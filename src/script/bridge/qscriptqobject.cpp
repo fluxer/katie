@@ -1,11 +1,12 @@
 /****************************************************************************
 **
 ** Copyright (C) 2015 The Qt Company Ltd.
-** Copyright (C) 2016-2019 Ivailo Monev
+** Copyright (C) 2016-2021 Ivailo Monev
 **
 ** This file is part of the QtScript module of the Katie Toolkit.
 **
-** $QT_BEGIN_LICENSE:LGPL-ONLY$
+** $QT_BEGIN_LICENSE:LGPL$
+**
 ** GNU Lesser General Public License Usage
 ** This file may be used under the terms of the GNU Lesser
 ** General Public License version 2.1 as published by the Free Software
@@ -13,9 +14,6 @@
 ** packaging of this file.  Please review the following information to
 ** ensure the GNU Lesser General Public License version 2.1 requirements
 ** will be met: http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html.
-**
-** If you have questions regarding the use of this file, please contact
-** us via http://www.qt.io/contact-us/.
 **
 ** $QT_END_LICENSE$
 **
@@ -2140,9 +2138,7 @@ void QObjectConnectionManager::execute(int slotIndex, void **argv)
     int signalIndex = -1;
     QScript::APIShim shim(engine);
     for (int i = 0; i < connections.size(); ++i) {
-        const QVector<QObjectConnection> &cs = connections.at(i);
-        for (int j = 0; j < cs.size(); ++j) {
-            const QObjectConnection &c = cs.at(j);
+        foreach (const QObjectConnection &c, connections.at(i)) {
             if (c.slotIndex == slotIndex) {
                 receiver = c.receiver;
                 slot = c.slot;

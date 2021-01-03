@@ -1,7 +1,7 @@
 /****************************************************************************
 **
 ** Copyright (C) 2015 The Qt Company Ltd.
-** Copyright (C) 2016-2020 Ivailo Monev
+** Copyright (C) 2016-2021 Ivailo Monev
 **
 ** This file is part of the QtCore module of the Katie Toolkit.
 **
@@ -88,7 +88,6 @@
 #define QT_NO_STYLE_QGTK
 #define QT_NO_STYLE_CDE
 #define QT_NO_STATEMACHINE
-#define QT_NO_XKB
 #define QT_NO_XIM
 #define QT_NO_IM
 #define QT_NO_INPUTMETHOD
@@ -97,15 +96,8 @@
 #define QT_NO_OPENGL
 #define QT_NO_TABLET
 #define QT_NO_TABLETEVENT
-#define QT_NO_GCONF2
 #define QT_NO_RAWFONT
 #define QT_NO_IMAGE_TEXT
-#define QT_NO_GLIB
-#define QT_NO_ICONV
-#define QT_NO_LPR
-#define QT_NO_NIS
-#define QT_NO_NSL
-#define QT_NO_NAS
 #define QT_NO_IMAGEFORMAT_MNG
 #define QT_NO_TEXTODFWRITER
 
@@ -140,7 +132,6 @@
 #cmakedefine QT_NO_FONTCONFIG
 #cmakedefine QT_NO_IMAGEFORMAT_JPEG
 #cmakedefine QT_NO_IMAGEFORMAT_TIFF
-#cmakedefine QT_NO_RESOLV
 #cmakedefine QT_NO_SESSIONMANAGER
 #cmakedefine QT_NO_TRANSLATION
 #cmakedefine QT_NO_XCURSOR
@@ -149,7 +140,6 @@
 #cmakedefine QT_NO_XRANDR
 #cmakedefine QT_NO_XRENDER
 #cmakedefine QT_NO_XSHAPE
-#cmakedefine QT_NO_XSHM
 #cmakedefine QT_NO_XSYNC
 
 // Misc
@@ -190,7 +180,6 @@
 #cmakedefine QT_NO_DRAGANDDROP
 #cmakedefine QT_NO_DYNAMIC_CAST
 #cmakedefine QT_NO_EFFECTS
-#cmakedefine QT_NO_EMIT
 #cmakedefine QT_NO_ERRORMESSAGE
 #cmakedefine QT_NO_FILEDIALOG
 #cmakedefine QT_NO_FILEICONPROVIDER

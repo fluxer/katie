@@ -1,7 +1,7 @@
 /****************************************************************************
 **
 ** Copyright (C) 2015 The Qt Company Ltd.
-** Copyright (C) 2016-2020 Ivailo Monev
+** Copyright (C) 2016-2021 Ivailo Monev
 **
 ** This file is part of the QtCore module of the Katie Toolkit.
 **
@@ -68,7 +68,6 @@ private:
     // Platform-specific data
     QT_DIR *dir;
     QT_DIRENT *dirEntry;
-    int lastError;
 
     Q_DISABLE_COPY(QFileSystemIterator)
 };

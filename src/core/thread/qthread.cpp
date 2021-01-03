@@ -1,7 +1,7 @@
 /****************************************************************************
 **
 ** Copyright (C) 2015 The Qt Company Ltd.
-** Copyright (C) 2016-2020 Ivailo Monev
+** Copyright (C) 2016-2021 Ivailo Monev
 **
 ** This file is part of the QtCore module of the Katie Toolkit.
 **
@@ -50,9 +50,9 @@ QT_BEGIN_NAMESPACE
   QThreadData
 */
 
-QThreadData::QThreadData(int initialRefCount)
+QThreadData::QThreadData()
     : quitNow(false), canWait(true), isAdopted(false), loopLevel(0),
-    threadId(0), thread(Q_NULLPTR), eventDispatcher(Q_NULLPTR), _ref(initialRefCount)
+    threadId(0), thread(Q_NULLPTR), eventDispatcher(Q_NULLPTR), _ref(1)
 {
     // fprintf(stderr, "QThreadData %p created\n", this);
 }
@@ -424,12 +424,12 @@ void QThread::setStackSize(uint stackSize)
     Q_ASSERT_X(!d->running, "QThread::setStackSize",
                "cannot change stack size while the thread is running");
 #ifdef PTHREAD_STACK_MIN
-    static int stack_min = sysconf(_SC_THREAD_STACK_MIN);
+    static long stack_min = sysconf(_SC_THREAD_STACK_MIN);
     if (stack_min == -1)
         stack_min = PTHREAD_STACK_MIN;
     // 0 means default stack size
     if (Q_UNLIKELY(stackSize != 0 && stackSize < stack_min)) {
-        qWarning("QThread::setStackSize: %u is less than the minimum %u", stackSize, stack_min);
+        qWarning("QThread::setStackSize: %u is less than the minimum %ld", stackSize, stack_min);
         stackSize = stack_min;
     }
 #endif
@@ -521,7 +521,9 @@ void QThread::exit(int returnCode)
     \sa exit() QEventLoop
 */
 void QThread::quit()
-{ exit(); }
+{
+    QThread::exit();
+}
 
 /*!
     The starting point for the thread. After calling start(), the
@@ -536,7 +538,7 @@ void QThread::quit()
 */
 void QThread::run()
 {
-    (void) exec();
+    (void) QThread::exec();
 }
 
 /*!

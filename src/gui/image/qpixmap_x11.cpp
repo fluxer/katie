@@ -1,7 +1,7 @@
 /****************************************************************************
 **
 ** Copyright (C) 2015 The Qt Company Ltd.
-** Copyright (C) 2016-2020 Ivailo Monev
+** Copyright (C) 2016-2021 Ivailo Monev
 **
 ** This file is part of the QtGui module of the Katie Toolkit.
 **
@@ -30,16 +30,6 @@
 ** $QT_END_LICENSE$
 **
 ****************************************************************************/
-
-// Uncomment the next line to enable the MIT Shared Memory extension
-//
-// WARNING:  This has some problems:
-//
-//    1. Consumes a 800x600 pixmap
-//    2. Qt does not handle the ShmCompletion message, so you will
-//        get strange effects if you xForm() repeatedly.
-//
-// #define QT_MITSHM
 
 #include "qplatformdefs.h"
 #include "qdebug.h"
@@ -124,95 +114,6 @@ Qt::HANDLE QX11PixmapData::bitmap_to_mask(const QBitmap &bitmap, int screen)
     XFreeGC(qt_x11Data->display, gc);
     return mask;
 }
-
-
-/*****************************************************************************
-  MIT Shared Memory Extension support: makes xForm noticeably (~20%) faster.
- *****************************************************************************/
-
-#if defined(QT_MITSHM)
-
-static bool               xshminit = false;
-static XShmSegmentInfo xshminfo;
-static XImage              *xshmimg = 0;
-static Pixmap               xshmpm  = 0;
-
-static void qt_cleanup_mitshm()
-{
-    if (xshmimg == 0)
-        return;
-    Display *dpy = QX11Info::appDisplay();
-    if (xshmpm) {
-        XFreePixmap(dpy, xshmpm);
-        xshmpm = 0;
-    }
-    XShmDetach(dpy, &xshminfo); xshmimg->data = 0;
-    qSafeXDestroyImage(xshmimg); xshmimg = 0;
-    shmdt(xshminfo.shmaddr);
-    shmctl(xshminfo.shmid, IPC_RMID, 0);
-}
-
-static bool qt_create_mitshm_buffer(const QPaintDevice* dev, int w, int h)
-{
-    static int major, minor;
-    static Bool pixmaps_ok;
-    Display *dpy = dev->data->xinfo->display();
-    int dd         = dev->x11Depth();
-    Visual *vis         = (Visual*)dev->x11Visual();
-
-    if (xshminit) {
-        qt_cleanup_mitshm();
-    } else {
-        if (!XShmQueryVersion(dpy, &major, &minor, &pixmaps_ok))
-            return false;                        // MIT Shm not supported
-        qAddPostRoutine(qt_cleanup_mitshm);
-        xshminit = true;
-    }
-
-    xshmimg = XShmCreateImage(dpy, vis, dd, ZPixmap, 0, &xshminfo, w, h);
-    if (!xshmimg)
-        return false;
-
-    bool ok;
-    xshminfo.shmid = shmget(IPC_PRIVATE,
-                             xshmimg->bytes_per_line * xshmimg->height,
-                             IPC_CREAT | 0700);
-    ok = xshminfo.shmid != -1;
-    if (ok) {
-        xshmimg->data = (char*)shmat(xshminfo.shmid, 0, 0);
-        xshminfo.shmaddr = xshmimg->data;
-        ok = (xshminfo.shmaddr != (char*)-1);
-    }
-    xshminfo.readOnly = false;
-    if (ok)
-        ok = XShmAttach(dpy, &xshminfo);
-    if (!ok) {
-        qSafeXDestroyImage(xshmimg);
-        xshmimg = 0;
-        if (xshminfo.shmaddr)
-            shmdt(xshminfo.shmaddr);
-        if (xshminfo.shmid != -1)
-            shmctl(xshminfo.shmid, IPC_RMID, 0);
-        return false;
-    }
-    if (pixmaps_ok)
-        xshmpm = XShmCreatePixmap(dpy, DefaultRootWindow(dpy), xshmimg->data,
-                                   &xshminfo, w, h, dd);
-
-    return true;
-}
-
-#else
-
-// If extern, need a dummy.
-//
-// static bool qt_create_mitshm_buffer(QPaintDevice*, int, int)
-// {
-//     return false;
-// }
-
-#endif // QT_MITSHM
-
 
 /*****************************************************************************
   Internal functions
@@ -1421,15 +1322,8 @@ int QX11PixmapData::metric(QPaintDevice::PaintDeviceMetric metric) const
     return 0;
 }
 
-struct QXImageWrapper
+bool QX11PixmapData::canTakeQImageFromXImage(const XImage *xi) const
 {
-    XImage *xi;
-};
-
-bool QX11PixmapData::canTakeQImageFromXImage(const QXImageWrapper &xiWrapper) const
-{
-    XImage *xi = xiWrapper.xi;
-
     // ARGB32_Premultiplied
     if (picture && depth() == 32)
         return true;
@@ -1449,10 +1343,8 @@ bool QX11PixmapData::canTakeQImageFromXImage(const QXImageWrapper &xiWrapper) co
     return false;
 }
 
-QImage QX11PixmapData::takeQImageFromXImage(const QXImageWrapper &xiWrapper) const
+QImage QX11PixmapData::takeQImageFromXImage(XImage *xi) const
 {
-    XImage *xi = xiWrapper.xi;
-
     QImage::Format format = QImage::Format_ARGB32_Premultiplied;
     if (depth() == 24)
         format = QImage::Format_RGB32;
@@ -1504,19 +1396,18 @@ QImage QX11PixmapData::takeQImageFromXImage(const QXImageWrapper &xiWrapper) con
 
 QImage QX11PixmapData::toImage(const QRect &rect) const
 {
-    QXImageWrapper xiWrapper;
-    xiWrapper.xi = XGetImage(qt_x11Data->display, hd, rect.x(), rect.y(), rect.width(), rect.height(),
-                             AllPlanes, (depth() == 1) ? XYPixmap : ZPixmap);
+    XImage *xi = XGetImage(qt_x11Data->display, hd, rect.x(), rect.y(), rect.width(), rect.height(),
+                           AllPlanes, (depth() == 1) ? XYPixmap : ZPixmap);
 
-    Q_CHECK_PTR(xiWrapper.xi);
-    if (!xiWrapper.xi)
+    Q_CHECK_PTR(xi);
+    if (!xi)
         return QImage();
 
-    if (!x11_mask && canTakeQImageFromXImage(xiWrapper))
-        return takeQImageFromXImage(xiWrapper);
+    if (!x11_mask && canTakeQImageFromXImage(xi))
+        return takeQImageFromXImage(xi);
 
-    QImage image = toImage(xiWrapper, rect);
-    qSafeXDestroyImage(xiWrapper.xi);
+    QImage image = toImage(xi, rect);
+    qSafeXDestroyImage(xi);
     return image;
 }
 
@@ -1540,10 +1431,8 @@ QImage QX11PixmapData::toImage() const
     return toImage(QRect(0, 0, w, h));
 }
 
-QImage QX11PixmapData::toImage(const QXImageWrapper &xiWrapper, const QRect &rect) const
+QImage QX11PixmapData::toImage(const XImage *xi, const QRect &rect) const
 {
-    XImage *xi = xiWrapper.xi;
-
     int d = depth();
     Visual *visual = (Visual *)xinfo.visual();
     bool trucol = (visual->c_class >= TrueColor) && d > 1;
@@ -1864,21 +1753,11 @@ QPixmap QX11PixmapData::transformed(const QTransform &transform,
     mat = mat.inverted(&invertible);  // invert matrix
 
     if (h == 0 || w == 0 || !invertible
-        || qAbs(scaledWidth) >= 32768 || qAbs(scaledHeight) >= 32768 )
-	// error, return null pixmap
+        || qAbs(scaledWidth) >= 32768 || qAbs(scaledHeight) >= 32768 ) {
+        // error, return null pixmap
         return QPixmap();
-
-#if defined(QT_MITSHM)
-    static bool try_once = true;
-    if (try_once) {
-        try_once = false;
-        if (!xshminit)
-            qt_create_mitshm_buffer(this, 800, 600);
     }
 
-    bool use_mitshm = xshmimg && !depth1 &&
-                      xshmimg->width >= w && xshmimg->height >= h;
-#endif
     XImage *xi = XGetImage(qt_x11Data->display, handle(), 0, 0, ws, hs, AllPlanes,
                            depth1 ? XYPixmap : ZPixmap);
 
@@ -1895,25 +1774,14 @@ QPixmap QX11PixmapData::transformed(const QTransform &transform,
         dbpl = ((w*bpp+31)/32)*4;
     dbytes = dbpl*h;
 
-#if defined(QT_MITSHM)
-    if (use_mitshm) {
-        dptr = (uchar *)xshmimg->data;
-        uchar fillbyte = bpp == 8 ? white.pixel() : 0xff;
-        for (int y=0; y<h; y++)
-            memset(dptr + y*xshmimg->bytes_per_line, fillbyte, dbpl);
-    } else {
-#endif
-        dptr = (uchar *)malloc(dbytes);        // create buffer for bits
-        Q_CHECK_PTR(dptr);
-        if (depth1)                                // fill with zeros
-            memset(dptr, 0, dbytes);
-        else if (bpp == 8)                        // fill with background color
-            memset(dptr, WhitePixel(qt_x11Data->display, xinfo.screen()), dbytes);
-        else
-            memset(dptr, 0, dbytes);
-#if defined(QT_MITSHM)
-    }
-#endif
+    dptr = (uchar *)malloc(dbytes);        // create buffer for bits
+    Q_CHECK_PTR(dptr);
+    if (depth1)                                // fill with zeros
+        ::memset(dptr, 0, dbytes);
+    else if (bpp == 8)                        // fill with background color
+        ::memset(dptr, WhitePixel(qt_x11Data->display, xinfo.screen()), dbytes);
+    else
+        ::memset(dptr, 0, dbytes);
 
     // #define QT_DEBUG_XIMAGE
 #if defined(QT_DEBUG_XIMAGE)
@@ -1942,10 +1810,6 @@ QPixmap QX11PixmapData::transformed(const QTransform &transform,
     } else {
         xbpl  = (w*bpp)/8;
         p_inc = dbpl - xbpl;
-#if defined(QT_MITSHM)
-        if (use_mitshm)
-            p_inc = xshmimg->bytes_per_line - xbpl;
-#endif
     }
 
     if (!qt_xForm_helper(mat, xi->xoffset, type, bpp, dptr, xbpl, p_inc, h, sptr, sbpl, ws, hs)){
@@ -1987,18 +1851,11 @@ QPixmap QX11PixmapData::transformed(const QTransform &transform,
 #endif // QT_NO_XRENDER
 
         GC gc = XCreateGC(qt_x11Data->display, x11Data->hd, 0, 0);
-#if defined(QT_MITSHM)
-        if (use_mitshm) {
-            XCopyArea(dpy, xshmpm, x11Data->hd, gc, 0, 0, w, h, 0, 0);
-        } else
-#endif
-        {
-            xi = XCreateImage(dpy, (Visual*)x11Data->xinfo.visual(),
-                              x11Data->d,
-                              ZPixmap, 0, (char *)dptr, w, h, 32, 0);
-            XPutImage(dpy, pm.handle(), gc, xi, 0, 0, 0, 0, w, h);
-            qSafeXDestroyImage(xi);
-        }
+        xi = XCreateImage(dpy, (Visual*)x11Data->xinfo.visual(),
+                            x11Data->d,
+                            ZPixmap, 0, (char *)dptr, w, h, 32, 0);
+        XPutImage(dpy, pm.handle(), gc, xi, 0, 0, 0, 0, w, h);
+        qSafeXDestroyImage(xi);
         XFreeGC(qt_x11Data->display, gc);
 
         if (x11_mask) { // xform mask, too

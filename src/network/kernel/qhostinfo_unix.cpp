@@ -1,7 +1,7 @@
 /****************************************************************************
 **
 ** Copyright (C) 2015 The Qt Company Ltd.
-** Copyright (C) 2016-2020 Ivailo Monev
+** Copyright (C) 2016-2021 Ivailo Monev
 **
 ** This file is part of the QtNetwork module of the Katie Toolkit.
 **
@@ -47,10 +47,6 @@
 #include <netdb.h>
 #include <arpa/inet.h>
 
-#ifndef QT_NO_RESOLV
-#include <resolv.h>
-#endif // QT_NO_RESOLV
-
 QT_BEGIN_NAMESPACE
 
 #if !defined(QT_HAVE_GETADDRINFO)
@@ -66,11 +62,6 @@ QHostInfo QHostInfoAgent::fromName(const QString &hostName)
     qDebug("QHostInfoAgent::fromName(%s) looking up...",
            hostName.toLatin1().constData());
 #endif
-
-#ifndef QT_NO_RESOLV
-    // If res_init is available, poll it.
-    res_init();
-#endif // QT_NO_RESOLV
 
     QHostAddress address;
     if (address.setAddress(hostName)) {
@@ -269,46 +260,35 @@ QHostInfo QHostInfoAgent::fromName(const QString &hostName)
 
 QString QHostInfo::localHostName()
 {
-    static int size_max = sysconf(_SC_HOST_NAME_MAX);
+    static long size_max = sysconf(_SC_HOST_NAME_MAX);
     if (size_max == -1)
         size_max = _POSIX_HOST_NAME_MAX;
-    char gethostbuffer[size_max];
-    if (Q_LIKELY(::gethostname(gethostbuffer, size_max) == 0)) {
-        gethostbuffer[size_max - 1] = '\0';
-        return QString::fromLocal8Bit(gethostbuffer);
+    char gethostbuff[size_max];
+    if (Q_LIKELY(::gethostname(gethostbuff, size_max) == 0)) {
+        gethostbuff[size_max - 1] = '\0';
+        return QString::fromLocal8Bit(gethostbuff);
     }
     return QString();
 }
 
 QString QHostInfo::localDomainName()
 {
-//support both thread-safe and unsafe versions
-#if !defined(QT_NO_RESOLV) && defined(QT_HAVE_RES_NINIT)
-    // using thread-safe version
-    struct __res_state state;
-    res_ninit(&state);
-    QString domainName = QUrl::fromAce(state.defdname);
-    if (domainName.isEmpty())
-        domainName = QUrl::fromAce(state.dnsrch[0]);
-    res_nclose(&state);
-
-    return domainName;
-#elif !defined(QT_NO_RESOLV)
-    // using thread-unsafe version
-
-#if !defined(QT_HAVE_GETADDRINFO)
-    // We have to call res_init to be sure that _res was initialized
-    // So, for systems without getaddrinfo (which is thread-safe), we lock the mutex too
-    QMutexLocker locker(getHostByNameMutex());
-#endif
-    res_init();
-    QString domainName = QUrl::fromAce(_res.defdname);
-    if (domainName.isEmpty())
-        domainName = QUrl::fromAce(_res.dnsrch[0]);
-    return domainName;
+#if defined(QT_HAVE_GETDOMAINNAME)
+    // thread-safe
+    static long size_max = sysconf(_SC_HOST_NAME_MAX);
+    if (size_max == -1)
+        size_max = _POSIX_HOST_NAME_MAX;
+    QByteArray getdomainbuff(size_max, Qt::Uninitialized);
+    if (Q_LIKELY(::getdomainname(getdomainbuff.data(), getdomainbuff.size()) == 0)) {
+        if (getdomainbuff == "(none)") {
+            // not set
+            return QString();
+        }
+        return QUrl::fromAce(getdomainbuff);
+    }
+    return QString();
 #else
-
-    // nothing worked, try doing it by ourselves:
+    // doing it by ourselves
 #if defined(_PATH_RESCONF)
     QFile resolvconf(QFile::decodeName(_PATH_RESCONF));
 #else
@@ -335,7 +315,7 @@ QString QHostInfo::localDomainName()
 
     // return the fallen-back-to searched domain
     return domainName;
-#endif // QT_NO_RESOLV
+#endif // QT_HAVE_GETDOMAINNAME
 }
 
 QT_END_NAMESPACE

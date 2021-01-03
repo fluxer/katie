@@ -1,7 +1,7 @@
 /****************************************************************************
 **
 ** Copyright (C) 2015 The Qt Company Ltd.
-** Copyright (C) 2016-2020 Ivailo Monev
+** Copyright (C) 2016-2021 Ivailo Monev
 **
 ** This file is part of the QtCore module of the Katie Toolkit.
 **
@@ -51,7 +51,9 @@
 #ifndef QT_NO_EXECINFO
 #  include "qcoreapplication.h"
 #  include <execinfo.h>
-#  include <cxxabi.h>
+#  ifdef QT_HAVE_CXXABI_H
+#    include <cxxabi.h>
+#  endif
 #endif
 
 QT_BEGIN_NAMESPACE
@@ -1066,14 +1068,16 @@ static void qt_print_backtrace()
     }
 
     for (int i = 0; i < nptrs; i++) {
+#ifdef QT_HAVE_CXXABI_H
         int status;
         char* demangled = abi::__cxa_demangle(strings[i], nullptr, nullptr, &status);
         if (status == 0) {
             ::printf(" %s\n", demangled);
             ::free(demangled);
-        } else {
-            ::printf(" %s\n", strings[i]);
+            continue;
         }
+#endif
+        ::printf(" %s\n", strings[i]);
     }
 
     ::free(strings);

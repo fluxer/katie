@@ -1,7 +1,7 @@
 /****************************************************************************
 **
 ** Copyright (C) 2015 The Qt Company Ltd.
-** Copyright (C) 2016-2020 Ivailo Monev
+** Copyright (C) 2016-2021 Ivailo Monev
 **
 ** This file is part of the QtDeclarative module of the Katie Toolkit.
 **
@@ -517,13 +517,6 @@ void QDeclarativeDataLoader::load(QDeclarativeDataBlob *blob)
     QString lf = QDeclarativeEnginePrivate::urlToLocalFileOrQrc(blob->m_url);
 
     if (!lf.isEmpty()) {
-        if (!QDeclarative_isFileCaseCorrect(lf)) {
-            QDeclarativeError error;
-            error.setUrl(blob->m_url);
-            error.setDescription(QLatin1String("File name case mismatch"));
-            blob->setError(error);
-            return;
-        }
         QFile file(lf);
         if (file.open(QFile::ReadOnly)) {
             QByteArray data = file.readAll();

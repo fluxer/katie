@@ -1,7 +1,7 @@
 /****************************************************************************
 **
 ** Copyright (C) 2015 The Qt Company Ltd.
-** Copyright (C) 2016-2020 Ivailo Monev
+** Copyright (C) 2016-2021 Ivailo Monev
 **
 ** This file is part of the QtCore module of the Katie Toolkit.
 **
@@ -42,7 +42,7 @@
 #ifndef QT_NO_SHAREDMEMORY
 #include <sys/types.h>
 #include <sys/ipc.h>
-#ifndef QT_POSIX_IPC
+#ifndef QT_HAVE_SEMAPHORE_H
 #include <sys/shm.h>
 #else
 #include <sys/mman.h>
@@ -66,7 +66,7 @@ QSharedMemoryPrivate::QSharedMemoryPrivate()
 #ifndef QT_NO_SYSTEMSEMAPHORE
       systemSemaphore(QString()), lockedByMe(false),
 #endif
-#ifndef QT_POSIX_IPC
+#ifndef QT_HAVE_SEMAPHORE_H
       unix_key(0)
 #else
       hand(0)
@@ -118,7 +118,7 @@ void QSharedMemoryPrivate::setErrorString(const QString &function)
 
     If not already made create the handle used for accessing the shared memory.
 */
-#ifndef QT_POSIX_IPC
+#ifndef QT_HAVE_SEMAPHORE_H
 key_t QSharedMemoryPrivate::handle()
 {
     // already made
@@ -152,7 +152,7 @@ int QSharedMemoryPrivate::handle()
 
     return 1;
 }
-#endif // QT_POSIX_IPC
+#endif // QT_HAVE_SEMAPHORE_H
 
 #endif // QT_NO_SHAREDMEMORY
 
@@ -168,7 +168,7 @@ int QSharedMemoryPrivate::handle()
 */
 int QSharedMemoryPrivate::createUnixKeyFile(const QString &fileName)
 {
-#ifndef QT_POSIX_IPC
+#ifndef QT_HAVE_SEMAPHORE_H
     if (QFile::exists(fileName))
         return 0;
 
@@ -194,7 +194,7 @@ int QSharedMemoryPrivate::createUnixKeyFile(const QString &fileName)
 
 void QSharedMemoryPrivate::cleanHandle()
 {
-#ifndef QT_POSIX_IPC
+#ifndef QT_HAVE_SEMAPHORE_H
     unix_key = 0;
 #else
     qt_safe_close(hand);
@@ -204,7 +204,7 @@ void QSharedMemoryPrivate::cleanHandle()
 
 bool QSharedMemoryPrivate::create(int size)
 {
-#ifndef QT_POSIX_IPC
+#ifndef QT_HAVE_SEMAPHORE_H
     // build file if needed
     int built = createUnixKeyFile(nativeKey);
     if (built == -1) {
@@ -268,14 +268,14 @@ bool QSharedMemoryPrivate::create(int size)
     }
 
     qt_safe_close(fd);
-#endif // QT_POSIX_IPC
+#endif // QT_HAVE_SEMAPHORE_H
 
     return true;
 }
 
 bool QSharedMemoryPrivate::attach(QSharedMemory::AccessMode mode)
 {
-#ifndef QT_POSIX_IPC
+#ifndef QT_HAVE_SEMAPHORE_H
     // grab the shared memory segment id
     int id = shmget(unix_key, 0, (mode == QSharedMemory::ReadOnly ? 0400 : 0600));
     if (-1 == id) {
@@ -340,14 +340,14 @@ bool QSharedMemoryPrivate::attach(QSharedMemory::AccessMode mode)
         size = 0;
         return false;
     }
-#endif // QT_POSIX_IPC
+#endif // QT_HAVE_SEMAPHORE_H
 
     return true;
 }
 
 bool QSharedMemoryPrivate::detach()
 {
-#ifndef QT_POSIX_IPC
+#ifndef QT_HAVE_SEMAPHORE_H
     // detach from the memory segment
     if (-1 == shmdt(memory)) {
         QString function = QLatin1String("QSharedMemory::detach");
@@ -417,7 +417,7 @@ bool QSharedMemoryPrivate::detach()
         if (::shm_unlink(shmName.constData()) == -1 && errno != ENOENT)
             setErrorString(QLatin1String("QSharedMemory::detach (shm_unlink)"));
     }
-#endif // QT_POSIX_IPC
+#endif // QT_HAVE_SEMAPHORE_H
 
     return true;
 }

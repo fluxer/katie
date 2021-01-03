@@ -1,7 +1,7 @@
 /****************************************************************************
 **
 ** Copyright (C) 2015 The Qt Company Ltd.
-** Copyright (C) 2016-2020 Ivailo Monev
+** Copyright (C) 2016-2021 Ivailo Monev
 **
 ** This file is part of the QtCore module of the Katie Toolkit.
 **
@@ -121,14 +121,10 @@ void (*QAbstractDeclarativeData::objectNameChanged)(QAbstractDeclarativeData *, 
 
 QObjectData::~QObjectData() {}
 
-QObjectPrivate::QObjectPrivate(int version)
+QObjectPrivate::QObjectPrivate()
     : threadData(Q_NULLPTR), connectionLists(Q_NULLPTR), senders(Q_NULLPTR),
     currentSender(Q_NULLPTR), currentChildBeingDeleted(Q_NULLPTR)
 {
-    if (version != QObjectPrivateVersion)
-        qFatal("Cannot mix incompatible Qt library (version 0x%x) with this library (version 0x%x)",
-                version, QObjectPrivateVersion);
-
     // QObjectData initialization
     q_ptr = Q_NULLPTR;
     parent = Q_NULLPTR;                                 // no parent yet. It is set by setParent()
@@ -1162,10 +1158,13 @@ void QObject::moveToThread(QThread *targetThread)
     } else if (Q_UNLIKELY(d->isWidget)) {
         qWarning("QObject::moveToThread: Widgets cannot be moved to a new thread");
         return;
+    } else if (Q_UNLIKELY(!targetThread)) {
+        qWarning("QObject::moveToThread: Invalid new thread");
+        return;
     }
 
     QThreadData *currentData = QThreadData::current();
-    QThreadData *targetData = targetThread ? QThreadData::get2(targetThread) : new QThreadData(0);
+    QThreadData *targetData = QThreadData::get2(targetThread);
     if (!d->threadData->thread && currentData == targetData) {
         // one exception to the rule: we allow moving objects with no thread affinity to the current thread
         currentData = d->threadData;
@@ -1199,8 +1198,7 @@ void QObjectPrivate::moveToThread_helper()
     Q_Q(QObject);
     QEvent e(QEvent::ThreadChange);
     QCoreApplication::sendEvent(q, &e);
-    for (int i = 0; i < children.size(); ++i) {
-        QObject *child = children.at(i);
+    foreach (QObject *child, children) {;
         child->d_func()->moveToThread_helper();
     }
 }
@@ -1237,8 +1235,7 @@ void QObjectPrivate::setThreadData_helper(QThreadData *currentData, QThreadData 
     threadData->deref();
     threadData = targetData;
 
-    for (int i = 0; i < children.size(); ++i) {
-        QObject *child = children.at(i);
+    foreach (QObject *child, children) {;
         child->d_func()->setThreadData_helper(currentData, targetData);
     }
 }
@@ -1705,28 +1702,10 @@ QString QObject::trUtf8(const char *sourceText)
   Signals and slots
  *****************************************************************************/
 
-
-const char *qFlagLocation(const char *method)
-{
-    QThreadData::current()->flaggedSignatures.store(method);
-    return method;
-}
-
-static int extract_code(const char *member)
+static inline int extract_code(const char *member)
 {
     // extract code, ensure QMETHOD_CODE <= code <= QSIGNAL_CODE
     return (((int)(*member) - '0') & 0x3);
-}
-
-static const char * extract_location(const char *member)
-{
-    if (QThreadData::current()->flaggedSignatures.contains(member)) {
-        // signature includes location information after the first null-terminator
-        const char *location = member + qstrlen(member) + 1;
-        if (*location != '\0')
-            return location;
-    }
-    return Q_NULLPTR;
 }
 
 static bool check_signal_macro(const QObject *sender, const char *signal,
@@ -1765,16 +1744,8 @@ static void err_method_notfound(const QObject *object,
         case QSLOT_CODE:   type = "slot";   break;
         case QSIGNAL_CODE: type = "signal"; break;
     }
-    const char *loc = extract_location(method);
-    if (strchr(method,')') == 0) {               // common typing mistake
-        qWarning("Object::%s: Parentheses expected, %s %s::%s%s%s",
-                 func, type, object->metaObject()->className(), method+1,
-                 loc ? " in ": "", loc ? loc : "");
-    } else {
-        qWarning("Object::%s: No such %s %s::%s%s%s",
-                 func, type, object->metaObject()->className(), method+1,
-                 loc ? " in ": "", loc ? loc : "");
-    }
+    qWarning("Object::%s: No such %s %s::%s",
+             func, type, object->metaObject()->className(), method+1);
 }
 
 
@@ -2316,13 +2287,12 @@ bool QObject::disconnect(const QObject *sender, const char *signal,
 
     QByteArray method_name;
     const char *method_arg = method;
-    int membcode = -1;
     bool method_found = false;
     if (method) {
         method_name = QMetaObject::normalizedSignature(method);
         method = method_name.constData();
 
-        membcode = extract_code(method);
+        int membcode = extract_code(method);
         if (!check_method_code(membcode, receiver, method, "disconnect"))
             return false;
         method++; // skip code

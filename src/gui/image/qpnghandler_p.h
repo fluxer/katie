@@ -1,7 +1,7 @@
 /****************************************************************************
 **
 ** Copyright (C) 2015 The Qt Company Ltd.
-** Copyright (C) 2016-2020 Ivailo Monev
+** Copyright (C) 2016-2021 Ivailo Monev
 **
 ** This file is part of the QtGui module of the Katie Toolkit.
 **
@@ -47,8 +47,6 @@
 
 #include "QtGui/qimageiohandler.h"
 
-#ifndef QT_NO_IMAGEFORMAT_PNG
-
 QT_BEGIN_NAMESPACE
 
 class QPngHandlerPrivate;
@@ -76,5 +74,4 @@ private:
 
 QT_END_NAMESPACE
 
-#endif // QT_NO_IMAGEFORMAT_PNG
 #endif // QPNGHANDLER_P_H

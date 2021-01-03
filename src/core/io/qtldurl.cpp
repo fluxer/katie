@@ -1,7 +1,7 @@
 /****************************************************************************
 **
 ** Copyright (C) 2015 The Qt Company Ltd.
-** Copyright (C) 2016-2020 Ivailo Monev
+** Copyright (C) 2016-2021 Ivailo Monev
 **
 ** This file is part of the QtCore module of the Katie Toolkit.
 **
@@ -41,7 +41,7 @@ QT_BEGIN_NAMESPACE
 // file, You can obtain one at https://mozilla.org/MPL/2.0/.
 
 // generated via gentld.py
-static const char* TLDTbl[9084] = {
+static const char* TLDTbl[9105] = {
     "ac\0",
     "com.ac\0",
     "edu.ac\0",
@@ -6391,7 +6391,6 @@ static const char* TLDTbl[9084] = {
     "cbn\0",
     "cbre\0",
     "cbs\0",
-    "ceb\0",
     "center\0",
     "ceo\0",
     "cern\0",
@@ -6813,7 +6812,6 @@ static const char* TLDTbl[9084] = {
     "ltd\0",
     "ltda\0",
     "lundbeck\0",
-    "lupin\0",
     "luxe\0",
     "luxury\0",
     "macys\0",
@@ -7657,12 +7655,15 @@ static const char* TLDTbl[9084] = {
     "builtwithdark.com\0",
     "edgestack.me\0",
     "debian.net\0",
+    "deno.dev\0",
+    "deno-staging.dev\0",
     "dedyn.io\0",
     "jozi.biz\0",
     "dnshome.de\0",
     "online.th\0",
     "shop.th\0",
     "drayddns.com\0",
+    "shoparena.pl\0",
     "dreamhosters.com\0",
     "mydrobo.com\0",
     "drud.io\0",
@@ -8150,7 +8151,6 @@ static const char* TLDTbl[9084] = {
     "myfast.host\0",
     "fastvps.site\0",
     "myfast.space\0",
-    "fhapp.xyz\0",
     "fedorainfracloud.org\0",
     "fedorapeople.org\0",
     "cloud.fedoraproject.org\0",
@@ -8170,6 +8170,7 @@ static const char* TLDTbl[9084] = {
     "filegear-jp.me\0",
     "filegear-sg.me\0",
     "firebaseapp.com\0",
+    "flap.id\0",
     "fly.dev\0",
     "edgeapp.net\0",
     "shw.io\0",
@@ -8304,6 +8305,8 @@ static const char* TLDTbl[9084] = {
     "blogspot.vn\0",
     "graphox.us\0",
     "awsmppl.com\0",
+    "günstigbestellen.de\0",
+    "günstigliefern.de\0",
     "fin.ci\0",
     "free.hr\0",
     "caa.li\0",
@@ -8323,23 +8326,26 @@ static const char* TLDTbl[9084] = {
     "development.run\0",
     "ravendb.run\0",
     "secaas.hk\0",
-    "bpl.biz\0",
     "orx.biz\0",
-    "ng.city\0",
     "biz.gl\0",
-    "ng.ink\0",
     "col.ng\0",
     "firm.ng\0",
     "gen.ng\0",
     "ltd.ng\0",
     "ngo.ng\0",
-    "ng.school\0",
+    "edu.scot\0",
     "sch.so\0",
+    "org.yt\0",
     "hostyhosting.io\0",
     "häkkinen.fi\0",
     "*.moonscale.io\0",
     "moonscale.net\0",
     "iki.fi\0",
+    "smushcdn.com\0",
+    "wphostedmail.com\0",
+    "wpmucdn.com\0",
+    "tempurl.host\0",
+    "wpmudev.host\0",
     "dyn-berlin.de\0",
     "in-berlin.de\0",
     "in-brb.de\0",
@@ -8496,6 +8502,8 @@ static const char* TLDTbl[9084] = {
     "oya.to\0",
     "co.krd\0",
     "edu.krd\0",
+    "krellian.net\0",
+    "webthings.io\0",
     "git-repos.de\0",
     "lcube-server.de\0",
     "svn-repos.de\0",
@@ -8523,6 +8531,7 @@ static const char* TLDTbl[9084] = {
     "loginline.io\0",
     "loginline.services\0",
     "loginline.site\0",
+    "lohmus.me\0",
     "krasnik.pl\0",
     "leczna.pl\0",
     "lubartow.pl\0",
@@ -8797,6 +8806,7 @@ static const char* TLDTbl[9084] = {
     "nid.io\0",
     "opensocial.site\0",
     "opencraft.hosting\0",
+    "orsites.com\0",
     "operaunite.com\0",
     "skygearapp.com\0",
     "outsystemscloud.com\0",
@@ -9086,6 +9096,7 @@ static const char* TLDTbl[9084] = {
     "wmcloud.org\0",
     "panel.gg\0",
     "daemon.panel.gg\0",
+    "woltlab-demo.com\0",
     "myforum.community\0",
     "community-pro.de\0",
     "diskussionsbereich.de\0",
@@ -9126,8 +9137,18 @@ static const char* TLDTbl[9084] = {
     "impertrixcdn.com\0",
     "impertrix.com\0",
     "gsj.bz\0",
+    "биз.рус\0",
+    "ком.рус\0",
+    "крым.рус\0",
+    "мир.рус\0",
+    "мск.рус\0",
+    "орг.рус\0",
+    "самара.рус\0",
+    "сочи.рус\0",
+    "спб.рус\0",
+    "я.рус\0",
 };
-static const qint16 TLDTblSize = 9084;
+static const qint16 TLDTblSize = 9105;
 
 static inline bool containsTLDEntry(const QString &entry)
 {

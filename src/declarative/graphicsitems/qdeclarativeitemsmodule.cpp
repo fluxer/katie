@@ -1,7 +1,7 @@
 /****************************************************************************
 **
 ** Copyright (C) 2015 The Qt Company Ltd.
-** Copyright (C) 2016-2020 Ivailo Monev
+** Copyright (C) 2016-2021 Ivailo Monev
 **
 ** This file is part of the QtDeclarative module of the Katie Toolkit.
 **
@@ -92,7 +92,7 @@ void QDeclarativeItemModule::defineModule()
     QDeclarativePrivate::qmlregister(QDeclarativePrivate::AutoParentRegistration, &autoparent);
 #ifdef QT_NO_MOVIE
     qmlRegisterTypeNotAvailable("QtQuick",1,0,"AnimatedImage",
-        qApp->translate("QDeclarativeAnimatedImage","Qt was built without support for QMovie"));
+        qApp->translate("QDeclarativeAnimatedImage","Katie was built without support for QMovie"));
 #else
     qmlRegisterType<QDeclarativeAnimatedImage>("QtQuick",1,0,"AnimatedImage");
 #endif

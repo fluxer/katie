@@ -1,7 +1,7 @@
 /****************************************************************************
 **
 ** Copyright (C) 2015 The Qt Company Ltd.
-** Copyright (C) 2016-2020 Ivailo Monev
+** Copyright (C) 2016-2021 Ivailo Monev
 **
 ** This file is part of the QtGui module of the Katie Toolkit.
 **
@@ -47,12 +47,11 @@
 
 #include "qpixmapdata_p.h"
 #include "qx11info_x11.h"
+#include "qt_x11_p.h"
 
 QT_BEGIN_NAMESPACE
 
 class QX11PaintEngine;
-
-struct QXImageWrapper;
 
 class Q_GUI_EXPORT QX11PixmapData : public QPixmapData
 {
@@ -103,14 +102,14 @@ private:
 
     void release();
 
-    QImage toImage(const QXImageWrapper &xi, const QRect &rect) const;
+    QImage toImage(const XImage *xi, const QRect &rect) const;
 
     QBitmap mask_to_bitmap(int screen) const;
     static Qt::HANDLE bitmap_to_mask(const QBitmap &, int screen);
     void bitmapFromImage(const QImage &image);
 
-    bool canTakeQImageFromXImage(const QXImageWrapper &xi) const;
-    QImage takeQImageFromXImage(const QXImageWrapper &xi) const;
+    bool canTakeQImageFromXImage(const XImage *xi) const;
+    QImage takeQImageFromXImage(XImage *xi) const;
 
     Qt::HANDLE hd;
 

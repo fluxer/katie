@@ -1,7 +1,7 @@
 /****************************************************************************
 **
 ** Copyright (C) 2015 The Qt Company Ltd.
-** Copyright (C) 2016-2020 Ivailo Monev
+** Copyright (C) 2016-2021 Ivailo Monev
 **
 ** This file is part of the QtNetwork module of the Katie Toolkit.
 **
@@ -50,7 +50,6 @@
 #include "qnetworkconfigmanager.h"
 
 #include <QtCore/qobject.h>
-#include <QtCore/qglobal.h>
 #include <QtCore/qlist.h>
 #include <QtCore/qstring.h>
 #include <QtCore/qhash.h>

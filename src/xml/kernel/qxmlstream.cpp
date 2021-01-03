@@ -1,7 +1,7 @@
 /****************************************************************************
 **
 ** Copyright (C) 2015 The Qt Company Ltd.
-** Copyright (C) 2016-2020 Ivailo Monev
+** Copyright (C) 2016-2021 Ivailo Monev
 **
 ** This file is part of the QtCore module of the Katie Toolkit.
 **
@@ -735,7 +735,6 @@ QXmlStreamReaderPrivate::QXmlStreamReaderPrivate()
     stack_size(64),
     sym_stack(Q_NULLPTR),
     state_stack(Q_NULLPTR),
-    entityParser(Q_NULLPTR),
     entityResolver(Q_NULLPTR)
 {
     reallocateStack();
@@ -779,8 +778,6 @@ void QXmlStreamReaderPrivate::init()
 #endif
     attributeStack.clear();
     attributeStack.reserve(16);
-    delete entityParser;
-    entityParser = Q_NULLPTR;
     hasCheckedStartDocument = false;
     normalizeLiterals = false;
     hasSeenTag = false;
@@ -808,17 +805,14 @@ void QXmlStreamReaderPrivate::parseEntity(const QString &value)
     if (value.isEmpty())
         return;
 
-
-    if (!entityParser)
-        entityParser = new QXmlStreamReaderPrivate();
-    else
-        entityParser->init();
-    entityParser->inParseEntity = true;
-    entityParser->readBuffer = value;
-    entityParser->injectToken(PARSE_ENTITY);
-    while (!entityParser->atEnd && entityParser->type != QXmlStreamReader::Invalid)
-        entityParser->parse();
-    if (entityParser->type == QXmlStreamReader::Invalid || entityParser->tagStack.size())
+    QXmlStreamReaderPrivate entityParser;
+    entityParser.init();
+    entityParser.inParseEntity = true;
+    entityParser.readBuffer = value;
+    entityParser.injectToken(PARSE_ENTITY);
+    while (!entityParser.atEnd && entityParser.type != QXmlStreamReader::Invalid)
+        entityParser.parse();
+    if (entityParser.type == QXmlStreamReader::Invalid || entityParser.tagStack.size())
         raiseWellFormedError(QXmlStream::tr("Invalid entity value."));
 
 }
@@ -840,7 +834,6 @@ QXmlStreamReaderPrivate::~QXmlStreamReaderPrivate()
 #endif
     free(sym_stack);
     free(state_stack);
-    delete entityParser;
 }
 
 

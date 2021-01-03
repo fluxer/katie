@@ -1,9 +1,21 @@
-# Copyright (c) 2015-2020, Ivailo Monev, <xakepa10@gmail.com>
+# Copyright (c) 2015-2021, Ivailo Monev, <xakepa10@gmail.com>
 # Redistribution and use is allowed according to the terms of the BSD license.
 
 set(KATIE_UIC "uic")
 set(KATIE_RCC "rcc")
 set(KATIE_MOC "bootstrap_moc")
+
+# a function to check for header presence, if header is found a definition is
+# added
+function(KATIE_CHECK_HEADER FORHEADER)
+    string(REPLACE "." "_" underscoreheader "${FORHEADER}")
+    check_include_file_cxx("${FORHEADER}" HAVE_${underscoreheader})
+
+    if(HAVE_${underscoreheader})
+        string(TOUPPER "${underscoreheader}" upperheader)
+        add_definitions(-DQT_HAVE_${upperheader})
+    endif()
+endfunction()
 
 # a function to check for C function/definition, works for external functions
 function(KATIE_CHECK_DEFINED FORDEFINITION FROMHEADER)
@@ -204,13 +216,12 @@ function(KATIE_STRING_UNWRAP INSTR OUTLST)
 endfunction()
 
 # a macro to instruct CMake which sources to exclude from the unity source file
-macro(KATIE_ALLINONE_EXCLUDE ARG1)
+macro(KATIE_UNITY_EXCLUDE ARG1)
     set_source_files_properties(${ARG1} ${ARGN} PROPERTIES SKIP_UNITY_BUILD_INCLUSION TRUE)
 endmacro()
 
-# a function to create an array of source files for a target while taking into
-# account all-in-one target build setting up proper dependency for the
-# moc/uic/rcc generated resources
+# a function to create an array of source files for a target setting up proper
+# dependency for the moc/uic/rcc generated resources
 function(KATIE_SETUP_TARGET FORTARGET)
     get_directory_property(dirdefs COMPILE_DEFINITIONS)
     get_directory_property(dirincs INCLUDE_DIRECTORIES)

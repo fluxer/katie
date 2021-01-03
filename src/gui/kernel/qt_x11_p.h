@@ -1,7 +1,7 @@
 /****************************************************************************
 **
 ** Copyright (C) 2015 The Qt Company Ltd.
-** Copyright (C) 2016-2020 Ivailo Monev
+** Copyright (C) 2016-2021 Ivailo Monev
 **
 ** This file is part of the QtGui module of the Katie Toolkit.
 **
@@ -62,6 +62,7 @@
 #include <X11/Xutil.h>
 #include <X11/Xos.h>
 #include <X11/Xatom.h>
+#include <X11/Xproto.h>
 
 #define XK_MISCELLANY
 #define XK_LATIN1
@@ -99,10 +100,6 @@
 #include <X11/Xcursor/Xcursor.h>
 #include <X11/cursorfont.h>
 #endif // QT_NO_XCURSOR
-
-#ifndef QT_NO_XSHM
-#  include <X11/extensions/XShm.h>
-#endif // QT_NO_XSHM
 
 #ifndef QT_NO_XFIXES
 #  include <X11/extensions/Xfixes.h>
@@ -203,10 +200,6 @@ struct QX11Data
     // true if compiled w/ XFIXES support and XFIXES is supported on the connected Display
     bool use_xfixes;
     int xfixes_eventbase;
-
-    // true if compiled w/ MIT-SHM support and MIT-SHM is supported on the connected Display
-    bool use_mitshm;
-    int mitshm_major;
 
     // true if compiled w/ XINERAMA support and XINERAMA is supported on the connected Display
     bool use_xinerama;

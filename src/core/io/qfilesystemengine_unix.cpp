@@ -1,7 +1,7 @@
 /****************************************************************************
 **
 ** Copyright (C) 2015 The Qt Company Ltd.
-** Copyright (C) 2016-2020 Ivailo Monev
+** Copyright (C) 2016-2021 Ivailo Monev
 **
 ** This file is part of the QtCore module of the Katie Toolkit.
 **
@@ -52,11 +52,14 @@
 
 QT_BEGIN_NAMESPACE
 
+const uint QFileSystemMetaData::nobodyID = (uint) -2;
+
 //static
 QFileSystemEntry QFileSystemEngine::getLinkTarget(const QFileSystemEntry &link, QFileSystemMetaData &data)
 {
+    QByteArray lpath = link.nativeFilePath();
     char readlinkbuf[PATH_MAX];
-    int len = ::readlink(link.nativeFilePath().constData(), readlinkbuf, sizeof(readlinkbuf));
+    int len = ::readlink(lpath.constData(), readlinkbuf, sizeof(readlinkbuf));
     if (len > 0) {
         QString ret;
         if (!data.hasFlags(QFileSystemMetaData::DirectoryType))
@@ -93,7 +96,8 @@ QFileSystemEntry QFileSystemEngine::canonicalName(const QFileSystemEntry &entry,
     if (entry.isEmpty() || entry.isRoot())
         return entry;
 
-    char *ret = ::realpath(entry.nativeFilePath().constData(), (char*)0);
+    QByteArray path = entry.nativeFilePath();
+    char *ret = ::realpath(path.constData(), (char*)0);
     if (ret) {
         data.entryFlags |= QFileSystemMetaData::ExistsAttribute;
         QString canonicalPath = QDir::cleanPath(QString::fromLocal8Bit(ret));
@@ -142,7 +146,7 @@ QFileSystemEntry QFileSystemEngine::absoluteName(const QFileSystemEntry &entry)
 Q_CORE_EXPORT QString qt_resolveUserName(uint userId)
 {
 #if !defined(QT_NO_THREAD) && defined(QT_HAVE_GETPWUID_R)
-    static int size_max = sysconf(_SC_GETPW_R_SIZE_MAX);
+    static long size_max = sysconf(_SC_GETPW_R_SIZE_MAX);
     if (size_max == -1)
         size_max = 1024;
     char buf[size_max];
@@ -167,7 +171,7 @@ QString QFileSystemEngine::resolveUserName(uint userId)
 QString QFileSystemEngine::resolveGroupName(uint groupId)
 {
 #if !defined(QT_NO_THREAD) && defined(QT_HAVE_GETGRGID_R)
-    static int size_max = sysconf(_SC_GETGR_R_SIZE_MAX);
+    static long size_max = sysconf(_SC_GETGR_R_SIZE_MAX);
     if (size_max == -1)
         size_max = 1024;
     char buf[size_max];
@@ -193,7 +197,7 @@ bool QFileSystemEngine::fillMetaData(const QFileSystemEntry &entry, QFileSystemM
 
     data.entryFlags &= ~what;
 
-    const QByteArray &path = entry.nativeFilePath();
+    const QByteArray path = entry.nativeFilePath();
 
     QT_STATBUF statBuffer;
     bool statBufferValid = false;
@@ -216,8 +220,8 @@ bool QFileSystemEngine::fillMetaData(const QFileSystemEntry &entry, QFileSystemM
         data.modificationTime_ = 0;
         data.accessTime_ = 0;
         data.size_ = 0;
-        data.userId_ = (uint) -2;
-        data.groupId_ = (uint) -2;
+        data.userId_ = QFileSystemMetaData::nobodyID;
+        data.groupId_ = QFileSystemMetaData::nobodyID;
     }
 
     if (what & QFileSystemMetaData::UserPermissions) {
@@ -262,7 +266,7 @@ bool QFileSystemEngine::createDirectory(const QFileSystemEntry &entry, bool crea
                 const QByteArray chunk = QFile::encodeName(dirName.left(slash));
                 QT_STATBUF st;
                 if (QT_STAT(chunk.constData(), &st) == 0) {
-                    if ((st.st_mode & S_IFMT) != S_IFDIR)
+                    if (!S_ISDIR(st.st_mode))
                         return false;
                 } else if (QT_MKDIR(chunk.constData(), 0777) != 0) {
                     return false;
@@ -271,8 +275,8 @@ bool QFileSystemEngine::createDirectory(const QFileSystemEntry &entry, bool crea
         }
         return true;
     }
-    const QByteArray eDirName = QFile::encodeName(dirName);
-    return (QT_MKDIR(eDirName.constData(), 0777) == 0);
+    const QByteArray path = QFile::encodeName(dirName);
+    return (QT_MKDIR(path.constData(), 0777) == 0);
 }
 
 //static
@@ -284,7 +288,7 @@ bool QFileSystemEngine::removeDirectory(const QFileSystemEntry &entry, bool remo
             const QByteArray chunk = QFile::encodeName(dirName.left(slash));
             QT_STATBUF st;
             if (QT_STAT(chunk.constData(), &st) == 0) {
-                if ((st.st_mode & S_IFMT) != S_IFDIR)
+                if (!S_ISDIR(st.st_mode))
                     return false;
                 if (::rmdir(chunk.constData()) != 0)
                     return oldslash != 0;
@@ -295,14 +299,16 @@ bool QFileSystemEngine::removeDirectory(const QFileSystemEntry &entry, bool remo
         }
         return true;
     }
-    const QByteArray eDirName = QFile::encodeName(entry.filePath());
-    return ::rmdir(eDirName.constData()) == 0;
+    const QByteArray path = QFile::encodeName(entry.filePath());
+    return ::rmdir(path.constData()) == 0;
 }
 
 //static
 bool QFileSystemEngine::createLink(const QFileSystemEntry &source, const QFileSystemEntry &target, int *error)
 {
-    if (::symlink(source.nativeFilePath().constData(), target.nativeFilePath().constData()) == 0)
+    const QByteArray spath = source.nativeFilePath();
+    const QByteArray tpath = target.nativeFilePath();
+    if (::symlink(spath.constData(), tpath.constData()) == 0)
         return true;
     *error = errno;
     return false;
@@ -311,19 +317,21 @@ bool QFileSystemEngine::createLink(const QFileSystemEntry &source, const QFileSy
 //static
 bool QFileSystemEngine::copyFile(const QFileSystemEntry &source, const QFileSystemEntry &target, int *error)
 {
+    const QByteArray spath = source.nativeFilePath();
+    const QByteArray tpath = target.nativeFilePath();
     QT_STATBUF st;
-    if (QT_STAT(source.nativeFilePath().constData(), &st) == 0) {
+    if (QT_STAT(spath.constData(), &st) == 0) {
         if (!S_ISREG(st.st_mode))
             return false;
     }
 
-    const int sourcefd = QT_OPEN(source.nativeFilePath().constData(), O_RDONLY);
+    const int sourcefd = QT_OPEN(spath.constData(), O_RDONLY);
     if (sourcefd == -1) {
         *error = errno;
         return false;
     }
 
-    const int targetfd = QT_CREAT(target.nativeFilePath().constData(), st.st_mode);
+    const int targetfd = QT_CREAT(tpath.constData(), st.st_mode);
     if (targetfd == -1) {
         *error = errno;
         ::close(sourcefd);
@@ -395,7 +403,9 @@ bool QFileSystemEngine::copyFile(const QFileSystemEntry &source, const QFileSyst
 //static
 bool QFileSystemEngine::renameFile(const QFileSystemEntry &source, const QFileSystemEntry &target, int *error)
 {
-    if (::rename(source.nativeFilePath().constData(), target.nativeFilePath().constData()) == 0)
+    const QByteArray spath = source.nativeFilePath();
+    const QByteArray tpath = target.nativeFilePath();
+    if (::rename(spath.constData(), tpath.constData()) == 0)
         return true;
     *error = errno;
     return false;
@@ -404,7 +414,8 @@ bool QFileSystemEngine::renameFile(const QFileSystemEntry &source, const QFileSy
 //static
 bool QFileSystemEngine::removeFile(const QFileSystemEntry &entry, int *error)
 {
-    if (unlink(entry.nativeFilePath().constData()) == 0)
+    const QByteArray path = entry.nativeFilePath();
+    if (unlink(path.constData()) == 0)
         return true;
     *error = errno;
     return false;
@@ -440,7 +451,8 @@ bool QFileSystemEngine::setPermissions(const QFileSystemEntry &entry, QFile::Per
     if (permissions & QFile::ExeOther)
         mode |= S_IXOTH;
 
-    if (::chmod(entry.nativeFilePath().constData(), mode) == 0)
+    const QByteArray path = entry.nativeFilePath();
+    if (::chmod(path.constData(), mode) == 0)
         return true;
     *error = errno;
     return false;
@@ -467,10 +479,10 @@ QString QFileSystemEngine::tempPath()
     return QLatin1String("/tmp");
 }
 
-bool QFileSystemEngine::setCurrentPath(const QFileSystemEntry &path)
+bool QFileSystemEngine::setCurrentPath(const QFileSystemEntry &entry)
 {
-    const char* cPath = path.nativeFilePath().constData();
-    return (QT_CHDIR(cPath) >= 0);
+    const QByteArray path = entry.nativeFilePath();
+    return (QT_CHDIR(path.constData()) >= 0);
 }
 
 QFileSystemEntry QFileSystemEngine::currentPath()
@@ -499,4 +511,120 @@ QFileSystemEntry QFileSystemEngine::currentPath()
 
     return result;
 }
+
+bool QFileSystemEngine::fillMetaData(int fd, QFileSystemMetaData &data)
+{
+    data.entryFlags &= ~QFileSystemMetaData::PosixStatFlags;
+
+    QT_STATBUF statBuffer;
+    if (QT_FSTAT(fd, &statBuffer) == 0) {
+        data.fillFromStatBuf(statBuffer);
+        return true;
+    }
+
+    return false;
+}
+
+void QFileSystemMetaData::fillFromStatBuf(const QT_STATBUF &statBuffer)
+{
+    // Permissions
+    if (statBuffer.st_mode & S_IRUSR)
+        entryFlags |= QFileSystemMetaData::OwnerReadPermission;
+    if (statBuffer.st_mode & S_IWUSR)
+        entryFlags |= QFileSystemMetaData::OwnerWritePermission;
+    if (statBuffer.st_mode & S_IXUSR)
+        entryFlags |= QFileSystemMetaData::OwnerExecutePermission;
+
+    if (statBuffer.st_mode & S_IRGRP)
+        entryFlags |= QFileSystemMetaData::GroupReadPermission;
+    if (statBuffer.st_mode & S_IWGRP)
+        entryFlags |= QFileSystemMetaData::GroupWritePermission;
+    if (statBuffer.st_mode & S_IXGRP)
+        entryFlags |= QFileSystemMetaData::GroupExecutePermission;
+
+    if (statBuffer.st_mode & S_IROTH)
+        entryFlags |= QFileSystemMetaData::OtherReadPermission;
+    if (statBuffer.st_mode & S_IWOTH)
+        entryFlags |= QFileSystemMetaData::OtherWritePermission;
+    if (statBuffer.st_mode & S_IXOTH)
+        entryFlags |= QFileSystemMetaData::OtherExecutePermission;
+
+    // Type
+    if (S_ISREG(statBuffer.st_mode))
+        entryFlags |= QFileSystemMetaData::FileType;
+    else if (S_ISDIR(statBuffer.st_mode))
+        entryFlags |= QFileSystemMetaData::DirectoryType;
+    else
+        entryFlags |= QFileSystemMetaData::SequentialType;
+
+    // Attributes
+    entryFlags |= QFileSystemMetaData::ExistsAttribute;
+    entryFlags |= QFileSystemMetaData::SizeAttribute;
+    size_ = statBuffer.st_size;
+
+    // Times
+    entryFlags |= QFileSystemMetaData::Times;
+    creationTime_ = statBuffer.st_ctime;
+    modificationTime_ = statBuffer.st_mtime;
+    accessTime_ = statBuffer.st_atime;
+    userId_ = statBuffer.st_uid;
+    groupId_ = statBuffer.st_gid;
+}
+
+void QFileSystemMetaData::fillFromDirEnt(const QT_DIRENT &entry)
+{
+#ifdef QT_HAVE_DIRENT_D_TYPE
+    // ### This will clear all entry flags
+    switch (entry.d_type)
+    {
+    case DT_DIR:
+        entryFlags = QFileSystemMetaData::DirectoryType
+            | QFileSystemMetaData::ExistsAttribute;
+
+        break;
+
+    case DT_BLK:
+    case DT_CHR:
+    case DT_FIFO:
+    case DT_SOCK:
+        entryFlags = QFileSystemMetaData::SequentialType
+            | QFileSystemMetaData::ExistsAttribute;
+
+        break;
+
+    case DT_LNK:
+        entryFlags = QFileSystemMetaData::LinkType;
+        break;
+
+    case DT_REG:
+        entryFlags = QFileSystemMetaData::FileType
+            | QFileSystemMetaData::ExistsAttribute;
+
+        break;
+
+    case DT_UNKNOWN:
+    default:
+        clear();
+    }
+#else
+    Q_UNUSED(entry)
+#endif
+}
+
+//static
+QString QFileSystemEngine::resolveUserName(const QFileSystemEntry &entry, QFileSystemMetaData &metaData)
+{
+    if (!metaData.hasFlags(QFileSystemMetaData::UserId))
+        QFileSystemEngine::fillMetaData(entry, metaData, QFileSystemMetaData::UserId);
+    return resolveUserName(metaData.userId());
+}
+
+//static
+QString QFileSystemEngine::resolveGroupName(const QFileSystemEntry &entry, QFileSystemMetaData &metaData)
+{
+    if (!metaData.hasFlags(QFileSystemMetaData::GroupId))
+        QFileSystemEngine::fillMetaData(entry, metaData, QFileSystemMetaData::GroupId);
+    return resolveGroupName(metaData.groupId());
+}
+
 QT_END_NAMESPACE

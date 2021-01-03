@@ -1,7 +1,7 @@
 /****************************************************************************
 **
 ** Copyright (C) 2015 The Qt Company Ltd.
-** Copyright (C) 2016-2020 Ivailo Monev
+** Copyright (C) 2016-2021 Ivailo Monev
 **
 ** This file is part of the QtGui module of the Katie Toolkit.
 **
@@ -119,9 +119,8 @@ QStringList QIconLoader::themeSearchPaths() const
 QIconTheme::QIconTheme(const QString &themeName)
         : m_valid(false)
 {
-    QStringList iconDirs = QIcon::themeSearchPaths();
-    for ( int i = 0 ; i < iconDirs.size() ; ++i) {
-        QString themeDir = iconDirs[i] + QLatin1Char('/') + themeName;
+    foreach (const QString &it, QIcon::themeSearchPaths()) {
+        QString themeDir = it + QLatin1Char('/') + themeName;
         if (QFile::exists(themeDir + QLatin1String("/index.theme"))) {
             m_contentDir = themeDir;
             m_valid = true;

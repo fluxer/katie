@@ -5,7 +5,7 @@
 #  POSTGRESQL_INCLUDES - the PostgreSQL database engine include directory
 #  POSTGRESQL_LIBRARIES - the libraries needed to use PostgreSQL database engine
 #
-# Copyright (c) 2020, Ivailo Monev, <xakepa10@gmail.com>
+# Copyright (c) 2020-2021, Ivailo Monev, <xakepa10@gmail.com>
 #
 # Redistribution and use is allowed according to the terms of the BSD license.
 

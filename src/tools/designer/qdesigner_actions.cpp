@@ -1,7 +1,7 @@
 /****************************************************************************
 **
 ** Copyright (C) 2015 The Qt Company Ltd.
-** Copyright (C) 2016-2020 Ivailo Monev
+** Copyright (C) 2016-2021 Ivailo Monev
 **
 ** This file is part of the Katie Designer of the Katie Toolkit.
 **
@@ -52,6 +52,7 @@
 #include "codedialog_p.h"
 #include "qdesigner_formwindowmanager_p.h"
 #include "qdesigner_integration_p.h"
+#include "qdesigner_components.h"
 
 // sdk
 #include "abstractformeditor.h"
@@ -323,12 +324,7 @@ QDesignerActions::QDesignerActions(QDesignerWorkbench *workbench)
 //
 
     m_editWidgetsAction->setCheckable(true);
-    QList<QKeySequence> shortcuts;
-    shortcuts.append(QKeySequence(Qt::Key_F3));
-#if QT_VERSION >= 0x040900 // "ESC" switching to edit mode: Activate once item delegates handle shortcut overrides for ESC.
-    shortcuts.append(QKeySequence(Qt::Key_Escape));
-#endif
-    m_editWidgetsAction->setShortcuts(shortcuts);
+    m_editWidgetsAction->setShortcut(QKeySequence(Qt::Key_F3));
     QIcon fallback(m_core->resourceLocation() + QLatin1String("/widgettool.png"));
     m_editWidgetsAction->setIcon(QIcon::fromTheme(QLatin1String("designer-edit-widget"), fallback));
     connect(m_editWidgetsAction, SIGNAL(triggered()), this, SLOT(editWidgetsSlot()));
@@ -340,7 +336,8 @@ QDesignerActions::QDesignerActions(QDesignerWorkbench *workbench)
     connect(formWindowManager, SIGNAL(activeFormWindowChanged(QDesignerFormWindowInterface*)),
                 this, SLOT(activeFormWindowChanged(QDesignerFormWindowInterface*)));
 
-    QList<QObject*> builtinPlugins = m_core->pluginManager()->instances();
+    QList<QObject*> builtinPlugins = QDesignerComponents::initializePlugins(m_core);
+    m_core->pluginManager()->ensureInitializedStatic(builtinPlugins);
     foreach (QObject *plugin, builtinPlugins) {
         if (QDesignerFormEditorPluginInterface *formEditorPlugin = qobject_cast<QDesignerFormEditorPluginInterface*>(plugin)) {
             if (QAction *action = formEditorPlugin->action()) {

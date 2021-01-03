@@ -1,7 +1,7 @@
 /****************************************************************************
 **
 ** Copyright (C) 2015 The Qt Company Ltd.
-** Copyright (C) 2016-2020 Ivailo Monev
+** Copyright (C) 2016-2021 Ivailo Monev
 **
 ** This file is part of the QtGui module of the Katie Toolkit.
 **
@@ -297,12 +297,6 @@ void QDesktopServices::unsetUrlHandler(const QString &scheme)
 
     \note The storage location returned can be a directory that does not exist; i.e., it
     may need to be created by the system or the user.
-
-    \note On Symbian OS, ApplicationsLocation always point /sys/bin folder on the same drive
-    with executable. FontsLocation always points to folder on ROM drive. Symbian OS does not
-    have desktop concept, DesktopLocation returns same path as DocumentsLocation.
-    Rest of the standard locations point to folder on same drive with executable, except
-    that if executable is in ROM the folder from C drive is returned.
 */
 QString QDesktopServices::storageLocation(StandardLocation type)
 {

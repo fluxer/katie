@@ -1,7 +1,7 @@
 /****************************************************************************
 **
 ** Copyright (C) 2015 The Qt Company Ltd.
-** Copyright (C) 2016-2020 Ivailo Monev
+** Copyright (C) 2016-2021 Ivailo Monev
 **
 ** This file is part of the QtCore module of the Katie Toolkit.
 **
@@ -304,7 +304,9 @@ void QEventLoop::wakeUp()
     \sa QCoreApplication::quit(), exit()
 */
 void QEventLoop::quit()
-{ exit(0); }
+{
+    QEventLoop::exit(0);
+}
 
 #include "moc_qeventloop.h"
 
