@@ -36,157 +36,45 @@
 
 #include <QtCore/qhash.h>
 
+#include <unordered_set>
+
 QT_BEGIN_HEADER
 
 QT_BEGIN_NAMESPACE
 
+template<class T>
+struct SetHasher {
+    size_t operator()(const T& k) const { return qHash(k); }
+};
 
 template <class T>
-class Q_CORE_EXPORT QSet
+class Q_CORE_EXPORT QSet : public std::unordered_set<T, SetHasher<T>>
 {
-    typedef QHash<T, bool> Hash;
+    typedef std::unordered_set<T, SetHasher<T>> Data;
 
 public:
-    inline QSet() {}
-    inline QSet(const QSet<T> &other) : q_hash(other.q_hash) {}
+    inline QSet() : Data() {}
+    inline QSet(const QSet<T> &other) : Data(other) {}
 
-    inline QSet<T> &operator=(const QSet<T> &other)
-        { q_hash = other.q_hash; return *this; }
-#ifdef Q_COMPILER_RVALUE_REFS
-    inline QSet<T> &operator=(QSet<T> &&other)
-        { qSwap(q_hash, other.q_hash); return *this; }
-#endif
-    inline void swap(QSet<T> &other) { q_hash.swap(other.q_hash); }
-
-    inline bool operator==(const QSet<T> &other) const
-        { return q_hash == other.q_hash; }
-    inline bool operator!=(const QSet<T> &other) const
-        { return q_hash != other.q_hash; }
-
-    inline int size() const { return q_hash.size(); }
-
-    inline bool isEmpty() const { return q_hash.isEmpty(); }
-
-    inline int capacity() const { return q_hash.capacity(); }
-    inline void reserve(int size) { q_hash.reserve(size); }
-
-    inline void squeeze() { q_hash.squeeze(); }
-
-    inline void detach() { q_hash.detach(); }
-    inline bool isDetached() const { return q_hash.isDetached(); }
-
-    inline void clear() { q_hash.clear(); }
-
-    inline bool remove(const T &value) { return q_hash.remove(value) != 0; }
-
-    inline bool contains(const T &value) const { return q_hash.contains(value); }
-
+    inline bool isEmpty() const { return Data::empty(); }
+    inline void squeeze() { Data::rehash(); }
+    inline bool remove(const T &value) { return Data::erase(value) != 0; }
+    inline int count() const { return Data::size(); }
+    inline bool contains(const T &value) const { return Data::count(value) != 0; }
     bool contains(const QSet<T> &set) const;
 
-    class const_iterator;
+    inline typename Data::iterator insert(const T &value)
+        { return static_cast<typename Data::iterator>(Data::emplace(value).first); }
+    inline typename Data::const_iterator constBegin() const { return Data::cbegin(); }
+    inline typename Data::const_iterator constEnd() const { return Data::cend(); }
+    inline typename Data::const_iterator constFind(const T &value) const { return Data::find(value); }
+    typedef typename Data::iterator Iterator;
+    typedef typename Data::const_iterator ConstIterator;
 
-    class iterator
-    {
-        typedef QHash<T, bool> Hash;
-        typename Hash::iterator i;
-        friend class const_iterator;
-
-    public:
-        typedef std::bidirectional_iterator_tag iterator_category;
-        typedef qptrdiff difference_type;
-        typedef T value_type;
-        typedef const T *pointer;
-        typedef const T &reference;
-
-        inline iterator() {}
-        inline iterator(typename Hash::iterator o) : i(o) {}
-        inline iterator(const iterator &o) : i(o.i) {}
-        inline iterator &operator=(const iterator &o) { i = o.i; return *this; }
-        inline const T &operator*() const { return i.key(); }
-        inline const T *operator->() const { return &i.key(); }
-        inline bool operator==(const iterator &o) const { return i == o.i; }
-        inline bool operator!=(const iterator &o) const { return i != o.i; }
-        inline bool operator==(const const_iterator &o) const
-            { return i == o.i; }
-        inline bool operator!=(const const_iterator &o) const
-            { return i != o.i; }
-        inline iterator &operator++() { ++i; return *this; }
-        inline iterator operator++(int) { iterator r = *this; ++i; return r; }
-        inline iterator &operator--() { --i; return *this; }
-        inline iterator operator--(int) { iterator r = *this; --i; return r; }
-        inline iterator operator+(int j) const { return i + j; }
-        inline iterator operator-(int j) const { return i - j; }
-        inline iterator &operator+=(int j) { i += j; return *this; }
-        inline iterator &operator-=(int j) { i -= j; return *this; }
-    };
-
-    class const_iterator
-    {
-        typedef QHash<T, bool> Hash;
-        typename Hash::const_iterator i;
-        friend class iterator;
-
-    public:
-        typedef std::bidirectional_iterator_tag iterator_category;
-        typedef qptrdiff difference_type;
-        typedef T value_type;
-        typedef const T *pointer;
-        typedef const T &reference;
-
-        inline const_iterator() {}
-        inline const_iterator(typename Hash::const_iterator o) : i(o) {}
-        inline const_iterator(const const_iterator &o) : i(o.i) {}
-        inline const_iterator(const iterator &o)
-            : i(o.i) {}
-        inline const_iterator &operator=(const const_iterator &o) { i = o.i; return *this; }
-        inline const T &operator*() const { return i.key(); }
-        inline const T *operator->() const { return &i.key(); }
-        inline bool operator==(const const_iterator &o) const { return i == o.i; }
-        inline bool operator!=(const const_iterator &o) const { return i != o.i; }
-        inline const_iterator &operator++() { ++i; return *this; }
-        inline const_iterator operator++(int) { const_iterator r = *this; ++i; return r; }
-        inline const_iterator &operator--() { --i; return *this; }
-        inline const_iterator operator--(int) { const_iterator r = *this; --i; return r; }
-        inline const_iterator operator+(int j) const { return i + j; }
-        inline const_iterator operator-(int j) const { return i - j; }
-        inline const_iterator &operator+=(int j) { i += j; return *this; }
-        inline const_iterator &operator-=(int j) { i -= j; return *this; }
-    };
-
-    // STL style
-    inline iterator begin() { return q_hash.begin(); }
-    inline const_iterator begin() const { return q_hash.begin(); }
-    inline const_iterator constBegin() const { return q_hash.constBegin(); }
-    inline iterator end() { return q_hash.end(); }
-    inline const_iterator end() const { return q_hash.end(); }
-    inline const_iterator constEnd() const { return q_hash.constEnd(); }
-    iterator erase(iterator i)
-        { return q_hash.erase(reinterpret_cast<typename Hash::iterator &>(i)); }
-
-    // more Qt
-    typedef iterator Iterator;
-    typedef const_iterator ConstIterator;
-    inline int count() const { return q_hash.count(); }
-    inline iterator insert(const T &value)
-        { return static_cast<typename Hash::iterator>(q_hash.insert(value, false)); }
-    iterator find(const T &value) { return q_hash.find(value); }
-    const_iterator find(const T &value) const { return q_hash.find(value); }
-    inline const_iterator constFind(const T &value) const { return find(value); }
     QSet<T> &unite(const QSet<T> &other);
     QSet<T> &intersect(const QSet<T> &other);
     QSet<T> &subtract(const QSet<T> &other);
 
-    // STL compatibility
-    typedef T key_type;
-    typedef T value_type;
-    typedef value_type *pointer;
-    typedef const value_type *const_pointer;
-    typedef value_type &reference;
-    typedef const value_type &const_reference;
-    typedef qptrdiff difference_type;
-    typedef int size_type;
-
-    inline bool empty() const { return isEmpty(); }
     // comfort
     inline QSet<T> &operator<<(const T &value) { insert(value); return *this; }
     inline QSet<T> &operator|=(const QSet<T> &other) { unite(other); return *this; }
@@ -211,50 +99,47 @@ public:
     inline QList<T> values() const { return toList(); }
 
     static QSet<T> fromList(const QList<T> &list);
-
-private:
-    Hash q_hash;
 };
 
 template <class T>
-Q_INLINE_TEMPLATE QSet<T> &QSet<T>::unite(const QSet<T> &other)
+inline QSet<T> &QSet<T>::unite(const QSet<T> &other)
 {
     typename QSet<T>::const_iterator i = other.constEnd();
-    while (i != other.constBegin()) {
-        --i;
+    while (i != other.constEnd()) {
         insert(*i);
+        i++;
     }
     return *this;
 }
 
 template <class T>
-Q_INLINE_TEMPLATE QSet<T> &QSet<T>::intersect(const QSet<T> &other)
+inline QSet<T> &QSet<T>::intersect(const QSet<T> &other)
 {
     QSet<T> copy(*this);
-    typename QSet<T>::const_iterator i = copy.constEnd();
-    while (i != copy.constBegin()) {
-        --i;
+    typename QSet<T>::const_iterator i = copy.constBegin();
+    while (i != copy.constEnd()) {
         if (!other.contains(*i))
             remove(*i);
+        i++;
     }
     return *this;
 }
 
 template <class T>
-Q_INLINE_TEMPLATE QSet<T> &QSet<T>::subtract(const QSet<T> &other)
+inline QSet<T> &QSet<T>::subtract(const QSet<T> &other)
 {
     QSet<T> copy(*this);
-    typename QSet<T>::const_iterator i = copy.constEnd();
-    while (i != copy.constBegin()) {
-        --i;
+    typename QSet<T>::const_iterator i = copy.constBegin();
+    while (i != copy.constEnd()) {
         if (other.contains(*i))
             remove(*i);
+        i++;
     }
     return *this;
 }
 
 template <class T>
-Q_INLINE_TEMPLATE bool QSet<T>::contains(const QSet<T> &other) const
+inline bool QSet<T>::contains(const QSet<T> &other) const
 {
     typename QSet<T>::const_iterator i = other.constBegin();
     while (i != other.constEnd()) {
@@ -266,10 +151,10 @@ Q_INLINE_TEMPLATE bool QSet<T>::contains(const QSet<T> &other) const
 }
 
 template <typename T>
-Q_OUTOFLINE_TEMPLATE QList<T> QSet<T>::toList() const
+QList<T> QSet<T>::toList() const
 {
     QList<T> result;
-    result.reserve(size());
+    result.reserve(Data::size());
     typename QSet<T>::const_iterator i = constBegin();
     while (i != constEnd()) {
         result.append(*i);
