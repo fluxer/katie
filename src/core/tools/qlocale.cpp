@@ -1857,11 +1857,12 @@ Qt::DayOfWeek QLocale::firstDayOfWeek() const
 
 QLocale::MeasurementSystem QLocalePrivate::measurementSystem() const
 {
+    QByteArray latinbcp47 = bcp47Name().toLatin1();
     UErrorCode error = U_ZERO_ERROR;
-    UMeasurementSystem measurement = ulocdata_getMeasurementSystem(bcp47Name().toLatin1().constData(), &error);
+    UMeasurementSystem measurement = ulocdata_getMeasurementSystem(latinbcp47.constData(), &error);
     if (Q_UNLIKELY(U_FAILURE(error))) {
         qWarning("QLocale::measurementSystem: ulocdata_getMeasurementSystem(%s) failed %s",
-            bcp47Name().toLatin1().constData(), u_errorName(error));
+            latinbcp47.constData(), u_errorName(error));
         return QLocale::MetricSystem;
     }
     switch (measurement) {
@@ -1930,7 +1931,8 @@ QLocale::MeasurementSystem QLocale::measurementSystem() const
 */
 Qt::LayoutDirection QLocale::textDirection() const
 {
-    if (uloc_isRightToLeft(bcp47Name().toLatin1().constData()))
+    QByteArray latinbcp47 = bcp47Name().toLatin1();
+    if (uloc_isRightToLeft(latinbcp47.constData()))
         return Qt::RightToLeft;
     return Qt::LeftToRight;
 }
