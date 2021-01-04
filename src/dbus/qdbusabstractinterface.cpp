@@ -445,7 +445,7 @@ QDBusMessage QDBusAbstractInterface::callWithArgumentList(QDBus::CallMode mode,
                 if (mm.methodType() != QMetaMethod::Slot && mm.methodType() != QMetaMethod::Method)
                     continue;
 
-                const int returnType = qDBusNameToTypeId(mm.typeName());
+                const int returnType = QMetaType::type(mm.typeName());
                 if (returnType == QMetaType::Void) {
                     mode = QDBus::NoBlock;
                     break;

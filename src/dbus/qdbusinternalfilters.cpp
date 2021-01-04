@@ -321,7 +321,7 @@ static int writeProperty(QObject *obj, const QByteArray &property_name, QVariant
     int id = mp.type();
     if (id == QVariant::UserType) {
         // dynamic type
-        id = qDBusNameToTypeId(mp.typeName());
+        id = QMetaType::type(mp.typeName());
         if (id == -1) {
             // type not registered?
             qWarning("QDBusConnection: Unable to handle unregistered datatype '%s' for property '%s::%s'",
@@ -428,7 +428,7 @@ static QVariantMap readAllProperties(QObject *object, int flags)
             continue;
 
         // is it a registered property?
-        int typeId = qDBusNameToTypeId(mp.typeName());
+        int typeId = QMetaType::type(mp.typeName());
         if (!typeId)
             continue;
         const char *signature = QDBusMetaType::typeToSignature(typeId);

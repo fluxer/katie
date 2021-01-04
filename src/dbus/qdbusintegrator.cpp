@@ -641,7 +641,7 @@ static int findMetaSlot(const QMetaObject *mo, const QByteArray &name, int flags
         if (paren != name.length() || !slotname.startsWith(name))
             continue;
 
-        const int returnType = qDBusNameToTypeId(mm.typeName());
+        const int returnType = QMetaType::type(mm.typeName());
         const bool isScriptable = mm.attributes() & QMetaMethod::Scriptable;
 
         int inputCount = qDBusParametersForMethod(mm, metaTypes);
