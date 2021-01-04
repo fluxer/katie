@@ -90,8 +90,7 @@ QString &decimalForm(QChar zero, QChar decimal, QChar group,
         for (int i = 0; i < -decpt; ++i)
             digits.prepend(zero);
         decpt = 0;
-    }
-    else if (decpt > digits.length()) {
+    } else if (decpt > digits.length()) {
         for (int i = digits.length(); i < decpt; ++i)
             digits.append(zero);
     }
@@ -100,12 +99,9 @@ QString &decimalForm(QChar zero, QChar decimal, QChar group,
         uint decimal_digits = digits.length() - decpt;
         for (uint i = decimal_digits; i < precision; ++i)
             digits.append(zero);
-    }
-    else if (pm == PMSignificantDigits) {
+    } else if (pm == PMSignificantDigits) {
         for (uint i = digits.length(); i < precision; ++i)
             digits.append(zero);
-    }
-    else { // pm == PMChopTrailingZeros
     }
 
     if (always_show_decpt || decpt < digits.length())
