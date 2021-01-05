@@ -356,11 +356,11 @@ bool QSqlQuery::exec(const QString& query)
         d->sqlResult->setNumericalPrecisionPolicy(d->sqlResult->numericalPrecisionPolicy());
     }
     d->sqlResult->setQuery(query.trimmed());
-    if (!driver()->isOpen() || driver()->isOpenError()) {
+    if (Q_UNLIKELY(!driver()->isOpen() || driver()->isOpenError())) {
         qWarning("QSqlQuery::exec: database not open");
         return false;
     }
-    if (query.isEmpty()) {
+    if (Q_UNLIKELY(query.isEmpty())) {
         qWarning("QSqlQuery::exec: empty query");
         return false;
     }
@@ -391,7 +391,7 @@ bool QSqlQuery::exec(const QString& query)
 
 QVariant QSqlQuery::value(int index) const
 {
-    if (isActive() && isValid() && (index > QSql::BeforeFirstRow))
+    if (Q_LIKELY(isActive() && isValid() && (index > QSql::BeforeFirstRow)))
         return d->sqlResult->data(index);
     qWarning("QSqlQuery::value: not positioned on a valid record");
     return QVariant();
@@ -527,7 +527,7 @@ bool QSqlQuery::seek(int index, bool relative)
         }
     }
     // let drivers optimize
-    if (isForwardOnly() && actualIdx < at()) {
+    if (Q_UNLIKELY(isForwardOnly() && actualIdx < at())) {
         qWarning("QSqlQuery::seek: cannot seek backwards in a forward only query");
         return false;
     }
@@ -632,7 +632,7 @@ bool QSqlQuery::previous()
 {
     if (!isSelect() || !isActive())
         return false;
-    if (isForwardOnly()) {
+    if (Q_UNLIKELY(isForwardOnly())) {
         qWarning("QSqlQuery::seek: cannot seek backwards in a forward only query");
         return false;
     }
@@ -665,7 +665,7 @@ bool QSqlQuery::first()
 {
     if (!isSelect() || !isActive())
         return false;
-    if (isForwardOnly() && at() > QSql::BeforeFirstRow) {
+    if (Q_UNLIKELY(isForwardOnly() && at() > QSql::BeforeFirstRow)) {
         qWarning("QSqlQuery::seek: cannot seek backwards in a forward only query");
         return false;
     }
@@ -896,15 +896,15 @@ bool QSqlQuery::prepare(const QString& query)
         d->sqlResult->setAt(QSql::BeforeFirstRow);
         d->sqlResult->setNumericalPrecisionPolicy(d->sqlResult->numericalPrecisionPolicy());
     }
-    if (!driver()) {
+    if (Q_UNLIKELY(!driver())) {
         qWarning("QSqlQuery::prepare: no driver");
         return false;
     }
-    if (!driver()->isOpen() || driver()->isOpenError()) {
+    if (Q_UNLIKELY(!driver()->isOpen() || driver()->isOpenError())) {
         qWarning("QSqlQuery::prepare: database not open");
         return false;
     }
-    if (query.isEmpty()) {
+    if (Q_UNLIKELY(query.isEmpty())) {
         qWarning("QSqlQuery::prepare: empty query");
         return false;
     }
