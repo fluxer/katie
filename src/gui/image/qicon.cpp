@@ -235,7 +235,7 @@ QPixmap QPixmapIconEngine::pixmap(const QSize &size, QIcon::Mode mode, QIcon::St
 
     QString key = QLatin1String("qt_")
                   + HexString<quint64>(pm.cacheKey())
-                  + HexString<uint>(pe->mode)
+                  + HexString<uint>(pe ? pe->mode : QIcon::Normal)
                   + HexString<quint64>(QApplication::palette().cacheKey())
                   + HexString<uint>(actualSize.width())
                   + HexString<uint>(actualSize.height());
@@ -468,7 +468,7 @@ bool QPixmapIconEngine::write(QDataStream &out) const
   Constructs a null icon.
 */
 QIcon::QIcon()
-    : d(0)
+    : d(Q_NULLPTR)
 {
 }
 
@@ -476,7 +476,7 @@ QIcon::QIcon()
   Constructs an icon from a \a pixmap.
  */
 QIcon::QIcon(const QPixmap &pixmap)
-    :d(0)
+    : d(Q_NULLPTR)
 {
     addPixmap(pixmap);
 }
@@ -485,7 +485,7 @@ QIcon::QIcon(const QPixmap &pixmap)
   Constructs a copy of \a other. This is very fast.
 */
 QIcon::QIcon(const QIcon &other)
-    :d(other.d)
+    : d(other.d)
 {
     if (d)
         d->ref.ref();
@@ -510,7 +510,7 @@ QIcon::QIcon(const QIcon &other)
     complete list of the supported file formats.
 */
 QIcon::QIcon(const QString &fileName)
-    : d(0)
+    : d(Q_NULLPTR)
 {
     addFile(fileName);
 }
@@ -521,7 +521,7 @@ QIcon::QIcon(const QString &fileName)
     ownership of the engine.
 */
 QIcon::QIcon(QIconEngine *engine)
-    :d(new QIconPrivate)
+    : d(new QIconPrivate())
 {
     d->engine = engine;
 }
