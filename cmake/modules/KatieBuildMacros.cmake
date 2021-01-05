@@ -231,7 +231,6 @@ function(KATIE_SETUP_TARGET FORTARGET)
     endforeach()
 
     set(rscpath "${CMAKE_CURRENT_BINARY_DIR}/${FORTARGET}_resources")
-    include_directories("${rscpath}")
     foreach(tmparg ${ARGN})
         get_filename_component(fileabs "${tmparg}" ABSOLUTE)
         get_filename_component(fileext "${fileabs}" EXT)
@@ -239,6 +238,7 @@ function(KATIE_SETUP_TARGET FORTARGET)
         if("${fileext}" STREQUAL ".ui")
             set(rscout "${rscpath}/ui_${filename}.h")
             make_directory("${rscpath}")
+            include_directories("${rscpath}")
             add_custom_command(
                 COMMAND "${CMAKE_BINARY_DIR}/exec.sh" "${CMAKE_BINARY_DIR}/bin/uic${KATIE_TOOLS_SUFFIX}" "${fileabs}" -o "${rscout}"
                 DEPENDS "uic"
@@ -248,6 +248,7 @@ function(KATIE_SETUP_TARGET FORTARGET)
         elseif("${fileext}" STREQUAL ".qrc")
             set(rscout "${rscpath}/qrc_${filename}.cpp")
             make_directory("${rscpath}")
+            include_directories("${rscpath}")
             add_custom_command(
                 COMMAND "${CMAKE_BINARY_DIR}/exec.sh" "${CMAKE_BINARY_DIR}/bin/rcc${KATIE_TOOLS_SUFFIX}" "${fileabs}" -o "${rscout}" -name "${filename}"
                 DEPENDS "rcc"
@@ -259,6 +260,7 @@ function(KATIE_SETUP_TARGET FORTARGET)
             if("${rsccontent}" MATCHES "(Q_OBJECT|Q_OBJECT_FAKE|Q_GADGET)")
                 set(rscout "${rscpath}/moc_${filename}${fileext}")
                 make_directory("${rscpath}")
+                include_directories("${rscpath}")
                 add_custom_command(
                     COMMAND "${CMAKE_BINARY_DIR}/exec.sh" "${CMAKE_BINARY_DIR}/bin/bootstrap_moc" -nw "${fileabs}" -o "${rscout}" ${mocargs}
                     DEPENDS "bootstrap_moc"
