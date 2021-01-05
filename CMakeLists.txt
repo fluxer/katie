@@ -43,6 +43,7 @@ if(CMAKE_SYSTEM_NAME MATCHES "BSD")
 endif()
 
 include(GNUInstallDirs)
+include(CheckCXXCompilerFlag)
 include(CheckIncludeFileCXX)
 include(CheckTypeSize)
 include(CMakePushCheckState)
@@ -58,6 +59,24 @@ set(KATIE_MINOR "9")
 set(KATIE_MICRO "2")
 set(KATIE_HEX "0x040902")
 set(KATIE_VERSION "${KATIE_MAJOR}.${KATIE_MINOR}.${KATIE_MICRO}")
+
+set(KATIE_NO_WARNINGS
+    # placement new used in private QVariant constructor functions
+    -Wno-placement-new
+    # QVector does not always use new/delete
+    -Wno-class-memaccess
+    # hot attribute used in function prototypes
+    -Wno-attributes
+    # deprecated X11, CUPS and OpenSSL API used
+    -Wno-deprecated -Wno-deprecated-declarations
+)
+foreach(nowarning ${KATIE_NO_WARNINGS})
+    string(REPLACE "-W" "" normalizednowarning "${nowarning}")
+    check_cxx_compiler_flag(${nowarning} CXX_${normalizednowarning})
+    if(CXX_${normalizednowarning})
+        set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} ${nowarning}")
+    endif()
+endforeach()
 
 # only for the build process
 if(CMAKE_SYSTEM_PROCESSOR)

@@ -14,10 +14,6 @@ build_script:
         libicu-dev unixodbc-dev libpq-dev libmariadbclient-dev libmariadbd-dev liblz4-dev \
         libsqlite3-dev xorg-dev dbus-x11
 
-    export CFLAGS="$CFLAGS -w"
-
-    export CXXFLAGS="$CXXFLAGS -w"
-
     cmake . -Wno-dev -DKATIE_TESTS=ON -DKATIE_BENCHMARKS=ON -DKATIE_UTILS=ON -DKATIE_PCH=ON -DCMAKE_UNITY_BUILD=ON
 
     make -j $(nproc || echo 1)

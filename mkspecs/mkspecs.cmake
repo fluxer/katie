@@ -28,7 +28,7 @@ if(NOT trycompilestandardpolicy EQUAL NEW)
     # using MATCHES in all checks due to CMP0054
     if(CMAKE_CXX_COMPILER_ID MATCHES "GNU")
         set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=gnu++11")
-    elseif(CMAKE_CXX_COMPILER_ID MATCHES "(Clang|AppleClang)")
+    elseif(CMAKE_CXX_COMPILER_ID MATCHES "Clang")
         set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++11")
     else()
         message(FATAL_ERROR "Unknown compiler '${CMAKE_CXX_COMPILER_ID}'")
