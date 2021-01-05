@@ -2656,7 +2656,7 @@ static inline Operator getOperator(const QSpanData *data, const QSpan *spans, in
 }
 
 // -------------------- blend methods ---------------------
-static void QT_FASTCALL blend_color_generic(int count, const QSpan *spans, void *userData)
+static void blend_color_generic(int count, const QSpan *spans, void *userData)
 {
     QSpanData *data = reinterpret_cast<QSpanData *>(userData);
     uint buffer[buffer_size];
@@ -2678,7 +2678,7 @@ static void QT_FASTCALL blend_color_generic(int count, const QSpan *spans, void 
     }
 }
 
-static void QT_FASTCALL blend_src_generic(int count, const QSpan *spans, void *userData)
+static void blend_src_generic(int count, const QSpan *spans, void *userData)
 {
     QSpanData *data = reinterpret_cast<QSpanData *>(userData);
 
@@ -2738,7 +2738,7 @@ static void QT_FASTCALL blend_src_generic(int count, const QSpan *spans, void *u
     }
 }
 
-static void QT_FASTCALL blend_untransformed_generic(int count, const QSpan *spans, void *userData)
+static void blend_untransformed_generic(int count, const QSpan *spans, void *userData)
 {
     QSpanData *data = reinterpret_cast<QSpanData *>(userData);
 
@@ -2783,7 +2783,7 @@ static void QT_FASTCALL blend_untransformed_generic(int count, const QSpan *span
     }
 }
 
-static void QT_FASTCALL blend_tiled_generic(int count, const QSpan *spans, void *userData)
+static void blend_tiled_generic(int count, const QSpan *spans, void *userData)
 {
     QSpanData *data = reinterpret_cast<QSpanData *>(userData);
 
@@ -2971,7 +2971,7 @@ inline void qt_bitmapblit_template(QRasterBuffer *rasterBuffer,
     }
 }
 
-static void QT_FASTCALL qt_gradient_quint32(int count, const QSpan *spans, void *userData)
+static void qt_gradient_quint32(int count, const QSpan *spans, void *userData)
 {
     QSpanData *data = reinterpret_cast<QSpanData *>(userData);
 
@@ -3142,11 +3142,11 @@ static inline void rgbBlendPixel(quint32 *dst, int coverage, int sr, int sg, int
     *dst = qRgb(nr, ng, nb);
 }
 
-static void QT_FASTCALL qt_alphamapblit_quint32(QRasterBuffer *rasterBuffer,
-                                                int x, int y, quint32 color,
-                                                const uchar *map,
-                                                int mapWidth, int mapHeight, int mapStride,
-                                                const QClipData *clip)
+static void qt_alphamapblit_quint32(QRasterBuffer *rasterBuffer,
+                                    int x, int y, quint32 color,
+                                    const uchar *map,
+                                    int mapWidth, int mapHeight, int mapStride,
+                                    const QClipData *clip)
 {
     const int destStride = rasterBuffer->bytesPerLine() / sizeof(quint32);
 
@@ -3205,10 +3205,10 @@ static void QT_FASTCALL qt_alphamapblit_quint32(QRasterBuffer *rasterBuffer,
     }
 }
 
-static void QT_FASTCALL qt_alphargbblit_quint32(QRasterBuffer *rasterBuffer,
-                                                int x, int y, quint32 color,
-                                                const uint *src, int mapWidth, int mapHeight, int srcStride,
-                                                const QClipData *clip)
+static void qt_alphargbblit_quint32(QRasterBuffer *rasterBuffer,
+                                    int x, int y, quint32 color,
+                                    const uint *src, int mapWidth, int mapHeight, int srcStride,
+                                    const QClipData *clip)
 {
     int sr = qRed(color);
     int sg = qGreen(color);
@@ -3268,16 +3268,16 @@ static void QT_FASTCALL qt_alphargbblit_quint32(QRasterBuffer *rasterBuffer,
 }
 
 inline static void qt_rectfill_quint32(QRasterBuffer *rasterBuffer,
-                                       int x, int y, int width, int height,
-                                       quint32 color)
+                                    int x, int y, int width, int height,
+                                    quint32 color)
 {
     qt_rectfill<quint32>(reinterpret_cast<quint32*>(rasterBuffer->buffer()),
                 color, x, y, width, height, rasterBuffer->bytesPerLine());
 }
 
 inline static void qt_rectfill_quint16(QRasterBuffer *rasterBuffer,
-                                       int x, int y, int width, int height,
-                                       quint32 color)
+                                    int x, int y, int width, int height,
+                                    quint32 color)
 {
     qt_rectfill<quint16>(reinterpret_cast<quint16*>(rasterBuffer->buffer()),
                 qt_colorConvert<quint16, quint32>(color, 0),
