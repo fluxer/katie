@@ -66,7 +66,8 @@ public:
     inline ~QDebug() {
         if (!--stream->ref) {
             if(stream->message_output) {
-                qt_message_output(stream->type, stream->buffer.toLocal8Bit().data());
+                QByteArray data = stream->buffer.toLocal8Bit();
+                qt_message_output(stream->type, data.constData());
             }
             delete stream;
         }
