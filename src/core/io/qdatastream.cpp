@@ -224,7 +224,6 @@ QT_BEGIN_NAMESPACE
   QDataStream member functions
  *****************************************************************************/
 
-#undef  CHECK_STREAM_PRECOND
 #ifndef QT_NO_DEBUG
 #define CHECK_STREAM_PRECOND(retVal) \
     if (!dev) { \
@@ -253,14 +252,14 @@ QT_BEGIN_NAMESPACE
 */
 
 QDataStream::QDataStream()
+    : d(Q_NULLPTR),
+    dev(Q_NULLPTR),
+    owndev(false),
+    noswap(QSysInfo::ByteOrder == QSysInfo::BigEndian),
+    byteorder(QDataStream::BigEndian),
+    ver(QDataStream::Qt_Default),
+    q_status(QDataStream::Ok)
 {
-    d = Q_NULLPTR;
-    dev = 0;
-    owndev = false;
-    byteorder = BigEndian;
-    ver = QDataStream::Qt_Default;
-    noswap = QSysInfo::ByteOrder == QSysInfo::BigEndian;
-    q_status = Ok;
 }
 
 /*!
@@ -276,14 +275,14 @@ QDataStream::QDataStream()
 */
 
 QDataStream::QDataStream(QIODevice *device)
+    : d(Q_NULLPTR),
+    dev(device),
+    owndev(false),
+    noswap(QSysInfo::ByteOrder == QSysInfo::BigEndian),
+    byteorder(QDataStream::BigEndian),
+    ver(QDataStream::Qt_Default),
+    q_status(QDataStream::Ok)
 {
-    d = Q_NULLPTR;
-    dev = device;                                // set device
-    owndev = false;
-    byteorder = BigEndian;                        // default byte order
-    ver = QDataStream::Qt_Default;
-    noswap = QSysInfo::ByteOrder == QSysInfo::BigEndian;
-    q_status = Ok;
 }
 
 
@@ -301,8 +300,14 @@ QDataStream::QDataStream(QIODevice *device)
 */
 
 QDataStream::QDataStream(QByteArray *a, QIODevice::OpenMode flags)
+    : d(Q_NULLPTR),
+    dev(Q_NULLPTR),
+    owndev(false),
+    noswap(QSysInfo::ByteOrder == QSysInfo::BigEndian),
+    byteorder(QDataStream::BigEndian),
+    ver(QDataStream::Qt_Default),
+    q_status(QDataStream::Ok)
 {
-    d = Q_NULLPTR;
     QBuffer *buf = new QBuffer(a);
 #ifndef QT_NO_QOBJECT
     buf->blockSignals(true);
@@ -310,10 +315,6 @@ QDataStream::QDataStream(QByteArray *a, QIODevice::OpenMode flags)
     buf->open(flags);
     dev = buf;
     owndev = true;
-    byteorder = BigEndian;
-    ver = QDataStream::Qt_Default;
-    noswap = QSysInfo::ByteOrder == QSysInfo::BigEndian;
-    q_status = Ok;
 }
 
 /*!
@@ -325,8 +326,14 @@ QDataStream::QDataStream(QByteArray *a, QIODevice::OpenMode flags)
     is created to wrap the byte array.
 */
 QDataStream::QDataStream(const QByteArray &a)
+    : d(Q_NULLPTR),
+    dev(Q_NULLPTR),
+    owndev(false),
+    noswap(QSysInfo::ByteOrder == QSysInfo::BigEndian),
+    byteorder(QDataStream::BigEndian),
+    ver(QDataStream::Qt_Default),
+    q_status(QDataStream::Ok)
 {
-    d = Q_NULLPTR;
     QBuffer *buf = new QBuffer;
 #ifndef QT_NO_QOBJECT
     buf->blockSignals(true);
@@ -335,10 +342,6 @@ QDataStream::QDataStream(const QByteArray &a)
     buf->open(QIODevice::ReadOnly);
     dev = buf;
     owndev = true;
-    byteorder = BigEndian;
-    ver = QDataStream::Qt_Default;
-    noswap = QSysInfo::ByteOrder == QSysInfo::BigEndian;
-    q_status = Ok;
 }
 
 /*!
