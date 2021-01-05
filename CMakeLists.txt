@@ -42,8 +42,8 @@ if(CMAKE_SYSTEM_NAME MATCHES "BSD")
     link_directories(/usr/X11R7/lib /usr/pkg/lib /usr/local/lib /usr/lib /lib)
 endif()
 
-include(GNUInstallDirs)
 include(CheckCXXCompilerFlag)
+include(GNUInstallDirs)
 include(CheckIncludeFileCXX)
 include(CheckTypeSize)
 include(CMakePushCheckState)
@@ -61,7 +61,7 @@ set(KATIE_HEX "0x040902")
 set(KATIE_VERSION "${KATIE_MAJOR}.${KATIE_MINOR}.${KATIE_MICRO}")
 
 set(KATIE_NO_WARNINGS
-    # placement new used in private QVariant constructor functions
+    # placement new used in private QVariant functions
     -Wno-placement-new
     # QVector does not always use new/delete
     -Wno-class-memaccess

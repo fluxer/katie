@@ -1307,9 +1307,9 @@ QNetworkProxyFactory::~QNetworkProxyFactory()
 void QNetworkProxyFactory::setUseSystemConfiguration(bool enable)
 {
     if (enable) {
-        setApplicationProxyFactory(new QSystemConfigurationProxyFactory);
+        setApplicationProxyFactory(new QSystemConfigurationProxyFactory());
     } else {
-        setApplicationProxyFactory(0);
+        setApplicationProxyFactory(Q_NULLPTR);
     }
 }
 

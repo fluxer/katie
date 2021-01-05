@@ -85,7 +85,7 @@ static qreal compare(const QGridLayoutBox &box1, const QGridLayoutBox &box2, int
     qreal size1 = box1.q_sizes(which);
     qreal size2 = box2.q_sizes(which);
 
-    if (which == MaximumSize) {
+    if (which == Qt::MaximumSize) {
         return size2 - size1;
     } else {
         return size1 - size2;
@@ -216,7 +216,7 @@ void QGridLayoutRowData::calculateGeometries(int start, int end, qreal targetSiz
     }
 
     if (targetSize < totalBox.q_preferredSize) {
-        stealBox(start, end, MinimumSize, positions, sizes);
+        stealBox(start, end, Qt::MinimumSize, positions, sizes);
 
         sumAvailable = targetSize - totalBox.q_minimumSize;
         if (sumAvailable > 0.0) {
@@ -243,10 +243,10 @@ void QGridLayoutRowData::calculateGeometries(int start, int end, qreal targetSiz
     } else {
         bool isLargerThanMaximum = (targetSize > totalBox.q_maximumSize);
         if (isLargerThanMaximum) {
-            stealBox(start, end, MaximumSize, positions, sizes);
+            stealBox(start, end, Qt::MaximumSize, positions, sizes);
             sumAvailable = targetSize - totalBox.q_maximumSize;
         } else {
-            stealBox(start, end, PreferredSize, positions, sizes);
+            stealBox(start, end, Qt::PreferredSize, positions, sizes);
             sumAvailable = targetSize - totalBox.q_preferredSize;
         }
 

@@ -250,7 +250,7 @@ QSqlQuery::QSqlQuery(const QSqlQuery& other)
 /*!
     \internal
 */
-static void qInit(QSqlQuery *q, const QString& query, QSqlDatabase db)
+static inline void qInit(QSqlQuery *q, QSqlDatabase db)
 {
     QSqlDatabase database = db;
     if (!database.isValid())
@@ -258,8 +258,6 @@ static void qInit(QSqlQuery *q, const QString& query, QSqlDatabase db)
     if (database.isValid()) {
         *q = QSqlQuery(database.driver()->createResult());
     }
-    if (!query.isEmpty())
-        q->exec(query);
 }
 
 /*!
@@ -273,7 +271,9 @@ static void qInit(QSqlQuery *q, const QString& query, QSqlDatabase db)
 QSqlQuery::QSqlQuery(const QString& query, QSqlDatabase db)
     : d(QSqlQueryPrivate::shared_null())
 {
-    qInit(this, query, db);
+    qInit(this, db);
+    if (!query.isEmpty())
+        QSqlQuery::exec(query);
 }
 
 /*!
@@ -286,7 +286,7 @@ QSqlQuery::QSqlQuery(const QString& query, QSqlDatabase db)
 QSqlQuery::QSqlQuery(QSqlDatabase db)
     : d(QSqlQueryPrivate::shared_null())
 {
-    qInit(this, QString(), db);
+    qInit(this, db);
 }
 
 
