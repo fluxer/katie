@@ -181,7 +181,9 @@ bool QUdpSocketPrivate::doEnsureInitialized(const QHostAddress &bindAddress, qui
     QAbstractSocket::NetworkLayerProtocol proto = address->protocol();
     if (proto == QUdpSocket::UnknownNetworkLayerProtocol) {
         address = &remoteAddress;
+#if defined(QT_NO_IPV6)
         proto = address->protocol();
+#endif
     }
 
 #if defined(QT_NO_IPV6)

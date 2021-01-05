@@ -3886,16 +3886,13 @@ bool QXmlSimpleReaderPrivate::processElementEmptyTag()
                 return false;
             }
             // ... followed by endPrefixMapping
-            QStringList prefixesBefore, prefixesAfter;
-            if (contentHnd) {
-                prefixesBefore = namespaceSupport.prefixes();
-            }
+            QStringList prefixesBefore = namespaceSupport.prefixes();
             namespaceSupport.popContext();
             // call the handler for prefix mapping
-            prefixesAfter = namespaceSupport.prefixes();
-            for (QStringList::Iterator it = prefixesBefore.begin(); it != prefixesBefore.end(); ++it) {
-                if (!prefixesAfter.contains(*it)) {
-                    if (!contentHnd->endPrefixMapping(*it)) {
+            QStringList prefixesAfter = namespaceSupport.prefixes();
+            foreach (const QString &it, prefixesBefore) {
+                if (!prefixesAfter.contains(it)) {
+                    if (!contentHnd->endPrefixMapping(it)) {
                         reportParseError(contentHnd->errorString());
                         return false;
                     }
