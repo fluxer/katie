@@ -46,7 +46,6 @@
 //
 
 #include "QtGui/qwindowdefs.h"
-#include "QtCore/qhash.h"
 #include "QtCore/qlist.h"
 #include "QtCore/qvariant.h"
 
