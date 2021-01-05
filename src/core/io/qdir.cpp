@@ -1963,7 +1963,7 @@ QDebug operator<<(QDebug debug, QDir::Filters filters)
     return debug;
 }
 
-static QDebug operator<<(QDebug debug, QDir::SortFlags sorting)
+QDebug operator<<(QDebug debug, QDir::SortFlags sorting)
 {
     if (sorting == QDir::NoSort) {
         debug << "QDir::SortFlags(NoSort)";

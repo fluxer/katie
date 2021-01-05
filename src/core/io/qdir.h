@@ -198,6 +198,7 @@ Q_DECLARE_OPERATORS_FOR_FLAGS(QDir::SortFlags)
 #ifndef QT_NO_DEBUG_STREAM
 class QDebug;
 Q_CORE_EXPORT QDebug operator<<(QDebug debug, QDir::Filters filters);
+Q_CORE_EXPORT QDebug operator<<(QDebug debug, QDir::SortFlags sorting);
 Q_CORE_EXPORT QDebug operator<<(QDebug debug, const QDir &dir);
 #endif
 
