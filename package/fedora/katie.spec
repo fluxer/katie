@@ -58,7 +58,6 @@ This package includes headers, pkg-config and CMake files.
 * Mon Dec 21 2020 Ivailo Monev <xakepa10@gmail.com> - 4.9.2-1
 - package update
 
-%changelog
 * Mon Dec 21 2020 Ivailo Monev <xakepa10@gmail.com> - 4.9.1-2
 - split package
 
