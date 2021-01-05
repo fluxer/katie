@@ -225,7 +225,6 @@ struct QX11Data
     Colormap *argbColormaps;
     int screenCount;
     int defaultScreen;
-    QHash<int, int> bppForDepth;
 
     Time time;
     Time userTime;
