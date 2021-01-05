@@ -234,27 +234,24 @@ class QGlobalNetworkProxy
 public:
     QGlobalNetworkProxy()
         : mutex(QMutex::Recursive)
-        , applicationLevelProxy(0)
-        , applicationLevelProxyFactory(0)
-        , socks5SocketEngineHandler(0)
+        , applicationLevelProxy(Q_NULLPTR)
+        , applicationLevelProxyFactory(new QSystemConfigurationProxyFactory())
+#ifndef QT_NO_SOCKS5
+        , socks5SocketEngineHandler(new QSocks5SocketEngineHandler())
+#endif
 #ifndef QT_NO_HTTP
-        , httpSocketEngineHandler(0)
+        , httpSocketEngineHandler(new QHttpSocketEngineHandler())
 #endif
     {
-        setApplicationProxyFactory(new QSystemConfigurationProxyFactory);
-#ifndef QT_NO_SOCKS5
-        socks5SocketEngineHandler = new QSocks5SocketEngineHandler();
-#endif
-#ifndef QT_NO_HTTP
-        httpSocketEngineHandler = new QHttpSocketEngineHandler();
-#endif
     }
 
     ~QGlobalNetworkProxy()
     {
         delete applicationLevelProxy;
         delete applicationLevelProxyFactory;
+#ifndef QT_NO_SOCKS5
         delete socks5SocketEngineHandler;
+#endif
 #ifndef QT_NO_HTTP
         delete httpSocketEngineHandler;
 #endif
@@ -263,18 +260,21 @@ public:
     void setApplicationProxy(const QNetworkProxy &proxy)
     {
         QMutexLocker lock(&mutex);
-        if (!applicationLevelProxy)
-            applicationLevelProxy = new QNetworkProxy;
-        *applicationLevelProxy = proxy;
+        if (applicationLevelProxy) {
+            delete applicationLevelProxy;
+        }
+        applicationLevelProxy = new QNetworkProxy(proxy);
         delete applicationLevelProxyFactory;
-        applicationLevelProxyFactory = 0;
+        applicationLevelProxyFactory = Q_NULLPTR;
     }
 
     void setApplicationProxyFactory(QNetworkProxyFactory *factory)
     {
         QMutexLocker lock(&mutex);
-        if (applicationLevelProxy)
-            *applicationLevelProxy = QNetworkProxy();
+        if (applicationLevelProxy) {
+            delete applicationLevelProxy;
+            applicationLevelProxy = Q_NULLPTR;
+        }
         delete applicationLevelProxyFactory;
         applicationLevelProxyFactory = factory;
     }
@@ -290,7 +290,9 @@ private:
     QMutex mutex;
     QNetworkProxy *applicationLevelProxy;
     QNetworkProxyFactory *applicationLevelProxyFactory;
+#ifndef QT_NO_SOCKS5
     QSocks5SocketEngineHandler *socks5SocketEngineHandler;
+#endif
 #ifndef QT_NO_HTTP
     QHttpSocketEngineHandler *httpSocketEngineHandler;
 #endif
