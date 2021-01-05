@@ -1,10 +1,6 @@
 # Copyright (c) 2015-2021, Ivailo Monev, <xakepa10@gmail.com>
 # Redistribution and use is allowed according to the terms of the BSD license.
 
-set(KATIE_UIC "uic")
-set(KATIE_RCC "rcc")
-set(KATIE_MOC "bootstrap_moc")
-
 # a function to check for header presence, if header is found a definition is
 # added
 function(KATIE_CHECK_HEADER FORHEADER)
@@ -234,53 +230,48 @@ function(KATIE_SETUP_TARGET FORTARGET)
         set(mocargs ${mocargs} -I${incdir})
     endforeach()
 
-    # this can be simpler if continue() was supported by old CMake versions
-    set(resourcesdep "${CMAKE_CURRENT_BINARY_DIR}/${FORTARGET}_resources.cpp")
-    katie_write_file("${resourcesdep}" "enum { CompilersWorkaroundAlaAutomoc = 1 };\n")
-    set(filteredsources)
-    set(targetresources)
     set(rscpath "${CMAKE_CURRENT_BINARY_DIR}/${FORTARGET}_resources")
     include_directories("${rscpath}")
-    foreach(tmpres ${ARGN})
-        get_filename_component(resource "${tmpres}" ABSOLUTE)
-        get_filename_component(rscext "${resource}" EXT)
-        get_filename_component(rscname "${resource}" NAME_WE)
-        if("${rscext}" STREQUAL ".ui")
-            set(rscout "${rscpath}/ui_${rscname}.h")
-            set(targetresources ${targetresources} "${rscout}")
+    foreach(tmparg ${ARGN})
+        get_filename_component(fileabs "${tmparg}" ABSOLUTE)
+        get_filename_component(fileext "${fileabs}" EXT)
+        get_filename_component(filename "${fileabs}" NAME_WE)
+        if("${fileext}" STREQUAL ".ui")
+            set(rscout "${rscpath}/ui_${filename}.h")
             make_directory("${rscpath}")
             add_custom_command(
-                COMMAND "${CMAKE_BINARY_DIR}/exec.sh" "${CMAKE_BINARY_DIR}/bin/${KATIE_UIC}${KATIE_TOOLS_SUFFIX}" "${resource}" -o "${rscout}"
-                DEPENDS "${KATIE_UIC}"
+                COMMAND "${CMAKE_BINARY_DIR}/exec.sh" "${CMAKE_BINARY_DIR}/bin/uic${KATIE_TOOLS_SUFFIX}" "${fileabs}" -o "${rscout}"
+                DEPENDS "uic"
                 OUTPUT "${rscout}"
             )
-        elseif("${rscext}" STREQUAL ".qrc")
-            set(rscout "${rscpath}/qrc_${rscname}.cpp")
-            set(targetresources ${targetresources} "${rscout}")
+            set_property(SOURCE "${fileabs}" APPEND PROPERTY OBJECT_DEPENDS "${rscout}")
+        elseif("${fileext}" STREQUAL ".qrc")
+            set(rscout "${rscpath}/qrc_${filename}.cpp")
             make_directory("${rscpath}")
             add_custom_command(
-                COMMAND "${CMAKE_BINARY_DIR}/exec.sh" "${CMAKE_BINARY_DIR}/bin/${KATIE_RCC}${KATIE_TOOLS_SUFFIX}" "${resource}" -o "${rscout}" -name "${rscname}"
-                DEPENDS "${KATIE_RCC}"
+                COMMAND "${CMAKE_BINARY_DIR}/exec.sh" "${CMAKE_BINARY_DIR}/bin/rcc${KATIE_TOOLS_SUFFIX}" "${fileabs}" -o "${rscout}" -name "${filename}"
+                DEPENDS "rcc"
                 OUTPUT "${rscout}"
             )
-        elseif("${rscext}" MATCHES "(.c|.h|.hpp|.cc|.cpp)")
-            set(filteredsources ${filteredsources} "${resource}")
-            file(READ "${resource}" rsccontent)
+            set_property(SOURCE "${fileabs}" APPEND PROPERTY OBJECT_DEPENDS "${rscout}")
+        elseif("${fileext}" MATCHES "(.c|.h|.hpp|.cc|.cpp)")
+            file(READ "${fileabs}" rsccontent)
             if("${rsccontent}" MATCHES "(Q_OBJECT|Q_OBJECT_FAKE|Q_GADGET)")
-                set(rscout "${rscpath}/moc_${rscname}${rscext}")
-                set(targetresources ${targetresources} "${rscout}")
+                set(rscout "${rscpath}/moc_${filename}${fileext}")
                 make_directory("${rscpath}")
                 add_custom_command(
-                    COMMAND "${CMAKE_BINARY_DIR}/exec.sh" "${CMAKE_BINARY_DIR}/bin/${KATIE_MOC}" -nw "${resource}" -o "${rscout}" ${mocargs}
-                    DEPENDS "${KATIE_MOC}"
+                    COMMAND "${CMAKE_BINARY_DIR}/exec.sh" "${CMAKE_BINARY_DIR}/bin/bootstrap_moc" -nw "${fileabs}" -o "${rscout}" ${mocargs}
+                    DEPENDS "bootstrap_moc"
                     OUTPUT "${rscout}"
                 )
+                set_property(SOURCE "${fileabs}" APPEND PROPERTY OBJECT_DEPENDS "${rscout}")
             endif()
+        else()
+            message(SEND_ERROR "Unkown source type in sources list: ${fileabs}")
         endif()
     endforeach()
-    set_property(SOURCE "${resourcesdep}" APPEND PROPERTY OBJECT_DEPENDS "${targetresources}")
 
-    set(${FORTARGET}_SOURCES "${resourcesdep}" ${filteredsources} PARENT_SCOPE)
+    set(${FORTARGET}_SOURCES ${ARGN} PARENT_SCOPE)
 endfunction()
 
 # a macro to ensure that object targets are build with PIC if the target they
