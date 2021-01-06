@@ -977,11 +977,10 @@ static bool read_xpm_body(
 //
 // INTERNAL
 //
-// Reads an .xpm from either the QImageIO or from the QString *.
-// One of the two HAS to be 0, the other one is used.
+// Reads an .xpm from characters array
 //
 
-bool qt_read_xpm_image_or_array(const char * const * source, QImage &image)
+bool qt_read_xpm_array(const char * const * source, QImage &image)
 {
     if (!source)
         return true;
