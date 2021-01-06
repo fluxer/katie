@@ -62,13 +62,6 @@
 
 QT_BEGIN_NAMESPACE
 
-#ifndef DBL_DIG
-#  define DBL_DIG 10
-#endif
-#ifndef FLT_DIG
-#  define FLT_DIG 6
-#endif
-
 static const QLatin1String qStringListDelim = QLatin1String(",");
 
 static void construct(QVariant::Private *x, const void *copy)

@@ -64,10 +64,7 @@
 #include "qmath.h"
 
 #include <limits.h>
-
-#ifndef DBL_DIG
-#  define DBL_DIG 10
-#endif
+#include <float.h>
 
 QT_BEGIN_NAMESPACE
 
