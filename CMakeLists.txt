@@ -53,13 +53,7 @@ include(FeatureSummary)
 include(KatieBuildMacros)
 include(mkspecs/mkspecs.cmake)
 
-# mostly relevant to the build process, also stored in the version file for CMake and in qconfig.h.cmake
-set(KATIE_MAJOR "4")
-set(KATIE_MINOR "9")
-set(KATIE_MICRO "2")
-set(KATIE_HEX "0x040902")
-set(KATIE_VERSION "${KATIE_MAJOR}.${KATIE_MINOR}.${KATIE_MICRO}")
-
+# disable some compiler warnings
 set(KATIE_NO_WARNINGS
     # placement new used in private QVariant functions
     -Wno-placement-new
@@ -77,6 +71,13 @@ foreach(nowarning ${KATIE_NO_WARNINGS})
         set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} ${nowarning}")
     endif()
 endforeach()
+
+# mostly relevant to the build process, also stored in the version file for CMake and in qconfig.h.cmake
+set(KATIE_MAJOR "4")
+set(KATIE_MINOR "9")
+set(KATIE_MICRO "2")
+set(KATIE_HEX "0x040902")
+set(KATIE_VERSION "${KATIE_MAJOR}.${KATIE_MINOR}.${KATIE_MICRO}")
 
 # only for the build process
 if(CMAKE_SYSTEM_PROCESSOR)
@@ -155,6 +156,9 @@ option(WITH_EXECINFO "Build ExecInfo support" OFF)
 add_feature_info(execinfo WITH_EXECINFO "build ExecInfo support")
 
 # optional features
+option(WITH_ACCESSIBILITY "Build accessibility support" ON)
+add_feature_info(accessibility WITH_ACCESSIBILITY "build accessibility support")
+
 option(KATIE_TESTS "Build automatic tests" OFF)
 add_feature_info(tests KATIE_TESTS "build automatic tests")
 
@@ -166,9 +170,6 @@ add_feature_info(utils KATIE_UTILS "build maintainance utilities")
 
 option(KATIE_PCH "Build components with pre-compiled header" OFF)
 add_feature_info(pch KATIE_PCH "build components with pre-compiled header")
-
-option(WITH_ACCESSIBILITY "Build accessibility support" ON)
-add_feature_info(accessibility WITH_ACCESSIBILITY "build accessibility support")
 
 # v1.2.0+ required for compressBound()
 find_package(ZLIB 1.2.0)
@@ -476,7 +477,7 @@ if(NOT WITH_EXECINFO OR NOT EXECINFO_FOUND)
     katie_definition(-DQT_NO_EXECINFO)
 endif()
 
-# conditional features
+# optional and conditional features
 if(NOT WITH_ACCESSIBILITY)
     katie_definition(-DQT_NO_ACCESSIBILITY)
 endif()
@@ -487,7 +488,7 @@ if(NOT HAVE_pic)
     katie_definition(-DQ_NO_DATA_RELOCATION)
 endif()
 
-# keep in sync with the gui component CMake file, only definitions setup is needed here
+# keep in sync with the GUI component CMake file, only definitions setup is needed here
 foreach(x11ext Xshape Xinerama Xrandr Xrender Xfixes Xcursor)
     if(NOT X11_${x11ext}_FOUND)
         message(WARNING "The X11 ${x11ext} extension was not found")
@@ -1041,6 +1042,7 @@ add_custom_target(install-devel
     WORKING_DIRECTORY "${CMAKE_BINARY_DIR}"
 )
 
+# custom install targets to make packaging easier
 add_custom_target(install-runtime
     DEPENDS ${KATIE_COMPONENTS}
     COMMAND "${CMAKE_COMMAND}" -DCMAKE_INSTALL_COMPONENT=Runtime -P cmake_install.cmake
