@@ -34,10 +34,10 @@
 #ifndef QMETATYPE_H
 #define QMETATYPE_H
 
-#include <QtCore/qatomic.h>
-
 #ifndef QT_NO_DATASTREAM
 #include <QtCore/qdatastream.h>
+#else
+#include <QtCore/qglobal.h>
 #endif
 
 #ifdef Bool
@@ -237,10 +237,9 @@ inline int qRegisterMetaTypeStreamOperators()
         enum { Defined = 1 };                                           \
         static int qt_metatype_id()                                     \
             {                                                           \
-                static QAtomicInt metatype_id = QAtomicInt(0); \
-                if (!metatype_id)                                       \
-                    metatype_id = qRegisterMetaType< TYPE >(#TYPE,      \
-                               reinterpret_cast< TYPE *>(quintptr(-1))); \
+                static int metatype_id =                                \
+                    qRegisterMetaType< TYPE >(#TYPE,                    \
+                    reinterpret_cast< TYPE *>(quintptr(-1)));           \
                 return metatype_id;                                     \
             }                                                           \
     };                                                                  \
