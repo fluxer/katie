@@ -31,7 +31,7 @@
 **
 ****************************************************************************/
 
-//#define QABSTRACTSOCKET_DEBUG
+// #define QABSTRACTSOCKET_DEBUG
 
 /*!
     \class QAbstractSocket
@@ -1486,7 +1486,7 @@ bool QAbstractSocket::canReadLine() const
 {
     bool hasLine = d_func()->readBuffer.canReadLine();
 #if defined (QABSTRACTSOCKET_DEBUG)
-    qDebug("QAbstractSocket::canReadLine() == %s, buffer size = %d, size = %d", hasLine ? "true" : "false",
+    qDebug("QAbstractSocket::canReadLine() == %s, buffer size = %d, size = %lld", hasLine ? "true" : "false",
            d_func()->readBuffer.size(), d_func()->buffer.size());
 #endif
     return hasLine || QIODevice::canReadLine();
