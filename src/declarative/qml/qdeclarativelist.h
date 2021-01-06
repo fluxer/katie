@@ -34,7 +34,6 @@
 #ifndef QDECLARATIVELIST_H
 #define QDECLARATIVELIST_H
 
-#include <QtCore/qglobal.h>
 #include <QtCore/qlist.h>
 #include <QtCore/qvariant.h>
 
