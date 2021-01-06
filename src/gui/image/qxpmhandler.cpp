@@ -839,7 +839,7 @@ static bool read_xpm_body(
     bool hasTransparency = false;
 
     for(int currentColor=0; currentColor < ncols; ++currentColor) {
-        if (!read_xpm_string(buf, device, source, index, state)) {
+        if (Q_UNLIKELY(!read_xpm_string(buf, device, source, index, state))) {
             qWarning("QImage: XPM color specification missing");
             return false;
         }
@@ -854,7 +854,7 @@ static bool read_xpm_body(
             i = tokens.indexOf("g4");
         if (i < 0)
             i = tokens.indexOf("m");
-        if (i < 0) {
+        if (Q_UNLIKELY(i < 0)) {
             qWarning("QImage: XPM color specification is missing: %s", buf.constData());
             return false;        // no c/g/g4/m specification at all
         }
@@ -862,7 +862,7 @@ static bool read_xpm_body(
         while ((++i < tokens.size()) && !is_xpm_color_spec_prefix(tokens.at(i))) {
             color.append(tokens.at(i));
         }
-        if (color.isEmpty()) {
+        if (Q_UNLIKELY(color.isEmpty())) {
             qWarning("QImage: XPM color value is missing from specification: %s", buf.constData());
             return false;        // no color value
         }
@@ -939,7 +939,7 @@ static bool read_xpm_body(
                 }
             }
             // avoid uninitialized memory for malformed xpms
-            if (x < w) {
+            if (Q_UNLIKELY(x < w)) {
                 qWarning("QImage: XPM pixels missing on image line %d (possibly a C++ trigraph).", y);
                 memset(p, 0, w - x);
             }
@@ -956,7 +956,7 @@ static bool read_xpm_body(
                 d += cpp;
             }
             // avoid uninitialized memory for malformed xpms
-            if (x < w) {
+            if (Q_UNLIKELY(x < w)) {
                 qWarning("QImage: XPM pixels missing on image line %d (possibly a C++ trigraph).", y);
                 memset(p, 0, (w - x)*4);
             }
@@ -1164,7 +1164,7 @@ bool QXpmHandler::canRead() const
 
 bool QXpmHandler::canRead(QIODevice *device)
 {
-    if (!device) {
+    if (Q_UNLIKELY(!device)) {
         qWarning("QXpmHandler::canRead() called with no device");
         return false;
     }
