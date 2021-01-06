@@ -580,9 +580,9 @@ static const uchar bitflip[256] = {
 */
 
 QImage::QImage()
-    : QPaintDevice()
+    : QPaintDevice(),
+    d(Q_NULLPTR)
 {
-    d = 0;
 }
 
 /*!
@@ -596,9 +596,9 @@ QImage::QImage()
     drawing onto it with QPainter.
 */
 QImage::QImage(int width, int height, Format format)
-    : QPaintDevice()
+    : QPaintDevice(),
+    d(QImageData::create(QSize(width, height), format))
 {
-    d = QImageData::create(QSize(width, height), format);
 }
 
 /*!
@@ -611,16 +611,16 @@ QImage::QImage(int width, int height, Format format)
     drawing onto it with QPainter.
 */
 QImage::QImage(const QSize &size, Format format)
-    : QPaintDevice()
+    : QPaintDevice(),
+    d(QImageData::create(size, format))
 {
-    d = QImageData::create(size, format);
 }
 
 
 
 QImageData *QImageData::create(uchar *data, int width, int height,  int bpl, QImage::Format format, bool readOnly)
 {
-    if (format == QImage::Format_Invalid)
+    if (Q_UNLIKELY(format == QImage::Format_Invalid))
         return Q_NULLPTR;
 
     const int depth = qt_depthForFormat(format);
@@ -669,9 +669,9 @@ QImageData *QImageData::create(uchar *data, int width, int height,  int bpl, QIm
     setColorCount() or setColorTable() before the image is used.
 */
 QImage::QImage(uchar* data, int width, int height, Format format)
-    : QPaintDevice()
+    : QPaintDevice(),
+    d(QImageData::create(data, width, height, 0, format, false))
 {
-    d = QImageData::create(data, width, height, 0, format, false);
 }
 
 /*!
@@ -698,9 +698,9 @@ QImage::QImage(uchar* data, int width, int height, Format format)
     data being changed.
 */
 QImage::QImage(const uchar* data, int width, int height, Format format)
-    : QPaintDevice()
+    : QPaintDevice(),
+    d(QImageData::create(const_cast<uchar*>(data), width, height, 0, format, true))
 {
-    d = QImageData::create(const_cast<uchar*>(data), width, height, 0, format, true);
 }
 
 /*!
@@ -717,9 +717,9 @@ QImage::QImage(const uchar* data, int width, int height, Format format)
     setColorCount() or setColorTable() before the image is used.
 */
 QImage::QImage(uchar *data, int width, int height, int bytesPerLine, Format format)
-    :QPaintDevice()
+    : QPaintDevice(),
+    d(QImageData::create(data, width, height, bytesPerLine, format, false))
 {
-    d = QImageData::create(data, width, height, bytesPerLine, format, false);
 }
 
 
@@ -745,9 +745,9 @@ QImage::QImage(uchar *data, int width, int height, int bytesPerLine, Format form
 */
 
 QImage::QImage(const uchar *data, int width, int height, int bytesPerLine, Format format)
-    :QPaintDevice()
+    : QPaintDevice(),
+    d(QImageData::create(const_cast<uchar*>(data), width, height, bytesPerLine, format, true))
 {
-    d = QImageData::create(const_cast<uchar*>(data), width, height, bytesPerLine, format, true);
 }
 
 /*!
@@ -770,9 +770,9 @@ QImage::QImage(const uchar *data, int width, int height, int bytesPerLine, Forma
 */
 
 QImage::QImage(const QString &fileName, const char *format)
-    : QPaintDevice()
+    : QPaintDevice(),
+    d(Q_NULLPTR)
 {
-    d = 0;
     load(fileName, format);
 }
 
@@ -802,9 +802,9 @@ QImage::QImage(const QString &fileName, const char *format)
 */
 #ifndef QT_NO_CAST_FROM_ASCII
 QImage::QImage(const char *fileName, const char *format)
-    : QPaintDevice()
+    : QPaintDevice(),
+    d(Q_NULLPTR)
 {
-    d = 0;
     load(QString::fromAscii(fileName), format);
 }
 #endif
@@ -829,12 +829,12 @@ extern bool qt_read_xpm_image_or_array(const char * const *source, QImage &image
 */
 
 QImage::QImage(const char * const xpm[])
-    : QPaintDevice()
+    : QPaintDevice(),
+    d(Q_NULLPTR)
 {
-    d = 0;
-    if (!xpm)
+    if (Q_UNLIKELY(!xpm))
         return;
-    if (!qt_read_xpm_image_or_array(xpm, *this))
+    if (Q_UNLIKELY(!qt_read_xpm_image_or_array(xpm, *this)))
         // Issue: Warning because the constructor may be ambigious
         qWarning("QImage::QImage(), XPM is not supported");
 }
@@ -867,10 +867,10 @@ QImage::QImage(const char * const xpm[])
 */
 
 QImage::QImage(const QImage &image)
-    : QPaintDevice()
+    : QPaintDevice(),
+    d(Q_NULLPTR)
 {
     if (image.paintingActive()) {
-        d = 0;
         operator=(image.copy());
     } else {
         d = image.d;
