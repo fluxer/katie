@@ -981,7 +981,7 @@ static bool read_xpm_body(
 // One of the two HAS to be 0, the other one is used.
 //
 
-bool qt_read_xpm_image_or_array(QIODevice *device, const char * const * source, QImage &image)
+bool qt_read_xpm_image_or_array(const char * const * source, QImage &image)
 {
     if (!source)
         return true;
@@ -991,25 +991,10 @@ bool qt_read_xpm_image_or_array(QIODevice *device, const char * const * source, 
 
     int cpp, ncols, w, h, index = 0;
 
-    if (device) {
-        // "/* XPM */"
-        int readBytes;
-        if ((readBytes = device->readLine(buf.data(), buf.size())) < 0)
-            return false;
-
-        if (buf.indexOf("/* XPM") != 0) {
-            while (readBytes > 0) {
-                device->ungetChar(buf.at(readBytes - 1));
-                --readBytes;
-            }
-            return false;
-        }// bad magic
-    }
-
-    if (!read_xpm_header(device, source, index, state, &cpp, &ncols, &w, &h))
+    if (!read_xpm_header(Q_NULLPTR, source, index, state, &cpp, &ncols, &w, &h))
         return false;
 
-    return read_xpm_body(device, source, index, state, cpp, ncols, w, h, image);
+    return read_xpm_body(Q_NULLPTR, source, index, state, cpp, ncols, w, h, image);
 }
 
 static const char* xpm_color_name(int cpp, int index)
@@ -1139,7 +1124,7 @@ QXpmHandler::QXpmHandler()
 bool QXpmHandler::readHeader()
 {
     state = Error;
-    if (!read_xpm_header(device(), 0, index, buffer, &cpp, &ncols, &width, &height))
+    if (!read_xpm_header(device(), Q_NULLPTR, index, buffer, &cpp, &ncols, &width, &height))
         return false;
     state = ReadHeader;
     return true;
@@ -1155,7 +1140,7 @@ bool QXpmHandler::readImage(QImage *image)
         return false;
     }
 
-    if (!read_xpm_body(device(), 0, index, buffer, cpp, ncols, width, height, *image)) {
+    if (!read_xpm_body(device(), Q_NULLPTR, index, buffer, cpp, ncols, width, height, *image)) {
         state = Error;
         return false;
     }
