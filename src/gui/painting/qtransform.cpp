@@ -47,9 +47,6 @@ QT_BEGIN_NAMESPACE
 
 #define Q_NEAR_CLIP (sizeof(qreal) == sizeof(double) ? 0.000001 : 0.0001)
 
-#ifdef MAP
-#  undef MAP
-#endif
 #define MAP(x, y, nx, ny) \
     do { \
         qreal FX_ = x; \
@@ -2282,8 +2279,6 @@ QTransform::operator QVariant() const
     fuzziness factor for floating-point comparisons; false otherwise.
 */
 
+#undef MAP
+
 QT_END_NAMESPACE
-
-
-
-
