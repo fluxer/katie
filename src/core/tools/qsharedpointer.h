@@ -152,8 +152,8 @@ namespace QtSharedPointer {
         QAtomicInt strongref;
 
         inline ExternalRefCountData()
-            : strongref(1),
-            weakref(1)
+            : weakref(1),
+            strongref(1)
         {
         }
         inline ExternalRefCountData(Qt::Initialization) { }
