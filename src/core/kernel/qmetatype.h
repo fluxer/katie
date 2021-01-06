@@ -249,7 +249,7 @@ inline int qRegisterMetaTypeStreamOperators()
     QT_BEGIN_NAMESPACE \
     template<> struct QMetaTypeId2<TYPE> \
     { \
-        enum { Defined = 1, MetaType = QMetaType::NAME }; \
+        enum { Defined = 1 }; \
         static inline int qt_metatype_id() { return QMetaType::NAME; } \
     }; \
     QT_END_NAMESPACE
