@@ -31,8 +31,8 @@
 **
 ****************************************************************************/
 
-#ifndef DIALOGGUI
-#define DIALOGGUI
+#ifndef DIALOGGUI_H
+#define DIALOGGUI_H
 
 //
 //  W A R N I N G
@@ -95,4 +95,4 @@ private:
 
 QT_END_NAMESPACE
 
-#endif // DIALOGGUI
+#endif // DIALOGGUI_H
