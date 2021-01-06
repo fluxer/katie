@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-01-02 01:58+0200\n"
+"POT-Creation-Date: 2021-01-06 02:00+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -1437,8 +1437,8 @@ msgid ""
 "conditions of the GNU LGPL version 2.1.</p><p>Copyright (C) 2015 The Qt "
 "Company Ltd and other contributors.</p><p>Copyright (C) 2016-2021 Ivailo "
 "Monev</p><p>Qt and the Qt logo are trademarks of The Qt Company Ltd.</"
-"p><p>See <a href=\"http://fluxer.github.io/katie/\">fluxer.github.io/katie</"
-"a> for more information.</p>"
+"p><p>See <a href=\"https://github.com/fluxer/katie\">github.com/fluxer/"
+"katie</a> for more information.</p>"
 msgstr ""
 
 #: src/gui/dialogs/qmessagebox.cpp:1486
@@ -3755,7 +3755,7 @@ msgstr ""
 msgid "%1: The socket operation is not supported"
 msgstr ""
 
-#: src/network/socket/qudpsocket.cpp:191
+#: src/network/socket/qudpsocket.cpp:193
 msgid "This platform does not support IPv6"
 msgstr ""
 
