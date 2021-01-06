@@ -2087,8 +2087,6 @@ WId QWidget::effectiveWinId() const
     The style sheet contains a textual description of customizations to the
     widget's style, as described in the \l{Qt Style Sheets} document.
 
-    Since Qt 4.5, Qt style sheets fully supports Mac OS X.
-
     \warning Qt style sheets are currently not supported for custom QStyle
     subclasses. We plan to address this in some future release.
 
@@ -4762,7 +4760,6 @@ void QWidgetPrivate::render(QPaintDevice *target, const QPoint &targetOffset,
     if (paintRegion.isEmpty())
         return;
 
-#ifndef Q_WS_MAC
     QPainter *oldSharedPainter = inRenderWithPainter ? sharedPainter() : 0;
 
     // Use the target's shared painter if set (typically set when doing
@@ -4775,7 +4772,6 @@ void QWidgetPrivate::render(QPaintDevice *target, const QPoint &targetOffset,
                 setSharedPainter(targetPainter);
         }
     }
-#endif
 
     // Use the target's redirected device if set and adjust offset and paint
     // region accordingly. This is typically the case when people call render
@@ -4817,17 +4813,12 @@ void QWidgetPrivate::render(QPaintDevice *target, const QPoint &targetOffset,
         return;
     }
 
-#ifndef Q_WS_MAC
     // Render via backingstore.
     drawWidget(target, paintRegion, offset, flags, sharedPainter());
 
     // Restore shared painter.
     if (oldSharedPainter)
         setSharedPainter(oldSharedPainter);
-#else
-    // Render via backingstore (no shared painter).
-    drawWidget(target, paintRegion, offset, flags, 0);
-#endif
 }
 
 void QWidgetPrivate::paintSiblingsRecursive(QPaintDevice *pdev, const QObjectList& siblings, int index, const QRegion &rgn,
@@ -8703,15 +8694,6 @@ void QWidget::setParent(QWidget *parent, Qt::WindowFlags f)
             QChildEvent e(QEvent::ChildAdded, this);
             QApplication::sendEvent(parent, &e);
         }
-
-//### already hidden above ---> must probably do something smart on the mac
-// #ifdef Q_WS_MAC
-//             extern bool qt_mac_is_macdrawer(const QWidget *); //qwidget_mac.cpp
-//             if(!qt_mac_is_macdrawer(q)) //special case
-//                 q->setAttribute(Qt::WA_WState_Hidden);
-// #else
-//             q->setAttribute(Qt::WA_WState_Hidden);
-//#endif
 
         if (parent && d->sendChildEvents && d->polished) {
             QChildEvent e(QEvent::ChildPolished, this);
