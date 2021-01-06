@@ -66,7 +66,7 @@ void qDBusDemarshallHelper(const QDBusArgument &arg, T *t)
 { arg >> *t; }
 
 template<typename T>
-int qDBusRegisterMetaType(T * /* dummy */ = Q_NULLPTR)
+int qDBusRegisterMetaType()
 {
     void (*mf)(QDBusArgument &, const T *) = qDBusMarshallHelper<T>;
     void (*df)(const QDBusArgument &, T *) = qDBusDemarshallHelper<T>;
