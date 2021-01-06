@@ -599,7 +599,7 @@ public:
     static QWidget *keyboardGrabber;
 
     void setWindowRole();
-    void sendStartupMessage(const char *message) const;
+    void sendStartupMessage() const;
     void setNetWmWindowTypes();
     void x11UpdateIsOpaque();
     bool isBackgroundInherited() const;
