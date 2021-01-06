@@ -844,10 +844,6 @@ const char *qVersion()
        little-endian.
     \endlist
 
-    Some constants are defined only on certain platforms. You can use
-    the preprocessor symbols Q_WS_WIN and Q_WS_MAC to test that
-    the application is compiled under Windows or Mac.
-
     \sa QLibraryInfo
 */
 
@@ -859,12 +855,6 @@ const char *qVersion()
 
     \value WordSize The size in bits of a pointer for the platform on which
            the application is compiled (32 or 64).
-*/
-
-/*!
-    \variable QSysInfo::WindowsVersion
-    \brief the version of the Windows operating system on which the
-           application is run (Windows only)
 */
 
 /*!
