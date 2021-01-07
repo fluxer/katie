@@ -163,7 +163,6 @@ protected:
     virtual QString fromRawData(const QByteArray &data, bool beginning = false);
 
 private:
-    void init();
     QXmlInputSourcePrivate *d;
 };
 

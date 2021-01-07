@@ -215,6 +215,8 @@ static bool stripTextDecl(QString& str)
 class QXmlInputSourcePrivate
 {
 public:
+    QXmlInputSourcePrivate();
+
     QIODevice *inputDevice;
 
     QString str;
@@ -230,6 +232,20 @@ public:
     QString encodingDeclChars;
     bool lookingForEncodingDecl;
 };
+
+QXmlInputSourcePrivate::QXmlInputSourcePrivate()
+    : inputDevice(Q_NULLPTR),
+    unicode(str.unicode()),
+    pos(0),
+    length(0),
+    nextReturnedEndOfData(true), // first call to next() will call fetchData()
+#ifndef QT_NO_TEXTCODEC
+    encMapper(Q_NULLPTR),
+#endif
+    lookingForEncodingDecl(true)
+{
+}
+
 class QXmlParseExceptionPrivate
 {
 public:
@@ -1265,39 +1281,14 @@ void QXmlAttributes::append(const QString &qName, const QString &uri, const QStr
 const ushort QXmlInputSource::EndOfData = 0xfffe;
 const ushort QXmlInputSource::EndOfDocument = 0xffff;
 
-/*
-    Common part of the constructors.
-*/
-void QXmlInputSource::init()
-{
-    d = new QXmlInputSourcePrivate;
-
-    QT_TRY {
-        d->inputDevice = Q_NULLPTR;
-
-        setData(QString());
-#ifndef QT_NO_TEXTCODEC
-        d->encMapper = Q_NULLPTR;
-#endif
-        d->nextReturnedEndOfData = true; // first call to next() will call fetchData()
-
-        d->encodingDeclBytes.clear();
-        d->encodingDeclChars.clear();
-        d->lookingForEncodingDecl = true;
-    } QT_CATCH(...) {
-        delete(d);
-        QT_RETHROW;
-    }
-}
-
 /*!
     Constructs an input source which contains no data.
 
     \sa setData()
 */
 QXmlInputSource::QXmlInputSource()
+    : d(new QXmlInputSourcePrivate())
 {
-    init();
 }
 
 /*!
@@ -1309,8 +1300,8 @@ QXmlInputSource::QXmlInputSource()
     \sa setData() fetchData() QIODevice
 */
 QXmlInputSource::QXmlInputSource(QIODevice *dev)
+    : d(new QXmlInputSourcePrivate())
 {
-    init();
     d->inputDevice = dev;
     if (dev->isOpen())
         d->inputDevice->setTextModeEnabled(false);
