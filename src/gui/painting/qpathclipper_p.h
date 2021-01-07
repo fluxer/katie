@@ -51,7 +51,6 @@
 
 #include <stdio.h>
 
-QT_BEGIN_HEADER
 
 QT_BEGIN_NAMESPACE
 
@@ -472,6 +471,5 @@ inline QPathEdge::Direction QWingedEdge::flip(QPathEdge::Direction direction)
 
 QT_END_NAMESPACE
 
-QT_END_HEADER
 
 #endif // QPATHCLIPPER_P_H

@@ -40,7 +40,6 @@
 
 #ifndef QT_NO_NETWORKINTERFACE
 
-QT_BEGIN_HEADER
 
 QT_BEGIN_NAMESPACE
 
@@ -120,7 +119,6 @@ Q_NETWORK_EXPORT QDebug operator<<(QDebug debug, const QNetworkInterface &networ
 
 QT_END_NAMESPACE
 
-QT_END_HEADER
 
 #endif // QT_NO_NETWORKINTERFACE
 

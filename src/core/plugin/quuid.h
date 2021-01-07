@@ -36,7 +36,6 @@
 
 #include <QtCore/qstring.h>
 
-QT_BEGIN_HEADER
 
 QT_BEGIN_NAMESPACE
 
@@ -132,6 +131,5 @@ Q_CORE_EXPORT uint qHash(const QUuid &uuid);
 
 QT_END_NAMESPACE
 
-QT_END_HEADER
 
 #endif // QUUID_H

@@ -36,7 +36,6 @@
 
 #include <QtCore/qscopedpointer.h>
 
-QT_BEGIN_HEADER
 
 QT_BEGIN_NAMESPACE
 
@@ -144,6 +143,5 @@ Q_DECLARE_OPERATORS_FOR_FLAGS(QTreeWidgetItemIterator::IteratorFlags)
 
 QT_END_NAMESPACE
 #endif // QT_NO_TREEWIDGET
-QT_END_HEADER
 
 #endif // QTREEWIDGETITEMITERATOR_H

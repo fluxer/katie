@@ -38,7 +38,6 @@
 #include <QtGui/qgraphicslayoutitem.h>
 #include <QtCore/qsize.h>
 
-QT_BEGIN_HEADER
 
 QT_BEGIN_NAMESPACE
 
@@ -81,5 +80,4 @@ QT_END_NAMESPACE
 
 QML_DECLARE_TYPE(QDeclarativeLayoutItem)
 
-QT_END_HEADER
 #endif

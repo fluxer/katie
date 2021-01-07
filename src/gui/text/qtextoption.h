@@ -39,7 +39,6 @@
 #include <QtCore/qmetatype.h>
 
 
-QT_BEGIN_HEADER
 
 QT_BEGIN_NAMESPACE
 
@@ -150,6 +149,5 @@ QT_END_NAMESPACE
 
 Q_DECLARE_METATYPE( QTextOption::Tab )
 
-QT_END_HEADER
 
 #endif // QTEXTOPTION_H

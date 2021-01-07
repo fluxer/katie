@@ -28,7 +28,6 @@
 #include <QtCore/qstringlist.h>
 #include <QtCore/qsharedpointer.h>
 
-QT_BEGIN_HEADER
 
 QT_BEGIN_NAMESPACE
 
@@ -98,6 +97,5 @@ Q_SCRIPT_EXPORT QDataStream &operator>>(QDataStream &, QScriptContextInfo &);
 
 QT_END_NAMESPACE
 
-QT_END_HEADER
 
 #endif

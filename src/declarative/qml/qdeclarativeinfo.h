@@ -38,7 +38,6 @@
 #include <QtCore/qurl.h>
 #include <QtDeclarative/qdeclarativeerror.h>
 
-QT_BEGIN_HEADER
 
 QT_BEGIN_NAMESPACE
 
@@ -90,6 +89,5 @@ Q_DECLARATIVE_EXPORT QDeclarativeInfo qmlInfo(const QObject *me, const QList<QDe
 
 QT_END_NAMESPACE
 
-QT_END_HEADER
 
 #endif // QDECLARATIVEINFO_H

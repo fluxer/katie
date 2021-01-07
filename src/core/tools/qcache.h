@@ -36,7 +36,6 @@
 
 #include <QtCore/qhash.h>
 
-QT_BEGIN_HEADER
 
 QT_BEGIN_NAMESPACE
 
@@ -194,6 +193,5 @@ void QCache<Key,T>::trim(int m)
 
 QT_END_NAMESPACE
 
-QT_END_HEADER
 
 #endif // QCACHE_H

@@ -36,7 +36,6 @@
 
 #include <QtCore/qglobal.h>
 
-QT_BEGIN_HEADER
 
 QT_BEGIN_NAMESPACE
 
@@ -228,6 +227,5 @@ template <> inline quint8 qbswap<quint8>(const quint8 source)
 
 QT_END_NAMESPACE
 
-QT_END_HEADER
 
 #endif // QENDIAN_H

@@ -44,7 +44,6 @@
 #  include <exception>
 #endif
 
-QT_BEGIN_HEADER
 QT_BEGIN_NAMESPACE
 
 
@@ -112,7 +111,6 @@ public:
 } // namespace QtConcurrent
 
 QT_END_NAMESPACE
-QT_END_HEADER
 
 #endif // QT_NO_CONCURRENT
 

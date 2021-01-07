@@ -37,7 +37,6 @@
 #include <QtCore/qlist.h>
 #include <QtCore/qvariant.h>
 
-QT_BEGIN_HEADER
 
 QT_BEGIN_NAMESPACE
 
@@ -134,6 +133,5 @@ QT_END_NAMESPACE
 
 Q_DECLARE_METATYPE(QDeclarativeListReference)
 
-QT_END_HEADER
 
 #endif // QDECLARATIVELIST_H

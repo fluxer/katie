@@ -36,7 +36,6 @@
 
 #include <QtDesigner/extension.h>
 
-QT_BEGIN_HEADER
 
 QT_BEGIN_NAMESPACE
 
@@ -71,6 +70,5 @@ QT_END_NAMESPACE
 
 Q_DECLARE_EXTENSION_INTERFACE(QDesignerExtraInfoExtension, "Katie.Designer.ExtraInfo.2")
 
-QT_END_HEADER
 
 #endif // EXTRAINFO_H

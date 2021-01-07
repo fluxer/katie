@@ -36,7 +36,6 @@
 
 #include <QtDesigner/extension.h>
 
-QT_BEGIN_HEADER
 
 QT_BEGIN_NAMESPACE
 
@@ -77,6 +76,5 @@ QT_END_NAMESPACE
 Q_DECLARE_EXTENSION_INTERFACE(QDesignerPropertySheetExtension,
     "Katie.Designer.PropertySheet")
 
-QT_END_HEADER
 
 #endif // PROPERTYSHEET_H

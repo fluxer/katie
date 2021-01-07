@@ -37,7 +37,6 @@
 #include <QtCore/qbytearray.h>
 #include <QtCore/qobjectdefs.h>
 
-QT_BEGIN_HEADER
 
 QT_BEGIN_NAMESPACE
 
@@ -296,6 +295,5 @@ private:
 
 QT_END_NAMESPACE
 
-QT_END_HEADER
 
 #endif // QCOREEVENT_H

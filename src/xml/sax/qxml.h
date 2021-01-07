@@ -40,7 +40,6 @@
 #include <QtCore/qstringlist.h>
 #include <QtCore/qlist.h>
 
-QT_BEGIN_HEADER
 
 QT_BEGIN_NAMESPACE
 
@@ -402,6 +401,5 @@ inline int QXmlAttributes::count() const
 
 QT_END_NAMESPACE
 
-QT_END_HEADER
 
 #endif // QXML_H

@@ -42,7 +42,6 @@
 
 #include <cmath>
 
-QT_BEGIN_HEADER
 
 QT_BEGIN_NAMESPACE
 
@@ -194,6 +193,5 @@ inline qreal qFmod(qreal x, qreal y)
 
 QT_END_NAMESPACE
 
-QT_END_HEADER
 
 #endif // QMATH_H

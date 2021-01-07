@@ -37,7 +37,6 @@
 #include <QtCore/qcoreevent.h>
 #include <QtCore/qeventloop.h>
 
-QT_BEGIN_HEADER
 
 QT_BEGIN_NAMESPACE
 
@@ -194,6 +193,5 @@ Q_CORE_EXPORT void qRemovePostRoutine(QtCleanUpFunction);
 
 QT_END_NAMESPACE
 
-QT_END_HEADER
 
 #endif // QCOREAPPLICATION_H

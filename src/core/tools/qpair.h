@@ -36,7 +36,6 @@
 
 #include <QtCore/qdatastream.h>
 
-QT_BEGIN_HEADER
 
 QT_BEGIN_NAMESPACE
 
@@ -113,6 +112,5 @@ inline QDataStream& operator<<(QDataStream& s, const QPair<T1, T2>& p)
 
 QT_END_NAMESPACE
 
-QT_END_HEADER
 
 #endif // QPAIR_H

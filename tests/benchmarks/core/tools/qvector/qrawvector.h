@@ -46,8 +46,6 @@
 #include <stdlib.h>
 #include <string.h>
 
-QT_BEGIN_HEADER
-
 QT_BEGIN_NAMESPACE
 
 static const int N = 1000000;
@@ -719,7 +717,5 @@ Q_DECLARE_SEQUENTIAL_ITERATOR(RawVector)
 Q_DECLARE_MUTABLE_SEQUENTIAL_ITERATOR(RawVector)
 
 QT_END_NAMESPACE
-
-QT_END_HEADER
 
 #endif // QRAWVECTOR_H

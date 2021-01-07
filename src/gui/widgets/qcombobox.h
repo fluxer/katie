@@ -39,7 +39,6 @@
 #include <QtCore/qabstractitemmodel.h>
 #include <QtCore/qvariant.h>
 
-QT_BEGIN_HEADER
 
 QT_BEGIN_NAMESPACE
 
@@ -265,6 +264,5 @@ inline void QComboBox::insertItem(int aindex, const QString &atext,
 
 QT_END_NAMESPACE
 
-QT_END_HEADER
 
 #endif // QCOMBOBOX_H

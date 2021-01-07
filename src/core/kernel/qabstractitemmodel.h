@@ -36,7 +36,6 @@
 
 #include <QtCore/qvariant.h>
 
-QT_BEGIN_HEADER
 
 QT_BEGIN_NAMESPACE
 
@@ -383,6 +382,5 @@ inline uint qHash(const QModelIndex &index)
 
 QT_END_NAMESPACE
 
-QT_END_HEADER
 
 #endif // QABSTRACTITEMMODEL_H

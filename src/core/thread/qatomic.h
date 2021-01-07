@@ -51,7 +51,6 @@
 #endif
 
 QT_BEGIN_NAMESPACE
-QT_BEGIN_HEADER
 
 class Q_CORE_EXPORT QAtomicInt
 {
@@ -302,6 +301,5 @@ inline void qAtomicDetach(T *&d)
 }
 
 QT_END_NAMESPACE
-QT_END_HEADER
 
 #endif // QATOMIC_H

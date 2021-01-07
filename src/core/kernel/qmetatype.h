@@ -44,7 +44,6 @@
 #error qmetatype.h must be included before any header file that defines Bool
 #endif
 
-QT_BEGIN_HEADER
 
 QT_BEGIN_NAMESPACE
 
@@ -385,6 +384,5 @@ Q_DECLARE_BUILTIN_METATYPE(QWidget *, QWidgetStar)
 Q_DECLARE_BUILTIN_METATYPE(QVariant, QVariant)
 
 
-QT_END_HEADER
 
 #endif // QMETATYPE_H

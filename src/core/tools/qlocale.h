@@ -36,7 +36,6 @@
 
 #include <QtCore/qvariant.h>
 
-QT_BEGIN_HEADER
 
 QT_BEGIN_NAMESPACE
 
@@ -1482,6 +1481,5 @@ QT_END_NAMESPACE
 Q_DECLARE_METATYPE(QSystemLocale::CurrencyToStringArgument)
 #endif
 
-QT_END_HEADER
 
 #endif // QLOCALE_H

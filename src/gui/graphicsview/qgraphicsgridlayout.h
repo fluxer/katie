@@ -37,7 +37,6 @@
 #include <QtGui/qgraphicsitem.h>
 #include <QtGui/qgraphicslayout.h>
 
-QT_BEGIN_HEADER
 
 QT_BEGIN_NAMESPACE
 
@@ -128,7 +127,6 @@ inline void QGraphicsGridLayout::addItem(QGraphicsLayoutItem *aitem, int arow, i
 
 QT_END_NAMESPACE
 
-QT_END_HEADER
 
 #endif
 

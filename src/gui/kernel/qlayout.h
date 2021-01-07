@@ -37,7 +37,6 @@
 #include <QtGui/qlayoutitem.h>
 #include <QtCore/qmargins.h>
 
-QT_BEGIN_HEADER
 
 QT_BEGIN_NAMESPACE
 
@@ -155,6 +154,5 @@ QT_END_NAMESPACE
 #include <QtGui/qboxlayout.h>
 #include <QtGui/qgridlayout.h>
 
-QT_END_HEADER
 
 #endif // QLAYOUT_H

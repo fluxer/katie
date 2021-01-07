@@ -43,7 +43,6 @@
 #include <QtCore/qbytearray.h>
 #include <QtCore/qmetaobject.h>
 
-QT_BEGIN_HEADER
 
 #define QML_DECLARE_TYPE(TYPE) \
     Q_DECLARE_METATYPE(TYPE *) \
@@ -401,6 +400,5 @@ QT_END_NAMESPACE
 QML_DECLARE_TYPE(QObject)
 Q_DECLARE_METATYPE(QVariant)
 
-QT_END_HEADER
 
 #endif // QDECLARATIVE_H

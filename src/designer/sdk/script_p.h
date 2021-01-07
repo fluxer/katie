@@ -48,7 +48,6 @@
 #include <QtDesigner/extension.h>
 #include <QtCore/QVariant>
 
-QT_BEGIN_HEADER
 
 QT_BEGIN_NAMESPACE
 
@@ -70,6 +69,5 @@ QT_END_NAMESPACE
 
 Q_DECLARE_EXTENSION_INTERFACE(QDesignerScriptExtension, "Katie.Designer.Script")
 
-QT_END_HEADER
 
 #endif // SCRIPT_H

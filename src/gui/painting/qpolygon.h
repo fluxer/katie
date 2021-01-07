@@ -38,7 +38,6 @@
 #include <QtCore/qpoint.h>
 #include <QtCore/qrect.h>
 
-QT_BEGIN_HEADER
 
 QT_BEGIN_NAMESPACE
 
@@ -175,6 +174,5 @@ inline QPolygonF QPolygonF::translated(qreal dx, qreal dy) const
 
 QT_END_NAMESPACE
 
-QT_END_HEADER
 
 #endif // QPOLYGON_H

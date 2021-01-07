@@ -52,7 +52,6 @@
 #include <QtScript/qscriptvalue.h>
 #include <QtCore/qurl.h>
 
-QT_BEGIN_HEADER
 
 QT_BEGIN_NAMESPACE
 
@@ -115,6 +114,5 @@ QT_END_NAMESPACE
 
 QML_DECLARE_TYPE(QDeclarativeWorkerScript)
 
-QT_END_HEADER
 
 #endif // QDECLARATIVEWORKERSCRIPT_P_H

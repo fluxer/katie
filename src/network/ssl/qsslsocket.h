@@ -40,7 +40,6 @@
 #include <QtNetwork/qtcpsocket.h>
 #include <QtNetwork/qsslerror.h>
 
-QT_BEGIN_HEADER
 
 QT_BEGIN_NAMESPACE
 
@@ -201,6 +200,5 @@ QT_END_NAMESPACE
 
 Q_DECLARE_METATYPE(QList<QSslError>)
 
-QT_END_HEADER
 
 #endif

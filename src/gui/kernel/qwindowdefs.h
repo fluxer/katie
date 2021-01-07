@@ -46,7 +46,6 @@ typedef struct _XRegion *Region;
 typedef unsigned long  WId;
 #endif // Q_WS_X11
 
-QT_BEGIN_HEADER
 
 QT_BEGIN_NAMESPACE
 
@@ -64,6 +63,5 @@ typedef QSet<QWidget *> QWidgetSet;
 
 QT_END_NAMESPACE
 
-QT_END_HEADER
 
 #endif // QWINDOWDEFS_H

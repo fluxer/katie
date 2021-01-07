@@ -39,7 +39,6 @@
 #include <QtCore/QMetaType>
 #include <QtCore/QObject>
 
-QT_BEGIN_HEADER
 
 QT_BEGIN_NAMESPACE
 
@@ -107,6 +106,5 @@ QT_END_NAMESPACE
 Q_DECLARE_METATYPE(QNetworkCookie)
 Q_DECLARE_METATYPE(QList<QNetworkCookie>)
 
-QT_END_HEADER
 
 #endif

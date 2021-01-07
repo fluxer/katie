@@ -47,7 +47,6 @@ typedef std::basic_string<wchar_t> QStdWString;
 
 #include <stdarg.h>
 
-QT_BEGIN_HEADER
 
 QT_BEGIN_NAMESPACE
 
@@ -1087,6 +1086,5 @@ inline bool QStringRef::contains(const QStringRef &s, Qt::CaseSensitivity cs) co
 
 QT_END_NAMESPACE
 
-QT_END_HEADER
 
 #endif // QSTRING_H

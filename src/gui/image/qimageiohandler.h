@@ -37,7 +37,6 @@
 #include <QtCore/qplugin.h>
 #include <QtCore/qfactoryinterface.h>
 
-QT_BEGIN_HEADER
 
 QT_BEGIN_NAMESPACE
 
@@ -139,6 +138,5 @@ Q_DECLARE_OPERATORS_FOR_FLAGS(QImageIOPlugin::Capabilities)
 
 QT_END_NAMESPACE
 
-QT_END_HEADER
 
 #endif // QIMAGEIOHANDLER_H

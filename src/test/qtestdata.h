@@ -38,7 +38,6 @@
 #include <QtCore/qmetatype.h>
 #include <QtCore/qstring.h>
 
-QT_BEGIN_HEADER
 
 QT_BEGIN_NAMESPACE
 
@@ -81,6 +80,5 @@ inline QTestData &operator<<(QTestData &data, const char * value)
 
 QT_END_NAMESPACE
 
-QT_END_HEADER
 
 #endif

@@ -38,7 +38,6 @@
 #include <QtGui/qregion.h>
 #include <QtCore/qline.h>
 
-QT_BEGIN_HEADER
 
 QT_BEGIN_NAMESPACE
 
@@ -162,6 +161,5 @@ Q_GUI_EXPORT QDebug operator<<(QDebug, const QMatrix &);
 
 QT_END_NAMESPACE
 
-QT_END_HEADER
 
 #endif // QMATRIX_H

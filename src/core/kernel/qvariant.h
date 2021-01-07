@@ -38,7 +38,6 @@
 #include <QtCore/qhash.h>
 #include <QtCore/qmap.h>
 
-QT_BEGIN_HEADER
 
 QT_BEGIN_NAMESPACE
 
@@ -484,6 +483,5 @@ Q_DECLARE_BUILTIN_METATYPE(QVariantList, QVariantList)
 Q_DECLARE_BUILTIN_METATYPE(QVariantMap, QVariantMap)
 Q_DECLARE_BUILTIN_METATYPE(QVariantHash, QVariantHash)
 
-QT_END_HEADER
 
 #endif // QVARIANT_H

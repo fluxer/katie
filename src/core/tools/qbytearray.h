@@ -41,7 +41,6 @@
 #include <stdarg.h>
 #include <string>
 
-QT_BEGIN_HEADER
 
 QT_BEGIN_NAMESPACE
 
@@ -541,6 +540,5 @@ static inline int qstrcmp(const QByteArray &str1, const QByteArray &str2)
 
 QT_END_NAMESPACE
 
-QT_END_HEADER
 
 #endif // QBYTEARRAY_H

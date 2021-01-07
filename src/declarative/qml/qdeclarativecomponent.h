@@ -41,7 +41,6 @@
 #include <QtCore/qstring.h>
 #include <QtScript/qscriptvalue.h>
 
-QT_BEGIN_HEADER
 
 QT_BEGIN_NAMESPACE
 
@@ -122,6 +121,5 @@ Q_DECLARE_METATYPE(QDeclarativeComponent::Status)
 QML_DECLARE_TYPE(QDeclarativeComponent)
 QML_DECLARE_TYPEINFO(QDeclarativeComponent, QML_HAS_ATTACHED_PROPERTIES)
 
-QT_END_HEADER
 
 #endif // QDECLARATIVECOMPONENT_H

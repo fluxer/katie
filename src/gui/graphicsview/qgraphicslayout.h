@@ -36,7 +36,6 @@
 
 #include <QtGui/qgraphicslayoutitem.h>
 
-QT_BEGIN_HEADER
 
 #ifndef QT_NO_GRAPHICSVIEW
 
@@ -84,7 +83,6 @@ Q_DECLARE_INTERFACE(QGraphicsLayout, "Katie.QGraphicsLayout")
 
 #endif
 
-QT_END_HEADER
 
 #endif
 

@@ -42,7 +42,6 @@
 #include <QtNetwork/qssl.h>
 #include <QtNetwork/qcryptographichash.h>
 
-QT_BEGIN_HEADER
 
 QT_BEGIN_NAMESPACE
 
@@ -118,6 +117,5 @@ Q_NETWORK_EXPORT QDebug operator<<(QDebug debug, QSslCertificate::SubjectInfo in
 
 QT_END_NAMESPACE
 
-QT_END_HEADER
 
 #endif

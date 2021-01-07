@@ -39,7 +39,6 @@
 #include <QtCore/QObject>
 #include <QtCore/QPair>
 
-QT_BEGIN_HEADER
 
 QT_BEGIN_NAMESPACE
 
@@ -87,6 +86,5 @@ QT_END_NAMESPACE
 
 Q_DECLARE_EXTENSION_INTERFACE(QDesignerLayoutDecorationExtension, "Katie.Designer.LayoutDecoration")
 
-QT_END_HEADER
 
 #endif // LAYOUTDECORATION_H

@@ -36,7 +36,6 @@
 
 #include <QtCore/qstring.h>
 
-QT_BEGIN_HEADER
 
 QT_BEGIN_NAMESPACE
 
@@ -100,6 +99,5 @@ Q_SQL_EXPORT QDebug operator<<(QDebug, const QSqlRecord &);
 
 QT_END_NAMESPACE
 
-QT_END_HEADER
 
 #endif // QSQLRECORD_H

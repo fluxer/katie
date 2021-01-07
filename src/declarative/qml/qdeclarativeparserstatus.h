@@ -36,7 +36,6 @@
 
 #include <QtCore/qobject.h>
 
-QT_BEGIN_HEADER
 
 QT_BEGIN_NAMESPACE
 
@@ -62,6 +61,5 @@ QT_END_NAMESPACE
 
 Q_DECLARE_INTERFACE(QDeclarativeParserStatus, "Katie.qml.QDeclarativeParserStatus")
 
-QT_END_HEADER
 
 #endif // QDECLARATIVEPARSERSTATUS_H

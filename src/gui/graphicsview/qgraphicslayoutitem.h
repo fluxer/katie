@@ -38,7 +38,6 @@
 #include <QtGui/qsizepolicy.h>
 #include <QtGui/qevent.h>
 
-QT_BEGIN_HEADER
 
 #ifndef QT_NO_GRAPHICSVIEW
 
@@ -140,6 +139,5 @@ Q_DECLARE_INTERFACE(QGraphicsLayoutItem, "Katie.QGraphicsLayoutItem")
 
 #endif
 
-QT_END_HEADER
 
 #endif

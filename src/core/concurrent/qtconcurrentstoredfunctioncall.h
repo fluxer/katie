@@ -40,7 +40,6 @@
 #ifndef QT_NO_CONCURRENT
 #include <QtCore/qtconcurrentrunbase.h>
 
-QT_BEGIN_HEADER
 QT_BEGIN_NAMESPACE
 
 namespace QtConcurrent {
@@ -1291,7 +1290,6 @@ private:
 } //namespace QtConcurrent
 
 QT_END_NAMESPACE
-QT_END_HEADER
 
 #endif // QT_NO_CONCURRENT
 

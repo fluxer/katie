@@ -37,7 +37,6 @@
 #include "qdeclarativeflickable_p.h"
 #include "qdeclarativeguard_p.h"
 
-QT_BEGIN_HEADER
 
 QT_BEGIN_NAMESPACE
 
@@ -272,6 +271,5 @@ QT_END_NAMESPACE
 QML_DECLARE_TYPE(QDeclarativeGridView)
 QML_DECLARE_TYPEINFO(QDeclarativeGridView, QML_HAS_ATTACHED_PROPERTIES)
 
-QT_END_HEADER
 
 #endif

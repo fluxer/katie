@@ -36,7 +36,6 @@
 
 #include <QtDeclarative/qdeclarativeitem.h>
 
-QT_BEGIN_HEADER
 
 QT_BEGIN_NAMESPACE
 
@@ -244,6 +243,5 @@ QML_DECLARE_TYPE(QDeclarativeParticleMotionGravity)
 QML_DECLARE_TYPE(QDeclarativeParticleMotionWander)
 QML_DECLARE_TYPE(QDeclarativeParticles)
 
-QT_END_HEADER
 
 #endif
