@@ -949,7 +949,7 @@ static bool read_xpm_body(
             int x;
             char b[16];
             b[cpp] = '\0';
-            for (x=0; x<w && d<end; x++) {
+            for (x = 0; x < w && d < end; x++) {
                 memcpy(b, (char *)d, cpp);
                 *p++ = (QRgb)colorMap[xpmHash(b)];
                 d += cpp;
@@ -1041,12 +1041,11 @@ static bool write_xpm_image(const QImage &sourceImage, QIODevice *device, const 
     QMap<QRgb, int> colorMap;
 
     int w = image.width(), h = image.height(), ncolors = 0;
-    int x, y;
 
     // build color table
-    for(y=0; y<h; y++) {
+    for(int y = 0; y < h; y++) {
         QRgb * yp = (QRgb *)image.scanLine(y);
-        for(x=0; x<w; x++) {
+        for(int x = 0; x < w; x++) {
             QRgb color = *(yp + x);
             if (!colorMap.contains(color))
                 colorMap.insert(color, ncolors++);
@@ -1090,10 +1089,10 @@ static bool write_xpm_image(const QImage &sourceImage, QIODevice *device, const 
 
     // write pixels, limit to 4 characters per pixel
     line.truncate(cpp*w);
-    for(y=0; y<h; y++) {
+    for(int y = 0; y < h; y++) {
         QRgb * yp = (QRgb *) image.scanLine(y);
         int cc = 0;
-        for(x=0; x<w; x++) {
+        for(int x = 0; x < w; x++) {
             int color = (int)(*(yp + x));
             QByteArray chars(xpm_color_name(cpp, colorMap[color]));
             line[cc++] = QLatin1Char(chars[0]);
