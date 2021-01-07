@@ -997,7 +997,7 @@ bool qt_read_xpm_array(const char * const * source, QImage &image)
 
 static const char* xpm_color_name(int cpp, int index)
 {
-    static char returnable[5];
+    static char returnable[4];
     static const char code[] = ".#abcdefghijklmnopqrstuvwxyzABCD"
                                "EFGHIJKLMNOPQRSTUVWXYZ0123456789";
     // cpp is limited to 4 and index is limited to 64^cpp
