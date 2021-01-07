@@ -869,10 +869,9 @@ static bool read_xpm_body(
         buf = color;
         if (buf == "none") {
             hasTransparency = true;
-            int transparentColor = currentColor;
             if (ncols <= 256) {
-                image.setColor(transparentColor, 0);
-                colorMap.insert(xpmHash(index.constData()), transparentColor);
+                image.setColor(currentColor, 0);
+                colorMap.insert(xpmHash(index.constData()), currentColor);
             } else {
                 colorMap.insert(xpmHash(index.constData()), 0);
             }
