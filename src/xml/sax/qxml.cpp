@@ -272,8 +272,9 @@ class QXmlSimpleReaderPrivate
 public:
     ~QXmlSimpleReaderPrivate();
 private:
-    // functions
     QXmlSimpleReaderPrivate(QXmlSimpleReader *reader);
+
+    // functions
     void initIncrementalParsing();
 
     // used to determine if elements are correctly nested
@@ -500,9 +501,7 @@ private:
     void pushParseState(ParseFunction function, int state);
     bool isExpandedEntityValueTooLarge(QString *errorMessage);
 
-    Q_DECLARE_PUBLIC(QXmlSimpleReader)
-    QXmlSimpleReader *q_ptr;
-
+    friend class QXmlSimpleReader;
     friend class QXmlSimpleReaderLocator;
 };
 
@@ -578,7 +577,6 @@ QXmlParseException::QXmlParseException(const QString& name, int c, int l,
 QXmlParseException::QXmlParseException(const QXmlParseException& other) :
      d(new QXmlParseExceptionPrivate(*other.d))
 {
-
 }
 
 /*!
@@ -744,8 +742,8 @@ public:
     Constructs a QXmlNamespaceSupport.
 */
 QXmlNamespaceSupport::QXmlNamespaceSupport()
+    : d(new QXmlNamespaceSupportPrivate())
 {
-    d = new QXmlNamespaceSupportPrivate;
 }
 
 /*!
@@ -2662,23 +2660,20 @@ inline void QXmlSimpleReaderPrivate::refClear()
 }
 
 QXmlSimpleReaderPrivate::QXmlSimpleReaderPrivate(QXmlSimpleReader *reader)
+    : useNamespaces(true),
+    useNamespacePrefixes(false),
+    reportWhitespaceCharData(true),
+    reportEntities(false),
+    locator(new QXmlSimpleReaderLocator(reader)),
+    parseStack(Q_NULLPTR),
+    contentHnd(Q_NULLPTR),
+    errorHnd(Q_NULLPTR),
+    dtdHnd(Q_NULLPTR),
+    entityRes(Q_NULLPTR),
+    lexicalHnd(Q_NULLPTR),
+    declHnd(Q_NULLPTR),
+    inputSource(Q_NULLPTR)
 {
-    q_ptr = reader;
-    parseStack = Q_NULLPTR;
-
-    locator = new QXmlSimpleReaderLocator(reader);
-    entityRes  = 0;
-    dtdHnd     = 0;
-    contentHnd = 0;
-    errorHnd   = 0;
-    lexicalHnd = 0;
-    declHnd    = 0;
-
-    // default feature settings
-    useNamespaces = true;
-    useNamespacePrefixes = false;
-    reportWhitespaceCharData = true;
-    reportEntities = false;
 }
 
 QXmlSimpleReaderPrivate::~QXmlSimpleReaderPrivate()
@@ -3137,8 +3132,7 @@ void QXmlSimpleReader::setEntityResolver(QXmlEntityResolver* handler)
 */
 QXmlEntityResolver* QXmlSimpleReader::entityResolver() const
 {
-    const QXmlSimpleReaderPrivate *d = d_func();
-    return d->entityRes;
+    return d_func()->entityRes;
 }
 
 /*!
@@ -3155,8 +3149,7 @@ void QXmlSimpleReader::setDTDHandler(QXmlDTDHandler* handler)
 */
 QXmlDTDHandler* QXmlSimpleReader::DTDHandler() const
 {
-    const QXmlSimpleReaderPrivate *d = d_func();
-    return d->dtdHnd;
+    return d_func()->dtdHnd;
 }
 
 /*!
