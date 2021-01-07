@@ -11,9 +11,9 @@ COMMENT = C++ toolkit deived from the Qt 4.8 framework
 LICENSE = modified-bsd AND gnu-lgpl-v2.1
 HOMEPAGE = https://github.com/fluxer/katie
 
-MASTER_SITES = https://github.com/fluxer/katie/archive/
+MASTER_SITES = ${MASTER_SITE_GITHUB}/fluxer/katie/archive/
 DIST_SUBDIR = katie
-WRKSRC = ${WRKDIR}/katie-master
+WRKSRC = ${WRKDIR}/katie-${DISTNAME}
 
 USE_CMAKE = yes
 CMAKE_ARGS = -DKATIE_TOOLS_SUFFIX="-katie"
