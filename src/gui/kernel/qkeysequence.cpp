@@ -399,7 +399,7 @@ static const struct KeyNameTblData {
     { Qt::Key_PreviousCandidate,QT_TRANSLATE_NOOP("QShortcut", "Previous Candidate") },
 };
 
-static const short KeyNameTblSize = sizeof(KeyNameTbl) / sizeof(KeyNameTblData);
+static const qint16 KeyNameTblSize = sizeof(KeyNameTbl) / sizeof(KeyNameTblData);
 
 // Table of key bindings, must be sorted by standard key priority
 const QKeyBinding QKeySequencePrivate::keyBindings[] = {
@@ -889,7 +889,7 @@ int QKeySequencePrivate::decodeString(const QString &str, QKeySequence::Sequence
         // For NativeText, check the traslation table first,
         // if we don't find anything then try it out with just the untranlated stuff.
         // PortableText will only try the untranlated table.
-        for (ushort i = 0; i < KeyNameTblSize; ++i) {
+        for (qint16 i = 0; i < KeyNameTblSize; ++i) {
             QString keyName(nativeText
                             ? QShortcut::tr(KeyNameTbl[i].name)
                             : QString::fromLatin1(KeyNameTbl[i].name));
@@ -943,7 +943,7 @@ QString QKeySequencePrivate::encodeString(int key, QKeySequence::SequenceFormat 
                            : QString::fromLatin1("F%1").arg(key - Qt::Key_F1 + 1);
     } else if (key) {
         bool foundmatch = false;
-        for (ushort i = 0; i < KeyNameTblSize; i++) {
+        for (qint16 i = 0; i < KeyNameTblSize; i++) {
             if (KeyNameTbl[i].key == key) {
                 p = nativeText ? QShortcut::tr(KeyNameTbl[i].name)
                                 : QString::fromLatin1(KeyNameTbl[i].name);
