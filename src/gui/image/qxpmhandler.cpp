@@ -843,8 +843,7 @@ static bool read_xpm_body(
             qWarning("QImage: XPM color specification missing");
             return false;
         }
-        QByteArray index;
-        index = buf.left(cpp);
+        QByteArray index = buf.left(cpp);
         buf = buf.mid(cpp).simplified().trimmed().toLower();
         QList<QByteArray> tokens = buf.split(' ');
         int i = tokens.indexOf("c");
