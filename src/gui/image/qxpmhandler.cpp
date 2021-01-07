@@ -985,7 +985,6 @@ bool qt_read_xpm_array(const char * const * source, QImage &image)
     if (!source)
         return true;
 
-    QByteArray buf(200, 0);
     QByteArray state;
 
     int cpp, ncols, w, h, index = 0;
