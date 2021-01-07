@@ -1129,25 +1129,6 @@ bool QXpmHandler::readHeader()
     return true;
 }
 
-bool QXpmHandler::readImage(QImage *image)
-{
-    if (state == Error)
-        return false;
-
-    if (state == Ready && !readHeader()) {
-        state = Error;
-        return false;
-    }
-
-    if (!read_xpm_body(device(), Q_NULLPTR, index, buffer, cpp, ncols, width, height, *image)) {
-        state = Error;
-        return false;
-    }
-
-    state = Ready;
-    return true;
-}
-
 bool QXpmHandler::canRead() const
 {
     if (state == Ready && !canRead(device()))
@@ -1179,7 +1160,22 @@ bool QXpmHandler::read(QImage *image)
 {
     if (!canRead())
         return false;
-    return readImage(image);
+
+    if (state == Error)
+        return false;
+
+    if (state == Ready && !readHeader()) {
+        state = Error;
+        return false;
+    }
+
+    if (!read_xpm_body(device(), Q_NULLPTR, index, buffer, cpp, ncols, width, height, *image)) {
+        state = Error;
+        return false;
+    }
+
+    state = Ready;
+    return true;
 }
 
 bool QXpmHandler::write(const QImage &image)
