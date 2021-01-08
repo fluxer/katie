@@ -181,8 +181,9 @@ bool QFSFileEngine::open(QIODevice::OpenMode openMode)
     }
 
     // Try to open the file.
+    QByteArray native = d->fileEntry.nativeFilePath();
     do {
-        d->fd = QT_OPEN(d->fileEntry.nativeFilePath().constData(), flags, 0666);
+        d->fd = QT_OPEN(native.constData(), flags, 0666);
     } while (d->fd == -1 && errno == EINTR);
 
     // On failure, return and report the error.
