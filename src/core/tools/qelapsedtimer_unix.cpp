@@ -45,18 +45,6 @@ static const bool monotonicClockAvailable = (sysconf(_SC_MONOTONIC_CLOCK) >= 200
 static const bool monotonicClockAvailable = (_POSIX_MONOTONIC_CLOCK > 0);
 #endif
 
-static inline qint64 fractionAdjustment()
-{
-    if (Q_LIKELY(monotonicClockAvailable)) {
-        // the monotonic timer is measured in nanoseconds
-        // 1 ms = 1000000 ns
-        return 1000*1000ull;
-    }
-    // gettimeofday is measured in microseconds
-    // 1 ms = 1000 us
-    return 1000;
-}
-
 bool QElapsedTimer::isMonotonic()
 {
     return monotonicClockAvailable;
@@ -72,18 +60,14 @@ QElapsedTimer::ClockType QElapsedTimer::clockType()
 
 static inline void do_gettime(qint64 *sec, qint64 *frac)
 {
+    timespec ts;
     if (Q_LIKELY(monotonicClockAvailable)) {
-        timespec ts;
         ::clock_gettime(CLOCK_MONOTONIC, &ts);
-        *sec = ts.tv_sec;
-        *frac = ts.tv_nsec;
-        return;
+    } else {
+        ::clock_gettime(CLOCK_REALTIME, &ts);
     }
-    // use gettimeofday
-    struct timeval tv;
-    ::gettimeofday(&tv, Q_NULLPTR);
-    *sec = tv.tv_sec;
-    *frac = tv.tv_usec;
+    *sec = ts.tv_sec;
+    *frac = ts.tv_nsec;
 }
 
 // used in qcore_unix.cpp and qeventdispatcher_unix.cpp
@@ -94,11 +78,7 @@ timeval qt_gettime()
 
     timeval tv;
     tv.tv_sec = sec;
-    if (Q_LIKELY(monotonicClockAvailable)) {
-        tv.tv_usec = frac / 1000;
-    } else {
-        tv.tv_usec = frac;
-    }
+    tv.tv_usec = frac / 1000;
     return tv;
 }
 
@@ -108,7 +88,7 @@ static inline qint64 elapsedAndRestart(qint64 sec, qint64 frac,
     do_gettime(nowsec, nowfrac);
     sec = *nowsec - sec;
     frac = *nowfrac - frac;
-    return sec * Q_INT64_C(1000) + frac / fractionAdjustment();
+    return (sec * Q_INT64_C(1000000000) + frac) / Q_INT64_C(1000000);
 }
 
 void QElapsedTimer::start()
@@ -127,27 +107,24 @@ qint64 QElapsedTimer::nsecsElapsed() const
     do_gettime(&sec, &frac);
     sec = sec - t1;
     frac = frac - t2;
-    if (Q_UNLIKELY(!monotonicClockAvailable))
-        frac *= 1000;
-    return sec * Q_INT64_C(1000000000) + frac;
+    return (sec * Q_INT64_C(1000000000) + frac);
 }
 
 qint64 QElapsedTimer::elapsed() const
 {
-    qint64 sec, frac;
-    return elapsedAndRestart(t1, t2, &sec, &frac);
+    return (nsecsElapsed() / Q_INT64_C(1000000));
 }
 
 qint64 QElapsedTimer::msecsSinceReference() const
 {
-    return t1 * Q_INT64_C(1000) + t2 / fractionAdjustment();
+    return (t1 * Q_INT64_C(1000) + t2 / Q_INT64_C(1000000));
 }
 
 qint64 QElapsedTimer::msecsTo(const QElapsedTimer &other) const
 {
     qint64 secs = other.t1 - t1;
     qint64 fraction = other.t2 - t2;
-    return secs * Q_INT64_C(1000) + fraction / fractionAdjustment();
+    return (secs * Q_INT64_C(1000000000) + fraction) / Q_INT64_C(1000000);;
 }
 
 qint64 QElapsedTimer::secsTo(const QElapsedTimer &other) const
