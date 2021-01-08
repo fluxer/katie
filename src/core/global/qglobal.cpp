@@ -1049,6 +1049,7 @@ void qBadAlloc()
 #ifndef QT_NO_EXECINFO
 static void qt_print_backtrace()
 {
+    ::setvbuf(stderr, Q_NULLPTR, _IONBF, 0);
     void *buffer[256];
     int  nptrs = backtrace(buffer, sizeof(buffer));
     char **strings = backtrace_symbols(buffer, nptrs);
@@ -1062,12 +1063,12 @@ static void qt_print_backtrace()
         int status;
         char* demangled = abi::__cxa_demangle(strings[i], nullptr, nullptr, &status);
         if (status == 0) {
-            ::printf(" %s\n", demangled);
+            ::fprintf(stderr, " %s\n", demangled);
             ::free(demangled);
             continue;
         }
 #endif
-        ::printf(" %s\n", strings[i]);
+        ::fprintf(stderr, " %s\n", strings[i]);
     }
 
     ::free(strings);
@@ -1141,14 +1142,19 @@ int qt_install_crash_handler()
 Q_CONSTRUCTOR_FUNCTION(qt_install_crash_handler);
 #endif
 
+static const bool fatalwarnings = !qgetenv("QT_FATAL_WARNINGS").isNull();
+#ifndef QT_NO_EXECINFO
+static const bool tracewarnings = !qgetenv("QT_TRACE_WARNINGS").isNull();
+#endif
+
 /*
   The Q_ASSERT macro calls this function when the test fails.
 */
 void qt_assert(const char *assertion, const char *file, int line)
 {
 #ifndef QT_NO_EXECINFO
-    // don't print backtrace twice if abort() will be called in qt_message_output()
-    if (qgetenv("QT_FATAL_WARNINGS").isNull())
+    // don't print backtrace twice if trace will be printed in qt_message_output()
+    if (!fatalwarnings)
         qt_print_backtrace();
 #endif
     qFatal("ASSERT: \"%s\" in file %s, line %d", assertion, file, line);
@@ -1160,8 +1166,8 @@ void qt_assert(const char *assertion, const char *file, int line)
 void qt_assert_x(const char *where, const char *what, const char *file, int line)
 {
 #ifndef QT_NO_EXECINFO
-    // don't print backtrace twice if abort() will be called in qt_message_output()
-    if (qgetenv("QT_FATAL_WARNINGS").isNull())
+    // don't print backtrace twice if trace will be printed in qt_message_output()
+    if (!fatalwarnings)
         qt_print_backtrace();
 #endif
     qFatal("ASSERT failure in %s: \"%s\", file %s, line %d", where, what, file, line);
@@ -1240,12 +1246,15 @@ void qt_message_output(QtMsgType msgType, const char *buf)
     if (handler) {
         (*handler)(msgType, buf);
     } else {
-        fprintf(stderr, "%s\n", buf);
-        fflush(stderr);
+        ::fprintf(stderr, "%s\n", buf);
+        ::fflush(stderr);
     }
 
-    static const bool fatalwarnings = qgetenv("QT_FATAL_WARNINGS").isNull();
-    if (msgType == QtFatalMsg || (msgType == QtWarningMsg && !fatalwarnings))
+#ifndef QT_NO_EXECINFO
+    if (msgType == QtWarningMsg && tracewarnings)
+        qt_print_backtrace();
+#endif
+    if (msgType == QtFatalMsg || (msgType == QtWarningMsg && fatalwarnings))
         abort(); // trap; generates core dump
 }
 
