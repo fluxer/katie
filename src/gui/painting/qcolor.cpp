@@ -744,7 +744,7 @@ bool QColor::isValidColor(const QString &name)
     }
 
     QByteArray latin = name.toLatin1();
-    if (name.startsWith(QLatin1Char('#'))) {
+    if (latin.startsWith('#')) {
         QRgb rgb;
         if (qt_get_hex_rgb(latin.constData(), latin.length(), &rgb)) {
             return true;
