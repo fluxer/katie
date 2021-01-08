@@ -49,11 +49,6 @@
 
 QT_BEGIN_NAMESPACE
 
-#if !defined(QT_HAVE_GETADDRINFO)
-#include "qmutex.h"
-Q_GLOBAL_STATIC(QMutex, getHostByNameMutex)
-#endif
-
 QHostInfo QHostInfoAgent::fromName(const QString &hostName)
 {
     QHostInfo results;
@@ -66,7 +61,6 @@ QHostInfo QHostInfoAgent::fromName(const QString &hostName)
     QHostAddress address;
     if (address.setAddress(hostName)) {
         // Reverse lookup
-#if defined(QT_HAVE_GETADDRINFO)
         sockaddr_in sa4;
 #ifndef QT_NO_IPV6
         sockaddr_in6 sa6;
@@ -106,19 +100,6 @@ QHostInfo QHostInfoAgent::fromName(const QString &hostName)
             results.setError(QHostInfo::UnknownError);
             results.setErrorString(QString::fromLocal8Bit(::gai_strerror(result)));
         }
-#else
-        in_addr_t inetaddr = ::inet_addr(hostName.toLatin1().constData());
-        struct hostent *ent = ::gethostbyaddr((const char *)&inetaddr, sizeof(inetaddr), AF_INET);
-        if (ent) {
-            results.setHostName(QString::fromLatin1(ent->h_name));
-        } else if (h_errno == HOST_NOT_FOUND || h_errno == NO_DATA || h_errno == NO_ADDRESS) {
-            results.setError(QHostInfo::HostNotFound);
-            results.setErrorString(tr("Host not found"));
-        } else {
-            results.setError(QHostInfo::UnknownError);
-            results.setErrorString(tr("Unknown error"));
-        }
-#endif
 
         if (results.hostName().isEmpty())
             results.setHostName(address.toString());
@@ -139,7 +120,6 @@ QHostInfo QHostInfoAgent::fromName(const QString &hostName)
         return results;
     }
 
-#if defined(QT_HAVE_GETADDRINFO)
     // Call getaddrinfo, and place all IPv4 addresses at the start and
     // the IPv6 addresses at the end of the address list in results.
     addrinfo *res = 0;
@@ -206,38 +186,6 @@ QHostInfo QHostInfoAgent::fromName(const QString &hostName)
         results.setError(QHostInfo::UnknownError);
         results.setErrorString(QString::fromLocal8Bit(::gai_strerror(result)));
     }
-
-#else
-    // Fall back to gethostbyname for platforms that don't define
-    // getaddrinfo. gethostbyname does not support IPv6, and it's not
-    // reentrant on all platforms. For now this is okay since we only
-    // use one QHostInfoAgent, but if more agents are introduced, locking
-    // must be provided.
-    QMutexLocker locker(getHostByNameMutex());
-    hostent *result = ::gethostbyname(aceHostname.constData());
-    if (result) {
-        if (result->h_addrtype == AF_INET) {
-            QList<QHostAddress> addresses;
-            for (char **p = result->h_addr_list; *p != 0; p++) {
-                QHostAddress addr;
-                addr.setAddress(ntohl(*((quint32 *)*p)));
-                if (!addresses.contains(addr))
-                    addresses.prepend(addr);
-            }
-            results.setAddresses(addresses);
-        } else {
-            results.setError(QHostInfo::UnknownError);
-            results.setErrorString(tr("Unknown address type"));
-        }
-    } else if (h_errno == HOST_NOT_FOUND || h_errno == NO_DATA
-               || h_errno == NO_ADDRESS) {
-        results.setError(QHostInfo::HostNotFound);
-        results.setErrorString(tr("Host not found"));
-    } else {
-        results.setError(QHostInfo::UnknownError);
-        results.setErrorString(tr("Unknown error"));
-    }
-#endif //  defined(QT_HAVE_GETADDRINFO)
 
 #if defined(QHOSTINFO_DEBUG)
     if (results.error() != QHostInfo::NoError) {

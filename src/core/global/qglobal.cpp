@@ -1178,7 +1178,7 @@ QString qt_error_string(int errorCode)
     //    be the beginning of the buffer we used
     // The GNU libc manpage for strerror_r says you should use the the XSI
     // version in portable code.
-#if !defined(QT_NO_THREAD) && defined(QT_HAVE_STRERROR_R)
+#if !defined(QT_NO_THREAD)
     char errbuf[1024];
     ::memset(errbuf, '\0', sizeof(errbuf));
     if (Q_LIKELY(::strerror_r(errorCode, errbuf, sizeof(errbuf)))) {

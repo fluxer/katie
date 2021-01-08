@@ -34,12 +34,10 @@
 #include "qbytearray.h"
 #include "qstring.h"
 
-#include <string.h>
-#include <stdio.h>
-
 QT_BEGIN_NAMESPACE
 
 /*!
+    \fn return qvsnprintf(str, n, fmt, ap);
     \relates QByteArray
 
     A portable \c vsnprintf() function. Will call \c ::vsnprintf(), \c
@@ -60,29 +58,6 @@ QT_BEGIN_NAMESPACE
 
     \sa qsnprintf(), QString::sprintf()
 */
-
-int qvsnprintf(char *str, size_t n, const char *fmt, va_list ap)
-{
-#ifdef QT_HAVE_VSNPRINTF
-    return ::vsnprintf(str, n, fmt, ap);
-#else
-    if (!str || !fmt)
-        return -1;
-
-    QString buf;
-    buf.vsprintf(fmt, ap);
-
-    QByteArray ba = buf.toLocal8Bit();
-
-    if (n > 0) {
-        size_t blen = qMin(size_t(ba.length()), size_t(n - 1));
-        memcpy(str, ba.constData(), blen);
-        str[blen] = '\0'; // make sure str is always 0 terminated
-    }
-
-    return ba.length();
-#endif
-}
 
 /*!
     \relates QByteArray

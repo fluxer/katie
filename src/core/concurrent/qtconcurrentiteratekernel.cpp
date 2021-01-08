@@ -49,7 +49,6 @@ enum {
 
 static qint64 getticks()
 {
-#ifdef QT_HAVE_CLOCK_GETTIME
     clockid_t clockId = CLOCK_REALTIME;
 
 #if defined(_SC_THREAD_CPUTIME) && defined(CLOCK_THREAD_CPUTIME_ID)
@@ -64,12 +63,6 @@ static qint64 getticks()
     if (::clock_gettime(clockId, &ts) == -1)
         return 0;
     return (ts.tv_sec * 1000000000) + ts.tv_nsec;
-#else
-    // no clock_gettime(), fall back to wall time
-    struct timeval tv;
-    ::gettimeofday(&tv, Q_NULLPTR);
-    return (tv.tv_sec * 1000000) + tv.tv_usec;
-#endif // QT_HAVE_CLOCK_GETTIME
 }
 
 static inline double elapsed(qint64 after, qint64 before)

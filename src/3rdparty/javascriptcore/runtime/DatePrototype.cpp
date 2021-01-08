@@ -34,10 +34,7 @@
 #include <math.h>
 #include <time.h>
 #include <sys/time.h>
-
-#if defined(QT_HAVE_NL_LANGINFO)
 #include <langinfo.h>
-#endif
 
 using namespace WTF;
 
@@ -102,11 +99,7 @@ enum LocaleDateTimeFormat { LocaleDateAndTime, LocaleDate, LocaleTime };
 
 static JSCell* formatLocaleDate(ExecState* exec, const GregorianDateTime& gdt, LocaleDateTimeFormat format)
 {
-#if defined(QT_HAVE_NL_LANGINFO)
     static const nl_item formats[] = { D_T_FMT, D_FMT, T_FMT };
-#else
-    static const char* const formatStrings[] = { "%#c", "%#x", "%X" };
-#endif
  
     // Offset year if needed
     struct tm localTM = gdt;
@@ -115,7 +108,6 @@ static JSCell* formatLocaleDate(ExecState* exec, const GregorianDateTime& gdt, L
     if (yearNeedsOffset)
         localTM.tm_year = equivalentYearForDST(year) - 1900;
  
-#if defined(QT_HAVE_NL_LANGINFO)
     // We do not allow strftime to generate dates with 2-digits years,
     // both to avoid ambiguity, and a crash in strncpy, for years that
     // need offset.
@@ -123,18 +115,13 @@ static JSCell* formatLocaleDate(ExecState* exec, const GregorianDateTime& gdt, L
     char* yPos = strchr(formatString, 'y');
     if (yPos)
         *yPos = 'Y';
-#endif
 
     // Do the formatting
     const int bufsize = 128;
     char timebuffer[bufsize];
 
-#if defined(QT_HAVE_NL_LANGINFO)
     size_t ret = ::strftime(timebuffer, bufsize, formatString, &localTM);
     ::free(formatString);
-#else
-    size_t ret = ::strftime(timebuffer, bufsize, formatStrings[format], &localTM);
-#endif
  
     if (ret == 0)
         return jsEmptyString(exec);

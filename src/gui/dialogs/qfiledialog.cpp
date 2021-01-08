@@ -827,7 +827,6 @@ Q_AUTOTEST_EXPORT QString qt_tildeExpansion(const QString &path, bool *expanded 
     } else {
         QString userName = tokens.first();
         userName.remove(0, 1);
-#if defined(QT_HAVE_GETPWNAM_R)
         static long size_max = sysconf(_SC_GETPW_R_SIZE_MAX);
         if (size_max == -1)
             size_max = 1024;
@@ -838,12 +837,6 @@ Q_AUTOTEST_EXPORT QString qt_tildeExpansion(const QString &path, bool *expanded 
         if (!tmpPw)
             return ret;
         const QString homePath = QString::fromLocal8Bit(pw.pw_dir);
-#else
-        struct passwd *pw = ::getpwnam(userName.toLocal8Bit().constData());
-        if (!pw)
-            return ret;
-        const QString homePath = QString::fromLocal8Bit(pw->pw_dir);
-#endif // QT_HAVE_GETPWNAM_R
         ret.replace(0, tokens.first().length(), homePath);
     }
     if (expanded != 0)

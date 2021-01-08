@@ -56,10 +56,7 @@
 #include <stdlib.h>
 #include <ctype.h>
 #include <locale.h>
-
-#if defined(QT_HAVE_NL_LANGINFO)
 #include <langinfo.h>
-#endif
 
 // enabling this is not exception safe!
 // #define Q_DEBUG_TEXTCODEC
@@ -192,13 +189,11 @@ static void setupLocaleMapper()
 
     }
 
-#if defined(QT_HAVE_NL_LANGINFO)
     if (!localeMapper) {
         const char *charset = ::nl_langinfo(CODESET);
         if (charset)
             localeMapper = QTextCodec::codecForName(charset);
     }
-#endif
 
     // If everything failed, we default to 8859-1
     // We could perhaps default to 8859-15.

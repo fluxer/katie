@@ -145,7 +145,7 @@ QFileSystemEntry QFileSystemEngine::absoluteName(const QFileSystemEntry &entry)
 
 Q_CORE_EXPORT QString qt_resolveUserName(uint userId)
 {
-#if !defined(QT_NO_THREAD) && defined(QT_HAVE_GETPWUID_R)
+#if !defined(QT_NO_THREAD)
     static long size_max = sysconf(_SC_GETPW_R_SIZE_MAX);
     if (size_max == -1)
         size_max = 1024;
@@ -170,7 +170,7 @@ QString QFileSystemEngine::resolveUserName(uint userId)
 //static
 QString QFileSystemEngine::resolveGroupName(uint groupId)
 {
-#if !defined(QT_NO_THREAD) && defined(QT_HAVE_GETGRGID_R)
+#if !defined(QT_NO_THREAD)
     static long size_max = sysconf(_SC_GETGR_R_SIZE_MAX);
     if (size_max == -1)
         size_max = 1024;

@@ -39,21 +39,19 @@
 
 QT_BEGIN_NAMESPACE
 
-#if defined(QT_HAVE_CLOCK_GETTIME) && defined(_SC_MONOTONIC_CLOCK)
+#if defined(_SC_MONOTONIC_CLOCK)
 static const bool monotonicClockAvailable = (sysconf(_SC_MONOTONIC_CLOCK) >= 200112L);
-#elif defined(QT_HAVE_CLOCK_GETTIME)
+#else
 static const bool monotonicClockAvailable = (_POSIX_MONOTONIC_CLOCK > 0);
 #endif
 
 static inline qint64 fractionAdjustment()
 {
-#ifdef QT_HAVE_CLOCK_GETTIME
     if (Q_LIKELY(monotonicClockAvailable)) {
         // the monotonic timer is measured in nanoseconds
         // 1 ms = 1000000 ns
         return 1000*1000ull;
     }
-#endif
     // gettimeofday is measured in microseconds
     // 1 ms = 1000 us
     return 1000;
@@ -61,26 +59,19 @@ static inline qint64 fractionAdjustment()
 
 bool QElapsedTimer::isMonotonic()
 {
-#ifdef QT_HAVE_CLOCK_GETTIME
     return monotonicClockAvailable;
-#else
-    return false;
-#endif
 }
 
 QElapsedTimer::ClockType QElapsedTimer::clockType()
 {
-#ifdef QT_HAVE_CLOCK_GETTIME
     if (Q_LIKELY(monotonicClockAvailable)) {
         return QElapsedTimer::MonotonicClock;
     }
-#endif
     return QElapsedTimer::SystemTime;
 }
 
 static inline void do_gettime(qint64 *sec, qint64 *frac)
 {
-#ifdef QT_HAVE_CLOCK_GETTIME
     if (Q_LIKELY(monotonicClockAvailable)) {
         timespec ts;
         ::clock_gettime(CLOCK_MONOTONIC, &ts);
@@ -88,7 +79,6 @@ static inline void do_gettime(qint64 *sec, qint64 *frac)
         *frac = ts.tv_nsec;
         return;
     }
-#endif
     // use gettimeofday
     struct timeval tv;
     ::gettimeofday(&tv, Q_NULLPTR);
@@ -104,13 +94,11 @@ timeval qt_gettime()
 
     timeval tv;
     tv.tv_sec = sec;
-#ifdef QT_HAVE_CLOCK_GETTIME
-    if (Q_LIKELY(monotonicClockAvailable))
+    if (Q_LIKELY(monotonicClockAvailable)) {
         tv.tv_usec = frac / 1000;
-    else
-#endif
+    } else {
         tv.tv_usec = frac;
-
+    }
     return tv;
 }
 
@@ -139,10 +127,8 @@ qint64 QElapsedTimer::nsecsElapsed() const
     do_gettime(&sec, &frac);
     sec = sec - t1;
     frac = frac - t2;
-#ifdef QT_HAVE_CLOCK_GETTIME
     if (Q_UNLIKELY(!monotonicClockAvailable))
         frac *= 1000;
-#endif
     return sec * Q_INT64_C(1000000000) + frac;
 }
 

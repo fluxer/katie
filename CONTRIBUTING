@@ -21,7 +21,7 @@ edit pages on the wiki.
 
 ## Standards
 All standard and extension requirements for optional feature should be checked
-for during build if they are newer than POSIX.1c
+for during build if they are newer than POSIX.1-2001
 (https://en.wikipedia.org/wiki/POSIX). Read any documentation that may be
 relevant to the changes you make such as manual pages for Linux
 (https://linux.die.net/man/), FreeBSD (https://www.freebsd.org/cgi/man.cgi),

@@ -44,7 +44,7 @@
 #include <float.h>
 #include <stdlib.h>
 
-#if defined(Q_OS_LINUX) && defined(QT_HAVE_FEGETENV) && defined(QT_HAVE_FESETENV) \
+#if defined(Q_OS_LINUX) \
     && defined(QT_HAVE_FECLEAREXCEPT) && defined(QT_HAVE_FEENABLEEXCEPT)
 #  define TEST_FP_EXCEPTION
 #endif
