@@ -47,7 +47,6 @@
 #include <QtGui/QAbstractAnimation>
 #include <QtGui/qcolor.h>
 
-QT_BEGIN_HEADER
 
 QT_BEGIN_NAMESPACE
 
@@ -514,6 +513,5 @@ QML_DECLARE_TYPE(QDeclarativeRotationAnimation)
 QML_DECLARE_TYPE(QDeclarativeParentAnimation)
 QML_DECLARE_TYPE(QDeclarativeAnchorAnimation)
 
-QT_END_HEADER
 
 #endif // QDECLARATIVEANIMATION_H

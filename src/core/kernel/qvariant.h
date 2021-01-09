@@ -38,7 +38,6 @@
 #include <QtCore/qhash.h>
 #include <QtCore/qmap.h>
 
-QT_BEGIN_HEADER
 
 QT_BEGIN_NAMESPACE
 
@@ -406,7 +405,7 @@ inline bool qvariant_cast_helper(const QVariant &v, QVariant::Type tp, void *ptr
 template <typename T>
 inline QVariant qVariantFromValue(const T &t)
 {
-    return QVariant(qMetaTypeId<T>(reinterpret_cast<T *>(0)), &t, QTypeInfo<T>::isPointer);
+    return QVariant(qMetaTypeId<T>(), &t, QTypeInfo<T>::isPointer);
 }
 
 template <>
@@ -416,7 +415,7 @@ template <typename T>
 inline void qVariantSetValue(QVariant &v, const T &t)
 {
     //if possible we reuse the current QVariant private
-    const int type = qMetaTypeId<T>(reinterpret_cast<T *>(0));
+    const int type = qMetaTypeId<T>();
     QVariant::Private &d = v.data_ptr();
     if (v.isDetached() && (type == d.type || (type <= QVariant::Char && d.type <= QVariant::Char))) {
         d.type = type;
@@ -451,7 +450,7 @@ Q_CORE_EXPORT QDataStream& operator<< (QDataStream& s, const QVariant::Type p);
 #ifndef QT_MOC
 template<typename T> inline T qvariant_cast(const QVariant &v)
 {
-    const int vid = qMetaTypeId<T>(static_cast<T *>(Q_NULLPTR));
+    const int vid = qMetaTypeId<T>();
     if (vid == v.userType())
         return *reinterpret_cast<const T *>(v.constData());
     if (vid < int(QMetaType::User)) {
@@ -484,6 +483,5 @@ Q_DECLARE_BUILTIN_METATYPE(QVariantList, QVariantList)
 Q_DECLARE_BUILTIN_METATYPE(QVariantMap, QVariantMap)
 Q_DECLARE_BUILTIN_METATYPE(QVariantHash, QVariantHash)
 
-QT_END_HEADER
 
 #endif // QVARIANT_H

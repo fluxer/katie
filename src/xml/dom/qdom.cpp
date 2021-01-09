@@ -907,24 +907,24 @@ QDomImplementationPrivate* QDomImplementationPrivate::clone()
     Constructs a QDomImplementation object.
 */
 QDomImplementation::QDomImplementation()
+    : impl(Q_NULLPTR)
 {
-    impl = 0;
 }
 
 /*!
     Constructs a copy of \a x.
 */
 QDomImplementation::QDomImplementation(const QDomImplementation &x)
+    : impl(x.impl)
 {
-    impl = x.impl;
     if (impl)
         impl->ref.ref();
 }
 
 QDomImplementation::QDomImplementation(QDomImplementationPrivate *p)
+    : impl(p)
 {
     // We want to be co-owners, so increase the reference count
-    impl = p;
     if (impl)
         impl->ref.ref();
 }
@@ -2012,8 +2012,8 @@ void QDomNodePrivate::setLocation(int lineNumber, int columnNumber)
     Constructs a \link isNull() null\endlink node.
 */
 QDomNode::QDomNode()
+    : impl(Q_NULLPTR)
 {
-    impl = 0;
 }
 
 /*!
@@ -2024,8 +2024,8 @@ QDomNode::QDomNode()
     cloneNode().
 */
 QDomNode::QDomNode(const QDomNode &n)
+    : impl(n.impl)
 {
-    impl = n.impl;
     if (impl)
         impl->ref.ref();
 }
@@ -2034,8 +2034,8 @@ QDomNode::QDomNode(const QDomNode &n)
   Constructs a new node for the data \a n.
 */
 QDomNode::QDomNode(QDomNodePrivate *n)
+    : impl(n)
 {
-    impl = n;
     if (impl)
         impl->ref.ref();
 }
@@ -2629,7 +2629,7 @@ bool QDomNode::hasChildNodes() const
 */
 bool QDomNode::isNull() const
 {
-    return (impl == 0);
+    return (impl == Q_NULLPTR);
 }
 
 /*!
@@ -2642,7 +2642,7 @@ void QDomNode::clear()
 {
     if (impl && !impl->ref.deref())
         delete impl;
-    impl = 0;
+    impl = Q_NULLPTR;
 }
 
 /*!
@@ -3221,23 +3221,23 @@ bool QDomNamedNodeMapPrivate::containsNS(const QString& nsURI, const QString & l
     Constructs an empty named node map.
 */
 QDomNamedNodeMap::QDomNamedNodeMap()
+    : impl(Q_NULLPTR)
 {
-    impl = 0;
 }
 
 /*!
     Constructs a copy of \a n.
 */
 QDomNamedNodeMap::QDomNamedNodeMap(const QDomNamedNodeMap &n)
+    : impl(n.impl)
 {
-    impl = n.impl;
     if (impl)
         impl->ref.ref();
 }
 
 QDomNamedNodeMap::QDomNamedNodeMap(QDomNamedNodeMapPrivate *n)
+    : impl(n)
 {
-    impl = n;
     if (impl)
         impl->ref.ref();
 }
@@ -3643,7 +3643,8 @@ void QDomDocumentTypePrivate::save(QTextStream& s, int, int indent) const
 /*!
     Creates an empty QDomDocumentType object.
 */
-QDomDocumentType::QDomDocumentType() : QDomNode()
+QDomDocumentType::QDomDocumentType()
+    : QDomNode()
 {
 }
 
@@ -3824,6 +3825,7 @@ QDomNodePrivate* QDomDocumentFragmentPrivate::cloneNode(bool deep)
     Constructs an empty document fragment.
 */
 QDomDocumentFragment::QDomDocumentFragment()
+    : QDomNode()
 {
 }
 
@@ -3958,6 +3960,7 @@ void QDomCharacterDataPrivate::appendData(const QString& arg)
     Constructs an empty character data object.
 */
 QDomCharacterData::QDomCharacterData()
+    : QDomNode()
 {
 }
 
@@ -4284,6 +4287,7 @@ void QDomAttrPrivate::save(QTextStream& s, int, int) const
     Constructs an empty attribute.
 */
 QDomAttr::QDomAttr()
+    : QDomNode()
 {
 }
 
@@ -6562,8 +6566,8 @@ void QDomDocumentPrivate::saveDocument(QTextStream& s, const int indent, QDomNod
     Constructs an empty document.
 */
 QDomDocument::QDomDocument()
+    : QDomNode()
 {
-    impl = 0;
 }
 
 /*!
@@ -6571,9 +6575,8 @@ QDomDocument::QDomDocument()
     name.
 */
 QDomDocument::QDomDocument(const QString& name)
+    : QDomNode(new QDomDocumentPrivate(name)) // We take over ownership
 {
-    // We take over ownership
-    impl = new QDomDocumentPrivate(name);
 }
 
 /*!
@@ -6582,8 +6585,8 @@ QDomDocument::QDomDocument(const QString& name)
     \sa QDomImplementation::createDocumentType()
 */
 QDomDocument::QDomDocument(const QDomDocumentType& doctype)
+    : QDomNode(new QDomDocumentPrivate((QDomDocumentTypePrivate*)(doctype.impl)))
 {
-    impl = new QDomDocumentPrivate((QDomDocumentTypePrivate*)(doctype.impl));
 }
 
 /*!

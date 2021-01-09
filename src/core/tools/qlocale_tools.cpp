@@ -90,8 +90,7 @@ QString &decimalForm(QChar zero, QChar decimal, QChar group,
         for (int i = 0; i < -decpt; ++i)
             digits.prepend(zero);
         decpt = 0;
-    }
-    else if (decpt > digits.length()) {
+    } else if (decpt > digits.length()) {
         for (int i = digits.length(); i < decpt; ++i)
             digits.append(zero);
     }
@@ -100,12 +99,9 @@ QString &decimalForm(QChar zero, QChar decimal, QChar group,
         uint decimal_digits = digits.length() - decpt;
         for (uint i = decimal_digits; i < precision; ++i)
             digits.append(zero);
-    }
-    else if (pm == PMSignificantDigits) {
+    } else if (pm == PMSignificantDigits) {
         for (uint i = digits.length(); i < precision; ++i)
             digits.append(zero);
-    }
-    else { // pm == PMChopTrailingZeros
     }
 
     if (always_show_decpt || decpt < digits.length())
@@ -243,12 +239,13 @@ bool qt_initLocale(const QString &locale)
 {
     qt_deinitLocale();
 
+    QByteArray latinlocale = locale.toLatin1();
     UErrorCode error = U_ZERO_ERROR;
-    icuCollator = ucol_open(locale.toLatin1().constData(), &error);
+    icuCollator = ucol_open(latinlocale.constData(), &error);
 
     if (Q_UNLIKELY(U_FAILURE(error))) {
         qWarning("qt_initLocale: ucol_open(%s) failed %s",
-            locale.toLatin1().constData(), u_errorName(error));
+            latinlocale.constData(), u_errorName(error));
         return false;
     }
 
@@ -275,13 +272,14 @@ bool qt_u_strToUpper(const QString &str, QString *out, const QLocale &locale)
     Q_ASSERT(out);
     out->resize(QMAXUSTRLEN(str.size()));
 
+    QByteArray latinbcp47 = locale.bcp47Name().toLatin1();
     UErrorCode error = U_ZERO_ERROR;
     const int upperresult = u_strToUpper(reinterpret_cast<UChar*>(out->data()), out->size(),
         reinterpret_cast<const UChar*>(str.unicode()), str.size(),
-        locale.bcp47Name().toLatin1().constData(), &error);
+        latinbcp47.constData(), &error);
     if (Q_UNLIKELY(U_FAILURE(error))) {
         qWarning("qt_u_strToUpper: u_strToUpper(%s) failed %s",
-            locale.bcp47Name().toLatin1().constData(), u_errorName(error));
+            latinbcp47.constData(), u_errorName(error));
         out->clear();
         return false;
     }
@@ -295,13 +293,14 @@ bool qt_u_strToLower(const QString &str, QString *out, const QLocale &locale)
     Q_ASSERT(out);
     out->resize(QMAXUSTRLEN(str.size()));
 
+    QByteArray latinbcp47 = locale.bcp47Name().toLatin1();
     UErrorCode error = U_ZERO_ERROR;
     const int lowerresult = u_strToLower(reinterpret_cast<UChar*>(out->data()), out->size(),
         reinterpret_cast<const UChar*>(str.unicode()), str.size(),
-        locale.bcp47Name().toLatin1().constData(), &error);
+        latinbcp47.constData(), &error);
     if (Q_UNLIKELY(U_FAILURE(error))) {
         qWarning("qt_u_strToLower: u_strToLower(%s) failed %s",
-            locale.bcp47Name().toLatin1().constData(), u_errorName(error));
+            latinbcp47.constData(), u_errorName(error));
         out->clear();
         return false;
     }

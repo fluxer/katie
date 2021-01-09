@@ -118,7 +118,8 @@ QString QNetworkInterfacePrivate::makeHwAddress(int len, uchar *data)
 {
     QString result;
     for (int i = 0; i < len; ++i) {
-        result += QLatin1Char(':');
+        if (i)
+            result += QLatin1Char(':');
 
         char buf[3];
         sprintf(buf, "%02hX", ushort(data[i]));

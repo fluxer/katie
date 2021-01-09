@@ -37,7 +37,6 @@
 #include <QtGui/qwidget.h>
 #include <QtCore/qdatetime.h>
 
-QT_BEGIN_HEADER
 
 QT_BEGIN_NAMESPACE
 
@@ -184,7 +183,6 @@ private:
 
 QT_END_NAMESPACE
 
-QT_END_HEADER
 
 #endif // QCALENDARWIDGET_H
 

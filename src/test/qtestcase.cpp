@@ -1090,9 +1090,7 @@ Q_TEST_EXPORT void qtest_qParseArgs(int argc, char *argv[], bool qml)
 #endif
          "\n"
          " Benchmark related options:\n"
-#ifdef QT_HAVE_CLOCK_GETTIME
         " -tickcounter    : Use CPU tick counters to time benchmarks\n"
-#endif
         " -eventcounter   : Counts events received during benchmarks\n"
         " -minimumvalue n : Sets the minimum acceptable measurement value\n"
         " -iterations  n  : Sets the number of accumulation iterations.\n"
@@ -1178,10 +1176,8 @@ Q_TEST_EXPORT void qtest_qParseArgs(int argc, char *argv[], bool qml)
 #endif
         } else if (strcmp(argv[i], "-keyevent-verbose") == 0) {
             QTest::keyVerbose = 1;
-#ifdef QT_HAVE_CLOCK_GETTIME
         } else if (strcmp(argv[i], "-tickcounter") == 0) {
             QBenchmarkGlobalData::current->setMode(QBenchmarkGlobalData::TickCounter);
-#endif
         } else if (strcmp(argv[i], "-eventcounter") == 0) {
             QBenchmarkGlobalData::current->setMode(QBenchmarkGlobalData::EventCounter);
         } else if (strcmp(argv[i], "-random") == 0) {

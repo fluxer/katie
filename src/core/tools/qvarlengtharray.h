@@ -39,7 +39,6 @@
 
 #include <new>
 
-QT_BEGIN_HEADER
 
 QT_BEGIN_NAMESPACE
 
@@ -377,6 +376,5 @@ bool operator!=(const QVarLengthArray<T, Prealloc1> &l, const QVarLengthArray<T,
 
 QT_END_NAMESPACE
 
-QT_END_HEADER
 
 #endif // QVARLENGTHARRAY_H

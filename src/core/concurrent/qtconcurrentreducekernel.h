@@ -46,7 +46,6 @@
 #include <QtCore/qthreadpool.h>
 #include <QtCore/qvector.h>
 
-QT_BEGIN_HEADER
 QT_BEGIN_NAMESPACE
 
 namespace QtConcurrent {
@@ -233,7 +232,6 @@ struct SequenceHolder2 : public Base
 } // namespace QtConcurrent
 
 QT_END_NAMESPACE
-QT_END_HEADER
 
 #endif // QT_NO_CONCURRENT
 

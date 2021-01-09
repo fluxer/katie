@@ -46,7 +46,6 @@
 //
 
 #include "QtGui/qwindowdefs.h"
-#include "QtCore/qhash.h"
 #include "QtCore/qlist.h"
 #include "QtCore/qvariant.h"
 
@@ -225,7 +224,6 @@ struct QX11Data
     Colormap *argbColormaps;
     int screenCount;
     int defaultScreen;
-    QHash<int, int> bppForDepth;
 
     Time time;
     Time userTime;

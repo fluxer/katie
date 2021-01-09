@@ -42,7 +42,6 @@
 #include <QtCore/qtconcurrentreducekernel.h>
 #include <QtCore/qtconcurrentfunctionwrappers.h>
 
-QT_BEGIN_HEADER
 QT_BEGIN_NAMESPACE
 
 
@@ -255,7 +254,6 @@ typename QtPrivate::MapResultType<Iterator, MapFunctor>::ResultType blockingMapp
 
 
 QT_END_NAMESPACE
-QT_END_HEADER
 
 #endif // QT_NO_CONCURRENT
 

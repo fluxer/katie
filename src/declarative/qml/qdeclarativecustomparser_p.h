@@ -52,7 +52,6 @@
 
 #include <QtCore/qbytearray.h>
 
-QT_BEGIN_HEADER
 
 QT_BEGIN_NAMESPACE
 
@@ -152,6 +151,5 @@ QT_END_NAMESPACE
 Q_DECLARE_METATYPE(QDeclarativeCustomParserProperty)
 Q_DECLARE_METATYPE(QDeclarativeCustomParserNode)
 
-QT_END_HEADER
 
 #endif

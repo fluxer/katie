@@ -40,7 +40,6 @@
 #error qtemporaryfile.h must be included before any header file that defines open
 #endif
 
-QT_BEGIN_HEADER
 
 QT_BEGIN_NAMESPACE
 
@@ -93,6 +92,5 @@ private:
 
 QT_END_NAMESPACE
 
-QT_END_HEADER
 
 #endif // QTEMPORARYFILE_H

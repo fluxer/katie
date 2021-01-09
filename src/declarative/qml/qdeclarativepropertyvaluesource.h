@@ -36,7 +36,6 @@
 
 #include <QtCore/qobject.h>
 
-QT_BEGIN_HEADER
 
 QT_BEGIN_NAMESPACE
 
@@ -54,6 +53,5 @@ QT_END_NAMESPACE
 
 Q_DECLARE_INTERFACE(QDeclarativePropertyValueSource, "Katie.qml.QDeclarativePropertyValueSource")
 
-QT_END_HEADER
 
 #endif // QDECLARATIVEPROPERTYVALUESOURCE_H

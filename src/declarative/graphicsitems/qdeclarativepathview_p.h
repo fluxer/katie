@@ -37,7 +37,6 @@
 #include "qdeclarativeitem.h"
 #include "qdeclarativepath_p.h"
 
-QT_BEGIN_HEADER
 
 QT_BEGIN_NAMESPACE
 
@@ -238,6 +237,5 @@ QT_END_NAMESPACE
 
 QML_DECLARE_TYPE(QDeclarativePathView)
 QML_DECLARE_TYPEINFO(QDeclarativePathView, QML_HAS_ATTACHED_PROPERTIES)
-QT_END_HEADER
 
 #endif // QDECLARATIVEPATHVIEW_H

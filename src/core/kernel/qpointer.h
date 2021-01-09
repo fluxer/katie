@@ -36,7 +36,6 @@
 
 #include <QtCore/qsharedpointer.h>
 
-QT_BEGIN_HEADER
 
 QT_BEGIN_NAMESPACE
 
@@ -109,6 +108,5 @@ inline bool operator!= (const QPointer<T> &p1, const QPointer<T> &p2)
 
 QT_END_NAMESPACE
 
-QT_END_HEADER
 
 #endif // QPOINTER_H

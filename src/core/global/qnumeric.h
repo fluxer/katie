@@ -39,7 +39,6 @@
 #include <cmath>
 #include <limits>
 
-QT_BEGIN_HEADER
 
 QT_BEGIN_NAMESPACE
 
@@ -56,6 +55,5 @@ inline double qInf() { return std::numeric_limits<double>::infinity(); }
 
 QT_END_NAMESPACE
 
-QT_END_HEADER
 
 #endif // QNUMERIC_H

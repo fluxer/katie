@@ -1167,12 +1167,6 @@ void qt_init(QApplicationPrivate *priv, int,
         qt_x11Data->defaultScreen = DefaultScreen(qt_x11Data->display);
         qt_x11Data->screenCount = ScreenCount(qt_x11Data->display);
 
-        int formatCount = 0;
-        XPixmapFormatValues *values = XListPixmapFormats(qt_x11Data->display, &formatCount);
-        for (int i = 0; i < formatCount; ++i)
-            qt_x11Data->bppForDepth[values[i].depth] = values[i].bits_per_pixel;
-        XFree(values);
-
         qt_x11Data->screens = new QX11InfoData[qt_x11Data->screenCount];
         qt_x11Data->argbVisuals = new Visual *[qt_x11Data->screenCount];
         qt_x11Data->argbColormaps = new Colormap[qt_x11Data->screenCount];

@@ -47,7 +47,6 @@
 
 #include <QtDesigner/extension.h>
 
-QT_BEGIN_HEADER
 
 QT_BEGIN_NAMESPACE
 
@@ -69,6 +68,5 @@ QT_END_NAMESPACE
 
 Q_DECLARE_EXTENSION_INTERFACE(QDesignerDynamicPropertySheetExtension, "Katie.Designer.DynamicPropertySheet")
 
-QT_END_HEADER
 
 #endif // DYNAMICPROPERTYSHEET_H

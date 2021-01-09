@@ -36,7 +36,6 @@
 
 #include <QtCore/qstring.h>
 
-QT_BEGIN_HEADER
 
 struct DBusError;
 
@@ -102,6 +101,5 @@ Q_DBUS_EXPORT QDebug operator<<(QDebug, const QDBusError &);
 
 QT_END_NAMESPACE
 
-QT_END_HEADER
 
 #endif

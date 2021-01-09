@@ -36,7 +36,6 @@
 
 #include <QtCore/qglobal.h>
 
-QT_BEGIN_HEADER
 
 QT_BEGIN_NAMESPACE
 
@@ -50,6 +49,5 @@ namespace QTest
 
 QT_END_NAMESPACE
 
-QT_END_HEADER
 
 #endif

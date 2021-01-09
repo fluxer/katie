@@ -100,10 +100,6 @@ using namespace qdesigner_internal;
 
 const char *QDesignerActions::defaultToolbarPropertyName = "__qt_defaultToolBarAction";
 
-//#ifdef Q_WS_MAC
-#  define NONMODAL_PREVIEW
-//#endif
-
 static QAction *createSeparator(QObject *parent) {
     QAction * rc = new QAction(parent);
     rc->setSeparator(true);

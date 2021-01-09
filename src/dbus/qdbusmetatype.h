@@ -38,7 +38,6 @@
 #include <QtDBus/qdbusargument.h>
 
 
-QT_BEGIN_HEADER
 
 QT_BEGIN_NAMESPACE
 
@@ -66,7 +65,7 @@ void qDBusDemarshallHelper(const QDBusArgument &arg, T *t)
 { arg >> *t; }
 
 template<typename T>
-int qDBusRegisterMetaType(T * /* dummy */ = Q_NULLPTR)
+int qDBusRegisterMetaType()
 {
     void (*mf)(QDBusArgument &, const T *) = qDBusMarshallHelper<T>;
     void (*df)(const QDBusArgument &, T *) = qDBusDemarshallHelper<T>;
@@ -80,6 +79,5 @@ int qDBusRegisterMetaType(T * /* dummy */ = Q_NULLPTR)
 
 QT_END_NAMESPACE
 
-QT_END_HEADER
 
 #endif

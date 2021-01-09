@@ -36,7 +36,6 @@
 
 #include <QtCore/qnamespace.h>
 
-QT_BEGIN_HEADER
 
 QT_BEGIN_NAMESPACE
 
@@ -134,6 +133,5 @@ Q_CORE_EXPORT QDebug operator<<(QDebug, const QMargins &);
 
 QT_END_NAMESPACE
 
-QT_END_HEADER
 
 #endif // QMARGINS_H

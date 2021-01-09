@@ -39,7 +39,6 @@
 #include <QtGui/qgraphicsitem.h>
 #include <QtGui/qpalette.h>
 
-QT_BEGIN_HEADER
 
 QT_BEGIN_NAMESPACE
 
@@ -232,7 +231,6 @@ inline void QGraphicsWidget::setGeometry(qreal ax, qreal ay, qreal aw, qreal ah)
 
 QT_END_NAMESPACE
 
-QT_END_HEADER
 
 #endif
 

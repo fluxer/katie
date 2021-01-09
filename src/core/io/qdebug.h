@@ -39,7 +39,6 @@
 #include <QtCore/qset.h>
 #include <QtCore/qcontiguouscache.h>
 
-QT_BEGIN_HEADER
 
 QT_BEGIN_NAMESPACE
 
@@ -66,7 +65,8 @@ public:
     inline ~QDebug() {
         if (!--stream->ref) {
             if(stream->message_output) {
-                qt_message_output(stream->type, stream->buffer.toLocal8Bit().data());
+                QByteArray data = stream->buffer.toLocal8Bit();
+                qt_message_output(stream->type, data.constData());
             }
             delete stream;
         }
@@ -242,6 +242,5 @@ inline QNoDebug qWarning() { return QNoDebug(); }
 
 QT_END_NAMESPACE
 
-QT_END_HEADER
 
 #endif // QDEBUG_H

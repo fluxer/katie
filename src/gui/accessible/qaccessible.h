@@ -44,7 +44,6 @@
 
 #ifndef QT_NO_ACCESSIBILITY
 
-QT_BEGIN_HEADER
 
 QT_BEGIN_NAMESPACE
 
@@ -446,7 +445,6 @@ QT_END_NAMESPACE
 #define QAccessibleInterface_iid "Katie.QAccessibleInterface"
 Q_DECLARE_INTERFACE(QAccessibleInterface, QAccessibleInterface_iid)
 
-QT_END_HEADER
 
 #endif // QT_NO_ACCESSIBILITY
 

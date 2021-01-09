@@ -69,7 +69,6 @@ public:
 
 private:
     bool readHeader();
-    bool readImage(QImage *image);
     enum State {
         Ready,
         ReadHeader,

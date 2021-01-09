@@ -34,17 +34,16 @@
 #ifndef QMETATYPE_H
 #define QMETATYPE_H
 
-#include <QtCore/qatomic.h>
-
 #ifndef QT_NO_DATASTREAM
 #include <QtCore/qdatastream.h>
+#else
+#include <QtCore/qglobal.h>
 #endif
 
 #ifdef Bool
 #error qmetatype.h must be included before any header file that defines Bool
 #endif
 
-QT_BEGIN_HEADER
 
 QT_BEGIN_NAMESPACE
 
@@ -200,7 +199,7 @@ void qRegisterMetaTypeStreamOperators(const char *typeName, T * /* dummy */ = Q_
 #endif // QT_NO_DATASTREAM
 
 template <typename T>
-inline int qMetaTypeId( T * /* dummy */ = Q_NULLPTR)
+inline int qMetaTypeId()
 {
     return QMetaTypeId2<T>::qt_metatype_id();
 }
@@ -208,7 +207,7 @@ inline int qMetaTypeId( T * /* dummy */ = Q_NULLPTR)
 template <typename T>
 inline int qRegisterMetaType(T * dummy = Q_NULLPTR)
 {
-    return qMetaTypeId(dummy);
+    return qMetaTypeId<T>();
 }
 
 #ifndef QT_NO_DATASTREAM
@@ -237,10 +236,9 @@ inline int qRegisterMetaTypeStreamOperators()
         enum { Defined = 1 };                                           \
         static int qt_metatype_id()                                     \
             {                                                           \
-                static QAtomicInt metatype_id = QAtomicInt(0); \
-                if (!metatype_id)                                       \
-                    metatype_id = qRegisterMetaType< TYPE >(#TYPE,      \
-                               reinterpret_cast< TYPE *>(quintptr(-1))); \
+                static int metatype_id =                                \
+                    qRegisterMetaType< TYPE >(#TYPE,                    \
+                    reinterpret_cast< TYPE *>(quintptr(-1)));           \
                 return metatype_id;                                     \
             }                                                           \
     };                                                                  \
@@ -250,7 +248,7 @@ inline int qRegisterMetaTypeStreamOperators()
     QT_BEGIN_NAMESPACE \
     template<> struct QMetaTypeId2<TYPE> \
     { \
-        enum { Defined = 1, MetaType = QMetaType::NAME }; \
+        enum { Defined = 1 }; \
         static inline int qt_metatype_id() { return QMetaType::NAME; } \
     }; \
     QT_END_NAMESPACE
@@ -386,6 +384,5 @@ Q_DECLARE_BUILTIN_METATYPE(QWidget *, QWidgetStar)
 Q_DECLARE_BUILTIN_METATYPE(QVariant, QVariant)
 
 
-QT_END_HEADER
 
 #endif // QMETATYPE_H

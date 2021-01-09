@@ -38,7 +38,6 @@
 #include <QtGui/qdialog.h>
 #include <QtGui/qfont.h>
 
-QT_BEGIN_HEADER
 
 QT_BEGIN_NAMESPACE
 
@@ -115,6 +114,5 @@ Q_DECLARE_OPERATORS_FOR_FLAGS(QFontDialog::FontDialogOptions)
 
 QT_END_NAMESPACE
 
-QT_END_HEADER
 
 #endif // QFONTDIALOG_H

@@ -41,6 +41,7 @@
 #include "qapplication.h"
 #include "qplatformdefs.h"
 #include "qicon.h"
+#include "qstandardpaths.h"
 
 QT_BEGIN_NAMESPACE
 
@@ -149,14 +150,8 @@ QStringList QGuiPlatformPlugin::iconThemeSearchPaths()
     if (homeDir.exists())
         paths.append(homeDir.path());
 
-    QString xdgDirString = QFile::decodeName(getenv("XDG_DATA_DIRS"));
-    if (xdgDirString.isEmpty())
-        xdgDirString = QLatin1String("/usr/local/share/:/usr/share/");
-
-    QStringList xdgDirs = xdgDirString.split(QLatin1Char(':'));
-
-    for (int i = 0 ; i < xdgDirs.size() ; ++i) {
-        QDir dir(xdgDirs[i]);
+    foreach (const QString &it, QStandardPaths::standardLocations(QStandardPaths::GenericDataLocation)) {
+        QDir dir(it);
         if (dir.exists())
             paths.append(dir.path() + QLatin1String("/icons"));
     }

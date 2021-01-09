@@ -40,7 +40,6 @@
 #include <QtGui/qpen.h>
 #include <QtGui/qtextoption.h>
 
-QT_BEGIN_HEADER
 
 QT_BEGIN_NAMESPACE
 
@@ -960,6 +959,5 @@ inline void QTextTableCellFormat::setPadding(qreal padding)
 
 QT_END_NAMESPACE
 
-QT_END_HEADER
 
 #endif // QTEXTFORMAT_H

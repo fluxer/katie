@@ -38,7 +38,6 @@
 #include <QtCore/qstring.h>
 #include <QtNetwork/qsslcertificate.h>
 
-QT_BEGIN_HEADER
 
 QT_BEGIN_NAMESPACE
 
@@ -106,6 +105,5 @@ Q_NETWORK_EXPORT QDebug operator<<(QDebug debug, const QSslError::SslError &erro
 
 QT_END_NAMESPACE
 
-QT_END_HEADER
 
 #endif

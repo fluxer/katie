@@ -72,8 +72,8 @@ const Q_GUI_EXPORT QX11Info *qt_x11Info(const QPaintDevice *pd)
 }
 
 QPaintDevice::QPaintDevice()
+    : painters(0)
 {
-    painters = 0;
 }
 
 QPaintDevice::~QPaintDevice()

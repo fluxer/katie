@@ -40,7 +40,6 @@
 #include <QtDBus/qdbusreply.h>
 
 
-QT_BEGIN_HEADER
 
 QT_BEGIN_NAMESPACE
 
@@ -114,6 +113,5 @@ QT_END_NAMESPACE
 
 Q_DECLARE_BUILTIN_METATYPE(QDBusConnectionInterface::RegisterServiceReply, UInt)
 
-QT_END_HEADER
 
 #endif
