@@ -56,7 +56,6 @@
 #include "qdnd_p.h"
 #include "qcolormap.h"
 #include "qdebug.h"
-#include "qgraphicssystemfactory_p.h"
 #include "qgraphicssystem_p.h"
 #include "qstylesheetstyle_p.h"
 #include "qstyle_p.h"
@@ -601,12 +600,6 @@ void QApplicationPrivate::construct(
 
     QWidgetPrivate::mapper = new QWidgetMapper;
     QWidgetPrivate::allWidgets = new QWidgetSet;
-
-#if !defined(Q_WS_X11)
-    // initialize the graphics system - on X11 this is initialized inside
-    // qt_init() in qapplication_x11.cpp because of several reasons.
-    graphics_system = QGraphicsSystemFactory::create(graphics_system_name);
-#endif
 
     if (qt_appType != QApplication::Tty)
         (void) QApplication::style();  // trigger creation of application style

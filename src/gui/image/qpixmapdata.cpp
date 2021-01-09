@@ -43,12 +43,8 @@ QT_BEGIN_NAMESPACE
 
 QPixmapData *QPixmapData::create(int w, int h, PixelType type)
 {
-    QPixmapData *data;
-    QGraphicsSystem* gs = QApplicationPrivate::graphics_system;
-    if (gs)
-        data = gs->createPixmapData(static_cast<QPixmapData::PixelType>(type));
-    else
-        data = QGraphicsSystem::createDefaultPixmapData(static_cast<QPixmapData::PixelType>(type));
+    Q_ASSERT(QApplicationPrivate::graphics_system);
+    QPixmapData *data = QApplicationPrivate::graphics_system->createPixmapData(type);
     data->resize(w, h);
     return data;
 }
