@@ -656,7 +656,6 @@ void QMotifStyle::drawPrimitive(PrimitiveElement pe, const QStyleOption *opt, QP
             cols[4] = &opt->palette.mid().color();
         }
 
-#define CMID *cols[(colspec>>12) & 0xf]
 #define CLEFT *cols[(colspec>>8) & 0xf]
 #define CTOP *cols[(colspec>>4) & 0xf]
 #define CBOT *cols[colspec & 0xf]
@@ -680,7 +679,6 @@ void QMotifStyle::drawPrimitive(PrimitiveElement pe, const QStyleOption *opt, QP
 
         p->setBrush(saveBrush);
         p->setPen(savePen);
-#undef CMID
 #undef CLEFT
 #undef CTOP
 #undef CBOT
