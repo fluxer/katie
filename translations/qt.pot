@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-01-06 02:00+0200\n"
+"POT-Creation-Date: 2021-01-09 15:40+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -44,8 +44,6 @@ msgstr ""
 
 #: src/core/plugin/qlibrary.cpp:809 src/core/plugin/qpluginloader.cpp:291
 #: src/core/io/qiodevice.cpp:1541 src/network/ssl/qsslerror.cpp:261
-#: src/network/kernel/qhostinfo_unix.cpp:119
-#: src/network/kernel/qhostinfo_unix.cpp:238
 #: src/network/socket/qnativesocketengine.cpp:268
 #: src/network/access/qftp.cpp:1439 src/uitools/formscriptrunner.cpp:116
 msgid "Unknown error"
@@ -201,103 +199,84 @@ msgstr ""
 msgid "Process operation timed out"
 msgstr ""
 
-#: src/core/kernel/qsharedmemory.cpp:225
+#: src/core/kernel/qsharedmemory.cpp:220
 msgid "%1: unable to set key on lock"
 msgstr ""
 
-#: src/core/kernel/qsharedmemory.cpp:309
+#: src/core/kernel/qsharedmemory.cpp:304
 msgid "%1: create size is less then 0"
 msgstr ""
 
-#: src/core/kernel/qsharedmemory.cpp:482 src/core/kernel/qsharedmemory_p.h:137
+#: src/core/kernel/qsharedmemory.cpp:477 src/core/kernel/qsharedmemory_p.h:131
 msgid "%1: unable to lock"
 msgstr ""
 
-#: src/core/kernel/qsharedmemory.cpp:503
+#: src/core/kernel/qsharedmemory.cpp:498
 msgid "%1: unable to unlock"
 msgstr ""
 
-#: src/core/kernel/qsharedmemory_unix.cpp:83
+#: src/core/kernel/qsharedmemory_unix.cpp:75
 msgid "%1: permission denied"
 msgstr ""
 
-#: src/core/kernel/qsharedmemory_unix.cpp:87
+#: src/core/kernel/qsharedmemory_unix.cpp:79
 msgid "%1: already exists"
 msgstr ""
 
-#: src/core/kernel/qsharedmemory_unix.cpp:91
+#: src/core/kernel/qsharedmemory_unix.cpp:83
 msgid "%1: doesn't exist"
 msgstr ""
 
-#: src/core/kernel/qsharedmemory_unix.cpp:99
+#: src/core/kernel/qsharedmemory_unix.cpp:91
 msgid "%1: out of resources"
 msgstr ""
 
-#: src/core/kernel/qsharedmemory_unix.cpp:103
+#: src/core/kernel/qsharedmemory_unix.cpp:95
 msgid "%1: invalid size"
 msgstr ""
 
-#: src/core/kernel/qsharedmemory_unix.cpp:107
+#: src/core/kernel/qsharedmemory_unix.cpp:99
 msgid "%1: unknown error %2"
 msgstr ""
 
-#: src/core/kernel/qsharedmemory_unix.cpp:130
-#: src/core/kernel/qsharedmemory_unix.cpp:148
-#: src/core/kernel/qsystemsemaphore_unix.cpp:133
-#: src/core/kernel/qsystemsemaphore_unix.cpp:195
+#: src/core/kernel/qsharedmemory_unix.cpp:118
+#: src/core/kernel/qsystemsemaphore_unix.cpp:125
 msgid "%1: key is empty"
 msgstr ""
 
-#: src/core/kernel/qsharedmemory_unix.cpp:211
-#: src/core/kernel/qsystemsemaphore_unix.cpp:141
-msgid "%1: unable to make key"
-msgstr ""
-
-#: src/core/kernel/qsharedmemory_unix.cpp:229
-msgid "%1: system-imposed size restrictions"
-msgstr ""
-
-#: src/core/kernel/qsharedmemory_unix.cpp:252
-#: src/core/kernel/qsharedmemory_unix.cpp:314
+#: src/core/kernel/qsharedmemory_unix.cpp:146
+#: src/core/kernel/qsharedmemory_unix.cpp:182
 msgid "%1: bad name"
 msgstr ""
 
-#: src/core/kernel/qsharedmemory_unix.cpp:356
-msgid "%1: not attached"
-msgstr ""
-
-#: src/core/kernel/qsystemsemaphore_unix.cpp:87
+#: src/core/kernel/qsystemsemaphore_unix.cpp:80
 msgctxt "QSystemSemaphore"
 msgid "%1: permission denied"
 msgstr ""
 
-#: src/core/kernel/qsystemsemaphore_unix.cpp:91
+#: src/core/kernel/qsystemsemaphore_unix.cpp:84
 msgctxt "QSystemSemaphore"
 msgid "%1: already exists"
 msgstr ""
 
-#: src/core/kernel/qsystemsemaphore_unix.cpp:95
+#: src/core/kernel/qsystemsemaphore_unix.cpp:88
 msgctxt "QSystemSemaphore"
 msgid "%1: does not exist"
 msgstr ""
 
-#: src/core/kernel/qsystemsemaphore_unix.cpp:104
+#: src/core/kernel/qsystemsemaphore_unix.cpp:97
 msgctxt "QSystemSemaphore"
 msgid "%1: out of resources"
 msgstr ""
 
-#: src/core/kernel/qsystemsemaphore_unix.cpp:108
+#: src/core/kernel/qsystemsemaphore_unix.cpp:101
 msgctxt "QSystemSemaphore"
 msgid "%1: name error"
 msgstr ""
 
-#: src/core/kernel/qsystemsemaphore_unix.cpp:112
+#: src/core/kernel/qsystemsemaphore_unix.cpp:105
 msgctxt "QSystemSemaphore"
 msgid "%1: unknown error %2"
-msgstr ""
-
-#: src/core/kernel/qsystemsemaphore_unix.cpp:150
-msgid "%1: ftok failed"
 msgstr ""
 
 #: src/core/tools/qregexp.cpp:57
@@ -1536,11 +1515,11 @@ msgstr ""
 msgid "&Add to Custom Colors"
 msgstr ""
 
-#: src/gui/dialogs/qmessagebox.h:230
+#: src/gui/dialogs/qmessagebox.h:229
 msgid "Executable '%1' requires Qt %2, found Qt %3."
 msgstr ""
 
-#: src/gui/dialogs/qmessagebox.h:232
+#: src/gui/dialogs/qmessagebox.h:231
 msgid "Incompatible Qt Library Error"
 msgstr ""
 
@@ -1771,7 +1750,7 @@ msgstr ""
 msgid "Save As"
 msgstr ""
 
-#: src/gui/dialogs/qfiledialog.cpp:522 src/gui/dialogs/qfiledialog.cpp:1030
+#: src/gui/dialogs/qfiledialog.cpp:522 src/gui/dialogs/qfiledialog.cpp:1023
 msgid "All Files (*)"
 msgstr ""
 
@@ -1795,70 +1774,70 @@ msgstr ""
 msgid "&New Folder"
 msgstr ""
 
-#: src/gui/dialogs/qfiledialog.cpp:544 src/gui/dialogs/qfiledialog.cpp:1211
+#: src/gui/dialogs/qfiledialog.cpp:544 src/gui/dialogs/qfiledialog.cpp:1204
 msgid "Directory:"
 msgstr ""
 
-#: src/gui/dialogs/qfiledialog.cpp:546 src/gui/dialogs/qfiledialog.cpp:1217
+#: src/gui/dialogs/qfiledialog.cpp:546 src/gui/dialogs/qfiledialog.cpp:1210
 msgid "File &name:"
 msgstr ""
 
-#: src/gui/dialogs/qfiledialog.cpp:1204 src/gui/dialogs/qfiledialog.cpp:1259
-#: src/gui/dialogs/qfiledialog.cpp:2706
+#: src/gui/dialogs/qfiledialog.cpp:1197 src/gui/dialogs/qfiledialog.cpp:1252
+#: src/gui/dialogs/qfiledialog.cpp:2699
 msgid "&Open"
 msgstr ""
 
-#: src/gui/dialogs/qfiledialog.cpp:1204 src/gui/dialogs/qfiledialog.cpp:1259
+#: src/gui/dialogs/qfiledialog.cpp:1197 src/gui/dialogs/qfiledialog.cpp:1252
 msgid "&Save"
 msgstr ""
 
-#: src/gui/dialogs/qfiledialog.cpp:1207
+#: src/gui/dialogs/qfiledialog.cpp:1200
 msgid "Directories"
 msgstr ""
 
-#: src/gui/dialogs/qfiledialog.cpp:1214 src/gui/dialogs/qfiledialog.cpp:1257
+#: src/gui/dialogs/qfiledialog.cpp:1207 src/gui/dialogs/qfiledialog.cpp:1250
 msgid "&Choose"
 msgstr ""
 
-#: src/gui/dialogs/qfiledialog.cpp:1924 src/gui/dialogs/qfiledialog.cpp:2777
+#: src/gui/dialogs/qfiledialog.cpp:1917 src/gui/dialogs/qfiledialog.cpp:2770
 msgid ""
 "%1\n"
 "Directory not found.\n"
 "Please verify the correct directory name was given."
 msgstr ""
 
-#: src/gui/dialogs/qfiledialog.cpp:1958
+#: src/gui/dialogs/qfiledialog.cpp:1951
 msgid ""
 "%1 already exists.\n"
 "Do you want to replace it?"
 msgstr ""
 
-#: src/gui/dialogs/qfiledialog.cpp:1978
+#: src/gui/dialogs/qfiledialog.cpp:1971
 msgid ""
 "%1\n"
 "File not found.\n"
 "Please verify the correct file name was given."
 msgstr ""
 
-#: src/gui/dialogs/qfiledialog.cpp:2427
+#: src/gui/dialogs/qfiledialog.cpp:2420
 msgid "New Folder"
 msgstr ""
 
-#: src/gui/dialogs/qfiledialog.cpp:2555
+#: src/gui/dialogs/qfiledialog.cpp:2548
 msgid ""
 "'%1' is write protected.\n"
 "Do you want to delete it anyway?"
 msgstr ""
 
-#: src/gui/dialogs/qfiledialog.cpp:2560
+#: src/gui/dialogs/qfiledialog.cpp:2553
 msgid "Are sure you want to delete '%1'?"
 msgstr ""
 
-#: src/gui/dialogs/qfiledialog.cpp:2575
+#: src/gui/dialogs/qfiledialog.cpp:2568
 msgid "Could not delete directory."
 msgstr ""
 
-#: src/gui/dialogs/qfiledialog.cpp:2973
+#: src/gui/dialogs/qfiledialog.cpp:2966
 msgid "Recent Places"
 msgstr ""
 
@@ -2255,11 +2234,11 @@ msgstr ""
 msgid "Step &down"
 msgstr ""
 
-#: src/gui/kernel/qwidget.cpp:5118
+#: src/gui/kernel/qwidget.cpp:5109
 msgid "*"
 msgstr ""
 
-#: src/gui/kernel/qapplication.cpp:1803
+#: src/gui/kernel/qapplication.cpp:1796
 msgid "QT_LAYOUT_DIRECTION"
 msgstr ""
 
@@ -3517,27 +3496,24 @@ msgctxt "QHostInfo"
 msgid "No host name given"
 msgstr ""
 
-#: src/network/kernel/qhostinfo_unix.cpp:104
-#: src/network/kernel/qhostinfo_unix.cpp:116
-#: src/network/kernel/qhostinfo_unix.cpp:204
-#: src/network/kernel/qhostinfo_unix.cpp:235
-#: src/network/socket/qabstractsocket.cpp:886
+#: src/network/kernel/qhostinfo_unix.cpp:98
+#: src/network/kernel/qhostinfo_unix.cpp:184
+#: src/network/socket/qabstractsocket.cpp:885
 #: src/network/socket/qhttpsocketengine.cpp:662
 #: src/network/socket/qsocks5socketengine.cpp:640
 #: src/network/socket/qsocks5socketengine.cpp:666
 msgid "Host not found"
 msgstr ""
 
-#: src/network/kernel/qhostinfo_unix.cpp:135
+#: src/network/kernel/qhostinfo_unix.cpp:116
 msgid "No host name given"
 msgstr ""
 
-#: src/network/kernel/qhostinfo_unix.cpp:137
+#: src/network/kernel/qhostinfo_unix.cpp:118
 msgid "Invalid hostname"
 msgstr ""
 
-#: src/network/kernel/qhostinfo_unix.cpp:192
-#: src/network/kernel/qhostinfo_unix.cpp:230
+#: src/network/kernel/qhostinfo_unix.cpp:172
 msgid "Unknown address type"
 msgstr ""
 
@@ -3546,9 +3522,9 @@ msgid "Invalid configuration."
 msgstr ""
 
 #: src/network/socket/qtcpserver.cpp:278 src/network/socket/qtcpserver.cpp:400
-#: src/network/socket/qabstractsocket.cpp:537
-#: src/network/socket/qabstractsocket.cpp:1324
-#: src/network/socket/qabstractsocket.cpp:1534
+#: src/network/socket/qabstractsocket.cpp:536
+#: src/network/socket/qabstractsocket.cpp:1323
+#: src/network/socket/qabstractsocket.cpp:1533
 msgid "Operation on socket is not supported"
 msgstr ""
 
@@ -3570,23 +3546,23 @@ msgstr ""
 msgid "%1: Unknown error %2"
 msgstr ""
 
-#: src/network/socket/qabstractsocket.cpp:928
+#: src/network/socket/qabstractsocket.cpp:927
 #: src/network/socket/qhttpsocketengine.cpp:665
 #: src/network/socket/qnativesocketengine.cpp:232
 #: src/network/socket/qsocks5socketengine.cpp:670
 msgid "Connection refused"
 msgstr ""
 
-#: src/network/socket/qabstractsocket.cpp:1070
+#: src/network/socket/qabstractsocket.cpp:1069
 #: src/network/socket/qnativesocketengine.cpp:229
 msgid "Connection timed out"
 msgstr ""
 
-#: src/network/socket/qabstractsocket.cpp:1711
+#: src/network/socket/qabstractsocket.cpp:1710
 msgid "Socket operation timed out"
 msgstr ""
 
-#: src/network/socket/qabstractsocket.cpp:2122
+#: src/network/socket/qabstractsocket.cpp:2121
 msgid "Socket is not connected"
 msgstr ""
 
