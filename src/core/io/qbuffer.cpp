@@ -342,7 +342,7 @@ qint64 QBuffer::size() const
 /*!
     \reimp
 */
-bool QBuffer::seek(const qint64 pos)
+bool QBuffer::seek(qint64 pos)
 {
     Q_D(QBuffer);
     if (pos > d->buf->size() && isWritable()) {

@@ -70,7 +70,7 @@ public:
     bool open(OpenMode openMode);
 
     qint64 size() const;
-    bool seek(const qint64 off);
+    bool seek(qint64 off);
     bool canReadLine() const;
 
 protected:
