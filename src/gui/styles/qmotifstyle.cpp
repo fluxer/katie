@@ -2333,12 +2333,10 @@ QMotifStyle::styleHint(StyleHint hint, const QStyleOption *opt, const QWidget *w
 /*! \reimp */
 QPalette QMotifStyle::standardPalette() const
 {
-#ifdef Q_WS_X11
     QColor background(0xcf, 0xcf, 0xcf);
+#ifdef Q_WS_X11
     if (QX11Info::appDepth() <= 8)
         background = QColor(0xc0, 0xc0, 0xc0);
-#else
-    QColor background = QColor(0xcf, 0xcf, 0xcf);
 #endif
 
     QColor light = background.lighter();
