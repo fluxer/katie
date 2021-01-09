@@ -190,8 +190,8 @@ static void setupLocaleMapper()
     }
 
     if (!localeMapper) {
-        const char *charset = ::nl_langinfo(CODESET);
-        if (charset)
+        const QByteArray charset = ::nl_langinfo(CODESET);
+        if (!charset.isEmpty())
             localeMapper = QTextCodec::codecForName(charset);
     }
 
