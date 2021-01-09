@@ -904,8 +904,8 @@ QPointF qt_curves_for_arc(const QRectF &rect, qreal startAngle, qreal sweepLengt
         }
     }
 
-    int startSegment = int(qFloor(startAngle / 90));
-    int endSegment = int(qFloor((startAngle + sweepLength) / 90));
+    int startSegment = qFloor(startAngle / 90);
+    int endSegment = qFloor((startAngle + sweepLength) / 90);
 
     qreal startT = (startAngle - startSegment * 90) / 90;
     qreal endT = (startAngle + sweepLength - endSegment * 90) / 90;
