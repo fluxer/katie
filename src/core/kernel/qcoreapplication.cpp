@@ -85,23 +85,6 @@ bool QCoreApplicationPrivate::checkInstance(const char *function)
     return true;
 }
 
-void QCoreApplicationPrivate::processCommandLineArguments()
-{
-    int j = argc ? 1 : 0;
-    for (int i = 1; i < argc; ++i) {
-        if (argv[i] && *argv[i] != '-') {
-            argv[j++] = argv[i];
-            continue;
-        }
-        argv[j++] = argv[i];
-    }
-
-    if (j < argc) {
-        argv[j] = 0;
-        argc = j;
-    }
-}
-
 typedef QList<QtCleanUpFunction> QVFuncList;
 Q_GLOBAL_STATIC(QVFuncList, postRList)
 
@@ -185,11 +168,6 @@ QCoreApplicationPrivate::QCoreApplicationPrivate(int &aargc, char **aargv)
     : QObjectPrivate(), argc(aargc), argv(aargv), eventFilter(0),
       in_exec(false), aboutToQuitEmitted(false)
 {
-    static const char *const empty = "";
-    if (argc == 0 || argv == 0) {
-        argc = 0;
-        argv = (char **)&empty; // ouch! careful with QCoreApplication::argv()!
-    }
     QCoreApplicationPrivate::is_app_closing = false;
 }
 
@@ -400,8 +378,6 @@ void QCoreApplication::init()
     // thread.
     QProcessPrivate::initializeProcessManager();
 #endif
-
-    d->processCommandLineArguments();
 }
 
 

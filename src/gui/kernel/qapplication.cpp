@@ -404,13 +404,11 @@ void QApplicationPrivate::process_cmdline()
     if (!qt_is_gui_used || !argc)
         return;
 
-    int j = 1;
     for (int i=1; i<argc; i++) { // if you add anything here, modify QCoreApplication::arguments()
         if (!argv[i]) {
             continue;
         }
         if (*argv[i] != '-') {
-            argv[j++] = argv[i];
             continue;
         }
         QString s;
@@ -442,8 +440,6 @@ void QApplicationPrivate::process_cmdline()
             QApplication::setLayoutDirection(Qt::RightToLeft);
         } else if (qstrcmp(argv[i], "-graphicssystem") == 0 && i < argc - 1) {
             // no longer supported
-        } else {
-            argv[j++] = argv[i];
         }
         if (!s.isEmpty()) {
             if (app_style) {
@@ -452,11 +448,6 @@ void QApplicationPrivate::process_cmdline()
             }
             styleOverride = s;
         }
-    }
-
-    if(j < argc) {
-        argv[j] = 0;
-        argc = j;
     }
 }
 
@@ -628,7 +619,7 @@ void QApplicationPrivate::construct(
 // ### if aargv is modified someday
 // ########## make it work with argc == argv == 0
 static int aargc = 1;
-static char *aargv[] = { (char*)"unknown", 0 };
+static char *aargv[] = { (char*)"unknown\0", 0 };
 
 /*!
     \fn QApplication::QApplication(Display* display, Qt::HANDLE visual, Qt::HANDLE colormap)

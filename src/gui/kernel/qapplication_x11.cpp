@@ -1076,10 +1076,8 @@ void qt_init(QApplicationPrivate *priv, int,
     original_xio_errhandler = XSetIOErrorHandler(qt_xio_errhandler);
 
     // Get command line params
-    int j = argc ? 1 : 0;
     for (int i=1; i<argc; i++) {
         if (argv[i] && *argv[i] != '-') {
-            argv[j++] = argv[i];
             continue;
         }
         QByteArray arg(argv[i]);
@@ -1131,11 +1129,7 @@ void qt_init(QApplicationPrivate *priv, int,
         else if (arg == "-dograb")
             appDoGrab = !appDoGrab;
 #endif
-        else
-            argv[j++] = argv[i];
     }
-
-    priv->argc = j;
 
 #if !defined(QT_NO_DEBUG) && defined(QT_HAVE_PROC_CMDLINE) && defined(QT_HAVE_PROC_EXE)
     if (!appNoGrab && !appDoGrab && runningUnderDebugger()) {
