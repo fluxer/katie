@@ -237,11 +237,7 @@ QString QHostInfo::localDomainName()
     return QString();
 #else
     // doing it by ourselves
-#if defined(_PATH_RESCONF)
-    QFile resolvconf(QFile::decodeName(_PATH_RESCONF));
-#else
     QFile resolvconf(QLatin1String("/etc/resolv.conf"));
-#endif
     if (!resolvconf.open(QIODevice::ReadOnly))
         return QString();       // failure
 
