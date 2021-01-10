@@ -26,6 +26,8 @@ for during build if they are newer than POSIX.1-2001
 relevant to the changes you make such as manual pages for Linux
 (https://linux.die.net/man/), FreeBSD (https://www.freebsd.org/cgi/man.cgi),
 OpenBSD (https://man.openbsd.org/) and Solaris (https://docs.oracle.com/en/).
+Open Group documentation is also a good source of information
+(https://pubs.opengroup.org/onlinepubs/9699919799/idx/head.html).
 
 ## Tests
 You can import tests and adjust them as needed from stock Qt4 copy
