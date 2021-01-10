@@ -64,7 +64,6 @@
 #include "qmetaobject.h"
 #include "qtimer.h"
 #include "qlibrary.h"
-#include "qgraphicssystem_raster_p.h"
 #include "qguiplatformplugin.h"
 #include "qthread_p.h"
 #include "qeventdispatcher_x11_p.h"
@@ -1222,9 +1221,6 @@ void qt_init(QApplicationPrivate *priv, int,
         }
 #endif
 
-        // initialize the graphics system - order is imporant here - it must be done before
-        // the QColormap::initialize() call
-        QApplicationPrivate::graphics_system = new QRasterGraphicsSystem();
         QColormap::initialize();
 
         // Support protocols

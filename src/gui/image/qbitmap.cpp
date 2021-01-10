@@ -33,10 +33,10 @@
 
 #include "qbitmap.h"
 #include "qpixmapdata_p.h"
+#include "qpixmap_raster_p.h"
 #include "qimage.h"
 #include "qvariant.h"
 #include "qpainter.h"
-#include "qgraphicssystem_p.h"
 #include "qapplication_p.h"
 
 QT_BEGIN_NAMESPACE
@@ -253,9 +253,7 @@ QBitmap QBitmap::fromImage(const QImage &image, Qt::ImageConversionFlags flags)
         img.setColor(1, c0);
     }
 
-    QGraphicsSystem* gs = QApplicationPrivate::graphics_system;
-    QScopedPointer<QPixmapData> data(gs ? gs->createPixmapData(QPixmapData::BitmapType)
-                : QGraphicsSystem::createDefaultPixmapData(QPixmapData::BitmapType));
+    QScopedPointer<QPixmapData> data(new QRasterPixmapData(QPixmapData::BitmapType));
 
     data->fromImage(img, flags | Qt::MonoOnly);
     return QPixmap(data.take());

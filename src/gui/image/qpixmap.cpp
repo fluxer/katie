@@ -42,7 +42,6 @@
 #include "qbuffer.h"
 #include "qapplication.h"
 #include "qapplication_p.h"
-#include "qgraphicssystem_p.h"
 #include "qwidget_p.h"
 #include "qevent.h"
 #include "qfile.h"
@@ -53,6 +52,7 @@
 #include "qimagewriter.h"
 #include "qpaintengine.h"
 #include "qthread.h"
+#include "qpixmap_raster_p.h"
 
 #if defined(Q_WS_X11)
 # include "qx11info_x11.h"
@@ -1760,9 +1760,7 @@ QPixmap QPixmap::fromImage(const QImage &image, Qt::ImageConversionFlags flags)
     if (image.isNull())
         return QPixmap();
 
-    QGraphicsSystem* gs = QApplicationPrivate::graphics_system;
-    QScopedPointer<QPixmapData> data(gs ? gs->createPixmapData(QPixmapData::PixmapType)
-            : QGraphicsSystem::createDefaultPixmapData(QPixmapData::PixmapType));
+    QScopedPointer<QPixmapData> data(new QRasterPixmapData(QPixmapData::PixmapType));
     data->fromImage(image, flags);
     return QPixmap(data.take());
 }
@@ -1781,9 +1779,7 @@ QPixmap QPixmap::fromImage(const QImage &image, Qt::ImageConversionFlags flags)
 */
 QPixmap QPixmap::fromImageReader(QImageReader *imageReader, Qt::ImageConversionFlags flags)
 {
-    QGraphicsSystem *gs = QApplicationPrivate::graphics_system;
-    QScopedPointer<QPixmapData> data(gs ? gs->createPixmapData(QPixmapData::PixmapType)
-            : QGraphicsSystem::createDefaultPixmapData(QPixmapData::PixmapType));
+    QScopedPointer<QPixmapData> data(new QRasterPixmapData(QPixmapData::PixmapType));
     data->fromImageReader(imageReader, flags);
     return QPixmap(data.take());
 }

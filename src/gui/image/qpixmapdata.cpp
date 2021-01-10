@@ -32,10 +32,10 @@
 ****************************************************************************/
 
 #include "qpixmapdata_p.h"
-#include <QtCore/qbuffer.h>
-#include <QtGui/qbitmap.h>
-#include <QtGui/qimagereader.h>
-#include "qgraphicssystem_p.h"
+#include "qbuffer.h"
+#include "qbitmap.h"
+#include "qimagereader.h"
+#include "qpixmap_raster_p.h"
 #include "qapplication_p.h"
 #include "qguicommon_p.h"
 
@@ -43,8 +43,7 @@ QT_BEGIN_NAMESPACE
 
 QPixmapData *QPixmapData::create(int w, int h, PixelType type)
 {
-    Q_ASSERT(QApplicationPrivate::graphics_system);
-    QPixmapData *data = QApplicationPrivate::graphics_system->createPixmapData(type);
+    QPixmapData *data = new QRasterPixmapData(type);
     data->resize(w, h);
     return data;
 }
@@ -69,10 +68,7 @@ QPixmapData::~QPixmapData()
 
 QPixmapData *QPixmapData::createCompatiblePixmapData() const
 {
-    QGraphicsSystem *gs = QApplicationPrivate::graphics_system;
-    if (gs)
-        return gs->createPixmapData(pixelType());
-    return QGraphicsSystem::createDefaultPixmapData(pixelType());
+    return new QRasterPixmapData(pixelType());
 }
 
 static QImage makeBitmapCompliantIfNeeded(QPixmapData *d, const QImage &image, Qt::ImageConversionFlags flags)
