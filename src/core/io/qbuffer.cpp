@@ -294,7 +294,7 @@ const QByteArray &QBuffer::data() const
 */
 void QBuffer::setData(const QByteArray &data)
 {
-    if (isOpen()) {
+    if (Q_UNLIKELY(isOpen())) {
         qWarning("QBuffer::setData: Buffer is open");
         return;
     }
@@ -303,13 +303,20 @@ void QBuffer::setData(const QByteArray &data)
 }
 
 /*!
-    \fn void QBuffer::setData(const char *data, int size)
-
     \overload
 
     Sets the contents of the internal buffer to be the first \a size
-    bytes of \a data.
+    bytes of \a data, does not copy the data.
 */
+void QBuffer::setData(const char *data, const int len)
+{
+    if (Q_UNLIKELY(isOpen())) {
+        qWarning("QBuffer::setData: Buffer is open");
+        return;
+    }
+    Q_D(QBuffer);
+    d->buf->setRawData(data, len);
+}
 
 /*!
    \reimp

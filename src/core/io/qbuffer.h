@@ -63,8 +63,7 @@ public:
     void setBuffer(QByteArray *a);
 
     void setData(const QByteArray &data);
-    inline void setData(const char *data, const int len)
-        { setData(QByteArray::fromRawData(data, len)); }
+    void setData(const char *data, const int len);
     const QByteArray &data() const;
 
     bool open(OpenMode openMode);
