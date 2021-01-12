@@ -36,9 +36,9 @@
 
 #include <QtCore/qglobal.h>
 
+#include <string.h>
 
 QT_BEGIN_NAMESPACE
-
 
 /*
  * ENDIAN FUNCTIONS
