@@ -51,7 +51,8 @@
 // the host must support all of the functions, if that is the case
 // QT_LARGEFILE_SUPPORT is defined
 #if defined(_LARGEFILE64_SOURCE) && defined(_LARGEFILE_SOURCE) \
-    && (_FILE_OFFSET_BITS-0) != 64 && defined(QT_LARGEFILE_SUPPORT)
+    && defined(_FILE_OFFSET_BITS) && _FILE_OFFSET_BITS != 64 \
+    && defined(QT_LARGEFILE_SUPPORT)
 
 #define QT_STATBUF              struct stat64
 #define QT_FPOS_T               fpos64_t
