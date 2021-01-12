@@ -201,6 +201,7 @@ class QImageWriterPrivate
 {
 public:
     QImageWriterPrivate();
+    ~QImageWriterPrivate();
 
     // device
     QByteArray format;
@@ -222,15 +223,22 @@ public:
     \internal
 */
 QImageWriterPrivate::QImageWriterPrivate()
+    : device(Q_NULLPTR),
+    deleteDevice(false),
+    handler(Q_NULLPTR),
+    quality(-1),
+    compression(0),
+    gamma(0.0),
+    imageWriterError(QImageWriter::UnknownError),
+    errorString(QT_TRANSLATE_NOOP(QImageWriter, QLatin1String("Unknown error")))
 {
-    device = 0;
-    deleteDevice = false;
-    handler = 0;
-    quality = -1;
-    compression = 0;
-    gamma = 0.0;
-    imageWriterError = QImageWriter::UnknownError;
-    errorString = QT_TRANSLATE_NOOP(QImageWriter, QLatin1String("Unknown error"));
+}
+
+QImageWriterPrivate::~QImageWriterPrivate()
+{
+    if (deleteDevice)
+        delete device;
+    delete handler;
 }
 
 /*!
@@ -274,9 +282,6 @@ QImageWriter::QImageWriter(const QString &fileName, const QByteArray &format)
 */
 QImageWriter::~QImageWriter()
 {
-    if (d->deleteDevice)
-        delete d->device;
-    delete d->handler;
     delete d;
 }
 
