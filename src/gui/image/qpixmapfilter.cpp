@@ -83,9 +83,6 @@ public:
     \value BlurFilter         A filter that is used to blur an image using
                               a simple blur radius. See QPixmapBlurFilter
                               for more information.
-
-    \value UserFilter   The first filter type that can be used for
-                        application-specific purposes.
 */
 
 
