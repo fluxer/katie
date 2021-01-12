@@ -2510,7 +2510,7 @@ template <typename T>
 inline T qNumVariantToHelper(const QVariant::Private &d,
                              const QVariant::Handler *handler, bool *ok, const T& val)
 {
-    uint t = qMetaTypeId<T>();
+    int t = qMetaTypeId<T>();
     if (ok)
         *ok = true;
     if (d.type == t)
