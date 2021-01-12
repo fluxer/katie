@@ -75,18 +75,19 @@ public:
     int pos;
     QString string;
     mutable UBreakIterator *breakiter; // ubrk_isBoundary() takes non-const argument
+    QAtomicInt ref;
 
 private:
     Q_DISABLE_COPY(QTextBoundaryFinderPrivate);
 };
 
 QTextBoundaryFinderPrivate::QTextBoundaryFinderPrivate()
-    : type(QTextBoundaryFinder::Grapheme), pos(0), breakiter(Q_NULLPTR)
+    : type(QTextBoundaryFinder::Grapheme), pos(0), breakiter(Q_NULLPTR), ref(1)
 {
 }
 
 QTextBoundaryFinderPrivate::QTextBoundaryFinderPrivate(const QTextBoundaryFinder::BoundaryType type, const QString &text)
-    : type(type), pos(0), string(text), breakiter(Q_NULLPTR)
+    : type(type), pos(0), string(text), breakiter(Q_NULLPTR), ref(1)
 {
     if (Q_LIKELY(!string.isEmpty())) {
         UErrorCode error = U_ZERO_ERROR;
@@ -180,6 +181,7 @@ QTextBoundaryFinder::QTextBoundaryFinder()
 QTextBoundaryFinder::QTextBoundaryFinder(const QTextBoundaryFinder &other)
     : d(other.d)
 {
+    d->ref.ref();
 }
 
 /*!
@@ -209,7 +211,8 @@ QTextBoundaryFinder &QTextBoundaryFinder::operator=(const QTextBoundaryFinder &o
 */
 QTextBoundaryFinder::~QTextBoundaryFinder()
 {
-    delete d;
+    if (!d->ref.deref())
+        delete d;
 }
 
 /*!
