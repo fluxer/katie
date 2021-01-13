@@ -469,7 +469,7 @@ QIODevice *QXmlStreamReader::device() const
 void QXmlStreamReader::addData(const QByteArray &data)
 {
     Q_D(QXmlStreamReader);
-    if (d->device) {
+    if (Q_UNLIKELY(d->device)) {
         qWarning("QXmlStreamReader: addData() with device()");
         return;
     }
