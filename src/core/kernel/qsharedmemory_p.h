@@ -51,9 +51,8 @@
 # ifndef QT_NO_SYSTEMSEMAPHORE
 namespace QSharedMemoryPrivate
 {
-    int createUnixKeyFile(const QString &fileName);
-    QString makePlatformSafeKey(const QString &key,
-            const QString &prefix = QLatin1String("qipc_sharedmemory_"));
+    QString makePlatformSafeKey(const QString &key, ,
+            const QString &prefix = QLatin1String("/qipc_sharedmemory_"));
 }
 #endif
 #else
@@ -115,14 +114,9 @@ public:
     bool lockedByMe;
 #endif
 
-    static int createUnixKeyFile(const QString &fileName);
     static QString makePlatformSafeKey(const QString &key,
-            const QString &prefix = QLatin1String("qipc_sharedmemory_"));
-#if defined(QT_HAVE_SEMAPHORE_H)
+                   const QString &prefix = QLatin1String("/qipc_sharedmemory_"));
     int handle();
-#else
-    key_t handle();
-#endif
     bool initKey();
     void cleanHandle();
     bool create(int size);
@@ -143,11 +137,7 @@ public:
 #endif // QT_NO_SYSTEMSEMAPHORE
 
 private:
-#if defined(QT_HAVE_SEMAPHORE_H)
     int hand;
-#else
-    key_t unix_key;
-#endif
 };
 
 QT_END_NAMESPACE

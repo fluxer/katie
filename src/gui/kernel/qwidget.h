@@ -44,7 +44,6 @@
 #include <QtGui/qkeysequence.h>
 #include <QtGui/qregion.h>
 
-QT_BEGIN_HEADER
 
 QT_BEGIN_NAMESPACE
 
@@ -776,6 +775,5 @@ inline void QWidget::setSizePolicy(QSizePolicy::Policy hor, QSizePolicy::Policy 
 
 QT_END_NAMESPACE
 
-QT_END_HEADER
 
 #endif // QWIDGET_H

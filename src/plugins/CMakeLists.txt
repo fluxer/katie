@@ -13,7 +13,7 @@ include_directories(
 )
 
 # place the plugins in a sub-directory the leading of which can be used as plugin path,
-# this makes testing without installation possible and is relied upon in the test script
+# this makes testing without installation possible and is relied upon in the exec script
 set(CMAKE_LIBRARY_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}/plugins/accessible")
 set(CMAKE_ARCHIVE_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}/plugins/accessible")
 if(WITH_ACCESSIBILITY)

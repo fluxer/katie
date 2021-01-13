@@ -39,10 +39,7 @@
 #include <QtCore/qset.h>
 #include <QtCore/qcontiguouscache.h>
 
-QT_BEGIN_HEADER
-
 QT_BEGIN_NAMESPACE
-
 
 class Q_CORE_EXPORT QDebug
 {
@@ -66,7 +63,8 @@ public:
     inline ~QDebug() {
         if (!--stream->ref) {
             if(stream->message_output) {
-                qt_message_output(stream->type, stream->buffer.toLocal8Bit().data());
+                QByteArray data = stream->buffer.toLocal8Bit();
+                qt_message_output(stream->type, data.constData());
             }
             delete stream;
         }
@@ -111,7 +109,7 @@ public:
     inline QNoDebug(){}
     inline QNoDebug(const QDebug &){}
     inline ~QNoDebug(){}
-#if !defined( QT_NO_TEXTSTREAM )
+#if !defined(QT_NO_TEXTSTREAM)
     inline QNoDebug &operator<<(QTextStreamFunction) { return *this; }
     inline QNoDebug &operator<<(QTextStreamManipulator) { return *this; }
 #endif
@@ -222,10 +220,9 @@ inline QDebug operator<<(QDebug debug, const QFlags<T> &flags)
     return debug.space();
 }
 
-#if !defined(QT_NO_DEBUG_STREAM)
+#if !defined(QT_NO_DEBUG_OUTPUT)
 Q_CORE_EXPORT_INLINE QDebug qDebug() { return QDebug(QtDebugMsg); }
-
-#else // QT_NO_DEBUG_STREAM
+#else
 #undef qDebug
 inline QNoDebug qDebug() { return QNoDebug(); }
 #define qDebug QNoDebug
@@ -242,6 +239,5 @@ inline QNoDebug qWarning() { return QNoDebug(); }
 
 QT_END_NAMESPACE
 
-QT_END_HEADER
 
 #endif // QDEBUG_H

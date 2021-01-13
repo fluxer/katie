@@ -323,7 +323,6 @@ public:
     static QGraphicsProxyWidget * nearestGraphicsProxyWidget(const QWidget *origin);
 #endif
     QWindowSurface *createDefaultWindowSurface();
-    QWindowSurface *createDefaultWindowSurface_sys();
     void repaint_sys(const QRegion &rgn);
 
     QRect clipRect() const;
@@ -599,7 +598,7 @@ public:
     static QWidget *keyboardGrabber;
 
     void setWindowRole();
-    void sendStartupMessage(const char *message) const;
+    void sendStartupMessage() const;
     void setNetWmWindowTypes();
     void x11UpdateIsOpaque();
     bool isBackgroundInherited() const;

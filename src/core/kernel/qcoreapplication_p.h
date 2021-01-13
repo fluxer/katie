@@ -84,9 +84,8 @@ public:
 #if !defined (QT_NO_DEBUG)
     void checkReceiverThread(QObject *receiver);
 #endif
-    int &argc;
-    char **argv;
-    void processCommandLineArguments();
+    const int &argc;
+    char **const argv;
 
 #ifndef QT_NO_TRANSLATION
     QTranslatorList translators;

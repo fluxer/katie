@@ -36,7 +36,6 @@
 
 #include <QtTest/qtestcoreelement.h>
 
-QT_BEGIN_HEADER
 
 QT_BEGIN_NAMESPACE
 
@@ -60,6 +59,5 @@ class QTestElement: public QTestCoreElement<QTestElement>
 
 QT_END_NAMESPACE
 
-QT_END_HEADER
 
 #endif

@@ -40,7 +40,6 @@
 #include <QtCore/qatomic.h>
 #include <QtCore/qobject.h>    // for qobject_cast
 
-QT_BEGIN_HEADER
 
 QT_BEGIN_NAMESPACE
 
@@ -152,9 +151,9 @@ namespace QtSharedPointer {
         QAtomicInt strongref;
 
         inline ExternalRefCountData()
+            : weakref(1),
+            strongref(1)
         {
-            strongref = 1;
-            weakref = 1;
         }
         inline ExternalRefCountData(Qt::Initialization) { }
         virtual inline ~ExternalRefCountData() { Q_ASSERT(!weakref); Q_ASSERT(strongref <= 0); }
@@ -831,6 +830,5 @@ template<typename T> Q_DECLARE_TYPEINFO_BODY(QSharedPointer<T>, Q_MOVABLE_TYPE);
 
 QT_END_NAMESPACE
 
-QT_END_HEADER
 
 #endif // QSHAREDPOINTER_H

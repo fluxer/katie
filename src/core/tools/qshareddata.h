@@ -36,7 +36,6 @@
 
 #include <QtCore/qatomic.h>
 
-QT_BEGIN_HEADER
 
 QT_BEGIN_NAMESPACE
 
@@ -264,6 +263,5 @@ namespace std {
     { p1.swap(p2); }
 }
 
-QT_END_HEADER
 
 #endif // QSHAREDDATA_H

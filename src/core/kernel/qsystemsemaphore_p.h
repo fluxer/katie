@@ -52,10 +52,7 @@
 #include "qsharedmemory_p.h"
 
 #include <sys/types.h>
-#ifdef QT_HAVE_SEMAPHORE_H
-#  include <semaphore.h>
-#endif
-
+#include <semaphore.h>
 
 QT_BEGIN_NAMESPACE
 
@@ -66,31 +63,19 @@ public:
 
     inline QString makeKeyFileName() const
     {
-        return QSharedMemoryPrivate::makePlatformSafeKey(key, QLatin1String("qipc_systemsem_"));
+        return QSharedMemoryPrivate::makePlatformSafeKey(key, QLatin1String("/qipc_systemsem_"));
     }
 
-#if defined(QT_HAVE_SEMAPHORE_H)
     bool handle(QSystemSemaphore::AccessMode mode = QSystemSemaphore::Open);
     void setErrorString(const QString &function);
-#else
-    key_t handle(QSystemSemaphore::AccessMode mode = QSystemSemaphore::Open);
-    void setErrorString(const QString &function);
-#endif
     void cleanHandle();
     bool modifySemaphore(int count);
 
     QString key;
     QString fileName;
     int initialValue;
-#if defined(QT_HAVE_SEMAPHORE_H)
     sem_t *semaphore;
     bool createdSemaphore;
-#else
-    key_t unix_key;
-    int semaphore;
-    bool createdFile;
-    bool createdSemaphore;
-#endif
     QString errorString;
     QSystemSemaphore::SystemSemaphoreError error;
 };

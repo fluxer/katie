@@ -249,7 +249,7 @@ void tst_qfile::readBigFile()
             const char* cfilename = data.constData();
             FILE* cfile = QT_FOPEN(cfilename, "rb");
             QBENCHMARK {
-                while(!feof(cfile))
+                while(!::feof(cfile))
                     ::fread(buffer, blockSize, 1, cfile);
                 QT_FSEEK(cfile, 0, SEEK_SET);
             }
@@ -526,7 +526,7 @@ void tst_qfile::readSmallFiles()
 
             QBENCHMARK {
                 Q_FOREACH(FILE* cfile, fileList) {
-                    while(!feof(cfile))
+                    while(!::feof(cfile))
                         ::fread(buffer, blockSize, 1, cfile);
                     QT_FSEEK(cfile, 0, SEEK_SET);
                 }

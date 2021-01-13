@@ -40,7 +40,6 @@
 #include <cstdlib>
 #include <new>
 
-QT_BEGIN_HEADER
 
 QT_BEGIN_NAMESPACE
 
@@ -437,6 +436,5 @@ inline T QContiguousCache<T>::takeLast()
 
 QT_END_NAMESPACE
 
-QT_END_HEADER
 
 #endif

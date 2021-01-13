@@ -51,7 +51,6 @@
 #include <QtCore/qrect.h>
 
 
-QT_BEGIN_HEADER
 
 QT_BEGIN_NAMESPACE
 
@@ -256,6 +255,5 @@ int main(int argc, char *argv[]) \
 
 #endif // QT_GUI_LIB
 
-QT_END_HEADER
 
 #endif

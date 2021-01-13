@@ -323,6 +323,11 @@
 #cmakedefine QT_NO_XMLSTREAMREADER
 #cmakedefine QT_NO_XMLSTREAMWRITER
 
+// Debugging
+#if defined(QT_NO_TEXTSTREAM) && !defined(QT_NO_DEBUG_STREAM)
+#  define QT_NO_DEBUG_STREAM
+#endif
+
 // Future
 #if !defined(QT_NO_QFUTURE) && defined(QT_NO_CONCURRENT)
 #  define QT_NO_QFUTURE
@@ -737,6 +742,5 @@
 #if !defined(QT_NO_PRINTPREVIEWDIALOG) && (defined(QT_NO_PRINTPREVIEWWIDGET) || defined(QT_NO_PRINTDIALOG) || defined(QT_NO_TOOLBAR))
 #  define QT_NO_PRINTPREVIEWDIALOG
 #endif
-
 
 #endif

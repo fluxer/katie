@@ -38,9 +38,7 @@
 #include "qmath.h"
 #include "qdebug.h"
 
-#ifdef QT_HAVE_CLOCK_GETTIME
-#  include <time.h>
-#endif
+#include <time.h>
 
 QT_BEGIN_NAMESPACE
 
@@ -76,7 +74,6 @@ QTest::QBenchmarkMetric QBenchmarkTimeMeasurer::metricType()
     return QTest::WalltimeMilliseconds;
 }
 
-#ifdef QT_HAVE_CLOCK_GETTIME
 static qint64 getticks()
 {
     struct timespec ts;
@@ -114,7 +111,5 @@ QTest::QBenchmarkMetric QBenchmarkTickMeasurer::metricType()
 {
     return QTest::CPUTicks;
 }
-#endif
-
 
 QT_END_NAMESPACE

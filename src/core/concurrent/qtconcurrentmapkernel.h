@@ -41,7 +41,6 @@
 #include <QtCore/qtconcurrentiteratekernel.h>
 #include <QtCore/qtconcurrentreducekernel.h>
 
-QT_BEGIN_HEADER
 QT_BEGIN_NAMESPACE
 
 
@@ -255,7 +254,6 @@ inline ThreadEngineStarter<ResultType> startMappedReduced(Iterator begin, Iterat
 
 
 QT_END_NAMESPACE
-QT_END_HEADER
 
 #endif // QT_NO_CONCURRENT
 

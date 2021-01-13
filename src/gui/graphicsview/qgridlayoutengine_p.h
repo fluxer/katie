@@ -151,53 +151,35 @@ public:
     qreal q_minimumAscent;
     inline qreal &q_sizes(int which)
     {
-        qreal *t;
         switch (which) {
-        case Qt::MinimumSize:
-            t = &q_minimumSize;
-            break;
-        case Qt::PreferredSize:
-            t = &q_preferredSize;
-            break;
-        case Qt::MaximumSize:
-            t = &q_maximumSize;
-            break;
-        case Qt::MinimumDescent:
-            t = &q_minimumDescent;
-            break;
-        case (Qt::MinimumDescent + 1):
-            t = &q_minimumAscent;
-            break;
-        default:
-            t = 0;
-            break;
+            case Qt::MinimumSize:
+                return q_minimumSize;
+            case Qt::PreferredSize:
+                return q_preferredSize;
+            case Qt::MaximumSize:
+                return q_maximumSize;
+            case Qt::MinimumDescent:
+                return q_minimumDescent;
+            case (Qt::MinimumDescent + 1):
+                return q_minimumAscent;
         }
-        return *t;
+        Q_UNREACHABLE();
     }
-    inline const qreal &q_sizes(int which) const
+    inline const qreal q_sizes(int which) const
     {
-        const qreal *t;
         switch (which) {
-        case Qt::MinimumSize:
-            t = &q_minimumSize;
-            break;
-        case Qt::PreferredSize:
-            t = &q_preferredSize;
-            break;
-        case Qt::MaximumSize:
-            t = &q_maximumSize;
-            break;
-        case Qt::MinimumDescent:
-            t = &q_minimumDescent;
-            break;
-        case (Qt::MinimumDescent + 1):
-            t = &q_minimumAscent;
-            break;
-        default:
-            t = 0;
-            break;
+            case Qt::MinimumSize:
+                return q_minimumSize;
+            case Qt::PreferredSize:
+                return q_preferredSize;
+            case Qt::MaximumSize:
+                return q_maximumSize;
+            case Qt::MinimumDescent:
+                return q_minimumDescent;
+            case (Qt::MinimumDescent + 1):
+                return q_minimumAscent;
         }
-        return *t;
+        Q_UNREACHABLE();
     }
 };
 

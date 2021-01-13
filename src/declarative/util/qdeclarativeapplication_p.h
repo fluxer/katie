@@ -38,7 +38,6 @@
 #include "qdeclarative.h"
 #include "qdeclarativeglobal_p.h"
 
-QT_BEGIN_HEADER
 
 QT_BEGIN_NAMESPACE
 
@@ -72,6 +71,5 @@ QT_END_NAMESPACE
 
 QML_DECLARE_TYPE(QDeclarativeApplication)
 
-QT_END_HEADER
 
 #endif // QDECLARATIVEAPPLICATION_P_H

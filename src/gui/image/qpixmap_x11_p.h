@@ -97,7 +97,6 @@ private:
     friend class QPixmap;
     friend class QBitmap;
     friend class QX11PaintEngine;
-    friend class QX11WindowSurface;
     friend class QRasterWindowSurface;
 
     void release();

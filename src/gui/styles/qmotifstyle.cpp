@@ -656,7 +656,6 @@ void QMotifStyle::drawPrimitive(PrimitiveElement pe, const QStyleOption *opt, QP
             cols[4] = &opt->palette.mid().color();
         }
 
-#define CMID *cols[(colspec>>12) & 0xf]
 #define CLEFT *cols[(colspec>>8) & 0xf]
 #define CTOP *cols[(colspec>>4) & 0xf]
 #define CBOT *cols[colspec & 0xf]
@@ -680,7 +679,6 @@ void QMotifStyle::drawPrimitive(PrimitiveElement pe, const QStyleOption *opt, QP
 
         p->setBrush(saveBrush);
         p->setPen(savePen);
-#undef CMID
 #undef CLEFT
 #undef CTOP
 #undef CBOT
@@ -2194,68 +2192,51 @@ QMotifStyle::standardPixmap(StandardPixmap standardPixmap, const QStyleOption *o
     case SP_DockWidgetCloseButton:
         return QPixmap(qt_motif_dock_window_close_xpm);
 
-    case SP_MessageBoxInformation:
-    case SP_MessageBoxWarning:
-    case SP_MessageBoxCritical:
-    case SP_MessageBoxQuestion:
-    {
-        const char * const * xpm_data;
-        switch (standardPixmap) {
-        case SP_MessageBoxInformation:
-            xpm_data = qt_information_xpm;
-            break;
-        case SP_MessageBoxWarning:
-            xpm_data = qt_warning_xpm;
-            break;
-        case SP_MessageBoxCritical:
-            xpm_data = qt_critical_xpm;
-            break;
-        case SP_MessageBoxQuestion:
-            xpm_data = qt_question_xpm;
-            break;
-        default:
-            xpm_data = 0;
-            break;
-        }
-        QPixmap pm;
-        if (xpm_data) {
-            QImage image((const char **) xpm_data);
-            // All that color looks ugly in Motif
-            const QPalette &pal = QApplication::palette();
-            switch (standardPixmap) {
-            case SP_MessageBoxInformation:
-            case SP_MessageBoxQuestion:
-                image.setColor(2, 0xff000000 |
-                               pal.color(QPalette::Active, QPalette::Dark).rgb());
-                image.setColor(3, 0xff000000 |
-                               pal.color(QPalette::Active, QPalette::Base).rgb());
-                image.setColor(4, 0xff000000 |
-                               pal.color(QPalette::Active, QPalette::Text).rgb());
-                break;
-            case SP_MessageBoxWarning:
-                image.setColor(1, 0xff000000 |
-                               pal.color(QPalette::Active, QPalette::Base).rgb());
-                image.setColor(2, 0xff000000 |
-                               pal.color(QPalette::Active, QPalette::Text).rgb());
-                image.setColor(3, 0xff000000 |
-                               pal.color(QPalette::Active, QPalette::Dark).rgb());
-                break;
-            case SP_MessageBoxCritical:
-                image.setColor(1, 0xff000000 |
-                               pal.color(QPalette::Active, QPalette::Dark).rgb());
-                image.setColor(2, 0xff000000 |
-                               pal.color(QPalette::Active, QPalette::Text).rgb());
-                image.setColor(3, 0xff000000 |
-                               pal.color(QPalette::Active, QPalette::Base).rgb());
-                break;
-            default:
-                break;
-            }
-            pm = QPixmap::fromImage(image);
-        }
-        return pm;
+    case SP_MessageBoxInformation: {
+        // All that color looks ugly in Motif
+        const QPalette &pal = QApplication::palette();
+        QImage image((const char **) qt_information_xpm);
+        image.setColor(2, 0xff000000 |
+                        pal.color(QPalette::Active, QPalette::Dark).rgb());
+        image.setColor(3, 0xff000000 |
+                        pal.color(QPalette::Active, QPalette::Base).rgb());
+        image.setColor(4, 0xff000000 |
+                        pal.color(QPalette::Active, QPalette::Text).rgb());
+        return QPixmap::fromImage(image);
     }
-
+    case SP_MessageBoxWarning: {
+        const QPalette &pal = QApplication::palette();
+        QImage image((const char **) qt_warning_xpm);
+        image.setColor(1, 0xff000000 |
+                        pal.color(QPalette::Active, QPalette::Base).rgb());
+        image.setColor(2, 0xff000000 |
+                        pal.color(QPalette::Active, QPalette::Text).rgb());
+        image.setColor(3, 0xff000000 |
+                        pal.color(QPalette::Active, QPalette::Dark).rgb());
+        return QPixmap::fromImage(image);
+    }
+    case SP_MessageBoxCritical: {
+        const QPalette &pal = QApplication::palette();
+        QImage image((const char **) qt_critical_xpm);
+        image.setColor(1, 0xff000000 |
+                        pal.color(QPalette::Active, QPalette::Dark).rgb());
+        image.setColor(2, 0xff000000 |
+                        pal.color(QPalette::Active, QPalette::Text).rgb());
+        image.setColor(3, 0xff000000 |
+                        pal.color(QPalette::Active, QPalette::Base).rgb());
+        return QPixmap::fromImage(image);
+    }
+    case SP_MessageBoxQuestion: {
+        const QPalette &pal = QApplication::palette();
+        QImage image((const char **) qt_question_xpm);
+        image.setColor(2, 0xff000000 |
+                        pal.color(QPalette::Active, QPalette::Dark).rgb());
+        image.setColor(3, 0xff000000 |
+                        pal.color(QPalette::Active, QPalette::Base).rgb());
+        image.setColor(4, 0xff000000 |
+                        pal.color(QPalette::Active, QPalette::Text).rgb());
+        return QPixmap::fromImage(image);
+    }
     default:
         break;
     }
@@ -2352,12 +2333,10 @@ QMotifStyle::styleHint(StyleHint hint, const QStyleOption *opt, const QWidget *w
 /*! \reimp */
 QPalette QMotifStyle::standardPalette() const
 {
-#ifdef Q_WS_X11
     QColor background(0xcf, 0xcf, 0xcf);
+#ifdef Q_WS_X11
     if (QX11Info::appDepth() <= 8)
         background = QColor(0xc0, 0xc0, 0xc0);
-#else
-    QColor background = QColor(0xcf, 0xcf, 0xcf);
 #endif
 
     QColor light = background.lighter();

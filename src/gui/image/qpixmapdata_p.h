@@ -95,8 +95,6 @@ public:
     virtual QImage toImage(const QRect &rect) const;
     virtual QPaintEngine* paintEngine() const = 0;
 
-    inline int serialNumber() const { return ser_no; }
-
     inline PixelType pixelType() const { return type; }
     inline ClassId classId() const { return id; }
 
@@ -104,7 +102,6 @@ public:
 
     inline int width() const { return w; }
     inline int height() const { return h; }
-    inline int colorCount() const { return metric(QPaintDevice::PdmNumColors); }
     inline int depth() const { return d; }
     inline bool isNull() const { return is_null; }
     inline qint64 cacheKey() const {

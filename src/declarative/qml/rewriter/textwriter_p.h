@@ -38,7 +38,6 @@
 #include <QtCore/QList>
 #include <QtGui/QTextCursor>
 
-QT_BEGIN_HEADER
 QT_BEGIN_NAMESPACE
 
 namespace QDeclarativeJS {
@@ -66,6 +65,5 @@ public:
 } // end of namespace QDeclarativeJS
 
 QT_END_NAMESPACE
-QT_END_HEADER
 
 #endif // TEXTWRITER_H

@@ -75,7 +75,6 @@ private:
     QElapsedTimer time;
 };
 
-#ifdef QT_HAVE_CLOCK_GETTIME
 class QBenchmarkTickMeasurer : public QBenchmarkMeasurerBase
 {
 public:
@@ -88,7 +87,6 @@ public:
 private:
     qint64 startTicks;
 };
-#endif
 
 QT_END_NAMESPACE
 

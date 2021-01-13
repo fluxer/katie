@@ -53,13 +53,12 @@ template <typename Type> class QDataBuffer
 {
 public:
     QDataBuffer(int res)
+        : capacity(res),
+        siz(0),
+        buffer(Q_NULLPTR)
     {
-        capacity = res;
         if (res)
             buffer = (Type*) malloc(capacity * sizeof(Type));
-        else
-            buffer = 0;
-        siz = 0;
     }
 
     ~QDataBuffer()

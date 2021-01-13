@@ -121,7 +121,6 @@ bool QWindowsStyle::eventFilter(QObject *o, QEvent *e)
     if (!o->isWidgetType())
         return QObject::eventFilter(o, e);
 
-    QWidget *widget = qobject_cast<QWidget*>(o);
     Q_D(QWindowsStyle);
     switch(e->type()) {
 #ifndef QT_NO_PROGRESSBAR

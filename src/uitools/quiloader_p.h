@@ -58,7 +58,6 @@
 #define PROP_TABPAGETOOLTIP "_q_tabPageToolTip_notr"
 #define PROP_TABPAGEWHATSTHIS "_q_tabPageWhatsThis_notr"
 
-QT_BEGIN_HEADER
 
 QT_BEGIN_NAMESPACE
 
@@ -82,7 +81,6 @@ struct QUiItemRolePair {
 
 QT_END_NAMESPACE
 
-QT_END_HEADER
 
 Q_DECLARE_METATYPE(QUiTranslatableStringValue)
 

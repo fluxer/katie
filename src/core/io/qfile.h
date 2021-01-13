@@ -42,7 +42,6 @@
 #error qfile.h must be included before any header file that defines open
 #endif
 
-QT_BEGIN_HEADER
 
 QT_BEGIN_NAMESPACE
 
@@ -176,6 +175,5 @@ Q_DECLARE_OPERATORS_FOR_FLAGS(QFile::Permissions)
 
 QT_END_NAMESPACE
 
-QT_END_HEADER
 
 #endif // QFILE_H

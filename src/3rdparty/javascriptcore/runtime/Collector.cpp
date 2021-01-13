@@ -98,9 +98,9 @@ NEVER_INLINE CollectorBlock* Heap::allocateBlock()
 {
 #if defined(QT_HAVE_POSIX_MEMALIGN)
     void* address;
-    ::posix_memalign(&address, BLOCK_SIZE, BLOCK_SIZE);
+    if (::posix_memalign(&address, BLOCK_SIZE, BLOCK_SIZE) != 0)
+        CRASH();
 #else
-
     static size_t pagesize = ::getpagesize();
 
     size_t extra = 0;

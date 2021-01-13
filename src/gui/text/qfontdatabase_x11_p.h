@@ -807,7 +807,7 @@ static const char *styleHint(const QFontDef &request)
 }
 
 #ifndef QT_NO_FONTCONFIG
-static void qt_addPatternProps(FcPattern *pattern, int screen, int script, const QFontDef &request)
+static void qt_addPatternProps(FcPattern *pattern, int screen, QUnicodeTables::Script script, const QFontDef &request)
 {
     double size_value = qMax(qreal(1.), request.pixelSize);
     FcPatternDel(pattern, FC_PIXEL_SIZE);
@@ -873,7 +873,7 @@ static bool preferScalable(const QFontDef &request)
 }
 
 
-static FcPattern *getFcPattern(const QFontPrivate *fp, int script, const QFontDef &request)
+static FcPattern *getFcPattern(const QFontPrivate *fp, QUnicodeTables::Script script, const QFontDef &request)
 {
     if (!qt_x11Data->has_fontconfig)
         return 0;

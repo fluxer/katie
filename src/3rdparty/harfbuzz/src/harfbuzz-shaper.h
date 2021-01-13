@@ -44,11 +44,7 @@ HB_BEGIN_HEADER
    memory consumption as HB_CharAttributes and HB_GlyphAttributes will not have
    a 4 byte alignment
 */
-#ifdef  __xlC__
-typedef unsigned hb_bitfield;
-#else
 typedef hb_uint8 hb_bitfield;
-#endif
 
 typedef enum {
         HB_Script_Common,

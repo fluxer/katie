@@ -36,7 +36,6 @@
 
 #include <QtCore/qobject.h>
 
-QT_BEGIN_HEADER
 
 QT_BEGIN_NAMESPACE
 
@@ -55,6 +54,5 @@ QT_END_NAMESPACE
 
 Q_DECLARE_INTERFACE(QDeclarativePropertyValueInterceptor, "Katie.qml.QDeclarativePropertyValueInterceptor")
 
-QT_END_HEADER
 
 #endif // QDECLARATIVEPROPERTYVALUEINTERCEPTOR_H

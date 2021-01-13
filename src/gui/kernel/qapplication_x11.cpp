@@ -64,7 +64,6 @@
 #include "qmetaobject.h"
 #include "qtimer.h"
 #include "qlibrary.h"
-#include "qgraphicssystemfactory_p.h"
 #include "qguiplatformplugin.h"
 #include "qthread_p.h"
 #include "qeventdispatcher_x11_p.h"
@@ -1077,10 +1076,8 @@ void qt_init(QApplicationPrivate *priv, int,
     original_xio_errhandler = XSetIOErrorHandler(qt_xio_errhandler);
 
     // Get command line params
-    int j = argc ? 1 : 0;
     for (int i=1; i<argc; i++) {
         if (argv[i] && *argv[i] != '-') {
-            argv[j++] = argv[i];
             continue;
         }
         QByteArray arg(argv[i]);
@@ -1132,11 +1129,7 @@ void qt_init(QApplicationPrivate *priv, int,
         else if (arg == "-dograb")
             appDoGrab = !appDoGrab;
 #endif
-        else
-            argv[j++] = argv[i];
     }
-
-    priv->argc = j;
 
 #if !defined(QT_NO_DEBUG) && defined(QT_HAVE_PROC_CMDLINE) && defined(QT_HAVE_PROC_EXE)
     if (!appNoGrab && !appDoGrab && runningUnderDebugger()) {
@@ -1166,12 +1159,6 @@ void qt_init(QApplicationPrivate *priv, int,
     if (qt_is_gui_used) {
         qt_x11Data->defaultScreen = DefaultScreen(qt_x11Data->display);
         qt_x11Data->screenCount = ScreenCount(qt_x11Data->display);
-
-        int formatCount = 0;
-        XPixmapFormatValues *values = XListPixmapFormats(qt_x11Data->display, &formatCount);
-        for (int i = 0; i < formatCount; ++i)
-            qt_x11Data->bppForDepth[values[i].depth] = values[i].bits_per_pixel;
-        XFree(values);
 
         qt_x11Data->screens = new QX11InfoData[qt_x11Data->screenCount];
         qt_x11Data->argbVisuals = new Visual *[qt_x11Data->screenCount];
@@ -1228,9 +1215,6 @@ void qt_init(QApplicationPrivate *priv, int,
         }
 #endif
 
-        // initialize the graphics system - order is imporant here - it must be done before
-        // the QColormap::initialize() call
-        QApplicationPrivate::graphics_system = QGraphicsSystemFactory::create(QApplicationPrivate::graphics_system_name);
         QColormap::initialize();
 
         // Support protocols

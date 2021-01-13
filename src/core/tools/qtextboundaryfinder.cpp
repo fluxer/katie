@@ -178,7 +178,7 @@ QTextBoundaryFinder::QTextBoundaryFinder()
   Copies the QTextBoundaryFinder object, \a other.
 */
 QTextBoundaryFinder::QTextBoundaryFinder(const QTextBoundaryFinder &other)
-    : d(other.d)
+    : d(new QTextBoundaryFinderPrivate(other.d->type, other.d->string))
 {
 }
 

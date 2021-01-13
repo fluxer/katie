@@ -36,7 +36,6 @@
 
 #include <QtCore/qiodevice.h>
 
-QT_BEGIN_HEADER
 
 QT_BEGIN_NAMESPACE
 
@@ -64,14 +63,13 @@ public:
     void setBuffer(QByteArray *a);
 
     void setData(const QByteArray &data);
-    inline void setData(const char *data, const int len)
-        { setData(QByteArray::fromRawData(data, len)); }
+    void setData(const char *data, const int len);
     const QByteArray &data() const;
 
     bool open(OpenMode openMode);
 
     qint64 size() const;
-    bool seek(const qint64 off);
+    bool seek(qint64 off);
     bool canReadLine() const;
 
 protected:
@@ -91,6 +89,5 @@ private:
 
 QT_END_NAMESPACE
 
-QT_END_HEADER
 
 #endif // QBUFFER_H

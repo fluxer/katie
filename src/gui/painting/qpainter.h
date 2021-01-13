@@ -44,7 +44,6 @@
 #include <QtGui/qdrawutil.h>
 #include <QtGui/qbrush.h>
 
-QT_BEGIN_HEADER
 
 QT_BEGIN_NAMESPACE
 
@@ -844,6 +843,5 @@ inline void QPainter::setWindow(int x, int y, int w, int h)
 
 QT_END_NAMESPACE
 
-QT_END_HEADER
 
 #endif // QPAINTER_H

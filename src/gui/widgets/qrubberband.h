@@ -36,7 +36,6 @@
 
 #include <QtGui/qwidget.h>
 
-QT_BEGIN_HEADER
 
 QT_BEGIN_NAMESPACE
 
@@ -84,6 +83,5 @@ inline void QRubberBand::move(int ax, int ay)
 
 QT_END_NAMESPACE
 
-QT_END_HEADER
 
 #endif // QRUBBERBAND_H

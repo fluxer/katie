@@ -159,8 +159,6 @@ QT_USE_NAMESPACE
 
 #endif /* QT_NO_USING_NAMESPACE */
 
-#define QT_BEGIN_HEADER
-#define QT_END_HEADER
 #define QT_BEGIN_INCLUDE_HEADER
 #define QT_END_INCLUDE_HEADER extern "C++"
 
@@ -274,7 +272,6 @@ QT_USE_NAMESPACE
     } AFUNC ## __dest_instance__;
 #define Q_DESTRUCTOR_FUNCTION(AFUNC) Q_DESTRUCTOR_FUNCTION0(AFUNC)
 
-QT_BEGIN_HEADER
 QT_BEGIN_NAMESPACE
 
 /*
@@ -461,13 +458,6 @@ Q_CORE_EXPORT const char *qVersion();
    Avoid "unused parameter" warnings
 */
 #define Q_UNUSED(x) (void)x;
-
-/*
-   Debugging and error handling
-*/
-#if (defined(QT_NO_DEBUG_OUTPUT) || defined(QT_NO_TEXTSTREAM)) && !defined(QT_NO_DEBUG_STREAM)
-#  define QT_NO_DEBUG_STREAM
-#endif
 
 class QString;
 #define qPrintable(string) QString(string).toLocal8Bit().constData()
@@ -1034,6 +1024,5 @@ Q_CORE_EXPORT void qsrand(uint seed);
 Q_CORE_EXPORT int qrand();
 
 QT_END_NAMESPACE
-QT_END_HEADER
 
 #endif /* QGLOBAL_H */

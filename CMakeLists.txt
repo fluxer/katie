@@ -42,6 +42,7 @@ if(CMAKE_SYSTEM_NAME MATCHES "BSD")
     link_directories(/usr/X11R7/lib /usr/pkg/lib /usr/local/lib /usr/lib /lib)
 endif()
 
+include(CheckCXXCompilerFlag)
 include(GNUInstallDirs)
 include(CheckIncludeFileCXX)
 include(CheckTypeSize)
@@ -51,6 +52,25 @@ include(CheckCXXSourceRuns)
 include(FeatureSummary)
 include(KatieBuildMacros)
 include(mkspecs/mkspecs.cmake)
+
+# disable some compiler warnings
+set(KATIE_NO_WARNINGS
+    # placement new used in private QVariant functions
+    -Wno-placement-new
+    # QVector does not always use new/delete
+    -Wno-class-memaccess
+    # hot attribute used in function prototypes
+    -Wno-attributes
+    # deprecated X11, CUPS and OpenSSL API used
+    -Wno-deprecated -Wno-deprecated-declarations
+)
+foreach(nowarning ${KATIE_NO_WARNINGS})
+    string(REPLACE "-W" "" normalizednowarning "${nowarning}")
+    check_cxx_compiler_flag(${nowarning} CXX_${normalizednowarning})
+    if(CXX_${normalizednowarning})
+        set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} ${nowarning}")
+    endif()
+endforeach()
 
 # mostly relevant to the build process, also stored in the version file for CMake and in qconfig.h.cmake
 set(KATIE_MAJOR "4")
@@ -136,6 +156,9 @@ option(WITH_EXECINFO "Build ExecInfo support" OFF)
 add_feature_info(execinfo WITH_EXECINFO "build ExecInfo support")
 
 # optional features
+option(WITH_ACCESSIBILITY "Build accessibility support" ON)
+add_feature_info(accessibility WITH_ACCESSIBILITY "build accessibility support")
+
 option(KATIE_TESTS "Build automatic tests" OFF)
 add_feature_info(tests KATIE_TESTS "build automatic tests")
 
@@ -147,9 +170,6 @@ add_feature_info(utils KATIE_UTILS "build maintainance utilities")
 
 option(KATIE_PCH "Build components with pre-compiled header" OFF)
 add_feature_info(pch KATIE_PCH "build components with pre-compiled header")
-
-option(WITH_ACCESSIBILITY "Build accessibility support" ON)
-add_feature_info(accessibility WITH_ACCESSIBILITY "build accessibility support")
 
 # v1.2.0+ required for compressBound()
 find_package(ZLIB 1.2.0)
@@ -331,26 +351,13 @@ check_type_size(size_t QT_POINTER_SIZE)
 
 # used in components, tests and JavaScriptCore
 katie_check_header("cxxabi.h")
-katie_check_header("semaphore.h")
-katie_check_function(getpwnam_r "pwd.h")
-katie_check_function(getpwuid_r "pwd.h")
-katie_check_function(getgrgid_r "grp.h")
-katie_check_function(nl_langinfo "langinfo.h")
-katie_check_function(getaddrinfo "netdb.h")
-katie_check_function(clock_gettime "time.h")
-katie_check_function(vsnprintf "stdio.h")
 katie_check_function(posix_memalign "stdlib.h")
-katie_check_function(strerror_r "string.h")
-katie_check_function(localtime_r "time.h")
-katie_check_function(gmtime_r "time.h")
 katie_check_function(fcvt "stdlib.h")
 katie_check_function(ecvt "stdlib.h")
 katie_check_function(getprogname "stdlib.h")
 katie_check_function(arc4random "stdlib.h")
 katie_check_function(get_current_dir_name "unistd.h")
 katie_check_function(prctl "sys/prctl.h")
-katie_check_function(fegetenv "fenv.h")
-katie_check_function(fesetenv "fenv.h")
 katie_check_function(feclearexcept "fenv.h")
 katie_check_function(feenableexcept "fenv.h")
 katie_check_function(madvise "sys/mman.h")
@@ -421,7 +428,7 @@ foreach(script exec dbus xvfb dbg)
     file(
         COPY ${CMAKE_BINARY_DIR}/${CMAKE_FILES_DIRECTORY}/${script}.sh
         DESTINATION ${CMAKE_BINARY_DIR}
-        FILE_PERMISSIONS OWNER_READ OWNER_WRITE OWNER_EXECUTE GROUP_READ GROUP_EXECUTE WORLD_READ WORLD_EXECUTE
+        FILE_PERMISSIONS OWNER_READ OWNER_WRITE OWNER_EXECUTE GROUP_READ WORLD_READ
     )
 endforeach()
 
@@ -457,7 +464,7 @@ if(NOT WITH_EXECINFO OR NOT EXECINFO_FOUND)
     katie_definition(-DQT_NO_EXECINFO)
 endif()
 
-# conditional features
+# optional and conditional features
 if(NOT WITH_ACCESSIBILITY)
     katie_definition(-DQT_NO_ACCESSIBILITY)
 endif()
@@ -468,7 +475,7 @@ if(NOT HAVE_pic)
     katie_definition(-DQ_NO_DATA_RELOCATION)
 endif()
 
-# keep in sync with the gui component CMake file, only definitions setup is needed here
+# keep in sync with the GUI component CMake file, only definitions setup is needed here
 foreach(x11ext Xshape Xinerama Xrandr Xrender Xfixes Xcursor)
     if(NOT X11_${x11ext}_FOUND)
         message(WARNING "The X11 ${x11ext} extension was not found")
@@ -1019,6 +1026,7 @@ add_custom_target(install-devel
     WORKING_DIRECTORY "${CMAKE_BINARY_DIR}"
 )
 
+# custom install targets to make packaging easier
 add_custom_target(install-runtime
     DEPENDS ${KATIE_COMPONENTS}
     COMMAND "${CMAKE_COMMAND}" -DCMAKE_INSTALL_COMPONENT=Runtime -P cmake_install.cmake

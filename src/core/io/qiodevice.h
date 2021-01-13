@@ -45,7 +45,6 @@
 #error qiodevice.h must be included before any header file that defines open
 #endif
 
-QT_BEGIN_HEADER
 
 QT_BEGIN_NAMESPACE
 
@@ -170,6 +169,5 @@ Q_CORE_EXPORT QDebug operator<<(QDebug debug, QIODevice::OpenMode modes);
 
 QT_END_NAMESPACE
 
-QT_END_HEADER
 
 #endif // QIODEVICE_H

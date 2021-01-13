@@ -48,18 +48,13 @@ QT_BEGIN_NAMESPACE
 
     On Unix this will be a file name
   */
-QString QSharedMemoryPrivate::makePlatformSafeKey(const QString &key,
-                                                  const QString &prefix)
+QString QSharedMemoryPrivate::makePlatformSafeKey(const QString &key, const QString &prefix)
 {
+    Q_ASSERT(prefix.startsWith(QLatin1Char('/')));
     if (key.isEmpty())
         return QString();
 
-    QString result = prefix + key.toUtf8().toHex();
-#if defined(QT_HAVE_SEMAPHORE_H)
-    return QLatin1Char('/') + result;
-#else
-    return QDir::tempPath() + QLatin1Char('/') + result;
-#endif
+    return (prefix + key.toUtf8().toHex());
 }
 #endif // QT_NO_SHAREDMEMORY && QT_NO_SHAREDMEMORY
 

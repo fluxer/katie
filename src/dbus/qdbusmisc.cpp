@@ -45,14 +45,6 @@
 
 QT_BEGIN_NAMESPACE
 
-int qDBusNameToTypeId(const char *name)
-{
-    int id = static_cast<int>( QVariant::nameToType(name) );
-    if (id == QVariant::UserType)
-        id = QMetaType::type(name);
-    return id;
-}
-
 QString qDBusInterfaceFromMetaObject(const QMetaObject *mo)
 {
     QString interface;
@@ -131,7 +123,7 @@ int qDBusParametersForMethod(const QMetaMethod &mm, QList<int>& metaTypes)
             QByteArray basictype = type;
             basictype.truncate(type.length() - 1);
 
-            int id = qDBusNameToTypeId(basictype);
+            int id = QMetaType::type(basictype);
             if (id == 0) {
                 //qWarning("Could not parse the method '%s'", mm.signature());
                 // invalid type in method parameter list
@@ -150,7 +142,7 @@ int qDBusParametersForMethod(const QMetaMethod &mm, QList<int>& metaTypes)
             return -1;          // not allowed
         }
 
-        int id = qDBusNameToTypeId(type);
+        int id = QMetaType::type(type);
         if (id == 0) {
             //qWarning("Could not parse the method '%s'", mm.signature());
             // invalid type in method parameter list

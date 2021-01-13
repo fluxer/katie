@@ -56,8 +56,6 @@
 #include "qdnd_p.h"
 #include "qcolormap.h"
 #include "qdebug.h"
-#include "qgraphicssystemfactory_p.h"
-#include "qgraphicssystem_p.h"
 #include "qstylesheetstyle_p.h"
 #include "qstyle_p.h"
 #include "qmessagebox.h"
@@ -341,9 +339,6 @@ QPalette *QApplicationPrivate::app_pal = 0;        // default application palett
 QPalette *QApplicationPrivate::sys_pal = 0;        // default system palette
 QPalette *QApplicationPrivate::set_pal = 0;        // default palette set by programmer
 
-QGraphicsSystem *QApplicationPrivate::graphics_system = 0; // default graphics system
-QString QApplicationPrivate::graphics_system_name;         // graphics system id - for delayed initialization
-
 Q_GLOBAL_STATIC(QMutex, applicationFontMutex)
 QFont *QApplicationPrivate::app_font = 0;        // default application font
 QFont *QApplicationPrivate::sys_font = 0;        // default system font
@@ -409,13 +404,11 @@ void QApplicationPrivate::process_cmdline()
     if (!qt_is_gui_used || !argc)
         return;
 
-    int j = 1;
     for (int i=1; i<argc; i++) { // if you add anything here, modify QCoreApplication::arguments()
         if (!argv[i]) {
             continue;
         }
         if (*argv[i] != '-') {
-            argv[j++] = argv[i];
             continue;
         }
         QString s;
@@ -446,9 +439,7 @@ void QApplicationPrivate::process_cmdline()
             force_reverse = true;
             QApplication::setLayoutDirection(Qt::RightToLeft);
         } else if (qstrcmp(argv[i], "-graphicssystem") == 0 && i < argc - 1) {
-            graphics_system_name = QString::fromLocal8Bit(argv[++i]);
-        } else {
-            argv[j++] = argv[i];
+            // no longer supported
         }
         if (!s.isEmpty()) {
             if (app_style) {
@@ -457,11 +448,6 @@ void QApplicationPrivate::process_cmdline()
             }
             styleOverride = s;
         }
-    }
-
-    if(j < argc) {
-        argv[j] = 0;
-        argc = j;
     }
 }
 
@@ -588,9 +574,6 @@ void QApplicationPrivate::construct(
 
     qt_is_gui_used = (qt_appType != QApplication::Tty);
     process_cmdline();
-    // the environment variable has the lowest precedence of runtime graphicssystem switches
-    if (graphics_system_name.isEmpty())
-        graphics_system_name = QString::fromLocal8Bit(qgetenv("QT_GRAPHICSSYSTEM"));
 
     // Must be called before initializing
     qt_init(this, qt_appType
@@ -601,12 +584,6 @@ void QApplicationPrivate::construct(
 
     QWidgetPrivate::mapper = new QWidgetMapper;
     QWidgetPrivate::allWidgets = new QWidgetSet;
-
-#if !defined(Q_WS_X11)
-    // initialize the graphics system - on X11 this is initialized inside
-    // qt_init() in qapplication_x11.cpp because of several reasons.
-    graphics_system = QGraphicsSystemFactory::create(graphics_system_name);
-#endif
 
     if (qt_appType != QApplication::Tty)
         (void) QApplication::style();  // trigger creation of application style
@@ -642,7 +619,7 @@ void QApplicationPrivate::construct(
 // ### if aargv is modified someday
 // ########## make it work with argc == argv == 0
 static int aargc = 1;
-static char *aargv[] = { (char*)"unknown", 0 };
+static char *aargv[] = { (char*)"unknown\0", 0 };
 
 /*!
     \fn QApplication::QApplication(Display* display, Qt::HANDLE visual, Qt::HANDLE colormap)
@@ -820,8 +797,6 @@ QApplication::~QApplication()
     QApplicationPrivate::app_style = 0;
     delete QApplicationPrivate::app_icon;
     QApplicationPrivate::app_icon = 0;
-    delete QApplicationPrivate::graphics_system;
-    QApplicationPrivate::graphics_system = 0;
 #ifndef QT_NO_CURSOR
     d->cursor_list.clear();
 #endif
@@ -1169,38 +1144,21 @@ QStyle* QApplication::setStyle(const QString& style)
 
 /*!
     \since 4.5
-
-    Sets the default graphics backend to \a system, which will be used for
-    on-screen widgets and QPixmaps. The available systems is \c{"raster"}.
-
-    There are several ways to set the graphics backend, in order of decreasing
-    precedence:
-    \list
-        \o the application commandline \c{-graphicssystem} switch
-        \o QApplication::setGraphicsSystem()
-        \o the QT_GRAPHICSSYSTEM environment variable
-        \o the Qt configure \c{-graphicssystem} switch
-    \endlist
-    If the highest precedence switch sets an invalid name, the error will be
-    ignored and the default backend will be used.
-
-    \warning This function is only effective before the QApplication constructor
-    is called.
+    \obsolete
 */
 
 QString QApplication::graphicsSystem()
 {
-    return QApplicationPrivate::graphics_system_name;
+    return QLatin1String("raster");
 }
+
+/*!
+    \obsolete
+*/
 
 void QApplication::setGraphicsSystem(const QString &system)
 {
-    if (Q_UNLIKELY(system == QLatin1String("native"))) {
-        qWarning() << "Attempt to set native graphicssystem";
-        QApplicationPrivate::graphics_system_name = QLatin1String("raster");
-    } else {
-        QApplicationPrivate::graphics_system_name = system;
-    }
+    Q_UNUSED(system);
 }
 
 /*!

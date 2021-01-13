@@ -401,7 +401,7 @@ void QX11PixmapData::fromImage(const QImage &img,
             QVector<QRgb> colorTable = cimage.colorTable();
             uint *xidata = (uint *)xi->data;
             for (int y = 0; y < h; ++y) {
-                const uchar *p = cimage.scanLine(y);
+                const uchar *p = cimage.constScanLine(y);
                 for (int x = 0; x < w; ++x) {
                     const QRgb rgb = colorTable[p[x]];
                     const int a = qAlpha(rgb);
@@ -421,7 +421,7 @@ void QX11PixmapData::fromImage(const QImage &img,
         case QImage::Format_RGB32: {
             uint *xidata = (uint *)xi->data;
             for (int y = 0; y < h; ++y) {
-                const QRgb *p = (const QRgb *) cimage.scanLine(y);
+                const QRgb *p = (const QRgb *) cimage.constScanLine(y);
                 for (int x = 0; x < w; ++x)
                     *xidata++ = p[x] | 0xff000000;
             }
@@ -430,7 +430,7 @@ void QX11PixmapData::fromImage(const QImage &img,
         case QImage::Format_ARGB32: {
             uint *xidata = (uint *)xi->data;
             for (int y = 0; y < h; ++y) {
-                const QRgb *p = (const QRgb *) cimage.scanLine(y);
+                const QRgb *p = (const QRgb *) cimage.constScanLine(y);
                 for (int x = 0; x < w; ++x) {
                     const QRgb rgb = p[x];
                     const int a = qAlpha(rgb);
@@ -451,7 +451,7 @@ void QX11PixmapData::fromImage(const QImage &img,
         case QImage::Format_ARGB32_Premultiplied: {
             uint *xidata = (uint *)xi->data;
             for (int y = 0; y < h; ++y) {
-                const QRgb *p = (const QRgb *) cimage.scanLine(y);
+                const QRgb *p = (const QRgb *) cimage.constScanLine(y);
                 memcpy(xidata, p, w*sizeof(QRgb));
                 xidata += w;
             }
@@ -666,7 +666,7 @@ void QX11PixmapData::fromImage(const QImage &img,
 
 #define CYCLE(body)                                             \
         for (int y=0; y<h; y++) {                               \
-            const uchar* src = cimage.scanLine(y);              \
+            const uchar* src = cimage.constScanLine(y);              \
             uchar* dst = newbits + xi->bytes_per_line*y;        \
             const QRgb* p = (const QRgb *)src;                  \
             body                                                \
@@ -840,7 +840,7 @@ void QX11PixmapData::fromImage(const QImage &img,
         const QImage &cimage = image;
         memset(pop, 0, sizeof(int)*256);        // reset popularity array
         for (int i = 0; i < h; i++) {                        // for each scanline...
-            const uchar* p = cimage.scanLine(i);
+            const uchar* p = cimage.constScanLine(i);
             const uchar *end = p + w;
             while (p < end)                        // compute popularity
                 pop[*p++]++;
@@ -1033,11 +1033,9 @@ Qt::HANDLE QX11PixmapData::createBitmapFromImage(const QImage &image)
     if (bpl != ibpl) {
         tmp_bits = new uchar[bpl*h];
         bits = (char *)tmp_bits;
-        uchar *p, *b;
-        int y;
-        b = tmp_bits;
-        p = img.scanLine(0);
-        for (y = 0; y < h; y++) {
+        uchar *b = tmp_bits;
+        const uchar *p = img.constScanLine(0);
+        for (int y = 0; y < h; y++) {
             memcpy(b, p, bpl);
             b += bpl;
             p += ibpl;
@@ -1363,14 +1361,14 @@ QImage QX11PixmapData::takeQImageFromXImage(XImage *xi) const
         for (int i=0; i < image.height(); i++) {
             if (depth() == 16) {
                 ushort *p = (ushort*)image.scanLine(i);
-                ushort *end = p + image.width();
+                const ushort *end = p + image.width();
                 while (p < end) {
                     *p = ((*p << 8) & 0xff00) | ((*p >> 8) & 0x00ff);
                     p++;
                 }
             } else {
                 uint *p = (uint*)image.scanLine(i);
-                uint *end = p + image.width();
+                const uint *end = p + image.width();
                 while (p < end) {
                     *p = ((*p << 24) & 0xff000000) | ((*p << 8) & 0x00ff0000)
                          | ((*p >> 8) & 0x0000ff00) | ((*p >> 24) & 0x000000ff);
@@ -1506,7 +1504,7 @@ QImage QX11PixmapData::toImage(const XImage *xi, const QRect &rect) const
 
         for (int y = 0; y < xi->height; ++y) {
             uint pixel;
-            const uchar* asrc = x11_mask ? alpha.scanLine(y) : 0;
+            const uchar* asrc = x11_mask ? alpha.constScanLine(y) : 0;
             QRgb *dst = (QRgb *)image.scanLine(y);
             uchar *src = (uchar *)xi->data + xi->bytes_per_line*y;
             for (int x = 0; x < xi->width; x++) {
@@ -1594,8 +1592,6 @@ QImage QX11PixmapData::toImage(const XImage *xi, const QRect &rect) const
         image.setColor(0, qRgb(255,255,255));
         image.setColor(1, qRgb(0,0,0));
     } else if (!trucol) {                        // pixmap with colormap
-        uchar *p;
-        uchar *end;
         uchar  use[256];                        // pixel-in-use table
         uchar  pix[256];                        // pixel translation table
         int    ncols, bpl;
@@ -1605,8 +1601,8 @@ QImage QX11PixmapData::toImage(const XImage *xi, const QRect &rect) const
 
         if (x11_mask) {                         // which pixels are used?
             for (int i = 0; i < xi->height; i++) {
-                const uchar* asrc = alpha.scanLine(i);
-                p = image.scanLine(i);
+                const uchar* asrc = alpha.constScanLine(i);
+                const uchar *p = image.constScanLine(i);
                 if (ale) {
                     for (int x = 0; x < xi->width; x++) {
                         if (asrc[x >> 3] & (1 << (x & 7)))
@@ -1623,8 +1619,8 @@ QImage QX11PixmapData::toImage(const XImage *xi, const QRect &rect) const
             }
         } else {
             for (int i = 0; i < xi->height; i++) {
-                p = image.scanLine(i);
-                end = p + bpl;
+                const uchar *p = image.constScanLine(i);
+                const uchar *end = p + bpl;
                 while (p < end)
                     use[*p++] = 1;
             }
@@ -1635,8 +1631,8 @@ QImage QX11PixmapData::toImage(const XImage *xi, const QRect &rect) const
                 pix[i] = ncols++;
         }
         for (int i = 0; i < xi->height; i++) {                        // translate pixels
-            p = image.scanLine(i);
-            end = p + bpl;
+            uchar *p = image.scanLine(i);
+            const uchar *end = p + bpl;
             while (p < end) {
                 *p = pix[*p];
                 p++;
@@ -1656,7 +1652,7 @@ QImage QX11PixmapData::toImage(const XImage *xi, const QRect &rect) const
             }
             for (int i = 0; i < xi->height; i++) {
                 const uchar* asrc = alpha.scanLine(i);
-                p = image.scanLine(i);
+                uchar *p = image.scanLine(i);
                 if (ale) {
                     for (int x = 0; x < xi->width; x++) {
                         if (!(asrc[x >> 3] & (1 << (x & 7))))

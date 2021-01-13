@@ -62,13 +62,6 @@
 
 QT_BEGIN_NAMESPACE
 
-#ifndef DBL_DIG
-#  define DBL_DIG 10
-#endif
-#ifndef FLT_DIG
-#  define FLT_DIG 6
-#endif
-
 static const QLatin1String qStringListDelim = QLatin1String(",");
 
 static void construct(QVariant::Private *x, const void *copy)
@@ -2517,7 +2510,7 @@ template <typename T>
 inline T qNumVariantToHelper(const QVariant::Private &d,
                              const QVariant::Handler *handler, bool *ok, const T& val)
 {
-    uint t = qMetaTypeId<T>();
+    int t = qMetaTypeId<T>();
     if (ok)
         *ok = true;
     if (d.type == t)

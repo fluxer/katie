@@ -40,7 +40,6 @@
 #include "qdeclarativeanchors_p.h"
 #include "qdeclarativescriptstring.h"
 
-QT_BEGIN_HEADER
 
 QT_BEGIN_NAMESPACE
 
@@ -284,6 +283,5 @@ QML_DECLARE_TYPE(QDeclarativeStateChangeScript)
 QML_DECLARE_TYPE(QDeclarativeAnchorSet)
 QML_DECLARE_TYPE(QDeclarativeAnchorChanges)
 
-QT_END_HEADER
 
 #endif // QDECLARATIVESTATEOPERATIONS_H

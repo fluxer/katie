@@ -51,7 +51,6 @@
 #include "qmenu_p.h"
 #include "qbackingstore_p.h"
 #include "qwidget_p.h"
-#include "qwindowsurface_x11_p.h"
 #include "qpixmap_x11_p.h"
 #include "qpaintengine_x11_p.h"
 #include "qt_x11_p.h"
@@ -1956,10 +1955,7 @@ void QWidgetPrivate::show_sys()
 
     // Freedesktop.org Startup Notification
     if (qt_x11Data->startupId && q->isWindow()) {
-        QByteArray message("remove: ID=");
-        message.append(qt_x11Data->startupId);
-        sendStartupMessage(message.constData());
-        qt_x11Data->startupId = 0;
+        sendStartupMessage();
     }
 }
 
@@ -1968,12 +1964,12 @@ void QWidgetPrivate::show_sys()
   Platform-specific part of QWidget::show().
 */
 
-void QWidgetPrivate::sendStartupMessage(const char *message) const
+void QWidgetPrivate::sendStartupMessage() const
 {
     Q_Q(const QWidget);
 
-    if (!message)
-        return;
+    QByteArray message("remove: ID=");
+    message.append(qt_x11Data->startupId);
 
     XEvent xevent;
     xevent.xclient.type = ClientMessage;
@@ -1984,7 +1980,7 @@ void QWidgetPrivate::sendStartupMessage(const char *message) const
 
     Window rootWindow = RootWindow(qt_x11Data->display, DefaultScreen(qt_x11Data->display));
     uint sent = 0;
-    uint length = strlen(message) + 1;
+    uint length = message.size() + 1;
     do {
         if (sent == 20)
             xevent.xclient.message_type = ATOM(_NET_STARTUP_INFO);
@@ -1994,6 +1990,8 @@ void QWidgetPrivate::sendStartupMessage(const char *message) const
 
         XSendEvent(qt_x11Data->display, rootWindow, false, PropertyChangeMask, &xevent);
     } while (sent <= length);
+
+    qt_x11Data->startupId = 0;
 }
 
 void QWidgetPrivate::setNetWmWindowTypes()
@@ -2831,11 +2829,6 @@ QPaintEngine *QWidget::paintEngine() const
         return d->extraPaintEngine;
     }
     return qt_widget_paintengine();
-}
-
-QWindowSurface *QWidgetPrivate::createDefaultWindowSurface_sys()
-{
-    return new QX11WindowSurface(q_func());
 }
 
 Qt::HANDLE QWidget::x11PictureHandle() const

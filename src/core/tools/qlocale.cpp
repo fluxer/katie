@@ -86,7 +86,7 @@ QLocale::Language QLocalePrivate::codeToLanguage(const QString &code)
     }
 
     for (qint16 i = 0; i < languageTblSize; i++) {
-        if (QString::fromLatin1(languageTbl[i].code) == lower)
+        if (QLatin1String(languageTbl[i].code) == lower)
             return languageTbl[i].language;
     }
 
@@ -109,7 +109,7 @@ QLocale::Script QLocalePrivate::codeToScript(const QString &code)
     }
 
     for (qint16 i = 0; i < scriptTblSize; i++) {
-        if (QString::fromLatin1(scriptTbl[i].code) == title)
+        if (QLatin1String(scriptTbl[i].code) == title)
             return scriptTbl[i].script;
     }
     return QLocale::AnyScript;
@@ -127,7 +127,7 @@ QLocale::Country QLocalePrivate::codeToCountry(const QString &code)
     }
 
     for (qint16 i = 0; i < countryTblSize; i++) {
-        if (QString::fromLatin1(countryTbl[i].code) == upper)
+        if (QLatin1String(countryTbl[i].code) == upper)
             return countryTbl[i].country;
     }
 
@@ -827,9 +827,9 @@ QString QLocale::name() const
     const char *lang = languageTbl[dd->m_language].code;
     if (dd->m_country != AnyCountry) {
         const char *country = countryTbl[dd->m_country].code;
-        return QString::fromLatin1(lang) + QLatin1Char('_') + QString::fromLatin1(country);
+        return QLatin1String(lang) + QLatin1Char('_') + QLatin1String(country);
     }
-    return QString::fromLatin1(lang);
+    return QLatin1String(lang);
 }
 
 /*!
@@ -1857,11 +1857,12 @@ Qt::DayOfWeek QLocale::firstDayOfWeek() const
 
 QLocale::MeasurementSystem QLocalePrivate::measurementSystem() const
 {
+    QByteArray latinbcp47 = bcp47Name().toLatin1();
     UErrorCode error = U_ZERO_ERROR;
-    UMeasurementSystem measurement = ulocdata_getMeasurementSystem(bcp47Name().toLatin1().constData(), &error);
+    UMeasurementSystem measurement = ulocdata_getMeasurementSystem(latinbcp47.constData(), &error);
     if (Q_UNLIKELY(U_FAILURE(error))) {
         qWarning("QLocale::measurementSystem: ulocdata_getMeasurementSystem(%s) failed %s",
-            bcp47Name().toLatin1().constData(), u_errorName(error));
+            latinbcp47.constData(), u_errorName(error));
         return QLocale::MetricSystem;
     }
     switch (measurement) {
@@ -1930,7 +1931,8 @@ QLocale::MeasurementSystem QLocale::measurementSystem() const
 */
 Qt::LayoutDirection QLocale::textDirection() const
 {
-    if (uloc_isRightToLeft(bcp47Name().toLatin1().constData()))
+    QByteArray latinbcp47 = bcp47Name().toLatin1();
+    if (uloc_isRightToLeft(latinbcp47.constData()))
         return Qt::RightToLeft;
     return Qt::LeftToRight;
 }
@@ -2250,11 +2252,11 @@ QString QLocalePrivate::doubleToString(const QChar _zero, const QChar plus, cons
 
     // Detect special numbers (nan, +/-inf)
     if (qIsInf(d)) {
-        num_str = QString::fromLatin1("inf");
+        num_str = QLatin1String("inf");
         special_number = true;
         negative = d < 0;
     } else if (qIsNaN(d)) {
-        num_str = QString::fromLatin1("nan");
+        num_str = QLatin1String("nan");
         special_number = true;
     }
 
@@ -2266,9 +2268,9 @@ QString QLocalePrivate::doubleToString(const QChar _zero, const QChar plus, cons
         // NOT thread safe!
         if (form == DFDecimal) {
 #ifdef QT_HAVE_FCVT
-            digits = QLatin1String(::fcvt(d, precision, &decpt, &sign));
+            digits = QString::fromLatin1(::fcvt(d, precision, &decpt, &sign));
 #else
-            digits = QLatin1String(qfcvt(d, precision, &decpt, &sign));
+            digits = QString::fromLatin1(qfcvt(d, precision, &decpt, &sign));
 #endif
         } else {
             int pr = precision;
@@ -2277,9 +2279,9 @@ QString QLocalePrivate::doubleToString(const QChar _zero, const QChar plus, cons
             else if (form == DFSignificantDigits && pr == 0)
                 pr = 1;
 #ifdef QT_HAVE_ECVT
-            digits = QLatin1String(::ecvt(d, pr, &decpt, &sign));
+            digits = QString::fromLatin1(::ecvt(d, pr, &decpt, &sign));
 #else
-            digits = QLatin1String(qecvt(d, pr, &decpt, &sign));
+            digits = QString::fromLatin1(qecvt(d, pr, &decpt, &sign));
 #endif
 
             // Chop trailing zeros
@@ -2855,7 +2857,7 @@ QString QLocale::currencySymbol(QLocale::CurrencySymbolFormat format) const
         case CurrencyDisplayName:
             return getLocaleData(d()->m_currency_display_name);
         case CurrencyIsoCode: {
-            return QString::fromLatin1(d()->m_currency_iso_code);
+            return QString::fromUtf8(d()->m_currency_iso_code);
         }
     }
     return QString();

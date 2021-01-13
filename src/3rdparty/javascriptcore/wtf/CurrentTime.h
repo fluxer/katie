@@ -45,7 +45,7 @@ namespace WTF {
         struct timeval now;
         struct timezone zone;
 
-        gettimeofday(&now, &zone);
+        ::gettimeofday(&now, &zone);
         return static_cast<double>(now.tv_sec) + (double)(now.tv_usec / 1000000.0);
     }
 
@@ -57,7 +57,7 @@ namespace WTF {
 
     inline void getLocalTime(const time_t* localTime, struct tm* localTM)
     {
-        localtime_r(localTime, localTM);
+        ::localtime_r(localTime, localTM);
     }
 
 } // namespace WTF

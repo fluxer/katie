@@ -38,8 +38,6 @@
 
 #include <unordered_set>
 
-QT_BEGIN_HEADER
-
 QT_BEGIN_NAMESPACE
 
 template<class T>
@@ -206,6 +204,5 @@ public:
 
 QT_END_NAMESPACE
 
-QT_END_HEADER
 
 #endif // QSET_H

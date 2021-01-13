@@ -36,7 +36,6 @@
 
 #include <QtCore/qglobal.h>
 
-QT_BEGIN_HEADER
 QT_BEGIN_NAMESPACE
 
 template <typename T>
@@ -67,6 +66,5 @@ private:
 };
 
 QT_END_NAMESPACE
-QT_END_HEADER
 
 #endif // QSCOPEDVALUEROLLBACK_H

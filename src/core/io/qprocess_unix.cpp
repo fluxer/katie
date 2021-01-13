@@ -382,12 +382,12 @@ bool QProcessPrivate::createChannel(Channel &channel)
         return true;
     } else if (channel.type == Channel::Redirect) {
         // we're redirecting the channel to/from a file
-        const char* fname = QFile::encodeName(channel.file).constData();
+        const QByteArray fname = QFile::encodeName(channel.file);
 
         if (&channel == &stdinChannel) {
             // try to open in read-only mode
             channel.pipe[1] = -1;
-            if ( (channel.pipe[0] = qt_safe_open(fname, O_RDONLY)) != -1)
+            if ( (channel.pipe[0] = qt_safe_open(fname.constData(), O_RDONLY)) != -1)
                 return true;    // success
 
             q->setErrorString(QProcess::tr("Could not open input redirection for reading"));
@@ -399,7 +399,7 @@ bool QProcessPrivate::createChannel(Channel &channel)
                 mode |= O_TRUNC;
 
             channel.pipe[0] = -1;
-            if ( (channel.pipe[1] = qt_safe_open(fname, mode, 0666)) != -1)
+            if ( (channel.pipe[1] = qt_safe_open(fname.constData(), mode, 0666)) != -1)
                 return true; // success
 
             q->setErrorString(QProcess::tr("Could not open output redirection for writing"));

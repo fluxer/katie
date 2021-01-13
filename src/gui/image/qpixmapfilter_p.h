@@ -50,7 +50,6 @@
 #include <QtGui/qgraphicseffect.h>
 
 #ifndef QT_NO_GRAPHICSEFFECT
-QT_BEGIN_HEADER
 
 QT_BEGIN_NAMESPACE
 
@@ -69,8 +68,6 @@ public:
         ColorizeFilter,
         DropShadowFilter,
         BlurFilter,
-
-        UserFilter = 1024
     };
 
     FilterType type() const;
@@ -151,7 +148,6 @@ public:
 
 QT_END_NAMESPACE
 
-QT_END_HEADER
 
 #endif //QT_NO_GRAPHICSEFFECT
 #endif // QPIXMAPFILTER_H

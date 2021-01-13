@@ -36,7 +36,6 @@
 
 #include <QtCore/qvariant.h>
 
-QT_BEGIN_HEADER
 
 #ifndef QT_NO_SETTINGS
 
@@ -129,6 +128,5 @@ QT_END_NAMESPACE
 
 #endif // QT_NO_SETTINGS
 
-QT_END_HEADER
 
 #endif // QSETTINGS_H
