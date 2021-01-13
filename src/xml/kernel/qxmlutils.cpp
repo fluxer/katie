@@ -280,9 +280,7 @@ bool QXmlUtils::isNameChar(const QChar c)
  */
 bool QXmlUtils::isPublicID(const QString &candidate)
 {
-    const int len = candidate.length();
-
-    for(int i = 0; i < len; ++i)
+    for(int i = 0; i < candidate.length(); ++i)
     {
         const ushort cp = candidate.at(i).unicode();
 
@@ -347,8 +345,7 @@ bool QXmlUtils::isNCName(const QStringRef &ncName)
     if(!QXmlUtils::isLetter(first) && first.unicode() != '_' && first.unicode() != ':')
         return false;
 
-    const int len = ncName.size();
-    for(int i = 0; i < len; ++i)
+    for(int i = 0; i < ncName.size(); ++i)
     {
         const QChar &at = ncName.at(i);
         if(!QXmlUtils::isNameChar(at) || at == QLatin1Char(':'))
