@@ -141,7 +141,7 @@ public:
 
 
     static double bytearrayToDouble(const char *num, bool *ok, bool *overflow = Q_NULLPTR);
-    static qint64 bytearrayToLongLong(const char *num, int base, bool *ok, bool *overflow = Q_NULLPTR);
+    static qint64 bytearrayToLongLong(const char *num, int base, bool *ok);
     static quint64 bytearrayToUnsLongLong(const char *num, int base, bool *ok);
 
     typedef QVarLengthArray<char, 256> CharBuff;

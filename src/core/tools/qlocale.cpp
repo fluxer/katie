@@ -2772,13 +2772,11 @@ double QLocalePrivate::bytearrayToDouble(const char *num, bool *ok, bool *overfl
     return ret;
 }
 
-qlonglong QLocalePrivate::bytearrayToLongLong(const char *num, int base, bool *ok, bool *overflow)
+qlonglong QLocalePrivate::bytearrayToLongLong(const char *num, int base, bool *ok)
 {
     if (*num == '\0') {
         if (ok != Q_NULLPTR)
             *ok = false;
-        if (overflow != Q_NULLPTR)
-            *overflow = false;
         return 0;
     }
 
@@ -2787,11 +2785,6 @@ qlonglong QLocalePrivate::bytearrayToLongLong(const char *num, int base, bool *o
     if ((ret == LLONG_MIN || ret == LLONG_MAX) && (errno == ERANGE || errno == EINVAL)) {
         if (ok != Q_NULLPTR)
             *ok = false;
-        if (overflow != Q_NULLPTR) {
-            // the only way qstrtoll can fail with *endptr != '\0' on a non-empty
-            // input string is overflow
-            *overflow = *endptr != '\0';
-        }
         return 0;
     }
 
@@ -2799,15 +2792,11 @@ qlonglong QLocalePrivate::bytearrayToLongLong(const char *num, int base, bool *o
         // we stopped at a non-digit character after converting some digits
         if (ok != Q_NULLPTR)
             *ok = false;
-        if (overflow != Q_NULLPTR)
-            *overflow = false;
         return 0;
     }
 
     if (ok != Q_NULLPTR)
         *ok = true;
-    if (overflow != Q_NULLPTR)
-        *overflow = false;
     return ret;
 }
 

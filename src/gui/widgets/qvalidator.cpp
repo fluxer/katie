@@ -343,9 +343,9 @@ QValidator::State QIntValidator::validate(QString & input, int&) const
     if (buff.size() == 1 && (buff.at(0) == '+' || buff.at(0) == '-'))
         return Intermediate;
 
-    bool ok, overflow;
-    qlonglong entered = QLocalePrivate::bytearrayToLongLong(buff.constData(), 10, &ok, &overflow);
-    if (overflow || !ok)
+    bool ok;
+    qlonglong entered = QLocalePrivate::bytearrayToLongLong(buff.constData(), 10, &ok);
+    if (!ok)
         return Invalid;
 
     if (entered >= b && entered <= t) {
@@ -371,9 +371,9 @@ void QIntValidator::fixup(QString &input) const
         if (!cl.d()->validateChars(input, QLocalePrivate::IntegerMode, &buff))
             return;
     }
-    bool ok, overflow;
-    qlonglong entered = QLocalePrivate::bytearrayToLongLong(buff.constData(), 10, &ok, &overflow);
-    if (ok && !overflow)
+    bool ok;
+    qlonglong entered = QLocalePrivate::bytearrayToLongLong(buff.constData(), 10, &ok);
+    if (ok)
         input = locale().toString(entered);
 }
 
