@@ -2731,14 +2731,9 @@ qulonglong QLocalePrivate::stringToUnsLongLong(const QString &number, int base,
 }
 
 
-double QLocalePrivate::bytearrayToDouble(const char *num, bool *ok, bool *overflow)
+double QLocalePrivate::bytearrayToDouble(const char *num, bool *ok)
 {
-    if (ok != Q_NULLPTR)
-        *ok = true;
-    if (overflow != Q_NULLPTR)
-        *overflow = false;
-
-    if (*num == '\0') {
+    if (Q_UNLIKELY(*num == '\0')) {
         if (ok != Q_NULLPTR)
             *ok = false;
         return 0.0;
@@ -2747,34 +2742,26 @@ double QLocalePrivate::bytearrayToDouble(const char *num, bool *ok, bool *overfl
     char *endptr;
     double ret = std::strtod(num, &endptr);
     if ((ret == 0.0l && errno == ERANGE) || ret == HUGE_VAL || ret == -HUGE_VAL) {
-        // the only way strtod can fail with *endptr != '\0' on a non-empty
-        // input string is overflow
         if (ok != Q_NULLPTR)
             *ok = false;
-        if (overflow != Q_NULLPTR)
-            *overflow = *endptr != '\0';
         return 0.0;
     }
 
     if (*endptr != '\0') {
-        // we stopped at a non-digit character after converting some digits
+        // stopped at a non-digit character after converting some digits
         if (ok != Q_NULLPTR)
             *ok = false;
-        if (overflow != Q_NULLPTR)
-            *overflow = false;
         return 0.0;
     }
 
     if (ok != Q_NULLPTR)
         *ok = true;
-    if (overflow != Q_NULLPTR)
-        *overflow = false;
     return ret;
 }
 
 qlonglong QLocalePrivate::bytearrayToLongLong(const char *num, int base, bool *ok)
 {
-    if (*num == '\0') {
+    if (Q_UNLIKELY(*num == '\0')) {
         if (ok != Q_NULLPTR)
             *ok = false;
         return 0;
@@ -2789,7 +2776,7 @@ qlonglong QLocalePrivate::bytearrayToLongLong(const char *num, int base, bool *o
     }
 
     if (*endptr != '\0') {
-        // we stopped at a non-digit character after converting some digits
+        // stopped at a non-digit character after converting some digits
         if (ok != Q_NULLPTR)
             *ok = false;
         return 0;
@@ -2802,9 +2789,22 @@ qlonglong QLocalePrivate::bytearrayToLongLong(const char *num, int base, bool *o
 
 qulonglong QLocalePrivate::bytearrayToUnsLongLong(const char *num, int base, bool *ok)
 {
+    if (Q_UNLIKELY(*num == '\0')) {
+        if (ok != Q_NULLPTR)
+            *ok = false;
+        return 0;
+    }
+
     char *endptr;
     qulonglong ret = std::strtoull(num, &endptr, base);
-    if ((ret == ULLONG_MAX && (errno == ERANGE || errno == EINVAL)) || *endptr != '\0') {
+    if (ret == ULLONG_MAX && (errno == ERANGE || errno == EINVAL)) {
+        if (ok != Q_NULLPTR)
+            *ok = false;
+        return 0;
+    }
+
+    if (*endptr != '\0') {
+        // stopped at a non-digit character after converting some digits
         if (ok != Q_NULLPTR)
             *ok = false;
         return 0;

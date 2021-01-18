@@ -586,12 +586,10 @@ QValidator::State QDoubleValidatorPrivate::validateWithLocale(QString &input, QL
     if (q->t < 0 && buff.startsWith('+'))
         return QValidator::Invalid;
 
-    bool ok, overflow;
-    double i = QLocalePrivate::bytearrayToDouble(buff.constData(), &ok, &overflow);
-    if (overflow)
-        return QValidator::Invalid;
+    bool ok;
+    double i = QLocalePrivate::bytearrayToDouble(buff.constData(), &ok);
     if (!ok)
-        return QValidator::Intermediate;
+        return QValidator::Invalid;
 
     if (i >= q->b && i <= q->t)
         return QValidator::Acceptable;
