@@ -144,7 +144,7 @@ public:
     static qint64 bytearrayToLongLong(const char *num, int base, bool *ok);
     static quint64 bytearrayToUnsLongLong(const char *num, int base, bool *ok);
 
-    typedef QVarLengthArray<char, 256> CharBuff;
+    typedef QVarLengthArray<char, 32> CharBuff;
     bool numberToCLocale(const QString &num,
                          GroupSeparatorMode group_sep_mode,
                          CharBuff *result) const;
