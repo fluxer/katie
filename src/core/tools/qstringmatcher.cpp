@@ -195,7 +195,7 @@ QStringMatcher &QStringMatcher::operator=(const QStringMatcher &other)
     if (this != &other) {
         q_pattern = other.q_pattern;
         q_cs = other.q_cs;
-        ::memcpy(&q_skiptable, &other.q_skiptable, sizeof(q_skiptable));
+        ::memcpy(&q_skiptable, &other.q_skiptable, sizeof(q_skiptable) * sizeof(uchar));
     }
     return *this;
 }

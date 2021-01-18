@@ -156,7 +156,7 @@ QByteArrayMatcher &QByteArrayMatcher::operator=(const QByteArrayMatcher &other)
 {
     if (this != &other) {
         q_pattern = other.q_pattern;
-        ::memcpy(&q_skiptable, &other.q_skiptable, sizeof(q_skiptable));
+        ::memcpy(&q_skiptable, &other.q_skiptable, sizeof(q_skiptable) * sizeof(uchar));
     }
     return *this;
 }

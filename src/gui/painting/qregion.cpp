@@ -1294,12 +1294,10 @@ void QRegionPrivate::append(const QRegionPrivate *r)
     }
 
     // update extents
-    destRect = &extents;
-    srcRect = &r->extents;
-    extents.setCoords(qMin(destRect->left(), srcRect->left()),
-                      qMin(destRect->top(), srcRect->top()),
-                      qMax(destRect->right(), srcRect->right()),
-                      qMax(destRect->bottom(), srcRect->bottom()));
+    extents.setCoords(qMin(extents.left(), r->extents.left()),
+                      qMin(extents.top(), r->extents.top()),
+                      qMax(extents.right(), r->extents.right()),
+                      qMax(extents.bottom(), r->extents.bottom()));
 
 #ifdef QT_REGION_DEBUG
     selfTest();
@@ -1349,15 +1347,10 @@ void QRegionPrivate::prepend(const QRegionPrivate *r)
 
     if (numPrepend > 0) {
         const int newNumRects = numRects + numPrepend;
-        if (newNumRects > rects.size())
-            rects.resize(newNumRects);
-
-        // move existing rectangles
-        memmove(rects.data() + numPrepend, rects.constData() + numSkip,
-                numRects * sizeof(QRect));
-
-        // prepend new rectangles
-        memcpy(rects.data(), r->rects.constData(), numPrepend * sizeof(QRect));
+        // move existing rectangles and prepend new rectanbles
+        for (int i = 0; i < r->rects.size(); i++) {
+            rects.insert(i, r->rects.at(i));
+        }
 
         numRects = newNumRects;
     }
@@ -1389,8 +1382,7 @@ void QRegionPrivate::prepend(const QRect *r)
             const QRect *nextToFirst = (numRects > 2 ? myFirst + 2 : 0);
             if (mergeFromAbove(myFirst + 1, myFirst, nextToFirst, 0)) {
                 --numRects;
-                memmove(rects.data(), rects.constData() + 1,
-                        numRects * sizeof(QRect));
+                rects.remove(0);
             }
         }
     } else if (mergeFromAbove(myFirst, r, (numRects > 1 ? myFirst + 1 : 0), 0)) {

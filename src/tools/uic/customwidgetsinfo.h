@@ -49,8 +49,6 @@ public:
     CustomWidgetsInfo();
 
     void acceptUI(DomUI *node);
-
-    void acceptCustomWidgets(DomCustomWidgets *node);
     void acceptCustomWidget(DomCustomWidget *node);
 
     inline QStringList customWidgets() const
