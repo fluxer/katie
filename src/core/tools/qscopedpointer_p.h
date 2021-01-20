@@ -49,38 +49,7 @@
 
 QT_BEGIN_NAMESPACE
 
-
-/* Internal helper class - exposes the data through data_ptr (legacy from QShared).
-   Required for some internal Qt classes, do not use otherwise. */
-template <typename T, typename Cleanup = QScopedPointerDeleter<T> >
-class QCustomScopedPointer : public QScopedPointer<T, Cleanup>
-{
-public:
-    explicit inline QCustomScopedPointer(T *p = 0)
-        : QScopedPointer<T, Cleanup>(p)
-    {
-    }
-
-    inline T *&data_ptr()
-    {
-        return this->d;
-    }
-
-    inline bool operator==(const QCustomScopedPointer<T, Cleanup> &other) const
-    {
-        return this->d == other.d;
-    }
-
-    inline bool operator!=(const QCustomScopedPointer<T, Cleanup> &other) const
-    {
-        return this->d != other.d;
-    }
-
-private:
-    Q_DISABLE_COPY(QCustomScopedPointer)
-};
-
-/* Internal helper class - a handler for QShared* classes, to be used in QCustomScopedPointer */
+/* Internal helper class - a handler for QShared* classes, to be used in QScopedSharedPointer */
 template <typename T>
 class QScopedPointerSharedDeleter
 {
@@ -96,11 +65,11 @@ public:
    This class is basically a scoped pointer pointing to a ref-counted object
  */
 template <typename T>
-class QScopedSharedPointer : public QCustomScopedPointer<T, QScopedPointerSharedDeleter<T> >
+class QScopedSharedPointer : public QScopedPointer<T, QScopedPointerSharedDeleter<T> >
 {
 public:
     explicit inline QScopedSharedPointer(T *p = 0)
-        : QCustomScopedPointer<T, QScopedPointerSharedDeleter<T> >(p)
+        : QScopedPointer<T, QScopedPointerSharedDeleter<T> >(p)
     {
     }
 
