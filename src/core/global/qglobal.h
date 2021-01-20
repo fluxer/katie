@@ -459,13 +459,6 @@ Q_CORE_EXPORT const char *qVersion();
 */
 #define Q_UNUSED(x) (void)x;
 
-/*
-   Debugging and error handling
-*/
-#if (defined(QT_NO_DEBUG_OUTPUT) || defined(QT_NO_TEXTSTREAM)) && !defined(QT_NO_DEBUG_STREAM)
-#  define QT_NO_DEBUG_STREAM
-#endif
-
 class QString;
 #define qPrintable(string) QString(string).toLocal8Bit().constData()
 

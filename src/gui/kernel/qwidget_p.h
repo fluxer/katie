@@ -323,7 +323,6 @@ public:
     static QGraphicsProxyWidget * nearestGraphicsProxyWidget(const QWidget *origin);
 #endif
     QWindowSurface *createDefaultWindowSurface();
-    QWindowSurface *createDefaultWindowSurface_sys();
     void repaint_sys(const QRegion &rgn);
 
     QRect clipRect() const;

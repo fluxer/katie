@@ -67,7 +67,6 @@ QT_BEGIN_NAMESPACE
 class QTimer;
 class QClipboard;
 class QGraphicsScene;
-class QGraphicsSystem;
 class QObject;
 class QWidget;
 class QSocketNotifier;
@@ -162,8 +161,6 @@ public:
     static QPalette *app_pal;
     static QPalette *sys_pal;
     static QPalette *set_pal;
-    static QGraphicsSystem *graphics_system;
-    static QString graphics_system_name;
 
 private:
     static QFont *app_font; // private for a reason! Always use QApplication::font() instead!

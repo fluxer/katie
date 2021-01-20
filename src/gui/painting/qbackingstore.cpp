@@ -45,7 +45,6 @@
 #include "qapplication_p.h"
 #include "qpaintengine_raster_p.h"
 #include "qgraphicseffect_p.h"
-#include "qgraphicssystem_p.h"
 
 QT_BEGIN_NAMESPACE
 

@@ -35,7 +35,6 @@
 #include "qpixmap.h"
 #include "qpixmapfilter_p.h"
 #include "qapplication_p.h"
-#include "qgraphicssystem_p.h"
 #include "qpaintengineex_p.h"
 #include "qpaintengine_raster_p.h"
 #include "qmath.h"
@@ -84,9 +83,6 @@ public:
     \value BlurFilter         A filter that is used to blur an image using
                               a simple blur radius. See QPixmapBlurFilter
                               for more information.
-
-    \value UserFilter   The first filter type that can be used for
-                        application-specific purposes.
 */
 
 

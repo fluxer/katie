@@ -1294,12 +1294,10 @@ void QRegionPrivate::append(const QRegionPrivate *r)
     }
 
     // update extents
-    destRect = &extents;
-    srcRect = &r->extents;
-    extents.setCoords(qMin(destRect->left(), srcRect->left()),
-                      qMin(destRect->top(), srcRect->top()),
-                      qMax(destRect->right(), srcRect->right()),
-                      qMax(destRect->bottom(), srcRect->bottom()));
+    extents.setCoords(qMin(extents.left(), r->extents.left()),
+                      qMin(extents.top(), r->extents.top()),
+                      qMax(extents.right(), r->extents.right()),
+                      qMax(extents.bottom(), r->extents.bottom()));
 
 #ifdef QT_REGION_DEBUG
     selfTest();

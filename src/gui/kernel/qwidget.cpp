@@ -49,9 +49,6 @@
 #include "qvariant.h"
 #include "qwidget.h"
 #include "qstyleoption.h"
-#ifndef QT_NO_ACCESSIBILITY
-# include "qaccessible.h"
-#endif
 #include "qpainter.h"
 #include "qtooltip.h"
 #include "qwhatsthis.h"
@@ -59,18 +56,11 @@
 #include "qstylesheetstyle_p.h"
 #include "qstyle_p.h"
 #include "qfileinfo.h"
-
-#if defined(Q_WS_X11)
-# include "qpaintengine_x11_p.h"
-# include "qx11info_x11.h"
-#endif
-
 #include "qgraphicseffect_p.h"
 #include "qwindowsurface_p.h"
 #include "qbackingstore_p.h"
 #include "qpaintengine_raster_p.h"
-
-
+#include "qwindowsurface_raster_p.h"
 #include "qwidget_p.h"
 #include "qaction_p.h"
 #include "qlayout_p.h"
@@ -80,9 +70,16 @@
 #include "QtGui/qabstractscrollarea.h"
 #include "qabstractscrollarea_p.h"
 #include "qevent_p.h"
-
-#include "qgraphicssystem_p.h"
 #include "qgesturemanager_p.h"
+
+#ifndef QT_NO_ACCESSIBILITY
+# include "qaccessible.h"
+#endif
+
+#if defined(Q_WS_X11)
+# include "qpaintengine_x11_p.h"
+# include "qx11info_x11.h"
+#endif
 
 
 // widget/widget data creation count
@@ -252,11 +249,7 @@ QWidgetPrivate::~QWidgetPrivate()
 QWindowSurface *QWidgetPrivate::createDefaultWindowSurface()
 {
     Q_Q(QWidget);
-
-    if (QApplicationPrivate::graphics_system) {
-        return QApplicationPrivate::graphics_system->createWindowSurface(q);
-    }
-    return createDefaultWindowSurface_sys();
+    return new QRasterWindowSurface(q);
 }
 
 /*!

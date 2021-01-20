@@ -97,7 +97,6 @@ private:
     friend class QPixmap;
     friend class QBitmap;
     friend class QX11PaintEngine;
-    friend class QX11WindowSurface;
     friend class QRasterWindowSurface;
 
     void release();
@@ -115,8 +114,7 @@ private:
 
     enum Flag {
          NoFlags = 0x0,
-         Uninitialized = 0x1,
-         Readonly = 0x2
+         Readonly = 0x1
     };
     uint flags;
 

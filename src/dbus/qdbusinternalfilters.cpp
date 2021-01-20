@@ -90,14 +90,11 @@ static const char peerInterfaceXml[] =
     "    </method>\n"
     "  </interface>\n";
 
-static QString generateSubObjectXml(QObject *object)
+static QString generateSubObjectXml(const QObject *object)
 {
     QString retval;
-    const QObjectList &objs = object->children();
-    QObjectList::ConstIterator it = objs.constBegin();
-    QObjectList::ConstIterator end = objs.constEnd();
-    for ( ; it != end; ++it) {
-        QString name = (*it)->objectName();
+    foreach (const QObject *it, object->children()) {
+        QString name = it->objectName();
         if (!name.isEmpty() && QDBusUtil::isValidPartOfObjectPath(name))
             retval += QString::fromLatin1("  <node name=\"%1\"/>\n")
                       .arg(name);

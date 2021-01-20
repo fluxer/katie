@@ -372,9 +372,6 @@ bool QNativeSocketEnginePrivate::nativeConnect(const QHostAddress &addr, quint16
         sockAddrSize = sizeof(sockAddrIPv6);
         sockAddrPtr = (struct sockaddr *) &sockAddrIPv6;
     } else
-#if 0
-    {}
-#endif
 #endif
     if (addr.protocol() == QAbstractSocket::IPv4Protocol) {
         memset(&sockAddrIPv4, 0, sizeof(sockAddrIPv4));
@@ -384,8 +381,6 @@ bool QNativeSocketEnginePrivate::nativeConnect(const QHostAddress &addr, quint16
 
         sockAddrSize = sizeof(sockAddrIPv4);
         sockAddrPtr = (struct sockaddr *) &sockAddrIPv4;
-    } else {
-        // unreachable
     }
 
     int connectResult = qt_safe_connect(socketDescriptor, sockAddrPtr, sockAddrSize);
@@ -480,16 +475,14 @@ bool QNativeSocketEnginePrivate::nativeBind(const QHostAddress &address, quint16
         sockAddrPtr = (struct sockaddr *) &sockAddrIPv6;
     } else
 #endif
-        if (address.protocol() == QAbstractSocket::IPv4Protocol) {
-            memset(&sockAddrIPv4, 0, sizeof(sockAddrIPv4));
-            sockAddrIPv4.sin_family = AF_INET;
-            sockAddrIPv4.sin_port = htons(port);
-            sockAddrIPv4.sin_addr.s_addr = htonl(address.toIPv4Address());
-            sockAddrSize = sizeof(sockAddrIPv4);
-            sockAddrPtr = (struct sockaddr *) &sockAddrIPv4;
-        } else {
-            // unreachable
-        }
+    if (address.protocol() == QAbstractSocket::IPv4Protocol) {
+        memset(&sockAddrIPv4, 0, sizeof(sockAddrIPv4));
+        sockAddrIPv4.sin_family = AF_INET;
+        sockAddrIPv4.sin_port = htons(port);
+        sockAddrIPv4.sin_addr.s_addr = htonl(address.toIPv4Address());
+        sockAddrSize = sizeof(sockAddrIPv4);
+        sockAddrPtr = (struct sockaddr *) &sockAddrIPv4;
+    }
 
     int bindResult = QT_SOCKET_BIND(socketDescriptor, sockAddrPtr, sockAddrSize);
 

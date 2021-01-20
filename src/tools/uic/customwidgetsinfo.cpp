@@ -50,11 +50,6 @@ void CustomWidgetsInfo::acceptUI(DomUI *node)
         acceptCustomWidgets(node->elementCustomWidgets());
 }
 
-void CustomWidgetsInfo::acceptCustomWidgets(DomCustomWidgets *node)
-{
-    TreeWalker::acceptCustomWidgets(node);
-}
-
 void CustomWidgetsInfo::acceptCustomWidget(DomCustomWidget *node)
 {
     if (node->elementClass().isEmpty())

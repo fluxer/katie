@@ -193,9 +193,6 @@ public:
     static QByteArray toPunycode(const QString &);
     static QString fromAce(const QByteArray &);
     static QByteArray toAce(const QString &);
-    static QStringList idnWhitelist();
-    static void setIdnWhitelist(const QStringList &);
-
 
     QString errorString() const;
 

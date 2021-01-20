@@ -51,7 +51,6 @@
 #include "qmenu_p.h"
 #include "qbackingstore_p.h"
 #include "qwidget_p.h"
-#include "qwindowsurface_x11_p.h"
 #include "qpixmap_x11_p.h"
 #include "qpaintengine_x11_p.h"
 #include "qt_x11_p.h"
@@ -2830,11 +2829,6 @@ QPaintEngine *QWidget::paintEngine() const
         return d->extraPaintEngine;
     }
     return qt_widget_paintengine();
-}
-
-QWindowSurface *QWidgetPrivate::createDefaultWindowSurface_sys()
-{
-    return new QX11WindowSurface(q_func());
 }
 
 Qt::HANDLE QWidget::x11PictureHandle() const

@@ -68,8 +68,6 @@ public:
         ColorizeFilter,
         DropShadowFilter,
         BlurFilter,
-
-        UserFilter = 1024
     };
 
     FilterType type() const;

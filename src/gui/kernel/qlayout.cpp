@@ -149,7 +149,7 @@ QLayout::QLayout(QLayoutPrivate &dd, QLayout *lay, QWidget *w)
 
 QLayoutPrivate::QLayoutPrivate()
     : QObjectPrivate(), insideSpacing(-1), userLeftMargin(-1), userTopMargin(-1), userRightMargin(-1),
-      userBottomMargin(-1), topLevel(false), enabled(true), activated(true), autoNewChild(false),
+      userBottomMargin(-1), topLevel(false), enabled(true), activated(true),
       constraint(QLayout::SetDefaultConstraint), menubar(Q_NULLPTR)
 {
 }

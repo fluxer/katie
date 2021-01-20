@@ -82,7 +82,6 @@ public:
     bool topLevel;
     bool enabled;
     bool activated;
-    bool autoNewChild;
     QLayout::SizeConstraint constraint;
     QRect rect;
     QWidget *menubar;

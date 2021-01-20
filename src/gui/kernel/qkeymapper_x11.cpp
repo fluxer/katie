@@ -180,7 +180,7 @@ static int translateKeySym(const uint key)
 static bool getX11AutoRepeat() {
     XKeyboardState state;
     XGetKeyboardControl(qt_x11Data->display, &state);
-    if (state.global_auto_repeat) {
+    if (state.global_auto_repeat == AutoRepeatModeOn) {
         // NOTE: according to `xset -q` the delay is 250,
         // QApplication::keyboardInputInterval() is set to 400 but it does not
         // have the same meaning nor is it clear if the events are delayed by
