@@ -1729,7 +1729,6 @@ void QPixmap::detach()
 #if defined(Q_WS_X11)
     if (pd->classId() == QPixmapData::X11Class) {
         QX11PixmapData *d = static_cast<QX11PixmapData*>(pd);
-        d->flags &= ~QX11PixmapData::Uninitialized;
 
         // reset the cache data
         if (d->hd2) {

@@ -186,7 +186,7 @@ QAtomicInt qt_pixmap_serial = QAtomicInt(0);
 
 QX11PixmapData::QX11PixmapData(PixelType type)
     : QPixmapData(type, X11Class), hd(0),
-      flags(Uninitialized), x11_mask(0), picture(0), mask_picture(0), hd2(0),
+      flags(NoFlags), x11_mask(0), picture(0), mask_picture(0), hd2(0),
       share_mode(QPixmap::ImplicitlyShared), pengine(0)
 {
 }
@@ -1826,7 +1826,6 @@ QPixmap QX11PixmapData::transformed(const QTransform &transform,
     } else {                                        // color pixmap
         QX11PixmapData *x11Data = new QX11PixmapData(QPixmapData::PixmapType);
         QPixmap pm(x11Data);
-        x11Data->flags &= ~QX11PixmapData::Uninitialized;
         x11Data->xinfo = xinfo;
         x11Data->d = d;
         x11Data->w = w;
@@ -1965,8 +1964,6 @@ QPixmap QPixmap::grabWindow(WId window, int x, int y, int w, int h)
     data->resize(w, h);
 
     QPixmap pm(data);
-
-    data->flags &= ~QX11PixmapData::Uninitialized;
     pm.x11SetScreen(scr);
 
     GC gc = XCreateGC(dpy, pm.handle(), 0, 0);
@@ -2083,7 +2080,6 @@ void QX11PixmapData::copy(const QPixmapData *data, const QRect &rect)
 
     setSerialNumber(qt_pixmap_serial.fetchAndAddRelaxed(1));
 
-    flags &= ~Uninitialized;
     xinfo = x11Data->xinfo;
     d = x11Data->d;
     w = rect.width();
