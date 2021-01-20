@@ -264,7 +264,7 @@ int QThread::idealThreadCount()
 
 void QThread::yieldCurrentThread()
 {
-    std::this_thread::yield();
+    sched_yield();
 }
 
 void QThread::sleep(unsigned long secs)
