@@ -1144,33 +1144,33 @@ void QDomImplementation::setInvalidDataPolicy(InvalidDataPolicy policy)
  **************************************************************/
 
 QDomNodeListPrivate::QDomNodeListPrivate(QDomNodePrivate *n_impl)
+    : ref(1),
+    node_impl(n_impl),
+    timestamp(0)
 {
-    ref  = 1;
-    node_impl = n_impl;
     if (node_impl)
         node_impl->ref.ref();
-    timestamp = 0;
 }
 
 QDomNodeListPrivate::QDomNodeListPrivate(QDomNodePrivate *n_impl, const QString &name)
+    : ref(1),
+    node_impl(n_impl),
+    timestamp(0),
+    tagname(name)
 {
-    ref = 1;
-    node_impl = n_impl;
     if (node_impl)
         node_impl->ref.ref();
-    tagname = name;
-    timestamp = 0;
 }
 
 QDomNodeListPrivate::QDomNodeListPrivate(QDomNodePrivate *n_impl, const QString &_nsURI, const QString &localName)
+    : ref(1),
+    node_impl(n_impl),
+    timestamp(0),
+    tagname(localName),
+    nsURI(_nsURI)
 {
-    ref = 1;
-    node_impl = n_impl;
     if (node_impl)
         node_impl->ref.ref();
-    tagname = localName;
-    nsURI = _nsURI;
-    timestamp = 0;
 }
 
 QDomNodeListPrivate::~QDomNodeListPrivate()
