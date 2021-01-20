@@ -338,12 +338,7 @@ void QThread::start(Priority priority)
     pthread_attr_setdetachstate(&attr, PTHREAD_CREATE_DETACHED);
 
     if (d->stackSize > 0) {
-#if defined(QT_HAVE_PTHREAD_ATTR_SETSTACKSIZE)
         int code = pthread_attr_setstacksize(&attr, d->stackSize);
-#else
-        int code = ENOSYS; // stack size not supported, automatically fail
-#endif // _POSIX_THREAD_ATTR_STACKSIZE
-
         if (Q_UNLIKELY(code)) {
             qWarning("QThread::start: Thread stack size error: %s",
                      qPrintable(qt_error_string(code)));
