@@ -44,13 +44,8 @@
 #include <float.h>
 #include <stdlib.h>
 
-#if defined(Q_OS_LINUX) \
-    && defined(QT_HAVE_FECLEAREXCEPT) && defined(QT_HAVE_FEENABLEEXCEPT)
-#  define TEST_FP_EXCEPTION
-#endif
-
-#ifdef TEST_FP_EXCEPTION
-#    include <fenv.h>
+#if defined(QT_HAVE_FEENABLEEXCEPT)
+#  include <fenv.h>
 #endif
 
 QT_USE_NAMESPACE
@@ -776,7 +771,7 @@ void tst_QLocale::testInfAndNan()
 
 void tst_QLocale::fpExceptions()
 {
-#ifdef TEST_FP_EXCEPTION
+#ifdef QT_HAVE_FEENABLEEXCEPT
     fenv_t envp;
     fegetenv(&envp);
     feclearexcept(FE_ALL_EXCEPT);
@@ -789,7 +784,7 @@ void tst_QLocale::fpExceptions()
 
     QVERIFY(true);
 
-#ifdef TEST_FP_EXCEPTION
+#ifdef QT_HAVE_FEENABLEEXCEPT
     fesetenv(&envp);
 #endif
 }
