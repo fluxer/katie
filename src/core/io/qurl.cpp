@@ -270,19 +270,17 @@ Q_GLOBAL_STATIC(QIDNA, qGlobalIDNA);
 #define QURL_HASFLAG(a, b) (((a) & (b)) == (b))
 
 struct QUrlErrorInfo {
-    inline QUrlErrorInfo() : _source(0), _message(0), _expected(0), _found(0)
+    inline QUrlErrorInfo() : _source(0), _message(0), _found(0)
     { }
 
     const char *_source;
     const char *_message;
-    char _expected;
     char _found;
 
-    inline void setParams(const char *source, const char *message, char expected, char found)
+    inline void setParams(const char *source, const char *message, char found)
     {
         _source = source;
         _message = message;
-        _expected = expected;
         _found = found;
     }
 };
@@ -1392,13 +1390,13 @@ void QUrlPrivate::validate() const
             that->isValid = false;
             that->errorInfo.setParams(0, QT_TRANSLATE_NOOP(QUrl, "expected empty host, username,"
                                                            "port and password"),
-                                      0, 0);
+                                      0);
         }
     } else if (scheme == QLatin1String("ftp") || scheme == QLatin1String("http")) {
         if (host.isEmpty() && !(path.isEmpty() && encodedPath.isEmpty())) {
             that->isValid = false;
             that->errorInfo.setParams(0, QT_TRANSLATE_NOOP(QUrl, "the host is empty, but not the path"),
-                                      0, 0);
+                                      0);
         }
     }
 }
@@ -1407,11 +1405,11 @@ void QUrlPrivate::parse(ParseOptions parseOptions) const
 {
     // Caller must lock mutex first
     QUrlPrivate *that = const_cast<QUrlPrivate *>(this);
-    that->errorInfo.setParams(0, 0, 0, 0);
+    that->errorInfo.setParams(0, 0, 0);
     if (encodedOriginal.isEmpty()) {
         that->isValid = false;
         that->errorInfo.setParams(0, QT_TRANSLATE_NOOP(QUrl, "empty"),
-                                  0, 0);
+                                  0);
         QURL_SETFLAG(that->stateFlags, Validated | Parsed);
         return;
     }
@@ -1436,7 +1434,7 @@ void QUrlPrivate::parse(ParseOptions parseOptions) const
         that->isValid = false;
         char ch = *((*ptr)++);
         that->errorInfo.setParams(*ptr, QT_TRANSLATE_NOOP(QUrl, "unexpected URL scheme"),
-                                  0, ch);
+                                  ch);
         QURL_SETFLAG(that->stateFlags, Validated | Parsed);
 #if defined (QURL_DEBUG)
         qDebug("QUrlPrivate::parse(), unrecognized: %c%s", ch, *ptr);
@@ -1462,7 +1460,7 @@ void QUrlPrivate::parse(ParseOptions parseOptions) const
     } else if (ch != '\0') {
         that->isValid = false;
         that->errorInfo.setParams(*ptr, QT_TRANSLATE_NOOP(QUrl, "expected end of URL"),
-                                  0, ch);
+                                  ch);
         QURL_SETFLAG(that->stateFlags, Validated | Parsed);
 #if defined (QURL_DEBUG)
         qDebug("QUrlPrivate::parse(), unrecognized: %c%s", ch, *ptr);
@@ -1733,17 +1731,11 @@ QString QUrlPrivate::createErrorString() const
         }
     }
 
-    if (errorInfo._expected) {
-        errorString += QLatin1String(QT_TRANSLATE_NOOP(QUrl, ": expected \'"));
-        errorString += QLatin1Char(errorInfo._expected);
-        errorString += QLatin1String(QT_TRANSLATE_NOOP(QUrl, "\'"));
-    } else {
-        errorString += QLatin1String(QT_TRANSLATE_NOOP(QUrl, ": "));
-        if (isHostValid)
-            errorString += QLatin1String(errorInfo._message);
-        else
-            errorString += QLatin1String(QT_TRANSLATE_NOOP(QUrl, "invalid hostname"));
-    }
+    errorString += QLatin1String(QT_TRANSLATE_NOOP(QUrl, ": "));
+    if (isHostValid)
+        errorString += QLatin1String(errorInfo._message);
+    else
+        errorString += QLatin1String(QT_TRANSLATE_NOOP(QUrl, "invalid hostname"));
     if (errorInfo._found) {
         errorString += QLatin1String(QT_TRANSLATE_NOOP(QUrl, ", but found \'"));
         errorString += QLatin1Char(errorInfo._found);
