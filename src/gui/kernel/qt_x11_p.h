@@ -150,7 +150,7 @@ struct QX11Data
     bool clipboardWaitForEvent(Window win, int type, XEvent *event, int timeout, bool checkManager = false);
     bool clipboardReadProperty(Window win, Atom property, bool deleteProperty,
                             QByteArray *buffer, int *size, Atom *type, int *format);
-    QByteArray clipboardReadIncrementalProperty(Window win, Atom property, int nbytes, bool nullterm);
+    QByteArray clipboardReadIncrementalProperty(Window win, Atom property, int nbytes);
 
     // from qdnd_x11.cpp
     bool dndEnable(QWidget* w, bool on);
