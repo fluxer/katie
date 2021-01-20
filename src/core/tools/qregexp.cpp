@@ -3538,8 +3538,8 @@ static void invalidateEngine(QRegExpPrivate *priv)
     \sa isValid(), errorString()
 */
 QRegExp::QRegExp()
+    : priv(new QRegExpPrivate())
 {
-    priv = new QRegExpPrivate;
     prepareEngine(priv);
 }
 
@@ -3554,8 +3554,8 @@ QRegExp::QRegExp()
     \sa setPattern(), setCaseSensitivity(), setPatternSyntax()
 */
 QRegExp::QRegExp(const QString &pattern, Qt::CaseSensitivity cs, PatternSyntax syntax)
+    : priv(new QRegExpPrivate(QRegExpEngineKey(pattern, syntax, cs)))
 {
-    priv = new QRegExpPrivate(QRegExpEngineKey(pattern, syntax, cs));
     prepareEngine(priv);
 }
 
@@ -3565,8 +3565,8 @@ QRegExp::QRegExp(const QString &pattern, Qt::CaseSensitivity cs, PatternSyntax s
     \sa operator=()
 */
 QRegExp::QRegExp(const QRegExp &rx)
+    : priv(new QRegExpPrivate())
 {
-    priv = new QRegExpPrivate;
     operator=(rx);
 }
 
