@@ -1347,10 +1347,15 @@ void QRegionPrivate::prepend(const QRegionPrivate *r)
 
     if (numPrepend > 0) {
         const int newNumRects = numRects + numPrepend;
-        // move existing rectangles and prepend new rectanbles
-        for (int i = 0; i < r->rects.size(); i++) {
-            rects.insert(i, r->rects.at(i));
-        }
+        if (newNumRects > rects.size())
+            rects.resize(newNumRects);
+
+        // move existing rectangles
+        memmove(rects.data() + numPrepend, rects.constData() + numSkip,
+                numRects * sizeof(QRect));
+
+        // prepend new rectangles
+        memcpy(rects.data(), r->rects.constData(), numPrepend * sizeof(QRect));
 
         numRects = newNumRects;
     }
@@ -1382,7 +1387,8 @@ void QRegionPrivate::prepend(const QRect *r)
             const QRect *nextToFirst = (numRects > 2 ? myFirst + 2 : 0);
             if (mergeFromAbove(myFirst + 1, myFirst, nextToFirst, 0)) {
                 --numRects;
-                rects.remove(0);
+                memmove(rects.data(), rects.constData() + 1,
+                        numRects * sizeof(QRect));
             }
         }
     } else if (mergeFromAbove(myFirst, r, (numRects > 1 ? myFirst + 1 : 0), 0)) {
