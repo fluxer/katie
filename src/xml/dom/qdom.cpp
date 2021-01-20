@@ -161,20 +161,19 @@ public:
     }
 
     // Dynamic cast
-    virtual bool isAttr() const                     { return false; }
-    virtual bool isCDATASection() const             { return false; }
-    virtual bool isDocumentFragment() const         { return false; }
-    virtual bool isDocument() const                 { return false; }
-    virtual bool isDocumentType() const             { return false; }
-    virtual bool isElement() const                  { return false; }
-    virtual bool isEntityReference() const          { return false; }
-    virtual bool isText() const                     { return false; }
-    virtual bool isEntity() const                   { return false; }
-    virtual bool isNotation() const                 { return false; }
-    virtual bool isProcessingInstruction() const    { return false; }
-    virtual bool isCharacterData() const            { return false; }
-    virtual bool isComment() const                  { return false; }
-
+    inline bool isAttr() const                     { return nodeType() == QDomNode::AttributeNode; }
+    inline bool isCDATASection() const             { return nodeType() == QDomNode::CDATASectionNode; }
+    inline bool isDocumentFragment() const         { return nodeType() == QDomNode::DocumentFragmentNode; }
+    inline bool isDocument() const                 { return nodeType() == QDomNode::DocumentNode; }
+    inline bool isDocumentType() const             { return nodeType() == QDomNode::DocumentTypeNode; }
+    inline bool isElement() const                  { return nodeType() == QDomNode::ElementNode; }
+    inline bool isEntityReference() const          { return nodeType() == QDomNode::EntityReferenceNode; }
+    inline bool isText() const                     { return nodeType() == QDomNode::TextNode; }
+    inline bool isEntity() const                   { return nodeType() == QDomNode::EntityNode; }
+    inline bool isNotation() const                 { return nodeType() == QDomNode::NotationNode; }
+    inline bool isProcessingInstruction() const    { return nodeType() == QDomNode::ProcessingInstructionNode; }
+    inline bool isCharacterData() const            { return nodeType() == QDomNode::CharacterDataNode; }
+    inline bool isComment() const                  { return nodeType() == QDomNode::CommentNode; }
     virtual QDomNode::NodeType nodeType() const { return QDomNode::BaseNode; }
 
     virtual void save(QTextStream&, int, int) const;
@@ -290,7 +289,6 @@ public:
     QDomNodePrivate* removeChild(QDomNodePrivate* oldChild);
     QDomNodePrivate* appendChild(QDomNodePrivate* newChild);
 
-    virtual bool isDocumentType() const { return true; }
     QDomNode::NodeType nodeType() const { return QDomNode::DocumentTypeNode; }
 
     void save(QTextStream& s, int, int) const;
@@ -311,7 +309,6 @@ public:
 
     // Reimplemented from QDomNodePrivate
     virtual QDomNodePrivate* cloneNode(bool deep = true);
-    virtual bool isDocumentFragment() const { return true; }
     QDomNode::NodeType nodeType() const { return QDomNode::DocumentFragmentNode; }
 };
 
@@ -329,7 +326,6 @@ public:
     void replaceData(unsigned long offset, unsigned long count, const QString& arg);
 
     // Reimplemented from QDomNodePrivate
-    virtual bool isCharacterData() const { return true; }
     QDomNode::NodeType nodeType() const { return QDomNode::CharacterDataNode; }
     QDomNodePrivate* cloneNode(bool deep = true);
 };
@@ -344,7 +340,6 @@ public:
 
     // Reimplemented from QDomNodePrivate
     QDomNodePrivate* cloneNode(bool deep = true);
-    virtual bool isText() const { return true; }
     QDomNode::NodeType nodeType() const { return QDomNode::TextNode; }
     virtual void save(QTextStream& s, int, int) const;
 };
@@ -361,7 +356,6 @@ public:
     // Reimplemented from QDomNodePrivate
     void setNodeValue(const QString& v);
     QDomNodePrivate* cloneNode(bool deep = true);
-    virtual bool isAttr() const { return true; }
     QDomNode::NodeType nodeType() const { return QDomNode::AttributeNode; }
     virtual void save(QTextStream& s, int, int) const;
 
@@ -395,7 +389,6 @@ public:
     // Reimplemented from QDomNodePrivate
     QDomNamedNodeMapPrivate* attributes() { return m_attr; }
     bool hasAttributes() { return (m_attr->length() > 0); }
-    virtual bool isElement() const { return true; }
     QDomNode::NodeType nodeType() const { return QDomNode::ElementNode; }
     QDomNodePrivate* cloneNode(bool deep = true);
     virtual void save(QTextStream& s, int, int) const;
@@ -413,7 +406,6 @@ public:
 
     // Reimplemented from QDomNodePrivate
     QDomNodePrivate* cloneNode(bool deep = true);
-    virtual bool isComment() const { return true; }
     QDomNode::NodeType nodeType() const { return QDomNode::CommentNode; }
     virtual void save(QTextStream& s, int, int) const;
 };
@@ -426,7 +418,7 @@ public:
 
     // Reimplemented from QDomNodePrivate
     QDomNodePrivate* cloneNode(bool deep = true);
-    virtual bool isCDATASection() const { return true; }
+
     QDomNode::NodeType nodeType() const { return QDomNode::CDATASectionNode; }
     virtual void save(QTextStream& s, int, int) const;
 };
@@ -440,7 +432,6 @@ public:
 
     // Reimplemented from QDomNodePrivate
     QDomNodePrivate* cloneNode(bool deep = true);
-    virtual bool isNotation() const { return true; }
     QDomNode::NodeType nodeType() const { return QDomNode::NotationNode; }
     virtual void save(QTextStream& s, int, int) const;
 
@@ -458,7 +449,6 @@ public:
 
     // Reimplemented from QDomNodePrivate
     QDomNodePrivate* cloneNode(bool deep = true);
-    virtual bool isEntity() const { return true; }
     QDomNode::NodeType nodeType() const { return QDomNode::EntityNode; }
     virtual void save(QTextStream& s, int, int) const;
 
@@ -476,7 +466,6 @@ public:
 
     // Reimplemented from QDomNodePrivate
     QDomNodePrivate* cloneNode(bool deep = true);
-    bool isEntityReference() const { return true; }
     QDomNode::NodeType nodeType() const { return QDomNode::EntityReferenceNode; }
     virtual void save(QTextStream& s, int, int) const;
 };
@@ -490,7 +479,6 @@ public:
 
     // Reimplemented from QDomNodePrivate
     QDomNodePrivate* cloneNode(bool deep = true);
-    virtual bool isProcessingInstruction() const { return true; }
     QDomNode::NodeType nodeType() const { return QDomNode::ProcessingInstructionNode; }
     virtual void save(QTextStream& s, int, int) const;
 };
@@ -528,7 +516,6 @@ public:
 
     // Reimplemented from QDomNodePrivate
     QDomNodePrivate* cloneNode(bool deep = true);
-    bool isDocument() const { return true; }
     QDomNode::NodeType nodeType() const { return QDomNode::DocumentNode; }
     void clear();
 
