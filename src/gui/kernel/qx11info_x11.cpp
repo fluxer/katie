@@ -99,47 +99,6 @@ QX11Info::~QX11Info()
 
 /*!
     \internal
-    Makes a shallow copy of the X11-specific data of \a fromDevice, if it is not
-    null. Otherwise this function sets it to null.
-*/
-
-void QX11Info::copyX11Data(const QPaintDevice *fromDevice)
-{
-    QX11InfoData *xd = 0;
-    if (fromDevice) {
-        if (fromDevice->devType() == QInternal::Widget)
-            xd = static_cast<const QWidget *>(fromDevice)->x11Info().x11data;
-        else if (fromDevice->devType() == QInternal::Pixmap)
-            xd = static_cast<const QPixmap *>(fromDevice)->x11Info().x11data;
-    }
-    setX11Data(xd);
-}
-
-/*!
-    \internal
-    Makes a deep copy of the X11-specific data of \a fromDevice, if it is not
-    null. Otherwise this function sets it to null.
-*/
-
-void QX11Info::cloneX11Data(const QPaintDevice *fromDevice)
-{
-    QX11InfoData *d = 0;
-    if (fromDevice) {
-        QX11InfoData *xd;
-        if (fromDevice->devType() == QInternal::Widget) {
-            xd = static_cast<const QWidget *>(fromDevice)->x11Info().x11data;
-        } else {
-            Q_ASSERT(fromDevice->devType() == QInternal::Pixmap);
-            xd = static_cast<const QPixmap *>(fromDevice)->x11Info().x11data;
-        }
-        d = new QX11InfoData(*xd);
-        d->ref = 0;
-    }
-    setX11Data(d);
-}
-
-/*!
-    \internal
     Makes a shallow copy of the X11-specific data \a d and assigns it to this
     class. This function increments the reference code of \a d.
 */
