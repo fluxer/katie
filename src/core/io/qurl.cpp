@@ -989,44 +989,46 @@ static void QT_FASTCALL _fragment(const char **ptr, QUrlParseData *parseData)
 }
 
 QUrlPrivate::QUrlPrivate()
+    : ref(1),
+    port(-1),
+    parsingMode(QUrl::TolerantMode),
+    hasQuery(false),
+    hasFragment(false),
+    isValid(false),
+    isHostValid(true),
+    valueDelimiter('='),
+    pairDelimiter('&'),
+    stateFlags(0)
 {
-    ref = 1;
-    port = -1;
-    isValid = false;
-    isHostValid = true;
-    parsingMode = QUrl::TolerantMode;
-    valueDelimiter = '=';
-    pairDelimiter = '&';
-    stateFlags = 0;
-    hasFragment = false;
-    hasQuery = false;
 }
 
 // Called by normalized() and detach(). Must hold copy.mutex.
 QUrlPrivate::QUrlPrivate(const QUrlPrivate &copy)
-    : scheme(copy.scheme),
-      userName(copy.userName),
-      password(copy.password),
-      host(copy.host),
-      path(copy.path),
-      query(copy.query),
-      fragment(copy.fragment),
-      encodedOriginal(copy.encodedOriginal),
-      encodedUserName(copy.encodedUserName),
-      encodedPassword(copy.encodedPassword),
-      encodedPath(copy.encodedPath),
-      encodedFragment(copy.encodedFragment),
-      port(copy.port),
-      parsingMode(copy.parsingMode),
-      hasQuery(copy.hasQuery),
-      hasFragment(copy.hasFragment),
-      isValid(copy.isValid),
-      isHostValid(copy.isHostValid),
-      valueDelimiter(copy.valueDelimiter),
-      pairDelimiter(copy.pairDelimiter),
-      stateFlags(copy.stateFlags),
-      encodedNormalized(copy.encodedNormalized)
-{ ref = 1; }
+    : ref(1),
+    scheme(copy.scheme),
+    userName(copy.userName),
+    password(copy.password),
+    host(copy.host),
+    path(copy.path),
+    query(copy.query),
+    fragment(copy.fragment),
+    encodedOriginal(copy.encodedOriginal),
+    encodedUserName(copy.encodedUserName),
+    encodedPassword(copy.encodedPassword),
+    encodedPath(copy.encodedPath),
+    encodedFragment(copy.encodedFragment),
+    port(copy.port),
+    parsingMode(copy.parsingMode),
+    hasQuery(copy.hasQuery),
+    hasFragment(copy.hasFragment),
+    isValid(copy.isValid),
+    isHostValid(copy.isHostValid),
+    valueDelimiter(copy.valueDelimiter),
+    pairDelimiter(copy.pairDelimiter),
+    stateFlags(copy.stateFlags),
+    encodedNormalized(copy.encodedNormalized)
+{
+}
 
 QString QUrlPrivate::canonicalHost() const
 {
