@@ -205,7 +205,7 @@ void QX11PixmapData::resize(int width, int height)
     is_null = (w <= 0 || h <= 0);
 
     if (defaultScreen >= 0 && defaultScreen != xinfo.screen()) {
-        QX11InfoData* xd = xinfo.getX11Data(true);
+        QX11InfoData* xd = xinfo.getX11Data();
         xd->screen = defaultScreen;
         xd->depth = QX11Info::appDepth(xd->screen);
         xd->cells = QX11Info::appCells(xd->screen);
@@ -291,7 +291,7 @@ void QX11PixmapData::fromImage(const QImage &img,
     }
 
     if (defaultScreen >= 0 && defaultScreen != xinfo.screen()) {
-        QX11InfoData* xd = xinfo.getX11Data(true);
+        QX11InfoData* xd = xinfo.getX11Data();
         xd->screen = defaultScreen;
         xd->depth = QX11Info::appDepth(xd->screen);
         xd->cells = QX11Info::appCells(xd->screen);
@@ -373,7 +373,7 @@ void QX11PixmapData::fromImage(const QImage &img,
             if (xinfo.x11data) {
                 xinfo.x11data->depth = d;
             } else {
-                QX11InfoData *xd = xinfo.getX11Data(true);
+                QX11InfoData *xd = xinfo.getX11Data();
                 xd->screen = QX11Info::appScreen();
                 xd->depth = d;
                 xd->cells = QX11Info::appCells();
@@ -1892,7 +1892,7 @@ void QPixmap::x11SetScreen(int screen)
         return; // nothing to do
 
     if (isNull()) {
-        QX11InfoData* xd = x11Data->xinfo.getX11Data(true);
+        QX11InfoData* xd = x11Data->xinfo.getX11Data();
         xd->screen = screen;
         xd->depth = QX11Info::appDepth(screen);
         xd->cells = QX11Info::appCells(screen);
@@ -2207,7 +2207,7 @@ QPixmap QPixmap::fromX11Pixmap(Qt::HANDLE pixmap, QPixmap::ShareMode mode)
     data->hd = pixmap;
 
     if (defaultScreen >= 0 && defaultScreen != screen) {
-        QX11InfoData* xd = data->xinfo.getX11Data(true);
+        QX11InfoData* xd = data->xinfo.getX11Data();
         xd->screen = defaultScreen;
         xd->depth = QX11Info::appDepth(xd->screen);
         xd->cells = QX11Info::appCells(xd->screen);

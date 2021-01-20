@@ -115,34 +115,25 @@ void QX11Info::setX11Data(const QX11InfoData* d)
 
 /*!
     \internal
-    If \a def is false, returns a deep copy of the x11Data, or 0 if x11Data is 0.
-    If \a def is true, makes a QX11Data struct filled with the default
-    values.
+    Makes a QX11Data struct filled with the default values.
 
-    In either case the caller is responsible for deleting the returned
-    struct. But notice that the struct is a shared class, so other
-    classes might also have a reference to it. The reference count of
-    the returned QX11Data* is 0.
+    The caller is responsible for deleting the returned struct. But
+    notice that the struct is a shared class, so other classes might
+    also have a reference to it. The reference count of the returned
+    QX11Data* is 0.
 */
 
-QX11InfoData* QX11Info::getX11Data(bool def) const
+QX11InfoData* QX11Info::getX11Data() const
 {
-    QX11InfoData* res = 0;
-    if (def) {
-        res = new QX11InfoData;
-        res->ref = 0;
-        res->screen = appScreen();
-        res->depth = appDepth();
-        res->cells = appCells();
-        res->colormap = colormap();
-        res->defaultColormap = appDefaultColormap();
-        res->visual = (Visual*) appVisual();
-        res->defaultVisual = appDefaultVisual();
-    } else if (x11data) {
-        res = new QX11InfoData;
-        *res = *x11data;
-        res->ref = 0;
-    }
+    QX11InfoData* res = new QX11InfoData;
+    res->ref = 0;
+    res->screen = appScreen();
+    res->depth = appDepth();
+    res->cells = appCells();
+    res->colormap = colormap();
+    res->defaultColormap = appDefaultColormap();
+    res->visual = (Visual*) appVisual();
+    res->defaultVisual = appDefaultVisual();
     return res;
 }
 

@@ -83,7 +83,7 @@ public:
 
 private:
     void setX11Data(const QX11InfoData *);
-    QX11InfoData* getX11Data(bool def = false) const;
+    QX11InfoData* getX11Data() const;
 
     QX11InfoData *x11data;
 
