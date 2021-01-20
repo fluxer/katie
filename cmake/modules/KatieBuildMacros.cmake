@@ -63,8 +63,8 @@ function(KATIE_CHECK_FUNCTION64 FORFUNCTION FROMHEADER)
     endif()
 endfunction()
 
-# a function to check for C struct member presence in header, if member is found a
-# definition is added
+# a function to check for C struct member presence in header, if member is
+# found a definition is added
 function(KATIE_CHECK_STRUCT FORSTRUCT FORMEMBER FROMHEADER)
     check_struct_has_member("struct ${FORSTRUCT}" "${FORMEMBER}" "${FROMHEADER}" HAVE_${FORSTRUCT}_${FORMEMBER})
 
@@ -75,7 +75,9 @@ function(KATIE_CHECK_STRUCT FORSTRUCT FORMEMBER FROMHEADER)
 endfunction()
 
 # a function to check for file existence in /proc, if file exists a definition
-# is added
+# is added, this macro is over-engineered for two reasons - to be able to
+# override the test on the command-line and to show test status messages
+# similar to other tests
 function(KATIE_CHECK_PROC FORFILE)
     check_cxx_source_runs(
         "
@@ -151,6 +153,7 @@ macro(KATIE_GENERATE_MISC MISC_INCLUDES SUBDIR)
     endforeach(mischeader)
 endmacro()
 
+# a macro to create alias headers for the sake of compatibility
 macro(KATIE_GENERATE_OBSOLETE OBSOLETE_INCLUDE SUBDIR REDIRECT)
     set(pubout "${CMAKE_BINARY_DIR}/include/${SUBDIR}/${OBSOLETE_INCLUDE}")
     katie_write_file("${pubout}" "#include <${SUBDIR}/${REDIRECT}>\n")
