@@ -124,9 +124,9 @@ public:
     // attributes
     QVariant attribute(QNetworkRequest::Attribute code) const;
 
-    QSslConfiguration sslConfiguration() const;
-    void setSslConfiguration(const QSslConfiguration &configuration);
-    void ignoreSslErrors(const QList<QSslError> &errors);
+    virtual QSslConfiguration sslConfiguration() const;
+    virtual void setSslConfiguration(const QSslConfiguration &configuration);
+    virtual void ignoreSslErrors(const QList<QSslError> &errors);
 
 public Q_SLOTS:
     virtual void ignoreSslErrors();

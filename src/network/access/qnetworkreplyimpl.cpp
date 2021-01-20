@@ -945,7 +945,7 @@ void QNetworkReplyImpl::setReadBufferSize(qint64 size)
     }
 }
 
-QSslConfiguration QNetworkReplyImpl::sslConfigurationImplementation() const
+QSslConfiguration QNetworkReplyImpl::sslConfiguration() const
 {
     Q_D(const QNetworkReplyImpl);
     QSslConfiguration config;
@@ -954,7 +954,7 @@ QSslConfiguration QNetworkReplyImpl::sslConfigurationImplementation() const
     return config;
 }
 
-void QNetworkReplyImpl::setSslConfigurationImplementation(const QSslConfiguration &config)
+void QNetworkReplyImpl::setSslConfiguration(const QSslConfiguration &config)
 {
     Q_D(QNetworkReplyImpl);
     if (d->backend && !config.isNull())
@@ -968,7 +968,7 @@ void QNetworkReplyImpl::ignoreSslErrors()
         d->backend->ignoreSslErrors();
 }
 
-void QNetworkReplyImpl::ignoreSslErrorsImplementation(const QList<QSslError> &errors)
+void QNetworkReplyImpl::ignoreSslErrors(const QList<QSslError> &errors)
 {
     Q_D(QNetworkReplyImpl);
     if (d->backend)
