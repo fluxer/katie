@@ -1804,7 +1804,7 @@ static QVector<QRgb> fix_color_table(const QVector<QRgb> &ctbl, QImage::Format f
     if (format == QImage::Format_RGB32) {
         // check if the color table has alpha
         for (int i = 0; i < colorTable.size(); ++i)
-            if (qAlpha(colorTable.at(i) != 0xff))
+            if (qAlpha(colorTable.at(i)) != 255)
                 colorTable[i] = colorTable.at(i) | 0xff000000;
     } else if (format == QImage::Format_ARGB32_Premultiplied) {
         // check if the color table has alpha
