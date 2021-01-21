@@ -61,7 +61,7 @@ There are several things you should be aware before considering Katie:
   - support for generating CRC-32 checksums via qChecksum32() function
   - verification section for plugins build with Clang
   - faster alternatives to qCompress() and qUncompress()
-  - stack backtrace on assert or crash via execinfo
+  - stack backtrace on assert, crash or warning via execinfo
   - brief manual pages for all command-line tools
   - desktop files, Shell profile and dynamic linker/loader config
   - automatic async D-Bus calls based on return type, no Q_NOREPLY needed
