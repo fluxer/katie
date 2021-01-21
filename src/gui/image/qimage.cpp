@@ -146,25 +146,25 @@ bool QImageData::checkForAlphaPixels() const
     bool has_alpha_pixels = false;
 
     switch (format) {
-
-    case QImage::Format_Mono:
-    case QImage::Format_MonoLSB:
-    case QImage::Format_Indexed8:
-        has_alpha_pixels = has_alpha_clut;
-        break;
-
-    case QImage::Format_ARGB32:
-    case QImage::Format_ARGB32_Premultiplied: {
-        uchar *bits = data;
-        for (int y=0; y<height && !has_alpha_pixels; ++y) {
-            for (int x=0; x<width; ++x)
-                has_alpha_pixels |= (((uint *)bits)[x] & 0xff000000) != 0xff000000;
-            bits += bytes_per_line;
+        case QImage::Format_Mono:
+        case QImage::Format_MonoLSB:
+        case QImage::Format_Indexed8: {
+            has_alpha_pixels = has_alpha_clut;
+            break;
         }
-    } break;
-
-    default:
-        break;
+        case QImage::Format_ARGB32:
+        case QImage::Format_ARGB32_Premultiplied: {
+            const uchar *bits = data;
+            for (int y=0; y<height && !has_alpha_pixels; ++y) {
+                for (int x=0; x<width; ++x)
+                    has_alpha_pixels |= (((const uint *)bits)[x] & 0xff000000) != 0xff000000;
+                bits += bytes_per_line;
+            }
+            break;
+        }
+        default: {
+            break;
+        }
     }
 
     return has_alpha_pixels;
@@ -4480,18 +4480,15 @@ int QImage::bitPlaneCount() const
 {
     if (!d)
         return 0;
-    int bpc = 0;
     switch (d->format) {
-    case QImage::Format_Invalid:
-        break;
-    case QImage::Format_RGB32:
-        bpc = 24;
-        break;
-    default:
-        bpc = qt_depthForFormat(d->format);
-        break;
+        case QImage::Format_Invalid:
+            return 0;
+        case QImage::Format_RGB32:
+            return 24;
+        default:
+            return qt_depthForFormat(d->format);
     }
-    return bpc;
+    Q_UNREACHABLE();
 }
 
 
