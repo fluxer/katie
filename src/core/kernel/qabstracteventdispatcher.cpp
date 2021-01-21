@@ -421,16 +421,6 @@ int QAbstractEventDispatcher::registerTimer(int interval, QObject *object)
     immediately. Does nothing on platforms other than X11.
 */
 
-// ### DOC: Are these called when the _application_ starts/stops or just
-// when the current _event loop_ starts/stops?
-/*! \internal */
-void QAbstractEventDispatcher::startingUp()
-{ }
-
-/*! \internal */
-void QAbstractEventDispatcher::closingDown()
-{ }
-
 /*!
     \typedef QAbstractEventDispatcher::TimerInfo
 

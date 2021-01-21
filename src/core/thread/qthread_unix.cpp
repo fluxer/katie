@@ -153,11 +153,7 @@ void QAdoptedThread::init()
 void QThreadPrivate::createEventDispatcher(QThreadData *data)
 {
     QMutexLocker l(&data->postEventList.mutex);
-
     data->eventDispatcher = new QEventDispatcherUNIX;
-
-    l.unlock();
-    data->eventDispatcher->startingUp();
 }
 
 #ifndef QT_NO_THREAD
@@ -231,7 +227,6 @@ void QThreadPrivate::finish(void *arg)
     if (eventDispatcher) {
         d->data->eventDispatcher = Q_NULLPTR;
         locker.unlock();
-        eventDispatcher->closingDown();
         delete eventDispatcher;
         locker.relock();
     }

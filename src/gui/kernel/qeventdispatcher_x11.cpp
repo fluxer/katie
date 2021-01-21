@@ -45,10 +45,6 @@ class QEventDispatcherX11Private : public QEventDispatcherUNIXPrivate
 {
     Q_DECLARE_PUBLIC(QEventDispatcherX11)
 public:
-    inline QEventDispatcherX11Private()
-        : xfd(-1)
-    { }
-    int xfd;
     QList<XEvent> queuedUserInputEvents;
 };
 
@@ -153,25 +149,14 @@ void QEventDispatcherX11::flush()
     XFlush(qt_x11Data->display);
 }
 
-void QEventDispatcherX11::startingUp()
-{
-    Q_D(QEventDispatcherX11);
-    d->xfd = XConnectionNumber(qt_x11Data->display);
-}
-
-void QEventDispatcherX11::closingDown()
-{
-    Q_D(QEventDispatcherX11);
-    d->xfd = -1;
-}
-
 int QEventDispatcherX11::select(int nfds, fd_set *readfds, fd_set *writefds, fd_set *exceptfds,
                                 timeval *timeout)
 {
     Q_D(QEventDispatcherX11);
-    if (d->xfd > 0) {
-        nfds = qMax(nfds - 1, d->xfd) + 1;
-        FD_SET(d->xfd, readfds);
+    int xfd = ConnectionNumber(qt_x11Data->display);
+    if (Q_LIKELY(xfd > 0)) {
+        nfds = qMax(nfds - 1, xfd) + 1;
+        FD_SET(xfd, readfds);
     }
     return QEventDispatcherUNIX::select(nfds, readfds, writefds, exceptfds, timeout);
 }

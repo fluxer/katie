@@ -72,9 +72,6 @@ public:
     virtual void interrupt() = 0;
     virtual void flush() = 0;
 
-    virtual void startingUp();
-    virtual void closingDown();
-
     typedef bool(*EventFilter)(void *message);
     EventFilter setEventFilter(EventFilter filter);
     bool filterEvent(void *message);
