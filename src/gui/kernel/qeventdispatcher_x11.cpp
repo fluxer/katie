@@ -152,7 +152,6 @@ void QEventDispatcherX11::flush()
 int QEventDispatcherX11::select(int nfds, fd_set *readfds, fd_set *writefds, fd_set *exceptfds,
                                 timeval *timeout)
 {
-    Q_D(QEventDispatcherX11);
     int xfd = ConnectionNumber(qt_x11Data->display);
     if (Q_LIKELY(xfd > 0)) {
         nfds = qMax(nfds - 1, xfd) + 1;
