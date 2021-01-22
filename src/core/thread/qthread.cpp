@@ -584,8 +584,7 @@ void QThread::run()
 QThread::Priority QThread::priority() const
 {
     Q_D(const QThread);
-    // mask off the high bits that are used for flags
-    return Priority(d->priority & 0xffff);
+    return d->priority;
 }
 
 /*!
