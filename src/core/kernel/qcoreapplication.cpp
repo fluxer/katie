@@ -383,8 +383,6 @@ void QCoreApplication::init()
 */
 QCoreApplication::~QCoreApplication()
 {
-    Q_D(QCoreApplication);
-
     qt_call_post_routines();
 
     self = 0;

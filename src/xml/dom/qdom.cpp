@@ -1142,8 +1142,8 @@ QDomNodeListPrivate::QDomNodeListPrivate(QDomNodePrivate *n_impl)
 QDomNodeListPrivate::QDomNodeListPrivate(QDomNodePrivate *n_impl, const QString &name)
     : ref(1),
     node_impl(n_impl),
-    timestamp(0),
-    tagname(name)
+    tagname(name),
+    timestamp(0)
 {
     if (node_impl)
         node_impl->ref.ref();
@@ -1152,9 +1152,9 @@ QDomNodeListPrivate::QDomNodeListPrivate(QDomNodePrivate *n_impl, const QString 
 QDomNodeListPrivate::QDomNodeListPrivate(QDomNodePrivate *n_impl, const QString &_nsURI, const QString &localName)
     : ref(1),
     node_impl(n_impl),
-    timestamp(0),
     tagname(localName),
-    nsURI(_nsURI)
+    nsURI(_nsURI),
+    timestamp(0)
 {
     if (node_impl)
         node_impl->ref.ref();
