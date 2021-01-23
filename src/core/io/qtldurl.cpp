@@ -41,7 +41,7 @@ QT_BEGIN_NAMESPACE
 // file, You can obtain one at https://mozilla.org/MPL/2.0/.
 
 // generated via gentld.py
-static const char* TLDTbl[9105] = {
+static const char* TLDTbl[9117] = {
     "ac\0",
     "com.ac\0",
     "edu.ac\0",
@@ -6173,7 +6173,13 @@ static const char* TLDTbl[9105] = {
     "укр\0",
     "اليمن\0",
     "xxx\0",
-    "*.ye\0",
+    "ye\0",
+    "com.ye\0",
+    "edu.ye\0",
+    "gov.ye\0",
+    "net.ye\0",
+    "mil.ye\0",
+    "org.ye\0",
     "ac.za\0",
     "agric.za\0",
     "alt.za\0",
@@ -8170,6 +8176,7 @@ static const char* TLDTbl[9105] = {
     "filegear-jp.me\0",
     "filegear-sg.me\0",
     "firebaseapp.com\0",
+    "fireweb.app\0",
     "flap.id\0",
     "fly.dev\0",
     "edgeapp.net\0",
@@ -8183,6 +8190,7 @@ static const char* TLDTbl[9105] = {
     "freebox-os.fr\0",
     "freeboxos.fr\0",
     "freedesktop.org\0",
+    "freemyip.com\0",
     "wien.funkfeuer.at\0",
     "*.futurecms.at\0",
     "*.ex.futurecms.at\0",
@@ -8199,6 +8207,7 @@ static const char* TLDTbl[9105] = {
     "gentlentapis.com\0",
     "lab.ms\0",
     "cdn-edges.net\0",
+    "ghost.io\0",
     "github.io\0",
     "githubusercontent.com\0",
     "gitlab.io\0",
@@ -8599,8 +8608,11 @@ static const char* TLDTbl[9105] = {
     "pp.ru\0",
     "hostedpi.com\0",
     "customer.mythic-beasts.com\0",
+    "caracal.mythic-beasts.com\0",
+    "fentiger.mythic-beasts.com\0",
     "lynx.mythic-beasts.com\0",
     "ocelot.mythic-beasts.com\0",
+    "oncilla.mythic-beasts.com\0",
     "onza.mythic-beasts.com\0",
     "sphinx.mythic-beasts.com\0",
     "vs.mythic-beasts.com\0",
@@ -8912,6 +8924,7 @@ static const char* TLDTbl[9105] = {
     "pp.ua\0",
     "shiftedit.io\0",
     "myshopblocks.com\0",
+    "myshopify.com\0",
     "shopitsite.com\0",
     "shopware.store\0",
     "mo-siemens.io\0",
@@ -8925,6 +8938,7 @@ static const char* TLDTbl[9105] = {
     "alpha.bounty-full.com\0",
     "beta.bounty-full.com\0",
     "small-web.org\0",
+    "try-snowplow.com\0",
     "stackhero-network.com\0",
     "static.land\0",
     "dev.static.land\0",
@@ -8940,8 +8954,6 @@ static const char* TLDTbl[9105] = {
     "soc.srcf.net\0",
     "user.srcf.net\0",
     "temp-dns.com\0",
-    "applicationcloud.io\0",
-    "scapp.io\0",
     "*.s5y.io\0",
     "*.sensiosite.cloud\0",
     "syncloud.it\0",
@@ -9148,7 +9160,7 @@ static const char* TLDTbl[9105] = {
     "спб.рус\0",
     "я.рус\0",
 };
-static const qint16 TLDTblSize = 9105;
+static const qint16 TLDTblSize = 9117;
 
 static inline bool containsTLDEntry(const QString &entry)
 {
