@@ -9,6 +9,10 @@ URL: https://github.com/fluxer/katie
 
 BuildRequires: gcc-c++ cmake libicu-devel libzstd-devel zlib-devel libsq3-devel libpng-devel freetype-devel pcre-devel openssl-devel libX11-devel libXinerama-devel libXrandr-devel libXrender-devel libXfixes-devel libXcursor-devel libSM-devel libICE-devel dbus-devel libtiff-devel libjpeg-turbo-devel fontconfig-devel cups-devel libiodbc-devel libpq-devel mariadb-embedded-devel unifdef
 Requires: xdg-utils
+Requires(post): /sbin/ldconfig
+Requires(postun): /sbin/ldconfig
+Requires(post): desktop-file-utils
+Requires(postun): desktop-file-utils
 
 %description
 Katie is continuation of the Qt4 C++ toolkit with the goal to keep it alive,
@@ -18,7 +22,7 @@ on the latest Git revision of Qt v4.8.
 This package includes libraries, tools and their documentation.
 
 %build
-%cmake -DKATIE_TOOLS_SUFFIX="-katie" -DKATIE_PCH=ON
+%cmake -DKATIE_TOOLS_SUFFIX="-katie"
 %cmake_build
 
 %install
@@ -34,6 +38,13 @@ rm -v %{buildroot}/%{_sysconfdir}/profile.d/katie-*.sh
 %{_datadir}/pixmaps/*
 %{_mandir}/man1/*
 %{_sysconfdir}/ld.so.conf.d/katie-*.conf
+
+%post
+/sbin/ldconfig
+/usr/bin/update-desktop-database &> /dev/null || :
+%postun
+/sbin/ldconfig
+/usr/bin/update-desktop-database &> /dev/null || :
 
 %package devel
 Summary: C++ toolkit derived from the Qt 4.8 framework (development package)
@@ -58,9 +69,6 @@ This package includes headers, pkg-config and CMake files.
 %changelog
 * Mon Dec 21 2020 Ivailo Monev <xakepa10@gmail.com> - 4.9.2-1
 - package update
-
-* Mon Dec 21 2020 Ivailo Monev <xakepa10@gmail.com> - 4.9.1-2
-- split package
 
 * Wed Dec 17 2020 Ivailo Monev <xakepa10@gmail.com> - 4.9.1-1
 - package update
