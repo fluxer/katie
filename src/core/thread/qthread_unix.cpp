@@ -165,7 +165,6 @@ void *QThreadPrivate::start(void *arg)
     QThread *thr = reinterpret_cast<QThread *>(arg);
     QThreadData *data = QThreadData::get2(thr);
 
-    // do we need to reset the thread priority?
     thr->setPriority(thr->d_func()->priority);
 
     data->threadId = (Qt::HANDLE)pthread_self();
