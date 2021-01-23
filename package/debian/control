@@ -15,7 +15,7 @@ Build-Depends: debhelper (>= 9~), libssl-dev, zlib1g-dev, libzstd-dev,
 Package: katie-runtime
 Architecture: amd64 arm64 armel armhf i386 mips mips64el mipsel ppc64el s390x hurd-i386
 Section: x11
-Depends: ${shlibs:Depends}, ${misc:Depends}
+Depends: ${shlibs:Depends}, ${misc:Depends}, xdg-utils
 Recommends: unixodbc, libpq5, libmariadbclient, xserver-xorg-core
 Description: C++ toolkit derived from the Qt 4.8 framework
  Katie is continuation of the Qt4 C++ toolkit with the goal to keep it alive,

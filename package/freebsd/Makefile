@@ -21,6 +21,7 @@ WRKSRC = ${WRKDIR}/katie-master
 USES = compiler:c++11-lang pkgconfig cmake ssl xorg sqlite:3 desktop-file-utils
 USE_XORG = xinerama xrandr xrender xfixes xcursor xext sm ice
 USE_LDCONFIG = yes
+RUN_DEPENDS = xdg-open:devel/xdg-utils
 LIB_DEPENDS = libzstd.so:archivers/zstd libicuuc.so:devel/icu libicui18n.so:devel/icu \
 	libpcre.so:devel/pcre libpng.so:graphics/png libjpeg.so:graphics/jpeg-turbo \
 	libtiff.so:graphics/tiff libfreetype.so:print/freetype2 \

@@ -20,6 +20,8 @@ CMAKE_ARGS = -DKATIE_TOOLS_SUFFIX="-katie"
 USE_LANGUAGES = c c++11
 USE_TOOLS = pkg-config msgfmt
 
+DEPENDS = xdg-utils-[0-9]*:../../misc/xdg-utils
+
 .include "options.mk"
 
 .include "../../sysutils/desktop-file-utils/desktopdb.mk"
