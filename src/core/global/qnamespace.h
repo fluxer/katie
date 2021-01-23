@@ -346,7 +346,6 @@ public:
         WA_SetWindowIcon = 83,
         WA_SetLayoutDirection = 84,
         WA_SetWindowModality = 85,
-        WA_NoX11EventCompression = 86,
 
         // Add new attributes before this line
         WA_AttributeCount

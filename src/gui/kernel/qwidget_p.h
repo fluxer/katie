@@ -206,7 +206,6 @@ struct QWExtra {
 
     // *************************** Platform specific values (bit fields first) **********
 #if defined(Q_WS_X11) // <--------------------------------------------------------- X11
-    bool compress_events;
     WId xDndProxy; // XDND forwarding to embedded windows
 #endif
 };
