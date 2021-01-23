@@ -346,6 +346,14 @@ set_package_properties(ExecInfo PROPERTIES
     TYPE RECOMMENDED
 )
 
+find_package(XdgUtils)
+set_package_properties(XdgUtils PROPERTIES
+    PURPOSE "Required for desktop services"
+    DESCRIPTION "Utilities for integrating applications with the desktop environment"
+    URL "https://www.freedesktop.org/wiki/Software/xdg-utils/"
+    TYPE RUNTIME
+)
+
 # stored in qconfig.h.cmake
 check_type_size(size_t QT_POINTER_SIZE)
 
