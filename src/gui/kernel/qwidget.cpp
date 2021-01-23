@@ -1328,6 +1328,7 @@ void QWidgetPrivate::createExtra()
         extra->nativeChildrenForced = false;
         extra->inRenderWithPainter = false;
         extra->hasMask = false;
+        extra->compress_events = true;
         createSysExtra();
 #ifdef QWIDGET_EXTRA_DEBUG
         static int count = 0;
@@ -9077,6 +9078,12 @@ void QWidget::setAttribute(Qt::WidgetAttribute attribute, bool on)
         break;
     }
 #ifdef Q_WS_X11
+    case Qt::WA_NoX11EventCompression: {
+        if (!d->extra)
+            d->createExtra();
+        d->extra->compress_events = on;
+        break;
+    }
     case Qt::WA_X11DoNotAcceptFocus: {
         if (testAttribute(Qt::WA_WState_Created))
             d->updateX11AcceptFocus();
