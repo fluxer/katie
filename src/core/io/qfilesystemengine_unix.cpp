@@ -574,7 +574,7 @@ void QFileSystemMetaData::fillFromStatBuf(const QT_STATBUF &statBuffer)
 void QFileSystemMetaData::fillFromDirEnt(const QT_DIRENT &entry, const QFileSystemEntry::NativePath &nativePath)
 {
     // ### This will clear all entry flags
-#ifdef DEFFINETLY_NOT_DEFINED // QT_HAVE_DIRENT_D_TYPE
+#ifdef QT_HAVE_DIRENT_D_TYPE
     switch (entry.d_type) {
         case DT_DIR: {
             entryFlags = QFileSystemMetaData::DirectoryType
