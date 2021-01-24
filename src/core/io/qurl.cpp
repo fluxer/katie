@@ -3497,7 +3497,7 @@ QString QUrl::fromAce(const QByteArray &domain)
     const QString utf8 = QString::fromUtf8(domain);
     UErrorCode error = U_ZERO_ERROR;
     UIDNAInfo info = UIDNA_INFO_INITIALIZER;
-    QString result(domain.size() * 4, Qt::Uninitialized);
+    QString result(utf8.size() * 4, Qt::Uninitialized);
     const int idnaresult = uidna_nameToUnicode(globalidna,
         reinterpret_cast<const UChar*>(utf8.unicode()), utf8.size(),
         reinterpret_cast<UChar*>(result.data()), result.size(),
