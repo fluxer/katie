@@ -1041,9 +1041,7 @@ void QPainterPrivate::updateState(QPainterState *newState)
     only use the format types QImage::Format_ARGB32_Premultiplied,
     QImage::Format_RGB32 or QImage::Format_RGB16. Any other format,
     including QImage::Format_ARGB32, has significantly worse
-    performance. This engine is also used by default. It can be used
-    as default graphics system on any OS/hardware/software combination
-    by passing \c {-graphicssystem raster} on the command line
+    performance. This engine is also used by default.
 
     \endlist
 

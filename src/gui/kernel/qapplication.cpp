@@ -438,8 +438,6 @@ void QApplicationPrivate::process_cmdline()
         } else if (qstrcmp(argv[i], "-reverse") == 0) {
             force_reverse = true;
             QApplication::setLayoutDirection(Qt::RightToLeft);
-        } else if (qstrcmp(argv[i], "-graphicssystem") == 0 && i < argc - 1) {
-            // no longer supported
         }
         if (!s.isEmpty()) {
             if (app_style) {
@@ -499,8 +497,6 @@ void QApplicationPrivate::process_cmdline()
         \o  -session \e session, is the same as listed above.
         \o  -reverse, sets the application's layout direction to
             Qt::RightToLeft
-        \o  -graphicssystem, sets the backend to be used for on-screen widgets
-            and QPixmaps. Available options are \c{raster}.
     \endlist
 
     The X11 version of Qt supports some traditional X11 command line options:

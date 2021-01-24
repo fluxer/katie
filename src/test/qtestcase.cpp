@@ -1222,16 +1222,6 @@ Q_TEST_EXPORT void qtest_qParseArgs(int argc, char *argv[], bool qml)
             QBenchmarkGlobalData::current->verboseOutput = true;
         } else if (strcmp(argv[i], "-chart") == 0) {
             fprintf(stderr, "Warning: `-chart' option is not available\n");
-        } else if (strcmp(argv[i], "-qws") == 0) {
-            // do nothing
-        } else if (strcmp(argv[i], "-graphicssystem") == 0) {
-            // do nothing
-            if (i + 1 >= argc) {
-                printf("-graphicssystem needs an extra parameter specifying the graphics system\n");
-                ::exit(1);
-            } else {
-                ++i;
-            }
         } else if (argv[i][0] == '-') {
             printf("Unknown option: '%s'\n\n%s", argv[i], testOptions);
             ::exit(1);
@@ -1691,7 +1681,7 @@ FatalSignalHandler::FatalSignalHandler()
     for (int i = 0; fatalSignals[i]; ++i) {
         sigaction(fatalSignals[i], &act, &oldact);
         // Don't overwrite any non-default handlers
-        // however, we need to replace the default QWS handlers
+        // however, we need to replace the default handlers
         if (
 #ifdef SA_SIGINFO
             oldact.sa_flags & SA_SIGINFO ||

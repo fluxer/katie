@@ -9174,7 +9174,7 @@ static inline bool containsTLDEntry(const QString &entry)
 /*!
     \internal
 
-    Return the top-level-domain per Qt's copy of the Mozilla public suffix list of
+    Return the top-level-domain per copy of the Mozilla public suffix list of
     \a domain.
 */
 
