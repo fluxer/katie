@@ -18,14 +18,10 @@ function(KATIE_CHECK_DEFINED FORDEFINITION FROMHEADER)
     # see comment in top-level CMake file
     set(CMAKE_REQUIRED_INCLUDES /usr/X11R7/include /usr/pkg/include /usr/local/include /usr/include)
     set(CMAKE_REQUIRED_LINK_OPTIONS -L/usr/X11R7/lib -L/usr/pkg/lib -L/usr/local/lib -L/usr/lib -L/lib)
-    set(includedata)
-    foreach(inc ${FROMHEADER})
-        set(includedata "${includedata}#include <${inc}>\n")
-    endforeach()
     check_cxx_source_compiles(
         "
 #include <stdio.h>
-${includedata}
+#include <${FROMHEADER}>
 
 int main() {
     printf(\"%p\", &${FORDEFINITION});
@@ -75,7 +71,7 @@ function(KATIE_CHECK_STRUCT FORSTRUCT FORMEMBER FROMHEADER)
 endfunction()
 
 # a function to check for file existence in /proc, if file exists a definition
-# is added, this macro is over-engineered for two reasons - to be able to
+# is added, this function is over-engineered for two reasons - to be able to
 # override the test on the command-line and to show test status messages
 # similar to other tests
 function(KATIE_CHECK_PROC FORFILE)
