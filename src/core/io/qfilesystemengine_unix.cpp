@@ -571,43 +571,62 @@ void QFileSystemMetaData::fillFromStatBuf(const QT_STATBUF &statBuffer)
     groupId_ = statBuffer.st_gid;
 }
 
-void QFileSystemMetaData::fillFromDirEnt(const QT_DIRENT &entry)
+void QFileSystemMetaData::fillFromDirEnt(const QT_DIRENT &entry, const QFileSystemEntry::NativePath &nativePath)
 {
-#ifdef QT_HAVE_DIRENT_D_TYPE
     // ### This will clear all entry flags
-    switch (entry.d_type)
-    {
-    case DT_DIR:
-        entryFlags = QFileSystemMetaData::DirectoryType
-            | QFileSystemMetaData::ExistsAttribute;
+#ifdef DEFFINETLY_NOT_DEFINED // QT_HAVE_DIRENT_D_TYPE
+    switch (entry.d_type) {
+        case DT_DIR: {
+            entryFlags = QFileSystemMetaData::DirectoryType
+                | QFileSystemMetaData::ExistsAttribute;
+            break;
+        }
+        case DT_BLK:
+        case DT_CHR:
+        case DT_FIFO:
+        case DT_SOCK: {
+            entryFlags = QFileSystemMetaData::SequentialType
+                | QFileSystemMetaData::ExistsAttribute;
 
-        break;
-
-    case DT_BLK:
-    case DT_CHR:
-    case DT_FIFO:
-    case DT_SOCK:
-        entryFlags = QFileSystemMetaData::SequentialType
-            | QFileSystemMetaData::ExistsAttribute;
-
-        break;
-
-    case DT_LNK:
-        entryFlags = QFileSystemMetaData::LinkType;
-        break;
-
-    case DT_REG:
-        entryFlags = QFileSystemMetaData::FileType
-            | QFileSystemMetaData::ExistsAttribute;
-
-        break;
-
-    case DT_UNKNOWN:
-    default:
+            break;
+        }
+        case DT_LNK: {
+            entryFlags = QFileSystemMetaData::LinkType;
+            break;
+        }
+        case DT_REG: {
+            entryFlags = QFileSystemMetaData::FileType
+                | QFileSystemMetaData::ExistsAttribute;
+            break;
+        }
+        case DT_UNKNOWN:
+        default: {
+            clear();
+        }
+    }
+    Q_UNUSED(nativePath);
+#else
+    Q_UNUSED(entry);
+    QT_STATBUF statBuffer;
+    if (QT_STAT(nativePath.constData(), &statBuffer) == 0) {
+        if (S_ISREG(statBuffer.st_mode)) {
+            entryFlags |= QFileSystemMetaData::FileType
+                | QFileSystemMetaData::ExistsAttribute;
+        } else if (S_ISDIR(statBuffer.st_mode)) {
+            entryFlags |= QFileSystemMetaData::DirectoryType
+                | QFileSystemMetaData::ExistsAttribute;
+        } else if (S_ISLNK(statBuffer.st_mode)) {
+            entryFlags |= QFileSystemMetaData::LinkType;
+        } else if (S_ISBLK(statBuffer.st_mode) || S_ISCHR(statBuffer.st_mode)
+            || S_ISFIFO(statBuffer.st_mode) || S_ISSOCK(statBuffer.st_mode)) {
+            entryFlags |= QFileSystemMetaData::SequentialType
+                | QFileSystemMetaData::ExistsAttribute;
+        } else {
+            clear();
+        }
+    } else {
         clear();
     }
-#else
-    Q_UNUSED(entry)
 #endif
 }
 

@@ -67,7 +67,7 @@ bool QFileSystemIterator::advance(QFileSystemEntry &fileEntry, QFileSystemMetaDa
 
     if (dirEntry) {
         fileEntry = QFileSystemEntry(nativePath + QByteArray(dirEntry->d_name), QFileSystemEntry::FromNativePath());
-        metaData.fillFromDirEnt(*dirEntry);
+        metaData.fillFromDirEnt(*dirEntry, fileEntry.nativeFilePath());
         return true;
     }
 
