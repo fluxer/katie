@@ -396,6 +396,11 @@ public:
           config(Q_NULLPTR),
           func(&easeNone)
     { }
+    QEasingCurvePrivate(const QEasingCurvePrivate &other)
+        : type(other.type),
+          config(other.config ? other.config->copy() : Q_NULLPTR),
+          func(other.func)
+    { }
     ~QEasingCurvePrivate() { delete config; }
     void setType_helper(QEasingCurve::Type);
 
@@ -581,7 +586,7 @@ static QEasingCurveFunction *curveToFunctionObject(QEasingCurve::Type type)
     Constructs an easing curve of the given \a type.
  */
 QEasingCurve::QEasingCurve(Type type)
-    : d_ptr(new QEasingCurvePrivate)
+    : d_ptr(new QEasingCurvePrivate())
 {
     setType(type);
 }
@@ -590,12 +595,9 @@ QEasingCurve::QEasingCurve(Type type)
     Construct a copy of \a other.
  */
 QEasingCurve::QEasingCurve(const QEasingCurve &other)
-    : d_ptr(new QEasingCurvePrivate)
+    : d_ptr(new QEasingCurvePrivate(*other.d_ptr))
 {
     // ### non-atomic, requires malloc on shallow copy
-    *d_ptr = *other.d_ptr;
-    if (other.d_ptr->config)
-        d_ptr->config = other.d_ptr->config->copy();
 }
 
 /*!
@@ -612,16 +614,10 @@ QEasingCurve::~QEasingCurve()
  */
 QEasingCurve &QEasingCurve::operator=(const QEasingCurve &other)
 {
-    // ### non-atomic, requires malloc on shallow copy
-    if (d_ptr->config) {
-        delete d_ptr->config;
-        d_ptr->config = Q_NULLPTR;
+    if (*this != other) {
+        QEasingCurve copy(other);
+        qSwap(d_ptr, copy.d_ptr);
     }
-
-    *d_ptr = *other.d_ptr;
-    if (other.d_ptr->config)
-        d_ptr->config = other.d_ptr->config->copy();
-
     return *this;
 }
 
@@ -635,11 +631,11 @@ bool QEasingCurve::operator==(const QEasingCurve &other) const
             && d_ptr->type == other.d_ptr->type;
     if (res) {
         if (d_ptr->config && other.d_ptr->config) {
-        // catch the config content
+            // catch the config content
             res = d_ptr->config->operator==(*(other.d_ptr->config));
 
         } else if (d_ptr->config || other.d_ptr->config) {
-        // one one has a config object, which could contain default values
+            // one one has a config object, which could contain default values
             res = qFuzzyCompare(amplitude(), other.amplitude()) &&
                   qFuzzyCompare(period(), other.period()) &&
                   qFuzzyCompare(overshoot(), other.overshoot());
