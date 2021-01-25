@@ -104,12 +104,12 @@
 #  include <X11/extensions/Xfixes.h>
 #endif // QT_NO_XFIXES
 
-#ifndef QT_NO_FONTCONFIG
-#include <fontconfig/fontconfig.h>
-#endif
-
 #ifndef QT_NO_SESSIONMANAGER
 #include <X11/SM/SMlib.h>
+#endif
+
+#ifndef QT_NO_FONTCONFIG
+#include <fontconfig/fontconfig.h>
 #endif
 
 QT_BEGIN_NAMESPACE
@@ -144,7 +144,7 @@ struct QXdndDropTransaction
 class QMimeData;
 struct QX11Data
 {
-    Window findClientWindow(Window, Atom, bool);
+    Window findClientWindow(Window, Atom);
 
     // from qclipboard_x11.cpp
     bool clipboardWaitForEvent(Window win, int type, XEvent *event, int timeout, bool checkManager = false);
