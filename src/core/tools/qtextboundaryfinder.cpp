@@ -201,6 +201,14 @@ QTextBoundaryFinder &QTextBoundaryFinder::operator=(const QTextBoundaryFinder &o
         qWarning("QTextBoundaryFinder: ubrk_safeClone() failed %s", u_errorName(error));
         d->breakiter = Q_NULLPTR;
     }
+    error = U_ZERO_ERROR;
+    ubrk_setText(d->breakiter, reinterpret_cast<const UChar*>(d->string.unicode()), d->string.size(), &error);
+    if (Q_UNLIKELY(U_FAILURE(error))) {
+        qWarning("QTextBoundaryFinder: ubrk_setText() failed %s", u_errorName(error));
+        ubrk_close(d->breakiter);
+        d->breakiter = Q_NULLPTR;
+    }
+
     return *this;
 }
 
