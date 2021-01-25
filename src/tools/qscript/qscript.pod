@@ -9,13 +9,13 @@ qscript [script-file]
 =head1 OPTIONS
 
     -d
-           Attach a debugger
+        Attach a debugger.
 
     -i
-           Run interactive.
+        Run interactive.
 
     -
-           Read from standard-input.
+        Read from standard-input.
 
 =head1 DESCRIPTION
 
