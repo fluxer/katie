@@ -574,7 +574,7 @@ static QEasingCurveFunction *curveToFunctionObject(QEasingCurve::Type type)
             return new QEasingCurveFunction(type, qreal(0.3), qreal(1.0), qreal(1.70158));
     }
 
-    return Q_NULLPTR;
+    Q_UNREACHABLE();
 }
 
 /*!
