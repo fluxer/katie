@@ -144,14 +144,7 @@ QStyleOptionMenuItem QComboMenuDelegate::getStyleOption(const QStyleOptionViewIt
     menuOption.maxIconWidth =  option.decorationSize.width() + 4;
     menuOption.menuRect = option.rect;
     menuOption.rect = option.rect;
-
-    // Make sure fonts set on the combo box also overrides the font for the popup menu.
-    if (mCombo->testAttribute(Qt::WA_SetFont)
-        || mCombo->font() != qt_app_fonts_hash()->value("QComboBox", QFont()))
-        menuOption.font = mCombo->font();
-    else
-        menuOption.font = qt_app_fonts_hash()->value("QComboMenuItem", mCombo->font());
-
+    menuOption.font = mCombo->font();
     menuOption.fontMetrics = QFontMetrics(menuOption.font);
 
     return menuOption;

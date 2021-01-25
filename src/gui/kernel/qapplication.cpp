@@ -376,16 +376,7 @@ static bool force_reverse = false;
 // ######## move to QApplicationPrivate
 // Default application palettes and fonts (per widget type)
 Q_GLOBAL_STATIC(PaletteHash, app_palettes)
-PaletteHash *qt_app_palettes_hash()
-{
-    return app_palettes();
-}
-
 Q_GLOBAL_STATIC(FontHash, app_fonts)
-FontHash *qt_app_fonts_hash()
-{
-    return app_fonts();
-}
 
 QWidgetList *QApplicationPrivate::popupWidgets = Q_NULLPTR;  // has keyboard input focus
 
