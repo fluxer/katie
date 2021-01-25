@@ -1512,8 +1512,8 @@ int qrand()
         ::time(&almostrandom);
         std::srand(almostrandom + std::intptr_t(&almostrandom));
     }
-#endif
     return std::rand();
+#endif
 }
 
 /*!
