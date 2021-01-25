@@ -78,10 +78,8 @@ int QFontPrivate::defaultEncodingID = -1;
 void QFont::initialize()
 {
     extern int qt_encoding_id_for_mib(int mib); // from qfontdatabase_x11.cpp
-    QTextCodec *codec = QTextCodec::codecForLocale();
     // determine the default encoding id using the locale, otherwise
-    // fallback to latin1 (mib == 4)
-    int mib = codec ? codec->mibEnum() : 4;
+    int mib = QTextCodec::codecForLocale()->mibEnum();
 
     // for asian locales, use the mib for the font codec instead of the locale codec
     switch (mib) {
