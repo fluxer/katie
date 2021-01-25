@@ -1504,7 +1504,7 @@ void qsrand(uint seed)
 int qrand()
 {
 #ifdef QT_HAVE_ARC4RANDOM
-    return ::arc4random();
+    return (::arc4random() % RAND_MAX);
 #else
     // Seed the PRNG once per thread with a combination of current time and its address
     thread_local time_t almostrandom = 0;
