@@ -33,14 +33,14 @@
 
 #include "qthread.h"
 
-#include "qplatformdefs.h"
-#include "qcoreapplication_p.h"
+#include "qcoreapplication.h"
 #include "qthread_p.h"
 #include "qdebug.h"
 #include "qeventdispatcher_unix_p.h"
 
 #include <sched.h>
 #include <errno.h>
+#include <pthread.h>
 
 #if defined(QT_HAVE_PRCTL)
 #include <sys/prctl.h>
