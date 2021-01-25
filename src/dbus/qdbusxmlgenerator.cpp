@@ -47,26 +47,6 @@ QT_BEGIN_NAMESPACE
 extern Q_DBUS_EXPORT QString qDBusGenerateMetaObjectXml(QString interface, const QMetaObject *mo,
                                                        const QMetaObject *base, int flags);
 
-static inline QString typeNameToXml(const char *typeName)
-{
-    // ### copied from qtextdocument.cpp
-    // ### move this into QtCore at some point
-    QString plain = QLatin1String(typeName);
-    QString rich;
-    rich.reserve(int(plain.length() * 1.1));
-    for (int i = 0; i < plain.length(); ++i) {
-        if (plain.at(i) == QLatin1Char('<'))
-            rich += QLatin1String("&lt;");
-        else if (plain.at(i) == QLatin1Char('>'))
-            rich += QLatin1String("&gt;");
-        else if (plain.at(i) == QLatin1Char('&'))
-            rich += QLatin1String("&amp;");
-        else
-            rich += plain.at(i);
-    }
-    return rich;
-}
-
 // implement the D-Bus org.freedesktop.DBus.Introspectable interface
 // we do that by analysing the metaObject of all the adaptor interfaces
 
@@ -107,7 +87,7 @@ static QString generateInterfaceXml(const QMetaObject *mo, int flags, int method
             if (QDBusMetaType::signatureToType(signature) == QVariant::Invalid) {
                 const char *typeName = QVariant::typeToName(QVariant::Type(typeId));
                 retval += QString::fromLatin1(">\n      <annotation name=\"org.qtproject.QtDBus.QtTypeName\" value=\"%3\"/>\n    </property>\n")
-                          .arg(typeNameToXml(typeName));
+                          .arg(Qt::escape(QString::fromLatin1(typeName)));
             } else {
                 retval += QLatin1String("/>\n");
             }
@@ -146,12 +126,12 @@ static QString generateInterfaceXml(const QMetaObject *mo, int flags, int method
             const char *typeName = QDBusMetaType::typeToSignature(typeId);
             if (typeName) {
                 xml += QString::fromLatin1("      <arg type=\"%1\" direction=\"out\"/>\n")
-                       .arg(typeNameToXml(typeName));
+                       .arg(Qt::escape(QString::fromLatin1(typeName)));
 
                 // do we need to describe this argument?
                 if (QDBusMetaType::signatureToType(typeName) == QVariant::Invalid)
                     xml += QString::fromLatin1("      <annotation name=\"org.qtproject.QtDBus.QtTypeName.Out0\" value=\"%1\"/>\n")
-                        .arg(typeNameToXml(QVariant::typeToName(QVariant::Type(typeId))));
+                        .arg(Qt::escape(QString::fromLatin1(QVariant::typeToName(QVariant::Type(typeId)))));
             } else
                 continue;
         }
@@ -197,7 +177,7 @@ static QString generateInterfaceXml(const QMetaObject *mo, int flags, int method
                 xml += QString::fromLatin1("      <annotation name=\"org.qtproject.QtDBus.QtTypeName.%1%2\" value=\"%3\"/>\n")
                        .arg(isOutput ? QLatin1String("Out") : QLatin1String("In"))
                        .arg(isOutput && !isSignal ? j - inputCount : j - 1)
-                       .arg(typeNameToXml(typeName));
+                       .arg(Qt::escape(QString::fromLatin1(typeName)));
             }
         }
 

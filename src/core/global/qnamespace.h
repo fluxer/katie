@@ -1360,6 +1360,22 @@ public:
         LogicalMoveStyle,
         VisualMoveStyle
     };
+
+    enum HitTestAccuracy {
+        ExactHit,
+        FuzzyHit
+    };
+
+    enum WhiteSpaceMode {
+        WhiteSpaceNormal,
+        WhiteSpacePre,
+        WhiteSpaceNoWrap,
+        WhiteSpaceModeUndefined = -1
+    };
+
+    Q_CORE_EXPORT bool mightBeRichText(const QString&);
+    Q_CORE_EXPORT QString escape(const QString& plain);
+    Q_CORE_EXPORT QString convertFromPlainText(const QString &plain, WhiteSpaceMode mode = WhiteSpacePre);
 }
 #ifdef Q_MOC_RUN
  ;

@@ -368,96 +368,77 @@ static const ushort windowsLatin1ExtendedCharacters[0xA0 - 0x80] = {
 };
 
 // the displayMode value is according to the what are blocks in the piecetable, not
-// what the w3c defines.
-static const QTextHtmlElement elements[Html_NumElements]= {
-    { "a",          Html_a,          QTextHtmlElement::DisplayInline },
-    { "address",    Html_address,    QTextHtmlElement::DisplayInline },
-    { "b",          Html_b,          QTextHtmlElement::DisplayInline },
-    { "big",        Html_big,        QTextHtmlElement::DisplayInline },
-    { "blockquote", Html_blockquote, QTextHtmlElement::DisplayBlock },
-    { "body",       Html_body,       QTextHtmlElement::DisplayBlock },
-    { "br",         Html_br,         QTextHtmlElement::DisplayInline },
-    { "caption",    Html_caption,    QTextHtmlElement::DisplayBlock },
-    { "center",     Html_center,     QTextHtmlElement::DisplayBlock },
-    { "cite",       Html_cite,       QTextHtmlElement::DisplayInline },
-    { "code",       Html_code,       QTextHtmlElement::DisplayInline },
-    { "dd",         Html_dd,         QTextHtmlElement::DisplayBlock },
-    { "dfn",        Html_dfn,        QTextHtmlElement::DisplayInline },
-    { "div",        Html_div,        QTextHtmlElement::DisplayBlock },
-    { "dl",         Html_dl,         QTextHtmlElement::DisplayBlock },
-    { "dt",         Html_dt,         QTextHtmlElement::DisplayBlock },
-    { "em",         Html_em,         QTextHtmlElement::DisplayInline },
-    { "font",       Html_font,       QTextHtmlElement::DisplayInline },
-    { "h1",         Html_h1,         QTextHtmlElement::DisplayBlock },
-    { "h2",         Html_h2,         QTextHtmlElement::DisplayBlock },
-    { "h3",         Html_h3,         QTextHtmlElement::DisplayBlock },
-    { "h4",         Html_h4,         QTextHtmlElement::DisplayBlock },
-    { "h5",         Html_h5,         QTextHtmlElement::DisplayBlock },
-    { "h6",         Html_h6,         QTextHtmlElement::DisplayBlock },
-    { "head",       Html_head,       QTextHtmlElement::DisplayNone },
-    { "hr",         Html_hr,         QTextHtmlElement::DisplayBlock },
-    { "html",       Html_html,       QTextHtmlElement::DisplayInline },
-    { "i",          Html_i,          QTextHtmlElement::DisplayInline },
-    { "img",        Html_img,        QTextHtmlElement::DisplayInline },
-    { "kbd",        Html_kbd,        QTextHtmlElement::DisplayInline },
-    { "li",         Html_li,         QTextHtmlElement::DisplayBlock },
-    { "link",       Html_link,       QTextHtmlElement::DisplayNone },
-    { "meta",       Html_meta,       QTextHtmlElement::DisplayNone },
-    { "nobr",       Html_nobr,       QTextHtmlElement::DisplayInline },
-    { "ol",         Html_ol,         QTextHtmlElement::DisplayBlock },
-    { "p",          Html_p,          QTextHtmlElement::DisplayBlock },
-    { "pre",        Html_pre,        QTextHtmlElement::DisplayBlock },
-    { "qt",         Html_body /*deliberate mapping*/, QTextHtmlElement::DisplayBlock },
-    { "s",          Html_s,          QTextHtmlElement::DisplayInline },
-    { "samp",       Html_samp,       QTextHtmlElement::DisplayInline },
-    { "script",     Html_script,     QTextHtmlElement::DisplayNone },
-    { "small",      Html_small,      QTextHtmlElement::DisplayInline },
-    { "span",       Html_span,       QTextHtmlElement::DisplayInline },
-    { "strong",     Html_strong,     QTextHtmlElement::DisplayInline },
-    { "style",      Html_style,      QTextHtmlElement::DisplayNone },
-    { "sub",        Html_sub,        QTextHtmlElement::DisplayInline },
-    { "sup",        Html_sup,        QTextHtmlElement::DisplayInline },
-    { "table",      Html_table,      QTextHtmlElement::DisplayTable },
-    { "tbody",      Html_tbody,      QTextHtmlElement::DisplayTable },
-    { "td",         Html_td,         QTextHtmlElement::DisplayBlock },
-    { "tfoot",      Html_tfoot,      QTextHtmlElement::DisplayTable },
-    { "th",         Html_th,         QTextHtmlElement::DisplayBlock },
-    { "thead",      Html_thead,      QTextHtmlElement::DisplayTable },
-    { "title",      Html_title,      QTextHtmlElement::DisplayNone },
-    { "tr",         Html_tr,         QTextHtmlElement::DisplayTable },
-    { "tt",         Html_tt,         QTextHtmlElement::DisplayInline },
-    { "u",          Html_u,          QTextHtmlElement::DisplayInline },
-    { "ul",         Html_ul,         QTextHtmlElement::DisplayBlock },
-    { "var",        Html_var,        QTextHtmlElement::DisplayInline },
+// what the w3c defines. same as those in qglobal.cpp
+static const QTextHtmlElement elementsTbl[Html_NumElements]= {
+    { QLatin1String("a"),          Html_a,          QTextHtmlElement::DisplayInline },
+    { QLatin1String("address"),    Html_address,    QTextHtmlElement::DisplayInline },
+    { QLatin1String("b"),          Html_b,          QTextHtmlElement::DisplayInline },
+    { QLatin1String("big"),        Html_big,        QTextHtmlElement::DisplayInline },
+    { QLatin1String("blockquote"), Html_blockquote, QTextHtmlElement::DisplayBlock },
+    { QLatin1String("body"),       Html_body,       QTextHtmlElement::DisplayBlock },
+    { QLatin1String("br"),         Html_br,         QTextHtmlElement::DisplayInline },
+    { QLatin1String("caption"),    Html_caption,    QTextHtmlElement::DisplayBlock },
+    { QLatin1String("center"),     Html_center,     QTextHtmlElement::DisplayBlock },
+    { QLatin1String("cite"),       Html_cite,       QTextHtmlElement::DisplayInline },
+    { QLatin1String("code"),       Html_code,       QTextHtmlElement::DisplayInline },
+    { QLatin1String("dd"),         Html_dd,         QTextHtmlElement::DisplayBlock },
+    { QLatin1String("dfn"),        Html_dfn,        QTextHtmlElement::DisplayInline },
+    { QLatin1String("div"),        Html_div,        QTextHtmlElement::DisplayBlock },
+    { QLatin1String("dl"),         Html_dl,         QTextHtmlElement::DisplayBlock },
+    { QLatin1String("dt"),         Html_dt,         QTextHtmlElement::DisplayBlock },
+    { QLatin1String("em"),         Html_em,         QTextHtmlElement::DisplayInline },
+    { QLatin1String("font"),       Html_font,       QTextHtmlElement::DisplayInline },
+    { QLatin1String("h1"),         Html_h1,         QTextHtmlElement::DisplayBlock },
+    { QLatin1String("h2"),         Html_h2,         QTextHtmlElement::DisplayBlock },
+    { QLatin1String("h3"),         Html_h3,         QTextHtmlElement::DisplayBlock },
+    { QLatin1String("h4"),         Html_h4,         QTextHtmlElement::DisplayBlock },
+    { QLatin1String("h5"),         Html_h5,         QTextHtmlElement::DisplayBlock },
+    { QLatin1String("h6"),         Html_h6,         QTextHtmlElement::DisplayBlock },
+    { QLatin1String("head"),       Html_head,       QTextHtmlElement::DisplayNone },
+    { QLatin1String("hr"),         Html_hr,         QTextHtmlElement::DisplayBlock },
+    { QLatin1String("html"),       Html_html,       QTextHtmlElement::DisplayInline },
+    { QLatin1String("i"),          Html_i,          QTextHtmlElement::DisplayInline },
+    { QLatin1String("img"),        Html_img,        QTextHtmlElement::DisplayInline },
+    { QLatin1String("kbd"),        Html_kbd,        QTextHtmlElement::DisplayInline },
+    { QLatin1String("li"),         Html_li,         QTextHtmlElement::DisplayBlock },
+    { QLatin1String("link"),       Html_link,       QTextHtmlElement::DisplayNone },
+    { QLatin1String("meta"),       Html_meta,       QTextHtmlElement::DisplayNone },
+    { QLatin1String("nobr"),       Html_nobr,       QTextHtmlElement::DisplayInline },
+    { QLatin1String("ol"),         Html_ol,         QTextHtmlElement::DisplayBlock },
+    { QLatin1String("p"),          Html_p,          QTextHtmlElement::DisplayBlock },
+    { QLatin1String("pre"),        Html_pre,        QTextHtmlElement::DisplayBlock },
+    { QLatin1String("qt"),         Html_body /*deliberate mapping*/, QTextHtmlElement::DisplayBlock },
+    { QLatin1String("s"),          Html_s,          QTextHtmlElement::DisplayInline },
+    { QLatin1String("samp"),       Html_samp,       QTextHtmlElement::DisplayInline },
+    { QLatin1String("script"),     Html_script,     QTextHtmlElement::DisplayNone },
+    { QLatin1String("small"),      Html_small,      QTextHtmlElement::DisplayInline },
+    { QLatin1String("span"),       Html_span,       QTextHtmlElement::DisplayInline },
+    { QLatin1String("strong"),     Html_strong,     QTextHtmlElement::DisplayInline },
+    { QLatin1String("style"),      Html_style,      QTextHtmlElement::DisplayNone },
+    { QLatin1String("sub"),        Html_sub,        QTextHtmlElement::DisplayInline },
+    { QLatin1String("sup"),        Html_sup,        QTextHtmlElement::DisplayInline },
+    { QLatin1String("table"),      Html_table,      QTextHtmlElement::DisplayTable },
+    { QLatin1String("tbody"),      Html_tbody,      QTextHtmlElement::DisplayTable },
+    { QLatin1String("td"),         Html_td,         QTextHtmlElement::DisplayBlock },
+    { QLatin1String("tfoot"),      Html_tfoot,      QTextHtmlElement::DisplayTable },
+    { QLatin1String("th"),         Html_th,         QTextHtmlElement::DisplayBlock },
+    { QLatin1String("thead"),      Html_thead,      QTextHtmlElement::DisplayTable },
+    { QLatin1String("title"),      Html_title,      QTextHtmlElement::DisplayNone },
+    { QLatin1String("tr"),         Html_tr,         QTextHtmlElement::DisplayTable },
+    { QLatin1String("tt"),         Html_tt,         QTextHtmlElement::DisplayInline },
+    { QLatin1String("u"),          Html_u,          QTextHtmlElement::DisplayInline },
+    { QLatin1String("ul"),         Html_ul,         QTextHtmlElement::DisplayBlock },
+    { QLatin1String("var"),        Html_var,        QTextHtmlElement::DisplayInline },
 };
-
-
-static inline bool operator<(const QString &str, const QTextHtmlElement &e)
-{
-    return str < QLatin1String(e.name);
-}
-
-static inline bool operator<(const QTextHtmlElement &e, const QString &str)
-{
-    return QLatin1String(e.name) < str;
-}
 
 static const QTextHtmlElement *lookupElementHelper(const QString &element)
 {
-    const QTextHtmlElement *start = &elements[0];
-    const QTextHtmlElement *end = &elements[Html_NumElements];
-    const QTextHtmlElement *e = qBinaryFind(start, end, element);
-    if (e == end)
-        return 0;
-    return e;
-}
-
-int QTextHtmlParser::lookupElement(const QString &element)
-{
-    const QTextHtmlElement *e = lookupElementHelper(element);
-    if (!e)
-        return -1;
-    return e->id;
+    for (qint16 i = 0; i < Html_NumElements; i++) {
+        if (element == elementsTbl[i].name) {
+            return &elementsTbl[i];
+        }
+    }
+    return Q_NULLPTR;
 }
 
 // quotes newlines as "\\n"
