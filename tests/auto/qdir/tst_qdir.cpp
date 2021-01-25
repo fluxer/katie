@@ -975,7 +975,6 @@ void tst_QDir::rename()
     QDir dir;
     QVERIFY(dir.rename("rename-test", "rename-test-renamed"));
     QVERIFY(dir.rename("rename-test-renamed", "rename-test"));
-    QVERIFY(!dir.rename("rename-test", "/rename-test-renamed"));
     QTest::ignoreMessage(QtWarningMsg, "QDir::rename: Empty or null file name(s)");
     QVERIFY(!dir.rename("rename-test", ""));
     QTest::ignoreMessage(QtWarningMsg, "QDir::rename: Empty or null file name(s)");
@@ -983,6 +982,11 @@ void tst_QDir::rename()
     QVERIFY(!dir.rename("some-file-that-does-not-exist", "rename-test-renamed"));
 
     QVERIFY(dir.remove("rename-test"));
+
+    if (::getuid() == 0)
+        // root and Chuck Norris don't care for file permissions. Skip.
+        QSKIP("Running this test as root doesn't make sense", SkipAll);
+    QVERIFY(!dir.rename("rename-test", "/rename-test-renamed"));
 }
 
 void tst_QDir::exists2_data()
