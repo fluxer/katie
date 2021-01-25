@@ -407,7 +407,7 @@ public:
 struct ElasticEase : public QEasingCurveFunction
 {
     ElasticEase(QEasingCurve::Type type)
-        : QEasingCurveFunction(type, qreal(0.3), qreal(1.0))
+        : QEasingCurveFunction(type)
     { }
 
     qreal value(qreal t)
@@ -432,7 +432,7 @@ struct ElasticEase : public QEasingCurveFunction
 struct BounceEase : public QEasingCurveFunction
 {
     BounceEase(QEasingCurve::Type type)
-        : QEasingCurveFunction(type, qreal(0.3), qreal(1.0))
+        : QEasingCurveFunction(type)
     { }
 
     qreal value(qreal t)
@@ -456,7 +456,7 @@ struct BounceEase : public QEasingCurveFunction
 struct BackEase : public QEasingCurveFunction
 {
     BackEase(QEasingCurve::Type type)
-        : QEasingCurveFunction(type, qreal(0.3), qreal(1.0), qreal(1.70158))
+        : QEasingCurveFunction(type)
     { }
 
     qreal value(qreal t)
@@ -571,7 +571,7 @@ static QEasingCurveFunction *curveToFunctionObject(QEasingCurve::Type type)
         case QEasingCurve::OutInBack:
             return new BackEase(type);
         default:
-            return new QEasingCurveFunction(type, qreal(0.3), qreal(1.0), qreal(1.70158));
+            return new QEasingCurveFunction(type);
     }
 
     Q_UNREACHABLE();
