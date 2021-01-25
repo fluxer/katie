@@ -651,13 +651,6 @@ static qulonglong qConvertToUnsignedNumber(const QVariant::Private *d, bool *ok)
     return Q_UINT64_C(0);
 }
 
-template<typename TInput, typename LiteralWrapper>
-inline bool qt_convertToBool(const QVariant::Private *const d)
-{
-    TInput str = v_cast<TInput>(d)->toLower();
-    return !(str == LiteralWrapper("0") || str == LiteralWrapper("false") || str.isEmpty());
-}
-
 /*!
  \internal
 
@@ -936,12 +929,16 @@ static bool convert(const QVariant::Private *d, QVariant::Type t, void *result, 
     case QVariant::Bool: {
         *static_cast<bool *>(result) = false;
         switch(d->type) {
-        case QVariant::ByteArray:
-            *static_cast<bool *>(result) = qt_convertToBool<QByteArray, QByteArray>(d);
+        case QVariant::ByteArray: {
+            QByteArray str = v_cast<QByteArray>(d)->toLower();
+            *static_cast<bool *>(result) = (!str.isEmpty() && str != "0" && str != "false");
             return true;
-        case QVariant::String:
-            *static_cast<bool *>(result) = qt_convertToBool<QString, QLatin1String>(d);
+        }
+        case QVariant::String: {
+            QString str = v_cast<QString>(d)->toLower();
+            *static_cast<bool *>(result) = (!str.isEmpty() && str != QLatin1String("0") && str != QLatin1String("false"));
             return true;
+        }
         case QVariant::Char:
             *static_cast<bool *>(result) = !v_cast<QChar>(d)->isNull();
             return true;
@@ -952,7 +949,7 @@ static bool convert(const QVariant::Private *d, QVariant::Type t, void *result, 
         case QMetaType::Short:
         case QMetaType::Long:
         case QVariant::Float:
-            *static_cast<bool *>(result) = qMetaTypeNumber(d) != Q_INT64_C(0);
+            *static_cast<bool *>(result) = (qMetaTypeNumber(d) != Q_INT64_C(0));
             return true;
         case QVariant::UInt:
         case QVariant::ULongLong:
