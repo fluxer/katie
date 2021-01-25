@@ -61,15 +61,15 @@ class Q_CORE_EXPORT QTextCodecPlugin : public QObject, public QTextCodecFactoryI
     Q_OBJECT
     Q_INTERFACES(QTextCodecFactoryInterface:QFactoryInterface)
 public:
-    explicit QTextCodecPlugin(QObject *parent = Q_NULLPTR);
+    QT_DEPRECATED_CONSTRUCTOR explicit QTextCodecPlugin(QObject *parent = Q_NULLPTR);
     ~QTextCodecPlugin();
 
-    virtual QList<QByteArray> names() const = 0;
-    virtual QList<QByteArray> aliases() const = 0;
-    virtual QTextCodec *createForName(const QByteArray &name) = 0;
+    QT_DEPRECATED virtual QList<QByteArray> names() const = 0;
+    QT_DEPRECATED virtual QList<QByteArray> aliases() const = 0;
+    QT_DEPRECATED virtual QTextCodec *createForName(const QByteArray &name) = 0;
 
-    virtual QList<int> mibEnums() const = 0;
-    virtual QTextCodec *createForMib(int mib) = 0;
+    QT_DEPRECATED virtual QList<int> mibEnums() const = 0;
+    QT_DEPRECATED virtual QTextCodec *createForMib(int mib) = 0;
 
 private:
     QStringList keys() const;
