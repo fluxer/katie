@@ -417,8 +417,6 @@ void QThread::setPriority(Priority priority)
         return;
     }
 
-    // copied from start() with a few modifications:
-
 #ifdef QT_HAS_THREAD_PRIORITY_SCHEDULING
     int sched_policy;
     sched_param param;
