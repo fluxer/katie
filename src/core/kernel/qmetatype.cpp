@@ -338,10 +338,11 @@ Q_CORE_EXPORT const QMetaTypeGuiHelper *qMetaTypeGuiHelper = Q_NULLPTR;
 class QCustomTypeInfo
 {
 public:
-    QCustomTypeInfo() : constr(Q_NULLPTR), destr(Q_NULLPTR)
+    QCustomTypeInfo() : constr(Q_NULLPTR), destr(Q_NULLPTR),
 #ifndef QT_NO_DATASTREAM
-    , saveOp(Q_NULLPTR), loadOp(Q_NULLPTR)
+    saveOp(Q_NULLPTR), loadOp(Q_NULLPTR),
 #endif
+    alias(-1)
     {}
 
     QByteArray typeName;
@@ -522,8 +523,8 @@ int QMetaType::registerTypedef(const char* typeName, int aliasId)
     QCustomTypeInfo inf;
     inf.typeName = normalizedTypeName;
     inf.alias = aliasId;
-    inf.constr = 0;
-    inf.destr = 0;
+    inf.constr = Q_NULLPTR;
+    inf.destr = Q_NULLPTR;
     ct->append(inf);
     return aliasId;
 }
@@ -551,8 +552,8 @@ void QMetaType::unregisterType(const char *typeName)
         if (ct->at(v).typeName == typeName) {
             QCustomTypeInfo &inf = (*ct)[v];
             inf.typeName.clear();
-            inf.constr = 0;
-            inf.destr = 0;
+            inf.constr = Q_NULLPTR;
+            inf.destr = Q_NULLPTR;
             inf.alias = -1;
         }
     }
