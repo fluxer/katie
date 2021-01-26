@@ -61,7 +61,7 @@ class Q_CORE_EXPORT QTextCodecPlugin : public QObject, public QTextCodecFactoryI
     Q_OBJECT
     Q_INTERFACES(QTextCodecFactoryInterface:QFactoryInterface)
 public:
-    QT_DEPRECATED_CONSTRUCTOR explicit QTextCodecPlugin(QObject *parent = Q_NULLPTR);
+    QT_DEPRECATED_CONSTRUCTOR QTextCodecPlugin(QObject *parent = Q_NULLPTR);
     ~QTextCodecPlugin();
 
     QT_DEPRECATED virtual QList<QByteArray> names() const = 0;
