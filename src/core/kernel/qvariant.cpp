@@ -1263,7 +1263,6 @@ const QVariant::Handler qt_kernel_variant_handler = {
 #endif
     compare,
     convert,
-    0,
 #if !defined(QT_NO_DEBUG_STREAM) && !defined(Q_BROKEN_DEBUG_STREAM)
     streamDebug
 #else

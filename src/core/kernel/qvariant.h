@@ -346,7 +346,6 @@ class Q_CORE_EXPORT QVariant
 #endif
     typedef bool (*f_compare)(const Private *, const Private *);
     typedef bool (*f_convert)(const QVariant::Private *d, Type t, void *, bool *);
-    typedef bool (*f_canConvert)(const QVariant::Private *d, Type t);
     typedef void (*f_debugStream)(QDebug, const QVariant &);
     struct Handler {
         f_construct construct;
@@ -358,7 +357,6 @@ class Q_CORE_EXPORT QVariant
 #endif
         f_compare compare;
         f_convert convert;
-        f_canConvert canConvert;
         f_debugStream debugStream;
     };
 
