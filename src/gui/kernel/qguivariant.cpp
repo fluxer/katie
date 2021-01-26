@@ -532,7 +532,7 @@ static void streamDebug(QDebug dbg, const QVariant &v)
         dbg.nospace() << qvariant_cast<QRegion>(v);
         break;
     case QVariant::Font:
-//        dbg.nospace() << qvariant_cast<QFont>(v);  //FIXME
+        dbg.nospace() << qvariant_cast<QFont>(v);
         break;
     case QVariant::Matrix:
         dbg.nospace() << qvariant_cast<QMatrix>(v);
