@@ -546,16 +546,15 @@ extern int qUnregisterGuiVariant();
 */
 QApplication::QApplication(int &argc, char **argv, QApplication::Type type)
     : QCoreApplication(*new QApplicationPrivate(argc, argv, type))
-{ Q_D(QApplication); d->construct(); }
+{
+    Q_D(QApplication);
+    d->construct();
+}
 
 /*!
     \internal
 */
-void QApplicationPrivate::construct(
-#ifdef Q_WS_X11
-                                    Display *dpy, Qt::HANDLE visual, Qt::HANDLE cmap
-#endif
-                                    )
+void QApplicationPrivate::construct(Display *dpy, Qt::HANDLE visual, Qt::HANDLE cmap)
 {
     initResources();
 
@@ -563,11 +562,7 @@ void QApplicationPrivate::construct(
     process_cmdline();
 
     // Must be called before initializing
-    qt_init(this, qt_appType
-#ifdef Q_WS_X11
-            , dpy, visual, cmap
-#endif
-            );
+    qt_init(this, qt_appType, dpy, visual, cmap);
 
     QWidgetPrivate::mapper = new QWidgetMapper;
     QWidgetPrivate::allWidgets = new QWidgetSet;
@@ -648,7 +643,7 @@ QApplication::QApplication(Display *dpy, int &argc, char **argv,
     if (Q_UNLIKELY(!dpy))
         qWarning("QApplication: Invalid Display* argument");
     Q_D(QApplication);
-    d->construct(dpy, visual, colormap);;
+    d->construct(dpy, visual, colormap);
 }
 
 #endif // Q_WS_X11

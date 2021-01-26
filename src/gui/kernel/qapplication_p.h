@@ -116,11 +116,7 @@ public:
 
     bool notify_helper(QObject *receiver, QEvent * e);
 
-    void construct(
-#ifdef Q_WS_X11
-                   Display *dpy = 0, Qt::HANDLE visual = 0, Qt::HANDLE cmap = 0
-#endif
-                   );
+    void construct(Display *dpy = 0, Qt::HANDLE visual = 0, Qt::HANDLE cmap = 0);
     void process_cmdline();
 
     bool inPopupMode() const;
