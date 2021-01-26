@@ -1187,10 +1187,8 @@ QString qt_error_string(int errorCode)
 #if !defined(QT_NO_THREAD)
     char errbuf[1024];
     ::memset(errbuf, '\0', sizeof(errbuf));
-    if (Q_LIKELY(::strerror_r(errorCode, errbuf, sizeof(errbuf)))) {
-        return QString::fromLocal8Bit(errbuf, sizeof(errbuf));
-    }
-    return QString();
+    ::strerror_r(errorCode, errbuf, sizeof(errbuf));
+    return QString::fromLocal8Bit(errbuf);
 #else
     return QString::fromLocal8Bit(::strerror(errorCode));
 #endif
