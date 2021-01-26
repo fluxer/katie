@@ -386,7 +386,7 @@ static bool compare(const QVariant::Private *a, const QVariant::Private *b)
     return qcoreVariantHandler()->compare(a, b);
 }
 
-static bool convert(const QVariant::Private *d, QVariant::Type t,
+static bool convert(const QVariant::Private *d, int t,
                  void *result, bool *ok)
 {
     switch (t) {

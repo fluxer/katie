@@ -656,16 +656,16 @@ static qulonglong qConvertToUnsignedNumber(const QVariant::Private *d, bool *ok)
 
  Converts \a d to type \a t, which is placed in \a result.
  */
-static bool convert(const QVariant::Private *d, QVariant::Type t, void *result, bool *ok)
+static bool convert(const QVariant::Private *d, int t, void *result, bool *ok)
 {
-    Q_ASSERT(d->type != int(t));
+    Q_ASSERT(d->type != t);
     Q_ASSERT(result);
 
     bool dummy;
     if (!ok)
         ok = &dummy;
 
-    switch (int(t)) {
+    switch (t) {
 #ifndef QT_BOOTSTRAPPED
     case QVariant::Url:
         switch (d->type) {
@@ -2513,7 +2513,7 @@ inline T qNumVariantToHelper(const QVariant::Private &d,
         return val;
 
     T ret;
-    if (!handler->convert(&d, QVariant::Type(t), &ret, ok) && ok)
+    if (!handler->convert(&d, t, &ret, ok) && ok)
         *ok = false;
     return ret;
 }
