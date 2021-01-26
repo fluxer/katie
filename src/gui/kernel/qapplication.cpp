@@ -521,9 +521,6 @@ void QApplicationPrivate::process_cmdline()
     \sa arguments()
 */
 
-extern int qRegisterGuiVariant();
-extern int qUnregisterGuiVariant();
-
 /*!
     Constructs an application object with \a argc command line arguments in
     \a argv.
@@ -569,8 +566,6 @@ void QApplicationPrivate::construct(Display *dpy, Qt::HANDLE visual, Qt::HANDLE 
 
     if (qt_appType != QApplication::Tty)
         (void) QApplication::style();  // trigger creation of application style
-    // trigger registering of QVariant's GUI types
-    qRegisterGuiVariant();
 
     is_app_running = true; // no longer starting up
 
@@ -809,9 +804,6 @@ QApplication::~QApplication()
     QApplicationPrivate::animate_combo = false;
     QApplicationPrivate::animate_tooltip = false;
     QApplicationPrivate::fade_tooltip = false;
-
-    // trigger unregistering of QVariant's GUI types
-    qUnregisterGuiVariant();
 }
 
 
