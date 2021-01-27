@@ -44,7 +44,7 @@ template<class T>
 class Q_CORE_EXPORT QStack : public QVector<T>
 {
 public:
-    inline QStack() {}
+    inline QStack() : QVector<T>() {}
     inline ~QStack() {}
     inline void swap(QStack<T> &other) { QVector<T>::swap(other); } // prevent QVector<->QStack swaps
     inline void push(const T &t) { QVector<T>::append(t); }

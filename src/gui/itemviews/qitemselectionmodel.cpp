@@ -369,6 +369,7 @@ QModelIndexList QItemSelectionRange::indexes() const
     by \a bottomRight.
 */
 QItemSelection::QItemSelection(const QModelIndex &topLeft, const QModelIndex &bottomRight)
+    : QList<QItemSelectionRange>()
 {
     select(topLeft, bottomRight);
 }

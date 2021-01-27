@@ -52,6 +52,7 @@ class Q_TEST_EXPORT QSignalSpy: public QObject, public QList<QList<QVariant> >
 {
 public:
     QSignalSpy(QObject *obj, const char *aSignal)
+        : QObject(obj), QList<QList<QVariant> >()
     {
         static const int memberOffset = QObject::staticMetaObject.methodCount();
         Q_ASSERT(obj);

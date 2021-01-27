@@ -173,7 +173,7 @@ private:
     class List : public QList<QObject*>
     {
     public:
-        List(int lpi) : notifyIndex(lpi) {}
+        List(int lpi) : QList<QObject*>(), notifyIndex(lpi) {}
         int notifyIndex;
     };
     QList<List> listProperties;

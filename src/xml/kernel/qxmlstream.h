@@ -81,7 +81,7 @@ Q_DECLARE_TYPEINFO(QXmlStreamAttribute, Q_MOVABLE_TYPE);
 class Q_XML_EXPORT QXmlStreamAttributes : public QVector<QXmlStreamAttribute>
 {
 public:
-    inline QXmlStreamAttributes() {}
+    inline QXmlStreamAttributes() : QVector<QXmlStreamAttribute>() {}
     QStringRef value(const QString &namespaceUri, const QString &name) const;
     QStringRef value(const QString &namespaceUri, const QLatin1String &name) const;
     QStringRef value(const QLatin1String &namespaceUri, const QLatin1String &name) const;
