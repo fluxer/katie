@@ -193,6 +193,8 @@ int QEventDispatcherUNIXPrivate::processThreadWakeUp(int nsel)
  */
 
 QTimerInfoList::QTimerInfoList()
+    : QList<QTimerInfo*>(),
+    firstTimerInfo(Q_NULLPTR)
 {
     if (Q_LIKELY(QElapsedTimer::isMonotonic())) {
         // detected monotonic timers
@@ -210,8 +212,6 @@ QTimerInfoList::QTimerInfoList()
         ticksPerSecond = sysconf(_SC_CLK_TCK);
         msPerTick = 1000/ticksPerSecond;
     }
-
-    firstTimerInfo = Q_NULLPTR;
 }
 
 timeval QTimerInfoList::updateCurrentTime()
