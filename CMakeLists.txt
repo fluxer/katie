@@ -38,8 +38,16 @@ cmake_policy(SET CMP0063 NEW)
 # LLVM linker does not have a default library search path, add some directories known to contain
 # system wide libraries. the headers search path is also incomplete
 if(CMAKE_SYSTEM_NAME MATCHES "BSD")
-    include_directories(/usr/X11R7/include /usr/pkg/include /usr/local/include /usr/include)
-    link_directories(/usr/X11R7/lib /usr/pkg/lib /usr/local/lib /usr/lib /lib)
+    foreach(incdir /usr/X11R7/include /usr/pkg/include /usr/local/include /usr/include)
+        if (EXISTS "${incdir}")
+            include_directories(${incdir})
+        endif()
+    endforeach()
+    foreach(linkdir /usr/X11R7/lib /usr/pkg/lib /usr/local/lib /usr/lib /lib)
+        if (EXISTS "${linkdir}")
+            link_directories(${linkdir})
+        endif()
+    endforeach()
 endif()
 
 include(CheckCXXCompilerFlag)
