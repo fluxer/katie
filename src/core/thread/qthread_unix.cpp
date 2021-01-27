@@ -120,7 +120,7 @@ QThreadData *QThreadData::current()
 {
     QThreadData *data = currentThreadData;
     if (!data) {
-        data = new QThreadData;
+        data = new QThreadData();
         QT_TRY {
             set_thread_data(data);
             data->thread = new QAdoptedThread(data);

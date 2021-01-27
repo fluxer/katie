@@ -126,7 +126,7 @@ class QThreadPrivate : public QObjectPrivate
     Q_DECLARE_PUBLIC(QThread)
 
 public:
-    QThreadPrivate(QThreadData *d = Q_NULLPTR);
+    QThreadPrivate(QThreadData *d);
     ~QThreadPrivate();
 
     QMutex mutex;
@@ -158,7 +158,7 @@ public:
 class QThreadPrivate : public QObjectPrivate
 {
 public:
-    QThreadPrivate(QThreadData *d = Q_NULLPTR);
+    QThreadPrivate(QThreadData *d);
     ~QThreadPrivate();
 
     QThreadData *data;
@@ -222,7 +222,7 @@ class QAdoptedThread : public QThread
     Q_DECLARE_PRIVATE(QThread)
 
 public:
-    QAdoptedThread(QThreadData *data = Q_NULLPTR);
+    QAdoptedThread(QThreadData *data);
     ~QAdoptedThread();
     void init();
 

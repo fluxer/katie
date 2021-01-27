@@ -130,8 +130,6 @@ QThreadPrivate::QThreadPrivate(QThreadData *d)
       isInFinish(false), exited(false), returnCode(-1),
       stackSize(0), priority(QThread::InheritPriority), thread_id(0), data(d)
 {
-    if (!data)
-        data = new QThreadData;
 }
 
 QThreadPrivate::~QThreadPrivate()
@@ -342,7 +340,7 @@ QThread *QThread::currentThread()
     \sa start()
 */
 QThread::QThread(QObject *parent)
-    : QObject(*(new QThreadPrivate), parent)
+    : QObject(*(new QThreadPrivate(new QThreadData())), parent)
 {
     Q_D(QThread);
     // fprintf(stderr, "QThreadData %p created for thread %p\n", d->data, this);
@@ -699,7 +697,7 @@ static QThreadData *currentdata = Q_NULLPTR;
 QThreadData* QThreadData::current()
 {
     if (!currentdata) {
-        QScopedPointer<QThreadData> newdata(new QThreadData);
+        QScopedPointer<QThreadData> newdata(new QThreadData());
         newdata->thread = Q_NULLPTR; // new QAdoptedThread(newdata.data());
         currentdata = newdata.take();
         currentdata->deref();
@@ -718,7 +716,7 @@ QThread::QThread(QThreadPrivate &dd, QObject *parent)
 }
 
 QThreadPrivate::QThreadPrivate(QThreadData *d)
-    : data(d ? d : new QThreadData)
+    : data(d)
 {
 }
 
