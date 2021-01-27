@@ -239,6 +239,12 @@ static void QT_FASTCALL destStoreARGB32(QRasterBuffer *rasterBuffer, int x, int 
     }
 }
 
+static void QT_FASTCALL destStoreRGB32(QRasterBuffer *rasterBuffer, int x, int y, const uint *buffer, int length)
+{
+    quint32 *data = (quint32*)rasterBuffer->scanLine(y) + x;
+    ::memcpy(data, buffer, length * sizeof(quint32));
+}
+
 static void QT_FASTCALL destStoreRGB16(QRasterBuffer *rasterBuffer, int x, int y, const uint *buffer, int length)
 {
     quint16 *data = (quint16*)rasterBuffer->scanLine(y) + x;
@@ -251,9 +257,9 @@ static DestStoreProc destStoreProc[QImage::NImageFormats] =
     destStoreMono, // Format_Mono,
     destStoreMonoLsb, // Format_MonoLSB
     0, // Format_Indexed8
-    0, // Format_RGB32
+    destStoreRGB32, // Format_RGB32
     destStoreARGB32, // Format_ARGB32,
-    0, // Format_ARGB32_Premultiplied
+    destStoreRGB32, // Format_ARGB32_Premultiplied
     destStoreRGB16, // Format_RGB16
 };
 
