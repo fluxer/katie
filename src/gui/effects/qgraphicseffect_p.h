@@ -95,13 +95,13 @@ class QGraphicsEffectSourcePrivate : public QObjectPrivate
     Q_DECLARE_PUBLIC(QGraphicsEffectSource)
 public:
     QGraphicsEffectSourcePrivate()
-        : QObjectPrivate()
-        , m_cachedSystem(Qt::DeviceCoordinates)
-        , m_cachedMode(QGraphicsEffect::PadToTransparentBorder)
-    {}
-
-    enum InvalidateReason
+        : QObjectPrivate(),
+        m_cachedSystem(Qt::DeviceCoordinates),
+        m_cachedMode(QGraphicsEffect::PadToTransparentBorder)
     {
+    }
+
+    enum InvalidateReason {
         TransformChanged,
         EffectRectChanged,
         SourceChanged
@@ -141,7 +141,11 @@ class Q_GUI_EXPORT QGraphicsEffectPrivate : public QObjectPrivate
 {
     Q_DECLARE_PUBLIC(QGraphicsEffect)
 public:
-    QGraphicsEffectPrivate() : source(Q_NULLPTR), isEnabled(true) {}
+    QGraphicsEffectPrivate()
+        : source(Q_NULLPTR),
+        isEnabled(true)
+    {
+    }
 
     inline void setGraphicsEffectSource(QGraphicsEffectSource *newSource)
     {
@@ -169,9 +173,9 @@ class QGraphicsColorizeEffectPrivate : public QGraphicsEffectPrivate
     Q_DECLARE_PUBLIC(QGraphicsColorizeEffect)
 public:
     QGraphicsColorizeEffectPrivate()
-        : opaque(true)
+        : filter(new QPixmapColorizeFilter()),
+        opaque(true)
     {
-        filter = new QPixmapColorizeFilter;
     }
     ~QGraphicsColorizeEffectPrivate() { delete filter; }
 
@@ -183,7 +187,10 @@ class QGraphicsBlurEffectPrivate : public QGraphicsEffectPrivate
 {
     Q_DECLARE_PUBLIC(QGraphicsBlurEffect)
 public:
-    QGraphicsBlurEffectPrivate() : filter(new QPixmapBlurFilter) {}
+    QGraphicsBlurEffectPrivate()
+        : filter(new QPixmapBlurFilter())
+    {
+    }
     ~QGraphicsBlurEffectPrivate() { delete filter; }
 
     QPixmapBlurFilter *filter;
@@ -193,7 +200,10 @@ class QGraphicsDropShadowEffectPrivate : public QGraphicsEffectPrivate
 {
     Q_DECLARE_PUBLIC(QGraphicsDropShadowEffect)
 public:
-    QGraphicsDropShadowEffectPrivate() : filter(new QPixmapDropShadowFilter) {}
+    QGraphicsDropShadowEffectPrivate()
+        : filter(new QPixmapDropShadowFilter())
+    {
+    }
     ~QGraphicsDropShadowEffectPrivate() { delete filter; }
 
     QPixmapDropShadowFilter *filter;
@@ -204,7 +214,12 @@ class QGraphicsOpacityEffectPrivate : public QGraphicsEffectPrivate
     Q_DECLARE_PUBLIC(QGraphicsOpacityEffect)
 public:
     QGraphicsOpacityEffectPrivate()
-        : opacity(qreal(0.7)), isFullyTransparent(false), isFullyOpaque(false), hasOpacityMask(false) {}
+        : opacity(qreal(0.7)),
+        isFullyTransparent(false),
+        isFullyOpaque(false),
+        hasOpacityMask(false)
+    {
+    }
     ~QGraphicsOpacityEffectPrivate() {}
 
     qreal opacity;
