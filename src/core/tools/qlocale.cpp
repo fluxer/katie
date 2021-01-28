@@ -2275,7 +2275,8 @@ QString QLocalePrivate::doubleToString(const QChar _zero, const QChar plus, cons
 #ifdef QT_HAVE_FCVT
             digits = QString::fromLatin1(::fcvt(d, precision, &decpt, &sign));
 #else
-            digits = QString::fromLatin1(qfcvt(d, precision, &decpt, &sign));
+            char qfcvtbuf[QECVT_BUFFSIZE];
+            digits = QString::fromLatin1(qfcvt(d, precision, &decpt, &sign, qfcvtbuf));
 #endif
         } else {
             int pr = precision;
@@ -2286,7 +2287,8 @@ QString QLocalePrivate::doubleToString(const QChar _zero, const QChar plus, cons
 #ifdef QT_HAVE_ECVT
             digits = QString::fromLatin1(::ecvt(d, pr, &decpt, &sign));
 #else
-            digits = QString::fromLatin1(qecvt(d, pr, &decpt, &sign));
+            char qecvtbuf[QECVT_BUFFSIZE];
+            digits = QString::fromLatin1(qecvt(d, pr, &decpt, &sign, qecvtbuf));
 #endif
 
             // Chop trailing zeros
