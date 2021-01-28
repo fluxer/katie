@@ -38,8 +38,16 @@ cmake_policy(SET CMP0063 NEW)
 # LLVM linker does not have a default library search path, add some directories known to contain
 # system wide libraries. the headers search path is also incomplete
 if(CMAKE_SYSTEM_NAME MATCHES "BSD")
-    include_directories(/usr/X11R7/include /usr/pkg/include /usr/local/include /usr/include)
-    link_directories(/usr/X11R7/lib /usr/pkg/lib /usr/local/lib /usr/lib /lib)
+    foreach(incdir /usr/X11R7/include /usr/pkg/include /usr/local/include /usr/include)
+        if (EXISTS "${incdir}")
+            include_directories(${incdir})
+        endif()
+    endforeach()
+    foreach(linkdir /usr/X11R7/lib /usr/pkg/lib /usr/local/lib /usr/lib /lib)
+        if (EXISTS "${linkdir}")
+            link_directories(${linkdir})
+        endif()
+    endforeach()
 endif()
 
 include(CheckCXXCompilerFlag)
@@ -346,6 +354,14 @@ set_package_properties(ExecInfo PROPERTIES
     TYPE RECOMMENDED
 )
 
+find_package(XdgUtils)
+set_package_properties(XdgUtils PROPERTIES
+    PURPOSE "Required for desktop services"
+    DESCRIPTION "Utilities for integrating applications with the desktop environment"
+    URL "https://www.freedesktop.org/wiki/Software/xdg-utils/"
+    TYPE RUNTIME
+)
+
 # stored in qconfig.h.cmake
 check_type_size(size_t QT_POINTER_SIZE)
 
@@ -358,7 +374,6 @@ katie_check_function(getprogname "stdlib.h")
 katie_check_function(arc4random "stdlib.h")
 katie_check_function(get_current_dir_name "unistd.h")
 katie_check_function(prctl "sys/prctl.h")
-katie_check_function(feclearexcept "fenv.h")
 katie_check_function(feenableexcept "fenv.h")
 katie_check_function(madvise "sys/mman.h")
 katie_check_function(getifaddrs "ifaddrs.h")
@@ -377,7 +392,6 @@ katie_check_struct(dirent d_type "dirent.h")
 
 cmake_reset_check_state()
 set(CMAKE_REQUIRED_LIBRARIES ${CMAKE_THREAD_LIBS_INIT})
-katie_check_function(pthread_attr_setstacksize "pthread.h")
 katie_check_function(pthread_setname_np "pthread.h")
 cmake_reset_check_state()
 

@@ -33,14 +33,14 @@
 
 #include "qthread.h"
 
-#include "qplatformdefs.h"
-#include "qcoreapplication_p.h"
+#include "qcoreapplication.h"
 #include "qthread_p.h"
 #include "qdebug.h"
 #include "qeventdispatcher_unix_p.h"
 
 #include <sched.h>
 #include <errno.h>
+#include <pthread.h>
 
 #if defined(QT_HAVE_PRCTL)
 #include <sys/prctl.h>
@@ -61,9 +61,6 @@
 QT_BEGIN_NAMESPACE
 
 #ifndef QT_NO_THREAD
-
-enum { ThreadPriorityResetFlag = 0x80000000 };
-
 static thread_local QThreadData *currentThreadData = Q_NULLPTR;
 
 static pthread_once_t current_thread_data_once = PTHREAD_ONCE_INIT;
@@ -123,7 +120,7 @@ QThreadData *QThreadData::current()
 {
     QThreadData *data = currentThreadData;
     if (!data) {
-        data = new QThreadData;
+        data = new QThreadData();
         QT_TRY {
             set_thread_data(data);
             data->thread = new QAdoptedThread(data);
@@ -156,11 +153,7 @@ void QAdoptedThread::init()
 void QThreadPrivate::createEventDispatcher(QThreadData *data)
 {
     QMutexLocker l(&data->postEventList.mutex);
-
     data->eventDispatcher = new QEventDispatcherUNIX;
-
-    l.unlock();
-    data->eventDispatcher->startingUp();
 }
 
 #ifndef QT_NO_THREAD
@@ -172,10 +165,7 @@ void *QThreadPrivate::start(void *arg)
     QThread *thr = reinterpret_cast<QThread *>(arg);
     QThreadData *data = QThreadData::get2(thr);
 
-    // do we need to reset the thread priority?
-    if (int(thr->d_func()->priority) & ThreadPriorityResetFlag) {
-        thr->setPriority(QThread::Priority(thr->d_func()->priority & ~ThreadPriorityResetFlag));
-    }
+    thr->setPriority(thr->d_func()->priority);
 
     data->threadId = (Qt::HANDLE)pthread_self();
     set_thread_data(data);
@@ -236,7 +226,6 @@ void QThreadPrivate::finish(void *arg)
     if (eventDispatcher) {
         d->data->eventDispatcher = Q_NULLPTR;
         locker.unlock();
-        eventDispatcher->closingDown();
         delete eventDispatcher;
         locker.relock();
     }
@@ -269,7 +258,7 @@ int QThread::idealThreadCount()
 
 void QThread::yieldCurrentThread()
 {
-    std::this_thread::yield();
+    sched_yield();
 }
 
 void QThread::sleep(unsigned long secs)
@@ -342,56 +331,8 @@ void QThread::start(Priority priority)
     pthread_attr_init(&attr);
     pthread_attr_setdetachstate(&attr, PTHREAD_CREATE_DETACHED);
 
-#if defined(QT_HAS_THREAD_PRIORITY_SCHEDULING)
-    switch (priority) {
-    case InheritPriority:
-        {
-            pthread_attr_setinheritsched(&attr, PTHREAD_INHERIT_SCHED);
-            break;
-        }
-
-    default:
-        {
-            int sched_policy;
-            if (Q_UNLIKELY(pthread_attr_getschedpolicy(&attr, &sched_policy) != 0)) {
-                // failed to get the scheduling policy, don't bother
-                // setting the priority
-                qWarning("QThread::start: Cannot determine default scheduler policy");
-                break;
-            }
-
-            int prio;
-            if (Q_UNLIKELY(!calculateUnixPriority(priority, &sched_policy, &prio))) {
-                // failed to get the scheduling parameters, don't
-                // bother setting the priority
-                qWarning("QThread::start: Cannot determine scheduler priority range");
-                break;
-            }
-
-            sched_param sp;
-            sp.sched_priority = prio;
-
-            if (pthread_attr_setinheritsched(&attr, PTHREAD_EXPLICIT_SCHED) != 0
-                || pthread_attr_setschedpolicy(&attr, sched_policy) != 0
-                || pthread_attr_setschedparam(&attr, &sp) != 0) {
-                // could not set scheduling hints, fallback to inheriting them
-                // we'll try again from inside the thread
-                pthread_attr_setinheritsched(&attr, PTHREAD_INHERIT_SCHED);
-                d->priority = Priority(priority | ThreadPriorityResetFlag);
-            }
-            break;
-        }
-    }
-#endif // QT_HAS_THREAD_PRIORITY_SCHEDULING
-
-
     if (d->stackSize > 0) {
-#if defined(QT_HAVE_PTHREAD_ATTR_SETSTACKSIZE)
         int code = pthread_attr_setstacksize(&attr, d->stackSize);
-#else
-        int code = ENOSYS; // stack size not supported, automatically fail
-#endif // _POSIX_THREAD_ATTR_STACKSIZE
-
         if (Q_UNLIKELY(code)) {
             qWarning("QThread::start: Thread stack size error: %s",
                      qPrintable(qt_error_string(code)));
@@ -405,12 +346,6 @@ void QThread::start(Priority priority)
     }
 
     int code = pthread_create(&d->thread_id, &attr, QThreadPrivate::start, this);
-    if (Q_UNLIKELY(code == EPERM)) {
-        // caller does not have permission to set the scheduling
-        // parameters/policy
-        pthread_attr_setinheritsched(&attr, PTHREAD_INHERIT_SCHED);
-        code = pthread_create(&d->thread_id, &attr, QThreadPrivate::start, this);
-    }
 
     pthread_attr_destroy(&attr);
 
@@ -481,8 +416,6 @@ void QThread::setPriority(Priority priority)
         qWarning("QThread::setPriority: Cannot set priority, thread is not running");
         return;
     }
-
-    // copied from start() with a few modifications:
 
 #ifdef QT_HAS_THREAD_PRIORITY_SCHEDULING
     int sched_policy;

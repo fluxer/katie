@@ -44,7 +44,7 @@ template <class T>
 class QQueue : public QList<T>
 {
 public:
-    inline QQueue() {}
+    inline QQueue() : QList<T>() {}
     inline ~QQueue() {}
     inline void swap(QQueue<T> &other) { QList<T>::swap(other); } // prevent QList<->QQueue swaps
     inline void enqueue(const T &t) { QList<T>::append(t); }

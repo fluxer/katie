@@ -363,14 +363,6 @@ public:
     }
 };
 
-#ifdef QT3_SUPPORT
-#define VERIFY_LOCKED(x) QVERIFY((x).locked())
-#define VERIFY_NLOCKED(x) QVERIFY(!(x).locked())
-#else
-#define VERIFY_LOCKED(x)
-#define VERIFY_NLOCKED(x)
-#endif // QT3_SUPPORT
-
 void tst_QMutex::lock_unlock_locked_tryLock()
 {
     // normal mutex
@@ -382,7 +374,6 @@ void tst_QMutex::lock_unlock_locked_tryLock()
 
     for (int i = 0; i < iterations; ++i) {
 	// normal mutex
-	VERIFY_NLOCKED(mutex);
 	QVERIFY(mutex.tryLock());
 	mutex.unlock();
 
@@ -391,7 +382,6 @@ void tst_QMutex::lock_unlock_locked_tryLock()
 
 	for (int j = 0; j < iterations; ++j) {
 	    QVERIFY(thread.cond.wait(&thread.mutex, 10000));
-	    VERIFY_LOCKED(mutex);
 	    QVERIFY(!mutex.tryLock());
 
 	    thread.cond.wakeOne();
@@ -400,13 +390,11 @@ void tst_QMutex::lock_unlock_locked_tryLock()
 	thread.mutex.unlock();
 
 	QVERIFY(thread.wait(10000));
-        VERIFY_NLOCKED(mutex);
 	QVERIFY(mutex.tryLock());
 
 	mutex.unlock();
 
     	// recursive mutex
-        VERIFY_NLOCKED(rmutex);
 	QVERIFY(rmutex.tryLock());
 	QVERIFY(rmutex.tryLock());
 	QVERIFY(rmutex.tryLock());
@@ -422,7 +410,6 @@ void tst_QMutex::lock_unlock_locked_tryLock()
 
 	for (int k = 0; k < iterations; ++k) {
 	    QVERIFY(rthread.cond.wait(&rthread.mutex, 10000));
-            VERIFY_LOCKED(rmutex);
 	    QVERIFY(!rmutex.tryLock());
 
 	    rthread.cond.wakeOne();
@@ -431,7 +418,6 @@ void tst_QMutex::lock_unlock_locked_tryLock()
 	rthread.mutex.unlock();
 
 	QVERIFY(rthread.wait(10000));
-        VERIFY_NLOCKED(rmutex);
 	QVERIFY(rmutex.tryLock());
 	QVERIFY(rmutex.tryLock());
 	QVERIFY(rmutex.tryLock());

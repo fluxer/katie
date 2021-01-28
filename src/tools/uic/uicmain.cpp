@@ -53,23 +53,23 @@ void showHelp()
             "Options:\n"
             "    -h\n"
             "    -help\n"
-            "           Display this help and exit.\n\n"
+            "         Display this help and exit.\n\n"
             "    -v\n"
             "    -version\n"
-            "           Display version.\n\n"
+            "         Display version.\n\n"
             "    -d\n"
             "    -dependencies\n"
-            "           Display the dependencies.\n\n"
+            "         Display the dependencies.\n\n"
             "    -o <file>\n"
-            "           Place the output into <file>.\n\n"
+            "         Place the output into <file>.\n\n"
             "    -tr <func>\n"
-            "           Use func() for i18n.\n\n"
+            "         Use func() for i18n.\n\n"
             "    -p\n"
             "    -no-protection\n"
-            "           Disable header protection.\n\n"
+            "         Disable header protection.\n\n"
             "    -n\n"
             "    -no-implicit-includes\n"
-            "           Disable generation of #include-directives.\n");
+            "         Disable generation of #include-directives.\n");
 }
 
 int runUic(int argc, char *argv[])

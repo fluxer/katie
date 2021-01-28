@@ -293,15 +293,11 @@ namespace QtSharedPointer {
 
         inline void internalConstruct(T *ptr)
         {
-#ifdef QT_SHAREDPOINTER_TRACK_POINTERS
-            internalConstruct<void (*)(T *)>(ptr, normalDeleter);
-#else
             if (ptr)
                 d = new Data;
             else
                 d = Q_NULLPTR;
             internalFinishConstruction(ptr);
-#endif
         }
 
         template <typename Deleter>

@@ -561,6 +561,8 @@ static const struct MIBTblData {
     { 1020, "BOCU-1\0" },
     { 1020, "csBOCU1\0" },
     { 1020, "csBOCU-1\0" },
+    { 1021, "UTF-7-IMAP\0" },
+    { 1021, "csUTF7IMAP\0" },
     { 2000, "ISO-8859-1-Windows-3.0-Latin-1\0" },
     { 2000, "csWindows30Latin1\0" },
     { 2001, "ISO-8859-1-Windows-3.1-Latin-1\0" },

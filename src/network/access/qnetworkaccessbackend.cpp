@@ -50,7 +50,7 @@ QT_BEGIN_NAMESPACE
 class QNetworkAccessBackendFactoryData: public QList<QNetworkAccessBackendFactory *>
 {
 public:
-    QNetworkAccessBackendFactoryData() : mutex(QMutex::Recursive)
+    QNetworkAccessBackendFactoryData() : QList<QNetworkAccessBackendFactory *>(), mutex(QMutex::Recursive)
     {
         valid.ref();
     }

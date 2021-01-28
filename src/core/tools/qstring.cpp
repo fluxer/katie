@@ -3343,10 +3343,10 @@ QByteArray QString::toAscii() const
 static QByteArray toLocal8Bit_helper(const QChar *data, int length)
 {
 #ifndef QT_NO_TEXTCODEC
-    if (QTextCodec::codecForLocale())
-        return QTextCodec::codecForLocale()->fromUnicode(data, length);
-#endif // QT_NO_TEXTCODEC
+    return QTextCodec::codecForLocale()->fromUnicode(data, length);
+#else
     return toLatin1_helper(data, length);
+#endif // QT_NO_TEXTCODEC
 }
 
 /*!
@@ -3367,10 +3367,10 @@ static QByteArray toLocal8Bit_helper(const QChar *data, int length)
 QByteArray QString::toLocal8Bit() const
 {
 #ifndef QT_NO_TEXTCODEC
-    if (QTextCodec::codecForLocale())
-        return QTextCodec::codecForLocale()->fromUnicode(*this);
-#endif // QT_NO_TEXTCODEC
+    return QTextCodec::codecForLocale()->fromUnicode(*this);
+#else
     return toLatin1();
+#endif // QT_NO_TEXTCODEC
 }
 
 /*!
@@ -3507,11 +3507,10 @@ QString QString::fromLocal8Bit(const char *str, int size)
 #if !defined(QT_NO_TEXTCODEC)
     if (size < 0)
         size = qstrlen(str);
-    QTextCodec *codec = QTextCodec::codecForLocale();
-    if (codec)
-        return codec->toUnicode(str, size);
-#endif // !QT_NO_TEXTCODEC
+    return QTextCodec::codecForLocale()->toUnicode(str, size);
+#else
     return fromLatin1(str, size);
+#endif // !QT_NO_TEXTCODEC
 }
 
 /*!
@@ -8372,10 +8371,10 @@ QByteArray QStringRef::toAscii() const
 QByteArray QStringRef::toLocal8Bit() const
 {
 #ifndef QT_NO_TEXTCODEC
-    if (QTextCodec::codecForLocale())
-        return QTextCodec::codecForLocale()->fromUnicode(unicode(), length());
-#endif // QT_NO_TEXTCODEC
+    return QTextCodec::codecForLocale()->fromUnicode(unicode(), length());
+#else
     return toLatin1();
+#endif // QT_NO_TEXTCODEC
 }
 
 /*!

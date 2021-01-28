@@ -262,16 +262,6 @@ timeval qt_gettime(); // in qelapsedtimer_unix.cpp
 Q_CORE_EXPORT int qt_safe_select(int nfds, fd_set *fdread, fd_set *fdwrite, fd_set *fdexcept,
                                  const struct timeval *tv);
 
-// according to X/OPEN we have to define semun ourselves
-// we use prefix as on some systems sem.h will have it
-struct semid_ds;
-union qt_semun {
-    int val;                    /* value for SETVAL */
-    struct semid_ds *buf;       /* buffer for IPC_STAT, IPC_SET */
-    unsigned short *array;      /* array for GETALL, SETALL */
-};
-
-
 /*
    Returns the difference between msecs and elapsed. If msecs is -1,
    however, -1 is returned.

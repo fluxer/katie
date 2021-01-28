@@ -112,20 +112,23 @@ bool QTemporaryFileEngine::open(QIODevice::OpenMode openMode)
 
     QString qfilename = d->fileEntry.filePath();
 
-    // Ensure there is a placeholder mask
-    uint phPos = qfilename.length();
-    uint phLength = 0;
+    // "Nativify" :-)
+    QFileSystemEntry::NativePath filename =
+        QFileSystemEngine::absoluteName(QFileSystemEntry(qfilename)).nativeFilePath();
 
+    // Find placeholder in native path
+    uint phPos = filename.length();
+    uint phLength = 0;
     while (phPos != 0) {
         --phPos;
 
-        if (qfilename[phPos] == QLatin1Char('X')) {
+        if (filename.at(phPos) == 'X') {
             ++phLength;
             continue;
         }
 
         // require atleast 6 for compatibility
-        if (phLength >= 6 || qfilename[phPos] == QLatin1Char('/')) {
+        if (phLength >= 6 || filename.at(phPos) == '/') {
             ++phPos;
             break;
         }
@@ -134,31 +137,11 @@ bool QTemporaryFileEngine::open(QIODevice::OpenMode openMode)
         phLength = 0;
     }
 
-    if (phLength < 6)
-        qfilename.append(QLatin1String(".XXXXXXXXXX"));
-
-    // "Nativify" :-)
-    QFileSystemEntry::NativePath filename =
-        QFileSystemEngine::absoluteName(QFileSystemEntry(qfilename)).nativeFilePath();
-
-    // Find mask in native path
-    phPos = filename.length();
-    phLength = 0;
-    while (phPos != 0) {
-        --phPos;
-
-        if (filename[phPos] == 'X') {
-            ++phLength;
-            continue;
-        }
-
-        if (phLength >= 6) {
-            ++phPos;
-            break;
-        }
-
-        // start over
-        phLength = 0;
+    // Ensure there is a placeholder mask
+    if (phLength < 6) {
+        filename.append(".XXXXXXXXXX");
+        phPos = filename.length() - 10;
+        phLength = 10;
     }
 
     Q_ASSERT(phLength >= 6);
@@ -172,7 +155,7 @@ bool QTemporaryFileEngine::open(QIODevice::OpenMode openMode)
         data[i + phPos] = tmpnamechars[qrand() % 52];
     }
 
-    // Atomically create file and obtain handle
+    // Create file and obtain handle
     d->fd = QT_OPEN(data, QT_OPEN_CREAT | O_EXCL | QT_OPEN_RDWR, 0600);
 
     if (d->fd == -1) {

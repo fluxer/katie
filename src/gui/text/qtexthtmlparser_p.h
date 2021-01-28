@@ -138,9 +138,9 @@ struct QTextHtmlElement
         DisplayTable,
         DisplayNone
     };
-    const char *name;
-    QTextHTMLElements id;
-    DisplayMode displayMode;
+    const QLatin1String name;
+    const QTextHTMLElements id;
+    const DisplayMode displayMode;
 };
 
 class QTextHtmlParser;
@@ -282,7 +282,6 @@ public:
 
     void parse(const QString &text, const QTextDocument *resourceProvider);
 
-    static int lookupElement(const QString &element);
 protected:
     QTextHtmlParserNode *newNode(int parent);
     QVector<QTextHtmlParserNode> nodes;

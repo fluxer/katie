@@ -82,10 +82,8 @@ public:
     static bool isCompositingManagerRunning();
 
 private:
-    void copyX11Data(const QPaintDevice *);
-    void cloneX11Data(const QPaintDevice *);
     void setX11Data(const QX11InfoData *);
-    QX11InfoData* getX11Data(bool def = false) const;
+    QX11InfoData* getX11Data() const;
 
     QX11InfoData *x11data;
 

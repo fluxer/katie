@@ -1615,7 +1615,7 @@ void QApplication::restoreOverrideCursor()
   Routines to find a Qt widget from a screen position
  *****************************************************************************/
 
-Window QX11Data::findClientWindow(Window win, Atom property, bool leaf)
+Window QX11Data::findClientWindow(Window win, Atom property)
 {
     Atom   type = XNone;
     int    format;
@@ -1636,7 +1636,7 @@ Window QX11Data::findClientWindow(Window win, Atom property, bool leaf)
         return 0;
     }
     for (int i=nchildren-1; !target && i >= 0; i--)
-        target = qt_x11Data->findClientWindow(children[i], property, leaf);
+        target = qt_x11Data->findClientWindow(children[i], property);
     if (children)
         XFree((char *)children);
     return target;
@@ -1662,12 +1662,11 @@ QWidget *QApplication::topLevelAt(const QPoint &p)
     }
     if (!target || target == QX11Info::appRootWindow(screen))
         return 0;
-    QWidget *w;
-    w = QWidget::find((WId)target);
+    QWidget *w = QWidget::find((WId)target);
 
     if (!w) {
         qt_x11Data->ignoreBadwindow();
-        target = qt_x11Data->findClientWindow(target, ATOM(WM_STATE), true);
+        target = qt_x11Data->findClientWindow(target, ATOM(WM_STATE));
         if (qt_x11Data->badwindow())
             return 0;
         w = QWidget::find((WId)target);

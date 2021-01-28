@@ -20,7 +20,7 @@ WRKSRC = ${WRKDIR}/katie-master
 COMPILER = base-clang ports-gcc
 MODULES = devel/cmake
 BUILD_DEPENDS = devel/gettext,-tools
-RUN_DEPENDS = devel/desktop-file-utils
+RUN_DEPENDS = devel/desktop-file-utils devel/xdg-utils
 LIB_DEPENDS = archivers/zstd textproc/icu4c devel/pcre graphics/png \
 	graphics/jpeg graphics/tiff x11/dbus print/cups,-libs databases/iodbc \
 	databases/sqlite3 devel/gettext,-runtime

@@ -2022,7 +2022,7 @@ QVariant QDropData::retrieveData_sys(const QString &mimetype, QVariant::Type req
         if (qt_x11Data->clipboardReadProperty(tw->effectiveWinId(), ATOM(XdndSelection), true, &result, 0, &type, 0)) {
             if (type == ATOM(INCR)) {
                 int nbytes = result.size() >= 4 ? *((int*)result.data()) : 0;
-                result = qt_x11Data->clipboardReadIncrementalProperty(tw->effectiveWinId(), ATOM(XdndSelection), nbytes, false);
+                result = qt_x11Data->clipboardReadIncrementalProperty(tw->effectiveWinId(), ATOM(XdndSelection), nbytes);
             } else if (type != a && type != XNone) {
                 DEBUG("Qt clipboard: unknown atom %ld", type);
             }

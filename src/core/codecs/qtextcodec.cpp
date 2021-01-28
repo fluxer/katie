@@ -144,7 +144,7 @@ static void setupLocaleMapper()
         // First part is getting that locale name.  First try setlocale() which
         // definitely knows it, but since we cannot fully trust it, get ready
         // to fall back to environment variables.
-        const QByteArray ctype = setlocale(LC_CTYPE, 0);
+        const QByteArray ctype = ::setlocale(LC_CTYPE, 0);
 
         // Get the first nonempty value from $LC_ALL, $LC_CTYPE, and $LANG
         // environment variables.

@@ -376,16 +376,7 @@ static bool force_reverse = false;
 // ######## move to QApplicationPrivate
 // Default application palettes and fonts (per widget type)
 Q_GLOBAL_STATIC(PaletteHash, app_palettes)
-PaletteHash *qt_app_palettes_hash()
-{
-    return app_palettes();
-}
-
 Q_GLOBAL_STATIC(FontHash, app_fonts)
-FontHash *qt_app_fonts_hash()
-{
-    return app_fonts();
-}
 
 QWidgetList *QApplicationPrivate::popupWidgets = Q_NULLPTR;  // has keyboard input focus
 
@@ -438,8 +429,6 @@ void QApplicationPrivate::process_cmdline()
         } else if (qstrcmp(argv[i], "-reverse") == 0) {
             force_reverse = true;
             QApplication::setLayoutDirection(Qt::RightToLeft);
-        } else if (qstrcmp(argv[i], "-graphicssystem") == 0 && i < argc - 1) {
-            // no longer supported
         }
         if (!s.isEmpty()) {
             if (app_style) {
@@ -499,8 +488,6 @@ void QApplicationPrivate::process_cmdline()
         \o  -session \e session, is the same as listed above.
         \o  -reverse, sets the application's layout direction to
             Qt::RightToLeft
-        \o  -graphicssystem, sets the backend to be used for on-screen widgets
-            and QPixmaps. Available options are \c{raster}.
     \endlist
 
     The X11 version of Qt supports some traditional X11 command line options:
@@ -534,9 +521,6 @@ void QApplicationPrivate::process_cmdline()
     \sa arguments()
 */
 
-extern int qRegisterGuiVariant();
-extern int qUnregisterGuiVariant();
-
 /*!
     Constructs an application object with \a argc command line arguments in
     \a argv.
@@ -559,16 +543,15 @@ extern int qUnregisterGuiVariant();
 */
 QApplication::QApplication(int &argc, char **argv, QApplication::Type type)
     : QCoreApplication(*new QApplicationPrivate(argc, argv, type))
-{ Q_D(QApplication); d->construct(); }
+{
+    Q_D(QApplication);
+    d->construct();
+}
 
 /*!
     \internal
 */
-void QApplicationPrivate::construct(
-#ifdef Q_WS_X11
-                                    Display *dpy, Qt::HANDLE visual, Qt::HANDLE cmap
-#endif
-                                    )
+void QApplicationPrivate::construct(Display *dpy, Qt::HANDLE visual, Qt::HANDLE cmap)
 {
     initResources();
 
@@ -576,19 +559,13 @@ void QApplicationPrivate::construct(
     process_cmdline();
 
     // Must be called before initializing
-    qt_init(this, qt_appType
-#ifdef Q_WS_X11
-            , dpy, visual, cmap
-#endif
-            );
+    qt_init(this, qt_appType, dpy, visual, cmap);
 
     QWidgetPrivate::mapper = new QWidgetMapper;
     QWidgetPrivate::allWidgets = new QWidgetSet;
 
     if (qt_appType != QApplication::Tty)
         (void) QApplication::style();  // trigger creation of application style
-    // trigger registering of QVariant's GUI types
-    qRegisterGuiVariant();
 
     is_app_running = true; // no longer starting up
 
@@ -603,8 +580,6 @@ void QApplicationPrivate::construct(
 
     if (qt_is_gui_used)
         initializeMultitouch();
-
-    threadData->eventDispatcher->startingUp();
 
 #ifndef QT_NO_LIBRARY
     //make sure the plugin is loaded
@@ -663,7 +638,7 @@ QApplication::QApplication(Display *dpy, int &argc, char **argv,
     if (Q_UNLIKELY(!dpy))
         qWarning("QApplication: Invalid Display* argument");
     Q_D(QApplication);
-    d->construct(dpy, visual, colormap);;
+    d->construct(dpy, visual, colormap);
 }
 
 #endif // Q_WS_X11
@@ -747,7 +722,6 @@ QApplication::~QApplication()
     d->toolTipWakeUp.stop();
     d->toolTipFallAsleep.stop();
 
-    d->threadData->eventDispatcher->closingDown();
     QApplicationPrivate::is_app_closing = true;
     QApplicationPrivate::is_app_running = false;
 
@@ -830,9 +804,6 @@ QApplication::~QApplication()
     QApplicationPrivate::animate_combo = false;
     QApplicationPrivate::animate_tooltip = false;
     QApplicationPrivate::fade_tooltip = false;
-
-    // trigger unregistering of QVariant's GUI types
-    qUnregisterGuiVariant();
 }
 
 

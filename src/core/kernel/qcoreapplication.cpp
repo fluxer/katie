@@ -305,8 +305,6 @@ QCoreApplication::QCoreApplication(QCoreApplicationPrivate &p)
     : QObject(p, 0)
 {
     init();
-    // note: it is the subclasses' job to call
-    // QCoreApplicationPrivate::eventDispatcher->startingUp();
 }
 
 /*!
@@ -345,7 +343,6 @@ QCoreApplication::QCoreApplication(int &argc, char **argv)
 : QObject(*new QCoreApplicationPrivate(argc, argv))
 {
     init();
-    d_func()->threadData->eventDispatcher->startingUp();
 }
 
 
@@ -386,8 +383,6 @@ void QCoreApplication::init()
 */
 QCoreApplication::~QCoreApplication()
 {
-    Q_D(QCoreApplication);
-
     qt_call_post_routines();
 
     self = 0;
@@ -405,9 +400,6 @@ QCoreApplication::~QCoreApplication()
     if (globalThreadPool)
         globalThreadPool->waitForDone();
 #endif
-
-    if (d->threadData->eventDispatcher)
-        d->threadData->eventDispatcher->closingDown();
 
 #ifndef QT_NO_LIBRARY
     delete coreappdata()->app_libpaths;

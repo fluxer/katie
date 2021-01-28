@@ -112,9 +112,6 @@ public:
 
     void parseCSStoXMLAttrs(const QString &css, QVector<QSvgCssAttribute> *attributes);
 
-    inline QPen defaultPen() const
-    { return m_defaultPen; }
-
     bool startElement(const QString &localName, const QXmlStreamAttributes &attributes);
     bool endElement(const QStringRef &localName);
     bool characters(const QStringRef &str);
@@ -155,7 +152,6 @@ private:
     QCss::Parser m_cssParser;
     void resolveGradients(QSvgNode *node) const;
 
-    QPen m_defaultPen;
     /**
      * Whether we own the variable xml, and hence whether
      * we need to delete it.

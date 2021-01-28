@@ -18,14 +18,10 @@ function(KATIE_CHECK_DEFINED FORDEFINITION FROMHEADER)
     # see comment in top-level CMake file
     set(CMAKE_REQUIRED_INCLUDES /usr/X11R7/include /usr/pkg/include /usr/local/include /usr/include)
     set(CMAKE_REQUIRED_LINK_OPTIONS -L/usr/X11R7/lib -L/usr/pkg/lib -L/usr/local/lib -L/usr/lib -L/lib)
-    set(includedata)
-    foreach(inc ${FROMHEADER})
-        set(includedata "${includedata}#include <${inc}>\n")
-    endforeach()
     check_cxx_source_compiles(
         "
 #include <stdio.h>
-${includedata}
+#include <${FROMHEADER}>
 
 int main() {
     printf(\"%p\", &${FORDEFINITION});
@@ -63,8 +59,8 @@ function(KATIE_CHECK_FUNCTION64 FORFUNCTION FROMHEADER)
     endif()
 endfunction()
 
-# a function to check for C struct member presence in header, if member is found a
-# definition is added
+# a function to check for C struct member presence in header, if member is
+# found a definition is added
 function(KATIE_CHECK_STRUCT FORSTRUCT FORMEMBER FROMHEADER)
     check_struct_has_member("struct ${FORSTRUCT}" "${FORMEMBER}" "${FROMHEADER}" HAVE_${FORSTRUCT}_${FORMEMBER})
 
@@ -75,7 +71,9 @@ function(KATIE_CHECK_STRUCT FORSTRUCT FORMEMBER FROMHEADER)
 endfunction()
 
 # a function to check for file existence in /proc, if file exists a definition
-# is added
+# is added, this function is over-engineered for two reasons - to be able to
+# override the test on the command-line and to show test status messages
+# similar to other tests
 function(KATIE_CHECK_PROC FORFILE)
     check_cxx_source_runs(
         "
@@ -120,8 +118,7 @@ endmacro()
 macro(KATIE_GENERATE_PUBLIC PUBLIC_INCLUDES SUBDIR)
     foreach(pubheader ${PUBLIC_INCLUDES})
         string(TOLOWER ${pubheader} pubname)
-        set(pubout "${CMAKE_BINARY_DIR}/include/${SUBDIR}/${pubheader}")
-        katie_write_file("${pubout}" "#include <${pubname}.h>\n")
+        katie_generate_obsolete("${pubheader}" "${SUBDIR}" "${pubname}.h")
     endforeach()
 
     file(GLOB PUBLIC_LIST "${CMAKE_BINARY_DIR}/include/${SUBDIR}/*.h")
@@ -152,6 +149,7 @@ macro(KATIE_GENERATE_MISC MISC_INCLUDES SUBDIR)
     endforeach(mischeader)
 endmacro()
 
+# a macro to create alias headers for the sake of compatibility
 macro(KATIE_GENERATE_OBSOLETE OBSOLETE_INCLUDE SUBDIR REDIRECT)
     set(pubout "${CMAKE_BINARY_DIR}/include/${SUBDIR}/${OBSOLETE_INCLUDE}")
     katie_write_file("${pubout}" "#include <${SUBDIR}/${REDIRECT}>\n")

@@ -337,8 +337,7 @@ bool QHttpNetworkReplyPrivate::findChallenge(bool forProxy, QByteArray &challeng
     QList<QByteArray> challenges = headerFieldValues(header);
     for (int i = 0; i<challenges.size(); i++) {
         QByteArray line = challenges.at(i);
-        // todo use qstrincmp
-        if (!line.toLower().startsWith("negotiate"))
+        if (qstrnicmp(line.constData(), "negotiate", 9) != 0)
             challenge = line;
     }
     return !challenge.isEmpty();

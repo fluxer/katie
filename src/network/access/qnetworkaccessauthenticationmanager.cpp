@@ -51,6 +51,7 @@ class QNetworkAuthenticationCache: private QVector<QNetworkAuthenticationCredent
 {
 public:
     QNetworkAuthenticationCache()
+        : QVector<QNetworkAuthenticationCredential>(), QNetworkAccessCache::CacheableObject()
     {
         setExpires(false);
         setShareable(true);

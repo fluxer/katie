@@ -221,7 +221,7 @@ inline uint qHash(const QItemSelectionRange &) { return 0; }
 class Q_GUI_EXPORT QItemSelection : public QList<QItemSelectionRange>
 {
 public:
-    QItemSelection() {}
+    QItemSelection() : QList<QItemSelectionRange>() {}
     QItemSelection(const QModelIndex &topLeft, const QModelIndex &bottomRight);
     void select(const QModelIndex &topLeft, const QModelIndex &bottomRight);
     bool contains(const QModelIndex &index) const;

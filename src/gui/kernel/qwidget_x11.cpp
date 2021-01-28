@@ -420,7 +420,7 @@ static QVector<Atom> getNetWmState(QWidget *w)
 
 void qt_x11_getX11InfoForWindow(QX11Info *xinfo, const void *att)
 {
-    QX11InfoData* xd = xinfo->getX11Data(true);
+    QX11InfoData* xd = xinfo->getX11Data();
     const XWindowAttributes *a = static_cast<const XWindowAttributes*>(att);
     // find which screen the window is on...
     xd->screen = QX11Info::appScreen(); // by default, use the default :)
@@ -596,7 +596,7 @@ void QWidgetPrivate::create_sys(WId window, bool initializeWindow, bool destroyO
             && xinfo.depth() != 32 && qt_x11Data->argbVisuals[screen]
             && q->testAttribute(Qt::WA_TranslucentBackground))
         {
-            QX11InfoData *xd = xinfo.getX11Data(true);
+            QX11InfoData *xd = xinfo.getX11Data();
 
             xd->screen = screen;
             xd->visual = qt_x11Data->argbVisuals[screen];

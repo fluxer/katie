@@ -3474,10 +3474,10 @@ static QDateTimePrivate::Spec utcToLocal(QDate &date, QTime &time)
 #if !defined(QT_NO_THREAD)
     // use the reentrant version of localtime() where available
     tzset();
-    tm res;
-    tm *brokenDown = ::localtime_r(&secsSince1Jan1970UTC, &res);
+    struct tm res;
+    struct tm *brokenDown = ::localtime_r(&secsSince1Jan1970UTC, &res);
 #else
-    tm *brokenDown = ::localtime(&secsSince1Jan1970UTC);
+    struct tm *brokenDown = ::localtime(&secsSince1Jan1970UTC);
 #endif  // !QT_NO_THREAD
     if (!brokenDown) {
         date = QDate(1970, 1, 1);
@@ -3502,7 +3502,7 @@ static void localToUtc(QDate &date, QTime &time, int isdst)
 
     QDate fakeDate = adjustDate(date);
 
-    tm localTM;
+    struct tm localTM;
     localTM.tm_sec = time.second();
     localTM.tm_min = time.minute();
     localTM.tm_hour = time.hour();
@@ -3513,10 +3513,10 @@ static void localToUtc(QDate &date, QTime &time, int isdst)
     time_t secsSince1Jan1970UTC = mktime(&localTM);
 #if !defined(QT_NO_THREAD)
     // use the reentrant version of gmtime() where available
-    tm res;
-    tm *brokenDown = ::gmtime_r(&secsSince1Jan1970UTC, &res);
+    struct tm res;
+    struct tm *brokenDown = ::gmtime_r(&secsSince1Jan1970UTC, &res);
 #else
-    tm *brokenDown = ::gmtime(&secsSince1Jan1970UTC);
+    struct tm *brokenDown = ::gmtime(&secsSince1Jan1970UTC);
 #endif // !QT_NO_THREAD
     if (!brokenDown) {
         date = QDate(1970, 1, 1);

@@ -421,9 +421,9 @@ set(CORE_SOURCES
 # on some platforms these are not needed as the functionality may be part of
 # the standard C library
 foreach(lib dl rt)
-    find_library(libpath NAMES ${lib})
-    if(libpath)
-        set(EXTRA_CORE_LIBS ${EXTRA_CORE_LIBS} ${lib})
+    find_library(lib${lib}_path NAMES ${lib})
+    if(lib${lib}_path)
+        set(EXTRA_CORE_LIBS ${EXTRA_CORE_LIBS} ${lib${lib}_path})
     endif()
 endforeach()
 

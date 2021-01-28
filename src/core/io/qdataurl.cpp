@@ -73,7 +73,7 @@ Q_CORE_EXPORT QPair<QString, QByteArray> qDecodeDataUrl(const QUrl &uri)
                 data.chop(7);
             }
 
-            if (data.toLower().startsWith("charset")) {
+            if (qstrnicmp(data.constData(), "charset", 7) == 0) {
                 int i = 7;      // strlen("charset")
                 while (data.at(i) == ' ')
                     ++i;

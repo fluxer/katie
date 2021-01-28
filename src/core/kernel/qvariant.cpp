@@ -651,28 +651,21 @@ static qulonglong qConvertToUnsignedNumber(const QVariant::Private *d, bool *ok)
     return Q_UINT64_C(0);
 }
 
-template<typename TInput, typename LiteralWrapper>
-inline bool qt_convertToBool(const QVariant::Private *const d)
-{
-    TInput str = v_cast<TInput>(d)->toLower();
-    return !(str == LiteralWrapper("0") || str == LiteralWrapper("false") || str.isEmpty());
-}
-
 /*!
  \internal
 
  Converts \a d to type \a t, which is placed in \a result.
  */
-static bool convert(const QVariant::Private *d, QVariant::Type t, void *result, bool *ok)
+static bool convert(const QVariant::Private *d, int t, void *result, bool *ok)
 {
-    Q_ASSERT(d->type != int(t));
+    Q_ASSERT(d->type != t);
     Q_ASSERT(result);
 
     bool dummy;
     if (!ok)
         ok = &dummy;
 
-    switch (int(t)) {
+    switch (t) {
 #ifndef QT_BOOTSTRAPPED
     case QVariant::Url:
         switch (d->type) {
@@ -936,12 +929,16 @@ static bool convert(const QVariant::Private *d, QVariant::Type t, void *result, 
     case QVariant::Bool: {
         *static_cast<bool *>(result) = false;
         switch(d->type) {
-        case QVariant::ByteArray:
-            *static_cast<bool *>(result) = qt_convertToBool<QByteArray, QByteArray>(d);
+        case QVariant::ByteArray: {
+            QByteArray str = v_cast<QByteArray>(d)->toLower();
+            *static_cast<bool *>(result) = (!str.isEmpty() && str != "0" && str != "false");
             return true;
-        case QVariant::String:
-            *static_cast<bool *>(result) = qt_convertToBool<QString, QLatin1String>(d);
+        }
+        case QVariant::String: {
+            QString str = v_cast<QString>(d)->toLower();
+            *static_cast<bool *>(result) = (!str.isEmpty() && str != QLatin1String("0") && str != QLatin1String("false"));
             return true;
+        }
         case QVariant::Char:
             *static_cast<bool *>(result) = !v_cast<QChar>(d)->isNull();
             return true;
@@ -952,7 +949,7 @@ static bool convert(const QVariant::Private *d, QVariant::Type t, void *result, 
         case QMetaType::Short:
         case QMetaType::Long:
         case QVariant::Float:
-            *static_cast<bool *>(result) = qMetaTypeNumber(d) != Q_INT64_C(0);
+            *static_cast<bool *>(result) = (qMetaTypeNumber(d) != Q_INT64_C(0));
             return true;
         case QVariant::UInt:
         case QVariant::ULongLong:
@@ -1266,7 +1263,6 @@ const QVariant::Handler qt_kernel_variant_handler = {
 #endif
     compare,
     convert,
-    0,
 #if !defined(QT_NO_DEBUG_STREAM) && !defined(Q_BROKEN_DEBUG_STREAM)
     streamDebug
 #else
@@ -2517,7 +2513,7 @@ inline T qNumVariantToHelper(const QVariant::Private &d,
         return val;
 
     T ret;
-    if (!handler->convert(&d, QVariant::Type(t), &ret, ok) && ok)
+    if (!handler->convert(&d, t, &ret, ok) && ok)
         *ok = false;
     return ret;
 }

@@ -50,16 +50,14 @@
 QT_BEGIN_NAMESPACE
 
 QEventDispatcherUNIXPrivate::QEventDispatcherUNIXPrivate()
+    : sn_highest(-1),
+    interrupt(false)
 {
     // initialize the common parts of the event loop
     if (qt_safe_pipe(thread_pipe, O_NONBLOCK) == -1) {
         perror("QEventDispatcherUNIXPrivate(): Unable to create thread pipe");
         qFatal("QEventDispatcherUNIXPrivate(): Can not continue without a thread pipe");
     }
-
-    sn_highest = -1;
-
-    interrupt = false;
 }
 
 QEventDispatcherUNIXPrivate::~QEventDispatcherUNIXPrivate()
@@ -195,6 +193,8 @@ int QEventDispatcherUNIXPrivate::processThreadWakeUp(int nsel)
  */
 
 QTimerInfoList::QTimerInfoList()
+    : QList<QTimerInfo*>(),
+    firstTimerInfo(Q_NULLPTR)
 {
     if (Q_LIKELY(QElapsedTimer::isMonotonic())) {
         // detected monotonic timers
@@ -212,8 +212,6 @@ QTimerInfoList::QTimerInfoList()
         ticksPerSecond = sysconf(_SC_CLK_TCK);
         msPerTick = 1000/ticksPerSecond;
     }
-
-    firstTimerInfo = Q_NULLPTR;
 }
 
 timeval QTimerInfoList::updateCurrentTime()
