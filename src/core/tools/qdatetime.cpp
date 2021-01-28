@@ -2120,7 +2120,8 @@ void QDateTime::setDate(const QDate &date)
 {
     detach();
     d->date = date;
-    if (d->spec == QDateTimePrivate::LocalStandard)
+    if (d->spec == QDateTimePrivate::LocalStandard
+        || d->spec == QDateTimePrivate::LocalDST)
         d->spec = QDateTimePrivate::LocalUnknown;
     if (date.isValid() && !d->time.isValid())
         d->time = QTime(0, 0, 0);
@@ -2135,7 +2136,8 @@ void QDateTime::setDate(const QDate &date)
 void QDateTime::setTime(const QTime &time)
 {
     detach();
-    if (d->spec == QDateTimePrivate::LocalStandard)
+    if (d->spec == QDateTimePrivate::LocalStandard
+        || d->spec == QDateTimePrivate::LocalDST)
         d->spec = QDateTimePrivate::LocalUnknown;
     d->time = time;
 }
@@ -2826,8 +2828,9 @@ QDateTime QDateTime::currentDateTime()
     dt.d->time.mds = msecsFromDecomposed(t->tm_hour, t->tm_min, t->tm_sec, tv.tv_usec / 1000);
 
     dt.d->date.jd = julianDayFromDate(t->tm_year + 1900, t->tm_mon + 1, t->tm_mday);
-    dt.d->spec = (t->tm_isdst >= 0 ? QDateTimePrivate::LocalStandard :
-                 QDateTimePrivate::LocalUnknown);
+    dt.d->spec = t->tm_isdst > 0  ? QDateTimePrivate::LocalDST :
+                 t->tm_isdst == 0 ? QDateTimePrivate::LocalStandard :
+                 QDateTimePrivate::LocalUnknown;
     return dt;
 }
 
@@ -3488,7 +3491,9 @@ static QDateTimePrivate::Spec utcToLocal(QDate &date, QTime &time)
         date = QDate(brokenDown->tm_year + 1900, brokenDown->tm_mon + 1, brokenDown->tm_mday);
         time = QTime(brokenDown->tm_hour, brokenDown->tm_min, brokenDown->tm_sec, time.msec());
         date = date.addDays(deltaDays);
-        if (brokenDown->tm_isdst < 0)
+        if (brokenDown->tm_isdst > 0)
+            return QDateTimePrivate::LocalDST;
+        else if (brokenDown->tm_isdst < 0)
             return QDateTimePrivate::LocalUnknown;
         else
             return QDateTimePrivate::LocalStandard;
