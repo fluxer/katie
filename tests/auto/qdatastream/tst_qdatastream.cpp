@@ -135,9 +135,6 @@ private slots:
     void stream_qint64_data();
     void stream_qint64();
 
-    void stream_QWMatrix_data();
-    void stream_QWMatrix();
-
     void stream_QIcon_data();
     void stream_QIcon();
 
@@ -190,10 +187,6 @@ private slots:
 
     void floatingPointPrecision();
 
-#ifdef QT3_SUPPORT
-    void task_224283();
-#endif
-
     void floatingPointNaN();
 
 private:
@@ -222,7 +215,6 @@ private:
     void writeMap(QDataStream* dev);
     void writeHash(QDataStream* dev);
     void writeqint64(QDataStream *s);
-    void writeQWMatrix(QDataStream *s);
     void writeQIcon(QDataStream *s);
     void writeQEasingCurve(QDataStream *s);
 
@@ -250,7 +242,6 @@ private:
     void readMap(QDataStream *s);
     void readHash(QDataStream *s);
     void readqint64(QDataStream *s);
-    void readQWMatrix(QDataStream *s);
     void readQIcon(QDataStream *s);
     void readQEasingCurve(QDataStream *s);
 
@@ -272,7 +263,10 @@ static int NColorRoles[] = {
     QPalette::ToolTipText + 1,     // Qt_4_4
     QPalette::ToolTipText + 1,     // Qt_4_5
     QPalette::ToolTipText + 1,     // Qt_4_6
-    0                              // add the correct value for Qt_4_7 here later
+    QPalette::ToolTipText + 1,     // Qt_4_7
+    QPalette::ToolTipText + 1,     // Qt_4_8
+    QPalette::ToolTipText + 1,     // Qt_4_9
+    0                              // add the correct value for Qt_4_10 here later
 };
 
 // Testing get/set functions
@@ -1038,20 +1032,15 @@ static QCursor qCursorData(int index)
 {
     switch (index)
     {
-#ifdef QT3_SUPPORT
-	case 0: return QCursor(Qt::arrowCursor);
-	case 1: return QCursor(Qt::waitCursor);
-#else
-    case 0: return QCursor(Qt::ArrowCursor);
-    case 1: return QCursor(Qt::WaitCursor);
-#endif
-	case 2: return QCursor(Qt::BitmapCursor);
-	case 3: return QCursor(Qt::BlankCursor);
-	case 4: return QCursor(Qt::BlankCursor);
-	case 5: return QCursor(QPixmap(open_xpm), 1, 1);
+        case 0: return QCursor(Qt::ArrowCursor);
+        case 1: return QCursor(Qt::WaitCursor);
+        case 2: return QCursor(Qt::BitmapCursor);
+        case 3: return QCursor(Qt::BlankCursor);
+        case 4: return QCursor(Qt::BlankCursor);
+        case 5: return QCursor(QPixmap(open_xpm), 1, 1);
         case 6: { QPixmap pm(open_xpm); return QCursor(QBitmap(pm), pm.mask(), 3, 4); }
-	case 7: return QCursor(QPixmap(open_xpm), -1, 5);
-	case 8: return QCursor(QPixmap(open_xpm), 5, -1);
+        case 7: return QCursor(QPixmap(open_xpm), -1, 5);
+        case 8: return QCursor(QPixmap(open_xpm), 5, -1);
     }
 
     return QCursor();
@@ -1454,11 +1443,7 @@ void tst_QDataStream::readQImage(QDataStream *s)
     QVERIFY(d12.height() == ref.height());
     QVERIFY(d12.depth() == ref.depth());
     QVERIFY(d12.colorCount() == ref.colorCount());
-#ifdef QT3_SUPPORT
-    QVERIFY(d12.hasAlphaBuffer() == ref.hasAlphaBuffer());
-#else
     QVERIFY(d12.hasAlphaChannel() == ref.hasAlphaChannel());
-#endif
 
 //    qDebug("Alpha: %i %i", (int)d12.hasAlphaBuffer(), ref.hasAlphaBuffer());
 //    qDebug("Feil %i %i: %x != %x", 3, 0, d12.pixel(3, 0), ref.pixel(3, 0));
@@ -1474,54 +1459,17 @@ void tst_QDataStream::readQImage(QDataStream *s)
 }
 
 // ************************************
-#ifdef QT3_SUPPORT
 static QPalette qPaletteData(int index)
 {
-    QColorGroup g1(
-	QBrush(Qt::red, Qt::SolidPattern),
-	QBrush(Qt::blue, Qt::Dense1Pattern),
-	QBrush(Qt::green, Qt::Dense2Pattern),
-	QBrush(Qt::blue, Qt::Dense3Pattern),
-	QBrush(Qt::cyan, Qt::Dense4Pattern),
-	QBrush(Qt::magenta, Qt::Dense5Pattern),
-	QBrush(Qt::black, Qt::Dense6Pattern),
-	QBrush(Qt::darkGray, Qt::Dense7Pattern),
-	QBrush(Qt::gray, Qt::CrossPattern));
-    QColorGroup g2(
-	QBrush(Qt::cyan, Qt::Dense3Pattern),
-	QBrush(Qt::blue, Qt::Dense4Pattern),
-	QBrush(Qt::magenta, Qt::Dense5Pattern),
-	QBrush(Qt::black, Qt::Dense6Pattern),
-	QBrush(Qt::darkGray, Qt::Dense7Pattern),
-	QBrush(Qt::gray, Qt::CrossPattern),
-	QBrush(Qt::green, Qt::SolidPattern),
-	QBrush(Qt::blue, Qt::Dense1Pattern),
-	QBrush(Qt::red, Qt::Dense2Pattern));
-    QColorGroup g3(
-	QBrush(Qt::black, Qt::Dense6Pattern),
-	QBrush(Qt::darkGray, Qt::Dense7Pattern),
-	QBrush(Qt::red, Qt::CrossPattern),
-	QBrush(Qt::gray, Qt::SolidPattern),
-	QBrush(Qt::blue, Qt::Dense1Pattern),
-	QBrush(Qt::cyan, Qt::Dense2Pattern),
-	QBrush(Qt::magenta, Qt::Dense3Pattern),
-	QBrush(Qt::blue, Qt::Dense4Pattern),
-	QBrush(Qt::magenta, Qt::Dense5Pattern));
-
     switch (index)
     {
 	case 0: return QPalette(Qt::green);
 	case 1: return QPalette(Qt::cyan, Qt::blue);
 	case 2: return QPalette(Qt::red, Qt::yellow);
-	case 3: return QPalette(g1, g2, g3);
-	case 4: return QPalette(g2, g3, g1);
-	case 5: return QPalette(g3, g1, g2);
-	case 6: return QPalette(g3, g2, g1);
     }
     return QPalette(Qt::black);
 }
-#endif
-#define MAX_QPALETTE_DATA 7
+#define MAX_QPALETTE_DATA 3
 
 void tst_QDataStream::stream_QPalette_data()
 {
@@ -1535,27 +1483,16 @@ void tst_QDataStream::stream_QPalette()
 
 void tst_QDataStream::writeQPalette(QDataStream *s)
 {
-#ifdef QT3_SUPPORT
     QPalette d13(qPaletteData(dataIndex(QTest::currentDataTag())));
     *s << d13;
-#else
-    QSKIP("No Qt3 Support", SkipAll);
-#endif
 }
 
 void tst_QDataStream::readQPalette(QDataStream *s)
 {
-#ifdef QT3_SUPPORT
     QPalette test(qPaletteData(dataIndex(QTest::currentDataTag())));
     QPalette d13;
     *s >> d13;
     QVERIFY(d13 == test);
-    QVERIFY(d13.active() == test.active());
-    QVERIFY(d13.inactive() == test.inactive());
-    QVERIFY(d13.disabled() == test.disabled());
-#else
-    QSKIP("No Qt3 Support", SkipAll);
-#endif
 }
 
 // ************************************
@@ -1659,31 +1596,21 @@ void tst_QDataStream::readQPen(QDataStream *s)
 //
 void tst_QDataStream::stream_QPixmap_data()
 {
-#ifndef Q_OS_WINCE
     stream_data(1);
-#endif
 }
 
 void tst_QDataStream::stream_QPixmap()
 {
-#ifdef Q_OS_WINCE
-    QSKIP("Test depends on more memory than available on Qt/CE", SkipAll);
-#endif
     STREAM_IMPL(QPixmap);
 }
 
 void tst_QDataStream::stream_QIcon_data()
 {
-#ifndef Q_OS_WINCE
     stream_data(1);
-#endif
 }
 
 void tst_QDataStream::stream_QIcon()
 {
-#ifdef Q_OS_WINCE
-    QSKIP("Test depends on more memory than available on Qt/CE", SkipAll);
-#endif
     STREAM_IMPL(QIcon);
 }
 
@@ -1704,12 +1631,6 @@ void tst_QDataStream::readQPixmap(QDataStream *s)
     QVERIFY(d16.size() == pm.size());
     QVERIFY(d16.rect() == pm.rect());
     QVERIFY(d16.depth() == pm.depth());
-    // bit depth must be 24 or above for pixmap comparison
-#ifdef QT3_SUPPORT
-    if (Q3PaintDeviceMetrics(&pm).depth() < 24)
-        QSKIP("Don't do pixmap comparison when depth < 24", SkipAll);
-    QCOMPARE(d16, QPixmap(pm));
-#endif
 }
 
 void tst_QDataStream::writeQIcon(QDataStream *s)
@@ -1983,7 +1904,7 @@ static QRegion qRegionData(int index)
 	case 4: return QRegion(100, -100, 2048, 4096, QRegion::Rectangle);
 	case 5: return QRegion(-100, 100, 4096, 2048, QRegion::Rectangle);
         case 6: return QRegion(0, 0, 0, 0, QRegion::Ellipse);
-#if defined(Q_OS_SYMBIAN) || (!defined(Q_OS_UNIX) && !defined(Q_OS_WINCE)) // all our Unix platforms use X regions.
+        // all our Unix platforms use X regions.
         case 7: return QRegion(1, 2, 300, 400, QRegion::Ellipse);
 	case 8: return QRegion(100, 100, 1024, 768, QRegion::Ellipse);
 	case 9: return QRegion(-100, -100, 1024, 1024, QRegion::Ellipse);
@@ -1991,11 +1912,6 @@ static QRegion qRegionData(int index)
 	case 11: return QRegion(-100, 100, 4096, 2048, QRegion::Ellipse);
 	    // simplest X11 case that fails:
 	case 12: return QRegion(0, 0, 3, 3, QRegion::Ellipse);
-#else
-        case 7:
-	    qWarning("Skipping streaming of elliptical regions on embedded, Mac OS X, and X11;"
-		     " our pointarray stuff is not that great at approximating.");
-#endif
     }
     return QRegion();
 }
@@ -2078,50 +1994,6 @@ void tst_QDataStream::readQSize(QDataStream *s)
     QVERIFY(d21f == QSizeF(ref));
 }
 
-// ************************************
-
-void tst_QDataStream::stream_QWMatrix_data()
-{
-    stream_data(1);
-}
-
-void tst_QDataStream::stream_QWMatrix()
-{
-    STREAM_IMPL(QWMatrix);
-}
-
-void tst_QDataStream::writeQWMatrix(QDataStream *s)
-{
-#ifdef QT3_SUPPORT
-    // QStringList: Qt 2.0 specific
-    QWMatrix d23(1.2, 2.3, 3.4, 4.5, 5.6, 6.7);
-    *s << d23;
-#else
-    QSKIP("No Qt3 Support", SkipAll);
-#endif
-}
-
-void tst_QDataStream::readQWMatrix(QDataStream *s)
-{
-#ifdef QT3_SUPPORT
-    // QStringList: Qt 2.0 specific
-
-    QWMatrix d23;
-    *s >> d23;
-    //    QVERIFY(d23 == QWMatrix(1.2, 2.3, 3.4, 4.5, 5.6, 6.7));
-    QWMatrix m(1.2, 2.3, 3.4, 4.5, 5.6, 6.7);
-    // Because of double vs. float rounding differences:
-    QVERIFY(QABS(d23.m11() - m.m11()) < 1e-6);
-    QVERIFY(QABS(d23.m12() - m.m12()) < 1e-6);
-    QVERIFY(QABS(d23.m21() - m.m21()) < 1e-6);
-    QVERIFY(QABS(d23.m22() - m.m22()) < 1e-6);
-    QVERIFY(QABS(d23.dx() - m.dx()) < 1e-6);
-    QVERIFY(QABS(d23.dy() - m.dy()) < 1e-6);
-#else
-    QSKIP("No Qt3 Support", SkipAll);
-#endif
-}
-
 // *********************** atEnd ******************************
 
 void tst_QDataStream::stream_atEnd_data()
@@ -2173,11 +2045,7 @@ void tst_QDataStream::stream_atEnd()
 
 	// Do the same test again, but this time with an initial size for the bytearray.
 	{
-#ifdef QT3_SUPPORT
-	    QByteArray ba(10000);
-#else
         QByteArray ba(10000, '\0');
-#endif
 	    QBuffer bOut(&ba);
 	    bOut.open(QIODevice::WriteOnly | QIODevice::Truncate);
 	    QDataStream sout(&bOut);
@@ -2661,16 +2529,10 @@ void tst_QDataStream::status_charptr_QByteArray_data()
     QTest::addColumn<int>("expectedStatus");
     QTest::addColumn<QByteArray>("expectedString");
 
-#if !defined(Q_OS_WINCE) && !defined(Q_OS_SYMBIAN)
-#ifdef QT3_SUPPORT
-    QByteArray oneMbMinus1(1024 * 1024 - 1);
-#else
     QByteArray oneMbMinus1(1024 * 1024 - 1, '\0');
-#endif
     for (int i = 0; i < oneMbMinus1.size(); ++i)
         oneMbMinus1[i] = 0x1 | (8 * ((uchar)i / 9));
     QByteArray threeMbMinus1 = oneMbMinus1 + 'j' + oneMbMinus1 + 'k' + oneMbMinus1;
-#endif
 
     // ok
     QTest::newRow("size 0") << QByteArray("\x00\x00\x00\x00", 4) << (int) QDataStream::Ok << QByteArray();
@@ -2679,14 +2541,12 @@ void tst_QDataStream::status_charptr_QByteArray_data()
     QTest::newRow("size 3") << QByteArray("\x00\x00\x00\x03jkl", 7) << (int) QDataStream::Ok << QByteArray("jkl");
     QTest::newRow("size 4") << QByteArray("\x00\x00\x00\x04jklm", 8) << (int) QDataStream::Ok << QByteArray("jklm");
     QTest::newRow("size 4j") << QByteArray("\x00\x00\x00\x04jklmj", 8) << (int) QDataStream::Ok << QByteArray("jklm");
-#if !defined(Q_OS_WINCE) && !defined(Q_OS_SYMBIAN)
     QTest::newRow("size 1MB-1") << QByteArray("\x00\x0f\xff\xff", 4) + oneMbMinus1 + QByteArray("j") << (int) QDataStream::Ok << oneMbMinus1;
     QTest::newRow("size 1MB") << QByteArray("\x00\x10\x00\x00", 4) + oneMbMinus1 + QByteArray("jkl") << (int) QDataStream::Ok << oneMbMinus1 + "j";
     QTest::newRow("size 1MB+1") << QByteArray("\x00\x10\x00\x01", 4) + oneMbMinus1 + QByteArray("jkl") << (int) QDataStream::Ok << oneMbMinus1 + "jk";
     QTest::newRow("size 3MB-1") << QByteArray("\x00\x2f\xff\xff", 4) + threeMbMinus1 + QByteArray("j") << (int) QDataStream::Ok << threeMbMinus1;
     QTest::newRow("size 3MB") << QByteArray("\x00\x30\x00\x00", 4) + threeMbMinus1 + QByteArray("jkl") << (int) QDataStream::Ok << threeMbMinus1 + "j";
     QTest::newRow("size 3MB+1") << QByteArray("\x00\x30\x00\x01", 4) + threeMbMinus1 + QByteArray("jkl") << (int) QDataStream::Ok << threeMbMinus1 + "jk";
-#endif
 
     // past end
     QTest::newRow("empty") << QByteArray() << (int) QDataStream::ReadPastEnd << QByteArray();
@@ -2699,12 +2559,10 @@ void tst_QDataStream::status_charptr_QByteArray_data()
     QTest::newRow("badsize 2") << QByteArray("\x00\x00\x00\x02j", 5) << (int) QDataStream::ReadPastEnd << QByteArray();
     QTest::newRow("badsize 3") << QByteArray("\x00\x00\x00\x03jk", 6) << (int) QDataStream::ReadPastEnd << QByteArray();
     QTest::newRow("badsize 4") << QByteArray("\x00\x00\x00\x04jkl", 7) << (int) QDataStream::ReadPastEnd << QByteArray();
-#if !defined(Q_OS_WINCE) && !defined(Q_OS_SYMBIAN)
     QTest::newRow("badsize 1MB") << QByteArray("\x00\x10\x00\x00", 4) + oneMbMinus1 << (int) QDataStream::ReadPastEnd << QByteArray();
     QTest::newRow("badsize 1MB+1") << QByteArray("\x00\x10\x00\x01", 4) + oneMbMinus1 + QByteArray("j") << (int) QDataStream::ReadPastEnd << QByteArray();
     QTest::newRow("badsize 3MB") << QByteArray("\x00\x30\x00\x00", 4) + threeMbMinus1 << (int) QDataStream::ReadPastEnd << QByteArray();
     QTest::newRow("badsize 3MB+1") << QByteArray("\x00\x30\x00\x01", 4) + threeMbMinus1 + QByteArray("j") << (int) QDataStream::ReadPastEnd << QByteArray();
-#endif
     QTest::newRow("size -1") << QByteArray("\xff\xff\xff\xff", 4) << (int) QDataStream::ReadPastEnd << QByteArray();
     QTest::newRow("size -2") << QByteArray("\xff\xff\xff\xfe", 4) << (int) QDataStream::ReadPastEnd << QByteArray();
 }
@@ -2754,11 +2612,7 @@ void tst_QDataStream::status_charptr_QByteArray()
 
 static QByteArray qstring2qbytearray(const QString &str)
 {
-#ifdef QT3_SUPPORT
-    QByteArray ba(str.size() * 2);
-#else
     QByteArray ba(str.size() * 2 , '\0');
-#endif
     for (int i = 0; i < str.size(); ++i) {
         // BigEndian
         ba[2 * i] = str[i].row();
@@ -2773,7 +2627,6 @@ void tst_QDataStream::status_QString_data()
     QTest::addColumn<int>("expectedStatus");
     QTest::addColumn<QString>("expectedString");
 
-#if !defined(Q_OS_WINCE) && !defined(Q_OS_SYMBIAN)
     QString oneMbMinus1;
     oneMbMinus1.resize(1024 * 1024 - 1);
     for (int i = 0; i < oneMbMinus1.size(); ++i)
@@ -2782,7 +2635,6 @@ void tst_QDataStream::status_QString_data()
 
     QByteArray threeMbMinus1Data = qstring2qbytearray(threeMbMinus1);
     QByteArray oneMbMinus1Data = qstring2qbytearray(oneMbMinus1);
-#endif
 
     // ok
     QTest::newRow("size 0") << QByteArray("\x00\x00\x00\x00", 4) << (int) QDataStream::Ok << QString();
@@ -2791,14 +2643,12 @@ void tst_QDataStream::status_QString_data()
     QTest::newRow("size 3") << QByteArray("\x00\x00\x00\x06\x00j\x00k\x00l", 10) << (int) QDataStream::Ok << QString("jkl");
     QTest::newRow("size 4") << QByteArray("\x00\x00\x00\x08\x00j\x00k\x00l\x00m", 12) << (int) QDataStream::Ok << QString("jklm");
     QTest::newRow("size 4j") << QByteArray("\x00\x00\x00\x08\x00j\x00k\x00l\x00mjj", 14) << (int) QDataStream::Ok << QString("jklm");
-#if !defined(Q_OS_WINCE) && !defined(Q_OS_SYMBIAN)
     QTest::newRow("size 1MB-1") << QByteArray("\x00\x1f\xff\xfe", 4) + oneMbMinus1Data + QByteArray("jj") << (int) QDataStream::Ok << oneMbMinus1;
     QTest::newRow("size 1MB") << QByteArray("\x00\x20\x00\x00", 4) + oneMbMinus1Data + QByteArray("\x00j\x00k\x00l", 6) << (int) QDataStream::Ok << oneMbMinus1 + "j";
     QTest::newRow("size 1MB+1") << QByteArray("\x00\x20\x00\x02", 4) + oneMbMinus1Data + QByteArray("\x00j\x00k\x00l", 6) << (int) QDataStream::Ok << oneMbMinus1 + "jk";
     QTest::newRow("size 3MB-1") << QByteArray("\x00\x5f\xff\xfe", 4) + threeMbMinus1Data + QByteArray("jj") << (int) QDataStream::Ok << threeMbMinus1;
     QTest::newRow("size 3MB") << QByteArray("\x00\x60\x00\x00", 4) + threeMbMinus1Data + QByteArray("\x00j\x00k\x00l", 6) << (int) QDataStream::Ok << threeMbMinus1 + "j";
     QTest::newRow("size 3MB+1") << QByteArray("\x00\x60\x00\x02", 4) + threeMbMinus1Data + QByteArray("\x00j\x00k\x00l", 6) << (int) QDataStream::Ok << threeMbMinus1 + "jk";
-#endif
 
     // past end
     QTest::newRow("empty") << QByteArray() << (int) QDataStream::ReadPastEnd << QString();
@@ -2811,14 +2661,12 @@ void tst_QDataStream::status_QString_data()
     QTest::newRow("badsize 2") << QByteArray("\x00\x00\x00\x04jj", 6) << (int) QDataStream::ReadPastEnd << QString();
     QTest::newRow("badsize 3") << QByteArray("\x00\x00\x00\x06jjkk", 8) << (int) QDataStream::ReadPastEnd << QString();
     QTest::newRow("badsize 4") << QByteArray("\x00\x00\x00\x08jjkkll", 10) << (int) QDataStream::ReadPastEnd << QString();
-#if !defined(Q_OS_WINCE) && !defined(Q_OS_SYMBIAN)
     QTest::newRow("badsize 1MB") << QByteArray("\x00\x20\x00\x00", 4) + oneMbMinus1Data << (int) QDataStream::ReadPastEnd << QString();
     QTest::newRow("badsize 1MB+1") << QByteArray("\x00\x20\x00\x02", 4) + oneMbMinus1Data + QByteArray("j") << (int) QDataStream::ReadPastEnd << QString();
     QTest::newRow("badsize 3MB") << QByteArray("\x00\x60\x00\x00", 4) + threeMbMinus1Data << (int) QDataStream::ReadPastEnd << QString();
     QTest::newRow("badsize 3MB+1") << QByteArray("\x00\x60\x00\x02", 4) + threeMbMinus1Data + QByteArray("j") << (int) QDataStream::ReadPastEnd << QString();
     QTest::newRow("size -2") << QByteArray("\xff\xff\xff\xfe", 4) << (int) QDataStream::ReadPastEnd << QString();
     QTest::newRow("size MAX") << QByteArray("\x7f\xff\xff\xfe", 4) << (int) QDataStream::ReadPastEnd << QString();
-#endif
 
     // corrupt data
     QTest::newRow("corrupt1") << QByteArray("yyyy") << (int) QDataStream::ReadCorruptData << QString();
@@ -3187,32 +3035,6 @@ void tst_QDataStream::streamRealDataTypes()
     }
 #endif
 }
-
-#ifdef QT3_SUPPORT
-void tst_QDataStream::task_224283()
-{
-    static const char sdata[] = "\0\0\0\12" "123456789";
-    QByteArray expected = QByteArray::fromRawData(sdata, sizeof sdata); // includes the NUL
-    Q3CString original = "123456789";
-
-    QByteArray data;
-    {
-        QDataStream out(&data, QIODevice::WriteOnly);
-        out.setVersion(QDataStream::Qt_3_3);
-        out << original;
-    }
-    QCOMPARE(data, expected);
-
-    {
-        QDataStream in(data);
-        in.setVersion(QDataStream::Qt_3_3);
-        Q3CString s;
-        in >> s;
-        QVERIFY(s.length() == 9);
-        QCOMPARE(s, original);
-    }
-}
-#endif
 
 void tst_QDataStream::floatingPointNaN()
 {
