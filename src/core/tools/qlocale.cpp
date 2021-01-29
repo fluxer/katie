@@ -2848,7 +2848,7 @@ QString QLocale::currencySymbol(QLocale::CurrencySymbolFormat format) const
         case CurrencyDisplayName:
             return getLocaleData(d()->m_currency_display_name);
         case CurrencyIsoCode: {
-            return QString::fromUtf8(d()->m_currency_iso_code);
+            return getLocaleData(d()->m_currency_iso_code);
         }
     }
     return QString();
