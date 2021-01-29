@@ -67,7 +67,7 @@ QT_BEGIN_NAMESPACE
 class QDateTimePrivate
 {
 public:
-    enum Spec { LocalUnknown = -1, LocalStandard = 0, UTC = 1, OffsetFromUTC = 2 };
+    enum Spec { LocalUnknown = -1, LocalStandard = 0, LocalDST = 1, UTC = 2, OffsetFromUTC = 3};
 
     QDateTimePrivate() : spec(LocalUnknown), utcOffset(0) {}
     QDateTimePrivate(const QDateTimePrivate &other)

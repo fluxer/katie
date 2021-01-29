@@ -335,7 +335,8 @@ SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 ----------------------------------------------------------------------
 */
 #if !defined(QT_HAVE_FCVT) || !defined(QT_HAVE_ECVT)
-char *qfcvt(double x, int n, int *dp, int *sign)
+// the code bellow is copy from musl libc, modified to not use static buffer
+char *qfcvt(double x, int n, int *dp, int *sign, char* buf)
 {
     char tmp[1500];
     int i, lz;
@@ -353,12 +354,11 @@ char *qfcvt(double x, int n, int *dp, int *sign)
         return (char*)"000000000000000"+14-n;
     }
 
-    return qecvt(x, n-lz, dp, sign);
+    return qecvt(x, n-lz, dp, sign, buf);
 }
 
-char *qecvt(double x, int n, int *dp, int *sign)
+char *qecvt(double x, int n, int *dp, int *sign, char* buf)
 {
-    static char buf[16];
     char tmp[32];
     int i, j;
 

@@ -42,14 +42,6 @@
 #include <atomic>
 #include <cstddef>
 
-#ifndef ATOMIC_INT_LOCK_FREE
-#define ATOMIC_INT_LOCK_FREE 0
-#endif
-
-#ifndef ATOMIC_POINTER_LOCK_FREE
-#define ATOMIC_POINTER_LOCK_FREE 0
-#endif
-
 QT_BEGIN_NAMESPACE
 
 class Q_CORE_EXPORT QAtomicInt
@@ -151,7 +143,11 @@ class Q_CORE_EXPORT QAtomicInt
         { return load(); }
 
       inline static bool isLockFree() {
+#ifdef ATOMIC_INT_LOCK_FREE
          return ATOMIC_INT_LOCK_FREE == 2;
+#else
+         return false;
+#endif
       }
 
    private:
@@ -249,7 +245,11 @@ class Q_CORE_EXPORT QAtomicPointer
         { return load(); }
 
       inline static bool isLockFree() {
+#ifdef ATOMIC_POINTER_LOCK_FREE
          return ATOMIC_POINTER_LOCK_FREE == 2;
+#else
+         return false;
+#endif
       }
 
    private:

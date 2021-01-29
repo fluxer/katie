@@ -57,11 +57,6 @@
 #  define QLOCALEDEBUG if (false) qDebug()
 #endif
 
-// BSD and musl libc implementations do not set errno
-#ifdef __GLIBC__
-#define QLOCALE_CHECK_ERRNO
-#endif
-
 QT_BEGIN_NAMESPACE
 
 static const qint16 systemLocaleIndex = localeTblSize + 1;
@@ -2275,7 +2270,8 @@ QString QLocalePrivate::doubleToString(const QChar _zero, const QChar plus, cons
 #ifdef QT_HAVE_FCVT
             digits = QString::fromLatin1(::fcvt(d, precision, &decpt, &sign));
 #else
-            digits = QString::fromLatin1(qfcvt(d, precision, &decpt, &sign));
+            char qfcvtbuf[QECVT_BUFFSIZE];
+            digits = QString::fromLatin1(qfcvt(d, precision, &decpt, &sign, qfcvtbuf));
 #endif
         } else {
             int pr = precision;
@@ -2286,7 +2282,8 @@ QString QLocalePrivate::doubleToString(const QChar _zero, const QChar plus, cons
 #ifdef QT_HAVE_ECVT
             digits = QString::fromLatin1(::ecvt(d, pr, &decpt, &sign));
 #else
-            digits = QString::fromLatin1(qecvt(d, pr, &decpt, &sign));
+            char qecvtbuf[QECVT_BUFFSIZE];
+            digits = QString::fromLatin1(qecvt(d, pr, &decpt, &sign, qecvtbuf));
 #endif
 
             // Chop trailing zeros
@@ -2746,13 +2743,11 @@ double QLocalePrivate::bytearrayToDouble(const char *num, bool *ok)
 
     char *endptr;
     double ret = std::strtod(num, &endptr);
-#ifdef QLOCALE_CHECK_ERRNO
     if (Q_UNLIKELY((ret == 0.0l && errno == ERANGE) || ret == HUGE_VAL || ret == -HUGE_VAL)) {
         if (ok != Q_NULLPTR)
             *ok = false;
         return 0.0;
     }
-#endif
 
     if (Q_UNLIKELY(*endptr != '\0')) {
         // stopped at a non-digit character after converting some digits
@@ -2776,13 +2771,11 @@ qlonglong QLocalePrivate::bytearrayToLongLong(const char *num, int base, bool *o
 
     char *endptr;
     qlonglong ret = std::strtoll(num, &endptr, base);
-#ifdef QLOCALE_CHECK_ERRNO
     if (Q_UNLIKELY((ret == LLONG_MIN || ret == LLONG_MAX) && (errno == ERANGE || errno == EINVAL))) {
         if (ok != Q_NULLPTR)
             *ok = false;
         return 0;
     }
-#endif
 
     if (Q_UNLIKELY(*endptr != '\0')) {
         // stopped at a non-digit character after converting some digits
@@ -2806,13 +2799,11 @@ qulonglong QLocalePrivate::bytearrayToUnsLongLong(const char *num, int base, boo
 
     char *endptr;
     qulonglong ret = std::strtoull(num, &endptr, base);
-#ifdef QLOCALE_CHECK_ERRNO
     if (Q_UNLIKELY(ret == ULLONG_MAX && (errno == ERANGE || errno == EINVAL))) {
         if (ok != Q_NULLPTR)
             *ok = false;
         return 0;
     }
-#endif
 
     if (Q_UNLIKELY(*endptr != '\0')) {
         // stopped at a non-digit character after converting some digits
@@ -2857,7 +2848,7 @@ QString QLocale::currencySymbol(QLocale::CurrencySymbolFormat format) const
         case CurrencyDisplayName:
             return getLocaleData(d()->m_currency_display_name);
         case CurrencyIsoCode: {
-            return QString::fromUtf8(d()->m_currency_iso_code);
+            return getLocaleData(d()->m_currency_iso_code);
         }
     }
     return QString();
