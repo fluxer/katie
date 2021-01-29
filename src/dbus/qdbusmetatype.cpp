@@ -86,46 +86,40 @@ int QDBusMetaTypeId::signature = qRegisterMetaType<QDBusSignature>("QDBusSignatu
 int QDBusMetaTypeId::error = qRegisterMetaType<QDBusError>("QDBusError");
 int QDBusMetaTypeId::unixfd = qRegisterMetaType<QDBusUnixFileDescriptor>("QDBusUnixFileDescriptor");
 
-void QDBusMetaTypeId::init()
+static int QDBusMetaTypeIdInit()
 {
-    static volatile bool initialized = false;
-
-    // reentrancy is not a problem since everything else is locked on their own
-    // set the guard variable at the end
-    if (!initialized) {
 #ifndef QDBUS_NO_SPECIALTYPES
-        // and register QtCore's with us
-        registerHelper<QDate>();
-        registerHelper<QTime>();
-        registerHelper<QDateTime>();
-        registerHelper<QRect>();
-        registerHelper<QRectF>();
-        registerHelper<QSize>();
-        registerHelper<QSizeF>();
-        registerHelper<QPoint>();
-        registerHelper<QPointF>();
-        registerHelper<QLine>();
-        registerHelper<QLineF>();
-        registerHelper<QVariantList>();
-        registerHelper<QVariantMap>();
-        registerHelper<QVariantHash>();
+    // and register QtCore's with us
+    registerHelper<QDate>();
+    registerHelper<QTime>();
+    registerHelper<QDateTime>();
+    registerHelper<QRect>();
+    registerHelper<QRectF>();
+    registerHelper<QSize>();
+    registerHelper<QSizeF>();
+    registerHelper<QPoint>();
+    registerHelper<QPointF>();
+    registerHelper<QLine>();
+    registerHelper<QLineF>();
+    registerHelper<QVariantList>();
+    registerHelper<QVariantMap>();
+    registerHelper<QVariantHash>();
 
-        qDBusRegisterMetaType<QList<bool> >();
-        qDBusRegisterMetaType<QList<short> >();
-        qDBusRegisterMetaType<QList<ushort> >();
-        qDBusRegisterMetaType<QList<int> >();
-        qDBusRegisterMetaType<QList<uint> >();
-        qDBusRegisterMetaType<QList<qlonglong> >();
-        qDBusRegisterMetaType<QList<qulonglong> >();
-        qDBusRegisterMetaType<QList<double> >();
-        qDBusRegisterMetaType<QList<QDBusObjectPath> >();
-        qDBusRegisterMetaType<QList<QDBusSignature> >();
-        qDBusRegisterMetaType<QList<QDBusUnixFileDescriptor> >();
+    qDBusRegisterMetaType<QList<bool> >();
+    qDBusRegisterMetaType<QList<short> >();
+    qDBusRegisterMetaType<QList<ushort> >();
+    qDBusRegisterMetaType<QList<int> >();
+    qDBusRegisterMetaType<QList<uint> >();
+    qDBusRegisterMetaType<QList<qlonglong> >();
+    qDBusRegisterMetaType<QList<qulonglong> >();
+    qDBusRegisterMetaType<QList<double> >();
+    qDBusRegisterMetaType<QList<QDBusObjectPath> >();
+    qDBusRegisterMetaType<QList<QDBusSignature> >();
+    qDBusRegisterMetaType<QList<QDBusUnixFileDescriptor> >();
 #endif
-
-        initialized = true;
-    }
+    return 0;
 }
+Q_CONSTRUCTOR_FUNCTION(QDBusMetaTypeIdInit);
 
 Q_GLOBAL_STATIC(QVector<QDBusCustomTypeInfo>, customTypes)
 Q_GLOBAL_STATIC(QReadWriteLock, customTypesLock)
@@ -217,8 +211,6 @@ void QDBusMetaType::registerMarshallOperators(int id, MarshallFunction mf,
 */
 bool QDBusMetaType::marshall(QDBusArgument &arg, int id, const void *data)
 {
-    QDBusMetaTypeId::init();
-
     MarshallFunction mf;
     {
         QReadLocker locker(customTypesLock());
@@ -246,8 +238,6 @@ bool QDBusMetaType::marshall(QDBusArgument &arg, int id, const void *data)
 */
 bool QDBusMetaType::demarshall(const QDBusArgument &arg, int id, void *data)
 {
-    QDBusMetaTypeId::init();
-
     DemarshallFunction df;
     {
         QReadLocker locker(customTypesLock());
@@ -284,9 +274,6 @@ int QDBusMetaType::signatureToType(const char *signature)
 {
     if (!signature)
         return QVariant::Invalid;
-
-    QDBusMetaTypeId::init();
-
     switch (signature[0]) {
         case DBUS_TYPE_BOOLEAN:
             return QVariant::Bool;
@@ -408,7 +395,6 @@ const char *QDBusMetaType::typeToSignature(int type)
             return DBUS_TYPE_ARRAY_AS_STRING DBUS_TYPE_BYTE_AS_STRING; // ay
     }
 
-    QDBusMetaTypeId::init();
     if (type == QDBusMetaTypeId::variant)
         return DBUS_TYPE_VARIANT_AS_STRING;
     else if (type == QDBusMetaTypeId::objectpath)

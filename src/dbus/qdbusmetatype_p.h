@@ -58,8 +58,6 @@ struct QDBusMetaTypeId
     static int signature;       // QDBusSignature
     static int error;           // QDBusError
     static int unixfd;          // QDBusUnixFileDescriptor
-
-    static void init();
 };
 
 QT_END_NAMESPACE

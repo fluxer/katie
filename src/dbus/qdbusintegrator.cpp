@@ -973,8 +973,6 @@ QDBusConnectionPrivate::QDBusConnectionPrivate(QObject *p)
         qdbusThreadDebug = qdbusDefaultThreadDebug;
 #endif
 
-    QDBusMetaTypeId::init();
-
     rootNode.flags = 0;
 
     // prepopulate watchedServices:
