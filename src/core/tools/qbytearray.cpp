@@ -2749,11 +2749,19 @@ QDataStream &operator>>(QDataStream &in, QByteArray &ba)
     if (len == 0xffffffff)
         return in;
 
-    ba.resize(len);
-    if (in.readRawData(ba.data(), len) != len) {
-        ba.clear();
-        in.setStatus(QDataStream::ReadCorruptData);
-    }
+    const quint32 Step = 1024 * 1024;
+    quint32 allocated = 0;
+
+    do {
+        int blockSize = qMin(Step, len - allocated);
+        ba.resize(allocated + blockSize);
+        if (in.readRawData(ba.data() + allocated, blockSize) != blockSize) {
+            ba.clear();
+            in.setStatus(QDataStream::ReadPastEnd);
+            return in;
+        }
+        allocated += blockSize;
+    } while (allocated < len);
 
     return in;
 }
