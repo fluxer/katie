@@ -945,14 +945,14 @@ static QColor QColorData(int index)
 {
     switch (index)
     {
-	case 0: return QColor(0,0,0);
-	case 1: return QColor(0,0,0);
-	case 2: return QColor(0,0,0);
-	case 3: return QColor(0,0,0);
-	case 4: return QColor(0,0,0);
-	case 5: return QColor(0,0,0);
-	case 6: return QColor(0,0,0);
-	case 7: return QColor(0,0,0);
+	case 0: return QColor(Qt::color0);
+	case 1: return QColor(Qt::lightGray);
+	case 2: return QColor(Qt::blue);
+	case 3: return QColor(Qt::darkRed);
+	case 4: return QColor(Qt::darkBlue);
+	case 5: return QColor(Qt::darkMagenta);
+	case 6: return QColor(Qt::transparent);
+	case 7: return QColor("lightsteelblue");
     }
 
     return QColor(0,0,0);
