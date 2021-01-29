@@ -59,8 +59,8 @@ class Q_GUI_EXPORT QLabel : public QFrame
     Q_PROPERTY(QString selectedText READ selectedText)
 
 public:
-    explicit QLabel(QWidget *parent=0, Qt::WindowFlags f=0);
-    explicit QLabel(const QString &text, QWidget *parent=0, Qt::WindowFlags f=0);
+    explicit QLabel(QWidget *parent = Q_NULLPTR, Qt::WindowFlags f = 0);
+    explicit QLabel(const QString &text, QWidget *parent = Q_NULLPTR, Qt::WindowFlags f = 0);
     ~QLabel();
 
     QString text() const;
@@ -116,22 +116,21 @@ public Q_SLOTS:
     void clear();
 
 Q_SIGNALS:
-    void linkActivated(const QString& link);
-    void linkHovered(const QString& link);
+    void linkActivated(const QString &link);
+    void linkHovered(const QString &link);
 
 protected:
-    bool event(QEvent *e);
-    void keyPressEvent(QKeyEvent *ev);
-    void paintEvent(QPaintEvent *);
-    void changeEvent(QEvent *);
-    void mousePressEvent(QMouseEvent *ev);
-    void mouseMoveEvent(QMouseEvent *ev);
-    void mouseReleaseEvent(QMouseEvent *ev);
-    void contextMenuEvent(QContextMenuEvent *ev);
-    void focusInEvent(QFocusEvent *ev);
-    void focusOutEvent(QFocusEvent *ev);
-    bool focusNextPrevChild(bool next);
-
+    virtual bool event(QEvent *ev);
+    virtual void keyPressEvent(QKeyEvent *ev);
+    virtual void paintEvent(QPaintEvent *ev);
+    virtual void changeEvent(QEvent *ev);
+    virtual void mousePressEvent(QMouseEvent *ev);
+    virtual void mouseMoveEvent(QMouseEvent *ev);
+    virtual void mouseReleaseEvent(QMouseEvent *ev);
+    virtual void contextMenuEvent(QContextMenuEvent *ev);
+    virtual void focusInEvent(QFocusEvent *ev);
+    virtual void focusOutEvent(QFocusEvent *ev);
+    virtual bool focusNextPrevChild(bool next);
 
 private:
     Q_DISABLE_COPY(QLabel)

@@ -798,6 +798,7 @@ void QLabel::mousePressEvent(QMouseEvent *ev)
 {
     Q_D(QLabel);
     d->sendControlEvent(ev);
+    QFrame::mousePressEvent(ev);
 }
 
 /*!\reimp
@@ -806,6 +807,7 @@ void QLabel::mouseMoveEvent(QMouseEvent *ev)
 {
     Q_D(QLabel);
     d->sendControlEvent(ev);
+    QFrame::mouseMoveEvent(ev);
 }
 
 /*!\reimp
@@ -814,6 +816,7 @@ void QLabel::mouseReleaseEvent(QMouseEvent *ev)
 {
     Q_D(QLabel);
     d->sendControlEvent(ev);
+    QFrame::mouseReleaseEvent(ev);
 }
 
 /*!\reimp
@@ -837,6 +840,7 @@ void QLabel::contextMenuEvent(QContextMenuEvent *ev)
     menu->setAttribute(Qt::WA_DeleteOnClose);
     menu->popup(ev->globalPos());
 #endif
+    QFrame::contextMenuEvent(ev);
 }
 
 /*!
@@ -889,6 +893,7 @@ void QLabel::keyPressEvent(QKeyEvent *ev)
 {
     Q_D(QLabel);
     d->sendControlEvent(ev);
+    QFrame::keyPressEvent(ev);
 }
 
 /*!\reimp
@@ -927,7 +932,7 @@ bool QLabel::event(QEvent *e)
 
 /*!\reimp
 */
-void QLabel::paintEvent(QPaintEvent *)
+void QLabel::paintEvent(QPaintEvent *ev)
 {
     Q_D(QLabel);
     QStyle *style = QWidget::style();
@@ -1023,6 +1028,7 @@ void QLabel::paintEvent(QPaintEvent *)
             pix = style->generatedIconPixmap(QIcon::Disabled, pix, &opt);
         style->drawItemPixmap(&painter, cr, align, pix);
     }
+    QFrame::paintEvent(ev);
 }
 
 
