@@ -202,8 +202,7 @@ public:
         TextJustificationForced = 0x10000,
         TextForceLeftToRight = 0x20000,
         TextForceRightToLeft = 0x40000,
-        TextLongestVariant = 0x80000,
-        TextBypassShaping = 0x100000
+        TextLongestVariant = 0x80000
     };
 
     enum TextElideMode {

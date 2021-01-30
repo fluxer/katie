@@ -362,7 +362,6 @@
 
     \omitvalue TextLongestVariant Ensures that the longest variant is always used
            when computing the size of a multi-variant string. (Internal)
-    \omitvalue TextBypassShaping
     \omitvalue TextForceLeftToRight
     \omitvalue TextForceRightToLeft
 
