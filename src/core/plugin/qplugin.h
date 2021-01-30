@@ -61,9 +61,7 @@ typedef QObject *(*QtPluginInstanceFunction)();
   Q_PLUGIN_VERIFICATION_SECTION \
   Q_EXTERN_C Q_DECL_EXPORT QT_PREPEND_NAMESPACE(QObject) * kt_plugin_instance() \
   { \
-    static QT_PREPEND_NAMESPACE(QPointer)<QT_PREPEND_NAMESPACE(QObject)> _instance; \
-    if (!_instance)      \
-      _instance = new PLUGINCLASS; \
+    static QT_PREPEND_NAMESPACE(QPointer)<QT_PREPEND_NAMESPACE(QObject)> _instance(new PLUGINCLASS); \
     return _instance; \
   }
 
