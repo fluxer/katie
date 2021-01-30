@@ -294,7 +294,7 @@ static inline QByteArray msgCannotStartProcess(const QString &binary, const QStr
 void tst_QUuid::processUniqueness()
 {
     QDir workingDirectory = QCoreApplication::applicationDirPath();
-    const QString binary = workingDirectory.absoluteFilePath(QLatin1String("testProcessUniqueness"));
+    const QString binary = workingDirectory.absoluteFilePath(QLatin1String("quuid_testProcessUniqueness"));
 
     // Start it once
     QProcess process;
