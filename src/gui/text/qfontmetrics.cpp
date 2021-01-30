@@ -513,14 +513,6 @@ int QFontMetrics::rightBearing(QChar ch) const
 */
 int QFontMetrics::width(const QString &text, int len) const
 {
-    return width(text, len, 0);
-}
-
-/*!
-    \internal
-*/
-int QFontMetrics::width(const QString &text, int len, int flags) const
-{
     int pos = text.indexOf(QLatin1Char('\x9c'));
     if (pos != -1) {
         len = (len < 0) ? pos : qMin(pos, len);

@@ -75,7 +75,6 @@ public:
     int leftBearing(QChar) const;
     int rightBearing(QChar) const;
     int width(const QString &, int len = -1) const;
-    int width(const QString &, int len, int flags) const;
 
     int width(QChar) const;
     int charWidth(const QString &str, int pos) const;
