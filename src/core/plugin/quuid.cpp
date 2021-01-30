@@ -771,13 +771,7 @@ QUuid QUuid::createUuid()
     uint *data = &(result.data1);
 
     static const int intbits = sizeof(int)*8;
-    static int randbits = 0;
-    if (!randbits) {
-        int r = 0;
-        int max = RAND_MAX;
-        do { ++r; } while ((max=max>>1));
-        randbits = r;
-    }
+    static const int randbits = qrand();
 
     int chunks = 16 / sizeof(uint);
     while (chunks--) {
