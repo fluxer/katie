@@ -35,8 +35,6 @@
 #include "qdatastream.h"
 #include "qendian.h"
 
-#include <stdlib.h> // for RAND_MAX
-
 QT_BEGIN_NAMESPACE
 
 #ifndef QT_NO_QUUID_STRING
