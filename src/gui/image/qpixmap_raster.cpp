@@ -101,9 +101,7 @@ void QRasterPixmapData::fromImage(const QImage &sourceImage,
                                   Qt::ImageConversionFlags flags)
 {
     QImage::Format format;
-    if (flags & Qt::NoFormatConversion) {
-        format = sourceImage.format();
-    } else if (pixelType() == BitmapType) {
+    if (pixelType() == BitmapType) {
         format = QImage::Format_MonoLSB;
     } else {
         if (sourceImage.depth() == 1) {

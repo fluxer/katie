@@ -387,8 +387,7 @@ public:
         PreferDither            = 0x00000040,
         AvoidDither             = 0x00000080,
 
-        NoOpaqueDetection       = 0x00000100,
-        NoFormatConversion      = 0x00000200
+        NoOpaqueDetection       = 0x00000100
     };
     Q_DECLARE_FLAGS(ImageConversionFlags, ImageConversionFlag)
 
