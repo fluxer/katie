@@ -309,7 +309,7 @@ public:
     ~QSocks5BindStore();
 
     void add(int socketDescriptor, QSocks5BindData *bindData);
-    bool contains(int socketDescriptor);
+    bool contains(int socketDescriptor) const;
     QSocks5BindData *retrieve(int socketDescriptor);
 
 protected:
@@ -324,8 +324,7 @@ protected:
 Q_GLOBAL_STATIC(QSocks5BindStore, socks5BindStore)
 
 QSocks5BindStore::QSocks5BindStore()
-    : mutex(QMutex::Recursive)
-    , sweepTimerId(-1)
+    : sweepTimerId(-1)
 {
     QCoreApplication *app = QCoreApplication::instance();
     if (app && app->thread() != thread())
@@ -349,9 +348,8 @@ void QSocks5BindStore::add(int socketDescriptor, QSocks5BindData *bindData)
         sweepTimerId = startTimer(60000);
 }
 
-bool QSocks5BindStore::contains(int socketDescriptor)
+bool QSocks5BindStore::contains(int socketDescriptor) const
 {
-    QMutexLocker lock(&mutex);
     return store.contains(socketDescriptor);
 }
 
