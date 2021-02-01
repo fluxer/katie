@@ -117,19 +117,23 @@ int QEventDispatcherUNIXPrivate::doSelect(QEventLoop::ProcessEventsFlags flags, 
                     FD_SET(sn->fd, &fdset);
 
                     int ret = -1;
-                    do {
-                        switch (type) {
-                        case 0: // read
-                            ret = ::select(sn->fd + 1, &fdset, 0, 0, &tm);
-                            break;
-                        case 1: // write
-                            ret = ::select(sn->fd + 1, 0, &fdset, 0, &tm);
-                            break;
-                        case 2: // except
-                            ret = ::select(sn->fd + 1, 0, 0, &fdset, &tm);
+                    switch (type) {
+                        case 0: {
+                            // read
+                            ret = qt_safe_select(sn->fd + 1, &fdset, 0, 0, &tm);
                             break;
                         }
-                    } while (ret == -1 && (errno == EINTR || errno == EAGAIN));
+                        case 1: {
+                            // write
+                            ret = qt_safe_select(sn->fd + 1, 0, &fdset, 0, &tm);
+                            break;
+                        }
+                        case 2: {
+                            // except
+                            ret = qt_safe_select(sn->fd + 1, 0, 0, &fdset, &tm);
+                            break;
+                        }
+                    }
 
                     if (ret == -1 && errno == EBADF) {
                         // disable the invalid socket notifier

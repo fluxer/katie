@@ -52,9 +52,9 @@
 #include <sys/wait.h>
 #include <errno.h>
 
-#define EINTR_LOOP(var, cmd)                    \
-    do {                                        \
-        var = cmd;                              \
+#define EINTR_LOOP(var, cmd)                                  \
+    do {                                                      \
+        var = cmd;                                            \
     } while (var == -1 && errno == EINTR)
 
 QT_BEGIN_NAMESPACE
