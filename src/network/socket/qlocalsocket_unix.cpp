@@ -503,20 +503,12 @@ bool QLocalSocket::waitForConnected(int msec)
     if (state() != ConnectingState)
         return (state() == ConnectedState);
 
-    fd_set fds;
-    FD_ZERO(&fds);
-    FD_SET(d->connectingSocket, &fds);
-
-    timeval timeout;
-    timeout.tv_sec = msec / 1000;
-    timeout.tv_usec = (msec % 1000) * 1000;
-
     // timeout can not be 0 or else select will return an error.
     if (msec == 0)
-        timeout.tv_usec = 1000;
+        msec = 1000;
 
     while (state() == ConnectingState && msec == -1) {
-        int result = qt_safe_select(d->connectingSocket + 1, &fds, 0, 0, &timeout);
+        int result = qt_safe_poll(d->connectingSocket, POLLIN, msec);
         if (result == -1 && errno != EINTR) {
             d->errorOccurred( QLocalSocket::UnknownSocketError,
                     QLatin1String("QLocalSocket::waitForConnected"));

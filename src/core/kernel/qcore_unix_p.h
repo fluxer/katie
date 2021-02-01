@@ -48,6 +48,7 @@
 #include "qplatformdefs.h"
 #include "qatomic.h"
 
+#include <poll.h>
 #include <string.h>
 #include <sys/wait.h>
 #include <errno.h>
@@ -255,6 +256,14 @@ static inline pid_t qt_safe_waitpid(pid_t pid, int *status, int options)
     int ret;
     EINTR_LOOP(ret, ::waitpid(pid, status, options));
     return ret;
+}
+
+static inline int qt_safe_poll(int fd, int events, int timeout)
+{
+    struct pollfd pd;
+    pd.fd = fd;
+    pd.events = events;
+    return ::poll(&pd, 1, timeout);
 }
 
 timeval qt_gettime(); // in qelapsedtimer_unix.cpp
