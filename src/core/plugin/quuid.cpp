@@ -768,15 +768,9 @@ QUuid QUuid::createUuid()
     QUuid result;
     uint *data = &(result.data1);
 
-    static const int intbits = sizeof(int)*8;
-    static const int randbits = qrand();
-
     int chunks = 16 / sizeof(uint);
     while (chunks--) {
-        uint randNumber = 0;
-        for (int filled = 0; filled < intbits; filled += randbits)
-            randNumber |= qrand()<<filled;
-        *(data+chunks) = randNumber;
+        *(data+chunks) = qrand();
     }
 
     result.data4[0] = (result.data4[0] & 0x3F) | 0x80;        // UV_DCE
