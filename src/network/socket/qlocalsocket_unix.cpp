@@ -512,17 +512,12 @@ bool QLocalSocket::waitForConnected(int msec)
     timeout.tv_usec = (msec % 1000) * 1000;
 
     // timeout can not be 0 or else select will return an error.
-    if (0 == msec)
+    if (msec == 0)
         timeout.tv_usec = 1000;
 
-    int result = -1;
-    // on Linux timeout will be updated by select, but _not_ on other systems.
-    QElapsedTimer timer;
-    timer.start();
-    while (state() == ConnectingState
-           && (-1 == msec || timer.elapsed() < msec)) {
-        result = ::select(d->connectingSocket + 1, &fds, 0, 0, &timeout);
-        if (-1 == result && errno != EINTR) {
+    while (state() == ConnectingState && msec == -1) {
+        int result = qt_safe_select(d->connectingSocket + 1, &fds, 0, 0, &timeout);
+        if (result == -1 && errno != EINTR) {
             d->errorOccurred( QLocalSocket::UnknownSocketError,
                     QLatin1String("QLocalSocket::waitForConnected"));
             break;
