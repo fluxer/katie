@@ -57,8 +57,6 @@ class QOpenUrlHandlerRegistry : public QObject
 {
     Q_OBJECT
 public:
-    inline QOpenUrlHandlerRegistry() : mutex(QMutex::Recursive) {}
-
     QMutex mutex;
 
     struct Handler
