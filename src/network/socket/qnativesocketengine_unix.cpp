@@ -1039,27 +1039,48 @@ qint64 QNativeSocketEnginePrivate::nativeRead(char *data, qint64 maxSize)
 
 int QNativeSocketEnginePrivate::nativeSelect(int timeout, bool selectForRead) const
 {
-    return qt_safe_poll(socketDescriptor, selectForRead ? POLLIN : POLLOUT, timeout < 0 ? 0 : timeout);
+    fd_set fds;
+    FD_ZERO(&fds);
+    FD_SET(socketDescriptor, &fds);
+
+    struct timeval tv;
+    tv.tv_sec = timeout / 1000;
+    tv.tv_usec = (timeout % 1000) * 1000;
+
+    int retval;
+    if (selectForRead)
+        retval = qt_safe_select(socketDescriptor + 1, &fds, 0, 0, timeout < 0 ? 0 : &tv);
+    else
+        retval = qt_safe_select(socketDescriptor + 1, 0, &fds, 0, timeout < 0 ? 0 : &tv);
+
+    return retval;
 }
 
 int QNativeSocketEnginePrivate::nativeSelect(int timeout, bool checkRead, bool checkWrite,
                        bool *selectForRead, bool *selectForWrite) const
 {
-    struct pollfd pd;
-    pd.fd = socketDescriptor;
-    if (checkRead) {
-        pd.events |= POLLIN;
-    }
-    if (checkWrite) {
-        pd.events |= POLLOUT;
-    }
+    fd_set fdread;
+    FD_ZERO(&fdread);
+    if (checkRead)
+        FD_SET(socketDescriptor, &fdread);
 
-    int ret = ::poll(&pd, 1, timeout < 0 ? 0 : timeout); 
+    fd_set fdwrite;
+    FD_ZERO(&fdwrite);
+    if (checkWrite)
+        FD_SET(socketDescriptor, &fdwrite);
 
-    if (ret > 0) {
-        *selectForRead = (pd.revents & POLLIN);
-        *selectForWrite = (pd.revents & POLLOUT);
-    }
+    struct timeval tv;
+    tv.tv_sec = timeout / 1000;
+    tv.tv_usec = (timeout % 1000) * 1000;
+
+    int ret;
+    ret = qt_safe_select(socketDescriptor + 1, &fdread, &fdwrite, 0, timeout < 0 ? 0 : &tv);
+
+    if (ret <= 0)
+        return ret;
+    *selectForRead = FD_ISSET(socketDescriptor, &fdread);
+    *selectForWrite = FD_ISSET(socketDescriptor, &fdwrite);
+
     return ret;
 }
 
