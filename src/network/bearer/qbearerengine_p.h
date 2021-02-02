@@ -72,7 +72,7 @@ public:
     explicit QBearerEngine(QObject *parent = Q_NULLPTR);
     virtual ~QBearerEngine();
 
-    virtual bool hasIdentifier(const QString &id) = 0;
+    virtual bool hasIdentifier(const QString &id) const = 0;
 
     virtual QNetworkConfigurationManager::Capabilities capabilities() const = 0;
 

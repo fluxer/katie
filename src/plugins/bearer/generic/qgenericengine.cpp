@@ -93,10 +93,8 @@ QString QGenericEngine::getInterfaceFromId(const QString &id)
     return configurationInterface.value(id);
 }
 
-bool QGenericEngine::hasIdentifier(const QString &id)
+bool QGenericEngine::hasIdentifier(const QString &id) const
 {
-    QMutexLocker locker(&mutex);
-
     return configurationInterface.contains(id);
 }
 

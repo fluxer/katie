@@ -68,7 +68,7 @@ public:
     bool networkManagerAvailable() const;
 
     QString getInterfaceFromId(const QString &id);
-    bool hasIdentifier(const QString &id);
+    bool hasIdentifier(const QString &id) const;
 
     void connectToId(const QString &id);
     void disconnectFromId(const QString &id);

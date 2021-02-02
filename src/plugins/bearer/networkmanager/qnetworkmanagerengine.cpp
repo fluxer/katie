@@ -156,10 +156,8 @@ QString QNetworkManagerEngine::getInterfaceFromId(const QString &id)
     return QString();
 }
 
-bool QNetworkManagerEngine::hasIdentifier(const QString &id)
+bool QNetworkManagerEngine::hasIdentifier(const QString &id) const
 {
-    QMutexLocker locker(&mutex);
-
     if (connectionFromId(id))
         return true;
 

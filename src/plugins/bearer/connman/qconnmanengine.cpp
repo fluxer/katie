@@ -124,9 +124,8 @@ QString QConnmanEngine::getInterfaceFromId(const QString &id)
     return configInterfaces.value(id);
 }
 
-bool QConnmanEngine::hasIdentifier(const QString &id)
+bool QConnmanEngine::hasIdentifier(const QString &id) const
 {
-    QMutexLocker locker(&mutex);
     return accessPointConfigurations.contains(id);
 }
 

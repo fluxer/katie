@@ -69,7 +69,7 @@ public:
     bool connmanAvailable() const;
 
     virtual QString getInterfaceFromId(const QString &id);
-    bool hasIdentifier(const QString &id);
+    bool hasIdentifier(const QString &id) const;
 
     virtual void connectToId(const QString &id);
     virtual void disconnectFromId(const QString &id);
