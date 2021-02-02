@@ -1896,8 +1896,7 @@ static void cssStyleLookup(QSvgNode *node,
 
 static inline QStringList stringToList(const QString &str)
 {
-    QStringList lst = str.split(QLatin1Char(','), QString::SkipEmptyParts);
-    return lst;
+    return str.split(QLatin1Char(','), QString::SkipEmptyParts);
 }
 
 static bool parseCoreNode(QSvgNode *node,
