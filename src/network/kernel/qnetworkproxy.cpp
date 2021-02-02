@@ -233,8 +233,7 @@ class QGlobalNetworkProxy
 {
 public:
     QGlobalNetworkProxy()
-        : mutex(QMutex::Recursive)
-        , applicationLevelProxy(Q_NULLPTR)
+        : applicationLevelProxy(Q_NULLPTR)
         , applicationLevelProxyFactory(new QSystemConfigurationProxyFactory())
 #ifndef QT_NO_SOCKS5
         , socks5SocketEngineHandler(new QSocks5SocketEngineHandler())
@@ -279,12 +278,12 @@ public:
         applicationLevelProxyFactory = factory;
     }
 
-    QNetworkProxy applicationProxy()
+    QNetworkProxy applicationProxy() const
     {
         return proxyForQuery(QNetworkProxyQuery()).first();
     }
 
-    QList<QNetworkProxy> proxyForQuery(const QNetworkProxyQuery &query);
+    QList<QNetworkProxy> proxyForQuery(const QNetworkProxyQuery &query) const;
 
 private:
     QMutex mutex;
@@ -298,10 +297,8 @@ private:
 #endif
 };
 
-QList<QNetworkProxy> QGlobalNetworkProxy::proxyForQuery(const QNetworkProxyQuery &query)
+QList<QNetworkProxy> QGlobalNetworkProxy::proxyForQuery(const QNetworkProxyQuery &query) const
 {
-    QMutexLocker locker(&mutex);
-
     QList<QNetworkProxy> result;
 
     // don't look for proxies for a local connection
