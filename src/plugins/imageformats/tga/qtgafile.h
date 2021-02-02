@@ -76,7 +76,6 @@ public:
     ~QTgaFile();
 
     inline bool isValid() const;
-    inline QString errorMessage() const;
     QImage readImage();
     inline int xOffset() const;
     inline int yOffset() const;
@@ -96,11 +95,6 @@ private:
 inline bool QTgaFile::isValid() const
 {
     return mErrorMessage.isEmpty();
-}
-
-inline QString QTgaFile::errorMessage() const
-{
-    return mErrorMessage;
 }
 
 /*!
