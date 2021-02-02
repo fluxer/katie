@@ -49,6 +49,10 @@
 
 QT_BEGIN_NAMESPACE
 
+#ifndef QT_NO_DEBUG
+static const long maxOpenFiles = sysconf(_SC_OPEN_MAX);
+#endif
+
 QEventDispatcherUNIXPrivate::QEventDispatcherUNIXPrivate()
     : sn_highest(-1),
     interrupt(false)
@@ -599,12 +603,10 @@ void QEventDispatcherUNIX::registerSocketNotifier(QSocketNotifier *notifier)
     int sockfd = notifier->socket();
     int type = notifier->type();
 #ifndef QT_NO_DEBUG
-    if (sockfd < 0
-        || unsigned(sockfd) >= FD_SETSIZE) {
+    if (Q_UNLIKELY(sockfd < 0 || sockfd >= maxOpenFiles)) {
         qWarning("QSocketNotifier: Internal error");
         return;
-    } else if (notifier->thread() != thread()
-               || thread() != QThread::currentThread()) {
+    } else if (Q_UNLIKELY(notifier->thread() != thread() || thread() != QThread::currentThread())) {
         qWarning("QSocketNotifier: socket notifiers cannot be enabled from another thread");
         return;
     }
@@ -642,12 +644,10 @@ void QEventDispatcherUNIX::unregisterSocketNotifier(QSocketNotifier *notifier)
     int sockfd = notifier->socket();
     int type = notifier->type();
 #ifndef QT_NO_DEBUG
-    if (sockfd < 0
-        || unsigned(sockfd) >= FD_SETSIZE) {
+    if (Q_UNLIKELY(sockfd < 0 || sockfd >= maxOpenFiles)) {
         qWarning("QSocketNotifier: Internal error");
         return;
-    } else if (notifier->thread() != thread()
-               || thread() != QThread::currentThread()) {
+    } else if (Q_UNLIKELY(notifier->thread() != thread() || thread() != QThread::currentThread())) {
         qWarning("QSocketNotifier: socket notifiers cannot be disabled from another thread");
         return;
     }
@@ -692,8 +692,7 @@ void QEventDispatcherUNIX::setSocketNotifierPending(QSocketNotifier *notifier)
     int sockfd = notifier->socket();
     int type = notifier->type();
 #ifndef QT_NO_DEBUG
-    if (sockfd < 0
-        || unsigned(sockfd) >= FD_SETSIZE) {
+    if (Q_UNLIKELY(sockfd < 0 || sockfd >= maxOpenFiles)) {
         qWarning("QSocketNotifier: Internal error");
         return;
     }
