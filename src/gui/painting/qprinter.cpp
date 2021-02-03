@@ -2090,26 +2090,6 @@ QSizeF qt_paperSizeToQSizeF(QPrinter::PaperSize size)
     return QSizeF(qt_paperSizes[size][0], qt_paperSizes[size][1]);
 }
 
-/*
-    Returns the PaperSize type that matches \a size, where \a size
-    is in millimeters.
-
-    Because dimensions may not always be completely accurate (for
-    example when converting between units), a particular PaperSize
-    will be returned if it matches within -1/+1 millimeters.
-*/
-QPrinter::PaperSize qSizeFTopaperSize(const QSizeF& size)
-{
-    for (int i = 0; i < static_cast<int>(QPrinter::NPaperSize); ++i) {
-        if (qt_paperSizes[i][0] >= size.width() - 1 &&
-                qt_paperSizes[i][0] <= size.width() + 1 &&
-                qt_paperSizes[i][1] >= size.height() - 1 &&
-                qt_paperSizes[i][1] <= size.height() + 1) {
-            return QPrinter::PaperSize(i);
-        }
-    }
-
-    return QPrinter::Custom;
 }
 
 QT_END_NAMESPACE
