@@ -2757,7 +2757,7 @@ void QMetaObject::connectSlotsByName(QObject *o)
             const QObject *co = list.at(j);
             QByteArray objName = co->objectName().toAscii();
             int len = objName.length();
-            if (!len || qstrncmp(slot + 3, objName.data(), len) || slot[len+3] != '_')
+            if (!len || qstrncmp(slot + 3, objName.constData(), len) || slot[len+3] != '_')
                 continue;
             int sigIndex = co->d_func()->signalIndex(slot + len + 4);
             if (sigIndex < 0) { // search for compatible signals
