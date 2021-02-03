@@ -1083,9 +1083,7 @@ QSizeF QPrinter::paperSize(Unit unit) const
         QSizeF size = d->printEngine->property(QPrintEngine::PPK_CustomPaperSize).toSizeF();
         return QSizeF(size.width() / multiplier, size.height() / multiplier);
     }
-    else {
-        return qt_printerPaperSize(orientation(), paperType, unit, res);
-    }
+    return qt_printerPaperSize(orientation(), paperType, unit, res);
 }
 
 /*!
