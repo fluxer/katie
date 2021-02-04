@@ -63,16 +63,16 @@ public:
 
     struct ConverterState {
         ConverterState(ConversionFlags f = DefaultConversion)
-            : flags(f), remainingChars(0), invalidChars(0), d(Q_NULLPTR) { }
+            : flags(f), invalidChars(0), d(Q_NULLPTR) { }
         ~ConverterState() { }
         ConversionFlags flags;
-        int remainingChars;
         int invalidChars;
     private:
+        void *d;
+
         friend class QIcuCodec;
         friend class QTextStreamPrivate;
         friend class QTextStream;
-        void *d;
 
         ConverterState(const ConverterState &other);
         ConverterState& operator=(const ConverterState &other);
