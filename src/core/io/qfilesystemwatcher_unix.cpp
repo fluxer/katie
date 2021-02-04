@@ -154,13 +154,13 @@ QStringList QFileSystemWatcherEngineUnix::addPaths(const QStringList &paths,
         int fd = qt_safe_open(QFile::encodeName(path), O_RDONLY);
 #endif
         if (fd == -1) {
-            perror("QKqueueFileSystemWatcherEngine::addPaths: open");
+            perror("QFileSystemWatcherEngineUnix::addPaths: open");
             continue;
         }
 
         QT_STATBUF st;
         if (QT_FSTAT(fd, &st) == -1) {
-            perror("QKqueueFileSystemWatcherEngine::addPaths: fstat");
+            perror("QFileSystemWatcherEngineUnix::addPaths: fstat");
             ::close(fd);
             continue;
         }
@@ -186,17 +186,17 @@ QStringList QFileSystemWatcherEngineUnix::addPaths(const QStringList &paths,
                0,
                0);
         if (kevent(sockfd, &kev, 1, 0, 0, 0) == -1) {
-            perror("QKqueueFileSystemWatcherEngine::addPaths: kevent");
+            perror("QFileSystemWatcherEngineUnix::addPaths: kevent");
             ::close(fd);
             continue;
         }
 
         p.removeAll(path);
         if (id < 0) {
-            // qDebug() << "QKqueueFileSystemWatcherEngine: added directory path" << path;
+            // qDebug() << "QFileSystemWatcherEngineUnix: added directory path" << path;
             directories->append(path);
         } else {
-            // qDebug() << "QKqueueFileSystemWatcherEngine: added file path" << path;
+            // qDebug() << "QFileSystemWatcherEngineUnix: added file path" << path;
             files->append(path);
         }
 
@@ -304,13 +304,13 @@ void QFileSystemWatcherEngineUnix::readFromFd()
     }
 #elif defined(QT_HAVE_KEVENT)
     forever {
-        // qDebug() << "QKqueueFileSystemWatcherEngine: polling for changes";
+        // qDebug() << "QFileSystemWatcherEngineUnix: polling for changes";
         int r;
         struct kevent kev;
         struct timespec ts = { 0, 0 }; // 0 ts, because we want to poll
         EINTR_LOOP(r, kevent(sockfd, 0, 0, &kev, 1, &ts));
         if (r < 0) {
-            perror("QKqueueFileSystemWatcherEngine: error during kevent wait");
+            perror("QFileSystemWatcherEngineUnix: error during kevent wait");
             return;
         } else if (r == 0) {
             // polling returned no events, so stop
@@ -318,7 +318,7 @@ void QFileSystemWatcherEngineUnix::readFromFd()
         } else {
             int fd = kev.ident;
 
-            // qDebug() << "QKqueueFileSystemWatcherEngine: processing kevent" << kev.ident << kev.filter;
+            // qDebug() << "QFileSystemWatcherEngineUnix: processing kevent" << kev.ident << kev.filter;
             QMutexLocker locker(&mutex);
 
             int id = fd;
@@ -328,12 +328,12 @@ void QFileSystemWatcherEngineUnix::readFromFd()
                 id = -id;
                 path = idToPath.value(id);
                 if (path.isEmpty()) {
-                    // qDebug() << "QKqueueFileSystemWatcherEngine: received a kevent for a file we're not watching";
+                    // qDebug() << "QFileSystemWatcherEngineUnix: received a kevent for a file we're not watching";
                     continue;
                 }
             }
             if (kev.filter != EVFILT_VNODE) {
-                // qDebug() << "QKqueueFileSystemWatcherEngine: received a kevent with the wrong filter";
+                // qDebug() << "QFileSystemWatcherEngineUnix: received a kevent with the wrong filter";
                 continue;
             }
 
