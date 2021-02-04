@@ -94,7 +94,6 @@ public:
     QCoreApplication::EventFilter eventFilter;
 
     bool in_exec;
-    bool aboutToQuitEmitted;
     QString cachedApplicationDirPath;
     QString cachedApplicationFilePath;
 

@@ -166,7 +166,7 @@ Q_GLOBAL_STATIC(QCoreApplicationData, coreappdata)
 
 QCoreApplicationPrivate::QCoreApplicationPrivate(int &aargc, char **aargv)
     : QObjectPrivate(), argc(aargc), argv(aargv), eventFilter(0),
-      in_exec(false), aboutToQuitEmitted(false)
+      in_exec(false)
 {
     QCoreApplicationPrivate::is_app_closing = false;
 }
@@ -720,14 +720,11 @@ int QCoreApplication::exec()
     threadData->quitNow = false;
     QEventLoop eventLoop;
     self->d_func()->in_exec = true;
-    self->d_func()->aboutToQuitEmitted = false;
     int returnCode = eventLoop.exec();
     threadData->quitNow = false;
     if (self) {
         self->d_func()->in_exec = false;
-        if (!self->d_func()->aboutToQuitEmitted)
-            emit self->aboutToQuit();
-        self->d_func()->aboutToQuitEmitted = true;
+        emit self->aboutToQuit();
         sendPostedEvents(0, QEvent::DeferredDelete);
     }
 
