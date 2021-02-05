@@ -130,7 +130,7 @@ void tst_QFontDatabase::fixedPitch()
     QFETCH(bool, fixedPitch);
 
     QFontDatabase fdb;
-    qDebug() << fdb.families();
+    // qDebug() << fdb.families();
     if (!fdb.families().contains(font))
         QSKIP( "Font not installed", SkipSingle);
 
