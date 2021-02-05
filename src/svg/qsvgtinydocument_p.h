@@ -80,8 +80,6 @@ public:
     int width() const;
     int height() const;
 
-    bool preserveAspectRatio() const;
-
     QRectF viewBox() const;
     void setViewBox(const QRectF &rect);
 
@@ -153,11 +151,6 @@ inline QRectF QSvgTinyDocument::viewBox() const
         m_viewBox = transformedBounds();
 
     return m_viewBox;
-}
-
-inline bool QSvgTinyDocument::preserveAspectRatio() const
-{
-    return false;
 }
 
 inline int QSvgTinyDocument::currentElapsed() const
