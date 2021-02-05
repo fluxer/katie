@@ -614,7 +614,7 @@ QSize QSvgGenerator::size() const
 void QSvgGenerator::setSize(const QSize &size)
 {
     Q_D(QSvgGenerator);
-    if (d->engine->isActive()) {
+    if (Q_UNLIKELY(d->engine->isActive())) {
         qWarning("QSvgGenerator::setSize(), cannot set size while SVG is being generated");
         return;
     }
@@ -657,7 +657,7 @@ QRect QSvgGenerator::viewBox() const
 void QSvgGenerator::setViewBox(const QRectF &viewBox)
 {
     Q_D(QSvgGenerator);
-    if (d->engine->isActive()) {
+    if (Q_UNLIKELY(d->engine->isActive())) {
         qWarning("QSvgGenerator::setViewBox(), cannot set viewBox while SVG is being generated");
         return;
     }
@@ -685,7 +685,7 @@ QString QSvgGenerator::fileName() const
 void QSvgGenerator::setFileName(const QString &fileName)
 {
     Q_D(QSvgGenerator);
-    if (d->engine->isActive()) {
+    if (Q_UNLIKELY(d->engine->isActive())) {
         qWarning("QSvgGenerator::setFileName(), cannot set file name while SVG is being generated");
         return;
     }
@@ -719,7 +719,7 @@ QIODevice *QSvgGenerator::outputDevice() const
 void QSvgGenerator::setOutputDevice(QIODevice *outputDevice)
 {
     Q_D(QSvgGenerator);
-    if (d->engine->isActive()) {
+    if (Q_UNLIKELY(d->engine->isActive())) {
         qWarning("QSvgGenerator::setOutputDevice(), cannot set output device while SVG is being generated");
         return;
     }
@@ -801,18 +801,16 @@ int QSvgGenerator::metric(QPaintDevice::PaintDeviceMetric metric) const
 bool QSvgPaintEngine::begin(QPaintDevice *)
 {
     Q_D(QSvgPaintEngine);
-    if (!d->outputDevice) {
+    if (Q_UNLIKELY(!d->outputDevice)) {
         qWarning("QSvgPaintEngine::begin(), no output device");
         return false;
-    }
-
-    if (!d->outputDevice->isOpen()) {
-        if (!d->outputDevice->open(QIODevice::WriteOnly | QIODevice::Text)) {
+    } else if (!d->outputDevice->isOpen()) {
+        if (Q_UNLIKELY(!d->outputDevice->open(QIODevice::WriteOnly | QIODevice::Text))) {
             qWarning("QSvgPaintEngine::begin(), could not open output device: '%s'",
                      qPrintable(d->outputDevice->errorString()));
             return false;
         }
-    } else if (!d->outputDevice->isWritable()) {
+    } else if (Q_UNLIKELY(!d->outputDevice->isWritable())) {
         qWarning("QSvgPaintEngine::begin(), could not write to read-only output device: '%s'",
                  qPrintable(d->outputDevice->errorString()));
         return false;
