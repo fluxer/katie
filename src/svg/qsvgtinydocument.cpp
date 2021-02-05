@@ -52,8 +52,6 @@ QT_BEGIN_NAMESPACE
 
 QSvgTinyDocument::QSvgTinyDocument()
     : QSvgStructureNode(0)
-    , m_widthPercent(false)
-    , m_heightPercent(false)
     , m_animated(false)
     , m_animationDuration(0)
     , m_fps(30)
@@ -297,16 +295,14 @@ QSvgNode::Type QSvgTinyDocument::type() const
     return DOC;
 }
 
-void QSvgTinyDocument::setWidth(int len, bool percent)
+void QSvgTinyDocument::setWidth(int len)
 {
     m_size.setWidth(len);
-    m_widthPercent = percent;
 }
 
-void QSvgTinyDocument::setHeight(int len, bool percent)
+void QSvgTinyDocument::setHeight(int len)
 {
     m_size.setHeight(len);
-    m_heightPercent = percent;
 }
 
 void QSvgTinyDocument::setViewBox(const QRectF &rect)

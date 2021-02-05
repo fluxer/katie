@@ -75,12 +75,10 @@ public:
     Type type() const;
 
     QSize size() const;
-    void setWidth(int len, bool percent);
-    void setHeight(int len, bool percent);
+    void setWidth(int len);
+    void setHeight(int len);
     int width() const;
     int height() const;
-    bool widthPercent() const;
-    bool heightPercent() const;
 
     bool preserveAspectRatio() const;
 
@@ -115,8 +113,6 @@ private:
     void mapSourceToTarget(QPainter *p, const QRectF &targetRect, const QRectF &sourceRect = QRectF());
 
     QSize  m_size;
-    bool   m_widthPercent;
-    bool   m_heightPercent;
 
     mutable QRectF m_viewBox;
 
@@ -149,16 +145,6 @@ inline int QSvgTinyDocument::width() const
 inline int QSvgTinyDocument::height() const
 {
     return size().height();
-}
-
-inline bool QSvgTinyDocument::widthPercent() const
-{
-    return m_widthPercent;
-}
-
-inline bool QSvgTinyDocument::heightPercent() const
-{
-    return m_heightPercent;
 }
 
 inline QRectF QSvgTinyDocument::viewBox() const

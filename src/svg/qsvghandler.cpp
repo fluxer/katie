@@ -3054,14 +3054,14 @@ static QSvgNode *createSvgNode(QSvgNode *parent,
         width = parseLength(widthStr, type, handler);
         if (type != QSvgHandler::LT_PT)
             width = convertToPixels(width, true, type);
-        node->setWidth(int(width), type == QSvgHandler::LT_PERCENT);
+        node->setWidth(int(width));
     }
     qreal height = 0;
     if (!heightStr.isEmpty()) {
         height = parseLength(heightStr, type, handler);
         if (type != QSvgHandler::LT_PT)
             height = convertToPixels(height, false, type);
-        node->setHeight(int(height), type == QSvgHandler::LT_PERCENT);
+        node->setHeight(int(height));
     }
 
     QStringList viewBoxValues;
