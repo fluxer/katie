@@ -1,7 +1,7 @@
 /****************************************************************************
 **
 ** Copyright (C) 2015 The Qt Company Ltd.
-** Copyright (C) 2016-2021 Ivailo Monev
+** Copyright (C) 2016 Ivailo Monev
 **
 ** This file is part of the QtGui module of the Katie Toolkit.
 **
@@ -1477,7 +1477,7 @@ void QMessageBox::aboutQt(QWidget *parent, const QString &title)
         "development of applications provided you can comply with the terms "
         "and conditions of the GNU LGPL version 2.1.</p>"
         "<p>Copyright (C) 2015 The Qt Company Ltd and other contributors.</p>"
-        "<p>Copyright (C) 2016-2021 Ivailo Monev</p>"
+        "<p>Copyright (C) 2016 Ivailo Monev</p>"
         "<p>Qt and the Qt logo are trademarks of The Qt Company Ltd.</p>"
         "<p>See <a href=\"https://github.com/fluxer/katie\">github.com/fluxer/katie</a> for more information.</p>"
         );

@@ -39,8 +39,6 @@ for sfile in lfiles:
                 sfile.endswith('.g'), sfile.endswith('.sh'))
             soldheader = readlicense(sfile, False, False)
             snewcontent = scontent.replace(soldheader, snewheader)
-            snewcontent = snewcontent.replace('2016-2019', '2016-2020')
-            snewcontent = snewcontent.replace('2016-2020', '2016-2021')
             if not snewcontent == scontent:
                 with open(sfile, 'w') as f:
                     f.write(snewcontent)

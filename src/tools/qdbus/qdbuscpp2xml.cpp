@@ -1,7 +1,7 @@
 /****************************************************************************
 **
 ** Copyright (C) 2015 The Qt Company Ltd.
-** Copyright (C) 2016-2021 Ivailo Monev
+** Copyright (C) 2016 Ivailo Monev
 **
 ** This file is part of the tools applications of the Katie Toolkit.
 **
@@ -62,7 +62,7 @@ QT_END_NAMESPACE
 #define PROGRAMNAME     "qdbuscpp2xml"
 #define PROGRAMVERSION  "0.1"
 #define PROGRAMCOPYRIGHT "Copyright (C) 2015 The Qt Company Ltd."
-#define PROGRAMCOPYRIGHT2 "Copyright (C) 2016-2021 Ivailo Monev"
+#define PROGRAMCOPYRIGHT2 "Copyright (C) 2016 Ivailo Monev"
 
 QT_USE_NAMESPACE
 

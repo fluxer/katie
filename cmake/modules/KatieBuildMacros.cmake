@@ -1,4 +1,4 @@
-# Copyright (c) 2015-2021, Ivailo Monev, <xakepa10@gmail.com>
+# Copyright (C) 2015, Ivailo Monev, <xakepa10@gmail.com>
 # Redistribution and use is allowed according to the terms of the BSD license.
 
 # a function to check for header presence, if header is found a definition is

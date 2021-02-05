@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-01-09 15:40+0200\n"
+"POT-Creation-Date: 2021-02-05 06:17+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -1414,10 +1414,10 @@ msgid ""
 "p><p>Katie licensed under the GNU LGPL version 2.1 is appropriate for the "
 "development of applications provided you can comply with the terms and "
 "conditions of the GNU LGPL version 2.1.</p><p>Copyright (C) 2015 The Qt "
-"Company Ltd and other contributors.</p><p>Copyright (C) 2016-2021 Ivailo "
-"Monev</p><p>Qt and the Qt logo are trademarks of The Qt Company Ltd.</"
-"p><p>See <a href=\"https://github.com/fluxer/katie\">github.com/fluxer/"
-"katie</a> for more information.</p>"
+"Company Ltd and other contributors.</p><p>Copyright (C) 2016 Ivailo Monev</"
+"p><p>Qt and the Qt logo are trademarks of The Qt Company Ltd.</p><p>See <a "
+"href=\"https://github.com/fluxer/katie\">github.com/fluxer/katie</a> for "
+"more information.</p>"
 msgstr ""
 
 #: src/gui/dialogs/qmessagebox.cpp:1486
@@ -2234,11 +2234,11 @@ msgstr ""
 msgid "Step &down"
 msgstr ""
 
-#: src/gui/kernel/qwidget.cpp:5109
+#: src/gui/kernel/qwidget.cpp:5102
 msgid "*"
 msgstr ""
 
-#: src/gui/kernel/qapplication.cpp:1796
+#: src/gui/kernel/qapplication.cpp:1732
 msgid "QT_LAYOUT_DIRECTION"
 msgstr ""
 
@@ -3500,8 +3500,8 @@ msgstr ""
 #: src/network/kernel/qhostinfo_unix.cpp:184
 #: src/network/socket/qabstractsocket.cpp:885
 #: src/network/socket/qhttpsocketengine.cpp:662
-#: src/network/socket/qsocks5socketengine.cpp:640
-#: src/network/socket/qsocks5socketengine.cpp:666
+#: src/network/socket/qsocks5socketengine.cpp:638
+#: src/network/socket/qsocks5socketengine.cpp:664
 msgid "Host not found"
 msgstr ""
 
@@ -3549,7 +3549,7 @@ msgstr ""
 #: src/network/socket/qabstractsocket.cpp:927
 #: src/network/socket/qhttpsocketengine.cpp:665
 #: src/network/socket/qnativesocketengine.cpp:232
-#: src/network/socket/qsocks5socketengine.cpp:670
+#: src/network/socket/qsocks5socketengine.cpp:668
 msgid "Connection refused"
 msgstr ""
 
@@ -3643,7 +3643,7 @@ msgid "Host unreachable"
 msgstr ""
 
 #: src/network/socket/qnativesocketengine.cpp:223
-#: src/network/socket/qsocks5socketengine.cpp:662
+#: src/network/socket/qsocks5socketengine.cpp:660
 msgid "Network unreachable"
 msgstr ""
 
@@ -3735,59 +3735,59 @@ msgstr ""
 msgid "This platform does not support IPv6"
 msgstr ""
 
-#: src/network/socket/qsocks5socketengine.cpp:595
+#: src/network/socket/qsocks5socketengine.cpp:593
 msgid "Connection to proxy refused"
 msgstr ""
 
-#: src/network/socket/qsocks5socketengine.cpp:599
+#: src/network/socket/qsocks5socketengine.cpp:597
 msgid "Connection to proxy closed prematurely"
 msgstr ""
 
-#: src/network/socket/qsocks5socketengine.cpp:603
+#: src/network/socket/qsocks5socketengine.cpp:601
 msgid "Proxy host not found"
 msgstr ""
 
-#: src/network/socket/qsocks5socketengine.cpp:608
+#: src/network/socket/qsocks5socketengine.cpp:606
 msgid "Connection to proxy timed out"
 msgstr ""
 
-#: src/network/socket/qsocks5socketengine.cpp:625
+#: src/network/socket/qsocks5socketengine.cpp:623
 msgid "Proxy authentication failed"
 msgstr ""
 
-#: src/network/socket/qsocks5socketengine.cpp:626
+#: src/network/socket/qsocks5socketengine.cpp:624
 msgid "Proxy authentication failed: %1"
 msgstr ""
 
-#: src/network/socket/qsocks5socketengine.cpp:635
+#: src/network/socket/qsocks5socketengine.cpp:633
 msgid "SOCKS version 5 protocol error"
 msgstr ""
 
-#: src/network/socket/qsocks5socketengine.cpp:654
+#: src/network/socket/qsocks5socketengine.cpp:652
 msgid "General SOCKSv5 server failure"
 msgstr ""
 
-#: src/network/socket/qsocks5socketengine.cpp:658
+#: src/network/socket/qsocks5socketengine.cpp:656
 msgid "Connection not allowed by SOCKSv5 server"
 msgstr ""
 
-#: src/network/socket/qsocks5socketengine.cpp:674
+#: src/network/socket/qsocks5socketengine.cpp:672
 msgid "TTL expired"
 msgstr ""
 
-#: src/network/socket/qsocks5socketengine.cpp:678
+#: src/network/socket/qsocks5socketengine.cpp:676
 msgid "SOCKSv5 command not supported"
 msgstr ""
 
-#: src/network/socket/qsocks5socketengine.cpp:682
+#: src/network/socket/qsocks5socketengine.cpp:680
 msgid "Address type not supported"
 msgstr ""
 
-#: src/network/socket/qsocks5socketengine.cpp:687
+#: src/network/socket/qsocks5socketengine.cpp:685
 msgid "Unknown SOCKSv5 proxy error code 0x%1"
 msgstr ""
 
-#: src/network/socket/qsocks5socketengine.cpp:1379
+#: src/network/socket/qsocks5socketengine.cpp:1377
 msgctxt "QSocks5SocketEngine"
 msgid "Network operation timed out"
 msgstr ""

@@ -1,7 +1,7 @@
 /****************************************************************************
 **
 ** Copyright (C) 2015 The Qt Company Ltd.
-** Copyright (C) 2016-2021 Ivailo Monev
+** Copyright (C) 2016 Ivailo Monev
 **
 ** This file is part of the tools applications of the Katie Toolkit.
 **
@@ -738,7 +738,7 @@ void MainWindow::helpAbout()
     box.setText(tr("<h3>%1</h3>"
                    "<br/>Version %2"
                    "<br/><br/>Copyright (C) 2015 The Qt Company Ltd."
-                   "<br/><br/>Copyright (C) 2016-2021 Ivailo Monev"
+                   "<br/><br/>Copyright (C) 2016 Ivailo Monev"
                     )
                    .arg(tr("Katie Configuration")).arg(QLatin1String(QT_VERSION_STR)));
     box.setWindowTitle(tr("Katie Configuration"));

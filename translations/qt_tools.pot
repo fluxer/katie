@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-01-09 15:40+0200\n"
+"POT-Creation-Date: 2021-02-05 06:17+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -113,7 +113,7 @@ msgstr ""
 #: src/tools/qtconfig/mainwindow.cpp:738
 msgid ""
 "<h3>%1</h3><br/>Version %2<br/><br/>Copyright (C) 2015 The Qt Company Ltd."
-"<br/><br/>Copyright (C) 2016-2021 Ivailo Monev"
+"<br/><br/>Copyright (C) 2016 Ivailo Monev"
 msgstr ""
 
 #: src/tools/qtconfig/mainwindow.cpp:743 src/tools/qtconfig/mainwindow.cpp:744
@@ -256,8 +256,8 @@ msgstr ""
 
 #: src/tools/designer/versiondialog.cpp:162
 msgid ""
-"%1<br/>Copyright (C) 2015 The Qt Company Ltd.<br/>Copyright (C) 2016-2021 "
-"Ivailo Monev"
+"%1<br/>Copyright (C) 2015 The Qt Company Ltd.<br/>Copyright (C) 2016 Ivailo "
+"Monev"
 msgstr ""
 
 #: src/tools/designer/appfontdialog.cpp:143
