@@ -5375,14 +5375,6 @@ void QGraphicsItemPrivate::removeChild(QGraphicsItem *child)
 /*!
     \internal
 */
-QGraphicsItemCache *QGraphicsItemPrivate::maybeExtraItemCache() const
-{
-    return (QGraphicsItemCache *)qvariant_cast<void *>(extra(ExtraCacheData));
-}
-
-/*!
-    \internal
-*/
 QGraphicsItemCache *QGraphicsItemPrivate::extraItemCache()
 {
     QGraphicsItemCache *c = (QGraphicsItemCache *)qvariant_cast<void *>(extra(ExtraCacheData));

@@ -360,7 +360,6 @@ public:
 
     QList<ExtraStruct> extras;
 
-    QGraphicsItemCache *maybeExtraItemCache() const;
     QGraphicsItemCache *extraItemCache();
     void removeExtraItemCache();
 
