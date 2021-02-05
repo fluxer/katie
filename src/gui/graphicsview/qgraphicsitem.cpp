@@ -673,15 +673,6 @@
 */
 
 /*!
-    \enum QGraphicsItem::Extension
-    \internal
-
-    Note: This is provided as a hook to avoid future problems related
-    to adding virtual functions. See also extension(),
-    supportsExtension() and setExtension().
-*/
-
-/*!
     \enum QGraphicsItem::PanelModality
     \since 4.6
 
@@ -7227,42 +7218,6 @@ QVariant QGraphicsItem::itemChange(GraphicsItemChange change, const QVariant &va
 /*!
     \internal
 
-    Note: This is provided as a hook to avoid future problems related
-    to adding virtual functions.
-*/
-bool QGraphicsItem::supportsExtension(Extension extension) const
-{
-    Q_UNUSED(extension);
-    return false;
-}
-
-/*!
-    \internal
-
-    Note: This is provided as a hook to avoid future problems related
-    to adding virtual functions.
-*/
-void QGraphicsItem::setExtension(Extension extension, const QVariant &variant)
-{
-    Q_UNUSED(extension);
-    Q_UNUSED(variant);
-}
-
-/*!
-    \internal
-
-    Note: This is provided as a hook to avoid future problems related
-    to adding virtual functions.
-*/
-QVariant QGraphicsItem::extension(const QVariant &variant) const
-{
-    Q_UNUSED(variant);
-    return QVariant();
-}
-
-/*!
-    \internal
-
     Adds this item to the scene's index. Called in conjunction with
     removeFromIndex() to ensure the index bookkeeping is correct when
     the item's position, transformation or shape changes.
@@ -8103,33 +8058,6 @@ int QGraphicsPathItem::type() const
 }
 
 /*!
-    \internal
-*/
-bool QGraphicsPathItem::supportsExtension(Extension extension) const
-{
-    Q_UNUSED(extension);
-    return false;
-}
-
-/*!
-    \internal
-*/
-void QGraphicsPathItem::setExtension(Extension extension, const QVariant &variant)
-{
-    Q_UNUSED(extension);
-    Q_UNUSED(variant);
-}
-
-/*!
-    \internal
-*/
-QVariant QGraphicsPathItem::extension(const QVariant &variant) const
-{
-    Q_UNUSED(variant);
-    return QVariant();
-}
-
-/*!
     \class QGraphicsRectItem
     \brief The QGraphicsRectItem class provides a rectangle item that you
     can add to a QGraphicsScene.
@@ -8319,33 +8247,6 @@ void QGraphicsRectItem::paint(QPainter *painter, const QStyleOptionGraphicsItem 
 int QGraphicsRectItem::type() const
 {
     return Type;
-}
-
-/*!
-    \internal
-*/
-bool QGraphicsRectItem::supportsExtension(Extension extension) const
-{
-    Q_UNUSED(extension);
-    return false;
-}
-
-/*!
-    \internal
-*/
-void QGraphicsRectItem::setExtension(Extension extension, const QVariant &variant)
-{
-    Q_UNUSED(extension);
-    Q_UNUSED(variant);
-}
-
-/*!
-    \internal
-*/
-QVariant QGraphicsRectItem::extension(const QVariant &variant) const
-{
-    Q_UNUSED(variant);
-    return QVariant();
 }
 
 /*!
@@ -8611,34 +8512,6 @@ int QGraphicsEllipseItem::type() const
     return Type;
 }
 
-
-/*!
-    \internal
-*/
-bool QGraphicsEllipseItem::supportsExtension(Extension extension) const
-{
-    Q_UNUSED(extension);
-    return false;
-}
-
-/*!
-    \internal
-*/
-void QGraphicsEllipseItem::setExtension(Extension extension, const QVariant &variant)
-{
-    Q_UNUSED(extension);
-    Q_UNUSED(variant);
-}
-
-/*!
-    \internal
-*/
-QVariant QGraphicsEllipseItem::extension(const QVariant &variant) const
-{
-    Q_UNUSED(variant);
-    return QVariant();
-}
-
 /*!
     \class QGraphicsPolygonItem
     \brief The QGraphicsPolygonItem class provides a polygon item that you
@@ -8821,33 +8694,6 @@ void QGraphicsPolygonItem::paint(QPainter *painter, const QStyleOptionGraphicsIt
 int QGraphicsPolygonItem::type() const
 {
     return Type;
-}
-
-/*!
-    \internal
-*/
-bool QGraphicsPolygonItem::supportsExtension(Extension extension) const
-{
-    Q_UNUSED(extension);
-    return false;
-}
-
-/*!
-    \internal
-*/
-void QGraphicsPolygonItem::setExtension(Extension extension, const QVariant &variant)
-{
-    Q_UNUSED(extension);
-    Q_UNUSED(variant);
-}
-
-/*!
-    \internal
-*/
-QVariant QGraphicsPolygonItem::extension(const QVariant &variant) const
-{
-    Q_UNUSED(variant);
-    return QVariant();
 }
 
 /*!
@@ -9059,33 +8905,6 @@ void QGraphicsLineItem::paint(QPainter *painter, const QStyleOptionGraphicsItem 
 int QGraphicsLineItem::type() const
 {
     return Type;
-}
-
-/*!
-    \internal
-*/
-bool QGraphicsLineItem::supportsExtension(Extension extension) const
-{
-    Q_UNUSED(extension);
-    return false;
-}
-
-/*!
-    \internal
-*/
-void QGraphicsLineItem::setExtension(Extension extension, const QVariant &variant)
-{
-    Q_UNUSED(extension);
-    Q_UNUSED(variant);
-}
-
-/*!
-    \internal
-*/
-QVariant QGraphicsLineItem::extension(const QVariant &variant) const
-{
-    Q_UNUSED(variant);
-    return QVariant();
 }
 
 /*!
@@ -9366,33 +9185,6 @@ void QGraphicsPixmapItem::setShapeMode(ShapeMode mode)
         return;
     d->shapeMode = mode;
     d->hasShape = false;
-}
-
-/*!
-    \internal
-*/
-bool QGraphicsPixmapItem::supportsExtension(Extension extension) const
-{
-    Q_UNUSED(extension);
-    return false;
-}
-
-/*!
-    \internal
-*/
-void QGraphicsPixmapItem::setExtension(Extension extension, const QVariant &variant)
-{
-    Q_UNUSED(extension);
-    Q_UNUSED(variant);
-}
-
-/*!
-    \internal
-*/
-QVariant QGraphicsPixmapItem::extension(const QVariant &variant) const
-{
-    Q_UNUSED(variant);
-    return QVariant();
 }
 
 /*!
@@ -9960,33 +9752,6 @@ void QGraphicsTextItem::hoverLeaveEvent(QGraphicsSceneHoverEvent *event)
 /*!
     \internal
 */
-bool QGraphicsTextItem::supportsExtension(Extension extension) const
-{
-    Q_UNUSED(extension);
-    return false;
-}
-
-/*!
-    \internal
-*/
-void QGraphicsTextItem::setExtension(Extension extension, const QVariant &variant)
-{
-    Q_UNUSED(extension);
-    Q_UNUSED(variant);
-}
-
-/*!
-    \internal
-*/
-QVariant QGraphicsTextItem::extension(const QVariant &variant) const
-{
-    Q_UNUSED(variant);
-    return QVariant();
-}
-
-/*!
-    \internal
-*/
 void QGraphicsTextItemPrivate::_q_update(QRectF rect)
 {
     if (rect.isValid()) {
@@ -10439,33 +10204,6 @@ void QGraphicsSimpleTextItem::paint(QPainter *painter, const QStyleOptionGraphic
 int QGraphicsSimpleTextItem::type() const
 {
     return Type;
-}
-
-/*!
-    \internal
-*/
-bool QGraphicsSimpleTextItem::supportsExtension(Extension extension) const
-{
-    Q_UNUSED(extension);
-    return false;
-}
-
-/*!
-    \internal
-*/
-void QGraphicsSimpleTextItem::setExtension(Extension extension, const QVariant &variant)
-{
-    Q_UNUSED(extension);
-    Q_UNUSED(variant);
-}
-
-/*!
-    \internal
-*/
-QVariant QGraphicsSimpleTextItem::extension(const QVariant &variant) const
-{
-    Q_UNUSED(variant);
-    return QVariant();
 }
 
 /*!

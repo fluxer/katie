@@ -424,13 +424,6 @@ protected:
 
     virtual QVariant itemChange(GraphicsItemChange change, const QVariant &value);
 
-    enum Extension {
-        UserExtension = 0x80000000
-    };
-    virtual bool supportsExtension(Extension extension) const;
-    virtual void setExtension(Extension extension, const QVariant &variant);
-    virtual QVariant extension(const QVariant &variant) const;
-
 protected:
     QGraphicsItem(QGraphicsItemPrivate &dd,
                   QGraphicsItem *parent, QGraphicsScene *scene);
@@ -625,11 +618,6 @@ public:
     enum { Type = 2 };
     int type() const;
 
-protected:
-    bool supportsExtension(Extension extension) const;
-    void setExtension(Extension extension, const QVariant &variant);
-    QVariant extension(const QVariant &variant) const;
-
 private:
     Q_DISABLE_COPY(QGraphicsPathItem)
     Q_DECLARE_PRIVATE(QGraphicsPathItem)
@@ -665,11 +653,6 @@ public:
 
     enum { Type = 3 };
     int type() const;
-
-protected:
-    bool supportsExtension(Extension extension) const;
-    void setExtension(Extension extension, const QVariant &variant);
-    QVariant extension(const QVariant &variant) const;
 
 private:
     Q_DISABLE_COPY(QGraphicsRectItem)
@@ -716,11 +699,6 @@ public:
     enum { Type = 4 };
     int type() const;
 
-protected:
-    bool supportsExtension(Extension extension) const;
-    void setExtension(Extension extension, const QVariant &variant);
-    QVariant extension(const QVariant &variant) const;
-
 private:
     Q_DISABLE_COPY(QGraphicsEllipseItem)
     Q_DECLARE_PRIVATE(QGraphicsEllipseItem)
@@ -758,11 +736,6 @@ public:
 
     enum { Type = 5 };
     int type() const;
-
-protected:
-    bool supportsExtension(Extension extension) const;
-    void setExtension(Extension extension, const QVariant &variant);
-    QVariant extension(const QVariant &variant) const;
 
 private:
     Q_DISABLE_COPY(QGraphicsPolygonItem)
@@ -803,11 +776,6 @@ public:
 
     enum { Type = 6 };
     int type() const;
-
-protected:
-    bool supportsExtension(Extension extension) const;
-    void setExtension(Extension extension, const QVariant &variant);
-    QVariant extension(const QVariant &variant) const;
 
 private:
     Q_DISABLE_COPY(QGraphicsLineItem)
@@ -854,11 +822,6 @@ public:
 
     ShapeMode shapeMode() const;
     void setShapeMode(ShapeMode mode);
-
-protected:
-    bool supportsExtension(Extension extension) const;
-    void setExtension(Extension extension, const QVariant &variant);
-    QVariant extension(const QVariant &variant) const;
 
 private:
     Q_DISABLE_COPY(QGraphicsPixmapItem)
@@ -952,10 +915,6 @@ protected:
     void hoverMoveEvent(QGraphicsSceneHoverEvent *event);
     void hoverLeaveEvent(QGraphicsSceneHoverEvent *event);
 
-    bool supportsExtension(Extension extension) const;
-    void setExtension(Extension extension, const QVariant &variant);
-    QVariant extension(const QVariant &variant) const;
-
 private:
     Q_DISABLE_COPY(QGraphicsTextItem)
     Q_PRIVATE_SLOT(dd, void _q_updateBoundingRect(const QSizeF &))
@@ -993,11 +952,6 @@ public:
 
     enum { Type = 9 };
     int type() const;
-
-protected:
-    bool supportsExtension(Extension extension) const;
-    void setExtension(Extension extension, const QVariant &variant);
-    QVariant extension(const QVariant &variant) const;
 
 private:
     Q_DISABLE_COPY(QGraphicsSimpleTextItem)
