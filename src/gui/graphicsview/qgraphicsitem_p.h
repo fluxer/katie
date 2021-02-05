@@ -321,19 +321,14 @@ public:
 
     inline void setExtra(Extra type, const QVariant &value)
     {
-        int index = -1;
         for (int i = 0; i < extras.size(); ++i) {
             if (extras.at(i).type == type) {
-                index = i;
-                break;
+                extras[i].value = value;
+                return;
             }
         }
 
-        if (index == -1) {
-            extras << ExtraStruct(type, value);
-        } else {
-            extras[index].value = value;
-        }
+        extras << ExtraStruct(type, value);
     }
 
     inline void unsetExtra(Extra type)
