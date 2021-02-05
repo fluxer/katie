@@ -80,21 +80,17 @@ class QSvgPaintEnginePrivate : public QPaintEnginePrivate
 {
 public:
     QSvgPaintEnginePrivate()
+        : outputDevice(Q_NULLPTR),
+        resolution(72),
+        afterFirstUpdate(false),
+        numGradients(0)
     {
-        size = QSize();
-        viewBox = QRectF();
-        outputDevice = 0;
-        resolution = 72;
-
         attributes.document_title = QLatin1String("Katie Svg Document");
         attributes.document_description = QLatin1String("Generated with Katie");
         attributes.font_family = QLatin1String("serif");
         attributes.font_size = QLatin1String("10pt");
         attributes.font_style = QLatin1String("normal");
         attributes.font_weight = QLatin1String("normal");
-
-        afterFirstUpdate = false;
-        numGradients = 0;
     }
 
     QSize size;
