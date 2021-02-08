@@ -1131,9 +1131,9 @@ QList<int> QIcuCodec::allMibs()
 
     for (int i = 0; i < ucnv_countAvailable(); i++) {
         const char *name = ucnv_getAvailableName(i);
-        for (qint16 i = 0; i < MIBTblSize; i++) {
-            if (ucnv_compareNames(name, MIBTbl[i].name) == 0) {
-                allmibs.append(MIBTbl[i].mib);
+        for (qint16 m = 0; m < MIBTblSize; m++) {
+            if (ucnv_compareNames(name, MIBTbl[m].name) == 0) {
+                allmibs.append(MIBTbl[m].mib);
             }
         }
     }
