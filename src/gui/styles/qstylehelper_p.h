@@ -56,19 +56,24 @@ namespace QStyleHelper
 }
 
 // internal helper. Converts an integer value to an unique string token
-template <typename T>
-        struct HexString
+template <class SRC>
+inline QChar HexString(const SRC val)
 {
-    inline HexString(const T t)
-        : val(t)
-    {}
+    const char *c = reinterpret_cast<const char *>(&val);
+    return QChar(qChecksum(c, sizeof(SRC)));
+}
 
-    inline operator const QChar() const {
-        const char *c = reinterpret_cast<const char *>(&val);
-        return QChar(qChecksum(c ,sizeof(T)));
-    }
-    const T val;
-};
+#define TRIVIAL_HEXSTRING(TYPE)                 \
+template <>                                     \
+inline QChar HexString(const TYPE val)          \
+{                                               \
+    return QChar(val);                          \
+}
+
+TRIVIAL_HEXSTRING(uint)
+TRIVIAL_HEXSTRING(int)
+
+#undef TRIVIAL_HEXSTRING
 
 QT_END_NAMESPACE
 
