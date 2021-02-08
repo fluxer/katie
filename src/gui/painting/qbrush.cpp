@@ -22,14 +22,13 @@
 #include "qbrush.h"
 #include "qpixmap.h"
 #include "qbitmap.h"
-#include "qpixmapcache.h"
 #include "qdatastream.h"
 #include "qvariant.h"
 #include "qline.h"
 #include "qdebug.h"
-#include <QtCore/qcoreapplication.h>
+#include "qcoreapplication.h"
 #include "qstylehelper_p.h"
-#include <QtCore/qnumeric.h>
+#include "qnumeric.h"
 
 QT_BEGIN_NAMESPACE
 
@@ -59,15 +58,7 @@ static const uchar *qt_patternForBrush(int brushStyle)
 QPixmap qt_pixmapForBrush(int brushStyle)
 {
 
-    QPixmap pm;
-    QString key = QLatin1String("$qt-brush$") + HexString<uint>(brushStyle);
-    if (!QPixmapCache::find(key, pm)) {
-        pm = QBitmap::fromData(QSize(8, 8), qt_patternForBrush(brushStyle),
-                               QImage::Format_MonoLSB);
-        QPixmapCache::insert(key, pm);
-    }
-
-    return pm;
+    return QBitmap::fromData(QSize(8, 8), qt_patternForBrush(brushStyle), QImage::Format_MonoLSB);
 }
 
 Q_GUI_EXPORT QImage qt_diagCrossBrush()
