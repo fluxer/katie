@@ -128,8 +128,9 @@ bool QEventDispatcherX11::processEvents(QEventLoop::ProcessEventsFlags flags)
 
 bool QEventDispatcherX11::hasPendingEvents()
 {
-    extern uint qGlobalPostedEventsCount(); // from qapplication.cpp
-    return (qGlobalPostedEventsCount() || XPending(qt_x11Data->display));
+    if (XPending(qt_x11Data->display))
+        return true;
+    return QEventDispatcherUNIX::hasPendingEvents();
 }
 
 void QEventDispatcherX11::flush()

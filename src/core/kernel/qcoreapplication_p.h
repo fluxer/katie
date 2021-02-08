@@ -46,8 +46,6 @@ typedef QList<QTranslator*> QTranslatorList;
 
 class QAbstractEventDispatcher;
 
-Q_CORE_EXPORT uint qGlobalPostedEventsCount();
-
 class Q_CORE_EXPORT QCoreApplicationPrivate : public QObjectPrivate
 {
     Q_DECLARE_PUBLIC(QCoreApplication)

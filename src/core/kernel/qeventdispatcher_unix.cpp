@@ -778,8 +778,8 @@ bool QEventDispatcherUNIX::processEvents(QEventLoop::ProcessEventsFlags flags)
 
 bool QEventDispatcherUNIX::hasPendingEvents()
 {
-    extern uint qGlobalPostedEventsCount(); // from qapplication.cpp
-    return qGlobalPostedEventsCount();
+    QThreadData *currentThreadData = QThreadData::current();
+    return currentThreadData->postEventList.size() - currentThreadData->postEventList.startOffset;
 }
 
 void QEventDispatcherUNIX::wakeUp()

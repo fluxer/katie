@@ -120,12 +120,6 @@ QSettings *QCoreApplicationPrivate::staticConf()
 }
 #endif
 
-Q_CORE_EXPORT uint qGlobalPostedEventsCount()
-{
-    QThreadData *currentThreadData = QThreadData::current();
-    return currentThreadData->postEventList.size() - currentThreadData->postEventList.startOffset;
-}
-
 QCoreApplication *QCoreApplication::self = 0;
 std::bitset<Qt::AA_AttributeCount> QCoreApplicationPrivate::attribs;
 
