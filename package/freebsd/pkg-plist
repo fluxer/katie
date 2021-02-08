@@ -174,8 +174,6 @@ include/katie/QtCore/QSystemSemaphore
 include/katie/QtCore/QTemporaryFile
 include/katie/QtCore/QTextBoundaryFinder
 include/katie/QtCore/QTextCodec
-include/katie/QtCore/QTextCodecFactoryInterface
-include/katie/QtCore/QTextCodecPlugin
 include/katie/QtCore/QTextDecoder
 include/katie/QtCore/QTextEncoder
 include/katie/QtCore/QTextStream
@@ -328,7 +326,6 @@ include/katie/QtCore/qtconcurrentthreadengine.h
 include/katie/QtCore/qtemporaryfile.h
 include/katie/QtCore/qtextboundaryfinder.h
 include/katie/QtCore/qtextcodec.h
-include/katie/QtCore/qtextcodecplugin.h
 include/katie/QtCore/qtextstream.h
 include/katie/QtCore/qthread.h
 include/katie/QtCore/qthreadpool.h

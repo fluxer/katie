@@ -47,12 +47,6 @@
 #include "qhash.h"
 #include "qicucodec_p.h"
 
-#ifndef QT_NO_LIBRARY
-# include "qcoreapplication.h"
-# include "qtextcodecplugin.h"
-# include "qfactoryloader_p.h"
-#endif
-
 #include <stdlib.h>
 #include <ctype.h>
 #include <locale.h>
@@ -62,11 +56,6 @@
 // #define Q_DEBUG_TEXTCODEC
 
 QT_BEGIN_NAMESPACE
-
-#if !defined(QT_NO_LIBRARY) && !defined(QT_NO_TEXTCODECPLUGIN)
-Q_GLOBAL_STATIC_WITH_ARGS(QFactoryLoader, codecsloader,
-    (QTextCodecFactoryInterface_iid, QLatin1String("/codecs")))
-#endif
 
 static inline bool nameMatch(const QByteArray &name, const QByteArray &name2)
 {
@@ -549,18 +538,6 @@ QTextCodec *QTextCodec::codecForName(const QByteArray &name)
         }
     }
 
-#if !defined(QT_NO_LIBRARY) && !defined(QT_NO_TEXTCODECPLUGIN)
-    const QFactoryLoader *l = codecsloader();
-    foreach (const QString &key, l->keys()) {
-        if (nameMatch(name, key.toLatin1())) {
-            if (QTextCodecFactoryInterface *factory
-                = qobject_cast<QTextCodecFactoryInterface*>(l->instance(key))) {
-                return factory->create(key);
-            }
-        }
-    }
-#endif
-
     foreach(const QByteArray &codec, QIcuCodec::allCodecs()) {
         if (nameMatch(name, codec)) {
             return new QIcuCodec(name);
@@ -589,13 +566,6 @@ QTextCodec* QTextCodec::codecForMib(int mib)
         }
     }
 
-#ifndef QT_NO_TEXTCODECPLUGIN
-    QString name = QLatin1String("MIB: ") + QString::number(mib);
-    if (QTextCodecFactoryInterface *factory
-        = qobject_cast<QTextCodecFactoryInterface*>(codecsloader()->instance(name)))
-        return factory->create(name);
-#endif
-
     foreach(const int codec, QIcuCodec::allMibs()) {
         if (mib == codec) {
             return new QIcuCodec(mib);
@@ -616,20 +586,9 @@ QTextCodec* QTextCodec::codecForMib(int mib)
 */
 QList<QByteArray> QTextCodec::availableCodecs()
 {
-    QList<QByteArray> codecs;
-    codecs << "System" << QIcuCodec::allCodecs();
-
-#if !defined(QT_NO_LIBRARY) && !defined(QT_NO_TEXTCODECPLUGIN)
-    const QFactoryLoader *l = codecsloader();
-    foreach (const QString &key, l->keys()) {
-        if (!key.startsWith(QLatin1String("MIB: "))) {
-            QByteArray name = key.toLatin1();
-            if (!codecs.contains(name))
-                codecs += name;
-        }
-    }
-#endif
-
+    static const QList<QByteArray> codecs = QList<QByteArray>()
+        << "System"
+        << QIcuCodec::allCodecs();
     return codecs;
 }
 
@@ -641,20 +600,7 @@ QList<QByteArray> QTextCodec::availableCodecs()
 */
 QList<int> QTextCodec::availableMibs()
 {
-    QList<int> codecs;
-    codecs << QIcuCodec::allMibs();
-
-#if !defined(QT_NO_LIBRARY) && !defined(QT_NO_TEXTCODECPLUGIN)
-    const QFactoryLoader *l = codecsloader();
-    foreach (const QString &key, l->keys()) {
-        if (key.startsWith(QLatin1String("MIB: "))) {
-            int mib = key.mid(5).toInt();
-            if (!codecs.contains(mib))
-                codecs += mib;
-        }
-    }
-#endif
-
+    static const QList<int> codecs = QIcuCodec::allMibs();
     return codecs;
 }
 

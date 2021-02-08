@@ -28,7 +28,6 @@ set(CORE_PUBLIC_HEADERS
     QtConcurrentMap
     QBitArray
     QChar
-    QTextCodecPlugin
     QMap
     QTextStream
     QDebug
@@ -121,7 +120,6 @@ set(CORE_HEADERS
     ${CMAKE_CURRENT_SOURCE_DIR}/codecs/qtextcodec_p.h
     ${CMAKE_CURRENT_SOURCE_DIR}/codecs/qtextcodec.h
     ${CMAKE_CURRENT_SOURCE_DIR}/codecs/qicucodec_p.h
-    ${CMAKE_CURRENT_SOURCE_DIR}/codecs/qtextcodecplugin.h
     ${CMAKE_CURRENT_SOURCE_DIR}/concurrent/qfuture.h
     ${CMAKE_CURRENT_SOURCE_DIR}/concurrent/qfutureinterface.h
     ${CMAKE_CURRENT_SOURCE_DIR}/concurrent/qfuturesynchronizer.h
@@ -296,7 +294,6 @@ set(CORE_HEADERS
 
 set(CORE_SOURCES
     ${CMAKE_CURRENT_SOURCE_DIR}/codecs/qtextcodec.cpp
-    ${CMAKE_CURRENT_SOURCE_DIR}/codecs/qtextcodecplugin.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/codecs/qicucodec.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/concurrent/qfuture.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/concurrent/qfutureinterface.cpp

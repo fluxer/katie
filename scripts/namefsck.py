@@ -725,8 +725,6 @@ classlist = [
     "QTextBrowser",
     "QTextCharFormat",
     "QTextCodec",
-    "QTextCodecFactoryInterface",
-    "QTextCodecPlugin",
     "QTextCursor",
     "QTextDecoder",
     "QTextDocument",

@@ -89,7 +89,6 @@ incmap = {
         'QStringRef': 'qstring.h',
         'QSysInfo': 'qglobal.h',
         'QSystemLocale': 'qlocale.h',
-        'QTextCodecFactoryInterface': 'qtextcodecplugin.h',
         'QTextDecoder': 'qtextcodec.h',
         'QTextEncoder': 'qtextcodec.h',
         'QTextStreamFunction': 'qtextstream.h',

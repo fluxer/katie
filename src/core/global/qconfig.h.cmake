@@ -100,6 +100,7 @@
 #define QT_NO_IMAGE_TEXT
 #define QT_NO_IMAGEFORMAT_MNG
 #define QT_NO_TEXTODFWRITER
+#define QT_NO_TEXTCODECPLUGIN
 
 // Not supported, used to bootstrap
 #cmakedefine QT_NO_QOBJECT
@@ -291,7 +292,6 @@
 #cmakedefine QT_NO_TEXTBROWSER
 #cmakedefine QT_NO_TEXTCODE
 #cmakedefine QT_NO_TEXTCODEC
-#cmakedefine QT_NO_TEXTCODECPLUGIN
 #cmakedefine QT_NO_TEXTCONTROL
 #cmakedefine QT_NO_TEXTDATE
 #cmakedefine QT_NO_TEXTEDIT
@@ -501,11 +501,6 @@
 // QtSvg module
 #if !defined(QT_NO_SVG) && (defined(QT_NO_XMLSTREAMREADER) || defined(QT_NO_CSSPARSER))
 #  define QT_NO_SVG
-#endif
-
-// QTextCodecPlugin
-#if !defined(QT_NO_TEXTCODECPLUGIN) && (defined(QT_NO_TEXTCODEC) || defined(QT_NO_LIBRARY))
-#  define QT_NO_TEXTCODECPLUGIN
 #endif
 
 // QColorDialog
