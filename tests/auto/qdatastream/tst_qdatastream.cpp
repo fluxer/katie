@@ -265,7 +265,12 @@ static int NColorRoles[] = {
     QPalette::ToolTipText + 1,     // Qt_4_7
     QPalette::ToolTipText + 1,     // Qt_4_8
     QPalette::ToolTipText + 1,     // Qt_4_9
-    0                              // add the correct value for Qt_4_10 here later
+    QPalette::ToolTipText + 1,     // Qt_4_10
+#if QT_VERSION > 0x041000
+#error Add the datastream color role for this version
+    QPalette::ToolTipText + 1,     // Qt_4_11
+#endif
+    0                              // add the correct value for Qt_4_11 here later
 };
 
 // Testing get/set functions

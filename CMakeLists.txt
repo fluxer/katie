@@ -82,9 +82,9 @@ endforeach()
 
 # mostly relevant to the build process, also stored in the version file for CMake and in qconfig.h.cmake
 set(KATIE_MAJOR "4")
-set(KATIE_MINOR "9")
-set(KATIE_MICRO "2")
-set(KATIE_HEX "0x040902")
+set(KATIE_MINOR "10")
+set(KATIE_MICRO "0")
+set(KATIE_HEX "0x041000")
 set(KATIE_VERSION "${KATIE_MAJOR}.${KATIE_MINOR}.${KATIE_MICRO}")
 
 # only for the build process

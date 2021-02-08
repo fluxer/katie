@@ -3,7 +3,7 @@
 # https://www.openbsd.org/faq/ports/
 
 DISTNAME = katie
-PKGNAME = katie-4.9.2.d20201231
+PKGNAME = katie-4.10.0.d20201231
 CATEGORIES = devel x11 net www
 MAINTAINER = Ivailo Monev <xakepa10@gmail.com>
 COMMENT = C++ toolkit derived from the Qt 4.8 framework
@@ -31,19 +31,19 @@ SEPARATE_BUILD = Yes
 CONFIGURE_ARGS = -DKATIE_TOOLS_SUFFIX="-katie"
 
 SHARED_LIBS = \
-	KtCore                4.9 \
-	KtDBus                4.9 \
-	KtDeclarative         4.9 \
-	KtDesigner            4.9 \
-	KtDesignerComponents  4.9 \
-	KtGui                 4.9 \
-	KtNetwork             4.9 \
-	KtScript              4.9 \
-	KtScriptTools         4.9 \
-	KtSql                 4.9 \
-	KtSvg                 4.9 \
-	KtTest                4.9 \
-	KtUiTools             4.9 \
-	KtXml                 4.9
+	KtCore                4.10 \
+	KtDBus                4.10 \
+	KtDeclarative         4.10 \
+	KtDesigner            4.10 \
+	KtDesignerComponents  4.10 \
+	KtGui                 4.10 \
+	KtNetwork             4.10 \
+	KtScript              4.10 \
+	KtScriptTools         4.10 \
+	KtSql                 4.10 \
+	KtSvg                 4.10 \
+	KtTest                4.10 \
+	KtUiTools             4.10 \
+	KtXml                 4.10
 
 .include <bsd.port.mk>

@@ -4,7 +4,7 @@
 # https://wiki.archlinux.org/index.php/Arch_package_guidelines
 
 pkgname=katie-git
-pkgver=4.9.2.r4681.8f22ea5f
+pkgver=4.10.0.r4681.8f22ea5f
 pkgrel=1
 pkgdesc='C++ toolkit derived from the Qt 4.8 framework'
 arch=('i486' 'i686' 'pentium4' 'x86_64' 'arm')
@@ -23,7 +23,7 @@ conflicts=('katie')
 
 pkgver() {
     cd katie
-    printf "4.9.2.r%s.%s" "$(git rev-list --count HEAD)" "$(git rev-parse --short HEAD)"
+    printf "4.10.0.r%s.%s" "$(git rev-list --count HEAD)" "$(git rev-parse --short HEAD)"
 }
 
 prepare() {

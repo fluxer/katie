@@ -3,7 +3,7 @@
 # https://www.freebsd.org/doc/en_US.ISO8859-1/books/porters-handbook/
 
 PORTNAME = katie
-DISTVERSION = 4.9.2.d20201231
+DISTVERSION = 4.10.0.d20201231
 CATEGORIES = devel x11 ftp net www
 MAINTAINER = xakepa10@gmail.com
 COMMENT = C++ toolkit derived from the Qt 4.8 framework
