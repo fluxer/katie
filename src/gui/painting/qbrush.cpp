@@ -297,7 +297,7 @@ public:
 Q_GLOBAL_STATIC_WITH_INITIALIZER(QBrushData, nullBrushInstance,
                                  {
                                      x->ref = 1;
-                                     x->style = Qt::BrushStyle(0);
+                                     x->style = Qt::NoBrush;
                                      x->color = Qt::black;
                                  })
 
