@@ -537,7 +537,7 @@ public:
     static TYPE *NAME()                                              \
     {                                                                \
         static TYPE thisVariable;                                    \
-        static QGlobalStatic<TYPE > thisGlobalStatic(0);             \
+        static QGlobalStatic<TYPE > thisGlobalStatic(Q_NULLPTR);     \
         if (!thisGlobalStatic.pointer) {                             \
             TYPE *x = thisGlobalStatic.pointer = &thisVariable;      \
             INITIALIZER;                                             \
