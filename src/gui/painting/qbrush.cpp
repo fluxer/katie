@@ -70,39 +70,9 @@ QPixmap qt_pixmapForBrush(int brushStyle)
     return pm;
 }
 
-class QBrushPatternImageCache
+Q_GUI_EXPORT QImage qt_diagCrossBrush()
 {
-public:
-    QBrushPatternImageCache()
-    {
-        for (int style = Qt::Dense1Pattern; style <= Qt::DiagCrossPattern; ++style) {
-            int i = style - Qt::Dense1Pattern;
-            m_images[i] = QImage(qt_patternForBrush(style), 8, 8, 1, QImage::Format_MonoLSB);
-        }
-    }
-
-    ~QBrushPatternImageCache() {
-        for (int style = Qt::Dense1Pattern; style <= Qt::DiagCrossPattern; ++style) {
-            int i = style - Qt::Dense1Pattern;
-            m_images[i] = QImage();
-        }
-    }
-
-    QImage getImage(int brushStyle) const
-    {
-        Q_ASSERT(brushStyle >= Qt::Dense1Pattern && brushStyle <= Qt::DiagCrossPattern);
-        return m_images[brushStyle - Qt::Dense1Pattern];
-    }
-
-private:
-    QImage m_images[Qt::DiagCrossPattern - Qt::Dense1Pattern + 1];
-};
-
-Q_GLOBAL_STATIC(QBrushPatternImageCache, qt_brushPatternImageCache)
-
-Q_GUI_EXPORT QImage qt_imageForBrush(int brushStyle)
-{
-    return qt_brushPatternImageCache()->getImage(brushStyle);
+    return QImage(qt_patternForBrush(Qt::DiagCrossPattern), 8, 8, 1, QImage::Format_MonoLSB);
 }
 
 struct QTexturedBrushData : public QBrushData
