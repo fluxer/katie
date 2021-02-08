@@ -479,6 +479,10 @@ if(NOT WITH_EXECINFO OR NOT EXECINFO_FOUND)
 endif()
 
 # optional and conditional features
+if(NOT CMAKE_BUILD_TYPE STREQUAL "Debug")
+    katie_definition(-DQT_NO_DEBUG)
+endif()
+
 if(NOT WITH_ACCESSIBILITY)
     katie_definition(-DQT_NO_ACCESSIBILITY)
 endif()

@@ -12,7 +12,3 @@ elseif(CMAKE_SYSTEM_NAME MATCHES "(FreeBSD|DragonFly)")
 elseif(NOT CMAKE_SYSTEM_NAME MATCHES "(OpenBSD|NetBSD|Solaris|SunOS)")
     message(FATAL_ERROR "Unknown platform '${CMAKE_SYSTEM_NAME}'")
 endif()
-
-if(NOT CMAKE_BUILD_TYPE STREQUAL "Debug")
-    katie_definition(-DQT_NO_DEBUG)
-endif()
