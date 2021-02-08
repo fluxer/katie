@@ -5,7 +5,7 @@
 **
 ** This file is part of the QtDeclarative module of the Katie Toolkit.
 **
-** $QT_BEGIN_LICENSE:LGPL-ONLY$
+** $QT_BEGIN_LICENSE:LGPL$
 **
 ** GNU Lesser General Public License Usage
 ** This file may be used under the terms of the GNU Lesser

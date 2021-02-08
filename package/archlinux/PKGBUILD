@@ -9,7 +9,7 @@ pkgrel=1
 pkgdesc='C++ toolkit derived from the Qt 4.8 framework'
 arch=('i486' 'i686' 'pentium4' 'x86_64' 'arm')
 url='https://github.com/fluxer/katie'
-license=('LGPL' 'BSD' 'custom')
+license=('LGPL' 'BSD')
 depends=('libsm' 'libxcursor' 'libxinerama' 'icu' 'libcups' 'libxrandr' 'sqlite' 'fontconfig'
         'xdg-utils')
 makedepends=('cmake' 'git' 'postgresql' 'mariadb-libs' 'unixodbc' 'unifdef')
@@ -48,6 +48,4 @@ package() {
 
     install -vDm644 ../katie/LICENSE.BSD \
         "${pkgdir}/usr/share/licenses/katie-git/BSD.txt"
-    install -vDm644 ../katie/LGPL_EXCEPTION.txt \
-        "${pkgdir}/usr/share/licenses/katie-git/LGPL_EXCEPTION.txt"
 }

@@ -60,7 +60,6 @@ This package includes headers, pkg-config and CMake files.
 
 %files devel
 %doc README
-%license LGPL_EXCEPTION.txt
 %{_includedir}/katie/*
 %{_libdir}/*.so
 %{_libdir}/pkgconfig/*

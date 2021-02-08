@@ -2,7 +2,7 @@
 
 import os
 
-licenses = ['BSD', 'FDL', 'LGPL', 'LGPL-ONLY']
+licenses = ['BSD', 'FDL', 'LGPL']
 
 lfiles = []
 for root, subdirs, files in os.walk(os.curdir):
