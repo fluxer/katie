@@ -19,6 +19,7 @@
 **
 ****************************************************************************/
 
+#include "qapplication.h"
 #include "qwidget.h"
 #include "qpixmap.h"
 #include "qx11info_x11.h"
@@ -261,12 +262,14 @@ void QX11Info::setAppUserTime(unsigned long time)
 
 
 /*!
-    \fn const char *QX11Info::appClass()
-
     Returns the X11 application class.
 
     \sa display()
 */
+const char *QX11Info::appClass()
+{
+    return QApplication::applicationName().toLocal8Bit().constData();
+}
 
 /*!
     Returns the default display for the application.

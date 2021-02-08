@@ -214,9 +214,6 @@ Q_GUI_EXPORT QX11Data *qt_x11Data = 0;
 /*****************************************************************************
   Internal variables and functions
  *****************************************************************************/
-static const char *appName = 0;                         // application name
-static const char *appClass = 0;                        // application class
-static const char *appFont = 0;                         // application font
 static const char *mwGeometry = 0;                      // main widget geometry
 static const char *mwTitle = 0;                         // main widget title
 static bool        appSync = false;                     // X11 synchronization
@@ -488,7 +485,8 @@ static int qt_x_errhandler(Display *dpy, XErrorEvent *err)
 
 static int qt_xio_errhandler(Display *)
 {
-    qWarning("%s: Fatal IO error: client killed", appName);
+    QByteArray appName = QApplication::applicationName().toLocal8Bit();
+    qWarning("%s: Fatal IO error: client killed", appName.constData());
     QApplicationPrivate::reset_instance_pointer();
     QApplication::exit(1);
     return 0;
@@ -619,13 +617,11 @@ bool QApplicationPrivate::x11_apply_settings()
     if (groupCount == QPalette::NColorGroups)
         QApplicationPrivate::setSystemPalette(pal);
 
-    if (!appFont) {
-        QString fontDescription = settings->value(QLatin1String("Qt/font")).toString();
-        if (!fontDescription .isEmpty()) {
-            QFont font(QApplication::font());
-            font.fromString(fontDescription );
-            QApplicationPrivate::setSystemFont(font);
-        }
+    QString fontDescription = settings->value(QLatin1String("Qt/font")).toString();
+    if (!fontDescription.isEmpty()) {
+        QFont font(QApplication::font());
+        font.fromString(fontDescription );
+        QApplicationPrivate::setSystemFont(font);
     }
 
     // read library (ie. plugin) path list
@@ -1028,35 +1024,8 @@ void qt_init(QApplicationPrivate *priv, int,
     int argc = priv->argc;
     char **argv = priv->argv;
 
-    if (qt_x11Data->display) {
-        // Qt part of other application
-
-        // Set application name and class
-        appName = qstrdup("Qt-subapplication");
-        char *app_class = 0;
-        if (argv) {
-            const char* p = strrchr(argv[0], '/');
-            app_class = qstrdup(p ? p + 1 : argv[0]);
-            if (app_class[0])
-                app_class[0] = toupper(app_class[0]);
-        }
-        appClass = app_class;
-    } else {
-        // Qt controls everything (default)
-
-        if (QApplication::testAttribute(Qt::AA_X11InitThreads))
-            XInitThreads();
-
-        // Set application name and class
-        char *app_class = 0;
-        if (argv && argv[0]) {
-            const char *p = strrchr(argv[0], '/');
-            appName = p ? p + 1 : argv[0];
-            app_class = qstrdup(appName);
-            if (app_class[0])
-                app_class[0] = toupper(app_class[0]);
-        }
-        appClass = app_class;
+    if (!qt_x11Data->display && QApplication::testAttribute(Qt::AA_X11InitThreads)) {
+        XInitThreads();
     }
 
     // Install default error handlers
@@ -1072,12 +1041,6 @@ void qt_init(QApplicationPrivate *priv, int,
         if (arg == "-display") {
             if (++i < argc && !qt_x11Data->display)
                 qt_x11Data->displayName = argv[i];
-        } else if (arg == "-fn" || arg == "-font") {
-            if (++i < argc)
-                appFont = argv[i];
-        } else if (arg == "-name") {
-            if (++i < argc)
-                appName = argv[i];
         } else if (arg == "-title") {
             if (++i < argc)
                 mwTitle = argv[i];
@@ -1130,7 +1093,8 @@ void qt_init(QApplicationPrivate *priv, int,
     // Connect to X server
     if (qt_is_gui_used && !qt_x11Data->display) {
         if ((qt_x11Data->display = XOpenDisplay(qt_x11Data->displayName)) == 0) {
-            qWarning("%s: cannot connect to X server %s", appName,
+            QByteArray appName = QApplication::applicationName().toLocal8Bit();
+            qWarning("%s: cannot connect to X server %s", appName.constData(),
                      XDisplayName(qt_x11Data->displayName));
             QApplicationPrivate::reset_instance_pointer();
             QApplication::exit(1);
@@ -1358,7 +1322,7 @@ void qt_init(QApplicationPrivate *priv, int,
     QFont::initialize();
 
     if(qt_is_gui_used) {
-        qApp->setObjectName(QString::fromLocal8Bit(appName));
+        qApp->setObjectName(qApp->applicationName());
 
         for (int screen = 0; screen < qt_x11Data->screenCount; ++screen) {
             XSelectInput(qt_x11Data->display, QX11Info::appRootWindow(screen),
@@ -1473,14 +1437,6 @@ void qt_cleanup()
     delete [] qt_x11Data->argbVisuals;
     delete [] qt_x11Data->argbColormaps;
 
-    if (qt_x11Data->foreignDisplay) {
-        delete [] (char *)appName;
-        appName = 0;
-    }
-
-    delete [] (char *)appClass;
-    appClass = 0;
-
     if (qt_x11Data->net_supported_list)
         delete [] qt_x11Data->net_supported_list;
     qt_x11Data->net_supported_list = 0;
@@ -1495,18 +1451,8 @@ void qt_cleanup()
 
 
 /*****************************************************************************
-  Platform specific global and internal functions
+  Global and internal functions
  *****************************************************************************/
-
-QString QApplicationPrivate::appName() const
-{
-    return QString::fromLocal8Bit(QT_PREPEND_NAMESPACE(appName));
-}
-
-const char *QX11Info::appClass()                                // get application class
-{
-    return QT_PREPEND_NAMESPACE(appClass);
-}
 
 bool qt_nograb()                                // application no-grab option
 {
@@ -3830,8 +3776,6 @@ static void sm_performSaveYourself(QSessionManagerPrivate* smd)
     QStringList restart;
     restart  << argument0 << QLatin1String("-session")
              << smd->sessionId + QLatin1Char('_') + smd->sessionKey;
-    if (qstricmp(appName, QX11Info::appClass()) != 0)
-        restart << QLatin1String("-name") << QApplication::applicationName();
     sm->setRestartCommand(restart);
     QStringList discard;
     sm->setDiscardCommand(discard);

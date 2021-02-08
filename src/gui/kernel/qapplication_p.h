@@ -90,7 +90,6 @@ public:
     static QString desktopStyleKey();
 
     QAbstractEventDispatcher* createEventDispatcher();
-    QString appName() const;
     static void dispatchEnterLeave(QWidget *enter, QWidget *leave);
 
     //modality

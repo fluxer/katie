@@ -49,21 +49,6 @@
 
 QT_BEGIN_NAMESPACE
 
-QString QCoreApplicationPrivate::appName() const
-{
-#ifdef QT_HAVE_GETPROGNAME
-    if (applicationName.isEmpty()) {
-        return QString::fromLocal8Bit(::getprogname());
-    }
-#else
-    if (applicationName.isEmpty() && argv[0]) {
-        const char *p = ::strrchr(argv[0], '/');
-        return QString::fromLocal8Bit(p ? p + 1 : argv[0]);
-    }
-#endif // QT_HAVE_GETPROGNAME
-    return applicationName;
-}
-
 bool QCoreApplicationPrivate::checkInstance(const char *function)
 {
     if (Q_UNLIKELY(!QCoreApplication::self)) {
@@ -1593,13 +1578,21 @@ void QCoreApplication::setApplicationName(const QString &application)
 
 QString QCoreApplication::applicationName()
 {
-    if (coreappdata())
-        return coreappdata()->application;
-
-    if (QCoreApplication::self)
-        return QCoreApplication::self->d_func()->appName();
-
-    return QString();
+    QString name = coreappdata()->application;
+#ifdef QT_HAVE_GETPROGNAME
+    if (name.isEmpty()) {
+        name = QString::fromLocal8Bit(::getprogname());
+    }
+#else
+    if (name.isEmpty() && self) {
+        char ** const argv = self->d_func()->argv;
+        if (argv[0]) {
+            const char *p = ::strrchr(argv[0], '/');
+            name = QString::fromLocal8Bit(p ? p + 1 : argv[0]);
+        }
+    }
+#endif // QT_HAVE_GETPROGNAME
+    return name;
 }
 
 /*!

@@ -58,9 +58,6 @@ public:
     bool sendThroughObjectEventFilters(QObject *, QEvent *);
     bool notify_helper(QObject *, QEvent *);
 
-    virtual QString appName() const;
-    QString applicationName;
-
     virtual QAbstractEventDispatcher* createEventDispatcher();
     static void removePostedEvent(QEvent *);
 
