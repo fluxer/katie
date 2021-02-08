@@ -59,7 +59,6 @@ include(CheckStructHasMember)
 include(CheckCXXSourceRuns)
 include(FeatureSummary)
 include(KatieBuildMacros)
-include(mkspecs/mkspecs.cmake)
 
 # disable some compiler warnings
 set(KATIE_NO_WARNINGS
@@ -79,6 +78,16 @@ foreach(nowarning ${KATIE_NO_WARNINGS})
         set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} ${nowarning}")
     endif()
 endforeach()
+
+# https://www.gnu.org/software/libc/manual/html_node/Feature-Test-Macros.html
+# https://github.com/Kitware/CMake/blob/master/Modules/CMakeDetermineSystem.cmake
+if(CMAKE_SYSTEM_NAME MATCHES "(Linux|GNU)")
+    katie_definition(-D_LARGEFILE64_SOURCE -D_LARGEFILE_SOURCE -D_GNU_SOURCE)
+elseif(CMAKE_SYSTEM_NAME MATCHES "(FreeBSD|DragonFly)")
+    katie_definition(-D_THREAD_SAFE)
+elseif(NOT CMAKE_SYSTEM_NAME MATCHES "(OpenBSD|NetBSD|Solaris|SunOS)")
+    message(FATAL_ERROR "Unknown platform '${CMAKE_SYSTEM_NAME}'")
+endif()
 
 # mostly relevant to the build process, also stored in the version file for CMake and in qconfig.h.cmake
 set(KATIE_MAJOR "4")
@@ -1000,12 +1009,6 @@ configure_file(
     ${CMAKE_SOURCE_DIR}/cmake/profile.sh.cmake
     ${CMAKE_BINARY_DIR}/profile.sh
     @ONLY
-)
-
-install(
-    DIRECTORY mkspecs
-    DESTINATION ${KATIE_CMAKE_PATH}
-    COMPONENT Devel
 )
 
 install(

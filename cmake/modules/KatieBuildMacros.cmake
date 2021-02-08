@@ -1,6 +1,14 @@
 # Copyright (C) 2015, Ivailo Monev, <xakepa10@gmail.com>
 # Redistribution and use is allowed according to the terms of the BSD license.
 
+# a function to append definitions to KATIE_DEFINITIONS which is stored in
+# KatieConfig.cmake and pkg-config files as interface definitions and add
+# definitions to the current directory scope
+function(KATIE_DEFINITION DEF)
+    set(KATIE_DEFINITIONS ${KATIE_DEFINITIONS} ${DEF} ${ARGN} PARENT_SCOPE)
+    add_definitions(${DEF} ${ARGN})
+endfunction()
+
 # a function to check for header presence, if header is found a definition is
 # added
 function(KATIE_CHECK_HEADER FORHEADER)

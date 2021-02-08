@@ -1463,7 +1463,6 @@ lib/cmake/Katie/KatieConfigVersion.cmake
 lib/cmake/Katie/KatieTargets-%%CMAKE_BUILD_TYPE%%.cmake
 lib/cmake/Katie/KatieTargets.cmake
 lib/cmake/Katie/Qt4UseFile.cmake
-lib/cmake/Katie/mkspecs/mkspecs.cmake
 lib/katie/imports/Qt/labs/folderlistmodel/libqmlfolderlistmodelplugin.so
 lib/katie/imports/Qt/labs/folderlistmodel/qmldir
 lib/katie/imports/Qt/labs/gestures/libqmlgesturesplugin.so

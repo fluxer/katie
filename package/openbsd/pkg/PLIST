@@ -1480,8 +1480,6 @@ lib/cmake/Katie/KatieConfigVersion.cmake
 lib/cmake/Katie/KatieTargets${MODCMAKE_BUILD_SUFFIX}
 lib/cmake/Katie/KatieTargets.cmake
 lib/cmake/Katie/Qt4UseFile.cmake
-lib/cmake/Katie/mkspecs/
-lib/cmake/Katie/mkspecs/mkspecs.cmake
 lib/katie/
 lib/katie/imports/
 lib/katie/imports/Qt/
