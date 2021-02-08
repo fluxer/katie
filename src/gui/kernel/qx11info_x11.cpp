@@ -268,7 +268,9 @@ void QX11Info::setAppUserTime(unsigned long time)
 */
 const char *QX11Info::appClass()
 {
-    return QApplication::applicationName().toLocal8Bit().constData();
+    if (QApplication::instance())
+        return QApplication::applicationName().toLocal8Bit().constData();
+    return Q_NULLPTR;
 }
 
 /*!
