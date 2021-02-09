@@ -272,7 +272,7 @@ static QWidget *qt_popup_down = 0;  // popup that contains the pressed widget
 extern bool qt_xdnd_dragging;
 
 // gui or non-gui from qapplication.cpp
-extern bool qt_is_gui_used;
+extern QApplication::Type qt_appType;
 
 #ifndef QT_NO_XFIXES
 
@@ -1091,7 +1091,7 @@ void qt_init(QApplicationPrivate *priv, Display *display,
 #endif
 
     // Connect to X server
-    if (qt_is_gui_used && !qt_x11Data->display) {
+    if (qt_appType != QApplication::Tty && !qt_x11Data->display) {
         if ((qt_x11Data->display = XOpenDisplay(qt_x11Data->displayName)) == 0) {
             QByteArray appName = QApplication::applicationName().toLocal8Bit();
             qWarning("%s: cannot connect to X server %s", appName.constData(),
@@ -1108,7 +1108,7 @@ void qt_init(QApplicationPrivate *priv, Display *display,
 
     // Get X parameters
 
-    if (qt_is_gui_used) {
+    if (qt_appType != QApplication::Tty) {
         qt_x11Data->defaultScreen = DefaultScreen(qt_x11Data->display);
         qt_x11Data->screenCount = ScreenCount(qt_x11Data->display);
 
@@ -1321,7 +1321,7 @@ void qt_init(QApplicationPrivate *priv, Display *display,
     }
     QFont::initialize();
 
-    if(qt_is_gui_used) {
+    if(qt_appType != QApplication::Tty) {
         qApp->setObjectName(qApp->applicationName());
 
         for (int screen = 0; screen < qt_x11Data->screenCount; ++screen) {
@@ -1398,7 +1398,7 @@ void qt_init(QApplicationPrivate *priv, Display *display,
 
 void qt_cleanup()
 {
-    if (qt_is_gui_used) {
+    if (qt_appType != QApplication::Tty) {
         QPixmapCache::clear();
         QCursorData::cleanup();
         QFont::cleanup();
@@ -1417,7 +1417,7 @@ void qt_cleanup()
 #endif
 
     // Reset the error handlers
-    if (qt_is_gui_used)
+    if (qt_appType != QApplication::Tty)
         XSync(qt_x11Data->display, False); // sync first to process all possible errors
     XSetErrorHandler(original_x_errhandler);
     XSetIOErrorHandler(original_xio_errhandler);
@@ -1429,7 +1429,7 @@ void qt_cleanup()
         }
     }
 
-    if (qt_is_gui_used && !qt_x11Data->foreignDisplay)
+    if (qt_appType != QApplication::Tty && !qt_x11Data->foreignDisplay)
         XCloseDisplay(qt_x11Data->display);                // close X display
     qt_x11Data->display = 0;
 

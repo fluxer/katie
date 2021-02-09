@@ -342,7 +342,6 @@ int QApplicationPrivate::wheel_scroll_lines = 3;         // number of lines to s
 #else
 int QApplicationPrivate::wheel_scroll_lines = 0;
 #endif
-bool qt_is_gui_used = false;
 bool qt_in_tab_key_event = false;
 static int drag_time = 500;
 static int drag_distance = 4;
@@ -377,7 +376,7 @@ QWidgetList *qt_modal_stack = Q_NULLPTR;                     // stack of modal w
 void QApplicationPrivate::process_cmdline()
 {
     // process platform-indep command line
-    if (!qt_is_gui_used || !argc)
+    if (qt_appType == QApplication::Tty || !argc)
         return;
 
     for (int i=1; i<argc; i++) { // if you add anything here, modify QCoreApplication::arguments()
@@ -536,7 +535,6 @@ void QApplicationPrivate::construct(Display *dpy, Qt::HANDLE visual, Qt::HANDLE 
 {
     initResources();
 
-    qt_is_gui_used = (qt_appType != QApplication::Tty);
     process_cmdline();
 
     // Must be called before initializing
@@ -559,14 +557,8 @@ void QApplicationPrivate::construct(Display *dpy, Qt::HANDLE visual, Qt::HANDLE 
     if (qgetenv("QT_USE_NATIVE_WINDOWS").toInt() > 0)
         q->setAttribute(Qt::AA_NativeWindows);
 
-    if (qt_is_gui_used)
+    if (qt_appType != QApplication::Tty)
         initializeMultitouch();
-
-#ifndef QT_NO_LIBRARY
-    //make sure the plugin is loaded
-    if (qt_is_gui_used)
-        qt_guiPlatformPlugin();
-#endif
 }
 
 #if defined(Q_WS_X11)
@@ -757,7 +749,7 @@ QApplication::~QApplication()
 #endif
 
 #ifndef QT_NO_DRAGANDDROP
-    if (qt_is_gui_used)
+    if (qt_appType != QApplication::Tty)
         delete QDragManager::self();
 #endif
 
@@ -917,7 +909,7 @@ QStyle *QApplication::style()
 {
     if (QApplicationPrivate::app_style)
         return QApplicationPrivate::app_style;
-    if (!qt_is_gui_used) {
+    if (qt_appType == QApplication::Tty) {
         Q_ASSERT(!"No style available in non-gui applications!");
         return 0;
     }
