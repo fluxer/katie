@@ -5731,35 +5731,11 @@ QPixmap QCommonStyle::generatedIconPixmap(QIcon::Mode iconMode, const QPixmap &p
 }
 
 /*!
-  \reimp
-*/
-void QCommonStyle::polish(QPalette &pal)
-{
-    QStyle::polish(pal);
-}
-
-/*!
-    \reimp
- */
-void QCommonStyle::polish(QWidget *widget)
-{
-    QStyle::polish(widget);
-}
-
-/*!
     \reimp
  */
 void QCommonStyle::unpolish(QWidget *widget)
 {
     QStyle::unpolish(widget);
-}
-
-/*!
-  \reimp
-*/
-void QCommonStyle::polish(QApplication *app)
-{
-    QStyle::polish(app);
 }
 
 /*!

@@ -61,9 +61,6 @@ public:
     QPixmap generatedIconPixmap(QIcon::Mode iconMode, const QPixmap &pixmap,
                                 const QStyleOption *opt) const;
 
-    void polish(QPalette &);
-    void polish(QApplication *app);
-    void polish(QWidget *widget);
     void unpolish(QWidget *widget);
     void unpolish(QApplication *application);
 
