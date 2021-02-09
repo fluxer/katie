@@ -342,7 +342,7 @@ int QApplicationPrivate::wheel_scroll_lines = 3;         // number of lines to s
 #else
 int QApplicationPrivate::wheel_scroll_lines = 0;
 #endif
-bool qt_is_gui_used;
+bool qt_is_gui_used = false;
 bool qt_in_tab_key_event = false;
 static int drag_time = 500;
 static int drag_distance = 4;
