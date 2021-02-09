@@ -122,7 +122,6 @@ QThreadData *QThreadData::current()
         data->deref();
 
         data->isAdopted = true;
-        data->threadId = (Qt::HANDLE)pthread_self();
     }
     return data;
 }
@@ -155,7 +154,6 @@ void *QThreadPrivate::start(void *arg)
 
     thr->setPriority(thr->d_func()->priority);
 
-    data->threadId = (Qt::HANDLE)pthread_self();
     set_thread_data(data);
 
     data->ref();
@@ -235,8 +233,7 @@ void QThreadPrivate::finish(void *arg)
 
 Qt::HANDLE QThread::currentThreadId()
 {
-    // requires a C cast here otherwise we run into trouble on AIX
-    return (Qt::HANDLE)pthread_self();
+    return Qt::HANDLE(pthread_self());
 }
 
 int QThread::idealThreadCount()

@@ -40,7 +40,7 @@ QT_BEGIN_NAMESPACE
 
 QThreadData::QThreadData()
     : quitNow(false), canWait(true), isAdopted(false), loopLevel(0),
-    threadId(0), thread(Q_NULLPTR), eventDispatcher(Q_NULLPTR), _ref(1)
+    thread(Q_NULLPTR), eventDispatcher(Q_NULLPTR), _ref(1)
 {
     // fprintf(stderr, "QThreadData %p created\n", this);
 }

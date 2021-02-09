@@ -183,7 +183,6 @@ public:
     bool isAdopted;
     int loopLevel;
 
-    Qt::HANDLE threadId;
     QStack<QEventLoop *> eventLoops;
     QThread *thread;
     QAbstractEventDispatcher *eventDispatcher;
