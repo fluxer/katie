@@ -152,7 +152,6 @@ static QImageIOHandler *createWriteHandlerHelper(QIODevice *device,
 #ifndef QT_NO_IMAGEFORMAT_XBM
         } else if (testFormat == "xbm") {
             handler = new QXbmHandler;
-            handler->setOption(QImageIOHandler::SubType, testFormat);
 #endif
 #ifndef QT_NO_IMAGEFORMAT_PPM
         } else if (testFormat == "pbm" || testFormat == "pbmraw" || testFormat == "pgm"
