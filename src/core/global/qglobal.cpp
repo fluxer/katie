@@ -1049,7 +1049,7 @@ static void qt_print_backtrace()
     for (int i = 0; i < nptrs; i++) {
 #ifdef QT_HAVE_CXXABI_H
         int status;
-        char* demangled = abi::__cxa_demangle(strings[i], nullptr, nullptr, &status);
+        char* demangled = abi::__cxa_demangle(strings[i], Q_NULLPTR, Q_NULLPTR, &status);
         if (status == 0) {
             ::fprintf(stderr, " %s\n", demangled);
             ::free(demangled);
