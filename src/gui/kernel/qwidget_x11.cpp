@@ -745,8 +745,9 @@ void QWidgetPrivate::create_sys(WId window, bool initializeWindow, bool destroyO
 
         XClassHint class_hint;
         QByteArray appName = QApplication::applicationName().toLatin1();
+        QByteArray appClass = QX11Info::appClass();
         class_hint.res_name = appName.data(); // application name
-        class_hint.res_class = const_cast<char *>(QX11Info::appClass());   // application class
+        class_hint.res_class = appClass.data();   // application class
 
         XSetWMProperties(dpy, id, 0, 0,
                          qApp->d_func()->argv, qApp->d_func()->argc,

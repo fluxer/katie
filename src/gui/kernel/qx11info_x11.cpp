@@ -266,11 +266,11 @@ void QX11Info::setAppUserTime(unsigned long time)
 
     \sa display()
 */
-const char *QX11Info::appClass()
+QByteArray QX11Info::appClass()
 {
     if (QApplication::instance())
-        return QApplication::applicationName().toLocal8Bit().constData();
-    return Q_NULLPTR;
+        return QApplication::applicationName().toLocal8Bit();
+    return QByteArray();
 }
 
 /*!

@@ -44,8 +44,8 @@ void tst_QX11Info::staticFunctionsBeforeQApplication()
 
     Display *display = QX11Info::display();
     QCOMPARE(display, (Display *)0);
-    const char *appClass = QX11Info::appClass();
-    QCOMPARE(appClass, (const char *)0);
+    QByteArray appClass = QX11Info::appClass();
+    QCOMPARE(appClass, QByteArray());
     int appScreen = QX11Info::appScreen();
     QCOMPARE(appScreen, 0);
     int appDepth = QX11Info::appDepth();

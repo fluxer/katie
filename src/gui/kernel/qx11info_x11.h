@@ -42,7 +42,7 @@ public:
     QX11Info &operator=(const QX11Info &other);
 
     static Display *display();
-    static const char *appClass();
+    static QByteArray appClass();
     int screen() const;
     int depth() const;
     int cells() const;
