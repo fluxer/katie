@@ -3756,8 +3756,8 @@ QSize QCleanlooksStyle::sizeFromContents(ContentsType type, const QStyleOption *
         newSize += QSize(0, 4);
         break;
     case CT_MenuBarItem:
-	    newSize += QSize(0, 2);
-	    break;
+        newSize += QSize(0, 2);
+        break;
     case CT_MenuItem:
         if (const QStyleOptionMenuItem *menuItem = qstyleoption_cast<const QStyleOptionMenuItem *>(option)) {
             if (menuItem->menuItemType == QStyleOptionMenuItem::Separator) {
@@ -3775,8 +3775,8 @@ QSize QCleanlooksStyle::sizeFromContents(ContentsType type, const QStyleOption *
         }
         break;
     case CT_SizeGrip:
-	    newSize += QSize(4, 4);
-	break;
+        newSize += QSize(4, 4);
+        break;
     case CT_MdiControls:
         if (const QStyleOptionComplex *styleOpt = qstyleoption_cast<const QStyleOptionComplex *>(option)) {
             int width = 0;
