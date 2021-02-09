@@ -305,11 +305,8 @@ QApplicationPrivate::~QApplicationPrivate()
     qapplication_xyz.cpp file.
 */
 
-void qt_init(QApplicationPrivate *priv, int type
-#ifdef Q_WS_X11
-              , Display *display = 0, Qt::HANDLE visual = 0, Qt::HANDLE colormap = 0
-#endif
-   );
+void qt_init(QApplicationPrivate *priv, Display *display,
+             Qt::HANDLE visual, Qt::HANDLE colormap);
 void qt_cleanup();
 
 Qt::MouseButtons QApplicationPrivate::mouse_buttons = Qt::NoButton;
@@ -543,7 +540,7 @@ void QApplicationPrivate::construct(Display *dpy, Qt::HANDLE visual, Qt::HANDLE 
     process_cmdline();
 
     // Must be called before initializing
-    qt_init(this, qt_appType, dpy, visual, cmap);
+    qt_init(this, dpy, visual, cmap);
 
     QWidgetPrivate::mapper = new QWidgetMapper;
     QWidgetPrivate::allWidgets = new QWidgetSet;
