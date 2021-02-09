@@ -214,10 +214,10 @@ s.section(QChar::fromLatin1('.'),2,2).toInt()) { \
 if (!qApp){ \
     new QApplication(argc,argv); \
 } \
-QString s = QApplication::tr("Executable '%1' requires Qt "\
- "%2, found Qt %3.").arg(QApplication::applicationName()).arg(QString::fromLatin1(\
+QString s = QApplication::tr("Executable '%1' requires Katie "\
+ "%2, found Katie %3.").arg(QApplication::applicationName()).arg(QString::fromLatin1(\
 str)).arg(QString::fromLatin1(qVersion())); QMessageBox::critical(0, QApplication::tr(\
-"Incompatible Qt Library Error"), s, QMessageBox::Abort, 0); qFatal("%s", s.toLatin1().data()); }}
+"Incompatible Katie Library Error"), s, QMessageBox::Abort, 0); qFatal("%s", s.toLatin1().data()); }}
 
 #endif // QT_NO_MESSAGEBOX
 
