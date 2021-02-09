@@ -69,11 +69,9 @@ static inline bool qt_pixmap_thread_test()
     return true;
 }
 
-extern QApplication::Type qt_appType;
-
 void QPixmap::init(int w, int h, int type)
 {
-    if (qt_appType == QApplication::Tty) {
+    if (Q_UNLIKELY(QApplication::type() == QApplication::Tty)) {
         qWarning("QPixmap: Cannot create a QPixmap when no GUI is being used");
         data = 0;
         return;
