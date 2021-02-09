@@ -289,15 +289,14 @@ endfunction()
 # target properties
 macro(KATIE_SETUP_OBJECT FORTARGET)
     get_target_property(target_pic ${FORTARGET} POSITION_INDEPENDENT_CODE)
-    if(CMAKE_POSITION_INDEPENDENT_CODE OR target_pic)
-        foreach(objtarget ${ARGN})
+
+    foreach(objtarget ${ARGN})
+        if(CMAKE_POSITION_INDEPENDENT_CODE OR target_pic)
             set_target_properties(${objtarget} PROPERTIES
                 POSITION_INDEPENDENT_CODE TRUE
             )
-        endforeach()
-    endif()
+        endif()
 
-    foreach(objtarget ${ARGN})
         get_target_property(object_definitions ${objtarget} COMPILE_DEFINITIONS)
         get_target_property(object_includes ${objtarget} INCLUDE_DIRECTORIES)
         if(object_definitions)
