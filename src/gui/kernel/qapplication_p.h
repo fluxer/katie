@@ -81,7 +81,6 @@ public:
 
 #if defined(Q_WS_X11)
     static bool x11_apply_settings();
-    static void reset_instance_pointer();
 #endif
     static bool quitOnLastWindowClosed;
     static void emitLastWindowClosed();
