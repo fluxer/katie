@@ -485,9 +485,9 @@ static int qt_x_errhandler(Display *dpy, XErrorEvent *err)
 
 static int qt_xio_errhandler(Display *)
 {
-    QByteArray appName = QApplication::applicationName().toLocal8Bit();
-    qWarning("%s: Fatal IO error: client killed", appName.constData());
     QApplication::exit(1);
+    QByteArray appName = QApplication::applicationName().toLocal8Bit();
+    qFatal("%s: Fatal IO error: client killed", appName.constData());
     return 0;
 }
 
@@ -1084,10 +1084,10 @@ void qt_init(QApplicationPrivate *priv, Display *display,
     // Connect to X server
     if (qt_appType != QApplication::Tty && !qt_x11Data->display) {
         if ((qt_x11Data->display = XOpenDisplay(qt_x11Data->displayName)) == 0) {
-            QByteArray appName = QApplication::applicationName().toLocal8Bit();
-            qWarning("%s: cannot connect to X server %s", appName.constData(),
-                     XDisplayName(qt_x11Data->displayName));
             QApplication::exit(1);
+            QByteArray appName = QApplication::applicationName().toLocal8Bit();
+            qFatal("%s: cannot connect to X server %s", appName.constData(),
+                     XDisplayName(qt_x11Data->displayName));
         }
 
         if (appSync)                                // if "-sync" argument
