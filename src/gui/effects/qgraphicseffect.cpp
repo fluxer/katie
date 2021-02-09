@@ -155,36 +155,12 @@ QRectF QGraphicsEffect::sourceBoundingRect(Qt::CoordinateSystem system) const
 }
 
 /*!
-    Returns a pointer to the item if this source is a QGraphicsItem; otherwise
-    returns 0.
-
-    \sa widget()
-*/
-const QGraphicsItem *QGraphicsEffectSource::graphicsItem() const
-{
-    return d_func()->graphicsItem();
-}
-
-/*!
     Returns a pointer to the widget if this source is a QWidget; otherwise
     returns 0.
-
-    \sa graphicsItem()
 */
 const QWidget *QGraphicsEffectSource::widget() const
 {
     return d_func()->widget();
-}
-
-/*!
-    Returns a pointer to the style options (used when drawing the source) if
-    available; otherwise returns 0.
-
-    \sa graphicsItem(), widget()
-*/
-const QStyleOption *QGraphicsEffectSource::styleOption() const
-{
-    return d_func()->styleOption();
 }
 
 /*!
@@ -253,22 +229,9 @@ void QGraphicsEffectSource::update()
     point in drawing the source in device coordinates to avoid pixmap scaling
     if this function returns true - the source pixmap will be scaled anyways.
 */
-bool QGraphicsEffectSource::isPixmap() const
-{
-    return d_func()->isPixmap();
-}
-
-/*!
-    Returns true if the source effectively is a pixmap, e.g., a
-    QGraphicsPixmapItem.
-
-    This function is useful for optimization purposes. For instance, there's no
-    point in drawing the source in device coordinates to avoid pixmap scaling
-    if this function returns true - the source pixmap will be scaled anyways.
-*/
 bool QGraphicsEffect::sourceIsPixmap() const
 {
-    return source() ? source()->isPixmap() : false;
+    return false;
 }
 
 /*!
@@ -290,33 +253,12 @@ QPixmap QGraphicsEffectSource::pixmap(Qt::CoordinateSystem system, QPoint *offse
 {
     Q_D(const QGraphicsEffectSource);
 
-    // Shortcut, no cache for childless pixmap items...
-    const QGraphicsItem *item = graphicsItem();
-    if (system == Qt::LogicalCoordinates && mode == QGraphicsEffect::NoPad && item && isPixmap()) {
-        const QGraphicsPixmapItem *pixmapItem = static_cast<const QGraphicsPixmapItem *>(item);
-        if (offset)
-            *offset = pixmapItem->offset().toPoint();
-        return pixmapItem->pixmap();
-    }
+    QPixmap pm = d->pixmap(system, &d->m_cachedOffset, mode);
+    d->m_cachedSystem = system;
+    d->m_cachedMode = mode;
 
-    if (system == Qt::DeviceCoordinates && item
-        && !static_cast<const QGraphicsItemEffectSourcePrivate *>(d_func())->info) {
-        qWarning("QGraphicsEffectSource::pixmap: Not yet implemented, lacking device context");
-        return QPixmap();
-    }
-
-    QPixmap pm;
-    if (item && d->m_cachedSystem == system && d->m_cachedMode == mode)
-        QPixmapCache::find(d->m_cacheKey, &pm);
-
-    if (pm.isNull()) {
-        pm = d->pixmap(system, &d->m_cachedOffset, mode);
-        d->m_cachedSystem = system;
-        d->m_cachedMode = mode;
-
-        d->invalidateCache();
-        d->m_cacheKey = QPixmapCache::insert(pm);
-    }
+    d->invalidateCache();
+    d->m_cacheKey = QPixmapCache::insert(pm);
 
     if (offset)
         *offset = d->m_cachedOffset;
@@ -673,15 +615,6 @@ void QGraphicsColorizeEffect::draw(QPainter *painter)
     }
 
     QPoint offset;
-    if (sourceIsPixmap()) {
-        // No point in drawing in device coordinates (pixmap will be scaled anyways).
-        const QPixmap pixmap = sourcePixmap(Qt::LogicalCoordinates, &offset, NoPad);
-        if (!pixmap.isNull())
-            d->filter->draw(painter, offset, pixmap);
-
-        return;
-    }
-
     // Draw pixmap in deviceCoordinates to avoid pixmap scaling.
     const QPixmap pixmap = sourcePixmap(Qt::DeviceCoordinates, &offset);
     if (pixmap.isNull())
@@ -1172,8 +1105,7 @@ void QGraphicsOpacityEffect::draw(QPainter *painter)
     }
 
     QPoint offset;
-    Qt::CoordinateSystem system = sourceIsPixmap() ? Qt::LogicalCoordinates : Qt::DeviceCoordinates;
-    QPixmap pixmap = sourcePixmap(system, &offset, QGraphicsEffect::NoPad);
+    QPixmap pixmap = sourcePixmap(Qt::DeviceCoordinates, &offset, QGraphicsEffect::NoPad);
     if (pixmap.isNull())
         return;
 
@@ -1184,19 +1116,13 @@ void QGraphicsOpacityEffect::draw(QPainter *painter)
         QPainter pixmapPainter(&pixmap);
         pixmapPainter.setRenderHints(painter->renderHints());
         pixmapPainter.setCompositionMode(QPainter::CompositionMode_DestinationIn);
-        if (system == Qt::DeviceCoordinates) {
-            QTransform worldTransform = painter->worldTransform();
-            worldTransform *= QTransform::fromTranslate(-offset.x(), -offset.y());
-            pixmapPainter.setWorldTransform(worldTransform);
-            pixmapPainter.fillRect(sourceBoundingRect(), d->opacityMask);
-        } else {
-            pixmapPainter.translate(-offset);
-            pixmapPainter.fillRect(pixmap.rect(), d->opacityMask);
-        }
+        QTransform worldTransform = painter->worldTransform();
+        worldTransform *= QTransform::fromTranslate(-offset.x(), -offset.y());
+        pixmapPainter.setWorldTransform(worldTransform);
+        pixmapPainter.fillRect(sourceBoundingRect(), d->opacityMask);
     }
 
-    if (system == Qt::DeviceCoordinates)
-        painter->setWorldTransform(QTransform());
+    painter->setWorldTransform(QTransform());
 
     painter->drawPixmap(offset, pixmap);
     painter->restore();

@@ -623,9 +623,6 @@ public:
     inline void detach()
     { m_widget->d_func()->graphicsEffect = 0; }
 
-    inline const QGraphicsItem *graphicsItem() const
-    { return 0; }
-
     inline const QWidget *widget() const
     { return m_widget; }
 
@@ -636,9 +633,6 @@ public:
         updateDueToGraphicsEffect = false;
     }
 
-    inline bool isPixmap() const
-    { return false; }
-
     inline void effectBoundingRectChanged()
     {
         // ### This function should take a rect parameter; then we can avoid
@@ -648,9 +642,6 @@ public:
         else
             update();
     }
-
-    inline const QStyleOption *styleOption() const
-    { return Q_NULLPTR; }
 
     inline QRect deviceRect() const
     { return m_widget->window()->rect(); }
