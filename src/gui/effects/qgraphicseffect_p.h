@@ -50,7 +50,6 @@ class Q_GUI_EXPORT QGraphicsEffectSource : public QObject
 public:
     ~QGraphicsEffectSource();
     const QWidget *widget() const;
-    const QStyleOption *styleOption() const;
 
     void draw(QPainter *painter);
     void update();
