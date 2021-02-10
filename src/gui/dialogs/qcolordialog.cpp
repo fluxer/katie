@@ -398,7 +398,7 @@ int QColorDialog::customCount()
 */
 QRgb QColorDialog::customColor(int index)
 {
-    if (uint(index) >= uint(customCount()))
+    if (index >= customCount())
         return qRgb(255, 255, 255);
     initRGB();
     return cusrgb[index];
@@ -409,7 +409,7 @@ QRgb QColorDialog::customColor(int index)
 */
 void QColorDialog::setCustomColor(int index, QRgb color)
 {
-    if (uint(index) >= uint(customCount()))
+    if (index >= customCount())
         return;
     initRGB();
     customSet = true;
@@ -422,7 +422,7 @@ void QColorDialog::setCustomColor(int index, QRgb color)
 
 void QColorDialog::setStandardColor(int index, QRgb color)
 {
-    if (uint(index) >= uint(6 * 8))
+    if (index >= int(6 * 8))
         return;
     initRGB();
     stdrgb[index] = color;
