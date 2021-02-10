@@ -71,11 +71,7 @@ include/katie/QtCore/QHashNode
 include/katie/QtCore/QIODevice
 include/katie/QtCore/QIncompatibleFlag
 include/katie/QtCore/QInternal
-include/katie/QtCore/QJsonArray
 include/katie/QtCore/QJsonDocument
-include/katie/QtCore/QJsonObject
-include/katie/QtCore/QJsonParseError
-include/katie/QtCore/QJsonValue
 include/katie/QtCore/QLatin1Char
 include/katie/QtCore/QLatin1String
 include/katie/QtCore/QLibrary
@@ -256,10 +252,7 @@ include/katie/QtCore/qglobal.h
 include/katie/QtCore/qhash.h
 include/katie/QtCore/qiodevice.h
 include/katie/QtCore/qiterator.h
-include/katie/QtCore/qjsonarray.h
 include/katie/QtCore/qjsondocument.h
-include/katie/QtCore/qjsonobject.h
-include/katie/QtCore/qjsonvalue.h
 include/katie/QtCore/qlibrary.h
 include/katie/QtCore/qlibraryinfo.h
 include/katie/QtCore/qline.h

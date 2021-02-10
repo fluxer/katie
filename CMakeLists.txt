@@ -215,6 +215,15 @@ set_package_properties(ZSTD PROPERTIES
     TYPE REQUIRED
 )
 
+# v2.0+ required for json_loads() with three arguments
+find_package(Jansson 2.0)
+set_package_properties(Jansson PROPERTIES
+    PURPOSE "Required for JSON support"
+    DESCRIPTION "C library for encoding, decoding and manipulating JSON data"
+    URL "https://github.com/akheron/jansson"
+    TYPE REQUIRED
+)
+
 # v0.9.8+ required for SHA-224...SHA-512 support
 find_package(OpenSSL 0.9.8)
 set_package_properties(OpenSSL PROPERTIES
@@ -742,7 +751,6 @@ katie_generate_obsolete(QItemEditorCreatorBase QtGui qitemeditorfactory.h)
 katie_generate_obsolete(QItemEditorCreator QtGui qitemeditorfactory.h)
 katie_generate_obsolete(QItemSelection QtGui qitemselectionmodel.h)
 katie_generate_obsolete(QItemSelectionRange QtGui qitemselectionmodel.h)
-katie_generate_obsolete(QJsonParseError QtCore qjsondocument.h)
 katie_generate_obsolete(QKeyEvent QtGui qevent.h)
 katie_generate_obsolete(QLatin1Char QtCore qchar.h)
 katie_generate_obsolete(QLatin1String QtCore qstring.h)

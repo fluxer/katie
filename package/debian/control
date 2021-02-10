@@ -6,11 +6,12 @@ Vcs-Git: git://github.com/fluxer/katie.git
 Vcs-browser: https://github.com/fluxer/katie
 Standards-Version: 4.10.0
 Build-Depends: debhelper (>= 9~), libssl-dev, zlib1g-dev, libzstd-dev,
- libc6-dev, libpng-dev, libjpeg-dev, libtiff5-dev, libcups2-dev,
- libfreetype6-dev, libfontconfig1-dev, libpcre3-dev, libdbus-1-dev,
- unixodbc-dev, libicu-dev, libsqlite3-dev, cmake, git, xserver-xorg-dev,
- libxinerama-dev, libxrandr-dev, libxrender-dev, libxcursor-dev, libsm-dev,
- libpq-dev, libmariadbclient-dev, libmariadbd-dev, unifdef | dpkg
+ libc6-dev, libjansson-dev, libpng-dev, libjpeg-dev, libtiff5-dev,
+ libcups2-dev, libfreetype6-dev, libfontconfig1-dev, libpcre3-dev,
+ libdbus-1-dev, unixodbc-dev, libicu-dev, libsqlite3-dev, cmake, git,
+ xserver-xorg-dev, libxinerama-dev, libxrandr-dev, libxrender-dev,
+ libxcursor-dev, libsm-dev, libpq-dev, libmariadbclient-dev, libmariadbd-dev,
+ unifdef | dpkg
 
 Package: katie-runtime
 Architecture: amd64 arm64 armel armhf i386 mips mips64el mipsel ppc64el s390x hurd-i386

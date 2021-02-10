@@ -10,8 +10,8 @@ pkgdesc='C++ toolkit derived from the Qt 4.8 framework'
 arch=('i486' 'i686' 'pentium4' 'x86_64' 'arm')
 url='https://github.com/fluxer/katie'
 license=('LGPL' 'BSD')
-depends=('libsm' 'libxcursor' 'libxinerama' 'icu' 'libcups' 'libxrandr' 'sqlite' 'fontconfig'
-        'xdg-utils')
+depends=('libsm' 'libxcursor' 'libxinerama' 'icu' 'libcups' 'libxrandr' 'sqlite'
+        'fontconfig' 'xdg-utils' 'jansson')
 makedepends=('cmake' 'git' 'postgresql' 'mariadb-libs' 'unixodbc' 'unifdef')
 optdepends=('postgresql-libs: PostgreSQL driver'
         'mariadb-libs: MariaDB driver'

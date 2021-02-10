@@ -31,9 +31,6 @@
 
 #ifndef QT_BOOTSTRAPPED
 #  include "qeasingcurve.h"
-#  include "qjsonvalue.h"
-#  include "qjsonobject.h"
-#  include "qjsonarray.h"
 #  include "qjsondocument.h"
 #  include "qbitarray.h"
 #  include "qurl.h"
@@ -117,9 +114,6 @@ QT_BEGIN_NAMESPACE
     \value QPointF QPointF
     \value QRegExp QRegExp
     \value QEasingCurve QEasingCurve
-    \value QJsonValue QJsonValue
-    \value QJsonObject QJsonObject
-    \value QJsonArray QJsonArray
     \value QJsonDocument QJsonDocument
     \value QVariantHash QVariantHash
     \value QVariantList QVariantList
@@ -244,9 +238,6 @@ static const struct MetaTypeTblData {
     QT_ADD_STATIC_METATYPE("QPointF", QMetaType::QPointF),
     QT_ADD_STATIC_METATYPE("QRegExp", QMetaType::QRegExp),
     QT_ADD_STATIC_METATYPE("QEasingCurve", QMetaType::QEasingCurve),
-    QT_ADD_STATIC_METATYPE("QJsonValue", QMetaType:: QJsonValue),
-    QT_ADD_STATIC_METATYPE("QJsonObject", QMetaType::QJsonObject),
-    QT_ADD_STATIC_METATYPE("QJsonArray", QMetaType::QJsonArray),
     QT_ADD_STATIC_METATYPE("QJsonDocument", QMetaType::QJsonDocument),
     QT_ADD_STATIC_METATYPE("QVariantHash", QMetaType::QVariantHash),
     QT_ADD_STATIC_METATYPE("QVariantList", QMetaType::QVariantList),
@@ -621,9 +612,6 @@ bool QMetaType::save(QDataStream &stream, int type, const void *data)
     case QMetaType::VoidStar:
     case QMetaType::QObjectStar:
     case QMetaType::QWidgetStar:
-    case QMetaType::QJsonValue:
-    case QMetaType::QJsonObject:
-    case QMetaType::QJsonArray:
     case QMetaType::QJsonDocument:
         return false;
     case QMetaType::Long:
@@ -818,9 +806,6 @@ bool QMetaType::load(QDataStream &stream, int type, void *data)
     case QMetaType::VoidStar:
     case QMetaType::QObjectStar:
     case QMetaType::QWidgetStar:
-    case QMetaType::QJsonValue:
-    case QMetaType::QJsonObject:
-    case QMetaType::QJsonArray:
     case QMetaType::QJsonDocument:
         return false;
     case QMetaType::Long: {
@@ -1094,12 +1079,6 @@ void *QMetaType::construct(int type, const void *copy)
 #ifndef QT_BOOTSTRAPPED
         case QMetaType::QEasingCurve:
             return new NS(QEasingCurve)(*static_cast<const NS(QEasingCurve)*>(copy));
-        case QMetaType::QJsonValue:
-            return new NS(QJsonValue)(*static_cast<const NS(QJsonValue)*>(copy));
-        case QMetaType::QJsonObject:
-            return new NS(QJsonObject)(*static_cast<const NS(QJsonObject)*>(copy));
-        case QMetaType::QJsonArray:
-            return new NS(QJsonArray)(*static_cast<const NS(QJsonArray)*>(copy));
         case QMetaType::QJsonDocument:
             return new NS(QJsonDocument)(*static_cast<const NS(QJsonDocument)*>(copy));
 #endif
@@ -1361,15 +1340,6 @@ void QMetaType::destroy(int type, void *data)
 #ifndef QT_BOOTSTRAPPED
     case QMetaType::QEasingCurve:
         delete static_cast< NS(QEasingCurve)* >(data);
-        break;
-    case QMetaType::QJsonValue:
-        delete static_cast< NS(QJsonValue)* >(data);
-        break;
-    case QMetaType::QJsonObject:
-        delete static_cast< NS(QJsonObject)* >(data);
-        break;
-    case QMetaType::QJsonArray:
-        delete static_cast< NS(QJsonArray)* >(data);
         break;
     case QMetaType::QJsonDocument:
         delete static_cast< NS(QJsonDocument)* >(data);

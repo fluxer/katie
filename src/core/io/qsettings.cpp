@@ -23,7 +23,6 @@
 #include "qplatformdefs.h"
 #include "qsettings.h"
 #include "qjsondocument.h"
-#include "qjsonobject.h"
 #include "qstandardpaths.h"
 #include "qmutex.h"
 #include "qcoreapplication.h"
@@ -63,14 +62,13 @@ static bool json_settings_read(QIODevice &device, QSettings::SettingsMap &map)
         return false;
     }
 
-    QJsonParseError error;
-    QJsonDocument jsondoc = QJsonDocument::fromJson(data, &error);
+    QJsonDocument jsondoc = QJsonDocument::fromJson(data);
     if (Q_UNLIKELY(jsondoc.isNull())) {
-        qWarning("json_settings_read: %s", error.errorString().toUtf8().constData());
+        qWarning("json_settings_read: %s", jsondoc.errorString().toUtf8().constData());
         return false;
     }
 
-    map = jsondoc.object().toVariantMap();
+    map = jsondoc.toVariant().toMap();
 
     // qDebug() << "json_settings_read" << jsondoc.toJson();
     return true;
@@ -78,7 +76,7 @@ static bool json_settings_read(QIODevice &device, QSettings::SettingsMap &map)
 
 static bool json_settings_write(QIODevice &device, const QSettings::SettingsMap &map)
 {
-    QJsonDocument jsondoc = QJsonDocument(QJsonObject::fromVariantMap(map));
+    QJsonDocument jsondoc = QJsonDocument::fromVariant(map);
     QByteArray jsondata = jsondoc.toJson();
     if (Q_UNLIKELY(jsondoc.isNull() || jsondata.isNull())) {
         return false;

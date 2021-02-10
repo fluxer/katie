@@ -36,9 +36,6 @@ class QDate;
 class QDateTime;
 #ifndef QT_BOOTSTRAPPED
 class QEasingCurve;
-class QJsonValue;
-class QJsonObject;
-class QJsonArray;
 class QJsonDocument;
 #endif
 class QLine;
@@ -105,9 +102,6 @@ class Q_CORE_EXPORT QVariant
         RegExp = QMetaType::QRegExp,
         Hash = QMetaType::QVariantHash,
         EasingCurve = QMetaType::QEasingCurve,
-        JsonValue = QMetaType::QJsonValue,
-        JsonObject = QMetaType::QJsonObject,
-        JsonArray = QMetaType::QJsonArray,
         JsonDocument = QMetaType::QJsonDocument,
         LastCoreType = QMetaType::LastCoreType,
 
@@ -191,9 +185,6 @@ class Q_CORE_EXPORT QVariant
 #endif
 #ifndef QT_BOOTSTRAPPED
     QVariant(const QEasingCurve &easing);
-    QVariant(const QJsonValue &jsonValue);
-    QVariant(const QJsonObject &jsonObject);
-    QVariant(const QJsonArray &jsonArray);
     QVariant(const QJsonDocument &jsonDocument);
 #endif
 
@@ -258,9 +249,6 @@ class Q_CORE_EXPORT QVariant
 #endif
 #ifndef QT_BOOTSTRAPPED
     QEasingCurve toEasingCurve() const;
-    QJsonValue toJsonValue() const;
-    QJsonObject toJsonObject() const;
-    QJsonArray toJsonArray() const;
     QJsonDocument toJsonDocument() const;
 #endif
 

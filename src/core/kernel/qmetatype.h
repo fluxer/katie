@@ -45,9 +45,8 @@ public:
         QByteArray = 11, QBitArray = 12, QDate = 13, QTime = 14,
         QDateTime = 15, QUrl = 16, QLocale = 17, QRect = 18, QRectF = 19,
         QSize = 20, QSizeF = 21, QLine = 22, QLineF = 23, QPoint = 24,
-        QPointF = 25, QRegExp = 26, QEasingCurve = 27, QJsonValue = 28,
-        QJsonObject = 29, QJsonArray = 30, QJsonDocument = 31,
-        QVariantHash = 32, QVariantList = 33, QVariantMap = 34,
+        QPointF = 25, QRegExp = 26, QEasingCurve = 27, QJsonDocument = 28,
+        QVariantHash = 29, QVariantList = 30, QVariantMap = 31,
         LastCoreType = QVariantMap,
 
         FirstGuiType = 64 /* QFont */,
@@ -262,9 +261,6 @@ class QPointF;
 #ifndef QT_NO_REGEXP
 class QRegExp;
 #endif
-class QJsonValue;
-class QJsonObject;
-class QJsonArray;
 class QJsonDocument;
 class QEasingCurve;
 class QWidget;
@@ -327,9 +323,6 @@ Q_DECLARE_BUILTIN_METATYPE(QPointF, QPointF)
 Q_DECLARE_BUILTIN_METATYPE(QRegExp, QRegExp)
 #endif
 Q_DECLARE_BUILTIN_METATYPE(QEasingCurve, QEasingCurve)
-Q_DECLARE_BUILTIN_METATYPE(QJsonValue, QJsonValue)
-Q_DECLARE_BUILTIN_METATYPE(QJsonObject, QJsonObject)
-Q_DECLARE_BUILTIN_METATYPE(QJsonArray, QJsonArray)
 Q_DECLARE_BUILTIN_METATYPE(QJsonDocument, QJsonDocument)
 // QVariantHash
 // QVariantList

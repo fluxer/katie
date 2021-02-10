@@ -3,6 +3,7 @@ set(EXTRA_CORE_LIBS
     ${ZLIB_LIBRARIES}
     ${ICU_LIBRARIES}
     ${ZSTD_LIBRARIES}
+    ${JANSSON_LIBRARIES}
     ${CMAKE_THREAD_LIBS_INIT}
     # libm should be present by default becaue this is C++
     m
@@ -101,10 +102,7 @@ set(CORE_PUBLIC_HEADERS
     QBasicTimer
     QThread
     QSocketNotifier
-    QJsonArray
     QJsonDocument
-    QJsonObject
-    QJsonValue
 )
 
 include_directories(
@@ -114,6 +112,7 @@ include_directories(
     ${ZLIB_INCLUDE_DIRS}
     ${ICU_INCLUDES}
     ${ZSTD_INCLUDES}
+    ${JANSSON_INCLUDES}
 )
 
 set(CORE_HEADERS
@@ -188,13 +187,6 @@ set(CORE_HEADERS
     ${CMAKE_CURRENT_SOURCE_DIR}/io/qfilesystemengine_p.h
     ${CMAKE_CURRENT_SOURCE_DIR}/io/qfilesystemmetadata_p.h
     ${CMAKE_CURRENT_SOURCE_DIR}/io/qfilesystemiterator_p.h
-    ${CMAKE_CURRENT_SOURCE_DIR}/json/qjsonarray.h
-    ${CMAKE_CURRENT_SOURCE_DIR}/json/qjsondocument.h
-    ${CMAKE_CURRENT_SOURCE_DIR}/json/qjsonobject.h
-    ${CMAKE_CURRENT_SOURCE_DIR}/json/qjsonparser_p.h
-    ${CMAKE_CURRENT_SOURCE_DIR}/json/qjson_p.h
-    ${CMAKE_CURRENT_SOURCE_DIR}/json/qjsonvalue.h
-    ${CMAKE_CURRENT_SOURCE_DIR}/json/qjsonwriter_p.h
     ${CMAKE_CURRENT_SOURCE_DIR}/kernel/qabstracteventdispatcher.h
     ${CMAKE_CURRENT_SOURCE_DIR}/kernel/qabstractitemmodel.h
     ${CMAKE_CURRENT_SOURCE_DIR}/kernel/qabstractitemmodel_p.h
@@ -255,6 +247,7 @@ set(CORE_HEADERS
     ${CMAKE_CURRENT_SOURCE_DIR}/tools/qdatetime_p.h
     ${CMAKE_CURRENT_SOURCE_DIR}/tools/qeasingcurve.h
     ${CMAKE_CURRENT_SOURCE_DIR}/tools/qhash.h
+    ${CMAKE_CURRENT_SOURCE_DIR}/tools/qjsondocument.h
     ${CMAKE_CURRENT_SOURCE_DIR}/tools/qline.h
     ${CMAKE_CURRENT_SOURCE_DIR}/tools/qlinkedlist.h
     ${CMAKE_CURRENT_SOURCE_DIR}/tools/qlist.h
@@ -339,13 +332,6 @@ set(CORE_SOURCES
     ${CMAKE_CURRENT_SOURCE_DIR}/io/qprocess_unix.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/io/qfilesystemiterator_unix.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/io/qstandardpaths_unix.cpp
-    ${CMAKE_CURRENT_SOURCE_DIR}/json/qjsonarray.cpp
-    ${CMAKE_CURRENT_SOURCE_DIR}/json/qjson.cpp
-    ${CMAKE_CURRENT_SOURCE_DIR}/json/qjsondocument.cpp
-    ${CMAKE_CURRENT_SOURCE_DIR}/json/qjsonobject.cpp
-    ${CMAKE_CURRENT_SOURCE_DIR}/json/qjsonparser.cpp
-    ${CMAKE_CURRENT_SOURCE_DIR}/json/qjsonvalue.cpp
-    ${CMAKE_CURRENT_SOURCE_DIR}/json/qjsonwriter.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/kernel/qabstracteventdispatcher.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/kernel/qabstractitemmodel.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/kernel/qbasictimer.cpp
@@ -390,6 +376,7 @@ set(CORE_SOURCES
     ${CMAKE_CURRENT_SOURCE_DIR}/tools/qeasingcurve.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/tools/qelapsedtimer.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/tools/qhash.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/tools/qjsondocument.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/tools/qline.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/tools/qlinkedlist.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/tools/qlist.cpp

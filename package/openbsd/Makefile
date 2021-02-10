@@ -21,9 +21,9 @@ COMPILER = base-clang ports-gcc
 MODULES = devel/cmake
 BUILD_DEPENDS = devel/gettext,-tools
 RUN_DEPENDS = devel/desktop-file-utils devel/xdg-utils
-LIB_DEPENDS = archivers/zstd textproc/icu4c devel/pcre graphics/png \
-	graphics/jpeg graphics/tiff x11/dbus print/cups,-libs databases/iodbc \
-	databases/sqlite3 devel/gettext,-runtime
+LIB_DEPENDS = archivers/zstd textproc/icu4c devel/jansson devel/pcre \
+	graphics/png graphics/jpeg graphics/tiff x11/dbus print/cups,-libs \
+	databases/iodbc databases/sqlite3 devel/gettext,-runtime
 WANTLIB = ${COMPILER_LIBCXX} ICE SM X11 Xcursor Xext Xfixes Xinerama Xrandr \
 	Xrender fontconfig freetype zstd icui18n icuuc pcre png jpeg tiff \
 	dbus-1 cups iodbc sqlite3 intl ssl z c crypto m
