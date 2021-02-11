@@ -50,16 +50,13 @@ static inline bool nameMatch(const QByteArray &name, const QByteArray &name2)
     return (ucnv_compareNames(name.constData(), name2.constData()) == 0);
 }
 
-static QList<QTextCodec*> *all = Q_NULLPTR;
-#ifdef Q_DEBUG_TEXTCODEC
-static bool destroying_is_ok = false;
-#endif
-
 static QTextCodec *localeMapper = Q_NULLPTR;
 QTextCodec *QTextCodec::cftr = Q_NULLPTR;
+#ifndef QT_NO_THREAD
+Q_GLOBAL_STATIC_WITH_ARGS(QMutex, textCodecsMutex, (QMutex::Recursive))
+#endif
 
-
-class QTextCodecCleanup
+class QTextCodecCleanup : public QList<QTextCodec*>
 {
 public:
     ~QTextCodecCleanup();
@@ -72,28 +69,12 @@ public:
 */
 QTextCodecCleanup::~QTextCodecCleanup()
 {
-    if (!all)
-        return;
-
-#ifdef Q_DEBUG_TEXTCODEC
-    destroying_is_ok = true;
-#endif
-
-    QList<QTextCodec *> *myAll = all;
-    all = Q_NULLPTR; // Otherwise the d'tor destroys the iterator
-    for (QList<QTextCodec *>::const_iterator it = myAll->constBegin()
-            ; it != myAll->constEnd(); ++it) {
-        delete *it;
+    for (int i = 0; i < this->size(); i++) {
+        delete this->at(i);
     }
-    delete myAll;
     localeMapper = Q_NULLPTR;
-
-#ifdef Q_DEBUG_TEXTCODEC
-    destroying_is_ok = false;
-#endif
 }
-
-Q_GLOBAL_STATIC(QTextCodecCleanup, createQTextCodecCleanup)
+Q_GLOBAL_STATIC(QTextCodecCleanup, qGlobalQTextCodec)
 
 static QTextCodec *checkForCodec(const QByteArray &name) {
     QTextCodec *c = QTextCodec::codecForName(name);
@@ -176,26 +157,6 @@ static void setupLocaleMapper()
     // We could perhaps default to 8859-15.
     if (!localeMapper)
         localeMapper = QTextCodec::codecForName("ISO-8859-1");
-}
-
-#ifndef QT_NO_THREAD
-Q_GLOBAL_STATIC_WITH_ARGS(QMutex, textCodecsMutex, (QMutex::Recursive))
-#endif
-
-// textCodecsMutex need to be locked to enter this function
-static void setup()
-{
-    if (all)
-        return;
-
-
-#ifdef Q_DEBUG_TEXTCODEC
-    if (Q_UNLIKELY(destroying_is_ok))
-        qWarning("QTextCodec: Creating new codec during codec cleanup");
-#endif
-    all = new QList<QTextCodec*>;
-    // create the cleanup object to cleanup all codecs on exit
-    (void) createQTextCodecCleanup();
 }
 
 /*!
@@ -463,8 +424,7 @@ QTextCodec::QTextCodec()
 #ifndef QT_NO_THREAD
     QMutexLocker locker(textCodecsMutex());
 #endif
-    setup();
-    all->append(this);
+    qGlobalQTextCodec()->append(this);
 }
 
 
@@ -479,13 +439,7 @@ QTextCodec::~QTextCodec()
 #ifndef QT_NO_THREAD
     QMutexLocker locker(textCodecsMutex());
 #endif
-#ifdef Q_DEBUG_TEXTCODEC
-    if (Q_UNLIKELY(!destroying_is_ok))
-        qWarning("QTextCodec::~QTextCodec: Called by application");
-#endif
-    if (all) {
-        all->removeAll(this);
-    }
+    qGlobalQTextCodec()->removeAll(this);
 }
 
 /*!
@@ -512,10 +466,9 @@ QTextCodec *QTextCodec::codecForName(const QByteArray &name)
 #ifndef QT_NO_THREAD
     QMutexLocker locker(textCodecsMutex());
 #endif
-    setup();
 
-    for (int i = 0; i < all->size(); ++i) {
-        QTextCodec *cursor = all->at(i);
+    for (int i = 0; i < qGlobalQTextCodec()->size(); ++i) {
+        QTextCodec *cursor = qGlobalQTextCodec()->at(i);
         if (nameMatch(cursor->name(), name)) {
             return cursor;
         }
@@ -545,10 +498,9 @@ QTextCodec* QTextCodec::codecForMib(int mib)
 #ifndef QT_NO_THREAD
     QMutexLocker locker(textCodecsMutex());
 #endif
-    setup();
 
-    for (int i = 0; i < all->size(); ++i) {
-        QTextCodec *cursor = all->at(i);
+    for (int i = 0; i < qGlobalQTextCodec()->size(); ++i) {
+        QTextCodec *cursor = qGlobalQTextCodec()->at(i);
         if (cursor->mibEnum() == mib) {
             return cursor;
         }
