@@ -1687,9 +1687,8 @@ QByteArray &QByteArray::append(const char *str, int len)
     if (str && len) {
         if (d->ref != 1 || d->size + len > d->alloc)
             reallocData(qAllocMore(d->size + len, sizeof(Data)));
-        memcpy(d->data + d->size, str, len); // include null terminator
+        memcpy(d->data + d->size, str, len + 1); // include null terminator
         d->size += len;
-        d->data[d->size] = '\0';
     }
     return *this;
 }
