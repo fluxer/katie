@@ -201,7 +201,7 @@ QByteArray QJsonDocumentPrivate::mapToJson(const QVariantMap &jsonmap)
                 json_object_set_new_nocheck(jroot, bytearraykey.constData(), json_string(bytearrayvalue.constData()));
                 break;
             }
-            case QVariant::List: // TODO: this works only for QString-convertable types
+            case QVariant::List: // this works only for QString-convertable types
             case QVariant::StringList: {
                 json_t *jarray = json_array();
                 foreach(const QString &listvalue, value.toStringList()) {
