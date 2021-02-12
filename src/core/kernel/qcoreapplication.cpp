@@ -1579,11 +1579,13 @@ void QCoreApplication::setApplicationName(const QString &application)
 QString QCoreApplication::applicationName()
 {
     QString name = coreappdata()->application;
+
 #ifdef QT_HAVE_GETPROGNAME
     if (name.isEmpty()) {
         name = QString::fromLocal8Bit(::getprogname());
     }
-#else
+#endif // QT_HAVE_GETPROGNAME
+
 #if defined(QT_HAVE_PROC_EXE)
     if (name.isEmpty()) {
         // Try looking for a /proc/<pid>/exe symlink first which points to
@@ -1603,7 +1605,7 @@ QString QCoreApplication::applicationName()
             name = QString::fromLocal8Bit(p ? p + 1 : argv[0]);
         }
     }
-#endif // QT_HAVE_GETPROGNAME
+
     return name;
 }
 
