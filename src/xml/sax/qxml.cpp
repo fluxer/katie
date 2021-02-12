@@ -279,8 +279,6 @@ private:
             : publicId(p), systemId(s) {}
         QString publicId;
         QString systemId;
-
-        Q_DUMMY_COMPARISON_OPERATOR(ExternParameterEntity)
     };
     struct ExternEntity
     {
@@ -290,7 +288,6 @@ private:
         QString publicId;
         QString systemId;
         QString notation;
-        Q_DUMMY_COMPARISON_OPERATOR(ExternEntity)
     };
     QMap<QString,ExternParameterEntity> externParameterEntities;
     QMap<QString,QString> parameterEntities;

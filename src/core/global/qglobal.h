@@ -713,24 +713,6 @@ static inline bool qIsNull(float f)
 }
 
 /*
-   Compilers which follow outdated template instantiation rules
-   require a class to have a comparison operator to exist when
-   a QList of this type is instantiated. It's not actually
-   used in the list, though. Hence the dummy implementation.
-   Just in case other code relies on it we better trigger a warning
-   mandating a real implementation.
-*/
-#ifdef Q_FULL_TEMPLATE_INSTANTIATION
-#  define Q_DUMMY_COMPARISON_OPERATOR(C) \
-    bool operator==(const C&) const { \
-        qWarning(#C"::operator==(const "#C"&) was called"); \
-        return false; \
-    }
-#else
-#  define Q_DUMMY_COMPARISON_OPERATOR(C)
-#endif
-
-/*
    QTypeInfo     - type trait functionality
 */
 template <typename T>

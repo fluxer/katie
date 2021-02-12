@@ -161,7 +161,7 @@ private:
 
     QPixmap(const QSize &s, int type);
     void init(int, int, int);
-    Q_DUMMY_COMPARISON_OPERATOR(QPixmap)
+
     friend class QPixmapData;
     friend class QX11PixmapData;
     friend class QBitmap;

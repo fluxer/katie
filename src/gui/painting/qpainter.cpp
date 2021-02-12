@@ -6463,12 +6463,13 @@ struct QPaintDeviceRedirection
                             const QPoint& offset, int internalWidgetRedirectionIndex)
         : device(device), replacement(replacement), offset(offset),
           internalWidgetRedirectionIndex(internalWidgetRedirectionIndex) { }
+
     const QPaintDevice *device;
     QPaintDevice *replacement;
     QPoint offset;
     int internalWidgetRedirectionIndex;
+
     bool operator==(const QPaintDevice *pdev) const { return device == pdev; }
-    Q_DUMMY_COMPARISON_OPERATOR(QPaintDeviceRedirection)
 };
 
 void qt_format_text(const QFont &fnt, const QRectF &_r,

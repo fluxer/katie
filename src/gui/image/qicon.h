@@ -88,8 +88,6 @@ public:
     static QString themeName();
     static void setThemeName(const QString &path);
 
-    Q_DUMMY_COMPARISON_OPERATOR(QIcon)
-
 private:
     QIconPrivate *d;
 #if !defined(QT_NO_DATASTREAM)
