@@ -49,7 +49,7 @@ struct Q_CORE_EXPORT QListData {
         int alloc, begin, end;
         void *array[1];
     };
-    enum { DataHeaderSize = sizeof(Data) - sizeof(void *) };
+    enum { DataHeaderSize = sizeof(Data) - QT_POINTER_SIZE };
 
     Data *detach(int alloc);
     Data *detach_grow(int *i, int n);

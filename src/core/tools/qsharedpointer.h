@@ -193,7 +193,7 @@ namespace QtSharedPointer {
             inline CustomDeleter(T *p, Deleter d) : deleter(d), ptr(p) {}
         };
         CustomDeleter extra;
-        // sizeof(CustomDeleter) = sizeof(Deleter) + sizeof(void*)
+        // sizeof(CustomDeleter) = sizeof(Deleter) + QT_POINTER_SIZE
         // for Deleter = function pointer:  8 (32-bit) / 16 (64-bit)
         // for Deleter = PMF: 12 (32-bit) / 24 (64-bit)  (GCC)
 

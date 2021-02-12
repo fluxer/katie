@@ -235,18 +235,18 @@ private:
     typedef QVarLengthArray<void *> Array;
 public:
     QVarLengthGlyphLayoutArray(int totalGlyphs)
-        : Array(spaceNeededForGlyphLayout(totalGlyphs) / sizeof(void *) + 1)
+        : Array(spaceNeededForGlyphLayout(totalGlyphs) / QT_POINTER_SIZE + 1)
         , QGlyphLayout(reinterpret_cast<char *>(Array::data()), totalGlyphs)
     {
-        memset(Array::data(), 0, Array::size() * sizeof(void *));
+        memset(Array::data(), 0, Array::size() * QT_POINTER_SIZE);
     }
 
     void resize(int totalGlyphs)
     {
-        Array::resize(spaceNeededForGlyphLayout(totalGlyphs) / sizeof(void *) + 1);
+        Array::resize(spaceNeededForGlyphLayout(totalGlyphs) / QT_POINTER_SIZE + 1);
 
         *((QGlyphLayout *)this) = QGlyphLayout(reinterpret_cast<char *>(Array::data()), totalGlyphs);
-        memset(Array::data(), 0, Array::size() * sizeof(void *));
+        memset(Array::data(), 0, Array::size() * QT_POINTER_SIZE);
     }
 };
 
@@ -263,7 +263,7 @@ private:
     void *buffer[(N * (sizeof(HB_Glyph) + sizeof(HB_GlyphAttributes)
                 + sizeof(QFixed) + sizeof(QFixed) + sizeof(QFixedPoint)
                 + sizeof(QGlyphJustification)))
-                    / sizeof(void *) + 1];
+                    / QT_POINTER_SIZE + 1];
 };
 
 struct QScriptItem;
@@ -588,7 +588,7 @@ private:
 
 class QStackTextEngine : public QTextEngine {
 public:
-    enum { MemSize = 256*40/sizeof(void *) };
+    enum { MemSize = 256 * 40 / QT_POINTER_SIZE };
     QStackTextEngine(const QString &string, const QFont &f);
     LayoutData _layoutData;
     void *_memory[MemSize];

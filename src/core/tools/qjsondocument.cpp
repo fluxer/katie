@@ -216,7 +216,6 @@ QByteArray QJsonDocumentPrivate::mapToJson(const QVariantMap &jsonmap)
                 result += mapToJson(value.toMap());
                 break;
             }
-
             default: {
                 error = QCoreApplication::translate("QJsonDocument", "Unknown JSON type");
                 break;

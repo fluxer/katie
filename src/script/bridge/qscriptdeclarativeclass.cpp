@@ -185,7 +185,7 @@ QString QScriptDeclarativeClass::PersistentIdentifier::toString() const
 QScriptDeclarativeClass::QScriptDeclarativeClass(QScriptEngine *engine)
 : d_ptr(new QScriptDeclarativeClassPrivate)
 {
-    Q_ASSERT(sizeof(void*) == sizeof(JSC::Identifier));
+    Q_ASSERT(sizeof(JSC::Identifier) == QT_POINTER_SIZE);
     d_ptr->engine = engine;
 }
 

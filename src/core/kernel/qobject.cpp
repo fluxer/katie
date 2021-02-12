@@ -2798,9 +2798,9 @@ static void queued_activate(QObject *sender, int signal, QObjectPrivate::Connect
     int nargs = 1; // include return type
     while (c->argumentTypes[nargs-1])
         ++nargs;
-    int *types = (int *) malloc(nargs*sizeof(int));
+    int *types = (int *) ::malloc(nargs * sizeof(int));
     Q_CHECK_PTR(types);
-    void **args = (void **) malloc(nargs*sizeof(void *));
+    void **args = (void **) ::malloc(nargs * QT_POINTER_SIZE);
     Q_CHECK_PTR(args);
     types[0] = 0; // return type
     args[0] = Q_NULLPTR; // return value

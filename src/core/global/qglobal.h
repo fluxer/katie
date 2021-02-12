@@ -425,7 +425,7 @@ typedef double qreal;
 class Q_CORE_EXPORT QSysInfo {
 public:
     enum Sizes {
-        WordSize = (sizeof(void *)<<3)
+        WordSize = (QT_POINTER_SIZE << 3)
     };
 
     enum Endian {
@@ -741,7 +741,7 @@ public:
         isPointer = false,
         isComplex = true,
         isStatic = true,
-        isLarge = (sizeof(T)>sizeof(void*))
+        isLarge = (sizeof(T) > QT_POINTER_SIZE)
     };
 };
 
@@ -779,7 +779,7 @@ public: \
     enum { \
         isComplex = (((FLAGS) & Q_PRIMITIVE_TYPE) == 0), \
         isStatic = (((FLAGS) & (Q_MOVABLE_TYPE | Q_PRIMITIVE_TYPE)) == 0), \
-        isLarge = (sizeof(TYPE)>sizeof(void*)), \
+        isLarge = (sizeof(TYPE) > QT_POINTER_SIZE), \
         isPointer = false \
     }; \
     static inline const char *name() { return #TYPE; } \

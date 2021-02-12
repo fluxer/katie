@@ -1603,7 +1603,7 @@ bool QMetaMethod::invoke(QObject *object,
         }
 
         int nargs = 1; // include return type
-        void **args = (void **) malloc(paramCount * sizeof(void *));
+        void **args = (void **) malloc(paramCount * QT_POINTER_SIZE);
         Q_CHECK_PTR(args);
         int *types = (int *) malloc(paramCount * sizeof(int));
         Q_CHECK_PTR(types);

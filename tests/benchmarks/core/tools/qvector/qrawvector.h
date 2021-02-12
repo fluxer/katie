@@ -250,11 +250,7 @@ private:
     }
     static inline int alignOfTypedData()
     {
-#ifdef Q_ALIGNOF
-        return qMax<int>(sizeof(void*), Q_ALIGNOF(Data));
-#else
-        return 0;
-#endif
+        return qMax<int>(QT_POINTER_SIZE, Q_ALIGNOF(Data));
     }
 
 public:
