@@ -53,7 +53,7 @@ static inline bool nameMatch(const QByteArray &name, const QByteArray &name2)
 static QTextCodec *localeMapper = Q_NULLPTR;
 QTextCodec *QTextCodec::cftr = Q_NULLPTR;
 #ifndef QT_NO_THREAD
-Q_GLOBAL_STATIC_WITH_ARGS(QMutex, textCodecsMutex, (QMutex::Recursive))
+Q_GLOBAL_STATIC(QMutex, textCodecsMutex)
 #endif
 
 class QTextCodecCleanup : public QList<QTextCodec*>
@@ -477,6 +477,7 @@ QTextCodec *QTextCodec::codecForName(const QByteArray &name)
 
     foreach(const QByteArray &codec, QIcuCodec::allCodecs()) {
         if (nameMatch(name, codec)) {
+            locker.unlock();
             return new QIcuCodec(name);
         }
     }
@@ -504,6 +505,7 @@ QTextCodec* QTextCodec::codecForMib(int mib)
 
     foreach(const int codec, QIcuCodec::allMibs()) {
         if (mib == codec) {
+            locker.unlock();
             return new QIcuCodec(mib);
         }
     }
@@ -552,9 +554,6 @@ QList<int> QTextCodec::availableMibs()
 */
 void QTextCodec::setCodecForLocale(QTextCodec *c)
 {
-#ifndef QT_NO_THREAD
-    QMutexLocker locker(textCodecsMutex());
-#endif
     localeMapper = c;
     if (!localeMapper)
         setupLocaleMapper();
@@ -566,9 +565,6 @@ void QTextCodec::setCodecForLocale(QTextCodec *c)
 
 QTextCodec* QTextCodec::codecForLocale()
 {
-#ifndef QT_NO_THREAD
-    QMutexLocker locker(textCodecsMutex());
-#endif
     if (!localeMapper)
         setupLocaleMapper();
 
