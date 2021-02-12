@@ -51,11 +51,11 @@ public:
     QString convertToUnicode(const char *data, int len, ConverterState *state) const;
     QByteArray convertFromUnicode(const QChar *unicode, int len, ConverterState *state) const;
 
+#ifndef QT_NO_TEXTCODEC
     QByteArray name() const;
     QList<QByteArray> aliases() const;
     int mibEnum() const;
 
-#ifndef QT_NO_TEXTCODEC
     static QList<QByteArray> allCodecs();
     static QList<int> allMibs();
     static QTextCodec* codecForUtf(const QByteArray &text, QTextCodec *defaultCodec);

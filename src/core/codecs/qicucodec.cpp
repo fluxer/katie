@@ -1044,7 +1044,7 @@ QByteArray QIcuCodec::convertFromUnicode(const QChar *unicode, int length,
     return result;
 }
 
-
+#ifndef QT_NO_TEXTCODEC
 QByteArray QIcuCodec::name() const
 {
     return m_name;
@@ -1112,14 +1112,29 @@ int QIcuCodec::mibEnum() const
     return 2;
 }
 
-#ifndef QT_NO_TEXTCODEC
 QList<QByteArray> QIcuCodec::allCodecs()
 {
     QList<QByteArray> allcodecs;
 
     for (int i = 0; i < ucnv_countAvailable(); i++) {
         const char *name = ucnv_getAvailableName(i);
-        allcodecs += QByteArray::fromRawData(name, qstrlen(name));
+        UErrorCode error = U_ZERO_ERROR;
+        const char *iana = ucnv_getStandardName(name, "IANA", &error);
+        if (Q_UNLIKELY(U_FAILURE(error))) {
+#ifdef QICUCODEC_DEBUG
+            qWarning("QIcuCodec::allCodecs: ucnv_getStandardName(%s) failed %s",
+                name, u_errorName(error));
+#endif
+            continue;
+        } else if (Q_UNLIKELY(!iana)) {
+            continue;
+        }
+        for (qint16 m = 0; m < MIBTblSize; m++) {
+            if (ucnv_compareNames(iana, MIBTbl[m].name) == 0) {
+                allcodecs += QByteArray::fromRawData(name, qstrlen(name));
+                break;
+            }
+        }
     }
 
     return allcodecs;
@@ -1131,9 +1146,23 @@ QList<int> QIcuCodec::allMibs()
 
     for (int i = 0; i < ucnv_countAvailable(); i++) {
         const char *name = ucnv_getAvailableName(i);
+        UErrorCode error = U_ZERO_ERROR;
+        const char *iana = ucnv_getStandardName(name, "IANA", &error);
+        if (Q_UNLIKELY(U_FAILURE(error))) {
+#ifdef QICUCODEC_DEBUG
+            qWarning("QIcuCodec::allMibs: ucnv_getStandardName(%s) failed %s",
+                name, u_errorName(error));
+#endif
+            continue;
+        } else if (Q_UNLIKELY(!iana)) {
+            continue;
+        }
         for (qint16 m = 0; m < MIBTblSize; m++) {
-            if (ucnv_compareNames(name, MIBTbl[m].name) == 0) {
-                allmibs.append(MIBTbl[m].mib);
+            if (ucnv_compareNames(iana, MIBTbl[m].name) == 0) {
+                if (!allmibs.contains(MIBTbl[m].mib)) {
+                    allmibs.append(MIBTbl[m].mib);
+                }
+                break;
             }
         }
     }
