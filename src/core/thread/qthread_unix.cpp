@@ -370,7 +370,7 @@ bool QThread::wait(unsigned long time)
         return false;
     }
 
-    if (d->finished || !d->running)
+    if (d->finished)
         return true;
 
     while (d->running) {
