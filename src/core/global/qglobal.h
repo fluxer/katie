@@ -823,11 +823,9 @@ class Q_CORE_EXPORT QFlag
 {
     int i;
 public:
-    inline QFlag(int i);
+    inline QFlag(int ai) : i(ai) {}
     inline operator int() const { return i; }
 };
-
-inline QFlag::QFlag(int ai) : i(ai) {}
 
 class Q_CORE_EXPORT QIncompatibleFlag
 {
@@ -838,7 +836,6 @@ public:
 };
 
 inline QIncompatibleFlag::QIncompatibleFlag(int ai) : i(ai) {}
-
 
 #ifndef Q_NO_TYPESAFE_FLAGS
 
