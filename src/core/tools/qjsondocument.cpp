@@ -1,6 +1,6 @@
 /****************************************************************************
 **
-** Copyright (C) 2020 Ivailo Monev
+** Copyright (C) 2021 Ivailo Monev
 **
 ** This file is part of the QtCore module of the Katie Toolkit.
 **
