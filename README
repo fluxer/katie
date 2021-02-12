@@ -46,7 +46,7 @@ There are several things you should be aware before considering Katie:
   - dropped Valgrind support
 
  - some additions have been made: 
-  - JSON classes and types
+  - JSON document handler
   - standard directories handler
   - building with OpenSSL v1.1+ is possible
   - building with IODBC instead of unixODBC is possible
