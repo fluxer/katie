@@ -20,7 +20,6 @@
 ****************************************************************************/
 
 #include "qdatastream.h"
-#include "qdatastream_p.h"
 
 #if !defined(QT_NO_DATASTREAM)
 #include "qbuffer.h"
@@ -240,13 +239,13 @@ QT_BEGIN_NAMESPACE
 */
 
 QDataStream::QDataStream()
-    : d(Q_NULLPTR),
-    dev(Q_NULLPTR),
+    : dev(Q_NULLPTR),
     owndev(false),
     noswap(QSysInfo::ByteOrder == QSysInfo::BigEndian),
     byteorder(QDataStream::BigEndian),
     ver(QDataStream::Qt_Default),
-    q_status(QDataStream::Ok)
+    q_status(QDataStream::Ok),
+    floatingPrecision(QDataStream::DoublePrecision)
 {
 }
 
@@ -263,13 +262,13 @@ QDataStream::QDataStream()
 */
 
 QDataStream::QDataStream(QIODevice *device)
-    : d(Q_NULLPTR),
-    dev(device),
+    : dev(device),
     owndev(false),
     noswap(QSysInfo::ByteOrder == QSysInfo::BigEndian),
     byteorder(QDataStream::BigEndian),
     ver(QDataStream::Qt_Default),
-    q_status(QDataStream::Ok)
+    q_status(QDataStream::Ok),
+    floatingPrecision(QDataStream::DoublePrecision)
 {
 }
 
@@ -288,13 +287,13 @@ QDataStream::QDataStream(QIODevice *device)
 */
 
 QDataStream::QDataStream(QByteArray *a, QIODevice::OpenMode flags)
-    : d(Q_NULLPTR),
-    dev(Q_NULLPTR),
-    owndev(false),
+    : dev(Q_NULLPTR),
+    owndev(true),
     noswap(QSysInfo::ByteOrder == QSysInfo::BigEndian),
     byteorder(QDataStream::BigEndian),
     ver(QDataStream::Qt_Default),
-    q_status(QDataStream::Ok)
+    q_status(QDataStream::Ok),
+    floatingPrecision(QDataStream::DoublePrecision)
 {
     QBuffer *buf = new QBuffer(a);
 #ifndef QT_NO_QOBJECT
@@ -302,7 +301,6 @@ QDataStream::QDataStream(QByteArray *a, QIODevice::OpenMode flags)
 #endif
     buf->open(flags);
     dev = buf;
-    owndev = true;
 }
 
 /*!
@@ -314,13 +312,13 @@ QDataStream::QDataStream(QByteArray *a, QIODevice::OpenMode flags)
     is created to wrap the byte array.
 */
 QDataStream::QDataStream(const QByteArray &a)
-    : d(Q_NULLPTR),
-    dev(Q_NULLPTR),
-    owndev(false),
+    : dev(Q_NULLPTR),
+    owndev(true),
     noswap(QSysInfo::ByteOrder == QSysInfo::BigEndian),
     byteorder(QDataStream::BigEndian),
     ver(QDataStream::Qt_Default),
-    q_status(QDataStream::Ok)
+    q_status(QDataStream::Ok),
+    floatingPrecision(QDataStream::DoublePrecision)
 {
     QBuffer *buf = new QBuffer;
 #ifndef QT_NO_QOBJECT
@@ -329,7 +327,6 @@ QDataStream::QDataStream(const QByteArray &a)
     buf->setData(a);
     buf->open(QIODevice::ReadOnly);
     dev = buf;
-    owndev = true;
 }
 
 /*!
@@ -345,7 +342,6 @@ QDataStream::~QDataStream()
 {
     if (owndev)
         delete dev;
-    delete d;
 }
 
 
@@ -400,9 +396,7 @@ bool QDataStream::atEnd() const
 */
 QDataStream::FloatingPointPrecision QDataStream::floatingPointPrecision() const
 {
-    if (!d)
-        return QDataStream::DoublePrecision;
-    return d->floatingPointPrecision;
+    return floatingPrecision;
 }
 
 /*!
@@ -424,9 +418,7 @@ QDataStream::FloatingPointPrecision QDataStream::floatingPointPrecision() const
 */
 void QDataStream::setFloatingPointPrecision(QDataStream::FloatingPointPrecision precision)
 {
-    if (!d)
-        d = new QDataStreamPrivate();
-    d->floatingPointPrecision = precision;
+    floatingPrecision = precision;
 }
 
 /*!

@@ -153,7 +153,6 @@ set(CORE_HEADERS
     ${CMAKE_CURRENT_SOURCE_DIR}/io/qabstractfileengine_p.h
     ${CMAKE_CURRENT_SOURCE_DIR}/io/qbuffer.h
     ${CMAKE_CURRENT_SOURCE_DIR}/io/qdatastream.h
-    ${CMAKE_CURRENT_SOURCE_DIR}/io/qdatastream_p.h
     ${CMAKE_CURRENT_SOURCE_DIR}/io/qdataurl_p.h
     ${CMAKE_CURRENT_SOURCE_DIR}/io/qdebug.h
     ${CMAKE_CURRENT_SOURCE_DIR}/io/qdir.h

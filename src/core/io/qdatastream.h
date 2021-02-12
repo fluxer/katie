@@ -38,7 +38,6 @@ template <class Key, class T> class QHash;
 template <class Key, class T> class QMap;
 
 #if !defined(QT_NO_DATASTREAM)
-class QDataStreamPrivate;
 class Q_CORE_EXPORT QDataStream
 {
 public:
@@ -131,11 +130,8 @@ public:
 
     int skipRawData(int len);
 
-
 private:
     Q_DISABLE_COPY(QDataStream)
-
-    QDataStreamPrivate* d;
 
     QIODevice *dev;
     bool owndev;
@@ -143,6 +139,7 @@ private:
     ByteOrder byteorder;
     Version ver;
     DataStatus q_status;
+    FloatingPointPrecision floatingPrecision;
 };
 
 
