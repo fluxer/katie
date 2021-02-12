@@ -1584,6 +1584,18 @@ QString QCoreApplication::applicationName()
         name = QString::fromLocal8Bit(::getprogname());
     }
 #else
+#if defined(QT_HAVE_PROC_EXE)
+    if (name.isEmpty()) {
+        // Try looking for a /proc/<pid>/exe symlink first which points to
+        // the absolute path of the executable
+        QFileInfo pfi(QString::fromLatin1("/proc/%1/exe").arg(::getpid()));
+        if (pfi.exists() && pfi.isSymLink()) {
+            pfi.setFile(pfi.canonicalFilePath());
+            name = pfi.baseName();
+        }
+    }
+#endif
+
     if (name.isEmpty() && self) {
         char ** const argv = self->d_func()->argv;
         if (argv[0]) {

@@ -124,13 +124,13 @@ static void setupLocaleMapper()
         // 1. CODESET from ctype if it contains a .CODESET part (e.g. en_US.ISO8859-15)
         int indexOfDot = ctype.indexOf('.');
         if (indexOfDot != -1)
-            localeMapper = checkForCodec( ctype.mid(indexOfDot + 1) );
+            localeMapper = checkForCodec(ctype.mid(indexOfDot + 1));
 
         // 2. CODESET from lang if it contains a .CODESET part
         if (!localeMapper) {
             indexOfDot = lang.indexOf('.');
             if (indexOfDot != -1)
-                localeMapper = checkForCodec( lang.mid(indexOfDot + 1) );
+                localeMapper = checkForCodec(lang.mid(indexOfDot + 1));
         }
 
         // 3. ctype (maybe the locale is named "ISO-8859-1" or something)
