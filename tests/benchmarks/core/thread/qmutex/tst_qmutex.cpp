@@ -24,7 +24,6 @@
 
 #include <math.h>
 #include <pthread.h>
-#include <errno.h>
 
 typedef pthread_mutex_t NativeMutexType;
 void NativeMutexInitialize(NativeMutexType *mutex)
