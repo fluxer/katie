@@ -812,10 +812,6 @@ void QWidgetPrivate::create_sys(WId window, bool initializeWindow, bool destroyO
 
     // set X11 event mask
     if (desktop) {
-//         QWidget* main_desktop = find(id);
-//         if (main_desktop->testWFlags(Qt::WPaintDesktop))
-//             XSelectInput(dpy, id, stdDesktopEventMask | ExposureMask);
-//         else
         XSelectInput(dpy, id, stdDesktopEventMask);
     } else if (q->internalWinId()) {
         XSelectInput(dpy, id, stdWidgetEventMask);

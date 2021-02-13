@@ -1832,47 +1832,6 @@
     \value WindowType_Mask  A mask for extracting the window type
                             part of the window flags.
 
-    Obsolete flags:
-
-    \value WMouseNoMask         Use Qt::WA_MouseNoMask instead.
-    \value WDestructiveClose    Use Qt::WA_DeleteOnClose instead.
-    \value WStaticContents      Use Qt::WA_StaticContents instead.
-    \value WGroupLeader         No longer needed.
-    \value WShowModal           Use QWidget::windowModality instead.
-    \value WNoMousePropagation  Use Qt::WA_NoMousePropagation instead.
-    \value WType_TopLevel       Use Qt::Window instead.
-    \value WType_Dialog         Use Qt::Dialog instead.
-    \value WType_Popup          Use Qt::Popup instead.
-    \value WType_Desktop        Use Qt::Desktop instead.
-    \value WType_Mask           Use Qt::WindowType_Mask instead.
-
-    \value WStyle_Customize     No longer needed.
-    \value WStyle_NormalBorder  No longer needed.
-    \value WStyle_NoBorder      Use Qt::FramelessWindowHint instead.
-    \value WStyle_Title         Use Qt::WindowTitleHint instead.
-    \value WStyle_SysMenu       Use Qt::WindowSystemMenuHint instead.
-    \value WStyle_Minimize      Use Qt::WindowMinimizeButtonHint instead.
-    \value WStyle_Maximize      Use Qt::WindowMaximizeButtonHint instead.
-    \value WStyle_MinMax        Use Qt::WindowMinMaxButtonsHint instead.
-    \value WStyle_Tool          Use Qt::Tool instead.
-    \value WStyle_StaysOnTop    Use Qt::WindowStaysOnTopHint instead.
-    \value WStyle_ContextHelp   Use Qt::WindowContextHelpButtonHint instead.
-
-    \value WPaintDesktop        No longer needed.
-    \value WPaintClever         No longer needed.
-
-    \value WX11BypassWM         Use Qt::X11BypassWindowManagerHint instead.
-
-    \value WStyle_Splash        Use Qt::SplashScreen instead.
-
-    \value WNoAutoErase         No longer needed.
-    \value WRepaintNoErase      No longer needed.
-    \value WNorthWestGravity    Use Qt::WA_StaticContents instead.
-    \value WType_Modal          Use Qt::Dialog and QWidget::windowModality instead.
-    \value WStyle_Dialog        Use Qt::Dialog instead.
-    \value WStyle_NoBorderEx    Use Qt::FramelessWindowHint instead.
-    \value WResizeNoErase       No longer needed.
-
     \sa QWidget::windowFlags, {Window Flags Example}
 */
 

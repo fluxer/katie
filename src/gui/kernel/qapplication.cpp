@@ -633,7 +633,7 @@ QApplication::Type QApplication::type()
     Returns the active popup widget.
 
     A popup widget is a special top-level widget that sets the \c
-    Qt::WType_Popup widget flag, e.g. the QMenu widget. When the application
+    Qt::Popup widget flag, e.g. the QMenu widget. When the application
     opens a popup widget, all events are sent to the popup. Normal widgets and
     modal widgets cannot be accessed before the popup widget is closed.
 
