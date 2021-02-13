@@ -33,7 +33,7 @@ jobs:
     - name: Install dependencies
       run: |
         sudo apt-get update -qq
-        sudo apt-get install -qq libpcre3-dev libssl-dev zlib1g-dev libzstd-dev libjansson-dev libc6-dev libpng-dev libjpeg-dev libtiff-dev libcups2-dev libfreetype6-dev libfontconfig1-dev libdbus-1-dev libicu-dev unixodbc-dev libpq-dev libmysqld-dev libsqlite3-dev xorg-dev
+        sudo apt-get install -qq libpcre3-dev libssl-dev zlib1g-dev libzstd-dev libjansson-dev libc6-dev libpng-dev libjpeg-dev libtiff-dev libcups2-dev libfreetype6-dev libfontconfig1-dev libdbus-1-dev libicu-dev unixodbc-dev libpq-dev libsqlite3-dev xorg-dev
 
     # If this run was triggered by a pull request event, then checkout
     # the head of the pull request instead of the merge commit.
