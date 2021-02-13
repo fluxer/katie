@@ -459,25 +459,25 @@ QTextCodec *QTextCodec::codecForName(const QByteArray &name)
     if (name == "System")
         return QTextCodec::codecForLocale();
 
+    {
 #ifndef QT_NO_THREAD
-    QMutexLocker locker(textCodecsMutex());
+        QMutexLocker locker(textCodecsMutex());
 #endif
-
-    for (int i = 0; i < qGlobalQTextCodec()->size(); ++i) {
-        QTextCodec *cursor = qGlobalQTextCodec()->at(i);
-        if (nameMatch(cursor->name(), name)) {
-            return cursor;
-        }
-        foreach (const QByteArray &alias, cursor->aliases()) {
-            if (nameMatch(alias, name)) {
+        for (int i = 0; i < qGlobalQTextCodec()->size(); ++i) {
+            QTextCodec *cursor = qGlobalQTextCodec()->at(i);
+            if (nameMatch(cursor->name(), name)) {
                 return cursor;
+            }
+            foreach (const QByteArray &alias, cursor->aliases()) {
+                if (nameMatch(alias, name)) {
+                    return cursor;
+                }
             }
         }
     }
 
     foreach(const QByteArray &codec, QIcuCodec::allCodecs()) {
         if (nameMatch(name, codec)) {
-            locker.unlock();
             return new QIcuCodec(name);
         }
     }
@@ -492,20 +492,20 @@ QTextCodec *QTextCodec::codecForName(const QByteArray &name)
 */
 QTextCodec* QTextCodec::codecForMib(int mib)
 {
+    {
 #ifndef QT_NO_THREAD
-    QMutexLocker locker(textCodecsMutex());
+        QMutexLocker locker(textCodecsMutex());
 #endif
-
-    for (int i = 0; i < qGlobalQTextCodec()->size(); ++i) {
-        QTextCodec *cursor = qGlobalQTextCodec()->at(i);
-        if (cursor->mibEnum() == mib) {
-            return cursor;
+        for (int i = 0; i < qGlobalQTextCodec()->size(); ++i) {
+            QTextCodec *cursor = qGlobalQTextCodec()->at(i);
+            if (cursor->mibEnum() == mib) {
+                return cursor;
+            }
         }
     }
 
     foreach(const int codec, QIcuCodec::allMibs()) {
         if (mib == codec) {
-            locker.unlock();
             return new QIcuCodec(mib);
         }
     }
