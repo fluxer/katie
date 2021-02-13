@@ -244,9 +244,8 @@ QT_USE_NAMESPACE
 #define Q_NULLPTR nullptr
 #define Q_DECL_CONSTEXPR constexpr
 
-#define Q_CONSTRUCTOR_FUNCTION0(AFUNC) \
-    static const int AFUNC ## __init_variable__ = AFUNC();
-#define Q_CONSTRUCTOR_FUNCTION(AFUNC) Q_CONSTRUCTOR_FUNCTION0(AFUNC)
+#define Q_CONSTRUCTOR_FUNCTION(AFUNC) \
+    static const int __init_variable__ ## AFUNC = AFUNC();
 
 #define Q_DESTRUCTOR_FUNCTION0(AFUNC) \
     class AFUNC ## __dest_class__ { \
