@@ -439,8 +439,6 @@ set_target_properties(KtCore PROPERTIES
     EXPORT_NAME Core
 )
 
-katie_setup_pch(KtCore)
-
 install(
     TARGETS KtCore
     EXPORT KatieTargets ${INSTALL_TARGETS_DEFAULT_ARGS}

@@ -306,17 +306,6 @@ macro(KATIE_SETUP_OBJECT FORTARGET)
     endforeach()
 endmacro()
 
-# a macro to setup pre-compiled header for target
-macro(KATIE_SETUP_PCH FORTARGET)
-    if(KATIE_PCH)
-        if (NOT CMAKE_VERSION VERSION_LESS "3.16.0")
-            target_precompile_headers(${FORTARGET} PRIVATE "${CMAKE_SOURCE_DIR}/src/core/qt_pch.h")
-        else()
-            message(FATAL_ERROR "Pre-compiled headers option requires CMake v3.16+")
-        endif()
-    endif()
-endmacro()
-
 # a macro to remove conditional code from headers which is only relevant to the
 # process of building Katie itself
 macro(KATIE_OPTIMIZE_HEADERS DIR)

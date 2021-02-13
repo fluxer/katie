@@ -185,9 +185,6 @@ add_feature_info(benchmarks KATIE_BENCHMARKS "build automatic benchmarks")
 option(KATIE_UTILS "Build maintainance utilities" OFF)
 add_feature_info(utils KATIE_UTILS "build maintainance utilities")
 
-option(KATIE_PCH "Build components with pre-compiled header" OFF)
-add_feature_info(pch KATIE_PCH "build components with pre-compiled header")
-
 # v1.2.0+ required for compressBound()
 find_package(ZLIB 1.2.0)
 set_package_properties(ZLIB PROPERTIES
