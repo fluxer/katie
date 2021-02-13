@@ -263,7 +263,6 @@ inline static qint64 qt_timeout_value(qint64 msecs, qint64 elapsed)
     return timeout < 0 ? 0 : timeout;
 }
 
-
 QT_END_NAMESPACE
 
 #endif
