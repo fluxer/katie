@@ -30,10 +30,6 @@
 */
 #define QT_VERSION_CHECK(major, minor, patch) ((major<<16)|(minor<<8)|(patch))
 
-#define QT_PACKAGEDATE_STR "YYYY-MM-DD"
-
-#define QT_PACKAGE_TAG ""
-
 /*
    The architechture, must be one of: (QT_ARCH_x)
 
