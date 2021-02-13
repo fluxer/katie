@@ -130,6 +130,7 @@ public:
 #ifndef QT_NO_DEBUG
     void dump(int indent = 0) const;
 #endif
+
     // This code could use the union-struct-array trick, but a compiler
     // bug prevents this from working.
     qreal q_minimumSize;
@@ -137,7 +138,8 @@ public:
     qreal q_maximumSize;
     qreal q_minimumDescent;
     qreal q_minimumAscent;
-    inline qreal &q_sizes(int which)
+
+    inline qreal& q_sizes(int which)
     {
         switch (which) {
             case Qt::MinimumSize:
@@ -153,7 +155,7 @@ public:
         }
         Q_UNREACHABLE();
     }
-    inline const qreal q_sizes(int which) const
+    inline const qreal& q_sizes(int which) const
     {
         switch (which) {
             case Qt::MinimumSize:
