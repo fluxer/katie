@@ -57,7 +57,7 @@ public:
             return m;
         return createMutex(index);
     }
-    static QMutexPool *instance();
+
     static QMutex *globalInstanceGet(const void *address);
 
 private:
