@@ -64,6 +64,8 @@ private:
     QMutex *createMutex(int index);
     std::array<QAtomicPointer<QMutex>, QMUTEXPOOL_SIZE> mutexes;
     const QMutex::RecursionMode recursionMode;
+
+    Q_DISABLE_COPY(QMutexPool)
 };
 
 QT_END_NAMESPACE
