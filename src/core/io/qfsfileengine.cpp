@@ -104,10 +104,7 @@ QFSFileEngine::~QFSFileEngine()
     Q_D(QFSFileEngine);
     if (d->closeFileHandle) {
         if (d->fd != -1) {
-            int ret;
-            do {
-                ret = QT_CLOSE(d->fd);
-            } while (ret == -1 && errno == EINTR);
+            qt_safe_close(d->fd);
         }
     }
     QList<uchar*> keys = d->maps.keys();
@@ -170,9 +167,7 @@ bool QFSFileEngine::open(QIODevice::OpenMode openMode)
 
     // Try to open the file.
     QByteArray native = d->fileEntry.nativeFilePath();
-    do {
-        d->fd = QT_OPEN(native.constData(), flags, 0666);
-    } while (d->fd == -1 && errno == EINTR);
+    d->fd = qt_safe_open(native.constData(), flags, 0666);
 
     // On failure, return and report the error.
     if (d->fd == -1) {
@@ -293,10 +288,7 @@ bool QFSFileEngine::close()
 
     // Close the file if we created the handle.
     if (d->closeFileHandle) {
-        int ret;
-        do {
-            ret = QT_CLOSE(d->fd);
-        } while (ret == -1 && errno == EINTR);
+        int ret = qt_safe_close(d->fd);
 
         // We must reset these guys regardless; calling close again after a
         // failed close causes crashes on some systems.
