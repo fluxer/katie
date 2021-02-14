@@ -1049,12 +1049,12 @@ install(
 katie_string_unwrap("${KATIE_COMPONENTS}" KATIE_COMPONENTS "Kt")
 katie_string_unwrap("${KATIE_TOOLS}" KATIE_TOOLS)
 
+# custom install targets to make packaging easier
 add_custom_target(install-devel
     COMMAND "${CMAKE_COMMAND}" -DCMAKE_INSTALL_COMPONENT=Devel -P cmake_install.cmake
     WORKING_DIRECTORY "${CMAKE_BINARY_DIR}"
 )
 
-# custom install targets to make packaging easier
 add_custom_target(install-runtime
     DEPENDS ${KATIE_COMPONENTS}
     COMMAND "${CMAKE_COMMAND}" -DCMAKE_INSTALL_COMPONENT=Runtime -P cmake_install.cmake
