@@ -88,7 +88,7 @@ bool QLocalServerPrivate::listen(const QString &requestedServerName)
         setError(QLatin1String("QLocalServer::listen"));
         // if address is in use already, just close the socket, but do not delete the file
         if(errno == EADDRINUSE)
-            QT_CLOSE(listenSocket);
+            qt_safe_close(listenSocket);
         // otherwise, close the socket and delete the file
         else
             closeServer();
@@ -128,7 +128,7 @@ void QLocalServerPrivate::closeServer()
     }
 
     if (-1 != listenSocket)
-        QT_CLOSE(listenSocket);
+        qt_safe_close(listenSocket);
     listenSocket = -1;
 
     if (!fullServerName.isEmpty())

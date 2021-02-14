@@ -27,7 +27,7 @@
 #include "qfile_p.h"
 #include "qfsfileengine_p.h"
 #include "qfilesystemengine_p.h"
-#include "qcore_unix_p.h"       // overrides QT_OPEN
+#include "qcore_unix_p.h"
 
 #include <errno.h>
 
@@ -144,7 +144,7 @@ bool QTemporaryFileEngine::open(QIODevice::OpenMode openMode)
     }
 
     // Create file and obtain handle
-    d->fd = QT_OPEN(data, QT_OPEN_CREAT | O_EXCL | QT_OPEN_RDWR, 0600);
+    d->fd = qt_safe_open(data, QT_OPEN_CREAT | O_EXCL | QT_OPEN_RDWR, 0600);
 
     if (d->fd == -1) {
         setError(QFile::OpenError, qt_error_string(errno));

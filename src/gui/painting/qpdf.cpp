@@ -27,7 +27,6 @@
 #include "qprinterinfo.h"
 #include "qnumeric.h"
 #include "qx11info_x11.h"
-#include "qcore_unix_p.h" // overrides QT_OPEN
 
 QT_BEGIN_NAMESPACE
 
@@ -1928,7 +1927,3 @@ QRect QPdfBaseEnginePrivate::pageRect() const
 #endif
 
 QT_END_NAMESPACE
-
-
-
-

@@ -313,16 +313,16 @@ bool QFileSystemEngine::copyFile(const QFileSystemEntry &source, const QFileSyst
             return false;
     }
 
-    const int sourcefd = QT_OPEN(spath.constData(), O_RDONLY);
+    const int sourcefd = qt_safe_open(spath.constData(), O_RDONLY);
     if (sourcefd == -1) {
         *error = errno;
         return false;
     }
 
-    const int targetfd = QT_CREAT(tpath.constData(), st.st_mode);
+    const int targetfd = qt_safe_creat(tpath.constData(), st.st_mode);
     if (targetfd == -1) {
         *error = errno;
-        ::close(sourcefd);
+        qt_safe_close(sourcefd);
         return false;
     }
 
@@ -338,8 +338,8 @@ bool QFileSystemEngine::copyFile(const QFileSystemEntry &source, const QFileSyst
     while (sendresult != tocopy) {
         if (sendresult == -1) {
             *error = errno;
-            ::close(sourcefd);
-            ::close(targetfd);
+            qt_safe_close(sourcefd);
+            qt_safe_close(targetfd);
             return false;
         }
         tocopy -= sendresult;
@@ -355,27 +355,27 @@ bool QFileSystemEngine::copyFile(const QFileSystemEntry &source, const QFileSyst
     int sendresult = ::sendfile(sourcefd, targetfd, QT_OFF_T(0), size_t(0), Q_NULLPTR, &totalwrite, SF_SYNC);
     if (QT_OFF_T(sendresult) != totalwrite) {
         *error = errno;
-        ::close(sourcefd);
-        ::close(targetfd);
+        qt_safe_close(sourcefd);
+        qt_safe_close(targetfd);
         return false;
     }
 #else
     size_t totalwrite = 0;
     char copybuffer[QT_BUFFSIZE];
     while (QT_OFF_T(totalwrite) != tocopy) {
-        const size_t readresult = QT_READ(sourcefd, copybuffer, sizeof(copybuffer));
+        const size_t readresult = qt_safe_read(sourcefd, copybuffer, sizeof(copybuffer));
         if (readresult == -1) {
             *error = errno;
-            ::close(sourcefd);
-            ::close(targetfd);
+            qt_safe_close(sourcefd);
+            qt_safe_close(targetfd);
             return false;
         }
 
-        const size_t writeresult = QT_WRITE(targetfd, copybuffer, readresult);
+        const size_t writeresult = qt_safe_write(targetfd, copybuffer, readresult);
         if (writeresult != readresult) {
             *error = errno;
-            ::close(sourcefd);
-            ::close(targetfd);
+            qt_safe_close(sourcefd);
+            qt_safe_close(targetfd);
             return false;
         }
 
@@ -383,8 +383,8 @@ bool QFileSystemEngine::copyFile(const QFileSystemEntry &source, const QFileSyst
     }
 #endif
 
-    ::close(sourcefd);
-    ::close(targetfd);
+    qt_safe_close(sourcefd);
+    qt_safe_close(targetfd);
     return true;
 }
 
