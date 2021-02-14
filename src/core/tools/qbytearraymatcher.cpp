@@ -274,8 +274,7 @@ int qFindByteArray(
     const char *end = haystack0 + (l - sl);
     const uint sl_minus_1 = sl - 1;
     uint hashNeedle = 0, hashHaystack = 0;
-    int idx;
-    for (idx = 0; idx < sl; ++idx) {
+    for (int idx = 0; idx < sl; ++idx) {
         hashNeedle = ((hashNeedle<<1) + needle[idx]);
         hashHaystack = ((hashHaystack<<1) + haystack[idx]);
     }
