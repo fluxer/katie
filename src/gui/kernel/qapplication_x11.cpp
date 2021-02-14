@@ -4083,7 +4083,7 @@ static inline int testBit(const char *array, int bit)
 
 static int openRX71Device(const QByteArray &deviceName)
 {
-    int fd = open(deviceName, O_RDONLY | O_NONBLOCK);
+    int fd = qt_safe_open(deviceName, O_RDONLY | O_NONBLOCK);
     if (fd == -1) {
         fd = -errno;
         return fd;
@@ -4092,24 +4092,24 @@ static int openRX71Device(const QByteArray &deviceName)
     // fetch the event type mask and check that the device reports absolute coordinates
     char eventTypeMask[(EV_MAX + sizeof(char) - 1) * sizeof(char) + 1];
     memset(eventTypeMask, 0, sizeof(eventTypeMask));
-    if (ioctl(fd, EVIOCGBIT(0, sizeof(eventTypeMask)), eventTypeMask) < 0) {
-        close(fd);
+    if (::ioctl(fd, EVIOCGBIT(0, sizeof(eventTypeMask)), eventTypeMask) < 0) {
+        qt_safe_close(fd);
         return -1;
     }
     if (!testBit(eventTypeMask, EV_ABS)) {
-        close(fd);
+        qt_safe_close(fd);
         return -1;
     }
 
     // make sure that we can get the absolute X and Y positions from the device
     char absMask[(ABS_MAX + sizeof(char) - 1) * sizeof(char) + 1];
-    memset(absMask, 0, sizeof(absMask));
-    if (ioctl(fd, EVIOCGBIT(EV_ABS, sizeof(absMask)), absMask) < 0) {
-        close(fd);
+    ::memset(absMask, 0, sizeof(absMask));
+    if (::ioctl(fd, EVIOCGBIT(EV_ABS, sizeof(absMask)), absMask) < 0) {
+        qt_safe_close(fd);
         return -1;
     }
     if (!testBit(absMask, ABS_X) || !testBit(absMask, ABS_Y)) {
-        close(fd);
+        qt_safe_close(fd);
         return -1;
     }
 
@@ -4134,9 +4134,9 @@ void QApplicationPrivate::initializeMultitouch_sys()
         }
 
         struct input_absinfo abs_x, abs_y, abs_z;
-        ioctl(fd, EVIOCGABS(ABS_X), &abs_x);
-        ioctl(fd, EVIOCGABS(ABS_Y), &abs_y);
-        ioctl(fd, EVIOCGABS(ABS_Z), &abs_z);
+        ::ioctl(fd, EVIOCGABS(ABS_X), &abs_x);
+        ::ioctl(fd, EVIOCGABS(ABS_Y), &abs_y);
+        ::ioctl(fd, EVIOCGABS(ABS_Z), &abs_z);
 
         int deviceNumber = allRX71TouchPoints.count();
 
