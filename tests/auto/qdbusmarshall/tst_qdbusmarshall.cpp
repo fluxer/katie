@@ -1089,7 +1089,7 @@ void tst_QDBusMarshall::receiveUnknownType()
         con.registerObject("/spyObject", &spy, QDBusConnection::ExportAllSlots);
         ScopedDBusMessage msg(dbus_message_new_method_call(con.baseService().toLatin1(), "/spyObject", NULL, "theSlot"));
 
-        int fd = fileno(stdout);
+        int fd = QT_FILENO(stdout);
         dbus_message_append_args(msg.data(), DBUS_TYPE_UNIX_FD, &fd, DBUS_TYPE_INVALID);
 
         // try to send to us
@@ -1135,7 +1135,7 @@ void tst_QDBusMarshall::receiveUnknownType()
 
         DBusMessageIter iter;
         dbus_message_iter_init_append(msg.data(), &iter);
-        int fd = fileno(stdout);
+        int fd = QT_FILENO(stdout);
 
         if (qstrcmp(QTest::currentDataTag(), "type-naked") == 0) {
             // send naked

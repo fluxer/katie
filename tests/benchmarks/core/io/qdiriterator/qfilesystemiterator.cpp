@@ -146,7 +146,7 @@ QFileSystemIteratorPrivate::QFileSystemIteratorPrivate(const QString &path,
 QFileSystemIteratorPrivate::~QFileSystemIteratorPrivate()
 {
     while (!m_dirStructs.isEmpty())
-        ::closedir(m_dirStructs.pop());
+        QT_CLOSEDIR(m_dirStructs.pop());
 }
 
 static bool isDotOrDotDot(const char *name)
@@ -175,7 +175,7 @@ void QFileSystemIteratorPrivate::pushSubDirectory(const QByteArray &path)
     }
 */
 
-    DIR *dir = ::opendir(path.constData());
+    DIR *dir = QT_OPENDIR(path.constData());
     //m_entry = QT_READDIR(dir);
     //while (m_entry && isDotOrDotDot(m_entry->d_name))
     //    m_entry = QT_READDIR(m_dirStructs.top());
@@ -255,7 +255,7 @@ bool QFileSystemIteratorPrivate::advanceHelper()
     if (!m_entry) {
         m_dirPaths.pop();
         DIR *dir = m_dirStructs.pop();
-        ::closedir(dir);
+        QT_CLOSEDIR(dir);
         return false; // further iteration possibly needed
     }
 

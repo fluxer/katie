@@ -77,10 +77,10 @@ QFileSystemWatcherEngineUnix::~QFileSystemWatcherEngineUnix()
 #if defined(QT_HAVE_INOTIFY_INIT1)
     foreach (int id, pathToID)
         inotify_rm_watch(sockfd, id < 0 ? -id : id);
-    ::close(sockfd);
+    qt_safe_close(sockfd);
 #elif defined(QT_HAVE_KEVENT)
     foreach (int id, pathToID)
-        ::close(id < 0 ? -id : id);
+        qt_safe_close(id < 0 ? -id : id);
 #endif
 }
 
@@ -149,18 +149,18 @@ QStringList QFileSystemWatcherEngineUnix::addPaths(const QStringList &paths,
         QT_STATBUF st;
         if (QT_FSTAT(fd, &st) == -1) {
             perror("QFileSystemWatcherEngineUnix::addPaths: fstat");
-            ::close(fd);
+            qt_safe_close(fd);
             continue;
         }
         int id = (S_ISDIR(st.st_mode)) ? -fd : fd;
         if (id < 0) {
             if (directories->contains(path)) {
-                ::close(fd);
+                qt_safe_close(fd);
                 continue;
             }
         } else {
             if (files->contains(path)) {
-                ::close(fd);
+                qt_safe_close(fd);
                 continue;
             }
         }
@@ -175,7 +175,7 @@ QStringList QFileSystemWatcherEngineUnix::addPaths(const QStringList &paths,
                0);
         if (kevent(sockfd, &kev, 1, 0, 0, 0) == -1) {
             perror("QFileSystemWatcherEngineUnix::addPaths: kevent");
-            ::close(fd);
+            qt_safe_close(fd);
             continue;
         }
 
@@ -231,7 +231,7 @@ QStringList QFileSystemWatcherEngineUnix::removePaths(const QStringList &paths,
         if (x.isEmpty() || x != path)
             continue;
 
-        ::close(id < 0 ? -id : id);
+        qt_safe_close(id < 0 ? -id : id);
 
         p.removeAll(path);
         if (id < 0)
@@ -252,7 +252,7 @@ void QFileSystemWatcherEngineUnix::readFromFd()
     int buffSize = 0;
     ::ioctl(sockfd, FIONREAD, (char *) &buffSize);
     char readbuff[buffSize];
-    buffSize = ::read(sockfd, readbuff, buffSize);
+    buffSize = qt_safe_read(sockfd, readbuff, buffSize);
     char *at = readbuff;
     char * const end = at + buffSize;
 
@@ -330,7 +330,7 @@ void QFileSystemWatcherEngineUnix::readFromFd()
 
                 pathToID.remove(path);
                 idToPath.remove(id);
-                ::close(fd);
+                qt_safe_close(fd);
 
                 if (id < 0)
                     emit directoryChanged(path, true);

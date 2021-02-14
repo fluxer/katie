@@ -79,8 +79,6 @@ static inline int qt_safe_connect(int sockfd, const struct sockaddr *addr, QT_SO
     EINTR_LOOP(ret, QT_SOCKET_CONNECT(sockfd, const_cast<struct sockaddr *>(addr), addrlen));
     return ret;
 }
-#undef QT_SOCKET_CONNECT
-#define QT_SOCKET_CONNECT qt_safe_connect
 
 #if defined(socket)
 # undef socket

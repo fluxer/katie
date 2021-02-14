@@ -129,10 +129,10 @@ private slots:
 
     void sizeSpeedWithoutFilterLowLevel() {
         QDir testdir(QDir::tempPath() + QLatin1String("/test_speed"));
-        DIR *dir = ::opendir(qPrintable(testdir.absolutePath()));
+        DIR *dir = QT_OPENDIR(qPrintable(testdir.absolutePath()));
         QVERIFY(dir);
 
-        QVERIFY(!chdir(qPrintable(testdir.absolutePath())));
+        QVERIFY(!QT_CHDIR(qPrintable(testdir.absolutePath())));
         QBENCHMARK {
             QT_DIRENT *item = QT_READDIR(dir);
             while (item) {
@@ -144,7 +144,7 @@ private slots:
                 item = QT_READDIR(dir);
             }
         }
-        closedir(dir);
+        QT_CLOSEDIR(dir);
     }
 };
 

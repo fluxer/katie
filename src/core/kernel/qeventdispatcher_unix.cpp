@@ -55,8 +55,8 @@ QEventDispatcherUNIXPrivate::QEventDispatcherUNIXPrivate()
 QEventDispatcherUNIXPrivate::~QEventDispatcherUNIXPrivate()
 {
     // cleanup the common parts of the event loop
-    ::close(thread_pipe[0]);
-    ::close(thread_pipe[1]);
+    qt_safe_close(thread_pipe[0]);
+    qt_safe_close(thread_pipe[1]);
 
     // cleanup timers
     qDeleteAll(timerList);
@@ -171,7 +171,7 @@ int QEventDispatcherUNIXPrivate::processThreadWakeUp(int nsel)
         // some other thread woke us up... consume the data on the thread pipe so that
         // select doesn't immediately return next time
         char c[16];
-        while (::read(thread_pipe[0], c, sizeof(c)) > 0)
+        while (QT_READ(thread_pipe[0], c, sizeof(c)) > 0)
             ;
 
         if (!wakeUps.testAndSetRelease(1, 0)) {

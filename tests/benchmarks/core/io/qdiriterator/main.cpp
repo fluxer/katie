@@ -51,7 +51,7 @@ void tst_qdiriterator::data()
 static int posix_helper(const char *dirpath)
 {
     //qDebug() << "DIR" << dirpath;
-    DIR *dir = ::opendir(dirpath);
+    DIR *dir = QT_OPENDIR(dirpath);
     if (!dir)
         return 0;
 
@@ -73,7 +73,7 @@ static int posix_helper(const char *dirpath)
             count += posix_helper(ba.constData());
     }
 
-    ::closedir(dir);
+    QT_CLOSEDIR(dir);
     return count;
 }
 

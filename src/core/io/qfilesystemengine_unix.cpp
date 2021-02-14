@@ -278,7 +278,7 @@ bool QFileSystemEngine::removeDirectory(const QFileSystemEntry &entry, bool remo
             if (QT_STAT(chunk.constData(), &st) == 0) {
                 if (!S_ISDIR(st.st_mode))
                     return false;
-                if (::rmdir(chunk.constData()) != 0)
+                if (QT_RMDIR(chunk.constData()) != 0)
                     return oldslash != 0;
             } else {
                 return false;
@@ -288,7 +288,7 @@ bool QFileSystemEngine::removeDirectory(const QFileSystemEntry &entry, bool remo
         return true;
     }
     const QByteArray path = QFile::encodeName(entry.filePath());
-    return ::rmdir(path.constData()) == 0;
+    return QT_RMDIR(path.constData()) == 0;
 }
 
 //static
@@ -486,7 +486,7 @@ QFileSystemEntry QFileSystemEngine::currentPath()
 #else
 #define GETCWDFUNCNAME "getcwd"
     char getcwdbuffer[PATH_MAX];
-    if (::getcwd(getcwdbuffer, sizeof(getcwdbuffer))) {
+    if (QT_GETCWD(getcwdbuffer, sizeof(getcwdbuffer))) {
         result = QFileSystemEntry(QByteArray(getcwdbuffer), QFileSystemEntry::FromNativePath());
     }
 #endif // QT_HAVE_GET_CURRENT_DIR_NAME
