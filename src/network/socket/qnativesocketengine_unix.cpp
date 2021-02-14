@@ -734,10 +734,8 @@ bool QNativeSocketEnginePrivate::nativeHasPendingDatagrams() const
     // Peek 0 bytes into the next message. The size of the message may
     // well be 0, so we can't check recvfrom's return value.
     ssize_t readBytes;
-    do {
-        char c;
-        readBytes = ::recvfrom(socketDescriptor, &c, 1, MSG_PEEK, &storage.a, &storageSize);
-    } while (readBytes == -1 && errno == EINTR);
+    char c;
+    EINTR_LOOP(readBytes, ::recvfrom(socketDescriptor, &c, 1, MSG_PEEK, &storage.a, &storageSize));
 
     // If there's no error, or if our buffer was too small, there must be a
     // pending datagram.
@@ -786,11 +784,9 @@ qint64 QNativeSocketEnginePrivate::nativeReceiveDatagram(char *data, qint64 maxS
     sz = sizeof(aa);
 
     ssize_t recvFromResult = 0;
-    do {
-        char c;
-        recvFromResult = ::recvfrom(socketDescriptor, maxSize ? data : &c, maxSize ? maxSize : 1,
-                                    0, &aa.a, &sz);
-    } while (recvFromResult == -1 && errno == EINTR);
+    char c;
+    EINTR_LOOP(recvFromResult, ::recvfrom(socketDescriptor, maxSize ? data : &c, maxSize ? maxSize : 1,
+                                    0, &aa.a, &sz));
 
     if (recvFromResult == -1) {
         setError(QAbstractSocket::NetworkError, ReceiveDatagramErrorString);
