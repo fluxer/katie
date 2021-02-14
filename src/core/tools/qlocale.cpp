@@ -2741,13 +2741,13 @@ double QLocalePrivate::bytearrayToDouble(const char *num, bool *ok)
     char *endptr;
     QLOCALE_RESET_ERRNO
     double ret = std::strtod(num, &endptr);
-    if (Q_UNLIKELY((ret == 0.0l && errno == ERANGE) || ret == HUGE_VAL || ret == -HUGE_VAL)) {
+    if ((ret == 0.0l && errno == ERANGE) || ret == HUGE_VAL || ret == -HUGE_VAL) {
         if (ok != Q_NULLPTR)
             *ok = false;
         return 0.0;
     }
 
-    if (Q_UNLIKELY(*endptr != '\0')) {
+    if (*endptr != '\0') {
         // stopped at a non-digit character after converting some digits
         if (ok != Q_NULLPTR)
             *ok = false;
@@ -2770,13 +2770,13 @@ qlonglong QLocalePrivate::bytearrayToLongLong(const char *num, int base, bool *o
     char *endptr;
     QLOCALE_RESET_ERRNO
     qlonglong ret = std::strtoll(num, &endptr, base);
-    if (Q_UNLIKELY((ret == LLONG_MIN || ret == LLONG_MAX) && (errno == ERANGE || errno == EINVAL))) {
+    if ((ret == LLONG_MIN || ret == LLONG_MAX) && (errno == ERANGE || errno == EINVAL)) {
         if (ok != Q_NULLPTR)
             *ok = false;
         return 0;
     }
 
-    if (Q_UNLIKELY(*endptr != '\0')) {
+    if (*endptr != '\0') {
         // stopped at a non-digit character after converting some digits
         if (ok != Q_NULLPTR)
             *ok = false;
@@ -2799,13 +2799,13 @@ qulonglong QLocalePrivate::bytearrayToUnsLongLong(const char *num, int base, boo
     char *endptr;
     QLOCALE_RESET_ERRNO
     qulonglong ret = std::strtoull(num, &endptr, base);
-    if (Q_UNLIKELY(ret == ULLONG_MAX && (errno == ERANGE || errno == EINVAL))) {
+    if (ret == ULLONG_MAX && (errno == ERANGE || errno == EINVAL)) {
         if (ok != Q_NULLPTR)
             *ok = false;
         return 0;
     }
 
-    if (Q_UNLIKELY(*endptr != '\0')) {
+    if (*endptr != '\0') {
         // stopped at a non-digit character after converting some digits
         if (ok != Q_NULLPTR)
             *ok = false;
