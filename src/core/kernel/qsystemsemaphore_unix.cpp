@@ -121,11 +121,11 @@ bool QSystemSemaphorePrivate::handle(QSystemSemaphore::AccessMode mode)
     int oflag = O_CREAT | O_EXCL;
     for (int tryNum = 0, maxTries = 1; tryNum < maxTries; ++tryNum) {
         do {
-            semaphore = sem_open(semName.constData(), oflag, 0666, initialValue);
+            semaphore = ::sem_open(semName.constData(), oflag, 0666, initialValue);
         } while (semaphore == QT_SEM_FAILED && errno == EINTR);
         if (semaphore == QT_SEM_FAILED && errno == EEXIST) {
             if (mode == QSystemSemaphore::Create) {
-                if (sem_unlink(semName.constData()) == -1 && errno != ENOENT) {
+                if (::sem_unlink(semName.constData()) == -1 && errno != ENOENT) {
                     setErrorString(QLatin1String("QSystemSemaphore::handle (sem_unlink)"));
                     return false;
                 }
@@ -159,7 +159,7 @@ bool QSystemSemaphorePrivate::handle(QSystemSemaphore::AccessMode mode)
 void QSystemSemaphorePrivate::cleanHandle()
 {
     if (semaphore != QT_SEM_FAILED) {
-        if (sem_close(semaphore) == -1) {
+        if (::sem_close(semaphore) == -1) {
             setErrorString(QLatin1String("QSystemSemaphore::cleanHandle (sem_close)"));
 #ifdef QSYSTEMSEMAPHORE_DEBUG
             qDebug() << QLatin1String("QSystemSemaphore::cleanHandle sem_close failed.");
@@ -169,7 +169,7 @@ void QSystemSemaphorePrivate::cleanHandle()
     }
 
     if (createdSemaphore) {
-        if (sem_unlink(QFile::encodeName(fileName).constData()) == -1 && errno != ENOENT) {
+        if (::sem_unlink(QFile::encodeName(fileName).constData()) == -1 && errno != ENOENT) {
             setErrorString(QLatin1String("QSystemSemaphore::cleanHandle (sem_unlink)"));
 #ifdef QSYSTEMSEMAPHORE_DEBUG
             qDebug() << QLatin1String("QSystemSemaphore::cleanHandle sem_unlink failed.");
@@ -190,7 +190,7 @@ bool QSystemSemaphorePrivate::modifySemaphore(int count)
     if (count > 0) {
         int cnt = count;
         do {
-            if (sem_post(semaphore) == -1) {
+            if (::sem_post(semaphore) == -1) {
                 setErrorString(QLatin1String("QSystemSemaphore::modifySemaphore (sem_post)"));
 #ifdef QSYSTEMSEMAPHORE_DEBUG
                 qDebug() << QLatin1String("QSystemSemaphore::modify sem_post failed") << count << errno;
@@ -198,7 +198,7 @@ bool QSystemSemaphorePrivate::modifySemaphore(int count)
                 // rollback changes to preserve the SysV semaphore behavior
                 for ( ; cnt < count; ++cnt) {
                     int res;
-                    EINTR_LOOP(res, sem_wait(semaphore));
+                    EINTR_LOOP(res, ::sem_wait(semaphore));
                 }
                 return false;
             }
@@ -206,7 +206,7 @@ bool QSystemSemaphorePrivate::modifySemaphore(int count)
         } while (cnt > 0);
     } else {
         int res;
-        EINTR_LOOP(res, sem_wait(semaphore));
+        EINTR_LOOP(res, ::sem_wait(semaphore));
         if (res == -1) {
             // If the semaphore was removed be nice and create it and then modifySemaphore again
             if (errno == EINVAL || errno == EIDRM) {
