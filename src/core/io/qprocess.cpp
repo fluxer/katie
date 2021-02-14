@@ -36,7 +36,6 @@
 #if defined QPROCESS_DEBUG
 
 #include <ctype.h>
-#include <errno.h>
 
 QT_BEGIN_NAMESPACE
 /*
