@@ -42,8 +42,6 @@
 #include "qtcpsocket.h"
 #include "qsocketnotifier.h"
 
-#include <errno.h>
-
 QT_BEGIN_NAMESPACE
 
 class QLocalSocketPrivate : public QIODevicePrivate
