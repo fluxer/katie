@@ -11,21 +11,24 @@ generating the data tables if possible. Check out the existing scripts
 (https://github.com/fluxer/katie/tree/master/scripts) for examples.
 
 ## Compatibility
-Neither source nor binary compatibility is guratneed between releases which
+Neither source nor binary compatibility is guaranteed between releases which
 means hacks for binary compatibility and such are not required. If there is
 breaking change, the changes that need to be applied to other projects should
-be kept to minimum with backwards compatiblity where possible and usually noted
+be kept to minimum with backwards compatibility where possible and usually noted
 at the main wiki page (https://github.com/fluxer/katie/wiki). Note your changes
-there if neccessary once they are accepted, ask for write access if you cannot
+there if necessary once they are accepted, ask for write access if you cannot
 edit pages on the wiki.
 
 ## Standards
 All standard and extension requirements for optional feature should be checked
-for during build if they are newer than POSIX.1c
+for during build if they are newer than POSIX.1-2001
 (https://en.wikipedia.org/wiki/POSIX). Read any documentation that may be
 relevant to the changes you make such as manual pages for Linux
 (https://linux.die.net/man/), FreeBSD (https://www.freebsd.org/cgi/man.cgi),
-OpenBSD (https://man.openbsd.org/) and Solaris (https://docs.oracle.com/en/).
+NetBSD (https://man.netbsd.org/), OpenBSD (https://man.openbsd.org/) and
+Solaris (https://docs.oracle.com/en/). Open Group documentation is also a good
+source of information
+(https://pubs.opengroup.org/onlinepubs/9699919799/idx/head.html).
 
 ## Tests
 You can import tests and adjust them as needed from stock Qt4 copy
@@ -46,5 +49,5 @@ does not enable by default non-free software repository thus user interaction
 is required before non-free software can be installed.
 
 If you cannot contribute your changes with license that is more or equally
-permisive than those already in use (3-clause BSD, FDL v1.3 and LGPL v2.1+)
+permissive than those already in use (3-clause BSD, FDL v1.3 and LGPL v2.1+)
 than your contribution may not be acceptable.

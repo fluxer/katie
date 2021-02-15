@@ -19,8 +19,8 @@ if [ -z "$DISPLAY" ];then
     xvfbpid=$!
     sleep 5
 
-    DISPLAY=:123 @CMAKE_CROSSCOMPILING_EMULATOR@ "./$(basename "$bin")" $@
-    retval=$?
+    retval=0
+    DISPLAY=:123 @CMAKE_CROSSCOMPILING_EMULATOR@ "./$(basename "$bin")" $@ || retval=$?
 
     kill $xvfbpid
     exit $retval

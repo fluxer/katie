@@ -1,7 +1,7 @@
 /****************************************************************************
 **
 ** Copyright (C) 2015 The Qt Company Ltd.
-** Copyright (C) 2016-2021 Ivailo Monev
+** Copyright (C) 2016 Ivailo Monev
 **
 ** This file is part of the QtCore module of the Katie Toolkit.
 **
@@ -14,18 +14,6 @@
 ** packaging of this file.  Please review the following information to
 ** ensure the GNU Lesser General Public License version 2.1 requirements
 ** will be met: http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html.
-**
-** As a special exception, The Qt Company gives you certain additional
-** rights. These rights are described in The Qt Company LGPL Exception
-** version 1.1, included in the file LGPL_EXCEPTION.txt in this package.
-**
-** GNU General Public License Usage
-** Alternatively, this file may be used under the terms of the GNU
-** General Public License version 3.0 as published by the Free Software
-** Foundation and appearing in the file LICENSE.GPL included in the
-** packaging of this file.  Please review the following information to
-** ensure the GNU General Public License version 3.0 requirements will be
-** met: http://www.gnu.org/copyleft/gpl.html.
 **
 ** $QT_END_LICENSE$
 **
@@ -48,9 +36,6 @@
 
 #ifndef QT_BOOTSTRAPPED
 #  include "qeasingcurve.h"
-#  include "qjsonvalue.h"
-#  include "qjsonobject.h"
-#  include "qjsonarray.h"
 #  include "qjsondocument.h"
 #  include "qsize.h"
 #  include "qpoint.h"
@@ -61,13 +46,6 @@
 #include <float.h>
 
 QT_BEGIN_NAMESPACE
-
-#ifndef DBL_DIG
-#  define DBL_DIG 10
-#endif
-#ifndef FLT_DIG
-#  define FLT_DIG 6
-#endif
 
 static const QLatin1String qStringListDelim = QLatin1String(",");
 
@@ -151,15 +129,6 @@ static void construct(QVariant::Private *x, const void *copy)
 #ifndef QT_BOOTSTRAPPED
     case QVariant::EasingCurve:
         v_construct<QEasingCurve>(x, copy);
-        break;
-    case QVariant::JsonValue:
-        v_construct<QJsonValue>(x, copy);
-        break;
-    case QVariant::JsonObject:
-        v_construct<QJsonObject>(x, copy);
-        break;
-    case QVariant::JsonArray:
-        v_construct<QJsonArray>(x, copy);
         break;
     case QVariant::JsonDocument:
         v_construct<QJsonDocument>(x, copy);
@@ -284,15 +253,6 @@ static void clear(QVariant::Private *d)
     case QVariant::EasingCurve:
         v_clear<QEasingCurve>(d);
         break;
-    case QVariant::JsonValue:
-        v_clear<QJsonValue>(d);
-        break;
-    case QVariant::JsonObject:
-        v_clear<QJsonObject>(d);
-        break;
-    case QVariant::JsonArray:
-        v_clear<QJsonArray>(d);
-        break;
     case QVariant::JsonDocument:
         v_clear<QJsonDocument>(d);
         break;
@@ -354,12 +314,8 @@ static bool isNull(const QVariant::Private *d)
         return v_cast<QPoint>(d)->isNull();
     case QVariant::PointF:
         return v_cast<QPointF>(d)->isNull();
-    case QVariant::JsonValue:
-        return v_cast<QJsonValue>(d)->isNull();
     case QVariant::JsonDocument:
         return v_cast<QJsonDocument>(d)->isNull();
-    case QVariant::JsonObject:
-    case QVariant::JsonArray:
     case QVariant::EasingCurve:
     case QVariant::Url:
 #endif
@@ -483,12 +439,6 @@ static bool compare(const QVariant::Private *a, const QVariant::Private *b)
 #ifndef QT_BOOTSTRAPPED
     case QVariant::EasingCurve:
         return *v_cast<QEasingCurve>(a) == *v_cast<QEasingCurve>(b);
-    case QVariant::JsonValue:
-        return *v_cast<QJsonValue>(a) == *v_cast<QJsonValue>(b);
-    case QVariant::JsonObject:
-        return *v_cast<QJsonObject>(a) == *v_cast<QJsonObject>(b);
-    case QVariant::JsonArray:
-        return *v_cast<QJsonArray>(a) == *v_cast<QJsonArray>(b);
     case QVariant::JsonDocument:
         return *v_cast<QJsonDocument>(a) == *v_cast<QJsonDocument>(b);
 #endif
@@ -553,10 +503,6 @@ static qlonglong qMetaTypeNumber(const QVariant::Private *d)
         return qRound64(d->data.f);
     case QVariant::Double:
         return qRound64(d->data.d);
-#ifndef QT_BOOTSTRAPPED
-    case QMetaType::QJsonValue:
-        return v_cast<QJsonValue>(d)->toDouble(0.0);
-#endif
     }
     Q_ASSERT(false);
     return 0;
@@ -593,12 +539,6 @@ static qlonglong qConvertToNumber(const QVariant::Private *d, bool *ok)
         return v_cast<QByteArray>(d)->toLongLong(ok);
     case QVariant::Bool:
         return qlonglong(d->data.b);
-#ifndef QT_BOOTSTRAPPED
-    case QVariant::JsonValue:
-        if (!v_cast<QJsonValue>(d)->isDouble())
-            break;
-        return qlonglong(v_cast<QJsonValue>(d)->toDouble(0.0));
-#endif
     case QVariant::Double:
     case QVariant::Int:
     case QMetaType::Char:
@@ -632,12 +572,6 @@ static qulonglong qConvertToUnsignedNumber(const QVariant::Private *d, bool *ok)
         return v_cast<QByteArray>(d)->toULongLong(ok);
     case QVariant::Bool:
         return qulonglong(d->data.b);
-#ifndef QT_BOOTSTRAPPED
-    case QVariant::JsonValue:
-        if (!v_cast<QJsonValue>(d)->isDouble())
-            break;
-        return qulonglong(v_cast<QJsonValue>(d)->toDouble(0.0));
-#endif
     case QVariant::Double:
     case QVariant::Int:
     case QMetaType::Char:
@@ -658,28 +592,21 @@ static qulonglong qConvertToUnsignedNumber(const QVariant::Private *d, bool *ok)
     return Q_UINT64_C(0);
 }
 
-template<typename TInput, typename LiteralWrapper>
-inline bool qt_convertToBool(const QVariant::Private *const d)
-{
-    TInput str = v_cast<TInput>(d)->toLower();
-    return !(str == LiteralWrapper("0") || str == LiteralWrapper("false") || str.isEmpty());
-}
-
 /*!
  \internal
 
  Converts \a d to type \a t, which is placed in \a result.
  */
-static bool convert(const QVariant::Private *d, QVariant::Type t, void *result, bool *ok)
+static bool convert(const QVariant::Private *d, int t, void *result, bool *ok)
 {
-    Q_ASSERT(d->type != int(t));
+    Q_ASSERT(d->type != t);
     Q_ASSERT(result);
 
     bool dummy;
     if (!ok)
         ok = &dummy;
 
-    switch (int(t)) {
+    switch (t) {
 #ifndef QT_BOOTSTRAPPED
     case QVariant::Url:
         switch (d->type) {
@@ -742,12 +669,6 @@ static bool convert(const QVariant::Private *d, QVariant::Type t, void *result, 
         case QVariant::Url:
             *str = v_cast<QUrl>(d)->toString();
             return true;
-        case QMetaType::QJsonValue:
-            if (v_cast<QJsonValue>(d)->isString()) {
-                *str = v_cast<QJsonValue>(d)->toString();
-                return true;
-            }
-            return false;
 #endif
         default:
             return false;
@@ -943,12 +864,16 @@ static bool convert(const QVariant::Private *d, QVariant::Type t, void *result, 
     case QVariant::Bool: {
         *static_cast<bool *>(result) = false;
         switch(d->type) {
-        case QVariant::ByteArray:
-            *static_cast<bool *>(result) = qt_convertToBool<QByteArray, QByteArray>(d);
+        case QVariant::ByteArray: {
+            QByteArray str = v_cast<QByteArray>(d)->toLower();
+            *static_cast<bool *>(result) = (!str.isEmpty() && str != "0" && str != "false");
             return true;
-        case QVariant::String:
-            *static_cast<bool *>(result) = qt_convertToBool<QString, QLatin1String>(d);
+        }
+        case QVariant::String: {
+            QString str = v_cast<QString>(d)->toLower();
+            *static_cast<bool *>(result) = (!str.isEmpty() && str != QLatin1String("0") && str != QLatin1String("false"));
             return true;
+        }
         case QVariant::Char:
             *static_cast<bool *>(result) = !v_cast<QChar>(d)->isNull();
             return true;
@@ -959,7 +884,7 @@ static bool convert(const QVariant::Private *d, QVariant::Type t, void *result, 
         case QMetaType::Short:
         case QMetaType::Long:
         case QVariant::Float:
-            *static_cast<bool *>(result) = qMetaTypeNumber(d) != Q_INT64_C(0);
+            *static_cast<bool *>(result) = (qMetaTypeNumber(d) != Q_INT64_C(0));
             return true;
         case QVariant::UInt:
         case QVariant::ULongLong:
@@ -968,13 +893,6 @@ static bool convert(const QVariant::Private *d, QVariant::Type t, void *result, 
         case QMetaType::ULong:
             *static_cast<bool *>(result) = qMetaTypeUNumber(d) != Q_UINT64_C(0);
             return true;
-#ifndef QT_BOOTSTRAPPED
-        case QMetaType::QJsonValue:
-            if (!v_cast<QJsonValue>(d)->isBool())
-                return false;
-            *static_cast<bool *>(result) = v_cast<QJsonValue>(d)->toBool(false);
-            return true;
-#endif
         default:
             return false;
         }
@@ -1008,13 +926,6 @@ static bool convert(const QVariant::Private *d, QVariant::Type t, void *result, 
         case QMetaType::ULong:
             *static_cast<double *>(result) = double(qMetaTypeUNumber(d));
             return true;
-#ifndef QT_BOOTSTRAPPED
-        case QMetaType::QJsonValue:
-            if (!v_cast<QJsonValue>(d)->isDouble())
-                return false;
-            *static_cast<double *>(result) = v_cast<QJsonValue>(d)->toDouble(0.0);
-            return true;
-#endif
         default:
             return false;
         }
@@ -1048,13 +959,6 @@ static bool convert(const QVariant::Private *d, QVariant::Type t, void *result, 
         case QMetaType::ULong:
             *static_cast<float *>(result) = float(qMetaTypeUNumber(d));
             return true;
-#ifndef QT_BOOTSTRAPPED
-        case QMetaType::QJsonValue:
-            if (!v_cast<QJsonValue>(d)->isDouble())
-                return false;
-            *static_cast<float *>(result) = v_cast<QJsonValue>(d)->toDouble(0.0);
-            return true;
-#endif
         default:
             return false;
         }
@@ -1069,48 +973,18 @@ static bool convert(const QVariant::Private *d, QVariant::Type t, void *result, 
         } else if (d->type == QVariant::List) {
             *static_cast<QVariantList *>(result) = *static_cast<QList<QVariant> *>(d->data.shared->ptr);
             return true;
-#ifndef QT_BOOTSTRAPPED
-        } else if (d->type == QMetaType::QJsonValue) {
-            if (!v_cast<QJsonValue>(d)->isArray())
-                return false;
-            *static_cast<QVariantList *>(result) = v_cast<QJsonValue>(d)->toArray().toVariantList();
-            return true;
-        } else if (d->type == QMetaType::QJsonArray) {
-            *static_cast<QVariantList *>(result) = v_cast<QJsonArray>(d)->toVariantList();
-            return true;
-#endif
         }
         return false;
     case QVariant::Map:
         if (d->type == QVariant::Map) {
             *static_cast<QVariantMap *>(result) = *static_cast<QMap<QString, QVariant> *>(d->data.shared->ptr);
             return true;
-#ifndef QT_BOOTSTRAPPED
-        } else if (d->type == QMetaType::QJsonValue) {
-            if (!v_cast<QJsonValue>(d)->isObject())
-                return false;
-            *static_cast<QVariantMap *>(result) = v_cast<QJsonValue>(d)->toObject().toVariantMap();
-            return true;
-        } else if (d->type == QMetaType::QJsonObject) {
-            *static_cast<QVariantMap *>(result) = v_cast<QJsonObject>(d)->toVariantMap();
-            return true;
-#endif
         }
         return false;
     case QVariant::Hash:
         if (d->type == QVariant::Hash) {
             *static_cast<QVariantHash *>(result) = *static_cast<QHash<QString, QVariant> *>(d->data.shared->ptr);
             return true;
-#ifndef QT_BOOTSTRAPPED
-        } else if (d->type == QMetaType::QJsonValue) {
-            if (!v_cast<QJsonValue>(d)->isObject())
-                return false;
-            *static_cast<QVariantHash *>(result) = v_cast<QJsonValue>(d)->toObject().toVariantHash();
-            return true;
-        } else if (d->type == QMetaType::QJsonObject) {
-            *static_cast<QVariantHash *>(result) = v_cast<QJsonObject>(d)->toVariantHash();
-            return true;
-#endif
         }
         return false;
 #ifndef QT_BOOTSTRAPPED
@@ -1209,15 +1083,6 @@ static void streamDebug(QDebug dbg, const QVariant &v)
     case QVariant::EasingCurve:
         dbg.nospace() << v.toEasingCurve();
         break;
-    case QVariant::JsonValue:
-        dbg.nospace() << v.toJsonValue();
-        break;
-    case QVariant::JsonObject:
-        dbg.nospace() << v.toJsonObject();
-        break;
-    case QVariant::JsonArray:
-        dbg.nospace() << v.toJsonArray();
-        break;
     case QVariant::JsonDocument:
         dbg.nospace() << v.toJsonDocument();
         break;
@@ -1273,7 +1138,6 @@ const QVariant::Handler qt_kernel_variant_handler = {
 #endif
     compare,
     convert,
-    0,
 #if !defined(QT_NO_DEBUG_STREAM) && !defined(Q_BROKEN_DEBUG_STREAM)
     streamDebug
 #else
@@ -1391,9 +1255,6 @@ const QVariant::Handler *QVariant::handler = &qt_kernel_variant_handler;
     \value DateTime  a QDateTime
     \value Double  a double
     \value EasingCurve a QEasingCurve
-    \value QJsonValue QJsonValue
-    \value QJsonObject QJsonObject
-    \value QJsonArray QJsonArray
     \value QJsonDocument QJsonDocument
     \value Font  a QFont
     \value Hash a QVariantHash
@@ -1611,27 +1472,6 @@ QVariant::QVariant(const char *val)
 
 /*!
     \since 4.9
-    \fn QVariant::QVariant(const QJsonValue &val)
-
-    Constructs a new variant with a json value, \a val.
-*/
-
-/*!
-    \since 4.9
-    \fn QVariant::QVariant(const QJsonObject &val)
-
-    Constructs a new variant with a json object value, \a val.
-*/
-
-/*!
-    \since 4.9
-    \fn QVariant::QVariant(const QJsonArray &val)
-
-    Constructs a new variant with a json array value, \a val.
-*/
-
-/*!
-    \since 4.9
     \fn QVariant::QVariant(const QJsonDocument &val)
 
     Constructs a new variant with a json document value, \a val.
@@ -1835,9 +1675,6 @@ QVariant::QVariant(const QDateTime &val)
 #ifndef QT_BOOTSTRAPPED
 QVariant::QVariant(const QEasingCurve &val)
 { d.is_null = false; d.type = EasingCurve; v_construct<QEasingCurve>(&d, val); }
-QVariant::QVariant(const QJsonValue &jsonValue) { d.is_null = false; d.type = JsonValue; v_construct<QJsonValue>(&d, jsonValue); }
-QVariant::QVariant(const QJsonObject &jsonObject) { d.is_null = false; d.type = JsonObject; v_construct<QJsonObject>(&d, jsonObject); }
-QVariant::QVariant(const QJsonArray &jsonArray) { d.is_null = false; d.type = JsonArray; v_construct<QJsonArray>(&d, jsonArray); }
 QVariant::QVariant(const QJsonDocument &jsonDocument) { d.is_null = false; d.type = JsonDocument; v_construct<QJsonDocument>(&d, jsonDocument); }
 #endif
 QVariant::QVariant(const QList<QVariant> &list)
@@ -2277,45 +2114,6 @@ QEasingCurve QVariant::toEasingCurve() const
 /*!
     \since 4.9
 
-    Returns the variant as a QJsonValue if the variant has userType() \l
-    QJsonValue; otherwise returns a default constructed QJsonValue.
-
-    \sa canConvert(), convert()
-*/
-QJsonValue QVariant::toJsonValue() const
-{
-    return qVariantToHelper<QJsonValue>(d, JsonValue, handler);
-}
-
-/*!
-    \since 4.9
-
-    Returns the variant as a QJsonObject if the variant has userType() \l
-    QJsonObject; otherwise returns a default constructed QJsonObject.
-
-    \sa canConvert(), convert()
-*/
-QJsonObject QVariant::toJsonObject() const
-{
-    return qVariantToHelper<QJsonObject>(d, JsonObject, handler);
-}
-
-/*!
-    \since 4.9
-
-    Returns the variant as a QJsonArray if the variant has userType() \l
-    QJsonArray; otherwise returns a default constructed QJsonArray.
-
-    \sa canConvert(), convert()
-*/
-QJsonArray QVariant::toJsonArray() const
-{
-    return qVariantToHelper<QJsonArray>(d, JsonArray, handler);
-}
-
-/*!
-    \since 4.9
-
     Returns the variant as a QJsonDocument if the variant has userType() \l
     QJsonDocument; otherwise returns a default constructed QJsonDocument.
 
@@ -2517,14 +2315,14 @@ template <typename T>
 inline T qNumVariantToHelper(const QVariant::Private &d,
                              const QVariant::Handler *handler, bool *ok, const T& val)
 {
-    uint t = qMetaTypeId<T>();
+    int t = qMetaTypeId<T>();
     if (ok)
         *ok = true;
     if (d.type == t)
         return val;
 
     T ret;
-    if (!handler->convert(&d, QVariant::Type(t), &ret, ok) && ok)
+    if (!handler->convert(&d, t, &ret, ok) && ok)
         *ok = false;
     return ret;
 }
@@ -2995,44 +2793,6 @@ bool QVariant::canConvert(Type t) const
     /* RegExp */
     /* Hash */
     /* EasingCurve */
-    } else if (d.type == QVariant::JsonValue) {
-        switch (int(t)) {
-        case QVariant::String:
-        case QVariant::Bool:
-        case QVariant::Int:
-        case QVariant::UInt:
-        case QVariant::Double:
-        case QVariant::Float:
-        case QMetaType::ULong:
-        case QMetaType::Long:
-        case QVariant::LongLong:
-        case QVariant::ULongLong:
-        case QMetaType::UShort:
-        case QMetaType::UChar:
-        case QMetaType::Char:
-        case QMetaType::Short:
-        case QVariant::List:
-        case QVariant::Map:
-        case QVariant::Hash:
-            return true;
-        default:
-            return false;
-        }
-    } else if (d.type == QVariant::JsonObject) {
-        switch (t) {
-        case QVariant::Map:
-        case QVariant::Hash:
-            return true;
-        default:
-            return false;
-        }
-    } else if (d.type == QVariant::JsonArray) {
-        switch (t) {
-        case QVariant::List:
-            return true;
-        default:
-            return false;
-        }
     /* JsonDocument */
     } else if (t == QVariant::Font) {
         switch (d.type) {

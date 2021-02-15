@@ -1,7 +1,7 @@
 /****************************************************************************
 **
 ** Copyright (C) 2015 The Qt Company Ltd.
-** Copyright (C) 2016-2021 Ivailo Monev
+** Copyright (C) 2016 Ivailo Monev
 **
 ** This file is part of the QtCore module of the Katie Toolkit.
 **
@@ -14,18 +14,6 @@
 ** packaging of this file.  Please review the following information to
 ** ensure the GNU Lesser General Public License version 2.1 requirements
 ** will be met: http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html.
-**
-** As a special exception, The Qt Company gives you certain additional
-** rights. These rights are described in The Qt Company LGPL Exception
-** version 1.1, included in the file LGPL_EXCEPTION.txt in this package.
-**
-** GNU General Public License Usage
-** Alternatively, this file may be used under the terms of the GNU
-** General Public License version 3.0 as published by the Free Software
-** Foundation and appearing in the file LICENSE.GPL included in the
-** packaging of this file.  Please review the following information to
-** ensure the GNU General Public License version 3.0 requirements will be
-** met: http://www.gnu.org/copyleft/gpl.html.
 **
 ** $QT_END_LICENSE$
 **
@@ -844,10 +832,6 @@ const char *qVersion()
        little-endian.
     \endlist
 
-    Some constants are defined only on certain platforms. You can use
-    the preprocessor symbols Q_WS_WIN and Q_WS_MAC to test that
-    the application is compiled under Windows or Mac.
-
     \sa QLibraryInfo
 */
 
@@ -859,12 +843,6 @@ const char *qVersion()
 
     \value WordSize The size in bits of a pointer for the platform on which
            the application is compiled (32 or 64).
-*/
-
-/*!
-    \variable QSysInfo::WindowsVersion
-    \brief the version of the Windows operating system on which the
-           application is run (Windows only)
 */
 
 /*!
@@ -1059,6 +1037,7 @@ void qBadAlloc()
 #ifndef QT_NO_EXECINFO
 static void qt_print_backtrace()
 {
+    ::setvbuf(stderr, Q_NULLPTR, _IONBF, 0);
     void *buffer[256];
     int  nptrs = backtrace(buffer, sizeof(buffer));
     char **strings = backtrace_symbols(buffer, nptrs);
@@ -1070,14 +1049,14 @@ static void qt_print_backtrace()
     for (int i = 0; i < nptrs; i++) {
 #ifdef QT_HAVE_CXXABI_H
         int status;
-        char* demangled = abi::__cxa_demangle(strings[i], nullptr, nullptr, &status);
+        char* demangled = abi::__cxa_demangle(strings[i], Q_NULLPTR, Q_NULLPTR, &status);
         if (status == 0) {
-            ::printf(" %s\n", demangled);
+            ::fprintf(stderr, " %s\n", demangled);
             ::free(demangled);
             continue;
         }
 #endif
-        ::printf(" %s\n", strings[i]);
+        ::fprintf(stderr, " %s\n", strings[i]);
     }
 
     ::free(strings);
@@ -1151,14 +1130,19 @@ int qt_install_crash_handler()
 Q_CONSTRUCTOR_FUNCTION(qt_install_crash_handler);
 #endif
 
+static const bool fatalwarnings = !qgetenv("QT_FATAL_WARNINGS").isNull();
+#ifndef QT_NO_EXECINFO
+static const bool tracewarnings = !qgetenv("QT_TRACE_WARNINGS").isNull();
+#endif
+
 /*
   The Q_ASSERT macro calls this function when the test fails.
 */
 void qt_assert(const char *assertion, const char *file, int line)
 {
 #ifndef QT_NO_EXECINFO
-    // don't print backtrace twice if abort() will be called in qt_message_output()
-    if (qgetenv("QT_FATAL_WARNINGS").isNull())
+    // don't print backtrace twice if trace will be printed in qt_message_output()
+    if (!fatalwarnings)
         qt_print_backtrace();
 #endif
     qFatal("ASSERT: \"%s\" in file %s, line %d", assertion, file, line);
@@ -1170,8 +1154,8 @@ void qt_assert(const char *assertion, const char *file, int line)
 void qt_assert_x(const char *where, const char *what, const char *file, int line)
 {
 #ifndef QT_NO_EXECINFO
-    // don't print backtrace twice if abort() will be called in qt_message_output()
-    if (qgetenv("QT_FATAL_WARNINGS").isNull())
+    // don't print backtrace twice if trace will be printed in qt_message_output()
+    if (!fatalwarnings)
         qt_print_backtrace();
 #endif
     qFatal("ASSERT failure in %s: \"%s\", file %s, line %d", where, what, file, line);
@@ -1188,13 +1172,11 @@ QString qt_error_string(int errorCode)
     //    be the beginning of the buffer we used
     // The GNU libc manpage for strerror_r says you should use the the XSI
     // version in portable code.
-#if !defined(QT_NO_THREAD) && defined(QT_HAVE_STRERROR_R)
+#if !defined(QT_NO_THREAD)
     char errbuf[1024];
     ::memset(errbuf, '\0', sizeof(errbuf));
-    if (Q_LIKELY(::strerror_r(errorCode, errbuf, sizeof(errbuf)))) {
-        return QString::fromLocal8Bit(errbuf, sizeof(errbuf));
-    }
-    return QString();
+    ::strerror_r(errorCode, errbuf, sizeof(errbuf));
+    return QString::fromLocal8Bit(errbuf);
 #else
     return QString::fromLocal8Bit(::strerror(errorCode));
 #endif
@@ -1250,12 +1232,15 @@ void qt_message_output(QtMsgType msgType, const char *buf)
     if (handler) {
         (*handler)(msgType, buf);
     } else {
-        fprintf(stderr, "%s\n", buf);
-        fflush(stderr);
+        ::fprintf(stderr, "%s\n", buf);
+        ::fflush(stderr);
     }
 
-    static const bool fatalwarnings = qgetenv("QT_FATAL_WARNINGS").isNull();
-    if (msgType == QtFatalMsg || (msgType == QtWarningMsg && !fatalwarnings))
+#ifndef QT_NO_EXECINFO
+    if (msgType == QtWarningMsg && tracewarnings)
+        qt_print_backtrace();
+#endif
+    if (msgType == QtFatalMsg || (msgType == QtWarningMsg && fatalwarnings))
         abort(); // trap; generates core dump
 }
 
@@ -1505,7 +1490,7 @@ void qsrand(uint seed)
 int qrand()
 {
 #ifdef QT_HAVE_ARC4RANDOM
-    return ::arc4random();
+    return (::arc4random() % RAND_MAX);
 #else
     // Seed the PRNG once per thread with a combination of current time and its address
     thread_local time_t almostrandom = 0;
@@ -1513,8 +1498,8 @@ int qrand()
         ::time(&almostrandom);
         std::srand(almostrandom + std::intptr_t(&almostrandom));
     }
-#endif
     return std::rand();
+#endif
 }
 
 /*!
@@ -1880,10 +1865,9 @@ bool QInternal::activateCallbacks(void **parameters)
     at the same logical level with respect to preprocessor conditionals
     in the same file.
 
-    As a rule of thumb, \c QT_BEGIN_NAMESPACE should appear in all Qt header
-    and Qt source files after the last \c{#include} line and before the first
-    declaration. In Qt headers using \c QT_BEGIN_HEADER, \c QT_BEGIN_NAMESPACE
-    follows \c QT_BEGIN_HEADER immediately.
+    As a rule of thumb, \c QT_BEGIN_NAMESPACE should appear in all Katie header
+    and source files after the last \c{#include} line and before the first
+    declaration.
 
     If that rule can't be followed because, e.g., \c{#include} lines and
     declarations are wildly mixed, place \c QT_BEGIN_NAMESPACE before
@@ -2012,5 +1996,225 @@ bool QInternal::activateCallbacks(void **parameters)
     \sa Q_DECL_EXPORT
 */
 
+// the displayMode value is according to the what are blocks in the piecetable, not
+// what the w3c defines. same as those in qtexthtmlparser.cpp
+static const char* elementsTbl[]= {
+    "a\0",
+    "address\0",
+    "b\0",
+    "big\0",
+    "blockquote\0",
+    "body\0",
+    "br\0",
+    "caption\0",
+    "center\0",
+    "cite\0",
+    "code\0",
+    "dd\0",
+    "dfn\0",
+    "div\0",
+    "dl\0",
+    "dt\0",
+    "em\0",
+    "font\0",
+    "h1\0",
+    "h2\0",
+    "h3\0",
+    "h4\0",
+    "h5\0",
+    "h6\0",
+    "head\0",
+    "hr\0",
+    "html\0",
+    "i\0",
+    "img\0",
+    "kbd\0",
+    "li\0",
+    "link\0",
+    "meta\0",
+    "nobr\0",
+    "ol\0",
+    "p\0",
+    "pre\0",
+    "qt\0",
+    "s\0",
+    "samp\0",
+    "script\0",
+    "small\0",
+    "span\0",
+    "strong\0",
+    "style\0",
+    "sub\0",
+    "sup\0",
+    "table\0",
+    "tbody\0",
+    "td\0",
+    "tfoot\0",
+    "th\0",
+    "thead\0",
+    "title\0",
+    "tr\0",
+    "tt\0",
+    "u\0",
+    "ul\0",
+    "var\0",
+};
+static const qint16 elementsTblSize = 59;
+
+/*!
+    Returns true if the string \a text is likely to be rich text;
+    otherwise returns false.
+
+    This function uses a fast and therefore simple heuristic. It
+    mainly checks whether there is something that looks like a tag
+    before the first line break. Although the result may be correct
+    for common cases, there is no guarantee.
+*/
+bool Qt::mightBeRichText(const QString& text)
+{
+    if (text.isEmpty())
+        return false;
+    int start = 0;
+
+    while (start < text.length() && text.at(start).isSpace())
+        ++start;
+
+    // skip a leading <?xml ... ?> as for example with xhtml
+    if (text.mid(start, 5) == QLatin1String("<?xml")) {
+        while (start < text.length()) {
+            if (text.at(start) == QLatin1Char('?')
+                && start + 2 < text.length()
+                && text.at(start + 1) == QLatin1Char('>')) {
+                start += 2;
+                break;
+            }
+            ++start;
+        }
+
+        while (start < text.length() && text.at(start).isSpace())
+            ++start;
+    }
+
+    if (text.mid(start, 5).toLower() == QLatin1String("<!doc"))
+        return true;
+    int open = start;
+    while (open < text.length() && text.at(open) != QLatin1Char('<')
+            && text.at(open) != QLatin1Char('\n')) {
+        if (text.at(open) == QLatin1Char('&') &&  text.mid(open+1,3) == QLatin1String("lt;"))
+            return true; // support desperate attempt of user to see <...>
+        ++open;
+    }
+    if (open < text.length() && text.at(open) == QLatin1Char('<')) {
+        const int close = text.indexOf(QLatin1Char('>'), open);
+        if (close > -1) {
+            QByteArray tag;
+            for (int i = open+1; i < close; ++i) {
+                if (text[i].isDigit() || text[i].isLetter())
+                    tag += text[i].toLatin1();
+                else if (!tag.isEmpty() && text[i].isSpace())
+                    break;
+                else if (!tag.isEmpty() && text[i] == QLatin1Char('/') && i + 1 == close)
+                    break;
+                else if (!text[i].isSpace() && (!tag.isEmpty() || text[i] != QLatin1Char('!')))
+                    return false; // that's not a tag
+            }
+            for (qint16 i = 0; i < elementsTblSize; i++) {
+                if (qstricmp(tag.constData(), elementsTbl[i]) == 0) {
+                    return true;
+                }
+            }
+            return false;
+        }
+    }
+    return false;
+}
+
+/*!
+    Converts the plain text string \a plain to a HTML string with
+    HTML metacharacters \c{<}, \c{>}, \c{&}, and \c{"} replaced by HTML
+    entities.
+
+    Example:
+
+    \snippet doc/src/snippets/code/src_gui_text_qtextdocument.cpp 0
+
+    \sa convertFromPlainText(), mightBeRichText()
+*/
+QString Qt::escape(const QString& plain)
+{
+    QString rich;
+    rich.reserve(int(plain.length() * qreal(1.1)));
+    for (int i = 0; i < plain.length(); ++i) {
+        if (plain.at(i) == QLatin1Char('<'))
+            rich += QLatin1String("&lt;");
+        else if (plain.at(i) == QLatin1Char('>'))
+            rich += QLatin1String("&gt;");
+        else if (plain.at(i) == QLatin1Char('&'))
+            rich += QLatin1String("&amp;");
+        else if (plain.at(i) == QLatin1Char('"'))
+            rich += QLatin1String("&quot;");
+        else
+            rich += plain.at(i);
+    }
+    return rich;
+}
+
+/*!
+    \fn QString Qt::convertFromPlainText(const QString &plain, WhiteSpaceMode mode)
+
+    Converts the plain text string \a plain to an HTML-formatted
+    paragraph while preserving most of its look.
+
+    \a mode defines how whitespace is handled.
+
+    \sa escape(), mightBeRichText()
+*/
+QString Qt::convertFromPlainText(const QString &plain, Qt::WhiteSpaceMode mode)
+{
+    int col = 0;
+    QString rich;
+    rich += QLatin1String("<p>");
+    for (int i = 0; i < plain.length(); ++i) {
+        if (plain[i] == QLatin1Char('\n')){
+            int c = 1;
+            while (i+1 < plain.length() && plain[i+1] == QLatin1Char('\n')) {
+                i++;
+                c++;
+            }
+            if (c == 1)
+                rich += QLatin1String("<br>\n");
+            else {
+                rich += QLatin1String("</p>\n");
+                while (--c > 1)
+                    rich += QLatin1String("<br>\n");
+                rich += QLatin1String("<p>");
+            }
+            col = 0;
+        } else {
+            if (mode == Qt::WhiteSpacePre && plain[i] == QLatin1Char('\t')){
+                rich += QChar(0x00a0U);
+                ++col;
+                while (col % 8) {
+                    rich += QChar(0x00a0U);
+                    ++col;
+                }
+            }
+            else if (mode == Qt::WhiteSpacePre && plain[i].isSpace())
+                rich += QChar(0x00a0U);
+            else if (plain[i] == QLatin1Char('<'))
+                rich += QLatin1String("&lt;");
+            else if (plain[i] == QLatin1Char('>'))
+                rich += QLatin1String("&gt;");
+            else if (plain[i] == QLatin1Char('&'))
+                rich += QLatin1String("&amp;");
+            else
+                rich += plain[i];
+            ++col;
+        }
+    }
+    if (col != 0)
+        rich += QLatin1String("</p>");
+    return rich;
+}
 
 QT_END_NAMESPACE

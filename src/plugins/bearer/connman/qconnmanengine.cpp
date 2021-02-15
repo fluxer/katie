@@ -1,7 +1,7 @@
 /****************************************************************************
 **
 ** Copyright (C) 2015 The Qt Company Ltd.
-** Copyright (C) 2016-2021 Ivailo Monev
+** Copyright (C) 2016 Ivailo Monev
 **
 ** This file is part of the plugins of the Katie Toolkit.
 **
@@ -14,18 +14,6 @@
 ** packaging of this file.  Please review the following information to
 ** ensure the GNU Lesser General Public License version 2.1 requirements
 ** will be met: http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html.
-**
-** As a special exception, The Qt Company gives you certain additional
-** rights. These rights are described in The Qt Company LGPL Exception
-** version 1.1, included in the file LGPL_EXCEPTION.txt in this package.
-**
-** GNU General Public License Usage
-** Alternatively, this file may be used under the terms of the GNU
-** General Public License version 3.0 as published by the Free Software
-** Foundation and appearing in the file LICENSE.GPL included in the
-** packaging of this file.  Please review the following information to
-** ensure the GNU General Public License version 3.0 requirements will be
-** met: http://www.gnu.org/copyleft/gpl.html.
 **
 ** $QT_END_LICENSE$
 **
@@ -124,9 +112,8 @@ QString QConnmanEngine::getInterfaceFromId(const QString &id)
     return configInterfaces.value(id);
 }
 
-bool QConnmanEngine::hasIdentifier(const QString &id)
+bool QConnmanEngine::hasIdentifier(const QString &id) const
 {
-    QMutexLocker locker(&mutex);
     return accessPointConfigurations.contains(id);
 }
 
@@ -366,9 +353,8 @@ void QConnmanEngine::configurationChange(const QString &id)
         QNetworkConfigurationPrivatePointer ptr = accessPointConfigurations.value(id);
 
         QString servicePath = serviceFromId(id);
-        QConnmanServiceInterface *serv;
-        serv = new QConnmanServiceInterface(servicePath);
-        QString networkName = serv->getName();
+        QConnmanServiceInterface serv(servicePath);
+        QString networkName = serv.getName();
 
         QNetworkConfiguration::StateFlags curState = getStateForService(servicePath);
 
@@ -512,21 +498,20 @@ void QConnmanEngine::removeConfiguration(const QString &id)
 void QConnmanEngine::addServiceConfiguration(const QString &servicePath)
 {
     QMutexLocker locker(&mutex);
-    QConnmanServiceInterface *serv;
-    serv = new QConnmanServiceInterface(servicePath);
+    QConnmanServiceInterface serv(servicePath);
 
     const QString id = QString::number(qHash(servicePath));
 
     if (!accessPointConfigurations.contains(id)) {
         serviceNetworks.append(servicePath);
 
-        connect(serv,SIGNAL(propertyChangedContext(QString,QString,QDBusVariant)),
+        connect(&serv,SIGNAL(propertyChangedContext(QString,QString,QDBusVariant)),
                 this,SLOT(servicePropertyChangedContext(QString,QString,QDBusVariant)));
         QNetworkConfigurationPrivate* cpPriv = new QNetworkConfigurationPrivate();
 
-        QString networkName = serv->getName();
+        QString networkName = serv.getName();
 
-        const QString connectionType = serv->getType();
+        const QString connectionType = serv.getType();
         if (connectionType == QLatin1String("ethernet")) {
             cpPriv->bearerType = QNetworkConfiguration::BearerEthernet;
         } else if (connectionType == QLatin1String("wifi")) {
@@ -534,9 +519,9 @@ void QConnmanEngine::addServiceConfiguration(const QString &servicePath)
         } else if (connectionType == QLatin1String("cellular")) {
             cpPriv->bearerType = ofonoTechToBearerType(QLatin1String("cellular"));
             if(servicePath.isEmpty()) {
-                networkName = serv->getAPN();
+                networkName = serv.getAPN();
                 if(networkName.isEmpty()) {
-                    networkName = serv->getName();
+                    networkName = serv.getName();
                 }
             }
             cpPriv->roamingSupported = isRoamingAllowed(servicePath);
@@ -551,7 +536,7 @@ void QConnmanEngine::addServiceConfiguration(const QString &servicePath)
         cpPriv->id = id;
         cpPriv->type = QNetworkConfiguration::InternetAccessPoint;
 
-        if(serv->getSecurity() == QLatin1String("none")) {
+        if(serv.getSecurity() == QLatin1String("none")) {
             cpPriv->purpose = QNetworkConfiguration::PublicPurpose;
         } else {
             cpPriv->purpose = QNetworkConfiguration::PrivatePurpose;
@@ -562,7 +547,7 @@ void QConnmanEngine::addServiceConfiguration(const QString &servicePath)
         QNetworkConfigurationPrivatePointer ptr(cpPriv);
         accessPointConfigurations.insert(ptr->id, ptr);
         foundConfigurations.append(cpPriv);
-        configInterfaces[cpPriv->id] = serv->getInterface(); 
+        configInterfaces[cpPriv->id] = serv.getInterface();
 
         locker.unlock();
         emit configurationAdded(ptr);

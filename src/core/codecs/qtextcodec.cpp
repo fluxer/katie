@@ -1,7 +1,7 @@
 /****************************************************************************
 **
 ** Copyright (C) 2015 The Qt Company Ltd.
-** Copyright (C) 2016-2021 Ivailo Monev
+** Copyright (C) 2016 Ivailo Monev
 **
 ** This file is part of the QtCore module of the Katie Toolkit.
 **
@@ -14,18 +14,6 @@
 ** packaging of this file.  Please review the following information to
 ** ensure the GNU Lesser General Public License version 2.1 requirements
 ** will be met: http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html.
-**
-** As a special exception, The Qt Company gives you certain additional
-** rights. These rights are described in The Qt Company LGPL Exception
-** version 1.1, included in the file LGPL_EXCEPTION.txt in this package.
-**
-** GNU General Public License Usage
-** Alternatively, this file may be used under the terms of the GNU
-** General Public License version 3.0 as published by the Free Software
-** Foundation and appearing in the file LICENSE.GPL included in the
-** packaging of this file.  Please review the following information to
-** ensure the GNU General Public License version 3.0 requirements will be
-** met: http://www.gnu.org/copyleft/gpl.html.
 **
 ** $QT_END_LICENSE$
 **
@@ -47,45 +35,28 @@
 #include "qhash.h"
 #include "qicucodec_p.h"
 
-#ifndef QT_NO_LIBRARY
-# include "qcoreapplication.h"
-# include "qtextcodecplugin.h"
-# include "qfactoryloader_p.h"
-#endif
-
 #include <stdlib.h>
 #include <ctype.h>
 #include <locale.h>
-
-#if defined(QT_HAVE_NL_LANGINFO)
 #include <langinfo.h>
-#endif
 
 // enabling this is not exception safe!
 // #define Q_DEBUG_TEXTCODEC
 
 QT_BEGIN_NAMESPACE
 
-#if !defined(QT_NO_LIBRARY) && !defined(QT_NO_TEXTCODECPLUGIN)
-Q_GLOBAL_STATIC_WITH_ARGS(QFactoryLoader, codecsloader,
-    (QTextCodecFactoryInterface_iid, QLatin1String("/codecs")))
-#endif
-
 static inline bool nameMatch(const QByteArray &name, const QByteArray &name2)
 {
     return (ucnv_compareNames(name.constData(), name2.constData()) == 0);
 }
 
-static QList<QTextCodec*> *all = Q_NULLPTR;
-#ifdef Q_DEBUG_TEXTCODEC
-static bool destroying_is_ok = false;
-#endif
-
 static QTextCodec *localeMapper = Q_NULLPTR;
 QTextCodec *QTextCodec::cftr = Q_NULLPTR;
+#ifndef QT_NO_THREAD
+Q_GLOBAL_STATIC(QMutex, textCodecsMutex)
+#endif
 
-
-class QTextCodecCleanup
+class QTextCodecCleanup : public QList<QTextCodec*>
 {
 public:
     ~QTextCodecCleanup();
@@ -98,28 +69,12 @@ public:
 */
 QTextCodecCleanup::~QTextCodecCleanup()
 {
-    if (!all)
-        return;
-
-#ifdef Q_DEBUG_TEXTCODEC
-    destroying_is_ok = true;
-#endif
-
-    QList<QTextCodec *> *myAll = all;
-    all = Q_NULLPTR; // Otherwise the d'tor destroys the iterator
-    for (QList<QTextCodec *>::const_iterator it = myAll->constBegin()
-            ; it != myAll->constEnd(); ++it) {
-        delete *it;
+    for (int i = 0; i < this->size(); i++) {
+        delete this->at(i);
     }
-    delete myAll;
     localeMapper = Q_NULLPTR;
-
-#ifdef Q_DEBUG_TEXTCODEC
-    destroying_is_ok = false;
-#endif
 }
-
-Q_GLOBAL_STATIC(QTextCodecCleanup, createQTextCodecCleanup)
+Q_GLOBAL_STATIC(QTextCodecCleanup, qGlobalQTextCodec)
 
 static QTextCodec *checkForCodec(const QByteArray &name) {
     QTextCodec *c = QTextCodec::codecForName(name);
@@ -147,7 +102,7 @@ static void setupLocaleMapper()
         // First part is getting that locale name.  First try setlocale() which
         // definitely knows it, but since we cannot fully trust it, get ready
         // to fall back to environment variables.
-        const QByteArray ctype = setlocale(LC_CTYPE, 0);
+        const QByteArray ctype = ::setlocale(LC_CTYPE, 0);
 
         // Get the first nonempty value from $LC_ALL, $LC_CTYPE, and $LANG
         // environment variables.
@@ -169,13 +124,13 @@ static void setupLocaleMapper()
         // 1. CODESET from ctype if it contains a .CODESET part (e.g. en_US.ISO8859-15)
         int indexOfDot = ctype.indexOf('.');
         if (indexOfDot != -1)
-            localeMapper = checkForCodec( ctype.mid(indexOfDot + 1) );
+            localeMapper = checkForCodec(ctype.mid(indexOfDot + 1));
 
         // 2. CODESET from lang if it contains a .CODESET part
         if (!localeMapper) {
             indexOfDot = lang.indexOf('.');
             if (indexOfDot != -1)
-                localeMapper = checkForCodec( lang.mid(indexOfDot + 1) );
+                localeMapper = checkForCodec(lang.mid(indexOfDot + 1));
         }
 
         // 3. ctype (maybe the locale is named "ISO-8859-1" or something)
@@ -192,38 +147,16 @@ static void setupLocaleMapper()
 
     }
 
-#if defined(QT_HAVE_NL_LANGINFO)
     if (!localeMapper) {
-        const char *charset = ::nl_langinfo(CODESET);
-        if (charset)
+        const QByteArray charset = ::nl_langinfo(CODESET);
+        if (!charset.isEmpty())
             localeMapper = QTextCodec::codecForName(charset);
     }
-#endif
 
     // If everything failed, we default to 8859-1
     // We could perhaps default to 8859-15.
     if (!localeMapper)
         localeMapper = QTextCodec::codecForName("ISO-8859-1");
-}
-
-#ifndef QT_NO_THREAD
-Q_GLOBAL_STATIC_WITH_ARGS(QMutex, textCodecsMutex, (QMutex::Recursive))
-#endif
-
-// textCodecsMutex need to be locked to enter this function
-static void setup()
-{
-    if (all)
-        return;
-
-
-#ifdef Q_DEBUG_TEXTCODEC
-    if (Q_UNLIKELY(destroying_is_ok))
-        qWarning("QTextCodec: Creating new codec during codec cleanup");
-#endif
-    all = new QList<QTextCodec*>;
-    // create the cleanup object to cleanup all codecs on exit
-    (void) createQTextCodecCleanup();
 }
 
 /*!
@@ -295,89 +228,92 @@ QTextCodec::ConverterState& QTextCodec::ConverterState::operator=(const QTextCod
     Some of the supported encodings are:
 
     \list
-    \o Adobe-Standard-Encoding
-    \o Big5
-    \o Big5-HKSCS
     \o BOCU-1
     \o CESU-8
-    \o cp851
-    \o EUC-JP
-    \o EUC-KR
-    \o GB18030
-    \o GB2312
-    \o GB_2312-80
-    \o GBK
-    \o hp-roman8
-    \o HZ-GB-2312
-    \o IBM00858
-    \o IBM01140
-    \o IBM01141
-    \o IBM01142
-    \o IBM01143
-    \o IBM01144
-    \o IBM01145
-    \o IBM01146
-    \o IBM01147
-    \o IBM01148
-    \o IBM01149
-    \o IBM037
-    \o IBM1026
-    \o IBM1047
-    \o IBM273
-    \o IBM277
-    \o IBM278
-    \o IBM280
-    \o IBM284
-    \o IBM285
-    \o IBM290
-    \o IBM297
-    \o IBM420
-    \o IBM424
-    \o IBM437
-    \o IBM500
-    \o IBM775
-    \o IBM850
-    \o IBM852
-    \o IBM855
-    \o IBM857
-    \o IBM860
-    \o IBM861
-    \o IBM862
-    \o IBM863
-    \o IBM864
-    \o IBM865
-    \o IBM866
-    \o IBM868
-    \o IBM869
-    \o IBM870
-    \o IBM871
-    \o IBM918
-    \o IBM-Thai
-    \o ISO-2022-CN
-    \o ISO-2022-CN-EXT
-    \o ISO-2022-JP
-    \o ISO-2022-JP-1
-    \o ISO-2022-JP-2
-    \o ISO-2022-KR
+    \o euc-jp-2007
+    \o gb18030
+    \o HZ
+    \o ibm-1026_P100-1995
+    \o ibm-1047_P100-1995
+    \o ibm-1051_P100-1995
+    \o ibm-1089_P100-1995
+    \o ibm-1140_P100-1997
+    \o ibm-1141_P100-1997
+    \o ibm-1142_P100-1997
+    \o ibm-1143_P100-1997
+    \o ibm-1144_P100-1997
+    \o ibm-1145_P100-1997
+    \o ibm-1146_P100-1997
+    \o ibm-1147_P100-1997
+    \o ibm-1148_P100-1997
+    \o ibm-1149_P100-1997
+    \o ibm-1168_P100-2002
+    \o ibm-1276_P100-1995
+    \o ibm-1363_P11B-1998
+    \o ibm-1375_P100-2008
+    \o ibm-1383_P110-1999
+    \o ibm-273_P100-1995
+    \o ibm-277_P100-1995
+    \o ibm-278_P100-1995
+    \o ibm-280_P100-1995
+    \o ibm-284_P100-1995
+    \o ibm-285_P100-1995
+    \o ibm-290_P100-1995
+    \o ibm-297_P100-1995
+    \o ibm-37_P100-1995
+    \o ibm-420_X120-1999
+    \o ibm-424_P100-1995
+    \o ibm-437_P100-1995
+    \o ibm-500_P100-1995
+    \o ibm-5012_P100-1999
+    \o ibm-5346_P100-1998
+    \o ibm-5347_P100-1998
+    \o ibm-5348_P100-1997
+    \o ibm-5349_P100-1998
+    \o ibm-5350_P100-1998
+    \o ibm-5354_P100-1998
+    \o ibm-5478_P100-1995
+    \o ibm-775_P100-1996
+    \o ibm-838_P100-1995
+    \o ibm-850_P100-1995
+    \o ibm-851_P100-1995
+    \o ibm-852_P100-1995
+    \o ibm-855_P100-1995
+    \o ibm-857_P100-1995
+    \o ibm-858_P100-1997
+    \o ibm-860_P100-1995
+    \o ibm-861_P100-1995
+    \o ibm-862_P100-1995
+    \o ibm-863_P100-1995
+    \o ibm-864_X110-1999
+    \o ibm-865_P100-1995
+    \o ibm-866_P100-1995
+    \o ibm-868_P100-1995
+    \o ibm-869_P100-1995
+    \o ibm-870_P100-1995
+    \o ibm-871_P100-1995
+    \o ibm-874_P100-1995
+    \o ibm-878_P100-1996
+    \o ibm-9005_X110-2007
+    \o ibm-912_P100-1995
+    \o ibm-913_P100-2000
+    \o ibm-914_P100-1995
+    \o ibm-915_P100-1995
+    \o ibm-918_P100-1995
+    \o ibm-920_P100-1995
+    \o ibm-921_P100-1995
+    \o ibm-923_P100-1998
+    \o ibm-943_P15A-2003
+    \o ibm-9447_P100-2002
+    \o ibm-9448_X100-2005
+    \o ibm-9449_P100-2002
+    \o ibm-970_P110_P110-2006_U2
+    \o ISO_2022
     \o ISO-8859-1
-    \o ISO-8859-10
-    \o ISO-8859-13
-    \o ISO-8859-14
-    \o ISO-8859-15
-    \o ISO-8859-2
-    \o ISO-8859-3
-    \o ISO-8859-4
-    \o ISO-8859-5
-    \o ISO-8859-6
-    \o ISO-8859-7
-    \o ISO-8859-8
-    \o ISO-8859-9
-    \o KOI8-R
-    \o KOI8-U
-    \o macintosh
+    \o iso-8859_10-1998
+    \o iso-8859_14-1998
+    \o macos-0_2-10.2
     \o SCSU
-    \o Shift_JIS
-    \o TIS-620
     \o US-ASCII
     \o UTF-16
     \o UTF-16BE
@@ -387,15 +323,8 @@ QTextCodec::ConverterState& QTextCodec::ConverterState::operator=(const QTextCod
     \o UTF-32LE
     \o UTF-7
     \o UTF-8
-    \o windows-1250
-    \o windows-1251
-    \o windows-1252
-    \o windows-1253
-    \o windows-1254
-    \o windows-1255
-    \o windows-1256
-    \o windows-1257
-    \o windows-1258
+    \o windows-936-2000
+    \o windows-950-2000
 
     \o System Any of the above depending on the system locale
     \endlist
@@ -491,8 +420,7 @@ QTextCodec::QTextCodec()
 #ifndef QT_NO_THREAD
     QMutexLocker locker(textCodecsMutex());
 #endif
-    setup();
-    all->append(this);
+    qGlobalQTextCodec()->append(this);
 }
 
 
@@ -507,13 +435,7 @@ QTextCodec::~QTextCodec()
 #ifndef QT_NO_THREAD
     QMutexLocker locker(textCodecsMutex());
 #endif
-#ifdef Q_DEBUG_TEXTCODEC
-    if (Q_UNLIKELY(!destroying_is_ok))
-        qWarning("QTextCodec::~QTextCodec: Called by application");
-#endif
-    if (all) {
-        all->removeAll(this);
-    }
+    qGlobalQTextCodec()->removeAll(this);
 }
 
 /*!
@@ -537,34 +459,22 @@ QTextCodec *QTextCodec::codecForName(const QByteArray &name)
     if (name == "System")
         return QTextCodec::codecForLocale();
 
+    {
 #ifndef QT_NO_THREAD
-    QMutexLocker locker(textCodecsMutex());
+        QMutexLocker locker(textCodecsMutex());
 #endif
-    setup();
-
-    for (int i = 0; i < all->size(); ++i) {
-        QTextCodec *cursor = all->at(i);
-        if (nameMatch(cursor->name(), name)) {
-            return cursor;
-        }
-        foreach (const QByteArray &alias, cursor->aliases()) {
-            if (nameMatch(alias, name)) {
+        for (int i = 0; i < qGlobalQTextCodec()->size(); ++i) {
+            QTextCodec *cursor = qGlobalQTextCodec()->at(i);
+            if (nameMatch(cursor->name(), name)) {
                 return cursor;
             }
-        }
-    }
-
-#if !defined(QT_NO_LIBRARY) && !defined(QT_NO_TEXTCODECPLUGIN)
-    const QFactoryLoader *l = codecsloader();
-    foreach (const QString &key, l->keys()) {
-        if (nameMatch(name, key.toLatin1())) {
-            if (QTextCodecFactoryInterface *factory
-                = qobject_cast<QTextCodecFactoryInterface*>(l->instance(key))) {
-                return factory->create(key);
+            foreach (const QByteArray &alias, cursor->aliases()) {
+                if (nameMatch(alias, name)) {
+                    return cursor;
+                }
             }
         }
     }
-#endif
 
     foreach(const QByteArray &codec, QIcuCodec::allCodecs()) {
         if (nameMatch(name, codec)) {
@@ -582,24 +492,17 @@ QTextCodec *QTextCodec::codecForName(const QByteArray &name)
 */
 QTextCodec* QTextCodec::codecForMib(int mib)
 {
+    {
 #ifndef QT_NO_THREAD
-    QMutexLocker locker(textCodecsMutex());
+        QMutexLocker locker(textCodecsMutex());
 #endif
-    setup();
-
-    for (int i = 0; i < all->size(); ++i) {
-        QTextCodec *cursor = all->at(i);
-        if (cursor->mibEnum() == mib) {
-            return cursor;
+        for (int i = 0; i < qGlobalQTextCodec()->size(); ++i) {
+            QTextCodec *cursor = qGlobalQTextCodec()->at(i);
+            if (cursor->mibEnum() == mib) {
+                return cursor;
+            }
         }
     }
-
-#ifndef QT_NO_TEXTCODECPLUGIN
-    QString name = QLatin1String("MIB: ") + QString::number(mib);
-    if (QTextCodecFactoryInterface *factory
-        = qobject_cast<QTextCodecFactoryInterface*>(codecsloader()->instance(name)))
-        return factory->create(name);
-#endif
 
     foreach(const int codec, QIcuCodec::allMibs()) {
         if (mib == codec) {
@@ -621,20 +524,9 @@ QTextCodec* QTextCodec::codecForMib(int mib)
 */
 QList<QByteArray> QTextCodec::availableCodecs()
 {
-    QList<QByteArray> codecs;
-    codecs << "System" << QIcuCodec::allCodecs();
-
-#if !defined(QT_NO_LIBRARY) && !defined(QT_NO_TEXTCODECPLUGIN)
-    const QFactoryLoader *l = codecsloader();
-    foreach (const QString &key, l->keys()) {
-        if (!key.startsWith(QLatin1String("MIB: "))) {
-            QByteArray name = key.toLatin1();
-            if (!codecs.contains(name))
-                codecs += name;
-        }
-    }
-#endif
-
+    static const QList<QByteArray> codecs = QList<QByteArray>()
+        << "System"
+        << QIcuCodec::allCodecs();
     return codecs;
 }
 
@@ -646,20 +538,7 @@ QList<QByteArray> QTextCodec::availableCodecs()
 */
 QList<int> QTextCodec::availableMibs()
 {
-    QList<int> codecs;
-    codecs << QIcuCodec::allMibs();
-
-#if !defined(QT_NO_LIBRARY) && !defined(QT_NO_TEXTCODECPLUGIN)
-    const QFactoryLoader *l = codecsloader();
-    foreach (const QString &key, l->keys()) {
-        if (key.startsWith(QLatin1String("MIB: "))) {
-            int mib = key.mid(5).toInt();
-            if (!codecs.contains(mib))
-                codecs += mib;
-        }
-    }
-#endif
-
+    static const QList<int> codecs = QIcuCodec::allMibs();
     return codecs;
 }
 
@@ -675,9 +554,6 @@ QList<int> QTextCodec::availableMibs()
 */
 void QTextCodec::setCodecForLocale(QTextCodec *c)
 {
-#ifndef QT_NO_THREAD
-    QMutexLocker locker(textCodecsMutex());
-#endif
     localeMapper = c;
     if (!localeMapper)
         setupLocaleMapper();
@@ -689,9 +565,6 @@ void QTextCodec::setCodecForLocale(QTextCodec *c)
 
 QTextCodec* QTextCodec::codecForLocale()
 {
-#ifndef QT_NO_THREAD
-    QMutexLocker locker(textCodecsMutex());
-#endif
     if (!localeMapper)
         setupLocaleMapper();
 
@@ -744,7 +617,7 @@ QList<QByteArray> QTextCodec::aliases() const
     \a state can be 0, in which case the conversion is stateless and
     default conversion rules should be used. If state is not 0, the
     codec should save the state after the conversion in \a state, and
-    adjust the remainingChars and invalidChars members of the struct.
+    adjust the invalidChars members of the struct.
 */
 
 /*!
@@ -760,7 +633,7 @@ QList<QByteArray> QTextCodec::aliases() const
     \a state can be 0 in which case the conversion is stateless and
     default conversion rules should be used. If state is not 0, the
     codec should save the state after the conversion in \a state, and
-    adjust the remainingChars and invalidChars members of the struct.
+    adjust the invalidChars members of the struct.
 */
 
 /*!

@@ -1,9 +1,11 @@
-version: 4.9.2-{branch}-{build}
+version: 4.10.0-{branch}-{build}
 image: Ubuntu2004
 clone_depth: 1
 services:
   - mysql
   - postgresql
+cache:
+  - /home/appveyor/.ccache
 
 build_script:
 - sh: >-
@@ -12,13 +14,11 @@ build_script:
     sudo apt-get install -qq libpcre3-dev libssl-dev zlib1g-dev libzstd-dev libc6-dev libpng-dev \
         libjpeg-dev libtiff-dev libcups2-dev libfreetype6-dev libfontconfig1-dev libdbus-1-dev \
         libicu-dev unixodbc-dev libpq-dev libmariadbclient-dev libmariadbd-dev liblz4-dev \
-        libsqlite3-dev xorg-dev dbus-x11
+        libsqlite3-dev xorg-dev dbus-x11 libjansson-dev ccache
 
-    export CFLAGS="$CFLAGS -w"
+    export PATH="/usr/lib/ccache/:$PATH"
 
-    export CXXFLAGS="$CXXFLAGS -w"
-
-    cmake . -Wno-dev -DKATIE_TESTS=ON -DKATIE_BENCHMARKS=ON -DKATIE_UTILS=ON -DKATIE_PCH=ON -DCMAKE_UNITY_BUILD=ON
+    cmake . -Wno-dev -DKATIE_TESTS=ON -DKATIE_BENCHMARKS=ON -DKATIE_UTILS=ON
 
     make -j $(nproc || echo 1)
 

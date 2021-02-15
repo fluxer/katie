@@ -1,7 +1,7 @@
 /****************************************************************************
 **
 ** Copyright (C) 2015 The Qt Company Ltd.
-** Copyright (C) 2016-2021 Ivailo Monev
+** Copyright (C) 2016 Ivailo Monev
 **
 ** This file is part of the QtGui module of the Katie Toolkit.
 **
@@ -14,18 +14,6 @@
 ** packaging of this file.  Please review the following information to
 ** ensure the GNU Lesser General Public License version 2.1 requirements
 ** will be met: http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html.
-**
-** As a special exception, The Qt Company gives you certain additional
-** rights. These rights are described in The Qt Company LGPL Exception
-** version 1.1, included in the file LGPL_EXCEPTION.txt in this package.
-**
-** GNU General Public License Usage
-** Alternatively, this file may be used under the terms of the GNU
-** General Public License version 3.0 as published by the Free Software
-** Foundation and appearing in the file LICENSE.GPL included in the
-** packaging of this file.  Please review the following information to
-** ensure the GNU General Public License version 3.0 requirements will be
-** met: http://www.gnu.org/copyleft/gpl.html.
 **
 ** $QT_END_LICENSE$
 **
@@ -142,6 +130,7 @@ public:
 #ifndef QT_NO_DEBUG
     void dump(int indent = 0) const;
 #endif
+
     // This code could use the union-struct-array trick, but a compiler
     // bug prevents this from working.
     qreal q_minimumSize;
@@ -149,55 +138,38 @@ public:
     qreal q_maximumSize;
     qreal q_minimumDescent;
     qreal q_minimumAscent;
-    inline qreal &q_sizes(int which)
+
+    inline qreal& q_sizes(int which)
     {
-        qreal *t;
         switch (which) {
-        case Qt::MinimumSize:
-            t = &q_minimumSize;
-            break;
-        case Qt::PreferredSize:
-            t = &q_preferredSize;
-            break;
-        case Qt::MaximumSize:
-            t = &q_maximumSize;
-            break;
-        case Qt::MinimumDescent:
-            t = &q_minimumDescent;
-            break;
-        case (Qt::MinimumDescent + 1):
-            t = &q_minimumAscent;
-            break;
-        default:
-            t = 0;
-            break;
+            case Qt::MinimumSize:
+                return q_minimumSize;
+            case Qt::PreferredSize:
+                return q_preferredSize;
+            case Qt::MaximumSize:
+                return q_maximumSize;
+            case Qt::MinimumDescent:
+                return q_minimumDescent;
+            case (Qt::MinimumDescent + 1):
+                return q_minimumAscent;
         }
-        return *t;
+        Q_UNREACHABLE();
     }
-    inline const qreal &q_sizes(int which) const
+    inline const qreal& q_sizes(int which) const
     {
-        const qreal *t;
         switch (which) {
-        case Qt::MinimumSize:
-            t = &q_minimumSize;
-            break;
-        case Qt::PreferredSize:
-            t = &q_preferredSize;
-            break;
-        case Qt::MaximumSize:
-            t = &q_maximumSize;
-            break;
-        case Qt::MinimumDescent:
-            t = &q_minimumDescent;
-            break;
-        case (Qt::MinimumDescent + 1):
-            t = &q_minimumAscent;
-            break;
-        default:
-            t = 0;
-            break;
+            case Qt::MinimumSize:
+                return q_minimumSize;
+            case Qt::PreferredSize:
+                return q_preferredSize;
+            case Qt::MaximumSize:
+                return q_maximumSize;
+            case Qt::MinimumDescent:
+                return q_minimumDescent;
+            case (Qt::MinimumDescent + 1):
+                return q_minimumAscent;
         }
-        return *t;
+        Q_UNREACHABLE();
     }
 };
 

@@ -215,8 +215,6 @@ set_target_properties(KtNetwork PROPERTIES
     EXPORT_NAME Network
 )
 
-katie_setup_pch(KtNetwork)
-
 install(
     TARGETS KtNetwork
     EXPORT KatieTargets ${INSTALL_TARGETS_DEFAULT_ARGS}

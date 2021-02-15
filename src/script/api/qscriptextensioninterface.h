@@ -1,7 +1,7 @@
 /****************************************************************************
 **
 ** Copyright (C) 2015 The Qt Company Ltd.
-** Copyright (C) 2016-2021 Ivailo Monev
+** Copyright (C) 2016 Ivailo Monev
 **
 ** This file is part of the QtScript module of the Katie Toolkit.
 **
@@ -26,7 +26,6 @@
 
 #include <QtCore/qobject.h>
 
-QT_BEGIN_HEADER
 
 QT_BEGIN_NAMESPACE
 
@@ -43,6 +42,5 @@ QT_END_NAMESPACE
 Q_DECLARE_INTERFACE(QScriptExtensionInterface,
     "Katie.QScriptExtensionInterface/1.0")
 
-QT_END_HEADER
 
 #endif // QSCRIPTEXTENSIONINTERFACE_H

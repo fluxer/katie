@@ -71,7 +71,7 @@
 .\" ========================================================================
 .\"
 .IX Title "MOC 1"
-.TH MOC 1 "2021-01-01" "Katie 4.9.2" "Katie Manual"
+.TH MOC 1 "2021-02-05" "Katie 4.10.0" "Katie Manual"
 .\" For nroff, turn off justification.  Always turn off hyphenation; it makes
 .\" way too many mistakes in technical documents.
 .if n .ad l
@@ -90,56 +90,68 @@ with the implementation of the class (or it can be #included into the class's
 source file).
 .SH "OPTIONS"
 .IX Header "OPTIONS"
-.Vb 1
-\&    \-o<file>           write output to file rather than stdout
+.Vb 2
+\&    \-o<file>
+\&        Write output to file rather than stdout.
 \&
-\&    \-I<dir>            add dir to the include path for header files
+\&    \-I<dir>
+\&        Add dir to the include path for header files.
 \&
-\&    \-E                 preprocess only; do not generate meta object code
+\&    \-E
+\&        Preprocess only; do not generate meta object code.
 \&
-\&    \-D<macro>[=<def>]  define macro, with optional definition
+\&    \-D<macro>[=<def>]
+\&        define macro, with optional definition.
 \&
-\&    \-U<macro>          undefine macro
+\&    \-U<macro>
+\&        Undefine macro.
 \&
-\&    \-i                 do not generate an #include statement
+\&    \-i
+\&        Do not generate an #include statement.
 \&
-\&    \-p<path>           path prefix for included file
+\&    \-p<path>
+\&        Path prefix for included file.
 \&
-\&    \-f[<file>]         force #include, optional file name
+\&    \-f[<file>]
+\&        Force #include, optional file name.
 \&
-\&    \-nn                do not display notes
+\&    \-nn
+\&        Do not display notes.
 \&
-\&    \-nw                do not display warnings
+\&    \-nw
+\&        Do not display warnings.
 \&
-\&    @<file>            read additional options from file
+\&    @<file>
+\&        Read additional options from file.
 \&
-\&    \-v                 display version of moc
+\&    \-v
+\&        Display version of moc.
 .Ve
 .SH "EXIT STATUS"
 .IX Header "EXIT STATUS"
 moc returns 0 on success and other on unexcepted failure.
 .SH "BUGS"
 .IX Header "BUGS"
-.Vb 3
-\&    The moc does not expand #include or #define, it simply skips any
-\&    preprocessor directives it encounters. This is regrettable, but is normally
-\&    not a problem in practice.
-\&
-\&    The moc does not handle all of C++. The main problem is that class
-\&    templates cannot have signals or slots. This is an important bug. Here is
-\&    an example:
-\&
-\&        class SomeTemplate<int> : public QFrame {
-\&            Q_OBJECT
-\&            ....
-\&        signals:
-\&            void bugInMocDetected( int );
-\&        };
-\&
-\&    Less importantly, the following constructs are illegal. All of them have
-\&    have alternatives which we think are usually better, so removing these
-\&    limitations is not a high priority for us.
+The moc does not expand #include or #define, it simply skips any
+preprocessor directives it encounters. This is regrettable, but is normally
+not a problem in practice.
+.PP
+The moc does not handle all of \*(C+. The main problem is that class
+templates cannot have signals or slots. This is an important bug. Here is
+an example:
+.PP
+.Vb 6
+\&    class SomeTemplate<int> : public QFrame {
+\&        Q_OBJECT
+\&        ....
+\&    signals:
+\&        void bugInMocDetected( int );
+\&    };
 .Ve
+.PP
+Less importantly, the following constructs are illegal. All of them have
+have alternatives which we think are usually better, so removing these
+limitations is not a high priority for us.
 .SS "Multiple inheritance requires QObject to be first."
 .IX Subsection "Multiple inheritance requires QObject to be first."
 .Vb 3
@@ -314,6 +326,6 @@ moc returns 0 on success and other on unexcepted failure.
 The Qt Company Ltd.
 .PP
 Copyright (C) 2015 The Qt Company Ltd.
-Copyright (C) 2016\-2021 Ivailo Monev
+Copyright (C) 2016 Ivailo Monev
 .PP
 Licensed through \s-1GNU\s0 Lesser General Public License/GNU General Public License.

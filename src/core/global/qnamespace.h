@@ -1,7 +1,7 @@
 /****************************************************************************
 **
 ** Copyright (C) 2015 The Qt Company Ltd.
-** Copyright (C) 2016-2021 Ivailo Monev
+** Copyright (C) 2016 Ivailo Monev
 **
 ** This file is part of the QtCore module of the Katie Toolkit.
 **
@@ -15,18 +15,6 @@
 ** ensure the GNU Lesser General Public License version 2.1 requirements
 ** will be met: http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html.
 **
-** As a special exception, The Qt Company gives you certain additional
-** rights. These rights are described in The Qt Company LGPL Exception
-** version 1.1, included in the file LGPL_EXCEPTION.txt in this package.
-**
-** GNU General Public License Usage
-** Alternatively, this file may be used under the terms of the GNU
-** General Public License version 3.0 as published by the Free Software
-** Foundation and appearing in the file LICENSE.GPL included in the
-** packaging of this file.  Please review the following information to
-** ensure the GNU General Public License version 3.0 requirements will be
-** met: http://www.gnu.org/copyleft/gpl.html.
-**
 ** $QT_END_LICENSE$
 **
 ****************************************************************************/
@@ -36,7 +24,6 @@
 
 #include <QtCore/qglobal.h>
 
-QT_BEGIN_HEADER
 
 QT_BEGIN_NAMESPACE
 
@@ -203,8 +190,7 @@ public:
         TextJustificationForced = 0x10000,
         TextForceLeftToRight = 0x20000,
         TextForceRightToLeft = 0x40000,
-        TextLongestVariant = 0x80000,
-        TextBypassShaping = 0x100000
+        TextLongestVariant = 0x80000
     };
 
     enum TextElideMode {
@@ -389,8 +375,7 @@ public:
         PreferDither            = 0x00000040,
         AvoidDither             = 0x00000080,
 
-        NoOpaqueDetection       = 0x00000100,
-        NoFormatConversion      = 0x00000200
+        NoOpaqueDetection       = 0x00000100
     };
     Q_DECLARE_FLAGS(ImageConversionFlags, ImageConversionFlag)
 
@@ -1361,6 +1346,22 @@ public:
         LogicalMoveStyle,
         VisualMoveStyle
     };
+
+    enum HitTestAccuracy {
+        ExactHit,
+        FuzzyHit
+    };
+
+    enum WhiteSpaceMode {
+        WhiteSpaceNormal,
+        WhiteSpacePre,
+        WhiteSpaceNoWrap,
+        WhiteSpaceModeUndefined = -1
+    };
+
+    Q_CORE_EXPORT bool mightBeRichText(const QString&);
+    Q_CORE_EXPORT QString escape(const QString& plain);
+    Q_CORE_EXPORT QString convertFromPlainText(const QString &plain, WhiteSpaceMode mode = WhiteSpacePre);
 }
 #ifdef Q_MOC_RUN
  ;
@@ -1412,6 +1413,5 @@ public:
 
 QT_END_NAMESPACE
 
-QT_END_HEADER
 
 #endif // QNAMESPACE_H

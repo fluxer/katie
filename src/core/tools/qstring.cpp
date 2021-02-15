@@ -1,7 +1,7 @@
 /****************************************************************************
 **
 ** Copyright (C) 2015 The Qt Company Ltd.
-** Copyright (C) 2016-2021 Ivailo Monev
+** Copyright (C) 2016 Ivailo Monev
 **
 ** This file is part of the QtCore module of the Katie Toolkit.
 **
@@ -14,18 +14,6 @@
 ** packaging of this file.  Please review the following information to
 ** ensure the GNU Lesser General Public License version 2.1 requirements
 ** will be met: http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html.
-**
-** As a special exception, The Qt Company gives you certain additional
-** rights. These rights are described in The Qt Company LGPL Exception
-** version 1.1, included in the file LGPL_EXCEPTION.txt in this package.
-**
-** GNU General Public License Usage
-** Alternatively, this file may be used under the terms of the GNU
-** General Public License version 3.0 as published by the Free Software
-** Foundation and appearing in the file LICENSE.GPL included in the
-** packaging of this file.  Please review the following information to
-** ensure the GNU General Public License version 3.0 requirements will be
-** met: http://www.gnu.org/copyleft/gpl.html.
 **
 ** $QT_END_LICENSE$
 **
@@ -3343,10 +3331,10 @@ QByteArray QString::toAscii() const
 static QByteArray toLocal8Bit_helper(const QChar *data, int length)
 {
 #ifndef QT_NO_TEXTCODEC
-    if (QTextCodec::codecForLocale())
-        return QTextCodec::codecForLocale()->fromUnicode(data, length);
-#endif // QT_NO_TEXTCODEC
+    return QTextCodec::codecForLocale()->fromUnicode(data, length);
+#else
     return toLatin1_helper(data, length);
+#endif // QT_NO_TEXTCODEC
 }
 
 /*!
@@ -3367,10 +3355,10 @@ static QByteArray toLocal8Bit_helper(const QChar *data, int length)
 QByteArray QString::toLocal8Bit() const
 {
 #ifndef QT_NO_TEXTCODEC
-    if (QTextCodec::codecForLocale())
-        return QTextCodec::codecForLocale()->fromUnicode(*this);
-#endif // QT_NO_TEXTCODEC
+    return QTextCodec::codecForLocale()->fromUnicode(*this);
+#else
     return toLatin1();
+#endif // QT_NO_TEXTCODEC
 }
 
 /*!
@@ -3507,11 +3495,10 @@ QString QString::fromLocal8Bit(const char *str, int size)
 #if !defined(QT_NO_TEXTCODEC)
     if (size < 0)
         size = qstrlen(str);
-    QTextCodec *codec = QTextCodec::codecForLocale();
-    if (codec)
-        return codec->toUnicode(str, size);
-#endif // !QT_NO_TEXTCODEC
+    return QTextCodec::codecForLocale()->toUnicode(str, size);
+#else
     return fromLatin1(str, size);
+#endif // !QT_NO_TEXTCODEC
 }
 
 /*!
@@ -6840,13 +6827,13 @@ QDataStream &operator<<(QDataStream &out, const QString &str)
         if ((out.byteOrder() == QDataStream::BigEndian) == (QSysInfo::ByteOrder == QSysInfo::BigEndian)) {
             out.writeBytes(reinterpret_cast<const char *>(str.unicode()), sizeof(QChar) * str.length());
         } else {
-            QVarLengthArray<ushort> buffer(str.length());
+            ushort buffer[str.length()];
             const ushort *data = reinterpret_cast<const ushort *>(str.constData());
             for (int i = 0; i < str.length(); i++) {
                 buffer[i] = qbswap(*data);
                 ++data;
             }
-            out.writeBytes(reinterpret_cast<const char *>(buffer.data()), sizeof(ushort) * buffer.size());
+            out.writeBytes(reinterpret_cast<const char *>(buffer), sizeof(ushort) * str.length());
         }
     } else {
         // write null marker
@@ -8372,10 +8359,10 @@ QByteArray QStringRef::toAscii() const
 QByteArray QStringRef::toLocal8Bit() const
 {
 #ifndef QT_NO_TEXTCODEC
-    if (QTextCodec::codecForLocale())
-        return QTextCodec::codecForLocale()->fromUnicode(unicode(), length());
-#endif // QT_NO_TEXTCODEC
+    return QTextCodec::codecForLocale()->fromUnicode(unicode(), length());
+#else
     return toLatin1();
+#endif // QT_NO_TEXTCODEC
 }
 
 /*!

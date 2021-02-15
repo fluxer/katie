@@ -1,7 +1,7 @@
 /****************************************************************************
 **
 ** Copyright (C) 2015 The Qt Company Ltd.
-** Copyright (C) 2016-2021 Ivailo Monev
+** Copyright (C) 2016 Ivailo Monev
 **
 ** This file is part of the QtCore module of the Katie Toolkit.
 **
@@ -15,18 +15,6 @@
 ** ensure the GNU Lesser General Public License version 2.1 requirements
 ** will be met: http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html.
 **
-** As a special exception, The Qt Company gives you certain additional
-** rights. These rights are described in The Qt Company LGPL Exception
-** version 1.1, included in the file LGPL_EXCEPTION.txt in this package.
-**
-** GNU General Public License Usage
-** Alternatively, this file may be used under the terms of the GNU
-** General Public License version 3.0 as published by the Free Software
-** Foundation and appearing in the file LICENSE.GPL included in the
-** packaging of this file.  Please review the following information to
-** ensure the GNU General Public License version 3.0 requirements will be
-** met: http://www.gnu.org/copyleft/gpl.html.
-**
 ** $QT_END_LICENSE$
 **
 ****************************************************************************/
@@ -36,7 +24,6 @@
 
 #include <QtCore/qiodevice.h>
 
-QT_BEGIN_HEADER
 
 QT_BEGIN_NAMESPACE
 
@@ -51,7 +38,6 @@ template <class Key, class T> class QHash;
 template <class Key, class T> class QMap;
 
 #if !defined(QT_NO_DATASTREAM)
-class QDataStreamPrivate;
 class Q_CORE_EXPORT QDataStream
 {
 public:
@@ -60,11 +46,12 @@ public:
         Qt_4_7 = Qt_4_6,
         Qt_4_8 = Qt_4_7,
         Qt_4_9 = Qt_4_8,
-#if QT_VERSION >= 0x041000
+        Qt_4_10 = Qt_4_9,
+#if QT_VERSION > 0x041000
 #error Add the datastream version for this version
-        Qt_4_10 = Qt_4_9
+        Qt_4_11 = Qt_4_10
 #endif
-        Qt_Default = Qt_4_9
+        Qt_Default = Qt_4_10
     };
 
     enum ByteOrder {
@@ -143,11 +130,8 @@ public:
 
     int skipRawData(int len);
 
-
 private:
     Q_DISABLE_COPY(QDataStream)
-
-    QDataStreamPrivate* d;
 
     QIODevice *dev;
     bool owndev;
@@ -155,6 +139,7 @@ private:
     ByteOrder byteorder;
     Version ver;
     DataStatus q_status;
+    FloatingPointPrecision floatingPrecision;
 };
 
 
@@ -388,6 +373,5 @@ Q_OUTOFLINE_TEMPLATE QDataStream &operator<<(QDataStream &out, const QMap<Key, T
 
 QT_END_NAMESPACE
 
-QT_END_HEADER
 
 #endif // QDATASTREAM_H

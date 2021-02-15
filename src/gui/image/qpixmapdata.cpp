@@ -1,7 +1,7 @@
 /****************************************************************************
 **
 ** Copyright (C) 2015 The Qt Company Ltd.
-** Copyright (C) 2016-2021 Ivailo Monev
+** Copyright (C) 2016 Ivailo Monev
 **
 ** This file is part of the QtGui module of the Katie Toolkit.
 **
@@ -15,27 +15,15 @@
 ** ensure the GNU Lesser General Public License version 2.1 requirements
 ** will be met: http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html.
 **
-** As a special exception, The Qt Company gives you certain additional
-** rights. These rights are described in The Qt Company LGPL Exception
-** version 1.1, included in the file LGPL_EXCEPTION.txt in this package.
-**
-** GNU General Public License Usage
-** Alternatively, this file may be used under the terms of the GNU
-** General Public License version 3.0 as published by the Free Software
-** Foundation and appearing in the file LICENSE.GPL included in the
-** packaging of this file.  Please review the following information to
-** ensure the GNU General Public License version 3.0 requirements will be
-** met: http://www.gnu.org/copyleft/gpl.html.
-**
 ** $QT_END_LICENSE$
 **
 ****************************************************************************/
 
 #include "qpixmapdata_p.h"
-#include <QtCore/qbuffer.h>
-#include <QtGui/qbitmap.h>
-#include <QtGui/qimagereader.h>
-#include "qgraphicssystem_p.h"
+#include "qbuffer.h"
+#include "qbitmap.h"
+#include "qimagereader.h"
+#include "qpixmap_raster_p.h"
 #include "qapplication_p.h"
 #include "qguicommon_p.h"
 
@@ -43,12 +31,7 @@ QT_BEGIN_NAMESPACE
 
 QPixmapData *QPixmapData::create(int w, int h, PixelType type)
 {
-    QPixmapData *data;
-    QGraphicsSystem* gs = QApplicationPrivate::graphics_system;
-    if (gs)
-        data = gs->createPixmapData(static_cast<QPixmapData::PixelType>(type));
-    else
-        data = QGraphicsSystem::createDefaultPixmapData(static_cast<QPixmapData::PixelType>(type));
+    QPixmapData *data = new QRasterPixmapData(type);
     data->resize(w, h);
     return data;
 }
@@ -73,10 +56,7 @@ QPixmapData::~QPixmapData()
 
 QPixmapData *QPixmapData::createCompatiblePixmapData() const
 {
-    QGraphicsSystem *gs = QApplicationPrivate::graphics_system;
-    if (gs)
-        return gs->createPixmapData(pixelType());
-    return QGraphicsSystem::createDefaultPixmapData(pixelType());
+    return new QRasterPixmapData(pixelType());
 }
 
 static QImage makeBitmapCompliantIfNeeded(QPixmapData *d, const QImage &image, Qt::ImageConversionFlags flags)

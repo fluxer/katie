@@ -1,7 +1,7 @@
 /****************************************************************************
 **
 ** Copyright (C) 2015 The Qt Company Ltd.
-** Copyright (C) 2016-2021 Ivailo Monev
+** Copyright (C) 2016 Ivailo Monev
 **
 ** This file is part of the QtScript module of the Katie Toolkit.
 **
@@ -26,7 +26,6 @@
 #include <QtCore/qlist.h>
 #include <QtCore/qsharedpointer.h>
 
-QT_BEGIN_HEADER
 
 QT_BEGIN_NAMESPACE
 
@@ -204,6 +203,5 @@ Q_DECLARE_OPERATORS_FOR_FLAGS(QScriptValue::PropertyFlags)
 
 QT_END_NAMESPACE
 
-QT_END_HEADER
 
 #endif

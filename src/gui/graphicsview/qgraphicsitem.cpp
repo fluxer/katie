@@ -1,7 +1,7 @@
 /****************************************************************************
 **
 ** Copyright (C) 2015 The Qt Company Ltd.
-** Copyright (C) 2016-2021 Ivailo Monev
+** Copyright (C) 2016 Ivailo Monev
 **
 ** This file is part of the QtGui module of the Katie Toolkit.
 **
@@ -14,18 +14,6 @@
 ** packaging of this file.  Please review the following information to
 ** ensure the GNU Lesser General Public License version 2.1 requirements
 ** will be met: http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html.
-**
-** As a special exception, The Qt Company gives you certain additional
-** rights. These rights are described in The Qt Company LGPL Exception
-** version 1.1, included in the file LGPL_EXCEPTION.txt in this package.
-**
-** GNU General Public License Usage
-** Alternatively, this file may be used under the terms of the GNU
-** General Public License version 3.0 as published by the Free Software
-** Foundation and appearing in the file LICENSE.GPL included in the
-** packaging of this file.  Please review the following information to
-** ensure the GNU General Public License version 3.0 requirements will be
-** met: http://www.gnu.org/copyleft/gpl.html.
 **
 ** $QT_END_LICENSE$
 **
@@ -670,15 +658,6 @@
     quality.
 
     \sa QGraphicsItem::setCacheMode()
-*/
-
-/*!
-    \enum QGraphicsItem::Extension
-    \internal
-
-    Note: This is provided as a hook to avoid future problems related
-    to adding virtual functions. See also extension(),
-    supportsExtension() and setExtension().
 */
 
 /*!
@@ -5384,14 +5363,6 @@ void QGraphicsItemPrivate::removeChild(QGraphicsItem *child)
 /*!
     \internal
 */
-QGraphicsItemCache *QGraphicsItemPrivate::maybeExtraItemCache() const
-{
-    return (QGraphicsItemCache *)qvariant_cast<void *>(extra(ExtraCacheData));
-}
-
-/*!
-    \internal
-*/
 QGraphicsItemCache *QGraphicsItemPrivate::extraItemCache()
 {
     QGraphicsItemCache *c = (QGraphicsItemCache *)qvariant_cast<void *>(extra(ExtraCacheData));
@@ -7227,42 +7198,6 @@ QVariant QGraphicsItem::itemChange(GraphicsItemChange change, const QVariant &va
 /*!
     \internal
 
-    Note: This is provided as a hook to avoid future problems related
-    to adding virtual functions.
-*/
-bool QGraphicsItem::supportsExtension(Extension extension) const
-{
-    Q_UNUSED(extension);
-    return false;
-}
-
-/*!
-    \internal
-
-    Note: This is provided as a hook to avoid future problems related
-    to adding virtual functions.
-*/
-void QGraphicsItem::setExtension(Extension extension, const QVariant &variant)
-{
-    Q_UNUSED(extension);
-    Q_UNUSED(variant);
-}
-
-/*!
-    \internal
-
-    Note: This is provided as a hook to avoid future problems related
-    to adding virtual functions.
-*/
-QVariant QGraphicsItem::extension(const QVariant &variant) const
-{
-    Q_UNUSED(variant);
-    return QVariant();
-}
-
-/*!
-    \internal
-
     Adds this item to the scene's index. Called in conjunction with
     removeFromIndex() to ensure the index bookkeeping is correct when
     the item's position, transformation or shape changes.
@@ -8103,33 +8038,6 @@ int QGraphicsPathItem::type() const
 }
 
 /*!
-    \internal
-*/
-bool QGraphicsPathItem::supportsExtension(Extension extension) const
-{
-    Q_UNUSED(extension);
-    return false;
-}
-
-/*!
-    \internal
-*/
-void QGraphicsPathItem::setExtension(Extension extension, const QVariant &variant)
-{
-    Q_UNUSED(extension);
-    Q_UNUSED(variant);
-}
-
-/*!
-    \internal
-*/
-QVariant QGraphicsPathItem::extension(const QVariant &variant) const
-{
-    Q_UNUSED(variant);
-    return QVariant();
-}
-
-/*!
     \class QGraphicsRectItem
     \brief The QGraphicsRectItem class provides a rectangle item that you
     can add to a QGraphicsScene.
@@ -8319,33 +8227,6 @@ void QGraphicsRectItem::paint(QPainter *painter, const QStyleOptionGraphicsItem 
 int QGraphicsRectItem::type() const
 {
     return Type;
-}
-
-/*!
-    \internal
-*/
-bool QGraphicsRectItem::supportsExtension(Extension extension) const
-{
-    Q_UNUSED(extension);
-    return false;
-}
-
-/*!
-    \internal
-*/
-void QGraphicsRectItem::setExtension(Extension extension, const QVariant &variant)
-{
-    Q_UNUSED(extension);
-    Q_UNUSED(variant);
-}
-
-/*!
-    \internal
-*/
-QVariant QGraphicsRectItem::extension(const QVariant &variant) const
-{
-    Q_UNUSED(variant);
-    return QVariant();
 }
 
 /*!
@@ -8611,34 +8492,6 @@ int QGraphicsEllipseItem::type() const
     return Type;
 }
 
-
-/*!
-    \internal
-*/
-bool QGraphicsEllipseItem::supportsExtension(Extension extension) const
-{
-    Q_UNUSED(extension);
-    return false;
-}
-
-/*!
-    \internal
-*/
-void QGraphicsEllipseItem::setExtension(Extension extension, const QVariant &variant)
-{
-    Q_UNUSED(extension);
-    Q_UNUSED(variant);
-}
-
-/*!
-    \internal
-*/
-QVariant QGraphicsEllipseItem::extension(const QVariant &variant) const
-{
-    Q_UNUSED(variant);
-    return QVariant();
-}
-
 /*!
     \class QGraphicsPolygonItem
     \brief The QGraphicsPolygonItem class provides a polygon item that you
@@ -8821,33 +8674,6 @@ void QGraphicsPolygonItem::paint(QPainter *painter, const QStyleOptionGraphicsIt
 int QGraphicsPolygonItem::type() const
 {
     return Type;
-}
-
-/*!
-    \internal
-*/
-bool QGraphicsPolygonItem::supportsExtension(Extension extension) const
-{
-    Q_UNUSED(extension);
-    return false;
-}
-
-/*!
-    \internal
-*/
-void QGraphicsPolygonItem::setExtension(Extension extension, const QVariant &variant)
-{
-    Q_UNUSED(extension);
-    Q_UNUSED(variant);
-}
-
-/*!
-    \internal
-*/
-QVariant QGraphicsPolygonItem::extension(const QVariant &variant) const
-{
-    Q_UNUSED(variant);
-    return QVariant();
 }
 
 /*!
@@ -9059,33 +8885,6 @@ void QGraphicsLineItem::paint(QPainter *painter, const QStyleOptionGraphicsItem 
 int QGraphicsLineItem::type() const
 {
     return Type;
-}
-
-/*!
-    \internal
-*/
-bool QGraphicsLineItem::supportsExtension(Extension extension) const
-{
-    Q_UNUSED(extension);
-    return false;
-}
-
-/*!
-    \internal
-*/
-void QGraphicsLineItem::setExtension(Extension extension, const QVariant &variant)
-{
-    Q_UNUSED(extension);
-    Q_UNUSED(variant);
-}
-
-/*!
-    \internal
-*/
-QVariant QGraphicsLineItem::extension(const QVariant &variant) const
-{
-    Q_UNUSED(variant);
-    return QVariant();
 }
 
 /*!
@@ -9366,33 +9165,6 @@ void QGraphicsPixmapItem::setShapeMode(ShapeMode mode)
         return;
     d->shapeMode = mode;
     d->hasShape = false;
-}
-
-/*!
-    \internal
-*/
-bool QGraphicsPixmapItem::supportsExtension(Extension extension) const
-{
-    Q_UNUSED(extension);
-    return false;
-}
-
-/*!
-    \internal
-*/
-void QGraphicsPixmapItem::setExtension(Extension extension, const QVariant &variant)
-{
-    Q_UNUSED(extension);
-    Q_UNUSED(variant);
-}
-
-/*!
-    \internal
-*/
-QVariant QGraphicsPixmapItem::extension(const QVariant &variant) const
-{
-    Q_UNUSED(variant);
-    return QVariant();
 }
 
 /*!
@@ -9960,33 +9732,6 @@ void QGraphicsTextItem::hoverLeaveEvent(QGraphicsSceneHoverEvent *event)
 /*!
     \internal
 */
-bool QGraphicsTextItem::supportsExtension(Extension extension) const
-{
-    Q_UNUSED(extension);
-    return false;
-}
-
-/*!
-    \internal
-*/
-void QGraphicsTextItem::setExtension(Extension extension, const QVariant &variant)
-{
-    Q_UNUSED(extension);
-    Q_UNUSED(variant);
-}
-
-/*!
-    \internal
-*/
-QVariant QGraphicsTextItem::extension(const QVariant &variant) const
-{
-    Q_UNUSED(variant);
-    return QVariant();
-}
-
-/*!
-    \internal
-*/
 void QGraphicsTextItemPrivate::_q_update(QRectF rect)
 {
     if (rect.isValid()) {
@@ -10439,33 +10184,6 @@ void QGraphicsSimpleTextItem::paint(QPainter *painter, const QStyleOptionGraphic
 int QGraphicsSimpleTextItem::type() const
 {
     return Type;
-}
-
-/*!
-    \internal
-*/
-bool QGraphicsSimpleTextItem::supportsExtension(Extension extension) const
-{
-    Q_UNUSED(extension);
-    return false;
-}
-
-/*!
-    \internal
-*/
-void QGraphicsSimpleTextItem::setExtension(Extension extension, const QVariant &variant)
-{
-    Q_UNUSED(extension);
-    Q_UNUSED(variant);
-}
-
-/*!
-    \internal
-*/
-QVariant QGraphicsSimpleTextItem::extension(const QVariant &variant) const
-{
-    Q_UNUSED(variant);
-    return QVariant();
 }
 
 /*!

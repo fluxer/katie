@@ -1,7 +1,7 @@
 /****************************************************************************
 **
 ** Copyright (C) 2015 The Qt Company Ltd.
-** Copyright (C) 2016-2021 Ivailo Monev
+** Copyright (C) 2016 Ivailo Monev
 **
 ** This file is part of the QtCore module of the Katie Toolkit.
 **
@@ -14,18 +14,6 @@
 ** packaging of this file.  Please review the following information to
 ** ensure the GNU Lesser General Public License version 2.1 requirements
 ** will be met: http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html.
-**
-** As a special exception, The Qt Company gives you certain additional
-** rights. These rights are described in The Qt Company LGPL Exception
-** version 1.1, included in the file LGPL_EXCEPTION.txt in this package.
-**
-** GNU General Public License Usage
-** Alternatively, this file may be used under the terms of the GNU
-** General Public License version 3.0 as published by the Free Software
-** Foundation and appearing in the file LICENSE.GPL included in the
-** packaging of this file.  Please review the following information to
-** ensure the GNU General Public License version 3.0 requirements will be
-** met: http://www.gnu.org/copyleft/gpl.html.
 **
 ** $QT_END_LICENSE$
 **
@@ -2120,7 +2108,8 @@ void QDateTime::setDate(const QDate &date)
 {
     detach();
     d->date = date;
-    if (d->spec == QDateTimePrivate::LocalStandard)
+    if (d->spec == QDateTimePrivate::LocalStandard
+        || d->spec == QDateTimePrivate::LocalDST)
         d->spec = QDateTimePrivate::LocalUnknown;
     if (date.isValid() && !d->time.isValid())
         d->time = QTime(0, 0, 0);
@@ -2135,7 +2124,8 @@ void QDateTime::setDate(const QDate &date)
 void QDateTime::setTime(const QTime &time)
 {
     detach();
-    if (d->spec == QDateTimePrivate::LocalStandard)
+    if (d->spec == QDateTimePrivate::LocalStandard
+        || d->spec == QDateTimePrivate::LocalDST)
         d->spec = QDateTimePrivate::LocalUnknown;
     d->time = time;
 }
@@ -2772,14 +2762,14 @@ QDate QDate::currentDate()
     time_t ltime;
     ::time(&ltime);
 
-#if !defined(QT_NO_THREAD) && defined(QT_HAVE_LOCALTIME_R)
+#if !defined(QT_NO_THREAD)
     // use the reentrant version of localtime() where available
     tzset();
     struct tm res;
     struct tm *t = ::localtime_r(&ltime, &res);
 #else
     struct tm *t = ::localtime(&ltime);
-#endif // !QT_NO_THREAD && QT_HAVE_LOCALTIME_R
+#endif // !QT_NO_THREAD
 
     d.jd = julianDayFromDate(t->tm_year + 1900, t->tm_mon + 1, t->tm_mday);
     return d;
@@ -2792,14 +2782,14 @@ QTime QTime::currentTime()
     struct timeval tv;
     ::gettimeofday(&tv, Q_NULLPTR);
 
-#if !defined(QT_NO_THREAD) && defined(QT_HAVE_LOCALTIME_R)
+#if !defined(QT_NO_THREAD)
     // use the reentrant version of localtime() where available
     tzset();
     struct tm res;
     struct tm *t = ::localtime_r(&tv.tv_sec, &res);
 #else
     struct tm *t = ::localtime(&tv.tv_sec);
-#endif // !QT_NO_THREAD && QT_HAVE_LOCALTIME_R
+#endif // !QT_NO_THREAD
     Q_CHECK_PTR(t);
 
     ct.mds = msecsFromDecomposed(t->tm_hour, t->tm_min, t->tm_sec, tv.tv_usec / 1000);
@@ -2813,21 +2803,22 @@ QDateTime QDateTime::currentDateTime()
     struct timeval tv;
     ::gettimeofday(&tv, Q_NULLPTR);
 
-#if !defined(QT_NO_THREAD) && defined(QT_HAVE_LOCALTIME_R)
+#if !defined(QT_NO_THREAD)
     // use the reentrant version of localtime() where available
     tzset();
     struct tm res;
     struct tm *t = ::localtime_r(&tv.tv_sec, &res);
 #else
     struct tm *t = ::localtime(&tv.tv_sec);
-#endif // !QT_NO_THREAD && QT_HAVE_LOCALTIME_R
+#endif // !QT_NO_THREAD
 
     QDateTime dt;
     dt.d->time.mds = msecsFromDecomposed(t->tm_hour, t->tm_min, t->tm_sec, tv.tv_usec / 1000);
 
     dt.d->date.jd = julianDayFromDate(t->tm_year + 1900, t->tm_mon + 1, t->tm_mday);
-    dt.d->spec = (t->tm_isdst >= 0 ? QDateTimePrivate::LocalStandard :
-                 QDateTimePrivate::LocalUnknown);
+    dt.d->spec = t->tm_isdst > 0  ? QDateTimePrivate::LocalDST :
+                 t->tm_isdst == 0 ? QDateTimePrivate::LocalStandard :
+                 QDateTimePrivate::LocalUnknown;
     return dt;
 }
 
@@ -2838,13 +2829,13 @@ QDateTime QDateTime::currentDateTimeUtc()
     struct timeval tv;
     ::gettimeofday(&tv, Q_NULLPTR);
 
-#if !defined(QT_NO_THREAD) && defined(QT_HAVE_GMTIME_R)
+#if !defined(QT_NO_THREAD)
     // use the reentrant version of gmtime_r() where available
     struct tm res;
     struct tm *t = ::gmtime_r(&tv.tv_sec, &res);
 #else
     struct tm *t = ::gmtime(&tv.tv_sec);
-#endif // !QT_NO_THREAD && QT_HAVE_GMTIME_R
+#endif // !QT_NO_THREAD
 
     QDateTime dt;
     dt.d->time.mds = msecsFromDecomposed(t->tm_hour, t->tm_min, t->tm_sec, tv.tv_usec / 1000);
@@ -3471,14 +3462,14 @@ static QDateTimePrivate::Spec utcToLocal(QDate &date, QTime &time)
     // won't overflow because of fakeDate
     time_t secsSince1Jan1970UTC = toMSecsSinceEpoch_helper(fakeDate.toJulianDay(), QTime().msecsTo(time)) / 1000;
 
-#if !defined(QT_NO_THREAD) && defined(QT_HAVE_LOCALTIME_R)
+#if !defined(QT_NO_THREAD)
     // use the reentrant version of localtime() where available
     tzset();
-    tm res;
-    tm *brokenDown = ::localtime_r(&secsSince1Jan1970UTC, &res);
+    struct tm res;
+    struct tm *brokenDown = ::localtime_r(&secsSince1Jan1970UTC, &res);
 #else
-    tm *brokenDown = ::localtime(&secsSince1Jan1970UTC);
-#endif  // !QT_NO_THREAD && QT_HAVE_LOCALTIME_R
+    struct tm *brokenDown = ::localtime(&secsSince1Jan1970UTC);
+#endif  // !QT_NO_THREAD
     if (!brokenDown) {
         date = QDate(1970, 1, 1);
         time = QTime();
@@ -3488,7 +3479,9 @@ static QDateTimePrivate::Spec utcToLocal(QDate &date, QTime &time)
         date = QDate(brokenDown->tm_year + 1900, brokenDown->tm_mon + 1, brokenDown->tm_mday);
         time = QTime(brokenDown->tm_hour, brokenDown->tm_min, brokenDown->tm_sec, time.msec());
         date = date.addDays(deltaDays);
-        if (brokenDown->tm_isdst < 0)
+        if (brokenDown->tm_isdst > 0)
+            return QDateTimePrivate::LocalDST;
+        else if (brokenDown->tm_isdst < 0)
             return QDateTimePrivate::LocalUnknown;
         else
             return QDateTimePrivate::LocalStandard;
@@ -3502,7 +3495,7 @@ static void localToUtc(QDate &date, QTime &time, int isdst)
 
     QDate fakeDate = adjustDate(date);
 
-    tm localTM;
+    struct tm localTM;
     localTM.tm_sec = time.second();
     localTM.tm_min = time.minute();
     localTM.tm_hour = time.hour();
@@ -3511,13 +3504,13 @@ static void localToUtc(QDate &date, QTime &time, int isdst)
     localTM.tm_year = fakeDate.year() - 1900;
     localTM.tm_isdst = isdst;
     time_t secsSince1Jan1970UTC = mktime(&localTM);
-#if !defined(QT_NO_THREAD) && defined(QT_HAVE_GMTIME_R)
+#if !defined(QT_NO_THREAD)
     // use the reentrant version of gmtime() where available
-    tm res;
-    tm *brokenDown = ::gmtime_r(&secsSince1Jan1970UTC, &res);
+    struct tm res;
+    struct tm *brokenDown = ::gmtime_r(&secsSince1Jan1970UTC, &res);
 #else
-    tm *brokenDown = ::gmtime(&secsSince1Jan1970UTC);
-#endif // !QT_NO_THREAD && QT_HAVE_GMTIME_R
+    struct tm *brokenDown = ::gmtime(&secsSince1Jan1970UTC);
+#endif // !QT_NO_THREAD
     if (!brokenDown) {
         date = QDate(1970, 1, 1);
         time = QTime();

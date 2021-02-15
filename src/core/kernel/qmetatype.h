@@ -1,7 +1,7 @@
 /****************************************************************************
 **
 ** Copyright (C) 2015 The Qt Company Ltd.
-** Copyright (C) 2016-2021 Ivailo Monev
+** Copyright (C) 2016 Ivailo Monev
 **
 ** This file is part of the QtCore module of the Katie Toolkit.
 **
@@ -15,18 +15,6 @@
 ** ensure the GNU Lesser General Public License version 2.1 requirements
 ** will be met: http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html.
 **
-** As a special exception, The Qt Company gives you certain additional
-** rights. These rights are described in The Qt Company LGPL Exception
-** version 1.1, included in the file LGPL_EXCEPTION.txt in this package.
-**
-** GNU General Public License Usage
-** Alternatively, this file may be used under the terms of the GNU
-** General Public License version 3.0 as published by the Free Software
-** Foundation and appearing in the file LICENSE.GPL included in the
-** packaging of this file.  Please review the following information to
-** ensure the GNU General Public License version 3.0 requirements will be
-** met: http://www.gnu.org/copyleft/gpl.html.
-**
 ** $QT_END_LICENSE$
 **
 ****************************************************************************/
@@ -34,17 +22,16 @@
 #ifndef QMETATYPE_H
 #define QMETATYPE_H
 
-#include <QtCore/qatomic.h>
-
 #ifndef QT_NO_DATASTREAM
 #include <QtCore/qdatastream.h>
+#else
+#include <QtCore/qglobal.h>
 #endif
 
 #ifdef Bool
 #error qmetatype.h must be included before any header file that defines Bool
 #endif
 
-QT_BEGIN_HEADER
 
 QT_BEGIN_NAMESPACE
 
@@ -58,9 +45,8 @@ public:
         QByteArray = 11, QBitArray = 12, QDate = 13, QTime = 14,
         QDateTime = 15, QUrl = 16, QLocale = 17, QRect = 18, QRectF = 19,
         QSize = 20, QSizeF = 21, QLine = 22, QLineF = 23, QPoint = 24,
-        QPointF = 25, QRegExp = 26, QEasingCurve = 27, QJsonValue = 28,
-        QJsonObject = 29, QJsonArray = 30, QJsonDocument = 31,
-        QVariantHash = 32, QVariantList = 33, QVariantMap = 34,
+        QPointF = 25, QRegExp = 26, QEasingCurve = 27, QJsonDocument = 28,
+        QVariantHash = 29, QVariantList = 30, QVariantMap = 31,
         LastCoreType = QVariantMap,
 
         FirstGuiType = 64 /* QFont */,
@@ -200,7 +186,7 @@ void qRegisterMetaTypeStreamOperators(const char *typeName, T * /* dummy */ = Q_
 #endif // QT_NO_DATASTREAM
 
 template <typename T>
-inline int qMetaTypeId( T * /* dummy */ = Q_NULLPTR)
+inline int qMetaTypeId()
 {
     return QMetaTypeId2<T>::qt_metatype_id();
 }
@@ -208,7 +194,7 @@ inline int qMetaTypeId( T * /* dummy */ = Q_NULLPTR)
 template <typename T>
 inline int qRegisterMetaType(T * dummy = Q_NULLPTR)
 {
-    return qMetaTypeId(dummy);
+    return qMetaTypeId<T>();
 }
 
 #ifndef QT_NO_DATASTREAM
@@ -237,10 +223,9 @@ inline int qRegisterMetaTypeStreamOperators()
         enum { Defined = 1 };                                           \
         static int qt_metatype_id()                                     \
             {                                                           \
-                static QAtomicInt metatype_id = QAtomicInt(0); \
-                if (!metatype_id)                                       \
-                    metatype_id = qRegisterMetaType< TYPE >(#TYPE,      \
-                               reinterpret_cast< TYPE *>(quintptr(-1))); \
+                static int metatype_id =                                \
+                    qRegisterMetaType< TYPE >(#TYPE,                    \
+                    reinterpret_cast< TYPE *>(quintptr(-1)));           \
                 return metatype_id;                                     \
             }                                                           \
     };                                                                  \
@@ -250,7 +235,7 @@ inline int qRegisterMetaTypeStreamOperators()
     QT_BEGIN_NAMESPACE \
     template<> struct QMetaTypeId2<TYPE> \
     { \
-        enum { Defined = 1, MetaType = QMetaType::NAME }; \
+        enum { Defined = 1 }; \
         static inline int qt_metatype_id() { return QMetaType::NAME; } \
     }; \
     QT_END_NAMESPACE
@@ -276,9 +261,6 @@ class QPointF;
 #ifndef QT_NO_REGEXP
 class QRegExp;
 #endif
-class QJsonValue;
-class QJsonObject;
-class QJsonArray;
 class QJsonDocument;
 class QEasingCurve;
 class QWidget;
@@ -341,9 +323,6 @@ Q_DECLARE_BUILTIN_METATYPE(QPointF, QPointF)
 Q_DECLARE_BUILTIN_METATYPE(QRegExp, QRegExp)
 #endif
 Q_DECLARE_BUILTIN_METATYPE(QEasingCurve, QEasingCurve)
-Q_DECLARE_BUILTIN_METATYPE(QJsonValue, QJsonValue)
-Q_DECLARE_BUILTIN_METATYPE(QJsonObject, QJsonObject)
-Q_DECLARE_BUILTIN_METATYPE(QJsonArray, QJsonArray)
 Q_DECLARE_BUILTIN_METATYPE(QJsonDocument, QJsonDocument)
 // QVariantHash
 // QVariantList
@@ -386,6 +365,5 @@ Q_DECLARE_BUILTIN_METATYPE(QWidget *, QWidgetStar)
 Q_DECLARE_BUILTIN_METATYPE(QVariant, QVariant)
 
 
-QT_END_HEADER
 
 #endif // QMETATYPE_H

@@ -1,7 +1,7 @@
 /****************************************************************************
 **
 ** Copyright (C) 2015 The Qt Company Ltd.
-** Copyright (C) 2016-2021 Ivailo Monev
+** Copyright (C) 2016 Ivailo Monev
 **
 ** This file is part of the QtGui module of the Katie Toolkit.
 **
@@ -14,18 +14,6 @@
 ** packaging of this file.  Please review the following information to
 ** ensure the GNU Lesser General Public License version 2.1 requirements
 ** will be met: http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html.
-**
-** As a special exception, The Qt Company gives you certain additional
-** rights. These rights are described in The Qt Company LGPL Exception
-** version 1.1, included in the file LGPL_EXCEPTION.txt in this package.
-**
-** GNU General Public License Usage
-** Alternatively, this file may be used under the terms of the GNU
-** General Public License version 3.0 as published by the Free Software
-** Foundation and appearing in the file LICENSE.GPL included in the
-** packaging of this file.  Please review the following information to
-** ensure the GNU General Public License version 3.0 requirements will be
-** met: http://www.gnu.org/copyleft/gpl.html.
 **
 ** $QT_END_LICENSE$
 **
@@ -67,7 +55,6 @@ QT_BEGIN_NAMESPACE
 class QTimer;
 class QClipboard;
 class QGraphicsScene;
-class QGraphicsSystem;
 class QObject;
 class QWidget;
 class QSocketNotifier;
@@ -75,7 +62,6 @@ class QSocketNotifier;
 class QGestureManager;
 #endif
 
-extern bool qt_is_gui_used;
 #ifndef QT_NO_CLIPBOARD
 extern QClipboard *qt_clipboard;
 #endif
@@ -95,7 +81,6 @@ public:
 
 #if defined(Q_WS_X11)
     static bool x11_apply_settings();
-    static void reset_instance_pointer();
 #endif
     static bool quitOnLastWindowClosed;
     static void emitLastWindowClosed();
@@ -103,7 +88,6 @@ public:
     static QString desktopStyleKey();
 
     QAbstractEventDispatcher* createEventDispatcher();
-    QString appName() const;
     static void dispatchEnterLeave(QWidget *enter, QWidget *leave);
 
     //modality
@@ -117,11 +101,7 @@ public:
 
     bool notify_helper(QObject *receiver, QEvent * e);
 
-    void construct(
-#ifdef Q_WS_X11
-                   Display *dpy = 0, Qt::HANDLE visual = 0, Qt::HANDLE cmap = 0
-#endif
-                   );
+    void construct(Display *dpy = 0, Qt::HANDLE visual = 0, Qt::HANDLE cmap = 0);
     void process_cmdline();
 
     bool inPopupMode() const;
@@ -162,8 +142,6 @@ public:
     static QPalette *app_pal;
     static QPalette *sys_pal;
     static QPalette *set_pal;
-    static QGraphicsSystem *graphics_system;
-    static QString graphics_system_name;
 
 private:
     static QFont *app_font; // private for a reason! Always use QApplication::font() instead!

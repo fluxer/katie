@@ -1,7 +1,7 @@
 /****************************************************************************
 **
 ** Copyright (C) 2015 The Qt Company Ltd.
-** Copyright (C) 2016-2021 Ivailo Monev
+** Copyright (C) 2016 Ivailo Monev
 **
 ** This file is part of the QtGui module of the Katie Toolkit.
 **
@@ -14,18 +14,6 @@
 ** packaging of this file.  Please review the following information to
 ** ensure the GNU Lesser General Public License version 2.1 requirements
 ** will be met: http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html.
-**
-** As a special exception, The Qt Company gives you certain additional
-** rights. These rights are described in The Qt Company LGPL Exception
-** version 1.1, included in the file LGPL_EXCEPTION.txt in this package.
-**
-** GNU General Public License Usage
-** Alternatively, this file may be used under the terms of the GNU
-** General Public License version 3.0 as published by the Free Software
-** Foundation and appearing in the file LICENSE.GPL included in the
-** packaging of this file.  Please review the following information to
-** ensure the GNU General Public License version 3.0 requirements will be
-** met: http://www.gnu.org/copyleft/gpl.html.
 **
 ** $QT_END_LICENSE$
 **
@@ -54,7 +42,6 @@
 #include "qtoolbar.h"
 #include "qtoolbutton.h"
 #include "qrubberband.h"
-#include "qcommonstylepixmaps_p.h"
 #include "qdebug.h"
 #include "qtextformat.h"
 #include "qwizard.h"
@@ -72,6 +59,116 @@
 #include <limits.h>
 
 QT_BEGIN_NAMESPACE
+
+#ifndef QT_NO_IMAGEFORMAT_XPM
+static const char * const tree_branch_open_xpm[] = {
+"9 9 2 1",
+"  c None",
+"# c #000000",
+"#########",
+"#       #",
+"# ##### #",
+"#  ###  #",
+"#  ###  #",
+"#   #   #",
+"#   #   #",
+"#       #",
+"#########"};
+
+static const char * const tree_branch_closed_xpm[] = {
+"9 9 2 1",
+"  c None",
+"# c #000000",
+"#########",
+"#       #",
+"# #     #",
+"# ###   #",
+"# ##### #",
+"# ###   #",
+"# #     #",
+"#       #",
+"#########"};
+
+static const char * const tb_extension_arrow_v_xpm[] = {
+    "5 8 3 1",
+    "            c None",
+    ".            c #000000",
+    "+            c none",
+    ".+++.",
+    "..+..",
+    "+...+",
+    "++.++",
+    ".+++.",
+    "..+..",
+    "+...+",
+    "++.++"
+};
+
+static const char * const tb_extension_arrow_h_xpm[] = {
+    "8 5 3 1",
+    "            c None",
+    ".            c #000000",
+    "+            c none",
+    "..++..++",
+    "+..++..+",
+    "++..++..",
+    "+..++..+",
+    "..++..++",
+};
+
+static const char * const filedialog_start_xpm[]={
+    "16 15 8 1",
+    "a c #cec6bd",
+    "# c #000000",
+    "e c #ffff00",
+    "b c #999999",
+    "f c #cccccc",
+    "d c #dcdcdc",
+    "c c #ffffff",
+    ". c None",
+    ".....######aaaaa",
+    "...bb#cccc##aaaa",
+    "..bcc#cccc#d#aaa",
+    ".bcef#cccc#dd#aa",
+    ".bcfe#cccc#####a",
+    ".bcef#ccccccccc#",
+    "bbbbbbbbbbbbccc#",
+    "bccccccccccbbcc#",
+    "bcefefefefee#bc#",
+    ".bcefefefefef#c#",
+    ".bcfefefefefe#c#",
+    "..bcfefefefeeb##",
+    "..bbbbbbbbbbbbb#",
+    "...#############",
+    "................"};
+
+static const char * const filedialog_end_xpm[]={
+    "16 15 9 1",
+    "d c #a0a0a0",
+    "c c #c3c3c3",
+    "# c #cec6bd",
+    ". c #000000",
+    "f c #ffff00",
+    "e c #999999",
+    "g c #cccccc",
+    "b c #ffffff",
+    "a c None",
+    "......####aaaaaa",
+    ".bbbb..###aaaaaa",
+    ".bbbb.c.##aaaaaa",
+    ".bbbb....ddeeeea",
+    ".bbbbbbb.bbbbbe.",
+    ".bbbbbbb.bcfgfe.",
+    "eeeeeeeeeeeeefe.",
+    "ebbbbbbbbbbeege.",
+    "ebfgfgfgfgff.ee.",
+    "aebfgfgfgfgfg.e.",
+    "aebgfgfgfgfgf.e.",
+    "aaebgfgfgfgffe..",
+    "aaeeeeeeeeeeeee.",
+    "aaa.............",
+    "aaaaaaaaaaaaaaaa"};
+#endif // QT_NO_IMAGEFORMAT_XPM
 
 /*!
     \class QCommonStyle
@@ -5634,35 +5731,11 @@ QPixmap QCommonStyle::generatedIconPixmap(QIcon::Mode iconMode, const QPixmap &p
 }
 
 /*!
-  \reimp
-*/
-void QCommonStyle::polish(QPalette &pal)
-{
-    QStyle::polish(pal);
-}
-
-/*!
-    \reimp
- */
-void QCommonStyle::polish(QWidget *widget)
-{
-    QStyle::polish(widget);
-}
-
-/*!
     \reimp
  */
 void QCommonStyle::unpolish(QWidget *widget)
 {
     QStyle::unpolish(widget);
-}
-
-/*!
-  \reimp
-*/
-void QCommonStyle::polish(QApplication *app)
-{
-    QStyle::polish(app);
 }
 
 /*!

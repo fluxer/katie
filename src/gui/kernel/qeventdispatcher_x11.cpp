@@ -1,7 +1,7 @@
 /****************************************************************************
 **
 ** Copyright (C) 2015 The Qt Company Ltd.
-** Copyright (C) 2016-2021 Ivailo Monev
+** Copyright (C) 2016 Ivailo Monev
 **
 ** This file is part of the QtGui module of the Katie Toolkit.
 **
@@ -14,18 +14,6 @@
 ** packaging of this file.  Please review the following information to
 ** ensure the GNU Lesser General Public License version 2.1 requirements
 ** will be met: http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html.
-**
-** As a special exception, The Qt Company gives you certain additional
-** rights. These rights are described in The Qt Company LGPL Exception
-** version 1.1, included in the file LGPL_EXCEPTION.txt in this package.
-**
-** GNU General Public License Usage
-** Alternatively, this file may be used under the terms of the GNU
-** General Public License version 3.0 as published by the Free Software
-** Foundation and appearing in the file LICENSE.GPL included in the
-** packaging of this file.  Please review the following information to
-** ensure the GNU General Public License version 3.0 requirements will be
-** met: http://www.gnu.org/copyleft/gpl.html.
 **
 ** $QT_END_LICENSE$
 **
@@ -45,10 +33,6 @@ class QEventDispatcherX11Private : public QEventDispatcherUNIXPrivate
 {
     Q_DECLARE_PUBLIC(QEventDispatcherX11)
 public:
-    inline QEventDispatcherX11Private()
-        : xfd(-1)
-    { }
-    int xfd;
     QList<XEvent> queuedUserInputEvents;
 };
 
@@ -69,70 +53,67 @@ bool QEventDispatcherX11::processEvents(QEventLoop::ProcessEventsFlags flags)
     ulong marker = XNextRequest(qt_x11Data->display);
     int nevents = 0;
     do {
-        while (!d->interrupt) {
-            XEvent event;
-            if (!(flags & QEventLoop::ExcludeUserInputEvents)
-                && !d->queuedUserInputEvents.isEmpty()) {
-                // process a pending user input event
-                event = d->queuedUserInputEvents.takeFirst();
-            } else if (XEventsQueued(qt_x11Data->display, QueuedAlready)) {
-                // process events from the X server
-                XNextEvent(qt_x11Data->display, &event);
+        XEvent event;
+        if (!(flags & QEventLoop::ExcludeUserInputEvents)
+            && !d->queuedUserInputEvents.isEmpty()) {
+            // process a pending user input event
+            event = d->queuedUserInputEvents.takeFirst();
+        } else if (XEventsQueued(qt_x11Data->display, QueuedAlready)) {
+            // process events from the X server
+            XNextEvent(qt_x11Data->display, &event);
 
-                if (flags & QEventLoop::ExcludeUserInputEvents) {
-                    // queue user input events
-                    switch (event.type) {
-                    case XButtonPress:
-                    case XButtonRelease:
-                    case MotionNotify:
-                    case XKeyPress:
-                    case XKeyRelease:
-                    case EnterNotify:
-                    case LeaveNotify:
-                        d->queuedUserInputEvents.append(event);
-                        continue;
+            if (flags & QEventLoop::ExcludeUserInputEvents) {
+                // queue user input events
+                switch (event.type) {
+                case XButtonPress:
+                case XButtonRelease:
+                case MotionNotify:
+                case XKeyPress:
+                case XKeyRelease:
+                case EnterNotify:
+                case LeaveNotify:
+                    d->queuedUserInputEvents.append(event);
+                    continue;
 
-                    case ClientMessage:
-                        // only keep the wm_take_focus and
-                        // _qt_scrolldone protocols, queue all other
-                        // client messages
-                        if (event.xclient.format == 32) {
-                            if (event.xclient.message_type == ATOM(WM_PROTOCOLS) &&
-                                (Atom) event.xclient.data.l[0] == ATOM(WM_TAKE_FOCUS)) {
-                                break;
-                            } else if (event.xclient.message_type == ATOM(_QT_SCROLL_DONE)) {
-                                break;
-                            }
+                case ClientMessage:
+                    // only keep the wm_take_focus and
+                    // _qt_scrolldone protocols, queue all other
+                    // client messages
+                    if (event.xclient.format == 32) {
+                        if (event.xclient.message_type == ATOM(WM_PROTOCOLS) &&
+                            (Atom) event.xclient.data.l[0] == ATOM(WM_TAKE_FOCUS)) {
+                            continue;
+                        } else if (event.xclient.message_type == ATOM(_QT_SCROLL_DONE)) {
+                            continue;
                         }
-                        d->queuedUserInputEvents.append(event);
-                        continue;
-
-                    default:
-                        break;
                     }
+                    d->queuedUserInputEvents.append(event);
+                    continue;
+
+                default:
+                    continue;
                 }
-            } else {
-                // no event to process
-                break;
             }
+        } else {
+            // no event to process
+            continue;
+        }
 
-            // send through event filter
-            if (filterEvent(&event))
-                continue;
+        // send through event filter
+        if (filterEvent(&event))
+            continue;
 
-            nevents++;
-            if (qApp->x11ProcessEvent(&event) == 1)
-                return true;
+        nevents++;
+        if (qApp->x11ProcessEvent(&event) == 1)
+            return true;
 
-            if (event.xany.serial >= marker) {
-                if (XEventsQueued(qt_x11Data->display, QueuedAfterFlush))
-                    flags &= ~QEventLoop::WaitForMoreEvents;
-                goto out;
-            }
+        if (event.xany.serial >= marker) {
+            if (XEventsQueued(qt_x11Data->display, QueuedAfterFlush))
+                flags &= ~QEventLoop::WaitForMoreEvents;
+            break;
         }
     } while (!d->interrupt && XEventsQueued(qt_x11Data->display, QueuedAfterFlush));
 
- out:
     if (!d->interrupt) {
         const uint exclude_all = QEventLoop::ExcludeSocketNotifiers | QEventLoop::WaitForMoreEvents;
         if (nevents > 0 && ((uint)flags & exclude_all) == exclude_all) {
@@ -147,8 +128,9 @@ bool QEventDispatcherX11::processEvents(QEventLoop::ProcessEventsFlags flags)
 
 bool QEventDispatcherX11::hasPendingEvents()
 {
-    extern uint qGlobalPostedEventsCount(); // from qapplication.cpp
-    return (qGlobalPostedEventsCount() || XPending(qt_x11Data->display));
+    if (XPending(qt_x11Data->display))
+        return true;
+    return QEventDispatcherUNIX::hasPendingEvents();
 }
 
 void QEventDispatcherX11::flush()
@@ -156,25 +138,13 @@ void QEventDispatcherX11::flush()
     XFlush(qt_x11Data->display);
 }
 
-void QEventDispatcherX11::startingUp()
-{
-    Q_D(QEventDispatcherX11);
-    d->xfd = XConnectionNumber(qt_x11Data->display);
-}
-
-void QEventDispatcherX11::closingDown()
-{
-    Q_D(QEventDispatcherX11);
-    d->xfd = -1;
-}
-
 int QEventDispatcherX11::select(int nfds, fd_set *readfds, fd_set *writefds, fd_set *exceptfds,
                                 timeval *timeout)
 {
-    Q_D(QEventDispatcherX11);
-    if (d->xfd > 0) {
-        nfds = qMax(nfds - 1, d->xfd) + 1;
-        FD_SET(d->xfd, readfds);
+    int xfd = ConnectionNumber(qt_x11Data->display);
+    if (Q_LIKELY(xfd > 0)) {
+        nfds = qMax(nfds - 1, xfd) + 1;
+        FD_SET(xfd, readfds);
     }
     return QEventDispatcherUNIX::select(nfds, readfds, writefds, exceptfds, timeout);
 }

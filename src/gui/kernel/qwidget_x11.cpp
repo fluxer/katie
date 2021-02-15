@@ -1,7 +1,7 @@
 /****************************************************************************
 **
 ** Copyright (C) 2015 The Qt Company Ltd.
-** Copyright (C) 2016-2021 Ivailo Monev
+** Copyright (C) 2016 Ivailo Monev
 **
 ** This file is part of the QtGui module of the Katie Toolkit.
 **
@@ -14,18 +14,6 @@
 ** packaging of this file.  Please review the following information to
 ** ensure the GNU Lesser General Public License version 2.1 requirements
 ** will be met: http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html.
-**
-** As a special exception, The Qt Company gives you certain additional
-** rights. These rights are described in The Qt Company LGPL Exception
-** version 1.1, included in the file LGPL_EXCEPTION.txt in this package.
-**
-** GNU General Public License Usage
-** Alternatively, this file may be used under the terms of the GNU
-** General Public License version 3.0 as published by the Free Software
-** Foundation and appearing in the file LICENSE.GPL included in the
-** packaging of this file.  Please review the following information to
-** ensure the GNU General Public License version 3.0 requirements will be
-** met: http://www.gnu.org/copyleft/gpl.html.
 **
 ** $QT_END_LICENSE$
 **
@@ -51,7 +39,6 @@
 #include "qmenu_p.h"
 #include "qbackingstore_p.h"
 #include "qwidget_p.h"
-#include "qwindowsurface_x11_p.h"
 #include "qpixmap_x11_p.h"
 #include "qpaintengine_x11_p.h"
 #include "qt_x11_p.h"
@@ -421,7 +408,7 @@ static QVector<Atom> getNetWmState(QWidget *w)
 
 void qt_x11_getX11InfoForWindow(QX11Info *xinfo, const void *att)
 {
-    QX11InfoData* xd = xinfo->getX11Data(true);
+    QX11InfoData* xd = xinfo->getX11Data();
     const XWindowAttributes *a = static_cast<const XWindowAttributes*>(att);
     // find which screen the window is on...
     xd->screen = QX11Info::appScreen(); // by default, use the default :)
@@ -597,7 +584,7 @@ void QWidgetPrivate::create_sys(WId window, bool initializeWindow, bool destroyO
             && xinfo.depth() != 32 && qt_x11Data->argbVisuals[screen]
             && q->testAttribute(Qt::WA_TranslucentBackground))
         {
-            QX11InfoData *xd = xinfo.getX11Data(true);
+            QX11InfoData *xd = xinfo.getX11Data();
 
             xd->screen = screen;
             xd->visual = qt_x11Data->argbVisuals[screen];
@@ -758,8 +745,9 @@ void QWidgetPrivate::create_sys(WId window, bool initializeWindow, bool destroyO
 
         XClassHint class_hint;
         QByteArray appName = QApplication::applicationName().toLatin1();
+        QByteArray appClass = QX11Info::appClass();
         class_hint.res_name = appName.data(); // application name
-        class_hint.res_class = const_cast<char *>(QX11Info::appClass());   // application class
+        class_hint.res_class = appClass.data();   // application class
 
         XSetWMProperties(dpy, id, 0, 0,
                          qApp->d_func()->argv, qApp->d_func()->argc,
@@ -824,10 +812,6 @@ void QWidgetPrivate::create_sys(WId window, bool initializeWindow, bool destroyO
 
     // set X11 event mask
     if (desktop) {
-//         QWidget* main_desktop = find(id);
-//         if (main_desktop->testWFlags(Qt::WPaintDesktop))
-//             XSelectInput(dpy, id, stdDesktopEventMask | ExposureMask);
-//         else
         XSelectInput(dpy, id, stdDesktopEventMask);
     } else if (q->internalWinId()) {
         XSelectInput(dpy, id, stdWidgetEventMask);
@@ -1956,10 +1940,7 @@ void QWidgetPrivate::show_sys()
 
     // Freedesktop.org Startup Notification
     if (qt_x11Data->startupId && q->isWindow()) {
-        QByteArray message("remove: ID=");
-        message.append(qt_x11Data->startupId);
-        sendStartupMessage(message.constData());
-        qt_x11Data->startupId = 0;
+        sendStartupMessage();
     }
 }
 
@@ -1968,12 +1949,12 @@ void QWidgetPrivate::show_sys()
   Platform-specific part of QWidget::show().
 */
 
-void QWidgetPrivate::sendStartupMessage(const char *message) const
+void QWidgetPrivate::sendStartupMessage() const
 {
     Q_Q(const QWidget);
 
-    if (!message)
-        return;
+    QByteArray message("remove: ID=");
+    message.append(qt_x11Data->startupId);
 
     XEvent xevent;
     xevent.xclient.type = ClientMessage;
@@ -1984,7 +1965,7 @@ void QWidgetPrivate::sendStartupMessage(const char *message) const
 
     Window rootWindow = RootWindow(qt_x11Data->display, DefaultScreen(qt_x11Data->display));
     uint sent = 0;
-    uint length = strlen(message) + 1;
+    uint length = message.size() + 1;
     do {
         if (sent == 20)
             xevent.xclient.message_type = ATOM(_NET_STARTUP_INFO);
@@ -1994,6 +1975,8 @@ void QWidgetPrivate::sendStartupMessage(const char *message) const
 
         XSendEvent(qt_x11Data->display, rootWindow, false, PropertyChangeMask, &xevent);
     } while (sent <= length);
+
+    qt_x11Data->startupId = 0;
 }
 
 void QWidgetPrivate::setNetWmWindowTypes()
@@ -2831,11 +2814,6 @@ QPaintEngine *QWidget::paintEngine() const
         return d->extraPaintEngine;
     }
     return qt_widget_paintengine();
-}
-
-QWindowSurface *QWidgetPrivate::createDefaultWindowSurface_sys()
-{
-    return new QX11WindowSurface(q_func());
 }
 
 Qt::HANDLE QWidget::x11PictureHandle() const

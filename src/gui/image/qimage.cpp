@@ -1,7 +1,7 @@
 /****************************************************************************
 **
 ** Copyright (C) 2015 The Qt Company Ltd.
-** Copyright (C) 2016-2021 Ivailo Monev
+** Copyright (C) 2016 Ivailo Monev
 **
 ** This file is part of the QtGui module of the Katie Toolkit.
 **
@@ -14,18 +14,6 @@
 ** packaging of this file.  Please review the following information to
 ** ensure the GNU Lesser General Public License version 2.1 requirements
 ** will be met: http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html.
-**
-** As a special exception, The Qt Company gives you certain additional
-** rights. These rights are described in The Qt Company LGPL Exception
-** version 1.1, included in the file LGPL_EXCEPTION.txt in this package.
-**
-** GNU General Public License Usage
-** Alternatively, this file may be used under the terms of the GNU
-** General Public License version 3.0 as published by the Free Software
-** Foundation and appearing in the file LICENSE.GPL included in the
-** packaging of this file.  Please review the following information to
-** ensure the GNU General Public License version 3.0 requirements will be
-** met: http://www.gnu.org/copyleft/gpl.html.
 **
 ** $QT_END_LICENSE$
 **
@@ -146,25 +134,25 @@ bool QImageData::checkForAlphaPixels() const
     bool has_alpha_pixels = false;
 
     switch (format) {
-
-    case QImage::Format_Mono:
-    case QImage::Format_MonoLSB:
-    case QImage::Format_Indexed8:
-        has_alpha_pixels = has_alpha_clut;
-        break;
-
-    case QImage::Format_ARGB32:
-    case QImage::Format_ARGB32_Premultiplied: {
-        uchar *bits = data;
-        for (int y=0; y<height && !has_alpha_pixels; ++y) {
-            for (int x=0; x<width; ++x)
-                has_alpha_pixels |= (((uint *)bits)[x] & 0xff000000) != 0xff000000;
-            bits += bytes_per_line;
+        case QImage::Format_Mono:
+        case QImage::Format_MonoLSB:
+        case QImage::Format_Indexed8: {
+            has_alpha_pixels = has_alpha_clut;
+            break;
         }
-    } break;
-
-    default:
-        break;
+        case QImage::Format_ARGB32:
+        case QImage::Format_ARGB32_Premultiplied: {
+            const uchar *bits = data;
+            for (int y=0; y<height && !has_alpha_pixels; ++y) {
+                for (int x=0; x<width; ++x)
+                    has_alpha_pixels |= (((const uint *)bits)[x] & 0xff000000) != 0xff000000;
+                bits += bytes_per_line;
+            }
+            break;
+        }
+        default: {
+            break;
+        }
     }
 
     return has_alpha_pixels;
@@ -580,9 +568,9 @@ static const uchar bitflip[256] = {
 */
 
 QImage::QImage()
-    : QPaintDevice()
+    : QPaintDevice(),
+    d(Q_NULLPTR)
 {
-    d = 0;
 }
 
 /*!
@@ -596,9 +584,9 @@ QImage::QImage()
     drawing onto it with QPainter.
 */
 QImage::QImage(int width, int height, Format format)
-    : QPaintDevice()
+    : QPaintDevice(),
+    d(QImageData::create(QSize(width, height), format))
 {
-    d = QImageData::create(QSize(width, height), format);
 }
 
 /*!
@@ -611,16 +599,16 @@ QImage::QImage(int width, int height, Format format)
     drawing onto it with QPainter.
 */
 QImage::QImage(const QSize &size, Format format)
-    : QPaintDevice()
+    : QPaintDevice(),
+    d(QImageData::create(size, format))
 {
-    d = QImageData::create(size, format);
 }
 
 
 
 QImageData *QImageData::create(uchar *data, int width, int height,  int bpl, QImage::Format format, bool readOnly)
 {
-    if (format == QImage::Format_Invalid)
+    if (Q_UNLIKELY(format == QImage::Format_Invalid))
         return Q_NULLPTR;
 
     const int depth = qt_depthForFormat(format);
@@ -669,9 +657,9 @@ QImageData *QImageData::create(uchar *data, int width, int height,  int bpl, QIm
     setColorCount() or setColorTable() before the image is used.
 */
 QImage::QImage(uchar* data, int width, int height, Format format)
-    : QPaintDevice()
+    : QPaintDevice(),
+    d(QImageData::create(data, width, height, 0, format, false))
 {
-    d = QImageData::create(data, width, height, 0, format, false);
 }
 
 /*!
@@ -698,9 +686,9 @@ QImage::QImage(uchar* data, int width, int height, Format format)
     data being changed.
 */
 QImage::QImage(const uchar* data, int width, int height, Format format)
-    : QPaintDevice()
+    : QPaintDevice(),
+    d(QImageData::create(const_cast<uchar*>(data), width, height, 0, format, true))
 {
-    d = QImageData::create(const_cast<uchar*>(data), width, height, 0, format, true);
 }
 
 /*!
@@ -717,9 +705,9 @@ QImage::QImage(const uchar* data, int width, int height, Format format)
     setColorCount() or setColorTable() before the image is used.
 */
 QImage::QImage(uchar *data, int width, int height, int bytesPerLine, Format format)
-    :QPaintDevice()
+    : QPaintDevice(),
+    d(QImageData::create(data, width, height, bytesPerLine, format, false))
 {
-    d = QImageData::create(data, width, height, bytesPerLine, format, false);
 }
 
 
@@ -745,9 +733,9 @@ QImage::QImage(uchar *data, int width, int height, int bytesPerLine, Format form
 */
 
 QImage::QImage(const uchar *data, int width, int height, int bytesPerLine, Format format)
-    :QPaintDevice()
+    : QPaintDevice(),
+    d(QImageData::create(const_cast<uchar*>(data), width, height, bytesPerLine, format, true))
 {
-    d = QImageData::create(const_cast<uchar*>(data), width, height, bytesPerLine, format, true);
 }
 
 /*!
@@ -770,9 +758,9 @@ QImage::QImage(const uchar *data, int width, int height, int bytesPerLine, Forma
 */
 
 QImage::QImage(const QString &fileName, const char *format)
-    : QPaintDevice()
+    : QPaintDevice(),
+    d(Q_NULLPTR)
 {
-    d = 0;
     load(fileName, format);
 }
 
@@ -802,15 +790,15 @@ QImage::QImage(const QString &fileName, const char *format)
 */
 #ifndef QT_NO_CAST_FROM_ASCII
 QImage::QImage(const char *fileName, const char *format)
-    : QPaintDevice()
+    : QPaintDevice(),
+    d(Q_NULLPTR)
 {
-    d = 0;
     load(QString::fromAscii(fileName), format);
 }
 #endif
 
 #ifndef QT_NO_IMAGEFORMAT_XPM
-extern bool qt_read_xpm_image_or_array(QIODevice *device, const char * const *source, QImage &image);
+extern bool qt_read_xpm_array(const char * const *source, QImage &image);
 
 /*!
     Constructs an image from the given \a xpm image.
@@ -829,12 +817,12 @@ extern bool qt_read_xpm_image_or_array(QIODevice *device, const char * const *so
 */
 
 QImage::QImage(const char * const xpm[])
-    : QPaintDevice()
+    : QPaintDevice(),
+    d(Q_NULLPTR)
 {
-    d = 0;
-    if (!xpm)
+    if (Q_UNLIKELY(!xpm))
         return;
-    if (!qt_read_xpm_image_or_array(0, xpm, *this))
+    if (Q_UNLIKELY(!qt_read_xpm_array(xpm, *this)))
         // Issue: Warning because the constructor may be ambigious
         qWarning("QImage::QImage(), XPM is not supported");
 }
@@ -867,10 +855,10 @@ QImage::QImage(const char * const xpm[])
 */
 
 QImage::QImage(const QImage &image)
-    : QPaintDevice()
+    : QPaintDevice(),
+    d(Q_NULLPTR)
 {
     if (image.paintingActive()) {
-        d = 0;
         operator=(image.copy());
     } else {
         d = image.d;
@@ -1804,7 +1792,7 @@ static QVector<QRgb> fix_color_table(const QVector<QRgb> &ctbl, QImage::Format f
     if (format == QImage::Format_RGB32) {
         // check if the color table has alpha
         for (int i = 0; i < colorTable.size(); ++i)
-            if (qAlpha(colorTable.at(i) != 0xff))
+            if (qAlpha(colorTable.at(i)) != 255)
                 colorTable[i] = colorTable.at(i) | 0xff000000;
     } else if (format == QImage::Format_ARGB32_Premultiplied) {
         // check if the color table has alpha
@@ -4480,18 +4468,15 @@ int QImage::bitPlaneCount() const
 {
     if (!d)
         return 0;
-    int bpc = 0;
     switch (d->format) {
-    case QImage::Format_Invalid:
-        break;
-    case QImage::Format_RGB32:
-        bpc = 24;
-        break;
-    default:
-        bpc = qt_depthForFormat(d->format);
-        break;
+        case QImage::Format_Invalid:
+            return 0;
+        case QImage::Format_RGB32:
+            return 24;
+        default:
+            return qt_depthForFormat(d->format);
     }
-    return bpc;
+    Q_UNREACHABLE();
 }
 
 

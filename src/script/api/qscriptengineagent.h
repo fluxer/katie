@@ -1,7 +1,7 @@
 /****************************************************************************
 **
 ** Copyright (C) 2015 The Qt Company Ltd.
-** Copyright (C) 2016-2021 Ivailo Monev
+** Copyright (C) 2016 Ivailo Monev
 **
 ** This file is part of the QtScript module of the Katie Toolkit.
 **
@@ -25,7 +25,6 @@
 #include <QtCore/qobjectdefs.h>
 #include <QtCore/qvariant.h>
 
-QT_BEGIN_HEADER
 
 QT_BEGIN_NAMESPACE
 
@@ -81,6 +80,5 @@ private:
 
 QT_END_NAMESPACE
 
-QT_END_HEADER
 
 #endif

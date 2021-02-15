@@ -1,7 +1,7 @@
 /****************************************************************************
 **
 ** Copyright (C) 2015 The Qt Company Ltd.
-** Copyright (C) 2016-2021 Ivailo Monev
+** Copyright (C) 2016 Ivailo Monev
 **
 ** This file is part of the QtTest module of the Katie Toolkit.
 **
@@ -14,18 +14,6 @@
 ** packaging of this file.  Please review the following information to
 ** ensure the GNU Lesser General Public License version 2.1 requirements
 ** will be met: http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html.
-**
-** As a special exception, The Qt Company gives you certain additional
-** rights. These rights are described in The Qt Company LGPL Exception
-** version 1.1, included in the file LGPL_EXCEPTION.txt in this package.
-**
-** GNU General Public License Usage
-** Alternatively, this file may be used under the terms of the GNU
-** General Public License version 3.0 as published by the Free Software
-** Foundation and appearing in the file LICENSE.GPL included in the
-** packaging of this file.  Please review the following information to
-** ensure the GNU General Public License version 3.0 requirements will be
-** met: http://www.gnu.org/copyleft/gpl.html.
 **
 ** $QT_END_LICENSE$
 **
@@ -56,7 +44,6 @@
 #include <stdarg.h>
 #include <stdio.h>
 #include <stdlib.h>
-#include <errno.h>
 #include <signal.h>
 #include <time.h>
 
@@ -1090,9 +1077,7 @@ Q_TEST_EXPORT void qtest_qParseArgs(int argc, char *argv[], bool qml)
 #endif
          "\n"
          " Benchmark related options:\n"
-#ifdef QT_HAVE_CLOCK_GETTIME
         " -tickcounter    : Use CPU tick counters to time benchmarks\n"
-#endif
         " -eventcounter   : Counts events received during benchmarks\n"
         " -minimumvalue n : Sets the minimum acceptable measurement value\n"
         " -iterations  n  : Sets the number of accumulation iterations.\n"
@@ -1178,10 +1163,8 @@ Q_TEST_EXPORT void qtest_qParseArgs(int argc, char *argv[], bool qml)
 #endif
         } else if (strcmp(argv[i], "-keyevent-verbose") == 0) {
             QTest::keyVerbose = 1;
-#ifdef QT_HAVE_CLOCK_GETTIME
         } else if (strcmp(argv[i], "-tickcounter") == 0) {
             QBenchmarkGlobalData::current->setMode(QBenchmarkGlobalData::TickCounter);
-#endif
         } else if (strcmp(argv[i], "-eventcounter") == 0) {
             QBenchmarkGlobalData::current->setMode(QBenchmarkGlobalData::EventCounter);
         } else if (strcmp(argv[i], "-random") == 0) {
@@ -1226,16 +1209,6 @@ Q_TEST_EXPORT void qtest_qParseArgs(int argc, char *argv[], bool qml)
             QBenchmarkGlobalData::current->verboseOutput = true;
         } else if (strcmp(argv[i], "-chart") == 0) {
             fprintf(stderr, "Warning: `-chart' option is not available\n");
-        } else if (strcmp(argv[i], "-qws") == 0) {
-            // do nothing
-        } else if (strcmp(argv[i], "-graphicssystem") == 0) {
-            // do nothing
-            if (i + 1 >= argc) {
-                printf("-graphicssystem needs an extra parameter specifying the graphics system\n");
-                ::exit(1);
-            } else {
-                ++i;
-            }
         } else if (argv[i][0] == '-') {
             printf("Unknown option: '%s'\n\n%s", argv[i], testOptions);
             ::exit(1);
@@ -1695,7 +1668,7 @@ FatalSignalHandler::FatalSignalHandler()
     for (int i = 0; fatalSignals[i]; ++i) {
         sigaction(fatalSignals[i], &act, &oldact);
         // Don't overwrite any non-default handlers
-        // however, we need to replace the default QWS handlers
+        // however, we need to replace the default handlers
         if (
 #ifdef SA_SIGINFO
             oldact.sa_flags & SA_SIGINFO ||

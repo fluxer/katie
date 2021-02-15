@@ -1,7 +1,7 @@
 /****************************************************************************
 **
 ** Copyright (C) 2015 The Qt Company Ltd.
-** Copyright (C) 2016-2021 Ivailo Monev
+** Copyright (C) 2016 Ivailo Monev
 **
 ** This file is part of the QtGui module of the Katie Toolkit.
 **
@@ -14,18 +14,6 @@
 ** packaging of this file.  Please review the following information to
 ** ensure the GNU Lesser General Public License version 2.1 requirements
 ** will be met: http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html.
-**
-** As a special exception, The Qt Company gives you certain additional
-** rights. These rights are described in The Qt Company LGPL Exception
-** version 1.1, included in the file LGPL_EXCEPTION.txt in this package.
-**
-** GNU General Public License Usage
-** Alternatively, this file may be used under the terms of the GNU
-** General Public License version 3.0 as published by the Free Software
-** Foundation and appearing in the file LICENSE.GPL included in the
-** packaging of this file.  Please review the following information to
-** ensure the GNU General Public License version 3.0 requirements will be
-** met: http://www.gnu.org/copyleft/gpl.html.
 **
 ** $QT_END_LICENSE$
 **
@@ -186,7 +174,7 @@ QAtomicInt qt_pixmap_serial = QAtomicInt(0);
 
 QX11PixmapData::QX11PixmapData(PixelType type)
     : QPixmapData(type, X11Class), hd(0),
-      flags(Uninitialized), x11_mask(0), picture(0), mask_picture(0), hd2(0),
+      flags(NoFlags), x11_mask(0), picture(0), mask_picture(0), hd2(0),
       share_mode(QPixmap::ImplicitlyShared), pengine(0)
 {
 }
@@ -205,7 +193,7 @@ void QX11PixmapData::resize(int width, int height)
     is_null = (w <= 0 || h <= 0);
 
     if (defaultScreen >= 0 && defaultScreen != xinfo.screen()) {
-        QX11InfoData* xd = xinfo.getX11Data(true);
+        QX11InfoData* xd = xinfo.getX11Data();
         xd->screen = defaultScreen;
         xd->depth = QX11Info::appDepth(xd->screen);
         xd->cells = QX11Info::appCells(xd->screen);
@@ -291,7 +279,7 @@ void QX11PixmapData::fromImage(const QImage &img,
     }
 
     if (defaultScreen >= 0 && defaultScreen != xinfo.screen()) {
-        QX11InfoData* xd = xinfo.getX11Data(true);
+        QX11InfoData* xd = xinfo.getX11Data();
         xd->screen = defaultScreen;
         xd->depth = QX11Info::appDepth(xd->screen);
         xd->cells = QX11Info::appCells(xd->screen);
@@ -373,7 +361,7 @@ void QX11PixmapData::fromImage(const QImage &img,
             if (xinfo.x11data) {
                 xinfo.x11data->depth = d;
             } else {
-                QX11InfoData *xd = xinfo.getX11Data(true);
+                QX11InfoData *xd = xinfo.getX11Data();
                 xd->screen = QX11Info::appScreen();
                 xd->depth = d;
                 xd->cells = QX11Info::appCells();
@@ -401,7 +389,7 @@ void QX11PixmapData::fromImage(const QImage &img,
             QVector<QRgb> colorTable = cimage.colorTable();
             uint *xidata = (uint *)xi->data;
             for (int y = 0; y < h; ++y) {
-                const uchar *p = cimage.scanLine(y);
+                const uchar *p = cimage.constScanLine(y);
                 for (int x = 0; x < w; ++x) {
                     const QRgb rgb = colorTable[p[x]];
                     const int a = qAlpha(rgb);
@@ -421,7 +409,7 @@ void QX11PixmapData::fromImage(const QImage &img,
         case QImage::Format_RGB32: {
             uint *xidata = (uint *)xi->data;
             for (int y = 0; y < h; ++y) {
-                const QRgb *p = (const QRgb *) cimage.scanLine(y);
+                const QRgb *p = (const QRgb *) cimage.constScanLine(y);
                 for (int x = 0; x < w; ++x)
                     *xidata++ = p[x] | 0xff000000;
             }
@@ -430,7 +418,7 @@ void QX11PixmapData::fromImage(const QImage &img,
         case QImage::Format_ARGB32: {
             uint *xidata = (uint *)xi->data;
             for (int y = 0; y < h; ++y) {
-                const QRgb *p = (const QRgb *) cimage.scanLine(y);
+                const QRgb *p = (const QRgb *) cimage.constScanLine(y);
                 for (int x = 0; x < w; ++x) {
                     const QRgb rgb = p[x];
                     const int a = qAlpha(rgb);
@@ -451,7 +439,7 @@ void QX11PixmapData::fromImage(const QImage &img,
         case QImage::Format_ARGB32_Premultiplied: {
             uint *xidata = (uint *)xi->data;
             for (int y = 0; y < h; ++y) {
-                const QRgb *p = (const QRgb *) cimage.scanLine(y);
+                const QRgb *p = (const QRgb *) cimage.constScanLine(y);
                 memcpy(xidata, p, w*sizeof(QRgb));
                 xidata += w;
             }
@@ -666,7 +654,7 @@ void QX11PixmapData::fromImage(const QImage &img,
 
 #define CYCLE(body)                                             \
         for (int y=0; y<h; y++) {                               \
-            const uchar* src = cimage.scanLine(y);              \
+            const uchar* src = cimage.constScanLine(y);              \
             uchar* dst = newbits + xi->bytes_per_line*y;        \
             const QRgb* p = (const QRgb *)src;                  \
             body                                                \
@@ -840,7 +828,7 @@ void QX11PixmapData::fromImage(const QImage &img,
         const QImage &cimage = image;
         memset(pop, 0, sizeof(int)*256);        // reset popularity array
         for (int i = 0; i < h; i++) {                        // for each scanline...
-            const uchar* p = cimage.scanLine(i);
+            const uchar* p = cimage.constScanLine(i);
             const uchar *end = p + w;
             while (p < end)                        // compute popularity
                 pop[*p++]++;
@@ -1033,11 +1021,9 @@ Qt::HANDLE QX11PixmapData::createBitmapFromImage(const QImage &image)
     if (bpl != ibpl) {
         tmp_bits = new uchar[bpl*h];
         bits = (char *)tmp_bits;
-        uchar *p, *b;
-        int y;
-        b = tmp_bits;
-        p = img.scanLine(0);
-        for (y = 0; y < h; y++) {
+        uchar *b = tmp_bits;
+        const uchar *p = img.constScanLine(0);
+        for (int y = 0; y < h; y++) {
             memcpy(b, p, bpl);
             b += bpl;
             p += ibpl;
@@ -1363,14 +1349,14 @@ QImage QX11PixmapData::takeQImageFromXImage(XImage *xi) const
         for (int i=0; i < image.height(); i++) {
             if (depth() == 16) {
                 ushort *p = (ushort*)image.scanLine(i);
-                ushort *end = p + image.width();
+                const ushort *end = p + image.width();
                 while (p < end) {
                     *p = ((*p << 8) & 0xff00) | ((*p >> 8) & 0x00ff);
                     p++;
                 }
             } else {
                 uint *p = (uint*)image.scanLine(i);
-                uint *end = p + image.width();
+                const uint *end = p + image.width();
                 while (p < end) {
                     *p = ((*p << 24) & 0xff000000) | ((*p << 8) & 0x00ff0000)
                          | ((*p >> 8) & 0x0000ff00) | ((*p >> 24) & 0x000000ff);
@@ -1506,7 +1492,7 @@ QImage QX11PixmapData::toImage(const XImage *xi, const QRect &rect) const
 
         for (int y = 0; y < xi->height; ++y) {
             uint pixel;
-            const uchar* asrc = x11_mask ? alpha.scanLine(y) : 0;
+            const uchar* asrc = x11_mask ? alpha.constScanLine(y) : 0;
             QRgb *dst = (QRgb *)image.scanLine(y);
             uchar *src = (uchar *)xi->data + xi->bytes_per_line*y;
             for (int x = 0; x < xi->width; x++) {
@@ -1594,8 +1580,6 @@ QImage QX11PixmapData::toImage(const XImage *xi, const QRect &rect) const
         image.setColor(0, qRgb(255,255,255));
         image.setColor(1, qRgb(0,0,0));
     } else if (!trucol) {                        // pixmap with colormap
-        uchar *p;
-        uchar *end;
         uchar  use[256];                        // pixel-in-use table
         uchar  pix[256];                        // pixel translation table
         int    ncols, bpl;
@@ -1605,8 +1589,8 @@ QImage QX11PixmapData::toImage(const XImage *xi, const QRect &rect) const
 
         if (x11_mask) {                         // which pixels are used?
             for (int i = 0; i < xi->height; i++) {
-                const uchar* asrc = alpha.scanLine(i);
-                p = image.scanLine(i);
+                const uchar* asrc = alpha.constScanLine(i);
+                const uchar *p = image.constScanLine(i);
                 if (ale) {
                     for (int x = 0; x < xi->width; x++) {
                         if (asrc[x >> 3] & (1 << (x & 7)))
@@ -1623,8 +1607,8 @@ QImage QX11PixmapData::toImage(const XImage *xi, const QRect &rect) const
             }
         } else {
             for (int i = 0; i < xi->height; i++) {
-                p = image.scanLine(i);
-                end = p + bpl;
+                const uchar *p = image.constScanLine(i);
+                const uchar *end = p + bpl;
                 while (p < end)
                     use[*p++] = 1;
             }
@@ -1635,8 +1619,8 @@ QImage QX11PixmapData::toImage(const XImage *xi, const QRect &rect) const
                 pix[i] = ncols++;
         }
         for (int i = 0; i < xi->height; i++) {                        // translate pixels
-            p = image.scanLine(i);
-            end = p + bpl;
+            uchar *p = image.scanLine(i);
+            const uchar *end = p + bpl;
             while (p < end) {
                 *p = pix[*p];
                 p++;
@@ -1656,7 +1640,7 @@ QImage QX11PixmapData::toImage(const XImage *xi, const QRect &rect) const
             }
             for (int i = 0; i < xi->height; i++) {
                 const uchar* asrc = alpha.scanLine(i);
-                p = image.scanLine(i);
+                uchar *p = image.scanLine(i);
                 if (ale) {
                     for (int x = 0; x < xi->width; x++) {
                         if (!(asrc[x >> 3] & (1 << (x & 7))))
@@ -1830,7 +1814,6 @@ QPixmap QX11PixmapData::transformed(const QTransform &transform,
     } else {                                        // color pixmap
         QX11PixmapData *x11Data = new QX11PixmapData(QPixmapData::PixmapType);
         QPixmap pm(x11Data);
-        x11Data->flags &= ~QX11PixmapData::Uninitialized;
         x11Data->xinfo = xinfo;
         x11Data->d = d;
         x11Data->w = w;
@@ -1897,7 +1880,7 @@ void QPixmap::x11SetScreen(int screen)
         return; // nothing to do
 
     if (isNull()) {
-        QX11InfoData* xd = x11Data->xinfo.getX11Data(true);
+        QX11InfoData* xd = x11Data->xinfo.getX11Data();
         xd->screen = screen;
         xd->depth = QX11Info::appDepth(screen);
         xd->cells = QX11Info::appCells(screen);
@@ -1969,8 +1952,6 @@ QPixmap QPixmap::grabWindow(WId window, int x, int y, int w, int h)
     data->resize(w, h);
 
     QPixmap pm(data);
-
-    data->flags &= ~QX11PixmapData::Uninitialized;
     pm.x11SetScreen(scr);
 
     GC gc = XCreateGC(dpy, pm.handle(), 0, 0);
@@ -2087,7 +2068,6 @@ void QX11PixmapData::copy(const QPixmapData *data, const QRect &rect)
 
     setSerialNumber(qt_pixmap_serial.fetchAndAddRelaxed(1));
 
-    flags &= ~Uninitialized;
     xinfo = x11Data->xinfo;
     d = x11Data->d;
     w = rect.width();
@@ -2215,7 +2195,7 @@ QPixmap QPixmap::fromX11Pixmap(Qt::HANDLE pixmap, QPixmap::ShareMode mode)
     data->hd = pixmap;
 
     if (defaultScreen >= 0 && defaultScreen != screen) {
-        QX11InfoData* xd = data->xinfo.getX11Data(true);
+        QX11InfoData* xd = data->xinfo.getX11Data();
         xd->screen = defaultScreen;
         xd->depth = QX11Info::appDepth(xd->screen);
         xd->cells = QX11Info::appCells(xd->screen);

@@ -1,7 +1,7 @@
 /****************************************************************************
 **
 ** Copyright (C) 2015 The Qt Company Ltd.
-** Copyright (C) 2016-2021 Ivailo Monev
+** Copyright (C) 2016 Ivailo Monev
 **
 ** This file is part of the QtCore module of the Katie Toolkit.
 **
@@ -15,18 +15,6 @@
 ** ensure the GNU Lesser General Public License version 2.1 requirements
 ** will be met: http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html.
 **
-** As a special exception, The Qt Company gives you certain additional
-** rights. These rights are described in The Qt Company LGPL Exception
-** version 1.1, included in the file LGPL_EXCEPTION.txt in this package.
-**
-** GNU General Public License Usage
-** Alternatively, this file may be used under the terms of the GNU
-** General Public License version 3.0 as published by the Free Software
-** Foundation and appearing in the file LICENSE.GPL included in the
-** packaging of this file.  Please review the following information to
-** ensure the GNU General Public License version 3.0 requirements will be
-** met: http://www.gnu.org/copyleft/gpl.html.
-**
 ** $QT_END_LICENSE$
 **
 ****************************************************************************/
@@ -36,14 +24,9 @@
 
 #include <QtCore/qglobal.h>
 
-#ifdef __GLIBC__
-#include <byteswap.h>
-#endif
-
-QT_BEGIN_HEADER
+#include <string.h>
 
 QT_BEGIN_NAMESPACE
-
 
 /*
  * ENDIAN FUNCTIONS
@@ -165,49 +148,18 @@ template <> inline qint16 qFromBigEndian<qint16>(const uchar *src)
 */
 template <typename T> T qbswap(const T source);
 
-#ifdef __GLIBC__
 template <> inline quint64 qbswap<quint64>(const quint64 source)
 {
-    return bswap_64(source);
+    return __builtin_bswap64(source);
 }
 template <> inline quint32 qbswap<quint32>(const quint32 source)
 {
-    return bswap_32(source);
+    return __builtin_bswap32(source);
 }
 template <> inline quint16 qbswap<quint16>(const quint16 source)
 {
-    return bswap_16(source);
+    return __builtin_bswap16(source);
 }
-#else
-template <> inline quint64 qbswap<quint64>(const quint64 source)
-{
-    return 0
-        | ((source & Q_UINT64_C(0x00000000000000ff)) << 56)
-        | ((source & Q_UINT64_C(0x000000000000ff00)) << 40)
-        | ((source & Q_UINT64_C(0x0000000000ff0000)) << 24)
-        | ((source & Q_UINT64_C(0x00000000ff000000)) << 8)
-        | ((source & Q_UINT64_C(0x000000ff00000000)) >> 8)
-        | ((source & Q_UINT64_C(0x0000ff0000000000)) >> 24)
-        | ((source & Q_UINT64_C(0x00ff000000000000)) >> 40)
-        | ((source & Q_UINT64_C(0xff00000000000000)) >> 56);
-}
-
-template <> inline quint32 qbswap<quint32>(const quint32 source)
-{
-    return 0
-        | ((source & 0x000000ff) << 24)
-        | ((source & 0x0000ff00) << 8)
-        | ((source & 0x00ff0000) >> 8)
-        | ((source & 0xff000000) >> 24);
-}
-
-template <> inline quint16 qbswap<quint16>(const quint16 source)
-{
-    return quint16( 0
-                    | ((source & 0x00ff) << 8)
-                    | ((source & 0xff00) >> 8) );
-}
-#endif // __GLIBC__
 
 // signed specializations
 template <> inline qint64 qbswap<qint64>(const qint64 source)
@@ -263,6 +215,5 @@ template <> inline quint8 qbswap<quint8>(const quint8 source)
 
 QT_END_NAMESPACE
 
-QT_END_HEADER
 
 #endif // QENDIAN_H

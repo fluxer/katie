@@ -107,7 +107,7 @@ static const char* regexpName(int re, RegExp* regexp)
 
 static UString pointerToSourceString(void* p)
 {
-    char buffer[2 + 2 * sizeof(void*) + 1]; // 0x [two characters per byte] \0
+    char buffer[2 + 2 * QT_POINTER_SIZE + 1]; // 0x [two characters per byte] \0
     snprintf(buffer, sizeof(buffer), "%p", p);
     return buffer;
 }
