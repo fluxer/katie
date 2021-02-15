@@ -1,7 +1,7 @@
 /****************************************************************************
 **
 ** Copyright (C) 2015 The Qt Company Ltd.
-** Copyright (C) 2016-2020 Ivailo Monev
+** Copyright (C) 2016 Ivailo Monev
 **
 ** This file is part of the QtGui module of the Katie Toolkit.
 **
@@ -14,18 +14,6 @@
 ** packaging of this file.  Please review the following information to
 ** ensure the GNU Lesser General Public License version 2.1 requirements
 ** will be met: http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html.
-**
-** As a special exception, The Qt Company gives you certain additional
-** rights. These rights are described in The Qt Company LGPL Exception
-** version 1.1, included in the file LGPL_EXCEPTION.txt in this package.
-**
-** GNU General Public License Usage
-** Alternatively, this file may be used under the terms of the GNU
-** General Public License version 3.0 as published by the Free Software
-** Foundation and appearing in the file LICENSE.GPL included in the
-** packaging of this file.  Please review the following information to
-** ensure the GNU General Public License version 3.0 requirements will be
-** met: http://www.gnu.org/copyleft/gpl.html.
 **
 ** $QT_END_LICENSE$
 **
@@ -239,6 +227,12 @@ static void QT_FASTCALL destStoreARGB32(QRasterBuffer *rasterBuffer, int x, int 
     }
 }
 
+static void QT_FASTCALL destStoreRGB32(QRasterBuffer *rasterBuffer, int x, int y, const uint *buffer, int length)
+{
+    quint32 *data = (quint32*)rasterBuffer->scanLine(y) + x;
+    ::memcpy(data, buffer, length * sizeof(quint32));
+}
+
 static void QT_FASTCALL destStoreRGB16(QRasterBuffer *rasterBuffer, int x, int y, const uint *buffer, int length)
 {
     quint16 *data = (quint16*)rasterBuffer->scanLine(y) + x;
@@ -251,9 +245,9 @@ static DestStoreProc destStoreProc[QImage::NImageFormats] =
     destStoreMono, // Format_Mono,
     destStoreMonoLsb, // Format_MonoLSB
     0, // Format_Indexed8
-    0, // Format_RGB32
+    destStoreRGB32, // Format_RGB32
     destStoreARGB32, // Format_ARGB32,
-    0, // Format_ARGB32_Premultiplied
+    destStoreRGB32, // Format_ARGB32_Premultiplied
     destStoreRGB16, // Format_RGB16
 };
 

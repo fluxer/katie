@@ -1,7 +1,7 @@
 /****************************************************************************
 **
 ** Copyright (C) 2015 The Qt Company Ltd.
-** Copyright (C) 2016-2020 Ivailo Monev
+** Copyright (C) 2016 Ivailo Monev
 **
 ** This file is part of the QtGui module of the Katie Toolkit.
 **
@@ -14,18 +14,6 @@
 ** packaging of this file.  Please review the following information to
 ** ensure the GNU Lesser General Public License version 2.1 requirements
 ** will be met: http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html.
-**
-** As a special exception, The Qt Company gives you certain additional
-** rights. These rights are described in The Qt Company LGPL Exception
-** version 1.1, included in the file LGPL_EXCEPTION.txt in this package.
-**
-** GNU General Public License Usage
-** Alternatively, this file may be used under the terms of the GNU
-** General Public License version 3.0 as published by the Free Software
-** Foundation and appearing in the file LICENSE.GPL included in the
-** packaging of this file.  Please review the following information to
-** ensure the GNU General Public License version 3.0 requirements will be
-** met: http://www.gnu.org/copyleft/gpl.html.
 **
 ** $QT_END_LICENSE$
 **
@@ -343,9 +331,9 @@ QValidator::State QIntValidator::validate(QString & input, int&) const
     if (buff.size() == 1 && (buff.at(0) == '+' || buff.at(0) == '-'))
         return Intermediate;
 
-    bool ok, overflow;
-    qlonglong entered = QLocalePrivate::bytearrayToLongLong(buff.constData(), 10, &ok, &overflow);
-    if (overflow || !ok)
+    bool ok;
+    qlonglong entered = QLocalePrivate::bytearrayToLongLong(buff.constData(), 10, &ok);
+    if (!ok)
         return Invalid;
 
     if (entered >= b && entered <= t) {
@@ -371,9 +359,9 @@ void QIntValidator::fixup(QString &input) const
         if (!cl.d()->validateChars(input, QLocalePrivate::IntegerMode, &buff))
             return;
     }
-    bool ok, overflow;
-    qlonglong entered = QLocalePrivate::bytearrayToLongLong(buff.constData(), 10, &ok, &overflow);
-    if (ok && !overflow)
+    bool ok;
+    qlonglong entered = QLocalePrivate::bytearrayToLongLong(buff.constData(), 10, &ok);
+    if (ok)
         input = locale().toString(entered);
 }
 
@@ -586,12 +574,10 @@ QValidator::State QDoubleValidatorPrivate::validateWithLocale(QString &input, QL
     if (q->t < 0 && buff.startsWith('+'))
         return QValidator::Invalid;
 
-    bool ok, overflow;
-    double i = QLocalePrivate::bytearrayToDouble(buff.constData(), &ok, &overflow);
-    if (overflow)
-        return QValidator::Invalid;
+    bool ok;
+    double i = QLocalePrivate::bytearrayToDouble(buff.constData(), &ok);
     if (!ok)
-        return QValidator::Intermediate;
+        return QValidator::Invalid;
 
     if (i >= q->b && i <= q->t)
         return QValidator::Acceptable;

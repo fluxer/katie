@@ -1,7 +1,7 @@
 /****************************************************************************
 **
 ** Copyright (C) 2015 The Qt Company Ltd.
-** Copyright (C) 2016-2020 Ivailo Monev
+** Copyright (C) 2016 Ivailo Monev
 **
 ** This file is part of the QtCore module of the Katie Toolkit.
 **
@@ -14,18 +14,6 @@
 ** packaging of this file.  Please review the following information to
 ** ensure the GNU Lesser General Public License version 2.1 requirements
 ** will be met: http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html.
-**
-** As a special exception, The Qt Company gives you certain additional
-** rights. These rights are described in The Qt Company LGPL Exception
-** version 1.1, included in the file LGPL_EXCEPTION.txt in this package.
-**
-** GNU General Public License Usage
-** Alternatively, this file may be used under the terms of the GNU
-** General Public License version 3.0 as published by the Free Software
-** Foundation and appearing in the file LICENSE.GPL included in the
-** packaging of this file.  Please review the following information to
-** ensure the GNU General Public License version 3.0 requirements will be
-** met: http://www.gnu.org/copyleft/gpl.html.
 **
 ** $QT_END_LICENSE$
 **
@@ -43,9 +31,6 @@
 
 #ifndef QT_BOOTSTRAPPED
 #  include "qeasingcurve.h"
-#  include "qjsonvalue.h"
-#  include "qjsonobject.h"
-#  include "qjsonarray.h"
 #  include "qjsondocument.h"
 #  include "qbitarray.h"
 #  include "qurl.h"
@@ -129,9 +114,6 @@ QT_BEGIN_NAMESPACE
     \value QPointF QPointF
     \value QRegExp QRegExp
     \value QEasingCurve QEasingCurve
-    \value QJsonValue QJsonValue
-    \value QJsonObject QJsonObject
-    \value QJsonArray QJsonArray
     \value QJsonDocument QJsonDocument
     \value QVariantHash QVariantHash
     \value QVariantList QVariantList
@@ -256,9 +238,6 @@ static const struct MetaTypeTblData {
     QT_ADD_STATIC_METATYPE("QPointF", QMetaType::QPointF),
     QT_ADD_STATIC_METATYPE("QRegExp", QMetaType::QRegExp),
     QT_ADD_STATIC_METATYPE("QEasingCurve", QMetaType::QEasingCurve),
-    QT_ADD_STATIC_METATYPE("QJsonValue", QMetaType:: QJsonValue),
-    QT_ADD_STATIC_METATYPE("QJsonObject", QMetaType::QJsonObject),
-    QT_ADD_STATIC_METATYPE("QJsonArray", QMetaType::QJsonArray),
     QT_ADD_STATIC_METATYPE("QJsonDocument", QMetaType::QJsonDocument),
     QT_ADD_STATIC_METATYPE("QVariantHash", QMetaType::QVariantHash),
     QT_ADD_STATIC_METATYPE("QVariantList", QMetaType::QVariantList),
@@ -338,10 +317,11 @@ Q_CORE_EXPORT const QMetaTypeGuiHelper *qMetaTypeGuiHelper = Q_NULLPTR;
 class QCustomTypeInfo
 {
 public:
-    QCustomTypeInfo() : constr(Q_NULLPTR), destr(Q_NULLPTR)
+    QCustomTypeInfo() : constr(Q_NULLPTR), destr(Q_NULLPTR),
 #ifndef QT_NO_DATASTREAM
-    , saveOp(Q_NULLPTR), loadOp(Q_NULLPTR)
+    saveOp(Q_NULLPTR), loadOp(Q_NULLPTR),
 #endif
+    alias(-1)
     {}
 
     QByteArray typeName;
@@ -522,8 +502,8 @@ int QMetaType::registerTypedef(const char* typeName, int aliasId)
     QCustomTypeInfo inf;
     inf.typeName = normalizedTypeName;
     inf.alias = aliasId;
-    inf.constr = 0;
-    inf.destr = 0;
+    inf.constr = Q_NULLPTR;
+    inf.destr = Q_NULLPTR;
     ct->append(inf);
     return aliasId;
 }
@@ -551,8 +531,8 @@ void QMetaType::unregisterType(const char *typeName)
         if (ct->at(v).typeName == typeName) {
             QCustomTypeInfo &inf = (*ct)[v];
             inf.typeName.clear();
-            inf.constr = 0;
-            inf.destr = 0;
+            inf.constr = Q_NULLPTR;
+            inf.destr = Q_NULLPTR;
             inf.alias = -1;
         }
     }
@@ -632,9 +612,6 @@ bool QMetaType::save(QDataStream &stream, int type, const void *data)
     case QMetaType::VoidStar:
     case QMetaType::QObjectStar:
     case QMetaType::QWidgetStar:
-    case QMetaType::QJsonValue:
-    case QMetaType::QJsonObject:
-    case QMetaType::QJsonArray:
     case QMetaType::QJsonDocument:
         return false;
     case QMetaType::Long:
@@ -829,9 +806,6 @@ bool QMetaType::load(QDataStream &stream, int type, void *data)
     case QMetaType::VoidStar:
     case QMetaType::QObjectStar:
     case QMetaType::QWidgetStar:
-    case QMetaType::QJsonValue:
-    case QMetaType::QJsonObject:
-    case QMetaType::QJsonArray:
     case QMetaType::QJsonDocument:
         return false;
     case QMetaType::Long: {
@@ -1105,12 +1079,6 @@ void *QMetaType::construct(int type, const void *copy)
 #ifndef QT_BOOTSTRAPPED
         case QMetaType::QEasingCurve:
             return new NS(QEasingCurve)(*static_cast<const NS(QEasingCurve)*>(copy));
-        case QMetaType::QJsonValue:
-            return new NS(QJsonValue)(*static_cast<const NS(QJsonValue)*>(copy));
-        case QMetaType::QJsonObject:
-            return new NS(QJsonObject)(*static_cast<const NS(QJsonObject)*>(copy));
-        case QMetaType::QJsonArray:
-            return new NS(QJsonArray)(*static_cast<const NS(QJsonArray)*>(copy));
         case QMetaType::QJsonDocument:
             return new NS(QJsonDocument)(*static_cast<const NS(QJsonDocument)*>(copy));
 #endif
@@ -1372,15 +1340,6 @@ void QMetaType::destroy(int type, void *data)
 #ifndef QT_BOOTSTRAPPED
     case QMetaType::QEasingCurve:
         delete static_cast< NS(QEasingCurve)* >(data);
-        break;
-    case QMetaType::QJsonValue:
-        delete static_cast< NS(QJsonValue)* >(data);
-        break;
-    case QMetaType::QJsonObject:
-        delete static_cast< NS(QJsonObject)* >(data);
-        break;
-    case QMetaType::QJsonArray:
-        delete static_cast< NS(QJsonArray)* >(data);
         break;
     case QMetaType::QJsonDocument:
         delete static_cast< NS(QJsonDocument)* >(data);

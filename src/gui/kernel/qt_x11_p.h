@@ -1,7 +1,7 @@
 /****************************************************************************
 **
 ** Copyright (C) 2015 The Qt Company Ltd.
-** Copyright (C) 2016-2020 Ivailo Monev
+** Copyright (C) 2016 Ivailo Monev
 **
 ** This file is part of the QtGui module of the Katie Toolkit.
 **
@@ -14,18 +14,6 @@
 ** packaging of this file.  Please review the following information to
 ** ensure the GNU Lesser General Public License version 2.1 requirements
 ** will be met: http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html.
-**
-** As a special exception, The Qt Company gives you certain additional
-** rights. These rights are described in The Qt Company LGPL Exception
-** version 1.1, included in the file LGPL_EXCEPTION.txt in this package.
-**
-** GNU General Public License Usage
-** Alternatively, this file may be used under the terms of the GNU
-** General Public License version 3.0 as published by the Free Software
-** Foundation and appearing in the file LICENSE.GPL included in the
-** packaging of this file.  Please review the following information to
-** ensure the GNU General Public License version 3.0 requirements will be
-** met: http://www.gnu.org/copyleft/gpl.html.
 **
 ** $QT_END_LICENSE$
 **
@@ -46,7 +34,6 @@
 //
 
 #include "QtGui/qwindowdefs.h"
-#include "QtCore/qhash.h"
 #include "QtCore/qlist.h"
 #include "QtCore/qvariant.h"
 
@@ -62,6 +49,7 @@
 #include <X11/Xutil.h>
 #include <X11/Xos.h>
 #include <X11/Xatom.h>
+#include <X11/Xproto.h>
 
 #define XK_MISCELLANY
 #define XK_LATIN1
@@ -100,20 +88,16 @@
 #include <X11/cursorfont.h>
 #endif // QT_NO_XCURSOR
 
-#ifndef QT_NO_XSHM
-#  include <X11/extensions/XShm.h>
-#endif // QT_NO_XSHM
-
 #ifndef QT_NO_XFIXES
 #  include <X11/extensions/Xfixes.h>
 #endif // QT_NO_XFIXES
 
-#ifndef QT_NO_FONTCONFIG
-#include <fontconfig/fontconfig.h>
-#endif
-
 #ifndef QT_NO_SESSIONMANAGER
 #include <X11/SM/SMlib.h>
+#endif
+
+#ifndef QT_NO_FONTCONFIG
+#include <fontconfig/fontconfig.h>
 #endif
 
 QT_BEGIN_NAMESPACE
@@ -148,13 +132,13 @@ struct QXdndDropTransaction
 class QMimeData;
 struct QX11Data
 {
-    Window findClientWindow(Window, Atom, bool);
+    Window findClientWindow(Window, Atom);
 
     // from qclipboard_x11.cpp
     bool clipboardWaitForEvent(Window win, int type, XEvent *event, int timeout, bool checkManager = false);
     bool clipboardReadProperty(Window win, Atom property, bool deleteProperty,
                             QByteArray *buffer, int *size, Atom *type, int *format);
-    QByteArray clipboardReadIncrementalProperty(Window win, Atom property, int nbytes, bool nullterm);
+    QByteArray clipboardReadIncrementalProperty(Window win, Atom property, int nbytes);
 
     // from qdnd_x11.cpp
     bool dndEnable(QWidget* w, bool on);
@@ -204,10 +188,6 @@ struct QX11Data
     bool use_xfixes;
     int xfixes_eventbase;
 
-    // true if compiled w/ MIT-SHM support and MIT-SHM is supported on the connected Display
-    bool use_mitshm;
-    int mitshm_major;
-
     // true if compiled w/ XINERAMA support and XINERAMA is supported on the connected Display
     bool use_xinerama;
 
@@ -232,7 +212,6 @@ struct QX11Data
     Colormap *argbColormaps;
     int screenCount;
     int defaultScreen;
-    QHash<int, int> bppForDepth;
 
     Time time;
     Time userTime;

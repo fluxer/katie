@@ -1,7 +1,7 @@
 /****************************************************************************
 **
 ** Copyright (C) 2015 The Qt Company Ltd.
-** Copyright (C) 2016-2020 Ivailo Monev
+** Copyright (C) 2016 Ivailo Monev
 **
 ** This file is part of the QtGui module of the Katie Toolkit.
 **
@@ -14,18 +14,6 @@
 ** packaging of this file.  Please review the following information to
 ** ensure the GNU Lesser General Public License version 2.1 requirements
 ** will be met: http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html.
-**
-** As a special exception, The Qt Company gives you certain additional
-** rights. These rights are described in The Qt Company LGPL Exception
-** version 1.1, included in the file LGPL_EXCEPTION.txt in this package.
-**
-** GNU General Public License Usage
-** Alternatively, this file may be used under the terms of the GNU
-** General Public License version 3.0 as published by the Free Software
-** Foundation and appearing in the file LICENSE.GPL included in the
-** packaging of this file.  Please review the following information to
-** ensure the GNU General Public License version 3.0 requirements will be
-** met: http://www.gnu.org/copyleft/gpl.html.
 **
 ** $QT_END_LICENSE$
 **
@@ -50,20 +38,6 @@ QKeyMapperPrivate::QKeyMapperPrivate()
 
 QKeyMapperPrivate::~QKeyMapperPrivate()
 {
-}
-
-QList<int> QKeyMapperPrivate::possibleKeys(QKeyEvent *event)
-{
-    const Qt::KeyboardModifiers modifiers = event->modifiers();
-    const int key = event->key();
-
-    QList<int> result;
-    result << (key | modifiers);
-
-#if 0
-    qDebug() << "possibleKeys()" << key << modifiers << result;
-#endif
-    return result;
 }
 
 void QKeyMapperPrivate::clearMappings()
@@ -191,6 +165,23 @@ static int translateKeySym(const uint key)
     return key;
 }
 
+static bool getX11AutoRepeat() {
+    XKeyboardState state;
+    XGetKeyboardControl(qt_x11Data->display, &state);
+    if (state.global_auto_repeat == AutoRepeatModeOn) {
+        // NOTE: according to `xset -q` the delay is 250,
+        // QApplication::keyboardInputInterval() is set to 400 but it does not
+        // have the same meaning nor is it clear if the events are delayed by
+        // the delay value X11 holds or they appear in the range of the value
+        // so the time-window for auto repeat events that are registered is
+        // likely incorrect. there are two ways to query the actual X11 value,
+        // either via XkbGetControls() or XF86MiscGetKbdSettings() but the
+        // second is deprecated
+        return QApplication::keyboardInputInterval();
+    }
+    return -1;
+}
+
 struct qt_auto_repeat_data
 {
     // simulated auto-repeat X11 events have the same serial
@@ -218,23 +209,26 @@ bool QKeyMapperPrivate::translateKeyEvent(QWidget *keyWidget, const XEvent *even
     QString text = QString::fromLatin1(lookupbuff, count);
 
     bool autorepeat = false;
-    static qt_auto_repeat_data curr_autorep = { 0, 0, 0, 0 };
-    static int interval = QApplication::keyboardInputInterval() + 10;
-    if (curr_autorep.serial == event->xkey.serial ||
-        (event->xkey.window == curr_autorep.window &&
-        event->xkey.keycode == curr_autorep.keycode &&
-        event->xkey.time - curr_autorep.time < interval)) {
-        autorepeat = true;
+    static const int qt_x11_autorepeat = getX11AutoRepeat();
+    // auto repeat is on by default
+    if (Q_LIKELY(qt_x11_autorepeat)) {
+        static qt_auto_repeat_data curr_autorep = { 0, 0, 0, 0 };
+        if (curr_autorep.serial == event->xkey.serial ||
+            (event->xkey.window == curr_autorep.window &&
+            event->xkey.keycode == curr_autorep.keycode &&
+            event->xkey.time - curr_autorep.time < qt_x11_autorepeat)) {
+            autorepeat = true;
+        }
+        curr_autorep = {
+            event->xkey.serial,
+            event->xkey.window,
+            event->xkey.keycode,
+            event->xkey.time
+        };
     }
-    curr_autorep = {
-        event->xkey.serial,
-        event->xkey.window,
-        event->xkey.keycode,
-        event->xkey.time
-    };
 
 #if 0
-    qDebug() << "translateKeyEvent" << modifiers << count << text << autorepeat;
+    qDebug() << "translateKeyEvent" << modifiers << count << text << autorepeat << qt_x11_autorepeat;
 #endif
 
     // try the menu key first

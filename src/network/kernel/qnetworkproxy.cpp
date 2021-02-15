@@ -1,7 +1,7 @@
 /****************************************************************************
 **
 ** Copyright (C) 2015 The Qt Company Ltd.
-** Copyright (C) 2016-2020 Ivailo Monev
+** Copyright (C) 2016 Ivailo Monev
 **
 ** This file is part of the QtNetwork module of the Katie Toolkit.
 **
@@ -14,18 +14,6 @@
 ** packaging of this file.  Please review the following information to
 ** ensure the GNU Lesser General Public License version 2.1 requirements
 ** will be met: http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html.
-**
-** As a special exception, The Qt Company gives you certain additional
-** rights. These rights are described in The Qt Company LGPL Exception
-** version 1.1, included in the file LGPL_EXCEPTION.txt in this package.
-**
-** GNU General Public License Usage
-** Alternatively, this file may be used under the terms of the GNU
-** General Public License version 3.0 as published by the Free Software
-** Foundation and appearing in the file LICENSE.GPL included in the
-** packaging of this file.  Please review the following information to
-** ensure the GNU General Public License version 3.0 requirements will be
-** met: http://www.gnu.org/copyleft/gpl.html.
 **
 ** $QT_END_LICENSE$
 **
@@ -233,28 +221,24 @@ class QGlobalNetworkProxy
 {
 public:
     QGlobalNetworkProxy()
-        : mutex(QMutex::Recursive)
-        , applicationLevelProxy(0)
-        , applicationLevelProxyFactory(0)
-        , socks5SocketEngineHandler(0)
+        : applicationLevelProxy(Q_NULLPTR)
+        , applicationLevelProxyFactory(new QSystemConfigurationProxyFactory())
+#ifndef QT_NO_SOCKS5
+        , socks5SocketEngineHandler(new QSocks5SocketEngineHandler())
+#endif
 #ifndef QT_NO_HTTP
-        , httpSocketEngineHandler(0)
+        , httpSocketEngineHandler(new QHttpSocketEngineHandler())
 #endif
     {
-        setApplicationProxyFactory(new QSystemConfigurationProxyFactory);
-#ifndef QT_NO_SOCKS5
-        socks5SocketEngineHandler = new QSocks5SocketEngineHandler();
-#endif
-#ifndef QT_NO_HTTP
-        httpSocketEngineHandler = new QHttpSocketEngineHandler();
-#endif
     }
 
     ~QGlobalNetworkProxy()
     {
         delete applicationLevelProxy;
         delete applicationLevelProxyFactory;
+#ifndef QT_NO_SOCKS5
         delete socks5SocketEngineHandler;
+#endif
 #ifndef QT_NO_HTTP
         delete httpSocketEngineHandler;
 #endif
@@ -263,43 +247,46 @@ public:
     void setApplicationProxy(const QNetworkProxy &proxy)
     {
         QMutexLocker lock(&mutex);
-        if (!applicationLevelProxy)
-            applicationLevelProxy = new QNetworkProxy;
-        *applicationLevelProxy = proxy;
+        if (applicationLevelProxy) {
+            delete applicationLevelProxy;
+        }
+        applicationLevelProxy = new QNetworkProxy(proxy);
         delete applicationLevelProxyFactory;
-        applicationLevelProxyFactory = 0;
+        applicationLevelProxyFactory = Q_NULLPTR;
     }
 
     void setApplicationProxyFactory(QNetworkProxyFactory *factory)
     {
         QMutexLocker lock(&mutex);
-        if (applicationLevelProxy)
-            *applicationLevelProxy = QNetworkProxy();
+        if (applicationLevelProxy) {
+            delete applicationLevelProxy;
+            applicationLevelProxy = Q_NULLPTR;
+        }
         delete applicationLevelProxyFactory;
         applicationLevelProxyFactory = factory;
     }
 
-    QNetworkProxy applicationProxy()
+    QNetworkProxy applicationProxy() const
     {
         return proxyForQuery(QNetworkProxyQuery()).first();
     }
 
-    QList<QNetworkProxy> proxyForQuery(const QNetworkProxyQuery &query);
+    QList<QNetworkProxy> proxyForQuery(const QNetworkProxyQuery &query) const;
 
 private:
     QMutex mutex;
     QNetworkProxy *applicationLevelProxy;
     QNetworkProxyFactory *applicationLevelProxyFactory;
+#ifndef QT_NO_SOCKS5
     QSocks5SocketEngineHandler *socks5SocketEngineHandler;
+#endif
 #ifndef QT_NO_HTTP
     QHttpSocketEngineHandler *httpSocketEngineHandler;
 #endif
 };
 
-QList<QNetworkProxy> QGlobalNetworkProxy::proxyForQuery(const QNetworkProxyQuery &query)
+QList<QNetworkProxy> QGlobalNetworkProxy::proxyForQuery(const QNetworkProxyQuery &query) const
 {
-    QMutexLocker locker(&mutex);
-
     QList<QNetworkProxy> result;
 
     // don't look for proxies for a local connection
@@ -1305,9 +1292,9 @@ QNetworkProxyFactory::~QNetworkProxyFactory()
 void QNetworkProxyFactory::setUseSystemConfiguration(bool enable)
 {
     if (enable) {
-        setApplicationProxyFactory(new QSystemConfigurationProxyFactory);
+        setApplicationProxyFactory(new QSystemConfigurationProxyFactory());
     } else {
-        setApplicationProxyFactory(0);
+        setApplicationProxyFactory(Q_NULLPTR);
     }
 }
 

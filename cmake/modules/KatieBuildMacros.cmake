@@ -1,23 +1,35 @@
-# Copyright (c) 2015-2020, Ivailo Monev, <xakepa10@gmail.com>
+# Copyright (C) 2015, Ivailo Monev, <xakepa10@gmail.com>
 # Redistribution and use is allowed according to the terms of the BSD license.
 
-set(KATIE_UIC "uic")
-set(KATIE_RCC "rcc")
-set(KATIE_MOC "bootstrap_moc")
+# a function to append definitions to KATIE_DEFINITIONS which is stored in
+# KatieConfig.cmake and pkg-config files as interface definitions and add
+# definitions to the current directory scope
+function(KATIE_DEFINITION DEF)
+    set(KATIE_DEFINITIONS ${KATIE_DEFINITIONS} ${DEF} ${ARGN} PARENT_SCOPE)
+    add_definitions(${DEF} ${ARGN})
+endfunction()
+
+# a function to check for header presence, if header is found a definition is
+# added
+function(KATIE_CHECK_HEADER FORHEADER)
+    string(REPLACE "." "_" underscoreheader "${FORHEADER}")
+    check_include_file_cxx("${FORHEADER}" HAVE_${underscoreheader})
+
+    if(HAVE_${underscoreheader})
+        string(TOUPPER "${underscoreheader}" upperheader)
+        add_definitions(-DQT_HAVE_${upperheader})
+    endif()
+endfunction()
 
 # a function to check for C function/definition, works for external functions
 function(KATIE_CHECK_DEFINED FORDEFINITION FROMHEADER)
     # see comment in top-level CMake file
-    set(CMAKE_REQUIRED_INCLUDES /usr/X11R7/include /usr/pkg/include /usr/local/include /usr/include)
-    set(CMAKE_REQUIRED_LINK_OPTIONS -L/usr/X11R7/lib -L/usr/pkg/lib -L/usr/local/lib -L/usr/lib -L/lib)
-    set(includedata)
-    foreach(inc ${FROMHEADER})
-        set(includedata "${includedata}#include <${inc}>\n")
-    endforeach()
+    set(CMAKE_REQUIRED_INCLUDES /usr/X11R6/include /usr/X11R7/include /usr/pkg/include /usr/local/include /usr/include)
+    set(CMAKE_REQUIRED_LINK_OPTIONS -L/usr/X11R6/lib -L/usr/X11R7/lib -L/usr/pkg/lib -L/usr/local/lib -L/usr/lib -L/lib)
     check_cxx_source_compiles(
         "
 #include <stdio.h>
-${includedata}
+#include <${FROMHEADER}>
 
 int main() {
     printf(\"%p\", &${FORDEFINITION});
@@ -55,8 +67,8 @@ function(KATIE_CHECK_FUNCTION64 FORFUNCTION FROMHEADER)
     endif()
 endfunction()
 
-# a function to check for C struct member presence in header, if member is found a
-# definition is added
+# a function to check for C struct member presence in header, if member is
+# found a definition is added
 function(KATIE_CHECK_STRUCT FORSTRUCT FORMEMBER FROMHEADER)
     check_struct_has_member("struct ${FORSTRUCT}" "${FORMEMBER}" "${FROMHEADER}" HAVE_${FORSTRUCT}_${FORMEMBER})
 
@@ -67,7 +79,9 @@ function(KATIE_CHECK_STRUCT FORSTRUCT FORMEMBER FROMHEADER)
 endfunction()
 
 # a function to check for file existence in /proc, if file exists a definition
-# is added
+# is added, this function is over-engineered for two reasons - to be able to
+# override the test on the command-line and to show test status messages
+# similar to other tests
 function(KATIE_CHECK_PROC FORFILE)
     check_cxx_source_runs(
         "
@@ -112,8 +126,7 @@ endmacro()
 macro(KATIE_GENERATE_PUBLIC PUBLIC_INCLUDES SUBDIR)
     foreach(pubheader ${PUBLIC_INCLUDES})
         string(TOLOWER ${pubheader} pubname)
-        set(pubout "${CMAKE_BINARY_DIR}/include/${SUBDIR}/${pubheader}")
-        katie_write_file("${pubout}" "#include <${pubname}.h>\n")
+        katie_generate_obsolete("${pubheader}" "${SUBDIR}" "${pubname}.h")
     endforeach()
 
     file(GLOB PUBLIC_LIST "${CMAKE_BINARY_DIR}/include/${SUBDIR}/*.h")
@@ -144,6 +157,7 @@ macro(KATIE_GENERATE_MISC MISC_INCLUDES SUBDIR)
     endforeach(mischeader)
 endmacro()
 
+# a macro to create alias headers for the sake of compatibility
 macro(KATIE_GENERATE_OBSOLETE OBSOLETE_INCLUDE SUBDIR REDIRECT)
     set(pubout "${CMAKE_BINARY_DIR}/include/${SUBDIR}/${OBSOLETE_INCLUDE}")
     katie_write_file("${pubout}" "#include <${SUBDIR}/${REDIRECT}>\n")
@@ -204,13 +218,12 @@ function(KATIE_STRING_UNWRAP INSTR OUTLST)
 endfunction()
 
 # a macro to instruct CMake which sources to exclude from the unity source file
-macro(KATIE_ALLINONE_EXCLUDE ARG1)
+macro(KATIE_UNITY_EXCLUDE ARG1)
     set_source_files_properties(${ARG1} ${ARGN} PROPERTIES SKIP_UNITY_BUILD_INCLUSION TRUE)
 endmacro()
 
-# a function to create an array of source files for a target while taking into
-# account all-in-one target build setting up proper dependency for the
-# moc/uic/rcc generated resources
+# a function to create an array of source files for a target setting up proper
+# dependency for the moc/uic/rcc generated resources
 function(KATIE_SETUP_TARGET FORTARGET)
     get_directory_property(dirdefs COMPILE_DEFINITIONS)
     get_directory_property(dirincs INCLUDE_DIRECTORIES)
@@ -223,53 +236,50 @@ function(KATIE_SETUP_TARGET FORTARGET)
         set(mocargs ${mocargs} -I${incdir})
     endforeach()
 
-    # this can be simpler if continue() was supported by old CMake versions
-    set(resourcesdep "${CMAKE_CURRENT_BINARY_DIR}/${FORTARGET}_resources.cpp")
-    katie_write_file("${resourcesdep}" "enum { CompilersWorkaroundAlaAutomoc = 1 };\n")
-    set(filteredsources)
-    set(targetresources)
     set(rscpath "${CMAKE_CURRENT_BINARY_DIR}/${FORTARGET}_resources")
-    include_directories("${rscpath}")
-    foreach(tmpres ${ARGN})
-        get_filename_component(resource "${tmpres}" ABSOLUTE)
-        get_filename_component(rscext "${resource}" EXT)
-        get_filename_component(rscname "${resource}" NAME_WE)
-        if("${rscext}" STREQUAL ".ui")
-            set(rscout "${rscpath}/ui_${rscname}.h")
-            set(targetresources ${targetresources} "${rscout}")
+    foreach(tmparg ${ARGN})
+        get_filename_component(fileabs "${tmparg}" ABSOLUTE)
+        get_filename_component(fileext "${fileabs}" EXT)
+        get_filename_component(filename "${fileabs}" NAME_WE)
+        if("${fileext}" STREQUAL ".ui")
+            set(rscout "${rscpath}/ui_${filename}.h")
             make_directory("${rscpath}")
+            include_directories("${rscpath}")
             add_custom_command(
-                COMMAND "${CMAKE_BINARY_DIR}/exec.sh" "${CMAKE_BINARY_DIR}/bin/${KATIE_UIC}${KATIE_TOOLS_SUFFIX}" "${resource}" -o "${rscout}"
-                DEPENDS "${KATIE_UIC}"
+                COMMAND "${CMAKE_BINARY_DIR}/exec.sh" "${CMAKE_BINARY_DIR}/bin/uic${KATIE_TOOLS_SUFFIX}" "${fileabs}" -o "${rscout}"
+                DEPENDS "uic"
                 OUTPUT "${rscout}"
             )
-        elseif("${rscext}" STREQUAL ".qrc")
-            set(rscout "${rscpath}/qrc_${rscname}.cpp")
-            set(targetresources ${targetresources} "${rscout}")
+            set_property(SOURCE "${fileabs}" APPEND PROPERTY OBJECT_DEPENDS "${rscout}")
+        elseif("${fileext}" STREQUAL ".qrc")
+            set(rscout "${rscpath}/qrc_${filename}.cpp")
             make_directory("${rscpath}")
+            include_directories("${rscpath}")
             add_custom_command(
-                COMMAND "${CMAKE_BINARY_DIR}/exec.sh" "${CMAKE_BINARY_DIR}/bin/${KATIE_RCC}${KATIE_TOOLS_SUFFIX}" "${resource}" -o "${rscout}" -name "${rscname}"
-                DEPENDS "${KATIE_RCC}"
+                COMMAND "${CMAKE_BINARY_DIR}/exec.sh" "${CMAKE_BINARY_DIR}/bin/rcc${KATIE_TOOLS_SUFFIX}" "${fileabs}" -o "${rscout}" -name "${filename}"
+                DEPENDS "rcc"
                 OUTPUT "${rscout}"
             )
-        elseif("${rscext}" MATCHES "(.c|.h|.hpp|.cc|.cpp)")
-            set(filteredsources ${filteredsources} "${resource}")
-            file(READ "${resource}" rsccontent)
+            set_property(SOURCE "${fileabs}" APPEND PROPERTY OBJECT_DEPENDS "${rscout}")
+        elseif("${fileext}" MATCHES "(.c|.h|.hpp|.cc|.cpp)")
+            file(READ "${fileabs}" rsccontent)
             if("${rsccontent}" MATCHES "(Q_OBJECT|Q_OBJECT_FAKE|Q_GADGET)")
-                set(rscout "${rscpath}/moc_${rscname}${rscext}")
-                set(targetresources ${targetresources} "${rscout}")
+                set(rscout "${rscpath}/moc_${filename}${fileext}")
                 make_directory("${rscpath}")
+                include_directories("${rscpath}")
                 add_custom_command(
-                    COMMAND "${CMAKE_BINARY_DIR}/exec.sh" "${CMAKE_BINARY_DIR}/bin/${KATIE_MOC}" -nw "${resource}" -o "${rscout}" ${mocargs}
-                    DEPENDS "${KATIE_MOC}"
+                    COMMAND "${CMAKE_BINARY_DIR}/exec.sh" "${CMAKE_BINARY_DIR}/bin/bootstrap_moc" -nw "${fileabs}" -o "${rscout}" ${mocargs}
+                    DEPENDS "bootstrap_moc"
                     OUTPUT "${rscout}"
                 )
+                set_property(SOURCE "${fileabs}" APPEND PROPERTY OBJECT_DEPENDS "${rscout}")
             endif()
+        else()
+            message(SEND_ERROR "Unkown source type in sources list: ${fileabs}")
         endif()
     endforeach()
-    set_property(SOURCE "${resourcesdep}" APPEND PROPERTY OBJECT_DEPENDS "${targetresources}")
 
-    set(${FORTARGET}_SOURCES "${resourcesdep}" ${filteredsources} PARENT_SCOPE)
+    set(${FORTARGET}_SOURCES ${ARGN} PARENT_SCOPE)
 endfunction()
 
 # a macro to ensure that object targets are build with PIC if the target they
@@ -279,15 +289,14 @@ endfunction()
 # target properties
 macro(KATIE_SETUP_OBJECT FORTARGET)
     get_target_property(target_pic ${FORTARGET} POSITION_INDEPENDENT_CODE)
-    if(CMAKE_POSITION_INDEPENDENT_CODE OR target_pic)
-        foreach(objtarget ${ARGN})
+
+    foreach(objtarget ${ARGN})
+        if(CMAKE_POSITION_INDEPENDENT_CODE OR target_pic)
             set_target_properties(${objtarget} PROPERTIES
                 POSITION_INDEPENDENT_CODE TRUE
             )
-        endforeach()
-    endif()
+        endif()
 
-    foreach(objtarget ${ARGN})
         get_target_property(object_definitions ${objtarget} COMPILE_DEFINITIONS)
         get_target_property(object_includes ${objtarget} INCLUDE_DIRECTORIES)
         if(object_definitions)
@@ -295,17 +304,6 @@ macro(KATIE_SETUP_OBJECT FORTARGET)
         endif()
         target_include_directories(${FORTARGET} PRIVATE ${object_includes})
     endforeach()
-endmacro()
-
-# a macro to setup pre-compiled header for target
-macro(KATIE_SETUP_PCH FORTARGET)
-    if(KATIE_PCH)
-        if (NOT CMAKE_VERSION VERSION_LESS "3.16.0")
-            target_precompile_headers(${FORTARGET} PRIVATE "${CMAKE_SOURCE_DIR}/src/core/qt_pch.h")
-        else()
-            message(FATAL_ERROR "Pre-compiled headers option requires CMake v3.16+")
-        endif()
-    endif()
 endmacro()
 
 # a macro to remove conditional code from headers which is only relevant to the

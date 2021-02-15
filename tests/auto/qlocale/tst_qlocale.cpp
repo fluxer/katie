@@ -1,7 +1,7 @@
 /****************************************************************************
 **
 ** Copyright (C) 2015 The Qt Company Ltd.
-** Copyright (C) 2016-2020 Ivailo Monev
+** Copyright (C) 2016 Ivailo Monev
 **
 ** This file is part of the test suite of the Katie Toolkit.
 **
@@ -14,18 +14,6 @@
 ** packaging of this file.  Please review the following information to
 ** ensure the GNU Lesser General Public License version 2.1 requirements
 ** will be met: http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html.
-**
-** As a special exception, The Qt Company gives you certain additional
-** rights. These rights are described in The Qt Company LGPL Exception
-** version 1.1, included in the file LGPL_EXCEPTION.txt in this package.
-**
-** GNU General Public License Usage
-** Alternatively, this file may be used under the terms of the GNU
-** General Public License version 3.0 as published by the Free Software
-** Foundation and appearing in the file LICENSE.GPL included in the
-** packaging of this file.  Please review the following information to
-** ensure the GNU General Public License version 3.0 requirements will be
-** met: http://www.gnu.org/copyleft/gpl.html.
 **
 ** $QT_END_LICENSE$
 **
@@ -44,13 +32,8 @@
 #include <float.h>
 #include <stdlib.h>
 
-#if defined(Q_OS_LINUX) && defined(QT_HAVE_FEGETENV) && defined(QT_HAVE_FESETENV) \
-    && defined(QT_HAVE_FECLEAREXCEPT) && defined(QT_HAVE_FEENABLEEXCEPT)
-#  define TEST_FP_EXCEPTION
-#endif
-
-#ifdef TEST_FP_EXCEPTION
-#    include <fenv.h>
+#if defined(QT_HAVE_FEENABLEEXCEPT)
+#  include <fenv.h>
 #endif
 
 QT_USE_NAMESPACE
@@ -776,7 +759,7 @@ void tst_QLocale::testInfAndNan()
 
 void tst_QLocale::fpExceptions()
 {
-#ifdef TEST_FP_EXCEPTION
+#ifdef QT_HAVE_FEENABLEEXCEPT
     fenv_t envp;
     fegetenv(&envp);
     feclearexcept(FE_ALL_EXCEPT);
@@ -789,7 +772,7 @@ void tst_QLocale::fpExceptions()
 
     QVERIFY(true);
 
-#ifdef TEST_FP_EXCEPTION
+#ifdef QT_HAVE_FEENABLEEXCEPT
     fesetenv(&envp);
 #endif
 }

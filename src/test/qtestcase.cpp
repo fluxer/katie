@@ -1,7 +1,7 @@
 /****************************************************************************
 **
 ** Copyright (C) 2015 The Qt Company Ltd.
-** Copyright (C) 2016-2020 Ivailo Monev
+** Copyright (C) 2016 Ivailo Monev
 **
 ** This file is part of the QtTest module of the Katie Toolkit.
 **
@@ -14,18 +14,6 @@
 ** packaging of this file.  Please review the following information to
 ** ensure the GNU Lesser General Public License version 2.1 requirements
 ** will be met: http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html.
-**
-** As a special exception, The Qt Company gives you certain additional
-** rights. These rights are described in The Qt Company LGPL Exception
-** version 1.1, included in the file LGPL_EXCEPTION.txt in this package.
-**
-** GNU General Public License Usage
-** Alternatively, this file may be used under the terms of the GNU
-** General Public License version 3.0 as published by the Free Software
-** Foundation and appearing in the file LICENSE.GPL included in the
-** packaging of this file.  Please review the following information to
-** ensure the GNU General Public License version 3.0 requirements will be
-** met: http://www.gnu.org/copyleft/gpl.html.
 **
 ** $QT_END_LICENSE$
 **
@@ -56,7 +44,6 @@
 #include <stdarg.h>
 #include <stdio.h>
 #include <stdlib.h>
-#include <errno.h>
 #include <signal.h>
 #include <time.h>
 
@@ -1055,7 +1042,7 @@ static int qToInt(char *str)
     int l = (int)strtol(str, &pEnd, 10);
     if (*pEnd != 0) {
         printf("Invalid numeric parameter: '%s'\n", str);
-        exit(1);
+        ::exit(1);
     }
     return l;
 }
@@ -1090,9 +1077,7 @@ Q_TEST_EXPORT void qtest_qParseArgs(int argc, char *argv[], bool qml)
 #endif
          "\n"
          " Benchmark related options:\n"
-#ifdef QT_HAVE_CLOCK_GETTIME
         " -tickcounter    : Use CPU tick counters to time benchmarks\n"
-#endif
         " -eventcounter   : Counts events received during benchmarks\n"
         " -minimumvalue n : Sets the minimum acceptable measurement value\n"
         " -iterations  n  : Sets the number of accumulation iterations.\n"
@@ -1107,19 +1092,19 @@ Q_TEST_EXPORT void qtest_qParseArgs(int argc, char *argv[], bool qml)
             printf(" Usage: %s [options] [testfunction[:testdata]]...\n"
                    "    By default, all testfunctions will be run.\n\n"
                    "%s", argv[0], testOptions);
-            exit(0);
+            ::exit(0);
         } else if (strcmp(argv[i], "-functions") == 0) {
             if (qml) {
                 QTest::printAvailableFunctions = true;
             } else {
                 qPrintTestSlots();
-                exit(0);
+                ::exit(0);
             }
         } else if (strcmp(argv[i], "-datatags") == 0) {
             QTest::printAvailableTags = true;
             if (!qml) {
                 qPrintDataTags();
-                exit(0);
+                ::exit(0);
             }
         } else if(strcmp(argv[i], "-xunitxml") == 0){
             QTestLog::setLogMode(QTestLog::XunitXML);
@@ -1140,35 +1125,35 @@ Q_TEST_EXPORT void qtest_qParseArgs(int argc, char *argv[], bool qml)
         } else if (strcmp(argv[i], "-o") == 0) {
             if (i + 1 >= argc) {
                 printf("-o needs an extra parameter specifying the filename\n");
-                exit(1);
+                ::exit(1);
             } else {
                 QTestLog::redirectOutput(argv[++i]);
             }
         } else if (strcmp(argv[i], "-eventdelay") == 0) {
             if (i + 1 >= argc) {
                 printf("-eventdelay needs an extra parameter to indicate the delay(ms)\n");
-                exit(1);
+                ::exit(1);
             } else {
                 QTest::eventDelay = qToInt(argv[++i]);
             }
         } else if (strcmp(argv[i], "-keydelay") == 0) {
             if (i + 1 >= argc) {
                 printf("-keydelay needs an extra parameter to indicate the delay(ms)\n");
-                exit(1);
+                ::exit(1);
             } else {
                 QTest::keyDelay = qToInt(argv[++i]);
             }
         } else if (strcmp(argv[i], "-mousedelay") == 0) {
             if (i + 1 >= argc) {
                 printf("-mousedelay needs an extra parameter to indicate the delay(ms)\n");
-                exit(1);
+                ::exit(1);
             } else {
                 QTest::mouseDelay = qToInt(argv[++i]);
             }
         } else if (strcmp(argv[i], "-maxwarnings") == 0) {
             if (i + 1 >= argc) {
                 printf("-maxwarnings needs an extra parameter with the amount of warnings\n");
-                exit(1);
+                ::exit(1);
             } else {
                 QTestLog::setMaxWarnings(qToInt(argv[++i]));
             }
@@ -1178,10 +1163,8 @@ Q_TEST_EXPORT void qtest_qParseArgs(int argc, char *argv[], bool qml)
 #endif
         } else if (strcmp(argv[i], "-keyevent-verbose") == 0) {
             QTest::keyVerbose = 1;
-#ifdef QT_HAVE_CLOCK_GETTIME
         } else if (strcmp(argv[i], "-tickcounter") == 0) {
             QBenchmarkGlobalData::current->setMode(QBenchmarkGlobalData::TickCounter);
-#endif
         } else if (strcmp(argv[i], "-eventcounter") == 0) {
             QBenchmarkGlobalData::current->setMode(QBenchmarkGlobalData::EventCounter);
         } else if (strcmp(argv[i], "-random") == 0) {
@@ -1196,28 +1179,28 @@ Q_TEST_EXPORT void qtest_qParseArgs(int argc, char *argv[], bool qml)
             }
             if (!argumentOk) {
                 printf("-seed needs an extra positive integer parameter to specify the seed\n");
-                exit(1);
+                ::exit(1);
             } else {
                 QTest::seedSet = true;
             }
         } else if (strcmp(argv[i], "-minimumvalue") == 0) {
             if (i + 1 >= argc) {
                 printf("-minimumvalue needs an extra parameter to indicate the minimum time(ms)\n");
-                exit(1);
+                ::exit(1);
             } else {
                 QBenchmarkGlobalData::current->walltimeMinimum = qToInt(argv[++i]);
             }
         } else if (strcmp(argv[i], "-iterations") == 0) {
             if (i + 1 >= argc) {
                 printf("-iterations needs an extra parameter to indicate the number of iterations\n");
-                exit(1);
+                ::exit(1);
             } else {
                 QBenchmarkGlobalData::current->iterationCount = qToInt(argv[++i]);
             }
         } else if (strcmp(argv[i], "-median") == 0) {
             if (i + 1 >= argc) {
                 printf("-median needs an extra parameter to indicate the number of median iterations\n");
-                exit(1);
+                ::exit(1);
             } else {
                 QBenchmarkGlobalData::current->medianIterationCount = qToInt(argv[++i]);
             }
@@ -1226,19 +1209,9 @@ Q_TEST_EXPORT void qtest_qParseArgs(int argc, char *argv[], bool qml)
             QBenchmarkGlobalData::current->verboseOutput = true;
         } else if (strcmp(argv[i], "-chart") == 0) {
             fprintf(stderr, "Warning: `-chart' option is not available\n");
-        } else if (strcmp(argv[i], "-qws") == 0) {
-            // do nothing
-        } else if (strcmp(argv[i], "-graphicssystem") == 0) {
-            // do nothing
-            if (i + 1 >= argc) {
-                printf("-graphicssystem needs an extra parameter specifying the graphics system\n");
-                exit(1);
-            } else {
-                ++i;
-            }
         } else if (argv[i][0] == '-') {
             printf("Unknown option: '%s'\n\n%s", argv[i], testOptions);
-            exit(1);
+            ::exit(1);
         } else if (qml) {
             // We can't check the availability of test functions until
             // we load the QML files.  So just store the data for now.
@@ -1289,7 +1262,7 @@ Q_TEST_EXPORT void qtest_qParseArgs(int argc, char *argv[], bool qml)
                 printf("Unknown testfunction: '%s'\n", buf);
                 printf("Available testfunctions:\n");
                 qPrintTestSlots();
-                exit(1);
+                ::exit(1);
             }
             testFuncs[testFuncCount].set(idx, data);
             testFuncCount++;
@@ -1299,7 +1272,7 @@ Q_TEST_EXPORT void qtest_qParseArgs(int argc, char *argv[], bool qml)
 
     if (QTest::seedSet && !QTest::randomOrder) {
         printf("-seed requires -random\n");
-        exit(1);
+        ::exit(1);
     }
 }
 
@@ -1695,7 +1668,7 @@ FatalSignalHandler::FatalSignalHandler()
     for (int i = 0; fatalSignals[i]; ++i) {
         sigaction(fatalSignals[i], &act, &oldact);
         // Don't overwrite any non-default handlers
-        // however, we need to replace the default QWS handlers
+        // however, we need to replace the default handlers
         if (
 #ifdef SA_SIGINFO
             oldact.sa_flags & SA_SIGINFO ||

@@ -1,7 +1,7 @@
 /****************************************************************************
 **
 ** Copyright (C) 2015 The Qt Company Ltd.
-** Copyright (C) 2016-2020 Ivailo Monev
+** Copyright (C) 2016 Ivailo Monev
 **
 ** This file is part of the QtXml module of the Katie Toolkit.
 **
@@ -14,18 +14,6 @@
 ** packaging of this file.  Please review the following information to
 ** ensure the GNU Lesser General Public License version 2.1 requirements
 ** will be met: http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html.
-**
-** As a special exception, The Qt Company gives you certain additional
-** rights. These rights are described in The Qt Company LGPL Exception
-** version 1.1, included in the file LGPL_EXCEPTION.txt in this package.
-**
-** GNU General Public License Usage
-** Alternatively, this file may be used under the terms of the GNU
-** General Public License version 3.0 as published by the Free Software
-** Foundation and appearing in the file LICENSE.GPL included in the
-** packaging of this file.  Please review the following information to
-** ensure the GNU General Public License version 3.0 requirements will be
-** met: http://www.gnu.org/copyleft/gpl.html.
 **
 ** $QT_END_LICENSE$
 **
@@ -215,6 +203,8 @@ static bool stripTextDecl(QString& str)
 class QXmlInputSourcePrivate
 {
 public:
+    QXmlInputSourcePrivate();
+
     QIODevice *inputDevice;
 
     QString str;
@@ -230,6 +220,20 @@ public:
     QString encodingDeclChars;
     bool lookingForEncodingDecl;
 };
+
+QXmlInputSourcePrivate::QXmlInputSourcePrivate()
+    : inputDevice(Q_NULLPTR),
+    unicode(str.unicode()),
+    pos(0),
+    length(0),
+    nextReturnedEndOfData(true), // first call to next() will call fetchData()
+#ifndef QT_NO_TEXTCODEC
+    encMapper(Q_NULLPTR),
+#endif
+    lookingForEncodingDecl(true)
+{
+}
+
 class QXmlParseExceptionPrivate
 {
 public:
@@ -256,8 +260,9 @@ class QXmlSimpleReaderPrivate
 public:
     ~QXmlSimpleReaderPrivate();
 private:
-    // functions
     QXmlSimpleReaderPrivate(QXmlSimpleReader *reader);
+
+    // functions
     void initIncrementalParsing();
 
     // used to determine if elements are correctly nested
@@ -274,8 +279,6 @@ private:
             : publicId(p), systemId(s) {}
         QString publicId;
         QString systemId;
-
-        Q_DUMMY_COMPARISON_OPERATOR(ExternParameterEntity)
     };
     struct ExternEntity
     {
@@ -285,7 +288,6 @@ private:
         QString publicId;
         QString systemId;
         QString notation;
-        Q_DUMMY_COMPARISON_OPERATOR(ExternEntity)
     };
     QMap<QString,ExternParameterEntity> externParameterEntities;
     QMap<QString,QString> parameterEntities;
@@ -484,9 +486,7 @@ private:
     void pushParseState(ParseFunction function, int state);
     bool isExpandedEntityValueTooLarge(QString *errorMessage);
 
-    Q_DECLARE_PUBLIC(QXmlSimpleReader)
-    QXmlSimpleReader *q_ptr;
-
+    friend class QXmlSimpleReader;
     friend class QXmlSimpleReaderLocator;
 };
 
@@ -562,7 +562,6 @@ QXmlParseException::QXmlParseException(const QString& name, int c, int l,
 QXmlParseException::QXmlParseException(const QXmlParseException& other) :
      d(new QXmlParseExceptionPrivate(*other.d))
 {
-
 }
 
 /*!
@@ -728,8 +727,8 @@ public:
     Constructs a QXmlNamespaceSupport.
 */
 QXmlNamespaceSupport::QXmlNamespaceSupport()
+    : d(new QXmlNamespaceSupportPrivate())
 {
-    d = new QXmlNamespaceSupportPrivate;
 }
 
 /*!
@@ -1265,39 +1264,14 @@ void QXmlAttributes::append(const QString &qName, const QString &uri, const QStr
 const ushort QXmlInputSource::EndOfData = 0xfffe;
 const ushort QXmlInputSource::EndOfDocument = 0xffff;
 
-/*
-    Common part of the constructors.
-*/
-void QXmlInputSource::init()
-{
-    d = new QXmlInputSourcePrivate;
-
-    QT_TRY {
-        d->inputDevice = Q_NULLPTR;
-
-        setData(QString());
-#ifndef QT_NO_TEXTCODEC
-        d->encMapper = Q_NULLPTR;
-#endif
-        d->nextReturnedEndOfData = true; // first call to next() will call fetchData()
-
-        d->encodingDeclBytes.clear();
-        d->encodingDeclChars.clear();
-        d->lookingForEncodingDecl = true;
-    } QT_CATCH(...) {
-        delete(d);
-        QT_RETHROW;
-    }
-}
-
 /*!
     Constructs an input source which contains no data.
 
     \sa setData()
 */
 QXmlInputSource::QXmlInputSource()
+    : d(new QXmlInputSourcePrivate())
 {
-    init();
 }
 
 /*!
@@ -1309,8 +1283,8 @@ QXmlInputSource::QXmlInputSource()
     \sa setData() fetchData() QIODevice
 */
 QXmlInputSource::QXmlInputSource(QIODevice *dev)
+    : d(new QXmlInputSourcePrivate())
 {
-    init();
     d->inputDevice = dev;
     if (dev->isOpen())
         d->inputDevice->setTextModeEnabled(false);
@@ -2671,23 +2645,20 @@ inline void QXmlSimpleReaderPrivate::refClear()
 }
 
 QXmlSimpleReaderPrivate::QXmlSimpleReaderPrivate(QXmlSimpleReader *reader)
+    : useNamespaces(true),
+    useNamespacePrefixes(false),
+    reportWhitespaceCharData(true),
+    reportEntities(false),
+    locator(new QXmlSimpleReaderLocator(reader)),
+    parseStack(Q_NULLPTR),
+    contentHnd(Q_NULLPTR),
+    errorHnd(Q_NULLPTR),
+    dtdHnd(Q_NULLPTR),
+    entityRes(Q_NULLPTR),
+    lexicalHnd(Q_NULLPTR),
+    declHnd(Q_NULLPTR),
+    inputSource(Q_NULLPTR)
 {
-    q_ptr = reader;
-    parseStack = Q_NULLPTR;
-
-    locator = new QXmlSimpleReaderLocator(reader);
-    entityRes  = 0;
-    dtdHnd     = 0;
-    contentHnd = 0;
-    errorHnd   = 0;
-    lexicalHnd = 0;
-    declHnd    = 0;
-
-    // default feature settings
-    useNamespaces = true;
-    useNamespacePrefixes = false;
-    reportWhitespaceCharData = true;
-    reportEntities = false;
 }
 
 QXmlSimpleReaderPrivate::~QXmlSimpleReaderPrivate()
@@ -3146,8 +3117,7 @@ void QXmlSimpleReader::setEntityResolver(QXmlEntityResolver* handler)
 */
 QXmlEntityResolver* QXmlSimpleReader::entityResolver() const
 {
-    const QXmlSimpleReaderPrivate *d = d_func();
-    return d->entityRes;
+    return d_func()->entityRes;
 }
 
 /*!
@@ -3164,8 +3134,7 @@ void QXmlSimpleReader::setDTDHandler(QXmlDTDHandler* handler)
 */
 QXmlDTDHandler* QXmlSimpleReader::DTDHandler() const
 {
-    const QXmlSimpleReaderPrivate *d = d_func();
-    return d->dtdHnd;
+    return d_func()->dtdHnd;
 }
 
 /*!
@@ -3886,16 +3855,13 @@ bool QXmlSimpleReaderPrivate::processElementEmptyTag()
                 return false;
             }
             // ... followed by endPrefixMapping
-            QStringList prefixesBefore, prefixesAfter;
-            if (contentHnd) {
-                prefixesBefore = namespaceSupport.prefixes();
-            }
+            QStringList prefixesBefore = namespaceSupport.prefixes();
             namespaceSupport.popContext();
             // call the handler for prefix mapping
-            prefixesAfter = namespaceSupport.prefixes();
-            for (QStringList::Iterator it = prefixesBefore.begin(); it != prefixesBefore.end(); ++it) {
-                if (!prefixesAfter.contains(*it)) {
-                    if (!contentHnd->endPrefixMapping(*it)) {
+            QStringList prefixesAfter = namespaceSupport.prefixes();
+            foreach (const QString &it, prefixesBefore) {
+                if (!prefixesAfter.contains(it)) {
+                    if (!contentHnd->endPrefixMapping(it)) {
                         reportParseError(contentHnd->errorString());
                         return false;
                     }

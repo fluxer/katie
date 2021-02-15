@@ -8,7 +8,8 @@ lfiles = []
 for root, subdirs, files in os.walk(os.curdir):
     for sfile in files:
         if sfile.endswith(('.cpp', '.h', '.js', '.qs', '.qml', '.ui', \
-            '.g', '.sh', '.cmake', '.pod')):
+            '.g', '.sh', '.cmake', '.pod', '.qdoc', '.c', '.xsl', '.xml', \
+            '.cmake')):
             lfiles.append('%s/%s' % (root, sfile))
 
 def readlicense(sfile, replacedashes, replacehashes):
@@ -38,7 +39,6 @@ for sfile in lfiles:
                 sfile.endswith('.g'), sfile.endswith('.sh'))
             soldheader = readlicense(sfile, False, False)
             snewcontent = scontent.replace(soldheader, snewheader)
-            snewcontent = snewcontent.replace('2016-2019', '2016-2020')
             if not snewcontent == scontent:
                 with open(sfile, 'w') as f:
                     f.write(snewcontent)

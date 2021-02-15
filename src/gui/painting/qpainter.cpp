@@ -1,7 +1,7 @@
 /****************************************************************************
 **
 ** Copyright (C) 2015 The Qt Company Ltd.
-** Copyright (C) 2016-2020 Ivailo Monev
+** Copyright (C) 2016 Ivailo Monev
 **
 ** This file is part of the QtGui module of the Katie Toolkit.
 **
@@ -14,18 +14,6 @@
 ** packaging of this file.  Please review the following information to
 ** ensure the GNU Lesser General Public License version 2.1 requirements
 ** will be met: http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html.
-**
-** As a special exception, The Qt Company gives you certain additional
-** rights. These rights are described in The Qt Company LGPL Exception
-** version 1.1, included in the file LGPL_EXCEPTION.txt in this package.
-**
-** GNU General Public License Usage
-** Alternatively, this file may be used under the terms of the GNU
-** General Public License version 3.0 as published by the Free Software
-** Foundation and appearing in the file LICENSE.GPL included in the
-** packaging of this file.  Please review the following information to
-** ensure the GNU General Public License version 3.0 requirements will be
-** met: http://www.gnu.org/copyleft/gpl.html.
 **
 ** $QT_END_LICENSE$
 **
@@ -1041,9 +1029,7 @@ void QPainterPrivate::updateState(QPainterState *newState)
     only use the format types QImage::Format_ARGB32_Premultiplied,
     QImage::Format_RGB32 or QImage::Format_RGB16. Any other format,
     including QImage::Format_ARGB32, has significantly worse
-    performance. This engine is also used by default. It can be used
-    as default graphics system on any OS/hardware/software combination
-    by passing \c {-graphicssystem raster} on the command line
+    performance. This engine is also used by default.
 
     \endlist
 
@@ -5157,23 +5143,6 @@ void QPainter::drawText(const QPointF &p, const QString &str, int tf, int justif
     if (!d->engine || str.isEmpty() || pen().style() == Qt::NoPen)
         return;
 
-    if (tf & Qt::TextBypassShaping) {
-        // Skip harfbuzz complex shaping, shape using glyph advances only
-        int len = str.length();
-        int numGlyphs = len;
-        QVarLengthGlyphLayoutArray glyphs(len);
-        QFontEngine *fontEngine = d->state->font.d->engineForScript(QUnicodeTables::Common);
-        if (!fontEngine->stringToCMap(str.data(), len, &glyphs, &numGlyphs, 0)) {
-            glyphs.resize(numGlyphs);
-            if (!fontEngine->stringToCMap(str.data(), len, &glyphs, &numGlyphs, 0))
-                Q_ASSERT_X(false, Q_FUNC_INFO, "stringToCMap shouldn't fail twice");
-        }
-
-        QTextItemInt gf(glyphs, &d->state->font, str.data(), len, fontEngine);
-        drawTextItem(p, gf);
-        return;
-    }
-
     QStackTextEngine engine(str, d->state->font);
     engine.option.setTextDirection(d->state->layoutDirection);
     if (tf & (Qt::TextForceLeftToRight|Qt::TextForceRightToLeft)) {
@@ -6494,12 +6463,13 @@ struct QPaintDeviceRedirection
                             const QPoint& offset, int internalWidgetRedirectionIndex)
         : device(device), replacement(replacement), offset(offset),
           internalWidgetRedirectionIndex(internalWidgetRedirectionIndex) { }
+
     const QPaintDevice *device;
     QPaintDevice *replacement;
     QPoint offset;
     int internalWidgetRedirectionIndex;
+
     bool operator==(const QPaintDevice *pdev) const { return device == pdev; }
-    Q_DUMMY_COMPARISON_OPERATOR(QPaintDeviceRedirection)
 };
 
 void qt_format_text(const QFont &fnt, const QRectF &_r,

@@ -1,7 +1,7 @@
 /****************************************************************************
 **
 ** Copyright (C) 2015 The Qt Company Ltd.
-** Copyright (C) 2016-2020 Ivailo Monev
+** Copyright (C) 2016 Ivailo Monev
 **
 ** This file is part of the QtGui module of the Katie Toolkit.
 **
@@ -14,18 +14,6 @@
 ** packaging of this file.  Please review the following information to
 ** ensure the GNU Lesser General Public License version 2.1 requirements
 ** will be met: http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html.
-**
-** As a special exception, The Qt Company gives you certain additional
-** rights. These rights are described in The Qt Company LGPL Exception
-** version 1.1, included in the file LGPL_EXCEPTION.txt in this package.
-**
-** GNU General Public License Usage
-** Alternatively, this file may be used under the terms of the GNU
-** General Public License version 3.0 as published by the Free Software
-** Foundation and appearing in the file LICENSE.GPL included in the
-** packaging of this file.  Please review the following information to
-** ensure the GNU General Public License version 3.0 requirements will be
-** met: http://www.gnu.org/copyleft/gpl.html.
 **
 ** $QT_END_LICENSE$
 **
@@ -57,27 +45,7 @@
 
 QT_BEGIN_NAMESPACE
 
-#if !defined(QT_NO_IMAGEFORMAT_PNG)
-#  define QIMAGE_STREAM_FORMAT "png"
-#elif !defined(QT_NO_IMAGEFORMAT_JPEG)
-#  define QIMAGE_STREAM_FORMAT "jpeg"
-#elif !defined(QT_NO_IMAGEFORMAT_BMP)
-#  define QIMAGE_STREAM_FORMAT "bmp"
-#elif !defined(QT_NO_IMAGEFORMAT_TIFF)
-#  define QIMAGE_STREAM_FORMAT "tiff"
-#elif !defined(QT_NO_IMAGEFORMAT_GIF)
-#  define QIMAGE_STREAM_FORMAT "gif"
-#elif !defined(QT_NO_IMAGEFORMAT_TGA)
-#  define QIMAGE_STREAM_FORMAT "tga"
-#elif !defined(QT_NO_IMAGEFORMAT_PPM)
-#  define QIMAGE_STREAM_FORMAT "ppm"
-#elif !defined(QT_NO_IMAGEFORMAT_XBM)
-#  define QIMAGE_STREAM_FORMAT "xbm"
-#elif !defined(QT_NO_IMAGEFORMAT_XPM)
-#  define QIMAGE_STREAM_FORMAT "xpm"
-#else
-#  error No image format available for streaming
-#endif
+#define QIMAGE_STREAM_FORMAT "png"
 
 #define QIMAGE_SANITYCHECK_MEMORY(image) \
     if (Q_UNLIKELY((image).isNull())) { \
@@ -166,25 +134,25 @@ bool QImageData::checkForAlphaPixels() const
     bool has_alpha_pixels = false;
 
     switch (format) {
-
-    case QImage::Format_Mono:
-    case QImage::Format_MonoLSB:
-    case QImage::Format_Indexed8:
-        has_alpha_pixels = has_alpha_clut;
-        break;
-
-    case QImage::Format_ARGB32:
-    case QImage::Format_ARGB32_Premultiplied: {
-        uchar *bits = data;
-        for (int y=0; y<height && !has_alpha_pixels; ++y) {
-            for (int x=0; x<width; ++x)
-                has_alpha_pixels |= (((uint *)bits)[x] & 0xff000000) != 0xff000000;
-            bits += bytes_per_line;
+        case QImage::Format_Mono:
+        case QImage::Format_MonoLSB:
+        case QImage::Format_Indexed8: {
+            has_alpha_pixels = has_alpha_clut;
+            break;
         }
-    } break;
-
-    default:
-        break;
+        case QImage::Format_ARGB32:
+        case QImage::Format_ARGB32_Premultiplied: {
+            const uchar *bits = data;
+            for (int y=0; y<height && !has_alpha_pixels; ++y) {
+                for (int x=0; x<width; ++x)
+                    has_alpha_pixels |= (((const uint *)bits)[x] & 0xff000000) != 0xff000000;
+                bits += bytes_per_line;
+            }
+            break;
+        }
+        default: {
+            break;
+        }
     }
 
     return has_alpha_pixels;
@@ -600,9 +568,9 @@ static const uchar bitflip[256] = {
 */
 
 QImage::QImage()
-    : QPaintDevice()
+    : QPaintDevice(),
+    d(Q_NULLPTR)
 {
-    d = 0;
 }
 
 /*!
@@ -616,9 +584,9 @@ QImage::QImage()
     drawing onto it with QPainter.
 */
 QImage::QImage(int width, int height, Format format)
-    : QPaintDevice()
+    : QPaintDevice(),
+    d(QImageData::create(QSize(width, height), format))
 {
-    d = QImageData::create(QSize(width, height), format);
 }
 
 /*!
@@ -631,16 +599,16 @@ QImage::QImage(int width, int height, Format format)
     drawing onto it with QPainter.
 */
 QImage::QImage(const QSize &size, Format format)
-    : QPaintDevice()
+    : QPaintDevice(),
+    d(QImageData::create(size, format))
 {
-    d = QImageData::create(size, format);
 }
 
 
 
 QImageData *QImageData::create(uchar *data, int width, int height,  int bpl, QImage::Format format, bool readOnly)
 {
-    if (format == QImage::Format_Invalid)
+    if (Q_UNLIKELY(format == QImage::Format_Invalid))
         return Q_NULLPTR;
 
     const int depth = qt_depthForFormat(format);
@@ -689,9 +657,9 @@ QImageData *QImageData::create(uchar *data, int width, int height,  int bpl, QIm
     setColorCount() or setColorTable() before the image is used.
 */
 QImage::QImage(uchar* data, int width, int height, Format format)
-    : QPaintDevice()
+    : QPaintDevice(),
+    d(QImageData::create(data, width, height, 0, format, false))
 {
-    d = QImageData::create(data, width, height, 0, format, false);
 }
 
 /*!
@@ -718,9 +686,9 @@ QImage::QImage(uchar* data, int width, int height, Format format)
     data being changed.
 */
 QImage::QImage(const uchar* data, int width, int height, Format format)
-    : QPaintDevice()
+    : QPaintDevice(),
+    d(QImageData::create(const_cast<uchar*>(data), width, height, 0, format, true))
 {
-    d = QImageData::create(const_cast<uchar*>(data), width, height, 0, format, true);
 }
 
 /*!
@@ -737,9 +705,9 @@ QImage::QImage(const uchar* data, int width, int height, Format format)
     setColorCount() or setColorTable() before the image is used.
 */
 QImage::QImage(uchar *data, int width, int height, int bytesPerLine, Format format)
-    :QPaintDevice()
+    : QPaintDevice(),
+    d(QImageData::create(data, width, height, bytesPerLine, format, false))
 {
-    d = QImageData::create(data, width, height, bytesPerLine, format, false);
 }
 
 
@@ -765,9 +733,9 @@ QImage::QImage(uchar *data, int width, int height, int bytesPerLine, Format form
 */
 
 QImage::QImage(const uchar *data, int width, int height, int bytesPerLine, Format format)
-    :QPaintDevice()
+    : QPaintDevice(),
+    d(QImageData::create(const_cast<uchar*>(data), width, height, bytesPerLine, format, true))
 {
-    d = QImageData::create(const_cast<uchar*>(data), width, height, bytesPerLine, format, true);
 }
 
 /*!
@@ -790,9 +758,9 @@ QImage::QImage(const uchar *data, int width, int height, int bytesPerLine, Forma
 */
 
 QImage::QImage(const QString &fileName, const char *format)
-    : QPaintDevice()
+    : QPaintDevice(),
+    d(Q_NULLPTR)
 {
-    d = 0;
     load(fileName, format);
 }
 
@@ -822,15 +790,15 @@ QImage::QImage(const QString &fileName, const char *format)
 */
 #ifndef QT_NO_CAST_FROM_ASCII
 QImage::QImage(const char *fileName, const char *format)
-    : QPaintDevice()
+    : QPaintDevice(),
+    d(Q_NULLPTR)
 {
-    d = 0;
     load(QString::fromAscii(fileName), format);
 }
 #endif
 
 #ifndef QT_NO_IMAGEFORMAT_XPM
-extern bool qt_read_xpm_image_or_array(QIODevice *device, const char * const *source, QImage &image);
+extern bool qt_read_xpm_array(const char * const *source, QImage &image);
 
 /*!
     Constructs an image from the given \a xpm image.
@@ -849,12 +817,12 @@ extern bool qt_read_xpm_image_or_array(QIODevice *device, const char * const *so
 */
 
 QImage::QImage(const char * const xpm[])
-    : QPaintDevice()
+    : QPaintDevice(),
+    d(Q_NULLPTR)
 {
-    d = 0;
-    if (!xpm)
+    if (Q_UNLIKELY(!xpm))
         return;
-    if (!qt_read_xpm_image_or_array(0, xpm, *this))
+    if (Q_UNLIKELY(!qt_read_xpm_array(xpm, *this)))
         // Issue: Warning because the constructor may be ambigious
         qWarning("QImage::QImage(), XPM is not supported");
 }
@@ -887,10 +855,10 @@ QImage::QImage(const char * const xpm[])
 */
 
 QImage::QImage(const QImage &image)
-    : QPaintDevice()
+    : QPaintDevice(),
+    d(Q_NULLPTR)
 {
     if (image.paintingActive()) {
-        d = 0;
         operator=(image.copy());
     } else {
         d = image.d;
@@ -1701,9 +1669,9 @@ QImage::Format QImage::systemFormat()
   Internal routines for converting image depth.
  *****************************************************************************/
 
-typedef void (*Image_Converter)(QImageData *dest, const QImageData *src, Qt::ImageConversionFlags);
+typedef void (QT_FASTCALL *Image_Converter)(QImageData *dest, const QImageData *src, Qt::ImageConversionFlags);
 
-static void convert_ARGB_to_ARGB_PM(QImageData *dest, const QImageData *src, Qt::ImageConversionFlags)
+static void QT_FASTCALL convert_ARGB_to_ARGB_PM(QImageData *dest, const QImageData *src, Qt::ImageConversionFlags)
 {
     Q_ASSERT(src->format == QImage::Format_ARGB32);
     Q_ASSERT(dest->format == QImage::Format_ARGB32_Premultiplied);
@@ -1727,7 +1695,7 @@ static void convert_ARGB_to_ARGB_PM(QImageData *dest, const QImageData *src, Qt:
     }
 }
 
-static void convert_ARGB_PM_to_ARGB(QImageData *dest, const QImageData *src, Qt::ImageConversionFlags)
+static void QT_FASTCALL convert_ARGB_PM_to_ARGB(QImageData *dest, const QImageData *src, Qt::ImageConversionFlags)
 {
     Q_ASSERT(src->format == QImage::Format_ARGB32_Premultiplied);
     Q_ASSERT(dest->format == QImage::Format_ARGB32);
@@ -1751,7 +1719,7 @@ static void convert_ARGB_PM_to_ARGB(QImageData *dest, const QImageData *src, Qt:
     }
 }
 
-static void convert_ARGB_PM_to_RGB(QImageData *dest, const QImageData *src, Qt::ImageConversionFlags)
+static void QT_FASTCALL convert_ARGB_PM_to_RGB(QImageData *dest, const QImageData *src, Qt::ImageConversionFlags)
 {
     Q_ASSERT(src->format == QImage::Format_ARGB32_Premultiplied);
     Q_ASSERT(dest->format == QImage::Format_RGB32);
@@ -1775,7 +1743,7 @@ static void convert_ARGB_PM_to_RGB(QImageData *dest, const QImageData *src, Qt::
     }
 }
 
-static void swap_bit_order(QImageData *dest, const QImageData *src, Qt::ImageConversionFlags)
+static void QT_FASTCALL swap_bit_order(QImageData *dest, const QImageData *src, Qt::ImageConversionFlags)
 {
     Q_ASSERT(src->format == QImage::Format_Mono || src->format == QImage::Format_MonoLSB);
     Q_ASSERT(dest->format == QImage::Format_Mono || dest->format == QImage::Format_MonoLSB);
@@ -1796,7 +1764,7 @@ static void swap_bit_order(QImageData *dest, const QImageData *src, Qt::ImageCon
     }
 }
 
-static void mask_alpha_converter(QImageData *dest, const QImageData *src, Qt::ImageConversionFlags)
+static void QT_FASTCALL mask_alpha_converter(QImageData *dest, const QImageData *src, Qt::ImageConversionFlags)
 {
     Q_ASSERT(src->width == dest->width);
     Q_ASSERT(src->height == dest->height);
@@ -1824,7 +1792,7 @@ static QVector<QRgb> fix_color_table(const QVector<QRgb> &ctbl, QImage::Format f
     if (format == QImage::Format_RGB32) {
         // check if the color table has alpha
         for (int i = 0; i < colorTable.size(); ++i)
-            if (qAlpha(colorTable.at(i) != 0xff))
+            if (qAlpha(colorTable.at(i)) != 255)
                 colorTable[i] = colorTable.at(i) | 0xff000000;
     } else if (format == QImage::Format_ARGB32_Premultiplied) {
         // check if the color table has alpha
@@ -2103,12 +2071,12 @@ static void dither_to_Mono(QImageData *dst, const QImageData *src,
     }
 }
 
-static void convert_X_to_Mono(QImageData *dst, const QImageData *src, Qt::ImageConversionFlags flags)
+static void QT_FASTCALL convert_X_to_Mono(QImageData *dst, const QImageData *src, Qt::ImageConversionFlags flags)
 {
     dither_to_Mono(dst, src, flags, false);
 }
 
-static void convert_ARGB_PM_to_Mono(QImageData *dst, const QImageData *src, Qt::ImageConversionFlags flags)
+static void QT_FASTCALL convert_ARGB_PM_to_Mono(QImageData *dst, const QImageData *src, Qt::ImageConversionFlags flags)
 {
     QScopedPointer<QImageData> tmp(QImageData::create(QSize(src->width, src->height), QImage::Format_ARGB32));
     convert_ARGB_PM_to_ARGB(tmp.data(), src, flags);
@@ -2130,7 +2098,7 @@ struct QRgbMap {
     QRgb  rgb;
 };
 
-static void convert_RGB_to_Indexed8(QImageData *dst, const QImageData *src, Qt::ImageConversionFlags flags)
+static void QT_FASTCALL convert_RGB_to_Indexed8(QImageData *dst, const QImageData *src, Qt::ImageConversionFlags flags)
 {
     Q_ASSERT(src->format == QImage::Format_RGB32 || src->format == QImage::Format_ARGB32);
     Q_ASSERT(dst->format == QImage::Format_Indexed8);
@@ -2395,19 +2363,19 @@ static void convert_RGB_to_Indexed8(QImageData *dst, const QImageData *src, Qt::
     }
 }
 
-static void convert_ARGB_PM_to_Indexed8(QImageData *dst, const QImageData *src, Qt::ImageConversionFlags flags)
+static void QT_FASTCALL convert_ARGB_PM_to_Indexed8(QImageData *dst, const QImageData *src, Qt::ImageConversionFlags flags)
 {
     QScopedPointer<QImageData> tmp(QImageData::create(QSize(src->width, src->height), QImage::Format_ARGB32));
     convert_ARGB_PM_to_ARGB(tmp.data(), src, flags);
     convert_RGB_to_Indexed8(dst, tmp.data(), flags);
 }
 
-static void convert_ARGB_to_Indexed8(QImageData *dst, const QImageData *src, Qt::ImageConversionFlags flags)
+static void QT_FASTCALL convert_ARGB_to_Indexed8(QImageData *dst, const QImageData *src, Qt::ImageConversionFlags flags)
 {
     convert_RGB_to_Indexed8(dst, src, flags);
 }
 
-static void convert_Indexed8_to_X32(QImageData *dest, const QImageData *src, Qt::ImageConversionFlags)
+static void QT_FASTCALL convert_Indexed8_to_X32(QImageData *dest, const QImageData *src, Qt::ImageConversionFlags)
 {
     Q_ASSERT(src->format == QImage::Format_Indexed8);
     Q_ASSERT(dest->format == QImage::Format_RGB32
@@ -2440,7 +2408,7 @@ static void convert_Indexed8_to_X32(QImageData *dest, const QImageData *src, Qt:
     }
 }
 
-static void convert_Mono_to_X32(QImageData *dest, const QImageData *src, Qt::ImageConversionFlags)
+static void QT_FASTCALL convert_Mono_to_X32(QImageData *dest, const QImageData *src, Qt::ImageConversionFlags)
 {
     Q_ASSERT(src->format == QImage::Format_Mono || src->format == QImage::Format_MonoLSB);
     Q_ASSERT(dest->format == QImage::Format_RGB32
@@ -2482,7 +2450,7 @@ static void convert_Mono_to_X32(QImageData *dest, const QImageData *src, Qt::Ima
 }
 
 
-static void convert_Mono_to_Indexed8(QImageData *dest, const QImageData *src, Qt::ImageConversionFlags)
+static void QT_FASTCALL convert_Mono_to_Indexed8(QImageData *dest, const QImageData *src, Qt::ImageConversionFlags)
 {
     Q_ASSERT(src->format == QImage::Format_Mono || src->format == QImage::Format_MonoLSB);
     Q_ASSERT(dest->format == QImage::Format_Indexed8);
@@ -2522,21 +2490,27 @@ static void convert_Mono_to_Indexed8(QImageData *dest, const QImageData *src, Qt
     }
 }
 
-#define CONVERT_DECL(DST, SRC)                                          \
-    static void convert_##SRC##_to_##DST(QImageData *dest,              \
-                                         const QImageData *src,         \
-                                         Qt::ImageConversionFlags)      \
-    {                                                                   \
-        qt_rectconvert<DST, SRC>(reinterpret_cast<DST*>(dest->data),    \
-                                 reinterpret_cast<const SRC*>(src->data), \
-                                 src->width, src->height,               \
-                                 dest->bytes_per_line, src->bytes_per_line); \
+static void QT_FASTCALL convert_RGB16_to_RGB32(QImageData *dest, const QImageData *src, Qt::ImageConversionFlags)
+{
+    uchar *d = dest->data;
+    const uchar *s = src->data;
+    for (int i = 0; i < src->height; ++i) {
+        qt_memconvert<quint32,quint16>((quint32*)d, (const quint16*)s, src->width);
+        d += dest->bytes_per_line;
+        s += src->bytes_per_line;
     }
+}
 
-CONVERT_DECL(quint32, quint16)
-CONVERT_DECL(quint16, quint32)
-#undef CONVERT_DECL
-#define CONVERT_PTR(DST, SRC) convert_##SRC##_to_##DST
+static void QT_FASTCALL convert_RGB32_to_RGB16(QImageData *dest, const QImageData *src, Qt::ImageConversionFlags)
+{
+    uchar *d = dest->data;
+    const uchar *s = src->data;
+    for (int i = 0; i < src->height; ++i) {
+        qt_memconvert<quint16,quint32>((quint16*)d, (const quint32*)s, src->width);
+        d += dest->bytes_per_line;
+        s += src->bytes_per_line;
+    }
+}
 
 /*
         Format_Invalid,
@@ -2597,7 +2571,7 @@ static Image_Converter converter_map[QImage::NImageFormats][QImage::NImageFormat
         0,
         mask_alpha_converter,
         mask_alpha_converter,
-        CONVERT_PTR(quint16, quint32),
+        convert_RGB16_to_RGB32
     }, // Format_RGB32
 
     {
@@ -2608,7 +2582,7 @@ static Image_Converter converter_map[QImage::NImageFormats][QImage::NImageFormat
         mask_alpha_converter,
         0,
         convert_ARGB_to_ARGB_PM,
-        CONVERT_PTR(quint16, quint32)
+        convert_RGB16_to_RGB32
     }, // Format_ARGB32
 
     {
@@ -2627,9 +2601,9 @@ static Image_Converter converter_map[QImage::NImageFormats][QImage::NImageFormat
         0,
         0,
         0,
-        CONVERT_PTR(quint32, quint16),
-        CONVERT_PTR(quint32, quint16),
-        CONVERT_PTR(quint32, quint16),
+        convert_RGB32_to_RGB16,
+        convert_RGB32_to_RGB16,
+        convert_RGB32_to_RGB16,
         0
     }, // Format_RGB16
 };
@@ -4494,18 +4468,15 @@ int QImage::bitPlaneCount() const
 {
     if (!d)
         return 0;
-    int bpc = 0;
     switch (d->format) {
-    case QImage::Format_Invalid:
-        break;
-    case QImage::Format_RGB32:
-        bpc = 24;
-        break;
-    default:
-        bpc = qt_depthForFormat(d->format);
-        break;
+        case QImage::Format_Invalid:
+            return 0;
+        case QImage::Format_RGB32:
+            return 24;
+        default:
+            return qt_depthForFormat(d->format);
     }
-    return bpc;
+    Q_UNREACHABLE();
 }
 
 

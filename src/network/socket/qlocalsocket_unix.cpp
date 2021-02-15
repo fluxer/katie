@@ -1,7 +1,7 @@
 /****************************************************************************
 **
 ** Copyright (C) 2015 The Qt Company Ltd.
-** Copyright (C) 2016-2020 Ivailo Monev
+** Copyright (C) 2016 Ivailo Monev
 **
 ** This file is part of the QtNetwork module of the Katie Toolkit.
 **
@@ -14,18 +14,6 @@
 ** packaging of this file.  Please review the following information to
 ** ensure the GNU Lesser General Public License version 2.1 requirements
 ** will be met: http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html.
-**
-** As a special exception, The Qt Company gives you certain additional
-** rights. These rights are described in The Qt Company LGPL Exception
-** version 1.1, included in the file LGPL_EXCEPTION.txt in this package.
-**
-** GNU General Public License Usage
-** Alternatively, this file may be used under the terms of the GNU
-** General Public License version 3.0 as published by the Free Software
-** Foundation and appearing in the file LICENSE.GPL included in the
-** packaging of this file.  Please review the following information to
-** ensure the GNU General Public License version 3.0 requirements will be
-** met: http://www.gnu.org/copyleft/gpl.html.
 **
 ** $QT_END_LICENSE$
 **
@@ -503,29 +491,24 @@ bool QLocalSocket::waitForConnected(int msec)
     if (state() != ConnectingState)
         return (state() == ConnectedState);
 
-    fd_set fds;
-    FD_ZERO(&fds);
-    FD_SET(d->connectingSocket, &fds);
+    if (state() == ConnectingState) {
+        fd_set fds;
+        FD_ZERO(&fds);
+        FD_SET(d->connectingSocket, &fds);
 
-    timeval timeout;
-    timeout.tv_sec = msec / 1000;
-    timeout.tv_usec = (msec % 1000) * 1000;
+        timeval timeout;
+        timeout.tv_sec = msec / 1000;
+        timeout.tv_usec = (msec % 1000) * 1000;
 
-    // timeout can not be 0 or else select will return an error.
-    if (0 == msec)
-        timeout.tv_usec = 1000;
+        // timeout can not be 0 or else select will return an error.
+        if (msec == 0)
+            timeout.tv_usec = 1000;
 
-    int result = -1;
-    // on Linux timeout will be updated by select, but _not_ on other systems.
-    QElapsedTimer timer;
-    timer.start();
-    while (state() == ConnectingState
-           && (-1 == msec || timer.elapsed() < msec)) {
-        result = ::select(d->connectingSocket + 1, &fds, 0, 0, &timeout);
-        if (-1 == result && errno != EINTR) {
+        int result = qt_safe_select(d->connectingSocket + 1, &fds, 0, 0, (msec == -1) ? 0 : &timeout);
+        if (result == -1) {
             d->errorOccurred( QLocalSocket::UnknownSocketError,
                     QLatin1String("QLocalSocket::waitForConnected"));
-            break;
+            return false;
         }
         if (result > 0)
             d->_q_connectToSocket();

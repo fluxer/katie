@@ -1,7 +1,7 @@
 /****************************************************************************
 **
 ** Copyright (C) 2015 The Qt Company Ltd.
-** Copyright (C) 2016-2020 Ivailo Monev
+** Copyright (C) 2016 Ivailo Monev
 **
 ** This file is part of the QtGui module of the Katie Toolkit.
 **
@@ -14,18 +14,6 @@
 ** packaging of this file.  Please review the following information to
 ** ensure the GNU Lesser General Public License version 2.1 requirements
 ** will be met: http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html.
-**
-** As a special exception, The Qt Company gives you certain additional
-** rights. These rights are described in The Qt Company LGPL Exception
-** version 1.1, included in the file LGPL_EXCEPTION.txt in this package.
-**
-** GNU General Public License Usage
-** Alternatively, this file may be used under the terms of the GNU
-** General Public License version 3.0 as published by the Free Software
-** Foundation and appearing in the file LICENSE.GPL included in the
-** packaging of this file.  Please review the following information to
-** ensure the GNU General Public License version 3.0 requirements will be
-** met: http://www.gnu.org/copyleft/gpl.html.
 **
 ** $QT_END_LICENSE$
 **
@@ -54,7 +42,6 @@
 #include "qtoolbar.h"
 #include "qtoolbutton.h"
 #include "qrubberband.h"
-#include "qcommonstylepixmaps_p.h"
 #include "qdebug.h"
 #include "qtextformat.h"
 #include "qwizard.h"
@@ -72,6 +59,116 @@
 #include <limits.h>
 
 QT_BEGIN_NAMESPACE
+
+#ifndef QT_NO_IMAGEFORMAT_XPM
+static const char * const tree_branch_open_xpm[] = {
+"9 9 2 1",
+"  c None",
+"# c #000000",
+"#########",
+"#       #",
+"# ##### #",
+"#  ###  #",
+"#  ###  #",
+"#   #   #",
+"#   #   #",
+"#       #",
+"#########"};
+
+static const char * const tree_branch_closed_xpm[] = {
+"9 9 2 1",
+"  c None",
+"# c #000000",
+"#########",
+"#       #",
+"# #     #",
+"# ###   #",
+"# ##### #",
+"# ###   #",
+"# #     #",
+"#       #",
+"#########"};
+
+static const char * const tb_extension_arrow_v_xpm[] = {
+    "5 8 3 1",
+    "            c None",
+    ".            c #000000",
+    "+            c none",
+    ".+++.",
+    "..+..",
+    "+...+",
+    "++.++",
+    ".+++.",
+    "..+..",
+    "+...+",
+    "++.++"
+};
+
+static const char * const tb_extension_arrow_h_xpm[] = {
+    "8 5 3 1",
+    "            c None",
+    ".            c #000000",
+    "+            c none",
+    "..++..++",
+    "+..++..+",
+    "++..++..",
+    "+..++..+",
+    "..++..++",
+};
+
+static const char * const filedialog_start_xpm[]={
+    "16 15 8 1",
+    "a c #cec6bd",
+    "# c #000000",
+    "e c #ffff00",
+    "b c #999999",
+    "f c #cccccc",
+    "d c #dcdcdc",
+    "c c #ffffff",
+    ". c None",
+    ".....######aaaaa",
+    "...bb#cccc##aaaa",
+    "..bcc#cccc#d#aaa",
+    ".bcef#cccc#dd#aa",
+    ".bcfe#cccc#####a",
+    ".bcef#ccccccccc#",
+    "bbbbbbbbbbbbccc#",
+    "bccccccccccbbcc#",
+    "bcefefefefee#bc#",
+    ".bcefefefefef#c#",
+    ".bcfefefefefe#c#",
+    "..bcfefefefeeb##",
+    "..bbbbbbbbbbbbb#",
+    "...#############",
+    "................"};
+
+static const char * const filedialog_end_xpm[]={
+    "16 15 9 1",
+    "d c #a0a0a0",
+    "c c #c3c3c3",
+    "# c #cec6bd",
+    ". c #000000",
+    "f c #ffff00",
+    "e c #999999",
+    "g c #cccccc",
+    "b c #ffffff",
+    "a c None",
+    "......####aaaaaa",
+    ".bbbb..###aaaaaa",
+    ".bbbb.c.##aaaaaa",
+    ".bbbb....ddeeeea",
+    ".bbbbbbb.bbbbbe.",
+    ".bbbbbbb.bcfgfe.",
+    "eeeeeeeeeeeeefe.",
+    "ebbbbbbbbbbeege.",
+    "ebfgfgfgfgff.ee.",
+    "aebfgfgfgfgfg.e.",
+    "aebgfgfgfgfgf.e.",
+    "aaebgfgfgfgffe..",
+    "aaeeeeeeeeeeeee.",
+    "aaa.............",
+    "aaaaaaaaaaaaaaaa"};
+#endif // QT_NO_IMAGEFORMAT_XPM
 
 /*!
     \class QCommonStyle
@@ -685,12 +782,11 @@ static void drawArrow(const QStyle *style, const QStyleOptionToolButton *toolbut
 
 QSize QCommonStylePrivate::viewItemSize(const QStyleOptionViewItemV4 *option, int role) const
 {
-    const QWidget *widget = option->widget;
     switch (role) {
     case Qt::CheckStateRole:
         if (option->features & QStyleOptionViewItemV2::HasCheckIndicator)
-            return QSize(proxyStyle->pixelMetric(QStyle::PM_IndicatorWidth, option, widget),
-                         proxyStyle->pixelMetric(QStyle::PM_IndicatorHeight, option, widget));
+            return QSize(proxyStyle->pixelMetric(QStyle::PM_IndicatorWidth, option, option->widget),
+                         proxyStyle->pixelMetric(QStyle::PM_IndicatorHeight, option, option->widget));
         break;
     case Qt::DisplayRole:
         if (option->features & QStyleOptionViewItemV2::HasDisplay) {
@@ -701,7 +797,7 @@ QSize QCommonStylePrivate::viewItemSize(const QStyleOptionViewItemV4 *option, in
             textLayout.setFont(option->font);
             textLayout.setText(option->text);
             const bool wrapText = option->features & QStyleOptionViewItemV2::WrapText;
-            const int textMargin = proxyStyle->pixelMetric(QStyle::PM_FocusFrameHMargin, option, widget) + 1;
+            const int textMargin = proxyStyle->pixelMetric(QStyle::PM_FocusFrameHMargin, option, option->widget) + 1;
             QRect bounds = option->rect;
             switch (option->decorationPosition) {
             case QStyleOptionViewItem::Left:
@@ -768,8 +864,7 @@ static QSizeF viewItemTextLayout(QTextLayout &textLayout, int lineWidth)
 
 void QCommonStylePrivate::viewItemDrawText(QPainter *p, const QStyleOptionViewItemV4 *option, const QRect &rect) const
 {
-    const QWidget *widget = option->widget;
-    const int textMargin = proxyStyle->pixelMetric(QStyle::PM_FocusFrameHMargin, 0, widget) + 1;
+    const int textMargin = proxyStyle->pixelMetric(QStyle::PM_FocusFrameHMargin, 0, option->widget) + 1;
 
     QRect textRect = rect.adjusted(textMargin, 0, -textMargin, 0); // remove width padding
     const bool wrapText = option->features & QStyleOptionViewItemV2::WrapText;
@@ -4616,7 +4711,7 @@ QSize QCommonStyle::sizeFromContents(ContentsType ct, const QStyleOption *opt,
             QRect decorationRect, displayRect, checkRect;
             d->viewItemLayout(vopt, &checkRect, &decorationRect, &displayRect, true);
             sz = (decorationRect|displayRect|checkRect).size();
-                      }
+        }
         break;
 #endif // QT_NO_ITEMVIEWS
     case CT_ScrollBar:
@@ -4916,10 +5011,6 @@ QPixmap QCommonStyle::standardPixmap(StandardPixmap sp, const QStyleOption *opti
                                      const QWidget *widget) const
 {
     const bool rtl = (option && option->direction == Qt::RightToLeft) || (!option && QApplication::isRightToLeft());
-#ifdef QT_NO_IMAGEFORMAT_PNG
-    Q_UNUSED(widget);
-    Q_UNUSED(sp);
-#else
     QPixmap pixmap;
 
     if (QApplication::desktopSettingsAware() && !QIcon::themeName().isEmpty()) {
@@ -5090,7 +5181,7 @@ QPixmap QCommonStyle::standardPixmap(StandardPixmap sp, const QStyleOption *opti
 
     if (!pixmap.isNull())
         return pixmap;
-#endif //QT_NO_IMAGEFORMAT_PNG
+
     switch (sp) {
 #ifndef QT_NO_IMAGEFORMAT_XPM
     case SP_ToolBarHorizontalExtensionButton:
@@ -5107,7 +5198,7 @@ QPixmap QCommonStyle::standardPixmap(StandardPixmap sp, const QStyleOption *opti
     case SP_FileDialogEnd:
         return QPixmap(filedialog_end_xpm);
 #endif
-#ifndef QT_NO_IMAGEFORMAT_PNG
+
     case SP_CommandLink:
     case SP_ArrowForward:
         if (rtl)
@@ -5211,7 +5302,7 @@ QPixmap QCommonStyle::standardPixmap(StandardPixmap sp, const QStyleOption *opti
         return QPixmap(QLatin1String(":/trolltech/styles/commonstyle/images/media-volume-16.png"));
     case SP_MediaVolumeMuted:
         return QPixmap(QLatin1String(":/trolltech/styles/commonstyle/images/media-volume-muted-16.png"));
-#endif // QT_NO_IMAGEFORMAT_PNG
+
     default:
         break;
     }
@@ -5407,7 +5498,6 @@ QIcon QCommonStyle::standardIcon(StandardPixmap standardicon, const QStyleOption
         return icon;
 
     switch (standardicon) {
-#ifndef QT_NO_IMAGEFORMAT_PNG
      case SP_FileDialogNewFolder:
         icon.addFile(QLatin1String(":/trolltech/styles/commonstyle/images/newdirectory-16.png"), QSize(16, 16));
         icon.addFile(QLatin1String(":/trolltech/styles/commonstyle/images/newdirectory-32.png"), QSize(32, 32));
@@ -5602,7 +5692,6 @@ QIcon QCommonStyle::standardIcon(StandardPixmap standardicon, const QStyleOption
     case SP_MediaVolumeMuted:
         icon.addFile(QLatin1String(":/trolltech/styles/commonstyle/images/media-volume-muted-16.png"), QSize(16, 16));
         break;
-#endif // QT_NO_IMAGEFORMAT_PNG
     default:
         icon.addPixmap(proxy()->standardPixmap(standardicon, option, widget));
         break;
@@ -5642,35 +5731,11 @@ QPixmap QCommonStyle::generatedIconPixmap(QIcon::Mode iconMode, const QPixmap &p
 }
 
 /*!
-  \reimp
-*/
-void QCommonStyle::polish(QPalette &pal)
-{
-    QStyle::polish(pal);
-}
-
-/*!
-    \reimp
- */
-void QCommonStyle::polish(QWidget *widget)
-{
-    QStyle::polish(widget);
-}
-
-/*!
     \reimp
  */
 void QCommonStyle::unpolish(QWidget *widget)
 {
     QStyle::unpolish(widget);
-}
-
-/*!
-  \reimp
-*/
-void QCommonStyle::polish(QApplication *app)
-{
-    QStyle::polish(app);
 }
 
 /*!

@@ -1,7 +1,7 @@
 /****************************************************************************
 **
 ** Copyright (C) 2015 The Qt Company Ltd.
-** Copyright (C) 2016-2020 Ivailo Monev
+** Copyright (C) 2016 Ivailo Monev
 **
 ** This file is part of the QtCore module of the Katie Toolkit.
 **
@@ -14,18 +14,6 @@
 ** packaging of this file.  Please review the following information to
 ** ensure the GNU Lesser General Public License version 2.1 requirements
 ** will be met: http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html.
-**
-** As a special exception, The Qt Company gives you certain additional
-** rights. These rights are described in The Qt Company LGPL Exception
-** version 1.1, included in the file LGPL_EXCEPTION.txt in this package.
-**
-** GNU General Public License Usage
-** Alternatively, this file may be used under the terms of the GNU
-** General Public License version 3.0 as published by the Free Software
-** Foundation and appearing in the file LICENSE.GPL included in the
-** packaging of this file.  Please review the following information to
-** ensure the GNU General Public License version 3.0 requirements will be
-** met: http://www.gnu.org/copyleft/gpl.html.
 **
 ** $QT_END_LICENSE$
 **
@@ -47,7 +35,6 @@ typedef std::basic_string<wchar_t> QStdWString;
 
 #include <stdarg.h>
 
-QT_BEGIN_HEADER
 
 QT_BEGIN_NAMESPACE
 
@@ -976,7 +963,7 @@ public:
     QStringRef appendTo(QString *string) const;
 
     inline const QChar at(int i) const
-        { Q_ASSERT(uint(i) < uint(size())); return m_string->at(i + m_position); }
+        { Q_ASSERT(i < size()); return m_string->at(i + m_position); }
 
     int compare(const QString &s, Qt::CaseSensitivity cs = Qt::CaseSensitive) const;
     int compare(const QStringRef &s, Qt::CaseSensitivity cs = Qt::CaseSensitive) const;
@@ -1087,6 +1074,5 @@ inline bool QStringRef::contains(const QStringRef &s, Qt::CaseSensitivity cs) co
 
 QT_END_NAMESPACE
 
-QT_END_HEADER
 
 #endif // QSTRING_H

@@ -1,7 +1,7 @@
 /****************************************************************************
 **
 ** Copyright (C) 2015 The Qt Company Ltd.
-** Copyright (C) 2016-2020 Ivailo Monev
+** Copyright (C) 2016 Ivailo Monev
 **
 ** This file is part of the QtDBus module of the Katie Toolkit.
 **
@@ -14,18 +14,6 @@
 ** packaging of this file.  Please review the following information to
 ** ensure the GNU Lesser General Public License version 2.1 requirements
 ** will be met: http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html.
-**
-** As a special exception, The Qt Company gives you certain additional
-** rights. These rights are described in The Qt Company LGPL Exception
-** version 1.1, included in the file LGPL_EXCEPTION.txt in this package.
-**
-** GNU General Public License Usage
-** Alternatively, this file may be used under the terms of the GNU
-** General Public License version 3.0 as published by the Free Software
-** Foundation and appearing in the file LICENSE.GPL included in the
-** packaging of this file.  Please review the following information to
-** ensure the GNU General Public License version 3.0 requirements will be
-** met: http://www.gnu.org/copyleft/gpl.html.
 **
 ** $QT_END_LICENSE$
 **
@@ -403,20 +391,19 @@ static QByteArray buildMatchRule(const QString &service,
                                  const QString &member, const QStringList &argMatch, const QString & /*signature*/)
 {
     QString result = QLatin1String("type='signal',");
-    QString keyValue = QLatin1String("%1='%2',");
 
     if (!service.isEmpty())
-        result += keyValue.arg(QLatin1String("sender"), service);
+        result += QString::fromLatin1("sender='%1',").arg(service);
     if (!objectPath.isEmpty())
-        result += keyValue.arg(QLatin1String("path"), objectPath);
+        result += QString::fromLatin1("path='%1',").arg(objectPath);
     if (!interface.isEmpty())
-        result += keyValue.arg(QLatin1String("interface"), interface);
+        result += QString::fromLatin1("interface='%1',").arg(interface);
     if (!member.isEmpty())
-        result += keyValue.arg(QLatin1String("member"), member);
+        result += QString::fromLatin1("member='%1',").arg(member);
 
     // add the argument string-matching now
     if (!argMatch.isEmpty()) {
-        keyValue = QLatin1String("arg%1='%2',");
+        QString keyValue = QLatin1String("arg%1='%2',");
         for (int i = 0; i < argMatch.count(); ++i)
             if (!argMatch.at(i).isNull())
                 result += keyValue.arg(i).arg(argMatch.at(i));
@@ -642,7 +629,7 @@ static int findMetaSlot(const QMetaObject *mo, const QByteArray &name, int flags
         if (paren != name.length() || !slotname.startsWith(name))
             continue;
 
-        const int returnType = qDBusNameToTypeId(mm.typeName());
+        const int returnType = QMetaType::type(mm.typeName());
         const bool isScriptable = mm.attributes() & QMetaMethod::Scriptable;
 
         int inputCount = qDBusParametersForMethod(mm, metaTypes);
@@ -973,8 +960,6 @@ QDBusConnectionPrivate::QDBusConnectionPrivate(QObject *p)
     if (isDebugging > 1)
         qdbusThreadDebug = qdbusDefaultThreadDebug;
 #endif
-
-    QDBusMetaTypeId::init();
 
     rootNode.flags = 0;
 

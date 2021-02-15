@@ -1,7 +1,7 @@
 /****************************************************************************
 **
 ** Copyright (C) 2015 The Qt Company Ltd.
-** Copyright (C) 2016-2020 Ivailo Monev
+** Copyright (C) 2016 Ivailo Monev
 **
 ** This file is part of the test suite of the Katie Toolkit.
 **
@@ -14,18 +14,6 @@
 ** packaging of this file.  Please review the following information to
 ** ensure the GNU Lesser General Public License version 2.1 requirements
 ** will be met: http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html.
-**
-** As a special exception, The Qt Company gives you certain additional
-** rights. These rights are described in The Qt Company LGPL Exception
-** version 1.1, included in the file LGPL_EXCEPTION.txt in this package.
-**
-** GNU General Public License Usage
-** Alternatively, this file may be used under the terms of the GNU
-** General Public License version 3.0 as published by the Free Software
-** Foundation and appearing in the file LICENSE.GPL included in the
-** packaging of this file.  Please review the following information to
-** ensure the GNU General Public License version 3.0 requirements will be
-** met: http://www.gnu.org/copyleft/gpl.html.
 **
 ** $QT_END_LICENSE$
 **
@@ -204,7 +192,6 @@ void tst_QtBench::qtBench_data()
     benchmarks << (new DrawText(longString, DrawText::PixmapMode));
     benchmarks << (new DrawText(superLongString, DrawText::PixmapMode));
 
-#if QT_VERSION >= 0x040700
     benchmarks << (new DrawText(shortString, DrawText::StaticTextMode));
     benchmarks << (new DrawText(middleString, DrawText::StaticTextMode));
     benchmarks << (new DrawText(longString, DrawText::StaticTextMode));
@@ -214,7 +201,6 @@ void tst_QtBench::qtBench_data()
     benchmarks << (new DrawText(middleString, DrawText::StaticTextWithMaximumSizeMode));
     benchmarks << (new DrawText(longString, DrawText::StaticTextWithMaximumSizeMode));
     benchmarks << (new DrawText(superLongString, DrawText::StaticTextWithMaximumSizeMode));
-#endif
 
     foreach (Benchmark *benchmark, benchmarks)
         QTest::newRow(qPrintable(benchmark->name())) << reinterpret_cast<void *>(benchmark);

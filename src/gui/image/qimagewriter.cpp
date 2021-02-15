@@ -1,7 +1,7 @@
 /****************************************************************************
 **
 ** Copyright (C) 2015 The Qt Company Ltd.
-** Copyright (C) 2016-2020 Ivailo Monev
+** Copyright (C) 2016 Ivailo Monev
 **
 ** This file is part of the QtGui module of the Katie Toolkit.
 **
@@ -14,18 +14,6 @@
 ** packaging of this file.  Please review the following information to
 ** ensure the GNU Lesser General Public License version 2.1 requirements
 ** will be met: http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html.
-**
-** As a special exception, The Qt Company gives you certain additional
-** rights. These rights are described in The Qt Company LGPL Exception
-** version 1.1, included in the file LGPL_EXCEPTION.txt in this package.
-**
-** GNU General Public License Usage
-** Alternatively, this file may be used under the terms of the GNU
-** General Public License version 3.0 as published by the Free Software
-** Foundation and appearing in the file LICENSE.GPL included in the
-** packaging of this file.  Please review the following information to
-** ensure the GNU General Public License version 3.0 requirements will be
-** met: http://www.gnu.org/copyleft/gpl.html.
 **
 ** $QT_END_LICENSE$
 **
@@ -104,9 +92,7 @@
 #include "qppmhandler_p.h"
 #include "qxbmhandler_p.h"
 #include "qxpmhandler_p.h"
-#ifndef QT_NO_IMAGEFORMAT_PNG
 #include "qpnghandler_p.h"
-#endif
 
 QT_BEGIN_NAMESPACE
 
@@ -153,11 +139,8 @@ static QImageIOHandler *createWriteHandlerHelper(QIODevice *device,
 
     // check if any built-in handlers can write the image
     if (!handler && !testFormat.isEmpty()) {
-        if (false) {
-#ifndef QT_NO_IMAGEFORMAT_PNG
-        } else if (testFormat == "png") {
+        if (testFormat == "png") {
             handler = new QPngHandler;
-#endif
 #ifndef QT_NO_IMAGEFORMAT_BMP
         } else if (testFormat == "bmp") {
             handler = new QBmpHandler;
@@ -169,7 +152,6 @@ static QImageIOHandler *createWriteHandlerHelper(QIODevice *device,
 #ifndef QT_NO_IMAGEFORMAT_XBM
         } else if (testFormat == "xbm") {
             handler = new QXbmHandler;
-            handler->setOption(QImageIOHandler::SubType, testFormat);
 #endif
 #ifndef QT_NO_IMAGEFORMAT_PPM
         } else if (testFormat == "pbm" || testFormat == "pbmraw" || testFormat == "pgm"
@@ -206,6 +188,7 @@ class QImageWriterPrivate
 {
 public:
     QImageWriterPrivate();
+    ~QImageWriterPrivate();
 
     // device
     QByteArray format;
@@ -227,15 +210,22 @@ public:
     \internal
 */
 QImageWriterPrivate::QImageWriterPrivate()
+    : device(Q_NULLPTR),
+    deleteDevice(false),
+    handler(Q_NULLPTR),
+    quality(-1),
+    compression(0),
+    gamma(0.0),
+    imageWriterError(QImageWriter::UnknownError),
+    errorString(QT_TRANSLATE_NOOP(QImageWriter, QLatin1String("Unknown error")))
 {
-    device = 0;
-    deleteDevice = false;
-    handler = 0;
-    quality = -1;
-    compression = 0;
-    gamma = 0.0;
-    imageWriterError = QImageWriter::UnknownError;
-    errorString = QT_TRANSLATE_NOOP(QImageWriter, QLatin1String("Unknown error"));
+}
+
+QImageWriterPrivate::~QImageWriterPrivate()
+{
+    if (deleteDevice)
+        delete device;
+    delete handler;
 }
 
 /*!
@@ -279,9 +269,6 @@ QImageWriter::QImageWriter(const QString &fileName, const QByteArray &format)
 */
 QImageWriter::~QImageWriter()
 {
-    if (d->deleteDevice)
-        delete d->device;
-    delete d->handler;
     delete d;
 }
 
@@ -579,7 +566,10 @@ bool QImageWriter::supportsOption(QImageIOHandler::ImageOption option) const
 QList<QByteArray> QImageWriter::supportedImageFormats()
 {
     QList<QByteArray> formats;
+    formats << "png";
+#ifndef QT_NO_IMAGEFORMAT_BMP
     formats << "bmp";
+#endif
 #ifndef QT_NO_IMAGEFORMAT_PPM
     formats << "ppm";
 #endif
@@ -588,9 +578,6 @@ QList<QByteArray> QImageWriter::supportedImageFormats()
 #endif
 #ifndef QT_NO_IMAGEFORMAT_XPM
     formats << "xpm";
-#endif
-#ifndef QT_NO_IMAGEFORMAT_PNG
-    formats << "png";
 #endif
 
 #ifndef QT_NO_LIBRARY

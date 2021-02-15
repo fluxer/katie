@@ -1,7 +1,7 @@
 /****************************************************************************
 **
 ** Copyright (C) 2015 The Qt Company Ltd.
-** Copyright (C) 2016-2020 Ivailo Monev
+** Copyright (C) 2016 Ivailo Monev
 **
 ** This file is part of the QtCore module of the Katie Toolkit.
 **
@@ -14,18 +14,6 @@
 ** packaging of this file.  Please review the following information to
 ** ensure the GNU Lesser General Public License version 2.1 requirements
 ** will be met: http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html.
-**
-** As a special exception, The Qt Company gives you certain additional
-** rights. These rights are described in The Qt Company LGPL Exception
-** version 1.1, included in the file LGPL_EXCEPTION.txt in this package.
-**
-** GNU General Public License Usage
-** Alternatively, this file may be used under the terms of the GNU
-** General Public License version 3.0 as published by the Free Software
-** Foundation and appearing in the file LICENSE.GPL included in the
-** packaging of this file.  Please review the following information to
-** ensure the GNU General Public License version 3.0 requirements will be
-** met: http://www.gnu.org/copyleft/gpl.html.
 **
 ** $QT_END_LICENSE$
 **
@@ -77,7 +65,6 @@ QFSFileEnginePrivate::QFSFileEnginePrivate() : QAbstractFileEnginePrivate()
 */
 void QFSFileEnginePrivate::init()
 {
-    is_sequential = 0;
     metaData.clear();
     openMode = QIODevice::NotOpen;
     fd = -1;
@@ -117,10 +104,7 @@ QFSFileEngine::~QFSFileEngine()
     Q_D(QFSFileEngine);
     if (d->closeFileHandle) {
         if (d->fd != -1) {
-            int ret;
-            do {
-                ret = QT_CLOSE(d->fd);
-            } while (ret == -1 && errno == EINTR);
+            qt_safe_close(d->fd);
         }
     }
     QList<uchar*> keys = d->maps.keys();
@@ -182,9 +166,8 @@ bool QFSFileEngine::open(QIODevice::OpenMode openMode)
     }
 
     // Try to open the file.
-    do {
-        d->fd = QT_OPEN(d->fileEntry.nativeFilePath().constData(), flags, 0666);
-    } while (d->fd == -1 && errno == EINTR);
+    QByteArray native = d->fileEntry.nativeFilePath();
+    d->fd = qt_safe_open(native.constData(), flags, 0666);
 
     // On failure, return and report the error.
     if (d->fd == -1) {
@@ -198,10 +181,7 @@ bool QFSFileEngine::open(QIODevice::OpenMode openMode)
     // Seek to the end when in Append mode.
     if (d->openMode & QFile::Append) {
         int ret;
-        do {
-            ret = QT_LSEEK(d->fd, 0, SEEK_END);
-        } while (ret == -1 && errno == EINTR);
-
+        EINTR_LOOP(ret, QT_LSEEK(d->fd, 0, SEEK_END));
         if (ret == -1) {
             setError(errno == EMFILE ? QFile::ResourceError : QFile::OpenError,
                      qt_error_string(errno));
@@ -272,10 +252,7 @@ bool QFSFileEngine::open(QIODevice::OpenMode openMode, int fd, QFile::FileHandle
     // Seek to the end when in Append mode.
     if (d->openMode & QFile::Append) {
         int ret;
-        do {
-            ret = QT_LSEEK(d->fd, 0, SEEK_END);
-        } while (ret == -1 && errno == EINTR);
-
+        EINTR_LOOP(ret, QT_LSEEK(d->fd, 0, SEEK_END));
         if (ret == -1) {
             setError(errno == EMFILE ? QFile::ResourceError : QFile::OpenError,
                      qt_error_string(errno));
@@ -305,10 +282,7 @@ bool QFSFileEngine::close()
 
     // Close the file if we created the handle.
     if (d->closeFileHandle) {
-        int ret;
-        do {
-            ret = QT_CLOSE(d->fd);
-        } while (ret == -1 && errno == EINTR);
+        int ret = qt_safe_close(d->fd);
 
         // We must reset these guys regardless; calling close again after a
         // failed close causes crashes on some systems.
@@ -462,13 +436,9 @@ QAbstractFileEngine::Iterator *QFSFileEngine::beginEntryList(QDir::Filters filte
 bool QFSFileEngine::isSequential() const
 {
     Q_D(const QFSFileEngine);
-    if (d->is_sequential == 0) {
-        bool isSequentialFdFh = true;
-        if (d->doStat(QFileSystemMetaData::SequentialType))
-            isSequentialFdFh = d->metaData.isSequential();
-        d->is_sequential = (isSequentialFdFh ? 1 : 2);
-    }
-    return (d->is_sequential == 1);
+    if (d->doStat(QFileSystemMetaData::SequentialType))
+        return d->metaData.isSequential();
+    return true;
 }
 
 /*!

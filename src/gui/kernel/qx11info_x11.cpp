@@ -1,7 +1,7 @@
 /****************************************************************************
 **
 ** Copyright (C) 2015 The Qt Company Ltd.
-** Copyright (C) 2016-2020 Ivailo Monev
+** Copyright (C) 2016 Ivailo Monev
 **
 ** This file is part of the QtGui module of the Katie Toolkit.
 **
@@ -15,22 +15,11 @@
 ** ensure the GNU Lesser General Public License version 2.1 requirements
 ** will be met: http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html.
 **
-** As a special exception, The Qt Company gives you certain additional
-** rights. These rights are described in The Qt Company LGPL Exception
-** version 1.1, included in the file LGPL_EXCEPTION.txt in this package.
-**
-** GNU General Public License Usage
-** Alternatively, this file may be used under the terms of the GNU
-** General Public License version 3.0 as published by the Free Software
-** Foundation and appearing in the file LICENSE.GPL included in the
-** packaging of this file.  Please review the following information to
-** ensure the GNU General Public License version 3.0 requirements will be
-** met: http://www.gnu.org/copyleft/gpl.html.
-**
 ** $QT_END_LICENSE$
 **
 ****************************************************************************/
 
+#include "qapplication.h"
 #include "qwidget.h"
 #include "qpixmap.h"
 #include "qx11info_x11.h"
@@ -99,47 +88,6 @@ QX11Info::~QX11Info()
 
 /*!
     \internal
-    Makes a shallow copy of the X11-specific data of \a fromDevice, if it is not
-    null. Otherwise this function sets it to null.
-*/
-
-void QX11Info::copyX11Data(const QPaintDevice *fromDevice)
-{
-    QX11InfoData *xd = 0;
-    if (fromDevice) {
-        if (fromDevice->devType() == QInternal::Widget)
-            xd = static_cast<const QWidget *>(fromDevice)->x11Info().x11data;
-        else if (fromDevice->devType() == QInternal::Pixmap)
-            xd = static_cast<const QPixmap *>(fromDevice)->x11Info().x11data;
-    }
-    setX11Data(xd);
-}
-
-/*!
-    \internal
-    Makes a deep copy of the X11-specific data of \a fromDevice, if it is not
-    null. Otherwise this function sets it to null.
-*/
-
-void QX11Info::cloneX11Data(const QPaintDevice *fromDevice)
-{
-    QX11InfoData *d = 0;
-    if (fromDevice) {
-        QX11InfoData *xd;
-        if (fromDevice->devType() == QInternal::Widget) {
-            xd = static_cast<const QWidget *>(fromDevice)->x11Info().x11data;
-        } else {
-            Q_ASSERT(fromDevice->devType() == QInternal::Pixmap);
-            xd = static_cast<const QPixmap *>(fromDevice)->x11Info().x11data;
-        }
-        d = new QX11InfoData(*xd);
-        d->ref = 0;
-    }
-    setX11Data(d);
-}
-
-/*!
-    \internal
     Makes a shallow copy of the X11-specific data \a d and assigns it to this
     class. This function increments the reference code of \a d.
 */
@@ -156,34 +104,25 @@ void QX11Info::setX11Data(const QX11InfoData* d)
 
 /*!
     \internal
-    If \a def is false, returns a deep copy of the x11Data, or 0 if x11Data is 0.
-    If \a def is true, makes a QX11Data struct filled with the default
-    values.
+    Makes a QX11Data struct filled with the default values.
 
-    In either case the caller is responsible for deleting the returned
-    struct. But notice that the struct is a shared class, so other
-    classes might also have a reference to it. The reference count of
-    the returned QX11Data* is 0.
+    The caller is responsible for deleting the returned struct. But
+    notice that the struct is a shared class, so other classes might
+    also have a reference to it. The reference count of the returned
+    QX11Data* is 0.
 */
 
-QX11InfoData* QX11Info::getX11Data(bool def) const
+QX11InfoData* QX11Info::getX11Data() const
 {
-    QX11InfoData* res = 0;
-    if (def) {
-        res = new QX11InfoData;
-        res->ref = 0;
-        res->screen = appScreen();
-        res->depth = appDepth();
-        res->cells = appCells();
-        res->colormap = colormap();
-        res->defaultColormap = appDefaultColormap();
-        res->visual = (Visual*) appVisual();
-        res->defaultVisual = appDefaultVisual();
-    } else if (x11data) {
-        res = new QX11InfoData;
-        *res = *x11data;
-        res->ref = 0;
-    }
+    QX11InfoData* res = new QX11InfoData;
+    res->ref = 0;
+    res->screen = appScreen();
+    res->depth = appDepth();
+    res->cells = appCells();
+    res->colormap = colormap();
+    res->defaultColormap = appDefaultColormap();
+    res->visual = (Visual*) appVisual();
+    res->defaultVisual = appDefaultVisual();
     return res;
 }
 
@@ -323,12 +262,16 @@ void QX11Info::setAppUserTime(unsigned long time)
 
 
 /*!
-    \fn const char *QX11Info::appClass()
-
     Returns the X11 application class.
 
     \sa display()
 */
+QByteArray QX11Info::appClass()
+{
+    if (QApplication::instance())
+        return QApplication::applicationName().toLocal8Bit();
+    return QByteArray();
+}
 
 /*!
     Returns the default display for the application.

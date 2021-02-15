@@ -16,29 +16,29 @@ generates an image file that embeds raw image data in C++ source code.
 
     -h
     -help
-           Display this help and exit.
+        Display this help and exit.
 
     -v
     -version
-           Display version.
+        Display version.
 
     -d
     -dependencies
-           Display the dependencies.
+        Display the dependencies.
 
     -o <file>
-           Place the output into <file>.
+        Place the output into <file>.
 
     -tr <func>
-           Use func() for i18n.
+        Use func() for i18n.
 
     -p
     -no-protection
-           Disable header protection.
+        Disable header protection.
 
     -n
     -no-implicit-includes
-           Disable generation of #include-directives.
+        Disable generation of #include-directives.
 
 =head1 EXIT STATUS
 
@@ -49,6 +49,6 @@ uic returns 0 on success and other on unexcepted failure.
 The Qt Company Ltd.
 
 Copyright (C) 2015 The Qt Company Ltd.
-Copyright (C) 2016-2020 Ivailo Monev
+Copyright (C) 2016 Ivailo Monev
 
 Licensed through GNU Lesser General Public License/GNU General Public License.

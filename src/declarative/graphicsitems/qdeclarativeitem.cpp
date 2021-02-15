@@ -1,7 +1,7 @@
 /****************************************************************************
 **
 ** Copyright (C) 2015 The Qt Company Ltd.
-** Copyright (C) 2016-2020 Ivailo Monev
+** Copyright (C) 2016 Ivailo Monev
 **
 ** This file is part of the QtDeclarative module of the Katie Toolkit.
 **
@@ -14,18 +14,6 @@
 ** packaging of this file.  Please review the following information to
 ** ensure the GNU Lesser General Public License version 2.1 requirements
 ** will be met: http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html.
-**
-** As a special exception, The Qt Company gives you certain additional
-** rights. These rights are described in The Qt Company LGPL Exception
-** version 1.1, included in the file LGPL_EXCEPTION.txt in this package.
-**
-** GNU General Public License Usage
-** Alternatively, this file may be used under the terms of the GNU
-** General Public License version 3.0 as published by the Free Software
-** Foundation and appearing in the file LICENSE.GPL included in the
-** packaging of this file.  Please review the following information to
-** ensure the GNU General Public License version 3.0 requirements will be
-** met: http://www.gnu.org/copyleft/gpl.html.
 **
 ** $QT_END_LICENSE$
 **
@@ -1260,11 +1248,6 @@ void QDeclarativeItemPrivate::setLayoutMirror(bool mirror)
     parameter provides information about the event.
 */
 
-bool QDeclarativeKeysAttachedPrivate::isConnected(const char *signalName)
-{
-    return isSignalConnected(signalIndex(signalName));
-}
-
 QDeclarativeKeysAttached::QDeclarativeKeysAttached(QObject *parent)
 : QObject(*(new QDeclarativeKeysAttachedPrivate), parent),
   QDeclarativeItemKeyFilter(qobject_cast<QDeclarativeItem*>(parent))
@@ -1296,44 +1279,38 @@ static const struct KeySignalTblData {
     const Qt::Key qtkey;
     const char* signal;
 } KeySignalTbl[] = {
-    { Qt::Key_Left, "leftPressed" },
-    { Qt::Key_Right, "rightPressed" },
-    { Qt::Key_Up, "upPressed" },
-    { Qt::Key_Down, "downPressed" },
-    { Qt::Key_Tab, "tabPressed" },
-    { Qt::Key_Backtab, "backtabPressed" },
-    { Qt::Key_Asterisk, "asteriskPressed" },
-    { Qt::Key_NumberSign, "numberSignPressed" },
-    { Qt::Key_Escape, "escapePressed" },
-    { Qt::Key_Return, "returnPressed" },
-    { Qt::Key_Enter, "enterPressed" },
-    { Qt::Key_Delete, "deletePressed" },
-    { Qt::Key_Space, "spacePressed" },
-    { Qt::Key_Back, "backPressed" },
-    { Qt::Key_Cancel, "cancelPressed" },
-    { Qt::Key_Select, "selectPressed" },
-    { Qt::Key_Call, "callPressed" },
-    { Qt::Key_Menu, "menuPressed" },
-    { Qt::Key_VolumeUp, "volumeUpPressed" },
-    { Qt::Key_VolumeDown, "volumeDownPressed" }
+    { Qt::Key_0, "digit0Pressed(QDeclarativeKeyEvent*)" },
+    { Qt::Key_1, "digit1Pressed(QDeclarativeKeyEvent*)" },
+    { Qt::Key_2, "digit2Pressed(QDeclarativeKeyEvent*)" },
+    { Qt::Key_3, "digit3Pressed(QDeclarativeKeyEvent*)" },
+    { Qt::Key_4, "digit4Pressed(QDeclarativeKeyEvent*)" },
+    { Qt::Key_5, "digit5Pressed(QDeclarativeKeyEvent*)" },
+    { Qt::Key_6, "digit6Pressed(QDeclarativeKeyEvent*)" },
+    { Qt::Key_7, "digit7Pressed(QDeclarativeKeyEvent*)" },
+    { Qt::Key_8, "digit8Pressed(QDeclarativeKeyEvent*)" },
+    { Qt::Key_9, "digit9Pressed(QDeclarativeKeyEvent*)" },
+    { Qt::Key_Left, "leftPressed(QDeclarativeKeyEvent*)" },
+    { Qt::Key_Right, "rightPressed(QDeclarativeKeyEvent*)" },
+    { Qt::Key_Up, "upPressed(QDeclarativeKeyEvent*)" },
+    { Qt::Key_Down, "downPressed(QDeclarativeKeyEvent*)" },
+    { Qt::Key_Tab, "tabPressed(QDeclarativeKeyEvent*)" },
+    { Qt::Key_Backtab, "backtabPressed(QDeclarativeKeyEvent*)" },
+    { Qt::Key_Asterisk, "asteriskPressed(QDeclarativeKeyEvent*)" },
+    { Qt::Key_NumberSign, "numberSignPressed(QDeclarativeKeyEvent*)" },
+    { Qt::Key_Escape, "escapePressed(QDeclarativeKeyEvent*)" },
+    { Qt::Key_Return, "returnPressed(QDeclarativeKeyEvent*)" },
+    { Qt::Key_Enter, "enterPressed(QDeclarativeKeyEvent*)" },
+    { Qt::Key_Delete, "deletePressed(QDeclarativeKeyEvent*)" },
+    { Qt::Key_Space, "spacePressed(QDeclarativeKeyEvent*)" },
+    { Qt::Key_Back, "backPressed(QDeclarativeKeyEvent*)" },
+    { Qt::Key_Cancel, "cancelPressed(QDeclarativeKeyEvent*)" },
+    { Qt::Key_Select, "selectPressed(QDeclarativeKeyEvent*)" },
+    { Qt::Key_Call, "callPressed(QDeclarativeKeyEvent*)" },
+    { Qt::Key_Menu, "menuPressed(QDeclarativeKeyEvent*)" },
+    { Qt::Key_VolumeUp, "volumeUpPressed(QDeclarativeKeyEvent*)" },
+    { Qt::Key_VolumeDown, "volumeDownPressed(QDeclarativeKeyEvent*)" }
 };
 static const qint16 KeySignalTblSize = sizeof(KeySignalTbl) / sizeof(KeySignalTblData);
-
-static const QByteArray keyToSignal(int key) {
-    QByteArray keySignal;
-    if (key >= Qt::Key_0 && key <= Qt::Key_9) {
-        keySignal = "digit0Pressed";
-        keySignal[5] = '0' + (key - Qt::Key_0);
-    } else {
-        for (qint16 i = 0; i < KeySignalTblSize; i++) {
-            if (KeySignalTbl[i].qtkey == key) {
-                keySignal = KeySignalTbl[i].signal;
-                break;
-            }
-        }
-    }
-    return keySignal;
-}
 
 void QDeclarativeKeysAttached::keyPressed(QKeyEvent *event, bool post)
 {
@@ -1361,21 +1338,24 @@ void QDeclarativeKeysAttached::keyPressed(QKeyEvent *event, bool post)
     }
 
     QDeclarativeKeyEvent ke(*event);
-    QByteArray keySignal = keyToSignal(event->key());
-    if (!keySignal.isEmpty()) {
-        keySignal += "(QDeclarativeKeyEvent*)";
-        if (d->isConnected(keySignal)) {
-            // If we specifically handle a key then default to accepted
-            ke.setAccepted(true);
-            int idx = QDeclarativeKeysAttached::staticMetaObject.indexOfSignal(keySignal);
-            metaObject()->method(idx).invoke(this, Qt::DirectConnection, Q_ARG(QDeclarativeKeyEvent*, &ke));
+    for (qint16 i = 0; i < KeySignalTblSize; i++) {
+        if (KeySignalTbl[i].qtkey == event->key()) {
+            if (d->isSignalConnected(d->signalIndex(KeySignalTbl[i].signal))) {
+                // If we specifically handle a key then default to accepted
+                ke.setAccepted(true);
+                int idx = QDeclarativeKeysAttached::staticMetaObject.indexOfSignal(KeySignalTbl[i].signal);
+                metaObject()->method(idx).invoke(this, Qt::DirectConnection, Q_ARG(QDeclarativeKeyEvent*, &ke));
+            }
+            break;
         }
     }
+
     if (!ke.isAccepted())
         emit pressed(&ke);
     event->setAccepted(ke.isAccepted());
 
-    if (!event->isAccepted()) QDeclarativeItemKeyFilter::keyPressed(event, post);
+    if (!event->isAccepted())
+        QDeclarativeItemKeyFilter::keyPressed(event, post);
 }
 
 void QDeclarativeKeysAttached::keyReleased(QKeyEvent *event, bool post)

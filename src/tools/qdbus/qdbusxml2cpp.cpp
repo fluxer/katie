@@ -1,7 +1,7 @@
 /****************************************************************************
 **
 ** Copyright (C) 2015 The Qt Company Ltd.
-** Copyright (C) 2016-2020 Ivailo Monev
+** Copyright (C) 2016 Ivailo Monev
 **
 ** This file is part of the tools applications of the Katie Toolkit.
 **
@@ -14,18 +14,6 @@
 ** packaging of this file.  Please review the following information to
 ** ensure the GNU Lesser General Public License version 2.1 requirements
 ** will be met: http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html.
-**
-** As a special exception, The Qt Company gives you certain additional
-** rights. These rights are described in The Qt Company LGPL Exception
-** version 1.1, included in the file LGPL_EXCEPTION.txt in this package.
-**
-** GNU General Public License Usage
-** Alternatively, this file may be used under the terms of the GNU
-** General Public License version 3.0 as published by the Free Software
-** Foundation and appearing in the file LICENSE.GPL included in the
-** packaging of this file.  Please review the following information to
-** ensure the GNU General Public License version 3.0 requirements will be
-** met: http://www.gnu.org/copyleft/gpl.html.
 **
 ** $QT_END_LICENSE$
 **
@@ -57,7 +45,7 @@
 #define PROGRAMNAME     "qdbusxml2cpp"
 #define PROGRAMVERSION  "0.7"
 #define PROGRAMCOPYRIGHT "Copyright (C) 2015 The Qt Company Ltd."
-#define PROGRAMCOPYRIGHT2 "Copyright (C) 2016-2020 Ivailo Monev"
+#define PROGRAMCOPYRIGHT2 "Copyright (C) 2016 Ivailo Monev"
 
 #define ANNOTATION_NO_WAIT      "org.freedesktop.DBus.Method.NoReply"
 
@@ -80,16 +68,26 @@ static const char help[] =
     "Produces the C++ code to implement the interfaces defined in the input file.\n"
     "\n"
     "Options:\n"
-    "    -a <filename>    Write the adaptor code to <filename>\n"
-    "    -c <classname>   Use <classname> as the class name for the generated classes\n"
-    "    -h               Show this information\n"
-    "    -i <filename>    Add #include to the output\n"
-    "    -l <classname>   When generating an adaptor, use <classname> as the parent class\n"
-    "    -m               Generate #include \"filename.moc\" statements in the .cpp files\n"
-    "    -N               Don't use namespaces\n"
-    "    -p <filename>    Write the proxy code to <filename>\n"
-    "    -v               Be verbose.\n"
-    "    -V               Show the program version and quit.\n"
+    "    -a <filename>\n"
+    "        Write the adaptor code to <filename>.\n"
+    "    -c <classname>\n"
+    "        Use <classname> as the class name for the generated classes.\n"
+    "    -h\n"
+    "        Show this information.\n"
+    "    -i <filename>\n"
+    "        Add #include to the output.\n"
+    "    -l <classname>\n"
+    "        When generating an adaptor, use <classname> as the parent class.\n"
+    "    -m\n"
+    "        Generate #include \"filename.moc\" statements in the .cpp files.\n"
+    "    -N\n"
+    "        Don't use namespaces\n"
+    "    -p <filename>\n"
+    "        Write the proxy code to <filename>.\n"
+    "    -v\n"
+    "        Be verbose.\n"
+    "    -V\n"
+    "        Show the program version and quit.\n"
     "\n"
     "If the file name given to the options -a and -p does not end in .cpp or .h, the\n"
     "program will automatically append the suffixes and produce both files.\n"

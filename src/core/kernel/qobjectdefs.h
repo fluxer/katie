@@ -1,7 +1,7 @@
 /****************************************************************************
 **
 ** Copyright (C) 2015 The Qt Company Ltd.
-** Copyright (C) 2016-2020 Ivailo Monev
+** Copyright (C) 2016 Ivailo Monev
 **
 ** This file is part of the QtCore module of the Katie Toolkit.
 **
@@ -15,18 +15,6 @@
 ** ensure the GNU Lesser General Public License version 2.1 requirements
 ** will be met: http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html.
 **
-** As a special exception, The Qt Company gives you certain additional
-** rights. These rights are described in The Qt Company LGPL Exception
-** version 1.1, included in the file LGPL_EXCEPTION.txt in this package.
-**
-** GNU General Public License Usage
-** Alternatively, this file may be used under the terms of the GNU
-** General Public License version 3.0 as published by the Free Software
-** Foundation and appearing in the file LICENSE.GPL included in the
-** packaging of this file.  Please review the following information to
-** ensure the GNU General Public License version 3.0 requirements will be
-** met: http://www.gnu.org/copyleft/gpl.html.
-**
 ** $QT_END_LICENSE$
 **
 ****************************************************************************/
@@ -36,7 +24,6 @@
 
 #include <QtCore/qnamespace.h>
 
-QT_BEGIN_HEADER
 
 QT_BEGIN_NAMESPACE
 
@@ -53,19 +40,15 @@ class QString;
 // They are used, strictly speaking, only by the moc.
 
 #ifndef Q_MOC_RUN
-# if defined(QT_NO_KEYWORDS)
-#  define QT_NO_EMIT
-# else
+# ifndef QT_NO_KEYWORDS
 #   define slots
 #   define signals protected
+#   define emit
 # endif
-# define Q_SLOTS
-# define Q_SIGNALS protected
-# define Q_PRIVATE_SLOT(d, signature)
-# define Q_EMIT
-#ifndef QT_NO_EMIT
-# define emit
-#endif
+#define Q_SLOTS
+#define Q_SIGNALS protected
+#define Q_PRIVATE_SLOT(d, signature)
+#define Q_EMIT
 #define Q_CLASSINFO(name, value)
 #define Q_INTERFACES(x)
 #define Q_PROPERTY(text)
@@ -151,40 +134,16 @@ private:
 #define Q_SLOT Q_SLOT
 #endif //Q_MOC_RUN
 
-// macro for onaming members
-#ifdef METHOD
-#undef METHOD
-#endif
-#ifdef SLOT
-#undef SLOT
-#endif
-#ifdef SIGNAL
-#undef SIGNAL
-#endif
-
-Q_CORE_EXPORT const char *qFlagLocation(const char *method);
-
-#define QTOSTRING_HELPER(s) #s
-#define QTOSTRING(s) QTOSTRING_HELPER(s)
-#ifndef QT_NO_DEBUG
-# define QLOCATION "\0" __FILE__ ":" QTOSTRING(__LINE__)
-# ifndef QT_NO_KEYWORDS
-#  define METHOD(a)   qFlagLocation("0"#a QLOCATION)
-# endif
-# define SLOT(a)     qFlagLocation("1"#a QLOCATION)
-# define SIGNAL(a)   qFlagLocation("2"#a QLOCATION)
-#else
-# ifndef QT_NO_KEYWORDS
-#  define METHOD(a)   "0"#a
-# endif
-# define SLOT(a)     "1"#a
-# define SIGNAL(a)   "2"#a
-#endif
-
-
-#define QMETHOD_CODE  0                        // member type codes
+// definitions and macros for identifying connection types
+#define QMETHOD_CODE  0
 #define QSLOT_CODE    1
 #define QSIGNAL_CODE  2
+
+#ifndef QT_NO_KEYWORDS
+# define METHOD(a)   "0"#a
+#endif
+#define SLOT(a)     "1"#a
+#define SIGNAL(a)   "2"#a
 
 #define Q_ARG(type, data) QArgument<type >(#type, data)
 #define Q_RETURN_ARG(type, data) QReturnArgument<type >(#type, data)
@@ -415,6 +374,5 @@ inline const QMetaObject *QMetaObject::superClass() const
 
 QT_END_NAMESPACE
 
-QT_END_HEADER
 
 #endif // QOBJECTDEFS_H

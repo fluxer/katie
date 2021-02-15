@@ -1,4 +1,4 @@
-/* A Bison parser, made by GNU Bison 3.6.4.  */
+/* A Bison parser, made by GNU Bison 3.7.4.  */
 
 /* Bison implementation for Yacc-like parsers in C
 
@@ -45,11 +45,11 @@
    define necessary library symbols; they are noted "INFRINGES ON
    USER NAME SPACE" below.  */
 
-/* Identify Bison output.  */
-#define YYBISON 1
+/* Identify Bison output, and Bison version.  */
+#define YYBISON 30704
 
-/* Bison version.  */
-#define YYBISON_VERSION "3.6.4"
+/* Bison version string.  */
+#define YYBISON_VERSION "3.7.4"
 
 /* Skeleton name.  */
 #define YYSKELETON_NAME "yacc.c"
@@ -234,155 +234,7 @@ static inline void appendToVarDeclarationList(JSGlobalData* globalData, ParserAr
 #  endif
 # endif
 
-/* Use api.header.include to #include this header
-   instead of duplicating it here.  */
-#ifndef YY_JSCYY_GRAMMAR_HPP_INCLUDED
-# define YY_JSCYY_GRAMMAR_HPP_INCLUDED
-/* Debug traces.  */
-#ifndef YYDEBUG
-# define YYDEBUG 0
-#endif
-#if YYDEBUG
-extern int jscyydebug;
-#endif
-
-/* Token kinds.  */
-#ifndef YYTOKENTYPE
-# define YYTOKENTYPE
-  enum yytokentype
-  {
-    YYEMPTY = -2,
-    YYEOF = 0,                     /* "end of file"  */
-    YYerror = 256,                 /* error  */
-    YYUNDEF = 257,                 /* "invalid token"  */
-    NULLTOKEN = 258,               /* NULLTOKEN  */
-    TRUETOKEN = 259,               /* TRUETOKEN  */
-    FALSETOKEN = 260,              /* FALSETOKEN  */
-    BREAK = 261,                   /* BREAK  */
-    CASE = 262,                    /* CASE  */
-    DEFAULT = 263,                 /* DEFAULT  */
-    FOR = 264,                     /* FOR  */
-    NEW = 265,                     /* NEW  */
-    VAR = 266,                     /* VAR  */
-    CONSTTOKEN = 267,              /* CONSTTOKEN  */
-    CONTINUE = 268,                /* CONTINUE  */
-    FUNCTION = 269,                /* FUNCTION  */
-    RETURN = 270,                  /* RETURN  */
-    VOIDTOKEN = 271,               /* VOIDTOKEN  */
-    DELETETOKEN = 272,             /* DELETETOKEN  */
-    IF = 273,                      /* IF  */
-    THISTOKEN = 274,               /* THISTOKEN  */
-    DO = 275,                      /* DO  */
-    WHILE = 276,                   /* WHILE  */
-    INTOKEN = 277,                 /* INTOKEN  */
-    INSTANCEOF = 278,              /* INSTANCEOF  */
-    TYPEOF = 279,                  /* TYPEOF  */
-    SWITCH = 280,                  /* SWITCH  */
-    WITH = 281,                    /* WITH  */
-    RESERVED = 282,                /* RESERVED  */
-    THROW = 283,                   /* THROW  */
-    TRY = 284,                     /* TRY  */
-    CATCH = 285,                   /* CATCH  */
-    FINALLY = 286,                 /* FINALLY  */
-    DEBUGGER = 287,                /* DEBUGGER  */
-    IF_WITHOUT_ELSE = 288,         /* IF_WITHOUT_ELSE  */
-    ELSE = 289,                    /* ELSE  */
-    EQEQ = 290,                    /* EQEQ  */
-    NE = 291,                      /* NE  */
-    STREQ = 292,                   /* STREQ  */
-    STRNEQ = 293,                  /* STRNEQ  */
-    LE = 294,                      /* LE  */
-    GE = 295,                      /* GE  */
-    OR = 296,                      /* OR  */
-    AND = 297,                     /* AND  */
-    PLUSPLUS = 298,                /* PLUSPLUS  */
-    MINUSMINUS = 299,              /* MINUSMINUS  */
-    LSHIFT = 300,                  /* LSHIFT  */
-    RSHIFT = 301,                  /* RSHIFT  */
-    URSHIFT = 302,                 /* URSHIFT  */
-    PLUSEQUAL = 303,               /* PLUSEQUAL  */
-    MINUSEQUAL = 304,              /* MINUSEQUAL  */
-    MULTEQUAL = 305,               /* MULTEQUAL  */
-    DIVEQUAL = 306,                /* DIVEQUAL  */
-    LSHIFTEQUAL = 307,             /* LSHIFTEQUAL  */
-    RSHIFTEQUAL = 308,             /* RSHIFTEQUAL  */
-    URSHIFTEQUAL = 309,            /* URSHIFTEQUAL  */
-    ANDEQUAL = 310,                /* ANDEQUAL  */
-    MODEQUAL = 311,                /* MODEQUAL  */
-    XOREQUAL = 312,                /* XOREQUAL  */
-    OREQUAL = 313,                 /* OREQUAL  */
-    OPENBRACE = 314,               /* OPENBRACE  */
-    CLOSEBRACE = 315,              /* CLOSEBRACE  */
-    NUMBER = 316,                  /* NUMBER  */
-    IDENT = 317,                   /* IDENT  */
-    STRING = 318,                  /* STRING  */
-    AUTOPLUSPLUS = 319,            /* AUTOPLUSPLUS  */
-    AUTOMINUSMINUS = 320           /* AUTOMINUSMINUS  */
-  };
-  typedef enum yytokentype yytoken_kind_t;
-#endif
-
-/* Value type.  */
-#if ! defined YYSTYPE && ! defined YYSTYPE_IS_DECLARED
-union YYSTYPE
-{
-
-    int                 intValue;
-    double              doubleValue;
-    const Identifier*   ident;
-
-    // expression subtrees
-    ExpressionNodeInfo  expressionNode;
-    FuncDeclNodeInfo    funcDeclNode;
-    PropertyNodeInfo    propertyNode;
-    ArgumentsNodeInfo   argumentsNode;
-    ConstDeclNodeInfo   constDeclNode;
-    CaseBlockNodeInfo   caseBlockNode;
-    CaseClauseNodeInfo  caseClauseNode;
-    FuncExprNodeInfo    funcExprNode;
-
-    // statement nodes
-    StatementNodeInfo   statementNode;
-    FunctionBodyNode*   functionBodyNode;
-    ProgramNode*        programNode;
-
-    SourceElementsInfo  sourceElements;
-    PropertyListInfo    propertyList;
-    ArgumentListInfo    argumentList;
-    VarDeclListInfo     varDeclList;
-    ConstDeclListInfo   constDeclList;
-    ClauseListInfo      clauseList;
-    ElementListInfo     elementList;
-    ParameterListInfo   parameterList;
-
-    Operator            op;
-
-
-};
-typedef union YYSTYPE YYSTYPE;
-# define YYSTYPE_IS_TRIVIAL 1
-# define YYSTYPE_IS_DECLARED 1
-#endif
-
-/* Location type.  */
-#if ! defined YYLTYPE && ! defined YYLTYPE_IS_DECLARED
-typedef struct YYLTYPE YYLTYPE;
-struct YYLTYPE
-{
-  int first_line;
-  int first_column;
-  int last_line;
-  int last_column;
-};
-# define YYLTYPE_IS_DECLARED 1
-# define YYLTYPE_IS_TRIVIAL 1
-#endif
-
-
-
-int jscyyparse (void *globalPtr);
-
-#endif /* !YY_JSCYY_GRAMMAR_HPP_INCLUDED  */
+#include "Grammar.hpp"
 /* Symbol kind.  */
 enum yysymbol_kind_t
 {
@@ -1006,6 +858,7 @@ union yyalloc
 /* YYNSTATES -- Number of states.  */
 #define YYNSTATES  1082
 
+/* YYMAXUTOK -- Last valid token kind.  */
 #define YYMAXUTOK   320
 
 
@@ -2551,7 +2404,7 @@ yydestruct (const char *yymsg,
 int
 yyparse (void *globalPtr)
 {
-/* The lookahead symbol.  */
+/* Lookahead token kind.  */
 int yychar;
 
 
@@ -2570,42 +2423,37 @@ static YYLTYPE yyloc_default
 YYLTYPE yylloc = yyloc_default;
 
     /* Number of syntax errors so far.  */
-    int yynerrs;
+    int yynerrs = 0;
 
-    yy_state_fast_t yystate;
+    yy_state_fast_t yystate = 0;
     /* Number of tokens to shift before error messages enabled.  */
-    int yyerrstatus;
+    int yyerrstatus = 0;
 
-    /* The stacks and their tools:
-       'yyss': related to states.
-       'yyvs': related to semantic values.
-       'yyls': related to locations.
-
-       Refer to the stacks through separate pointers, to allow yyoverflow
+    /* Refer to the stacks through separate pointers, to allow yyoverflow
        to reallocate them elsewhere.  */
 
     /* Their size.  */
-    YYPTRDIFF_T yystacksize;
+    YYPTRDIFF_T yystacksize = YYINITDEPTH;
 
-    /* The state stack.  */
+    /* The state stack: array, bottom, top.  */
     yy_state_t yyssa[YYINITDEPTH];
-    yy_state_t *yyss;
-    yy_state_t *yyssp;
+    yy_state_t *yyss = yyssa;
+    yy_state_t *yyssp = yyss;
 
-    /* The semantic value stack.  */
+    /* The semantic value stack: array, bottom, top.  */
     YYSTYPE yyvsa[YYINITDEPTH];
-    YYSTYPE *yyvs;
-    YYSTYPE *yyvsp;
+    YYSTYPE *yyvs = yyvsa;
+    YYSTYPE *yyvsp = yyvs;
 
-    /* The location stack.  */
+    /* The location stack: array, bottom, top.  */
     YYLTYPE yylsa[YYINITDEPTH];
-    YYLTYPE *yyls;
-    YYLTYPE *yylsp;
+    YYLTYPE *yyls = yylsa;
+    YYLTYPE *yylsp = yyls;
 
   int yyn;
   /* The return value of yyparse.  */
   int yyresult;
-  /* Lookahead token as an internal (translated) token number.  */
+  /* Lookahead symbol kind.  */
   yysymbol_kind_t yytoken = YYSYMBOL_YYEMPTY;
   /* The variables used to return semantic value and location from the
      action routines.  */
@@ -2622,16 +2470,6 @@ YYLTYPE yylloc = yyloc_default;
   /* The number of symbols on the RHS of the reduced rule.
      Keep to zero when no symbol should be popped.  */
   int yylen = 0;
-
-  yynerrs = 0;
-  yystate = 0;
-  yyerrstatus = 0;
-
-  yystacksize = YYINITDEPTH;
-  yyssp = yyss = yyssa;
-  yyvsp = yyvs = yyvsa;
-  yylsp = yyls = yylsa;
-
 
   YYDPRINTF ((stderr, "Starting parse\n"));
 
@@ -2843,27 +2681,27 @@ yyreduce:
   YY_REDUCE_PRINT (yyn);
   switch (yyn)
     {
-  case 2:
+  case 2: /* Literal: NULLTOKEN  */
                                         { (yyval.expressionNode) = createNodeInfo<ExpressionNode*>(new (GLOBAL_DATA) NullNode(GLOBAL_DATA), 0, 1); }
     break;
 
-  case 3:
+  case 3: /* Literal: TRUETOKEN  */
                                         { (yyval.expressionNode) = createNodeInfo<ExpressionNode*>(new (GLOBAL_DATA) BooleanNode(GLOBAL_DATA, true), 0, 1); }
     break;
 
-  case 4:
+  case 4: /* Literal: FALSETOKEN  */
                                         { (yyval.expressionNode) = createNodeInfo<ExpressionNode*>(new (GLOBAL_DATA) BooleanNode(GLOBAL_DATA, false), 0, 1); }
     break;
 
-  case 5:
+  case 5: /* Literal: NUMBER  */
                                         { (yyval.expressionNode) = createNodeInfo<ExpressionNode*>(makeNumberNode(GLOBAL_DATA, (yyvsp[0].doubleValue)), 0, 1); }
     break;
 
-  case 6:
+  case 6: /* Literal: STRING  */
                                         { (yyval.expressionNode) = createNodeInfo<ExpressionNode*>(new (GLOBAL_DATA) StringNode(GLOBAL_DATA, *(yyvsp[0].ident)), 0, 1); }
     break;
 
-  case 7:
+  case 7: /* Literal: '/'  */
                                         {
                                             Lexer& l = *GLOBAL_DATA->lexer;
                                             const Identifier* pattern;
@@ -2877,7 +2715,7 @@ yyreduce:
                                         }
     break;
 
-  case 8:
+  case 8: /* Literal: DIVEQUAL  */
                                         {
                                             Lexer& l = *GLOBAL_DATA->lexer;
                                             const Identifier* pattern;
@@ -2891,23 +2729,23 @@ yyreduce:
                                         }
     break;
 
-  case 9:
+  case 9: /* Property: IDENT ':' AssignmentExpr  */
                                         { (yyval.propertyNode) = createNodeInfo<PropertyNode*>(new (GLOBAL_DATA) PropertyNode(GLOBAL_DATA, *(yyvsp[-2].ident), (yyvsp[0].expressionNode).m_node, PropertyNode::Constant), (yyvsp[0].expressionNode).m_features, (yyvsp[0].expressionNode).m_numConstants); }
     break;
 
-  case 10:
+  case 10: /* Property: STRING ':' AssignmentExpr  */
                                         { (yyval.propertyNode) = createNodeInfo<PropertyNode*>(new (GLOBAL_DATA) PropertyNode(GLOBAL_DATA, *(yyvsp[-2].ident), (yyvsp[0].expressionNode).m_node, PropertyNode::Constant), (yyvsp[0].expressionNode).m_features, (yyvsp[0].expressionNode).m_numConstants); }
     break;
 
-  case 11:
+  case 11: /* Property: NUMBER ':' AssignmentExpr  */
                                         { (yyval.propertyNode) = createNodeInfo<PropertyNode*>(new (GLOBAL_DATA) PropertyNode(GLOBAL_DATA, (yyvsp[-2].doubleValue), (yyvsp[0].expressionNode).m_node, PropertyNode::Constant), (yyvsp[0].expressionNode).m_features, (yyvsp[0].expressionNode).m_numConstants); }
     break;
 
-  case 12:
+  case 12: /* Property: IDENT IDENT '(' ')' OPENBRACE FunctionBody CLOSEBRACE  */
                                                              { (yyval.propertyNode) = createNodeInfo<PropertyNode*>(makeGetterOrSetterPropertyNode(GLOBAL_DATA, *(yyvsp[-6].ident), *(yyvsp[-5].ident), 0, (yyvsp[-1].functionBodyNode), GLOBAL_DATA->lexer->sourceCode((yyvsp[-2].intValue), (yyvsp[0].intValue), (yylsp[-2]).first_line)), ClosureFeature, 0); setStatementLocation((yyvsp[-1].functionBodyNode), (yylsp[-2]), (yylsp[0])); if (!(yyval.propertyNode).m_node) YYABORT; }
     break;
 
-  case 13:
+  case 13: /* Property: IDENT IDENT '(' FormalParameterList ')' OPENBRACE FunctionBody CLOSEBRACE  */
                                                              {
                                                                  (yyval.propertyNode) = createNodeInfo<PropertyNode*>(makeGetterOrSetterPropertyNode(GLOBAL_DATA, *(yyvsp[-7].ident), *(yyvsp[-6].ident), (yyvsp[-4].parameterList).m_node.head, (yyvsp[-1].functionBodyNode), GLOBAL_DATA->lexer->sourceCode((yyvsp[-2].intValue), (yyvsp[0].intValue), (yylsp[-2]).first_line)), (yyvsp[-4].parameterList).m_features | ClosureFeature, 0); 
                                                                  if ((yyvsp[-4].parameterList).m_features & ArgumentsFeature)
@@ -2918,629 +2756,629 @@ yyreduce:
                                                              }
     break;
 
-  case 14:
+  case 14: /* PropertyList: Property  */
                                         { (yyval.propertyList).m_node.head = new (GLOBAL_DATA) PropertyListNode(GLOBAL_DATA, (yyvsp[0].propertyNode).m_node); 
                                           (yyval.propertyList).m_node.tail = (yyval.propertyList).m_node.head;
                                           (yyval.propertyList).m_features = (yyvsp[0].propertyNode).m_features;
                                           (yyval.propertyList).m_numConstants = (yyvsp[0].propertyNode).m_numConstants; }
     break;
 
-  case 15:
+  case 15: /* PropertyList: PropertyList ',' Property  */
                                         { (yyval.propertyList).m_node.head = (yyvsp[-2].propertyList).m_node.head;
                                           (yyval.propertyList).m_node.tail = new (GLOBAL_DATA) PropertyListNode(GLOBAL_DATA, (yyvsp[0].propertyNode).m_node, (yyvsp[-2].propertyList).m_node.tail);
                                           (yyval.propertyList).m_features = (yyvsp[-2].propertyList).m_features | (yyvsp[0].propertyNode).m_features;
                                           (yyval.propertyList).m_numConstants = (yyvsp[-2].propertyList).m_numConstants + (yyvsp[0].propertyNode).m_numConstants; }
     break;
 
-  case 17:
+  case 17: /* PrimaryExpr: OPENBRACE CLOSEBRACE  */
                                                      { (yyval.expressionNode) = createNodeInfo<ExpressionNode*>(new (GLOBAL_DATA) ObjectLiteralNode(GLOBAL_DATA), 0, 0); }
     break;
 
-  case 18:
+  case 18: /* PrimaryExpr: OPENBRACE PropertyList CLOSEBRACE  */
                                                      { (yyval.expressionNode) = createNodeInfo<ExpressionNode*>(new (GLOBAL_DATA) ObjectLiteralNode(GLOBAL_DATA, (yyvsp[-1].propertyList).m_node.head), (yyvsp[-1].propertyList).m_features, (yyvsp[-1].propertyList).m_numConstants); }
     break;
 
-  case 19:
+  case 19: /* PrimaryExpr: OPENBRACE PropertyList ',' CLOSEBRACE  */
                                                      { (yyval.expressionNode) = createNodeInfo<ExpressionNode*>(new (GLOBAL_DATA) ObjectLiteralNode(GLOBAL_DATA, (yyvsp[-2].propertyList).m_node.head), (yyvsp[-2].propertyList).m_features, (yyvsp[-2].propertyList).m_numConstants); }
     break;
 
-  case 20:
+  case 20: /* PrimaryExprNoBrace: THISTOKEN  */
                                         { (yyval.expressionNode) = createNodeInfo<ExpressionNode*>(new (GLOBAL_DATA) ThisNode(GLOBAL_DATA), ThisFeature, 0); }
     break;
 
-  case 23:
+  case 23: /* PrimaryExprNoBrace: IDENT  */
                                         { (yyval.expressionNode) = createNodeInfo<ExpressionNode*>(new (GLOBAL_DATA) ResolveNode(GLOBAL_DATA, *(yyvsp[0].ident), (yylsp[0]).first_column), (*(yyvsp[0].ident) == GLOBAL_DATA->propertyNames->arguments) ? ArgumentsFeature : 0, 0); }
     break;
 
-  case 24:
+  case 24: /* PrimaryExprNoBrace: '(' Expr ')'  */
                                         { (yyval.expressionNode) = (yyvsp[-1].expressionNode); }
     break;
 
-  case 25:
+  case 25: /* ArrayLiteral: '[' ElisionOpt ']'  */
                                         { (yyval.expressionNode) = createNodeInfo<ExpressionNode*>(new (GLOBAL_DATA) ArrayNode(GLOBAL_DATA, (yyvsp[-1].intValue)), 0, (yyvsp[-1].intValue) ? 1 : 0); }
     break;
 
-  case 26:
+  case 26: /* ArrayLiteral: '[' ElementList ']'  */
                                         { (yyval.expressionNode) = createNodeInfo<ExpressionNode*>(new (GLOBAL_DATA) ArrayNode(GLOBAL_DATA, (yyvsp[-1].elementList).m_node.head), (yyvsp[-1].elementList).m_features, (yyvsp[-1].elementList).m_numConstants); }
     break;
 
-  case 27:
+  case 27: /* ArrayLiteral: '[' ElementList ',' ElisionOpt ']'  */
                                         { (yyval.expressionNode) = createNodeInfo<ExpressionNode*>(new (GLOBAL_DATA) ArrayNode(GLOBAL_DATA, (yyvsp[-1].intValue), (yyvsp[-3].elementList).m_node.head), (yyvsp[-3].elementList).m_features, (yyvsp[-1].intValue) ? (yyvsp[-3].elementList).m_numConstants + 1 : (yyvsp[-3].elementList).m_numConstants); }
     break;
 
-  case 28:
+  case 28: /* ElementList: ElisionOpt AssignmentExpr  */
                                         { (yyval.elementList).m_node.head = new (GLOBAL_DATA) ElementNode(GLOBAL_DATA, (yyvsp[-1].intValue), (yyvsp[0].expressionNode).m_node);
                                           (yyval.elementList).m_node.tail = (yyval.elementList).m_node.head;
                                           (yyval.elementList).m_features = (yyvsp[0].expressionNode).m_features;
                                           (yyval.elementList).m_numConstants = (yyvsp[0].expressionNode).m_numConstants; }
     break;
 
-  case 29:
+  case 29: /* ElementList: ElementList ',' ElisionOpt AssignmentExpr  */
                                         { (yyval.elementList).m_node.head = (yyvsp[-3].elementList).m_node.head;
                                           (yyval.elementList).m_node.tail = new (GLOBAL_DATA) ElementNode(GLOBAL_DATA, (yyvsp[-3].elementList).m_node.tail, (yyvsp[-1].intValue), (yyvsp[0].expressionNode).m_node);
                                           (yyval.elementList).m_features = (yyvsp[-3].elementList).m_features | (yyvsp[0].expressionNode).m_features;
                                           (yyval.elementList).m_numConstants = (yyvsp[-3].elementList).m_numConstants + (yyvsp[0].expressionNode).m_numConstants; }
     break;
 
-  case 30:
+  case 30: /* ElisionOpt: %empty  */
                                         { (yyval.intValue) = 0; }
     break;
 
-  case 32:
+  case 32: /* Elision: ','  */
                                         { (yyval.intValue) = 1; }
     break;
 
-  case 33:
+  case 33: /* Elision: Elision ','  */
                                         { (yyval.intValue) = (yyvsp[-1].intValue) + 1; }
     break;
 
-  case 35:
+  case 35: /* MemberExpr: FunctionExpr  */
                                         { (yyval.expressionNode) = createNodeInfo<ExpressionNode*>((yyvsp[0].funcExprNode).m_node, (yyvsp[0].funcExprNode).m_features, (yyvsp[0].funcExprNode).m_numConstants); }
     break;
 
-  case 36:
+  case 36: /* MemberExpr: MemberExpr '[' Expr ']'  */
                                         { BracketAccessorNode* node = new (GLOBAL_DATA) BracketAccessorNode(GLOBAL_DATA, (yyvsp[-3].expressionNode).m_node, (yyvsp[-1].expressionNode).m_node, (yyvsp[-1].expressionNode).m_features & AssignFeature);
                                           setExceptionLocation(node, (yylsp[-3]).first_column, (yylsp[-3]).last_column, (yylsp[0]).last_column);
                                           (yyval.expressionNode) = createNodeInfo<ExpressionNode*>(node, (yyvsp[-3].expressionNode).m_features | (yyvsp[-1].expressionNode).m_features, (yyvsp[-3].expressionNode).m_numConstants + (yyvsp[-1].expressionNode).m_numConstants); 
                                         }
     break;
 
-  case 37:
+  case 37: /* MemberExpr: MemberExpr '.' IDENT  */
                                         { DotAccessorNode* node = new (GLOBAL_DATA) DotAccessorNode(GLOBAL_DATA, (yyvsp[-2].expressionNode).m_node, *(yyvsp[0].ident));
                                           setExceptionLocation(node, (yylsp[-2]).first_column, (yylsp[-2]).last_column, (yylsp[0]).last_column);
                                           (yyval.expressionNode) = createNodeInfo<ExpressionNode*>(node, (yyvsp[-2].expressionNode).m_features, (yyvsp[-2].expressionNode).m_numConstants);
                                         }
     break;
 
-  case 38:
+  case 38: /* MemberExpr: NEW MemberExpr Arguments  */
                                         { NewExprNode* node = new (GLOBAL_DATA) NewExprNode(GLOBAL_DATA, (yyvsp[-1].expressionNode).m_node, (yyvsp[0].argumentsNode).m_node);
                                           setExceptionLocation(node, (yylsp[-2]).first_column, (yylsp[-1]).last_column, (yylsp[0]).last_column);
                                           (yyval.expressionNode) = createNodeInfo<ExpressionNode*>(node, (yyvsp[-1].expressionNode).m_features | (yyvsp[0].argumentsNode).m_features, (yyvsp[-1].expressionNode).m_numConstants + (yyvsp[0].argumentsNode).m_numConstants);
                                         }
     break;
 
-  case 40:
+  case 40: /* MemberExprNoBF: MemberExprNoBF '[' Expr ']'  */
                                         { BracketAccessorNode* node = new (GLOBAL_DATA) BracketAccessorNode(GLOBAL_DATA, (yyvsp[-3].expressionNode).m_node, (yyvsp[-1].expressionNode).m_node, (yyvsp[-1].expressionNode).m_features & AssignFeature);
                                           setExceptionLocation(node, (yylsp[-3]).first_column, (yylsp[-3]).last_column, (yylsp[0]).last_column);
                                           (yyval.expressionNode) = createNodeInfo<ExpressionNode*>(node, (yyvsp[-3].expressionNode).m_features | (yyvsp[-1].expressionNode).m_features, (yyvsp[-3].expressionNode).m_numConstants + (yyvsp[-1].expressionNode).m_numConstants); 
                                         }
     break;
 
-  case 41:
+  case 41: /* MemberExprNoBF: MemberExprNoBF '.' IDENT  */
                                         { DotAccessorNode* node = new (GLOBAL_DATA) DotAccessorNode(GLOBAL_DATA, (yyvsp[-2].expressionNode).m_node, *(yyvsp[0].ident));
                                           setExceptionLocation(node, (yylsp[-2]).first_column, (yylsp[-2]).last_column, (yylsp[0]).last_column);
                                           (yyval.expressionNode) = createNodeInfo<ExpressionNode*>(node, (yyvsp[-2].expressionNode).m_features, (yyvsp[-2].expressionNode).m_numConstants);
                                         }
     break;
 
-  case 42:
+  case 42: /* MemberExprNoBF: NEW MemberExpr Arguments  */
                                         { NewExprNode* node = new (GLOBAL_DATA) NewExprNode(GLOBAL_DATA, (yyvsp[-1].expressionNode).m_node, (yyvsp[0].argumentsNode).m_node);
                                           setExceptionLocation(node, (yylsp[-2]).first_column, (yylsp[-1]).last_column, (yylsp[0]).last_column);
                                           (yyval.expressionNode) = createNodeInfo<ExpressionNode*>(node, (yyvsp[-1].expressionNode).m_features | (yyvsp[0].argumentsNode).m_features, (yyvsp[-1].expressionNode).m_numConstants + (yyvsp[0].argumentsNode).m_numConstants);
                                         }
     break;
 
-  case 44:
+  case 44: /* NewExpr: NEW NewExpr  */
                                         { NewExprNode* node = new (GLOBAL_DATA) NewExprNode(GLOBAL_DATA, (yyvsp[0].expressionNode).m_node);
                                           setExceptionLocation(node, (yylsp[-1]).first_column, (yylsp[0]).last_column, (yylsp[0]).last_column);
                                           (yyval.expressionNode) = createNodeInfo<ExpressionNode*>(node, (yyvsp[0].expressionNode).m_features, (yyvsp[0].expressionNode).m_numConstants); 
                                         }
     break;
 
-  case 46:
+  case 46: /* NewExprNoBF: NEW NewExpr  */
                                         { NewExprNode* node = new (GLOBAL_DATA) NewExprNode(GLOBAL_DATA, (yyvsp[0].expressionNode).m_node);
                                           setExceptionLocation(node, (yylsp[-1]).first_column, (yylsp[0]).last_column, (yylsp[0]).last_column);
                                           (yyval.expressionNode) = createNodeInfo<ExpressionNode*>(node, (yyvsp[0].expressionNode).m_features, (yyvsp[0].expressionNode).m_numConstants);
                                         }
     break;
 
-  case 47:
+  case 47: /* CallExpr: MemberExpr Arguments  */
                                         { (yyval.expressionNode) = makeFunctionCallNode(GLOBAL_DATA, (yyvsp[-1].expressionNode), (yyvsp[0].argumentsNode), (yylsp[-1]).first_column, (yylsp[-1]).last_column, (yylsp[0]).last_column); }
     break;
 
-  case 48:
+  case 48: /* CallExpr: CallExpr Arguments  */
                                         { (yyval.expressionNode) = makeFunctionCallNode(GLOBAL_DATA, (yyvsp[-1].expressionNode), (yyvsp[0].argumentsNode), (yylsp[-1]).first_column, (yylsp[-1]).last_column, (yylsp[0]).last_column); }
     break;
 
-  case 49:
+  case 49: /* CallExpr: CallExpr '[' Expr ']'  */
                                         { BracketAccessorNode* node = new (GLOBAL_DATA) BracketAccessorNode(GLOBAL_DATA, (yyvsp[-3].expressionNode).m_node, (yyvsp[-1].expressionNode).m_node, (yyvsp[-1].expressionNode).m_features & AssignFeature);
                                           setExceptionLocation(node, (yylsp[-3]).first_column, (yylsp[-3]).last_column, (yylsp[0]).last_column);
                                           (yyval.expressionNode) = createNodeInfo<ExpressionNode*>(node, (yyvsp[-3].expressionNode).m_features | (yyvsp[-1].expressionNode).m_features, (yyvsp[-3].expressionNode).m_numConstants + (yyvsp[-1].expressionNode).m_numConstants); 
                                         }
     break;
 
-  case 50:
+  case 50: /* CallExpr: CallExpr '.' IDENT  */
                                         { DotAccessorNode* node = new (GLOBAL_DATA) DotAccessorNode(GLOBAL_DATA, (yyvsp[-2].expressionNode).m_node, *(yyvsp[0].ident));
                                           setExceptionLocation(node, (yylsp[-2]).first_column, (yylsp[-2]).last_column, (yylsp[0]).last_column);
                                           (yyval.expressionNode) = createNodeInfo<ExpressionNode*>(node, (yyvsp[-2].expressionNode).m_features, (yyvsp[-2].expressionNode).m_numConstants); }
     break;
 
-  case 51:
+  case 51: /* CallExprNoBF: MemberExprNoBF Arguments  */
                                         { (yyval.expressionNode) = makeFunctionCallNode(GLOBAL_DATA, (yyvsp[-1].expressionNode), (yyvsp[0].argumentsNode), (yylsp[-1]).first_column, (yylsp[-1]).last_column, (yylsp[0]).last_column); }
     break;
 
-  case 52:
+  case 52: /* CallExprNoBF: CallExprNoBF Arguments  */
                                         { (yyval.expressionNode) = makeFunctionCallNode(GLOBAL_DATA, (yyvsp[-1].expressionNode), (yyvsp[0].argumentsNode), (yylsp[-1]).first_column, (yylsp[-1]).last_column, (yylsp[0]).last_column); }
     break;
 
-  case 53:
+  case 53: /* CallExprNoBF: CallExprNoBF '[' Expr ']'  */
                                         { BracketAccessorNode* node = new (GLOBAL_DATA) BracketAccessorNode(GLOBAL_DATA, (yyvsp[-3].expressionNode).m_node, (yyvsp[-1].expressionNode).m_node, (yyvsp[-1].expressionNode).m_features & AssignFeature);
                                           setExceptionLocation(node, (yylsp[-3]).first_column, (yylsp[-3]).last_column, (yylsp[0]).last_column);
                                           (yyval.expressionNode) = createNodeInfo<ExpressionNode*>(node, (yyvsp[-3].expressionNode).m_features | (yyvsp[-1].expressionNode).m_features, (yyvsp[-3].expressionNode).m_numConstants + (yyvsp[-1].expressionNode).m_numConstants); 
                                         }
     break;
 
-  case 54:
+  case 54: /* CallExprNoBF: CallExprNoBF '.' IDENT  */
                                         { DotAccessorNode* node = new (GLOBAL_DATA) DotAccessorNode(GLOBAL_DATA, (yyvsp[-2].expressionNode).m_node, *(yyvsp[0].ident));
                                           setExceptionLocation(node, (yylsp[-2]).first_column, (yylsp[-2]).last_column, (yylsp[0]).last_column);
                                           (yyval.expressionNode) = createNodeInfo<ExpressionNode*>(node, (yyvsp[-2].expressionNode).m_features, (yyvsp[-2].expressionNode).m_numConstants); 
                                         }
     break;
 
-  case 55:
+  case 55: /* Arguments: '(' ')'  */
                                         { (yyval.argumentsNode) = createNodeInfo<ArgumentsNode*>(new (GLOBAL_DATA) ArgumentsNode(GLOBAL_DATA), 0, 0); }
     break;
 
-  case 56:
+  case 56: /* Arguments: '(' ArgumentList ')'  */
                                         { (yyval.argumentsNode) = createNodeInfo<ArgumentsNode*>(new (GLOBAL_DATA) ArgumentsNode(GLOBAL_DATA, (yyvsp[-1].argumentList).m_node.head), (yyvsp[-1].argumentList).m_features, (yyvsp[-1].argumentList).m_numConstants); }
     break;
 
-  case 57:
+  case 57: /* ArgumentList: AssignmentExpr  */
                                         { (yyval.argumentList).m_node.head = new (GLOBAL_DATA) ArgumentListNode(GLOBAL_DATA, (yyvsp[0].expressionNode).m_node);
                                           (yyval.argumentList).m_node.tail = (yyval.argumentList).m_node.head;
                                           (yyval.argumentList).m_features = (yyvsp[0].expressionNode).m_features;
                                           (yyval.argumentList).m_numConstants = (yyvsp[0].expressionNode).m_numConstants; }
     break;
 
-  case 58:
+  case 58: /* ArgumentList: ArgumentList ',' AssignmentExpr  */
                                         { (yyval.argumentList).m_node.head = (yyvsp[-2].argumentList).m_node.head;
                                           (yyval.argumentList).m_node.tail = new (GLOBAL_DATA) ArgumentListNode(GLOBAL_DATA, (yyvsp[-2].argumentList).m_node.tail, (yyvsp[0].expressionNode).m_node);
                                           (yyval.argumentList).m_features = (yyvsp[-2].argumentList).m_features | (yyvsp[0].expressionNode).m_features;
                                           (yyval.argumentList).m_numConstants = (yyvsp[-2].argumentList).m_numConstants + (yyvsp[0].expressionNode).m_numConstants; }
     break;
 
-  case 64:
+  case 64: /* PostfixExpr: LeftHandSideExpr PLUSPLUS  */
                                         { (yyval.expressionNode) = createNodeInfo<ExpressionNode*>(makePostfixNode(GLOBAL_DATA, (yyvsp[-1].expressionNode).m_node, OpPlusPlus, (yylsp[-1]).first_column, (yylsp[-1]).last_column, (yylsp[0]).last_column), (yyvsp[-1].expressionNode).m_features | AssignFeature, (yyvsp[-1].expressionNode).m_numConstants); }
     break;
 
-  case 65:
+  case 65: /* PostfixExpr: LeftHandSideExpr MINUSMINUS  */
                                         { (yyval.expressionNode) = createNodeInfo<ExpressionNode*>(makePostfixNode(GLOBAL_DATA, (yyvsp[-1].expressionNode).m_node, OpMinusMinus, (yylsp[-1]).first_column, (yylsp[-1]).last_column, (yylsp[0]).last_column), (yyvsp[-1].expressionNode).m_features | AssignFeature, (yyvsp[-1].expressionNode).m_numConstants); }
     break;
 
-  case 67:
+  case 67: /* PostfixExprNoBF: LeftHandSideExprNoBF PLUSPLUS  */
                                         { (yyval.expressionNode) = createNodeInfo<ExpressionNode*>(makePostfixNode(GLOBAL_DATA, (yyvsp[-1].expressionNode).m_node, OpPlusPlus, (yylsp[-1]).first_column, (yylsp[-1]).last_column, (yylsp[0]).last_column), (yyvsp[-1].expressionNode).m_features | AssignFeature, (yyvsp[-1].expressionNode).m_numConstants); }
     break;
 
-  case 68:
+  case 68: /* PostfixExprNoBF: LeftHandSideExprNoBF MINUSMINUS  */
                                         { (yyval.expressionNode) = createNodeInfo<ExpressionNode*>(makePostfixNode(GLOBAL_DATA, (yyvsp[-1].expressionNode).m_node, OpMinusMinus, (yylsp[-1]).first_column, (yylsp[-1]).last_column, (yylsp[0]).last_column), (yyvsp[-1].expressionNode).m_features | AssignFeature, (yyvsp[-1].expressionNode).m_numConstants); }
     break;
 
-  case 69:
+  case 69: /* UnaryExprCommon: DELETETOKEN UnaryExpr  */
                                         { (yyval.expressionNode) = createNodeInfo<ExpressionNode*>(makeDeleteNode(GLOBAL_DATA, (yyvsp[0].expressionNode).m_node, (yylsp[-1]).first_column, (yylsp[0]).last_column, (yylsp[0]).last_column), (yyvsp[0].expressionNode).m_features, (yyvsp[0].expressionNode).m_numConstants); }
     break;
 
-  case 70:
+  case 70: /* UnaryExprCommon: VOIDTOKEN UnaryExpr  */
                                         { (yyval.expressionNode) = createNodeInfo<ExpressionNode*>(new (GLOBAL_DATA) VoidNode(GLOBAL_DATA, (yyvsp[0].expressionNode).m_node), (yyvsp[0].expressionNode).m_features, (yyvsp[0].expressionNode).m_numConstants + 1); }
     break;
 
-  case 71:
+  case 71: /* UnaryExprCommon: TYPEOF UnaryExpr  */
                                         { (yyval.expressionNode) = createNodeInfo<ExpressionNode*>(makeTypeOfNode(GLOBAL_DATA, (yyvsp[0].expressionNode).m_node), (yyvsp[0].expressionNode).m_features, (yyvsp[0].expressionNode).m_numConstants); }
     break;
 
-  case 72:
+  case 72: /* UnaryExprCommon: PLUSPLUS UnaryExpr  */
                                         { (yyval.expressionNode) = createNodeInfo<ExpressionNode*>(makePrefixNode(GLOBAL_DATA, (yyvsp[0].expressionNode).m_node, OpPlusPlus, (yylsp[-1]).first_column, (yylsp[0]).first_column + 1, (yylsp[0]).last_column), (yyvsp[0].expressionNode).m_features | AssignFeature, (yyvsp[0].expressionNode).m_numConstants); }
     break;
 
-  case 73:
+  case 73: /* UnaryExprCommon: AUTOPLUSPLUS UnaryExpr  */
                                         { (yyval.expressionNode) = createNodeInfo<ExpressionNode*>(makePrefixNode(GLOBAL_DATA, (yyvsp[0].expressionNode).m_node, OpPlusPlus, (yylsp[-1]).first_column, (yylsp[0]).first_column + 1, (yylsp[0]).last_column), (yyvsp[0].expressionNode).m_features | AssignFeature, (yyvsp[0].expressionNode).m_numConstants); }
     break;
 
-  case 74:
+  case 74: /* UnaryExprCommon: MINUSMINUS UnaryExpr  */
                                         { (yyval.expressionNode) = createNodeInfo<ExpressionNode*>(makePrefixNode(GLOBAL_DATA, (yyvsp[0].expressionNode).m_node, OpMinusMinus, (yylsp[-1]).first_column, (yylsp[0]).first_column + 1, (yylsp[0]).last_column), (yyvsp[0].expressionNode).m_features | AssignFeature, (yyvsp[0].expressionNode).m_numConstants); }
     break;
 
-  case 75:
+  case 75: /* UnaryExprCommon: AUTOMINUSMINUS UnaryExpr  */
                                         { (yyval.expressionNode) = createNodeInfo<ExpressionNode*>(makePrefixNode(GLOBAL_DATA, (yyvsp[0].expressionNode).m_node, OpMinusMinus, (yylsp[-1]).first_column, (yylsp[0]).first_column + 1, (yylsp[0]).last_column), (yyvsp[0].expressionNode).m_features | AssignFeature, (yyvsp[0].expressionNode).m_numConstants); }
     break;
 
-  case 76:
+  case 76: /* UnaryExprCommon: '+' UnaryExpr  */
                                         { (yyval.expressionNode) = createNodeInfo<ExpressionNode*>(new (GLOBAL_DATA) UnaryPlusNode(GLOBAL_DATA, (yyvsp[0].expressionNode).m_node), (yyvsp[0].expressionNode).m_features, (yyvsp[0].expressionNode).m_numConstants); }
     break;
 
-  case 77:
+  case 77: /* UnaryExprCommon: '-' UnaryExpr  */
                                         { (yyval.expressionNode) = createNodeInfo<ExpressionNode*>(makeNegateNode(GLOBAL_DATA, (yyvsp[0].expressionNode).m_node), (yyvsp[0].expressionNode).m_features, (yyvsp[0].expressionNode).m_numConstants); }
     break;
 
-  case 78:
+  case 78: /* UnaryExprCommon: '~' UnaryExpr  */
                                         { (yyval.expressionNode) = createNodeInfo<ExpressionNode*>(makeBitwiseNotNode(GLOBAL_DATA, (yyvsp[0].expressionNode).m_node), (yyvsp[0].expressionNode).m_features, (yyvsp[0].expressionNode).m_numConstants); }
     break;
 
-  case 79:
+  case 79: /* UnaryExprCommon: '!' UnaryExpr  */
                                         { (yyval.expressionNode) = createNodeInfo<ExpressionNode*>(new (GLOBAL_DATA) LogicalNotNode(GLOBAL_DATA, (yyvsp[0].expressionNode).m_node), (yyvsp[0].expressionNode).m_features, (yyvsp[0].expressionNode).m_numConstants); }
     break;
 
-  case 85:
+  case 85: /* MultiplicativeExpr: MultiplicativeExpr '*' UnaryExpr  */
                                         { (yyval.expressionNode) = createNodeInfo<ExpressionNode*>(makeMultNode(GLOBAL_DATA, (yyvsp[-2].expressionNode).m_node, (yyvsp[0].expressionNode).m_node, (yyvsp[0].expressionNode).m_features & AssignFeature), (yyvsp[-2].expressionNode).m_features | (yyvsp[0].expressionNode).m_features, (yyvsp[-2].expressionNode).m_numConstants + (yyvsp[0].expressionNode).m_numConstants); }
     break;
 
-  case 86:
+  case 86: /* MultiplicativeExpr: MultiplicativeExpr '/' UnaryExpr  */
                                         { (yyval.expressionNode) = createNodeInfo<ExpressionNode*>(makeDivNode(GLOBAL_DATA, (yyvsp[-2].expressionNode).m_node, (yyvsp[0].expressionNode).m_node, (yyvsp[0].expressionNode).m_features & AssignFeature), (yyvsp[-2].expressionNode).m_features | (yyvsp[0].expressionNode).m_features, (yyvsp[-2].expressionNode).m_numConstants + (yyvsp[0].expressionNode).m_numConstants); }
     break;
 
-  case 87:
+  case 87: /* MultiplicativeExpr: MultiplicativeExpr '%' UnaryExpr  */
                                         { (yyval.expressionNode) = createNodeInfo<ExpressionNode*>(new (GLOBAL_DATA) ModNode(GLOBAL_DATA, (yyvsp[-2].expressionNode).m_node, (yyvsp[0].expressionNode).m_node, (yyvsp[0].expressionNode).m_features & AssignFeature), (yyvsp[-2].expressionNode).m_features | (yyvsp[0].expressionNode).m_features, (yyvsp[-2].expressionNode).m_numConstants + (yyvsp[0].expressionNode).m_numConstants); }
     break;
 
-  case 89:
+  case 89: /* MultiplicativeExprNoBF: MultiplicativeExprNoBF '*' UnaryExpr  */
                                         { (yyval.expressionNode) = createNodeInfo<ExpressionNode*>(makeMultNode(GLOBAL_DATA, (yyvsp[-2].expressionNode).m_node, (yyvsp[0].expressionNode).m_node, (yyvsp[0].expressionNode).m_features & AssignFeature), (yyvsp[-2].expressionNode).m_features | (yyvsp[0].expressionNode).m_features, (yyvsp[-2].expressionNode).m_numConstants + (yyvsp[0].expressionNode).m_numConstants); }
     break;
 
-  case 90:
+  case 90: /* MultiplicativeExprNoBF: MultiplicativeExprNoBF '/' UnaryExpr  */
                                         { (yyval.expressionNode) = createNodeInfo<ExpressionNode*>(makeDivNode(GLOBAL_DATA, (yyvsp[-2].expressionNode).m_node, (yyvsp[0].expressionNode).m_node, (yyvsp[0].expressionNode).m_features & AssignFeature), (yyvsp[-2].expressionNode).m_features | (yyvsp[0].expressionNode).m_features, (yyvsp[-2].expressionNode).m_numConstants + (yyvsp[0].expressionNode).m_numConstants); }
     break;
 
-  case 91:
+  case 91: /* MultiplicativeExprNoBF: MultiplicativeExprNoBF '%' UnaryExpr  */
                                         { (yyval.expressionNode) = createNodeInfo<ExpressionNode*>(new (GLOBAL_DATA) ModNode(GLOBAL_DATA, (yyvsp[-2].expressionNode).m_node, (yyvsp[0].expressionNode).m_node, (yyvsp[0].expressionNode).m_features & AssignFeature), (yyvsp[-2].expressionNode).m_features | (yyvsp[0].expressionNode).m_features, (yyvsp[-2].expressionNode).m_numConstants + (yyvsp[0].expressionNode).m_numConstants); }
     break;
 
-  case 93:
+  case 93: /* AdditiveExpr: AdditiveExpr '+' MultiplicativeExpr  */
                                         { (yyval.expressionNode) = createNodeInfo<ExpressionNode*>(makeAddNode(GLOBAL_DATA, (yyvsp[-2].expressionNode).m_node, (yyvsp[0].expressionNode).m_node, (yyvsp[0].expressionNode).m_features & AssignFeature), (yyvsp[-2].expressionNode).m_features | (yyvsp[0].expressionNode).m_features, (yyvsp[-2].expressionNode).m_numConstants + (yyvsp[0].expressionNode).m_numConstants); }
     break;
 
-  case 94:
+  case 94: /* AdditiveExpr: AdditiveExpr '-' MultiplicativeExpr  */
                                         { (yyval.expressionNode) = createNodeInfo<ExpressionNode*>(makeSubNode(GLOBAL_DATA, (yyvsp[-2].expressionNode).m_node, (yyvsp[0].expressionNode).m_node, (yyvsp[0].expressionNode).m_features & AssignFeature), (yyvsp[-2].expressionNode).m_features | (yyvsp[0].expressionNode).m_features, (yyvsp[-2].expressionNode).m_numConstants + (yyvsp[0].expressionNode).m_numConstants); }
     break;
 
-  case 96:
+  case 96: /* AdditiveExprNoBF: AdditiveExprNoBF '+' MultiplicativeExpr  */
                                         { (yyval.expressionNode) = createNodeInfo<ExpressionNode*>(makeAddNode(GLOBAL_DATA, (yyvsp[-2].expressionNode).m_node, (yyvsp[0].expressionNode).m_node, (yyvsp[0].expressionNode).m_features & AssignFeature), (yyvsp[-2].expressionNode).m_features | (yyvsp[0].expressionNode).m_features, (yyvsp[-2].expressionNode).m_numConstants + (yyvsp[0].expressionNode).m_numConstants); }
     break;
 
-  case 97:
+  case 97: /* AdditiveExprNoBF: AdditiveExprNoBF '-' MultiplicativeExpr  */
                                         { (yyval.expressionNode) = createNodeInfo<ExpressionNode*>(makeSubNode(GLOBAL_DATA, (yyvsp[-2].expressionNode).m_node, (yyvsp[0].expressionNode).m_node, (yyvsp[0].expressionNode).m_features & AssignFeature), (yyvsp[-2].expressionNode).m_features | (yyvsp[0].expressionNode).m_features, (yyvsp[-2].expressionNode).m_numConstants + (yyvsp[0].expressionNode).m_numConstants); }
     break;
 
-  case 99:
+  case 99: /* ShiftExpr: ShiftExpr LSHIFT AdditiveExpr  */
                                         { (yyval.expressionNode) = createNodeInfo<ExpressionNode*>(makeLeftShiftNode(GLOBAL_DATA, (yyvsp[-2].expressionNode).m_node, (yyvsp[0].expressionNode).m_node, (yyvsp[0].expressionNode).m_features & AssignFeature), (yyvsp[-2].expressionNode).m_features | (yyvsp[0].expressionNode).m_features, (yyvsp[-2].expressionNode).m_numConstants + (yyvsp[0].expressionNode).m_numConstants); }
     break;
 
-  case 100:
+  case 100: /* ShiftExpr: ShiftExpr RSHIFT AdditiveExpr  */
                                         { (yyval.expressionNode) = createNodeInfo<ExpressionNode*>(makeRightShiftNode(GLOBAL_DATA, (yyvsp[-2].expressionNode).m_node, (yyvsp[0].expressionNode).m_node, (yyvsp[0].expressionNode).m_features & AssignFeature), (yyvsp[-2].expressionNode).m_features | (yyvsp[0].expressionNode).m_features, (yyvsp[-2].expressionNode).m_numConstants + (yyvsp[0].expressionNode).m_numConstants); }
     break;
 
-  case 101:
+  case 101: /* ShiftExpr: ShiftExpr URSHIFT AdditiveExpr  */
                                         { (yyval.expressionNode) = createNodeInfo<ExpressionNode*>(new (GLOBAL_DATA) UnsignedRightShiftNode(GLOBAL_DATA, (yyvsp[-2].expressionNode).m_node, (yyvsp[0].expressionNode).m_node, (yyvsp[0].expressionNode).m_features & AssignFeature), (yyvsp[-2].expressionNode).m_features | (yyvsp[0].expressionNode).m_features, (yyvsp[-2].expressionNode).m_numConstants + (yyvsp[0].expressionNode).m_numConstants); }
     break;
 
-  case 103:
+  case 103: /* ShiftExprNoBF: ShiftExprNoBF LSHIFT AdditiveExpr  */
                                         { (yyval.expressionNode) = createNodeInfo<ExpressionNode*>(makeLeftShiftNode(GLOBAL_DATA, (yyvsp[-2].expressionNode).m_node, (yyvsp[0].expressionNode).m_node, (yyvsp[0].expressionNode).m_features & AssignFeature), (yyvsp[-2].expressionNode).m_features | (yyvsp[0].expressionNode).m_features, (yyvsp[-2].expressionNode).m_numConstants + (yyvsp[0].expressionNode).m_numConstants); }
     break;
 
-  case 104:
+  case 104: /* ShiftExprNoBF: ShiftExprNoBF RSHIFT AdditiveExpr  */
                                         { (yyval.expressionNode) = createNodeInfo<ExpressionNode*>(makeRightShiftNode(GLOBAL_DATA, (yyvsp[-2].expressionNode).m_node, (yyvsp[0].expressionNode).m_node, (yyvsp[0].expressionNode).m_features & AssignFeature), (yyvsp[-2].expressionNode).m_features | (yyvsp[0].expressionNode).m_features, (yyvsp[-2].expressionNode).m_numConstants + (yyvsp[0].expressionNode).m_numConstants); }
     break;
 
-  case 105:
+  case 105: /* ShiftExprNoBF: ShiftExprNoBF URSHIFT AdditiveExpr  */
                                         { (yyval.expressionNode) = createNodeInfo<ExpressionNode*>(new (GLOBAL_DATA) UnsignedRightShiftNode(GLOBAL_DATA, (yyvsp[-2].expressionNode).m_node, (yyvsp[0].expressionNode).m_node, (yyvsp[0].expressionNode).m_features & AssignFeature), (yyvsp[-2].expressionNode).m_features | (yyvsp[0].expressionNode).m_features, (yyvsp[-2].expressionNode).m_numConstants + (yyvsp[0].expressionNode).m_numConstants); }
     break;
 
-  case 107:
+  case 107: /* RelationalExpr: RelationalExpr '<' ShiftExpr  */
                                         { (yyval.expressionNode) = createNodeInfo<ExpressionNode*>(new (GLOBAL_DATA) LessNode(GLOBAL_DATA, (yyvsp[-2].expressionNode).m_node, (yyvsp[0].expressionNode).m_node, (yyvsp[0].expressionNode).m_features & AssignFeature), (yyvsp[-2].expressionNode).m_features | (yyvsp[0].expressionNode).m_features, (yyvsp[-2].expressionNode).m_numConstants + (yyvsp[0].expressionNode).m_numConstants); }
     break;
 
-  case 108:
+  case 108: /* RelationalExpr: RelationalExpr '>' ShiftExpr  */
                                         { (yyval.expressionNode) = createNodeInfo<ExpressionNode*>(new (GLOBAL_DATA) GreaterNode(GLOBAL_DATA, (yyvsp[-2].expressionNode).m_node, (yyvsp[0].expressionNode).m_node, (yyvsp[0].expressionNode).m_features & AssignFeature), (yyvsp[-2].expressionNode).m_features | (yyvsp[0].expressionNode).m_features, (yyvsp[-2].expressionNode).m_numConstants + (yyvsp[0].expressionNode).m_numConstants); }
     break;
 
-  case 109:
+  case 109: /* RelationalExpr: RelationalExpr LE ShiftExpr  */
                                         { (yyval.expressionNode) = createNodeInfo<ExpressionNode*>(new (GLOBAL_DATA) LessEqNode(GLOBAL_DATA, (yyvsp[-2].expressionNode).m_node, (yyvsp[0].expressionNode).m_node, (yyvsp[0].expressionNode).m_features & AssignFeature), (yyvsp[-2].expressionNode).m_features | (yyvsp[0].expressionNode).m_features, (yyvsp[-2].expressionNode).m_numConstants + (yyvsp[0].expressionNode).m_numConstants); }
     break;
 
-  case 110:
+  case 110: /* RelationalExpr: RelationalExpr GE ShiftExpr  */
                                         { (yyval.expressionNode) = createNodeInfo<ExpressionNode*>(new (GLOBAL_DATA) GreaterEqNode(GLOBAL_DATA, (yyvsp[-2].expressionNode).m_node, (yyvsp[0].expressionNode).m_node, (yyvsp[0].expressionNode).m_features & AssignFeature), (yyvsp[-2].expressionNode).m_features | (yyvsp[0].expressionNode).m_features, (yyvsp[-2].expressionNode).m_numConstants + (yyvsp[0].expressionNode).m_numConstants); }
     break;
 
-  case 111:
+  case 111: /* RelationalExpr: RelationalExpr INSTANCEOF ShiftExpr  */
                                         { InstanceOfNode* node = new (GLOBAL_DATA) InstanceOfNode(GLOBAL_DATA, (yyvsp[-2].expressionNode).m_node, (yyvsp[0].expressionNode).m_node, (yyvsp[0].expressionNode).m_features & AssignFeature);
                                           setExceptionLocation(node, (yylsp[-2]).first_column, (yylsp[0]).first_column, (yylsp[0]).last_column);  
                                           (yyval.expressionNode) = createNodeInfo<ExpressionNode*>(node, (yyvsp[-2].expressionNode).m_features | (yyvsp[0].expressionNode).m_features, (yyvsp[-2].expressionNode).m_numConstants + (yyvsp[0].expressionNode).m_numConstants); }
     break;
 
-  case 112:
+  case 112: /* RelationalExpr: RelationalExpr INTOKEN ShiftExpr  */
                                         { InNode* node = new (GLOBAL_DATA) InNode(GLOBAL_DATA, (yyvsp[-2].expressionNode).m_node, (yyvsp[0].expressionNode).m_node, (yyvsp[0].expressionNode).m_features & AssignFeature);
                                           setExceptionLocation(node, (yylsp[-2]).first_column, (yylsp[0]).first_column, (yylsp[0]).last_column);  
                                           (yyval.expressionNode) = createNodeInfo<ExpressionNode*>(node, (yyvsp[-2].expressionNode).m_features | (yyvsp[0].expressionNode).m_features, (yyvsp[-2].expressionNode).m_numConstants + (yyvsp[0].expressionNode).m_numConstants); }
     break;
 
-  case 114:
+  case 114: /* RelationalExprNoIn: RelationalExprNoIn '<' ShiftExpr  */
                                         { (yyval.expressionNode) = createNodeInfo<ExpressionNode*>(new (GLOBAL_DATA) LessNode(GLOBAL_DATA, (yyvsp[-2].expressionNode).m_node, (yyvsp[0].expressionNode).m_node, (yyvsp[0].expressionNode).m_features & AssignFeature), (yyvsp[-2].expressionNode).m_features | (yyvsp[0].expressionNode).m_features, (yyvsp[-2].expressionNode).m_numConstants + (yyvsp[0].expressionNode).m_numConstants); }
     break;
 
-  case 115:
+  case 115: /* RelationalExprNoIn: RelationalExprNoIn '>' ShiftExpr  */
                                         { (yyval.expressionNode) = createNodeInfo<ExpressionNode*>(new (GLOBAL_DATA) GreaterNode(GLOBAL_DATA, (yyvsp[-2].expressionNode).m_node, (yyvsp[0].expressionNode).m_node, (yyvsp[0].expressionNode).m_features & AssignFeature), (yyvsp[-2].expressionNode).m_features | (yyvsp[0].expressionNode).m_features, (yyvsp[-2].expressionNode).m_numConstants + (yyvsp[0].expressionNode).m_numConstants); }
     break;
 
-  case 116:
+  case 116: /* RelationalExprNoIn: RelationalExprNoIn LE ShiftExpr  */
                                         { (yyval.expressionNode) = createNodeInfo<ExpressionNode*>(new (GLOBAL_DATA) LessEqNode(GLOBAL_DATA, (yyvsp[-2].expressionNode).m_node, (yyvsp[0].expressionNode).m_node, (yyvsp[0].expressionNode).m_features & AssignFeature), (yyvsp[-2].expressionNode).m_features | (yyvsp[0].expressionNode).m_features, (yyvsp[-2].expressionNode).m_numConstants + (yyvsp[0].expressionNode).m_numConstants); }
     break;
 
-  case 117:
+  case 117: /* RelationalExprNoIn: RelationalExprNoIn GE ShiftExpr  */
                                         { (yyval.expressionNode) = createNodeInfo<ExpressionNode*>(new (GLOBAL_DATA) GreaterEqNode(GLOBAL_DATA, (yyvsp[-2].expressionNode).m_node, (yyvsp[0].expressionNode).m_node, (yyvsp[0].expressionNode).m_features & AssignFeature), (yyvsp[-2].expressionNode).m_features | (yyvsp[0].expressionNode).m_features, (yyvsp[-2].expressionNode).m_numConstants + (yyvsp[0].expressionNode).m_numConstants); }
     break;
 
-  case 118:
+  case 118: /* RelationalExprNoIn: RelationalExprNoIn INSTANCEOF ShiftExpr  */
                                         { InstanceOfNode* node = new (GLOBAL_DATA) InstanceOfNode(GLOBAL_DATA, (yyvsp[-2].expressionNode).m_node, (yyvsp[0].expressionNode).m_node, (yyvsp[0].expressionNode).m_features & AssignFeature);
                                           setExceptionLocation(node, (yylsp[-2]).first_column, (yylsp[0]).first_column, (yylsp[0]).last_column);  
                                           (yyval.expressionNode) = createNodeInfo<ExpressionNode*>(node, (yyvsp[-2].expressionNode).m_features | (yyvsp[0].expressionNode).m_features, (yyvsp[-2].expressionNode).m_numConstants + (yyvsp[0].expressionNode).m_numConstants); }
     break;
 
-  case 120:
+  case 120: /* RelationalExprNoBF: RelationalExprNoBF '<' ShiftExpr  */
                                         { (yyval.expressionNode) = createNodeInfo<ExpressionNode*>(new (GLOBAL_DATA) LessNode(GLOBAL_DATA, (yyvsp[-2].expressionNode).m_node, (yyvsp[0].expressionNode).m_node, (yyvsp[0].expressionNode).m_features & AssignFeature), (yyvsp[-2].expressionNode).m_features | (yyvsp[0].expressionNode).m_features, (yyvsp[-2].expressionNode).m_numConstants + (yyvsp[0].expressionNode).m_numConstants); }
     break;
 
-  case 121:
+  case 121: /* RelationalExprNoBF: RelationalExprNoBF '>' ShiftExpr  */
                                         { (yyval.expressionNode) = createNodeInfo<ExpressionNode*>(new (GLOBAL_DATA) GreaterNode(GLOBAL_DATA, (yyvsp[-2].expressionNode).m_node, (yyvsp[0].expressionNode).m_node, (yyvsp[0].expressionNode).m_features & AssignFeature), (yyvsp[-2].expressionNode).m_features | (yyvsp[0].expressionNode).m_features, (yyvsp[-2].expressionNode).m_numConstants + (yyvsp[0].expressionNode).m_numConstants); }
     break;
 
-  case 122:
+  case 122: /* RelationalExprNoBF: RelationalExprNoBF LE ShiftExpr  */
                                         { (yyval.expressionNode) = createNodeInfo<ExpressionNode*>(new (GLOBAL_DATA) LessEqNode(GLOBAL_DATA, (yyvsp[-2].expressionNode).m_node, (yyvsp[0].expressionNode).m_node, (yyvsp[0].expressionNode).m_features & AssignFeature), (yyvsp[-2].expressionNode).m_features | (yyvsp[0].expressionNode).m_features, (yyvsp[-2].expressionNode).m_numConstants + (yyvsp[0].expressionNode).m_numConstants); }
     break;
 
-  case 123:
+  case 123: /* RelationalExprNoBF: RelationalExprNoBF GE ShiftExpr  */
                                         { (yyval.expressionNode) = createNodeInfo<ExpressionNode*>(new (GLOBAL_DATA) GreaterEqNode(GLOBAL_DATA, (yyvsp[-2].expressionNode).m_node, (yyvsp[0].expressionNode).m_node, (yyvsp[0].expressionNode).m_features & AssignFeature), (yyvsp[-2].expressionNode).m_features | (yyvsp[0].expressionNode).m_features, (yyvsp[-2].expressionNode).m_numConstants + (yyvsp[0].expressionNode).m_numConstants); }
     break;
 
-  case 124:
+  case 124: /* RelationalExprNoBF: RelationalExprNoBF INSTANCEOF ShiftExpr  */
                                         { InstanceOfNode* node = new (GLOBAL_DATA) InstanceOfNode(GLOBAL_DATA, (yyvsp[-2].expressionNode).m_node, (yyvsp[0].expressionNode).m_node, (yyvsp[0].expressionNode).m_features & AssignFeature);
                                           setExceptionLocation(node, (yylsp[-2]).first_column, (yylsp[0]).first_column, (yylsp[0]).last_column);  
                                           (yyval.expressionNode) = createNodeInfo<ExpressionNode*>(node, (yyvsp[-2].expressionNode).m_features | (yyvsp[0].expressionNode).m_features, (yyvsp[-2].expressionNode).m_numConstants + (yyvsp[0].expressionNode).m_numConstants); }
     break;
 
-  case 125:
+  case 125: /* RelationalExprNoBF: RelationalExprNoBF INTOKEN ShiftExpr  */
                                         { InNode* node = new (GLOBAL_DATA) InNode(GLOBAL_DATA, (yyvsp[-2].expressionNode).m_node, (yyvsp[0].expressionNode).m_node, (yyvsp[0].expressionNode).m_features & AssignFeature);
                                           setExceptionLocation(node, (yylsp[-2]).first_column, (yylsp[0]).first_column, (yylsp[0]).last_column);  
                                           (yyval.expressionNode) = createNodeInfo<ExpressionNode*>(node, (yyvsp[-2].expressionNode).m_features | (yyvsp[0].expressionNode).m_features, (yyvsp[-2].expressionNode).m_numConstants + (yyvsp[0].expressionNode).m_numConstants); }
     break;
 
-  case 127:
+  case 127: /* EqualityExpr: EqualityExpr EQEQ RelationalExpr  */
                                         { (yyval.expressionNode) = createNodeInfo<ExpressionNode*>(new (GLOBAL_DATA) EqualNode(GLOBAL_DATA, (yyvsp[-2].expressionNode).m_node, (yyvsp[0].expressionNode).m_node, (yyvsp[0].expressionNode).m_features & AssignFeature), (yyvsp[-2].expressionNode).m_features | (yyvsp[0].expressionNode).m_features, (yyvsp[-2].expressionNode).m_numConstants + (yyvsp[0].expressionNode).m_numConstants); }
     break;
 
-  case 128:
+  case 128: /* EqualityExpr: EqualityExpr NE RelationalExpr  */
                                         { (yyval.expressionNode) = createNodeInfo<ExpressionNode*>(new (GLOBAL_DATA) NotEqualNode(GLOBAL_DATA, (yyvsp[-2].expressionNode).m_node, (yyvsp[0].expressionNode).m_node, (yyvsp[0].expressionNode).m_features & AssignFeature), (yyvsp[-2].expressionNode).m_features | (yyvsp[0].expressionNode).m_features, (yyvsp[-2].expressionNode).m_numConstants + (yyvsp[0].expressionNode).m_numConstants); }
     break;
 
-  case 129:
+  case 129: /* EqualityExpr: EqualityExpr STREQ RelationalExpr  */
                                         { (yyval.expressionNode) = createNodeInfo<ExpressionNode*>(new (GLOBAL_DATA) StrictEqualNode(GLOBAL_DATA, (yyvsp[-2].expressionNode).m_node, (yyvsp[0].expressionNode).m_node, (yyvsp[0].expressionNode).m_features & AssignFeature), (yyvsp[-2].expressionNode).m_features | (yyvsp[0].expressionNode).m_features, (yyvsp[-2].expressionNode).m_numConstants + (yyvsp[0].expressionNode).m_numConstants); }
     break;
 
-  case 130:
+  case 130: /* EqualityExpr: EqualityExpr STRNEQ RelationalExpr  */
                                         { (yyval.expressionNode) = createNodeInfo<ExpressionNode*>(new (GLOBAL_DATA) NotStrictEqualNode(GLOBAL_DATA, (yyvsp[-2].expressionNode).m_node, (yyvsp[0].expressionNode).m_node, (yyvsp[0].expressionNode).m_features & AssignFeature), (yyvsp[-2].expressionNode).m_features | (yyvsp[0].expressionNode).m_features, (yyvsp[-2].expressionNode).m_numConstants + (yyvsp[0].expressionNode).m_numConstants); }
     break;
 
-  case 132:
+  case 132: /* EqualityExprNoIn: EqualityExprNoIn EQEQ RelationalExprNoIn  */
                                         { (yyval.expressionNode) = createNodeInfo<ExpressionNode*>(new (GLOBAL_DATA) EqualNode(GLOBAL_DATA, (yyvsp[-2].expressionNode).m_node, (yyvsp[0].expressionNode).m_node, (yyvsp[0].expressionNode).m_features & AssignFeature), (yyvsp[-2].expressionNode).m_features | (yyvsp[0].expressionNode).m_features, (yyvsp[-2].expressionNode).m_numConstants + (yyvsp[0].expressionNode).m_numConstants); }
     break;
 
-  case 133:
+  case 133: /* EqualityExprNoIn: EqualityExprNoIn NE RelationalExprNoIn  */
                                         { (yyval.expressionNode) = createNodeInfo<ExpressionNode*>(new (GLOBAL_DATA) NotEqualNode(GLOBAL_DATA, (yyvsp[-2].expressionNode).m_node, (yyvsp[0].expressionNode).m_node, (yyvsp[0].expressionNode).m_features & AssignFeature), (yyvsp[-2].expressionNode).m_features | (yyvsp[0].expressionNode).m_features, (yyvsp[-2].expressionNode).m_numConstants + (yyvsp[0].expressionNode).m_numConstants); }
     break;
 
-  case 134:
+  case 134: /* EqualityExprNoIn: EqualityExprNoIn STREQ RelationalExprNoIn  */
                                         { (yyval.expressionNode) = createNodeInfo<ExpressionNode*>(new (GLOBAL_DATA) StrictEqualNode(GLOBAL_DATA, (yyvsp[-2].expressionNode).m_node, (yyvsp[0].expressionNode).m_node, (yyvsp[0].expressionNode).m_features & AssignFeature), (yyvsp[-2].expressionNode).m_features | (yyvsp[0].expressionNode).m_features, (yyvsp[-2].expressionNode).m_numConstants + (yyvsp[0].expressionNode).m_numConstants); }
     break;
 
-  case 135:
+  case 135: /* EqualityExprNoIn: EqualityExprNoIn STRNEQ RelationalExprNoIn  */
                                         { (yyval.expressionNode) = createNodeInfo<ExpressionNode*>(new (GLOBAL_DATA) NotStrictEqualNode(GLOBAL_DATA, (yyvsp[-2].expressionNode).m_node, (yyvsp[0].expressionNode).m_node, (yyvsp[0].expressionNode).m_features & AssignFeature), (yyvsp[-2].expressionNode).m_features | (yyvsp[0].expressionNode).m_features, (yyvsp[-2].expressionNode).m_numConstants + (yyvsp[0].expressionNode).m_numConstants); }
     break;
 
-  case 137:
+  case 137: /* EqualityExprNoBF: EqualityExprNoBF EQEQ RelationalExpr  */
                                         { (yyval.expressionNode) = createNodeInfo<ExpressionNode*>(new (GLOBAL_DATA) EqualNode(GLOBAL_DATA, (yyvsp[-2].expressionNode).m_node, (yyvsp[0].expressionNode).m_node, (yyvsp[0].expressionNode).m_features & AssignFeature), (yyvsp[-2].expressionNode).m_features | (yyvsp[0].expressionNode).m_features, (yyvsp[-2].expressionNode).m_numConstants + (yyvsp[0].expressionNode).m_numConstants); }
     break;
 
-  case 138:
+  case 138: /* EqualityExprNoBF: EqualityExprNoBF NE RelationalExpr  */
                                         { (yyval.expressionNode) = createNodeInfo<ExpressionNode*>(new (GLOBAL_DATA) NotEqualNode(GLOBAL_DATA, (yyvsp[-2].expressionNode).m_node, (yyvsp[0].expressionNode).m_node, (yyvsp[0].expressionNode).m_features & AssignFeature), (yyvsp[-2].expressionNode).m_features | (yyvsp[0].expressionNode).m_features, (yyvsp[-2].expressionNode).m_numConstants + (yyvsp[0].expressionNode).m_numConstants); }
     break;
 
-  case 139:
+  case 139: /* EqualityExprNoBF: EqualityExprNoBF STREQ RelationalExpr  */
                                         { (yyval.expressionNode) = createNodeInfo<ExpressionNode*>(new (GLOBAL_DATA) StrictEqualNode(GLOBAL_DATA, (yyvsp[-2].expressionNode).m_node, (yyvsp[0].expressionNode).m_node, (yyvsp[0].expressionNode).m_features & AssignFeature), (yyvsp[-2].expressionNode).m_features | (yyvsp[0].expressionNode).m_features, (yyvsp[-2].expressionNode).m_numConstants + (yyvsp[0].expressionNode).m_numConstants); }
     break;
 
-  case 140:
+  case 140: /* EqualityExprNoBF: EqualityExprNoBF STRNEQ RelationalExpr  */
                                         { (yyval.expressionNode) = createNodeInfo<ExpressionNode*>(new (GLOBAL_DATA) NotStrictEqualNode(GLOBAL_DATA, (yyvsp[-2].expressionNode).m_node, (yyvsp[0].expressionNode).m_node, (yyvsp[0].expressionNode).m_features & AssignFeature), (yyvsp[-2].expressionNode).m_features | (yyvsp[0].expressionNode).m_features, (yyvsp[-2].expressionNode).m_numConstants + (yyvsp[0].expressionNode).m_numConstants); }
     break;
 
-  case 142:
+  case 142: /* BitwiseANDExpr: BitwiseANDExpr '&' EqualityExpr  */
                                         { (yyval.expressionNode) = createNodeInfo<ExpressionNode*>(new (GLOBAL_DATA) BitAndNode(GLOBAL_DATA, (yyvsp[-2].expressionNode).m_node, (yyvsp[0].expressionNode).m_node, (yyvsp[0].expressionNode).m_features & AssignFeature), (yyvsp[-2].expressionNode).m_features | (yyvsp[0].expressionNode).m_features, (yyvsp[-2].expressionNode).m_numConstants + (yyvsp[0].expressionNode).m_numConstants); }
     break;
 
-  case 144:
+  case 144: /* BitwiseANDExprNoIn: BitwiseANDExprNoIn '&' EqualityExprNoIn  */
                                         { (yyval.expressionNode) = createNodeInfo<ExpressionNode*>(new (GLOBAL_DATA) BitAndNode(GLOBAL_DATA, (yyvsp[-2].expressionNode).m_node, (yyvsp[0].expressionNode).m_node, (yyvsp[0].expressionNode).m_features & AssignFeature), (yyvsp[-2].expressionNode).m_features | (yyvsp[0].expressionNode).m_features, (yyvsp[-2].expressionNode).m_numConstants + (yyvsp[0].expressionNode).m_numConstants); }
     break;
 
-  case 146:
+  case 146: /* BitwiseANDExprNoBF: BitwiseANDExprNoBF '&' EqualityExpr  */
                                         { (yyval.expressionNode) = createNodeInfo<ExpressionNode*>(new (GLOBAL_DATA) BitAndNode(GLOBAL_DATA, (yyvsp[-2].expressionNode).m_node, (yyvsp[0].expressionNode).m_node, (yyvsp[0].expressionNode).m_features & AssignFeature), (yyvsp[-2].expressionNode).m_features | (yyvsp[0].expressionNode).m_features, (yyvsp[-2].expressionNode).m_numConstants + (yyvsp[0].expressionNode).m_numConstants); }
     break;
 
-  case 148:
+  case 148: /* BitwiseXORExpr: BitwiseXORExpr '^' BitwiseANDExpr  */
                                         { (yyval.expressionNode) = createNodeInfo<ExpressionNode*>(new (GLOBAL_DATA) BitXOrNode(GLOBAL_DATA, (yyvsp[-2].expressionNode).m_node, (yyvsp[0].expressionNode).m_node, (yyvsp[0].expressionNode).m_features & AssignFeature), (yyvsp[-2].expressionNode).m_features | (yyvsp[0].expressionNode).m_features, (yyvsp[-2].expressionNode).m_numConstants + (yyvsp[0].expressionNode).m_numConstants); }
     break;
 
-  case 150:
+  case 150: /* BitwiseXORExprNoIn: BitwiseXORExprNoIn '^' BitwiseANDExprNoIn  */
                                         { (yyval.expressionNode) = createNodeInfo<ExpressionNode*>(new (GLOBAL_DATA) BitXOrNode(GLOBAL_DATA, (yyvsp[-2].expressionNode).m_node, (yyvsp[0].expressionNode).m_node, (yyvsp[0].expressionNode).m_features & AssignFeature), (yyvsp[-2].expressionNode).m_features | (yyvsp[0].expressionNode).m_features, (yyvsp[-2].expressionNode).m_numConstants + (yyvsp[0].expressionNode).m_numConstants); }
     break;
 
-  case 152:
+  case 152: /* BitwiseXORExprNoBF: BitwiseXORExprNoBF '^' BitwiseANDExpr  */
                                         { (yyval.expressionNode) = createNodeInfo<ExpressionNode*>(new (GLOBAL_DATA) BitXOrNode(GLOBAL_DATA, (yyvsp[-2].expressionNode).m_node, (yyvsp[0].expressionNode).m_node, (yyvsp[0].expressionNode).m_features & AssignFeature), (yyvsp[-2].expressionNode).m_features | (yyvsp[0].expressionNode).m_features, (yyvsp[-2].expressionNode).m_numConstants + (yyvsp[0].expressionNode).m_numConstants); }
     break;
 
-  case 154:
+  case 154: /* BitwiseORExpr: BitwiseORExpr '|' BitwiseXORExpr  */
                                         { (yyval.expressionNode) = createNodeInfo<ExpressionNode*>(new (GLOBAL_DATA) BitOrNode(GLOBAL_DATA, (yyvsp[-2].expressionNode).m_node, (yyvsp[0].expressionNode).m_node, (yyvsp[0].expressionNode).m_features & AssignFeature), (yyvsp[-2].expressionNode).m_features | (yyvsp[0].expressionNode).m_features, (yyvsp[-2].expressionNode).m_numConstants + (yyvsp[0].expressionNode).m_numConstants); }
     break;
 
-  case 156:
+  case 156: /* BitwiseORExprNoIn: BitwiseORExprNoIn '|' BitwiseXORExprNoIn  */
                                         { (yyval.expressionNode) = createNodeInfo<ExpressionNode*>(new (GLOBAL_DATA) BitOrNode(GLOBAL_DATA, (yyvsp[-2].expressionNode).m_node, (yyvsp[0].expressionNode).m_node, (yyvsp[0].expressionNode).m_features & AssignFeature), (yyvsp[-2].expressionNode).m_features | (yyvsp[0].expressionNode).m_features, (yyvsp[-2].expressionNode).m_numConstants + (yyvsp[0].expressionNode).m_numConstants); }
     break;
 
-  case 158:
+  case 158: /* BitwiseORExprNoBF: BitwiseORExprNoBF '|' BitwiseXORExpr  */
                                         { (yyval.expressionNode) = createNodeInfo<ExpressionNode*>(new (GLOBAL_DATA) BitOrNode(GLOBAL_DATA, (yyvsp[-2].expressionNode).m_node, (yyvsp[0].expressionNode).m_node, (yyvsp[0].expressionNode).m_features & AssignFeature), (yyvsp[-2].expressionNode).m_features | (yyvsp[0].expressionNode).m_features, (yyvsp[-2].expressionNode).m_numConstants + (yyvsp[0].expressionNode).m_numConstants); }
     break;
 
-  case 160:
+  case 160: /* LogicalANDExpr: LogicalANDExpr AND BitwiseORExpr  */
                                         { (yyval.expressionNode) = createNodeInfo<ExpressionNode*>(new (GLOBAL_DATA) LogicalOpNode(GLOBAL_DATA, (yyvsp[-2].expressionNode).m_node, (yyvsp[0].expressionNode).m_node, OpLogicalAnd), (yyvsp[-2].expressionNode).m_features | (yyvsp[0].expressionNode).m_features, (yyvsp[-2].expressionNode).m_numConstants + (yyvsp[0].expressionNode).m_numConstants); }
     break;
 
-  case 162:
+  case 162: /* LogicalANDExprNoIn: LogicalANDExprNoIn AND BitwiseORExprNoIn  */
                                         { (yyval.expressionNode) = createNodeInfo<ExpressionNode*>(new (GLOBAL_DATA) LogicalOpNode(GLOBAL_DATA, (yyvsp[-2].expressionNode).m_node, (yyvsp[0].expressionNode).m_node, OpLogicalAnd), (yyvsp[-2].expressionNode).m_features | (yyvsp[0].expressionNode).m_features, (yyvsp[-2].expressionNode).m_numConstants + (yyvsp[0].expressionNode).m_numConstants); }
     break;
 
-  case 164:
+  case 164: /* LogicalANDExprNoBF: LogicalANDExprNoBF AND BitwiseORExpr  */
                                         { (yyval.expressionNode) = createNodeInfo<ExpressionNode*>(new (GLOBAL_DATA) LogicalOpNode(GLOBAL_DATA, (yyvsp[-2].expressionNode).m_node, (yyvsp[0].expressionNode).m_node, OpLogicalAnd), (yyvsp[-2].expressionNode).m_features | (yyvsp[0].expressionNode).m_features, (yyvsp[-2].expressionNode).m_numConstants + (yyvsp[0].expressionNode).m_numConstants); }
     break;
 
-  case 166:
+  case 166: /* LogicalORExpr: LogicalORExpr OR LogicalANDExpr  */
                                         { (yyval.expressionNode) = createNodeInfo<ExpressionNode*>(new (GLOBAL_DATA) LogicalOpNode(GLOBAL_DATA, (yyvsp[-2].expressionNode).m_node, (yyvsp[0].expressionNode).m_node, OpLogicalOr), (yyvsp[-2].expressionNode).m_features | (yyvsp[0].expressionNode).m_features, (yyvsp[-2].expressionNode).m_numConstants + (yyvsp[0].expressionNode).m_numConstants); }
     break;
 
-  case 168:
+  case 168: /* LogicalORExprNoIn: LogicalORExprNoIn OR LogicalANDExprNoIn  */
                                         { (yyval.expressionNode) = createNodeInfo<ExpressionNode*>(new (GLOBAL_DATA) LogicalOpNode(GLOBAL_DATA, (yyvsp[-2].expressionNode).m_node, (yyvsp[0].expressionNode).m_node, OpLogicalOr), (yyvsp[-2].expressionNode).m_features | (yyvsp[0].expressionNode).m_features, (yyvsp[-2].expressionNode).m_numConstants + (yyvsp[0].expressionNode).m_numConstants); }
     break;
 
-  case 170:
+  case 170: /* LogicalORExprNoBF: LogicalORExprNoBF OR LogicalANDExpr  */
                                         { (yyval.expressionNode) = createNodeInfo<ExpressionNode*>(new (GLOBAL_DATA) LogicalOpNode(GLOBAL_DATA, (yyvsp[-2].expressionNode).m_node, (yyvsp[0].expressionNode).m_node, OpLogicalOr), (yyvsp[-2].expressionNode).m_features | (yyvsp[0].expressionNode).m_features, (yyvsp[-2].expressionNode).m_numConstants + (yyvsp[0].expressionNode).m_numConstants); }
     break;
 
-  case 172:
+  case 172: /* ConditionalExpr: LogicalORExpr '?' AssignmentExpr ':' AssignmentExpr  */
                                         { (yyval.expressionNode) = createNodeInfo<ExpressionNode*>(new (GLOBAL_DATA) ConditionalNode(GLOBAL_DATA, (yyvsp[-4].expressionNode).m_node, (yyvsp[-2].expressionNode).m_node, (yyvsp[0].expressionNode).m_node), (yyvsp[-4].expressionNode).m_features | (yyvsp[-2].expressionNode).m_features | (yyvsp[0].expressionNode).m_features, (yyvsp[-4].expressionNode).m_numConstants + (yyvsp[-2].expressionNode).m_numConstants + (yyvsp[0].expressionNode).m_numConstants); }
     break;
 
-  case 174:
+  case 174: /* ConditionalExprNoIn: LogicalORExprNoIn '?' AssignmentExprNoIn ':' AssignmentExprNoIn  */
                                         { (yyval.expressionNode) = createNodeInfo<ExpressionNode*>(new (GLOBAL_DATA) ConditionalNode(GLOBAL_DATA, (yyvsp[-4].expressionNode).m_node, (yyvsp[-2].expressionNode).m_node, (yyvsp[0].expressionNode).m_node), (yyvsp[-4].expressionNode).m_features | (yyvsp[-2].expressionNode).m_features | (yyvsp[0].expressionNode).m_features, (yyvsp[-4].expressionNode).m_numConstants + (yyvsp[-2].expressionNode).m_numConstants + (yyvsp[0].expressionNode).m_numConstants); }
     break;
 
-  case 176:
+  case 176: /* ConditionalExprNoBF: LogicalORExprNoBF '?' AssignmentExpr ':' AssignmentExpr  */
                                         { (yyval.expressionNode) = createNodeInfo<ExpressionNode*>(new (GLOBAL_DATA) ConditionalNode(GLOBAL_DATA, (yyvsp[-4].expressionNode).m_node, (yyvsp[-2].expressionNode).m_node, (yyvsp[0].expressionNode).m_node), (yyvsp[-4].expressionNode).m_features | (yyvsp[-2].expressionNode).m_features | (yyvsp[0].expressionNode).m_features, (yyvsp[-4].expressionNode).m_numConstants + (yyvsp[-2].expressionNode).m_numConstants + (yyvsp[0].expressionNode).m_numConstants); }
     break;
 
-  case 178:
+  case 178: /* AssignmentExpr: LeftHandSideExpr AssignmentOperator AssignmentExpr  */
                                         { (yyval.expressionNode) = createNodeInfo<ExpressionNode*>(makeAssignNode(GLOBAL_DATA, (yyvsp[-2].expressionNode).m_node, (yyvsp[-1].op), (yyvsp[0].expressionNode).m_node, (yyvsp[-2].expressionNode).m_features & AssignFeature, (yyvsp[0].expressionNode).m_features & AssignFeature, 
                                                                                                      (yylsp[-2]).first_column, (yylsp[-1]).first_column + 1, (yylsp[0]).last_column), (yyvsp[-2].expressionNode).m_features | (yyvsp[0].expressionNode).m_features | AssignFeature, (yyvsp[-2].expressionNode).m_numConstants + (yyvsp[0].expressionNode).m_numConstants); 
                                         }
     break;
 
-  case 180:
+  case 180: /* AssignmentExprNoIn: LeftHandSideExpr AssignmentOperator AssignmentExprNoIn  */
                                         { (yyval.expressionNode) = createNodeInfo<ExpressionNode*>(makeAssignNode(GLOBAL_DATA, (yyvsp[-2].expressionNode).m_node, (yyvsp[-1].op), (yyvsp[0].expressionNode).m_node, (yyvsp[-2].expressionNode).m_features & AssignFeature, (yyvsp[0].expressionNode).m_features & AssignFeature, 
                                                                                                      (yylsp[-2]).first_column, (yylsp[-1]).first_column + 1, (yylsp[0]).last_column), (yyvsp[-2].expressionNode).m_features | (yyvsp[0].expressionNode).m_features | AssignFeature, (yyvsp[-2].expressionNode).m_numConstants + (yyvsp[0].expressionNode).m_numConstants);
                                         }
     break;
 
-  case 182:
+  case 182: /* AssignmentExprNoBF: LeftHandSideExprNoBF AssignmentOperator AssignmentExpr  */
                                         { (yyval.expressionNode) = createNodeInfo<ExpressionNode*>(makeAssignNode(GLOBAL_DATA, (yyvsp[-2].expressionNode).m_node, (yyvsp[-1].op), (yyvsp[0].expressionNode).m_node, (yyvsp[-2].expressionNode).m_features & AssignFeature, (yyvsp[0].expressionNode).m_features & AssignFeature,
                                                                                                      (yylsp[-2]).first_column, (yylsp[-1]).first_column + 1, (yylsp[0]).last_column), (yyvsp[-2].expressionNode).m_features | (yyvsp[0].expressionNode).m_features | AssignFeature, (yyvsp[-2].expressionNode).m_numConstants + (yyvsp[0].expressionNode).m_numConstants); 
                                         }
     break;
 
-  case 183:
+  case 183: /* AssignmentOperator: '='  */
                                         { (yyval.op) = OpEqual; }
     break;
 
-  case 184:
+  case 184: /* AssignmentOperator: PLUSEQUAL  */
                                         { (yyval.op) = OpPlusEq; }
     break;
 
-  case 185:
+  case 185: /* AssignmentOperator: MINUSEQUAL  */
                                         { (yyval.op) = OpMinusEq; }
     break;
 
-  case 186:
+  case 186: /* AssignmentOperator: MULTEQUAL  */
                                         { (yyval.op) = OpMultEq; }
     break;
 
-  case 187:
+  case 187: /* AssignmentOperator: DIVEQUAL  */
                                         { (yyval.op) = OpDivEq; }
     break;
 
-  case 188:
+  case 188: /* AssignmentOperator: LSHIFTEQUAL  */
                                         { (yyval.op) = OpLShift; }
     break;
 
-  case 189:
+  case 189: /* AssignmentOperator: RSHIFTEQUAL  */
                                         { (yyval.op) = OpRShift; }
     break;
 
-  case 190:
+  case 190: /* AssignmentOperator: URSHIFTEQUAL  */
                                         { (yyval.op) = OpURShift; }
     break;
 
-  case 191:
+  case 191: /* AssignmentOperator: ANDEQUAL  */
                                         { (yyval.op) = OpAndEq; }
     break;
 
-  case 192:
+  case 192: /* AssignmentOperator: XOREQUAL  */
                                         { (yyval.op) = OpXOrEq; }
     break;
 
-  case 193:
+  case 193: /* AssignmentOperator: OREQUAL  */
                                         { (yyval.op) = OpOrEq; }
     break;
 
-  case 194:
+  case 194: /* AssignmentOperator: MODEQUAL  */
                                         { (yyval.op) = OpModEq; }
     break;
 
-  case 196:
+  case 196: /* Expr: Expr ',' AssignmentExpr  */
                                         { (yyval.expressionNode) = createNodeInfo<ExpressionNode*>(combineCommaNodes(GLOBAL_DATA, (yyvsp[-2].expressionNode).m_node, (yyvsp[0].expressionNode).m_node), (yyvsp[-2].expressionNode).m_features | (yyvsp[0].expressionNode).m_features, (yyvsp[-2].expressionNode).m_numConstants + (yyvsp[0].expressionNode).m_numConstants); }
     break;
 
-  case 198:
+  case 198: /* ExprNoIn: ExprNoIn ',' AssignmentExprNoIn  */
                                         { (yyval.expressionNode) = createNodeInfo<ExpressionNode*>(combineCommaNodes(GLOBAL_DATA, (yyvsp[-2].expressionNode).m_node, (yyvsp[0].expressionNode).m_node), (yyvsp[-2].expressionNode).m_features | (yyvsp[0].expressionNode).m_features, (yyvsp[-2].expressionNode).m_numConstants + (yyvsp[0].expressionNode).m_numConstants); }
     break;
 
-  case 200:
+  case 200: /* ExprNoBF: ExprNoBF ',' AssignmentExpr  */
                                         { (yyval.expressionNode) = createNodeInfo<ExpressionNode*>(combineCommaNodes(GLOBAL_DATA, (yyvsp[-2].expressionNode).m_node, (yyvsp[0].expressionNode).m_node), (yyvsp[-2].expressionNode).m_features | (yyvsp[0].expressionNode).m_features, (yyvsp[-2].expressionNode).m_numConstants + (yyvsp[0].expressionNode).m_numConstants); }
     break;
 
-  case 218:
+  case 218: /* Block: OPENBRACE CLOSEBRACE  */
                                         { (yyval.statementNode) = createNodeDeclarationInfo<StatementNode*>(new (GLOBAL_DATA) BlockNode(GLOBAL_DATA, 0), 0, 0, 0, 0);
                                           setStatementLocation((yyval.statementNode).m_node, (yylsp[-1]), (yylsp[0])); }
     break;
 
-  case 219:
+  case 219: /* Block: OPENBRACE SourceElements CLOSEBRACE  */
                                         { (yyval.statementNode) = createNodeDeclarationInfo<StatementNode*>(new (GLOBAL_DATA) BlockNode(GLOBAL_DATA, (yyvsp[-1].sourceElements).m_node), (yyvsp[-1].sourceElements).m_varDeclarations, (yyvsp[-1].sourceElements).m_funcDeclarations, (yyvsp[-1].sourceElements).m_features, (yyvsp[-1].sourceElements).m_numConstants);
                                           setStatementLocation((yyval.statementNode).m_node, (yylsp[-2]), (yylsp[0])); }
     break;
 
-  case 220:
+  case 220: /* VariableStatement: VAR VariableDeclarationList ';'  */
                                         { (yyval.statementNode) = createNodeDeclarationInfo<StatementNode*>(makeVarStatementNode(GLOBAL_DATA, (yyvsp[-1].varDeclList).m_node), (yyvsp[-1].varDeclList).m_varDeclarations, (yyvsp[-1].varDeclList).m_funcDeclarations, (yyvsp[-1].varDeclList).m_features, (yyvsp[-1].varDeclList).m_numConstants);
                                           setStatementLocation((yyval.statementNode).m_node, (yylsp[-2]), (yylsp[0])); }
     break;
 
-  case 221:
+  case 221: /* VariableStatement: VAR VariableDeclarationList error  */
                                         { (yyval.statementNode) = createNodeDeclarationInfo<StatementNode*>(makeVarStatementNode(GLOBAL_DATA, (yyvsp[-1].varDeclList).m_node), (yyvsp[-1].varDeclList).m_varDeclarations, (yyvsp[-1].varDeclList).m_funcDeclarations, (yyvsp[-1].varDeclList).m_features, (yyvsp[-1].varDeclList).m_numConstants);
                                           setStatementLocation((yyval.statementNode).m_node, (yylsp[-2]), (yylsp[-1]));
                                           AUTO_SEMICOLON; }
     break;
 
-  case 222:
+  case 222: /* VariableDeclarationList: IDENT  */
                                         { (yyval.varDeclList).m_node = 0;
                                           (yyval.varDeclList).m_varDeclarations = new (GLOBAL_DATA) ParserArenaData<DeclarationStacks::VarStack>;
                                           appendToVarDeclarationList(GLOBAL_DATA, (yyval.varDeclList).m_varDeclarations, *(yyvsp[0].ident), 0);
@@ -3550,7 +3388,7 @@ yyreduce:
                                         }
     break;
 
-  case 223:
+  case 223: /* VariableDeclarationList: IDENT Initializer  */
                                         { AssignResolveNode* node = new (GLOBAL_DATA) AssignResolveNode(GLOBAL_DATA, *(yyvsp[-1].ident), (yyvsp[0].expressionNode).m_node, (yyvsp[0].expressionNode).m_features & AssignFeature);
                                           setExceptionLocation(node, (yylsp[-1]).first_column, (yylsp[0]).first_column + 1, (yylsp[0]).last_column);
                                           (yyval.varDeclList).m_node = node;
@@ -3562,7 +3400,7 @@ yyreduce:
                                         }
     break;
 
-  case 224:
+  case 224: /* VariableDeclarationList: VariableDeclarationList ',' IDENT  */
                                         { (yyval.varDeclList).m_node = (yyvsp[-2].varDeclList).m_node;
                                           (yyval.varDeclList).m_varDeclarations = (yyvsp[-2].varDeclList).m_varDeclarations;
                                           appendToVarDeclarationList(GLOBAL_DATA, (yyval.varDeclList).m_varDeclarations, *(yyvsp[0].ident), 0);
@@ -3572,7 +3410,7 @@ yyreduce:
                                         }
     break;
 
-  case 225:
+  case 225: /* VariableDeclarationList: VariableDeclarationList ',' IDENT Initializer  */
                                         { AssignResolveNode* node = new (GLOBAL_DATA) AssignResolveNode(GLOBAL_DATA, *(yyvsp[-1].ident), (yyvsp[0].expressionNode).m_node, (yyvsp[0].expressionNode).m_features & AssignFeature);
                                           setExceptionLocation(node, (yylsp[-1]).first_column, (yylsp[0]).first_column + 1, (yylsp[0]).last_column);
                                           (yyval.varDeclList).m_node = combineCommaNodes(GLOBAL_DATA, (yyvsp[-3].varDeclList).m_node, node);
@@ -3584,7 +3422,7 @@ yyreduce:
                                         }
     break;
 
-  case 226:
+  case 226: /* VariableDeclarationListNoIn: IDENT  */
                                         { (yyval.varDeclList).m_node = 0;
                                           (yyval.varDeclList).m_varDeclarations = new (GLOBAL_DATA) ParserArenaData<DeclarationStacks::VarStack>;
                                           appendToVarDeclarationList(GLOBAL_DATA, (yyval.varDeclList).m_varDeclarations, *(yyvsp[0].ident), 0);
@@ -3594,7 +3432,7 @@ yyreduce:
                                         }
     break;
 
-  case 227:
+  case 227: /* VariableDeclarationListNoIn: IDENT InitializerNoIn  */
                                         { AssignResolveNode* node = new (GLOBAL_DATA) AssignResolveNode(GLOBAL_DATA, *(yyvsp[-1].ident), (yyvsp[0].expressionNode).m_node, (yyvsp[0].expressionNode).m_features & AssignFeature);
                                           setExceptionLocation(node, (yylsp[-1]).first_column, (yylsp[0]).first_column + 1, (yylsp[0]).last_column);
                                           (yyval.varDeclList).m_node = node;
@@ -3606,7 +3444,7 @@ yyreduce:
                                         }
     break;
 
-  case 228:
+  case 228: /* VariableDeclarationListNoIn: VariableDeclarationListNoIn ',' IDENT  */
                                         { (yyval.varDeclList).m_node = (yyvsp[-2].varDeclList).m_node;
                                           (yyval.varDeclList).m_varDeclarations = (yyvsp[-2].varDeclList).m_varDeclarations;
                                           appendToVarDeclarationList(GLOBAL_DATA, (yyval.varDeclList).m_varDeclarations, *(yyvsp[0].ident), 0);
@@ -3616,7 +3454,7 @@ yyreduce:
                                         }
     break;
 
-  case 229:
+  case 229: /* VariableDeclarationListNoIn: VariableDeclarationListNoIn ',' IDENT InitializerNoIn  */
                                         { AssignResolveNode* node = new (GLOBAL_DATA) AssignResolveNode(GLOBAL_DATA, *(yyvsp[-1].ident), (yyvsp[0].expressionNode).m_node, (yyvsp[0].expressionNode).m_features & AssignFeature);
                                           setExceptionLocation(node, (yylsp[-1]).first_column, (yylsp[0]).first_column + 1, (yylsp[0]).last_column);
                                           (yyval.varDeclList).m_node = combineCommaNodes(GLOBAL_DATA, (yyvsp[-3].varDeclList).m_node, node);
@@ -3628,17 +3466,17 @@ yyreduce:
                                         }
     break;
 
-  case 230:
+  case 230: /* ConstStatement: CONSTTOKEN ConstDeclarationList ';'  */
                                         { (yyval.statementNode) = createNodeDeclarationInfo<StatementNode*>(new (GLOBAL_DATA) ConstStatementNode(GLOBAL_DATA, (yyvsp[-1].constDeclList).m_node.head), (yyvsp[-1].constDeclList).m_varDeclarations, (yyvsp[-1].constDeclList).m_funcDeclarations, (yyvsp[-1].constDeclList).m_features, (yyvsp[-1].constDeclList).m_numConstants);
                                           setStatementLocation((yyval.statementNode).m_node, (yylsp[-2]), (yylsp[0])); }
     break;
 
-  case 231:
+  case 231: /* ConstStatement: CONSTTOKEN ConstDeclarationList error  */
                                         { (yyval.statementNode) = createNodeDeclarationInfo<StatementNode*>(new (GLOBAL_DATA) ConstStatementNode(GLOBAL_DATA, (yyvsp[-1].constDeclList).m_node.head), (yyvsp[-1].constDeclList).m_varDeclarations, (yyvsp[-1].constDeclList).m_funcDeclarations, (yyvsp[-1].constDeclList).m_features, (yyvsp[-1].constDeclList).m_numConstants);
                                           setStatementLocation((yyval.statementNode).m_node, (yylsp[-2]), (yylsp[-1])); AUTO_SEMICOLON; }
     break;
 
-  case 232:
+  case 232: /* ConstDeclarationList: ConstDeclaration  */
                                         { (yyval.constDeclList).m_node.head = (yyvsp[0].constDeclNode).m_node;
                                           (yyval.constDeclList).m_node.tail = (yyval.constDeclList).m_node.head;
                                           (yyval.constDeclList).m_varDeclarations = new (GLOBAL_DATA) ParserArenaData<DeclarationStacks::VarStack>;
@@ -3649,7 +3487,7 @@ yyreduce:
     }
     break;
 
-  case 233:
+  case 233: /* ConstDeclarationList: ConstDeclarationList ',' ConstDeclaration  */
                                         { (yyval.constDeclList).m_node.head = (yyvsp[-2].constDeclList).m_node.head;
                                           (yyvsp[-2].constDeclList).m_node.tail->m_next = (yyvsp[0].constDeclNode).m_node;
                                           (yyval.constDeclList).m_node.tail = (yyvsp[0].constDeclNode).m_node;
@@ -3660,42 +3498,42 @@ yyreduce:
                                           (yyval.constDeclList).m_numConstants = (yyvsp[-2].constDeclList).m_numConstants + (yyvsp[0].constDeclNode).m_numConstants; }
     break;
 
-  case 234:
+  case 234: /* ConstDeclaration: IDENT  */
                                         { (yyval.constDeclNode) = createNodeInfo<ConstDeclNode*>(new (GLOBAL_DATA) ConstDeclNode(GLOBAL_DATA, *(yyvsp[0].ident), 0), (*(yyvsp[0].ident) == GLOBAL_DATA->propertyNames->arguments) ? ArgumentsFeature : 0, 0); }
     break;
 
-  case 235:
+  case 235: /* ConstDeclaration: IDENT Initializer  */
                                         { (yyval.constDeclNode) = createNodeInfo<ConstDeclNode*>(new (GLOBAL_DATA) ConstDeclNode(GLOBAL_DATA, *(yyvsp[-1].ident), (yyvsp[0].expressionNode).m_node), ((*(yyvsp[-1].ident) == GLOBAL_DATA->propertyNames->arguments) ? ArgumentsFeature : 0) | (yyvsp[0].expressionNode).m_features, (yyvsp[0].expressionNode).m_numConstants); }
     break;
 
-  case 236:
+  case 236: /* Initializer: '=' AssignmentExpr  */
                                         { (yyval.expressionNode) = (yyvsp[0].expressionNode); }
     break;
 
-  case 237:
+  case 237: /* InitializerNoIn: '=' AssignmentExprNoIn  */
                                         { (yyval.expressionNode) = (yyvsp[0].expressionNode); }
     break;
 
-  case 238:
+  case 238: /* EmptyStatement: ';'  */
                                         { (yyval.statementNode) = createNodeDeclarationInfo<StatementNode*>(new (GLOBAL_DATA) EmptyStatementNode(GLOBAL_DATA), 0, 0, 0, 0); }
     break;
 
-  case 239:
+  case 239: /* ExprStatement: ExprNoBF ';'  */
                                         { (yyval.statementNode) = createNodeDeclarationInfo<StatementNode*>(new (GLOBAL_DATA) ExprStatementNode(GLOBAL_DATA, (yyvsp[-1].expressionNode).m_node), 0, 0, (yyvsp[-1].expressionNode).m_features, (yyvsp[-1].expressionNode).m_numConstants);
                                           setStatementLocation((yyval.statementNode).m_node, (yylsp[-1]), (yylsp[0])); }
     break;
 
-  case 240:
+  case 240: /* ExprStatement: ExprNoBF error  */
                                         { (yyval.statementNode) = createNodeDeclarationInfo<StatementNode*>(new (GLOBAL_DATA) ExprStatementNode(GLOBAL_DATA, (yyvsp[-1].expressionNode).m_node), 0, 0, (yyvsp[-1].expressionNode).m_features, (yyvsp[-1].expressionNode).m_numConstants);
                                           setStatementLocation((yyval.statementNode).m_node, (yylsp[-1]), (yylsp[-1])); AUTO_SEMICOLON; }
     break;
 
-  case 241:
+  case 241: /* IfStatement: IF '(' Expr ')' Statement  */
                                         { (yyval.statementNode) = createNodeDeclarationInfo<StatementNode*>(new (GLOBAL_DATA) IfNode(GLOBAL_DATA, (yyvsp[-2].expressionNode).m_node, (yyvsp[0].statementNode).m_node), (yyvsp[0].statementNode).m_varDeclarations, (yyvsp[0].statementNode).m_funcDeclarations, (yyvsp[-2].expressionNode).m_features | (yyvsp[0].statementNode).m_features, (yyvsp[-2].expressionNode).m_numConstants + (yyvsp[0].statementNode).m_numConstants);
                                           setStatementLocation((yyval.statementNode).m_node, (yylsp[-4]), (yylsp[-1])); }
     break;
 
-  case 242:
+  case 242: /* IfStatement: IF '(' Expr ')' Statement ELSE Statement  */
                                         { (yyval.statementNode) = createNodeDeclarationInfo<StatementNode*>(new (GLOBAL_DATA) IfElseNode(GLOBAL_DATA, (yyvsp[-4].expressionNode).m_node, (yyvsp[-2].statementNode).m_node, (yyvsp[0].statementNode).m_node), 
                                                                                          mergeDeclarationLists((yyvsp[-2].statementNode).m_varDeclarations, (yyvsp[0].statementNode).m_varDeclarations),
                                                                                          mergeDeclarationLists((yyvsp[-2].statementNode).m_funcDeclarations, (yyvsp[0].statementNode).m_funcDeclarations),
@@ -3704,22 +3542,22 @@ yyreduce:
                                           setStatementLocation((yyval.statementNode).m_node, (yylsp[-6]), (yylsp[-3])); }
     break;
 
-  case 243:
+  case 243: /* IterationStatement: DO Statement WHILE '(' Expr ')' ';'  */
                                            { (yyval.statementNode) = createNodeDeclarationInfo<StatementNode*>(new (GLOBAL_DATA) DoWhileNode(GLOBAL_DATA, (yyvsp[-5].statementNode).m_node, (yyvsp[-2].expressionNode).m_node), (yyvsp[-5].statementNode).m_varDeclarations, (yyvsp[-5].statementNode).m_funcDeclarations, (yyvsp[-5].statementNode).m_features | (yyvsp[-2].expressionNode).m_features, (yyvsp[-5].statementNode).m_numConstants + (yyvsp[-2].expressionNode).m_numConstants);
                                              setStatementLocation((yyval.statementNode).m_node, (yylsp[-6]), (yylsp[-4])); }
     break;
 
-  case 244:
+  case 244: /* IterationStatement: DO Statement WHILE '(' Expr ')' error  */
                                            { (yyval.statementNode) = createNodeDeclarationInfo<StatementNode*>(new (GLOBAL_DATA) DoWhileNode(GLOBAL_DATA, (yyvsp[-5].statementNode).m_node, (yyvsp[-2].expressionNode).m_node), (yyvsp[-5].statementNode).m_varDeclarations, (yyvsp[-5].statementNode).m_funcDeclarations, (yyvsp[-5].statementNode).m_features | (yyvsp[-2].expressionNode).m_features, (yyvsp[-5].statementNode).m_numConstants + (yyvsp[-2].expressionNode).m_numConstants);
                                              setStatementLocation((yyval.statementNode).m_node, (yylsp[-6]), (yylsp[-4])); }
     break;
 
-  case 245:
+  case 245: /* IterationStatement: WHILE '(' Expr ')' Statement  */
                                         { (yyval.statementNode) = createNodeDeclarationInfo<StatementNode*>(new (GLOBAL_DATA) WhileNode(GLOBAL_DATA, (yyvsp[-2].expressionNode).m_node, (yyvsp[0].statementNode).m_node), (yyvsp[0].statementNode).m_varDeclarations, (yyvsp[0].statementNode).m_funcDeclarations, (yyvsp[-2].expressionNode).m_features | (yyvsp[0].statementNode).m_features, (yyvsp[-2].expressionNode).m_numConstants + (yyvsp[0].statementNode).m_numConstants);
                                           setStatementLocation((yyval.statementNode).m_node, (yylsp[-4]), (yylsp[-1])); }
     break;
 
-  case 246:
+  case 246: /* IterationStatement: FOR '(' ExprNoInOpt ';' ExprOpt ';' ExprOpt ')' Statement  */
                                         { (yyval.statementNode) = createNodeDeclarationInfo<StatementNode*>(new (GLOBAL_DATA) ForNode(GLOBAL_DATA, (yyvsp[-6].expressionNode).m_node, (yyvsp[-4].expressionNode).m_node, (yyvsp[-2].expressionNode).m_node, (yyvsp[0].statementNode).m_node, false), (yyvsp[0].statementNode).m_varDeclarations, (yyvsp[0].statementNode).m_funcDeclarations, 
                                                                                          (yyvsp[-6].expressionNode).m_features | (yyvsp[-4].expressionNode).m_features | (yyvsp[-2].expressionNode).m_features | (yyvsp[0].statementNode).m_features,
                                                                                          (yyvsp[-6].expressionNode).m_numConstants + (yyvsp[-4].expressionNode).m_numConstants + (yyvsp[-2].expressionNode).m_numConstants + (yyvsp[0].statementNode).m_numConstants);
@@ -3727,7 +3565,7 @@ yyreduce:
                                         }
     break;
 
-  case 247:
+  case 247: /* IterationStatement: FOR '(' VAR VariableDeclarationListNoIn ';' ExprOpt ';' ExprOpt ')' Statement  */
                                         { (yyval.statementNode) = createNodeDeclarationInfo<StatementNode*>(new (GLOBAL_DATA) ForNode(GLOBAL_DATA, (yyvsp[-6].varDeclList).m_node, (yyvsp[-4].expressionNode).m_node, (yyvsp[-2].expressionNode).m_node, (yyvsp[0].statementNode).m_node, true),
                                                                                          mergeDeclarationLists((yyvsp[-6].varDeclList).m_varDeclarations, (yyvsp[0].statementNode).m_varDeclarations),
                                                                                          mergeDeclarationLists((yyvsp[-6].varDeclList).m_funcDeclarations, (yyvsp[0].statementNode).m_funcDeclarations),
@@ -3736,7 +3574,7 @@ yyreduce:
                                           setStatementLocation((yyval.statementNode).m_node, (yylsp[-9]), (yylsp[-1])); }
     break;
 
-  case 248:
+  case 248: /* IterationStatement: FOR '(' LeftHandSideExpr INTOKEN Expr ')' Statement  */
                                         {
                                             ForInNode* node = new (GLOBAL_DATA) ForInNode(GLOBAL_DATA, (yyvsp[-4].expressionNode).m_node, (yyvsp[-2].expressionNode).m_node, (yyvsp[0].statementNode).m_node);
                                             setExceptionLocation(node, (yylsp[-4]).first_column, (yylsp[-4]).last_column, (yylsp[-2]).last_column);
@@ -3747,7 +3585,7 @@ yyreduce:
                                         }
     break;
 
-  case 249:
+  case 249: /* IterationStatement: FOR '(' VAR IDENT INTOKEN Expr ')' Statement  */
                                         { ForInNode *forIn = new (GLOBAL_DATA) ForInNode(GLOBAL_DATA, *(yyvsp[-4].ident), 0, (yyvsp[-2].expressionNode).m_node, (yyvsp[0].statementNode).m_node, (yylsp[-3]).first_column, (yylsp[-3]).first_column - (yylsp[-4]).first_column, (yylsp[-2]).last_column - (yylsp[-3]).first_column);
                                           setExceptionLocation(forIn, (yylsp[-4]).first_column, (yylsp[-3]).first_column + 1, (yylsp[-2]).last_column);
                                           appendToVarDeclarationList(GLOBAL_DATA, (yyvsp[0].statementNode).m_varDeclarations, *(yyvsp[-4].ident), DeclarationStacks::HasInitializer);
@@ -3755,7 +3593,7 @@ yyreduce:
                                           setStatementLocation((yyval.statementNode).m_node, (yylsp[-7]), (yylsp[-1])); }
     break;
 
-  case 250:
+  case 250: /* IterationStatement: FOR '(' VAR IDENT InitializerNoIn INTOKEN Expr ')' Statement  */
                                         { ForInNode *forIn = new (GLOBAL_DATA) ForInNode(GLOBAL_DATA, *(yyvsp[-5].ident), (yyvsp[-4].expressionNode).m_node, (yyvsp[-2].expressionNode).m_node, (yyvsp[0].statementNode).m_node, (yylsp[-4]).first_column, (yylsp[-4]).first_column - (yylsp[-5]).first_column, (yylsp[-4]).last_column - (yylsp[-4]).first_column);
                                           setExceptionLocation(forIn, (yylsp[-5]).first_column, (yylsp[-3]).first_column + 1, (yylsp[-2]).last_column);
                                           appendToVarDeclarationList(GLOBAL_DATA, (yyvsp[0].statementNode).m_varDeclarations, *(yyvsp[-5].ident), DeclarationStacks::HasInitializer);
@@ -3765,107 +3603,107 @@ yyreduce:
                                           setStatementLocation((yyval.statementNode).m_node, (yylsp[-8]), (yylsp[-1])); }
     break;
 
-  case 251:
+  case 251: /* ExprOpt: %empty  */
                                         { (yyval.expressionNode) = createNodeInfo<ExpressionNode*>(0, 0, 0); }
     break;
 
-  case 253:
+  case 253: /* ExprNoInOpt: %empty  */
                                         { (yyval.expressionNode) = createNodeInfo<ExpressionNode*>(0, 0, 0); }
     break;
 
-  case 255:
+  case 255: /* ContinueStatement: CONTINUE ';'  */
                                         { ContinueNode* node = new (GLOBAL_DATA) ContinueNode(GLOBAL_DATA);
                                           setExceptionLocation(node, (yylsp[-1]).first_column, (yylsp[-1]).last_column, (yylsp[-1]).last_column); 
                                           (yyval.statementNode) = createNodeDeclarationInfo<StatementNode*>(node, 0, 0, 0, 0);
                                           setStatementLocation((yyval.statementNode).m_node, (yylsp[-1]), (yylsp[0])); }
     break;
 
-  case 256:
+  case 256: /* ContinueStatement: CONTINUE error  */
                                         { ContinueNode* node = new (GLOBAL_DATA) ContinueNode(GLOBAL_DATA);
                                           setExceptionLocation(node, (yylsp[-1]).first_column, (yylsp[-1]).last_column, (yylsp[-1]).last_column); 
                                           (yyval.statementNode) = createNodeDeclarationInfo<StatementNode*>(node, 0, 0, 0, 0);
                                           setStatementLocation((yyval.statementNode).m_node, (yylsp[-1]), (yylsp[-1])); AUTO_SEMICOLON; }
     break;
 
-  case 257:
+  case 257: /* ContinueStatement: CONTINUE IDENT ';'  */
                                         { ContinueNode* node = new (GLOBAL_DATA) ContinueNode(GLOBAL_DATA, *(yyvsp[-1].ident));
                                           setExceptionLocation(node, (yylsp[-2]).first_column, (yylsp[-1]).last_column, (yylsp[-1]).last_column); 
                                           (yyval.statementNode) = createNodeDeclarationInfo<StatementNode*>(node, 0, 0, 0, 0);
                                           setStatementLocation((yyval.statementNode).m_node, (yylsp[-2]), (yylsp[0])); }
     break;
 
-  case 258:
+  case 258: /* ContinueStatement: CONTINUE IDENT error  */
                                         { ContinueNode* node = new (GLOBAL_DATA) ContinueNode(GLOBAL_DATA, *(yyvsp[-1].ident));
                                           setExceptionLocation(node, (yylsp[-2]).first_column, (yylsp[-1]).last_column, (yylsp[-1]).last_column); 
                                           (yyval.statementNode) = createNodeDeclarationInfo<StatementNode*>(node, 0, 0, 0, 0);
                                           setStatementLocation((yyval.statementNode).m_node, (yylsp[-2]), (yylsp[-1])); AUTO_SEMICOLON; }
     break;
 
-  case 259:
+  case 259: /* BreakStatement: BREAK ';'  */
                                         { BreakNode* node = new (GLOBAL_DATA) BreakNode(GLOBAL_DATA);
                                           setExceptionLocation(node, (yylsp[-1]).first_column, (yylsp[-1]).last_column, (yylsp[-1]).last_column);
                                           (yyval.statementNode) = createNodeDeclarationInfo<StatementNode*>(node, 0, 0, 0, 0); setStatementLocation((yyval.statementNode).m_node, (yylsp[-1]), (yylsp[0])); }
     break;
 
-  case 260:
+  case 260: /* BreakStatement: BREAK error  */
                                         { BreakNode* node = new (GLOBAL_DATA) BreakNode(GLOBAL_DATA);
                                           setExceptionLocation(node, (yylsp[-1]).first_column, (yylsp[-1]).last_column, (yylsp[-1]).last_column);
                                           (yyval.statementNode) = createNodeDeclarationInfo<StatementNode*>(new (GLOBAL_DATA) BreakNode(GLOBAL_DATA), 0, 0, 0, 0); setStatementLocation((yyval.statementNode).m_node, (yylsp[-1]), (yylsp[-1])); AUTO_SEMICOLON; }
     break;
 
-  case 261:
+  case 261: /* BreakStatement: BREAK IDENT ';'  */
                                         { BreakNode* node = new (GLOBAL_DATA) BreakNode(GLOBAL_DATA, *(yyvsp[-1].ident));
                                           setExceptionLocation(node, (yylsp[-2]).first_column, (yylsp[-1]).last_column, (yylsp[-1]).last_column);
                                           (yyval.statementNode) = createNodeDeclarationInfo<StatementNode*>(node, 0, 0, 0, 0); setStatementLocation((yyval.statementNode).m_node, (yylsp[-2]), (yylsp[0])); }
     break;
 
-  case 262:
+  case 262: /* BreakStatement: BREAK IDENT error  */
                                         { BreakNode* node = new (GLOBAL_DATA) BreakNode(GLOBAL_DATA, *(yyvsp[-1].ident));
                                           setExceptionLocation(node, (yylsp[-2]).first_column, (yylsp[-1]).last_column, (yylsp[-1]).last_column);
                                           (yyval.statementNode) = createNodeDeclarationInfo<StatementNode*>(new (GLOBAL_DATA) BreakNode(GLOBAL_DATA, *(yyvsp[-1].ident)), 0, 0, 0, 0); setStatementLocation((yyval.statementNode).m_node, (yylsp[-2]), (yylsp[-1])); AUTO_SEMICOLON; }
     break;
 
-  case 263:
+  case 263: /* ReturnStatement: RETURN ';'  */
                                         { ReturnNode* node = new (GLOBAL_DATA) ReturnNode(GLOBAL_DATA, 0); 
                                           setExceptionLocation(node, (yylsp[-1]).first_column, (yylsp[-1]).last_column, (yylsp[-1]).last_column); 
                                           (yyval.statementNode) = createNodeDeclarationInfo<StatementNode*>(node, 0, 0, 0, 0); setStatementLocation((yyval.statementNode).m_node, (yylsp[-1]), (yylsp[0])); }
     break;
 
-  case 264:
+  case 264: /* ReturnStatement: RETURN error  */
                                         { ReturnNode* node = new (GLOBAL_DATA) ReturnNode(GLOBAL_DATA, 0); 
                                           setExceptionLocation(node, (yylsp[-1]).first_column, (yylsp[-1]).last_column, (yylsp[-1]).last_column); 
                                           (yyval.statementNode) = createNodeDeclarationInfo<StatementNode*>(node, 0, 0, 0, 0); setStatementLocation((yyval.statementNode).m_node, (yylsp[-1]), (yylsp[-1])); AUTO_SEMICOLON; }
     break;
 
-  case 265:
+  case 265: /* ReturnStatement: RETURN Expr ';'  */
                                         { ReturnNode* node = new (GLOBAL_DATA) ReturnNode(GLOBAL_DATA, (yyvsp[-1].expressionNode).m_node); 
                                           setExceptionLocation(node, (yylsp[-2]).first_column, (yylsp[-1]).last_column, (yylsp[-1]).last_column);
                                           (yyval.statementNode) = createNodeDeclarationInfo<StatementNode*>(node, 0, 0, (yyvsp[-1].expressionNode).m_features, (yyvsp[-1].expressionNode).m_numConstants); setStatementLocation((yyval.statementNode).m_node, (yylsp[-2]), (yylsp[0])); }
     break;
 
-  case 266:
+  case 266: /* ReturnStatement: RETURN Expr error  */
                                         { ReturnNode* node = new (GLOBAL_DATA) ReturnNode(GLOBAL_DATA, (yyvsp[-1].expressionNode).m_node); 
                                           setExceptionLocation(node, (yylsp[-2]).first_column, (yylsp[-1]).last_column, (yylsp[-1]).last_column); 
                                           (yyval.statementNode) = createNodeDeclarationInfo<StatementNode*>(node, 0, 0, (yyvsp[-1].expressionNode).m_features, (yyvsp[-1].expressionNode).m_numConstants); setStatementLocation((yyval.statementNode).m_node, (yylsp[-2]), (yylsp[-1])); AUTO_SEMICOLON; }
     break;
 
-  case 267:
+  case 267: /* WithStatement: WITH '(' Expr ')' Statement  */
                                         { (yyval.statementNode) = createNodeDeclarationInfo<StatementNode*>(new (GLOBAL_DATA) WithNode(GLOBAL_DATA, (yyvsp[-2].expressionNode).m_node, (yyvsp[0].statementNode).m_node, (yylsp[-2]).last_column, (yylsp[-2]).last_column - (yylsp[-2]).first_column),
                                                                                          (yyvsp[0].statementNode).m_varDeclarations, (yyvsp[0].statementNode).m_funcDeclarations, (yyvsp[-2].expressionNode).m_features | (yyvsp[0].statementNode).m_features | WithFeature, (yyvsp[-2].expressionNode).m_numConstants + (yyvsp[0].statementNode).m_numConstants);
                                           setStatementLocation((yyval.statementNode).m_node, (yylsp[-4]), (yylsp[-1])); }
     break;
 
-  case 268:
+  case 268: /* SwitchStatement: SWITCH '(' Expr ')' CaseBlock  */
                                         { (yyval.statementNode) = createNodeDeclarationInfo<StatementNode*>(new (GLOBAL_DATA) SwitchNode(GLOBAL_DATA, (yyvsp[-2].expressionNode).m_node, (yyvsp[0].caseBlockNode).m_node), (yyvsp[0].caseBlockNode).m_varDeclarations, (yyvsp[0].caseBlockNode).m_funcDeclarations,
                                                                                          (yyvsp[-2].expressionNode).m_features | (yyvsp[0].caseBlockNode).m_features, (yyvsp[-2].expressionNode).m_numConstants + (yyvsp[0].caseBlockNode).m_numConstants);
                                           setStatementLocation((yyval.statementNode).m_node, (yylsp[-4]), (yylsp[-1])); }
     break;
 
-  case 269:
+  case 269: /* CaseBlock: OPENBRACE CaseClausesOpt CLOSEBRACE  */
                                                      { (yyval.caseBlockNode) = createNodeDeclarationInfo<CaseBlockNode*>(new (GLOBAL_DATA) CaseBlockNode(GLOBAL_DATA, (yyvsp[-1].clauseList).m_node.head, 0, 0), (yyvsp[-1].clauseList).m_varDeclarations, (yyvsp[-1].clauseList).m_funcDeclarations, (yyvsp[-1].clauseList).m_features, (yyvsp[-1].clauseList).m_numConstants); }
     break;
 
-  case 270:
+  case 270: /* CaseBlock: OPENBRACE CaseClausesOpt DefaultClause CaseClausesOpt CLOSEBRACE  */
                                         { (yyval.caseBlockNode) = createNodeDeclarationInfo<CaseBlockNode*>(new (GLOBAL_DATA) CaseBlockNode(GLOBAL_DATA, (yyvsp[-3].clauseList).m_node.head, (yyvsp[-2].caseClauseNode).m_node, (yyvsp[-1].clauseList).m_node.head),
                                                                                          mergeDeclarationLists(mergeDeclarationLists((yyvsp[-3].clauseList).m_varDeclarations, (yyvsp[-2].caseClauseNode).m_varDeclarations), (yyvsp[-1].clauseList).m_varDeclarations),
                                                                                          mergeDeclarationLists(mergeDeclarationLists((yyvsp[-3].clauseList).m_funcDeclarations, (yyvsp[-2].caseClauseNode).m_funcDeclarations), (yyvsp[-1].clauseList).m_funcDeclarations),
@@ -3873,11 +3711,11 @@ yyreduce:
                                                                                          (yyvsp[-3].clauseList).m_numConstants + (yyvsp[-2].caseClauseNode).m_numConstants + (yyvsp[-1].clauseList).m_numConstants); }
     break;
 
-  case 271:
+  case 271: /* CaseClausesOpt: %empty  */
                                         { (yyval.clauseList).m_node.head = 0; (yyval.clauseList).m_node.tail = 0; (yyval.clauseList).m_varDeclarations = 0; (yyval.clauseList).m_funcDeclarations = 0; (yyval.clauseList).m_features = 0; (yyval.clauseList).m_numConstants = 0; }
     break;
 
-  case 273:
+  case 273: /* CaseClauses: CaseClause  */
                                         { (yyval.clauseList).m_node.head = new (GLOBAL_DATA) ClauseListNode(GLOBAL_DATA, (yyvsp[0].caseClauseNode).m_node);
                                           (yyval.clauseList).m_node.tail = (yyval.clauseList).m_node.head;
                                           (yyval.clauseList).m_varDeclarations = (yyvsp[0].caseClauseNode).m_varDeclarations;
@@ -3886,7 +3724,7 @@ yyreduce:
                                           (yyval.clauseList).m_numConstants = (yyvsp[0].caseClauseNode).m_numConstants; }
     break;
 
-  case 274:
+  case 274: /* CaseClauses: CaseClauses CaseClause  */
                                         { (yyval.clauseList).m_node.head = (yyvsp[-1].clauseList).m_node.head;
                                           (yyval.clauseList).m_node.tail = new (GLOBAL_DATA) ClauseListNode(GLOBAL_DATA, (yyvsp[-1].clauseList).m_node.tail, (yyvsp[0].caseClauseNode).m_node);
                                           (yyval.clauseList).m_varDeclarations = mergeDeclarationLists((yyvsp[-1].clauseList).m_varDeclarations, (yyvsp[0].caseClauseNode).m_varDeclarations);
@@ -3896,43 +3734,43 @@ yyreduce:
                                         }
     break;
 
-  case 275:
+  case 275: /* CaseClause: CASE Expr ':'  */
                                         { (yyval.caseClauseNode) = createNodeDeclarationInfo<CaseClauseNode*>(new (GLOBAL_DATA) CaseClauseNode(GLOBAL_DATA, (yyvsp[-1].expressionNode).m_node), 0, 0, (yyvsp[-1].expressionNode).m_features, (yyvsp[-1].expressionNode).m_numConstants); }
     break;
 
-  case 276:
+  case 276: /* CaseClause: CASE Expr ':' SourceElements  */
                                         { (yyval.caseClauseNode) = createNodeDeclarationInfo<CaseClauseNode*>(new (GLOBAL_DATA) CaseClauseNode(GLOBAL_DATA, (yyvsp[-2].expressionNode).m_node, (yyvsp[0].sourceElements).m_node), (yyvsp[0].sourceElements).m_varDeclarations, (yyvsp[0].sourceElements).m_funcDeclarations, (yyvsp[-2].expressionNode).m_features | (yyvsp[0].sourceElements).m_features, (yyvsp[-2].expressionNode).m_numConstants + (yyvsp[0].sourceElements).m_numConstants); }
     break;
 
-  case 277:
+  case 277: /* DefaultClause: DEFAULT ':'  */
                                         { (yyval.caseClauseNode) = createNodeDeclarationInfo<CaseClauseNode*>(new (GLOBAL_DATA) CaseClauseNode(GLOBAL_DATA, 0), 0, 0, 0, 0); }
     break;
 
-  case 278:
+  case 278: /* DefaultClause: DEFAULT ':' SourceElements  */
                                         { (yyval.caseClauseNode) = createNodeDeclarationInfo<CaseClauseNode*>(new (GLOBAL_DATA) CaseClauseNode(GLOBAL_DATA, 0, (yyvsp[0].sourceElements).m_node), (yyvsp[0].sourceElements).m_varDeclarations, (yyvsp[0].sourceElements).m_funcDeclarations, (yyvsp[0].sourceElements).m_features, (yyvsp[0].sourceElements).m_numConstants); }
     break;
 
-  case 279:
+  case 279: /* LabelledStatement: IDENT ':' Statement  */
                                         { LabelNode* node = new (GLOBAL_DATA) LabelNode(GLOBAL_DATA, *(yyvsp[-2].ident), (yyvsp[0].statementNode).m_node);
                                           setExceptionLocation(node, (yylsp[-2]).first_column, (yylsp[-1]).last_column, (yylsp[-1]).last_column);
                                           (yyval.statementNode) = createNodeDeclarationInfo<StatementNode*>(node, (yyvsp[0].statementNode).m_varDeclarations, (yyvsp[0].statementNode).m_funcDeclarations, (yyvsp[0].statementNode).m_features, (yyvsp[0].statementNode).m_numConstants); }
     break;
 
-  case 280:
+  case 280: /* ThrowStatement: THROW Expr ';'  */
                                         { ThrowNode* node = new (GLOBAL_DATA) ThrowNode(GLOBAL_DATA, (yyvsp[-1].expressionNode).m_node);
                                           setExceptionLocation(node, (yylsp[-2]).first_column, (yylsp[-1]).last_column, (yylsp[-1]).last_column);
                                           (yyval.statementNode) = createNodeDeclarationInfo<StatementNode*>(node, 0, 0, (yyvsp[-1].expressionNode).m_features, (yyvsp[-1].expressionNode).m_numConstants); setStatementLocation((yyval.statementNode).m_node, (yylsp[-2]), (yylsp[-1]));
                                         }
     break;
 
-  case 281:
+  case 281: /* ThrowStatement: THROW Expr error  */
                                         { ThrowNode* node = new (GLOBAL_DATA) ThrowNode(GLOBAL_DATA, (yyvsp[-1].expressionNode).m_node);
                                           setExceptionLocation(node, (yylsp[-2]).first_column, (yylsp[-1]).last_column, (yylsp[-1]).last_column);
                                           (yyval.statementNode) = createNodeDeclarationInfo<StatementNode*>(node, 0, 0, (yyvsp[-1].expressionNode).m_features, (yyvsp[-1].expressionNode).m_numConstants); setStatementLocation((yyval.statementNode).m_node, (yylsp[-2]), (yylsp[-1])); AUTO_SEMICOLON; 
                                         }
     break;
 
-  case 282:
+  case 282: /* TryStatement: TRY Block FINALLY Block  */
                                         { (yyval.statementNode) = createNodeDeclarationInfo<StatementNode*>(new (GLOBAL_DATA) TryNode(GLOBAL_DATA, (yyvsp[-2].statementNode).m_node, GLOBAL_DATA->propertyNames->nullIdentifier, false, 0, (yyvsp[0].statementNode).m_node),
                                                                                          mergeDeclarationLists((yyvsp[-2].statementNode).m_varDeclarations, (yyvsp[0].statementNode).m_varDeclarations),
                                                                                          mergeDeclarationLists((yyvsp[-2].statementNode).m_funcDeclarations, (yyvsp[0].statementNode).m_funcDeclarations),
@@ -3941,7 +3779,7 @@ yyreduce:
                                           setStatementLocation((yyval.statementNode).m_node, (yylsp[-3]), (yylsp[-2])); }
     break;
 
-  case 283:
+  case 283: /* TryStatement: TRY Block CATCH '(' IDENT ')' Block  */
                                         { (yyval.statementNode) = createNodeDeclarationInfo<StatementNode*>(new (GLOBAL_DATA) TryNode(GLOBAL_DATA, (yyvsp[-5].statementNode).m_node, *(yyvsp[-2].ident), ((yyvsp[0].statementNode).m_features & EvalFeature) != 0, (yyvsp[0].statementNode).m_node, 0),
                                                                                          mergeDeclarationLists((yyvsp[-5].statementNode).m_varDeclarations, (yyvsp[0].statementNode).m_varDeclarations),
                                                                                          mergeDeclarationLists((yyvsp[-5].statementNode).m_funcDeclarations, (yyvsp[0].statementNode).m_funcDeclarations),
@@ -3950,7 +3788,7 @@ yyreduce:
                                           setStatementLocation((yyval.statementNode).m_node, (yylsp[-6]), (yylsp[-5])); }
     break;
 
-  case 284:
+  case 284: /* TryStatement: TRY Block CATCH '(' IDENT ')' Block FINALLY Block  */
                                         { (yyval.statementNode) = createNodeDeclarationInfo<StatementNode*>(new (GLOBAL_DATA) TryNode(GLOBAL_DATA, (yyvsp[-7].statementNode).m_node, *(yyvsp[-4].ident), ((yyvsp[-2].statementNode).m_features & EvalFeature) != 0, (yyvsp[-2].statementNode).m_node, (yyvsp[0].statementNode).m_node),
                                                                                          mergeDeclarationLists(mergeDeclarationLists((yyvsp[-7].statementNode).m_varDeclarations, (yyvsp[-2].statementNode).m_varDeclarations), (yyvsp[0].statementNode).m_varDeclarations),
                                                                                          mergeDeclarationLists(mergeDeclarationLists((yyvsp[-7].statementNode).m_funcDeclarations, (yyvsp[-2].statementNode).m_funcDeclarations), (yyvsp[0].statementNode).m_funcDeclarations),
@@ -3959,21 +3797,21 @@ yyreduce:
                                           setStatementLocation((yyval.statementNode).m_node, (yylsp[-8]), (yylsp[-7])); }
     break;
 
-  case 285:
+  case 285: /* DebuggerStatement: DEBUGGER ';'  */
                                         { (yyval.statementNode) = createNodeDeclarationInfo<StatementNode*>(new (GLOBAL_DATA) DebuggerStatementNode(GLOBAL_DATA), 0, 0, 0, 0);
                                           setStatementLocation((yyval.statementNode).m_node, (yylsp[-1]), (yylsp[0])); }
     break;
 
-  case 286:
+  case 286: /* DebuggerStatement: DEBUGGER error  */
                                         { (yyval.statementNode) = createNodeDeclarationInfo<StatementNode*>(new (GLOBAL_DATA) DebuggerStatementNode(GLOBAL_DATA), 0, 0, 0, 0);
                                           setStatementLocation((yyval.statementNode).m_node, (yylsp[-1]), (yylsp[-1])); AUTO_SEMICOLON; }
     break;
 
-  case 287:
+  case 287: /* FunctionDeclaration: FUNCTION IDENT '(' ')' OPENBRACE FunctionBody CLOSEBRACE  */
                                                              { (yyval.statementNode) = createNodeDeclarationInfo<StatementNode*>(new (GLOBAL_DATA) FuncDeclNode(GLOBAL_DATA, *(yyvsp[-5].ident), (yyvsp[-1].functionBodyNode), GLOBAL_DATA->lexer->sourceCode((yyvsp[-2].intValue), (yyvsp[0].intValue), (yylsp[-2]).first_line)), 0, new (GLOBAL_DATA) ParserArenaData<DeclarationStacks::FunctionStack>, ((*(yyvsp[-5].ident) == GLOBAL_DATA->propertyNames->arguments) ? ArgumentsFeature : 0) | ClosureFeature, 0); setStatementLocation((yyvsp[-1].functionBodyNode), (yylsp[-2]), (yylsp[0])); (yyval.statementNode).m_funcDeclarations->data.append(static_cast<FuncDeclNode*>((yyval.statementNode).m_node)->body()); }
     break;
 
-  case 288:
+  case 288: /* FunctionDeclaration: FUNCTION IDENT '(' FormalParameterList ')' OPENBRACE FunctionBody CLOSEBRACE  */
       {
           (yyval.statementNode) = createNodeDeclarationInfo<StatementNode*>(new (GLOBAL_DATA) FuncDeclNode(GLOBAL_DATA, *(yyvsp[-6].ident), (yyvsp[-1].functionBodyNode), GLOBAL_DATA->lexer->sourceCode((yyvsp[-2].intValue), (yyvsp[0].intValue), (yylsp[-2]).first_line), (yyvsp[-4].parameterList).m_node.head), 0, new (GLOBAL_DATA) ParserArenaData<DeclarationStacks::FunctionStack>, ((*(yyvsp[-6].ident) == GLOBAL_DATA->propertyNames->arguments) ? ArgumentsFeature : 0) | (yyvsp[-4].parameterList).m_features | ClosureFeature, 0);
           if ((yyvsp[-4].parameterList).m_features & ArgumentsFeature)
@@ -3983,11 +3821,11 @@ yyreduce:
       }
     break;
 
-  case 289:
+  case 289: /* FunctionExpr: FUNCTION '(' ')' OPENBRACE FunctionBody CLOSEBRACE  */
                                                        { (yyval.funcExprNode) = createNodeInfo(new (GLOBAL_DATA) FuncExprNode(GLOBAL_DATA, GLOBAL_DATA->propertyNames->nullIdentifier, (yyvsp[-1].functionBodyNode), GLOBAL_DATA->lexer->sourceCode((yyvsp[-2].intValue), (yyvsp[0].intValue), (yylsp[-2]).first_line)), ClosureFeature, 0); setStatementLocation((yyvsp[-1].functionBodyNode), (yylsp[-2]), (yylsp[0])); }
     break;
 
-  case 290:
+  case 290: /* FunctionExpr: FUNCTION '(' FormalParameterList ')' OPENBRACE FunctionBody CLOSEBRACE  */
       {
           (yyval.funcExprNode) = createNodeInfo(new (GLOBAL_DATA) FuncExprNode(GLOBAL_DATA, GLOBAL_DATA->propertyNames->nullIdentifier, (yyvsp[-1].functionBodyNode), GLOBAL_DATA->lexer->sourceCode((yyvsp[-2].intValue), (yyvsp[0].intValue), (yylsp[-2]).first_line), (yyvsp[-4].parameterList).m_node.head), (yyvsp[-4].parameterList).m_features | ClosureFeature, 0);
           if ((yyvsp[-4].parameterList).m_features & ArgumentsFeature)
@@ -3996,11 +3834,11 @@ yyreduce:
       }
     break;
 
-  case 291:
+  case 291: /* FunctionExpr: FUNCTION IDENT '(' ')' OPENBRACE FunctionBody CLOSEBRACE  */
                                                              { (yyval.funcExprNode) = createNodeInfo(new (GLOBAL_DATA) FuncExprNode(GLOBAL_DATA, *(yyvsp[-5].ident), (yyvsp[-1].functionBodyNode), GLOBAL_DATA->lexer->sourceCode((yyvsp[-2].intValue), (yyvsp[0].intValue), (yylsp[-2]).first_line)), ClosureFeature, 0); setStatementLocation((yyvsp[-1].functionBodyNode), (yylsp[-2]), (yylsp[0])); }
     break;
 
-  case 292:
+  case 292: /* FunctionExpr: FUNCTION IDENT '(' FormalParameterList ')' OPENBRACE FunctionBody CLOSEBRACE  */
       {
           (yyval.funcExprNode) = createNodeInfo(new (GLOBAL_DATA) FuncExprNode(GLOBAL_DATA, *(yyvsp[-6].ident), (yyvsp[-1].functionBodyNode), GLOBAL_DATA->lexer->sourceCode((yyvsp[-2].intValue), (yyvsp[0].intValue), (yylsp[-2]).first_line), (yyvsp[-4].parameterList).m_node.head), (yyvsp[-4].parameterList).m_features | ClosureFeature, 0); 
           if ((yyvsp[-4].parameterList).m_features & ArgumentsFeature)
@@ -4009,36 +3847,36 @@ yyreduce:
       }
     break;
 
-  case 293:
+  case 293: /* FormalParameterList: IDENT  */
                                         { (yyval.parameterList).m_node.head = new (GLOBAL_DATA) ParameterNode(GLOBAL_DATA, *(yyvsp[0].ident));
                                           (yyval.parameterList).m_features = (*(yyvsp[0].ident) == GLOBAL_DATA->propertyNames->arguments) ? ArgumentsFeature : 0;
                                           (yyval.parameterList).m_node.tail = (yyval.parameterList).m_node.head; }
     break;
 
-  case 294:
+  case 294: /* FormalParameterList: FormalParameterList ',' IDENT  */
                                         { (yyval.parameterList).m_node.head = (yyvsp[-2].parameterList).m_node.head;
                                           (yyval.parameterList).m_features = (yyvsp[-2].parameterList).m_features | ((*(yyvsp[0].ident) == GLOBAL_DATA->propertyNames->arguments) ? ArgumentsFeature : 0);
                                           (yyval.parameterList).m_node.tail = new (GLOBAL_DATA) ParameterNode(GLOBAL_DATA, (yyvsp[-2].parameterList).m_node.tail, *(yyvsp[0].ident));  }
     break;
 
-  case 295:
+  case 295: /* FunctionBody: %empty  */
                                         { (yyval.functionBodyNode) = FunctionBodyNode::create(GLOBAL_DATA); }
     break;
 
-  case 296:
+  case 296: /* FunctionBody: SourceElements_NoNode  */
                                         { (yyval.functionBodyNode) = FunctionBodyNode::create(GLOBAL_DATA); }
     break;
 
-  case 297:
+  case 297: /* Program: %empty  */
                                         { GLOBAL_DATA->parser->didFinishParsing(new (GLOBAL_DATA) SourceElements(GLOBAL_DATA), 0, 0, NoFeatures, (yylsp[0]).last_line, 0); }
     break;
 
-  case 298:
+  case 298: /* Program: SourceElements  */
                                         { GLOBAL_DATA->parser->didFinishParsing((yyvsp[0].sourceElements).m_node, (yyvsp[0].sourceElements).m_varDeclarations, (yyvsp[0].sourceElements).m_funcDeclarations, (yyvsp[0].sourceElements).m_features, 
                                                                                 (yylsp[0]).last_line, (yyvsp[0].sourceElements).m_numConstants); }
     break;
 
-  case 299:
+  case 299: /* SourceElements: Statement  */
                                         { (yyval.sourceElements).m_node = new (GLOBAL_DATA) SourceElements(GLOBAL_DATA);
                                           (yyval.sourceElements).m_node->append((yyvsp[0].statementNode).m_node);
                                           (yyval.sourceElements).m_varDeclarations = (yyvsp[0].statementNode).m_varDeclarations;
@@ -4048,7 +3886,7 @@ yyreduce:
                                         }
     break;
 
-  case 300:
+  case 300: /* SourceElements: SourceElements Statement  */
                                         { (yyval.sourceElements).m_node->append((yyvsp[0].statementNode).m_node);
                                           (yyval.sourceElements).m_varDeclarations = mergeDeclarationLists((yyvsp[-1].sourceElements).m_varDeclarations, (yyvsp[0].statementNode).m_varDeclarations);
                                           (yyval.sourceElements).m_funcDeclarations = mergeDeclarationLists((yyvsp[-1].sourceElements).m_funcDeclarations, (yyvsp[0].statementNode).m_funcDeclarations);
@@ -4057,147 +3895,147 @@ yyreduce:
                                         }
     break;
 
-  case 304:
+  case 304: /* Literal_NoNode: NUMBER  */
            { }
     break;
 
-  case 305:
+  case 305: /* Literal_NoNode: STRING  */
            { }
     break;
 
-  case 306:
+  case 306: /* Literal_NoNode: '/'  */
                      { if (!GLOBAL_DATA->lexer->skipRegExp()) YYABORT; }
     break;
 
-  case 307:
+  case 307: /* Literal_NoNode: DIVEQUAL  */
                                   { if (!GLOBAL_DATA->lexer->skipRegExp()) YYABORT; }
     break;
 
-  case 308:
+  case 308: /* Property_NoNode: IDENT ':' AssignmentExpr_NoNode  */
                                     { }
     break;
 
-  case 309:
+  case 309: /* Property_NoNode: STRING ':' AssignmentExpr_NoNode  */
                                      { }
     break;
 
-  case 310:
+  case 310: /* Property_NoNode: NUMBER ':' AssignmentExpr_NoNode  */
                                      { }
     break;
 
-  case 311:
+  case 311: /* Property_NoNode: IDENT IDENT '(' ')' OPENBRACE FunctionBody_NoNode CLOSEBRACE  */
                                                                  { if (*(yyvsp[-6].ident) != "get" && *(yyvsp[-6].ident) != "set") YYABORT; }
     break;
 
-  case 312:
+  case 312: /* Property_NoNode: IDENT IDENT '(' FormalParameterList_NoNode ')' OPENBRACE FunctionBody_NoNode CLOSEBRACE  */
                                                                                             { if (*(yyvsp[-7].ident) != "get" && *(yyvsp[-7].ident) != "set") YYABORT; }
     break;
 
-  case 316:
+  case 316: /* PrimaryExpr_NoNode: OPENBRACE CLOSEBRACE  */
                          { }
     break;
 
-  case 317:
+  case 317: /* PrimaryExpr_NoNode: OPENBRACE PropertyList_NoNode CLOSEBRACE  */
                                              { }
     break;
 
-  case 318:
+  case 318: /* PrimaryExpr_NoNode: OPENBRACE PropertyList_NoNode ',' CLOSEBRACE  */
                                                  { }
     break;
 
-  case 322:
+  case 322: /* PrimaryExprNoBrace_NoNode: IDENT  */
           { }
     break;
 
-  case 517:
+  case 517: /* Block_NoNode: OPENBRACE CLOSEBRACE  */
                          { }
     break;
 
-  case 518:
+  case 518: /* Block_NoNode: OPENBRACE SourceElements_NoNode CLOSEBRACE  */
                                                { }
     break;
 
-  case 520:
+  case 520: /* VariableStatement_NoNode: VAR VariableDeclarationList_NoNode error  */
                                              { AUTO_SEMICOLON; }
     break;
 
-  case 521:
+  case 521: /* VariableDeclarationList_NoNode: IDENT  */
           { }
     break;
 
-  case 522:
+  case 522: /* VariableDeclarationList_NoNode: IDENT Initializer_NoNode  */
                              { }
     break;
 
-  case 525:
+  case 525: /* VariableDeclarationListNoIn_NoNode: IDENT  */
           { }
     break;
 
-  case 526:
+  case 526: /* VariableDeclarationListNoIn_NoNode: IDENT InitializerNoIn_NoNode  */
                                  { }
     break;
 
-  case 530:
+  case 530: /* ConstStatement_NoNode: CONSTTOKEN ConstDeclarationList_NoNode error  */
                                                  { AUTO_SEMICOLON; }
     break;
 
-  case 533:
+  case 533: /* ConstDeclaration_NoNode: IDENT  */
           { }
     break;
 
-  case 534:
+  case 534: /* ConstDeclaration_NoNode: IDENT Initializer_NoNode  */
                              { }
     break;
 
-  case 539:
+  case 539: /* ExprStatement_NoNode: ExprNoBF_NoNode error  */
                           { AUTO_SEMICOLON; }
     break;
 
-  case 555:
+  case 555: /* ContinueStatement_NoNode: CONTINUE error  */
                    { AUTO_SEMICOLON; }
     break;
 
-  case 557:
+  case 557: /* ContinueStatement_NoNode: CONTINUE IDENT error  */
                          { AUTO_SEMICOLON; }
     break;
 
-  case 559:
+  case 559: /* BreakStatement_NoNode: BREAK error  */
                 { AUTO_SEMICOLON; }
     break;
 
-  case 561:
+  case 561: /* BreakStatement_NoNode: BREAK IDENT error  */
                       { AUTO_SEMICOLON; }
     break;
 
-  case 563:
+  case 563: /* ReturnStatement_NoNode: RETURN error  */
                  { AUTO_SEMICOLON; }
     break;
 
-  case 565:
+  case 565: /* ReturnStatement_NoNode: RETURN Expr_NoNode error  */
                              { AUTO_SEMICOLON; }
     break;
 
-  case 568:
+  case 568: /* CaseBlock_NoNode: OPENBRACE CaseClausesOpt_NoNode CLOSEBRACE  */
                                                { }
     break;
 
-  case 569:
+  case 569: /* CaseBlock_NoNode: OPENBRACE CaseClausesOpt_NoNode DefaultClause_NoNode CaseClausesOpt_NoNode CLOSEBRACE  */
                                                                                           { }
     break;
 
-  case 578:
+  case 578: /* LabelledStatement_NoNode: IDENT ':' Statement_NoNode  */
                                { }
     break;
 
-  case 580:
+  case 580: /* ThrowStatement_NoNode: THROW Expr_NoNode error  */
                             { AUTO_SEMICOLON; }
     break;
 
-  case 585:
+  case 585: /* DebuggerStatement_NoNode: DEBUGGER error  */
                    { AUTO_SEMICOLON; }
     break;
 
-  case 592:
+  case 592: /* FormalParameterList_NoNode: IDENT  */
           { }
     break;
 
@@ -4366,13 +4204,13 @@ yyabortlab:
 yyexhaustedlab:
   yyerror (&yylloc, globalPtr, YY_("memory exhausted"));
   yyresult = 2;
-  /* Fall through.  */
+  goto yyreturn;
 #endif
 
 
-/*-----------------------------------------------------.
-| yyreturn -- parsing is finished, return the result.  |
-`-----------------------------------------------------*/
+/*-------------------------------------------------------.
+| yyreturn -- parsing is finished, clean up and return.  |
+`-------------------------------------------------------*/
 yyreturn:
   if (yychar != YYEMPTY)
     {

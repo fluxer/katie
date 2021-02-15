@@ -1,7 +1,7 @@
 /****************************************************************************
 **
 ** Copyright (C) 2015 The Qt Company Ltd.
-** Copyright (C) 2016-2020 Ivailo Monev
+** Copyright (C) 2016 Ivailo Monev
 **
 ** This file is part of the QtGui module of the Katie Toolkit.
 **
@@ -14,18 +14,6 @@
 ** packaging of this file.  Please review the following information to
 ** ensure the GNU Lesser General Public License version 2.1 requirements
 ** will be met: http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html.
-**
-** As a special exception, The Qt Company gives you certain additional
-** rights. These rights are described in The Qt Company LGPL Exception
-** version 1.1, included in the file LGPL_EXCEPTION.txt in this package.
-**
-** GNU General Public License Usage
-** Alternatively, this file may be used under the terms of the GNU
-** General Public License version 3.0 as published by the Free Software
-** Foundation and appearing in the file LICENSE.GPL included in the
-** packaging of this file.  Please review the following information to
-** ensure the GNU General Public License version 3.0 requirements will be
-** met: http://www.gnu.org/copyleft/gpl.html.
 **
 ** $QT_END_LICENSE$
 **
@@ -386,16 +374,17 @@ static bool compare(const QVariant::Private *a, const QVariant::Private *b)
     return qcoreVariantHandler()->compare(a, b);
 }
 
-static bool convert(const QVariant::Private *d, QVariant::Type t,
+static bool convert(const QVariant::Private *d, int t,
                  void *result, bool *ok)
 {
     switch (t) {
-    case QVariant::ByteArray:
+    case QVariant::ByteArray: {
         if (d->type == QVariant::Color) {
             *static_cast<QByteArray *>(result) = v_cast<QColor>(d)->name().toLatin1();
             return true;
         }
         break;
+    }
     case QVariant::String: {
         QString *str = static_cast<QString *>(result);
         switch (d->type) {
@@ -415,7 +404,7 @@ static bool convert(const QVariant::Private *d, QVariant::Type t,
         }
         break;
     }
-    case QVariant::Pixmap:
+    case QVariant::Pixmap: {
         if (d->type == QVariant::Image) {
             *static_cast<QPixmap *>(result) = QPixmap::fromImage(*v_cast<QImage>(d));
             return true;
@@ -429,7 +418,8 @@ static bool convert(const QVariant::Private *d, QVariant::Type t,
             }
         }
         break;
-    case QVariant::Image:
+    }
+    case QVariant::Image: {
         if (d->type == QVariant::Pixmap) {
             *static_cast<QImage *>(result) = v_cast<QPixmap>(d)->toImage();
             return true;
@@ -438,7 +428,8 @@ static bool convert(const QVariant::Private *d, QVariant::Type t,
             return true;
         }
         break;
-    case QVariant::Bitmap:
+    }
+    case QVariant::Bitmap: {
         if (d->type == QVariant::Pixmap) {
             *static_cast<QBitmap *>(result) = *v_cast<QPixmap>(d);
             return true;
@@ -447,22 +438,25 @@ static bool convert(const QVariant::Private *d, QVariant::Type t,
             return true;
         }
         break;
+    }
 #ifndef QT_NO_SHORTCUT
-    case QVariant::Int:
+    case QVariant::Int: {
         if (d->type == QVariant::KeySequence) {
             *static_cast<int *>(result) = (int)(*(v_cast<QKeySequence>(d)));
             return true;
         }
         break;
+    }
 #endif
-    case QVariant::Font:
+    case QVariant::Font: {
         if (d->type == QVariant::String) {
             QFont *f = static_cast<QFont *>(result);
             f->fromString(*v_cast<QString>(d));
             return true;
         }
         break;
-    case QVariant::Color:
+    }
+    case QVariant::Color: {
         if (d->type == QVariant::String) {
             static_cast<QColor *>(result)->setNamedColor(*v_cast<QString>(d));
             return static_cast<QColor *>(result)->isValid();
@@ -477,7 +471,8 @@ static bool convert(const QVariant::Private *d, QVariant::Type t,
             }
         }
         break;
-    case QVariant::Brush:
+    }
+    case QVariant::Brush: {
         if (d->type == QVariant::Color) {
             *static_cast<QBrush *>(result) = QBrush(*v_cast<QColor>(d));
             return true;
@@ -486,19 +481,18 @@ static bool convert(const QVariant::Private *d, QVariant::Type t,
             return true;
         }
         break;
+    }
 #ifndef QT_NO_SHORTCUT
     case QVariant::KeySequence: {
         QKeySequence *seq = static_cast<QKeySequence *>(result);
-        switch (d->type) {
-        case QVariant::String:
+        if (d->type == QVariant::String) {
             *seq = QKeySequence(*v_cast<QString>(d));
             return true;
-        case QVariant::Int:
+        } else if (d->type == QVariant::Int) {
             *seq = QKeySequence(d->data.i);
             return true;
-        default:
-            break;
         }
+        break;
     }
 #endif
     default:
@@ -526,7 +520,7 @@ static void streamDebug(QDebug dbg, const QVariant &v)
         dbg.nospace() << qvariant_cast<QRegion>(v);
         break;
     case QVariant::Font:
-//        dbg.nospace() << qvariant_cast<QFont>(v);  //FIXME
+        dbg.nospace() << qvariant_cast<QFont>(v);
         break;
     case QVariant::Matrix:
         dbg.nospace() << qvariant_cast<QMatrix>(v);
@@ -607,7 +601,6 @@ const QVariant::Handler qt_gui_variant_handler = {
 #endif
     compare,
     convert,
-    0,
 #if !defined(QT_NO_DEBUG_STREAM) && !defined(Q_BROKEN_DEBUG_STREAM)
     streamDebug
 #else

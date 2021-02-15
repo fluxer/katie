@@ -1,7 +1,7 @@
 /****************************************************************************
 **
 ** Copyright (C) 2015 The Qt Company Ltd.
-** Copyright (C) 2016-2020 Ivailo Monev
+** Copyright (C) 2016 Ivailo Monev
 **
 ** This file is part of the QtNetwork module of the Katie Toolkit.
 **
@@ -14,18 +14,6 @@
 ** packaging of this file.  Please review the following information to
 ** ensure the GNU Lesser General Public License version 2.1 requirements
 ** will be met: http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html.
-**
-** As a special exception, The Qt Company gives you certain additional
-** rights. These rights are described in The Qt Company LGPL Exception
-** version 1.1, included in the file LGPL_EXCEPTION.txt in this package.
-**
-** GNU General Public License Usage
-** Alternatively, this file may be used under the terms of the GNU
-** General Public License version 3.0 as published by the Free Software
-** Foundation and appearing in the file LICENSE.GPL included in the
-** packaging of this file.  Please review the following information to
-** ensure the GNU General Public License version 3.0 requirements will be
-** met: http://www.gnu.org/copyleft/gpl.html.
 **
 ** $QT_END_LICENSE$
 **
@@ -372,9 +360,6 @@ bool QNativeSocketEnginePrivate::nativeConnect(const QHostAddress &addr, quint16
         sockAddrSize = sizeof(sockAddrIPv6);
         sockAddrPtr = (struct sockaddr *) &sockAddrIPv6;
     } else
-#if 0
-    {}
-#endif
 #endif
     if (addr.protocol() == QAbstractSocket::IPv4Protocol) {
         memset(&sockAddrIPv4, 0, sizeof(sockAddrIPv4));
@@ -384,8 +369,6 @@ bool QNativeSocketEnginePrivate::nativeConnect(const QHostAddress &addr, quint16
 
         sockAddrSize = sizeof(sockAddrIPv4);
         sockAddrPtr = (struct sockaddr *) &sockAddrIPv4;
-    } else {
-        // unreachable
     }
 
     int connectResult = qt_safe_connect(socketDescriptor, sockAddrPtr, sockAddrSize);
@@ -480,16 +463,14 @@ bool QNativeSocketEnginePrivate::nativeBind(const QHostAddress &address, quint16
         sockAddrPtr = (struct sockaddr *) &sockAddrIPv6;
     } else
 #endif
-        if (address.protocol() == QAbstractSocket::IPv4Protocol) {
-            memset(&sockAddrIPv4, 0, sizeof(sockAddrIPv4));
-            sockAddrIPv4.sin_family = AF_INET;
-            sockAddrIPv4.sin_port = htons(port);
-            sockAddrIPv4.sin_addr.s_addr = htonl(address.toIPv4Address());
-            sockAddrSize = sizeof(sockAddrIPv4);
-            sockAddrPtr = (struct sockaddr *) &sockAddrIPv4;
-        } else {
-            // unreachable
-        }
+    if (address.protocol() == QAbstractSocket::IPv4Protocol) {
+        memset(&sockAddrIPv4, 0, sizeof(sockAddrIPv4));
+        sockAddrIPv4.sin_family = AF_INET;
+        sockAddrIPv4.sin_port = htons(port);
+        sockAddrIPv4.sin_addr.s_addr = htonl(address.toIPv4Address());
+        sockAddrSize = sizeof(sockAddrIPv4);
+        sockAddrPtr = (struct sockaddr *) &sockAddrIPv4;
+    }
 
     int bindResult = QT_SOCKET_BIND(socketDescriptor, sockAddrPtr, sockAddrSize);
 
@@ -753,10 +734,8 @@ bool QNativeSocketEnginePrivate::nativeHasPendingDatagrams() const
     // Peek 0 bytes into the next message. The size of the message may
     // well be 0, so we can't check recvfrom's return value.
     ssize_t readBytes;
-    do {
-        char c;
-        readBytes = ::recvfrom(socketDescriptor, &c, 1, MSG_PEEK, &storage.a, &storageSize);
-    } while (readBytes == -1 && errno == EINTR);
+    char c;
+    EINTR_LOOP(readBytes, ::recvfrom(socketDescriptor, &c, 1, MSG_PEEK, &storage.a, &storageSize));
 
     // If there's no error, or if our buffer was too small, there must be a
     // pending datagram.
@@ -805,11 +784,9 @@ qint64 QNativeSocketEnginePrivate::nativeReceiveDatagram(char *data, qint64 maxS
     sz = sizeof(aa);
 
     ssize_t recvFromResult = 0;
-    do {
-        char c;
-        recvFromResult = ::recvfrom(socketDescriptor, maxSize ? data : &c, maxSize ? maxSize : 1,
-                                    0, &aa.a, &sz);
-    } while (recvFromResult == -1 && errno == EINTR);
+    char c;
+    EINTR_LOOP(recvFromResult, ::recvfrom(socketDescriptor, maxSize ? data : &c, maxSize ? maxSize : 1,
+                                    0, &aa.a, &sz));
 
     if (recvFromResult == -1) {
         setError(QAbstractSocket::NetworkError, ReceiveDatagramErrorString);

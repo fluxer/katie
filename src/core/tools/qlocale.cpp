@@ -1,7 +1,7 @@
 /****************************************************************************
 **
 ** Copyright (C) 2015 The Qt Company Ltd.
-** Copyright (C) 2016-2020 Ivailo Monev
+** Copyright (C) 2016 Ivailo Monev
 **
 ** This file is part of the QtCore module of the Katie Toolkit.
 **
@@ -14,18 +14,6 @@
 ** packaging of this file.  Please review the following information to
 ** ensure the GNU Lesser General Public License version 2.1 requirements
 ** will be met: http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html.
-**
-** As a special exception, The Qt Company gives you certain additional
-** rights. These rights are described in The Qt Company LGPL Exception
-** version 1.1, included in the file LGPL_EXCEPTION.txt in this package.
-**
-** GNU General Public License Usage
-** Alternatively, this file may be used under the terms of the GNU
-** General Public License version 3.0 as published by the Free Software
-** Foundation and appearing in the file LICENSE.GPL included in the
-** packaging of this file.  Please review the following information to
-** ensure the GNU General Public License version 3.0 requirements will be
-** met: http://www.gnu.org/copyleft/gpl.html.
 **
 ** $QT_END_LICENSE$
 **
@@ -57,6 +45,15 @@
 #  define QLOCALEDEBUG if (false) qDebug()
 #endif
 
+// BSD and musl libc implementations do not reset errno and there is no
+// reliable way to check if some functions (e.g. strtoll()) errored or returned
+// a valid value if they do not reset errno
+#ifdef __GLIBC__
+#  define QLOCALE_RESET_ERRNO
+#else
+#  define QLOCALE_RESET_ERRNO errno = 0;
+#endif
+
 QT_BEGIN_NAMESPACE
 
 #ifndef QT_NO_SYSTEMLOCALE
@@ -84,7 +81,7 @@ QLocale::Language QLocalePrivate::codeToLanguage(const QString &code)
     }
 
     for (qint16 i = 0; i < languageTblSize; i++) {
-        if (QString::fromLatin1(languageTbl[i].code) == lower)
+        if (QLatin1String(languageTbl[i].code) == lower)
             return languageTbl[i].language;
     }
 
@@ -107,7 +104,7 @@ QLocale::Script QLocalePrivate::codeToScript(const QString &code)
     }
 
     for (qint16 i = 0; i < scriptTblSize; i++) {
-        if (QString::fromLatin1(scriptTbl[i].code) == title)
+        if (QLatin1String(scriptTbl[i].code) == title)
             return scriptTbl[i].script;
     }
     return QLocale::AnyScript;
@@ -125,7 +122,7 @@ QLocale::Country QLocalePrivate::codeToCountry(const QString &code)
     }
 
     for (qint16 i = 0; i < countryTblSize; i++) {
-        if (QString::fromLatin1(countryTbl[i].code) == upper)
+        if (QLatin1String(countryTbl[i].code) == upper)
             return countryTbl[i].country;
     }
 
@@ -830,9 +827,9 @@ QString QLocale::name() const
     const char *lang = languageTbl[dd->m_language].code;
     if (dd->m_country != AnyCountry) {
         const char *country = countryTbl[dd->m_country].code;
-        return QString::fromLatin1(lang) + QLatin1Char('_') + QString::fromLatin1(country);
+        return QLatin1String(lang) + QLatin1Char('_') + QLatin1String(country);
     }
-    return QString::fromLatin1(lang);
+    return QLatin1String(lang);
 }
 
 /*!
@@ -1803,7 +1800,8 @@ QLocale::MeasurementSystem QLocale::measurementSystem() const
 */
 Qt::LayoutDirection QLocale::textDirection() const
 {
-    if (uloc_isRightToLeft(bcp47Name().toLatin1().constData()))
+    QByteArray latinbcp47 = bcp47Name().toLatin1();
+    if (uloc_isRightToLeft(latinbcp47.constData()))
         return Qt::RightToLeft;
     return Qt::LeftToRight;
 }
@@ -2109,11 +2107,11 @@ QString QLocalePrivate::doubleToString(const QChar _zero, const QChar plus, cons
 
     // Detect special numbers (nan, +/-inf)
     if (qIsInf(d)) {
-        num_str = QString::fromLatin1("inf");
+        num_str = QLatin1String("inf");
         special_number = true;
         negative = d < 0;
     } else if (qIsNaN(d)) {
-        num_str = QString::fromLatin1("nan");
+        num_str = QLatin1String("nan");
         special_number = true;
     }
 
@@ -2125,9 +2123,10 @@ QString QLocalePrivate::doubleToString(const QChar _zero, const QChar plus, cons
         // NOT thread safe!
         if (form == DFDecimal) {
 #ifdef QT_HAVE_FCVT
-            digits = QLatin1String(::fcvt(d, precision, &decpt, &sign));
+            digits = QString::fromLatin1(::fcvt(d, precision, &decpt, &sign));
 #else
-            digits = QLatin1String(qfcvt(d, precision, &decpt, &sign));
+            char qfcvtbuf[QECVT_BUFFSIZE];
+            digits = QString::fromLatin1(qfcvt(d, precision, &decpt, &sign, qfcvtbuf));
 #endif
         } else {
             int pr = precision;
@@ -2136,9 +2135,10 @@ QString QLocalePrivate::doubleToString(const QChar _zero, const QChar plus, cons
             else if (form == DFSignificantDigits && pr == 0)
                 pr = 1;
 #ifdef QT_HAVE_ECVT
-            digits = QLatin1String(::ecvt(d, pr, &decpt, &sign));
+            digits = QString::fromLatin1(::ecvt(d, pr, &decpt, &sign));
 #else
-            digits = QLatin1String(qecvt(d, pr, &decpt, &sign));
+            char qecvtbuf[QECVT_BUFFSIZE];
+            digits = QString::fromLatin1(qecvt(d, pr, &decpt, &sign, qecvtbuf));
 #endif
 
             // Chop trailing zeros
@@ -2588,91 +2588,83 @@ qulonglong QLocalePrivate::stringToUnsLongLong(const QString &number, int base,
 }
 
 
-double QLocalePrivate::bytearrayToDouble(const char *num, bool *ok, bool *overflow)
+double QLocalePrivate::bytearrayToDouble(const char *num, bool *ok)
 {
-    if (ok != Q_NULLPTR)
-        *ok = true;
-    if (overflow != Q_NULLPTR)
-        *overflow = false;
-
-    if (*num == '\0') {
+    if (Q_UNLIKELY(*num == '\0')) {
         if (ok != Q_NULLPTR)
             *ok = false;
         return 0.0;
     }
 
     char *endptr;
+    QLOCALE_RESET_ERRNO
     double ret = std::strtod(num, &endptr);
     if ((ret == 0.0l && errno == ERANGE) || ret == HUGE_VAL || ret == -HUGE_VAL) {
-        // the only way strtod can fail with *endptr != '\0' on a non-empty
-        // input string is overflow
         if (ok != Q_NULLPTR)
             *ok = false;
-        if (overflow != Q_NULLPTR)
-            *overflow = *endptr != '\0';
         return 0.0;
     }
 
     if (*endptr != '\0') {
-        // we stopped at a non-digit character after converting some digits
+        // stopped at a non-digit character after converting some digits
         if (ok != Q_NULLPTR)
             *ok = false;
-        if (overflow != Q_NULLPTR)
-            *overflow = false;
         return 0.0;
     }
 
     if (ok != Q_NULLPTR)
         *ok = true;
-    if (overflow != Q_NULLPTR)
-        *overflow = false;
     return ret;
 }
 
-qlonglong QLocalePrivate::bytearrayToLongLong(const char *num, int base, bool *ok, bool *overflow)
+qlonglong QLocalePrivate::bytearrayToLongLong(const char *num, int base, bool *ok)
 {
-    if (*num == '\0') {
+    if (Q_UNLIKELY(*num == '\0')) {
         if (ok != Q_NULLPTR)
             *ok = false;
-        if (overflow != Q_NULLPTR)
-            *overflow = false;
         return 0;
     }
 
     char *endptr;
+    QLOCALE_RESET_ERRNO
     qlonglong ret = std::strtoll(num, &endptr, base);
     if ((ret == LLONG_MIN || ret == LLONG_MAX) && (errno == ERANGE || errno == EINVAL)) {
         if (ok != Q_NULLPTR)
             *ok = false;
-        if (overflow != Q_NULLPTR) {
-            // the only way qstrtoll can fail with *endptr != '\0' on a non-empty
-            // input string is overflow
-            *overflow = *endptr != '\0';
-        }
         return 0;
     }
 
     if (*endptr != '\0') {
-        // we stopped at a non-digit character after converting some digits
+        // stopped at a non-digit character after converting some digits
         if (ok != Q_NULLPTR)
             *ok = false;
-        if (overflow != Q_NULLPTR)
-            *overflow = false;
         return 0;
     }
 
     if (ok != Q_NULLPTR)
         *ok = true;
-    if (overflow != Q_NULLPTR)
-        *overflow = false;
     return ret;
 }
 
 qulonglong QLocalePrivate::bytearrayToUnsLongLong(const char *num, int base, bool *ok)
 {
+    if (Q_UNLIKELY(*num == '\0')) {
+        if (ok != Q_NULLPTR)
+            *ok = false;
+        return 0;
+    }
+
     char *endptr;
+    QLOCALE_RESET_ERRNO
     qulonglong ret = std::strtoull(num, &endptr, base);
-    if ((ret == ULLONG_MAX && (errno == ERANGE || errno == EINVAL)) || *endptr != '\0') {
+    if (ret == ULLONG_MAX && (errno == ERANGE || errno == EINVAL)) {
+        if (ok != Q_NULLPTR)
+            *ok = false;
+        return 0;
+    }
+
+    if (*endptr != '\0') {
+        // stopped at a non-digit character after converting some digits
         if (ok != Q_NULLPTR)
             *ok = false;
         return 0;
@@ -2707,7 +2699,7 @@ QString QLocale::currencySymbol(QLocale::CurrencySymbolFormat format) const
         case CurrencyDisplayName:
             return getLocaleData(d()->m_currency_display_name);
         case CurrencyIsoCode: {
-            return QString::fromLatin1(d()->m_currency_iso_code);
+            return getLocaleData(d()->m_currency_iso_code);
         }
     }
     return QString();
