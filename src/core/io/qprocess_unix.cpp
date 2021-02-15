@@ -307,7 +307,7 @@ static int qt_create_pipe(int *pipe)
     if (pipe[1] != -1)
         qt_safe_close(pipe[1]);
     int pipe_ret = qt_safe_pipe(pipe);
-    if (pipe_ret != 0) {
+    if (Q_UNLIKELY(pipe_ret != 0)) {
         qWarning("QProcessPrivate::createPipe: Cannot create pipe %p: %s",
                  pipe, qPrintable(qt_error_string(errno)));
     }
@@ -1163,7 +1163,7 @@ bool QProcessPrivate::startDetached(const QString &program, const QStringList &a
 
         qt_safe_close(startedPipe[1]);
         qt_safe_write(pidPipe[1], (const char *)&doubleForkPid, sizeof(pid_t));
-        if (QT_CHDIR("/") == -1) {
+        if (Q_UNLIKELY(QT_CHDIR("/") == -1)) {
             qWarning("QProcessPrivate::startDetached: failed to chdir to /");
         }
         ::_exit(1);
