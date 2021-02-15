@@ -317,7 +317,7 @@ bool QTimerInfoList::timerWait(timeval &tm)
     }
 
     if (!t)
-      return false;
+        return false;
 
     if (currentTime < t->timeout) {
         // time to wait
