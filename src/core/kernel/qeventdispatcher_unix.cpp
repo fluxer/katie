@@ -212,7 +212,8 @@ QTimerInfoList::QTimerInfoList()
 
 timeval QTimerInfoList::updateCurrentTime()
 {
-    return (currentTime = qt_gettime());
+    currentTime = qt_gettime();
+    return currentTime;
 }
 
 timeval qAbsTimeval(const timeval &t)
