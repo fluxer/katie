@@ -1,7 +1,7 @@
 /****************************************************************************
 **
 ** Copyright (C) 2015 The Qt Company Ltd.
-** Copyright (C) 2016-2021 Ivailo Monev
+** Copyright (C) 2016 Ivailo Monev
 **
 ** This file is part of the QtDeclarative module of the Katie Toolkit.
 **
@@ -185,7 +185,7 @@ QString QScriptDeclarativeClass::PersistentIdentifier::toString() const
 QScriptDeclarativeClass::QScriptDeclarativeClass(QScriptEngine *engine)
 : d_ptr(new QScriptDeclarativeClassPrivate)
 {
-    Q_ASSERT(sizeof(void*) == sizeof(JSC::Identifier));
+    Q_ASSERT(sizeof(JSC::Identifier) == QT_POINTER_SIZE);
     d_ptr->engine = engine;
 }
 

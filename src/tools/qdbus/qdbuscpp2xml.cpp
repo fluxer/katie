@@ -1,7 +1,7 @@
 /****************************************************************************
 **
 ** Copyright (C) 2015 The Qt Company Ltd.
-** Copyright (C) 2016-2021 Ivailo Monev
+** Copyright (C) 2016 Ivailo Monev
 **
 ** This file is part of the tools applications of the Katie Toolkit.
 **
@@ -14,18 +14,6 @@
 ** packaging of this file.  Please review the following information to
 ** ensure the GNU Lesser General Public License version 2.1 requirements
 ** will be met: http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html.
-**
-** As a special exception, The Qt Company gives you certain additional
-** rights. These rights are described in The Qt Company LGPL Exception
-** version 1.1, included in the file LGPL_EXCEPTION.txt in this package.
-**
-** GNU General Public License Usage
-** Alternatively, this file may be used under the terms of the GNU
-** General Public License version 3.0 as published by the Free Software
-** Foundation and appearing in the file LICENSE.GPL included in the
-** packaging of this file.  Please review the following information to
-** ensure the GNU General Public License version 3.0 requirements will be
-** met: http://www.gnu.org/copyleft/gpl.html.
 **
 ** $QT_END_LICENSE$
 **
@@ -62,7 +50,7 @@ QT_END_NAMESPACE
 #define PROGRAMNAME     "qdbuscpp2xml"
 #define PROGRAMVERSION  "0.1"
 #define PROGRAMCOPYRIGHT "Copyright (C) 2015 The Qt Company Ltd."
-#define PROGRAMCOPYRIGHT2 "Copyright (C) 2016-2021 Ivailo Monev"
+#define PROGRAMCOPYRIGHT2 "Copyright (C) 2016 Ivailo Monev"
 
 QT_USE_NAMESPACE
 
@@ -75,13 +63,20 @@ static const char help[] =
     "produces the D-Bus Introspection XML.\n"
     "\n"
     "Options:\n"
-    "    -p|-s|-m       Only parse scriptable Properties, Signals and Methods (slots)\n"
-    "    -P|-S|-M       Parse all Properties, Signals and Methods (slots)\n"
-    "    -a             Output all scriptable contents (equivalent to -psm)\n"
-    "    -A             Output all contents (equivalent to -PSM)\n"
-    "    -o <filename>  Write the output to file <filename>\n"
-    "    -h             Show this information\n"
-    "    -V             Show the program version and quit.\n"
+    "    -p|-s|-m\n"
+    "        Only parse scriptable Properties, Signals and Methods (slots).\n"
+    "    -P|-S|-M\n"
+    "        Parse all Properties, Signals and Methods (slots).\n"
+    "    -a\n"
+    "        Output all scriptable contents (equivalent to -psm).\n"
+    "    -A\n"
+    "        Output all contents (equivalent to -PSM).\n"
+    "    -o <filename>\n"
+    "        Write the output to file <filename>.\n"
+    "    -h\n"
+    "        Show this information.\n"
+    "    -V\n"
+    "        Show the program version and quit.\n"
     "\n";
 
 class MocParser

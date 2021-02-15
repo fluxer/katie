@@ -1,7 +1,7 @@
 /****************************************************************************
 **
 ** Copyright (C) 2015 The Qt Company Ltd.
-** Copyright (C) 2016-2021 Ivailo Monev
+** Copyright (C) 2016 Ivailo Monev
 **
 ** This file is part of the tools applications of the Katie Toolkit.
 **
@@ -14,18 +14,6 @@
 ** packaging of this file.  Please review the following information to
 ** ensure the GNU Lesser General Public License version 2.1 requirements
 ** will be met: http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html.
-**
-** As a special exception, The Qt Company gives you certain additional
-** rights. These rights are described in The Qt Company LGPL Exception
-** version 1.1, included in the file LGPL_EXCEPTION.txt in this package.
-**
-** GNU General Public License Usage
-** Alternatively, this file may be used under the terms of the GNU
-** General Public License version 3.0 as published by the Free Software
-** Foundation and appearing in the file LICENSE.GPL included in the
-** packaging of this file.  Please review the following information to
-** ensure the GNU General Public License version 3.0 requirements will be
-** met: http://www.gnu.org/copyleft/gpl.html.
 **
 ** $QT_END_LICENSE$
 **
@@ -383,14 +371,7 @@ static const struct ClassTblData {
     { QLatin1String("QItemSelection"), QLatin1String("QtGui/qitemselectionmodel.h") },
     { QLatin1String("QItemSelectionModel"), QLatin1String("QtGui/qitemselectionmodel.h") },
     { QLatin1String("QItemSelectionRange"), QLatin1String("QtGui/qitemselectionmodel.h") },
-    { QLatin1String("QJsonArray"), QLatin1String("QtCore/qjsonarray.h") },
     { QLatin1String("QJsonDocument"), QLatin1String("QtCore/qjsondocument.h") },
-    { QLatin1String("QJsonObject"), QLatin1String("QtCore/qjsonobject.h") },
-    { QLatin1String("QJsonParseError"), QLatin1String("QtCore/qjsondocument.h") },
-    { QLatin1String("QJsonValue"), QLatin1String("QtCore/qjsonvalue.h") },
-    { QLatin1String("QJsonValuePtr"), QLatin1String("QtCore/qjsonvalue.h") },
-    { QLatin1String("QJsonValueRef"), QLatin1String("QtCore/qjsonvalue.h") },
-    { QLatin1String("QJsonValueRefPtr"), QLatin1String("QtCore/qjsonvalue.h") },
     { QLatin1String("QKeyEvent"), QLatin1String("QtGui/qevent.h") },
     { QLatin1String("QKeySequence"), QLatin1String("QtGui/qkeysequence.h") },
     { QLatin1String("QLCDNumber"), QLatin1String("QtGui/qlcdnumber.h") },
@@ -651,8 +632,6 @@ static const struct ClassTblData {
     { QLatin1String("QTextBrowser"), QLatin1String("QtGui/qtextbrowser.h") },
     { QLatin1String("QTextCharFormat"), QLatin1String("QtGui/qtextformat.h") },
     { QLatin1String("QTextCodec"), QLatin1String("QtCore/qtextcodec.h") },
-    { QLatin1String("QTextCodecFactoryInterface"), QLatin1String("QtCore/qtextcodecplugin.h") },
-    { QLatin1String("QTextCodecPlugin"), QLatin1String("QtCore/qtextcodecplugin.h") },
     { QLatin1String("QTextCursor"), QLatin1String("QtGui/qtextcursor.h") },
     { QLatin1String("QTextDecoder"), QLatin1String("QtCore/qtextcodec.h") },
     { QLatin1String("QTextDocument"), QLatin1String("QtGui/qtextdocument.h") },

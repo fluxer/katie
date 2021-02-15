@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-01-02 01:58+0200\n"
+"POT-Creation-Date: 2021-02-11 01:35+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -17,1415 +17,1349 @@ msgstr ""
 "Content-Type: text/plain; charset=CHARSET\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: src/core/plugin/qlibrary.cpp:187
+#: src/core/plugin/qlibrary.cpp:175
 msgid "'%1' is not ELF file"
 msgstr ""
 
-#: src/core/plugin/qlibrary.cpp:190
+#: src/core/plugin/qlibrary.cpp:178
 msgid "ELF class mismatch in '%1'"
 msgstr ""
 
-#: src/core/plugin/qlibrary.cpp:214
+#: src/core/plugin/qlibrary.cpp:202
 msgid "Plugin verification data mismatch in '%1'"
 msgstr ""
 
-#: src/core/plugin/qlibrary.cpp:426 src/core/plugin/qlibrary.cpp:461
-#: src/core/plugin/qpluginloader.cpp:274
+#: src/core/plugin/qlibrary.cpp:414 src/core/plugin/qlibrary.cpp:449
+#: src/core/plugin/qpluginloader.cpp:262
 msgid "The shared library was not found."
 msgstr ""
 
-#: src/core/plugin/qlibrary.cpp:463
+#: src/core/plugin/qlibrary.cpp:451
 msgid "The file '%1' is not a valid Katie plugin."
 msgstr ""
 
-#: src/core/plugin/qlibrary.cpp:476
+#: src/core/plugin/qlibrary.cpp:464
 msgid "The plugin uses incompatible Katie library: %1 (%2, %3)"
 msgstr ""
 
-#: src/core/plugin/qlibrary.cpp:809 src/core/plugin/qpluginloader.cpp:291
-#: src/core/io/qiodevice.cpp:1541 src/network/ssl/qsslerror.cpp:261
-#: src/network/kernel/qhostinfo_unix.cpp:119
-#: src/network/kernel/qhostinfo_unix.cpp:238
-#: src/network/socket/qnativesocketengine.cpp:268
-#: src/network/access/qftp.cpp:1439 src/uitools/formscriptrunner.cpp:116
+#: src/core/plugin/qlibrary.cpp:797 src/core/plugin/qpluginloader.cpp:279
+#: src/core/io/qiodevice.cpp:1529 src/network/ssl/qsslerror.cpp:249
+#: src/network/socket/qnativesocketengine.cpp:256
+#: src/network/access/qftp.cpp:1427 src/uitools/formscriptrunner.cpp:104
 msgid "Unknown error"
 msgstr ""
 
-#: src/core/plugin/qlibrary_unix.cpp:68
+#: src/core/plugin/qlibrary_unix.cpp:56
 msgid "Cannot load library %1: %2"
 msgstr ""
 
-#: src/core/plugin/qlibrary_unix.cpp:79
+#: src/core/plugin/qlibrary_unix.cpp:67
 msgid "Cannot unload library %1: %2"
 msgstr ""
 
-#: src/core/plugin/qlibrary_unix.cpp:90
+#: src/core/plugin/qlibrary_unix.cpp:78
 msgid "Cannot resolve symbol \"%1\" in %2: %3"
 msgstr ""
 
-#: src/core/plugin/qpluginloader.cpp:229
+#: src/core/plugin/qpluginloader.cpp:217
 msgid "The plugin was not loaded."
 msgstr ""
 
-#: src/core/io/qstandardpaths.cpp:295
+#: src/core/io/qstandardpaths.cpp:283
 msgctxt "QStandardPaths"
 msgid "Desktop"
 msgstr ""
 
-#: src/core/io/qstandardpaths.cpp:297
+#: src/core/io/qstandardpaths.cpp:285
 msgctxt "QStandardPaths"
 msgid "Documents"
 msgstr ""
 
-#: src/core/io/qstandardpaths.cpp:299
+#: src/core/io/qstandardpaths.cpp:287
 msgctxt "QStandardPaths"
 msgid "Fonts"
 msgstr ""
 
-#: src/core/io/qstandardpaths.cpp:301
+#: src/core/io/qstandardpaths.cpp:289
 msgctxt "QStandardPaths"
 msgid "Applications"
 msgstr ""
 
-#: src/core/io/qstandardpaths.cpp:303
+#: src/core/io/qstandardpaths.cpp:291
 msgctxt "QStandardPaths"
 msgid "Music"
 msgstr ""
 
-#: src/core/io/qstandardpaths.cpp:305
+#: src/core/io/qstandardpaths.cpp:293
 msgctxt "QStandardPaths"
 msgid "Movies"
 msgstr ""
 
-#: src/core/io/qstandardpaths.cpp:307
+#: src/core/io/qstandardpaths.cpp:295
 msgctxt "QStandardPaths"
 msgid "Pictures"
 msgstr ""
 
-#: src/core/io/qstandardpaths.cpp:309
+#: src/core/io/qstandardpaths.cpp:297
 msgctxt "QStandardPaths"
 msgid "Temporary Directory"
 msgstr ""
 
-#: src/core/io/qstandardpaths.cpp:311
+#: src/core/io/qstandardpaths.cpp:299
 msgctxt "QStandardPaths"
 msgid "Home"
 msgstr ""
 
-#: src/core/io/qstandardpaths.cpp:313
+#: src/core/io/qstandardpaths.cpp:301
 msgctxt "QStandardPaths"
 msgid "Application Data"
 msgstr ""
 
-#: src/core/io/qstandardpaths.cpp:315
+#: src/core/io/qstandardpaths.cpp:303
 msgctxt "QStandardPaths"
 msgid "Cache"
 msgstr ""
 
-#: src/core/io/qstandardpaths.cpp:317
+#: src/core/io/qstandardpaths.cpp:305
 msgctxt "QStandardPaths"
 msgid "Shared Data"
 msgstr ""
 
-#: src/core/io/qstandardpaths.cpp:319
+#: src/core/io/qstandardpaths.cpp:307
 msgctxt "QStandardPaths"
 msgid "Runtime"
 msgstr ""
 
-#: src/core/io/qstandardpaths.cpp:321
+#: src/core/io/qstandardpaths.cpp:309
 msgctxt "QStandardPaths"
 msgid "Configuration"
 msgstr ""
 
-#: src/core/io/qstandardpaths.cpp:323
+#: src/core/io/qstandardpaths.cpp:311
 msgctxt "QStandardPaths"
 msgid "Shared Configuration"
 msgstr ""
 
-#: src/core/io/qstandardpaths.cpp:325
+#: src/core/io/qstandardpaths.cpp:313
 msgctxt "QStandardPaths"
 msgid "Shared Cache"
 msgstr ""
 
-#: src/core/io/qstandardpaths.cpp:327
+#: src/core/io/qstandardpaths.cpp:315
 msgctxt "QStandardPaths"
 msgid "Download"
 msgstr ""
 
-#: src/core/io/qfile.cpp:597
+#: src/core/io/qfile.cpp:585
 msgid "Destination file exists"
 msgstr ""
 
-#: src/core/io/qfile.cpp:612
+#: src/core/io/qfile.cpp:600
 msgid "Will not rename sequential file using block copy"
 msgstr ""
 
-#: src/core/io/qfile.cpp:635
+#: src/core/io/qfile.cpp:623
 msgid "Cannot remove source file"
 msgstr ""
 
-#: src/core/io/qfile.cpp:1034
+#: src/core/io/qfile.cpp:1022
 msgid "No file engine available or engine does not support UnMapExtension"
 msgstr ""
 
-#: src/core/io/qprocess.cpp:809 src/core/io/qprocess.cpp:861
+#: src/core/io/qprocess.cpp:797 src/core/io/qprocess.cpp:849
 msgid "Error reading from process"
 msgstr ""
 
-#: src/core/io/qprocess.cpp:908
+#: src/core/io/qprocess.cpp:896
 msgid "Error writing to process"
 msgstr ""
 
-#: src/core/io/qprocess.cpp:971
+#: src/core/io/qprocess.cpp:959
 msgid "Process crashed"
 msgstr ""
 
-#: src/core/io/qprocess.cpp:1858
+#: src/core/io/qprocess.cpp:1846
 msgid "No program defined"
 msgstr ""
 
-#: src/core/io/qprocess_unix.cpp:393
+#: src/core/io/qprocess_unix.cpp:381
 msgid "Could not open input redirection for reading"
 msgstr ""
 
-#: src/core/io/qprocess_unix.cpp:405
+#: src/core/io/qprocess_unix.cpp:393
 msgid "Could not open output redirection for writing"
 msgstr ""
 
-#: src/core/io/qprocess_unix.cpp:623
+#: src/core/io/qprocess_unix.cpp:611
 msgid "Resource error (fork failure): %1"
 msgstr ""
 
-#: src/core/io/qprocess_unix.cpp:860 src/core/io/qprocess_unix.cpp:908
-#: src/core/io/qprocess_unix.cpp:978 src/core/io/qprocess_unix.cpp:1040
+#: src/core/io/qprocess_unix.cpp:848 src/core/io/qprocess_unix.cpp:896
+#: src/core/io/qprocess_unix.cpp:966 src/core/io/qprocess_unix.cpp:1028
 msgid "Process operation timed out"
 msgstr ""
 
-#: src/core/kernel/qsharedmemory.cpp:225
+#: src/core/kernel/qsharedmemory.cpp:208
 msgid "%1: unable to set key on lock"
 msgstr ""
 
-#: src/core/kernel/qsharedmemory.cpp:309
+#: src/core/kernel/qsharedmemory.cpp:292
 msgid "%1: create size is less then 0"
 msgstr ""
 
-#: src/core/kernel/qsharedmemory.cpp:482 src/core/kernel/qsharedmemory_p.h:137
+#: src/core/kernel/qsharedmemory.cpp:465 src/core/kernel/qsharedmemory_p.h:119
 msgid "%1: unable to lock"
 msgstr ""
 
-#: src/core/kernel/qsharedmemory.cpp:503
+#: src/core/kernel/qsharedmemory.cpp:486
 msgid "%1: unable to unlock"
 msgstr ""
 
-#: src/core/kernel/qsharedmemory_unix.cpp:83
+#: src/core/kernel/qsharedmemory_unix.cpp:63
 msgid "%1: permission denied"
 msgstr ""
 
-#: src/core/kernel/qsharedmemory_unix.cpp:87
+#: src/core/kernel/qsharedmemory_unix.cpp:67
 msgid "%1: already exists"
 msgstr ""
 
-#: src/core/kernel/qsharedmemory_unix.cpp:91
+#: src/core/kernel/qsharedmemory_unix.cpp:71
 msgid "%1: doesn't exist"
 msgstr ""
 
-#: src/core/kernel/qsharedmemory_unix.cpp:99
+#: src/core/kernel/qsharedmemory_unix.cpp:79
 msgid "%1: out of resources"
 msgstr ""
 
-#: src/core/kernel/qsharedmemory_unix.cpp:103
+#: src/core/kernel/qsharedmemory_unix.cpp:83
 msgid "%1: invalid size"
 msgstr ""
 
-#: src/core/kernel/qsharedmemory_unix.cpp:107
+#: src/core/kernel/qsharedmemory_unix.cpp:87
 msgid "%1: unknown error %2"
 msgstr ""
 
-#: src/core/kernel/qsharedmemory_unix.cpp:130
-#: src/core/kernel/qsharedmemory_unix.cpp:148
-#: src/core/kernel/qsystemsemaphore_unix.cpp:133
-#: src/core/kernel/qsystemsemaphore_unix.cpp:195
+#: src/core/kernel/qsharedmemory_unix.cpp:106
+#: src/core/kernel/qsystemsemaphore_unix.cpp:113
 msgid "%1: key is empty"
 msgstr ""
 
-#: src/core/kernel/qsharedmemory_unix.cpp:211
-#: src/core/kernel/qsystemsemaphore_unix.cpp:141
-msgid "%1: unable to make key"
-msgstr ""
-
-#: src/core/kernel/qsharedmemory_unix.cpp:229
-msgid "%1: system-imposed size restrictions"
-msgstr ""
-
-#: src/core/kernel/qsharedmemory_unix.cpp:252
-#: src/core/kernel/qsharedmemory_unix.cpp:314
+#: src/core/kernel/qsharedmemory_unix.cpp:134
+#: src/core/kernel/qsharedmemory_unix.cpp:170
 msgid "%1: bad name"
 msgstr ""
 
-#: src/core/kernel/qsharedmemory_unix.cpp:356
-msgid "%1: not attached"
-msgstr ""
-
-#: src/core/kernel/qsystemsemaphore_unix.cpp:87
+#: src/core/kernel/qsystemsemaphore_unix.cpp:68
 msgctxt "QSystemSemaphore"
 msgid "%1: permission denied"
 msgstr ""
 
-#: src/core/kernel/qsystemsemaphore_unix.cpp:91
+#: src/core/kernel/qsystemsemaphore_unix.cpp:72
 msgctxt "QSystemSemaphore"
 msgid "%1: already exists"
 msgstr ""
 
-#: src/core/kernel/qsystemsemaphore_unix.cpp:95
+#: src/core/kernel/qsystemsemaphore_unix.cpp:76
 msgctxt "QSystemSemaphore"
 msgid "%1: does not exist"
 msgstr ""
 
-#: src/core/kernel/qsystemsemaphore_unix.cpp:104
+#: src/core/kernel/qsystemsemaphore_unix.cpp:85
 msgctxt "QSystemSemaphore"
 msgid "%1: out of resources"
 msgstr ""
 
-#: src/core/kernel/qsystemsemaphore_unix.cpp:108
+#: src/core/kernel/qsystemsemaphore_unix.cpp:89
 msgctxt "QSystemSemaphore"
 msgid "%1: name error"
 msgstr ""
 
-#: src/core/kernel/qsystemsemaphore_unix.cpp:112
+#: src/core/kernel/qsystemsemaphore_unix.cpp:93
 msgctxt "QSystemSemaphore"
 msgid "%1: unknown error %2"
 msgstr ""
 
-#: src/core/kernel/qsystemsemaphore_unix.cpp:150
-msgid "%1: ftok failed"
-msgstr ""
-
-#: src/core/tools/qregexp.cpp:57
+#: src/core/tools/qregexp.cpp:45
 msgctxt "QRegExp"
 msgid "no error occurred"
 msgstr ""
 
-#: src/core/tools/qregexp.cpp:58
+#: src/core/tools/qregexp.cpp:46
 msgctxt "QRegExp"
 msgid "disabled feature used"
 msgstr ""
 
-#: src/core/tools/qregexp.cpp:59
+#: src/core/tools/qregexp.cpp:47
 msgctxt "QRegExp"
 msgid "bad char class syntax"
 msgstr ""
 
-#: src/core/tools/qregexp.cpp:60
+#: src/core/tools/qregexp.cpp:48
 msgctxt "QRegExp"
 msgid "bad lookahead syntax"
 msgstr ""
 
-#: src/core/tools/qregexp.cpp:61
+#: src/core/tools/qregexp.cpp:49
 msgctxt "QRegExp"
 msgid "lookbehinds not supported, see QTBUG-2371"
 msgstr ""
 
-#: src/core/tools/qregexp.cpp:62
+#: src/core/tools/qregexp.cpp:50
 msgctxt "QRegExp"
 msgid "bad repetition syntax"
 msgstr ""
 
-#: src/core/tools/qregexp.cpp:63
+#: src/core/tools/qregexp.cpp:51
 msgctxt "QRegExp"
 msgid "invalid octal value"
 msgstr ""
 
-#: src/core/tools/qregexp.cpp:64
+#: src/core/tools/qregexp.cpp:52
 msgctxt "QRegExp"
 msgid "missing left delim"
 msgstr ""
 
-#: src/core/tools/qregexp.cpp:65
+#: src/core/tools/qregexp.cpp:53
 msgctxt "QRegExp"
 msgid "unexpected end"
 msgstr ""
 
-#: src/core/tools/qregexp.cpp:66
+#: src/core/tools/qregexp.cpp:54
 msgctxt "QRegExp"
 msgid "met internal limit"
 msgstr ""
 
-#: src/core/tools/qregexp.cpp:67
+#: src/core/tools/qregexp.cpp:55
 msgctxt "QRegExp"
 msgid "invalid interval"
 msgstr ""
 
-#: src/core/tools/qregexp.cpp:68
+#: src/core/tools/qregexp.cpp:56
 msgctxt "QRegExp"
 msgid "invalid category"
 msgstr ""
 
-#: src/core/json/qjsonparser.cpp:59
-msgctxt "QJsonParseError"
-msgid "no error occurred"
+#: src/core/tools/qjsondocument.cpp:49
+msgctxt "QJsonDocument"
+msgid "Data is empty"
 msgstr ""
 
-#: src/core/json/qjsonparser.cpp:60
-msgctxt "QJsonParseError"
-msgid "unterminated object"
+#: src/core/tools/qjsondocument.cpp:105
+msgctxt "QJsonDocument"
+msgid "Unknown JSON type in array"
 msgstr ""
 
-#: src/core/json/qjsonparser.cpp:61
-msgctxt "QJsonParseError"
-msgid "missing name separator"
+#: src/core/tools/qjsondocument.cpp:138 src/core/tools/qjsondocument.cpp:221
+msgctxt "QJsonDocument"
+msgid "Unknown JSON type"
 msgstr ""
 
-#: src/core/json/qjsonparser.cpp:62
-msgctxt "QJsonParseError"
-msgid "unterminated array"
+#: src/core/tools/qjsondocument.cpp:146
+msgctxt "QJsonDocument"
+msgid "Rootless array/values are not supported"
 msgstr ""
 
-#: src/core/json/qjsonparser.cpp:63
-msgctxt "QJsonParseError"
-msgid "missing value separator"
+#: src/core/tools/qjsondocument.cpp:163
+msgctxt "QJsonDocument"
+msgid "Data map is empty"
 msgstr ""
 
-#: src/core/json/qjsonparser.cpp:64
-msgctxt "QJsonParseError"
-msgid "illegal value"
-msgstr ""
-
-#: src/core/json/qjsonparser.cpp:65
-msgctxt "QJsonParseError"
-msgid "invalid termination by number"
-msgstr ""
-
-#: src/core/json/qjsonparser.cpp:66
-msgctxt "QJsonParseError"
-msgid "illegal number"
-msgstr ""
-
-#: src/core/json/qjsonparser.cpp:67
-msgctxt "QJsonParseError"
-msgid "invalid escape sequence"
-msgstr ""
-
-#: src/core/json/qjsonparser.cpp:68
-msgctxt "QJsonParseError"
-msgid "invalid UTF8 string"
-msgstr ""
-
-#: src/core/json/qjsonparser.cpp:69
-msgctxt "QJsonParseError"
-msgid "unterminated string"
-msgstr ""
-
-#: src/core/json/qjsonparser.cpp:70
-msgctxt "QJsonParseError"
-msgid "object is missing after a comma"
-msgstr ""
-
-#: src/core/json/qjsonparser.cpp:71
-msgctxt "QJsonParseError"
-msgid "too deeply nested document"
-msgstr ""
-
-#: src/core/json/qjsonparser.cpp:72
-msgctxt "QJsonParseError"
-msgid "too large document"
-msgstr ""
-
-#: src/declarative/graphicsitems/qdeclarativeitemsmodule.cpp:95
+#: src/declarative/graphicsitems/qdeclarativeitemsmodule.cpp:83
 msgctxt "QDeclarativeAnimatedImage"
 msgid "Katie was built without support for QMovie"
 msgstr ""
 
-#: src/declarative/graphicsitems/qdeclarativeitemsmodule.cpp:167
+#: src/declarative/graphicsitems/qdeclarativeitemsmodule.cpp:155
 msgid "KeyNavigation is only available via attached properties"
 msgstr ""
 
-#: src/declarative/graphicsitems/qdeclarativeitemsmodule.cpp:168
+#: src/declarative/graphicsitems/qdeclarativeitemsmodule.cpp:156
 msgid "Keys is only available via attached properties"
 msgstr ""
 
-#: src/declarative/graphicsitems/qdeclarativeitemsmodule.cpp:193
+#: src/declarative/graphicsitems/qdeclarativeitemsmodule.cpp:181
 msgid "LayoutMirroring is only available via attached properties"
 msgstr ""
 
-#: src/declarative/graphicsitems/qdeclarativeloader.cpp:399
+#: src/declarative/graphicsitems/qdeclarativeloader.cpp:387
 msgid "Loader does not support loading non-visual elements."
 msgstr ""
 
-#: src/declarative/graphicsitems/qdeclarativeanchors.cpp:189
+#: src/declarative/graphicsitems/qdeclarativeanchors.cpp:177
 msgid "Possible anchor loop detected on fill."
 msgstr ""
 
-#: src/declarative/graphicsitems/qdeclarativeanchors.cpp:218
+#: src/declarative/graphicsitems/qdeclarativeanchors.cpp:206
 msgid "Possible anchor loop detected on centerIn."
 msgstr ""
 
-#: src/declarative/graphicsitems/qdeclarativeanchors.cpp:426
-#: src/declarative/graphicsitems/qdeclarativeanchors.cpp:460
-#: src/declarative/graphicsitems/qdeclarativeanchors.cpp:1106
-#: src/declarative/graphicsitems/qdeclarativeanchors.cpp:1143
+#: src/declarative/graphicsitems/qdeclarativeanchors.cpp:414
+#: src/declarative/graphicsitems/qdeclarativeanchors.cpp:448
+#: src/declarative/graphicsitems/qdeclarativeanchors.cpp:1094
+#: src/declarative/graphicsitems/qdeclarativeanchors.cpp:1131
 msgid "Cannot anchor to an item that isn't a parent or sibling."
 msgstr ""
 
-#: src/declarative/graphicsitems/qdeclarativeanchors.cpp:573
+#: src/declarative/graphicsitems/qdeclarativeanchors.cpp:561
 msgid "Possible anchor loop detected on vertical anchor."
 msgstr ""
 
-#: src/declarative/graphicsitems/qdeclarativeanchors.cpp:668
+#: src/declarative/graphicsitems/qdeclarativeanchors.cpp:656
 msgid "Possible anchor loop detected on horizontal anchor."
 msgstr ""
 
-#: src/declarative/graphicsitems/qdeclarativeanchors.cpp:1090
+#: src/declarative/graphicsitems/qdeclarativeanchors.cpp:1078
 msgid "Cannot specify left, right, and hcenter anchors."
 msgstr ""
 
-#: src/declarative/graphicsitems/qdeclarativeanchors.cpp:1100
-#: src/declarative/graphicsitems/qdeclarativeanchors.cpp:1137
+#: src/declarative/graphicsitems/qdeclarativeanchors.cpp:1088
+#: src/declarative/graphicsitems/qdeclarativeanchors.cpp:1125
 msgid "Cannot anchor to a null item."
 msgstr ""
 
-#: src/declarative/graphicsitems/qdeclarativeanchors.cpp:1103
+#: src/declarative/graphicsitems/qdeclarativeanchors.cpp:1091
 msgid "Cannot anchor a horizontal edge to a vertical edge."
 msgstr ""
 
-#: src/declarative/graphicsitems/qdeclarativeanchors.cpp:1109
-#: src/declarative/graphicsitems/qdeclarativeanchors.cpp:1146
+#: src/declarative/graphicsitems/qdeclarativeanchors.cpp:1097
+#: src/declarative/graphicsitems/qdeclarativeanchors.cpp:1134
 msgid "Cannot anchor item to self."
 msgstr ""
 
-#: src/declarative/graphicsitems/qdeclarativeanchors.cpp:1121
+#: src/declarative/graphicsitems/qdeclarativeanchors.cpp:1109
 msgid "Cannot specify top, bottom, and vcenter anchors."
 msgstr ""
 
-#: src/declarative/graphicsitems/qdeclarativeanchors.cpp:1127
+#: src/declarative/graphicsitems/qdeclarativeanchors.cpp:1115
 msgid ""
 "Baseline anchor cannot be used in conjunction with top, bottom, or vcenter "
 "anchors."
 msgstr ""
 
-#: src/declarative/graphicsitems/qdeclarativeanchors.cpp:1140
+#: src/declarative/graphicsitems/qdeclarativeanchors.cpp:1128
 msgid "Cannot anchor a vertical edge to a horizontal edge."
 msgstr ""
 
-#: src/declarative/graphicsitems/qdeclarativetextinput.cpp:921
-#: src/declarative/graphicsitems/qdeclarativetextinput.cpp:929
+#: src/declarative/graphicsitems/qdeclarativetextinput.cpp:909
+#: src/declarative/graphicsitems/qdeclarativetextinput.cpp:917
 msgid "Could not load cursor delegate"
 msgstr ""
 
-#: src/declarative/graphicsitems/qdeclarativetextinput.cpp:940
+#: src/declarative/graphicsitems/qdeclarativetextinput.cpp:928
 msgid "Could not instantiate cursor delegate"
 msgstr ""
 
-#: src/declarative/graphicsitems/qdeclarativeflipable.cpp:130
+#: src/declarative/graphicsitems/qdeclarativeflipable.cpp:118
 msgid "front is a write-once property"
 msgstr ""
 
-#: src/declarative/graphicsitems/qdeclarativeflipable.cpp:150
+#: src/declarative/graphicsitems/qdeclarativeflipable.cpp:138
 msgid "back is a write-once property"
 msgstr ""
 
-#: src/declarative/graphicsitems/qdeclarativeitem.cpp:795
+#: src/declarative/graphicsitems/qdeclarativeitem.cpp:783
 msgid "LayoutDirection attached property only works with Items"
 msgstr ""
 
-#: src/declarative/graphicsitems/qdeclarativevisualitemmodel.cpp:1093
+#: src/declarative/graphicsitems/qdeclarativevisualitemmodel.cpp:1081
 msgid "Delegate component must be Item type."
 msgstr ""
 
-#: src/declarative/qml/qdeclarativecompiler.cpp:176
-#: src/declarative/qml/qdeclarativecompiler.cpp:1830
-#: src/declarative/qml/qdeclarativecompiler.cpp:2035
-#: src/declarative/qml/qdeclarativecompiler.cpp:2116
-#: src/declarative/qml/qdeclarativecompiler.cpp:2191
-#: src/declarative/qml/qdeclarativecompiler.cpp:2785
+#: src/declarative/qml/qdeclarativecompiler.cpp:164
+#: src/declarative/qml/qdeclarativecompiler.cpp:1818
+#: src/declarative/qml/qdeclarativecompiler.cpp:2023
+#: src/declarative/qml/qdeclarativecompiler.cpp:2104
+#: src/declarative/qml/qdeclarativecompiler.cpp:2179
+#: src/declarative/qml/qdeclarativecompiler.cpp:2773
 msgid "Invalid property assignment: \"%1\" is a read-only property"
 msgstr ""
 
-#: src/declarative/qml/qdeclarativecompiler.cpp:185
+#: src/declarative/qml/qdeclarativecompiler.cpp:173
 msgid "Invalid property assignment: unknown enumeration"
 msgstr ""
 
-#: src/declarative/qml/qdeclarativecompiler.cpp:193
+#: src/declarative/qml/qdeclarativecompiler.cpp:181
 msgid "Invalid property assignment: string expected"
 msgstr ""
 
-#: src/declarative/qml/qdeclarativecompiler.cpp:196
+#: src/declarative/qml/qdeclarativecompiler.cpp:184
 msgid "Invalid property assignment: url expected"
 msgstr ""
 
-#: src/declarative/qml/qdeclarativecompiler.cpp:206
+#: src/declarative/qml/qdeclarativecompiler.cpp:194
 msgid "Invalid property assignment: unsigned int expected"
 msgstr ""
 
-#: src/declarative/qml/qdeclarativecompiler.cpp:217
+#: src/declarative/qml/qdeclarativecompiler.cpp:205
 msgid "Invalid property assignment: int expected"
 msgstr ""
 
-#: src/declarative/qml/qdeclarativecompiler.cpp:221
-#: src/declarative/qml/qdeclarativecompiler.cpp:224
+#: src/declarative/qml/qdeclarativecompiler.cpp:209
+#: src/declarative/qml/qdeclarativecompiler.cpp:212
 msgid "Invalid property assignment: number expected"
 msgstr ""
 
-#: src/declarative/qml/qdeclarativecompiler.cpp:230
+#: src/declarative/qml/qdeclarativecompiler.cpp:218
 msgid "Invalid property assignment: color expected"
 msgstr ""
 
-#: src/declarative/qml/qdeclarativecompiler.cpp:238
+#: src/declarative/qml/qdeclarativecompiler.cpp:226
 msgid "Invalid property assignment: date expected"
 msgstr ""
 
-#: src/declarative/qml/qdeclarativecompiler.cpp:245
+#: src/declarative/qml/qdeclarativecompiler.cpp:233
 msgid "Invalid property assignment: time expected"
 msgstr ""
 
-#: src/declarative/qml/qdeclarativecompiler.cpp:252
+#: src/declarative/qml/qdeclarativecompiler.cpp:240
 msgid "Invalid property assignment: datetime expected"
 msgstr ""
 
-#: src/declarative/qml/qdeclarativecompiler.cpp:261
+#: src/declarative/qml/qdeclarativecompiler.cpp:249
 msgid "Invalid property assignment: point expected"
 msgstr ""
 
-#: src/declarative/qml/qdeclarativecompiler.cpp:269
+#: src/declarative/qml/qdeclarativecompiler.cpp:257
 msgid "Invalid property assignment: size expected"
 msgstr ""
 
-#: src/declarative/qml/qdeclarativecompiler.cpp:277
+#: src/declarative/qml/qdeclarativecompiler.cpp:265
 msgid "Invalid property assignment: rect expected"
 msgstr ""
 
-#: src/declarative/qml/qdeclarativecompiler.cpp:282
+#: src/declarative/qml/qdeclarativecompiler.cpp:270
 msgid "Invalid property assignment: boolean expected"
 msgstr ""
 
-#: src/declarative/qml/qdeclarativecompiler.cpp:289
+#: src/declarative/qml/qdeclarativecompiler.cpp:277
 msgid "Invalid property assignment: 3D vector expected"
 msgstr ""
 
-#: src/declarative/qml/qdeclarativecompiler.cpp:294
+#: src/declarative/qml/qdeclarativecompiler.cpp:282
 msgid "Invalid property assignment: unsupported type \"%1\""
 msgstr ""
 
-#: src/declarative/qml/qdeclarativecompiler.cpp:566
+#: src/declarative/qml/qdeclarativecompiler.cpp:554
 msgid "Element is not creatable."
 msgstr ""
 
-#: src/declarative/qml/qdeclarativecompiler.cpp:1216
+#: src/declarative/qml/qdeclarativecompiler.cpp:1204
 msgid "Component elements may not contain properties other than id"
 msgstr ""
 
-#: src/declarative/qml/qdeclarativecompiler.cpp:1223
+#: src/declarative/qml/qdeclarativecompiler.cpp:1211
 msgid "Invalid component id specification"
 msgstr ""
 
-#: src/declarative/qml/qdeclarativecompiler.cpp:1229
-#: src/declarative/qml/qdeclarativecompiler.cpp:1744
+#: src/declarative/qml/qdeclarativecompiler.cpp:1217
+#: src/declarative/qml/qdeclarativecompiler.cpp:1732
 msgid "id is not unique"
 msgstr ""
 
-#: src/declarative/qml/qdeclarativecompiler.cpp:1239
+#: src/declarative/qml/qdeclarativecompiler.cpp:1227
 msgid "Invalid component body specification"
 msgstr ""
 
-#: src/declarative/qml/qdeclarativecompiler.cpp:1242
+#: src/declarative/qml/qdeclarativecompiler.cpp:1230
 msgid "Component objects cannot declare new properties."
 msgstr ""
 
-#: src/declarative/qml/qdeclarativecompiler.cpp:1244
+#: src/declarative/qml/qdeclarativecompiler.cpp:1232
 msgid "Component objects cannot declare new signals."
 msgstr ""
 
-#: src/declarative/qml/qdeclarativecompiler.cpp:1246
+#: src/declarative/qml/qdeclarativecompiler.cpp:1234
 msgid "Component objects cannot declare new functions."
 msgstr ""
 
-#: src/declarative/qml/qdeclarativecompiler.cpp:1253
+#: src/declarative/qml/qdeclarativecompiler.cpp:1241
 msgid "Cannot create empty component specification"
 msgstr ""
 
-#: src/declarative/qml/qdeclarativecompiler.cpp:1341
-#: src/declarative/qml/qdeclarativecompiler.cpp:1462
+#: src/declarative/qml/qdeclarativecompiler.cpp:1329
+#: src/declarative/qml/qdeclarativecompiler.cpp:1450
 msgid "\"%1.%2\" is not available in %3 %4.%5."
 msgstr ""
 
-#: src/declarative/qml/qdeclarativecompiler.cpp:1343
-#: src/declarative/qml/qdeclarativecompiler.cpp:1464
+#: src/declarative/qml/qdeclarativecompiler.cpp:1331
+#: src/declarative/qml/qdeclarativecompiler.cpp:1452
 msgid "\"%1.%2\" is not available due to component versioning."
 msgstr ""
 
-#: src/declarative/qml/qdeclarativecompiler.cpp:1354
+#: src/declarative/qml/qdeclarativecompiler.cpp:1342
 msgid "Incorrectly specified signal assignment"
 msgstr ""
 
-#: src/declarative/qml/qdeclarativecompiler.cpp:1366
+#: src/declarative/qml/qdeclarativecompiler.cpp:1354
 msgid "Cannot assign a value to a signal (expecting a script to be run)"
 msgstr ""
 
-#: src/declarative/qml/qdeclarativecompiler.cpp:1370
+#: src/declarative/qml/qdeclarativecompiler.cpp:1358
 msgid "Empty signal assignment"
 msgstr ""
 
-#: src/declarative/qml/qdeclarativecompiler.cpp:1408
+#: src/declarative/qml/qdeclarativecompiler.cpp:1396
 msgid "Empty property assignment"
 msgstr ""
 
-#: src/declarative/qml/qdeclarativecompiler.cpp:1420
+#: src/declarative/qml/qdeclarativecompiler.cpp:1408
 msgid "Attached properties cannot be used here"
 msgstr ""
 
-#: src/declarative/qml/qdeclarativecompiler.cpp:1434
-#: src/declarative/qml/qdeclarativecompiler.cpp:1562
+#: src/declarative/qml/qdeclarativecompiler.cpp:1422
+#: src/declarative/qml/qdeclarativecompiler.cpp:1550
 msgid "Non-existent attached object"
 msgstr ""
 
-#: src/declarative/qml/qdeclarativecompiler.cpp:1438
-#: src/declarative/qml/qdeclarativecompiler.cpp:1565
+#: src/declarative/qml/qdeclarativecompiler.cpp:1426
+#: src/declarative/qml/qdeclarativecompiler.cpp:1553
 msgid "Invalid attached object assignment"
 msgstr ""
 
-#: src/declarative/qml/qdeclarativecompiler.cpp:1517
+#: src/declarative/qml/qdeclarativecompiler.cpp:1505
 msgid "Cannot assign to non-existent default property"
 msgstr ""
 
-#: src/declarative/qml/qdeclarativecompiler.cpp:1519
-#: src/declarative/qml/qdeclarativecompiler.cpp:1875
-#: src/declarative/qml/qdeclarativecompiler.cpp:1878
-#: src/declarative/util/qdeclarativeconnections.cpp:199
-#: src/declarative/util/qdeclarativeconnections.cpp:263
-#: src/declarative/util/qdeclarativepropertychanges.cpp:416
+#: src/declarative/qml/qdeclarativecompiler.cpp:1507
+#: src/declarative/qml/qdeclarativecompiler.cpp:1863
+#: src/declarative/qml/qdeclarativecompiler.cpp:1866
+#: src/declarative/util/qdeclarativeconnections.cpp:187
+#: src/declarative/util/qdeclarativeconnections.cpp:251
+#: src/declarative/util/qdeclarativepropertychanges.cpp:404
 msgid "Cannot assign to non-existent property \"%1\""
 msgstr ""
 
-#: src/declarative/qml/qdeclarativecompiler.cpp:1549
+#: src/declarative/qml/qdeclarativecompiler.cpp:1537
 msgid "Invalid use of namespace"
 msgstr ""
 
-#: src/declarative/qml/qdeclarativecompiler.cpp:1554
+#: src/declarative/qml/qdeclarativecompiler.cpp:1542
 msgid "Not an attached property name"
 msgstr ""
 
-#: src/declarative/qml/qdeclarativecompiler.cpp:1736
+#: src/declarative/qml/qdeclarativecompiler.cpp:1724
 msgid "Invalid use of id property"
 msgstr ""
 
-#: src/declarative/qml/qdeclarativecompiler.cpp:1823
-#: src/declarative/qml/qdeclarativecompiler.cpp:1825
+#: src/declarative/qml/qdeclarativecompiler.cpp:1811
+#: src/declarative/qml/qdeclarativecompiler.cpp:1813
 msgid "Property has already been assigned a value"
 msgstr ""
 
-#: src/declarative/qml/qdeclarativecompiler.cpp:1843
-#: src/declarative/qml/qdeclarativecompiler.cpp:1850
+#: src/declarative/qml/qdeclarativecompiler.cpp:1831
+#: src/declarative/qml/qdeclarativecompiler.cpp:1838
 msgid "Invalid grouped property access"
 msgstr ""
 
-#: src/declarative/qml/qdeclarativecompiler.cpp:1853
+#: src/declarative/qml/qdeclarativecompiler.cpp:1841
 msgid "Cannot assign a value directly to a grouped property"
 msgstr ""
 
-#: src/declarative/qml/qdeclarativecompiler.cpp:1869
+#: src/declarative/qml/qdeclarativecompiler.cpp:1857
 msgid "Invalid property use"
 msgstr ""
 
-#: src/declarative/qml/qdeclarativecompiler.cpp:1884
+#: src/declarative/qml/qdeclarativecompiler.cpp:1872
 msgid "Property assignment expected"
 msgstr ""
 
-#: src/declarative/qml/qdeclarativecompiler.cpp:1887
+#: src/declarative/qml/qdeclarativecompiler.cpp:1875
 msgid "Single property assignment expected"
 msgstr ""
 
-#: src/declarative/qml/qdeclarativecompiler.cpp:1892
+#: src/declarative/qml/qdeclarativecompiler.cpp:1880
 msgid "Unexpected object assignment"
 msgstr ""
 
-#: src/declarative/qml/qdeclarativecompiler.cpp:1957
+#: src/declarative/qml/qdeclarativecompiler.cpp:1945
 msgid "Cannot assign object to list"
 msgstr ""
 
-#: src/declarative/qml/qdeclarativecompiler.cpp:1963
+#: src/declarative/qml/qdeclarativecompiler.cpp:1951
 msgid "Can only assign one binding to lists"
 msgstr ""
 
-#: src/declarative/qml/qdeclarativecompiler.cpp:1969
+#: src/declarative/qml/qdeclarativecompiler.cpp:1957
 msgid "Cannot assign primitives to lists"
 msgstr ""
 
-#: src/declarative/qml/qdeclarativecompiler.cpp:1982
+#: src/declarative/qml/qdeclarativecompiler.cpp:1970
 msgid "Cannot assign multiple values to a script property"
 msgstr ""
 
-#: src/declarative/qml/qdeclarativecompiler.cpp:1985
+#: src/declarative/qml/qdeclarativecompiler.cpp:1973
 msgid "Invalid property assignment: script expected"
 msgstr ""
 
-#: src/declarative/qml/qdeclarativecompiler.cpp:2000
+#: src/declarative/qml/qdeclarativecompiler.cpp:1988
 msgid "Cannot assign multiple values to a singular property"
 msgstr ""
 
-#: src/declarative/qml/qdeclarativecompiler.cpp:2093
+#: src/declarative/qml/qdeclarativecompiler.cpp:2081
 msgid "Cannot assign object to property"
 msgstr ""
 
-#: src/declarative/qml/qdeclarativecompiler.cpp:2143
+#: src/declarative/qml/qdeclarativecompiler.cpp:2131
 msgid "\"%1\" cannot operate on \"%2\""
 msgstr ""
 
-#: src/declarative/qml/qdeclarativecompiler.cpp:2319
+#: src/declarative/qml/qdeclarativecompiler.cpp:2307
 msgid "Duplicate default property"
 msgstr ""
 
-#: src/declarative/qml/qdeclarativecompiler.cpp:2324
+#: src/declarative/qml/qdeclarativecompiler.cpp:2312
 msgid "Duplicate property name"
 msgstr ""
 
-#: src/declarative/qml/qdeclarativecompiler.cpp:2328
+#: src/declarative/qml/qdeclarativecompiler.cpp:2316
 msgid "Property names cannot begin with an upper case letter"
 msgstr ""
 
-#: src/declarative/qml/qdeclarativecompiler.cpp:2331
+#: src/declarative/qml/qdeclarativecompiler.cpp:2319
 msgid "Illegal property name"
 msgstr ""
 
-#: src/declarative/qml/qdeclarativecompiler.cpp:2339
+#: src/declarative/qml/qdeclarativecompiler.cpp:2327
 msgid "Duplicate signal name"
 msgstr ""
 
-#: src/declarative/qml/qdeclarativecompiler.cpp:2342
+#: src/declarative/qml/qdeclarativecompiler.cpp:2330
 msgid "Signal names cannot begin with an upper case letter"
 msgstr ""
 
-#: src/declarative/qml/qdeclarativecompiler.cpp:2344
+#: src/declarative/qml/qdeclarativecompiler.cpp:2332
 msgid "Illegal signal name"
 msgstr ""
 
-#: src/declarative/qml/qdeclarativecompiler.cpp:2350
+#: src/declarative/qml/qdeclarativecompiler.cpp:2338
 msgid "Duplicate method name"
 msgstr ""
 
-#: src/declarative/qml/qdeclarativecompiler.cpp:2353
+#: src/declarative/qml/qdeclarativecompiler.cpp:2341
 msgid "Method names cannot begin with an upper case letter"
 msgstr ""
 
-#: src/declarative/qml/qdeclarativecompiler.cpp:2355
+#: src/declarative/qml/qdeclarativecompiler.cpp:2343
 msgid "Illegal method name"
 msgstr ""
 
-#: src/declarative/qml/qdeclarativecompiler.cpp:2376
+#: src/declarative/qml/qdeclarativecompiler.cpp:2364
 msgid "Property value set multiple times"
 msgstr ""
 
-#: src/declarative/qml/qdeclarativecompiler.cpp:2380
+#: src/declarative/qml/qdeclarativecompiler.cpp:2368
 msgid "Invalid property nesting"
 msgstr ""
 
-#: src/declarative/qml/qdeclarativecompiler.cpp:2432
+#: src/declarative/qml/qdeclarativecompiler.cpp:2420
 msgid "Cannot override FINAL property"
 msgstr ""
 
-#: src/declarative/qml/qdeclarativecompiler.cpp:2455
+#: src/declarative/qml/qdeclarativecompiler.cpp:2443
 msgid "Invalid property type"
 msgstr ""
 
-#: src/declarative/qml/qdeclarativecompiler.cpp:2632
+#: src/declarative/qml/qdeclarativecompiler.cpp:2620
 msgid "Invalid empty ID"
 msgstr ""
 
-#: src/declarative/qml/qdeclarativecompiler.cpp:2635
+#: src/declarative/qml/qdeclarativecompiler.cpp:2623
 msgid "IDs cannot start with an uppercase letter"
 msgstr ""
 
-#: src/declarative/qml/qdeclarativecompiler.cpp:2641
+#: src/declarative/qml/qdeclarativecompiler.cpp:2629
 msgid "IDs must start with a letter or underscore"
 msgstr ""
 
-#: src/declarative/qml/qdeclarativecompiler.cpp:2643
+#: src/declarative/qml/qdeclarativecompiler.cpp:2631
 msgid "IDs must contain only letters, numbers, and underscores"
 msgstr ""
 
-#: src/declarative/qml/qdeclarativecompiler.cpp:2649
+#: src/declarative/qml/qdeclarativecompiler.cpp:2637
 msgid "ID illegally masks global JavaScript property"
 msgstr ""
 
-#: src/declarative/qml/qdeclarativecompiler.cpp:2680
-#: src/declarative/qml/qdeclarativecompiler.cpp:2689
+#: src/declarative/qml/qdeclarativecompiler.cpp:2668
+#: src/declarative/qml/qdeclarativecompiler.cpp:2677
 msgid "No property alias location"
 msgstr ""
 
-#: src/declarative/qml/qdeclarativecompiler.cpp:2685
-#: src/declarative/qml/qdeclarativecompiler.cpp:2710
-#: src/declarative/qml/qdeclarativecompiler.cpp:2717
-#: src/declarative/qml/qdeclarativecompiler.cpp:2724
-#: src/declarative/qml/qdeclarativecompiler.cpp:2730
+#: src/declarative/qml/qdeclarativecompiler.cpp:2673
+#: src/declarative/qml/qdeclarativecompiler.cpp:2698
+#: src/declarative/qml/qdeclarativecompiler.cpp:2705
+#: src/declarative/qml/qdeclarativecompiler.cpp:2712
+#: src/declarative/qml/qdeclarativecompiler.cpp:2718
 msgid "Invalid alias location"
 msgstr ""
 
-#: src/declarative/qml/qdeclarativecompiler.cpp:2694
+#: src/declarative/qml/qdeclarativecompiler.cpp:2682
 msgid ""
 "Invalid alias reference. An alias reference must be specified as <id>, <id>."
 "<property> or <id>.<value property>.<property>"
 msgstr ""
 
-#: src/declarative/qml/qdeclarativecompiler.cpp:2697
+#: src/declarative/qml/qdeclarativecompiler.cpp:2685
 msgid "Invalid alias reference. Unable to find id \"%1\""
 msgstr ""
 
-#: src/declarative/qml/qdeclarativecompiler.cpp:2712
+#: src/declarative/qml/qdeclarativecompiler.cpp:2700
 msgid "Alias property exceeds alias bounds"
 msgstr ""
 
-#: src/declarative/qml/qdeclarativeimport.cpp:372
+#: src/declarative/qml/qdeclarativeimport.cpp:360
 msgid "plugin cannot be loaded for module \"%1\": %2"
 msgstr ""
 
-#: src/declarative/qml/qdeclarativeimport.cpp:377
+#: src/declarative/qml/qdeclarativeimport.cpp:365
 msgid "module \"%1\" plugin \"%2\" not found"
 msgstr ""
 
-#: src/declarative/qml/qdeclarativeimport.cpp:521
-#: src/declarative/qml/qdeclarativeimport.cpp:589
+#: src/declarative/qml/qdeclarativeimport.cpp:509
+#: src/declarative/qml/qdeclarativeimport.cpp:577
 msgid "module \"%1\" version %2.%3 is not installed"
 msgstr ""
 
-#: src/declarative/qml/qdeclarativeimport.cpp:523
+#: src/declarative/qml/qdeclarativeimport.cpp:511
 msgid "module \"%1\" is not installed"
 msgstr ""
 
-#: src/declarative/qml/qdeclarativeimport.cpp:537
-#: src/declarative/qml/qdeclarativeimport.cpp:557
+#: src/declarative/qml/qdeclarativeimport.cpp:525
+#: src/declarative/qml/qdeclarativeimport.cpp:545
 msgid "\"%1\": no such directory"
 msgstr ""
 
-#: src/declarative/qml/qdeclarativeimport.cpp:555
+#: src/declarative/qml/qdeclarativeimport.cpp:543
 msgid "import \"%1\" has no qmldir and no namespace"
 msgstr ""
 
-#: src/declarative/qml/qdeclarativeimport.cpp:623
+#: src/declarative/qml/qdeclarativeimport.cpp:611
 msgid "- %1 is not a namespace"
 msgstr ""
 
-#: src/declarative/qml/qdeclarativeimport.cpp:629
+#: src/declarative/qml/qdeclarativeimport.cpp:617
 msgid "- nested namespaces not allowed"
 msgstr ""
 
-#: src/declarative/qml/qdeclarativeimport.cpp:676
-#: src/declarative/qml/qdeclarativeimport.cpp:680
+#: src/declarative/qml/qdeclarativeimport.cpp:664
+#: src/declarative/qml/qdeclarativeimport.cpp:668
 msgid "local directory"
 msgstr ""
 
-#: src/declarative/qml/qdeclarativeimport.cpp:686
+#: src/declarative/qml/qdeclarativeimport.cpp:674
 msgid "is ambiguous. Found in %1 and in %2"
 msgstr ""
 
-#: src/declarative/qml/qdeclarativeimport.cpp:690
+#: src/declarative/qml/qdeclarativeimport.cpp:678
 msgid "is ambiguous. Found in %1 in version %2.%3 and %4.%5"
 msgstr ""
 
-#: src/declarative/qml/qdeclarativeimport.cpp:704
+#: src/declarative/qml/qdeclarativeimport.cpp:692
 msgid "is instantiated recursively"
 msgstr ""
 
-#: src/declarative/qml/qdeclarativeimport.cpp:706
+#: src/declarative/qml/qdeclarativeimport.cpp:694
 msgid "is not a type"
 msgstr ""
 
-#: src/declarative/qml/qdeclarativebinding.cpp:419
+#: src/declarative/qml/qdeclarativebinding.cpp:407
 msgid "Binding loop detected for property \"%1\""
 msgstr ""
 
-#: src/declarative/qml/qdeclarativecomponent.cpp:489
+#: src/declarative/qml/qdeclarativecomponent.cpp:477
 msgid "Invalid empty URL"
 msgstr ""
 
-#: src/declarative/qml/qdeclarativecomponent.cpp:637
+#: src/declarative/qml/qdeclarativecomponent.cpp:625
 msgid "createObject: value is not an object"
 msgstr ""
 
-#: src/declarative/qml/qdeclarativevme.cpp:211
+#: src/declarative/qml/qdeclarativevme.cpp:199
 msgctxt "QDeclarativeVME"
 msgid "Unable to create object of type %1"
 msgstr ""
 
-#: src/declarative/qml/qdeclarativevme.cpp:651
+#: src/declarative/qml/qdeclarativevme.cpp:639
 msgctxt "QDeclarativeVME"
 msgid "Cannot assign object type %1 with no default method"
 msgstr ""
 
-#: src/declarative/qml/qdeclarativevme.cpp:654
+#: src/declarative/qml/qdeclarativevme.cpp:642
 msgctxt "QDeclarativeVME"
 msgid "Cannot connect mismatched signal/slot %1 %vs. %2"
 msgstr ""
 
-#: src/declarative/qml/qdeclarativevme.cpp:659
+#: src/declarative/qml/qdeclarativevme.cpp:647
 msgctxt "QDeclarativeVME"
 msgid "Cannot assign an object to signal property %1"
 msgstr ""
 
-#: src/declarative/qml/qdeclarativevme.cpp:808
+#: src/declarative/qml/qdeclarativevme.cpp:796
 msgctxt "QDeclarativeVME"
 msgid "Cannot assign object to list"
 msgstr ""
 
-#: src/declarative/qml/qdeclarativevme.cpp:851
+#: src/declarative/qml/qdeclarativevme.cpp:839
 msgctxt "QDeclarativeVME"
 msgid "Cannot assign object to interface property"
 msgstr ""
 
-#: src/declarative/qml/qdeclarativevme.cpp:862
+#: src/declarative/qml/qdeclarativevme.cpp:850
 msgctxt "QDeclarativeVME"
 msgid "Unable to create attached object"
 msgstr ""
 
-#: src/declarative/qml/qdeclarativevme.cpp:894
+#: src/declarative/qml/qdeclarativevme.cpp:882
 msgctxt "QDeclarativeVME"
 msgid "Cannot set properties on %1 as it is null"
 msgstr ""
 
-#: src/declarative/qml/qdeclarativescriptparser.cpp:246
-#: src/declarative/qml/qdeclarativescriptparser.cpp:675
-#: src/declarative/qml/qdeclarativescriptparser.cpp:734
+#: src/declarative/qml/qdeclarativescriptparser.cpp:234
+#: src/declarative/qml/qdeclarativescriptparser.cpp:663
+#: src/declarative/qml/qdeclarativescriptparser.cpp:722
 msgctxt "QDeclarativeParser"
 msgid "Property value set multiple times"
 msgstr ""
 
-#: src/declarative/qml/qdeclarativescriptparser.cpp:257
+#: src/declarative/qml/qdeclarativescriptparser.cpp:245
 msgctxt "QDeclarativeParser"
 msgid "Expected type name"
 msgstr ""
 
-#: src/declarative/qml/qdeclarativescriptparser.cpp:391
+#: src/declarative/qml/qdeclarativescriptparser.cpp:379
 msgctxt "QDeclarativeParser"
 msgid "Invalid import qualifier ID"
 msgstr ""
 
-#: src/declarative/qml/qdeclarativescriptparser.cpp:399
+#: src/declarative/qml/qdeclarativescriptparser.cpp:387
 msgctxt "QDeclarativeParser"
 msgid "Reserved name \"Qt\" cannot be used as an qualifier"
 msgstr ""
 
-#: src/declarative/qml/qdeclarativescriptparser.cpp:414
+#: src/declarative/qml/qdeclarativescriptparser.cpp:402
 msgctxt "QDeclarativeParser"
 msgid "Script import qualifiers must be unique."
 msgstr ""
 
-#: src/declarative/qml/qdeclarativescriptparser.cpp:424
+#: src/declarative/qml/qdeclarativescriptparser.cpp:412
 msgctxt "QDeclarativeParser"
 msgid "Script import requires a qualifier"
 msgstr ""
 
-#: src/declarative/qml/qdeclarativescriptparser.cpp:435
+#: src/declarative/qml/qdeclarativescriptparser.cpp:423
 msgctxt "QDeclarativeParser"
 msgid "Library import requires a version"
 msgstr ""
 
-#: src/declarative/qml/qdeclarativescriptparser.cpp:494
+#: src/declarative/qml/qdeclarativescriptparser.cpp:482
 msgctxt "QDeclarativeParser"
 msgid "Expected parameter type"
 msgstr ""
 
-#: src/declarative/qml/qdeclarativescriptparser.cpp:536
+#: src/declarative/qml/qdeclarativescriptparser.cpp:524
 msgctxt "QDeclarativeParser"
 msgid "Invalid property type modifier"
 msgstr ""
 
-#: src/declarative/qml/qdeclarativescriptparser.cpp:545
+#: src/declarative/qml/qdeclarativescriptparser.cpp:533
 msgctxt "QDeclarativeParser"
 msgid "Unexpected property type modifier"
 msgstr ""
 
-#: src/declarative/qml/qdeclarativescriptparser.cpp:554
+#: src/declarative/qml/qdeclarativescriptparser.cpp:542
 msgctxt "QDeclarativeParser"
 msgid "Expected property type"
 msgstr ""
 
-#: src/declarative/qml/qdeclarativescriptparser.cpp:563
+#: src/declarative/qml/qdeclarativescriptparser.cpp:551
 msgctxt "QDeclarativeParser"
 msgid "Readonly not yet supported"
 msgstr ""
 
-#: src/declarative/qml/qdeclarativescriptparser.cpp:781
+#: src/declarative/qml/qdeclarativescriptparser.cpp:769
 msgctxt "QDeclarativeParser"
 msgid "JavaScript declaration outside Script element"
 msgstr ""
 
-#: src/declarative/qml/qdeclarativecompiledbindings.cpp:337
+#: src/declarative/qml/qdeclarativecompiledbindings.cpp:325
 msgctxt "QDeclarativeCompiledBindings"
 msgid "Binding loop detected for property \"%1\""
 msgstr ""
 
-#: src/declarative/qml/qdeclarativetypeloader.cpp:914
+#: src/declarative/qml/qdeclarativetypeloader.cpp:902
 msgid "Script %1 unavailable"
 msgstr ""
 
-#: src/declarative/qml/qdeclarativetypeloader.cpp:932
+#: src/declarative/qml/qdeclarativetypeloader.cpp:920
 msgid "Type %1 unavailable"
 msgstr ""
 
-#: src/declarative/qml/qdeclarativetypeloader.cpp:1118
+#: src/declarative/qml/qdeclarativetypeloader.cpp:1106
 msgid "Namespace %1 cannot be used as a type"
 msgstr ""
 
-#: src/declarative/qml/qdeclarativetypeloader.cpp:1120
+#: src/declarative/qml/qdeclarativetypeloader.cpp:1108
 msgid "%1 %2"
 msgstr ""
 
-#: src/declarative/qml/parser/qdeclarativejsparser.cpp:1817
-#: src/declarative/qml/parser/qdeclarativejsparser.cpp:1885
+#: src/declarative/qml/parser/qdeclarativejsparser.cpp:1805
+#: src/declarative/qml/parser/qdeclarativejsparser.cpp:1873
 msgctxt "QDeclarativeParser"
 msgid "Syntax error"
 msgstr ""
 
-#: src/declarative/qml/parser/qdeclarativejsparser.cpp:1819
+#: src/declarative/qml/parser/qdeclarativejsparser.cpp:1807
 msgctxt "QDeclarativeParser"
 msgid "Unexpected token `%1'"
 msgstr ""
 
-#: src/declarative/qml/parser/qdeclarativejsparser.cpp:1848
-#: src/declarative/qml/parser/qdeclarativejsparser.cpp:1872
+#: src/declarative/qml/parser/qdeclarativejsparser.cpp:1836
+#: src/declarative/qml/parser/qdeclarativejsparser.cpp:1860
 msgctxt "QDeclarativeParser"
 msgid "Expected token `%1'"
 msgstr ""
 
-#: src/declarative/qml/parser/qdeclarativejslexer.cpp:532
-#: src/declarative/qml/parser/qdeclarativejslexer.cpp:655
-#: src/declarative/qml/parser/qdeclarativejslexer.cpp:709
+#: src/declarative/qml/parser/qdeclarativejslexer.cpp:520
+#: src/declarative/qml/parser/qdeclarativejslexer.cpp:643
+#: src/declarative/qml/parser/qdeclarativejslexer.cpp:697
 msgctxt "QDeclarativeParser"
 msgid "Illegal unicode escape sequence"
 msgstr ""
 
-#: src/declarative/qml/parser/qdeclarativejslexer.cpp:569
+#: src/declarative/qml/parser/qdeclarativejslexer.cpp:557
 msgctxt "QDeclarativeParser"
 msgid "Illegal character"
 msgstr ""
 
-#: src/declarative/qml/parser/qdeclarativejslexer.cpp:583
+#: src/declarative/qml/parser/qdeclarativejslexer.cpp:571
 msgctxt "QDeclarativeParser"
 msgid "Unclosed string at end of line"
 msgstr ""
 
-#: src/declarative/qml/parser/qdeclarativejslexer.cpp:609
+#: src/declarative/qml/parser/qdeclarativejslexer.cpp:597
 msgctxt "QDeclarativeParser"
 msgid "Illegal escape sequence"
 msgstr ""
 
-#: src/declarative/qml/parser/qdeclarativejslexer.cpp:681
+#: src/declarative/qml/parser/qdeclarativejslexer.cpp:669
 msgctxt "QDeclarativeParser"
 msgid "Unclosed comment at end of file"
 msgstr ""
 
-#: src/declarative/qml/parser/qdeclarativejslexer.cpp:783
+#: src/declarative/qml/parser/qdeclarativejslexer.cpp:771
 msgctxt "QDeclarativeParser"
 msgid "Illegal syntax for exponential number"
 msgstr ""
 
-#: src/declarative/qml/parser/qdeclarativejslexer.cpp:809
+#: src/declarative/qml/parser/qdeclarativejslexer.cpp:797
 msgctxt "QDeclarativeParser"
 msgid "Identifier cannot start with numeric literal"
 msgstr ""
 
-#: src/declarative/qml/parser/qdeclarativejslexer.cpp:1147
+#: src/declarative/qml/parser/qdeclarativejslexer.cpp:1135
 msgctxt "QDeclarativeParser"
 msgid "Unterminated regular expression literal"
 msgstr ""
 
-#: src/declarative/qml/parser/qdeclarativejslexer.cpp:1162
+#: src/declarative/qml/parser/qdeclarativejslexer.cpp:1150
 msgctxt "QDeclarativeParser"
 msgid "Invalid regular expression flag '%0'"
 msgstr ""
 
-#: src/declarative/qml/parser/qdeclarativejslexer.cpp:1178
-#: src/declarative/qml/parser/qdeclarativejslexer.cpp:1200
+#: src/declarative/qml/parser/qdeclarativejslexer.cpp:1166
+#: src/declarative/qml/parser/qdeclarativejslexer.cpp:1188
 msgctxt "QDeclarativeParser"
 msgid "Unterminated regular expression backslash sequence"
 msgstr ""
 
-#: src/declarative/qml/parser/qdeclarativejslexer.cpp:1213
+#: src/declarative/qml/parser/qdeclarativejslexer.cpp:1201
 msgctxt "QDeclarativeParser"
 msgid "Unterminated regular expression class"
 msgstr ""
 
-#: src/declarative/util/qdeclarativeconnections.cpp:209
+#: src/declarative/util/qdeclarativeconnections.cpp:197
 msgid "Connections: nested objects not allowed"
 msgstr ""
 
-#: src/declarative/util/qdeclarativeconnections.cpp:212
+#: src/declarative/util/qdeclarativeconnections.cpp:200
 msgid "Connections: syntax error"
 msgstr ""
 
-#: src/declarative/util/qdeclarativeconnections.cpp:220
+#: src/declarative/util/qdeclarativeconnections.cpp:208
 msgid "Connections: script expected"
 msgstr ""
 
-#: src/declarative/util/qdeclarativeanimation.cpp:164
+#: src/declarative/util/qdeclarativeanimation.cpp:152
 msgid "Cannot animate non-existent property \"%1\""
 msgstr ""
 
-#: src/declarative/util/qdeclarativeanimation.cpp:167
+#: src/declarative/util/qdeclarativeanimation.cpp:155
 msgid "Cannot animate read-only property \"%1\""
 msgstr ""
 
-#: src/declarative/util/qdeclarativeanimation.cpp:601
-#: src/declarative/util/qdeclarativeanimation.cpp:1835
-#: src/declarative/util/qdeclarativeanimation.cpp:2855
+#: src/declarative/util/qdeclarativeanimation.cpp:589
+#: src/declarative/util/qdeclarativeanimation.cpp:1823
+#: src/declarative/util/qdeclarativeanimation.cpp:2843
 msgid "Cannot set a duration of < 0"
 msgstr ""
 
-#: src/declarative/util/qdeclarativeanimation.cpp:2687
-#: src/declarative/util/qdeclarativestateoperations.cpp:95
+#: src/declarative/util/qdeclarativeanimation.cpp:2675
+#: src/declarative/util/qdeclarativestateoperations.cpp:83
 msgid "Unable to preserve appearance under complex transform"
 msgstr ""
 
-#: src/declarative/util/qdeclarativeanimation.cpp:2698
-#: src/declarative/util/qdeclarativeanimation.cpp:2705
-#: src/declarative/util/qdeclarativestateoperations.cpp:106
-#: src/declarative/util/qdeclarativestateoperations.cpp:113
+#: src/declarative/util/qdeclarativeanimation.cpp:2686
+#: src/declarative/util/qdeclarativeanimation.cpp:2693
+#: src/declarative/util/qdeclarativestateoperations.cpp:94
+#: src/declarative/util/qdeclarativestateoperations.cpp:101
 msgid "Unable to preserve appearance under non-uniform scale"
 msgstr ""
 
-#: src/declarative/util/qdeclarativeanimation.cpp:2712
-#: src/declarative/util/qdeclarativestateoperations.cpp:120
+#: src/declarative/util/qdeclarativeanimation.cpp:2700
+#: src/declarative/util/qdeclarativestateoperations.cpp:108
 msgid "Unable to preserve appearance under scale of 0"
 msgstr ""
 
-#: src/declarative/util/qdeclarativepropertychanges.cpp:248
+#: src/declarative/util/qdeclarativepropertychanges.cpp:236
 msgid "PropertyChanges does not support creating state-specific objects."
 msgstr ""
 
-#: src/declarative/util/qdeclarativepropertychanges.cpp:419
+#: src/declarative/util/qdeclarativepropertychanges.cpp:407
 msgid "Cannot assign to read-only property \"%1\""
 msgstr ""
 
-#: src/declarative/util/qdeclarativebehavior.cpp:119
+#: src/declarative/util/qdeclarativebehavior.cpp:107
 msgid "Cannot change the animation assigned to a Behavior."
 msgstr ""
 
-#: src/declarative/util/qdeclarativelistmodel.cpp:382
+#: src/declarative/util/qdeclarativelistmodel.cpp:370
 msgid "remove: index %1 out of range"
 msgstr ""
 
-#: src/declarative/util/qdeclarativelistmodel.cpp:415
+#: src/declarative/util/qdeclarativelistmodel.cpp:403
 msgid "insert: value is not an object"
 msgstr ""
 
-#: src/declarative/util/qdeclarativelistmodel.cpp:420
+#: src/declarative/util/qdeclarativelistmodel.cpp:408
 msgid "insert: index %1 out of range"
 msgstr ""
 
-#: src/declarative/util/qdeclarativelistmodel.cpp:450
+#: src/declarative/util/qdeclarativelistmodel.cpp:438
 msgid "move: out of range"
 msgstr ""
 
-#: src/declarative/util/qdeclarativelistmodel.cpp:490
+#: src/declarative/util/qdeclarativelistmodel.cpp:478
 msgid "append: value is not an object"
 msgstr ""
 
-#: src/declarative/util/qdeclarativelistmodel.cpp:561
+#: src/declarative/util/qdeclarativelistmodel.cpp:549
 msgid "set: value is not an object"
 msgstr ""
 
-#: src/declarative/util/qdeclarativelistmodel.cpp:565
-#: src/declarative/util/qdeclarativelistmodel.cpp:603
+#: src/declarative/util/qdeclarativelistmodel.cpp:553
+#: src/declarative/util/qdeclarativelistmodel.cpp:591
 msgid "set: index %1 out of range"
 msgstr ""
 
-#: src/declarative/util/qdeclarativelistmodel.cpp:640
-#: src/declarative/util/qdeclarativelistmodel.cpp:657
+#: src/declarative/util/qdeclarativelistmodel.cpp:628
+#: src/declarative/util/qdeclarativelistmodel.cpp:645
 msgid "ListElement: cannot contain nested elements"
 msgstr ""
 
-#: src/declarative/util/qdeclarativelistmodel.cpp:661
+#: src/declarative/util/qdeclarativelistmodel.cpp:649
 msgid "ListElement: cannot use reserved \"id\" property"
 msgstr ""
 
-#: src/declarative/util/qdeclarativelistmodel.cpp:715
+#: src/declarative/util/qdeclarativelistmodel.cpp:703
 msgid "ListElement: cannot use script for property value"
 msgstr ""
 
-#: src/declarative/util/qdeclarativelistmodel.cpp:747
+#: src/declarative/util/qdeclarativelistmodel.cpp:735
 msgid "ListModel: undefined property '%1'"
 msgstr ""
 
-#: src/declarative/util/qdeclarativepixmapcache.cpp:298
+#: src/declarative/util/qdeclarativepixmapcache.cpp:286
 msgid "Error decoding: %1: %2"
 msgstr ""
 
-#: src/declarative/util/qdeclarativepixmapcache.cpp:471
-#: src/declarative/util/qdeclarativepixmapcache.cpp:832
+#: src/declarative/util/qdeclarativepixmapcache.cpp:459
+#: src/declarative/util/qdeclarativepixmapcache.cpp:820
 msgid "Failed to get image from provider: %1"
 msgstr ""
 
-#: src/declarative/util/qdeclarativepixmapcache.cpp:489
-#: src/declarative/util/qdeclarativepixmapcache.cpp:850
+#: src/declarative/util/qdeclarativepixmapcache.cpp:477
+#: src/declarative/util/qdeclarativepixmapcache.cpp:838
 msgid "Cannot open: %1"
 msgstr ""
 
-#: src/declarative/util/qdeclarativeutilmodule.cpp:71
+#: src/declarative/util/qdeclarativeutilmodule.cpp:59
 msgid "Application is an abstract class"
 msgstr ""
 
-#: src/declarative/util/qdeclarativeutilmodule.cpp:99
+#: src/declarative/util/qdeclarativeutilmodule.cpp:87
 msgid "Animation is an abstract class"
 msgstr ""
 
-#: src/declarative/util/qdeclarativeutilmodule.cpp:110
-#: src/declarative/util/qdeclarativeutilmodule.cpp:112
+#: src/declarative/util/qdeclarativeutilmodule.cpp:98
+#: src/declarative/util/qdeclarativeutilmodule.cpp:100
 msgctxt "QDeclarativeXmlListModel"
 msgid "Katie does not support xmlpatterns"
 msgstr ""
 
-#: src/gui/accessible/qaccessibleobject.cpp:365
-#: src/plugins/accessible/widgets/complexwidgets.cpp:1609
+#: src/gui/accessible/qaccessibleobject.cpp:353
+#: src/plugins/accessible/widgets/complexwidgets.cpp:1597
 msgid "Activate"
 msgstr ""
 
-#: src/gui/accessible/qaccessibleobject.cpp:367
+#: src/gui/accessible/qaccessibleobject.cpp:355
 msgid "Activates the program's main window"
 msgstr ""
 
-#: src/gui/dialogs/qwizard.cpp:590
+#: src/gui/dialogs/qwizard.cpp:578
 msgid "Go Back"
 msgstr ""
 
-#: src/gui/dialogs/qwizard.cpp:590
+#: src/gui/dialogs/qwizard.cpp:578
 msgid "< &Back"
 msgstr ""
 
-#: src/gui/dialogs/qwizard.cpp:593
-#: src/scripttools/debugging/qscriptdebugger.cpp:1679
+#: src/gui/dialogs/qwizard.cpp:581
+#: src/scripttools/debugging/qscriptdebugger.cpp:1667
 msgid "Continue"
 msgstr ""
 
-#: src/gui/dialogs/qwizard.cpp:595
+#: src/gui/dialogs/qwizard.cpp:583
 msgid "&Next >"
 msgstr ""
 
-#: src/gui/dialogs/qwizard.cpp:597
+#: src/gui/dialogs/qwizard.cpp:585
 msgid "Commit"
 msgstr ""
 
-#: src/gui/dialogs/qwizard.cpp:599
+#: src/gui/dialogs/qwizard.cpp:587
 msgid "Done"
 msgstr ""
 
-#: src/gui/dialogs/qwizard.cpp:599
+#: src/gui/dialogs/qwizard.cpp:587
 msgid "&Finish"
 msgstr ""
 
-#: src/gui/dialogs/qwizard.cpp:601 src/gui/dialogs/qprogressdialog.cpp:176
+#: src/gui/dialogs/qwizard.cpp:589 src/gui/dialogs/qprogressdialog.cpp:164
 msgid "Cancel"
 msgstr ""
 
-#: src/gui/dialogs/qwizard.cpp:603 src/gui/widgets/qmdisubwindow.cpp:324
+#: src/gui/dialogs/qwizard.cpp:591 src/gui/widgets/qmdisubwindow.cpp:312
 msgid "Help"
 msgstr ""
 
-#: src/gui/dialogs/qwizard.cpp:603
+#: src/gui/dialogs/qwizard.cpp:591
 msgid "&Help"
 msgstr ""
 
-#: src/gui/dialogs/qprintpreviewdialog.cpp:238
+#: src/gui/dialogs/qprintpreviewdialog.cpp:226
 msgid "%1%"
 msgstr ""
 
-#: src/gui/dialogs/qprintpreviewdialog.cpp:307
+#: src/gui/dialogs/qprintpreviewdialog.cpp:295
 msgctxt "QPrintPreviewDialog"
 msgid "Print Preview"
 msgstr ""
 
-#: src/gui/dialogs/qprintpreviewdialog.cpp:333
+#: src/gui/dialogs/qprintpreviewdialog.cpp:321
 msgctxt "QPrintPreviewDialog"
 msgid "Next page"
 msgstr ""
 
-#: src/gui/dialogs/qprintpreviewdialog.cpp:334
+#: src/gui/dialogs/qprintpreviewdialog.cpp:322
 msgctxt "QPrintPreviewDialog"
 msgid "Previous page"
 msgstr ""
 
-#: src/gui/dialogs/qprintpreviewdialog.cpp:335
+#: src/gui/dialogs/qprintpreviewdialog.cpp:323
 msgctxt "QPrintPreviewDialog"
 msgid "First page"
 msgstr ""
 
-#: src/gui/dialogs/qprintpreviewdialog.cpp:336
+#: src/gui/dialogs/qprintpreviewdialog.cpp:324
 msgctxt "QPrintPreviewDialog"
 msgid "Last page"
 msgstr ""
 
-#: src/gui/dialogs/qprintpreviewdialog.cpp:345
+#: src/gui/dialogs/qprintpreviewdialog.cpp:333
 msgctxt "QPrintPreviewDialog"
 msgid "Fit width"
 msgstr ""
 
-#: src/gui/dialogs/qprintpreviewdialog.cpp:346
+#: src/gui/dialogs/qprintpreviewdialog.cpp:334
 msgctxt "QPrintPreviewDialog"
 msgid "Fit page"
 msgstr ""
 
-#: src/gui/dialogs/qprintpreviewdialog.cpp:357
+#: src/gui/dialogs/qprintpreviewdialog.cpp:345
 msgctxt "QPrintPreviewDialog"
 msgid "Zoom in"
 msgstr ""
 
-#: src/gui/dialogs/qprintpreviewdialog.cpp:358
+#: src/gui/dialogs/qprintpreviewdialog.cpp:346
 msgctxt "QPrintPreviewDialog"
 msgid "Zoom out"
 msgstr ""
 
-#: src/gui/dialogs/qprintpreviewdialog.cpp:364
+#: src/gui/dialogs/qprintpreviewdialog.cpp:352
 msgctxt "QPrintPreviewDialog"
 msgid "Portrait"
 msgstr ""
 
-#: src/gui/dialogs/qprintpreviewdialog.cpp:365
+#: src/gui/dialogs/qprintpreviewdialog.cpp:353
 msgctxt "QPrintPreviewDialog"
 msgid "Landscape"
 msgstr ""
 
-#: src/gui/dialogs/qprintpreviewdialog.cpp:375
+#: src/gui/dialogs/qprintpreviewdialog.cpp:363
 msgctxt "QPrintPreviewDialog"
 msgid "Show single page"
 msgstr ""
 
-#: src/gui/dialogs/qprintpreviewdialog.cpp:376
+#: src/gui/dialogs/qprintpreviewdialog.cpp:364
 msgctxt "QPrintPreviewDialog"
 msgid "Show facing pages"
 msgstr ""
 
-#: src/gui/dialogs/qprintpreviewdialog.cpp:377
+#: src/gui/dialogs/qprintpreviewdialog.cpp:365
 msgctxt "QPrintPreviewDialog"
 msgid "Show overview of all pages"
 msgstr ""
 
-#: src/gui/dialogs/qprintpreviewdialog.cpp:392
+#: src/gui/dialogs/qprintpreviewdialog.cpp:380
 msgctxt "QPrintPreviewDialog"
 msgid "Print"
 msgstr ""
 
-#: src/gui/dialogs/qprintpreviewdialog.cpp:393
+#: src/gui/dialogs/qprintpreviewdialog.cpp:381
 msgctxt "QPrintPreviewDialog"
 msgid "Page setup"
 msgstr ""
 
-#: src/gui/dialogs/qinputdialog.cpp:209
+#: src/gui/dialogs/qinputdialog.cpp:197
 msgid "Enter a value:"
 msgstr ""
 
-#: src/gui/dialogs/qfilesystemmodel_p.h:244
+#: src/gui/dialogs/qfilesystemmodel_p.h:232
 msgid "Computer"
 msgstr ""
 
-#: src/gui/dialogs/qmessagebox.cpp:117
+#: src/gui/dialogs/qmessagebox.cpp:105
 msgid "Show Details..."
 msgstr ""
 
-#: src/gui/dialogs/qmessagebox.cpp:117
+#: src/gui/dialogs/qmessagebox.cpp:105
 msgid "Hide Details..."
 msgstr ""
 
-#: src/gui/dialogs/qmessagebox.cpp:1466
+#: src/gui/dialogs/qmessagebox.cpp:1454
 msgid "<h3>About Katie</h3><p>This program uses Katie version %1.</p>"
 msgstr ""
 
-#: src/gui/dialogs/qmessagebox.cpp:1470
+#: src/gui/dialogs/qmessagebox.cpp:1458
 msgid ""
 "<p>Katie is a C++ toolkit derived from the Qt 4.8 framework.</p><p>Katie is "
 "available under two different licensing options designed to accommodate the "
@@ -1435,3397 +1369,3394 @@ msgid ""
 "p><p>Katie licensed under the GNU LGPL version 2.1 is appropriate for the "
 "development of applications provided you can comply with the terms and "
 "conditions of the GNU LGPL version 2.1.</p><p>Copyright (C) 2015 The Qt "
-"Company Ltd and other contributors.</p><p>Copyright (C) 2016-2021 Ivailo "
-"Monev</p><p>Qt and the Qt logo are trademarks of The Qt Company Ltd.</"
-"p><p>See <a href=\"http://fluxer.github.io/katie/\">fluxer.github.io/katie</"
-"a> for more information.</p>"
+"Company Ltd and other contributors.</p><p>Copyright (C) 2016 Ivailo Monev</"
+"p><p>Qt and the Qt logo are trademarks of The Qt Company Ltd.</p><p>See <a "
+"href=\"https://github.com/fluxer/katie\">github.com/fluxer/katie</a> for "
+"more information.</p>"
 msgstr ""
 
-#: src/gui/dialogs/qmessagebox.cpp:1486
+#: src/gui/dialogs/qmessagebox.cpp:1474
 msgid "About Katie"
 msgstr ""
 
-#: src/gui/dialogs/qsidebar.cpp:417
+#: src/gui/dialogs/qsidebar.cpp:405
 msgid "Remove"
 msgstr ""
 
+#: src/gui/dialogs/qabstractpagesetupdialog.cpp:48
 #: src/gui/dialogs/qabstractpagesetupdialog.cpp:60
-#: src/gui/dialogs/qabstractpagesetupdialog.cpp:72
 msgctxt "QPrintPreviewDialog"
 msgid "Page Setup"
 msgstr ""
 
-#: src/gui/dialogs/qdialog.cpp:507 src/gui/kernel/qwhatsthis.cpp:480
+#: src/gui/dialogs/qdialog.cpp:495 src/gui/kernel/qwhatsthis.cpp:468
 msgid "What's This?"
 msgstr ""
 
-#: src/gui/dialogs/qfontdialog.cpp:167
+#: src/gui/dialogs/qfontdialog.cpp:155
 msgid "Select Font"
 msgstr ""
 
-#: src/gui/dialogs/qfontdialog.cpp:691
+#: src/gui/dialogs/qfontdialog.cpp:679
 msgid "&Font"
 msgstr ""
 
-#: src/gui/dialogs/qfontdialog.cpp:692
+#: src/gui/dialogs/qfontdialog.cpp:680
 msgid "Font st&yle"
 msgstr ""
 
-#: src/gui/dialogs/qfontdialog.cpp:693 src/gui/widgets/qmdisubwindow.cpp:1028
-#: src/gui/widgets/qworkspace.cpp:1028
+#: src/gui/dialogs/qfontdialog.cpp:681 src/gui/widgets/qmdisubwindow.cpp:1016
+#: src/gui/widgets/qworkspace.cpp:1016
 msgid "&Size"
 msgstr ""
 
-#: src/gui/dialogs/qfontdialog.cpp:696
+#: src/gui/dialogs/qfontdialog.cpp:684
 msgid "Effects"
 msgstr ""
 
-#: src/gui/dialogs/qfontdialog.cpp:697
+#: src/gui/dialogs/qfontdialog.cpp:685
 msgid "Stri&keout"
 msgstr ""
 
-#: src/gui/dialogs/qfontdialog.cpp:698
+#: src/gui/dialogs/qfontdialog.cpp:686
 msgid "&Underline"
 msgstr ""
 
-#: src/gui/dialogs/qfontdialog.cpp:699
+#: src/gui/dialogs/qfontdialog.cpp:687
 msgid "Sample"
 msgstr ""
 
-#: src/gui/dialogs/qcolordialog.cpp:1214
+#: src/gui/dialogs/qcolordialog.cpp:1202
 msgid "Hu&e:"
 msgstr ""
 
-#: src/gui/dialogs/qcolordialog.cpp:1215
+#: src/gui/dialogs/qcolordialog.cpp:1203
 msgid "&Sat:"
 msgstr ""
 
-#: src/gui/dialogs/qcolordialog.cpp:1216
+#: src/gui/dialogs/qcolordialog.cpp:1204
 msgid "&Val:"
 msgstr ""
 
-#: src/gui/dialogs/qcolordialog.cpp:1217
+#: src/gui/dialogs/qcolordialog.cpp:1205
 msgid "&Red:"
 msgstr ""
 
-#: src/gui/dialogs/qcolordialog.cpp:1218
+#: src/gui/dialogs/qcolordialog.cpp:1206
 msgid "&Green:"
 msgstr ""
 
-#: src/gui/dialogs/qcolordialog.cpp:1219
+#: src/gui/dialogs/qcolordialog.cpp:1207
 msgid "Bl&ue:"
 msgstr ""
 
-#: src/gui/dialogs/qcolordialog.cpp:1220
+#: src/gui/dialogs/qcolordialog.cpp:1208
 msgid "A&lpha channel:"
 msgstr ""
 
-#: src/gui/dialogs/qcolordialog.cpp:1321
+#: src/gui/dialogs/qcolordialog.cpp:1309
 msgid "Select Color"
 msgstr ""
 
-#: src/gui/dialogs/qcolordialog.cpp:1448
+#: src/gui/dialogs/qcolordialog.cpp:1436
 msgid "&Basic colors"
 msgstr ""
 
-#: src/gui/dialogs/qcolordialog.cpp:1449
+#: src/gui/dialogs/qcolordialog.cpp:1437
 msgid "&Custom colors"
 msgstr ""
 
-#: src/gui/dialogs/qcolordialog.cpp:1450
+#: src/gui/dialogs/qcolordialog.cpp:1438
 msgid "&Add to Custom Colors"
 msgstr ""
 
-#: src/gui/dialogs/qmessagebox.h:230
-msgid "Executable '%1' requires Qt %2, found Qt %3."
+#: src/gui/dialogs/qmessagebox.h:217
+msgid "Executable '%1' requires Katie %2, found Katie %3."
 msgstr ""
 
-#: src/gui/dialogs/qmessagebox.h:232
-msgid "Incompatible Qt Library Error"
+#: src/gui/dialogs/qmessagebox.h:219
+msgid "Incompatible Katie Library Error"
 msgstr ""
 
-#: src/gui/dialogs/qpagesetupdialog_unix.cpp:64
+#: src/gui/dialogs/qpagesetupdialog_unix.cpp:52
 msgid "A0"
 msgstr ""
 
-#: src/gui/dialogs/qpagesetupdialog_unix.cpp:65
+#: src/gui/dialogs/qpagesetupdialog_unix.cpp:53
 msgid "A1"
 msgstr ""
 
-#: src/gui/dialogs/qpagesetupdialog_unix.cpp:66
+#: src/gui/dialogs/qpagesetupdialog_unix.cpp:54
 msgid "A2"
 msgstr ""
 
-#: src/gui/dialogs/qpagesetupdialog_unix.cpp:67
+#: src/gui/dialogs/qpagesetupdialog_unix.cpp:55
 msgid "A3"
 msgstr ""
 
-#: src/gui/dialogs/qpagesetupdialog_unix.cpp:68
+#: src/gui/dialogs/qpagesetupdialog_unix.cpp:56
 msgid "A4"
 msgstr ""
 
-#: src/gui/dialogs/qpagesetupdialog_unix.cpp:69
+#: src/gui/dialogs/qpagesetupdialog_unix.cpp:57
 msgid "A5"
 msgstr ""
 
-#: src/gui/dialogs/qpagesetupdialog_unix.cpp:70
+#: src/gui/dialogs/qpagesetupdialog_unix.cpp:58
 msgid "A6"
 msgstr ""
 
-#: src/gui/dialogs/qpagesetupdialog_unix.cpp:71
+#: src/gui/dialogs/qpagesetupdialog_unix.cpp:59
 msgid "A7"
 msgstr ""
 
-#: src/gui/dialogs/qpagesetupdialog_unix.cpp:72
+#: src/gui/dialogs/qpagesetupdialog_unix.cpp:60
 msgid "A8"
 msgstr ""
 
-#: src/gui/dialogs/qpagesetupdialog_unix.cpp:73
+#: src/gui/dialogs/qpagesetupdialog_unix.cpp:61
 msgid "A9"
 msgstr ""
 
-#: src/gui/dialogs/qpagesetupdialog_unix.cpp:74
+#: src/gui/dialogs/qpagesetupdialog_unix.cpp:62
 msgid "B0"
 msgstr ""
 
-#: src/gui/dialogs/qpagesetupdialog_unix.cpp:75
+#: src/gui/dialogs/qpagesetupdialog_unix.cpp:63
 msgid "B1"
 msgstr ""
 
-#: src/gui/dialogs/qpagesetupdialog_unix.cpp:76
+#: src/gui/dialogs/qpagesetupdialog_unix.cpp:64
 msgid "B2"
 msgstr ""
 
-#: src/gui/dialogs/qpagesetupdialog_unix.cpp:77
+#: src/gui/dialogs/qpagesetupdialog_unix.cpp:65
 msgid "B3"
 msgstr ""
 
-#: src/gui/dialogs/qpagesetupdialog_unix.cpp:78
+#: src/gui/dialogs/qpagesetupdialog_unix.cpp:66
 msgid "B4"
 msgstr ""
 
-#: src/gui/dialogs/qpagesetupdialog_unix.cpp:79
+#: src/gui/dialogs/qpagesetupdialog_unix.cpp:67
 msgid "B5"
 msgstr ""
 
-#: src/gui/dialogs/qpagesetupdialog_unix.cpp:80
+#: src/gui/dialogs/qpagesetupdialog_unix.cpp:68
 msgid "B6"
 msgstr ""
 
-#: src/gui/dialogs/qpagesetupdialog_unix.cpp:81
+#: src/gui/dialogs/qpagesetupdialog_unix.cpp:69
 msgid "B7"
 msgstr ""
 
-#: src/gui/dialogs/qpagesetupdialog_unix.cpp:82
+#: src/gui/dialogs/qpagesetupdialog_unix.cpp:70
 msgid "B8"
 msgstr ""
 
-#: src/gui/dialogs/qpagesetupdialog_unix.cpp:83
+#: src/gui/dialogs/qpagesetupdialog_unix.cpp:71
 msgid "B9"
 msgstr ""
 
-#: src/gui/dialogs/qpagesetupdialog_unix.cpp:84
+#: src/gui/dialogs/qpagesetupdialog_unix.cpp:72
 msgid "B10"
 msgstr ""
 
-#: src/gui/dialogs/qpagesetupdialog_unix.cpp:85
+#: src/gui/dialogs/qpagesetupdialog_unix.cpp:73
 msgid "C5E"
 msgstr ""
 
-#: src/gui/dialogs/qpagesetupdialog_unix.cpp:86
+#: src/gui/dialogs/qpagesetupdialog_unix.cpp:74
 msgid "DLE"
 msgstr ""
 
-#: src/gui/dialogs/qpagesetupdialog_unix.cpp:87
+#: src/gui/dialogs/qpagesetupdialog_unix.cpp:75
 msgid "Executive"
 msgstr ""
 
-#: src/gui/dialogs/qpagesetupdialog_unix.cpp:88
+#: src/gui/dialogs/qpagesetupdialog_unix.cpp:76
 msgid "Folio"
 msgstr ""
 
-#: src/gui/dialogs/qpagesetupdialog_unix.cpp:89
+#: src/gui/dialogs/qpagesetupdialog_unix.cpp:77
 msgid "Ledger"
 msgstr ""
 
-#: src/gui/dialogs/qpagesetupdialog_unix.cpp:90
+#: src/gui/dialogs/qpagesetupdialog_unix.cpp:78
 msgid "Legal"
 msgstr ""
 
-#: src/gui/dialogs/qpagesetupdialog_unix.cpp:91
+#: src/gui/dialogs/qpagesetupdialog_unix.cpp:79
 msgid "Letter"
 msgstr ""
 
-#: src/gui/dialogs/qpagesetupdialog_unix.cpp:92
+#: src/gui/dialogs/qpagesetupdialog_unix.cpp:80
 msgid "Tabloid"
 msgstr ""
 
-#: src/gui/dialogs/qpagesetupdialog_unix.cpp:93
+#: src/gui/dialogs/qpagesetupdialog_unix.cpp:81
 msgid "US Common #10 Envelope"
 msgstr ""
 
-#: src/gui/dialogs/qpagesetupdialog_unix.cpp:94
+#: src/gui/dialogs/qpagesetupdialog_unix.cpp:82
 msgid "Custom"
 msgstr ""
 
-#: src/gui/dialogs/qpagesetupdialog_unix.cpp:281
+#: src/gui/dialogs/qpagesetupdialog_unix.cpp:269
 msgid "Centimeters (cm)"
 msgstr ""
 
-#: src/gui/dialogs/qpagesetupdialog_unix.cpp:281
+#: src/gui/dialogs/qpagesetupdialog_unix.cpp:269
 msgid "Millimeters (mm)"
 msgstr ""
 
-#: src/gui/dialogs/qpagesetupdialog_unix.cpp:281
+#: src/gui/dialogs/qpagesetupdialog_unix.cpp:269
 msgid "Inches (in)"
 msgstr ""
 
-#: src/gui/dialogs/qpagesetupdialog_unix.cpp:281
+#: src/gui/dialogs/qpagesetupdialog_unix.cpp:269
 msgid "Points (pt)"
 msgstr ""
 
-#: src/gui/dialogs/qprintdialog_unix.cpp:365
-#: src/gui/dialogs/qprintdialog_unix.cpp:433
+#: src/gui/dialogs/qprintdialog_unix.cpp:353
+#: src/gui/dialogs/qprintdialog_unix.cpp:421
 msgid "&Options >>"
 msgstr ""
 
-#: src/gui/dialogs/qprintdialog_unix.cpp:370
+#: src/gui/dialogs/qprintdialog_unix.cpp:358
 msgid "&Print"
 msgstr ""
 
-#: src/gui/dialogs/qprintdialog_unix.cpp:437
+#: src/gui/dialogs/qprintdialog_unix.cpp:425
 msgid "&Options <<"
 msgstr ""
 
-#: src/gui/dialogs/qprintdialog_unix.cpp:662
+#: src/gui/dialogs/qprintdialog_unix.cpp:650
 msgid "Print to File (PDF)"
 msgstr ""
 
-#: src/gui/dialogs/qprintdialog_unix.cpp:663
+#: src/gui/dialogs/qprintdialog_unix.cpp:651
 msgid "Print to File (Postscript)"
 msgstr ""
 
-#: src/gui/dialogs/qprintdialog_unix.cpp:710
+#: src/gui/dialogs/qprintdialog_unix.cpp:698
 msgid "Local file"
 msgstr ""
 
-#: src/gui/dialogs/qprintdialog_unix.cpp:711
+#: src/gui/dialogs/qprintdialog_unix.cpp:699
 msgid "Write %1 file"
 msgstr ""
 
-#: src/gui/dialogs/qprintdialog_unix.cpp:772
+#: src/gui/dialogs/qprintdialog_unix.cpp:760
 msgid "Print To File ..."
 msgstr ""
 
-#: src/gui/dialogs/qprintdialog_unix.cpp:850
+#: src/gui/dialogs/qprintdialog_unix.cpp:838
 msgid ""
 "%1 is a directory.\n"
 "Please choose a different file name."
 msgstr ""
 
-#: src/gui/dialogs/qprintdialog_unix.cpp:854
+#: src/gui/dialogs/qprintdialog_unix.cpp:842
 msgid ""
 "File %1 is not writable.\n"
 "Please choose a different file name."
 msgstr ""
 
-#: src/gui/dialogs/qprintdialog_unix.cpp:858
+#: src/gui/dialogs/qprintdialog_unix.cpp:846
 msgid ""
 "%1 already exists.\n"
 "Do you want to overwrite it?"
 msgstr ""
 
-#: src/gui/dialogs/qprintdialog_unix.cpp:1147
+#: src/gui/dialogs/qprintdialog_unix.cpp:1135
 msgctxt "QPPDOptionsModel"
 msgid "Name"
 msgstr ""
 
-#: src/gui/dialogs/qprintdialog_unix.cpp:1149
+#: src/gui/dialogs/qprintdialog_unix.cpp:1137
 msgctxt "QPPDOptionsModel"
 msgid "Value"
 msgstr ""
 
-#: src/gui/dialogs/qabstractprintdialog.cpp:104
-#: src/gui/dialogs/qabstractprintdialog.cpp:117
+#: src/gui/dialogs/qabstractprintdialog.cpp:92
+#: src/gui/dialogs/qabstractprintdialog.cpp:105
 msgctxt "QPrintDialog"
 msgid "Print"
 msgstr ""
 
-#: src/gui/dialogs/qfiledialog.cpp:503
+#: src/gui/dialogs/qfiledialog.cpp:491
 msgid "Find Directory"
 msgstr ""
 
-#: src/gui/dialogs/qfiledialog.cpp:505
-#: src/plugins/accessible/widgets/simplewidgets.cpp:108
-#: src/plugins/accessible/widgets/simplewidgets.cpp:423
-#: src/plugins/accessible/widgets/simplewidgets.cpp:431
-#: src/plugins/accessible/widgets/qaccessiblemenu.cpp:150
-#: src/plugins/accessible/widgets/qaccessiblemenu.cpp:375
-#: src/plugins/accessible/widgets/qaccessiblemenu.cpp:429
-#: src/plugins/accessible/widgets/complexwidgets.cpp:1841
-#: src/plugins/accessible/widgets/complexwidgets.cpp:1907
+#: src/gui/dialogs/qfiledialog.cpp:493
+#: src/plugins/accessible/widgets/simplewidgets.cpp:96
+#: src/plugins/accessible/widgets/simplewidgets.cpp:411
+#: src/plugins/accessible/widgets/simplewidgets.cpp:419
+#: src/plugins/accessible/widgets/qaccessiblemenu.cpp:138
+#: src/plugins/accessible/widgets/qaccessiblemenu.cpp:363
+#: src/plugins/accessible/widgets/qaccessiblemenu.cpp:417
+#: src/plugins/accessible/widgets/complexwidgets.cpp:1829
+#: src/plugins/accessible/widgets/complexwidgets.cpp:1895
 msgid "Open"
 msgstr ""
 
-#: src/gui/dialogs/qfiledialog.cpp:507
+#: src/gui/dialogs/qfiledialog.cpp:495
 msgid "Save As"
 msgstr ""
 
-#: src/gui/dialogs/qfiledialog.cpp:522 src/gui/dialogs/qfiledialog.cpp:1030
+#: src/gui/dialogs/qfiledialog.cpp:510 src/gui/dialogs/qfiledialog.cpp:1011
 msgid "All Files (*)"
 msgstr ""
 
-#: src/gui/dialogs/qfiledialog.cpp:532
+#: src/gui/dialogs/qfiledialog.cpp:520
 msgid "Show "
 msgstr ""
 
-#: src/gui/dialogs/qfiledialog.cpp:536
+#: src/gui/dialogs/qfiledialog.cpp:524
 msgid "&Rename"
 msgstr ""
 
-#: src/gui/dialogs/qfiledialog.cpp:537
+#: src/gui/dialogs/qfiledialog.cpp:525
 msgid "&Delete"
 msgstr ""
 
-#: src/gui/dialogs/qfiledialog.cpp:538
+#: src/gui/dialogs/qfiledialog.cpp:526
 msgid "Show &hidden files"
 msgstr ""
 
-#: src/gui/dialogs/qfiledialog.cpp:539
+#: src/gui/dialogs/qfiledialog.cpp:527
 msgid "&New Folder"
 msgstr ""
 
-#: src/gui/dialogs/qfiledialog.cpp:544 src/gui/dialogs/qfiledialog.cpp:1211
+#: src/gui/dialogs/qfiledialog.cpp:532 src/gui/dialogs/qfiledialog.cpp:1192
 msgid "Directory:"
 msgstr ""
 
-#: src/gui/dialogs/qfiledialog.cpp:546 src/gui/dialogs/qfiledialog.cpp:1217
+#: src/gui/dialogs/qfiledialog.cpp:534 src/gui/dialogs/qfiledialog.cpp:1198
 msgid "File &name:"
 msgstr ""
 
-#: src/gui/dialogs/qfiledialog.cpp:1204 src/gui/dialogs/qfiledialog.cpp:1259
-#: src/gui/dialogs/qfiledialog.cpp:2706
+#: src/gui/dialogs/qfiledialog.cpp:1185 src/gui/dialogs/qfiledialog.cpp:1240
+#: src/gui/dialogs/qfiledialog.cpp:2687
 msgid "&Open"
 msgstr ""
 
-#: src/gui/dialogs/qfiledialog.cpp:1204 src/gui/dialogs/qfiledialog.cpp:1259
+#: src/gui/dialogs/qfiledialog.cpp:1185 src/gui/dialogs/qfiledialog.cpp:1240
 msgid "&Save"
 msgstr ""
 
-#: src/gui/dialogs/qfiledialog.cpp:1207
+#: src/gui/dialogs/qfiledialog.cpp:1188
 msgid "Directories"
 msgstr ""
 
-#: src/gui/dialogs/qfiledialog.cpp:1214 src/gui/dialogs/qfiledialog.cpp:1257
+#: src/gui/dialogs/qfiledialog.cpp:1195 src/gui/dialogs/qfiledialog.cpp:1238
 msgid "&Choose"
 msgstr ""
 
-#: src/gui/dialogs/qfiledialog.cpp:1924 src/gui/dialogs/qfiledialog.cpp:2777
+#: src/gui/dialogs/qfiledialog.cpp:1905 src/gui/dialogs/qfiledialog.cpp:2758
 msgid ""
 "%1\n"
 "Directory not found.\n"
 "Please verify the correct directory name was given."
 msgstr ""
 
-#: src/gui/dialogs/qfiledialog.cpp:1958
+#: src/gui/dialogs/qfiledialog.cpp:1939
 msgid ""
 "%1 already exists.\n"
 "Do you want to replace it?"
 msgstr ""
 
-#: src/gui/dialogs/qfiledialog.cpp:1978
+#: src/gui/dialogs/qfiledialog.cpp:1959
 msgid ""
 "%1\n"
 "File not found.\n"
 "Please verify the correct file name was given."
 msgstr ""
 
-#: src/gui/dialogs/qfiledialog.cpp:2427
+#: src/gui/dialogs/qfiledialog.cpp:2408
 msgid "New Folder"
 msgstr ""
 
-#: src/gui/dialogs/qfiledialog.cpp:2555
+#: src/gui/dialogs/qfiledialog.cpp:2536
 msgid ""
 "'%1' is write protected.\n"
 "Do you want to delete it anyway?"
 msgstr ""
 
-#: src/gui/dialogs/qfiledialog.cpp:2560
+#: src/gui/dialogs/qfiledialog.cpp:2541
 msgid "Are sure you want to delete '%1'?"
 msgstr ""
 
-#: src/gui/dialogs/qfiledialog.cpp:2575
+#: src/gui/dialogs/qfiledialog.cpp:2556
 msgid "Could not delete directory."
 msgstr ""
 
-#: src/gui/dialogs/qfiledialog.cpp:2973
+#: src/gui/dialogs/qfiledialog.cpp:2954
 msgid "Recent Places"
 msgstr ""
 
-#: src/gui/dialogs/qfilesystemmodel.cpp:655
-#: src/gui/itemviews/qdirmodel.cpp:1217
+#: src/gui/dialogs/qfilesystemmodel.cpp:643
+#: src/gui/itemviews/qdirmodel.cpp:1205
 msgid "%1 TB"
 msgstr ""
 
-#: src/gui/dialogs/qfilesystemmodel.cpp:657
-#: src/gui/itemviews/qdirmodel.cpp:1219
+#: src/gui/dialogs/qfilesystemmodel.cpp:645
+#: src/gui/itemviews/qdirmodel.cpp:1207
 msgid "%1 GB"
 msgstr ""
 
-#: src/gui/dialogs/qfilesystemmodel.cpp:659
-#: src/gui/itemviews/qdirmodel.cpp:1221
+#: src/gui/dialogs/qfilesystemmodel.cpp:647
+#: src/gui/itemviews/qdirmodel.cpp:1209
 msgid "%1 MB"
 msgstr ""
 
-#: src/gui/dialogs/qfilesystemmodel.cpp:661
-#: src/gui/itemviews/qdirmodel.cpp:1223
+#: src/gui/dialogs/qfilesystemmodel.cpp:649
+#: src/gui/itemviews/qdirmodel.cpp:1211
 msgid "%1 KB"
 msgstr ""
 
-#: src/gui/dialogs/qfilesystemmodel.cpp:662
+#: src/gui/dialogs/qfilesystemmodel.cpp:650
 msgid "%1 bytes"
 msgstr ""
 
-#: src/gui/dialogs/qfilesystemmodel.cpp:732
+#: src/gui/dialogs/qfilesystemmodel.cpp:720
 msgid "Invalid filename"
 msgstr ""
 
-#: src/gui/dialogs/qfilesystemmodel.cpp:733
+#: src/gui/dialogs/qfilesystemmodel.cpp:721
 msgid ""
 "<b>The name \"%1\" can not be used.</b><p>Try using another name, with fewer "
 "characters or no punctuations marks."
 msgstr ""
 
-#: src/gui/dialogs/qfilesystemmodel.cpp:797 src/gui/itemviews/qdirmodel.cpp:407
+#: src/gui/dialogs/qfilesystemmodel.cpp:785 src/gui/itemviews/qdirmodel.cpp:395
 msgid "Name"
 msgstr ""
 
-#: src/gui/dialogs/qfilesystemmodel.cpp:799 src/gui/itemviews/qdirmodel.cpp:408
+#: src/gui/dialogs/qfilesystemmodel.cpp:787 src/gui/itemviews/qdirmodel.cpp:396
 msgid "Size"
 msgstr ""
 
-#: src/gui/dialogs/qfilesystemmodel.cpp:801 src/gui/itemviews/qdirmodel.cpp:409
+#: src/gui/dialogs/qfilesystemmodel.cpp:789 src/gui/itemviews/qdirmodel.cpp:397
 msgid "Type"
 msgstr ""
 
-#: src/gui/dialogs/qfilesystemmodel.cpp:807 src/gui/itemviews/qdirmodel.cpp:412
+#: src/gui/dialogs/qfilesystemmodel.cpp:795 src/gui/itemviews/qdirmodel.cpp:400
 msgid "Date Modified"
 msgstr ""
 
-#: src/gui/dialogs/qerrormessage.cpp:155
+#: src/gui/dialogs/qerrormessage.cpp:143
 msgid "Warning:"
 msgstr ""
 
-#: src/gui/dialogs/qerrormessage.cpp:158
+#: src/gui/dialogs/qerrormessage.cpp:146
 msgid "Fatal Error:"
 msgstr ""
 
-#: src/gui/dialogs/qerrormessage.cpp:161
+#: src/gui/dialogs/qerrormessage.cpp:149
 msgid "Debug Message:"
 msgstr ""
 
-#: src/gui/dialogs/qerrormessage.cpp:354
+#: src/gui/dialogs/qerrormessage.cpp:342
 msgid "&Show this message again"
 msgstr ""
 
-#: src/gui/dialogs/qerrormessage.cpp:355
+#: src/gui/dialogs/qerrormessage.cpp:343
 msgid "&OK"
 msgstr ""
 
-#: src/gui/image/qimagereader.cpp:476
+#: src/gui/image/qimagereader.cpp:463
 msgctxt "QImageReader"
 msgid "Invalid device"
 msgstr ""
 
-#: src/gui/image/qimagereader.cpp:503
+#: src/gui/image/qimagereader.cpp:490
 msgctxt "QImageReader"
 msgid "File not found"
 msgstr ""
 
-#: src/gui/image/qimagereader.cpp:512
+#: src/gui/image/qimagereader.cpp:499
 msgctxt "QImageReader"
 msgid "Unsupported image format"
 msgstr ""
 
-#: src/gui/image/qimagereader.cpp:1044
+#: src/gui/image/qimagereader.cpp:1031
 msgctxt "QImageReader"
 msgid "Unable to read image data"
 msgstr ""
 
-#: src/gui/image/qimagereader.cpp:1235
+#: src/gui/image/qimagereader.cpp:1222
 msgctxt "QImageReader"
 msgid "Unknown error"
 msgstr ""
 
-#: src/gui/widgets/qtabbar.cpp:2191
+#: src/gui/widgets/qtabbar.cpp:2179
 msgid "Close Tab"
 msgstr ""
 
-#: src/gui/widgets/qlineedit.cpp:1767 src/gui/text/qtextcontrol.cpp:1870
+#: src/gui/widgets/qlineedit.cpp:1755 src/gui/text/qtextcontrol.cpp:1858
 msgid "&Undo"
 msgstr ""
 
-#: src/gui/widgets/qlineedit.cpp:1771 src/gui/text/qtextcontrol.cpp:1872
+#: src/gui/widgets/qlineedit.cpp:1759 src/gui/text/qtextcontrol.cpp:1860
 msgid "&Redo"
 msgstr ""
 
-#: src/gui/widgets/qlineedit.cpp:1780 src/gui/text/qtextcontrol.cpp:1876
+#: src/gui/widgets/qlineedit.cpp:1768 src/gui/text/qtextcontrol.cpp:1864
 msgid "Cu&t"
 msgstr ""
 
-#: src/gui/widgets/qlineedit.cpp:1786 src/gui/text/qtextcontrol.cpp:1881
+#: src/gui/widgets/qlineedit.cpp:1774 src/gui/text/qtextcontrol.cpp:1869
 msgid "&Copy"
 msgstr ""
 
-#: src/gui/widgets/qlineedit.cpp:1792 src/gui/text/qtextcontrol.cpp:1894
+#: src/gui/widgets/qlineedit.cpp:1780 src/gui/text/qtextcontrol.cpp:1882
 msgid "&Paste"
 msgstr ""
 
-#: src/gui/widgets/qlineedit.cpp:1799 src/gui/text/qtextcontrol.cpp:1897
-#: src/scripttools/debugging/qscriptbreakpointswidget.cpp:291
+#: src/gui/widgets/qlineedit.cpp:1787 src/gui/text/qtextcontrol.cpp:1885
+#: src/scripttools/debugging/qscriptbreakpointswidget.cpp:279
 msgid "Delete"
 msgstr ""
 
-#: src/gui/widgets/qlineedit.cpp:1807 src/gui/text/qtextcontrol.cpp:1904
+#: src/gui/widgets/qlineedit.cpp:1795 src/gui/text/qtextcontrol.cpp:1892
 msgid "Select All"
 msgstr ""
 
-#: src/gui/widgets/qscrollbar.cpp:394
+#: src/gui/widgets/qscrollbar.cpp:382
 msgid "Scroll here"
 msgstr ""
 
-#: src/gui/widgets/qscrollbar.cpp:396
+#: src/gui/widgets/qscrollbar.cpp:384
 msgid "Left edge"
 msgstr ""
 
-#: src/gui/widgets/qscrollbar.cpp:396
+#: src/gui/widgets/qscrollbar.cpp:384
 msgid "Top"
 msgstr ""
 
-#: src/gui/widgets/qscrollbar.cpp:397
+#: src/gui/widgets/qscrollbar.cpp:385
 msgid "Right edge"
 msgstr ""
 
-#: src/gui/widgets/qscrollbar.cpp:397
+#: src/gui/widgets/qscrollbar.cpp:385
 msgid "Bottom"
 msgstr ""
 
-#: src/gui/widgets/qscrollbar.cpp:399
-#: src/plugins/accessible/widgets/rangecontrols.cpp:697
+#: src/gui/widgets/qscrollbar.cpp:387
+#: src/plugins/accessible/widgets/rangecontrols.cpp:685
 msgid "Page left"
 msgstr ""
 
-#: src/gui/widgets/qscrollbar.cpp:399
-#: src/plugins/accessible/widgets/rangecontrols.cpp:544
-#: src/plugins/accessible/widgets/rangecontrols.cpp:697
+#: src/gui/widgets/qscrollbar.cpp:387
+#: src/plugins/accessible/widgets/rangecontrols.cpp:532
+#: src/plugins/accessible/widgets/rangecontrols.cpp:685
 msgid "Page up"
 msgstr ""
 
-#: src/gui/widgets/qscrollbar.cpp:400
-#: src/plugins/accessible/widgets/rangecontrols.cpp:702
+#: src/gui/widgets/qscrollbar.cpp:388
+#: src/plugins/accessible/widgets/rangecontrols.cpp:690
 msgid "Page right"
 msgstr ""
 
-#: src/gui/widgets/qscrollbar.cpp:400
-#: src/plugins/accessible/widgets/rangecontrols.cpp:548
-#: src/plugins/accessible/widgets/rangecontrols.cpp:702
+#: src/gui/widgets/qscrollbar.cpp:388
+#: src/plugins/accessible/widgets/rangecontrols.cpp:536
+#: src/plugins/accessible/widgets/rangecontrols.cpp:690
 msgid "Page down"
 msgstr ""
 
-#: src/gui/widgets/qscrollbar.cpp:402
+#: src/gui/widgets/qscrollbar.cpp:390
 msgid "Scroll left"
 msgstr ""
 
-#: src/gui/widgets/qscrollbar.cpp:402
+#: src/gui/widgets/qscrollbar.cpp:390
 msgid "Scroll up"
 msgstr ""
 
-#: src/gui/widgets/qscrollbar.cpp:403
+#: src/gui/widgets/qscrollbar.cpp:391
 msgid "Scroll right"
 msgstr ""
 
-#: src/gui/widgets/qscrollbar.cpp:403
+#: src/gui/widgets/qscrollbar.cpp:391
 msgid "Scroll down"
 msgstr ""
 
-#: src/gui/widgets/qdialogbuttonbox.cpp:451
+#: src/gui/widgets/qdialogbuttonbox.cpp:439
 msgctxt "QDialogButtonBox"
 msgid "OK"
 msgstr ""
 
-#: src/gui/widgets/qdialogbuttonbox.cpp:454
+#: src/gui/widgets/qdialogbuttonbox.cpp:442
 msgctxt "QDialogButtonBox"
 msgid "Save"
 msgstr ""
 
-#: src/gui/widgets/qdialogbuttonbox.cpp:457
+#: src/gui/widgets/qdialogbuttonbox.cpp:445
 msgctxt "QDialogButtonBox"
 msgid "Open"
 msgstr ""
 
-#: src/gui/widgets/qdialogbuttonbox.cpp:460
+#: src/gui/widgets/qdialogbuttonbox.cpp:448
 msgctxt "QDialogButtonBox"
 msgid "Cancel"
 msgstr ""
 
-#: src/gui/widgets/qdialogbuttonbox.cpp:463
+#: src/gui/widgets/qdialogbuttonbox.cpp:451
 msgctxt "QDialogButtonBox"
 msgid "Close"
 msgstr ""
 
-#: src/gui/widgets/qdialogbuttonbox.cpp:466
+#: src/gui/widgets/qdialogbuttonbox.cpp:454
 msgctxt "QDialogButtonBox"
 msgid "Apply"
 msgstr ""
 
-#: src/gui/widgets/qdialogbuttonbox.cpp:469
+#: src/gui/widgets/qdialogbuttonbox.cpp:457
 msgctxt "QDialogButtonBox"
 msgid "Reset"
 msgstr ""
 
-#: src/gui/widgets/qdialogbuttonbox.cpp:472
+#: src/gui/widgets/qdialogbuttonbox.cpp:460
 msgctxt "QDialogButtonBox"
 msgid "Help"
 msgstr ""
 
-#: src/gui/widgets/qdialogbuttonbox.cpp:475
+#: src/gui/widgets/qdialogbuttonbox.cpp:463
 msgctxt "QDialogButtonBox"
 msgid "Discard"
 msgstr ""
 
-#: src/gui/widgets/qdialogbuttonbox.cpp:478
+#: src/gui/widgets/qdialogbuttonbox.cpp:466
 msgctxt "QDialogButtonBox"
 msgid "&Yes"
 msgstr ""
 
-#: src/gui/widgets/qdialogbuttonbox.cpp:481
+#: src/gui/widgets/qdialogbuttonbox.cpp:469
 msgctxt "QDialogButtonBox"
 msgid "Yes to &All"
 msgstr ""
 
-#: src/gui/widgets/qdialogbuttonbox.cpp:484
+#: src/gui/widgets/qdialogbuttonbox.cpp:472
 msgctxt "QDialogButtonBox"
 msgid "&No"
 msgstr ""
 
-#: src/gui/widgets/qdialogbuttonbox.cpp:487
+#: src/gui/widgets/qdialogbuttonbox.cpp:475
 msgctxt "QDialogButtonBox"
 msgid "N&o to All"
 msgstr ""
 
-#: src/gui/widgets/qdialogbuttonbox.cpp:490
+#: src/gui/widgets/qdialogbuttonbox.cpp:478
 msgctxt "QDialogButtonBox"
 msgid "Save All"
 msgstr ""
 
-#: src/gui/widgets/qdialogbuttonbox.cpp:493
+#: src/gui/widgets/qdialogbuttonbox.cpp:481
 msgctxt "QDialogButtonBox"
 msgid "Abort"
 msgstr ""
 
-#: src/gui/widgets/qdialogbuttonbox.cpp:496
+#: src/gui/widgets/qdialogbuttonbox.cpp:484
 msgctxt "QDialogButtonBox"
 msgid "Retry"
 msgstr ""
 
-#: src/gui/widgets/qdialogbuttonbox.cpp:499
+#: src/gui/widgets/qdialogbuttonbox.cpp:487
 msgctxt "QDialogButtonBox"
 msgid "Ignore"
 msgstr ""
 
-#: src/gui/widgets/qdialogbuttonbox.cpp:502
+#: src/gui/widgets/qdialogbuttonbox.cpp:490
 msgctxt "QDialogButtonBox"
 msgid "Restore Defaults"
 msgstr ""
 
-#: src/gui/widgets/qdatetimeedit.cpp:2093
+#: src/gui/widgets/qdatetimeedit.cpp:2081
 msgid "AM"
 msgstr ""
 
-#: src/gui/widgets/qdatetimeedit.cpp:2093
+#: src/gui/widgets/qdatetimeedit.cpp:2081
 msgid "am"
 msgstr ""
 
-#: src/gui/widgets/qdatetimeedit.cpp:2095
+#: src/gui/widgets/qdatetimeedit.cpp:2083
 msgid "PM"
 msgstr ""
 
-#: src/gui/widgets/qdatetimeedit.cpp:2095
+#: src/gui/widgets/qdatetimeedit.cpp:2083
 msgid "pm"
 msgstr ""
 
-#: src/gui/widgets/qmdisubwindow.cpp:261
+#: src/gui/widgets/qmdisubwindow.cpp:249
 msgid "- [%1]"
 msgstr ""
 
-#: src/gui/widgets/qmdisubwindow.cpp:262 src/gui/widgets/qworkspace.cpp:1804
-#: src/gui/widgets/qworkspace.cpp:1864
+#: src/gui/widgets/qmdisubwindow.cpp:250 src/gui/widgets/qworkspace.cpp:1792
+#: src/gui/widgets/qworkspace.cpp:1852
 msgid "%1 - [%2]"
 msgstr ""
 
-#: src/gui/widgets/qmdisubwindow.cpp:303 src/gui/widgets/qworkspace.cpp:107
+#: src/gui/widgets/qmdisubwindow.cpp:291 src/gui/widgets/qworkspace.cpp:95
 msgid "Minimize"
 msgstr ""
 
-#: src/gui/widgets/qmdisubwindow.cpp:306
+#: src/gui/widgets/qmdisubwindow.cpp:294
 msgid "Maximize"
 msgstr ""
 
-#: src/gui/widgets/qmdisubwindow.cpp:309
+#: src/gui/widgets/qmdisubwindow.cpp:297
 msgid "Unshade"
 msgstr ""
 
-#: src/gui/widgets/qmdisubwindow.cpp:312
+#: src/gui/widgets/qmdisubwindow.cpp:300
 msgid "Shade"
 msgstr ""
 
-#: src/gui/widgets/qmdisubwindow.cpp:316 src/gui/widgets/qworkspace.cpp:109
+#: src/gui/widgets/qmdisubwindow.cpp:304 src/gui/widgets/qworkspace.cpp:97
 msgid "Restore Down"
 msgstr ""
 
-#: src/gui/widgets/qmdisubwindow.cpp:318
+#: src/gui/widgets/qmdisubwindow.cpp:306
 msgid "Restore"
 msgstr ""
 
-#: src/gui/widgets/qmdisubwindow.cpp:321 src/gui/widgets/qworkspace.cpp:105
-#: src/plugins/accessible/widgets/qaccessiblemenu.cpp:149
-#: src/plugins/accessible/widgets/qaccessiblemenu.cpp:374
-#: src/plugins/accessible/widgets/qaccessiblewidgets.cpp:1321
-#: src/plugins/accessible/widgets/complexwidgets.cpp:1606
-#: src/plugins/accessible/widgets/complexwidgets.cpp:1907
-#: src/scripttools/debugging/qscriptbreakpointswidget.cpp:68
-#: src/scripttools/debugging/qscriptdebuggercodefinderwidget.cpp:128
+#: src/gui/widgets/qmdisubwindow.cpp:309 src/gui/widgets/qworkspace.cpp:93
+#: src/plugins/accessible/widgets/qaccessiblemenu.cpp:137
+#: src/plugins/accessible/widgets/qaccessiblemenu.cpp:362
+#: src/plugins/accessible/widgets/qaccessiblewidgets.cpp:1309
+#: src/plugins/accessible/widgets/complexwidgets.cpp:1594
+#: src/plugins/accessible/widgets/complexwidgets.cpp:1895
+#: src/scripttools/debugging/qscriptbreakpointswidget.cpp:56
+#: src/scripttools/debugging/qscriptdebuggercodefinderwidget.cpp:116
 msgid "Close"
 msgstr ""
 
-#: src/gui/widgets/qmdisubwindow.cpp:327
+#: src/gui/widgets/qmdisubwindow.cpp:315
 msgid "Menu"
 msgstr ""
 
-#: src/gui/widgets/qmdisubwindow.cpp:1024 src/gui/widgets/qworkspace.cpp:1026
+#: src/gui/widgets/qmdisubwindow.cpp:1012 src/gui/widgets/qworkspace.cpp:1014
 msgid "&Restore"
 msgstr ""
 
-#: src/gui/widgets/qmdisubwindow.cpp:1027 src/gui/widgets/qworkspace.cpp:1027
+#: src/gui/widgets/qmdisubwindow.cpp:1015 src/gui/widgets/qworkspace.cpp:1015
 msgid "&Move"
 msgstr ""
 
-#: src/gui/widgets/qmdisubwindow.cpp:1029 src/gui/widgets/qworkspace.cpp:1030
+#: src/gui/widgets/qmdisubwindow.cpp:1017 src/gui/widgets/qworkspace.cpp:1018
 msgid "Mi&nimize"
 msgstr ""
 
-#: src/gui/widgets/qmdisubwindow.cpp:1031 src/gui/widgets/qworkspace.cpp:1032
+#: src/gui/widgets/qmdisubwindow.cpp:1019 src/gui/widgets/qworkspace.cpp:1020
 msgid "Ma&ximize"
 msgstr ""
 
-#: src/gui/widgets/qmdisubwindow.cpp:1033 src/gui/widgets/qworkspace.cpp:1040
+#: src/gui/widgets/qmdisubwindow.cpp:1021 src/gui/widgets/qworkspace.cpp:1028
 msgid "Stay on &Top"
 msgstr ""
 
-#: src/gui/widgets/qmdisubwindow.cpp:1036 src/gui/widgets/qworkspace.cpp:1034
+#: src/gui/widgets/qmdisubwindow.cpp:1024 src/gui/widgets/qworkspace.cpp:1022
 msgid "&Close"
 msgstr ""
 
-#: src/gui/widgets/qmdiarea.cpp:263
+#: src/gui/widgets/qmdiarea.cpp:251
 msgid "(Untitled)"
 msgstr ""
 
-#: src/gui/widgets/qworkspace.cpp:1043 src/gui/widgets/qworkspace.cpp:2082
+#: src/gui/widgets/qworkspace.cpp:1031 src/gui/widgets/qworkspace.cpp:2070
 msgid "Sh&ade"
 msgstr ""
 
-#: src/gui/widgets/qworkspace.cpp:2078
+#: src/gui/widgets/qworkspace.cpp:2066
 msgid "&Unshade"
 msgstr ""
 
-#: src/gui/widgets/qmenubar.cpp:1611
+#: src/gui/widgets/qmenubar.cpp:1599
 msgctxt "QMenuBar"
 msgid "Corner Toolbar"
 msgstr ""
 
-#: src/gui/widgets/qabstractspinbox.cpp:1164
+#: src/gui/widgets/qabstractspinbox.cpp:1152
 msgid "&Select All"
 msgstr ""
 
-#: src/gui/widgets/qabstractspinbox.cpp:1170
+#: src/gui/widgets/qabstractspinbox.cpp:1158
 msgid "&Step up"
 msgstr ""
 
-#: src/gui/widgets/qabstractspinbox.cpp:1172
+#: src/gui/widgets/qabstractspinbox.cpp:1160
 msgid "Step &down"
 msgstr ""
 
-#: src/gui/kernel/qwidget.cpp:5118
+#: src/gui/kernel/qwidget.cpp:5090
 msgid "*"
 msgstr ""
 
-#: src/gui/kernel/qapplication.cpp:1803
+#: src/gui/kernel/qapplication.cpp:1705
 msgid "QT_LAYOUT_DIRECTION"
 msgstr ""
 
-#: src/gui/kernel/qkeysequence.cpp:207
+#: src/gui/kernel/qkeysequence.cpp:195
 msgctxt "QShortcut"
 msgid "Space"
 msgstr ""
 
-#: src/gui/kernel/qkeysequence.cpp:208
+#: src/gui/kernel/qkeysequence.cpp:196
 msgctxt "QShortcut"
 msgid "Esc"
 msgstr ""
 
-#: src/gui/kernel/qkeysequence.cpp:209
+#: src/gui/kernel/qkeysequence.cpp:197
 msgctxt "QShortcut"
 msgid "Tab"
 msgstr ""
 
-#: src/gui/kernel/qkeysequence.cpp:210
+#: src/gui/kernel/qkeysequence.cpp:198
 msgctxt "QShortcut"
 msgid "Backtab"
 msgstr ""
 
-#: src/gui/kernel/qkeysequence.cpp:211
+#: src/gui/kernel/qkeysequence.cpp:199
 msgctxt "QShortcut"
 msgid "Backspace"
 msgstr ""
 
-#: src/gui/kernel/qkeysequence.cpp:212
+#: src/gui/kernel/qkeysequence.cpp:200
 msgctxt "QShortcut"
 msgid "Return"
 msgstr ""
 
-#: src/gui/kernel/qkeysequence.cpp:213
+#: src/gui/kernel/qkeysequence.cpp:201
 msgctxt "QShortcut"
 msgid "Enter"
 msgstr ""
 
-#: src/gui/kernel/qkeysequence.cpp:214
+#: src/gui/kernel/qkeysequence.cpp:202
 msgctxt "QShortcut"
 msgid "Ins"
 msgstr ""
 
-#: src/gui/kernel/qkeysequence.cpp:215
+#: src/gui/kernel/qkeysequence.cpp:203
 msgctxt "QShortcut"
 msgid "Del"
 msgstr ""
 
-#: src/gui/kernel/qkeysequence.cpp:216
+#: src/gui/kernel/qkeysequence.cpp:204
 msgctxt "QShortcut"
 msgid "Pause"
 msgstr ""
 
-#: src/gui/kernel/qkeysequence.cpp:217
+#: src/gui/kernel/qkeysequence.cpp:205
 msgctxt "QShortcut"
 msgid "Print"
 msgstr ""
 
-#: src/gui/kernel/qkeysequence.cpp:218
+#: src/gui/kernel/qkeysequence.cpp:206
 msgctxt "QShortcut"
 msgid "SysReq"
 msgstr ""
 
-#: src/gui/kernel/qkeysequence.cpp:219
+#: src/gui/kernel/qkeysequence.cpp:207
 msgctxt "QShortcut"
 msgid "Home"
 msgstr ""
 
-#: src/gui/kernel/qkeysequence.cpp:220
+#: src/gui/kernel/qkeysequence.cpp:208
 msgctxt "QShortcut"
 msgid "End"
 msgstr ""
 
-#: src/gui/kernel/qkeysequence.cpp:221
+#: src/gui/kernel/qkeysequence.cpp:209
 msgctxt "QShortcut"
 msgid "Left"
 msgstr ""
 
-#: src/gui/kernel/qkeysequence.cpp:222
+#: src/gui/kernel/qkeysequence.cpp:210
 msgctxt "QShortcut"
 msgid "Up"
 msgstr ""
 
-#: src/gui/kernel/qkeysequence.cpp:223
+#: src/gui/kernel/qkeysequence.cpp:211
 msgctxt "QShortcut"
 msgid "Right"
 msgstr ""
 
-#: src/gui/kernel/qkeysequence.cpp:224
+#: src/gui/kernel/qkeysequence.cpp:212
 msgctxt "QShortcut"
 msgid "Down"
 msgstr ""
 
-#: src/gui/kernel/qkeysequence.cpp:225
+#: src/gui/kernel/qkeysequence.cpp:213
 msgctxt "QShortcut"
 msgid "PgUp"
 msgstr ""
 
-#: src/gui/kernel/qkeysequence.cpp:226
+#: src/gui/kernel/qkeysequence.cpp:214
 msgctxt "QShortcut"
 msgid "PgDown"
 msgstr ""
 
-#: src/gui/kernel/qkeysequence.cpp:227
+#: src/gui/kernel/qkeysequence.cpp:215
 msgctxt "QShortcut"
 msgid "CapsLock"
 msgstr ""
 
-#: src/gui/kernel/qkeysequence.cpp:228
+#: src/gui/kernel/qkeysequence.cpp:216
 msgctxt "QShortcut"
 msgid "NumLock"
 msgstr ""
 
-#: src/gui/kernel/qkeysequence.cpp:229
+#: src/gui/kernel/qkeysequence.cpp:217
 msgctxt "QShortcut"
 msgid "ScrollLock"
 msgstr ""
 
-#: src/gui/kernel/qkeysequence.cpp:230
+#: src/gui/kernel/qkeysequence.cpp:218
 msgctxt "QShortcut"
 msgid "Menu"
 msgstr ""
 
-#: src/gui/kernel/qkeysequence.cpp:231
+#: src/gui/kernel/qkeysequence.cpp:219
 msgctxt "QShortcut"
 msgid "Help"
 msgstr ""
 
-#: src/gui/kernel/qkeysequence.cpp:236
+#: src/gui/kernel/qkeysequence.cpp:224
 msgctxt "QShortcut"
 msgid "Back"
 msgstr ""
 
-#: src/gui/kernel/qkeysequence.cpp:237
+#: src/gui/kernel/qkeysequence.cpp:225
 msgctxt "QShortcut"
 msgid "Forward"
 msgstr ""
 
-#: src/gui/kernel/qkeysequence.cpp:238
+#: src/gui/kernel/qkeysequence.cpp:226
 msgctxt "QShortcut"
 msgid "Stop"
 msgstr ""
 
-#: src/gui/kernel/qkeysequence.cpp:239
+#: src/gui/kernel/qkeysequence.cpp:227
 msgctxt "QShortcut"
 msgid "Refresh"
 msgstr ""
 
-#: src/gui/kernel/qkeysequence.cpp:240
+#: src/gui/kernel/qkeysequence.cpp:228
 msgctxt "QShortcut"
 msgid "Volume Down"
 msgstr ""
 
-#: src/gui/kernel/qkeysequence.cpp:241
+#: src/gui/kernel/qkeysequence.cpp:229
 msgctxt "QShortcut"
 msgid "Volume Mute"
 msgstr ""
 
-#: src/gui/kernel/qkeysequence.cpp:242
+#: src/gui/kernel/qkeysequence.cpp:230
 msgctxt "QShortcut"
 msgid "Volume Up"
 msgstr ""
 
-#: src/gui/kernel/qkeysequence.cpp:243
+#: src/gui/kernel/qkeysequence.cpp:231
 msgctxt "QShortcut"
 msgid "Media Play"
 msgstr ""
 
-#: src/gui/kernel/qkeysequence.cpp:244
+#: src/gui/kernel/qkeysequence.cpp:232
 msgctxt "QShortcut"
 msgid "Media Stop"
 msgstr ""
 
-#: src/gui/kernel/qkeysequence.cpp:245
+#: src/gui/kernel/qkeysequence.cpp:233
 msgctxt "QShortcut"
 msgid "Media Previous"
 msgstr ""
 
-#: src/gui/kernel/qkeysequence.cpp:246
+#: src/gui/kernel/qkeysequence.cpp:234
 msgctxt "QShortcut"
 msgid "Media Next"
 msgstr ""
 
-#: src/gui/kernel/qkeysequence.cpp:247
+#: src/gui/kernel/qkeysequence.cpp:235
 msgctxt "QShortcut"
 msgid "Media Record"
 msgstr ""
 
-#: src/gui/kernel/qkeysequence.cpp:249
+#: src/gui/kernel/qkeysequence.cpp:237
 msgctxt "QShortcut"
 msgid "Media Pause"
 msgstr ""
 
-#: src/gui/kernel/qkeysequence.cpp:251
+#: src/gui/kernel/qkeysequence.cpp:239
 msgctxt "QShortcut"
 msgid "Home Page"
 msgstr ""
 
-#: src/gui/kernel/qkeysequence.cpp:252
+#: src/gui/kernel/qkeysequence.cpp:240
 msgctxt "QShortcut"
 msgid "Favorites"
 msgstr ""
 
-#: src/gui/kernel/qkeysequence.cpp:253
+#: src/gui/kernel/qkeysequence.cpp:241
 msgctxt "QShortcut"
 msgid "Search"
 msgstr ""
 
-#: src/gui/kernel/qkeysequence.cpp:254
+#: src/gui/kernel/qkeysequence.cpp:242
 msgctxt "QShortcut"
 msgid "Standby"
 msgstr ""
 
-#: src/gui/kernel/qkeysequence.cpp:255
+#: src/gui/kernel/qkeysequence.cpp:243
 msgctxt "QShortcut"
 msgid "Open URL"
 msgstr ""
 
-#: src/gui/kernel/qkeysequence.cpp:256
+#: src/gui/kernel/qkeysequence.cpp:244
 msgctxt "QShortcut"
 msgid "Launch Mail"
 msgstr ""
 
-#: src/gui/kernel/qkeysequence.cpp:257
+#: src/gui/kernel/qkeysequence.cpp:245
 msgctxt "QShortcut"
 msgid "Launch Media"
 msgstr ""
 
-#: src/gui/kernel/qkeysequence.cpp:258
+#: src/gui/kernel/qkeysequence.cpp:246
 msgctxt "QShortcut"
 msgid "Launch (0)"
 msgstr ""
 
-#: src/gui/kernel/qkeysequence.cpp:259
+#: src/gui/kernel/qkeysequence.cpp:247
 msgctxt "QShortcut"
 msgid "Launch (1)"
 msgstr ""
 
-#: src/gui/kernel/qkeysequence.cpp:260
+#: src/gui/kernel/qkeysequence.cpp:248
 msgctxt "QShortcut"
 msgid "Launch (2)"
 msgstr ""
 
-#: src/gui/kernel/qkeysequence.cpp:261
+#: src/gui/kernel/qkeysequence.cpp:249
 msgctxt "QShortcut"
 msgid "Launch (3)"
 msgstr ""
 
-#: src/gui/kernel/qkeysequence.cpp:262
+#: src/gui/kernel/qkeysequence.cpp:250
 msgctxt "QShortcut"
 msgid "Launch (4)"
 msgstr ""
 
-#: src/gui/kernel/qkeysequence.cpp:263
+#: src/gui/kernel/qkeysequence.cpp:251
 msgctxt "QShortcut"
 msgid "Launch (5)"
 msgstr ""
 
-#: src/gui/kernel/qkeysequence.cpp:264
+#: src/gui/kernel/qkeysequence.cpp:252
 msgctxt "QShortcut"
 msgid "Launch (6)"
 msgstr ""
 
-#: src/gui/kernel/qkeysequence.cpp:265
+#: src/gui/kernel/qkeysequence.cpp:253
 msgctxt "QShortcut"
 msgid "Launch (7)"
 msgstr ""
 
-#: src/gui/kernel/qkeysequence.cpp:266
+#: src/gui/kernel/qkeysequence.cpp:254
 msgctxt "QShortcut"
 msgid "Launch (8)"
 msgstr ""
 
-#: src/gui/kernel/qkeysequence.cpp:267
+#: src/gui/kernel/qkeysequence.cpp:255
 msgctxt "QShortcut"
 msgid "Launch (9)"
 msgstr ""
 
-#: src/gui/kernel/qkeysequence.cpp:268
+#: src/gui/kernel/qkeysequence.cpp:256
 msgctxt "QShortcut"
 msgid "Launch (A)"
 msgstr ""
 
-#: src/gui/kernel/qkeysequence.cpp:269
+#: src/gui/kernel/qkeysequence.cpp:257
 msgctxt "QShortcut"
 msgid "Launch (B)"
 msgstr ""
 
-#: src/gui/kernel/qkeysequence.cpp:270
+#: src/gui/kernel/qkeysequence.cpp:258
 msgctxt "QShortcut"
 msgid "Launch (C)"
 msgstr ""
 
-#: src/gui/kernel/qkeysequence.cpp:271
+#: src/gui/kernel/qkeysequence.cpp:259
 msgctxt "QShortcut"
 msgid "Launch (D)"
 msgstr ""
 
-#: src/gui/kernel/qkeysequence.cpp:272
+#: src/gui/kernel/qkeysequence.cpp:260
 msgctxt "QShortcut"
 msgid "Launch (E)"
 msgstr ""
 
-#: src/gui/kernel/qkeysequence.cpp:273
+#: src/gui/kernel/qkeysequence.cpp:261
 msgctxt "QShortcut"
 msgid "Launch (F)"
 msgstr ""
 
-#: src/gui/kernel/qkeysequence.cpp:274
+#: src/gui/kernel/qkeysequence.cpp:262
 msgctxt "QShortcut"
 msgid "Monitor Brightness Up"
 msgstr ""
 
-#: src/gui/kernel/qkeysequence.cpp:275
+#: src/gui/kernel/qkeysequence.cpp:263
 msgctxt "QShortcut"
 msgid "Monitor Brightness Down"
 msgstr ""
 
-#: src/gui/kernel/qkeysequence.cpp:276
+#: src/gui/kernel/qkeysequence.cpp:264
 msgctxt "QShortcut"
 msgid "Keyboard Light On/Off"
 msgstr ""
 
-#: src/gui/kernel/qkeysequence.cpp:277
+#: src/gui/kernel/qkeysequence.cpp:265
 msgctxt "QShortcut"
 msgid "Keyboard Brightness Up"
 msgstr ""
 
-#: src/gui/kernel/qkeysequence.cpp:278
+#: src/gui/kernel/qkeysequence.cpp:266
 msgctxt "QShortcut"
 msgid "Keyboard Brightness Down"
 msgstr ""
 
-#: src/gui/kernel/qkeysequence.cpp:279
+#: src/gui/kernel/qkeysequence.cpp:267
 msgctxt "QShortcut"
 msgid "Power Off"
 msgstr ""
 
-#: src/gui/kernel/qkeysequence.cpp:280
+#: src/gui/kernel/qkeysequence.cpp:268
 msgctxt "QShortcut"
 msgid "Wake Up"
 msgstr ""
 
-#: src/gui/kernel/qkeysequence.cpp:281
+#: src/gui/kernel/qkeysequence.cpp:269
 msgctxt "QShortcut"
 msgid "Eject"
 msgstr ""
 
-#: src/gui/kernel/qkeysequence.cpp:282
+#: src/gui/kernel/qkeysequence.cpp:270
 msgctxt "QShortcut"
 msgid "Screensaver"
 msgstr ""
 
-#: src/gui/kernel/qkeysequence.cpp:283
+#: src/gui/kernel/qkeysequence.cpp:271
 msgctxt "QShortcut"
 msgid "WWW"
 msgstr ""
 
-#: src/gui/kernel/qkeysequence.cpp:284
+#: src/gui/kernel/qkeysequence.cpp:272
 msgctxt "QShortcut"
 msgid "Sleep"
 msgstr ""
 
-#: src/gui/kernel/qkeysequence.cpp:285
+#: src/gui/kernel/qkeysequence.cpp:273
 msgctxt "QShortcut"
 msgid "LightBulb"
 msgstr ""
 
-#: src/gui/kernel/qkeysequence.cpp:286
+#: src/gui/kernel/qkeysequence.cpp:274
 msgctxt "QShortcut"
 msgid "Shop"
 msgstr ""
 
-#: src/gui/kernel/qkeysequence.cpp:287
+#: src/gui/kernel/qkeysequence.cpp:275
 msgctxt "QShortcut"
 msgid "History"
 msgstr ""
 
-#: src/gui/kernel/qkeysequence.cpp:288
+#: src/gui/kernel/qkeysequence.cpp:276
 msgctxt "QShortcut"
 msgid "Add Favorite"
 msgstr ""
 
-#: src/gui/kernel/qkeysequence.cpp:289
+#: src/gui/kernel/qkeysequence.cpp:277
 msgctxt "QShortcut"
 msgid "Hot Links"
 msgstr ""
 
-#: src/gui/kernel/qkeysequence.cpp:290
+#: src/gui/kernel/qkeysequence.cpp:278
 msgctxt "QShortcut"
 msgid "Adjust Brightness"
 msgstr ""
 
-#: src/gui/kernel/qkeysequence.cpp:291
+#: src/gui/kernel/qkeysequence.cpp:279
 msgctxt "QShortcut"
 msgid "Finance"
 msgstr ""
 
-#: src/gui/kernel/qkeysequence.cpp:292
+#: src/gui/kernel/qkeysequence.cpp:280
 msgctxt "QShortcut"
 msgid "Community"
 msgstr ""
 
-#: src/gui/kernel/qkeysequence.cpp:293
+#: src/gui/kernel/qkeysequence.cpp:281
 msgctxt "QShortcut"
 msgid "Audio Rewind"
 msgstr ""
 
-#: src/gui/kernel/qkeysequence.cpp:294
+#: src/gui/kernel/qkeysequence.cpp:282
 msgctxt "QShortcut"
 msgid "Back Forward"
 msgstr ""
 
-#: src/gui/kernel/qkeysequence.cpp:295
+#: src/gui/kernel/qkeysequence.cpp:283
 msgctxt "QShortcut"
 msgid "Application Left"
 msgstr ""
 
-#: src/gui/kernel/qkeysequence.cpp:296
+#: src/gui/kernel/qkeysequence.cpp:284
 msgctxt "QShortcut"
 msgid "Application Right"
 msgstr ""
 
-#: src/gui/kernel/qkeysequence.cpp:297
+#: src/gui/kernel/qkeysequence.cpp:285
 msgctxt "QShortcut"
 msgid "Book"
 msgstr ""
 
-#: src/gui/kernel/qkeysequence.cpp:298
+#: src/gui/kernel/qkeysequence.cpp:286
 msgctxt "QShortcut"
 msgid "CD"
 msgstr ""
 
-#: src/gui/kernel/qkeysequence.cpp:299
+#: src/gui/kernel/qkeysequence.cpp:287
 msgctxt "QShortcut"
 msgid "Calculator"
 msgstr ""
 
-#: src/gui/kernel/qkeysequence.cpp:300
+#: src/gui/kernel/qkeysequence.cpp:288
 msgctxt "QShortcut"
 msgid "Clear"
 msgstr ""
 
-#: src/gui/kernel/qkeysequence.cpp:301
+#: src/gui/kernel/qkeysequence.cpp:289
 msgctxt "QShortcut"
 msgid "Clear Grab"
 msgstr ""
 
-#: src/gui/kernel/qkeysequence.cpp:302
+#: src/gui/kernel/qkeysequence.cpp:290
 msgctxt "QShortcut"
 msgid "Close"
 msgstr ""
 
-#: src/gui/kernel/qkeysequence.cpp:303
+#: src/gui/kernel/qkeysequence.cpp:291
 msgctxt "QShortcut"
 msgid "Copy"
 msgstr ""
 
-#: src/gui/kernel/qkeysequence.cpp:304
+#: src/gui/kernel/qkeysequence.cpp:292
 msgctxt "QShortcut"
 msgid "Cut"
 msgstr ""
 
-#: src/gui/kernel/qkeysequence.cpp:305
+#: src/gui/kernel/qkeysequence.cpp:293
 msgctxt "QShortcut"
 msgid "Display"
 msgstr ""
 
-#: src/gui/kernel/qkeysequence.cpp:306
+#: src/gui/kernel/qkeysequence.cpp:294
 msgctxt "QShortcut"
 msgid "DOS"
 msgstr ""
 
-#: src/gui/kernel/qkeysequence.cpp:307
+#: src/gui/kernel/qkeysequence.cpp:295
 msgctxt "QShortcut"
 msgid "Documents"
 msgstr ""
 
-#: src/gui/kernel/qkeysequence.cpp:308
+#: src/gui/kernel/qkeysequence.cpp:296
 msgctxt "QShortcut"
 msgid "Spreadsheet"
 msgstr ""
 
-#: src/gui/kernel/qkeysequence.cpp:309
+#: src/gui/kernel/qkeysequence.cpp:297
 msgctxt "QShortcut"
 msgid "Browser"
 msgstr ""
 
-#: src/gui/kernel/qkeysequence.cpp:310
+#: src/gui/kernel/qkeysequence.cpp:298
 msgctxt "QShortcut"
 msgid "Game"
 msgstr ""
 
-#: src/gui/kernel/qkeysequence.cpp:311
+#: src/gui/kernel/qkeysequence.cpp:299
 msgctxt "QShortcut"
 msgid "Go"
 msgstr ""
 
-#: src/gui/kernel/qkeysequence.cpp:312
+#: src/gui/kernel/qkeysequence.cpp:300
 msgctxt "QShortcut"
 msgid "iTouch"
 msgstr ""
 
-#: src/gui/kernel/qkeysequence.cpp:313
+#: src/gui/kernel/qkeysequence.cpp:301
 msgctxt "QShortcut"
 msgid "Logoff"
 msgstr ""
 
-#: src/gui/kernel/qkeysequence.cpp:314
+#: src/gui/kernel/qkeysequence.cpp:302
 msgctxt "QShortcut"
 msgid "Market"
 msgstr ""
 
-#: src/gui/kernel/qkeysequence.cpp:315
+#: src/gui/kernel/qkeysequence.cpp:303
 msgctxt "QShortcut"
 msgid "Meeting"
 msgstr ""
 
-#: src/gui/kernel/qkeysequence.cpp:316
+#: src/gui/kernel/qkeysequence.cpp:304
 msgctxt "QShortcut"
 msgid "Keyboard Menu"
 msgstr ""
 
-#: src/gui/kernel/qkeysequence.cpp:317
+#: src/gui/kernel/qkeysequence.cpp:305
 msgctxt "QShortcut"
 msgid "Menu PB"
 msgstr ""
 
-#: src/gui/kernel/qkeysequence.cpp:318
+#: src/gui/kernel/qkeysequence.cpp:306
 msgctxt "QShortcut"
 msgid "My Sites"
 msgstr ""
 
-#: src/gui/kernel/qkeysequence.cpp:319
+#: src/gui/kernel/qkeysequence.cpp:307
 msgctxt "QShortcut"
 msgid "News"
 msgstr ""
 
-#: src/gui/kernel/qkeysequence.cpp:320
+#: src/gui/kernel/qkeysequence.cpp:308
 msgctxt "QShortcut"
 msgid "Home Office"
 msgstr ""
 
-#: src/gui/kernel/qkeysequence.cpp:321
+#: src/gui/kernel/qkeysequence.cpp:309
 msgctxt "QShortcut"
 msgid "Option"
 msgstr ""
 
-#: src/gui/kernel/qkeysequence.cpp:322
+#: src/gui/kernel/qkeysequence.cpp:310
 msgctxt "QShortcut"
 msgid "Paste"
 msgstr ""
 
-#: src/gui/kernel/qkeysequence.cpp:323
+#: src/gui/kernel/qkeysequence.cpp:311
 msgctxt "QShortcut"
 msgid "Phone"
 msgstr ""
 
-#: src/gui/kernel/qkeysequence.cpp:324
+#: src/gui/kernel/qkeysequence.cpp:312
 msgctxt "QShortcut"
 msgid "Reply"
 msgstr ""
 
-#: src/gui/kernel/qkeysequence.cpp:325
+#: src/gui/kernel/qkeysequence.cpp:313
 msgctxt "QShortcut"
 msgid "Reload"
 msgstr ""
 
-#: src/gui/kernel/qkeysequence.cpp:326
+#: src/gui/kernel/qkeysequence.cpp:314
 msgctxt "QShortcut"
 msgid "Rotate Windows"
 msgstr ""
 
-#: src/gui/kernel/qkeysequence.cpp:327
+#: src/gui/kernel/qkeysequence.cpp:315
 msgctxt "QShortcut"
 msgid "Rotation PB"
 msgstr ""
 
-#: src/gui/kernel/qkeysequence.cpp:328
+#: src/gui/kernel/qkeysequence.cpp:316
 msgctxt "QShortcut"
 msgid "Rotation KB"
 msgstr ""
 
-#: src/gui/kernel/qkeysequence.cpp:329
+#: src/gui/kernel/qkeysequence.cpp:317
 msgctxt "QShortcut"
 msgid "Save"
 msgstr ""
 
-#: src/gui/kernel/qkeysequence.cpp:330
+#: src/gui/kernel/qkeysequence.cpp:318
 msgctxt "QShortcut"
 msgid "Send"
 msgstr ""
 
-#: src/gui/kernel/qkeysequence.cpp:331
+#: src/gui/kernel/qkeysequence.cpp:319
 msgctxt "QShortcut"
 msgid "Spellchecker"
 msgstr ""
 
-#: src/gui/kernel/qkeysequence.cpp:332
+#: src/gui/kernel/qkeysequence.cpp:320
 msgctxt "QShortcut"
 msgid "Split Screen"
 msgstr ""
 
-#: src/gui/kernel/qkeysequence.cpp:333
+#: src/gui/kernel/qkeysequence.cpp:321
 msgctxt "QShortcut"
 msgid "Support"
 msgstr ""
 
-#: src/gui/kernel/qkeysequence.cpp:334
+#: src/gui/kernel/qkeysequence.cpp:322
 msgctxt "QShortcut"
 msgid "Task Panel"
 msgstr ""
 
-#: src/gui/kernel/qkeysequence.cpp:335
+#: src/gui/kernel/qkeysequence.cpp:323
 msgctxt "QShortcut"
 msgid "Terminal"
 msgstr ""
 
-#: src/gui/kernel/qkeysequence.cpp:336
+#: src/gui/kernel/qkeysequence.cpp:324
 msgctxt "QShortcut"
 msgid "Tools"
 msgstr ""
 
-#: src/gui/kernel/qkeysequence.cpp:337
+#: src/gui/kernel/qkeysequence.cpp:325
 msgctxt "QShortcut"
 msgid "Travel"
 msgstr ""
 
-#: src/gui/kernel/qkeysequence.cpp:338
+#: src/gui/kernel/qkeysequence.cpp:326
 msgctxt "QShortcut"
 msgid "Video"
 msgstr ""
 
-#: src/gui/kernel/qkeysequence.cpp:339
+#: src/gui/kernel/qkeysequence.cpp:327
 msgctxt "QShortcut"
 msgid "Word Processor"
 msgstr ""
 
-#: src/gui/kernel/qkeysequence.cpp:340
+#: src/gui/kernel/qkeysequence.cpp:328
 msgctxt "QShortcut"
 msgid "XFer"
 msgstr ""
 
-#: src/gui/kernel/qkeysequence.cpp:341
+#: src/gui/kernel/qkeysequence.cpp:329
 msgctxt "QShortcut"
 msgid "Zoom In"
 msgstr ""
 
-#: src/gui/kernel/qkeysequence.cpp:342
+#: src/gui/kernel/qkeysequence.cpp:330
 msgctxt "QShortcut"
 msgid "Zoom Out"
 msgstr ""
 
-#: src/gui/kernel/qkeysequence.cpp:343
+#: src/gui/kernel/qkeysequence.cpp:331
 msgctxt "QShortcut"
 msgid "Away"
 msgstr ""
 
-#: src/gui/kernel/qkeysequence.cpp:344
+#: src/gui/kernel/qkeysequence.cpp:332
 msgctxt "QShortcut"
 msgid "Messenger"
 msgstr ""
 
-#: src/gui/kernel/qkeysequence.cpp:345
+#: src/gui/kernel/qkeysequence.cpp:333
 msgctxt "QShortcut"
 msgid "WebCam"
 msgstr ""
 
-#: src/gui/kernel/qkeysequence.cpp:346
+#: src/gui/kernel/qkeysequence.cpp:334
 msgctxt "QShortcut"
 msgid "Mail Forward"
 msgstr ""
 
-#: src/gui/kernel/qkeysequence.cpp:347
+#: src/gui/kernel/qkeysequence.cpp:335
 msgctxt "QShortcut"
 msgid "Pictures"
 msgstr ""
 
-#: src/gui/kernel/qkeysequence.cpp:348
+#: src/gui/kernel/qkeysequence.cpp:336
 msgctxt "QShortcut"
 msgid "Music"
 msgstr ""
 
-#: src/gui/kernel/qkeysequence.cpp:349
+#: src/gui/kernel/qkeysequence.cpp:337
 msgctxt "QShortcut"
 msgid "Battery"
 msgstr ""
 
-#: src/gui/kernel/qkeysequence.cpp:350
+#: src/gui/kernel/qkeysequence.cpp:338
 msgctxt "QShortcut"
 msgid "Bluetooth"
 msgstr ""
 
-#: src/gui/kernel/qkeysequence.cpp:351
+#: src/gui/kernel/qkeysequence.cpp:339
 msgctxt "QShortcut"
 msgid "Wireless"
 msgstr ""
 
-#: src/gui/kernel/qkeysequence.cpp:352
+#: src/gui/kernel/qkeysequence.cpp:340
 msgctxt "QShortcut"
 msgid "Ultra Wide Band"
 msgstr ""
 
-#: src/gui/kernel/qkeysequence.cpp:353
+#: src/gui/kernel/qkeysequence.cpp:341
 msgctxt "QShortcut"
 msgid "Audio Forward"
 msgstr ""
 
-#: src/gui/kernel/qkeysequence.cpp:354
+#: src/gui/kernel/qkeysequence.cpp:342
 msgctxt "QShortcut"
 msgid "Audio Repeat"
 msgstr ""
 
-#: src/gui/kernel/qkeysequence.cpp:355
+#: src/gui/kernel/qkeysequence.cpp:343
 msgctxt "QShortcut"
 msgid "Audio Random Play"
 msgstr ""
 
-#: src/gui/kernel/qkeysequence.cpp:356
+#: src/gui/kernel/qkeysequence.cpp:344
 msgctxt "QShortcut"
 msgid "Subtitle"
 msgstr ""
 
-#: src/gui/kernel/qkeysequence.cpp:357
+#: src/gui/kernel/qkeysequence.cpp:345
 msgctxt "QShortcut"
 msgid "Audio Cycle Track"
 msgstr ""
 
-#: src/gui/kernel/qkeysequence.cpp:358
+#: src/gui/kernel/qkeysequence.cpp:346
 msgctxt "QShortcut"
 msgid "Time"
 msgstr ""
 
-#: src/gui/kernel/qkeysequence.cpp:359
+#: src/gui/kernel/qkeysequence.cpp:347
 msgctxt "QShortcut"
 msgid "Select"
 msgstr ""
 
-#: src/gui/kernel/qkeysequence.cpp:360
+#: src/gui/kernel/qkeysequence.cpp:348
 msgctxt "QShortcut"
 msgid "View"
 msgstr ""
 
-#: src/gui/kernel/qkeysequence.cpp:361
+#: src/gui/kernel/qkeysequence.cpp:349
 msgctxt "QShortcut"
 msgid "Top Menu"
 msgstr ""
 
-#: src/gui/kernel/qkeysequence.cpp:362
+#: src/gui/kernel/qkeysequence.cpp:350
 msgctxt "QShortcut"
 msgid "Suspend"
 msgstr ""
 
-#: src/gui/kernel/qkeysequence.cpp:363
+#: src/gui/kernel/qkeysequence.cpp:351
 msgctxt "QShortcut"
 msgid "Hibernate"
 msgstr ""
 
-#: src/gui/kernel/qkeysequence.cpp:367
+#: src/gui/kernel/qkeysequence.cpp:355
 msgctxt "QShortcut"
 msgid "Print Screen"
 msgstr ""
 
-#: src/gui/kernel/qkeysequence.cpp:368
+#: src/gui/kernel/qkeysequence.cpp:356
 msgctxt "QShortcut"
 msgid "Page Up"
 msgstr ""
 
-#: src/gui/kernel/qkeysequence.cpp:369
+#: src/gui/kernel/qkeysequence.cpp:357
 msgctxt "QShortcut"
 msgid "Page Down"
 msgstr ""
 
-#: src/gui/kernel/qkeysequence.cpp:370
+#: src/gui/kernel/qkeysequence.cpp:358
 msgctxt "QShortcut"
 msgid "Caps Lock"
 msgstr ""
 
-#: src/gui/kernel/qkeysequence.cpp:371
+#: src/gui/kernel/qkeysequence.cpp:359
 msgctxt "QShortcut"
 msgid "Num Lock"
 msgstr ""
 
-#: src/gui/kernel/qkeysequence.cpp:372
+#: src/gui/kernel/qkeysequence.cpp:360
 msgctxt "QShortcut"
 msgid "Number Lock"
 msgstr ""
 
-#: src/gui/kernel/qkeysequence.cpp:373
+#: src/gui/kernel/qkeysequence.cpp:361
 msgctxt "QShortcut"
 msgid "Scroll Lock"
 msgstr ""
 
-#: src/gui/kernel/qkeysequence.cpp:374
+#: src/gui/kernel/qkeysequence.cpp:362
 msgctxt "QShortcut"
 msgid "Insert"
 msgstr ""
 
-#: src/gui/kernel/qkeysequence.cpp:375
+#: src/gui/kernel/qkeysequence.cpp:363
 msgctxt "QShortcut"
 msgid "Delete"
 msgstr ""
 
-#: src/gui/kernel/qkeysequence.cpp:376
+#: src/gui/kernel/qkeysequence.cpp:364
 msgctxt "QShortcut"
 msgid "Escape"
 msgstr ""
 
-#: src/gui/kernel/qkeysequence.cpp:377
+#: src/gui/kernel/qkeysequence.cpp:365
 msgctxt "QShortcut"
 msgid "System Request"
 msgstr ""
 
-#: src/gui/kernel/qkeysequence.cpp:381
+#: src/gui/kernel/qkeysequence.cpp:369
 msgctxt "QShortcut"
 msgid "Kanji"
 msgstr ""
 
-#: src/gui/kernel/qkeysequence.cpp:382
+#: src/gui/kernel/qkeysequence.cpp:370
 msgctxt "QShortcut"
 msgid "Muhenkan"
 msgstr ""
 
-#: src/gui/kernel/qkeysequence.cpp:383
+#: src/gui/kernel/qkeysequence.cpp:371
 msgctxt "QShortcut"
 msgid "Henkan"
 msgstr ""
 
-#: src/gui/kernel/qkeysequence.cpp:384
+#: src/gui/kernel/qkeysequence.cpp:372
 msgctxt "QShortcut"
 msgid "Romaji"
 msgstr ""
 
-#: src/gui/kernel/qkeysequence.cpp:385
+#: src/gui/kernel/qkeysequence.cpp:373
 msgctxt "QShortcut"
 msgid "Hiragana"
 msgstr ""
 
-#: src/gui/kernel/qkeysequence.cpp:386
+#: src/gui/kernel/qkeysequence.cpp:374
 msgctxt "QShortcut"
 msgid "Katakana"
 msgstr ""
 
-#: src/gui/kernel/qkeysequence.cpp:387
+#: src/gui/kernel/qkeysequence.cpp:375
 msgctxt "QShortcut"
 msgid "Hiragana Katakana"
 msgstr ""
 
-#: src/gui/kernel/qkeysequence.cpp:388
+#: src/gui/kernel/qkeysequence.cpp:376
 msgctxt "QShortcut"
 msgid "Zenkaku"
 msgstr ""
 
-#: src/gui/kernel/qkeysequence.cpp:389
+#: src/gui/kernel/qkeysequence.cpp:377
 msgctxt "QShortcut"
 msgid "Hankaku"
 msgstr ""
 
-#: src/gui/kernel/qkeysequence.cpp:390
+#: src/gui/kernel/qkeysequence.cpp:378
 msgctxt "QShortcut"
 msgid "Zenkaku Hankaku"
 msgstr ""
 
-#: src/gui/kernel/qkeysequence.cpp:391
+#: src/gui/kernel/qkeysequence.cpp:379
 msgctxt "QShortcut"
 msgid "Touroku"
 msgstr ""
 
-#: src/gui/kernel/qkeysequence.cpp:392
+#: src/gui/kernel/qkeysequence.cpp:380
 msgctxt "QShortcut"
 msgid "Massyo"
 msgstr ""
 
-#: src/gui/kernel/qkeysequence.cpp:393
+#: src/gui/kernel/qkeysequence.cpp:381
 msgctxt "QShortcut"
 msgid "Kana Lock"
 msgstr ""
 
-#: src/gui/kernel/qkeysequence.cpp:394
+#: src/gui/kernel/qkeysequence.cpp:382
 msgctxt "QShortcut"
 msgid "Kana Shift"
 msgstr ""
 
-#: src/gui/kernel/qkeysequence.cpp:395
+#: src/gui/kernel/qkeysequence.cpp:383
 msgctxt "QShortcut"
 msgid "Eisu Shift"
 msgstr ""
 
-#: src/gui/kernel/qkeysequence.cpp:396
+#: src/gui/kernel/qkeysequence.cpp:384
 msgctxt "QShortcut"
 msgid "Eisu toggle"
 msgstr ""
 
-#: src/gui/kernel/qkeysequence.cpp:397
+#: src/gui/kernel/qkeysequence.cpp:385
 msgctxt "QShortcut"
 msgid "Code input"
 msgstr ""
 
-#: src/gui/kernel/qkeysequence.cpp:398
+#: src/gui/kernel/qkeysequence.cpp:386
 msgctxt "QShortcut"
 msgid "Multiple Candidate"
 msgstr ""
 
-#: src/gui/kernel/qkeysequence.cpp:399
+#: src/gui/kernel/qkeysequence.cpp:387
 msgctxt "QShortcut"
 msgid "Previous Candidate"
 msgstr ""
 
-#: src/gui/kernel/qkeysequence.cpp:852 src/gui/kernel/qkeysequence.cpp:931
+#: src/gui/kernel/qkeysequence.cpp:840 src/gui/kernel/qkeysequence.cpp:919
 msgid "Ctrl"
 msgstr ""
 
-#: src/gui/kernel/qkeysequence.cpp:853 src/gui/kernel/qkeysequence.cpp:935
+#: src/gui/kernel/qkeysequence.cpp:841 src/gui/kernel/qkeysequence.cpp:923
 msgid "Shift"
 msgstr ""
 
-#: src/gui/kernel/qkeysequence.cpp:854 src/gui/kernel/qkeysequence.cpp:933
+#: src/gui/kernel/qkeysequence.cpp:842 src/gui/kernel/qkeysequence.cpp:921
 msgid "Alt"
 msgstr ""
 
-#: src/gui/kernel/qkeysequence.cpp:855 src/gui/kernel/qkeysequence.cpp:929
+#: src/gui/kernel/qkeysequence.cpp:843 src/gui/kernel/qkeysequence.cpp:917
 msgid "Meta"
 msgstr ""
 
-#: src/gui/kernel/qkeysequence.cpp:918
+#: src/gui/kernel/qkeysequence.cpp:906
 msgid "+"
 msgstr ""
 
-#: src/gui/kernel/qkeysequence.cpp:942
+#: src/gui/kernel/qkeysequence.cpp:930
 msgid "F%1"
 msgstr ""
 
-#: src/gui/itemviews/qdirmodel.cpp:805
+#: src/gui/itemviews/qdirmodel.cpp:793
 msgctxt "QFileDialog"
 msgid "My Computer"
 msgstr ""
 
-#: src/gui/itemviews/qdirmodel.cpp:1224
+#: src/gui/itemviews/qdirmodel.cpp:1212
 msgid "%1 byte(s)"
 msgstr ""
 
-#: src/gui/itemviews/qitemeditorfactory.cpp:548
+#: src/gui/itemviews/qitemeditorfactory.cpp:536
 msgid "False"
 msgstr ""
 
-#: src/gui/itemviews/qitemeditorfactory.cpp:549
+#: src/gui/itemviews/qitemeditorfactory.cpp:537
 msgid "True"
 msgstr ""
 
-#: src/gui/itemviews/qfileiconprovider.cpp:145
+#: src/gui/itemviews/qfileiconprovider.cpp:133
 msgctxt "QFileDialog"
 msgid "Drive"
 msgstr ""
 
-#: src/gui/itemviews/qfileiconprovider.cpp:148
-#: src/gui/itemviews/qfileiconprovider.cpp:149
+#: src/gui/itemviews/qfileiconprovider.cpp:136
+#: src/gui/itemviews/qfileiconprovider.cpp:137
 msgctxt "QFileDialog"
 msgid "File"
 msgstr ""
 
-#: src/gui/itemviews/qfileiconprovider.cpp:153
+#: src/gui/itemviews/qfileiconprovider.cpp:141
 msgctxt "QFileDialog"
 msgid "Folder"
 msgstr ""
 
-#: src/gui/itemviews/qfileiconprovider.cpp:158
+#: src/gui/itemviews/qfileiconprovider.cpp:146
 msgctxt "QFileDialog"
 msgid "Shortcut"
 msgstr ""
 
-#: src/gui/itemviews/qfileiconprovider.cpp:162
+#: src/gui/itemviews/qfileiconprovider.cpp:150
 msgctxt "QFileDialog"
 msgid "Unknown"
 msgstr ""
 
-#: src/gui/util/qundostack.cpp:869 src/gui/util/qundogroup.cpp:380
+#: src/gui/util/qundostack.cpp:857 src/gui/util/qundogroup.cpp:368
 msgid "Undo %1"
 msgstr ""
 
-#: src/gui/util/qundostack.cpp:869 src/gui/util/qundogroup.cpp:380
+#: src/gui/util/qundostack.cpp:857 src/gui/util/qundogroup.cpp:368
 msgid "Undo"
 msgstr ""
 
-#: src/gui/util/qundostack.cpp:899 src/gui/util/qundogroup.cpp:411
+#: src/gui/util/qundostack.cpp:887 src/gui/util/qundogroup.cpp:399
 msgid "Redo %1"
 msgstr ""
 
-#: src/gui/util/qundostack.cpp:899 src/gui/util/qundogroup.cpp:411
+#: src/gui/util/qundostack.cpp:887 src/gui/util/qundogroup.cpp:399
 msgid "Redo"
 msgstr ""
 
-#: src/gui/util/qundoview.cpp:93
+#: src/gui/util/qundoview.cpp:81
 msgid "<empty>"
 msgstr ""
 
-#: src/gui/text/qfontdatabase.cpp:74 src/gui/text/qfontdatabase.cpp:837
+#: src/gui/text/qfontdatabase.cpp:62 src/gui/text/qfontdatabase.cpp:825
 msgctxt "QFontDatabase"
 msgid "Normal"
 msgstr ""
 
-#: src/gui/text/qfontdatabase.cpp:77 src/gui/text/qfontdatabase.cpp:89
-#: src/gui/text/qfontdatabase.cpp:825
+#: src/gui/text/qfontdatabase.cpp:65 src/gui/text/qfontdatabase.cpp:77
+#: src/gui/text/qfontdatabase.cpp:813
 msgctxt "QFontDatabase"
 msgid "Bold"
 msgstr ""
 
-#: src/gui/text/qfontdatabase.cpp:80 src/gui/text/qfontdatabase.cpp:827
+#: src/gui/text/qfontdatabase.cpp:68 src/gui/text/qfontdatabase.cpp:815
 msgctxt "QFontDatabase"
 msgid "Demi Bold"
 msgstr ""
 
-#: src/gui/text/qfontdatabase.cpp:83 src/gui/text/qfontdatabase.cpp:101
-#: src/gui/text/qfontdatabase.cpp:823
+#: src/gui/text/qfontdatabase.cpp:71 src/gui/text/qfontdatabase.cpp:89
+#: src/gui/text/qfontdatabase.cpp:811
 msgctxt "QFontDatabase"
 msgid "Black"
 msgstr ""
 
-#: src/gui/text/qfontdatabase.cpp:91
+#: src/gui/text/qfontdatabase.cpp:79
 msgctxt "QFontDatabase"
 msgid "Demi"
 msgstr ""
 
-#: src/gui/text/qfontdatabase.cpp:97 src/gui/text/qfontdatabase.cpp:829
+#: src/gui/text/qfontdatabase.cpp:85 src/gui/text/qfontdatabase.cpp:817
 msgctxt "QFontDatabase"
 msgid "Light"
 msgstr ""
 
-#: src/gui/text/qfontdatabase.cpp:205 src/gui/text/qfontdatabase.cpp:832
+#: src/gui/text/qfontdatabase.cpp:193 src/gui/text/qfontdatabase.cpp:820
 msgctxt "QFontDatabase"
 msgid "Italic"
 msgstr ""
 
-#: src/gui/text/qfontdatabase.cpp:208 src/gui/text/qfontdatabase.cpp:834
+#: src/gui/text/qfontdatabase.cpp:196 src/gui/text/qfontdatabase.cpp:822
 msgctxt "QFontDatabase"
 msgid "Oblique"
 msgstr ""
 
-#: src/gui/text/qtextcontrol.cpp:1888
+#: src/gui/text/qtextcontrol.cpp:1876
 msgid "Copy &Link Location"
 msgstr ""
 
-#: src/gui/text/qtextcontrol.cpp:2804
+#: src/gui/text/qtextcontrol.cpp:2792
 msgctxt "QUnicodeControlCharacterMenu"
 msgid "LRM Left-to-right mark"
 msgstr ""
 
-#: src/gui/text/qtextcontrol.cpp:2805
+#: src/gui/text/qtextcontrol.cpp:2793
 msgctxt "QUnicodeControlCharacterMenu"
 msgid "RLM Right-to-left mark"
 msgstr ""
 
-#: src/gui/text/qtextcontrol.cpp:2806
+#: src/gui/text/qtextcontrol.cpp:2794
 msgctxt "QUnicodeControlCharacterMenu"
 msgid "ZWJ Zero width joiner"
 msgstr ""
 
-#: src/gui/text/qtextcontrol.cpp:2807
+#: src/gui/text/qtextcontrol.cpp:2795
 msgctxt "QUnicodeControlCharacterMenu"
 msgid "ZWNJ Zero width non-joiner"
 msgstr ""
 
-#: src/gui/text/qtextcontrol.cpp:2808
+#: src/gui/text/qtextcontrol.cpp:2796
 msgctxt "QUnicodeControlCharacterMenu"
 msgid "ZWSP Zero width space"
 msgstr ""
 
-#: src/gui/text/qtextcontrol.cpp:2809
+#: src/gui/text/qtextcontrol.cpp:2797
 msgctxt "QUnicodeControlCharacterMenu"
 msgid "LRE Start of left-to-right embedding"
 msgstr ""
 
-#: src/gui/text/qtextcontrol.cpp:2810
+#: src/gui/text/qtextcontrol.cpp:2798
 msgctxt "QUnicodeControlCharacterMenu"
 msgid "RLE Start of right-to-left embedding"
 msgstr ""
 
-#: src/gui/text/qtextcontrol.cpp:2811
+#: src/gui/text/qtextcontrol.cpp:2799
 msgctxt "QUnicodeControlCharacterMenu"
 msgid "LRO Start of left-to-right override"
 msgstr ""
 
-#: src/gui/text/qtextcontrol.cpp:2812
+#: src/gui/text/qtextcontrol.cpp:2800
 msgctxt "QUnicodeControlCharacterMenu"
 msgid "RLO Start of right-to-left override"
 msgstr ""
 
-#: src/gui/text/qtextcontrol.cpp:2813
+#: src/gui/text/qtextcontrol.cpp:2801
 msgctxt "QUnicodeControlCharacterMenu"
 msgid "PDF Pop directional formatting"
 msgstr ""
 
-#: src/gui/text/qtextcontrol.cpp:2819
+#: src/gui/text/qtextcontrol.cpp:2807
 msgid "Insert Unicode control character"
 msgstr ""
 
-#: src/network/ssl/qsslerror.cpp:209
+#: src/network/ssl/qsslerror.cpp:197
 msgid "No error"
 msgstr ""
 
-#: src/network/ssl/qsslerror.cpp:211
+#: src/network/ssl/qsslerror.cpp:199
 msgid "The issuer certificate could not be found"
 msgstr ""
 
-#: src/network/ssl/qsslerror.cpp:213
+#: src/network/ssl/qsslerror.cpp:201
 msgid "The certificate signature could not be decrypted"
 msgstr ""
 
-#: src/network/ssl/qsslerror.cpp:215
+#: src/network/ssl/qsslerror.cpp:203
 msgid "The public key in the certificate could not be read"
 msgstr ""
 
-#: src/network/ssl/qsslerror.cpp:217
+#: src/network/ssl/qsslerror.cpp:205
 msgid "The signature of the certificate is invalid"
 msgstr ""
 
-#: src/network/ssl/qsslerror.cpp:219
+#: src/network/ssl/qsslerror.cpp:207
 msgid "The certificate is not yet valid"
 msgstr ""
 
-#: src/network/ssl/qsslerror.cpp:221
+#: src/network/ssl/qsslerror.cpp:209
 msgid "The certificate has expired"
 msgstr ""
 
-#: src/network/ssl/qsslerror.cpp:223
+#: src/network/ssl/qsslerror.cpp:211
 msgid "The certificate's notBefore field contains an invalid time"
 msgstr ""
 
-#: src/network/ssl/qsslerror.cpp:225
+#: src/network/ssl/qsslerror.cpp:213
 msgid "The certificate's notAfter field contains an invalid time"
 msgstr ""
 
-#: src/network/ssl/qsslerror.cpp:227
+#: src/network/ssl/qsslerror.cpp:215
 msgid "The certificate is self-signed, and untrusted"
 msgstr ""
 
-#: src/network/ssl/qsslerror.cpp:229
+#: src/network/ssl/qsslerror.cpp:217
 msgid ""
 "The root certificate of the certificate chain is self-signed, and untrusted"
 msgstr ""
 
-#: src/network/ssl/qsslerror.cpp:231
+#: src/network/ssl/qsslerror.cpp:219
 msgid ""
 "The issuer certificate of a locally looked up certificate could not be found"
 msgstr ""
 
-#: src/network/ssl/qsslerror.cpp:233
+#: src/network/ssl/qsslerror.cpp:221
 msgid "No certificates could be verified"
 msgstr ""
 
-#: src/network/ssl/qsslerror.cpp:235
+#: src/network/ssl/qsslerror.cpp:223
 msgid "One of the CA certificates is invalid"
 msgstr ""
 
-#: src/network/ssl/qsslerror.cpp:237
+#: src/network/ssl/qsslerror.cpp:225
 msgid "The basicConstraints path length parameter has been exceeded"
 msgstr ""
 
-#: src/network/ssl/qsslerror.cpp:239
+#: src/network/ssl/qsslerror.cpp:227
 msgid "The supplied certificate is unsuitable for this purpose"
 msgstr ""
 
-#: src/network/ssl/qsslerror.cpp:241
+#: src/network/ssl/qsslerror.cpp:229
 msgid "The root CA certificate is not trusted for this purpose"
 msgstr ""
 
-#: src/network/ssl/qsslerror.cpp:243
+#: src/network/ssl/qsslerror.cpp:231
 msgid "The root CA certificate is marked to reject the specified purpose"
 msgstr ""
 
-#: src/network/ssl/qsslerror.cpp:245
+#: src/network/ssl/qsslerror.cpp:233
 msgid ""
 "The current candidate issuer certificate was rejected because its subject "
 "name did not match the issuer name of the current certificate"
 msgstr ""
 
-#: src/network/ssl/qsslerror.cpp:248
+#: src/network/ssl/qsslerror.cpp:236
 msgid ""
 "The current candidate issuer certificate was rejected because its issuer "
 "name and serial number was present and did not match the authority key "
 "identifier of the current certificate"
 msgstr ""
 
-#: src/network/ssl/qsslerror.cpp:252
+#: src/network/ssl/qsslerror.cpp:240
 msgid "The peer did not present any certificate"
 msgstr ""
 
-#: src/network/ssl/qsslerror.cpp:254
+#: src/network/ssl/qsslerror.cpp:242
 msgid "The host name did not match any of the valid hosts for this certificate"
 msgstr ""
 
-#: src/network/ssl/qsslerror.cpp:257
+#: src/network/ssl/qsslerror.cpp:245
 msgid "The peer certificate is blacklisted"
 msgstr ""
 
-#: src/network/ssl/qsslsocket_openssl.cpp:266
+#: src/network/ssl/qsslsocket_openssl.cpp:254
 msgid "Error creating SSL context (%1)"
 msgstr ""
 
-#: src/network/ssl/qsslsocket_openssl.cpp:320
+#: src/network/ssl/qsslsocket_openssl.cpp:308
 msgid "Invalid or empty cipher list (%1)"
 msgstr ""
 
-#: src/network/ssl/qsslsocket_openssl.cpp:352
+#: src/network/ssl/qsslsocket_openssl.cpp:340
 msgid "Cannot provide a certificate with no key, %1"
 msgstr ""
 
-#: src/network/ssl/qsslsocket_openssl.cpp:359
+#: src/network/ssl/qsslsocket_openssl.cpp:347
 msgid "Error loading local certificate, %1"
 msgstr ""
 
-#: src/network/ssl/qsslsocket_openssl.cpp:374
+#: src/network/ssl/qsslsocket_openssl.cpp:362
 msgid "Error loading private key, %1"
 msgstr ""
 
-#: src/network/ssl/qsslsocket_openssl.cpp:381
+#: src/network/ssl/qsslsocket_openssl.cpp:369
 msgid "Private key does not certify public key, %1"
 msgstr ""
 
-#: src/network/ssl/qsslsocket_openssl.cpp:401
+#: src/network/ssl/qsslsocket_openssl.cpp:389
 msgid "Error creating SSL session, %1"
 msgstr ""
 
-#: src/network/ssl/qsslsocket_openssl.cpp:437
+#: src/network/ssl/qsslsocket_openssl.cpp:425
 msgid "Error creating SSL session: %1"
 msgstr ""
 
-#: src/network/ssl/qsslsocket_openssl.cpp:686
+#: src/network/ssl/qsslsocket_openssl.cpp:674
 msgid "Unable to write data: %1"
 msgstr ""
 
-#: src/network/ssl/qsslsocket_openssl.cpp:757
+#: src/network/ssl/qsslsocket_openssl.cpp:745
 msgid "Unable to decrypt data: %1"
 msgstr ""
 
-#: src/network/ssl/qsslsocket_openssl.cpp:830
+#: src/network/ssl/qsslsocket_openssl.cpp:818
 msgid "The TLS/SSL connection has been closed"
 msgstr ""
 
-#: src/network/ssl/qsslsocket_openssl.cpp:838
-#: src/network/ssl/qsslsocket_openssl.cpp:848
+#: src/network/ssl/qsslsocket_openssl.cpp:826
+#: src/network/ssl/qsslsocket_openssl.cpp:836
 msgid "Error while reading: %1"
 msgstr ""
 
-#: src/network/ssl/qsslsocket_openssl.cpp:943
+#: src/network/ssl/qsslsocket_openssl.cpp:931
 msgid "Error during SSL handshake: %1"
 msgstr ""
 
-#: src/network/kernel/qhostinfo_p.h:91
+#: src/network/kernel/qhostinfo_p.h:79
 msgctxt "QHostInfo"
 msgid "Unknown error"
 msgstr ""
 
-#: src/network/kernel/qhostinfo.cpp:146
+#: src/network/kernel/qhostinfo.cpp:134
 msgctxt "QHostInfo"
 msgid "No host name given"
 msgstr ""
 
-#: src/network/kernel/qhostinfo_unix.cpp:104
-#: src/network/kernel/qhostinfo_unix.cpp:116
-#: src/network/kernel/qhostinfo_unix.cpp:204
-#: src/network/kernel/qhostinfo_unix.cpp:235
-#: src/network/socket/qabstractsocket.cpp:886
-#: src/network/socket/qhttpsocketengine.cpp:662
-#: src/network/socket/qsocks5socketengine.cpp:640
-#: src/network/socket/qsocks5socketengine.cpp:666
+#: src/network/kernel/qhostinfo_unix.cpp:86
+#: src/network/kernel/qhostinfo_unix.cpp:172
+#: src/network/socket/qabstractsocket.cpp:873
+#: src/network/socket/qhttpsocketengine.cpp:650
+#: src/network/socket/qsocks5socketengine.cpp:626
+#: src/network/socket/qsocks5socketengine.cpp:652
 msgid "Host not found"
 msgstr ""
 
-#: src/network/kernel/qhostinfo_unix.cpp:135
+#: src/network/kernel/qhostinfo_unix.cpp:104
 msgid "No host name given"
 msgstr ""
 
-#: src/network/kernel/qhostinfo_unix.cpp:137
+#: src/network/kernel/qhostinfo_unix.cpp:106
 msgid "Invalid hostname"
 msgstr ""
 
-#: src/network/kernel/qhostinfo_unix.cpp:192
-#: src/network/kernel/qhostinfo_unix.cpp:230
+#: src/network/kernel/qhostinfo_unix.cpp:160
 msgid "Unknown address type"
 msgstr ""
 
-#: src/network/bearer/qnetworksession.cpp:444
+#: src/network/bearer/qnetworksession.cpp:432
 msgid "Invalid configuration."
 msgstr ""
 
-#: src/network/socket/qtcpserver.cpp:278 src/network/socket/qtcpserver.cpp:400
-#: src/network/socket/qabstractsocket.cpp:537
-#: src/network/socket/qabstractsocket.cpp:1324
-#: src/network/socket/qabstractsocket.cpp:1534
+#: src/network/socket/qtcpserver.cpp:266 src/network/socket/qtcpserver.cpp:388
+#: src/network/socket/qabstractsocket.cpp:524
+#: src/network/socket/qabstractsocket.cpp:1311
+#: src/network/socket/qabstractsocket.cpp:1521
 msgid "Operation on socket is not supported"
 msgstr ""
 
-#: src/network/socket/qlocalserver_unix.cpp:203
+#: src/network/socket/qlocalserver_unix.cpp:191
 msgid "%1: Permission denied"
 msgstr ""
 
-#: src/network/socket/qlocalserver_unix.cpp:211
-#: src/network/socket/qlocalserver.cpp:214
+#: src/network/socket/qlocalserver_unix.cpp:199
+#: src/network/socket/qlocalserver.cpp:202
 msgid "%1: Name error"
 msgstr ""
 
-#: src/network/socket/qlocalserver_unix.cpp:215
+#: src/network/socket/qlocalserver_unix.cpp:203
 msgid "%1: Address in use"
 msgstr ""
 
-#: src/network/socket/qlocalserver_unix.cpp:220
-#: src/network/socket/qlocalsocket_unix.cpp:153
+#: src/network/socket/qlocalserver_unix.cpp:208
+#: src/network/socket/qlocalsocket_unix.cpp:141
 msgid "%1: Unknown error %2"
 msgstr ""
 
-#: src/network/socket/qabstractsocket.cpp:928
-#: src/network/socket/qhttpsocketengine.cpp:665
-#: src/network/socket/qnativesocketengine.cpp:232
-#: src/network/socket/qsocks5socketengine.cpp:670
+#: src/network/socket/qabstractsocket.cpp:915
+#: src/network/socket/qhttpsocketengine.cpp:653
+#: src/network/socket/qnativesocketengine.cpp:220
+#: src/network/socket/qsocks5socketengine.cpp:656
 msgid "Connection refused"
 msgstr ""
 
-#: src/network/socket/qabstractsocket.cpp:1070
-#: src/network/socket/qnativesocketengine.cpp:229
+#: src/network/socket/qabstractsocket.cpp:1057
+#: src/network/socket/qnativesocketengine.cpp:217
 msgid "Connection timed out"
 msgstr ""
 
-#: src/network/socket/qabstractsocket.cpp:1711
+#: src/network/socket/qabstractsocket.cpp:1698
 msgid "Socket operation timed out"
 msgstr ""
 
-#: src/network/socket/qabstractsocket.cpp:2122
+#: src/network/socket/qabstractsocket.cpp:2109
 msgid "Socket is not connected"
 msgstr ""
 
-#: src/network/socket/qhttpsocketengine.cpp:562
+#: src/network/socket/qhttpsocketengine.cpp:550
 msgid "Did not receive HTTP response from proxy"
 msgstr ""
 
-#: src/network/socket/qhttpsocketengine.cpp:598
+#: src/network/socket/qhttpsocketengine.cpp:586
 msgid "Error parsing authentication request from proxy"
 msgstr ""
 
-#: src/network/socket/qhttpsocketengine.cpp:632
+#: src/network/socket/qhttpsocketengine.cpp:620
 msgid "Authentication required"
 msgstr ""
 
-#: src/network/socket/qhttpsocketengine.cpp:659
+#: src/network/socket/qhttpsocketengine.cpp:647
 msgid "Proxy denied connection"
 msgstr ""
 
-#: src/network/socket/qhttpsocketengine.cpp:669
+#: src/network/socket/qhttpsocketengine.cpp:657
 msgid "Error communicating with HTTP proxy"
 msgstr ""
 
-#: src/network/socket/qhttpsocketengine.cpp:692
+#: src/network/socket/qhttpsocketengine.cpp:680
 msgid "Proxy server not found"
 msgstr ""
 
-#: src/network/socket/qhttpsocketengine.cpp:694
+#: src/network/socket/qhttpsocketengine.cpp:682
 msgid "Proxy connection refused"
 msgstr ""
 
-#: src/network/socket/qhttpsocketengine.cpp:696
+#: src/network/socket/qhttpsocketengine.cpp:684
 msgid "Proxy server connection timed out"
 msgstr ""
 
-#: src/network/socket/qhttpsocketengine.cpp:698
+#: src/network/socket/qhttpsocketengine.cpp:686
 msgid "Proxy connection closed prematurely"
 msgstr ""
 
-#: src/network/socket/qnativesocketengine.cpp:193
+#: src/network/socket/qnativesocketengine.cpp:181
 msgid "Unable to initialize non-blocking socket"
 msgstr ""
 
-#: src/network/socket/qnativesocketengine.cpp:196
+#: src/network/socket/qnativesocketengine.cpp:184
 msgid "Unable to initialize broadcast socket"
 msgstr ""
 
-#: src/network/socket/qnativesocketengine.cpp:199
+#: src/network/socket/qnativesocketengine.cpp:187
 msgid "Attempt to use IPv6 socket on a platform with no IPv6 support"
 msgstr ""
 
-#: src/network/socket/qnativesocketengine.cpp:202
+#: src/network/socket/qnativesocketengine.cpp:190
 msgid "The remote host closed the connection"
 msgstr ""
 
-#: src/network/socket/qnativesocketengine.cpp:205
+#: src/network/socket/qnativesocketengine.cpp:193
 msgid "Network operation timed out"
 msgstr ""
 
-#: src/network/socket/qnativesocketengine.cpp:208
+#: src/network/socket/qnativesocketengine.cpp:196
 msgid "Out of resources"
 msgstr ""
 
-#: src/network/socket/qnativesocketengine.cpp:211
+#: src/network/socket/qnativesocketengine.cpp:199
 msgid "Unsupported socket operation"
 msgstr ""
 
-#: src/network/socket/qnativesocketengine.cpp:214
+#: src/network/socket/qnativesocketengine.cpp:202
 msgid "Protocol type not supported"
 msgstr ""
 
-#: src/network/socket/qnativesocketengine.cpp:217
+#: src/network/socket/qnativesocketengine.cpp:205
 msgid "Invalid socket descriptor"
 msgstr ""
 
-#: src/network/socket/qnativesocketengine.cpp:220
+#: src/network/socket/qnativesocketengine.cpp:208
 msgid "Host unreachable"
 msgstr ""
 
-#: src/network/socket/qnativesocketengine.cpp:223
-#: src/network/socket/qsocks5socketengine.cpp:662
+#: src/network/socket/qnativesocketengine.cpp:211
+#: src/network/socket/qsocks5socketengine.cpp:648
 msgid "Network unreachable"
 msgstr ""
 
-#: src/network/socket/qnativesocketengine.cpp:226
+#: src/network/socket/qnativesocketengine.cpp:214
 msgid "Permission denied"
 msgstr ""
 
-#: src/network/socket/qnativesocketengine.cpp:235
+#: src/network/socket/qnativesocketengine.cpp:223
 msgid "The bound address is already in use"
 msgstr ""
 
-#: src/network/socket/qnativesocketengine.cpp:238
+#: src/network/socket/qnativesocketengine.cpp:226
 msgid "The address is not available"
 msgstr ""
 
-#: src/network/socket/qnativesocketengine.cpp:241
+#: src/network/socket/qnativesocketengine.cpp:229
 msgid "The address is protected"
 msgstr ""
 
-#: src/network/socket/qnativesocketengine.cpp:244
+#: src/network/socket/qnativesocketengine.cpp:232
 msgid "Datagram was too large to send"
 msgstr ""
 
-#: src/network/socket/qnativesocketengine.cpp:247
+#: src/network/socket/qnativesocketengine.cpp:235
 msgid "Unable to send a message"
 msgstr ""
 
-#: src/network/socket/qnativesocketengine.cpp:250
+#: src/network/socket/qnativesocketengine.cpp:238
 msgid "Unable to receive a message"
 msgstr ""
 
-#: src/network/socket/qnativesocketengine.cpp:253
+#: src/network/socket/qnativesocketengine.cpp:241
 msgid "Unable to write"
 msgstr ""
 
-#: src/network/socket/qnativesocketengine.cpp:256
+#: src/network/socket/qnativesocketengine.cpp:244
 msgid "Network error"
 msgstr ""
 
-#: src/network/socket/qnativesocketengine.cpp:259
+#: src/network/socket/qnativesocketengine.cpp:247
 msgid "Another socket is already listening on the same port"
 msgstr ""
 
-#: src/network/socket/qnativesocketengine.cpp:262
+#: src/network/socket/qnativesocketengine.cpp:250
 msgid "Operation on non-socket"
 msgstr ""
 
-#: src/network/socket/qnativesocketengine.cpp:265
+#: src/network/socket/qnativesocketengine.cpp:253
 msgid "The proxy type is invalid for this operation"
 msgstr ""
 
-#: src/network/socket/qlocalsocket_unix.cpp:125
+#: src/network/socket/qlocalsocket_unix.cpp:113
 msgid "%1: Connection refused"
 msgstr ""
 
-#: src/network/socket/qlocalsocket_unix.cpp:128
+#: src/network/socket/qlocalsocket_unix.cpp:116
 msgid "%1: Remote closed"
 msgstr ""
 
-#: src/network/socket/qlocalsocket_unix.cpp:131
+#: src/network/socket/qlocalsocket_unix.cpp:119
 msgid "%1: Invalid name"
 msgstr ""
 
-#: src/network/socket/qlocalsocket_unix.cpp:134
+#: src/network/socket/qlocalsocket_unix.cpp:122
 msgid "%1: Socket access error"
 msgstr ""
 
-#: src/network/socket/qlocalsocket_unix.cpp:137
+#: src/network/socket/qlocalsocket_unix.cpp:125
 msgid "%1: Socket resource error"
 msgstr ""
 
-#: src/network/socket/qlocalsocket_unix.cpp:140
+#: src/network/socket/qlocalsocket_unix.cpp:128
 msgid "%1: Socket operation timed out"
 msgstr ""
 
-#: src/network/socket/qlocalsocket_unix.cpp:143
+#: src/network/socket/qlocalsocket_unix.cpp:131
 msgid "%1: Datagram too large"
 msgstr ""
 
-#: src/network/socket/qlocalsocket_unix.cpp:146
+#: src/network/socket/qlocalsocket_unix.cpp:134
 msgid "%1: Connection error"
 msgstr ""
 
-#: src/network/socket/qlocalsocket_unix.cpp:149
+#: src/network/socket/qlocalsocket_unix.cpp:137
 msgid "%1: The socket operation is not supported"
 msgstr ""
 
-#: src/network/socket/qudpsocket.cpp:191
+#: src/network/socket/qudpsocket.cpp:181
 msgid "This platform does not support IPv6"
 msgstr ""
 
-#: src/network/socket/qsocks5socketengine.cpp:595
+#: src/network/socket/qsocks5socketengine.cpp:581
 msgid "Connection to proxy refused"
 msgstr ""
 
-#: src/network/socket/qsocks5socketengine.cpp:599
+#: src/network/socket/qsocks5socketengine.cpp:585
 msgid "Connection to proxy closed prematurely"
 msgstr ""
 
-#: src/network/socket/qsocks5socketengine.cpp:603
+#: src/network/socket/qsocks5socketengine.cpp:589
 msgid "Proxy host not found"
 msgstr ""
 
-#: src/network/socket/qsocks5socketengine.cpp:608
+#: src/network/socket/qsocks5socketengine.cpp:594
 msgid "Connection to proxy timed out"
 msgstr ""
 
-#: src/network/socket/qsocks5socketengine.cpp:625
+#: src/network/socket/qsocks5socketengine.cpp:611
 msgid "Proxy authentication failed"
 msgstr ""
 
-#: src/network/socket/qsocks5socketengine.cpp:626
+#: src/network/socket/qsocks5socketengine.cpp:612
 msgid "Proxy authentication failed: %1"
 msgstr ""
 
-#: src/network/socket/qsocks5socketengine.cpp:635
+#: src/network/socket/qsocks5socketengine.cpp:621
 msgid "SOCKS version 5 protocol error"
 msgstr ""
 
-#: src/network/socket/qsocks5socketengine.cpp:654
+#: src/network/socket/qsocks5socketengine.cpp:640
 msgid "General SOCKSv5 server failure"
 msgstr ""
 
-#: src/network/socket/qsocks5socketengine.cpp:658
+#: src/network/socket/qsocks5socketengine.cpp:644
 msgid "Connection not allowed by SOCKSv5 server"
 msgstr ""
 
-#: src/network/socket/qsocks5socketengine.cpp:674
+#: src/network/socket/qsocks5socketengine.cpp:660
 msgid "TTL expired"
 msgstr ""
 
-#: src/network/socket/qsocks5socketengine.cpp:678
+#: src/network/socket/qsocks5socketengine.cpp:664
 msgid "SOCKSv5 command not supported"
 msgstr ""
 
-#: src/network/socket/qsocks5socketengine.cpp:682
+#: src/network/socket/qsocks5socketengine.cpp:668
 msgid "Address type not supported"
 msgstr ""
 
-#: src/network/socket/qsocks5socketengine.cpp:687
+#: src/network/socket/qsocks5socketengine.cpp:673
 msgid "Unknown SOCKSv5 proxy error code 0x%1"
 msgstr ""
 
-#: src/network/socket/qsocks5socketengine.cpp:1379
+#: src/network/socket/qsocks5socketengine.cpp:1365
 msgctxt "QSocks5SocketEngine"
 msgid "Network operation timed out"
 msgstr ""
 
-#: src/network/access/qhttpnetworkconnection.cpp:668
-#: src/network/access/qhttp.cpp:2599
+#: src/network/access/qhttpnetworkconnection.cpp:656
+#: src/network/access/qhttp.cpp:2587
 msgctxt "QHttp"
 msgid "Host %1 not found"
 msgstr ""
 
-#: src/network/access/qhttpnetworkconnection.cpp:671
+#: src/network/access/qhttpnetworkconnection.cpp:659
 msgctxt "QHttp"
 msgid "Connection refused"
 msgstr ""
 
-#: src/network/access/qhttpnetworkconnection.cpp:674
+#: src/network/access/qhttpnetworkconnection.cpp:662
 msgctxt "QHttp"
 msgid "Connection closed"
 msgstr ""
 
-#: src/network/access/qhttpnetworkconnection.cpp:677
+#: src/network/access/qhttpnetworkconnection.cpp:665
 msgctxt "QAbstractSocket"
 msgid "Socket operation timed out"
 msgstr ""
 
-#: src/network/access/qhttpnetworkconnection.cpp:680
+#: src/network/access/qhttpnetworkconnection.cpp:668
 msgctxt "QHttp"
 msgid "Proxy requires authentication"
 msgstr ""
 
-#: src/network/access/qhttpnetworkconnection.cpp:683
+#: src/network/access/qhttpnetworkconnection.cpp:671
 msgctxt "QHttp"
 msgid "Host requires authentication"
 msgstr ""
 
-#: src/network/access/qhttpnetworkconnection.cpp:686
+#: src/network/access/qhttpnetworkconnection.cpp:674
 msgctxt "QHttp"
 msgid "Data corrupted"
 msgstr ""
 
-#: src/network/access/qhttpnetworkconnection.cpp:689
+#: src/network/access/qhttpnetworkconnection.cpp:677
 msgctxt "QHttp"
 msgid "Unknown protocol specified"
 msgstr ""
 
-#: src/network/access/qhttpnetworkconnection.cpp:692
+#: src/network/access/qhttpnetworkconnection.cpp:680
 msgctxt "QHttp"
 msgid "SSL handshake failed"
 msgstr ""
 
-#: src/network/access/qnetworkaccessdebugpipebackend.cpp:182
+#: src/network/access/qnetworkaccessdebugpipebackend.cpp:170
 msgctxt "QNetworkAccessDebugPipeBackend"
 msgid "Write error writing to %1: %2"
 msgstr ""
 
-#: src/network/access/qnetworkaccessdebugpipebackend.cpp:242
+#: src/network/access/qnetworkaccessdebugpipebackend.cpp:230
 msgid "Socket error on %1: %2"
 msgstr ""
 
-#: src/network/access/qnetworkaccessdebugpipebackend.cpp:257
+#: src/network/access/qnetworkaccessdebugpipebackend.cpp:245
 msgid "Remote host closed the connection prematurely on %1"
 msgstr ""
 
-#: src/network/access/qnetworkaccessftpbackend.cpp:126
-#: src/network/access/qnetworkaccesshttpbackend.cpp:416
+#: src/network/access/qnetworkaccessftpbackend.cpp:114
+#: src/network/access/qnetworkaccesshttpbackend.cpp:404
 msgid "No suitable proxy found"
 msgstr ""
 
-#: src/network/access/qnetworkaccessftpbackend.cpp:140
+#: src/network/access/qnetworkaccessftpbackend.cpp:128
 msgid "Cannot open %1: is a directory"
 msgstr ""
 
-#: src/network/access/qnetworkaccessftpbackend.cpp:240
+#: src/network/access/qnetworkaccessftpbackend.cpp:228
 msgid "Logging in to %1 failed: authentication required"
 msgstr ""
 
-#: src/network/access/qnetworkaccessftpbackend.cpp:272
+#: src/network/access/qnetworkaccessftpbackend.cpp:260
 msgid "Error while downloading %1: %2"
 msgstr ""
 
-#: src/network/access/qnetworkaccessftpbackend.cpp:274
+#: src/network/access/qnetworkaccessftpbackend.cpp:262
 msgid "Error while uploading %1: %2"
 msgstr ""
 
-#: src/network/access/qnetworkreplydataimpl.cpp:74
+#: src/network/access/qnetworkreplydataimpl.cpp:62
 msgctxt "QNetworkAccessDataBackend"
 msgid "Invalid URI: %1"
 msgstr ""
 
-#: src/network/access/qnetworkaccesscachebackend.cpp:58
+#: src/network/access/qnetworkaccesscachebackend.cpp:46
 msgctxt "QNetworkAccessCacheBackend"
 msgid "Error opening %1"
 msgstr ""
 
-#: src/network/access/qhttp.cpp:1554 src/network/access/qhttp.cpp:2370
+#: src/network/access/qhttp.cpp:1542 src/network/access/qhttp.cpp:2358
 msgctxt "QHttp"
 msgid "Unknown error"
 msgstr ""
 
-#: src/network/access/qhttp.cpp:1806
+#: src/network/access/qhttp.cpp:1794
 msgid "Request aborted"
 msgstr ""
 
-#: src/network/access/qhttp.cpp:2381
+#: src/network/access/qhttp.cpp:2369
 msgctxt "QHttp"
 msgid "No server set to connect to"
 msgstr ""
 
-#: src/network/access/qhttp.cpp:2537
+#: src/network/access/qhttp.cpp:2525
 msgctxt "QHttp"
 msgid "Wrong content length"
 msgstr ""
 
-#: src/network/access/qhttp.cpp:2541
+#: src/network/access/qhttp.cpp:2529
 msgctxt "QHttp"
 msgid "Server closed connection unexpectedly"
 msgstr ""
 
-#: src/network/access/qhttp.cpp:2596
+#: src/network/access/qhttp.cpp:2584
 msgctxt "QHttp"
 msgid "Connection refused (or timed out)"
 msgstr ""
 
-#: src/network/access/qhttp.cpp:2619
+#: src/network/access/qhttp.cpp:2607
 msgctxt "QHttp"
 msgid "HTTP request failed"
 msgstr ""
 
-#: src/network/access/qhttp.cpp:2707
+#: src/network/access/qhttp.cpp:2695
 msgctxt "QHttp"
 msgid "Invalid HTTP response header"
 msgstr ""
 
-#: src/network/access/qhttp.cpp:2735
+#: src/network/access/qhttp.cpp:2723
 msgctxt "QHttp"
 msgid "Unknown authentication method"
 msgstr ""
 
-#: src/network/access/qhttp.cpp:2745
+#: src/network/access/qhttp.cpp:2733
 msgctxt "QHttp"
 msgid "Proxy authentication required"
 msgstr ""
 
-#: src/network/access/qhttp.cpp:2749
+#: src/network/access/qhttp.cpp:2737
 msgctxt "QHttp"
 msgid "Authentication required"
 msgstr ""
 
-#: src/network/access/qhttp.cpp:2832 src/network/access/qhttp.cpp:2880
+#: src/network/access/qhttp.cpp:2820 src/network/access/qhttp.cpp:2868
 msgctxt "QHttp"
 msgid "Invalid HTTP chunked body"
 msgstr ""
 
-#: src/network/access/qhttp.cpp:2918
+#: src/network/access/qhttp.cpp:2906
 msgctxt "QHttp"
 msgid "Error writing response to device"
 msgstr ""
 
-#: src/network/access/qhttpthreaddelegate.cpp:419
-#: src/network/access/qhttpthreaddelegate.cpp:442
+#: src/network/access/qhttpthreaddelegate.cpp:407
+#: src/network/access/qhttpthreaddelegate.cpp:430
 msgctxt "QNetworkReply"
 msgid "Error downloading %1 - server replied: %2"
 msgstr ""
 
-#: src/network/access/qnetworkreplyimpl.cpp:80
+#: src/network/access/qnetworkreplyimpl.cpp:68
 msgctxt "QNetworkReply"
 msgid "Protocol \"%1\" is unknown"
 msgstr ""
 
-#: src/network/access/qnetworkreplyimpl.cpp:106
-#: src/network/access/qnetworkreplyimpl.cpp:297
+#: src/network/access/qnetworkreplyimpl.cpp:94
+#: src/network/access/qnetworkreplyimpl.cpp:285
 msgctxt "QNetworkReply"
 msgid "Network session error."
 msgstr ""
 
-#: src/network/access/qnetworkreplyimpl.cpp:113
+#: src/network/access/qnetworkreplyimpl.cpp:101
 msgctxt "QNetworkReply"
 msgid "backend start error."
 msgstr ""
 
-#: src/network/access/qnetworkreplyimpl.cpp:760
+#: src/network/access/qnetworkreplyimpl.cpp:748
 msgid "Temporary network failure."
 msgstr ""
 
-#: src/network/access/qnetworkreplyimpl.cpp:875
-#: src/network/access/qnetworkreplyimpl.cpp:905
+#: src/network/access/qnetworkreplyimpl.cpp:863
+#: src/network/access/qnetworkreplyimpl.cpp:893
 msgid "Operation canceled"
 msgstr ""
 
-#: src/network/access/qnetworkreplyimpl.cpp:1100
+#: src/network/access/qnetworkreplyimpl.cpp:1088
 msgctxt "QNetworkAccessManager"
 msgid "Network access is disabled."
 msgstr ""
 
-#: src/network/access/qftp.cpp:867
+#: src/network/access/qftp.cpp:855
 msgid "Not connected"
 msgstr ""
 
-#: src/network/access/qftp.cpp:946
+#: src/network/access/qftp.cpp:934
 msgid "Host %1 not found"
 msgstr ""
 
-#: src/network/access/qftp.cpp:950
+#: src/network/access/qftp.cpp:938
 msgid "Connection refused to host %1"
 msgstr ""
 
-#: src/network/access/qftp.cpp:954
+#: src/network/access/qftp.cpp:942
 msgid "Connection timed out to host %1"
 msgstr ""
 
-#: src/network/access/qftp.cpp:1058
+#: src/network/access/qftp.cpp:1046
 msgid "Connected to host %1"
 msgstr ""
 
-#: src/network/access/qftp.cpp:1266
+#: src/network/access/qftp.cpp:1254
 msgid "Connection refused for data connection"
 msgstr ""
 
-#: src/network/access/qftp.cpp:2340
+#: src/network/access/qftp.cpp:2328
 msgctxt "QFtp"
 msgid ""
 "Connecting to host failed:\n"
 "%1"
 msgstr ""
 
-#: src/network/access/qftp.cpp:2344
+#: src/network/access/qftp.cpp:2332
 msgctxt "QFtp"
 msgid ""
 "Login failed:\n"
 "%1"
 msgstr ""
 
-#: src/network/access/qftp.cpp:2348
+#: src/network/access/qftp.cpp:2336
 msgctxt "QFtp"
 msgid ""
 "Listing directory failed:\n"
 "%1"
 msgstr ""
 
-#: src/network/access/qftp.cpp:2352
+#: src/network/access/qftp.cpp:2340
 msgctxt "QFtp"
 msgid ""
 "Changing directory failed:\n"
 "%1"
 msgstr ""
 
-#: src/network/access/qftp.cpp:2356
+#: src/network/access/qftp.cpp:2344
 msgctxt "QFtp"
 msgid ""
 "Downloading file failed:\n"
 "%1"
 msgstr ""
 
-#: src/network/access/qftp.cpp:2360
+#: src/network/access/qftp.cpp:2348
 msgctxt "QFtp"
 msgid ""
 "Uploading file failed:\n"
 "%1"
 msgstr ""
 
-#: src/network/access/qftp.cpp:2364
+#: src/network/access/qftp.cpp:2352
 msgctxt "QFtp"
 msgid ""
 "Removing file failed:\n"
 "%1"
 msgstr ""
 
-#: src/network/access/qftp.cpp:2368
+#: src/network/access/qftp.cpp:2356
 msgctxt "QFtp"
 msgid ""
 "Creating directory failed:\n"
 "%1"
 msgstr ""
 
-#: src/network/access/qftp.cpp:2372
+#: src/network/access/qftp.cpp:2360
 msgctxt "QFtp"
 msgid ""
 "Removing directory failed:\n"
 "%1"
 msgstr ""
 
-#: src/network/access/qftp.cpp:2400
+#: src/network/access/qftp.cpp:2388
 msgctxt "QFtp"
 msgid "Connection closed"
 msgstr ""
 
-#: src/network/access/qnetworkaccessfilebackend.cpp:99
-#: src/network/access/qnetworkreplyfileimpl.cpp:66
+#: src/network/access/qnetworkaccessfilebackend.cpp:87
+#: src/network/access/qnetworkreplyfileimpl.cpp:54
 msgctxt "QNetworkAccessFileBackend"
 msgid "Request for opening non-local file %1"
 msgstr ""
 
-#: src/network/access/qnetworkaccessfilebackend.cpp:143
-#: src/network/access/qnetworkreplyfileimpl.cpp:101
+#: src/network/access/qnetworkaccessfilebackend.cpp:131
+#: src/network/access/qnetworkreplyfileimpl.cpp:89
 msgctxt "QNetworkAccessFileBackend"
 msgid "Error opening %1: %2"
 msgstr ""
 
-#: src/network/access/qnetworkaccessfilebackend.cpp:181
+#: src/network/access/qnetworkaccessfilebackend.cpp:169
 msgctxt "QNetworkAccessFileBackend"
 msgid "Write error writing to %1: %2"
 msgstr ""
 
-#: src/network/access/qnetworkaccessfilebackend.cpp:223
-#: src/network/access/qnetworkreplyfileimpl.cpp:88
+#: src/network/access/qnetworkaccessfilebackend.cpp:211
+#: src/network/access/qnetworkreplyfileimpl.cpp:76
 msgctxt "QNetworkAccessFileBackend"
 msgid "Cannot open %1: Path is a directory"
 msgstr ""
 
-#: src/network/access/qnetworkaccessfilebackend.cpp:244
+#: src/network/access/qnetworkaccessfilebackend.cpp:232
 msgctxt "QNetworkAccessFileBackend"
 msgid "Read error reading from %1: %2"
 msgstr ""
 
-#: src/plugins/accessible/widgets/simplewidgets.cpp:112
-#: src/plugins/accessible/widgets/simplewidgets.cpp:257
+#: src/plugins/accessible/widgets/simplewidgets.cpp:100
+#: src/plugins/accessible/widgets/simplewidgets.cpp:245
 msgid "Uncheck"
 msgstr ""
 
-#: src/plugins/accessible/widgets/simplewidgets.cpp:115
-#: src/plugins/accessible/widgets/simplewidgets.cpp:120
-#: src/plugins/accessible/widgets/simplewidgets.cpp:259
+#: src/plugins/accessible/widgets/simplewidgets.cpp:103
+#: src/plugins/accessible/widgets/simplewidgets.cpp:108
+#: src/plugins/accessible/widgets/simplewidgets.cpp:247
 msgid "Check"
 msgstr ""
 
-#: src/plugins/accessible/widgets/simplewidgets.cpp:116
-#: src/plugins/accessible/widgets/simplewidgets.cpp:726
+#: src/plugins/accessible/widgets/simplewidgets.cpp:104
+#: src/plugins/accessible/widgets/simplewidgets.cpp:714
 msgid "Toggle"
 msgstr ""
 
-#: src/plugins/accessible/widgets/simplewidgets.cpp:262
-#: src/plugins/accessible/widgets/simplewidgets.cpp:421
-#: src/plugins/accessible/widgets/simplewidgets.cpp:427
-#: src/plugins/accessible/widgets/complexwidgets.cpp:1611
+#: src/plugins/accessible/widgets/simplewidgets.cpp:250
+#: src/plugins/accessible/widgets/simplewidgets.cpp:409
+#: src/plugins/accessible/widgets/simplewidgets.cpp:415
+#: src/plugins/accessible/widgets/complexwidgets.cpp:1599
 msgid "Press"
 msgstr ""
 
-#: src/plugins/accessible/widgets/qaccessiblemenu.cpp:152
-#: src/plugins/accessible/widgets/qaccessiblemenu.cpp:377
-#: src/plugins/accessible/widgets/qaccessiblemenu.cpp:430
+#: src/plugins/accessible/widgets/qaccessiblemenu.cpp:140
+#: src/plugins/accessible/widgets/qaccessiblemenu.cpp:365
+#: src/plugins/accessible/widgets/qaccessiblemenu.cpp:418
 msgid "Execute"
 msgstr ""
 
-#: src/plugins/accessible/widgets/rangecontrols.cpp:140
-#: src/plugins/accessible/widgets/rangecontrols.cpp:403
+#: src/plugins/accessible/widgets/rangecontrols.cpp:128
+#: src/plugins/accessible/widgets/rangecontrols.cpp:391
 msgid "More"
 msgstr ""
 
-#: src/plugins/accessible/widgets/rangecontrols.cpp:142
-#: src/plugins/accessible/widgets/rangecontrols.cpp:405
+#: src/plugins/accessible/widgets/rangecontrols.cpp:130
+#: src/plugins/accessible/widgets/rangecontrols.cpp:393
 msgid "Less"
 msgstr ""
 
-#: src/plugins/accessible/widgets/rangecontrols.cpp:542
+#: src/plugins/accessible/widgets/rangecontrols.cpp:530
 msgid "Line up"
 msgstr ""
 
-#: src/plugins/accessible/widgets/rangecontrols.cpp:546
-#: src/plugins/accessible/widgets/rangecontrols.cpp:699
+#: src/plugins/accessible/widgets/rangecontrols.cpp:534
+#: src/plugins/accessible/widgets/rangecontrols.cpp:687
 msgid "Position"
 msgstr ""
 
-#: src/plugins/accessible/widgets/rangecontrols.cpp:550
+#: src/plugins/accessible/widgets/rangecontrols.cpp:538
 msgid "Line down"
 msgstr ""
 
-#: src/plugins/accessible/widgets/rangecontrols.cpp:924
+#: src/plugins/accessible/widgets/rangecontrols.cpp:912
 msgid "QDial"
 msgstr ""
 
-#: src/plugins/accessible/widgets/rangecontrols.cpp:926
+#: src/plugins/accessible/widgets/rangecontrols.cpp:914
 msgid "SpeedoMeter"
 msgstr ""
 
-#: src/plugins/accessible/widgets/rangecontrols.cpp:928
+#: src/plugins/accessible/widgets/rangecontrols.cpp:916
 msgid "SliderHandle"
 msgstr ""
 
-#: src/plugins/accessible/widgets/qaccessiblewidgets.cpp:1323
+#: src/plugins/accessible/widgets/qaccessiblewidgets.cpp:1311
 msgid "Dock"
 msgstr ""
 
-#: src/plugins/accessible/widgets/qaccessiblewidgets.cpp:1324
+#: src/plugins/accessible/widgets/qaccessiblewidgets.cpp:1312
 msgid "Float"
 msgstr ""
 
-#: src/plugins/accessible/widgets/complexwidgets.cpp:1507
+#: src/plugins/accessible/widgets/complexwidgets.cpp:1495
 msgid "Scroll Left"
 msgstr ""
 
-#: src/plugins/accessible/widgets/complexwidgets.cpp:1507
+#: src/plugins/accessible/widgets/complexwidgets.cpp:1495
 msgid "Scroll Right"
 msgstr ""
 
-#: src/plugins/accessible/widgets/complexwidgets.cpp:1616
+#: src/plugins/accessible/widgets/complexwidgets.cpp:1604
 msgid "Close the tab"
 msgstr ""
 
-#: src/plugins/accessible/widgets/complexwidgets.cpp:1619
+#: src/plugins/accessible/widgets/complexwidgets.cpp:1607
 msgid "Activate the tab"
 msgstr ""
 
-#: src/plugins/imageformats/tga/qtgafile.cpp:130
+#: src/plugins/imageformats/tga/qtgafile.cpp:118
 msgid "Could not read image data"
 msgstr ""
 
-#: src/plugins/imageformats/tga/qtgafile.cpp:135
+#: src/plugins/imageformats/tga/qtgafile.cpp:123
 msgid "Sequential device (eg socket) for image read not supported"
 msgstr ""
 
-#: src/plugins/imageformats/tga/qtgafile.cpp:140
+#: src/plugins/imageformats/tga/qtgafile.cpp:128
 msgid "Seek file/device for image read failed"
 msgstr ""
 
-#: src/plugins/imageformats/tga/qtgafile.cpp:146
+#: src/plugins/imageformats/tga/qtgafile.cpp:134
 msgid "Image mHeader read failed"
 msgstr ""
 
-#: src/plugins/imageformats/tga/qtgafile.cpp:153
+#: src/plugins/imageformats/tga/qtgafile.cpp:141
 msgid "Image type not supported"
 msgstr ""
 
-#: src/plugins/imageformats/tga/qtgafile.cpp:161
+#: src/plugins/imageformats/tga/qtgafile.cpp:149
 msgid "Image depth not valid"
 msgstr ""
 
-#: src/plugins/imageformats/tga/qtgafile.cpp:166
+#: src/plugins/imageformats/tga/qtgafile.cpp:154
 msgid "Could not seek to image read footer"
 msgstr ""
 
-#: src/plugins/imageformats/tga/qtgafile.cpp:174
+#: src/plugins/imageformats/tga/qtgafile.cpp:162
 msgid "Could not read footer"
 msgstr ""
 
-#: src/plugins/imageformats/tga/qtgafile.cpp:178
+#: src/plugins/imageformats/tga/qtgafile.cpp:166
 msgid "Image type (non-TrueVision 2.0) not supported"
 msgstr ""
 
-#: src/plugins/imageformats/tga/qtgafile.cpp:182
+#: src/plugins/imageformats/tga/qtgafile.cpp:170
 msgid "Could not reset to start position"
 msgstr ""
 
-#: src/plugins/bearer/qnetworksession_impl.cpp:246
+#: src/plugins/bearer/qnetworksession_impl.cpp:234
 msgid "Unknown session error."
 msgstr ""
 
-#: src/plugins/bearer/qnetworksession_impl.cpp:248
+#: src/plugins/bearer/qnetworksession_impl.cpp:236
 msgid "The session was aborted by the user or system."
 msgstr ""
 
-#: src/plugins/bearer/qnetworksession_impl.cpp:250
+#: src/plugins/bearer/qnetworksession_impl.cpp:238
 msgid "The requested operation is not supported by the system."
 msgstr ""
 
-#: src/plugins/bearer/qnetworksession_impl.cpp:252
+#: src/plugins/bearer/qnetworksession_impl.cpp:240
 msgid "The specified configuration cannot be used."
 msgstr ""
 
-#: src/plugins/bearer/qnetworksession_impl.cpp:254
+#: src/plugins/bearer/qnetworksession_impl.cpp:242
 msgid "Roaming was aborted or is not possible."
 msgstr ""
 
-#: src/plugins/sqldrivers/psql/qsql_psql.cpp:196
+#: src/plugins/sqldrivers/psql/qsql_psql.cpp:184
 msgctxt "QPSQLResult"
 msgid "Unable to create query"
 msgstr ""
 
-#: src/plugins/sqldrivers/psql/qsql_psql.cpp:572
+#: src/plugins/sqldrivers/psql/qsql_psql.cpp:560
 msgctxt "QPSQLResult"
 msgid "Unable to prepare statement"
 msgstr ""
 
-#: src/plugins/sqldrivers/psql/qsql_psql.cpp:836
-#: src/plugins/sqldrivers/odbc/qsql_odbc.cpp:1798
-#: src/plugins/sqldrivers/mysql/qsql_mysql.cpp:1176
+#: src/plugins/sqldrivers/psql/qsql_psql.cpp:824
+#: src/plugins/sqldrivers/odbc/qsql_odbc.cpp:1786
+#: src/plugins/sqldrivers/mysql/qsql_mysql.cpp:1164
 msgid "Unable to connect"
 msgstr ""
 
-#: src/plugins/sqldrivers/psql/qsql_psql.cpp:885
+#: src/plugins/sqldrivers/psql/qsql_psql.cpp:873
 msgid "Could not begin transaction"
 msgstr ""
 
-#: src/plugins/sqldrivers/psql/qsql_psql.cpp:913
+#: src/plugins/sqldrivers/psql/qsql_psql.cpp:901
 msgid "Could not commit transaction"
 msgstr ""
 
-#: src/plugins/sqldrivers/psql/qsql_psql.cpp:930
+#: src/plugins/sqldrivers/psql/qsql_psql.cpp:918
 msgid "Could not rollback transaction"
 msgstr ""
 
-#: src/plugins/sqldrivers/psql/qsql_psql.cpp:1251
+#: src/plugins/sqldrivers/psql/qsql_psql.cpp:1239
 msgid "Unable to subscribe"
 msgstr ""
 
-#: src/plugins/sqldrivers/psql/qsql_psql.cpp:1283
+#: src/plugins/sqldrivers/psql/qsql_psql.cpp:1271
 msgid "Unable to unsubscribe"
 msgstr ""
 
-#: src/plugins/sqldrivers/odbc/qsql_odbc.cpp:899
-#: src/plugins/sqldrivers/odbc/qsql_odbc.cpp:1238
+#: src/plugins/sqldrivers/odbc/qsql_odbc.cpp:887
+#: src/plugins/sqldrivers/odbc/qsql_odbc.cpp:1226
 msgctxt "QODBCResult"
 msgid ""
 "QODBCResult::reset: Unable to set 'SQL_CURSOR_STATIC' as statement "
 "attribute. Please check your ODBC driver configuration"
 msgstr ""
 
-#: src/plugins/sqldrivers/odbc/qsql_odbc.cpp:909
-#: src/plugins/sqldrivers/odbc/qsql_odbc.cpp:1530
+#: src/plugins/sqldrivers/odbc/qsql_odbc.cpp:897
+#: src/plugins/sqldrivers/odbc/qsql_odbc.cpp:1518
 msgctxt "QODBCResult"
 msgid "Unable to execute statement"
 msgstr ""
 
-#: src/plugins/sqldrivers/odbc/qsql_odbc.cpp:963
+#: src/plugins/sqldrivers/odbc/qsql_odbc.cpp:951
 msgctxt "QODBCResult"
 msgid "Unable to fetch"
 msgstr ""
 
-#: src/plugins/sqldrivers/odbc/qsql_odbc.cpp:985
+#: src/plugins/sqldrivers/odbc/qsql_odbc.cpp:973
 msgctxt "QODBCResult"
 msgid "Unable to fetch next"
 msgstr ""
 
-#: src/plugins/sqldrivers/odbc/qsql_odbc.cpp:1007
+#: src/plugins/sqldrivers/odbc/qsql_odbc.cpp:995
 msgctxt "QODBCResult"
 msgid "Unable to fetch first"
 msgstr ""
 
-#: src/plugins/sqldrivers/odbc/qsql_odbc.cpp:1026
+#: src/plugins/sqldrivers/odbc/qsql_odbc.cpp:1014
 msgctxt "QODBCResult"
 msgid "Unable to fetch previous"
 msgstr ""
 
-#: src/plugins/sqldrivers/odbc/qsql_odbc.cpp:1057
-#: src/plugins/sqldrivers/odbc/qsql_odbc.cpp:1634
+#: src/plugins/sqldrivers/odbc/qsql_odbc.cpp:1045
+#: src/plugins/sqldrivers/odbc/qsql_odbc.cpp:1622
 msgctxt "QODBCResult"
 msgid "Unable to fetch last"
 msgstr ""
 
-#: src/plugins/sqldrivers/odbc/qsql_odbc.cpp:1249
+#: src/plugins/sqldrivers/odbc/qsql_odbc.cpp:1237
 msgctxt "QODBCResult"
 msgid "Unable to prepare statement"
 msgstr ""
 
-#: src/plugins/sqldrivers/odbc/qsql_odbc.cpp:1522
+#: src/plugins/sqldrivers/odbc/qsql_odbc.cpp:1510
 msgctxt "QODBCResult"
 msgid "Unable to bind variable"
 msgstr ""
 
-#: src/plugins/sqldrivers/odbc/qsql_odbc.cpp:1804
+#: src/plugins/sqldrivers/odbc/qsql_odbc.cpp:1792
 msgid "Unable to connect - Driver doesn't support all functionality required"
 msgstr ""
 
-#: src/plugins/sqldrivers/odbc/qsql_odbc.cpp:2077
+#: src/plugins/sqldrivers/odbc/qsql_odbc.cpp:2065
 msgid "Unable to disable autocommit"
 msgstr ""
 
-#: src/plugins/sqldrivers/odbc/qsql_odbc.cpp:2094
-#: src/plugins/sqldrivers/mysql/qsql_mysql.cpp:1330
-#: src/sql/drivers/qsql_sqlite.cpp:645
+#: src/plugins/sqldrivers/odbc/qsql_odbc.cpp:2082
+#: src/plugins/sqldrivers/mysql/qsql_mysql.cpp:1318
+#: src/sql/drivers/qsql_sqlite.cpp:633
 msgid "Unable to commit transaction"
 msgstr ""
 
-#: src/plugins/sqldrivers/odbc/qsql_odbc.cpp:2111
-#: src/plugins/sqldrivers/mysql/qsql_mysql.cpp:1347
-#: src/sql/drivers/qsql_sqlite.cpp:660
+#: src/plugins/sqldrivers/odbc/qsql_odbc.cpp:2099
+#: src/plugins/sqldrivers/mysql/qsql_mysql.cpp:1335
+#: src/sql/drivers/qsql_sqlite.cpp:648
 msgid "Unable to rollback transaction"
 msgstr ""
 
-#: src/plugins/sqldrivers/odbc/qsql_odbc.cpp:2126
+#: src/plugins/sqldrivers/odbc/qsql_odbc.cpp:2114
 msgid "Unable to enable autocommit"
 msgstr ""
 
-#: src/plugins/sqldrivers/mysql/qsql_mysql.cpp:457
-#: src/plugins/sqldrivers/mysql/qsql_mysql.cpp:484
+#: src/plugins/sqldrivers/mysql/qsql_mysql.cpp:445
+#: src/plugins/sqldrivers/mysql/qsql_mysql.cpp:472
 msgctxt "QMYSQLResult"
 msgid "Unable to fetch data"
 msgstr ""
 
-#: src/plugins/sqldrivers/mysql/qsql_mysql.cpp:636
+#: src/plugins/sqldrivers/mysql/qsql_mysql.cpp:624
 msgctxt "QMYSQLResult"
 msgid "Unable to execute query"
 msgstr ""
 
-#: src/plugins/sqldrivers/mysql/qsql_mysql.cpp:642
+#: src/plugins/sqldrivers/mysql/qsql_mysql.cpp:630
 msgctxt "QMYSQLResult"
 msgid "Unable to store result"
 msgstr ""
 
-#: src/plugins/sqldrivers/mysql/qsql_mysql.cpp:734
+#: src/plugins/sqldrivers/mysql/qsql_mysql.cpp:722
 msgctxt "QMYSQLResult"
 msgid "Unable to execute next query"
 msgstr ""
 
-#: src/plugins/sqldrivers/mysql/qsql_mysql.cpp:744
+#: src/plugins/sqldrivers/mysql/qsql_mysql.cpp:732
 msgctxt "QMYSQLResult"
 msgid "Unable to store next result"
 msgstr ""
 
-#: src/plugins/sqldrivers/mysql/qsql_mysql.cpp:811
-#: src/plugins/sqldrivers/mysql/qsql_mysql.cpp:820
+#: src/plugins/sqldrivers/mysql/qsql_mysql.cpp:799
+#: src/plugins/sqldrivers/mysql/qsql_mysql.cpp:808
 msgctxt "QMYSQLResult"
 msgid "Unable to prepare statement"
 msgstr ""
 
-#: src/plugins/sqldrivers/mysql/qsql_mysql.cpp:852
+#: src/plugins/sqldrivers/mysql/qsql_mysql.cpp:840
 msgctxt "QMYSQLResult"
 msgid "Unable to reset statement"
 msgstr ""
 
-#: src/plugins/sqldrivers/mysql/qsql_mysql.cpp:943
+#: src/plugins/sqldrivers/mysql/qsql_mysql.cpp:931
 msgctxt "QMYSQLResult"
 msgid "Unable to bind value"
 msgstr ""
 
-#: src/plugins/sqldrivers/mysql/qsql_mysql.cpp:954
+#: src/plugins/sqldrivers/mysql/qsql_mysql.cpp:942
 msgctxt "QMYSQLResult"
 msgid "Unable to execute statement"
 msgstr ""
 
-#: src/plugins/sqldrivers/mysql/qsql_mysql.cpp:968
-#: src/plugins/sqldrivers/mysql/qsql_mysql.cpp:989
+#: src/plugins/sqldrivers/mysql/qsql_mysql.cpp:956
+#: src/plugins/sqldrivers/mysql/qsql_mysql.cpp:977
 msgctxt "QMYSQLResult"
 msgid "Unable to bind outvalues"
 msgstr ""
 
-#: src/plugins/sqldrivers/mysql/qsql_mysql.cpp:977
+#: src/plugins/sqldrivers/mysql/qsql_mysql.cpp:965
 msgctxt "QMYSQLResult"
 msgid "Unable to store statement results"
 msgstr ""
 
-#: src/plugins/sqldrivers/mysql/qsql_mysql.cpp:1165
+#: src/plugins/sqldrivers/mysql/qsql_mysql.cpp:1153
 msgid "Unable to open database '"
 msgstr ""
 
-#: src/plugins/sqldrivers/mysql/qsql_mysql.cpp:1313
-#: src/sql/drivers/qsql_sqlite.cpp:630
+#: src/plugins/sqldrivers/mysql/qsql_mysql.cpp:1301
+#: src/sql/drivers/qsql_sqlite.cpp:618
 msgid "Unable to begin transaction"
 msgstr ""
 
-#: src/scripttools/debugging/qscriptedit.cpp:403
-#: src/scripttools/debugging/qscriptdebugger.cpp:1780
+#: src/scripttools/debugging/qscriptedit.cpp:391
+#: src/scripttools/debugging/qscriptdebugger.cpp:1768
 msgid "Toggle Breakpoint"
 msgstr ""
 
-#: src/scripttools/debugging/qscriptedit.cpp:405
+#: src/scripttools/debugging/qscriptedit.cpp:393
 msgid "Disable Breakpoint"
 msgstr ""
 
-#: src/scripttools/debugging/qscriptedit.cpp:406
+#: src/scripttools/debugging/qscriptedit.cpp:394
 msgid "Enable Breakpoint"
 msgstr ""
 
-#: src/scripttools/debugging/qscriptedit.cpp:410
+#: src/scripttools/debugging/qscriptedit.cpp:398
 msgid "Breakpoint Condition:"
 msgstr ""
 
-#: src/scripttools/debugging/qscriptbreakpointswidget.cpp:285
+#: src/scripttools/debugging/qscriptbreakpointswidget.cpp:273
 msgid "New"
 msgstr ""
 
-#: src/scripttools/debugging/qscriptdebuggerstackmodel.cpp:153
+#: src/scripttools/debugging/qscriptdebuggerstackmodel.cpp:141
 msgctxt "QScriptDebuggerStackModel"
 msgid "Level"
 msgstr ""
 
-#: src/scripttools/debugging/qscriptdebuggerstackmodel.cpp:155
+#: src/scripttools/debugging/qscriptdebuggerstackmodel.cpp:143
 msgctxt "QScriptDebuggerStackModel"
 msgid "Name"
 msgstr ""
 
-#: src/scripttools/debugging/qscriptdebuggerstackmodel.cpp:157
+#: src/scripttools/debugging/qscriptdebuggerstackmodel.cpp:145
 msgctxt "QScriptDebuggerStackModel"
 msgid "Location"
 msgstr ""
 
-#: src/scripttools/debugging/qscriptdebuggerlocalsmodel.cpp:888
+#: src/scripttools/debugging/qscriptdebuggerlocalsmodel.cpp:876
 msgctxt "QScriptDebuggerLocalsModel"
 msgid "Name"
 msgstr ""
 
-#: src/scripttools/debugging/qscriptdebuggerlocalsmodel.cpp:890
+#: src/scripttools/debugging/qscriptdebuggerlocalsmodel.cpp:878
 msgctxt "QScriptDebuggerLocalsModel"
 msgid "Value"
 msgstr ""
 
-#: src/scripttools/debugging/qscriptbreakpointsmodel.cpp:447
+#: src/scripttools/debugging/qscriptbreakpointsmodel.cpp:435
 msgctxt "QScriptBreakpointsModel"
 msgid "ID"
 msgstr ""
 
-#: src/scripttools/debugging/qscriptbreakpointsmodel.cpp:449
+#: src/scripttools/debugging/qscriptbreakpointsmodel.cpp:437
 msgctxt "QScriptBreakpointsModel"
 msgid "Location"
 msgstr ""
 
-#: src/scripttools/debugging/qscriptbreakpointsmodel.cpp:451
+#: src/scripttools/debugging/qscriptbreakpointsmodel.cpp:439
 msgctxt "QScriptBreakpointsModel"
 msgid "Condition"
 msgstr ""
 
-#: src/scripttools/debugging/qscriptbreakpointsmodel.cpp:453
+#: src/scripttools/debugging/qscriptbreakpointsmodel.cpp:441
 msgctxt "QScriptBreakpointsModel"
 msgid "Ignore-count"
 msgstr ""
 
-#: src/scripttools/debugging/qscriptbreakpointsmodel.cpp:455
+#: src/scripttools/debugging/qscriptbreakpointsmodel.cpp:443
 msgctxt "QScriptBreakpointsModel"
 msgid "Single-shot"
 msgstr ""
 
-#: src/scripttools/debugging/qscriptbreakpointsmodel.cpp:457
+#: src/scripttools/debugging/qscriptbreakpointsmodel.cpp:445
 msgctxt "QScriptBreakpointsModel"
 msgid "Hit-count"
 msgstr ""
 
-#: src/scripttools/debugging/qscriptdebugger.cpp:872
-#: src/scripttools/debugging/qscriptdebugger.cpp:1883
+#: src/scripttools/debugging/qscriptdebugger.cpp:860
+#: src/scripttools/debugging/qscriptdebugger.cpp:1871
 msgid "Go to Line"
 msgstr ""
 
-#: src/scripttools/debugging/qscriptdebugger.cpp:873
+#: src/scripttools/debugging/qscriptdebugger.cpp:861
 msgid "Line:"
 msgstr ""
 
-#: src/scripttools/debugging/qscriptdebugger.cpp:1662
+#: src/scripttools/debugging/qscriptdebugger.cpp:1650
 msgid "Interrupt"
 msgstr ""
 
-#: src/scripttools/debugging/qscriptdebugger.cpp:1664
+#: src/scripttools/debugging/qscriptdebugger.cpp:1652
 msgid "Shift+F5"
 msgstr ""
 
-#: src/scripttools/debugging/qscriptdebugger.cpp:1681
+#: src/scripttools/debugging/qscriptdebugger.cpp:1669
 msgid "F5"
 msgstr ""
 
-#: src/scripttools/debugging/qscriptdebugger.cpp:1696
+#: src/scripttools/debugging/qscriptdebugger.cpp:1684
 msgid "Step Into"
 msgstr ""
 
-#: src/scripttools/debugging/qscriptdebugger.cpp:1698
+#: src/scripttools/debugging/qscriptdebugger.cpp:1686
 msgid "F11"
 msgstr ""
 
-#: src/scripttools/debugging/qscriptdebugger.cpp:1713
+#: src/scripttools/debugging/qscriptdebugger.cpp:1701
 msgid "Step Over"
 msgstr ""
 
-#: src/scripttools/debugging/qscriptdebugger.cpp:1715
+#: src/scripttools/debugging/qscriptdebugger.cpp:1703
 msgid "F10"
 msgstr ""
 
-#: src/scripttools/debugging/qscriptdebugger.cpp:1730
+#: src/scripttools/debugging/qscriptdebugger.cpp:1718
 msgid "Step Out"
 msgstr ""
 
-#: src/scripttools/debugging/qscriptdebugger.cpp:1732
+#: src/scripttools/debugging/qscriptdebugger.cpp:1720
 msgid "Shift+F11"
 msgstr ""
 
-#: src/scripttools/debugging/qscriptdebugger.cpp:1747
+#: src/scripttools/debugging/qscriptdebugger.cpp:1735
 msgid "Run to Cursor"
 msgstr ""
 
-#: src/scripttools/debugging/qscriptdebugger.cpp:1749
+#: src/scripttools/debugging/qscriptdebugger.cpp:1737
 msgid "Ctrl+F10"
 msgstr ""
 
-#: src/scripttools/debugging/qscriptdebugger.cpp:1765
+#: src/scripttools/debugging/qscriptdebugger.cpp:1753
 msgid "Run to New Script"
 msgstr ""
 
-#: src/scripttools/debugging/qscriptdebugger.cpp:1781
+#: src/scripttools/debugging/qscriptdebugger.cpp:1769
 msgid "F9"
 msgstr ""
 
-#: src/scripttools/debugging/qscriptdebugger.cpp:1795
+#: src/scripttools/debugging/qscriptdebugger.cpp:1783
 msgid "Clear Debug Output"
 msgstr ""
 
-#: src/scripttools/debugging/qscriptdebugger.cpp:1808
+#: src/scripttools/debugging/qscriptdebugger.cpp:1796
 msgid "Clear Error Log"
 msgstr ""
 
-#: src/scripttools/debugging/qscriptdebugger.cpp:1821
+#: src/scripttools/debugging/qscriptdebugger.cpp:1809
 msgid "Clear Console"
 msgstr ""
 
-#: src/scripttools/debugging/qscriptdebugger.cpp:1835
+#: src/scripttools/debugging/qscriptdebugger.cpp:1823
 msgid "&Find in Script..."
 msgstr ""
 
-#: src/scripttools/debugging/qscriptdebugger.cpp:1836
+#: src/scripttools/debugging/qscriptdebugger.cpp:1824
 msgid "Ctrl+F"
 msgstr ""
 
-#: src/scripttools/debugging/qscriptdebugger.cpp:1853
+#: src/scripttools/debugging/qscriptdebugger.cpp:1841
 msgid "Find &Next"
 msgstr ""
 
-#: src/scripttools/debugging/qscriptdebugger.cpp:1855
+#: src/scripttools/debugging/qscriptdebugger.cpp:1843
 msgid "F3"
 msgstr ""
 
-#: src/scripttools/debugging/qscriptdebugger.cpp:1868
+#: src/scripttools/debugging/qscriptdebugger.cpp:1856
 msgid "Find &Previous"
 msgstr ""
 
-#: src/scripttools/debugging/qscriptdebugger.cpp:1870
+#: src/scripttools/debugging/qscriptdebugger.cpp:1858
 msgid "Shift+F3"
 msgstr ""
 
-#: src/scripttools/debugging/qscriptdebugger.cpp:1884
+#: src/scripttools/debugging/qscriptdebugger.cpp:1872
 msgid "Ctrl+G"
 msgstr ""
 
-#: src/scripttools/debugging/qscriptdebugger.cpp:1895
+#: src/scripttools/debugging/qscriptdebugger.cpp:1883
 msgid "Debug"
 msgstr ""
 
-#: src/scripttools/debugging/qscriptenginedebugger.cpp:497
+#: src/scripttools/debugging/qscriptenginedebugger.cpp:485
 msgid "Loaded Scripts"
 msgstr ""
 
-#: src/scripttools/debugging/qscriptenginedebugger.cpp:503
+#: src/scripttools/debugging/qscriptenginedebugger.cpp:491
 msgid "Breakpoints"
 msgstr ""
 
-#: src/scripttools/debugging/qscriptenginedebugger.cpp:509
+#: src/scripttools/debugging/qscriptenginedebugger.cpp:497
 msgid "Stack"
 msgstr ""
 
-#: src/scripttools/debugging/qscriptenginedebugger.cpp:515
+#: src/scripttools/debugging/qscriptenginedebugger.cpp:503
 msgid "Locals"
 msgstr ""
 
-#: src/scripttools/debugging/qscriptenginedebugger.cpp:521
+#: src/scripttools/debugging/qscriptenginedebugger.cpp:509
 msgid "Console"
 msgstr ""
 
-#: src/scripttools/debugging/qscriptenginedebugger.cpp:527
+#: src/scripttools/debugging/qscriptenginedebugger.cpp:515
 msgid "Debug Output"
 msgstr ""
 
-#: src/scripttools/debugging/qscriptenginedebugger.cpp:533
+#: src/scripttools/debugging/qscriptenginedebugger.cpp:521
 msgid "Error Log"
 msgstr ""
 
-#: src/scripttools/debugging/qscriptenginedebugger.cpp:545
+#: src/scripttools/debugging/qscriptenginedebugger.cpp:533
 msgid "Search"
 msgstr ""
 
-#: src/scripttools/debugging/qscriptenginedebugger.cpp:552
+#: src/scripttools/debugging/qscriptenginedebugger.cpp:540
 msgid "View"
 msgstr ""
 
-#: src/scripttools/debugging/qscriptenginedebugger.cpp:570
+#: src/scripttools/debugging/qscriptenginedebugger.cpp:558
 msgid "Katie Script Debugger"
 msgstr ""
 
-#: src/scripttools/debugging/qscriptdebuggercodefinderwidget.cpp:141
+#: src/scripttools/debugging/qscriptdebuggercodefinderwidget.cpp:129
 msgid "Previous"
 msgstr ""
 
-#: src/scripttools/debugging/qscriptdebuggercodefinderwidget.cpp:148
+#: src/scripttools/debugging/qscriptdebuggercodefinderwidget.cpp:136
 msgid "Next"
 msgstr ""
 
-#: src/scripttools/debugging/qscriptdebuggercodefinderwidget.cpp:153
+#: src/scripttools/debugging/qscriptdebuggercodefinderwidget.cpp:141
 msgid "Case Sensitive"
 msgstr ""
 
-#: src/scripttools/debugging/qscriptdebuggercodefinderwidget.cpp:156
+#: src/scripttools/debugging/qscriptdebuggercodefinderwidget.cpp:144
 msgid "Whole words"
 msgstr ""
 
-#: src/scripttools/debugging/qscriptdebuggercodefinderwidget.cpp:165
+#: src/scripttools/debugging/qscriptdebuggercodefinderwidget.cpp:153
 msgid ""
 "<img src=\":/qt/scripttools/debugging/images/wrap.png\">&nbsp;Search wrapped"
 msgstr ""
 
-#: src/sql/drivers/qsql_sqlite.cpp:223 src/sql/drivers/qsql_sqlite.cpp:299
-#: src/sql/drivers/qsql_sqlite.cpp:308
+#: src/sql/drivers/qsql_sqlite.cpp:211 src/sql/drivers/qsql_sqlite.cpp:287
+#: src/sql/drivers/qsql_sqlite.cpp:296
 msgctxt "QSQLiteResult"
 msgid "Unable to fetch row"
 msgstr ""
 
-#: src/sql/drivers/qsql_sqlite.cpp:224
+#: src/sql/drivers/qsql_sqlite.cpp:212
 msgctxt "QSQLiteResult"
 msgid "No query"
 msgstr ""
 
-#: src/sql/drivers/qsql_sqlite.cpp:371
+#: src/sql/drivers/qsql_sqlite.cpp:359
 msgctxt "QSQLiteResult"
 msgid "Unable to execute statement"
 msgstr ""
 
-#: src/sql/drivers/qsql_sqlite.cpp:376
+#: src/sql/drivers/qsql_sqlite.cpp:364
 msgctxt "QSQLiteResult"
 msgid "Unable to execute multiple statements at a time"
 msgstr ""
 
-#: src/sql/drivers/qsql_sqlite.cpp:396
+#: src/sql/drivers/qsql_sqlite.cpp:384
 msgctxt "QSQLiteResult"
 msgid "Unable to reset statement"
 msgstr ""
 
-#: src/sql/drivers/qsql_sqlite.cpp:448
+#: src/sql/drivers/qsql_sqlite.cpp:436
 msgctxt "QSQLiteResult"
 msgid "Unable to bind parameters"
 msgstr ""
 
-#: src/sql/drivers/qsql_sqlite.cpp:455
+#: src/sql/drivers/qsql_sqlite.cpp:443
 msgctxt "QSQLiteResult"
 msgid "Parameter count mismatch"
 msgstr ""
 
-#: src/sql/drivers/qsql_sqlite.cpp:589
+#: src/sql/drivers/qsql_sqlite.cpp:577
 msgid "Error opening database"
 msgstr ""
 
-#: src/sql/drivers/qsql_sqlite.cpp:611
+#: src/sql/drivers/qsql_sqlite.cpp:599
 msgid "Error closing database"
 msgstr ""
 
-#: src/uitools/formbuilderextra.cpp:361
+#: src/uitools/formbuilderextra.cpp:349
 msgctxt "FormBuilder"
 msgid "Invalid stretch value for '%1': '%2'"
 msgstr ""
 
-#: src/uitools/formbuilderextra.cpp:423
+#: src/uitools/formbuilderextra.cpp:411
 msgctxt "FormBuilder"
 msgid "Invalid minimum size for '%1': '%2'"
 msgstr ""
 
-#: src/uitools/properties.cpp:98
+#: src/uitools/properties.cpp:86
 msgctxt "QFormBuilder"
 msgid "The set-type property %1 could not be read."
 msgstr ""
 
-#: src/uitools/properties.cpp:121
+#: src/uitools/properties.cpp:109
 msgctxt "QFormBuilder"
 msgid "The enumeration-type property %1 could not be read."
 msgstr ""
 
-#: src/uitools/properties.cpp:311
+#: src/uitools/properties.cpp:299
 msgctxt "QFormBuilder"
 msgid "Reading properties of the type %1 is not supported yet."
 msgstr ""
 
-#: src/uitools/properties.cpp:577
+#: src/uitools/properties.cpp:565
 msgctxt "QFormBuilder"
 msgid "The property %1 could not be written. The type %2 is not supported yet."
 msgstr ""
 
-#: src/uitools/formbuilder.cpp:162
+#: src/uitools/formbuilder.cpp:150
 msgctxt "QFormBuilder"
 msgid "An empty class name was passed on to %1 (object name: '%2')."
 msgstr ""
 
-#: src/uitools/formbuilder.cpp:216
+#: src/uitools/formbuilder.cpp:204
 msgctxt "QFormBuilder"
 msgid ""
 "QFormBuilder was unable to create a custom widget of the class '%1'; "
 "defaulting to base class '%2'."
 msgstr ""
 
-#: src/uitools/formbuilder.cpp:222
+#: src/uitools/formbuilder.cpp:210
 msgctxt "QFormBuilder"
 msgid "QFormBuilder was unable to create a widget of the class '%1'."
 msgstr ""
 
-#: src/uitools/formbuilder.cpp:263
+#: src/uitools/formbuilder.cpp:251
 msgctxt "QFormBuilder"
 msgid "The layout type `%1' is not supported."
 msgstr ""
 
-#: src/uitools/formscriptrunner.cpp:80
+#: src/uitools/formscriptrunner.cpp:68
 msgid "Exception at line %1: %2"
 msgstr ""
 
-#: src/uitools/formscriptrunner.cpp:166
+#: src/uitools/formscriptrunner.cpp:154
 msgid ""
 "An error occurred while running the script for %1: %2\n"
 "Script: %3"
 msgstr ""
 
-#: src/uitools/abstractformbuilder.cpp:195
+#: src/uitools/abstractformbuilder.cpp:183
 msgctxt "QAbstractFormBuilder"
 msgid "Unexpected element <%1>"
 msgstr ""
 
-#: src/uitools/abstractformbuilder.cpp:200
+#: src/uitools/abstractformbuilder.cpp:188
 msgctxt "QAbstractFormBuilder"
 msgid ""
 "An error has occurred while reading the UI file at line %1, column %2: %3"
 msgstr ""
 
-#: src/uitools/abstractformbuilder.cpp:206
+#: src/uitools/abstractformbuilder.cpp:194
 msgctxt "QAbstractFormBuilder"
 msgid "Invalid UI file: The root element <ui> is missing."
 msgstr ""
 
-#: src/uitools/abstractformbuilder.cpp:310
+#: src/uitools/abstractformbuilder.cpp:298
 msgctxt "QAbstractFormBuilder"
 msgid "The creation of a widget of the class '%1' failed."
 msgstr ""
 
-#: src/uitools/abstractformbuilder.cpp:606
+#: src/uitools/abstractformbuilder.cpp:594
 msgctxt "QAbstractFormBuilder"
 msgid "Attempt to add child that is not of class QWizardPage to QWizard."
 msgstr ""
 
-#: src/uitools/abstractformbuilder.cpp:668
+#: src/uitools/abstractformbuilder.cpp:656
 msgctxt "QAbstractFormBuilder"
 msgid ""
 "Attempt to add a layout to a widget '%1' (%2) which already has a layout of "
@@ -4833,298 +4764,298 @@ msgid ""
 "This indicates an inconsistency in the ui-file."
 msgstr ""
 
-#: src/uitools/abstractformbuilder.cpp:878
+#: src/uitools/abstractformbuilder.cpp:866
 msgctxt "QAbstractFormBuilder"
 msgid "Empty widget item in %1 '%2'."
 msgstr ""
 
-#: src/uitools/abstractformbuilder.cpp:1624
+#: src/uitools/abstractformbuilder.cpp:1612
 msgctxt "QAbstractFormBuilder"
 msgid "Flags property are not supported yet."
 msgstr ""
 
-#: src/uitools/abstractformbuilder.cpp:1705
+#: src/uitools/abstractformbuilder.cpp:1693
 msgctxt "QAbstractFormBuilder"
 msgid "While applying tab stops: The widget '%1' could not be found."
 msgstr ""
 
-#: src/uitools/abstractformbuilder.cpp:2451
+#: src/uitools/abstractformbuilder.cpp:2439
 msgctxt "QAbstractFormBuilder"
 msgid "Invalid QButtonGroup reference '%1' referenced by '%2'."
 msgstr ""
 
-#: src/uitools/abstractformbuilder.cpp:2962
+#: src/uitools/abstractformbuilder.cpp:2950
 msgctxt "QAbstractFormBuilder"
 msgid "This version of the uitools library is linked without script support."
 msgstr ""
 
-#: src/uitools/properties_p.h:121
+#: src/uitools/properties_p.h:109
 msgctxt "QFormBuilder"
 msgid ""
 "The enumeration-value '%1' is invalid. The default value '%2' will be used "
 "instead."
 msgstr ""
 
-#: src/uitools/properties_p.h:135
+#: src/uitools/properties_p.h:123
 msgctxt "QFormBuilder"
 msgid "The flag-value '%1' is invalid. Zero will be used instead."
 msgstr ""
 
-#: src/xml/sax/qxml.cpp:48
+#: src/xml/sax/qxml.cpp:36
 msgctxt "QXml"
 msgid "no error occurred"
 msgstr ""
 
-#: src/xml/sax/qxml.cpp:49
+#: src/xml/sax/qxml.cpp:37
 msgctxt "QXml"
 msgid "error triggered by consumer"
 msgstr ""
 
-#: src/xml/sax/qxml.cpp:50
+#: src/xml/sax/qxml.cpp:38
 msgctxt "QXml"
 msgid "unexpected end of file"
 msgstr ""
 
-#: src/xml/sax/qxml.cpp:51
+#: src/xml/sax/qxml.cpp:39
 msgctxt "QXml"
 msgid "more than one document type definition"
 msgstr ""
 
-#: src/xml/sax/qxml.cpp:52
+#: src/xml/sax/qxml.cpp:40
 msgctxt "QXml"
 msgid "error occurred while parsing element"
 msgstr ""
 
-#: src/xml/sax/qxml.cpp:53
+#: src/xml/sax/qxml.cpp:41
 msgctxt "QXml"
 msgid "tag mismatch"
 msgstr ""
 
-#: src/xml/sax/qxml.cpp:54
+#: src/xml/sax/qxml.cpp:42
 msgctxt "QXml"
 msgid "error occurred while parsing content"
 msgstr ""
 
-#: src/xml/sax/qxml.cpp:55
+#: src/xml/sax/qxml.cpp:43
 msgctxt "QXml"
 msgid "unexpected character"
 msgstr ""
 
-#: src/xml/sax/qxml.cpp:56
+#: src/xml/sax/qxml.cpp:44
 msgctxt "QXml"
 msgid "invalid name for processing instruction"
 msgstr ""
 
-#: src/xml/sax/qxml.cpp:57
+#: src/xml/sax/qxml.cpp:45
 msgctxt "QXml"
 msgid "version expected while reading the XML declaration"
 msgstr ""
 
-#: src/xml/sax/qxml.cpp:58
+#: src/xml/sax/qxml.cpp:46
 msgctxt "QXml"
 msgid "wrong value for standalone declaration"
 msgstr ""
 
-#: src/xml/sax/qxml.cpp:59
+#: src/xml/sax/qxml.cpp:47
 msgctxt "QXml"
 msgid ""
 "encoding declaration or standalone declaration expected while reading the "
 "XML declaration"
 msgstr ""
 
-#: src/xml/sax/qxml.cpp:60
+#: src/xml/sax/qxml.cpp:48
 msgctxt "QXml"
 msgid "standalone declaration expected while reading the XML declaration"
 msgstr ""
 
-#: src/xml/sax/qxml.cpp:61
+#: src/xml/sax/qxml.cpp:49
 msgctxt "QXml"
 msgid "error occurred while parsing document type definition"
 msgstr ""
 
-#: src/xml/sax/qxml.cpp:62
+#: src/xml/sax/qxml.cpp:50
 msgctxt "QXml"
 msgid "letter is expected"
 msgstr ""
 
-#: src/xml/sax/qxml.cpp:63
+#: src/xml/sax/qxml.cpp:51
 msgctxt "QXml"
 msgid "error occurred while parsing comment"
 msgstr ""
 
-#: src/xml/sax/qxml.cpp:64
+#: src/xml/sax/qxml.cpp:52
 msgctxt "QXml"
 msgid "error occurred while parsing reference"
 msgstr ""
 
-#: src/xml/sax/qxml.cpp:65
+#: src/xml/sax/qxml.cpp:53
 msgctxt "QXml"
 msgid "internal general entity reference not allowed in DTD"
 msgstr ""
 
-#: src/xml/sax/qxml.cpp:66
+#: src/xml/sax/qxml.cpp:54
 msgctxt "QXml"
 msgid "external parsed general entity reference not allowed in attribute value"
 msgstr ""
 
-#: src/xml/sax/qxml.cpp:67
+#: src/xml/sax/qxml.cpp:55
 msgctxt "QXml"
 msgid "external parsed general entity reference not allowed in DTD"
 msgstr ""
 
-#: src/xml/sax/qxml.cpp:68
+#: src/xml/sax/qxml.cpp:56
 msgctxt "QXml"
 msgid "unparsed entity reference in wrong context"
 msgstr ""
 
-#: src/xml/sax/qxml.cpp:69
+#: src/xml/sax/qxml.cpp:57
 msgctxt "QXml"
 msgid "recursive entities"
 msgstr ""
 
-#: src/xml/sax/qxml.cpp:70
+#: src/xml/sax/qxml.cpp:58
 msgctxt "QXml"
 msgid "error in the text declaration of an external entity"
 msgstr ""
 
-#: src/xml/kernel/qxmlstream_p.h:755
+#: src/xml/kernel/qxmlstream_p.h:743
 msgid "Recursive entity detected."
 msgstr ""
 
-#: src/xml/kernel/qxmlstream_p.h:1056 src/xml/kernel/qxmlstream.cpp:1393
+#: src/xml/kernel/qxmlstream_p.h:1044 src/xml/kernel/qxmlstream.cpp:1381
 msgid "Encountered incorrectly encoded content."
 msgstr ""
 
-#: src/xml/kernel/qxmlstream_p.h:1268
+#: src/xml/kernel/qxmlstream_p.h:1256
 msgid "Start tag expected."
 msgstr ""
 
-#: src/xml/kernel/qxmlstream_p.h:1459
+#: src/xml/kernel/qxmlstream_p.h:1447
 msgid "NDATA in parameter entity declaration."
 msgstr ""
 
-#: src/xml/kernel/qxmlstream_p.h:1490
+#: src/xml/kernel/qxmlstream_p.h:1478
 msgid "XML declaration not at start of document."
 msgstr ""
 
-#: src/xml/kernel/qxmlstream_p.h:1493
+#: src/xml/kernel/qxmlstream_p.h:1481
 msgid "%1 is an invalid processing instruction name."
 msgstr ""
 
-#: src/xml/kernel/qxmlstream_p.h:1504
+#: src/xml/kernel/qxmlstream_p.h:1492
 msgid "Invalid processing instruction name."
 msgstr ""
 
-#: src/xml/kernel/qxmlstream_p.h:1618
+#: src/xml/kernel/qxmlstream_p.h:1606
 msgid "%1 is an invalid PUBLIC identifier."
 msgstr ""
 
-#: src/xml/kernel/qxmlstream_p.h:1668 src/xml/kernel/qxmlstream_p.h:1721
-#: src/xml/kernel/qxmlstream.cpp:1456 src/xml/kernel/qxmlstream.cpp:1468
+#: src/xml/kernel/qxmlstream_p.h:1656 src/xml/kernel/qxmlstream_p.h:1709
+#: src/xml/kernel/qxmlstream.cpp:1444 src/xml/kernel/qxmlstream.cpp:1456
 msgid "Illegal namespace declaration."
 msgstr ""
 
-#: src/xml/kernel/qxmlstream_p.h:1736
+#: src/xml/kernel/qxmlstream_p.h:1724
 msgid "Invalid XML name."
 msgstr ""
 
-#: src/xml/kernel/qxmlstream_p.h:1747 src/xml/kernel/qxmlstream.cpp:583
+#: src/xml/kernel/qxmlstream_p.h:1735 src/xml/kernel/qxmlstream.cpp:571
 msgid "Extra content at end of document."
 msgstr ""
 
-#: src/xml/kernel/qxmlstream_p.h:1759
+#: src/xml/kernel/qxmlstream_p.h:1747
 msgid "Opening and ending tag mismatch."
 msgstr ""
 
-#: src/xml/kernel/qxmlstream_p.h:1764 src/xml/kernel/qxmlstream_p.h:1825
-#: src/xml/kernel/qxmlstream_p.h:1865
+#: src/xml/kernel/qxmlstream_p.h:1752 src/xml/kernel/qxmlstream_p.h:1813
+#: src/xml/kernel/qxmlstream_p.h:1853
 msgid "Entity '%1' not declared."
 msgstr ""
 
-#: src/xml/kernel/qxmlstream_p.h:1777
+#: src/xml/kernel/qxmlstream_p.h:1765
 msgid "Reference to unparsed entity '%1'."
 msgstr ""
 
-#: src/xml/kernel/qxmlstream_p.h:1839
+#: src/xml/kernel/qxmlstream_p.h:1827
 msgid "Reference to external entity '%1' in attribute value."
 msgstr ""
 
-#: src/xml/kernel/qxmlstream_p.h:1879
+#: src/xml/kernel/qxmlstream_p.h:1867
 msgid "Invalid character reference."
 msgstr ""
 
-#: src/xml/kernel/qxmlstream.cpp:816
+#: src/xml/kernel/qxmlstream.cpp:804
 msgid "Invalid entity value."
 msgstr ""
 
-#: src/xml/kernel/qxmlstream.cpp:924
+#: src/xml/kernel/qxmlstream.cpp:912
 msgid "Invalid XML character."
 msgstr ""
 
-#: src/xml/kernel/qxmlstream.cpp:1183
+#: src/xml/kernel/qxmlstream.cpp:1171
 msgid "Sequence ']]>' not allowed in content."
 msgstr ""
 
-#: src/xml/kernel/qxmlstream.cpp:1423
+#: src/xml/kernel/qxmlstream.cpp:1411
 msgid "Namespace prefix '%1' not declared"
 msgstr ""
 
-#: src/xml/kernel/qxmlstream.cpp:1500
+#: src/xml/kernel/qxmlstream.cpp:1488
 msgid "Attribute redefined."
 msgstr ""
 
-#: src/xml/kernel/qxmlstream.cpp:1614
+#: src/xml/kernel/qxmlstream.cpp:1602
 msgid "Unexpected character '%1' in public id literal."
 msgstr ""
 
-#: src/xml/kernel/qxmlstream.cpp:1642
+#: src/xml/kernel/qxmlstream.cpp:1630
 msgid "Invalid XML version string."
 msgstr ""
 
-#: src/xml/kernel/qxmlstream.cpp:1644
+#: src/xml/kernel/qxmlstream.cpp:1632
 msgid "Unsupported XML version."
 msgstr ""
 
-#: src/xml/kernel/qxmlstream.cpp:1665
+#: src/xml/kernel/qxmlstream.cpp:1653
 msgid "The standalone pseudo attribute must appear after the encoding."
 msgstr ""
 
-#: src/xml/kernel/qxmlstream.cpp:1667
+#: src/xml/kernel/qxmlstream.cpp:1655
 msgid "%1 is an invalid encoding name."
 msgstr ""
 
-#: src/xml/kernel/qxmlstream.cpp:1674
+#: src/xml/kernel/qxmlstream.cpp:1662
 msgid "Encoding %1 is unsupported"
 msgstr ""
 
-#: src/xml/kernel/qxmlstream.cpp:1690
+#: src/xml/kernel/qxmlstream.cpp:1678
 msgid "Standalone accepts only yes or no."
 msgstr ""
 
-#: src/xml/kernel/qxmlstream.cpp:1692
+#: src/xml/kernel/qxmlstream.cpp:1680
 msgid "Invalid attribute in XML declaration."
 msgstr ""
 
-#: src/xml/kernel/qxmlstream.cpp:1708
+#: src/xml/kernel/qxmlstream.cpp:1696
 msgid "Premature end of document."
 msgstr ""
 
-#: src/xml/kernel/qxmlstream.cpp:1710
+#: src/xml/kernel/qxmlstream.cpp:1698
 msgid "Invalid document."
 msgstr ""
 
-#: src/xml/kernel/qxmlstream.cpp:1750
+#: src/xml/kernel/qxmlstream.cpp:1738
 msgid "Expected "
 msgstr ""
 
-#: src/xml/kernel/qxmlstream.cpp:1761
+#: src/xml/kernel/qxmlstream.cpp:1749
 msgid ", but got '"
 msgstr ""
 
-#: src/xml/kernel/qxmlstream.cpp:1765
+#: src/xml/kernel/qxmlstream.cpp:1753
 msgid "Unexpected '"
 msgstr ""
 
-#: src/xml/kernel/qxmlstream.cpp:1990
+#: src/xml/kernel/qxmlstream.cpp:1978
 msgid "Expected character data."
 msgstr ""

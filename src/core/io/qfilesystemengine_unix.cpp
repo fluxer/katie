@@ -1,7 +1,7 @@
 /****************************************************************************
 **
 ** Copyright (C) 2015 The Qt Company Ltd.
-** Copyright (C) 2016-2021 Ivailo Monev
+** Copyright (C) 2016 Ivailo Monev
 **
 ** This file is part of the QtCore module of the Katie Toolkit.
 **
@@ -14,18 +14,6 @@
 ** packaging of this file.  Please review the following information to
 ** ensure the GNU Lesser General Public License version 2.1 requirements
 ** will be met: http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html.
-**
-** As a special exception, The Qt Company gives you certain additional
-** rights. These rights are described in The Qt Company LGPL Exception
-** version 1.1, included in the file LGPL_EXCEPTION.txt in this package.
-**
-** GNU General Public License Usage
-** Alternatively, this file may be used under the terms of the GNU
-** General Public License version 3.0 as published by the Free Software
-** Foundation and appearing in the file LICENSE.GPL included in the
-** packaging of this file.  Please review the following information to
-** ensure the GNU General Public License version 3.0 requirements will be
-** met: http://www.gnu.org/copyleft/gpl.html.
 **
 ** $QT_END_LICENSE$
 **
@@ -145,7 +133,7 @@ QFileSystemEntry QFileSystemEngine::absoluteName(const QFileSystemEntry &entry)
 
 Q_CORE_EXPORT QString qt_resolveUserName(uint userId)
 {
-#if !defined(QT_NO_THREAD) && defined(QT_HAVE_GETPWUID_R)
+#if !defined(QT_NO_THREAD)
     static long size_max = sysconf(_SC_GETPW_R_SIZE_MAX);
     if (size_max == -1)
         size_max = 1024;
@@ -170,7 +158,7 @@ QString QFileSystemEngine::resolveUserName(uint userId)
 //static
 QString QFileSystemEngine::resolveGroupName(uint groupId)
 {
-#if !defined(QT_NO_THREAD) && defined(QT_HAVE_GETGRGID_R)
+#if !defined(QT_NO_THREAD)
     static long size_max = sysconf(_SC_GETGR_R_SIZE_MAX);
     if (size_max == -1)
         size_max = 1024;
@@ -290,7 +278,7 @@ bool QFileSystemEngine::removeDirectory(const QFileSystemEntry &entry, bool remo
             if (QT_STAT(chunk.constData(), &st) == 0) {
                 if (!S_ISDIR(st.st_mode))
                     return false;
-                if (::rmdir(chunk.constData()) != 0)
+                if (QT_RMDIR(chunk.constData()) != 0)
                     return oldslash != 0;
             } else {
                 return false;
@@ -300,7 +288,7 @@ bool QFileSystemEngine::removeDirectory(const QFileSystemEntry &entry, bool remo
         return true;
     }
     const QByteArray path = QFile::encodeName(entry.filePath());
-    return ::rmdir(path.constData()) == 0;
+    return QT_RMDIR(path.constData()) == 0;
 }
 
 //static
@@ -325,16 +313,16 @@ bool QFileSystemEngine::copyFile(const QFileSystemEntry &source, const QFileSyst
             return false;
     }
 
-    const int sourcefd = QT_OPEN(spath.constData(), O_RDONLY);
+    const int sourcefd = qt_safe_open(spath.constData(), O_RDONLY);
     if (sourcefd == -1) {
         *error = errno;
         return false;
     }
 
-    const int targetfd = QT_CREAT(tpath.constData(), st.st_mode);
+    const int targetfd = qt_safe_creat(tpath.constData(), st.st_mode);
     if (targetfd == -1) {
         *error = errno;
-        ::close(sourcefd);
+        qt_safe_close(sourcefd);
         return false;
     }
 
@@ -350,8 +338,8 @@ bool QFileSystemEngine::copyFile(const QFileSystemEntry &source, const QFileSyst
     while (sendresult != tocopy) {
         if (sendresult == -1) {
             *error = errno;
-            ::close(sourcefd);
-            ::close(targetfd);
+            qt_safe_close(sourcefd);
+            qt_safe_close(targetfd);
             return false;
         }
         tocopy -= sendresult;
@@ -367,27 +355,27 @@ bool QFileSystemEngine::copyFile(const QFileSystemEntry &source, const QFileSyst
     int sendresult = ::sendfile(sourcefd, targetfd, QT_OFF_T(0), size_t(0), Q_NULLPTR, &totalwrite, SF_SYNC);
     if (QT_OFF_T(sendresult) != totalwrite) {
         *error = errno;
-        ::close(sourcefd);
-        ::close(targetfd);
+        qt_safe_close(sourcefd);
+        qt_safe_close(targetfd);
         return false;
     }
 #else
     size_t totalwrite = 0;
     char copybuffer[QT_BUFFSIZE];
     while (QT_OFF_T(totalwrite) != tocopy) {
-        const size_t readresult = QT_READ(sourcefd, copybuffer, sizeof(copybuffer));
+        const size_t readresult = qt_safe_read(sourcefd, copybuffer, sizeof(copybuffer));
         if (readresult == -1) {
             *error = errno;
-            ::close(sourcefd);
-            ::close(targetfd);
+            qt_safe_close(sourcefd);
+            qt_safe_close(targetfd);
             return false;
         }
 
-        const size_t writeresult = QT_WRITE(targetfd, copybuffer, readresult);
+        const size_t writeresult = qt_safe_write(targetfd, copybuffer, readresult);
         if (writeresult != readresult) {
             *error = errno;
-            ::close(sourcefd);
-            ::close(targetfd);
+            qt_safe_close(sourcefd);
+            qt_safe_close(targetfd);
             return false;
         }
 
@@ -395,8 +383,8 @@ bool QFileSystemEngine::copyFile(const QFileSystemEntry &source, const QFileSyst
     }
 #endif
 
-    ::close(sourcefd);
-    ::close(targetfd);
+    qt_safe_close(sourcefd);
+    qt_safe_close(targetfd);
     return true;
 }
 
@@ -498,7 +486,7 @@ QFileSystemEntry QFileSystemEngine::currentPath()
 #else
 #define GETCWDFUNCNAME "getcwd"
     char getcwdbuffer[PATH_MAX];
-    if (::getcwd(getcwdbuffer, sizeof(getcwdbuffer))) {
+    if (QT_GETCWD(getcwdbuffer, sizeof(getcwdbuffer))) {
         result = QFileSystemEntry(QByteArray(getcwdbuffer), QFileSystemEntry::FromNativePath());
     }
 #endif // QT_HAVE_GET_CURRENT_DIR_NAME
@@ -571,43 +559,62 @@ void QFileSystemMetaData::fillFromStatBuf(const QT_STATBUF &statBuffer)
     groupId_ = statBuffer.st_gid;
 }
 
-void QFileSystemMetaData::fillFromDirEnt(const QT_DIRENT &entry)
+void QFileSystemMetaData::fillFromDirEnt(const QT_DIRENT &entry, const QFileSystemEntry::NativePath &nativePath)
 {
-#ifdef QT_HAVE_DIRENT_D_TYPE
     // ### This will clear all entry flags
-    switch (entry.d_type)
-    {
-    case DT_DIR:
-        entryFlags = QFileSystemMetaData::DirectoryType
-            | QFileSystemMetaData::ExistsAttribute;
+#ifdef QT_HAVE_DIRENT_D_TYPE
+    switch (entry.d_type) {
+        case DT_DIR: {
+            entryFlags = QFileSystemMetaData::DirectoryType
+                | QFileSystemMetaData::ExistsAttribute;
+            break;
+        }
+        case DT_BLK:
+        case DT_CHR:
+        case DT_FIFO:
+        case DT_SOCK: {
+            entryFlags = QFileSystemMetaData::SequentialType
+                | QFileSystemMetaData::ExistsAttribute;
 
-        break;
-
-    case DT_BLK:
-    case DT_CHR:
-    case DT_FIFO:
-    case DT_SOCK:
-        entryFlags = QFileSystemMetaData::SequentialType
-            | QFileSystemMetaData::ExistsAttribute;
-
-        break;
-
-    case DT_LNK:
-        entryFlags = QFileSystemMetaData::LinkType;
-        break;
-
-    case DT_REG:
-        entryFlags = QFileSystemMetaData::FileType
-            | QFileSystemMetaData::ExistsAttribute;
-
-        break;
-
-    case DT_UNKNOWN:
-    default:
+            break;
+        }
+        case DT_LNK: {
+            entryFlags = QFileSystemMetaData::LinkType;
+            break;
+        }
+        case DT_REG: {
+            entryFlags = QFileSystemMetaData::FileType
+                | QFileSystemMetaData::ExistsAttribute;
+            break;
+        }
+        case DT_UNKNOWN:
+        default: {
+            clear();
+        }
+    }
+    Q_UNUSED(nativePath);
+#else
+    Q_UNUSED(entry);
+    QT_STATBUF statBuffer;
+    if (QT_STAT(nativePath.constData(), &statBuffer) == 0) {
+        if (S_ISREG(statBuffer.st_mode)) {
+            entryFlags |= QFileSystemMetaData::FileType
+                | QFileSystemMetaData::ExistsAttribute;
+        } else if (S_ISDIR(statBuffer.st_mode)) {
+            entryFlags |= QFileSystemMetaData::DirectoryType
+                | QFileSystemMetaData::ExistsAttribute;
+        } else if (S_ISLNK(statBuffer.st_mode)) {
+            entryFlags |= QFileSystemMetaData::LinkType;
+        } else if (S_ISBLK(statBuffer.st_mode) || S_ISCHR(statBuffer.st_mode)
+            || S_ISFIFO(statBuffer.st_mode) || S_ISSOCK(statBuffer.st_mode)) {
+            entryFlags |= QFileSystemMetaData::SequentialType
+                | QFileSystemMetaData::ExistsAttribute;
+        } else {
+            clear();
+        }
+    } else {
         clear();
     }
-#else
-    Q_UNUSED(entry)
 #endif
 }
 

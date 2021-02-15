@@ -29,7 +29,7 @@ static inline uint foldCase(const uint ch, uint &last)
 
 static inline QString timeZone()
 {
-    tzset();
+    ::tzset();
     return QString::fromLocal8Bit(tzname[1]);
 }
 

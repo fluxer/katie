@@ -335,8 +335,6 @@ set_target_properties(KtDeclarative PROPERTIES
     EXPORT_NAME Declarative
 )
 
-katie_setup_pch(KtDeclarative)
-
 install(
     TARGETS KtDeclarative
     EXPORT KatieTargets ${INSTALL_TARGETS_DEFAULT_ARGS}

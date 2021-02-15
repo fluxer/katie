@@ -1,7 +1,7 @@
 /****************************************************************************
 **
 ** Copyright (C) 2015 The Qt Company Ltd.
-** Copyright (C) 2016-2021 Ivailo Monev
+** Copyright (C) 2016 Ivailo Monev
 **
 ** This file is part of the QtGui module of the Katie Toolkit.
 **
@@ -14,18 +14,6 @@
 ** packaging of this file.  Please review the following information to
 ** ensure the GNU Lesser General Public License version 2.1 requirements
 ** will be met: http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html.
-**
-** As a special exception, The Qt Company gives you certain additional
-** rights. These rights are described in The Qt Company LGPL Exception
-** version 1.1, included in the file LGPL_EXCEPTION.txt in this package.
-**
-** GNU General Public License Usage
-** Alternatively, this file may be used under the terms of the GNU
-** General Public License version 3.0 as published by the Free Software
-** Foundation and appearing in the file LICENSE.GPL included in the
-** packaging of this file.  Please review the following information to
-** ensure the GNU General Public License version 3.0 requirements will be
-** met: http://www.gnu.org/copyleft/gpl.html.
 **
 ** $QT_END_LICENSE$
 **
@@ -95,7 +83,7 @@ static bool read_xbm_header(QIODevice *device, int& w, int& h)
     // "#define .._height <num>"
     readBytes = device->readLine(buf, buflen);
     if (readBytes <= 0)
-	return false;
+        return false;
     buf[readBytes - 1] = '\0';
 
     sbuf = QString::fromLatin1(buf);
@@ -175,11 +163,11 @@ static bool read_xbm_image(QIODevice *device, QImage *outImage)
 static bool write_xbm_image(const QImage &sourceImage, QIODevice *device, const QString &fileName)
 {
     QImage image = sourceImage;
-    int	       w = image.width();
-    int	       h = image.height();
-    int	       i;
-    int        msize = fileName.length() + 100;
-    char *buf = new char[msize];
+    int    w = image.width();
+    int    h = image.height();
+    int    i;
+    int    msize = fileName.length() + 100;
+    char  *buf = new char[msize];
 
     qsnprintf(buf, msize, "#define %s_width %d\n", fileName.toAscii().data(), w);
     device->write(buf, qstrlen(buf));
@@ -194,16 +182,15 @@ static bool write_xbm_image(const QImage &sourceImage, QIODevice *device, const 
     bool invert = qGray(image.color(0)) < qGray(image.color(1));
     char hexrep[16];
     for (i=0; i<10; i++)
-	hexrep[i] = '0' + i;
+        hexrep[i] = '0' + i;
     for (i=10; i<16; i++)
-	hexrep[i] = 'a' -10 + i;
+        hexrep[i] = 'a' -10 + i;
     if (invert) {
-	char t;
-	for (i=0; i<8; i++) {
-	    t = hexrep[15-i];
-	    hexrep[15-i] = hexrep[i];
-	    hexrep[i] = t;
-	}
+        for (i=0; i<8; i++) {
+            char t = hexrep[15-i];
+            hexrep[15-i] = hexrep[i];
+            hexrep[i] = t;
+        }
     }
     int bcnt = 0;
     char *p = buf;

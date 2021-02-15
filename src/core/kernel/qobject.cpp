@@ -1,7 +1,7 @@
 /****************************************************************************
 **
 ** Copyright (C) 2015 The Qt Company Ltd.
-** Copyright (C) 2016-2021 Ivailo Monev
+** Copyright (C) 2016 Ivailo Monev
 **
 ** This file is part of the QtCore module of the Katie Toolkit.
 **
@@ -14,18 +14,6 @@
 ** packaging of this file.  Please review the following information to
 ** ensure the GNU Lesser General Public License version 2.1 requirements
 ** will be met: http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html.
-**
-** As a special exception, The Qt Company gives you certain additional
-** rights. These rights are described in The Qt Company LGPL Exception
-** version 1.1, included in the file LGPL_EXCEPTION.txt in this package.
-**
-** GNU General Public License Usage
-** Alternatively, this file may be used under the terms of the GNU
-** General Public License version 3.0 as published by the Free Software
-** Foundation and appearing in the file LICENSE.GPL included in the
-** packaging of this file.  Please review the following information to
-** ensure the GNU General Public License version 3.0 requirements will be
-** met: http://www.gnu.org/copyleft/gpl.html.
 **
 ** $QT_END_LICENSE$
 **
@@ -2757,7 +2745,7 @@ void QMetaObject::connectSlotsByName(QObject *o)
             const QObject *co = list.at(j);
             QByteArray objName = co->objectName().toAscii();
             int len = objName.length();
-            if (!len || qstrncmp(slot + 3, objName.data(), len) || slot[len+3] != '_')
+            if (!len || qstrncmp(slot + 3, objName.constData(), len) || slot[len+3] != '_')
                 continue;
             int sigIndex = co->d_func()->signalIndex(slot + len + 4);
             if (sigIndex < 0) { // search for compatible signals
@@ -2810,9 +2798,9 @@ static void queued_activate(QObject *sender, int signal, QObjectPrivate::Connect
     int nargs = 1; // include return type
     while (c->argumentTypes[nargs-1])
         ++nargs;
-    int *types = (int *) malloc(nargs*sizeof(int));
+    int *types = (int *) ::malloc(nargs * sizeof(int));
     Q_CHECK_PTR(types);
-    void **args = (void **) malloc(nargs*sizeof(void *));
+    void **args = (void **) ::malloc(nargs * QT_POINTER_SIZE);
     Q_CHECK_PTR(args);
     types[0] = 0; // return type
     args[0] = Q_NULLPTR; // return value
@@ -2861,7 +2849,7 @@ void QMetaObject::activate(QObject *sender, const QMetaObject *m, int local_sign
                                                          argv ? argv : empty_argv);
     }
 
-    Qt::HANDLE currentThreadId = QThread::currentThreadId();
+    QThread* currentThread = QThread::currentThread();
 
     QMutexLocker locker(signalSlotLock(sender));
     QObjectConnectionListVector *connectionLists = sender->d_func()->connectionLists;
@@ -2889,7 +2877,7 @@ void QMetaObject::activate(QObject *sender, const QMetaObject *m, int local_sign
                 continue;
 
             QObject * const receiver = c->receiver;
-            const bool receiverInSameThread = currentThreadId == receiver->d_func()->threadData->threadId;
+            const bool receiverInSameThread = currentThread == receiver->d_func()->threadData->thread;
 
             // determine if this connection should be sent immediately or
             // put into the event queue

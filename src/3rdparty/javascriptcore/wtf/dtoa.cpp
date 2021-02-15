@@ -85,9 +85,6 @@
  *    to store 16 bits per 32-bit int32_t when doing high-precision integer
  *    arithmetic.  Whether this speeds things up or slows things down
  *    depends on the machine and the number being converted.
- * #define Bad_float_h if your system lacks a float.h or if it does not
- *    define some or all of DBL_DIG, DBL_MAX_10_EXP, DBL_MAX_EXP,
- *    FLT_RADIX, FLT_ROUNDS, and DBL_MAX.
  * #define INFNAN_CHECK on IEEE systems to cause strtod to check for
  *    Infinity and NaN (case insensitively).  On some systems (e.g.,
  *    some HP systems), it may be necessary to #define NAN_WORD0

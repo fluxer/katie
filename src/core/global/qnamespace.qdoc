@@ -1,7 +1,7 @@
 /****************************************************************************
 **
 ** Copyright (C) 2015 The Qt Company Ltd.
-** Copyright (C) 2016-2021 Ivailo Monev
+** Copyright (C) 2016 Ivailo Monev
 **
 ** This file is part of the documentation of the Katie Toolkit.
 **
@@ -362,7 +362,6 @@
 
     \omitvalue TextLongestVariant Ensures that the longest variant is always used
            when computing the size of a multi-variant string. (Internal)
-    \omitvalue TextBypassShaping
     \omitvalue TextForceLeftToRight
     \omitvalue TextForceRightToLeft
 
@@ -577,10 +576,6 @@
            until a non-opaque pixel is found, or if you want the pixmap to
            retain an alpha channel for some other reason. If the image has no
            alpha channel this flag has no effect.
-
-    \omitvalue NoFormatConversion Don't do any format conversions on the image.
-           Can be useful when converting a QImage to a QPixmap for a one-time
-           rendering operation for example.
 */
 
 /*!
@@ -1015,43 +1010,68 @@
 /*!
     \enum Qt::Key
 
-    The key names used by Qt.
+    The key names used by Katie.
 
-    \value Key_Escape
-    \value Key_Tab
-    \value Key_Backtab
-    \omitvalue Key_BackTab
     \value Key_Backspace
-    \omitvalue Key_BackSpace
-    \value Key_Return
-    \value Key_Enter     Typically located on the keypad.
-    \value Key_Insert
-    \value Key_Delete
-    \value Key_Pause    The Pause/Break key (\note Not anything to do with pausing media)
-    \value Key_Print
-    \value Key_SysReq
+    \value Key_Tab
+    \value Key_Linefeed
     \value Key_Clear
+    \value Key_Return
+    \value Key_Pause      The Pause/Break key (\note Not anything to do with pausing media)
+    \value Key_Scroll_Lock
+    \value Key_Sys_Req
+    \value Key_Escape
+    \value Key_Delete
+    \value Key_Multi_key
+    \value Key_Codeinput
+    \value Key_SingleCandidate
+    \value Key_MultipleCandidate
+    \value Key_PreviousCandidate
+    \value Key_Kanji
+    \value Key_Muhenkan
+    \value Key_Henkan_Mode
+    \value Key_Henkan
+    \value Key_Romaji
+    \value Key_Hiragana
+    \value Key_Katakana
+    \value Key_Hiragana_Katakana
+    \value Key_Zenkaku
+    \value Key_Hankaku
+    \value Key_Zenkaku_Hankaku
+    \value Key_Touroku
+    \value Key_Massyo
+    \value Key_Kana_Lock
+    \value Key_Kana_Shift
+    \value Key_Eisu_Shift
+    \value Key_Eisu_toggle
+    \value Key_Kanji_Bangou
+    \value Key_Zen_Koho
+    \value Key_Mae_Koho
     \value Key_Home
-    \value Key_End
     \value Key_Left
     \value Key_Up
     \value Key_Right
     \value Key_Down
-    \value Key_PageUp
-    \omitvalue Key_Prior
-    \value Key_PageDown
-    \omitvalue Key_Next
-    \value Key_Shift
-    \value Key_Control    On Mac OS X, this corresponds to the Command keys.
-    \value Key_Meta       On Mac OS X, this corresponds to the Control keys.
-                          On Windows keyboards, this key is mapped to the
-                          Windows key.
-    \value Key_Alt
-    \value Key_AltGr      On Windows, when the KeyDown event for this key is
-                          sent, the Ctrl+Alt modifiers are also set.
-    \value Key_CapsLock
-    \value Key_NumLock
-    \value Key_ScrollLock
+    \value Key_Prior
+    \value Key_Page_Up
+    \value Key_Next
+    \value Key_Page_Down
+    \value Key_End
+    \value Key_Begin
+    \value Key_Select
+    \value Key_Print
+    \value Key_Execute
+    \value Key_Insert
+    \value Key_Undo
+    \value Key_Redo
+    \value Key_Menu
+    \value Key_Find
+    \value Key_Cancel
+    \value Key_Help
+    \value Key_Break
+    \value Key_Mode_switch
+    \value Key_script_switch
+    \value Key_Num_Lock
     \value Key_F1
     \value Key_F2
     \value Key_F3
@@ -1087,16 +1107,22 @@
     \value Key_F33
     \value Key_F34
     \value Key_F35
+    \value Key_Shift_L
+    \value Key_Shift_R
+    \value Key_Control_L
+    \value Key_Control_R
+    \value Key_Caps_Lock
+    \value Key_Shift_Lock
+    \value Key_Meta_L
+    \value Key_Meta_R
+    \value Key_Alt_L
+    \value Key_Alt_R
     \value Key_Super_L
     \value Key_Super_R
-    \value Key_Menu
     \value Key_Hyper_L
     \value Key_Hyper_R
-    \value Key_Help
-    \value Key_Direction_L
-    \value Key_Direction_R
+
     \value Key_Space
-    \value Key_Any
     \value Key_Exclam
     \value Key_QuoteDbl
     \value Key_NumberSign
@@ -1160,7 +1186,6 @@
     \value Key_BracketRight
     \value Key_AsciiCircum
     \value Key_Underscore
-    \value Key_QuoteLeft
     \value Key_BraceLeft
     \value Key_Bar
     \value Key_BraceRight
@@ -1214,6 +1239,7 @@
     \value Key_Icircumflex
     \value Key_Idiaeresis
     \value Key_ETH
+    \value Key_Eth
     \value Key_Ntilde
     \value Key_Ograve
     \value Key_Oacute
@@ -1221,6 +1247,7 @@
     \value Key_Otilde
     \value Key_Odiaeresis
     \value Key_multiply
+    \value Key_Oslash
     \value Key_Ooblique
     \value Key_Ugrave
     \value Key_Uacute
@@ -1228,150 +1255,90 @@
     \value Key_Udiaeresis
     \value Key_Yacute
     \value Key_THORN
+    \value Key_Thorn
     \value Key_ssharp
-    \omitvalue Key_agrave
-    \omitvalue Key_aacute
-    \omitvalue Key_acircumflex
-    \omitvalue Key_atilde
-    \omitvalue Key_adiaeresis
-    \omitvalue Key_aring
-    \omitvalue Key_ae
-    \omitvalue Key_ccedilla
-    \omitvalue Key_egrave
-    \omitvalue Key_eacute
-    \omitvalue Key_ecircumflex
-    \omitvalue Key_ediaeresis
-    \omitvalue Key_igrave
-    \omitvalue Key_iacute
-    \omitvalue Key_icircumflex
-    \omitvalue Key_idiaeresis
-    \omitvalue Key_eth
-    \omitvalue Key_ntilde
-    \omitvalue Key_ograve
-    \omitvalue Key_oacute
-    \omitvalue Key_ocircumflex
-    \omitvalue Key_otilde
-    \omitvalue Key_odiaeresis
+    \value Key_agrave
+    \value Key_aacute
+    \value Key_acircumflex
+    \value Key_atilde
+    \value Key_adiaeresis
+    \value Key_aring
+    \value Key_ae
+    \value Key_ccedilla
+    \value Key_egrave
+    \value Key_eacute
+    \value Key_ecircumflex
+    \value Key_ediaeresis
+    \value Key_igrave
+    \value Key_iacute
+    \value Key_icircumflex
+    \value Key_idiaeresis
+    \value Key_eth
+    \value Key_ntilde
+    \value Key_ograve
+    \value Key_oacute
+    \value Key_ocircumflex
+    \value Key_otilde
+    \value Key_odiaeresis
     \value Key_division
-    \omitvalue Key_oslash
-    \omitvalue Key_ugrave
-    \omitvalue Key_uacute
-    \omitvalue Key_ucircumflex
-    \omitvalue Key_udiaeresis
-    \omitvalue Key_yacute
-    \omitvalue Key_thorn
+    \value Key_oslash
+    \value Key_ooblique
+    \value Key_ugrave
+    \value Key_uacute
+    \value Key_ucircumflex
+    \value Key_udiaeresis
+    \value Key_yacute
+    \value Key_thorn
     \value Key_ydiaeresis
-    \value Key_Multi_key
-    \value Key_Codeinput
-    \value Key_SingleCandidate
-    \value Key_MultipleCandidate
-    \value Key_PreviousCandidate
-    \value Key_Mode_switch
-    \value Key_Kanji
-    \value Key_Muhenkan
-    \value Key_Henkan
-    \value Key_Romaji
-    \value Key_Hiragana
-    \value Key_Katakana
-    \value Key_Hiragana_Katakana
-    \value Key_Zenkaku
-    \value Key_Hankaku
-    \value Key_Zenkaku_Hankaku
-    \value Key_Touroku
-    \value Key_Massyo
-    \value Key_Kana_Lock
-    \value Key_Kana_Shift
-    \value Key_Eisu_Shift
-    \value Key_Eisu_toggle
-    \value Key_Hangul
-    \value Key_Hangul_Start
-    \value Key_Hangul_End
-    \value Key_Hangul_Hanja
-    \value Key_Hangul_Jamo
-    \value Key_Hangul_Romaja
-    \value Key_Hangul_Jeonja
-    \value Key_Hangul_Banja
-    \value Key_Hangul_PreHanja
-    \value Key_Hangul_PostHanja
-    \value Key_Hangul_Special
-    \value Key_Dead_Grave
-    \value Key_Dead_Acute
-    \value Key_Dead_Circumflex
-    \value Key_Dead_Tilde
-    \value Key_Dead_Macron
-    \value Key_Dead_Breve
-    \value Key_Dead_Abovedot
-    \value Key_Dead_Diaeresis
-    \value Key_Dead_Abovering
-    \value Key_Dead_Doubleacute
-    \value Key_Dead_Caron
-    \value Key_Dead_Cedilla
-    \value Key_Dead_Ogonek
-    \value Key_Dead_Iota
-    \value Key_Dead_Voiced_Sound
-    \value Key_Dead_Semivoiced_Sound
-    \value Key_Dead_Belowdot
-    \value Key_Dead_Hook
-    \value Key_Dead_Horn
+
+    \value Key_ModeLock
+    \value Key_MonBrightnessUp
+    \value Key_MonBrightnessDown
+    \value Key_KbdLightOnOff
+    \value Key_KbdBrightnessUp
+    \value Key_KbdBrightnessDown
+    \value Key_MonBrightnessCycle
+    \value Key_Standby
+    \value Key_AudioLowerVolume
+    \value Key_AudioMute
+    \value Key_AudioRaiseVolume
+    \value Key_AudioPlay
+    \value Key_AudioStop
+    \value Key_AudioPrev
+    \value Key_AudioNext
+    \value Key_HomePage
+    \value Key_Mail
+    \value Key_Start
+    \value Key_Search
+    \value Key_AudioRecord
+    \value Key_Calculator On X11 this key is not mapped for legacy reasons. Use Qt::Key_Launch1 instead.
+    \value Key_Memo
+    \value Key_ToDoList
+    \value Key_Calendar
+    \value Key_PowerDown
+    \value Key_ContrastAdjust
+    \value Key_RockerUp
+    \value Key_RockerDown
+    \value Key_RockerEnter
     \value Key_Back
     \value Key_Forward
     \value Key_Stop
     \value Key_Refresh
-    \value Key_VolumeDown
-    \value Key_VolumeMute
-    \value Key_VolumeUp
-    \value Key_BassBoost
-    \value Key_BassUp
-    \value Key_BassDown
-    \value Key_TrebleUp
-    \value Key_TrebleDown
-    \value Key_MediaPlay    A key setting the state of the media player to play
-    \value Key_MediaStop    A key setting the state of the media player to stop
-    \value Key_MediaPrevious
-    \omitvalue Key_MediaPrev
-    \value Key_MediaNext
-    \value Key_MediaRecord
-    \value Key_MediaPause   A key setting the state of the media player to pause (\note not the pause/break key)
-    \value Key_MediaTogglePlayPause   A key to toggle the play/pause state in the media player (rather than setting an absolute state)
-    \value Key_HomePage
-    \value Key_Favorites
-    \value Key_Search
-    \value Key_Standby
-    \value Key_OpenUrl
-    \value Key_LaunchMail
-    \value Key_LaunchMedia
-    \value Key_Launch0 On X11 this key is mapped to "My Computer" (XF86XK_MyComputer) key for legacy reasons.
-    \value Key_Launch1 On X11 this key is mapped to "Calculator" (XF86XK_Calculator) key for legacy reasons.
-    \value Key_Launch2 On X11 this key is mapped to XF86XK_Launch0 key for legacy reasons.
-    \value Key_Launch3 On X11 this key is mapped to XF86XK_Launch1 key for legacy reasons.
-    \value Key_Launch4 On X11 this key is mapped to XF86XK_Launch2 key for legacy reasons.
-    \value Key_Launch5 On X11 this key is mapped to XF86XK_Launch3 key for legacy reasons.
-    \value Key_Launch6 On X11 this key is mapped to XF86XK_Launch4 key for legacy reasons.
-    \value Key_Launch7 On X11 this key is mapped to XF86XK_Launch5 key for legacy reasons.
-    \value Key_Launch8 On X11 this key is mapped to XF86XK_Launch6 key for legacy reasons.
-    \value Key_Launch9 On X11 this key is mapped to XF86XK_Launch7 key for legacy reasons.
-    \value Key_LaunchA On X11 this key is mapped to XF86XK_Launch8 key for legacy reasons.
-    \value Key_LaunchB On X11 this key is mapped to XF86XK_Launch9 key for legacy reasons.
-    \value Key_LaunchC On X11 this key is mapped to XF86XK_LaunchA key for legacy reasons.
-    \value Key_LaunchD On X11 this key is mapped to XF86XK_LaunchB key for legacy reasons.
-    \value Key_LaunchE On X11 this key is mapped to XF86XK_LaunchC key for legacy reasons.
-    \value Key_LaunchF On X11 this key is mapped to XF86XK_LaunchD key for legacy reasons.
-    \value Key_LaunchG On X11 this key is mapped to XF86XK_LaunchE key for legacy reasons.
-    \value Key_LaunchH On X11 this key is mapped to XF86XK_LaunchF key for legacy reasons.
-    \value Key_MonBrightnessUp
-    \value Key_MonBrightnessDown
-    \value Key_KeyboardLightOnOff
-    \value Key_KeyboardBrightnessUp
-    \value Key_KeyboardBrightnessDown
     \value Key_PowerOff
     \value Key_WakeUp
     \value Key_Eject
     \value Key_ScreenSaver
     \value Key_WWW
-    \value Key_Memo
+    \value Key_Sleep
+    \value Key_Favorites
+    \value Key_AudioPause
+    \value Key_AudioMedia
+    \value Key_MyComputer
+    \value Key_VendorHome
     \value Key_LightBulb
     \value Key_Shop
     \value Key_History
+    \value Key_OpenURL
     \value Key_AddFavorite
     \value Key_HotLinks
     \value Key_BrightnessAdjust
@@ -1379,13 +1346,27 @@
     \value Key_Community
     \value Key_AudioRewind
     \value Key_BackForward
+    \value Key_Launch0    On X11 this key is mapped to "My Computer" (XF86XK_MyComputer) key for legacy reasons.
+    \value Key_Launch1    On X11 this key is mapped to "Calculator" (XF86XK_Calculator) key for legacy reasons.
+    \value Key_Launch2    On X11 this key is mapped to XF86XK_Launch0 key for legacy reasons.
+    \value Key_Launch3    On X11 this key is mapped to XF86XK_Launch1 key for legacy reasons.
+    \value Key_Launch4    On X11 this key is mapped to XF86XK_Launch2 key for legacy reasons.
+    \value Key_Launch5    On X11 this key is mapped to XF86XK_Launch3 key for legacy reasons.
+    \value Key_Launch6    On X11 this key is mapped to XF86XK_Launch4 key for legacy reasons.
+    \value Key_Launch7    On X11 this key is mapped to XF86XK_Launch5 key for legacy reasons.
+    \value Key_Launch8    On X11 this key is mapped to XF86XK_Launch6 key for legacy reasons.
+    \value Key_Launch9    On X11 this key is mapped to XF86XK_Launch7 key for legacy reasons.
+    \value Key_LaunchA    On X11 this key is mapped to XF86XK_Launch8 key for legacy reasons.
+    \value Key_LaunchB    On X11 this key is mapped to XF86XK_Launch9 key for legacy reasons.
+    \value Key_LaunchC    On X11 this key is mapped to XF86XK_LaunchA key for legacy reasons.
+    \value Key_LaunchD    On X11 this key is mapped to XF86XK_LaunchB key for legacy reasons.
+    \value Key_LaunchE    On X11 this key is mapped to XF86XK_LaunchC key for legacy reasons.
+    \value Key_LaunchF    On X11 this key is mapped to XF86XK_LaunchD key for legacy reasons.
     \value Key_ApplicationLeft
     \value Key_ApplicationRight
     \value Key_Book
     \value Key_CD
-    \value Key_Calculator On X11 this key is not mapped for legacy reasons. Use Qt::Key_Launch1 instead.
-    \value Key_ToDoList
-    \value Key_ClearGrab
+    \value Key_Calculater
     \value Key_Close
     \value Key_Copy
     \value Key_Cut
@@ -1403,18 +1384,22 @@
     \value Key_MenuKB
     \value Key_MenuPB
     \value Key_MySites
+    \value Key_New
     \value Key_News
     \value Key_OfficeHome
+    \value Key_Open
     \value Key_Option
     \value Key_Paste
     \value Key_Phone
-    \value Key_Calendar
     \value Key_Reply
     \value Key_Reload
     \value Key_RotateWindows
     \value Key_RotationPB
     \value Key_RotationKB
     \value Key_Save
+    \value Key_ScrollUp
+    \value Key_ScrollDown
+    \value Key_ScrollClick
     \value Key_Send
     \value Key_Spell
     \value Key_SplitScreen
@@ -1423,7 +1408,11 @@
     \value Key_Terminal
     \value Key_Tools
     \value Key_Travel
+    \value Key_UserPB
+    \value Key_User1KB
+    \value Key_User2KB
     \value Key_Video
+    \value Key_WheelButton
     \value Key_Word
     \value Key_Xfer
     \value Key_ZoomIn
@@ -1443,38 +1432,55 @@
     \value Key_AudioRandomPlay
     \value Key_Subtitle
     \value Key_AudioCycleTrack
+    \value Key_CycleAngle
+    \value Key_FrameBack
+    \value Key_FrameForward
     \value Key_Time
-    \value Key_Hibernate
     \value Key_View
     \value Key_TopMenu
-    \value Key_PowerDown
+    \value Key_Red
+    \value Key_Green
+    \value Key_Yellow
+    \value Key_Blue
     \value Key_Suspend
-    \value Key_ContrastAdjust
-    \value Key_MediaLast
-    \value Key_unknown
+    \value Key_Hibernate
+    \value Key_TouchpadToggle
+    \value Key_TouchpadOn
+    \value Key_TouchpadOff
+    \value Key_AudioMicMute
+    \value Key_Keyboard
+    \value Key_WWAN
+    \value Key_RFKill
+    \value Key_AudioPreset
+    \value Key_RotationLockToggle
+    \value Key_FullScreen
+    \value Key_Switch_VT_1
+    \value Key_Switch_VT_2
+    \value Key_Switch_VT_3
+    \value Key_Switch_VT_4
+    \value Key_Switch_VT_5
+    \value Key_Switch_VT_6
+    \value Key_Switch_VT_7
+    \value Key_Switch_VT_8
+    \value Key_Switch_VT_9
+    \value Key_Switch_VT_10
+    \value Key_Switch_VT_11
+    \value Key_Switch_VT_12
+    \value Key_Ungrab
+    \value Key_ClearGrab
+    \value Key_Next_VMode
+    \value Key_Prev_VMode
+    \value Key_LogWindowTree
+    \value Key_LogGrabInfo
 
-    \value Key_Call     A key to answer or initiate a call (see Qt::Key_ToggleCallHangup for a key to toggle current call state)
-    \value Key_Camera   A key to activate the camera shutter
-    \value Key_CameraFocus  A key to focus the camera
-    \value Key_Context1
-    \value Key_Context2
-    \value Key_Context3
-    \value Key_Context4
-    \value Key_Flip
-    \value Key_Hangup   A key to end an ongoing call (see Qt::Key_ToggleCallHangup for a key to toggle current call state)
-    \value Key_No
-    \value Key_Select
-    \value Key_Yes
-    \value Key_ToggleCallHangup A key to toggle the current call state (ie. either answer, or hangup) depending on current call state
-    \value Key_VoiceDial
-    \value Key_LastNumberRedial
+    \value Key_Shift
+    \value Key_Control
+    \value Key_Meta
+    \value Key_Alt
+    \value Key_Backtab
+    \value Key_Direction_L
+    \value Key_Direction_R
 
-    \value Key_Execute
-    \value Key_Printer
-    \value Key_Play
-    \value Key_Sleep
-    \value Key_Zoom
-    \value Key_Cancel
 
     \sa QKeyEvent::key()
 */
@@ -1825,47 +1831,6 @@
 
     \value WindowType_Mask  A mask for extracting the window type
                             part of the window flags.
-
-    Obsolete flags:
-
-    \value WMouseNoMask         Use Qt::WA_MouseNoMask instead.
-    \value WDestructiveClose    Use Qt::WA_DeleteOnClose instead.
-    \value WStaticContents      Use Qt::WA_StaticContents instead.
-    \value WGroupLeader         No longer needed.
-    \value WShowModal           Use QWidget::windowModality instead.
-    \value WNoMousePropagation  Use Qt::WA_NoMousePropagation instead.
-    \value WType_TopLevel       Use Qt::Window instead.
-    \value WType_Dialog         Use Qt::Dialog instead.
-    \value WType_Popup          Use Qt::Popup instead.
-    \value WType_Desktop        Use Qt::Desktop instead.
-    \value WType_Mask           Use Qt::WindowType_Mask instead.
-
-    \value WStyle_Customize     No longer needed.
-    \value WStyle_NormalBorder  No longer needed.
-    \value WStyle_NoBorder      Use Qt::FramelessWindowHint instead.
-    \value WStyle_Title         Use Qt::WindowTitleHint instead.
-    \value WStyle_SysMenu       Use Qt::WindowSystemMenuHint instead.
-    \value WStyle_Minimize      Use Qt::WindowMinimizeButtonHint instead.
-    \value WStyle_Maximize      Use Qt::WindowMaximizeButtonHint instead.
-    \value WStyle_MinMax        Use Qt::WindowMinMaxButtonsHint instead.
-    \value WStyle_Tool          Use Qt::Tool instead.
-    \value WStyle_StaysOnTop    Use Qt::WindowStaysOnTopHint instead.
-    \value WStyle_ContextHelp   Use Qt::WindowContextHelpButtonHint instead.
-
-    \value WPaintDesktop        No longer needed.
-    \value WPaintClever         No longer needed.
-
-    \value WX11BypassWM         Use Qt::X11BypassWindowManagerHint instead.
-
-    \value WStyle_Splash        Use Qt::SplashScreen instead.
-
-    \value WNoAutoErase         No longer needed.
-    \value WRepaintNoErase      No longer needed.
-    \value WNorthWestGravity    Use Qt::WA_StaticContents instead.
-    \value WType_Modal          Use Qt::Dialog and QWidget::windowModality instead.
-    \value WStyle_Dialog        Use Qt::Dialog instead.
-    \value WStyle_NoBorderEx    Use Qt::FramelessWindowHint instead.
-    \value WResizeNoErase       No longer needed.
 
     \sa QWidget::windowFlags, {Window Flags Example}
 */

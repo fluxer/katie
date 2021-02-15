@@ -6,7 +6,7 @@
 #  DBUS_ARCH_INCLUDES - the D-Bus message bus architecture include directory
 #  DBUS_LIBRARIES - the libraries needed to use D-Bus message bus system
 #
-# Copyright (c) 2015-2021, Ivailo Monev, <xakepa10@gmail.com>
+# Copyright (C) 2015, Ivailo Monev, <xakepa10@gmail.com>
 #
 # Redistribution and use is allowed according to the terms of the BSD license.
 
