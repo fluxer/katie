@@ -181,8 +181,6 @@ set_target_properties(KtScriptTools PROPERTIES
     EXPORT_NAME ScriptTools
 )
 
-katie_setup_pch(KtScriptTools)
-
 install(
     TARGETS KtScriptTools
     EXPORT KatieTargets ${INSTALL_TARGETS_DEFAULT_ARGS}

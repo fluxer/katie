@@ -38,8 +38,16 @@ cmake_policy(SET CMP0063 NEW)
 # LLVM linker does not have a default library search path, add some directories known to contain
 # system wide libraries. the headers search path is also incomplete
 if(CMAKE_SYSTEM_NAME MATCHES "BSD")
-    include_directories(/usr/X11R7/include /usr/pkg/include /usr/local/include /usr/include)
-    link_directories(/usr/X11R7/lib /usr/pkg/lib /usr/local/lib /usr/lib /lib)
+    foreach(incdir /usr/X11R6/include /usr/X11R7/include /usr/pkg/include /usr/local/include /usr/include)
+        if(EXISTS "${incdir}")
+            include_directories(${incdir})
+        endif()
+    endforeach()
+    foreach(linkdir /usr/X11R6/lib /usr/X11R7/lib /usr/pkg/lib /usr/local/lib /usr/lib /lib)
+        if(EXISTS "${linkdir}")
+            link_directories(${linkdir})
+        endif()
+    endforeach()
 endif()
 
 include(CheckCXXCompilerFlag)
@@ -51,7 +59,6 @@ include(CheckStructHasMember)
 include(CheckCXXSourceRuns)
 include(FeatureSummary)
 include(KatieBuildMacros)
-include(mkspecs/mkspecs.cmake)
 
 # disable some compiler warnings
 set(KATIE_NO_WARNINGS
@@ -72,11 +79,21 @@ foreach(nowarning ${KATIE_NO_WARNINGS})
     endif()
 endforeach()
 
+# https://www.gnu.org/software/libc/manual/html_node/Feature-Test-Macros.html
+# https://github.com/Kitware/CMake/blob/master/Modules/CMakeDetermineSystem.cmake
+if(CMAKE_SYSTEM_NAME MATCHES "(Linux|GNU)")
+    katie_definition(-D_LARGEFILE64_SOURCE -D_LARGEFILE_SOURCE -D_GNU_SOURCE)
+elseif(CMAKE_SYSTEM_NAME MATCHES "(FreeBSD|DragonFly)")
+    katie_definition(-D_THREAD_SAFE)
+elseif(NOT CMAKE_SYSTEM_NAME MATCHES "(OpenBSD|NetBSD|Solaris|SunOS)")
+    message(FATAL_ERROR "Unknown platform '${CMAKE_SYSTEM_NAME}'")
+endif()
+
 # mostly relevant to the build process, also stored in the version file for CMake and in qconfig.h.cmake
 set(KATIE_MAJOR "4")
-set(KATIE_MINOR "9")
-set(KATIE_MICRO "2")
-set(KATIE_HEX "0x040902")
+set(KATIE_MINOR "10")
+set(KATIE_MICRO "0")
+set(KATIE_HEX "0x041000")
 set(KATIE_VERSION "${KATIE_MAJOR}.${KATIE_MINOR}.${KATIE_MICRO}")
 
 # only for the build process
@@ -168,9 +185,6 @@ add_feature_info(benchmarks KATIE_BENCHMARKS "build automatic benchmarks")
 option(KATIE_UTILS "Build maintainance utilities" OFF)
 add_feature_info(utils KATIE_UTILS "build maintainance utilities")
 
-option(KATIE_PCH "Build components with pre-compiled header" OFF)
-add_feature_info(pch KATIE_PCH "build components with pre-compiled header")
-
 # v1.2.0+ required for compressBound()
 find_package(ZLIB 1.2.0)
 set_package_properties(ZLIB PROPERTIES
@@ -195,6 +209,15 @@ set_package_properties(ZSTD PROPERTIES
     PURPOSE "Required for compression support"
     DESCRIPTION "Fast real-time compression algorithm"
     URL "https://github.com/facebook/zstd"
+    TYPE REQUIRED
+)
+
+# v2.0+ required for json_loads() with three arguments
+find_package(Jansson 2.0)
+set_package_properties(Jansson PROPERTIES
+    PURPOSE "Required for JSON support"
+    DESCRIPTION "C library for encoding, decoding and manipulating JSON data"
+    URL "https://github.com/akheron/jansson"
     TYPE REQUIRED
 )
 
@@ -346,6 +369,14 @@ set_package_properties(ExecInfo PROPERTIES
     TYPE RECOMMENDED
 )
 
+find_package(XdgUtils)
+set_package_properties(XdgUtils PROPERTIES
+    PURPOSE "Required for desktop services"
+    DESCRIPTION "Utilities for integrating applications with the desktop environment"
+    URL "https://www.freedesktop.org/wiki/Software/xdg-utils/"
+    TYPE RUNTIME
+)
+
 # stored in qconfig.h.cmake
 check_type_size(size_t QT_POINTER_SIZE)
 
@@ -358,7 +389,6 @@ katie_check_function(getprogname "stdlib.h")
 katie_check_function(arc4random "stdlib.h")
 katie_check_function(get_current_dir_name "unistd.h")
 katie_check_function(prctl "sys/prctl.h")
-katie_check_function(feclearexcept "fenv.h")
 katie_check_function(feenableexcept "fenv.h")
 katie_check_function(madvise "sys/mman.h")
 katie_check_function(getifaddrs "ifaddrs.h")
@@ -377,7 +407,6 @@ katie_check_struct(dirent d_type "dirent.h")
 
 cmake_reset_check_state()
 set(CMAKE_REQUIRED_LIBRARIES ${CMAKE_THREAD_LIBS_INIT})
-katie_check_function(pthread_attr_setstacksize "pthread.h")
 katie_check_function(pthread_setname_np "pthread.h")
 cmake_reset_check_state()
 
@@ -465,6 +494,10 @@ if(NOT WITH_EXECINFO OR NOT EXECINFO_FOUND)
 endif()
 
 # optional and conditional features
+if(NOT CMAKE_BUILD_TYPE STREQUAL "Debug")
+    katie_definition(-DQT_NO_DEBUG)
+endif()
+
 if(NOT WITH_ACCESSIBILITY)
     katie_definition(-DQT_NO_ACCESSIBILITY)
 endif()
@@ -715,7 +748,6 @@ katie_generate_obsolete(QItemEditorCreatorBase QtGui qitemeditorfactory.h)
 katie_generate_obsolete(QItemEditorCreator QtGui qitemeditorfactory.h)
 katie_generate_obsolete(QItemSelection QtGui qitemselectionmodel.h)
 katie_generate_obsolete(QItemSelectionRange QtGui qitemselectionmodel.h)
-katie_generate_obsolete(QJsonParseError QtCore qjsondocument.h)
 katie_generate_obsolete(QKeyEvent QtGui qevent.h)
 katie_generate_obsolete(QLatin1Char QtCore qchar.h)
 katie_generate_obsolete(QLatin1String QtCore qstring.h)
@@ -870,7 +902,6 @@ katie_generate_obsolete(QTextBlockGroup QtGui qtextobject.h)
 katie_generate_obsolete(QTextBlock QtGui qtextobject.h)
 katie_generate_obsolete(QTextBlockUserData QtGui qtextobject.h)
 katie_generate_obsolete(QTextCharFormat QtGui qtextformat.h)
-katie_generate_obsolete(QTextCodecFactoryInterface QtCore qtextcodecplugin.h)
 katie_generate_obsolete(QTextDecoder QtCore qtextcodec.h)
 katie_generate_obsolete(QTextEncoder QtCore qtextcodec.h)
 katie_generate_obsolete(QTextFragment QtGui qtextobject.h)
@@ -982,12 +1013,6 @@ configure_file(
 )
 
 install(
-    DIRECTORY mkspecs
-    DESTINATION ${KATIE_CMAKE_PATH}
-    COMPONENT Devel
-)
-
-install(
     FILES
     ${CMAKE_BINARY_DIR}/KatieConfig.cmake
     ${CMAKE_BINARY_DIR}/KatieConfigVersion.cmake
@@ -1021,12 +1046,12 @@ install(
 katie_string_unwrap("${KATIE_COMPONENTS}" KATIE_COMPONENTS "Kt")
 katie_string_unwrap("${KATIE_TOOLS}" KATIE_TOOLS)
 
+# custom install targets to make packaging easier
 add_custom_target(install-devel
     COMMAND "${CMAKE_COMMAND}" -DCMAKE_INSTALL_COMPONENT=Devel -P cmake_install.cmake
     WORKING_DIRECTORY "${CMAKE_BINARY_DIR}"
 )
 
-# custom install targets to make packaging easier
 add_custom_target(install-runtime
     DEPENDS ${KATIE_COMPONENTS}
     COMMAND "${CMAKE_COMMAND}" -DCMAKE_INSTALL_COMPONENT=Runtime -P cmake_install.cmake

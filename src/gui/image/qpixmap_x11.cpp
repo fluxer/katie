@@ -1,7 +1,7 @@
 /****************************************************************************
 **
 ** Copyright (C) 2015 The Qt Company Ltd.
-** Copyright (C) 2016-2021 Ivailo Monev
+** Copyright (C) 2016 Ivailo Monev
 **
 ** This file is part of the QtGui module of the Katie Toolkit.
 **
@@ -14,18 +14,6 @@
 ** packaging of this file.  Please review the following information to
 ** ensure the GNU Lesser General Public License version 2.1 requirements
 ** will be met: http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html.
-**
-** As a special exception, The Qt Company gives you certain additional
-** rights. These rights are described in The Qt Company LGPL Exception
-** version 1.1, included in the file LGPL_EXCEPTION.txt in this package.
-**
-** GNU General Public License Usage
-** Alternatively, this file may be used under the terms of the GNU
-** General Public License version 3.0 as published by the Free Software
-** Foundation and appearing in the file LICENSE.GPL included in the
-** packaging of this file.  Please review the following information to
-** ensure the GNU General Public License version 3.0 requirements will be
-** met: http://www.gnu.org/copyleft/gpl.html.
 **
 ** $QT_END_LICENSE$
 **
@@ -186,7 +174,7 @@ QAtomicInt qt_pixmap_serial = QAtomicInt(0);
 
 QX11PixmapData::QX11PixmapData(PixelType type)
     : QPixmapData(type, X11Class), hd(0),
-      flags(Uninitialized), x11_mask(0), picture(0), mask_picture(0), hd2(0),
+      flags(NoFlags), x11_mask(0), picture(0), mask_picture(0), hd2(0),
       share_mode(QPixmap::ImplicitlyShared), pengine(0)
 {
 }
@@ -205,7 +193,7 @@ void QX11PixmapData::resize(int width, int height)
     is_null = (w <= 0 || h <= 0);
 
     if (defaultScreen >= 0 && defaultScreen != xinfo.screen()) {
-        QX11InfoData* xd = xinfo.getX11Data(true);
+        QX11InfoData* xd = xinfo.getX11Data();
         xd->screen = defaultScreen;
         xd->depth = QX11Info::appDepth(xd->screen);
         xd->cells = QX11Info::appCells(xd->screen);
@@ -291,7 +279,7 @@ void QX11PixmapData::fromImage(const QImage &img,
     }
 
     if (defaultScreen >= 0 && defaultScreen != xinfo.screen()) {
-        QX11InfoData* xd = xinfo.getX11Data(true);
+        QX11InfoData* xd = xinfo.getX11Data();
         xd->screen = defaultScreen;
         xd->depth = QX11Info::appDepth(xd->screen);
         xd->cells = QX11Info::appCells(xd->screen);
@@ -373,7 +361,7 @@ void QX11PixmapData::fromImage(const QImage &img,
             if (xinfo.x11data) {
                 xinfo.x11data->depth = d;
             } else {
-                QX11InfoData *xd = xinfo.getX11Data(true);
+                QX11InfoData *xd = xinfo.getX11Data();
                 xd->screen = QX11Info::appScreen();
                 xd->depth = d;
                 xd->cells = QX11Info::appCells();
@@ -1826,7 +1814,6 @@ QPixmap QX11PixmapData::transformed(const QTransform &transform,
     } else {                                        // color pixmap
         QX11PixmapData *x11Data = new QX11PixmapData(QPixmapData::PixmapType);
         QPixmap pm(x11Data);
-        x11Data->flags &= ~QX11PixmapData::Uninitialized;
         x11Data->xinfo = xinfo;
         x11Data->d = d;
         x11Data->w = w;
@@ -1893,7 +1880,7 @@ void QPixmap::x11SetScreen(int screen)
         return; // nothing to do
 
     if (isNull()) {
-        QX11InfoData* xd = x11Data->xinfo.getX11Data(true);
+        QX11InfoData* xd = x11Data->xinfo.getX11Data();
         xd->screen = screen;
         xd->depth = QX11Info::appDepth(screen);
         xd->cells = QX11Info::appCells(screen);
@@ -1965,8 +1952,6 @@ QPixmap QPixmap::grabWindow(WId window, int x, int y, int w, int h)
     data->resize(w, h);
 
     QPixmap pm(data);
-
-    data->flags &= ~QX11PixmapData::Uninitialized;
     pm.x11SetScreen(scr);
 
     GC gc = XCreateGC(dpy, pm.handle(), 0, 0);
@@ -2083,7 +2068,6 @@ void QX11PixmapData::copy(const QPixmapData *data, const QRect &rect)
 
     setSerialNumber(qt_pixmap_serial.fetchAndAddRelaxed(1));
 
-    flags &= ~Uninitialized;
     xinfo = x11Data->xinfo;
     d = x11Data->d;
     w = rect.width();
@@ -2211,7 +2195,7 @@ QPixmap QPixmap::fromX11Pixmap(Qt::HANDLE pixmap, QPixmap::ShareMode mode)
     data->hd = pixmap;
 
     if (defaultScreen >= 0 && defaultScreen != screen) {
-        QX11InfoData* xd = data->xinfo.getX11Data(true);
+        QX11InfoData* xd = data->xinfo.getX11Data();
         xd->screen = defaultScreen;
         xd->depth = QX11Info::appDepth(xd->screen);
         xd->cells = QX11Info::appCells(xd->screen);

@@ -12,8 +12,8 @@ There are several things you should be aware before considering Katie:
 
  - some things have changed:
   - QMake build system replaced with CMake
-  - zlib, zstd, OpenSSL, PCRE, Freetype, ICU, X11, libpng and SQLite are
-    required for building
+  - zlib, zstd, Jansson, OpenSSL, PCRE, Freetype, ICU, X11, libpng and SQLite
+    are required for building
   - OpenSSL, D-Bus and CUPS must be linked to during build
   - QtUiTools is build as shared library by default
   - moc, uic, rcc, etc. are linked to components
@@ -46,7 +46,7 @@ There are several things you should be aware before considering Katie:
   - dropped Valgrind support
 
  - some additions have been made: 
-  - JSON classes and types
+  - JSON document handler
   - standard directories handler
   - building with OpenSSL v1.1+ is possible
   - building with IODBC instead of unixODBC is possible
@@ -61,7 +61,7 @@ There are several things you should be aware before considering Katie:
   - support for generating CRC-32 checksums via qChecksum32() function
   - verification section for plugins build with Clang
   - faster alternatives to qCompress() and qUncompress()
-  - stack backtrace on assert or crash via execinfo
+  - stack backtrace on assert, crash or warning via execinfo
   - brief manual pages for all command-line tools
   - desktop files, Shell profile and dynamic linker/loader config
   - automatic async D-Bus calls based on return type, no Q_NOREPLY needed

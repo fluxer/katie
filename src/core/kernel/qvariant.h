@@ -1,7 +1,7 @@
 /****************************************************************************
 **
 ** Copyright (C) 2015 The Qt Company Ltd.
-** Copyright (C) 2016-2021 Ivailo Monev
+** Copyright (C) 2016 Ivailo Monev
 **
 ** This file is part of the QtCore module of the Katie Toolkit.
 **
@@ -14,18 +14,6 @@
 ** packaging of this file.  Please review the following information to
 ** ensure the GNU Lesser General Public License version 2.1 requirements
 ** will be met: http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html.
-**
-** As a special exception, The Qt Company gives you certain additional
-** rights. These rights are described in The Qt Company LGPL Exception
-** version 1.1, included in the file LGPL_EXCEPTION.txt in this package.
-**
-** GNU General Public License Usage
-** Alternatively, this file may be used under the terms of the GNU
-** General Public License version 3.0 as published by the Free Software
-** Foundation and appearing in the file LICENSE.GPL included in the
-** packaging of this file.  Please review the following information to
-** ensure the GNU General Public License version 3.0 requirements will be
-** met: http://www.gnu.org/copyleft/gpl.html.
 **
 ** $QT_END_LICENSE$
 **
@@ -48,9 +36,6 @@ class QDate;
 class QDateTime;
 #ifndef QT_BOOTSTRAPPED
 class QEasingCurve;
-class QJsonValue;
-class QJsonObject;
-class QJsonArray;
 class QJsonDocument;
 #endif
 class QLine;
@@ -117,9 +102,6 @@ class Q_CORE_EXPORT QVariant
         RegExp = QMetaType::QRegExp,
         Hash = QMetaType::QVariantHash,
         EasingCurve = QMetaType::QEasingCurve,
-        JsonValue = QMetaType::QJsonValue,
-        JsonObject = QMetaType::QJsonObject,
-        JsonArray = QMetaType::QJsonArray,
         JsonDocument = QMetaType::QJsonDocument,
         LastCoreType = QMetaType::LastCoreType,
 
@@ -203,9 +185,6 @@ class Q_CORE_EXPORT QVariant
 #endif
 #ifndef QT_BOOTSTRAPPED
     QVariant(const QEasingCurve &easing);
-    QVariant(const QJsonValue &jsonValue);
-    QVariant(const QJsonObject &jsonObject);
-    QVariant(const QJsonArray &jsonArray);
     QVariant(const QJsonDocument &jsonDocument);
 #endif
 
@@ -270,9 +249,6 @@ class Q_CORE_EXPORT QVariant
 #endif
 #ifndef QT_BOOTSTRAPPED
     QEasingCurve toEasingCurve() const;
-    QJsonValue toJsonValue() const;
-    QJsonObject toJsonObject() const;
-    QJsonArray toJsonArray() const;
     QJsonDocument toJsonDocument() const;
 #endif
 
@@ -345,8 +321,7 @@ class Q_CORE_EXPORT QVariant
     typedef void (*f_save)(const Private *, QDataStream &);
 #endif
     typedef bool (*f_compare)(const Private *, const Private *);
-    typedef bool (*f_convert)(const QVariant::Private *d, Type t, void *, bool *);
-    typedef bool (*f_canConvert)(const QVariant::Private *d, Type t);
+    typedef bool (*f_convert)(const QVariant::Private *d, int t, void *, bool *);
     typedef void (*f_debugStream)(QDebug, const QVariant &);
     struct Handler {
         f_construct construct;
@@ -358,7 +333,6 @@ class Q_CORE_EXPORT QVariant
 #endif
         f_compare compare;
         f_convert convert;
-        f_canConvert canConvert;
         f_debugStream debugStream;
     };
 

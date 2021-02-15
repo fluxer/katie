@@ -1,7 +1,7 @@
 /****************************************************************************
 **
 ** Copyright (C) 2015 The Qt Company Ltd.
-** Copyright (C) 2016-2021 Ivailo Monev
+** Copyright (C) 2016 Ivailo Monev
 **
 ** This file is part of the QtGui module of the Katie Toolkit.
 **
@@ -14,18 +14,6 @@
 ** packaging of this file.  Please review the following information to
 ** ensure the GNU Lesser General Public License version 2.1 requirements
 ** will be met: http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html.
-**
-** As a special exception, The Qt Company gives you certain additional
-** rights. These rights are described in The Qt Company LGPL Exception
-** version 1.1, included in the file LGPL_EXCEPTION.txt in this package.
-**
-** GNU General Public License Usage
-** Alternatively, this file may be used under the terms of the GNU
-** General Public License version 3.0 as published by the Free Software
-** Foundation and appearing in the file LICENSE.GPL included in the
-** packaging of this file.  Please review the following information to
-** ensure the GNU General Public License version 3.0 requirements will be
-** met: http://www.gnu.org/copyleft/gpl.html.
 **
 ** $QT_END_LICENSE$
 **
@@ -146,25 +134,25 @@ bool QImageData::checkForAlphaPixels() const
     bool has_alpha_pixels = false;
 
     switch (format) {
-
-    case QImage::Format_Mono:
-    case QImage::Format_MonoLSB:
-    case QImage::Format_Indexed8:
-        has_alpha_pixels = has_alpha_clut;
-        break;
-
-    case QImage::Format_ARGB32:
-    case QImage::Format_ARGB32_Premultiplied: {
-        uchar *bits = data;
-        for (int y=0; y<height && !has_alpha_pixels; ++y) {
-            for (int x=0; x<width; ++x)
-                has_alpha_pixels |= (((uint *)bits)[x] & 0xff000000) != 0xff000000;
-            bits += bytes_per_line;
+        case QImage::Format_Mono:
+        case QImage::Format_MonoLSB:
+        case QImage::Format_Indexed8: {
+            has_alpha_pixels = has_alpha_clut;
+            break;
         }
-    } break;
-
-    default:
-        break;
+        case QImage::Format_ARGB32:
+        case QImage::Format_ARGB32_Premultiplied: {
+            const uchar *bits = data;
+            for (int y=0; y<height && !has_alpha_pixels; ++y) {
+                for (int x=0; x<width; ++x)
+                    has_alpha_pixels |= (((const uint *)bits)[x] & 0xff000000) != 0xff000000;
+                bits += bytes_per_line;
+            }
+            break;
+        }
+        default: {
+            break;
+        }
     }
 
     return has_alpha_pixels;
@@ -1804,7 +1792,7 @@ static QVector<QRgb> fix_color_table(const QVector<QRgb> &ctbl, QImage::Format f
     if (format == QImage::Format_RGB32) {
         // check if the color table has alpha
         for (int i = 0; i < colorTable.size(); ++i)
-            if (qAlpha(colorTable.at(i) != 0xff))
+            if (qAlpha(colorTable.at(i)) != 255)
                 colorTable[i] = colorTable.at(i) | 0xff000000;
     } else if (format == QImage::Format_ARGB32_Premultiplied) {
         // check if the color table has alpha
@@ -4480,18 +4468,15 @@ int QImage::bitPlaneCount() const
 {
     if (!d)
         return 0;
-    int bpc = 0;
     switch (d->format) {
-    case QImage::Format_Invalid:
-        break;
-    case QImage::Format_RGB32:
-        bpc = 24;
-        break;
-    default:
-        bpc = qt_depthForFormat(d->format);
-        break;
+        case QImage::Format_Invalid:
+            return 0;
+        case QImage::Format_RGB32:
+            return 24;
+        default:
+            return qt_depthForFormat(d->format);
     }
-    return bpc;
+    Q_UNREACHABLE();
 }
 
 

@@ -1,7 +1,7 @@
 /****************************************************************************
 **
 ** Copyright (C) 2015 The Qt Company Ltd.
-** Copyright (C) 2016-2021 Ivailo Monev
+** Copyright (C) 2016 Ivailo Monev
 **
 ** This file is part of the QtCore module of the Katie Toolkit.
 **
@@ -14,18 +14,6 @@
 ** packaging of this file.  Please review the following information to
 ** ensure the GNU Lesser General Public License version 2.1 requirements
 ** will be met: http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html.
-**
-** As a special exception, The Qt Company gives you certain additional
-** rights. These rights are described in The Qt Company LGPL Exception
-** version 1.1, included in the file LGPL_EXCEPTION.txt in this package.
-**
-** GNU General Public License Usage
-** Alternatively, this file may be used under the terms of the GNU
-** General Public License version 3.0 as published by the Free Software
-** Foundation and appearing in the file LICENSE.GPL included in the
-** packaging of this file.  Please review the following information to
-** ensure the GNU General Public License version 3.0 requirements will be
-** met: http://www.gnu.org/copyleft/gpl.html.
 **
 ** $QT_END_LICENSE$
 **
@@ -55,6 +43,15 @@
 #  define QLOCALEDEBUG qDebug()
 #else
 #  define QLOCALEDEBUG if (false) qDebug()
+#endif
+
+// BSD and musl libc implementations do not reset errno and there is no
+// reliable way to check if some functions (e.g. strtoll()) errored or returned
+// a valid value if they do not reset errno
+#ifdef __GLIBC__
+#  define QLOCALE_RESET_ERRNO
+#else
+#  define QLOCALE_RESET_ERRNO errno = 0;
 #endif
 
 QT_BEGIN_NAMESPACE
@@ -2270,7 +2267,8 @@ QString QLocalePrivate::doubleToString(const QChar _zero, const QChar plus, cons
 #ifdef QT_HAVE_FCVT
             digits = QString::fromLatin1(::fcvt(d, precision, &decpt, &sign));
 #else
-            digits = QString::fromLatin1(qfcvt(d, precision, &decpt, &sign));
+            char qfcvtbuf[QECVT_BUFFSIZE];
+            digits = QString::fromLatin1(qfcvt(d, precision, &decpt, &sign, qfcvtbuf));
 #endif
         } else {
             int pr = precision;
@@ -2281,7 +2279,8 @@ QString QLocalePrivate::doubleToString(const QChar _zero, const QChar plus, cons
 #ifdef QT_HAVE_ECVT
             digits = QString::fromLatin1(::ecvt(d, pr, &decpt, &sign));
 #else
-            digits = QString::fromLatin1(qecvt(d, pr, &decpt, &sign));
+            char qecvtbuf[QECVT_BUFFSIZE];
+            digits = QString::fromLatin1(qecvt(d, pr, &decpt, &sign, qecvtbuf));
 #endif
 
             // Chop trailing zeros
@@ -2731,91 +2730,83 @@ qulonglong QLocalePrivate::stringToUnsLongLong(const QString &number, int base,
 }
 
 
-double QLocalePrivate::bytearrayToDouble(const char *num, bool *ok, bool *overflow)
+double QLocalePrivate::bytearrayToDouble(const char *num, bool *ok)
 {
-    if (ok != Q_NULLPTR)
-        *ok = true;
-    if (overflow != Q_NULLPTR)
-        *overflow = false;
-
-    if (*num == '\0') {
+    if (Q_UNLIKELY(*num == '\0')) {
         if (ok != Q_NULLPTR)
             *ok = false;
         return 0.0;
     }
 
     char *endptr;
+    QLOCALE_RESET_ERRNO
     double ret = std::strtod(num, &endptr);
     if ((ret == 0.0l && errno == ERANGE) || ret == HUGE_VAL || ret == -HUGE_VAL) {
-        // the only way strtod can fail with *endptr != '\0' on a non-empty
-        // input string is overflow
         if (ok != Q_NULLPTR)
             *ok = false;
-        if (overflow != Q_NULLPTR)
-            *overflow = *endptr != '\0';
         return 0.0;
     }
 
     if (*endptr != '\0') {
-        // we stopped at a non-digit character after converting some digits
+        // stopped at a non-digit character after converting some digits
         if (ok != Q_NULLPTR)
             *ok = false;
-        if (overflow != Q_NULLPTR)
-            *overflow = false;
         return 0.0;
     }
 
     if (ok != Q_NULLPTR)
         *ok = true;
-    if (overflow != Q_NULLPTR)
-        *overflow = false;
     return ret;
 }
 
-qlonglong QLocalePrivate::bytearrayToLongLong(const char *num, int base, bool *ok, bool *overflow)
+qlonglong QLocalePrivate::bytearrayToLongLong(const char *num, int base, bool *ok)
 {
-    if (*num == '\0') {
+    if (Q_UNLIKELY(*num == '\0')) {
         if (ok != Q_NULLPTR)
             *ok = false;
-        if (overflow != Q_NULLPTR)
-            *overflow = false;
         return 0;
     }
 
     char *endptr;
+    QLOCALE_RESET_ERRNO
     qlonglong ret = std::strtoll(num, &endptr, base);
     if ((ret == LLONG_MIN || ret == LLONG_MAX) && (errno == ERANGE || errno == EINVAL)) {
         if (ok != Q_NULLPTR)
             *ok = false;
-        if (overflow != Q_NULLPTR) {
-            // the only way qstrtoll can fail with *endptr != '\0' on a non-empty
-            // input string is overflow
-            *overflow = *endptr != '\0';
-        }
         return 0;
     }
 
     if (*endptr != '\0') {
-        // we stopped at a non-digit character after converting some digits
+        // stopped at a non-digit character after converting some digits
         if (ok != Q_NULLPTR)
             *ok = false;
-        if (overflow != Q_NULLPTR)
-            *overflow = false;
         return 0;
     }
 
     if (ok != Q_NULLPTR)
         *ok = true;
-    if (overflow != Q_NULLPTR)
-        *overflow = false;
     return ret;
 }
 
 qulonglong QLocalePrivate::bytearrayToUnsLongLong(const char *num, int base, bool *ok)
 {
+    if (Q_UNLIKELY(*num == '\0')) {
+        if (ok != Q_NULLPTR)
+            *ok = false;
+        return 0;
+    }
+
     char *endptr;
+    QLOCALE_RESET_ERRNO
     qulonglong ret = std::strtoull(num, &endptr, base);
-    if ((ret == ULLONG_MAX && (errno == ERANGE || errno == EINVAL)) || *endptr != '\0') {
+    if (ret == ULLONG_MAX && (errno == ERANGE || errno == EINVAL)) {
+        if (ok != Q_NULLPTR)
+            *ok = false;
+        return 0;
+    }
+
+    if (*endptr != '\0') {
+        // stopped at a non-digit character after converting some digits
         if (ok != Q_NULLPTR)
             *ok = false;
         return 0;
@@ -2857,7 +2848,7 @@ QString QLocale::currencySymbol(QLocale::CurrencySymbolFormat format) const
         case CurrencyDisplayName:
             return getLocaleData(d()->m_currency_display_name);
         case CurrencyIsoCode: {
-            return QString::fromUtf8(d()->m_currency_iso_code);
+            return getLocaleData(d()->m_currency_iso_code);
         }
     }
     return QString();

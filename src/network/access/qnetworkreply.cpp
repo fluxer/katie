@@ -1,7 +1,7 @@
 /****************************************************************************
 **
 ** Copyright (C) 2015 The Qt Company Ltd.
-** Copyright (C) 2016-2021 Ivailo Monev
+** Copyright (C) 2016 Ivailo Monev
 **
 ** This file is part of the QtNetwork module of the Katie Toolkit.
 **
@@ -14,18 +14,6 @@
 ** packaging of this file.  Please review the following information to
 ** ensure the GNU Lesser General Public License version 2.1 requirements
 ** will be met: http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html.
-**
-** As a special exception, The Qt Company gives you certain additional
-** rights. These rights are described in The Qt Company LGPL Exception
-** version 1.1, included in the file LGPL_EXCEPTION.txt in this package.
-**
-** GNU General Public License Usage
-** Alternatively, this file may be used under the terms of the GNU
-** General Public License version 3.0 as published by the Free Software
-** Foundation and appearing in the file LICENSE.GPL included in the
-** packaging of this file.  Please review the following information to
-** ensure the GNU General Public License version 3.0 requirements will be
-** met: http://www.gnu.org/copyleft/gpl.html.
 **
 ** $QT_END_LICENSE$
 **
@@ -560,15 +548,7 @@ QVariant QNetworkReply::attribute(QNetworkRequest::Attribute code) const
 */
 QSslConfiguration QNetworkReply::sslConfiguration() const
 {
-    QSslConfiguration config;
-
-    // determine if we support this extension
-    int id = metaObject()->indexOfMethod("sslConfigurationImplementation()");
-    if (id != -1) {
-        void *arr[] = { &config, 0 };
-        const_cast<QNetworkReply *>(this)->qt_metacall(QMetaObject::InvokeMetaMethod, id, arr);
-    }
-    return config;
+    return QSslConfiguration();
 }
 
 /*!
@@ -577,15 +557,7 @@ QSslConfiguration QNetworkReply::sslConfiguration() const
 */
 void QNetworkReply::setSslConfiguration(const QSslConfiguration &config)
 {
-    if (config.isNull())
-        return;
-
-    int id = metaObject()->indexOfMethod("setSslConfigurationImplementation(QSslConfiguration)");
-    if (id != -1) {
-        QSslConfiguration copy(config);
-        void *arr[] = { 0, &copy };
-        qt_metacall(QMetaObject::InvokeMetaMethod, id, arr);
-    }
+    Q_UNUSED(config);
 }
 
 /*!
@@ -611,14 +583,7 @@ void QNetworkReply::setSslConfiguration(const QSslConfiguration &config)
 */
 void QNetworkReply::ignoreSslErrors(const QList<QSslError> &errors)
 {
-    // do this cryptic trick, because we could not add a virtual method to this class later on
-    // since that breaks binary compatibility
-    int id = metaObject()->indexOfMethod("ignoreSslErrorsImplementation(QList<QSslError>)");
-    if (id != -1) {
-        QList<QSslError> copy(errors);
-        void *arr[] = { 0, &copy };
-        qt_metacall(QMetaObject::InvokeMetaMethod, id, arr);
-    }
+    Q_UNUSED(errors);
 }
 
 /*!

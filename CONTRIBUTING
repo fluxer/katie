@@ -25,8 +25,9 @@ for during build if they are newer than POSIX.1-2001
 (https://en.wikipedia.org/wiki/POSIX). Read any documentation that may be
 relevant to the changes you make such as manual pages for Linux
 (https://linux.die.net/man/), FreeBSD (https://www.freebsd.org/cgi/man.cgi),
-OpenBSD (https://man.openbsd.org/) and Solaris (https://docs.oracle.com/en/).
-Open Group documentation is also a good source of information
+NetBSD (https://man.netbsd.org/), OpenBSD (https://man.openbsd.org/) and
+Solaris (https://docs.oracle.com/en/). Open Group documentation is also a good
+source of information
 (https://pubs.opengroup.org/onlinepubs/9699919799/idx/head.html).
 
 ## Tests

@@ -1,7 +1,7 @@
 /****************************************************************************
 **
 ** Copyright (C) 2015 The Qt Company Ltd.
-** Copyright (C) 2016-2021 Ivailo Monev
+** Copyright (C) 2016 Ivailo Monev
 **
 ** This file is part of the QtCore module of the Katie Toolkit.
 **
@@ -14,18 +14,6 @@
 ** packaging of this file.  Please review the following information to
 ** ensure the GNU Lesser General Public License version 2.1 requirements
 ** will be met: http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html.
-**
-** As a special exception, The Qt Company gives you certain additional
-** rights. These rights are described in The Qt Company LGPL Exception
-** version 1.1, included in the file LGPL_EXCEPTION.txt in this package.
-**
-** GNU General Public License Usage
-** Alternatively, this file may be used under the terms of the GNU
-** General Public License version 3.0 as published by the Free Software
-** Foundation and appearing in the file LICENSE.GPL included in the
-** packaging of this file.  Please review the following information to
-** ensure the GNU General Public License version 3.0 requirements will be
-** met: http://www.gnu.org/copyleft/gpl.html.
 **
 ** $QT_END_LICENSE$
 **
@@ -133,11 +121,11 @@ bool QSystemSemaphorePrivate::handle(QSystemSemaphore::AccessMode mode)
     int oflag = O_CREAT | O_EXCL;
     for (int tryNum = 0, maxTries = 1; tryNum < maxTries; ++tryNum) {
         do {
-            semaphore = sem_open(semName.constData(), oflag, 0666, initialValue);
+            semaphore = ::sem_open(semName.constData(), oflag, 0666, initialValue);
         } while (semaphore == QT_SEM_FAILED && errno == EINTR);
         if (semaphore == QT_SEM_FAILED && errno == EEXIST) {
             if (mode == QSystemSemaphore::Create) {
-                if (sem_unlink(semName.constData()) == -1 && errno != ENOENT) {
+                if (::sem_unlink(semName.constData()) == -1 && errno != ENOENT) {
                     setErrorString(QLatin1String("QSystemSemaphore::handle (sem_unlink)"));
                     return false;
                 }
@@ -171,7 +159,7 @@ bool QSystemSemaphorePrivate::handle(QSystemSemaphore::AccessMode mode)
 void QSystemSemaphorePrivate::cleanHandle()
 {
     if (semaphore != QT_SEM_FAILED) {
-        if (sem_close(semaphore) == -1) {
+        if (::sem_close(semaphore) == -1) {
             setErrorString(QLatin1String("QSystemSemaphore::cleanHandle (sem_close)"));
 #ifdef QSYSTEMSEMAPHORE_DEBUG
             qDebug() << QLatin1String("QSystemSemaphore::cleanHandle sem_close failed.");
@@ -181,7 +169,7 @@ void QSystemSemaphorePrivate::cleanHandle()
     }
 
     if (createdSemaphore) {
-        if (sem_unlink(QFile::encodeName(fileName).constData()) == -1 && errno != ENOENT) {
+        if (::sem_unlink(QFile::encodeName(fileName).constData()) == -1 && errno != ENOENT) {
             setErrorString(QLatin1String("QSystemSemaphore::cleanHandle (sem_unlink)"));
 #ifdef QSYSTEMSEMAPHORE_DEBUG
             qDebug() << QLatin1String("QSystemSemaphore::cleanHandle sem_unlink failed.");
@@ -202,7 +190,7 @@ bool QSystemSemaphorePrivate::modifySemaphore(int count)
     if (count > 0) {
         int cnt = count;
         do {
-            if (sem_post(semaphore) == -1) {
+            if (::sem_post(semaphore) == -1) {
                 setErrorString(QLatin1String("QSystemSemaphore::modifySemaphore (sem_post)"));
 #ifdef QSYSTEMSEMAPHORE_DEBUG
                 qDebug() << QLatin1String("QSystemSemaphore::modify sem_post failed") << count << errno;
@@ -210,7 +198,7 @@ bool QSystemSemaphorePrivate::modifySemaphore(int count)
                 // rollback changes to preserve the SysV semaphore behavior
                 for ( ; cnt < count; ++cnt) {
                     int res;
-                    EINTR_LOOP(res, sem_wait(semaphore));
+                    EINTR_LOOP(res, ::sem_wait(semaphore));
                 }
                 return false;
             }
@@ -218,7 +206,7 @@ bool QSystemSemaphorePrivate::modifySemaphore(int count)
         } while (cnt > 0);
     } else {
         int res;
-        EINTR_LOOP(res, sem_wait(semaphore));
+        EINTR_LOOP(res, ::sem_wait(semaphore));
         if (res == -1) {
             // If the semaphore was removed be nice and create it and then modifySemaphore again
             if (errno == EINVAL || errno == EIDRM) {

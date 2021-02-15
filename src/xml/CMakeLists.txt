@@ -41,8 +41,6 @@ set_target_properties(KtXml PROPERTIES
     EXPORT_NAME Xml
 )
 
-katie_setup_pch(KtXml)
-
 install(
     TARGETS KtXml
     EXPORT KatieTargets ${INSTALL_TARGETS_DEFAULT_ARGS}

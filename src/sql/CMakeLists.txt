@@ -81,8 +81,6 @@ set_target_properties(KtSql PROPERTIES
     EXPORT_NAME Sql
 )
 
-katie_setup_pch(KtSql)
-
 install(
     TARGETS KtSql
     EXPORT KatieTargets ${INSTALL_TARGETS_DEFAULT_ARGS}

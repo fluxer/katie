@@ -1,7 +1,7 @@
 /****************************************************************************
 **
 ** Copyright (C) 2015 The Qt Company Ltd.
-** Copyright (C) 2016-2021 Ivailo Monev
+** Copyright (C) 2016 Ivailo Monev
 **
 ** This file is part of the QtGui module of the Katie Toolkit.
 **
@@ -14,18 +14,6 @@
 ** packaging of this file.  Please review the following information to
 ** ensure the GNU Lesser General Public License version 2.1 requirements
 ** will be met: http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html.
-**
-** As a special exception, The Qt Company gives you certain additional
-** rights. These rights are described in The Qt Company LGPL Exception
-** version 1.1, included in the file LGPL_EXCEPTION.txt in this package.
-**
-** GNU General Public License Usage
-** Alternatively, this file may be used under the terms of the GNU
-** General Public License version 3.0 as published by the Free Software
-** Foundation and appearing in the file LICENSE.GPL included in the
-** packaging of this file.  Please review the following information to
-** ensure the GNU General Public License version 3.0 requirements will be
-** met: http://www.gnu.org/copyleft/gpl.html.
 **
 ** $QT_END_LICENSE$
 **
@@ -1347,10 +1335,15 @@ void QRegionPrivate::prepend(const QRegionPrivate *r)
 
     if (numPrepend > 0) {
         const int newNumRects = numRects + numPrepend;
-        // move existing rectangles and prepend new rectanbles
-        for (int i = 0; i < r->rects.size(); i++) {
-            rects.insert(i, r->rects.at(i));
-        }
+        if (newNumRects > rects.size())
+            rects.resize(newNumRects);
+
+        // move existing rectangles
+        memmove(rects.data() + numPrepend, rects.constData() + numSkip,
+                numRects * sizeof(QRect));
+
+        // prepend new rectangles
+        memcpy(rects.data(), r->rects.constData(), numPrepend * sizeof(QRect));
 
         numRects = newNumRects;
     }
@@ -1382,7 +1375,8 @@ void QRegionPrivate::prepend(const QRect *r)
             const QRect *nextToFirst = (numRects > 2 ? myFirst + 2 : 0);
             if (mergeFromAbove(myFirst + 1, myFirst, nextToFirst, 0)) {
                 --numRects;
-                rects.remove(0);
+                memmove(rects.data(), rects.constData() + 1,
+                        numRects * sizeof(QRect));
             }
         }
     } else if (mergeFromAbove(myFirst, r, (numRects > 1 ? myFirst + 1 : 0), 0)) {
