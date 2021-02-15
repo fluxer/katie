@@ -1,7 +1,7 @@
 /****************************************************************************
 **
 ** Copyright (C) 2015 The Qt Company Ltd.
-** Copyright (C) 2016-2021 Ivailo Monev
+** Copyright (C) 2016 Ivailo Monev
 **
 ** This file is part of the QtCore module of the Katie Toolkit.
 **
@@ -14,18 +14,6 @@
 ** packaging of this file.  Please review the following information to
 ** ensure the GNU Lesser General Public License version 2.1 requirements
 ** will be met: http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html.
-**
-** As a special exception, The Qt Company gives you certain additional
-** rights. These rights are described in The Qt Company LGPL Exception
-** version 1.1, included in the file LGPL_EXCEPTION.txt in this package.
-**
-** GNU General Public License Usage
-** Alternatively, this file may be used under the terms of the GNU
-** General Public License version 3.0 as published by the Free Software
-** Foundation and appearing in the file LICENSE.GPL included in the
-** packaging of this file.  Please review the following information to
-** ensure the GNU General Public License version 3.0 requirements will be
-** met: http://www.gnu.org/copyleft/gpl.html.
 **
 ** $QT_END_LICENSE$
 **
@@ -41,10 +29,6 @@
    can be used like #if (QT_VERSION >= QT_VERSION_CHECK(4, 4, 0))
 */
 #define QT_VERSION_CHECK(major, minor, patch) ((major<<16)|(minor<<8)|(patch))
-
-#define QT_PACKAGEDATE_STR "YYYY-MM-DD"
-
-#define QT_PACKAGE_TAG ""
 
 /*
    The architechture, must be one of: (QT_ARCH_x)
@@ -260,9 +244,8 @@ QT_USE_NAMESPACE
 #define Q_NULLPTR nullptr
 #define Q_DECL_CONSTEXPR constexpr
 
-#define Q_CONSTRUCTOR_FUNCTION0(AFUNC) \
-    static const int AFUNC ## __init_variable__ = AFUNC();
-#define Q_CONSTRUCTOR_FUNCTION(AFUNC) Q_CONSTRUCTOR_FUNCTION0(AFUNC)
+#define Q_CONSTRUCTOR_FUNCTION(AFUNC) \
+    static const int __init_variable__ ## AFUNC = AFUNC();
 
 #define Q_DESTRUCTOR_FUNCTION0(AFUNC) \
     class AFUNC ## __dest_class__ { \
@@ -437,7 +420,7 @@ typedef double qreal;
 class Q_CORE_EXPORT QSysInfo {
 public:
     enum Sizes {
-        WordSize = (sizeof(void *)<<3)
+        WordSize = (QT_POINTER_SIZE << 3)
     };
 
     enum Endian {
@@ -549,7 +532,7 @@ public:
     static TYPE *NAME()                                              \
     {                                                                \
         static TYPE thisVariable;                                    \
-        static QGlobalStatic<TYPE > thisGlobalStatic(0);             \
+        static QGlobalStatic<TYPE > thisGlobalStatic(Q_NULLPTR);     \
         if (!thisGlobalStatic.pointer) {                             \
             TYPE *x = thisGlobalStatic.pointer = &thisVariable;      \
             INITIALIZER;                                             \
@@ -725,24 +708,6 @@ static inline bool qIsNull(float f)
 }
 
 /*
-   Compilers which follow outdated template instantiation rules
-   require a class to have a comparison operator to exist when
-   a QList of this type is instantiated. It's not actually
-   used in the list, though. Hence the dummy implementation.
-   Just in case other code relies on it we better trigger a warning
-   mandating a real implementation.
-*/
-#ifdef Q_FULL_TEMPLATE_INSTANTIATION
-#  define Q_DUMMY_COMPARISON_OPERATOR(C) \
-    bool operator==(const C&) const { \
-        qWarning(#C"::operator==(const "#C"&) was called"); \
-        return false; \
-    }
-#else
-#  define Q_DUMMY_COMPARISON_OPERATOR(C)
-#endif
-
-/*
    QTypeInfo     - type trait functionality
 */
 template <typename T>
@@ -753,7 +718,7 @@ public:
         isPointer = false,
         isComplex = true,
         isStatic = true,
-        isLarge = (sizeof(T)>sizeof(void*))
+        isLarge = (sizeof(T) > QT_POINTER_SIZE)
     };
 };
 
@@ -791,7 +756,7 @@ public: \
     enum { \
         isComplex = (((FLAGS) & Q_PRIMITIVE_TYPE) == 0), \
         isStatic = (((FLAGS) & (Q_MOVABLE_TYPE | Q_PRIMITIVE_TYPE)) == 0), \
-        isLarge = (sizeof(TYPE)>sizeof(void*)), \
+        isLarge = (sizeof(TYPE) > QT_POINTER_SIZE), \
         isPointer = false \
     }; \
     static inline const char *name() { return #TYPE; } \
@@ -853,11 +818,9 @@ class Q_CORE_EXPORT QFlag
 {
     int i;
 public:
-    inline QFlag(int i);
+    inline QFlag(int ai) : i(ai) {}
     inline operator int() const { return i; }
 };
-
-inline QFlag::QFlag(int ai) : i(ai) {}
 
 class Q_CORE_EXPORT QIncompatibleFlag
 {
@@ -868,7 +831,6 @@ public:
 };
 
 inline QIncompatibleFlag::QIncompatibleFlag(int ai) : i(ai) {}
-
 
 #ifndef Q_NO_TYPESAFE_FLAGS
 

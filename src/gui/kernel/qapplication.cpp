@@ -1,7 +1,7 @@
 /****************************************************************************
 **
 ** Copyright (C) 2015 The Qt Company Ltd.
-** Copyright (C) 2016-2021 Ivailo Monev
+** Copyright (C) 2016 Ivailo Monev
 **
 ** This file is part of the QtGui module of the Katie Toolkit.
 **
@@ -14,18 +14,6 @@
 ** packaging of this file.  Please review the following information to
 ** ensure the GNU Lesser General Public License version 2.1 requirements
 ** will be met: http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html.
-**
-** As a special exception, The Qt Company gives you certain additional
-** rights. These rights are described in The Qt Company LGPL Exception
-** version 1.1, included in the file LGPL_EXCEPTION.txt in this package.
-**
-** GNU General Public License Usage
-** Alternatively, this file may be used under the terms of the GNU
-** General Public License version 3.0 as published by the Free Software
-** Foundation and appearing in the file LICENSE.GPL included in the
-** packaging of this file.  Please review the following information to
-** ensure the GNU General Public License version 3.0 requirements will be
-** met: http://www.gnu.org/copyleft/gpl.html.
 **
 ** $QT_END_LICENSE$
 **
@@ -317,11 +305,8 @@ QApplicationPrivate::~QApplicationPrivate()
     qapplication_xyz.cpp file.
 */
 
-void qt_init(QApplicationPrivate *priv, int type
-#ifdef Q_WS_X11
-              , Display *display = 0, Qt::HANDLE visual = 0, Qt::HANDLE colormap = 0
-#endif
-   );
+void qt_init(QApplicationPrivate *priv, Display *display,
+             Qt::HANDLE visual, Qt::HANDLE colormap);
 void qt_cleanup();
 
 Qt::MouseButtons QApplicationPrivate::mouse_buttons = Qt::NoButton;
@@ -357,7 +342,6 @@ int QApplicationPrivate::wheel_scroll_lines = 3;         // number of lines to s
 #else
 int QApplicationPrivate::wheel_scroll_lines = 0;
 #endif
-bool qt_is_gui_used;
 bool qt_in_tab_key_event = false;
 static int drag_time = 500;
 static int drag_distance = 4;
@@ -392,7 +376,7 @@ QWidgetList *qt_modal_stack = Q_NULLPTR;                     // stack of modal w
 void QApplicationPrivate::process_cmdline()
 {
     // process platform-indep command line
-    if (!qt_is_gui_used || !argc)
+    if (qt_appType == QApplication::Tty || !argc)
         return;
 
     for (int i=1; i<argc; i++) { // if you add anything here, modify QCoreApplication::arguments()
@@ -495,10 +479,6 @@ void QApplicationPrivate::process_cmdline()
         \o  -display \e display, sets the X display (default is $DISPLAY).
         \o  -geometry \e geometry, sets the client geometry of the first window
             that is shown.
-        \o  -fn or \c -font \e font, defines the application font. The font
-            should be specified using an X logical font description. Note that
-            this option is ignored when Qt is built with fontconfig support enabled.
-        \o  -name \e name, sets the application name.
         \o  -title \e title, sets the application title.
         \o  -visual \c TrueColor, forces the application to use a TrueColor
             visual on an 8-bit display.
@@ -555,11 +535,10 @@ void QApplicationPrivate::construct(Display *dpy, Qt::HANDLE visual, Qt::HANDLE 
 {
     initResources();
 
-    qt_is_gui_used = (qt_appType != QApplication::Tty);
     process_cmdline();
 
     // Must be called before initializing
-    qt_init(this, qt_appType, dpy, visual, cmap);
+    qt_init(this, dpy, visual, cmap);
 
     QWidgetPrivate::mapper = new QWidgetMapper;
     QWidgetPrivate::allWidgets = new QWidgetSet;
@@ -578,14 +557,8 @@ void QApplicationPrivate::construct(Display *dpy, Qt::HANDLE visual, Qt::HANDLE 
     if (qgetenv("QT_USE_NATIVE_WINDOWS").toInt() > 0)
         q->setAttribute(Qt::AA_NativeWindows);
 
-    if (qt_is_gui_used)
+    if (qt_appType != QApplication::Tty)
         initializeMultitouch();
-
-#ifndef QT_NO_LIBRARY
-    //make sure the plugin is loaded
-    if (qt_is_gui_used)
-        qt_guiPlatformPlugin();
-#endif
 }
 
 #if defined(Q_WS_X11)
@@ -660,7 +633,7 @@ QApplication::Type QApplication::type()
     Returns the active popup widget.
 
     A popup widget is a special top-level widget that sets the \c
-    Qt::WType_Popup widget flag, e.g. the QMenu widget. When the application
+    Qt::Popup widget flag, e.g. the QMenu widget. When the application
     opens a popup widget, all events are sent to the popup. Normal widgets and
     modal widgets cannot be accessed before the popup widget is closed.
 
@@ -776,7 +749,7 @@ QApplication::~QApplication()
 #endif
 
 #ifndef QT_NO_DRAGANDDROP
-    if (qt_is_gui_used)
+    if (qt_appType != QApplication::Tty)
         delete QDragManager::self();
 #endif
 
@@ -936,7 +909,7 @@ QStyle *QApplication::style()
 {
     if (QApplicationPrivate::app_style)
         return QApplicationPrivate::app_style;
-    if (!qt_is_gui_used) {
+    if (qt_appType == QApplication::Tty) {
         Q_ASSERT(!"No style available in non-gui applications!");
         return 0;
     }

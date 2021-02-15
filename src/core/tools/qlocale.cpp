@@ -1,7 +1,7 @@
 /****************************************************************************
 **
 ** Copyright (C) 2015 The Qt Company Ltd.
-** Copyright (C) 2016-2021 Ivailo Monev
+** Copyright (C) 2016 Ivailo Monev
 **
 ** This file is part of the QtCore module of the Katie Toolkit.
 **
@@ -14,18 +14,6 @@
 ** packaging of this file.  Please review the following information to
 ** ensure the GNU Lesser General Public License version 2.1 requirements
 ** will be met: http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html.
-**
-** As a special exception, The Qt Company gives you certain additional
-** rights. These rights are described in The Qt Company LGPL Exception
-** version 1.1, included in the file LGPL_EXCEPTION.txt in this package.
-**
-** GNU General Public License Usage
-** Alternatively, this file may be used under the terms of the GNU
-** General Public License version 3.0 as published by the Free Software
-** Foundation and appearing in the file LICENSE.GPL included in the
-** packaging of this file.  Please review the following information to
-** ensure the GNU General Public License version 3.0 requirements will be
-** met: http://www.gnu.org/copyleft/gpl.html.
 **
 ** $QT_END_LICENSE$
 **
@@ -55,6 +43,15 @@
 #  define QLOCALEDEBUG qDebug()
 #else
 #  define QLOCALEDEBUG if (false) qDebug()
+#endif
+
+// BSD and musl libc implementations do not reset errno and there is no
+// reliable way to check if some functions (e.g. strtoll()) errored or returned
+// a valid value if they do not reset errno
+#ifdef __GLIBC__
+#  define QLOCALE_RESET_ERRNO
+#else
+#  define QLOCALE_RESET_ERRNO errno = 0;
 #endif
 
 QT_BEGIN_NAMESPACE
@@ -2742,14 +2739,15 @@ double QLocalePrivate::bytearrayToDouble(const char *num, bool *ok)
     }
 
     char *endptr;
+    QLOCALE_RESET_ERRNO
     double ret = std::strtod(num, &endptr);
-    if (Q_UNLIKELY((ret == 0.0l && errno == ERANGE) || ret == HUGE_VAL || ret == -HUGE_VAL)) {
+    if ((ret == 0.0l && errno == ERANGE) || ret == HUGE_VAL || ret == -HUGE_VAL) {
         if (ok != Q_NULLPTR)
             *ok = false;
         return 0.0;
     }
 
-    if (Q_UNLIKELY(*endptr != '\0')) {
+    if (*endptr != '\0') {
         // stopped at a non-digit character after converting some digits
         if (ok != Q_NULLPTR)
             *ok = false;
@@ -2770,14 +2768,15 @@ qlonglong QLocalePrivate::bytearrayToLongLong(const char *num, int base, bool *o
     }
 
     char *endptr;
+    QLOCALE_RESET_ERRNO
     qlonglong ret = std::strtoll(num, &endptr, base);
-    if (Q_UNLIKELY((ret == LLONG_MIN || ret == LLONG_MAX) && (errno == ERANGE || errno == EINVAL))) {
+    if ((ret == LLONG_MIN || ret == LLONG_MAX) && (errno == ERANGE || errno == EINVAL)) {
         if (ok != Q_NULLPTR)
             *ok = false;
         return 0;
     }
 
-    if (Q_UNLIKELY(*endptr != '\0')) {
+    if (*endptr != '\0') {
         // stopped at a non-digit character after converting some digits
         if (ok != Q_NULLPTR)
             *ok = false;
@@ -2798,14 +2797,15 @@ qulonglong QLocalePrivate::bytearrayToUnsLongLong(const char *num, int base, boo
     }
 
     char *endptr;
+    QLOCALE_RESET_ERRNO
     qulonglong ret = std::strtoull(num, &endptr, base);
-    if (Q_UNLIKELY(ret == ULLONG_MAX && (errno == ERANGE || errno == EINVAL))) {
+    if (ret == ULLONG_MAX && (errno == ERANGE || errno == EINVAL)) {
         if (ok != Q_NULLPTR)
             *ok = false;
         return 0;
     }
 
-    if (Q_UNLIKELY(*endptr != '\0')) {
+    if (*endptr != '\0') {
         // stopped at a non-digit character after converting some digits
         if (ok != Q_NULLPTR)
             *ok = false;

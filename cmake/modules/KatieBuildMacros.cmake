@@ -1,5 +1,13 @@
-# Copyright (c) 2015-2021, Ivailo Monev, <xakepa10@gmail.com>
+# Copyright (C) 2015, Ivailo Monev, <xakepa10@gmail.com>
 # Redistribution and use is allowed according to the terms of the BSD license.
+
+# a function to append definitions to KATIE_DEFINITIONS which is stored in
+# KatieConfig.cmake and pkg-config files as interface definitions and add
+# definitions to the current directory scope
+function(KATIE_DEFINITION DEF)
+    set(KATIE_DEFINITIONS ${KATIE_DEFINITIONS} ${DEF} ${ARGN} PARENT_SCOPE)
+    add_definitions(${DEF} ${ARGN})
+endfunction()
 
 # a function to check for header presence, if header is found a definition is
 # added
@@ -16,8 +24,8 @@ endfunction()
 # a function to check for C function/definition, works for external functions
 function(KATIE_CHECK_DEFINED FORDEFINITION FROMHEADER)
     # see comment in top-level CMake file
-    set(CMAKE_REQUIRED_INCLUDES /usr/X11R7/include /usr/pkg/include /usr/local/include /usr/include)
-    set(CMAKE_REQUIRED_LINK_OPTIONS -L/usr/X11R7/lib -L/usr/pkg/lib -L/usr/local/lib -L/usr/lib -L/lib)
+    set(CMAKE_REQUIRED_INCLUDES /usr/X11R6/include /usr/X11R7/include /usr/pkg/include /usr/local/include /usr/include)
+    set(CMAKE_REQUIRED_LINK_OPTIONS -L/usr/X11R6/lib -L/usr/X11R7/lib -L/usr/pkg/lib -L/usr/local/lib -L/usr/lib -L/lib)
     check_cxx_source_compiles(
         "
 #include <stdio.h>
@@ -281,15 +289,14 @@ endfunction()
 # target properties
 macro(KATIE_SETUP_OBJECT FORTARGET)
     get_target_property(target_pic ${FORTARGET} POSITION_INDEPENDENT_CODE)
-    if(CMAKE_POSITION_INDEPENDENT_CODE OR target_pic)
-        foreach(objtarget ${ARGN})
+
+    foreach(objtarget ${ARGN})
+        if(CMAKE_POSITION_INDEPENDENT_CODE OR target_pic)
             set_target_properties(${objtarget} PROPERTIES
                 POSITION_INDEPENDENT_CODE TRUE
             )
-        endforeach()
-    endif()
+        endif()
 
-    foreach(objtarget ${ARGN})
         get_target_property(object_definitions ${objtarget} COMPILE_DEFINITIONS)
         get_target_property(object_includes ${objtarget} INCLUDE_DIRECTORIES)
         if(object_definitions)
@@ -297,17 +304,6 @@ macro(KATIE_SETUP_OBJECT FORTARGET)
         endif()
         target_include_directories(${FORTARGET} PRIVATE ${object_includes})
     endforeach()
-endmacro()
-
-# a macro to setup pre-compiled header for target
-macro(KATIE_SETUP_PCH FORTARGET)
-    if(KATIE_PCH)
-        if (NOT CMAKE_VERSION VERSION_LESS "3.16.0")
-            target_precompile_headers(${FORTARGET} PRIVATE "${CMAKE_SOURCE_DIR}/src/core/qt_pch.h")
-        else()
-            message(FATAL_ERROR "Pre-compiled headers option requires CMake v3.16+")
-        endif()
-    endif()
 endmacro()
 
 # a macro to remove conditional code from headers which is only relevant to the

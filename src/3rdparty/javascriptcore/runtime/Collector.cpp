@@ -397,7 +397,7 @@ void NEVER_INLINE Heap::markCurrentThreadConservativelyInternal(MarkStack& markS
     markConservatively(markStack, stackPointer, stackBase);
 }
 
-#define REGISTER_BUFFER_ALIGNMENT Q_DECL_ALIGN(sizeof(void*))
+#define REGISTER_BUFFER_ALIGNMENT Q_DECL_ALIGN(QT_POINTER_SIZE)
 
 void Heap::markCurrentThreadConservatively(MarkStack& markStack)
 {

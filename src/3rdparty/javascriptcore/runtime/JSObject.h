@@ -202,7 +202,7 @@ namespace JSC {
         void allocatePropertyStorageInline(size_t oldSize, size_t newSize);
         bool isUsingInlineStorage() const { return m_structure->isUsingInlineStorage(); }
 
-        static const unsigned inlineStorageCapacity = sizeof(EncodedJSValue) == 2 * sizeof(void*) ? 4 : 3;
+        static const unsigned inlineStorageCapacity = sizeof(EncodedJSValue) == 2 * QT_POINTER_SIZE ? 4 : 3;
         static const unsigned nonInlineBaseStorageCapacity = 16;
 
         static PassRefPtr<Structure> createStructure(JSValue prototype)

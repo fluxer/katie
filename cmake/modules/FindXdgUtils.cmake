@@ -4,7 +4,7 @@
 #  XDGUTILS_FOUND - system has xdg-utils
 #  XDGUTILS_OPEN - the xdg-open binary
 #
-# Copyright (c) 2021, Ivailo Monev, <xakepa10@gmail.com>
+# Copyright (C) 2021, Ivailo Monev, <xakepa10@gmail.com>
 #
 # Redistribution and use is allowed according to the terms of the BSD license.
 
