@@ -1,7 +1,7 @@
 /****************************************************************************
 **
 ** Copyright (C) 2015 The Qt Company Ltd.
-** Copyright (C) 2016-2021 Ivailo Monev
+** Copyright (C) 2016 Ivailo Monev
 **
 ** This file is part of the QtCore module of the Katie Toolkit.
 **
@@ -15,24 +15,11 @@
 ** ensure the GNU Lesser General Public License version 2.1 requirements
 ** will be met: http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html.
 **
-** As a special exception, The Qt Company gives you certain additional
-** rights. These rights are described in The Qt Company LGPL Exception
-** version 1.1, included in the file LGPL_EXCEPTION.txt in this package.
-**
-** GNU General Public License Usage
-** Alternatively, this file may be used under the terms of the GNU
-** General Public License version 3.0 as published by the Free Software
-** Foundation and appearing in the file LICENSE.GPL included in the
-** packaging of this file.  Please review the following information to
-** ensure the GNU General Public License version 3.0 requirements will be
-** met: http://www.gnu.org/copyleft/gpl.html.
-**
 ** $QT_END_LICENSE$
 **
 ****************************************************************************/
 
 #include "qdatastream.h"
-#include "qdatastream_p.h"
 
 #if !defined(QT_NO_DATASTREAM)
 #include "qbuffer.h"
@@ -224,7 +211,6 @@ QT_BEGIN_NAMESPACE
   QDataStream member functions
  *****************************************************************************/
 
-#undef  CHECK_STREAM_PRECOND
 #ifndef QT_NO_DEBUG
 #define CHECK_STREAM_PRECOND(retVal) \
     if (!dev) { \
@@ -253,14 +239,14 @@ QT_BEGIN_NAMESPACE
 */
 
 QDataStream::QDataStream()
+    : dev(Q_NULLPTR),
+    owndev(false),
+    noswap(QSysInfo::ByteOrder == QSysInfo::BigEndian),
+    byteorder(QDataStream::BigEndian),
+    ver(QDataStream::Qt_Default),
+    q_status(QDataStream::Ok),
+    floatingPrecision(QDataStream::DoublePrecision)
 {
-    d = Q_NULLPTR;
-    dev = 0;
-    owndev = false;
-    byteorder = BigEndian;
-    ver = QDataStream::Qt_Default;
-    noswap = QSysInfo::ByteOrder == QSysInfo::BigEndian;
-    q_status = Ok;
 }
 
 /*!
@@ -276,14 +262,14 @@ QDataStream::QDataStream()
 */
 
 QDataStream::QDataStream(QIODevice *device)
+    : dev(device),
+    owndev(false),
+    noswap(QSysInfo::ByteOrder == QSysInfo::BigEndian),
+    byteorder(QDataStream::BigEndian),
+    ver(QDataStream::Qt_Default),
+    q_status(QDataStream::Ok),
+    floatingPrecision(QDataStream::DoublePrecision)
 {
-    d = Q_NULLPTR;
-    dev = device;                                // set device
-    owndev = false;
-    byteorder = BigEndian;                        // default byte order
-    ver = QDataStream::Qt_Default;
-    noswap = QSysInfo::ByteOrder == QSysInfo::BigEndian;
-    q_status = Ok;
 }
 
 
@@ -301,19 +287,20 @@ QDataStream::QDataStream(QIODevice *device)
 */
 
 QDataStream::QDataStream(QByteArray *a, QIODevice::OpenMode flags)
+    : dev(Q_NULLPTR),
+    owndev(true),
+    noswap(QSysInfo::ByteOrder == QSysInfo::BigEndian),
+    byteorder(QDataStream::BigEndian),
+    ver(QDataStream::Qt_Default),
+    q_status(QDataStream::Ok),
+    floatingPrecision(QDataStream::DoublePrecision)
 {
-    d = Q_NULLPTR;
     QBuffer *buf = new QBuffer(a);
 #ifndef QT_NO_QOBJECT
     buf->blockSignals(true);
 #endif
     buf->open(flags);
     dev = buf;
-    owndev = true;
-    byteorder = BigEndian;
-    ver = QDataStream::Qt_Default;
-    noswap = QSysInfo::ByteOrder == QSysInfo::BigEndian;
-    q_status = Ok;
 }
 
 /*!
@@ -325,8 +312,14 @@ QDataStream::QDataStream(QByteArray *a, QIODevice::OpenMode flags)
     is created to wrap the byte array.
 */
 QDataStream::QDataStream(const QByteArray &a)
+    : dev(Q_NULLPTR),
+    owndev(true),
+    noswap(QSysInfo::ByteOrder == QSysInfo::BigEndian),
+    byteorder(QDataStream::BigEndian),
+    ver(QDataStream::Qt_Default),
+    q_status(QDataStream::Ok),
+    floatingPrecision(QDataStream::DoublePrecision)
 {
-    d = Q_NULLPTR;
     QBuffer *buf = new QBuffer;
 #ifndef QT_NO_QOBJECT
     buf->blockSignals(true);
@@ -334,11 +327,6 @@ QDataStream::QDataStream(const QByteArray &a)
     buf->setData(a);
     buf->open(QIODevice::ReadOnly);
     dev = buf;
-    owndev = true;
-    byteorder = BigEndian;
-    ver = QDataStream::Qt_Default;
-    noswap = QSysInfo::ByteOrder == QSysInfo::BigEndian;
-    q_status = Ok;
 }
 
 /*!
@@ -354,7 +342,6 @@ QDataStream::~QDataStream()
 {
     if (owndev)
         delete dev;
-    delete d;
 }
 
 
@@ -409,9 +396,7 @@ bool QDataStream::atEnd() const
 */
 QDataStream::FloatingPointPrecision QDataStream::floatingPointPrecision() const
 {
-    if (!d)
-        return QDataStream::DoublePrecision;
-    return d->floatingPointPrecision;
+    return floatingPrecision;
 }
 
 /*!
@@ -433,9 +418,7 @@ QDataStream::FloatingPointPrecision QDataStream::floatingPointPrecision() const
 */
 void QDataStream::setFloatingPointPrecision(QDataStream::FloatingPointPrecision precision)
 {
-    if (!d)
-        d = new QDataStreamPrivate();
-    d->floatingPointPrecision = precision;
+    floatingPrecision = precision;
 }
 
 /*!
@@ -515,10 +498,11 @@ void QDataStream::setByteOrder(ByteOrder bo)
     This enum provides symbolic synonyms for the data serialization
     format version numbers.
 
-    \value Qt_4_6 Version 12 (Qt 4.6, Qt 4.7, Qt 4.8, Katie 4.9)
+    \value Qt_4_6 Version 12 (Qt 4.6, Qt 4.7, Qt 4.8, Katie 4.9, Katie 4.10)
     \value Qt_4_7 Same as Qt_4_6.
     \value Qt_4_8 Same as Qt_4_6.
     \value Qt_4_9 Same as Qt_4_6.
+    \value Qt_4_10 Same as Qt_4_6.
     \value Qt_Default
 
     \sa setVersion(), version()

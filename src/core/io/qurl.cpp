@@ -1,7 +1,7 @@
 /****************************************************************************
 **
 ** Copyright (C) 2015 The Qt Company Ltd.
-** Copyright (C) 2016-2021 Ivailo Monev
+** Copyright (C) 2016 Ivailo Monev
 **
 ** This file is part of the QtCore module of the Katie Toolkit.
 **
@@ -14,18 +14,6 @@
 ** packaging of this file.  Please review the following information to
 ** ensure the GNU Lesser General Public License version 2.1 requirements
 ** will be met: http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html.
-**
-** As a special exception, The Qt Company gives you certain additional
-** rights. These rights are described in The Qt Company LGPL Exception
-** version 1.1, included in the file LGPL_EXCEPTION.txt in this package.
-**
-** GNU General Public License Usage
-** Alternatively, this file may be used under the terms of the GNU
-** General Public License version 3.0 as published by the Free Software
-** Foundation and appearing in the file LICENSE.GPL included in the
-** packaging of this file.  Please review the following information to
-** ensure the GNU General Public License version 3.0 requirements will be
-** met: http://www.gnu.org/copyleft/gpl.html.
 **
 ** $QT_END_LICENSE$
 **
@@ -270,19 +258,17 @@ Q_GLOBAL_STATIC(QIDNA, qGlobalIDNA);
 #define QURL_HASFLAG(a, b) (((a) & (b)) == (b))
 
 struct QUrlErrorInfo {
-    inline QUrlErrorInfo() : _source(0), _message(0), _expected(0), _found(0)
+    inline QUrlErrorInfo() : _source(0), _message(0), _found(0)
     { }
 
     const char *_source;
     const char *_message;
-    char _expected;
     char _found;
 
-    inline void setParams(const char *source, const char *message, char expected, char found)
+    inline void setParams(const char *source, const char *message, char found)
     {
         _source = source;
         _message = message;
-        _expected = expected;
         _found = found;
     }
 };
@@ -991,44 +977,46 @@ static void QT_FASTCALL _fragment(const char **ptr, QUrlParseData *parseData)
 }
 
 QUrlPrivate::QUrlPrivate()
+    : ref(1),
+    port(-1),
+    parsingMode(QUrl::TolerantMode),
+    hasQuery(false),
+    hasFragment(false),
+    isValid(false),
+    isHostValid(true),
+    valueDelimiter('='),
+    pairDelimiter('&'),
+    stateFlags(0)
 {
-    ref = 1;
-    port = -1;
-    isValid = false;
-    isHostValid = true;
-    parsingMode = QUrl::TolerantMode;
-    valueDelimiter = '=';
-    pairDelimiter = '&';
-    stateFlags = 0;
-    hasFragment = false;
-    hasQuery = false;
 }
 
 // Called by normalized() and detach(). Must hold copy.mutex.
 QUrlPrivate::QUrlPrivate(const QUrlPrivate &copy)
-    : scheme(copy.scheme),
-      userName(copy.userName),
-      password(copy.password),
-      host(copy.host),
-      path(copy.path),
-      query(copy.query),
-      fragment(copy.fragment),
-      encodedOriginal(copy.encodedOriginal),
-      encodedUserName(copy.encodedUserName),
-      encodedPassword(copy.encodedPassword),
-      encodedPath(copy.encodedPath),
-      encodedFragment(copy.encodedFragment),
-      port(copy.port),
-      parsingMode(copy.parsingMode),
-      hasQuery(copy.hasQuery),
-      hasFragment(copy.hasFragment),
-      isValid(copy.isValid),
-      isHostValid(copy.isHostValid),
-      valueDelimiter(copy.valueDelimiter),
-      pairDelimiter(copy.pairDelimiter),
-      stateFlags(copy.stateFlags),
-      encodedNormalized(copy.encodedNormalized)
-{ ref = 1; }
+    : ref(1),
+    scheme(copy.scheme),
+    userName(copy.userName),
+    password(copy.password),
+    host(copy.host),
+    path(copy.path),
+    query(copy.query),
+    fragment(copy.fragment),
+    encodedOriginal(copy.encodedOriginal),
+    encodedUserName(copy.encodedUserName),
+    encodedPassword(copy.encodedPassword),
+    encodedPath(copy.encodedPath),
+    encodedFragment(copy.encodedFragment),
+    port(copy.port),
+    parsingMode(copy.parsingMode),
+    hasQuery(copy.hasQuery),
+    hasFragment(copy.hasFragment),
+    isValid(copy.isValid),
+    isHostValid(copy.isHostValid),
+    valueDelimiter(copy.valueDelimiter),
+    pairDelimiter(copy.pairDelimiter),
+    stateFlags(copy.stateFlags),
+    encodedNormalized(copy.encodedNormalized)
+{
+}
 
 QString QUrlPrivate::canonicalHost() const
 {
@@ -1392,13 +1380,13 @@ void QUrlPrivate::validate() const
             that->isValid = false;
             that->errorInfo.setParams(0, QT_TRANSLATE_NOOP(QUrl, "expected empty host, username,"
                                                            "port and password"),
-                                      0, 0);
+                                      0);
         }
     } else if (scheme == QLatin1String("ftp") || scheme == QLatin1String("http")) {
         if (host.isEmpty() && !(path.isEmpty() && encodedPath.isEmpty())) {
             that->isValid = false;
             that->errorInfo.setParams(0, QT_TRANSLATE_NOOP(QUrl, "the host is empty, but not the path"),
-                                      0, 0);
+                                      0);
         }
     }
 }
@@ -1407,11 +1395,11 @@ void QUrlPrivate::parse(ParseOptions parseOptions) const
 {
     // Caller must lock mutex first
     QUrlPrivate *that = const_cast<QUrlPrivate *>(this);
-    that->errorInfo.setParams(0, 0, 0, 0);
+    that->errorInfo.setParams(0, 0, 0);
     if (encodedOriginal.isEmpty()) {
         that->isValid = false;
         that->errorInfo.setParams(0, QT_TRANSLATE_NOOP(QUrl, "empty"),
-                                  0, 0);
+                                  0);
         QURL_SETFLAG(that->stateFlags, Validated | Parsed);
         return;
     }
@@ -1436,7 +1424,7 @@ void QUrlPrivate::parse(ParseOptions parseOptions) const
         that->isValid = false;
         char ch = *((*ptr)++);
         that->errorInfo.setParams(*ptr, QT_TRANSLATE_NOOP(QUrl, "unexpected URL scheme"),
-                                  0, ch);
+                                  ch);
         QURL_SETFLAG(that->stateFlags, Validated | Parsed);
 #if defined (QURL_DEBUG)
         qDebug("QUrlPrivate::parse(), unrecognized: %c%s", ch, *ptr);
@@ -1462,7 +1450,7 @@ void QUrlPrivate::parse(ParseOptions parseOptions) const
     } else if (ch != '\0') {
         that->isValid = false;
         that->errorInfo.setParams(*ptr, QT_TRANSLATE_NOOP(QUrl, "expected end of URL"),
-                                  0, ch);
+                                  ch);
         QURL_SETFLAG(that->stateFlags, Validated | Parsed);
 #if defined (QURL_DEBUG)
         qDebug("QUrlPrivate::parse(), unrecognized: %c%s", ch, *ptr);
@@ -1733,17 +1721,11 @@ QString QUrlPrivate::createErrorString() const
         }
     }
 
-    if (errorInfo._expected) {
-        errorString += QLatin1String(QT_TRANSLATE_NOOP(QUrl, ": expected \'"));
-        errorString += QLatin1Char(errorInfo._expected);
-        errorString += QLatin1String(QT_TRANSLATE_NOOP(QUrl, "\'"));
-    } else {
-        errorString += QLatin1String(QT_TRANSLATE_NOOP(QUrl, ": "));
-        if (isHostValid)
-            errorString += QLatin1String(errorInfo._message);
-        else
-            errorString += QLatin1String(QT_TRANSLATE_NOOP(QUrl, "invalid hostname"));
-    }
+    errorString += QLatin1String(QT_TRANSLATE_NOOP(QUrl, ": "));
+    if (isHostValid)
+        errorString += QLatin1String(errorInfo._message);
+    else
+        errorString += QLatin1String(QT_TRANSLATE_NOOP(QUrl, "invalid hostname"));
     if (errorInfo._found) {
         errorString += QLatin1String(QT_TRANSLATE_NOOP(QUrl, ", but found \'"));
         errorString += QLatin1Char(errorInfo._found);
@@ -3503,9 +3485,9 @@ QString QUrl::fromAce(const QByteArray &domain)
     const QString utf8 = QString::fromUtf8(domain);
     UErrorCode error = U_ZERO_ERROR;
     UIDNAInfo info = UIDNA_INFO_INITIALIZER;
-    QString result(domain.size() * 4, Qt::Uninitialized);
+    QString result(utf8.size() * 4, Qt::Uninitialized);
     const int idnaresult = uidna_nameToUnicode(globalidna,
-        reinterpret_cast<const UChar*>(utf8.constData()), utf8.size(),
+        reinterpret_cast<const UChar*>(utf8.unicode()), utf8.size(),
         reinterpret_cast<UChar*>(result.data()), result.size(),
         &info, &error);
 

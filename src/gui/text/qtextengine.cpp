@@ -1,7 +1,7 @@
 /****************************************************************************
 **
 ** Copyright (C) 2015 The Qt Company Ltd.
-** Copyright (C) 2016-2021 Ivailo Monev
+** Copyright (C) 2016 Ivailo Monev
 **
 ** This file is part of the QtGui module of the Katie Toolkit.
 **
@@ -14,18 +14,6 @@
 ** packaging of this file.  Please review the following information to
 ** ensure the GNU Lesser General Public License version 2.1 requirements
 ** will be met: http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html.
-**
-** As a special exception, The Qt Company gives you certain additional
-** rights. These rights are described in The Qt Company LGPL Exception
-** version 1.1, included in the file LGPL_EXCEPTION.txt in this package.
-**
-** GNU General Public License Usage
-** Alternatively, this file may be used under the terms of the GNU
-** General Public License version 3.0 as published by the Free Software
-** Foundation and appearing in the file LICENSE.GPL included in the
-** packaging of this file.  Please review the following information to
-** ensure the GNU General Public License version 3.0 requirements will be
-** met: http://www.gnu.org/copyleft/gpl.html.
 **
 ** $QT_END_LICENSE$
 **
@@ -1284,7 +1272,7 @@ void QTextEngine::itemize() const
     QBidiControl control(rtl);
 
     if (ignore) {
-        memset(analysis, 0, length*sizeof(QScriptAnalysis));
+        ::memset(analysis, 0, length * sizeof(QScriptAnalysis));
         if (option.textDirection() == Qt::RightToLeft) {
             for (int i = 0; i < length; ++i)
                 analysis[i].bidiLevel = 1;
@@ -1969,9 +1957,9 @@ QTextEngine::LayoutData::LayoutData(const QString &str, void **stack_memory, int
 {
     allocated = _allocated;
 
-    int space_charAttributes = sizeof(HB_CharAttributes)*string.length()/sizeof(void*) + 1;
-    int space_logClusters = sizeof(unsigned short)*string.length()/sizeof(void*) + 1;
-    available_glyphs = ((int)allocated - space_charAttributes - space_logClusters)*(int)sizeof(void*)/(int)QGlyphLayout::spaceNeededForGlyphLayout(1);
+    int space_charAttributes = sizeof(HB_CharAttributes) * string.length() / QT_POINTER_SIZE + 1;
+    int space_logClusters = sizeof(unsigned short) * string.length() / QT_POINTER_SIZE + 1;
+    available_glyphs = (allocated - space_charAttributes - space_logClusters) * QT_POINTER_SIZE / QGlyphLayout::spaceNeededForGlyphLayout(1);
 
     if (available_glyphs < str.length()) {
         // need to allocate on the heap
@@ -1988,7 +1976,7 @@ QTextEngine::LayoutData::LayoutData(const QString &str, void **stack_memory, int
         void *m = memory + space_charAttributes + space_logClusters;
         glyphLayout = QGlyphLayout(reinterpret_cast<char *>(m), str.length());
         glyphLayout.clear();
-        memset(memory, 0, space_charAttributes*sizeof(void *));
+        ::memset(memory, 0, space_charAttributes * QT_POINTER_SIZE);
     }
     used = 0;
     hasBidi = false;
@@ -1999,7 +1987,7 @@ QTextEngine::LayoutData::LayoutData(const QString &str, void **stack_memory, int
 QTextEngine::LayoutData::~LayoutData()
 {
     if (!memory_on_stack)
-        free(memory);
+        ::free(memory);
     memory = 0;
 }
 
@@ -2011,9 +1999,9 @@ bool QTextEngine::LayoutData::reallocate(int totalGlyphs)
         return true;
     }
 
-    int space_charAttributes = sizeof(HB_CharAttributes)*string.length()/sizeof(void*) + 1;
-    int space_logClusters = sizeof(unsigned short)*string.length()/sizeof(void*) + 1;
-    int space_glyphs = QGlyphLayout::spaceNeededForGlyphLayout(totalGlyphs)/sizeof(void*) + 2;
+    int space_charAttributes = sizeof(HB_CharAttributes) * string.length() / QT_POINTER_SIZE + 1;
+    int space_logClusters = sizeof(unsigned short) * string.length() / QT_POINTER_SIZE + 1;
+    int space_glyphs = QGlyphLayout::spaceNeededForGlyphLayout(totalGlyphs) / QT_POINTER_SIZE + 2;
 
     int newAllocated = space_charAttributes + space_glyphs + space_logClusters;
     // These values can be negative if the length of string/glyphs causes overflow,
@@ -2024,13 +2012,13 @@ bool QTextEngine::LayoutData::reallocate(int totalGlyphs)
         return false;
     }
 
-    void **newMem = (void **)::realloc(memory_on_stack ? 0 : memory, newAllocated*sizeof(void *));
+    void **newMem = (void **)::realloc(memory_on_stack ? 0 : memory, newAllocated * QT_POINTER_SIZE);
     if (!newMem) {
         layoutState = LayoutFailed;
         return false;
     }
     if (memory_on_stack)
-        memcpy(newMem, memory, allocated*sizeof(void *));
+        memcpy(newMem, memory, allocated * QT_POINTER_SIZE);
     memory = newMem;
     memory_on_stack = false;
 
@@ -2041,7 +2029,7 @@ bool QTextEngine::LayoutData::reallocate(int totalGlyphs)
 
     const int space_preGlyphLayout = space_charAttributes + space_logClusters;
     if (allocated < space_preGlyphLayout)
-        memset(memory + allocated, 0, (space_preGlyphLayout - allocated)*sizeof(void *));
+        memset(memory + allocated, 0, (space_preGlyphLayout - allocated) * QT_POINTER_SIZE);
 
     glyphLayout.grow(reinterpret_cast<char *>(m), totalGlyphs);
 

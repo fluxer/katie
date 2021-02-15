@@ -422,7 +422,6 @@ set(GUI_HEADERS
     ${CMAKE_CURRENT_SOURCE_DIR}/painting/qcolormap.h
     ${CMAKE_CURRENT_SOURCE_DIR}/painting/qcssutil_p.h
     ${CMAKE_CURRENT_SOURCE_DIR}/painting/qdrawutil.h
-    ${CMAKE_CURRENT_SOURCE_DIR}/painting/qgraphicssystem_p.h
     ${CMAKE_CURRENT_SOURCE_DIR}/painting/qmatrix.h
     ${CMAKE_CURRENT_SOURCE_DIR}/painting/qmemrotate_p.h
     ${CMAKE_CURRENT_SOURCE_DIR}/painting/qoutlinemapper_p.h
@@ -464,20 +463,15 @@ set(GUI_HEADERS
     ${CMAKE_CURRENT_SOURCE_DIR}/painting/qdatabuffer_p.h
     ${CMAKE_CURRENT_SOURCE_DIR}/painting/qpen_p.h
     ${CMAKE_CURRENT_SOURCE_DIR}/painting/qfixed_p.h
-    ${CMAKE_CURRENT_SOURCE_DIR}/painting/qgraphicssystem_raster_p.h
-    ${CMAKE_CURRENT_SOURCE_DIR}/painting/qgraphicssystemfactory_p.h
-    ${CMAKE_CURRENT_SOURCE_DIR}/painting/qgraphicssystemplugin_p.h
     ${CMAKE_CURRENT_SOURCE_DIR}/painting/qwindowsurface_raster_p.h
     ${CMAKE_CURRENT_SOURCE_DIR}/painting/qrgb.h
     ${CMAKE_CURRENT_SOURCE_DIR}/painting/qprinterinfo_unix_p.h
     ${CMAKE_CURRENT_SOURCE_DIR}/painting/qpaintengine_x11_p.h
-    ${CMAKE_CURRENT_SOURCE_DIR}/painting/qwindowsurface_x11_p.h
     ${CMAKE_CURRENT_SOURCE_DIR}/styles/qstyle.h
     ${CMAKE_CURRENT_SOURCE_DIR}/styles/qstyle_p.h
     ${CMAKE_CURRENT_SOURCE_DIR}/styles/qstylefactory.h
     ${CMAKE_CURRENT_SOURCE_DIR}/styles/qstyleoption.h
     ${CMAKE_CURRENT_SOURCE_DIR}/styles/qstyleplugin.h
-    ${CMAKE_CURRENT_SOURCE_DIR}/styles/qcommonstylepixmaps_p.h
     ${CMAKE_CURRENT_SOURCE_DIR}/styles/qcommonstyle.h
     ${CMAKE_CURRENT_SOURCE_DIR}/styles/qcommonstyle_p.h
     ${CMAKE_CURRENT_SOURCE_DIR}/styles/qstylehelper_p.h
@@ -781,7 +775,6 @@ set(GUI_SOURCES
     ${CMAKE_CURRENT_SOURCE_DIR}/painting/qcolor_p.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/painting/qcssutil.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/painting/qdrawutil.cpp
-    ${CMAKE_CURRENT_SOURCE_DIR}/painting/qgraphicssystem.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/painting/qmatrix.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/painting/qoutlinemapper.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/painting/qpaintdevice.cpp
@@ -810,15 +803,11 @@ set(GUI_SOURCES
     ${CMAKE_CURRENT_SOURCE_DIR}/painting/qpaintengine_raster.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/painting/qdrawhelper.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/painting/qbackingstore.cpp
-    ${CMAKE_CURRENT_SOURCE_DIR}/painting/qgraphicssystem_raster.cpp
-    ${CMAKE_CURRENT_SOURCE_DIR}/painting/qgraphicssystemfactory.cpp
-    ${CMAKE_CURRENT_SOURCE_DIR}/painting/qgraphicssystemplugin.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/painting/qwindowsurface_raster.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/painting/qprinterinfo_unix.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/painting/qgrayraster.c
     ${CMAKE_CURRENT_SOURCE_DIR}/painting/qcolormap_x11.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/painting/qpaintengine_x11.cpp
-    ${CMAKE_CURRENT_SOURCE_DIR}/painting/qwindowsurface_x11.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/styles/qstyle.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/styles/qstylefactory.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/styles/qstyleoption.cpp
@@ -1033,13 +1022,8 @@ katie_unity_exclude(
     ${CMAKE_CURRENT_SOURCE_DIR}/painting/qbackingstore.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/painting/qcolor.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/painting/qcolormap_x11.cpp
-    ${CMAKE_CURRENT_SOURCE_DIR}/painting/qgraphicssystem.cpp
-    ${CMAKE_CURRENT_SOURCE_DIR}/painting/qgraphicssystem_raster.cpp
-    ${CMAKE_CURRENT_SOURCE_DIR}/painting/qgraphicssystemfactory.cpp
-    ${CMAKE_CURRENT_SOURCE_DIR}/painting/qgraphicssystemplugin.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/painting/qpaintengine_x11.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/painting/qwindowsurface_raster.cpp
-    ${CMAKE_CURRENT_SOURCE_DIR}/painting/qwindowsurface_x11.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/text/qfont.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/text/qfontengine_x11.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/text/qfont_x11.cpp
@@ -1062,8 +1046,6 @@ set_target_properties(KtGui PROPERTIES
     SOVERSION ${KATIE_VERSION}
     EXPORT_NAME Gui
 )
-
-katie_setup_pch(KtGui)
 
 install(
     TARGETS KtGui

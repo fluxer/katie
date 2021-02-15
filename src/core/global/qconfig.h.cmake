@@ -1,7 +1,7 @@
 /****************************************************************************
 **
 ** Copyright (C) 2015 The Qt Company Ltd.
-** Copyright (C) 2016-2021 Ivailo Monev
+** Copyright (C) 2016 Ivailo Monev
 **
 ** This file is part of the QtCore module of the Katie Toolkit.
 **
@@ -14,18 +14,6 @@
 ** packaging of this file.  Please review the following information to
 ** ensure the GNU Lesser General Public License version 2.1 requirements
 ** will be met: http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html.
-**
-** As a special exception, The Qt Company gives you certain additional
-** rights. These rights are described in The Qt Company LGPL Exception
-** version 1.1, included in the file LGPL_EXCEPTION.txt in this package.
-**
-** GNU General Public License Usage
-** Alternatively, this file may be used under the terms of the GNU
-** General Public License version 3.0 as published by the Free Software
-** Foundation and appearing in the file LICENSE.GPL included in the
-** packaging of this file.  Please review the following information to
-** ensure the GNU General Public License version 3.0 requirements will be
-** met: http://www.gnu.org/copyleft/gpl.html.
 **
 ** $QT_END_LICENSE$
 **
@@ -100,6 +88,7 @@
 #define QT_NO_IMAGE_TEXT
 #define QT_NO_IMAGEFORMAT_MNG
 #define QT_NO_TEXTODFWRITER
+#define QT_NO_TEXTCODECPLUGIN
 
 // Not supported, used to bootstrap
 #cmakedefine QT_NO_QOBJECT
@@ -291,7 +280,6 @@
 #cmakedefine QT_NO_TEXTBROWSER
 #cmakedefine QT_NO_TEXTCODE
 #cmakedefine QT_NO_TEXTCODEC
-#cmakedefine QT_NO_TEXTCODECPLUGIN
 #cmakedefine QT_NO_TEXTCONTROL
 #cmakedefine QT_NO_TEXTDATE
 #cmakedefine QT_NO_TEXTEDIT
@@ -322,6 +310,11 @@
 #cmakedefine QT_NO_XMLSTREAM
 #cmakedefine QT_NO_XMLSTREAMREADER
 #cmakedefine QT_NO_XMLSTREAMWRITER
+
+// Debugging
+#if defined(QT_NO_TEXTSTREAM) && !defined(QT_NO_DEBUG_STREAM)
+#  define QT_NO_DEBUG_STREAM
+#endif
 
 // Future
 #if !defined(QT_NO_QFUTURE) && defined(QT_NO_CONCURRENT)
@@ -496,11 +489,6 @@
 // QtSvg module
 #if !defined(QT_NO_SVG) && (defined(QT_NO_XMLSTREAMREADER) || defined(QT_NO_CSSPARSER))
 #  define QT_NO_SVG
-#endif
-
-// QTextCodecPlugin
-#if !defined(QT_NO_TEXTCODECPLUGIN) && (defined(QT_NO_TEXTCODEC) || defined(QT_NO_LIBRARY))
-#  define QT_NO_TEXTCODECPLUGIN
 #endif
 
 // QColorDialog
@@ -737,6 +725,5 @@
 #if !defined(QT_NO_PRINTPREVIEWDIALOG) && (defined(QT_NO_PRINTPREVIEWWIDGET) || defined(QT_NO_PRINTDIALOG) || defined(QT_NO_TOOLBAR))
 #  define QT_NO_PRINTPREVIEWDIALOG
 #endif
-
 
 #endif

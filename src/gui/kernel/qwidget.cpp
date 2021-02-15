@@ -1,7 +1,7 @@
 /****************************************************************************
 **
 ** Copyright (C) 2015 The Qt Company Ltd.
-** Copyright (C) 2016-2021 Ivailo Monev
+** Copyright (C) 2016 Ivailo Monev
 **
 ** This file is part of the QtGui module of the Katie Toolkit.
 **
@@ -14,18 +14,6 @@
 ** packaging of this file.  Please review the following information to
 ** ensure the GNU Lesser General Public License version 2.1 requirements
 ** will be met: http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html.
-**
-** As a special exception, The Qt Company gives you certain additional
-** rights. These rights are described in The Qt Company LGPL Exception
-** version 1.1, included in the file LGPL_EXCEPTION.txt in this package.
-**
-** GNU General Public License Usage
-** Alternatively, this file may be used under the terms of the GNU
-** General Public License version 3.0 as published by the Free Software
-** Foundation and appearing in the file LICENSE.GPL included in the
-** packaging of this file.  Please review the following information to
-** ensure the GNU General Public License version 3.0 requirements will be
-** met: http://www.gnu.org/copyleft/gpl.html.
 **
 ** $QT_END_LICENSE$
 **
@@ -49,9 +37,6 @@
 #include "qvariant.h"
 #include "qwidget.h"
 #include "qstyleoption.h"
-#ifndef QT_NO_ACCESSIBILITY
-# include "qaccessible.h"
-#endif
 #include "qpainter.h"
 #include "qtooltip.h"
 #include "qwhatsthis.h"
@@ -59,18 +44,11 @@
 #include "qstylesheetstyle_p.h"
 #include "qstyle_p.h"
 #include "qfileinfo.h"
-
-#if defined(Q_WS_X11)
-# include "qpaintengine_x11_p.h"
-# include "qx11info_x11.h"
-#endif
-
 #include "qgraphicseffect_p.h"
 #include "qwindowsurface_p.h"
 #include "qbackingstore_p.h"
 #include "qpaintengine_raster_p.h"
-
-
+#include "qwindowsurface_raster_p.h"
 #include "qwidget_p.h"
 #include "qaction_p.h"
 #include "qlayout_p.h"
@@ -80,9 +58,16 @@
 #include "QtGui/qabstractscrollarea.h"
 #include "qabstractscrollarea_p.h"
 #include "qevent_p.h"
-
-#include "qgraphicssystem_p.h"
 #include "qgesturemanager_p.h"
+
+#ifndef QT_NO_ACCESSIBILITY
+# include "qaccessible.h"
+#endif
+
+#if defined(Q_WS_X11)
+# include "qpaintengine_x11_p.h"
+# include "qx11info_x11.h"
+#endif
 
 
 // widget/widget data creation count
@@ -252,11 +237,7 @@ QWidgetPrivate::~QWidgetPrivate()
 QWindowSurface *QWidgetPrivate::createDefaultWindowSurface()
 {
     Q_Q(QWidget);
-
-    if (QApplicationPrivate::graphics_system) {
-        return QApplicationPrivate::graphics_system->createWindowSurface(q);
-    }
-    return createDefaultWindowSurface_sys();
+    return new QRasterWindowSurface(q);
 }
 
 /*!
@@ -2086,8 +2067,6 @@ WId QWidget::effectiveWinId() const
 
     The style sheet contains a textual description of customizations to the
     widget's style, as described in the \l{Qt Style Sheets} document.
-
-    Since Qt 4.5, Qt style sheets fully supports Mac OS X.
 
     \warning Qt style sheets are currently not supported for custom QStyle
     subclasses. We plan to address this in some future release.
@@ -4762,7 +4741,6 @@ void QWidgetPrivate::render(QPaintDevice *target, const QPoint &targetOffset,
     if (paintRegion.isEmpty())
         return;
 
-#ifndef Q_WS_MAC
     QPainter *oldSharedPainter = inRenderWithPainter ? sharedPainter() : 0;
 
     // Use the target's shared painter if set (typically set when doing
@@ -4775,7 +4753,6 @@ void QWidgetPrivate::render(QPaintDevice *target, const QPoint &targetOffset,
                 setSharedPainter(targetPainter);
         }
     }
-#endif
 
     // Use the target's redirected device if set and adjust offset and paint
     // region accordingly. This is typically the case when people call render
@@ -4817,17 +4794,12 @@ void QWidgetPrivate::render(QPaintDevice *target, const QPoint &targetOffset,
         return;
     }
 
-#ifndef Q_WS_MAC
     // Render via backingstore.
     drawWidget(target, paintRegion, offset, flags, sharedPainter());
 
     // Restore shared painter.
     if (oldSharedPainter)
         setSharedPainter(oldSharedPainter);
-#else
-    // Render via backingstore (no shared painter).
-    drawWidget(target, paintRegion, offset, flags, 0);
-#endif
 }
 
 void QWidgetPrivate::paintSiblingsRecursive(QPaintDevice *pdev, const QObjectList& siblings, int index, const QRegion &rgn,
@@ -8703,15 +8675,6 @@ void QWidget::setParent(QWidget *parent, Qt::WindowFlags f)
             QChildEvent e(QEvent::ChildAdded, this);
             QApplication::sendEvent(parent, &e);
         }
-
-//### already hidden above ---> must probably do something smart on the mac
-// #ifdef Q_WS_MAC
-//             extern bool qt_mac_is_macdrawer(const QWidget *); //qwidget_mac.cpp
-//             if(!qt_mac_is_macdrawer(q)) //special case
-//                 q->setAttribute(Qt::WA_WState_Hidden);
-// #else
-//             q->setAttribute(Qt::WA_WState_Hidden);
-//#endif
 
         if (parent && d->sendChildEvents && d->polished) {
             QChildEvent e(QEvent::ChildPolished, this);

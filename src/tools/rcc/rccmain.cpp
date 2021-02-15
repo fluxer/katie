@@ -1,7 +1,7 @@
 /****************************************************************************
 **
 ** Copyright (C) 2015 The Qt Company Ltd.
-** Copyright (C) 2016-2021 Ivailo Monev
+** Copyright (C) 2016 Ivailo Monev
 **
 ** This file is part of the tools applications of the Katie Toolkit.
 **
@@ -14,18 +14,6 @@
 ** packaging of this file.  Please review the following information to
 ** ensure the GNU Lesser General Public License version 2.1 requirements
 ** will be met: http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html.
-**
-** As a special exception, The Qt Company gives you certain additional
-** rights. These rights are described in The Qt Company LGPL Exception
-** version 1.1, included in the file LGPL_EXCEPTION.txt in this package.
-**
-** GNU General Public License Usage
-** Alternatively, this file may be used under the terms of the GNU
-** General Public License version 3.0 as published by the Free Software
-** Foundation and appearing in the file LICENSE.GPL included in the
-** packaging of this file.  Please review the following information to
-** ensure the GNU General Public License version 3.0 requirements will be
-** met: http://www.gnu.org/copyleft/gpl.html.
 **
 ** $QT_END_LICENSE$
 **
@@ -49,30 +37,30 @@ void showHelp( const QString &error)
         "    rcc [options] <resource-file> [<resource-file>] ...\n\n"
         "Options:\n"
         "    -o <file>\n"
-        "           Write output to file rather than stdout.\n\n"
+        "         Write output to file rather than stdout.\n\n"
         "    -name <name>\n"
-        "           Create an external initialization function with name.\n\n"
+        "         Create an external initialization function with name.\n\n"
         "    -threshold <level>\n"
-        "           Threshold to consider compressing files.\n\n"
+        "         Threshold to consider compressing files.\n\n"
         "    -compress <level>\n"
-        "           Compress input files by level.\n\n"
+        "         Compress input files by level.\n\n"
         "    -root <path>\n"
-        "           Prefix resource access path with root path.\n\n"
+        "         Prefix resource access path with root path.\n\n"
         "    -no-compress\n"
-        "           Disable all compression.\n\n"
+        "         Disable all compression.\n\n"
         "    -binary\n"
-        "           Output a binary file for use as a dynamic resource.\n\n"
+        "         Output a binary file for use as a dynamic resource.\n\n"
         "    -namespace\n"
-        "           Turn off namespace macros.\n\n"
+        "         Turn off namespace macros.\n\n"
         "    -project\n"
-        "           Output a resource file containing all files from the\n"
-        "           current directory.\n\n"
+        "         Output a resource file containing all files from the\n"
+        "         current directory.\n\n"
         "    -list\n"
-        "           Lists .qrc file entries.\n\n"
+        "         Lists .qrc file entries.\n\n"
         "    -version\n"
-        "           Display version.\n\n"
+        "         Display version.\n\n"
         "    -help\n"
-        "           Display this information.\n");
+        "         Display this information.\n");
 }
 
 void dumpRecursive(const QDir &dir, QTextStream &out)

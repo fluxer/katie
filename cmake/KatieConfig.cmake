@@ -12,7 +12,6 @@
 #  KATIE_<COMPONENT>_LIBRARIES   - component libraries to link against e.g. QtCore
 #  KATIE_<TOOL>                  - path to tool e.g. moc
 #  KATIE_<DATA>_PATH             - path to different data type files e.g. translations
-#  KATIE_MKSPECS_DIR             - directory to mkspecs
 #  KATIE_TYPE                    - build type, either SHARED or STATIC
 #
 # As well as some that are unilkely to be needed outside the project:
@@ -51,7 +50,6 @@ if(NOT KATIE_FOUND)
     set(KATIE_COMPONENTS @KATIE_COMPONENTS@)
     set(KATIE_TOOLS @KATIE_TOOLS@)
     set(KATIE_TOOLS_SUFFIX "@KATIE_TOOLS_SUFFIX@")
-    set(KATIE_MKSPECS_DIR "${CMAKE_CURRENT_LIST_DIR}/mkspecs")
     set(KATIE_TYPE @KATIE_TYPE@)
 
     foreach(component ${KATIE_COMPONENTS})
@@ -72,9 +70,6 @@ if(NOT KATIE_FOUND)
         string(TOUPPER ${tool} uppertool)
         set(KATIE_${uppertool} Katie::${tool})
     endforeach()
-
-    # Platform specific stuff and some tests
-    include("${KATIE_MKSPECS_DIR}/mkspecs.cmake")
 
     if(NOT "${KATIE_FIND_QUIETLY}")
         message(STATUS "Found Katie version: ${KATIE_VERSION}")
@@ -99,7 +94,7 @@ if(NOT KATIE_FOUND)
         set(QT4_INCLUDE_DIR ${KATIE_INCLUDES})
         set(QT_LIBRARIES ${KATIE_LIBRARIES})
         set(QT_USE_FILE "${CMAKE_CURRENT_LIST_DIR}/Qt4UseFile.cmake")
-        set(QT_MKSPECS_DIR "${KATIE_MKSPECS_DIR}")
+        set(QT_MKSPECS_DIR "${CMAKE_CURRENT_LIST_DIR}/mkspecs")
         set(QT_LIBRARY_DIR ${KATIE_LIBRARIES_PATH})
         set(QT_BINARY_DIR ${KATIE_BINARIES_PATH})
         set(QT_PLUGINS_DIR ${KATIE_PLUGINS_PATH})

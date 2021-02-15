@@ -1,7 +1,7 @@
 /****************************************************************************
 **
 ** Copyright (C) 2015 The Qt Company Ltd.
-** Copyright (C) 2016-2021 Ivailo Monev
+** Copyright (C) 2016 Ivailo Monev
 **
 ** This file is part of the tools applications of the Katie Toolkit.
 **
@@ -14,18 +14,6 @@
 ** packaging of this file.  Please review the following information to
 ** ensure the GNU Lesser General Public License version 2.1 requirements
 ** will be met: http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html.
-**
-** As a special exception, The Qt Company gives you certain additional
-** rights. These rights are described in The Qt Company LGPL Exception
-** version 1.1, included in the file LGPL_EXCEPTION.txt in this package.
-**
-** GNU General Public License Usage
-** Alternatively, this file may be used under the terms of the GNU
-** General Public License version 3.0 as published by the Free Software
-** Foundation and appearing in the file LICENSE.GPL included in the
-** packaging of this file.  Please review the following information to
-** ensure the GNU General Public License version 3.0 requirements will be
-** met: http://www.gnu.org/copyleft/gpl.html.
 **
 ** $QT_END_LICENSE$
 **
@@ -60,17 +48,17 @@ static void showUsage()
            "    qdbus [options] [servicename] [path] [method] [args]\n\n"
            "Options:\n"
            "    --help\n"
-           "           Display this information and exit.\n\n"
+           "         Display this information and exit.\n\n"
            "    --system\n"
-           "           Connect to the system bus.\n\n"
+           "         Connect to the system bus.\n\n"
            "    --address <address>\n"
-           "           Connect to the given bus.\n\n"
+           "         Connect to the given bus.\n\n"
            "    --literal\n"
-           "           Print replies literally.\n\n"
-           "  servicename       the service to connect to (e.g., org.freedesktop.DBus)\n"
-           "  path              the path to the object (e.g., /)\n"
-           "  method            the method to call, with or without the interface\n"
-           "  args              arguments to pass to the call\n\n"
+           "         Print replies literally.\n\n"
+           "    servicename       the service to connect to (e.g., org.freedesktop.DBus)\n"
+           "    path              the path to the object (e.g., /)\n"
+           "    method            the method to call, with or without the interface\n"
+           "    args              arguments to pass to the call\n\n"
            "With 0 arguments, qdbus will list the services available on the bus.\n\n"
            "With just the servicename, qdbus will list the object paths available on\n"
            "the service.\n\n"

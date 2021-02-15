@@ -3,6 +3,7 @@ set(EXTRA_CORE_LIBS
     ${ZLIB_LIBRARIES}
     ${ICU_LIBRARIES}
     ${ZSTD_LIBRARIES}
+    ${JANSSON_LIBRARIES}
     ${CMAKE_THREAD_LIBS_INIT}
     # libm should be present by default becaue this is C++
     m
@@ -28,7 +29,6 @@ set(CORE_PUBLIC_HEADERS
     QtConcurrentMap
     QBitArray
     QChar
-    QTextCodecPlugin
     QMap
     QTextStream
     QDebug
@@ -102,10 +102,7 @@ set(CORE_PUBLIC_HEADERS
     QBasicTimer
     QThread
     QSocketNotifier
-    QJsonArray
     QJsonDocument
-    QJsonObject
-    QJsonValue
 )
 
 include_directories(
@@ -115,13 +112,13 @@ include_directories(
     ${ZLIB_INCLUDE_DIRS}
     ${ICU_INCLUDES}
     ${ZSTD_INCLUDES}
+    ${JANSSON_INCLUDES}
 )
 
 set(CORE_HEADERS
     ${CMAKE_CURRENT_SOURCE_DIR}/codecs/qtextcodec_p.h
     ${CMAKE_CURRENT_SOURCE_DIR}/codecs/qtextcodec.h
     ${CMAKE_CURRENT_SOURCE_DIR}/codecs/qicucodec_p.h
-    ${CMAKE_CURRENT_SOURCE_DIR}/codecs/qtextcodecplugin.h
     ${CMAKE_CURRENT_SOURCE_DIR}/concurrent/qfuture.h
     ${CMAKE_CURRENT_SOURCE_DIR}/concurrent/qfutureinterface.h
     ${CMAKE_CURRENT_SOURCE_DIR}/concurrent/qfuturesynchronizer.h
@@ -156,7 +153,6 @@ set(CORE_HEADERS
     ${CMAKE_CURRENT_SOURCE_DIR}/io/qabstractfileengine_p.h
     ${CMAKE_CURRENT_SOURCE_DIR}/io/qbuffer.h
     ${CMAKE_CURRENT_SOURCE_DIR}/io/qdatastream.h
-    ${CMAKE_CURRENT_SOURCE_DIR}/io/qdatastream_p.h
     ${CMAKE_CURRENT_SOURCE_DIR}/io/qdataurl_p.h
     ${CMAKE_CURRENT_SOURCE_DIR}/io/qdebug.h
     ${CMAKE_CURRENT_SOURCE_DIR}/io/qdir.h
@@ -190,13 +186,6 @@ set(CORE_HEADERS
     ${CMAKE_CURRENT_SOURCE_DIR}/io/qfilesystemengine_p.h
     ${CMAKE_CURRENT_SOURCE_DIR}/io/qfilesystemmetadata_p.h
     ${CMAKE_CURRENT_SOURCE_DIR}/io/qfilesystemiterator_p.h
-    ${CMAKE_CURRENT_SOURCE_DIR}/json/qjsonarray.h
-    ${CMAKE_CURRENT_SOURCE_DIR}/json/qjsondocument.h
-    ${CMAKE_CURRENT_SOURCE_DIR}/json/qjsonobject.h
-    ${CMAKE_CURRENT_SOURCE_DIR}/json/qjsonparser_p.h
-    ${CMAKE_CURRENT_SOURCE_DIR}/json/qjson_p.h
-    ${CMAKE_CURRENT_SOURCE_DIR}/json/qjsonvalue.h
-    ${CMAKE_CURRENT_SOURCE_DIR}/json/qjsonwriter_p.h
     ${CMAKE_CURRENT_SOURCE_DIR}/kernel/qabstracteventdispatcher.h
     ${CMAKE_CURRENT_SOURCE_DIR}/kernel/qabstractitemmodel.h
     ${CMAKE_CURRENT_SOURCE_DIR}/kernel/qabstractitemmodel_p.h
@@ -257,6 +246,7 @@ set(CORE_HEADERS
     ${CMAKE_CURRENT_SOURCE_DIR}/tools/qdatetime_p.h
     ${CMAKE_CURRENT_SOURCE_DIR}/tools/qeasingcurve.h
     ${CMAKE_CURRENT_SOURCE_DIR}/tools/qhash.h
+    ${CMAKE_CURRENT_SOURCE_DIR}/tools/qjsondocument.h
     ${CMAKE_CURRENT_SOURCE_DIR}/tools/qline.h
     ${CMAKE_CURRENT_SOURCE_DIR}/tools/qlinkedlist.h
     ${CMAKE_CURRENT_SOURCE_DIR}/tools/qlist.h
@@ -296,7 +286,6 @@ set(CORE_HEADERS
 
 set(CORE_SOURCES
     ${CMAKE_CURRENT_SOURCE_DIR}/codecs/qtextcodec.cpp
-    ${CMAKE_CURRENT_SOURCE_DIR}/codecs/qtextcodecplugin.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/codecs/qicucodec.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/concurrent/qfuture.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/concurrent/qfutureinterface.cpp
@@ -342,13 +331,6 @@ set(CORE_SOURCES
     ${CMAKE_CURRENT_SOURCE_DIR}/io/qprocess_unix.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/io/qfilesystemiterator_unix.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/io/qstandardpaths_unix.cpp
-    ${CMAKE_CURRENT_SOURCE_DIR}/json/qjsonarray.cpp
-    ${CMAKE_CURRENT_SOURCE_DIR}/json/qjson.cpp
-    ${CMAKE_CURRENT_SOURCE_DIR}/json/qjsondocument.cpp
-    ${CMAKE_CURRENT_SOURCE_DIR}/json/qjsonobject.cpp
-    ${CMAKE_CURRENT_SOURCE_DIR}/json/qjsonparser.cpp
-    ${CMAKE_CURRENT_SOURCE_DIR}/json/qjsonvalue.cpp
-    ${CMAKE_CURRENT_SOURCE_DIR}/json/qjsonwriter.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/kernel/qabstracteventdispatcher.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/kernel/qabstractitemmodel.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/kernel/qbasictimer.cpp
@@ -393,6 +375,7 @@ set(CORE_SOURCES
     ${CMAKE_CURRENT_SOURCE_DIR}/tools/qeasingcurve.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/tools/qelapsedtimer.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/tools/qhash.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/tools/qjsondocument.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/tools/qline.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/tools/qlinkedlist.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/tools/qlist.cpp
@@ -421,9 +404,9 @@ set(CORE_SOURCES
 # on some platforms these are not needed as the functionality may be part of
 # the standard C library
 foreach(lib dl rt)
-    find_library(libpath NAMES ${lib})
-    if(libpath)
-        set(EXTRA_CORE_LIBS ${EXTRA_CORE_LIBS} ${lib})
+    find_library(lib${lib}_path NAMES ${lib})
+    if(lib${lib}_path)
+        set(EXTRA_CORE_LIBS ${EXTRA_CORE_LIBS} ${lib${lib}_path})
     endif()
 endforeach()
 
@@ -455,8 +438,6 @@ set_target_properties(KtCore PROPERTIES
     SOVERSION ${KATIE_VERSION}
     EXPORT_NAME Core
 )
-
-katie_setup_pch(KtCore)
 
 install(
     TARGETS KtCore

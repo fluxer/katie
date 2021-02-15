@@ -1,7 +1,7 @@
 /****************************************************************************
 **
 ** Copyright (C) 2015 The Qt Company Ltd.
-** Copyright (C) 2016-2021 Ivailo Monev
+** Copyright (C) 2016 Ivailo Monev
 **
 ** This file is part of the QtDBus module of the Katie Toolkit.
 **
@@ -14,18 +14,6 @@
 ** packaging of this file.  Please review the following information to
 ** ensure the GNU Lesser General Public License version 2.1 requirements
 ** will be met: http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html.
-**
-** As a special exception, The Qt Company gives you certain additional
-** rights. These rights are described in The Qt Company LGPL Exception
-** version 1.1, included in the file LGPL_EXCEPTION.txt in this package.
-**
-** GNU General Public License Usage
-** Alternatively, this file may be used under the terms of the GNU
-** General Public License version 3.0 as published by the Free Software
-** Foundation and appearing in the file LICENSE.GPL included in the
-** packaging of this file.  Please review the following information to
-** ensure the GNU General Public License version 3.0 requirements will be
-** met: http://www.gnu.org/copyleft/gpl.html.
 **
 ** $QT_END_LICENSE$
 **
@@ -86,46 +74,40 @@ int QDBusMetaTypeId::signature = qRegisterMetaType<QDBusSignature>("QDBusSignatu
 int QDBusMetaTypeId::error = qRegisterMetaType<QDBusError>("QDBusError");
 int QDBusMetaTypeId::unixfd = qRegisterMetaType<QDBusUnixFileDescriptor>("QDBusUnixFileDescriptor");
 
-void QDBusMetaTypeId::init()
+static int QDBusMetaTypeIdInit()
 {
-    static volatile bool initialized = false;
-
-    // reentrancy is not a problem since everything else is locked on their own
-    // set the guard variable at the end
-    if (!initialized) {
 #ifndef QDBUS_NO_SPECIALTYPES
-        // and register QtCore's with us
-        registerHelper<QDate>();
-        registerHelper<QTime>();
-        registerHelper<QDateTime>();
-        registerHelper<QRect>();
-        registerHelper<QRectF>();
-        registerHelper<QSize>();
-        registerHelper<QSizeF>();
-        registerHelper<QPoint>();
-        registerHelper<QPointF>();
-        registerHelper<QLine>();
-        registerHelper<QLineF>();
-        registerHelper<QVariantList>();
-        registerHelper<QVariantMap>();
-        registerHelper<QVariantHash>();
+    // and register QtCore's with us
+    registerHelper<QDate>();
+    registerHelper<QTime>();
+    registerHelper<QDateTime>();
+    registerHelper<QRect>();
+    registerHelper<QRectF>();
+    registerHelper<QSize>();
+    registerHelper<QSizeF>();
+    registerHelper<QPoint>();
+    registerHelper<QPointF>();
+    registerHelper<QLine>();
+    registerHelper<QLineF>();
+    registerHelper<QVariantList>();
+    registerHelper<QVariantMap>();
+    registerHelper<QVariantHash>();
 
-        qDBusRegisterMetaType<QList<bool> >();
-        qDBusRegisterMetaType<QList<short> >();
-        qDBusRegisterMetaType<QList<ushort> >();
-        qDBusRegisterMetaType<QList<int> >();
-        qDBusRegisterMetaType<QList<uint> >();
-        qDBusRegisterMetaType<QList<qlonglong> >();
-        qDBusRegisterMetaType<QList<qulonglong> >();
-        qDBusRegisterMetaType<QList<double> >();
-        qDBusRegisterMetaType<QList<QDBusObjectPath> >();
-        qDBusRegisterMetaType<QList<QDBusSignature> >();
-        qDBusRegisterMetaType<QList<QDBusUnixFileDescriptor> >();
+    qDBusRegisterMetaType<QList<bool> >();
+    qDBusRegisterMetaType<QList<short> >();
+    qDBusRegisterMetaType<QList<ushort> >();
+    qDBusRegisterMetaType<QList<int> >();
+    qDBusRegisterMetaType<QList<uint> >();
+    qDBusRegisterMetaType<QList<qlonglong> >();
+    qDBusRegisterMetaType<QList<qulonglong> >();
+    qDBusRegisterMetaType<QList<double> >();
+    qDBusRegisterMetaType<QList<QDBusObjectPath> >();
+    qDBusRegisterMetaType<QList<QDBusSignature> >();
+    qDBusRegisterMetaType<QList<QDBusUnixFileDescriptor> >();
 #endif
-
-        initialized = true;
-    }
+    return 0;
 }
+Q_CONSTRUCTOR_FUNCTION(QDBusMetaTypeIdInit);
 
 Q_GLOBAL_STATIC(QVector<QDBusCustomTypeInfo>, customTypes)
 Q_GLOBAL_STATIC(QReadWriteLock, customTypesLock)
@@ -217,8 +199,6 @@ void QDBusMetaType::registerMarshallOperators(int id, MarshallFunction mf,
 */
 bool QDBusMetaType::marshall(QDBusArgument &arg, int id, const void *data)
 {
-    QDBusMetaTypeId::init();
-
     MarshallFunction mf;
     {
         QReadLocker locker(customTypesLock());
@@ -246,8 +226,6 @@ bool QDBusMetaType::marshall(QDBusArgument &arg, int id, const void *data)
 */
 bool QDBusMetaType::demarshall(const QDBusArgument &arg, int id, void *data)
 {
-    QDBusMetaTypeId::init();
-
     DemarshallFunction df;
     {
         QReadLocker locker(customTypesLock());
@@ -284,9 +262,6 @@ int QDBusMetaType::signatureToType(const char *signature)
 {
     if (!signature)
         return QVariant::Invalid;
-
-    QDBusMetaTypeId::init();
-
     switch (signature[0]) {
         case DBUS_TYPE_BOOLEAN:
             return QVariant::Bool;
@@ -408,7 +383,6 @@ const char *QDBusMetaType::typeToSignature(int type)
             return DBUS_TYPE_ARRAY_AS_STRING DBUS_TYPE_BYTE_AS_STRING; // ay
     }
 
-    QDBusMetaTypeId::init();
     if (type == QDBusMetaTypeId::variant)
         return DBUS_TYPE_VARIANT_AS_STRING;
     else if (type == QDBusMetaTypeId::objectpath)

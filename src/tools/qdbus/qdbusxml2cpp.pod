@@ -13,16 +13,35 @@ input file.
 
 =head1 OPTIONS
 
-    -a <filename>    Write the adaptor code to <filename>
-    -c <classname>   Use <classname> as the class name for the generated classes
-    -h               Show this information
-    -i <filename>    Add #include to the output
-    -l <classname>   When generating an adaptor, use <classname> as the parent class
-    -m               Generate #include "filename.moc" statements in the .cpp files
-    -N               Don't use namespaces
-    -p <filename>    Write the proxy code to <filename>
-    -v               Be verbose.
-    -V               Show the program version and quit.
+    -a <filename>
+        Write the adaptor code to <filename>.
+
+    -c <classname>
+        Use <classname> as the class name for the generated classes.
+
+    -h
+        Show this information.
+
+    -i <filename>
+        Add #include to the output.
+
+    -l <classname>
+        When generating an adaptor, use <classname> as the parent class.
+
+    -m
+        Generate #include "filename.moc" statements in the .cpp files.
+
+    -N
+        Don't use namespaces.
+
+    -p <filename>
+        Write the proxy code to <filename>.
+
+    -v
+        Be verbose.
+
+    -V
+        Show the program version and quit.
 
 If the file name given to the options -a and -p does not end in .cpp or .h, the
 program will automatically append the suffixes and produce both files.
@@ -41,6 +60,6 @@ qdbusxml2cpp returns 0 on success and other on unexcepted failure.
 The Qt Company Ltd.
 
 Copyright (C) 2015 The Qt Company Ltd.
-Copyright (C) 2016-2021 Ivailo Monev
+Copyright (C) 2016 Ivailo Monev
 
 Licensed through GNU Lesser General Public License/GNU General Public License.

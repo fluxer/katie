@@ -1,7 +1,7 @@
 /****************************************************************************
 **
 ** Copyright (C) 2015 The Qt Company Ltd.
-** Copyright (C) 2016-2021 Ivailo Monev
+** Copyright (C) 2016 Ivailo Monev
 **
 ** This file is part of the QtCore module of the Katie Toolkit.
 **
@@ -14,18 +14,6 @@
 ** packaging of this file.  Please review the following information to
 ** ensure the GNU Lesser General Public License version 2.1 requirements
 ** will be met: http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html.
-**
-** As a special exception, The Qt Company gives you certain additional
-** rights. These rights are described in The Qt Company LGPL Exception
-** version 1.1, included in the file LGPL_EXCEPTION.txt in this package.
-**
-** GNU General Public License Usage
-** Alternatively, this file may be used under the terms of the GNU
-** General Public License version 3.0 as published by the Free Software
-** Foundation and appearing in the file LICENSE.GPL included in the
-** packaging of this file.  Please review the following information to
-** ensure the GNU General Public License version 3.0 requirements will be
-** met: http://www.gnu.org/copyleft/gpl.html.
 **
 ** $QT_END_LICENSE$
 **
@@ -49,7 +37,6 @@ enum {
 
 static qint64 getticks()
 {
-#ifdef QT_HAVE_CLOCK_GETTIME
     clockid_t clockId = CLOCK_REALTIME;
 
 #if defined(_SC_THREAD_CPUTIME) && defined(CLOCK_THREAD_CPUTIME_ID)
@@ -64,12 +51,6 @@ static qint64 getticks()
     if (::clock_gettime(clockId, &ts) == -1)
         return 0;
     return (ts.tv_sec * 1000000000) + ts.tv_nsec;
-#else
-    // no clock_gettime(), fall back to wall time
-    struct timeval tv;
-    ::gettimeofday(&tv, Q_NULLPTR);
-    return (tv.tv_sec * 1000000) + tv.tv_usec;
-#endif // QT_HAVE_CLOCK_GETTIME
 }
 
 static inline double elapsed(qint64 after, qint64 before)

@@ -1,7 +1,7 @@
 /****************************************************************************
 **
 ** Copyright (C) 2015 The Qt Company Ltd.
-** Copyright (C) 2016-2021 Ivailo Monev
+** Copyright (C) 2016 Ivailo Monev
 **
 ** This file is part of the QtGui module of the Katie Toolkit.
 **
@@ -14,18 +14,6 @@
 ** packaging of this file.  Please review the following information to
 ** ensure the GNU Lesser General Public License version 2.1 requirements
 ** will be met: http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html.
-**
-** As a special exception, The Qt Company gives you certain additional
-** rights. These rights are described in The Qt Company LGPL Exception
-** version 1.1, included in the file LGPL_EXCEPTION.txt in this package.
-**
-** GNU General Public License Usage
-** Alternatively, this file may be used under the terms of the GNU
-** General Public License version 3.0 as published by the Free Software
-** Foundation and appearing in the file LICENSE.GPL included in the
-** packaging of this file.  Please review the following information to
-** ensure the GNU General Public License version 3.0 requirements will be
-** met: http://www.gnu.org/copyleft/gpl.html.
 **
 ** $QT_END_LICENSE$
 **
@@ -64,7 +52,6 @@
 #include "qmetaobject.h"
 #include "qtimer.h"
 #include "qlibrary.h"
-#include "qgraphicssystemfactory_p.h"
 #include "qguiplatformplugin.h"
 #include "qthread_p.h"
 #include "qeventdispatcher_x11_p.h"
@@ -227,9 +214,6 @@ Q_GUI_EXPORT QX11Data *qt_x11Data = 0;
 /*****************************************************************************
   Internal variables and functions
  *****************************************************************************/
-static const char *appName = 0;                         // application name
-static const char *appClass = 0;                        // application class
-static const char *appFont = 0;                         // application font
 static const char *mwGeometry = 0;                      // main widget geometry
 static const char *mwTitle = 0;                         // main widget title
 static bool        appSync = false;                     // X11 synchronization
@@ -288,7 +272,7 @@ static QWidget *qt_popup_down = 0;  // popup that contains the pressed widget
 extern bool qt_xdnd_dragging;
 
 // gui or non-gui from qapplication.cpp
-extern bool qt_is_gui_used;
+extern QApplication::Type qt_appType;
 
 #ifndef QT_NO_XFIXES
 
@@ -501,9 +485,9 @@ static int qt_x_errhandler(Display *dpy, XErrorEvent *err)
 
 static int qt_xio_errhandler(Display *)
 {
-    qWarning("%s: Fatal IO error: client killed", appName);
-    QApplicationPrivate::reset_instance_pointer();
     QApplication::exit(1);
+    QByteArray appName = QApplication::applicationName().toLocal8Bit();
+    qFatal("%s: Fatal IO error: client killed", appName.constData());
     return 0;
 }
 
@@ -632,13 +616,11 @@ bool QApplicationPrivate::x11_apply_settings()
     if (groupCount == QPalette::NColorGroups)
         QApplicationPrivate::setSystemPalette(pal);
 
-    if (!appFont) {
-        QString fontDescription = settings->value(QLatin1String("Qt/font")).toString();
-        if (!fontDescription .isEmpty()) {
-            QFont font(QApplication::font());
-            font.fromString(fontDescription );
-            QApplicationPrivate::setSystemFont(font);
-        }
+    QString fontDescription = settings->value(QLatin1String("Qt/font")).toString();
+    if (!fontDescription.isEmpty()) {
+        QFont font(QApplication::font());
+        font.fromString(fontDescription );
+        QApplicationPrivate::setSystemFont(font);
     }
 
     // read library (ie. plugin) path list
@@ -725,14 +707,6 @@ bool QApplicationPrivate::x11_apply_settings()
 
     return true;
 }
-
-
-/*! \internal
-    Resets the QApplication::instance() pointer to zero
-*/
-void QApplicationPrivate::reset_instance_pointer()
-{ QApplication::self = 0; }
-
 
 // update the supported array
 static void qt_get_net_supported()
@@ -970,8 +944,8 @@ bool runningUnderDebugger()
 // ### in qpaintdevice.h which then should have a static too but can't have
 // ### it because "storage class specifiers invalid in friend function
 // ### declarations" :-) Ideas anyone?
-void qt_init(QApplicationPrivate *priv, int,
-             Display *display, Qt::HANDLE visual, Qt::HANDLE colormap)
+void qt_init(QApplicationPrivate *priv, Display *display,
+             Qt::HANDLE visual, Qt::HANDLE colormap)
 {
     qt_x11Data = new QX11Data;
     qt_x11Data->display = display;
@@ -1041,35 +1015,8 @@ void qt_init(QApplicationPrivate *priv, int,
     int argc = priv->argc;
     char **argv = priv->argv;
 
-    if (qt_x11Data->display) {
-        // Qt part of other application
-
-        // Set application name and class
-        appName = qstrdup("Qt-subapplication");
-        char *app_class = 0;
-        if (argv) {
-            const char* p = strrchr(argv[0], '/');
-            app_class = qstrdup(p ? p + 1 : argv[0]);
-            if (app_class[0])
-                app_class[0] = toupper(app_class[0]);
-        }
-        appClass = app_class;
-    } else {
-        // Qt controls everything (default)
-
-        if (QApplication::testAttribute(Qt::AA_X11InitThreads))
-            XInitThreads();
-
-        // Set application name and class
-        char *app_class = 0;
-        if (argv && argv[0]) {
-            const char *p = strrchr(argv[0], '/');
-            appName = p ? p + 1 : argv[0];
-            app_class = qstrdup(appName);
-            if (app_class[0])
-                app_class[0] = toupper(app_class[0]);
-        }
-        appClass = app_class;
+    if (!qt_x11Data->display && QApplication::testAttribute(Qt::AA_X11InitThreads)) {
+        XInitThreads();
     }
 
     // Install default error handlers
@@ -1077,22 +1024,14 @@ void qt_init(QApplicationPrivate *priv, int,
     original_xio_errhandler = XSetIOErrorHandler(qt_xio_errhandler);
 
     // Get command line params
-    int j = argc ? 1 : 0;
     for (int i=1; i<argc; i++) {
         if (argv[i] && *argv[i] != '-') {
-            argv[j++] = argv[i];
             continue;
         }
         QByteArray arg(argv[i]);
         if (arg == "-display") {
             if (++i < argc && !qt_x11Data->display)
                 qt_x11Data->displayName = argv[i];
-        } else if (arg == "-fn" || arg == "-font") {
-            if (++i < argc)
-                appFont = argv[i];
-        } else if (arg == "-name") {
-            if (++i < argc)
-                appName = argv[i];
         } else if (arg == "-title") {
             if (++i < argc)
                 mwTitle = argv[i];
@@ -1132,11 +1071,7 @@ void qt_init(QApplicationPrivate *priv, int,
         else if (arg == "-dograb")
             appDoGrab = !appDoGrab;
 #endif
-        else
-            argv[j++] = argv[i];
     }
-
-    priv->argc = j;
 
 #if !defined(QT_NO_DEBUG) && defined(QT_HAVE_PROC_CMDLINE) && defined(QT_HAVE_PROC_EXE)
     if (!appNoGrab && !appDoGrab && runningUnderDebugger()) {
@@ -1147,12 +1082,12 @@ void qt_init(QApplicationPrivate *priv, int,
 #endif
 
     // Connect to X server
-    if (qt_is_gui_used && !qt_x11Data->display) {
+    if (qt_appType != QApplication::Tty && !qt_x11Data->display) {
         if ((qt_x11Data->display = XOpenDisplay(qt_x11Data->displayName)) == 0) {
-            qWarning("%s: cannot connect to X server %s", appName,
-                     XDisplayName(qt_x11Data->displayName));
-            QApplicationPrivate::reset_instance_pointer();
             QApplication::exit(1);
+            QByteArray appName = QApplication::applicationName().toLocal8Bit();
+            qFatal("%s: cannot connect to X server %s", appName.constData(),
+                     XDisplayName(qt_x11Data->displayName));
         }
 
         if (appSync)                                // if "-sync" argument
@@ -1163,15 +1098,9 @@ void qt_init(QApplicationPrivate *priv, int,
 
     // Get X parameters
 
-    if (qt_is_gui_used) {
+    if (qt_appType != QApplication::Tty) {
         qt_x11Data->defaultScreen = DefaultScreen(qt_x11Data->display);
         qt_x11Data->screenCount = ScreenCount(qt_x11Data->display);
-
-        int formatCount = 0;
-        XPixmapFormatValues *values = XListPixmapFormats(qt_x11Data->display, &formatCount);
-        for (int i = 0; i < formatCount; ++i)
-            qt_x11Data->bppForDepth[values[i].depth] = values[i].bits_per_pixel;
-        XFree(values);
 
         qt_x11Data->screens = new QX11InfoData[qt_x11Data->screenCount];
         qt_x11Data->argbVisuals = new Visual *[qt_x11Data->screenCount];
@@ -1228,9 +1157,6 @@ void qt_init(QApplicationPrivate *priv, int,
         }
 #endif
 
-        // initialize the graphics system - order is imporant here - it must be done before
-        // the QColormap::initialize() call
-        QApplicationPrivate::graphics_system = QGraphicsSystemFactory::create(QApplicationPrivate::graphics_system_name);
         QColormap::initialize();
 
         // Support protocols
@@ -1385,8 +1311,8 @@ void qt_init(QApplicationPrivate *priv, int,
     }
     QFont::initialize();
 
-    if(qt_is_gui_used) {
-        qApp->setObjectName(QString::fromLocal8Bit(appName));
+    if(qt_appType != QApplication::Tty) {
+        qApp->setObjectName(qApp->applicationName());
 
         for (int screen = 0; screen < qt_x11Data->screenCount; ++screen) {
             XSelectInput(qt_x11Data->display, QX11Info::appRootWindow(screen),
@@ -1462,7 +1388,7 @@ void qt_init(QApplicationPrivate *priv, int,
 
 void qt_cleanup()
 {
-    if (qt_is_gui_used) {
+    if (qt_appType != QApplication::Tty) {
         QPixmapCache::clear();
         QCursorData::cleanup();
         QFont::cleanup();
@@ -1481,7 +1407,7 @@ void qt_cleanup()
 #endif
 
     // Reset the error handlers
-    if (qt_is_gui_used)
+    if (qt_appType != QApplication::Tty)
         XSync(qt_x11Data->display, False); // sync first to process all possible errors
     XSetErrorHandler(original_x_errhandler);
     XSetIOErrorHandler(original_xio_errhandler);
@@ -1493,21 +1419,13 @@ void qt_cleanup()
         }
     }
 
-    if (qt_is_gui_used && !qt_x11Data->foreignDisplay)
+    if (qt_appType != QApplication::Tty && !qt_x11Data->foreignDisplay)
         XCloseDisplay(qt_x11Data->display);                // close X display
     qt_x11Data->display = 0;
 
     delete [] qt_x11Data->screens;
     delete [] qt_x11Data->argbVisuals;
     delete [] qt_x11Data->argbColormaps;
-
-    if (qt_x11Data->foreignDisplay) {
-        delete [] (char *)appName;
-        appName = 0;
-    }
-
-    delete [] (char *)appClass;
-    appClass = 0;
 
     if (qt_x11Data->net_supported_list)
         delete [] qt_x11Data->net_supported_list;
@@ -1523,18 +1441,8 @@ void qt_cleanup()
 
 
 /*****************************************************************************
-  Platform specific global and internal functions
+  Global and internal functions
  *****************************************************************************/
-
-QString QApplicationPrivate::appName() const
-{
-    return QString::fromLocal8Bit(QT_PREPEND_NAMESPACE(appName));
-}
-
-const char *QX11Info::appClass()                                // get application class
-{
-    return QT_PREPEND_NAMESPACE(appClass);
-}
 
 bool qt_nograb()                                // application no-grab option
 {
@@ -1631,7 +1539,7 @@ void QApplication::restoreOverrideCursor()
   Routines to find a Qt widget from a screen position
  *****************************************************************************/
 
-Window QX11Data::findClientWindow(Window win, Atom property, bool leaf)
+Window QX11Data::findClientWindow(Window win, Atom property)
 {
     Atom   type = XNone;
     int    format;
@@ -1652,7 +1560,7 @@ Window QX11Data::findClientWindow(Window win, Atom property, bool leaf)
         return 0;
     }
     for (int i=nchildren-1; !target && i >= 0; i--)
-        target = qt_x11Data->findClientWindow(children[i], property, leaf);
+        target = qt_x11Data->findClientWindow(children[i], property);
     if (children)
         XFree((char *)children);
     return target;
@@ -1678,12 +1586,11 @@ QWidget *QApplication::topLevelAt(const QPoint &p)
     }
     if (!target || target == QX11Info::appRootWindow(screen))
         return 0;
-    QWidget *w;
-    w = QWidget::find((WId)target);
+    QWidget *w = QWidget::find((WId)target);
 
     if (!w) {
         qt_x11Data->ignoreBadwindow();
-        target = qt_x11Data->findClientWindow(target, ATOM(WM_STATE), true);
+        target = qt_x11Data->findClientWindow(target, ATOM(WM_STATE));
         if (qt_x11Data->badwindow())
             return 0;
         w = QWidget::find((WId)target);
@@ -3859,8 +3766,6 @@ static void sm_performSaveYourself(QSessionManagerPrivate* smd)
     QStringList restart;
     restart  << argument0 << QLatin1String("-session")
              << smd->sessionId + QLatin1Char('_') + smd->sessionKey;
-    if (qstricmp(appName, QX11Info::appClass()) != 0)
-        restart << QLatin1String("-name") << QApplication::applicationName();
     sm->setRestartCommand(restart);
     QStringList discard;
     sm->setDiscardCommand(discard);
@@ -4178,7 +4083,7 @@ static inline int testBit(const char *array, int bit)
 
 static int openRX71Device(const QByteArray &deviceName)
 {
-    int fd = open(deviceName, O_RDONLY | O_NONBLOCK);
+    int fd = qt_safe_open(deviceName, O_RDONLY | O_NONBLOCK);
     if (fd == -1) {
         fd = -errno;
         return fd;
@@ -4187,24 +4092,24 @@ static int openRX71Device(const QByteArray &deviceName)
     // fetch the event type mask and check that the device reports absolute coordinates
     char eventTypeMask[(EV_MAX + sizeof(char) - 1) * sizeof(char) + 1];
     memset(eventTypeMask, 0, sizeof(eventTypeMask));
-    if (ioctl(fd, EVIOCGBIT(0, sizeof(eventTypeMask)), eventTypeMask) < 0) {
-        close(fd);
+    if (::ioctl(fd, EVIOCGBIT(0, sizeof(eventTypeMask)), eventTypeMask) < 0) {
+        qt_safe_close(fd);
         return -1;
     }
     if (!testBit(eventTypeMask, EV_ABS)) {
-        close(fd);
+        qt_safe_close(fd);
         return -1;
     }
 
     // make sure that we can get the absolute X and Y positions from the device
     char absMask[(ABS_MAX + sizeof(char) - 1) * sizeof(char) + 1];
-    memset(absMask, 0, sizeof(absMask));
-    if (ioctl(fd, EVIOCGBIT(EV_ABS, sizeof(absMask)), absMask) < 0) {
-        close(fd);
+    ::memset(absMask, 0, sizeof(absMask));
+    if (::ioctl(fd, EVIOCGBIT(EV_ABS, sizeof(absMask)), absMask) < 0) {
+        qt_safe_close(fd);
         return -1;
     }
     if (!testBit(absMask, ABS_X) || !testBit(absMask, ABS_Y)) {
-        close(fd);
+        qt_safe_close(fd);
         return -1;
     }
 
@@ -4229,9 +4134,9 @@ void QApplicationPrivate::initializeMultitouch_sys()
         }
 
         struct input_absinfo abs_x, abs_y, abs_z;
-        ioctl(fd, EVIOCGABS(ABS_X), &abs_x);
-        ioctl(fd, EVIOCGABS(ABS_Y), &abs_y);
-        ioctl(fd, EVIOCGABS(ABS_Z), &abs_z);
+        ::ioctl(fd, EVIOCGABS(ABS_X), &abs_x);
+        ::ioctl(fd, EVIOCGABS(ABS_Y), &abs_y);
+        ::ioctl(fd, EVIOCGABS(ABS_Z), &abs_z);
 
         int deviceNumber = allRX71TouchPoints.count();
 

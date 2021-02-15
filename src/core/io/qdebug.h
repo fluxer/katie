@@ -1,7 +1,7 @@
 /****************************************************************************
 **
 ** Copyright (C) 2015 The Qt Company Ltd.
-** Copyright (C) 2016-2021 Ivailo Monev
+** Copyright (C) 2016 Ivailo Monev
 **
 ** This file is part of the QtCore module of the Katie Toolkit.
 **
@@ -15,18 +15,6 @@
 ** ensure the GNU Lesser General Public License version 2.1 requirements
 ** will be met: http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html.
 **
-** As a special exception, The Qt Company gives you certain additional
-** rights. These rights are described in The Qt Company LGPL Exception
-** version 1.1, included in the file LGPL_EXCEPTION.txt in this package.
-**
-** GNU General Public License Usage
-** Alternatively, this file may be used under the terms of the GNU
-** General Public License version 3.0 as published by the Free Software
-** Foundation and appearing in the file LICENSE.GPL included in the
-** packaging of this file.  Please review the following information to
-** ensure the GNU General Public License version 3.0 requirements will be
-** met: http://www.gnu.org/copyleft/gpl.html.
-**
 ** $QT_END_LICENSE$
 **
 ****************************************************************************/
@@ -39,10 +27,7 @@
 #include <QtCore/qset.h>
 #include <QtCore/qcontiguouscache.h>
 
-QT_BEGIN_HEADER
-
 QT_BEGIN_NAMESPACE
-
 
 class Q_CORE_EXPORT QDebug
 {
@@ -66,7 +51,8 @@ public:
     inline ~QDebug() {
         if (!--stream->ref) {
             if(stream->message_output) {
-                qt_message_output(stream->type, stream->buffer.toLocal8Bit().data());
+                QByteArray data = stream->buffer.toLocal8Bit();
+                qt_message_output(stream->type, data.constData());
             }
             delete stream;
         }
@@ -111,7 +97,7 @@ public:
     inline QNoDebug(){}
     inline QNoDebug(const QDebug &){}
     inline ~QNoDebug(){}
-#if !defined( QT_NO_TEXTSTREAM )
+#if !defined(QT_NO_TEXTSTREAM)
     inline QNoDebug &operator<<(QTextStreamFunction) { return *this; }
     inline QNoDebug &operator<<(QTextStreamManipulator) { return *this; }
 #endif
@@ -222,10 +208,9 @@ inline QDebug operator<<(QDebug debug, const QFlags<T> &flags)
     return debug.space();
 }
 
-#if !defined(QT_NO_DEBUG_STREAM)
+#if !defined(QT_NO_DEBUG_OUTPUT)
 Q_CORE_EXPORT_INLINE QDebug qDebug() { return QDebug(QtDebugMsg); }
-
-#else // QT_NO_DEBUG_STREAM
+#else
 #undef qDebug
 inline QNoDebug qDebug() { return QNoDebug(); }
 #define qDebug QNoDebug
@@ -242,6 +227,5 @@ inline QNoDebug qWarning() { return QNoDebug(); }
 
 QT_END_NAMESPACE
 
-QT_END_HEADER
 
 #endif // QDEBUG_H
