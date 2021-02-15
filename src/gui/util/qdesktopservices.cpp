@@ -1,7 +1,7 @@
 /****************************************************************************
 **
 ** Copyright (C) 2015 The Qt Company Ltd.
-** Copyright (C) 2016-2020 Ivailo Monev
+** Copyright (C) 2016 Ivailo Monev
 **
 ** This file is part of the QtGui module of the Katie Toolkit.
 **
@@ -14,18 +14,6 @@
 ** packaging of this file.  Please review the following information to
 ** ensure the GNU Lesser General Public License version 2.1 requirements
 ** will be met: http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html.
-**
-** As a special exception, The Qt Company gives you certain additional
-** rights. These rights are described in The Qt Company LGPL Exception
-** version 1.1, included in the file LGPL_EXCEPTION.txt in this package.
-**
-** GNU General Public License Usage
-** Alternatively, this file may be used under the terms of the GNU
-** General Public License version 3.0 as published by the Free Software
-** Foundation and appearing in the file LICENSE.GPL included in the
-** packaging of this file.  Please review the following information to
-** ensure the GNU General Public License version 3.0 requirements will be
-** met: http://www.gnu.org/copyleft/gpl.html.
 **
 ** $QT_END_LICENSE$
 **
@@ -57,8 +45,6 @@ class QOpenUrlHandlerRegistry : public QObject
 {
     Q_OBJECT
 public:
-    inline QOpenUrlHandlerRegistry() : mutex(QMutex::Recursive) {}
-
     QMutex mutex;
 
     struct Handler
@@ -297,12 +283,6 @@ void QDesktopServices::unsetUrlHandler(const QString &scheme)
 
     \note The storage location returned can be a directory that does not exist; i.e., it
     may need to be created by the system or the user.
-
-    \note On Symbian OS, ApplicationsLocation always point /sys/bin folder on the same drive
-    with executable. FontsLocation always points to folder on ROM drive. Symbian OS does not
-    have desktop concept, DesktopLocation returns same path as DocumentsLocation.
-    Rest of the standard locations point to folder on same drive with executable, except
-    that if executable is in ROM the folder from C drive is returned.
 */
 QString QDesktopServices::storageLocation(StandardLocation type)
 {

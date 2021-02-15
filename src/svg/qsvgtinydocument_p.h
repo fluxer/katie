@@ -1,7 +1,7 @@
 /****************************************************************************
 **
 ** Copyright (C) 2015 The Qt Company Ltd.
-** Copyright (C) 2016-2020 Ivailo Monev
+** Copyright (C) 2016 Ivailo Monev
 **
 ** This file is part of the QtSvg module of the Katie Toolkit.
 **
@@ -14,18 +14,6 @@
 ** packaging of this file.  Please review the following information to
 ** ensure the GNU Lesser General Public License version 2.1 requirements
 ** will be met: http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html.
-**
-** As a special exception, The Qt Company gives you certain additional
-** rights. These rights are described in The Qt Company LGPL Exception
-** version 1.1, included in the file LGPL_EXCEPTION.txt in this package.
-**
-** GNU General Public License Usage
-** Alternatively, this file may be used under the terms of the GNU
-** General Public License version 3.0 as published by the Free Software
-** Foundation and appearing in the file LICENSE.GPL included in the
-** packaging of this file.  Please review the following information to
-** ensure the GNU General Public License version 3.0 requirements will be
-** met: http://www.gnu.org/copyleft/gpl.html.
 **
 ** $QT_END_LICENSE$
 **
@@ -75,14 +63,10 @@ public:
     Type type() const;
 
     QSize size() const;
-    void setWidth(int len, bool percent);
-    void setHeight(int len, bool percent);
+    void setWidth(int len);
+    void setHeight(int len);
     int width() const;
     int height() const;
-    bool widthPercent() const;
-    bool heightPercent() const;
-
-    bool preserveAspectRatio() const;
 
     QRectF viewBox() const;
     void setViewBox(const QRectF &rect);
@@ -115,8 +99,6 @@ private:
     void mapSourceToTarget(QPainter *p, const QRectF &targetRect, const QRectF &sourceRect = QRectF());
 
     QSize  m_size;
-    bool   m_widthPercent;
-    bool   m_heightPercent;
 
     mutable QRectF m_viewBox;
 
@@ -151,27 +133,12 @@ inline int QSvgTinyDocument::height() const
     return size().height();
 }
 
-inline bool QSvgTinyDocument::widthPercent() const
-{
-    return m_widthPercent;
-}
-
-inline bool QSvgTinyDocument::heightPercent() const
-{
-    return m_heightPercent;
-}
-
 inline QRectF QSvgTinyDocument::viewBox() const
 {
     if (m_viewBox.isNull())
         m_viewBox = transformedBounds();
 
     return m_viewBox;
-}
-
-inline bool QSvgTinyDocument::preserveAspectRatio() const
-{
-    return false;
 }
 
 inline int QSvgTinyDocument::currentElapsed() const

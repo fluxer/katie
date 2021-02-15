@@ -1,5 +1,4 @@
 add_definitions(
-    -DQT_SCRIPT_LIB -DQT_UITOOLS_LIB
     -DKATIE_TOOLS_SUFFIX="${KATIE_TOOLS_SUFFIX}"
 )
 set(EXTRA_DESIGNER_LIBS
@@ -291,7 +290,6 @@ set_target_properties(KtDesigner PROPERTIES
 )
 
 katie_setup_object(KtDesigner sharedqtgradienteditor sharedqtpropertybrowser sharedfindwidget)
-katie_setup_pch(KtDesigner)
 
 install(
     TARGETS KtDesigner

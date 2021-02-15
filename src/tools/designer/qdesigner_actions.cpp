@@ -1,7 +1,7 @@
 /****************************************************************************
 **
 ** Copyright (C) 2015 The Qt Company Ltd.
-** Copyright (C) 2016-2020 Ivailo Monev
+** Copyright (C) 2016 Ivailo Monev
 **
 ** This file is part of the Katie Designer of the Katie Toolkit.
 **
@@ -14,18 +14,6 @@
 ** packaging of this file.  Please review the following information to
 ** ensure the GNU Lesser General Public License version 2.1 requirements
 ** will be met: http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html.
-**
-** As a special exception, The Qt Company gives you certain additional
-** rights. These rights are described in The Qt Company LGPL Exception
-** version 1.1, included in the file LGPL_EXCEPTION.txt in this package.
-**
-** GNU General Public License Usage
-** Alternatively, this file may be used under the terms of the GNU
-** General Public License version 3.0 as published by the Free Software
-** Foundation and appearing in the file LICENSE.GPL included in the
-** packaging of this file.  Please review the following information to
-** ensure the GNU General Public License version 3.0 requirements will be
-** met: http://www.gnu.org/copyleft/gpl.html.
 **
 ** $QT_END_LICENSE$
 **
@@ -52,6 +40,7 @@
 #include "codedialog_p.h"
 #include "qdesigner_formwindowmanager_p.h"
 #include "qdesigner_integration_p.h"
+#include "qdesigner_components.h"
 
 // sdk
 #include "abstractformeditor.h"
@@ -98,10 +87,6 @@ QT_BEGIN_NAMESPACE
 using namespace qdesigner_internal;
 
 const char *QDesignerActions::defaultToolbarPropertyName = "__qt_defaultToolBarAction";
-
-//#ifdef Q_WS_MAC
-#  define NONMODAL_PREVIEW
-//#endif
 
 static QAction *createSeparator(QObject *parent) {
     QAction * rc = new QAction(parent);
@@ -323,12 +308,7 @@ QDesignerActions::QDesignerActions(QDesignerWorkbench *workbench)
 //
 
     m_editWidgetsAction->setCheckable(true);
-    QList<QKeySequence> shortcuts;
-    shortcuts.append(QKeySequence(Qt::Key_F3));
-#if QT_VERSION >= 0x040900 // "ESC" switching to edit mode: Activate once item delegates handle shortcut overrides for ESC.
-    shortcuts.append(QKeySequence(Qt::Key_Escape));
-#endif
-    m_editWidgetsAction->setShortcuts(shortcuts);
+    m_editWidgetsAction->setShortcut(QKeySequence(Qt::Key_F3));
     QIcon fallback(m_core->resourceLocation() + QLatin1String("/widgettool.png"));
     m_editWidgetsAction->setIcon(QIcon::fromTheme(QLatin1String("designer-edit-widget"), fallback));
     connect(m_editWidgetsAction, SIGNAL(triggered()), this, SLOT(editWidgetsSlot()));
@@ -340,7 +320,8 @@ QDesignerActions::QDesignerActions(QDesignerWorkbench *workbench)
     connect(formWindowManager, SIGNAL(activeFormWindowChanged(QDesignerFormWindowInterface*)),
                 this, SLOT(activeFormWindowChanged(QDesignerFormWindowInterface*)));
 
-    QList<QObject*> builtinPlugins = m_core->pluginManager()->instances();
+    QList<QObject*> builtinPlugins = QDesignerComponents::initializePlugins(m_core);
+    m_core->pluginManager()->ensureInitializedStatic(builtinPlugins);
     foreach (QObject *plugin, builtinPlugins) {
         if (QDesignerFormEditorPluginInterface *formEditorPlugin = qobject_cast<QDesignerFormEditorPluginInterface*>(plugin)) {
             if (QAction *action = formEditorPlugin->action()) {

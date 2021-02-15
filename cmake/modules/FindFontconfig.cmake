@@ -5,7 +5,7 @@
 #  FONTCONFIG_INCLUDES - the Fontconfig include directory
 #  FONTCONFIG_LIBRARIES - the libraries needed to use Fontconfig
 #
-# Copyright (c) 2015-2020, Ivailo Monev, <xakepa10@gmail.com>
+# Copyright (C) 2015, Ivailo Monev, <xakepa10@gmail.com>
 #
 # Redistribution and use is allowed according to the terms of the BSD license.
 

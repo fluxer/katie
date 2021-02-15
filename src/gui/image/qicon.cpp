@@ -1,7 +1,7 @@
 /****************************************************************************
 **
 ** Copyright (C) 2015 The Qt Company Ltd.
-** Copyright (C) 2016-2020 Ivailo Monev
+** Copyright (C) 2016 Ivailo Monev
 **
 ** This file is part of the QtGui module of the Katie Toolkit.
 **
@@ -14,18 +14,6 @@
 ** packaging of this file.  Please review the following information to
 ** ensure the GNU Lesser General Public License version 2.1 requirements
 ** will be met: http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html.
-**
-** As a special exception, The Qt Company gives you certain additional
-** rights. These rights are described in The Qt Company LGPL Exception
-** version 1.1, included in the file LGPL_EXCEPTION.txt in this package.
-**
-** GNU General Public License Usage
-** Alternatively, this file may be used under the terms of the GNU
-** General Public License version 3.0 as published by the Free Software
-** Foundation and appearing in the file LICENSE.GPL included in the
-** packaging of this file.  Please review the following information to
-** ensure the GNU General Public License version 3.0 requirements will be
-** met: http://www.gnu.org/copyleft/gpl.html.
 **
 ** $QT_END_LICENSE$
 **
@@ -88,14 +76,8 @@ QT_BEGIN_NAMESPACE
 
 static QAtomicInt serialNumCounter = QAtomicInt(1);
 
-static void qt_cleanup_icon_cache();
 typedef QCache<QString, QIcon> IconCache;
-Q_GLOBAL_STATIC_WITH_INITIALIZER(IconCache, qtIconCache, qAddPostRoutine(qt_cleanup_icon_cache))
-
-static void qt_cleanup_icon_cache()
-{
-    qtIconCache()->clear();
-}
+Q_GLOBAL_STATIC(IconCache, qtIconCache)
 
 QIconPrivate::QIconPrivate()
     : engine(0), ref(1),
@@ -241,7 +223,7 @@ QPixmap QPixmapIconEngine::pixmap(const QSize &size, QIcon::Mode mode, QIcon::St
 
     QString key = QLatin1String("qt_")
                   + HexString<quint64>(pm.cacheKey())
-                  + HexString<uint>(pe->mode)
+                  + HexString<uint>(pe ? pe->mode : QIcon::Normal)
                   + HexString<quint64>(QApplication::palette().cacheKey())
                   + HexString<uint>(actualSize.width())
                   + HexString<uint>(actualSize.height());
@@ -474,7 +456,7 @@ bool QPixmapIconEngine::write(QDataStream &out) const
   Constructs a null icon.
 */
 QIcon::QIcon()
-    : d(0)
+    : d(Q_NULLPTR)
 {
 }
 
@@ -482,7 +464,7 @@ QIcon::QIcon()
   Constructs an icon from a \a pixmap.
  */
 QIcon::QIcon(const QPixmap &pixmap)
-    :d(0)
+    : d(Q_NULLPTR)
 {
     addPixmap(pixmap);
 }
@@ -491,7 +473,7 @@ QIcon::QIcon(const QPixmap &pixmap)
   Constructs a copy of \a other. This is very fast.
 */
 QIcon::QIcon(const QIcon &other)
-    :d(other.d)
+    : d(other.d)
 {
     if (d)
         d->ref.ref();
@@ -516,7 +498,7 @@ QIcon::QIcon(const QIcon &other)
     complete list of the supported file formats.
 */
 QIcon::QIcon(const QString &fileName)
-    : d(0)
+    : d(Q_NULLPTR)
 {
     addFile(fileName);
 }
@@ -527,7 +509,7 @@ QIcon::QIcon(const QString &fileName)
     ownership of the engine.
 */
 QIcon::QIcon(QIconEngine *engine)
-    :d(new QIconPrivate)
+    : d(new QIconPrivate())
 {
     d->engine = engine;
 }

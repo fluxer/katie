@@ -1,7 +1,7 @@
 /****************************************************************************
 **
 ** Copyright (C) 2015 The Qt Company Ltd.
-** Copyright (C) 2016-2020 Ivailo Monev
+** Copyright (C) 2016 Ivailo Monev
 **
 ** This file is part of the QtGui module of the Katie Toolkit.
 **
@@ -14,18 +14,6 @@
 ** packaging of this file.  Please review the following information to
 ** ensure the GNU Lesser General Public License version 2.1 requirements
 ** will be met: http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html.
-**
-** As a special exception, The Qt Company gives you certain additional
-** rights. These rights are described in The Qt Company LGPL Exception
-** version 1.1, included in the file LGPL_EXCEPTION.txt in this package.
-**
-** GNU General Public License Usage
-** Alternatively, this file may be used under the terms of the GNU
-** General Public License version 3.0 as published by the Free Software
-** Foundation and appearing in the file LICENSE.GPL included in the
-** packaging of this file.  Please review the following information to
-** ensure the GNU General Public License version 3.0 requirements will be
-** met: http://www.gnu.org/copyleft/gpl.html.
 **
 ** $QT_END_LICENSE$
 **
@@ -88,167 +76,6 @@ static uint qt_int_sqrt(uint n)
         }
     }
     return p;
-}
-
-/*!
-    Returns true if the string \a text is likely to be rich text;
-    otherwise returns false.
-
-    This function uses a fast and therefore simple heuristic. It
-    mainly checks whether there is something that looks like a tag
-    before the first line break. Although the result may be correct
-    for common cases, there is no guarantee.
-
-    This function is defined in the \c <QTextDocument> header file.
-*/
-bool Qt::mightBeRichText(const QString& text)
-{
-    if (text.isEmpty())
-        return false;
-    int start = 0;
-
-    while (start < text.length() && text.at(start).isSpace())
-        ++start;
-
-    // skip a leading <?xml ... ?> as for example with xhtml
-    if (text.mid(start, 5) == QLatin1String("<?xml")) {
-        while (start < text.length()) {
-            if (text.at(start) == QLatin1Char('?')
-                && start + 2 < text.length()
-                && text.at(start + 1) == QLatin1Char('>')) {
-                start += 2;
-                break;
-            }
-            ++start;
-        }
-
-        while (start < text.length() && text.at(start).isSpace())
-            ++start;
-    }
-
-    if (text.mid(start, 5).toLower() == QLatin1String("<!doc"))
-        return true;
-    int open = start;
-    while (open < text.length() && text.at(open) != QLatin1Char('<')
-            && text.at(open) != QLatin1Char('\n')) {
-        if (text.at(open) == QLatin1Char('&') &&  text.mid(open+1,3) == QLatin1String("lt;"))
-            return true; // support desperate attempt of user to see <...>
-        ++open;
-    }
-    if (open < text.length() && text.at(open) == QLatin1Char('<')) {
-        const int close = text.indexOf(QLatin1Char('>'), open);
-        if (close > -1) {
-            QString tag;
-            for (int i = open+1; i < close; ++i) {
-                if (text[i].isDigit() || text[i].isLetter())
-                    tag += text[i];
-                else if (!tag.isEmpty() && text[i].isSpace())
-                    break;
-                else if (!tag.isEmpty() && text[i] == QLatin1Char('/') && i + 1 == close)
-                    break;
-                else if (!text[i].isSpace() && (!tag.isEmpty() || text[i] != QLatin1Char('!')))
-                    return false; // that's not a tag
-            }
-#ifndef QT_NO_TEXTHTMLPARSER
-            return QTextHtmlParser::lookupElement(tag.toLower()) != -1;
-#else
-            return false;
-#endif // QT_NO_TEXTHTMLPARSER
-        }
-    }
-    return false;
-}
-
-/*!
-    Converts the plain text string \a plain to a HTML string with
-    HTML metacharacters \c{<}, \c{>}, \c{&}, and \c{"} replaced by HTML
-    entities.
-
-    Example:
-
-    \snippet doc/src/snippets/code/src_gui_text_qtextdocument.cpp 0
-
-    This function is defined in the \c <QTextDocument> header file.
-
-    \sa convertFromPlainText(), mightBeRichText()
-*/
-QString Qt::escape(const QString& plain)
-{
-    QString rich;
-    rich.reserve(int(plain.length() * qreal(1.1)));
-    for (int i = 0; i < plain.length(); ++i) {
-        if (plain.at(i) == QLatin1Char('<'))
-            rich += QLatin1String("&lt;");
-        else if (plain.at(i) == QLatin1Char('>'))
-            rich += QLatin1String("&gt;");
-        else if (plain.at(i) == QLatin1Char('&'))
-            rich += QLatin1String("&amp;");
-        else if (plain.at(i) == QLatin1Char('"'))
-            rich += QLatin1String("&quot;");
-        else
-            rich += plain.at(i);
-    }
-    return rich;
-}
-
-/*!
-    \fn QString Qt::convertFromPlainText(const QString &plain, WhiteSpaceMode mode)
-
-    Converts the plain text string \a plain to an HTML-formatted
-    paragraph while preserving most of its look.
-
-    \a mode defines how whitespace is handled.
-
-    This function is defined in the \c <QTextDocument> header file.
-
-    \sa escape(), mightBeRichText()
-*/
-QString Qt::convertFromPlainText(const QString &plain, Qt::WhiteSpaceMode mode)
-{
-    int col = 0;
-    QString rich;
-    rich += QLatin1String("<p>");
-    for (int i = 0; i < plain.length(); ++i) {
-        if (plain[i] == QLatin1Char('\n')){
-            int c = 1;
-            while (i+1 < plain.length() && plain[i+1] == QLatin1Char('\n')) {
-                i++;
-                c++;
-            }
-            if (c == 1)
-                rich += QLatin1String("<br>\n");
-            else {
-                rich += QLatin1String("</p>\n");
-                while (--c > 1)
-                    rich += QLatin1String("<br>\n");
-                rich += QLatin1String("<p>");
-            }
-            col = 0;
-        } else {
-            if (mode == Qt::WhiteSpacePre && plain[i] == QLatin1Char('\t')){
-                rich += QChar(0x00a0U);
-                ++col;
-                while (col % 8) {
-                    rich += QChar(0x00a0U);
-                    ++col;
-                }
-            }
-            else if (mode == Qt::WhiteSpacePre && plain[i].isSpace())
-                rich += QChar(0x00a0U);
-            else if (plain[i] == QLatin1Char('<'))
-                rich += QLatin1String("&lt;");
-            else if (plain[i] == QLatin1Char('>'))
-                rich += QLatin1String("&gt;");
-            else if (plain[i] == QLatin1Char('&'))
-                rich += QLatin1String("&amp;");
-            else
-                rich += plain[i];
-            ++col;
-        }
-    }
-    if (col != 0)
-        rich += QLatin1String("</p>");
-    return rich;
 }
 
 /*!

@@ -1,7 +1,7 @@
 /****************************************************************************
 **
 ** Copyright (C) 2015 The Qt Company Ltd.
-** Copyright (C) 2016-2020 Ivailo Monev
+** Copyright (C) 2016 Ivailo Monev
 **
 ** This file is part of the QtDeclarative module of the Katie Toolkit.
 **
@@ -14,18 +14,6 @@
 ** packaging of this file.  Please review the following information to
 ** ensure the GNU Lesser General Public License version 2.1 requirements
 ** will be met: http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html.
-**
-** As a special exception, The Qt Company gives you certain additional
-** rights. These rights are described in The Qt Company LGPL Exception
-** version 1.1, included in the file LGPL_EXCEPTION.txt in this package.
-**
-** GNU General Public License Usage
-** Alternatively, this file may be used under the terms of the GNU
-** General Public License version 3.0 as published by the Free Software
-** Foundation and appearing in the file LICENSE.GPL included in the
-** packaging of this file.  Please review the following information to
-** ensure the GNU General Public License version 3.0 requirements will be
-** met: http://www.gnu.org/copyleft/gpl.html.
 **
 ** $QT_END_LICENSE$
 **
@@ -107,9 +95,9 @@ void QDeclarativeUtilModule::defineModule()
     qmlRegisterType<QDeclarativeStateChangeScript>("QtQuick",1,0,"StateChangeScript");
     qmlRegisterType<QDeclarativeListElement>("QtQuick",1,0,"ListElement");
     qmlRegisterTypeNotAvailable("QtQuick",1,0,"XmlListModel",
-        qApp->translate("QDeclarativeXmlListModel","Qt was built without support for xmlpatterns"));
+        qApp->translate("QDeclarativeXmlListModel","Katie does not support xmlpatterns"));
     qmlRegisterTypeNotAvailable("QtQuick",1,0,"XmlRole",
-        qApp->translate("QDeclarativeXmlListModel","Qt was built without support for xmlpatterns"));
+        qApp->translate("QDeclarativeXmlListModel","Katie does not support xmlpatterns"));
     qmlRegisterCustomType<QDeclarativeConnections>("QtQuick",1,0,"Connections", new QDeclarativeConnectionsParser);
     qmlRegisterCustomType<QDeclarativePropertyChanges>("QtQuick",1,0,"PropertyChanges", new QDeclarativePropertyChangesParser);
     qmlRegisterCustomType<QDeclarativeListModel>("QtQuick",1,0,"ListModel", new QDeclarativeListModelParser);

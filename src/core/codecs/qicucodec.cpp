@@ -1,7 +1,6 @@
 /****************************************************************************
 **
-** Copyright (C) 2016 The Qt Company Ltd.
-** Copyright (C) 2016-2020 Ivailo Monev
+** Copyright (C) 2019 Ivailo Monev
 **
 ** This file is part of the QtCore module of the Katie Toolkit.
 **
@@ -14,18 +13,6 @@
 ** packaging of this file.  Please review the following information to
 ** ensure the GNU Lesser General Public License version 2.1 requirements
 ** will be met: http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html.
-**
-** As a special exception, The Qt Company gives you certain additional
-** rights. These rights are described in The Qt Company LGPL Exception
-** version 1.1, included in the file LGPL_EXCEPTION.txt in this package.
-**
-** GNU General Public License Usage
-** Alternatively, this file may be used under the terms of the GNU
-** General Public License version 3.0 as published by the Free Software
-** Foundation and appearing in the file LICENSE.GPL included in the
-** packaging of this file.  Please review the following information to
-** ensure the GNU General Public License version 3.0 requirements will be
-** met: http://www.gnu.org/copyleft/gpl.html.
 **
 ** $QT_END_LICENSE$
 **
@@ -561,6 +548,8 @@ static const struct MIBTblData {
     { 1020, "BOCU-1\0" },
     { 1020, "csBOCU1\0" },
     { 1020, "csBOCU-1\0" },
+    { 1021, "UTF-7-IMAP\0" },
+    { 1021, "csUTF7IMAP\0" },
     { 2000, "ISO-8859-1-Windows-3.0-Latin-1\0" },
     { 2000, "csWindows30Latin1\0" },
     { 2001, "ISO-8859-1-Windows-3.1-Latin-1\0" },
@@ -1054,7 +1043,7 @@ QByteArray QIcuCodec::convertFromUnicode(const QChar *unicode, int length,
     return result;
 }
 
-
+#ifndef QT_NO_TEXTCODEC
 QByteArray QIcuCodec::name() const
 {
     return m_name;
@@ -1099,7 +1088,7 @@ int QIcuCodec::mibEnum() const
     const char *iana = ucnv_getStandardName(m_name.constData(), "IANA", &error);
     if (Q_UNLIKELY(U_FAILURE(error))) {
 #ifdef QICUCODEC_DEBUG
-        qWarning("QIcuCodec::aliases: ucnv_getStandardName(%s) failed %s",
+        qWarning("QIcuCodec::mibEnum: ucnv_getStandardName(%s) failed %s",
             m_name.constData(), u_errorName(error));
 #endif
         // 2 is for unknown, see https://www.iana.org/assignments/ianacharset-mib/ianacharset-mib
@@ -1107,7 +1096,7 @@ int QIcuCodec::mibEnum() const
     }
 
     // some codecs and their aliases are made up by ICU (e.g. IMAP-mailbox-name), you may get a
-    // warning for those
+    // warning for these
     if (Q_LIKELY(iana)) {
         for (qint16 i = 0; i < MIBTblSize; i++) {
             if (ucnv_compareNames(iana, MIBTbl[i].name) == 0) {
@@ -1122,14 +1111,29 @@ int QIcuCodec::mibEnum() const
     return 2;
 }
 
-#ifndef QT_NO_TEXTCODEC
 QList<QByteArray> QIcuCodec::allCodecs()
 {
     QList<QByteArray> allcodecs;
 
     for (int i = 0; i < ucnv_countAvailable(); i++) {
         const char *name = ucnv_getAvailableName(i);
-        allcodecs += QByteArray::fromRawData(name, qstrlen(name));
+        UErrorCode error = U_ZERO_ERROR;
+        const char *iana = ucnv_getStandardName(name, "IANA", &error);
+        if (Q_UNLIKELY(U_FAILURE(error))) {
+#ifdef QICUCODEC_DEBUG
+            qWarning("QIcuCodec::allCodecs: ucnv_getStandardName(%s) failed %s",
+                name, u_errorName(error));
+#endif
+            continue;
+        } else if (Q_UNLIKELY(!iana)) {
+            continue;
+        }
+        for (qint16 m = 0; m < MIBTblSize; m++) {
+            if (ucnv_compareNames(iana, MIBTbl[m].name) == 0) {
+                allcodecs += QByteArray::fromRawData(name, qstrlen(name));
+                break;
+            }
+        }
     }
 
     return allcodecs;
@@ -1141,9 +1145,23 @@ QList<int> QIcuCodec::allMibs()
 
     for (int i = 0; i < ucnv_countAvailable(); i++) {
         const char *name = ucnv_getAvailableName(i);
-        for (qint16 i = 0; i < MIBTblSize; i++) {
-            if (ucnv_compareNames(name, MIBTbl[i].name) == 0) {
-                allmibs.append(MIBTbl[i].mib);
+        UErrorCode error = U_ZERO_ERROR;
+        const char *iana = ucnv_getStandardName(name, "IANA", &error);
+        if (Q_UNLIKELY(U_FAILURE(error))) {
+#ifdef QICUCODEC_DEBUG
+            qWarning("QIcuCodec::allMibs: ucnv_getStandardName(%s) failed %s",
+                name, u_errorName(error));
+#endif
+            continue;
+        } else if (Q_UNLIKELY(!iana)) {
+            continue;
+        }
+        for (qint16 m = 0; m < MIBTblSize; m++) {
+            if (ucnv_compareNames(iana, MIBTbl[m].name) == 0) {
+                if (!allmibs.contains(MIBTbl[m].mib)) {
+                    allmibs.append(MIBTbl[m].mib);
+                }
+                break;
             }
         }
     }

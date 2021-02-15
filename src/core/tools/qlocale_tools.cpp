@@ -1,7 +1,7 @@
 /****************************************************************************
 **
 ** Copyright (C) 2015 The Qt Company Ltd.
-** Copyright (C) 2016-2020 Ivailo Monev
+** Copyright (C) 2016 Ivailo Monev
 **
 ** This file is part of the QtCore module of the Katie Toolkit.
 **
@@ -14,18 +14,6 @@
 ** packaging of this file.  Please review the following information to
 ** ensure the GNU Lesser General Public License version 2.1 requirements
 ** will be met: http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html.
-**
-** As a special exception, The Qt Company gives you certain additional
-** rights. These rights are described in The Qt Company LGPL Exception
-** version 1.1, included in the file LGPL_EXCEPTION.txt in this package.
-**
-** GNU General Public License Usage
-** Alternatively, this file may be used under the terms of the GNU
-** General Public License version 3.0 as published by the Free Software
-** Foundation and appearing in the file LICENSE.GPL included in the
-** packaging of this file.  Please review the following information to
-** ensure the GNU General Public License version 3.0 requirements will be
-** met: http://www.gnu.org/copyleft/gpl.html.
 **
 ** $QT_END_LICENSE$
 **
@@ -90,8 +78,7 @@ QString &decimalForm(QChar zero, QChar decimal, QChar group,
         for (int i = 0; i < -decpt; ++i)
             digits.prepend(zero);
         decpt = 0;
-    }
-    else if (decpt > digits.length()) {
+    } else if (decpt > digits.length()) {
         for (int i = digits.length(); i < decpt; ++i)
             digits.append(zero);
     }
@@ -100,12 +87,9 @@ QString &decimalForm(QChar zero, QChar decimal, QChar group,
         uint decimal_digits = digits.length() - decpt;
         for (uint i = decimal_digits; i < precision; ++i)
             digits.append(zero);
-    }
-    else if (pm == PMSignificantDigits) {
+    } else if (pm == PMSignificantDigits) {
         for (uint i = digits.length(); i < precision; ++i)
             digits.append(zero);
-    }
-    else { // pm == PMChopTrailingZeros
     }
 
     if (always_show_decpt || decpt < digits.length())
@@ -243,12 +227,13 @@ bool qt_initLocale(const QString &locale)
 {
     qt_deinitLocale();
 
+    QByteArray latinlocale = locale.toLatin1();
     UErrorCode error = U_ZERO_ERROR;
-    icuCollator = ucol_open(locale.toLatin1().constData(), &error);
+    icuCollator = ucol_open(latinlocale.constData(), &error);
 
     if (Q_UNLIKELY(U_FAILURE(error))) {
         qWarning("qt_initLocale: ucol_open(%s) failed %s",
-            locale.toLatin1().constData(), u_errorName(error));
+            latinlocale.constData(), u_errorName(error));
         return false;
     }
 
@@ -275,13 +260,14 @@ bool qt_u_strToUpper(const QString &str, QString *out, const QLocale &locale)
     Q_ASSERT(out);
     out->resize(QMAXUSTRLEN(str.size()));
 
+    QByteArray latinbcp47 = locale.bcp47Name().toLatin1();
     UErrorCode error = U_ZERO_ERROR;
     const int upperresult = u_strToUpper(reinterpret_cast<UChar*>(out->data()), out->size(),
         reinterpret_cast<const UChar*>(str.unicode()), str.size(),
-        locale.bcp47Name().toLatin1().constData(), &error);
+        latinbcp47.constData(), &error);
     if (Q_UNLIKELY(U_FAILURE(error))) {
         qWarning("qt_u_strToUpper: u_strToUpper(%s) failed %s",
-            locale.bcp47Name().toLatin1().constData(), u_errorName(error));
+            latinbcp47.constData(), u_errorName(error));
         out->clear();
         return false;
     }
@@ -295,13 +281,14 @@ bool qt_u_strToLower(const QString &str, QString *out, const QLocale &locale)
     Q_ASSERT(out);
     out->resize(QMAXUSTRLEN(str.size()));
 
+    QByteArray latinbcp47 = locale.bcp47Name().toLatin1();
     UErrorCode error = U_ZERO_ERROR;
     const int lowerresult = u_strToLower(reinterpret_cast<UChar*>(out->data()), out->size(),
         reinterpret_cast<const UChar*>(str.unicode()), str.size(),
-        locale.bcp47Name().toLatin1().constData(), &error);
+        latinbcp47.constData(), &error);
     if (Q_UNLIKELY(U_FAILURE(error))) {
         qWarning("qt_u_strToLower: u_strToLower(%s) failed %s",
-            locale.bcp47Name().toLatin1().constData(), u_errorName(error));
+            latinbcp47.constData(), u_errorName(error));
         out->clear();
         return false;
     }
@@ -336,7 +323,8 @@ SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 ----------------------------------------------------------------------
 */
 #if !defined(QT_HAVE_FCVT) || !defined(QT_HAVE_ECVT)
-char *qfcvt(double x, int n, int *dp, int *sign)
+// the code bellow is copy from musl libc, modified to not use static buffer
+char *qfcvt(double x, int n, int *dp, int *sign, char* buf)
 {
     char tmp[1500];
     int i, lz;
@@ -354,12 +342,11 @@ char *qfcvt(double x, int n, int *dp, int *sign)
         return (char*)"000000000000000"+14-n;
     }
 
-    return qecvt(x, n-lz, dp, sign);
+    return qecvt(x, n-lz, dp, sign, buf);
 }
 
-char *qecvt(double x, int n, int *dp, int *sign)
+char *qecvt(double x, int n, int *dp, int *sign, char* buf)
 {
-    static char buf[16];
     char tmp[32];
     int i, j;
 

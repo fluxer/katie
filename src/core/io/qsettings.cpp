@@ -1,7 +1,7 @@
 /****************************************************************************
 **
 ** Copyright (C) 2015 The Qt Company Ltd.
-** Copyright (C) 2016-2020 Ivailo Monev
+** Copyright (C) 2016 Ivailo Monev
 **
 ** This file is part of the QtCore module of the Katie Toolkit.
 **
@@ -15,18 +15,6 @@
 ** ensure the GNU Lesser General Public License version 2.1 requirements
 ** will be met: http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html.
 **
-** As a special exception, The Qt Company gives you certain additional
-** rights. These rights are described in The Qt Company LGPL Exception
-** version 1.1, included in the file LGPL_EXCEPTION.txt in this package.
-**
-** GNU General Public License Usage
-** Alternatively, this file may be used under the terms of the GNU
-** General Public License version 3.0 as published by the Free Software
-** Foundation and appearing in the file LICENSE.GPL included in the
-** packaging of this file.  Please review the following information to
-** ensure the GNU General Public License version 3.0 requirements will be
-** met: http://www.gnu.org/copyleft/gpl.html.
-**
 ** $QT_END_LICENSE$
 **
 ****************************************************************************/
@@ -35,7 +23,6 @@
 #include "qplatformdefs.h"
 #include "qsettings.h"
 #include "qjsondocument.h"
-#include "qjsonobject.h"
 #include "qstandardpaths.h"
 #include "qmutex.h"
 #include "qcoreapplication.h"
@@ -75,14 +62,13 @@ static bool json_settings_read(QIODevice &device, QSettings::SettingsMap &map)
         return false;
     }
 
-    QJsonParseError error;
-    QJsonDocument jsondoc = QJsonDocument::fromJson(data, &error);
+    QJsonDocument jsondoc = QJsonDocument::fromJson(data);
     if (Q_UNLIKELY(jsondoc.isNull())) {
-        qWarning("json_settings_read: %s", error.errorString().toUtf8().constData());
+        qWarning("json_settings_read: %s", jsondoc.errorString().toUtf8().constData());
         return false;
     }
 
-    map = jsondoc.object().toVariantMap();
+    map = jsondoc.toVariant().toMap();
 
     // qDebug() << "json_settings_read" << jsondoc.toJson();
     return true;
@@ -90,7 +76,7 @@ static bool json_settings_read(QIODevice &device, QSettings::SettingsMap &map)
 
 static bool json_settings_write(QIODevice &device, const QSettings::SettingsMap &map)
 {
-    QJsonDocument jsondoc = QJsonDocument(QJsonObject::fromVariantMap(map));
+    QJsonDocument jsondoc = QJsonDocument::fromVariant(map);
     QByteArray jsondata = jsondoc.toJson();
     if (Q_UNLIKELY(jsondoc.isNull() || jsondata.isNull())) {
         return false;
@@ -977,7 +963,7 @@ void QSettings::beginGroup(const QString &group)
 {
     Q_D(QSettings);
 
-    if (!d->group.isEmpty()) {
+    if (Q_UNLIKELY(!d->group.isEmpty())) {
         qWarning("QSettings::beginGroup: sub-groups are not supported");
         return;
     }
@@ -994,7 +980,7 @@ void QSettings::beginGroup(const QString &group)
 void QSettings::endGroup()
 {
     Q_D(QSettings);
-    if (d->group.isEmpty()) {
+    if (Q_UNLIKELY(d->group.isEmpty())) {
         qWarning("QSettings::endGroup: No matching beginGroup()");
         return;
     }

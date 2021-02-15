@@ -1,7 +1,7 @@
 /****************************************************************************
 **
 ** Copyright (C) 2015 The Qt Company Ltd.
-** Copyright (C) 2016-2020 Ivailo Monev
+** Copyright (C) 2016 Ivailo Monev
 **
 ** This file is part of the QtCore module of the Katie Toolkit.
 **
@@ -14,18 +14,6 @@
 ** packaging of this file.  Please review the following information to
 ** ensure the GNU Lesser General Public License version 2.1 requirements
 ** will be met: http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html.
-**
-** As a special exception, The Qt Company gives you certain additional
-** rights. These rights are described in The Qt Company LGPL Exception
-** version 1.1, included in the file LGPL_EXCEPTION.txt in this package.
-**
-** GNU General Public License Usage
-** Alternatively, this file may be used under the terms of the GNU
-** General Public License version 3.0 as published by the Free Software
-** Foundation and appearing in the file LICENSE.GPL included in the
-** packaging of this file.  Please review the following information to
-** ensure the GNU General Public License version 3.0 requirements will be
-** met: http://www.gnu.org/copyleft/gpl.html.
 **
 ** $QT_END_LICENSE$
 **
@@ -121,14 +109,10 @@ void (*QAbstractDeclarativeData::objectNameChanged)(QAbstractDeclarativeData *, 
 
 QObjectData::~QObjectData() {}
 
-QObjectPrivate::QObjectPrivate(int version)
+QObjectPrivate::QObjectPrivate()
     : threadData(Q_NULLPTR), connectionLists(Q_NULLPTR), senders(Q_NULLPTR),
     currentSender(Q_NULLPTR), currentChildBeingDeleted(Q_NULLPTR)
 {
-    if (version != QObjectPrivateVersion)
-        qFatal("Cannot mix incompatible Qt library (version 0x%x) with this library (version 0x%x)",
-                version, QObjectPrivateVersion);
-
     // QObjectData initialization
     q_ptr = Q_NULLPTR;
     parent = Q_NULLPTR;                                 // no parent yet. It is set by setParent()
@@ -1162,10 +1146,13 @@ void QObject::moveToThread(QThread *targetThread)
     } else if (Q_UNLIKELY(d->isWidget)) {
         qWarning("QObject::moveToThread: Widgets cannot be moved to a new thread");
         return;
+    } else if (Q_UNLIKELY(!targetThread)) {
+        qWarning("QObject::moveToThread: Invalid new thread");
+        return;
     }
 
     QThreadData *currentData = QThreadData::current();
-    QThreadData *targetData = targetThread ? QThreadData::get2(targetThread) : new QThreadData(0);
+    QThreadData *targetData = QThreadData::get2(targetThread);
     if (!d->threadData->thread && currentData == targetData) {
         // one exception to the rule: we allow moving objects with no thread affinity to the current thread
         currentData = d->threadData;
@@ -1199,8 +1186,7 @@ void QObjectPrivate::moveToThread_helper()
     Q_Q(QObject);
     QEvent e(QEvent::ThreadChange);
     QCoreApplication::sendEvent(q, &e);
-    for (int i = 0; i < children.size(); ++i) {
-        QObject *child = children.at(i);
+    foreach (QObject *child, children) {;
         child->d_func()->moveToThread_helper();
     }
 }
@@ -1237,8 +1223,7 @@ void QObjectPrivate::setThreadData_helper(QThreadData *currentData, QThreadData 
     threadData->deref();
     threadData = targetData;
 
-    for (int i = 0; i < children.size(); ++i) {
-        QObject *child = children.at(i);
+    foreach (QObject *child, children) {;
         child->d_func()->setThreadData_helper(currentData, targetData);
     }
 }
@@ -1705,28 +1690,10 @@ QString QObject::trUtf8(const char *sourceText)
   Signals and slots
  *****************************************************************************/
 
-
-const char *qFlagLocation(const char *method)
-{
-    QThreadData::current()->flaggedSignatures.store(method);
-    return method;
-}
-
-static int extract_code(const char *member)
+static inline int extract_code(const char *member)
 {
     // extract code, ensure QMETHOD_CODE <= code <= QSIGNAL_CODE
     return (((int)(*member) - '0') & 0x3);
-}
-
-static const char * extract_location(const char *member)
-{
-    if (QThreadData::current()->flaggedSignatures.contains(member)) {
-        // signature includes location information after the first null-terminator
-        const char *location = member + qstrlen(member) + 1;
-        if (*location != '\0')
-            return location;
-    }
-    return Q_NULLPTR;
 }
 
 static bool check_signal_macro(const QObject *sender, const char *signal,
@@ -1765,16 +1732,8 @@ static void err_method_notfound(const QObject *object,
         case QSLOT_CODE:   type = "slot";   break;
         case QSIGNAL_CODE: type = "signal"; break;
     }
-    const char *loc = extract_location(method);
-    if (strchr(method,')') == 0) {               // common typing mistake
-        qWarning("Object::%s: Parentheses expected, %s %s::%s%s%s",
-                 func, type, object->metaObject()->className(), method+1,
-                 loc ? " in ": "", loc ? loc : "");
-    } else {
-        qWarning("Object::%s: No such %s %s::%s%s%s",
-                 func, type, object->metaObject()->className(), method+1,
-                 loc ? " in ": "", loc ? loc : "");
-    }
+    qWarning("Object::%s: No such %s %s::%s",
+             func, type, object->metaObject()->className(), method+1);
 }
 
 
@@ -2316,13 +2275,12 @@ bool QObject::disconnect(const QObject *sender, const char *signal,
 
     QByteArray method_name;
     const char *method_arg = method;
-    int membcode = -1;
     bool method_found = false;
     if (method) {
         method_name = QMetaObject::normalizedSignature(method);
         method = method_name.constData();
 
-        membcode = extract_code(method);
+        int membcode = extract_code(method);
         if (!check_method_code(membcode, receiver, method, "disconnect"))
             return false;
         method++; // skip code
@@ -2787,7 +2745,7 @@ void QMetaObject::connectSlotsByName(QObject *o)
             const QObject *co = list.at(j);
             QByteArray objName = co->objectName().toAscii();
             int len = objName.length();
-            if (!len || qstrncmp(slot + 3, objName.data(), len) || slot[len+3] != '_')
+            if (!len || qstrncmp(slot + 3, objName.constData(), len) || slot[len+3] != '_')
                 continue;
             int sigIndex = co->d_func()->signalIndex(slot + len + 4);
             if (sigIndex < 0) { // search for compatible signals
@@ -2840,9 +2798,9 @@ static void queued_activate(QObject *sender, int signal, QObjectPrivate::Connect
     int nargs = 1; // include return type
     while (c->argumentTypes[nargs-1])
         ++nargs;
-    int *types = (int *) malloc(nargs*sizeof(int));
+    int *types = (int *) ::malloc(nargs * sizeof(int));
     Q_CHECK_PTR(types);
-    void **args = (void **) malloc(nargs*sizeof(void *));
+    void **args = (void **) ::malloc(nargs * QT_POINTER_SIZE);
     Q_CHECK_PTR(args);
     types[0] = 0; // return type
     args[0] = Q_NULLPTR; // return value
@@ -2891,7 +2849,7 @@ void QMetaObject::activate(QObject *sender, const QMetaObject *m, int local_sign
                                                          argv ? argv : empty_argv);
     }
 
-    Qt::HANDLE currentThreadId = QThread::currentThreadId();
+    QThread* currentThread = QThread::currentThread();
 
     QMutexLocker locker(signalSlotLock(sender));
     QObjectConnectionListVector *connectionLists = sender->d_func()->connectionLists;
@@ -2919,7 +2877,7 @@ void QMetaObject::activate(QObject *sender, const QMetaObject *m, int local_sign
                 continue;
 
             QObject * const receiver = c->receiver;
-            const bool receiverInSameThread = currentThreadId == receiver->d_func()->threadData->threadId;
+            const bool receiverInSameThread = currentThread == receiver->d_func()->threadData->thread;
 
             // determine if this connection should be sent immediately or
             // put into the event queue

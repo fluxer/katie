@@ -1,7 +1,7 @@
 /****************************************************************************
 **
 ** Copyright (C) 2015 The Qt Company Ltd.
-** Copyright (C) 2016-2020 Ivailo Monev
+** Copyright (C) 2016 Ivailo Monev
 **
 ** This file is part of the QtCore module of the Katie Toolkit.
 **
@@ -14,18 +14,6 @@
 ** packaging of this file.  Please review the following information to
 ** ensure the GNU Lesser General Public License version 2.1 requirements
 ** will be met: http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html.
-**
-** As a special exception, The Qt Company gives you certain additional
-** rights. These rights are described in The Qt Company LGPL Exception
-** version 1.1, included in the file LGPL_EXCEPTION.txt in this package.
-**
-** GNU General Public License Usage
-** Alternatively, this file may be used under the terms of the GNU
-** General Public License version 3.0 as published by the Free Software
-** Foundation and appearing in the file LICENSE.GPL included in the
-** packaging of this file.  Please review the following information to
-** ensure the GNU General Public License version 3.0 requirements will be
-** met: http://www.gnu.org/copyleft/gpl.html.
 **
 ** $QT_END_LICENSE$
 **
@@ -88,7 +76,6 @@
 #define QT_NO_STYLE_QGTK
 #define QT_NO_STYLE_CDE
 #define QT_NO_STATEMACHINE
-#define QT_NO_XKB
 #define QT_NO_XIM
 #define QT_NO_IM
 #define QT_NO_INPUTMETHOD
@@ -97,17 +84,11 @@
 #define QT_NO_OPENGL
 #define QT_NO_TABLET
 #define QT_NO_TABLETEVENT
-#define QT_NO_GCONF2
 #define QT_NO_RAWFONT
 #define QT_NO_IMAGE_TEXT
-#define QT_NO_GLIB
-#define QT_NO_ICONV
-#define QT_NO_LPR
-#define QT_NO_NIS
-#define QT_NO_NSL
-#define QT_NO_NAS
 #define QT_NO_IMAGEFORMAT_MNG
 #define QT_NO_TEXTODFWRITER
+#define QT_NO_TEXTCODECPLUGIN
 
 // Not supported, used to bootstrap
 #cmakedefine QT_NO_QOBJECT
@@ -140,7 +121,6 @@
 #cmakedefine QT_NO_FONTCONFIG
 #cmakedefine QT_NO_IMAGEFORMAT_JPEG
 #cmakedefine QT_NO_IMAGEFORMAT_TIFF
-#cmakedefine QT_NO_RESOLV
 #cmakedefine QT_NO_SESSIONMANAGER
 #cmakedefine QT_NO_TRANSLATION
 #cmakedefine QT_NO_XCURSOR
@@ -149,7 +129,6 @@
 #cmakedefine QT_NO_XRANDR
 #cmakedefine QT_NO_XRENDER
 #cmakedefine QT_NO_XSHAPE
-#cmakedefine QT_NO_XSHM
 #cmakedefine QT_NO_XSYNC
 
 // Misc
@@ -190,7 +169,6 @@
 #cmakedefine QT_NO_DRAGANDDROP
 #cmakedefine QT_NO_DYNAMIC_CAST
 #cmakedefine QT_NO_EFFECTS
-#cmakedefine QT_NO_EMIT
 #cmakedefine QT_NO_ERRORMESSAGE
 #cmakedefine QT_NO_FILEDIALOG
 #cmakedefine QT_NO_FILEICONPROVIDER
@@ -302,7 +280,6 @@
 #cmakedefine QT_NO_TEXTBROWSER
 #cmakedefine QT_NO_TEXTCODE
 #cmakedefine QT_NO_TEXTCODEC
-#cmakedefine QT_NO_TEXTCODECPLUGIN
 #cmakedefine QT_NO_TEXTCONTROL
 #cmakedefine QT_NO_TEXTDATE
 #cmakedefine QT_NO_TEXTEDIT
@@ -333,6 +310,11 @@
 #cmakedefine QT_NO_XMLSTREAM
 #cmakedefine QT_NO_XMLSTREAMREADER
 #cmakedefine QT_NO_XMLSTREAMWRITER
+
+// Debugging
+#if defined(QT_NO_TEXTSTREAM) && !defined(QT_NO_DEBUG_STREAM)
+#  define QT_NO_DEBUG_STREAM
+#endif
 
 // Future
 #if !defined(QT_NO_QFUTURE) && defined(QT_NO_CONCURRENT)
@@ -507,11 +489,6 @@
 // QtSvg module
 #if !defined(QT_NO_SVG) && (defined(QT_NO_XMLSTREAMREADER) || defined(QT_NO_CSSPARSER))
 #  define QT_NO_SVG
-#endif
-
-// QTextCodecPlugin
-#if !defined(QT_NO_TEXTCODECPLUGIN) && (defined(QT_NO_TEXTCODEC) || defined(QT_NO_LIBRARY))
-#  define QT_NO_TEXTCODECPLUGIN
 #endif
 
 // QColorDialog
@@ -748,6 +725,5 @@
 #if !defined(QT_NO_PRINTPREVIEWDIALOG) && (defined(QT_NO_PRINTPREVIEWWIDGET) || defined(QT_NO_PRINTDIALOG) || defined(QT_NO_TOOLBAR))
 #  define QT_NO_PRINTPREVIEWDIALOG
 #endif
-
 
 #endif

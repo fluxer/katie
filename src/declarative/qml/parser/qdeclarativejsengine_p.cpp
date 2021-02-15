@@ -1,7 +1,7 @@
 /****************************************************************************
 **
 ** Copyright (C) 2015 The Qt Company Ltd.
-** Copyright (C) 2016-2020 Ivailo Monev
+** Copyright (C) 2016 Ivailo Monev
 **
 ** This file is part of the QtDeclarative module of the Katie Toolkit.
 **
@@ -14,18 +14,6 @@
 ** packaging of this file.  Please review the following information to
 ** ensure the GNU Lesser General Public License version 2.1 requirements
 ** will be met: http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html.
-**
-** As a special exception, The Qt Company gives you certain additional
-** rights. These rights are described in The Qt Company LGPL Exception
-** version 1.1, included in the file LGPL_EXCEPTION.txt in this package.
-**
-** GNU General Public License Usage
-** Alternatively, this file may be used under the terms of the GNU
-** General Public License version 3.0 as published by the Free Software
-** Foundation and appearing in the file LICENSE.GPL included in the
-** packaging of this file.  Please review the following information to
-** ensure the GNU General Public License version 3.0 requirements will be
-** met: http://www.gnu.org/copyleft/gpl.html.
 **
 ** $QT_END_LICENSE$
 **
@@ -47,29 +35,15 @@ uint qHash(const QDeclarativeJS::NameId &id)
 
 int Ecma::RegExp::flagFromChar(const QChar &ch)
 {
-    static QHash<QChar, int> flagsHash;
-    if (flagsHash.isEmpty()) {
-        flagsHash[QLatin1Char('g')] = Global;
-        flagsHash[QLatin1Char('i')] = IgnoreCase;
-        flagsHash[QLatin1Char('m')] = Multiline;
+    switch (ch.unicode()) {
+        case 'g':
+            return Global;
+        case 'i':
+            return IgnoreCase;
+        case 'm':
+            return Multiline;
     }
-    QHash<QChar, int>::const_iterator it;
-    it = flagsHash.constFind(ch);
-    if (it == flagsHash.constEnd())
-        return 0;
-    return it.value();
-}
-
-QString Ecma::RegExp::flagsToString(int flags)
-{
-    QString result;
-    if (flags & Global)
-        result += QLatin1Char('g');
-    if (flags & IgnoreCase)
-        result += QLatin1Char('i');
-    if (flags & Multiline)
-        result += QLatin1Char('m');
-    return result;
+    return 0;
 }
 
 NodePool::NodePool(const QString &fileName, Engine *engine)

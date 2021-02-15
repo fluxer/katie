@@ -1,7 +1,7 @@
 /****************************************************************************
 **
 ** Copyright (C) 2015 The Qt Company Ltd.
-** Copyright (C) 2016-2020 Ivailo Monev
+** Copyright (C) 2016 Ivailo Monev
 **
 ** This file is part of the QtDeclarative module of the Katie Toolkit.
 **
@@ -14,18 +14,6 @@
 ** packaging of this file.  Please review the following information to
 ** ensure the GNU Lesser General Public License version 2.1 requirements
 ** will be met: http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html.
-**
-** As a special exception, The Qt Company gives you certain additional
-** rights. These rights are described in The Qt Company LGPL Exception
-** version 1.1, included in the file LGPL_EXCEPTION.txt in this package.
-**
-** GNU General Public License Usage
-** Alternatively, this file may be used under the terms of the GNU
-** General Public License version 3.0 as published by the Free Software
-** Foundation and appearing in the file LICENSE.GPL included in the
-** packaging of this file.  Please review the following information to
-** ensure the GNU General Public License version 3.0 requirements will be
-** met: http://www.gnu.org/copyleft/gpl.html.
 **
 ** $QT_END_LICENSE$
 **
@@ -85,8 +73,6 @@ struct QDeclarativeMetaTypeData
     Names nameToType;
     typedef QHash<const QMetaObject *, QDeclarativeType *> MetaObjects;
     MetaObjects metaObjectToType;
-    typedef QHash<int, QDeclarativeMetaType::StringConverter> StringConverters;
-    StringConverters stringConverters;
 
     struct ModuleInfo {
         ModuleInfo(int major, int minor)
@@ -904,43 +890,6 @@ bool QDeclarativeMetaType::isList(int userType)
     QReadLocker lock(metaTypeDataLock());
     QDeclarativeMetaTypeData *data = metaTypeData();
     return userType >= 0 && userType < data->lists.size() && data->lists.testBit(userType);
-}
-
-/*!
-    A custom string convertor allows you to specify a function pointer that
-    returns a variant of \a type. For example, if you have written your own icon
-    class that you want to support as an object property assignable in QML:
-
-    \code
-    int type = qRegisterMetaType<SuperIcon>("SuperIcon");
-    QML::addCustomStringConvertor(type, &SuperIcon::pixmapFromString);
-    \endcode
-
-    The function pointer must be of the form:
-    \code
-    QVariant (*StringConverter)(const QString &);
-    \endcode
- */
-void QDeclarativeMetaType::registerCustomStringConverter(int type, StringConverter converter)
-{
-    QWriteLocker lock(metaTypeDataLock());
-
-    QDeclarativeMetaTypeData *data = metaTypeData();
-    if (data->stringConverters.contains(type))
-        return;
-    data->stringConverters.insert(type, converter);
-}
-
-/*!
-    Return the custom string converter for \a type, previously installed through
-    registerCustomStringConverter()
- */
-QDeclarativeMetaType::StringConverter QDeclarativeMetaType::customStringConverter(int type)
-{
-    QReadLocker lock(metaTypeDataLock());
-
-    QDeclarativeMetaTypeData *data = metaTypeData();
-    return data->stringConverters.value(type);
 }
 
 /*!

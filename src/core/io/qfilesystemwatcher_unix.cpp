@@ -1,7 +1,7 @@
 /****************************************************************************
 **
 ** Copyright (C) 2015 The Qt Company Ltd.
-** Copyright (C) 2016-2020 Ivailo Monev
+** Copyright (C) 2016 Ivailo Monev
 **
 ** This file is part of the QtCore module of the Katie Toolkit.
 **
@@ -14,18 +14,6 @@
 ** packaging of this file.  Please review the following information to
 ** ensure the GNU Lesser General Public License version 2.1 requirements
 ** will be met: http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html.
-**
-** As a special exception, The Qt Company gives you certain additional
-** rights. These rights are described in The Qt Company LGPL Exception
-** version 1.1, included in the file LGPL_EXCEPTION.txt in this package.
-**
-** GNU General Public License Usage
-** Alternatively, this file may be used under the terms of the GNU
-** General Public License version 3.0 as published by the Free Software
-** Foundation and appearing in the file LICENSE.GPL included in the
-** packaging of this file.  Please review the following information to
-** ensure the GNU General Public License version 3.0 requirements will be
-** met: http://www.gnu.org/copyleft/gpl.html.
 **
 ** $QT_END_LICENSE$
 **
@@ -89,10 +77,10 @@ QFileSystemWatcherEngineUnix::~QFileSystemWatcherEngineUnix()
 #if defined(QT_HAVE_INOTIFY_INIT1)
     foreach (int id, pathToID)
         inotify_rm_watch(sockfd, id < 0 ? -id : id);
-    ::close(sockfd);
+    qt_safe_close(sockfd);
 #elif defined(QT_HAVE_KEVENT)
     foreach (int id, pathToID)
-        ::close(id < 0 ? -id : id);
+        qt_safe_close(id < 0 ? -id : id);
 #endif
 }
 
@@ -103,9 +91,7 @@ QStringList QFileSystemWatcherEngineUnix::addPaths(const QStringList &paths,
     QStringList p = paths;
 
 #if defined(QT_HAVE_INOTIFY_INIT1)
-    QMutableListIterator<QString> it(p);
-    while (it.hasNext()) {
-        QString path = it.next();
+    foreach (QString path, p) {
         QFileInfo fi(path);
         bool isDir = fi.isDir();
         if (isDir && directories->contains(path)) {
@@ -136,7 +122,7 @@ QStringList QFileSystemWatcherEngineUnix::addPaths(const QStringList &paths,
             continue;
         }
 
-        it.remove();
+        p.removeAll(path);
 
         int id = isDir ? -wd : wd;
         if (id < 0) {
@@ -149,42 +135,32 @@ QStringList QFileSystemWatcherEngineUnix::addPaths(const QStringList &paths,
         idToPath.insert(id, path);
     }
 #elif defined(QT_HAVE_KEVENT)
-    QMutableListIterator<QString> it(p);
-    while (it.hasNext()) {
-        QString path = it.next();
+    foreach (QString path, p) {
 #if defined(O_EVTONLY)
         int fd = qt_safe_open(QFile::encodeName(path), O_EVTONLY);
 #else
         int fd = qt_safe_open(QFile::encodeName(path), O_RDONLY);
 #endif
         if (fd == -1) {
-            perror("QKqueueFileSystemWatcherEngine::addPaths: open");
+            perror("QFileSystemWatcherEngineUnix::addPaths: open");
             continue;
         }
-        if (fd >= (int)FD_SETSIZE / 2 && fd < (int)FD_SETSIZE) {
-            int fddup = ::fcntl(fd, F_DUPFD, FD_SETSIZE);
-            if (fddup != -1) {
-                ::close(fd);
-                fd = fddup;
-            }
-        }
-        ::fcntl(fd, F_SETFD, FD_CLOEXEC);
 
         QT_STATBUF st;
         if (QT_FSTAT(fd, &st) == -1) {
-            perror("QKqueueFileSystemWatcherEngine::addPaths: fstat");
-            ::close(fd);
+            perror("QFileSystemWatcherEngineUnix::addPaths: fstat");
+            qt_safe_close(fd);
             continue;
         }
         int id = (S_ISDIR(st.st_mode)) ? -fd : fd;
         if (id < 0) {
             if (directories->contains(path)) {
-                ::close(fd);
+                qt_safe_close(fd);
                 continue;
             }
         } else {
             if (files->contains(path)) {
-                ::close(fd);
+                qt_safe_close(fd);
                 continue;
             }
         }
@@ -198,17 +174,17 @@ QStringList QFileSystemWatcherEngineUnix::addPaths(const QStringList &paths,
                0,
                0);
         if (kevent(sockfd, &kev, 1, 0, 0, 0) == -1) {
-            perror("QKqueueFileSystemWatcherEngine::addPaths: kevent");
-            ::close(fd);
+            perror("QFileSystemWatcherEngineUnix::addPaths: kevent");
+            qt_safe_close(fd);
             continue;
         }
 
-        it.remove();
+        p.removeAll(path);
         if (id < 0) {
-            // qDebug() << "QKqueueFileSystemWatcherEngine: added directory path" << path;
+            // qDebug() << "QFileSystemWatcherEngineUnix: added directory path" << path;
             directories->append(path);
         } else {
-            // qDebug() << "QKqueueFileSystemWatcherEngine: added file path" << path;
+            // qDebug() << "QFileSystemWatcherEngineUnix: added file path" << path;
             files->append(path);
         }
 
@@ -227,9 +203,7 @@ QStringList QFileSystemWatcherEngineUnix::removePaths(const QStringList &paths,
     QStringList p = paths;
 
 #if defined(QT_HAVE_INOTIFY_INIT1)
-    QMutableListIterator<QString> it(p);
-    while (it.hasNext()) {
-        QString path = it.next();
+    foreach (QString path, p) {
         int id = pathToID.take(path);
         QString x = idToPath.take(id);
         if (x.isEmpty() || x != path)
@@ -239,7 +213,7 @@ QStringList QFileSystemWatcherEngineUnix::removePaths(const QStringList &paths,
         // qDebug() << "removing watch for path" << path << "wd" << wd;
         ::inotify_rm_watch(sockfd, wd);
 
-        it.remove();
+        p.removeAll(path);
         if (id < 0) {
             directories->removeAll(path);
         } else {
@@ -251,17 +225,15 @@ QStringList QFileSystemWatcherEngineUnix::removePaths(const QStringList &paths,
     if (pathToID.isEmpty())
         return p;
 
-    QMutableListIterator<QString> it(p);
-    while (it.hasNext()) {
-        QString path = it.next();
+    foreach (QString path, p) {
         int id = pathToID.take(path);
         QString x = idToPath.take(id);
         if (x.isEmpty() || x != path)
             continue;
 
-        ::close(id < 0 ? -id : id);
+        qt_safe_close(id < 0 ? -id : id);
 
-        it.remove();
+        p.removeAll(path);
         if (id < 0)
             directories->removeAll(path);
         else
@@ -280,7 +252,7 @@ void QFileSystemWatcherEngineUnix::readFromFd()
     int buffSize = 0;
     ::ioctl(sockfd, FIONREAD, (char *) &buffSize);
     char readbuff[buffSize];
-    buffSize = ::read(sockfd, readbuff, buffSize);
+    buffSize = qt_safe_read(sockfd, readbuff, buffSize);
     char *at = readbuff;
     char * const end = at + buffSize;
 
@@ -320,13 +292,13 @@ void QFileSystemWatcherEngineUnix::readFromFd()
     }
 #elif defined(QT_HAVE_KEVENT)
     forever {
-        // qDebug() << "QKqueueFileSystemWatcherEngine: polling for changes";
+        // qDebug() << "QFileSystemWatcherEngineUnix: polling for changes";
         int r;
         struct kevent kev;
         struct timespec ts = { 0, 0 }; // 0 ts, because we want to poll
         EINTR_LOOP(r, kevent(sockfd, 0, 0, &kev, 1, &ts));
         if (r < 0) {
-            perror("QKqueueFileSystemWatcherEngine: error during kevent wait");
+            perror("QFileSystemWatcherEngineUnix: error during kevent wait");
             return;
         } else if (r == 0) {
             // polling returned no events, so stop
@@ -334,7 +306,7 @@ void QFileSystemWatcherEngineUnix::readFromFd()
         } else {
             int fd = kev.ident;
 
-            // qDebug() << "QKqueueFileSystemWatcherEngine: processing kevent" << kev.ident << kev.filter;
+            // qDebug() << "QFileSystemWatcherEngineUnix: processing kevent" << kev.ident << kev.filter;
             QMutexLocker locker(&mutex);
 
             int id = fd;
@@ -344,12 +316,12 @@ void QFileSystemWatcherEngineUnix::readFromFd()
                 id = -id;
                 path = idToPath.value(id);
                 if (path.isEmpty()) {
-                    // qDebug() << "QKqueueFileSystemWatcherEngine: received a kevent for a file we're not watching";
+                    // qDebug() << "QFileSystemWatcherEngineUnix: received a kevent for a file we're not watching";
                     continue;
                 }
             }
             if (kev.filter != EVFILT_VNODE) {
-                // qDebug() << "QKqueueFileSystemWatcherEngine: received a kevent with the wrong filter";
+                // qDebug() << "QFileSystemWatcherEngineUnix: received a kevent with the wrong filter";
                 continue;
             }
 
@@ -358,7 +330,7 @@ void QFileSystemWatcherEngineUnix::readFromFd()
 
                 pathToID.remove(path);
                 idToPath.remove(id);
-                ::close(fd);
+                qt_safe_close(fd);
 
                 if (id < 0)
                     emit directoryChanged(path, true);

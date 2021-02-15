@@ -1,7 +1,7 @@
 /****************************************************************************
 **
 ** Copyright (C) 2015 The Qt Company Ltd.
-** Copyright (C) 2016-2020 Ivailo Monev
+** Copyright (C) 2016 Ivailo Monev
 **
 ** This file is part of the test suite of the Katie Toolkit.
 **
@@ -14,18 +14,6 @@
 ** packaging of this file.  Please review the following information to
 ** ensure the GNU Lesser General Public License version 2.1 requirements
 ** will be met: http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html.
-**
-** As a special exception, The Qt Company gives you certain additional
-** rights. These rights are described in The Qt Company LGPL Exception
-** version 1.1, included in the file LGPL_EXCEPTION.txt in this package.
-**
-** GNU General Public License Usage
-** Alternatively, this file may be used under the terms of the GNU
-** General Public License version 3.0 as published by the Free Software
-** Foundation and appearing in the file LICENSE.GPL included in the
-** packaging of this file.  Please review the following information to
-** ensure the GNU General Public License version 3.0 requirements will be
-** met: http://www.gnu.org/copyleft/gpl.html.
 **
 ** $QT_END_LICENSE$
 **
@@ -1077,9 +1065,6 @@ public:
 
 void tst_QDBusMarshall::receiveUnknownType()
 {
-#ifndef DBUS_TYPE_UNIX_FD
-    QSKIP("Your system's D-Bus library is too old for this test", SkipAll);
-#else
     QDBusConnection con = QDBusConnection::sessionBus();
     QVERIFY(con.isConnected());
 
@@ -1104,7 +1089,7 @@ void tst_QDBusMarshall::receiveUnknownType()
         con.registerObject("/spyObject", &spy, QDBusConnection::ExportAllSlots);
         ScopedDBusMessage msg(dbus_message_new_method_call(con.baseService().toLatin1(), "/spyObject", NULL, "theSlot"));
 
-        int fd = fileno(stdout);
+        int fd = QT_FILENO(stdout);
         dbus_message_append_args(msg.data(), DBUS_TYPE_UNIX_FD, &fd, DBUS_TYPE_INVALID);
 
         // try to send to us
@@ -1150,7 +1135,7 @@ void tst_QDBusMarshall::receiveUnknownType()
 
         DBusMessageIter iter;
         dbus_message_iter_init_append(msg.data(), &iter);
-        int fd = fileno(stdout);
+        int fd = QT_FILENO(stdout);
 
         if (qstrcmp(QTest::currentDataTag(), "type-naked") == 0) {
             // send naked
@@ -1183,7 +1168,6 @@ void tst_QDBusMarshall::receiveUnknownType()
         //qDebug() << spy.list.at(0).arguments().at(0).typeName();
         QCOMPARE(spy.list.at(0).arguments().at(0).userType(), receivedTypeId);
     }
-#endif
 }
 
 void tst_QDBusMarshall::demarshallPrimitives_data()

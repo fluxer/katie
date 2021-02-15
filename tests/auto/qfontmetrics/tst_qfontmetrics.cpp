@@ -1,7 +1,7 @@
 /****************************************************************************
 **
 ** Copyright (C) 2015 The Qt Company Ltd.
-** Copyright (C) 2016-2020 Ivailo Monev
+** Copyright (C) 2016 Ivailo Monev
 **
 ** This file is part of the test suite of the Katie Toolkit.
 **
@@ -14,18 +14,6 @@
 ** packaging of this file.  Please review the following information to
 ** ensure the GNU Lesser General Public License version 2.1 requirements
 ** will be met: http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html.
-**
-** As a special exception, The Qt Company gives you certain additional
-** rights. These rights are described in The Qt Company LGPL Exception
-** version 1.1, included in the file LGPL_EXCEPTION.txt in this package.
-**
-** GNU General Public License Usage
-** Alternatively, this file may be used under the terms of the GNU
-** General Public License version 3.0 as published by the Free Software
-** Foundation and appearing in the file LICENSE.GPL included in the
-** packaging of this file.  Please review the following information to
-** ensure the GNU General Public License version 3.0 requirements will be
-** met: http://www.gnu.org/copyleft/gpl.html.
 **
 ** $QT_END_LICENSE$
 **
@@ -63,7 +51,6 @@ private slots:
     void elidedText();
     void veryNarrowElidedText();
     void averageCharWidth();
-    void bypassShaping();
     void elidedMultiLength();
     void elidedMultiLengthF();
     void inFontUcs4();
@@ -211,21 +198,6 @@ void tst_QFontMetrics::averageCharWidth()
     QVERIFY(fm.averageCharWidth() != 0);
     QFontMetricsF fmf(f);
     QVERIFY(fmf.averageCharWidth() != 0);
-}
-
-void tst_QFontMetrics::bypassShaping()
-{
-    QFont f;
-    f.setStyleStrategy(QFont::ForceIntegerMetrics);
-    QFontMetrics fm(f);
-    QString text = " A, B, C, D, E, F, G, H, I, J, K, L, M, N, O, P, Q, R, S, T, U, V, W, X, Y, Z, a, b, c, d, e, f, g, h, i, j, k, l, m, n, o, p, q, r, s, t, u, v, w, x, y, z";
-    int textWidth = fm.width(text, -1, Qt::TextBypassShaping);
-    QVERIFY(textWidth != 0);
-    int charsWidth = 0;
-    for (int i = 0; i < text.size(); ++i)
-        charsWidth += fm.width(text[i]);
-    // This assertion is needed in QtWebKit's WebCore::Font::offsetForPositionForSimpleText
-    QCOMPARE(textWidth, charsWidth);
 }
 
 template<class FontMetrics> void elidedMultiLength_helper()

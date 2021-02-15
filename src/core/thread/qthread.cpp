@@ -1,7 +1,7 @@
 /****************************************************************************
 **
 ** Copyright (C) 2015 The Qt Company Ltd.
-** Copyright (C) 2016-2020 Ivailo Monev
+** Copyright (C) 2016 Ivailo Monev
 **
 ** This file is part of the QtCore module of the Katie Toolkit.
 **
@@ -14,18 +14,6 @@
 ** packaging of this file.  Please review the following information to
 ** ensure the GNU Lesser General Public License version 2.1 requirements
 ** will be met: http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html.
-**
-** As a special exception, The Qt Company gives you certain additional
-** rights. These rights are described in The Qt Company LGPL Exception
-** version 1.1, included in the file LGPL_EXCEPTION.txt in this package.
-**
-** GNU General Public License Usage
-** Alternatively, this file may be used under the terms of the GNU
-** General Public License version 3.0 as published by the Free Software
-** Foundation and appearing in the file LICENSE.GPL included in the
-** packaging of this file.  Please review the following information to
-** ensure the GNU General Public License version 3.0 requirements will be
-** met: http://www.gnu.org/copyleft/gpl.html.
 **
 ** $QT_END_LICENSE$
 **
@@ -50,9 +38,9 @@ QT_BEGIN_NAMESPACE
   QThreadData
 */
 
-QThreadData::QThreadData(int initialRefCount)
+QThreadData::QThreadData()
     : quitNow(false), canWait(true), isAdopted(false), loopLevel(0),
-    threadId(0), thread(Q_NULLPTR), eventDispatcher(Q_NULLPTR), _ref(initialRefCount)
+    thread(Q_NULLPTR), eventDispatcher(Q_NULLPTR), _ref(1)
 {
     // fprintf(stderr, "QThreadData %p created\n", this);
 }
@@ -130,8 +118,6 @@ QThreadPrivate::QThreadPrivate(QThreadData *d)
       isInFinish(false), exited(false), returnCode(-1),
       stackSize(0), priority(QThread::InheritPriority), thread_id(0), data(d)
 {
-    if (!data)
-        data = new QThreadData;
 }
 
 QThreadPrivate::~QThreadPrivate()
@@ -342,7 +328,7 @@ QThread *QThread::currentThread()
     \sa start()
 */
 QThread::QThread(QObject *parent)
-    : QObject(*(new QThreadPrivate), parent)
+    : QObject(*(new QThreadPrivate(new QThreadData())), parent)
 {
     Q_D(QThread);
     // fprintf(stderr, "QThreadData %p created for thread %p\n", d->data, this);
@@ -424,12 +410,12 @@ void QThread::setStackSize(uint stackSize)
     Q_ASSERT_X(!d->running, "QThread::setStackSize",
                "cannot change stack size while the thread is running");
 #ifdef PTHREAD_STACK_MIN
-    static int stack_min = sysconf(_SC_THREAD_STACK_MIN);
+    static long stack_min = sysconf(_SC_THREAD_STACK_MIN);
     if (stack_min == -1)
         stack_min = PTHREAD_STACK_MIN;
     // 0 means default stack size
     if (Q_UNLIKELY(stackSize != 0 && stackSize < stack_min)) {
-        qWarning("QThread::setStackSize: %u is less than the minimum %u", stackSize, stack_min);
+        qWarning("QThread::setStackSize: %u is less than the minimum %ld", stackSize, stack_min);
         stackSize = stack_min;
     }
 #endif
@@ -521,7 +507,9 @@ void QThread::exit(int returnCode)
     \sa exit() QEventLoop
 */
 void QThread::quit()
-{ exit(); }
+{
+    QThread::exit();
+}
 
 /*!
     The starting point for the thread. After calling start(), the
@@ -536,7 +524,7 @@ void QThread::quit()
 */
 void QThread::run()
 {
-    (void) exec();
+    (void) QThread::exec();
 }
 
 /*!
@@ -582,8 +570,7 @@ void QThread::run()
 QThread::Priority QThread::priority() const
 {
     Q_D(const QThread);
-    // mask off the high bits that are used for flags
-    return Priority(d->priority & 0xffff);
+    return d->priority;
 }
 
 /*!
@@ -698,7 +685,7 @@ static QThreadData *currentdata = Q_NULLPTR;
 QThreadData* QThreadData::current()
 {
     if (!currentdata) {
-        QScopedPointer<QThreadData> newdata(new QThreadData);
+        QScopedPointer<QThreadData> newdata(new QThreadData());
         newdata->thread = Q_NULLPTR; // new QAdoptedThread(newdata.data());
         currentdata = newdata.take();
         currentdata->deref();
@@ -717,7 +704,7 @@ QThread::QThread(QThreadPrivate &dd, QObject *parent)
 }
 
 QThreadPrivate::QThreadPrivate(QThreadData *d)
-    : data(d ? d : new QThreadData)
+    : data(d)
 {
 }
 

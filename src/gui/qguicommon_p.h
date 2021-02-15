@@ -59,15 +59,17 @@ inline static Qt::DockWidgetArea toDockWidgetArea(QInternal::DockPosition pos)
 inline static QTabBar::Shape tabBarShapeFrom(QTabWidget::TabShape shape, QTabWidget::TabPosition position)
 {
     const bool rounded = (shape == QTabWidget::Rounded);
-    if (position == QTabWidget::North)
-        return rounded ? QTabBar::RoundedNorth : QTabBar::TriangularNorth;
-    if (position == QTabWidget::South)
-        return rounded ? QTabBar::RoundedSouth : QTabBar::TriangularSouth;
-    if (position == QTabWidget::East)
-        return rounded ? QTabBar::RoundedEast : QTabBar::TriangularEast;
-    if (position == QTabWidget::West)
-        return rounded ? QTabBar::RoundedWest : QTabBar::TriangularWest;
-    return QTabBar::RoundedNorth;
+    switch (position) {
+        case QTabWidget::North:
+            return (rounded ? QTabBar::RoundedNorth : QTabBar::TriangularNorth);
+        case QTabWidget::South:
+            return (rounded ? QTabBar::RoundedSouth : QTabBar::TriangularSouth);
+        case QTabWidget::East:
+            return (rounded ? QTabBar::RoundedEast : QTabBar::TriangularEast);
+        case QTabWidget::West:
+            return (rounded ? QTabBar::RoundedWest : QTabBar::TriangularWest);
+    }
+    Q_UNREACHABLE();
 }
 #endif // QT_NO_TABWIDGET
 

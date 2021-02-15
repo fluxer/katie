@@ -1,7 +1,7 @@
 /****************************************************************************
 **
 ** Copyright (C) 2015 The Qt Company Ltd.
-** Copyright (C) 2016-2020 Ivailo Monev
+** Copyright (C) 2016 Ivailo Monev
 **
 ** This file is part of the QtGui module of the Katie Toolkit.
 **
@@ -14,18 +14,6 @@
 ** packaging of this file.  Please review the following information to
 ** ensure the GNU Lesser General Public License version 2.1 requirements
 ** will be met: http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html.
-**
-** As a special exception, The Qt Company gives you certain additional
-** rights. These rights are described in The Qt Company LGPL Exception
-** version 1.1, included in the file LGPL_EXCEPTION.txt in this package.
-**
-** GNU General Public License Usage
-** Alternatively, this file may be used under the terms of the GNU
-** General Public License version 3.0 as published by the Free Software
-** Foundation and appearing in the file LICENSE.GPL included in the
-** packaging of this file.  Please review the following information to
-** ensure the GNU General Public License version 3.0 requirements will be
-** met: http://www.gnu.org/copyleft/gpl.html.
 **
 ** $QT_END_LICENSE$
 **
@@ -61,11 +49,8 @@ class Q_GUI_EXPORT QGraphicsEffectSource : public QObject
     Q_OBJECT
 public:
     ~QGraphicsEffectSource();
-    const QGraphicsItem *graphicsItem() const;
     const QWidget *widget() const;
-    const QStyleOption *styleOption() const;
 
-    bool isPixmap() const;
     void draw(QPainter *painter);
     void update();
 
@@ -95,13 +80,13 @@ class QGraphicsEffectSourcePrivate : public QObjectPrivate
     Q_DECLARE_PUBLIC(QGraphicsEffectSource)
 public:
     QGraphicsEffectSourcePrivate()
-        : QObjectPrivate()
-        , m_cachedSystem(Qt::DeviceCoordinates)
-        , m_cachedMode(QGraphicsEffect::PadToTransparentBorder)
-    {}
-
-    enum InvalidateReason
+        : QObjectPrivate(),
+        m_cachedSystem(Qt::DeviceCoordinates),
+        m_cachedMode(QGraphicsEffect::PadToTransparentBorder)
     {
+    }
+
+    enum InvalidateReason {
         TransformChanged,
         EffectRectChanged,
         SourceChanged
@@ -111,12 +96,9 @@ public:
     virtual void detach() = 0;
     virtual QRectF boundingRect(Qt::CoordinateSystem system) const = 0;
     virtual QRect deviceRect() const = 0;
-    virtual const QGraphicsItem *graphicsItem() const = 0;
     virtual const QWidget *widget() const = 0;
-    virtual const QStyleOption *styleOption() const = 0;
     virtual void draw(QPainter *p) = 0;
     virtual void update() = 0;
-    virtual bool isPixmap() const = 0;
     virtual QPixmap pixmap(Qt::CoordinateSystem system, QPoint *offset = 0,
                            QGraphicsEffect::PixmapPadMode mode = QGraphicsEffect::PadToTransparentBorder) const = 0;
     virtual void effectBoundingRectChanged() = 0;
@@ -141,7 +123,11 @@ class Q_GUI_EXPORT QGraphicsEffectPrivate : public QObjectPrivate
 {
     Q_DECLARE_PUBLIC(QGraphicsEffect)
 public:
-    QGraphicsEffectPrivate() : source(Q_NULLPTR), isEnabled(true) {}
+    QGraphicsEffectPrivate()
+        : source(Q_NULLPTR),
+        isEnabled(true)
+    {
+    }
 
     inline void setGraphicsEffectSource(QGraphicsEffectSource *newSource)
     {
@@ -169,9 +155,9 @@ class QGraphicsColorizeEffectPrivate : public QGraphicsEffectPrivate
     Q_DECLARE_PUBLIC(QGraphicsColorizeEffect)
 public:
     QGraphicsColorizeEffectPrivate()
-        : opaque(true)
+        : filter(new QPixmapColorizeFilter()),
+        opaque(true)
     {
-        filter = new QPixmapColorizeFilter;
     }
     ~QGraphicsColorizeEffectPrivate() { delete filter; }
 
@@ -183,7 +169,10 @@ class QGraphicsBlurEffectPrivate : public QGraphicsEffectPrivate
 {
     Q_DECLARE_PUBLIC(QGraphicsBlurEffect)
 public:
-    QGraphicsBlurEffectPrivate() : filter(new QPixmapBlurFilter) {}
+    QGraphicsBlurEffectPrivate()
+        : filter(new QPixmapBlurFilter())
+    {
+    }
     ~QGraphicsBlurEffectPrivate() { delete filter; }
 
     QPixmapBlurFilter *filter;
@@ -193,7 +182,10 @@ class QGraphicsDropShadowEffectPrivate : public QGraphicsEffectPrivate
 {
     Q_DECLARE_PUBLIC(QGraphicsDropShadowEffect)
 public:
-    QGraphicsDropShadowEffectPrivate() : filter(new QPixmapDropShadowFilter) {}
+    QGraphicsDropShadowEffectPrivate()
+        : filter(new QPixmapDropShadowFilter())
+    {
+    }
     ~QGraphicsDropShadowEffectPrivate() { delete filter; }
 
     QPixmapDropShadowFilter *filter;
@@ -204,7 +196,12 @@ class QGraphicsOpacityEffectPrivate : public QGraphicsEffectPrivate
     Q_DECLARE_PUBLIC(QGraphicsOpacityEffect)
 public:
     QGraphicsOpacityEffectPrivate()
-        : opacity(qreal(0.7)), isFullyTransparent(false), isFullyOpaque(false), hasOpacityMask(false) {}
+        : opacity(qreal(0.7)),
+        isFullyTransparent(false),
+        isFullyOpaque(false),
+        hasOpacityMask(false)
+    {
+    }
     ~QGraphicsOpacityEffectPrivate() {}
 
     qreal opacity;

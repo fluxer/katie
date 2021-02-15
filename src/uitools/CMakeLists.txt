@@ -1,4 +1,4 @@
-add_definitions(-DQT_UITOOLS_LIB)
+# add_definitions()
 set(EXTRA_UITOOLS_LIBS KtCore KtGui KtXml KtScript)
 
 set(UITOOLS_PUBLIC_HEADERS
@@ -56,8 +56,6 @@ set_target_properties(KtUiTools PROPERTIES
     SOVERSION ${KATIE_VERSION}
     EXPORT_NAME UiTools
 )
-
-katie_setup_pch(KtUiTools)
 
 install(
     TARGETS KtUiTools

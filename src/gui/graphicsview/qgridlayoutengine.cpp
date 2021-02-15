@@ -1,7 +1,7 @@
 /****************************************************************************
 **
 ** Copyright (C) 2015 The Qt Company Ltd.
-** Copyright (C) 2016-2020 Ivailo Monev
+** Copyright (C) 2016 Ivailo Monev
 **
 ** This file is part of the QtGui module of the Katie Toolkit.
 **
@@ -14,18 +14,6 @@
 ** packaging of this file.  Please review the following information to
 ** ensure the GNU Lesser General Public License version 2.1 requirements
 ** will be met: http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html.
-**
-** As a special exception, The Qt Company gives you certain additional
-** rights. These rights are described in The Qt Company LGPL Exception
-** version 1.1, included in the file LGPL_EXCEPTION.txt in this package.
-**
-** GNU General Public License Usage
-** Alternatively, this file may be used under the terms of the GNU
-** General Public License version 3.0 as published by the Free Software
-** Foundation and appearing in the file LICENSE.GPL included in the
-** packaging of this file.  Please review the following information to
-** ensure the GNU General Public License version 3.0 requirements will be
-** met: http://www.gnu.org/copyleft/gpl.html.
 **
 ** $QT_END_LICENSE$
 **
@@ -85,7 +73,7 @@ static qreal compare(const QGridLayoutBox &box1, const QGridLayoutBox &box2, int
     qreal size1 = box1.q_sizes(which);
     qreal size2 = box2.q_sizes(which);
 
-    if (which == MaximumSize) {
+    if (which == Qt::MaximumSize) {
         return size2 - size1;
     } else {
         return size1 - size2;
@@ -216,7 +204,7 @@ void QGridLayoutRowData::calculateGeometries(int start, int end, qreal targetSiz
     }
 
     if (targetSize < totalBox.q_preferredSize) {
-        stealBox(start, end, MinimumSize, positions, sizes);
+        stealBox(start, end, Qt::MinimumSize, positions, sizes);
 
         sumAvailable = targetSize - totalBox.q_minimumSize;
         if (sumAvailable > 0.0) {
@@ -243,10 +231,10 @@ void QGridLayoutRowData::calculateGeometries(int start, int end, qreal targetSiz
     } else {
         bool isLargerThanMaximum = (targetSize > totalBox.q_maximumSize);
         if (isLargerThanMaximum) {
-            stealBox(start, end, MaximumSize, positions, sizes);
+            stealBox(start, end, Qt::MaximumSize, positions, sizes);
             sumAvailable = targetSize - totalBox.q_maximumSize;
         } else {
-            stealBox(start, end, PreferredSize, positions, sizes);
+            stealBox(start, end, Qt::PreferredSize, positions, sizes);
             sumAvailable = targetSize - totalBox.q_preferredSize;
         }
 

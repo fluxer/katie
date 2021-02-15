@@ -1,7 +1,7 @@
 /****************************************************************************
 **
 ** Copyright (C) 2015 The Qt Company Ltd.
-** Copyright (C) 2016-2020 Ivailo Monev
+** Copyright (C) 2016 Ivailo Monev
 **
 ** This file is part of the QtSvg module of the Katie Toolkit.
 **
@@ -14,18 +14,6 @@
 ** packaging of this file.  Please review the following information to
 ** ensure the GNU Lesser General Public License version 2.1 requirements
 ** will be met: http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html.
-**
-** As a special exception, The Qt Company gives you certain additional
-** rights. These rights are described in The Qt Company LGPL Exception
-** version 1.1, included in the file LGPL_EXCEPTION.txt in this package.
-**
-** GNU General Public License Usage
-** Alternatively, this file may be used under the terms of the GNU
-** General Public License version 3.0 as published by the Free Software
-** Foundation and appearing in the file LICENSE.GPL included in the
-** packaging of this file.  Please review the following information to
-** ensure the GNU General Public License version 3.0 requirements will be
-** met: http://www.gnu.org/copyleft/gpl.html.
 **
 ** $QT_END_LICENSE$
 **
@@ -80,21 +68,17 @@ class QSvgPaintEnginePrivate : public QPaintEnginePrivate
 {
 public:
     QSvgPaintEnginePrivate()
+        : outputDevice(Q_NULLPTR),
+        resolution(72),
+        afterFirstUpdate(false),
+        numGradients(0)
     {
-        size = QSize();
-        viewBox = QRectF();
-        outputDevice = 0;
-        resolution = 72;
-
         attributes.document_title = QLatin1String("Katie Svg Document");
         attributes.document_description = QLatin1String("Generated with Katie");
         attributes.font_family = QLatin1String("serif");
         attributes.font_size = QLatin1String("10pt");
         attributes.font_style = QLatin1String("normal");
         attributes.font_weight = QLatin1String("normal");
-
-        afterFirstUpdate = false;
-        numGradients = 0;
     }
 
     QSize size;
@@ -618,7 +602,7 @@ QSize QSvgGenerator::size() const
 void QSvgGenerator::setSize(const QSize &size)
 {
     Q_D(QSvgGenerator);
-    if (d->engine->isActive()) {
+    if (Q_UNLIKELY(d->engine->isActive())) {
         qWarning("QSvgGenerator::setSize(), cannot set size while SVG is being generated");
         return;
     }
@@ -661,7 +645,7 @@ QRect QSvgGenerator::viewBox() const
 void QSvgGenerator::setViewBox(const QRectF &viewBox)
 {
     Q_D(QSvgGenerator);
-    if (d->engine->isActive()) {
+    if (Q_UNLIKELY(d->engine->isActive())) {
         qWarning("QSvgGenerator::setViewBox(), cannot set viewBox while SVG is being generated");
         return;
     }
@@ -689,7 +673,7 @@ QString QSvgGenerator::fileName() const
 void QSvgGenerator::setFileName(const QString &fileName)
 {
     Q_D(QSvgGenerator);
-    if (d->engine->isActive()) {
+    if (Q_UNLIKELY(d->engine->isActive())) {
         qWarning("QSvgGenerator::setFileName(), cannot set file name while SVG is being generated");
         return;
     }
@@ -723,7 +707,7 @@ QIODevice *QSvgGenerator::outputDevice() const
 void QSvgGenerator::setOutputDevice(QIODevice *outputDevice)
 {
     Q_D(QSvgGenerator);
-    if (d->engine->isActive()) {
+    if (Q_UNLIKELY(d->engine->isActive())) {
         qWarning("QSvgGenerator::setOutputDevice(), cannot set output device while SVG is being generated");
         return;
     }
@@ -805,18 +789,16 @@ int QSvgGenerator::metric(QPaintDevice::PaintDeviceMetric metric) const
 bool QSvgPaintEngine::begin(QPaintDevice *)
 {
     Q_D(QSvgPaintEngine);
-    if (!d->outputDevice) {
+    if (Q_UNLIKELY(!d->outputDevice)) {
         qWarning("QSvgPaintEngine::begin(), no output device");
         return false;
-    }
-
-    if (!d->outputDevice->isOpen()) {
-        if (!d->outputDevice->open(QIODevice::WriteOnly | QIODevice::Text)) {
+    } else if (!d->outputDevice->isOpen()) {
+        if (Q_UNLIKELY(!d->outputDevice->open(QIODevice::WriteOnly | QIODevice::Text))) {
             qWarning("QSvgPaintEngine::begin(), could not open output device: '%s'",
                      qPrintable(d->outputDevice->errorString()));
             return false;
         }
-    } else if (!d->outputDevice->isWritable()) {
+    } else if (Q_UNLIKELY(!d->outputDevice->isWritable())) {
         qWarning("QSvgPaintEngine::begin(), could not write to read-only output device: '%s'",
                  qPrintable(d->outputDevice->errorString()));
         return false;

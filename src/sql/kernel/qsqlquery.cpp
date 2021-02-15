@@ -1,7 +1,7 @@
 /****************************************************************************
 **
 ** Copyright (C) 2015 The Qt Company Ltd.
-** Copyright (C) 2016-2020 Ivailo Monev
+** Copyright (C) 2016 Ivailo Monev
 **
 ** This file is part of the QtSql module of the Katie Toolkit.
 **
@@ -14,18 +14,6 @@
 ** packaging of this file.  Please review the following information to
 ** ensure the GNU Lesser General Public License version 2.1 requirements
 ** will be met: http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html.
-**
-** As a special exception, The Qt Company gives you certain additional
-** rights. These rights are described in The Qt Company LGPL Exception
-** version 1.1, included in the file LGPL_EXCEPTION.txt in this package.
-**
-** GNU General Public License Usage
-** Alternatively, this file may be used under the terms of the GNU
-** General Public License version 3.0 as published by the Free Software
-** Foundation and appearing in the file LICENSE.GPL included in the
-** packaging of this file.  Please review the following information to
-** ensure the GNU General Public License version 3.0 requirements will be
-** met: http://www.gnu.org/copyleft/gpl.html.
 **
 ** $QT_END_LICENSE$
 **
@@ -250,7 +238,7 @@ QSqlQuery::QSqlQuery(const QSqlQuery& other)
 /*!
     \internal
 */
-static void qInit(QSqlQuery *q, const QString& query, QSqlDatabase db)
+static inline void qInit(QSqlQuery *q, QSqlDatabase db)
 {
     QSqlDatabase database = db;
     if (!database.isValid())
@@ -258,8 +246,6 @@ static void qInit(QSqlQuery *q, const QString& query, QSqlDatabase db)
     if (database.isValid()) {
         *q = QSqlQuery(database.driver()->createResult());
     }
-    if (!query.isEmpty())
-        q->exec(query);
 }
 
 /*!
@@ -273,7 +259,9 @@ static void qInit(QSqlQuery *q, const QString& query, QSqlDatabase db)
 QSqlQuery::QSqlQuery(const QString& query, QSqlDatabase db)
     : d(QSqlQueryPrivate::shared_null())
 {
-    qInit(this, query, db);
+    qInit(this, db);
+    if (!query.isEmpty())
+        QSqlQuery::exec(query);
 }
 
 /*!
@@ -286,7 +274,7 @@ QSqlQuery::QSqlQuery(const QString& query, QSqlDatabase db)
 QSqlQuery::QSqlQuery(QSqlDatabase db)
     : d(QSqlQueryPrivate::shared_null())
 {
-    qInit(this, QString(), db);
+    qInit(this, db);
 }
 
 
@@ -356,11 +344,11 @@ bool QSqlQuery::exec(const QString& query)
         d->sqlResult->setNumericalPrecisionPolicy(d->sqlResult->numericalPrecisionPolicy());
     }
     d->sqlResult->setQuery(query.trimmed());
-    if (!driver()->isOpen() || driver()->isOpenError()) {
+    if (Q_UNLIKELY(!driver()->isOpen() || driver()->isOpenError())) {
         qWarning("QSqlQuery::exec: database not open");
         return false;
     }
-    if (query.isEmpty()) {
+    if (Q_UNLIKELY(query.isEmpty())) {
         qWarning("QSqlQuery::exec: empty query");
         return false;
     }
@@ -391,7 +379,7 @@ bool QSqlQuery::exec(const QString& query)
 
 QVariant QSqlQuery::value(int index) const
 {
-    if (isActive() && isValid() && (index > QSql::BeforeFirstRow))
+    if (Q_LIKELY(isActive() && isValid() && (index > QSql::BeforeFirstRow)))
         return d->sqlResult->data(index);
     qWarning("QSqlQuery::value: not positioned on a valid record");
     return QVariant();
@@ -527,7 +515,7 @@ bool QSqlQuery::seek(int index, bool relative)
         }
     }
     // let drivers optimize
-    if (isForwardOnly() && actualIdx < at()) {
+    if (Q_UNLIKELY(isForwardOnly() && actualIdx < at())) {
         qWarning("QSqlQuery::seek: cannot seek backwards in a forward only query");
         return false;
     }
@@ -632,7 +620,7 @@ bool QSqlQuery::previous()
 {
     if (!isSelect() || !isActive())
         return false;
-    if (isForwardOnly()) {
+    if (Q_UNLIKELY(isForwardOnly())) {
         qWarning("QSqlQuery::seek: cannot seek backwards in a forward only query");
         return false;
     }
@@ -665,7 +653,7 @@ bool QSqlQuery::first()
 {
     if (!isSelect() || !isActive())
         return false;
-    if (isForwardOnly() && at() > QSql::BeforeFirstRow) {
+    if (Q_UNLIKELY(isForwardOnly() && at() > QSql::BeforeFirstRow)) {
         qWarning("QSqlQuery::seek: cannot seek backwards in a forward only query");
         return false;
     }
@@ -896,15 +884,15 @@ bool QSqlQuery::prepare(const QString& query)
         d->sqlResult->setAt(QSql::BeforeFirstRow);
         d->sqlResult->setNumericalPrecisionPolicy(d->sqlResult->numericalPrecisionPolicy());
     }
-    if (!driver()) {
+    if (Q_UNLIKELY(!driver())) {
         qWarning("QSqlQuery::prepare: no driver");
         return false;
     }
-    if (!driver()->isOpen() || driver()->isOpenError()) {
+    if (Q_UNLIKELY(!driver()->isOpen() || driver()->isOpenError())) {
         qWarning("QSqlQuery::prepare: database not open");
         return false;
     }
-    if (query.isEmpty()) {
+    if (Q_UNLIKELY(query.isEmpty())) {
         qWarning("QSqlQuery::prepare: empty query");
         return false;
     }

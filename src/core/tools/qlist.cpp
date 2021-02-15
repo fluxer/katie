@@ -1,7 +1,7 @@
 /****************************************************************************
 **
 ** Copyright (C) 2015 The Qt Company Ltd.
-** Copyright (C) 2016-2020 Ivailo Monev
+** Copyright (C) 2016 Ivailo Monev
 **
 ** This file is part of the QtCore module of the Katie Toolkit.
 **
@@ -14,18 +14,6 @@
 ** packaging of this file.  Please review the following information to
 ** ensure the GNU Lesser General Public License version 2.1 requirements
 ** will be met: http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html.
-**
-** As a special exception, The Qt Company gives you certain additional
-** rights. These rights are described in The Qt Company LGPL Exception
-** version 1.1, included in the file LGPL_EXCEPTION.txt in this package.
-**
-** GNU General Public License Usage
-** Alternatively, this file may be used under the terms of the GNU
-** General Public License version 3.0 as published by the Free Software
-** Foundation and appearing in the file LICENSE.GPL included in the
-** packaging of this file.  Please review the following information to
-** ensure the GNU General Public License version 3.0 requirements will be
-** met: http://www.gnu.org/copyleft/gpl.html.
 **
 ** $QT_END_LICENSE$
 **
@@ -54,7 +42,7 @@ QListData::Data QListData::shared_null = { QAtomicInt(1), 0, 0, 0, { 0 } };
 static int grow(int size)
 {
     // dear compiler: don't optimize me out.
-    volatile int x = qAllocMore(size * sizeof(void *), QListData::DataHeaderSize) / sizeof(void *);
+    volatile int x = qAllocMore(size * QT_POINTER_SIZE, QListData::DataHeaderSize) / QT_POINTER_SIZE;
     return x;
 }
 
@@ -74,7 +62,7 @@ QListData::Data *QListData::detach_grow(int *idx, int num)
     int l = x->end - x->begin;
     int nl = l + num;
     int alloc = grow(nl);
-    Data* t = static_cast<Data *>(malloc(DataHeaderSize + alloc * sizeof(void *)));
+    Data* t = static_cast<Data *>(malloc(DataHeaderSize + alloc * QT_POINTER_SIZE));
     Q_CHECK_PTR(t);
 
     t->ref = 1;
@@ -115,7 +103,7 @@ QListData::Data *QListData::detach_grow(int *idx, int num)
 QListData::Data *QListData::detach(int alloc)
 {
     Data *x = d;
-    Data* t = static_cast<Data *>(malloc(DataHeaderSize + alloc * sizeof(void *)));
+    Data* t = static_cast<Data *>(malloc(DataHeaderSize + alloc * QT_POINTER_SIZE));
     Q_CHECK_PTR(t);
 
     t->ref = 1;
@@ -143,7 +131,7 @@ void QListData::freeData(Data *data)
 
 /*!
  *  Detaches the QListData by reallocating new memory.
- *  Returns the old (shared) data, it is up to the caller to deref() and free()
+ *  It is up to the caller to deref() and free()
  *  For the new data node_copy needs to be called.
  *
  *  \internal
@@ -151,10 +139,17 @@ void QListData::freeData(Data *data)
 void QListData::reallocData(int alloc)
 {
     Q_ASSERT(d->ref == 1);
-    Data *x = static_cast<Data *>(realloc(d, DataHeaderSize + alloc * sizeof(void *)));
-    Q_CHECK_PTR(x);
 
-    d = x;
+    if (d == &shared_null) {
+        Data *x = static_cast<Data *>(malloc(DataHeaderSize + alloc * QT_POINTER_SIZE));
+        Q_CHECK_PTR(x);
+        d = x;
+    } else {
+        Data *x = static_cast<Data *>(realloc(d, DataHeaderSize + alloc * QT_POINTER_SIZE));
+        Q_CHECK_PTR(x);
+        d = x;
+    }
+
     d->alloc = alloc;
     if (!alloc)
         d->begin = d->end = 0;
@@ -170,7 +165,7 @@ void **QListData::append(int n)
         if (b - n >= 2 * d->alloc / 3) {
             // we have enough space. Just not at the end -> move it.
             e -= b;
-            ::memmove(d->array, d->array + b, e * sizeof(void *));
+            ::memmove(d->array, d->array + b, e * QT_POINTER_SIZE);
             d->begin = 0;
         } else {
             reallocData(grow(d->alloc + n));
@@ -204,7 +199,7 @@ void **QListData::prepend()
         else
             d->begin = d->alloc - d->end;
 
-        ::memmove(d->array + d->begin, d->array, d->end * sizeof(void *));
+        ::memmove(d->array + d->begin, d->array, d->end * QT_POINTER_SIZE);
         d->end += d->begin;
     }
     return d->array + --d->begin;
@@ -240,10 +235,10 @@ void **QListData::insert(int i)
 
     if (leftward) {
         --d->begin;
-        ::memmove(d->array + d->begin, d->array + d->begin + 1, i * sizeof(void *));
+        ::memmove(d->array + d->begin, d->array + d->begin + 1, i * QT_POINTER_SIZE);
     } else {
         ::memmove(d->array + d->begin + i + 1, d->array + d->begin + i,
-                  (size - i) * sizeof(void *));
+                  (size - i) * QT_POINTER_SIZE);
         ++d->end;
     }
     return d->array + d->begin + i;
@@ -255,11 +250,11 @@ void QListData::remove(int i)
     i += d->begin;
     if (i - d->begin < d->end - i) {
         if (int offset = i - d->begin)
-            ::memmove(d->array + d->begin + 1, d->array + d->begin, offset * sizeof(void *));
+            ::memmove(d->array + d->begin + 1, d->array + d->begin, offset * QT_POINTER_SIZE);
         d->begin++;
     } else {
         if (int offset = d->end - i - 1)
-            ::memmove(d->array + i, d->array + i + 1, offset * sizeof(void *));
+            ::memmove(d->array + i, d->array + i + 1, offset * QT_POINTER_SIZE);
         d->end--;
     }
 }
@@ -271,11 +266,11 @@ void QListData::remove(int i, int n)
     int middle = i + n/2;
     if (middle - d->begin < d->end - middle) {
         ::memmove(d->array + d->begin + n, d->array + d->begin,
-                   (i - d->begin) * sizeof(void*));
+                   (i - d->begin) * QT_POINTER_SIZE);
         d->begin += n;
     } else {
         ::memmove(d->array + i, d->array + i + n,
-                   (d->end - i - n) * sizeof(void*));
+                   (d->end - i - n) * QT_POINTER_SIZE);
         d->end -= n;
     }
 }
@@ -292,26 +287,26 @@ void QListData::move(int from, int to)
 
     if (from < to) {
         if (d->end == d->alloc || 3 * (to - from) < 2 * (d->end - d->begin)) {
-            ::memmove(d->array + from, d->array + from + 1, (to - from) * sizeof(void *));
+            ::memmove(d->array + from, d->array + from + 1, (to - from) * QT_POINTER_SIZE);
         } else {
             // optimization
             if (int offset = from - d->begin)
-                ::memmove(d->array + d->begin + 1, d->array + d->begin, offset * sizeof(void *));
+                ::memmove(d->array + d->begin + 1, d->array + d->begin, offset * QT_POINTER_SIZE);
             if (int offset = d->end - (to + 1))
-                ::memmove(d->array + to + 2, d->array + to + 1, offset * sizeof(void *));
+                ::memmove(d->array + to + 2, d->array + to + 1, offset * QT_POINTER_SIZE);
             ++d->begin;
             ++d->end;
             ++to;
         }
     } else {
         if (d->begin == 0 || 3 * (from - to) < 2 * (d->end - d->begin)) {
-            ::memmove(d->array + to + 1, d->array + to, (from - to) * sizeof(void *));
+            ::memmove(d->array + to + 1, d->array + to, (from - to) * QT_POINTER_SIZE);
         } else {
             // optimization
             if (int offset = to - d->begin)
-                ::memmove(d->array + d->begin - 1, d->array + d->begin, offset * sizeof(void *));
+                ::memmove(d->array + d->begin - 1, d->array + d->begin, offset * QT_POINTER_SIZE);
             if (int offset = d->end - (from + 1))
-                ::memmove(d->array + from, d->array + from + 1, offset * sizeof(void *));
+                ::memmove(d->array + from, d->array + from + 1, offset * QT_POINTER_SIZE);
             --d->begin;
             --d->end;
             --to;

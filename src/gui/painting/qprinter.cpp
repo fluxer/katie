@@ -1,7 +1,7 @@
 /****************************************************************************
 **
 ** Copyright (C) 2015 The Qt Company Ltd.
-** Copyright (C) 2016-2020 Ivailo Monev
+** Copyright (C) 2016 Ivailo Monev
 **
 ** This file is part of the QtGui module of the Katie Toolkit.
 **
@@ -14,18 +14,6 @@
 ** packaging of this file.  Please review the following information to
 ** ensure the GNU Lesser General Public License version 2.1 requirements
 ** will be met: http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html.
-**
-** As a special exception, The Qt Company gives you certain additional
-** rights. These rights are described in The Qt Company LGPL Exception
-** version 1.1, included in the file LGPL_EXCEPTION.txt in this package.
-**
-** GNU General Public License Usage
-** Alternatively, this file may be used under the terms of the GNU
-** General Public License version 3.0 as published by the Free Software
-** Foundation and appearing in the file LICENSE.GPL included in the
-** packaging of this file.  Please review the following information to
-** ensure the GNU General Public License version 3.0 requirements will be
-** met: http://www.gnu.org/copyleft/gpl.html.
 **
 ** $QT_END_LICENSE$
 **
@@ -64,37 +52,40 @@ QT_BEGIN_NAMESPACE
     }
 
 // NB! This table needs to be in sync with QPrinter::PaperSize
-static const float qt_paperSizes[][2] = {
-    {210, 297}, // A4
-    {176, 250}, // B5
-    {215.9f, 279.4f}, // Letter
-    {215.9f, 355.6f}, // Legal
-    {190.5f, 254}, // Executive
-    {841, 1189}, // A0
-    {594, 841}, // A1
-    {420, 594}, // A2
-    {297, 420}, // A3
-    {148, 210}, // A5
-    {105, 148}, // A6
-    {74, 105}, // A7
-    {52, 74}, // A8
-    {37, 52}, // A8
-    {1000, 1414}, // B0
-    {707, 1000}, // B1
-    {31, 44}, // B10
-    {500, 707}, // B2
-    {353, 500}, // B3
-    {250, 353}, // B4
-    {125, 176}, // B6
-    {88, 125}, // B7
-    {62, 88}, // B8
-    {33, 62}, // B9
-    {163, 229}, // C5E
-    {105, 241}, // US Common
-    {110, 220}, // DLE
-    {210, 330}, // Folio
-    {431.8f, 279.4f}, // Ledger
-    {279.4f, 431.8f} // Tabloid
+static const struct paperSizesData {
+    const float width;
+    const float height;
+} paperSizesTbl[QPrinter::NPaperSize] = {
+    { 210, 297 },       // A4
+    { 176, 250 },       // B5
+    { 215.9f, 279.4f }, // Letter
+    {215.9f, 355.6f },  // Legal
+    { 190.5f, 254 },    // Executive
+    { 841, 1189 },      // A0
+    { 594, 841 },       // A1
+    { 420, 594 },       // A2
+    { 297, 420 },       // A3
+    { 148, 210 },       // A5
+    { 105, 148 },       // A6
+    { 74, 105 },        // A7
+    { 52, 74 },         // A8
+    { 37, 52 },         // A9
+    { 1000, 1414 },     // B0
+    { 707, 1000 },      // B1
+    { 31, 44 },         // B10
+    { 500, 707 },       // B2
+    { 353, 500 },       // B3
+    { 250, 353 },       // B4
+    { 125, 176 },       // B6
+    { 88, 125 },        // B7
+    { 62, 88 },         // B8
+    { 33, 62 },         // B9
+    { 163, 229 },       // C5E
+    { 105, 241 },       // Comm10E
+    { 110, 220 },       // DLE
+    { 210, 330 },       // Folio
+    { 431.8f, 279.4f }, // Ledger
+    { 279.4f, 431.8f }  // Tabloid
 };
 
 /// return the multiplier of converting from the unit value to postscript-points.
@@ -125,15 +116,15 @@ QSizeF qt_printerPaperSize(QPrinter::Orientation orientation,
                            QPrinter::Unit unit,
                            int resolution)
 {
-    int width_index = 0;
-    int height_index = 1;
+    float width = paperSizesTbl[paperSize].width;
+    float height = paperSizesTbl[paperSize].height;
     if (orientation == QPrinter::Landscape) {
-        width_index = 1;
-        height_index = 0;
+        width = paperSizesTbl[paperSize].height;
+        height = paperSizesTbl[paperSize].width;
     }
     const qreal multiplier = qt_multiplierForUnit(unit, resolution);
-    return QSizeF((qt_paperSizes[paperSize][width_index] * 72 / 25.4) / multiplier,
-                  (qt_paperSizes[paperSize][height_index] * 72 / 25.4) / multiplier);
+    return QSizeF((width * 72 / 25.4) / multiplier,
+                  (height * 72 / 25.4) / multiplier);
 }
 
 void QPrinterPrivate::createDefaultEngines()
@@ -1080,9 +1071,7 @@ QSizeF QPrinter::paperSize(Unit unit) const
         QSizeF size = d->printEngine->property(QPrintEngine::PPK_CustomPaperSize).toSizeF();
         return QSizeF(size.width() / multiplier, size.height() / multiplier);
     }
-    else {
-        return qt_printerPaperSize(orientation(), paperType, unit, res);
-    }
+    return qt_printerPaperSize(orientation(), paperType, unit, res);
 }
 
 /*!
@@ -2087,29 +2076,7 @@ QPrinter::PrintRange QPrinter::printRange() const
 QSizeF qt_paperSizeToQSizeF(QPrinter::PaperSize size)
 {
     if (size == QPrinter::Custom) return QSizeF(0, 0);
-    return QSizeF(qt_paperSizes[size][0], qt_paperSizes[size][1]);
-}
-
-/*
-    Returns the PaperSize type that matches \a size, where \a size
-    is in millimeters.
-
-    Because dimensions may not always be completely accurate (for
-    example when converting between units), a particular PaperSize
-    will be returned if it matches within -1/+1 millimeters.
-*/
-QPrinter::PaperSize qSizeFTopaperSize(const QSizeF& size)
-{
-    for (int i = 0; i < static_cast<int>(QPrinter::NPaperSize); ++i) {
-        if (qt_paperSizes[i][0] >= size.width() - 1 &&
-                qt_paperSizes[i][0] <= size.width() + 1 &&
-                qt_paperSizes[i][1] >= size.height() - 1 &&
-                qt_paperSizes[i][1] <= size.height() + 1) {
-            return QPrinter::PaperSize(i);
-        }
-    }
-
-    return QPrinter::Custom;
+    return QSizeF(paperSizesTbl[size].width, paperSizesTbl[size].height);
 }
 
 QT_END_NAMESPACE

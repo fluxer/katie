@@ -1,7 +1,7 @@
 /****************************************************************************
 **
 ** Copyright (C) 2015 The Qt Company Ltd.
-** Copyright (C) 2016-2020 Ivailo Monev
+** Copyright (C) 2016 Ivailo Monev
 **
 ** This file is part of the QtCore module of the Katie Toolkit.
 **
@@ -14,18 +14,6 @@
 ** packaging of this file.  Please review the following information to
 ** ensure the GNU Lesser General Public License version 2.1 requirements
 ** will be met: http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html.
-**
-** As a special exception, The Qt Company gives you certain additional
-** rights. These rights are described in The Qt Company LGPL Exception
-** version 1.1, included in the file LGPL_EXCEPTION.txt in this package.
-**
-** GNU General Public License Usage
-** Alternatively, this file may be used under the terms of the GNU
-** General Public License version 3.0 as published by the Free Software
-** Foundation and appearing in the file LICENSE.GPL included in the
-** packaging of this file.  Please review the following information to
-** ensure the GNU General Public License version 3.0 requirements will be
-** met: http://www.gnu.org/copyleft/gpl.html.
 **
 ** $QT_END_LICENSE$
 **
@@ -52,9 +40,9 @@
 #include <sys/wait.h>
 #include <errno.h>
 
-#define EINTR_LOOP(var, cmd)                    \
-    do {                                        \
-        var = cmd;                              \
+#define EINTR_LOOP(var, cmd)                                  \
+    do {                                                      \
+        var = cmd;                                            \
     } while (var == -1 && errno == EINTR)
 
 QT_BEGIN_NAMESPACE
@@ -120,8 +108,7 @@ static inline void qt_ignore_sigpipe()
     }
 }
 
-// don't call QT_OPEN or ::open
-// call qt_safe_open
+// don't call QT_OPEN or ::open, call qt_safe_open
 static inline int qt_safe_open(const char *pathname, int flags, mode_t mode = 0777)
 {
 #ifdef O_CLOEXEC
@@ -138,11 +125,8 @@ static inline int qt_safe_open(const char *pathname, int flags, mode_t mode = 07
 #endif
     return fd;
 }
-#undef QT_OPEN
-#define QT_OPEN         qt_safe_open
 
-// don't call ::pipe
-// call qt_safe_pipe
+// don't call ::pipe or ::pipe2, call qt_safe_pipe
 static inline int qt_safe_pipe(int pipefd[2], int flags = 0)
 {
 #ifdef O_CLOEXEC
@@ -172,7 +156,7 @@ static inline int qt_safe_pipe(int pipefd[2], int flags = 0)
 #endif
 }
 
-// don't call dup or fcntl(F_DUPFD)
+// don't call dup or fcntl(F_DUPFD), call qt_safe_dup
 static inline int qt_safe_dup(int oldfd)
 {
 #ifdef F_DUPFD_CLOEXEC
@@ -186,8 +170,7 @@ static inline int qt_safe_dup(int oldfd)
 #endif
 }
 
-// don't call dup2
-// call qt_safe_dup2
+// don't call dup2, call qt_safe_dup2
 static inline int qt_safe_dup2(int oldfd, int newfd)
 {
     int ret;
@@ -195,23 +178,21 @@ static inline int qt_safe_dup2(int oldfd, int newfd)
     return ret;
 }
 
+// don't call QT_READ or ::read, call qt_safe_read
 static inline qint64 qt_safe_read(int fd, void *data, qint64 maxlen)
 {
     qint64 ret = 0;
     EINTR_LOOP(ret, QT_READ(fd, data, maxlen));
     return ret;
 }
-#undef QT_READ
-#define QT_READ qt_safe_read
 
+// don't call QT_WRITE or ::write, call qt_safe_write
 static inline qint64 qt_safe_write(int fd, const void *data, qint64 len)
 {
     qint64 ret = 0;
     EINTR_LOOP(ret, QT_WRITE(fd, data, len));
     return ret;
 }
-#undef QT_WRITE
-#define QT_WRITE qt_safe_write
 
 static inline qint64 qt_safe_write_nosignal(int fd, const void *data, qint64 len)
 {
@@ -219,15 +200,23 @@ static inline qint64 qt_safe_write_nosignal(int fd, const void *data, qint64 len
     return qt_safe_write(fd, data, len);
 }
 
+// don't call QT_CREAT or ::creat, call qt_safe_creat
+static inline int qt_safe_creat(const char* path, mode_t flags)
+{
+    int ret;
+    EINTR_LOOP(ret, QT_CREAT(path, flags));
+    return ret;
+}
+
+// don't call QT_CLOSE or ::close, call qt_safe_close
 static inline int qt_safe_close(int fd)
 {
     int ret;
     EINTR_LOOP(ret, QT_CLOSE(fd));
     return ret;
 }
-#undef QT_CLOSE
-#define QT_CLOSE qt_safe_close
 
+// don't call ::execve, call qt_safe_execve
 static inline int qt_safe_execve(const char *filename, char *const argv[],
                                  char *const envp[])
 {
@@ -236,6 +225,7 @@ static inline int qt_safe_execve(const char *filename, char *const argv[],
     return ret;
 }
 
+// don't call ::execv, call qt_safe_execv
 static inline int qt_safe_execv(const char *path, char *const argv[])
 {
     int ret;
@@ -243,6 +233,7 @@ static inline int qt_safe_execv(const char *path, char *const argv[])
     return ret;
 }
 
+// don't call ::execvp, call qt_safe_execvp
 static inline int qt_safe_execvp(const char *file, char *const argv[])
 {
     int ret;
@@ -250,6 +241,7 @@ static inline int qt_safe_execvp(const char *file, char *const argv[])
     return ret;
 }
 
+// don't call ::waitpid, call qt_safe_waitpid
 static inline pid_t qt_safe_waitpid(pid_t pid, int *status, int options)
 {
     int ret;
@@ -259,18 +251,9 @@ static inline pid_t qt_safe_waitpid(pid_t pid, int *status, int options)
 
 timeval qt_gettime(); // in qelapsedtimer_unix.cpp
 
+// don't call ::select, call qt_safe_select
 Q_CORE_EXPORT int qt_safe_select(int nfds, fd_set *fdread, fd_set *fdwrite, fd_set *fdexcept,
                                  const struct timeval *tv);
-
-// according to X/OPEN we have to define semun ourselves
-// we use prefix as on some systems sem.h will have it
-struct semid_ds;
-union qt_semun {
-    int val;                    /* value for SETVAL */
-    struct semid_ds *buf;       /* buffer for IPC_STAT, IPC_SET */
-    unsigned short *array;      /* array for GETALL, SETALL */
-};
-
 
 /*
    Returns the difference between msecs and elapsed. If msecs is -1,
@@ -284,7 +267,6 @@ inline static qint64 qt_timeout_value(qint64 msecs, qint64 elapsed)
     qint64 timeout = msecs - elapsed;
     return timeout < 0 ? 0 : timeout;
 }
-
 
 QT_END_NAMESPACE
 

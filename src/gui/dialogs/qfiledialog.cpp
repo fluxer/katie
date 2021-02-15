@@ -1,7 +1,7 @@
 /****************************************************************************
 **
 ** Copyright (C) 2015 The Qt Company Ltd.
-** Copyright (C) 2016-2020 Ivailo Monev
+** Copyright (C) 2016 Ivailo Monev
 **
 ** This file is part of the QtGui module of the Katie Toolkit.
 **
@@ -14,18 +14,6 @@
 ** packaging of this file.  Please review the following information to
 ** ensure the GNU Lesser General Public License version 2.1 requirements
 ** will be met: http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html.
-**
-** As a special exception, The Qt Company gives you certain additional
-** rights. These rights are described in The Qt Company LGPL Exception
-** version 1.1, included in the file LGPL_EXCEPTION.txt in this package.
-**
-** GNU General Public License Usage
-** Alternatively, this file may be used under the terms of the GNU
-** General Public License version 3.0 as published by the Free Software
-** Foundation and appearing in the file LICENSE.GPL included in the
-** packaging of this file.  Please review the following information to
-** ensure the GNU General Public License version 3.0 requirements will be
-** met: http://www.gnu.org/copyleft/gpl.html.
 **
 ** $QT_END_LICENSE$
 **
@@ -827,28 +815,16 @@ Q_AUTOTEST_EXPORT QString qt_tildeExpansion(const QString &path, bool *expanded 
     } else {
         QString userName = tokens.first();
         userName.remove(0, 1);
-#if defined(QT_HAVE_GETPWNAM_R)
-        static int size_max = sysconf(_SC_GETPW_R_SIZE_MAX);
+        static long size_max = sysconf(_SC_GETPW_R_SIZE_MAX);
         if (size_max == -1)
             size_max = 1024;
         char buf[size_max];
         struct passwd pw;
         struct passwd *tmpPw;
-        int err = 0;
-#if defined(Q_OS_SOLARIS) && (_POSIX_C_SOURCE - 0 < 199506L)
-        tmpPw = ::getpwnam_r(userName.toLocal8Bit().constData(), &pw, buf, size_max);
-#else
-        err = ::getpwnam_r(userName.toLocal8Bit().constData(), &pw, buf, size_max, &tmpPw);
-#endif
-        if (err || !tmpPw)
+        ::getpwnam_r(userName.toLocal8Bit().constData(), &pw, buf, size_max, &tmpPw);
+        if (!tmpPw)
             return ret;
         const QString homePath = QString::fromLocal8Bit(pw.pw_dir);
-#else
-        struct passwd *pw = ::getpwnam(userName.toLocal8Bit().constData());
-        if (!pw)
-            return ret;
-        const QString homePath = QString::fromLocal8Bit(pw->pw_dir);
-#endif // QT_HAVE_GETPWNAM_R
         ret.replace(0, tokens.first().length(), homePath);
     }
     if (expanded != 0)

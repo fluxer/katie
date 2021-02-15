@@ -1,7 +1,7 @@
 /****************************************************************************
 **
 ** Copyright (C) 2015 The Qt Company Ltd.
-** Copyright (C) 2016-2020 Ivailo Monev
+** Copyright (C) 2016 Ivailo Monev
 **
 ** This file is part of the QtCore module of the Katie Toolkit.
 **
@@ -14,18 +14,6 @@
 ** packaging of this file.  Please review the following information to
 ** ensure the GNU Lesser General Public License version 2.1 requirements
 ** will be met: http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html.
-**
-** As a special exception, The Qt Company gives you certain additional
-** rights. These rights are described in The Qt Company LGPL Exception
-** version 1.1, included in the file LGPL_EXCEPTION.txt in this package.
-**
-** GNU General Public License Usage
-** Alternatively, this file may be used under the terms of the GNU
-** General Public License version 3.0 as published by the Free Software
-** Foundation and appearing in the file LICENSE.GPL included in the
-** packaging of this file.  Please review the following information to
-** ensure the GNU General Public License version 3.0 requirements will be
-** met: http://www.gnu.org/copyleft/gpl.html.
 **
 ** $QT_END_LICENSE$
 **
@@ -61,21 +49,6 @@
 
 QT_BEGIN_NAMESPACE
 
-QString QCoreApplicationPrivate::appName() const
-{
-#ifdef QT_HAVE_GETPROGNAME
-    if (applicationName.isEmpty()) {
-        return QString::fromLocal8Bit(::getprogname());
-    }
-#else
-    if (applicationName.isEmpty() && argv[0]) {
-        const char *p = ::strrchr(argv[0], '/');
-        return QString::fromLocal8Bit(p ? p + 1 : argv[0]);
-    }
-#endif // QT_HAVE_GETPROGNAME
-    return applicationName;
-}
-
 bool QCoreApplicationPrivate::checkInstance(const char *function)
 {
     if (Q_UNLIKELY(!QCoreApplication::self)) {
@@ -83,23 +56,6 @@ bool QCoreApplicationPrivate::checkInstance(const char *function)
         return false;
     }
     return true;
-}
-
-void QCoreApplicationPrivate::processCommandLineArguments()
-{
-    int j = argc ? 1 : 0;
-    for (int i = 1; i < argc; ++i) {
-        if (argv[i] && *argv[i] != '-') {
-            argv[j++] = argv[i];
-            continue;
-        }
-        argv[j++] = argv[i];
-    }
-
-    if (j < argc) {
-        argv[j] = 0;
-        argc = j;
-    }
 }
 
 typedef QList<QtCleanUpFunction> QVFuncList;
@@ -149,12 +105,6 @@ QSettings *QCoreApplicationPrivate::staticConf()
 }
 #endif
 
-Q_CORE_EXPORT uint qGlobalPostedEventsCount()
-{
-    QThreadData *currentThreadData = QThreadData::current();
-    return currentThreadData->postEventList.size() - currentThreadData->postEventList.startOffset;
-}
-
 QCoreApplication *QCoreApplication::self = 0;
 std::bitset<Qt::AA_AttributeCount> QCoreApplicationPrivate::attribs;
 
@@ -183,13 +133,8 @@ Q_GLOBAL_STATIC(QCoreApplicationData, coreappdata)
 
 QCoreApplicationPrivate::QCoreApplicationPrivate(int &aargc, char **aargv)
     : QObjectPrivate(), argc(aargc), argv(aargv), eventFilter(0),
-      in_exec(false), aboutToQuitEmitted(false)
+      in_exec(false)
 {
-    static const char *const empty = "";
-    if (argc == 0 || argv == 0) {
-        argc = 0;
-        argv = (char **)&empty; // ouch! careful with QCoreApplication::argv()!
-    }
     QCoreApplicationPrivate::is_app_closing = false;
 }
 
@@ -327,8 +272,6 @@ QCoreApplication::QCoreApplication(QCoreApplicationPrivate &p)
     : QObject(p, 0)
 {
     init();
-    // note: it is the subclasses' job to call
-    // QCoreApplicationPrivate::eventDispatcher->startingUp();
 }
 
 /*!
@@ -367,7 +310,6 @@ QCoreApplication::QCoreApplication(int &argc, char **argv)
 : QObject(*new QCoreApplicationPrivate(argc, argv))
 {
     init();
-    d_func()->threadData->eventDispatcher->startingUp();
 }
 
 
@@ -400,8 +342,6 @@ void QCoreApplication::init()
     // thread.
     QProcessPrivate::initializeProcessManager();
 #endif
-
-    d->processCommandLineArguments();
 }
 
 
@@ -410,8 +350,6 @@ void QCoreApplication::init()
 */
 QCoreApplication::~QCoreApplication()
 {
-    Q_D(QCoreApplication);
-
     qt_call_post_routines();
 
     self = 0;
@@ -429,9 +367,6 @@ QCoreApplication::~QCoreApplication()
     if (globalThreadPool)
         globalThreadPool->waitForDone();
 #endif
-
-    if (d->threadData->eventDispatcher)
-        d->threadData->eventDispatcher->closingDown();
 
 #ifndef QT_NO_LIBRARY
     delete coreappdata()->app_libpaths;
@@ -752,14 +687,11 @@ int QCoreApplication::exec()
     threadData->quitNow = false;
     QEventLoop eventLoop;
     self->d_func()->in_exec = true;
-    self->d_func()->aboutToQuitEmitted = false;
     int returnCode = eventLoop.exec();
     threadData->quitNow = false;
     if (self) {
         self->d_func()->in_exec = false;
-        if (!self->d_func()->aboutToQuitEmitted)
-            emit self->aboutToQuit();
-        self->d_func()->aboutToQuitEmitted = true;
+        emit self->aboutToQuit();
         sendPostedEvents(0, QEvent::DeferredDelete);
     }
 
@@ -1280,7 +1212,7 @@ bool QCoreApplication::event(QEvent *e)
 
 void QCoreApplication::quit()
 {
-    exit(0);
+    QCoreApplication::exit(0);
 }
 
 /*!
@@ -1541,7 +1473,7 @@ QString QCoreApplication::applicationFilePath()
 */
 qint64 QCoreApplication::applicationPid()
 {
-    return getpid();
+    return ::getpid();
 }
 
 /*!
@@ -1562,20 +1494,6 @@ qint64 QCoreApplication::applicationPid()
     pass, for example, Japanese command line arguments on a system that runs in a
     Latin1 locale. Most modern Unix systems do not have this limitation, as they are
     Unicode-based.
-
-    On NT-based Windows, this limitation does not apply either.
-    On Windows, the arguments() are not built from the contents of argv/argc, as
-    the content does not support Unicode. Instead, the arguments() are constructed
-    from the return value of
-    \l{http://msdn2.microsoft.com/en-us/library/ms683156(VS.85).aspx}{GetCommandLine()}.
-    As a result of this, the string given by arguments().at(0) might not be
-    the program name on Windows, depending on how the application was started.
-
-    For Symbian applications started with \c RApaLsSession::StartApp one can specify
-    arguments using \c CApaCommandLine::SetTailEndL function. Such arguments are only
-    available via this method; they will not be passed to \c main function. Also note
-    that only 8-bit string data set with \c CApaCommandLine::SetTailEndL is supported
-    by this function.
 
     \sa applicationFilePath()
 */
@@ -1660,13 +1578,35 @@ void QCoreApplication::setApplicationName(const QString &application)
 
 QString QCoreApplication::applicationName()
 {
-    if (coreappdata())
-        return coreappdata()->application;
+    QString name = coreappdata()->application;
 
-    if (QCoreApplication::self)
-        return QCoreApplication::self->d_func()->appName();
+#ifdef QT_HAVE_GETPROGNAME
+    if (name.isEmpty()) {
+        name = QString::fromLocal8Bit(::getprogname());
+    }
+#endif // QT_HAVE_GETPROGNAME
 
-    return QString();
+#if defined(QT_HAVE_PROC_EXE)
+    if (name.isEmpty()) {
+        // Try looking for a /proc/<pid>/exe symlink first which points to
+        // the absolute path of the executable
+        QFileInfo pfi(QString::fromLatin1("/proc/%1/exe").arg(::getpid()));
+        if (pfi.exists() && pfi.isSymLink()) {
+            pfi.setFile(pfi.canonicalFilePath());
+            name = pfi.baseName();
+        }
+    }
+#endif
+
+    if (name.isEmpty() && self) {
+        char ** const argv = self->d_func()->argv;
+        if (argv[0]) {
+            const char *p = ::strrchr(argv[0], '/');
+            name = QString::fromLocal8Bit(p ? p + 1 : argv[0]);
+        }
+    }
+
+    return name;
 }
 
 /*!

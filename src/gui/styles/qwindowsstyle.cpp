@@ -1,7 +1,7 @@
 /****************************************************************************
 **
 ** Copyright (C) 2015 The Qt Company Ltd.
-** Copyright (C) 2016-2020 Ivailo Monev
+** Copyright (C) 2016 Ivailo Monev
 **
 ** This file is part of the QtGui module of the Katie Toolkit.
 **
@@ -14,18 +14,6 @@
 ** packaging of this file.  Please review the following information to
 ** ensure the GNU Lesser General Public License version 2.1 requirements
 ** will be met: http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html.
-**
-** As a special exception, The Qt Company gives you certain additional
-** rights. These rights are described in The Qt Company LGPL Exception
-** version 1.1, included in the file LGPL_EXCEPTION.txt in this package.
-**
-** GNU General Public License Usage
-** Alternatively, this file may be used under the terms of the GNU
-** General Public License version 3.0 as published by the Free Software
-** Foundation and appearing in the file LICENSE.GPL included in the
-** packaging of this file.  Please review the following information to
-** ensure the GNU General Public License version 3.0 requirements will be
-** met: http://www.gnu.org/copyleft/gpl.html.
 **
 ** $QT_END_LICENSE$
 **
@@ -118,45 +106,11 @@ void QWindowsStyle::timerEvent(QTimerEvent *event)
 */
 bool QWindowsStyle::eventFilter(QObject *o, QEvent *e)
 {
-    // Records Alt- and Focus events
     if (!o->isWidgetType())
         return QObject::eventFilter(o, e);
 
-    QWidget *widget = qobject_cast<QWidget*>(o);
     Q_D(QWindowsStyle);
     switch(e->type()) {
-    case QEvent::KeyPress:
-        if (static_cast<QKeyEvent *>(e)->key() == Qt::Key_Alt) {
-            widget = widget->window();
-
-            // Alt has been pressed - find all widgets that care
-            QList<QWidget *> l = widget->findChildren<QWidget *>();
-            for (int pos=0 ; pos < l.size() ;) {
-                QWidget *w = l.at(pos);
-                if (w->isWindow() || !w->isVisible() ||
-                    w->style()->styleHint(SH_UnderlineShortcut, 0, w)) {
-                    l.removeAt(pos);
-                    continue;
-                }
-                pos++;
-            }
-            // Repaint all relevant widgets
-            for (int pos = 0; pos < l.size(); ++pos)
-                l.at(pos)->update();
-        }
-        break;
-    case QEvent::KeyRelease:
-        if (static_cast<QKeyEvent*>(e)->key() == Qt::Key_Alt) {
-            widget = widget->window();
-
-            // Repaint the menu bars.
-#ifndef QT_NO_MENUBAR
-            QList<QMenuBar *> l = widget->findChildren<QMenuBar *>();
-            for (int i = 0; i < l.size(); ++i)
-                l.at(i)->update();
-#endif
-        }
-        break;
 #ifndef QT_NO_PROGRESSBAR
     case QEvent::StyleChange:
     case QEvent::Paint:

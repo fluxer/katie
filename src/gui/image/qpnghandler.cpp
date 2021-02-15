@@ -1,7 +1,7 @@
 /****************************************************************************
 **
 ** Copyright (C) 2015 The Qt Company Ltd.
-** Copyright (C) 2016-2020 Ivailo Monev
+** Copyright (C) 2016 Ivailo Monev
 **
 ** This file is part of the QtGui module of the Katie Toolkit.
 **
@@ -15,25 +15,12 @@
 ** ensure the GNU Lesser General Public License version 2.1 requirements
 ** will be met: http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html.
 **
-** As a special exception, The Qt Company gives you certain additional
-** rights. These rights are described in The Qt Company LGPL Exception
-** version 1.1, included in the file LGPL_EXCEPTION.txt in this package.
-**
-** GNU General Public License Usage
-** Alternatively, this file may be used under the terms of the GNU
-** General Public License version 3.0 as published by the Free Software
-** Foundation and appearing in the file LICENSE.GPL included in the
-** packaging of this file.  Please review the following information to
-** ensure the GNU General Public License version 3.0 requirements will be
-** met: http://www.gnu.org/copyleft/gpl.html.
-**
 ** $QT_END_LICENSE$
 **
 ****************************************************************************/
 
 #include "qpnghandler_p.h"
 
-#ifndef QT_NO_IMAGEFORMAT_PNG
 #include "qcoreapplication.h"
 #include "qiodevice.h"
 #include "qimage.h"
@@ -623,7 +610,6 @@ bool QPNGImageWriter::writeImage(const QImage& image, int quality_in)
         png_set_filler(png_ptr, 0, QFILLER_ORDER);
 
     int height = image.height();
-    int width = image.width();
     switch (image.format()) {
     case QImage::Format_Mono:
     case QImage::Format_MonoLSB:
@@ -640,14 +626,12 @@ bool QPNGImageWriter::writeImage(const QImage& image, int quality_in)
         break;
     default:
         {
-            QImage::Format fmt = image.hasAlphaChannel() ? QImage::Format_ARGB32 : QImage::Format_RGB32;
-            QImage row;
-            png_bytep row_pointers[1];
-            for (int y=0; y<height; y++) {
-                row = image.copy(0, y, width, 1).convertToFormat(fmt);
-                row_pointers[0] = png_bytep(row.constScanLine(0));
-                png_write_rows(png_ptr, row_pointers, 1);
-            }
+            QImage copy = image.convertToFormat(image.hasAlphaChannel() ? QImage::Format_ARGB32 : QImage::Format_RGB32);
+            png_bytep* row_pointers = new png_bytep[height];
+            for (int y=0; y<height; y++)
+                row_pointers[y] = (png_bytep)copy.constScanLine(y);
+            png_write_image(png_ptr, row_pointers);
+            delete [] row_pointers;
         }
         break;
     }
@@ -757,5 +741,3 @@ QByteArray QPngHandler::name() const
 }
 
 QT_END_NAMESPACE
-
-#endif // QT_NO_IMAGEFORMAT_PNG

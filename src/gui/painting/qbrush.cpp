@@ -1,7 +1,7 @@
 /****************************************************************************
 **
 ** Copyright (C) 2015 The Qt Company Ltd.
-** Copyright (C) 2016-2020 Ivailo Monev
+** Copyright (C) 2016 Ivailo Monev
 **
 ** This file is part of the QtGui module of the Katie Toolkit.
 **
@@ -15,18 +15,6 @@
 ** ensure the GNU Lesser General Public License version 2.1 requirements
 ** will be met: http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html.
 **
-** As a special exception, The Qt Company gives you certain additional
-** rights. These rights are described in The Qt Company LGPL Exception
-** version 1.1, included in the file LGPL_EXCEPTION.txt in this package.
-**
-** GNU General Public License Usage
-** Alternatively, this file may be used under the terms of the GNU
-** General Public License version 3.0 as published by the Free Software
-** Foundation and appearing in the file LICENSE.GPL included in the
-** packaging of this file.  Please review the following information to
-** ensure the GNU General Public License version 3.0 requirements will be
-** met: http://www.gnu.org/copyleft/gpl.html.
-**
 ** $QT_END_LICENSE$
 **
 ****************************************************************************/
@@ -34,14 +22,13 @@
 #include "qbrush.h"
 #include "qpixmap.h"
 #include "qbitmap.h"
-#include "qpixmapcache.h"
 #include "qdatastream.h"
 #include "qvariant.h"
 #include "qline.h"
 #include "qdebug.h"
-#include <QtCore/qcoreapplication.h>
+#include "qcoreapplication.h"
 #include "qstylehelper_p.h"
-#include <QtCore/qnumeric.h>
+#include "qnumeric.h"
 
 QT_BEGIN_NAMESPACE
 
@@ -71,50 +58,12 @@ static const uchar *qt_patternForBrush(int brushStyle)
 QPixmap qt_pixmapForBrush(int brushStyle)
 {
 
-    QPixmap pm;
-    QString key = QLatin1String("$qt-brush$") + HexString<uint>(brushStyle);
-    if (!QPixmapCache::find(key, pm)) {
-        pm = QBitmap::fromData(QSize(8, 8), qt_patternForBrush(brushStyle),
-                               QImage::Format_MonoLSB);
-        QPixmapCache::insert(key, pm);
-    }
-
-    return pm;
+    return QBitmap::fromData(QSize(8, 8), qt_patternForBrush(brushStyle), QImage::Format_MonoLSB);
 }
 
-class QBrushPatternImageCache
+Q_GUI_EXPORT QImage qt_diagCrossBrush()
 {
-public:
-    QBrushPatternImageCache()
-    {
-        for (int style = Qt::Dense1Pattern; style <= Qt::DiagCrossPattern; ++style) {
-            int i = style - Qt::Dense1Pattern;
-            m_images[i] = QImage(qt_patternForBrush(style), 8, 8, 1, QImage::Format_MonoLSB);
-        }
-    }
-
-    ~QBrushPatternImageCache() {
-        for (int style = Qt::Dense1Pattern; style <= Qt::DiagCrossPattern; ++style) {
-            int i = style - Qt::Dense1Pattern;
-            m_images[i] = QImage();
-        }
-    }
-
-    QImage getImage(int brushStyle) const
-    {
-        Q_ASSERT(brushStyle >= Qt::Dense1Pattern && brushStyle <= Qt::DiagCrossPattern);
-        return m_images[brushStyle - Qt::Dense1Pattern];
-    }
-
-private:
-    QImage m_images[Qt::DiagCrossPattern - Qt::Dense1Pattern + 1];
-};
-
-Q_GLOBAL_STATIC(QBrushPatternImageCache, qt_brushPatternImageCache)
-
-Q_GUI_EXPORT QImage qt_imageForBrush(int brushStyle)
-{
-    return qt_brushPatternImageCache()->getImage(brushStyle);
+    return QImage(qt_patternForBrush(Qt::DiagCrossPattern), 8, 8, 1, QImage::Format_MonoLSB);
 }
 
 struct QTexturedBrushData : public QBrushData
@@ -301,7 +250,7 @@ public:
     {
         if (!globalStatic.pointer->ref.deref())
             delete globalStatic.pointer;
-        globalStatic.pointer = 0;
+        globalStatic.pointer = Q_NULLPTR;
         globalStatic.destroyed = true;
     }
 };
@@ -309,7 +258,7 @@ public:
 Q_GLOBAL_STATIC_WITH_INITIALIZER(QBrushData, nullBrushInstance,
                                  {
                                      x->ref = 1;
-                                     x->style = Qt::BrushStyle(0);
+                                     x->style = Qt::NoBrush;
                                      x->color = Qt::black;
                                  })
 

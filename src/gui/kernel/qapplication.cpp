@@ -1,7 +1,7 @@
 /****************************************************************************
 **
 ** Copyright (C) 2015 The Qt Company Ltd.
-** Copyright (C) 2016-2020 Ivailo Monev
+** Copyright (C) 2016 Ivailo Monev
 **
 ** This file is part of the QtGui module of the Katie Toolkit.
 **
@@ -14,18 +14,6 @@
 ** packaging of this file.  Please review the following information to
 ** ensure the GNU Lesser General Public License version 2.1 requirements
 ** will be met: http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html.
-**
-** As a special exception, The Qt Company gives you certain additional
-** rights. These rights are described in The Qt Company LGPL Exception
-** version 1.1, included in the file LGPL_EXCEPTION.txt in this package.
-**
-** GNU General Public License Usage
-** Alternatively, this file may be used under the terms of the GNU
-** General Public License version 3.0 as published by the Free Software
-** Foundation and appearing in the file LICENSE.GPL included in the
-** packaging of this file.  Please review the following information to
-** ensure the GNU General Public License version 3.0 requirements will be
-** met: http://www.gnu.org/copyleft/gpl.html.
 **
 ** $QT_END_LICENSE$
 **
@@ -56,8 +44,6 @@
 #include "qdnd_p.h"
 #include "qcolormap.h"
 #include "qdebug.h"
-#include "qgraphicssystemfactory_p.h"
-#include "qgraphicssystem_p.h"
 #include "qstylesheetstyle_p.h"
 #include "qstyle_p.h"
 #include "qmessagebox.h"
@@ -319,11 +305,8 @@ QApplicationPrivate::~QApplicationPrivate()
     qapplication_xyz.cpp file.
 */
 
-void qt_init(QApplicationPrivate *priv, int type
-#ifdef Q_WS_X11
-              , Display *display = 0, Qt::HANDLE visual = 0, Qt::HANDLE colormap = 0
-#endif
-   );
+void qt_init(QApplicationPrivate *priv, Display *display,
+             Qt::HANDLE visual, Qt::HANDLE colormap);
 void qt_cleanup();
 
 Qt::MouseButtons QApplicationPrivate::mouse_buttons = Qt::NoButton;
@@ -340,9 +323,6 @@ QPointer<QWidget> QApplicationPrivate::leaveAfterRelease = 0;
 QPalette *QApplicationPrivate::app_pal = 0;        // default application palette
 QPalette *QApplicationPrivate::sys_pal = 0;        // default system palette
 QPalette *QApplicationPrivate::set_pal = 0;        // default palette set by programmer
-
-QGraphicsSystem *QApplicationPrivate::graphics_system = 0; // default graphics system
-QString QApplicationPrivate::graphics_system_name;         // graphics system id - for delayed initialization
 
 Q_GLOBAL_STATIC(QMutex, applicationFontMutex)
 QFont *QApplicationPrivate::app_font = 0;        // default application font
@@ -362,7 +342,6 @@ int QApplicationPrivate::wheel_scroll_lines = 3;         // number of lines to s
 #else
 int QApplicationPrivate::wheel_scroll_lines = 0;
 #endif
-bool qt_is_gui_used;
 bool qt_in_tab_key_event = false;
 static int drag_time = 500;
 static int drag_distance = 4;
@@ -381,16 +360,7 @@ static bool force_reverse = false;
 // ######## move to QApplicationPrivate
 // Default application palettes and fonts (per widget type)
 Q_GLOBAL_STATIC(PaletteHash, app_palettes)
-PaletteHash *qt_app_palettes_hash()
-{
-    return app_palettes();
-}
-
 Q_GLOBAL_STATIC(FontHash, app_fonts)
-FontHash *qt_app_fonts_hash()
-{
-    return app_fonts();
-}
 
 QWidgetList *QApplicationPrivate::popupWidgets = Q_NULLPTR;  // has keyboard input focus
 
@@ -406,16 +376,14 @@ QWidgetList *qt_modal_stack = Q_NULLPTR;                     // stack of modal w
 void QApplicationPrivate::process_cmdline()
 {
     // process platform-indep command line
-    if (!qt_is_gui_used || !argc)
+    if (qt_appType == QApplication::Tty || !argc)
         return;
 
-    int j = 1;
     for (int i=1; i<argc; i++) { // if you add anything here, modify QCoreApplication::arguments()
         if (!argv[i]) {
             continue;
         }
         if (*argv[i] != '-') {
-            argv[j++] = argv[i];
             continue;
         }
         QString s;
@@ -445,10 +413,6 @@ void QApplicationPrivate::process_cmdline()
         } else if (qstrcmp(argv[i], "-reverse") == 0) {
             force_reverse = true;
             QApplication::setLayoutDirection(Qt::RightToLeft);
-        } else if (qstrcmp(argv[i], "-graphicssystem") == 0 && i < argc - 1) {
-            graphics_system_name = QString::fromLocal8Bit(argv[++i]);
-        } else {
-            argv[j++] = argv[i];
         }
         if (!s.isEmpty()) {
             if (app_style) {
@@ -457,11 +421,6 @@ void QApplicationPrivate::process_cmdline()
             }
             styleOverride = s;
         }
-    }
-
-    if(j < argc) {
-        argv[j] = 0;
-        argc = j;
     }
 }
 
@@ -513,8 +472,6 @@ void QApplicationPrivate::process_cmdline()
         \o  -session \e session, is the same as listed above.
         \o  -reverse, sets the application's layout direction to
             Qt::RightToLeft
-        \o  -graphicssystem, sets the backend to be used for on-screen widgets
-            and QPixmaps. Available options are \c{raster}.
     \endlist
 
     The X11 version of Qt supports some traditional X11 command line options:
@@ -522,10 +479,6 @@ void QApplicationPrivate::process_cmdline()
         \o  -display \e display, sets the X display (default is $DISPLAY).
         \o  -geometry \e geometry, sets the client geometry of the first window
             that is shown.
-        \o  -fn or \c -font \e font, defines the application font. The font
-            should be specified using an X logical font description. Note that
-            this option is ignored when Qt is built with fontconfig support enabled.
-        \o  -name \e name, sets the application name.
         \o  -title \e title, sets the application title.
         \o  -visual \c TrueColor, forces the application to use a TrueColor
             visual on an 8-bit display.
@@ -547,9 +500,6 @@ void QApplicationPrivate::process_cmdline()
 
     \sa arguments()
 */
-
-extern int qRegisterGuiVariant();
-extern int qUnregisterGuiVariant();
 
 /*!
     Constructs an application object with \a argc command line arguments in
@@ -573,45 +523,28 @@ extern int qUnregisterGuiVariant();
 */
 QApplication::QApplication(int &argc, char **argv, QApplication::Type type)
     : QCoreApplication(*new QApplicationPrivate(argc, argv, type))
-{ Q_D(QApplication); d->construct(); }
+{
+    Q_D(QApplication);
+    d->construct();
+}
 
 /*!
     \internal
 */
-void QApplicationPrivate::construct(
-#ifdef Q_WS_X11
-                                    Display *dpy, Qt::HANDLE visual, Qt::HANDLE cmap
-#endif
-                                    )
+void QApplicationPrivate::construct(Display *dpy, Qt::HANDLE visual, Qt::HANDLE cmap)
 {
     initResources();
 
-    qt_is_gui_used = (qt_appType != QApplication::Tty);
     process_cmdline();
-    // the environment variable has the lowest precedence of runtime graphicssystem switches
-    if (graphics_system_name.isEmpty())
-        graphics_system_name = QString::fromLocal8Bit(qgetenv("QT_GRAPHICSSYSTEM"));
 
     // Must be called before initializing
-    qt_init(this, qt_appType
-#ifdef Q_WS_X11
-            , dpy, visual, cmap
-#endif
-            );
+    qt_init(this, dpy, visual, cmap);
 
     QWidgetPrivate::mapper = new QWidgetMapper;
     QWidgetPrivate::allWidgets = new QWidgetSet;
 
-#if !defined(Q_WS_X11)
-    // initialize the graphics system - on X11 this is initialized inside
-    // qt_init() in qapplication_x11.cpp because of several reasons.
-    graphics_system = QGraphicsSystemFactory::create(graphics_system_name);
-#endif
-
     if (qt_appType != QApplication::Tty)
         (void) QApplication::style();  // trigger creation of application style
-    // trigger registering of QVariant's GUI types
-    qRegisterGuiVariant();
 
     is_app_running = true; // no longer starting up
 
@@ -624,16 +557,8 @@ void QApplicationPrivate::construct(
     if (qgetenv("QT_USE_NATIVE_WINDOWS").toInt() > 0)
         q->setAttribute(Qt::AA_NativeWindows);
 
-    if (qt_is_gui_used)
+    if (qt_appType != QApplication::Tty)
         initializeMultitouch();
-
-    threadData->eventDispatcher->startingUp();
-
-#ifndef QT_NO_LIBRARY
-    //make sure the plugin is loaded
-    if (qt_is_gui_used)
-        qt_guiPlatformPlugin();
-#endif
 }
 
 #if defined(Q_WS_X11)
@@ -642,7 +567,7 @@ void QApplicationPrivate::construct(
 // ### if aargv is modified someday
 // ########## make it work with argc == argv == 0
 static int aargc = 1;
-static char *aargv[] = { (char*)"unknown", 0 };
+static char *aargv[] = { (char*)"unknown\0", 0 };
 
 /*!
     \fn QApplication::QApplication(Display* display, Qt::HANDLE visual, Qt::HANDLE colormap)
@@ -686,7 +611,7 @@ QApplication::QApplication(Display *dpy, int &argc, char **argv,
     if (Q_UNLIKELY(!dpy))
         qWarning("QApplication: Invalid Display* argument");
     Q_D(QApplication);
-    d->construct(dpy, visual, colormap);;
+    d->construct(dpy, visual, colormap);
 }
 
 #endif // Q_WS_X11
@@ -708,7 +633,7 @@ QApplication::Type QApplication::type()
     Returns the active popup widget.
 
     A popup widget is a special top-level widget that sets the \c
-    Qt::WType_Popup widget flag, e.g. the QMenu widget. When the application
+    Qt::Popup widget flag, e.g. the QMenu widget. When the application
     opens a popup widget, all events are sent to the popup. Normal widgets and
     modal widgets cannot be accessed before the popup widget is closed.
 
@@ -770,7 +695,6 @@ QApplication::~QApplication()
     d->toolTipWakeUp.stop();
     d->toolTipFallAsleep.stop();
 
-    d->threadData->eventDispatcher->closingDown();
     QApplicationPrivate::is_app_closing = true;
     QApplicationPrivate::is_app_running = false;
 
@@ -820,14 +744,12 @@ QApplication::~QApplication()
     QApplicationPrivate::app_style = 0;
     delete QApplicationPrivate::app_icon;
     QApplicationPrivate::app_icon = 0;
-    delete QApplicationPrivate::graphics_system;
-    QApplicationPrivate::graphics_system = 0;
 #ifndef QT_NO_CURSOR
     d->cursor_list.clear();
 #endif
 
 #ifndef QT_NO_DRAGANDDROP
-    if (qt_is_gui_used)
+    if (qt_appType != QApplication::Tty)
         delete QDragManager::self();
 #endif
 
@@ -855,9 +777,6 @@ QApplication::~QApplication()
     QApplicationPrivate::animate_combo = false;
     QApplicationPrivate::animate_tooltip = false;
     QApplicationPrivate::fade_tooltip = false;
-
-    // trigger unregistering of QVariant's GUI types
-    qUnregisterGuiVariant();
 }
 
 
@@ -990,7 +909,7 @@ QStyle *QApplication::style()
 {
     if (QApplicationPrivate::app_style)
         return QApplicationPrivate::app_style;
-    if (!qt_is_gui_used) {
+    if (qt_appType == QApplication::Tty) {
         Q_ASSERT(!"No style available in non-gui applications!");
         return 0;
     }
@@ -1169,38 +1088,21 @@ QStyle* QApplication::setStyle(const QString& style)
 
 /*!
     \since 4.5
-
-    Sets the default graphics backend to \a system, which will be used for
-    on-screen widgets and QPixmaps. The available systems is \c{"raster"}.
-
-    There are several ways to set the graphics backend, in order of decreasing
-    precedence:
-    \list
-        \o the application commandline \c{-graphicssystem} switch
-        \o QApplication::setGraphicsSystem()
-        \o the QT_GRAPHICSSYSTEM environment variable
-        \o the Qt configure \c{-graphicssystem} switch
-    \endlist
-    If the highest precedence switch sets an invalid name, the error will be
-    ignored and the default backend will be used.
-
-    \warning This function is only effective before the QApplication constructor
-    is called.
+    \obsolete
 */
 
 QString QApplication::graphicsSystem()
 {
-    return QApplicationPrivate::graphics_system_name;
+    return QLatin1String("raster");
 }
+
+/*!
+    \obsolete
+*/
 
 void QApplication::setGraphicsSystem(const QString &system)
 {
-    if (Q_UNLIKELY(system == QLatin1String("native"))) {
-        qWarning() << "Attempt to set native graphicssystem";
-        QApplicationPrivate::graphics_system_name = QLatin1String("raster");
-    } else {
-        QApplicationPrivate::graphics_system_name = system;
-    }
+    Q_UNUSED(system);
 }
 
 /*!

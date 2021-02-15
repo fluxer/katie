@@ -12,9 +12,9 @@ There are several things you should be aware before considering Katie:
 
  - some things have changed:
   - QMake build system replaced with CMake
-  - zlib, zstd, OpenSSL, PCRE, Freetype, ICU, X11, libpng and SQLite are
-    required for building
-  - OpenSSL, D-Bus, CUPS and resolv must be linked to during build
+  - zlib, zstd, Jansson, OpenSSL, PCRE, Freetype, ICU, X11, libpng and SQLite
+    are required for building
+  - OpenSSL, D-Bus and CUPS must be linked to during build
   - QtUiTools is build as shared library by default
   - moc, uic, rcc, etc. are linked to components
   - updated bundled Harfbuzz from upstream (not Harfbuzz-NG)
@@ -24,6 +24,7 @@ There are several things you should be aware before considering Katie:
   - updated localizations data from Common Locale Data Repository v38
   - SQLite driver uses UTF-8 encoding instead of UTF-16
   - default text codec for C-strings is UTF-8
+  - QTranslator uses gettext for translations
   - OpenVG is no longer supported graphics output
   - Blitter is no longer supported painting engine
   - native graphics system is no more, rasterizer is just as fast as native
@@ -45,12 +46,11 @@ There are several things you should be aware before considering Katie:
   - dropped Valgrind support
 
  - some additions have been made: 
-  - JSON classes and types
+  - JSON document handler
   - standard directories handler
   - building with OpenSSL v1.1+ is possible
   - building with IODBC instead of unixODBC is possible
   - building with LTO is possible and supported, if the toolchain can handle it
-  - building without resolv is possible
   - alternative libc implementations support
   - additional text codecs via ICU converter
   - Unicode v5.0+ characters and partial scripts support
@@ -61,7 +61,7 @@ There are several things you should be aware before considering Katie:
   - support for generating CRC-32 checksums via qChecksum32() function
   - verification section for plugins build with Clang
   - faster alternatives to qCompress() and qUncompress()
-  - stack backtrace on assert or crash via execinfo
+  - stack backtrace on assert, crash or warning via execinfo
   - brief manual pages for all command-line tools
   - desktop files, Shell profile and dynamic linker/loader config
   - automatic async D-Bus calls based on return type, no Q_NOREPLY needed
@@ -84,16 +84,16 @@ QTBUG-25114, QTBUG-24672, QTBUG-23524 (WIP), QTBUG-56088, QTBUG-42189,
 QTBUG-39285, QTBUG-18173, QTBUG-28968, QTBUG-34336, QTBUG-40974, QTBUG-44286,
 QTBUG-12564, QTBUG-20028, QTBUG-71967, QTBUG-70956, QTBUG-71446, QTBUG-61307,
 QTBUG-27287, QTBUG-25143, QTBUG-22833, QTBUG-57399, QTBUG-59159, QTBUG-15773,
-QTBUG-70506, QTBUG-46054, QTBUG-11223, QTBUG-63108
+QTBUG-70506, QTBUG-46054, QTBUG-11223, QTBUG-63108, QTBUG-6932, QTBUG-42365
 
 Unless you use QMake and QDoc porting to Katie or even supporting it along with
 Qt4 in the same codebase is trivial and requires only minor changes because
 Katie is mostly source compatible with Qt 4.8.x, compatibility with releases
 earlier than that is not a goal. Do note that using libraries that
 are linked to Qt4 from applications linked to Katie will trigger undefined
-behaviour.
+behavior.
 
-Should you enouncter a problem please report it at
+Should you encounter a problem please report it at
 https://github.com/fluxer/katie/issues. For more information about changes,
 how to handle them and general info please visit
 https://github.com/fluxer/katie/wiki.

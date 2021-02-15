@@ -5,7 +5,7 @@
 #  PCRE_INCLUDES - the PCRE include directory
 #  PCRE_LIBRARIES - the libraries needed to use PCRE
 #
-# Copyright (c) 2016-2020, Ivailo Monev, <xakepa10@gmail.com>
+# Copyright (C) 2016, Ivailo Monev, <xakepa10@gmail.com>
 #
 # Redistribution and use is allowed according to the terms of the BSD license.
 

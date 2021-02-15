@@ -30,6 +30,7 @@ set(CMAKE_C_VISIBILITY_PRESET "hidden")
 set(CMAKE_CXX_VISIBILITY_PRESET "hidden")
 set(CMAKE_VISIBILITY_INLINES_HIDDEN ON)
 set(CMAKE_INCLUDE_DIRECTORIES_BEFORE ON)
+set(CMAKE_UNITY_BUILD_BATCH_SIZE 300)
 
 # enable symbols visibility preset for all targets
 cmake_policy(SET CMP0063 NEW)
@@ -37,10 +38,19 @@ cmake_policy(SET CMP0063 NEW)
 # LLVM linker does not have a default library search path, add some directories known to contain
 # system wide libraries. the headers search path is also incomplete
 if(CMAKE_SYSTEM_NAME MATCHES "BSD")
-    include_directories(/usr/X11R7/include /usr/pkg/include /usr/local/include /usr/include)
-    link_directories(/usr/X11R7/lib /usr/pkg/lib /usr/local/lib /usr/lib /lib)
+    foreach(incdir /usr/X11R6/include /usr/X11R7/include /usr/pkg/include /usr/local/include /usr/include)
+        if(EXISTS "${incdir}")
+            include_directories(${incdir})
+        endif()
+    endforeach()
+    foreach(linkdir /usr/X11R6/lib /usr/X11R7/lib /usr/pkg/lib /usr/local/lib /usr/lib /lib)
+        if(EXISTS "${linkdir}")
+            link_directories(${linkdir})
+        endif()
+    endforeach()
 endif()
 
+include(CheckCXXCompilerFlag)
 include(GNUInstallDirs)
 include(CheckIncludeFileCXX)
 include(CheckTypeSize)
@@ -49,13 +59,41 @@ include(CheckStructHasMember)
 include(CheckCXXSourceRuns)
 include(FeatureSummary)
 include(KatieBuildMacros)
-include(mkspecs/mkspecs.cmake)
+
+# disable some compiler warnings
+set(KATIE_NO_WARNINGS
+    # placement new used in private QVariant functions
+    -Wno-placement-new
+    # QVector does not always use new/delete
+    -Wno-class-memaccess
+    # hot attribute used in function prototypes
+    -Wno-attributes
+    # deprecated X11, CUPS and OpenSSL API used
+    -Wno-deprecated -Wno-deprecated-declarations
+)
+foreach(nowarning ${KATIE_NO_WARNINGS})
+    string(REPLACE "-W" "" normalizednowarning "${nowarning}")
+    check_cxx_compiler_flag(${nowarning} CXX_${normalizednowarning})
+    if(CXX_${normalizednowarning})
+        set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} ${nowarning}")
+    endif()
+endforeach()
+
+# https://www.gnu.org/software/libc/manual/html_node/Feature-Test-Macros.html
+# https://github.com/Kitware/CMake/blob/master/Modules/CMakeDetermineSystem.cmake
+if(CMAKE_SYSTEM_NAME MATCHES "(Linux|GNU)")
+    katie_definition(-D_LARGEFILE64_SOURCE -D_LARGEFILE_SOURCE -D_GNU_SOURCE)
+elseif(CMAKE_SYSTEM_NAME MATCHES "(FreeBSD|DragonFly)")
+    katie_definition(-D_THREAD_SAFE)
+elseif(NOT CMAKE_SYSTEM_NAME MATCHES "(OpenBSD|NetBSD|Solaris|SunOS)")
+    message(FATAL_ERROR "Unknown platform '${CMAKE_SYSTEM_NAME}'")
+endif()
 
 # mostly relevant to the build process, also stored in the version file for CMake and in qconfig.h.cmake
 set(KATIE_MAJOR "4")
-set(KATIE_MINOR "9")
-set(KATIE_MICRO "1")
-set(KATIE_HEX "0x040901")
+set(KATIE_MINOR "10")
+set(KATIE_MICRO "0")
+set(KATIE_HEX "0x041000")
 set(KATIE_VERSION "${KATIE_MAJOR}.${KATIE_MINOR}.${KATIE_MICRO}")
 
 # only for the build process
@@ -128,9 +166,6 @@ add_feature_info(postgresql WITH_POSTGRESQL "build PostgreSQL support")
 option(WITH_MYSQL "Build MySQL database plugin" ON)
 add_feature_info(mysql WITH_MYSQL "build MySQL support")
 
-option(WITH_RESOLV "Build resolv support" ON)
-add_feature_info(resolv WITH_RESOLV "build resolv support")
-
 option(WITH_INTL "Build Intl support" ON)
 add_feature_info(intl WITH_INTL "build Intl support")
 
@@ -138,6 +173,9 @@ option(WITH_EXECINFO "Build ExecInfo support" OFF)
 add_feature_info(execinfo WITH_EXECINFO "build ExecInfo support")
 
 # optional features
+option(WITH_ACCESSIBILITY "Build accessibility support" ON)
+add_feature_info(accessibility WITH_ACCESSIBILITY "build accessibility support")
+
 option(KATIE_TESTS "Build automatic tests" OFF)
 add_feature_info(tests KATIE_TESTS "build automatic tests")
 
@@ -146,12 +184,6 @@ add_feature_info(benchmarks KATIE_BENCHMARKS "build automatic benchmarks")
 
 option(KATIE_UTILS "Build maintainance utilities" OFF)
 add_feature_info(utils KATIE_UTILS "build maintainance utilities")
-
-option(KATIE_PCH "Build components with pre-compiled header" OFF)
-add_feature_info(pch KATIE_PCH "build components with pre-compiled header")
-
-option(WITH_ACCESSIBILITY "Build accessibility support" ON)
-add_feature_info(accessibility WITH_ACCESSIBILITY "build accessibility support")
 
 # v1.2.0+ required for compressBound()
 find_package(ZLIB 1.2.0)
@@ -177,6 +209,15 @@ set_package_properties(ZSTD PROPERTIES
     PURPOSE "Required for compression support"
     DESCRIPTION "Fast real-time compression algorithm"
     URL "https://github.com/facebook/zstd"
+    TYPE REQUIRED
+)
+
+# v2.0+ required for json_loads() with three arguments
+find_package(Jansson 2.0)
+set_package_properties(Jansson PROPERTIES
+    PURPOSE "Required for JSON support"
+    DESCRIPTION "C library for encoding, decoding and manipulating JSON data"
+    URL "https://github.com/akheron/jansson"
     TYPE REQUIRED
 )
 
@@ -240,14 +281,6 @@ set_package_properties(Sqlite PROPERTIES
     DESCRIPTION "Software library that implements SQL database engine"
     URL "https://www.sqlite.org/"
     TYPE REQUIRED
-)
-
-find_package(Resolv)
-set_package_properties(Resolv PROPERTIES
-    PURPOSE "Required for domain resolving support"
-    DESCRIPTION "Standard C library specific resolv implementation"
-    URL ""
-    TYPE RECOMMENDED
 )
 
 find_package(JPEG)
@@ -336,44 +369,26 @@ set_package_properties(ExecInfo PROPERTIES
     TYPE RECOMMENDED
 )
 
-add_definitions(
-    # these conditionals are probably going to become default in the future
-    -DQT_POSIX_IPC
-    # -DQT_STRICT_ITERATORS
-    # -DQT_ASCII_CAST_WARNINGS
-    # maybe one day, this forces it onto other projects which (most likely)
-    # means source code adjustments!
-    # -DQT_NO_CAST_FROM_ASCII
-    # -DQT_NO_CAST_TO_ASCII
+find_package(XdgUtils)
+set_package_properties(XdgUtils PROPERTIES
+    PURPOSE "Required for desktop services"
+    DESCRIPTION "Utilities for integrating applications with the desktop environment"
+    URL "https://www.freedesktop.org/wiki/Software/xdg-utils/"
+    TYPE RUNTIME
 )
-
-# for symbols mangling while backtracing in core component
-check_include_file_cxx(cxxabi.h HAVE_CXXABI)
 
 # stored in qconfig.h.cmake
 check_type_size(size_t QT_POINTER_SIZE)
 
 # used in components, tests and JavaScriptCore
-katie_check_function(getpwnam_r "pwd.h")
-katie_check_function(getpwuid_r "pwd.h")
-katie_check_function(getgrgid_r "grp.h")
-katie_check_function(nl_langinfo "langinfo.h")
-katie_check_function(getaddrinfo "netdb.h")
-katie_check_function(clock_gettime "time.h")
-katie_check_function(vsnprintf "stdio.h")
+katie_check_header("cxxabi.h")
 katie_check_function(posix_memalign "stdlib.h")
-katie_check_function(strerror_r "string.h")
-katie_check_function(localtime_r "time.h")
-katie_check_function(gmtime_r "time.h")
 katie_check_function(fcvt "stdlib.h")
 katie_check_function(ecvt "stdlib.h")
 katie_check_function(getprogname "stdlib.h")
 katie_check_function(arc4random "stdlib.h")
 katie_check_function(get_current_dir_name "unistd.h")
 katie_check_function(prctl "sys/prctl.h")
-katie_check_function(fegetenv "fenv.h")
-katie_check_function(fesetenv "fenv.h")
-katie_check_function(feclearexcept "fenv.h")
 katie_check_function(feenableexcept "fenv.h")
 katie_check_function(madvise "sys/mman.h")
 katie_check_function(getifaddrs "ifaddrs.h")
@@ -384,6 +399,7 @@ katie_check_function(pipe2 "unistd.h")
 katie_check_function(accept4 "sys/socket.h")
 katie_check_function(paccept "sys/socket.h")
 katie_check_function(flock "sys/file.h")
+katie_check_function(getdomainname "unistd.h")
 katie_check_struct(tm tm_gmtoff "time.h")
 katie_check_struct(tm tm_zone "time.h")
 katie_check_struct(sockaddr_ll sll_addr "netpacket/packet.h")
@@ -393,8 +409,6 @@ katie_check_struct(dirent d_type "dirent.h")
 cmake_reset_check_state()
 set(CMAKE_REQUIRED_LIBRARIES ${CMAKE_THREAD_LIBS_INIT})
 katie_check_function(pthread_setname_np "pthread.h")
-katie_check_function(pthread_stackseg_np  "pthread_np.h")
-katie_check_function(pthread_attr_get_np "pthread_np.h")
 cmake_reset_check_state()
 
 # 64-bit offset alternatives, if any of the functions is not found it will set
@@ -444,7 +458,7 @@ foreach(script exec dbus xvfb dbg)
     file(
         COPY ${CMAKE_BINARY_DIR}/${CMAKE_FILES_DIRECTORY}/${script}.sh
         DESTINATION ${CMAKE_BINARY_DIR}
-        FILE_PERMISSIONS OWNER_READ OWNER_WRITE OWNER_EXECUTE GROUP_READ GROUP_EXECUTE WORLD_READ WORLD_EXECUTE
+        FILE_PERMISSIONS OWNER_READ OWNER_WRITE OWNER_EXECUTE GROUP_READ WORLD_READ
     )
 endforeach()
 
@@ -464,10 +478,6 @@ if(NOT WITH_CUPS OR NOT CUPS_FOUND)
     katie_definition(-DQT_NO_CUPS)
 endif()
 
-if(NOT WITH_RESOLV OR NOT RESOLV_FOUND)
-    katie_definition(-DQT_NO_RESOLV)
-endif()
-
 if(NOT WITH_JPEG OR NOT JPEG_FOUND)
     katie_definition(-DQT_NO_IMAGEFORMAT_JPEG)
 endif()
@@ -480,11 +490,15 @@ if(NOT WITH_INTL OR NOT INTL_FOUND)
     katie_definition(-DQT_NO_TRANSLATION)
 endif()
 
-if(NOT WITH_EXECINFO OR NOT EXECINFO_FOUND OR NOT HAVE_CXXABI)
+if(NOT WITH_EXECINFO OR NOT EXECINFO_FOUND)
     katie_definition(-DQT_NO_EXECINFO)
 endif()
 
-# conditional features
+# optional and conditional features
+if(NOT CMAKE_BUILD_TYPE STREQUAL "Debug")
+    katie_definition(-DQT_NO_DEBUG)
+endif()
+
 if(NOT WITH_ACCESSIBILITY)
     katie_definition(-DQT_NO_ACCESSIBILITY)
 endif()
@@ -495,7 +509,7 @@ if(NOT HAVE_pic)
     katie_definition(-DQ_NO_DATA_RELOCATION)
 endif()
 
-# keep in sync with the gui component CMake file, only definitions setup is needed here
+# keep in sync with the GUI component CMake file, only definitions setup is needed here
 foreach(x11ext Xshape Xinerama Xrandr Xrender Xfixes Xcursor)
     if(NOT X11_${x11ext}_FOUND)
         message(WARNING "The X11 ${x11ext} extension was not found")
@@ -505,7 +519,7 @@ foreach(x11ext Xshape Xinerama Xrandr Xrender Xfixes Xcursor)
 endforeach()
 if(NOT X11_Xext_FOUND)
     message(WARNING "The X11 Xext extension was not found")
-    katie_definition(-DQT_NO_XSYNC -DQT_NO_XSHAPE -DQT_NO_XSHM)
+    katie_definition(-DQT_NO_XSYNC -DQT_NO_XSHAPE)
 endif()
 if(NOT X11_SM_FOUND OR NOT X11_ICE_FOUND)
     message(WARNING "X11 SM/ICE was not found thus disabling session manager support")
@@ -546,7 +560,7 @@ if(KATIE_UTILS)
     add_subdirectory(util)
 endif()
 
-# the macro calls bellow are generted via the incfsck script
+# the macro calls bellow are generated via the incfsck script
 katie_generate_obsolete(QAbstractExtensionFactory QtDesigner extension.h)
 katie_generate_obsolete(QAbstractExtensionManager QtDesigner extension.h)
 katie_generate_obsolete(QAbstractFileEngineIterator QtCore qabstractfileengine.h)
@@ -735,7 +749,6 @@ katie_generate_obsolete(QItemEditorCreatorBase QtGui qitemeditorfactory.h)
 katie_generate_obsolete(QItemEditorCreator QtGui qitemeditorfactory.h)
 katie_generate_obsolete(QItemSelection QtGui qitemselectionmodel.h)
 katie_generate_obsolete(QItemSelectionRange QtGui qitemselectionmodel.h)
-katie_generate_obsolete(QJsonParseError QtCore qjsondocument.h)
 katie_generate_obsolete(QKeyEvent QtGui qevent.h)
 katie_generate_obsolete(QLatin1Char QtCore qchar.h)
 katie_generate_obsolete(QLatin1String QtCore qstring.h)
@@ -891,7 +904,6 @@ katie_generate_obsolete(QTextBlockGroup QtGui qtextobject.h)
 katie_generate_obsolete(QTextBlock QtGui qtextobject.h)
 katie_generate_obsolete(QTextBlockUserData QtGui qtextobject.h)
 katie_generate_obsolete(QTextCharFormat QtGui qtextformat.h)
-katie_generate_obsolete(QTextCodecFactoryInterface QtCore qtextcodecplugin.h)
 katie_generate_obsolete(QTextDecoder QtCore qtextcodec.h)
 katie_generate_obsolete(QTextEncoder QtCore qtextcodec.h)
 katie_generate_obsolete(QTextFragment QtGui qtextobject.h)
@@ -1005,12 +1017,6 @@ configure_file(
 )
 
 install(
-    DIRECTORY mkspecs
-    DESTINATION ${KATIE_CMAKE_PATH}
-    COMPONENT Devel
-)
-
-install(
     FILES
     ${CMAKE_BINARY_DIR}/KatieConfig.cmake
     ${CMAKE_BINARY_DIR}/KatieConfigVersion.cmake
@@ -1044,6 +1050,7 @@ install(
 katie_string_unwrap("${KATIE_COMPONENTS}" KATIE_COMPONENTS "Kt")
 katie_string_unwrap("${KATIE_TOOLS}" KATIE_TOOLS)
 
+# custom install targets to make packaging easier
 add_custom_target(install-devel
     COMMAND "${CMAKE_COMMAND}" -DCMAKE_INSTALL_COMPONENT=Devel -P cmake_install.cmake
     WORKING_DIRECTORY "${CMAKE_BINARY_DIR}"

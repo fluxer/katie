@@ -1,7 +1,7 @@
 /****************************************************************************
 **
 ** Copyright (C) 2015 The Qt Company Ltd.
-** Copyright (C) 2016-2020 Ivailo Monev
+** Copyright (C) 2016 Ivailo Monev
 **
 ** This file is part of the QtCore module of the Katie Toolkit.
 **
@@ -14,18 +14,6 @@
 ** packaging of this file.  Please review the following information to
 ** ensure the GNU Lesser General Public License version 2.1 requirements
 ** will be met: http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html.
-**
-** As a special exception, The Qt Company gives you certain additional
-** rights. These rights are described in The Qt Company LGPL Exception
-** version 1.1, included in the file LGPL_EXCEPTION.txt in this package.
-**
-** GNU General Public License Usage
-** Alternatively, this file may be used under the terms of the GNU
-** General Public License version 3.0 as published by the Free Software
-** Foundation and appearing in the file LICENSE.GPL included in the
-** packaging of this file.  Please review the following information to
-** ensure the GNU General Public License version 3.0 requirements will be
-** met: http://www.gnu.org/copyleft/gpl.html.
 **
 ** $QT_END_LICENSE$
 **
@@ -1699,9 +1687,8 @@ QByteArray &QByteArray::append(const char *str, int len)
     if (str && len) {
         if (d->ref != 1 || d->size + len > d->alloc)
             reallocData(qAllocMore(d->size + len, sizeof(Data)));
-        memcpy(d->data + d->size, str, len); // include null terminator
+        memcpy(d->data + d->size, str, len + 1); // include null terminator
         d->size += len;
-        d->data[d->size] = '\0';
     }
     return *this;
 }
@@ -1954,7 +1941,7 @@ QByteArray &QByteArray::replace(const char *c, const QByteArray &after)
 
 QByteArray &QByteArray::replace(const char *before, int bsize, const char *after, int asize)
 {
-    if (isNull() || (before == after && bsize == asize))
+    if (isEmpty() || (before == after && bsize == asize))
         return *this;
 
     QByteArrayMatcher matcher(before, bsize);
@@ -2749,11 +2736,19 @@ QDataStream &operator>>(QDataStream &in, QByteArray &ba)
     if (len == 0xffffffff)
         return in;
 
-    ba.resize(len);
-    if (in.readRawData(ba.data(), len) != len) {
-        ba.clear();
-        in.setStatus(QDataStream::ReadCorruptData);
-    }
+    const quint32 Step = 1024 * 1024;
+    quint32 allocated = 0;
+
+    do {
+        int blockSize = qMin(Step, len - allocated);
+        ba.resize(allocated + blockSize);
+        if (in.readRawData(ba.data() + allocated, blockSize) != blockSize) {
+            ba.clear();
+            in.setStatus(QDataStream::ReadPastEnd);
+            return in;
+        }
+        allocated += blockSize;
+    } while (allocated < len);
 
     return in;
 }

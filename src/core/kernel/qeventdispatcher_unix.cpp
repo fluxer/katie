@@ -1,7 +1,7 @@
 /****************************************************************************
 **
 ** Copyright (C) 2015 The Qt Company Ltd.
-** Copyright (C) 2016-2020 Ivailo Monev
+** Copyright (C) 2016 Ivailo Monev
 **
 ** This file is part of the QtCore module of the Katie Toolkit.
 **
@@ -14,18 +14,6 @@
 ** packaging of this file.  Please review the following information to
 ** ensure the GNU Lesser General Public License version 2.1 requirements
 ** will be met: http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html.
-**
-** As a special exception, The Qt Company gives you certain additional
-** rights. These rights are described in The Qt Company LGPL Exception
-** version 1.1, included in the file LGPL_EXCEPTION.txt in this package.
-**
-** GNU General Public License Usage
-** Alternatively, this file may be used under the terms of the GNU
-** General Public License version 3.0 as published by the Free Software
-** Foundation and appearing in the file LICENSE.GPL included in the
-** packaging of this file.  Please review the following information to
-** ensure the GNU General Public License version 3.0 requirements will be
-** met: http://www.gnu.org/copyleft/gpl.html.
 **
 ** $QT_END_LICENSE$
 **
@@ -49,24 +37,26 @@
 
 QT_BEGIN_NAMESPACE
 
+#ifndef QT_NO_DEBUG
+static const long maxOpenFiles = sysconf(_SC_OPEN_MAX);
+#endif
+
 QEventDispatcherUNIXPrivate::QEventDispatcherUNIXPrivate()
+    : sn_highest(-1),
+    interrupt(false)
 {
     // initialize the common parts of the event loop
     if (qt_safe_pipe(thread_pipe, O_NONBLOCK) == -1) {
         perror("QEventDispatcherUNIXPrivate(): Unable to create thread pipe");
         qFatal("QEventDispatcherUNIXPrivate(): Can not continue without a thread pipe");
     }
-
-    sn_highest = -1;
-
-    interrupt = false;
 }
 
 QEventDispatcherUNIXPrivate::~QEventDispatcherUNIXPrivate()
 {
     // cleanup the common parts of the event loop
-    ::close(thread_pipe[0]);
-    ::close(thread_pipe[1]);
+    qt_safe_close(thread_pipe[0]);
+    qt_safe_close(thread_pipe[1]);
 
     // cleanup timers
     qDeleteAll(timerList);
@@ -119,19 +109,23 @@ int QEventDispatcherUNIXPrivate::doSelect(QEventLoop::ProcessEventsFlags flags, 
                     FD_SET(sn->fd, &fdset);
 
                     int ret = -1;
-                    do {
-                        switch (type) {
-                        case 0: // read
-                            ret = ::select(sn->fd + 1, &fdset, 0, 0, &tm);
-                            break;
-                        case 1: // write
-                            ret = ::select(sn->fd + 1, 0, &fdset, 0, &tm);
-                            break;
-                        case 2: // except
-                            ret = ::select(sn->fd + 1, 0, 0, &fdset, &tm);
+                    switch (type) {
+                        case 0: {
+                            // read
+                            ret = qt_safe_select(sn->fd + 1, &fdset, 0, 0, &tm);
                             break;
                         }
-                    } while (ret == -1 && (errno == EINTR || errno == EAGAIN));
+                        case 1: {
+                            // write
+                            ret = qt_safe_select(sn->fd + 1, 0, &fdset, 0, &tm);
+                            break;
+                        }
+                        case 2: {
+                            // except
+                            ret = qt_safe_select(sn->fd + 1, 0, 0, &fdset, &tm);
+                            break;
+                        }
+                    }
 
                     if (ret == -1 && errno == EBADF) {
                         // disable the invalid socket notifier
@@ -177,7 +171,7 @@ int QEventDispatcherUNIXPrivate::processThreadWakeUp(int nsel)
         // some other thread woke us up... consume the data on the thread pipe so that
         // select doesn't immediately return next time
         char c[16];
-        while (::read(thread_pipe[0], c, sizeof(c)) > 0)
+        while (qt_safe_read(thread_pipe[0], c, sizeof(c)) > 0)
             ;
 
         if (!wakeUps.testAndSetRelease(1, 0)) {
@@ -195,6 +189,8 @@ int QEventDispatcherUNIXPrivate::processThreadWakeUp(int nsel)
  */
 
 QTimerInfoList::QTimerInfoList()
+    : QList<QTimerInfo*>(),
+    firstTimerInfo(Q_NULLPTR)
 {
     if (Q_LIKELY(QElapsedTimer::isMonotonic())) {
         // detected monotonic timers
@@ -212,13 +208,12 @@ QTimerInfoList::QTimerInfoList()
         ticksPerSecond = sysconf(_SC_CLK_TCK);
         msPerTick = 1000/ticksPerSecond;
     }
-
-    firstTimerInfo = Q_NULLPTR;
 }
 
 timeval QTimerInfoList::updateCurrentTime()
 {
-    return (currentTime = qt_gettime());
+    currentTime = qt_gettime();
+    return currentTime;
 }
 
 timeval qAbsTimeval(const timeval &t)
@@ -323,7 +318,7 @@ bool QTimerInfoList::timerWait(timeval &tm)
     }
 
     if (!t)
-      return false;
+        return false;
 
     if (currentTime < t->timeout) {
         // time to wait
@@ -597,12 +592,10 @@ void QEventDispatcherUNIX::registerSocketNotifier(QSocketNotifier *notifier)
     int sockfd = notifier->socket();
     int type = notifier->type();
 #ifndef QT_NO_DEBUG
-    if (sockfd < 0
-        || unsigned(sockfd) >= FD_SETSIZE) {
+    if (Q_UNLIKELY(sockfd < 0 || sockfd >= maxOpenFiles)) {
         qWarning("QSocketNotifier: Internal error");
         return;
-    } else if (notifier->thread() != thread()
-               || thread() != QThread::currentThread()) {
+    } else if (Q_UNLIKELY(notifier->thread() != thread() || thread() != QThread::currentThread())) {
         qWarning("QSocketNotifier: socket notifiers cannot be enabled from another thread");
         return;
     }
@@ -640,12 +633,10 @@ void QEventDispatcherUNIX::unregisterSocketNotifier(QSocketNotifier *notifier)
     int sockfd = notifier->socket();
     int type = notifier->type();
 #ifndef QT_NO_DEBUG
-    if (sockfd < 0
-        || unsigned(sockfd) >= FD_SETSIZE) {
+    if (Q_UNLIKELY(sockfd < 0 || sockfd >= maxOpenFiles)) {
         qWarning("QSocketNotifier: Internal error");
         return;
-    } else if (notifier->thread() != thread()
-               || thread() != QThread::currentThread()) {
+    } else if (Q_UNLIKELY(notifier->thread() != thread() || thread() != QThread::currentThread())) {
         qWarning("QSocketNotifier: socket notifiers cannot be disabled from another thread");
         return;
     }
@@ -690,8 +681,7 @@ void QEventDispatcherUNIX::setSocketNotifierPending(QSocketNotifier *notifier)
     int sockfd = notifier->socket();
     int type = notifier->type();
 #ifndef QT_NO_DEBUG
-    if (sockfd < 0
-        || unsigned(sockfd) >= FD_SETSIZE) {
+    if (Q_UNLIKELY(sockfd < 0 || sockfd >= maxOpenFiles)) {
         qWarning("QSocketNotifier: Internal error");
         return;
     }
@@ -789,8 +779,8 @@ bool QEventDispatcherUNIX::processEvents(QEventLoop::ProcessEventsFlags flags)
 
 bool QEventDispatcherUNIX::hasPendingEvents()
 {
-    extern uint qGlobalPostedEventsCount(); // from qapplication.cpp
-    return qGlobalPostedEventsCount();
+    QThreadData *currentThreadData = QThreadData::current();
+    return currentThreadData->postEventList.size() - currentThreadData->postEventList.startOffset;
 }
 
 void QEventDispatcherUNIX::wakeUp()

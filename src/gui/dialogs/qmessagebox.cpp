@@ -1,7 +1,7 @@
 /****************************************************************************
 **
 ** Copyright (C) 2015 The Qt Company Ltd.
-** Copyright (C) 2016-2020 Ivailo Monev
+** Copyright (C) 2016 Ivailo Monev
 **
 ** This file is part of the QtGui module of the Katie Toolkit.
 **
@@ -14,18 +14,6 @@
 ** packaging of this file.  Please review the following information to
 ** ensure the GNU Lesser General Public License version 2.1 requirements
 ** will be met: http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html.
-**
-** As a special exception, The Qt Company gives you certain additional
-** rights. These rights are described in The Qt Company LGPL Exception
-** version 1.1, included in the file LGPL_EXCEPTION.txt in this package.
-**
-** GNU General Public License Usage
-** Alternatively, this file may be used under the terms of the GNU
-** General Public License version 3.0 as published by the Free Software
-** Foundation and appearing in the file LICENSE.GPL included in the
-** packaging of this file.  Please review the following information to
-** ensure the GNU General Public License version 3.0 requirements will be
-** met: http://www.gnu.org/copyleft/gpl.html.
 **
 ** $QT_END_LICENSE$
 **
@@ -1476,13 +1464,11 @@ void QMessageBox::aboutQt(QWidget *parent, const QString &title)
         "<p>Katie licensed under the GNU LGPL version 2.1 is appropriate for the "
         "development of applications provided you can comply with the terms "
         "and conditions of the GNU LGPL version 2.1.</p>"
-        "<p>Copyright (C) %1 The Qt Company Ltd and other contributors.</p>"
-        "<p>Copyright (C) %2 Ivailo Monev</p>"
+        "<p>Copyright (C) 2015 The Qt Company Ltd and other contributors.</p>"
+        "<p>Copyright (C) 2016 Ivailo Monev</p>"
         "<p>Qt and the Qt logo are trademarks of The Qt Company Ltd.</p>"
-        "<p>See <a href=\"http://%3/\">%3</a> for more information.</p>"
-        ).arg(QLatin1String("2015"),
-              QLatin1String("2016-2020"),
-              QLatin1String("fluxer.github.io/katie"));
+        "<p>See <a href=\"https://github.com/fluxer/katie\">github.com/fluxer/katie</a> for more information.</p>"
+        );
     QMessageBox *msgBox = new QMessageBox(parent);
     msgBox->setAttribute(Qt::WA_DeleteOnClose);
     msgBox->setWindowTitle(title.isEmpty() ? tr("About Katie") : title);

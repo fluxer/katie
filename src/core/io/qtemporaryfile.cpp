@@ -1,7 +1,7 @@
 /****************************************************************************
 **
 ** Copyright (C) 2015 The Qt Company Ltd.
-** Copyright (C) 2016-2020 Ivailo Monev
+** Copyright (C) 2016 Ivailo Monev
 **
 ** This file is part of the QtCore module of the Katie Toolkit.
 **
@@ -15,18 +15,6 @@
 ** ensure the GNU Lesser General Public License version 2.1 requirements
 ** will be met: http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html.
 **
-** As a special exception, The Qt Company gives you certain additional
-** rights. These rights are described in The Qt Company LGPL Exception
-** version 1.1, included in the file LGPL_EXCEPTION.txt in this package.
-**
-** GNU General Public License Usage
-** Alternatively, this file may be used under the terms of the GNU
-** General Public License version 3.0 as published by the Free Software
-** Foundation and appearing in the file LICENSE.GPL included in the
-** packaging of this file.  Please review the following information to
-** ensure the GNU General Public License version 3.0 requirements will be
-** met: http://www.gnu.org/copyleft/gpl.html.
-**
 ** $QT_END_LICENSE$
 **
 ****************************************************************************/
@@ -39,7 +27,7 @@
 #include "qfile_p.h"
 #include "qfsfileengine_p.h"
 #include "qfilesystemengine_p.h"
-#include "qcore_unix_p.h"       // overrides QT_OPEN
+#include "qcore_unix_p.h"
 
 #include <errno.h>
 
@@ -112,20 +100,23 @@ bool QTemporaryFileEngine::open(QIODevice::OpenMode openMode)
 
     QString qfilename = d->fileEntry.filePath();
 
-    // Ensure there is a placeholder mask
-    uint phPos = qfilename.length();
-    uint phLength = 0;
+    // "Nativify" :-)
+    QFileSystemEntry::NativePath filename =
+        QFileSystemEngine::absoluteName(QFileSystemEntry(qfilename)).nativeFilePath();
 
+    // Find placeholder in native path
+    uint phPos = filename.length();
+    uint phLength = 0;
     while (phPos != 0) {
         --phPos;
 
-        if (qfilename[phPos] == QLatin1Char('X')) {
+        if (filename.at(phPos) == 'X') {
             ++phLength;
             continue;
         }
 
         // require atleast 6 for compatibility
-        if (phLength >= 6 || qfilename[phPos] == QLatin1Char('/')) {
+        if (phLength >= 6 || filename.at(phPos) == '/') {
             ++phPos;
             break;
         }
@@ -134,31 +125,11 @@ bool QTemporaryFileEngine::open(QIODevice::OpenMode openMode)
         phLength = 0;
     }
 
-    if (phLength < 6)
-        qfilename.append(QLatin1String(".XXXXXXXXXX"));
-
-    // "Nativify" :-)
-    QFileSystemEntry::NativePath filename =
-        QFileSystemEngine::absoluteName(QFileSystemEntry(qfilename)).nativeFilePath();
-
-    // Find mask in native path
-    phPos = filename.length();
-    phLength = 0;
-    while (phPos != 0) {
-        --phPos;
-
-        if (filename[phPos] == 'X') {
-            ++phLength;
-            continue;
-        }
-
-        if (phLength >= 6) {
-            ++phPos;
-            break;
-        }
-
-        // start over
-        phLength = 0;
+    // Ensure there is a placeholder mask
+    if (phLength < 6) {
+        filename.append(".XXXXXXXXXX");
+        phPos = filename.length() - 10;
+        phLength = 10;
     }
 
     Q_ASSERT(phLength >= 6);
@@ -172,8 +143,8 @@ bool QTemporaryFileEngine::open(QIODevice::OpenMode openMode)
         data[i + phPos] = tmpnamechars[qrand() % 52];
     }
 
-    // Atomically create file and obtain handle
-    d->fd = QT_OPEN(data, QT_OPEN_CREAT | O_EXCL | QT_OPEN_RDWR, 0600);
+    // Create file and obtain handle
+    d->fd = qt_safe_open(data, QT_OPEN_CREAT | O_EXCL | QT_OPEN_RDWR, 0600);
 
     if (d->fd == -1) {
         setError(QFile::OpenError, qt_error_string(errno));
@@ -499,7 +470,7 @@ QTemporaryFile *QTemporaryFile::createLocalFile(QFile &file)
 {
     if (QAbstractFileEngine *engine = file.fileEngine()) {
         if(engine->fileFlags(QAbstractFileEngine::FlagsMask) & QAbstractFileEngine::LocalDiskFlag)
-            return 0; //local already
+            return Q_NULLPTR; //local already
         //cache
         bool wasOpen = file.isOpen();
         qint64 old_off = 0;
@@ -508,15 +479,15 @@ QTemporaryFile *QTemporaryFile::createLocalFile(QFile &file)
         else
             file.open(QIODevice::ReadOnly);
         //dump data
-        QTemporaryFile *ret = new QTemporaryFile;
+        QTemporaryFile *ret = new QTemporaryFile();
         ret->open();
         file.seek(0);
-        char buffer[1024];
+        char readbuff[QT_BUFFSIZE];
         while(true) {
-            qint64 len = file.read(buffer, 1024);
+            qint64 len = file.read(readbuff, sizeof(readbuff));
             if(len < 1)
                 break;
-            ret->write(buffer, len);
+            ret->write(readbuff, len);
         }
         ret->seek(0);
         //restore

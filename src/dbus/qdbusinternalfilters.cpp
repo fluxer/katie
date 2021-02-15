@@ -1,7 +1,7 @@
 /****************************************************************************
 **
 ** Copyright (C) 2015 The Qt Company Ltd.
-** Copyright (C) 2016-2020 Ivailo Monev
+** Copyright (C) 2016 Ivailo Monev
 **
 ** This file is part of the QtDBus module of the Katie Toolkit.
 **
@@ -14,18 +14,6 @@
 ** packaging of this file.  Please review the following information to
 ** ensure the GNU Lesser General Public License version 2.1 requirements
 ** will be met: http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html.
-**
-** As a special exception, The Qt Company gives you certain additional
-** rights. These rights are described in The Qt Company LGPL Exception
-** version 1.1, included in the file LGPL_EXCEPTION.txt in this package.
-**
-** GNU General Public License Usage
-** Alternatively, this file may be used under the terms of the GNU
-** General Public License version 3.0 as published by the Free Software
-** Foundation and appearing in the file LICENSE.GPL included in the
-** packaging of this file.  Please review the following information to
-** ensure the GNU General Public License version 3.0 requirements will be
-** met: http://www.gnu.org/copyleft/gpl.html.
 **
 ** $QT_END_LICENSE$
 **
@@ -90,14 +78,11 @@ static const char peerInterfaceXml[] =
     "    </method>\n"
     "  </interface>\n";
 
-static QString generateSubObjectXml(QObject *object)
+static QString generateSubObjectXml(const QObject *object)
 {
     QString retval;
-    const QObjectList &objs = object->children();
-    QObjectList::ConstIterator it = objs.constBegin();
-    QObjectList::ConstIterator end = objs.constEnd();
-    for ( ; it != end; ++it) {
-        QString name = (*it)->objectName();
+    foreach (const QObject *it, object->children()) {
+        QString name = it->objectName();
         if (!name.isEmpty() && QDBusUtil::isValidPartOfObjectPath(name))
             retval += QString::fromLatin1("  <node name=\"%1\"/>\n")
                       .arg(name);
@@ -321,7 +306,7 @@ static int writeProperty(QObject *obj, const QByteArray &property_name, QVariant
     int id = mp.type();
     if (id == QVariant::UserType) {
         // dynamic type
-        id = qDBusNameToTypeId(mp.typeName());
+        id = QMetaType::type(mp.typeName());
         if (id == -1) {
             // type not registered?
             qWarning("QDBusConnection: Unable to handle unregistered datatype '%s' for property '%s::%s'",
@@ -428,7 +413,7 @@ static QVariantMap readAllProperties(QObject *object, int flags)
             continue;
 
         // is it a registered property?
-        int typeId = qDBusNameToTypeId(mp.typeName());
+        int typeId = QMetaType::type(mp.typeName());
         if (!typeId)
             continue;
         const char *signature = QDBusMetaType::typeToSignature(typeId);
