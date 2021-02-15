@@ -171,7 +171,7 @@ int QEventDispatcherUNIXPrivate::processThreadWakeUp(int nsel)
         // some other thread woke us up... consume the data on the thread pipe so that
         // select doesn't immediately return next time
         char c[16];
-        while (QT_READ(thread_pipe[0], c, sizeof(c)) > 0)
+        while (qt_safe_read(thread_pipe[0], c, sizeof(c)) > 0)
             ;
 
         if (!wakeUps.testAndSetRelease(1, 0)) {
