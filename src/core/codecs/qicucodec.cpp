@@ -1055,8 +1055,7 @@ int QIcuCodec::mibEnum() const
     UErrorCode error = U_ZERO_ERROR;
     const char *iana = ucnv_getStandardName(m_name.constData(), "IANA", &error);
 
-    // some codecs and their aliases are made up by ICU (e.g. IMAP-mailbox-name), you may get a
-    // warning for these
+    // some codecs and their aliases are made up by ICU (e.g. IMAP-mailbox-name)
     if (Q_LIKELY(iana)) {
         for (qint16 i = 0; i < MIBTblSize; i++) {
             if (ucnv_compareNames(iana, MIBTbl[i].name) == 0) {
