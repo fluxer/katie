@@ -43,7 +43,7 @@ public:
     inline QSet(const QSet<T> &other) : Data(other) {}
 
     inline bool isEmpty() const { return Data::empty(); }
-    inline void squeeze() { Data::rehash(); }
+    inline void squeeze() { Data::rehash(0); }
     inline bool remove(const T &value) { return Data::erase(value) != 0; }
     inline int count() const { return Data::size(); }
     inline bool contains(const T &value) const { return Data::count(value) != 0; }
