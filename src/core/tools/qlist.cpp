@@ -143,7 +143,7 @@ void QListData::freeData(Data *data)
 
 /*!
  *  Detaches the QListData by reallocating new memory.
- *  Returns the old (shared) data, it is up to the caller to deref() and free()
+ *  It is up to the caller to deref() and free()
  *  For the new data node_copy needs to be called.
  *
  *  \internal
@@ -151,10 +151,16 @@ void QListData::freeData(Data *data)
 void QListData::reallocData(int alloc)
 {
     Q_ASSERT(d->ref == 1);
-    Data *x = static_cast<Data *>(realloc(d, DataHeaderSize + alloc * sizeof(void *)));
-    Q_CHECK_PTR(x);
+    if (d == &shared_null) {
+        Data *x = static_cast<Data *>(malloc(DataHeaderSize + alloc * sizeof(void *)));
+        Q_CHECK_PTR(x);
+        d = x;
+    } else {
+        Data *x = static_cast<Data *>(realloc(d, DataHeaderSize + alloc * sizeof(void *)));
+        Q_CHECK_PTR(x);
+        d = x;
+    }
 
-    d = x;
     d->alloc = alloc;
     if (!alloc)
         d->begin = d->end = 0;
