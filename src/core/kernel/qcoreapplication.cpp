@@ -65,14 +65,13 @@ QString QCoreApplicationPrivate::appName() const
 {
 #ifdef QT_HAVE_GETPROGNAME
     if (applicationName.isEmpty()) {
-        return QString::fromLocal8Bit(::getprogname());
+        applicationName = QString::fromLocal8Bit(::getprogname());
     }
-#else
+#endif // QT_HAVE_GETPROGNAME
     if (applicationName.isEmpty() && argv[0]) {
         const char *p = ::strrchr(argv[0], '/');
         return QString::fromLocal8Bit(p ? p + 1 : argv[0]);
     }
-#endif // QT_HAVE_GETPROGNAME
     return applicationName;
 }
 
