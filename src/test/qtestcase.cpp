@@ -1540,7 +1540,7 @@ char *toHexRepresentation(const char *ba, int length)
         result[size - 1] = '\0';
     }
 
-    const char toHex[] = "0123456789ABCDEF";
+    static const char toHex[] = "0123456789ABCDEF";
     int i = 0;
     int o = 0;
 
