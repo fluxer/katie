@@ -522,27 +522,28 @@ void QDataStream::setByteOrder(ByteOrder bo)
     Sets the version number of the data serialization format to \a v.
 
     You don't \e have to set a version if you are using the current
-    version of Qt, but for your own custom binary formats we
+    version of Katie, but for your own custom binary formats we
     recommend that you do; see \l{Versioning} in the Detailed
     Description.
 
     To accommodate new functionality, the datastream serialization
-    format of some Qt classes has changed in some versions of Qt. If
-    you want to read data that was created by an earlier version of
-    Qt, or write data that can be read by a program that was compiled
-    with an earlier version of Qt, use this function to modify the
+    format of some Katie classes has changed in some versions of Katie.
+    If you want to read data that was created by an earlier version of
+    Katie, or write data that can be read by a program that was compiled
+    with an earlier version of Katie, use this function to modify the
     serialization format used by QDataStream.
 
     \table
-    \header \i Qt Version       \i QDataStream Version
-    \row \i Qt 4.9                  \i 12
-    \row \i Qt 4.8                  \i 12
-    \row \i Qt 4.7                  \i 12
-    \row \i Qt 4.6                  \i 12
+    \header \i Toolkit Version      \i QDataStream Version
+    \row    \i Qt 4.6               \i 12
+    \row    \i Qt 4.7               \i 12
+    \row    \i Qt 4.8               \i 12
+    \row    \i Katie 4.9            \i 12
+    \row    \i Katie 4.10           \i 12
     \endtable
 
     The \l Version enum provides symbolic constants for the different
-    versions of Qt. For example:
+    versions of Katie. For example:
 
     \snippet doc/src/snippets/code/src_corelib_io_qdatastream.cpp 5
 
