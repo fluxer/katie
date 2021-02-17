@@ -501,7 +501,6 @@ static int qt_x_errhandler(Display *dpy, XErrorEvent *err)
 static int qt_xio_errhandler(Display *)
 {
     qWarning("%s: Fatal IO error: client killed", appName);
-    QApplicationPrivate::reset_instance_pointer();
     QApplication::exit(1);
     return 0;
 }
@@ -724,14 +723,6 @@ bool QApplicationPrivate::x11_apply_settings()
 
     return true;
 }
-
-
-/*! \internal
-    Resets the QApplication::instance() pointer to zero
-*/
-void QApplicationPrivate::reset_instance_pointer()
-{ QApplication::self = 0; }
-
 
 // update the supported array
 static void qt_get_net_supported()
@@ -1144,7 +1135,6 @@ void qt_init(QApplicationPrivate *priv, int,
         if ((qt_x11Data->display = XOpenDisplay(qt_x11Data->displayName)) == 0) {
             qWarning("%s: cannot connect to X server %s", appName,
                      XDisplayName(qt_x11Data->displayName));
-            QApplicationPrivate::reset_instance_pointer();
             QApplication::exit(1);
         }
 
