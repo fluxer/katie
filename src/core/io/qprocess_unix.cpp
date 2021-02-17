@@ -449,35 +449,25 @@ QProcessEnvironment QProcessEnvironment::systemEnvironment()
 
         QByteArray name(entry, equal - entry);
         QByteArray value(equal + 1);
-        env.d->hash.insert(QProcessEnvironmentPrivate::Key(name),
-                           QProcessEnvironmentPrivate::Value(value));
+        env.hash.insert(QString::fromLatin1(name.constData()), QString::fromLatin1(value));
     }
     return env;
 }
 
-static char **_q_dupEnvironment(const QProcessEnvironmentPrivate::Hash &environment, int *envc)
+static char **_q_dupEnvironment(const QProcessEnvironment &environment, int *envc)
 {
     *envc = 0;
-    if (environment.isEmpty())
-        return 0;
+    Q_ASSERT(!environment.isEmpty());
 
-    // if LD_LIBRARY_PATH exists in the current environment, but
-    // not in the environment list passed by the programmer, then
-    // copy it over.
-    static const char libraryPath[] = "LD_LIBRARY_PATH";
-    const QByteArray envLibraryPath = qgetenv(libraryPath);
-    bool needToAddLibraryPath = !envLibraryPath.isEmpty() &&
-                                !environment.contains(QProcessEnvironmentPrivate::Key(QByteArray(libraryPath)));
+    const QStringList envkeys = environment.keys();
 
-    char **envp = new char *[environment.count() + 2];
-    envp[environment.count()] = 0;
-    envp[environment.count() + 1] = 0;
+    char **envp = new char *[envkeys.count() + 2];
+    envp[envkeys.count()] = 0;
+    envp[envkeys.count() + 1] = 0;
 
-    QProcessEnvironmentPrivate::Hash::ConstIterator it = environment.constBegin();
-    const QProcessEnvironmentPrivate::Hash::ConstIterator end = environment.constEnd();
-    for ( ; it != end; ++it) {
-        QByteArray key = it.key();
-        QByteArray value = it.value().bytes();
+    foreach (const QString &envkey, envkeys) {
+        QByteArray key = envkey.toLocal8Bit();
+        QByteArray value = environment.value(envkey).toLocal8Bit();
         key.reserve(key.length() + 1 + value.length());
         key.append('=');
         key.append(value);
@@ -485,9 +475,6 @@ static char **_q_dupEnvironment(const QProcessEnvironmentPrivate::Hash &environm
         envp[(*envc)++] = ::strdup(key.constData());
     }
 
-    if (needToAddLibraryPath)
-        envp[(*envc)++] = ::strdup(QByteArray(QByteArray(libraryPath) + '=' +
-                                 envLibraryPath).constData());
     return envp;
 }
 
@@ -547,9 +534,8 @@ void QProcessPrivate::startProcess()
     // Duplicate the environment.
     int envc = 0;
     char **envp = 0;
-    if (environment.d.constData()) {
-        QProcessEnvironmentPrivate::MutexLocker locker(environment.d);
-        envp = _q_dupEnvironment(environment.d.constData()->hash, &envc);
+    if (!environment.isEmpty()) {
+        envp = _q_dupEnvironment(environment, &envc);
     }
 
     // Encode the working directory if it's non-empty, otherwise just pass 0.
