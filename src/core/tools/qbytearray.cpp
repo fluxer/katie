@@ -4094,18 +4094,6 @@ QByteArray QByteArray::fromPercentEncoding(const QByteArray &input, char percent
     return tmp;
 }
 
-static inline bool q_strchr(const char str[], char chr)
-{
-    if (!str) return false;
-
-    const char *ptr = str;
-    char c;
-    while ((c = *ptr++))
-        if (c == chr)
-            return true;
-    return false;
-}
-
 static inline char toHexHelper(char c)
 {
     static const char hexnumbers[] = "0123456789ABCDEF";
@@ -4132,8 +4120,8 @@ static void q_toPercentEncoding(QByteArray *ba, const char *dontEncode, const ch
              || c == 0x2E // .
              || c == 0x5F // _
              || c == 0x7E // ~
-             || q_strchr(dontEncode, c))
-            && !q_strchr(alsoEncode, c)) {
+             || ::strchr(dontEncode, c))
+            && !::strchr(alsoEncode, c)) {
             if (output)
                 output[length] = c;
             ++length;
