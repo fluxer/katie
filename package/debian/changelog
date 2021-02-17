@@ -1,4 +1,10 @@
-katie (4.9.2) unstable; urgency=medium
+katie (4.9.3) stable; urgency=medium
+
+  * Backport package update
+
+ -- Ivailo Monev <xakepa10@gmail.com>  Wed, 17 Feb 2021 14:44:00 +0200
+
+katie (4.9.2) stable; urgency=medium
 
   * Third package update
 
