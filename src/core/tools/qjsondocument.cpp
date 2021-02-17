@@ -51,7 +51,7 @@ QVariantMap QJsonDocumentPrivate::jsonToMap(const QByteArray &jsondata)
     }
 
     json_error_t jerror;
-    json_t *jroot = json_loads(jsondata.constData(), 0, &jerror);
+    json_t *jroot = json_loads(jsondata.constData(), JSON_ALLOW_NUL, &jerror);
 
     if (!jroot) {
         error = jerror.text;

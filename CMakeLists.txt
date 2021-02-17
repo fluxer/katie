@@ -212,8 +212,8 @@ set_package_properties(ZSTD PROPERTIES
     TYPE REQUIRED
 )
 
-# v2.0+ required for json_loads() with three arguments
-find_package(Jansson 2.0)
+# v2.6+ required for JSON_ALLOW_NUL
+find_package(Jansson 2.6)
 set_package_properties(Jansson PROPERTIES
     PURPOSE "Required for JSON support"
     DESCRIPTION "C library for encoding, decoding and manipulating JSON data"
