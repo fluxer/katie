@@ -3,7 +3,7 @@
 # https://wiki.netbsd.org/pkgsrc/intro_to_packaging/
 # https://www.netbsd.org/docs/pkgsrc/
 
-DISTNAME = master
+DISTNAME = 4.9
 PKGNAME = katie-4.9.3.d20201231
 CATEGORIES = devel x11 net www
 MAINTAINER = xakepa10@gmail.com

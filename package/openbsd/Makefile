@@ -13,9 +13,9 @@ PERMIT_DISTFILES = Yes
 HOMEPAGE = https://github.com/fluxer/katie
 
 MASTER_SITES = https://github.com/fluxer/katie/archive/
-DISTFILES = master.tar.gz
+DISTFILES = 4.9.tar.gz
 DIST_SUBDIR = ${DISTNAME}
-WRKSRC = ${WRKDIR}/katie-master
+WRKSRC = ${WRKDIR}/katie-4.9
 
 COMPILER = base-clang ports-gcc
 MODULES = devel/cmake
