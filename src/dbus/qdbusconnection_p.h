@@ -204,7 +204,7 @@ private:
     bool activateCall(QObject *object, int flags, const QDBusMessage &msg);
 
     void sendError(const QDBusMessage &msg, QDBusError::ErrorType code);
-    void deliverCall(QObject *object, int flags, const QDBusMessage &msg,
+    void deliverCall(QObject *object, const QDBusMessage &msg,
                      const QList<int> &metaTypes, int slotIdx);
 
     bool isServiceRegisteredByThread(const QString &serviceName);
