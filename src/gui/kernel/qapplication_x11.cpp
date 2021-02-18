@@ -2786,8 +2786,6 @@ bool QETWidget::translateMouseEvent(const XEvent *event)
         case Button3: button = Qt::RightButton; break;
         case Button4:
         case Button5:
-        case 6:
-        case 7:
             // the fancy mouse wheel.
 
             // We are only interested in ButtonPress.
@@ -2812,15 +2810,15 @@ bool QETWidget::translateMouseEvent(const XEvent *event)
                 // indicates forward rotation, a negative one
                 // backward rotation respectively.
                 int btn = event->xbutton.button;
-                delta *= 120 * ((btn == Button4 || btn == 6) ? 1 : -1);
-                bool hor = (((btn == Button4 || btn == Button5) && (modifiers & Qt::AltModifier)) ||
-                            (btn == 6 || btn == 7));
+                delta *= 120 * (btn == Button4 ? 1 : -1);
+                bool hor = ((btn == Button4 || btn == Button5) && (modifiers & Qt::AltModifier));
                 translateWheelEvent(globalPos.x(), globalPos.y(), delta, buttons,
                                     modifiers, (hor) ? Qt::Horizontal: Qt::Vertical);
             }
             return true;
-        case 8: button = Qt::XButton1; break;
-        case 9: button = Qt::XButton2; break;
+        // TODO: these are not defined in X11 headers, remove
+        // case 8: button = Qt::XButton1; break;
+        // case 9: button = Qt::XButton2; break;
         }
         if (event->type == XButtonPress) {        // mouse button pressed
             buttons |= button;
