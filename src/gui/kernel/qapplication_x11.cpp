@@ -236,7 +236,6 @@ bool qt_use_rtl_extensions = false;
 
 static Window           mouseActWindow       = 0;            // window where mouse is
 static Qt::MouseButton  mouseButtonPressed   = Qt::NoButton; // last mouse button pressed
-static Qt::MouseButtons mouseButtonState     = Qt::NoButton; // mouse button state
 static Time             mouseButtonPressTime = 0;            // when was a button pressed
 static short            mouseXPos, mouseYPos = 0;            // mouse pres position in act window
 static short            mouseGlobalXPos, mouseGlobalYPos;    // global mouse press position
@@ -2684,12 +2683,6 @@ static Qt::MouseButtons translateMouseButtons(int s)
         ret |= Qt::MiddleButton;
     if (s & Button3Mask)
         ret |= Qt::RightButton;
-    // X11 has no special state for XButton1 and XButton2, so we need to use
-    // the global state maintained between press and release.
-    if (mouseButtonState.testFlag(Qt::XButton1))
-        ret |= Qt::XButton1;
-    if (mouseButtonState.testFlag(Qt::XButton2))
-        ret |= Qt::XButton2;
     return ret;
 }
 
@@ -2781,44 +2774,42 @@ bool QETWidget::translateMouseEvent(const XEvent *event)
         buttons = translateMouseButtons(event->xbutton.state);
         modifiers = qt_keymapper_private()->translateModifiers(event->xbutton.state);
         switch (event->xbutton.button) {
-        case Button1: button = Qt::LeftButton; break;
-        case Button2: button = Qt::MiddleButton; break;
-        case Button3: button = Qt::RightButton; break;
-        case Button4:
-        case Button5:
-            // the fancy mouse wheel.
+            case Button1: button = Qt::LeftButton; break;
+            case Button2: button = Qt::MiddleButton; break;
+            case Button3: button = Qt::RightButton; break;
+            case Button4:
+            case Button5: {
+                // the fancy mouse wheel.
 
-            // We are only interested in ButtonPress.
-            if (event->type == XButtonPress){
-                // compress wheel events (the X Server will simply
-                // send a button press for each single notch,
-                // regardless whether the application can catch up
-                // or not)
-                int delta = 1;
-                XEvent xevent;
-                while (XCheckTypedWindowEvent(qt_x11Data->display, effectiveWinId(), XButtonPress, &xevent)){
-                    if (xevent.xbutton.button != event->xbutton.button){
-                        XPutBackEvent(qt_x11Data->display, &xevent);
-                        break;
+                // We are only interested in ButtonPress.
+                if (event->type == XButtonPress){
+                    // compress wheel events (the X Server will simply
+                    // send a button press for each single notch,
+                    // regardless whether the application can catch up
+                    // or not)
+                    int delta = 1;
+                    XEvent xevent;
+                    while (XCheckTypedWindowEvent(qt_x11Data->display, effectiveWinId(), XButtonPress, &xevent)){
+                        if (xevent.xbutton.button != event->xbutton.button){
+                            XPutBackEvent(qt_x11Data->display, &xevent);
+                            break;
+                        }
+                        delta++;
                     }
-                    delta++;
-                }
 
-                // the delta is defined as multiples of
-                // WHEEL_DELTA, which is set to 120. Future wheels
-                // may offer a finer-resolution. A positive delta
-                // indicates forward rotation, a negative one
-                // backward rotation respectively.
-                int btn = event->xbutton.button;
-                delta *= 120 * (btn == Button4 ? 1 : -1);
-                bool hor = ((btn == Button4 || btn == Button5) && (modifiers & Qt::AltModifier));
-                translateWheelEvent(globalPos.x(), globalPos.y(), delta, buttons,
-                                    modifiers, (hor) ? Qt::Horizontal: Qt::Vertical);
+                    // the delta is defined as multiples of
+                    // WHEEL_DELTA, which is set to 120. Future wheels
+                    // may offer a finer-resolution. A positive delta
+                    // indicates forward rotation, a negative one
+                    // backward rotation respectively.
+                    int btn = event->xbutton.button;
+                    delta *= 120 * (btn == Button4 ? 1 : -1);
+                    bool hor = ((btn == Button4 || btn == Button5) && (modifiers & Qt::AltModifier));
+                    translateWheelEvent(globalPos.x(), globalPos.y(), delta, buttons,
+                                        modifiers, (hor) ? Qt::Horizontal: Qt::Vertical);
+                }
+                return true;
             }
-            return true;
-        // TODO: these are not defined in X11 headers, remove
-        // case 8: button = Qt::XButton1; break;
-        // case 9: button = Qt::XButton2; break;
         }
         if (event->type == XButtonPress) {        // mouse button pressed
             buttons |= button;
@@ -2850,7 +2841,6 @@ bool QETWidget::translateMouseEvent(const XEvent *event)
         }
     }
     mouseActWindow = effectiveWinId();                        // save some event params
-    mouseButtonState = buttons;
     if (type == 0)                                // don't send event
         return false;
 
