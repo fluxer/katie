@@ -206,7 +206,7 @@ bool QKeyMapperPrivate::translateKeyEvent(QWidget *keyWidget, const XEvent *even
     KeySym keysym = 0;
     int count = XLookupString(&xkeyevent, lookupbuff, sizeof(lookupbuff), &keysym, 0);
     int code = translateKeySym(keysym);
-    QString text = QString::fromLatin1(lookupbuff, count);
+    QString text = QString::fromUtf8(lookupbuff, count);
 
     bool autorepeat = false;
     static const int qt_x11_autorepeat = getX11AutoRepeat();
