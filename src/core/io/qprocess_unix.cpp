@@ -449,7 +449,7 @@ QProcessEnvironment QProcessEnvironment::systemEnvironment()
 
         QByteArray name(entry, equal - entry);
         QByteArray value(equal + 1);
-        env.hash.insert(QString::fromLatin1(name.constData()), QString::fromLatin1(value));
+        env.hash.insert(QString::fromLatin1(name.constData()), QString::fromLocal8Bit(value));
     }
     return env;
 }
