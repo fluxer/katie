@@ -238,7 +238,7 @@ static Window           mouseActWindow       = 0;            // window where mou
 static Qt::MouseButton  mouseButtonPressed   = Qt::NoButton; // last mouse button pressed
 static Qt::MouseButtons mouseButtonState     = Qt::NoButton; // mouse button state
 static Time             mouseButtonPressTime = 0;            // when was a button pressed
-static short            mouseXPos, mouseYPos;                // mouse pres position in act window
+static short            mouseXPos, mouseYPos = 0;            // mouse pres position in act window
 static short            mouseGlobalXPos, mouseGlobalYPos;    // global mouse press position
 
 extern QWidgetList *qt_modal_stack;                // stack of modal widgets
@@ -248,7 +248,7 @@ static Window pressed_window = XNone;
 
 // popup control
 static bool replayPopupMouseEvent = false;
-static bool popupGrabOk;
+static bool popupGrabOk = false;
 
 bool qt_sm_blockUserInput = false;                // session management
 
