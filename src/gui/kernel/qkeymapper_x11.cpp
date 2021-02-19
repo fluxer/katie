@@ -19,9 +19,10 @@
 **
 ****************************************************************************/
 
-#include "qkeymapper_p.h"
 #include "qdebug.h"
 #include "qwidget.h"
+#include "qtextcodec.h"
+#include "qkeymapper_p.h"
 #include "qapplication_p.h"
 #include "qt_x11_p.h"
 
@@ -202,11 +203,14 @@ bool QKeyMapperPrivate::translateKeyEvent(QWidget *keyWidget, const XEvent *even
     QEvent::Type type = (event->type == XKeyPress) ? QEvent::KeyPress : QEvent::KeyRelease;
     Qt::KeyboardModifiers modifiers = translateModifiers(event->xkey.state);
     XKeyEvent xkeyevent = event->xkey;
-    char lookupbuff[10];
+    QByteArray lookupbuff(10, '\0');
     KeySym keysym = 0;
-    int count = XLookupString(&xkeyevent, lookupbuff, sizeof(lookupbuff), &keysym, 0);
+    int count = XLookupString(&xkeyevent, lookupbuff.data(), lookupbuff.size(), &keysym, 0);
+    lookupbuff.resize(count);
     int code = translateKeySym(keysym);
-    QString text = QString::fromUtf8(lookupbuff, count);
+    // TODO: this is sub-optimal
+    QTextCodec* codec = QTextCodec::codecForText(lookupbuff);
+    QString text = codec->toUnicode(lookupbuff);
 
     bool autorepeat = false;
     static const int qt_x11_autorepeat = getX11AutoRepeat();
@@ -243,7 +247,7 @@ bool QKeyMapperPrivate::translateKeyEvent(QWidget *keyWidget, const XEvent *even
 
     QKeyEvent e(type, code, modifiers,
                   event->xkey.keycode, keysym, event->xkey.state,
-                  text, autorepeat, qMax(qMax(count,1), text.length()));
+                  text, autorepeat, qMax(qMax(count, 1), text.length()));
     return qt_sendSpontaneousEvent(keyWidget, &e);
 }
 

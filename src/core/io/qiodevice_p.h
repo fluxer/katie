@@ -121,7 +121,7 @@ public:
         len -= r;
         first += r;
         return r;
-        }
+    }
     bool canReadLine() const {
         return memchr(first, '\n', len);
     }
