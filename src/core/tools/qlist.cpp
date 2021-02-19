@@ -144,15 +144,16 @@ void QListData::reallocData(int alloc)
         Data *x = static_cast<Data *>(malloc(DataHeaderSize + alloc * QT_POINTER_SIZE));
         Q_CHECK_PTR(x);
         d = x;
+        d->begin = d->end = 0;
     } else {
         Data *x = static_cast<Data *>(realloc(d, DataHeaderSize + alloc * QT_POINTER_SIZE));
         Q_CHECK_PTR(x);
         d = x;
+        if (!alloc)
+            d->begin = d->end = 0;
     }
 
     d->alloc = alloc;
-    if (!alloc)
-        d->begin = d->end = 0;
 }
 
 // ensures that enough space is available to append n elements
