@@ -27,6 +27,7 @@
 #include "qstringlist.h"
 #include "qdebug.h"
 #include "qcoreapplication_p.h"
+#include "qnet_unix_p.h"
 #include "../qnetworksession_impl.h"
 
 #ifdef Q_OS_LINUX
@@ -45,12 +46,12 @@ QT_BEGIN_NAMESPACE
 static QNetworkConfiguration::BearerType qGetInterfaceType(const QString &interface)
 {
 #if defined(Q_OS_LINUX)
-    int sock = ::socket(AF_INET, SOCK_DGRAM, 0);
+    int sock = qt_safe_socket(AF_INET, SOCK_DGRAM, 0);
 
     struct ifreq request;
     strncpy(request.ifr_name, interface.toLocal8Bit().data(), sizeof(request.ifr_name));
     int result = ::ioctl(sock, SIOCGIFHWADDR, &request);
-    ::close(sock);
+    qt_safe_close(sock);
 
     if (result >= 0 && request.ifr_hwaddr.sa_family == ARPHRD_ETHER)
         return QNetworkConfiguration::BearerEthernet;
