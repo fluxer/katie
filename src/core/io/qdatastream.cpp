@@ -925,17 +925,11 @@ QDataStream &QDataStream::operator<<(qint32 i)
 QDataStream &QDataStream::operator<<(qint64 i)
 {
     CHECK_STREAM_WRITE_PRECOND(*this)
-    if (version() < 6) {
-        quint32 i1 = i & 0xffffffff;
-        quint32 i2 = i >> 32;
-        *this << i2 << i1;
-    } else {
-        if (!noswap) {
-            i = qbswap(i);
-        }
-        if (dev->write((char *)&i, sizeof(qint64)) != sizeof(qint64))
-            q_status = WriteFailed;
+    if (!noswap) {
+        i = qbswap(i);
     }
+    if (dev->write((char *)&i, sizeof(qint64)) != sizeof(qint64))
+        q_status = WriteFailed;
     return *this;
 }
 
