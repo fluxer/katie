@@ -856,6 +856,7 @@ int QDataStream::readRawData(char *s, int len)
 
 QDataStream &QDataStream::operator<<(qint8 i)
 {
+    Q_ASSERT(sizeof(char) == sizeof(qint8));
     CHECK_STREAM_WRITE_PRECOND(*this)
     if (!dev->putChar(i))
         q_status = WriteFailed;
