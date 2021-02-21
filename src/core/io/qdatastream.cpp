@@ -599,7 +599,7 @@ QDataStream &QDataStream::operator>>(qint16 &i)
 {
     i = 0;
     CHECK_STREAM_PRECOND(*this)
-    if (dev->read((char *)&i, 2) != 2) {
+    if (dev->read((char *)&i, sizeof(qint16)) != sizeof(qint16)) {
         i = 0;
         setStatus(ReadPastEnd);
     } else if (!noswap) {
@@ -628,7 +628,7 @@ QDataStream &QDataStream::operator>>(qint32 &i)
 {
     i = 0;
     CHECK_STREAM_PRECOND(*this)
-    if (dev->read((char *)&i, 4) != 4) {
+    if (dev->read((char *)&i, sizeof(qint32)) != sizeof(qint32)) {
         i = 0;
         setStatus(ReadPastEnd);
     } else if (!noswap) {
@@ -656,7 +656,7 @@ QDataStream &QDataStream::operator>>(qint64 &i)
 {
     i = qint64(0);
     CHECK_STREAM_PRECOND(*this)
-    if (dev->read((char *)&i, 8) != 8) {
+    if (dev->read((char *)&i, sizeof(qint64)) != sizeof(qint64)) {
         i = qint64(0);
         setStatus(ReadPastEnd);
     } else if (!noswap) {
@@ -698,7 +698,7 @@ QDataStream &QDataStream::operator>>(float &f)
 
     f = 0.0f;
     CHECK_STREAM_PRECOND(*this)
-    if (dev->read((char *)&f, 4) != 4) {
+    if (dev->read((char *)&f, sizeof(float)) != sizeof(float)) {
         f = 0.0f;
         setStatus(ReadPastEnd);
     } else if (!noswap) {
@@ -733,7 +733,7 @@ QDataStream &QDataStream::operator>>(double &f)
 
     f = 0.0;
     CHECK_STREAM_PRECOND(*this)
-    if (dev->read((char *)&f, 8) != 8) {
+    if (dev->read((char *)&f, sizeof(double)) != sizeof(double)) {
         f = 0.0;
         setStatus(ReadPastEnd);
     } else if (!noswap) {
