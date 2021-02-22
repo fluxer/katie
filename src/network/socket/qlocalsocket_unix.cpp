@@ -210,19 +210,26 @@ void QLocalSocket::connectToServer(const QString &name, OpenMode openMode)
     }
 
     // create the socket
-    if (-1 == (d->connectingSocket = qt_safe_socket(PF_UNIX, SOCK_STREAM, 0))) {
+#ifdef SOCK_NONBLOCK
+    // Linux specific
+    d->connectingSocket = qt_safe_socket(PF_UNIX, SOCK_NONBLOCK | SOCK_STREAM, 0);
+#else
+    d->connectingSocket = qt_safe_socket(PF_UNIX, SOCK_STREAM, 0);
+#endif
+    if (d->connectingSocket == -1) {
         d->errorOccurred(UnsupportedSocketOperationError,
                         QLatin1String("QLocalSocket::connectToServer"));
         return;
     }
+#ifndef SOCK_NONBLOCK
     // set non blocking so we can try to connect and it wont wait
-    int flags = fcntl(d->connectingSocket, F_GETFL, 0);
-    if (-1 == flags
-        || -1 == (fcntl(d->connectingSocket, F_SETFL, flags | O_NONBLOCK))) {
+    int flags = ::fcntl(d->connectingSocket, F_GETFL, 0);
+    if (flags == -1 || ::fcntl(d->connectingSocket, F_SETFL, flags | O_NONBLOCK) == -1) {
         d->errorOccurred(UnknownSocketError,
                 QLatin1String("QLocalSocket::connectToServer"));
         return;
     }
+#endif
 
     // _q_connectToSocket does the actual connecting
     d->connectingName = name;
