@@ -19,8 +19,8 @@
 **
 ****************************************************************************/
 
-#ifndef QFILESYSTEMWATCHER_INOTIFY_P_H
-#define QFILESYSTEMWATCHER_INOTIFY_P_H
+#ifndef QFILESYSTEMWATCHER_UNIX_P_H
+#define QFILESYSTEMWATCHER_UNIX_P_H
 
 //
 //  W A R N I N G
@@ -73,5 +73,7 @@ private:
 
 
 QT_END_NAMESPACE
+
 #endif // QT_NO_FILESYSTEMWATCHER
-#endif // QFILESYSTEMWATCHER_INOTIFY_P_H
+
+#endif // QFILESYSTEMWATCHER_UNIX_P_H
