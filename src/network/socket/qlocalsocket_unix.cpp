@@ -407,7 +407,7 @@ void QLocalSocket::close()
     d->unixSocket.close();
     d->cancelDelayedConnect();
     if (d->connectingSocket != -1)
-        ::close(d->connectingSocket);
+        qt_safe_close(d->connectingSocket);
     d->connectingSocket = -1;
     d->connectingName.clear();
     d->connectingOpenMode = 0;

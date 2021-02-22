@@ -25,6 +25,7 @@
 #include "qfontengine_p.h"
 #include "qpaintengine_p.h"
 #include "qpdf_p.h"
+#include "qcore_unix_p.h"
 
 #ifndef QT_NO_PRINTER
 
@@ -638,7 +639,7 @@ QPSPrintEngine::~QPSPrintEngine()
 {
     Q_D(QPSPrintEngine);
     if (d->fd >= 0)
-        ::close(d->fd);
+        qt_safe_close(d->fd);
 }
 
 bool QPSPrintEngine::begin(QPaintDevice *pdev)
