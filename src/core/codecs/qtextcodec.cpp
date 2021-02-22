@@ -228,93 +228,91 @@ QTextCodec::ConverterState& QTextCodec::ConverterState::operator=(const QTextCod
     Some of the supported encodings are:
 
     \list
+    \o Adobe-Standard-Encoding
+    \o ANSI_X3.4-1968
+    \o Big5
+    \o Big5-HKSCS
     \o BOCU-1
     \o CESU-8
-    \o euc-jp-2007
+    \o EUC-KR
+    \o Extended_UNIX_Code_Packed_Format_for_Japanese
     \o gb18030
-    \o HZ
-    \o ibm-1026_P100-1995
-    \o ibm-1047_P100-1995
-    \o ibm-1051_P100-1995
-    \o ibm-1089_P100-1995
-    \o ibm-1140_P100-1997
-    \o ibm-1141_P100-1997
-    \o ibm-1142_P100-1997
-    \o ibm-1143_P100-1997
-    \o ibm-1144_P100-1997
-    \o ibm-1145_P100-1997
-    \o ibm-1146_P100-1997
-    \o ibm-1147_P100-1997
-    \o ibm-1148_P100-1997
-    \o ibm-1149_P100-1997
-    \o ibm-1168_P100-2002
-    \o ibm-1276_P100-1995
-    \o ibm-1363_P11B-1998
-    \o ibm-1375_P100-2008
-    \o ibm-1383_P110-1999
-    \o ibm-273_P100-1995
-    \o ibm-277_P100-1995
-    \o ibm-278_P100-1995
-    \o ibm-280_P100-1995
-    \o ibm-284_P100-1995
-    \o ibm-285_P100-1995
-    \o ibm-290_P100-1995
-    \o ibm-297_P100-1995
-    \o ibm-37_P100-1995
-    \o ibm-420_X120-1999
-    \o ibm-424_P100-1995
-    \o ibm-437_P100-1995
-    \o ibm-500_P100-1995
-    \o ibm-5012_P100-1999
-    \o ibm-5346_P100-1998
-    \o ibm-5347_P100-1998
-    \o ibm-5348_P100-1997
-    \o ibm-5349_P100-1998
-    \o ibm-5350_P100-1998
-    \o ibm-5354_P100-1998
-    \o ibm-5478_P100-1995
-    \o ibm-775_P100-1996
-    \o ibm-838_P100-1995
-    \o ibm-850_P100-1995
-    \o ibm-851_P100-1995
-    \o ibm-852_P100-1995
-    \o ibm-855_P100-1995
-    \o ibm-857_P100-1995
-    \o ibm-858_P100-1997
-    \o ibm-860_P100-1995
-    \o ibm-861_P100-1995
-    \o ibm-862_P100-1995
-    \o ibm-863_P100-1995
-    \o ibm-864_X110-1999
-    \o ibm-865_P100-1995
-    \o ibm-866_P100-1995
-    \o ibm-868_P100-1995
-    \o ibm-869_P100-1995
-    \o ibm-870_P100-1995
-    \o ibm-871_P100-1995
-    \o ibm-874_P100-1995
-    \o ibm-878_P100-1996
-    \o ibm-9005_X110-2007
-    \o ibm-912_P100-1995
-    \o ibm-913_P100-2000
-    \o ibm-914_P100-1995
-    \o ibm-915_P100-1995
-    \o ibm-918_P100-1995
-    \o ibm-920_P100-1995
-    \o ibm-921_P100-1995
-    \o ibm-923_P100-1998
-    \o ibm-943_P15A-2003
-    \o ibm-9447_P100-2002
-    \o ibm-9448_X100-2005
-    \o ibm-9449_P100-2002
-    \o ibm-970_P110_P110-2006_U2
-    \o ISO_2022
-    \o ISO-8859-1
-    \o iso-8859_10-1998
-    \o iso-8859_14-1998
-    \o macos-0_2-10.2
+    \o GB2312
+    \o GB_2312-80
+    \o GBK
+    \o hp-roman8
+    \o HZ-GB-2312
+    \o IBM00858
+    \o IBM01140
+    \o IBM01141
+    \o IBM01142
+    \o IBM01143
+    \o IBM01144
+    \o IBM01145
+    \o IBM01146
+    \o IBM01147
+    \o IBM01148
+    \o IBM01149
+    \o IBM037
+    \o IBM1026
+    \o IBM1047
+    \o IBM273
+    \o IBM277
+    \o IBM278
+    \o IBM280
+    \o IBM284
+    \o IBM285
+    \o IBM290
+    \o IBM297
+    \o IBM420
+    \o IBM424
+    \o IBM437
+    \o IBM500
+    \o IBM775
+    \o IBM850
+    \o IBM851
+    \o IBM852
+    \o IBM855
+    \o IBM857
+    \o IBM860
+    \o IBM861
+    \o IBM862
+    \o IBM863
+    \o IBM864
+    \o IBM865
+    \o IBM866
+    \o IBM868
+    \o IBM869
+    \o IBM870
+    \o IBM871
+    \o IBM918
+    \o IBM-Thai
+    \o ISO-2022-CN
+    \o ISO-2022-CN-EXT
+    \o ISO-2022-JP
+    \o ISO-2022-JP-2
+    \o ISO-2022-KR
+    \o ISO-8859-10
+    \o ISO_8859-1:1987
+    \o ISO-8859-13
+    \o ISO-8859-14
+    \o ISO-8859-15
+    \o ISO_8859-2:1987
+    \o ISO_8859-3:1988
+    \o ISO_8859-4:1988
+    \o ISO_8859-5:1988
+    \o ISO_8859-6:1987
+    \o ISO_8859-7:1987
+    \o ISO_8859-8:1988
+    \o ISO_8859-9:1989
+    \o JIS_Encoding
+    \o KOI8-R
+    \o KOI8-U
+    \o KS_C_5601-1987
+    \o macintosh
     \o SCSU
-    \o US-ASCII
+    \o Shift_JIS
+    \o TIS-620
     \o UTF-16
     \o UTF-16BE
     \o UTF-16LE
@@ -323,8 +321,15 @@ QTextCodec::ConverterState& QTextCodec::ConverterState::operator=(const QTextCod
     \o UTF-32LE
     \o UTF-7
     \o UTF-8
-    \o windows-936-2000
-    \o windows-950-2000
+    \o windows-1250
+    \o windows-1251
+    \o windows-1252
+    \o windows-1253
+    \o windows-1254
+    \o windows-1255
+    \o windows-1256
+    \o windows-1257
+    \o windows-1258
 
     \o System Any of the above depending on the system locale
     \endlist
@@ -465,11 +470,11 @@ QTextCodec *QTextCodec::codecForName(const QByteArray &name)
 #endif
         for (int i = 0; i < qGlobalQTextCodec()->size(); ++i) {
             QTextCodec *cursor = qGlobalQTextCodec()->at(i);
-            if (nameMatch(cursor->name(), name)) {
+            if (nameMatch(name, cursor->name())) {
                 return cursor;
             }
             foreach (const QByteArray &alias, cursor->aliases()) {
-                if (nameMatch(alias, name)) {
+                if (nameMatch(name, alias)) {
                     return cursor;
                 }
             }

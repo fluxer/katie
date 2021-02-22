@@ -1081,7 +1081,7 @@ QList<QByteArray> QIcuCodec::allCodecs()
         }
         for (qint16 m = 0; m < MIBTblSize; m++) {
             if (ucnv_compareNames(iana, MIBTbl[m].name) == 0) {
-                allcodecs += QByteArray::fromRawData(name, qstrlen(name));
+                allcodecs += QByteArray::fromRawData(iana, qstrlen(iana));
                 break;
             }
         }
