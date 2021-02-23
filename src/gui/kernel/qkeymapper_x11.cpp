@@ -32,7 +32,8 @@ QT_BEGIN_NAMESPACE
 extern bool qt_sendSpontaneousEvent(QObject*, QEvent*);
 
 QKeyMapperPrivate::QKeyMapperPrivate()
-    : keyboardInputDirection(Qt::LeftToRight)
+    : keyboardInputDirection(Qt::LeftToRight),
+    keyMapperCodec(QTextCodec::codecForCStrings())
 {
     clearMappings();
 }
@@ -43,10 +44,25 @@ QKeyMapperPrivate::~QKeyMapperPrivate()
 
 void QKeyMapperPrivate::clearMappings()
 {
-    // ### cannot get/guess the locale with the core protocol
-    keyboardInputLocale = QLocale::c();
-    // ### could examine group 0 for RTL keys
-    keyboardInputDirection = Qt::LeftToRight;
+    XIM im = XOpenIM(qt_x11Data->display, NULL, NULL, NULL);
+    QString imlocale = QString::fromLatin1(XLocaleOfIM(im));
+    keyboardInputLocale = QLocale(imlocale);
+    XCloseIM(im);
+
+    keyboardInputDirection = keyboardInputLocale.textDirection();
+
+    // X11 is known to use whatever is set by setlocale() as input method
+    // locale, setlocale() and XLocaleOfIM() return string in the form:
+    // language[_territory][.codeset][@modifier]
+    const int dotindex = imlocale.indexOf(QLatin1Char('.'));
+    if (dotindex >= 0) {
+        QByteArray codeset = imlocale.mid(dotindex + 1).toLatin1();
+        const int atindex = codeset.indexOf('@');
+        if (atindex >= 0) {
+            codeset = codeset.left(atindex);
+        }
+        keyMapperCodec = QTextCodec::codecForName(codeset.constData());
+    }
 }
 
 extern bool qt_sm_blockUserInput;
@@ -203,14 +219,12 @@ bool QKeyMapperPrivate::translateKeyEvent(QWidget *keyWidget, const XEvent *even
     QEvent::Type type = (event->type == XKeyPress) ? QEvent::KeyPress : QEvent::KeyRelease;
     Qt::KeyboardModifiers modifiers = translateModifiers(event->xkey.state);
     XKeyEvent xkeyevent = event->xkey;
-    QByteArray lookupbuff(10, '\0');
+    char lookupbuff[10];
+    ::memset(lookupbuff, 0, sizeof(lookupbuff) * sizeof(char));
     KeySym keysym = 0;
-    int count = XLookupString(&xkeyevent, lookupbuff.data(), lookupbuff.size(), &keysym, 0);
-    lookupbuff.resize(count);
+    int count = XLookupString(&xkeyevent, lookupbuff, sizeof(lookupbuff), &keysym, 0);
     int code = translateKeySym(keysym);
-    // TODO: this is sub-optimal
-    QTextCodec* codec = QTextCodec::codecForText(lookupbuff);
-    QString text = codec->toUnicode(lookupbuff);
+    QString text = keyMapperCodec->toUnicode(lookupbuff, count);
 
     bool autorepeat = false;
     static const int qt_x11_autorepeat = getX11AutoRepeat();

@@ -75,6 +75,7 @@ public:
 
     QLocale keyboardInputLocale;
     Qt::LayoutDirection keyboardInputDirection;
+    QTextCodec *keyMapperCodec;
 
 #if defined(Q_WS_X11)
     bool translateKeyEvent(QWidget *keywidget, const XEvent *event);
