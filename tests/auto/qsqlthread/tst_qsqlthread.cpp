@@ -66,7 +66,7 @@ private:
     int threadFinishedCount;
 };
 
-static QAtomicInt counter = QAtomicInt(0);
+static QAtomicInt counter(0);
 
 class QtTestSqlThread : public QThread
 {

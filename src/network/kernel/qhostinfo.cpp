@@ -82,7 +82,7 @@ Q_GLOBAL_STATIC(QHostInfoCache, globalHostInfoCache)
     \sa QAbstractSocket, {http://www.rfc-editor.org/rfc/rfc3492.txt}{RFC 3492}
 */
 
-static QAtomicInt theIdCounter = QAtomicInt(1);
+static QAtomicInt theIdCounter(1);
 
 /*!
     Looks up the IP address(es) associated with host name \a name, and

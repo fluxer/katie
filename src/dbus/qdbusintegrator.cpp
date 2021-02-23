@@ -51,8 +51,8 @@ QT_BEGIN_NAMESPACE
 // used with dbus_server_allocate_data_slot
 static dbus_int32_t server_slot = -1;
 
-static QAtomicInt isDebugging = QAtomicInt(-1);
-#define qDBusDebug              if (isDebugging == 0); else qDebug
+static const bool isDebugging = !qgetenv("QDBUS_DEBUG").isNull();
+#define qDBusDebug              if (!isDebugging); else qDebug
 
 static const QString orgFreedesktopDBusString = QLatin1String(DBUS_SERVICE_DBUS);
 
@@ -952,12 +952,10 @@ QDBusConnectionPrivate::QDBusConnectionPrivate(QObject *p)
       rootNode(QString(QLatin1Char('/')))
 {
     static const bool threads = dbus_threads_init_default();
-    if (isDebugging == -1)
-        isDebugging = qgetenv("QDBUS_DEBUG").toInt();
     Q_UNUSED(threads)
 
 #if QDBUS_THREAD_DEBUG
-    if (isDebugging > 1)
+    if (isDebugging)
         qdbusThreadDebug = qdbusDefaultThreadDebug;
 #endif
 

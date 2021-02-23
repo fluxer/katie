@@ -83,7 +83,7 @@ static int *queuedConnectionTypes(const QList<QByteArray> &typeNames)
 #ifndef QT_NO_THREAD
 static QAtomicPointer<QMutexPool> signalSlotMutexes = QAtomicPointer<QMutexPool>(Q_NULLPTR);
 #endif
-static QAtomicInt objectCount = QAtomicInt(0);
+static QAtomicInt objectCount(0);
 
 /** \internal
  * mutex to be locked when accessing the connectionlists or the senders list
