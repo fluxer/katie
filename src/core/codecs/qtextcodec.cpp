@@ -47,7 +47,15 @@ QT_BEGIN_NAMESPACE
 
 static inline bool nameMatch(const QByteArray &name, const QByteArray &name2)
 {
-    return (ucnv_compareNames(name.constData(), name2.constData()) == 0);
+    if (ucnv_compareNames(name.constData(), name2.constData()) == 0) {
+        return true;
+    }
+    UErrorCode error = U_ZERO_ERROR;
+    const char *iana = ucnv_getStandardName(name.constData(), "IANA", &error);
+    if (Q_UNLIKELY(U_FAILURE(error) || !iana)) {
+        return false;
+    }
+    return (ucnv_compareNames(iana, name2.constData()) == 0);
 }
 
 static QTextCodec *localeMapper = Q_NULLPTR;
