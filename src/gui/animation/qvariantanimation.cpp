@@ -134,7 +134,7 @@ QT_BEGIN_NAMESPACE
     \sa currentValue
 */
 
-Q_GLOBAL_STATIC(QMutex, qVariantAnimationMutex)
+Q_GLOBAL_STATIC_WITH_ARGS(QMutex, qVariantAnimationMutex, (QMutex::Recursive))
 
 static bool animationValueLessThan(const QVariantAnimation::KeyValue &p1, const QVariantAnimation::KeyValue &p2)
 {
