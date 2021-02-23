@@ -613,14 +613,6 @@ QVariant QVariantAnimation::currentValue() const
 
 /*!
     \reimp
- */
-bool QVariantAnimation::event(QEvent *event)
-{
-    return QAbstractAnimation::event(event);
-}
-
-/*!
-    \reimp
 */
 void QVariantAnimation::updateState(QAbstractAnimation::State newState,
                                     QAbstractAnimation::State oldState)
