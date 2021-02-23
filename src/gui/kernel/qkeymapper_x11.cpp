@@ -214,8 +214,9 @@ bool QKeyMapperPrivate::translateKeyEvent(QWidget *keyWidget, const XEvent *even
 
     bool autorepeat = false;
     static const int qt_x11_autorepeat = getX11AutoRepeat();
-    // auto repeat is on by default
-    if (Q_LIKELY(qt_x11_autorepeat)) {
+    // modifier keys should not auto-repeat
+    if (qt_x11_autorepeat && code != Qt::Key_Shift && code != Qt::Key_Control
+        && code != Qt::Key_Meta && code != Qt::Key_Alt) {
         static qt_auto_repeat_data curr_autorep = { 0, 0, 0, 0 };
         if (curr_autorep.serial == event->xkey.serial ||
             (event->xkey.window == curr_autorep.window &&
