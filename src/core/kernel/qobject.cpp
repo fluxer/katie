@@ -162,7 +162,7 @@ static void computeOffsets(const QMetaObject *metaobject, int *signalOffset, int
     while (m) {
         const QMetaObjectPrivate *d = QMetaObjectPrivate::get(m);
         *methodOffset += d->methodCount;
-        Q_ASSERT(d->revision >= 4);
+        Q_ASSERT(d->revision >= 6);
         *signalOffset += d->signalCount;
         m = m->d.superdata;
     }
