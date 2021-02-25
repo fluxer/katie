@@ -1695,7 +1695,7 @@ Qt::KeyboardModifiers QApplication::queryKeyboardModifiers()
     for (int i = 0; i < ScreenCount(qt_x11Data->display); ++i) {
         if (XQueryPointer(qt_x11Data->display, QX11Info::appRootWindow(i), &root, &child,
                           &root_x, &root_y, &win_x, &win_y, &keybstate))
-            return qt_keymapper_private()->translateModifiers(keybstate & 0x00ff);
+            return qt_keymapper()->translateModifiers(keybstate & 0x00ff);
     }
     return 0;
 
@@ -2077,7 +2077,7 @@ int QApplication::x11ProcessEvent(XEvent* event)
         {
             if (keywidget && keywidget->isEnabled()) { // should always exist
                 // qDebug("sending key event");
-                qt_keymapper_private()->translateKeyEvent(keywidget, event);
+                qt_keymapper()->translateKeyEvent(keywidget, event);
             }
             break;
         }
@@ -2747,7 +2747,7 @@ bool QETWidget::translateMouseEvent(const XEvent *event)
         globalPos.rx() = lastMotion.x_root;
         globalPos.ry() = lastMotion.y_root;
         buttons = translateMouseButtons(lastMotion.state);
-        modifiers = qt_keymapper_private()->translateModifiers(lastMotion.state);
+        modifiers = qt_keymapper()->translateModifiers(lastMotion.state);
         if (qt_button_down && !buttons)
             qt_button_down = 0;
     } else if (event->type == EnterNotify || event->type == LeaveNotify) {
@@ -2760,7 +2760,7 @@ bool QETWidget::translateMouseEvent(const XEvent *event)
         globalPos.rx() = xevent->xcrossing.x_root;
         globalPos.ry() = xevent->xcrossing.y_root;
         buttons = translateMouseButtons(xevent->xcrossing.state);
-        modifiers = qt_keymapper_private()->translateModifiers(xevent->xcrossing.state);
+        modifiers = qt_keymapper()->translateModifiers(xevent->xcrossing.state);
         if (qt_button_down && !buttons)
             qt_button_down = 0;
         if (qt_button_down)
@@ -2772,7 +2772,7 @@ bool QETWidget::translateMouseEvent(const XEvent *event)
         globalPos.rx() = event->xbutton.x_root;
         globalPos.ry() = event->xbutton.y_root;
         buttons = translateMouseButtons(event->xbutton.state);
-        modifiers = qt_keymapper_private()->translateModifiers(event->xbutton.state);
+        modifiers = qt_keymapper()->translateModifiers(event->xbutton.state);
         switch (event->xbutton.button) {
             case Button1: button = Qt::LeftButton; break;
             case Button2: button = Qt::MiddleButton; break;

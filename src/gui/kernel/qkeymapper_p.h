@@ -32,8 +32,6 @@
 // We mean it.
 //
 
-#include "qobject.h"
-#include "qobject_p.h"
 #include "qkeysequence.h"
 #include "qlist.h"
 #include "qlocale.h"
@@ -45,31 +43,15 @@
 
 QT_BEGIN_NAMESPACE
 
-class QKeyMapperPrivate;
-class QKeyMapper : public QObject
+class QKeyMapper
 {
-    Q_OBJECT
 public:
     explicit QKeyMapper();
     ~QKeyMapper();
 
-    static QKeyMapper *instance();
+
     static void changeKeyboard();
     static QList<int> possibleKeys(QKeyEvent *e);
-
-private:
-    friend QKeyMapperPrivate *qt_keymapper_private();
-    Q_DECLARE_PRIVATE(QKeyMapper)
-    Q_DISABLE_COPY(QKeyMapper)
-};
-
-class QKeyEvent;
-class QKeyMapperPrivate : public QObjectPrivate
-{
-    Q_DECLARE_PUBLIC(QKeyMapper)
-public:
-    QKeyMapperPrivate();
-    ~QKeyMapperPrivate();
 
     void clearMappings();
 
@@ -83,7 +65,7 @@ public:
 #endif
 };
 
-QKeyMapperPrivate *qt_keymapper_private(); // from qkeymapper.cpp
+QKeyMapper *qt_keymapper(); // from qkeymapper.cpp
 
 QT_END_NAMESPACE
 

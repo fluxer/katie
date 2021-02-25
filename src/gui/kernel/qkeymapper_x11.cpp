@@ -31,18 +31,18 @@ QT_BEGIN_NAMESPACE
 // from qapplication_x11.cpp
 extern bool qt_sendSpontaneousEvent(QObject*, QEvent*);
 
-QKeyMapperPrivate::QKeyMapperPrivate()
+QKeyMapper::QKeyMapper()
     : keyboardInputDirection(Qt::LeftToRight),
     keyMapperCodec(QTextCodec::codecForCStrings())
 {
     clearMappings();
 }
 
-QKeyMapperPrivate::~QKeyMapperPrivate()
+QKeyMapper::~QKeyMapper()
 {
 }
 
-void QKeyMapperPrivate::clearMappings()
+void QKeyMapper::clearMappings()
 {
     XIM im = XOpenIM(qt_x11Data->display, NULL, NULL, NULL);
     QString imlocale = QString::fromLatin1(XLocaleOfIM(im));
@@ -209,7 +209,7 @@ struct qt_auto_repeat_data
     Time time;
 };
 
-bool QKeyMapperPrivate::translateKeyEvent(QWidget *keyWidget, const XEvent *event)
+bool QKeyMapper::translateKeyEvent(QWidget *keyWidget, const XEvent *event)
 {
     if (qt_sm_blockUserInput) // block user interaction during session management
         return true;
@@ -266,7 +266,7 @@ bool QKeyMapperPrivate::translateKeyEvent(QWidget *keyWidget, const XEvent *even
     return qt_sendSpontaneousEvent(keyWidget, &e);
 }
 
-Qt::KeyboardModifiers QKeyMapperPrivate::translateModifiers(int state)
+Qt::KeyboardModifiers QKeyMapper::translateModifiers(int state)
 {
     // xmodmap -pm
     Qt::KeyboardModifiers ret = 0;
