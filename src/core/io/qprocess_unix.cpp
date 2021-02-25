@@ -707,7 +707,7 @@ void QProcessPrivate::execChild(const char *workingDir, char **path, char **argv
 bool QProcessPrivate::processStarted()
 {
     ushort buf[errorBufferMax];
-    int i = qt_safe_read(childStartedPipe[0], &buf, sizeof buf);
+    qint64 i = qt_safe_read(childStartedPipe[0], &buf, sizeof buf);
     if (startupSocketNotifier) {
         startupSocketNotifier->setEnabled(false);
         startupSocketNotifier->deleteLater();
@@ -1165,7 +1165,7 @@ bool QProcessPrivate::startDetached(const QString &program, const QStringList &a
     }
 
     char reply = '\0';
-    int startResult = qt_safe_read(startedPipe[0], &reply, 1);
+    qint64 startResult = qt_safe_read(startedPipe[0], &reply, 1);
     int result;
     qt_safe_close(startedPipe[0]);
     qt_safe_waitpid(childPid, &result, 0);

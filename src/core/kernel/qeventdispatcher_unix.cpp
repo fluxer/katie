@@ -788,7 +788,7 @@ void QEventDispatcherUNIX::wakeUp()
     Q_D(QEventDispatcherUNIX);
     if (d->wakeUps.testAndSetAcquire(0, 1)) {
         char c = 0;
-        qt_safe_write( d->thread_pipe[1], &c, 1 );
+        qt_safe_write( d->thread_pipe[1], &c, 1);
     }
 }
 

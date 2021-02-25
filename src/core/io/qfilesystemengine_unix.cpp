@@ -360,10 +360,10 @@ bool QFileSystemEngine::copyFile(const QFileSystemEntry &source, const QFileSyst
         return false;
     }
 #else
-    size_t totalwrite = 0;
+    qint64 totalwrite = 0;
     char copybuffer[QT_BUFFSIZE];
     while (QT_OFF_T(totalwrite) != tocopy) {
-        const size_t readresult = qt_safe_read(sourcefd, copybuffer, sizeof(copybuffer));
+        const qint64 readresult = qt_safe_read(sourcefd, copybuffer, sizeof(copybuffer));
         if (readresult == -1) {
             *error = errno;
             qt_safe_close(sourcefd);
@@ -371,7 +371,7 @@ bool QFileSystemEngine::copyFile(const QFileSystemEntry &source, const QFileSyst
             return false;
         }
 
-        const size_t writeresult = qt_safe_write(targetfd, copybuffer, readresult);
+        const qint64 writeresult = qt_safe_write(targetfd, copybuffer, readresult);
         if (writeresult != readresult) {
             *error = errno;
             qt_safe_close(sourcefd);
