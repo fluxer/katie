@@ -797,9 +797,6 @@ struct QModifKeyName {
     QString name;
 };
 
-Q_GLOBAL_STATIC(QList<QModifKeyName>, globalModifs)
-Q_GLOBAL_STATIC(QList<QModifKeyName>, globalPortableModifs)
-
 /*!
   Constructs a single key from the string \a str.
 */
@@ -812,28 +809,7 @@ int QKeySequencePrivate::decodeString(const QString &str, QKeySequence::Sequence
 {
     int ret = 0;
     QString accel = str.toLower();
-    bool nativeText = (format == QKeySequence::NativeText);
-
-    QList<QModifKeyName> *gmodifs;
-    if (nativeText) {
-        gmodifs = globalModifs();
-        if (gmodifs->isEmpty()) {
-            *gmodifs << QModifKeyName(Qt::CTRL, QLatin1String("ctrl+"))
-                     << QModifKeyName(Qt::SHIFT, QLatin1String("shift+"))
-                     << QModifKeyName(Qt::ALT, QLatin1String("alt+"))
-                     << QModifKeyName(Qt::META, QLatin1String("meta+"));
-        }
-    } else {
-        gmodifs = globalPortableModifs();
-        if (gmodifs->isEmpty()) {
-            *gmodifs << QModifKeyName(Qt::CTRL, QLatin1String("ctrl+"))
-                     << QModifKeyName(Qt::SHIFT, QLatin1String("shift+"))
-                     << QModifKeyName(Qt::ALT, QLatin1String("alt+"))
-                     << QModifKeyName(Qt::META, QLatin1String("meta+"));
-        }
-    }
-    if (!gmodifs) return ret;
-
+    const bool nativeText = (format == QKeySequence::NativeText);
 
     QList<QModifKeyName> modifs;
     if (nativeText) {
@@ -842,7 +818,11 @@ int QKeySequencePrivate::decodeString(const QString &str, QKeySequence::Sequence
                << QModifKeyName(Qt::ALT, QShortcut::tr("Alt").toLower().append(QLatin1Char('+')))
                << QModifKeyName(Qt::META, QShortcut::tr("Meta").toLower().append(QLatin1Char('+')));
     }
-    modifs += *gmodifs; // Test non-translated ones last
+    // Test non-translated ones last
+    modifs << QModifKeyName(Qt::CTRL, QLatin1String("ctrl+"));
+    modifs << QModifKeyName(Qt::SHIFT, QLatin1String("shift+"));
+    modifs << QModifKeyName(Qt::ALT, QLatin1String("alt+"));
+    modifs << QModifKeyName(Qt::META, QLatin1String("meta+"));
 
     int i = 0;
     int lastI = 0;
@@ -852,8 +832,7 @@ int QKeySequencePrivate::decodeString(const QString &str, QKeySequence::Sequence
         // Rational: A modifier will contain the name AND +, so longer than 1, a length of 1 is just
         // the remaining part of the shortcut (ei. The 'C' in "Ctrl+C"), so no need to check that.
         if (sub.length() > 1) {
-            for (int j = 0; j < modifs.size(); ++j) {
-                const QModifKeyName &mkf = modifs.at(j);
+            foreach (const QModifKeyName &mkf, modifs) {
                 if (sub == mkf.name) {
                     ret |= mkf.qt_key;
                     break; // Shortcut, since if we find an other it would/should just be a dup
