@@ -844,11 +844,10 @@ int QKeySequencePrivate::decodeString(const QString &str, QKeySequence::Sequence
     }
     modifs += *gmodifs; // Test non-translated ones last
 
-    const QString sl = accel;
     int i = 0;
     int lastI = 0;
-    while ((i = sl.indexOf(QLatin1Char('+'), i + 1)) != -1) {
-        const QString sub = sl.mid(lastI, i - lastI + 1);
+    while ((i = accel.indexOf(QLatin1Char('+'), i + 1)) != -1) {
+        const QString sub = accel.mid(lastI, i - lastI + 1);
         // Just shortcut the check here if we only have one character.
         // Rational: A modifier will contain the name AND +, so longer than 1, a length of 1 is just
         // the remaining part of the shortcut (ei. The 'C' in "Ctrl+C"), so no need to check that.
