@@ -790,11 +790,11 @@ int QKeySequence::assign(const QString &ks, QKeySequence::SequenceFormat format)
 }
 
 struct QModifKeyName {
-    QModifKeyName() { }
-    QModifKeyName(int q, QChar n) : qt_key(q), name(n) { }
-    QModifKeyName(int q, const QString &n) : qt_key(q), name(n) { }
-    int qt_key;
-    QString name;
+    QModifKeyName() : qt_key(Qt::CTRL) { }
+    QModifKeyName(Qt::Modifier q, QChar n) : qt_key(q), name(n) { }
+    QModifKeyName(Qt::Modifier q, const QString &n) : qt_key(q), name(n) { }
+    const Qt::Modifier qt_key;
+    const QString name;
 };
 
 /*!
