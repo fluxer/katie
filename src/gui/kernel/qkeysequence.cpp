@@ -917,13 +917,18 @@ QString QKeySequencePrivate::encodeString(int key, QKeySequence::SequenceFormat 
                 break;
             }
         }
+
         // If we can't find the actual translatable keyname,
         // fall back on the unicode representation of it...
         // Or else characters like Qt::Key_aring may not get displayed
         // (Really depends on you locale)
         if (!foundmatch) {
+            if (QChar::category(uint(key)) == QChar::Other_NotAssigned) {
+                // no unicode representation at all, that's invalid shortcut
+                return QString();
+            }
             if (!QChar::requiresSurrogates(key)) {
-                p = QChar::toUpper(ushort(key));
+                p = QChar::toUpper(uint(key));
             } else {
                 p += QChar(QChar::highSurrogate(key));
                 p += QChar(QChar::lowSurrogate(key));
@@ -1167,7 +1172,7 @@ QDataStream &operator<<(QDataStream &s, const QKeySequence &keysequence)
 */
 QDataStream &operator>>(QDataStream &s, QKeySequence &keysequence)
 {
-	qAtomicDetach(keysequence.d);
+    qAtomicDetach(keysequence.d);
     QList<quint32> list;
     s >> list;
     for (int i = 0; i < 4; ++i)
