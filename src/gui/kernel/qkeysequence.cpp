@@ -561,9 +561,9 @@ QKeySequence::QKeySequence(StandardKey key)
     if (bindings.size() > 0) {
         d = bindings.first().d; 
         d->ref.ref();
-    }
-    else
+    } else {
         d = new QKeySequencePrivate();
+    }
 }
 
 
@@ -599,8 +599,8 @@ QKeySequence::QKeySequence()
     necessary, but it provides some context for the human translator.
 */
 QKeySequence::QKeySequence(const QString &key, QKeySequence::SequenceFormat format)
+    : d(new QKeySequencePrivate())
 {
-    d = new QKeySequencePrivate();
     assign(key, format);
 }
 
@@ -613,8 +613,8 @@ QKeySequence::QKeySequence(const QString &key, QKeySequence::SequenceFormat form
     Qt::ALT, or Qt::META.
 */
 QKeySequence::QKeySequence(int k1, int k2, int k3, int k4)
+    : d(new QKeySequencePrivate())
 {
-    d = new QKeySequencePrivate();
     d->key[0] = k1;
     d->key[1] = k2;
     d->key[2] = k3;
