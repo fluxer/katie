@@ -1833,10 +1833,9 @@ void QX11PaintEngine::drawImage(const QRectF &r, const QImage &image, const QRec
     }
 }
 
-void QX11PaintEngine::drawPixmap(const QRectF &r, const QPixmap &px, const QRectF &_sr)
+void QX11PaintEngine::drawPixmap(const QRectF &r, const QPixmap &px, const QRectF &sr)
 {
     Q_D(QX11PaintEngine);
-    QRectF sr = _sr;
     int x = qRound(r.x());
     int y = qRound(r.y());
     int sx = qRound(sr.x());
