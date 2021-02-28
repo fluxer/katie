@@ -400,7 +400,6 @@ public:
         Key_PreviousCandidate             = 0xff3e,
         Key_Kanji                         = 0xff21,
         Key_Muhenkan                      = 0xff22,
-        Key_Henkan_Mode                   = 0xff23,
         Key_Henkan                        = 0xff23,
         Key_Romaji                        = 0xff24,
         Key_Hiragana                      = 0xff25,
@@ -882,6 +881,7 @@ public:
         Key_KeyboardBrightnessDown = Key_KbdBrightnessDown,
         Key_Camera = Key_WebCam,
         Key_Call = Key_Phone,
+        Key_Henkan_Mode = Key_Henkan,
 
         // deprecated
         Key_QuoteLeft = Key_Underscore,
