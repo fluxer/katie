@@ -45,7 +45,7 @@ QKeyMapper::~QKeyMapper()
 void QKeyMapper::clearMappings()
 {
     XIM im = XOpenIM(qt_x11Data->display, NULL, NULL, NULL);
-    QString imlocale = QString::fromLatin1(XLocaleOfIM(im));
+    const QString imlocale = QString::fromLatin1(XLocaleOfIM(im));
     keyboardInputLocale = QLocale(imlocale);
     XCloseIM(im);
 
@@ -256,7 +256,7 @@ bool QKeyMapper::translateKeyEvent(QWidget *keyWidget, const XEvent *event)
         QPoint pos = keyWidget->mapFromGlobal(globalPos);
         QContextMenuEvent e(QContextMenuEvent::Keyboard, pos, globalPos);
         qt_sendSpontaneousEvent(keyWidget, &e);
-        if(e.isAccepted())
+        if (e.isAccepted())
             return true;
     }
 
