@@ -4674,7 +4674,7 @@ int QStyleSheetStyle::pixelMetric(PixelMetric m, const QStyleOption *opt, const 
             break;
         QSize size = subRule.size();
         return (opt->state & QStyle::State_Horizontal) ? size.height() : size.width();
-                                    }
+    }
 
     case PM_ToolBarIconSize:
     case PM_ListViewIconSize:
@@ -4694,7 +4694,7 @@ int QStyleSheetStyle::pixelMetric(PixelMetric m, const QStyleOption *opt, const 
             break;
         return (subRule.border() ? subRule.border()->borders[TopEdge] : 0)
                 + (subRule.hasBox() ? subRule.box()->margins[TopEdge] + subRule.box()->paddings[TopEdge]: 0);
-                                   }
+    }
 
     case PM_DockWidgetSeparatorExtent: {
         QRenderRule subRule = renderRule(w, opt, PseudoElement_DockWidgetSeparator);
@@ -4702,7 +4702,7 @@ int QStyleSheetStyle::pixelMetric(PixelMetric m, const QStyleOption *opt, const 
             break;
         QSize sz = subRule.size();
         return qMax(sz.width(), sz.height());
-                                        }
+    }
 
     case PM_TitleBarHeight: {
         QRenderRule subRule = renderRule(w, opt, PseudoElement_TitleBar);
@@ -4713,7 +4713,7 @@ int QStyleSheetStyle::pixelMetric(PixelMetric m, const QStyleOption *opt, const 
             return subRule.size(QSize(0, fm.height())).height();
         }
         break;
-                            }
+    }
 
     case PM_MdiSubWindowFrameWidth:
         if (rule.hasBox() || rule.hasBorder()) {
@@ -4728,7 +4728,7 @@ int QStyleSheetStyle::pixelMetric(PixelMetric m, const QStyleOption *opt, const 
         if (width != -1)
             return width;
         break;
-                                     }
+    }
     default:
         break;
     }
