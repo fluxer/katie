@@ -601,7 +601,37 @@ QKeySequence::QKeySequence()
 QKeySequence::QKeySequence(const QString &key, QKeySequence::SequenceFormat format)
     : d(new QKeySequencePrivate())
 {
-    assign(key, format);
+    QString keyseq = key;
+    QString part;
+    int n = 0;
+    int p = 0, diff = 0;
+
+    // Run through the whole string, but stop
+    // if we have 4 keys before the end.
+    while (keyseq.length() && n < 4) {
+        // We MUST use something to separate each sequence, and space
+        // does not cut it, since some of the key names have space
+        // in them.. (Let's hope no one translate with a comma in it)
+        p = keyseq.indexOf(QLatin1Char(','));
+        if (-1 != p) {
+            if (p == keyseq.count() - 1) { // Last comma 'Ctrl+,'
+                p = -1;
+            } else {
+                if (QLatin1Char(',') == keyseq.at(p+1)) // e.g. 'Ctrl+,, Shift+,,'
+                    p++;
+                if (QLatin1Char(' ') == keyseq.at(p+1)) { // Space after comma
+                    diff = 1;
+                    p++;
+                } else {
+                    diff = 0;
+                }
+            }
+        }
+        part = keyseq.left(-1 == p ? keyseq.length() : p - diff);
+        keyseq = keyseq.right(-1 == p ? 0 : keyseq.length() - (p + 1));
+        d->key[n] = QKeySequencePrivate::decodeString(part, format);
+        ++n;
+    }
 }
 
 /*!
@@ -742,51 +772,6 @@ QKeySequence QKeySequence::mnemonic(const QString &text)
         p++;
     }
     return ret;
-}
-
-/*!
-    \fn int QKeySequence::assign(const QString &keys, QKeySequence::SequenceFormat format)
-    \since 4.7
-
-    Adds the given \a keys to the key sequence (based on \a format).
-    \a keys may contain up to four key codes, provided they are
-    separated by a comma; for example, "Alt+X,Ctrl+S,Z". The return
-    value is the number of key codes added.
-*/
-int QKeySequence::assign(const QString &ks, QKeySequence::SequenceFormat format)
-{
-    QString keyseq = ks;
-    QString part;
-    int n = 0;
-    int p = 0, diff = 0;
-
-    // Run through the whole string, but stop
-    // if we have 4 keys before the end.
-    while (keyseq.length() && n < 4) {
-        // We MUST use something to separate each sequence, and space
-        // does not cut it, since some of the key names have space
-        // in them.. (Let's hope no one translate with a comma in it:)
-        p = keyseq.indexOf(QLatin1Char(','));
-        if (-1 != p) {
-            if (p == keyseq.count() - 1) { // Last comma 'Ctrl+,'
-                p = -1;
-            } else {
-                if (QLatin1Char(',') == keyseq.at(p+1)) // e.g. 'Ctrl+,, Shift+,,'
-                    p++;
-                if (QLatin1Char(' ') == keyseq.at(p+1)) { // Space after comma
-                    diff = 1;
-                    p++;
-                } else {
-                    diff = 0;
-                }
-            }
-        }
-        part = keyseq.left(-1 == p ? keyseq.length() : p - diff);
-        keyseq = keyseq.right(-1 == p ? 0 : keyseq.length() - (p + 1));
-        d->key[n] = QKeySequencePrivate::decodeString(part, format);
-        ++n;
-    }
-    return n;
 }
 
 struct QModifKeyName {
