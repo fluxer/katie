@@ -533,16 +533,9 @@ void QShortcutMap::createNewSequences(QKeyEvent *e, QVector<QKeySequence> &ksl)
             int i = (pkNum * ssTotal) + ssNum;
             QKeySequence &curKsl = ksl[i];
             if (ssActual) {
-                const QKeySequence &curSeq = d->currentSequences.at(ssNum);
-                curKsl.setKey(curSeq[0], 0);
-                curKsl.setKey(curSeq[1], 1);
-                curKsl.setKey(curSeq[2], 2);
-                curKsl.setKey(curSeq[3], 3);
+                curKsl = d->currentSequences.at(ssNum);
             } else {
-                curKsl.setKey(0, 0);
-                curKsl.setKey(0, 1);
-                curKsl.setKey(0, 2);
-                curKsl.setKey(0, 3);
+                curKsl = QKeySequence();
             }
             curKsl.setKey(possibleKeys.at(pkNum), index);
         }
