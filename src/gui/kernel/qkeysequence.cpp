@@ -721,10 +721,10 @@ QKeySequence QKeySequence::mnemonic(const QString &text)
     int p = 0;
     while (p >= 0) {
         p = text.indexOf(QLatin1Char('&'), p) + 1;
-        if (p <= 0 || p >= (int)text.length())
+        if (p <= 0 || p >= text.length())
             break;
-        if (text.at(p) != QLatin1Char('&')) {
-            QChar c = text.at(p);
+        QChar c = text.at(p);
+        if (c != QLatin1Char('&')) {
             if (c.isPrint()) {
                 if (!found) {
                     c = c.toUpper();
