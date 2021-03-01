@@ -2639,9 +2639,7 @@ void QPainterPathStroker::setDashPattern(Qt::PenStyle style)
 */
 void QPainterPathStroker::setDashPattern(const QVector<qreal> &dashPattern)
 {
-    d_func()->dashPattern.clear();
-    for (int i=0; i<dashPattern.size(); ++i)
-        d_func()->dashPattern << dashPattern.at(i);
+    d_func()->dashPattern = dashPattern;
 }
 
 /*!
