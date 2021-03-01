@@ -1554,7 +1554,7 @@ static inline int QMetaObject_properties(const QMetaObject *metaObject)
 
 static inline void flush_vme_signal(const QObject *object, int index)
 {
-    QDeclarativeData *data = static_cast<QDeclarativeData *>(QObjectPrivate::get(const_cast<QObject *>(object))->declarativeData);
+    const QDeclarativeData *data = static_cast<QDeclarativeData *>(QObjectPrivate::get(object)->declarativeData);
     if (data && data->propertyCache) {
         QDeclarativePropertyCache::Data *property = data->propertyCache->method(index);
 
