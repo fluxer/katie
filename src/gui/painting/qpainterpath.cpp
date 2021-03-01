@@ -2962,9 +2962,9 @@ qreal QPainterPath::slopeAtPercent(qreal t) const
     if (m1)
         return (m2 / m1);
 
-#define SLOPE_SIGN(x) ((x < 0)?-1:1)
-    return qreal(std::numeric_limits<qreal>::infinity() * SLOPE_SIGN(m2));
-#undef SLOPE_SIGN
+    if (m2 < 0)
+        return -std::numeric_limits<qreal>::infinity();
+    return std::numeric_limits<qreal>::infinity();
 }
 
 /*!
