@@ -671,7 +671,7 @@ void QGridLayoutPrivate::setupLayoutData(int hSpacing, int vSpacing)
     }
 
     int n = things.size();
-    QVarLengthArray<QGridLayoutSizeTriple> sizes(n);
+    QGridLayoutSizeTriple sizes[n];
 
     bool has_multi = false;
 
