@@ -219,15 +219,7 @@ QLayoutItem *QStackedLayout::itemAt(int index) const
 // Code that enables proper handling of the case that takeAt() is
 // called somewhere inside QObject destructor (can't call hide()
 // on the object then)
-
-class QtFriendlyLayoutWidget : public QWidget
-{
-public:
-    inline bool wasDeleted() const { return d_ptr->wasDeleted; }
-};
-
-static bool qt_wasDeleted(const QWidget *w) { return static_cast<const QtFriendlyLayoutWidget*>(w)->wasDeleted(); }
-
+static inline bool qt_wasDeleted(const QWidget *w) { return QObjectPrivate::get(w)->wasDeleted; }
 
 /*!
     \reimp
