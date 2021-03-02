@@ -1946,16 +1946,14 @@ QRenderRule QStyleSheetStyle::renderRule(const QWidget *w, const QStyleOption *o
         else if (const QStyleOptionViewItemV2 *v2 = qstyleoption_cast<const QStyleOptionViewItemV2 *>(opt)) {
             if (v2->features & QStyleOptionViewItemV2::Alternate)
                 extraClass |= PseudoClass_Alternate;
-            if (const QStyleOptionViewItemV4 *v4 = qstyleoption_cast<const QStyleOptionViewItemV4 *>(opt)) {
-                if (v4->viewItemPosition == QStyleOptionViewItemV4::OnlyOne)
-                    extraClass |= PseudoClass_OnlyOne;
-                else if (v4->viewItemPosition == QStyleOptionViewItemV4::Beginning)
-                    extraClass |= PseudoClass_First;
-                else if (v4->viewItemPosition == QStyleOptionViewItemV4::End)
-                    extraClass |= PseudoClass_Last;
-                else if (v4->viewItemPosition == QStyleOptionViewItemV4::Middle)
-                    extraClass |= PseudoClass_Middle;
-            }
+            if (v2->viewItemPosition == QStyleOptionViewItemV4::OnlyOne)
+                extraClass |= PseudoClass_OnlyOne;
+            else if (v2->viewItemPosition == QStyleOptionViewItemV4::Beginning)
+                extraClass |= PseudoClass_First;
+            else if (v2->viewItemPosition == QStyleOptionViewItemV4::End)
+                extraClass |= PseudoClass_Last;
+            else if (v2->viewItemPosition == QStyleOptionViewItemV4::Middle)
+                extraClass |= PseudoClass_Middle;
         }
 #endif
 #ifndef QT_NO_LINEEDIT
