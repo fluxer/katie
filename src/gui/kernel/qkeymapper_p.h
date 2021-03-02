@@ -63,6 +63,9 @@ public:
     bool translateKeyEvent(QWidget *keywidget, const XEvent *event);
     Qt::KeyboardModifiers translateModifiers(int state);
 #endif
+
+private:
+    Q_DISABLE_COPY(QKeyMapper)
 };
 
 QKeyMapper *qt_keymapper(); // from qkeymapper.cpp
