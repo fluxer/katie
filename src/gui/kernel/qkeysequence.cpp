@@ -202,8 +202,8 @@ static const struct KeyNameTblData {
     { Qt::Key_Pause,                    QT_TRANSLATE_NOOP("QShortcut", "Pause") },
     { Qt::Key_Scroll_Lock,              QT_TRANSLATE_NOOP("QShortcut", "Scroll Lock") },
     { Qt::Key_Sys_Req,                  QT_TRANSLATE_NOOP("QShortcut", "System Request") },
-    { Qt::Key_Escape,                   QT_TRANSLATE_NOOP("QShortcut", "Esc") },
-    { Qt::Key_Delete,                   QT_TRANSLATE_NOOP("QShortcut", "Del") },
+    { Qt::Key_Escape,                   QT_TRANSLATE_NOOP("QShortcut", "Escape") },
+    { Qt::Key_Delete,                   QT_TRANSLATE_NOOP("QShortcut", "Delete") },
     { Qt::Key_Multi_key,                QT_TRANSLATE_NOOP("QShortcut", "Multi Key") },
     { Qt::Key_Codeinput,                QT_TRANSLATE_NOOP("QShortcut", "Code input") },
     { Qt::Key_SingleCandidate,          QT_TRANSLATE_NOOP("QShortcut", "Single Candidate") },
@@ -237,7 +237,7 @@ static const struct KeyNameTblData {
     { Qt::Key_Select,                   QT_TRANSLATE_NOOP("QShortcut", "Select") },
     { Qt::Key_Print,                    QT_TRANSLATE_NOOP("QShortcut", "Print Screen") },
     { Qt::Key_Execute,                  QT_TRANSLATE_NOOP("QShortcut", "Execute") },
-    { Qt::Key_Insert,                   QT_TRANSLATE_NOOP("QShortcut", "Ins") },
+    { Qt::Key_Insert,                   QT_TRANSLATE_NOOP("QShortcut", "Insert") },
     { Qt::Key_Undo,                     QT_TRANSLATE_NOOP("QShortcut", "Undo") },
     { Qt::Key_Redo,                     QT_TRANSLATE_NOOP("QShortcut", "Redo") },
     { Qt::Key_Menu,                     QT_TRANSLATE_NOOP("QShortcut", "Menu") },
@@ -308,8 +308,8 @@ static const struct KeyNameTblData {
     { Qt::Key_Percent,                  QT_TRANSLATE_NOOP("QShortcut", "%") },
     { Qt::Key_Ampersand,                QT_TRANSLATE_NOOP("QShortcut", "&") },
     { Qt::Key_Apostrophe,               QT_TRANSLATE_NOOP("QShortcut", "'") },
-    { Qt::Key_ParenLeft,                QT_TRANSLATE_NOOP("QShortcut", "<<") }, // extended ASCII
-    { Qt::Key_ParenRight,               QT_TRANSLATE_NOOP("QShortcut", ">>") }, // extended ASCII
+    { Qt::Key_ParenLeft,                QT_TRANSLATE_NOOP("QShortcut", "(") },
+    { Qt::Key_ParenRight,               QT_TRANSLATE_NOOP("QShortcut", ")") },
     { Qt::Key_Asterisk,                 QT_TRANSLATE_NOOP("QShortcut", "*") },
     { Qt::Key_Plus,                     QT_TRANSLATE_NOOP("QShortcut", "+") },
     { Qt::Key_Comma,                    QT_TRANSLATE_NOOP("QShortcut", ",") },
@@ -359,14 +359,14 @@ static const struct KeyNameTblData {
     { Qt::Key_X,                        QT_TRANSLATE_NOOP("QShortcut", "X") },
     { Qt::Key_Y,                        QT_TRANSLATE_NOOP("QShortcut", "Y") },
     { Qt::Key_Z,                        QT_TRANSLATE_NOOP("QShortcut", "Z") },
-    { Qt::Key_BracketLeft,              QT_TRANSLATE_NOOP("QShortcut", "{") },
+    { Qt::Key_BracketLeft,              QT_TRANSLATE_NOOP("QShortcut", "[") },
     { Qt::Key_Backslash,                QT_TRANSLATE_NOOP("QShortcut", "\\") },
-    { Qt::Key_BracketRight,             QT_TRANSLATE_NOOP("QShortcut", "}") },
+    { Qt::Key_BracketRight,             QT_TRANSLATE_NOOP("QShortcut", "]") },
     { Qt::Key_AsciiCircum,              QT_TRANSLATE_NOOP("QShortcut", "^") },
     { Qt::Key_Underscore,               QT_TRANSLATE_NOOP("QShortcut", "_") },
-    { Qt::Key_BraceLeft,                QT_TRANSLATE_NOOP("QShortcut", "(") },
+    { Qt::Key_BraceLeft,                QT_TRANSLATE_NOOP("QShortcut", "{") },
     { Qt::Key_Bar,                      QT_TRANSLATE_NOOP("QShortcut", "|") },
-    { Qt::Key_BraceRight,               QT_TRANSLATE_NOOP("QShortcut", ")") },
+    { Qt::Key_BraceRight,               QT_TRANSLATE_NOOP("QShortcut", "}") },
     { Qt::Key_AsciiTilde,               QT_TRANSLATE_NOOP("QShortcut", "~") },
     { Qt::Key_nobreakspace,             QT_TRANSLATE_NOOP("QShortcut", "nobreakspace") },
     { Qt::Key_exclamdown,               QT_TRANSLATE_NOOP("QShortcut", "exclamdown") },
@@ -660,6 +660,17 @@ static const struct KeyNameTblData {
 /*
     { Qt::Key_AltGr,                    QT_TRANSLATE_NOOP("QShortcut", "AltGr") }
 */
+
+    // decoding compatibility
+    { Qt::Key_Insert,                   QT_TRANSLATE_NOOP("QShortcut", "Ins") },
+    { Qt::Key_Escape,                   QT_TRANSLATE_NOOP("QShortcut", "Esc") },
+    { Qt::Key_Delete,                   QT_TRANSLATE_NOOP("QShortcut", "Del") },
+    { Qt::Key_Page_Up,                  QT_TRANSLATE_NOOP("QShortcut", "PgUp") },
+    { Qt::Key_Page_Down,                QT_TRANSLATE_NOOP("QShortcut", "PgDown") },
+    { Qt::Key_Sys_Req,                  QT_TRANSLATE_NOOP("QShortcut", "SysReq") },
+    { Qt::Key_Caps_Lock,                QT_TRANSLATE_NOOP("QShortcut", "CapsLock") },
+    { Qt::Key_Num_Lock,                 QT_TRANSLATE_NOOP("QShortcut", "NumLock") },
+    { Qt::Key_Scroll_Lock,              QT_TRANSLATE_NOOP("QShortcut", "ScrollLock") },
 };
 
 static const qint16 KeyNameTblSize = sizeof(KeyNameTbl) / sizeof(KeyNameTblData);
