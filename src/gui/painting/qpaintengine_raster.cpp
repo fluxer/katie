@@ -2817,11 +2817,6 @@ QImage::Format QRasterBuffer::prepare(QImage *image)
     return format;
 }
 
-void QRasterBuffer::resetBuffer(int val)
-{
-    memset(m_buffer, val, m_height*bytes_per_line);
-}
-
 QClipData::QClipData(int height)
 {
     clipSpanHeight = height;
