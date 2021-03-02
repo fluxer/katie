@@ -96,9 +96,9 @@ void QWindowsStyle::timerEvent(QTimerEvent *event)
         d->animateStep = d->startTime.elapsed() / (1000 / d->animationFps);
         foreach (QProgressBar *bar, d->animatedProgressBars)
             bar->update();
+        event->ignore();
     }
 #endif // QT_NO_PROGRESSBAR
-    event->ignore();
 }
 
 /*!
