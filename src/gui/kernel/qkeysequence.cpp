@@ -486,7 +486,7 @@ static const struct KeyNameTblData {
     { Qt::Key_AudioRecord,              QT_TRANSLATE_NOOP("QShortcut", "Media Record") },
     { Qt::Key_Calculator,               QT_TRANSLATE_NOOP("QShortcut", "Calculator") },
     { Qt::Key_Memo,                     QT_TRANSLATE_NOOP("QShortcut", "Memo") },
-    { Qt::Key_ToDoList,                 QT_TRANSLATE_NOOP("QShortcut", "ToDoList") },
+    { Qt::Key_ToDoList,                 QT_TRANSLATE_NOOP("QShortcut", "ToDo List") },
     { Qt::Key_Calendar,                 QT_TRANSLATE_NOOP("QShortcut", "Calendar") },
     { Qt::Key_PowerDown,                QT_TRANSLATE_NOOP("QShortcut", "Power Down") },
     { Qt::Key_ContrastAdjust,           QT_TRANSLATE_NOOP("QShortcut", "Contrast Adjust") },
@@ -671,6 +671,7 @@ static const struct KeyNameTblData {
     { Qt::Key_Caps_Lock,                QT_TRANSLATE_NOOP("QShortcut", "CapsLock") },
     { Qt::Key_Num_Lock,                 QT_TRANSLATE_NOOP("QShortcut", "NumLock") },
     { Qt::Key_Scroll_Lock,              QT_TRANSLATE_NOOP("QShortcut", "ScrollLock") },
+    { Qt::Key_Shift_Lock,               QT_TRANSLATE_NOOP("QShortcut", "ShiftLock") },
 };
 
 static const qint16 KeyNameTblSize = sizeof(KeyNameTbl) / sizeof(KeyNameTblData);
