@@ -3805,8 +3805,8 @@ void QStyleSheetStyle::drawControl(ControlElement ce, const QStyleOption *opt, Q
                 return;
             }
         }
-                               }
         break;
+    }
 
     case CE_ProgressBarLabel:
         if (const QStyleOptionProgressBarV2 *pb = qstyleoption_cast<const QStyleOptionProgressBarV2 *>(opt)) {
@@ -3850,13 +3850,13 @@ void QStyleSheetStyle::drawControl(ControlElement ce, const QStyleOption *opt, Q
         return;
 
     case CE_ToolBoxTabShape: {
-            QRenderRule subRule = renderRule(w, opt, PseudoElement_ToolBoxTab);
-            if (subRule.hasDrawable()) {
-                subRule.drawRule(p, opt->rect);
-                return;
-            }
-                            }
+        QRenderRule subRule = renderRule(w, opt, PseudoElement_ToolBoxTab);
+        if (subRule.hasDrawable()) {
+            subRule.drawRule(p, opt->rect);
+            return;
+        }
         break;
+    }
 
     case CE_ToolBoxTabLabel:
         if (const QStyleOptionToolBox *box = qstyleoption_cast<const QStyleOptionToolBox *>(opt)) {
@@ -3960,7 +3960,7 @@ void QStyleSheetStyle::drawControl(ControlElement ce, const QStyleOption *opt, Q
 
             return;
         }
-       break;
+        break;
 #endif // QT_NO_TABBAR
 
     case CE_ColumnViewGrip:
@@ -5381,7 +5381,7 @@ QRect QStyleSheetStyle::subControlRect(ComplexControl cc, const QStyleOptionComp
                 case SC_ToolButtonMenu: {
                     QRenderRule subRule = renderRule(w, opt, PseudoElement_ToolButtonMenu);
                     return positionRect(w, rule, subRule, PseudoElement_ToolButtonMenu, opt->rect, opt->direction);
-                                                                            }
+                }
                 default:
                     break;
                 }
@@ -5391,8 +5391,8 @@ QRect QStyleSheetStyle::subControlRect(ComplexControl cc, const QStyleOptionComp
             tool.rect = rule.borderRect(opt->rect);
             return rule.baseStyleCanDraw() ? baseStyle()->subControlRect(cc, &tool, sc, w)
                                            : QWindowsStyle::subControlRect(cc, &tool, sc, w);
-            }
-            break;
+        }
+        break;
 
 #ifndef QT_NO_SCROLLBAR
     case CC_ScrollBar:
@@ -5654,7 +5654,7 @@ QRect QStyleSheetStyle::subElementRect(SubElement se, const QStyleOption *opt, c
                 QRect rect = ParentStyle::subElementRect(se, &optCopy, w);
                 return positionRect(w, subRule2, pe, rect, opt->direction);
             }
-         }
+        }
         break;
 #endif // QT_NO_ITEMVIEWS
 
@@ -5662,15 +5662,15 @@ QRect QStyleSheetStyle::subElementRect(SubElement se, const QStyleOption *opt, c
         QRenderRule subRule = renderRule(w, opt, PseudoElement_HeaderViewUpArrow);
         if (subRule.hasPosition() || subRule.hasGeometry())
             return positionRect(w, rule, subRule, PseudoElement_HeaderViewUpArrow, opt->rect, opt->direction);
-                         }
         break;
+    }
 
     case SE_HeaderLabel: {
         QRenderRule subRule = renderRule(w, opt, PseudoElement_HeaderViewSection);
         if (subRule.hasBox() || !subRule.hasNativeBorder())
             return subRule.contentsRect(opt->rect);
-                         }
         break;
+    }
 
     case SE_ProgressBarGroove:
     case SE_ProgressBarContents:
