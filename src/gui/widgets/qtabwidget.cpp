@@ -299,13 +299,11 @@ void QTabWidget::initStyleOption(QStyleOptionTabWidgetFrame *option) const
 
     option->tabBarSize = t;
 
-    if (QStyleOptionTabWidgetFrameV2 *tabframe = qstyleoption_cast<QStyleOptionTabWidgetFrameV2*>(option)) {
-        QRect tbRect = tabBar()->geometry();
-        QRect selectedTabRect = tabBar()->tabRect(tabBar()->currentIndex());
-        tabframe->tabBarRect = tbRect;
-        selectedTabRect.moveTopLeft(selectedTabRect.topLeft() + tbRect.topLeft());
-        tabframe->selectedTabRect = selectedTabRect;
-    }
+    QRect tbRect = tabBar()->geometry();
+    QRect selectedTabRect = tabBar()->tabRect(tabBar()->currentIndex());
+    option->tabBarRect = tbRect;
+    selectedTabRect.moveTopLeft(selectedTabRect.topLeft() + tbRect.topLeft());
+    option->selectedTabRect = selectedTabRect;
 }
 
 /*!

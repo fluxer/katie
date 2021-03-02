@@ -1204,7 +1204,7 @@ void QCommonStyle::drawControl(ControlElement element, const QStyleOption *opt,
             }
         }
         break;
- case CE_PushButtonLabel:
+    case CE_PushButtonLabel:
         if (const QStyleOptionButton *button = qstyleoption_cast<const QStyleOptionButton *>(opt)) {
             QRect textRect = button->rect;
             uint tf = Qt::AlignVCenter | Qt::TextShowMnemonic;

@@ -194,26 +194,24 @@ void QToolBoxButton::initStyleOption(QStyleOptionToolBox *option) const
     option->text = text();
     option->icon = icon();
 
-    if (QStyleOptionToolBoxV2 *optionV2 = qstyleoption_cast<QStyleOptionToolBoxV2 *>(option)) {
-        QToolBox *toolBox = static_cast<QToolBox *>(parentWidget()); // I know I'm in a tool box.
-        int widgetCount = toolBox->count();
-        int currIndex = toolBox->currentIndex();
-        if (widgetCount == 1) {
-            optionV2->position = QStyleOptionToolBoxV2::OnlyOneTab;
-        } else if (indexInPage == 0) {
-            optionV2->position = QStyleOptionToolBoxV2::Beginning;
-        } else if (indexInPage == widgetCount - 1) {
-            optionV2->position = QStyleOptionToolBoxV2::End;
-        } else {
-            optionV2->position = QStyleOptionToolBoxV2::Middle;
-        }
-        if (currIndex == indexInPage - 1) {
-            optionV2->selectedPosition = QStyleOptionToolBoxV2::PreviousIsSelected;
-        } else if (currIndex == indexInPage + 1) {
-            optionV2->selectedPosition = QStyleOptionToolBoxV2::NextIsSelected;
-        } else {
-            optionV2->selectedPosition = QStyleOptionToolBoxV2::NotAdjacent;
-        }
+    const QToolBox *toolBox = static_cast<QToolBox *>(parentWidget()); // I know I'm in a tool box.
+    const int widgetCount = toolBox->count();
+    const int currIndex = toolBox->currentIndex();
+    if (widgetCount == 1) {
+        option->position = QStyleOptionToolBoxV2::OnlyOneTab;
+    } else if (indexInPage == 0) {
+        option->position = QStyleOptionToolBoxV2::Beginning;
+    } else if (indexInPage == widgetCount - 1) {
+        option->position = QStyleOptionToolBoxV2::End;
+    } else {
+        option->position = QStyleOptionToolBoxV2::Middle;
+    }
+    if (currIndex == indexInPage - 1) {
+        option->selectedPosition = QStyleOptionToolBoxV2::PreviousIsSelected;
+    } else if (currIndex == indexInPage + 1) {
+        option->selectedPosition = QStyleOptionToolBoxV2::NextIsSelected;
+    } else {
+        option->selectedPosition = QStyleOptionToolBoxV2::NotAdjacent;
     }
 }
 
