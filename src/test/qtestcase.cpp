@@ -878,7 +878,7 @@ static void invokeMethod(QObject *obj, const char *methodName)
     }
 }
 
-bool Q_TEST_EXPORT defaultKeyVerbose()
+Q_TEST_EXPORT bool defaultKeyVerbose()
 {
     if (keyVerbose == -1) {
         keyVerbose = qgetenv("QTEST_KEYEVENT_VERBOSE").constData() ? 1 : 0;
@@ -897,7 +897,7 @@ int defaultEventDelay()
     return eventDelay;
 }
 
-int Q_TEST_EXPORT defaultMouseDelay()
+Q_TEST_EXPORT int defaultMouseDelay()
 {
     if (mouseDelay == -1) {
         if (qgetenv("QTEST_MOUSEEVENT_DELAY").constData())
@@ -908,7 +908,7 @@ int Q_TEST_EXPORT defaultMouseDelay()
     return mouseDelay;
 }
 
-int Q_TEST_EXPORT defaultKeyDelay()
+Q_TEST_EXPORT int defaultKeyDelay()
 {
     if (keyDelay == -1) {
         if (qgetenv("QTEST_KEYEVENT_DELAY").constData())
