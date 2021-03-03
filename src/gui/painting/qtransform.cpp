@@ -2044,14 +2044,14 @@ const QMatrix &QTransform::toAffine() const
 QTransform::TransformationType QTransform::type() const
 {
     if(m_dirty == TxNone || m_dirty < m_type)
-        return static_cast<TransformationType>(m_type);
+        return m_type;
 
-    switch (static_cast<TransformationType>(m_dirty)) {
+    switch (m_dirty) {
     case TxProject:
         if (!qFuzzyIsNull(m_13) || !qFuzzyIsNull(m_23) || !qFuzzyIsNull(m_33 - 1)) {
              m_type = TxProject;
              break;
-         }
+        }
     case TxShear:
     case TxRotate:
         if (!qFuzzyIsNull(affine._m12) || !qFuzzyIsNull(affine._m21)) {
@@ -2078,7 +2078,7 @@ QTransform::TransformationType QTransform::type() const
     }
 
     m_dirty = TxNone;
-    return static_cast<TransformationType>(m_type);
+    return m_type;
 }
 
 /*!
