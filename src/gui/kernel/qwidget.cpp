@@ -8239,15 +8239,15 @@ QLayout *QWidget::layout() const
 
 void QWidget::setLayout(QLayout *l)
 {
-    if (!l) {
+    if (Q_UNLIKELY(!l)) {
         qWarning("QWidget::setLayout: Cannot set layout to 0");
         return;
-    }
-    if (layout()) {
-        if (layout() != l)
+    } else if (layout()) {
+        if (Q_UNLIKELY(layout() != l)) {
             qWarning("QWidget::setLayout: Attempting to set QLayout \"%s\" on %s \"%s\", which already has a"
                      " layout", l->objectName().toLocal8Bit().data(), metaObject()->className(),
                      objectName().toLocal8Bit().data());
+        }
         return;
     }
 
