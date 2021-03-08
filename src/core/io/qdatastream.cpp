@@ -31,6 +31,10 @@
 #include <ctype.h>
 #include <stdlib.h>
 
+#define QINT16_LEN 7 // length of SHRT_MAX + terminator + 1 for negative sign
+#define QINT32_LEN 13 // length of INT_MAX + terminator + 1 for negative sign
+#define QINT64_LEN 21 // length of LONG_LONG_MAX + terminator + 1 for negative sign
+
 QT_BEGIN_NAMESPACE
 
 /*!
@@ -572,10 +576,11 @@ QDataStream &QDataStream::operator>>(qint8 &i)
     i = 0;
     CHECK_STREAM_PRECOND(*this)
     char c;
-    if (!dev->getChar(&c))
+    if (!dev->getChar(&c)) {
         setStatus(ReadPastEnd);
-    else
-        i = qint8(c);
+        return *this;
+    }
+    i = qint8(c);
     return *this;
 }
 
@@ -599,12 +604,19 @@ QDataStream &QDataStream::operator>>(qint16 &i)
 {
     i = 0;
     CHECK_STREAM_PRECOND(*this)
-    if (dev->read((char *)&i, sizeof(qint16)) != sizeof(qint16)) {
-        i = 0;
+    char c;
+    if (!dev->getChar(&c)) {
         setStatus(ReadPastEnd);
-    } else if (!noswap) {
-        i = qbswap(i);
+        return *this;
     }
+    char intbuff[QINT16_LEN];
+    const qint8 intlen = qint8(c);
+    if (dev->read(intbuff, intlen) != intlen) {
+        setStatus(ReadPastEnd);
+        return *this;
+    }
+    intbuff[intlen] = '\0';
+    i = std::strtoll(intbuff, Q_NULLPTR, 0);
     return *this;
 }
 
@@ -628,12 +640,19 @@ QDataStream &QDataStream::operator>>(qint32 &i)
 {
     i = 0;
     CHECK_STREAM_PRECOND(*this)
-    if (dev->read((char *)&i, sizeof(qint32)) != sizeof(qint32)) {
-        i = 0;
+    char c;
+    if (!dev->getChar(&c)) {
         setStatus(ReadPastEnd);
-    } else if (!noswap) {
-        i = qbswap(i);
+        return *this;
     }
+    char intbuff[QINT32_LEN];
+    const qint8 intlen = qint8(c);
+    if (dev->read(intbuff, intlen) != intlen) {
+        setStatus(ReadPastEnd);
+        return *this;
+    }
+    intbuff[intlen] = '\0';
+    i = std::strtoll(intbuff, Q_NULLPTR, 0);
     return *this;
 }
 
@@ -656,12 +675,19 @@ QDataStream &QDataStream::operator>>(qint64 &i)
 {
     i = qint64(0);
     CHECK_STREAM_PRECOND(*this)
-    if (dev->read((char *)&i, sizeof(qint64)) != sizeof(qint64)) {
-        i = qint64(0);
+    char c;
+    if (!dev->getChar(&c)) {
         setStatus(ReadPastEnd);
-    } else if (!noswap) {
-        i = qbswap(i);
+        return *this;
     }
+    char intbuff[QINT64_LEN];
+    const qint8 intlen = qint8(c);
+    if (dev->read(intbuff, intlen) != intlen) {
+        setStatus(ReadPastEnd);
+        return *this;
+    }
+    intbuff[intlen] = '\0';
+    i = std::strtoll(intbuff, Q_NULLPTR, 0);
     return *this;
 }
 
@@ -882,10 +908,13 @@ QDataStream &QDataStream::operator<<(qint8 i)
 QDataStream &QDataStream::operator<<(qint16 i)
 {
     CHECK_STREAM_WRITE_PRECOND(*this)
-    if (!noswap) {
-        i = qbswap(i);
+    char intbuff[QINT16_LEN];
+    const qint8 intlen = ::snprintf(intbuff, sizeof(intbuff), "%hi", i);
+    if (!intlen || !dev->putChar(intlen)) {
+        q_status = WriteFailed;
+        return *this;
     }
-    if (dev->write((char *)&i, sizeof(qint16)) != sizeof(qint16))
+    if (dev->write(intbuff, intlen) != intlen)
         q_status = WriteFailed;
     return *this;
 }
@@ -900,10 +929,13 @@ QDataStream &QDataStream::operator<<(qint16 i)
 QDataStream &QDataStream::operator<<(qint32 i)
 {
     CHECK_STREAM_WRITE_PRECOND(*this)
-    if (!noswap) {
-        i = qbswap(i);
+    char intbuff[QINT32_LEN];
+    const qint8 intlen = ::snprintf(intbuff, sizeof(intbuff), "%i", i);
+    if (!intlen || !dev->putChar(intlen)) {
+        q_status = WriteFailed;
+        return *this;
     }
-    if (dev->write((char *)&i, sizeof(qint32)) != sizeof(qint32))
+    if (dev->write(intbuff, intlen) != intlen)
         q_status = WriteFailed;
     return *this;
 }
@@ -926,10 +958,13 @@ QDataStream &QDataStream::operator<<(qint32 i)
 QDataStream &QDataStream::operator<<(qint64 i)
 {
     CHECK_STREAM_WRITE_PRECOND(*this)
-    if (!noswap) {
-        i = qbswap(i);
+    char intbuff[QINT64_LEN];
+    const qint8 intlen = ::snprintf(intbuff, sizeof(intbuff), "%lli", i);
+    if (!intlen || !dev->putChar(intlen)) {
+        q_status = WriteFailed;
+        return *this;
     }
-    if (dev->write((char *)&i, sizeof(qint64)) != sizeof(qint64))
+    if (dev->write(intbuff, intlen) != intlen)
         q_status = WriteFailed;
     return *this;
 }
