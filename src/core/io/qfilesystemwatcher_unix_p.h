@@ -38,7 +38,6 @@
 #ifndef QT_NO_FILESYSTEMWATCHER
 
 #include <QtCore/qhash.h>
-#include <QtCore/qmutex.h>
 #include <QtCore/qsocketnotifier.h>
 
 QT_BEGIN_NAMESPACE
@@ -65,10 +64,6 @@ private:
     QHash<QString, int> pathToID;
     QHash<int, QString> idToPath;
     QSocketNotifier notifier;
-
-#if defined(QT_HAVE_KEVENT)
-    QMutex mutex;
-#endif
 };
 
 

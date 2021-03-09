@@ -221,7 +221,6 @@ QStringList QFileSystemWatcherEngineUnix::removePaths(const QStringList &paths,
         }
     }
 #elif defined(QT_HAVE_KEVENT)
-    QMutexLocker locker(&mutex);
     if (pathToID.isEmpty())
         return p;
 
@@ -307,7 +306,6 @@ void QFileSystemWatcherEngineUnix::readFromFd()
             int fd = kev.ident;
 
             // qDebug() << "QFileSystemWatcherEngineUnix: processing kevent" << kev.ident << kev.filter;
-            QMutexLocker locker(&mutex);
 
             int id = fd;
             QString path = idToPath.value(id);
