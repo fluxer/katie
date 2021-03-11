@@ -1753,14 +1753,13 @@ static bool parseStyle(QSvgNode *node,
 static void parseCSStoXMLAttrs(const QVector<QCss::Declaration> &declarations,
                                QXmlStreamAttributes &attributes)
 {
-    for (int i = 0; i < declarations.count(); ++i) {
-        const QCss::Declaration &decl = declarations.at(i);
+    foreach (const QCss::Declaration &decl, declarations) {
         if (decl.d->property.isEmpty())
             continue;
         QCss::Value val = decl.d->values.first();
         QString valueStr;
         if (decl.d->values.count() != 1) {
-            for (int i=0; i<decl.d->values.count(); ++i) {
+            for (int i = 0; i < decl.d->values.count(); ++i) {
                 const QString &value = decl.d->values[i].toString();
                 if (value.isEmpty())
                     valueStr += QLatin1Char(',');
