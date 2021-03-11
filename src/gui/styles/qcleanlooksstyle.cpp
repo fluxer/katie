@@ -4153,42 +4153,6 @@ QRect QCleanlooksStyle::subControlRect(ComplexControl control, const QStyleOptio
     return rect;
 }
 
-
-/*!
-  \reimp
-*/
-QRect QCleanlooksStyle::itemPixmapRect(const QRect &r, int flags, const QPixmap &pixmap) const
-{
-    return QWindowsStyle::itemPixmapRect(r, flags, pixmap);
-}
-
-/*!
-  \reimp
-*/
-void QCleanlooksStyle::drawItemPixmap(QPainter *painter, const QRect &rect,
-                            int alignment, const QPixmap &pixmap) const
-{
-    QWindowsStyle::drawItemPixmap(painter, rect, alignment, pixmap);
-}
-
-/*!
-  \reimp
-*/
-QStyle::SubControl QCleanlooksStyle::hitTestComplexControl(ComplexControl cc, const QStyleOptionComplex *opt,
-                              const QPoint &pt, const QWidget *w) const
-{
-    return QWindowsStyle::hitTestComplexControl(cc, opt, pt, w);
-}
-
-/*!
-  \reimp
-*/
-QPixmap QCleanlooksStyle::generatedIconPixmap(QIcon::Mode iconMode, const QPixmap &pixmap,
-                                        const QStyleOption *opt) const
-{
-    return QWindowsStyle::generatedIconPixmap(iconMode, pixmap, opt);
-}
-
 /*!
   \reimp
 */
