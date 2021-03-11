@@ -1171,7 +1171,8 @@ void QWindowsStyle::drawPrimitive(PrimitiveElement pe, const QStyleOption *opt, 
                         opt->rect.right(), opt->rect.bottom());
         }
         p->setPen(oldPen);
-        break; }
+        break;
+    }
     case PE_FrameDockWidget: {
         if (qstyleoption_cast<const QStyleOptionFrame *>(opt)) {
             proxy()->drawPrimitive(QStyle::PE_FrameWindow, opt, p, w);
@@ -1592,7 +1593,8 @@ void QWindowsStyle::drawControl(ControlElement ce, const QStyleOption *opt, QPai
                         p->drawPoint(x1 + 1, y2 - 1);
                         p->drawPoint(x1 + 2, y2);
                     }
-                    break; }
+                    break;
+                }
                 case QTabBar::RoundedEast: {
                     if (!selected) {
                         x2 -= 2;
@@ -1915,8 +1917,7 @@ void QWindowsStyle::drawControl(ControlElement ce, const QStyleOption *opt, QPai
                     }
                 }
                 p->restore(); //restore state
-            }
-            else {
+            } else {
                 QCommonStyle::drawControl(ce, opt, p, widget);
             }
         }
