@@ -33,7 +33,11 @@
 
 QT_BEGIN_NAMESPACE
 
-#define Q_NEAR_CLIP (sizeof(qreal) == sizeof(double) ? 0.000001 : 0.0001)
+#ifdef QT_NO_FPU
+#  define Q_NEAR_CLIP 0.0001
+#else
+#  define Q_NEAR_CLIP 0.000001
+#endif
 
 #define MAP(x, y, nx, ny) \
     do { \
@@ -59,7 +63,7 @@ QT_BEGIN_NAMESPACE
             break;                                                   \
         case TxProject:                                              \
             qreal w = (m_13 * FX_ + m_23 * FY_ + m_33);              \
-            if (w < qreal(Q_NEAR_CLIP)) w = qreal(Q_NEAR_CLIP);      \
+            if (w < Q_NEAR_CLIP) w = Q_NEAR_CLIP;                    \
             w = 1./w;                                                \
             nx = affine._m11 * FX_ + affine._m21 * FY_ + affine._dx * w; \
             ny = affine._m12 * FX_ + affine._m22 * FY_ + affine._dy * w; \

@@ -2173,7 +2173,7 @@ bool QPainterPath::operator==(const QPainterPath &path) const
     else if (d->elements.size() != path.d_func()->elements.size())
         return false;
 
-    const qreal qt_epsilon = sizeof(qreal) == sizeof(double) ? 1e-12 : qreal(1e-5);
+    static const qreal qt_epsilon = std::numeric_limits<qreal>::epsilon();;
 
     QSizeF epsilon = boundingRect().size();
     epsilon.rwidth() *= qt_epsilon;
