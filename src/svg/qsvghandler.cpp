@@ -3489,13 +3489,12 @@ bool QSvgHandler::startElement(const QString &localName,
             case QSvgNode::DOC:
             case QSvgNode::G:
             case QSvgNode::DEFS:
-            case QSvgNode::SWITCH:
-            {
+            case QSvgNode::SWITCH: {
                 QSvgStructureNode *group =
                     static_cast<QSvgStructureNode*>(m_nodes.top());
                 group->addChild(node, someId(attributes));
-            }
                 break;
+            }
             default:
                 break;
             }
@@ -3512,15 +3511,14 @@ bool QSvgHandler::startElement(const QString &localName,
             case QSvgNode::DOC:
             case QSvgNode::G:
             case QSvgNode::DEFS:
-            case QSvgNode::SWITCH:
-            {
+            case QSvgNode::SWITCH: {
                 QSvgStructureNode *group =
                     static_cast<QSvgStructureNode*>(m_nodes.top());
                 group->addChild(node, someId(attributes));
-            }
                 break;
+            }
             case QSvgNode::TEXT:
-            case QSvgNode::TEXTAREA:
+            case QSvgNode::TEXTAREA: {
                 if (node->type() == QSvgNode::TSPAN) {
                     static_cast<QSvgText *>(m_nodes.top())->addTspan(static_cast<QSvgTspan *>(node));
                 } else {
@@ -3529,11 +3527,13 @@ bool QSvgHandler::startElement(const QString &localName,
                     node = 0;
                 }
                 break;
-            default:
+            }
+            default: {
                 qWarning("Could not add child element to parent element because the types are incorrect.");
                 delete node;
                 node = 0;
                 break;
+            }
             }
 
             if (node) {
