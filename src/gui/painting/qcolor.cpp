@@ -738,6 +738,12 @@ bool QColor::isValidColor(const QString &name)
     }
 
     QByteArray latin = name.toLatin1();
+    int spaceindex = latin.indexOf(' ');
+    while (spaceindex >= 0) {
+        latin.remove(spaceindex, 1);
+        spaceindex = latin.indexOf(' ');
+    }
+
     if (latin.startsWith('#')) {
         QRgb rgb;
         if (qt_get_hex_rgb(latin.constData(), latin.length(), &rgb)) {
