@@ -554,7 +554,7 @@ QObject::QObject(QObject *parent)
     d->threadData->ref();
     if (parent) {
         QT_TRY {
-            if (!check_parent_thread(parent, parent ? parent->d_func()->threadData : Q_NULLPTR, d->threadData))
+            if (!check_parent_thread(parent, parent->d_func()->threadData, d->threadData))
                 parent = Q_NULLPTR;
             setParent(parent);
         } QT_CATCH(...) {
@@ -577,7 +577,7 @@ QObject::QObject(QObjectPrivate &dd, QObject *parent)
     d->threadData->ref();
     if (parent) {
         QT_TRY {
-            if (!check_parent_thread(parent, parent ? parent->d_func()->threadData : Q_NULLPTR, d->threadData))
+            if (!check_parent_thread(parent, parent->d_func()->threadData, d->threadData))
                 parent = Q_NULLPTR;
             if (d->isWidget) {
                 if (parent) {
