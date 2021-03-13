@@ -514,7 +514,7 @@ static bool check_parent_thread(QObject *parent,
                                 QThreadData *parentThreadData,
                                 QThreadData *currentThreadData)
 {
-    if (Q_UNLIKELY(parent && parentThreadData != currentThreadData)) {
+    if (Q_UNLIKELY(parentThreadData != currentThreadData)) {
         QThread *parentThread = parentThreadData->thread;
         QThread *currentThread = currentThreadData->thread;
         qWarning("QObject: Cannot create children for a parent that is in a different thread.\n"
