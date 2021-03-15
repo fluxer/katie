@@ -1821,6 +1821,37 @@ QColor QColor::toRgb() const
             color.ct.argb.red = color.ct.argb.green = color.ct.argb.blue = 0;
         } else {
             // chromatic case
+            const qreal h = ct.ahsl.hue == 36000 ? 0 : ct.ahsl.hue / qreal(36000.);
+            const qreal s = ct.ahsl.saturation / qreal(USHRT_MAX);
+            const qreal l = ct.ahsl.lightness / qreal(USHRT_MAX);
+
+            qreal temp2;
+            if (l < qreal(0.5))
+                temp2 = l * (qreal(1.0) + s);
+            else
+                temp2 = l + s - (l * s);
+
+            const qreal temp1 = (qreal(2.0) * l) - temp2;
+            qreal temp3[3] = { h + (qreal(1.0) / qreal(3.0)),
+                                h,
+                                h - (qreal(1.0) / qreal(3.0)) };
+
+            for (int i = 0; i != 3; ++i) {
+                if (temp3[i] < qreal(0.0))
+                    temp3[i] += qreal(1.0);
+                else if (temp3[i] > qreal(1.0))
+                    temp3[i] -= qreal(1.0);
+
+                const qreal sixtemp3 = temp3[i] * qreal(6.0);
+                if (sixtemp3 < qreal(1.0))
+                    color.ct.array[i+1] = qRound((temp1 + (temp2 - temp1) * sixtemp3) * USHRT_MAX);
+                else if ((temp3[i] * qreal(2.0)) < qreal(1.0))
+                    color.ct.array[i+1] = qRound(temp2 * USHRT_MAX);
+                else if ((temp3[i] * qreal(3.0)) < qreal(2.0))
+                    color.ct.array[i+1] = qRound((temp1 + (temp2 -temp1) * (qreal(2.0) /qreal(3.0) - temp3[i]) * qreal(6.0)) * USHRT_MAX);
+                else
+                    color.ct.array[i+1] = qRound(temp1 * USHRT_MAX);
+            }
             color.ct.argb.red = color.ct.argb.red == 1 ? 0 : color.ct.argb.red;
             color.ct.argb.green = color.ct.argb.green == 1 ? 0 : color.ct.argb.green;
             color.ct.argb.blue = color.ct.argb.blue == 1 ? 0 : color.ct.argb.blue;
