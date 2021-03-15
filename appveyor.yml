@@ -9,6 +9,10 @@ cache:
 
 build_script:
 - sh: >-
+    git log > /tmp/gitlog.txt
+
+    grep -q '\[ci reset\]' /tmp/gitlog.txt && rm -rf /home/appveyor/.ccache
+
     sudo apt-get update -qq
 
     sudo apt-get install -qq libpcre3-dev libssl-dev zlib1g-dev libzstd-dev libc6-dev libpng-dev \
