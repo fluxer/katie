@@ -95,76 +95,38 @@ static QTextCodec *checkForCodec(const QByteArray &name) {
     return c;
 }
 
-/* the next two functions are implicitely thread safe,
-   as they are only called by setup() which uses a mutex.
-*/
 static void setupLocaleMapper()
 {
     if (!localeMapper) {
-        // Very poorly defined and followed standards causes lots of
-        // code to try to get all the cases...
-
-        // Try to determine locale codeset from locale name assigned to
-        // LC_CTYPE category.
-
-        // First part is getting that locale name.  First try setlocale() which
-        // definitely knows it, but since we cannot fully trust it, get ready
-        // to fall back to environment variables.
-        const QByteArray ctype = ::setlocale(LC_CTYPE, 0);
-
         // Get the first nonempty value from $LC_ALL, $LC_CTYPE, and $LANG
         // environment variables.
         QByteArray lang = qgetenv("LC_ALL");
-        if (lang.isEmpty() || lang == "C") {
+        if (lang.isEmpty()) {
             lang = qgetenv("LC_CTYPE");
         }
-        if (lang.isEmpty() || lang == "C") {
+        if (lang.isEmpty()) {
             lang = qgetenv("LANG");
         }
 
-        // Now try these in order:
-        // 1. CODESET from ctype if it contains a .CODESET part (e.g. en_US.ISO8859-15)
-        // 2. CODESET from lang if it contains a .CODESET part
-        // 3. ctype (maybe the locale is named "ISO-8859-1" or something)
-        // 4. locale (ditto)
-        // 5. check for "@euro"
-
-        // 1. CODESET from ctype if it contains a .CODESET part (e.g. en_US.ISO8859-15)
-        int indexOfDot = ctype.indexOf('.');
-        if (indexOfDot != -1)
-            localeMapper = checkForCodec(ctype.mid(indexOfDot + 1));
-
-        // 2. CODESET from lang if it contains a .CODESET part
-        if (!localeMapper) {
-            indexOfDot = lang.indexOf('.');
-            if (indexOfDot != -1)
-                localeMapper = checkForCodec(lang.mid(indexOfDot + 1));
+        const int indexOfDot = lang.indexOf('.');
+        if (indexOfDot != -1) {
+            localeMapper = checkForCodec(lang.mid(indexOfDot + 1));
         }
 
-        // 3. ctype (maybe the locale is named "ISO-8859-1" or something)
-        if (!localeMapper && !ctype.isEmpty() && ctype != "C")
-            localeMapper = checkForCodec(ctype);
-
-        // 4. locale (ditto)
-        if (!localeMapper && !lang.isEmpty())
+        if (!localeMapper && !lang.isEmpty()) {
             localeMapper = checkForCodec(lang);
-
-        // 5. "@euro"
-        if ((!localeMapper && ctype.contains("@euro")) || lang.contains("@euro"))
-            localeMapper = checkForCodec("ISO-8859-15");
-
+        }
     }
 
+    // Fallback to implementation-defined default locale
     if (!localeMapper) {
-        const QByteArray charset = ::nl_langinfo(CODESET);
-        if (!charset.isEmpty())
-            localeMapper = QTextCodec::codecForName(charset);
+        const QByteArray charset = ::nl_langinfo(CODESET); // deep copy
+        localeMapper = QTextCodec::codecForName(charset);
     }
 
-    // If everything failed, we default to 8859-1
-    // We could perhaps default to 8859-15.
-    if (!localeMapper)
-        localeMapper = QTextCodec::codecForName("ISO-8859-1");
+    // nl_langinfo() is documented to return empty string only if its argument
+    // is not valid
+    Q_ASSERT(localeMapper);
 }
 
 /*!
