@@ -1442,15 +1442,16 @@ void QX11PaintEnginePrivate::fillPolygon_translated(const QPointF *polygonPoints
     QPointF translated_points[pointCount];
     QPointF offset(matrix.dx(), matrix.dy());
 
-    qreal offs = adjust_coords ? aliasedCoordinateDelta : 0.0;
     if (!qt_x11Data->use_xrender || !(render_hints & QPainter::Antialiasing))
         offset += QPointF(aliasedCoordinateDelta, aliasedCoordinateDelta);
 
     for (int i = 0; i < pointCount; ++i) {
         translated_points[i] = polygonPoints[i] + offset;
 
-        translated_points[i].rx() = qRound(translated_points[i].x()) + offs;
-        translated_points[i].ry() = qRound(translated_points[i].y()) + offs;
+        if (adjust_coords) {
+            translated_points[i].rx() = qRound(translated_points[i].x()) + aliasedCoordinateDelta;
+            translated_points[i].ry() = qRound(translated_points[i].y()) + aliasedCoordinateDelta;
+        }
     }
 
     fillPolygon_dev(translated_points, pointCount, gcMode, mode);
@@ -1668,8 +1669,6 @@ void QX11PaintEngine::drawPolygon(const QPointF *polygonPoints, int pointCount, 
 
 void QX11PaintEnginePrivate::fillPath(const QPainterPath &path, QX11PaintEnginePrivate::GCMode gc_mode, bool transform)
 {
-    qreal offs = adjust_coords ? aliasedCoordinateDelta : 0.0;
-
     QPainterPath clippedPath;
     QPainterPath clipPath;
     clipPath.addRect(polygonClipper.boundingRect());
@@ -1686,9 +1685,10 @@ void QX11PaintEnginePrivate::fillPath(const QPainterPath &path, QX11PaintEngineP
 
         for (int j = 0; j < translated_size; ++j) {
             translated_points[j] = polys.at(i).at(j);
-            if (!qt_x11Data->use_xrender || !(render_hints & QPainter::Antialiasing)) {
-                translated_points[j].rx() = qRound(translated_points[j].rx() + aliasedCoordinateDelta) + offs;
-                translated_points[j].ry() = qRound(translated_points[j].ry() + aliasedCoordinateDelta) + offs;
+
+            if (!qt_x11Data->use_xrender || adjust_coords) {
+                translated_points[j].rx() = qRound(translated_points[j].rx() + aliasedCoordinateDelta) + aliasedCoordinateDelta;
+                translated_points[j].ry() = qRound(translated_points[j].ry() + aliasedCoordinateDelta) + aliasedCoordinateDelta;
             }
         }
 
