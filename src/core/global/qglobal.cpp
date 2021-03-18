@@ -2104,7 +2104,7 @@ bool Qt::mightBeRichText(const QString& text)
 
 /*!
     Converts the plain text string \a plain to a HTML string with
-    HTML metacharacters \c{<}, \c{>}, \c{&}, and \c{"} replaced by HTML
+    HTML metacharacters \c{<}, \c{>}, \c{&}, \c{'}, and \c{"} replaced by HTML
     entities.
 
     Example:
@@ -2124,6 +2124,8 @@ QString Qt::escape(const QString& plain)
             rich += QLatin1String("&gt;");
         else if (plain.at(i) == QLatin1Char('&'))
             rich += QLatin1String("&amp;");
+        else if (plain.at(i) == QLatin1Char('\''))
+            rich += QLatin1String("&apos;");
         else if (plain.at(i) == QLatin1Char('"'))
             rich += QLatin1String("&quot;");
         else
