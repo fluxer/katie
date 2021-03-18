@@ -160,7 +160,7 @@ void QJsonDocumentPrivate::mapToJson(const QVariantMap &jsonmap, json_t *jroot, 
     if (jsonmap.isEmpty()) {
         error = QCoreApplication::translate("QJsonDocument", "Data map is empty");
         return;
-    } else if (jdepth >= JSON_PARSER_MAX_DEPTH) {
+    } else if (Q_UNLIKELY(jdepth >= JSON_PARSER_MAX_DEPTH)) {
         error = QCoreApplication::translate("QJsonDocument", "Maximum depth reached");
         return;
     }
