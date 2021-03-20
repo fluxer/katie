@@ -153,9 +153,11 @@ void tst_QJsonDocument::eq_not_eq()
     QVERIFY(nulljsondoc != jsondoc);
 
     // assignment crash test
+    QJsonDocument jsondoc2 = QJsonDocument::fromVariant(testjsondata);
     nulljsondoc = jsondoc;
+    jsondoc2 = nulljsondoc2;
 
-    // constructor crash
+    // constructor crash test
     QJsonDocument nulljsondoc3(nulljsondoc);
 
 }

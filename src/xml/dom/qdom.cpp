@@ -909,11 +909,7 @@ QDomImplementation::QDomImplementation(QDomImplementationPrivate *p)
 */
 QDomImplementation& QDomImplementation::operator=(const QDomImplementation &x)
 {
-    if (x.impl)
-        x.impl->ref.ref();
-    if (impl && !impl->ref.deref())
-        delete impl;
-    impl = x.impl;
+    qAtomicAssign(impl, x.impl);
     return *this;
 }
 
@@ -1306,11 +1302,7 @@ QDomNodeList::QDomNodeList(const QDomNodeList& n)
 */
 QDomNodeList& QDomNodeList::operator=(const QDomNodeList &n)
 {
-    if (n.impl)
-        n.impl->ref.ref();
-    if (impl && !impl->ref.deref())
-        delete impl;
-    impl = n.impl;
+    qAtomicAssign(impl, n.impl);
     return *this;
 }
 
@@ -2024,11 +2016,7 @@ QDomNode::QDomNode(QDomNodePrivate *n)
 */
 QDomNode& QDomNode::operator=(const QDomNode &n)
 {
-    if (n.impl)
-        n.impl->ref.ref();
-    if (impl && !impl->ref.deref())
-        delete impl;
-    impl = n.impl;
+    qAtomicAssign(impl, n.impl);
     return *this;
 }
 
@@ -3222,11 +3210,7 @@ QDomNamedNodeMap::QDomNamedNodeMap(QDomNamedNodeMapPrivate *n)
 */
 QDomNamedNodeMap& QDomNamedNodeMap::operator=(const QDomNamedNodeMap &n)
 {
-    if (n.impl)
-        n.impl->ref.ref();
-    if (impl && !impl->ref.deref())
-        delete impl;
-    impl = n.impl;
+    qAtomicAssign(impl, n.impl);
     return *this;
 }
 
