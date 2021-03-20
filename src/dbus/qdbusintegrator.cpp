@@ -1773,11 +1773,13 @@ void QDBusConnectionPrivate::processFinishedCall(QDBusPendingCallPrivate *call)
         delete call;
 }
 
-int QDBusConnectionPrivate::send(const QDBusMessage& message)
+bool QDBusConnectionPrivate::send(const QDBusMessage& message)
 {
-    if (QDBusMessagePrivate::isLocal(message))
-        return -1;              // don't send; the reply will be retrieved by the caller
-                                // through the d_ptr->localReply link
+    if (QDBusMessagePrivate::isLocal(message)) {
+        // don't send; the reply will be retrieved by the caller
+        // through the d_ptr->localReply link
+        return true;
+    }
 
     QDBusError error;
     DBusMessage *msg = QDBusMessagePrivate::toDBusMessage(message, capabilities, &error);
@@ -1799,24 +1801,18 @@ int QDBusConnectionPrivate::send(const QDBusMessage& message)
                      "invalid", qPrintable(message.service()),
                      qPrintable(error.message()));
         lastError = error;
-        return 0;
+        return false;
     }
 
     dbus_message_set_no_reply(msg, true); // the reply would not be delivered to anything
 
     qDBusDebug() << this << "sending message (no reply):" << message;
     checkThread();
-    bool isOk;
-    {
-        QDBusDispatchLocker locker(SendMessageAction, this);
-        isOk = dbus_connection_send(connection, msg, 0);
-    }
-    int serial = 0;
-    if (isOk)
-        serial = dbus_message_get_serial(msg);
 
+    QDBusDispatchLocker locker(SendMessageAction, this);
+    bool isOk = dbus_connection_send(connection, msg, 0);
     dbus_message_unref(msg);
-    return serial;
+    return isOk;
 }
 
 QDBusMessage QDBusConnectionPrivate::sendWithReply(const QDBusMessage &message,

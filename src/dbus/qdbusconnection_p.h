@@ -156,7 +156,7 @@ public:
 
     QString getNameOwner(const QString &service);
 
-    int send(const QDBusMessage &message);
+    bool send(const QDBusMessage &message);
     QDBusMessage sendWithReply(const QDBusMessage &message, int mode, int timeout = -1);
     QDBusMessage sendWithReplyLocal(const QDBusMessage &message);
     QDBusPendingCallPrivate *sendWithReplyAsync(const QDBusMessage &message, QObject *receiver,

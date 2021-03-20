@@ -448,7 +448,7 @@ bool QDBusConnection::send(const QDBusMessage &message) const
                                     QLatin1String("Not connected to D-BUS server"));
         return false;
     }
-    return d->send(message) != 0;
+    return d->send(message);
 }
 
 /*!
