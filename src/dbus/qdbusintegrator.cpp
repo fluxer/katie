@@ -2377,7 +2377,7 @@ bool QDBusConnectionPrivate::isServiceRegisteredByThread(const QString &serviceN
     if (serviceName == dbusServiceString())
         return false;
 
-    QDBusReadLocker locker(UnregisterServiceAction, this);
+    QDBusReadLocker locker(ServiceRegisteredAction, this);
     return serviceNames.contains(serviceName);
 }
 
