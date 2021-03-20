@@ -39,6 +39,9 @@ public:
     QByteArray json;
     QVariantMap map;
     QString error;
+
+private:
+    Q_DISABLE_COPY(QJsonDocumentPrivate);
 };
 
 QVariantMap QJsonDocumentPrivate::jsonToMap(const QByteArray &jsondata)
@@ -242,17 +245,25 @@ QJsonDocument::~QJsonDocument()
 }
 
 QJsonDocument::QJsonDocument(const QJsonDocument &other)
+    : d_ptr(other.d_ptr)
 {
-    qAtomicAssign(d_ptr, other.d_ptr);
+    Q_D(QJsonDocument);
+    if (d) {
+        d->ref.ref();
+    }
 }
 
 /*!
     Assigns the \a other document to this QJsonDocument.
     Returns a reference to this object.
 */
-QJsonDocument &QJsonDocument::operator =(const QJsonDocument &other)
+QJsonDocument &QJsonDocument::operator=(const QJsonDocument &other)
 {
-    qAtomicAssign(d_ptr, other.d_ptr);
+    other.d_ptr->ref.ref();
+    if (d_ptr && !d_ptr->ref.deref()) {
+        delete d_ptr;
+    }
+    d_ptr = other.d_ptr;
     return *this;
 }
 
