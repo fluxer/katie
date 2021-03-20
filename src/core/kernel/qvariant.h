@@ -138,7 +138,6 @@ class Q_CORE_EXPORT QVariant
     ~QVariant();
     QVariant(Type type);
     QVariant(int typeOrUserType, const void *copy);
-    QVariant(int typeOrUserType, const void *copy, uint flags);
     QVariant(const QVariant &other);
 
 #ifndef QT_NO_DATASTREAM
@@ -379,7 +378,7 @@ inline bool qvariant_cast_helper(const QVariant &v, QVariant::Type tp, void *ptr
 template <typename T>
 inline QVariant qVariantFromValue(const T &t)
 {
-    return QVariant(qMetaTypeId<T>(), &t, QTypeInfo<T>::isPointer);
+    return QVariant(qMetaTypeId<T>(), &t);
 }
 
 template <>
@@ -388,19 +387,7 @@ inline QVariant qVariantFromValue(const QVariant &t) { return t; }
 template <typename T>
 inline void qVariantSetValue(QVariant &v, const T &t)
 {
-    //if possible we reuse the current QVariant private
-    const int type = qMetaTypeId<T>();
-    QVariant::Private &d = v.data_ptr();
-    if (v.isDetached() && (type == d.type || (type <= QVariant::Char && d.type <= QVariant::Char))) {
-        d.type = type;
-        d.is_null = false;
-        T *old = reinterpret_cast<T*>(d.is_shared ? d.data.shared->ptr : &d.data.ptr);
-        if (QTypeInfo<T>::isComplex)
-            old->~T();
-        new (old) T(t); //call the copy constructor
-    } else {
-        v = QVariant(type, &t, QTypeInfo<T>::isPointer);
-    }
+    v = QVariant(qMetaTypeId<T>(), &t);
 }
 
 template <>

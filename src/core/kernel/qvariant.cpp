@@ -1623,21 +1623,6 @@ QVariant::QVariant(Type type)
 QVariant::QVariant(int typeOrUserType, const void *copy)
 { create(typeOrUserType, copy); d.is_null = false; }
 
-/*! \internal
-    flags is true if it is a pointer type
- */
-QVariant::QVariant(int typeOrUserType, const void *copy, uint flags)
-{
-    if (flags) { //type is a pointer type
-        d.type = typeOrUserType;
-        d.data.ptr = *reinterpret_cast<void *const*>(copy);
-        d.is_null = false;
-    } else {
-        create(typeOrUserType, copy);
-        d.is_null = false;
-    }
-}
-
 QVariant::QVariant(int val)
 { d.is_null = false; d.type = Int; d.data.i = val; }
 QVariant::QVariant(uint val)
