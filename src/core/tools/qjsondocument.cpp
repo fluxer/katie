@@ -259,11 +259,7 @@ QJsonDocument::QJsonDocument(const QJsonDocument &other)
 */
 QJsonDocument &QJsonDocument::operator=(const QJsonDocument &other)
 {
-    other.d_ptr->ref.ref();
-    if (d_ptr && !d_ptr->ref.deref()) {
-        delete d_ptr;
-    }
-    d_ptr = other.d_ptr;
+    qAtomicAssign(d_ptr, other.d_ptr);
     return *this;
 }
 

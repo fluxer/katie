@@ -480,8 +480,8 @@ QDBusMessage QDBusMessage::createErrorReply(QDBusError::ErrorType atype, const Q
     \sa createError(), createMethodCall(), createSignal()
 */
 QDBusMessage::QDBusMessage()
+    : d_ptr(new QDBusMessagePrivate())
 {
-    d_ptr = new QDBusMessagePrivate;
 }
 
 /*!

@@ -258,7 +258,7 @@ inline void qAtomicAssign(T *&d, T *x)
    }
 
    x->ref.ref();
-   if (!d->ref.deref()) {
+   if (d && !d->ref.deref()) {
       delete d;
    }
 
