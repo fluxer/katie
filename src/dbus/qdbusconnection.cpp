@@ -344,7 +344,8 @@ QDBusConnection QDBusConnection::connectToBus(const QString &address,
     d = new QDBusConnectionPrivate;
     // setConnection does the error handling for us
     QDBusErrorInternal error;
-    DBusConnection *c = dbus_connection_open_private(address.toUtf8().constData(), error);
+    const QByteArray addressref = address.toUtf8();
+    DBusConnection *c = dbus_connection_open_private(addressref.constData(), error);
     if (c) {
         if (!dbus_bus_register(c, error)) {
             dbus_connection_unref(c);
@@ -383,7 +384,8 @@ QDBusConnection QDBusConnection::connectToPeer(const QString &address,
     d = new QDBusConnectionPrivate;
     // setPeer does the error handling for us
     QDBusErrorInternal error;
-    DBusConnection *c = dbus_connection_open_private(address.toUtf8().constData(), error);
+    const QByteArray addressref = address.toUtf8();
+    DBusConnection *c = dbus_connection_open_private(addressref.constData(), error);
 
     d->setPeer(c, error);
     _q_manager()->setConnection(name, d);
