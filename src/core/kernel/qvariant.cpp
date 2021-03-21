@@ -345,7 +345,7 @@ static bool isNull(const QVariant::Private *d)
   \since 4.4
 
   We cannot use v_cast() for QMetaType's numeric types because they're smaller than QVariant::Private::Data,
-  which in turns makes v_cast() believe the value is stored in d->data.c. But
+  which in turns makes v_cast() believe the value is stored in d->data.ptr. But
   it's not, since we're a QMetaType type.
  */
 template<typename T>
