@@ -39,9 +39,9 @@ static inline const char *data(const QByteArray &arr)
 }
 
 QDBusMessagePrivate::QDBusMessagePrivate()
-    : msg(0), reply(0), type(DBUS_MESSAGE_TYPE_INVALID),
-      localReply(0), ref(1), delayedReply(false), localMessage(false),
-      autoStartService(true), parametersValidated(false)
+    : msg(Q_NULLPTR), reply(Q_NULLPTR), localReply(Q_NULLPTR), ref(1),
+    type(DBUS_MESSAGE_TYPE_INVALID), delayedReply(false), localMessage(false),
+    autoStartService(true), parametersValidated(false)
 {
 }
 
