@@ -9,9 +9,9 @@ cache:
 
 build_script:
 - sh: >-
-    git log > /tmp/log.txt
+    git log > /tmp/gitlog.txt
 
-    grep -q '\[ci reset\]' /tmp/log.txt && rm -rf /home/appveyor/.ccache
+    grep -q '\[ci reset\]' /tmp/gitlog.txt && rm -rf /home/appveyor/.ccache
 
     sudo apt-get update -qq
 
