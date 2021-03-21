@@ -2973,18 +2973,18 @@ static inline bool qIsFloatingPoint(int tp)
  */
 bool QVariant::cmp(const QVariant &v) const
 {
-    QVariant v2 = v;
-    if (d.type != v2.d.type) {
+    if (d.type != v.d.type) {
         if (qIsNumericType(d.type) && qIsNumericType(v.d.type)) {
             if (qIsFloatingPoint(d.type) || qIsFloatingPoint(v.d.type))
                 return qFuzzyCompare(toReal(), v.toReal());
-            else
-                return toLongLong() == v.toLongLong();
+            return toLongLong() == v.toLongLong();
         }
-        if (!v2.canConvert(Type(d.type)) || !v2.convert(Type(d.type)))
+        QVariant v2(v);
+        if (!v2.convert(Type(d.type)))
             return false;
+        return handler->compare(&d, &v2.d);
     }
-    return handler->compare(&d, &v2.d);
+    return handler->compare(&d, &v.d);
 }
 
 /*! \internal
