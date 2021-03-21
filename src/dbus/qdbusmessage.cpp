@@ -413,7 +413,7 @@ QDBusMessage QDBusMessage::createError(const QString &name, const QString &msg)
 QDBusMessage QDBusMessage::createReply(const QVariantList &arguments) const
 {
     QDBusMessage reply;
-    reply.setArguments(arguments);
+    reply.d_ptr->arguments = arguments;
     reply.d_ptr->type = DBUS_MESSAGE_TYPE_METHOD_RETURN;
     if (d_ptr->msg)
         reply.d_ptr->reply = dbus_message_ref(d_ptr->msg);
