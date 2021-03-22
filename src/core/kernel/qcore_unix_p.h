@@ -95,7 +95,7 @@ inline timeval operator*(const timeval &t1, int mul)
 static inline void qt_ignore_sigpipe()
 {
     // Set to ignore SIGPIPE once only.
-    static QAtomicInt atom = QAtomicInt(0);
+    static QAtomicInt atom(0);
     if (!atom) {
         // More than one thread could turn off SIGPIPE at the same time
         // But that's acceptable because they all would be doing the same

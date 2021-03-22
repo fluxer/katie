@@ -54,6 +54,7 @@ Q_CORE_EXPORT QObject *qt_qFindChild_helper(const QObject *parent, const QString
 
 class QObjectData {
 public:
+    QObjectData();
     virtual ~QObjectData() = 0;
     QObject *q_ptr;
     QObject *parent;

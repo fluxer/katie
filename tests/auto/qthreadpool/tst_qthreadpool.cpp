@@ -213,23 +213,23 @@ void tst_QThreadPool::waitcomplete()
     QCOMPARE(testFunctionCount, runs);
 }
 
-QAtomicInt ran = QAtomicInt(false); // bool
+QAtomicInt ran(0); // bool
 class TestTask : public QRunnable
 {
 public:
     void run()
     {
-        ran = true;
+        ran = 1;
     }
 };
 
 void tst_QThreadPool::runTask()
 {
     QThreadPool manager;
-    ran = false;
+    ran = 0;
     manager.start(new TestTask());
     // Hang if task is not runned.
-    while (ran == false)
+    while (ran == 0)
         QTest::qSleep(100); // no busy loop - this doesn't work with FIFO schedulers
 }
 
@@ -238,9 +238,9 @@ void tst_QThreadPool::runTask()
 */
 void tst_QThreadPool::singleton()
 {
-    ran = false;
+    ran = 0;
     QThreadPool::globalInstance()->start(new TestTask());
-    while (ran == false)
+    while (ran == 0)
         QTest::qSleep(100); // no busy loop - this doesn't work with FIFO schedulers
 }
 
@@ -771,8 +771,8 @@ void tst_QThreadPool::tryStart()
 }
 
 QMutex mutex;
-QAtomicInt activeThreads = QAtomicInt(0);
-QAtomicInt peakActiveThreads = QAtomicInt(0);
+QAtomicInt activeThreads(0);
+QAtomicInt peakActiveThreads(0);
 void tst_QThreadPool::tryStartPeakThreadCount()
 {
     class CounterTask : public QRunnable

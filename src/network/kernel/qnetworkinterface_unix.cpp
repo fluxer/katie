@@ -242,7 +242,7 @@ static QList<QNetworkInterfacePrivate *> interfaceListing()
         iface->addressEntries << entry;
     }
 
-    ::close(socket);
+    qt_safe_close(socket);
     return interfaces;
 }
 
@@ -371,7 +371,7 @@ static QList<QNetworkInterfacePrivate *> interfaceListing()
     ifaddrs *interfaceListing;
     if (::getifaddrs(&interfaceListing) == -1) {
         // error
-        ::close(socket);
+        qt_safe_close(socket);
         return interfaces;
     }
 
@@ -406,7 +406,7 @@ static QList<QNetworkInterfacePrivate *> interfaceListing()
     }
 
     ::freeifaddrs(interfaceListing);
-    ::close(socket);
+    qt_safe_close(socket);
     return interfaces;
 }
 #endif

@@ -87,14 +87,11 @@ void QTabBar::initStyleOption(QStyleOptionTab *option, int tabIndex) const
         option->palette.setColor(foregroundRole(), tab.textColor);
 
     option->icon = tab.icon;
-    if (QStyleOptionTabV2 *optionV2 = qstyleoption_cast<QStyleOptionTabV2 *>(option))
-        optionV2->iconSize = iconSize();  // Will get the default value then.
+    option->iconSize = iconSize();  // Will get the default value then.
 
-    if (QStyleOptionTabV3 *optionV3 = qstyleoption_cast<QStyleOptionTabV3 *>(option)) {
-        optionV3->leftButtonSize = tab.leftWidget ? tab.leftWidget->size() : QSize();
-        optionV3->rightButtonSize = tab.rightWidget ? tab.rightWidget->size() : QSize();
-        optionV3->documentMode = d->documentMode;
-    }
+    option->leftButtonSize = tab.leftWidget ? tab.leftWidget->size() : QSize();
+    option->rightButtonSize = tab.rightWidget ? tab.rightWidget->size() : QSize();
+    option->documentMode = d->documentMode;
 
     if (tabIndex > 0 && tabIndex - 1 == d->currentIndex)
         option->selectedPosition = QStyleOptionTab::PreviousIsSelected;

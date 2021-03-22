@@ -116,73 +116,12 @@ QT_BEGIN_NAMESPACE
     \sa QProcess, QProcess::systemEnvironment(), QProcess::setProcessEnvironment()
 */
 
-QStringList QProcessEnvironmentPrivate::toList() const
-{
-    QStringList result;
-    result.reserve(hash.size());
-    Hash::ConstIterator it = hash.constBegin(),
-                       end = hash.constEnd();
-    for ( ; it != end; ++it) {
-        QString data = nameToString(it.key());
-        QString value = valueToString(it.value());
-        data.reserve(data.length() + value.length() + 1);
-        data.append(QLatin1Char('='));
-        data.append(value);
-        result << data;
-    }
-    return result;
-}
-
-QProcessEnvironment QProcessEnvironmentPrivate::fromList(const QStringList &list)
-{
-    QProcessEnvironment env;
-    env.d->hash.reserve(list.size());
-    QStringList::ConstIterator it = list.constBegin(),
-                              end = list.constEnd();
-    for ( ; it != end; ++it) {
-        int pos = it->indexOf(QLatin1Char('='));
-        if (Q_UNLIKELY(pos < 1))
-            continue;
-
-        QString value = it->mid(pos + 1);
-        QString name = *it;
-        name.truncate(pos);
-        env.insert(name, value);
-    }
-    return env;
-}
-
-QStringList QProcessEnvironmentPrivate::keys() const
-{
-    QStringList result;
-    result.reserve(hash.size());
-    Hash::ConstIterator it = hash.constBegin(),
-                       end = hash.constEnd();
-    for ( ; it != end; ++it)
-        result << nameToString(it.key());
-    return result;
-}
-
-void QProcessEnvironmentPrivate::insert(const QProcessEnvironmentPrivate &other)
-{
-    Hash::ConstIterator it = other.hash.constBegin(),
-                       end = other.hash.constEnd();
-    for ( ; it != end; ++it)
-        hash.insert(it.key(), it.value());
-
-    QHash<QString, Key>::ConstIterator nit = other.nameMap.constBegin(),
-                                      nend = other.nameMap.constEnd();
-    for ( ; nit != nend; ++nit)
-        nameMap.insert(nit.key(), nit.value());
-}
-
 /*!
     Creates a new QProcessEnvironment object. This constructor creates an
     empty environment. If set on a QProcess, this will cause the current
     environment variables to be removed.
 */
 QProcessEnvironment::QProcessEnvironment()
-    : d(Q_NULLPTR)
 {
 }
 
@@ -197,7 +136,7 @@ QProcessEnvironment::~QProcessEnvironment()
     Creates a QProcessEnvironment object that is a copy of \a other.
 */
 QProcessEnvironment::QProcessEnvironment(const QProcessEnvironment &other)
-    : d(other.d)
+    : hash(other.hash)
 {
 }
 
@@ -207,7 +146,7 @@ QProcessEnvironment::QProcessEnvironment(const QProcessEnvironment &other)
 */
 QProcessEnvironment &QProcessEnvironment::operator=(const QProcessEnvironment &other)
 {
-    d = other.d;
+    hash = other.hash;
     return *this;
 }
 
@@ -230,12 +169,7 @@ QProcessEnvironment &QProcessEnvironment::operator=(const QProcessEnvironment &o
 */
 bool QProcessEnvironment::operator==(const QProcessEnvironment &other) const
 {
-    if (d == other.d)
-        return true;
-    if (d && other.d) {
-        return d->hash == other.d->hash;
-    }
-    return false;
+    return hash == other.hash;
 }
 
 /*!
@@ -246,8 +180,7 @@ bool QProcessEnvironment::operator==(const QProcessEnvironment &other) const
 */
 bool QProcessEnvironment::isEmpty() const
 {
-    // Needs no locking, as no hash nodes are accessed
-    return d ? d->hash.isEmpty() : true;
+    return hash.isEmpty();
 }
 
 /*!
@@ -258,10 +191,7 @@ bool QProcessEnvironment::isEmpty() const
 */
 void QProcessEnvironment::clear()
 {
-    if (d)
-        d->hash.clear();
-    // Unix: Don't clear d->nameMap, as the environment is likely to be
-    // re-populated with the same keys again.
+    hash.clear();
 }
 
 /*!
@@ -276,10 +206,7 @@ void QProcessEnvironment::clear()
 */
 bool QProcessEnvironment::contains(const QString &name) const
 {
-    if (!d)
-        return false;
-    QProcessEnvironmentPrivate::MutexLocker locker(d);
-    return d->hash.contains(d->prepareName(name));
+    return hash.contains(name);
 }
 
 /*!
@@ -300,9 +227,7 @@ bool QProcessEnvironment::contains(const QString &name) const
 */
 void QProcessEnvironment::insert(const QString &name, const QString &value)
 {
-    // our re-impl of detach() detaches from null
-    d.detach(); // detach before prepareName()
-    d->hash.insert(d->prepareName(name), d->prepareValue(value));
+    hash.insert(name, value);
 }
 
 /*!
@@ -318,10 +243,7 @@ void QProcessEnvironment::insert(const QString &name, const QString &value)
 */
 void QProcessEnvironment::remove(const QString &name)
 {
-    if (d) {
-        d.detach(); // detach before prepareName()
-        d->hash.remove(d->prepareName(name));
-    }
+    hash.remove(name);
 }
 
 /*!
@@ -337,15 +259,7 @@ void QProcessEnvironment::remove(const QString &name)
 */
 QString QProcessEnvironment::value(const QString &name, const QString &defaultValue) const
 {
-    if (!d)
-        return defaultValue;
-
-    QProcessEnvironmentPrivate::MutexLocker locker(d);
-    QProcessEnvironmentPrivate::Hash::ConstIterator it = d->hash.constFind(d->prepareName(name));
-    if (it == d->hash.constEnd())
-        return defaultValue;
-
-    return d->valueToString(it.value());
+    return hash.value(name, defaultValue);
 }
 
 /*!
@@ -363,10 +277,19 @@ QString QProcessEnvironment::value(const QString &name, const QString &defaultVa
 */
 QStringList QProcessEnvironment::toStringList() const
 {
-    if (!d)
-        return QStringList();
-    QProcessEnvironmentPrivate::MutexLocker locker(d);
-    return d->toList();
+    QStringList result;
+    result.reserve(hash.size());
+    Hash::ConstIterator it = hash.constBegin(),
+                       end = hash.constEnd();
+    for ( ; it != end; ++it) {
+        QString data = it.key();
+        QString value = it.value();
+        data.reserve(data.length() + value.length() + 1);
+        data.append(QLatin1Char('='));
+        data.append(value);
+        result << data;
+    }
+    return result;
 }
 
 /*!
@@ -377,27 +300,22 @@ QStringList QProcessEnvironment::toStringList() const
 */
 QStringList QProcessEnvironment::keys() const
 {
-    if (!d)
-        return QStringList();
-    QProcessEnvironmentPrivate::MutexLocker locker(d);
-    return d->keys();
+    return hash.keys();
 }
 
 /*!
     \overload
     \since 4.8
 
-    Inserts the contents of \a e in this QProcessEnvironment object. Variables in
-    this object that also exist in \a e will be overwritten.
+    Inserts the contents of \a other in this QProcessEnvironment object. Variables in
+    this object that also exist in \a other will be overwritten.
 */
-void QProcessEnvironment::insert(const QProcessEnvironment &e)
+void QProcessEnvironment::insert(const QProcessEnvironment &other)
 {
-    if (!e.d)
-        return;
-
-    // our re-impl of detach() detaches from null
-    QProcessEnvironmentPrivate::MutexLocker locker(e.d);
-    d->insert(*e.d);
+    Hash::ConstIterator it = other.hash.constBegin(),
+                       end = other.hash.constEnd();
+    for ( ; it != end; ++it)
+        hash.insert(it.key(), it.value());
 }
 
 void QProcessPrivate::Channel::clear()
@@ -1421,7 +1339,21 @@ QProcess::ProcessState QProcess::state() const
 */
 void QProcess::setEnvironment(const QStringList &environment)
 {
-    setProcessEnvironment(QProcessEnvironmentPrivate::fromList(environment));
+    QProcessEnvironment env;
+    env.hash.reserve(environment.size());
+    QStringList::ConstIterator it = environment.constBegin(),
+                              end = environment.constEnd();
+    for ( ; it != end; ++it) {
+        int pos = it->indexOf(QLatin1Char('='));
+        if (Q_UNLIKELY(pos < 1))
+            continue;
+
+        QString value = it->mid(pos + 1);
+        QString name = *it;
+        name.truncate(pos);
+        env.insert(name, value);
+    }
+    setProcessEnvironment(env);
 }
 
 /*!

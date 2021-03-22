@@ -27,6 +27,7 @@
 #include <qfile.h>
 #include <qdir.h>
 #include <qset.h>
+#include <qcore_unix_p.h>
 
 #include <sys/types.h>
 #include <sys/stat.h>
@@ -296,7 +297,7 @@ void tst_QTemporaryFile::renameFdLeak()
     static const int count = 10;
     int bunch_of_files[count];
     for (int i = 0; i < count; ++i) {
-        bunch_of_files[i] = ::open(SRCDIR "tst_qtemporaryfile.cpp", O_RDONLY);
+        bunch_of_files[i] = qt_safe_open(SRCDIR "tst_qtemporaryfile.cpp", O_RDONLY);
         QVERIFY(bunch_of_files[i] != -1);
     }
 
@@ -308,7 +309,7 @@ void tst_QTemporaryFile::renameFdLeak()
 
         // close the bunch of files
         for (int i = 0; i < count; ++i)
-            ::close(bunch_of_files[i]);
+            qt_safe_close(bunch_of_files[i]);
 
         // save the file descriptor for later
         fd = file.handle();
@@ -320,7 +321,7 @@ void tst_QTemporaryFile::renameFdLeak()
     }
 
     // check if QTemporaryFile closed the file
-    QVERIFY(::close(fd) == -1 && errno == EBADF);
+    QVERIFY(qt_safe_close(fd) == -1 && errno == EBADF);
 }
 
 void tst_QTemporaryFile::reOpenThroughQFile()

@@ -51,7 +51,8 @@ QDBusServer::QDBusServer(const QString &address, QObject *parent)
                      this, SIGNAL(newConnection(QDBusConnection)));
 
     QDBusErrorInternal error;
-    d->setServer(dbus_server_listen(address.toUtf8().constData(), error), error);
+    const QByteArray addressref = address.toUtf8();
+    d->setServer(dbus_server_listen(addressref.constData(), error), error);
 }
 
 /*!

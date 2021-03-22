@@ -19,7 +19,7 @@
 **
 ****************************************************************************/
 
-//#define QIMAGEREADER_DEBUG
+// #define QIMAGEREADER_DEBUG
 
 /*!
     \class QImageReader
@@ -165,8 +165,7 @@ static const qint16 ImageFormatTblSize = sizeof(ImageFormatTbl) / sizeof(ImageFo
 
 static QImageIOHandler *createReadHandlerHelper(QIODevice *device,
                                                 const QByteArray &format,
-                                                bool autoDetectImageFormat,
-                                                bool ignoresFormatAndExtension)
+                                                bool autoDetectImageFormat)
 {
     if (!autoDetectImageFormat && format.isEmpty())
         return Q_NULLPTR;
@@ -188,7 +187,7 @@ static QImageIOHandler *createReadHandlerHelper(QIODevice *device,
 
 #ifndef QT_NO_LIBRARY
     int suffixPluginIndex = -1;
-    if (device && format.isEmpty() && autoDetectImageFormat && !ignoresFormatAndExtension) {
+    if (device && format.isEmpty() && autoDetectImageFormat) {
         // if there's no format, see if \a device is a file, and if so, find
         // the file suffix and find support for that format among our plugins.
         // this allows plugins to override our built-in handlers.
@@ -213,9 +212,6 @@ static QImageIOHandler *createReadHandlerHelper(QIODevice *device,
 
     QByteArray testFormat = !form.isEmpty() ? form : suffix;
 
-    if (ignoresFormatAndExtension)
-        testFormat = QByteArray();
-
 #ifndef QT_NO_LIBRARY
     if (suffixPluginIndex != -1) {
         // check if the plugin that claims support for this format can load
@@ -233,7 +229,7 @@ static QImageIOHandler *createReadHandlerHelper(QIODevice *device,
             device->seek(pos);
     }
 
-    if (!handler && !testFormat.isEmpty() && !ignoresFormatAndExtension) {
+    if (!handler && !testFormat.isEmpty()) {
         // check if any plugin supports the format (they are not allowed to
         // read from the device yet).
         const qint64 pos = device ? device->pos() : 0;
@@ -298,7 +294,7 @@ static QImageIOHandler *createReadHandlerHelper(QIODevice *device,
     }
 
 #ifndef QT_NO_LIBRARY
-    if (!handler && (autoDetectImageFormat || ignoresFormatAndExtension)) {
+    if (!handler && autoDetectImageFormat) {
         // check if any of our plugins recognize the file from its contents.
         const qint64 pos = device ? device->pos() : 0;
         for (int i = 0; i < keys.size(); i++) {
@@ -318,7 +314,7 @@ static QImageIOHandler *createReadHandlerHelper(QIODevice *device,
     }
 #endif // QT_NO_LIBRARY
 
-    if (!handler && (autoDetectImageFormat || ignoresFormatAndExtension)) {
+    if (!handler && autoDetectImageFormat) {
         // check if any of our built-in handlers recognize the file from its
         // contents.
         qint16 currentFormat = 0;
@@ -411,7 +407,6 @@ public:
     // device
     QByteArray format;
     bool autoDetectImageFormat;
-    bool ignoresFormatAndExtension;
     QIODevice *device;
     bool deleteDevice;
     QImageIOHandler *handler;
@@ -433,7 +428,6 @@ public:
 */
 QImageReaderPrivate::QImageReaderPrivate()
     : autoDetectImageFormat(true),
-    ignoresFormatAndExtension(false),
     device(Q_NULLPTR),
     deleteDevice(false),
     handler(Q_NULLPTR),
@@ -494,7 +488,7 @@ bool QImageReaderPrivate::initHandler()
     }
 
     // assign a handler
-    if (!handler && (handler = createReadHandlerHelper(device, format, autoDetectImageFormat, ignoresFormatAndExtension)) == 0) {
+    if (!handler && (handler = createReadHandlerHelper(device, format, autoDetectImageFormat)) == 0) {
         imageReaderError = QImageReader::UnsupportedFormatError;
         errorString = QCoreApplication::translate("QImageReader", "Unsupported image format");
         return false;
@@ -639,41 +633,6 @@ bool QImageReader::autoDetectImageFormat() const
 {
     return d->autoDetectImageFormat;
 }
-
-
-/*!
-    If \a ignored is set to true, then the image reader will ignore
-    specified formats or file extensions and decide which plugin to
-    use only based on the contents in the datastream.
-
-    Setting this flag means that all image plugins gets loaded. Each
-    plugin will read the first bytes in the image data and decide if
-    the plugin is compatible or not.
-
-    This also disables auto detecting the image format.
-
-    \sa decideFormatFromContent()
-*/
-
-void QImageReader::setDecideFormatFromContent(bool ignored)
-{
-    d->ignoresFormatAndExtension = ignored;
-}
-
-
-/*!
-    Returns whether the image reader should decide which plugin to use
-    only based on the contents of the datastream rather than on the file
-    extension.
-
-    \sa setDecideFormatFromContent()
-*/
-
-bool QImageReader::decideFormatFromContent() const
-{
-    return d->ignoresFormatAndExtension;
-}
-
 
 /*!
     Sets QImageReader's device to \a device. If a device has already
@@ -1268,7 +1227,7 @@ QByteArray QImageReader::imageFormat(const QString &fileName)
 QByteArray QImageReader::imageFormat(QIODevice *device)
 {
     QByteArray format;
-    QImageIOHandler *handler = createReadHandlerHelper(device, format, /* autoDetectImageFormat = */ true, false);
+    QImageIOHandler *handler = createReadHandlerHelper(device, format, /* autoDetectImageFormat = */ true);
     if (handler) {
         if (handler->canRead())
             format = handler->format();

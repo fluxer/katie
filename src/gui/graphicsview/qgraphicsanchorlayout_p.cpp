@@ -40,7 +40,11 @@ QT_BEGIN_NAMESPACE
 // they are actually calculated in the interval [0, 2 * limit]
 // To avoid numerical errors in platforms where we use single precision,
 // we use a tighter limit for the variables range.
-const qreal g_offset = (sizeof(qreal) == sizeof(double)) ? QWIDGETSIZE_MAX : QWIDGETSIZE_MAX / 32;
+#ifdef QT_NO_FPU
+static const qreal g_offset = QWIDGETSIZE_MAX / 32;
+#else
+static const qreal g_offset = QWIDGETSIZE_MAX;
+#endif
 
 QGraphicsAnchorPrivate::QGraphicsAnchorPrivate()
     : QObjectPrivate(), layoutPrivate(0), data(0),

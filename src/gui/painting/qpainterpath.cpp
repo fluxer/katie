@@ -2173,7 +2173,7 @@ bool QPainterPath::operator==(const QPainterPath &path) const
     else if (d->elements.size() != path.d_func()->elements.size())
         return false;
 
-    const qreal qt_epsilon = sizeof(qreal) == sizeof(double) ? 1e-12 : qreal(1e-5);
+    static const qreal qt_epsilon = std::numeric_limits<qreal>::epsilon();;
 
     QSizeF epsilon = boundingRect().size();
     epsilon.rwidth() *= qt_epsilon;
@@ -2639,9 +2639,7 @@ void QPainterPathStroker::setDashPattern(Qt::PenStyle style)
 */
 void QPainterPathStroker::setDashPattern(const QVector<qreal> &dashPattern)
 {
-    d_func()->dashPattern.clear();
-    for (int i=0; i<dashPattern.size(); ++i)
-        d_func()->dashPattern << dashPattern.at(i);
+    d_func()->dashPattern = dashPattern;
 }
 
 /*!
@@ -2964,9 +2962,9 @@ qreal QPainterPath::slopeAtPercent(qreal t) const
     if (m1)
         return (m2 / m1);
 
-#define SLOPE_SIGN(x) ((x < 0)?-1:1)
-    return qreal(std::numeric_limits<qreal>::infinity() * SLOPE_SIGN(m2));
-#undef SLOPE_SIGN
+    if (m2 < 0)
+        return -std::numeric_limits<qreal>::infinity();
+    return std::numeric_limits<qreal>::infinity();
 }
 
 /*!

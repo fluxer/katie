@@ -595,12 +595,7 @@ void QDockWidget::initStyleOption(QStyleOptionDockWidget *option) const
     option->closable = hasFeature(this, QDockWidget::DockWidgetClosable);
     option->movable = hasFeature(this, QDockWidget::DockWidgetMovable);
     option->floatable = hasFeature(this, QDockWidget::DockWidgetFloatable);
-
-    QDockWidgetLayout *l = qobject_cast<QDockWidgetLayout*>(layout());
-    QStyleOptionDockWidgetV2 *v2
-        = qstyleoption_cast<QStyleOptionDockWidgetV2*>(option);
-    if (v2 != 0)
-        v2->verticalTitleBar = l->verticalTitleBar;
+    option->verticalTitleBar = dwlayout->verticalTitleBar;
 }
 
 void QDockWidgetPrivate::_q_toggleView(bool b)

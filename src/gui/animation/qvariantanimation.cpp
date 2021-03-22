@@ -134,7 +134,7 @@ QT_BEGIN_NAMESPACE
     \sa currentValue
 */
 
-Q_GLOBAL_STATIC(QMutex, qVariantAnimationMutex)
+Q_GLOBAL_STATIC_WITH_ARGS(QMutex, qVariantAnimationMutex, (QMutex::Recursive))
 
 static bool animationValueLessThan(const QVariantAnimation::KeyValue &p1, const QVariantAnimation::KeyValue &p2)
 {
@@ -268,7 +268,7 @@ void QVariantAnimationPrivate::setCurrentValueForProgress(const qreal progress)
                                    localProgress);
     qSwap(currentValue, ret);
     q->updateCurrentValue(currentValue);
-    static QAtomicInt changedSignalIndex = QAtomicInt(0);
+    static QAtomicInt changedSignalIndex(0);
     if (!changedSignalIndex) {
         //we keep the mask so that we emit valueChanged only when needed (for performance reasons)
         changedSignalIndex.testAndSetRelaxed(0, signalIndex("valueChanged(QVariant)"));
@@ -609,14 +609,6 @@ QVariant QVariantAnimation::currentValue() const
     if (!d->currentValue.isValid())
         const_cast<QVariantAnimationPrivate*>(d)->recalculateCurrentInterval();
     return d->currentValue;
-}
-
-/*!
-    \reimp
- */
-bool QVariantAnimation::event(QEvent *event)
-{
-    return QAbstractAnimation::event(event);
 }
 
 /*!

@@ -378,10 +378,10 @@ void QSequentialAnimationGroup::updateState(QAbstractAnimation::State newState,
     case Paused:
         if (oldState == d->currentAnimation->state()
             && oldState == QSequentialAnimationGroup::Running) {
-                d->currentAnimation->pause();
-            }
-        else
+            d->currentAnimation->pause();
+        } else {
             d->restart();
+        }
         break;
     case Running:
         if (oldState == d->currentAnimation->state()

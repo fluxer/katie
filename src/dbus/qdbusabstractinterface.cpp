@@ -522,7 +522,7 @@ bool QDBusAbstractInterface::callWithCallback(const QString &method,
     QDBusMessagePrivate::setParametersValidated(msg, true);
     msg.setArguments(args);
 
-    d->lastError = 0;
+    d->lastError = QDBusError(Q_NULLPTR);
     return d->connection.callWithCallback(msg,
                                           receiver,
                                           returnMethod,

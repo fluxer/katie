@@ -136,8 +136,8 @@ private:
     qreal   m_23;
     qreal   m_33;
 
-    mutable uint m_type : 5;
-    mutable uint m_dirty : 5;
+    mutable TransformationType m_type;
+    mutable TransformationType m_dirty;
 };
 Q_DECLARE_TYPEINFO(QTransform, Q_MOVABLE_TYPE);
 
@@ -145,7 +145,7 @@ Q_DECLARE_TYPEINFO(QTransform, Q_MOVABLE_TYPE);
 inline QTransform::TransformationType QTransform::inline_type() const
 {
     if (m_dirty == TxNone)
-        return static_cast<TransformationType>(m_type);
+        return m_type;
     return type();
 }
 

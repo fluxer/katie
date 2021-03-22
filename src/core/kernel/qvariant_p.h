@@ -45,7 +45,7 @@ inline const T *v_cast(const QVariant::Private *d)
 {
     return ((sizeof(T) > sizeof(QVariant::Private::Data))
             ? static_cast<const T *>(d->data.shared->ptr)
-            : static_cast<const T *>(static_cast<const void *>(&d->data.c)));
+            : static_cast<const T *>(static_cast<const void *>(&d->data.ptr)));
 }
 
 template <typename T>
@@ -53,7 +53,7 @@ inline T *v_cast(QVariant::Private *d)
 {
     return ((sizeof(T) > sizeof(QVariant::Private::Data))
             ? static_cast<T *>(d->data.shared->ptr)
-            : static_cast<T *>(static_cast<void *>(&d->data.c)));
+            : static_cast<T *>(static_cast<void *>(&d->data.ptr)));
 }
 
 //a simple template that avoids to allocate 2 memory chunks when creating a QVariant

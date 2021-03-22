@@ -55,6 +55,7 @@ enum ThreadAction {
     RegisterObjectAction = 2,
     UnregisterObjectAction = 3,
     ObjectRegisteredAtAction = 4,
+    ServiceRegisteredAction = 5,
 
     CloseConnectionAction = 10,
     ObjectDestroyedAction = 11,

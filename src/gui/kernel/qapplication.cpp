@@ -4215,7 +4215,7 @@ QLocale QApplication::keyboardInputLocale()
 {
     if (!QApplicationPrivate::checkInstance("keyboardInputLocale"))
         return QLocale::c();
-    return qt_keymapper_private()->keyboardInputLocale;
+    return qt_keymapper()->keyboardInputLocale;
 }
 
 /*!
@@ -4227,7 +4227,7 @@ Qt::LayoutDirection QApplication::keyboardInputDirection()
 {
     if (!QApplicationPrivate::checkInstance("keyboardInputDirection"))
         return Qt::LeftToRight;
-    return qt_keymapper_private()->keyboardInputDirection;
+    return qt_keymapper()->keyboardInputDirection;
 }
 
 void QApplicationPrivate::giveFocusAccordingToFocusPolicy(QWidget *widget,

@@ -3097,9 +3097,7 @@ void QPlastiqueStyle::drawControl(ControlElement element, const QStyleOption *op
         if (const QStyleOptionDockWidget *dockWidget = qstyleoption_cast<const QStyleOptionDockWidget *>(option)) {
             painter->save();
 
-            const QStyleOptionDockWidgetV2 *v2
-                = qstyleoption_cast<const QStyleOptionDockWidgetV2*>(dockWidget);
-            bool verticalTitleBar = v2 == 0 ? false : v2->verticalTitleBar;
+            bool verticalTitleBar = dockWidget->verticalTitleBar;
 
             // Find text width and title rect
             int textWidth = option->fontMetrics.width(dockWidget->title);

@@ -136,8 +136,6 @@
     left-handed mice.)
     \value RightButton     The right button.
     \value MiddleButton    The middle button.
-    \value XButton1        The first X button.
-    \value XButton2        The second X button.
 
     \omitvalue MouseButtonMask
 

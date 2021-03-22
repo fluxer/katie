@@ -39,9 +39,9 @@ static inline const char *data(const QByteArray &arr)
 }
 
 QDBusMessagePrivate::QDBusMessagePrivate()
-    : msg(0), reply(0), type(DBUS_MESSAGE_TYPE_INVALID),
-      timeout(-1), localReply(0), ref(1), delayedReply(false), localMessage(false),
-      autoStartService(true), parametersValidated(false)
+    : msg(Q_NULLPTR), reply(Q_NULLPTR), localReply(Q_NULLPTR), ref(1),
+    type(DBUS_MESSAGE_TYPE_INVALID), delayedReply(false), localMessage(false),
+    autoStartService(true), parametersValidated(false)
 {
 }
 
@@ -413,7 +413,7 @@ QDBusMessage QDBusMessage::createError(const QString &name, const QString &msg)
 QDBusMessage QDBusMessage::createReply(const QVariantList &arguments) const
 {
     QDBusMessage reply;
-    reply.setArguments(arguments);
+    reply.d_ptr->arguments = arguments;
     reply.d_ptr->type = DBUS_MESSAGE_TYPE_METHOD_RETURN;
     if (d_ptr->msg)
         reply.d_ptr->reply = dbus_message_ref(d_ptr->msg);
@@ -480,8 +480,8 @@ QDBusMessage QDBusMessage::createErrorReply(QDBusError::ErrorType atype, const Q
     \sa createError(), createMethodCall(), createSignal()
 */
 QDBusMessage::QDBusMessage()
+    : d_ptr(new QDBusMessagePrivate())
 {
-    d_ptr = new QDBusMessagePrivate;
 }
 
 /*!

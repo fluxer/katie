@@ -134,9 +134,8 @@ public:
                                    Sender *currentSender,
                                    Sender *previousSender);
 
-    static QObjectPrivate *get(QObject *o) {
-        return o->d_func();
-    }
+    static inline QObjectPrivate *get(QObject *o) { return o->d_func(); }
+    static inline const QObjectPrivate *get(const QObject *o) { return o->d_func(); }
 
     int signalIndex(const char *signalName) const;
     inline bool isSignalConnected(uint signalIdx) const;

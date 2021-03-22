@@ -45,141 +45,140 @@ inline qint64 qRound64(qreal d)
 
 inline int qCeil(qreal v)
 {
-#ifdef QT_USE_MATH_H_FLOATS
-    if (sizeof(qreal) == sizeof(float))
-        return int(ceilf(float(v)));
-#endif
+#if defined(QT_USE_MATH_H_FLOATS) && defined(QT_NO_FPU)
+    return int(ceilf(v));
+#else
     return int(ceil(v));
+#endif
 }
 
 inline int qFloor(qreal v)
 {
-#ifdef QT_USE_MATH_H_FLOATS
-    if (sizeof(qreal) == sizeof(float))
-        return int(floorf(float(v)));
-#endif
+#if defined(QT_USE_MATH_H_FLOATS) && defined(QT_NO_FPU)
+    return int(floorf(v));
+#else
     return int(floor(v));
+#endif
 }
 
 inline qreal qFabs(qreal v)
 {
-#ifdef QT_USE_MATH_H_FLOATS
-    if(sizeof(qreal) == sizeof(float))
-        return fabsf(float(v));
-#endif
+#if defined(QT_USE_MATH_H_FLOATS) && defined(QT_NO_FPU)
+    return fabsf(v);
+#else
     return fabs(v);
+#endif
 }
 
 inline qreal qSin(qreal v)
 {
-#ifdef QT_USE_MATH_H_FLOATS
-    if (sizeof(qreal) == sizeof(float))
-        return sinf(float(v));
-#endif
+#if defined(QT_USE_MATH_H_FLOATS) && defined(QT_NO_FPU)
+    return sinf(v);
+#else
     return sin(v);
+#endif
 }
 
 inline qreal qCos(qreal v)
 {
-#ifdef QT_USE_MATH_H_FLOATS
-    if (sizeof(qreal) == sizeof(float))
-        return cosf(float(v));
-#endif
+#if defined(QT_USE_MATH_H_FLOATS) && defined(QT_NO_FPU)
+    return cosf(v);
+#else
     return cos(v);
+#endif
 }
 
 inline qreal qTan(qreal v)
 {
-#ifdef QT_USE_MATH_H_FLOATS
-    if (sizeof(qreal) == sizeof(float))
-        return tanf(float(v));
-#endif
+#if defined(QT_USE_MATH_H_FLOATS) && defined(QT_NO_FPU)
+    return tanf(v);
+#else
     return tan(v);
+#endif
 }
 
 inline qreal qAcos(qreal v)
 {
-#ifdef QT_USE_MATH_H_FLOATS
-    if (sizeof(qreal) == sizeof(float))
-        return acosf(float(v));
-#endif
+#if defined(QT_USE_MATH_H_FLOATS) && defined(QT_NO_FPU)
+    return acosf(v);
+#else
     return acos(v);
+#endif
 }
 
 inline qreal qAsin(qreal v)
 {
-#ifdef QT_USE_MATH_H_FLOATS
-    if (sizeof(qreal) == sizeof(float))
-        return asinf(float(v));
-#endif
+#if defined(QT_USE_MATH_H_FLOATS) && defined(QT_NO_FPU)
+    return asinf(v);
+#else
     return asin(v);
+#endif
 }
 
 inline qreal qAtan(qreal v)
 {
-#ifdef QT_USE_MATH_H_FLOATS
-    if(sizeof(qreal) == sizeof(float))
-        return atanf(float(v));
-#endif
+#if defined(QT_USE_MATH_H_FLOATS) && defined(QT_NO_FPU)
+    return atanf(v);
+#else
     return atan(v);
+#endif
 }
 
 inline qreal qAtan2(qreal x, qreal y)
 {
-#ifdef QT_USE_MATH_H_FLOATS
-    if(sizeof(qreal) == sizeof(float))
-        return atan2f(float(x), float(y));
-#endif
+#if defined(QT_USE_MATH_H_FLOATS) && defined(QT_NO_FPU)
+    return atan2f(x, y);
+#else
     return atan2(x, y);
+#endif
 }
 
 inline qreal qSqrt(qreal v)
 {
-#ifdef QT_USE_MATH_H_FLOATS
-    if (sizeof(qreal) == sizeof(float))
-        return sqrtf(float(v));
-#endif
+#if defined(QT_USE_MATH_H_FLOATS) && defined(QT_NO_FPU)
+    return sqrtf(v);
+#else
     return sqrt(v);
+#endif
 }
 
 inline qreal qLn(qreal v)
 {
-#ifdef QT_USE_MATH_H_FLOATS
-    if (sizeof(qreal) == sizeof(float))
-        return logf(float(v));
-#endif
+#if defined(QT_USE_MATH_H_FLOATS) && defined(QT_NO_FPU)
+    return logf(v);
+#else
     return log(v);
+#endif
 }
 
 inline qreal qExp(qreal v)
 {
-#ifdef QT_USE_MATH_H_FLOATS
-    if (sizeof(qreal) == sizeof(float))
-        return expf(float(v));
-#endif
+#if defined(QT_USE_MATH_H_FLOATS) && defined(QT_NO_FPU)
+    return expf(v);
+#else
     return exp(v);
+#endif
 }
 
 inline qreal qPow(qreal x, qreal y)
 {
-#ifdef QT_USE_MATH_H_FLOATS
-    if (sizeof(qreal) == sizeof(float))
-        return powf(float(x), float(y));
-#endif
+#if defined(QT_USE_MATH_H_FLOATS) && defined(QT_NO_FPU)
+    return powf(x, y);
+#else
     return pow(x, y);
+#endif
 }
 
 
 inline qreal qFmod(qreal x, qreal y)
 {
-#ifdef QT_USE_MATH_H_FLOATS
-    if(sizeof(qreal) == sizeof(float))
-        return fmodf(float(x), float(y));
-#endif
+#if defined(QT_USE_MATH_H_FLOATS) && defined(QT_NO_FPU)
+    return fmodf(x, y);
+#else
     return fmod(x, y);
+#endif
 }
 
 QT_END_NAMESPACE
-
 
 #endif // QMATH_H

@@ -19,9 +19,10 @@
 **
 ****************************************************************************/
 
-#include "qkeymapper_p.h"
 #include "qdebug.h"
 #include "qwidget.h"
+#include "qtextcodec.h"
+#include "qkeymapper_p.h"
 #include "qapplication_p.h"
 #include "qt_x11_p.h"
 
@@ -30,22 +31,38 @@ QT_BEGIN_NAMESPACE
 // from qapplication_x11.cpp
 extern bool qt_sendSpontaneousEvent(QObject*, QEvent*);
 
-QKeyMapperPrivate::QKeyMapperPrivate()
-    : keyboardInputDirection(Qt::LeftToRight)
+QKeyMapper::QKeyMapper()
+    : keyboardInputDirection(Qt::LeftToRight),
+    keyMapperCodec(QTextCodec::codecForCStrings())
 {
     clearMappings();
 }
 
-QKeyMapperPrivate::~QKeyMapperPrivate()
+QKeyMapper::~QKeyMapper()
 {
 }
 
-void QKeyMapperPrivate::clearMappings()
+void QKeyMapper::clearMappings()
 {
-    // ### cannot get/guess the locale with the core protocol
-    keyboardInputLocale = QLocale::c();
-    // ### could examine group 0 for RTL keys
-    keyboardInputDirection = Qt::LeftToRight;
+    XIM im = XOpenIM(qt_x11Data->display, NULL, NULL, NULL);
+    const QString imlocale = QString::fromLatin1(XLocaleOfIM(im));
+    keyboardInputLocale = QLocale(imlocale);
+    XCloseIM(im);
+
+    keyboardInputDirection = keyboardInputLocale.textDirection();
+
+    // X11 is known to use whatever is set by setlocale() as input method
+    // locale, setlocale() and XLocaleOfIM() return string in the form:
+    // language[_territory][.codeset][@modifier]
+    const int dotindex = imlocale.indexOf(QLatin1Char('.'));
+    if (dotindex >= 0) {
+        QByteArray codeset = imlocale.mid(dotindex + 1).toLatin1();
+        const int atindex = codeset.indexOf('@');
+        if (atindex >= 0) {
+            codeset = codeset.left(atindex);
+        }
+        keyMapperCodec = QTextCodec::codecForName(codeset.constData());
+    }
 }
 
 extern bool qt_sm_blockUserInput;
@@ -192,7 +209,7 @@ struct qt_auto_repeat_data
     Time time;
 };
 
-bool QKeyMapperPrivate::translateKeyEvent(QWidget *keyWidget, const XEvent *event)
+bool QKeyMapper::translateKeyEvent(QWidget *keyWidget, const XEvent *event)
 {
     if (qt_sm_blockUserInput) // block user interaction during session management
         return true;
@@ -203,15 +220,17 @@ bool QKeyMapperPrivate::translateKeyEvent(QWidget *keyWidget, const XEvent *even
     Qt::KeyboardModifiers modifiers = translateModifiers(event->xkey.state);
     XKeyEvent xkeyevent = event->xkey;
     char lookupbuff[10];
+    ::memset(lookupbuff, 0, sizeof(lookupbuff) * sizeof(char));
     KeySym keysym = 0;
     int count = XLookupString(&xkeyevent, lookupbuff, sizeof(lookupbuff), &keysym, 0);
     int code = translateKeySym(keysym);
-    QString text = QString::fromLatin1(lookupbuff, count);
+    QString text = keyMapperCodec->toUnicode(lookupbuff, count);
 
     bool autorepeat = false;
     static const int qt_x11_autorepeat = getX11AutoRepeat();
-    // auto repeat is on by default
-    if (Q_LIKELY(qt_x11_autorepeat)) {
+    // modifier keys should not auto-repeat
+    if (qt_x11_autorepeat && code != Qt::Key_Shift && code != Qt::Key_Control
+        && code != Qt::Key_Meta && code != Qt::Key_Alt) {
         static qt_auto_repeat_data curr_autorep = { 0, 0, 0, 0 };
         if (curr_autorep.serial == event->xkey.serial ||
             (event->xkey.window == curr_autorep.window &&
@@ -237,17 +256,17 @@ bool QKeyMapperPrivate::translateKeyEvent(QWidget *keyWidget, const XEvent *even
         QPoint pos = keyWidget->mapFromGlobal(globalPos);
         QContextMenuEvent e(QContextMenuEvent::Keyboard, pos, globalPos);
         qt_sendSpontaneousEvent(keyWidget, &e);
-        if(e.isAccepted())
+        if (e.isAccepted())
             return true;
     }
 
     QKeyEvent e(type, code, modifiers,
                   event->xkey.keycode, keysym, event->xkey.state,
-                  text, autorepeat, qMax(qMax(count,1), text.length()));
+                  text, autorepeat, qMax(qMax(count, 1), text.length()));
     return qt_sendSpontaneousEvent(keyWidget, &e);
 }
 
-Qt::KeyboardModifiers QKeyMapperPrivate::translateModifiers(int state)
+Qt::KeyboardModifiers QKeyMapper::translateModifiers(int state)
 {
     // xmodmap -pm
     Qt::KeyboardModifiers ret = 0;

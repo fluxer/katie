@@ -35,9 +35,8 @@ extern QPixmap qt_toX11Pixmap(const QPixmap &pixmap); // qpixmap_x11.cpp
  *****************************************************************************/
 
 QCursorData::QCursorData(Qt::CursorShape s)
-    : cshape(s), bm(0), bmm(0), hx(0), hy(0), hcurs(0), pm(0)
+    : ref(1), cshape(s), bm(Q_NULLPTR), bmm(Q_NULLPTR), hx(0), hy(0), hcurs(0), pm(0)
 {
-    ref = 1;
 }
 
 QCursorData::~QCursorData()

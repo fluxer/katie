@@ -2708,7 +2708,7 @@ int QString::count(const QString &str, Qt::CaseSensitivity cs) const
 int QString::count(QChar ch, Qt::CaseSensitivity cs) const
 {
     return qt_string_count(unicode(), size(), ch, cs);
-    }
+}
 
 /*!
     \since 4.8

@@ -2790,12 +2790,14 @@ QRasterBuffer::~QRasterBuffer()
 }
 
 QRasterBuffer::QRasterBuffer()
-    : m_width(0), m_height(0), m_buffer(Q_NULLPTR)
+    : monoDestinationWithClut(false),
+    destColor0(0),
+    destColor1(0),
+    compositionMode(QPainter::CompositionMode_SourceOver),
+    m_width(0),
+    m_height(0),
+    m_buffer(Q_NULLPTR)
 {
-    compositionMode = QPainter::CompositionMode_SourceOver;
-    monoDestinationWithClut = false;
-    destColor0 = 0;
-    destColor1 = 0;
 }
 
 QImage::Format QRasterBuffer::prepare(QImage *image)
@@ -2815,11 +2817,6 @@ QImage::Format QRasterBuffer::prepare(QImage *image)
     }
 
     return format;
-}
-
-void QRasterBuffer::resetBuffer(int val)
-{
-    memset(m_buffer, val, m_height*bytes_per_line);
 }
 
 QClipData::QClipData(int height)

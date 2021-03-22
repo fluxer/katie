@@ -66,10 +66,6 @@ public:
 
 uint qHash(const QDeclarativeJS::NameId &id);
 
-} // end of namespace QDeclarativeJS
-
-namespace QDeclarativeJS {
-
 class Lexer;
 class NodePool;
 

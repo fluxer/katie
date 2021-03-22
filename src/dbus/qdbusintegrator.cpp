@@ -51,8 +51,8 @@ QT_BEGIN_NAMESPACE
 // used with dbus_server_allocate_data_slot
 static dbus_int32_t server_slot = -1;
 
-static QAtomicInt isDebugging = QAtomicInt(-1);
-#define qDBusDebug              if (isDebugging == 0); else qDebug
+static const bool isDebugging = !qgetenv("QDBUS_DEBUG").isNull();
+#define qDBusDebug              if (!isDebugging); else qDebug
 
 static const QString orgFreedesktopDBusString = QLatin1String(DBUS_SERVICE_DBUS);
 
@@ -743,7 +743,7 @@ void QDBusConnectionPrivate::activateSignal(const QDBusConnectionPrivate::Signal
     if (call == DIRECT_DELIVERY) {
         // short-circuit delivery
         Q_ASSERT(this == hook.obj);
-        deliverCall(this, 0, msg, hook.params, hook.midx);
+        deliverCall(this, msg, hook.params, hook.midx);
         return;
     }
     if (call)
@@ -826,21 +826,21 @@ bool QDBusConnectionPrivate::activateCall(QObject* object, int flags, const QDBu
         object->setProperty(cachePropertyName, QVariant::fromValue(slotCache));
 
         // found the slot to be called
-        deliverCall(object, flags, msg, slotData.metaTypes, slotData.slotIdx);
+        deliverCall(object, msg, slotData.metaTypes, slotData.slotIdx);
         return true;
     } else if (cacheIt->slotIdx == -1) {
         // negative cache
         return false;
     } else {
         // use the cache
-        deliverCall(object, flags, msg, cacheIt->metaTypes, cacheIt->slotIdx);
+        deliverCall(object, msg, cacheIt->metaTypes, cacheIt->slotIdx);
         return true;
     }
 #endif // QT_NO_PROPERTIES
     return false;
 }
 
-void QDBusConnectionPrivate::deliverCall(QObject *object, int /*flags*/, const QDBusMessage &msg,
+void QDBusConnectionPrivate::deliverCall(QObject *object, const QDBusMessage &msg,
                                          const QList<int> &metaTypes, int slotIdx)
 {
     Q_ASSERT_X(!object || QThread::currentThread() == object->thread(),
@@ -952,12 +952,10 @@ QDBusConnectionPrivate::QDBusConnectionPrivate(QObject *p)
       rootNode(QString(QLatin1Char('/')))
 {
     static const bool threads = dbus_threads_init_default();
-    if (isDebugging == -1)
-        isDebugging = qgetenv("QDBUS_DEBUG").toInt();
     Q_UNUSED(threads)
 
 #if QDBUS_THREAD_DEBUG
-    if (isDebugging > 1)
+    if (isDebugging)
         qdbusThreadDebug = qdbusDefaultThreadDebug;
 #endif
 
@@ -1775,11 +1773,13 @@ void QDBusConnectionPrivate::processFinishedCall(QDBusPendingCallPrivate *call)
         delete call;
 }
 
-int QDBusConnectionPrivate::send(const QDBusMessage& message)
+bool QDBusConnectionPrivate::send(const QDBusMessage& message)
 {
-    if (QDBusMessagePrivate::isLocal(message))
-        return -1;              // don't send; the reply will be retrieved by the caller
-                                // through the d_ptr->localReply link
+    if (QDBusMessagePrivate::isLocal(message)) {
+        // don't send; the reply will be retrieved by the caller
+        // through the d_ptr->localReply link
+        return true;
+    }
 
     QDBusError error;
     DBusMessage *msg = QDBusMessagePrivate::toDBusMessage(message, capabilities, &error);
@@ -1801,24 +1801,18 @@ int QDBusConnectionPrivate::send(const QDBusMessage& message)
                      "invalid", qPrintable(message.service()),
                      qPrintable(error.message()));
         lastError = error;
-        return 0;
+        return false;
     }
 
     dbus_message_set_no_reply(msg, true); // the reply would not be delivered to anything
 
     qDBusDebug() << this << "sending message (no reply):" << message;
     checkThread();
-    bool isOk;
-    {
-        QDBusDispatchLocker locker(SendMessageAction, this);
-        isOk = dbus_connection_send(connection, msg, 0);
-    }
-    int serial = 0;
-    if (isOk)
-        serial = dbus_message_get_serial(msg);
 
+    QDBusDispatchLocker locker(SendMessageAction, this);
+    bool isOk = dbus_connection_send(connection, msg, 0);
     dbus_message_unref(msg);
-    return serial;
+    return isOk;
 }
 
 QDBusMessage QDBusConnectionPrivate::sendWithReply(const QDBusMessage &message,
@@ -2383,7 +2377,7 @@ bool QDBusConnectionPrivate::isServiceRegisteredByThread(const QString &serviceN
     if (serviceName == dbusServiceString())
         return false;
 
-    QDBusReadLocker locker(UnregisterServiceAction, this);
+    QDBusReadLocker locker(ServiceRegisteredAction, this);
     return serviceNames.contains(serviceName);
 }
 
