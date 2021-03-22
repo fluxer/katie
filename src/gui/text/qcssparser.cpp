@@ -37,190 +37,189 @@ QT_BEGIN_NAMESPACE
 
 namespace QCss {
 
-struct QCssKnownValue
-{
-    const char *name;
+struct QCssKnownValue {
+    const QLatin1String name;
     const quint64 id;
 };
 
-static const QCssKnownValue properties[NumProperties - 1] = {
-    { "-qt-background-role", QtBackgroundRole },
-    { "-qt-block-indent", QtBlockIndent },
-    { "-qt-list-indent", QtListIndent },
-    { "-qt-list-number-prefix", QtListNumberPrefix },
-    { "-qt-list-number-suffix", QtListNumberSuffix },
-    { "-qt-paragraph-type", QtParagraphType },
-    { "-qt-style-features", QtStyleFeatures },
-    { "-qt-table-type", QtTableType },
-    { "-qt-user-state", QtUserState },
-    { "alternate-background-color", QtAlternateBackground },
-    { "background", Background },
-    { "background-attachment", BackgroundAttachment },
-    { "background-clip", BackgroundClip },
-    { "background-color", BackgroundColor },
-    { "background-image", BackgroundImage },
-    { "background-origin", BackgroundOrigin },
-    { "background-position", BackgroundPosition },
-    { "background-repeat", BackgroundRepeat },
-    { "border", Border },
-    { "border-bottom", BorderBottom },
-    { "border-bottom-color", BorderBottomColor },
-    { "border-bottom-left-radius", BorderBottomLeftRadius },
-    { "border-bottom-right-radius", BorderBottomRightRadius },
-    { "border-bottom-style", BorderBottomStyle },
-    { "border-bottom-width", BorderBottomWidth },
-    { "border-color", BorderColor },
-    { "border-image", BorderImage },
-    { "border-left", BorderLeft },
-    { "border-left-color", BorderLeftColor },
-    { "border-left-style", BorderLeftStyle },
-    { "border-left-width", BorderLeftWidth },
-    { "border-radius", BorderRadius },
-    { "border-right", BorderRight },
-    { "border-right-color", BorderRightColor },
-    { "border-right-style", BorderRightStyle },
-    { "border-right-width", BorderRightWidth },
-    { "border-style", BorderStyles },
-    { "border-top", BorderTop },
-    { "border-top-color", BorderTopColor },
-    { "border-top-left-radius", BorderTopLeftRadius },
-    { "border-top-right-radius", BorderTopRightRadius },
-    { "border-top-style", BorderTopStyle },
-    { "border-top-width", BorderTopWidth },
-    { "border-width", BorderWidth },
-    { "bottom", Bottom },
-    { "color", Color },
-    { "float", Float },
-    { "font", Font },
-    { "font-family", FontFamily },
-    { "font-size", FontSize },
-    { "font-style", FontStyle },
-    { "font-variant", FontVariant },
-    { "font-weight", FontWeight },
-    { "height", Height },
-    { "image", QtImage },
-    { "image-position", QtImageAlignment },
-    { "left", Left },
-    { "line-height", LineHeight },
-    { "list-style", ListStyle },
-    { "list-style-type", ListStyleType },
-    { "margin" , Margin },
-    { "margin-bottom", MarginBottom },
-    { "margin-left", MarginLeft },
-    { "margin-right", MarginRight },
-    { "margin-top", MarginTop },
-    { "max-height", MaximumHeight },
-    { "max-width", MaximumWidth },
-    { "min-height", MinimumHeight },
-    { "min-width", MinimumWidth },
-    { "outline", Outline },
-    { "outline-bottom-left-radius", OutlineBottomLeftRadius },
-    { "outline-bottom-right-radius", OutlineBottomRightRadius },
-    { "outline-color", OutlineColor },
-    { "outline-offset", OutlineOffset },
-    { "outline-radius", OutlineRadius },
-    { "outline-style", OutlineStyle },
-    { "outline-top-left-radius", OutlineTopLeftRadius },
-    { "outline-top-right-radius", OutlineTopRightRadius },
-    { "outline-width", OutlineWidth },
-    { "padding", Padding },
-    { "padding-bottom", PaddingBottom },
-    { "padding-left", PaddingLeft },
-    { "padding-right", PaddingRight },
-    { "padding-top", PaddingTop },
-    { "page-break-after", PageBreakAfter },
-    { "page-break-before", PageBreakBefore },
-    { "position", Position },
-    { "right", Right },
-    { "selection-background-color", QtSelectionBackground },
-    { "selection-color", QtSelectionForeground },
-    { "spacing", QtSpacing },
-    { "subcontrol-origin", QtOrigin },
-    { "subcontrol-position", QtPosition },
-    { "text-align", TextAlignment },
-    { "text-decoration", TextDecoration },
-    { "text-indent", TextIndent },
-    { "text-transform", TextTransform },
-    { "text-underline-style", TextUnderlineStyle },
-    { "top", Top },
-    { "vertical-align", VerticalAlignment },
-    { "white-space", Whitespace },
-    { "width", Width }
+static const QCssKnownValue propertiesTbl[NumProperties - 1] = {
+    { QLatin1String("-qt-background-role"), QtBackgroundRole },
+    { QLatin1String("-qt-block-indent"), QtBlockIndent },
+    { QLatin1String("-qt-list-indent"), QtListIndent },
+    { QLatin1String("-qt-list-number-prefix"), QtListNumberPrefix },
+    { QLatin1String("-qt-list-number-suffix"), QtListNumberSuffix },
+    { QLatin1String("-qt-paragraph-type"), QtParagraphType },
+    { QLatin1String("-qt-style-features"), QtStyleFeatures },
+    { QLatin1String("-qt-table-type"), QtTableType },
+    { QLatin1String("-qt-user-state"), QtUserState },
+    { QLatin1String("alternate-background-color"), QtAlternateBackground },
+    { QLatin1String("background"), Background },
+    { QLatin1String("background-attachment"), BackgroundAttachment },
+    { QLatin1String("background-clip"), BackgroundClip },
+    { QLatin1String("background-color"), BackgroundColor },
+    { QLatin1String("background-image"), BackgroundImage },
+    { QLatin1String("background-origin"), BackgroundOrigin },
+    { QLatin1String("background-position"), BackgroundPosition },
+    { QLatin1String("background-repeat"), BackgroundRepeat },
+    { QLatin1String("border"), Border },
+    { QLatin1String("border-bottom"), BorderBottom },
+    { QLatin1String("border-bottom-color"), BorderBottomColor },
+    { QLatin1String("border-bottom-left-radius"), BorderBottomLeftRadius },
+    { QLatin1String("border-bottom-right-radius"), BorderBottomRightRadius },
+    { QLatin1String("border-bottom-style"), BorderBottomStyle },
+    { QLatin1String("border-bottom-width"), BorderBottomWidth },
+    { QLatin1String("border-color"), BorderColor },
+    { QLatin1String("border-image"), BorderImage },
+    { QLatin1String("border-left"), BorderLeft },
+    { QLatin1String("border-left-color"), BorderLeftColor },
+    { QLatin1String("border-left-style"), BorderLeftStyle },
+    { QLatin1String("border-left-width"), BorderLeftWidth },
+    { QLatin1String("border-radius"), BorderRadius },
+    { QLatin1String("border-right"), BorderRight },
+    { QLatin1String("border-right-color"), BorderRightColor },
+    { QLatin1String("border-right-style"), BorderRightStyle },
+    { QLatin1String("border-right-width"), BorderRightWidth },
+    { QLatin1String("border-style"), BorderStyles },
+    { QLatin1String("border-top"), BorderTop },
+    { QLatin1String("border-top-color"), BorderTopColor },
+    { QLatin1String("border-top-left-radius"), BorderTopLeftRadius },
+    { QLatin1String("border-top-right-radius"), BorderTopRightRadius },
+    { QLatin1String("border-top-style"), BorderTopStyle },
+    { QLatin1String("border-top-width"), BorderTopWidth },
+    { QLatin1String("border-width"), BorderWidth },
+    { QLatin1String("bottom"), Bottom },
+    { QLatin1String("color"), Color },
+    { QLatin1String("float"), Float },
+    { QLatin1String("font"), Font },
+    { QLatin1String("font-family"), FontFamily },
+    { QLatin1String("font-size"), FontSize },
+    { QLatin1String("font-style"), FontStyle },
+    { QLatin1String("font-variant"), FontVariant },
+    { QLatin1String("font-weight"), FontWeight },
+    { QLatin1String("height"), Height },
+    { QLatin1String("image"), QtImage },
+    { QLatin1String("image-position"), QtImageAlignment },
+    { QLatin1String("left"), Left },
+    { QLatin1String("line-height"), LineHeight },
+    { QLatin1String("list-style"), ListStyle },
+    { QLatin1String("list-style-type"), ListStyleType },
+    { QLatin1String("margin"), Margin },
+    { QLatin1String("margin-bottom"), MarginBottom },
+    { QLatin1String("margin-left"), MarginLeft },
+    { QLatin1String("margin-right"), MarginRight },
+    { QLatin1String("margin-top"), MarginTop },
+    { QLatin1String("max-height"), MaximumHeight },
+    { QLatin1String("max-width"), MaximumWidth },
+    { QLatin1String("min-height"), MinimumHeight },
+    { QLatin1String("min-width"), MinimumWidth },
+    { QLatin1String("outline"), Outline },
+    { QLatin1String("outline-bottom-left-radius"), OutlineBottomLeftRadius },
+    { QLatin1String("outline-bottom-right-radius"), OutlineBottomRightRadius },
+    { QLatin1String("outline-color"), OutlineColor },
+    { QLatin1String("outline-offset"), OutlineOffset },
+    { QLatin1String("outline-radius"), OutlineRadius },
+    { QLatin1String("outline-style"), OutlineStyle },
+    { QLatin1String("outline-top-left-radius"), OutlineTopLeftRadius },
+    { QLatin1String("outline-top-right-radius"), OutlineTopRightRadius },
+    { QLatin1String("outline-width"), OutlineWidth },
+    { QLatin1String("padding"), Padding },
+    { QLatin1String("padding-bottom"), PaddingBottom },
+    { QLatin1String("padding-left"), PaddingLeft },
+    { QLatin1String("padding-right"), PaddingRight },
+    { QLatin1String("padding-top"), PaddingTop },
+    { QLatin1String("page-break-after"), PageBreakAfter },
+    { QLatin1String("page-break-before"), PageBreakBefore },
+    { QLatin1String("position"), Position },
+    { QLatin1String("right"), Right },
+    { QLatin1String("selection-background-color"), QtSelectionBackground },
+    { QLatin1String("selection-color"), QtSelectionForeground },
+    { QLatin1String("spacing"), QtSpacing },
+    { QLatin1String("subcontrol-origin"), QtOrigin },
+    { QLatin1String("subcontrol-position"), QtPosition },
+    { QLatin1String("text-align"), TextAlignment },
+    { QLatin1String("text-decoration"), TextDecoration },
+    { QLatin1String("text-indent"), TextIndent },
+    { QLatin1String("text-transform"), TextTransform },
+    { QLatin1String("text-underline-style"), TextUnderlineStyle },
+    { QLatin1String("top"), Top },
+    { QLatin1String("vertical-align"), VerticalAlignment },
+    { QLatin1String("white-space"), Whitespace },
+    { QLatin1String("width"), Width }
 };
 
-static const QCssKnownValue values[NumKnownValues - 1] = {
-    { "active", Value_Active },
-    { "alternate-base", Value_AlternateBase },
-    { "always", Value_Always },
-    { "auto", Value_Auto },
-    { "base", Value_Base },
-    { "bold", Value_Bold },
-    { "bottom", Value_Bottom },
-    { "bright-text", Value_BrightText },
-    { "button", Value_Button },
-    { "button-text", Value_ButtonText },
-    { "center", Value_Center },
-    { "circle", Value_Circle },
-    { "dark", Value_Dark },
-    { "dashed", Value_Dashed },
-    { "decimal", Value_Decimal },
-    { "disabled", Value_Disabled },
-    { "disc", Value_Disc },
-    { "dot-dash", Value_DotDash },
-    { "dot-dot-dash", Value_DotDotDash },
-    { "dotted", Value_Dotted },
-    { "double", Value_Double },
-    { "groove", Value_Groove },
-    { "highlight", Value_Highlight },
-    { "highlighted-text", Value_HighlightedText },
-    { "inset", Value_Inset },
-    { "italic", Value_Italic },
-    { "large", Value_Large },
-    { "left", Value_Left },
-    { "light", Value_Light },
-    { "line-through", Value_LineThrough },
-    { "link", Value_Link },
-    { "link-visited", Value_LinkVisited },
-    { "lower-alpha", Value_LowerAlpha },
-    { "lower-roman", Value_LowerRoman },
-    { "lowercase", Value_Lowercase },
-    { "medium", Value_Medium },
-    { "mid", Value_Mid },
-    { "middle", Value_Middle },
-    { "midlight", Value_Midlight },
-    { "native", Value_Native },
-    { "none", Value_None },
-    { "normal", Value_Normal },
-    { "nowrap", Value_NoWrap },
-    { "oblique", Value_Oblique },
-    { "off", Value_Off },
-    { "on", Value_On },
-    { "outset", Value_Outset },
-    { "overline", Value_Overline },
-    { "pre", Value_Pre },
-    { "pre-wrap", Value_PreWrap },
-    { "ridge", Value_Ridge },
-    { "right", Value_Right },
-    { "selected", Value_Selected },
-    { "shadow", Value_Shadow },
-    { "small" , Value_Small },
-    { "small-caps", Value_SmallCaps },
-    { "solid", Value_Solid },
-    { "square", Value_Square },
-    { "sub", Value_Sub },
-    { "super", Value_Super },
-    { "text", Value_Text },
-    { "top", Value_Top },
-    { "transparent", Value_Transparent },
-    { "underline", Value_Underline },
-    { "upper-alpha", Value_UpperAlpha },
-    { "upper-roman", Value_UpperRoman },
-    { "uppercase", Value_Uppercase },
-    { "wave", Value_Wave },
-    { "window", Value_Window },
-    { "window-text", Value_WindowText },
-    { "x-large", Value_XLarge },
-    { "xx-large", Value_XXLarge }
+static const QCssKnownValue valuesTbl[NumKnownValues - 1] = {
+    { QLatin1String("active"), Value_Active },
+    { QLatin1String("alternate-base"), Value_AlternateBase },
+    { QLatin1String("always"), Value_Always },
+    { QLatin1String("auto"), Value_Auto },
+    { QLatin1String("base"), Value_Base },
+    { QLatin1String("bold"), Value_Bold },
+    { QLatin1String("bottom"), Value_Bottom },
+    { QLatin1String("bright-text"), Value_BrightText },
+    { QLatin1String("button"), Value_Button },
+    { QLatin1String("button-text"), Value_ButtonText },
+    { QLatin1String("center"), Value_Center },
+    { QLatin1String("circle"), Value_Circle },
+    { QLatin1String("dark"), Value_Dark },
+    { QLatin1String("dashed"), Value_Dashed },
+    { QLatin1String("decimal"), Value_Decimal },
+    { QLatin1String("disabled"), Value_Disabled },
+    { QLatin1String("disc"), Value_Disc },
+    { QLatin1String("dot-dash"), Value_DotDash },
+    { QLatin1String("dot-dot-dash"), Value_DotDotDash },
+    { QLatin1String("dotted"), Value_Dotted },
+    { QLatin1String("double"), Value_Double },
+    { QLatin1String("groove"), Value_Groove },
+    { QLatin1String("highlight"), Value_Highlight },
+    { QLatin1String("highlighted-text"), Value_HighlightedText },
+    { QLatin1String("inset"), Value_Inset },
+    { QLatin1String("italic"), Value_Italic },
+    { QLatin1String("large"), Value_Large },
+    { QLatin1String("left"), Value_Left },
+    { QLatin1String("light"), Value_Light },
+    { QLatin1String("line-through"), Value_LineThrough },
+    { QLatin1String("link"), Value_Link },
+    { QLatin1String("link-visited"), Value_LinkVisited },
+    { QLatin1String("lower-alpha"), Value_LowerAlpha },
+    { QLatin1String("lower-roman"), Value_LowerRoman },
+    { QLatin1String("lowercase"), Value_Lowercase },
+    { QLatin1String("medium"), Value_Medium },
+    { QLatin1String("mid"), Value_Mid },
+    { QLatin1String("middle"), Value_Middle },
+    { QLatin1String("midlight"), Value_Midlight },
+    { QLatin1String("native"), Value_Native },
+    { QLatin1String("none"), Value_None },
+    { QLatin1String("normal"), Value_Normal },
+    { QLatin1String("nowrap"), Value_NoWrap },
+    { QLatin1String("oblique"), Value_Oblique },
+    { QLatin1String("off"), Value_Off },
+    { QLatin1String("on"), Value_On },
+    { QLatin1String("outset"), Value_Outset },
+    { QLatin1String("overline"), Value_Overline },
+    { QLatin1String("pre"), Value_Pre },
+    { QLatin1String("pre-wrap"), Value_PreWrap },
+    { QLatin1String("ridge"), Value_Ridge },
+    { QLatin1String("right"), Value_Right },
+    { QLatin1String("selected"), Value_Selected },
+    { QLatin1String("shadow"), Value_Shadow },
+    { QLatin1String("small"), Value_Small },
+    { QLatin1String("small-caps"), Value_SmallCaps },
+    { QLatin1String("solid"), Value_Solid },
+    { QLatin1String("square"), Value_Square },
+    { QLatin1String("sub"), Value_Sub },
+    { QLatin1String("super"), Value_Super },
+    { QLatin1String("text"), Value_Text },
+    { QLatin1String("top"), Value_Top },
+    { QLatin1String("transparent"), Value_Transparent },
+    { QLatin1String("underline"), Value_Underline },
+    { QLatin1String("upper-alpha"), Value_UpperAlpha },
+    { QLatin1String("upper-roman"), Value_UpperRoman },
+    { QLatin1String("uppercase"), Value_Uppercase },
+    { QLatin1String("wave"), Value_Wave },
+    { QLatin1String("window"), Value_Window },
+    { QLatin1String("window-text"), Value_WindowText },
+    { QLatin1String("x-large"), Value_XLarge },
+    { QLatin1String("xx-large"), Value_XXLarge }
 };
 
 //Map id to strings as they appears in the 'values' array above
@@ -232,101 +231,101 @@ static const short indexOfId[NumKnownValues] = { 0, 41, 48, 42, 49, 54, 35, 26, 
 QString Value::toString() const
 {
     if (type == KnownIdentifier) {
-        return QLatin1String(values[indexOfId[variant.toInt()]].name);
+        return valuesTbl[indexOfId[variant.toInt()]].name;
     } else {
         return variant.toString();
     }
 }
 
-static const QCssKnownValue pseudos[NumPseudos - 1] = {
-    { "active", PseudoClass_Active },
-    { "adjoins-item", PseudoClass_Item },
-    { "alternate", PseudoClass_Alternate },
-    { "bottom", PseudoClass_Bottom },
-    { "checked", PseudoClass_Checked },
-    { "closable", PseudoClass_Closable },
-    { "closed", PseudoClass_Closed },
-    { "default", PseudoClass_Default },
-    { "disabled", PseudoClass_Disabled },
-    { "edit-focus", PseudoClass_EditFocus },
-    { "editable", PseudoClass_Editable },
-    { "enabled", PseudoClass_Enabled },
-    { "exclusive", PseudoClass_Exclusive },
-    { "first", PseudoClass_First },
-    { "flat", PseudoClass_Flat },
-    { "floatable", PseudoClass_Floatable },
-    { "focus", PseudoClass_Focus },
-    { "has-children", PseudoClass_Children },
-    { "has-siblings", PseudoClass_Sibling },
-    { "horizontal", PseudoClass_Horizontal },
-    { "hover", PseudoClass_Hover },
-    { "indeterminate" , PseudoClass_Indeterminate },
-    { "last", PseudoClass_Last },
-    { "left", PseudoClass_Left },
-    { "maximized", PseudoClass_Maximized },
-    { "middle", PseudoClass_Middle },
-    { "minimized", PseudoClass_Minimized },
-    { "movable", PseudoClass_Movable },
-    { "next-selected", PseudoClass_NextSelected },
-    { "no-frame", PseudoClass_Frameless },
-    { "non-exclusive", PseudoClass_NonExclusive },
-    { "off", PseudoClass_Unchecked },
-    { "on", PseudoClass_Checked },
-    { "only-one", PseudoClass_OnlyOne },
-    { "open", PseudoClass_Open },
-    { "pressed", PseudoClass_Pressed },
-    { "previous-selected", PseudoClass_PreviousSelected },
-    { "read-only", PseudoClass_ReadOnly },
-    { "right", PseudoClass_Right },
-    { "selected", PseudoClass_Selected },
-    { "top", PseudoClass_Top },
-    { "unchecked" , PseudoClass_Unchecked },
-    { "vertical", PseudoClass_Vertical },
-    { "window", PseudoClass_Window }
+static const QCssKnownValue pseudosTbl[NumPseudos - 1] = {
+    { QLatin1String("active"), PseudoClass_Active },
+    { QLatin1String("adjoins-item"), PseudoClass_Item },
+    { QLatin1String("alternate"), PseudoClass_Alternate },
+    { QLatin1String("bottom"), PseudoClass_Bottom },
+    { QLatin1String("checked"), PseudoClass_Checked },
+    { QLatin1String("closable"), PseudoClass_Closable },
+    { QLatin1String("closed"), PseudoClass_Closed },
+    { QLatin1String("default"), PseudoClass_Default },
+    { QLatin1String("disabled"), PseudoClass_Disabled },
+    { QLatin1String("edit-focus"), PseudoClass_EditFocus },
+    { QLatin1String("editable"), PseudoClass_Editable },
+    { QLatin1String("enabled"), PseudoClass_Enabled },
+    { QLatin1String("exclusive"), PseudoClass_Exclusive },
+    { QLatin1String("first"), PseudoClass_First },
+    { QLatin1String("flat"), PseudoClass_Flat },
+    { QLatin1String("floatable"), PseudoClass_Floatable },
+    { QLatin1String("focus"), PseudoClass_Focus },
+    { QLatin1String("has-children"), PseudoClass_Children },
+    { QLatin1String("has-siblings"), PseudoClass_Sibling },
+    { QLatin1String("horizontal"), PseudoClass_Horizontal },
+    { QLatin1String("hover"), PseudoClass_Hover },
+    { QLatin1String("indeterminate"), PseudoClass_Indeterminate },
+    { QLatin1String("last"), PseudoClass_Last },
+    { QLatin1String("left"), PseudoClass_Left },
+    { QLatin1String("maximized"), PseudoClass_Maximized },
+    { QLatin1String("middle"), PseudoClass_Middle },
+    { QLatin1String("minimized"), PseudoClass_Minimized },
+    { QLatin1String("movable"), PseudoClass_Movable },
+    { QLatin1String("next-selected"), PseudoClass_NextSelected },
+    { QLatin1String("no-frame"), PseudoClass_Frameless },
+    { QLatin1String("non-exclusive"), PseudoClass_NonExclusive },
+    { QLatin1String("off"), PseudoClass_Unchecked },
+    { QLatin1String("on"), PseudoClass_Checked },
+    { QLatin1String("only-one"), PseudoClass_OnlyOne },
+    { QLatin1String("open"), PseudoClass_Open },
+    { QLatin1String("pressed"), PseudoClass_Pressed },
+    { QLatin1String("previous-selected"), PseudoClass_PreviousSelected },
+    { QLatin1String("read-only"), PseudoClass_ReadOnly },
+    { QLatin1String("right"), PseudoClass_Right },
+    { QLatin1String("selected"), PseudoClass_Selected },
+    { QLatin1String("top"), PseudoClass_Top },
+    { QLatin1String("unchecked"), PseudoClass_Unchecked },
+    { QLatin1String("vertical"), PseudoClass_Vertical },
+    { QLatin1String("window"), PseudoClass_Window }
 };
 
-static const QCssKnownValue origins[NumKnownOrigins - 1] = {
-    { "border", Origin_Border },
-    { "content", Origin_Content },
-    { "margin", Origin_Margin }, // not in css
-    { "padding", Origin_Padding }
+static const QCssKnownValue originsTbl[NumKnownOrigins - 1] = {
+    { QLatin1String("border"), Origin_Border },
+    { QLatin1String("content"), Origin_Content },
+    { QLatin1String("margin"), Origin_Margin }, // not in css
+    { QLatin1String("padding"), Origin_Padding }
 };
 
-static const QCssKnownValue repeats[NumKnownRepeats - 1] = {
-    { "no-repeat", Repeat_None },
-    { "repeat-x", Repeat_X },
-    { "repeat-xy", Repeat_XY },
-    { "repeat-y", Repeat_Y }
+static const QCssKnownValue repeatsTbl[NumKnownRepeats - 1] = {
+    { QLatin1String("no-repeat"), Repeat_None },
+    { QLatin1String("repeat-x"), Repeat_X },
+    { QLatin1String("repeat-xy"), Repeat_XY },
+    { QLatin1String("repeat-y"), Repeat_Y }
 };
 
-static const QCssKnownValue tileModes[NumKnownTileModes - 1] = {
-    { "repeat", TileMode_Repeat },
-    { "round", TileMode_Round },
-    { "stretch", TileMode_Stretch },
+static const QCssKnownValue tileModesTbl[NumKnownTileModes - 1] = {
+    { QLatin1String("repeat"), TileMode_Repeat },
+    { QLatin1String("round"), TileMode_Round },
+    { QLatin1String("stretch"), TileMode_Stretch },
 };
 
-static const QCssKnownValue positions[NumKnownPositionModes - 1] = {
-    { "absolute", PositionMode_Absolute },
-    { "fixed", PositionMode_Fixed },
-    { "relative", PositionMode_Relative },
-    { "static", PositionMode_Static }
+static const QCssKnownValue positionsTbl[NumKnownPositionModes - 1] = {
+    { QLatin1String("absolute"), PositionMode_Absolute },
+    { QLatin1String("fixed"), PositionMode_Fixed },
+    { QLatin1String("relative"), PositionMode_Relative },
+    { QLatin1String("static"), PositionMode_Static }
 };
 
-static const QCssKnownValue attachments[NumKnownAttachments - 1] = {
-    { "fixed", Attachment_Fixed },
-    { "scroll", Attachment_Scroll }
+static const QCssKnownValue attachmentsTbl[NumKnownAttachments - 1] = {
+    { QLatin1String("fixed"), Attachment_Fixed },
+    { QLatin1String("scroll"), Attachment_Scroll }
 };
 
-static const QCssKnownValue styleFeatures[NumKnownStyleFeatures - 1] = {
-    { "background-color", StyleFeature_BackgroundColor },
-    { "background-gradient", StyleFeature_BackgroundGradient },
-    { "none", StyleFeature_None }
+static const QCssKnownValue styleFeaturesTbl[NumKnownStyleFeatures - 1] = {
+    { QLatin1String("background-color"), StyleFeature_BackgroundColor },
+    { QLatin1String("background-gradient"), StyleFeature_BackgroundGradient },
+    { QLatin1String("none"), StyleFeature_None }
 };
 
 static inline quint64 findKnownValue(const QString &name, const QCssKnownValue *iter, int numValues)
 {
     for (int i = 0; i < numValues - 1; i++) {
-        if (name.compare(QLatin1String(iter[i].name), Qt::CaseInsensitive) == 0) {
+        if (name.compare(iter[i].name, Qt::CaseInsensitive) == 0) {
             return iter[i].id;
         }
     }
@@ -663,7 +662,7 @@ static ColorData parseColorValue(QCss::Value v)
         return ColorData();
 
     if ((lst.at(0).compare(QLatin1String("palette"), Qt::CaseInsensitive)) == 0) {
-        int role = findKnownValue(lst.at(1).trimmed(), values, NumKnownValues);
+        int role = findKnownValue(lst.at(1).trimmed(), valuesTbl, NumKnownValues);
         if (role >= Value_FirstColorRole && role <= Value_LastColorRole)
             return (QPalette::ColorRole)(role-Value_FirstColorRole);
 
@@ -936,7 +935,7 @@ static void parseShorthandBackgroundProperty(const QVector<QCss::Value> &values,
         }
 
         Repeat repeatAttempt = static_cast<Repeat>(findKnownValue(v.variant.toString(),
-                                                   repeats, NumKnownRepeats));
+                                                   repeatsTbl, NumKnownRepeats));
         if (repeatAttempt != Repeat_Unknown) {
             *repeat = repeatAttempt;
             continue;
@@ -985,7 +984,7 @@ bool ValueExtractor::extractBackground(QBrush *brush, QString *image, Repeat *re
                     *repeat = static_cast<Repeat>(decl.d->parsed.toInt());
                 } else {
                     *repeat = static_cast<Repeat>(findKnownValue(val.variant.toString(),
-                                                  repeats, NumKnownRepeats));
+                                                  repeatsTbl, NumKnownRepeats));
                     decl.d->parsed = *repeat;
                 }
                 break;
@@ -1507,7 +1506,7 @@ Repeat Declaration::repeatValue() const
     if (d->values.count() != 1)
         return Repeat_Unknown;
     int v = findKnownValue(d->values.at(0).variant.toString(),
-                   repeats, NumKnownRepeats);
+                   repeatsTbl, NumKnownRepeats);
     d->parsed = v;
     return static_cast<Repeat>(v);
 }
@@ -1519,7 +1518,7 @@ Origin Declaration::originValue() const
     if (d->values.count() != 1)
         return Origin_Unknown;
     int v = findKnownValue(d->values.at(0).variant.toString(),
-                               origins, NumKnownOrigins);
+                               originsTbl, NumKnownOrigins);
     d->parsed = v;
     return static_cast<Origin>(v);
 }
@@ -1531,7 +1530,7 @@ PositionMode Declaration::positionValue() const
     if (d->values.count() != 1)
         return PositionMode_Unknown;
     int v = findKnownValue(d->values.at(0).variant.toString(),
-                           positions, NumKnownPositionModes);
+                           positionsTbl, NumKnownPositionModes);
     d->parsed = v;
     return static_cast<PositionMode>(v);
 }
@@ -1543,7 +1542,7 @@ Attachment Declaration::attachmentValue() const
     if (d->values.count() != 1)
         return Attachment_Unknown;
     int v = findKnownValue(d->values.at(0).variant.toString(),
-                           attachments, NumKnownAttachments);
+                           attachmentsTbl, NumKnownAttachments);
     d->parsed = v;
     return static_cast<Attachment>(v);
 }
@@ -1556,7 +1555,7 @@ int Declaration::styleFeaturesValue() const
     int features = StyleFeature_None;
     for (int i = 0; i < d->values.count(); i++) {
         features |= static_cast<int>(findKnownValue(d->values.value(i).variant.toString(),
-                                     styleFeatures, NumKnownStyleFeatures));
+                                     styleFeaturesTbl, NumKnownStyleFeatures));
     }
     d->parsed = features;
     return features;
@@ -1608,12 +1607,12 @@ void Declaration::borderImageValue(QString *image, int *cuts,
 
     if (d->values.last().type == Value::Identifier) {
         *v = static_cast<TileMode>(findKnownValue(d->values.last().variant.toString(),
-                                      tileModes, NumKnownTileModes));
+                                      tileModesTbl, NumKnownTileModes));
     }
     if (d->values[d->values.count() - 2].type == Value::Identifier) {
         *h = static_cast<TileMode>
                 (findKnownValue(d->values[d->values.count()-2].variant.toString(),
-                                        tileModes, NumKnownTileModes));
+                                        tileModesTbl, NumKnownTileModes));
     } else
         *h = *v;
 }
@@ -2261,7 +2260,7 @@ bool Parser::parseCombinator(BasicSelector::Relation *relation)
 bool Parser::parseProperty(Declaration *decl)
 {
     decl->d->property = lexem();
-    decl->d->propertyId = static_cast<Property>(findKnownValue(decl->d->property, properties, NumProperties));
+    decl->d->propertyId = static_cast<Property>(findKnownValue(decl->d->property, propertiesTbl, NumProperties));
     skipSpace();
     return true;
 }
@@ -2420,7 +2419,7 @@ bool Parser::parsePseudo(Pseudo *pseudo)
     pseudo->negated = test(EXCLAMATION_SYM);
     if (test(IDENT)) {
         pseudo->name = lexem();
-        pseudo->type = static_cast<quint64>(findKnownValue(pseudo->name, pseudos, NumPseudos));
+        pseudo->type = static_cast<quint64>(findKnownValue(pseudo->name, pseudosTbl, NumPseudos));
         return true;
     }
     if (!next(FUNCTION)) return false;
@@ -2541,7 +2540,7 @@ bool Parser::parseTerm(Value *value)
         case IDENT: {
             if (haveUnary) return false;
             value->type = Value::Identifier;
-            const int theid = findKnownValue(str, values, NumKnownValues);
+            const int theid = findKnownValue(str, valuesTbl, NumKnownValues);
             if (theid != 0) {
                 value->type = Value::KnownIdentifier;
                 value->variant = theid;
