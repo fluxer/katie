@@ -26,16 +26,9 @@ Interface::Interface()
 {
 }
 
-// Export the sleep function
-// TODO QT5: remove this class, QThread::msleep is now public
-class FriendlySleepyThread : public QThread {
-public:
-    using QThread::msleep;
-};
-
 int Interface::sleepMethod(int msec)
 {
-    FriendlySleepyThread::msleep(msec);
+    QThread::msleep(msec);
     return 42;
 }
 
