@@ -123,8 +123,6 @@ public:
         LeftButton       = 0x00000001,
         RightButton      = 0x00000002,
         MiddleButton     = 0x00000004,
-        XButton1         = 0x00000008,
-        XButton2         = 0x00000010,
         MouseButtonMask  = 0x000000ff
     };
     Q_DECLARE_FLAGS(MouseButtons, MouseButton)
@@ -229,7 +227,6 @@ public:
         WindowCloseButtonHint = 0x00080000,
         BypassGraphicsProxyWidget = 0x00100000
     };
-
     Q_DECLARE_FLAGS(WindowFlags, WindowType)
 
     enum WindowState {
@@ -403,7 +400,6 @@ public:
         Key_PreviousCandidate             = 0xff3e,
         Key_Kanji                         = 0xff21,
         Key_Muhenkan                      = 0xff22,
-        Key_Henkan_Mode                   = 0xff23,
         Key_Henkan                        = 0xff23,
         Key_Romaji                        = 0xff24,
         Key_Hiragana                      = 0xff25,
@@ -418,17 +414,12 @@ public:
         Key_Kana_Shift                    = 0xff2e,
         Key_Eisu_Shift                    = 0xff2f,
         Key_Eisu_toggle                   = 0xff30,
-        Key_Kanji_Bangou                  = 0xff37,
-        Key_Zen_Koho                      = 0xff3d,
-        Key_Mae_Koho                      = 0xff3e,
         Key_Home                          = 0xff50,
         Key_Left                          = 0xff51,
         Key_Up                            = 0xff52,
         Key_Right                         = 0xff53,
         Key_Down                          = 0xff54,
-        Key_Prior                         = 0xff55,
         Key_Page_Up                       = 0xff55,
-        Key_Next                          = 0xff56,
         Key_Page_Down                     = 0xff56,
         Key_End                           = 0xff57,
         Key_Begin                         = 0xff58,
@@ -444,7 +435,6 @@ public:
         Key_Help                          = 0xff6a,
         Key_Break                         = 0xff6b,
         Key_Mode_switch                   = 0xff7e,
-        Key_script_switch                 = 0xff7e,
         Key_Num_Lock                      = 0xff7f,
         Key_F1                            = 0xffbe,
         Key_F2                            = 0xffbf,
@@ -614,7 +604,6 @@ public:
         Key_Icircumflex                   = 0x00ce,
         Key_Idiaeresis                    = 0x00cf,
         Key_ETH                           = 0x00d0,
-        Key_Eth                           = 0x00d0,
         Key_Ntilde                        = 0x00d1,
         Key_Ograve                        = 0x00d2,
         Key_Oacute                        = 0x00d3,
@@ -623,14 +612,12 @@ public:
         Key_Odiaeresis                    = 0x00d6,
         Key_multiply                      = 0x00d7,
         Key_Oslash                        = 0x00d8,
-        Key_Ooblique                      = 0x00d8,
         Key_Ugrave                        = 0x00d9,
         Key_Uacute                        = 0x00da,
         Key_Ucircumflex                   = 0x00db,
         Key_Udiaeresis                    = 0x00dc,
         Key_Yacute                        = 0x00dd,
         Key_THORN                         = 0x00de,
-        Key_Thorn                         = 0x00de,
         Key_ssharp                        = 0x00df,
         Key_agrave                        = 0x00e0,
         Key_aacute                        = 0x00e1,
@@ -657,7 +644,6 @@ public:
         Key_odiaeresis                    = 0x00f6,
         Key_division                      = 0x00f7,
         Key_oslash                        = 0x00f8,
-        Key_ooblique                      = 0x00f8,
         Key_ugrave                        = 0x00f9,
         Key_uacute                        = 0x00fa,
         Key_ucircumflex                   = 0x00fb,
@@ -886,9 +872,20 @@ public:
         Key_Camera = Key_WebCam,
         Key_Call = Key_Phone,
 
-        // deprecated
+        // deprecated and aliases
+        Key_Next = Key_Page_Down,
+        Key_Prior = Key_Page_Up,
+        Key_ooblique = Key_oslash,
+        Key_Ooblique = Key_Oslash,
+        Key_Thorn = Key_THORN,
         Key_QuoteLeft = Key_Underscore,
         Key_QuoteRight = Key_Apostrophe,
+        Key_Eth = Key_ETH,
+        Key_Henkan_Mode = Key_Henkan,
+        Key_Kanji_Bangou = Key_Codeinput,
+        Key_Zen_Koho = Key_MultipleCandidate,
+        Key_Mae_Koho = Key_PreviousCandidate,
+        Key_script_switch = Key_Mode_switch,
 
         Key_Any = Key_Space,
         Key_Enter = 0xff8d,
@@ -1234,13 +1231,13 @@ public:
         MatchExactly = 0,
         MatchContains = 1,
         MatchStartsWith = 2,
-        MatchEndsWith = 3,
-        MatchRegExp = 4,
-        MatchWildcard = 5,
-        MatchFixedString = 8,
-        MatchCaseSensitive = 16,
-        MatchWrap = 32,
-        MatchRecursive = 64
+        MatchEndsWith = 4,
+        MatchRegExp = 8,
+        MatchWildcard = 16,
+        MatchFixedString = 32,
+        MatchCaseSensitive = 64,
+        MatchWrap = 128,
+        MatchRecursive = 256
     };
     Q_DECLARE_FLAGS(MatchFlags, MatchFlag)
 

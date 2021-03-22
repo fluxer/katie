@@ -83,7 +83,7 @@ static int *queuedConnectionTypes(const QList<QByteArray> &typeNames)
 #ifndef QT_NO_THREAD
 static QAtomicPointer<QMutexPool> signalSlotMutexes = QAtomicPointer<QMutexPool>(Q_NULLPTR);
 #endif
-static QAtomicInt objectCount = QAtomicInt(0);
+static QAtomicInt objectCount(0);
 
 /** \internal
  * mutex to be locked when accessing the connectionlists or the senders list
@@ -107,26 +107,30 @@ void (*QAbstractDeclarativeData::destroyed)(QAbstractDeclarativeData *, QObject 
 void (*QAbstractDeclarativeData::parentChanged)(QAbstractDeclarativeData *, QObject *, QObject *) = 0;
 void (*QAbstractDeclarativeData::objectNameChanged)(QAbstractDeclarativeData *, QObject *) = 0;
 
-QObjectData::~QObjectData() {}
+QObjectData::QObjectData()
+    : q_ptr(Q_NULLPTR),
+    parent(Q_NULLPTR),                         // no parent yet. It is set by setParent()
+    isWidget(false),                           // assume not a widget object
+    pendTimer(false),                          // no timers yet
+    blockSig(false),                           // not blocking signals
+    wasDeleted(false),                         // double-delete catcher
+    sendChildEvents(true),                     // if we should send ChildInsert and ChildRemove events to parent
+    receiveChildEvents(true),
+    inThreadChangeEvent(false),
+    postedEvents(0),
+    metaObject(Q_NULLPTR)
+{
+}
+
+QObjectData::~QObjectData()
+{
+}
 
 QObjectPrivate::QObjectPrivate()
-    : threadData(Q_NULLPTR), connectionLists(Q_NULLPTR), senders(Q_NULLPTR),
-    currentSender(Q_NULLPTR), currentChildBeingDeleted(Q_NULLPTR)
+    : extraData(Q_NULLPTR), threadData(QThreadData::current()), connectionLists(Q_NULLPTR),
+    senders(Q_NULLPTR), currentSender(Q_NULLPTR), currentChildBeingDeleted(Q_NULLPTR)
 {
-    // QObjectData initialization
-    q_ptr = Q_NULLPTR;
-    parent = Q_NULLPTR;                                 // no parent yet. It is set by setParent()
-    isWidget = false;                           // assume not a widget object
-    pendTimer = false;                          // no timers yet
-    blockSig = false;                           // not blocking signals
-    wasDeleted = false;                         // double-delete catcher
-    sendChildEvents = true;                     // if we should send ChildInsert and ChildRemove events to parent
-    receiveChildEvents = true;
-    postedEvents = 0;
-    extraData = Q_NULLPTR;
     connectedSignals[0] = connectedSignals[1] = 0;
-    inThreadChangeEvent = false;
-    metaObject = Q_NULLPTR;
 }
 
 QObjectPrivate::~QObjectPrivate()
@@ -162,7 +166,7 @@ static void computeOffsets(const QMetaObject *metaobject, int *signalOffset, int
     while (m) {
         const QMetaObjectPrivate *d = QMetaObjectPrivate::get(m);
         *methodOffset += d->methodCount;
-        Q_ASSERT(d->revision >= 4);
+        Q_ASSERT(d->revision >= 6);
         *signalOffset += d->signalCount;
         m = m->d.superdata;
     }
@@ -514,7 +518,7 @@ static bool check_parent_thread(QObject *parent,
                                 QThreadData *parentThreadData,
                                 QThreadData *currentThreadData)
 {
-    if (Q_UNLIKELY(parent && parentThreadData != currentThreadData)) {
+    if (Q_UNLIKELY(parentThreadData != currentThreadData)) {
         QThread *parentThread = parentThreadData->thread;
         QThread *currentThread = currentThreadData->thread;
         qWarning("QObject: Cannot create children for a parent that is in a different thread.\n"
@@ -550,11 +554,10 @@ QObject::QObject(QObject *parent)
 {
     Q_D(QObject);
     d->q_ptr = this;
-    d->threadData = (parent && !parent->thread()) ? parent->d_func()->threadData : QThreadData::current();
     d->threadData->ref();
     if (parent) {
         QT_TRY {
-            if (!check_parent_thread(parent, parent ? parent->d_func()->threadData : Q_NULLPTR, d->threadData))
+            if (!check_parent_thread(parent, parent->d_func()->threadData, d->threadData))
                 parent = Q_NULLPTR;
             setParent(parent);
         } QT_CATCH(...) {
@@ -573,11 +576,10 @@ QObject::QObject(QObjectPrivate &dd, QObject *parent)
 {
     Q_D(QObject);
     d->q_ptr = this;
-    d->threadData = (parent && !parent->thread()) ? parent->d_func()->threadData : QThreadData::current();
     d->threadData->ref();
     if (parent) {
         QT_TRY {
-            if (!check_parent_thread(parent, parent ? parent->d_func()->threadData : Q_NULLPTR, d->threadData))
+            if (!check_parent_thread(parent, parent->d_func()->threadData, d->threadData))
                 parent = Q_NULLPTR;
             if (d->isWidget) {
                 if (parent) {

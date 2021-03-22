@@ -50,7 +50,6 @@ QT_BEGIN_NAMESPACE
         command;                                            \
         p->setBrush(oldBrush);                              \
     }                                                       \
-    p->setOpacity(oldOpacity);
 
 
 void QSvgAnimation::draw(QPainter *, QSvgExtraStates &)
@@ -96,10 +95,8 @@ void QSvgArc::draw(QPainter *p, QSvgExtraStates &states)
 {
     applyStyle(p, states);
     if (p->pen().widthF() != 0) {
-        qreal oldOpacity = p->opacity();
-        p->setOpacity(oldOpacity * states.strokeOpacity);
+        p->setOpacity(p->opacity() * states.strokeOpacity);
         p->drawPath(m_path);
-        p->setOpacity(oldOpacity);
     }
     revertStyle(p, states);
 }
@@ -133,10 +130,8 @@ void QSvgLine::draw(QPainter *p, QSvgExtraStates &states)
 {
     applyStyle(p, states);
     if (p->pen().widthF() != 0) {
-        qreal oldOpacity = p->opacity();
-        p->setOpacity(oldOpacity * states.strokeOpacity);
+        p->setOpacity(p->opacity() * states.strokeOpacity);
         p->drawLine(m_line);
-        p->setOpacity(oldOpacity);
     }
     revertStyle(p, states);
 }
@@ -207,7 +202,6 @@ void QSvgPolyline::draw(QPainter *p, QSvgExtraStates &states)
         p->setOpacity(oldOpacity * states.strokeOpacity);
         p->drawPolyline(m_poly);
     }
-    p->setOpacity(oldOpacity);
     revertStyle(p, states);
 }
 

@@ -93,9 +93,9 @@ public:
     \sa release(), available()
 */
 QSemaphore::QSemaphore(int n)
+    : d(new QSemaphorePrivate(n))
 {
     Q_ASSERT_X(n >= 0, "QSemaphore", "parameter 'n' must be non-negative");
-    d = new QSemaphorePrivate(n);
 }
 
 /*!
@@ -105,7 +105,9 @@ QSemaphore::QSemaphore(int n)
     undefined behavior.
 */
 QSemaphore::~QSemaphore()
-{ delete d; }
+{
+    delete d;
+}
 
 /*!
     Tries to acquire \c n resources guarded by the semaphore. If \a n

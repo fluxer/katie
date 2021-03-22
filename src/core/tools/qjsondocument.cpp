@@ -33,12 +33,15 @@ public:
     QJsonDocumentPrivate() : ref(1) { }
 
     QVariantMap jsonToMap(const QByteArray &jsondata);
-    QByteArray mapToJson(const QVariantMap &jsonmap);
+    void mapToJson(const QVariantMap &jsonmap, json_t *jroot, quint16 jdepth);
 
     QAtomicInt ref;
     QByteArray json;
     QVariantMap map;
     QString error;
+
+private:
+    Q_DISABLE_COPY(QJsonDocumentPrivate);
 };
 
 QVariantMap QJsonDocumentPrivate::jsonToMap(const QByteArray &jsondata)
@@ -51,7 +54,7 @@ QVariantMap QJsonDocumentPrivate::jsonToMap(const QByteArray &jsondata)
     }
 
     json_error_t jerror;
-    json_t *jroot = json_loads(jsondata.constData(), 0, &jerror);
+    json_t *jroot = json_loads(jsondata.constData(), JSON_ALLOW_NUL, &jerror);
 
     if (!jroot) {
         error = jerror.text;
@@ -155,17 +158,15 @@ QVariantMap QJsonDocumentPrivate::jsonToMap(const QByteArray &jsondata)
     return result;
 }
 
-QByteArray QJsonDocumentPrivate::mapToJson(const QVariantMap &jsonmap)
+void QJsonDocumentPrivate::mapToJson(const QVariantMap &jsonmap, json_t *jroot, quint16 jdepth)
 {
-    QByteArray result;
-
     if (jsonmap.isEmpty()) {
         error = QCoreApplication::translate("QJsonDocument", "Data map is empty");
-        return result;
+        return;
+    } else if (Q_UNLIKELY(jdepth >= JSON_PARSER_MAX_DEPTH)) {
+        error = QCoreApplication::translate("QJsonDocument", "Maximum depth reached");
+        return;
     }
-
-    static const size_t jflags = JSON_SORT_KEYS | JSON_INDENT(4);
-    json_t *jroot = json_object();
 
     foreach(const QString &key, jsonmap.keys()) {
         const QVariant value = jsonmap.value(key);
@@ -213,7 +214,11 @@ QByteArray QJsonDocumentPrivate::mapToJson(const QVariantMap &jsonmap)
             }
             case QVariant::Hash:
             case QVariant::Map: {
-                result += mapToJson(value.toMap());
+                jdepth++;
+                json_t *jrootn = json_object();
+                mapToJson(value.toMap(), jrootn, jdepth);
+                json_object_set_new_nocheck(jroot, bytearraykey.constData(), jrootn);
+                jdepth--;
                 break;
             }
             default: {
@@ -223,12 +228,7 @@ QByteArray QJsonDocumentPrivate::mapToJson(const QVariantMap &jsonmap)
         }
     }
 
-    result += json_dumps(jroot, jflags);
-    json_decref(jroot);
-
-    // qDebug() << "converted" << jsonmap << "to" << result;
-
-    return result;
+    // qDebug() << "converted" << jsonmap << "to" << json_dumps(jroot, 0);
 }
 
 QJsonDocument::QJsonDocument()
@@ -245,15 +245,19 @@ QJsonDocument::~QJsonDocument()
 }
 
 QJsonDocument::QJsonDocument(const QJsonDocument &other)
+    : d_ptr(other.d_ptr)
 {
-    qAtomicAssign(d_ptr, other.d_ptr);
+    Q_D(QJsonDocument);
+    if (d) {
+        d->ref.ref();
+    }
 }
 
 /*!
     Assigns the \a other document to this QJsonDocument.
     Returns a reference to this object.
 */
-QJsonDocument &QJsonDocument::operator =(const QJsonDocument &other)
+QJsonDocument &QJsonDocument::operator=(const QJsonDocument &other)
 {
     qAtomicAssign(d_ptr, other.d_ptr);
     return *this;
@@ -273,9 +277,14 @@ QJsonDocument &QJsonDocument::operator =(const QJsonDocument &other)
  */
 QJsonDocument QJsonDocument::fromVariant(const QVariant &variant)
 {
+    static const size_t jflags = JSON_SORT_KEYS | JSON_INDENT(4);
+
     QScopedPointer<QJsonDocumentPrivate> d(new QJsonDocumentPrivate());
     d->map = variant.toMap();
-    d->json = d->mapToJson(d->map);
+    json_t *jroot = json_object();
+    d->mapToJson(d->map, jroot, 1);
+    d->json = json_dumps(jroot, jflags);
+    json_decref(jroot);
 
     QJsonDocument jd;
     if (Q_UNLIKELY(!d->error.isEmpty())) {

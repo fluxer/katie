@@ -46,10 +46,7 @@ QT_BEGIN_NAMESPACE
 
 static inline bool fuzzyIsNull(qreal d)
 {
-    if (sizeof(qreal) == sizeof(double))
-        return qAbs(d) <= 1e-12;
-    else
-        return qAbs(d) <= 1e-5f;
+    return qAbs(d) <= std::numeric_limits<qreal>::epsilon();
 }
 
 static inline bool comparePoints(const QPointF &a, const QPointF &b)

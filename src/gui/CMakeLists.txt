@@ -381,6 +381,7 @@ set(GUI_HEADERS
     ${CMAKE_CURRENT_SOURCE_DIR}/kernel/qformlayout.h
     ${CMAKE_CURRENT_SOURCE_DIR}/kernel/qgridlayout.h
     ${CMAKE_CURRENT_SOURCE_DIR}/kernel/qkeysequence.h
+    ${CMAKE_CURRENT_SOURCE_DIR}/kernel/qkeysequence_p.h
     ${CMAKE_CURRENT_SOURCE_DIR}/kernel/qlayout.h
     ${CMAKE_CURRENT_SOURCE_DIR}/kernel/qlayout_p.h
     ${CMAKE_CURRENT_SOURCE_DIR}/kernel/qlayoutengine_p.h

@@ -77,7 +77,6 @@ Q_SIGNALS:
 
 protected:
     QVariantAnimation(QVariantAnimationPrivate &dd, QObject *parent = Q_NULLPTR);
-    bool event(QEvent *event);
 
     void updateCurrentTime(int);
     void updateState(QAbstractAnimation::State newState, QAbstractAnimation::State oldState);

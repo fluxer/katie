@@ -46,7 +46,7 @@ namespace QTest
                            Qt::KeyboardModifiers stateKey, QPoint pos, int delay=-1)
     {
         QTEST_ASSERT(widget);
-        extern int Q_TEST_EXPORT defaultMouseDelay();
+        extern Q_TEST_EXPORT int defaultMouseDelay();
 
         if (delay == -1 || delay < defaultMouseDelay())
             delay = defaultMouseDelay();

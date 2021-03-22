@@ -37,8 +37,8 @@ public:
     QString m_ininame;
 
 public slots:
-    void init();
-    void cleanup();
+    void initTestCase();
+    void cleanupTestCase();
 
 private slots:
     void value_data();
@@ -53,7 +53,7 @@ private slots:
     void custom();
 };
 
-void tst_QSettings::init()
+void tst_QSettings::initTestCase()
 {
     const QString filename = QDir::tempPath() + QLatin1String("/tst_qsettings_")
         + QString::number(qrand());
@@ -61,7 +61,7 @@ void tst_QSettings::init()
     m_ininame = filename + QLatin1String(".ini");
 }
 
-void tst_QSettings::cleanup()
+void tst_QSettings::cleanupTestCase()
 {
     QFile::remove(m_nativename);
     QFile::remove(m_ininame);
@@ -137,22 +137,29 @@ void tst_QSettings::variant()
 
     QSettings settings(filename, format);
 
-    const QPoint qpoint(1, 2);
-    const QRect qrect(1, 2, 3, 4);
-    const QSize qsize(1, 2);
+    const qlonglong qll = 123;
+    const qreal qrl = 123.456;
     const QByteArray qbytearray("abc");
     const QByteArray qstring("måndag");
     const QStringList qstringlist = QStringList() << "a" << "b" << "c";
+    const QPoint qpoint(1, 2);
+    const QRect qrect(1, 2, 3, 4);
+    const QSize qsize(1, 2);
     const QDate qdate = QDate::currentDate();
     const QColor qcolor(1, 2, 3);
     const QFont qfont = QApplication::font();
 
-    QVARIANT_TEST(qpoint);
-    QVARIANT_TEST(qrect);
-    QVARIANT_TEST(qsize);
+    QVARIANT_TEST(qll);
+    QVARIANT_TEST(qrl);
     QVARIANT_TEST(qbytearray);
     QVARIANT_TEST(qstring);
     QVARIANT_TEST(qstringlist);
+    if (format == QSettings::NativeFormat) {
+        QSKIP("Native format does not support some types", SkipAll);
+    }
+    QVARIANT_TEST(qpoint);
+    QVARIANT_TEST(qrect);
+    QVARIANT_TEST(qsize);
     QVARIANT_TEST(qdate);
     QVARIANT_TEST(qcolor);
     QVARIANT_TEST(qfont);
@@ -219,6 +226,10 @@ void tst_QSettings::custom()
 {
     QFETCH(QString, filename);
     QFETCH(QSettings::Format, format);
+
+    if (format == QSettings::NativeFormat) {
+        QSKIP("Native format does not support custom types", SkipAll);
+    }
 
     qRegisterMetaType<CustomType>();
     qRegisterMetaTypeStreamOperators<CustomType>();

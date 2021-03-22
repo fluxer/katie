@@ -202,14 +202,14 @@ namespace QTest
     inline bool qCompare<qreal, double>(qreal const &t1, double const &t2, const char *actual,
                                  const char *expected, const char *file, int line)
     {
-        return qCompare<float>(float(t1), float(t2), actual, expected, file, line);
+        return qCompare<float>(t1, float(t2), actual, expected, file, line);
     }
 
     template <>
     inline bool qCompare<double, qreal>(double const &t1, qreal const &t2, const char *actual,
                                  const char *expected, const char *file, int line)
     {
-        return qCompare<float>(float(t1), float(t2), actual, expected, file, line);
+        return qCompare<float>(float(t1), t2, actual, expected, file, line);
     }
 
 #endif

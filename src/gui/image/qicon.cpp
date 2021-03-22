@@ -74,7 +74,7 @@ QT_BEGIN_NAMESPACE
   \value On  Display the pixmap when the widget is in an "on" state
 */
 
-static QAtomicInt serialNumCounter = QAtomicInt(1);
+static QAtomicInt serialNumCounter(1);
 
 typedef QCache<QString, QIcon> IconCache;
 Q_GLOBAL_STATIC(IconCache, qtIconCache)

@@ -51,19 +51,12 @@ public:
     QRect subElementRect(SubElement r, const QStyleOption *opt, const QWidget *widget = Q_NULLPTR) const;
     QSize sizeFromContents(ContentsType type, const QStyleOption *option,
                            const QSize &size, const QWidget *widget) const;
-    SubControl hitTestComplexControl(ComplexControl cc, const QStyleOptionComplex *opt,
-                               const QPoint &pt, const QWidget *w = Q_NULLPTR) const;
     QRect subControlRect(ComplexControl cc, const QStyleOptionComplex *opt,
                          SubControl sc, const QWidget *widget) const;
-    QPixmap generatedIconPixmap(QIcon::Mode iconMode, const QPixmap &pixmap,
-                                        const QStyleOption *opt) const;
     int styleHint(StyleHint hint, const QStyleOption *option = Q_NULLPTR, const QWidget *widget = Q_NULLPTR,
                   QStyleHintReturn *returnData = Q_NULLPTR) const;
-    QRect itemPixmapRect(const QRect &r, int flags, const QPixmap &pixmap) const;
     QPixmap standardPixmap(StandardPixmap standardPixmap, const QStyleOption *opt,
                            const QWidget *widget = Q_NULLPTR) const;
-    void drawItemPixmap(QPainter *painter, const QRect &rect,
-                        int alignment, const QPixmap &pixmap) const;
     void drawItemText(QPainter *painter, const QRect &rect,
                               int flags, const QPalette &pal, bool enabled,
                               const QString &text, QPalette::ColorRole textRole = QPalette::NoRole) const;

@@ -384,13 +384,6 @@ void QItemDelegate::paint(QPainter *painter,
 
     QStyleOptionViewItemV4 opt = setOptions(index, option);
 
-    const QStyleOptionViewItemV2 *v2 = qstyleoption_cast<const QStyleOptionViewItemV2 *>(&option);
-    opt.features = v2 ? v2->features
-                    : QStyleOptionViewItemV2::ViewItemFeatures(QStyleOptionViewItemV2::None);
-    const QStyleOptionViewItemV3 *v3 = qstyleoption_cast<const QStyleOptionViewItemV3 *>(&option);
-    opt.locale = v3 ? v3->locale : QLocale();
-    opt.widget = v3 ? v3->widget : 0;
-
     // prepare
     painter->save();
     if (d->clipPainting)

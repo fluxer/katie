@@ -345,7 +345,7 @@ static bool isNull(const QVariant::Private *d)
   \since 4.4
 
   We cannot use v_cast() for QMetaType's numeric types because they're smaller than QVariant::Private::Data,
-  which in turns makes v_cast() believe the value is stored in d->data.c. But
+  which in turns makes v_cast() believe the value is stored in d->data.ptr. But
   it's not, since we're a QMetaType type.
  */
 template<typename T>
@@ -1619,24 +1619,9 @@ QVariant::QVariant(const char *val)
 */
 
 QVariant::QVariant(Type type)
-{ create(type, 0); }
+{ create(type, Q_NULLPTR); }
 QVariant::QVariant(int typeOrUserType, const void *copy)
 { create(typeOrUserType, copy); d.is_null = false; }
-
-/*! \internal
-    flags is true if it is a pointer type
- */
-QVariant::QVariant(int typeOrUserType, const void *copy, uint flags)
-{
-    if (flags) { //type is a pointer type
-        d.type = typeOrUserType;
-        d.data.ptr = *reinterpret_cast<void *const*>(copy);
-        d.is_null = false;
-    } else {
-        create(typeOrUserType, copy);
-        d.is_null = false;
-    }
-}
 
 QVariant::QVariant(int val)
 { d.is_null = false; d.type = Int; d.data.i = val; }
@@ -1885,7 +1870,7 @@ void QVariant::load(QDataStream &s)
             return;
         }
     }
-    create(static_cast<int>(u), 0);
+    create(static_cast<int>(u), Q_NULLPTR);
     d.is_null = is_null;
 
     if (!isValid()) {
@@ -1994,7 +1979,7 @@ inline T qVariantToHelper(const QVariant::Private &d, QVariant::Type t,
         return *v_cast<T>(&d);
 
     T ret;
-    handler->convert(&d, t, &ret, 0);
+    handler->convert(&d, t, &ret, Q_NULLPTR);
     return ret;
 }
 
@@ -2415,7 +2400,7 @@ bool QVariant::toBool() const
         return d.data.b;
 
     bool res = false;
-    handler->convert(&d, Bool, &res, 0);
+    handler->convert(&d, Bool, &res, Q_NULLPTR);
 
     return res;
 }
@@ -2922,7 +2907,7 @@ bool QVariant::convert(Type t)
     if (!oldValue.canConvert(t))
         return false;
 
-    create(t, 0);
+    create(t, Q_NULLPTR);
     if (oldValue.isNull())
         return false;
 
@@ -2988,18 +2973,18 @@ static inline bool qIsFloatingPoint(int tp)
  */
 bool QVariant::cmp(const QVariant &v) const
 {
-    QVariant v2 = v;
-    if (d.type != v2.d.type) {
+    if (d.type != v.d.type) {
         if (qIsNumericType(d.type) && qIsNumericType(v.d.type)) {
             if (qIsFloatingPoint(d.type) || qIsFloatingPoint(v.d.type))
                 return qFuzzyCompare(toReal(), v.toReal());
-            else
-                return toLongLong() == v.toLongLong();
+            return toLongLong() == v.toLongLong();
         }
-        if (!v2.canConvert(Type(d.type)) || !v2.convert(Type(d.type)))
+        QVariant v2(v);
+        if (!v2.convert(Type(d.type)))
             return false;
+        return handler->compare(&d, &v2.d);
     }
-    return handler->compare(&d, &v2.d);
+    return handler->compare(&d, &v.d);
 }
 
 /*! \internal

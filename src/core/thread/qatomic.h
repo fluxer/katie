@@ -253,16 +253,19 @@ class Q_CORE_EXPORT QAtomicPointer
 template <typename T>
 inline void qAtomicAssign(T *&d, T *x)
 {
-   if (d == x) {
-      return;
-   }
+    if (d == x) {
+        return;
+    }
 
-   x->ref.ref();
-   if (!d->ref.deref()) {
-      delete d;
-   }
+    if (x) {
+        x->ref.ref();
+    }
 
-   d = x;
+    if (d && !d->ref.deref()) {
+        delete d;
+    }
+
+    d = x;
 }
 
 /*!

@@ -522,27 +522,28 @@ void QDataStream::setByteOrder(ByteOrder bo)
     Sets the version number of the data serialization format to \a v.
 
     You don't \e have to set a version if you are using the current
-    version of Qt, but for your own custom binary formats we
+    version of Katie, but for your own custom binary formats we
     recommend that you do; see \l{Versioning} in the Detailed
     Description.
 
     To accommodate new functionality, the datastream serialization
-    format of some Qt classes has changed in some versions of Qt. If
-    you want to read data that was created by an earlier version of
-    Qt, or write data that can be read by a program that was compiled
-    with an earlier version of Qt, use this function to modify the
+    format of some Katie classes has changed in some versions of Katie.
+    If you want to read data that was created by an earlier version of
+    Katie, or write data that can be read by a program that was compiled
+    with an earlier version of Katie, use this function to modify the
     serialization format used by QDataStream.
 
     \table
-    \header \i Qt Version       \i QDataStream Version
-    \row \i Qt 4.9                  \i 12
-    \row \i Qt 4.8                  \i 12
-    \row \i Qt 4.7                  \i 12
-    \row \i Qt 4.6                  \i 12
+    \header \i Toolkit Version      \i QDataStream Version
+    \row    \i Qt 4.6               \i 12
+    \row    \i Qt 4.7               \i 12
+    \row    \i Qt 4.8               \i 12
+    \row    \i Katie 4.9            \i 12
+    \row    \i Katie 4.10           \i 12
     \endtable
 
     The \l Version enum provides symbolic constants for the different
-    versions of Qt. For example:
+    versions of Katie. For example:
 
     \snippet doc/src/snippets/code/src_corelib_io_qdatastream.cpp 5
 
@@ -598,7 +599,7 @@ QDataStream &QDataStream::operator>>(qint16 &i)
 {
     i = 0;
     CHECK_STREAM_PRECOND(*this)
-    if (dev->read((char *)&i, 2) != 2) {
+    if (dev->read((char *)&i, sizeof(qint16)) != sizeof(qint16)) {
         i = 0;
         setStatus(ReadPastEnd);
     } else if (!noswap) {
@@ -627,7 +628,7 @@ QDataStream &QDataStream::operator>>(qint32 &i)
 {
     i = 0;
     CHECK_STREAM_PRECOND(*this)
-    if (dev->read((char *)&i, 4) != 4) {
+    if (dev->read((char *)&i, sizeof(qint32)) != sizeof(qint32)) {
         i = 0;
         setStatus(ReadPastEnd);
     } else if (!noswap) {
@@ -655,7 +656,7 @@ QDataStream &QDataStream::operator>>(qint64 &i)
 {
     i = qint64(0);
     CHECK_STREAM_PRECOND(*this)
-    if (dev->read((char *)&i, 8) != 8) {
+    if (dev->read((char *)&i, sizeof(qint64)) != sizeof(qint64)) {
         i = qint64(0);
         setStatus(ReadPastEnd);
     } else if (!noswap) {
@@ -697,7 +698,7 @@ QDataStream &QDataStream::operator>>(float &f)
 
     f = 0.0f;
     CHECK_STREAM_PRECOND(*this)
-    if (dev->read((char *)&f, 4) != 4) {
+    if (dev->read((char *)&f, sizeof(float)) != sizeof(float)) {
         f = 0.0f;
         setStatus(ReadPastEnd);
     } else if (!noswap) {
@@ -732,7 +733,7 @@ QDataStream &QDataStream::operator>>(double &f)
 
     f = 0.0;
     CHECK_STREAM_PRECOND(*this)
-    if (dev->read((char *)&f, 8) != 8) {
+    if (dev->read((char *)&f, sizeof(double)) != sizeof(double)) {
         f = 0.0;
         setStatus(ReadPastEnd);
     } else if (!noswap) {
@@ -855,6 +856,7 @@ int QDataStream::readRawData(char *s, int len)
 
 QDataStream &QDataStream::operator<<(qint8 i)
 {
+    Q_ASSERT(sizeof(char) == sizeof(qint8));
     CHECK_STREAM_WRITE_PRECOND(*this)
     if (!dev->putChar(i))
         q_status = WriteFailed;
@@ -924,17 +926,11 @@ QDataStream &QDataStream::operator<<(qint32 i)
 QDataStream &QDataStream::operator<<(qint64 i)
 {
     CHECK_STREAM_WRITE_PRECOND(*this)
-    if (version() < 6) {
-        quint32 i1 = i & 0xffffffff;
-        quint32 i2 = i >> 32;
-        *this << i2 << i1;
-    } else {
-        if (!noswap) {
-            i = qbswap(i);
-        }
-        if (dev->write((char *)&i, sizeof(qint64)) != sizeof(qint64))
-            q_status = WriteFailed;
+    if (!noswap) {
+        i = qbswap(i);
     }
+    if (dev->write((char *)&i, sizeof(qint64)) != sizeof(qint64))
+        q_status = WriteFailed;
     return *this;
 }
 

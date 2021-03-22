@@ -132,7 +132,7 @@ void QFactoryLoader::updateDir(const QString &pluginDir)
             if (instance && factory && instance->qt_metacast(d->iid.constData()))
                 keys = factory->keys();
             if (keys.isEmpty())
-                library->unload();
+                library->release();
             reg.clear();
             reg << library->lastModified;
             reg += keys;

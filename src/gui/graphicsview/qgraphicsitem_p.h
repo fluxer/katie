@@ -212,7 +212,7 @@ public:
         isDeclarativeItem(false),
         sendParentChangeNotification(false),
         cacheMode(QGraphicsItem::NoCache),
-        acceptedMouseButtons(Qt::LeftButton | Qt::RightButton | Qt::MiddleButton | Qt::XButton1 | Qt::XButton2),
+        acceptedMouseButtons(Qt::LeftButton | Qt::RightButton | Qt::MiddleButton),
         flags(0),
         ancestorFlags(0),
         globalStackingOrder(-1),
