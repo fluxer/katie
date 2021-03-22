@@ -1416,26 +1416,8 @@ void QByteArray::resize(int size)
         if (!d->ref.deref())
             freeData(d);
         d = x;
-    } else if (d == &shared_null) {
-        //
-        // Optimize the idiom:
-        //    QByteArray a;
-        //    a.resize(sz);
-        //    ...
-        // which is used in place of the Qt 3 idiom:
-        //    QByteArray a(sz);
-        //
-        Data *x = static_cast<Data *>(malloc(sizeof(Data)+size));
-        Q_CHECK_PTR(x);
-        x->ref = 1;
-        x->alloc = x->size = size;
-        x->data = x->array;
-        x->array[size] = '\0';
-        (void) d->ref.deref(); // cannot be 0, x points to shared_null
-        d = x;
-    } else {
-        if (d->ref != 1 || size != d->size)
-            reallocData(size);
+    } else if (size != d->size) {
+        reallocData(size);
         d->size = size;
         if (d->data == d->array) {
             d->array[size] = '\0';
