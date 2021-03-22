@@ -1382,7 +1382,7 @@ qreal QFontMetricsF::width(const QString &text) const
 */
 qreal QFontMetricsF::width(QChar ch) const
 {
-    if (QChar::category(ch.unicode()) == QChar::Mark_NonSpacing)
+    if (ch.category() == QChar::Mark_NonSpacing)
         return 0.;
 
     const QUnicodeTables::Script script = QUnicodeTables::script(ch.unicode());

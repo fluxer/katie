@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-02-11 01:35+0200\n"
+"POT-Creation-Date: 2021-03-18 12:01+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -166,19 +166,19 @@ msgstr ""
 msgid "No file engine available or engine does not support UnMapExtension"
 msgstr ""
 
-#: src/core/io/qprocess.cpp:797 src/core/io/qprocess.cpp:849
+#: src/core/io/qprocess.cpp:714 src/core/io/qprocess.cpp:766
 msgid "Error reading from process"
 msgstr ""
 
-#: src/core/io/qprocess.cpp:896
+#: src/core/io/qprocess.cpp:813
 msgid "Error writing to process"
 msgstr ""
 
-#: src/core/io/qprocess.cpp:959
+#: src/core/io/qprocess.cpp:876
 msgid "Process crashed"
 msgstr ""
 
-#: src/core/io/qprocess.cpp:1846
+#: src/core/io/qprocess.cpp:1777
 msgid "No program defined"
 msgstr ""
 
@@ -190,12 +190,12 @@ msgstr ""
 msgid "Could not open output redirection for writing"
 msgstr ""
 
-#: src/core/io/qprocess_unix.cpp:611
+#: src/core/io/qprocess_unix.cpp:597
 msgid "Resource error (fork failure): %1"
 msgstr ""
 
-#: src/core/io/qprocess_unix.cpp:848 src/core/io/qprocess_unix.cpp:896
-#: src/core/io/qprocess_unix.cpp:966 src/core/io/qprocess_unix.cpp:1028
+#: src/core/io/qprocess_unix.cpp:834 src/core/io/qprocess_unix.cpp:882
+#: src/core/io/qprocess_unix.cpp:952 src/core/io/qprocess_unix.cpp:1014
 msgid "Process operation timed out"
 msgstr ""
 
@@ -349,7 +349,7 @@ msgctxt "QJsonDocument"
 msgid "Unknown JSON type in array"
 msgstr ""
 
-#: src/core/tools/qjsondocument.cpp:138 src/core/tools/qjsondocument.cpp:221
+#: src/core/tools/qjsondocument.cpp:138 src/core/tools/qjsondocument.cpp:222
 msgctxt "QJsonDocument"
 msgid "Unknown JSON type"
 msgstr ""
@@ -359,9 +359,14 @@ msgctxt "QJsonDocument"
 msgid "Rootless array/values are not supported"
 msgstr ""
 
-#: src/core/tools/qjsondocument.cpp:163
+#: src/core/tools/qjsondocument.cpp:161
 msgctxt "QJsonDocument"
 msgid "Data map is empty"
+msgstr ""
+
+#: src/core/tools/qjsondocument.cpp:164
+msgctxt "QJsonDocument"
+msgid "Maximum depth reached"
 msgstr ""
 
 #: src/declarative/graphicsitems/qdeclarativeitemsmodule.cpp:83
@@ -1018,60 +1023,60 @@ msgctxt "QDeclarativeParser"
 msgid "Expected token `%1'"
 msgstr ""
 
-#: src/declarative/qml/parser/qdeclarativejslexer.cpp:520
-#: src/declarative/qml/parser/qdeclarativejslexer.cpp:643
-#: src/declarative/qml/parser/qdeclarativejslexer.cpp:697
+#: src/declarative/qml/parser/qdeclarativejslexer.cpp:516
+#: src/declarative/qml/parser/qdeclarativejslexer.cpp:639
+#: src/declarative/qml/parser/qdeclarativejslexer.cpp:693
 msgctxt "QDeclarativeParser"
 msgid "Illegal unicode escape sequence"
 msgstr ""
 
-#: src/declarative/qml/parser/qdeclarativejslexer.cpp:557
+#: src/declarative/qml/parser/qdeclarativejslexer.cpp:553
 msgctxt "QDeclarativeParser"
 msgid "Illegal character"
 msgstr ""
 
-#: src/declarative/qml/parser/qdeclarativejslexer.cpp:571
+#: src/declarative/qml/parser/qdeclarativejslexer.cpp:567
 msgctxt "QDeclarativeParser"
 msgid "Unclosed string at end of line"
 msgstr ""
 
-#: src/declarative/qml/parser/qdeclarativejslexer.cpp:597
+#: src/declarative/qml/parser/qdeclarativejslexer.cpp:593
 msgctxt "QDeclarativeParser"
 msgid "Illegal escape sequence"
 msgstr ""
 
-#: src/declarative/qml/parser/qdeclarativejslexer.cpp:669
+#: src/declarative/qml/parser/qdeclarativejslexer.cpp:665
 msgctxt "QDeclarativeParser"
 msgid "Unclosed comment at end of file"
 msgstr ""
 
-#: src/declarative/qml/parser/qdeclarativejslexer.cpp:771
+#: src/declarative/qml/parser/qdeclarativejslexer.cpp:767
 msgctxt "QDeclarativeParser"
 msgid "Illegal syntax for exponential number"
 msgstr ""
 
-#: src/declarative/qml/parser/qdeclarativejslexer.cpp:797
+#: src/declarative/qml/parser/qdeclarativejslexer.cpp:793
 msgctxt "QDeclarativeParser"
 msgid "Identifier cannot start with numeric literal"
 msgstr ""
 
-#: src/declarative/qml/parser/qdeclarativejslexer.cpp:1135
+#: src/declarative/qml/parser/qdeclarativejslexer.cpp:1131
 msgctxt "QDeclarativeParser"
 msgid "Unterminated regular expression literal"
 msgstr ""
 
-#: src/declarative/qml/parser/qdeclarativejslexer.cpp:1150
+#: src/declarative/qml/parser/qdeclarativejslexer.cpp:1146
 msgctxt "QDeclarativeParser"
 msgid "Invalid regular expression flag '%0'"
 msgstr ""
 
-#: src/declarative/qml/parser/qdeclarativejslexer.cpp:1166
-#: src/declarative/qml/parser/qdeclarativejslexer.cpp:1188
+#: src/declarative/qml/parser/qdeclarativejslexer.cpp:1162
+#: src/declarative/qml/parser/qdeclarativejslexer.cpp:1184
 msgctxt "QDeclarativeParser"
 msgid "Unterminated regular expression backslash sequence"
 msgstr ""
 
-#: src/declarative/qml/parser/qdeclarativejslexer.cpp:1201
+#: src/declarative/qml/parser/qdeclarativejslexer.cpp:1197
 msgctxt "QDeclarativeParser"
 msgid "Unterminated regular expression class"
 msgstr ""
@@ -1866,32 +1871,32 @@ msgstr ""
 msgid "&OK"
 msgstr ""
 
-#: src/gui/image/qimagereader.cpp:463
+#: src/gui/image/qimagereader.cpp:457
 msgctxt "QImageReader"
 msgid "Invalid device"
 msgstr ""
 
-#: src/gui/image/qimagereader.cpp:490
+#: src/gui/image/qimagereader.cpp:484
 msgctxt "QImageReader"
 msgid "File not found"
 msgstr ""
 
-#: src/gui/image/qimagereader.cpp:499
+#: src/gui/image/qimagereader.cpp:493
 msgctxt "QImageReader"
 msgid "Unsupported image format"
 msgstr ""
 
-#: src/gui/image/qimagereader.cpp:1031
+#: src/gui/image/qimagereader.cpp:990
 msgctxt "QImageReader"
 msgid "Unable to read image data"
 msgstr ""
 
-#: src/gui/image/qimagereader.cpp:1222
+#: src/gui/image/qimagereader.cpp:1181
 msgctxt "QImageReader"
 msgid "Unknown error"
 msgstr ""
 
-#: src/gui/widgets/qtabbar.cpp:2179
+#: src/gui/widgets/qtabbar.cpp:2176
 msgid "Close Tab"
 msgstr ""
 
@@ -2197,933 +2202,2279 @@ msgstr ""
 msgid "QT_LAYOUT_DIRECTION"
 msgstr ""
 
-#: src/gui/kernel/qkeysequence.cpp:195
-msgctxt "QShortcut"
-msgid "Space"
-msgstr ""
-
-#: src/gui/kernel/qkeysequence.cpp:196
-msgctxt "QShortcut"
-msgid "Esc"
-msgstr ""
-
 #: src/gui/kernel/qkeysequence.cpp:197
-msgctxt "QShortcut"
-msgid "Tab"
-msgstr ""
-
-#: src/gui/kernel/qkeysequence.cpp:198
-msgctxt "QShortcut"
-msgid "Backtab"
-msgstr ""
-
-#: src/gui/kernel/qkeysequence.cpp:199
 msgctxt "QShortcut"
 msgid "Backspace"
 msgstr ""
 
+#: src/gui/kernel/qkeysequence.cpp:198
+msgctxt "QShortcut"
+msgid "Tab"
+msgstr ""
+
+#: src/gui/kernel/qkeysequence.cpp:199
+msgctxt "QShortcut"
+msgid "Linefeed"
+msgstr ""
+
 #: src/gui/kernel/qkeysequence.cpp:200
-msgctxt "QShortcut"
-msgid "Return"
-msgstr ""
-
-#: src/gui/kernel/qkeysequence.cpp:201
-msgctxt "QShortcut"
-msgid "Enter"
-msgstr ""
-
-#: src/gui/kernel/qkeysequence.cpp:202
-msgctxt "QShortcut"
-msgid "Ins"
-msgstr ""
-
-#: src/gui/kernel/qkeysequence.cpp:203
-msgctxt "QShortcut"
-msgid "Del"
-msgstr ""
-
-#: src/gui/kernel/qkeysequence.cpp:204
-msgctxt "QShortcut"
-msgid "Pause"
-msgstr ""
-
-#: src/gui/kernel/qkeysequence.cpp:205
-msgctxt "QShortcut"
-msgid "Print"
-msgstr ""
-
-#: src/gui/kernel/qkeysequence.cpp:206
-msgctxt "QShortcut"
-msgid "SysReq"
-msgstr ""
-
-#: src/gui/kernel/qkeysequence.cpp:207
-msgctxt "QShortcut"
-msgid "Home"
-msgstr ""
-
-#: src/gui/kernel/qkeysequence.cpp:208
-msgctxt "QShortcut"
-msgid "End"
-msgstr ""
-
-#: src/gui/kernel/qkeysequence.cpp:209
-msgctxt "QShortcut"
-msgid "Left"
-msgstr ""
-
-#: src/gui/kernel/qkeysequence.cpp:210
-msgctxt "QShortcut"
-msgid "Up"
-msgstr ""
-
-#: src/gui/kernel/qkeysequence.cpp:211
-msgctxt "QShortcut"
-msgid "Right"
-msgstr ""
-
-#: src/gui/kernel/qkeysequence.cpp:212
-msgctxt "QShortcut"
-msgid "Down"
-msgstr ""
-
-#: src/gui/kernel/qkeysequence.cpp:213
-msgctxt "QShortcut"
-msgid "PgUp"
-msgstr ""
-
-#: src/gui/kernel/qkeysequence.cpp:214
-msgctxt "QShortcut"
-msgid "PgDown"
-msgstr ""
-
-#: src/gui/kernel/qkeysequence.cpp:215
-msgctxt "QShortcut"
-msgid "CapsLock"
-msgstr ""
-
-#: src/gui/kernel/qkeysequence.cpp:216
-msgctxt "QShortcut"
-msgid "NumLock"
-msgstr ""
-
-#: src/gui/kernel/qkeysequence.cpp:217
-msgctxt "QShortcut"
-msgid "ScrollLock"
-msgstr ""
-
-#: src/gui/kernel/qkeysequence.cpp:218
-msgctxt "QShortcut"
-msgid "Menu"
-msgstr ""
-
-#: src/gui/kernel/qkeysequence.cpp:219
-msgctxt "QShortcut"
-msgid "Help"
-msgstr ""
-
-#: src/gui/kernel/qkeysequence.cpp:224
-msgctxt "QShortcut"
-msgid "Back"
-msgstr ""
-
-#: src/gui/kernel/qkeysequence.cpp:225
-msgctxt "QShortcut"
-msgid "Forward"
-msgstr ""
-
-#: src/gui/kernel/qkeysequence.cpp:226
-msgctxt "QShortcut"
-msgid "Stop"
-msgstr ""
-
-#: src/gui/kernel/qkeysequence.cpp:227
-msgctxt "QShortcut"
-msgid "Refresh"
-msgstr ""
-
-#: src/gui/kernel/qkeysequence.cpp:228
-msgctxt "QShortcut"
-msgid "Volume Down"
-msgstr ""
-
-#: src/gui/kernel/qkeysequence.cpp:229
-msgctxt "QShortcut"
-msgid "Volume Mute"
-msgstr ""
-
-#: src/gui/kernel/qkeysequence.cpp:230
-msgctxt "QShortcut"
-msgid "Volume Up"
-msgstr ""
-
-#: src/gui/kernel/qkeysequence.cpp:231
-msgctxt "QShortcut"
-msgid "Media Play"
-msgstr ""
-
-#: src/gui/kernel/qkeysequence.cpp:232
-msgctxt "QShortcut"
-msgid "Media Stop"
-msgstr ""
-
-#: src/gui/kernel/qkeysequence.cpp:233
-msgctxt "QShortcut"
-msgid "Media Previous"
-msgstr ""
-
-#: src/gui/kernel/qkeysequence.cpp:234
-msgctxt "QShortcut"
-msgid "Media Next"
-msgstr ""
-
-#: src/gui/kernel/qkeysequence.cpp:235
-msgctxt "QShortcut"
-msgid "Media Record"
-msgstr ""
-
-#: src/gui/kernel/qkeysequence.cpp:237
-msgctxt "QShortcut"
-msgid "Media Pause"
-msgstr ""
-
-#: src/gui/kernel/qkeysequence.cpp:239
-msgctxt "QShortcut"
-msgid "Home Page"
-msgstr ""
-
-#: src/gui/kernel/qkeysequence.cpp:240
-msgctxt "QShortcut"
-msgid "Favorites"
-msgstr ""
-
-#: src/gui/kernel/qkeysequence.cpp:241
-msgctxt "QShortcut"
-msgid "Search"
-msgstr ""
-
-#: src/gui/kernel/qkeysequence.cpp:242
-msgctxt "QShortcut"
-msgid "Standby"
-msgstr ""
-
-#: src/gui/kernel/qkeysequence.cpp:243
-msgctxt "QShortcut"
-msgid "Open URL"
-msgstr ""
-
-#: src/gui/kernel/qkeysequence.cpp:244
-msgctxt "QShortcut"
-msgid "Launch Mail"
-msgstr ""
-
-#: src/gui/kernel/qkeysequence.cpp:245
-msgctxt "QShortcut"
-msgid "Launch Media"
-msgstr ""
-
-#: src/gui/kernel/qkeysequence.cpp:246
-msgctxt "QShortcut"
-msgid "Launch (0)"
-msgstr ""
-
-#: src/gui/kernel/qkeysequence.cpp:247
-msgctxt "QShortcut"
-msgid "Launch (1)"
-msgstr ""
-
-#: src/gui/kernel/qkeysequence.cpp:248
-msgctxt "QShortcut"
-msgid "Launch (2)"
-msgstr ""
-
-#: src/gui/kernel/qkeysequence.cpp:249
-msgctxt "QShortcut"
-msgid "Launch (3)"
-msgstr ""
-
-#: src/gui/kernel/qkeysequence.cpp:250
-msgctxt "QShortcut"
-msgid "Launch (4)"
-msgstr ""
-
-#: src/gui/kernel/qkeysequence.cpp:251
-msgctxt "QShortcut"
-msgid "Launch (5)"
-msgstr ""
-
-#: src/gui/kernel/qkeysequence.cpp:252
-msgctxt "QShortcut"
-msgid "Launch (6)"
-msgstr ""
-
-#: src/gui/kernel/qkeysequence.cpp:253
-msgctxt "QShortcut"
-msgid "Launch (7)"
-msgstr ""
-
-#: src/gui/kernel/qkeysequence.cpp:254
-msgctxt "QShortcut"
-msgid "Launch (8)"
-msgstr ""
-
-#: src/gui/kernel/qkeysequence.cpp:255
-msgctxt "QShortcut"
-msgid "Launch (9)"
-msgstr ""
-
-#: src/gui/kernel/qkeysequence.cpp:256
-msgctxt "QShortcut"
-msgid "Launch (A)"
-msgstr ""
-
-#: src/gui/kernel/qkeysequence.cpp:257
-msgctxt "QShortcut"
-msgid "Launch (B)"
-msgstr ""
-
-#: src/gui/kernel/qkeysequence.cpp:258
-msgctxt "QShortcut"
-msgid "Launch (C)"
-msgstr ""
-
-#: src/gui/kernel/qkeysequence.cpp:259
-msgctxt "QShortcut"
-msgid "Launch (D)"
-msgstr ""
-
-#: src/gui/kernel/qkeysequence.cpp:260
-msgctxt "QShortcut"
-msgid "Launch (E)"
-msgstr ""
-
-#: src/gui/kernel/qkeysequence.cpp:261
-msgctxt "QShortcut"
-msgid "Launch (F)"
-msgstr ""
-
-#: src/gui/kernel/qkeysequence.cpp:262
-msgctxt "QShortcut"
-msgid "Monitor Brightness Up"
-msgstr ""
-
-#: src/gui/kernel/qkeysequence.cpp:263
-msgctxt "QShortcut"
-msgid "Monitor Brightness Down"
-msgstr ""
-
-#: src/gui/kernel/qkeysequence.cpp:264
-msgctxt "QShortcut"
-msgid "Keyboard Light On/Off"
-msgstr ""
-
-#: src/gui/kernel/qkeysequence.cpp:265
-msgctxt "QShortcut"
-msgid "Keyboard Brightness Up"
-msgstr ""
-
-#: src/gui/kernel/qkeysequence.cpp:266
-msgctxt "QShortcut"
-msgid "Keyboard Brightness Down"
-msgstr ""
-
-#: src/gui/kernel/qkeysequence.cpp:267
-msgctxt "QShortcut"
-msgid "Power Off"
-msgstr ""
-
-#: src/gui/kernel/qkeysequence.cpp:268
-msgctxt "QShortcut"
-msgid "Wake Up"
-msgstr ""
-
-#: src/gui/kernel/qkeysequence.cpp:269
-msgctxt "QShortcut"
-msgid "Eject"
-msgstr ""
-
-#: src/gui/kernel/qkeysequence.cpp:270
-msgctxt "QShortcut"
-msgid "Screensaver"
-msgstr ""
-
-#: src/gui/kernel/qkeysequence.cpp:271
-msgctxt "QShortcut"
-msgid "WWW"
-msgstr ""
-
-#: src/gui/kernel/qkeysequence.cpp:272
-msgctxt "QShortcut"
-msgid "Sleep"
-msgstr ""
-
-#: src/gui/kernel/qkeysequence.cpp:273
-msgctxt "QShortcut"
-msgid "LightBulb"
-msgstr ""
-
-#: src/gui/kernel/qkeysequence.cpp:274
-msgctxt "QShortcut"
-msgid "Shop"
-msgstr ""
-
-#: src/gui/kernel/qkeysequence.cpp:275
-msgctxt "QShortcut"
-msgid "History"
-msgstr ""
-
-#: src/gui/kernel/qkeysequence.cpp:276
-msgctxt "QShortcut"
-msgid "Add Favorite"
-msgstr ""
-
-#: src/gui/kernel/qkeysequence.cpp:277
-msgctxt "QShortcut"
-msgid "Hot Links"
-msgstr ""
-
-#: src/gui/kernel/qkeysequence.cpp:278
-msgctxt "QShortcut"
-msgid "Adjust Brightness"
-msgstr ""
-
-#: src/gui/kernel/qkeysequence.cpp:279
-msgctxt "QShortcut"
-msgid "Finance"
-msgstr ""
-
-#: src/gui/kernel/qkeysequence.cpp:280
-msgctxt "QShortcut"
-msgid "Community"
-msgstr ""
-
-#: src/gui/kernel/qkeysequence.cpp:281
-msgctxt "QShortcut"
-msgid "Audio Rewind"
-msgstr ""
-
-#: src/gui/kernel/qkeysequence.cpp:282
-msgctxt "QShortcut"
-msgid "Back Forward"
-msgstr ""
-
-#: src/gui/kernel/qkeysequence.cpp:283
-msgctxt "QShortcut"
-msgid "Application Left"
-msgstr ""
-
-#: src/gui/kernel/qkeysequence.cpp:284
-msgctxt "QShortcut"
-msgid "Application Right"
-msgstr ""
-
-#: src/gui/kernel/qkeysequence.cpp:285
-msgctxt "QShortcut"
-msgid "Book"
-msgstr ""
-
-#: src/gui/kernel/qkeysequence.cpp:286
-msgctxt "QShortcut"
-msgid "CD"
-msgstr ""
-
-#: src/gui/kernel/qkeysequence.cpp:287
-msgctxt "QShortcut"
-msgid "Calculator"
-msgstr ""
-
-#: src/gui/kernel/qkeysequence.cpp:288
 msgctxt "QShortcut"
 msgid "Clear"
 msgstr ""
 
-#: src/gui/kernel/qkeysequence.cpp:289
+#: src/gui/kernel/qkeysequence.cpp:201
 msgctxt "QShortcut"
-msgid "Clear Grab"
+msgid "Return"
 msgstr ""
 
-#: src/gui/kernel/qkeysequence.cpp:290
+#: src/gui/kernel/qkeysequence.cpp:202
 msgctxt "QShortcut"
-msgid "Close"
+msgid "Pause"
 msgstr ""
 
-#: src/gui/kernel/qkeysequence.cpp:291
-msgctxt "QShortcut"
-msgid "Copy"
-msgstr ""
-
-#: src/gui/kernel/qkeysequence.cpp:292
-msgctxt "QShortcut"
-msgid "Cut"
-msgstr ""
-
-#: src/gui/kernel/qkeysequence.cpp:293
-msgctxt "QShortcut"
-msgid "Display"
-msgstr ""
-
-#: src/gui/kernel/qkeysequence.cpp:294
-msgctxt "QShortcut"
-msgid "DOS"
-msgstr ""
-
-#: src/gui/kernel/qkeysequence.cpp:295
-msgctxt "QShortcut"
-msgid "Documents"
-msgstr ""
-
-#: src/gui/kernel/qkeysequence.cpp:296
-msgctxt "QShortcut"
-msgid "Spreadsheet"
-msgstr ""
-
-#: src/gui/kernel/qkeysequence.cpp:297
-msgctxt "QShortcut"
-msgid "Browser"
-msgstr ""
-
-#: src/gui/kernel/qkeysequence.cpp:298
-msgctxt "QShortcut"
-msgid "Game"
-msgstr ""
-
-#: src/gui/kernel/qkeysequence.cpp:299
-msgctxt "QShortcut"
-msgid "Go"
-msgstr ""
-
-#: src/gui/kernel/qkeysequence.cpp:300
-msgctxt "QShortcut"
-msgid "iTouch"
-msgstr ""
-
-#: src/gui/kernel/qkeysequence.cpp:301
-msgctxt "QShortcut"
-msgid "Logoff"
-msgstr ""
-
-#: src/gui/kernel/qkeysequence.cpp:302
-msgctxt "QShortcut"
-msgid "Market"
-msgstr ""
-
-#: src/gui/kernel/qkeysequence.cpp:303
-msgctxt "QShortcut"
-msgid "Meeting"
-msgstr ""
-
-#: src/gui/kernel/qkeysequence.cpp:304
-msgctxt "QShortcut"
-msgid "Keyboard Menu"
-msgstr ""
-
-#: src/gui/kernel/qkeysequence.cpp:305
-msgctxt "QShortcut"
-msgid "Menu PB"
-msgstr ""
-
-#: src/gui/kernel/qkeysequence.cpp:306
-msgctxt "QShortcut"
-msgid "My Sites"
-msgstr ""
-
-#: src/gui/kernel/qkeysequence.cpp:307
-msgctxt "QShortcut"
-msgid "News"
-msgstr ""
-
-#: src/gui/kernel/qkeysequence.cpp:308
-msgctxt "QShortcut"
-msgid "Home Office"
-msgstr ""
-
-#: src/gui/kernel/qkeysequence.cpp:309
-msgctxt "QShortcut"
-msgid "Option"
-msgstr ""
-
-#: src/gui/kernel/qkeysequence.cpp:310
-msgctxt "QShortcut"
-msgid "Paste"
-msgstr ""
-
-#: src/gui/kernel/qkeysequence.cpp:311
-msgctxt "QShortcut"
-msgid "Phone"
-msgstr ""
-
-#: src/gui/kernel/qkeysequence.cpp:312
-msgctxt "QShortcut"
-msgid "Reply"
-msgstr ""
-
-#: src/gui/kernel/qkeysequence.cpp:313
-msgctxt "QShortcut"
-msgid "Reload"
-msgstr ""
-
-#: src/gui/kernel/qkeysequence.cpp:314
-msgctxt "QShortcut"
-msgid "Rotate Windows"
-msgstr ""
-
-#: src/gui/kernel/qkeysequence.cpp:315
-msgctxt "QShortcut"
-msgid "Rotation PB"
-msgstr ""
-
-#: src/gui/kernel/qkeysequence.cpp:316
-msgctxt "QShortcut"
-msgid "Rotation KB"
-msgstr ""
-
-#: src/gui/kernel/qkeysequence.cpp:317
-msgctxt "QShortcut"
-msgid "Save"
-msgstr ""
-
-#: src/gui/kernel/qkeysequence.cpp:318
-msgctxt "QShortcut"
-msgid "Send"
-msgstr ""
-
-#: src/gui/kernel/qkeysequence.cpp:319
-msgctxt "QShortcut"
-msgid "Spellchecker"
-msgstr ""
-
-#: src/gui/kernel/qkeysequence.cpp:320
-msgctxt "QShortcut"
-msgid "Split Screen"
-msgstr ""
-
-#: src/gui/kernel/qkeysequence.cpp:321
-msgctxt "QShortcut"
-msgid "Support"
-msgstr ""
-
-#: src/gui/kernel/qkeysequence.cpp:322
-msgctxt "QShortcut"
-msgid "Task Panel"
-msgstr ""
-
-#: src/gui/kernel/qkeysequence.cpp:323
-msgctxt "QShortcut"
-msgid "Terminal"
-msgstr ""
-
-#: src/gui/kernel/qkeysequence.cpp:324
-msgctxt "QShortcut"
-msgid "Tools"
-msgstr ""
-
-#: src/gui/kernel/qkeysequence.cpp:325
-msgctxt "QShortcut"
-msgid "Travel"
-msgstr ""
-
-#: src/gui/kernel/qkeysequence.cpp:326
-msgctxt "QShortcut"
-msgid "Video"
-msgstr ""
-
-#: src/gui/kernel/qkeysequence.cpp:327
-msgctxt "QShortcut"
-msgid "Word Processor"
-msgstr ""
-
-#: src/gui/kernel/qkeysequence.cpp:328
-msgctxt "QShortcut"
-msgid "XFer"
-msgstr ""
-
-#: src/gui/kernel/qkeysequence.cpp:329
-msgctxt "QShortcut"
-msgid "Zoom In"
-msgstr ""
-
-#: src/gui/kernel/qkeysequence.cpp:330
-msgctxt "QShortcut"
-msgid "Zoom Out"
-msgstr ""
-
-#: src/gui/kernel/qkeysequence.cpp:331
-msgctxt "QShortcut"
-msgid "Away"
-msgstr ""
-
-#: src/gui/kernel/qkeysequence.cpp:332
-msgctxt "QShortcut"
-msgid "Messenger"
-msgstr ""
-
-#: src/gui/kernel/qkeysequence.cpp:333
-msgctxt "QShortcut"
-msgid "WebCam"
-msgstr ""
-
-#: src/gui/kernel/qkeysequence.cpp:334
-msgctxt "QShortcut"
-msgid "Mail Forward"
-msgstr ""
-
-#: src/gui/kernel/qkeysequence.cpp:335
-msgctxt "QShortcut"
-msgid "Pictures"
-msgstr ""
-
-#: src/gui/kernel/qkeysequence.cpp:336
-msgctxt "QShortcut"
-msgid "Music"
-msgstr ""
-
-#: src/gui/kernel/qkeysequence.cpp:337
-msgctxt "QShortcut"
-msgid "Battery"
-msgstr ""
-
-#: src/gui/kernel/qkeysequence.cpp:338
-msgctxt "QShortcut"
-msgid "Bluetooth"
-msgstr ""
-
-#: src/gui/kernel/qkeysequence.cpp:339
-msgctxt "QShortcut"
-msgid "Wireless"
-msgstr ""
-
-#: src/gui/kernel/qkeysequence.cpp:340
-msgctxt "QShortcut"
-msgid "Ultra Wide Band"
-msgstr ""
-
-#: src/gui/kernel/qkeysequence.cpp:341
-msgctxt "QShortcut"
-msgid "Audio Forward"
-msgstr ""
-
-#: src/gui/kernel/qkeysequence.cpp:342
-msgctxt "QShortcut"
-msgid "Audio Repeat"
-msgstr ""
-
-#: src/gui/kernel/qkeysequence.cpp:343
-msgctxt "QShortcut"
-msgid "Audio Random Play"
-msgstr ""
-
-#: src/gui/kernel/qkeysequence.cpp:344
-msgctxt "QShortcut"
-msgid "Subtitle"
-msgstr ""
-
-#: src/gui/kernel/qkeysequence.cpp:345
-msgctxt "QShortcut"
-msgid "Audio Cycle Track"
-msgstr ""
-
-#: src/gui/kernel/qkeysequence.cpp:346
-msgctxt "QShortcut"
-msgid "Time"
-msgstr ""
-
-#: src/gui/kernel/qkeysequence.cpp:347
-msgctxt "QShortcut"
-msgid "Select"
-msgstr ""
-
-#: src/gui/kernel/qkeysequence.cpp:348
-msgctxt "QShortcut"
-msgid "View"
-msgstr ""
-
-#: src/gui/kernel/qkeysequence.cpp:349
-msgctxt "QShortcut"
-msgid "Top Menu"
-msgstr ""
-
-#: src/gui/kernel/qkeysequence.cpp:350
-msgctxt "QShortcut"
-msgid "Suspend"
-msgstr ""
-
-#: src/gui/kernel/qkeysequence.cpp:351
-msgctxt "QShortcut"
-msgid "Hibernate"
-msgstr ""
-
-#: src/gui/kernel/qkeysequence.cpp:355
-msgctxt "QShortcut"
-msgid "Print Screen"
-msgstr ""
-
-#: src/gui/kernel/qkeysequence.cpp:356
-msgctxt "QShortcut"
-msgid "Page Up"
-msgstr ""
-
-#: src/gui/kernel/qkeysequence.cpp:357
-msgctxt "QShortcut"
-msgid "Page Down"
-msgstr ""
-
-#: src/gui/kernel/qkeysequence.cpp:358
-msgctxt "QShortcut"
-msgid "Caps Lock"
-msgstr ""
-
-#: src/gui/kernel/qkeysequence.cpp:359
-msgctxt "QShortcut"
-msgid "Num Lock"
-msgstr ""
-
-#: src/gui/kernel/qkeysequence.cpp:360
-msgctxt "QShortcut"
-msgid "Number Lock"
-msgstr ""
-
-#: src/gui/kernel/qkeysequence.cpp:361
+#: src/gui/kernel/qkeysequence.cpp:203
 msgctxt "QShortcut"
 msgid "Scroll Lock"
 msgstr ""
 
-#: src/gui/kernel/qkeysequence.cpp:362
-msgctxt "QShortcut"
-msgid "Insert"
-msgstr ""
-
-#: src/gui/kernel/qkeysequence.cpp:363
-msgctxt "QShortcut"
-msgid "Delete"
-msgstr ""
-
-#: src/gui/kernel/qkeysequence.cpp:364
-msgctxt "QShortcut"
-msgid "Escape"
-msgstr ""
-
-#: src/gui/kernel/qkeysequence.cpp:365
+#: src/gui/kernel/qkeysequence.cpp:204
 msgctxt "QShortcut"
 msgid "System Request"
 msgstr ""
 
-#: src/gui/kernel/qkeysequence.cpp:369
+#: src/gui/kernel/qkeysequence.cpp:205
 msgctxt "QShortcut"
-msgid "Kanji"
+msgid "Escape"
 msgstr ""
 
-#: src/gui/kernel/qkeysequence.cpp:370
+#: src/gui/kernel/qkeysequence.cpp:206
 msgctxt "QShortcut"
-msgid "Muhenkan"
+msgid "Delete"
 msgstr ""
 
-#: src/gui/kernel/qkeysequence.cpp:371
+#: src/gui/kernel/qkeysequence.cpp:207
 msgctxt "QShortcut"
-msgid "Henkan"
+msgid "Multi Key"
 msgstr ""
 
-#: src/gui/kernel/qkeysequence.cpp:372
-msgctxt "QShortcut"
-msgid "Romaji"
-msgstr ""
-
-#: src/gui/kernel/qkeysequence.cpp:373
-msgctxt "QShortcut"
-msgid "Hiragana"
-msgstr ""
-
-#: src/gui/kernel/qkeysequence.cpp:374
-msgctxt "QShortcut"
-msgid "Katakana"
-msgstr ""
-
-#: src/gui/kernel/qkeysequence.cpp:375
-msgctxt "QShortcut"
-msgid "Hiragana Katakana"
-msgstr ""
-
-#: src/gui/kernel/qkeysequence.cpp:376
-msgctxt "QShortcut"
-msgid "Zenkaku"
-msgstr ""
-
-#: src/gui/kernel/qkeysequence.cpp:377
-msgctxt "QShortcut"
-msgid "Hankaku"
-msgstr ""
-
-#: src/gui/kernel/qkeysequence.cpp:378
-msgctxt "QShortcut"
-msgid "Zenkaku Hankaku"
-msgstr ""
-
-#: src/gui/kernel/qkeysequence.cpp:379
-msgctxt "QShortcut"
-msgid "Touroku"
-msgstr ""
-
-#: src/gui/kernel/qkeysequence.cpp:380
-msgctxt "QShortcut"
-msgid "Massyo"
-msgstr ""
-
-#: src/gui/kernel/qkeysequence.cpp:381
-msgctxt "QShortcut"
-msgid "Kana Lock"
-msgstr ""
-
-#: src/gui/kernel/qkeysequence.cpp:382
-msgctxt "QShortcut"
-msgid "Kana Shift"
-msgstr ""
-
-#: src/gui/kernel/qkeysequence.cpp:383
-msgctxt "QShortcut"
-msgid "Eisu Shift"
-msgstr ""
-
-#: src/gui/kernel/qkeysequence.cpp:384
-msgctxt "QShortcut"
-msgid "Eisu toggle"
-msgstr ""
-
-#: src/gui/kernel/qkeysequence.cpp:385
+#: src/gui/kernel/qkeysequence.cpp:208
 msgctxt "QShortcut"
 msgid "Code input"
 msgstr ""
 
-#: src/gui/kernel/qkeysequence.cpp:386
+#: src/gui/kernel/qkeysequence.cpp:209
+msgctxt "QShortcut"
+msgid "Single Candidate"
+msgstr ""
+
+#: src/gui/kernel/qkeysequence.cpp:210
 msgctxt "QShortcut"
 msgid "Multiple Candidate"
 msgstr ""
 
-#: src/gui/kernel/qkeysequence.cpp:387
+#: src/gui/kernel/qkeysequence.cpp:211
 msgctxt "QShortcut"
 msgid "Previous Candidate"
 msgstr ""
 
-#: src/gui/kernel/qkeysequence.cpp:840 src/gui/kernel/qkeysequence.cpp:919
-msgid "Ctrl"
+#: src/gui/kernel/qkeysequence.cpp:212
+msgctxt "QShortcut"
+msgid "Kanji"
 msgstr ""
 
-#: src/gui/kernel/qkeysequence.cpp:841 src/gui/kernel/qkeysequence.cpp:923
-msgid "Shift"
+#: src/gui/kernel/qkeysequence.cpp:213
+msgctxt "QShortcut"
+msgid "Muhenkan"
 msgstr ""
 
-#: src/gui/kernel/qkeysequence.cpp:842 src/gui/kernel/qkeysequence.cpp:921
-msgid "Alt"
+#: src/gui/kernel/qkeysequence.cpp:214
+msgctxt "QShortcut"
+msgid "Henkan"
 msgstr ""
 
-#: src/gui/kernel/qkeysequence.cpp:843 src/gui/kernel/qkeysequence.cpp:917
-msgid "Meta"
+#: src/gui/kernel/qkeysequence.cpp:215
+msgctxt "QShortcut"
+msgid "Romaji"
 msgstr ""
 
-#: src/gui/kernel/qkeysequence.cpp:906
+#: src/gui/kernel/qkeysequence.cpp:216
+msgctxt "QShortcut"
+msgid "Hiragana"
+msgstr ""
+
+#: src/gui/kernel/qkeysequence.cpp:217
+msgctxt "QShortcut"
+msgid "Katakana"
+msgstr ""
+
+#: src/gui/kernel/qkeysequence.cpp:218
+msgctxt "QShortcut"
+msgid "Hiragana Katakana"
+msgstr ""
+
+#: src/gui/kernel/qkeysequence.cpp:219
+msgctxt "QShortcut"
+msgid "Zenkaku"
+msgstr ""
+
+#: src/gui/kernel/qkeysequence.cpp:220
+msgctxt "QShortcut"
+msgid "Hankaku"
+msgstr ""
+
+#: src/gui/kernel/qkeysequence.cpp:221
+msgctxt "QShortcut"
+msgid "Zenkaku Hankaku"
+msgstr ""
+
+#: src/gui/kernel/qkeysequence.cpp:222
+msgctxt "QShortcut"
+msgid "Touroku"
+msgstr ""
+
+#: src/gui/kernel/qkeysequence.cpp:223
+msgctxt "QShortcut"
+msgid "Massyo"
+msgstr ""
+
+#: src/gui/kernel/qkeysequence.cpp:224
+msgctxt "QShortcut"
+msgid "Kana Lock"
+msgstr ""
+
+#: src/gui/kernel/qkeysequence.cpp:225
+msgctxt "QShortcut"
+msgid "Kana Shift"
+msgstr ""
+
+#: src/gui/kernel/qkeysequence.cpp:226
+msgctxt "QShortcut"
+msgid "Eisu Shift"
+msgstr ""
+
+#: src/gui/kernel/qkeysequence.cpp:227
+msgctxt "QShortcut"
+msgid "Eisu toggle"
+msgstr ""
+
+#: src/gui/kernel/qkeysequence.cpp:228
+msgctxt "QShortcut"
+msgid "Home"
+msgstr ""
+
+#: src/gui/kernel/qkeysequence.cpp:229
+msgctxt "QShortcut"
+msgid "Left"
+msgstr ""
+
+#: src/gui/kernel/qkeysequence.cpp:230
+msgctxt "QShortcut"
+msgid "Up"
+msgstr ""
+
+#: src/gui/kernel/qkeysequence.cpp:231
+msgctxt "QShortcut"
+msgid "Right"
+msgstr ""
+
+#: src/gui/kernel/qkeysequence.cpp:232
+msgctxt "QShortcut"
+msgid "Down"
+msgstr ""
+
+#: src/gui/kernel/qkeysequence.cpp:233
+msgctxt "QShortcut"
+msgid "Page Up"
+msgstr ""
+
+#: src/gui/kernel/qkeysequence.cpp:234
+msgctxt "QShortcut"
+msgid "Page Down"
+msgstr ""
+
+#: src/gui/kernel/qkeysequence.cpp:235
+msgctxt "QShortcut"
+msgid "End"
+msgstr ""
+
+#: src/gui/kernel/qkeysequence.cpp:236
+msgctxt "QShortcut"
+msgid "Begin"
+msgstr ""
+
+#: src/gui/kernel/qkeysequence.cpp:237
+msgctxt "QShortcut"
+msgid "Select"
+msgstr ""
+
+#: src/gui/kernel/qkeysequence.cpp:238
+msgctxt "QShortcut"
+msgid "Print Screen"
+msgstr ""
+
+#: src/gui/kernel/qkeysequence.cpp:239
+msgctxt "QShortcut"
+msgid "Execute"
+msgstr ""
+
+#: src/gui/kernel/qkeysequence.cpp:240
+msgctxt "QShortcut"
+msgid "Insert"
+msgstr ""
+
+#: src/gui/kernel/qkeysequence.cpp:241
+msgctxt "QShortcut"
+msgid "Undo"
+msgstr ""
+
+#: src/gui/kernel/qkeysequence.cpp:242
+msgctxt "QShortcut"
+msgid "Redo"
+msgstr ""
+
+#: src/gui/kernel/qkeysequence.cpp:243
+msgctxt "QShortcut"
+msgid "Menu"
+msgstr ""
+
+#: src/gui/kernel/qkeysequence.cpp:244
+msgctxt "QShortcut"
+msgid "Find"
+msgstr ""
+
+#: src/gui/kernel/qkeysequence.cpp:245
+msgctxt "QShortcut"
+msgid "Cancel"
+msgstr ""
+
+#: src/gui/kernel/qkeysequence.cpp:246
+msgctxt "QShortcut"
+msgid "Help"
+msgstr ""
+
+#: src/gui/kernel/qkeysequence.cpp:247
+msgctxt "QShortcut"
+msgid "Break"
+msgstr ""
+
+#: src/gui/kernel/qkeysequence.cpp:248
+msgctxt "QShortcut"
+msgid "Mode switch"
+msgstr ""
+
+#: src/gui/kernel/qkeysequence.cpp:249
+msgctxt "QShortcut"
+msgid "Num Lock"
+msgstr ""
+
+#: src/gui/kernel/qkeysequence.cpp:250
+msgctxt "QShortcut"
+msgid "F1"
+msgstr ""
+
+#: src/gui/kernel/qkeysequence.cpp:251
+msgctxt "QShortcut"
+msgid "F2"
+msgstr ""
+
+#: src/gui/kernel/qkeysequence.cpp:252
+msgctxt "QShortcut"
+msgid "F3"
+msgstr ""
+
+#: src/gui/kernel/qkeysequence.cpp:253
+msgctxt "QShortcut"
+msgid "F4"
+msgstr ""
+
+#: src/gui/kernel/qkeysequence.cpp:254
+msgctxt "QShortcut"
+msgid "F5"
+msgstr ""
+
+#: src/gui/kernel/qkeysequence.cpp:255
+msgctxt "QShortcut"
+msgid "F6"
+msgstr ""
+
+#: src/gui/kernel/qkeysequence.cpp:256
+msgctxt "QShortcut"
+msgid "F7"
+msgstr ""
+
+#: src/gui/kernel/qkeysequence.cpp:257
+msgctxt "QShortcut"
+msgid "F8"
+msgstr ""
+
+#: src/gui/kernel/qkeysequence.cpp:258
+msgctxt "QShortcut"
+msgid "F9"
+msgstr ""
+
+#: src/gui/kernel/qkeysequence.cpp:259
+msgctxt "QShortcut"
+msgid "F10"
+msgstr ""
+
+#: src/gui/kernel/qkeysequence.cpp:260
+msgctxt "QShortcut"
+msgid "F11"
+msgstr ""
+
+#: src/gui/kernel/qkeysequence.cpp:261
+msgctxt "QShortcut"
+msgid "F12"
+msgstr ""
+
+#: src/gui/kernel/qkeysequence.cpp:262
+msgctxt "QShortcut"
+msgid "F13"
+msgstr ""
+
+#: src/gui/kernel/qkeysequence.cpp:263
+msgctxt "QShortcut"
+msgid "F14"
+msgstr ""
+
+#: src/gui/kernel/qkeysequence.cpp:264
+msgctxt "QShortcut"
+msgid "F15"
+msgstr ""
+
+#: src/gui/kernel/qkeysequence.cpp:265
+msgctxt "QShortcut"
+msgid "F16"
+msgstr ""
+
+#: src/gui/kernel/qkeysequence.cpp:266
+msgctxt "QShortcut"
+msgid "F17"
+msgstr ""
+
+#: src/gui/kernel/qkeysequence.cpp:267
+msgctxt "QShortcut"
+msgid "F18"
+msgstr ""
+
+#: src/gui/kernel/qkeysequence.cpp:268
+msgctxt "QShortcut"
+msgid "F19"
+msgstr ""
+
+#: src/gui/kernel/qkeysequence.cpp:269
+msgctxt "QShortcut"
+msgid "F20"
+msgstr ""
+
+#: src/gui/kernel/qkeysequence.cpp:270
+msgctxt "QShortcut"
+msgid "F21"
+msgstr ""
+
+#: src/gui/kernel/qkeysequence.cpp:271
+msgctxt "QShortcut"
+msgid "F22"
+msgstr ""
+
+#: src/gui/kernel/qkeysequence.cpp:272
+msgctxt "QShortcut"
+msgid "F23"
+msgstr ""
+
+#: src/gui/kernel/qkeysequence.cpp:273
+msgctxt "QShortcut"
+msgid "F24"
+msgstr ""
+
+#: src/gui/kernel/qkeysequence.cpp:274
+msgctxt "QShortcut"
+msgid "F25"
+msgstr ""
+
+#: src/gui/kernel/qkeysequence.cpp:275
+msgctxt "QShortcut"
+msgid "F26"
+msgstr ""
+
+#: src/gui/kernel/qkeysequence.cpp:276
+msgctxt "QShortcut"
+msgid "F27"
+msgstr ""
+
+#: src/gui/kernel/qkeysequence.cpp:277
+msgctxt "QShortcut"
+msgid "F28"
+msgstr ""
+
+#: src/gui/kernel/qkeysequence.cpp:278
+msgctxt "QShortcut"
+msgid "F29"
+msgstr ""
+
+#: src/gui/kernel/qkeysequence.cpp:279
+msgctxt "QShortcut"
+msgid "F30"
+msgstr ""
+
+#: src/gui/kernel/qkeysequence.cpp:280
+msgctxt "QShortcut"
+msgid "F31"
+msgstr ""
+
+#: src/gui/kernel/qkeysequence.cpp:281
+msgctxt "QShortcut"
+msgid "F32"
+msgstr ""
+
+#: src/gui/kernel/qkeysequence.cpp:282
+msgctxt "QShortcut"
+msgid "F33"
+msgstr ""
+
+#: src/gui/kernel/qkeysequence.cpp:283
+msgctxt "QShortcut"
+msgid "F34"
+msgstr ""
+
+#: src/gui/kernel/qkeysequence.cpp:284
+msgctxt "QShortcut"
+msgid "F35"
+msgstr ""
+
+#: src/gui/kernel/qkeysequence.cpp:291
+msgctxt "QShortcut"
+msgid "Caps Lock"
+msgstr ""
+
+#: src/gui/kernel/qkeysequence.cpp:292
+msgctxt "QShortcut"
+msgid "Shift Lock"
+msgstr ""
+
+#: src/gui/kernel/qkeysequence.cpp:299
+msgctxt "QShortcut"
+msgid "Super Left"
+msgstr ""
+
+#: src/gui/kernel/qkeysequence.cpp:300
+msgctxt "QShortcut"
+msgid "Super Right"
+msgstr ""
+
+#: src/gui/kernel/qkeysequence.cpp:301
+msgctxt "QShortcut"
+msgid "Hyper Left"
+msgstr ""
+
+#: src/gui/kernel/qkeysequence.cpp:302
+msgctxt "QShortcut"
+msgid "Hyper Right"
+msgstr ""
+
+#: src/gui/kernel/qkeysequence.cpp:303
+msgctxt "QShortcut"
+msgid "Space"
+msgstr ""
+
+#: src/gui/kernel/qkeysequence.cpp:304
+msgctxt "QShortcut"
+msgid "!"
+msgstr ""
+
+#: src/gui/kernel/qkeysequence.cpp:305
+msgctxt "QShortcut"
+msgid "\""
+msgstr ""
+
+#: src/gui/kernel/qkeysequence.cpp:306
+msgctxt "QShortcut"
+msgid "#"
+msgstr ""
+
+#: src/gui/kernel/qkeysequence.cpp:307
+msgctxt "QShortcut"
+msgid "$"
+msgstr ""
+
+#: src/gui/kernel/qkeysequence.cpp:308
+msgctxt "QShortcut"
+msgid "%"
+msgstr ""
+
+#: src/gui/kernel/qkeysequence.cpp:309
+msgctxt "QShortcut"
+msgid "&"
+msgstr ""
+
+#: src/gui/kernel/qkeysequence.cpp:310
+msgctxt "QShortcut"
+msgid "'"
+msgstr ""
+
+#: src/gui/kernel/qkeysequence.cpp:311
+msgctxt "QShortcut"
+msgid "("
+msgstr ""
+
+#: src/gui/kernel/qkeysequence.cpp:312
+msgctxt "QShortcut"
+msgid ")"
+msgstr ""
+
+#: src/gui/kernel/qkeysequence.cpp:313
+msgctxt "QShortcut"
+msgid "*"
+msgstr ""
+
+#: src/gui/kernel/qkeysequence.cpp:314
+msgctxt "QShortcut"
 msgid "+"
 msgstr ""
 
-#: src/gui/kernel/qkeysequence.cpp:930
-msgid "F%1"
+#: src/gui/kernel/qkeysequence.cpp:315
+msgctxt "QShortcut"
+msgid ","
+msgstr ""
+
+#: src/gui/kernel/qkeysequence.cpp:316
+msgctxt "QShortcut"
+msgid "-"
+msgstr ""
+
+#: src/gui/kernel/qkeysequence.cpp:317
+msgctxt "QShortcut"
+msgid "."
+msgstr ""
+
+#: src/gui/kernel/qkeysequence.cpp:318
+msgctxt "QShortcut"
+msgid "/"
+msgstr ""
+
+#: src/gui/kernel/qkeysequence.cpp:319
+msgctxt "QShortcut"
+msgid "0"
+msgstr ""
+
+#: src/gui/kernel/qkeysequence.cpp:320
+msgctxt "QShortcut"
+msgid "1"
+msgstr ""
+
+#: src/gui/kernel/qkeysequence.cpp:321
+msgctxt "QShortcut"
+msgid "2"
+msgstr ""
+
+#: src/gui/kernel/qkeysequence.cpp:322
+msgctxt "QShortcut"
+msgid "3"
+msgstr ""
+
+#: src/gui/kernel/qkeysequence.cpp:323
+msgctxt "QShortcut"
+msgid "4"
+msgstr ""
+
+#: src/gui/kernel/qkeysequence.cpp:324
+msgctxt "QShortcut"
+msgid "5"
+msgstr ""
+
+#: src/gui/kernel/qkeysequence.cpp:325
+msgctxt "QShortcut"
+msgid "6"
+msgstr ""
+
+#: src/gui/kernel/qkeysequence.cpp:326
+msgctxt "QShortcut"
+msgid "7"
+msgstr ""
+
+#: src/gui/kernel/qkeysequence.cpp:327
+msgctxt "QShortcut"
+msgid "8"
+msgstr ""
+
+#: src/gui/kernel/qkeysequence.cpp:328
+msgctxt "QShortcut"
+msgid "9"
+msgstr ""
+
+#: src/gui/kernel/qkeysequence.cpp:329
+msgctxt "QShortcut"
+msgid ":"
+msgstr ""
+
+#: src/gui/kernel/qkeysequence.cpp:330
+msgctxt "QShortcut"
+msgid ";"
+msgstr ""
+
+#: src/gui/kernel/qkeysequence.cpp:331
+msgctxt "QShortcut"
+msgid "<"
+msgstr ""
+
+#: src/gui/kernel/qkeysequence.cpp:332
+msgctxt "QShortcut"
+msgid "="
+msgstr ""
+
+#: src/gui/kernel/qkeysequence.cpp:333
+msgctxt "QShortcut"
+msgid ">"
+msgstr ""
+
+#: src/gui/kernel/qkeysequence.cpp:334
+msgctxt "QShortcut"
+msgid "?"
+msgstr ""
+
+#: src/gui/kernel/qkeysequence.cpp:335
+msgctxt "QShortcut"
+msgid "@"
+msgstr ""
+
+#: src/gui/kernel/qkeysequence.cpp:336
+msgctxt "QShortcut"
+msgid "A"
+msgstr ""
+
+#: src/gui/kernel/qkeysequence.cpp:337
+msgctxt "QShortcut"
+msgid "B"
+msgstr ""
+
+#: src/gui/kernel/qkeysequence.cpp:338
+msgctxt "QShortcut"
+msgid "C"
+msgstr ""
+
+#: src/gui/kernel/qkeysequence.cpp:339
+msgctxt "QShortcut"
+msgid "D"
+msgstr ""
+
+#: src/gui/kernel/qkeysequence.cpp:340
+msgctxt "QShortcut"
+msgid "E"
+msgstr ""
+
+#: src/gui/kernel/qkeysequence.cpp:341
+msgctxt "QShortcut"
+msgid "F"
+msgstr ""
+
+#: src/gui/kernel/qkeysequence.cpp:342
+msgctxt "QShortcut"
+msgid "G"
+msgstr ""
+
+#: src/gui/kernel/qkeysequence.cpp:343
+msgctxt "QShortcut"
+msgid "H"
+msgstr ""
+
+#: src/gui/kernel/qkeysequence.cpp:344
+msgctxt "QShortcut"
+msgid "I"
+msgstr ""
+
+#: src/gui/kernel/qkeysequence.cpp:345
+msgctxt "QShortcut"
+msgid "J"
+msgstr ""
+
+#: src/gui/kernel/qkeysequence.cpp:346
+msgctxt "QShortcut"
+msgid "K"
+msgstr ""
+
+#: src/gui/kernel/qkeysequence.cpp:347
+msgctxt "QShortcut"
+msgid "L"
+msgstr ""
+
+#: src/gui/kernel/qkeysequence.cpp:348
+msgctxt "QShortcut"
+msgid "M"
+msgstr ""
+
+#: src/gui/kernel/qkeysequence.cpp:349
+msgctxt "QShortcut"
+msgid "N"
+msgstr ""
+
+#: src/gui/kernel/qkeysequence.cpp:350
+msgctxt "QShortcut"
+msgid "O"
+msgstr ""
+
+#: src/gui/kernel/qkeysequence.cpp:351
+msgctxt "QShortcut"
+msgid "P"
+msgstr ""
+
+#: src/gui/kernel/qkeysequence.cpp:352
+msgctxt "QShortcut"
+msgid "Q"
+msgstr ""
+
+#: src/gui/kernel/qkeysequence.cpp:353
+msgctxt "QShortcut"
+msgid "R"
+msgstr ""
+
+#: src/gui/kernel/qkeysequence.cpp:354
+msgctxt "QShortcut"
+msgid "S"
+msgstr ""
+
+#: src/gui/kernel/qkeysequence.cpp:355
+msgctxt "QShortcut"
+msgid "T"
+msgstr ""
+
+#: src/gui/kernel/qkeysequence.cpp:356
+msgctxt "QShortcut"
+msgid "U"
+msgstr ""
+
+#: src/gui/kernel/qkeysequence.cpp:357
+msgctxt "QShortcut"
+msgid "V"
+msgstr ""
+
+#: src/gui/kernel/qkeysequence.cpp:358
+msgctxt "QShortcut"
+msgid "W"
+msgstr ""
+
+#: src/gui/kernel/qkeysequence.cpp:359
+msgctxt "QShortcut"
+msgid "X"
+msgstr ""
+
+#: src/gui/kernel/qkeysequence.cpp:360
+msgctxt "QShortcut"
+msgid "Y"
+msgstr ""
+
+#: src/gui/kernel/qkeysequence.cpp:361
+msgctxt "QShortcut"
+msgid "Z"
+msgstr ""
+
+#: src/gui/kernel/qkeysequence.cpp:362
+msgctxt "QShortcut"
+msgid "["
+msgstr ""
+
+#: src/gui/kernel/qkeysequence.cpp:363
+msgctxt "QShortcut"
+msgid "\\"
+msgstr ""
+
+#: src/gui/kernel/qkeysequence.cpp:364
+msgctxt "QShortcut"
+msgid "]"
+msgstr ""
+
+#: src/gui/kernel/qkeysequence.cpp:365
+msgctxt "QShortcut"
+msgid "^"
+msgstr ""
+
+#: src/gui/kernel/qkeysequence.cpp:366
+msgctxt "QShortcut"
+msgid "_"
+msgstr ""
+
+#: src/gui/kernel/qkeysequence.cpp:367
+msgctxt "QShortcut"
+msgid "{"
+msgstr ""
+
+#: src/gui/kernel/qkeysequence.cpp:368
+msgctxt "QShortcut"
+msgid "|"
+msgstr ""
+
+#: src/gui/kernel/qkeysequence.cpp:369
+msgctxt "QShortcut"
+msgid "}"
+msgstr ""
+
+#: src/gui/kernel/qkeysequence.cpp:370
+msgctxt "QShortcut"
+msgid "~"
+msgstr ""
+
+#: src/gui/kernel/qkeysequence.cpp:371
+msgctxt "QShortcut"
+msgid "nobreakspace"
+msgstr ""
+
+#: src/gui/kernel/qkeysequence.cpp:372
+msgctxt "QShortcut"
+msgid "exclamdown"
+msgstr ""
+
+#: src/gui/kernel/qkeysequence.cpp:373
+msgctxt "QShortcut"
+msgid "cent"
+msgstr ""
+
+#: src/gui/kernel/qkeysequence.cpp:374
+msgctxt "QShortcut"
+msgid "sterling"
+msgstr ""
+
+#: src/gui/kernel/qkeysequence.cpp:375
+msgctxt "QShortcut"
+msgid "currency"
+msgstr ""
+
+#: src/gui/kernel/qkeysequence.cpp:376
+msgctxt "QShortcut"
+msgid "yen"
+msgstr ""
+
+#: src/gui/kernel/qkeysequence.cpp:377
+msgctxt "QShortcut"
+msgid "brokenbar"
+msgstr ""
+
+#: src/gui/kernel/qkeysequence.cpp:378
+msgctxt "QShortcut"
+msgid "section"
+msgstr ""
+
+#: src/gui/kernel/qkeysequence.cpp:379
+msgctxt "QShortcut"
+msgid "diaeresis"
+msgstr ""
+
+#: src/gui/kernel/qkeysequence.cpp:380
+msgctxt "QShortcut"
+msgid "copyright"
+msgstr ""
+
+#: src/gui/kernel/qkeysequence.cpp:381
+msgctxt "QShortcut"
+msgid "ordfeminine"
+msgstr ""
+
+#: src/gui/kernel/qkeysequence.cpp:382
+msgctxt "QShortcut"
+msgid "guillemotleft"
+msgstr ""
+
+#: src/gui/kernel/qkeysequence.cpp:383
+msgctxt "QShortcut"
+msgid "notsign"
+msgstr ""
+
+#: src/gui/kernel/qkeysequence.cpp:384
+msgctxt "QShortcut"
+msgid "hyphen"
+msgstr ""
+
+#: src/gui/kernel/qkeysequence.cpp:385
+msgctxt "QShortcut"
+msgid "registered"
+msgstr ""
+
+#: src/gui/kernel/qkeysequence.cpp:386
+msgctxt "QShortcut"
+msgid "macron"
+msgstr ""
+
+#: src/gui/kernel/qkeysequence.cpp:387
+msgctxt "QShortcut"
+msgid "degree"
+msgstr ""
+
+#: src/gui/kernel/qkeysequence.cpp:388
+msgctxt "QShortcut"
+msgid "plusminus"
+msgstr ""
+
+#: src/gui/kernel/qkeysequence.cpp:389
+msgctxt "QShortcut"
+msgid "twosuperior"
+msgstr ""
+
+#: src/gui/kernel/qkeysequence.cpp:390
+msgctxt "QShortcut"
+msgid "threesuperior"
+msgstr ""
+
+#: src/gui/kernel/qkeysequence.cpp:391
+msgctxt "QShortcut"
+msgid "acute"
+msgstr ""
+
+#: src/gui/kernel/qkeysequence.cpp:392
+msgctxt "QShortcut"
+msgid "mu"
+msgstr ""
+
+#: src/gui/kernel/qkeysequence.cpp:393
+msgctxt "QShortcut"
+msgid "paragraph"
+msgstr ""
+
+#: src/gui/kernel/qkeysequence.cpp:394
+msgctxt "QShortcut"
+msgid "periodcentered"
+msgstr ""
+
+#: src/gui/kernel/qkeysequence.cpp:395
+msgctxt "QShortcut"
+msgid "cedilla"
+msgstr ""
+
+#: src/gui/kernel/qkeysequence.cpp:396
+msgctxt "QShortcut"
+msgid "onesuperior"
+msgstr ""
+
+#: src/gui/kernel/qkeysequence.cpp:397
+msgctxt "QShortcut"
+msgid "masculine"
+msgstr ""
+
+#: src/gui/kernel/qkeysequence.cpp:398
+msgctxt "QShortcut"
+msgid "guillemotright"
+msgstr ""
+
+#: src/gui/kernel/qkeysequence.cpp:399
+msgctxt "QShortcut"
+msgid "onequarter"
+msgstr ""
+
+#: src/gui/kernel/qkeysequence.cpp:400
+msgctxt "QShortcut"
+msgid "onehalf"
+msgstr ""
+
+#: src/gui/kernel/qkeysequence.cpp:401
+msgctxt "QShortcut"
+msgid "threequarters"
+msgstr ""
+
+#: src/gui/kernel/qkeysequence.cpp:402
+msgctxt "QShortcut"
+msgid "questiondown"
+msgstr ""
+
+#: src/gui/kernel/qkeysequence.cpp:403
+msgctxt "QShortcut"
+msgid "Agrave"
+msgstr ""
+
+#: src/gui/kernel/qkeysequence.cpp:404
+msgctxt "QShortcut"
+msgid "Aacute"
+msgstr ""
+
+#: src/gui/kernel/qkeysequence.cpp:405
+msgctxt "QShortcut"
+msgid "Acircumflex"
+msgstr ""
+
+#: src/gui/kernel/qkeysequence.cpp:406
+msgctxt "QShortcut"
+msgid "Atilde"
+msgstr ""
+
+#: src/gui/kernel/qkeysequence.cpp:407
+msgctxt "QShortcut"
+msgid "Adiaeresis"
+msgstr ""
+
+#: src/gui/kernel/qkeysequence.cpp:408
+msgctxt "QShortcut"
+msgid "Aring"
+msgstr ""
+
+#: src/gui/kernel/qkeysequence.cpp:409
+msgctxt "QShortcut"
+msgid "AE"
+msgstr ""
+
+#: src/gui/kernel/qkeysequence.cpp:410
+msgctxt "QShortcut"
+msgid "Ccedilla"
+msgstr ""
+
+#: src/gui/kernel/qkeysequence.cpp:411
+msgctxt "QShortcut"
+msgid "Egrave"
+msgstr ""
+
+#: src/gui/kernel/qkeysequence.cpp:412
+msgctxt "QShortcut"
+msgid "Eacute"
+msgstr ""
+
+#: src/gui/kernel/qkeysequence.cpp:413
+msgctxt "QShortcut"
+msgid "Ecircumflex"
+msgstr ""
+
+#: src/gui/kernel/qkeysequence.cpp:414
+msgctxt "QShortcut"
+msgid "Ediaeresis"
+msgstr ""
+
+#: src/gui/kernel/qkeysequence.cpp:415
+msgctxt "QShortcut"
+msgid "Igrave"
+msgstr ""
+
+#: src/gui/kernel/qkeysequence.cpp:416
+msgctxt "QShortcut"
+msgid "Iacute"
+msgstr ""
+
+#: src/gui/kernel/qkeysequence.cpp:417
+msgctxt "QShortcut"
+msgid "Icircumflex"
+msgstr ""
+
+#: src/gui/kernel/qkeysequence.cpp:418
+msgctxt "QShortcut"
+msgid "Idiaeresis"
+msgstr ""
+
+#: src/gui/kernel/qkeysequence.cpp:419
+msgctxt "QShortcut"
+msgid "ETH"
+msgstr ""
+
+#: src/gui/kernel/qkeysequence.cpp:420
+msgctxt "QShortcut"
+msgid "Ntilde"
+msgstr ""
+
+#: src/gui/kernel/qkeysequence.cpp:421
+msgctxt "QShortcut"
+msgid "Ograve"
+msgstr ""
+
+#: src/gui/kernel/qkeysequence.cpp:422
+msgctxt "QShortcut"
+msgid "Oacute"
+msgstr ""
+
+#: src/gui/kernel/qkeysequence.cpp:423
+msgctxt "QShortcut"
+msgid "Ocircumflex"
+msgstr ""
+
+#: src/gui/kernel/qkeysequence.cpp:424
+msgctxt "QShortcut"
+msgid "Otilde"
+msgstr ""
+
+#: src/gui/kernel/qkeysequence.cpp:425
+msgctxt "QShortcut"
+msgid "Odiaeresis"
+msgstr ""
+
+#: src/gui/kernel/qkeysequence.cpp:426
+msgctxt "QShortcut"
+msgid "multiply"
+msgstr ""
+
+#: src/gui/kernel/qkeysequence.cpp:427
+msgctxt "QShortcut"
+msgid "Oslash"
+msgstr ""
+
+#: src/gui/kernel/qkeysequence.cpp:428
+msgctxt "QShortcut"
+msgid "Ugrave"
+msgstr ""
+
+#: src/gui/kernel/qkeysequence.cpp:429
+msgctxt "QShortcut"
+msgid "Uacute"
+msgstr ""
+
+#: src/gui/kernel/qkeysequence.cpp:430
+msgctxt "QShortcut"
+msgid "Ucircumflex"
+msgstr ""
+
+#: src/gui/kernel/qkeysequence.cpp:431
+msgctxt "QShortcut"
+msgid "Udiaeresis"
+msgstr ""
+
+#: src/gui/kernel/qkeysequence.cpp:432
+msgctxt "QShortcut"
+msgid "Yacute"
+msgstr ""
+
+#: src/gui/kernel/qkeysequence.cpp:433
+msgctxt "QShortcut"
+msgid "THORN"
+msgstr ""
+
+#: src/gui/kernel/qkeysequence.cpp:434
+msgctxt "QShortcut"
+msgid "ssharp"
+msgstr ""
+
+#: src/gui/kernel/qkeysequence.cpp:435
+msgctxt "QShortcut"
+msgid "agrave"
+msgstr ""
+
+#: src/gui/kernel/qkeysequence.cpp:436
+msgctxt "QShortcut"
+msgid "aacute"
+msgstr ""
+
+#: src/gui/kernel/qkeysequence.cpp:437
+msgctxt "QShortcut"
+msgid "acircumflex"
+msgstr ""
+
+#: src/gui/kernel/qkeysequence.cpp:438
+msgctxt "QShortcut"
+msgid "atilde"
+msgstr ""
+
+#: src/gui/kernel/qkeysequence.cpp:439
+msgctxt "QShortcut"
+msgid "adiaeresis"
+msgstr ""
+
+#: src/gui/kernel/qkeysequence.cpp:440
+msgctxt "QShortcut"
+msgid "aring"
+msgstr ""
+
+#: src/gui/kernel/qkeysequence.cpp:441
+msgctxt "QShortcut"
+msgid "ae"
+msgstr ""
+
+#: src/gui/kernel/qkeysequence.cpp:442
+msgctxt "QShortcut"
+msgid "ccedilla"
+msgstr ""
+
+#: src/gui/kernel/qkeysequence.cpp:443
+msgctxt "QShortcut"
+msgid "egrave"
+msgstr ""
+
+#: src/gui/kernel/qkeysequence.cpp:444
+msgctxt "QShortcut"
+msgid "eacute"
+msgstr ""
+
+#: src/gui/kernel/qkeysequence.cpp:445
+msgctxt "QShortcut"
+msgid "ecircumflex"
+msgstr ""
+
+#: src/gui/kernel/qkeysequence.cpp:446
+msgctxt "QShortcut"
+msgid "ediaeresis"
+msgstr ""
+
+#: src/gui/kernel/qkeysequence.cpp:447
+msgctxt "QShortcut"
+msgid "igrave"
+msgstr ""
+
+#: src/gui/kernel/qkeysequence.cpp:448
+msgctxt "QShortcut"
+msgid "iacute"
+msgstr ""
+
+#: src/gui/kernel/qkeysequence.cpp:449
+msgctxt "QShortcut"
+msgid "icircumflex"
+msgstr ""
+
+#: src/gui/kernel/qkeysequence.cpp:450
+msgctxt "QShortcut"
+msgid "idiaeresis"
+msgstr ""
+
+#: src/gui/kernel/qkeysequence.cpp:451
+msgctxt "QShortcut"
+msgid "eth"
+msgstr ""
+
+#: src/gui/kernel/qkeysequence.cpp:452
+msgctxt "QShortcut"
+msgid "ntilde"
+msgstr ""
+
+#: src/gui/kernel/qkeysequence.cpp:453
+msgctxt "QShortcut"
+msgid "ograve"
+msgstr ""
+
+#: src/gui/kernel/qkeysequence.cpp:454
+msgctxt "QShortcut"
+msgid "oacute"
+msgstr ""
+
+#: src/gui/kernel/qkeysequence.cpp:455
+msgctxt "QShortcut"
+msgid "ocircumflex"
+msgstr ""
+
+#: src/gui/kernel/qkeysequence.cpp:456
+msgctxt "QShortcut"
+msgid "otilde"
+msgstr ""
+
+#: src/gui/kernel/qkeysequence.cpp:457
+msgctxt "QShortcut"
+msgid "odiaeresis"
+msgstr ""
+
+#: src/gui/kernel/qkeysequence.cpp:458
+msgctxt "QShortcut"
+msgid "division"
+msgstr ""
+
+#: src/gui/kernel/qkeysequence.cpp:459
+msgctxt "QShortcut"
+msgid "oslash"
+msgstr ""
+
+#: src/gui/kernel/qkeysequence.cpp:460
+msgctxt "QShortcut"
+msgid "ugrave"
+msgstr ""
+
+#: src/gui/kernel/qkeysequence.cpp:461
+msgctxt "QShortcut"
+msgid "uacute"
+msgstr ""
+
+#: src/gui/kernel/qkeysequence.cpp:462
+msgctxt "QShortcut"
+msgid "ucircumflex"
+msgstr ""
+
+#: src/gui/kernel/qkeysequence.cpp:463
+msgctxt "QShortcut"
+msgid "udiaeresis"
+msgstr ""
+
+#: src/gui/kernel/qkeysequence.cpp:464
+msgctxt "QShortcut"
+msgid "yacute"
+msgstr ""
+
+#: src/gui/kernel/qkeysequence.cpp:465
+msgctxt "QShortcut"
+msgid "thorn"
+msgstr ""
+
+#: src/gui/kernel/qkeysequence.cpp:466
+msgctxt "QShortcut"
+msgid "ydiaeresis"
+msgstr ""
+
+#: src/gui/kernel/qkeysequence.cpp:467
+msgctxt "QShortcut"
+msgid "Mode Lock"
+msgstr ""
+
+#: src/gui/kernel/qkeysequence.cpp:468
+msgctxt "QShortcut"
+msgid "Monitor Brightness Up"
+msgstr ""
+
+#: src/gui/kernel/qkeysequence.cpp:469
+msgctxt "QShortcut"
+msgid "Monitor Brightness Down"
+msgstr ""
+
+#: src/gui/kernel/qkeysequence.cpp:470
+msgctxt "QShortcut"
+msgid "Keyboard Light On/Off"
+msgstr ""
+
+#: src/gui/kernel/qkeysequence.cpp:471
+msgctxt "QShortcut"
+msgid "Keyboard Brightness Up"
+msgstr ""
+
+#: src/gui/kernel/qkeysequence.cpp:472
+msgctxt "QShortcut"
+msgid "Keyboard Brightness Down"
+msgstr ""
+
+#: src/gui/kernel/qkeysequence.cpp:473
+msgctxt "QShortcut"
+msgid "Monitor Brightness Cycle"
+msgstr ""
+
+#: src/gui/kernel/qkeysequence.cpp:474
+msgctxt "QShortcut"
+msgid "Standby"
+msgstr ""
+
+#: src/gui/kernel/qkeysequence.cpp:475
+msgctxt "QShortcut"
+msgid "Volume Down"
+msgstr ""
+
+#: src/gui/kernel/qkeysequence.cpp:476
+msgctxt "QShortcut"
+msgid "Volume Mute"
+msgstr ""
+
+#: src/gui/kernel/qkeysequence.cpp:477
+msgctxt "QShortcut"
+msgid "Volume Up"
+msgstr ""
+
+#: src/gui/kernel/qkeysequence.cpp:478
+msgctxt "QShortcut"
+msgid "Media Play"
+msgstr ""
+
+#: src/gui/kernel/qkeysequence.cpp:479
+msgctxt "QShortcut"
+msgid "Media Stop"
+msgstr ""
+
+#: src/gui/kernel/qkeysequence.cpp:480
+msgctxt "QShortcut"
+msgid "Media Previous"
+msgstr ""
+
+#: src/gui/kernel/qkeysequence.cpp:481
+msgctxt "QShortcut"
+msgid "Media Next"
+msgstr ""
+
+#: src/gui/kernel/qkeysequence.cpp:482
+msgctxt "QShortcut"
+msgid "Home Page"
+msgstr ""
+
+#: src/gui/kernel/qkeysequence.cpp:483
+msgctxt "QShortcut"
+msgid "Launch Mail"
+msgstr ""
+
+#: src/gui/kernel/qkeysequence.cpp:484
+msgctxt "QShortcut"
+msgid "Start"
+msgstr ""
+
+#: src/gui/kernel/qkeysequence.cpp:485
+msgctxt "QShortcut"
+msgid "Search"
+msgstr ""
+
+#: src/gui/kernel/qkeysequence.cpp:486
+msgctxt "QShortcut"
+msgid "Media Record"
+msgstr ""
+
+#: src/gui/kernel/qkeysequence.cpp:487
+msgctxt "QShortcut"
+msgid "Calculator"
+msgstr ""
+
+#: src/gui/kernel/qkeysequence.cpp:488
+msgctxt "QShortcut"
+msgid "Memo"
+msgstr ""
+
+#: src/gui/kernel/qkeysequence.cpp:489
+msgctxt "QShortcut"
+msgid "ToDo List"
+msgstr ""
+
+#: src/gui/kernel/qkeysequence.cpp:490
+msgctxt "QShortcut"
+msgid "Calendar"
+msgstr ""
+
+#: src/gui/kernel/qkeysequence.cpp:491
+msgctxt "QShortcut"
+msgid "Power Down"
+msgstr ""
+
+#: src/gui/kernel/qkeysequence.cpp:492
+msgctxt "QShortcut"
+msgid "Contrast Adjust"
+msgstr ""
+
+#: src/gui/kernel/qkeysequence.cpp:493
+msgctxt "QShortcut"
+msgid "Rocker Up"
+msgstr ""
+
+#: src/gui/kernel/qkeysequence.cpp:494
+msgctxt "QShortcut"
+msgid "Rocker Down"
+msgstr ""
+
+#: src/gui/kernel/qkeysequence.cpp:495
+msgctxt "QShortcut"
+msgid "Rocker Enter"
+msgstr ""
+
+#: src/gui/kernel/qkeysequence.cpp:496
+msgctxt "QShortcut"
+msgid "Back"
+msgstr ""
+
+#: src/gui/kernel/qkeysequence.cpp:497
+msgctxt "QShortcut"
+msgid "Forward"
+msgstr ""
+
+#: src/gui/kernel/qkeysequence.cpp:498
+msgctxt "QShortcut"
+msgid "Stop"
+msgstr ""
+
+#: src/gui/kernel/qkeysequence.cpp:499
+msgctxt "QShortcut"
+msgid "Refresh"
+msgstr ""
+
+#: src/gui/kernel/qkeysequence.cpp:500
+msgctxt "QShortcut"
+msgid "Power Off"
+msgstr ""
+
+#: src/gui/kernel/qkeysequence.cpp:501
+msgctxt "QShortcut"
+msgid "Wake Up"
+msgstr ""
+
+#: src/gui/kernel/qkeysequence.cpp:502
+msgctxt "QShortcut"
+msgid "Eject"
+msgstr ""
+
+#: src/gui/kernel/qkeysequence.cpp:503
+msgctxt "QShortcut"
+msgid "Screensaver"
+msgstr ""
+
+#: src/gui/kernel/qkeysequence.cpp:504
+msgctxt "QShortcut"
+msgid "WWW"
+msgstr ""
+
+#: src/gui/kernel/qkeysequence.cpp:505
+msgctxt "QShortcut"
+msgid "Sleep"
+msgstr ""
+
+#: src/gui/kernel/qkeysequence.cpp:506
+msgctxt "QShortcut"
+msgid "Favorites"
+msgstr ""
+
+#: src/gui/kernel/qkeysequence.cpp:507
+msgctxt "QShortcut"
+msgid "Media Pause"
+msgstr ""
+
+#: src/gui/kernel/qkeysequence.cpp:508
+msgctxt "QShortcut"
+msgid "Launch Media"
+msgstr ""
+
+#: src/gui/kernel/qkeysequence.cpp:509
+msgctxt "QShortcut"
+msgid "My Computer"
+msgstr ""
+
+#: src/gui/kernel/qkeysequence.cpp:510
+msgctxt "QShortcut"
+msgid "Vendor Home"
+msgstr ""
+
+#: src/gui/kernel/qkeysequence.cpp:511
+msgctxt "QShortcut"
+msgid "LightBulb"
+msgstr ""
+
+#: src/gui/kernel/qkeysequence.cpp:512
+msgctxt "QShortcut"
+msgid "Shop"
+msgstr ""
+
+#: src/gui/kernel/qkeysequence.cpp:513
+msgctxt "QShortcut"
+msgid "History"
+msgstr ""
+
+#: src/gui/kernel/qkeysequence.cpp:514
+msgctxt "QShortcut"
+msgid "Open URL"
+msgstr ""
+
+#: src/gui/kernel/qkeysequence.cpp:515
+msgctxt "QShortcut"
+msgid "Add Favorite"
+msgstr ""
+
+#: src/gui/kernel/qkeysequence.cpp:516
+msgctxt "QShortcut"
+msgid "Hot Links"
+msgstr ""
+
+#: src/gui/kernel/qkeysequence.cpp:517
+msgctxt "QShortcut"
+msgid "Adjust Brightness"
+msgstr ""
+
+#: src/gui/kernel/qkeysequence.cpp:518
+msgctxt "QShortcut"
+msgid "Finance"
+msgstr ""
+
+#: src/gui/kernel/qkeysequence.cpp:519
+msgctxt "QShortcut"
+msgid "Community"
+msgstr ""
+
+#: src/gui/kernel/qkeysequence.cpp:520
+msgctxt "QShortcut"
+msgid "Audio Rewind"
+msgstr ""
+
+#: src/gui/kernel/qkeysequence.cpp:521
+msgctxt "QShortcut"
+msgid "Back Forward"
+msgstr ""
+
+#: src/gui/kernel/qkeysequence.cpp:522
+msgctxt "QShortcut"
+msgid "Launch (0)"
+msgstr ""
+
+#: src/gui/kernel/qkeysequence.cpp:523
+msgctxt "QShortcut"
+msgid "Launch (1)"
+msgstr ""
+
+#: src/gui/kernel/qkeysequence.cpp:524
+msgctxt "QShortcut"
+msgid "Launch (2)"
+msgstr ""
+
+#: src/gui/kernel/qkeysequence.cpp:525
+msgctxt "QShortcut"
+msgid "Launch (3)"
+msgstr ""
+
+#: src/gui/kernel/qkeysequence.cpp:526
+msgctxt "QShortcut"
+msgid "Launch (4)"
+msgstr ""
+
+#: src/gui/kernel/qkeysequence.cpp:527
+msgctxt "QShortcut"
+msgid "Launch (5)"
+msgstr ""
+
+#: src/gui/kernel/qkeysequence.cpp:528
+msgctxt "QShortcut"
+msgid "Launch (6)"
+msgstr ""
+
+#: src/gui/kernel/qkeysequence.cpp:529
+msgctxt "QShortcut"
+msgid "Launch (7)"
+msgstr ""
+
+#: src/gui/kernel/qkeysequence.cpp:530
+msgctxt "QShortcut"
+msgid "Launch (8)"
+msgstr ""
+
+#: src/gui/kernel/qkeysequence.cpp:531
+msgctxt "QShortcut"
+msgid "Launch (9)"
+msgstr ""
+
+#: src/gui/kernel/qkeysequence.cpp:532
+msgctxt "QShortcut"
+msgid "Launch (A)"
+msgstr ""
+
+#: src/gui/kernel/qkeysequence.cpp:533
+msgctxt "QShortcut"
+msgid "Launch (B)"
+msgstr ""
+
+#: src/gui/kernel/qkeysequence.cpp:534
+msgctxt "QShortcut"
+msgid "Launch (C)"
+msgstr ""
+
+#: src/gui/kernel/qkeysequence.cpp:535
+msgctxt "QShortcut"
+msgid "Launch (D)"
+msgstr ""
+
+#: src/gui/kernel/qkeysequence.cpp:536
+msgctxt "QShortcut"
+msgid "Launch (E)"
+msgstr ""
+
+#: src/gui/kernel/qkeysequence.cpp:537
+msgctxt "QShortcut"
+msgid "Launch (F)"
+msgstr ""
+
+#: src/gui/kernel/qkeysequence.cpp:538
+msgctxt "QShortcut"
+msgid "Application Left"
+msgstr ""
+
+#: src/gui/kernel/qkeysequence.cpp:539
+msgctxt "QShortcut"
+msgid "Application Right"
+msgstr ""
+
+#: src/gui/kernel/qkeysequence.cpp:540
+msgctxt "QShortcut"
+msgid "Book"
+msgstr ""
+
+#: src/gui/kernel/qkeysequence.cpp:541
+msgctxt "QShortcut"
+msgid "CD"
+msgstr ""
+
+#: src/gui/kernel/qkeysequence.cpp:542
+msgctxt "QShortcut"
+msgid "Calculater"
+msgstr ""
+
+#: src/gui/kernel/qkeysequence.cpp:543
+msgctxt "QShortcut"
+msgid "Close"
+msgstr ""
+
+#: src/gui/kernel/qkeysequence.cpp:544
+msgctxt "QShortcut"
+msgid "Copy"
+msgstr ""
+
+#: src/gui/kernel/qkeysequence.cpp:545
+msgctxt "QShortcut"
+msgid "Cut"
+msgstr ""
+
+#: src/gui/kernel/qkeysequence.cpp:546
+msgctxt "QShortcut"
+msgid "Display"
+msgstr ""
+
+#: src/gui/kernel/qkeysequence.cpp:547
+msgctxt "QShortcut"
+msgid "DOS"
+msgstr ""
+
+#: src/gui/kernel/qkeysequence.cpp:548
+msgctxt "QShortcut"
+msgid "Documents"
+msgstr ""
+
+#: src/gui/kernel/qkeysequence.cpp:549
+msgctxt "QShortcut"
+msgid "Spreadsheet"
+msgstr ""
+
+#: src/gui/kernel/qkeysequence.cpp:550
+msgctxt "QShortcut"
+msgid "Browser"
+msgstr ""
+
+#: src/gui/kernel/qkeysequence.cpp:551
+msgctxt "QShortcut"
+msgid "Game"
+msgstr ""
+
+#: src/gui/kernel/qkeysequence.cpp:552
+msgctxt "QShortcut"
+msgid "Go"
+msgstr ""
+
+#: src/gui/kernel/qkeysequence.cpp:553
+msgctxt "QShortcut"
+msgid "iTouch"
+msgstr ""
+
+#: src/gui/kernel/qkeysequence.cpp:554
+msgctxt "QShortcut"
+msgid "Logoff"
+msgstr ""
+
+#: src/gui/kernel/qkeysequence.cpp:555
+msgctxt "QShortcut"
+msgid "Market"
+msgstr ""
+
+#: src/gui/kernel/qkeysequence.cpp:556
+msgctxt "QShortcut"
+msgid "Meeting"
+msgstr ""
+
+#: src/gui/kernel/qkeysequence.cpp:557
+msgctxt "QShortcut"
+msgid "Keyboard Menu"
+msgstr ""
+
+#: src/gui/kernel/qkeysequence.cpp:558
+msgctxt "QShortcut"
+msgid "Menu PB"
+msgstr ""
+
+#: src/gui/kernel/qkeysequence.cpp:559
+msgctxt "QShortcut"
+msgid "My Sites"
+msgstr ""
+
+#: src/gui/kernel/qkeysequence.cpp:560
+msgctxt "QShortcut"
+msgid "New"
+msgstr ""
+
+#: src/gui/kernel/qkeysequence.cpp:561
+msgctxt "QShortcut"
+msgid "News"
+msgstr ""
+
+#: src/gui/kernel/qkeysequence.cpp:562
+msgctxt "QShortcut"
+msgid "Home Office"
+msgstr ""
+
+#: src/gui/kernel/qkeysequence.cpp:563
+msgctxt "QShortcut"
+msgid "Open"
+msgstr ""
+
+#: src/gui/kernel/qkeysequence.cpp:564
+msgctxt "QShortcut"
+msgid "Option"
+msgstr ""
+
+#: src/gui/kernel/qkeysequence.cpp:565
+msgctxt "QShortcut"
+msgid "Paste"
+msgstr ""
+
+#: src/gui/kernel/qkeysequence.cpp:566
+msgctxt "QShortcut"
+msgid "Phone"
+msgstr ""
+
+#: src/gui/kernel/qkeysequence.cpp:567
+msgctxt "QShortcut"
+msgid "Reply"
+msgstr ""
+
+#: src/gui/kernel/qkeysequence.cpp:568
+msgctxt "QShortcut"
+msgid "Reload"
+msgstr ""
+
+#: src/gui/kernel/qkeysequence.cpp:569
+msgctxt "QShortcut"
+msgid "Rotate Windows"
+msgstr ""
+
+#: src/gui/kernel/qkeysequence.cpp:570
+msgctxt "QShortcut"
+msgid "Rotation PB"
+msgstr ""
+
+#: src/gui/kernel/qkeysequence.cpp:571
+msgctxt "QShortcut"
+msgid "Rotation KB"
+msgstr ""
+
+#: src/gui/kernel/qkeysequence.cpp:572
+msgctxt "QShortcut"
+msgid "Save"
+msgstr ""
+
+#: src/gui/kernel/qkeysequence.cpp:573
+msgctxt "QShortcut"
+msgid "Scroll Up"
+msgstr ""
+
+#: src/gui/kernel/qkeysequence.cpp:574
+msgctxt "QShortcut"
+msgid "Scroll Down"
+msgstr ""
+
+#: src/gui/kernel/qkeysequence.cpp:575
+msgctxt "QShortcut"
+msgid "Scroll Click"
+msgstr ""
+
+#: src/gui/kernel/qkeysequence.cpp:576
+msgctxt "QShortcut"
+msgid "Send"
+msgstr ""
+
+#: src/gui/kernel/qkeysequence.cpp:577
+msgctxt "QShortcut"
+msgid "Spellchecker"
+msgstr ""
+
+#: src/gui/kernel/qkeysequence.cpp:578
+msgctxt "QShortcut"
+msgid "Split Screen"
+msgstr ""
+
+#: src/gui/kernel/qkeysequence.cpp:579
+msgctxt "QShortcut"
+msgid "Support"
+msgstr ""
+
+#: src/gui/kernel/qkeysequence.cpp:580
+msgctxt "QShortcut"
+msgid "Task Panel"
+msgstr ""
+
+#: src/gui/kernel/qkeysequence.cpp:581
+msgctxt "QShortcut"
+msgid "Terminal"
+msgstr ""
+
+#: src/gui/kernel/qkeysequence.cpp:582
+msgctxt "QShortcut"
+msgid "Tools"
+msgstr ""
+
+#: src/gui/kernel/qkeysequence.cpp:583
+msgctxt "QShortcut"
+msgid "Travel"
+msgstr ""
+
+#: src/gui/kernel/qkeysequence.cpp:584
+msgctxt "QShortcut"
+msgid "User PB"
+msgstr ""
+
+#: src/gui/kernel/qkeysequence.cpp:585
+msgctxt "QShortcut"
+msgid "User1 KB"
+msgstr ""
+
+#: src/gui/kernel/qkeysequence.cpp:586
+msgctxt "QShortcut"
+msgid "User2 KB"
+msgstr ""
+
+#: src/gui/kernel/qkeysequence.cpp:587
+msgctxt "QShortcut"
+msgid "Video"
+msgstr ""
+
+#: src/gui/kernel/qkeysequence.cpp:588
+msgctxt "QShortcut"
+msgid "Wheel Button"
+msgstr ""
+
+#: src/gui/kernel/qkeysequence.cpp:589
+msgctxt "QShortcut"
+msgid "Word Processor"
+msgstr ""
+
+#: src/gui/kernel/qkeysequence.cpp:590
+msgctxt "QShortcut"
+msgid "Xfer"
+msgstr ""
+
+#: src/gui/kernel/qkeysequence.cpp:591
+msgctxt "QShortcut"
+msgid "Zoom In"
+msgstr ""
+
+#: src/gui/kernel/qkeysequence.cpp:592
+msgctxt "QShortcut"
+msgid "Zoom Out"
+msgstr ""
+
+#: src/gui/kernel/qkeysequence.cpp:593
+msgctxt "QShortcut"
+msgid "Away"
+msgstr ""
+
+#: src/gui/kernel/qkeysequence.cpp:594
+msgctxt "QShortcut"
+msgid "Messenger"
+msgstr ""
+
+#: src/gui/kernel/qkeysequence.cpp:595
+msgctxt "QShortcut"
+msgid "WebCam"
+msgstr ""
+
+#: src/gui/kernel/qkeysequence.cpp:596
+msgctxt "QShortcut"
+msgid "Mail Forward"
+msgstr ""
+
+#: src/gui/kernel/qkeysequence.cpp:597
+msgctxt "QShortcut"
+msgid "Pictures"
+msgstr ""
+
+#: src/gui/kernel/qkeysequence.cpp:598
+msgctxt "QShortcut"
+msgid "Music"
+msgstr ""
+
+#: src/gui/kernel/qkeysequence.cpp:599
+msgctxt "QShortcut"
+msgid "Battery"
+msgstr ""
+
+#: src/gui/kernel/qkeysequence.cpp:600
+msgctxt "QShortcut"
+msgid "Bluetooth"
+msgstr ""
+
+#: src/gui/kernel/qkeysequence.cpp:601
+msgctxt "QShortcut"
+msgid "WLAN"
+msgstr ""
+
+#: src/gui/kernel/qkeysequence.cpp:602
+msgctxt "QShortcut"
+msgid "Ultra Wide Band"
+msgstr ""
+
+#: src/gui/kernel/qkeysequence.cpp:603
+msgctxt "QShortcut"
+msgid "Media Forward"
+msgstr ""
+
+#: src/gui/kernel/qkeysequence.cpp:604
+msgctxt "QShortcut"
+msgid "Media Repeat"
+msgstr ""
+
+#: src/gui/kernel/qkeysequence.cpp:605
+msgctxt "QShortcut"
+msgid "Media Random Play"
+msgstr ""
+
+#: src/gui/kernel/qkeysequence.cpp:606
+msgctxt "QShortcut"
+msgid "Subtitle"
+msgstr ""
+
+#: src/gui/kernel/qkeysequence.cpp:607
+msgctxt "QShortcut"
+msgid "Media Cycle Track"
+msgstr ""
+
+#: src/gui/kernel/qkeysequence.cpp:608
+msgctxt "QShortcut"
+msgid "Cycle Angle"
+msgstr ""
+
+#: src/gui/kernel/qkeysequence.cpp:609
+msgctxt "QShortcut"
+msgid "Frame Back"
+msgstr ""
+
+#: src/gui/kernel/qkeysequence.cpp:610
+msgctxt "QShortcut"
+msgid "Frame Forward"
+msgstr ""
+
+#: src/gui/kernel/qkeysequence.cpp:611
+msgctxt "QShortcut"
+msgid "Time"
+msgstr ""
+
+#: src/gui/kernel/qkeysequence.cpp:612
+msgctxt "QShortcut"
+msgid "View"
+msgstr ""
+
+#: src/gui/kernel/qkeysequence.cpp:613
+msgctxt "QShortcut"
+msgid "Top Menu"
+msgstr ""
+
+#: src/gui/kernel/qkeysequence.cpp:614
+msgctxt "QShortcut"
+msgid "Red"
+msgstr ""
+
+#: src/gui/kernel/qkeysequence.cpp:615
+msgctxt "QShortcut"
+msgid "Green"
+msgstr ""
+
+#: src/gui/kernel/qkeysequence.cpp:616
+msgctxt "QShortcut"
+msgid "Yellow"
+msgstr ""
+
+#: src/gui/kernel/qkeysequence.cpp:617
+msgctxt "QShortcut"
+msgid "Blue"
+msgstr ""
+
+#: src/gui/kernel/qkeysequence.cpp:618
+msgctxt "QShortcut"
+msgid "Suspend"
+msgstr ""
+
+#: src/gui/kernel/qkeysequence.cpp:619
+msgctxt "QShortcut"
+msgid "Hibernate"
+msgstr ""
+
+#: src/gui/kernel/qkeysequence.cpp:620
+msgctxt "QShortcut"
+msgid "Touchpad Toggle"
+msgstr ""
+
+#: src/gui/kernel/qkeysequence.cpp:621
+msgctxt "QShortcut"
+msgid "Touchpad On"
+msgstr ""
+
+#: src/gui/kernel/qkeysequence.cpp:622
+msgctxt "QShortcut"
+msgid "Touchpad Off"
+msgstr ""
+
+#: src/gui/kernel/qkeysequence.cpp:623
+msgctxt "QShortcut"
+msgid "Media Microphone Mute"
+msgstr ""
+
+#: src/gui/kernel/qkeysequence.cpp:624
+msgctxt "QShortcut"
+msgid "Keyboard"
+msgstr ""
+
+#: src/gui/kernel/qkeysequence.cpp:625
+msgctxt "QShortcut"
+msgid "WWAN"
+msgstr ""
+
+#: src/gui/kernel/qkeysequence.cpp:626
+msgctxt "QShortcut"
+msgid "RFKill"
+msgstr ""
+
+#: src/gui/kernel/qkeysequence.cpp:627
+msgctxt "QShortcut"
+msgid "Media Preset"
+msgstr ""
+
+#: src/gui/kernel/qkeysequence.cpp:628
+msgctxt "QShortcut"
+msgid "Rotation Lock Toggle"
+msgstr ""
+
+#: src/gui/kernel/qkeysequence.cpp:629
+msgctxt "QShortcut"
+msgid "FullScreen"
+msgstr ""
+
+#: src/gui/kernel/qkeysequence.cpp:630
+msgctxt "QShortcut"
+msgid "Switch VT (1)"
+msgstr ""
+
+#: src/gui/kernel/qkeysequence.cpp:631
+msgctxt "QShortcut"
+msgid "Switch VT (2)"
+msgstr ""
+
+#: src/gui/kernel/qkeysequence.cpp:632
+msgctxt "QShortcut"
+msgid "Switch VT (3)"
+msgstr ""
+
+#: src/gui/kernel/qkeysequence.cpp:633
+msgctxt "QShortcut"
+msgid "Switch VT (4)"
+msgstr ""
+
+#: src/gui/kernel/qkeysequence.cpp:634
+msgctxt "QShortcut"
+msgid "Switch VT (5)"
+msgstr ""
+
+#: src/gui/kernel/qkeysequence.cpp:635
+msgctxt "QShortcut"
+msgid "Switch VT (6)"
+msgstr ""
+
+#: src/gui/kernel/qkeysequence.cpp:636
+msgctxt "QShortcut"
+msgid "Switch VT (7)"
+msgstr ""
+
+#: src/gui/kernel/qkeysequence.cpp:637
+msgctxt "QShortcut"
+msgid "Switch VT (8)"
+msgstr ""
+
+#: src/gui/kernel/qkeysequence.cpp:638
+msgctxt "QShortcut"
+msgid "Switch VT (9)"
+msgstr ""
+
+#: src/gui/kernel/qkeysequence.cpp:639
+msgctxt "QShortcut"
+msgid "Switch VT (10)"
+msgstr ""
+
+#: src/gui/kernel/qkeysequence.cpp:640
+msgctxt "QShortcut"
+msgid "Switch VT (11)"
+msgstr ""
+
+#: src/gui/kernel/qkeysequence.cpp:641
+msgctxt "QShortcut"
+msgid "Switch VT (12)"
+msgstr ""
+
+#: src/gui/kernel/qkeysequence.cpp:642
+msgctxt "QShortcut"
+msgid "Ungrab"
+msgstr ""
+
+#: src/gui/kernel/qkeysequence.cpp:643
+msgctxt "QShortcut"
+msgid "Clear Grab"
+msgstr ""
+
+#: src/gui/kernel/qkeysequence.cpp:644
+msgctxt "QShortcut"
+msgid "Next VMode"
+msgstr ""
+
+#: src/gui/kernel/qkeysequence.cpp:645
+msgctxt "QShortcut"
+msgid "Prev VMode"
+msgstr ""
+
+#: src/gui/kernel/qkeysequence.cpp:646
+msgctxt "QShortcut"
+msgid "Log Window Tree"
+msgstr ""
+
+#: src/gui/kernel/qkeysequence.cpp:647
+msgctxt "QShortcut"
+msgid "Log Grab Info"
+msgstr ""
+
+#: src/gui/kernel/qkeysequence.cpp:654
+msgctxt "QShortcut"
+msgid "Backtab"
+msgstr ""
+
+#: src/gui/kernel/qkeysequence.cpp:659
+msgctxt "QShortcut"
+msgid "Enter"
+msgstr ""
+
+#: src/gui/kernel/qkeysequence.cpp:665
+msgctxt "QShortcut"
+msgid "Ins"
+msgstr ""
+
+#: src/gui/kernel/qkeysequence.cpp:666
+msgctxt "QShortcut"
+msgid "Esc"
+msgstr ""
+
+#: src/gui/kernel/qkeysequence.cpp:667
+msgctxt "QShortcut"
+msgid "Del"
+msgstr ""
+
+#: src/gui/kernel/qkeysequence.cpp:668
+msgctxt "QShortcut"
+msgid "PgUp"
+msgstr ""
+
+#: src/gui/kernel/qkeysequence.cpp:669
+msgctxt "QShortcut"
+msgid "PgDown"
+msgstr ""
+
+#: src/gui/kernel/qkeysequence.cpp:670
+msgctxt "QShortcut"
+msgid "SysReq"
+msgstr ""
+
+#: src/gui/kernel/qkeysequence.cpp:671
+msgctxt "QShortcut"
+msgid "CapsLock"
+msgstr ""
+
+#: src/gui/kernel/qkeysequence.cpp:672
+msgctxt "QShortcut"
+msgid "NumLock"
+msgstr ""
+
+#: src/gui/kernel/qkeysequence.cpp:673
+msgctxt "QShortcut"
+msgid "ScrollLock"
+msgstr ""
+
+#: src/gui/kernel/qkeysequence.cpp:674
+msgctxt "QShortcut"
+msgid "ShiftLock"
+msgstr ""
+
+#: src/gui/kernel/qkeysequence.cpp:1088 src/gui/kernel/qkeysequence.cpp:1163
+msgid "Ctrl"
+msgstr ""
+
+#: src/gui/kernel/qkeysequence.cpp:1089 src/gui/kernel/qkeysequence.cpp:1167
+msgid "Shift"
+msgstr ""
+
+#: src/gui/kernel/qkeysequence.cpp:1090 src/gui/kernel/qkeysequence.cpp:1165
+msgid "Alt"
+msgstr ""
+
+#: src/gui/kernel/qkeysequence.cpp:1091 src/gui/kernel/qkeysequence.cpp:1161
+msgid "Meta"
+msgstr ""
+
+#: src/gui/kernel/qkeysequence.cpp:1150
+msgid "+"
 msgstr ""
 
 #: src/gui/itemviews/qdirmodel.cpp:793

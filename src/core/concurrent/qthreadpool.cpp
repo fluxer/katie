@@ -383,8 +383,7 @@ QThreadPool::QThreadPool(QObject *parent)
 */
 QThreadPool::~QThreadPool()
 {
-    d_func()->waitForDone();
-    d_func()->reset();
+    waitForDone();
 }
 
 /*!

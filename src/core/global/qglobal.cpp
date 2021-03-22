@@ -746,21 +746,6 @@ QT_BEGIN_NAMESPACE
     \sa qMin(), qMax()
 */
 
-/*! \fn bool qSysInfo(int *wordSize, bool *bigEndian)
-    \relates <QtGlobal>
-
-    Use QSysInfo::WordSize and QSysInfo::ByteOrder instead.
-*/
-
-/*!
-    \fn bool qt_winUnicode()
-    \relates <QtGlobal>
-
-    This function always returns true.
-
-    \sa QSysInfo
-*/
-
 /*!
     \macro QT_VERSION_CHECK
     \relates <QtGlobal>
@@ -826,23 +811,11 @@ const char *qVersion()
     \brief The QSysInfo class provides information about the system.
 
     \list
-    \o \l WordSize specifies the size of a pointer for the platform
-       on which the application is compiled.
     \o \l ByteOrder specifies whether the platform is big-endian or
        little-endian.
     \endlist
 
     \sa QLibraryInfo
-*/
-
-/*!
-    \enum QSysInfo::Sizes
-
-    This enum provides platform-specific information about the sizes of data
-    structures used by the underlying architecture.
-
-    \value WordSize The size in bits of a pointer for the platform on which
-           the application is compiled (32 or 64).
 */
 
 /*!
@@ -2131,7 +2104,7 @@ bool Qt::mightBeRichText(const QString& text)
 
 /*!
     Converts the plain text string \a plain to a HTML string with
-    HTML metacharacters \c{<}, \c{>}, \c{&}, and \c{"} replaced by HTML
+    HTML metacharacters \c{<}, \c{>}, \c{&}, \c{'}, and \c{"} replaced by HTML
     entities.
 
     Example:
@@ -2151,6 +2124,8 @@ QString Qt::escape(const QString& plain)
             rich += QLatin1String("&gt;");
         else if (plain.at(i) == QLatin1Char('&'))
             rich += QLatin1String("&amp;");
+        else if (plain.at(i) == QLatin1Char('\''))
+            rich += QLatin1String("&apos;");
         else if (plain.at(i) == QLatin1Char('"'))
             rich += QLatin1String("&quot;");
         else

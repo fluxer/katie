@@ -7339,18 +7339,17 @@ bool QWidget::event(QEvent *event)
         }
         break; }
 
-    case QEvent::LanguageChange:
+    case QEvent::LanguageChange: {
         changeEvent(event);
-        {
-            QList<QObject*> childList = d->children;
-            for (int i = 0; i < childList.size(); ++i) {
-                QObject *o = childList.at(i);
-                if (o)
-                    QApplication::sendEvent(o, event);
-            }
+        QList<QObject*> childList = d->children;
+        for (int i = 0; i < childList.size(); ++i) {
+            QObject *o = childList.at(i);
+            if (o)
+                QApplication::sendEvent(o, event);
         }
         update();
         break;
+    }
 
     case QEvent::ApplicationLayoutDirectionChange:
         d->resolveLayoutDirection();
@@ -7370,22 +7369,21 @@ bool QWidget::event(QEvent *event)
         break;
 
     case QEvent::WindowBlocked:
-    case QEvent::WindowUnblocked:
-        {
-            QList<QObject*> childList = d->children;
-            for (int i = 0; i < childList.size(); ++i) {
-                QObject *o = childList.at(i);
-                if (o && o != QApplication::activeModalWidget()) {
-                    if (qobject_cast<QWidget *>(o) && static_cast<QWidget *>(o)->isWindow()) {
-                        // do not forward the event to child windows,
-                        // QApplication does this for us
-                        continue;
-                    }
-                    QApplication::sendEvent(o, event);
+    case QEvent::WindowUnblocked: {
+        QList<QObject*> childList = d->children;
+        for (int i = 0; i < childList.size(); ++i) {
+            QObject *o = childList.at(i);
+            if (o && o != QApplication::activeModalWidget()) {
+                if (qobject_cast<QWidget *>(o) && static_cast<QWidget *>(o)->isWindow()) {
+                    // do not forward the event to child windows,
+                    // QApplication does this for us
+                    continue;
                 }
+                QApplication::sendEvent(o, event);
             }
         }
         break;
+    }
 #ifndef QT_NO_TOOLTIP
     case QEvent::ToolTip:
         if (!d->toolTip.isEmpty())
@@ -7426,7 +7424,8 @@ bool QWidget::event(QEvent *event)
         default:
             return false;
         }
-        break; }
+        break;
+    }
 #endif
 #ifndef QT_NO_ACTION
     case QEvent::ActionAdded:
@@ -7436,23 +7435,21 @@ bool QWidget::event(QEvent *event)
         break;
 #endif
 
-    case QEvent::KeyboardLayoutChange:
-        {
-            changeEvent(event);
+    case QEvent::KeyboardLayoutChange: {
+        changeEvent(event);
 
-            // inform children of the change
-            QList<QObject*> childList = d->children;
-            for (int i = 0; i < childList.size(); ++i) {
-                QWidget *w = qobject_cast<QWidget *>(childList.at(i));
-                if (w && w->isVisible() && !w->isWindow())
-                    QApplication::sendEvent(w, event);
-            }
-            break;
+        // inform children of the change
+        QList<QObject*> childList = d->children;
+        for (int i = 0; i < childList.size(); ++i) {
+            QWidget *w = qobject_cast<QWidget *>(childList.at(i));
+            if (w && w->isVisible() && !w->isWindow())
+                QApplication::sendEvent(w, event);
         }
+        break;
+    }
     case QEvent::TouchBegin:
     case QEvent::TouchUpdate:
-    case QEvent::TouchEnd:
-    {
+    case QEvent::TouchEnd: {
         QTouchEvent *touchEvent = static_cast<QTouchEvent *>(event);
         const QTouchEvent::TouchPoint &touchPoint = touchEvent->touchPoints().first();
         if (touchPoint.isPrimary() || touchEvent->deviceType() == QTouchEvent::TouchPad)
@@ -7922,7 +7919,6 @@ void QWidget::resizeEvent(QResizeEvent * /* event */)
 */
 void QWidget::actionEvent(QActionEvent *)
 {
-
 }
 #endif
 
@@ -8239,15 +8235,15 @@ QLayout *QWidget::layout() const
 
 void QWidget::setLayout(QLayout *l)
 {
-    if (!l) {
+    if (Q_UNLIKELY(!l)) {
         qWarning("QWidget::setLayout: Cannot set layout to 0");
         return;
-    }
-    if (layout()) {
-        if (layout() != l)
+    } else if (layout()) {
+        if (Q_UNLIKELY(layout() != l)) {
             qWarning("QWidget::setLayout: Attempting to set QLayout \"%s\" on %s \"%s\", which already has a"
                      " layout", l->objectName().toLocal8Bit().data(), metaObject()->className(),
                      objectName().toLocal8Bit().data());
+        }
         return;
     }
 

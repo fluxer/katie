@@ -77,7 +77,7 @@
 
 QT_BEGIN_NAMESPACE
 
-Q_GLOBAL_STATIC(QMutex, qPropertyAnimationMutex)
+Q_GLOBAL_STATIC_WITH_ARGS(QMutex, qPropertyAnimationMutex, (QMutex::Recursive))
 
 void QPropertyAnimationPrivate::updateMetaProperty()
 {
@@ -101,7 +101,7 @@ void QPropertyAnimationPrivate::updateMetaProperty()
             qWarning("QPropertyAnimation: you're trying to animate a non-existing property %s of your QObject", propertyName.constData());
     } else if (!targetValue->metaObject()->property(propertyIndex).isWritable()) {
         qWarning("QPropertyAnimation: you're trying to animate the non-writable property %s of your QObject", propertyName.constData());
-	}
+    }
 }
 
 void QPropertyAnimationPrivate::updateProperty(const QVariant &newValue)

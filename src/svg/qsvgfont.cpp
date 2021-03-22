@@ -119,7 +119,3 @@ void QSvgFont::setUnitsPerEm(qreal upem)
 QT_END_NAMESPACE
 
 #endif // QT_NO_SVG
-
-
-
-

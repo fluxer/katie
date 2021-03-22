@@ -324,7 +324,7 @@ bool QShortcutMap::tryShortcutEvent(QObject *o, QKeyEvent *e)
         resetState();
         dispatchEvent(e);
     default:
-	break;
+        break;
     }
     // If nextState is QKeySequence::ExactMatch && identicals.count == 0
     // we've only found disabled shortcuts
@@ -345,12 +345,10 @@ QKeySequence::SequenceMatch QShortcutMap::nextState(QKeyEvent *e)
         e->key() <= Qt::Key_Alt)
         return d->currentState;
 
-    QKeySequence::SequenceMatch result = QKeySequence::NoMatch;
-
     // We start fresh each time..
     d->identicals.resize(0);
 
-    result = find(e);
+    QKeySequence::SequenceMatch result = find(e);
     if (result == QKeySequence::NoMatch && (e->modifiers() & Qt::KeypadModifier)) {
         // Try to find a match without keypad modifier
         QKeyEvent event = *e;
@@ -535,16 +533,9 @@ void QShortcutMap::createNewSequences(QKeyEvent *e, QVector<QKeySequence> &ksl)
             int i = (pkNum * ssTotal) + ssNum;
             QKeySequence &curKsl = ksl[i];
             if (ssActual) {
-                const QKeySequence &curSeq = d->currentSequences.at(ssNum);
-                curKsl.setKey(curSeq[0], 0);
-                curKsl.setKey(curSeq[1], 1);
-                curKsl.setKey(curSeq[2], 2);
-                curKsl.setKey(curSeq[3], 3);
+                curKsl = d->currentSequences.at(ssNum);
             } else {
-                curKsl.setKey(0, 0);
-                curKsl.setKey(0, 1);
-                curKsl.setKey(0, 2);
-                curKsl.setKey(0, 3);
+                curKsl = QKeySequence();
             }
             curKsl.setKey(possibleKeys.at(pkNum), index);
         }

@@ -966,7 +966,7 @@ QSocks5SocketEngine::~QSocks5SocketEngine()
         delete d->bindData;
 }
 
-static QAtomicInt descriptorCounter = QAtomicInt(1);
+static QAtomicInt descriptorCounter(1);
 
 bool QSocks5SocketEngine::initialize(QAbstractSocket::SocketType type, QAbstractSocket::NetworkLayerProtocol protocol)
 {

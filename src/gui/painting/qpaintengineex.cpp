@@ -369,9 +369,6 @@ void QPaintEngineEx::stroke(const QVectorPath &path, const QPen &pen)
                     break;
                 }
             }
-            if (path.hasImplicitClose())
-                d->activeStroker->lineTo(path.points()[0], path.points()[1]);
-
         } else {
             d->activeStroker->moveTo(points[0], points[1]);
             points += 2;
@@ -379,9 +376,9 @@ void QPaintEngineEx::stroke(const QVectorPath &path, const QPen &pen)
                 d->activeStroker->lineTo(points[0], points[1]);
                 points += 2;
             }
-            if (path.hasImplicitClose())
-                d->activeStroker->lineTo(path.points()[0], path.points()[1]);
         }
+        if (path.hasImplicitClose())
+            d->activeStroker->lineTo(path.points()[0], path.points()[1]);
         d->activeStroker->end();
 
         if (!d->strokeHandler->types.size()) // an empty path...

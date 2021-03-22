@@ -35,7 +35,7 @@ public:
     ~QJsonDocument();
 
     QJsonDocument(const QJsonDocument &other);
-    QJsonDocument &operator =(const QJsonDocument &other);
+    QJsonDocument &operator=(const QJsonDocument &other);
 
     static QJsonDocument fromVariant(const QVariant &variant);
     QVariant toVariant() const;
@@ -47,8 +47,8 @@ public:
     QString errorString() const;
 
     bool operator==(const QJsonDocument &other) const;
-    bool operator!=(const QJsonDocument &other) const {
-        return !(*this == other);
+    inline bool operator!=(const QJsonDocument &other) const {
+        return !operator==(other);
     }
 
 private:

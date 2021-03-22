@@ -53,7 +53,7 @@ QT_BEGIN_NAMESPACE
         return QImage(); \
     }
 
-QAtomicInt qimage_serial_number = QAtomicInt(1);
+QAtomicInt qimage_serial_number(1);
 
 QImageData::QImageData()
     : ref(0), width(0), height(0), depth(0), nbytes(0), data(0),

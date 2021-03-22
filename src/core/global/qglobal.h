@@ -419,10 +419,6 @@ typedef double qreal;
 */
 class Q_CORE_EXPORT QSysInfo {
 public:
-    enum Sizes {
-        WordSize = (QT_POINTER_SIZE << 3)
-    };
-
     enum Endian {
         BigEndian,
         LittleEndian,

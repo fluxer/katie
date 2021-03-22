@@ -920,19 +920,19 @@ QDataStream &operator<<(QDataStream &s, const QBrush &b)
 
         s << int(gradient->interpolationMode());
 
-        if (sizeof(qreal) == sizeof(double)) {
-            s << gradient->stops();
-        } else {
-            // ensure that we write doubles here instead of streaming the stops
-            // directly; otherwise, platforms that redefine qreal might generate
-            // data that cannot be read on other platforms.
-            QVector<QGradientStop> stops = gradient->stops();
-            s << quint32(stops.size());
-            for (int i = 0; i < stops.size(); ++i) {
-                const QGradientStop &stop = stops.at(i);
-                s << QPair<double, QColor>(double(stop.first), stop.second);
-            }
+#ifdef QT_NO_FPU
+        // ensure that we write doubles here instead of streaming the stops
+        // directly; otherwise, platforms that redefine qreal might generate
+        // data that cannot be read on other platforms.
+        QVector<QGradientStop> stops = gradient->stops();
+        s << quint32(stops.size());
+        for (int i = 0; i < stops.size(); ++i) {
+            const QGradientStop &stop = stops.at(i);
+            s << QPair<double, QColor>(double(stop.first), stop.second);
         }
+#else
+        s << gradient->stops();
+#endif
 
         if (gradient->type() == QGradient::LinearGradient) {
             s << static_cast<const QLinearGradient *>(gradient)->start();
@@ -991,19 +991,19 @@ QDataStream &operator>>(QDataStream &s, QBrush &b)
         s >> type_as_int;
         imode = QGradient::InterpolationMode(type_as_int);
 
-        if (sizeof(qreal) == sizeof(double)) {
-            s >> stops;
-        } else {
-            quint32 numStops;
-            double n;
-            QColor c;
+#ifdef QT_NO_FPU
+        quint32 numStops;
+        double n;
+        QColor c;
 
-            s >> numStops;
-            for (quint32 i = 0; i < numStops; ++i) {
-                s >> n >> c;
-                stops << QPair<qreal, QColor>(n, c);
-            }
+        s >> numStops;
+        for (quint32 i = 0; i < numStops; ++i) {
+            s >> n >> c;
+            stops << QPair<qreal, QColor>(n, c);
         }
+#else
+        s >> stops;
+#endif
 
         if (type == QGradient::LinearGradient) {
             QPointF p1, p2;

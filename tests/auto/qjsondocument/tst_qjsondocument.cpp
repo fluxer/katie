@@ -41,6 +41,7 @@ private slots:
     void read();
     void write();
     void error();
+    void eq_not_eq();
 };
 
 void tst_QJsonDocument::init()
@@ -139,7 +140,26 @@ void tst_QJsonDocument::error()
     QCOMPARE(jsondoc.errorString(), QLatin1String("Data map is empty"));
     QVERIFY(jsondoc.isNull());
 
-    // TODO: indermediate error test
+    // TODO: indermediate error test, e.g. maximum depth reached
+}
+
+void tst_QJsonDocument::eq_not_eq()
+{
+    QJsonDocument nulljsondoc;
+    QJsonDocument nulljsondoc2;
+    QCOMPARE(nulljsondoc, nulljsondoc2);
+
+    QJsonDocument jsondoc = QJsonDocument::fromVariant(testjsondata);
+    QVERIFY(nulljsondoc != jsondoc);
+
+    // assignment crash test
+    QJsonDocument jsondoc2 = QJsonDocument::fromVariant(testjsondata);
+    nulljsondoc = jsondoc;
+    jsondoc2 = nulljsondoc2;
+
+    // constructor crash test
+    QJsonDocument nulljsondoc3(nulljsondoc);
+
 }
 
 QTEST_MAIN(tst_QJsonDocument)

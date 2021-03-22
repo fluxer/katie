@@ -19,6 +19,7 @@ USE_CMAKE = yes
 CMAKE_ARGS = -DKATIE_TOOLS_SUFFIX="-katie"
 USE_LANGUAGES = c c++11
 USE_TOOLS = pkg-config msgfmt
+DL_AUTO_VARS = yes
 
 DEPENDS = xdg-utils-[0-9]*:../../misc/xdg-utils
 
@@ -50,4 +51,5 @@ DEPENDS = xdg-utils-[0-9]*:../../misc/xdg-utils
 .include "../../databases/iodbc/buildlink3.mk"
 .include "../../mk/pthread.buildlink3.mk"
 .include "../../mk/jpeg.buildlink3.mk"
+.include "../../mk/dlopen.buildlink3.mk"
 .include "../../mk/bsd.pkg.mk"

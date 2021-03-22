@@ -33,7 +33,7 @@
 QT_BEGIN_NAMESPACE
 
 #define QAPP_CHECK(functionName) \
-    if (!qApp) { \
+    if (Q_UNLIKELY(!qApp)) { \
         qWarning("QShortcut: Initialize QApplication before calling '" functionName "'."); \
         return; \
     }
@@ -140,7 +140,7 @@ public:
 void QShortcutPrivate::redoGrab(QShortcutMap &map)
 {
     Q_Q(QShortcut);
-    if (!parent) {
+    if (Q_UNLIKELY(!parent)) {
         qWarning("QShortcut: No widget parent defined");
         return;
     }

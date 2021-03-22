@@ -23,7 +23,7 @@
 #define QPROCESS_H
 
 #include <QtCore/qstringlist.h>
-#include <QtCore/qshareddata.h>
+#include <QtCore/qhash.h>
 
 
 QT_BEGIN_NAMESPACE
@@ -34,7 +34,6 @@ QT_BEGIN_NAMESPACE
 typedef qint64 Q_PID;
 
 class QProcessPrivate;
-class QProcessEnvironmentPrivate;
 
 class Q_CORE_EXPORT QProcessEnvironment
 {
@@ -65,9 +64,10 @@ public:
     static QProcessEnvironment systemEnvironment();
 
 private:
-    friend class QProcessPrivate;
-    friend class QProcessEnvironmentPrivate;
-    QSharedDataPointer<QProcessEnvironmentPrivate> d;
+    friend class QProcess;
+
+    typedef QHash<QString, QString> Hash;
+    Hash hash;
 };
 
 class Q_CORE_EXPORT QProcess : public QIODevice

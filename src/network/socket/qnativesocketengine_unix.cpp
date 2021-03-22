@@ -986,8 +986,7 @@ qint64 QNativeSocketEnginePrivate::nativeRead(char *data, qint64 maxSize)
         return -1;
     }
 
-    ssize_t r = 0;
-    r = qt_safe_read(socketDescriptor, data, maxSize);
+    qint64 r = qt_safe_read(socketDescriptor, data, maxSize);
 
     if (r < 0) {
         r = -1;
@@ -1014,11 +1013,11 @@ qint64 QNativeSocketEnginePrivate::nativeRead(char *data, qint64 maxSize)
 
 #if defined (QNATIVESOCKETENGINE_DEBUG)
     qDebug("QNativeSocketEnginePrivate::nativeRead(%p \"%s\", %llu) == %i",
-           data, qt_prettyDebug(data, qMin(r, ssize_t(16)), r).data(),
+           data, qt_prettyDebug(data, qMin(r, qint64(16)), r).data(),
            maxSize, r);
 #endif
 
-    return qint64(r);
+    return r;
 }
 
 int QNativeSocketEnginePrivate::nativeSelect(int timeout, bool selectForRead) const

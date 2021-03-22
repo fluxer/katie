@@ -156,7 +156,7 @@ public:
 
     QString getNameOwner(const QString &service);
 
-    int send(const QDBusMessage &message);
+    bool send(const QDBusMessage &message);
     QDBusMessage sendWithReply(const QDBusMessage &message, int mode, int timeout = -1);
     QDBusMessage sendWithReplyLocal(const QDBusMessage &message);
     QDBusPendingCallPrivate *sendWithReplyAsync(const QDBusMessage &message, QObject *receiver,
@@ -204,7 +204,7 @@ private:
     bool activateCall(QObject *object, int flags, const QDBusMessage &msg);
 
     void sendError(const QDBusMessage &msg, QDBusError::ErrorType code);
-    void deliverCall(QObject *object, int flags, const QDBusMessage &msg,
+    void deliverCall(QObject *object, const QDBusMessage &msg,
                      const QList<int> &metaTypes, int slotIdx);
 
     bool isServiceRegisteredByThread(const QString &serviceName);

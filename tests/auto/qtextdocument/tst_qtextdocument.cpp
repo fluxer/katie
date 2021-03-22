@@ -735,7 +735,7 @@ void tst_QTextDocument::toHtml_data()
         cursor.insertText("Blah", fmt);
 
         QTest::newRow("font-family-with-quotes1") << QTextDocumentFragment(&doc)
-                                  << QString("<p DEFAULTBLOCKSTYLE><span style=\" font-family:&quot;Foo's Family&quot;;\">Blah</span></p>");
+                                  << QString("<p DEFAULTBLOCKSTYLE><span style=\" font-family:&quot;Foo&apos;s Family&quot;;\">Blah</span></p>");
     }
 
     {
@@ -995,7 +995,7 @@ void tst_QTextDocument::toHtml_data()
         cursor.insertText("Blah", fmt);
 
         QTest::newRow("href anchor with ' and \"") << QTextDocumentFragment(&doc)
-                                  << QString("<p DEFAULTBLOCKSTYLE><a href=\"http://www.kde.org/?a='&amp;b=&quot;\">Blah</a></p>");
+                                  << QString("<p DEFAULTBLOCKSTYLE><a href=\"http://www.kde.org/?a=&apos;&amp;b=&quot;\">Blah</a></p>");
     }
 
     {

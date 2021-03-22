@@ -193,7 +193,8 @@ QDBusError::QDBusError(const QDBusMessage &qdmsg)
     if (qdmsg.type() != QDBusMessage::ErrorMessage)
         return;
 
-    code = getError(qdmsg.errorName().toUtf8().constData());
+    const QByteArray errorref = qdmsg.errorName().toUtf8();
+    code = getError(errorref.constData());
     nm = qdmsg.errorName();
     msg = qdmsg.errorMessage();
 }

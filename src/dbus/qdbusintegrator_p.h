@@ -72,20 +72,19 @@ class QDBusCallDeliveryEvent: public QMetaCallEvent
 {
 public:
     QDBusCallDeliveryEvent(const QDBusConnection &c, int id, QObject *sender,
-                           const QDBusMessage &msg, const QList<int> &types, int f = 0)
-        : QMetaCallEvent(0, id, 0, sender, -1), connection(c), message(msg), metaTypes(types), flags(f)
+                           const QDBusMessage &msg, const QList<int> &types)
+        : QMetaCallEvent(0, id, 0, sender, -1), connection(c), message(msg), metaTypes(types)
         { }
 
     void placeMetaCall(QObject *object)
     {
-        QDBusConnectionPrivate::d(connection)->deliverCall(object, flags, message, metaTypes, id());
+        QDBusConnectionPrivate::d(connection)->deliverCall(object, message, metaTypes, id());
     }
 
 private:
     QDBusConnection connection; // just for refcounting
     QDBusMessage message;
     QList<int> metaTypes;
-    int flags;
 };
 
 class QDBusActivateObjectEvent: public QMetaCallEvent

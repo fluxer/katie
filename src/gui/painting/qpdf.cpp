@@ -27,6 +27,7 @@
 #include "qprinterinfo.h"
 #include "qnumeric.h"
 #include "qx11info_x11.h"
+#include "qcore_unix_p.h"
 
 QT_BEGIN_NAMESPACE
 
@@ -1644,7 +1645,7 @@ void QPdfBaseEnginePrivate::closePrintDevice()
         return;
     outDevice->close();
     if (fd >= 0)
-        ::close(fd);
+        qt_safe_close(fd);
     fd = -1;
     delete outDevice;
     outDevice = 0;

@@ -214,9 +214,9 @@ void QTipLabel::hideTipImmediately()
 
 void QTipLabel::setTipRect(QWidget *w, const QRect &r)
 {
-    if (!rect.isNull() && !w)
+    if (Q_UNLIKELY(!rect.isNull() && !w)) {
         qWarning("QToolTip::setTipRect: Cannot pass null widget if rect is set");
-    else{
+    } else {
         widget = w;
         rect = r;
     }

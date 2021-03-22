@@ -215,6 +215,7 @@ private:
             ushort lightness;
             ushort pad;
         } ahsl;
+        ushort array[5];
     } ct;
 
     friend class QColormap;

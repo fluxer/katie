@@ -2140,10 +2140,6 @@ static const char *mouseButtonToString(Qt::MouseButton button)
             return "Qt::RightButton";
         case Qt::MiddleButton:
             return "Qt::MiddleButton";
-        case Qt::XButton1:
-            return "Qt::XButton1";
-        case Qt::XButton2:
-            return "Qt::XButton2";
         default:
             Q_ASSERT_X(false, "mouseButtonToString", "internal error");
     }

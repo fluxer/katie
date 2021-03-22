@@ -1601,9 +1601,7 @@ void QTextHtmlParser::applyAttributes(const QStringList &attributes)
                 if (key == QLatin1String("name")
                     && value == QLatin1String("qrichtext")) {
                     seenQt3Richtext = true;
-                }
-
-                if (key == QLatin1String("content")
+                } else if (key == QLatin1String("content")
                     && value == QLatin1String("1")
                     && seenQt3Richtext) {
 

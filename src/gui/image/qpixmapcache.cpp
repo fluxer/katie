@@ -176,8 +176,7 @@ QPixmapCache::Key QPixmapCache::insert(const QPixmap &pixmap)
 */
 bool QPixmapCache::replace(const Key &key, const QPixmap &pixmap)
 {
-    QPixmap *cpixmap = new QPixmap(pixmap);
-    return pm_cache()->insert(key, cpixmap);
+    return pm_cache()->insert(key, new QPixmap(pixmap));
 }
 
 /*!

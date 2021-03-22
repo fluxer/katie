@@ -325,7 +325,7 @@ static const QCssKnownValue styleFeatures[NumKnownStyleFeatures - 1] = {
 
 static inline quint64 findKnownValue(const QString &name, const QCssKnownValue *iter, int numValues)
 {
-    for (int i = 0; i < numValues; i++) {
+    for (int i = 0; i < numValues - 1; i++) {
         if (name.compare(QLatin1String(iter[i].name), Qt::CaseInsensitive) == 0) {
             return iter[i].id;
         }

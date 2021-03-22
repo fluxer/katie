@@ -169,7 +169,6 @@ public:
 private:
     static int decodeString(const QString &ks);
     static QString encodeString(int key);
-    int assign(const QString &str, SequenceFormat format = NativeText);
     void setKey(int key, int index);
 
     QKeySequencePrivate *d;
