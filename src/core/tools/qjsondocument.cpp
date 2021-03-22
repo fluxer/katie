@@ -195,7 +195,6 @@ void QJsonDocumentPrivate::mapToJson(const QVariantMap &jsonmap, json_t *jroot, 
                 json_object_set_new_nocheck(jroot, bytearraykey.constData(), json_real(value.toReal()));
                 break;
             }
-            case QVariant::Char:
             case QVariant::ByteArray:
             case QVariant::String: {
                 const QByteArray bytearrayvalue = value.toByteArray();
@@ -268,7 +267,7 @@ QJsonDocument &QJsonDocument::operator=(const QJsonDocument &other)
 
     If the \a variant contains any other type than a QVariant::Invalid,
     QVariant::Bool, QVariant::Int, QVariant::LongLong, QVariant::UInt,
-    QVariant::ULongLong, QVariant::Float, QVariant::Double, QVariant::Char,
+    QVariant::ULongLong, QVariant::Float, QVariant::Double,
     QVariant::ByteArray, QVariant::String, QVariant::List,
     QVariant::StringList, QVariant::Hash or QVariant::Map the returned document
     is null.
