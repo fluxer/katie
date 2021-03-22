@@ -459,8 +459,10 @@ namespace QDBusUtil
         QByteArray ba = signature.toLatin1();
         const char* data = ba.constData();
         int i = 0;
-        while (i < ba.size() && *data == '\0')
+        while (i < ba.size() && *data == '\0') {
             data++;
+            i++;
+        }
         return dbus_signature_validate(data, NULL);
     }
 
