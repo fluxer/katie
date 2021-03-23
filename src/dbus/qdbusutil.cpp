@@ -463,6 +463,9 @@ namespace QDBusUtil
             data++;
             i++;
         }
+        if (i == ba.size()) {
+            return false;
+        }
         return dbus_signature_validate(data, NULL);
     }
 
