@@ -97,25 +97,25 @@ static QTextCodec *checkForCodec(const QByteArray &name) {
 
 static void setupLocaleMapper()
 {
-    if (!localeMapper) {
-        // Get the first nonempty value from $LC_ALL, $LC_CTYPE, and $LANG
-        // environment variables.
-        QByteArray lang = qgetenv("LC_ALL");
-        if (lang.isEmpty()) {
-            lang = qgetenv("LC_CTYPE");
-        }
-        if (lang.isEmpty()) {
-            lang = qgetenv("LANG");
-        }
+    Q_ASSERT(!localeMapper);
 
-        const int indexOfDot = lang.indexOf('.');
-        if (indexOfDot != -1) {
-            localeMapper = checkForCodec(lang.mid(indexOfDot + 1));
-        }
+    // Get the first nonempty value from $LC_ALL, $LC_CTYPE, and $LANG
+    // environment variables.
+    QByteArray lang = qgetenv("LC_ALL");
+    if (lang.isEmpty()) {
+        lang = qgetenv("LC_CTYPE");
+    }
+    if (lang.isEmpty()) {
+        lang = qgetenv("LANG");
+    }
 
-        if (!localeMapper && !lang.isEmpty()) {
-            localeMapper = checkForCodec(lang);
-        }
+    const int indexOfDot = lang.indexOf('.');
+    if (indexOfDot != -1) {
+        localeMapper = checkForCodec(lang.mid(indexOfDot + 1));
+    }
+
+    if (!localeMapper && !lang.isEmpty()) {
+        localeMapper = checkForCodec(lang);
     }
 
     // Fallback to implementation-defined default locale
