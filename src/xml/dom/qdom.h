@@ -65,7 +65,6 @@ class QDomAttr;
 class QDomEntityReference;
 class QDomDocument;
 class QDomNamedNodeMap;
-class QDomDocument;
 class QDomDocumentFragment;
 class QDomDocumentType;
 class QDomImplementation;
