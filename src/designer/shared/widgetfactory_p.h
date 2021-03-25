@@ -102,10 +102,6 @@ public:
     // Return whether object was created by the factory for the form editor.
     static bool isFormEditorObject(const QObject *o);
 
-    // Boolean dynamic property to set on widgets to prevent custom
-    // styles from interfering
-    static const char *disableStyleCustomPaintingPropertyC;
-
 public slots:
     void loadPlugins();
 

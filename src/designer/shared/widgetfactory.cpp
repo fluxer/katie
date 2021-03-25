@@ -169,7 +169,6 @@ WidgetFactory::Strings::Strings() :
 // ---------------- WidgetFactory
 QPointer<QWidget> *WidgetFactory::m_lastPassiveInteractor = new QPointer<QWidget>();
 bool WidgetFactory::m_lastWasAPassiveInteractor = false;
-const char *WidgetFactory::disableStyleCustomPaintingPropertyC = "_q_custom_style_disabled";
 
 WidgetFactory::WidgetFactory(QDesignerFormEditorInterface *core, QObject *parent)
     : QDesignerWidgetFactoryInterface(parent),
@@ -557,16 +556,6 @@ void WidgetFactory::initializeCommon(QWidget *widget) const
     // Apply style
     if (m_currentStyle)
         widget->setStyle(m_currentStyle);
-    // Prevent the wizard from emulating the Windows Vista Theme.
-    // This theme (in both Aero and Basic mode) is tricky to
-    // emulate properly in designer due to 1) the manipulation of the non-client area of
-    // the top-level window, and 2) the upper-right location of the Back button.
-    // The wizard falls back to QWizard::ModernStyle whenever the Vista theme
-    // would normally apply.
-    if (QWizard *wizard = qobject_cast<QWizard *>(widget)) {
-        wizard->setProperty("_q_wizard_vista_off", QVariant(true));
-        return;
-    }
 }
 
 // Necessary initializations for preview objects

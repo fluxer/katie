@@ -363,11 +363,9 @@ QWidget *PreviewManager::createPreview(const QDesignerFormWindowInterface *fw,
         formWidget->setAttribute(Qt::WA_DeleteOnClose, true);
         connect(formWidget, SIGNAL(destroyed()), zw, SLOT(close()));
         zw->setZoom(initialZoom);
-        zw->setProperty(WidgetFactory::disableStyleCustomPaintingPropertyC, QVariant(true));
         return zw;
     }
     formWidget->setParent(fw->window(), Qt::Dialog);
-    formWidget->setProperty(WidgetFactory::disableStyleCustomPaintingPropertyC, QVariant(true));
     return formWidget;
 }
 

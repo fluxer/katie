@@ -918,7 +918,6 @@ void FormWindowManager::slotUpdateActions()
 QDesignerFormWindowInterface *FormWindowManager::createFormWindow(QWidget *parentWidget, Qt::WindowFlags flags)
 {
     FormWindow *formWindow = new FormWindow(qobject_cast<FormEditor*>(core()), parentWidget, flags);
-    formWindow->setProperty(WidgetFactory::disableStyleCustomPaintingPropertyC, QVariant(true));
     addFormWindow(formWindow);
     return formWindow;
 }
