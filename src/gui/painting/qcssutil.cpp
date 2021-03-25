@@ -326,12 +326,11 @@ static bool paintsOver(const QCss::BorderStyle *styles, const QBrush *colors, QC
     return false;
 }
 
-void qDrawBorder(QPainter *p, const QRect &rect, const QCss::BorderStyle *styles,
+void qDrawBorder(QPainter *p, const QRect &br, const QCss::BorderStyle *styles,
                  const int *borders, const QBrush *colors, const QSize *radii)
 {
-    const QRectF br(rect);
     QSize tlr, trr, blr, brr;
-    qNormalizeRadii(rect, radii, &tlr, &trr, &blr, &brr);
+    qNormalizeRadii(br, radii, &tlr, &trr, &blr, &brr);
 
     // Drawn in increasing order of precendence
     if (styles[BottomEdge] != BorderStyle_None && borders[BottomEdge] > 0) {
