@@ -146,8 +146,7 @@ QString QLocalePrivate::bcp47Name() const
     const int countrylen = qstrlen(country);
     const int totallen = langlen + scriptlen + countrylen + (script ? 1 : 0) + (country ? 1 : 0);
 
-    QString name(totallen, Qt::Uninitialized);
-    QChar *uc = name.data();
+    QChar uc[totallen];
     int datapos = 0;
     for (int i = 0; i < langlen; i++) {
         uc[datapos] = ushort(lang[i]);
@@ -168,7 +167,7 @@ QString QLocalePrivate::bcp47Name() const
         }
     }
 
-    return name;
+    return QString(uc, totallen);
 }
 
 static const QLocalePrivate *systemPrivate()

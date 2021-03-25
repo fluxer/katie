@@ -3281,16 +3281,12 @@ bool QString::endsWith(const QChar &c, Qt::CaseSensitivity cs) const
 
 static QByteArray toLatin1_helper(const QChar *data, int length)
 {
-    QByteArray ba(length, Qt::Uninitialized);
-    if (length) {
-        const ushort *src = reinterpret_cast<const ushort *>(data);
-        uchar *dst = (uchar*) ba.data();
-        while (length--) {
-            *dst++ = (*src>0xff) ? '?' : (uchar) *src;
-            ++src;
-        }
+    char result[length];
+    for (int i = 0; i < length; i++) {
+        const ushort ucs = data[i].unicode();
+        result[i] = (ucs > 0xff) ? '?' : char(ucs);
     }
-    return ba;
+    return QByteArray(result, length);
 }
 
 /*!
@@ -5673,17 +5669,17 @@ QString QString::normalized(QString::NormalizationForm mode) const
     }
 
     error = U_ZERO_ERROR;
-    QString result(QMAXUSTRLEN(size()), Qt::Uninitialized);
+    const int maxlength = QMAXUSTRLEN(size());
+    UChar result[maxlength];
     const int decresult = unorm2_normalize(normalizer,
         reinterpret_cast<const UChar*>(unicode()), size(),
-        reinterpret_cast<UChar*>(result.data()), result.size(), &error);
+        result, maxlength, &error);
     if (Q_UNLIKELY(U_FAILURE(error))) {
         qWarning("QString::normalized: unorm2_normalize() failed %s", u_errorName(error));
         return QString();
     }
 
-    result.resize(decresult);
-    return result;
+    return QString(reinterpret_cast<QChar*>(result), decresult);
 }
 
 /*!

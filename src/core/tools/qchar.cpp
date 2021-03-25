@@ -1148,9 +1148,9 @@ QString QChar::decomposition(const uint ucs4)
     }
 
     errorcode = U_ZERO_ERROR;
-    QString result(4, Qt::Uninitialized);
-    const int decresult = unorm2_getDecomposition(normalizer, ucs4,
-        reinterpret_cast<UChar*>(result.data()), result.size(), &errorcode);
+    static const int maxlength = 4;
+    UChar result[maxlength];
+    const int decresult = unorm2_getDecomposition(normalizer, ucs4, result, maxlength, &errorcode);
     if (Q_UNLIKELY(U_FAILURE(errorcode))) {
         qWarning("QChar::decomposition: unorm2_getDecomposition() failed %s", u_errorName(errorcode));
         return QString();
@@ -1159,8 +1159,7 @@ QString QChar::decomposition(const uint ucs4)
         return QString();
     }
 
-    result.resize(decresult);
-    return result;
+    return QString(reinterpret_cast<QChar*>(result), decresult);
 }
 
 /*!

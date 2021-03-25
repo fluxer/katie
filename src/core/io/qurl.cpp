@@ -3485,19 +3485,18 @@ QString QUrl::fromAce(const QByteArray &domain)
     const QString utf8 = QString::fromUtf8(domain);
     UErrorCode error = U_ZERO_ERROR;
     UIDNAInfo info = UIDNA_INFO_INITIALIZER;
-    QString result(utf8.size() * 4, Qt::Uninitialized);
+    const int maxlength = utf8.size() * 4;
+    UChar result[maxlength];
     const int idnaresult = uidna_nameToUnicode(globalidna,
         reinterpret_cast<const UChar*>(utf8.unicode()), utf8.size(),
-        reinterpret_cast<UChar*>(result.data()), result.size(),
-        &info, &error);
+        result, maxlength, &info, &error);
 
     if (Q_UNLIKELY(U_FAILURE(error) && info.errors != 0)) {
         qWarning("QUrl::fromAce: failed %s", u_errorName(error));
         return utf8;
     }
 
-    result.resize(idnaresult);
-    return result;
+    return QString(reinterpret_cast<QChar*>(result), idnaresult);
 }
 
 /*!
@@ -3530,19 +3529,18 @@ QByteArray QUrl::toAce(const QString &domain)
 
     UErrorCode error = U_ZERO_ERROR;
     UIDNAInfo info = UIDNA_INFO_INITIALIZER;
-    QString result(domain.size() * 4, Qt::Uninitialized);
+    const int maxlength = domain.size() * 4;
+    UChar result[maxlength];
     const int idnaresult = uidna_nameToASCII(globalidna,
         reinterpret_cast<const UChar*>(domain.unicode()), domain.size(),
-        reinterpret_cast<UChar*>(result.data()), result.size(),
-        &info, &error);
+        result, maxlength, &info, &error);
 
     if (Q_UNLIKELY(U_FAILURE(error) && info.errors != 0)) {
         qWarning("QUrl::toAce: failed %s", u_errorName(error));
         return QByteArray();
     }
 
-    result.resize(idnaresult);
-    return result.toLatin1();
+    return QString(reinterpret_cast<QChar*>(result), idnaresult).toLatin1();
 }
 
 /*!
