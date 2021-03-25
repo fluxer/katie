@@ -576,6 +576,8 @@ static int findChar(const QChar *str, int len, QChar ch, int from,
 
 QString::Data QString::shared_null = { QAtomicInt(1),
                                        0, 0, 0, shared_null.array, {0} };
+QString::Data QString::shared_empty = { QAtomicInt(1),
+                                        0, 0, 0, shared_empty.array, {0} };
 
 int QString::grow(int size)
 {
@@ -821,8 +823,11 @@ int QString::toWCharArray(wchar_t *array) const
 */
 QString::QString(const QChar *unicode, int size)
 {
-   if (!unicode || size <= 0) {
+   if (!unicode) {
         d = &shared_null;
+        d->ref.ref();
+    } else if (size <= 0) {
+        d = &shared_empty;
         d->ref.ref();
     } else {
         d = static_cast<Data*>(::malloc(sizeof(Data)+size*sizeof(QChar)));
@@ -845,7 +850,7 @@ QString::QString(const QChar *unicode, int size)
 QString::QString(const int size, const QChar ch)
 {
    if (size <= 0) {
-        d = &shared_null;
+        d = &shared_empty;
         d->ref.ref();
     } else {
         d = static_cast<Data*>(::malloc(sizeof(Data)+size*sizeof(QChar)));
@@ -956,8 +961,8 @@ QString::QString(const QChar ch)
 
 void QString::freeData(Data *d)
 {
-    if(d != &shared_null)
-        ::free(d);
+    if(d != &shared_null && d != &shared_empty)
+        free(d);
 }
 
 /*!
@@ -996,7 +1001,7 @@ void QString::resize(int size)
         size = 0;
 
     if (size == 0 && !d->capacity) {
-        Data *x = &shared_null;
+        Data *x = &shared_empty;
         x->ref.ref();
         if (!d->ref.deref())
             QString::freeData(d);
@@ -1287,7 +1292,7 @@ QString& QString::insert(int i, QChar ch)
 */
 QString &QString::append(const QString &str)
 {
-    if (str.d != &shared_null) {
+    if (str.d != &shared_null && str.d != &shared_empty) {
         if (d->ref != 1 || d->size + str.d->size > d->alloc)
             reallocData(grow(d->size + str.d->size));
         memcpy(d->data + d->size, str.d->data, str.d->size * sizeof(QChar));
@@ -3126,7 +3131,7 @@ QString QString::right(int n) const
 
 QString QString::mid(int position, int n) const
 {
-    if (d == &shared_null || position >= d->size)
+    if (d == &shared_null || d == &shared_empty || position >= d->size)
         return QString();
     if (n < 0)
         n = d->size - position;
@@ -3403,8 +3408,11 @@ QVector<uint> QString::toUcs4() const
 QString::Data *QString::fromLatin1_helper(const char *str, int size)
 {
     Data *d;
-    if (!str || size == 0 || (!*str && size < 0)) {
+    if (!str) {
         d = &shared_null;
+        d->ref.ref();
+    } else if (size == 0 || (!*str && size < 0)) {
+        d = &shared_empty;
         d->ref.ref();
     } else {
         if (size < 0)
@@ -3428,8 +3436,11 @@ QString::Data *QString::fromAscii_helper(const char *str, int size)
 #ifndef QT_NO_TEXTCODEC
     if (codecForCStrings) {
         Data *d;
-        if (!str || size == 0 || (!*str && size < 0)) {
+        if (!str) {
             d = &shared_null;
+            d->ref.ref();
+        } else if (size == 0 || (!*str && size < 0)) {
+            d = &shared_empty;
             d->ref.ref();
         } else {
             if (size < 0)
@@ -7692,7 +7703,7 @@ QStringRef QString::rightRef(int n) const
 
 QStringRef QString::midRef(int position, int n) const
 {
-    if (d == &shared_null || position >= d->size)
+    if (d == &shared_null || d == &shared_empty || position >= d->size)
         return QStringRef();
     if (n < 0)
         n = d->size - position;
