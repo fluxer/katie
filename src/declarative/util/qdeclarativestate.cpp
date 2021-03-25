@@ -370,8 +370,8 @@ bool QDeclarativeState::containsPropertyInRevertList(QObject *target, const QStr
 
     if (isStateActive()) {
         foreach (const QDeclarativeSimpleAction &simpleAction, d->revertList) {
-        if (simpleAction.specifiedObject() == target && simpleAction.specifiedProperty() == name)
-            return true;
+            if (simpleAction.specifiedObject() == target && simpleAction.specifiedProperty() == name)
+                return true;
         }
     }
 
