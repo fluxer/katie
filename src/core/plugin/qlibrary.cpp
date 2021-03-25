@@ -471,7 +471,6 @@ bool QLibraryPrivate::isPlugin()
 
     return pluginState == IsAPlugin;
 #else
-    Q_UNUSED(settings);
     return pluginState == MightBeAPlugin;
 #endif
 }
