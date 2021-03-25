@@ -1416,12 +1416,15 @@ void QByteArray::resize(int size)
         if (!d->ref.deref())
             freeData(d);
         d = x;
-    } else if (size != d->size) {
-        reallocData(size);
-        d->size = size;
-        if (d->data == d->array) {
-            d->array[size] = '\0';
-        }
+    } else {
+        if (d->ref != 1 || size > d->alloc || (size < d->size && size < d->alloc >> 1))
+            reallocData(qAllocMore(size, sizeof(Data)));
+        if (d->alloc >= size) {
+            d->size = size;
+            if (d->data == d->array) {
+                d->array[size] = '\0';
+            }
+         }
     }
 }
 
