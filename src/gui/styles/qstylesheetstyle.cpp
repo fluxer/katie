@@ -1995,7 +1995,6 @@ bool QStyleSheetStyle::hasStyleRule(const QWidget *w, int part) const
     }
 
     const QString pseudoElement = knownPseudoElements[part].name;
-    QVector<Declaration> declarations;
     for (int i = 0; i < rules.count(); i++) {
         const Selector& selector = rules.at(i).selectors.at(0);
         if (pseudoElement.compare(selector.pseudoElement(), Qt::CaseInsensitive) == 0) {
