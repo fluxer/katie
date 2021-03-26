@@ -94,10 +94,6 @@ void QDeclarativeUtilModule::defineModule()
     qmlRegisterType<QDeclarativeState>("QtQuick",1,0,"State");
     qmlRegisterType<QDeclarativeStateChangeScript>("QtQuick",1,0,"StateChangeScript");
     qmlRegisterType<QDeclarativeListElement>("QtQuick",1,0,"ListElement");
-    qmlRegisterTypeNotAvailable("QtQuick",1,0,"XmlListModel",
-        qApp->translate("QDeclarativeXmlListModel","Katie does not support xmlpatterns"));
-    qmlRegisterTypeNotAvailable("QtQuick",1,0,"XmlRole",
-        qApp->translate("QDeclarativeXmlListModel","Katie does not support xmlpatterns"));
     qmlRegisterCustomType<QDeclarativeConnections>("QtQuick",1,0,"Connections", new QDeclarativeConnectionsParser);
     qmlRegisterCustomType<QDeclarativePropertyChanges>("QtQuick",1,0,"PropertyChanges", new QDeclarativePropertyChangesParser);
     qmlRegisterCustomType<QDeclarativeListModel>("QtQuick",1,0,"ListModel", new QDeclarativeListModelParser);
