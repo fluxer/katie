@@ -26,6 +26,8 @@ build_script:
 
     make -j $(nproc || echo 1)
 
+    du -hsc /home/appveyor/.ccache | grep -q G && rm -rf /home/appveyor/.ccache
+
 test_script:
 - sh: >-
     Xvfb :123 &
