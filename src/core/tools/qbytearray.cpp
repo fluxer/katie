@@ -1643,14 +1643,7 @@ QByteArray &QByteArray::append(const QByteArray &ba)
 
 QByteArray& QByteArray::append(const char *str)
 {
-    if (str) {
-        int len = qstrlen(str);
-        if (d->ref != 1 || d->size + len > d->alloc)
-            reallocData(qAllocMore(d->size + len, sizeof(Data)));
-        memcpy(d->data + d->size, str, len + 1); // include null terminator
-        d->size += len;
-    }
-    return *this;
+    return append(str, qstrlen(str));
 }
 
 /*!
