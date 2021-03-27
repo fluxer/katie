@@ -47,8 +47,7 @@
 
 QT_BEGIN_NAMESPACE
 
-typedef QMap<QString, bool> widget_map;
-Q_GLOBAL_STATIC(widget_map, g_widgets)
+Q_GLOBAL_STATIC(QStringList, g_widgets)
 
 class QUiLoader;
 class QUiLoaderPrivate;
@@ -528,7 +527,7 @@ void QUiLoaderPrivate::setupWidgetMap() const
     if (!g_widgets()->isEmpty())
         return;
 
-#define DECLARE_WIDGET(a, b) g_widgets()->insert(QLatin1String(#a), true);
+#define DECLARE_WIDGET(a, b) g_widgets()->append(QLatin1String(#a));
 #define DECLARE_LAYOUT(a, b)
 
 #include "widgets.table"
@@ -755,13 +754,12 @@ QStringList QUiLoader::availableWidgets() const
     Q_D(const QUiLoader);
 
     d->setupWidgetMap();
-    widget_map available = *g_widgets();
 
     foreach (QDesignerCustomWidgetInterface *plugin, d->builder.customWidgets()) {
-        available.insert(plugin->name(), true);
+        g_widgets()->append(plugin->name());
     }
 
-    return available.keys();
+    return *g_widgets();
 }
 
 
