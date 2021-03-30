@@ -57,7 +57,7 @@ static const unsigned tinyMapThreshold = 20;
 static const unsigned newTableSize = 16;
 
 #ifndef QT_NO_DEBUG
-static bool shouldIgnoreLeaks;
+static bool shouldIgnoreLeaks = false;
 static HashSet<Structure*>& ignoreSet = *(new HashSet<Structure*>);
 #endif
 
@@ -112,7 +112,12 @@ void Structure::dumpStatistics()
 }
 
 Structure::Structure(JSValue prototype, const TypeInfo& typeInfo)
+#ifndef QT_NO_DEBUG
+    : m_count(0)
+    , m_typeInfo(typeInfo)
+#else
     : m_typeInfo(typeInfo)
+#endif
     , m_prototype(prototype)
     , m_specificValueInPrevious(0)
     , m_propertyTable(0)
