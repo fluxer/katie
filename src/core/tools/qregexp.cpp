@@ -3431,8 +3431,10 @@ static void derefEngine(QRegExpEngine *eng, const QRegExpEngineKey &key)
     }
 }
 
-static void prepareEngine_helper(QRegExpPrivate *priv)
+static void prepareEngine(QRegExpPrivate *priv)
 {
+    if (priv->eng)
+        return;
     bool initMatchState = !priv->eng;
 #if !defined(QT_NO_REGEXP_OPTIM)
     if (!priv->eng && globalEngineCache()) {
@@ -3448,13 +3450,6 @@ static void prepareEngine_helper(QRegExpPrivate *priv)
 
     if (initMatchState)
         priv->matchState.prepareForMatch(priv->eng);
-}
-
-inline static void prepareEngine(QRegExpPrivate *priv)
-{
-    if (priv->eng)
-        return;
-    prepareEngine_helper(priv);
 }
 
 static void prepareEngineForMatch(QRegExpPrivate *priv, const QString &str)
