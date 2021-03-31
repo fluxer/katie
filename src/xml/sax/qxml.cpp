@@ -1457,12 +1457,20 @@ void QXmlInputSource::fetchData()
 #ifndef QT_NO_TEXTCODEC
 static QString extractEncodingDecl(const QString &text, bool *needMoreText)
 {
-    int l = text.length();
-    QString snip = QString::fromLatin1("<?xml").left(l);
-    if (l > 0 && !text.startsWith(snip))
+    static const QLatin1String snipsTbl[] {
+        QLatin1String("<"),
+        QLatin1String("<?"),
+        QLatin1String("<?x"),
+        QLatin1String("<?xm"),
+        QLatin1String("<?xml"),
+    };
+
+    const int l = text.length();
+    const int snipindex = qBound(0, l, 5) - 1;
+    if (l > 0 && !text.startsWith(snipsTbl[snipindex]))
         return QString();
 
-    int endPos = text.indexOf(QLatin1Char('>'));
+    const int endPos = text.indexOf(QLatin1Char('>'));
     if (endPos == -1) {
         *needMoreText = l < 255; // we won't look forever
         return QString();
