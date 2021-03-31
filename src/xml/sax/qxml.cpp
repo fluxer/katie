@@ -1457,8 +1457,6 @@ void QXmlInputSource::fetchData()
 #ifndef QT_NO_TEXTCODEC
 static QString extractEncodingDecl(const QString &text, bool *needMoreText)
 {
-    *needMoreText = false;
-
     int l = text.length();
     QString snip = QString::fromLatin1("<?xml").left(l);
     if (l > 0 && !text.startsWith(snip))
@@ -1543,7 +1541,7 @@ QString QXmlInputSource::fromRawData(const QByteArray &data, bool beginning)
     if (d->lookingForEncodingDecl) {
         d->encodingDeclChars += input;
 
-        bool needMoreText;
+        bool needMoreText = false;
         QString encoding = extractEncodingDecl(d->encodingDeclChars, &needMoreText);
 
         if (!encoding.isEmpty()) {
