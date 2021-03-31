@@ -538,15 +538,14 @@ QByteArray qFastCompress(const char* data, int nbytes, int compressionLevel)
         return QByteArray();
     }
 
-    QByteArray result(bndresult, Qt::Uninitialized);
-    const size_t cmpresult = ZSTD_compress(result.data(), result.size(), data, nbytes, compressionLevel);
+    char cmpbuffer[bndresult];
+    const size_t cmpresult = ZSTD_compress(cmpbuffer, bndresult, data, nbytes, compressionLevel);
     if (Q_UNLIKELY(ZSTD_isError(cmpresult))) {
         qWarning("qFastCompress: Could not compress data (%s)", ZSTD_getErrorString(ZSTD_getErrorCode(cmpresult)));
         return QByteArray();
     }
-    result.resize(cmpresult);
 
-    return result;
+    return QByteArray(cmpbuffer, cmpresult);
 }
 
 /*!
@@ -591,14 +590,14 @@ QByteArray qFastUncompress(const char* data, int nbytes)
         return QByteArray();
     }
 
-    QByteArray result(uncompressedsize, Qt::Uninitialized);
-    const size_t decresult = ZSTD_decompress(result.data(), result.size(), data, nbytes);
+    char decbuffer[uncompressedsize];
+    const size_t decresult = ZSTD_decompress(decbuffer, uncompressedsize, data, nbytes);
     if (Q_UNLIKELY(ZSTD_isError(decresult))) {
         qWarning("qFastCompress: Could not uncompress data (%s)", ZSTD_getErrorString(ZSTD_getErrorCode(decresult)));
         return QByteArray();
     }
 
-    return result;
+    return QByteArray(decbuffer, uncompressedsize);
 }
 #endif // QT_NO_COMPRESS
 
