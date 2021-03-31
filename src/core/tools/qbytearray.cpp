@@ -3945,7 +3945,7 @@ QByteArray QByteArray::fromBase64(const QByteArray &base64)
 QByteArray QByteArray::fromHex(const QByteArray &hexEncoded)
 {
     QByteArray res((hexEncoded.size() + 1)/ 2, Qt::Uninitialized);
-    uchar *result = (uchar *)res.data() + res.size();
+    uchar *result = (uchar *)res.d->data + res.size();
 
     bool odd_digit = true;
     for (int i = hexEncoded.size() - 1; i >= 0; --i) {
@@ -3982,7 +3982,7 @@ QByteArray QByteArray::fromHex(const QByteArray &hexEncoded)
 QByteArray QByteArray::toHex() const
 {
     QByteArray hex(d->size * 2, Qt::Uninitialized);
-    char *hexData = hex.data();
+    char *hexData = hex.d->data;
     const uchar *data = (const uchar *)d->data;
     for (int i = 0; i < d->size; ++i) {
         int j = (data[i] >> 4) & 0xf;
