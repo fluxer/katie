@@ -1308,17 +1308,17 @@ void QTextDocumentPrivate::adjustDocumentChangesAndCursors(int from, int addedOr
 
 QString QTextDocumentPrivate::plainText() const
 {
-    QString result(length(), Qt::Uninitialized);
+    const int len = length();
+    QChar result[len];
+    int resultoffset = 0;
     const QChar *text_unicode = text.unicode();
-    QChar *data = result.data();
     for (QTextDocumentPrivate::FragmentIterator it = begin(); it != end(); ++it) {
         const QTextFragmentData *f = *it;
-        ::memcpy(data, text_unicode + f->stringPosition, f->size_array[0] * sizeof(QChar));
-        data += f->size_array[0];
+        ::memcpy(result + resultoffset, text_unicode + f->stringPosition, f->size_array[0] * sizeof(QChar));
+        resultoffset += f->size_array[0];
     }
     // remove trailing block separator
-    result.chop(1);
-    return result;
+    return QString(result, len - 1);
 }
 
 int QTextDocumentPrivate::blockCharFormatIndex(int node) const
