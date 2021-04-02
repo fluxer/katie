@@ -171,7 +171,7 @@ QString QFormBuilderExtra::customWidgetBaseClass(const QString &className) const
 {
     const QHash<QString, CustomWidgetData>::const_iterator it = m_customWidgetDataHash.constFind(className);
     if (it != m_customWidgetDataHash.constEnd())
-            return it.value().baseClass;
+        return it.value().baseClass;
     return QString();
 }
 
