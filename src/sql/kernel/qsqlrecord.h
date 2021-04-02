@@ -77,7 +77,6 @@ public:
     int count() const;
 
 private:
-    void detach();
     QSqlRecordPrivate* d;
 };
 

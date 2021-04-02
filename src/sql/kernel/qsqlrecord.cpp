@@ -239,7 +239,7 @@ QSqlField QSqlRecord::field(const QString &name) const
 
 void QSqlRecord::append(const QSqlField& field)
 {
-    detach();
+    qAtomicDetach(d);
     d->fields.append(field);
 }
 
@@ -250,8 +250,8 @@ void QSqlRecord::append(const QSqlField& field)
  */
 void QSqlRecord::insert(int pos, const QSqlField& field)
 {
-   detach();
-   d->fields.insert(pos, field);
+    qAtomicDetach(d);
+    d->fields.insert(pos, field);
 }
 
 /*!
@@ -266,7 +266,7 @@ void QSqlRecord::replace(int pos, const QSqlField& field)
     if (!d->contains(pos))
         return;
 
-    detach();
+    qAtomicDetach(d);
     d->fields[pos] = field;
 }
 
@@ -282,7 +282,7 @@ void QSqlRecord::remove(int pos)
     if (!d->contains(pos))
         return;
 
-    detach();
+    qAtomicDetach(d);
     d->fields.remove(pos);
 }
 
@@ -294,7 +294,7 @@ void QSqlRecord::remove(int pos)
 
 void QSqlRecord::clear()
 {
-    detach();
+    qAtomicDetach(d);
     d->fields.clear();
 }
 
@@ -330,7 +330,7 @@ bool QSqlRecord::contains(const QString& name) const
 
 void QSqlRecord::clearValues()
 {
-    detach();
+    qAtomicDetach(d);
     for (int i = 0; i < d->fields.count(); ++i)
         d->fields[i].clear();
 }
@@ -361,7 +361,7 @@ void QSqlRecord::setGenerated(int index, bool generated)
 {
     if (!d->contains(index))
         return;
-    detach();
+    qAtomicDetach(d);
     d->fields[index].setGenerated(generated);
 }
 
@@ -397,7 +397,7 @@ void QSqlRecord::setNull(int index)
 {
     if (!d->contains(index))
         return;
-    detach();
+    qAtomicDetach(d);
     d->fields[index].clear();
 }
 
@@ -459,7 +459,7 @@ void QSqlRecord::setValue(int index, const QVariant& val)
 {
     if (!d->contains(index))
         return;
-    detach();
+    qAtomicDetach(d);
     d->fields[index].setValue(val);
 }
 
@@ -474,14 +474,6 @@ void QSqlRecord::setValue(int index, const QVariant& val)
 void QSqlRecord::setValue(const QString& name, const QVariant& val)
 {
     setValue(indexOf(name), val);
-}
-
-
-/*! \internal
-*/
-void QSqlRecord::detach()
-{
-    qAtomicDetach(d);
 }
 
 #ifndef QT_NO_DEBUG_STREAM
