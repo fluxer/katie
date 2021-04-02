@@ -132,7 +132,7 @@ QPrinterInfo QPrinterInfo::defaultPrinter()
 QList<QPrinter::PaperSize> QPrinterInfo::supportedPaperSizes() const
 {
 #if !defined(QT_NO_CUPS)
-    const Q_D(QPrinterInfo);
+    Q_D(const QPrinterInfo);
 
     if (isNull())
         return d->paperSizes;

@@ -129,7 +129,7 @@ QPrinterInfo &QPrinterInfo::operator=(const QPrinterInfo &other)
 */
 QString QPrinterInfo::printerName() const
 {
-    const Q_D(QPrinterInfo);
+    Q_D(const QPrinterInfo);
     return d->name;
 }
 
@@ -141,7 +141,7 @@ QString QPrinterInfo::printerName() const
 */
 bool QPrinterInfo::isNull() const
 {
-    const Q_D(QPrinterInfo);
+    Q_D(const QPrinterInfo);
     return d == &QPrinterInfoPrivate::shared_null;
 }
 
@@ -150,7 +150,7 @@ bool QPrinterInfo::isNull() const
 */
 bool QPrinterInfo::isDefault() const
 {
-    const Q_D(QPrinterInfo);
+    Q_D(const QPrinterInfo);
     return d->isDefault;
 }
 
@@ -167,9 +167,3 @@ bool QPrinterInfo::isDefault() const
 QT_END_NAMESPACE
 
 #endif // QT_NO_PRINTER
-
-
-
-
-
-
