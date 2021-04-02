@@ -30,9 +30,8 @@
 #include "qstack.h"
 #include "qbuffer.h"
 #include "qcoreapplication.h"
+#include "qplatformdefs.h"
 #include "qxmlcommon_p.h"
-
-#include <stdio.h>
 
 QT_BEGIN_NAMESPACE
 
@@ -1335,7 +1334,6 @@ void QXmlStreamReaderPrivate::putReplacementInAttributeValue(const QString &s)
 
 ushort QXmlStreamReaderPrivate::getChar_helper()
 {
-    const int BUFFER_SIZE = 8192;
     characterOffset += readBufferPos;
     readBufferPos = 0;
     readBuffer.resize(0);
@@ -1344,8 +1342,8 @@ ushort QXmlStreamReaderPrivate::getChar_helper()
 #endif
         nbytesread = 0;
     if (device) {
-        rawReadBuffer.resize(BUFFER_SIZE);
-        int nbytesreadOrMinus1 = device->read(rawReadBuffer.data() + nbytesread, BUFFER_SIZE - nbytesread);
+        rawReadBuffer.resize(QT_BUFFSIZE);
+        int nbytesreadOrMinus1 = device->read(rawReadBuffer.data() + nbytesread, QT_BUFFSIZE - nbytesread);
         nbytesread += qMax(nbytesreadOrMinus1, 0);
     } else {
         if (nbytesread)
