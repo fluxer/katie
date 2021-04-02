@@ -42,13 +42,14 @@ public:
 };
 
 QSqlRecordPrivate::QSqlRecordPrivate()
+    : ref(1)
 {
-    ref = 1;
 }
 
-QSqlRecordPrivate::QSqlRecordPrivate(const QSqlRecordPrivate &other): fields(other.fields)
+QSqlRecordPrivate::QSqlRecordPrivate(const QSqlRecordPrivate &other)
+    : fields(other.fields),
+    ref(1)
 {
-    ref = 1;
 }
 
 /*!
