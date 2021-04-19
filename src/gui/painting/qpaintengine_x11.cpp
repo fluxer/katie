@@ -1462,7 +1462,7 @@ static void qt_XRenderCompositeTrapezoids(Display *dpy,
                                           int op,
                                           Picture src,
                                           Picture dst,
-                                          _Xconst XRenderPictFormat *maskFormat,
+                                          const XRenderPictFormat *maskFormat,
                                           int xSrc,
                                           int ySrc,
                                           const XTrapezoid *traps, int size)
