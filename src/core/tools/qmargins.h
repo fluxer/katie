@@ -53,8 +53,8 @@ private:
     int m_right;
     int m_bottom;
 
-    friend inline bool operator==(const QMargins &, const QMargins &);
-    friend inline bool operator!=(const QMargins &, const QMargins &);
+    inline bool operator==(const QMargins &other) const;
+    inline bool operator!=(const QMargins &other) const { return !operator==(other); };
 };
 
 Q_DECLARE_TYPEINFO(QMargins, Q_MOVABLE_TYPE);
@@ -97,22 +97,12 @@ inline void QMargins::setRight(int aright)
 inline void QMargins::setBottom(int abottom)
 { m_bottom = abottom; }
 
-inline bool operator==(const QMargins &m1, const QMargins &m2)
+inline bool QMargins::operator==(const QMargins &other) const
 {
-    return
-            m1.m_left == m2.m_left &&
-            m1.m_top == m2.m_top &&
-            m1.m_right == m2.m_right &&
-            m1.m_bottom == m2.m_bottom;
-}
-
-inline bool operator!=(const QMargins &m1, const QMargins &m2)
-{
-    return
-            m1.m_left != m2.m_left ||
-            m1.m_top != m2.m_top ||
-            m1.m_right != m2.m_right ||
-            m1.m_bottom != m2.m_bottom;
+    return m_left == other.m_left &&
+           m_top == other.m_top &&
+           m_right == other.m_right &&
+           m_bottom == other.m_bottom;
 }
 
 #ifndef QT_NO_DEBUG_STREAM

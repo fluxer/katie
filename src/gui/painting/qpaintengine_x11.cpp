@@ -1376,7 +1376,7 @@ void QX11PaintEngine::updateBrush(const QBrush &brush, const QPointF &origin)
 void QX11PaintEngine::drawEllipse(const QRectF &rect)
 {
     QRect aligned = rect.toAlignedRect();
-    if (aligned == rect)
+    if (aligned == rect.toRect())
         drawEllipse(aligned);
     else
         QPaintEngine::drawEllipse(rect);

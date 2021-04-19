@@ -116,9 +116,8 @@ public:
     QRect intersected(const QRect &other) const;
     bool intersects(const QRect &r) const;
 
-    friend Q_CORE_EXPORT_INLINE bool operator==(const QRect &, const QRect &);
-    friend Q_CORE_EXPORT_INLINE bool operator!=(const QRect &, const QRect &);
-
+    inline bool operator==(const QRect &other) const;
+    inline bool operator!=(const QRect &other) const { return !operator==(other); };
 
 private:
     int x1;
@@ -127,10 +126,6 @@ private:
     int y2;
 };
 Q_DECLARE_TYPEINFO(QRect, Q_MOVABLE_TYPE);
-
-Q_CORE_EXPORT_INLINE bool operator==(const QRect &, const QRect &);
-Q_CORE_EXPORT_INLINE bool operator!=(const QRect &, const QRect &);
-
 
 /*****************************************************************************
   QRect stream functions
@@ -417,14 +412,9 @@ inline QRect QRect::united(const QRect &r) const
     return *this | r;
 }
 
-inline bool operator==(const QRect &r1, const QRect &r2)
+inline bool QRect::operator==(const QRect &other) const
 {
-    return r1.x1==r2.x1 && r1.x2==r2.x2 && r1.y1==r2.y1 && r1.y2==r2.y2;
-}
-
-inline bool operator!=(const QRect &r1, const QRect &r2)
-{
-    return r1.x1!=r2.x1 || r1.x2!=r2.x2 || r1.y1!=r2.y1 || r1.y2!=r2.y2;
+    return x1 == other.x1 && x2 == other.x2 && y1 == other.y1 && y2 == other.y2;
 }
 
 #ifndef QT_NO_DEBUG_STREAM
@@ -518,8 +508,8 @@ public:
     QRectF intersected(const QRectF &other) const;
     bool intersects(const QRectF &r) const;
 
-    friend Q_CORE_EXPORT_INLINE bool operator==(const QRectF &, const QRectF &);
-    friend Q_CORE_EXPORT_INLINE bool operator!=(const QRectF &, const QRectF &);
+    inline bool operator==(const QRectF &other) const;
+    inline bool operator!=(const QRectF &other) const { return !operator==(other); };
 
     QRect toRect() const;
     QRect toAlignedRect() const;
@@ -531,9 +521,6 @@ private:
     qreal h;
 };
 Q_DECLARE_TYPEINFO(QRectF, Q_MOVABLE_TYPE);
-
-Q_CORE_EXPORT_INLINE bool operator==(const QRectF &, const QRectF &);
-Q_CORE_EXPORT_INLINE bool operator!=(const QRectF &, const QRectF &);
 
 
 /*****************************************************************************
@@ -742,16 +729,10 @@ inline QRectF QRectF::united(const QRectF &r) const
     return *this | r;
 }
 
-inline bool operator==(const QRectF &r1, const QRectF &r2)
+inline bool QRectF::operator==(const QRectF &other) const
 {
-    return qFuzzyCompare(r1.xp, r2.xp) && qFuzzyCompare(r1.yp, r2.yp)
-           && qFuzzyCompare(r1.w, r2.w) && qFuzzyCompare(r1.h, r2.h);
-}
-
-inline bool operator!=(const QRectF &r1, const QRectF &r2)
-{
-    return !qFuzzyCompare(r1.xp, r2.xp) || !qFuzzyCompare(r1.yp, r2.yp)
-           || !qFuzzyCompare(r1.w, r2.w) || !qFuzzyCompare(r1.h, r2.h);
+    return qFuzzyCompare(xp, other.xp) && qFuzzyCompare(yp, other.yp)
+           && qFuzzyCompare(w, other.w) && qFuzzyCompare(h, other.h);
 }
 
 inline QRect QRectF::toRect() const
