@@ -22,9 +22,7 @@
 #ifndef QTEXTBOUNDARYFINDER_H
 #define QTEXTBOUNDARYFINDER_H
 
-#include <QtCore/qchar.h>
 #include <QtCore/qstring.h>
-
 
 QT_BEGIN_NAMESPACE
 
