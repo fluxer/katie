@@ -1467,7 +1467,7 @@ static void qt_XRenderCompositeTrapezoids(Display *dpy,
                                           int ySrc,
                                           const XTrapezoid *traps, int size)
 {
-    const int MAX_TRAPS = 50000;
+    static const int MAX_TRAPS = 50000;
     while (size) {
         int to_draw = size;
         if (to_draw > MAX_TRAPS)
