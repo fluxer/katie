@@ -553,7 +553,7 @@ QRegion QRegion::translated(int dx, int dy) const
 }
 
 
-inline bool rect_intersects(const QRect &r1, const QRect &r2)
+static inline bool rect_intersects(const QRect &r1, const QRect &r2)
 {
     return (r1.right() >= r2.left() && r1.left() <= r2.right() &&
             r1.bottom() >= r2.top() && r1.top() <= r2.bottom());
