@@ -32,8 +32,6 @@ QT_BEGIN_NAMESPACE
 
 class QString;
 class QSqlRecord;
-template <typename T> class QVector;
-class QVariant;
 class QSqlDriver;
 class QSqlError;
 class QSqlResultPrivate;
