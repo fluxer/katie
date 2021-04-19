@@ -475,16 +475,6 @@ QSqlRecord QPSQLResult::record() const
     return info;
 }
 
-void QPSQLResult::virtual_hook(int id, void *data)
-{
-    Q_ASSERT(data);
-
-    switch (id) {
-    default:
-        QSqlResult::virtual_hook(id, data);
-    }
-}
-
 static QString qReplacePlaceholderMarkers(const QString &query)
 {
     const int originalLength = query.length();

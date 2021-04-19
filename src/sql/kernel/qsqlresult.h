@@ -102,7 +102,7 @@ protected:
     virtual QSqlRecord record() const;
     virtual QVariant lastInsertId() const;
 
-    enum VirtualHookOperation { BatchOperation, DetachFromResultSet, SetNumericalPrecision, NextResult };
+    enum VirtualHookOperation { DetachFromResultSet, SetNumericalPrecision, NextResult };
     virtual void virtual_hook(int id, void *data);
     bool execBatch(bool arrayBind = false);
     void detachFromResultSet();
