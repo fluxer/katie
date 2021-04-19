@@ -809,7 +809,7 @@ static bool createSvgGlyph(QSvgFont *font, const QXmlStreamAttributes &attribute
 
 // this should really be called convertToDefaultCoordinateSystem
 // and convert when type != QSvgHandler::defaultCoordinateSystem
-static qreal convertToPixels(qreal len, bool , QSvgHandler::LengthType type)
+static qreal convertToPixels(qreal len, QSvgHandler::LengthType type)
 {
 
     switch (type) {
@@ -2562,10 +2562,10 @@ static QSvgNode *createImageNode(QSvgNode *parent,
     qreal ny = toDouble(y);
     QSvgHandler::LengthType type;
     qreal nwidth = parseLength(width, type, handler);
-    nwidth = convertToPixels(nwidth, true, type);
+    nwidth = convertToPixels(nwidth, type);
 
     qreal nheight = parseLength(height, type, handler);
-    nheight = convertToPixels(nheight, false, type);
+    nheight = convertToPixels(nheight, type);
 
 
     filename = filename.trimmed();
@@ -2851,10 +2851,10 @@ static QSvgNode *createRectNode(QSvgNode *parent,
 
     QSvgHandler::LengthType type;
     qreal nwidth = parseLength(width, type, handler);
-    nwidth = convertToPixels(nwidth, true, type);
+    nwidth = convertToPixels(nwidth, type);
 
     qreal nheight = parseLength(height, type, handler);
-    nheight = convertToPixels(nheight, true, type);
+    nheight = convertToPixels(nheight, type);
     qreal nrx = toDouble(rx);
     qreal nry = toDouble(ry);
 
@@ -3040,14 +3040,14 @@ static QSvgNode *createSvgNode(QSvgNode *parent,
     if (!widthStr.isEmpty()) {
         width = parseLength(widthStr, type, handler);
         if (type != QSvgHandler::LT_PT)
-            width = convertToPixels(width, true, type);
+            width = convertToPixels(width, type);
         node->setWidth(int(width));
     }
     qreal height = 0;
     if (!heightStr.isEmpty()) {
         height = parseLength(heightStr, type, handler);
         if (type != QSvgHandler::LT_PT)
-            height = convertToPixels(height, false, type);
+            height = convertToPixels(height, type);
         node->setHeight(int(height));
     }
 
@@ -3075,8 +3075,8 @@ static QSvgNode *createSvgNode(QSvgNode *parent,
 
     } else if (width && height) {
         if (type == QSvgHandler::LT_PT) {
-            width = convertToPixels(width, false, type);
-            height = convertToPixels(height, false, type);
+            width = convertToPixels(width, type);
+            height = convertToPixels(height, type);
         }
         node->setViewBox(QRectF(0, 0, width, height));
     }
@@ -3177,10 +3177,10 @@ static QSvgNode *createUseNode(QSvgNode *parent,
             if (!xStr.isNull() || !yStr.isNull()) {
                 QSvgHandler::LengthType type;
                 qreal nx = parseLength(xStr, type, handler);
-                nx = convertToPixels(nx, true, type);
+                nx = convertToPixels(nx, type);
 
                 qreal ny = parseLength(yStr, type, handler);
-                ny = convertToPixels(ny, true, type);
+                ny = convertToPixels(ny, type);
                 pt = QPointF(nx, ny);
             }
 
