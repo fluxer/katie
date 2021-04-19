@@ -96,47 +96,41 @@ QT_BEGIN_NAMESPACE
 
 #define Q_VOID
 
-// Common constructs
+// Common checks
 #define Q_CHECK_VALID_SOCKETLAYER(function, returnValue) do { \
     if (!isValid()) { \
         qWarning(""#function" was called on an uninitialized socket device"); \
         return returnValue; \
     } } while (0)
-#define Q_CHECK_INVALID_SOCKETLAYER(function, returnValue) do { \
-    if (isValid()) { \
-        qWarning(""#function" was called on an already initialized socket device"); \
-        return returnValue; \
-    } } while (0)
+
 #define Q_CHECK_STATE(function, checkState, returnValue) do { \
     if (d->socketState != (checkState)) { \
         qWarning(""#function" was not called in "#checkState); \
         return (returnValue); \
     } } while (0)
+
 #define Q_CHECK_NOT_STATE(function, checkState, returnValue) do { \
     if (d->socketState == (checkState)) { \
         qWarning(""#function" was called in "#checkState); \
         return (returnValue); \
     } } while (0)
+
 #define Q_CHECK_STATES(function, state1, state2, returnValue) do { \
     if (d->socketState != (state1) && d->socketState != (state2)) { \
         qWarning(""#function" was called" \
                  " not in "#state1" or "#state2); \
         return (returnValue); \
     } } while (0)
+
 #define Q_CHECK_TYPE(function, type, returnValue) do { \
     if (d->socketType != (type)) { \
         qWarning(#function" was called by a" \
                  " socket other than "#type""); \
         return (returnValue); \
     } } while (0)
-#define Q_TR(a) QT_TRANSLATE_NOOP(QNativeSocketEngine, a)
 
 /*! \internal
     Constructs the private class and initializes all data members.
-
-    On Windows, WSAStartup is called "recursively" for every
-    concurrent QNativeSocketEngine. This is safe, because WSAStartup and
-    WSACleanup are reference counted.
 */
 QNativeSocketEnginePrivate::QNativeSocketEnginePrivate() :
     socketDescriptor(-1),
