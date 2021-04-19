@@ -2268,14 +2268,9 @@ bool QSslSocketPrivate::rootCertOnDemandLoadingSupported()
 */
 QByteArray QSslSocketPrivate::unixRootCertDirectory()
 {
-    static QByteArray certdir;
+    static QByteArray certdir = qgetenv(X509_get_default_cert_dir_env());
     if (certdir.isEmpty()) {
-        QByteArray fromenv = qgetenv(X509_get_default_cert_dir_env());
-        if (!fromenv.isEmpty()) {
-            certdir = fromenv;
-        } else {
-            certdir = QByteArray(X509_get_default_cert_dir());
-        }
+        certdir = QByteArray(X509_get_default_cert_dir());
     }
     return certdir;
 }
@@ -2285,14 +2280,9 @@ QByteArray QSslSocketPrivate::unixRootCertDirectory()
 */
 QByteArray QSslSocketPrivate::unixRootCertFile()
 {
-    static QByteArray certfile;
+    static QByteArray certfile = qgetenv(X509_get_default_cert_file_env());
     if (certfile.isEmpty()) {
-        QByteArray fromenv = qgetenv(X509_get_default_cert_file_env());
-        if (!fromenv.isEmpty()) {
-            certfile = fromenv;
-        } else {
-            certfile = QByteArray(X509_get_default_cert_file());
-        }
+        certfile = QByteArray(X509_get_default_cert_file());
     }
     return certfile;
 }
