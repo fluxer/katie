@@ -99,7 +99,7 @@ static void setupLocaleMapper()
 {
     Q_ASSERT(!localeMapper);
 
-    // Get the first nonempty value from $LC_ALL, $LC_CTYPE, and $LANG
+    // Get the first non-empty value from $LC_ALL, $LC_CTYPE, and $LANG
     // environment variables.
     QByteArray lang = qgetenv("LC_ALL");
     if (lang.isEmpty()) {

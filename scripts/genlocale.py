@@ -153,7 +153,7 @@ def todatetimeformat(fromformat):
         r'y' : 'yyyy',       # four-digit year without leading zeroes
         r'yyy{3,}' : 'yyyy', # more that three digits hence convert to four-digit year
         r'S{1,}' : '',       # fractional seconds. not supported.
-        r'A{1,}' : '',        # milliseconds in day. not supported.
+        r'A{1,}' : '',       # milliseconds in day. not supported.
         r'a' : 'AP',         # AM/PM
     }
     possibleoccurences = [
