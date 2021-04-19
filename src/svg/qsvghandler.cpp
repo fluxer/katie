@@ -2515,8 +2515,7 @@ static QSvgNode *createGNode(QSvgNode *parent,
                              QSvgHandler *)
 {
     Q_UNUSED(attributes);
-    QSvgG *node = new QSvgG(parent);
-    return node;
+    return new QSvgG(parent);
 }
 
 static bool parseGlyphNode(QSvgStyleProperty *parent,
@@ -3089,8 +3088,7 @@ static QSvgNode *createSwitchNode(QSvgNode *parent,
                                   QSvgHandler *)
 {
     Q_UNUSED(attributes);
-    QSvgSwitch *node = new QSvgSwitch(parent);
-    return node;
+    return new QSvgSwitch(parent);
 }
 
 static bool parseTbreakNode(QSvgNode *parent,
@@ -3186,8 +3184,7 @@ static QSvgNode *createUseNode(QSvgNode *parent,
 
             //delay link resolving till the first draw call on
             //use nodes, link 2might have not been created yet
-            QSvgUse *node = new QSvgUse(pt, parent, link);
-            return node;
+            return new QSvgUse(pt, parent, link);
         }
     }
 
