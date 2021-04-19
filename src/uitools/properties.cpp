@@ -59,8 +59,8 @@ QVariant domPropertyToVariant(QAbstractFormBuilder *afb,const QMetaObject *meta,
         const int index = meta->indexOfProperty(p->attributeName().toUtf8());
         if (index != -1 && meta->property(index).type() == QVariant::KeySequence)
             return QVariant::fromValue(QKeySequence(p->elementString()->text()));
-    }
         break;
+    }
 
     case DomProperty::Palette: {
         const DomPalette *dom = p->elementPalette();
@@ -119,8 +119,7 @@ QVariant domPropertyToVariant(QAbstractFormBuilder *afb,const QMetaObject *meta,
     default:
         if (afb->resourceBuilder()->isResourceProperty(p)) {
             return afb->resourceBuilder()->loadResource(afb->workingDirectory(), p);
-            }
-
+        }
         break;
     }
 
@@ -313,44 +312,51 @@ static bool applySimpleProperty(const QVariant &v, bool translateString, DomProp
         if (!translateString)
             str->setAttributeNotr(QLatin1String("true"));
         dom_prop->setElementString(str);
-    }
         return true;
+    }
 
-    case QVariant::ByteArray:
+    case QVariant::ByteArray: {
         dom_prop->setElementCstring(QString::fromUtf8(v.toByteArray()));
         return true;
+    }
 
-    case QVariant::Int:
+    case QVariant::Int: {
         dom_prop->setElementNumber(v.toInt());
         return true;
+    }
 
-    case QVariant::UInt:
+    case QVariant::UInt: {
         dom_prop->setElementUInt(v.toUInt());
         return true;
+    }
 
-    case QVariant::LongLong:
+    case QVariant::LongLong: {
         dom_prop->setElementLongLong(v.toLongLong());
         return true;
+    }
 
-    case QVariant::ULongLong:
+    case QVariant::ULongLong: {
         dom_prop->setElementULongLong(v.toULongLong());
         return true;
+    }
 
-    case QVariant::Double:
+    case QVariant::Double: {
         dom_prop->setElementDouble(v.toDouble());
         return true;
+    }
 
-    case QVariant::Bool:
+    case QVariant::Bool: {
         dom_prop->setElementBool(v.toBool() ? QFormBuilderStrings::instance().trueValue : QFormBuilderStrings::instance().falseValue);
         return true;
+    }
 
     case QVariant::Char: {
         DomChar *ch = new DomChar();
         const QChar character = v.toChar();
         ch->setElementUnicode(character.unicode());
         dom_prop->setElementChar(ch);
-    }
         return true;
+    }
 
     case QVariant::Point: {
         DomPoint *pt = new DomPoint();
@@ -358,8 +364,8 @@ static bool applySimpleProperty(const QVariant &v, bool translateString, DomProp
         pt->setElementX(point.x());
         pt->setElementY(point.y());
         dom_prop->setElementPoint(pt);
-    }
         return true;
+    }
 
     case QVariant::PointF: {
         DomPointF *ptf = new DomPointF();
@@ -367,8 +373,8 @@ static bool applySimpleProperty(const QVariant &v, bool translateString, DomProp
         ptf->setElementX(pointf.x());
         ptf->setElementY(pointf.y());
         dom_prop->setElementPointF(ptf);
-    }
         return true;
+    }
 
     case QVariant::Color: {
         DomColor *clr = new DomColor();
@@ -380,8 +386,8 @@ static bool applySimpleProperty(const QVariant &v, bool translateString, DomProp
         if (alphaChannel != 255)
             clr->setAttributeAlpha(alphaChannel);
         dom_prop->setElementColor(clr);
-    }
         return true;
+    }
 
     case QVariant::Size: {
         DomSize *sz = new DomSize();
@@ -389,8 +395,8 @@ static bool applySimpleProperty(const QVariant &v, bool translateString, DomProp
         sz->setElementWidth(size.width());
         sz->setElementHeight(size.height());
         dom_prop->setElementSize(sz);
-    }
         return true;
+    }
 
     case QVariant::SizeF: {
         DomSizeF *szf = new DomSizeF();
@@ -398,8 +404,8 @@ static bool applySimpleProperty(const QVariant &v, bool translateString, DomProp
         szf->setElementWidth(sizef.width());
         szf->setElementHeight(sizef.height());
         dom_prop->setElementSizeF(szf);
-    }
         return true;
+    }
 
     case QVariant::Rect: {
         DomRect *rc = new DomRect();
@@ -409,8 +415,8 @@ static bool applySimpleProperty(const QVariant &v, bool translateString, DomProp
         rc->setElementWidth(rect.width());
         rc->setElementHeight(rect.height());
         dom_prop->setElementRect(rc);
-    }
         return true;
+    }
 
     case QVariant::RectF: {
         DomRectF *rcf = new DomRectF();
@@ -420,8 +426,8 @@ static bool applySimpleProperty(const QVariant &v, bool translateString, DomProp
         rcf->setElementWidth(rectf.width());
         rcf->setElementHeight(rectf.height());
         dom_prop->setElementRectF(rcf);
-    }
         return true;
+    }
 
     case QVariant::Font: {
         DomFont *fnt = new DomFont();
@@ -448,23 +454,23 @@ static bool applySimpleProperty(const QVariant &v, bool translateString, DomProp
             fnt->setElementStyleStrategy(QLatin1String(styleStrategy_enum.valueToKey(font.styleStrategy())));
         }
         dom_prop->setElementFont(fnt);
-    }
         return true;
+    }
 
 #ifndef QT_NO_CURSOR
     case QVariant::Cursor: {
         const QMetaEnum cursorShape_enum = metaEnum<QAbstractFormBuilderGadget>("cursorShape");
         dom_prop->setElementCursorShape(QLatin1String(cursorShape_enum.valueToKey(qvariant_cast<QCursor>(v).shape())));
-        }
         return true;
+    }
 #endif
 
     case QVariant::KeySequence: {
         DomString *s = new DomString();
         s->setText(qvariant_cast<QKeySequence>(v).toString(QKeySequence::PortableText));
         dom_prop->setElementString(s);
-        }
         return true;
+    }
 
     case QVariant::Locale: {
         DomLocale *dom = new DomLocale();
@@ -477,8 +483,8 @@ static bool applySimpleProperty(const QVariant &v, bool translateString, DomProp
         dom->setAttributeCountry(QLatin1String(country_enum.valueToKey(locale.country())));
 
         dom_prop->setElementLocale(dom);
-        }
         return true;
+    }
 
     case QVariant::SizePolicy: {
         DomSizePolicy *dom = new DomSizePolicy();
@@ -493,8 +499,8 @@ static bool applySimpleProperty(const QVariant &v, bool translateString, DomProp
         dom->setAttributeVSizeType(QLatin1String(sizeType_enum.valueToKey(sizePolicy.verticalPolicy())));
 
         dom_prop->setElementSizePolicy(dom);
-    }
         return true;
+    }
 
     case QVariant::Date: {
         DomDate *dom = new DomDate();
@@ -505,8 +511,8 @@ static bool applySimpleProperty(const QVariant &v, bool translateString, DomProp
         dom->setElementDay(date.day());
 
         dom_prop->setElementDate(dom);
-        }
         return true;
+    }
 
     case QVariant::Time: {
         DomTime *dom = new DomTime();
@@ -517,8 +523,8 @@ static bool applySimpleProperty(const QVariant &v, bool translateString, DomProp
         dom->setElementSecond(time.second());
 
         dom_prop->setElementTime(dom);
-        }
         return true;
+    }
 
     case QVariant::DateTime: {
         DomDateTime *dom = new DomDateTime();
@@ -532,8 +538,8 @@ static bool applySimpleProperty(const QVariant &v, bool translateString, DomProp
         dom->setElementDay(dateTime.date().day());
 
         dom_prop->setElementDateTime(dom);
-    }
         return true;
+    }
 
     case QVariant::Url: {
         DomUrl *dom = new DomUrl();
@@ -544,15 +550,15 @@ static bool applySimpleProperty(const QVariant &v, bool translateString, DomProp
         dom->setElementString(str);
 
         dom_prop->setElementUrl(dom);
-    }
         return true;
+    }
 
     case QVariant::StringList: {
         DomStringList *sl = new DomStringList;
         sl->setElementString(qvariant_cast<QStringList>(v));
         dom_prop->setElementStringList(sl);
-    }
         return true;
+    }
 
     default:
         break;

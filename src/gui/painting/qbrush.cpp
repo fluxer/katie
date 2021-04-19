@@ -494,7 +494,7 @@ void QBrush::detach(Qt::BrushStyle newStyle)
         }
         x.reset(tbd);
         break;
-        }
+    }
     case Qt::LinearGradientPattern:
     case Qt::RadialGradientPattern:
     case Qt::ConicalGradientPattern:
