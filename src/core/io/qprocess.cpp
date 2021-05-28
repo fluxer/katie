@@ -105,14 +105,6 @@ QT_BEGIN_NAMESPACE
     QProcessEnvironment. This class only supports names and values that are
     encodable by the current locale settings (see QTextCodec::codecForLocale).
 
-    On Windows, the variable names are case-insensitive. Therefore,
-    QProcessEnvironment will always uppercase the names and do case-insensitive
-    comparisons.
-
-    On Windows CE, the concept of environment does not exist. This class will
-    keep the values set for compatibility with other platforms, but the values
-    set will have no effect on the processes being created.
-
     \sa QProcess, QProcess::systemEnvironment(), QProcess::setProcessEnvironment()
 */
 
