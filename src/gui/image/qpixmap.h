@@ -161,21 +161,20 @@ private:
 
     QPixmap(const QSize &s, int type);
     void init(int, int, int);
+    QPixmapData* pixmapData() const;
 
     friend class QPixmapData;
     friend class QX11PixmapData;
     friend class QBitmap;
     friend class QPaintDevice;
     friend class QPainter;
+    friend class QRasterPaintEngine;
     friend class QX11PaintEngine;
     friend class QWidgetPrivate;
     friend class QRasterBuffer;
 #if !defined(QT_NO_DATASTREAM)
     friend Q_GUI_EXPORT QDataStream &operator>>(QDataStream &, QPixmap &);
 #endif
-
-public:
-    QPixmapData* pixmapData() const;
 
 public:
     typedef QExplicitlySharedDataPointer<QPixmapData> DataPtr;
