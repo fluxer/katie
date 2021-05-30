@@ -832,7 +832,7 @@ bool QPixmap::save(QIODevice* device, const char* format, int quality) const
 */
 bool QPixmap::doImageIO(QImageWriter *writer, int quality) const
 {
-    if (quality > 100  || quality < -1)
+    if (Q_UNLIKELY(quality > 100 || quality < -1))
         qWarning("QPixmap::save: quality out of range [-1,100]");
     if (quality >= 0)
         writer->setQuality(qMin(quality,100));
