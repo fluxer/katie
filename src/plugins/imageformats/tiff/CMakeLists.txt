@@ -15,6 +15,8 @@ add_library(qtiffplugin MODULE ${qtiffplugin_SOURCES})
 target_link_libraries(qtiffplugin KtCore KtGui ${TIFF_LIBRARIES})
 set_target_properties(qtiffplugin PROPERTIES OUTPUT_NAME qtiff)
 
+katie_setup_plugin(qtiffplugin)
+
 install(
     TARGETS qtiffplugin
     DESTINATION ${KATIE_PLUGINS_PATH}/imageformats

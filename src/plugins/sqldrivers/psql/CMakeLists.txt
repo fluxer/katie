@@ -15,6 +15,8 @@ add_library(qsqlpsqlplugin MODULE ${qsqlpsqlplugin_SOURCES})
 target_link_libraries(qsqlpsqlplugin KtSql ${POSTGRESQL_LIBRARIES})
 set_target_properties(qsqlpsqlplugin PROPERTIES OUTPUT_NAME qsqlpsql)
 
+katie_setup_plugin(qsqlpsqlplugin)
+
 install(
     TARGETS qsqlpsqlplugin
     DESTINATION ${KATIE_PLUGINS_PATH}/sqldrivers

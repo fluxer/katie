@@ -13,6 +13,8 @@ add_library(qgifplugin MODULE ${qgifplugin_SOURCES})
 target_link_libraries(qgifplugin KtCore KtGui)
 set_target_properties(qgifplugin PROPERTIES OUTPUT_NAME qgif)
 
+katie_setup_plugin(qgifplugin)
+
 install(
     TARGETS qgifplugin
     DESTINATION ${KATIE_PLUGINS_PATH}/imageformats

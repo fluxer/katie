@@ -23,6 +23,8 @@ add_library(qtaccessiblewidgetsplugin MODULE ${qtaccessiblewidgetsplugin_SOURCES
 target_link_libraries(qtaccessiblewidgetsplugin KtCore KtGui)
 set_target_properties(qtaccessiblewidgetsplugin PROPERTIES OUTPUT_NAME qtaccessiblewidgets)
 
+katie_setup_plugin(qtaccessiblewidgetsplugin)
+
 install(
     TARGETS qtaccessiblewidgetsplugin
     DESTINATION ${KATIE_PLUGINS_PATH}/accessible

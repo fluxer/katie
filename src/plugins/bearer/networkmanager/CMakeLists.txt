@@ -24,6 +24,7 @@ target_include_directories(qnmbearerplugin PRIVATE
 )
 
 katie_setup_object(qnmbearerplugin sharedbearer)
+katie_setup_plugin(qnmbearerplugin)
 
 install(
     TARGETS qnmbearerplugin

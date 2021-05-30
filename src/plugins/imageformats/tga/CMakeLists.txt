@@ -15,6 +15,8 @@ add_library(qtgaplugin MODULE ${qtgaplugin_SOURCES})
 target_link_libraries(qtgaplugin KtCore KtGui)
 set_target_properties(qtgaplugin PROPERTIES OUTPUT_NAME qtga)
 
+katie_setup_plugin(qtgaplugin)
+
 install(
     TARGETS qtgaplugin
     DESTINATION ${KATIE_PLUGINS_PATH}/imageformats

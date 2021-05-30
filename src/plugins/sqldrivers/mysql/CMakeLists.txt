@@ -15,6 +15,8 @@ add_library(qsqlmysqlplugin MODULE ${qsqlmysqlplugin_SOURCES})
 target_link_libraries(qsqlmysqlplugin KtSql ${MYSQL_LIBRARIES})
 set_target_properties(qsqlmysqlplugin PROPERTIES OUTPUT_NAME qsqlmysql)
 
+katie_setup_plugin(qsqlmysqlplugin)
+
 install(
     TARGETS qsqlmysqlplugin
     DESTINATION ${KATIE_PLUGINS_PATH}/sqldrivers

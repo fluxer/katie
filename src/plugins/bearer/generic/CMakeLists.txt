@@ -20,6 +20,7 @@ target_include_directories(qgenericbearerplugin PRIVATE
 )
 
 katie_setup_object(qgenericbearerplugin sharedbearer)
+katie_setup_plugin(qgenericbearerplugin)
 
 install(
     TARGETS qgenericbearerplugin

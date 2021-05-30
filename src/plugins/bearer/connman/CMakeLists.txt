@@ -24,6 +24,7 @@ target_include_directories(qconnmanbearerplugin PRIVATE
 )
 
 katie_setup_object(qconnmanbearerplugin sharedbearer)
+katie_setup_plugin(qconnmanbearerplugin)
 
 install(
     TARGETS qconnmanbearerplugin

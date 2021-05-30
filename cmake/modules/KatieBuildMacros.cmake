@@ -282,6 +282,17 @@ function(KATIE_SETUP_TARGET FORTARGET)
     set(${FORTARGET}_SOURCES ${ARGN} PARENT_SCOPE)
 endfunction()
 
+# a function to make a meta target depend on all plugins, the meta target itself is used in the
+# tests setup macros to build all plugins before any test so that plugins from the host are not
+# used.
+# TODO: this is cheap and sub-optimal way of forcing tests depend on all plugins, perhaps with
+# plugin and test targets dependencies introspection it can be optimized, e.g. make tests that
+# depend on KtNetwork depend on plugins that depend on it too
+add_custom_target(plugins_dependant_tests)
+function(KATIE_SETUP_PLUGIN FORPLUGIN)
+    add_dependencies(plugins_dependant_tests ${FORPLUGIN})
+endfunction()
+
 # a macro to ensure that object targets are build with PIC if the target they
 # are going to be used in (like $<TARGET_OBJECTS:foo>) is build with PIC or
 # PIC has been enabled for all module/library/executable targets. in addition
@@ -324,6 +335,7 @@ macro(KATIE_TEST TESTNAME TESTSOURCES)
     katie_setup_target(${TESTNAME} ${TESTSOURCES} ${ARGN})
 
     add_executable(${TESTNAME} ${${TESTNAME}_SOURCES})
+    add_dependencies(${TESTNAME} plugins_dependant_tests)
 
     target_link_libraries(${TESTNAME} KtCore KtTest)
     target_compile_definitions(
@@ -346,6 +358,7 @@ macro(KATIE_DBUS_TEST TESTNAME TESTSOURCES)
     katie_setup_target(${TESTNAME} ${TESTSOURCES} ${ARGN})
 
     add_executable(${TESTNAME} ${${TESTNAME}_SOURCES})
+    add_dependencies(${TESTNAME} plugins_dependant_tests)
 
     target_link_libraries(${TESTNAME} KtCore KtDBus KtTest)
     target_compile_definitions(
@@ -368,6 +381,7 @@ macro(KATIE_GUI_TEST TESTNAME TESTSOURCES)
     katie_setup_target(${TESTNAME} ${TESTSOURCES} ${ARGN})
 
     add_executable(${TESTNAME} ${${TESTNAME}_SOURCES})
+    add_dependencies(${TESTNAME} plugins_dependant_tests)
 
     target_link_libraries(${TESTNAME} KtCore KtGui KtTest)
     target_compile_definitions(

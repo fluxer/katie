@@ -15,6 +15,8 @@ add_library(qjpegplugin MODULE ${qjpegplugin_SOURCES})
 target_link_libraries(qjpegplugin KtCore KtGui ${JPEG_LIBRARIES})
 set_target_properties(qjpegplugin PROPERTIES OUTPUT_NAME qjpeg)
 
+katie_setup_plugin(qjpegplugin)
+
 install(
     TARGETS qjpegplugin
     DESTINATION ${KATIE_PLUGINS_PATH}/imageformats

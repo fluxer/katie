@@ -12,6 +12,8 @@ add_library(qdeclarativeviewplugin MODULE ${qdeclarativeviewplugin_SOURCES})
 target_link_libraries(qdeclarativeviewplugin KtCore KtDeclarative KtDesigner)
 set_target_properties(qdeclarativeviewplugin PROPERTIES OUTPUT_NAME qdeclarativeview)
 
+katie_setup_plugin(qdeclarativeviewplugin)
+
 install(
     TARGETS qdeclarativeviewplugin
     DESTINATION ${KATIE_PLUGINS_PATH}/designer
