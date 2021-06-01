@@ -509,7 +509,6 @@ static const struct languageTblData {
     { QLocale::Language::Romansh, "Romansh\0", "rm\0" },
     { QLocale::Language::Romany, "Romany\0", "rom\0" },
     { QLocale::Language::Rombo, "Rombo\0", "rof\0" },
-    { QLocale::Language::Root, "Root\0", "root\0" },
     { QLocale::Language::Rotuman, "Rotuman\0", "rtm\0" },
     { QLocale::Language::Roviana, "Roviana\0", "rug\0" },
     { QLocale::Language::Rundi, "Rundi\0", "rn\0" },
@@ -971,10 +970,10 @@ static const struct countryTblData {
     { QLocale::Country::WesternAsia, "Western Asia\0", "145\0" },
     { QLocale::Country::WesternEurope, "Western Europe\0", "155\0" },
     { QLocale::Country::WesternSahara, "Western Sahara\0", "EH\0" },
-    { QLocale::Country::World, "World\0", "001\0" },
     { QLocale::Country::Yemen, "Yemen\0", "YE\0" },
     { QLocale::Country::Zambia, "Zambia\0", "ZM\0" },
     { QLocale::Country::Zimbabwe, "Zimbabwe\0", "ZW\0" },
+    { QLocale::Country::world, "world\0", "001\0" },
 };
 static const qint16 countryTblSize = sizeof(countryTbl) / sizeof(countryTblData);
 
@@ -1320,7 +1319,7 @@ static const QLocalePrivate localeTbl[] = {
         { "ሰ\0", "ማ\0", "ረ\0", "ሐ\0", "ዓ\0", "ቅ\0", "እ\0" }
     }, // am_ET
     {
-        QLocale::Language::Arabic, QLocale::Script::AnyScript, QLocale::Country::World,
+        QLocale::Language::Arabic, QLocale::Script::AnyScript, QLocale::Country::world,
         Qt::Monday, Qt::Saturday, Qt::Sunday,
         1643, 1644, 1563, 37, 45, 43, 69, 2, 1632,
         8221, 8220, 8217, 8216,
@@ -3206,11 +3205,11 @@ static const QLocalePrivate localeTbl[] = {
         { "Δ\0", "Τ\0", "Τ\0", "Π\0", "Π\0", "Σ\0", "Κ\0" }
     }, // el_GR
     {
-        QLocale::Language::English, QLocale::Script::AnyScript, QLocale::Country::World,
+        QLocale::Language::English, QLocale::Script::AnyScript, QLocale::Country::world,
         Qt::Monday, Qt::Saturday, Qt::Sunday,
         46, 44, 59, 37, 45, 43, 69, 2, 48,
         8220, 8221, 8216, 8217,
-        "English\0", "World\0",
+        "English\0", "world\0",
         "%1, %2\0", "%1, %2\0", "%1 and %2\0", "%1 and %2\0",
         "dd/MM/yyyy\0", "d MMMM yyyy\0", "h:mm AP\0", "h:mm:ss AP t\0",
         "am\0", "pm\0",
@@ -5621,7 +5620,7 @@ static const QLocalePrivate localeTbl[] = {
         { "1\0", "2\0", "3\0", "4\0", "5\0", "6\0", "7\0" }
     }, // en_ZW
     {
-        QLocale::Language::Esperanto, QLocale::Script::LatinScript, QLocale::Country::World,
+        QLocale::Language::Esperanto, QLocale::Script::LatinScript, QLocale::Country::world,
         Qt::Monday, Qt::Saturday, Qt::Sunday,
         44, 160, 59, 37, 8722, 43, 69, 2, 48,
         8220, 8221, 8216, 8217,
@@ -7078,7 +7077,7 @@ static const QLocalePrivate localeTbl[] = {
         "%1, %2\0", "%1, %2\0", "%1 et %2\0", "%1 et %2\0",
         "dd/MM/yyyy\0", "d MMMM yyyy\0", "HH:mm\0", "HH:mm:ss t\0",
         "AM\0", "PM\0",
-        "CFA\0", "%1 %2\0", Q_NULLPTR, "XOF\0", "franc CFA (BCEAO)\0",
+        "F CFA\0", "%1 %2\0", Q_NULLPTR, "XOF\0", "franc CFA (BCEAO)\0",
         { "janv.\0", "févr.\0", "mars\0", "avr.\0", "mai\0", "juin\0", "juil.\0", "août\0", "sept.\0", "oct.\0", "nov.\0", "déc.\0" },
         { "janvier\0", "février\0", "mars\0", "avril\0", "mai\0", "juin\0", "juillet\0", "août\0", "septembre\0", "octobre\0", "novembre\0", "décembre\0" },
         { "J\0", "F\0", "M\0", "A\0", "M\0", "J\0", "J\0", "A\0", "S\0", "O\0", "N\0", "D\0" },
@@ -7124,7 +7123,7 @@ static const QLocalePrivate localeTbl[] = {
         "%1, %2\0", "%1, %2\0", "%1 et %2\0", "%1 et %2\0",
         "dd/MM/yyyy\0", "d MMMM yyyy\0", "HH:mm\0", "HH:mm:ss t\0",
         "AM\0", "PM\0",
-        "CFA\0", "%1 %2\0", Q_NULLPTR, "XOF\0", "franc CFA (BCEAO)\0",
+        "F CFA\0", "%1 %2\0", Q_NULLPTR, "XOF\0", "franc CFA (BCEAO)\0",
         { "janv.\0", "févr.\0", "mars\0", "avr.\0", "mai\0", "juin\0", "juil.\0", "août\0", "sept.\0", "oct.\0", "nov.\0", "déc.\0" },
         { "janvier\0", "février\0", "mars\0", "avril\0", "mai\0", "juin\0", "juillet\0", "août\0", "septembre\0", "octobre\0", "novembre\0", "décembre\0" },
         { "J\0", "F\0", "M\0", "A\0", "M\0", "J\0", "J\0", "A\0", "S\0", "O\0", "N\0", "D\0" },
@@ -7285,7 +7284,7 @@ static const QLocalePrivate localeTbl[] = {
         "%1, %2\0", "%1, %2\0", "%1 et %2\0", "%1 et %2\0",
         "dd/MM/yyyy\0", "d MMMM yyyy\0", "HH:mm\0", "HH:mm:ss t\0",
         "AM\0", "PM\0",
-        "CFA\0", "%1 %2\0", Q_NULLPTR, "XOF\0", "franc CFA (BCEAO)\0",
+        "F CFA\0", "%1 %2\0", Q_NULLPTR, "XOF\0", "franc CFA (BCEAO)\0",
         { "janv.\0", "févr.\0", "mars\0", "avr.\0", "mai\0", "juin\0", "juil.\0", "août\0", "sept.\0", "oct.\0", "nov.\0", "déc.\0" },
         { "janvier\0", "février\0", "mars\0", "avril\0", "mai\0", "juin\0", "juillet\0", "août\0", "septembre\0", "octobre\0", "novembre\0", "décembre\0" },
         { "J\0", "F\0", "M\0", "A\0", "M\0", "J\0", "J\0", "A\0", "S\0", "O\0", "N\0", "D\0" },
@@ -7676,7 +7675,7 @@ static const QLocalePrivate localeTbl[] = {
         "%1, %2\0", "%1, %2\0", "%1 et %2\0", "%1 et %2\0",
         "dd/MM/yyyy\0", "yyyy MMMM d\0", "HH:mm\0", "HH:mm:ss t\0",
         "AM\0", "PM\0",
-        "CFA\0", "%1 %2\0", Q_NULLPTR, "XOF\0", "franc CFA (BCEAO)\0",
+        "F CFA\0", "%1 %2\0", Q_NULLPTR, "XOF\0", "franc CFA (BCEAO)\0",
         { "janv.\0", "févr.\0", "mars\0", "avr.\0", "mai\0", "juin\0", "juil.\0", "août\0", "sept.\0", "oct.\0", "nov.\0", "déc.\0" },
         { "janvier\0", "février\0", "mars\0", "avril\0", "mai\0", "juin\0", "juillet\0", "août\0", "septembre\0", "octobre\0", "novembre\0", "décembre\0" },
         { "1\0", "2\0", "3\0", "4\0", "5\0", "6\0", "7\0", "8\0", "9\0", "10\0", "11\0", "12\0" },
@@ -7791,7 +7790,7 @@ static const QLocalePrivate localeTbl[] = {
         "%1, %2\0", "%1, %2\0", "%1 et %2\0", "%1 et %2\0",
         "dd/MM/yyyy\0", "d MMMM yyyy\0", "HH:mm\0", "HH:mm:ss t\0",
         "AM\0", "PM\0",
-        "CFA\0", "%1 %2\0", Q_NULLPTR, "XOF\0", "franc CFA (BCEAO)\0",
+        "F CFA\0", "%1 %2\0", Q_NULLPTR, "XOF\0", "franc CFA (BCEAO)\0",
         { "janv.\0", "févr.\0", "mars\0", "avr.\0", "mai\0", "juin\0", "juil.\0", "août\0", "sept.\0", "oct.\0", "nov.\0", "déc.\0" },
         { "janvier\0", "février\0", "mars\0", "avril\0", "mai\0", "juin\0", "juillet\0", "août\0", "septembre\0", "octobre\0", "novembre\0", "décembre\0" },
         { "J\0", "F\0", "M\0", "A\0", "M\0", "J\0", "J\0", "A\0", "S\0", "O\0", "N\0", "D\0" },
@@ -7929,7 +7928,7 @@ static const QLocalePrivate localeTbl[] = {
         "%1, %2\0", "%1, %2\0", "%1 et %2\0", "%1 et %2\0",
         "dd/MM/yyyy\0", "yyyy MMMM d\0", "HH:mm\0", "HH:mm:ss t\0",
         "AM\0", "PM\0",
-        "CFA\0", "%1 %2\0", Q_NULLPTR, "XOF\0", "franc CFA (BCEAO)\0",
+        "F CFA\0", "%1 %2\0", Q_NULLPTR, "XOF\0", "franc CFA (BCEAO)\0",
         { "janv.\0", "févr.\0", "mars\0", "avr.\0", "mai\0", "juin\0", "juil.\0", "août\0", "sept.\0", "oct.\0", "nov.\0", "déc.\0" },
         { "janvier\0", "février\0", "mars\0", "avril\0", "mai\0", "juin\0", "juillet\0", "août\0", "septembre\0", "octobre\0", "novembre\0", "décembre\0" },
         { "1\0", "2\0", "3\0", "4\0", "5\0", "6\0", "7\0", "8\0", "9\0", "10\0", "11\0", "12\0" },
@@ -7998,7 +7997,7 @@ static const QLocalePrivate localeTbl[] = {
         "%1, %2\0", "%1, %2\0", "%1 et %2\0", "%1 et %2\0",
         "dd/MM/yyyy\0", "d MMMM yyyy\0", "HH:mm\0", "HH:mm:ss t\0",
         "AM\0", "PM\0",
-        "CFA\0", "%1 %2\0", Q_NULLPTR, "XOF\0", "franc CFA (BCEAO)\0",
+        "F CFA\0", "%1 %2\0", Q_NULLPTR, "XOF\0", "franc CFA (BCEAO)\0",
         { "janv.\0", "févr.\0", "mars\0", "avr.\0", "mai\0", "juin\0", "juil.\0", "août\0", "sept.\0", "oct.\0", "nov.\0", "déc.\0" },
         { "janvier\0", "février\0", "mars\0", "avril\0", "mai\0", "juin\0", "juillet\0", "août\0", "septembre\0", "octobre\0", "novembre\0", "décembre\0" },
         { "J\0", "F\0", "M\0", "A\0", "M\0", "J\0", "J\0", "A\0", "S\0", "O\0", "N\0", "D\0" },
@@ -8634,7 +8633,7 @@ static const QLocalePrivate localeTbl[] = {
         { "Ե\0", "Ե\0", "Չ\0", "Հ\0", "Ո\0", "Շ\0", "Կ\0" }
     }, // hy_AM
     {
-        QLocale::Language::Interlingua, QLocale::Script::AnyScript, QLocale::Country::World,
+        QLocale::Language::Interlingua, QLocale::Script::AnyScript, QLocale::Country::world,
         Qt::Monday, Qt::Saturday, Qt::Sunday,
         44, 46, 59, 37, 45, 43, 69, 2, 48,
         8216, 8217, 8220, 8221,
@@ -10361,48 +10360,48 @@ static const QLocalePrivate localeTbl[] = {
     {
         QLocale::Language::NorwegianBokmal, QLocale::Script::LatinScript, QLocale::Country::Norway,
         Qt::Monday, Qt::Saturday, Qt::Sunday,
-        44, 160, 59, 37, 8722, 43, 69, 2, 48,
-        171, 187, 8216, 8217,
-        "norsk bokmål\0", "Norge\0",
-        "%1, %2\0", "%1, %2\0", "%1 og %2\0", "%1 og %2\0",
-        "dd.MM.yyyy\0", "d. MMMM yyyy\0", "HH:mm\0", "HH:mm:ss t\0",
-        "a.m.\0", "p.m.\0",
-        "kr\0", "%2 %1\0", Q_NULLPTR, "NOK\0", "norske kroner\0",
-        { "jan\0", "feb\0", "mar\0", "apr\0", "mai\0", "jun\0", "jul\0", "aug\0", "sep\0", "okt\0", "nov\0", "des\0" },
-        { "januar\0", "februar\0", "mars\0", "april\0", "mai\0", "juni\0", "juli\0", "august\0", "september\0", "oktober\0", "november\0", "desember\0" },
-        { "J\0", "F\0", "M\0", "A\0", "M\0", "J\0", "J\0", "A\0", "S\0", "O\0", "N\0", "D\0" },
-        { "jan.\0", "feb.\0", "mar.\0", "apr.\0", "mai\0", "jun.\0", "jul.\0", "aug.\0", "sep.\0", "okt.\0", "nov.\0", "des.\0" },
-        { "januar\0", "februar\0", "mars\0", "april\0", "mai\0", "juni\0", "juli\0", "august\0", "september\0", "oktober\0", "november\0", "desember\0" },
-        { "J\0", "F\0", "M\0", "A\0", "M\0", "J\0", "J\0", "A\0", "S\0", "O\0", "N\0", "D\0" },
-        { "man.\0", "tir.\0", "ons.\0", "tor.\0", "fre.\0", "lør.\0", "søn.\0" },
-        { "mandag\0", "tirsdag\0", "onsdag\0", "torsdag\0", "fredag\0", "lørdag\0", "søndag\0" },
-        { "M\0", "T\0", "O\0", "T\0", "F\0", "L\0", "S\0" },
-        { "man.\0", "tir.\0", "ons.\0", "tor.\0", "fre.\0", "lør.\0", "søn.\0" },
-        { "mandag\0", "tirsdag\0", "onsdag\0", "torsdag\0", "fredag\0", "lørdag\0", "søndag\0" },
-        { "M\0", "T\0", "O\0", "T\0", "F\0", "L\0", "S\0" }
+        46, 44, 59, 37, 45, 43, 69, 2, 48,
+        8220, 8221, 8216, 8217,
+        Q_NULLPTR, Q_NULLPTR,
+        "%1, %2\0", "%1, %2\0", "%1, %2\0", "%1, %2\0",
+        "yyyy-MM-dd\0", "yyyy MMMM d\0", "HH:mm\0", "HH:mm:ss t\0",
+        "AM\0", "PM\0",
+        Q_NULLPTR, "%1%2\0", Q_NULLPTR, "NOK\0", Q_NULLPTR,
+        { "Jan\0", "Feb\0", "Mar\0", "Apr\0", "May\0", "Jun\0", "Jul\0", "Aug\0", "Sep\0", "Oct\0", "Nov\0", "Dec\0" },
+        { "January\0", "February\0", "March\0", "April\0", "May\0", "June\0", "July\0", "August\0", "September\0", "October\0", "November\0", "December\0" },
+        { "1\0", "2\0", "3\0", "4\0", "5\0", "6\0", "7\0", "8\0", "9\0", "10\0", "11\0", "12\0" },
+        { "Jan\0", "Feb\0", "Mar\0", "Apr\0", "May\0", "Jun\0", "Jul\0", "Aug\0", "Sep\0", "Oct\0", "Nov\0", "Dec\0" },
+        { "M01\0", "M02\0", "M03\0", "M04\0", "M05\0", "M06\0", "M07\0", "M08\0", "M09\0", "M10\0", "M11\0", "M12\0" },
+        { "1\0", "2\0", "3\0", "4\0", "5\0", "6\0", "7\0", "8\0", "9\0", "10\0", "11\0", "12\0" },
+        { "Mon\0", "Tue\0", "Wed\0", "Thu\0", "Fri\0", "Sat\0", "Sun\0" },
+        { "Monday\0", "Tuesday\0", "Wednesday\0", "Thursday\0", "Friday\0", "Saturday\0", "Sunday\0" },
+        { "M\0", "T\0", "W\0", "T\0", "F\0", "S\0", "S\0" },
+        { "Mon\0", "Tue\0", "Wed\0", "Thu\0", "Fri\0", "Sat\0", "Sun\0" },
+        { "Mon\0", "Tue\0", "Wed\0", "Thu\0", "Fri\0", "Sat\0", "Sun\0" },
+        { "1\0", "2\0", "3\0", "4\0", "5\0", "6\0", "7\0" }
     }, // nb_NO
     {
         QLocale::Language::NorwegianBokmal, QLocale::Script::LatinScript, QLocale::Country::SvalbardAndJanMayen,
         Qt::Monday, Qt::Saturday, Qt::Sunday,
-        44, 160, 59, 37, 8722, 43, 69, 2, 48,
-        171, 187, 8216, 8217,
-        "norsk bokmål\0", "Svalbard og Jan Mayen\0",
-        "%1, %2\0", "%1, %2\0", "%1 og %2\0", "%1 og %2\0",
-        "dd.MM.yyyy\0", "d. MMMM yyyy\0", "HH:mm\0", "HH:mm:ss t\0",
-        "a.m.\0", "p.m.\0",
-        "kr\0", "%2 %1\0", Q_NULLPTR, "NOK\0", "norske kroner\0",
-        { "jan\0", "feb\0", "mar\0", "apr\0", "mai\0", "jun\0", "jul\0", "aug\0", "sep\0", "okt\0", "nov\0", "des\0" },
-        { "januar\0", "februar\0", "mars\0", "april\0", "mai\0", "juni\0", "juli\0", "august\0", "september\0", "oktober\0", "november\0", "desember\0" },
-        { "J\0", "F\0", "M\0", "A\0", "M\0", "J\0", "J\0", "A\0", "S\0", "O\0", "N\0", "D\0" },
-        { "jan.\0", "feb.\0", "mar.\0", "apr.\0", "mai\0", "jun.\0", "jul.\0", "aug.\0", "sep.\0", "okt.\0", "nov.\0", "des.\0" },
-        { "januar\0", "februar\0", "mars\0", "april\0", "mai\0", "juni\0", "juli\0", "august\0", "september\0", "oktober\0", "november\0", "desember\0" },
-        { "J\0", "F\0", "M\0", "A\0", "M\0", "J\0", "J\0", "A\0", "S\0", "O\0", "N\0", "D\0" },
-        { "man.\0", "tir.\0", "ons.\0", "tor.\0", "fre.\0", "lør.\0", "søn.\0" },
-        { "mandag\0", "tirsdag\0", "onsdag\0", "torsdag\0", "fredag\0", "lørdag\0", "søndag\0" },
-        { "M\0", "T\0", "O\0", "T\0", "F\0", "L\0", "S\0" },
-        { "man.\0", "tir.\0", "ons.\0", "tor.\0", "fre.\0", "lør.\0", "søn.\0" },
-        { "mandag\0", "tirsdag\0", "onsdag\0", "torsdag\0", "fredag\0", "lørdag\0", "søndag\0" },
-        { "M\0", "T\0", "O\0", "T\0", "F\0", "L\0", "S\0" }
+        46, 44, 59, 37, 45, 43, 69, 2, 48,
+        8220, 8221, 8216, 8217,
+        Q_NULLPTR, Q_NULLPTR,
+        "%1, %2\0", "%1, %2\0", "%1, %2\0", "%1, %2\0",
+        "yyyy-MM-dd\0", "yyyy MMMM d\0", "HH:mm\0", "HH:mm:ss t\0",
+        "AM\0", "PM\0",
+        Q_NULLPTR, "%1%2\0", Q_NULLPTR, "NOK\0", Q_NULLPTR,
+        { "Jan\0", "Feb\0", "Mar\0", "Apr\0", "May\0", "Jun\0", "Jul\0", "Aug\0", "Sep\0", "Oct\0", "Nov\0", "Dec\0" },
+        { "January\0", "February\0", "March\0", "April\0", "May\0", "June\0", "July\0", "August\0", "September\0", "October\0", "November\0", "December\0" },
+        { "1\0", "2\0", "3\0", "4\0", "5\0", "6\0", "7\0", "8\0", "9\0", "10\0", "11\0", "12\0" },
+        { "Jan\0", "Feb\0", "Mar\0", "Apr\0", "May\0", "Jun\0", "Jul\0", "Aug\0", "Sep\0", "Oct\0", "Nov\0", "Dec\0" },
+        { "M01\0", "M02\0", "M03\0", "M04\0", "M05\0", "M06\0", "M07\0", "M08\0", "M09\0", "M10\0", "M11\0", "M12\0" },
+        { "1\0", "2\0", "3\0", "4\0", "5\0", "6\0", "7\0", "8\0", "9\0", "10\0", "11\0", "12\0" },
+        { "Mon\0", "Tue\0", "Wed\0", "Thu\0", "Fri\0", "Sat\0", "Sun\0" },
+        { "Monday\0", "Tuesday\0", "Wednesday\0", "Thursday\0", "Friday\0", "Saturday\0", "Sunday\0" },
+        { "M\0", "T\0", "W\0", "T\0", "F\0", "S\0", "S\0" },
+        { "Mon\0", "Tue\0", "Wed\0", "Thu\0", "Fri\0", "Sat\0", "Sun\0" },
+        { "Mon\0", "Tue\0", "Wed\0", "Thu\0", "Fri\0", "Sat\0", "Sun\0" },
+        { "1\0", "2\0", "3\0", "4\0", "5\0", "6\0", "7\0" }
     }, // nb_SJ
     {
         QLocale::Language::NorthNdebele, QLocale::Script::LatinScript, QLocale::Country::Zimbabwe,
@@ -10706,19 +10705,19 @@ static const QLocalePrivate localeTbl[] = {
     {
         QLocale::Language::NorwegianNynorsk, QLocale::Script::LatinScript, QLocale::Country::Norway,
         Qt::Monday, Qt::Saturday, Qt::Sunday,
-        44, 160, 59, 37, 8722, 43, 69, 2, 48,
-        171, 187, 8216, 8217,
-        "norsk nynorsk\0", "Noreg\0",
-        "%1, %2\0", "%1, %2\0", "%1 og %2\0", "%1 og %2\0",
+        46, 44, 59, 37, 45, 43, 69, 2, 48,
+        8220, 8221, 8216, 8217,
+        Q_NULLPTR, "Noreg\0",
+        "%1, %2\0", "%1, %2\0", "%1, %2\0", "%1, %2\0",
         "dd.MM.yyyy\0", "d. MMMM yyyy\0", "HH:mm\0", "HH:mm:ss t\0",
         "f.m.\0", "e.m.\0",
-        "kr\0", "%1 %2\0", Q_NULLPTR, "NOK\0", "norske kroner\0",
-        { "jan\0", "feb\0", "mar\0", "apr\0", "mai\0", "jun\0", "jul\0", "aug\0", "sep\0", "okt\0", "nov\0", "des\0" },
-        { "januar\0", "februar\0", "mars\0", "april\0", "mai\0", "juni\0", "juli\0", "august\0", "september\0", "oktober\0", "november\0", "desember\0" },
-        { "J\0", "F\0", "M\0", "A\0", "M\0", "J\0", "J\0", "A\0", "S\0", "O\0", "N\0", "D\0" },
+        Q_NULLPTR, "%1 %2\0", Q_NULLPTR, "NOK\0", Q_NULLPTR,
+        { "Jan\0", "Feb\0", "Mar\0", "Apr\0", "May\0", "Jun\0", "Jul\0", "Aug\0", "Sep\0", "Oct\0", "Nov\0", "Dec\0" },
+        { "January\0", "February\0", "March\0", "April\0", "May\0", "June\0", "July\0", "August\0", "September\0", "October\0", "November\0", "December\0" },
+        { "1\0", "2\0", "3\0", "4\0", "5\0", "6\0", "7\0", "8\0", "9\0", "10\0", "11\0", "12\0" },
         { "jan.\0", "feb.\0", "mars\0", "apr.\0", "mai\0", "juni\0", "juli\0", "aug.\0", "sep.\0", "okt.\0", "nov.\0", "des.\0" },
-        { "januar\0", "februar\0", "mars\0", "april\0", "mai\0", "juni\0", "juli\0", "august\0", "september\0", "oktober\0", "november\0", "desember\0" },
-        { "J\0", "F\0", "M\0", "A\0", "M\0", "J\0", "J\0", "A\0", "S\0", "O\0", "N\0", "D\0" },
+        { "M01\0", "M02\0", "M03\0", "M04\0", "M05\0", "M06\0", "M07\0", "M08\0", "M09\0", "M10\0", "M11\0", "M12\0" },
+        { "1\0", "2\0", "3\0", "4\0", "5\0", "6\0", "7\0", "8\0", "9\0", "10\0", "11\0", "12\0" },
         { "mån\0", "tys\0", "ons\0", "tor\0", "fre\0", "lau\0", "søn\0" },
         { "måndag\0", "tysdag\0", "onsdag\0", "torsdag\0", "fredag\0", "laurdag\0", "søndag\0" },
         { "M\0", "T\0", "O\0", "T\0", "F\0", "L\0", "S\0" },
@@ -11172,7 +11171,7 @@ static const QLocalePrivate localeTbl[] = {
         "%1, %2\0", "%1, %2\0", "%1 e %2\0", "%1 e %2\0",
         "dd/MM/yyyy\0", "d 'dddd' MMMM 'dddd' yyyy\0", "HH:mm\0", "HH:mm:ss t\0",
         "AM\0", "PM\0",
-        "CFA\0", "%2 %1\0", Q_NULLPTR, "XOF\0", "Franco CFA de BCEAO\0",
+        "F CFA\0", "%2 %1\0", Q_NULLPTR, "XOF\0", "Franco CFA de BCEAO\0",
         { "Jan\0", "Feb\0", "Mar\0", "Apr\0", "May\0", "Jun\0", "Jul\0", "Aug\0", "Sep\0", "Oct\0", "Nov\0", "Dec\0" },
         { "janeiro\0", "fevereiro\0", "março\0", "abril\0", "maio\0", "junho\0", "julho\0", "agosto\0", "setembro\0", "outubro\0", "novembro\0", "dezembro\0" },
         { "J\0", "F\0", "M\0", "A\0", "M\0", "J\0", "J\0", "A\0", "S\0", "O\0", "N\0", "D\0" },
@@ -13380,7 +13379,7 @@ static const QLocalePrivate localeTbl[] = {
         "%1, %2\0", "%1, %2\0", "%1, %2\0", "%1, %2\0",
         "dd-MM-yyyy\0", "d MMMM, yyyy\0", "HH:mm\0", "HH:mm:ss t\0",
         "Sub\0", "Ngo\0",
-        "CFA\0", "%2 %1\0", Q_NULLPTR, "XOF\0", "Franc CFA bu Afrik Sowwu-jant\0",
+        "F CFA\0", "%2 %1\0", Q_NULLPTR, "XOF\0", "Franc CFA bu Afrik Sowwu-jant\0",
         { "Sam\0", "Few\0", "Mar\0", "Awr\0", "Mee\0", "Suw\0", "Sul\0", "Ut\0", "Sàt\0", "Okt\0", "Now\0", "Des\0" },
         { "Samwiyee\0", "Fewriyee\0", "Mars\0", "Awril\0", "Mee\0", "Suwe\0", "Sulet\0", "Ut\0", "Sàttumbar\0", "Oktoobar\0", "Nowàmbar\0", "Desàmbar\0" },
         { "1\0", "2\0", "3\0", "4\0", "5\0", "6\0", "7\0", "8\0", "9\0", "10\0", "11\0", "12\0" },
@@ -13464,7 +13463,7 @@ static const QLocalePrivate localeTbl[] = {
         { "1\0", "2\0", "3\0", "4\0", "5\0", "6\0", "7\0" }
     }, // yav_CM
     {
-        QLocale::Language::Yiddish, QLocale::Script::HebrewScript, QLocale::Country::World,
+        QLocale::Language::Yiddish, QLocale::Script::HebrewScript, QLocale::Country::world,
         Qt::Monday, Qt::Saturday, Qt::Sunday,
         46, 44, 59, 37, 45, 43, 69, 2, 48,
         8221, 8221, 8217, 8217,
@@ -14298,7 +14297,7 @@ static const struct subtagAliasTblData {
     },
     {
         QLocale::Language::Esperanto, QLocale::Script::AnyScript, QLocale::Country::AnyCountry,
-        QLocale::Language::Esperanto, QLocale::Script::LatinScript, QLocale::Country::World
+        QLocale::Language::Esperanto, QLocale::Script::LatinScript, QLocale::Country::world
     },
     {
         QLocale::Language::Spanish, QLocale::Script::AnyScript, QLocale::Country::AnyCountry,
@@ -14562,7 +14561,7 @@ static const struct subtagAliasTblData {
     },
     {
         QLocale::Language::Interlingua, QLocale::Script::AnyScript, QLocale::Country::AnyCountry,
-        QLocale::Language::Interlingua, QLocale::Script::LatinScript, QLocale::Country::World
+        QLocale::Language::Interlingua, QLocale::Script::LatinScript, QLocale::Country::world
     },
     {
         QLocale::Language::Iban, QLocale::Script::AnyScript, QLocale::Country::AnyCountry,
@@ -14598,7 +14597,7 @@ static const struct subtagAliasTblData {
     },
     {
         QLocale::Language::Ido, QLocale::Script::AnyScript, QLocale::Country::AnyCountry,
-        QLocale::Language::Ido, QLocale::Script::LatinScript, QLocale::Country::World
+        QLocale::Language::Ido, QLocale::Script::LatinScript, QLocale::Country::world
     },
     {
         QLocale::Language::Icelandic, QLocale::Script::AnyScript, QLocale::Country::AnyCountry,
@@ -14626,7 +14625,7 @@ static const struct subtagAliasTblData {
     },
     {
         QLocale::Language::Lojban, QLocale::Script::AnyScript, QLocale::Country::AnyCountry,
-        QLocale::Language::Lojban, QLocale::Script::LatinScript, QLocale::Country::World
+        QLocale::Language::Lojban, QLocale::Script::LatinScript, QLocale::Country::world
     },
     {
         QLocale::Language::Ngomba, QLocale::Script::AnyScript, QLocale::Country::AnyCountry,
@@ -15322,7 +15321,7 @@ static const struct subtagAliasTblData {
     },
     {
         QLocale::Language::Prussian, QLocale::Script::AnyScript, QLocale::Country::AnyCountry,
-        QLocale::Language::Prussian, QLocale::Script::LatinScript, QLocale::Country::World
+        QLocale::Language::Prussian, QLocale::Script::LatinScript, QLocale::Country::world
     },
     {
         QLocale::Language::Pashto, QLocale::Script::AnyScript, QLocale::Country::AnyCountry,
@@ -16954,7 +16953,7 @@ static const struct subtagAliasTblData {
     },
     {
         QLocale::Language::Volapuk, QLocale::Script::AnyScript, QLocale::Country::AnyCountry,
-        QLocale::Language::Volapuk, QLocale::Script::LatinScript, QLocale::Country::World
+        QLocale::Language::Volapuk, QLocale::Script::LatinScript, QLocale::Country::world
     },
     {
         QLocale::Language::Votic, QLocale::Script::AnyScript, QLocale::Country::AnyCountry,
@@ -17026,7 +17025,7 @@ static const struct subtagAliasTblData {
     },
     {
         QLocale::Language::Yiddish, QLocale::Script::AnyScript, QLocale::Country::AnyCountry,
-        QLocale::Language::Yiddish, QLocale::Script::HebrewScript, QLocale::Country::World
+        QLocale::Language::Yiddish, QLocale::Script::HebrewScript, QLocale::Country::world
     },
     {
         QLocale::Language::Yoruba, QLocale::Script::AnyScript, QLocale::Country::AnyCountry,
@@ -17400,10 +17399,9 @@ static const struct languageAliasTblData {
     { QLatin1String("nno"), QLatin1String("nn") },
     { QLatin1String("nns"), QLatin1String("nbr") },
     { QLatin1String("nnx"), QLatin1String("ngv") },
-    { QLatin1String("no"), QLatin1String("nb") },
     { QLatin1String("nob"), QLatin1String("nb") },
     { QLatin1String("noo"), QLatin1String("dtd") },
-    { QLatin1String("nor"), QLatin1String("nb") },
+    { QLatin1String("nor"), QLatin1String("no") },
     { QLatin1String("npi"), QLatin1String("ne") },
     { QLatin1String("nts"), QLatin1String("pij") },
     { QLatin1String("nxu"), QLatin1String("bpp") },

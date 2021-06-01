@@ -21,7 +21,7 @@ There are several things you should be aware before considering Katie:
   - versioned and extended classes have been merged into the base class,
     e.g. QIconEngineV2 into QIconEngine and QKeyEventEx into QKeyEvent
   - QGuiPlatformPlugin class is public
-  - updated localizations data from Common Locale Data Repository v38
+  - updated localizations data from Common Locale Data Repository v39
   - SQLite driver uses UTF-8 encoding instead of UTF-16
   - default text codec for C-strings is UTF-8
   - QTranslator uses gettext for translations

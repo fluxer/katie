@@ -171,8 +171,8 @@ void tst_QLocale::ctor()
 
     TEST_CTOR(English, AnyCountry, QLocale::English, QLocale::UnitedStates)
     TEST_CTOR(English, UnitedStates, QLocale::English, QLocale::UnitedStates)
-    TEST_CTOR(English, World, QLocale::English, QLocale::World)
-    TEST_CTOR(English, France, QLocale::English, QLocale::World)
+    TEST_CTOR(English, world, QLocale::English, QLocale::world)
+    TEST_CTOR(English, France, QLocale::English, QLocale::world)
     TEST_CTOR(English, UnitedKingdom, QLocale::English, QLocale::UnitedKingdom)
 
     TEST_CTOR(French, France, QLocale::French, QLocale::France)
@@ -184,7 +184,7 @@ void tst_QLocale::ctor()
     {
         QLocale l;
         QVERIFY(l.language() == QLocale::English);
-        QVERIFY(l.country() == QLocale::World);
+        QVERIFY(l.country() == QLocale::world);
     }
 
     TEST_CTOR(French, France, QLocale::French, QLocale::France)
@@ -193,7 +193,7 @@ void tst_QLocale::ctor()
     TEST_CTOR(French, France, QLocale::French, QLocale::France)
     TEST_CTOR(C, AnyCountry, QLocale::C, QLocale::AnyCountry)
     TEST_CTOR(C, France, QLocale::C, QLocale::AnyCountry)
-    TEST_CTOR(Aymara, AnyCountry, QLocale::English, QLocale::World)
+    TEST_CTOR(Aymara, AnyCountry, QLocale::English, QLocale::world)
 
     QLocale::setDefault(QLocale(QLocale::English, QLocale::UnitedKingdom));
 
@@ -222,8 +222,8 @@ void tst_QLocale::ctor()
 
     TEST_CTOR(English, AnyCountry, QLocale::English, QLocale::UnitedStates)
     TEST_CTOR(English, UnitedStates, QLocale::English, QLocale::UnitedStates)
-    TEST_CTOR(English, World, QLocale::English, QLocale::World)
-    TEST_CTOR(English, France, QLocale::English, QLocale::World)
+    TEST_CTOR(English, world, QLocale::English, QLocale::world)
+    TEST_CTOR(English, France, QLocale::English, QLocale::world)
     TEST_CTOR(English, UnitedKingdom, QLocale::English, QLocale::UnitedKingdom)
 
     TEST_CTOR(French, France, QLocale::French, QLocale::France)
@@ -244,8 +244,8 @@ void tst_QLocale::ctor()
 
     TEST_CTOR(English, AnyCountry, QLocale::English, QLocale::UnitedStates)
     TEST_CTOR(English, UnitedStates, QLocale::English, QLocale::UnitedStates)
-    TEST_CTOR(English, World, QLocale::English, QLocale::World)
-    TEST_CTOR(English, France, QLocale::English, QLocale::World)
+    TEST_CTOR(English, world, QLocale::English, QLocale::world)
+    TEST_CTOR(English, France, QLocale::English, QLocale::world)
     TEST_CTOR(English, UnitedKingdom, QLocale::English, QLocale::UnitedKingdom)
 
     TEST_CTOR(French, France, QLocale::French, QLocale::France)
@@ -301,13 +301,13 @@ void tst_QLocale::ctor()
     TEST_CTOR("en.bla", English, UnitedStates)
     TEST_CTOR("en@bla", English, UnitedStates)
     TEST_CTOR("en_blaaa", English, UnitedStates)
-    TEST_CTOR("en_zz", English, World)
-    TEST_CTOR("en_001", English, World)
-    TEST_CTOR("en_001.bla", English, World)
-    TEST_CTOR("en_001@.bla", English, World)
-    TEST_CTOR("en_001@bla", English, World)
-    TEST_CTOR("en-001", English, World)
-    TEST_CTOR("en-001@bla", English, World)
+    TEST_CTOR("en_zz", English, world)
+    TEST_CTOR("en_001", English, world)
+    TEST_CTOR("en_001.bla", English, world)
+    TEST_CTOR("en_001@.bla", English, world)
+    TEST_CTOR("en_001@bla", English, world)
+    TEST_CTOR("en-001", English, world)
+    TEST_CTOR("en-001@bla", English, world)
     TEST_CTOR("en_GB", English, UnitedKingdom)
     TEST_CTOR("en_GB.bla", English, UnitedKingdom)
     TEST_CTOR("en_GB@.bla", English, UnitedKingdom)
@@ -453,7 +453,7 @@ void tst_QLocale::unixLocaleName()
     QLocale::setDefault(QLocale(QLocale::C));
 
     TEST_NAME(C, AnyCountry, "C")
-    TEST_NAME(English, World, "en_001")
+    TEST_NAME(English, world, "en_001")
     TEST_NAME(English, AnyCountry, "en_US")
     TEST_NAME(English, UnitedStates, "en_US")
     TEST_NAME(English, UnitedKingdom, "en_GB")

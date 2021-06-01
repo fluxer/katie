@@ -83,7 +83,7 @@
     \note For the current keyboard input locale take a look at
     QApplication::keyboardInputLocale().
 
-    QLocale's data is based on Common Locale Data Repository v38.
+    QLocale's data is based on Common Locale Data Repository v39.
 
     The double-to-string and string-to-double conversion functions are
     covered by the following licenses:
@@ -588,7 +588,6 @@
     \value Romansh
     \value Romany
     \value Rombo
-    \value Root
     \value Rotuman
     \value Roviana
     \value Rundi
@@ -1073,10 +1072,10 @@
     \value WesternAsia
     \value WesternEurope
     \value WesternSahara
-    \value World
     \value Yemen
     \value Zambia
     \value Zimbabwe
+    \value world
     \omitvalue LastCountry
 
     \sa country(), countryToString()
