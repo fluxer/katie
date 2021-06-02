@@ -477,14 +477,6 @@ if(NOT WITH_CUPS OR NOT CUPS_FOUND)
     katie_definition(-DQT_NO_CUPS)
 endif()
 
-if(NOT WITH_JPEG OR NOT JPEG_FOUND)
-    katie_definition(-DQT_NO_IMAGEFORMAT_JPEG)
-endif()
-
-if(NOT WITH_TIFF OR NOT TIFF_FOUND)
-    katie_definition(-DQT_NO_IMAGEFORMAT_TIFF)
-endif()
-
 if(NOT WITH_INTL OR NOT INTL_FOUND)
     katie_definition(-DQT_NO_TRANSLATION)
 endif()

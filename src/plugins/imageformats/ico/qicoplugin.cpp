@@ -21,13 +21,6 @@
 
 #include "qimageiohandler.h"
 #include "qdebug.h"
-
-#ifndef QT_NO_IMAGEFORMATPLUGIN
-
-#ifdef QT_NO_IMAGEFORMAT_ICO
-#undef QT_NO_IMAGEFORMAT_ICO
-#endif
-
 #include "qicohandler.h"
 
 QT_BEGIN_NAMESPACE
@@ -75,5 +68,3 @@ QImageIOHandler *QICOPlugin::create(QIODevice *device, const QByteArray &format)
 Q_EXPORT_PLUGIN2(qico, QICOPlugin)
 
 QT_END_NAMESPACE
-
-#endif /* QT_NO_IMAGEFORMATPLUGIN */

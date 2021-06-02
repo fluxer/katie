@@ -21,13 +21,6 @@
 
 #include <QtGui/QImageIOHandler>
 #include <QtCore/QDebug>
-
-#ifndef QT_NO_IMAGEFORMATPLUGIN
-
-#ifdef QT_NO_IMAGEFORMAT_TGA
-#undef QT_NO_IMAGEFORMAT_TGA
-#endif
-
 #include "qtgahandler.h"
 
 QT_BEGIN_NAMESPACE
@@ -73,5 +66,3 @@ QStringList QTgaPlugin::keys() const
 Q_EXPORT_PLUGIN2(qtga, QTgaPlugin)
 
 QT_END_NAMESPACE
-
-#endif /* QT_NO_IMAGEFORMATPLUGIN */

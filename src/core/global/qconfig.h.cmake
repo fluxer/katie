@@ -119,8 +119,6 @@
 #cmakedefine QT_NO_DBUS
 #cmakedefine QT_NO_EXECINFO
 #cmakedefine QT_NO_FONTCONFIG
-#cmakedefine QT_NO_IMAGEFORMAT_JPEG
-#cmakedefine QT_NO_IMAGEFORMAT_TIFF
 #cmakedefine QT_NO_SESSIONMANAGER
 #cmakedefine QT_NO_TRANSLATION
 #cmakedefine QT_NO_XCURSOR
@@ -190,12 +188,8 @@
 #cmakedefine QT_NO_HTTP
 #cmakedefine QT_NO_ICON
 #cmakedefine QT_NO_IDENTITYPROXYMODEL
-#cmakedefine QT_NO_IMAGEFORMATPLUGIN
 #cmakedefine QT_NO_IMAGEFORMAT_BMP
-#cmakedefine QT_NO_IMAGEFORMAT_GIF
-#cmakedefine QT_NO_IMAGEFORMAT_ICO
 #cmakedefine QT_NO_IMAGEFORMAT_PPM
-#cmakedefine QT_NO_IMAGEFORMAT_TGA
 #cmakedefine QT_NO_IMAGEFORMAT_XBM
 #cmakedefine QT_NO_IMAGEFORMAT_XPM
 #cmakedefine QT_NO_IMAGE_HEURISTIC_MASK
