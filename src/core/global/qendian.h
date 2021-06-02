@@ -24,8 +24,6 @@
 
 #include <QtCore/qglobal.h>
 
-#include <string.h>
-
 QT_BEGIN_NAMESPACE
 
 /*
@@ -34,6 +32,11 @@ QT_BEGIN_NAMESPACE
 inline void qbswap_helper(const uchar *src, uchar *dest, int size)
 {
     for (int i = 0; i < size ; ++i) dest[i] = src[size - 1 - i];
+}
+
+inline void qbcopy_helper(const uchar *src, uchar *dest, int size)
+{
+    for (int i = 0; i < size ; ++i) dest[i] = src[i];
 }
 
 /*
@@ -188,7 +191,7 @@ template <typename T> inline T qToLittleEndian(const T source)
 template <typename T> inline T qFromLittleEndian(const T source)
 { return qbswap<T>(source); }
 template <typename T> inline void qToBigEndian(const T src, uchar *dest)
-{ ::memcpy(dest, &src, sizeof(T)); }
+{ qbcopy_helper(reinterpret_cast<const uchar *>(&src), dest, sizeof(T)); }
 template <typename T> inline void qToLittleEndian(const T src, uchar *dest)
 { qbswap<T>(src, dest); }
 #else // Q_LITTLE_ENDIAN
@@ -204,7 +207,7 @@ template <typename T> inline T qFromLittleEndian(const T source)
 template <typename T> inline void qToBigEndian(const T src, uchar *dest)
 { qbswap<T>(src, dest); }
 template <typename T> inline void qToLittleEndian(const T src, uchar *dest)
-{ ::memcpy(dest, &src, sizeof(T)); }
+{ qbcopy_helper(reinterpret_cast<const uchar *>(&src), dest, sizeof(T)); }
 
 #endif // Q_BYTE_ORDER == Q_BIG_ENDIAN
 
