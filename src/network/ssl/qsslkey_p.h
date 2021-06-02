@@ -45,10 +45,10 @@ class QSslKeyPrivate
 {
 public:
     inline QSslKeyPrivate()
-        : rsa(0)
-        , dsa(0)
+        : isNull(true)
+        , rsa(Q_NULLPTR)
+        , dsa(Q_NULLPTR)
     {
-        clear();
     }
 
     inline ~QSslKeyPrivate()
