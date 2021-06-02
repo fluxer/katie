@@ -29,6 +29,12 @@ QT_BEGIN_NAMESPACE
 /*
  * ENDIAN FUNCTIONS
 */
+
+/*
+ * Changes the byte order of \a src from big endian to little endian or vice versa
+ * and stores the result in \a dest.
+ * There is no alignment requirements for \a dest.
+*/
 inline void qbswap_helper(const uchar *src, uchar *dest, int size)
 {
     for (int i = 0; i < size ; ++i) dest[i] = src[size - 1 - i];
@@ -37,17 +43,6 @@ inline void qbswap_helper(const uchar *src, uchar *dest, int size)
 inline void qbcopy_helper(const uchar *src, uchar *dest, int size)
 {
     for (int i = 0; i < size ; ++i) dest[i] = src[i];
-}
-
-/*
- * qbswap(const T src, const uchar *dest);
- * Changes the byte order of \a src from big endian to little endian or vice versa
- * and stores the result in \a dest.
- * There is no alignment requirements for \a dest.
-*/
-template <typename T> inline void qbswap(const T src, uchar *dest)
-{
-    qbswap_helper(reinterpret_cast<const uchar *>(&src), dest, sizeof(T));
 }
 
 /* T qFromLittleEndian(const uchar *src)
@@ -164,6 +159,11 @@ template <> inline quint16 qbswap<quint16>(const quint16 source)
     return __builtin_bswap16(source);
 }
 
+template <> inline quint8 qbswap<quint8>(const quint8 source)
+{
+    return source;
+}
+
 // signed specializations
 template <> inline qint64 qbswap<qint64>(const qint64 source)
 {
@@ -193,7 +193,7 @@ template <typename T> inline T qFromLittleEndian(const T source)
 template <typename T> inline void qToBigEndian(const T src, uchar *dest)
 { qbcopy_helper(reinterpret_cast<const uchar *>(&src), dest, sizeof(T)); }
 template <typename T> inline void qToLittleEndian(const T src, uchar *dest)
-{ qbswap<T>(src, dest); }
+{ qbswap_helper(reinterpret_cast<const uchar *>(&src), dest, sizeof(T)); }
 #else // Q_LITTLE_ENDIAN
 
 template <typename T> inline T qToBigEndian(const T source)
@@ -205,16 +205,11 @@ template <typename T> inline T qToLittleEndian(const T source)
 template <typename T> inline T qFromLittleEndian(const T source)
 { return source; }
 template <typename T> inline void qToBigEndian(const T src, uchar *dest)
-{ qbswap<T>(src, dest); }
+{ qbswap_helper(reinterpret_cast<const uchar *>(&src), dest, sizeof(T)); }
 template <typename T> inline void qToLittleEndian(const T src, uchar *dest)
 { qbcopy_helper(reinterpret_cast<const uchar *>(&src), dest, sizeof(T)); }
 
 #endif // Q_BYTE_ORDER == Q_BIG_ENDIAN
-
-template <> inline quint8 qbswap<quint8>(const quint8 source)
-{
-    return source;
-}
 
 QT_END_NAMESPACE
 
