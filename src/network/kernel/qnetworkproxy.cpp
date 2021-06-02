@@ -201,8 +201,6 @@
 #ifndef QT_NO_NETWORKPROXY
 
 #include "qnetworkproxy_p.h"
-#include "qsocks5socketengine_p.h"
-#include "qhttpsocketengine_p.h"
 #include "qauthenticator.h"
 #include "qhash.h"
 #include "qmutex.h"
@@ -223,12 +221,6 @@ public:
     QGlobalNetworkProxy()
         : applicationLevelProxy(Q_NULLPTR)
         , applicationLevelProxyFactory(new QSystemConfigurationProxyFactory())
-#ifndef QT_NO_SOCKS5
-        , socks5SocketEngineHandler(new QSocks5SocketEngineHandler())
-#endif
-#ifndef QT_NO_HTTP
-        , httpSocketEngineHandler(new QHttpSocketEngineHandler())
-#endif
     {
     }
 
@@ -236,12 +228,6 @@ public:
     {
         delete applicationLevelProxy;
         delete applicationLevelProxyFactory;
-#ifndef QT_NO_SOCKS5
-        delete socks5SocketEngineHandler;
-#endif
-#ifndef QT_NO_HTTP
-        delete httpSocketEngineHandler;
-#endif
     }
 
     void setApplicationProxy(const QNetworkProxy &proxy)
@@ -277,12 +263,6 @@ private:
     QMutex mutex;
     QNetworkProxy *applicationLevelProxy;
     QNetworkProxyFactory *applicationLevelProxyFactory;
-#ifndef QT_NO_SOCKS5
-    QSocks5SocketEngineHandler *socks5SocketEngineHandler;
-#endif
-#ifndef QT_NO_HTTP
-    QHttpSocketEngineHandler *httpSocketEngineHandler;
-#endif
 };
 
 QList<QNetworkProxy> QGlobalNetworkProxy::proxyForQuery(const QNetworkProxyQuery &query) const
