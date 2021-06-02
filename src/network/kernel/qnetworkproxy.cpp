@@ -306,37 +306,37 @@ static QNetworkProxy::Capabilities defaultCapabilitiesForType(QNetworkProxy::Pro
 {
     Q_ASSERT(int(QNetworkProxy::DefaultProxy) == 0);
     Q_ASSERT(int(QNetworkProxy::FtpCachingProxy) == 5);
-    static const int defaults[] =
+    static const QNetworkProxy::Capabilities defaults[] =
     {
         /* [QNetworkProxy::DefaultProxy] = */
-        (int(QNetworkProxy::ListeningCapability) |
-         int(QNetworkProxy::TunnelingCapability) |
-         int(QNetworkProxy::UdpTunnelingCapability)),
+        QNetworkProxy::ListeningCapability |
+        QNetworkProxy::TunnelingCapability |
+        QNetworkProxy::UdpTunnelingCapability,
         /* [QNetworkProxy::Socks5Proxy] = */
-        (int(QNetworkProxy::TunnelingCapability) |
-         int(QNetworkProxy::ListeningCapability) |
-         int(QNetworkProxy::UdpTunnelingCapability) |
-         int(QNetworkProxy::HostNameLookupCapability)),
+        QNetworkProxy::TunnelingCapability |
+        QNetworkProxy::ListeningCapability |
+        QNetworkProxy::UdpTunnelingCapability |
+        QNetworkProxy::HostNameLookupCapability,
         // it's weird to talk about the proxy capabilities of a "not proxy"...
         /* [QNetworkProxy::NoProxy] = */
-        (int(QNetworkProxy::ListeningCapability) |
-         int(QNetworkProxy::TunnelingCapability) |
-         int(QNetworkProxy::UdpTunnelingCapability)),
+        QNetworkProxy::ListeningCapability |
+        QNetworkProxy::TunnelingCapability |
+        QNetworkProxy::UdpTunnelingCapability,
         /* [QNetworkProxy::HttpProxy] = */
-        (int(QNetworkProxy::TunnelingCapability) |
-         int(QNetworkProxy::CachingCapability) |
-         int(QNetworkProxy::HostNameLookupCapability)),
+        QNetworkProxy::TunnelingCapability |
+        QNetworkProxy::CachingCapability |
+        QNetworkProxy::HostNameLookupCapability,
         /* [QNetworkProxy::HttpCachingProxy] = */
-        (int(QNetworkProxy::CachingCapability) |
-         int(QNetworkProxy::HostNameLookupCapability)),
+        QNetworkProxy::CachingCapability |
+        QNetworkProxy::HostNameLookupCapability,
         /* [QNetworkProxy::FtpCachingProxy] = */
-        (int(QNetworkProxy::CachingCapability) |
-         int(QNetworkProxy::HostNameLookupCapability)),
+        QNetworkProxy::CachingCapability |
+        QNetworkProxy::HostNameLookupCapability,
     };
 
     if (int(type) < 0 || int(type) > int(QNetworkProxy::FtpCachingProxy))
         type = QNetworkProxy::DefaultProxy;
-    return QNetworkProxy::Capabilities(defaults[int(type)]);
+    return defaults[int(type)];
 }
 
 class QNetworkProxyPrivate: public QSharedData
