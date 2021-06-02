@@ -4938,7 +4938,7 @@ int QDateTimeParser::maxChange(int index) const
 
 QDateTimeParser::FieldInfo QDateTimeParser::fieldInfo(int index) const
 {
-    FieldInfo ret = Q_NULLPTR;
+    FieldInfo ret = 0;
     const SectionNode &sn = sectionNode(index);
     const Section s = sn.type;
     switch (s) {
