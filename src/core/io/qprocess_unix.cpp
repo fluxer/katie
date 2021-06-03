@@ -223,7 +223,7 @@ void QProcessManager::run()
         // block forever, or until activity is detected on the dead child
         // pipe. the only other peers are the SIGCHLD signal handler, and the
         // QProcessManager destructor.
-        int nselect = select(qt_qprocess_deadChild_pipe[0] + 1, &readset, 0, 0, 0);
+        int nselect = ::select(qt_qprocess_deadChild_pipe[0] + 1, &readset, 0, 0, 0);
         if (nselect < 0) {
             if (errno == EINTR)
                 continue;
