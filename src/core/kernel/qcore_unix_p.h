@@ -244,7 +244,7 @@ static inline int qt_safe_execvp(const char *file, char *const argv[])
 // don't call ::waitpid, call qt_safe_waitpid
 static inline pid_t qt_safe_waitpid(pid_t pid, int *status, int options)
 {
-    int ret;
+    pid_t ret;
     EINTR_LOOP(ret, ::waitpid(pid, status, options));
     return ret;
 }
