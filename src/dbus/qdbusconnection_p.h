@@ -282,7 +282,7 @@ public:
     static QDBusCallDeliveryEvent *prepareReply(QDBusConnectionPrivate *target, QObject *object,
                                                 int idx, const QList<int> &metaTypes,
                                                 const QDBusMessage &msg);
-    static QDBusPendingCallPrivate* processFinishedCall(QDBusPendingCallPrivate *call);
+    static void processFinishedCall(QDBusPendingCallPrivate *call);
 
     static QDBusConnectionPrivate *d(const QDBusConnection& q) { return q.d; }
     static QDBusConnection q(QDBusConnectionPrivate *connection) { return QDBusConnection(connection); }
