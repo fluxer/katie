@@ -1720,7 +1720,7 @@ void QDBusConnectionPrivate::waitForFinished(QDBusPendingCallPrivate *pcall)
     }
 }
 
-void QDBusConnectionPrivate::processFinishedCall(QDBusPendingCallPrivate *call)
+QDBusPendingCallPrivate* QDBusConnectionPrivate::processFinishedCall(QDBusPendingCallPrivate *call)
 {
     QDBusConnectionPrivate *connection = const_cast<QDBusConnectionPrivate *>(call->connection);
 
@@ -1769,8 +1769,11 @@ void QDBusConnectionPrivate::processFinishedCall(QDBusPendingCallPrivate *call)
     if (msg.type() == QDBusMessage::ErrorMessage)
         emit connection->callWithCallbackFailed(QDBusError(msg), call->sentMessage);
 
-    if (!call->ref.deref())
+    if (!call->ref.deref()) {
         delete call;
+        return Q_NULLPTR;
+    }
+    return call;
 }
 
 bool QDBusConnectionPrivate::send(const QDBusMessage& message)
@@ -1941,8 +1944,7 @@ QDBusPendingCallPrivate *QDBusConnectionPrivate::sendWithReplyAsync(const QDBusM
            // by QDBusPendingCall::QExplicitlySharedDataPointer<QDBusPendingCallPrivate>
            pcall->ref = 2;
         }
-        processFinishedCall(pcall);
-        return pcall;
+        return processFinishedCall(pcall);
     }
 
     checkThread();
@@ -1975,8 +1977,7 @@ QDBusPendingCallPrivate *QDBusConnectionPrivate::sendWithReplyAsync(const QDBusM
                  qPrintable(error.message()));
         pcall->replyMessage = QDBusMessage::createError(error);
         lastError = error;
-        processFinishedCall(pcall);
-        return pcall;
+        return processFinishedCall(pcall);
     }
 
     qDBusDebug() << this << "sending message (async):" << message;
@@ -2001,8 +2002,7 @@ QDBusPendingCallPrivate *QDBusConnectionPrivate::sendWithReplyAsync(const QDBusM
 
     dbus_message_unref(msg);
     pcall->replyMessage = QDBusMessage::createError(error);
-    processFinishedCall(pcall);
-    return pcall;
+    return processFinishedCall(pcall);
 }
 
 bool QDBusConnectionPrivate::connectSignal(const QString &service,
