@@ -2216,11 +2216,12 @@ static HB_Error  Lookup_MarkBasePos( GPOS_Instance*    gpi,
 				     HB_UShort         context_length,
 				     int               nesting_level )
 {
-  HB_UShort        i, j, mark_index, base_index, property, class;
-  HB_Fixed           x_mark_value, y_mark_value, x_base_value, y_base_value;
+  HB_UInt          i, j;
+  HB_UShort        mark_index, base_index, property, class;
+  HB_Fixed         x_mark_value, y_mark_value, x_base_value, y_base_value;
   HB_Error         error;
-  HB_GPOSHeader*  gpos = gpi->gpos;
-  HB_MarkBasePos* mbp = &st->markbase;
+  HB_GPOSHeader*   gpos = gpi->gpos;
+  HB_MarkBasePos*  mbp = &st->markbase;
 
   HB_MarkArray*   ma;
   HB_BaseArray*   ba;
@@ -2623,10 +2624,11 @@ static HB_Error  Lookup_MarkLigPos( GPOS_Instance*    gpi,
 				    HB_UShort         context_length,
 				    int               nesting_level )
 {
-  HB_UShort        i, j, mark_index, lig_index, property, class;
-  HB_UShort        mark_glyph;
-  HB_Fixed           x_mark_value, y_mark_value, x_lig_value, y_lig_value;
-  HB_Error         error;
+  HB_UInt         i, j;
+  HB_UShort       mark_index, lig_index, property, class;
+  HB_UShort       mark_glyph;
+  HB_Fixed        x_mark_value, y_mark_value, x_lig_value, y_lig_value;
+  HB_Error        error;
   HB_GPOSHeader*  gpos = gpi->gpos;
   HB_MarkLigPos*  mlp = &st->marklig;
 
@@ -2950,12 +2952,12 @@ static HB_Error  Lookup_MarkMarkPos( GPOS_Instance*    gpi,
 				     HB_UShort         context_length,
 				     int               nesting_level )
 {
-  HB_UShort        i, j, mark1_index, mark2_index, property, class;
-  HB_Fixed           x_mark1_value, y_mark1_value,
-		   x_mark2_value, y_mark2_value;
+  HB_UInt          i, j;
+  HB_UShort        mark1_index, mark2_index, property, class;
+  HB_Fixed         x_mark1_value, y_mark1_value, x_mark2_value, y_mark2_value;
   HB_Error         error;
-  HB_GPOSHeader*  gpos = gpi->gpos;
-  HB_MarkMarkPos* mmp = &st->markmark;
+  HB_GPOSHeader*   gpos = gpi->gpos;
+  HB_MarkMarkPos*  mmp = &st->markmark;
 
   HB_MarkArray*    ma1;
   HB_Mark2Array*   ma2;
