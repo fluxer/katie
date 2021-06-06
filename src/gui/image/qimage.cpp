@@ -2571,7 +2571,7 @@ static Image_Converter converter_map[QImage::NImageFormats][QImage::NImageFormat
         0,
         mask_alpha_converter,
         mask_alpha_converter,
-        convert_RGB16_to_RGB32
+        convert_RGB32_to_RGB16
     }, // Format_RGB32
 
     {
@@ -2582,7 +2582,7 @@ static Image_Converter converter_map[QImage::NImageFormats][QImage::NImageFormat
         mask_alpha_converter,
         0,
         convert_ARGB_to_ARGB_PM,
-        convert_RGB16_to_RGB32
+        convert_RGB32_to_RGB16
     }, // Format_ARGB32
 
     {
@@ -2601,9 +2601,9 @@ static Image_Converter converter_map[QImage::NImageFormats][QImage::NImageFormat
         0,
         0,
         0,
-        convert_RGB32_to_RGB16,
-        convert_RGB32_to_RGB16,
-        convert_RGB32_to_RGB16,
+        convert_RGB16_to_RGB32,
+        convert_RGB16_to_RGB32,
+        convert_RGB16_to_RGB32,
         0
     }, // Format_RGB16
 };
