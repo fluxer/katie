@@ -571,14 +571,12 @@ bool QPNGImageWriter::writeImage(const QImage& image, int quality_in)
         }
     }
 
+#if Q_BYTE_ORDER == Q_BIG_ENDIAN
     // Swap ARGB to RGBA (normal PNG format) before saving on
     // BigEndian machines
-#if Q_BYTE_ORDER == Q_BIG_ENDIAN
     png_set_swap_alpha(png_ptr);
-#endif
-
+#elif Q_BYTE_ORDER == Q_LITTLE_ENDIAN
     // Qt==ARGB==Big(ARGB)==Little(BGRA). But RGB888 is RGB regardless
-#if Q_BYTE_ORDER == Q_LITTLE_ENDIAN
     png_set_bgr(png_ptr);
 #endif
 
