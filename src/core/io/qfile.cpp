@@ -942,7 +942,7 @@ bool QFile::open(int fd, OpenMode mode, FileHandleFlags handleFlags)
         if (mode & Append) {
             seek(size());
         } else {
-            const qint64 pos = (qint64)QT_LSEEK(fd, QT_OFF_T(0), SEEK_CUR);
+            const qint64 pos = (qint64)QT_LSEEK(fd, 0, SEEK_CUR);
             if (pos != -1)
                 seek(pos);
         }
