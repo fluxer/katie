@@ -62,7 +62,7 @@ QImageData::QImageData()
       detach_no(0),
       dpmx(QX11Info::appDpiX() * 100 / qreal(2.54)),
       dpmy(QX11Info::appDpiY() * 100 / qreal(2.54)),
-      offset(0, 0), own_data(true), ro_data(false), has_alpha_clut(false),
+      own_data(true), ro_data(false), has_alpha_clut(false),
       paintEngine(0)
 {
 }
@@ -256,10 +256,7 @@ bool QImageData::checkForAlphaPixels() const
 
     The rect() function returns the image's enclosing rectangle. The
     valid() function tells if a given pair of coordinates is within
-    this rectangle. The offset() function returns the number of pixels
-    by which the image is intended to be offset by when positioned
-    relative to other images, which also can be manipulated using the
-    setOffset() function.
+    this rectangle.
 
     \row
     \o Colors
@@ -1002,7 +999,6 @@ QImage QImage::copy(const QRect& r) const
         image.d->colortable = d->colortable;
         image.d->dpmx = d->dpmx;
         image.d->dpmy = d->dpmy;
-        image.d->offset = d->offset;
         image.d->has_alpha_clut = d->has_alpha_clut;
         return image;
     }
@@ -1090,7 +1086,6 @@ QImage QImage::copy(const QRect& r) const
     image.d->colortable = d->colortable;
     image.d->dpmx = d->dpmx;
     image.d->dpmy = d->dpmy;
-    image.d->offset = d->offset;
     image.d->has_alpha_clut = d->has_alpha_clut;
     return image;
 }
@@ -3944,37 +3939,6 @@ void QImage::setDotsPerMeterY(int y)
     detach();
 
     d->dpmy = y;
-}
-
-/*!
-    \fn QPoint QImage::offset() const
-
-    Returns the number of pixels by which the image is intended to be
-    offset by when positioning relative to other images.
-
-    \sa setOffset(), {QImage#Image Information}{Image Information}
-*/
-QPoint QImage::offset() const
-{
-    return d ? d->offset : QPoint();
-}
-
-
-/*!
-    \fn void QImage::setOffset(const QPoint& offset)
-
-    Sets the number of pixels by which the image is intended to be
-    offset by when positioning relative to other images, to \a offset.
-
-    \sa offset(), {QImage#Image Information}{Image Information}
-*/
-void QImage::setOffset(const QPoint& p)
-{
-    if (!d)
-        return;
-    detach();
-
-    d->offset = p;
 }
 
 /*

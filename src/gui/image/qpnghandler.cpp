@@ -411,9 +411,6 @@ bool QPngHandlerPrivate::readPngImage(QImage *outImage)
     outImage->setDotsPerMeterX(png_get_x_pixels_per_meter(png_ptr,info_ptr));
     outImage->setDotsPerMeterY(png_get_y_pixels_per_meter(png_ptr,info_ptr));
 
-    if (unit_type == PNG_OFFSET_PIXEL)
-        outImage->setOffset(QPoint(offset_x, offset_y));
-
     state = ReadingEnd;
     png_read_end(png_ptr, end_info);
 
@@ -584,13 +581,6 @@ bool QPNGImageWriter::writeImage(const QImage& image, int quality_in)
 #if Q_BYTE_ORDER == Q_LITTLE_ENDIAN
     png_set_bgr(png_ptr);
 #endif
-
-    QPoint offset = image.offset();
-    int off_x = offset.x();
-    int off_y = offset.y();
-    if (off_x || off_y) {
-        png_set_oFFs(png_ptr, info_ptr, off_x, off_y, PNG_OFFSET_PIXEL);
-    }
 
     if (frames_written > 0)
         png_set_sig_bytes(png_ptr, 8);

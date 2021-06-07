@@ -199,8 +199,6 @@ public:
     int dotsPerMeterY() const;
     void setDotsPerMeterX(int);
     void setDotsPerMeterY(int);
-    QPoint offset() const;
-    void setOffset(const QPoint&);
 
 protected:
     virtual int metric(PaintDeviceMetric metric) const;
