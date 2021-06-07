@@ -295,7 +295,7 @@ void QFileSystemWatcherEngineUnix::readFromFd()
         int r;
         struct kevent kev;
         struct timespec ts = { 0, 0 }; // 0 ts, because we want to poll
-        EINTR_LOOP(r, kevent(sockfd, 0, 0, &kev, 1, &ts));
+        Q_EINTR_LOOP(r, kevent(sockfd, 0, 0, &kev, 1, &ts));
         if (r < 0) {
             perror("QFileSystemWatcherEngineUnix: error during kevent wait");
             return;

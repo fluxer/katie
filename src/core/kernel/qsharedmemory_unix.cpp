@@ -125,7 +125,7 @@ bool QSharedMemoryPrivate::create(int size)
     QByteArray shmName = QFile::encodeName(makePlatformSafeKey(key));
 
     int fd;
-    EINTR_LOOP(fd, ::shm_open(shmName.constData(), O_RDWR | O_CREAT | O_EXCL, 0666));
+    Q_EINTR_LOOP(fd, ::shm_open(shmName.constData(), O_RDWR | O_CREAT | O_EXCL, 0666));
     if (fd == -1) {
         QString function = QLatin1String("QSharedMemory::create");
         switch (errno) {
@@ -142,7 +142,7 @@ bool QSharedMemoryPrivate::create(int size)
 
     // the size may only be set once; ignore errors
     int ret;
-    EINTR_LOOP(ret, QT_FTRUNCATE(fd, size));
+    Q_EINTR_LOOP(ret, QT_FTRUNCATE(fd, size));
     if (ret == -1) {
         setErrorString(QLatin1String("QSharedMemory::create (ftruncate)"));
         qt_safe_close(fd);
@@ -161,7 +161,7 @@ bool QSharedMemoryPrivate::attach(QSharedMemory::AccessMode mode)
     int oflag = (mode == QSharedMemory::ReadOnly ? O_RDONLY : O_RDWR);
     mode_t omode = (mode == QSharedMemory::ReadOnly ? 0444 : 0660);
 
-    EINTR_LOOP(hand, ::shm_open(shmName.constData(), oflag, omode));
+    Q_EINTR_LOOP(hand, ::shm_open(shmName.constData(), oflag, omode));
     if (hand == -1) {
         QString function = QLatin1String("QSharedMemory::attach (shm_open)");
         switch (errno) {

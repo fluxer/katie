@@ -34,8 +34,8 @@
 #include "qlocale_data_p.h"
 #include "qdebug.h"
 #include "qcorecommon_p.h"
+#include "qcore_unix_p.h"
 
-#include <errno.h>
 #include <unicode/ulocdata.h>
 
 // #define QLOCALE_DEBUG
@@ -43,15 +43,6 @@
 #  define QLOCALEDEBUG qDebug()
 #else
 #  define QLOCALEDEBUG if (false) qDebug()
-#endif
-
-// BSD and musl libc implementations do not reset errno and there is no
-// reliable way to check if some functions (e.g. strtoll()) errored or returned
-// a valid value if they do not reset errno
-#ifdef __GLIBC__
-#  define QLOCALE_RESET_ERRNO
-#else
-#  define QLOCALE_RESET_ERRNO errno = 0;
 #endif
 
 QT_BEGIN_NAMESPACE
@@ -2738,7 +2729,7 @@ double QLocalePrivate::bytearrayToDouble(const char *num, bool *ok)
     }
 
     char *endptr;
-    QLOCALE_RESET_ERRNO
+    Q_RESET_ERRNO
     double ret = std::strtod(num, &endptr);
     if ((ret == 0.0l && errno == ERANGE) || ret == HUGE_VAL || ret == -HUGE_VAL) {
         if (ok != Q_NULLPTR)
@@ -2767,7 +2758,7 @@ qlonglong QLocalePrivate::bytearrayToLongLong(const char *num, int base, bool *o
     }
 
     char *endptr;
-    QLOCALE_RESET_ERRNO
+    Q_RESET_ERRNO
     qlonglong ret = std::strtoll(num, &endptr, base);
     if ((ret == LLONG_MIN || ret == LLONG_MAX) && (errno == ERANGE || errno == EINVAL)) {
         if (ok != Q_NULLPTR)
@@ -2796,7 +2787,7 @@ qulonglong QLocalePrivate::bytearrayToUnsLongLong(const char *num, int base, boo
     }
 
     char *endptr;
-    QLOCALE_RESET_ERRNO
+    Q_RESET_ERRNO
     qulonglong ret = std::strtoull(num, &endptr, base);
     if (ret == ULLONG_MAX && (errno == ERANGE || errno == EINVAL)) {
         if (ok != Q_NULLPTR)

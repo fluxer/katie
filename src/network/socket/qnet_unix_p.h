@@ -76,7 +76,7 @@ static inline int qt_safe_connect(int sockfd, const struct sockaddr *addr, QT_SO
 {
     int ret;
     // Solaris e.g. expects a non-const 2nd parameter
-    EINTR_LOOP(ret, QT_SOCKET_CONNECT(sockfd, const_cast<struct sockaddr *>(addr), addrlen));
+    Q_EINTR_LOOP(ret, QT_SOCKET_CONNECT(sockfd, const_cast<struct sockaddr *>(addr), addrlen));
     return ret;
 }
 
@@ -97,7 +97,7 @@ static inline int qt_safe_sendto(int sockfd, const void *buf, size_t len, int fl
 #endif
 
     int ret;
-    EINTR_LOOP(ret, ::sendto(sockfd, buf, len, flags, to, tolen));
+    Q_EINTR_LOOP(ret, ::sendto(sockfd, buf, len, flags, to, tolen));
     return ret;
 }
 

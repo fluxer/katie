@@ -40,10 +40,20 @@
 #include <sys/wait.h>
 #include <errno.h>
 
-#define EINTR_LOOP(var, cmd)                                  \
+#define Q_EINTR_LOOP(var, cmd)                                \
     do {                                                      \
         var = cmd;                                            \
     } while (var == -1 && errno == EINTR)
+
+// BSD and musl libc implementations do not reset errno and there is no
+// reliable way to check if some functions (e.g. strtoll()) errored or returned
+// a valid value if they do not reset errno
+#ifdef __GLIBC__
+#  define Q_RESET_ERRNO
+#else
+#  define Q_RESET_ERRNO errno = 0;
+#endif
+
 
 QT_BEGIN_NAMESPACE
 
@@ -115,7 +125,7 @@ static inline int qt_safe_open(const char *pathname, int flags, mode_t mode = 07
     flags |= O_CLOEXEC;
 #endif
     int fd;
-    EINTR_LOOP(fd, QT_OPEN(pathname, flags, mode));
+    Q_EINTR_LOOP(fd, QT_OPEN(pathname, flags, mode));
 
 #ifndef O_CLOEXEC
     // unknown flags are ignored, so we have no way of verifying if
@@ -174,7 +184,7 @@ static inline int qt_safe_dup(int oldfd)
 static inline int qt_safe_dup2(int oldfd, int newfd)
 {
     int ret;
-    EINTR_LOOP(ret, ::dup2(oldfd, newfd));
+    Q_EINTR_LOOP(ret, ::dup2(oldfd, newfd));
     return ret;
 }
 
@@ -182,7 +192,7 @@ static inline int qt_safe_dup2(int oldfd, int newfd)
 static inline qint64 qt_safe_read(int fd, void *data, qint64 maxlen)
 {
     qint64 ret = 0;
-    EINTR_LOOP(ret, QT_READ(fd, data, maxlen));
+    Q_EINTR_LOOP(ret, QT_READ(fd, data, maxlen));
     return ret;
 }
 
@@ -190,7 +200,7 @@ static inline qint64 qt_safe_read(int fd, void *data, qint64 maxlen)
 static inline qint64 qt_safe_write(int fd, const void *data, qint64 len)
 {
     qint64 ret = 0;
-    EINTR_LOOP(ret, QT_WRITE(fd, data, len));
+    Q_EINTR_LOOP(ret, QT_WRITE(fd, data, len));
     return ret;
 }
 
@@ -204,7 +214,7 @@ static inline qint64 qt_safe_write_nosignal(int fd, const void *data, qint64 len
 static inline int qt_safe_creat(const char* path, mode_t flags)
 {
     int ret;
-    EINTR_LOOP(ret, QT_CREAT(path, flags));
+    Q_EINTR_LOOP(ret, QT_CREAT(path, flags));
     return ret;
 }
 
@@ -212,7 +222,7 @@ static inline int qt_safe_creat(const char* path, mode_t flags)
 static inline int qt_safe_close(int fd)
 {
     int ret;
-    EINTR_LOOP(ret, QT_CLOSE(fd));
+    Q_EINTR_LOOP(ret, QT_CLOSE(fd));
     return ret;
 }
 
@@ -221,7 +231,7 @@ static inline int qt_safe_execve(const char *filename, char *const argv[],
                                  char *const envp[])
 {
     int ret;
-    EINTR_LOOP(ret, ::execve(filename, argv, envp));
+    Q_EINTR_LOOP(ret, ::execve(filename, argv, envp));
     return ret;
 }
 
@@ -229,7 +239,7 @@ static inline int qt_safe_execve(const char *filename, char *const argv[],
 static inline int qt_safe_execv(const char *path, char *const argv[])
 {
     int ret;
-    EINTR_LOOP(ret, ::execv(path, argv));
+    Q_EINTR_LOOP(ret, ::execv(path, argv));
     return ret;
 }
 
@@ -237,7 +247,7 @@ static inline int qt_safe_execv(const char *path, char *const argv[])
 static inline int qt_safe_execvp(const char *file, char *const argv[])
 {
     int ret;
-    EINTR_LOOP(ret, ::execvp(file, argv));
+    Q_EINTR_LOOP(ret, ::execvp(file, argv));
     return ret;
 }
 
@@ -245,7 +255,7 @@ static inline int qt_safe_execvp(const char *file, char *const argv[])
 static inline pid_t qt_safe_waitpid(pid_t pid, int *status, int options)
 {
     pid_t ret;
-    EINTR_LOOP(ret, ::waitpid(pid, status, options));
+    Q_EINTR_LOOP(ret, ::waitpid(pid, status, options));
     return ret;
 }
 

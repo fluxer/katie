@@ -181,7 +181,7 @@ bool QFSFileEngine::open(QIODevice::OpenMode openMode)
     // Seek to the end when in Append mode.
     if (d->openMode & QFile::Append) {
         int ret;
-        EINTR_LOOP(ret, QT_LSEEK(d->fd, 0, SEEK_END));
+        Q_EINTR_LOOP(ret, QT_LSEEK(d->fd, 0, SEEK_END));
         if (ret == -1) {
             setError(errno == EMFILE ? QFile::ResourceError : QFile::OpenError,
                      qt_error_string(errno));
@@ -252,7 +252,7 @@ bool QFSFileEngine::open(QIODevice::OpenMode openMode, int fd, QFile::FileHandle
     // Seek to the end when in Append mode.
     if (d->openMode & QFile::Append) {
         int ret;
-        EINTR_LOOP(ret, QT_LSEEK(d->fd, 0, SEEK_END));
+        Q_EINTR_LOOP(ret, QT_LSEEK(d->fd, 0, SEEK_END));
         if (ret == -1) {
             setError(errno == EMFILE ? QFile::ResourceError : QFile::OpenError,
                      qt_error_string(errno));

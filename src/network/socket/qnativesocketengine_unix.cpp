@@ -735,7 +735,7 @@ bool QNativeSocketEnginePrivate::nativeHasPendingDatagrams() const
     // well be 0, so we can't check recvfrom's return value.
     ssize_t readBytes;
     char c;
-    EINTR_LOOP(readBytes, ::recvfrom(socketDescriptor, &c, 1, MSG_PEEK, &storage.a, &storageSize));
+    Q_EINTR_LOOP(readBytes, ::recvfrom(socketDescriptor, &c, 1, MSG_PEEK, &storage.a, &storageSize));
 
     // If there's no error, or if our buffer was too small, there must be a
     // pending datagram.
@@ -785,7 +785,7 @@ qint64 QNativeSocketEnginePrivate::nativeReceiveDatagram(char *data, qint64 maxS
 
     ssize_t recvFromResult = 0;
     char c;
-    EINTR_LOOP(recvFromResult, ::recvfrom(socketDescriptor, maxSize ? data : &c, maxSize ? maxSize : 1,
+    Q_EINTR_LOOP(recvFromResult, ::recvfrom(socketDescriptor, maxSize ? data : &c, maxSize ? maxSize : 1,
                                     0, &aa.a, &sz));
 
     if (recvFromResult == -1) {

@@ -76,6 +76,8 @@
 #include "CurrentTime.h"
 #include "CallFrame.h"
 
+#include "qcore_unix_p.h"
+
 #include <algorithm>
 #include <limits.h>
 #include <limits>
@@ -522,9 +524,9 @@ static int findMonth(const char* monthStr)
 
 static bool parseLong(const char* string, char** stopPosition, int base, long* result)
 {
+    Q_RESET_ERRNO
     *result = strtol(string, stopPosition, base);
-    // Avoid the use of errno as it is not available on Windows CE
-    if (string == *stopPosition || *result == LONG_MIN || *result == LONG_MAX)
+    if (string == *stopPosition || ((*result == LONG_MIN || *result == LONG_MAX) && (errno == ERANGE || errno == EINVAL)))
         return false;
     return true;
 }
