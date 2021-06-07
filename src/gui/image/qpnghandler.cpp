@@ -659,7 +659,7 @@ bool QPngHandler::canRead() const
 
 bool QPngHandler::canRead(QIODevice *device)
 {
-    if (!device) {
+    if (Q_UNLIKELY(!device)) {
         qWarning("QPngHandler::canRead() called with no device");
         return false;
     }
