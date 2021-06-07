@@ -48,7 +48,7 @@ QElapsedTimer::ClockType QElapsedTimer::clockType()
 
 static inline void do_gettime(qint64 *sec, qint64 *frac)
 {
-    timespec ts;
+    struct timespec ts;
     if (Q_LIKELY(monotonicClockAvailable)) {
         ::clock_gettime(CLOCK_MONOTONIC, &ts);
     } else {
