@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-03-18 12:01+0200\n"
+"POT-Creation-Date: 2021-06-08 07:48+0300\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -42,9 +42,9 @@ msgstr ""
 msgid "The plugin uses incompatible Katie library: %1 (%2, %3)"
 msgstr ""
 
-#: src/core/plugin/qlibrary.cpp:797 src/core/plugin/qpluginloader.cpp:279
+#: src/core/plugin/qlibrary.cpp:796 src/core/plugin/qpluginloader.cpp:279
 #: src/core/io/qiodevice.cpp:1529 src/network/ssl/qsslerror.cpp:249
-#: src/network/socket/qnativesocketengine.cpp:256
+#: src/network/socket/qnativesocketengine.cpp:250
 #: src/network/access/qftp.cpp:1427 src/uitools/formscriptrunner.cpp:104
 msgid "Unknown error"
 msgstr ""
@@ -166,19 +166,19 @@ msgstr ""
 msgid "No file engine available or engine does not support UnMapExtension"
 msgstr ""
 
-#: src/core/io/qprocess.cpp:714 src/core/io/qprocess.cpp:766
+#: src/core/io/qprocess.cpp:706 src/core/io/qprocess.cpp:758
 msgid "Error reading from process"
 msgstr ""
 
-#: src/core/io/qprocess.cpp:813
+#: src/core/io/qprocess.cpp:805
 msgid "Error writing to process"
 msgstr ""
 
-#: src/core/io/qprocess.cpp:876
+#: src/core/io/qprocess.cpp:868
 msgid "Process crashed"
 msgstr ""
 
-#: src/core/io/qprocess.cpp:1777
+#: src/core/io/qprocess.cpp:1769
 msgid "No program defined"
 msgstr ""
 
@@ -339,32 +339,32 @@ msgctxt "QRegExp"
 msgid "invalid category"
 msgstr ""
 
-#: src/core/tools/qjsondocument.cpp:49
+#: src/core/tools/qjsondocument.cpp:52
 msgctxt "QJsonDocument"
 msgid "Data is empty"
 msgstr ""
 
-#: src/core/tools/qjsondocument.cpp:105
+#: src/core/tools/qjsondocument.cpp:108
 msgctxt "QJsonDocument"
 msgid "Unknown JSON type in array"
 msgstr ""
 
-#: src/core/tools/qjsondocument.cpp:138 src/core/tools/qjsondocument.cpp:222
+#: src/core/tools/qjsondocument.cpp:141 src/core/tools/qjsondocument.cpp:224
 msgctxt "QJsonDocument"
 msgid "Unknown JSON type"
 msgstr ""
 
-#: src/core/tools/qjsondocument.cpp:146
+#: src/core/tools/qjsondocument.cpp:149
 msgctxt "QJsonDocument"
 msgid "Rootless array/values are not supported"
 msgstr ""
 
-#: src/core/tools/qjsondocument.cpp:161
+#: src/core/tools/qjsondocument.cpp:164
 msgctxt "QJsonDocument"
 msgid "Data map is empty"
 msgstr ""
 
-#: src/core/tools/qjsondocument.cpp:164
+#: src/core/tools/qjsondocument.cpp:167
 msgctxt "QJsonDocument"
 msgid "Maximum depth reached"
 msgstr ""
@@ -1202,12 +1202,6 @@ msgstr ""
 
 #: src/declarative/util/qdeclarativeutilmodule.cpp:87
 msgid "Animation is an abstract class"
-msgstr ""
-
-#: src/declarative/util/qdeclarativeutilmodule.cpp:98
-#: src/declarative/util/qdeclarativeutilmodule.cpp:100
-msgctxt "QDeclarativeXmlListModel"
-msgid "Katie does not support xmlpatterns"
 msgstr ""
 
 #: src/gui/accessible/qaccessibleobject.cpp:353
@@ -2194,7 +2188,7 @@ msgstr ""
 msgid "Step &down"
 msgstr ""
 
-#: src/gui/kernel/qwidget.cpp:5090
+#: src/gui/kernel/qwidget.cpp:5086
 msgid "*"
 msgstr ""
 
@@ -4854,13 +4848,13 @@ msgstr ""
 
 #: src/network/socket/qabstractsocket.cpp:915
 #: src/network/socket/qhttpsocketengine.cpp:653
-#: src/network/socket/qnativesocketengine.cpp:220
+#: src/network/socket/qnativesocketengine.cpp:214
 #: src/network/socket/qsocks5socketengine.cpp:656
 msgid "Connection refused"
 msgstr ""
 
 #: src/network/socket/qabstractsocket.cpp:1057
-#: src/network/socket/qnativesocketengine.cpp:217
+#: src/network/socket/qnativesocketengine.cpp:211
 msgid "Connection timed out"
 msgstr ""
 
@@ -4908,96 +4902,96 @@ msgstr ""
 msgid "Proxy connection closed prematurely"
 msgstr ""
 
-#: src/network/socket/qnativesocketengine.cpp:181
+#: src/network/socket/qnativesocketengine.cpp:175
 msgid "Unable to initialize non-blocking socket"
 msgstr ""
 
-#: src/network/socket/qnativesocketengine.cpp:184
+#: src/network/socket/qnativesocketengine.cpp:178
 msgid "Unable to initialize broadcast socket"
 msgstr ""
 
-#: src/network/socket/qnativesocketengine.cpp:187
+#: src/network/socket/qnativesocketengine.cpp:181
 msgid "Attempt to use IPv6 socket on a platform with no IPv6 support"
 msgstr ""
 
-#: src/network/socket/qnativesocketengine.cpp:190
+#: src/network/socket/qnativesocketengine.cpp:184
 msgid "The remote host closed the connection"
 msgstr ""
 
-#: src/network/socket/qnativesocketengine.cpp:193
+#: src/network/socket/qnativesocketengine.cpp:187
 msgid "Network operation timed out"
 msgstr ""
 
-#: src/network/socket/qnativesocketengine.cpp:196
+#: src/network/socket/qnativesocketengine.cpp:190
 msgid "Out of resources"
 msgstr ""
 
-#: src/network/socket/qnativesocketengine.cpp:199
+#: src/network/socket/qnativesocketengine.cpp:193
 msgid "Unsupported socket operation"
 msgstr ""
 
-#: src/network/socket/qnativesocketengine.cpp:202
+#: src/network/socket/qnativesocketengine.cpp:196
 msgid "Protocol type not supported"
 msgstr ""
 
-#: src/network/socket/qnativesocketengine.cpp:205
+#: src/network/socket/qnativesocketengine.cpp:199
 msgid "Invalid socket descriptor"
 msgstr ""
 
-#: src/network/socket/qnativesocketengine.cpp:208
+#: src/network/socket/qnativesocketengine.cpp:202
 msgid "Host unreachable"
 msgstr ""
 
-#: src/network/socket/qnativesocketengine.cpp:211
+#: src/network/socket/qnativesocketengine.cpp:205
 #: src/network/socket/qsocks5socketengine.cpp:648
 msgid "Network unreachable"
 msgstr ""
 
-#: src/network/socket/qnativesocketengine.cpp:214
+#: src/network/socket/qnativesocketengine.cpp:208
 msgid "Permission denied"
 msgstr ""
 
-#: src/network/socket/qnativesocketengine.cpp:223
+#: src/network/socket/qnativesocketengine.cpp:217
 msgid "The bound address is already in use"
 msgstr ""
 
-#: src/network/socket/qnativesocketengine.cpp:226
+#: src/network/socket/qnativesocketengine.cpp:220
 msgid "The address is not available"
 msgstr ""
 
-#: src/network/socket/qnativesocketengine.cpp:229
+#: src/network/socket/qnativesocketengine.cpp:223
 msgid "The address is protected"
 msgstr ""
 
-#: src/network/socket/qnativesocketengine.cpp:232
+#: src/network/socket/qnativesocketengine.cpp:226
 msgid "Datagram was too large to send"
 msgstr ""
 
-#: src/network/socket/qnativesocketengine.cpp:235
+#: src/network/socket/qnativesocketengine.cpp:229
 msgid "Unable to send a message"
 msgstr ""
 
-#: src/network/socket/qnativesocketengine.cpp:238
+#: src/network/socket/qnativesocketengine.cpp:232
 msgid "Unable to receive a message"
 msgstr ""
 
-#: src/network/socket/qnativesocketengine.cpp:241
+#: src/network/socket/qnativesocketengine.cpp:235
 msgid "Unable to write"
 msgstr ""
 
-#: src/network/socket/qnativesocketengine.cpp:244
+#: src/network/socket/qnativesocketengine.cpp:238
 msgid "Network error"
 msgstr ""
 
-#: src/network/socket/qnativesocketengine.cpp:247
+#: src/network/socket/qnativesocketengine.cpp:241
 msgid "Another socket is already listening on the same port"
 msgstr ""
 
-#: src/network/socket/qnativesocketengine.cpp:250
+#: src/network/socket/qnativesocketengine.cpp:244
 msgid "Operation on non-socket"
 msgstr ""
 
-#: src/network/socket/qnativesocketengine.cpp:253
+#: src/network/socket/qnativesocketengine.cpp:247
 msgid "The proxy type is invalid for this operation"
 msgstr ""
 
@@ -5561,34 +5555,34 @@ msgctxt "QPSQLResult"
 msgid "Unable to create query"
 msgstr ""
 
-#: src/plugins/sqldrivers/psql/qsql_psql.cpp:560
+#: src/plugins/sqldrivers/psql/qsql_psql.cpp:550
 msgctxt "QPSQLResult"
 msgid "Unable to prepare statement"
 msgstr ""
 
-#: src/plugins/sqldrivers/psql/qsql_psql.cpp:824
+#: src/plugins/sqldrivers/psql/qsql_psql.cpp:814
 #: src/plugins/sqldrivers/odbc/qsql_odbc.cpp:1786
 #: src/plugins/sqldrivers/mysql/qsql_mysql.cpp:1164
 msgid "Unable to connect"
 msgstr ""
 
-#: src/plugins/sqldrivers/psql/qsql_psql.cpp:873
+#: src/plugins/sqldrivers/psql/qsql_psql.cpp:863
 msgid "Could not begin transaction"
 msgstr ""
 
-#: src/plugins/sqldrivers/psql/qsql_psql.cpp:901
+#: src/plugins/sqldrivers/psql/qsql_psql.cpp:891
 msgid "Could not commit transaction"
 msgstr ""
 
-#: src/plugins/sqldrivers/psql/qsql_psql.cpp:918
+#: src/plugins/sqldrivers/psql/qsql_psql.cpp:908
 msgid "Could not rollback transaction"
 msgstr ""
 
-#: src/plugins/sqldrivers/psql/qsql_psql.cpp:1239
+#: src/plugins/sqldrivers/psql/qsql_psql.cpp:1229
 msgid "Unable to subscribe"
 msgstr ""
 
-#: src/plugins/sqldrivers/psql/qsql_psql.cpp:1271
+#: src/plugins/sqldrivers/psql/qsql_psql.cpp:1261
 msgid "Unable to unsubscribe"
 msgstr ""
 
@@ -6039,12 +6033,12 @@ msgctxt "QFormBuilder"
 msgid "The enumeration-type property %1 could not be read."
 msgstr ""
 
-#: src/uitools/properties.cpp:299
+#: src/uitools/properties.cpp:298
 msgctxt "QFormBuilder"
 msgid "Reading properties of the type %1 is not supported yet."
 msgstr ""
 
-#: src/uitools/properties.cpp:565
+#: src/uitools/properties.cpp:571
 msgctxt "QFormBuilder"
 msgid "The property %1 could not be written. The type %2 is not supported yet."
 msgstr ""
@@ -6269,144 +6263,144 @@ msgctxt "QXml"
 msgid "error in the text declaration of an external entity"
 msgstr ""
 
-#: src/xml/kernel/qxmlstream_p.h:743
+#: src/xml/kernel/qxmlstream_p.h:742
 msgid "Recursive entity detected."
 msgstr ""
 
-#: src/xml/kernel/qxmlstream_p.h:1044 src/xml/kernel/qxmlstream.cpp:1381
+#: src/xml/kernel/qxmlstream_p.h:1043 src/xml/kernel/qxmlstream.cpp:1379
 msgid "Encountered incorrectly encoded content."
 msgstr ""
 
-#: src/xml/kernel/qxmlstream_p.h:1256
+#: src/xml/kernel/qxmlstream_p.h:1255
 msgid "Start tag expected."
 msgstr ""
 
-#: src/xml/kernel/qxmlstream_p.h:1447
+#: src/xml/kernel/qxmlstream_p.h:1446
 msgid "NDATA in parameter entity declaration."
 msgstr ""
 
-#: src/xml/kernel/qxmlstream_p.h:1478
+#: src/xml/kernel/qxmlstream_p.h:1477
 msgid "XML declaration not at start of document."
 msgstr ""
 
-#: src/xml/kernel/qxmlstream_p.h:1481
+#: src/xml/kernel/qxmlstream_p.h:1480
 msgid "%1 is an invalid processing instruction name."
 msgstr ""
 
-#: src/xml/kernel/qxmlstream_p.h:1492
+#: src/xml/kernel/qxmlstream_p.h:1491
 msgid "Invalid processing instruction name."
 msgstr ""
 
-#: src/xml/kernel/qxmlstream_p.h:1606
+#: src/xml/kernel/qxmlstream_p.h:1605
 msgid "%1 is an invalid PUBLIC identifier."
 msgstr ""
 
-#: src/xml/kernel/qxmlstream_p.h:1656 src/xml/kernel/qxmlstream_p.h:1709
-#: src/xml/kernel/qxmlstream.cpp:1444 src/xml/kernel/qxmlstream.cpp:1456
+#: src/xml/kernel/qxmlstream_p.h:1655 src/xml/kernel/qxmlstream_p.h:1708
+#: src/xml/kernel/qxmlstream.cpp:1442 src/xml/kernel/qxmlstream.cpp:1454
 msgid "Illegal namespace declaration."
 msgstr ""
 
-#: src/xml/kernel/qxmlstream_p.h:1724
+#: src/xml/kernel/qxmlstream_p.h:1723
 msgid "Invalid XML name."
 msgstr ""
 
-#: src/xml/kernel/qxmlstream_p.h:1735 src/xml/kernel/qxmlstream.cpp:571
+#: src/xml/kernel/qxmlstream_p.h:1734 src/xml/kernel/qxmlstream.cpp:570
 msgid "Extra content at end of document."
 msgstr ""
 
-#: src/xml/kernel/qxmlstream_p.h:1747
+#: src/xml/kernel/qxmlstream_p.h:1746
 msgid "Opening and ending tag mismatch."
 msgstr ""
 
-#: src/xml/kernel/qxmlstream_p.h:1752 src/xml/kernel/qxmlstream_p.h:1813
-#: src/xml/kernel/qxmlstream_p.h:1853
+#: src/xml/kernel/qxmlstream_p.h:1751 src/xml/kernel/qxmlstream_p.h:1812
+#: src/xml/kernel/qxmlstream_p.h:1852
 msgid "Entity '%1' not declared."
 msgstr ""
 
-#: src/xml/kernel/qxmlstream_p.h:1765
+#: src/xml/kernel/qxmlstream_p.h:1764
 msgid "Reference to unparsed entity '%1'."
 msgstr ""
 
-#: src/xml/kernel/qxmlstream_p.h:1827
+#: src/xml/kernel/qxmlstream_p.h:1826
 msgid "Reference to external entity '%1' in attribute value."
 msgstr ""
 
-#: src/xml/kernel/qxmlstream_p.h:1867
+#: src/xml/kernel/qxmlstream_p.h:1866
 msgid "Invalid character reference."
 msgstr ""
 
-#: src/xml/kernel/qxmlstream.cpp:804
+#: src/xml/kernel/qxmlstream.cpp:803
 msgid "Invalid entity value."
 msgstr ""
 
-#: src/xml/kernel/qxmlstream.cpp:912
+#: src/xml/kernel/qxmlstream.cpp:911
 msgid "Invalid XML character."
 msgstr ""
 
-#: src/xml/kernel/qxmlstream.cpp:1171
+#: src/xml/kernel/qxmlstream.cpp:1170
 msgid "Sequence ']]>' not allowed in content."
 msgstr ""
 
-#: src/xml/kernel/qxmlstream.cpp:1411
+#: src/xml/kernel/qxmlstream.cpp:1409
 msgid "Namespace prefix '%1' not declared"
 msgstr ""
 
-#: src/xml/kernel/qxmlstream.cpp:1488
+#: src/xml/kernel/qxmlstream.cpp:1486
 msgid "Attribute redefined."
 msgstr ""
 
-#: src/xml/kernel/qxmlstream.cpp:1602
+#: src/xml/kernel/qxmlstream.cpp:1600
 msgid "Unexpected character '%1' in public id literal."
 msgstr ""
 
-#: src/xml/kernel/qxmlstream.cpp:1630
+#: src/xml/kernel/qxmlstream.cpp:1628
 msgid "Invalid XML version string."
 msgstr ""
 
-#: src/xml/kernel/qxmlstream.cpp:1632
+#: src/xml/kernel/qxmlstream.cpp:1630
 msgid "Unsupported XML version."
 msgstr ""
 
-#: src/xml/kernel/qxmlstream.cpp:1653
+#: src/xml/kernel/qxmlstream.cpp:1651
 msgid "The standalone pseudo attribute must appear after the encoding."
 msgstr ""
 
-#: src/xml/kernel/qxmlstream.cpp:1655
+#: src/xml/kernel/qxmlstream.cpp:1653
 msgid "%1 is an invalid encoding name."
 msgstr ""
 
-#: src/xml/kernel/qxmlstream.cpp:1662
+#: src/xml/kernel/qxmlstream.cpp:1660
 msgid "Encoding %1 is unsupported"
 msgstr ""
 
-#: src/xml/kernel/qxmlstream.cpp:1678
+#: src/xml/kernel/qxmlstream.cpp:1676
 msgid "Standalone accepts only yes or no."
 msgstr ""
 
-#: src/xml/kernel/qxmlstream.cpp:1680
+#: src/xml/kernel/qxmlstream.cpp:1678
 msgid "Invalid attribute in XML declaration."
 msgstr ""
 
-#: src/xml/kernel/qxmlstream.cpp:1696
+#: src/xml/kernel/qxmlstream.cpp:1694
 msgid "Premature end of document."
 msgstr ""
 
-#: src/xml/kernel/qxmlstream.cpp:1698
+#: src/xml/kernel/qxmlstream.cpp:1696
 msgid "Invalid document."
 msgstr ""
 
-#: src/xml/kernel/qxmlstream.cpp:1738
+#: src/xml/kernel/qxmlstream.cpp:1736
 msgid "Expected "
 msgstr ""
 
-#: src/xml/kernel/qxmlstream.cpp:1749
+#: src/xml/kernel/qxmlstream.cpp:1747
 msgid ", but got '"
 msgstr ""
 
-#: src/xml/kernel/qxmlstream.cpp:1753
+#: src/xml/kernel/qxmlstream.cpp:1751
 msgid "Unexpected '"
 msgstr ""
 
-#: src/xml/kernel/qxmlstream.cpp:1978
+#: src/xml/kernel/qxmlstream.cpp:1976
 msgid "Expected character data."
 msgstr ""
