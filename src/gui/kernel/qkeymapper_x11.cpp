@@ -45,6 +45,9 @@ QKeyMapper::~QKeyMapper()
 void QKeyMapper::clearMappings()
 {
     XIM im = XOpenIM(qt_x11Data->display, NULL, NULL, NULL);
+    if (!im) {
+        return;
+    }
     const QString imlocale = QString::fromLatin1(XLocaleOfIM(im));
     keyboardInputLocale = QLocale(imlocale);
     XCloseIM(im);
