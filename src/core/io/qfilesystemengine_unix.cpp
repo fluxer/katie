@@ -328,13 +328,7 @@ bool QFileSystemEngine::copyFile(const QFileSystemEntry &source, const QFileSyst
 
     QT_OFF_T tocopy = st.st_size;
 #ifdef Q_OS_LINUX
-// not in qplatformdefs.h since it is platform specific
-#if defined(QT_LARGEFILE_SUPPORT)
-#  define QT_SENDFILE ::sendfile64
-#else
-#  define QT_SENDFILE ::sendfile
-#endif
-    ssize_t sendresult = QT_SENDFILE(targetfd, sourcefd, Q_NULLPTR, tocopy);
+    ssize_t sendresult = ::sendfile(targetfd, sourcefd, Q_NULLPTR, tocopy);
     while (sendresult != tocopy) {
         if (sendresult == -1) {
             *error = errno;
@@ -343,9 +337,9 @@ bool QFileSystemEngine::copyFile(const QFileSystemEntry &source, const QFileSyst
             return false;
         }
         tocopy -= sendresult;
-        sendresult = QT_SENDFILE(targetfd, sourcefd, &tocopy, tocopy);
+        // sendfile64() may use internal types (different from off_t), do not use it
+        sendresult = ::sendfile(targetfd, sourcefd, &tocopy, tocopy);
     }
-#undef QT_SENDFILE
 #elif defined(Q_OS_FREEBSD) || defined(Q_OS_DRAGONFLY)
 // DragonFly BSD does not have SF_SYNC defined
 #ifndef SF_SYNC
