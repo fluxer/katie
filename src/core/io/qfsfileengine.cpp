@@ -146,11 +146,7 @@ bool QFSFileEngine::open(QIODevice::OpenMode openMode)
     d->metaData.clear();
     d->fd = -1;
 
-#ifdef QT_LARGEFILE_SUPPORT
-    int flags = QT_OPEN_RDONLY | QT_OPEN_LARGEFILE;
-#else
     int flags = QT_OPEN_RDONLY;
-#endif
 
     if ((d->openMode & QFile::ReadWrite) == QFile::ReadWrite) {
         flags = QT_OPEN_RDWR | QT_OPEN_CREAT;

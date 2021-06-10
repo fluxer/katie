@@ -51,22 +51,6 @@ macro(KATIE_CHECK_FUNCTION FORFUNCTION FROMHEADER)
     endif()
 endmacro()
 
-# a function to check for C function with 64-bit offset alternative, sets
-# QT_LARGEFILE_SUPPORT to FALSE if not available and does not perform
-# additional checks if one fails
-function(KATIE_CHECK_FUNCTION64 FORFUNCTION FROMHEADER)
-    if(QT_LARGEFILE_SUPPORT)
-        cmake_reset_check_state()
-        set(CMAKE_REQUIRED_DEFINITIONS -D_LARGEFILE64_SOURCE -D_LARGEFILE_SOURCE)
-        katie_check_defined("${FORFUNCTION}" "${FROMHEADER}")
-        cmake_reset_check_state()
-
-        if(NOT HAVE_${FORFUNCTION})
-            set(QT_LARGEFILE_SUPPORT FALSE PARENT_SCOPE)
-        endif()
-    endif()
-endfunction()
-
 # a function to check for C struct member presence in header, if member is
 # found a definition is added
 function(KATIE_CHECK_STRUCT FORSTRUCT FORMEMBER FROMHEADER)
