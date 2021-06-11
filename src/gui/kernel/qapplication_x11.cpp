@@ -270,9 +270,6 @@ static QWidget *qt_popup_down = 0;  // popup that contains the pressed widget
 
 extern bool qt_xdnd_dragging;
 
-// gui or non-gui from qapplication.cpp
-extern QApplication::Type qt_appType;
-
 #ifndef QT_NO_XFIXES
 
 struct qt_xfixes_selection_event_data
@@ -1081,7 +1078,7 @@ void qt_init(QApplicationPrivate *priv, Display *display,
 #endif
 
     // Connect to X server
-    if (qt_appType != QApplication::Tty && !qt_x11Data->display) {
+    if (!qt_x11Data->display) {
         if ((qt_x11Data->display = XOpenDisplay(qt_x11Data->displayName)) == 0) {
             QApplication::exit(1);
             QByteArray appName = QApplication::applicationName().toLocal8Bit();
@@ -1096,288 +1093,260 @@ void qt_init(QApplicationPrivate *priv, Display *display,
     // Common code, regardless of whether display is foreign.
 
     // Get X parameters
+    qt_x11Data->defaultScreen = DefaultScreen(qt_x11Data->display);
+    qt_x11Data->screenCount = ScreenCount(qt_x11Data->display);
 
-    if (qt_appType != QApplication::Tty) {
-        qt_x11Data->defaultScreen = DefaultScreen(qt_x11Data->display);
-        qt_x11Data->screenCount = ScreenCount(qt_x11Data->display);
+    qt_x11Data->screens = new QX11InfoData[qt_x11Data->screenCount];
+    qt_x11Data->argbVisuals = new Visual *[qt_x11Data->screenCount];
+    qt_x11Data->argbColormaps = new Colormap[qt_x11Data->screenCount];
 
-        qt_x11Data->screens = new QX11InfoData[qt_x11Data->screenCount];
-        qt_x11Data->argbVisuals = new Visual *[qt_x11Data->screenCount];
-        qt_x11Data->argbColormaps = new Colormap[qt_x11Data->screenCount];
+    for (int s = 0; s < qt_x11Data->screenCount; s++) {
+        QX11InfoData *screen = qt_x11Data->screens + s;
+        screen->ref = 1; // ensures it doesn't get deleted
+        screen->screen = s;
 
-        for (int s = 0; s < qt_x11Data->screenCount; s++) {
-            QX11InfoData *screen = qt_x11Data->screens + s;
-            screen->ref = 1; // ensures it doesn't get deleted
-            screen->screen = s;
-
-            int widthMM = DisplayWidthMM(qt_x11Data->display, s);
-            if (widthMM != 0) {
-                screen->dpiX = (DisplayWidth(qt_x11Data->display, s) * 254 + widthMM * 5) / (widthMM * 10);
-            } else {
-                screen->dpiX = 72;
-            }
-
-            int heightMM = DisplayHeightMM(qt_x11Data->display, s);
-            if (heightMM != 0) {
-                screen->dpiY = (DisplayHeight(qt_x11Data->display, s) * 254 + heightMM * 5) / (heightMM * 10);
-            } else {
-                screen->dpiY = 72;
-            }
-
-            qt_x11Data->argbVisuals[s] = 0;
-            qt_x11Data->argbColormaps[s] = 0;
+        int widthMM = DisplayWidthMM(qt_x11Data->display, s);
+        if (widthMM != 0) {
+            screen->dpiX = (DisplayWidth(qt_x11Data->display, s) * 254 + widthMM * 5) / (widthMM * 10);
+        } else {
+            screen->dpiX = 72;
         }
+
+        int heightMM = DisplayHeightMM(qt_x11Data->display, s);
+        if (heightMM != 0) {
+            screen->dpiY = (DisplayHeight(qt_x11Data->display, s) * 254 + heightMM * 5) / (heightMM * 10);
+        } else {
+            screen->dpiY = 72;
+        }
+
+        qt_x11Data->argbVisuals[s] = 0;
+        qt_x11Data->argbColormaps[s] = 0;
+    }
 
 
 #ifndef QT_NO_XRENDER
-        int xrender_eventbase,  xrender_errorbase;
-        // See if XRender is supported on the connected display
-        if (qgetenv("QT_X11_NO_XRENDER").isNull()
-            && XQueryExtension(qt_x11Data->display, "RENDER", &qt_x11Data->xrender_major,
-                            &xrender_eventbase, &xrender_errorbase)
-            && XRenderQueryExtension(qt_x11Data->display, &xrender_eventbase,
-                                     &xrender_errorbase)) {
-            // Check the version as well - we need v0.4 or higher
-            int xrender_major = 0;
-            int xrender_minor = 0;
-            XRenderQueryVersion(qt_x11Data->display, &xrender_major, &xrender_minor);
-            qt_x11Data->use_xrender = (xrender_major >= 0 && xrender_minor >= 5);
-            qt_x11Data->xrender_minor = xrender_minor;
-        }
+    int xrender_eventbase,  xrender_errorbase;
+    // See if XRender is supported on the connected display
+    if (qgetenv("QT_X11_NO_XRENDER").isNull()
+        && XQueryExtension(qt_x11Data->display, "RENDER", &qt_x11Data->xrender_major,
+                        &xrender_eventbase, &xrender_errorbase)
+        && XRenderQueryExtension(qt_x11Data->display, &xrender_eventbase,
+                                    &xrender_errorbase)) {
+        // Check the version as well - we need v0.4 or higher
+        int xrender_major = 0;
+        int xrender_minor = 0;
+        XRenderQueryVersion(qt_x11Data->display, &xrender_major, &xrender_minor);
+        qt_x11Data->use_xrender = (xrender_major >= 0 && xrender_minor >= 5);
+        qt_x11Data->xrender_minor = xrender_minor;
+    }
 #endif // QT_NO_XRENDER
 
 #ifndef QT_NO_XINERAMA
-        int xinerama_eventbase;
-        int xinerama_errorbase;
-        if (qgetenv("QT_X11_NO_XINERAMA").isNull()) {
-            qt_x11Data->use_xinerama = (XineramaQueryExtension(qt_x11Data->display,
-                                                               &xinerama_eventbase, &xinerama_errorbase)
-                                        && XineramaIsActive(qt_x11Data->display));
-        }
+    int xinerama_eventbase;
+    int xinerama_errorbase;
+    if (qgetenv("QT_X11_NO_XINERAMA").isNull()) {
+        qt_x11Data->use_xinerama = (XineramaQueryExtension(qt_x11Data->display,
+                                                            &xinerama_eventbase, &xinerama_errorbase)
+                                    && XineramaIsActive(qt_x11Data->display));
+    }
 #endif
 
-        QColormap::initialize();
+    QColormap::initialize();
 
-        // Support protocols
-        qt_x11Data->xdndSetup();
+    // Support protocols
+    qt_x11Data->xdndSetup();
 
-        // Finally create all atoms
-        qt_x11_create_intern_atoms();
+    // Finally create all atoms
+    qt_x11_create_intern_atoms();
 
-        // initialize NET lists
-        qt_get_net_supported();
-        qt_get_net_virtual_roots();
+    // initialize NET lists
+    qt_get_net_supported();
+    qt_get_net_virtual_roots();
 
 #ifndef QT_NO_XRANDR
         // See if XRandR is supported on the connected display
-        int xrandr_errorbase;
-        if (qgetenv("QT_X11_NO_XRANDR").isNull()
-            && XQueryExtension(qt_x11Data->display, "RANDR", &qt_x11Data->xrandr_major,
-                            &qt_x11Data->xrandr_eventbase, &xrandr_errorbase)) {
-
-            if (XRRQueryExtension(qt_x11Data->display, &qt_x11Data->xrandr_eventbase, &xrandr_errorbase)) {
-                // XRandR is supported
-                qt_x11Data->use_xrandr = true;
-            }
+    int xrandr_errorbase;
+    if (qgetenv("QT_X11_NO_XRANDR").isNull()
+        && XQueryExtension(qt_x11Data->display, "RANDR", &qt_x11Data->xrandr_major,
+                           &qt_x11Data->xrandr_eventbase, &xrandr_errorbase)) {
+        if (XRRQueryExtension(qt_x11Data->display, &qt_x11Data->xrandr_eventbase, &xrandr_errorbase)) {
+            // XRandR is supported
+            qt_x11Data->use_xrandr = true;
         }
+    }
 #endif // QT_NO_XRANDR
 
 #ifndef QT_NO_XRENDER
-        if (qt_x11Data->use_xrender) {
-            // XRender is supported, let's see if we have a PictFormat for the
-            // default visual
-            XRenderPictFormat *format =
-                XRenderFindVisualFormat(qt_x11Data->display,
-                                        (Visual *) QX11Info::appVisual(qt_x11Data->defaultScreen));
+    if (qt_x11Data->use_xrender) {
+        // XRender is supported, let's see if we have a PictFormat for the
+        // default visual
+        XRenderPictFormat *format =
+            XRenderFindVisualFormat(qt_x11Data->display,
+                                    (Visual *) QX11Info::appVisual(qt_x11Data->defaultScreen));
 
-            if (!format) {
-                qt_x11Data->use_xrender = false;
-            }
+        if (!format) {
+            qt_x11Data->use_xrender = false;
         }
+    }
 #endif // QT_NO_XRENDER
 
 #ifndef QT_NO_XFIXES
-        // See if Xfixes is supported on the connected display
-        int xfixes_major;
-        int xfixes_errorbase;
-        if (qgetenv("QT_X11_NO_XFIXES").isNull()
-            && XQueryExtension(qt_x11Data->display, "XFIXES", &xfixes_major,
-                            &qt_x11Data->xfixes_eventbase, &xfixes_errorbase)) {
-            if(XFixesQueryExtension(qt_x11Data->display, &qt_x11Data->xfixes_eventbase,
-                                    &xfixes_errorbase)) {
-                // Xfixes is supported.
-                // Note: the XFixes protocol version is negotiated using QueryVersion.
-                // We supply the highest version we support, the X server replies with
-                // the highest version it supports, but no higher than the version we
-                // asked for. The version sent back is the protocol version the X server
-                // will use to talk us. If this call is removed, the behavior of the
-                // X server when it receives an XFixes request is undefined.
-                int xfixes_major = 3;
-                int xfixes_minor = 0;
-                XFixesQueryVersion(qt_x11Data->display, &xfixes_major, &xfixes_minor);
-                qt_x11Data->use_xfixes = (xfixes_major >= 1);
-            }
+    // See if Xfixes is supported on the connected display
+    int xfixes_major;
+    int xfixes_errorbase;
+    if (qgetenv("QT_X11_NO_XFIXES").isNull()
+        && XQueryExtension(qt_x11Data->display, "XFIXES", &xfixes_major,
+                           &qt_x11Data->xfixes_eventbase, &xfixes_errorbase)) {
+        if(XFixesQueryExtension(qt_x11Data->display, &qt_x11Data->xfixes_eventbase,
+                                &xfixes_errorbase)) {
+            // Xfixes is supported.
+            // Note: the XFixes protocol version is negotiated using QueryVersion.
+            // We supply the highest version we support, the X server replies with
+            // the highest version it supports, but no higher than the version we
+            // asked for. The version sent back is the protocol version the X server
+            // will use to talk us. If this call is removed, the behavior of the
+            // X server when it receives an XFixes request is undefined.
+            int xfixes_major = 3;
+            int xfixes_minor = 0;
+            XFixesQueryVersion(qt_x11Data->display, &xfixes_major, &xfixes_minor);
+            qt_x11Data->use_xfixes = (xfixes_major >= 1);
         }
+    }
 #endif // QT_NO_XFIXES
 
 #ifndef QT_NO_XSYNC
-        int xsync_evbase;
-        int xsync_errbase;
-        int xsync_major;
-        int xsync_minor;
-        if (XSyncQueryExtension(qt_x11Data->display, &xsync_evbase, &xsync_errbase))
-            XSyncInitialize(qt_x11Data->display, &xsync_major, &xsync_minor);
+    int xsync_evbase;
+    int xsync_errbase;
+    int xsync_major;
+    int xsync_minor;
+    if (XSyncQueryExtension(qt_x11Data->display, &xsync_evbase, &xsync_errbase))
+        XSyncInitialize(qt_x11Data->display, &xsync_major, &xsync_minor);
 #endif // QT_NO_XSYNC
 
 #if !defined(QT_NO_FONTCONFIG)
-        int dpi = 0;
-        getXDefault("Xft", FC_DPI, &dpi);
-        if (dpi) {
-            for (int s = 0; s < ScreenCount(qt_x11Data->display); ++s) {
-                QX11Info::setAppDpiX(s, dpi);
-                QX11Info::setAppDpiY(s, dpi);
+    int dpi = 0;
+    getXDefault("Xft", FC_DPI, &dpi);
+    if (dpi) {
+        for (int s = 0; s < ScreenCount(qt_x11Data->display); ++s) {
+            QX11Info::setAppDpiX(s, dpi);
+            QX11Info::setAppDpiY(s, dpi);
+        }
+    }
+    for (int s = 0; s < ScreenCount(qt_x11Data->display); ++s) {
+        int subpixel = FC_RGBA_UNKNOWN;
+#if !defined(QT_NO_XRENDER) && (RENDER_MAJOR > 0 || RENDER_MINOR >= 6)
+        if (qt_x11Data->use_xrender) {
+            int rsp = XRenderQuerySubpixelOrder(qt_x11Data->display, s);
+            switch (rsp) {
+            default:
+            case SubPixelUnknown:
+                subpixel = FC_RGBA_UNKNOWN;
+                break;
+            case SubPixelHorizontalRGB:
+                subpixel = FC_RGBA_RGB;
+                break;
+            case SubPixelHorizontalBGR:
+                subpixel = FC_RGBA_BGR;
+                break;
+            case SubPixelVerticalRGB:
+                subpixel = FC_RGBA_VRGB;
+                break;
+            case SubPixelVerticalBGR:
+                subpixel = FC_RGBA_VBGR;
+                break;
+            case SubPixelNone:
+                subpixel = FC_RGBA_NONE;
+                break;
             }
         }
-        for (int s = 0; s < ScreenCount(qt_x11Data->display); ++s) {
-            int subpixel = FC_RGBA_UNKNOWN;
-#if !defined(QT_NO_XRENDER) && (RENDER_MAJOR > 0 || RENDER_MINOR >= 6)
-            if (qt_x11Data->use_xrender) {
-                int rsp = XRenderQuerySubpixelOrder(qt_x11Data->display, s);
-                switch (rsp) {
-                default:
-                case SubPixelUnknown:
-                    subpixel = FC_RGBA_UNKNOWN;
-                    break;
-                case SubPixelHorizontalRGB:
-                    subpixel = FC_RGBA_RGB;
-                    break;
-                case SubPixelHorizontalBGR:
-                    subpixel = FC_RGBA_BGR;
-                    break;
-                case SubPixelVerticalRGB:
-                    subpixel = FC_RGBA_VRGB;
-                    break;
-                case SubPixelVerticalBGR:
-                    subpixel = FC_RGBA_VBGR;
-                    break;
-                case SubPixelNone:
-                    subpixel = FC_RGBA_NONE;
-                    break;
-                }
-            }
 #endif
 
-            char *rgba = XGetDefault(qt_x11Data->display, "Xft", FC_RGBA);
-            if (rgba) {
-                char *end = 0;
-                int v = strtol(rgba, &end, 0);
-                if (rgba != end) {
-                    subpixel = v;
-                } else if (qstrncmp(rgba, "unknown", 7) == 0) {
-                    subpixel = FC_RGBA_UNKNOWN;
-                } else if (qstrncmp(rgba, "rgb", 3) == 0) {
-                    subpixel = FC_RGBA_RGB;
-                } else if (qstrncmp(rgba, "bgr", 3) == 0) {
-                    subpixel = FC_RGBA_BGR;
-                } else if (qstrncmp(rgba, "vrgb", 4) == 0) {
-                    subpixel = FC_RGBA_VRGB;
-                } else if (qstrncmp(rgba, "vbgr", 4) == 0) {
-                    subpixel = FC_RGBA_VBGR;
-                } else if (qstrncmp(rgba, "none", 4) == 0) {
-                    subpixel = FC_RGBA_NONE;
-                }
+        char *rgba = XGetDefault(qt_x11Data->display, "Xft", FC_RGBA);
+        if (rgba) {
+            char *end = 0;
+            int v = strtol(rgba, &end, 0);
+            if (rgba != end) {
+                subpixel = v;
+            } else if (qstrncmp(rgba, "unknown", 7) == 0) {
+                subpixel = FC_RGBA_UNKNOWN;
+            } else if (qstrncmp(rgba, "rgb", 3) == 0) {
+                subpixel = FC_RGBA_RGB;
+            } else if (qstrncmp(rgba, "bgr", 3) == 0) {
+                subpixel = FC_RGBA_BGR;
+            } else if (qstrncmp(rgba, "vrgb", 4) == 0) {
+                subpixel = FC_RGBA_VRGB;
+            } else if (qstrncmp(rgba, "vbgr", 4) == 0) {
+                subpixel = FC_RGBA_VBGR;
+            } else if (qstrncmp(rgba, "none", 4) == 0) {
+                subpixel = FC_RGBA_NONE;
             }
-            qt_x11Data->screens[s].subpixel = subpixel;
         }
-        getXDefault("Xft", FC_ANTIALIAS, &qt_x11Data->fc_antialias);
+        qt_x11Data->screens[s].subpixel = subpixel;
+    }
+    getXDefault("Xft", FC_ANTIALIAS, &qt_x11Data->fc_antialias);
 #ifdef FC_HINT_STYLE
-        qt_x11Data->fc_hint_style = -1;
-        getXDefault("Xft", FC_HINT_STYLE, &qt_x11Data->fc_hint_style);
+    qt_x11Data->fc_hint_style = -1;
+    getXDefault("Xft", FC_HINT_STYLE, &qt_x11Data->fc_hint_style);
 #endif
 #if 0
-        // ###### these are implemented by Xft, not sure we need them
-        getXDefault("Xft", FC_AUTOHINT, &qt_x11Data->fc_autohint);
-        getXDefault("Xft", FC_HINTING, &qt_x11Data->fc_autohint);
-        getXDefault("Xft", FC_MINSPACE, &qt_x11Data->fc_autohint);
+    // ###### these are implemented by Xft, not sure we need them
+    getXDefault("Xft", FC_AUTOHINT, &qt_x11Data->fc_autohint);
+    getXDefault("Xft", FC_HINTING, &qt_x11Data->fc_autohint);
+    getXDefault("Xft", FC_MINSPACE, &qt_x11Data->fc_autohint);
 #endif
 #endif // QT_NO_XRENDER
 
-        // initialize key mapper
-        QKeyMapper::changeKeyboard();
+    // initialize key mapper
+    QKeyMapper::changeKeyboard();
 
-        // Misc. initialization
-        QCursorData::initialize();
-    }
+    // Misc. initialization
+    QCursorData::initialize();
     QFont::initialize();
 
-    if(qt_appType != QApplication::Tty) {
-        qApp->setObjectName(qApp->applicationName());
+    qApp->setObjectName(qApp->applicationName());
 
-        for (int screen = 0; screen < qt_x11Data->screenCount; ++screen) {
-            XSelectInput(qt_x11Data->display, QX11Info::appRootWindow(screen),
-                         KeymapStateMask | EnterWindowMask | LeaveWindowMask | PropertyChangeMask);
+    for (int screen = 0; screen < qt_x11Data->screenCount; ++screen) {
+        XSelectInput(qt_x11Data->display, QX11Info::appRootWindow(screen),
+                     KeymapStateMask | EnterWindowMask | LeaveWindowMask | PropertyChangeMask);
 
 #ifndef QT_NO_XRANDR
-            if (qt_x11Data->use_xrandr)
-                XRRSelectInput(qt_x11Data->display, QX11Info::appRootWindow(screen), True);
+        if (qt_x11Data->use_xrandr)
+            XRRSelectInput(qt_x11Data->display, QX11Info::appRootWindow(screen), True);
 #endif // QT_NO_XRANDR
-        }
+    }
 
         // Attempt to determine if compositor is active
 #ifndef QT_NO_XFIXES
-        XFixesSelectSelectionInput(qt_x11Data->display, QX11Info::appRootWindow(), ATOM(_NET_WM_CM_S0),
-                                   XFixesSetSelectionOwnerNotifyMask
-                                   | XFixesSelectionWindowDestroyNotifyMask
-                                   | XFixesSelectionClientCloseNotifyMask);
+    XFixesSelectSelectionInput(qt_x11Data->display, QX11Info::appRootWindow(), ATOM(_NET_WM_CM_S0),
+                               XFixesSetSelectionOwnerNotifyMask
+                               | XFixesSelectionWindowDestroyNotifyMask
+                               | XFixesSelectionClientCloseNotifyMask);
 #endif // QT_NO_XFIXES
-        qt_x11Data->compositingManagerRunning = XGetSelectionOwner(qt_x11Data->display,
-                                                            ATOM(_NET_WM_CM_S0));
+    qt_x11Data->compositingManagerRunning = XGetSelectionOwner(qt_x11Data->display,
+                                                               ATOM(_NET_WM_CM_S0));
 
-        QApplicationPrivate::x11_apply_settings();
+    QApplicationPrivate::x11_apply_settings();
 
-        // be smart about the size of the default font. most X servers have helvetica
-        // 12 point available at 2 resolutions:
-        //     75dpi (12 pixels) and 100dpi (17 pixels).
-        // At 95 DPI, a 12 point font should be 16 pixels tall - in which case a 17
-        // pixel font is a closer match than a 12 pixel font
-        int ptsz = (qt_x11Data->use_xrender
-                    ? 9
-                    : (int) (((QX11Info::appDpiY() >= 95 ? 17. : 12.) *
-                              72. / (float) QX11Info::appDpiY()) + 0.5));
+    // be smart about the size of the default font. most X servers have helvetica
+    // 12 point available at 2 resolutions:
+    //     75dpi (12 pixels) and 100dpi (17 pixels).
+    // At 95 DPI, a 12 point font should be 16 pixels tall - in which case a 17
+    // pixel font is a closer match than a 12 pixel font
+    int ptsz = (qt_x11Data->use_xrender
+                ? 9
+                : (int) (((QX11Info::appDpiY() >= 95 ? 17. : 12.) *
+                            72. / (float) QX11Info::appDpiY()) + 0.5));
 
-        if (!QApplicationPrivate::sys_font) {
-            // no font from settings, provide a fallback
-            QFont f(qt_x11Data->has_fontconfig ? QLatin1String("Sans Serif") : QLatin1String("Helvetica"),
-                    ptsz);
-            QApplicationPrivate::setSystemFont(f);
-        }
+    if (!QApplicationPrivate::sys_font) {
+        // no font from settings, provide a fallback
+        QFont f(qt_x11Data->has_fontconfig ? QLatin1String("Sans Serif") : QLatin1String("Helvetica"),
+                ptsz);
+        QApplicationPrivate::setSystemFont(f);
+    }
 
-        qt_x11Data->startupId = getenv("DESKTOP_STARTUP_ID");
-        if (qt_x11Data->startupId) {
-            ::unsetenv("DESKTOP_STARTUP_ID");
-        }
-   } else {
-        // read some non-GUI settings when not using the X server...
-
-        if (QApplication::desktopSettingsAware()) {
-            QSettings *settings = QCoreApplicationPrivate::staticConf();
-
-            // read library (ie. plugin) path list
-            QStringList pathlist = settings->value(QLatin1String("Qt/libraryPath")).toString().split(QLatin1Char(':'));
-            if (!pathlist.isEmpty()) {
-                QStringList::ConstIterator it = pathlist.constBegin();
-                while (it != pathlist.constEnd())
-                    QApplication::addLibraryPath(*it++);
-            }
-
-            QString defaultcodec = settings->value(QLatin1String("Qt/defaultCodec"),
-                                                  QVariant(QLatin1String("none"))).toString();
-            if (defaultcodec != QLatin1String("none")) {
-                QTextCodec *codec = QTextCodec::codecForName(defaultcodec.toLatin1());
-                if (codec)
-                    QTextCodec::setCodecForTr(codec);
-            }
-        }
+    qt_x11Data->startupId = getenv("DESKTOP_STARTUP_ID");
+    if (qt_x11Data->startupId) {
+        ::unsetenv("DESKTOP_STARTUP_ID");
     }
 }
 
@@ -1387,12 +1356,10 @@ void qt_init(QApplicationPrivate *priv, Display *display,
 
 void qt_cleanup()
 {
-    if (qt_appType != QApplication::Tty) {
-        QPixmapCache::clear();
-        QCursorData::cleanup();
-        QFont::cleanup();
-        QColormap::cleanup();
-    }
+    QPixmapCache::clear();
+    QCursorData::cleanup();
+    QFont::cleanup();
+    QColormap::cleanup();
 
 #ifndef QT_NO_XRENDER
     for (int i = 0; i < qt_x11Data->solid_fill_count; ++i) {
@@ -1406,8 +1373,7 @@ void qt_cleanup()
 #endif
 
     // Reset the error handlers
-    if (qt_appType != QApplication::Tty)
-        XSync(qt_x11Data->display, False); // sync first to process all possible errors
+    XSync(qt_x11Data->display, False); // sync first to process all possible errors
     XSetErrorHandler(original_x_errhandler);
     XSetIOErrorHandler(original_xio_errhandler);
 
@@ -1418,8 +1384,8 @@ void qt_cleanup()
         }
     }
 
-    if (qt_appType != QApplication::Tty && !qt_x11Data->foreignDisplay)
-        XCloseDisplay(qt_x11Data->display);                // close X display
+    if (!qt_x11Data->foreignDisplay)
+        XCloseDisplay(qt_x11Data->display); // close X display
     qt_x11Data->display = 0;
 
     delete [] qt_x11Data->screens;

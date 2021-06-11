@@ -84,6 +84,7 @@ public:
     static bool is_app_closing;
 
     static std::bitset<Qt::AA_AttributeCount> attribs;
+    static QCoreApplication::Type app_type;
 #ifndef QT_NO_SETTINGS
     static QSettings *staticConf();
 #endif

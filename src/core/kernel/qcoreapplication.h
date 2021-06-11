@@ -47,9 +47,13 @@ class Q_CORE_EXPORT QCoreApplication : public QObject
 
     Q_DECLARE_PRIVATE(QCoreApplication)
 public:
+    enum Type { Tty, Gui };
+
     QCoreApplication(int &argc, char **argv);
 
     ~QCoreApplication();
+
+    static Type type();
 
     static QStringList arguments();
 

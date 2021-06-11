@@ -120,6 +120,7 @@ QSettings *QCoreApplicationPrivate::staticConf()
 
 QCoreApplication *QCoreApplication::self = 0;
 std::bitset<Qt::AA_AttributeCount> QCoreApplicationPrivate::attribs;
+QCoreApplication::Type QCoreApplicationPrivate::app_type = QCoreApplication::Tty;
 
 struct QCoreApplicationData {
     QCoreApplicationData() {
@@ -387,6 +388,15 @@ QCoreApplication::~QCoreApplication()
 #endif
 }
 
+/*!
+    Returns the type of application (\l Tty or Gui). The type is set depending
+    on the application instance - if it is QCoreApplication then type is Tty,
+    if it is QApplication then it is Gui.
+*/
+QCoreApplication::Type QCoreApplication::type()
+{
+    return QCoreApplicationPrivate::app_type;
+}
 
 /*!
     Sets the attribute \a attribute if \a on is true;

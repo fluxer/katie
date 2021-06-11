@@ -64,16 +64,12 @@ class Q_GUI_EXPORT QApplication : public QCoreApplication
     Q_PROPERTY(bool autoSipEnabled READ autoSipEnabled WRITE setAutoSipEnabled)
 
 public:
-    enum Type { Tty, Gui };
-
-    QApplication(int &argc, char **argv, Type = Gui);
+    QApplication(int &argc, char **argv);
 #if defined(Q_WS_X11)
     QApplication(Display* dpy, Qt::HANDLE visual = 0, Qt::HANDLE cmap = 0);
     QApplication(Display *dpy, int &argc, char **argv, Qt::HANDLE visual = 0, Qt::HANDLE cmap= 0);
 #endif
     virtual ~QApplication();
-
-    static Type type();
 
     static QStyle *style();
     static void setStyle(QStyle*);

@@ -86,16 +86,15 @@ QT_BEGIN_NAMESPACE
 
 Q_CORE_EXPORT void qt_call_post_routines();
 
-QApplication::Type qt_appType = QApplication::Tty;
 QApplicationPrivate *QApplicationPrivate::self = 0;
 
 bool QApplicationPrivate::quitOnLastWindowClosed = true;
 bool QApplicationPrivate::autoSipEnabled = true;
 
-QApplicationPrivate::QApplicationPrivate(int &argc, char **argv, QApplication::Type type)
+QApplicationPrivate::QApplicationPrivate(int &argc, char **argv)
     : QCoreApplicationPrivate(argc, argv)
 {
-    qt_appType = type;
+    QCoreApplicationPrivate::app_type = QCoreApplication::Gui;
 
 #ifndef QT_NO_SESSIONMANAGER
     is_session_restored = false;
@@ -376,7 +375,7 @@ QWidgetList *qt_modal_stack = Q_NULLPTR;                     // stack of modal w
 void QApplicationPrivate::process_cmdline()
 {
     // process platform-indep command line
-    if (qt_appType == QApplication::Tty || !argc)
+    if (!argc)
         return;
 
     for (int i=1; i<argc; i++) { // if you add anything here, modify QCoreApplication::arguments()
@@ -510,19 +509,10 @@ void QApplicationPrivate::process_cmdline()
     be greater than zero and \a argv must contain at least one valid character
     string.
 
-    Use \a Tty type for programs without a graphical user interface that should
-    be able to run without a window system.
-
-    On X11, the window system is initialized if type is \a GUI, otherwise the
-    application does not connect to the X server.
-
-    The following example shows how to create an application that uses a
-    graphical interface when available.
-
-    \snippet doc/src/snippets/code/src_gui_kernel_qapplication.cpp 0
+    Use \l{QCoreApplication} for programs without a graphical user interface.
 */
-QApplication::QApplication(int &argc, char **argv, QApplication::Type type)
-    : QCoreApplication(*new QApplicationPrivate(argc, argv, type))
+QApplication::QApplication(int &argc, char **argv)
+    : QCoreApplication(*new QApplicationPrivate(argc, argv))
 {
     Q_D(QApplication);
     d->construct();
@@ -543,8 +533,7 @@ void QApplicationPrivate::construct(Display *dpy, Qt::HANDLE visual, Qt::HANDLE 
     QWidgetPrivate::mapper = new QWidgetMapper;
     QWidgetPrivate::allWidgets = new QWidgetSet;
 
-    if (qt_appType != QApplication::Tty)
-        (void) QApplication::style();  // trigger creation of application style
+    QApplication::style(); // trigger creation of application style
 
     is_app_running = true; // no longer starting up
 
@@ -557,8 +546,7 @@ void QApplicationPrivate::construct(Display *dpy, Qt::HANDLE visual, Qt::HANDLE 
     if (qgetenv("QT_USE_NATIVE_WINDOWS").toInt() > 0)
         q->setAttribute(Qt::AA_NativeWindows);
 
-    if (qt_appType != QApplication::Tty)
-        initializeMultitouch();
+    initializeMultitouch();
 }
 
 #if defined(Q_WS_X11)
@@ -582,7 +570,7 @@ static char *aargv[] = { (char*)"unknown\0", 0 };
     This function is only available on X11.
 */
 QApplication::QApplication(Display* dpy, Qt::HANDLE visual, Qt::HANDLE colormap)
-    : QCoreApplication(*new QApplicationPrivate(aargc, aargv, QApplication::Gui))
+    : QCoreApplication(*new QApplicationPrivate(aargc, aargv))
 {
     if (Q_UNLIKELY(!dpy))
         qWarning("QApplication: Invalid Display* argument");
@@ -606,7 +594,7 @@ QApplication::QApplication(Display* dpy, Qt::HANDLE visual, Qt::HANDLE colormap)
 */
 QApplication::QApplication(Display *dpy, int &argc, char **argv,
                            Qt::HANDLE visual, Qt::HANDLE colormap)
-    : QCoreApplication(*new QApplicationPrivate(argc, argv, QApplication::Gui))
+    : QCoreApplication(*new QApplicationPrivate(argc, argv))
 {
     if (Q_UNLIKELY(!dpy))
         qWarning("QApplication: Invalid Display* argument");
@@ -615,15 +603,6 @@ QApplication::QApplication(Display *dpy, int &argc, char **argv,
 }
 
 #endif // Q_WS_X11
-
-/*!
-    Returns the type of application (\l Tty or Gui). The type is set when
-    constructing the QApplication object.
-*/
-QApplication::Type QApplication::type()
-{
-    return qt_appType;
-}
 
 /*****************************************************************************
   Functions returning the active popup and modal widgets.
@@ -749,8 +728,7 @@ QApplication::~QApplication()
 #endif
 
 #ifndef QT_NO_DRAGANDDROP
-    if (qt_appType != QApplication::Tty)
-        delete QDragManager::self();
+    delete QDragManager::self();
 #endif
 
     d->cleanupMultitouch();
@@ -909,7 +887,7 @@ QStyle *QApplication::style()
 {
     if (QApplicationPrivate::app_style)
         return QApplicationPrivate::app_style;
-    if (qt_appType == QApplication::Tty) {
+    if (QApplicationPrivate::app_type == QApplication::Tty) {
         Q_ASSERT(!"No style available in non-gui applications!");
         return 0;
     }
