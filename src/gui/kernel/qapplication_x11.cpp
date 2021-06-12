@@ -1164,7 +1164,7 @@ void qt_init(QApplicationPrivate *priv, Display *display,
     qt_get_net_virtual_roots();
 
 #ifndef QT_NO_XRANDR
-        // See if XRandR is supported on the connected display
+    // See if XRandR is supported on the connected display
     int xrandr_errorbase;
     if (qgetenv("QT_X11_NO_XRANDR").isNull()
         && XQueryExtension(qt_x11Data->display, "RANDR", &qt_x11Data->xrandr_major,
@@ -1238,10 +1238,6 @@ void qt_init(QApplicationPrivate *priv, Display *display,
         if (qt_x11Data->use_xrender) {
             int rsp = XRenderQuerySubpixelOrder(qt_x11Data->display, s);
             switch (rsp) {
-            default:
-            case SubPixelUnknown:
-                subpixel = FC_RGBA_UNKNOWN;
-                break;
             case SubPixelHorizontalRGB:
                 subpixel = FC_RGBA_RGB;
                 break;
@@ -1256,6 +1252,10 @@ void qt_init(QApplicationPrivate *priv, Display *display,
                 break;
             case SubPixelNone:
                 subpixel = FC_RGBA_NONE;
+                break;
+            case SubPixelUnknown:
+            default:
+                subpixel = FC_RGBA_UNKNOWN;
                 break;
             }
         }
