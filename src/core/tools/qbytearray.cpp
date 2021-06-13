@@ -1918,7 +1918,7 @@ QByteArray &QByteArray::replace(const char *c, const QByteArray &after)
 
 QByteArray &QByteArray::replace(const char *before, int bsize, const char *after, int asize)
 {
-    if (isEmpty() || (before == after && bsize == asize))
+    if (isEmpty() || !before || !bsize || (before == after && bsize == asize))
         return *this;
 
     QByteArrayMatcher matcher(before, bsize);
