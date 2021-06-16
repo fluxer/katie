@@ -383,8 +383,6 @@ check_type_size(size_t QT_POINTER_SIZE)
 # used in components, tests and JavaScriptCore
 katie_check_header("cxxabi.h")
 katie_check_function(posix_memalign "stdlib.h")
-katie_check_function(fcvt "stdlib.h")
-katie_check_function(ecvt "stdlib.h")
 katie_check_function(getprogname "stdlib.h")
 katie_check_function(arc4random "stdlib.h")
 katie_check_function(get_current_dir_name "unistd.h")

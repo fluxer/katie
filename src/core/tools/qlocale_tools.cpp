@@ -322,7 +322,6 @@ TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE
 SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 ----------------------------------------------------------------------
 */
-#if !defined(QT_HAVE_FCVT) || !defined(QT_HAVE_ECVT)
 // the code bellow is copy from musl libc, modified to not use static buffer
 char *qfcvt(double x, int n, int *dp, int *sign, char* buf)
 {
@@ -360,6 +359,5 @@ char *qecvt(double x, int n, int *dp, int *sign, char* buf)
 
     return buf;
 }
-#endif // QT_HAVE_ECVT
 
 QT_END_NAMESPACE
