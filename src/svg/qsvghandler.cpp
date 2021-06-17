@@ -105,8 +105,7 @@ QSvgAttributes::QSvgAttributes(const QXmlStreamAttributes &xmlAttributes, QSvgHa
     QStringRef style = xmlAttributes.value(QLatin1String("style"));
     if (!style.isEmpty()) {
         handler->parseCSStoXMLAttrs(style.toString(), &m_cssAttributes);
-        for (int j = 0; j < m_cssAttributes.count(); ++j) {
-            const QSvgCssAttribute &attribute = m_cssAttributes.at(j);
+        foreach (const QSvgCssAttribute &attribute, m_cssAttributes) {
             QStringRef name = attribute.name;
             QStringRef value = attribute.value;
             if (name.isEmpty())
