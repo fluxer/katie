@@ -60,7 +60,7 @@ public:
     virtual Type type() const;
     virtual QRectF bounds(QPainter *p, QSvgExtraStates &states) const;
 private:
-    QPainterPath m_path;
+    const QPainterPath m_path;
 };
 
 class QSvgEllipse : public QSvgNode
@@ -71,7 +71,7 @@ public:
     virtual Type type() const;
     virtual QRectF bounds(QPainter *p, QSvgExtraStates &states) const;
 private:
-    QRectF m_bounds;
+    const QRectF m_bounds;
 };
 
 class QSvgCircle : public QSvgEllipse
@@ -90,7 +90,7 @@ public:
     virtual Type type() const;
     virtual QRectF bounds(QPainter *p, QSvgExtraStates &states) const;
 private:
-    QImage m_image;
+    const QImage m_image;
     QRect  m_bounds;
 };
 
@@ -102,7 +102,7 @@ public:
     virtual Type type() const;
     virtual QRectF bounds(QPainter *p, QSvgExtraStates &states) const;
 private:
-    QLineF m_line;
+    const QLineF m_line;
 };
 
 class QSvgPath : public QSvgNode
@@ -124,7 +124,7 @@ public:
     virtual Type type() const;
     virtual QRectF bounds(QPainter *p, QSvgExtraStates &states) const;
 private:
-    QPolygonF m_poly;
+    const QPolygonF m_poly;
 };
 
 class QSvgPolyline : public QSvgNode
@@ -135,7 +135,7 @@ public:
     virtual Type type() const;
     virtual QRectF bounds(QPainter *p, QSvgExtraStates &states) const;
 private:
-    QPolygonF m_poly;
+    const QPolygonF m_poly;
 };
 
 class QSvgRect : public QSvgNode
@@ -146,8 +146,8 @@ public:
     virtual void draw(QPainter *p, QSvgExtraStates &states);
     virtual QRectF bounds(QPainter *p, QSvgExtraStates &states) const;
 private:
-    QRectF m_rect;
-    int m_rx, m_ry;
+    const QRectF m_rect;
+    const int m_rx, m_ry;
 };
 
 class  QSvgTspan;
@@ -177,7 +177,7 @@ public:
 private:
     static QSvgTspan * const LINEBREAK;
 
-    QPointF m_coord;
+    const QPointF m_coord;
 
     // 'm_tspans' is also used to store characters outside tspans and line breaks.
     // If a 'm_tspan' item is null, it indicates a line break.
@@ -207,7 +207,7 @@ public:
 private:
     QString m_text;
     QSvgText::WhitespaceMode m_mode;
-    bool m_isTspan;
+    const bool m_isTspan;
 };
 
 class QSvgUse : public QSvgNode
@@ -220,7 +220,7 @@ public:
 
 private:
     QSvgNode *m_link;
-    QPointF   m_start;
+    const QPointF   m_start;
 };
 
 class QSvgVideo : public QSvgNode
