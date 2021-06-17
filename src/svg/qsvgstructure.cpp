@@ -209,17 +209,16 @@ QSvgNode::Type QSvgSwitch::type() const
 QRectF QSvgStructureNode::bounds(QPainter *p, QSvgExtraStates &states) const
 {
     QRectF bounds;
-    foreach(QSvgNode *node, m_renderers)
+    foreach(const QSvgNode *node, m_renderers) {
         bounds |= node->transformedBounds(p, states);
+    }
     return bounds;
 }
 
 QSvgNode * QSvgStructureNode::previousSiblingNode(QSvgNode *n) const
 {
     QSvgNode *prev = 0;
-    QList<QSvgNode*>::const_iterator itr = m_renderers.constBegin();
-    for (; itr != m_renderers.constEnd(); ++itr) {
-        QSvgNode *node = *itr;
+    foreach(QSvgNode *node, m_renderers) {
         if (node == n)
             return prev;
         prev = node;
