@@ -67,7 +67,7 @@ static qint64 getticks()
     struct timespec ts;
     if (::clock_gettime(CLOCK_PROCESS_CPUTIME_ID, &ts) == -1)
         return 0;
-    return (ts.tv_sec * 1000000000) + ts.tv_nsec;
+    return (ts.tv_sec + ts.tv_nsec);
 }
 
 void QBenchmarkTickMeasurer::start()
