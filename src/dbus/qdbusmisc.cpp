@@ -39,9 +39,9 @@ QString qDBusInterfaceFromMetaObject(const QMetaObject *mo)
 
     int idx = mo->indexOfClassInfo(QCLASSINFO_DBUS_INTERFACE);
     if (idx >= mo->classInfoOffset()) {
-        interface = QLatin1String(mo->classInfo(idx).value());
+        interface = QString::fromLatin1(mo->classInfo(idx).value());
     } else {
-        interface = QLatin1String(mo->className());
+        interface = QString::fromLatin1(mo->className());
         interface.replace(QLatin1String("::"), QLatin1String("."));
 
         if (interface.startsWith(QLatin1String("QDBus"))) {

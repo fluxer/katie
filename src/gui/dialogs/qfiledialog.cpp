@@ -553,8 +553,8 @@ bool QFileDialogPrivate::canBeNativeDialog()
     if (q->testAttribute(Qt::WA_DontShowOnScreen))
         return false;
 
-    QLatin1String staticName(QFileDialog::staticMetaObject.className());
-    QLatin1String dynamicName(q->metaObject()->className());
+    const QByteArray staticName(QFileDialog::staticMetaObject.className());
+    const QByteArray dynamicName(q->metaObject()->className());
     return (staticName == dynamicName);
 }
 

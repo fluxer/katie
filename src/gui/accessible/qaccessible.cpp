@@ -568,7 +568,7 @@ QAccessibleInterface *QAccessible::queryAccessibleInterface(QObject *object)
 
     const QMetaObject *mo = object->metaObject();
     while (mo) {
-        const QLatin1String cn(mo->className());
+        const QString cn = QString::fromLatin1(mo->className());
         for (int i = qAccessibleFactories()->count(); i > 0; --i) {
             InterfaceFactory factory = qAccessibleFactories()->at(i - 1);
             iface = factory(cn, object);

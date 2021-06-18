@@ -407,7 +407,7 @@ void SignalSlotEditor::fromUi(const DomConnections *connections, QWidget *parent
 
 static bool skipWidget(const QWidget *w)
 {
-    const QString name = QLatin1String(w->metaObject()->className());
+    const QString name = QString::fromLatin1(w->metaObject()->className());
     if (name == QLatin1String("QDesignerWidget"))
         return true;
     if (name == QLatin1String("QLayoutWidget"))

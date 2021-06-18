@@ -422,7 +422,7 @@ bool QAbstractFormBuilder::addItem(DomWidget *ui_widget, QWidget *widget, QWidge
     if (parentWidget == 0)
         return true;
     // Check special cases. First: Custom container
-    const QString className = QLatin1String(parentWidget->metaObject()->className());
+    const QString className = QString::fromLatin1(parentWidget->metaObject()->className());
     const QString addPageMethod = QFormBuilderExtra::instance(this)->customWidgetAddPageMethod(className);
     if (!addPageMethod.isEmpty()) {
         // If this fails ( non-existent or non-slot), use ContainerExtension in Designer, else it can't be helped
@@ -993,7 +993,7 @@ DomColorGroup *QAbstractFormBuilder::saveColorGroup(const QPalette &palette)
 
             DomColorRole *colorRole = new DomColorRole();
             colorRole->setElementBrush(saveBrush(br));
-            colorRole->setAttributeRole(QLatin1String(colorRole_enum.valueToKey(role)));
+            colorRole->setAttributeRole(QString::fromLatin1(colorRole_enum.valueToKey(role)));
             colorRoles.append(colorRole);
         }
     }
@@ -1076,7 +1076,7 @@ DomBrush *QAbstractFormBuilder::saveBrush(const QBrush &br)
 
     DomBrush *brush = new DomBrush();
     const Qt::BrushStyle style = br.style();
-    brush->setAttributeBrushStyle(QLatin1String(brushStyle_enum.valueToKey(style)));
+    brush->setAttributeBrushStyle(QString::fromLatin1(brushStyle_enum.valueToKey(style)));
     if (style == Qt::LinearGradientPattern ||
                 style == Qt::RadialGradientPattern ||
                 style == Qt::ConicalGradientPattern) {
@@ -1087,9 +1087,9 @@ DomBrush *QAbstractFormBuilder::saveBrush(const QBrush &br)
         DomGradient *gradient = new DomGradient();
         const QGradient *gr = br.gradient();
         const QGradient::Type type = gr->type();
-        gradient->setAttributeType(QLatin1String(gradientType_enum.valueToKey(type)));
-        gradient->setAttributeSpread(QLatin1String(gradientSpread_enum.valueToKey(gr->spread())));
-        gradient->setAttributeCoordinateMode(QLatin1String(gradientCoordinate_enum.valueToKey(gr->coordinateMode())));
+        gradient->setAttributeType(QString::fromLatin1(gradientType_enum.valueToKey(type)));
+        gradient->setAttributeSpread(QString::fromLatin1(gradientSpread_enum.valueToKey(gr->spread())));
+        gradient->setAttributeCoordinateMode(QString::fromLatin1(gradientCoordinate_enum.valueToKey(gr->coordinateMode())));
         QList<DomGradientStop *> stops;
         QGradientStops st = gr->stops();
         QVectorIterator<QPair<qreal, QColor> > it(st);
@@ -1259,7 +1259,7 @@ DomConnections *QAbstractFormBuilder::saveConnections()
 DomWidget *QAbstractFormBuilder::createDom(QWidget *widget, DomWidget *ui_parentWidget, bool recursive)
 {
     DomWidget *ui_widget = new DomWidget();
-    ui_widget->setAttributeClass(QLatin1String(widget->metaObject()->className()));
+    ui_widget->setAttributeClass(QString::fromLatin1(widget->metaObject()->className()));
     ui_widget->setElementProperty(computeProperties(widget));
 
     if (recursive) {
@@ -1484,7 +1484,7 @@ DomLayout *QAbstractFormBuilder::createDom(QLayout *layout, DomLayout *ui_layout
 {
     Q_UNUSED(ui_layout)
     DomLayout *lay = new DomLayout();
-    lay->setAttributeClass(QLatin1String(layout->metaObject()->className()));
+    lay->setAttributeClass(QString::fromLatin1(layout->metaObject()->className()));
     const QString objectName = layout->objectName();
     if (!objectName.isEmpty())
         lay->setAttributeName(objectName);
@@ -1599,7 +1599,7 @@ QList<DomProperty*> QAbstractFormBuilder::computeProperties(QObject *obj)
         const QString pname = QString::fromUtf8(propname);
         const QMetaProperty prop = meta->property(meta->indexOfProperty(propname));
 
-        if (!prop.isWritable() || !checkProperty(obj, QLatin1String(prop.name())))
+        if (!prop.isWritable() || !checkProperty(obj, QString::fromLatin1(prop.name())))
             continue;
 
         const QVariant v = prop.read(obj);

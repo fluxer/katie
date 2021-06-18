@@ -396,9 +396,9 @@ QString WidgetFactory::classNameOf(QDesignerFormEditorInterface *c, const QObjec
     if (o == 0)
         return QString();
 
-    const char *className = o->metaObject()->className();
+    const QString className = QString::fromLatin1(o->metaObject()->className());
     if (!o->isWidgetType())
-        return QLatin1String(className);
+        return className;
     const QWidget *w = static_cast<const QWidget*>(o);
     // check promoted before designer special
     const QString customClassName = promotedCustomClassName(c, const_cast<QWidget*>(w));
@@ -415,7 +415,7 @@ QString WidgetFactory::classNameOf(QDesignerFormEditorInterface *c, const QObjec
     else if (qobject_cast<const QDesignerWidget*>(w))
         return QLatin1String("QWidget");
 
-    return QLatin1String(className);
+    return className;
 }
 
 QLayout *WidgetFactory::createUnmanagedLayout(QWidget *parentWidget, int type)
@@ -656,7 +656,7 @@ void WidgetFactory::initialize(QObject *object) const
 
 static inline QString classNameOfStyle(const QStyle *s)
 {
-    return QLatin1String(s->metaObject()->className());
+    return QString::fromLatin1(s->metaObject()->className());
 }
 
 QString WidgetFactory::styleName() const

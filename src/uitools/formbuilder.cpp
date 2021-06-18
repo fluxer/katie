@@ -132,7 +132,7 @@ QWidget *QFormBuilder::create(DomWidget *ui_widget, QWidget *parentWidget)
             && !qobject_cast<QDockWidget *>(parentWidget)
 #endif
         ) {
-        const QString parentClassName = QLatin1String(parentWidget->metaObject()->className());
+        const QString parentClassName = QString::fromLatin1(parentWidget->metaObject()->className());
         if (!fb->isCustomWidgetContainer(parentClassName))
             fb->setProcessingLayoutWidget(true);
     }

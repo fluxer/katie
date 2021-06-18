@@ -597,8 +597,8 @@ JSC::JSValue QT_FASTCALL functionDisconnect(JSC::ExecState *exec, JSC::JSObject 
     QMetaMethod sig = meta->method(qtSignal->initialIndex());
     if (sig.methodType() != QMetaMethod::Signal) {
         QString message = QString::fromLatin1("Function.prototype.disconnect: %0::%1 is not a signal")
-                          .arg(QLatin1String(qtSignal->metaObject()->className()))
-                          .arg(QLatin1String(sig.signature()));
+                          .arg(QString::fromLatin1(qtSignal->metaObject()->className()))
+                          .arg(QString::fromLatin1(sig.signature()));
         return JSC::throwError(exec, JSC::TypeError, message);
     }
 
@@ -628,8 +628,8 @@ JSC::JSValue QT_FASTCALL functionDisconnect(JSC::ExecState *exec, JSC::JSObject 
     bool ok = engine->scriptDisconnect(thisObject, receiver, slot);
     if (!ok) {
         QString message = QString::fromLatin1("Function.prototype.disconnect: failed to disconnect from %0::%1")
-                          .arg(QLatin1String(qtSignal->metaObject()->className()))
-                          .arg(QLatin1String(sig.signature()));
+                          .arg(QString::fromLatin1(qtSignal->metaObject()->className()))
+                          .arg(QString::fromLatin1(sig.signature()));
         return JSC::throwError(exec, JSC::GeneralError, message);
     }
     return JSC::jsUndefined();
@@ -655,8 +655,8 @@ JSC::JSValue QT_FASTCALL functionConnect(JSC::ExecState *exec, JSC::JSObject * /
     QMetaMethod sig = meta->method(qtSignal->initialIndex());
     if (sig.methodType() != QMetaMethod::Signal) {
         QString message = QString::fromLatin1("Function.prototype.connect: %0::%1 is not a signal")
-                          .arg(QLatin1String(qtSignal->metaObject()->className()))
-                          .arg(QLatin1String(sig.signature()));
+                          .arg(QString::fromLatin1(qtSignal->metaObject()->className()))
+                          .arg(QString::fromLatin1(sig.signature()));
         return JSC::throwError(exec, JSC::TypeError, message);
     }
 
@@ -666,14 +666,14 @@ JSC::JSValue QT_FASTCALL functionConnect(JSC::ExecState *exec, JSC::JSObject * /
             overloads.append(qtSignal->initialIndex());
             QByteArray signature = sig.signature();
             QString message = QString::fromLatin1("Function.prototype.connect: ambiguous connect to %0::%1(); candidates are\n")
-                              .arg(QLatin1String(qtSignal->metaObject()->className()))
-                              .arg(QLatin1String(signature.left(signature.indexOf('('))));
+                              .arg(QString::fromLatin1(qtSignal->metaObject()->className()))
+                              .arg(QString::fromLatin1(signature.left(signature.indexOf('('))));
             for (int i = 0; i < overloads.size(); ++i) {
                 QMetaMethod mtd = meta->method(overloads.at(i));
                 message.append(QString::fromLatin1("    %0\n").arg(QString::fromLatin1(mtd.signature())));
             }
             message.append(QString::fromLatin1("Use e.g. object['%0'].connect() to connect to a particular overload")
-                           .arg(QLatin1String(signature)));
+                           .arg(QString::fromLatin1(signature)));
             return JSC::throwError(exec, JSC::GeneralError, message);
         }
     }
@@ -704,8 +704,8 @@ JSC::JSValue QT_FASTCALL functionConnect(JSC::ExecState *exec, JSC::JSObject * /
     bool ok = engine->scriptConnect(thisObject, receiver, slot, Qt::AutoConnection);
     if (!ok) {
         QString message = QString::fromLatin1("Function.prototype.connect: failed to connect to %0::%1")
-                          .arg(QLatin1String(qtSignal->metaObject()->className()))
-                          .arg(QLatin1String(sig.signature()));
+                          .arg(QString::fromLatin1(qtSignal->metaObject()->className()))
+                          .arg(QString::fromLatin1(sig.signature()));
         return JSC::throwError(exec, JSC::GeneralError, message);
     }
     return JSC::jsUndefined();

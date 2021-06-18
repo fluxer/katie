@@ -861,14 +861,14 @@ QString PropertyEditor::realClassName(QObject *object) const
     if (!object)
         return QString();
 
-    QString className = QLatin1String(object->metaObject()->className());
+    QString className = QString::fromLatin1(object->metaObject()->className());
     const QDesignerWidgetDataBaseInterface *db = core()->widgetDataBase();
     if (QDesignerWidgetDataBaseItemInterface *widgetItem = db->item(db->indexOfObject(object, true))) {
         className = widgetItem->name();
 
         if (object->isWidgetType() && className == m_strings.m_qLayoutWidget
                 && static_cast<QWidget*>(object)->layout()) {
-            className = QLatin1String(static_cast<QWidget*>(object)->layout()->metaObject()->className());
+            className = QString::fromLatin1(static_cast<QWidget*>(object)->layout()->metaObject()->className());
         }
     }
 

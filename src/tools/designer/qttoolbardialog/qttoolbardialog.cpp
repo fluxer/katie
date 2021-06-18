@@ -483,7 +483,7 @@ void QtFullToolBarManager::addAction(QAction *action, const QString &category)
         return;
     if (d_ptr->allActions.contains(action))
         return;
-    if (QLatin1String(action->metaObject()->className()) ==
+    if (QString::fromLatin1(action->metaObject()->className()) ==
                 QLatin1String("QToolBarWidgetAction"))
         d_ptr->widgetActions.insert(action, 0);
     else

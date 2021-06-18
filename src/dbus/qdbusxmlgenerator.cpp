@@ -212,9 +212,9 @@ QString qDBusGenerateMetaObjectXml(QString interface, const QMetaObject *mo, con
         // generate the interface name from the meta object
         int idx = mo->indexOfClassInfo(QCLASSINFO_DBUS_INTERFACE);
         if (idx >= mo->classInfoOffset()) {
-            interface = QLatin1String(mo->classInfo(idx).value());
+            interface = QString::fromLatin1(mo->classInfo(idx).value());
         } else {
-            interface = QLatin1String(mo->className());
+            interface = QString::fromLatin1(mo->className());
             interface.replace(QLatin1String("::"), QLatin1String("."));
 
             if (interface.startsWith(QLatin1String("QDBus"))) {

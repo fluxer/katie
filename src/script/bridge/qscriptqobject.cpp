@@ -1780,7 +1780,7 @@ static JSC::JSValue QT_FASTCALL qobjectProtoFuncToString(JSC::ExecState *exec, J
     const QMetaObject *meta = obj ? obj->metaObject() : &QObject::staticMetaObject;
     QString name = obj ? obj->objectName() : QString::fromUtf8("unnamed");
     QString str = QString::fromUtf8("%0(name = \"%1\")")
-                  .arg(QLatin1String(meta->className())).arg(name);
+                  .arg(QString::fromLatin1(meta->className())).arg(name);
     return JSC::jsString(exec, str);
 }
 
@@ -2027,7 +2027,7 @@ JSC::JSValue QMetaObjectWrapperObject::execute(JSC::ExecState *exec,
             return result;
         } else {
             QString message = QString::fromLatin1("no constructor for %0")
-                              .arg(QLatin1String(meta->className()));
+                              .arg(QString::fromLatin1(meta->className()));
             return JSC::throwError(exec, JSC::TypeError, message);
         }
     }
