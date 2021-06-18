@@ -4605,7 +4605,7 @@ QDateTimeParser::StateNode QDateTimeParser::parse(QString &input, int &cursorPos
 end:
     if (newCurrentValue.isValid()) {
         if (context != FromString && state != Invalid && newCurrentValue < minimum) {
-            const QLatin1Char space(' ');
+            static const QLatin1Char space(' ');
             if (Q_UNLIKELY(newCurrentValue >= minimum))
                 qWarning("QDateTimeParser::parse Internal error 3 (%s %s)",
                          qPrintable(newCurrentValue.toString()), qPrintable(minimum.toString()));
