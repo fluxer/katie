@@ -1280,8 +1280,6 @@ private:
 
 void tst_QStyleSheetStyle::toolTip()
 {
-    QSKIP("FIXME: test fails, investigate", SkipAll);
-
     qApp->setStyleSheet(QString());
     QWidget w;
     QHBoxLayout layout(&w);
@@ -1338,6 +1336,7 @@ void tst_QStyleSheetStyle::toolTip()
                 break;
             }
         }
+
         QVERIFY(tooltip);
         QCOMPARE(tooltip->palette().color(tooltip->backgroundRole()), col);
     }
