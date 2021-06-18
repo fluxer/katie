@@ -989,12 +989,13 @@ static bool timeFormatContainsAP(const QString &format)
 {
     int i = 0;
     while (i < format.size()) {
-        if (format.at(i).unicode() == '\'') {
+        const ushort unichar = format.at(i).unicode();
+        if (unichar == '\'') {
             qt_readEscapedFormatString(format, &i);
             continue;
         }
 
-        if (format.at(i).toLower().unicode() == 'a')
+        if (unichar == 'a' || unichar == 'A')
             return true;
 
         ++i;
