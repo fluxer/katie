@@ -176,6 +176,15 @@ bool QFileSystemEntry::isEmpty() const
     return m_nativeFilePath.isEmpty();
 }
 
+void QFileSystemEntry::clear()
+{
+    m_filePath.clear();
+    m_nativeFilePath.clear();
+    m_lastSeparator = 0;
+    m_firstDotInFileName = 0;
+    m_lastDotInFileName = 0;
+}
+
 // private methods
 
 void QFileSystemEntry::findLastSeparator()

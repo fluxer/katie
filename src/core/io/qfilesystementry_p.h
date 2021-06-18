@@ -63,10 +63,7 @@ public:
     bool isRoot() const;
 
     bool isEmpty() const;
-    void clear()
-    {
-        *this = QFileSystemEntry();
-    }
+    void clear();
 
 private:
     // creates the QString version out of the bytearray version
