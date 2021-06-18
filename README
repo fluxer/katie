@@ -71,7 +71,6 @@ There are several things you should be aware before considering Katie:
   - improved namespaces support and introduced QT_NAMESPACE_COMPAT
   - improved cross-compilation support
   - improved POSIX, XSI, SUSv2, etc. requirements build checks
-  - improved Large File Support (LFS) requirements checks
   - script component relies on PCRE instead of internal copy
   - tests and benchmarks can be run without prior installation
 
