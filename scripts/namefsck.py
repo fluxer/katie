@@ -663,7 +663,6 @@ classlist = [
     "QSwipeGesture",
     "QSyntaxHighlighter",
     "QSysInfo",
-    "QSystemLocale",
     "QSystemSemaphore",
     "QSystemTrayIcon",
     "Qt",

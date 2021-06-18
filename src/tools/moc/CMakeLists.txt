@@ -30,7 +30,6 @@ set(BOOTSTRAP_DEFINITIONS
     -DQT_NO_DATASTREAM
     -DQT_NO_LIBRARY
     -DQT_NO_QOBJECT
-    -DQT_NO_SYSTEMLOCALE
     -DQT_NO_TEXTSTREAM
     -DQT_NO_THREAD
     -DQT_NO_PROCESS
@@ -76,7 +75,6 @@ set(BOOTSTRAP_SOURCES
     ${CMAKE_SOURCE_DIR}/src/core/tools/qstringlist.cpp
     ${CMAKE_SOURCE_DIR}/src/core/tools/qstringmatcher.cpp
     ${CMAKE_SOURCE_DIR}/src/core/tools/qvector.cpp
-    ${CMAKE_SOURCE_DIR}/src/core/tools/qlocale_unix.cpp
 )
 
 add_executable(bootstrap_moc ${BOOTSTRAP_SOURCES} ${MOC_SOURCES})

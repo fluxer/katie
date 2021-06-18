@@ -608,7 +608,6 @@ static const struct ClassTblData {
     { QLatin1String("QSwipeGesture"), QLatin1String("QtGui/qgesture.h") },
     { QLatin1String("QSyntaxHighlighter"), QLatin1String("QtGui/qsyntaxhighlighter.h") },
     { QLatin1String("QSysInfo"), QLatin1String("QtCore/qglobal.h") },
-    { QLatin1String("QSystemLocale"), QLatin1String("QtCore/qlocale.h") },
     { QLatin1String("QSystemSemaphore"), QLatin1String("QtCore/qsystemsemaphore.h") },
     { QLatin1String("QSystemTrayIcon"), QLatin1String("QtGui/qsystemtrayicon.h") },
     { QLatin1String("QTabBar"), QLatin1String("QtGui/qtabbar.h") },

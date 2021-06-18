@@ -59,8 +59,6 @@ public:
     static QLocale::Language codeToLanguage(const QString &code);
     static QLocale::Script codeToScript(const QString &code);
     static QLocale::Country codeToCountry(const QString &code);
-    static void getLangAndCountry(const QString &name, QLocale::Language &lang,
-                                  QLocale::Script &script, QLocale::Country &cntry);
     static const QLocalePrivate *findLocale(QLocale::Language language,
                                             QLocale::Script script,
                                             QLocale::Country country);
@@ -138,29 +136,27 @@ public:
                          CharBuff *result) const;
     inline char digitToCLocale(const QChar &c) const;
 
-    static void updateSystemPrivate();
-
     enum NumberMode { IntegerMode, DoubleStandardMode, DoubleScientificMode };
     bool validateChars(const QString &str, NumberMode numMode, QByteArray *buff, int decDigits = -1) const;
 
     QString dateTimeToString(const QString &format, const QDate *date, const QTime *time,
                              const QLocale *q) const;
 
-    QLocale::Language m_language;
-    QLocale::Script m_script;
-    QLocale::Country m_country;
-    Qt::DayOfWeek m_first_day_of_week;
-    Qt::DayOfWeek m_weekend_start;
-    Qt::DayOfWeek m_weekend_end;
-    ushort m_decimal;
-    ushort m_group;
-    ushort m_list;
-    ushort m_percent;
-    ushort m_minus;
-    ushort m_plus;
-    ushort m_exponential;
-    ushort m_currency_digits;
-    uint m_zero;
+    const QLocale::Language m_language;
+    const QLocale::Script m_script;
+    const QLocale::Country m_country;
+    const Qt::DayOfWeek m_first_day_of_week;
+    const Qt::DayOfWeek m_weekend_start;
+    const Qt::DayOfWeek m_weekend_end;
+    const ushort m_decimal;
+    const ushort m_group;
+    const ushort m_list;
+    const ushort m_percent;
+    const ushort m_minus;
+    const ushort m_plus;
+    const ushort m_exponential;
+    const ushort m_currency_digits;
+    const uint m_zero;
     const uint m_quotation_start;
     const uint m_quotation_end;
     const uint m_alternate_quotation_start;
@@ -231,8 +227,6 @@ inline char QLocalePrivate::digitToCLocale(const QChar &in) const
 
     return 0;
 }
-
-bool qt_splitLocaleName(const QString &name, QString &lang, QString &script, QString &cntry);
 
 QT_END_NAMESPACE
 

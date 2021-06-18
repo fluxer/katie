@@ -88,6 +88,7 @@
 #define QT_NO_IMAGEFORMAT_MNG
 #define QT_NO_TEXTODFWRITER
 #define QT_NO_TEXTCODECPLUGIN
+#define QT_NO_SYSTEMLOCALE
 
 // Not supported, used to bootstrap
 #cmakedefine QT_NO_QOBJECT
@@ -261,7 +262,6 @@
 #cmakedefine QT_NO_SVGRENDERER
 #cmakedefine QT_NO_SVGWIDGET
 #cmakedefine QT_NO_SYNTAXHIGHLIGHTER
-#cmakedefine QT_NO_SYSTEMLOCALE
 #cmakedefine QT_NO_SYSTEMSEMAPHORE
 #cmakedefine QT_NO_SYSTEMTRAYICON
 #cmakedefine QT_NO_TABBAR
