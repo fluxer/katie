@@ -31,10 +31,6 @@ QFileSystemEntry::QFileSystemEntry()
     m_firstDotInFileName(0),
     m_lastDotInFileName(0)
 {
-    resolveFilePath();
-    resolveNativeFilePath();
-    findLastSeparator();
-    findFileNameSeparators();
 }
 
 /*!
