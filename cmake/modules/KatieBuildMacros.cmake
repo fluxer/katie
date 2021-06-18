@@ -274,7 +274,7 @@ endfunction()
 # depend on KtNetwork depend on plugins that depend on it too
 add_custom_target(plugins_dependant_tests)
 function(KATIE_SETUP_PLUGIN FORPLUGIN)
-#     add_dependencies(plugins_dependant_tests ${FORPLUGIN})
+    add_dependencies(plugins_dependant_tests ${FORPLUGIN})
 endfunction()
 
 # a macro to ensure that object targets are build with PIC if the target they
