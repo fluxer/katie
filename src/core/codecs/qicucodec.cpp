@@ -985,7 +985,7 @@ QString QIcuCodec::convertToUnicode(const char *src, int length,
     }
 
     if (Q_LIKELY(U_SUCCESS(error))) {
-        return QString(reinterpret_cast<QChar*>(result) + resultoffset, convresult);
+        return QString(reinterpret_cast<QChar*>(result) + resultoffset, convresult - resultoffset);
     }
 
     return QString();
