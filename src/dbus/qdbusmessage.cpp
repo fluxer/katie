@@ -84,6 +84,11 @@ DBusMessage *QDBusMessagePrivate::toDBusMessage(const QDBusMessage &message, QDB
     DBusMessage *msg = 0;
     const QDBusMessagePrivate *d_ptr = message.d_ptr;
 
+    const QByteArray serviceref(d_ptr->service.toUtf8());
+    const QByteArray pathref(d_ptr->path.toUtf8());
+    const QByteArray interfaceref(d_ptr->interface.toUtf8());
+    const QByteArray nameref(d_ptr->name.toUtf8());
+
     switch (d_ptr->type) {
     case DBUS_MESSAGE_TYPE_INVALID:
         //qDebug() << "QDBusMessagePrivate::toDBusMessage" <<  "message is invalid";
@@ -101,8 +106,8 @@ DBusMessage *QDBusMessagePrivate::toDBusMessage(const QDBusMessage &message, QDB
                 return 0;
         }
 
-        msg = dbus_message_new_method_call(data(d_ptr->service.toUtf8()), d_ptr->path.toUtf8(),
-                                           data(d_ptr->interface.toUtf8()), d_ptr->name.toUtf8());
+        msg = dbus_message_new_method_call(data(serviceref), pathref,
+                                           data(interfaceref), nameref);
         dbus_message_set_auto_start( msg, d_ptr->autoStartService );
         break;
     case DBUS_MESSAGE_TYPE_METHOD_RETURN:
@@ -119,7 +124,7 @@ DBusMessage *QDBusMessagePrivate::toDBusMessage(const QDBusMessage &message, QDB
             return 0;
 
         msg = dbus_message_new(DBUS_MESSAGE_TYPE_ERROR);
-        dbus_message_set_error_name(msg, d_ptr->name.toUtf8());
+        dbus_message_set_error_name(msg, nameref);
         if (!d_ptr->localMessage) {
             dbus_message_set_destination(msg, dbus_message_get_sender(d_ptr->reply));
             dbus_message_set_reply_serial(msg, dbus_message_get_serial(d_ptr->reply));
@@ -136,8 +141,7 @@ DBusMessage *QDBusMessagePrivate::toDBusMessage(const QDBusMessage &message, QDB
                 return 0;
         }
 
-        msg = dbus_message_new_signal(d_ptr->path.toUtf8(), d_ptr->interface.toUtf8(),
-                                      d_ptr->name.toUtf8());
+        msg = dbus_message_new_signal(pathref, interfaceref, nameref);
         break;
     default:
         Q_ASSERT(false);
