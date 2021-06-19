@@ -81,9 +81,9 @@ void QDesignerComponents::initializeResources()
     initResources();
 }
 
-Q_GLOBAL_STATIC(qdesigner_internal::SignalSlotEditorPlugin, signalsloteditorplugin);
-Q_GLOBAL_STATIC(qdesigner_internal::BuddyEditorPlugin, buddyeditorplugin);
-Q_GLOBAL_STATIC(qdesigner_internal::TabOrderEditorPlugin, tabordereditorplugin);
+static qdesigner_internal::SignalSlotEditorPlugin* signalsloteditorplugin = new qdesigner_internal::SignalSlotEditorPlugin();
+static qdesigner_internal::BuddyEditorPlugin* buddyeditorplugin = new qdesigner_internal::BuddyEditorPlugin();
+static qdesigner_internal::TabOrderEditorPlugin* tabordereditorplugin = new qdesigner_internal::TabOrderEditorPlugin();
 
 /*!
     Initializes the plugins used by the components.*/
@@ -91,9 +91,9 @@ QObjectList QDesignerComponents::initializePlugins(QDesignerFormEditorInterface 
 {
     qdesigner_internal::QDesignerIntegration::initializePlugins(core);
     static QObjectList builtin = QObjectList()
-        << signalsloteditorplugin()
-        << buddyeditorplugin()
-        << tabordereditorplugin();
+        << signalsloteditorplugin
+        << buddyeditorplugin
+        << tabordereditorplugin;
     return builtin;
 }
 
