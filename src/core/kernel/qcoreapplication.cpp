@@ -31,18 +31,19 @@
 #include "qfile.h"
 #include "qfileinfo.h"
 #include "qhash.h"
-#include "qprocess_p.h"
 #include "qtextcodec.h"
 #include "qthread.h"
 #include "qthreadpool.h"
-#include "qthread_p.h"
+#include "qstandardpaths.h"
 #include "qelapsedtimer.h"
-#include "qlibraryinfo.h"
 #include "qvarlengtharray.h"
+#include "qscopedpointer.h"
+#include "qlibraryinfo.h"
+#include "qthread_p.h"
+#include "qprocess_p.h"
 #include "qfactoryloader_p.h"
 #include "qlocale_p.h"
 #include "qmutexpool_p.h"
-#include "qscopedpointer.h"
 #include "qeventdispatcher_unix_p.h"
 
 #include <stdlib.h>
@@ -1482,19 +1483,7 @@ QString QCoreApplication::applicationFilePath()
           Otherwise, the file path has to be determined using the
           PATH environment variable.
         */
-        QByteArray pEnv = qgetenv("PATH");
-        QDir currentDir = QDir::current();
-        QStringList paths = QString::fromLocal8Bit(pEnv.constData()).split(QLatin1Char(':'));
-        foreach (const QString &p, paths) {
-            if (p.isEmpty())
-                continue;
-            QString candidate = currentDir.absoluteFilePath(p + QLatin1Char('/') + argv0);
-            QFileInfo candidate_fi(candidate);
-            if (candidate_fi.exists() && !candidate_fi.isDir()) {
-                absPath = candidate;
-                break;
-            }
-        }
+        absPath = QStandardPaths::findExecutable(argv0);
     }
 
     absPath = QDir::cleanPath(absPath);
