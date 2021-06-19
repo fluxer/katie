@@ -1449,7 +1449,20 @@ QString QCoreApplication::applicationFilePath()
     }
 #endif
 
-    QString argv0 = QFile::decodeName(arguments().at(0).toLocal8Bit());
+    QString argv0;
+
+    char ** const argv = d->argv;
+    if (argv && argv[0]) {
+        const char *p = ::strrchr(argv[0], '/');
+        argv0 = QString::fromLocal8Bit(p ? p + 1 : argv[0]);
+    }
+
+#ifdef QT_HAVE_GETPROGNAME
+    if (argv0.isEmpty()) {
+        argv0 = QString::fromLocal8Bit(::getprogname());
+    }
+#endif // QT_HAVE_GETPROGNAME
+
     QString absPath;
 
     if (!argv0.isEmpty() && argv0.at(0) == QLatin1Char('/')) {
@@ -1625,7 +1638,7 @@ QString QCoreApplication::applicationName()
 
     if (name.isEmpty() && self) {
         char ** const argv = self->d_func()->argv;
-        if (argv[0]) {
+        if (argv && argv[0]) {
             const char *p = ::strrchr(argv[0], '/');
             name = QString::fromLocal8Bit(p ? p + 1 : argv[0]);
         }
