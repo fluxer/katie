@@ -642,7 +642,7 @@ void tst_QVariant::toUInt_data()
     QTest::newRow( "negativeint" ) << QVariant( -123 ) << (uint)-123 << true;
     QTest::newRow( "negativedouble" ) << QVariant( -3.1415927 ) << (uint)-3 << true;
     QTest::newRow( "negativefloat" ) << QVariant( -3.1415927f ) << (uint)-3 << true;
-    QTest::newRow( "negativeint-string" ) << QVariant( QString("-123") ) << (uint)-123 << true;
+    QTest::newRow( "negativeint-string" ) << QVariant( QString("-123") ) << (uint)0 << false;
     QTest::newRow( "negativelonglong0" ) << QVariant( (qlonglong)-34 ) << (uint)-34 << true;
     QTest::newRow( "QChar" ) << QVariant(QChar('a')) << uint('a') << true;
     QByteArray bytearray(4, ' ');
