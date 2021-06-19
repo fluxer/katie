@@ -2470,7 +2470,9 @@ qlonglong QLocalePrivate::bytearrayToLongLong(const char *num, int base, bool *o
 
 qulonglong QLocalePrivate::bytearrayToUnsLongLong(const char *num, int base, bool *ok)
 {
-    if (Q_UNLIKELY(*num == '\0')) {
+    // for compatibility strings starting with negative sign shall return 0 and set ok to false,
+    // standard C library implementation handles it like overflow
+    if (Q_UNLIKELY(*num == '\0' || *num == '-')) {
         if (ok != Q_NULLPTR)
             *ok = false;
         return 0;
