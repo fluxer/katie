@@ -158,29 +158,8 @@ Q_GLOBAL_STATIC(QNormalizedTypeHash, qGlobalNormalizedTypeHash);
 Q_GLOBAL_STATIC(QMutex, qGlobalNormalizedTypeMutex)
 #endif
 
-static const struct TypeTblData {
-    const char* original;
-    const int originalsize;
-    const char* substitute;
-    const int substitutesize;
-} TypeTbl[] = {
-    // remove 'struct', 'class', and 'enum' in the middle
-    { " struct ", 8, " ", 1 },
-    { " class ", 7, " ", 1 },
-    { " enum ", 6, " ", 1 },
-    // substitute 'unsigned x' with those defined in global header
-    { "unsigned int", 12, "uint", 4 },
-    { "unsigned long long", 18, "ulonglong", 9 },
-};
-static const qint16 TypeTblSize = sizeof(TypeTbl) / sizeof(TypeTblData);
-
-static inline bool arrayStartsWith(const QByteArray &array, const char *array2, const int len) {
-    return (qstrncmp(array.constData(), array2, len) == 0);
-}
-
-
 // This code is shared with moc.cpp
-static inline QByteArray normalizeTypeInternal(const char *t, const char *e)
+static inline QByteArray normalizeTypeInternal(const char *t, const char *e, bool adjustConst = true)
 {
     const int len = e - t;
 #ifndef QT_BOOTSTRAPPED
@@ -193,49 +172,143 @@ static inline QByteArray normalizeTypeInternal(const char *t, const char *e)
     lock.unlock();
 #endif
 
-    QByteArray result = QByteArray(t, len);
-
     /*
       Convert 'char const *' into 'const char *'. Start at index 1,
-      not 0, because 'const char *' is already OK. We musn't convert
-      'char * const *' into 'const char **' and we must beware of
-      'Bar<const Bla>'.
+      not 0, because 'const char *' is already OK.
     */
-    int searchindex = result.indexOf(" const", 1);
-    while (searchindex > 0) {
-        if (result.at(searchindex - 1) != '*') {
-            result.remove(searchindex, 6);
-            if (!arrayStartsWith(result, "const ", 6)) {
-                result.prepend("const ");
+    QByteArray constbuf;
+    for (int i = 1; i < len; i++) {
+        if ( t[i] == 'c'
+             && strncmp(t + i + 1, "onst", 4) == 0
+             && (i + 5 >= len || !is_ident_char(t[i + 5]))
+             && !is_ident_char(t[i-1])
+             ) {
+            constbuf = QByteArray(t, len);
+            if (is_space(t[i-1]))
+                constbuf.remove(i-1, 6);
+            else
+                constbuf.remove(i, 5);
+            constbuf.prepend("const ");
+            t = constbuf.data();
+            e = constbuf.data() + constbuf.length();
+            break;
+        }
+        /*
+          We musn't convert 'char * const *' into 'const char **'
+          and we must beware of 'Bar<const Bla>'.
+        */
+        if (t[i] == '&' || t[i] == '*' ||t[i] == '<')
+            break;
+    }
+    if (adjustConst && e > t + 6 && strncmp("const ", t, 6) == 0) {
+        if (*(e-1) == '&') { // treat const reference as value
+            t += 6;
+            --e;
+        } else if (is_ident_char(*(e-1)) || *(e-1) == '>') { // treat const value as value
+            t += 6;
+        }
+    }
+    QByteArray result;
+    result.reserve(len);
+
+#if 1
+    // consume initial 'const '
+    if (strncmp("const ", t, 6) == 0) {
+        t+= 6;
+        result += "const ";
+    }
+#endif
+
+    // some type substitutions for 'unsigned x'
+    if (strncmp("unsigned", t, 8) == 0) {
+        // make sure "unsigned" is an isolated word before making substitutions
+        if (!t[8] || !is_ident_char(t[8])) {
+            if (strncmp(" int", t+8, 4) == 0) {
+                t += 8+4;
+                result += "uint";
+            } else if (strncmp(" long", t+8, 5) == 0) {
+                if ((strlen(t + 8 + 5) < 4 || strncmp(t + 8 + 5, " int", 4) != 0) // preserve '[unsigned] long int'
+                    && (strlen(t + 8 + 5) < 5 || strncmp(t + 8 + 5, " long", 5) != 0) // preserve '[unsigned] long long'
+                   ) {
+                    t += 8+5;
+                    result += "ulong";
+                }
+            } else if (strncmp(" short", t+8, 6) != 0  // preserve unsigned short
+                && strncmp(" char", t+8, 5) != 0) {    // preserve unsigned char
+                //  treat rest (unsigned) as uint
+                t += 8;
+                result += "uint";
             }
         }
-        searchindex = result.indexOf(" const", searchindex + 1);
+    } else {
+        // discard 'struct', 'class', and 'enum'; they are optional
+        // and we don't want them in the normalized signature
+        struct {
+            const char *keyword;
+            int len;
+        } optional[] = {
+            { "struct ", 7 },
+            { "class ", 6 },
+            { "enum ", 5 },
+            { 0, 0 }
+        };
+        int i = 0;
+        do {
+            if (strncmp(optional[i].keyword, t, optional[i].len) == 0) {
+                t += optional[i].len;
+                break;
+            }
+        } while (optional[++i].keyword != 0);
     }
 
-    // convert const reference to value and const value to value
-    char lastchar = result.at(result.size()-1);
-    if (arrayStartsWith(result, "const ", 6) && lastchar != '*') {
-        result.remove(0, 6);
-        if (lastchar == '&') {
-            result.chop(1);
+    bool star = false;
+    while (t != e) {
+        char c = *t++;
+        star = star || c == '*';
+        result += c;
+        if (c == '<') {
+            //template recursion
+            const char* tt = t;
+            int templdepth = 1;
+            while (t != e) {
+                c = *t++;
+                if (c == '<')
+                    ++templdepth;
+                if (c == '>')
+                    --templdepth;
+                if (templdepth == 0 || (templdepth == 1 && c == ',')) {
+                    result += normalizeTypeInternal(tt, t-1, false);
+                    result += c;
+                    if (templdepth == 0) {
+                        if (*t == '>')
+                            result += ' '; // avoid >>
+                        break;
+                    }
+                    tt = t;
+                }
+            }
+        }
+
+        // cv qualifers can appear after the type as well
+        if (!is_ident_char(c) && t != e && (e - t >= 5 && strncmp("const", t, 5) == 0)
+            && (e - t == 5 || !is_ident_char(t[5]))) {
+            t += 5;
+            while (t != e && is_space(*t))
+                ++t;
+            if (adjustConst && t != e && *t == '&') {
+                // treat const ref as value
+                ++t;
+            } else if (adjustConst && !star) {
+                // treat const as value
+            } else if (!star) {
+                // move const to the front (but not if const comes after a *)
+                result.prepend("const ");
+            } else {
+                // keep const after a *
+                result += "const";
+            }
         }
     }
-
-    // discard 'struct', 'class', and 'enum'; they are optional
-    // and we don't want them in the normalized signature
-    if (arrayStartsWith(result, "struct ", 7)) {
-        result.remove(0, 7);
-    } else if (arrayStartsWith(result, "class ", 6)) {
-        result.remove(0, 6);
-    } else if (arrayStartsWith(result, "enum ", 5)) {
-        result.remove(0, 5);
-    }
-
-    // discard from table, does not use overload and avoids strlen() call
-    for (qint16 i = 0; i < TypeTblSize; i++) {
-        result.replace(TypeTbl[i].original, TypeTbl[i].originalsize,
-            TypeTbl[i].substitute, TypeTbl[i].substitutesize);
-     }
 
 #ifndef QT_BOOTSTRAPPED
     lock.relock();
