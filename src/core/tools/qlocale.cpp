@@ -2418,6 +2418,16 @@ double QLocalePrivate::bytearrayToDouble(const char *num, bool *ok)
         return 0.0;
     }
 
+    // strtod() sets errno to ERANGE on nan/infinity
+    if (ok != Q_NULLPTR)
+        *ok = true;
+    if (qstrcmp(num, "nan") == 0)
+        return qSNaN();
+    if (qstrcmp(num, "+inf") == 0 || qstrcmp(num, "inf") == 0)
+        return qInf();
+    if (qstrcmp(num, "-inf") == 0)
+        return -qInf();
+
     char *endptr;
     Q_RESET_ERRNO
     double ret = std::strtod(num, &endptr);
@@ -2434,8 +2444,6 @@ double QLocalePrivate::bytearrayToDouble(const char *num, bool *ok)
         return 0.0;
     }
 
-    if (ok != Q_NULLPTR)
-        *ok = true;
     return ret;
 }
 
