@@ -121,11 +121,13 @@ public:
                                 int base = 10,
                                 int width = -1,
                                 unsigned flags = NoFlags) const;
+    float stringToFloat(const QString &num, bool *ok, GroupSeparatorMode group_sep_mode) const;
     double stringToDouble(const QString &num, bool *ok, GroupSeparatorMode group_sep_mode) const;
     qint64 stringToLongLong(const QString &num, int base, bool *ok, GroupSeparatorMode group_sep_mode) const;
     quint64 stringToUnsLongLong(const QString &num, int base, bool *ok, GroupSeparatorMode group_sep_mode) const;
 
 
+    static float bytearrayToFloat(const char *num, bool *ok);
     static double bytearrayToDouble(const char *num, bool *ok);
     static qint64 bytearrayToLongLong(const char *num, int base, bool *ok);
     static quint64 bytearrayToUnsLongLong(const char *num, int base, bool *ok);

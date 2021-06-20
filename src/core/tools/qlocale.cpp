@@ -885,20 +885,14 @@ qulonglong QLocale::toULongLong(const QString &s, bool *ok, int base) const
     \sa toDouble(), toInt(), toString()
 */
 
-#define QT_MAX_FLOAT 3.4028234663852886e+38
-
 float QLocale::toFloat(const QString &s, bool *ok) const
 {
-    bool myOk;
-    double d = toDouble(s, &myOk);
-    if (!myOk || d > QT_MAX_FLOAT || d < -QT_MAX_FLOAT) {
-        if (ok != Q_NULLPTR)
-            *ok = false;
-        return 0.0;
-    }
-    if (ok != Q_NULLPTR)
-        *ok = true;
-    return float(d);
+    QLocalePrivate::GroupSeparatorMode mode
+        = p.numberOptions & RejectGroupSeparator
+            ? QLocalePrivate::FailOnGroupSeparators
+            : QLocalePrivate::ParseGroupSeparators;
+
+    return d()->stringToFloat(s, ok, mode);
 }
 
 /*!
@@ -2368,8 +2362,21 @@ bool QLocalePrivate::validateChars(const QString &str, NumberMode numMode, QByte
     return true;
 }
 
+float QLocalePrivate::stringToFloat(const QString &number, bool *ok,
+                                    GroupSeparatorMode group_sep_mode) const
+{
+    CharBuff buff;
+    if (!numberToCLocale(group().unicode() == 0xa0 ? number.trimmed() : number,
+                         group_sep_mode, &buff)) {
+        if (ok != Q_NULLPTR)
+            *ok = false;
+        return 0.0;
+    }
+    return bytearrayToFloat(buff.constData(), ok);
+}
+
 double QLocalePrivate::stringToDouble(const QString &number, bool *ok,
-                                        GroupSeparatorMode group_sep_mode) const
+                                      GroupSeparatorMode group_sep_mode) const
 {
     CharBuff buff;
     if (!numberToCLocale(group().unicode() == 0xa0 ? number.trimmed() : number,
@@ -2409,6 +2416,42 @@ qulonglong QLocalePrivate::stringToUnsLongLong(const QString &number, int base,
     return bytearrayToUnsLongLong(buff.constData(), base, ok);
 }
 
+float QLocalePrivate::bytearrayToFloat(const char *num, bool *ok)
+{
+    if (Q_UNLIKELY(*num == '\0')) {
+        if (ok != Q_NULLPTR)
+            *ok = false;
+        return 0.0;
+    }
+
+    // strtof() sets errno to ERANGE on nan/infinity
+    if (ok != Q_NULLPTR)
+        *ok = true;
+    if (qstrcmp(num, "nan") == 0)
+        return qSNaN();
+    if (qstrcmp(num, "+inf") == 0 || qstrcmp(num, "inf") == 0)
+        return qInf();
+    if (qstrcmp(num, "-inf") == 0)
+        return -qInf();
+
+    char *endptr;
+    Q_RESET_ERRNO
+    float ret = std::strtof(num, &endptr);
+    if ((ret == 0.0l && errno == ERANGE) || ret == HUGE_VALF || ret == -HUGE_VALF) {
+        if (ok != Q_NULLPTR)
+            *ok = false;
+        return 0.0;
+    }
+
+    if (*endptr != '\0') {
+        // stopped at a non-digit character after converting some digits
+        if (ok != Q_NULLPTR)
+            *ok = false;
+        return 0.0;
+    }
+
+    return ret;
+}
 
 double QLocalePrivate::bytearrayToDouble(const char *num, bool *ok)
 {

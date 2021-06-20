@@ -3718,7 +3718,7 @@ QString QString::simplified() const
     // without a trailing space.
     QString result((fromEnd - from) + copyCount, Qt::Uninitialized);
     QChar *to = reinterpret_cast<QChar *>(result.d->data);
-    ::memcpy(to, copyFrom, copyCount * 2);
+    ::memcpy(to, copyFrom, copyCount * sizeof(QChar));
     to += copyCount;
     fromEnd--;
     QChar ch;
@@ -5254,7 +5254,8 @@ double QString::toDouble(bool *ok) const
 {
     bool my_ok;
     QLocale def_locale;
-    double result = def_locale.d()->stringToDouble(*this, &my_ok, QLocalePrivate::FailOnGroupSeparators);
+    def_locale.setNumberOptions(QLocale::RejectGroupSeparator);
+    double result = def_locale.toDouble(*this, &my_ok);
     if (my_ok) {
         if (ok != Q_NULLPTR)
             *ok = true;
@@ -5262,7 +5263,8 @@ double QString::toDouble(bool *ok) const
     }
 
     QLocale c_locale(QLocale::C);
-    return c_locale.d()->stringToDouble(*this, ok, QLocalePrivate::FailOnGroupSeparators);
+    c_locale.setNumberOptions(QLocale::RejectGroupSeparator);
+    return c_locale.toDouble(*this, ok);
 }
 
 /*!
@@ -5278,20 +5280,21 @@ double QString::toDouble(bool *ok) const
     \sa number(), toDouble(), toInt()
 */
 
-#define QT_MAX_FLOAT 3.4028234663852886e+38
-
 float QString::toFloat(bool *ok) const
 {
-    bool myOk;
-    double d = toDouble(&myOk);
-    if (!myOk || d > QT_MAX_FLOAT || d < -QT_MAX_FLOAT) {
+    bool my_ok;
+    QLocale def_locale;
+    def_locale.setNumberOptions(QLocale::RejectGroupSeparator);
+    double result = def_locale.toFloat(*this, &my_ok);
+    if (my_ok) {
         if (ok != Q_NULLPTR)
-            *ok = false;
-        return 0.0;
+            *ok = true;
+        return result;
     }
-    if (ok != Q_NULLPTR)
-        *ok = true;
-    return (float) d;
+
+    QLocale c_locale(QLocale::C);
+    c_locale.setNumberOptions(QLocale::RejectGroupSeparator);
+    return c_locale.toFloat(*this, ok);
 }
 
 /*! \fn QString &QString::setNum(int n, int base)
