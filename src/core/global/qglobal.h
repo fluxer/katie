@@ -711,7 +711,6 @@ class QTypeInfo
 {
 public:
     enum {
-        isPointer = false,
         isComplex = true,
         isStatic = true,
         isLarge = (sizeof(T) > QT_POINTER_SIZE)
@@ -723,7 +722,6 @@ class QTypeInfo<T*>
 {
 public:
     enum {
-        isPointer = true,
         isComplex = false,
         isStatic = false,
         isLarge = false
@@ -753,7 +751,6 @@ public: \
         isComplex = (((FLAGS) & Q_PRIMITIVE_TYPE) == 0), \
         isStatic = (((FLAGS) & (Q_MOVABLE_TYPE | Q_PRIMITIVE_TYPE)) == 0), \
         isLarge = (sizeof(TYPE) > QT_POINTER_SIZE), \
-        isPointer = false \
     }; \
     static inline const char *name() { return #TYPE; } \
 }
