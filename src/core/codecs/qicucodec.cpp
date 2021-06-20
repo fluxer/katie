@@ -946,9 +946,13 @@ QIcuCodec::~QIcuCodec()
 {
 }
 
-QString QIcuCodec::convertToUnicode(const char *src, int length,
+QString QIcuCodec::convertToUnicode(const char *data, int length,
                                     QTextCodec::ConverterState *state) const
 {
+    if (!state) {
+        return convertTo(data, length, m_name.constData());
+    }
+
     UConverter *conv = getConverter(state);
     Q_ASSERT(conv);
 
@@ -956,8 +960,8 @@ QString QIcuCodec::convertToUnicode(const char *src, int length,
     UChar result[maxchars];
     int resultoffset = 0;
     UErrorCode error = U_ZERO_ERROR;
-    const int convresult = ucnv_toUChars(conv, result, maxchars, src, length, &error);
-    if (state && state->flags & QTextCodec::IgnoreHeader) {
+    const int convresult = ucnv_toUChars(conv, result, maxchars, data, length, &error);
+    if (state->flags & QTextCodec::IgnoreHeader) {
         // ICU always generates BOMs when converter is UTF-32/UTF-16 so no check is done to
         // verify that, unless someone makes it an option
         if (ucnv_compareNames(m_name.constData(), "UTF-32")) {
@@ -971,18 +975,12 @@ QString QIcuCodec::convertToUnicode(const char *src, int length,
     // by counting the invalid chars before the conversion, after it and
     // finally comparing the count but that should be fixed in ICU
 #if 0
-    if (state) {
-        error = U_ZERO_ERROR;
-        char errorbytes[10];
-        int8_t invalidlen = 0;
-        ucnv_getInvalidChars(conv, errorbytes, &invalidlen, &error);
-        state->invalidChars = invalidlen;
-    }
+    error = U_ZERO_ERROR;
+    char errorbytes[10];
+    int8_t invalidlen = 0;
+    ucnv_getInvalidChars(conv, errorbytes, &invalidlen, &error);
+    state->invalidChars = invalidlen;
 #endif
-
-    if (!state) {
-        ucnv_close(conv);
-    }
 
     if (Q_LIKELY(U_SUCCESS(error))) {
         return QString(reinterpret_cast<QChar*>(result) + resultoffset, convresult - resultoffset);
@@ -994,6 +992,10 @@ QString QIcuCodec::convertToUnicode(const char *src, int length,
 QByteArray QIcuCodec::convertFromUnicode(const QChar *unicode, int length,
                                          QTextCodec::ConverterState *state) const
 {
+    if (!state) {
+        return convertFrom(unicode, length, m_name.constData());
+    }
+
     UConverter *conv = getConverter(state);
     Q_ASSERT(conv);
 
@@ -1004,18 +1006,12 @@ QByteArray QIcuCodec::convertFromUnicode(const QChar *unicode, int length,
         reinterpret_cast<const UChar *>(unicode), length, &error);
 
 #if 0
-    if (state) {
-        error = U_ZERO_ERROR;
-        char errorbytes[10];
-        int8_t invalidlen = 0;
-        ucnv_getInvalidChars(conv, errorbytes, &invalidlen, &error);
-        state->invalidChars = invalidlen;
-    }
+    error = U_ZERO_ERROR;
+    char errorbytes[10];
+    int8_t invalidlen = 0;
+    ucnv_getInvalidChars(conv, errorbytes, &invalidlen, &error);
+    state->invalidChars = invalidlen;
 #endif
-
-    if (!state) {
-        ucnv_close(conv);
-    }
 
     if (Q_LIKELY(U_SUCCESS(error))) {
         return QByteArray(result, convresult);
@@ -1165,10 +1161,59 @@ QTextCodec *QIcuCodec::codecForData(const QByteArray &text, QTextCodec *defaultC
 }
 #endif
 
+QString QIcuCodec::convertTo(const char *data, int length, const char* const codec)
+{
+    UErrorCode error = U_ZERO_ERROR;
+    UConverter *conv = ucnv_open(codec, &error);
+    if (Q_UNLIKELY(U_FAILURE(error))) {
+        return QString();
+    }
+
+    error = U_ZERO_ERROR;
+    ucnv_setSubstString(conv, questionmarkchar, 1, &error);
+
+    const int maxchars = QMAXUSTRLEN(length);
+    UChar result[maxchars];
+    error = U_ZERO_ERROR;
+    const int convresult = ucnv_toUChars(conv, result, maxchars, data, length, &error);
+    ucnv_close(conv);
+
+    if (Q_LIKELY(U_SUCCESS(error))) {
+        return QString(reinterpret_cast<QChar*>(result), convresult);
+    }
+
+    return QString();
+}
+
+QByteArray QIcuCodec::convertFrom(const QChar *unicode, int length, const char* const codec)
+{
+    UErrorCode error = U_ZERO_ERROR;
+    UConverter *conv = ucnv_open(codec, &error);
+    if (Q_UNLIKELY(U_FAILURE(error))) {
+        return QByteArray();
+    }
+
+    error = U_ZERO_ERROR;
+    ucnv_setSubstString(conv, questionmarkchar, 1, &error);
+
+    const int maxbytes = UCNV_GET_MAX_BYTES_FOR_STRING(length, ucnv_getMaxCharSize(conv));
+    char result[maxbytes];
+    error = U_ZERO_ERROR;
+    const int convresult = ucnv_fromUChars(conv, result, maxbytes,
+        reinterpret_cast<const UChar *>(unicode), length, &error);
+    ucnv_close(conv);
+
+    if (Q_LIKELY(U_SUCCESS(error))) {
+        return QByteArray(result, convresult);
+    }
+
+    return QByteArray();
+}
+
 UConverter *QIcuCodec::getConverter(QTextCodec::ConverterState *state) const
 {
-    if (state && !state->d) {
-        // first time
+    if (!state->d) {
+        // first time, open a converter
         UErrorCode error = U_ZERO_ERROR;
         state->d = ucnv_open(m_name.constData(), &error);
         if (Q_UNLIKELY(U_FAILURE(error))) {
@@ -1180,18 +1225,9 @@ UConverter *QIcuCodec::getConverter(QTextCodec::ConverterState *state) const
         } else {
             ucnv_setSubstString(static_cast<UConverter *>(state->d), questionmarkchar, 1, &error);
         }
-
-        return static_cast<UConverter *>(state->d);
     }
 
-    // stateless conversion
-    UErrorCode error = U_ZERO_ERROR;
-    UConverter *conv = ucnv_open(m_name.constData(), &error);
-    if (Q_LIKELY(U_SUCCESS(error))) {
-        ucnv_setSubstString(conv, questionmarkchar, 1, &error);
-    }
-
-    return conv;
+    return static_cast<UConverter *>(state->d);
 }
 
 QT_END_NAMESPACE

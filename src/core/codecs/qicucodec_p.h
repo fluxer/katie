@@ -61,6 +61,9 @@ public:
     static QTextCodec* codecForData(const QByteArray &text, QTextCodec *defaultCodec);
 #endif
 
+    static QString convertTo(const char *data, int len, const char* const codec);
+    static QByteArray convertFrom(const QChar *unicode, int len, const char* const codec);
+
 private:
     UConverter *getConverter(QTextCodec::ConverterState *state) const;
 
