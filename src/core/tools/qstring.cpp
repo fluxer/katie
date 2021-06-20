@@ -4932,7 +4932,8 @@ qint64 QString::toLongLong(bool *ok, int base) const
 
     bool my_ok;
     QLocale def_locale;
-    qint64 result = def_locale.d()->stringToLongLong(*this, base, &my_ok, QLocalePrivate::FailOnGroupSeparators);
+    def_locale.setNumberOptions(QLocale::RejectGroupSeparator);
+    qint64 result = def_locale.toLongLong(*this, &my_ok, base);
     if (my_ok) {
         if (ok != Q_NULLPTR)
             *ok = true;
@@ -4940,7 +4941,8 @@ qint64 QString::toLongLong(bool *ok, int base) const
     }
 
     QLocale c_locale(QLocale::C);
-    return c_locale.d()->stringToLongLong(*this, base, ok, QLocalePrivate::FailOnGroupSeparators);
+    c_locale.setNumberOptions(QLocale::RejectGroupSeparator);
+    return c_locale.toLongLong(*this, ok, base);
 }
 
 /*!
@@ -4973,7 +4975,8 @@ quint64 QString::toULongLong(bool *ok, int base) const
 
     bool my_ok;
     QLocale def_locale;
-    quint64 result = def_locale.d()->stringToUnsLongLong(*this, base, &my_ok, QLocalePrivate::FailOnGroupSeparators);
+    def_locale.setNumberOptions(QLocale::RejectGroupSeparator);
+    quint64 result = def_locale.toULongLong(*this, &my_ok, base);
     if (my_ok) {
         if (ok != Q_NULLPTR)
             *ok = true;
@@ -4981,7 +4984,8 @@ quint64 QString::toULongLong(bool *ok, int base) const
     }
 
     QLocale c_locale(QLocale::C);
-    return c_locale.d()->stringToUnsLongLong(*this, base, ok, QLocalePrivate::FailOnGroupSeparators);
+    c_locale.setNumberOptions(QLocale::RejectGroupSeparator);
+    return c_locale.toULongLong(*this, ok, base);
 }
 
 /*!
