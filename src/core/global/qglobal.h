@@ -30,85 +30,9 @@
 */
 #define QT_VERSION_CHECK(major, minor, patch) ((major<<16)|(minor<<8)|(patch))
 
-/*
-   The architechture, must be one of: (QT_ARCH_x)
-
-     ALPHA     - ...
-     ARM       - ...
-     ARM64     - ...
-     AVR32     - ...
-     BFIN      - ...
-     I386      - ...
-     IA64      - ...
-     M68K      - ...
-     MIPS      - ...
-     PARISC    - ...
-     POWERPC   - ...
-     POWERPC64 - ...
-     S390      - ...
-     SPARC     - ...
-     SH        - ...
-     SH4A      - ...
-     X86_64    - ...
-
-   Useful hyper-links:
-
-     https://gcc.gnu.org/backends.html
-     https://en.wikipedia.org/wiki/GNU_Compiler_Collection#Architectures
-*/
-#if defined(__alpha__)
-#  define QT_ARCH_ALPHA
-#elif defined(__arm__)
-#  define QT_ARCH_ARM
-#elif defined(__aarch64__)
-#  define QT_ARCH_ARM64
-#elif defined(__avr__)
-#  define QT_ARCH_AVR32
-#elif defined(__bfin__)
-#  define QT_ARCH_BFIN
-#elif defined(__i386__)
-#  define QT_ARCH_I386
-#elif defined(__ia64__)
-#  define QT_ARCH_IA64
-#elif defined(__m68k__)
-#  define QT_ARCH_M68K
-#elif defined(__mips__)
-#  define QT_ARCH_MIPS
-#elif defined(__hppa__)
-#  define QT_ARCH_PARISC
-#elif defined(__powerpc__)
-#  define QT_ARCH_POWERPC
-#elif defined(__powerpc64__)
-#  define QT_ARCH_POWERPC64
-#elif defined(__s390__)
-#  define QT_ARCH_S390
-#elif defined(__sparc__)
-#  define QT_ARCH_SPARC
-#elif defined(__sh__)
-#  define QT_ARCH_SH
-#elif defined(__x86_64__)
-#  define QT_ARCH_X86_64
-#else
-# error Unable to detect architecture, please update above list
-#endif
-
-// Detect target endianness
-#if defined (__BYTE_ORDER__) && \
-    (__BYTE_ORDER__ == __ORDER_BIG_ENDIAN__ || __BYTE_ORDER__ == __ORDER_LITTLE_ENDIAN__)
-#  define Q_BYTE_ORDER       __BYTE_ORDER__
-#  define Q_BIG_ENDIAN       __ORDER_BIG_ENDIAN__
-#  define Q_LITTLE_ENDIAN    __ORDER_LITTLE_ENDIAN__
-#elif defined (__LITTLE_ENDIAN__)
-#  define Q_BIG_ENDIAN 1234
-#  define Q_LITTLE_ENDIAN 4321
-#  define Q_BYTE_ORDER Q_LITTLE_ENDIAN
-#elif defined (__BIG_ENDIAN__)
-#  define Q_BIG_ENDIAN 1234
-#  define Q_LITTLE_ENDIAN 4321
-#  define Q_BYTE_ORDER Q_BIG_ENDIAN
-#else
-#  error Unable to detect target endianness
-#endif
+// Compatibility, used to be conditional
+#define Q_WS_X11
+#define Q_OS_UNIX
 
 #include <utility> // std::swap
 #include <cstdint> // std::uintptr_t
@@ -147,40 +71,6 @@ QT_USE_NAMESPACE
 #define QT_END_INCLUDE_HEADER extern "C++"
 
 /*
-   The operating system, must be one of: (Q_OS_x)
-
-     LINUX     - Linux
-     FREEBSD   - FreeBSD
-     NETBSD    - NetBSD
-     OPENBSD   - OpenBSD
-     DRAGONFLY - DragonFly BSD
-     HURD      - GNU Hurd
-     SOLARIS   - Sun Solaris
-*/
-
-#if defined(__linux__) || defined(__linux)
-#  define Q_OS_LINUX
-#elif defined(__FreeBSD__)
-#  define Q_OS_FREEBSD
-#elif defined(__NetBSD__)
-#  define Q_OS_NETBSD
-#elif defined(__OpenBSD__)
-#  define Q_OS_OPENBSD
-#elif defined(__DragonFly__)
-#  define Q_OS_DRAGONFLY
-#elif defined(__GNU__)
-#  define Q_OS_HURD
-#elif defined(__sun) || defined(sun)
-#  define Q_OS_SOLARIS
-#else
-#  error "Katie has not been ported to this OS"
-#endif
-
-// Compatibility, used to be conditional
-#define Q_WS_X11
-#define Q_OS_UNIX
-
-/*
    The compiler, must be one of: (Q_CC_x)
 
      GNU      - GNU C++
@@ -196,7 +86,6 @@ QT_USE_NAMESPACE
   For full listing, see
    http://isocpp.org/std/standing-documents/sd-6-sg10-feature-test-recommendations
 */
-
 #if defined(__GNUC__)
 #  define Q_CC_GNU
 #  if __cplusplus >= 201103L || defined(__GXX_EXPERIMENTAL_CXX0X__)

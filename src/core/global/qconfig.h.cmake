@@ -33,6 +33,17 @@
 #define QT_KATIE
 #cmakedefine QT_POINTER_SIZE ${QT_POINTER_SIZE}
 
+// The operating system, must be one of Q_OS_x
+#define Q_OS_${KATIE_OS}
+
+// The architechture, must be one of QT_ARCH_x
+#define QT_ARCH_${KATIE_ARCH}
+
+// Target endianness
+#define Q_BIG_ENDIAN 4321
+#define Q_LITTLE_ENDIAN 1234
+#define Q_BYTE_ORDER ${KATIE_BYTE_ORDER}
+
 // No longer supported
 #define QT_NO_OPENVG
 #define QT_NO_PHONON
