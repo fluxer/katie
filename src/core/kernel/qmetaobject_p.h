@@ -171,9 +171,6 @@ static const struct TypeTblData {
     // substitute 'unsigned x' with those defined in global header
     { "unsigned int", 12, "uint", 4 },
     { "unsigned long long", 18, "ulonglong", 9 },
-    { "unsigned long", 13, "ulong", 5 },
-    { "unsigned short", 14, "ushort", 6 },
-    { "unsigned char", 13, "uchar", 5 }
 };
 static const qint16 TypeTblSize = sizeof(TypeTbl) / sizeof(TypeTblData);
 
