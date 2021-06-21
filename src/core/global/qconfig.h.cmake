@@ -120,6 +120,7 @@
 #cmakedefine QT_NO_REGEXP_WILDCARD
 #cmakedefine QT_NO_STANDARDPATHS
 #cmakedefine QT_NO_SETTINGS
+#cmakedefine QT_NO_TEXTCODEC
 
 // Compiler and host dependant
 #cmakedefine QT_NO_EXCEPTIONS
@@ -282,8 +283,6 @@
 #cmakedefine QT_NO_TEMPLATE_TEMPLATE_PARAMETERS
 #cmakedefine QT_NO_TEMPORARYFILE
 #cmakedefine QT_NO_TEXTBROWSER
-#cmakedefine QT_NO_TEXTCODE
-#cmakedefine QT_NO_TEXTCODEC
 #cmakedefine QT_NO_TEXTCONTROL
 #cmakedefine QT_NO_TEXTDATE
 #cmakedefine QT_NO_TEXTEDIT
