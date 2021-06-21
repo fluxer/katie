@@ -40,7 +40,6 @@ namespace QDBus
     };
 }
 
-class QDBusAbstractInterfacePrivate;
 class QDBusInterface;
 class QDBusError;
 class QDBusMessage;
