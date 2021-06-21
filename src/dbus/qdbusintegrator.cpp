@@ -2013,9 +2013,6 @@ bool QDBusConnectionPrivate::connectSignal(const QString &service,
     // check the slot
     QDBusConnectionPrivate::SignalHook hook;
     QString key;
-    QString name2 = name;
-    if (name2.isNull())
-        name2.detach();
 
     hook.signature = signature;
     if (!prepareHook(hook, key, service, path, interface, name, argumentMatch, receiver, slot, 0, false))
@@ -2088,9 +2085,6 @@ bool QDBusConnectionPrivate::disconnectSignal(const QString &service,
     // check the slot
     QDBusConnectionPrivate::SignalHook hook;
     QString key;
-    QString name2 = name;
-    if (name2.isNull())
-        name2.detach();
 
     hook.signature = signature;
     if (!prepareHook(hook, key, service, path, interface, name, argumentMatch, receiver, slot, 0, false))
