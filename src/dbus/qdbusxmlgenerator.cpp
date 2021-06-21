@@ -68,9 +68,9 @@ static QString generateInterfaceXml(const QMetaObject *mo, int flags, int method
                 continue;
 
             retval += QString::fromLatin1("    <property name=\"%1\" type=\"%2\" access=\"%3\"")
-                      .arg(QLatin1String(mp.name()))
-                      .arg(QLatin1String(signature))
-                      .arg(QLatin1String(accessvalues[access]));
+                      .arg(QString::fromLatin1(mp.name()))
+                      .arg(QString::fromLatin1(signature))
+                      .arg(QString::fromLatin1(accessvalues[access]));
 
             if (QDBusMetaType::signatureToType(signature) == QVariant::Invalid) {
                 const char *typeName = QVariant::typeToName(QVariant::Type(typeId));
@@ -106,7 +106,7 @@ static QString generateInterfaceXml(const QMetaObject *mo, int flags, int method
 
         QString xml = QString::fromLatin1("    <%1 name=\"%2\">\n")
                       .arg(isSignal ? QLatin1String("signal") : QLatin1String("method"))
-                      .arg(QLatin1String(signature.left(paren)));
+                      .arg(QString::fromLatin1(signature.left(paren)));
 
         // check the return type first
         int typeId = QMetaType::type(mm.typeName());
@@ -149,14 +149,14 @@ static QString generateInterfaceXml(const QMetaObject *mo, int flags, int method
 
             QString name;
             if (!names.at(j - 1).isEmpty())
-                name = QString::fromLatin1("name=\"%1\" ").arg(QLatin1String(names.at(j - 1)));
+                name = QString::fromLatin1("name=\"%1\" ").arg(QString::fromLatin1(names.at(j - 1)));
 
             bool isOutput = isSignal || j > inputCount;
 
             const char *signature = QDBusMetaType::typeToSignature(types.at(j));
             xml += QString::fromLatin1("      <arg %1type=\"%2\" direction=\"%3\"/>\n")
                    .arg(name)
-                   .arg(QLatin1String(signature))
+                   .arg(QString::fromLatin1(signature))
                    .arg(isOutput ? QLatin1String("out") : QLatin1String("in"));
 
             // do we need to describe this argument?

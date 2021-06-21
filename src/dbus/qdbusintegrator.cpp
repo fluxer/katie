@@ -1252,7 +1252,7 @@ bool QDBusConnectionPrivate::prepareHook(QDBusConnectionPrivate::SignalHook &hoo
         hook.signature.clear();
         for (int i = 1; i < hook.params.count(); ++i)
             if (hook.params.at(i) != QDBusMetaTypeId::message)
-                hook.signature += QLatin1String( QDBusMetaType::typeToSignature( hook.params.at(i) ) );
+                hook.signature += QString::fromLatin1( QDBusMetaType::typeToSignature( hook.params.at(i) ) );
     }
 
     hook.matchRule = buildMatchRule(service, path, interface, mname, argMatch, hook.signature);
