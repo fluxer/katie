@@ -419,6 +419,8 @@ QDBusMessage QDBusAbstractInterface::callWithArgumentList(QDBus::CallMode mode,
     if (mode == QDBus::AutoDetect) {
         // determine if this a sync or async call
         mode = QDBus::Block;
+        // not thread-safe, slots/methods have to be annotated from interface generator too
+#if 0
         const QMetaObject *mo = metaObject();
         const QByteArray match = m.toLatin1() + '(';
 
@@ -440,6 +442,7 @@ QDBusMessage QDBusAbstractInterface::callWithArgumentList(QDBus::CallMode mode,
                 }
             }
         }
+#endif
     }
 
 //    qDebug() << "QDBusAbstractInterface" << "Service" << service() << "Path:" << path();

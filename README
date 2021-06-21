@@ -64,7 +64,6 @@ There are several things you should be aware before considering Katie:
   - stack backtrace on assert, crash or warning via execinfo
   - brief manual pages for all command-line tools
   - desktop files, Shell profile and dynamic linker/loader config
-  - automatic async D-Bus calls based on return type, no Q_NOREPLY needed
   - more reliable qrand(), seeded per thread
   - improved signal/slot template arguments handling
   - improved OpenSSL default certificate and certificates directory detection

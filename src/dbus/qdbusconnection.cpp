@@ -542,7 +542,13 @@ QDBusMessage QDBusConnection::call(const QDBusMessage &message, QDBus::CallMode 
         return QDBusMessage::createError(err);
     }
 
-    return d->sendWithReply(message, mode, timeout);
+    if (mode != QDBus::NoBlock)
+        return d->sendWithReply(message, mode, timeout);
+
+    d->send(message);
+    QDBusMessage retval;
+    retval << QVariant(); // add one argument (to avoid .at(0) problems)
+    return retval;
 }
 
 /*!
