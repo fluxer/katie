@@ -26,16 +26,44 @@
 #include "qthread_p.h"
 #include "qcoreapplication_p.h"
 
-#include <limits.h>
 #include <bitset>
+#include <mutex>
 
 QT_BEGIN_NAMESPACE
 
 // 2048 pre-allocated should be more than enough for application, IDs rearely go beyond single
 // digit. could implement fallback to int-sized set if limit is reached
 enum { QTimerMax = 2048 };
-typedef std::bitset<QTimerMax> QTimersSet;
-static QAtomicPointer<QTimersSet> timerIds = QAtomicPointer<QTimersSet>(new QTimersSet);
+
+class QTimersSet : public std::bitset<QTimerMax>
+{
+public:
+    void unsetBit(const int bit);
+    int freeBit();
+private:
+    std::mutex m_mutex;
+};
+
+void QTimersSet::unsetBit(const int bit)
+{
+    std::lock_guard<std::mutex> locker(m_mutex);
+    this->set(bit, false);
+}
+
+int QTimersSet::freeBit()
+{
+    std::lock_guard<std::mutex> locker(m_mutex);
+    // 0 is invalid timer ID
+    for (qint16 i = 1; i < QTimerMax; i++) {
+        if (!this->test(i)) {
+            this->set(i, true);
+            return i;
+        }
+    }
+    return 0;
+}
+
+static QTimersSet timerIds;
 
 void QAbstractEventDispatcherPrivate::init()
 {
@@ -50,24 +78,19 @@ void QAbstractEventDispatcherPrivate::init()
 // Timer IDs are implemented using a free-list
 int QAbstractEventDispatcherPrivate::allocateTimerId()
 {
-    // 0 is invalid timer ID
-    for (qint16 i = 1; i < QTimerMax; i++) {
-        if (!timerIds->test(i)) {
-            timerIds->set(i, true);
-            return i;
-        }
+    const int id = timerIds.freeBit();
+    if (Q_UNLIKELY(id == 0)) {
+        qFatal("QAbstractEventDispatcher: no free timer ID");
     }
-
-    qFatal("QAbstractEventDispatcher: no free timer ID");
-    return 0;
+    return id;
 }
 
 // Releasing a timer ID requires only a bit flip to mark it as unused
 void QAbstractEventDispatcherPrivate::releaseTimerId(int timerId)
 {
-    Q_ASSERT_X(timerIds->test(timerId), "QAbstractEventDispatcher::releaseTimerId",
+    Q_ASSERT_X(timerIds.test(timerId), "QAbstractEventDispatcher::releaseTimerId",
                "Internal error: timer ID not found");
-    timerIds->set(timerId, false);
+    timerIds.unsetBit(timerId);
 }
 
 /*!
