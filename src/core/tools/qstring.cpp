@@ -4469,11 +4469,15 @@ QString QString::toLower() const
     if (!d->data || !d->size)
         return *this;
 
-    QString result(d->size, Qt::Uninitialized);
-    for (int i = 0; i < d->size; i++) {
-        result.d->data[i] = QChar::toLower(d->data[i]);
+    UErrorCode error = U_ZERO_ERROR;
+    const int maxchars = d->size + 1; // ICU will write zero-terminator
+    UChar result[maxchars];
+    const int lowerresult = u_strToLower(result, maxchars,
+        reinterpret_cast<const UChar*>(d->data), d->size, "C", &error);
+    if (Q_UNLIKELY(lowerresult > maxchars || U_FAILURE(error))) {
+        return QString();
     }
-    return result;
+    return QString(reinterpret_cast<QChar*>(result), lowerresult);
 }
 
 /*!
@@ -4485,11 +4489,15 @@ QString QString::toCaseFolded() const
     if (!d->data || !d->size)
         return *this;
 
-    QString result(d->size, Qt::Uninitialized);
-    for (int i = 0; i < d->size; i++) {
-        result.d->data[i] = QChar::toCaseFolded(d->data[i]);
+    UErrorCode error = U_ZERO_ERROR;
+    const int maxchars = d->size + 1; // ICU will write zero-terminator
+    UChar result[maxchars];
+    const int foldresult = u_strFoldCase(result, maxchars,
+        reinterpret_cast<const UChar*>(d->data), d->size, U_FOLD_CASE_DEFAULT, &error);
+    if (Q_UNLIKELY(foldresult > maxchars || U_FAILURE(error))) {
+        return QString();
     }
-    return result;
+    return QString(reinterpret_cast<QChar*>(result), foldresult);
 }
 
 /*!
@@ -4508,11 +4516,15 @@ QString QString::toUpper() const
     if (!d->data || !d->size)
         return *this;
 
-    QString result(d->size, Qt::Uninitialized);
-    for (int i = 0; i < d->size; i++) {
-        result.d->data[i] = QChar::toUpper(d->data[i]);
+    UErrorCode error = U_ZERO_ERROR;
+    const int maxchars = d->size + 1; // ICU will write zero-terminator
+    UChar result[maxchars];
+    const int upperresult = u_strToUpper(result, maxchars,
+        reinterpret_cast<const UChar*>(d->data), d->size, "C", &error);
+    if (Q_UNLIKELY(upperresult > maxchars || U_FAILURE(error))) {
+        return QString();
     }
-    return result;
+    return QString(reinterpret_cast<QChar*>(result), upperresult);
 }
 
 // ### Qt 5: Consider whether this function shouldn't be removed See task 202871.
