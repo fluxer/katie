@@ -76,7 +76,7 @@ void qDrawShadeLine(QPainter *p, int x1, int y1, int x2, int y2,
                      const QPalette &pal, bool sunken,
                      int lineWidth, int midLineWidth)
 {
-    if (!(p && lineWidth >= 0 && midLineWidth >= 0))        {
+    if (Q_UNLIKELY(!(p && lineWidth >= 0 && midLineWidth >= 0))) {
         qWarning("qDrawShadeLine: Invalid parameters");
         return;
     }
@@ -192,7 +192,7 @@ void qDrawShadeRect(QPainter *p, int x, int y, int w, int h,
 {
     if (w == 0 || h == 0)
         return;
-    if (! (w > 0 && h > 0 && lineWidth >= 0 && midLineWidth >= 0)) {
+    if (Q_UNLIKELY(!(w > 0 && h > 0 && lineWidth >= 0 && midLineWidth >= 0))) {
         qWarning("qDrawShadeRect: Invalid parameters");
         return;
     }
@@ -292,7 +292,7 @@ void qDrawShadePanel(QPainter *p, int x, int y, int w, int h,
 {
     if (w == 0 || h == 0)
         return;
-    if (!(w > 0 && h > 0 && lineWidth >= 0)) {
+    if (Q_UNLIKELY(!(w > 0 && h > 0 && lineWidth >= 0))) {
         qWarning("qDrawShadePanel: Invalid parameters");
     }
     QColor shade = pal.dark().color();
@@ -498,7 +498,7 @@ void qDrawPlainRect(QPainter *p, int x, int y, int w, int h, const QColor &c,
 {
     if (w == 0 || h == 0)
         return;
-    if (!(w > 0 && h > 0 && lineWidth >= 0)) {
+    if (Q_UNLIKELY(!(w > 0 && h > 0 && lineWidth >= 0))) {
         qWarning("qDrawPlainRect: Invalid parameters");
     }
     QPen   oldPen   = p->pen();
@@ -732,7 +732,7 @@ void qDrawBorderPixmap(QPainter *painter, const QRect &targetRect, const QMargin
                        const QPixmap &pixmap, const QRect &sourceRect,const QMargins &sourceMargins,
                        const QTileRules &rules)
 {
-    if (!painter->isActive()) {
+    if (Q_UNLIKELY(!painter->isActive())) {
         qWarning("qDrawBorderPixmap: Painter not active");
         return;
     } else if (pixmap.isNull()) {
