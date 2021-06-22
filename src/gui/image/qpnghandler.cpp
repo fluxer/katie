@@ -20,7 +20,6 @@
 ****************************************************************************/
 
 #include "qpnghandler_p.h"
-
 #include "qcoreapplication.h"
 #include "qiodevice.h"
 #include "qimage.h"
@@ -28,14 +27,12 @@
 #include "qtextcodec.h"
 #include "qvariant.h"
 #include "qvector.h"
+#include "qdrawhelper_p.h"
 
 #include <png.h>
 #include <pngconf.h>
 
 QT_BEGIN_NAMESPACE
-
-// avoid going through QImage::scanLine() which calls detach
-#define QFAST_SCAN_LINE(data, bpl, y) (data + (y) * bpl)
 
 #if Q_BYTE_ORDER == Q_BIG_ENDIAN
 #  define QFILLER_ORDER PNG_FILLER_BEFORE

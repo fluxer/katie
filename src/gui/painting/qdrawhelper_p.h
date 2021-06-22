@@ -442,6 +442,9 @@ static const uint qt_bayer_matrix[16][16] = {
       0xa9, 0x69, 0x99, 0x59, 0xa5, 0x65, 0x95, 0x55}
 };
 
+// avoid going through QImage::scanLine() which calls detach
+#define QFAST_SCAN_LINE(data, bpl, y) (data + y * bpl)
+
 QT_END_NAMESPACE
 
 #endif // QDRAWHELPER_P_H

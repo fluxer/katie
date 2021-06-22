@@ -2571,7 +2571,7 @@ void QRasterPaintEngine::drawBitmap(const QPointF &pos, const QImage &image, QSp
 
     QImage::Format format = image.format();
     for (int y = ymin; y < ymax; ++y) {
-        const uchar *src = image.scanLine(y - qRound(pos.y()));
+        const uchar *src = image.constScanLine(y - qRound(pos.y()));
         if (format == QImage::Format_MonoLSB) {
             for (int x = 0; x < xmax - xmin; ++x) {
                 int src_x = x + x_offset;
@@ -2776,9 +2776,11 @@ QImage QRasterBuffer::colorizeBitmap(const QImage &image, const QColor &color)
 
     int height = sourceImage.height();
     int width = sourceImage.width();
+    int bpl = dest.bytesPerLine();
+    uchar *data = dest.bits();
     for (int y=0; y<height; ++y) {
-        const uchar *source = sourceImage.scanLine(y);
-        QRgb *target = reinterpret_cast<QRgb *>(dest.scanLine(y));
+        const uchar *source = sourceImage.constScanLine(y);
+        QRgb *target = reinterpret_cast<QRgb *>(QFAST_SCAN_LINE(data, bpl, y));
         for (int x=0; x < width; ++x)
             target[x] = (source[x>>3] >> (x&7)) & 1 ? fg : bg;
     }
@@ -3252,7 +3254,7 @@ QImage QRasterBuffer::bufferImage() const
     QImage image(m_width, m_height, QImage::Format_ARGB32_Premultiplied);
 
     for (int y = 0; y < m_height; ++y) {
-        const uint *span = (const uint *)this->scanLine(y);
+        const uint *span = (const uint *)this->constScanLine(y);
 
         for (int x=0; x<m_width; ++x) {
             image.setPixel(x, y, span[x]);
