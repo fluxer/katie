@@ -47,7 +47,6 @@ public:
     bool translucentBackground;
 #endif
 #endif
-    bool inSetGeometry;
 };
 
 QRasterWindowSurface::QRasterWindowSurface(QWidget *window, bool setDefaultSurface)
@@ -61,7 +60,6 @@ QRasterWindowSurface::QRasterWindowSurface(QWidget *window, bool setDefaultSurfa
 #endif
 #endif
     d_ptr->image = 0;
-    d_ptr->inSetGeometry = false;
 }
 
 
@@ -153,7 +151,6 @@ void QRasterWindowSurface::setGeometry(const QRect &rect)
 {
     QWindowSurface::setGeometry(rect);
     Q_D(QRasterWindowSurface);
-    d->inSetGeometry = true;
     if (d->image == 0 || d->image->width() < rect.width() || d->image->height() < rect.height()) {
 #if defined(Q_WS_X11) && !defined(QT_NO_XRENDER)
         if (d_ptr->translucentBackground)
@@ -162,7 +159,6 @@ void QRasterWindowSurface::setGeometry(const QRect &rect)
 #endif
             prepareBuffer(QImage::systemFormat());
     }
-    d->inSetGeometry = false;
 }
 
 // from qwindowsurface.cpp
@@ -206,7 +202,7 @@ void QRasterWindowSurface::prepareBuffer(QImage::Format format)
 
     d->image = new QImage(width, height, format);
 
-    if (oldImage && d->inSetGeometry && hasStaticContents()) {
+    if (oldImage && hasStaticContents()) {
         const uchar *src = oldImage->constBits();
         uchar *dst = d->image->bits();
 
