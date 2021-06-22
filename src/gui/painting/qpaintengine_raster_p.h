@@ -372,7 +372,6 @@ public:
     QImage::Format prepare(QImage *image);
     QImage::Format prepare(QPixmap *pix);
     void prepare(int w, int h);
-    void prepareBuffer(int w, int h);
 
     uchar *scanLine(int y) { Q_ASSERT(y>=0); Q_ASSERT(y<m_height); return m_buffer + y * bytes_per_line; }
     const uchar *scanLine(int y) const { Q_ASSERT(y>=0); Q_ASSERT(y<m_height); return m_buffer + y * bytes_per_line; }
