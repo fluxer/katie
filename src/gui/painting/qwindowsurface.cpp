@@ -195,38 +195,6 @@ QImage* QWindowSurface::buffer(const QWidget *widget)
 }
 
 /*!
-  Returns a QPixmap generated from the part of the backing store
-  corresponding to \a widget. Returns a null QPixmap if an error
-  occurs. The contents of the pixmap are only defined for the regions
-  of \a widget that have received paint events since the last resize
-  of the backing store. The entire widget is grabbed.
-
-  The default implementation uses QWindowSurface::buffer().
-
-  \sa QPixmap::grabWidget()
-*/
-QPixmap QWindowSurface::grabWidget(const QWidget *widget) const
-{
-    if (widget->window() != window())
-        return QPixmap();
-
-    const QImage *img = const_cast<QWindowSurface *>(this)->buffer(widget->window());
-
-    if (!img || img->isNull())
-        return QPixmap();
-
-    QRect rect = widget->rect();
-
-    rect.translate(offset(widget) - offset(widget->window()));
-    rect &= QRect(QPoint(), img->size());
-
-    if (rect.isEmpty())
-        return QPixmap();
-
-    return QPixmap::fromImage(img->copy(rect));
-}
-
-/*!
   Returns the offset of \a widget in the coordinates of this
   window surface.
  */
