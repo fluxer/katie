@@ -25,14 +25,11 @@
 #include "qiodevice.h"
 #include "qvariant.h"
 #include "qplatformdefs.h"
+#include "qdrawhelper_p.h"
 
 QT_BEGIN_NAMESPACE
 
 #define Q_TRANSPARENT 0x00ffffff
-
-// avoid going through QImage::scanLine() which calls detach
-#define FAST_SCAN_LINE(bits, bpl, y) (bits + (y) * bpl)
-
 
 /*
   Incremental image decoder for GIF image format.
@@ -398,8 +395,8 @@ int QGIFFormat::decode(QImage *image, const uchar *buffer, int length,
                     const int dest_bpl = backingstore.bytesPerLine();
                     unsigned char *dest_data = backingstore.bits();
                     for (int ln=0; ln<h; ln++) {
-                        memcpy(FAST_SCAN_LINE(dest_data, dest_bpl, ln),
-                               FAST_SCAN_LINE(bits, bpl, t+ln) + l, w*sizeof(QRgb));
+                        memcpy(QFAST_SCAN_LINE(dest_data, dest_bpl, ln),
+                               QFAST_SCAN_LINE(bits, bpl, t+ln) + l, w*sizeof(QRgb));
                     }
                 }
 
@@ -472,7 +469,7 @@ int QGIFFormat::decode(QImage *image, const uchar *buffer, int length,
                     if (needfirst) {
                         firstcode=oldcode=code;
                         if (!out_of_bounds && image->height() > y && ((frame == 0) || (firstcode != trans_index)))
-                            ((QRgb*)FAST_SCAN_LINE(bits, bpl, y))[x] = color(firstcode);
+                            ((QRgb*)QFAST_SCAN_LINE(bits, bpl, y))[x] = color(firstcode);
                         x++;
                         if (x>=swidth) out_of_bounds = true;
                         needfirst=false;
@@ -525,7 +522,7 @@ int QGIFFormat::decode(QImage *image, const uchar *buffer, int length,
                         const int h = image->height();
                         QRgb *line = 0;
                         if (!out_of_bounds && h > y)
-                            line = (QRgb*)FAST_SCAN_LINE(bits, bpl, y);
+                            line = (QRgb*)QFAST_SCAN_LINE(bits, bpl, y);
                         while (sp>stack) {
                             const uchar index = *(--sp);
                             if (!out_of_bounds && h > y && ((frame == 0) || (index != trans_index))) {
@@ -538,7 +535,7 @@ int QGIFFormat::decode(QImage *image, const uchar *buffer, int length,
                                 out_of_bounds = left>=swidth || y>=sheight;
                                 nextY(bits, bpl);
                                 if (!out_of_bounds && h > y)
-                                    line = (QRgb*)FAST_SCAN_LINE(bits, bpl, y);
+                                    line = (QRgb*)QFAST_SCAN_LINE(bits, bpl, y);
                             }
                         }
                     }
@@ -935,7 +932,7 @@ void QGIFFormat::nextY(unsigned char *bits, int bpl)
         // Don't dup with transparency
         if (trans_index < 0) {
             for (i=1; i<=my; i++) {
-                memcpy(FAST_SCAN_LINE(bits, bpl, y+i)+left*sizeof(QRgb), FAST_SCAN_LINE(bits, bpl, y)+left*sizeof(QRgb),
+                memcpy(QFAST_SCAN_LINE(bits, bpl, y+i)+left*sizeof(QRgb), QFAST_SCAN_LINE(bits, bpl, y)+left*sizeof(QRgb),
                        (right-left+1)*sizeof(QRgb));
             }
         }
@@ -964,7 +961,7 @@ void QGIFFormat::nextY(unsigned char *bits, int bpl)
         // Don't dup with transparency
         if (trans_index < 0) {
             for (i=1; i<=my; i++) {
-                memcpy(FAST_SCAN_LINE(bits, bpl, y+i)+left*sizeof(QRgb), FAST_SCAN_LINE(bits, bpl, y)+left*sizeof(QRgb),
+                memcpy(QFAST_SCAN_LINE(bits, bpl, y+i)+left*sizeof(QRgb), QFAST_SCAN_LINE(bits, bpl, y)+left*sizeof(QRgb),
                        (right-left+1)*sizeof(QRgb));
             }
         }
@@ -988,7 +985,7 @@ void QGIFFormat::nextY(unsigned char *bits, int bpl)
         // Don't dup with transparency
         if (trans_index < 0) {
             for (i=1; i<=my; i++) {
-                memcpy(FAST_SCAN_LINE(bits, bpl, y+i)+left*sizeof(QRgb), FAST_SCAN_LINE(bits, bpl, y)+left*sizeof(QRgb),
+                memcpy(QFAST_SCAN_LINE(bits, bpl, y+i)+left*sizeof(QRgb), QFAST_SCAN_LINE(bits, bpl, y)+left*sizeof(QRgb),
                        (right-left+1)*sizeof(QRgb));
             }
         }
