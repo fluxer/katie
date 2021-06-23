@@ -1346,16 +1346,18 @@ QImage QX11PixmapData::takeQImageFromXImage(XImage *xi) const
     if ((QSysInfo::ByteOrder == QSysInfo::LittleEndian && xi->byte_order == MSBFirst)
         || (QSysInfo::ByteOrder == QSysInfo::BigEndian && xi->byte_order == LSBFirst))
     {
+        const int bpl = image.bytesPerLine();
+        uchar* dest = image.bits();
         for (int i=0; i < image.height(); i++) {
             if (depth() == 16) {
-                ushort *p = (ushort*)image.scanLine(i);
+                ushort *p = reinterpret_cast<ushort*>(QFAST_SCAN_LINE(dest, bpl, i));
                 const ushort *end = p + image.width();
                 while (p < end) {
                     *p = ((*p << 8) & 0xff00) | ((*p >> 8) & 0x00ff);
                     p++;
                 }
             } else {
-                uint *p = (uint*)image.scanLine(i);
+                uint *p = reinterpret_cast<uint*>(QFAST_SCAN_LINE(dest, bpl, i));
                 const uint *end = p + image.width();
                 while (p < end) {
                     *p = ((*p << 24) & 0xff000000) | ((*p << 8) & 0x00ff0000)
@@ -1563,9 +1565,12 @@ QImage QX11PixmapData::toImage(const XImage *xi, const QRect &rect) const
         }
     } else if (xi->bits_per_pixel == d) {        // compatible depth
         char *xidata = xi->data;                // copy each scanline
-        int bpl = qMin(image.bytesPerLine(),xi->bytes_per_line);
+        const int qbpl = image.bytesPerLine();
+        const int bpl = qMin(qbpl, xi->bytes_per_line);
+        uchar* qdata = image.bits();
         for (int y=0; y<xi->height; y++) {
-            memcpy(image.scanLine(y), xidata, bpl);
+            uchar* tscan = QFAST_SCAN_LINE(qdata, qbpl, y);
+            memcpy(tscan, xidata, bpl);
             xidata += xi->bytes_per_line;
         }
     } else {
