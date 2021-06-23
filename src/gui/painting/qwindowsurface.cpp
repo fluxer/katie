@@ -116,10 +116,6 @@ QWidget* QWindowSurface::window() const
     return d_ptr->window;
 }
 
-void QWindowSurface::beginPaint(const QRegion &)
-{
-}
-
 void QWindowSurface::endPaint(const QRegion &)
 {
 //     QApplication::syncX();
@@ -149,19 +145,13 @@ QRect QWindowSurface::geometry() const
 }
 
 /*!
+    \fn QRect QWindowSurface::scroll(const QRegion &area, int dx, int dy)
+
     Scrolls the given \a area \a dx pixels to the right and \a dy
     downward; both \a dx and \a dy may be negative.
 
     Returns true if the area was scrolled successfully; false otherwise.
 */
-bool QWindowSurface::scroll(const QRegion &area, int dx, int dy)
-{
-    Q_UNUSED(area);
-    Q_UNUSED(dx);
-    Q_UNUSED(dy);
-
-    return false;
-}
 
 /*!
     Returns a QImage pointer which represents the actual buffer the \a widget

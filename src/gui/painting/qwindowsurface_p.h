@@ -62,14 +62,14 @@ public:
     virtual void setGeometry(const QRect &rect);
     QRect geometry() const;
 
-    virtual bool scroll(const QRegion &area, int dx, int dy);
+    virtual bool scroll(const QRegion &area, int dx, int dy) = 0;
 
-    virtual void beginPaint(const QRegion &);
-    virtual void endPaint(const QRegion &);
+    virtual void beginPaint(const QRegion &) = 0;
+    void endPaint(const QRegion &);
 
-    virtual QImage* buffer(const QWidget *widget);
+    QImage* buffer(const QWidget *widget);
 
-    virtual QPoint offset(const QWidget *widget) const;
+    QPoint offset(const QWidget *widget) const;
     inline QRect rect(const QWidget *widget) const;
 
     void setStaticContents(const QRegion &region);
