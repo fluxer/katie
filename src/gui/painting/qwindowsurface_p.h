@@ -47,7 +47,7 @@ class QWindowSurfacePrivate;
 class Q_GUI_EXPORT QWindowSurface
 {
 public:
-    QWindowSurface(QWidget *window, bool setDefaultSurface = true);
+    QWindowSurface(QWidget *windows);
     virtual ~QWindowSurface();
 
     QWidget *window() const;

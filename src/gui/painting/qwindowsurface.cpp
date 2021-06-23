@@ -90,10 +90,10 @@ public:
 /*!
     Constructs an empty surface for the given top-level \a window.
 */
-QWindowSurface::QWindowSurface(QWidget *window, bool setDefaultSurface)
+QWindowSurface::QWindowSurface(QWidget *window)
     : d_ptr(new QWindowSurfacePrivate(window))
 {
-    if(setDefaultSurface && window)
+    if(window)
         window->setWindowSurface(this);
 }
 

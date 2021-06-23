@@ -49,8 +49,8 @@ public:
 #endif
 };
 
-QRasterWindowSurface::QRasterWindowSurface(QWidget *window, bool setDefaultSurface)
-    : QWindowSurface(window, setDefaultSurface), d_ptr(new QRasterWindowSurfacePrivate)
+QRasterWindowSurface::QRasterWindowSurface(QWidget *window)
+    : QWindowSurface(window), d_ptr(new QRasterWindowSurfacePrivate)
 {
 #ifdef Q_WS_X11
     d_ptr->gc = XCreateGC(qt_x11Data->display, window->handle(), 0, 0);

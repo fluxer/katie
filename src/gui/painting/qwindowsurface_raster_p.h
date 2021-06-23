@@ -48,7 +48,7 @@ class QRasterWindowSurfacePrivate;
 class Q_GUI_EXPORT QRasterWindowSurface : public QWindowSurface
 {
 public:
-    QRasterWindowSurface(QWidget *widget, bool setDefaultSurface = true);
+    QRasterWindowSurface(QWidget *widget);
     ~QRasterWindowSurface();
 
     QPaintDevice *paintDevice();
