@@ -254,12 +254,7 @@ QRegion QWindowSurface::staticContents() const
 
 bool QWindowSurface::hasStaticContents() const
 {
-    return hasFeature(QWindowSurface::StaticContents) && !d_ptr->staticContents.isEmpty();
-}
-
-QWindowSurface::WindowSurfaceFeatures QWindowSurface::features() const
-{
-    return PartialUpdates | PreservedContents;
+    return !d_ptr->staticContents.isEmpty();
 }
 
 void qt_scrollRectInImage(QImage *img, const QRect &rect, const QPoint &offset)

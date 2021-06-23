@@ -56,7 +56,6 @@ public:
     void beginPaint(const QRegion &rgn);
     void setGeometry(const QRect &rect);
     bool scroll(const QRegion &area, int dx, int dy);
-    WindowSurfaceFeatures features() const;
 
 private:
     void prepareBuffer(QImage::Format format);

@@ -176,11 +176,6 @@ bool QRasterWindowSurface::scroll(const QRegion &area, int dx, int dy)
     return true;
 }
 
-QWindowSurface::WindowSurfaceFeatures QRasterWindowSurface::features() const
-{
-    return QWindowSurface::AllFeatures;
-}
-
 void QRasterWindowSurface::prepareBuffer(QImage::Format format)
 {
     Q_D(QRasterWindowSurface);

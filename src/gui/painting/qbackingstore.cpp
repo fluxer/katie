@@ -184,7 +184,7 @@ bool QWidgetBackingStore::bltRect(const QRect &rect, int dx, int dy, QWidget *wi
 {
     const QPoint pos(tlwOffset + widget->mapTo(tlw, rect.topLeft()));
     const QRect tlwRect(QRect(pos, rect.size()));
-    if (fullUpdatePending || dirty.intersects(tlwRect))
+    if (dirty.intersects(tlwRect))
         return false; // We don't want to scroll junk.
     return windowSurface->scroll(tlwRect, dx, dy);
 }
@@ -242,7 +242,7 @@ QRegion QWidgetBackingStore::dirtyRegion(QWidget *widget) const
     const bool widgetDirty = widget && widget != tlw;
     const QRect tlwRect(tlw->data->crect);
     const QRect surfaceGeometry(windowSurface->geometry());
-    if (fullUpdatePending || (surfaceGeometry != tlwRect && surfaceGeometry.size() != tlwRect.size())) {
+    if (surfaceGeometry != tlwRect && surfaceGeometry.size() != tlwRect.size()) {
         if (widgetDirty) {
             const QRect dirtyTlwRect = QRect(QPoint(), tlwRect.size());
             const QPoint offset(widget->mapTo(tlw, QPoint()));
@@ -392,18 +392,6 @@ void QWidgetBackingStore::markDirty(const QRegion &rgn, QWidget *widget, bool up
         return;
     }
 
-    if (fullUpdatePending) {
-        if (updateImmediately)
-            sendUpdateRequest(tlw, updateImmediately);
-        return;
-    }
-
-    if (!windowSurface->hasFeature(QWindowSurface::PartialUpdates)) {
-        fullUpdatePending = true;
-        sendUpdateRequest(tlw, updateImmediately);
-        return;
-    }
-
     const QPoint offset = widget->mapTo(tlw, QPoint());
     const QRect widgetRect = widget->d_func()->effectiveRectFor(widget->rect());
     if (qt_region_strictContains(dirty, widgetRect.translated(offset))) {
@@ -484,18 +472,6 @@ void QWidgetBackingStore::markDirty(const QRect &rect, QWidget *widget, bool upd
         widget->d_func()->dirty += rect;
         if (!eventAlreadyPosted || updateImmediately)
             sendUpdateRequest(widget, updateImmediately);
-        return;
-    }
-
-    if (fullUpdatePending) {
-        if (updateImmediately)
-            sendUpdateRequest(tlw, updateImmediately);
-        return;
-    }
-
-    if (!windowSurface->hasFeature(QWindowSurface::PartialUpdates)) {
-        fullUpdatePending = true;
-        sendUpdateRequest(tlw, updateImmediately);
         return;
     }
 
@@ -611,7 +587,6 @@ void QWidgetBackingStore::updateLists(QWidget *cur)
 
 QWidgetBackingStore::QWidgetBackingStore(QWidget *topLevel)
     : tlw(topLevel)
-    , fullUpdatePending(false)
 {
     windowSurface = tlw->windowSurface();
     if (!windowSurface)
@@ -828,11 +803,6 @@ void QWidgetBackingStore::sync(QWidget *exposedWidget, const QRegion &exposedReg
         return;
     }
 
-    // If there's no preserved contents support we always need
-    // to do a full repaint before flushing
-    if (!windowSurface->hasFeature(QWindowSurface::PreservedContents))
-        fullUpdatePending = true;
-
     // Nothing to repaint.
     if (!isDirty()) {
         qt_flush(exposedWidget, exposedRegion, windowSurface, tlw, tlwOffset);
@@ -863,7 +833,6 @@ void QWidgetBackingStore::sync()
             for (int i = 0; i < dirtyWidgets.size(); ++i)
                 resetWidget(dirtyWidgets.at(i));
             dirtyWidgets.clear();
-            fullUpdatePending = false;
         }
         return;
     }
@@ -874,7 +843,7 @@ void QWidgetBackingStore::sync()
     const bool inTopLevelResize = tlwExtra->inTopLevelResize;
     const QRect tlwRect(tlw->data->crect);
     const QRect surfaceGeometry(windowSurface->geometry());
-    if ((fullUpdatePending || inTopLevelResize || surfaceGeometry.size() != tlwRect.size()) && !updatesDisabled) {
+    if ((inTopLevelResize || surfaceGeometry.size() != tlwRect.size()) && !updatesDisabled) {
         if (hasStaticContents()) {
             // Repaint existing dirty area and newly visible area.
             const QRect clipRect(0, 0, surfaceGeometry.width(), surfaceGeometry.height());
@@ -950,8 +919,6 @@ void QWidgetBackingStore::sync()
         }
     }
     dirtyWidgets.clear();
-
-    fullUpdatePending = false;
 
     if (toClean.isEmpty()) {
         // Nothing to repaint. However, we might have newly exposed areas on the

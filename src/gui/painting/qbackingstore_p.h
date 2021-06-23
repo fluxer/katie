@@ -65,7 +65,7 @@ public:
 
     inline bool isDirty() const
     {
-        return !(dirtyWidgets.isEmpty() && dirty.isEmpty() && !fullUpdatePending);
+        return !(dirtyWidgets.isEmpty() && dirty.isEmpty());
     }
 
     // ### Qt 4.6: Merge into a template function (after MSVC isn't supported anymore).
@@ -82,7 +82,6 @@ private:
     QVector<QWidget *> dirtyOnScreenWidgets;
     QList<QWidget *> staticWidgets;
     QWindowSurface *windowSurface;
-    bool fullUpdatePending;
 
     QPoint tlwOffset;
 
@@ -204,7 +203,7 @@ private:
     }
 
     inline bool hasStaticContents() const
-    { return !staticWidgets.isEmpty() && windowSurface->hasFeature(QWindowSurface::StaticContents); }
+    { return !staticWidgets.isEmpty(); }
 
     friend class QWidgetPrivate;
     friend class QWidget;
