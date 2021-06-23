@@ -26,6 +26,7 @@
 #include "qvariant.h"
 #include "qpainter.h"
 #include "qapplication_p.h"
+#include "qdrawhelper_p.h"
 
 QT_BEGIN_NAMESPACE
 
@@ -267,11 +268,14 @@ QBitmap QBitmap::fromData(const QSize &size, const uchar *bits, QImage::Format m
     image.setColor(0, QColor(Qt::color0).rgb());
     image.setColor(1, QColor(Qt::color1).rgb());
 
+    const int bpl = image.bytesPerLine();
+    uchar* dest = image.bits();
     // Need to memcpy each line separatly since QImage is 32bit aligned and
     // this data is only byte aligned...
     int bytesPerLine = (size.width() + 7) / 8;
-    for (int y = 0; y < size.height(); ++y)
-        memcpy(image.scanLine(y), bits + bytesPerLine * y, bytesPerLine);
+    for (int y = 0; y < size.height(); ++y) {
+        ::memcpy(QFAST_SCAN_LINE(dest, bpl, y), bits + bytesPerLine * y, bytesPerLine);
+    }
     return QBitmap::fromImage(image);
 }
 
