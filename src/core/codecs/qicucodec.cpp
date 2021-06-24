@@ -1021,8 +1021,15 @@ QByteArray QIcuCodec::convertFromUnicode(const QChar *unicode, int length,
 }
 
 #ifndef QT_NO_TEXTCODEC
+extern QTextCodec* qt_localeMapper();
 QByteArray QIcuCodec::name() const
 {
+    if (qt_localeMapper() == this) {
+        // fake the name so that when it is saved in configuration files for example it is dynmaic
+        // instead of being saved as UTF-8 and the next time it is requested it will again resolve
+        // to the system codec
+        return QByteArray("System");
+    }
     return m_name;
 }
 

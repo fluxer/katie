@@ -64,6 +64,11 @@ QTextCodec *QTextCodec::cftr = Q_NULLPTR;
 Q_GLOBAL_STATIC(QMutex, textCodecsMutex)
 #endif
 
+QTextCodec* qt_localeMapper()
+{
+    return localeMapper;
+}
+
 class QTextCodecCleanup : public QList<QTextCodec*>
 {
 public:
