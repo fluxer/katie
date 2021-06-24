@@ -29,10 +29,13 @@
 #include "qvector.h"
 #include "qdrawhelper_p.h"
 
+#include <zlib.h>
 #include <png.h>
 #include <pngconf.h>
 
 QT_BEGIN_NAMESPACE
+
+enum { QPNGDefaultQuality = Z_BEST_SPEED };
 
 #if Q_BYTE_ORDER == Q_BIG_ENDIAN
 #  define QFILLER_ORDER PNG_FILLER_BEFORE
@@ -58,7 +61,7 @@ public:
     };
 
     QPngHandlerPrivate(QPngHandler *qq)
-        : gamma(0.0), quality(2), png_ptr(0), info_ptr(0),
+        : gamma(0.0), quality(QPNGDefaultQuality), png_ptr(0), info_ptr(0),
           end_info(0), row_pointers(0), state(Ready), q(qq)
     { }
 
@@ -679,7 +682,7 @@ bool QPngHandler::write(const QImage &image)
         quality = qMin(quality, 100);
         quality = (100-quality) * 9 / 91; // map [0,100] -> [9,0]
     } else {
-        quality = 2;
+        quality = QPNGDefaultQuality;
     }
     writer.setGamma(d->gamma);
     return writer.writeImage(image, quality);
