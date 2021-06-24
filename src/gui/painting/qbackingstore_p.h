@@ -93,8 +93,7 @@ private:
     void beginPaint(QRegion &toClean, QWindowSurface *windowSurface, BeginPaintInfo *returnInfo);
     void endPaint(const QRegion &cleaned, QWindowSurface *windowSurface, BeginPaintInfo *beginPaintInfo);
 
-    QRegion dirtyRegion(QWidget *widget = 0) const;
-    QRegion staticContents(QWidget *widget = 0, const QRect &withinClipRect = QRect()) const;
+    QRegion staticContents(QWidget *widget, const QRect &withinClipRect) const;
 
     void markDirtyOnScreen(const QRegion &dirtyOnScreen, QWidget *widget, const QPoint &topLevelOffset);
 

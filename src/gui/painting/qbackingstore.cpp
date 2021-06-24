@@ -231,55 +231,6 @@ void QWidgetBackingStore::endPaint(const QRegion &cleaned, QWindowSurface *windo
     flush();
 }
 
-/*!
-    Returns the region (in top-level coordinates) that needs repaint and/or flush.
-
-    If the widget is non-zero, only the dirty region for the widget is returned
-    and the region will be in widget coordinates.
-*/
-QRegion QWidgetBackingStore::dirtyRegion(QWidget *widget) const
-{
-    const bool widgetDirty = widget && widget != tlw;
-    const QRect tlwRect(tlw->data->crect);
-    const QRect surfaceGeometry(windowSurface->geometry());
-    if (surfaceGeometry != tlwRect && surfaceGeometry.size() != tlwRect.size()) {
-        if (widgetDirty) {
-            const QRect dirtyTlwRect = QRect(QPoint(), tlwRect.size());
-            const QPoint offset(widget->mapTo(tlw, QPoint()));
-            const QRect dirtyWidgetRect(dirtyTlwRect & widget->rect().translated(offset));
-            return dirtyWidgetRect.translated(-offset);
-        }
-        return QRect(QPoint(), tlwRect.size());
-    }
-
-    // Calculate the region that needs repaint.
-    QRegion r(dirty);
-    foreach (QWidget *w, dirtyWidgets) {
-        if (widgetDirty && w != widget && !widget->isAncestorOf(w))
-            continue;
-        r += w->d_func()->dirty.translated(w->mapTo(tlw, QPoint()));
-    }
-
-    // Append the region that needs flush.
-    r += dirtyOnScreen;
-
-    // Only in use with native child widgets.
-    foreach (QWidget *w, dirtyOnScreenWidgets) {
-        if (widgetDirty && w != widget && !widget->isAncestorOf(w))
-            continue;
-        QWidgetPrivate *wd = w->d_func();
-        Q_ASSERT(wd->needsFlush);
-        r += wd->needsFlush->translated(w->mapTo(tlw, QPoint()));
-    }
-
-    if (widgetDirty) {
-        // Intersect with the widget geometry and translate to its coordinates.
-        const QPoint offset(widget->mapTo(tlw, QPoint()));
-        r &= widget->rect().translated(offset);
-        r.translate(-offset);
-    }
-    return r;
-}
 
 /*!
     Returns the static content inside the \a parent if non-zero; otherwise the static content
