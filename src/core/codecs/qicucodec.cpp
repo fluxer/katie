@@ -977,7 +977,7 @@ QString QIcuCodec::convertToUnicode(const char *data, int length,
 #if 0
     error = U_ZERO_ERROR;
     char errorbytes[10];
-    int8_t invalidlen = 0;
+    int8_t invalidlen = sizeof(errorbytes);
     ucnv_getInvalidChars(conv, errorbytes, &invalidlen, &error);
     state->invalidChars = invalidlen;
 #endif
@@ -1008,7 +1008,7 @@ QByteArray QIcuCodec::convertFromUnicode(const QChar *unicode, int length,
 #if 0
     error = U_ZERO_ERROR;
     char errorbytes[10];
-    int8_t invalidlen = 0;
+    int8_t invalidlen = sizeof(errorbytes);
     ucnv_getInvalidChars(conv, errorbytes, &invalidlen, &error);
     state->invalidChars = invalidlen;
 #endif
