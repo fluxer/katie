@@ -28,6 +28,7 @@
 #include "qmap.h"
 #include "qtextstream.h"
 #include "qvariant.h"
+#include "qplatformdefs.h"
 
 QT_BEGIN_NAMESPACE
 
@@ -749,11 +750,11 @@ static bool read_xpm_string(QByteArray &buf, QIODevice *d, const char * const *s
     int offset = 0;
     forever {
         if (offset == state.size() || state.isEmpty()) {
-            char buf[2048];
-            qint64 bytesRead = d->read(buf, sizeof(buf));
+            char readbuf[QT_BUFFSIZE];
+            qint64 bytesRead = d->read(readbuf, sizeof(readbuf));
             if (bytesRead <= 0)
                 return false;
-            state = QByteArray(buf, int(bytesRead));
+            state = QByteArray(readbuf, int(bytesRead));
             offset = 0;
         }
 
