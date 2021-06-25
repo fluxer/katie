@@ -1849,8 +1849,7 @@ void QX11PaintEngine::drawPixmap(const QRectF &r, const QPixmap &px, const QRect
 
     if ((d->xinfo && d->xinfo->screen() != pixmap.x11Info().screen())
         || (pixmap.x11Info().screen() != DefaultScreen(qt_x11Data->display))) {
-        QPixmap* p = const_cast<QPixmap *>(&pixmap);
-        p->x11SetScreen(d->xinfo ? d->xinfo->screen() : DefaultScreen(qt_x11Data->display));
+        pixmap.x11SetScreen(d->xinfo ? d->xinfo->screen() : DefaultScreen(qt_x11Data->display));
     }
 
     QPixmap::x11SetDefaultScreen(pixmap.x11Info().screen());
