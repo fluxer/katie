@@ -29,6 +29,7 @@
 #include "qmath.h"
 #include "qendian.h"
 #include "qharfbuzz_p.h"
+#include "qdrawhelper_p.h"
 
 QT_BEGIN_NAMESPACE
 
@@ -593,12 +594,14 @@ QImage QFontEngine::alphaRGBMapForGlyph(glyph_t glyph, QFixed /*subPixelPosition
     QImage rgbMask(alphaMask.width(), alphaMask.height(), QImage::Format_RGB32);
 
     QVector<QRgb> colorTable = alphaMask.colorTable();
+    const int bpl = rgbMask.bytesPerLine();
+    uchar *dest = rgbMask.bits();
     for (int y=0; y<alphaMask.height(); ++y) {
-        uint *dst = (uint *) rgbMask.scanLine(y);
-        const uchar *src = (const uchar *) alphaMask.scanLine(y);
+        uint *line = reinterpret_cast<uint*>(QFAST_SCAN_LINE(dest, bpl, y));
+        const uchar *src = (const uchar *) alphaMask.constScanLine(y);
         for (int x=0; x<alphaMask.width(); ++x) {
             int val = qAlpha(colorTable.at(src[x]));
-            dst[x] = qRgb(val, val, val);
+            line[x] = qRgb(val, val, val);
         }
     }
 
