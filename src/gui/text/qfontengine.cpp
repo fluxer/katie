@@ -637,11 +637,13 @@ QImage QFontEngine::alphaMapForGlyph(glyph_t glyph)
         colors[i] = qRgba(0, 0, 0, i);
     indexed.setColorTable(colors);
 
+    const int bpl = indexed.bytesPerLine();
+    uchar *dest = indexed.bits();
     for (int y=0; y<im.height(); ++y) {
-        uchar *dst = (uchar *) indexed.scanLine(y);
-        const uint *src = (const uint *) im.scanLine(y);
+        uchar *line = QFAST_SCAN_LINE(dest, bpl, y);
+        const uint *src = reinterpret_cast<const uint*>(im.constScanLine(y));
         for (int x=0; x<im.width(); ++x)
-            dst[x] = qAlpha(src[x]);
+            line[x] = qAlpha(src[x]);
     }
 
     return indexed;
