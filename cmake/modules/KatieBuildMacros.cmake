@@ -308,7 +308,6 @@ macro(KATIE_OPTIMIZE_HEADERS DIR)
         install(
             CODE "set(UNIFDEF_EXECUTABLE \"${KATIE_UNIFDEF}\")"
             CODE "set(HEADERS_DIRECTORY \"${DIR}\")"
-            CODE "set(HEADERS_DEFINITIONS \"${ARGN}\")"
             SCRIPT "${CMAKE_SOURCE_DIR}/cmake/modules/OptimizeHeaders.cmake"
         )
     endif()

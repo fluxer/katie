@@ -1,16 +1,16 @@
 # Copyright (C) 2015, Ivailo Monev, <xakepa10@gmail.com>
 # Redistribution and use is allowed according to the terms of the BSD license.
 
-# UNIFDEF_EXECUTABLE, HEADERS_DIRECTORY and HEADERS_DEFINITIONS origin from the macro call
+# UNIFDEF_EXECUTABLE and HEADERS_DIRECTORY origin from the macro call
 
-file(GLOB headers "$ENV{DESTDIR}/${HEADERS_DIRECTORY}/*.h")
+set(headers_directory "$ENV{DESTDIR}/${HEADERS_DIRECTORY}")
+file(GLOB_RECURSE headers "${headers_directory}/*.h")
 
-set(bootstrap
+set(unifdef_arguments
+    # bootstrap
     -UQT_BOOTSTRAPPED
     -UQT_MOC
-)
-
-set(notsupported
+    # not supported
     -UQT_NO_QOBJECT
     -UQT_NO_COMPRESS
     -UQT_NO_THREAD
@@ -32,9 +32,9 @@ set(notsupported
     -UQT_NO_TEXTCODEC
 )
 
-message(STATUS "Optimizing header in: $ENV{DESTDIR}/${HEADERS_DIRECTORY}")
+message(STATUS "Optimizing header in: ${headers_directory}")
 execute_process(
-    COMMAND ${UNIFDEF_EXECUTABLE} -m ${bootstrap} ${notsupported} ${HEADERS_DEFINITIONS} ${headers}
+    COMMAND ${UNIFDEF_EXECUTABLE} -m ${unifdef_arguments} ${headers}
     RESULT_VARIABLE unifdef_result
     ERROR_VARIABLE unifdef_output
     OUTPUT_VARIABLE unifdef_output

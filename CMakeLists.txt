@@ -1083,10 +1083,19 @@ katie_string_unwrap("${KATIE_COMPONENTS}" KATIE_COMPONENTS "Kt")
 katie_string_unwrap("${KATIE_TOOLS}" KATIE_TOOLS)
 
 # custom install targets to make packaging easier
-add_custom_target(install-devel
-    COMMAND "${CMAKE_COMMAND}" -DCMAKE_INSTALL_COMPONENT=Devel -P cmake_install.cmake
-    WORKING_DIRECTORY "${CMAKE_BINARY_DIR}"
-)
+if(KATIE_UNIFDEF)
+    add_custom_target(install-devel
+        COMMAND "${CMAKE_COMMAND}" -DCMAKE_INSTALL_COMPONENT=Devel -P cmake_install.cmake
+        WORKING_DIRECTORY "${CMAKE_BINARY_DIR}"
+        # installing from script does not execute other scripts
+        COMMAND "${CMAKE_COMMAND}" -DUNIFDEF_EXECUTABLE="${KATIE_UNIFDEF}" -DHEADERS_DIRECTORY="${KATIE_HEADERS_PATH}" -P "${CMAKE_SOURCE_DIR}/cmake/modules/OptimizeHeaders.cmake"
+    )
+else()
+    add_custom_target(install-devel
+        COMMAND "${CMAKE_COMMAND}" -DCMAKE_INSTALL_COMPONENT=Devel -P cmake_install.cmake
+        WORKING_DIRECTORY "${CMAKE_BINARY_DIR}"
+    )
+endif()
 
 add_custom_target(install-runtime
     DEPENDS ${KATIE_COMPONENTS}
