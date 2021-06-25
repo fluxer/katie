@@ -69,7 +69,7 @@ QCursorData *QCursorData::setBitmap(const QBitmap &bitmap, const QBitmap &mask, 
 {
     if (!QCursorData::initialized)
         QCursorData::initialize();
-    if (bitmap.depth() != 1 || mask.depth() != 1 || bitmap.size() != mask.size()) {
+    if (Q_UNLIKELY(bitmap.depth() != 1 || mask.depth() != 1 || bitmap.size() != mask.size())) {
         qWarning("QCursor: Cannot create bitmap cursor; invalid bitmap(s)");
         QCursorData *c = qt_cursorTable[0];
         c->ref.ref();
