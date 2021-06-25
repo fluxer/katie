@@ -277,32 +277,13 @@ QDataStream &operator>>(QDataStream &s, QCursor &c)
     because this size is supported on all platforms. Some platforms
     also support 16 x 16, 48 x 48, and 64 x 64 cursors.
 
-    \note On Windows CE, the cursor size is fixed. If the pixmap
-    is bigger than the system size, it will be scaled.
-
     \sa QPixmap::QPixmap(), QPixmap::setMask()
 */
 
 QCursor::QCursor(const QPixmap &pixmap, int hotX, int hotY)
-    : d(0)
+    : d(Q_NULLPTR)
 {
-    QImage img = pixmap.toImage().convertToFormat(QImage::Format_Indexed8, Qt::ThresholdDither|Qt::AvoidDither);
-    QBitmap bm = QBitmap::fromImage(img, Qt::ThresholdDither|Qt::AvoidDither);
-    QBitmap bmm = pixmap.mask();
-    if (!bmm.isNull()) {
-        QBitmap nullBm;
-        bm.setMask(nullBm);
-    }
-    else if (!pixmap.mask().isNull()) {
-        QImage mimg = pixmap.mask().toImage().convertToFormat(QImage::Format_Indexed8, Qt::ThresholdDither|Qt::AvoidDither);
-        bmm = QBitmap::fromImage(mimg, Qt::ThresholdDither|Qt::AvoidDither);
-    }
-    else {
-        bmm = QBitmap(bm.size());
-        bmm.fill(Qt::color1);
-    }
-
-    d = QCursorData::setBitmap(bm, bmm, hotX, hotY);
+    d = QCursorData::setBitmap(QBitmap(pixmap), pixmap.mask(), hotX, hotY);
     d->pixmap = pixmap;
 }
 
@@ -336,16 +317,12 @@ QCursor::QCursor(const QPixmap &pixmap, int hotX, int hotY)
     because this size is supported on all platforms. Some platforms
     also support 16 x 16, 48 x 48, and 64 x 64 cursors.
 
-    \note On Windows CE, the cursor size is fixed. If the pixmap
-    is bigger than the system size, it will be scaled.
-
     \sa QBitmap::QBitmap(), QBitmap::setMask()
 */
 
 QCursor::QCursor(const QBitmap &bitmap, const QBitmap &mask, int hotX, int hotY)
-    : d(0)
+    : d(QCursorData::setBitmap(bitmap, mask, hotX, hotY))
 {
-    d = QCursorData::setBitmap(bitmap, mask, hotX, hotY);
 }
 
 QCursorData *qt_cursorTable[Qt::LastCursor + 1];
