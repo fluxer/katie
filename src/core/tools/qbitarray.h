@@ -27,7 +27,9 @@
 
 QT_BEGIN_NAMESPACE
 
+class QDebug;
 class QBitRef;
+
 class Q_CORE_EXPORT QBitArray
 {
     friend Q_CORE_EXPORT QDataStream &operator<<(QDataStream &, const QBitArray &);
@@ -145,6 +147,10 @@ inline QBitRef QBitArray::operator[](uint i)
 #ifndef QT_NO_DATASTREAM
 Q_CORE_EXPORT QDataStream &operator<<(QDataStream &, const QBitArray &);
 Q_CORE_EXPORT QDataStream &operator>>(QDataStream &, QBitArray &);
+#endif
+
+#ifndef QT_NO_DEBUG_STREAM
+Q_CORE_EXPORT QDebug operator<<(QDebug, const QBitArray &);
 #endif
 
 Q_DECLARE_TYPEINFO(QBitArray, Q_MOVABLE_TYPE);

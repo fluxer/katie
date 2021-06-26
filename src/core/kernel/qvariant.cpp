@@ -1120,7 +1120,7 @@ static void streamDebug(QDebug dbg, const QVariant &v)
         break;
 #endif
     case QVariant::BitArray:
-        //dbg.nospace() << v.toBitArray();
+        dbg.nospace() << v.toBitArray();
         break;
     default:
         break;
