@@ -223,8 +223,7 @@ bool QNetworkAccessFileBackend::readMoreFromFile()
         // ### FIXME!!
         // Obtain a pointer from the ringbuffer!
         // Avoid extra copy
-        QByteArray data;
-        data.reserve(wantToRead);
+        QByteArray data(wantToRead, Qt::Uninitialized);
         qint64 actuallyRead = file.read(data.data(), wantToRead);
         if (actuallyRead <= 0) {
             // EOF or error
