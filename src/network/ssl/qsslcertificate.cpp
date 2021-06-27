@@ -638,8 +638,7 @@ QByteArray QSslCertificatePrivate::QByteArray_from_X509(X509 *x509, QSsl::Encodi
 
     // Use i2d_X509 to convert the X509 to an array.
     int length = i2d_X509(x509, 0);
-    QByteArray array;
-    array.resize(length);
+    QByteArray array(length, Qt::Uninitialized);
     char *data = array.data();
     char **dataP = &data;
     unsigned char **dataPu = (unsigned char **)dataP;
