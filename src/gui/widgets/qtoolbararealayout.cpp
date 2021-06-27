@@ -1298,7 +1298,7 @@ bool QToolBarAreaLayout::restoreState(QDataStream &stream, const QList<QToolBar*
         stream >> cnt;
 
         QToolBarAreaLayoutInfo &dock = docks[pos];
-        const bool applyingLayout = !testing && pos != QInternal::TopDock;
+        const bool applyingLayout = !testing;
         QToolBarAreaLayoutLine line(dock.o);
 
         for (int k = 0; k < cnt; ++k) {
