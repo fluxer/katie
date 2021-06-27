@@ -1704,8 +1704,7 @@ QRenderRule QStyleSheetStyle::renderRule(const QWidget *w, int element, quint64 
     }
 
 
-    const QString part = knownPseudoElements[element].name;
-    QVector<Declaration> decls = declarations(rules, part, state);
+    QVector<Declaration> decls = declarations(rules, knownPseudoElements[element].name, state);
     QRenderRule newRule(decls, w);
     cache[state] = newRule;
     if ((state & stateMask) != state)
@@ -2004,10 +2003,9 @@ bool QStyleSheetStyle::hasStyleRule(const QWidget *w, int part) const
         return result;
     }
 
-    const QString pseudoElement = knownPseudoElements[part].name;
     for (int i = 0; i < rules.count(); i++) {
         const Selector& selector = rules.at(i).selectors.at(0);
-        if (pseudoElement.compare(selector.pseudoElement(), Qt::CaseInsensitive) == 0) {
+        if (knownPseudoElements[part].name.compare(selector.pseudoElement(), Qt::CaseInsensitive) == 0) {
             cache[part] = true;
             return true;
         }
