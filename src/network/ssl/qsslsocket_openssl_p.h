@@ -57,7 +57,10 @@
 #include <openssl/tls1.h>
 #endif
 
-typedef _STACK STACK;
+// LibreSSL does not have it defined
+#ifndef OPENSSL_STACK
+#define OPENSSL_STACK _STACK
+#endif
 
 QT_BEGIN_NAMESPACE
 
