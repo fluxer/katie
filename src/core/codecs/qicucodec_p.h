@@ -64,10 +64,13 @@ public:
     static QString convertTo(const char *data, int len, const char* const codec);
     static QByteArray convertFrom(const QChar *unicode, int len, const char* const codec);
 
+    void invalidChars(int length) const;
+
 private:
     UConverter *getConverter(QTextCodec::ConverterState *state) const;
 
     QByteArray m_name;
+    mutable QTextCodec::ConverterState *m_callbackstate;
 };
 
 QT_END_NAMESPACE
