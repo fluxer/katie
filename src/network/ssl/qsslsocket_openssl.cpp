@@ -45,90 +45,6 @@ bool QSslSocketPrivate::s_libraryLoaded = false;
 bool QSslSocketPrivate::s_loadedCiphersAndCerts = false;
 bool QSslSocketPrivate::s_loadRootCertsOnDemand = false;
 
-#if OPENSSL_VERSION_NUMBER < 0x10100000L
-/* \internal
-
-    From OpenSSL's thread(3) manual page:
-
-    OpenSSL can safely be used in multi-threaded applications provided that at
-    least two callback functions are set.
-
-    locking_function(int mode, int n, const char *file, int line) is needed to
-    perform locking on shared data structures.  (Note that OpenSSL uses a
-    number of global data structures that will be implicitly shared
-    when-whenever ever multiple threads use OpenSSL.)  Multi-threaded
-    applications will crash at random if it is not set.  ...
-    ...
-    id_function(void) is a function that returns a thread ID. It is not
-    needed on Windows nor on platforms where getpid() returns a different
-    ID for each thread (most notably Linux)
-*/
-class QOpenSslLocks
-{
-public:
-    inline QOpenSslLocks()
-        : initLocker(QMutex::Recursive),
-          locksLocker(QMutex::Recursive)
-    {
-        QMutexLocker locker(&locksLocker);
-        int numLocks = CRYPTO_num_locks();
-        locks = new QMutex *[numLocks];
-        memset(locks, 0, numLocks * sizeof(QMutex *));
-    }
-    inline ~QOpenSslLocks()
-    {
-        QMutexLocker locker(&locksLocker);
-        for (int i = 0; i < CRYPTO_num_locks(); ++i)
-            delete locks[i];
-        delete [] locks;
-
-        QSslSocketPrivate::deinitialize();
-    }
-    inline QMutex *lock(int num)
-    {
-        QMutexLocker locker(&locksLocker);
-        QMutex *tmp = locks[num];
-        if (!tmp)
-            tmp = locks[num] = new QMutex(QMutex::Recursive);
-        return tmp;
-    }
-
-    QMutex *globalLock()
-    {
-        return &locksLocker;
-    }
-
-    QMutex *initLock()
-    {
-        return &initLocker;
-    }
-
-private:
-    QMutex initLocker;
-    QMutex locksLocker;
-    QMutex **locks;
-};
-Q_GLOBAL_STATIC(QOpenSslLocks, openssl_locks)
-
-extern "C" {
-static void locking_function(int mode, int lockNumber, const char *, int)
-{
-    QMutex *mutex = openssl_locks()->lock(lockNumber);
-
-    // Lock or unlock it
-    if (mode & CRYPTO_LOCK)
-        mutex->lock();
-    else
-        mutex->unlock();
-}
-static unsigned long id_function()
-{
-    return (quintptr)QThread::currentThreadId();
-}
-} // extern "C"
-
-#endif //OPENSSL_VERSION_NUMBER >= 0x10100000L
-
 QSslSocketBackendPrivate::QSslSocketBackendPrivate()
     : ssl(0),
       ctx(0),
@@ -164,8 +80,6 @@ QSslCipher QSslSocketBackendPrivate::QSslCipher_from_SSL_CIPHER(const SSL_CIPHER
         ciph.d->protocol = QSsl::UnknownProtocol;
         if (protoString == QLatin1String("SSLv3"))
             ciph.d->protocol = QSsl::SslV3;
-        else if (protoString == QLatin1String("SSLv2"))
-            ciph.d->protocol = QSsl::SslV2;
         else if (protoString == QLatin1String("TLSv1"))
             ciph.d->protocol = QSsl::TlsV1;
 
@@ -177,12 +91,7 @@ QSslCipher QSslSocketBackendPrivate::QSslCipher_from_SSL_CIPHER(const SSL_CIPHER
             ciph.d->encryptionMethod = descriptionList.at(4).mid(4);
         ciph.d->exportable = (descriptionList.size() > 6 && descriptionList.at(6) == QLatin1String("export"));
 
-#if OPENSSL_VERSION_NUMBER < 0x10100000L
-        ciph.d->bits = cipher->strength_bits;
-        ciph.d->supportedBits = cipher->alg_bits;
-#else
         ciph.d->bits = SSL_CIPHER_get_bits(cipher, &ciph.d->supportedBits);
-#endif
     }
     return ciph;
 }
@@ -217,13 +126,6 @@ bool QSslSocketBackendPrivate::initSslContext()
     bool reinitialized = false;
 init_context:
     switch (configuration.protocol) {
-    case QSsl::SslV2:
-#if !defined(OPENSSL_NO_SSL2) && OPENSSL_VERSION_NUMBER < 0x10100000L
-        ctx = SSL_CTX_new(client ? SSLv2_client_method() : SSLv2_server_method());
-#else
-        ctx = 0; // SSL 2 not supported by the system, but chosen deliberately -> error
-#endif
-        break;
     case QSsl::SslV3:
 #ifndef OPENSSL_NO_SSL3_METHOD
         ctx = SSL_CTX_new(client ? SSLv3_client_method() : SSLv3_server_method());
@@ -234,8 +136,7 @@ init_context:
     case QSsl::TlsV1:
         ctx = SSL_CTX_new(client ? TLSv1_client_method() : TLSv1_server_method());
         break;
-    case QSsl::SecureProtocols: // SslV2 will be disabled below
-    case QSsl::TlsV1SslV3: // SslV2 will be disabled below
+    case QSsl::SecureProtocols:
     case QSsl::AnyProtocol:
     default:
         ctx = SSL_CTX_new(client ? SSLv23_client_method() : SSLv23_server_method());
@@ -258,11 +159,7 @@ init_context:
     }
 
     // Enable bug workarounds.
-    long options;
-    if (configuration.protocol == QSsl::TlsV1SslV3 || configuration.protocol == QSsl::SecureProtocols)
-        options = SSL_OP_ALL|SSL_OP_NO_SSLv2;
-    else
-        options = SSL_OP_ALL;
+    long options = SSL_OP_ALL;
 
     // This option is disabled by default, so we need to be able to clear it
     if (configuration.sslOptions & QSsl::SslOptionDisableEmptyFragments)
@@ -392,12 +289,10 @@ init_context:
         return false;
     }
 
-#if OPENSSL_VERSION_NUMBER >= 0x0090806fL && !defined(OPENSSL_NO_TLSEXT)
-    if ((configuration.protocol == QSsl::TlsV1SslV3 ||
-        configuration.protocol == QSsl::TlsV1 ||
+#if !defined(OPENSSL_NO_TLSEXT)
+    if (configuration.protocol == QSsl::TlsV1 ||
         configuration.protocol == QSsl::SecureProtocols ||
-        configuration.protocol == QSsl::AnyProtocol) &&
-        client && SSLeay() >= 0x00090806fL) {
+        configuration.protocol == QSsl::AnyProtocol) {
         // Set server hostname on TLS extension. RFC4366 section 3.1 requires it in ACE format.
         QString tlsHostName = verificationPeerName.isEmpty() ? q->peerName() : verificationPeerName;
         if (tlsHostName.isEmpty())
@@ -461,17 +356,6 @@ void QSslSocketBackendPrivate::destroySslContext()
 
 /*!
     \internal
-*/
-void QSslSocketPrivate::deinitialize()
-{
-#if OPENSSL_VERSION_NUMBER < 0x10100000L
-    CRYPTO_set_id_callback(0);
-    CRYPTO_set_locking_callback(0);
-#endif
-}
-
-/*!
-    \internal
 
     Does the minimum amount of initialization to determine whether SSL
     is supported or not.
@@ -485,15 +369,8 @@ bool QSslSocketPrivate::supportsSsl()
 bool QSslSocketPrivate::ensureLibraryLoaded()
 {
     // Check if the library itself needs to be initialized.
-#if OPENSSL_VERSION_NUMBER < 0x10100000L
-    QMutexLocker locker(openssl_locks()->initLock());
-#endif
     if (!s_libraryLoaded) {
         // Initialize OpenSSL.
-#if OPENSSL_VERSION_NUMBER < 0x10100000L
-        CRYPTO_set_id_callback(id_function);
-        CRYPTO_set_locking_callback(locking_function);
-#endif
         if (SSL_library_init() != 1)
             return false;
         SSL_load_error_strings();
@@ -516,9 +393,6 @@ bool QSslSocketPrivate::ensureLibraryLoaded()
 
 void QSslSocketPrivate::ensureCiphersAndCertsLoaded()
 {
-#if OPENSSL_VERSION_NUMBER < 0x10100000L
-  QMutexLocker locker(openssl_locks()->initLock());
-#endif
     if (s_loadedCiphersAndCerts)
         return;
     s_loadedCiphersAndCerts = true;
@@ -568,18 +442,11 @@ void QSslSocketPrivate::resetDefaultCiphers()
     for (int i = 0; i < sk_SSL_CIPHER_num(supportedCiphers); ++i) {
         const SSL_CIPHER *cipher = sk_SSL_CIPHER_value(supportedCiphers, i);
         if (cipher) {
-
-#if OPENSSL_VERSION_NUMBER < 0x10100000L
-            if (cipher->valid) {
-#endif
-                QSslCipher ciph = QSslSocketBackendPrivate::QSslCipher_from_SSL_CIPHER(cipher);
-                if (!ciph.isNull()) {
-                    if (!ciph.name().toLower().startsWith(QLatin1String("adh")))
-                        ciphers << ciph;
-                }
-#if OPENSSL_VERSION_NUMBER < 0x10100000L
+            QSslCipher ciph = QSslSocketBackendPrivate::QSslCipher_from_SSL_CIPHER(cipher);
+            if (!ciph.isNull()) {
+                if (!ciph.name().toLower().startsWith(QLatin1String("adh")))
+                    ciphers << ciph;
             }
-#endif
         }
     }
 
@@ -1122,14 +989,7 @@ QSslCipher QSslSocketBackendPrivate::sessionCipher() const
 {
     if (!ssl || !ctx)
         return QSslCipher();
-#if OPENSSL_VERSION_NUMBER >= 0x10000000L
-    // FIXME This is fairly evil, but needed to keep source level compatibility
-    // with the OpenSSL 0.9.x implementation at maximum -- some other functions
-    // don't take a const SSL_CIPHER* when they should
-    SSL_CIPHER *sessionCipher = const_cast<SSL_CIPHER *>(SSL_get_current_cipher(ssl));
-#else
-    SSL_CIPHER *sessionCipher = SSL_get_current_cipher(ssl);
-#endif
+    const SSL_CIPHER *sessionCipher = SSL_get_current_cipher(ssl);
     return sessionCipher ? QSslCipher_from_SSL_CIPHER(sessionCipher) : QSslCipher();
 }
 

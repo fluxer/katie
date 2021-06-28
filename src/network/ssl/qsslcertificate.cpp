@@ -401,11 +401,7 @@ QMultiMap<QSsl::AlternateNameEntryType, QString> QSslCertificate::alternateSubje
                 continue;
             }
 
-#if OPENSSL_VERSION_NUMBER < 0x10100000L
-            const char *altNameStr = reinterpret_cast<const char *>(ASN1_STRING_data(genName->d.ia5));
-#else
             const char *altNameStr = reinterpret_cast<const char *>(ASN1_STRING_get0_data(genName->d.ia5));
-#endif
             const QString altName = QString::fromLatin1(altNameStr, len);
             if (genName->type == GEN_DNS)
                 result.insert(QSsl::DnsEntry, altName);
@@ -467,19 +463,11 @@ QSslKey QSslCertificate::publicKey() const
     QSslKey key;
 
     key.d->type = QSsl::PublicKey;
-#if OPENSSL_VERSION_NUMBER < 0x10100000L
-    X509_PUBKEY *xkey = d->x509->cert_info->key;
-#else
     X509_PUBKEY *xkey = X509_get_X509_PUBKEY(d->x509);
-#endif
     EVP_PKEY *pkey = X509_PUBKEY_get(xkey);
     Q_ASSERT(pkey);
 
-#if OPENSSL_VERSION_NUMBER < 0x10100000L
-    const int key_id = EVP_PKEY_type(pkey->type);
-#else
     const int key_id = EVP_PKEY_base_id(pkey);
-#endif
     if (key_id == EVP_PKEY_RSA) {
         key.d->rsa = EVP_PKEY_get1_RSA(pkey);
         key.d->algorithm = QSsl::Rsa;

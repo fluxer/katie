@@ -222,8 +222,8 @@ set_package_properties(Jansson PROPERTIES
     TYPE REQUIRED
 )
 
-# v0.9.8+ required for SHA-224...SHA-512 support
-find_package(OpenSSL 0.9.8)
+# v1.1.0+ required for thread-safety without use of locking callbacks
+find_package(OpenSSL 1.1.0)
 set_package_properties(OpenSSL PROPERTIES
     PURPOSE "Required for HTTPS support"
     DESCRIPTION "Robust, commercial-grade, and full-featured toolkit for SSL and TLS"
