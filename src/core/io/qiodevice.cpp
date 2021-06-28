@@ -26,15 +26,13 @@
 #include "qiodevice_p.h"
 #include "qfile.h"
 #include "qstringlist.h"
-#include <limits.h>
+#include "qcorecommon_p.h"
 
 #ifdef QIODEVICE_DEBUG
 #  include <ctype.h>
 #endif
 
 QT_BEGIN_NAMESPACE
-
-#define QBYTEARRAY_MAX INT_MAX
 
 #ifdef QIODEVICE_DEBUG
 void debugBinaryString(const QByteArray &input)

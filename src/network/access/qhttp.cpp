@@ -42,6 +42,7 @@
 # include "qauthenticator_p.h"
 # include "qdebug.h"
 # include "qtimer.h"
+# include "qcorecommon_p.h"
 #endif
 
 #ifndef QT_NO_HTTP
@@ -1857,7 +1858,7 @@ qint64 QHttp::read(char *data, qint64 maxlen)
 QByteArray QHttp::readAll()
 {
     qint64 avail = bytesAvailable();
-    if (Q_UNLIKELY(avail > INT_MAX)) {
+    if (Q_UNLIKELY(avail > QBYTEARRAY_MAX)) {
         qWarning("QHttp::readAll: overflow in available bytes");
         return QByteArray();
     }

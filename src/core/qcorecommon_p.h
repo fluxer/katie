@@ -4,8 +4,11 @@
 #include "qstring.h"
 
 #include <time.h>
+#include <limits.h>
 
 QT_BEGIN_NAMESPACE
+
+#define QBYTEARRAY_MAX INT_MAX
 
 // enough space to hold BOM, each char as surrogate pair and terminator
 #define QMAXUSTRLEN(X) 4 + (X * 2) + 2
