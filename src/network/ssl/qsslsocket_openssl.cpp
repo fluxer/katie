@@ -711,51 +711,50 @@ void QSslSocketBackendPrivate::transmit()
 
 static QSslError _q_OpenSSL_to_QSslError(int errorCode, const QSslCertificate &cert)
 {
-    QSslError error;
     switch (errorCode) {
     case X509_V_OK:
         // X509_V_OK is also reported if the peer had no certificate.
-        break;
+        return QSslError();
     case X509_V_ERR_UNABLE_TO_GET_ISSUER_CERT:
-        error = QSslError(QSslError::UnableToGetIssuerCertificate, cert); break;
+        return QSslError(QSslError::UnableToGetIssuerCertificate, cert);
     case X509_V_ERR_UNABLE_TO_DECRYPT_CERT_SIGNATURE:
-        error = QSslError(QSslError::UnableToDecryptCertificateSignature, cert); break;
+        return QSslError(QSslError::UnableToDecryptCertificateSignature, cert);
     case X509_V_ERR_UNABLE_TO_DECODE_ISSUER_PUBLIC_KEY:
-        error = QSslError(QSslError::UnableToDecodeIssuerPublicKey, cert); break;
+        return QSslError(QSslError::UnableToDecodeIssuerPublicKey, cert);
     case X509_V_ERR_CERT_SIGNATURE_FAILURE:
-        error = QSslError(QSslError::CertificateSignatureFailed, cert); break;
+        return QSslError(QSslError::CertificateSignatureFailed, cert);
     case X509_V_ERR_CERT_NOT_YET_VALID:
-        error = QSslError(QSslError::CertificateNotYetValid, cert); break;
+        return QSslError(QSslError::CertificateNotYetValid, cert);
     case X509_V_ERR_CERT_HAS_EXPIRED:
-        error = QSslError(QSslError::CertificateExpired, cert); break;
+        return QSslError(QSslError::CertificateExpired, cert);
     case X509_V_ERR_ERROR_IN_CERT_NOT_BEFORE_FIELD:
-        error = QSslError(QSslError::InvalidNotBeforeField, cert); break;
+        return QSslError(QSslError::InvalidNotBeforeField, cert);
     case X509_V_ERR_ERROR_IN_CERT_NOT_AFTER_FIELD:
-        error = QSslError(QSslError::InvalidNotAfterField, cert); break;
+        return QSslError(QSslError::InvalidNotAfterField, cert);
     case X509_V_ERR_DEPTH_ZERO_SELF_SIGNED_CERT:
-        error = QSslError(QSslError::SelfSignedCertificate, cert); break;
+        return QSslError(QSslError::SelfSignedCertificate, cert);
     case X509_V_ERR_SELF_SIGNED_CERT_IN_CHAIN:
-        error = QSslError(QSslError::SelfSignedCertificateInChain, cert); break;
+        return QSslError(QSslError::SelfSignedCertificateInChain, cert);
     case X509_V_ERR_UNABLE_TO_GET_ISSUER_CERT_LOCALLY:
-        error = QSslError(QSslError::UnableToGetLocalIssuerCertificate, cert); break;
+        return QSslError(QSslError::UnableToGetLocalIssuerCertificate, cert);
     case X509_V_ERR_UNABLE_TO_VERIFY_LEAF_SIGNATURE:
-        error = QSslError(QSslError::UnableToVerifyFirstCertificate, cert); break;
+        return QSslError(QSslError::UnableToVerifyFirstCertificate, cert);
     case X509_V_ERR_CERT_REVOKED:
-        error = QSslError(QSslError::CertificateRevoked, cert); break;
+        return QSslError(QSslError::CertificateRevoked, cert);
     case X509_V_ERR_INVALID_CA:
-        error = QSslError(QSslError::InvalidCaCertificate, cert); break;
+        return QSslError(QSslError::InvalidCaCertificate, cert);
     case X509_V_ERR_PATH_LENGTH_EXCEEDED:
-        error = QSslError(QSslError::PathLengthExceeded, cert); break;
+        return QSslError(QSslError::PathLengthExceeded, cert);
     case X509_V_ERR_INVALID_PURPOSE:
-        error = QSslError(QSslError::InvalidPurpose, cert); break;
+        return QSslError(QSslError::InvalidPurpose, cert);
     case X509_V_ERR_CERT_UNTRUSTED:
-        error = QSslError(QSslError::CertificateUntrusted, cert); break;
+        return QSslError(QSslError::CertificateUntrusted, cert);
     case X509_V_ERR_CERT_REJECTED:
-        error = QSslError(QSslError::CertificateRejected, cert); break;
+        return QSslError(QSslError::CertificateRejected, cert);
     default:
-        error = QSslError(QSslError::UnspecifiedError, cert); break;
+        return QSslError(QSslError::UnspecifiedError, cert);
     }
-    return error;
+    Q_UNREACHABLE();
 }
 
 bool QSslSocketBackendPrivate::startHandshake()
