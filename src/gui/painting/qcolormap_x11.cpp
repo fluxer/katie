@@ -282,19 +282,25 @@ static void init_direct(QColormapPrivate *d)
 
     for (int r = 0; r < d->r_max; ++r) {
         colorTable[i].red = r << 8 | r;
+        colorTable[i].green = 0;
+        colorTable[i].blue = 0;
         colorTable[i].pixel = r << d->r_shift;
         colorTable[i].flags = DoRed;
         ++i;
     }
 
     for (int g = 0; g < d->g_max; ++g) {
+        colorTable[i].red = 0;
         colorTable[i].green = g << 8 | g;
+        colorTable[i].blue = 0;
         colorTable[i].pixel = g << d->g_shift;
         colorTable[i].flags = DoGreen;
         ++i;
     }
 
     for (int b = 0; b < d->b_max; ++b) {
+        colorTable[i].red = 0;
+        colorTable[i].green = 0;
         colorTable[i].blue = (b << 8 | b);
         colorTable[i].pixel = b << d->b_shift;
         colorTable[i].flags = DoBlue;
