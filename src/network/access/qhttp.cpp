@@ -1857,9 +1857,12 @@ qint64 QHttp::read(char *data, qint64 maxlen)
 QByteArray QHttp::readAll()
 {
     qint64 avail = bytesAvailable();
-    QByteArray tmp;
-    tmp.resize(int(avail));
-    qint64 got = read(tmp.data(), int(avail));
+    if (Q_UNLIKELY(avail > INT_MAX)) {
+        qWarning("QHttp::readAll: overflow in available bytes");
+        return QByteArray();
+    }
+    QByteArray tmp(int(avail), Qt::Uninitialized);
+    qint64 got = read(tmp.data(), avail);
     tmp.resize(got);
     return tmp;
 }
