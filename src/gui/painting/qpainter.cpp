@@ -6474,13 +6474,12 @@ struct QPaintDeviceRedirection
 
 void qt_format_text(const QFont &fnt, const QRectF &_r,
                     int tf, const QString& str, QRectF *brect,
-                    int tabstops, int *ta, int tabarraylen,
-                    QPainter *painter)
+                    int tabstops, int *ta, int tabarraylen)
 {
     qt_format_text(fnt, _r,
                     tf, 0, str, brect,
                     tabstops, ta, tabarraylen,
-                    painter);
+                    Q_NULLPTR);
 }
 void qt_format_text(const QFont &fnt, const QRectF &_r,
                     int tf, const QTextOption *option, const QString& str, QRectF *brect,

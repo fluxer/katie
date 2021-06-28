@@ -41,8 +41,7 @@ extern const QX11Info *qt_x11Info(const QPaintDevice *pd);
 
 extern void qt_format_text(const QFont& font, const QRectF &_r,
                            int tf, const QString &text, QRectF *brect,
-                           int tabStops, int *tabArray, int tabArrayLen,
-                           QPainter *painter);
+                           int tabStops, int *tabArray, int tabArrayLen);
 
 /*****************************************************************************
   QFontMetrics member functions
@@ -744,7 +743,7 @@ QRect QFontMetrics::boundingRect(const QRect &rect, int flags, const QString &te
 
     QRectF rb;
     qt_format_text(QFont(d.data()), rect, flags | Qt::TextDontPrint, text, &rb, tabStops, tabArray,
-                   tabArrayLen, 0);
+                   tabArrayLen);
 
     return rb.toAlignedRect();
 }
@@ -1536,7 +1535,7 @@ QRectF QFontMetricsF::boundingRect(const QRectF &rect, int flags, const QString&
 
     QRectF rb;
     qt_format_text(QFont(d.data()), rect, flags | Qt::TextDontPrint, text, &rb, tabStops, tabArray,
-                   tabArrayLen, 0);
+                   tabArrayLen);
     return rb;
 }
 
