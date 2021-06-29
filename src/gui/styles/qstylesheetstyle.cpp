@@ -1894,10 +1894,8 @@ QRenderRule QStyleSheetStyle::renderRule(const QWidget *w, const QStyleOption *o
         } else if (const QStyleOptionFrame *frm = qstyleoption_cast<const QStyleOptionFrame *>(opt)) {
             if (frm->lineWidth == 0)
                 extraClass |= PseudoClass_Frameless;
-            if (const QStyleOptionFrameV2 *frame2 = qstyleoption_cast<const QStyleOptionFrameV2 *>(opt)) {
-                if (frame2->features & QStyleOptionFrameV2::Flat)
-                    extraClass |= PseudoClass_Flat;
-            }
+            if (frm->features & QStyleOptionFrame::Flat)
+                extraClass |= PseudoClass_Flat;
         }
 #ifndef QT_NO_TOOLBAR
         else if (const QStyleOptionToolBar *tb = qstyleoption_cast<const QStyleOptionToolBar *>(opt)) {
