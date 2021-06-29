@@ -154,7 +154,7 @@ StyleSheet QStyleSheetStyle::getDefaultStyleSheet() const
         ADD_DECLARATION;
 
         SET_PROPERTY(QLatin1String("-qt-style-features"), QtStyleFeatures);
-        ADD_VALUE(Value::Identifier, QString::fromLatin1("background-color"));
+        ADD_VALUE(Value::Identifier, QLatin1String("background-color"));
         ADD_DECLARATION;
 
         ADD_STYLE_RULE;
@@ -269,7 +269,7 @@ StyleSheet QStyleSheetStyle::getDefaultStyleSheet() const
         ADD_DECLARATION;
 
         SET_PROPERTY(QLatin1String("-qt-style-features"), QtStyleFeatures);
-        ADD_VALUE(Value::Identifier, QString::fromLatin1("background-color"));
+        ADD_VALUE(Value::Identifier, QLatin1String("background-color"));
         ADD_DECLARATION;
 
         ADD_STYLE_RULE;
@@ -292,8 +292,8 @@ StyleSheet QStyleSheetStyle::getDefaultStyleSheet() const
         ADD_DECLARATION;
 
         SET_PROPERTY(QLatin1String("-qt-style-features"), QtStyleFeatures);
-        ADD_VALUE(Value::Identifier, QString::fromLatin1("background-color"));
-        ADD_VALUE(Value::Identifier, QString::fromLatin1("background-gradient"));
+        ADD_VALUE(Value::Identifier, QLatin1String("background-color"));
+        ADD_VALUE(Value::Identifier, QLatin1String("background-gradient"));
         ADD_DECLARATION;
 
         SET_PROPERTY(QLatin1String("-qt-background-role"), QtBackgroundRole);
@@ -337,7 +337,7 @@ StyleSheet QStyleSheetStyle::getDefaultStyleSheet() const
         ADD_DECLARATION;
 
         SET_PROPERTY(QLatin1String("-qt-style-features"), QtStyleFeatures);
-        ADD_VALUE(Value::Identifier, QString::fromLatin1("background-color"));
+        ADD_VALUE(Value::Identifier, QLatin1String("background-color"));
         ADD_DECLARATION;
 
         SET_PROPERTY(QLatin1String("-qt-background-role"), QtBackgroundRole);
@@ -370,7 +370,7 @@ StyleSheet QStyleSheetStyle::getDefaultStyleSheet() const
     ADD_SELECTOR;
 
     SET_PROPERTY(QLatin1String("-qt-style-features"), QtStyleFeatures);
-    ADD_VALUE(Value::Identifier, QString::fromLatin1("background-color"));
+    ADD_VALUE(Value::Identifier, QLatin1String("background-color"));
     ADD_DECLARATION;
 
     ADD_STYLE_RULE;
@@ -411,7 +411,7 @@ StyleSheet QStyleSheetStyle::getDefaultStyleSheet() const
         ADD_DECLARATION;
 
         SET_PROPERTY(QLatin1String("-qt-style-features"), QtStyleFeatures);
-        ADD_VALUE(Value::Identifier, QString::fromLatin1("background-color"));
+        ADD_VALUE(Value::Identifier, QLatin1String("background-color"));
         ADD_DECLARATION;
 
         SET_PROPERTY(QLatin1String("border"), Border);
