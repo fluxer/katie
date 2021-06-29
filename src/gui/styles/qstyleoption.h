@@ -126,7 +126,7 @@ class Q_GUI_EXPORT QStyleOptionTabWidgetFrame : public QStyleOption
 {
 public:
     enum StyleOptionType { Type = SO_TabWidgetFrame };
-    enum StyleOptionVersion { Version = 3 };
+    enum StyleOptionVersion { Version = 2 };
 
     int lineWidth;
     int midLineWidth;
