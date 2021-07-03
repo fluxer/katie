@@ -54,7 +54,7 @@ endmacro()
 # a function to check for C struct member presence in header, if member is
 # found a definition is added
 function(KATIE_CHECK_STRUCT FORSTRUCT FORMEMBER FROMHEADER)
-    check_struct_has_member("struct ${FORSTRUCT}" "${FORMEMBER}" "${FROMHEADER}" HAVE_${FORSTRUCT}_${FORMEMBER})
+    check_struct_has_member("struct ${FORSTRUCT}" "${FORMEMBER}" "sys/types.h;${FROMHEADER}" HAVE_${FORSTRUCT}_${FORMEMBER})
 
     if(HAVE_${FORSTRUCT}_${FORMEMBER})
         string(TOUPPER "${FORSTRUCT}_${FORMEMBER}" upperstructmember)
