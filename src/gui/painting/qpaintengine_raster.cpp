@@ -3254,7 +3254,7 @@ QImage QRasterBuffer::bufferImage() const
     QImage image(m_width, m_height, QImage::Format_ARGB32_Premultiplied);
 
     for (int y = 0; y < m_height; ++y) {
-        const uint *span = (const uint *)this->constScanLine(y);
+        const uint *span = (const uint *)this->scanLine(y);
 
         for (int x=0; x<m_width; ++x) {
             image.setPixel(x, y, span[x]);
