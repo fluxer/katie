@@ -66,7 +66,7 @@ private:
 bool QCoreApplicationPrivate::checkInstance(const char *function)
 {
     if (Q_UNLIKELY(!QCoreApplication::self)) {
-        qWarning("QApplication::%s: Please instantiate the QApplication object first", function);
+        qWarning("QCoreApplication::%s: Please instantiate the QApplication object first", function);
         return false;
     }
     return true;
