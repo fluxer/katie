@@ -118,8 +118,7 @@ QString MainWindowBase::mainWindowTitle()
 // Use the minor Qt version as settings versions to avoid conflicts
 int MainWindowBase::settingsVersion()
 {
-    const int version = QT_VERSION;
-    return (version & 0x00FF00) >> 8;
+    return QT_VERSION_MINOR;
 }
 
 // ----------------- DockedMdiArea

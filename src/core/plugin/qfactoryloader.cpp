@@ -103,9 +103,8 @@ void QFactoryLoader::updateDir(const QString &pluginDir)
             library->release();
             continue;
         }
-        QString regkey = QString::fromLatin1("Katie Factory Cache %1.%2/%3:/%4")
-                         .arg((QT_VERSION & 0xff0000) >> 16)
-                         .arg((QT_VERSION & 0xff00) >> 8)
+        QString regkey = QString::fromLatin1("Katie Factory Cache %1/%2:/%3")
+                         .arg(QT_VERSION_HEX_STR)
                          .arg(QString::fromLatin1(d->iid.constData()))
                          .arg(fileName);
         QStringList keys;
