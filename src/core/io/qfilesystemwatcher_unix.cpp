@@ -75,13 +75,15 @@ QFileSystemWatcherEngineUnix::~QFileSystemWatcherEngineUnix()
 {
     notifier.setEnabled(false);
 #if defined(QT_HAVE_INOTIFY_INIT1)
-    foreach (int id, pathToID)
+    foreach (int id, pathToID) {
         inotify_rm_watch(sockfd, id < 0 ? -id : id);
-    qt_safe_close(sockfd);
+    }
 #elif defined(QT_HAVE_KEVENT)
-    foreach (int id, pathToID)
+    foreach (int id, pathToID) {
         qt_safe_close(id < 0 ? -id : id);
+    }
 #endif
+    qt_safe_close(sockfd);
 }
 
 QStringList QFileSystemWatcherEngineUnix::addPaths(const QStringList &paths,
