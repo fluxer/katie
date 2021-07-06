@@ -315,22 +315,17 @@ void QFileSystemWatcherPrivate::_q_directoryChanged(const QString &path, bool re
     \note On systems running a Linux kernel without inotify support,
     file systems that contain watched paths cannot be unmounted.
 
-    \note Windows CE does not support directory monitoring by
-    default as this depends on the file system driver installed.
-
     \note The act of monitoring files and directories for
     modifications consumes system resources. This implies there is a
     limit to the number of files and directories your process can
-    monitor simultaneously. On Mac OS X 10.4 and all BSD variants, for
-    example, an open file descriptor is required for each monitored
-    file. Some system limits the number of open file descriptors to 256
-    by default. This means that addPath() and addPaths() will fail if
-    your process tries to add more than 256 files or directories to
-    the file system monitor. Also note that your process may have
-    other file descriptors open in addition to the ones for files
-    being monitored, and these other open descriptors also count in
-    the total. Mac OS X 10.5 and up use a different backend and do not
-    suffer from this issue.
+    monitor simultaneously. On all BSD variants, for example, an open
+    file descriptor is required for each monitored file. Some system
+    limits the number of open file descriptors to 256 by default.
+    This means that addPath() and addPaths() will fail if your process
+    tries to add more than 256 files or directories to the file system
+    monitor. Also note that your process may have other file
+    descriptors open in addition to the ones for files being monitored,
+    and these other open descriptors also count in the total.
 
 
     \sa QFile, QDir
