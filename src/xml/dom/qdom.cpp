@@ -1740,8 +1740,7 @@ QDomNodePrivate* QDomNodePrivate::replaceChild(QDomNodePrivate* newChild, QDomNo
         newChild->last = 0;
 
         // We are no longer interested in the old node
-        if (oldChild)
-            oldChild->ref.deref();
+        oldChild->ref.deref();
 
         return oldChild;
     }
@@ -1774,8 +1773,7 @@ QDomNodePrivate* QDomNodePrivate::replaceChild(QDomNodePrivate* newChild, QDomNo
     oldChild->prev = 0;
 
     // We are no longer interested in the old node
-    if (oldChild)
-        oldChild->ref.deref();
+    oldChild->ref.deref();
 
     return oldChild;
 }
