@@ -220,6 +220,7 @@ void tst_QSocketNotifier::mixingWithTimers()
 
     QTcpSocket socket;
     socket.connectToHost(server.serverAddress(), server.serverPort());
+    server.waitForNewConnection(2000);
 
     QCoreApplication::processEvents();
 
@@ -247,9 +248,7 @@ void tst_QSocketNotifier::posixSockets()
         QSocketNotifier rn(posixSocket, QSocketNotifier::Read);
         connect(&rn, SIGNAL(activated(int)), &QTestEventLoop::instance(), SLOT(exitLoop()));
         QSignalSpy readSpy(&rn, SIGNAL(activated(int)));
-        QSocketNotifier wn(posixSocket, QSocketNotifier::Write);
-        connect(&wn, SIGNAL(activated(int)), &QTestEventLoop::instance(), SLOT(exitLoop()));
-        QSignalSpy writeSpy(&wn, SIGNAL(activated(int)));
+        // No write notifier, some systems trigger write notification on socket creation, but not all
         QSocketNotifier en(posixSocket, QSocketNotifier::Exception);
         connect(&en, SIGNAL(activated(int)), &QTestEventLoop::instance(), SLOT(exitLoop()));
         QSignalSpy errorSpy(&en, SIGNAL(activated(int)));
@@ -259,19 +258,26 @@ void tst_QSocketNotifier::posixSockets()
 
         QTestEventLoop::instance().enterLoop(3);
         QCOMPARE(readSpy.count(), 1);
-        writeSpy.clear(); //depending on OS, write notifier triggers on creation or not.
         QCOMPARE(errorSpy.count(), 0);
 
         char buffer[100];
-        qt_safe_read(posixSocket, buffer, 100);
+        int r = qt_safe_read(posixSocket, buffer, 100);
+        QCOMPARE(r, 6);
         QCOMPARE(buffer, "hello");
 
+        QSocketNotifier wn(posixSocket, QSocketNotifier::Write);
+        connect(&wn, SIGNAL(activated(int)), &QTestEventLoop::instance(), SLOT(exitLoop()));
+        QSignalSpy writeSpy(&wn, SIGNAL(activated(int)));
         qt_safe_write(posixSocket, "goodbye", 8);
 
         QTestEventLoop::instance().enterLoop(3);
         QCOMPARE(readSpy.count(), 1);
         QCOMPARE(writeSpy.count(), 1);
         QCOMPARE(errorSpy.count(), 0);
+
+        // Write notifier may have fired before the read notifier inside
+        // QTcpSocket, give QTcpSocket a chance to see the incoming data
+        passive->waitForReadyRead(1000);
         QCOMPARE(passive->readAll(), QByteArray("goodbye",8));
     }
     qt_safe_close(posixSocket);
