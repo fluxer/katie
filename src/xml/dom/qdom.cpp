@@ -6977,6 +6977,9 @@ QDomNodeList QDomDocument::elementsByTagName(const QString& tagname) const
     import QDomDocument and QDomDocumentType nodes. In those cases
     this function returns a \link QDomNode::isNull() null node\endlink.
 
+    If \a importedNode is a \link QDomNode::isNull() null node\endlink,
+    a null node is returned.
+
     If \a deep is true, this function imports not only the node \a
     importedNode but its whole subtree; if it is false, only the \a
     importedNode is imported. The argument \a deep has no effect on
@@ -7035,6 +7038,8 @@ QDomNodeList QDomDocument::elementsByTagName(const QString& tagname) const
 */
 QDomNode QDomDocument::importNode(const QDomNode& importedNode, bool deep)
 {
+    if (importedNode.isNull())
+        return QDomNode();
     if (!impl)
         impl = new QDomDocumentPrivate();
     return QDomNode(IMPL->importNode(importedNode.impl, deep));
