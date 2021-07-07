@@ -18,6 +18,7 @@ set(XML_HEADERS
     ${CMAKE_CURRENT_SOURCE_DIR}/kernel/qxmlstream_p.h
     ${CMAKE_CURRENT_SOURCE_DIR}/kernel/qxmlutils_p.h
     ${CMAKE_CURRENT_SOURCE_DIR}/sax/qxml.h
+    ${CMAKE_CURRENT_SOURCE_DIR}/sax/qxml_p.h
     ${CMAKE_CURRENT_SOURCE_DIR}/qxmlcommon_p.h
 )
 
