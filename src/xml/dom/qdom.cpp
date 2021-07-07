@@ -3041,8 +3041,7 @@ void QDomNamedNodeMapPrivate::clearMap()
 
 QDomNodePrivate* QDomNamedNodeMapPrivate::namedItem(const QString& name) const
 {
-    QDomNodePrivate* p = map[name];
-    return p;
+    return map.value(name, Q_NULLPTR);
 }
 
 QDomNodePrivate* QDomNamedNodeMapPrivate::namedItemNS(const QString& nsURI, const QString& localName) const
@@ -3099,11 +3098,11 @@ QDomNodePrivate* QDomNamedNodeMapPrivate::setNamedItemNS(QDomNodePrivate* arg)
 QDomNodePrivate* QDomNamedNodeMapPrivate::removeNamedItem(const QString& name)
 {
     if (readonly)
-        return 0;
+        return Q_NULLPTR;
 
     QDomNodePrivate* p = namedItem(name);
-    if (p == 0)
-        return 0;
+    if (!p)
+        return Q_NULLPTR;
     if (appendToParent)
         return parent->removeChild(p);
 
