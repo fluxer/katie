@@ -3001,11 +3001,11 @@ int QDomNode::columnNumber() const
  **************************************************************/
 
 QDomNamedNodeMapPrivate::QDomNamedNodeMapPrivate(QDomNodePrivate* n)
+    : ref(1),
+    readonly(false),
+    parent(n),
+    appendToParent(false)
 {
-    ref = 1;
-    readonly = false;
-    parent = n;
-    appendToParent = false;
 }
 
 QDomNamedNodeMapPrivate::~QDomNamedNodeMapPrivate()
