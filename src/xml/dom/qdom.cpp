@@ -1279,21 +1279,21 @@ int QDomNodeListPrivate::length() const
     Creates an empty node list.
 */
 QDomNodeList::QDomNodeList()
+    : impl(Q_NULLPTR)
 {
-    impl = 0;
 }
 
 QDomNodeList::QDomNodeList(QDomNodeListPrivate* p)
+    : impl(p)
 {
-    impl = p;
 }
 
 /*!
     Constructs a copy of \a n.
 */
 QDomNodeList::QDomNodeList(const QDomNodeList& n)
+    : impl(n.impl)
 {
-    impl = n.impl;
     if (impl)
         impl->ref.ref();
 }
@@ -1408,37 +1408,41 @@ inline void QDomNodePrivate::setOwnerDocument(QDomDocumentPrivate *doc)
 }
 
 QDomNodePrivate::QDomNodePrivate(QDomDocumentPrivate *doc, QDomNodePrivate *par)
+    : ref(1),
+    prev(Q_NULLPTR),
+    next(Q_NULLPTR),
+    ownerNode(Q_NULLPTR),
+    first(Q_NULLPTR),
+    last(Q_NULLPTR),
+    createdWithDom1Interface(true),
+    hasParent(false),
+    lineNumber(-1),
+    columnNumber(-1)
 {
-    ref = 1;
     if (par)
         setParent(par);
     else
         setOwnerDocument(doc);
-    prev = 0;
-    next = 0;
-    first = 0;
-    last = 0;
-    createdWithDom1Interface = true;
-    lineNumber = -1;
-    columnNumber = -1;
+
 }
 
 QDomNodePrivate::QDomNodePrivate(QDomNodePrivate *n, bool deep)
+    : ref(1),
+    prev(Q_NULLPTR),
+    next(Q_NULLPTR),
+    ownerNode(Q_NULLPTR),
+    first(Q_NULLPTR),
+    last(Q_NULLPTR),
+    name(n->name),
+    value(n->value),
+    prefix(n->prefix),
+    namespaceURI(n->namespaceURI),
+    createdWithDom1Interface(n->createdWithDom1Interface),
+    hasParent(false),
+    lineNumber(-1),
+    columnNumber(-1)
 {
-    ref = 1;
     setOwnerDocument(n->ownerDocument());
-    prev = 0;
-    next = 0;
-    first = 0;
-    last = 0;
-
-    name = n->name;
-    value = n->value;
-    prefix = n->prefix;
-    namespaceURI = n->namespaceURI;
-    createdWithDom1Interface = n->createdWithDom1Interface;
-    lineNumber = -1;
-    columnNumber = -1;
 
     if (!deep)
         return;
