@@ -1454,8 +1454,7 @@ QString QCoreApplication::applicationFilePath()
 
     char ** const argv = d->argv;
     if (argv && argv[0]) {
-        const char *p = ::strrchr(argv[0], '/');
-        argv0 = QString::fromLocal8Bit(p ? p + 1 : argv[0]);
+        argv0 = QString::fromLocal8Bit(argv[0]);
     }
 
 #ifdef QT_HAVE_GETPROGNAME
