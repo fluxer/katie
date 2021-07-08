@@ -1255,6 +1255,8 @@ QChar::UnicodeVersion QChar::unicodeVersion(const uint ucs4)
     UVersionInfo info;
     u_charAge(ucs4, info);
 
+    // for reference:
+    // https://www.unicode.org/versions/enumeratedversions.html
     if (info[0] == 1 && info[1] == 1) {
         return QChar::Unicode_1_1;
     } else if (info[0] == 2 && info[1] == 0) {
@@ -1301,6 +1303,8 @@ QChar::UnicodeVersion QChar::unicodeVersion(const uint ucs4)
         return QChar::Unicode_12_1;
     } else if (info[0] == 13 && info[1] == 0) {
         return QChar::Unicode_13_0;
+    } else if (info[0] == 14 && info[1] == 0) {
+        return QChar::Unicode_14_0;
     }
     return QChar::Unicode_Unassigned;
 }
