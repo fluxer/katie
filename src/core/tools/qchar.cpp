@@ -1250,7 +1250,7 @@ QChar::UnicodeVersion QChar::unicodeVersion(const ushort ucs2)
 */
 QChar::UnicodeVersion QChar::unicodeVersion(const uint ucs4)
 {
-    Q_ASSERT(U_MAX_VERSION_STRING_LENGTH == 4);
+    Q_ASSERT(U_MAX_VERSION_LENGTH == 4);
 
     UVersionInfo info;
     u_charAge(ucs4, info);
