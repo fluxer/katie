@@ -1006,9 +1006,9 @@ QString QIcuCodec::convertToUnicode(const char *data, int length,
     if (state->flags & QTextCodec::IgnoreHeader) {
         // ICU always generates BOMs when converter is UTF-32/UTF-16 so no check is done to
         // verify that, unless someone makes it an option
-        if (ucnv_compareNames(m_name.constData(), "UTF-32")) {
+        if (qstrnicmp("UTF-32", m_name.constData(), 6) == 0) {
             resultoffset = 4;
-        } else if (ucnv_compareNames(m_name.constData(), "UTF-16")) {
+        } else if (qstrnicmp("UTF-16", m_name.constData(), 6) == 0) {
             resultoffset = 2;
         }
     }
