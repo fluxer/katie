@@ -24,6 +24,7 @@
 #include "qtextcodec.h"
 #include "qkeymapper_p.h"
 #include "qapplication_p.h"
+#include "qcorecommon_p.h"
 #include "qt_x11_p.h"
 
 QT_BEGIN_NAMESPACE
@@ -222,8 +223,7 @@ bool QKeyMapper::translateKeyEvent(QWidget *keyWidget, const XEvent *event)
     QEvent::Type type = (event->type == XKeyPress) ? QEvent::KeyPress : QEvent::KeyRelease;
     Qt::KeyboardModifiers modifiers = translateModifiers(event->xkey.state);
     XKeyEvent xkeyevent = event->xkey;
-    char lookupbuff[10];
-    ::memset(lookupbuff, 0, sizeof(lookupbuff) * sizeof(char));
+    QSTACKARRAY(char, lookupbuff, 10);
     KeySym keysym = 0;
     int count = XLookupString(&xkeyevent, lookupbuff, sizeof(lookupbuff), &keysym, 0);
     int code = translateKeySym(keysym);

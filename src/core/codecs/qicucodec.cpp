@@ -22,6 +22,7 @@
 #include "qcorecommon_p.h"
 #include "qmutex.h"
 #include "qdebug.h"
+#include "qcorecommon_p.h"
 
 #include <unicode/ucsdet.h>
 
@@ -991,13 +992,13 @@ QString QIcuCodec::convertToUnicode(const char *data, int length,
     Q_ASSERT(conv);
 
     const int maxchars = QMAXUSTRLEN(length);
-    UChar result[maxchars];
+    QSTACKARRAY(UChar, result, maxchars);
     int resultoffset = 0;
     UErrorCode error = U_ZERO_ERROR;
     const int convresult = ucnv_toUChars(conv, result, maxchars, data, length, &error);
     if (Q_UNLIKELY(U_FAILURE(error))) {
         error = U_ZERO_ERROR;
-        char errorbytes[10];
+        QSTACKARRAY(char, errorbytes, 10);
         int8_t invalidlen = sizeof(errorbytes);
         ucnv_getInvalidChars(conv, errorbytes, &invalidlen, &error);
         state->invalidChars = invalidlen;
@@ -1027,13 +1028,13 @@ QByteArray QIcuCodec::convertFromUnicode(const QChar *unicode, int length,
     Q_ASSERT(conv);
 
     const int maxbytes = UCNV_GET_MAX_BYTES_FOR_STRING(length, ucnv_getMaxCharSize(conv));
-    char result[maxbytes];
+    QSTACKARRAY(char, result, maxbytes);
     UErrorCode error = U_ZERO_ERROR;
     const int convresult = ucnv_fromUChars(conv, result, maxbytes,
         reinterpret_cast<const UChar *>(unicode), length, &error);
     if (Q_UNLIKELY(U_FAILURE(error))) {
         error = U_ZERO_ERROR;
-        char errorbytes[10];
+        QSTACKARRAY(char, errorbytes, 10);
         int8_t invalidlen = sizeof(errorbytes);
         ucnv_getInvalidChars(conv, errorbytes, &invalidlen, &error);
         state->invalidChars = invalidlen;
@@ -1202,7 +1203,7 @@ QString QIcuCodec::convertTo(const char *data, int length, const char* const cod
     ucnv_setSubstString(conv, questionmarkchar, 1, &error);
 
     const int maxchars = QMAXUSTRLEN(length);
-    UChar result[maxchars];
+    QSTACKARRAY(UChar, result, maxchars);
     error = U_ZERO_ERROR;
     const int convresult = ucnv_toUChars(conv, result, maxchars, data, length, &error);
     ucnv_close(conv);
@@ -1226,7 +1227,7 @@ QByteArray QIcuCodec::convertFrom(const QChar *unicode, int length, const char* 
     ucnv_setSubstString(conv, questionmarkchar, 1, &error);
 
     const int maxbytes = UCNV_GET_MAX_BYTES_FOR_STRING(length, ucnv_getMaxCharSize(conv));
-    char result[maxbytes];
+    QSTACKARRAY(char, result, maxbytes);
     error = U_ZERO_ERROR;
     const int convresult = ucnv_fromUChars(conv, result, maxbytes,
         reinterpret_cast<const UChar *>(unicode), length, &error);

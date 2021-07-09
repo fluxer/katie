@@ -24,8 +24,7 @@
 
 #include "qnetworkdiskcache.h"
 #include "qnetworkdiskcache_p.h"
-#include "QtCore/qscopedpointer.h"
-
+#include "qscopedpointer.h"
 #include "qfile.h"
 #include "qdir.h"
 #include "qdatetime.h"
@@ -33,6 +32,7 @@
 #include "qurl.h"
 #include "qcryptographichash.h"
 #include "qdebug.h"
+#include "qcorecommon_p.h"
 
 #define CACHE_POSTFIX QLatin1String(".d")
 #define PREPARED_SLASH QLatin1String("prepared/")
@@ -442,9 +442,9 @@ void QNetworkDiskCache::updateMetaData(const QNetworkCacheMetaData &metaData)
 #endif
         return;
     }
-    char data[1024];
+    QSTACKARRAY(char, data, 1024);
     while (!oldDevice->atEnd()) {
-        qint64 s = oldDevice->read(data, 1024);
+        qint64 s = oldDevice->read(data, sizeof(data));
         newDevice->write(data, s);
     }
     delete oldDevice;

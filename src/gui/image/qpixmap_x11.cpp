@@ -33,6 +33,7 @@
 #include "qx11info_x11.h"
 #include "qdrawhelper_p.h"
 #include "qimage_p.h"
+#include "qcorecommon_p.h"
 #include "qguicommon_p.h"
 
 #include <stdlib.h>
@@ -1013,7 +1014,7 @@ Qt::HANDLE QX11PixmapData::createBitmapFromImage(const QImage &image)
     }
 
     char  *bits;
-    uchar *tmp_bits;
+    uchar *tmp_bits = Q_NULLPTR;
     int w = img.width();
     int h = img.height();
     int bpl = (w + 7) / 8;
@@ -1030,7 +1031,6 @@ Qt::HANDLE QX11PixmapData::createBitmapFromImage(const QImage &image)
         }
     } else {
         bits = (char *)img.bits();
-        tmp_bits = 0;
     }
     Qt::HANDLE hd = (Qt::HANDLE)XCreateBitmapFromData(qt_x11Data->display,
                                            QX11Info::appRootWindow(),
@@ -1585,12 +1585,10 @@ QImage QX11PixmapData::toImage(const XImage *xi, const QRect &rect) const
         image.setColor(0, qRgb(255,255,255));
         image.setColor(1, qRgb(0,0,0));
     } else if (!trucol) {                        // pixmap with colormap
-        uchar  use[256];                        // pixel-in-use table
-        uchar  pix[256];                        // pixel translation table
-        int    ncols, bpl;
-        memset(use, 0, 256);
-        memset(pix, 0, 256);
-        bpl = image.bytesPerLine();
+        QSTACKARRAY(uchar, use, 256);            // pixel-in-use table
+        QSTACKARRAY(uchar, pix, 256);            // pixel translation table
+        int ncols = 0;
+        int bpl = image.bytesPerLine();
 
         if (x11_mask) {                         // which pixels are used?
             for (int i = 0; i < xi->height; i++) {
@@ -1618,7 +1616,6 @@ QImage QX11PixmapData::toImage(const XImage *xi, const QRect &rect) const
                     use[*p++] = 1;
             }
         }
-        ncols = 0;
         for (int i = 0; i < 256; i++) {                // build translation table
             if (use[i])
                 pix[i] = ncols++;

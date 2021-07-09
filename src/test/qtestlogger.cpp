@@ -28,6 +28,7 @@
 #include "qtestcase.h"
 #include "qtestresult_p.h"
 #include "qbenchmark_p.h"
+#include "qcorecommon_p.h"
 
 #include <string.h>
 
@@ -81,7 +82,7 @@ void QTestLogger::stopLogging()
     QTestElement *iterator = listOfTestcases;
 
     if(format == TLF_XunitXml ){
-        char buf[10];
+        QSTACKARRAY(char, buf, 10);
 
         currentLogElement = new QTestElement(QTest::LET_TestSuite);
         currentLogElement->addAttribute(QTest::AI_Name, QTestResult::currentTestObjectName());
@@ -140,7 +141,7 @@ void QTestLogger::stopLogging()
 
 void QTestLogger::enterTestFunction(const char *function)
 {
-    char buf[1024];
+    QSTACKARRAY(char, buf, 1024);
     QTest::qt_snprintf(buf, sizeof(buf), "Entered test-function: %s\n", function);
     filelogger->flush(buf);
 
@@ -159,7 +160,7 @@ void QTestLogger::addIncident(IncidentTypes type, const char *description,
                      const char *file, int line)
 {
     const char *typeBuf = 0;
-    char buf[100];
+    QSTACKARRAY(char, buf, 100);
 
     switch (type) {
     case QAbstractTestLogger::XPass:
@@ -253,7 +254,7 @@ void QTestLogger::addBenchmarkResult(const QBenchmarkResult &result)
     benchmarkElement->addAttribute(QTest::AI_Tag, result.context.tag.toAscii().data());
     benchmarkElement->addAttribute(QTest::AI_Value, QByteArray::number(result.value).constData());
 
-    char buf[100];
+    QSTACKARRAY(char, buf, 100);
     QTest::qt_snprintf(buf, sizeof(buf), "%i", result.iterations);
     benchmarkElement->addAttribute(QTest::AI_Iterations, buf);
     currentLogElement->addLogElement(benchmarkElement);
@@ -322,7 +323,7 @@ void QTestLogger::addMessage(MessageTypes type, const char *message, const char 
     else
         errorElement->addAttribute(QTest::AI_File, "");
 
-    char buf[100];
+    QSTACKARRAY(char, buf, 100);
     QTest::qt_snprintf(buf, sizeof(buf), "%i", line);
     errorElement->addAttribute(QTest::AI_Line, buf);
 

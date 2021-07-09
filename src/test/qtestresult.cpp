@@ -23,6 +23,7 @@
 #include "qtestlog_p.h"
 #include "qtestdata.h"
 #include "qtestassert.h"
+#include "qcorecommon_p.h"
 
 #include <stdio.h>
 #include <string.h>
@@ -216,7 +217,7 @@ static bool checkStatement(bool statement, const char *msg, const char *file, in
 bool QTestResult::verify(bool statement, const char *statementStr,
                          const char *description, const char *file, int line)
 {
-    char msg[1024];
+    QSTACKARRAY(char, msg, 1024);
 
     if (QTestLog::verboseLevel() >= 2) {
         QTest::qt_snprintf(msg, 1024, "QVERIFY(%s)", statementStr);
@@ -246,7 +247,7 @@ bool QTestResult::compare(bool success, const char *msg, char *val1, char *val2,
     if (!val1 && !val2)
         return compare(success, msg, file, line);
 
-    char buf[1024];
+    QSTACKARRAY(char, buf, 1024);
     QTest::qt_snprintf(buf, 1024, "%s\n   Actual (%s): %s\n   Expected (%s): %s", msg,
                        actual, val1 ? val1 : "<null>",
                        expected, val2 ? val2 : "<null>");

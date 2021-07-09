@@ -325,7 +325,7 @@ SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 // the code bellow is copy from musl libc, modified to not use static buffer
 char *qfcvt(double x, int n, int *dp, int *sign, char* buf)
 {
-    char tmp[1500];
+    QSTACKARRAY(char, tmp, 1500);
     int i, lz;
 
     if (n > 1400U) n = 1400;
@@ -346,7 +346,7 @@ char *qfcvt(double x, int n, int *dp, int *sign, char* buf)
 
 char *qecvt(double x, int n, int *dp, int *sign, char* buf)
 {
-    char tmp[32];
+    QSTACKARRAY(char, tmp, 32);
     int i, j;
 
     if (n-1U > 15) n = 15;

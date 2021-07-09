@@ -1146,7 +1146,7 @@ QString qt_error_string(int errorCode)
     // The GNU libc manpage for strerror_r says you should use the the XSI
     // version in portable code.
 #if !defined(QT_NO_THREAD)
-    char errbuf[1024];
+    QSTACKARRAY(char, errbuf, 1024);
     ::memset(errbuf, '\0', sizeof(errbuf));
     ::strerror_r(errorCode, errbuf, sizeof(errbuf));
     return QString::fromLocal8Bit(errbuf);

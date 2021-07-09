@@ -21,6 +21,7 @@
 
 #include "qfilesystemwatcher.h"
 #include "qfilesystemwatcher_unix_p.h"
+#include "qcorecommon_p.h"
 
 #if !defined(QT_NO_FILESYSTEMWATCHER) && (defined(QT_HAVE_INOTIFY_INIT1) || defined(QT_HAVE_KEVENT))
 
@@ -252,7 +253,7 @@ void QFileSystemWatcherEngineUnix::readFromFd()
 
     int buffSize = 0;
     ::ioctl(sockfd, FIONREAD, (char *) &buffSize);
-    char readbuff[buffSize];
+    QSTACKARRAY(char, readbuff, buffSize);
     buffSize = qt_safe_read(sockfd, readbuff, buffSize);
     char *at = readbuff;
     char * const end = at + buffSize;

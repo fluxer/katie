@@ -24,6 +24,7 @@
 #include "qtestlog_p.h"
 #include "qtestresult_p.h"
 #include "qxmltestlogger_p.h"
+#include "qcorecommon_p.h"
 
 QT_BEGIN_NAMESPACE
 
@@ -57,7 +58,7 @@ void QTestXunitStreamer::formatStart(const QTestElement *element, QTestCharBuffe
     if(!element || !formatted )
         return;
 
-    char indent[20];
+    QSTACKARRAY(char, indent, 20);
     indentForElement(element, indent, sizeof(indent));
 
     // Errors are written as CDATA within system-err, comments elsewhere
@@ -83,7 +84,7 @@ void QTestXunitStreamer::formatEnd(const QTestElement *element, QTestCharBuffer 
         return;
     }
 
-    char indent[20];
+    QSTACKARRAY(char, indent, 20);
     indentForElement(element, indent, sizeof(indent));
 
     QTest::qt_asprintf(formatted, "%s</%s>\n", indent, element->elementName());

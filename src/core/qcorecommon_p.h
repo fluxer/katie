@@ -13,6 +13,14 @@ QT_BEGIN_NAMESPACE
 // enough space to hold BOM, each char as surrogate pair and terminator
 #define QMAXUSTRLEN(X) 4 + (X * 2) + 2
 
+// VLAs are nasty but using them by-passes std::bad_alloc exception for release
+// builds (negative size VLAs are a thing, exceptions may even be disabled via
+// QT_NO_EXCEPTIONS) and replaces it with assert for debug builds
+#define QSTACKARRAY(arraytype, arrayname, arraysize) \
+    Q_ASSERT(arraysize >= 1); \
+    arraytype arrayname[arraysize]; \
+    ::memset(arrayname, 0, arraysize * sizeof(arraytype));
+
 static inline uint foldCase(const ushort *ch, const ushort *start)
 {
     uint c = *ch;

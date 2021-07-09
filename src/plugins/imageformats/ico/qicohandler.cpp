@@ -34,6 +34,7 @@
 #include <QtCore/QFile>
 #include <QtCore/QBuffer>
 #include "qvariant.h"
+#include "qcorecommon_p.h"
 
 QT_BEGIN_NAMESPACE
 
@@ -122,7 +123,7 @@ private:
 static bool readIconDirEntry(QIODevice *iodev, ICONDIRENTRY *iconDirEntry)
 {
     if (iodev) {
-        uchar tmp[ICONDIRENTRY_SIZE];
+        QSTACKARRAY(uchar, tmp, ICONDIRENTRY_SIZE);
         if (iodev->read((char*)tmp, ICONDIRENTRY_SIZE) == ICONDIRENTRY_SIZE) {
             iconDirEntry->bWidth = tmp[0];
             iconDirEntry->bHeight = tmp[1];
@@ -142,7 +143,7 @@ static bool readIconDirEntry(QIODevice *iodev, ICONDIRENTRY *iconDirEntry)
 static bool writeIconDirEntry(QIODevice *iodev, const ICONDIRENTRY &iconEntry)
 {
     if (iodev) {
-        uchar tmp[ICONDIRENTRY_SIZE];
+        QSTACKARRAY(uchar, tmp, ICONDIRENTRY_SIZE);
         tmp[0] = iconEntry.bWidth;
         tmp[1] = iconEntry.bHeight;
         tmp[2] = iconEntry.bColorCount;
@@ -160,7 +161,7 @@ static bool writeIconDirEntry(QIODevice *iodev, const ICONDIRENTRY &iconEntry)
 static bool readIconDir(QIODevice *iodev, ICONDIR *iconDir)
 {
     if (iodev) {
-        uchar tmp[ICONDIR_SIZE];
+        QSTACKARRAY(uchar, tmp, ICONDIR_SIZE);
         if (iodev->read((char*)tmp, ICONDIR_SIZE) == ICONDIR_SIZE) {
             iconDir->idReserved = qFromLittleEndian<quint16>(&tmp[0]);
             iconDir->idType = qFromLittleEndian<quint16>(&tmp[2]);
@@ -174,7 +175,7 @@ static bool readIconDir(QIODevice *iodev, ICONDIR *iconDir)
 static bool writeIconDir(QIODevice *iodev, const ICONDIR &iconDir)
 {
     if (iodev) {
-        uchar tmp[6];
+        QSTACKARRAY(uchar, tmp, 6);
         qToLittleEndian(iconDir.idReserved, tmp);
         qToLittleEndian(iconDir.idType, &tmp[2]);
         qToLittleEndian(iconDir.idCount, &tmp[4]);
@@ -186,7 +187,7 @@ static bool writeIconDir(QIODevice *iodev, const ICONDIR &iconDir)
 static bool readBMPInfoHeader(QIODevice *iodev, BMP_INFOHDR *pHeader)
 {
     if (iodev) {
-        uchar header[BMP_INFOHDR_SIZE];
+        QSTACKARRAY(uchar, header, BMP_INFOHDR_SIZE);
         if (iodev->read((char*)header, BMP_INFOHDR_SIZE) == BMP_INFOHDR_SIZE) {
             pHeader->biSize = qFromLittleEndian<quint32>(&header[0]);
             pHeader->biWidth = qFromLittleEndian<quint32>(&header[4]);
@@ -208,7 +209,7 @@ static bool readBMPInfoHeader(QIODevice *iodev, BMP_INFOHDR *pHeader)
 static bool writeBMPInfoHeader(QIODevice *iodev, const BMP_INFOHDR &header)
 {
     if (iodev) {
-        uchar tmp[BMP_INFOHDR_SIZE];
+        QSTACKARRAY(uchar, tmp, BMP_INFOHDR_SIZE);
         qToLittleEndian<quint32>(header.biSize, &tmp[0]);
         qToLittleEndian<quint32>(header.biWidth, &tmp[4]);
         qToLittleEndian<quint32>(header.biHeight, &tmp[8]);
@@ -364,11 +365,11 @@ void ICOReader::readColorTable(QImage & image)
 {
     if (iod) {
         image.setColorCount(icoAttrib.ncolors);
-        uchar rgb[4];
+        QSTACKARRAY(uchar, rgb, 4);
         for (int i=0; i<icoAttrib.ncolors; i++) {
             if (iod->read((char*)rgb, 4) != 4) {
-            image = QImage();
-            break;
+                image = QImage();
+                break;
             }
             image.setColor(i, qRgb(rgb[2],rgb[1],rgb[0]));
         }
@@ -420,8 +421,7 @@ void ICOReader::read4BitBMP(QImage & image)
 
         int h = icoAttrib.h;
         int buflen = ((icoAttrib.w+7)/8)*4;
-        uchar *buf = new uchar[buflen];
-        Q_CHECK_PTR(buf);
+        QSTACKARRAY(uchar, buf, buflen);
 
         while (--h >= 0) {
             if (iod->read((char*)buf,buflen) != buflen) {
@@ -437,8 +437,6 @@ void ICOReader::read4BitBMP(QImage & image)
             if (icoAttrib.w & 1)                    // the last nibble
                 *p = *b >> 4;
         }
-
-        delete [] buf;
 
     } else {
         image = QImage();
@@ -469,7 +467,7 @@ void ICOReader::read16_24_32BMP(QImage & image)
         int h = icoAttrib.h;
         QRgb *p;
         QRgb  *end;
-        uchar *buf = new uchar[image.bytesPerLine()];
+        QSTACKARRAY(uchar, buf, image.bytesPerLine());
         int    bpl = ((icoAttrib.w*icoAttrib.nbits+31)/32)*4;
         uchar *b;
 
@@ -489,8 +487,6 @@ void ICOReader::read16_24_32BMP(QImage & image)
                 b += icoAttrib.nbits/8;
             }
         }
-
-        delete[] buf;
 
     } else {
         image = QImage();
@@ -687,9 +683,8 @@ bool ICOReader::write(QIODevice * device, const QList<QImage> & images)
             QBuffer buffer(&imageData[i]);
             buffer.open(QIODevice::WriteOnly);
 
-            uchar *buf = new uchar[bpl_bmp];
+            QSTACKARRAY(uchar, buf, bpl_bmp);
             uchar *b;
-            memset( buf, 0, bpl_bmp );
             int y;
             for (y = image.height() - 1; y >= 0; y--) {    // write the image bits
                 // 32 bits
@@ -709,7 +704,6 @@ bool ICOReader::write(QIODevice * device, const QList<QImage> & images)
                 }
                 buffer.write((char*)buf, bpl_bmp);
             }
-            delete[] buf;
 
             maskImage.invertPixels();   // seems as though it needs this
             // NOTE! !! The mask is only flipped vertically - not horizontally !!

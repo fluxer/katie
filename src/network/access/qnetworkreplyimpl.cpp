@@ -664,6 +664,7 @@ char* QNetworkReplyImplPrivate::getDownloadBuffer(qint64 size)
         if (bufferAllocationPolicy.isValid() && bufferAllocationPolicy.toLongLong() >= size) {
             downloadBufferCurrentSize = 0;
             downloadBufferMaximumSize = size;
+            Q_ASSERT(downloadBufferMaximumSize >= 0);
             downloadBuffer = new char[downloadBufferMaximumSize]; // throws if allocation fails
             downloadBufferPointer = QSharedPointer<char>(downloadBuffer, downloadBufferDeleter);
 

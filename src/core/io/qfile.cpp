@@ -28,6 +28,7 @@
 #include "qfileinfo.h"
 #include "qiodevice_p.h"
 #include "qfile_p.h"
+#include "qcorecommon_p.h"
 
 #ifdef QT_NO_QOBJECT
 #define tr(X) QString::fromLatin1(X)
@@ -605,7 +606,7 @@ QFile::rename(const QString &newName)
         if (open(QIODevice::ReadOnly)) {
             if (out.open(QIODevice::WriteOnly | QIODevice::Truncate)) {
                 bool error = false;
-                char block[QT_BUFFSIZE];
+                QSTACKARRAY(char, block, QT_BUFFSIZE);
                 qint64 bytes;
                 while ((bytes = read(block, sizeof(block))) > 0) {
                     if (bytes != out.write(block, bytes)) {

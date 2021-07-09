@@ -40,6 +40,7 @@
 #include "qtestresult_p.h"
 #include "qsignaldumper_p.h"
 #include "qbenchmark_p.h"
+#include "qcorecommon_p.h"
 
 #include <stdarg.h>
 #include <stdio.h>
@@ -993,10 +994,10 @@ static void qPrintDataTags()
             // Retrieve local tags:
             QStringList localTags;
             QTestTable table;
-            char member[512];
+            QSTACKARRAY(char, member, 512);
             char *slot = qstrdup(tf.signature());
             slot[strlen(slot) - 2] = '\0';
-            QTest::qt_snprintf(member, 512, "%s_data()", slot);
+            QTest::qt_snprintf(member, sizeof(member), "%s_data()", slot);
             invokeMethod(QTest::currentTestObject, member);
             for (int j = 0; j < table.dataCount(); ++j)
                 localTags << QLatin1String(table.testData(j)->dataTag());
@@ -1244,7 +1245,8 @@ Q_TEST_EXPORT void qtest_qParseArgs(int argc, char *argv[], bool qml)
             }
 
             int colon = -1;
-            char buf[512], *data=0;
+            QSTACKARRAY(char, buf, 512);
+            char *data = Q_NULLPTR;
             int off;
             for(off = 0; *(argv[i]+off); ++off) {
                 if (*(argv[i]+off) == ':') {
@@ -1533,8 +1535,7 @@ char *toHexRepresentation(const char *ba, int length)
         forElipsis[2] = '.';
         forElipsis[3] = '.';
         result[size - 1] = '\0';
-    }
-    else {
+    } else {
         const int size = len * 3;
         result = new char[size];
         result[size - 1] = '\0';

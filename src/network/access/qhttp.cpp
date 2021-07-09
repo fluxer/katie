@@ -2866,8 +2866,8 @@ void QHttpPrivate::_q_slotReadyRead()
 
                 if (chunkedSize == 0 && n - read >= 2) {
                     // read terminating CRLF
-                    char tmp[2];
-                    socket->read(tmp, 2);
+                    QSTACKARRAY(char, tmp, 2);
+                    socket->read(tmp, sizeof(tmp));
                     if (tmp[0] != '\r' || tmp[1] != '\n') {
                         finishedWithError(QLatin1String(QT_TRANSLATE_NOOP("QHttp", "Invalid HTTP chunked body")),
                                           QHttp::WrongContentLength);

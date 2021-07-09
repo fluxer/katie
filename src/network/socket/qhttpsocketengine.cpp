@@ -28,6 +28,7 @@
 #include "qnetworkinterface.h"
 #include "qcore_unix_p.h"
 #include "qnetworkcommon_p.h"
+#include "qcorecommon_p.h"
 
 #if !defined(QT_NO_NETWORKPROXY) && !defined(QT_NO_HTTP)
 #include "qdebug.h"
@@ -509,7 +510,7 @@ void QHttpSocketEngine::slotSocketReadNotification()
 
   readResponseContent:
     if (d->state == ReadResponseContent) {
-        char dummybuffer[4096];
+        QSTACKARRAY(char, dummybuffer, 4096);
         while (d->pendingResponseData) {
             int read = d->socket->read(dummybuffer, qMin(sizeof(dummybuffer), (size_t)d->pendingResponseData));
             if (read >= 0)

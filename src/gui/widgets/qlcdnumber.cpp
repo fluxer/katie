@@ -20,10 +20,12 @@
 ****************************************************************************/
 
 #include "qlcdnumber.h"
+
 #ifndef QT_NO_LCDNUMBER
 #include "qbitarray.h"
 #include "qpainter.h"
 #include "qframe_p.h"
+#include "qcorecommon_p.h"
 
 QT_BEGIN_NAMESPACE
 
@@ -161,7 +163,7 @@ static QString int2string(int num, QLCDNumber::Mode base, int ndigits, bool *ofl
             break;
         case QLCDNumber::Bin:
             {
-                char buf[42];
+                QSTACKARRAY(char, buf, 42);
                 char *p = &buf[41];
                 uint n = num;
                 int len = 0;

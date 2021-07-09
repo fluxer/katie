@@ -26,6 +26,7 @@
 #include "qtestresult_p.h"
 #include "qdir.h"
 #include "qplatformdefs.h"
+#include "qcorecommon_p.h"
 
 QT_BEGIN_NAMESPACE
 
@@ -43,7 +44,7 @@ QTestFileLogger::~QTestFileLogger()
 
 void QTestFileLogger::init()
 {
-    char filename[100];
+    QSTACKARRAY(char, filename, 100);
     int index = 0;
     QTest::qt_snprintf(filename, sizeof(filename), "%s.log",
                 QTestResult::currentTestObjectName());

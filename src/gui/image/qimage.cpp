@@ -36,6 +36,7 @@
 #include "qhash.h"
 #include "qpaintengine_raster_p.h"
 #include "qimage_p.h"
+#include "qcorecommon_p.h"
 #include "qx11info_x11.h"
 
 #include <ctype.h>
@@ -1830,9 +1831,9 @@ static void dither_to_Mono(QImageData *dst, const QImageData *src,
             dithermode = Diffuse;
     }
 
-    uchar gray[256];                                // gray map for 8 bit images
+    QSTACKARRAY(uchar, gray, 256); // gray map for 8 bit images
     bool  use_gray = (src->depth == 8);
-    if (use_gray) {                                // make gray map
+    if (use_gray) { // make gray map
         if (fromalpha) {
             // Alpha 0x00 -> 0 pixels (white)
             // Alpha 0xFF -> 1 pixels (black)

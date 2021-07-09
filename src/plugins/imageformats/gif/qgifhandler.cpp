@@ -26,6 +26,7 @@
 #include "qvariant.h"
 #include "qplatformdefs.h"
 #include "qdrawhelper_p.h"
+#include "qcorecommon_p.h"
 
 QT_BEGIN_NAMESPACE
 
@@ -661,7 +662,7 @@ void QGIFFormat::scan(QIODevice *device, QVector<QSize> *imageSizes, int *loopCo
     int imageWidth = 0;
     int imageHeight = 0;
     bool done = false;
-    uchar hold[16];
+    QSTACKARRAY(uchar, hold, 16);
     State state = Header;
 
     QByteArray readBuffer(device->read(QT_BUFFSIZE));
@@ -1071,7 +1072,7 @@ bool QGifHandler::canRead(QIODevice *device)
         return false;
     }
 
-    char head[6];
+    QSTACKARRAY(char, head, 6);
     if (device->peek(head, sizeof(head)) == sizeof(head))
         return qstrncmp(head, "GIF87a", 6) == 0
             || qstrncmp(head, "GIF89a", 6) == 0;

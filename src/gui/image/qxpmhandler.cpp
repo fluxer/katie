@@ -29,6 +29,7 @@
 #include "qtextstream.h"
 #include "qvariant.h"
 #include "qplatformdefs.h"
+#include "qcorecommon_p.h"
 
 QT_BEGIN_NAMESPACE
 
@@ -750,10 +751,14 @@ static bool read_xpm_string(QByteArray &buf, QIODevice *d, const char * const *s
     int offset = 0;
     forever {
         if (offset == state.size() || state.isEmpty()) {
-            char readbuf[QT_BUFFSIZE];
+            QSTACKARRAY(char, readbuf, QT_BUFFSIZE);
             qint64 bytesRead = d->read(readbuf, sizeof(readbuf));
             if (bytesRead <= 0)
                 return false;
+            if (Q_UNLIKELY(bytesRead > QBYTEARRAY_MAX)) {
+                qWarning("QImage: XPM string data overflow");
+                return false;
+            }
             state = QByteArray(readbuf, int(bytesRead));
             offset = 0;
         }
@@ -910,14 +915,13 @@ static bool read_xpm_body(
             uchar *end = d + buf.length();
             int x;
             if (cpp == 1) {
-                char b[2];
-                b[1] = '\0';
+                QSTACKARRAY(char, b, 2);
                 for (x=0; x<w && d<end; x++) {
                     b[0] = *d++;
                     *p++ = (uchar)colorMap[xpmHash(b)];
                 }
             } else {
-                char b[16];
+                QSTACKARRAY(char, b, 16);
                 b[cpp] = '\0';
                 for (x=0; x<w && d<end; x++) {
                     memcpy(b, (char *)d, cpp);
@@ -935,7 +939,7 @@ static bool read_xpm_body(
             uchar *d = (uchar *)buf.data();
             uchar *end = d + buf.length();
             int x;
-            char b[16];
+            QSTACKARRAY(char, b, 16);
             b[cpp] = '\0';
             for (x = 0; x < w && d < end; x++) {
                 memcpy(b, (char *)d, cpp);
@@ -1134,7 +1138,7 @@ bool QXpmHandler::canRead(QIODevice *device)
         return false;
     }
 
-    char head[6];
+    QSTACKARRAY(char, head, 6);
     if (device->peek(head, sizeof(head)) != sizeof(head))
         return false;
 

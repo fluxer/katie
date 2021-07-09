@@ -59,6 +59,7 @@
 #include "qkeymapper_p.h"
 #include "qwidget_p.h"
 #include "qbackingstore_p.h"
+#include "qcorecommon_p.h"
 
 #ifndef QT_GUI_DOUBLE_CLICK_RADIUS
 #define QT_GUI_DOUBLE_CLICK_RADIUS 5
@@ -429,12 +430,13 @@ static int qt_x_errhandler(Display *dpy, XErrorEvent *err)
         break;
     }
 
-    char errstr[256];
-    XGetErrorText( dpy, err->error_code, errstr, 256 );
-    char buffer[256];
-    char request_str[256];
-    qsnprintf(buffer, 256, "%d", err->request_code);
-    XGetErrorDatabaseText(dpy, "XRequest", buffer, "", request_str, 256);
+    static const int maxerrlen = 256;
+    QSTACKARRAY(char, errstr, maxerrlen);
+    XGetErrorText(dpy, err->error_code, errstr, maxerrlen);
+    QSTACKARRAY(char, buffer, maxerrlen);
+    QSTACKARRAY(char, request_str, maxerrlen);
+    qsnprintf(buffer, maxerrlen, "%d", err->request_code);
+    XGetErrorDatabaseText(dpy, "XRequest", buffer, "", request_str, maxerrlen);
     if (err->request_code < 128) {
         // X error for a normal protocol request
         qWarning( "X Error: %s %d\n"
@@ -452,13 +454,13 @@ static int qt_x_errhandler(Display *dpy, XErrorEvent *err)
         else if (err->request_code == qt_x11Data->xrandr_major)
             extensionName = "RANDR";
 
-        char minor_str[256];
+        QSTACKARRAY(char, minor_str, maxerrlen);
         if (extensionName) {
-            qsnprintf(buffer, 256, "%s.%d", extensionName, err->minor_code);
-            XGetErrorDatabaseText(dpy, "XRequest", buffer, "", minor_str, 256);
+            qsnprintf(buffer, maxerrlen, "%s.%d", extensionName, err->minor_code);
+            XGetErrorDatabaseText(dpy, "XRequest", buffer, "", minor_str, maxerrlen);
         } else {
             extensionName = "Unknown extension";
-            qsnprintf(minor_str, 256, "Unknown request");
+            qsnprintf(minor_str, maxerrlen, "Unknown request");
         }
         qWarning( "X Error: %s %d\n"
                   "  Extension:    %d (%s)\n"
@@ -3829,7 +3831,7 @@ QSessionManager::QSessionManager(QApplication * app, QString &id, QString& key)
     d->restartHint = RestartIfRunning;
 
     resetSmState();
-    char cerror[256];
+    QSTACKARRAY(char, cerror, 256);
     char* myId = 0;
     QByteArray b_id = id.toLatin1();
     char* prevId = b_id.data();

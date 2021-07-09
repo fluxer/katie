@@ -23,6 +23,7 @@
 #include "qendian.h"
 #include "qpainterpath.h"
 #include "qpdf_p.h"
+#include "qcorecommon_p.h"
 
 #ifdef Q_WS_X11
 #include "qfontengine_x11_p.h"
@@ -253,12 +254,12 @@ QByteArray QFontSubset::glyphName(unsigned short unicode, bool symbol)
     if (unicode_to_aglindex[l].u == unicode)
         return agl + unicode_to_aglindex[l].index;
 
-    char buffer[8];
+    QSTACKARRAY(char, buffer, 8);
     buffer[0] = 'u';
     buffer[1] = 'n';
     buffer[2] = 'i';
     QPdf::toHex(unicode, buffer+3);
-    return buffer;
+    return QByteArray(buffer);
 }
 
 static FT_Face ft_face(const QFontEngine *engine)
@@ -283,10 +284,9 @@ QByteArray QFontSubset::glyphName(unsigned int glyph, const QVector<int> reverse
     QPdf::ByteStream s(&ba);
     FT_Face face = ft_face(fontEngine);
 
-    char name[32];
-    name[0] = 0;
+    QSTACKARRAY(char, name, 32);
     if (face && FT_HAS_GLYPH_NAMES(face)) {
-        FT_Get_Glyph_Name(face, glyphIndex, &name, 32);
+        FT_Get_Glyph_Name(face, glyphIndex, &name, sizeof(name));
         if (name[0] == '.') // fix broken PS fonts returning .notdef for many glyphs
             name[0] = 0;
     }
@@ -406,7 +406,7 @@ QByteArray QFontSubset::createToUnicodeMap() const
     QByteArray ranges = "<0000> <0000> <0000>\n";
     QPdf::ByteStream s(&ranges);
 
-    char buf[5];
+    QSTACKARRAY(char, buf, 5);
     for (int g = 1; g < nGlyphs(); ) {
         int uc0 = reverseMap.at(g);
         if (!uc0) {

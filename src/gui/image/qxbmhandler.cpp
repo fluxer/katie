@@ -19,8 +19,9 @@
 **
 ****************************************************************************/
 
-#include <qplatformdefs.h>
+#include "qplatformdefs.h"
 #include "qxbmhandler_p.h"
+#include "qcorecommon_p.h"
 
 #ifndef QT_NO_IMAGEFORMAT_XBM
 
@@ -47,7 +48,7 @@ static bool read_xbm_header(QIODevice *device, int& w, int& h)
 {
     const int buflen = 300;
     const int maxlen = 4096;
-    char buf[buflen + 1];
+    QSTACKARRAY(char, buf, buflen + 1);
     QRegExp r1(QLatin1String("^#define[ \t]+[a-zA-Z0-9._]+[ \t]+"));
     QRegExp r2(QLatin1String("[0-9]+"));
 
@@ -102,7 +103,7 @@ static bool read_xbm_header(QIODevice *device, int& w, int& h)
 static bool read_xbm_body(QIODevice *device, int w, int h, QImage *outImage)
 {
     const int buflen = 300;
-    char buf[buflen + 1];
+    QSTACKARRAY(char, buf, buflen + 1);
 
     qint64 readBytes = 0;
 
@@ -167,7 +168,7 @@ static bool write_xbm_image(const QImage &sourceImage, QIODevice *device, const 
     int    h = image.height();
     int    i;
     int    msize = fileName.length() + 100;
-    char  *buf = new char[msize];
+    QSTACKARRAY(char, buf, msize);
 
     qsnprintf(buf, msize, "#define %s_width %d\n", fileName.toAscii().data(), w);
     device->write(buf, qstrlen(buf));
@@ -180,7 +181,7 @@ static bool write_xbm_image(const QImage &sourceImage, QIODevice *device, const 
         image = image.convertToFormat(QImage::Format_MonoLSB);
 
     bool invert = qGray(image.color(0)) < qGray(image.color(1));
-    char hexrep[16];
+    QSTACKARRAY(char, hexrep, 16);
     for (i=0; i<10; i++)
         hexrep[i] = '0' + i;
     for (i=10; i<16; i++)
@@ -209,7 +210,6 @@ static bool write_xbm_image(const QImage &sourceImage, QIODevice *device, const 
                     *p++ = ' ';
                     *p   = '\0';
                     if ((int)qstrlen(buf) != device->write(buf, qstrlen(buf))) {
-                        delete [] buf;
                         return false;
                     }
                     p = buf;
@@ -220,11 +220,9 @@ static bool write_xbm_image(const QImage &sourceImage, QIODevice *device, const 
     }
     strcpy(p, " };\n");
     if ((int)qstrlen(buf) != device->write(buf, qstrlen(buf))) {
-        delete [] buf;
         return false;
     }
 
-    delete [] buf;
     return true;
 }
 

@@ -26,6 +26,7 @@
 #include "qvector.h"
 #include "qbuffer.h"
 #include "qplatformdefs.h"
+#include "qcorecommon_p.h"
 
 #include <stdio.h>      // jpeglib needs this to be pre-included
 #include <setjmp.h>
@@ -71,7 +72,7 @@ extern "C" {
 static void my_error_exit (j_common_ptr cinfo)
 {
     my_error_mgr* myerr = (my_error_mgr*) cinfo->err;
-    char buffer[JMSG_LENGTH_MAX];
+    QSTACKARRAY(char, buffer, JMSG_LENGTH_MAX);
     (*cinfo->err->format_message)(cinfo, buffer);
     qWarning("%s", buffer);
     longjmp(myerr->setjmp_buffer, 1);
@@ -760,7 +761,7 @@ bool QJpegHandler::canRead(QIODevice *device)
         return false;
     }
 
-    char buffer[2];
+    QSTACKARRAY(char, buffer, 2);
     if (device->peek(buffer, 2) != 2)
         return false;
     return uchar(buffer[0]) == 0xff && uchar(buffer[1]) == 0xd8;

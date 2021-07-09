@@ -27,6 +27,7 @@
 #include "qelapsedtimer.h"
 #include "qvarlengtharray.h"
 #include "qnetworkinterface.h"
+#include "qcorecommon_p.h"
 
 #include <time.h>
 #include <errno.h>
@@ -97,7 +98,7 @@ static inline void qt_socket_getPortAndAddress(const qt_sockaddr *s, quint16 *po
             tmpAddress.setAddress(tmp);
             *addr = tmpAddress;
 #ifndef QT_NO_IPV6IFNAME
-            char scopeid[IFNAMSIZ];
+            QSTACKARRAY(char, scopeid, IFNAMSIZ);
             if (::if_indextoname(s->a6.sin6_scope_id, scopeid)) {
                 addr->setScopeId(QString::fromLatin1(scopeid));
             } else

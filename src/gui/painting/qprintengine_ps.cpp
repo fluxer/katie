@@ -49,6 +49,7 @@
 #include "qdrawhelper_p.h"
 #include "qmutexpool_p.h"
 #include "qcoreapplication_p.h"
+#include "qcorecommon_p.h"
 
 #include <unistd.h>
 #include <stdlib.h>
@@ -170,7 +171,7 @@ QPSPrintEnginePrivate::~QPSPrintEnginePrivate()
 static void ps_r7(QPdf::ByteStream& stream, const char * s, int l)
 {
     int i = 0;
-    uchar line[84];
+    QSTACKARRAY(uchar, line, 84);
     int col = 0;
 
     while(i < l) {

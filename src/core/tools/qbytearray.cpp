@@ -29,6 +29,7 @@
 #include "qlocale_tools_p.h"
 #include "qscopedpointer.h"
 #include "qdatastream.h"
+#include "qcorecommon_p.h"
 
 #include <ctype.h>
 #include <limits.h>
@@ -538,7 +539,7 @@ QByteArray qFastCompress(const char* data, int nbytes, int compressionLevel)
         return QByteArray();
     }
 
-    char cmpbuffer[bndresult];
+    QSTACKARRAY(char, cmpbuffer, bndresult);
     const size_t cmpresult = ZSTD_compress(cmpbuffer, bndresult, data, nbytes, compressionLevel);
     if (Q_UNLIKELY(ZSTD_isError(cmpresult))) {
         qWarning("qFastCompress: Could not compress data (%s)", ZSTD_getErrorString(ZSTD_getErrorCode(cmpresult)));
@@ -590,7 +591,7 @@ QByteArray qFastUncompress(const char* data, int nbytes)
         return QByteArray();
     }
 
-    char decbuffer[uncompressedsize];
+    QSTACKARRAY(char, decbuffer, uncompressedsize);
     const size_t decresult = ZSTD_decompress(decbuffer, uncompressedsize, data, nbytes);
     if (Q_UNLIKELY(ZSTD_isError(decresult))) {
         qWarning("qFastCompress: Could not uncompress data (%s)", ZSTD_getErrorString(ZSTD_getErrorCode(decresult)));
@@ -2058,7 +2059,7 @@ QByteArray &QByteArray::replace(const char *before, int bsize, const char *after
 
 QByteArray &QByteArray::replace(char before, const QByteArray &after)
 {
-    char b[2] = { before, '\0' };
+    const char b[2] = { before, '\0' };
     QByteArray cb = fromRawData(b, 1);
     return replace(cb, after);
 }

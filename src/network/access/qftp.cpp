@@ -38,6 +38,7 @@
 #include "qtcpserver.h"
 #include "qlocale.h"
 #include "qobject_p.h"
+#include "qcorecommon_p.h"
 
 QT_BEGIN_NAMESPACE
 
@@ -394,7 +395,7 @@ void QFtpDTP::writeData()
     } else if (data.dev) {
         callWriteData = false;
         const qint64 blockSize = 16*1024;
-        char buf[16*1024];
+        QSTACKARRAY(char, buf, blockSize);
         qint64 read = data.dev->read(buf, blockSize);
 #if defined(QFTPDTP_DEBUG)
         qDebug("QFtpDTP::writeData: write() of size %lli bytes", read);

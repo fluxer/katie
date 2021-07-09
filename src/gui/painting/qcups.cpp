@@ -20,6 +20,7 @@
 ****************************************************************************/
 #include "qdebug.h"
 #include "qcups_p.h"
+#include "qcorecommon_p.h"
 
 #ifndef QT_NO_CUPS
 
@@ -296,8 +297,8 @@ void QCUPSSupport::collectMarkedOptionsHelper(QStringList& list, const ppd_group
 
 QPair<int, QString> QCUPSSupport::tempFd()
 {
-    char filename[512];
-    int fd = cupsTempFd(filename, 512);
+    QSTACKARRAY(char, filename, 512);
+    int fd = cupsTempFd(filename, sizeof(filename));
     return QPair<int, QString>(fd, QString::fromLocal8Bit(filename));
 }
 

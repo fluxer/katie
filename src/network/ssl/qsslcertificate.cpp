@@ -104,6 +104,7 @@
 #include "qmutexpool_p.h"
 #include "qstring.h"
 #include "qstringlist.h"
+#include "qcorecommon_p.h"
 
 QT_BEGIN_NAMESPACE
 
@@ -677,7 +678,7 @@ QDateTime _q_getTimeFromASN1(const ASN1_TIME *aTime)
 
     if (aTime->type == V_ASN1_UTCTIME) {
 
-        char lBuffer[24];
+        QSTACKARRAY(char, lBuffer, 24);
         char *pBuffer = lBuffer;
 
         if ((lTimeLength < 11) || (lTimeLength > 17))

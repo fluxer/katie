@@ -22,6 +22,7 @@
 #include "quuid.h"
 #include "qdatastream.h"
 #include "qendian.h"
+#include "qcorecommon_p.h"
 
 QT_BEGIN_NAMESPACE
 
@@ -368,7 +369,7 @@ QUuid QUuid::fromRfc4122(const QByteArray &bytes)
     ushort d3 = qFromBigEndian<quint16>(data);
     data += sizeof(quint16);
 
-    uchar d4[8];
+    QSTACKARRAY(uchar, d4, 8);
     for (int i = 0; i < 8; ++i) {
         d4[i] = *(data);
         data++;

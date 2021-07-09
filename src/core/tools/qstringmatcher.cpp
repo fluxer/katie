@@ -283,7 +283,7 @@ int qFindStringBoyerMoore(
     const QChar *haystack, int haystackLen, int haystackOffset,
     const QChar *needle, int needleLen, Qt::CaseSensitivity cs)
 {
-    uchar skiptable[256];
+    QSTACKARRAY(uchar, skiptable, 256);
     bm_init_skiptable((const ushort *)needle, needleLen, skiptable, cs);
     if (haystackOffset < 0)
         haystackOffset = 0;

@@ -23,6 +23,7 @@
 #include "driver.h"
 #include "ui4.h"
 #include "uic.h"
+#include "qcorecommon_p.h"
 
 #include <QtCore/QTextStream>
 
@@ -33,10 +34,10 @@ namespace CPP {
 static QByteArray transformImageData(const QString &data)
 {
     int baSize = data.length() / 2;
-    uchar *ba = new uchar[baSize];
+    QSTACKARRAY(uchar, ba, baSize);
     for (int i = 0; i < baSize; ++i) {
-        char h = data[2 * (i)].toLatin1();
-        char l = data[2 * (i) + 1].toLatin1();
+        char h = data[2 * i].toLatin1();
+        char l = data[2 * i + 1].toLatin1();
         uchar r = 0;
         if (h <= '9')
             r += h - '0';
@@ -49,9 +50,7 @@ static QByteArray transformImageData(const QString &data)
             r += l - 'a' + 10;
         ba[i] = r;
     }
-    QByteArray ret(reinterpret_cast<const char *>(ba), baSize);
-    delete [] ba;
-    return ret;
+    return QByteArray(reinterpret_cast<const char *>(ba), baSize);
 }
 
 WriteIconData::WriteIconData(Uic *uic)

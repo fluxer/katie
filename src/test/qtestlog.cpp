@@ -27,6 +27,7 @@
 #include "qxmltestlogger_p.h"
 #include "qatomic.h"
 #include "qbytearray.h"
+#include "qcorecommon_p.h"
 
 #include <stdlib.h>
 #include <string.h>
@@ -219,10 +220,10 @@ void QTestLog::printUnhandledIgnoreMessages()
 {
     QTEST_ASSERT(QTest::testLogger);
 
-    char msg[1024];
+    QSTACKARRAY(char, msg, 1024);
     QTest::IgnoreResultList *list = QTest::ignoreResultList;
     while (list) {
-        QTest::qt_snprintf(msg, 1024, "Did not receive message: \"%s\"", list->msg);
+        QTest::qt_snprintf(msg, sizeof(msg), "Did not receive message: \"%s\"", list->msg);
         QTest::testLogger->addMessage(QAbstractTestLogger::Info, msg);
 
         list = list->next;

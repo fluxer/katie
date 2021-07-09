@@ -26,6 +26,7 @@
 #include "qstring.h"
 #include "qendian.h"
 #include "qplatformdefs.h"
+#include "qcorecommon_p.h"
 
 #include <stdio.h>
 #include <ctype.h>
@@ -1101,7 +1102,7 @@ int QDataStream::skipRawData(int len)
     CHECK_STREAM_PRECOND(-1)
 
     if (dev->isSequential()) {
-        char buf[QT_BUFFSIZE];
+        QSTACKARRAY(char, buf, QT_BUFFSIZE);
         int sumRead = 0;
 
         while (len > 0) {

@@ -28,6 +28,7 @@
 #include "qfsfileengine_p.h"
 #include "qfilesystemengine_p.h"
 #include "qcore_unix_p.h"
+#include "qcorecommon_p.h"
 
 #include <errno.h>
 
@@ -482,7 +483,7 @@ QTemporaryFile *QTemporaryFile::createLocalFile(QFile &file)
         QTemporaryFile *ret = new QTemporaryFile();
         ret->open();
         file.seek(0);
-        char readbuff[QT_BUFFSIZE];
+        QSTACKARRAY(char, readbuff, QT_BUFFSIZE);
         while(true) {
             qint64 len = file.read(readbuff, sizeof(readbuff));
             if(len < 1)

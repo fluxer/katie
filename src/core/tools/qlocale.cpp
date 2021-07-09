@@ -47,7 +47,6 @@
 
 QT_BEGIN_NAMESPACE
 
-enum { QMaxBCPNameLength = 20 };
 static const QLocalePrivate *default_lp = Q_NULLPTR;
 static QLocale::NumberOptions default_number_options = 0;
 
@@ -58,10 +57,9 @@ static QLocale::NumberOptions default_number_options = 0;
 static bool qt_splitLocaleName(const QString &name, QString &lang, QString &script, QString &cntry)
 {
     const QByteArray latinname = name.toLatin1();
-    char getbuffer[QMaxBCPNameLength];
+    QSTACKARRAY(char, getbuffer, 20);
     UErrorCode error = U_ZERO_ERROR;
-    ::memset(getbuffer, '\0', QMaxBCPNameLength * sizeof(char));
-    const int langresult = uloc_getLanguage(latinname.constData(), getbuffer, QMaxBCPNameLength, &error);
+    const int langresult = uloc_getLanguage(latinname.constData(), getbuffer, sizeof(getbuffer), &error);
     if (Q_UNLIKELY(U_FAILURE(error))) {
         qWarning("qt_splitLocaleName: uloc_getLanguage(%s) failed %s",
             latinname.constData(), u_errorName(error));
@@ -70,8 +68,8 @@ static bool qt_splitLocaleName(const QString &name, QString &lang, QString &scri
     lang = QString::fromLatin1(getbuffer, langresult);
 
     error = U_ZERO_ERROR;
-    ::memset(getbuffer, '\0', QMaxBCPNameLength * sizeof(char));
-    const int scriptresult = uloc_getScript(latinname.constData(), getbuffer, QMaxBCPNameLength, &error);
+    ::memset(getbuffer, '\0', sizeof(getbuffer) * sizeof(char));
+    const int scriptresult = uloc_getScript(latinname.constData(), getbuffer, sizeof(getbuffer), &error);
     if (Q_UNLIKELY(U_FAILURE(error))) {
         qWarning("qt_splitLocaleName: uloc_getScript(%s) failed %s",
             latinname.constData(), u_errorName(error));
@@ -80,8 +78,8 @@ static bool qt_splitLocaleName(const QString &name, QString &lang, QString &scri
     script = QString::fromLatin1(getbuffer, scriptresult);
 
     error = U_ZERO_ERROR;
-    ::memset(getbuffer, '\0', QMaxBCPNameLength * sizeof(char));
-    const int countryresult = uloc_getCountry(latinname.constData(), getbuffer, QMaxBCPNameLength, &error);
+    ::memset(getbuffer, '\0', sizeof(getbuffer) * sizeof(char));
+    const int countryresult = uloc_getCountry(latinname.constData(), getbuffer, sizeof(getbuffer), &error);
     if (Q_UNLIKELY(U_FAILURE(error))) {
         qWarning("qt_splitLocaleName: uloc_getCountry(%s) failed %s",
             latinname.constData(), u_errorName(error));
@@ -256,28 +254,28 @@ QString QLocalePrivate::bcp47Name() const
     const int countrylen = qstrlen(country);
     const int totallen = langlen + scriptlen + countrylen + (script ? 1 : 0) + (country ? 1 : 0);
 
-    QChar uc[totallen];
+    QSTACKARRAY(QChar, bcp, totallen);
     int datapos = 0;
     for (int i = 0; i < langlen; i++) {
-        uc[datapos] = ushort(lang[i]);
+        bcp[datapos] = ushort(lang[i]);
         datapos++;
     }
     if (script) {
-        uc[datapos++] = QLatin1Char('-');
+        bcp[datapos++] = QLatin1Char('-');
         for (int i = 0; i < scriptlen; i++) {
-            uc[datapos] = ushort(script[i]);
+            bcp[datapos] = ushort(script[i]);
             datapos++;
         }
     }
     if (country) {
-        uc[datapos++] = QLatin1Char('-');
+        bcp[datapos++] = QLatin1Char('-');
         for (int i = 0; i < countrylen; i++) {
-            uc[datapos] = ushort(country[i]);
+            bcp[datapos] = ushort(country[i]);
             datapos++;
         }
     }
 
-    return QString(uc, totallen);
+    return QString(bcp, totallen);
 }
 
 const QLocalePrivate *QLocalePrivate::findLocale(QLocale::Language language, QLocale::Script script, QLocale::Country country)
@@ -1946,7 +1944,7 @@ QString QLocalePrivate::doubleToString(const QChar _zero, const QChar plus, cons
 
         // NOT thread safe!
         if (form == DFDecimal) {
-            char qfcvtbuf[QECVT_BUFFSIZE];
+            QSTACKARRAY(char, qfcvtbuf, QECVT_BUFFSIZE);
             digits = QString::fromLatin1(qfcvt(d, precision, &decpt, &sign, qfcvtbuf));
         } else {
             int pr = precision;
@@ -1954,7 +1952,7 @@ QString QLocalePrivate::doubleToString(const QChar _zero, const QChar plus, cons
                 ++pr;
             else if (form == DFSignificantDigits && pr == 0)
                 pr = 1;
-            char qecvtbuf[QECVT_BUFFSIZE];
+            QSTACKARRAY(char, qecvtbuf, QECVT_BUFFSIZE);
             digits = QString::fromLatin1(qecvt(d, pr, &decpt, &sign, qecvtbuf));
 
             // Chop trailing zeros

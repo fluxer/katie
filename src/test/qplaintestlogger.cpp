@@ -27,6 +27,7 @@
 #include "qbenchmarkmetric_p.h"
 #include "qbytearray.h"
 #include "qmath.h"
+#include "qcorecommon_p.h"
 
 #include <stdarg.h>
 #include <stdio.h>
@@ -203,14 +204,14 @@ namespace QTest {
     {
         const char *bmtag = QTest::benchmarkResult2String();
 
-        char buf1[1024];
+        QSTACKARRAY(char, buf1, 1024);
         QTest::qt_snprintf(
             buf1, sizeof(buf1), "%s: %s::%s",
             bmtag,
             QTestResult::currentTestObjectName(),
             result.context.slotName.toAscii().data());
 
-        char bufTag[1024];
+        QSTACKARRAY(char, bufTag, 1024);
         bufTag[0] = 0;
         QByteArray tag = result.context.tag.toAscii();
         if (tag.isEmpty() == false) {
@@ -218,11 +219,11 @@ namespace QTest {
         }
 
 
-        char fillFormat[8];
+        QSTACKARRAY(char, fillFormat, 8);
         int fillLength = 5;
         QTest::qt_snprintf(
             fillFormat, sizeof(fillFormat), ":\n%%%ds", fillLength);
-        char fill[1024];
+        QSTACKARRAY(char, fill, 1024);
         QTest::qt_snprintf(fill, sizeof(fill), fillFormat, "");
 
         const char * unitText = QTest::benchmarkMetricUnit(result.metric);
@@ -231,13 +232,13 @@ namespace QTest {
         char resultBuffer[100] = "";
         formatResult(resultBuffer, 100, valuePerIteration, countSignificantDigits(result.value));
 
-        char buf2[1024];
+        QSTACKARRAY(char, buf2, 1024);
         QTest::qt_snprintf(
             buf2, sizeof(buf2), "%s %s",
             resultBuffer,
             unitText);
 
-        char buf2_[1024];
+        QSTACKARRAY(char, buf2_, 1024);
         QByteArray iterationText = " per iteration";
         Q_ASSERT(result.iterations > 0);
         QTest::qt_snprintf(
@@ -245,7 +246,7 @@ namespace QTest {
             sizeof(buf2_), "%s",
             iterationText.data());
 
-        char buf3[1024];
+        QSTACKARRAY(char, buf3, 1024);
         Q_ASSERT(result.iterations > 0);
         formatResult(resultBuffer, 100, result.value, countSignificantDigits(result.value));
         QTest::qt_snprintf(
@@ -253,8 +254,7 @@ namespace QTest {
             resultBuffer,
             result.iterations);
 
-        char buf[1024];
-
+        QSTACKARRAY(char, buf, 1024);
         if (result.setByMacro) {
             QTest::qt_snprintf(
                 buf, sizeof(buf), "%s%s%s%s%s%s\n", buf1, bufTag, fill, buf2, buf2_, buf3);
@@ -280,7 +280,7 @@ void QPlainTestLogger::startLogging()
 {
     QAbstractTestLogger::startLogging();
 
-    char buf[1024];
+    QSTACKARRAY(char, buf, 1024);
     if (QTestLog::verboseLevel() < 0) {
         QTest::qt_snprintf(buf, sizeof(buf), "Testing %s\n",
                            QTestResult::currentTestObjectName());
@@ -302,7 +302,7 @@ void QPlainTestLogger::startLogging()
 
 void QPlainTestLogger::stopLogging()
 {
-    char buf[1024];
+    QSTACKARRAY(char, buf, 1024);
     if (QTestLog::verboseLevel() < 0) {
         QTest::qt_snprintf(buf, sizeof(buf), "Totals: %d passed, %d failed, %d skipped\n",
                            QTestResult::passCount(), QTestResult::failCount(),

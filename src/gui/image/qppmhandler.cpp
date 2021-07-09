@@ -26,6 +26,7 @@
 #include "qimage.h"
 #include "qvariant.h"
 #include "qvector.h"
+#include "qcorecommon_p.h"
 
 #include <ctype.h>
 
@@ -41,7 +42,7 @@ static int read_pbm_int(QIODevice *d)
     int          val = -1;
     bool  digit;
     const int buflen = 100;
-    char  buf[buflen];
+    QSTACKARRAY(char, buf, buflen);
     for (;;) {
         if (!d->getChar(&c))                // end of file
             break;
@@ -70,7 +71,7 @@ static int read_pbm_int(QIODevice *d)
 
 static bool read_pbm_header(QIODevice *device, char& type, int& w, int& h, int& mcc)
 {
-    char buf[3];
+    QSTACKARRAY(char, buf, 3);
     if (device->read(buf, 3) != 3)                        // read P[1-6]<white-space>
         return false;
 
@@ -137,12 +138,12 @@ static bool read_pbm_body(QIODevice *device, char type, int w, int h, int mcc, Q
     if (raw) {                                // read raw data
         if (nbits == 32) {                        // type 6
             pbm_bpl = mcc < 256 ? 3*w : 6*w;
-            uchar *buf24 = new uchar[pbm_bpl], *b;
+            QSTACKARRAY(uchar, buf24, pbm_bpl);
+            uchar *b;
             QRgb  *p;
             QRgb  *end;
             for (y=0; y<h; y++) {
                 if (device->read((char *)buf24, pbm_bpl) != pbm_bpl) {
-                    delete[] buf24;
                     return false;
                 }
                 p = (QRgb *)outImage->scanLine(y);
@@ -160,11 +161,9 @@ static bool read_pbm_body(QIODevice *device, char type, int w, int h, int mcc, Q
                     }
                 }
             }
-            delete[] buf24;
         } else {                                // type 4,5
             for (y=0; y<h; y++) {
-                if (device->read((char *)outImage->scanLine(y), pbm_bpl)
-                        != pbm_bpl)
+                if (device->read((char *)outImage->scanLine(y), pbm_bpl) != pbm_bpl)
                     return false;
             }
         }
@@ -285,8 +284,8 @@ static bool write_pbm_image(QIODevice *out, const QImage &sourceImage, const QBy
                 if (w != (uint)out->write((char*)line, w))
                     return false;
             }
-            }
             break;
+        }
 
         case 8: {
             str.insert(1, gray ? '5' : '6');
@@ -295,7 +294,7 @@ static bool write_pbm_image(QIODevice *out, const QImage &sourceImage, const QBy
                 return false;
             QVector<QRgb> color = image.colorTable();
             uint bpl = w*(gray ? 1 : 3);
-            uchar *buf   = new uchar[bpl];
+            QSTACKARRAY(uchar, buf, bpl);
             for (uint y=0; y<h; y++) {
                 uchar *b = image.scanLine(y);
                 uchar *p = buf;
@@ -316,9 +315,8 @@ static bool write_pbm_image(QIODevice *out, const QImage &sourceImage, const QBy
                 if (bpl != (uint)out->write((char*)buf, bpl))
                     return false;
             }
-            delete [] buf;
-            }
             break;
+        }
 
         case 32: {
             str.insert(1, gray ? '5' : '6');
@@ -326,7 +324,7 @@ static bool write_pbm_image(QIODevice *out, const QImage &sourceImage, const QBy
             if (out->write(str, str.length()) != str.length())
                 return false;
             uint bpl = w*(gray ? 1 : 3);
-            uchar *buf = new uchar[bpl];
+            QSTACKARRAY(uchar, buf, bpl);
             for (uint y=0; y<h; y++) {
                 QRgb  *b = (QRgb*)image.scanLine(y);
                 uchar *p = buf;
@@ -347,12 +345,11 @@ static bool write_pbm_image(QIODevice *out, const QImage &sourceImage, const QBy
                 if (bpl != (uint)out->write((char*)buf, bpl))
                     return false;
             }
-            delete [] buf;
-            }
             break;
+        }
 
-    default:
-        return false;
+        default:
+            return false;
     }
 
     return true;
@@ -392,7 +389,7 @@ bool QPpmHandler::canRead(QIODevice *device, QByteArray *subType)
         return false;
     }
 
-    char head[2];
+    QSTACKARRAY(char, head, 2);
     if (device->peek(head, sizeof(head)) != sizeof(head))
         return false;
 

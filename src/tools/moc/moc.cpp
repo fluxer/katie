@@ -22,6 +22,7 @@
 #include "moc.h"
 #include "generator.h"
 #include "utils.h"
+#include "qcorecommon_p.h"
 
 // for normalizeTypeInternal
 #include "qmetaobject_p.h"
@@ -32,9 +33,8 @@ QT_BEGIN_NAMESPACE
 static QByteArray normalizeType(const char *s)
 {
     int len = qstrlen(s);
-    char stackbuf[64];
-    char *buf = (len >= 64 ? new char[len + 1] : stackbuf);
-    char *d = buf;
+    QSTACKARRAY(char, stackbuf, len + 1);
+    char *d = stackbuf;
     char last = 0;
     while(*s && is_space(*s))
         s++;
@@ -49,12 +49,10 @@ static QByteArray normalizeType(const char *s)
         }
     }
     *d = '\0';
-    QByteArray result;
-    if (strncmp("void", buf, d - buf) != 0)
-        result = normalizeTypeInternal(buf, d);
-    if (buf != stackbuf)
-        delete [] buf;
-    return result;
+    if (strncmp("void", stackbuf, d - stackbuf) != 0) {
+        return normalizeTypeInternal(stackbuf, d);
+    }
+    return QByteArray();
 }
 
 bool Moc::parseClassHead(ClassDef *def)

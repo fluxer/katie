@@ -30,6 +30,7 @@
 #include "qurl.h"
 #include "qfile.h"
 #include "qnet_unix_p.h"
+#include "qcorecommon_p.h"
 
 #include <sys/types.h>
 #include <netdb.h>
@@ -72,7 +73,7 @@ QHostInfo QHostInfoAgent::fromName(const QString &hostName)
         }
 #endif
 
-        char hbuf[NI_MAXHOST];
+        QSTACKARRAY(char, hbuf, NI_MAXHOST);
         int result = (sa ? ::getnameinfo(sa, saSize, hbuf, sizeof(hbuf), 0, 0, NI_NAMEREQD) : EAI_NONAME);
         if (result == 0) {
             results.setHostName(QString::fromLatin1(hbuf));
@@ -199,9 +200,8 @@ QString QHostInfo::localHostName()
     static long size_max = sysconf(_SC_HOST_NAME_MAX);
     if (size_max == -1)
         size_max = _POSIX_HOST_NAME_MAX;
-    char gethostbuff[size_max];
+    QSTACKARRAY(char, gethostbuff, size_max);
     if (Q_LIKELY(::gethostname(gethostbuff, size_max) == 0)) {
-        gethostbuff[size_max - 1] = '\0';
         return QString::fromLocal8Bit(gethostbuff);
     }
     return QString();
@@ -214,6 +214,7 @@ QString QHostInfo::localDomainName()
     static long size_max = sysconf(_SC_HOST_NAME_MAX);
     if (size_max == -1)
         size_max = _POSIX_HOST_NAME_MAX;
+    Q_ASSERT(size_max >= 0);
     QByteArray getdomainbuff(size_max, Qt::Uninitialized);
     if (Q_LIKELY(::getdomainname(getdomainbuff.data(), getdomainbuff.size()) == 0)) {
         if (getdomainbuff == "(none)") {

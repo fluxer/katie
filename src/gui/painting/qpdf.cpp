@@ -28,6 +28,7 @@
 #include "qnumeric.h"
 #include "qx11info_x11.h"
 #include "qcore_unix_p.h"
+#include "qcorecommon_p.h"
 
 QT_BEGIN_NAMESPACE
 
@@ -58,7 +59,7 @@ const char *qt_real_to_string(qreal val, char *buf) {
         ++ival;
         ifrac = 0;
     }
-    char output[256];
+    QSTACKARRAY(char, output, 256);
     int i = 0;
     while (ival) {
         output[i] = '0' + (ival % 10);
@@ -94,7 +95,7 @@ const char *qt_int_to_string(int val, char *buf) {
         *(buf++) = '-';
         val = -val;
     }
-    char output[256];
+    QSTACKARRAY(char, output, 256);
     int i = 0;
     while (val) {
         output[i] = '0' + (val % 10);
@@ -176,21 +177,21 @@ namespace QPdf {
     }
 
     ByteStream &ByteStream::operator <<(qreal val) {
-        char buf[256];
+        QSTACKARRAY(char, buf, 256);
         qt_real_to_string(val, buf);
         *this << buf;
         return *this;
     }
 
     ByteStream &ByteStream::operator <<(int val) {
-        char buf[256];
+        QSTACKARRAY(char, buf, 256);
         qt_int_to_string(val, buf);
         *this << buf;
         return *this;
     }
 
     ByteStream &ByteStream::operator <<(const QPointF &p) {
-        char buf[256];
+        QSTACKARRAY(char, buf, 256);
         qt_real_to_string(p.x(), buf);
         *this << buf;
         qt_real_to_string(p.y(), buf);
@@ -1814,7 +1815,7 @@ void QPdfBaseEnginePrivate::drawTextItem(const QPointF &p, const QTextItemInt &t
         if (synthesized & QFontEngine::SynthesizedItalic)
             x += .3*y;
         x /= stretch;
-        char buf[5];
+        QSTACKARRAY(char, buf, 5);
         int g = font->addGlyph(glyphs[i]);
         *currentPage << x - last_x << last_y - y << "Td <"
                      << QPdf::toHex((ushort)g, buf) << "> Tj\n";
@@ -1834,7 +1835,7 @@ void QPdfBaseEnginePrivate::drawTextItem(const QPointF &p, const QTextItemInt &t
             if (synthesized & QFontEngine::SynthesizedItalic)
                 x += .3*y;
             x /= stretch;
-            char buf[5];
+            QSTACKARRAY(char, buf, 5);
             int g = font->addGlyph(glyphs[i]);
             *currentPage << x - last_x << last_y - y << "Td <"
                         << QPdf::toHex((ushort)g, buf) << "> Tj\n";

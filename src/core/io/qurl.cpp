@@ -188,6 +188,7 @@
 #endif
 #include "qmutex.h"
 #include "qorderedmutexlocker_p.h"
+#include "qcorecommon_p.h"
 
 #include <unicode/uidna.h>
 
@@ -1995,11 +1996,7 @@ void QUrlPrivate::setEncodedUrl(const QByteArray &encodedUrl, QUrl::ParsingMode 
             quint8 c = quint8(tmp.at(i));
             if (c < 32 || c > 127 ||
                 strchr(hostStart <= i && i <= hostEnd ? doEncodeHost : doEncode, c)) {
-                char buf[4];
-                buf[0] = '%';
-                buf[1] = toHex(c >> 4);
-                buf[2] = toHex(c & 0xf);
-                buf[3] = '\0';
+                const char buf[4] = { '%', toHex(c >> 4), toHex(c & 0xf), '\0' };
                 tmp.replace(i, 1, buf);
                 i += 2;
             }
@@ -2637,11 +2634,7 @@ void QUrl::setQueryItems(const QList<QPair<QString, QString> > &query)
     if (!QURL_HASFLAG(d->stateFlags, QUrlPrivate::Parsed)) d->parse();
     detach(lock);
 
-    char alsoEncode[3];
-    alsoEncode[0] = d->valueDelimiter;
-    alsoEncode[1] = d->pairDelimiter;
-    alsoEncode[2] = 0;
-
+    const char alsoEncode[3] = { d->valueDelimiter , d->pairDelimiter, 0 };
     QByteArray queryTmp;
     for (int i = 0; i < query.size(); i++) {
         if (i) queryTmp += d->pairDelimiter;
@@ -2715,10 +2708,7 @@ void QUrl::addQueryItem(const QString &key, const QString &value)
     if (!QURL_HASFLAG(d->stateFlags, QUrlPrivate::Parsed)) d->parse();
     detach(lock);
 
-    char alsoEncode[3];
-    alsoEncode[0] = d->valueDelimiter;
-    alsoEncode[1] = d->pairDelimiter;
-    alsoEncode[2] = 0;
+    const char alsoEncode[3] = { d->valueDelimiter , d->pairDelimiter, 0 };
 
     if (!d->query.isEmpty())
         d->query += d->pairDelimiter;
@@ -3504,7 +3494,7 @@ QString QUrl::fromAce(const QByteArray &domain)
     UErrorCode error = U_ZERO_ERROR;
     UIDNAInfo info = UIDNA_INFO_INITIALIZER;
     const int maxlength = utf8.size() * 4;
-    UChar result[maxlength];
+    QSTACKARRAY(UChar, result, maxlength);
     const int idnaresult = uidna_nameToUnicode(globalidna,
         reinterpret_cast<const UChar*>(utf8.unicode()), utf8.size(),
         result, maxlength, &info, &error);
@@ -3548,7 +3538,7 @@ QByteArray QUrl::toAce(const QString &domain)
     UErrorCode error = U_ZERO_ERROR;
     UIDNAInfo info = UIDNA_INFO_INITIALIZER;
     const int maxlength = domain.size() * 4;
-    UChar result[maxlength];
+    QSTACKARRAY(UChar, result, maxlength);
     const int idnaresult = uidna_nameToASCII(globalidna,
         reinterpret_cast<const UChar*>(domain.unicode()), domain.size(),
         result, maxlength, &info, &error);

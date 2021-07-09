@@ -25,6 +25,7 @@
 #include "qalgorithms.h"
 #include "qnet_unix_p.h"
 #include "qplatformdefs.h"
+#include "qcorecommon_p.h"
 
 #ifndef QT_NO_NETWORKINTERFACE
 
@@ -61,7 +62,7 @@ static QHostAddress addressFromSockaddr(sockaddr *sa)
         int scope = ((sockaddr_in6 *)sa)->sin6_scope_id;
         if (scope) {
 #ifndef QT_NO_IPV6IFNAME
-            char scopeid[IFNAMSIZ];
+            QSTACKARRAY(char, scopeid, IFNAMSIZ);
             if (::if_indextoname(scope, scopeid)) {
                 address.setScopeId(QLatin1String(scopeid));
             } else

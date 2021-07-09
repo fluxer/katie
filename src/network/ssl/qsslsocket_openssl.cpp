@@ -38,6 +38,7 @@
 #include <QtCore/qthread.h>
 #include <QtCore/qurl.h>
 #include <QtCore/qvarlengtharray.h>
+#include "qcorecommon_p.h"
 
 QT_BEGIN_NAMESPACE
 
@@ -66,7 +67,7 @@ QSslCipher QSslSocketBackendPrivate::QSslCipher_from_SSL_CIPHER(const SSL_CIPHER
 {
     QSslCipher ciph;
 
-    char buf [256];
+    QSTACKARRAY(char, buf, 256);
     QString descriptionOneLine = QString::fromLatin1(SSL_CIPHER_description(cipher, buf, sizeof(buf)));
 
     QStringList descriptionList = descriptionOneLine.split(QLatin1String(" "), QString::SkipEmptyParts);

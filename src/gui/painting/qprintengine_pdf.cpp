@@ -33,6 +33,7 @@
 #include "qdatetime.h"
 #include "qprintengine_pdf_p.h"
 #include "qdrawhelper_p.h"
+#include "qcorecommon_p.h"
 
 #ifndef QT_NO_PRINTER
 
@@ -698,13 +699,13 @@ void QPdfEnginePrivate::xprintf(const char* fmt, ...)
         return;
 
     const int msize = 10000;
-    char buf[msize];
+    QSTACKARRAY(char, buf, msize);
 
     va_list args;
     va_start(args, fmt);
     int bufsize = qvsnprintf(buf, msize, fmt, args);
 
-    Q_ASSERT(bufsize<msize);
+    Q_ASSERT(bufsize < msize);
 
     va_end(args);
 
@@ -1104,7 +1105,7 @@ void QPdfEnginePrivate::printString(const QString &string) {
     const ushort *utf16 = string.utf16();
     
     for (int i=0; i < string.size(); ++i) {
-        char part[2] = {char((*(utf16 + i)) >> 8), char((*(utf16 + i)) & 0xff)};
+        const char part[2] = {char((*(utf16 + i)) >> 8), char((*(utf16 + i)) & 0xff)};
         for(int j=0; j < 2; ++j) {
             if (part[j] == '(' || part[j] == ')' || part[j] == '\\')
                 array.append('\\');

@@ -21,8 +21,8 @@
 
 #include "qhttpnetworkreply_p.h"
 #include "qhttpnetworkconnection_p.h"
-
 #include "qbytearraymatcher.h"
+#include "qcorecommon_p.h"
 
 #ifndef QT_NO_HTTP
 
@@ -414,7 +414,7 @@ int QHttpNetworkReplyPrivate::gunzipBodyPartially(QByteArray &compressed, QByteA
 {
     int ret = Z_DATA_ERROR;
     unsigned have;
-    unsigned char out[QT_BUFFSIZE];
+    QSTACKARRAY(unsigned char, out, QT_BUFFSIZE);
     int pos = -1;
 
     if (!initInflate) {
@@ -776,9 +776,9 @@ qint64 QHttpNetworkReplyPrivate::readReplyBodyChunked(QAbstractSocket *socket, Q
             currentChunkRead = 0;
             if (bytes) {
                 // After a chunk
-                char crlf[2];
+                QSTACKARRAY(char, crlf, 2);
                 // read the "\r\n" after the chunk
-                qint64 haveRead = socket->read(crlf, 2);
+                qint64 haveRead = socket->read(crlf, sizeof(crlf));
                 // FIXME: This code is slightly broken and not optimal. What if the 2 bytes are not available yet?!
                 // For nice reasons (the toLong in getChunkSize accepting \n at the beginning
                 // it right now still works, but we should definitely fix this.
@@ -796,8 +796,8 @@ qint64 QHttpNetworkReplyPrivate::readReplyBodyChunked(QAbstractSocket *socket, Q
         if (currentChunkSize == 0 || lastChunkRead) {
             lastChunkRead = true;
             // try to read the "\r\n" after the chunk
-            char crlf[2];
-            qint64 haveRead = socket->read(crlf, 2);
+            QSTACKARRAY(char, crlf, 2);
+            qint64 haveRead = socket->read(crlf, sizeof(crlf));
             if (haveRead > 0)
                 bytes += haveRead;
 
@@ -827,13 +827,13 @@ qint64 QHttpNetworkReplyPrivate::readReplyBodyChunked(QAbstractSocket *socket, Q
 qint64 QHttpNetworkReplyPrivate::getChunkSize(QAbstractSocket *socket, qint64 *chunkSize)
 {
     qint64 bytes = 0;
-    char crlf[2];
+    QSTACKARRAY(char, crlf, 2);
     *chunkSize = -1;
 
     int bytesAvailable = socket->bytesAvailable();
     // FIXME rewrite to permanent loop without bytesAvailable
     while (bytesAvailable > bytes) {
-        qint64 sniffedBytes = socket->peek(crlf, 2);
+        qint64 sniffedBytes = socket->peek(crlf, sizeof(crlf));
         int fragmentSize = fragment.size();
 
         // check the next two bytes for a "\r\n", skip blank lines

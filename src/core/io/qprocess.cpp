@@ -30,6 +30,7 @@
 #include "qsocketnotifier.h"
 #include "qtimer.h"
 #include "qcore_unix_p.h"
+#include "qcorecommon_p.h"
 
 //#define QPROCESS_DEBUG
 
@@ -55,7 +56,7 @@ static QByteArray qt_prettyDebug(const char *data, int len, int maxSize)
         case '\r': out += "\\r"; break;
         case '\t': out += "\\t"; break;
         default:
-            char buf[5];
+            QSTACKARRAY(char, buf, 5);
             qsnprintf(buf, sizeof(buf), "\\%3o", c);
             buf[4] = '\0';
             out += QByteArray(buf);

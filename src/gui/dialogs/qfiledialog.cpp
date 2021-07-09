@@ -38,6 +38,7 @@
 #include "qapplication.h"
 #include "qstylepainter.h"
 #include "qcoreapplication_p.h"
+#include "qcorecommon_p.h"
 #include "ui_qfiledialog.h"
 
 #include <stdlib.h>
@@ -818,7 +819,7 @@ Q_AUTOTEST_EXPORT QString qt_tildeExpansion(const QString &path, bool *expanded 
         static long size_max = sysconf(_SC_GETPW_R_SIZE_MAX);
         if (size_max == -1)
             size_max = 1024;
-        char buf[size_max];
+        QSTACKARRAY(char, buf, size_max);
         struct passwd pw;
         struct passwd *tmpPw;
         ::getpwnam_r(userName.toLocal8Bit().constData(), &pw, buf, size_max, &tmpPw);

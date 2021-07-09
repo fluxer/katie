@@ -26,6 +26,7 @@
 #include "qimage.h"
 #include "qvariant.h"
 #include "qvector.h"
+#include "qcorecommon_p.h"
 
 QT_BEGIN_NAMESPACE
 
@@ -288,7 +289,7 @@ static bool read_dib_body(QDataStream &s, const BMP_INFOHDR &bi, int offset, int
     }
 
     if (ncols > 0) {                                // read color table
-        uchar rgb[4];
+        QSTACKARRAY(uchar, rgb, 4);
         int   rgb_len = t == BMP_OLD ? 3 : 4;
         for (int i=0; i<ncols; i++) {
             if (d->read((char *)rgb, rgb_len) != rgb_len)
@@ -350,7 +351,7 @@ static bool read_dib_body(QDataStream &s, const BMP_INFOHDR &bi, int offset, int
 
     else if (nbits == 4) {                        // 4 bit BMP image
         int    buflen = ((w+7)/8)*4;
-        uchar *buf    = new uchar[buflen];
+        QSTACKARRAY(uchar, buf, buflen);
         if (comp == BMP_RLE4) {                // run length compression
             int x=0, y=0, c, i;
             quint8 b;
@@ -436,7 +437,6 @@ static bool read_dib_body(QDataStream &s, const BMP_INFOHDR &bi, int offset, int
                     *p = *b >> 4;
             }
         }
-        delete [] buf;
     }
 
     else if (nbits == 8) {                        // 8 bit BMP image
@@ -509,7 +509,7 @@ static bool read_dib_body(QDataStream &s, const BMP_INFOHDR &bi, int offset, int
     else if (nbits == 16 || nbits == 24 || nbits == 32) { // 16,24,32 bit BMP image
         QRgb *p;
         QRgb  *end;
-        uchar *buf24 = new uchar[bpl];
+        QSTACKARRAY(uchar, buf24, bpl);
         int    bpl24 = ((w*nbits+31)/32)*4;
         uchar *b;
         int c;
@@ -530,19 +530,17 @@ static bool read_dib_body(QDataStream &s, const BMP_INFOHDR &bi, int offset, int
                 b += nbits/8;
             }
         }
-        delete[] buf24;
     }
 
     if (bi.biHeight < 0) {
         // Flip the image
-        uchar *buf = new uchar[bpl];
+        QSTACKARRAY(uchar, buf, bpl);
         h = -bi.biHeight;
         for (int y = 0; y < h/2; ++y) {
             memcpy(buf, data + y*bpl, bpl);
             memcpy(data + y*bpl, data + (h-y-1)*bpl, bpl);
             memcpy(data + (h-y-1)*bpl, buf, bpl);
         }
-        delete [] buf;
     }
 
     return true;
@@ -588,7 +586,7 @@ bool qt_write_dib(QDataStream &s, QImage image)
         return false;
 
     if (image.depth() != 32) {                // write color table
-        uchar *color_table = new uchar[4*image.colorCount()];
+        QSTACKARRAY(uchar, color_table, 4*image.colorCount());
         uchar *rgb = color_table;
         QVector<QRgb> c = image.colorTable();
         for (int i=0; i<image.colorCount(); i++) {
@@ -598,10 +596,8 @@ bool qt_write_dib(QDataStream &s, QImage image)
             *rgb++ = 0;
         }
         if (d->write((char *)color_table, 4*image.colorCount()) == -1) {
-            delete [] color_table;
             return false;
         }
-        delete [] color_table;
     }
 
     if (image.format() == QImage::Format_MonoLSB)
@@ -617,11 +613,10 @@ bool qt_write_dib(QDataStream &s, QImage image)
         return true;
     }
 
-    uchar *buf        = new uchar[bpl_bmp];
+    QSTACKARRAY(uchar, buf, bpl_bmp);
     uchar *b, *end;
     uchar *p;
 
-    memset(buf, 0, bpl_bmp);
     for (y=image.height()-1; y>=0; y--) {        // write the image bits
         if (nbits == 4) {                        // convert 8 -> 4 bits
             p = image.scanLine(y);
@@ -645,11 +640,9 @@ bool qt_write_dib(QDataStream &s, QImage image)
             }
         }
         if (bpl_bmp != d->write((char*)buf, bpl_bmp)) {
-            delete[] buf;
             return false;
         }
     }
-    delete[] buf;
     return true;
 }
 
@@ -710,7 +703,7 @@ bool QBmpHandler::canRead(QIODevice *device)
         return false;
     }
 
-    char head[2];
+    QSTACKARRAY(char, head, 2);
     if (device->peek(head, sizeof(head)) != sizeof(head))
         return false;
 

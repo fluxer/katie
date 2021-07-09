@@ -29,6 +29,7 @@
 #include "qthread_p.h"
 #include "qcoreapplication_p.h"
 #include "qcore_unix_p.h"
+#include "qcorecommon_p.h"
 
 #include <errno.h>
 #include <stdio.h>
@@ -170,7 +171,7 @@ int QEventDispatcherUNIXPrivate::processThreadWakeUp(int nsel)
     if (nsel > 0 && FD_ISSET(thread_pipe[0], &sn_vec[0].select_fds)) {
         // some other thread woke us up... consume the data on the thread pipe so that
         // select doesn't immediately return next time
-        char c[16];
+        QSTACKARRAY(char, c, 16);
         while (qt_safe_read(thread_pipe[0], c, sizeof(c)) > 0)
             ;
 

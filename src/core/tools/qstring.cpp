@@ -1783,14 +1783,14 @@ QString &QString::replace(const QLatin1String &before,
                           Qt::CaseSensitivity cs)
 {
     int alen = qstrlen(after.latin1());
-    QVarLengthArray<ushort> a(alen);
+    QSTACKARRAY(ushort, a, alen);
     for (int i = 0; i < alen; ++i)
         a[i] = (uchar)after.latin1()[i];
     int blen = qstrlen(before.latin1());
-    QVarLengthArray<ushort> b(blen);
+    QSTACKARRAY(ushort, b, blen);
     for (int i = 0; i < blen; ++i)
         b[i] = (uchar)before.latin1()[i];
-    return replace((const QChar *)b.data(), blen, (const QChar *)a.data(), alen, cs);
+    return replace(reinterpret_cast<const QChar*>(b), blen, reinterpret_cast<const QChar*>(a), alen, cs);
 }
 
 /*!
@@ -3261,7 +3261,10 @@ bool QString::endsWith(const QChar &c, Qt::CaseSensitivity cs) const
 
 static QByteArray toLatin1_helper(const QChar *data, int length)
 {
-    char result[length];
+    if (!length) {
+        return QByteArray();
+    }
+    QSTACKARRAY(char, result, length);
     for (int i = 0; i < length; i++) {
         const ushort ucs = data[i].unicode();
         result[i] = (ucs > 0xff) ? '?' : char(ucs);
@@ -4471,7 +4474,7 @@ QString QString::toLower() const
 
     UErrorCode error = U_ZERO_ERROR;
     const int maxchars = d->size + 1; // ICU will write zero-terminator
-    UChar result[maxchars];
+    QSTACKARRAY(UChar, result, maxchars);
     const int lowerresult = u_strToLower(result, maxchars,
         reinterpret_cast<const UChar*>(d->data), d->size, "C", &error);
     if (Q_UNLIKELY(lowerresult > maxchars || U_FAILURE(error))) {
@@ -4491,7 +4494,7 @@ QString QString::toCaseFolded() const
 
     UErrorCode error = U_ZERO_ERROR;
     const int maxchars = d->size + 1; // ICU will write zero-terminator
-    UChar result[maxchars];
+    QSTACKARRAY(UChar, result, maxchars);
     const int foldresult = u_strFoldCase(result, maxchars,
         reinterpret_cast<const UChar*>(d->data), d->size, U_FOLD_CASE_DEFAULT, &error);
     if (Q_UNLIKELY(foldresult > maxchars || U_FAILURE(error))) {
@@ -4518,7 +4521,7 @@ QString QString::toUpper() const
 
     UErrorCode error = U_ZERO_ERROR;
     const int maxchars = d->size + 1; // ICU will write zero-terminator
-    UChar result[maxchars];
+    QSTACKARRAY(UChar, result, maxchars);
     const int upperresult = u_strToUpper(result, maxchars,
         reinterpret_cast<const UChar*>(d->data), d->size, "C", &error);
     if (Q_UNLIKELY(upperresult > maxchars || U_FAILURE(error))) {

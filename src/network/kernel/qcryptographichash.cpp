@@ -22,6 +22,7 @@
 #include "qplatformdefs.h"
 #include "qcryptographichash.h"
 #include "qiodevice.h"
+#include "qcorecommon_p.h"
 
 #include <openssl/md5.h>
 #include <openssl/md4.h>
@@ -179,11 +180,11 @@ bool QCryptographicHash::addData(QIODevice* device)
     if (!device->isOpen())
         return false;
 
-    char buffer[QT_BUFFSIZE];
+    QSTACKARRAY(char, buffer, QT_BUFFSIZE);
     int length;
-
-    while ((length = device->read(buffer, QT_BUFFSIZE)) > 0)
+    while ((length = device->read(buffer, QT_BUFFSIZE)) > 0) {
         addData(buffer, length);
+    }
 
     return device->atEnd();
 }
@@ -253,7 +254,7 @@ QByteArray QCryptographicHash::hash(const QByteArray &data, QCryptographicHash::
 {
     switch (method) {
         case QCryptographicHash::Md4: {
-            unsigned char result[MD4_DIGEST_LENGTH];
+            QSTACKARRAY(unsigned char, result, MD4_DIGEST_LENGTH);
             MD4_CTX md4Context;
             MD4_Init(&md4Context);
             MD4_Update(&md4Context, data.constData(), data.length());
@@ -261,7 +262,7 @@ QByteArray QCryptographicHash::hash(const QByteArray &data, QCryptographicHash::
             return QByteArray(reinterpret_cast<char *>(result), MD4_DIGEST_LENGTH);
         }
         case QCryptographicHash::Md5: {
-            unsigned char result[MD5_DIGEST_LENGTH];
+            QSTACKARRAY(unsigned char, result, MD5_DIGEST_LENGTH);
             MD5_CTX md5Context;
             MD5_Init(&md5Context);
             MD5_Update(&md5Context, data.constData(), data.length());
@@ -269,7 +270,7 @@ QByteArray QCryptographicHash::hash(const QByteArray &data, QCryptographicHash::
             return QByteArray(reinterpret_cast<char *>(result), MD5_DIGEST_LENGTH);
         }
         case QCryptographicHash::Sha1: {
-            unsigned char result[SHA_DIGEST_LENGTH];
+            QSTACKARRAY(unsigned char, result, SHA_DIGEST_LENGTH);
             SHA_CTX sha1Context;
             SHA1_Init(&sha1Context);
             SHA1_Update(&sha1Context, data.constData(), data.length());
@@ -277,7 +278,7 @@ QByteArray QCryptographicHash::hash(const QByteArray &data, QCryptographicHash::
             return QByteArray(reinterpret_cast<char *>(result), SHA_DIGEST_LENGTH);
         }
         case QCryptographicHash::Sha224: {
-            unsigned char result[SHA224_DIGEST_LENGTH];
+            QSTACKARRAY(unsigned char, result, SHA224_DIGEST_LENGTH);
             SHA256_CTX sha224Context;
             SHA224_Init(&sha224Context);
             SHA224_Update(&sha224Context, data.constData(), data.length());
@@ -285,7 +286,7 @@ QByteArray QCryptographicHash::hash(const QByteArray &data, QCryptographicHash::
             return QByteArray(reinterpret_cast<char *>(result), SHA224_DIGEST_LENGTH);
         }
         case QCryptographicHash::Sha256: {
-            unsigned char result[SHA256_DIGEST_LENGTH];
+            QSTACKARRAY(unsigned char, result, SHA256_DIGEST_LENGTH);
             SHA256_CTX sha256Context;
             SHA256_Init(&sha256Context);
             SHA256_Update(&sha256Context, data.constData(), data.length());
@@ -293,7 +294,7 @@ QByteArray QCryptographicHash::hash(const QByteArray &data, QCryptographicHash::
             return QByteArray(reinterpret_cast<char *>(result), SHA256_DIGEST_LENGTH);
         }
         case QCryptographicHash::Sha384: {
-            unsigned char result[SHA384_DIGEST_LENGTH];
+            QSTACKARRAY(unsigned char, result, SHA384_DIGEST_LENGTH);
             SHA512_CTX sha384Context;
             SHA384_Init(&sha384Context);
             SHA384_Update(&sha384Context, data.constData(), data.length());
@@ -301,7 +302,7 @@ QByteArray QCryptographicHash::hash(const QByteArray &data, QCryptographicHash::
             return QByteArray(reinterpret_cast<char *>(result), SHA384_DIGEST_LENGTH);
         }
         case QCryptographicHash::Sha512: {
-            unsigned char result[SHA512_DIGEST_LENGTH];
+            QSTACKARRAY(unsigned char, result, SHA512_DIGEST_LENGTH);
             SHA512_CTX sha512Context;
             SHA512_Init(&sha512Context);
             SHA512_Update(&sha512Context, data.constData(), data.length());

@@ -209,6 +209,7 @@
 #include "qnumeric.h"
 #include "qplatformdefs.h"
 #include "qlocale_p.h"
+#include "qcorecommon_p.h"
 
 #ifndef QT_NO_TEXTCODEC
 #  include "qtextcodec.h"
@@ -1819,7 +1820,7 @@ bool QTextStreamPrivate::getReal(double *f)
     consumeLastToken();
 
     const int BufferSize = 128;
-    char buf[BufferSize];
+    QSTACKARRAY(char, buf, BufferSize);
     int i = 0;
 
     QChar c;

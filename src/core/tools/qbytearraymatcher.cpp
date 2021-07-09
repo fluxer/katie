@@ -20,6 +20,7 @@
 ****************************************************************************/
 
 #include "qbytearraymatcher.h"
+#include "qcorecommon_p.h"
 
 #include <limits.h>
 
@@ -223,7 +224,7 @@ static int qFindByteArrayBoyerMoore(
     const char *haystack, int haystackLen, int haystackOffset,
     const char *needle, int needleLen)
 {
-    uchar skiptable[256];
+    QSTACKARRAY(uchar, skiptable, 256);
     bm_init_skiptable((const uchar *)needle, needleLen, skiptable);
     if (haystackOffset < 0)
         haystackOffset = 0;

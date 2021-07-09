@@ -25,6 +25,7 @@
 #include "qfile.h"
 #include "qfileinfo.h"
 #include "qcore_unix_p.h"
+#include "qcorecommon_p.h"
 
 #include <errno.h>
 #include <pwd.h>
@@ -46,7 +47,7 @@ const uint QFileSystemMetaData::nobodyID = (uint) -2;
 QFileSystemEntry QFileSystemEngine::getLinkTarget(const QFileSystemEntry &link, QFileSystemMetaData &data)
 {
     QByteArray lpath = link.nativeFilePath();
-    char readlinkbuf[PATH_MAX];
+    QSTACKARRAY(char, readlinkbuf, PATH_MAX);
     int len = ::readlink(lpath.constData(), readlinkbuf, sizeof(readlinkbuf));
     if (len > 0) {
         QString ret;
@@ -59,7 +60,6 @@ QFileSystemEntry QFileSystemEngine::getLinkTarget(const QFileSystemEntry &link, 
             if (!ret.isEmpty() && !ret.endsWith(QLatin1Char('/')))
                 ret += QLatin1Char('/');
         }
-        readlinkbuf[len] = '\0';
         ret += QFile::decodeName(QByteArray(readlinkbuf));
 
         if (!ret.startsWith(QLatin1Char('/'))) {
@@ -137,7 +137,7 @@ Q_CORE_EXPORT QString qt_resolveUserName(uint userId)
     static long size_max = sysconf(_SC_GETPW_R_SIZE_MAX);
     if (size_max == -1)
         size_max = 1024;
-    char buf[size_max];
+    QSTACKARRAY(char, buf, size_max);
     struct passwd entry;
     struct passwd *pw = Q_NULLPTR;
     ::getpwuid_r(userId, &entry, buf, size_max, &pw);
@@ -162,7 +162,7 @@ QString QFileSystemEngine::resolveGroupName(uint groupId)
     static long size_max = sysconf(_SC_GETGR_R_SIZE_MAX);
     if (size_max == -1)
         size_max = 1024;
-    char buf[size_max];
+    QSTACKARRAY(char, buf, size_max);
     struct group entry;
     struct group *gr = Q_NULLPTR;
     ::getgrgid_r(groupId, &entry, buf, size_max, &gr);
@@ -355,7 +355,7 @@ bool QFileSystemEngine::copyFile(const QFileSystemEntry &source, const QFileSyst
     }
 #else
     qint64 totalwrite = 0;
-    char copybuffer[QT_BUFFSIZE];
+    QSTACKARRAY(char, copybuffer, QT_BUFFSIZE);
     while (QT_OFF_T(totalwrite) != tocopy) {
         const qint64 readresult = qt_safe_read(sourcefd, copybuffer, sizeof(copybuffer));
         if (readresult == -1) {
@@ -479,7 +479,7 @@ QFileSystemEntry QFileSystemEngine::currentPath()
     }
 #else
 #define GETCWDFUNCNAME "getcwd"
-    char getcwdbuffer[PATH_MAX];
+    QSTACKARRAY(char, getcwdbuffer, PATH_MAX);
     if (QT_GETCWD(getcwdbuffer, sizeof(getcwdbuffer))) {
         result = QFileSystemEntry(QByteArray(getcwdbuffer), QFileSystemEntry::FromNativePath());
     }
