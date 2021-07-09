@@ -377,7 +377,8 @@ void QMenuPrivate::hideUpToMenuBar()
                     hideMenu(m, fadeMenus);
                 if (!fadeMenus) // Mac doesn't clear the action until after hidden.
                     m->d_func()->setCurrentAction(0);
-            } else {                caused = 0;
+            } else {
+                caused = 0;
             }
         }
     }
@@ -2219,33 +2220,36 @@ QMenu::event(QEvent *e)
 {
     Q_D(QMenu);
     switch (e->type()) {
-    case QEvent::Polish:
+    case QEvent::Polish: {
         d->updateLayoutDirection();
         break;
+    }
     case QEvent::ShortcutOverride: {
-            QKeyEvent *kev = static_cast<QKeyEvent*>(e);
-            if (kev->key() == Qt::Key_Up || kev->key() == Qt::Key_Down
-                || kev->key() == Qt::Key_Left || kev->key() == Qt::Key_Right
-                || kev->key() == Qt::Key_Enter || kev->key() == Qt::Key_Return
-                || kev->key() == Qt::Key_Escape) {
-                e->accept();
-                return true;
-            }
+        QKeyEvent *kev = static_cast<QKeyEvent*>(e);
+        if (kev->key() == Qt::Key_Up || kev->key() == Qt::Key_Down
+            || kev->key() == Qt::Key_Left || kev->key() == Qt::Key_Right
+            || kev->key() == Qt::Key_Enter || kev->key() == Qt::Key_Return
+            || kev->key() == Qt::Key_Escape) {
+            e->accept();
+            return true;
         }
         break;
+    }
     case QEvent::KeyPress: {
         QKeyEvent *ke = (QKeyEvent*)e;
         if (ke->key() == Qt::Key_Tab || ke->key() == Qt::Key_Backtab) {
             keyPressEvent(ke);
             return true;
         }
-    } break;
-    case QEvent::ContextMenu:
+        break;
+    }
+    case QEvent::ContextMenu: {
         if(d->menuDelayTimer.isActive()) {
             d->menuDelayTimer.stop();
             internalDelayedPopup();
         }
         break;
+    }
     case QEvent::Resize: {
         QStyleHintReturnMask menuMask;
         QStyleOption option;
@@ -2255,13 +2259,15 @@ QMenu::event(QEvent *e)
         }
         d->itemsDirty = true;
         d->updateActionRects();
-        break; }
-    case QEvent::Show:
+        break;
+    }
+    case QEvent::Show: {
         d->mouseDown = Q_NULLPTR;
         d->updateActionRects();
         if (d->currentAction)
             d->popupAction(d->currentAction, 0, false);
         break;
+    }
 #ifndef QT_NO_WHATSTHIS
     case QEvent::QueryWhatsThis:
         e->setAccepted(d->whatsThis.size());
