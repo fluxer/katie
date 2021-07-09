@@ -631,7 +631,7 @@ void QStaticTextPrivate::init()
     positionPool = new QFixedPoint[positions.size()];
     memcpy(positionPool, positions.constData(), positions.size() * sizeof(QFixedPoint));
 
-    Q_ASSERT(chars.size() >= 0);
+    Q_ASSERT(chars.size() >= 1);
     charPool = new QChar[chars.size()];
     memcpy(charPool, chars.constData(), chars.size() * sizeof(QChar));
 

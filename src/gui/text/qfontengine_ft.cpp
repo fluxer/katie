@@ -804,7 +804,7 @@ QFontEngineFT::Glyph *QFontEngineFT::loadGlyph(QGlyphSet *set, uint glyph,
         info.y = slot->bitmap_top;
 
         glyph_buffer_size = info.width * info.height * 4;
-        Q_ASSERT(glyph_buffer_size >= 0);
+        Q_ASSERT(glyph_buffer_size >= 1);
         glyph_buffer = new uchar[glyph_buffer_size];
 
         if (hsubpixel)
