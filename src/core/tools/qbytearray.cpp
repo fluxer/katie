@@ -2261,9 +2261,10 @@ int QByteArray::indexOf(char ch, int from) const
     if (from < d->size) {
         const char *n = d->data + from - 1;
         const char *e = d->data + d->size;
-        while (++n != e)
-        if (*n == ch)
-            return  n - d->data;
+        while (++n != e) {
+            if (*n == ch)
+                return  n - d->data;
+        }
     }
     return -1;
 }
