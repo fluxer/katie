@@ -33,11 +33,11 @@
 #include "qregexp.h"
 #include "qvector.h"
 #include "qalgorithms.h"
-#include "qvarlengtharray.h"
 #include "qfilesystementry_p.h"
 #include "qfilesystemmetadata_p.h"
 #include "qfilesystemengine_p.h"
 #include "qscopedpointer.h"
+#include "qcorecommon_p.h"
 
 #ifndef QT_BOOTSTRAPPED
 #  include "qresource.h"
@@ -1729,8 +1729,7 @@ QString QDir::cleanPath(const QString &path)
 
     int used = 0, levels = 0;
     const int len = path.length();
-    QVarLengthArray<QChar> outVector(len);
-    QChar *out = outVector.data();
+    QSTACKARRAY(QChar, out, len);
 
     const QChar *p = path.unicode();
     for (int i = 0, last = -1, iwrite = 0; i < len; ++i) {
