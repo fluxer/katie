@@ -1723,8 +1723,8 @@ void QGraphicsScene::render(QPainter *painter, const QRectF &target, const QRect
     // Find all items to draw, and reverse the list (we want to draw
     // in reverse order).
     QList<QGraphicsItem *> itemList = items(sourceRect, Qt::IntersectsItemBoundingRect);
-    QGraphicsItem **itemArray = new QGraphicsItem *[itemList.size()];
-    int numItems = itemList.size();
+    const int numItems = itemList.size();
+    QGraphicsItem **itemArray = new QGraphicsItem *[numItems];
     for (int i = 0; i < numItems; ++i)
         itemArray[numItems - i - 1] = itemList.at(i);
     itemList.clear();
