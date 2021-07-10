@@ -3069,14 +3069,14 @@ QByteArray QByteArray::simplified() const
     QByteArray result(d->size, Qt::Uninitialized);
     const char *from = d->data;
     const char *fromend = from + d->size;
-    int outc=0;
+    int outc = 0;
     char *to = result.d->data;
     for (;;) {
-        while (from!=fromend && isspace(uchar(*from)))
+        while (from != fromend && isspace(uchar(*from)))
             from++;
-        while (from!=fromend && !isspace(uchar(*from)))
+        while (from != fromend && !isspace(uchar(*from)))
             to[outc++] = *from++;
-        if (from!=fromend)
+        if (from != fromend)
             to[outc++] = ' ';
         else
             break;
