@@ -951,7 +951,6 @@ QSqlIndex QPSQLDriver::primaryIndex(const QString& tablename) const
     if (!isOpen())
         return idx;
     QSqlQuery i(createResult());
-    QString stmt;
 
     QString tbl = tablename;
     QString schema;
@@ -967,44 +966,26 @@ QSqlIndex QPSQLDriver::primaryIndex(const QString& tablename) const
     else
         schema = schema.toLower();
 
-    switch(d->pro) {
-    case QPSQLDriver::Version74:
-    case QPSQLDriver::Version8:
-    case QPSQLDriver::Version81:
-    case QPSQLDriver::Version82:
-    case QPSQLDriver::Version83:
-    case QPSQLDriver::Version84:
-    case QPSQLDriver::Version9:
-    case QPSQLDriver::Version91:
-    case QPSQLDriver::Version92:
-    case QPSQLDriver::Version93:
-    case QPSQLDriver::Version94:
-    case QPSQLDriver::Version95:
-    case QPSQLDriver::Version96:
-    case QPSQLDriver::Version10:
-    case QPSQLDriver::Version11:
-    case QPSQLDriver::Version12:
-    case QPSQLDriver::Version13:
-    case QPSQLDriver::Version131:
-        stmt = QLatin1String("SELECT pg_attribute.attname, pg_attribute.atttypid::int, "
-                "pg_class.relname "
-                "FROM pg_attribute, pg_class "
-                "WHERE %1 pg_class.oid IN "
-                "(SELECT indexrelid FROM pg_index WHERE indisprimary = true AND indrelid IN "
-                " (SELECT oid FROM pg_class WHERE relname = '%2')) "
-                "AND pg_attribute.attrelid = pg_class.oid "
-                "AND pg_attribute.attisdropped = false "
-                "ORDER BY pg_attribute.attnum");
-        if (schema.isEmpty())
-            stmt = stmt.arg(QLatin1String("pg_table_is_visible(pg_class.oid) AND"));
-        else
-            stmt = stmt.arg(QString::fromLatin1("pg_class.relnamespace = (select oid from "
-                   "pg_namespace where pg_namespace.nspname = '%1') AND ").arg(schema));
-        break;
-    case QPSQLDriver::VersionUnknown:
+    if (d->pro == QPSQLDriver::VersionUnknown) {
         qFatal("PSQL version is unknown");
-        break;
     }
+
+    QString stmt = QLatin1String(
+        "SELECT pg_attribute.attname, pg_attribute.atttypid::int, "
+        "pg_class.relname "
+        "FROM pg_attribute, pg_class "
+        "WHERE %1 pg_class.oid IN "
+        "(SELECT indexrelid FROM pg_index WHERE indisprimary = true AND indrelid IN "
+        " (SELECT oid FROM pg_class WHERE relname = '%2')) "
+        "AND pg_attribute.attrelid = pg_class.oid "
+        "AND pg_attribute.attisdropped = false "
+        "ORDER BY pg_attribute.attnum"
+    );
+    if (schema.isEmpty())
+        stmt = stmt.arg(QLatin1String("pg_table_is_visible(pg_class.oid) AND"));
+    else
+        stmt = stmt.arg(QString::fromLatin1("pg_class.relnamespace = (select oid from "
+                "pg_namespace where pg_namespace.nspname = '%1') AND ").arg(schema));
 
     i.exec(stmt.arg(tbl));
     while (i.isActive() && i.next()) {
@@ -1035,48 +1016,30 @@ QSqlRecord QPSQLDriver::record(const QString& tablename) const
     else
         schema = schema.toLower();
 
-    QString stmt;
-    switch(d->pro) {
-    case QPSQLDriver::Version74:
-    case QPSQLDriver::Version8:
-    case QPSQLDriver::Version81:
-    case QPSQLDriver::Version82:
-    case QPSQLDriver::Version83:
-    case QPSQLDriver::Version84:
-    case QPSQLDriver::Version9:
-    case QPSQLDriver::Version91:
-    case QPSQLDriver::Version92:
-    case QPSQLDriver::Version93:
-    case QPSQLDriver::Version94:
-    case QPSQLDriver::Version95:
-    case QPSQLDriver::Version96:
-    case QPSQLDriver::Version10:
-    case QPSQLDriver::Version11:
-    case QPSQLDriver::Version12:
-    case QPSQLDriver::Version13:
-    case QPSQLDriver::Version131:
-        stmt = QLatin1String("select pg_attribute.attname, pg_attribute.atttypid::int, "
-                "pg_attribute.attnotnull, pg_attribute.attlen, pg_attribute.atttypmod, "
-                "pg_attrdef.adsrc "
-                "from pg_class, pg_attribute "
-                "left join pg_attrdef on (pg_attrdef.adrelid = "
-                "pg_attribute.attrelid and pg_attrdef.adnum = pg_attribute.attnum) "
-                "where %1 "
-                "and pg_class.relname = '%2' "
-                "and pg_attribute.attnum > 0 "
-                "and pg_attribute.attrelid = pg_class.oid "
-                "and pg_attribute.attisdropped = false "
-                "order by pg_attribute.attnum ");
-        if (schema.isEmpty())
-            stmt = stmt.arg(QLatin1String("pg_table_is_visible(pg_class.oid)"));
-        else
-            stmt = stmt.arg(QString::fromLatin1("pg_class.relnamespace = (select oid from "
-                   "pg_namespace where pg_namespace.nspname = '%1')").arg(schema));
-        break;
-    case QPSQLDriver::VersionUnknown:
+
+    if (d->pro == QPSQLDriver::VersionUnknown) {
         qFatal("PSQL version is unknown");
-        break;
     }
+
+    QString stmt = QLatin1String(
+        "select pg_attribute.attname, pg_attribute.atttypid::int, "
+        "pg_attribute.attnotnull, pg_attribute.attlen, pg_attribute.atttypmod, "
+        "pg_attrdef.adsrc "
+        "from pg_class, pg_attribute "
+        "left join pg_attrdef on (pg_attrdef.adrelid = "
+        "pg_attribute.attrelid and pg_attrdef.adnum = pg_attribute.attnum) "
+        "where %1 "
+        "and pg_class.relname = '%2' "
+        "and pg_attribute.attnum > 0 "
+        "and pg_attribute.attrelid = pg_class.oid "
+        "and pg_attribute.attisdropped = false "
+        "order by pg_attribute.attnum "
+    );
+    if (schema.isEmpty())
+        stmt = stmt.arg(QLatin1String("pg_table_is_visible(pg_class.oid)"));
+    else
+        stmt = stmt.arg(QString::fromLatin1("pg_class.relnamespace = (select oid from "
+            "pg_namespace where pg_namespace.nspname = '%1')").arg(schema));
 
     QSqlQuery query(createResult());
     query.exec(stmt.arg(tbl));
