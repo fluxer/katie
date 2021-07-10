@@ -179,30 +179,31 @@ bool QDirSortItemComparator::operator()(const QDirSortItem &n1, const QDirSortIt
                  | (qt_cmp_si_sort_flags & QDir::Type);
 
     switch (sortBy) {
-      case QDir::Time:
-        r = f1->item.lastModified().secsTo(f2->item.lastModified());
-        break;
-      case QDir::Size:
-          r = int(qBound<qint64>(-1, f2->item.size() - f1->item.size(), 1));
-        break;
-      case QDir::Type:
-      {
-        bool ic = qt_cmp_si_sort_flags & QDir::IgnoreCase;
+        case QDir::Time: {
+            r = f1->item.lastModified().secsTo(f2->item.lastModified());
+            break;
+        }
+        case QDir::Size: {
+            r = int(qBound<qint64>(-1, f2->item.size() - f1->item.size(), 1));
+            break;
+        }
+        case QDir::Type: {
+            bool ic = qt_cmp_si_sort_flags & QDir::IgnoreCase;
 
-        if (f1->suffix_cache.isNull())
-            f1->suffix_cache = ic ? f1->item.suffix().toLower()
-                               : f1->item.suffix();
-        if (f2->suffix_cache.isNull())
-            f2->suffix_cache = ic ? f2->item.suffix().toLower()
-                               : f2->item.suffix();
+            if (f1->suffix_cache.isNull())
+                f1->suffix_cache = ic ? f1->item.suffix().toLower()
+                                : f1->item.suffix();
+            if (f2->suffix_cache.isNull())
+                f2->suffix_cache = ic ? f2->item.suffix().toLower()
+                                : f2->item.suffix();
 
-        r = qt_cmp_si_sort_flags & QDir::LocaleAware
-            ? f1->suffix_cache.localeAwareCompare(f2->suffix_cache)
-            : f1->suffix_cache.compare(f2->suffix_cache);
-      }
-        break;
-      default:
-        ;
+            r = qt_cmp_si_sort_flags & QDir::LocaleAware
+                ? f1->suffix_cache.localeAwareCompare(f2->suffix_cache)
+                : f1->suffix_cache.compare(f2->suffix_cache);
+            break;
+        }
+        default:
+            ;
     }
 
     if (r == 0 && sortBy != QDir::Unsorted) {
