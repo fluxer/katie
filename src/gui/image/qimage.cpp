@@ -1283,7 +1283,7 @@ void QImage::setColor(int i, QRgb c)
 {
     if (!d)
         return;
-    if (i < 0 || d->depth > 8 || i >= 1<<d->depth) {
+    if (Q_UNLIKELY(i < 0 || d->depth > 8 || i >= 1<<d->depth)) {
         qWarning("QImage::setColor: Index out of bound %d", i);
         return;
     }
@@ -1622,7 +1622,7 @@ void QImage::invertPixels(InvertMode mode)
 
 void QImage::setColorCount(int colorCount)
 {
-    if (!d) {
+    if (Q_UNLIKELY(!d)) {
         qWarning("QImage::setColorCount: null image");
         return;
     } else if (colorCount == d->colortable.size()) {
@@ -2789,7 +2789,7 @@ bool QImage::valid(int x, int y) const
 */
 int QImage::pixelIndex(int x, int y) const
 {
-    if (!d || x < 0 || x >= d->width || y < 0 || y >= d->height) {
+    if (Q_UNLIKELY(!d || x < 0 || x >= d->width || y < 0 || y >= d->height)) {
         qWarning("QImage::pixelIndex: coordinate (%d,%d) out of range", x, y);
         return -12345;
     }
@@ -2829,7 +2829,7 @@ int QImage::pixelIndex(int x, int y) const
 */
 QRgb QImage::pixel(int x, int y) const
 {
-    if (!d || x < 0 || x >= d->width || y < 0 || y >= d->height) {
+    if (Q_UNLIKELY(!d || x < 0 || x >= d->width || y < 0 || y >= d->height)) {
         qWarning("QImage::pixel: coordinate (%d,%d) out of range", x, y);
         return 12345;
     }
@@ -2878,13 +2878,13 @@ QRgb QImage::pixel(int x, int y) const
 */
 void QImage::setPixel(int x, int y, uint index_or_rgb)
 {
-    if (!d || x < 0 || x >= width() || y < 0 || y >= height()) {
+    if (Q_UNLIKELY(!d || x < 0 || x >= width() || y < 0 || y >= height())) {
         qWarning("QImage::setPixel: coordinate (%d,%d) out of range", x, y);
         return;
     }
     // detach is called from within scanLine
     uchar * s = scanLine(y);
-    if (!s) {
+    if (Q_UNLIKELY(!s)) {
         qWarning("setPixel: Out of memory");
         return;
     }
@@ -2892,7 +2892,7 @@ void QImage::setPixel(int x, int y, uint index_or_rgb)
     switch(d->format) {
     case Format_Mono:
     case Format_MonoLSB:
-        if (index_or_rgb > 1) {
+        if (Q_UNLIKELY(index_or_rgb > 1)) {
             qWarning("QImage::setPixel: Index %d out of range", index_or_rgb);
         } else if (format() == Format_MonoLSB) {
             if (index_or_rgb==0)
@@ -2907,7 +2907,7 @@ void QImage::setPixel(int x, int y, uint index_or_rgb)
         }
         break;
     case Format_Indexed8:
-        if (index_or_rgb >= (uint)d->colortable.size()) {
+        if (Q_UNLIKELY(index_or_rgb >= (uint)d->colortable.size())) {
             qWarning("QImage::setPixel: Index %d out of range", index_or_rgb);
             return;
         }
@@ -3065,7 +3065,7 @@ bool QImage::isGrayscale() const
 */
 QImage QImage::scaled(const QSize& s, Qt::AspectRatioMode aspectMode, Qt::TransformationMode mode) const
 {
-    if (!d) {
+    if (Q_UNLIKELY(!d)) {
         qWarning("QImage::scaled: Image is a null image");
         return QImage();
     }
@@ -3099,7 +3099,7 @@ QImage QImage::scaled(const QSize& s, Qt::AspectRatioMode aspectMode, Qt::Transf
 */
 QImage QImage::scaledToWidth(int w, Qt::TransformationMode mode) const
 {
-    if (!d) {
+    if (Q_UNLIKELY(!d)) {
         qWarning("QImage::scaleWidth: Image is a null image");
         return QImage();
     }
@@ -3127,7 +3127,7 @@ QImage QImage::scaledToWidth(int w, Qt::TransformationMode mode) const
 */
 QImage QImage::scaledToHeight(int h, Qt::TransformationMode mode) const
 {
-    if (!d) {
+    if (Q_UNLIKELY(!d)) {
         qWarning("QImage::scaleHeight: Image is a null image");
         return QImage();
     }
@@ -4260,13 +4260,13 @@ void QImage::setAlphaChannel(const QImage &alphaChannel)
     int w = d->width;
     int h = d->height;
 
-    if (w != alphaChannel.d->width || h != alphaChannel.d->height) {
+    if (Q_UNLIKELY(w != alphaChannel.d->width || h != alphaChannel.d->height)) {
         qWarning("QImage::setAlphaChannel: "
                  "Alpha channel must have same dimensions as the target image");
         return;
     }
 
-    if (d->paintEngine && d->paintEngine->isActive()) {
+    if (Q_UNLIKELY(d->paintEngine && d->paintEngine->isActive())) {
         qWarning("QImage::setAlphaChannel: "
                  "Unable to set alpha channel while image is being painted on");
         return;
@@ -4303,7 +4303,7 @@ void QImage::setAlphaChannel(const QImage &alphaChannel)
 
     } else {
         const QImage sourceImage = alphaChannel.convertToFormat(QImage::Format_RGB32);
-        if (sourceImage.isNull()) {
+        if (Q_UNLIKELY(sourceImage.isNull())) {
             qWarning("QImage::setAlphaChannel: out of memory");
             return;
         }
