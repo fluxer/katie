@@ -232,7 +232,7 @@ inline void QDirPrivate::sortFileList(QDir::SortFlags sort, QFileInfoList &l,
                                       QStringList *names, QFileInfoList *infos)
 {
     // names and infos are always empty lists or 0 here
-    int n = l.size();
+    const int n = l.size();
     if (n > 0) {
         if (n == 1 || (sort & QDir::SortByMask) == QDir::Unsorted) {
             if (infos)
@@ -242,10 +242,10 @@ inline void QDirPrivate::sortFileList(QDir::SortFlags sort, QFileInfoList &l,
                     names->append(l.at(i).fileName());
             }
         } else {
-            QScopedArrayPointer<QDirSortItem> si(new QDirSortItem[n]);
+            QSTACKARRAY(QDirSortItem, si, n);
             for (int i = 0; i < n; ++i)
                 si[i].item = l.at(i);
-            qSort(si.data(), si.data() + n, QDirSortItemComparator(sort));
+            qSort(si, si + n, QDirSortItemComparator(sort));
             // put them back in the list(s)
             if (infos) {
                 for (int i = 0; i < n; ++i)
@@ -258,6 +258,7 @@ inline void QDirPrivate::sortFileList(QDir::SortFlags sort, QFileInfoList &l,
         }
     }
 }
+
 inline void QDirPrivate::initFileLists(const QDir &dir) const
 {
     if (!fileListsInitialized) {
