@@ -1147,7 +1147,6 @@ QString qt_error_string(int errorCode)
     // version in portable code.
 #if !defined(QT_NO_THREAD)
     QSTACKARRAY(char, errbuf, 1024);
-    ::memset(errbuf, '\0', sizeof(errbuf));
     ::strerror_r(errorCode, errbuf, sizeof(errbuf));
     return QString::fromLocal8Bit(errbuf);
 #else
