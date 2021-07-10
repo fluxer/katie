@@ -1934,9 +1934,9 @@ static void dither_to_Mono(QImageData *dst, const QImageData *src,
                 b2++;
             }
         }
-    } break;
+         break;
+    }
     case Ordered: {
-
         memset(dst->data, 0, dst->nbytes);
         if (src->depth == 32) {
             for (int i=0; i<src->height; i++) {
@@ -1971,8 +1971,8 @@ static void dither_to_Mono(QImageData *dst, const QImageData *src,
                 dst_data += dst->bytes_per_line;
                 src_data += src->bytes_per_line;
             }
-        } else
-            /* (src->depth == 8) */ {
+        } else {
+            /* (src->depth == 8) */
             for (int i=0; i<src->height; i++) {
                 const uchar *p = src_data;
                 const uchar *end = p + src->width;
@@ -1993,8 +1993,10 @@ static void dither_to_Mono(QImageData *dst, const QImageData *src,
                 src_data += src->bytes_per_line;
             }
         }
-    } break;
-    default: { // Threshold:
+        break;
+    }
+    default: {
+        // Threshold:
         memset(dst->data, 0, dst->nbytes);
         if (src->depth == 32) {
             for (int i=0; i<src->height; i++) {
