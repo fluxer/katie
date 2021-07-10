@@ -895,11 +895,12 @@ QFontEngineFT::Glyph *QFontEngineFT::loadGlyph(QGlyphSet *set, uint glyph,
         bitmap.rows = info.height*vfactor;
         bitmap.width = hpixels;
         bitmap.pitch = format == Format_Mono ? (((info.width + 31) & ~31) >> 3) : ((bitmap.width + 3) & ~3);
+        const size_t bitmapsize = (size_t(bitmap.rows) * bitmap.pitch);
         if (!hsubpixel && vfactor == 1)
             bitmap.buffer = glyph_buffer;
         else
-            bitmap.buffer = new uchar[bitmap.rows*bitmap.pitch];
-        memset(bitmap.buffer, 0, bitmap.rows*bitmap.pitch);
+            bitmap.buffer = new uchar[bitmapsize];
+        ::memset(bitmap.buffer, 0, bitmapsize);
         bitmap.pixel_mode = format == Format_Mono ? FT_PIXEL_MODE_MONO : FT_PIXEL_MODE_GRAY;
         FT_Matrix matrix;
         matrix.xx = (hsubpixel ? 3 : 1) << 16;
@@ -912,7 +913,7 @@ QFontEngineFT::Glyph *QFontEngineFT::loadGlyph(QGlyphSet *set, uint glyph,
         if (hsubpixel) {
             Q_ASSERT (bitmap.pixel_mode == FT_PIXEL_MODE_GRAY);
             Q_ASSERT(antialias);
-            uchar *convoluted = new uchar[bitmap.rows*bitmap.pitch];
+            uchar *convoluted = new uchar[bitmapsize];
             bool useLegacyLcdFilter = false;
 #if defined(FC_LCD_FILTER) && defined(FT_LCD_FILTER_H)
             useLegacyLcdFilter = (lcdFilterType == FT_LCD_FILTER_LEGACY);
