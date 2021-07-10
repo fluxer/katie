@@ -423,7 +423,7 @@ static bool read_dib_body(QDataStream &s, const BMP_INFOHDR &bi, int offset, int
                 }
             }
         } else if (comp == BMP_RGB) {                // no compression
-            memset(data, 0, h*bpl);
+            ::memset(data, 0, size_t(h) * bpl);
             while (--h >= 0) {
                 if (d->read((char*)buf,buflen) != buflen)
                     break;

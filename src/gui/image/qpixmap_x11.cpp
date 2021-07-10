@@ -381,7 +381,7 @@ void QX11PixmapData::fromImage(const QImage &img,
 
         xi = XCreateImage(dpy, visual, d, ZPixmap, 0, 0, w, h, 32, 0);
         Q_CHECK_PTR(xi);
-        newbits = (uchar *)malloc(xi->bytes_per_line*h);
+        newbits = (uchar *)::malloc(size_t(xi->bytes_per_line) * h);
         Q_CHECK_PTR(newbits);
         xi->data = (char *)newbits;
 
@@ -405,8 +405,8 @@ void QX11PixmapData::fromImage(const QImage &img,
                     ++xidata;
                 }
             }
-        }
             break;
+        }
         case QImage::Format_RGB32: {
             uint *xidata = (uint *)xi->data;
             for (int y = 0; y < h; ++y) {
@@ -414,8 +414,8 @@ void QX11PixmapData::fromImage(const QImage &img,
                 for (int x = 0; x < w; ++x)
                     *xidata++ = p[x] | 0xff000000;
             }
-        }
             break;
+        }
         case QImage::Format_ARGB32: {
             uint *xidata = (uint *)xi->data;
             for (int y = 0; y < h; ++y) {
@@ -434,9 +434,8 @@ void QX11PixmapData::fromImage(const QImage &img,
                     ++xidata;
                 }
             }
-
-        }
             break;
+        }
         case QImage::Format_ARGB32_Premultiplied: {
             uint *xidata = (uint *)xi->data;
             for (int y = 0; y < h; ++y) {
@@ -444,8 +443,8 @@ void QX11PixmapData::fromImage(const QImage &img,
                 memcpy(xidata, p, w*sizeof(QRgb));
                 xidata += w;
             }
-        }
             break;
+        }
         default:
             Q_ASSERT(false);
         }
@@ -505,7 +504,7 @@ void QX11PixmapData::fromImage(const QImage &img,
 
         xi = XCreateImage(dpy, visual, dd, ZPixmap, 0, 0, w, h, 32, 0);
         Q_CHECK_PTR(xi);
-        newbits = (uchar *)malloc(xi->bytes_per_line*h);
+        newbits = (uchar *)::malloc(size_t(xi->bytes_per_line) * h);
         Q_CHECK_PTR(newbits);
         if (!newbits)                                // no memory
             return;
@@ -659,59 +658,67 @@ void QX11PixmapData::fromImage(const QImage &img,
             uchar* dst = newbits + xi->bytes_per_line*y;        \
             const QRgb* p = (const QRgb *)src;                  \
             body                                                \
-                }
+        }
 
         if (dither_tc) {
             switch (mode) {
-            case BPP16_565:
+            case BPP16_565: {
                 CYCLE(
                     quint16* dst16 = (quint16*)dst;
                     for (int x=0; x<w; x++) {
                         GET_PIXEL_DITHER_TC_OPT(<<8,<<3,>>3,0xf800,0x7e0,0x1f,5,6,5)
                             *dst16++ = pixel;
                     }
-                    )
-                    break;
-            case BPP16_555:
+                )
+                break;
+            }
+            case BPP16_555: {
                 CYCLE(
                     quint16* dst16 = (quint16*)dst;
                     for (int x=0; x<w; x++) {
                         GET_PIXEL_DITHER_TC_OPT(<<7,<<2,>>3,0x7c00,0x3e0,0x1f,5,5,5)
                             *dst16++ = pixel;
                     }
-                    )
-                    break;
-            case BPP16_MSB:                        // 16 bit MSB
+                )
+                break;
+            }
+            case BPP16_MSB: {
+                // 16 bit MSB
                 CYCLE(
                     for (int x=0; x<w; x++) {
                         GET_PIXEL_DITHER_TC
                             *dst++ = (pixel >> 8);
                         *dst++ = pixel;
                     }
-                    )
-                    break;
-            case BPP16_LSB:                        // 16 bit LSB
+                )
+                break;
+            }
+            case BPP16_LSB: {
+                // 16 bit LSB
                 CYCLE(
                     for (int x=0; x<w; x++) {
                         GET_PIXEL_DITHER_TC
                             *dst++ = pixel;
                         *dst++ = pixel >> 8;
                     }
-                    )
-                    break;
+                )
+                break;
+            }
             default:
                 qFatal("Logic error");
             }
         } else {
             switch (mode) {
-            case BPP8:                        // 8 bit
+            case BPP8: {
+                // 8 bit
                 CYCLE(
                     Q_UNUSED(p);
                     for (int x=0; x<w; x++)
                         *dst++ = pix[*src++];
-                    )
-                    break;
-            case BPP16_565:
+                )
+                break;
+            }
+            case BPP16_565: {
                 CYCLE(
                     quint16* dst16 = (quint16*)dst;
                     for (int x = 0; x < w; x++) {
@@ -720,9 +727,10 @@ void QX11PixmapData::fromImage(const QImage &img,
                                    | ((*p >> 3) & 0x1f);
                         ++p;
                     }
-                    )
-                    break;
-            case BPP16_555:
+                )
+                break;
+            }
+            case BPP16_555: {
                 CYCLE(
                     quint16* dst16 = (quint16*)dst;
                     for (int x=0; x<w; x++) {
@@ -731,27 +739,32 @@ void QX11PixmapData::fromImage(const QImage &img,
                                    | ((*p >> 3) & 0x1f);
                         ++p;
                     }
-                    )
-                    break;
-            case BPP16_MSB:                        // 16 bit MSB
+                )
+                break;
+            }
+            case BPP16_MSB: {
+                // 16 bit MSB
                 CYCLE(
                     for (int x=0; x<w; x++) {
                         GET_PIXEL
                             *dst++ = (pixel >> 8);
                         *dst++ = pixel;
                     }
-                    )
-                    break;
-            case BPP16_LSB:                        // 16 bit LSB
+                )
+                break;
+            }
+            case BPP16_LSB: {
+                // 16 bit LSB
                 CYCLE(
                     for (int x=0; x<w; x++) {
                         GET_PIXEL
                             *dst++ = pixel;
                         *dst++ = pixel >> 8;
                     }
-                    )
-                    break;
-            case BPP24_888:
+                )
+                break;
+            }
+            case BPP24_888: {
                 CYCLE(
                     for (int x=0; x<w; x++) {
 #if Q_BYTE_ORDER == Q_BIG_ENDIAN
@@ -764,9 +777,11 @@ void QX11PixmapData::fromImage(const QImage &img,
                         *dst++ = qRed  (*p++);
 #endif
                     }
-                    )
-                    break;
-            case BPP24_MSB:                        // 24 bit MSB
+                )
+                break;
+            }
+            case BPP24_MSB: {
+                // 24 bit MSB
                 CYCLE(
                     for (int x=0; x<w; x++) {
                         GET_PIXEL
@@ -774,9 +789,11 @@ void QX11PixmapData::fromImage(const QImage &img,
                         *dst++ = pixel >> 8;
                         *dst++ = pixel;
                     }
-                    )
-                    break;
-            case BPP24_LSB:                        // 24 bit LSB
+                )
+                break;
+            }
+            case BPP24_LSB: {
+                // 24 bit LSB
                 CYCLE(
                     for (int x=0; x<w; x++) {
                         GET_PIXEL
@@ -784,14 +801,17 @@ void QX11PixmapData::fromImage(const QImage &img,
                         *dst++ = pixel >> 8;
                         *dst++ = pixel >> 16;
                     }
-                    )
-                    break;
-            case BPP32_8888:
+                )
+                break;
+            }
+            case BPP32_8888: {
                 CYCLE(
                     memcpy(dst, p, w * 4);
-                    )
-                    break;
-            case BPP32_MSB:                        // 32 bit MSB
+                )
+                break;
+            }
+            case BPP32_MSB: {
+                // 32 bit MSB
                 CYCLE(
                     for (int x=0; x<w; x++) {
                         GET_PIXEL
@@ -800,9 +820,11 @@ void QX11PixmapData::fromImage(const QImage &img,
                         *dst++ = pixel >> 8;
                         *dst++ = pixel;
                     }
-                    )
-                    break;
-            case BPP32_LSB:                        // 32 bit LSB
+                )
+                break;
+            }
+            case BPP32_LSB: {
+                // 32 bit LSB
                 CYCLE(
                     for (int x=0; x<w; x++) {
                         GET_PIXEL
@@ -811,8 +833,9 @@ void QX11PixmapData::fromImage(const QImage &img,
                         *dst++ = pixel >> 16;
                         *dst++ = pixel >> 24;
                     }
-                    )
-                    break;
+                )
+                break;
+            }
             default:
                 qFatal("Logic error 2");
             }
@@ -835,12 +858,12 @@ void QX11PixmapData::fromImage(const QImage &img,
                 pop[*p++]++;
         }
 
-        newbits = (uchar *)malloc(nbytes);        // copy image into newbits
+        newbits = (uchar *)::malloc(nbytes);        // copy image into newbits
         Q_CHECK_PTR(newbits);
         if (!newbits)                                // no memory
             return;
         uchar* p = newbits;
-        memcpy(p, cimage.bits(), nbytes);        // copy image data into newbits
+        ::memcpy(p, cimage.bits(), nbytes);        // copy image data into newbits
 
         /*
          * The code below picks the most important colors. It is based on the
@@ -957,7 +980,7 @@ void QX11PixmapData::fromImage(const QImage &img,
         if (xi->bits_per_pixel == 16) {        // convert 8 bpp ==> 16 bpp
             ushort *p2;
             int            p2inc = xi->bytes_per_line/sizeof(ushort);
-            ushort *newerbits = (ushort *)malloc(xi->bytes_per_line * h);
+            ushort *newerbits = (ushort *)::malloc(size_t(xi->bytes_per_line) * h);
             Q_CHECK_PTR(newerbits);
             if (!newerbits)                                // no memory
                 return;
@@ -1760,7 +1783,7 @@ QPixmap QX11PixmapData::transformed(const QTransform &transform,
         dbpl = ((w*bpp+31)/32)*4;
     dbytes = dbpl*h;
 
-    dptr = (uchar *)malloc(dbytes);        // create buffer for bits
+    dptr = (uchar *)::malloc(dbytes);        // create buffer for bits
     Q_CHECK_PTR(dptr);
     if (depth1)                                // fill with zeros
         ::memset(dptr, 0, dbytes);

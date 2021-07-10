@@ -425,9 +425,10 @@ void QTextTablePrivate::update() const
     nRows = (cells.size() + nCols-1)/nCols;
     // qDebug(">>>> QTextTablePrivate::update, nRows=%d, nCols=%d", nRows, nCols);
 
-    grid = (int *)::realloc(grid, nRows*nCols*sizeof(int));
+    const size_t gridsize = size_t(nRows) * nCols* sizeof(int);
+    grid = (int *)::realloc(grid, gridsize);
     Q_CHECK_PTR(grid);
-    memset(grid, 0, nRows*nCols*sizeof(int));
+    memset(grid, 0, gridsize);
 
     QTextDocumentPrivate *p = pieceTable;
     QTextFormatCollection *c = p->formatCollection();
