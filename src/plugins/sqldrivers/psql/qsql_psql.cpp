@@ -616,64 +616,46 @@ void QPSQLDriverPrivate::detectBackslashEscape()
 static QPSQLDriver::Protocol qMakePSQLVersion(int vMaj, int vMin)
 {
     switch (vMaj) {
-    case 7:
-    {
-        switch (vMin) {
-        case 4:
-            return QPSQLDriver::Version74;
-        default:
+        case 7: {
+            switch (vMin) {
+                case 4: {
+                    return QPSQLDriver::Version74;
+                }
+                default: {
+                    return QPSQLDriver::VersionUnknown;
+                }
+            }
+        }
+        case 8: {
+            switch (vMin) {
+                case 1: {
+                    return QPSQLDriver::Version81;
+                }
+                case 2: {
+                    return QPSQLDriver::Version82;
+                }
+                case 3: {
+                    return QPSQLDriver::Version83;
+                }
+                case 4: {
+                    return QPSQLDriver::Version84;
+                }
+                default: {
+                    return QPSQLDriver::Version8;
+                }
+            }
+        }
+        case 9: {
+            return QPSQLDriver::Version9;
+        }
+        default: {
+            if (vMaj >= 10) {
+                return QPSQLDriver::VersionMaybeCompatible;
+            }
             return QPSQLDriver::VersionUnknown;
         }
     }
-    case 8:
-    {
-        switch (vMin) {
-        case 1:
-            return QPSQLDriver::Version81;
-        case 2:
-            return QPSQLDriver::Version82;
-        case 3:
-            return QPSQLDriver::Version83;
-        case 4:
-            return QPSQLDriver::Version84;
-        default:
-            return QPSQLDriver::Version8;
-        }
-    }
-    case 9:
-    {
-        switch (vMin) {
-        case 1:
-            return QPSQLDriver::Version91;
-        case 2:
-            return QPSQLDriver::Version92;
-        case 3:
-            return QPSQLDriver::Version93;
-        case 4:
-            return QPSQLDriver::Version94;
-        default:
-            return QPSQLDriver::Version9;
-        }
-    }
-    case 10:
-        return QPSQLDriver::Version10;
-    case 11:
-        return QPSQLDriver::Version11;
-    case 12:
-        return QPSQLDriver::Version12;
-    case 13:
-    {
-        switch (vMin) {
-        case 1:
-            return QPSQLDriver::Version131;
-        default:
-            return QPSQLDriver::Version13;
-        }
-    }
-    default:
-        break;
-    }
-    return QPSQLDriver::VersionUnknown;
+    Q_UNREACHABLE();
 }
 
 QPSQLDriver::Protocol QPSQLDriverPrivate::getPSQLVersion()
