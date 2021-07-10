@@ -28,6 +28,7 @@
 #include "qx11info_x11.h"
 #include "qt_x11_p.h"
 #include "qguicommon_p.h"
+#include "qcorecommon_p.h"
 
 #include <limits.h>
 
@@ -143,8 +144,7 @@ static void query_colormap(QColormapPrivate *d, int screen)
 
     // query existing colormap
     int q_colors = (((1u << d->depth) > 256u) ? 256u : (1u << d->depth));
-    XColor queried[256];
-    memset(queried, 0, sizeof(queried));
+    QSTACKARRAY(XColor, queried, 256);
     for (int x = 0; x < q_colors; ++x)
         queried[x].pixel = x;
     XQueryColors(display, d->colormap, queried, q_colors);
