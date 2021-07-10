@@ -4106,46 +4106,49 @@ bool qt_xForm_helper(const QTransform &trueMat, int xoffset, int type, int depth
         uchar *maxp = dptr + dbpl;
         if (depth != 1) {
             switch (depth) {
-                case 8:                                // 8 bpp transform
-                while (dptr < maxp) {
-                    if (trigx < maxws && trigy < maxhs)
-                        *dptr = *(sptr+sbpl*(trigy>>12)+(trigx>>12));
-                    trigx += m11;
-                    trigy += m12;
-                    dptr++;
+                case 8: {
+                    // 8 bpp transform
+                    while (dptr < maxp) {
+                        if (trigx < maxws && trigy < maxhs)
+                            *dptr = *(sptr+sbpl*(trigy>>12)+(trigx>>12));
+                        trigx += m11;
+                        trigy += m12;
+                        dptr++;
+                    }
+                    break;
                 }
-                break;
-
-                case 16:                        // 16 bpp transform
-                while (dptr < maxp) {
-                    if (trigx < maxws && trigy < maxhs)
-                        *((ushort*)dptr) = *((ushort *)(sptr+sbpl*(trigy>>12) +
-                                                     ((trigx>>12)<<1)));
-                    trigx += m11;
-                    trigy += m12;
-                    dptr++;
-                    dptr++;
+                case 16: {
+                    // 16 bpp transform
+                    while (dptr < maxp) {
+                        if (trigx < maxws && trigy < maxhs)
+                            *((ushort*)dptr) = *((ushort *)(sptr+sbpl*(trigy>>12) +
+                                                        ((trigx>>12)<<1)));
+                        trigx += m11;
+                        trigy += m12;
+                        dptr++;
+                        dptr++;
+                    }
+                    break;
                 }
-                break;
-
-                case 32:                        // 32 bpp transform
-                while (dptr < maxp) {
-                    if (trigx < maxws && trigy < maxhs)
-                        *((uint*)dptr) = *((uint *)(sptr+sbpl*(trigy>>12) +
-                                                   ((trigx>>12)<<2)));
-                    trigx += m11;
-                    trigy += m12;
-                    dptr += 4;
+                case 32: {
+                    // 32 bpp transform
+                    while (dptr < maxp) {
+                        if (trigx < maxws && trigy < maxhs)
+                            *((uint*)dptr) = *((uint *)(sptr+sbpl*(trigy>>12) +
+                                                    ((trigx>>12)<<2)));
+                        trigx += m11;
+                        trigy += m12;
+                        dptr += 4;
+                    }
+                    break;
                 }
-                break;
-
                 default: {
-                return false;
+                    return false;
                 }
             }
         } else  {
             switch (type) {
-                case QT_XFORM_TYPE_MSBFIRST:
+                case QT_XFORM_TYPE_MSBFIRST: {
                     while (dptr < maxp) {
                         IWX_MSB(128);
                         IWX_MSB(64);
@@ -4158,7 +4161,8 @@ bool qt_xForm_helper(const QTransform &trueMat, int xoffset, int type, int depth
                         dptr++;
                     }
                     break;
-                case QT_XFORM_TYPE_LSBFIRST:
+                }
+                case QT_XFORM_TYPE_LSBFIRST: {
                     while (dptr < maxp) {
                         IWX_LSB(1);
                         IWX_LSB(2);
@@ -4171,6 +4175,7 @@ bool qt_xForm_helper(const QTransform &trueMat, int xoffset, int type, int depth
                         dptr++;
                     }
                     break;
+                }
             }
         }
         m21ydx += m21;
