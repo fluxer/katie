@@ -131,7 +131,6 @@ public:
     inline const char *constData() const;
     inline void detach();
     bool isDetached() const;
-    inline bool isSharedWith(const QByteArray &other) const { return d == other.d; }
     void clear();
 
     char at(int i) const;

@@ -1100,11 +1100,6 @@ QByteArray &QByteArray::operator=(const char *str)
     \internal
 */
 
-/*! \fn bool QByteArray::isSharedWith(const QByteArray &other) const
-
-    \internal
-*/
-
 /*! \fn char QByteArray::at(int i) const
 
     Returns the character at index position \a i in the byte array.

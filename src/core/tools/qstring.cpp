@@ -929,11 +929,6 @@ QString::QString(const QChar ch)
     \internal
 */
 
-/*! \fn bool QString::isSharedWith(const QString &other) const
-
-    \internal
-*/
-
 void QString::freeData(Data *d)
 {
     if(d != &shared_null && d != &shared_empty)
