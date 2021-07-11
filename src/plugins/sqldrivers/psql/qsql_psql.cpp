@@ -520,14 +520,12 @@ static QString qCreateParamString(const QVector<QVariant> &boundValues, const QS
     return params;
 }
 
-Q_GLOBAL_STATIC(QMutex, qMutex)
+Q_GLOBAL_STATIC(QMutex, qPSqlMutex)
 QString qMakePreparedStmtId()
 {
-    qMutex()->lock();
+    QMutexLocker locker(qPSqlMutex());
     static unsigned int qPreparedStmtCount = 0;
-    QString id = QLatin1String("qpsqlpstmt_") + QString::number(++qPreparedStmtCount, 16);
-    qMutex()->unlock();
-    return id;
+    return QString::fromLatin1("qpsqlpstmt_%1").arg(QString::number(++qPreparedStmtCount, 16));
 }
 
 bool QPSQLResult::prepare(const QString &query)
