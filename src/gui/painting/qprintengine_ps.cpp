@@ -47,7 +47,6 @@
 #include "qpainterpath_p.h"
 #include "qdebug.h"
 #include "qdrawhelper_p.h"
-#include "qmutexpool_p.h"
 #include "qcoreapplication_p.h"
 #include "qcorecommon_p.h"
 

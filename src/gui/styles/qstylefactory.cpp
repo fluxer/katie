@@ -22,7 +22,6 @@
 #include "qstylefactory.h"
 #include "qstyleplugin.h"
 #include "qfactoryloader_p.h"
-#include "qmutex.h"
 
 #include "qapplication.h"
 #include "qwindowsstyle.h"

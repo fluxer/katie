@@ -26,7 +26,6 @@
 
 #include <QtCore/qdatetime.h>
 #include <QtCore/qdebug.h>
-#include <QtCore/qmutex.h>
 #include <QtCore/qstringlist.h>
 
 #ifndef QT_NO_BEARERMANAGEMENT

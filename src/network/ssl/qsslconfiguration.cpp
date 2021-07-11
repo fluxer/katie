@@ -22,7 +22,6 @@
 #include "qsslconfiguration.h"
 #include "qsslconfiguration_p.h"
 #include "qsslsocket.h"
-#include "qmutex.h"
 #include "qdebug.h"
 
 QT_BEGIN_NAMESPACE

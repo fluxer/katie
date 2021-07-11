@@ -21,7 +21,6 @@
 
 #include "qhttpmultipart.h"
 #include "qhttpmultipart_p.h"
-#include "QtCore/qmutex.h"
 
 QT_BEGIN_NAMESPACE
 

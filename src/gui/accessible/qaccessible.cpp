@@ -28,7 +28,6 @@
 #include "qapplication.h"
 #include "qhash.h"
 #include "qmetaobject.h"
-#include "qmutex.h"
 #include "qfactoryloader_p.h"
 
 #include "qwidget.h"

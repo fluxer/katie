@@ -25,7 +25,6 @@
 #ifndef QT_NO_ACCESSIBILITY
 
 #include "qcoreapplication.h"
-#include "qmutex.h"
 #include "qvector.h"
 #include "qfactoryloader_p.h"
 

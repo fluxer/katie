@@ -22,7 +22,6 @@
 #include "qdeclarativetimeline_p_p.h"
 
 #include <QDebug>
-#include <QMutex>
 #include <QThread>
 #include <QWaitCondition>
 #include <QEvent>

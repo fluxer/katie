@@ -21,7 +21,6 @@
 
 #include "qdebug.h"
 #include "qmath.h"
-#include "qmutex.h"
 #include "qbitmap.h"
 #include "qimage.h"
 #include "qpaintdevice.h"

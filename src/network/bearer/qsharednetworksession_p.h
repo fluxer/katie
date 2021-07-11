@@ -37,7 +37,6 @@
 #include "qnetworkconfiguration.h"
 #include <QHash>
 #include <QSharedPointer>
-#include <QMutex>
 
 #ifndef QT_NO_BEARERMANAGEMENT
 

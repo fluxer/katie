@@ -31,7 +31,6 @@
 #include "qsqlindex.h"
 #include "qfactoryloader_p.h"
 #include "qsqlnulldriver_p.h"
-#include "qmutex.h"
 #include "qhash.h"
 #include "qsql_sqlite_p.h"
 
