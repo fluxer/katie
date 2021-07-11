@@ -252,6 +252,7 @@ static inline uint to_ascii_upper(uint ucs4)
     \value Unicode_12_0
     \value Unicode_12_1
     \value Unicode_13_0
+    \value Unicode_14_0
     \value Unicode_Last Latest supported version
     \value Unicode_Unassigned  The value is not assigned to any character
         in Unicode.
