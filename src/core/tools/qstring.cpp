@@ -3631,25 +3631,23 @@ QString QString::simplified() const
     if (d->size == 0)
         return *this;
 
-    QString result(d->size, Qt::Uninitialized);
+    QSTACKARRAY(QChar, result, d->size);
     const QChar *from = reinterpret_cast<const QChar*>(d->data);
     const QChar *fromend = from + d->size;
     int outc = 0;
-    QChar *to = reinterpret_cast<QChar*>(result.d->data);
     for (;;) {
         while (from != fromend && QChar(*from).isSpace())
             from++;
         while (from != fromend && !QChar(*from).isSpace())
-            to[outc++] = *from++;
+            result[outc++] = *from++;
         if (from != fromend)
-            to[outc++] = QLatin1Char(' ');
+            result[outc++] = QLatin1Char(' ');
         else
             break;
     }
-    if (outc > 0 && to[outc-1] == QLatin1Char(' '))
+    if (outc > 0 && result[outc-1] == QLatin1Char(' '))
         outc--;
-    result.resize(outc);
-    return result;
+    return QString(result, outc);
 }
 
 /*!

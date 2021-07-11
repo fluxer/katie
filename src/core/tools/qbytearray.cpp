@@ -3066,25 +3066,24 @@ QByteArray QByteArray::simplified() const
 {
     if (d->size == 0)
         return *this;
-    QByteArray result(d->size, Qt::Uninitialized);
+
+    QSTACKARRAY(char, result, d->size)
     const char *from = d->data;
     const char *fromend = from + d->size;
     int outc = 0;
-    char *to = result.d->data;
     for (;;) {
         while (from != fromend && isspace(uchar(*from)))
             from++;
         while (from != fromend && !isspace(uchar(*from)))
-            to[outc++] = *from++;
+            result[outc++] = *from++;
         if (from != fromend)
-            to[outc++] = ' ';
+            result[outc++] = ' ';
         else
             break;
     }
-    if (outc > 0 && to[outc-1] == ' ')
+    if (outc > 0 && result[outc-1] == ' ')
         outc--;
-    result.resize(outc);
-    return result;
+    return QByteArray(result, outc);
 }
 
 /*!
