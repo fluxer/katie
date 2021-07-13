@@ -922,7 +922,9 @@ class QNtlmPhase2Block : public QNtlmPhase2BlockBase
 {  // challenge
 public:
     QNtlmPhase2Block() {
-        magic[0] = 0;
+        ::memset(magic, 0, sizeof(magic) * sizeof(char));
+        ::memset(challenge, 0, sizeof(challenge) * sizeof(unsigned char));
+        ::memset(context, 0, sizeof(context) * sizeof(quint32));
         type = 0xffffffff;
     }
 
