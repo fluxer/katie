@@ -347,8 +347,7 @@ static QByteArray compressHelper(const QImage &image, bool gray, int *format)
             *format = Runlength;
         }
     }
-    QByteArray outarr = QPdf::ascii85Encode(pixelData);
-    return outarr;
+    return QPdf::ascii85Encode(pixelData);
 }
 
 void QPSPrintEnginePrivate::drawImageHelper(qreal x, qreal y, qreal w, qreal h, const QImage &img,
