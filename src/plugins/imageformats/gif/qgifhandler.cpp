@@ -60,7 +60,6 @@ private:
     QRgb* localcmap;
     QImage backingstore;
     unsigned char hold[16];
-    bool gif89;
     int count;
     int ccount;
     int expectcount;
@@ -236,7 +235,6 @@ int QGIFFormat::decode(QImage *image, const uchar *buffer, int length,
             hold[count++]=ch;
             if (count==6) {
                 // Header
-                gif89=(hold[3]!='8' || hold[4]!='7');
                 state=LogicalScreenDescriptor;
                 count=0;
             }
