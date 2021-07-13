@@ -44,6 +44,7 @@
 #include "qnumeric.h"
 #include "qvarlengtharray.h"
 #include "qmath.h"
+#include "qcorecommon_p.h"
 
 #include <float.h>
 
@@ -462,8 +463,8 @@ static inline bool isDigit(ushort ch)
 
 static qreal toDouble(const QChar *&str)
 {
-    const int maxLen = 255;//technically doubles can go til 308+ but whatever
-    char temp[maxLen+1];
+    static const int maxLen = 255; // technically doubles can go til 308+ but whatever
+    QSTACKARRAY(char, temp, maxLen + 1);
     int pos = 0;
 
     if (*str == QLatin1Char('-')) {
@@ -498,8 +499,6 @@ static qreal toDouble(const QChar *&str)
             ++str;
         }
     }
-
-    temp[pos] = '\0';
 
     qreal val;
     if (!exponent && pos < 10) {
