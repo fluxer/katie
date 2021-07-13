@@ -233,7 +233,7 @@ public:
 
     inline QString &operator+=(QChar c) {
         if (d->ref != 1 || d->size + 1 > d->alloc)
-            reallocData(grow(d->size + 1));
+            reallocData(d->size + 1);
         d->data[d->size++] = c.unicode();
         d->data[d->size] = '\0';
         return *this;
@@ -482,7 +482,6 @@ private:
 #ifndef QT_NO_TEXTCODEC
     static QTextCodec *codecForCStrings;
 #endif
-    static int grow(int);
     static void freeData(Data *);
     void reallocData(int alloc);
     void expand(int i);

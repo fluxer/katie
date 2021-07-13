@@ -39,13 +39,6 @@ QT_BEGIN_NAMESPACE
 
 QListData::Data QListData::shared_null = { QAtomicInt(1), 0, 0, 0, { 0 } };
 
-static int grow(int size)
-{
-    // dear compiler: don't optimize me out.
-    volatile int x = qAllocMore(size * QT_POINTER_SIZE, QListData::DataHeaderSize) / QT_POINTER_SIZE;
-    return x;
-}
-
 /*!
  *  Detaches the QListData by allocating new memory for a list which will be bigger
  *  than the copied one and is expected to grow further.
@@ -61,8 +54,8 @@ QListData::Data *QListData::detach_grow(int *idx, int num)
     Data *x = d;
     int l = x->end - x->begin;
     int nl = l + num;
-    int alloc = grow(nl);
-    Data* t = static_cast<Data *>(malloc(DataHeaderSize + alloc * QT_POINTER_SIZE));
+    int alloc = qAllocMore(nl * QT_POINTER_SIZE, QListData::DataHeaderSize) / QT_POINTER_SIZE;
+    Data* t = static_cast<Data *>(::malloc(DataHeaderSize + alloc * QT_POINTER_SIZE));
     Q_CHECK_PTR(t);
 
     t->ref = 1;
@@ -103,7 +96,7 @@ QListData::Data *QListData::detach_grow(int *idx, int num)
 QListData::Data *QListData::detach(int alloc)
 {
     Data *x = d;
-    Data* t = static_cast<Data *>(malloc(DataHeaderSize + alloc * QT_POINTER_SIZE));
+    Data* t = static_cast<Data *>(::malloc(DataHeaderSize + alloc * QT_POINTER_SIZE));
     Q_CHECK_PTR(t);
 
     t->ref = 1;
@@ -141,12 +134,12 @@ void QListData::reallocData(int alloc)
     Q_ASSERT(d->ref == 1);
 
     if (d == &shared_null) {
-        Data *x = static_cast<Data *>(malloc(DataHeaderSize + alloc * QT_POINTER_SIZE));
+        Data *x = static_cast<Data *>(::malloc(DataHeaderSize + alloc * QT_POINTER_SIZE));
         Q_CHECK_PTR(x);
         d = x;
         d->begin = d->end = 0;
     } else {
-        Data *x = static_cast<Data *>(realloc(d, DataHeaderSize + alloc * QT_POINTER_SIZE));
+        Data *x = static_cast<Data *>(::realloc(d, DataHeaderSize + alloc * QT_POINTER_SIZE));
         Q_CHECK_PTR(x);
         d = x;
         if (!alloc)
@@ -169,7 +162,7 @@ void **QListData::append(int n)
             ::memmove(d->array, d->array + b, e * QT_POINTER_SIZE);
             d->begin = 0;
         } else {
-            reallocData(grow(d->alloc + n));
+            reallocData(d->alloc + n);
         }
     }
     d->end = e + n;
@@ -193,7 +186,7 @@ void **QListData::prepend()
     Q_ASSERT(d->ref == 1);
     if (d->begin == 0) {
         if (d->end >= d->alloc / 3)
-            reallocData(grow(d->alloc + 1));
+            reallocData(d->alloc + 1);
 
         if (d->end < d->alloc / 3)
             d->begin = d->alloc - 2 * d->end;
@@ -220,7 +213,7 @@ void **QListData::insert(int i)
     if (d->begin == 0) {
         if (d->end == d->alloc) {
             // If the array is full, we expand it and move some items rightward
-            reallocData(grow(d->alloc + 1));
+            reallocData(d->alloc + 1);
         } else {
             // If there is free space at the end of the array, we move some items rightward
         }

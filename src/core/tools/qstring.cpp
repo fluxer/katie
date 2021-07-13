@@ -29,7 +29,6 @@
 #include "qlocale_tools_p.h"
 #include "qstringmatcher.h"
 #include "qvarlengtharray.h"
-#include "qtools_p.h"
 #include "qhash.h"
 #include "qdebug.h"
 #include "qendian.h"
@@ -554,11 +553,6 @@ QString::Data QString::shared_null = { QAtomicInt(1),
 QString::Data QString::shared_empty = { QAtomicInt(1),
                                         0, 0, 0, shared_empty.array, {0} };
 
-int QString::grow(int size)
-{
-    return qAllocMore(size * sizeof(QChar), sizeof(Data)) / sizeof(QChar);
-}
-
 /*! \typedef QString::ConstIterator
 
     Qt-style synonym for QString::const_iterator.
@@ -979,7 +973,7 @@ void QString::resize(int size)
     } else {
         if (d->ref != 1 || size > d->alloc ||
             (!d->capacity && size < d->size && size < d->alloc >> 1))
-            reallocData(grow(size));
+            reallocData(size);
         if (d->alloc >= size) {
             d->size = size;
             if (d->data == d->array) {
@@ -1042,7 +1036,7 @@ void QString::resize(int size)
 void QString::reallocData(int alloc)
 {
     if (d->ref != 1 || d->data != d->array) {
-        Data *x = static_cast<Data *>(malloc(sizeof(Data) + alloc * sizeof(QChar)));
+        Data *x = static_cast<Data *>(::malloc(sizeof(Data) + alloc * sizeof(QChar)));
         Q_CHECK_PTR(x);
         x->size = qMin(alloc, d->size);
         ::memcpy(x->array, d->data, x->size * sizeof(QChar));
@@ -1055,7 +1049,7 @@ void QString::reallocData(int alloc)
             QString::freeData(d);
         d = x;
     } else {
-        Data *p = static_cast<Data *>(realloc(d, sizeof(Data) + alloc * sizeof(QChar)));
+        Data *p = static_cast<Data *>(::realloc(d, sizeof(Data) + alloc * sizeof(QChar)));
         Q_CHECK_PTR(p);
         d = p;
         d->alloc = alloc;
@@ -1264,7 +1258,7 @@ QString &QString::append(const QString &str)
 {
     if (str.d != &shared_null && str.d != &shared_empty) {
         if (d->ref != 1 || d->size + str.d->size > d->alloc)
-            reallocData(grow(d->size + str.d->size));
+            reallocData(d->size + str.d->size);
         memcpy(d->data + d->size, str.d->data, str.d->size * sizeof(QChar));
         d->size += str.d->size;
         d->data[d->size] = '\0';
@@ -1283,7 +1277,7 @@ QString &QString::append(const QLatin1String &str)
     if (s) {
         int len = qstrlen((char *)s);
         if (d->ref != 1 || d->size + len > d->alloc)
-            reallocData(grow(d->size + len));
+            reallocData(d->size + len);
         ushort *i = d->data + d->size;
         while ((*i++ = *s++))
             ;
@@ -1326,7 +1320,7 @@ QString &QString::append(const QLatin1String &str)
 QString &QString::append(QChar ch)
 {
     if (d->ref != 1 || d->size + 1 > d->alloc)
-        reallocData(grow(d->size + 1));
+        reallocData(d->size + 1);
     d->data[d->size++] = ch.unicode();
     d->data[d->size] = '\0';
     return *this;
@@ -1563,7 +1557,7 @@ void QString::replace_helper(uint *indices, int nIndices, int blen, const QChar 
     // (which we could possibly invalidate via a realloc or corrupt via memcpy operations.)
     QChar *afterBuffer = const_cast<QChar *>(after);
     if (after >= reinterpret_cast<QChar *>(d->data) && after < reinterpret_cast<QChar *>(d->data) + d->size) {
-        afterBuffer = static_cast<QChar *>(malloc(alen*sizeof(QChar)));
+        afterBuffer = static_cast<QChar *>(::malloc(alen * sizeof(QChar)));
         Q_CHECK_PTR(afterBuffer);
         ::memcpy(afterBuffer, after, alen*sizeof(QChar));
     }
@@ -6423,7 +6417,7 @@ bool QString::isRightToLeft() const
 */
 QString QString::fromRawData(const QChar *unicode, int size)
 {
-    Data *x = static_cast<Data *>(malloc(sizeof(Data)));
+    Data *x = static_cast<Data *>(::malloc(sizeof(Data)));
     Q_CHECK_PTR(x);
     if (unicode) {
         x->data = (ushort *)unicode;

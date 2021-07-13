@@ -33,8 +33,6 @@
 // We mean it.
 //
 
-#include "qtools_p.h"
-
 #include <stdlib.h>
 
 QT_BEGIN_NAMESPACE
@@ -206,7 +204,7 @@ void QFragmentMapData<Fragment>::init()
 {
     // the following code will realloc an existing fragment or create a new one.
     // it will also ignore errors when shrinking an existing fragment.
-    Fragment *newFragments = (Fragment *)realloc(fragments, 64*fragmentSize);
+    Fragment *newFragments = (Fragment *)::realloc(fragments, 64*fragmentSize);
     if (newFragments) {
         fragments = newFragments;
         head->allocated = 64;
@@ -235,9 +233,9 @@ uint QFragmentMapData<Fragment>::createFragment()
     uint freePos = head->freelist;
     if (freePos == head->allocated) {
         // need to create some free space
-        uint needed = qAllocMore((freePos+1)*fragmentSize, 0);
+        uint needed = ((freePos+1)*fragmentSize);
         Q_ASSERT(needed/fragmentSize > head->allocated);
-        Fragment *newFragments = (Fragment *)realloc(fragments, needed);
+        Fragment *newFragments = (Fragment *)::realloc(fragments, needed);
         Q_CHECK_PTR(newFragments);
         fragments = newFragments;
         head->allocated = needed/fragmentSize;
