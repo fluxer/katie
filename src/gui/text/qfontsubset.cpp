@@ -1485,12 +1485,12 @@ static const char *encodeNumber(int num, char *tmp)
 static QByteArray charString(const QPainterPath &path, qreal advance, qreal lsb, qreal ppem)
 {
     // the charstring commands we need
-    const char *hsbw = "0D";
-    const char *closepath = "09";
-    const char *moveto[3] = { "16", "04", "15" };
-    const char *lineto[3] = { "06", "07", "05" };
-    const char *rcurveto = "08";
-    const char *endchar = "0E";
+    static const char *hsbw = "0D";
+    static const char *closepath = "09";
+    static const char *moveto[3] = { "16", "04", "15" };
+    static const char *lineto[3] = { "06", "07", "05" };
+    static const char *rcurveto = "08";
+    static const char *endchar = "0E";
 
     enum { horizontal = 1,  vertical = 2 };
 
