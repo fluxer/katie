@@ -114,7 +114,7 @@ void qt_find_ellipse_coords(const QRectF &r, qreal angle, qreal length,
 #ifdef QPP_DEBUG
 static void qt_debug_path(const QPainterPath &path)
 {
-    const char *names[] = {
+    static const char *names[] = {
         "MoveTo     ",
         "LineTo     ",
         "CurveTo    ",
@@ -3356,7 +3356,12 @@ void QPainterPath::computeControlPointRect() const
 QDebug operator<<(QDebug s, const QPainterPath &p)
 {
     s.nospace() << "QPainterPath: Element count=" << p.elementCount() << endl;
-    const char *types[] = {"MoveTo", "LineTo", "CurveTo", "CurveToData"};
+    static const char *types[] = {
+        "MoveTo",
+        "LineTo",
+        "CurveTo",
+        "CurveToData"
+    };
     for (int i=0; i<p.elementCount(); ++i) {
         s.nospace() << " -> " << types[p.elementAt(i).type] << "(x=" << p.elementAt(i).x << ", y=" << p.elementAt(i).y << ')' << endl;
 
