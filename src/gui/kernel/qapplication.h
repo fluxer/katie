@@ -74,8 +74,6 @@ public:
     static QStyle *style();
     static void setStyle(QStyle*);
     static QStyle *setStyle(const QString&);
-    QT_DEPRECATED static QString graphicsSystem();
-    QT_DEPRECATED static void setGraphicsSystem(const QString &);
 
 #ifndef QT_NO_CURSOR
     static QCursor *overrideCursor();

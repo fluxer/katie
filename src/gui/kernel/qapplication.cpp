@@ -1065,25 +1065,6 @@ QStyle* QApplication::setStyle(const QString& style)
 }
 
 /*!
-    \since 4.5
-    \obsolete
-*/
-
-QString QApplication::graphicsSystem()
-{
-    return QLatin1String("raster");
-}
-
-/*!
-    \obsolete
-*/
-
-void QApplication::setGraphicsSystem(const QString &system)
-{
-    Q_UNUSED(system);
-}
-
-/*!
     \property QApplication::globalStrut
     \brief the minimum size that any GUI element that the user can interact
            with should have

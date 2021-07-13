@@ -1050,7 +1050,6 @@ QPixmap QPixmap::grabWidget(QWidget * widget, const QRect &rect)
     graphics system is explicitly enabled.
 
     \sa detach()
-    \sa QApplication::setGraphicsSystem()
 */
 
 Qt::HANDLE QPixmap::handle() const
