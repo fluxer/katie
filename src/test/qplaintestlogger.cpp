@@ -212,7 +212,6 @@ namespace QTest {
             result.context.slotName.toAscii().data());
 
         QSTACKARRAY(char, bufTag, 1024);
-        bufTag[0] = 0;
         QByteArray tag = result.context.tag.toAscii();
         if (tag.isEmpty() == false) {
             QTest::qt_snprintf(bufTag, sizeof(bufTag), ":\"%s\"", tag.data());
@@ -229,8 +228,8 @@ namespace QTest {
         const char * unitText = QTest::benchmarkMetricUnit(result.metric);
 
         qreal valuePerIteration = qreal(result.value) / qreal(result.iterations);
-        char resultBuffer[100] = "";
-        formatResult(resultBuffer, 100, valuePerIteration, countSignificantDigits(result.value));
+        QSTACKARRAY(char, resultBuffer, 100);
+        formatResult(resultBuffer, sizeof(resultBuffer), valuePerIteration, countSignificantDigits(result.value));
 
         QSTACKARRAY(char, buf2, 1024);
         QTest::qt_snprintf(
@@ -248,7 +247,7 @@ namespace QTest {
 
         QSTACKARRAY(char, buf3, 1024);
         Q_ASSERT(result.iterations > 0);
-        formatResult(resultBuffer, 100, result.value, countSignificantDigits(result.value));
+        formatResult(resultBuffer, sizeof(resultBuffer), result.value, countSignificantDigits(result.value));
         QTest::qt_snprintf(
             buf3, sizeof(buf3), " (total: %s, iterations: %d)",
             resultBuffer,
