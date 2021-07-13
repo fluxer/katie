@@ -908,7 +908,7 @@ QFontEngineFT::Glyph *QFontEngineFT::loadGlyph(QGlyphSet *set, uint glyph,
         matrix.yx = matrix.xy = 0;
 
         FT_Outline_Transform(&slot->outline, &matrix);
-        FT_Outline_Translate (&slot->outline, (hsubpixel ? -3*left +(4<<6) : -left), -bottom*vfactor);
+        FT_Outline_Translate(&slot->outline, (hsubpixel ? -3*left +(4<<6) : -left), FT_Pos(-bottom) * vfactor);
         FT_Outline_Get_Bitmap(library, &slot->outline, &bitmap);
         if (hsubpixel) {
             Q_ASSERT (bitmap.pixel_mode == FT_PIXEL_MODE_GRAY);
