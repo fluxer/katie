@@ -610,8 +610,8 @@ QByteArray QPdf::generateLinearGradientShader(const QLinearGradient *gradient, c
     int xoff = (int)(orthogonal.x()*factor_x);
     int yoff = (int)(orthogonal.y()*factor_y);
 
-    QByteArray triangles;
-    triangles.resize(spread == QGradient::PadSpread ? 20*(stops.size()+2) : 20*num*stops.size());
+    const int trianglessize = (spread == QGradient::PadSpread ? 20*(stops.size()+2) : 20*num*stops.size());
+    QByteArray triangles(trianglessize, Qt::Uninitialized);
     uchar *data = (uchar *) triangles.data();
     if (spread == QGradient::PadSpread) {
         if (off_min > 0 || off_max < 1) {
