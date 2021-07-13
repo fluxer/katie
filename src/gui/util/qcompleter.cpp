@@ -135,6 +135,8 @@
 #include "QtGui/qdesktopwidget.h"
 #include "QtGui/qlineedit.h"
 
+#include <limits.h>
+
 QT_BEGIN_NAMESPACE
 
 QCompletionModel::QCompletionModel(QCompleterPrivate *c, QObject *parent)

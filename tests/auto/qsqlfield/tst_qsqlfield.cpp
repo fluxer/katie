@@ -26,6 +26,7 @@
 #include <qvariant.h>
 #include <qsqlfield.h>
 
+#include <limits.h>
 
 //TESTED_CLASS=
 //TESTED_FILES=

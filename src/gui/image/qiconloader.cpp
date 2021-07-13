@@ -39,6 +39,8 @@
 
 #include "qstylehelper_p.h"
 
+#include <limits.h>
+
 QT_BEGIN_NAMESPACE
 
 Q_GLOBAL_STATIC(QIconLoader, iconLoaderInstance)

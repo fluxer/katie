@@ -19,10 +19,7 @@
 **
 ****************************************************************************/
 
-#include <new>
 #include "qlist.h"
-#include "qtools_p.h"
-#include <string.h>
 
 QT_BEGIN_NAMESPACE
 
@@ -38,52 +35,6 @@ QT_BEGIN_NAMESPACE
 */
 
 QListData::Data QListData::shared_null = { QAtomicInt(1), 0, 0, 0, { 0 } };
-
-/*!
- *  Detaches the QListData by allocating new memory for a list which will be bigger
- *  than the copied one and is expected to grow further.
- *  *idx is the desired insertion point and is clamped to the actual size of the list.
- *  num is the number of new elements to insert at the insertion point.
- *  Returns the old (shared) data, it is up to the caller to deref() and free().
- *  For the new data node_copy needs to be called.
- *
- *  \internal
- */
-QListData::Data *QListData::detach_grow(int *idx, int num)
-{
-    Data *x = d;
-    int l = x->end - x->begin;
-    int nl = l + num;
-    int alloc = qAllocMore(nl * QT_POINTER_SIZE, QListData::DataHeaderSize) / QT_POINTER_SIZE;
-    Data* t = static_cast<Data *>(::malloc(DataHeaderSize + alloc * QT_POINTER_SIZE));
-    Q_CHECK_PTR(t);
-
-    t->ref = 1;
-    t->alloc = alloc;
-    // The space reservation algorithm's optimization is biased towards appending:
-    // Something which looks like an append will put the data at the beginning,
-    // while something which looks like a prepend will put it in the middle
-    // instead of at the end. That's based on the assumption that prepending
-    // is uncommon and even an initial prepend will eventually be followed by
-    // at least some appends.
-    int bg;
-    if (*idx < 0) {
-        *idx = 0;
-        bg = (alloc - nl) >> 1;
-    } else if (*idx > l) {
-        *idx = l;
-        bg = 0;
-    } else if (*idx < (l >> 1)) {
-        bg = (alloc - nl) >> 1;
-    } else {
-        bg = 0;
-    }
-    t->begin = bg;
-    t->end = bg + nl;
-    d = t;
-
-    return x;
-}
 
 /*!
  *  Detaches the QListData by allocating new memory for a list which possibly
