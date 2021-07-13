@@ -49,6 +49,7 @@
 #include "qpaintengine_x11_p.h"
 #include "qt_x11_p.h"
 #include "qguicommon_p.h"
+#include "qcorecommon_p.h"
 
 #ifndef QT_NO_XRENDER
 #include "qtessellator_p.h"
@@ -1147,7 +1148,7 @@ void QX11PaintEngine::updatePen(const QPen &pen)
         break;
     }
 
-    char dashes[6];                             // custom pen dashes
+    QSTACKARRAY(char, dashes, 6);               // custom pen dashes
     int dash_len = 0;                           // length of dash list
     int xStyle = LineSolid;
 
