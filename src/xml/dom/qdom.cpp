@@ -3000,8 +3000,8 @@ int QDomNode::columnNumber() const
 
 QDomNamedNodeMapPrivate::QDomNamedNodeMapPrivate(QDomNodePrivate* n)
     : ref(1),
-    readonly(false),
     parent(n),
+    readonly(false),
     appendToParent(false)
 {
 }
