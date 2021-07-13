@@ -24,6 +24,7 @@
 
 #include "qdebug.h"
 #include "qendian.h"
+#include "qcorecommon_p.h"
 
 #ifndef QT_NO_NETWORKINTERFACE
 
@@ -109,7 +110,7 @@ QString QNetworkInterfacePrivate::makeHwAddress(int len, uchar *data)
         if (i)
             result += QLatin1Char(':');
 
-        char buf[3];
+        QSTACKARRAY(char, buf, 3);
         sprintf(buf, "%02hX", ushort(data[i]));
         result += QString::fromLatin1(buf);
     }
