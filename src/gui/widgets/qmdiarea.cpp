@@ -163,7 +163,7 @@ using namespace QMdi;
 static bool sanityCheck(const QMdiSubWindow * const child, const char *where)
 {
     if (!child) {
-        const char error[] = "null pointer";
+        static const char error[] = "null pointer";
         Q_ASSERT_X(false, where, error);
         qWarning("%s:%s", where, error);
         return false;
@@ -174,13 +174,13 @@ static bool sanityCheck(const QMdiSubWindow * const child, const char *where)
 static bool sanityCheck(const QList<QWidget *> &widgets, const int index, const char *where)
 {
     if (index < 0 || index >= widgets.size()) {
-        const char error[] = "index out of range";
+        static const char error[] = "index out of range";
         Q_ASSERT_X(false, where, error);
         qWarning("%s:%s", where, error);
         return false;
     }
     if (!widgets.at(index)) {
-        const char error[] = "null pointer";
+        static const char error[] = "null pointer";
         Q_ASSERT_X(false, where, error);
         qWarning("%s:%s", where, error);
         return false;
