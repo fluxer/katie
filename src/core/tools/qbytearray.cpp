@@ -21,7 +21,6 @@
 
 #include "qbytearray.h"
 #include "qbytearraymatcher.h"
-#include "qtools_p.h"
 #include "qstring.h"
 #include "qlist.h"
 #include "qlocale.h"
@@ -52,33 +51,6 @@ QT_BEGIN_NAMESPACE
 int qFindByteArray(
     const char *haystack0, int haystackLen, int from,
     const char *needle0, int needleLen);
-
-
-int qAllocMore(int alloc, int extra)
-{
-    Q_ASSERT(alloc >= 0 && extra >= 0);
-    Q_ASSERT_X(alloc < (1 << 30) - extra, "qAllocMore", "Requested size is too large!");
-
-    if (alloc == 0 && extra == 0)
-        return 0;
-    const int page = 1 << 12;
-    int nalloc;
-    alloc += extra;
-    if (alloc < 1<<6) {
-        nalloc = (1<<3) + ((alloc >>3) << 3);
-    } else  {
-        // don't do anything if the loop will overflow signed int.
-        if (alloc >= INT_MAX/2)
-            return INT_MAX;
-        nalloc = (alloc < page) ? 1 << 3 : page;
-        while (nalloc < alloc) {
-            if (nalloc <= 0)
-                return INT_MAX;
-            nalloc *= 2;
-        }
-    }
-    return nalloc - extra;
-}
 
 /*****************************************************************************
   Safe and portable C string functions; extensions to standard string.h

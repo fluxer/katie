@@ -262,7 +262,6 @@ set(CORE_HEADERS
     ${CMAKE_CURRENT_SOURCE_DIR}/tools/qrect.h
     ${CMAKE_CURRENT_SOURCE_DIR}/tools/qregexp.h
     ${CMAKE_CURRENT_SOURCE_DIR}/tools/qringbuffer_p.h
-    ${CMAKE_CURRENT_SOURCE_DIR}/tools/qtools_p.h
     ${CMAKE_CURRENT_SOURCE_DIR}/tools/qscopedpointer.h
     ${CMAKE_CURRENT_SOURCE_DIR}/tools/qscopedpointer_p.h
     ${CMAKE_CURRENT_SOURCE_DIR}/tools/qscopedvaluerollback.h

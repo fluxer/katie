@@ -19,9 +19,7 @@
 **
 ****************************************************************************/
 
-#include "qtools_p.h"
 #include "qdebug.h"
-
 #include "qtextdocument_p.h"
 #include "qtextdocument.h"
 #include "qtextformat.h"

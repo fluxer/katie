@@ -20,7 +20,8 @@
 ****************************************************************************/
 
 #include "qvector.h"
-#include "qtools_p.h"
+
+#include <limits.h>
 
 QT_BEGIN_NAMESPACE
 
@@ -28,18 +29,44 @@ QVectorData QVectorData::shared_null = { QAtomicInt(1), 0, 0, false };
 
 QVectorData *QVectorData::allocate(int size)
 {
-    return static_cast<QVectorData *>(malloc(size));
+    return static_cast<QVectorData *>(::malloc(size));
 }
 
 QVectorData *QVectorData::reallocate(QVectorData *x, int newsize)
 {
-    return static_cast<QVectorData *>(realloc(x, newsize));
+    return static_cast<QVectorData *>(::realloc(x, newsize));
 }
 
 void QVectorData::freeData(QVectorData *x)
 {
-    if(x != &shared_null)
-        free(x);
+    if (x != &shared_null)
+        ::free(x);
+}
+
+static int qAllocMore(int alloc, int extra)
+{
+    Q_ASSERT(alloc >= 0 && extra >= 0);
+    Q_ASSERT_X(alloc < (1 << 30) - extra, "qAllocMore", "Requested size is too large!");
+
+    if (alloc == 0 && extra == 0)
+        return 0;
+    const int page = 1 << 12;
+    int nalloc;
+    alloc += extra;
+    if (alloc < 1<<6) {
+        nalloc = (1<<3) + ((alloc >>3) << 3);
+    } else  {
+        // don't do anything if the loop will overflow signed int.
+        if (alloc >= INT_MAX/2)
+            return INT_MAX;
+        nalloc = (alloc < page) ? 1 << 3 : page;
+        while (nalloc < alloc) {
+            if (nalloc <= 0)
+                return INT_MAX;
+            nalloc *= 2;
+        }
+    }
+    return nalloc - extra;
 }
 
 int QVectorData::grow(int sizeofTypedData, int size, int sizeofT, bool excessive)
