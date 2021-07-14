@@ -101,7 +101,7 @@ public:
 
     inline int size() const { return p.size(); }
 
-    inline void detach() { if (d->ref != 1) detach_helper(); }
+    inline void detach() { if (d->ref != 1) detach_helper(d->alloc); }
     inline bool isDetached() const { return d->ref == 1; }
 
     inline bool isEmpty() const { return p.isEmpty(); }
@@ -290,7 +290,6 @@ public:
 
 private:
     void detach_helper(int alloc);
-    void detach_helper();
 
     void node_construct(Node *n, const T &t);
     void node_destruct(Node *n);
@@ -583,12 +582,6 @@ Q_OUTOFLINE_TEMPLATE void QList<T>::detach_helper(int alloc)
 
     if (!x->ref.deref())
         QListData::freeData(x);
-}
-
-template <typename T>
-Q_OUTOFLINE_TEMPLATE void QList<T>::detach_helper()
-{
-    detach_helper(d->alloc);
 }
 
 template <typename T>
