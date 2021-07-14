@@ -1011,7 +1011,7 @@ void qBadAlloc()
 static void qt_print_backtrace()
 {
     ::setvbuf(stderr, Q_NULLPTR, _IONBF, 0);
-    void *buffer[256];
+    QSTACKARRAY(void*, buffer, 256);
     int  nptrs = backtrace(buffer, sizeof(buffer));
     char **strings = backtrace_symbols(buffer, nptrs);
     if (!strings) {
