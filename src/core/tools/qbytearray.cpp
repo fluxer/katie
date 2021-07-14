@@ -43,7 +43,7 @@
 #include <zstd_errors.h>
 #endif // QT_NO_COMPRESS
 
-#define IS_RAW_DATA(d) ((d)->data != (d)->array)
+#define IS_RAW_DATA(d) ((d)->data == (d)->array)
 
 QT_BEGIN_NAMESPACE
 
@@ -1459,9 +1459,8 @@ void QByteArray::expand(int i)
 */
 QByteArray QByteArray::nulTerminated() const
 {
-    // is this fromRawData?
-    if (d->data == d->array)
-        return *this;           // no, then we're sure we're zero terminated
+    if (IS_RAW_DATA(d))
+        return *this; // it is zero terminated
 
     QByteArray copy(*this);
     copy.detach();
@@ -1491,7 +1490,7 @@ QByteArray QByteArray::nulTerminated() const
 
 QByteArray &QByteArray::prepend(const QByteArray &ba)
 {
-    if ((d == &shared_null || d == &shared_empty) && !IS_RAW_DATA(ba.d)) {
+    if ((d == &shared_null || d == &shared_empty) && IS_RAW_DATA(ba.d)) {
         *this = ba;
     } else if (ba.d != &shared_null) {
         QByteArray tmp = *this;
@@ -1575,7 +1574,7 @@ QByteArray &QByteArray::prepend(char ch)
 
 QByteArray &QByteArray::append(const QByteArray &ba)
 {
-    if ((d == &shared_null || d == &shared_empty) && !IS_RAW_DATA(ba.d)) {
+    if ((d == &shared_null || d == &shared_empty) && IS_RAW_DATA(ba.d)) {
         *this = ba;
     } else if (ba.d != &shared_null) {
         if (d->ref != 1 || d->size + ba.d->size > d->alloc)
