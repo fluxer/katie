@@ -49,7 +49,7 @@ struct QVectorTypedData : private QVectorData
   // as this would break strict aliasing rules. (in the case of shared_null)
     T array[1];
 
-    static inline void free(QVectorTypedData<T> *x) { QVectorData::freeData(static_cast<QVectorData *>(x)); }
+    static inline void freeTypeData(QVectorTypedData<T> *x) { QVectorData::freeData(static_cast<QVectorData *>(x)); }
 };
 
 template <typename T>
@@ -68,7 +68,7 @@ public:
     explicit QVector(int size);
     QVector(int size, const T &t);
     inline QVector(const QVector<T> &v) : d(v.d) { d->ref.ref(); }
-    inline ~QVector() { if (!d->ref.deref()) free(p); }
+    inline ~QVector() { if (!d->ref.deref()) freeData(p); }
     QVector<T> &operator=(const QVector<T> &v);
 #ifdef Q_COMPILER_RVALUE_REFS
     inline QVector<T> operator=(QVector<T> &&other)
@@ -89,7 +89,7 @@ public:
 
     inline int capacity() const { return d->alloc; }
     void reserve(int size);
-    inline void squeeze() { realloc(d->size, d->size); d->capacity = false; }
+    inline void squeeze() { reallocData(d->size, d->size); d->capacity = false; }
 
     inline void detach() { if (d->ref != 1) detach_helper(); }
     inline bool isDetached() const { return d->ref == 1; }
@@ -255,9 +255,9 @@ public:
     { std::vector<T> tmp; tmp.reserve(size()); qCopy(constBegin(), constEnd(), std::back_inserter(tmp)); return tmp; }
 private:
     void detach_helper();
-    QVectorData *malloc(int alloc);
-    void realloc(int size, int alloc);
-    void free(Data *d);
+    QVectorData *mallocData(int alloc);
+    void reallocData(int size, int alloc);
+    void freeData(Data *d);
     int sizeOfTypedData() {
         // this is more or less the same as sizeof(Data), except that it doesn't
         // count the padding at the end
@@ -267,13 +267,13 @@ private:
 
 template <typename T>
 void QVector<T>::detach_helper()
-{ realloc(d->size, d->alloc); }
+{ reallocData(d->size, d->alloc); }
 template <typename T>
 void QVector<T>::reserve(int asize)
-{ if (asize > d->alloc) realloc(d->size, asize); if (d->ref == 1) d->capacity = true; }
+{ if (asize > d->alloc) reallocData(d->size, asize); if (d->ref == 1) d->capacity = true; }
 template <typename T>
 void QVector<T>::resize(int asize)
-{ realloc(asize, (asize > d->alloc || (!d->capacity && asize < d->size && asize < (d->alloc >> 1))) ?
+{ reallocData(asize, (asize > d->alloc || (!d->capacity && asize < d->size && asize < (d->alloc >> 1))) ?
           QVectorData::grow(sizeOfTypedData(), asize, sizeof(T), QTypeInfo<T>::isStatic)
           : d->alloc); }
 template <typename T>
@@ -324,13 +324,13 @@ QVector<T> &QVector<T>::operator=(const QVector<T> &v)
     QVectorData *o = v.d;
     o->ref.ref();
     if (!d->ref.deref())
-        free(p);
+        freeData(p);
     d = o;
     return *this;
 }
 
 template <typename T>
-inline QVectorData *QVector<T>::malloc(int aalloc)
+inline QVectorData *QVector<T>::mallocData(int aalloc)
 {
     QVectorData *vectordata = QVectorData::allocate(sizeOfTypedData() + (aalloc - 1) * sizeof(T));
     Q_CHECK_PTR(vectordata);
@@ -340,7 +340,7 @@ inline QVectorData *QVector<T>::malloc(int aalloc)
 template <typename T>
 QVector<T>::QVector(int asize)
 {
-    d = malloc(asize);
+    d = mallocData(asize);
     d->ref = 1;
     d->alloc = d->size = asize;
     d->capacity = false;
@@ -357,7 +357,7 @@ QVector<T>::QVector(int asize)
 template <typename T>
 QVector<T>::QVector(int asize, const T &t)
 {
-    d = malloc(asize);
+    d = mallocData(asize);
     d->ref = 1;
     d->alloc = d->size = asize;
     d->capacity = false;
@@ -370,7 +370,7 @@ QVector<T>::QVector(int asize, const T &t)
 template <typename T>
 QVector<T>::QVector(std::initializer_list<T> args)
 {
-    d = malloc(int(args.size()));
+    d = mallocData(int(args.size()));
     d->ref = 1;
     d->alloc = d->size = int(args.size());
     d->capacity = false;
@@ -382,7 +382,7 @@ QVector<T>::QVector(std::initializer_list<T> args)
 #endif
 
 template <typename T>
-void QVector<T>::free(Data *x)
+void QVector<T>::freeData(Data *x)
 {
     if (QTypeInfo<T>::isComplex) {
         T* b = x->array;
@@ -392,11 +392,11 @@ void QVector<T>::free(Data *x)
         while (i-- != b)
              i->~T();
     }
-    x->free(x);
+    x->freeTypeData(x);
 }
 
 template <typename T>
-void QVector<T>::realloc(int asize, int aalloc)
+void QVector<T>::reallocData(int asize, int aalloc)
 {
     Q_ASSERT(asize <= aalloc);
     T *pOld;
@@ -418,11 +418,11 @@ void QVector<T>::realloc(int asize, int aalloc)
     if (aalloc != d->alloc || d->ref != 1) {
         // (re)allocate memory
         if (QTypeInfo<T>::isStatic) {
-            x.d = malloc(aalloc);
+            x.d = mallocData(aalloc);
             Q_CHECK_PTR(x.p);
             x.d->size = 0;
         } else if (d->ref != 1) {
-            x.d = malloc(aalloc);
+            x.d = mallocData(aalloc);
             Q_CHECK_PTR(x.p);
             if (QTypeInfo<T>::isComplex) {
                 x.d->size = 0;
@@ -457,7 +457,7 @@ void QVector<T>::realloc(int asize, int aalloc)
                 x.d->size++;
             }
         } QT_CATCH (...) {
-            free(x.p);
+            freeData(x.p);
             QT_RETHROW;
         }
 
@@ -469,7 +469,7 @@ void QVector<T>::realloc(int asize, int aalloc)
 
     if (d != x.d) {
         if (!d->ref.deref())
-            free(p);
+            freeData(p);
         d = x.d;
     }
 }
@@ -492,7 +492,7 @@ template <typename T>
 void QVector<T>::append(const T &t)
 {
     if (d->ref != 1 || d->size + 1 > d->alloc) {
-        realloc(d->size, QVectorData::grow(sizeOfTypedData(), d->size + 1, sizeof(T),
+        reallocData(d->size, QVectorData::grow(sizeOfTypedData(), d->size + 1, sizeof(T),
                                            QTypeInfo<T>::isStatic));
         if (QTypeInfo<T>::isComplex)
             new (p->array + d->size) T(t);
@@ -513,7 +513,7 @@ Q_TYPENAME QVector<T>::iterator QVector<T>::insert(iterator before, size_type n,
     int offset = int(before - p->array);
     if (n != 0) {
         if (d->ref != 1 || d->size + n > d->alloc)
-            realloc(d->size, QVectorData::grow(sizeOfTypedData(), d->size + n, sizeof(T),
+            reallocData(d->size, QVectorData::grow(sizeOfTypedData(), d->size + n, sizeof(T),
                                                QTypeInfo<T>::isStatic));
         if (QTypeInfo<T>::isStatic) {
             T *b = p->array + d->size;
@@ -595,7 +595,7 @@ template <typename T>
 QVector<T> &QVector<T>::operator+=(const QVector &l)
 {
     int newSize = d->size + l.d->size;
-    realloc(d->size, newSize);
+    reallocData(d->size, newSize);
 
     T *w = p->array + newSize;
     T *i = l.p->array + l.d->size;
