@@ -68,7 +68,7 @@ bool _q_fromHex(const Char *&src, Integral &value)
 }
 
 template <class Char>
-void _q_uuidToHex(Char *&dst, const uint &d1, const ushort &d2, const ushort &d3, const uchar (&d4)[8])
+void _q_uuidToHex(Char *dst, const uint &d1, const ushort &d2, const ushort &d3, const uchar (&d4)[8])
 {
     *dst++ = Char('{');
     _q_toHex(dst, d1);
@@ -428,12 +428,9 @@ QUuid QUuid::fromRfc4122(const QByteArray &bytes)
 */
 QString QUuid::toString() const
 {
-    QString result(38, Qt::Uninitialized);
-    ushort *data = (ushort *)result.unicode();
-
+    QSTACKARRAY(QChar, data, 38);
     _q_uuidToHex(data, data1, data2, data3, data4);
-
-    return result;
+    return QString(data, 38);
 }
 
 /*!
@@ -474,12 +471,9 @@ QString QUuid::toString() const
 */
 QByteArray QUuid::toByteArray() const
 {
-    QByteArray result(38, Qt::Uninitialized);
-    char *data = result.data();
-
+    QSTACKARRAY(char, data, 38);
     _q_uuidToHex(data, data1, data2, data3, data4);
-
-    return result;
+    return QByteArray(data, 38);
 }
 #endif
 
