@@ -6745,7 +6745,7 @@ QDataStream &operator<<(QDataStream &out, const QString &str)
         if ((out.byteOrder() == QDataStream::BigEndian) == (QSysInfo::ByteOrder == QSysInfo::BigEndian)) {
             out.writeBytes(reinterpret_cast<const char *>(str.unicode()), sizeof(QChar) * str.length());
         } else {
-            ushort buffer[str.length()];
+            QSTACKARRAY(ushort, buffer, str.length());
             const ushort *data = reinterpret_cast<const ushort *>(str.constData());
             for (int i = 0; i < str.length(); i++) {
                 buffer[i] = qbswap(*data);
