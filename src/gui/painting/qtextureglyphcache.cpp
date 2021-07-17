@@ -102,7 +102,6 @@ bool QTextureGlyphCache::populate(QFontEngine *fontEngine, int numGlyphs, const 
 #endif
 
     m_current_fontengine = fontEngine;
-    const int margin = glyphMargin();
 
     bool supportsSubPixelPositions = fontEngine->supportsSubPixelPositions();
     if (m_subPixelPositionCount == 0) {
@@ -163,8 +162,8 @@ bool QTextureGlyphCache::populate(QFontEngine *fontEngine, int numGlyphs, const 
             coords.insert(key, c);
             continue;
         }
-        glyph_width += margin * 2 + 4;
-        glyph_height += margin * 2 + 4;
+        glyph_width += 4;
+        glyph_height += 4;
         // align to 8-bit boundary
         if (m_type == QFontEngineGlyphCache::Raster_Mono)
             glyph_width = (glyph_width+7)&~7;
@@ -193,7 +192,7 @@ bool QTextureGlyphCache::populate(QFontEngine *fontEngine, int numGlyphs, const 
     while (iter != listItemCoordinates.constEnd()) {
         Coord c = iter.value();
 
-        m_currentRowHeight = qMax(m_currentRowHeight, c.h + margin * 2);
+        m_currentRowHeight = qMax(m_currentRowHeight, c.h * 2);
 
         if (m_cx + c.w > requiredWidth) {
             int new_width = requiredWidth*2;
@@ -205,7 +204,7 @@ bool QTextureGlyphCache::populate(QFontEngine *fontEngine, int numGlyphs, const 
                 // no room on the current line, start new glyph strip
                 m_cx = 0;
                 m_cy += m_currentRowHeight;
-                m_currentRowHeight = c.h + margin * 2; // New row
+                m_currentRowHeight = c.h * 2; // New row
             }
         }
 
@@ -336,15 +335,6 @@ void QImageTextureGlyphCache::createTextureData(int width, int height)
     }
 }
 
-int QImageTextureGlyphCache::glyphMargin() const
-{
-#if defined(Q_WS_X11)
-    return 0;
-#else
-    return m_type == QFontEngineGlyphCache::Raster_RGBMask ? 2 : 0;
-#endif
-}
-
 void QImageTextureGlyphCache::fillTexture(const Coord &c, glyph_t g, QFixed subPixelPosition)
 {
     QImage mask = textureMapForGlyph(g, subPixelPosition);
@@ -429,7 +419,7 @@ void QImageTextureGlyphCache::fillTexture(const Coord &c, glyph_t g, QFixed subP
 #ifdef CACHE_DEBUG
 //     QPainter p(&m_image);
 //     p.drawLine(
-    QPoint base(c.x + glyphMargin(), c.y + glyphMargin() + c.baseLineY-1);
+    QPoint base(c.x, c.y + c.baseLineY-1);
     if (m_image.rect().contains(base))
         m_image.setPixel(base, 255);
     m_image.save(QString::fromLatin1("cache-%1.png").arg(qint64(this)));

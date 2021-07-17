@@ -2239,7 +2239,6 @@ bool QRasterPaintEngine::drawCachedGlyphs(int numGlyphs, const glyph_t *glyphs,
         else if (depth == 1)
             rightShift = 3; // divide by 8
 
-        int margin = cache->glyphMargin();
         const uchar *bits = image.constBits();
         for (int i=0; i<numGlyphs; ++i) {
 
@@ -2249,8 +2248,8 @@ bool QRasterPaintEngine::drawCachedGlyphs(int numGlyphs, const glyph_t *glyphs,
             if (c.isNull())
                 continue;
 
-            int x = qFloor(positions[i].x) + c.baseLineX - margin;
-            int y = qFloor(positions[i].y + offs) - c.baseLineY - margin;
+            int x = qFloor(positions[i].x) + c.baseLineX ;
+            int y = qFloor(positions[i].y + offs) - c.baseLineY;
 
             // printf("drawing [%d %d %d %d] baseline [%d %d], glyph: %d, to: %d %d, pos: %d %d\n",
             //        c.x, c.y,
