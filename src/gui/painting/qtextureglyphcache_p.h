@@ -40,9 +40,7 @@
 
 #include "qfontengineglyphcache_p.h"
 
-#ifndef QT_DEFAULT_TEXTURE_GLYPH_CACHE_WIDTH
 #define QT_DEFAULT_TEXTURE_GLYPH_CACHE_WIDTH 256
-#endif
 
 struct glyph_metrics_t;
 typedef unsigned int glyph_t;
