@@ -613,25 +613,24 @@ void QProcessPrivate::Channel::clear()
 /*! \internal
 */
 QProcessPrivate::QProcessPrivate()
+    : processChannel(QProcess::StandardOutput),
+    processChannelMode(QProcess::SeparateChannels),
+    processError(QProcess::UnknownError),
+    processState(QProcess::NotRunning),
+    pid(0),
+    dying(false),
+    emittedReadyRead(false),
+    emittedBytesWritten(false),
+    startupSocketNotifier(Q_NULLPTR),
+    deathNotifier(Q_NULLPTR),
+    exitCode(0),
+    exitStatus(QProcess::NormalExit),
+    crashed(false)
 {
-    processChannel = QProcess::StandardOutput;
-    processChannelMode = QProcess::SeparateChannels;
-    processError = QProcess::UnknownError;
-    processState = QProcess::NotRunning;
-    pid = 0;
-    exitCode = 0;
-    exitStatus = QProcess::NormalExit;
-    startupSocketNotifier = 0;
-    deathNotifier = 0;
     childStartedPipe[0] = INVALID_Q_PIPE;
     childStartedPipe[1] = INVALID_Q_PIPE;
     deathPipe[0] = INVALID_Q_PIPE;
     deathPipe[1] = INVALID_Q_PIPE;
-    exitCode = 0;
-    crashed = false;
-    dying = false;
-    emittedReadyRead = false;
-    emittedBytesWritten = false;
 }
 
 /*! \internal
@@ -1810,11 +1809,7 @@ void QProcess::terminate()
 /*!
     Kills the current process, causing it to exit immediately.
 
-    On Windows, kill() uses TerminateProcess, and on Unix and Mac OS X, the
-    SIGKILL signal is sent to the process.
-
-    On Symbian, this function requires platform security capability
-    \c PowerMgmt. If absent, the process will panic with KERN-EXEC 46.
+    On Unix the SIGKILL signal is sent to the process.
 
     \note Killing running processes from other processes will typically
     cause a panic in Symbian due to platform security.
