@@ -198,8 +198,9 @@ QHostInfo QHostInfoAgent::fromName(const QString &hostName)
 QString QHostInfo::localHostName()
 {
     static long size_max = sysconf(_SC_HOST_NAME_MAX);
-    if (size_max == -1)
+    if (size_max == -1) {
         size_max = _POSIX_HOST_NAME_MAX;
+    }
     QSTACKARRAY(char, gethostbuff, size_max);
     if (Q_LIKELY(::gethostname(gethostbuff, size_max) == 0)) {
         return QString::fromLocal8Bit(gethostbuff);
@@ -212,16 +213,16 @@ QString QHostInfo::localDomainName()
 #if defined(QT_HAVE_GETDOMAINNAME)
     // thread-safe
     static long size_max = sysconf(_SC_HOST_NAME_MAX);
-    if (size_max == -1)
+    if (size_max == -1) {
         size_max = _POSIX_HOST_NAME_MAX;
-    Q_ASSERT(size_max >= 1);
-    QByteArray getdomainbuff(size_max, Qt::Uninitialized);
-    if (Q_LIKELY(::getdomainname(getdomainbuff.data(), getdomainbuff.size()) == 0)) {
-        if (getdomainbuff == "(none)") {
+    }
+    QSTACKARRAY(char, getdomainbuff, size_max);
+    if (Q_LIKELY(::getdomainname(getdomainbuff, sizeof(getdomainbuff)) == 0)) {
+        if (qstrncmp("(none)", getdomainbuff, 6) == 0) {
             // not set
             return QString();
         }
-        return QUrl::fromAce(getdomainbuff);
+        return QUrl::fromAce(QByteArray(getdomainbuff));
     }
     return QString();
 #else
