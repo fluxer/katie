@@ -41,9 +41,10 @@ QT_BEGIN_NAMESPACE
 
 struct QReadWriteLockPrivate
 {
-    QReadWriteLockPrivate(QReadWriteLock::RecursionMode recursionMode)
-        : accessCount(0), waitingReaders(0), waitingWriters(0),
-          recursive(recursionMode == QReadWriteLock::Recursive), currentWriter(0)
+    QReadWriteLockPrivate()
+        : accessCount(0),
+        waitingReaders(0),
+        waitingWriters(0)
     { }
 
     QMutex mutex;
@@ -53,10 +54,6 @@ struct QReadWriteLockPrivate
     int accessCount;
     int waitingReaders;
     int waitingWriters;
-
-    const bool recursive;
-    Qt::HANDLE currentWriter;
-    QHash<Qt::HANDLE, int> currentReaders;
 };
 
 QT_END_NAMESPACE

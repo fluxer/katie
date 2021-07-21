@@ -223,45 +223,6 @@ void tst_QWaitCondition::wait_QMutex()
 
 void tst_QWaitCondition::wait_QReadWriteLock()
 {
-    {
-        QReadWriteLock readWriteLock(QReadWriteLock::Recursive);
-        QWaitCondition waitCondition;
-
-        // ensure that the lockForRead is correctly restored
-        readWriteLock.lockForRead();
-
-        QVERIFY(!waitCondition.wait(&readWriteLock, 1));
-
-        QVERIFY(!readWriteLock.tryLockForWrite());
-        QVERIFY(readWriteLock.tryLockForRead());
-        readWriteLock.unlock();
-        QVERIFY(!readWriteLock.tryLockForWrite());
-        readWriteLock.unlock();
-
-        QVERIFY(readWriteLock.tryLockForWrite());
-        readWriteLock.unlock();
-    }
-
-    {
-        QReadWriteLock readWriteLock(QReadWriteLock::Recursive);
-        QWaitCondition waitCondition;
-
-        // ensure that the lockForWrite is correctly restored
-        readWriteLock.lockForWrite();
-
-        QVERIFY(!waitCondition.wait(&readWriteLock, 1));
-
-        QVERIFY(!readWriteLock.tryLockForRead());
-        QVERIFY(readWriteLock.tryLockForWrite());
-        readWriteLock.unlock();
-        QVERIFY(!readWriteLock.tryLockForRead());
-        readWriteLock.unlock();
-
-        QVERIFY(readWriteLock.tryLockForRead());
-        readWriteLock.unlock();
-    }
-
-
     int x;
     for (int i = 0; i < iterations; ++i) {
     {
@@ -299,26 +260,26 @@ void tst_QWaitCondition::wait_QReadWriteLock()
         wait_QReadWriteLock_Thread_1 thread[ThreadCount];
 
         for (x = 0; x < ThreadCount; ++x) {
-        thread[x].readWriteLock.lockForRead();
-        thread[x].start();
-        // wait for thread to start
-        QVERIFY(thread[x].cond.wait(&thread[x].readWriteLock, 1000));
-        thread[x].readWriteLock.unlock();
+            thread[x].readWriteLock.lockForRead();
+            thread[x].start();
+            // wait for thread to start
+            QVERIFY(thread[x].cond.wait(&thread[x].readWriteLock, 1000));
+            thread[x].readWriteLock.unlock();
         }
 
         for (x = 0; x < ThreadCount; ++x) {
-        QVERIFY(thread[x].isRunning());
-        QVERIFY(!thread[x].isFinished());
+            QVERIFY(thread[x].isRunning());
+            QVERIFY(!thread[x].isFinished());
         }
 
         for (x = 0; x < ThreadCount; ++x) {
-        thread[x].readWriteLock.lockForRead();
-        thread[x].cond.wakeOne();
-        thread[x].readWriteLock.unlock();
+            thread[x].readWriteLock.lockForRead();
+            thread[x].cond.wakeOne();
+            thread[x].readWriteLock.unlock();
         }
 
         for (x = 0; x < ThreadCount; ++x) {
-        QVERIFY(thread[x].wait(1000));
+            QVERIFY(thread[x].wait(1000));
         }
     }
 
@@ -330,17 +291,17 @@ void tst_QWaitCondition::wait_QReadWriteLock()
 
         readWriteLock.lockForWrite();
         for (x = 0; x < ThreadCount; ++x) {
-        thread[x].readWriteLock = &readWriteLock;
-        thread[x].cond = (x < ThreadCount / 2) ? &cond1 : &cond2;
-        thread[x].start();
-        // wait for thread to start
-        QVERIFY(thread[x].started.wait(&readWriteLock, 1000));
+            thread[x].readWriteLock = &readWriteLock;
+            thread[x].cond = (x < ThreadCount / 2) ? &cond1 : &cond2;
+            thread[x].start();
+            // wait for thread to start
+            QVERIFY(thread[x].started.wait(&readWriteLock, 1000));
         }
         readWriteLock.unlock();
 
         for (x = 0; x < ThreadCount; ++x) {
-        QVERIFY(thread[x].isRunning());
-        QVERIFY(!thread[x].isFinished());
+            QVERIFY(thread[x].isRunning());
+            QVERIFY(!thread[x].isFinished());
         }
 
         readWriteLock.lockForWrite();
@@ -349,7 +310,7 @@ void tst_QWaitCondition::wait_QReadWriteLock()
         readWriteLock.unlock();
 
         for (x = 0; x < ThreadCount; ++x) {
-        QVERIFY(thread[x].wait(1000));
+            QVERIFY(thread[x].wait(1000));
         }
     }
     }

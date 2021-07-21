@@ -35,9 +35,7 @@ struct QReadWriteLockPrivate;
 class Q_CORE_EXPORT QReadWriteLock
 {
 public:
-    enum RecursionMode { NonRecursive, Recursive };
-
-    QReadWriteLock(RecursionMode recursionMode = NonRecursive);
+    QReadWriteLock();
     ~QReadWriteLock();
 
     void lockForRead();
@@ -151,8 +149,7 @@ inline QWriteLocker::QWriteLocker(QReadWriteLock *areadWriteLock)
 class Q_CORE_EXPORT QReadWriteLock
 {
 public:
-    enum RecursionMode { NonRecursive, Recursive };
-    inline explicit QReadWriteLock(RecursionMode = NonRecursive) { }
+    inline explicit QReadWriteLock() { }
     inline ~QReadWriteLock() { }
 
     static inline void lockForRead() { }
