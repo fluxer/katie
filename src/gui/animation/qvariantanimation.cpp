@@ -134,7 +134,7 @@ QT_BEGIN_NAMESPACE
     \sa currentValue
 */
 
-Q_GLOBAL_STATIC_WITH_ARGS(QMutex, qVariantAnimationMutex, (QMutex::Recursive))
+static std::recursive_mutex qGlobalVariantAnimationMutex;
 
 static bool animationValueLessThan(const QVariantAnimation::KeyValue &p1, const QVariantAnimation::KeyValue &p2)
 {
@@ -413,7 +413,7 @@ void QVariantAnimation::registerInterpolator(QVariantAnimation::Interpolator fun
     // in such an order that we get here with interpolators == NULL,
     // to continue causes the app to crash on exit with a SEGV
     if (interpolators) {
-        QMutexLocker locker(qVariantAnimationMutex());
+        std::lock_guard<std::recursive_mutex> locker(qGlobalVariantAnimationMutex);
         if (interpolationType >= interpolators->count())
             interpolators->resize(interpolationType + 1);
         interpolators->replace(interpolationType, func);
@@ -423,7 +423,7 @@ void QVariantAnimation::registerInterpolator(QVariantAnimation::Interpolator fun
 QVariantAnimation::Interpolator QVariantAnimationPrivate::getInterpolator(int interpolationType)
 {
     QInterpolatorVector *interpolators = registeredInterpolators();
-    QMutexLocker locker(qVariantAnimationMutex());
+    std::lock_guard<std::recursive_mutex> locker(qGlobalVariantAnimationMutex);
     if (interpolationType < interpolators->count()) {
         QVariantAnimation::Interpolator ret = interpolators->at(interpolationType);
         if (ret) return ret;

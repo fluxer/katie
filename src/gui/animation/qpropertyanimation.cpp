@@ -77,7 +77,7 @@
 
 QT_BEGIN_NAMESPACE
 
-Q_GLOBAL_STATIC_WITH_ARGS(QMutex, qPropertyAnimationMutex, (QMutex::Recursive))
+static std::recursive_mutex qGlobalPropertyAnimationMutex;
 
 void QPropertyAnimationPrivate::updateMetaProperty()
 {
@@ -242,7 +242,7 @@ void QPropertyAnimation::updateState(QAbstractAnimation::State newState,
 
     QPropertyAnimation *animToStop = 0;
     {
-        QMutexLocker locker(qPropertyAnimationMutex());
+        std::lock_guard<std::recursive_mutex> locker(qGlobalPropertyAnimationMutex);
         typedef QPair<QObject *, QByteArray> QPropertyAnimationPair;
         typedef QHash<QPropertyAnimationPair, QPropertyAnimation*> QPropertyAnimationHash;
         static QPropertyAnimationHash hash;

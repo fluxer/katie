@@ -511,12 +511,12 @@ static QStringList familyList(const QFontDef &req)
 }
 
 Q_GLOBAL_STATIC(QFontDatabasePrivate, privateDb)
-Q_GLOBAL_STATIC_WITH_ARGS(QMutex, fontDatabaseMutex, (QMutex::Recursive))
+static std::recursive_mutex qGlobalFontDatabaseMutex;
 
 // used in qfontengine_x11.cpp
-QMutex *qt_fontdatabase_mutex()
+std::recursive_mutex& qt_fontdatabase_mutex()
 {
-    return fontDatabaseMutex();
+    return qGlobalFontDatabaseMutex;
 }
 
 QT_BEGIN_INCLUDE_NAMESPACE
@@ -904,7 +904,7 @@ QString QFontDatabase::styleString(const QFontInfo &fontInfo)
 */
 QFontDatabase::QFontDatabase()
 {
-    QMutexLocker locker(fontDatabaseMutex());
+    std::lock_guard<std::recursive_mutex> locker(qGlobalFontDatabaseMutex);
     createDatabase();
     d = privateDb();
 }
@@ -918,7 +918,7 @@ QFontDatabase::QFontDatabase()
 */
 QStringList QFontDatabase::families() const
 {
-    QMutexLocker locker(fontDatabaseMutex());
+    std::lock_guard<std::recursive_mutex> locker(qGlobalFontDatabaseMutex);
 
     createDatabase();
 
@@ -957,7 +957,7 @@ QStringList QFontDatabase::styles(const QString &family) const
     QString familyName, foundryName;
     parseFontName(family, foundryName, familyName);
 
-    QMutexLocker locker(fontDatabaseMutex());
+    std::lock_guard<std::recursive_mutex> locker(qGlobalFontDatabaseMutex);
 
     createDatabase();
 
@@ -1000,7 +1000,7 @@ bool QFontDatabase::isFixedPitch(const QString &family,
     QString familyName, foundryName;
     parseFontName(family, foundryName, familyName);
 
-    QMutexLocker locker(fontDatabaseMutex());
+    std::lock_guard<std::recursive_mutex> locker(qGlobalFontDatabaseMutex);
 
     createDatabase();
 
@@ -1038,7 +1038,7 @@ bool QFontDatabase::isSmoothlyScalable(const QString &family, const QString &sty
     QString familyName, foundryName;
     parseFontName(family, foundryName, familyName);
 
-    QMutexLocker locker(fontDatabaseMutex());
+    std::lock_guard<std::recursive_mutex> locker(qGlobalFontDatabaseMutex);
 
     createDatabase();
 
@@ -1070,7 +1070,7 @@ bool QFontDatabase::isSmoothlyScalable(const QString &family, const QString &sty
 bool  QFontDatabase::isScalable(const QString &family,
                                  const QString &style) const
 {
-    QMutexLocker locker(fontDatabaseMutex());
+    std::lock_guard<std::recursive_mutex> locker(qGlobalFontDatabaseMutex);
     if (isSmoothlyScalable(family, style))
         return true;
     return isBitmapScalable(family, style);
@@ -1090,7 +1090,7 @@ QList<int> QFontDatabase::pointSizes(const QString &family,
     QString familyName, foundryName;
     parseFontName(family, foundryName, familyName);
 
-    QMutexLocker locker(fontDatabaseMutex());
+    std::lock_guard<std::recursive_mutex> locker(qGlobalFontDatabaseMutex);
 
     createDatabase();
 
@@ -1145,7 +1145,7 @@ QFont QFontDatabase::font(const QString &family, const QString &style,
     QString familyName, foundryName;
     parseFontName(family, foundryName, familyName);
 
-    QMutexLocker locker(fontDatabaseMutex());
+    std::lock_guard<std::recursive_mutex> locker(qGlobalFontDatabaseMutex);
 
     createDatabase();
 
@@ -1190,7 +1190,7 @@ QList<int> QFontDatabase::smoothSizes(const QString &family,
     QString familyName, foundryName;
     parseFontName(family, foundryName, familyName);
 
-    QMutexLocker locker(fontDatabaseMutex());
+    std::lock_guard<std::recursive_mutex> locker(qGlobalFontDatabaseMutex);
 
     createDatabase();
 
@@ -1275,7 +1275,7 @@ bool QFontDatabase::italic(const QString &family, const QString &style) const
     QString familyName, foundryName;
     parseFontName(family, foundryName, familyName);
 
-    QMutexLocker locker(fontDatabaseMutex());
+    std::lock_guard<std::recursive_mutex> locker(qGlobalFontDatabaseMutex);
 
     createDatabase();
 
@@ -1309,7 +1309,7 @@ bool QFontDatabase::bold(const QString &family,
     QString familyName, foundryName;
     parseFontName(family, foundryName, familyName);
 
-    QMutexLocker locker(fontDatabaseMutex());
+    std::lock_guard<std::recursive_mutex> locker(qGlobalFontDatabaseMutex);
 
     createDatabase();
 
@@ -1345,7 +1345,7 @@ int QFontDatabase::weight(const QString &family,
     QString familyName, foundryName;
     parseFontName(family, foundryName, familyName);
 
-    QMutexLocker locker(fontDatabaseMutex());
+    std::lock_guard<std::recursive_mutex> locker(qGlobalFontDatabaseMutex);
 
     createDatabase();
 
@@ -1388,7 +1388,7 @@ void QFontDatabase::createDatabase()
 // used from qfontengine_ft.cpp
 Q_GUI_EXPORT QByteArray qt_fontdata_from_index(int index)
 {
-    QMutexLocker locker(fontDatabaseMutex());
+    std::lock_guard<std::recursive_mutex> locker(qGlobalFontDatabaseMutex);
     return privateDb()->applicationFonts.value(index).data;
 }
 
@@ -1453,7 +1453,7 @@ int QFontDatabase::addApplicationFont(const QString &fileName)
     QFile f(fileName);
     if (!f.open(QIODevice::ReadOnly))
         return -1;
-    QMutexLocker locker(fontDatabaseMutex());
+    std::lock_guard<std::recursive_mutex> locker(qGlobalFontDatabaseMutex);
     return privateDb()->addAppFont(f.readAll(), fileName);
 }
 
@@ -1478,7 +1478,7 @@ int QFontDatabase::addApplicationFont(const QString &fileName)
 */
 int QFontDatabase::addApplicationFontFromData(const QByteArray &fontData)
 {
-    QMutexLocker locker(fontDatabaseMutex());
+    std::lock_guard<std::recursive_mutex> locker(qGlobalFontDatabaseMutex);
     return privateDb()->addAppFont(fontData, QString() /* fileName */);
 }
 
@@ -1492,7 +1492,7 @@ int QFontDatabase::addApplicationFontFromData(const QByteArray &fontData)
 */
 QStringList QFontDatabase::applicationFontFamilies(int id)
 {
-    QMutexLocker locker(fontDatabaseMutex());
+    std::lock_guard<std::recursive_mutex> locker(qGlobalFontDatabaseMutex);
     return privateDb()->applicationFonts.value(id).families;
 }
 

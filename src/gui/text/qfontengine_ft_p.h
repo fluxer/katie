@@ -99,10 +99,10 @@ public:
 private:
     friend class QFontEngineFT;
     friend class QScopedPointerDeleter<QFreetypeFace>;
-    QFreetypeFace() : _lock(QMutex::Recursive) {}
+    QFreetypeFace() {}
     ~QFreetypeFace() {}
     QAtomicInt ref;
-    QMutex _lock;
+    std::recursive_mutex _lock;
     QByteArray fontData;
 };
 

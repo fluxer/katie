@@ -113,7 +113,7 @@ protected:
 
 Q_DECLARE_TYPEINFO(QResourceRoot, Q_MOVABLE_TYPE);
 
-Q_GLOBAL_STATIC_WITH_ARGS(QMutex, resourceMutex, (QMutex::Recursive))
+static std::recursive_mutex qGlobalResourceMutex;
 
 typedef QList<QResourceRoot*> ResourceList;
 Q_GLOBAL_STATIC(ResourceList, resourceList)
@@ -218,7 +218,7 @@ bool
 QResourcePrivate::load(const QString &file)
 {
     related.clear();
-    QMutexLocker lock(resourceMutex());
+    std::lock_guard<std::recursive_mutex> lock(qGlobalResourceMutex);
     const ResourceList *list = resourceList();
     QString cleaned = QDir::cleanPath(file);
     for(int i = 0; i < list->size(); ++i) {
@@ -725,7 +725,7 @@ bool QResourceRoot::mappingRootSubdir(const QString &path, QString *match) const
 Q_CORE_EXPORT bool qRegisterResourceData(int version, const unsigned char *tree,
                                          const unsigned char *name, const unsigned char *data)
 {
-    QMutexLocker lock(resourceMutex());
+    std::lock_guard<std::recursive_mutex> lock(qGlobalResourceMutex);
     if(version == Q_RCC_OUTPUT_REVISION && resourceList()) {
         bool found = false;
         QResourceRoot res(tree, name, data);
@@ -748,7 +748,7 @@ Q_CORE_EXPORT bool qRegisterResourceData(int version, const unsigned char *tree,
 Q_CORE_EXPORT bool qUnregisterResourceData(int version, const unsigned char *tree,
                                            const unsigned char *name, const unsigned char *data)
 {
-    QMutexLocker lock(resourceMutex());
+    std::lock_guard<std::recursive_mutex> lock(qGlobalResourceMutex);
     if(version == Q_RCC_OUTPUT_REVISION && resourceList()) {
         QResourceRoot res(tree, name, data);
         for(int i = 0; i < resourceList()->size(); ) {
@@ -863,7 +863,7 @@ QResource::registerResource(const QString &rccFilename, const QString &resourceR
     QDynamicFileResourceRoot *root = new QDynamicFileResourceRoot(resourceRoot);
     if(root->registerSelf(rccFilename)) {
         root->ref.ref();
-        QMutexLocker lock(resourceMutex());
+        std::lock_guard<std::recursive_mutex> lock(qGlobalResourceMutex);
         resourceList()->append(root);
         return true;
     }
@@ -885,7 +885,7 @@ QResource::registerResource(const QString &rccFilename, const QString &resourceR
 bool
 QResource::unregisterResource(const QString &rccFilename, const QString &resourceRoot)
 {
-    QMutexLocker lock(resourceMutex());
+    std::lock_guard<std::recursive_mutex> lock(qGlobalResourceMutex);
     ResourceList *list = resourceList();
     for(int i = 0; i < list->size(); ++i) {
         QResourceRoot *res = list->at(i);
@@ -931,7 +931,7 @@ QResource::registerResource(const uchar *rccData, const QString &resourceRoot)
     QDynamicBufferResourceRoot *root = new QDynamicBufferResourceRoot(resourceRoot);
     if(root->registerSelf(rccData)) {
         root->ref.ref();
-        QMutexLocker lock(resourceMutex());
+        std::lock_guard<std::recursive_mutex> lock(qGlobalResourceMutex);
         resourceList()->append(root);
         return true;
     }
@@ -953,7 +953,7 @@ QResource::registerResource(const uchar *rccData, const QString &resourceRoot)
 bool
 QResource::unregisterResource(const uchar *rccData, const QString &resourceRoot)
 {
-    QMutexLocker lock(resourceMutex());
+    std::lock_guard<std::recursive_mutex> lock(qGlobalResourceMutex);
     ResourceList *list = resourceList();
     for(int i = 0; i < list->size(); ++i) {
         QResourceRoot *res = list->at(i);

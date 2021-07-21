@@ -140,11 +140,11 @@ QFontPrivate::~QFontPrivate()
     scFont = 0;
 }
 
-extern QMutex *qt_fontdatabase_mutex();
+extern std::recursive_mutex &qt_fontdatabase_mutex();
 
 QFontEngine *QFontPrivate::engineForScript(QUnicodeTables::Script script) const
 {
-    QMutexLocker locker(qt_fontdatabase_mutex());
+    std::lock_guard<std::recursive_mutex> locker(qt_fontdatabase_mutex());
     if (script > QUnicodeTables::ScriptCount)
         script = QUnicodeTables::Common;
     if (engineData && engineData->fontCache != QFontCache::instance()) {

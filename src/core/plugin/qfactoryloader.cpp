@@ -38,8 +38,7 @@ QT_BEGIN_NAMESPACE
 
 Q_GLOBAL_STATIC(QList<QFactoryLoader *>, qt_factory_loaders)
 
-Q_GLOBAL_STATIC_WITH_ARGS(QMutex, qt_factoryloader_mutex, (QMutex::Recursive))
-
+static std::recursive_mutex qGlobalFactoryLoaderMutex;
 
 class QFactoryLoaderPrivate : public QObjectPrivate
 {
@@ -73,7 +72,7 @@ QFactoryLoader::QFactoryLoader(const char *iid,
     d->cs = cs;
     d->suffix = suffix;
 
-    QMutexLocker locker(qt_factoryloader_mutex());
+    std::lock_guard<std::recursive_mutex> locker(qGlobalFactoryLoaderMutex);
     update();
     qt_factory_loaders()->append(this);
 }
@@ -184,7 +183,7 @@ void QFactoryLoader::update()
 
 QFactoryLoader::~QFactoryLoader()
 {
-    QMutexLocker locker(qt_factoryloader_mutex());
+    std::lock_guard<std::recursive_mutex> locker(qGlobalFactoryLoaderMutex);
     qt_factory_loaders()->removeAll(this);
 }
 
@@ -209,7 +208,7 @@ QObject *QFactoryLoader::instance(const QString &key) const
 
 void QFactoryLoader::refreshAll()
 {
-    QMutexLocker locker(qt_factoryloader_mutex());
+    std::lock_guard<std::recursive_mutex> locker(qGlobalFactoryLoaderMutex);
     QList<QFactoryLoader *> *loaders = qt_factory_loaders();
     for (QList<QFactoryLoader *>::const_iterator it = loaders->constBegin();
          it != loaders->constEnd(); ++it) {

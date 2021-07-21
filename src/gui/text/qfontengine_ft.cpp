@@ -1400,8 +1400,8 @@ bool QFontEngineFT::stringToCMap(const QChar *str, int len, QGlyphLayout *glyphs
     }
 
 #if !defined(QT_NO_FONTCONFIG)
-    extern QMutex *qt_fontdatabase_mutex();
-    QMutex *mtx = 0;
+    extern std::recursive_mutex& qt_fontdatabase_mutex();
+    std::recursive_mutex *mtx = Q_NULLPTR;
 #endif
 
     bool mirrored = flags & QTextEngine::RightToLeft;
@@ -1415,7 +1415,7 @@ bool QFontEngineFT::stringToCMap(const QChar *str, int len, QGlyphLayout *glyphs
                 glyph_t glyph;
 #if !defined(QT_NO_FONTCONFIG)
                 if (!mtx) {
-                    mtx = qt_fontdatabase_mutex();
+                    mtx = &qt_fontdatabase_mutex();
                     mtx->lock();
                 }
 
@@ -1450,7 +1450,7 @@ bool QFontEngineFT::stringToCMap(const QChar *str, int len, QGlyphLayout *glyphs
             if (!glyphs->glyphs[glyph_pos]) {
 #if !defined(QT_NO_FONTCONFIG)
                 if (!mtx) {
-                    mtx = qt_fontdatabase_mutex();
+                    mtx = &qt_fontdatabase_mutex();
                     mtx->lock();
                 }
 

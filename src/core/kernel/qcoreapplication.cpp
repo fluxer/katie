@@ -1655,7 +1655,7 @@ QString QCoreApplication::applicationVersion()
 #ifndef QT_NO_LIBRARY
 
 
-Q_GLOBAL_STATIC_WITH_ARGS(QMutex, libraryPathMutex, (QMutex::Recursive))
+static std::recursive_mutex qGlobalLibraryPathMutex;
 
 /*!
     Returns a list of paths that the application will search when
@@ -1682,7 +1682,7 @@ Q_GLOBAL_STATIC_WITH_ARGS(QMutex, libraryPathMutex, (QMutex::Recursive))
 */
 QStringList QCoreApplication::libraryPaths()
 {
-    QMutexLocker locker(libraryPathMutex());
+    std::lock_guard<std::recursive_mutex> locker(qGlobalLibraryPathMutex);
     if (!coreappdata()->app_libpaths) {
         QStringList *app_libpaths = coreappdata()->app_libpaths = new QStringList;
 
@@ -1728,7 +1728,7 @@ QStringList QCoreApplication::libraryPaths()
  */
 void QCoreApplication::setLibraryPaths(const QStringList &paths)
 {
-    QMutexLocker locker(libraryPathMutex());
+    std::unique_lock<std::recursive_mutex> locker(qGlobalLibraryPathMutex);
     if (!coreappdata()->app_libpaths)
         coreappdata()->app_libpaths = new QStringList;
     *(coreappdata()->app_libpaths) = paths;
@@ -1753,7 +1753,7 @@ void QCoreApplication::addLibraryPath(const QString &path)
     if (path.isEmpty())
         return;
 
-    QMutexLocker locker(libraryPathMutex());
+    std::unique_lock<std::recursive_mutex> locker(qGlobalLibraryPathMutex);
 
     // make sure that library paths is initialized
     libraryPaths();
@@ -1777,7 +1777,7 @@ void QCoreApplication::removeLibraryPath(const QString &path)
     if (path.isEmpty())
         return;
 
-    QMutexLocker locker(libraryPathMutex());
+    std::lock_guard<std::recursive_mutex> locker(qGlobalLibraryPathMutex);
 
     // make sure that library paths is initialized
     libraryPaths();

@@ -163,10 +163,10 @@ struct QDBusWriteLocker: QDBusLockerBase
 struct QDBusMutexLocker: QDBusLockerBase
 {
     QDBusConnectionPrivate *self;
-    QMutex *mutex;
+    std::recursive_mutex *mutex;
     ThreadAction action;
     inline QDBusMutexLocker(ThreadAction a, QDBusConnectionPrivate *s,
-                            QMutex *m)
+                            std::recursive_mutex *m)
         : self(s), mutex(m), action(a)
     {
         reportThreadAction(action, BeforeLock, self);

@@ -245,7 +245,7 @@ public:
 
     // the dispatch lock protects everything related to the DBusConnection or DBusServer
     // including the timeouts and watches
-    QMutex dispatchLock;
+    std::recursive_mutex dispatchLock;
     DBusConnection *connection;
     DBusServer *server;
 

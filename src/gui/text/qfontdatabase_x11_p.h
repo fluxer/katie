@@ -1129,7 +1129,7 @@ void QFontDatabase::load(const QFontPrivate *d, int script)
     QFontEngine *fe = QFontCache::instance()->findEngine(key);
 
     if (!fe) {
-        QMutexLocker locker(fontDatabaseMutex());
+        std::lock_guard<std::recursive_mutex> locker(qGlobalFontDatabaseMutex);
         if (!privateDb()->count)
             initializeFontDb();
 
@@ -1226,7 +1226,7 @@ bool QFontDatabase::removeApplicationFont(int handle)
 #if defined(QT_NO_FONTCONFIG)
     return false;
 #else
-    QMutexLocker locker(fontDatabaseMutex());
+    std::lock_guard<std::recursive_mutex> locker(qGlobalFontDatabaseMutex);
 
     QFontDatabasePrivate *db = privateDb();
     if (handle < 0 || handle >= db->applicationFonts.count())
@@ -1247,7 +1247,7 @@ bool QFontDatabase::removeAllApplicationFonts()
 #if defined(QT_NO_FONTCONFIG)
     return false;
 #else
-    QMutexLocker locker(fontDatabaseMutex());
+    std::lock_guard<std::recursive_mutex> locker(qGlobalFontDatabaseMutex);
 
     QFontDatabasePrivate *db = privateDb();
     if (db->applicationFonts.isEmpty())

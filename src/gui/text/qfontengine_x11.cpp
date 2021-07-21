@@ -111,8 +111,8 @@ QFontEngineMultiFT::QFontEngineMultiFT(QFontEngine *fe, FcPattern *matchedPatter
 
 QFontEngineMultiFT::~QFontEngineMultiFT()
 {
-    extern QMutex *qt_fontdatabase_mutex();
-    QMutexLocker locker(qt_fontdatabase_mutex());
+    extern std::recursive_mutex& qt_fontdatabase_mutex();
+    std::lock_guard<std::recursive_mutex> locker(qt_fontdatabase_mutex());
 
     FcPatternDestroy(pattern);
     if (firstEnginePattern)
@@ -124,8 +124,8 @@ QFontEngineMultiFT::~QFontEngineMultiFT()
 
 void QFontEngineMultiFT::loadEngine(int at)
 {
-    extern QMutex *qt_fontdatabase_mutex();
-    QMutexLocker locker(qt_fontdatabase_mutex());
+    extern std::recursive_mutex& qt_fontdatabase_mutex();
+    std::lock_guard<std::recursive_mutex> locker(qt_fontdatabase_mutex());
 
     extern QFontDef qt_FcPatternToQFontDef(FcPattern *pattern, const QFontDef &);
     extern FcFontSet *qt_fontSetForPattern(FcPattern *pattern, const QFontDef &request);
