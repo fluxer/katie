@@ -63,10 +63,7 @@ void QWaitCondition::wakeAll()
 
 bool QWaitCondition::wait(QMutex *mutex, unsigned long time)
 {
-    if (!mutex)
-        return false;
-    if (Q_UNLIKELY(mutex->recursive)) {
-        qWarning("QWaitCondition: cannot wait on recursive mutexes");
+    if (!mutex) {
         return false;
     }
 

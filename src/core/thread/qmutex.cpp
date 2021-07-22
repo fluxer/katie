@@ -72,28 +72,9 @@ QT_BEGIN_NAMESPACE
 */
 
 /*!
-    \enum QMutex::RecursionMode
-
-    \value Recursive  In this mode, a thread can lock the same mutex
-                      multiple times and the mutex won't be unlocked
-                      until a corresponding number of unlock() calls
-                      have been made.
-
-    \value NonRecursive  In this mode, a thread may only lock a mutex
-                         once.
-
-    \sa QMutex()
-*/
-
-/*!
-    \fn QMutex::QMutex(RecursionMode mode)
+    \fn QMutex::QMutex()
 
     Constructs a new mutex. The mutex is created in an unlocked state.
-
-    If \a mode is QMutex::Recursive, a thread can lock the same mutex
-    multiple times and the mutex won't be unlocked until a
-    corresponding number of unlock() calls have been made. The
-    default is QMutex::NonRecursive.
 
     \sa lock(), unlock()
 */
@@ -113,10 +94,7 @@ QT_BEGIN_NAMESPACE
     call will block until that thread has unlocked it.
 
     Calling this function multiple times on the same mutex from the
-    same thread is allowed if this mutex is a
-    \l{QMutex::Recursive}{recursive mutex}. If this mutex is a
-    \l{QMutex::NonRecursive}{non-recursive mutex}, this function will
-    \e dead-lock when the mutex is locked recursively.
+    same thread is not allowed.
 
     \sa unlock()
 */
@@ -132,11 +110,7 @@ QT_BEGIN_NAMESPACE
     before another thread can successfully lock it.
 
     Calling this function multiple times on the same mutex from the
-    same thread is allowed if this mutex is a
-    \l{QMutex::Recursive}{recursive mutex}. If this mutex is a
-    \l{QMutex::NonRecursive}{non-recursive mutex}, this function will
-    \e always return false when attempting to lock the mutex
-    recursively.
+    same thread is not allowed.
 
     \sa lock(), unlock()
 */
@@ -158,11 +132,7 @@ QT_BEGIN_NAMESPACE
     before another thread can successfully lock it.
 
     Calling this function multiple times on the same mutex from the
-    same thread is allowed if this mutex is a
-    \l{QMutex::Recursive}{recursive mutex}. If this mutex is a
-    \l{QMutex::NonRecursive}{non-recursive mutex}, this function will
-    \e always return false when attempting to lock the mutex
-    recursively.
+    same thread is not allowed.
 
     \sa lock(), unlock()
 */
@@ -291,12 +261,6 @@ QT_BEGIN_NAMESPACE
     Relocks an unlocked mutex locker.
 
     \sa unlock()
-*/
-
-/*!
-    \fn QMutex::QMutex(bool recursive)
-
-    Use the constructor that takes a RecursionMode parameter instead.
 */
 
 QT_END_NAMESPACE

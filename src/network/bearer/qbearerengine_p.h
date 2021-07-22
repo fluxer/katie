@@ -83,7 +83,7 @@ protected:
     //the members of ServiceNetworks change
     QHash<QString, QNetworkConfigurationPrivatePointer> accessPointConfigurations;
 
-    QMutex mutex;
+    std::recursive_mutex mutex;
 };
 
 QT_END_NAMESPACE

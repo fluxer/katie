@@ -77,7 +77,7 @@ QGenericEngine::~QGenericEngine()
 
 QString QGenericEngine::getInterfaceFromId(const QString &id)
 {
-    QMutexLocker locker(&mutex);
+    std::lock_guard<std::recursive_mutex> locker(mutex);
 
     return configurationInterface.value(id);
 }
@@ -110,7 +110,7 @@ void QGenericEngine::requestUpdate()
 void QGenericEngine::doRequestUpdate()
 {
 #ifndef QT_NO_NETWORKINTERFACE
-    QMutexLocker locker(&mutex);
+    std::unique_lock<std::recursive_mutex> locker(mutex);
 
     // Immediately after connecting with a wireless access point
     // QNetworkInterface::allInterfaces() will sometimes return an empty list. Calling it again a
@@ -187,7 +187,7 @@ void QGenericEngine::doRequestUpdate()
             if (changed) {
                 locker.unlock();
                 emit configurationChanged(ptr);
-                locker.relock();
+                locker.lock();
             }
         } else {
             QNetworkConfigurationPrivatePointer ptr(new QNetworkConfigurationPrivate);
@@ -204,7 +204,7 @@ void QGenericEngine::doRequestUpdate()
 
             locker.unlock();
             emit configurationAdded(ptr);
-            locker.relock();
+            locker.lock();
         }
     }
 
@@ -216,7 +216,7 @@ void QGenericEngine::doRequestUpdate()
 
         locker.unlock();
         emit configurationRemoved(ptr);
-        locker.relock();
+        locker.lock();
     }
 
     locker.unlock();
@@ -227,14 +227,14 @@ void QGenericEngine::doRequestUpdate()
 
 QNetworkSession::State QGenericEngine::sessionStateForId(const QString &id)
 {
-    QMutexLocker locker(&mutex);
+    std::lock_guard<std::recursive_mutex> locker(mutex);
 
     QNetworkConfigurationPrivatePointer ptr = accessPointConfigurations.value(id);
 
     if (!ptr)
         return QNetworkSession::Invalid;
 
-    QMutexLocker configLocker(&ptr->mutex);
+    std::lock_guard<std::recursive_mutex> configLocker(ptr->mutex);
 
     if (!ptr->isValid) {
         return QNetworkSession::Invalid;

@@ -60,9 +60,6 @@ QT_BEGIN_NAMESPACE
     writer and another writer comes in, that writer will have
     priority over any readers that might also be waiting.
 
-    Unlike QMutex, a QReadWriteLock cannot be recursively locked by the
-    same thread.
-
     \sa QReadLocker, QWriteLocker, QMutex, QSemaphore
 */
 

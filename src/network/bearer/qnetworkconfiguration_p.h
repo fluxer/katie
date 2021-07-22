@@ -46,7 +46,6 @@ class QNetworkConfigurationPrivate : public QSharedData
 {
 public:
     QNetworkConfigurationPrivate() :
-        mutex(QMutex::Recursive),
         type(QNetworkConfiguration::Invalid),
         purpose(QNetworkConfiguration::UnknownPurpose),
         bearerType(QNetworkConfiguration::BearerUnknown),
@@ -65,7 +64,7 @@ public:
 
     QMap<unsigned int, QNetworkConfigurationPrivatePointer> serviceNetworkMembers;
 
-    mutable QMutex mutex;
+    mutable std::recursive_mutex mutex;
 
     QString name;
     QString id;

@@ -95,7 +95,7 @@ private:
     QTimer *pollTimer;
 
 private:
-    mutable QMutex mutex;
+    mutable std::recursive_mutex mutex;
 
     QList<QBearerEngine *> sessionEngines;
 

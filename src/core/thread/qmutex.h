@@ -34,52 +34,29 @@ QT_BEGIN_NAMESPACE
 class Q_CORE_EXPORT QMutex
 {
 public:
-    enum RecursionMode {
-        NonRecursive,
-        Recursive
-    };
-
-    explicit QMutex(RecursionMode mode = NonRecursive) : recursive(mode == Recursive) { }
-    ~QMutex() {}
+    QMutex() { }
+    ~QMutex() { }
 
     inline void lock() {
-        if (recursive) {
-            recursive_mutex.lock();
-        } else {
-            mutex.lock();
-        }
+        mutex.lock();
     }
 
     inline bool tryLock() {
-        if (recursive) {
-            return recursive_mutex.try_lock();
-        }
         return mutex.try_lock();
     }
 
     inline bool tryLock(int timeout) {
-        if (recursive) {
-            return recursive_mutex.try_lock_for(std::chrono::milliseconds(timeout));
-        }
         return mutex.try_lock_for(std::chrono::milliseconds(timeout));
     }
 
     inline void unlock() {
-        if (recursive) {
-            recursive_mutex.unlock();
-        } else {
-            mutex.unlock();
-        }
+        mutex.unlock();
     }
 
 private:
     Q_DISABLE_COPY(QMutex)
 
-    const bool recursive;
     std::timed_mutex mutex;
-    std::recursive_timed_mutex recursive_mutex;
-
-    friend class QWaitCondition;
 };
 
 class Q_CORE_EXPORT QMutexLocker
@@ -134,14 +111,12 @@ private:
 class Q_CORE_EXPORT QMutex
 {
 public:
-    enum RecursionMode { NonRecursive, Recursive };
+    inline QMutex() { }
+    inline ~QMutex() { }
 
-    inline explicit QMutex(RecursionMode mode = NonRecursive) { Q_UNUSED(mode); }
-    inline ~QMutex() {}
-
-    static inline void lock() {}
+    static inline void lock() { }
     static inline bool tryLock(int timeout = 0) { Q_UNUSED(timeout); return true; }
-    static inline void unlock() {}
+    static inline void unlock() { }
 
 private:
     Q_DISABLE_COPY(QMutex)
@@ -150,11 +125,11 @@ private:
 class Q_CORE_EXPORT QMutexLocker
 {
 public:
-    inline explicit QMutexLocker(QMutex *) {}
-    inline ~QMutexLocker() {}
+    inline explicit QMutexLocker(QMutex *) { }
+    inline ~QMutexLocker() { }
 
-    static inline void unlock() {}
-    static void relock() {}
+    static inline void unlock() { }
+    static void relock() { }
     static inline QMutex *mutex() { return Q_NULLPTR; }
 
 private:

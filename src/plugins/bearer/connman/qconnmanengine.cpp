@@ -76,7 +76,7 @@ void QConnmanEngine::initialize()
 
 QList<QNetworkConfigurationPrivate *> QConnmanEngine::getConfigurations()
 {
-    QMutexLocker locker(&mutex);
+    std::lock_guard<std::recursive_mutex> locker(mutex);
     QList<QNetworkConfigurationPrivate *> fetchedConfigurations;
     QNetworkConfigurationPrivate* cpPriv = 0;
 
@@ -108,7 +108,7 @@ void QConnmanEngine::doRequestUpdate()
 
 QString QConnmanEngine::getInterfaceFromId(const QString &id)
 {
-    QMutexLocker locker(&mutex);
+    std::lock_guard<std::recursive_mutex> locker(mutex);
     return configInterfaces.value(id);
 }
 
@@ -119,7 +119,7 @@ bool QConnmanEngine::hasIdentifier(const QString &id) const
 
 void QConnmanEngine::connectToId(const QString &id)
 {
-    QMutexLocker locker(&mutex);
+    std::lock_guard<std::recursive_mutex> locker(mutex);
     QString servicePath = serviceFromId(id);
     QConnmanServiceInterface serv(servicePath);
     if(!serv.isValid()) {
@@ -144,7 +144,7 @@ void QConnmanEngine::connectToId(const QString &id)
 
 void QConnmanEngine::disconnectFromId(const QString &id)
 {
-    QMutexLocker locker(&mutex);
+    std::lock_guard<std::recursive_mutex> locker(mutex);
     QString servicePath = serviceFromId(id);
     QConnmanServiceInterface serv(servicePath);
     if(!serv.isValid()) {
@@ -168,13 +168,13 @@ void QConnmanEngine::disconnectFromId(const QString &id)
 
 void QConnmanEngine::requestUpdate()
 {
-    QMutexLocker locker(&mutex);
+    std::lock_guard<std::recursive_mutex> locker(mutex);
     QTimer::singleShot(0, this, SLOT(doRequestUpdate()));
 }
 
 QString QConnmanEngine::serviceFromId(const QString &id)
 {
-    QMutexLocker locker(&mutex);
+    std::lock_guard<std::recursive_mutex> locker(mutex);
     foreach(const QString service, serviceNetworks) {
         if (id == QString::number(qHash(service)))
             return service;
@@ -185,7 +185,7 @@ QString QConnmanEngine::serviceFromId(const QString &id)
 
 QNetworkSession::State QConnmanEngine::sessionStateForId(const QString &id)
 {
-    QMutexLocker locker(&mutex);
+    std::lock_guard<std::recursive_mutex> locker(mutex);
 
     QNetworkConfigurationPrivatePointer ptr = accessPointConfigurations.value(id);
 
@@ -225,8 +225,9 @@ QNetworkSession::State QConnmanEngine::sessionStateForId(const QString &id)
 }
 
 quint64 QConnmanEngine::bytesWritten(const QString &id)
-{//TODO use connman counter API
-    QMutexLocker locker(&mutex);
+{
+    //TODO use connman counter API
+    std::lock_guard<std::recursive_mutex> locker(mutex);
     quint64 result = 0;
     QString devFile = getInterfaceFromId(id);
     QFile tx(QLatin1String("/sys/class/net/") + devFile + QLatin1String("/statistics/tx_bytes"));
@@ -240,8 +241,9 @@ quint64 QConnmanEngine::bytesWritten(const QString &id)
 }
 
 quint64 QConnmanEngine::bytesReceived(const QString &id)
-{//TODO use connman counter API
-    QMutexLocker locker(&mutex);
+{
+    //TODO use connman counter API
+    std::lock_guard<std::recursive_mutex> locker(mutex);
     quint64 result = 0;
     QString devFile = getInterfaceFromId(id);
     QFile rx(QLatin1String("/sys/class/net/") + devFile + QLatin1String("/statistics/rx_bytes"));
@@ -256,7 +258,7 @@ quint64 QConnmanEngine::bytesReceived(const QString &id)
 quint64 QConnmanEngine::startTime(const QString &/*id*/)
 {
     // TODO
-    QMutexLocker locker(&mutex);
+    std::lock_guard<std::recursive_mutex> locker(mutex);
     if (activeTime.isNull()) {
         return 0;
     }
@@ -284,7 +286,7 @@ void QConnmanEngine::propertyChangedContext(const QString &path,const QString &i
 {
     Q_UNUSED(path);
 
-    QMutexLocker locker(&mutex);
+    std::lock_guard<std::recursive_mutex> locker(mutex);
     if(item == QLatin1String("Services")) {
         QDBusArgument arg = qvariant_cast<QDBusArgument>(value.variant());
         QStringList list = qdbus_cast<QStringList>(arg);
@@ -320,7 +322,7 @@ void QConnmanEngine::propertyChangedContext(const QString &path,const QString &i
 
 void QConnmanEngine::servicePropertyChangedContext(const QString &path,const QString &item, const QDBusVariant &value)
 {
-    QMutexLocker locker(&mutex);
+    std::lock_guard<std::recursive_mutex> locker(mutex);
     if(item == QLatin1String("State")) {
         configurationChange(QString::number(qHash(path)));
 
@@ -346,7 +348,7 @@ void QConnmanEngine::technologyPropertyChangedContext(const QString & path, cons
 
 void QConnmanEngine::configurationChange(const QString &id)
 {
-    QMutexLocker locker(&mutex);
+    std::unique_lock<std::recursive_mutex> locker(mutex);
 
     if (accessPointConfigurations.contains(id)) {
 
@@ -376,7 +378,7 @@ void QConnmanEngine::configurationChange(const QString &id)
 
         locker.unlock();
         emit configurationChanged(ptr);
-        locker.relock();
+        locker.lock();
     }
 
      locker.unlock();
@@ -385,7 +387,7 @@ void QConnmanEngine::configurationChange(const QString &id)
 
 QNetworkConfiguration::StateFlags QConnmanEngine::getStateForService(const QString &service)
 {
-    QMutexLocker locker(&mutex);
+    std::lock_guard<std::recursive_mutex> locker(mutex);
     QConnmanServiceInterface serv(service);
     QNetworkConfiguration::StateFlags flag = QNetworkConfiguration::Defined;
     if( serv.getType() == QLatin1String("cellular")) {
@@ -476,7 +478,7 @@ bool QConnmanEngine::isRoamingAllowed(const QString &context)
 
 void QConnmanEngine::removeConfiguration(const QString &id)
 {
-    QMutexLocker locker(&mutex);
+    std::unique_lock<std::recursive_mutex> locker(mutex);
 
     if (accessPointConfigurations.contains(id)) {
 
@@ -491,13 +493,13 @@ void QConnmanEngine::removeConfiguration(const QString &id)
         QNetworkConfigurationPrivatePointer ptr = accessPointConfigurations.take(id);
         locker.unlock();
         emit configurationRemoved(ptr);
-        locker.relock();
+        locker.lock();
     }
 }
 
 void QConnmanEngine::addServiceConfiguration(const QString &servicePath)
 {
-    QMutexLocker locker(&mutex);
+    std::unique_lock<std::recursive_mutex> locker(mutex);
     QConnmanServiceInterface serv(servicePath);
 
     const QString id = QString::number(qHash(servicePath));
@@ -551,7 +553,7 @@ void QConnmanEngine::addServiceConfiguration(const QString &servicePath)
 
         locker.unlock();
         emit configurationAdded(ptr);
-        locker.relock();
+        locker.lock();
         emit updateCompleted();
     }
 }

@@ -333,7 +333,7 @@ QList<QNetworkConfiguration> QNetworkConfiguration::children() const
     if (!d)
         return results;
 
-    QMutexLocker locker(&d->mutex);
+    std::lock_guard<std::recursive_mutex>  locker(d->mutex);
 
     if (d->type != QNetworkConfiguration::ServiceNetwork || !d->isValid)
         return results;
@@ -346,7 +346,7 @@ QList<QNetworkConfiguration> QNetworkConfiguration::children() const
 
         //if we have an invalid member get rid of it -> was deleted earlier on
         {
-            QMutexLocker childLocker(&p->mutex);
+            std::lock_guard<std::recursive_mutex>  childLocker(p->mutex);
 
             if (!p->isValid) {
                 i.remove();

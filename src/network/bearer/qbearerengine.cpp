@@ -26,13 +26,13 @@
 QT_BEGIN_NAMESPACE
 
 QBearerEngine::QBearerEngine(QObject *parent)
-    : QObject(parent), mutex(QMutex::Recursive)
+    : QObject(parent)
 {
 }
 
 QBearerEngine::~QBearerEngine()
 {
-    QMutexLocker locker(&mutex);
+    std::lock_guard<std::recursive_mutex> locker(mutex);
 
     QHash<QString, QNetworkConfigurationPrivatePointer>::Iterator it;
     QHash<QString, QNetworkConfigurationPrivatePointer>::Iterator end;

@@ -82,25 +82,25 @@ QNetworkManagerEngine::~QNetworkManagerEngine()
 
 void QNetworkManagerEngine::initialize()
 {
-    QMutexLocker locker(&mutex);
+    std::unique_lock<std::recursive_mutex> locker(mutex);
 
     // Get current list of access points.
     foreach (const QDBusObjectPath &devicePath, interface->getDevices()) {
         locker.unlock();
         deviceAdded(devicePath);
-        locker.relock();
+        locker.lock();
     }
 
     // Get connections.
     foreach (const QDBusObjectPath &settingsPath, systemSettings->listConnections()) {
         locker.unlock();
         newConnection(settingsPath, systemSettings);
-        locker.relock();
+        locker.lock();
     }
     foreach (const QDBusObjectPath &settingsPath, userSettings->listConnections()) {
         locker.unlock();
         newConnection(settingsPath, userSettings);
-        locker.relock();
+        locker.lock();
     }
 
     // Get active connections.
@@ -122,7 +122,7 @@ bool QNetworkManagerEngine::networkManagerAvailable() const
 
 QString QNetworkManagerEngine::getInterfaceFromId(const QString &id)
 {
-    QMutexLocker locker(&mutex);
+    std::lock_guard<std::recursive_mutex> locker(mutex);
 
     foreach (const QDBusObjectPath &acPath, interface->activeConnections()) {
         QNetworkManagerConnectionActive activeConnection(acPath.path());
@@ -164,7 +164,7 @@ bool QNetworkManagerEngine::hasIdentifier(const QString &id) const
 
 void QNetworkManagerEngine::connectToId(const QString &id)
 {
-    QMutexLocker locker(&mutex);
+    std::lock_guard<std::recursive_mutex> locker(mutex);
 
     QNetworkManagerSettingsConnection *connection = connectionFromId(id);
 
@@ -202,7 +202,7 @@ void QNetworkManagerEngine::connectToId(const QString &id)
 
 void QNetworkManagerEngine::disconnectFromId(const QString &id)
 {
-    QMutexLocker locker(&mutex);
+    std::lock_guard<std::recursive_mutex> locker(mutex);
 
     foreach (const QDBusObjectPath &acPath, interface->activeConnections()) {
         QNetworkManagerConnectionActive activeConnection(acPath.path());
@@ -225,7 +225,7 @@ void QNetworkManagerEngine::requestUpdate()
 void QNetworkManagerEngine::interfacePropertiesChanged(const QString &path,
                                                        const QMap<QString, QVariant> &properties)
 {
-    QMutexLocker locker(&mutex);
+    std::unique_lock<std::recursive_mutex> locker(mutex);
 
     Q_UNUSED(path)
 
@@ -273,7 +273,7 @@ void QNetworkManagerEngine::interfacePropertiesChanged(const QString &path,
 
                         locker.unlock();
                         emit configurationChanged(ptr);
-                        locker.relock();
+                        locker.lock();
                     } else {
                         ptr->mutex.unlock();
                     }
@@ -295,7 +295,7 @@ void QNetworkManagerEngine::interfacePropertiesChanged(const QString &path,
 
                     locker.unlock();
                     emit configurationChanged(ptr);
-                    locker.relock();
+                    locker.lock();
                 } else {
                     ptr->mutex.unlock();
                 }
@@ -307,7 +307,7 @@ void QNetworkManagerEngine::interfacePropertiesChanged(const QString &path,
 void QNetworkManagerEngine::activeConnectionPropertiesChanged(const QString &path,
                                                               const QMap<QString, QVariant> &properties)
 {
-    QMutexLocker locker(&mutex);
+    std::unique_lock<std::recursive_mutex> locker(mutex);
 
     Q_UNUSED(properties)
 
@@ -329,7 +329,7 @@ void QNetworkManagerEngine::activeConnectionPropertiesChanged(const QString &pat
 
             locker.unlock();
             emit configurationChanged(ptr);
-            locker.relock();
+            locker.lock();
         } else {
             ptr->mutex.unlock();
         }
@@ -369,7 +369,7 @@ void QNetworkManagerEngine::deviceAdded(const QDBusObjectPath &path)
 
 void QNetworkManagerEngine::deviceRemoved(const QDBusObjectPath &path)
 {
-    QMutexLocker locker(&mutex);
+    std::lock_guard<std::recursive_mutex> locker(mutex);
 
     delete wirelessDevices.take(path.path());
 }
@@ -377,7 +377,7 @@ void QNetworkManagerEngine::deviceRemoved(const QDBusObjectPath &path)
 void QNetworkManagerEngine::newConnection(const QDBusObjectPath &path,
                                           QNetworkManagerSettings *settings)
 {
-    QMutexLocker locker(&mutex);
+    std::unique_lock<std::recursive_mutex> locker(mutex);
 
     if (!settings)
         settings = qobject_cast<QNetworkManagerSettings *>(sender());
@@ -421,7 +421,7 @@ void QNetworkManagerEngine::newConnection(const QDBusObjectPath &path,
 
 void QNetworkManagerEngine::removeConnection(const QString &path)
 {
-    QMutexLocker locker(&mutex);
+    std::unique_lock<std::recursive_mutex> locker(mutex);
 
     Q_UNUSED(path)
 
@@ -445,7 +445,7 @@ void QNetworkManagerEngine::removeConnection(const QString &path)
 
 void QNetworkManagerEngine::updateConnection(const QNmSettingsMap &settings)
 {
-    QMutexLocker locker(&mutex);
+    std::unique_lock<std::recursive_mutex> locker(mutex);
 
     QNetworkManagerSettingsConnection *connection =
         qobject_cast<QNetworkManagerSettingsConnection *>(sender());
@@ -487,7 +487,7 @@ void QNetworkManagerEngine::updateConnection(const QNmSettingsMap &settings)
 
 void QNetworkManagerEngine::activationFinished(QDBusPendingCallWatcher *watcher)
 {
-    QMutexLocker locker(&mutex);
+    std::unique_lock<std::recursive_mutex> locker(mutex);
 
     QDBusPendingReply<QDBusObjectPath> reply = *watcher;
     if (!reply.isError()) {
@@ -508,7 +508,7 @@ void QNetworkManagerEngine::activationFinished(QDBusPendingCallWatcher *watcher)
 
                 locker.unlock();
                 emit configurationChanged(ptr);
-                locker.relock();
+                locker.lock();
             } else {
                 ptr->mutex.unlock();
             }
@@ -518,7 +518,7 @@ void QNetworkManagerEngine::activationFinished(QDBusPendingCallWatcher *watcher)
 
 void QNetworkManagerEngine::newAccessPoint(const QString &path, const QDBusObjectPath &objectPath)
 {
-    QMutexLocker locker(&mutex);
+    std::unique_lock<std::recursive_mutex> locker(mutex);
 
     Q_UNUSED(path)
 
@@ -585,7 +585,7 @@ void QNetworkManagerEngine::newAccessPoint(const QString &path, const QDBusObjec
 void QNetworkManagerEngine::removeAccessPoint(const QString &path,
                                               const QDBusObjectPath &objectPath)
 {
-    QMutexLocker locker(&mutex);
+    std::unique_lock<std::recursive_mutex> locker(mutex);
 
     Q_UNUSED(path)
 
@@ -615,7 +615,7 @@ void QNetworkManagerEngine::removeAccessPoint(const QString &path,
 
                         locker.unlock();
                         emit configurationChanged(ptr);
-                        locker.relock();
+                        locker.lock();
                         break;
                     }
                 }
@@ -626,7 +626,7 @@ void QNetworkManagerEngine::removeAccessPoint(const QString &path,
                 if (ptr) {
                     locker.unlock();
                     emit configurationRemoved(ptr);
-                    locker.relock();
+                    locker.lock();
                 }
             }
 
@@ -639,7 +639,7 @@ void QNetworkManagerEngine::removeAccessPoint(const QString &path,
 
 void QNetworkManagerEngine::updateAccessPoint(const QMap<QString, QVariant> &map)
 {
-    QMutexLocker locker(&mutex);
+    std::unique_lock<std::recursive_mutex> locker(mutex);
 
     Q_UNUSED(map)
 
@@ -757,7 +757,7 @@ QNetworkManagerSettingsConnection *QNetworkManagerEngine::connectionFromId(const
 
 QNetworkSession::State QNetworkManagerEngine::sessionStateForId(const QString &id)
 {
-    QMutexLocker locker(&mutex);
+    std::lock_guard<std::recursive_mutex> locker(mutex);
 
     QNetworkConfigurationPrivatePointer ptr = accessPointConfigurations.value(id);
 
@@ -797,7 +797,7 @@ QNetworkSession::State QNetworkManagerEngine::sessionStateForId(const QString &i
 
 quint64 QNetworkManagerEngine::bytesWritten(const QString &id)
 {
-    QMutexLocker locker(&mutex);
+    std::lock_guard<std::recursive_mutex> locker(mutex);
 
     QNetworkConfigurationPrivatePointer ptr = accessPointConfigurations.value(id);
     if (ptr && (ptr->state & QNetworkConfiguration::Active) == QNetworkConfiguration::Active) {
@@ -825,7 +825,7 @@ quint64 QNetworkManagerEngine::bytesWritten(const QString &id)
 
 quint64 QNetworkManagerEngine::bytesReceived(const QString &id)
 {
-    QMutexLocker locker(&mutex);
+    std::lock_guard<std::recursive_mutex> locker(mutex);
 
     QNetworkConfigurationPrivatePointer ptr = accessPointConfigurations.value(id);
     if (ptr && (ptr->state & QNetworkConfiguration::Active) == QNetworkConfiguration::Active) {
@@ -853,7 +853,7 @@ quint64 QNetworkManagerEngine::bytesReceived(const QString &id)
 
 quint64 QNetworkManagerEngine::startTime(const QString &id)
 {
-    QMutexLocker locker(&mutex);
+    std::lock_guard<std::recursive_mutex> locker(mutex);
 
     QNetworkManagerSettingsConnection *connection = connectionFromId(id);
     if (connection)

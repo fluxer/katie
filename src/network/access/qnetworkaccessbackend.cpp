@@ -38,17 +38,17 @@ QT_BEGIN_NAMESPACE
 class QNetworkAccessBackendFactoryData: public QList<QNetworkAccessBackendFactory *>
 {
 public:
-    QNetworkAccessBackendFactoryData() : QList<QNetworkAccessBackendFactory *>(), mutex(QMutex::Recursive)
+    QNetworkAccessBackendFactoryData() : QList<QNetworkAccessBackendFactory *>()
     {
         valid.ref();
     }
     ~QNetworkAccessBackendFactoryData()
     {
-        QMutexLocker locker(&mutex); // why do we need to lock?
+        std::lock_guard<std::recursive_mutex> locker(mutex); // why do we need to lock?
         valid.deref();
     }
 
-    QMutex mutex;
+    std::recursive_mutex mutex;
     //this is used to avoid (re)constructing factory data from destructors of other global classes
     static QAtomicInt valid;
 };
@@ -57,14 +57,14 @@ QAtomicInt QNetworkAccessBackendFactoryData::valid = QAtomicInt(0);
 
 QNetworkAccessBackendFactory::QNetworkAccessBackendFactory()
 {
-    QMutexLocker locker(&factoryData()->mutex);
+    std::lock_guard<std::recursive_mutex> locker(factoryData()->mutex);
     factoryData()->append(this);
 }
 
 QNetworkAccessBackendFactory::~QNetworkAccessBackendFactory()
 {
     if (QNetworkAccessBackendFactoryData::valid) {
-        QMutexLocker locker(&factoryData()->mutex);
+        std::lock_guard<std::recursive_mutex> locker(factoryData()->mutex);
         factoryData()->removeAll(this);
     }
 }
@@ -73,7 +73,7 @@ QNetworkAccessBackend *QNetworkAccessManagerPrivate::findBackend(QNetworkAccessM
                                                                  const QNetworkRequest &request)
 {
     if (QNetworkAccessBackendFactoryData::valid) {
-        QMutexLocker locker(&factoryData()->mutex);
+        std::lock_guard<std::recursive_mutex> locker(factoryData()->mutex);
         QNetworkAccessBackendFactoryData::ConstIterator it = factoryData()->constBegin(),
                                                            end = factoryData()->constEnd();
         while (it != end) {
