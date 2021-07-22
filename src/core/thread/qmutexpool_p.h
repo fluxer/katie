@@ -44,29 +44,47 @@
 
 QT_BEGIN_NAMESPACE
 
-class Q_CORE_EXPORT QMutexPool
+template <class T>
+class Q_CORE_EXPORT QMutexPoolBase
 {
 public:
-    explicit QMutexPool(QMutex::RecursionMode recursionMode = QMutex::NonRecursive);
-    ~QMutexPool();
+    QMutexPoolBase() {
+        mutexes.fill(Q_NULLPTR);
+    }
 
-    inline QMutex *get(const void *address) {
+    ~QMutexPoolBase() {
+        for (int index = 0; index < QMUTEXPOOL_SIZE; ++index) {
+            delete mutexes[index];
+            mutexes[index] = Q_NULLPTR;
+        }
+    }
+
+    inline T *get(const void *address) {
         int index = std::intptr_t(address) % mutexes.size();
-        QMutex *m = mutexes[index];
+        T *m = mutexes[index];
         if (m)
             return m;
         return createMutex(index);
     }
 
-    static QMutex *globalInstanceGet(const void *address);
+    static T *globalInstanceGet(const void *address);
 
 private:
-    QMutex *createMutex(int index);
-    std::array<QAtomicPointer<QMutex>, QMUTEXPOOL_SIZE> mutexes;
-    const QMutex::RecursionMode recursionMode;
+    T *createMutex(int index) {
+        // mutex not created, create one
+        T *newMutex = new T();
+        if (!mutexes[index].testAndSetOrdered(Q_NULLPTR, newMutex))
+            delete newMutex;
+        return mutexes[index];
+    }
 
-    Q_DISABLE_COPY(QMutexPool)
+    std::array<QAtomicPointer<T>, QMUTEXPOOL_SIZE> mutexes;
+
+    Q_DISABLE_COPY(QMutexPoolBase)
 };
+
+typedef QMutexPoolBase<QMutex> QMutexPool;
+typedef QMutexPoolBase<std::recursive_mutex> QRecursiveMutexPool;
 
 QT_END_NAMESPACE
 

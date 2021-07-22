@@ -43,7 +43,6 @@
 #include "qprocess_p.h"
 #include "qfactoryloader_p.h"
 #include "qlocale_p.h"
-#include "qmutexpool_p.h"
 #include "qeventdispatcher_unix_p.h"
 
 #include <stdlib.h>

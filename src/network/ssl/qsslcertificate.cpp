@@ -234,7 +234,7 @@ void QSslCertificate::clear()
 */
 QByteArray QSslCertificate::version() const
 {
-    QMutexLocker lock(QMutexPool::globalInstanceGet(d.data()));
+    std::lock_guard<std::recursive_mutex> lock(*QRecursiveMutexPool::globalInstanceGet(d.data()));
     if (d->versionString.isEmpty() && d->x509) {
         d->versionString = QByteArray::number(qlonglong(X509_get_version(d->x509)) + 1);
     }
@@ -249,7 +249,7 @@ QByteArray QSslCertificate::version() const
 */
 QByteArray QSslCertificate::serialNumber() const
 {
-    QMutexLocker lock(QMutexPool::globalInstanceGet(d.data()));
+    std::lock_guard<std::recursive_mutex> lock(*QRecursiveMutexPool::globalInstanceGet(d.data()));
     if (d->serialNumberString.isEmpty() && d->x509) {
         ASN1_INTEGER *serialNumber = X509_get_serialNumber(d->x509);
         // if we cannot convert to a long, just output the hexadecimal number
@@ -304,7 +304,7 @@ static QString _q_SubjectInfoToString(QSslCertificate::SubjectInfo info)
 */
 QString QSslCertificate::issuerInfo(SubjectInfo info) const
 {
-    QMutexLocker lock(QMutexPool::globalInstanceGet(d.data()));
+    std::lock_guard<std::recursive_mutex> lock(*QRecursiveMutexPool::globalInstanceGet(d.data()));
     // lazy init
     if (d->issuerInfo.isEmpty() && d->x509)
         d->issuerInfo =
@@ -322,7 +322,7 @@ QString QSslCertificate::issuerInfo(SubjectInfo info) const
 */
 QString QSslCertificate::issuerInfo(const QByteArray &tag) const
 {
-    QMutexLocker lock(QMutexPool::globalInstanceGet(d.data()));
+    std::lock_guard<std::recursive_mutex> lock(*QRecursiveMutexPool::globalInstanceGet(d.data()));
     // lazy init
     if (d->issuerInfo.isEmpty() && d->x509)
         d->issuerInfo =
@@ -342,7 +342,7 @@ QString QSslCertificate::issuerInfo(const QByteArray &tag) const
 */
 QString QSslCertificate::subjectInfo(SubjectInfo info) const
 {
-    QMutexLocker lock(QMutexPool::globalInstanceGet(d.data()));
+    std::lock_guard<std::recursive_mutex> lock(*QRecursiveMutexPool::globalInstanceGet(d.data()));
     // lazy init
     if (d->subjectInfo.isEmpty() && d->x509)
         d->subjectInfo =
@@ -359,7 +359,7 @@ QString QSslCertificate::subjectInfo(SubjectInfo info) const
 */
 QString QSslCertificate::subjectInfo(const QByteArray &tag) const
 {
-    QMutexLocker lock(QMutexPool::globalInstanceGet(d.data()));
+    std::lock_guard<std::recursive_mutex> lock(*QRecursiveMutexPool::globalInstanceGet(d.data()));
     // lazy init
     if (d->subjectInfo.isEmpty() && d->x509)
         d->subjectInfo =
