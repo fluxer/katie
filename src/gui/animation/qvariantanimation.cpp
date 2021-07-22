@@ -134,7 +134,7 @@ QT_BEGIN_NAMESPACE
     \sa currentValue
 */
 
-static std::recursive_mutex qGlobalVariantAnimationMutex;
+Q_GLOBAL_STATIC(QMutex, qGlobalVariantAnimationMutex);
 
 static bool animationValueLessThan(const QVariantAnimation::KeyValue &p1, const QVariantAnimation::KeyValue &p2)
 {
@@ -407,13 +407,12 @@ Q_GLOBAL_STATIC(QInterpolatorVector, registeredInterpolators)
  */
 void QVariantAnimation::registerInterpolator(QVariantAnimation::Interpolator func, int interpolationType)
 {
-    // will override any existing interpolators
+    QMutexLocker locker(qGlobalVariantAnimationMutex());
     QInterpolatorVector *interpolators = registeredInterpolators();
-    // When built on solaris with GCC, the destructors can be called
-    // in such an order that we get here with interpolators == NULL,
-    // to continue causes the app to crash on exit with a SEGV
+    // the unregistration of interpolators can be called in such an order that we get here with
+    // interpolators == NULL which causes the app to crash on exit with a SEGV
     if (interpolators) {
-        std::lock_guard<std::recursive_mutex> locker(qGlobalVariantAnimationMutex);
+        // will override any existing interpolators
         if (interpolationType >= interpolators->count())
             interpolators->resize(interpolationType + 1);
         interpolators->replace(interpolationType, func);
@@ -422,8 +421,8 @@ void QVariantAnimation::registerInterpolator(QVariantAnimation::Interpolator fun
 
 QVariantAnimation::Interpolator QVariantAnimationPrivate::getInterpolator(int interpolationType)
 {
+    QMutexLocker locker(qGlobalVariantAnimationMutex());
     QInterpolatorVector *interpolators = registeredInterpolators();
-    std::lock_guard<std::recursive_mutex> locker(qGlobalVariantAnimationMutex);
     if (interpolationType < interpolators->count()) {
         QVariantAnimation::Interpolator ret = interpolators->at(interpolationType);
         if (ret) return ret;
