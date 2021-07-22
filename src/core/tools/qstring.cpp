@@ -6741,7 +6741,7 @@ QString &QString::setRawData(const QChar *unicode, int size)
 
 QDataStream &operator<<(QDataStream &out, const QString &str)
 {
-    if (!str.isNull()) {
+    if (!str.isEmpty()) {
         if ((out.byteOrder() == QDataStream::BigEndian) == (QSysInfo::ByteOrder == QSysInfo::BigEndian)) {
             out.writeBytes(reinterpret_cast<const char *>(str.unicode()), sizeof(QChar) * str.length());
         } else {
