@@ -25,9 +25,9 @@
 #include "qpainterpath_p.h"
 #include "qfontengine_p.h"
 #include "qstatictext_p.h"
-
 #include "qvarlengtharray.h"
 #include "qdebug.h"
+#include "qcorecommon_p.h"
 
 
 QT_BEGIN_NAMESPACE
@@ -500,7 +500,7 @@ void QPaintEngineEx::clip(const QRegion &region, Qt::ClipOperation op)
 
     QVector<QRect> rects = region.rects();
     if (rects.size() <= 32) {
-        qreal pts[2*32*4];
+        QSTACKARRAY(qreal, pts, 2 * 32 * 4);
         int pos = 0;
         for (QVector<QRect>::const_iterator i = rects.constBegin(); i != rects.constEnd(); ++i) {
             qreal x1 = i->x();
@@ -523,8 +523,8 @@ void QPaintEngineEx::clip(const QRegion &region, Qt::ClipOperation op)
         QVectorPath vp(pts, rects.size() * 4, qpaintengineex_rect4_types_32);
         clip(vp, op);
     } else {
-        QVarLengthArray<qreal> pts(rects.size() * 2 * 4);
-        QVarLengthArray<QPainterPath::ElementType> types(rects.size() * 4);
+        QSTACKARRAY(qreal, pts, rects.size() * 2 * 4);
+        QSTACKARRAY(QPainterPath::ElementType, types, rects.size() * 4);
         int ppos = 0;
         int tpos = 0;
 
@@ -552,7 +552,7 @@ void QPaintEngineEx::clip(const QRegion &region, Qt::ClipOperation op)
             types[tpos++] = QPainterPath::LineToElement;
         }
 
-        QVectorPath vp(pts.data(), rects.size() * 4, types.data());
+        QVectorPath vp(pts, rects.size() * 4, types);
         clip(vp, op);
     }
 
@@ -663,7 +663,7 @@ void QPaintEngineEx::drawLines(const QLine *lines, int lineCount)
     while (elementCount > 0) {
         const int count = qMin(elementCount, 32);
 
-        qreal pts[64];
+        QSTACKARRAY(qreal, pts, 64);
         const int count2 = count<<1;
         for (int i=0; i<count2; ++i)
             pts[i] = ((int *) lines)[i];
@@ -693,7 +693,7 @@ void QPaintEngineEx::drawLines(const QLineF *lines, int lineCount)
 
 void QPaintEngineEx::drawEllipse(const QRectF &r)
 {
-    qreal pts[26]; // QPointF[13] without constructors...
+    QSTACKARRAY(qreal, pts, 26); // QPointF[13] without constructors...
     union {
         qreal *ptr;
         QPointF *points;
@@ -727,7 +727,7 @@ void QPaintEngineEx::drawPoints(const QPointF *points, int pointCount)
     if (pen.brush().isOpaque()) {
         while (pointCount > 0) {
             int count = qMin(pointCount, 16);
-            qreal pts[64];
+            QSTACKARRAY(qreal, pts, 64);
             int oset = -1;
             for (int i=0; i<count; ++i) {
                 pts[++oset] = points[i].x();
@@ -758,7 +758,7 @@ void QPaintEngineEx::drawPoints(const QPoint *points, int pointCount)
     if (pen.brush().isOpaque()) {
         while (pointCount > 0) {
             int count = qMin(pointCount, 16);
-            qreal pts[64];
+            QSTACKARRAY(qreal, pts, 64);
             int oset = -1;
             for (int i=0; i<count; ++i) {
                 pts[++oset] = points[i].x();
