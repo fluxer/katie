@@ -938,8 +938,8 @@ QByteArray QMetaObject::normalizedSignature(const char *method)
     if (!method || !*method)
         return result;
     int len = int(strlen(method));
-    QVarLengthArray<char> stackbuf(len + 1);
-    char *d = stackbuf.data();
+    QSTACKARRAY(char, stackbuf, len + 1);
+    char *d = stackbuf;
     qRemoveWhitespace(method, d);
 
     result.reserve(len);
