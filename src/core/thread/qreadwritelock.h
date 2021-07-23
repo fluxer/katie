@@ -149,7 +149,7 @@ inline QWriteLocker::QWriteLocker(QReadWriteLock *areadWriteLock)
 class Q_CORE_EXPORT QReadWriteLock
 {
 public:
-    inline explicit QReadWriteLock() { }
+    inline QReadWriteLock() { }
     inline ~QReadWriteLock() { }
 
     static inline void lockForRead() { }
