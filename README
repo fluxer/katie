@@ -58,7 +58,7 @@ There are several things you should be aware before considering Katie:
   - support for AArch64 architecture
   - support for PostgreSQL v9.1+
   - support for locale aliases
-  - support for generating SHA-224, SHA-256, SHA-384, SHA-512 hash sums (SHA-2)
+  - support for generating SHA-256 and SHA-512 hash sums (SHA-2)
   - support for generating CRC-32 checksums via qChecksum32() function
   - verification section for plugins build with Clang
   - faster alternatives to qCompress() and qUncompress()

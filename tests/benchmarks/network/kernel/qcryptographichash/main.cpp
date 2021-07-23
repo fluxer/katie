@@ -92,9 +92,7 @@ void tst_qcryptographichash::algorithms_data()
     QTest::newRow("Md4")  << QCryptographicHash::Md4;
     QTest::newRow("Md5")  << QCryptographicHash::Md5;
     QTest::newRow("Sha1")  << QCryptographicHash::Sha1;
-    QTest::newRow("Sha224")  << QCryptographicHash::Sha224;
     QTest::newRow("Sha256")  << QCryptographicHash::Sha256;
-    QTest::newRow("Sha384")  << QCryptographicHash::Sha384;
     QTest::newRow("Sha512")  << QCryptographicHash::Sha512;
 }
 
