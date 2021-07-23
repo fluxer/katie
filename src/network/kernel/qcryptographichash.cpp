@@ -55,7 +55,7 @@ public:
 
   QCryptographicHash can be used to generate cryptographic hashes of binary or text data.
 
-  Currently MD4, MD5, SHA-1, SHA-224, SHA-256, SHA-384, and SHA-512 are supported.
+  Currently MD4, MD5, SHA-1, SHA-256 and SHA-512 are supported.
 */
 
 /*!
