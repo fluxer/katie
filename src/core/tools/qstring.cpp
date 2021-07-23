@@ -925,8 +925,8 @@ QString::QString(const QChar ch)
 
 void QString::freeData(Data *d)
 {
-    if(d != &shared_null && d != &shared_empty)
-        free(d);
+    if (d != &shared_null && d != &shared_empty)
+        ::free(d);
 }
 
 /*!
@@ -1179,6 +1179,9 @@ QString &QString::insert(int i, const QLatin1String &str)
         return *this;
 
     int len = qstrlen(str.latin1());
+    if (len <= 0)
+        return *this;
+
     expand(qMax(d->size, i) + len - 1);
 
     ::memmove(d->data + i + len, d->data + i, (d->size - i - len) * sizeof(QChar));
@@ -1256,13 +1259,13 @@ QString& QString::insert(int i, QChar ch)
 */
 QString &QString::append(const QString &str)
 {
-    if (str.d != &shared_null && str.d != &shared_empty) {
-        if (d->ref != 1 || d->size + str.d->size > d->alloc)
-            reallocData(d->size + str.d->size);
-        memcpy(d->data + d->size, str.d->data, str.d->size * sizeof(QChar));
-        d->size += str.d->size;
-        d->data[d->size] = '\0';
-    }
+    if (str.d->size <= 0)
+        return *this;
+    if (d->ref != 1 || d->size + str.d->size > d->alloc)
+        reallocData(d->size + str.d->size);
+    memcpy(d->data + d->size, str.d->data, str.d->size * sizeof(QChar));
+    d->size += str.d->size;
+    d->data[d->size] = '\0';
     return *this;
 }
 
@@ -3100,7 +3103,7 @@ QString QString::right(int n) const
 
 QString QString::mid(int position, int n) const
 {
-    if (d == &shared_null || d == &shared_empty || position >= d->size)
+    if (d->size <= 0 || position >= d->size)
         return QString();
     if (n < 0)
         n = d->size - position;
@@ -7625,7 +7628,7 @@ QStringRef QString::rightRef(int n) const
 
 QStringRef QString::midRef(int position, int n) const
 {
-    if (d == &shared_null || d == &shared_empty || position >= d->size)
+    if (d->size <= 0 || position >= d->size)
         return QStringRef();
     if (n < 0)
         n = d->size - position;
