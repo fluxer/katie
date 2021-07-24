@@ -50,8 +50,9 @@
 #include <openssl/x509.h>
 #include <openssl/x509v3.h>
 #include <openssl/x509_vfy.h>
-#include <openssl/dsa.h>
 #include <openssl/rsa.h>
+#include <openssl/dsa.h>
+#include <openssl/dh.h>
 #include <openssl/crypto.h>
 #if !defined(OPENSSL_NO_TLSEXT)
 #include <openssl/tls1.h>

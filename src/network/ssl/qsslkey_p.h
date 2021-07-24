@@ -38,6 +38,7 @@
 
 #include <openssl/rsa.h>
 #include <openssl/dsa.h>
+#include <openssl/dh.h>
 
 QT_BEGIN_NAMESPACE
 
@@ -48,6 +49,7 @@ public:
         : isNull(true)
         , rsa(Q_NULLPTR)
         , dsa(Q_NULLPTR)
+        , dh(Q_NULLPTR)
     {
     }
 
@@ -67,6 +69,7 @@ public:
     QSsl::KeyAlgorithm algorithm;
     RSA *rsa;
     DSA *dsa;
+    DH *dh;
 
     QAtomicInt ref;
 

@@ -252,10 +252,20 @@ init_context:
         // before we were using EVP_PKEY_assign_R* functions and did not use EVP_PKEY_free.
         // this lead to a memory leak. Now we use the *_set1_* functions which do not
         // take ownership of the RSA/DSA key instance because the QSslKey already has ownership.
-        if (configuration.privateKey.algorithm() == QSsl::Rsa)
-            EVP_PKEY_set1_RSA(pkey, (RSA *)configuration.privateKey.handle());
-        else
-            EVP_PKEY_set1_DSA(pkey, (DSA *)configuration.privateKey.handle());
+        switch (configuration.privateKey.algorithm()) {
+            case QSsl::Rsa: {
+                EVP_PKEY_set1_RSA(pkey, (RSA *)configuration.privateKey.handle());
+                break;
+            }
+            case QSsl::Dsa: {
+                EVP_PKEY_set1_DSA(pkey, (DSA *)configuration.privateKey.handle());
+                break;
+            }
+            case QSsl::Dh: {
+                EVP_PKEY_set1_DH(pkey, (DH *)configuration.privateKey.handle());
+                break;
+            }
+        }
         if (!SSL_CTX_use_PrivateKey(ctx, pkey)) {
             q->setErrorString(QSslSocket::tr("Error loading private key, %1").arg(getErrorsFromOpenSsl()));
             emit q->error(QAbstractSocket::UnknownSocketError);

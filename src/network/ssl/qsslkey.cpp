@@ -65,6 +65,11 @@ void QSslKeyPrivate::clear()
         DSA_free(dsa);
         dsa = 0;
     }
+
+    if (dh) {
+        DH_free(dh);
+        dh = 0;
+    }
 }
 
 /*!
@@ -92,18 +97,34 @@ void QSslKeyPrivate::decodePem(const QByteArray &pem, const QByteArray &passPhra
 
     void *phrase = (void *)passPhrase.constData();
 
-    if (algorithm == QSsl::Rsa) {
-        RSA *result = (type == QSsl::PublicKey)
-            ? PEM_read_bio_RSA_PUBKEY(bio, &rsa, 0, phrase)
-            : PEM_read_bio_RSAPrivateKey(bio, &rsa, 0, phrase);
-        if (rsa && rsa == result)
-            isNull = false;
-    } else {
-        DSA *result = (type == QSsl::PublicKey)
-            ? PEM_read_bio_DSA_PUBKEY(bio, &dsa, 0, phrase)
-            : PEM_read_bio_DSAPrivateKey(bio, &dsa, 0, phrase);
-        if (dsa && dsa == result)
-            isNull = false;
+    switch (algorithm) {
+        case QSsl::Rsa: {
+            RSA *result = (type == QSsl::PublicKey)
+                ? PEM_read_bio_RSA_PUBKEY(bio, &rsa, 0, phrase)
+                : PEM_read_bio_RSAPrivateKey(bio, &rsa, 0, phrase);
+            if (rsa && rsa == result)
+                isNull = false;
+            break;
+        }
+        case QSsl::Dsa: {
+            DSA *result = (type == QSsl::PublicKey)
+                ? PEM_read_bio_DSA_PUBKEY(bio, &dsa, 0, phrase)
+                : PEM_read_bio_DSAPrivateKey(bio, &dsa, 0, phrase);
+            if (dsa && dsa == result)
+                isNull = false;
+            break;
+        }
+        case QSsl::Dh: {
+            EVP_PKEY *result = (type == QSsl::PublicKey)
+                ? PEM_read_bio_PUBKEY(bio, 0, 0, phrase)
+                : PEM_read_bio_PrivateKey(bio, 0, 0, phrase);
+            if (result)
+                dh = EVP_PKEY_get1_DH(result);
+            if (dh)
+                isNull = false;
+            EVP_PKEY_free(result);
+            break;
+        }
     }
 
     BIO_free(bio);
@@ -126,9 +147,15 @@ QByteArray QSslKeyPrivate::pemHeader() const
 {
     if (type == QSsl::PublicKey)
         return QByteArray::fromRawData("-----BEGIN PUBLIC KEY-----\n", 27);
-    else if (algorithm == QSsl::Rsa)
-        return QByteArray::fromRawData("-----BEGIN RSA PRIVATE KEY-----\n", 32);
-    return QByteArray::fromRawData("-----BEGIN DSA PRIVATE KEY-----\n", 32);
+    switch (algorithm) {
+        case QSsl::Rsa:
+            return QByteArray::fromRawData("-----BEGIN RSA PRIVATE KEY-----\n", 32);
+        case QSsl::Dsa:
+            return QByteArray::fromRawData("-----BEGIN DSA PRIVATE KEY-----\n", 32);
+        case QSsl::Dh:
+            return QByteArray::fromRawData("-----BEGIN PRIVATE KEY-----\n", 28);
+    }
+    return QByteArray();
 }
 
 /*!
@@ -138,9 +165,15 @@ QByteArray QSslKeyPrivate::pemFooter() const
 {
     if (type == QSsl::PublicKey)
         return QByteArray::fromRawData("-----END PUBLIC KEY-----\n", 25);
-    else if (algorithm == QSsl::Rsa)
-        return QByteArray::fromRawData("-----END RSA PRIVATE KEY-----\n", 30);
-    return QByteArray::fromRawData("-----END DSA PRIVATE KEY-----\n", 30);
+    switch (algorithm) {
+        case QSsl::Rsa:
+            return QByteArray::fromRawData("-----END RSA PRIVATE KEY-----\n", 30);
+        case QSsl::Dsa:
+            return QByteArray::fromRawData("-----END DSA PRIVATE KEY-----\n", 30);
+        case QSsl::Dh:
+            return QByteArray::fromRawData("-----END PRIVATE KEY-----\n", 26);
+    }
+    return QByteArray();
 }
 
 /*!
@@ -286,14 +319,20 @@ int QSslKey::length() const
 {
     if (d->isNull)
         return -1;
-    if (d->algorithm == QSsl::Rsa) {
-        return RSA_bits(d->rsa);
-    }else{
-        const BIGNUM *p = NULL;
-        DSA_get0_pqg(d->dsa, &p, NULL, NULL);
-        return BN_num_bits(p);
+    switch (d->algorithm) {
+        case QSsl::Rsa: {
+            return RSA_bits(d->rsa);
+        }
+        case QSsl::Dsa: {
+            const BIGNUM *p = NULL;
+            DSA_get0_pqg(d->dsa, &p, NULL, NULL);
+            return BN_num_bits(p);
+        }
+        case QSsl::Dh: {
+            return DH_bits(d->dh);
+        }
     }
-
+    return -1;
 }
 
 /*!
@@ -341,31 +380,52 @@ QByteArray QSslKey::toPem(const QByteArray &passPhrase) const
 
     bool fail = false;
 
-    if (d->algorithm == QSsl::Rsa) {
-        if (d->type == QSsl::PublicKey) {
-            if (!PEM_write_bio_RSA_PUBKEY(bio, d->rsa))
-                fail = true;
-        } else {
-            if (!PEM_write_bio_RSAPrivateKey(
+    switch (d->algorithm) {
+        case QSsl::Rsa: {
+            if (d->type == QSsl::PublicKey) {
+                if (!PEM_write_bio_RSA_PUBKEY(bio, d->rsa))
+                    fail = true;
+            } else {
+                if (!PEM_write_bio_RSAPrivateKey(
                     bio, d->rsa,
                     // ### the cipher should be selectable in the API:
                     passPhrase.isEmpty() ? (const EVP_CIPHER *)0 : EVP_des_ede3_cbc(),
                     (uchar *)passPhrase.data(), passPhrase.size(), 0, 0)) {
-                fail = true;
+                    fail = true;
+                }
             }
+            break;
         }
-    } else {
-        if (d->type == QSsl::PublicKey) {
-            if (!PEM_write_bio_DSA_PUBKEY(bio, d->dsa))
-                fail = true;
-        } else {
-            if (!PEM_write_bio_DSAPrivateKey(
+        case QSsl::Dsa: {
+            if (d->type == QSsl::PublicKey) {
+                if (!PEM_write_bio_DSA_PUBKEY(bio, d->dsa))
+                    fail = true;
+            } else {
+                if (!PEM_write_bio_DSAPrivateKey(
                     bio, d->dsa,
                     // ### the cipher should be selectable in the API:
                     passPhrase.isEmpty() ? (const EVP_CIPHER *)0 : EVP_des_ede3_cbc(),
                     (uchar *)passPhrase.data(), passPhrase.size(), 0, 0)) {
+                    fail = true;
+                }
+            }
+            break;
+        }
+        case QSsl::Dh: {
+            EVP_PKEY *result = EVP_PKEY_new();
+            if (!result || !EVP_PKEY_set1_DH(result, d->dh)) {
+                fail = true;
+            } else if (d->type == QSsl::PublicKey) {
+                if (!PEM_write_bio_PUBKEY(bio, result))
+                    fail = true;
+            } else if (!PEM_write_bio_PrivateKey(
+                // ### the cipher should be selectable in the API:
+                bio, result, passPhrase.isEmpty() ? (const EVP_CIPHER *)0 : EVP_des_ede3_cbc(),
+                (uchar *)passPhrase.data(), passPhrase.size(), 0, 0)) {
                 fail = true;
             }
+            EVP_PKEY_free(result);
+            break;
         }
     }
 
@@ -424,9 +484,22 @@ class QDebug;
 QDebug operator<<(QDebug debug, const QSslKey &key)
 {
     debug << "QSslKey("
-          << (key.type() == QSsl::PublicKey ? "PublicKey" : "PrivateKey")
-          << ", " << (key.algorithm() == QSsl::Rsa ? "RSA" : "DSA")
-          << ", " << key.length()
+          << (key.type() == QSsl::PublicKey ? "PublicKey" : "PrivateKey");
+    switch (key.algorithm()) {
+        case QSsl::Rsa: {
+            debug << ", " << "RSA";
+            break;
+        }
+        case QSsl::Dsa: {
+            debug << ", " << "DSA";
+            break;
+        }
+        case QSsl::Dh: {
+            debug << ", " << "DH";
+            break;
+        }
+    }
+    debug << ", " << key.length()
           << ')';
     return debug;
 }

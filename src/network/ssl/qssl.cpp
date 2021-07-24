@@ -50,6 +50,7 @@ QT_BEGIN_NAMESPACE
 
     \value Rsa The RSA algorithm.
     \value Dsa The DSA algorithm.
+    \value Dh The DH algorithm.
 */
 
 /*!

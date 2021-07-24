@@ -478,7 +478,9 @@ QSslKey QSslCertificate::publicKey() const
         key.d->algorithm = QSsl::Dsa;
         key.d->isNull = false;
     } else if (key_id == EVP_PKEY_DH) {
-        // DH unsupported
+        key.d->dh = EVP_PKEY_get1_DH(pkey);
+        key.d->algorithm = QSsl::Dh;
+        key.d->isNull = false;
     } else {
         // error?
     }
