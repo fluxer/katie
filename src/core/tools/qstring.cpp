@@ -1259,7 +1259,7 @@ QString& QString::insert(int i, QChar ch)
 */
 QString &QString::append(const QString &str)
 {
-    if (str.d->size <= 0)
+    if (str.isEmpty())
         return *this;
     if (d->ref != 1 || d->size + str.d->size > d->alloc)
         reallocData(d->size + str.d->size);
@@ -1637,7 +1637,7 @@ QString &QString::replace(const QChar *before, int blen,
                           const QChar *after, int alen,
                           Qt::CaseSensitivity cs)
 {
-    if (d->size == 0) {
+    if (isEmpty()) {
         if (blen)
             return *this;
     } else {
@@ -1651,7 +1651,7 @@ QString &QString::replace(const QChar *before, int blen,
 
     int index = 0;
     while (1) {
-        uint indices[1024];
+        QSTACKARRAY(uint, indices, 1024);
         uint pos = 0;
         while (pos < 1023) {
             index = matcher.indexIn(*this, index);
@@ -3103,7 +3103,7 @@ QString QString::right(int n) const
 
 QString QString::mid(int position, int n) const
 {
-    if (d->size <= 0 || position >= d->size)
+    if (isEmpty() || position >= d->size)
         return QString();
     if (n < 0)
         n = d->size - position;
@@ -4606,8 +4606,7 @@ QString &QString::vsprintf(const char* cformat, va_list ap)
             // can't be negative - started with a digit
             // contains at least one digit
             width = width_str.toInt();
-        }
-        else if (*c == '*') {
+        } else if (*c == '*') {
             width = va_arg(ap, int);
             if (width < 0)
                 width = -1; // treat all negative numbers as unspecified
@@ -4631,8 +4630,7 @@ QString &QString::vsprintf(const char* cformat, va_list ap)
                 // can't be negative - started with a digit
                 // contains at least one digit
                 precision = precision_str.toInt();
-            }
-            else if (*c == '*') {
+            } else if (*c == '*') {
                 precision = va_arg(ap, int);
                 if (precision < 0)
                     precision = -1; // treat all negative numbers as unspecified
@@ -7628,7 +7626,7 @@ QStringRef QString::rightRef(int n) const
 
 QStringRef QString::midRef(int position, int n) const
 {
-    if (d->size <= 0 || position >= d->size)
+    if (isEmpty() || position >= d->size)
         return QStringRef();
     if (n < 0)
         n = d->size - position;
