@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-06-24 02:37+0300\n"
+"POT-Creation-Date: 2021-07-24 03:04+0300\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -43,9 +43,9 @@ msgid "The plugin uses incompatible Katie library: %1 (%2, %3)"
 msgstr ""
 
 #: src/core/plugin/qlibrary.cpp:796 src/core/plugin/qpluginloader.cpp:279
-#: src/core/io/qiodevice.cpp:1529 src/network/ssl/qsslerror.cpp:249
+#: src/core/io/qiodevice.cpp:1527 src/network/ssl/qsslerror.cpp:249
 #: src/network/socket/qnativesocketengine.cpp:250
-#: src/network/access/qftp.cpp:1427 src/uitools/formscriptrunner.cpp:104
+#: src/network/access/qftp.cpp:1428 src/uitools/formscriptrunner.cpp:104
 msgid "Unknown error"
 msgstr ""
 
@@ -150,19 +150,19 @@ msgctxt "QStandardPaths"
 msgid "Download"
 msgstr ""
 
-#: src/core/io/qfile.cpp:585
+#: src/core/io/qfile.cpp:586
 msgid "Destination file exists"
 msgstr ""
 
-#: src/core/io/qfile.cpp:600
+#: src/core/io/qfile.cpp:601
 msgid "Will not rename sequential file using block copy"
 msgstr ""
 
-#: src/core/io/qfile.cpp:623
+#: src/core/io/qfile.cpp:624
 msgid "Cannot remove source file"
 msgstr ""
 
-#: src/core/io/qfile.cpp:1022
+#: src/core/io/qfile.cpp:1023
 msgid "No file engine available or engine does not support UnMapExtension"
 msgstr ""
 
@@ -1684,11 +1684,11 @@ msgctxt "QPrintDialog"
 msgid "Print"
 msgstr ""
 
-#: src/gui/dialogs/qfiledialog.cpp:491
+#: src/gui/dialogs/qfiledialog.cpp:492
 msgid "Find Directory"
 msgstr ""
 
-#: src/gui/dialogs/qfiledialog.cpp:493
+#: src/gui/dialogs/qfiledialog.cpp:494
 #: src/plugins/accessible/widgets/simplewidgets.cpp:96
 #: src/plugins/accessible/widgets/simplewidgets.cpp:411
 #: src/plugins/accessible/widgets/simplewidgets.cpp:419
@@ -1700,98 +1700,98 @@ msgstr ""
 msgid "Open"
 msgstr ""
 
-#: src/gui/dialogs/qfiledialog.cpp:495
+#: src/gui/dialogs/qfiledialog.cpp:496
 msgid "Save As"
 msgstr ""
 
-#: src/gui/dialogs/qfiledialog.cpp:510 src/gui/dialogs/qfiledialog.cpp:1011
+#: src/gui/dialogs/qfiledialog.cpp:511 src/gui/dialogs/qfiledialog.cpp:1012
 msgid "All Files (*)"
 msgstr ""
 
-#: src/gui/dialogs/qfiledialog.cpp:520
+#: src/gui/dialogs/qfiledialog.cpp:521
 msgid "Show "
 msgstr ""
 
-#: src/gui/dialogs/qfiledialog.cpp:524
+#: src/gui/dialogs/qfiledialog.cpp:525
 msgid "&Rename"
 msgstr ""
 
-#: src/gui/dialogs/qfiledialog.cpp:525
+#: src/gui/dialogs/qfiledialog.cpp:526
 msgid "&Delete"
 msgstr ""
 
-#: src/gui/dialogs/qfiledialog.cpp:526
+#: src/gui/dialogs/qfiledialog.cpp:527
 msgid "Show &hidden files"
 msgstr ""
 
-#: src/gui/dialogs/qfiledialog.cpp:527
+#: src/gui/dialogs/qfiledialog.cpp:528
 msgid "&New Folder"
 msgstr ""
 
-#: src/gui/dialogs/qfiledialog.cpp:532 src/gui/dialogs/qfiledialog.cpp:1192
+#: src/gui/dialogs/qfiledialog.cpp:533 src/gui/dialogs/qfiledialog.cpp:1193
 msgid "Directory:"
 msgstr ""
 
-#: src/gui/dialogs/qfiledialog.cpp:534 src/gui/dialogs/qfiledialog.cpp:1198
+#: src/gui/dialogs/qfiledialog.cpp:535 src/gui/dialogs/qfiledialog.cpp:1199
 msgid "File &name:"
 msgstr ""
 
-#: src/gui/dialogs/qfiledialog.cpp:1185 src/gui/dialogs/qfiledialog.cpp:1240
-#: src/gui/dialogs/qfiledialog.cpp:2687
+#: src/gui/dialogs/qfiledialog.cpp:1186 src/gui/dialogs/qfiledialog.cpp:1241
+#: src/gui/dialogs/qfiledialog.cpp:2688
 msgid "&Open"
 msgstr ""
 
-#: src/gui/dialogs/qfiledialog.cpp:1185 src/gui/dialogs/qfiledialog.cpp:1240
+#: src/gui/dialogs/qfiledialog.cpp:1186 src/gui/dialogs/qfiledialog.cpp:1241
 msgid "&Save"
 msgstr ""
 
-#: src/gui/dialogs/qfiledialog.cpp:1188
+#: src/gui/dialogs/qfiledialog.cpp:1189
 msgid "Directories"
 msgstr ""
 
-#: src/gui/dialogs/qfiledialog.cpp:1195 src/gui/dialogs/qfiledialog.cpp:1238
+#: src/gui/dialogs/qfiledialog.cpp:1196 src/gui/dialogs/qfiledialog.cpp:1239
 msgid "&Choose"
 msgstr ""
 
-#: src/gui/dialogs/qfiledialog.cpp:1905 src/gui/dialogs/qfiledialog.cpp:2758
+#: src/gui/dialogs/qfiledialog.cpp:1906 src/gui/dialogs/qfiledialog.cpp:2759
 msgid ""
 "%1\n"
 "Directory not found.\n"
 "Please verify the correct directory name was given."
 msgstr ""
 
-#: src/gui/dialogs/qfiledialog.cpp:1939
+#: src/gui/dialogs/qfiledialog.cpp:1940
 msgid ""
 "%1 already exists.\n"
 "Do you want to replace it?"
 msgstr ""
 
-#: src/gui/dialogs/qfiledialog.cpp:1959
+#: src/gui/dialogs/qfiledialog.cpp:1960
 msgid ""
 "%1\n"
 "File not found.\n"
 "Please verify the correct file name was given."
 msgstr ""
 
-#: src/gui/dialogs/qfiledialog.cpp:2408
+#: src/gui/dialogs/qfiledialog.cpp:2409
 msgid "New Folder"
 msgstr ""
 
-#: src/gui/dialogs/qfiledialog.cpp:2536
+#: src/gui/dialogs/qfiledialog.cpp:2537
 msgid ""
 "'%1' is write protected.\n"
 "Do you want to delete it anyway?"
 msgstr ""
 
-#: src/gui/dialogs/qfiledialog.cpp:2541
+#: src/gui/dialogs/qfiledialog.cpp:2542
 msgid "Are sure you want to delete '%1'?"
 msgstr ""
 
-#: src/gui/dialogs/qfiledialog.cpp:2556
+#: src/gui/dialogs/qfiledialog.cpp:2557
 msgid "Could not delete directory."
 msgstr ""
 
-#: src/gui/dialogs/qfiledialog.cpp:2954
+#: src/gui/dialogs/qfiledialog.cpp:2955
 msgid "Recent Places"
 msgstr ""
 
@@ -2192,7 +2192,7 @@ msgstr ""
 msgid "*"
 msgstr ""
 
-#: src/gui/kernel/qapplication.cpp:1683
+#: src/gui/kernel/qapplication.cpp:1664
 msgid "QT_LAYOUT_DIRECTION"
 msgstr ""
 
@@ -4733,56 +4733,56 @@ msgstr ""
 msgid "The peer certificate is blacklisted"
 msgstr ""
 
-#: src/network/ssl/qsslsocket_openssl.cpp:254
+#: src/network/ssl/qsslsocket_openssl.cpp:156
 msgid "Error creating SSL context (%1)"
 msgstr ""
 
-#: src/network/ssl/qsslsocket_openssl.cpp:308
+#: src/network/ssl/qsslsocket_openssl.cpp:206
 msgid "Invalid or empty cipher list (%1)"
 msgstr ""
 
-#: src/network/ssl/qsslsocket_openssl.cpp:340
+#: src/network/ssl/qsslsocket_openssl.cpp:238
 msgid "Cannot provide a certificate with no key, %1"
 msgstr ""
 
-#: src/network/ssl/qsslsocket_openssl.cpp:347
+#: src/network/ssl/qsslsocket_openssl.cpp:245
 msgid "Error loading local certificate, %1"
 msgstr ""
 
-#: src/network/ssl/qsslsocket_openssl.cpp:362
+#: src/network/ssl/qsslsocket_openssl.cpp:260
 msgid "Error loading private key, %1"
 msgstr ""
 
-#: src/network/ssl/qsslsocket_openssl.cpp:369
+#: src/network/ssl/qsslsocket_openssl.cpp:267
 msgid "Private key does not certify public key, %1"
 msgstr ""
 
-#: src/network/ssl/qsslsocket_openssl.cpp:389
+#: src/network/ssl/qsslsocket_openssl.cpp:287
 msgid "Error creating SSL session, %1"
 msgstr ""
 
-#: src/network/ssl/qsslsocket_openssl.cpp:425
+#: src/network/ssl/qsslsocket_openssl.cpp:321
 msgid "Error creating SSL session: %1"
 msgstr ""
 
-#: src/network/ssl/qsslsocket_openssl.cpp:674
+#: src/network/ssl/qsslsocket_openssl.cpp:542
 msgid "Unable to write data: %1"
 msgstr ""
 
-#: src/network/ssl/qsslsocket_openssl.cpp:745
+#: src/network/ssl/qsslsocket_openssl.cpp:613
 msgid "Unable to decrypt data: %1"
 msgstr ""
 
-#: src/network/ssl/qsslsocket_openssl.cpp:818
+#: src/network/ssl/qsslsocket_openssl.cpp:686
 msgid "The TLS/SSL connection has been closed"
 msgstr ""
 
-#: src/network/ssl/qsslsocket_openssl.cpp:826
-#: src/network/ssl/qsslsocket_openssl.cpp:836
+#: src/network/ssl/qsslsocket_openssl.cpp:694
+#: src/network/ssl/qsslsocket_openssl.cpp:704
 msgid "Error while reading: %1"
 msgstr ""
 
-#: src/network/ssl/qsslsocket_openssl.cpp:931
+#: src/network/ssl/qsslsocket_openssl.cpp:798
 msgid "Error during SSL handshake: %1"
 msgstr ""
 
@@ -4796,24 +4796,24 @@ msgctxt "QHostInfo"
 msgid "No host name given"
 msgstr ""
 
-#: src/network/kernel/qhostinfo_unix.cpp:86
-#: src/network/kernel/qhostinfo_unix.cpp:172
+#: src/network/kernel/qhostinfo_unix.cpp:87
+#: src/network/kernel/qhostinfo_unix.cpp:173
 #: src/network/socket/qabstractsocket.cpp:873
-#: src/network/socket/qhttpsocketengine.cpp:650
+#: src/network/socket/qhttpsocketengine.cpp:651
 #: src/network/socket/qsocks5socketengine.cpp:626
 #: src/network/socket/qsocks5socketengine.cpp:652
 msgid "Host not found"
 msgstr ""
 
-#: src/network/kernel/qhostinfo_unix.cpp:104
+#: src/network/kernel/qhostinfo_unix.cpp:105
 msgid "No host name given"
 msgstr ""
 
-#: src/network/kernel/qhostinfo_unix.cpp:106
+#: src/network/kernel/qhostinfo_unix.cpp:107
 msgid "Invalid hostname"
 msgstr ""
 
-#: src/network/kernel/qhostinfo_unix.cpp:160
+#: src/network/kernel/qhostinfo_unix.cpp:161
 msgid "Unknown address type"
 msgstr ""
 
@@ -4847,7 +4847,7 @@ msgid "%1: Unknown error %2"
 msgstr ""
 
 #: src/network/socket/qabstractsocket.cpp:915
-#: src/network/socket/qhttpsocketengine.cpp:653
+#: src/network/socket/qhttpsocketengine.cpp:654
 #: src/network/socket/qnativesocketengine.cpp:214
 #: src/network/socket/qsocks5socketengine.cpp:656
 msgid "Connection refused"
@@ -4866,39 +4866,39 @@ msgstr ""
 msgid "Socket is not connected"
 msgstr ""
 
-#: src/network/socket/qhttpsocketengine.cpp:550
+#: src/network/socket/qhttpsocketengine.cpp:551
 msgid "Did not receive HTTP response from proxy"
 msgstr ""
 
-#: src/network/socket/qhttpsocketengine.cpp:586
+#: src/network/socket/qhttpsocketengine.cpp:587
 msgid "Error parsing authentication request from proxy"
 msgstr ""
 
-#: src/network/socket/qhttpsocketengine.cpp:620
+#: src/network/socket/qhttpsocketengine.cpp:621
 msgid "Authentication required"
 msgstr ""
 
-#: src/network/socket/qhttpsocketengine.cpp:647
+#: src/network/socket/qhttpsocketengine.cpp:648
 msgid "Proxy denied connection"
 msgstr ""
 
-#: src/network/socket/qhttpsocketengine.cpp:657
+#: src/network/socket/qhttpsocketengine.cpp:658
 msgid "Error communicating with HTTP proxy"
 msgstr ""
 
-#: src/network/socket/qhttpsocketengine.cpp:680
+#: src/network/socket/qhttpsocketengine.cpp:681
 msgid "Proxy server not found"
 msgstr ""
 
-#: src/network/socket/qhttpsocketengine.cpp:682
+#: src/network/socket/qhttpsocketengine.cpp:683
 msgid "Proxy connection refused"
 msgstr ""
 
-#: src/network/socket/qhttpsocketengine.cpp:684
+#: src/network/socket/qhttpsocketengine.cpp:685
 msgid "Proxy server connection timed out"
 msgstr ""
 
-#: src/network/socket/qhttpsocketengine.cpp:686
+#: src/network/socket/qhttpsocketengine.cpp:687
 msgid "Proxy connection closed prematurely"
 msgstr ""
 
@@ -5093,7 +5093,7 @@ msgid "Network operation timed out"
 msgstr ""
 
 #: src/network/access/qhttpnetworkconnection.cpp:656
-#: src/network/access/qhttp.cpp:2587
+#: src/network/access/qhttp.cpp:2591
 msgctxt "QHttp"
 msgid "Host %1 not found"
 msgstr ""
@@ -5182,66 +5182,66 @@ msgctxt "QNetworkAccessCacheBackend"
 msgid "Error opening %1"
 msgstr ""
 
-#: src/network/access/qhttp.cpp:1542 src/network/access/qhttp.cpp:2358
+#: src/network/access/qhttp.cpp:1543 src/network/access/qhttp.cpp:2362
 msgctxt "QHttp"
 msgid "Unknown error"
 msgstr ""
 
-#: src/network/access/qhttp.cpp:1794
+#: src/network/access/qhttp.cpp:1795
 msgid "Request aborted"
 msgstr ""
 
-#: src/network/access/qhttp.cpp:2369
+#: src/network/access/qhttp.cpp:2373
 msgctxt "QHttp"
 msgid "No server set to connect to"
 msgstr ""
 
-#: src/network/access/qhttp.cpp:2525
+#: src/network/access/qhttp.cpp:2529
 msgctxt "QHttp"
 msgid "Wrong content length"
 msgstr ""
 
-#: src/network/access/qhttp.cpp:2529
+#: src/network/access/qhttp.cpp:2533
 msgctxt "QHttp"
 msgid "Server closed connection unexpectedly"
 msgstr ""
 
-#: src/network/access/qhttp.cpp:2584
+#: src/network/access/qhttp.cpp:2588
 msgctxt "QHttp"
 msgid "Connection refused (or timed out)"
 msgstr ""
 
-#: src/network/access/qhttp.cpp:2607
+#: src/network/access/qhttp.cpp:2611
 msgctxt "QHttp"
 msgid "HTTP request failed"
 msgstr ""
 
-#: src/network/access/qhttp.cpp:2695
+#: src/network/access/qhttp.cpp:2699
 msgctxt "QHttp"
 msgid "Invalid HTTP response header"
 msgstr ""
 
-#: src/network/access/qhttp.cpp:2723
+#: src/network/access/qhttp.cpp:2727
 msgctxt "QHttp"
 msgid "Unknown authentication method"
 msgstr ""
 
-#: src/network/access/qhttp.cpp:2733
+#: src/network/access/qhttp.cpp:2737
 msgctxt "QHttp"
 msgid "Proxy authentication required"
 msgstr ""
 
-#: src/network/access/qhttp.cpp:2737
+#: src/network/access/qhttp.cpp:2741
 msgctxt "QHttp"
 msgid "Authentication required"
 msgstr ""
 
-#: src/network/access/qhttp.cpp:2820 src/network/access/qhttp.cpp:2868
+#: src/network/access/qhttp.cpp:2824 src/network/access/qhttp.cpp:2872
 msgctxt "QHttp"
 msgid "Invalid HTTP chunked body"
 msgstr ""
 
-#: src/network/access/qhttp.cpp:2906
+#: src/network/access/qhttp.cpp:2910
 msgctxt "QHttp"
 msgid "Error writing response to device"
 msgstr ""
@@ -5268,108 +5268,108 @@ msgctxt "QNetworkReply"
 msgid "backend start error."
 msgstr ""
 
-#: src/network/access/qnetworkreplyimpl.cpp:748
+#: src/network/access/qnetworkreplyimpl.cpp:749
 msgid "Temporary network failure."
 msgstr ""
 
-#: src/network/access/qnetworkreplyimpl.cpp:863
-#: src/network/access/qnetworkreplyimpl.cpp:893
+#: src/network/access/qnetworkreplyimpl.cpp:864
+#: src/network/access/qnetworkreplyimpl.cpp:894
 msgid "Operation canceled"
 msgstr ""
 
-#: src/network/access/qnetworkreplyimpl.cpp:1088
+#: src/network/access/qnetworkreplyimpl.cpp:1089
 msgctxt "QNetworkAccessManager"
 msgid "Network access is disabled."
 msgstr ""
 
-#: src/network/access/qftp.cpp:855
+#: src/network/access/qftp.cpp:856
 msgid "Not connected"
 msgstr ""
 
-#: src/network/access/qftp.cpp:934
+#: src/network/access/qftp.cpp:935
 msgid "Host %1 not found"
 msgstr ""
 
-#: src/network/access/qftp.cpp:938
+#: src/network/access/qftp.cpp:939
 msgid "Connection refused to host %1"
 msgstr ""
 
-#: src/network/access/qftp.cpp:942
+#: src/network/access/qftp.cpp:943
 msgid "Connection timed out to host %1"
 msgstr ""
 
-#: src/network/access/qftp.cpp:1046
+#: src/network/access/qftp.cpp:1047
 msgid "Connected to host %1"
 msgstr ""
 
-#: src/network/access/qftp.cpp:1254
+#: src/network/access/qftp.cpp:1255
 msgid "Connection refused for data connection"
 msgstr ""
 
-#: src/network/access/qftp.cpp:2328
+#: src/network/access/qftp.cpp:2329
 msgctxt "QFtp"
 msgid ""
 "Connecting to host failed:\n"
 "%1"
 msgstr ""
 
-#: src/network/access/qftp.cpp:2332
+#: src/network/access/qftp.cpp:2333
 msgctxt "QFtp"
 msgid ""
 "Login failed:\n"
 "%1"
 msgstr ""
 
-#: src/network/access/qftp.cpp:2336
+#: src/network/access/qftp.cpp:2337
 msgctxt "QFtp"
 msgid ""
 "Listing directory failed:\n"
 "%1"
 msgstr ""
 
-#: src/network/access/qftp.cpp:2340
+#: src/network/access/qftp.cpp:2341
 msgctxt "QFtp"
 msgid ""
 "Changing directory failed:\n"
 "%1"
 msgstr ""
 
-#: src/network/access/qftp.cpp:2344
+#: src/network/access/qftp.cpp:2345
 msgctxt "QFtp"
 msgid ""
 "Downloading file failed:\n"
 "%1"
 msgstr ""
 
-#: src/network/access/qftp.cpp:2348
+#: src/network/access/qftp.cpp:2349
 msgctxt "QFtp"
 msgid ""
 "Uploading file failed:\n"
 "%1"
 msgstr ""
 
-#: src/network/access/qftp.cpp:2352
+#: src/network/access/qftp.cpp:2353
 msgctxt "QFtp"
 msgid ""
 "Removing file failed:\n"
 "%1"
 msgstr ""
 
-#: src/network/access/qftp.cpp:2356
+#: src/network/access/qftp.cpp:2357
 msgctxt "QFtp"
 msgid ""
 "Creating directory failed:\n"
 "%1"
 msgstr ""
 
-#: src/network/access/qftp.cpp:2360
+#: src/network/access/qftp.cpp:2361
 msgctxt "QFtp"
 msgid ""
 "Removing directory failed:\n"
 "%1"
 msgstr ""
 
-#: src/network/access/qftp.cpp:2388
+#: src/network/access/qftp.cpp:2389
 msgctxt "QFtp"
 msgid "Connection closed"
 msgstr ""
@@ -5397,7 +5397,7 @@ msgctxt "QNetworkAccessFileBackend"
 msgid "Cannot open %1: Path is a directory"
 msgstr ""
 
-#: src/network/access/qnetworkaccessfilebackend.cpp:232
+#: src/network/access/qnetworkaccessfilebackend.cpp:231
 msgctxt "QNetworkAccessFileBackend"
 msgid "Read error reading from %1: %2"
 msgstr ""
@@ -5530,23 +5530,23 @@ msgstr ""
 msgid "Could not reset to start position"
 msgstr ""
 
-#: src/plugins/bearer/qnetworksession_impl.cpp:234
+#: src/plugins/bearer/qnetworksession_impl.cpp:233
 msgid "Unknown session error."
 msgstr ""
 
-#: src/plugins/bearer/qnetworksession_impl.cpp:236
+#: src/plugins/bearer/qnetworksession_impl.cpp:235
 msgid "The session was aborted by the user or system."
 msgstr ""
 
-#: src/plugins/bearer/qnetworksession_impl.cpp:238
+#: src/plugins/bearer/qnetworksession_impl.cpp:237
 msgid "The requested operation is not supported by the system."
 msgstr ""
 
-#: src/plugins/bearer/qnetworksession_impl.cpp:240
+#: src/plugins/bearer/qnetworksession_impl.cpp:239
 msgid "The specified configuration cannot be used."
 msgstr ""
 
-#: src/plugins/bearer/qnetworksession_impl.cpp:242
+#: src/plugins/bearer/qnetworksession_impl.cpp:241
 msgid "Roaming was aborted or is not possible."
 msgstr ""
 
@@ -5555,34 +5555,34 @@ msgctxt "QPSQLResult"
 msgid "Unable to create query"
 msgstr ""
 
-#: src/plugins/sqldrivers/psql/qsql_psql.cpp:550
+#: src/plugins/sqldrivers/psql/qsql_psql.cpp:548
 msgctxt "QPSQLResult"
 msgid "Unable to prepare statement"
 msgstr ""
 
-#: src/plugins/sqldrivers/psql/qsql_psql.cpp:814
+#: src/plugins/sqldrivers/psql/qsql_psql.cpp:794
 #: src/plugins/sqldrivers/odbc/qsql_odbc.cpp:1786
 #: src/plugins/sqldrivers/mysql/qsql_mysql.cpp:1164
 msgid "Unable to connect"
 msgstr ""
 
-#: src/plugins/sqldrivers/psql/qsql_psql.cpp:863
+#: src/plugins/sqldrivers/psql/qsql_psql.cpp:843
 msgid "Could not begin transaction"
 msgstr ""
 
-#: src/plugins/sqldrivers/psql/qsql_psql.cpp:891
+#: src/plugins/sqldrivers/psql/qsql_psql.cpp:871
 msgid "Could not commit transaction"
 msgstr ""
 
-#: src/plugins/sqldrivers/psql/qsql_psql.cpp:908
+#: src/plugins/sqldrivers/psql/qsql_psql.cpp:888
 msgid "Could not rollback transaction"
 msgstr ""
 
-#: src/plugins/sqldrivers/psql/qsql_psql.cpp:1229
+#: src/plugins/sqldrivers/psql/qsql_psql.cpp:1172
 msgid "Unable to subscribe"
 msgstr ""
 
-#: src/plugins/sqldrivers/psql/qsql_psql.cpp:1261
+#: src/plugins/sqldrivers/psql/qsql_psql.cpp:1204
 msgid "Unable to unsubscribe"
 msgstr ""
 
@@ -6146,119 +6146,119 @@ msgctxt "QFormBuilder"
 msgid "The flag-value '%1' is invalid. Zero will be used instead."
 msgstr ""
 
-#: src/xml/sax/qxml.cpp:36
+#: src/xml/sax/qxml.cpp:37
 msgctxt "QXml"
 msgid "no error occurred"
 msgstr ""
 
-#: src/xml/sax/qxml.cpp:37
+#: src/xml/sax/qxml.cpp:38
 msgctxt "QXml"
 msgid "error triggered by consumer"
 msgstr ""
 
-#: src/xml/sax/qxml.cpp:38
+#: src/xml/sax/qxml.cpp:39
 msgctxt "QXml"
 msgid "unexpected end of file"
 msgstr ""
 
-#: src/xml/sax/qxml.cpp:39
+#: src/xml/sax/qxml.cpp:40
 msgctxt "QXml"
 msgid "more than one document type definition"
 msgstr ""
 
-#: src/xml/sax/qxml.cpp:40
+#: src/xml/sax/qxml.cpp:41
 msgctxt "QXml"
 msgid "error occurred while parsing element"
 msgstr ""
 
-#: src/xml/sax/qxml.cpp:41
+#: src/xml/sax/qxml.cpp:42
 msgctxt "QXml"
 msgid "tag mismatch"
 msgstr ""
 
-#: src/xml/sax/qxml.cpp:42
+#: src/xml/sax/qxml.cpp:43
 msgctxt "QXml"
 msgid "error occurred while parsing content"
 msgstr ""
 
-#: src/xml/sax/qxml.cpp:43
+#: src/xml/sax/qxml.cpp:44
 msgctxt "QXml"
 msgid "unexpected character"
 msgstr ""
 
-#: src/xml/sax/qxml.cpp:44
+#: src/xml/sax/qxml.cpp:45
 msgctxt "QXml"
 msgid "invalid name for processing instruction"
 msgstr ""
 
-#: src/xml/sax/qxml.cpp:45
+#: src/xml/sax/qxml.cpp:46
 msgctxt "QXml"
 msgid "version expected while reading the XML declaration"
 msgstr ""
 
-#: src/xml/sax/qxml.cpp:46
+#: src/xml/sax/qxml.cpp:47
 msgctxt "QXml"
 msgid "wrong value for standalone declaration"
 msgstr ""
 
-#: src/xml/sax/qxml.cpp:47
+#: src/xml/sax/qxml.cpp:48
 msgctxt "QXml"
 msgid ""
 "encoding declaration or standalone declaration expected while reading the "
 "XML declaration"
 msgstr ""
 
-#: src/xml/sax/qxml.cpp:48
+#: src/xml/sax/qxml.cpp:49
 msgctxt "QXml"
 msgid "standalone declaration expected while reading the XML declaration"
 msgstr ""
 
-#: src/xml/sax/qxml.cpp:49
+#: src/xml/sax/qxml.cpp:50
 msgctxt "QXml"
 msgid "error occurred while parsing document type definition"
 msgstr ""
 
-#: src/xml/sax/qxml.cpp:50
+#: src/xml/sax/qxml.cpp:51
 msgctxt "QXml"
 msgid "letter is expected"
 msgstr ""
 
-#: src/xml/sax/qxml.cpp:51
+#: src/xml/sax/qxml.cpp:52
 msgctxt "QXml"
 msgid "error occurred while parsing comment"
 msgstr ""
 
-#: src/xml/sax/qxml.cpp:52
+#: src/xml/sax/qxml.cpp:53
 msgctxt "QXml"
 msgid "error occurred while parsing reference"
 msgstr ""
 
-#: src/xml/sax/qxml.cpp:53
+#: src/xml/sax/qxml.cpp:54
 msgctxt "QXml"
 msgid "internal general entity reference not allowed in DTD"
 msgstr ""
 
-#: src/xml/sax/qxml.cpp:54
+#: src/xml/sax/qxml.cpp:55
 msgctxt "QXml"
 msgid "external parsed general entity reference not allowed in attribute value"
 msgstr ""
 
-#: src/xml/sax/qxml.cpp:55
+#: src/xml/sax/qxml.cpp:56
 msgctxt "QXml"
 msgid "external parsed general entity reference not allowed in DTD"
 msgstr ""
 
-#: src/xml/sax/qxml.cpp:56
+#: src/xml/sax/qxml.cpp:57
 msgctxt "QXml"
 msgid "unparsed entity reference in wrong context"
 msgstr ""
 
-#: src/xml/sax/qxml.cpp:57
+#: src/xml/sax/qxml.cpp:58
 msgctxt "QXml"
 msgid "recursive entities"
 msgstr ""
 
-#: src/xml/sax/qxml.cpp:58
+#: src/xml/sax/qxml.cpp:59
 msgctxt "QXml"
 msgid "error in the text declaration of an external entity"
 msgstr ""
@@ -6271,61 +6271,61 @@ msgstr ""
 msgid "Encountered incorrectly encoded content."
 msgstr ""
 
-#: src/xml/kernel/qxmlstream_p.h:1255
+#: src/xml/kernel/qxmlstream_p.h:1256
 msgid "Start tag expected."
 msgstr ""
 
-#: src/xml/kernel/qxmlstream_p.h:1446
+#: src/xml/kernel/qxmlstream_p.h:1469
 msgid "NDATA in parameter entity declaration."
 msgstr ""
 
-#: src/xml/kernel/qxmlstream_p.h:1477
+#: src/xml/kernel/qxmlstream_p.h:1501
 msgid "XML declaration not at start of document."
 msgstr ""
 
-#: src/xml/kernel/qxmlstream_p.h:1480
+#: src/xml/kernel/qxmlstream_p.h:1504
 msgid "%1 is an invalid processing instruction name."
 msgstr ""
 
-#: src/xml/kernel/qxmlstream_p.h:1491
+#: src/xml/kernel/qxmlstream_p.h:1516
 msgid "Invalid processing instruction name."
 msgstr ""
 
-#: src/xml/kernel/qxmlstream_p.h:1605
+#: src/xml/kernel/qxmlstream_p.h:1647
 msgid "%1 is an invalid PUBLIC identifier."
 msgstr ""
 
-#: src/xml/kernel/qxmlstream_p.h:1655 src/xml/kernel/qxmlstream_p.h:1708
+#: src/xml/kernel/qxmlstream_p.h:1704 src/xml/kernel/qxmlstream_p.h:1757
 #: src/xml/kernel/qxmlstream.cpp:1442 src/xml/kernel/qxmlstream.cpp:1454
 msgid "Illegal namespace declaration."
 msgstr ""
 
-#: src/xml/kernel/qxmlstream_p.h:1723
+#: src/xml/kernel/qxmlstream_p.h:1773
 msgid "Invalid XML name."
 msgstr ""
 
-#: src/xml/kernel/qxmlstream_p.h:1734 src/xml/kernel/qxmlstream.cpp:570
+#: src/xml/kernel/qxmlstream_p.h:1786 src/xml/kernel/qxmlstream.cpp:570
 msgid "Extra content at end of document."
 msgstr ""
 
-#: src/xml/kernel/qxmlstream_p.h:1746
+#: src/xml/kernel/qxmlstream_p.h:1799
 msgid "Opening and ending tag mismatch."
 msgstr ""
 
-#: src/xml/kernel/qxmlstream_p.h:1751 src/xml/kernel/qxmlstream_p.h:1812
-#: src/xml/kernel/qxmlstream_p.h:1852
+#: src/xml/kernel/qxmlstream_p.h:1805 src/xml/kernel/qxmlstream_p.h:1867
+#: src/xml/kernel/qxmlstream_p.h:1909
 msgid "Entity '%1' not declared."
 msgstr ""
 
-#: src/xml/kernel/qxmlstream_p.h:1764
+#: src/xml/kernel/qxmlstream_p.h:1819
 msgid "Reference to unparsed entity '%1'."
 msgstr ""
 
-#: src/xml/kernel/qxmlstream_p.h:1826
+#: src/xml/kernel/qxmlstream_p.h:1883
 msgid "Reference to external entity '%1' in attribute value."
 msgstr ""
 
-#: src/xml/kernel/qxmlstream_p.h:1866
+#: src/xml/kernel/qxmlstream_p.h:1924
 msgid "Invalid character reference."
 msgstr ""
 

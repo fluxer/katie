@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-06-24 02:37+0300\n"
+"POT-Creation-Date: 2021-07-24 03:04+0300\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -659,43 +659,43 @@ msgstr ""
 msgid "Main"
 msgstr ""
 
-#: src/tools/designer/mainwindow.cpp:105 src/tools/designer/mainwindow.cpp:235
+#: src/tools/designer/mainwindow.cpp:105 src/tools/designer/mainwindow.cpp:234
 msgid "File"
 msgstr ""
 
-#: src/tools/designer/mainwindow.cpp:106 src/tools/designer/mainwindow.cpp:239
+#: src/tools/designer/mainwindow.cpp:106 src/tools/designer/mainwindow.cpp:238
 msgid "Edit"
 msgstr ""
 
-#: src/tools/designer/mainwindow.cpp:107 src/tools/designer/mainwindow.cpp:243
+#: src/tools/designer/mainwindow.cpp:107 src/tools/designer/mainwindow.cpp:242
 msgid "Tools"
 msgstr ""
 
-#: src/tools/designer/mainwindow.cpp:108 src/tools/designer/mainwindow.cpp:247
+#: src/tools/designer/mainwindow.cpp:108 src/tools/designer/mainwindow.cpp:246
 msgid "Form"
 msgstr ""
 
-#: src/tools/designer/mainwindow.cpp:204
+#: src/tools/designer/mainwindow.cpp:203
 msgid "Configure Toolbars..."
 msgstr ""
 
-#: src/tools/designer/mainwindow.cpp:219
+#: src/tools/designer/mainwindow.cpp:218
 msgid "Window"
 msgstr ""
 
-#: src/tools/designer/mainwindow.cpp:220
+#: src/tools/designer/mainwindow.cpp:219
 msgid "Help"
 msgstr ""
 
-#: src/tools/designer/mainwindow.cpp:227
+#: src/tools/designer/mainwindow.cpp:226
 msgid "Style"
 msgstr ""
 
-#: src/tools/designer/mainwindow.cpp:229
+#: src/tools/designer/mainwindow.cpp:228
 msgid "Dock views"
 msgstr ""
 
-#: src/tools/designer/mainwindow.cpp:251
+#: src/tools/designer/mainwindow.cpp:250
 #: src/tools/designer/qdesigner_workbench.cpp:216
 msgid "Toolbars"
 msgstr ""
