@@ -173,163 +173,37 @@ static QImageIOHandler *createReadHandlerHelper(QIODevice *device,
     QByteArray form = format.toLower();
     QImageIOHandler *handler = Q_NULLPTR;
 
-#ifndef QT_NO_LIBRARY
-    // check if we have plugins that support the image format
-    QFactoryLoader *l = imageloader();
-    QStringList keys = l->keys();
-#endif
-    QByteArray suffix;
 
-#ifdef QIMAGEREADER_DEBUG
-    qDebug() << "QImageReader::createReadHandler( device =" << (void *)device << ", format =" << format << "),"
-             << keys.size() << "plugins available: " << keys;
-#endif
-
-#ifndef QT_NO_LIBRARY
-    int suffixPluginIndex = -1;
-    if (device && format.isEmpty() && autoDetectImageFormat) {
-        // if there's no format, see if \a device is a file, and if so, find
-        // the file suffix and find support for that format among our plugins.
-        // this allows plugins to override our built-in handlers.
-        if (QFile *file = qobject_cast<QFile *>(device)) {
-#ifdef QIMAGEREADER_DEBUG
-            qDebug() << "QImageReader::createReadHandler: device is a file:" << file->fileName();
-#endif
-            suffix = QFileInfo(file->fileName()).suffix().toLower().toLatin1();
-            if (!suffix.isEmpty()) {
-                int index = keys.indexOf(QString::fromLatin1(suffix));
-                if (index != -1) {
-#ifdef QIMAGEREADER_DEBUG
-                    qDebug() << "QImageReader::createReadHandler: suffix recognized; the"
-                             << suffix << "plugin might be able to read this";
-#endif
-                    suffixPluginIndex = index;
-                }
-            }
-        }
-    }
-#endif // QT_NO_LIBRARY
-
-    QByteArray testFormat = !form.isEmpty() ? form : suffix;
-
-#ifndef QT_NO_LIBRARY
-    if (suffixPluginIndex != -1) {
-        // check if the plugin that claims support for this format can load
-        // from this device with this format.
-        const qint64 pos = device ? device->pos() : 0;
-        QImageIOPlugin *plugin = qobject_cast<QImageIOPlugin *>(l->instance(QString::fromLatin1(suffix)));
-        if (plugin && plugin->capabilities(device, testFormat) & QImageIOPlugin::CanRead) {
-            handler = plugin->create(device, testFormat);
-#ifdef QIMAGEREADER_DEBUG
-            qDebug() << "QImageReader::createReadHandler: using the" << suffix
-                     << "plugin";
-#endif
-        }
-        if (device && !device->isSequential())
-            device->seek(pos);
-    }
-
-    if (!handler && !testFormat.isEmpty()) {
-        // check if any plugin supports the format (they are not allowed to
-        // read from the device yet).
-        const qint64 pos = device ? device->pos() : 0;
-
-        if (autoDetectImageFormat) {
-            for (int i = 0; i < keys.size(); i++) {
-                if (i != suffixPluginIndex) {
-                    QImageIOPlugin *plugin = qobject_cast<QImageIOPlugin *>(l->instance(keys.at(i)));
-                    if (plugin && plugin->capabilities(device, testFormat) & QImageIOPlugin::CanRead) {
-#ifdef QIMAGEREADER_DEBUG
-                        qDebug() << "QImageReader::createReadHandler: the" << keys.at(i) << "plugin can read this format";
-#endif
-                        handler = plugin->create(device, testFormat);
-                        break;
-                    }
-                }
-            }
-        } else {
-            QImageIOPlugin *plugin = qobject_cast<QImageIOPlugin *>(l->instance(QLatin1String(testFormat)));
-            if (plugin && plugin->capabilities(device, testFormat) & QImageIOPlugin::CanRead) {
-#ifdef QIMAGEREADER_DEBUG
-                qDebug() << "QImageReader::createReadHandler: the" << testFormat << "plugin can read this format";
-#endif
-                handler = plugin->create(device, testFormat);
-            }
-        }
-        if (device && !device->isSequential())
-            device->seek(pos);
-    }
-
-#endif // QT_NO_LIBRARY
-
-    // if we don't have a handler yet, check if we have built-in support for
-    // the format
-    if (!handler && !testFormat.isEmpty()) {
-        if (testFormat == "png") {
-            handler = new QPngHandler;
+    // check if we have built-in support for the format first
+    if (form == "png") {
+        handler = new QPngHandler;
 #ifndef QT_NO_IMAGEFORMAT_BMP
-        } else if (testFormat == "bmp") {
-            handler = new QBmpHandler;
+    } else if (form == "bmp") {
+        handler = new QBmpHandler;
 #endif
 #ifndef QT_NO_IMAGEFORMAT_XPM
-        } else if (testFormat == "xpm") {
-            handler = new QXpmHandler;
+    } else if (form == "xpm") {
+        handler = new QXpmHandler;
 #endif
 #ifndef QT_NO_IMAGEFORMAT_XBM
-        } else if (testFormat == "xbm") {
-            handler = new QXbmHandler;
+    } else if (form == "xbm") {
+        handler = new QXbmHandler;
 #endif
 #ifndef QT_NO_IMAGEFORMAT_PPM
-        } else if (testFormat == "pbm" || testFormat == "pbmraw" || testFormat == "pgm"
-                   || testFormat == "pgmraw" || testFormat == "ppm" || testFormat == "ppmraw") {
-            handler = new QPpmHandler;
-            handler->setOption(QImageIOHandler::SubType, testFormat);
-#endif
-        }
-
-#ifdef QIMAGEREADER_DEBUG
-        if (handler)
-            qDebug() << "QImageReader::createReadHandler: using the built-in handler for" << testFormat;
+    } else if (form == "pbm" || form == "pbmraw" || form == "pgm"
+                || form == "pgmraw" || form == "ppm" || form == "ppmraw") {
+        handler = new QPpmHandler;
+        handler->setOption(QImageIOHandler::SubType, form);
 #endif
     }
 
-#ifndef QT_NO_LIBRARY
-    if (!handler && autoDetectImageFormat) {
-        // check if any of our plugins recognize the file from its contents.
-        const qint64 pos = device ? device->pos() : 0;
-        for (int i = 0; i < keys.size(); i++) {
-            if (i != suffixPluginIndex) {
-                QImageIOPlugin *plugin = qobject_cast<QImageIOPlugin *>(l->instance(keys.at(i)));
-                if (plugin && plugin->capabilities(device, QByteArray()) & QImageIOPlugin::CanRead) {
-                    handler = plugin->create(device, testFormat);
 #ifdef QIMAGEREADER_DEBUG
-                    qDebug() << "QImageReader::createReadHandler: the" << keys.at(i) << "plugin can read this data";
+    if (handler)
+        qDebug() << "QImageReader::createReadHandler: using the built-in handler for" << testFormat;
 #endif
-                    break;
-                }
-            }
-        }
-        if (device && !device->isSequential())
-            device->seek(pos);
-    }
-#endif // QT_NO_LIBRARY
 
-    if (!handler && autoDetectImageFormat) {
-        // check if any of our built-in handlers recognize the file from its
-        // contents.
-        qint16 currentFormat = 0;
-        if (!suffix.isEmpty()) {
-            // If reading from a file with a suffix, start testing our
-            // built-in handler for that suffix first.
-            for (qint16 i = 0; i < ImageFormatTblSize; i++) {
-                if (ImageFormatTbl[i].extension == suffix) {
-                    currentFormat = i;
-                    break;
-                }
-            }
-        }
-
-        for (qint16 i = currentFormat; device && i < ImageFormatTblSize; i++) {
+    if (!handler && device && autoDetectImageFormat) {
+        for (qint16 i = 0; i < ImageFormatTblSize; i++) {
             const qint64 pos = device->pos();
             switch (ImageFormatTbl[i].format) {
                 case qPngFormat: {
@@ -384,12 +258,58 @@ static QImageIOHandler *createReadHandlerHelper(QIODevice *device,
         }
     }
 
+#ifndef QT_NO_LIBRARY
+    QFactoryLoader *l = imageloader();
+    QStringList keys = l->keys();
+
+#ifdef QIMAGEREADER_DEBUG
+    if (!handler) {
+        qDebug() << "QImageReader::createReadHandler( device =" << (void *)device << ", format =" << format << "),"
+                 << keys.size() << "plugins available: " << keys;
+    }
+#endif
+
+    // check if any plugin recognize the format
+    if (!handler && !form.isEmpty()) {
+        const qint64 pos = device ? device->pos() : 0;
+        for (int i = 0; i < keys.size(); i++) {
+            QImageIOPlugin *plugin = qobject_cast<QImageIOPlugin *>(l->instance(keys.at(i)));
+            if (plugin && plugin->capabilities(device, form) & QImageIOPlugin::CanRead) {
+                handler = plugin->create(device, keys.at(i).toLatin1());
+#ifdef QIMAGEREADER_DEBUG
+                qDebug() << "QImageReader::createReadHandler: the" << keys.at(i) << "plugin can read this format";
+#endif
+                break;
+            }
+        }
+        if (device && !device->isSequential())
+            device->seek(pos);
+    }
+
+    // check if any plugin recognize the content
+    if (!handler && device && autoDetectImageFormat) {
+        const qint64 pos = device->pos();
+        for (int i = 0; i < keys.size(); i++) {
+            QImageIOPlugin *plugin = qobject_cast<QImageIOPlugin *>(l->instance(keys.at(i)));
+            if (plugin && plugin->capabilities(device, QByteArray()) & QImageIOPlugin::CanRead) {
+                handler = plugin->create(device, keys.at(i).toLatin1());
+#ifdef QIMAGEREADER_DEBUG
+                qDebug() << "QImageReader::createReadHandler: the" << keys.at(i) << "plugin can read this data";
+#endif
+                break;
+            }
+        }
+        if (!device->isSequential())
+            device->seek(pos);
+    }
+#endif // QT_NO_LIBRARY
+
     if (!handler) {
 #ifdef QIMAGEREADER_DEBUG
         qDebug() << "QImageReader::createReadHandler: no handlers found. giving up.";
 #endif
         // no handler: give up.
-        return 0;
+        return Q_NULLPTR;
     }
 
     handler->setDevice(device);

@@ -100,75 +100,42 @@ static QImageIOHandler *createWriteHandlerHelper(QIODevice *device,
     const QByteArray &format)
 {
     QByteArray form = format.toLower();
-    QByteArray suffix;
-    QImageIOHandler *handler = 0;
+    QImageIOHandler *handler = Q_NULLPTR;
+
+    // check if any built-in handlers can write the image
+    if (form == "png") {
+        handler = new QPngHandler;
+#ifndef QT_NO_IMAGEFORMAT_BMP
+    } else if (form == "bmp") {
+        handler = new QBmpHandler;
+#endif
+#ifndef QT_NO_IMAGEFORMAT_XPM
+    } else if (form == "xpm") {
+        handler = new QXpmHandler;
+#endif
+#ifndef QT_NO_IMAGEFORMAT_XBM
+    } else if (form == "xbm") {
+        handler = new QXbmHandler;
+#endif
+#ifndef QT_NO_IMAGEFORMAT_PPM
+    } else if (form == "pbm" || form == "pbmraw" || form == "pgm"
+                || form == "pgmraw" || form == "ppm" || form == "ppmraw") {
+        handler = new QPpmHandler;
+        handler->setOption(QImageIOHandler::SubType, form);
+#endif
+    }
+
 
 #ifndef QT_NO_LIBRARY
     // check if any plugins can write the image
     QFactoryLoader *l = imageloader();
     QStringList keys = l->keys();
-    int suffixPluginIndex = -1;
-#endif
 
-    if (device && format.isEmpty()) {
-        // if there's no format, see if \a device is a file, and if so, find
-        // the file suffix and find support for that format among our plugins.
-        // this allows plugins to override our built-in handlers.
-        if (QFile *file = qobject_cast<QFile *>(device)) {
-            if (!(suffix = QFileInfo(file->fileName()).suffix().toLower().toLatin1()).isEmpty()) {
-#ifndef QT_NO_LIBRARY
-                int index = keys.indexOf(QString::fromLatin1(suffix));
-                if (index != -1)
-                    suffixPluginIndex = index;
-#endif
-            }
-        }
-    }
-
-    QByteArray testFormat = !form.isEmpty() ? form : suffix;
-
-#ifndef QT_NO_LIBRARY
-    if (suffixPluginIndex != -1) {
-        // when format is missing, check if we can find a plugin for the
-        // suffix.
-        QImageIOPlugin *plugin = qobject_cast<QImageIOPlugin *>(l->instance(QString::fromLatin1(suffix)));
-        if (plugin && (plugin->capabilities(device, suffix) & QImageIOPlugin::CanWrite))
-            handler = plugin->create(device, suffix);
-    }
-#endif // QT_NO_LIBRARY
-
-    // check if any built-in handlers can write the image
-    if (!handler && !testFormat.isEmpty()) {
-        if (testFormat == "png") {
-            handler = new QPngHandler;
-#ifndef QT_NO_IMAGEFORMAT_BMP
-        } else if (testFormat == "bmp") {
-            handler = new QBmpHandler;
-#endif
-#ifndef QT_NO_IMAGEFORMAT_XPM
-        } else if (testFormat == "xpm") {
-            handler = new QXpmHandler;
-#endif
-#ifndef QT_NO_IMAGEFORMAT_XBM
-        } else if (testFormat == "xbm") {
-            handler = new QXbmHandler;
-#endif
-#ifndef QT_NO_IMAGEFORMAT_PPM
-        } else if (testFormat == "pbm" || testFormat == "pbmraw" || testFormat == "pgm"
-                 || testFormat == "pgmraw" || testFormat == "ppm" || testFormat == "ppmraw") {
-            handler = new QPpmHandler;
-            handler->setOption(QImageIOHandler::SubType, testFormat);
-#endif
-        }
-    }
-
-#ifndef QT_NO_LIBRARY
-    if (!testFormat.isEmpty()) {
+    if (!handler) {
         for (int i = 0; i < keys.size(); ++i) {
             QImageIOPlugin *plugin = qobject_cast<QImageIOPlugin *>(l->instance(keys.at(i)));
-            if (plugin && (plugin->capabilities(device, testFormat) & QImageIOPlugin::CanWrite)) {
-                delete handler;
-                handler = plugin->create(device, testFormat);
+            if (plugin && (plugin->capabilities(device, form) & QImageIOPlugin::CanWrite)) {
+                handler = plugin->create(device, keys.at(i).toLatin1());
                 break;
             }
         }
@@ -176,11 +143,11 @@ static QImageIOHandler *createWriteHandlerHelper(QIODevice *device,
 #endif // QT_NO_LIBRARY
 
     if (!handler)
-        return 0;
+        return Q_NULLPTR;
 
     handler->setDevice(device);
-    if (!testFormat.isEmpty())
-        handler->setFormat(testFormat);
+    if (!form.isEmpty())
+        handler->setFormat(form);
     return handler;
 }
 
