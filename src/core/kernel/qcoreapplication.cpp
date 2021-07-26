@@ -1652,9 +1652,7 @@ QString QCoreApplication::applicationVersion()
 }
 
 #ifndef QT_NO_LIBRARY
-
-
-static std::recursive_mutex qGlobalLibraryPathMutex;
+Q_GLOBAL_STATIC(QMutex, qGlobalLibraryPathMutex);
 
 /*!
     Returns a list of paths that the application will search when
@@ -1681,7 +1679,7 @@ static std::recursive_mutex qGlobalLibraryPathMutex;
 */
 QStringList QCoreApplication::libraryPaths()
 {
-    std::lock_guard<std::recursive_mutex> locker(qGlobalLibraryPathMutex);
+    QMutexLocker locker(qGlobalLibraryPathMutex());
     if (!coreappdata()->app_libpaths) {
         QStringList *app_libpaths = coreappdata()->app_libpaths = new QStringList;
 
@@ -1727,7 +1725,7 @@ QStringList QCoreApplication::libraryPaths()
  */
 void QCoreApplication::setLibraryPaths(const QStringList &paths)
 {
-    std::unique_lock<std::recursive_mutex> locker(qGlobalLibraryPathMutex);
+    QMutexLocker locker(qGlobalLibraryPathMutex());
     if (!coreappdata()->app_libpaths)
         coreappdata()->app_libpaths = new QStringList;
     *(coreappdata()->app_libpaths) = paths;
@@ -1752,11 +1750,10 @@ void QCoreApplication::addLibraryPath(const QString &path)
     if (path.isEmpty())
         return;
 
-    std::unique_lock<std::recursive_mutex> locker(qGlobalLibraryPathMutex);
-
     // make sure that library paths is initialized
     libraryPaths();
 
+    QMutexLocker locker(qGlobalLibraryPathMutex());
     QString canonicalPath = QDir(path).canonicalPath();
     if (!coreappdata()->app_libpaths->contains(canonicalPath)) {
         coreappdata()->app_libpaths->prepend(canonicalPath);
@@ -1776,11 +1773,10 @@ void QCoreApplication::removeLibraryPath(const QString &path)
     if (path.isEmpty())
         return;
 
-    std::lock_guard<std::recursive_mutex> locker(qGlobalLibraryPathMutex);
-
     // make sure that library paths is initialized
     libraryPaths();
 
+    QMutexLocker locker(qGlobalLibraryPathMutex());
     QString canonicalPath = QDir(path).canonicalPath();
     coreappdata()->app_libpaths->removeAll(canonicalPath);
     QFactoryLoader::refreshAll();
