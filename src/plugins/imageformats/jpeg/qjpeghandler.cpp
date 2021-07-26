@@ -756,7 +756,7 @@ bool QJpegHandler::canRead() const
 
 bool QJpegHandler::canRead(QIODevice *device)
 {
-    if (!device) {
+    if (Q_UNLIKELY(!device)) {
         qWarning("QJpegHandler::canRead() called with no device");
         return false;
     }

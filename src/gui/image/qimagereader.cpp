@@ -123,46 +123,6 @@
 
 QT_BEGIN_NAMESPACE
 
-enum qBuiltInFormatType {
-    qPngFormat = 0,
-#ifndef QT_NO_IMAGEFORMAT_BMP
-    qBmpFormat = 1,
-#endif
-#ifndef QT_NO_IMAGEFORMAT_PPM
-    qPpmFormat = 2,
-    qPgmFormat = 3,
-    qPbmFormat = 4,
-#endif
-#ifndef QT_NO_IMAGEFORMAT_XBM
-    qXbmFormat = 5,
-#endif
-#ifndef QT_NO_IMAGEFORMAT_XPM
-    qXpmFormat = 6,
-#endif
-};
-
-static const struct ImageFormatTblData {
-    const qBuiltInFormatType format;
-    const char *extension;
-} ImageFormatTbl[] = {
-    { qPngFormat, "png" },
-#ifndef QT_NO_IMAGEFORMAT_BMP
-    { qBmpFormat, "bmp" },
-#endif
-#ifndef QT_NO_IMAGEFORMAT_PPM
-    { qPpmFormat, "ppm" },
-    { qPgmFormat, "pgm" },
-    { qPbmFormat, "pbm" },
-#endif
-#ifndef QT_NO_IMAGEFORMAT_XBM
-    { qXbmFormat, "xbm" },
-#endif
-#ifndef QT_NO_IMAGEFORMAT_XPM
-    { qXpmFormat, "xpm" },
-#endif
-};
-static const qint16 ImageFormatTblSize = sizeof(ImageFormatTbl) / sizeof(ImageFormatTblData);
-
 static QImageIOHandler *createReadHandlerHelper(QIODevice *device,
                                                 const QByteArray &format,
                                                 bool autoDetectImageFormat)
@@ -172,7 +132,6 @@ static QImageIOHandler *createReadHandlerHelper(QIODevice *device,
 
     QByteArray form = format.toLower();
     QImageIOHandler *handler = Q_NULLPTR;
-
 
     // check if we have built-in support for the format first
     if (form == "png") {
@@ -198,65 +157,51 @@ static QImageIOHandler *createReadHandlerHelper(QIODevice *device,
     }
 
 #ifdef QIMAGEREADER_DEBUG
-    if (handler)
-        qDebug() << "QImageReader::createReadHandler: using the built-in handler for" << testFormat;
+    if (handler) {
+        qDebug() << "QImageReader::createReadHandler: using the built-in handler for" << form;
+    }
 #endif
 
+#ifndef QT_NO_DEBUG
+    const qint64 devicepos = device->pos();
+#endif
     if (!handler && device && autoDetectImageFormat) {
-        for (qint16 i = 0; i < ImageFormatTblSize; i++) {
-            const qint64 pos = device->pos();
-            switch (ImageFormatTbl[i].format) {
-                case qPngFormat: {
-                    if (QPngHandler::canRead(device))
-                        handler = new QPngHandler;
-                    break;
-                }
+        if (QPngHandler::canRead(device)) {
+            handler = new QPngHandler;
+        }
 #ifndef QT_NO_IMAGEFORMAT_BMP
-                case qBmpFormat: {
-                    if (QBmpHandler::canRead(device))
-                        handler = new QBmpHandler;
-                    break;
-                }
+        if (!handler && QBmpHandler::canRead(device)) {
+            handler = new QBmpHandler;
+        }
 #endif
 #ifndef QT_NO_IMAGEFORMAT_XPM
-                case qXpmFormat: {
-                    if (QXpmHandler::canRead(device))
-                        handler = new QXpmHandler;
-                    break;
-                }
+        if (!handler && QXpmHandler::canRead(device)) {
+            handler = new QXpmHandler;
+        }
 #endif
 #ifndef QT_NO_IMAGEFORMAT_PPM
-                case qPbmFormat:
-                case qPgmFormat:
-                case qPpmFormat: {
-                    QByteArray subType;
-                    if (QPpmHandler::canRead(device, &subType)) {
-                        handler = new QPpmHandler;
-                        handler->setOption(QImageIOHandler::SubType, subType);
-                    }
-                    break;
-                }
+        QByteArray subType;
+        if (!handler && QPpmHandler::canRead(device, &subType)) {
+            handler = new QPpmHandler;
+            handler->setOption(QImageIOHandler::SubType, subType);
+        }
 #endif
 #ifndef QT_NO_IMAGEFORMAT_XBM
-                case qXbmFormat: {
-                    if (QXbmHandler::canRead(device))
-                        handler = new QXbmHandler;
-                    break;
-                }
-#endif
-            }
-            if (!device->isSequential())
-                device->seek(pos);
-
-            if (handler) {
-#ifdef QIMAGEREADER_DEBUG
-                qDebug() << "QImageReader::createReadHandler: the" << ImageFormatTbl[i].extension
-                         << "built-in handler can read this data";
-#endif
-                break;
-            }
+        if (!handler && QXbmHandler::canRead(device)) {
+            handler = new QXbmHandler;
         }
+#endif
     }
+#ifndef QT_NO_DEBUG
+    Q_ASSERT(device->pos(), devicepos);
+#endif
+
+#ifdef QIMAGEREADER_DEBUG
+    if (handler) {
+        qDebug() << "QImageReader::createReadHandler: the" << handler->name()
+                 << "built-in handler can read this data";
+    }
+#endif
 
 #ifndef QT_NO_LIBRARY
     QFactoryLoader *l = imageloader();
@@ -1196,9 +1141,21 @@ QByteArray QImageReader::imageFormat(QIODevice *device)
 */
 QList<QByteArray> QImageReader::supportedImageFormats()
 {
-    QList<QByteArray> formats;
-    for (qint16 i = 0; i < ImageFormatTblSize; i++)
-        formats << ImageFormatTbl[i].extension;
+    QList<QByteArray> formats = QList<QByteArray>()
+        << "png"
+#ifndef QT_NO_IMAGEFORMAT_BMP
+        << "bmp"
+#endif
+#ifndef QT_NO_IMAGEFORMAT_PPM
+        << "ppm" << "pgm" << "pbm"
+#endif
+#ifndef QT_NO_IMAGEFORMAT_XBM
+        << "xbm"
+#endif
+#ifndef QT_NO_IMAGEFORMAT_XPM
+        << "xpm"
+#endif
+        ;
 
 #ifndef QT_NO_LIBRARY
     QFactoryLoader *l = imageloader();

@@ -255,7 +255,10 @@ bool QXbmHandler::canRead() const
 
 bool QXbmHandler::canRead(QIODevice *device)
 {
-    QImage image;
+    if (Q_UNLIKELY(!device)) {
+        qWarning("QXbmHandler::canRead() called with no device");
+        return false;
+    }
 
     // it's impossible to tell whether we can load an XBM or not when
     // it's from a sequential device, as the only way to do it is to
@@ -263,8 +266,9 @@ bool QXbmHandler::canRead(QIODevice *device)
     if (device->isSequential())
         return false;
 
-    qint64 oldPos = device->pos();
-    bool success = read_xbm_image(device, &image);
+    const qint64 oldPos = device->pos();
+    QImage image;
+    const bool success = read_xbm_image(device, &image);
     device->seek(oldPos);
 
     return success;

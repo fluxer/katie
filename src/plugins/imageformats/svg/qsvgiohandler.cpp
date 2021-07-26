@@ -106,7 +106,7 @@ bool QSvgIOHandler::canRead() const
     if (d->loaded && !d->readDone)
         return true;        // Will happen if we have been asked for the size
 
-    QByteArray buf = device()->peek(8);
+    const QByteArray buf = device()->peek(8);
     if (buf.startsWith("\x1f\x8b")) {
         setFormat("svgz");
         return true;
@@ -232,7 +232,12 @@ bool QSvgIOHandler::supportsOption(ImageOption option) const
 
 bool QSvgIOHandler::canRead(QIODevice *device)
 {
-    QByteArray buf = device->peek(8);
+    if (Q_UNLIKELY(!device)) {
+        qWarning("QSvgIOHandler::canRead() called with no device");
+        return false;
+    }
+
+    const QByteArray buf = device->peek(8);
     return buf.startsWith("\x1f\x8b") || buf.contains("<?xml") || buf.contains("<svg");
 }
 

@@ -152,20 +152,14 @@ bool QTiffHandler::canRead() const
 
 bool QTiffHandler::canRead(QIODevice *device)
 {
-    if (!device) {
+    if (Q_UNLIKELY(!device)) {
         qWarning("QTiffHandler::canRead() called with no device");
         return false;
     }
 
-    // current implementation uses TIFFClientOpen which needs to be
-    // able to seek, so sequential devices are not supported
-    int pos = device->pos();
-    if (pos != 0)
-        device->seek(0);  // need the magic from the beginning
-    QByteArray header = device->peek(4);
-    if (pos != 0)
-        device->seek(pos);  // put it back where we found it
-
+    // need the magic from the beginning
+    Q_ASSERT(device->pos() == 0);
+    const QByteArray header = device->peek(4);
     return header == QByteArray::fromRawData("\x49\x49\x2A\x00", 4)
            || header == QByteArray::fromRawData("\x4D\x4D\x00\x2A", 4);
 }

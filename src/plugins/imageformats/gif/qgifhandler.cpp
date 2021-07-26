@@ -1065,7 +1065,7 @@ bool QGifHandler::canRead() const
 
 bool QGifHandler::canRead(QIODevice *device)
 {
-    if (!device) {
+    if (Q_UNLIKELY(!device)) {
         qWarning("QGifHandler::canRead() called with no device");
         return false;
     }

@@ -384,7 +384,7 @@ bool QPpmHandler::canRead() const
 
 bool QPpmHandler::canRead(QIODevice *device, QByteArray *subType)
 {
-    if (!device) {
+    if (Q_UNLIKELY(!device)) {
         qWarning("QPpmHandler::canRead() called with no device");
         return false;
     }

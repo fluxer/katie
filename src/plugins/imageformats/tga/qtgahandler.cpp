@@ -53,12 +53,16 @@ bool QTgaHandler::canRead() const
 
 bool QTgaHandler::canRead(QIODevice *device)
 {
-    if (!device) {
+    if (Q_UNLIKELY(!device)) {
         qWarning("QTgaHandler::canRead() called with no device");
         return false;
     }
+
+    const qint64 oldpos = device->pos();
     QTgaFile tga(device);
-    return tga.isValid();
+    const bool isvalid = tga.isValid();
+    device->seek(oldpos);
+    return isvalid;
 }
 
 bool QTgaHandler::read(QImage *image)
