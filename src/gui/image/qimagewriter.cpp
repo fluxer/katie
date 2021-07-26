@@ -119,23 +119,20 @@ static QImageIOHandler *createWriteHandlerHelper(QIODevice *device,
 #endif
 #ifndef QT_NO_IMAGEFORMAT_PPM
     } else if (form == "pbm" || form == "pbmraw" || form == "pgm"
-                || form == "pgmraw" || form == "ppm" || form == "ppmraw") {
+        || form == "pgmraw" || form == "ppm" || form == "ppmraw") {
         handler = new QPpmHandler;
         handler->setOption(QImageIOHandler::SubType, form);
 #endif
     }
 
-
 #ifndef QT_NO_LIBRARY
     // check if any plugins can write the image
-    QFactoryLoader *l = imageloader();
-    QStringList keys = l->keys();
-
     if (!handler) {
-        for (int i = 0; i < keys.size(); ++i) {
-            QImageIOPlugin *plugin = qobject_cast<QImageIOPlugin *>(l->instance(keys.at(i)));
+        QFactoryLoader *l = imageloader();
+        foreach (const QString &key, l->keys()) {
+            QImageIOPlugin *plugin = qobject_cast<QImageIOPlugin *>(l->instance(key));
             if (plugin && (plugin->capabilities(device, form) & QImageIOPlugin::CanWrite)) {
-                handler = plugin->create(device, keys.at(i).toLatin1());
+                handler = plugin->create(device, key.toLatin1());
                 break;
             }
         }
