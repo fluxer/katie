@@ -3633,9 +3633,10 @@ QDomDocumentType::QDomDocumentType(QDomDocumentTypePrivate* n)
     will also change the other. If you want to make a deep copy, use
     cloneNode().
 */
-QDomDocumentType& QDomDocumentType::operator= (const QDomDocumentType& n)
+QDomDocumentType& QDomDocumentType::operator=(const QDomDocumentType& x)
 {
-    return (QDomDocumentType&) QDomNode::operator=(n);
+    qAtomicAssign(impl, x.impl);
+    return *this;
 }
 
 /*!
