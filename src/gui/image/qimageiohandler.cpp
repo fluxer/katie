@@ -83,17 +83,6 @@
     handler does not support this option, QImageReader will apply the
     scaled clip rect after the image has been read.
 
-    \value Description The image description. Some image formats,
-    such as GIF and PNG, allow embedding of text
-    or comments into the image data (e.g., for storing copyright
-    information). It's common that the text is stored in key-value
-    pairs, but some formats store all text in one continuous block.
-    QImageIOHandler returns the text as one
-    QString, where keys and values are separated by a ':', and
-    keys-value pairs are separated by two newlines (\\n\\n). For example,
-    "Title: Sunset\\n\\nAuthor: Jim Smith\\nSarah Jones\\n\\n". Formats that
-    store text in a single block can use "Description" as the key.
-
     \value CompressionRatio The compression ratio of the image data. A
     handler that supports this option is expected to set its
     compression rate depending on the value of this option (an int)
