@@ -4579,7 +4579,7 @@ static QImage rotated270(const QImage &image) {
     Transformations}
 */
 
-QImage QImage::transformed(const QTransform &matrix, Qt::TransformationMode mode ) const
+QImage QImage::transformed(const QTransform &matrix, Qt::TransformationMode mode) const
 {
     if (!d)
         return QImage();
@@ -4630,11 +4630,6 @@ QImage QImage::transformed(const QTransform &matrix, Qt::TransformationMode mode
     if (wd == 0 || hd == 0)
         return QImage();
 
-    int bpp = depth();
-
-    int sbpl = bytesPerLine();
-    const uchar *sptr = constBits();
-
     QImage dImage(wd, hd, d->format);
     QIMAGE_SANITYCHECK_MEMORY(dImage);
 
@@ -4648,6 +4643,7 @@ QImage QImage::transformed(const QTransform &matrix, Qt::TransformationMode mode
     dImage.d->dpmx = dotsPerMeterX();
     dImage.d->dpmy = dotsPerMeterY();
 
+    const int bpp = depth();
     switch (bpp) {
         // initizialize the data
         case 8:
@@ -4679,7 +4675,7 @@ QImage QImage::transformed(const QTransform &matrix, Qt::TransformationMode mode
         // create target image (some of the code is from QImage::copy())
         int type = format() == Format_Mono ? QT_XFORM_TYPE_MSBFIRST : QT_XFORM_TYPE_LSBFIRST;
         int dbpl = dImage.bytesPerLine();
-        qt_xForm_helper(mat, 0, type, bpp, dImage.bits(), dbpl, 0, hd, sptr, sbpl, ws, hs);
+        qt_xForm_helper(mat, 0, type, bpp, dImage.bits(), dbpl, 0, hd, constBits(), bytesPerLine(), ws, hs);
     }
     return dImage;
 }
