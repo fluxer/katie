@@ -4096,78 +4096,78 @@ bool qt_xForm_helper(const QTransform &trueMat, int xoffset, int type, int depth
         trigx = m21ydx;
         trigy = m22ydy;
         uchar *maxp = dptr + dbpl;
-        if (depth != 1) {
-            switch (depth) {
-                case 8: {
-                    // 8 bpp transform
-                    while (dptr < maxp) {
-                        if (trigx < maxws && trigy < maxhs)
-                            *dptr = *(sptr+sbpl*(trigy>>12)+(trigx>>12));
-                        trigx += m11;
-                        trigy += m12;
-                        dptr++;
+        switch (depth) {
+            case 1: {
+                switch (type) {
+                    case QT_XFORM_TYPE_MSBFIRST: {
+                        while (dptr < maxp) {
+                            IWX_MSB(128);
+                            IWX_MSB(64);
+                            IWX_MSB(32);
+                            IWX_MSB(16);
+                            IWX_MSB(8);
+                            IWX_MSB(4);
+                            IWX_MSB(2);
+                            IWX_MSB(1);
+                            dptr++;
+                        }
+                        break;
                     }
-                    break;
-                }
-                case 16: {
-                    // 16 bpp transform
-                    while (dptr < maxp) {
-                        if (trigx < maxws && trigy < maxhs)
-                            *((ushort*)dptr) = *((ushort *)(sptr+sbpl*(trigy>>12) +
-                                                        ((trigx>>12)<<1)));
-                        trigx += m11;
-                        trigy += m12;
-                        dptr++;
-                        dptr++;
+                    case QT_XFORM_TYPE_LSBFIRST: {
+                        while (dptr < maxp) {
+                            IWX_LSB(1);
+                            IWX_LSB(2);
+                            IWX_LSB(4);
+                            IWX_LSB(8);
+                            IWX_LSB(16);
+                            IWX_LSB(32);
+                            IWX_LSB(64);
+                            IWX_LSB(128);
+                            dptr++;
+                        }
+                        break;
                     }
-                    break;
                 }
-                case 32: {
-                    // 32 bpp transform
-                    while (dptr < maxp) {
-                        if (trigx < maxws && trigy < maxhs)
-                            *((uint*)dptr) = *((uint *)(sptr+sbpl*(trigy>>12) +
-                                                    ((trigx>>12)<<2)));
-                        trigx += m11;
-                        trigy += m12;
-                        dptr += 4;
-                    }
-                    break;
-                }
-                default: {
-                    return false;
-                }
+                break;
             }
-        } else  {
-            switch (type) {
-                case QT_XFORM_TYPE_MSBFIRST: {
-                    while (dptr < maxp) {
-                        IWX_MSB(128);
-                        IWX_MSB(64);
-                        IWX_MSB(32);
-                        IWX_MSB(16);
-                        IWX_MSB(8);
-                        IWX_MSB(4);
-                        IWX_MSB(2);
-                        IWX_MSB(1);
-                        dptr++;
-                    }
-                    break;
+            case 8: {
+                // 8 bpp transform
+                while (dptr < maxp) {
+                    if (trigx < maxws && trigy < maxhs)
+                        *dptr = *(sptr+sbpl*(trigy>>12)+(trigx>>12));
+                    trigx += m11;
+                    trigy += m12;
+                    dptr++;
                 }
-                case QT_XFORM_TYPE_LSBFIRST: {
-                    while (dptr < maxp) {
-                        IWX_LSB(1);
-                        IWX_LSB(2);
-                        IWX_LSB(4);
-                        IWX_LSB(8);
-                        IWX_LSB(16);
-                        IWX_LSB(32);
-                        IWX_LSB(64);
-                        IWX_LSB(128);
-                        dptr++;
-                    }
-                    break;
+                break;
+            }
+            case 16: {
+                // 16 bpp transform
+                while (dptr < maxp) {
+                    if (trigx < maxws && trigy < maxhs)
+                        *((ushort*)dptr) = *((ushort *)(sptr+sbpl*(trigy>>12) +
+                                                    ((trigx>>12)<<1)));
+                    trigx += m11;
+                    trigy += m12;
+                    dptr++;
+                    dptr++;
                 }
+                break;
+            }
+            case 32: {
+                // 32 bpp transform
+                while (dptr < maxp) {
+                    if (trigx < maxws && trigy < maxhs)
+                        *((uint*)dptr) = *((uint *)(sptr+sbpl*(trigy>>12) +
+                                                ((trigx>>12)<<2)));
+                    trigx += m11;
+                    trigy += m12;
+                    dptr += 4;
+                }
+                break;
+            }
+            default: {
+                return false;
             }
         }
         m21ydx += m21;
