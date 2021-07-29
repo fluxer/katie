@@ -4056,32 +4056,24 @@ int QImage::metric(PaintDeviceMetric metric) const
 */
 
 #undef IWX_MSB
-#define IWX_MSB(b)        if (trigx < maxws && trigy < maxhs) {                              \
-                            if (*(sptr+sbpl*(trigy>>12)+(trigx>>15)) &                      \
-                                 (1 << (7-((trigx>>12)&7))))                              \
-                                *dptr |= b;                                              \
-                        }                                                              \
-                        trigx += m11;                                                      \
-                        trigy += m12;
-        // END OF MACRO
+#define IWX_MSB(b) \
+    if (trigx < maxws && trigy < maxhs) {                                      \
+        if (*(sptr+sbpl*(trigy>>12)+(trigx>>15)) & (1 << (7-((trigx>>12)&7)))) \
+            *dptr |= b;                                                        \
+    }                                                                          \
+    trigx += m11;                                                              \
+    trigy += m12;
+// END OF MACRO
 #undef IWX_LSB
-#define IWX_LSB(b)        if (trigx < maxws && trigy < maxhs) {                              \
-                            if (*(sptr+sbpl*(trigy>>12)+(trigx>>15)) &                      \
-                                 (1 << ((trigx>>12)&7)))                              \
-                                *dptr |= b;                                              \
-                        }                                                              \
-                        trigx += m11;                                                      \
-                        trigy += m12;
-        // END OF MACRO
-#undef IWX_PIX
-#define IWX_PIX(b)        if (trigx < maxws && trigy < maxhs) {                              \
-                            if ((*(sptr+sbpl*(trigy>>12)+(trigx>>15)) &              \
-                                 (1 << (7-((trigx>>12)&7)))) == 0)                      \
-                                *dptr &= ~b;                                              \
-                        }                                                              \
-                        trigx += m11;                                                      \
-                        trigy += m12;
-        // END OF MACRO
+#define IWX_LSB(b) \
+    if (trigx < maxws && trigy < maxhs) {                                  \
+        if (*(sptr+sbpl*(trigy>>12)+(trigx>>15)) & (1 << ((trigx>>12)&7))) \
+            *dptr |= b;                                                    \
+    }                                                                      \
+    trigx += m11;                                                          \
+    trigy += m12;
+// END OF MACRO
+
 bool qt_xForm_helper(const QTransform &trueMat, int xoffset, int type, int depth,
                      uchar *dptr, int dbpl, int p_inc, int dHeight,
                      const uchar *sptr, int sbpl, int sWidth, int sHeight)
@@ -4186,7 +4178,6 @@ bool qt_xForm_helper(const QTransform &trueMat, int xoffset, int type, int depth
 }
 #undef IWX_MSB
 #undef IWX_LSB
-#undef IWX_PIX
 
 /*!
     \fn QImage QImage::xForm(const QMatrix &matrix) const
