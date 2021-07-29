@@ -610,19 +610,20 @@ QImageData *QImageData::create(uchar *data, int width, int height,  int bpl, QIm
         return Q_NULLPTR;
 
     const int depth = qt_depthForFormat(format);
-    const int calc_bytes_per_line = ((width * depth + 31)/32) * 4;
     const int min_bytes_per_line = (width * depth + 7)/8;
 
-    if (bpl <= 0)
-        bpl = calc_bytes_per_line;
+    if (bpl <= 0) {
+        bpl = ((width * depth + 31)/32) * 4;
+    }
 
-    if (width <= 0 || height <= 0 || !data
+    if (Q_UNLIKELY(width <= 0 || height <= 0 || !data
         || INT_MAX/sizeof(uchar *) < uint(height)
         || INT_MAX/uint(depth) < uint(width)
         || bpl <= 0
         || bpl < min_bytes_per_line
-        || INT_MAX/uint(bpl) < uint(height))
-        return Q_NULLPTR;                                        // invalid parameter(s)
+        || INT_MAX/uint(bpl) < uint(height))) {
+        return Q_NULLPTR; // invalid parameter(s)
+    }
 
     QScopedPointer<QImageData> d(new QImageData);
 
