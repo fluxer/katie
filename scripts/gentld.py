@@ -17,7 +17,7 @@ tldcount = len(tldlist)
 print('''static const char* TLDTbl[%d] = {''' % tldcount)
 
 for tld in tldlist:
-    print('    "%s\\0",' % tld)
+    print('    "%s",' % tld)
 
 print('''};
 static const qint16 TLDTblSize = %d;''' % tldcount)
