@@ -605,7 +605,6 @@ classlist = [
     "QStaticText",
     "QStatusBar",
     "QStatusTipEvent",
-    "QStdWString",
     "QString",
     "QStringList",
     "QStringListIterator",

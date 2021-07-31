@@ -28,11 +28,6 @@
 #include <QtCore/qnamespace.h>
 
 #include <string>
-#ifndef QT_NO_STL_WCHAR
-// workaround for some headers not typedef'ing std::wstring
-typedef std::basic_string<wchar_t> QStdWString;
-#endif // QT_NO_STL_WCHAR
-
 #include <stdarg.h>
 
 
@@ -301,9 +296,6 @@ public:
     static QString fromUcs4(const uint *, int size = -1);
     static QString fromRawData(const QChar *, int size);
 
-    int toWCharArray(wchar_t *array) const;
-    static QString fromWCharArray(const wchar_t *, int size = -1);
-
     QString &setRawData(const QChar *unicode, int size);
     QString &setUnicode(const QChar *unicode, int size);
     inline QString &setUtf16(const ushort *utf16, int size);
@@ -450,10 +442,6 @@ public:
 
     static inline QString fromStdString(const std::string &s);
     inline std::string toStdString() const;
-#ifndef QT_NO_STL_WCHAR
-    static inline QString fromStdWString(const QStdWString &s);
-    inline QStdWString toStdWString() const;
-#endif // QT_NO_STL_WCHAR
 
     bool isRightToLeft() const;
 
@@ -860,19 +848,6 @@ inline std::string QString::toStdString() const
 
 inline QString QString::fromStdString(const std::string &s)
 { return fromAscii(s.data(), int(s.size())); }
-
-#ifndef QT_NO_STL_WCHAR
-inline QStdWString QString::toStdWString() const
-{
-    QStdWString str;
-    str.resize(length());
-    str.resize(toWCharArray(&(*str.begin())));
-    return str;
-}
-inline QString QString::fromStdWString(const QStdWString &s)
-{ return fromWCharArray(s.data(), int(s.size())); }
-#endif
-
 
 #if !defined(QT_NO_DATASTREAM)
 Q_CORE_EXPORT QDataStream &operator<<(QDataStream &, const QString &);

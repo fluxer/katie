@@ -83,7 +83,6 @@ incmap = {
         'QSetIterator': 'qset.h',
         'QSharedDataPointer': 'qshareddata.h',
         'QSizeF': 'qsize.h',
-        'QStdWString': 'qstring.h',
         'QStringListIterator': 'qstringlist.h',
         'QStringRef': 'qstring.h',
         'QSysInfo': 'qglobal.h',

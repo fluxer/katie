@@ -676,56 +676,7 @@ QString::Data QString::shared_empty = { QAtomicInt(1),
     \sa  fromAscii(), fromLatin1(), fromLocal8Bit(), fromUtf8(), QByteArray::fromStdString()
 */
 
-/*! \fn QString QString::fromStdWString(const std::wstring &str)
-
-    Returns a copy of the \a str string. The given string is assumed
-    to be encoded in utf16 if the size of wchar_t is 2 bytes (e.g. on
-    windows) and ucs4 if the size of wchar_t is 4 bytes (most Unix
-    systems).
-
-    This method is only available if Qt is configured with STL
-    compatibility enabled.
-
-    \sa fromUtf16(), fromLatin1(), fromLocal8Bit(), fromUtf8(), fromUcs4()
-*/
-
-/*!
-    \since 4.2
-
-    Returns a copy of the \a string, where the encoding of \a string depends on
-    the size of wchar. If wchar is 4 bytes, the \a string is interpreted as ucs-4,
-    if wchar is 2 bytes it is interpreted as ucs-2.
-
-    If \a size is -1 (default), the \a string has to be 0 terminated.
-
-    \sa fromUtf16(), fromLatin1(), fromLocal8Bit(), fromUtf8(), fromUcs4(), fromStdWString()
-*/
-QString QString::fromWCharArray(const wchar_t *string, int size)
-{
-    if (sizeof(wchar_t) == sizeof(QChar)) {
-        return fromUtf16((const ushort *)string, size);
-    } else {
-        return fromUcs4((uint *)string, size);
-    }
-}
-
-/*! \fn std::wstring QString::toStdWString() const
-
-    Returns a std::wstring object with the data contained in this
-    QString. The std::wstring is encoded in utf16 on platforms where
-    wchar_t is 2 bytes wide (e.g. windows) and in ucs4 on platforms
-    where wchar_t is 4 bytes wide (most Unix systems).
-
-    This operator is mostly useful to pass a QString to a function
-    that accepts a std::wstring object.
-
-    This operator is only available if Qt is configured with STL
-    compatibility enabled.
-
-    \sa utf16(), toAscii(), toLatin1(), toUtf8(), toLocal8Bit()
-*/
-
-template<typename T> int toUcs4_helper(const unsigned short *uc, int length, T *out)
+int toUcs4_helper(const unsigned short *uc, int length, uint *out)
 {
     int i = 0;
     for (; i < length; ++i) {
@@ -737,38 +688,10 @@ template<typename T> int toUcs4_helper(const unsigned short *uc, int length, T *
                 u = QChar::surrogateToUcs4(u, low);
             }
         }
-        *out = T(u);
+        *out = u;
         ++out;
     }
     return i;
-}
-
-/*!
-  \since 4.2
-
-  Fills the \a array with the data contained in this QString object.
-  The array is encoded in utf16 on platforms where
-  wchar_t is 2 bytes wide (e.g. windows) and in ucs4 on platforms
-  where wchar_t is 4 bytes wide (most Unix systems).
-
-  \a array has to be allocated by the caller and contain enough space to
-  hold the complete string (allocating the array with the same length as the
-  string is always sufficient).
-
-  returns the actual length of the string in \a array.
-
-  \note This function does not append a null character to the array.
-
-  \sa utf16(), toUcs4(), toAscii(), toLatin1(), toUtf8(), toLocal8Bit(), toStdWString()
-*/
-int QString::toWCharArray(wchar_t *array) const
-{
-    if (sizeof(wchar_t) == sizeof(QChar)) {
-        memcpy(array, utf16(), sizeof(wchar_t)*length());
-        return length();
-    } else {
-        return toUcs4_helper<wchar_t>(utf16(), length(), array);
-    }
 }
 
 /*! \fn QString::QString(const QString &other)
@@ -3364,13 +3287,13 @@ QByteArray QString::toUtf8() const
     UCS-4 is a Unicode codec and is lossless. All characters from this string
     can be encoded in UCS-4. The vector is not null terminated.
 
-    \sa fromUtf8(), toAscii(), toLatin1(), toLocal8Bit(), QTextCodec, fromUcs4(), toWCharArray()
+    \sa fromUtf8(), toAscii(), toLatin1(), toLocal8Bit(), QTextCodec, fromUcs4()
 */
 QVector<uint> QString::toUcs4() const
 {
     QVector<uint> v(length());
     uint *a = v.data();
-    int len = toUcs4_helper<uint>(utf16(), length(), a);
+    int len = toUcs4_helper(utf16(), length(), a);
     v.resize(len);
     return v;
 }
@@ -3557,7 +3480,7 @@ QString QString::fromUtf16(const ushort *unicode, int size)
     If \a size is -1 (default), \a unicode must be terminated
     with a 0.
 
-    \sa toUcs4(), fromUtf16(), utf16(), setUtf16(), fromWCharArray()
+    \sa toUcs4(), fromUtf16(), utf16(), setUtf16()
 */
 QString QString::fromUcs4(const uint *unicode, int size)
 {
@@ -8323,7 +8246,7 @@ QVector<uint> QStringRef::toUcs4() const
 {
     QVector<uint> v(length());
     uint *a = v.data();
-    int len = toUcs4_helper<uint>(reinterpret_cast<const unsigned short *>(unicode()), length(), a);
+    int len = toUcs4_helper(reinterpret_cast<const unsigned short *>(unicode()), length(), a);
     v.resize(len);
     return v;
 }

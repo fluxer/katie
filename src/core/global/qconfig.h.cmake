@@ -100,6 +100,7 @@
 #define QT_NO_TEXTODFWRITER
 #define QT_NO_TEXTCODECPLUGIN
 #define QT_NO_SYSTEMLOCALE
+#define QT_NO_STL_WCHAR
 
 // Not supported, used to bootstrap
 #cmakedefine QT_NO_QOBJECT
@@ -261,7 +262,6 @@
 #cmakedefine QT_NO_STANDARDITEMMODEL
 #cmakedefine QT_NO_STATUSBAR
 #cmakedefine QT_NO_STATUSTIP
-#cmakedefine QT_NO_STL_WCHAR
 #cmakedefine QT_NO_STRINGLISTMODEL
 #cmakedefine QT_NO_STYLE_CLEANLOOKS
 #cmakedefine QT_NO_STYLE_MOTIF

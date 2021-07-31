@@ -158,7 +158,6 @@ include/katie/QtCore/QSizeF
 include/katie/QtCore/QSocketNotifier
 include/katie/QtCore/QStack
 include/katie/QtCore/QStandardPaths
-include/katie/QtCore/QStdWString
 include/katie/QtCore/QString
 include/katie/QtCore/QStringList
 include/katie/QtCore/QStringListIterator

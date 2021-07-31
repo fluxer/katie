@@ -44,9 +44,6 @@ private slots:
     void split_stdvector_stdstring() const;
     void split_stdvector_stdstring_data() const { return split_data(); }
 
-    void split_stdvector_stdwstring() const;
-    void split_stdvector_stdwstring_data() const { return split_data(); }
-
     void split_stdlist_stdstring() const;
     void split_stdlist_stdstring_data() const { return split_data(); }
 
@@ -151,22 +148,6 @@ void tst_QStringList::split_stdvector_stdstring() const
         std::istringstream split(stdinput);
         std::vector<std::string> token;
         for (std::string each;
-             std::getline(split, each, split_char);
-             token.push_back(each))
-            ;
-    }
-}
-
-void tst_QStringList::split_stdvector_stdwstring() const
-{
-    QFETCH(QString, input);
-    const wchar_t split_char = ':';
-    std::wstring stdinput = input.toStdWString();
-
-    QBENCHMARK {
-        std::wistringstream split(stdinput);
-        std::vector<std::wstring> token;
-        for (std::wstring each;
              std::getline(split, each, split_char);
              token.push_back(each))
             ;

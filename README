@@ -45,6 +45,7 @@ There are several things you should be aware before considering Katie:
   - dropped obscure (24-bit) image formats support
   - dropped Valgrind support
   - dropped recursive mutex and lock support
+  - dropped wide character and string support
 
  - some additions have been made: 
   - JSON document handler
