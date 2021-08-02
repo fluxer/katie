@@ -354,6 +354,7 @@ bool QFSFileEngine::setSize(qint64 size)
         ret = QT_FTRUNCATE(d->fd, size) == 0;
     else
         ret = QT_TRUNCATE(d->fileEntry.nativeFilePath().constData(), size) == 0;
+    d->metaData.clearFlags(QFileSystemMetaData::SizeAttribute);
     if (!ret)
         setError(QFile::ResizeError, qt_error_string(errno));
     return ret;
