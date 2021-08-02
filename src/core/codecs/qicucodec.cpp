@@ -991,11 +991,11 @@ QString QIcuCodec::convertToUnicode(const char *data, int length,
     UConverter *conv = getConverter(state);
     Q_ASSERT(conv);
 
-    const int maxchars = QMAXUSTRLEN(length);
-    QSTACKARRAY(UChar, result, maxchars);
+    const int maxbytes = UCNV_GET_MAX_BYTES_FOR_STRING(length, ucnv_getMaxCharSize(conv));
+    QSTACKARRAY(UChar, result, maxbytes);
     int resultoffset = 0;
     UErrorCode error = U_ZERO_ERROR;
-    const int convresult = ucnv_toUChars(conv, result, maxchars, data, length, &error);
+    const int convresult = ucnv_toUChars(conv, result, maxbytes, data, length, &error);
     if (Q_UNLIKELY(U_FAILURE(error))) {
         error = U_ZERO_ERROR;
         QSTACKARRAY(char, errorbytes, 10);
@@ -1202,10 +1202,10 @@ QString QIcuCodec::convertTo(const char *data, int length, const char* const cod
     error = U_ZERO_ERROR;
     ucnv_setSubstString(conv, questionmarkchar, 1, &error);
 
-    const int maxchars = QMAXUSTRLEN(length);
-    QSTACKARRAY(UChar, result, maxchars);
+    const int maxbytes = UCNV_GET_MAX_BYTES_FOR_STRING(length, ucnv_getMaxCharSize(conv));
+    QSTACKARRAY(UChar, result, maxbytes);
     error = U_ZERO_ERROR;
-    const int convresult = ucnv_toUChars(conv, result, maxchars, data, length, &error);
+    const int convresult = ucnv_toUChars(conv, result, maxbytes, data, length, &error);
     ucnv_close(conv);
 
     if (Q_LIKELY(U_SUCCESS(error))) {
