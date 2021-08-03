@@ -150,7 +150,7 @@ static QImageIOHandler *createReadHandlerHelper(QIODevice *device,
 #endif
 #ifndef QT_NO_IMAGEFORMAT_PPM
     } else if (form == "pbm" || form == "pbmraw" || form == "pgm"
-                || form == "pgmraw" || form == "ppm" || form == "ppmraw") {
+        || form == "pgmraw" || form == "ppm" || form == "ppmraw") {
         handler = new QPpmHandler;
         handler->setOption(QImageIOHandler::SubType, form);
 #endif
@@ -205,7 +205,7 @@ static QImageIOHandler *createReadHandlerHelper(QIODevice *device,
 
 #ifndef QT_NO_LIBRARY
     QFactoryLoader *l = imageloader();
-    QStringList keys = l->keys();
+    const QStringList keys = l->keys();
 
 #ifdef QIMAGEREADER_DEBUG
     if (!handler) {
@@ -217,12 +217,12 @@ static QImageIOHandler *createReadHandlerHelper(QIODevice *device,
     // check if any plugin recognize the format
     if (!handler && !form.isEmpty()) {
         const qint64 pos = device ? device->pos() : 0;
-        for (int i = 0; i < keys.size(); i++) {
-            QImageIOPlugin *plugin = qobject_cast<QImageIOPlugin *>(l->instance(keys.at(i)));
+        foreach (const QString &key, keys) {
+            QImageIOPlugin *plugin = qobject_cast<QImageIOPlugin *>(l->instance(key));
             if (plugin && plugin->capabilities(device, form) & QImageIOPlugin::CanRead) {
-                handler = plugin->create(device, keys.at(i).toLatin1());
+                handler = plugin->create(device, key.toLatin1());
 #ifdef QIMAGEREADER_DEBUG
-                qDebug() << "QImageReader::createReadHandler: the" << keys.at(i) << "plugin can read this format";
+                qDebug() << "QImageReader::createReadHandler: the" << key << "plugin can read this format";
 #endif
                 break;
             }
@@ -234,12 +234,12 @@ static QImageIOHandler *createReadHandlerHelper(QIODevice *device,
     // check if any plugin recognize the content
     if (!handler && device && autoDetectImageFormat) {
         const qint64 pos = device->pos();
-        for (int i = 0; i < keys.size(); i++) {
-            QImageIOPlugin *plugin = qobject_cast<QImageIOPlugin *>(l->instance(keys.at(i)));
+        foreach (const QString &key, keys) {
+            QImageIOPlugin *plugin = qobject_cast<QImageIOPlugin *>(l->instance(key));
             if (plugin && plugin->capabilities(device, QByteArray()) & QImageIOPlugin::CanRead) {
-                handler = plugin->create(device, keys.at(i).toLatin1());
+                handler = plugin->create(device, key.toLatin1());
 #ifdef QIMAGEREADER_DEBUG
-                qDebug() << "QImageReader::createReadHandler: the" << keys.at(i) << "plugin can read this data";
+                qDebug() << "QImageReader::createReadHandler: the" << key << "plugin can read this data";
 #endif
                 break;
             }
