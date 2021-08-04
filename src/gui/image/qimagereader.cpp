@@ -156,16 +156,20 @@ static QImageIOHandler *createReadHandlerHelper(QIODevice *device,
 #endif
     }
 
-#ifdef QIMAGEREADER_DEBUG
     if (handler) {
+#ifdef QIMAGEREADER_DEBUG
+
         qDebug() << "QImageReader::createReadHandler: using the built-in handler for" << form;
-    }
 #endif
+        handler->setDevice(device);
+        handler->setFormat(form);
+        return handler;
+    }
 
 #ifndef QT_NO_DEBUG
     const qint64 devicepos = device->pos();
 #endif
-    if (!handler && device && autoDetectImageFormat) {
+    if (device && autoDetectImageFormat) {
         if (QPngHandler::canRead(device)) {
             handler = new QPngHandler;
         }
@@ -202,9 +206,7 @@ static QImageIOHandler *createReadHandlerHelper(QIODevice *device,
                  << "built-in handler can read this data";
 #endif
         handler->setDevice(device);
-        if (!form.isEmpty()) {
-            handler->setFormat(form);
-        }
+        handler->setFormat(handler->name());
         return handler;
     }
 
