@@ -196,26 +196,29 @@ static QImageIOHandler *createReadHandlerHelper(QIODevice *device,
     Q_ASSERT(device->pos(), devicepos);
 #endif
 
-#ifdef QIMAGEREADER_DEBUG
     if (handler) {
+#ifdef QIMAGEREADER_DEBUG
         qDebug() << "QImageReader::createReadHandler: the" << handler->name()
                  << "built-in handler can read this data";
-    }
 #endif
+        handler->setDevice(device);
+        if (!form.isEmpty()) {
+            handler->setFormat(form);
+        }
+        return handler;
+    }
 
 #ifndef QT_NO_LIBRARY
     QFactoryLoader *l = imageloader();
     const QStringList keys = l->keys();
 
 #ifdef QIMAGEREADER_DEBUG
-    if (!handler) {
-        qDebug() << "QImageReader::createReadHandler( device =" << (void *)device << ", format =" << format << "),"
-                 << keys.size() << "plugins available: " << keys;
-    }
+    qDebug() << "QImageReader::createReadHandler( device =" << (void *)device << ", format =" << format << "),"
+             << keys.size() << "plugins available: " << keys;
 #endif
 
     // check if any plugin recognize the format
-    if (!handler && !form.isEmpty()) {
+    if (!form.isEmpty()) {
         foreach (const QString &key, keys) {
             QImageIOPlugin *plugin = qobject_cast<QImageIOPlugin *>(l->instance(key));
             if (plugin && plugin->capabilities(device, form) & QImageIOPlugin::CanRead) {
@@ -251,9 +254,6 @@ static QImageIOHandler *createReadHandlerHelper(QIODevice *device,
         return Q_NULLPTR;
     }
 
-    handler->setDevice(device);
-    if (!form.isEmpty())
-        handler->setFormat(form);
     return handler;
 }
 
