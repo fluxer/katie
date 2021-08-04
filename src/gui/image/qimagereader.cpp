@@ -197,7 +197,7 @@ static QImageIOHandler *createReadHandlerHelper(QIODevice *device,
 #endif
     }
 #ifndef QT_NO_DEBUG
-    Q_ASSERT(device->pos(), devicepos);
+    Q_ASSERT(device->pos() == devicepos);
 #endif
 
     if (handler) {
@@ -246,6 +246,9 @@ static QImageIOHandler *createReadHandlerHelper(QIODevice *device,
             }
         }
     }
+#ifndef QT_NO_DEBUG
+    Q_ASSERT(device->pos() == devicepos);
+#endif
 #endif // QT_NO_LIBRARY
 
     if (!handler) {
