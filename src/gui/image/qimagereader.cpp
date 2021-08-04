@@ -317,39 +317,16 @@ QImageReaderPrivate::~QImageReaderPrivate()
 bool QImageReaderPrivate::initHandler()
 {
     // check some preconditions
-    if (!device || (!deleteDevice && !device->isOpen() && !device->open(QIODevice::ReadOnly))) {
+    if (!device) {
         imageReaderError = QImageReader::DeviceError;
         errorString = QCoreApplication::translate("QImageReader", "Invalid device");
         return false;
     }
 
-    // probe the file extension
-    if (deleteDevice && !device->isOpen() && !device->open(QIODevice::ReadOnly) && autoDetectImageFormat) {
-        QList<QByteArray> extensions = QImageReader::supportedImageFormats();
-        if (!format.isEmpty()) {
-            // Try the most probable extension first
-            int currentFormatIndex = extensions.indexOf(format.toLower());
-            if (currentFormatIndex > 0)
-                extensions.swap(0, currentFormatIndex);
-        }
-
-        int currentExtension = 0;
-
-        QFile *file = static_cast<QFile *>(device);
-        QString fileName = file->fileName();
-
-        do {
-            file->setFileName(fileName + QLatin1Char('.')
-                    + QString::fromLatin1(extensions.at(currentExtension++).constData()));
-            file->open(QIODevice::ReadOnly);
-        } while (!file->isOpen() && currentExtension < extensions.size());
-
-        if (!device->isOpen()) {
-            imageReaderError = QImageReader::FileNotFoundError;
-            errorString = QCoreApplication::translate("QImageReader", "File not found");
-            file->setFileName(fileName); // restore the old file name
-            return false;
-        }
+    if (!device->isOpen() && !device->open(QIODevice::ReadOnly)) {
+        imageReaderError = QImageReader::FileNotFoundError;
+        errorString = QCoreApplication::translate("QImageReader", "File not found");
+        return false;
     }
 
     // assign a handler
