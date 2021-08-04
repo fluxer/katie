@@ -229,87 +229,90 @@ static bool writeBMPInfoHeader(QIODevice *iodev, const BMP_INFOHDR &header)
 
 
 ICOReader::ICOReader(QIODevice * iodevice)
-: iod(iodevice)
-, startpos(0)
-, headerRead(false)
+    : iod(iodevice)
+    , startpos(0)
+    , headerRead(false)
 {
 }
 
 
 int ICOReader::count()
 {
-    if (readHeader())
+    if (readHeader()) {
         return iconDir.idCount;
+    }
     return 0;
 }
 
 bool ICOReader::canRead(QIODevice *iodev)
 {
+    Q_ASSERT(iodev);
+
     bool isProbablyICO = false;
-    if (iodev) {
-        qint64 oldPos = iodev->pos();
+    qint64 oldPos = iodev->pos();
 
-        ICONDIR ikonDir;
-        if (readIconDir(iodev, &ikonDir)) {
-            qint64 readBytes = ICONDIR_SIZE;
-            if (readIconDirEntry(iodev, &ikonDir.idEntries[0])) {
-                readBytes += ICONDIRENTRY_SIZE;
-                // ICO format does not have a magic identifier, so we read 6 different values, which will hopefully be enough to identify the file.
-                if (   ikonDir.idReserved == 0
-                    && ikonDir.idType == 1
-                    && ikonDir.idEntries[0].bReserved == 0
-                    && ikonDir.idEntries[0].wPlanes <= 1
-                    && ikonDir.idEntries[0].wBitCount <= 32     // Bits per pixel
-                    && ikonDir.idEntries[0].dwBytesInRes >= 40  // Must be over 40, since sizeof (infoheader) == 40
-                    ) {
-                    isProbablyICO = true;
-                }
-
-                if (iodev->isSequential()) {
-                    // Our structs might be padded due to alignment, so we need to fetch each member before we ungetChar() !
-                    quint32 tmp = ikonDir.idEntries[0].dwImageOffset;
-                    iodev->ungetChar((tmp >> 24) & 0xff);
-                    iodev->ungetChar((tmp >> 16) & 0xff);
-                    iodev->ungetChar((tmp >>  8) & 0xff);
-                    iodev->ungetChar(tmp & 0xff);
-
-                    tmp = ikonDir.idEntries[0].dwBytesInRes;
-                    iodev->ungetChar((tmp >> 24) & 0xff);
-                    iodev->ungetChar((tmp >> 16) & 0xff);
-                    iodev->ungetChar((tmp >>  8) & 0xff);
-                    iodev->ungetChar(tmp & 0xff);
-
-                    tmp = ikonDir.idEntries[0].wBitCount;
-                    iodev->ungetChar((tmp >>  8) & 0xff);
-                    iodev->ungetChar(tmp & 0xff);
-
-                    tmp = ikonDir.idEntries[0].wPlanes;
-                    iodev->ungetChar((tmp >>  8) & 0xff);
-                    iodev->ungetChar(tmp & 0xff);
-
-                    iodev->ungetChar(ikonDir.idEntries[0].bReserved);
-                    iodev->ungetChar(ikonDir.idEntries[0].bColorCount);
-                    iodev->ungetChar(ikonDir.idEntries[0].bHeight);
-                    iodev->ungetChar(ikonDir.idEntries[0].bWidth);
-                }
+    ICONDIR ikonDir;
+    if (readIconDir(iodev, &ikonDir)) {
+        qint64 readBytes = ICONDIR_SIZE;
+        if (readIconDirEntry(iodev, &ikonDir.idEntries[0])) {
+            readBytes += ICONDIRENTRY_SIZE;
+            // ICO format does not have a magic identifier, so we read 6 different values, which will hopefully be enough to identify the file.
+            if (   ikonDir.idReserved == 0
+                && ikonDir.idType == 1
+                && ikonDir.idEntries[0].bReserved == 0
+                && ikonDir.idEntries[0].wPlanes <= 1
+                && ikonDir.idEntries[0].wBitCount <= 32     // Bits per pixel
+                && ikonDir.idEntries[0].dwBytesInRes >= 40  // Must be over 40, since sizeof (infoheader) == 40
+                ) {
+                isProbablyICO = true;
             }
 
             if (iodev->isSequential()) {
                 // Our structs might be padded due to alignment, so we need to fetch each member before we ungetChar() !
-                quint32 tmp = ikonDir.idCount;
+                quint32 tmp = ikonDir.idEntries[0].dwImageOffset;
+                iodev->ungetChar((tmp >> 24) & 0xff);
+                iodev->ungetChar((tmp >> 16) & 0xff);
                 iodev->ungetChar((tmp >>  8) & 0xff);
                 iodev->ungetChar(tmp & 0xff);
 
-                tmp = ikonDir.idType;
+                tmp = ikonDir.idEntries[0].dwBytesInRes;
+                iodev->ungetChar((tmp >> 24) & 0xff);
+                iodev->ungetChar((tmp >> 16) & 0xff);
                 iodev->ungetChar((tmp >>  8) & 0xff);
                 iodev->ungetChar(tmp & 0xff);
 
-                tmp = ikonDir.idReserved;
+                tmp = ikonDir.idEntries[0].wBitCount;
                 iodev->ungetChar((tmp >>  8) & 0xff);
                 iodev->ungetChar(tmp & 0xff);
+
+                tmp = ikonDir.idEntries[0].wPlanes;
+                iodev->ungetChar((tmp >>  8) & 0xff);
+                iodev->ungetChar(tmp & 0xff);
+
+                iodev->ungetChar(ikonDir.idEntries[0].bReserved);
+                iodev->ungetChar(ikonDir.idEntries[0].bColorCount);
+                iodev->ungetChar(ikonDir.idEntries[0].bHeight);
+                iodev->ungetChar(ikonDir.idEntries[0].bWidth);
             }
         }
-        if (!iodev->isSequential()) iodev->seek(oldPos);
+
+        if (iodev->isSequential()) {
+            // Our structs might be padded due to alignment, so we need to fetch each member before we ungetChar() !
+            quint32 tmp = ikonDir.idCount;
+            iodev->ungetChar((tmp >>  8) & 0xff);
+            iodev->ungetChar(tmp & 0xff);
+
+            tmp = ikonDir.idType;
+            iodev->ungetChar((tmp >>  8) & 0xff);
+            iodev->ungetChar(tmp & 0xff);
+
+            tmp = ikonDir.idReserved;
+            iodev->ungetChar((tmp >>  8) & 0xff);
+            iodev->ungetChar(tmp & 0xff);
+        }
+    }
+    if (!iodev->isSequential()) {
+        iodev->seek(oldPos);
     }
 
     return isProbablyICO;
@@ -764,8 +767,9 @@ QVariant QtIcoHandler::option(ImageOption option) const
                 return QSize(iconEntry.bWidth, iconEntry.bHeight);
             }
         }
-        if (!device->isSequential())
+        if (!device->isSequential()) {
             device->seek(oldPos);
+        }
     }
     return QVariant();
 }
@@ -782,16 +786,12 @@ bool QtIcoHandler::supportsOption(ImageOption option) const
  */
 bool QtIcoHandler::canRead() const
 {
-    bool bCanRead = false;
-    QIODevice *device = QImageIOHandler::device();
-    if (device) {
-        bCanRead = ICOReader::canRead(device);
-        if (bCanRead)
-            setFormat("ico");
-    } else {
-        qWarning("QtIcoHandler::canRead() called with no device");
+    if (QtIcoHandler::canRead(device())) {
+        setFormat("ico");
+        return true;
     }
-    return bCanRead;
+
+    return false;
 }
 
 /*! This static function is used by the plugin code, and is provided for convenience only.
@@ -799,7 +799,11 @@ bool QtIcoHandler::canRead() const
 */
 bool QtIcoHandler::canRead(QIODevice *device)
 {
-    Q_ASSERT(device);
+    if (Q_UNLIKELY(!device)) {
+        qWarning("QtIcoHandler::canRead() called with no device");
+        return false;
+    }
+
     return ICOReader::canRead(device);
 }
 
