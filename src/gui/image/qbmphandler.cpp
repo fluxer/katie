@@ -646,15 +646,6 @@ bool qt_write_dib(QDataStream &s, QImage image)
     return true;
 }
 
-// this is also used in qmime_win.cpp
-bool qt_read_dib(QDataStream &s, QImage &image)
-{
-    BMP_INFOHDR bi;
-    if (!read_dib_infoheader(s, bi))
-        return false;
-    return read_dib_body(s, bi, -1, -BMP_FILEHDR_SIZE, image);
-}
-
 QBmpHandler::QBmpHandler()
     : state(Ready)
 {
