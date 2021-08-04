@@ -755,10 +755,6 @@ static bool read_xpm_string(QByteArray &buf, QIODevice *d, const char * const *s
             qint64 bytesRead = d->read(readbuf, sizeof(readbuf));
             if (bytesRead <= 0)
                 return false;
-            if (Q_UNLIKELY(bytesRead > QBYTEARRAY_MAX)) {
-                qWarning("QImage: XPM string data overflow");
-                return false;
-            }
             state = QByteArray(readbuf, int(bytesRead));
             offset = 0;
         }
