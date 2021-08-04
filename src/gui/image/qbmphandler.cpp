@@ -689,8 +689,8 @@ bool QBmpHandler::canRead() const
 
 bool QBmpHandler::canRead(QIODevice *device)
 {
-    if (!device) {
-        qWarning("QBmpHandler::canRead() called with 0 pointer");
+    if (Q_UNLIKELY(!device)) {
+        qWarning("QBmpHandler::canRead() called with no device");
         return false;
     }
 
