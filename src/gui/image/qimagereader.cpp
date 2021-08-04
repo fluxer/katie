@@ -387,6 +387,8 @@ QImageReader::~QImageReader()
 */
 void QImageReader::setFormat(const QByteArray &format)
 {
+    delete d->handler;
+    d->handler = Q_NULLPTR;
     d->format = format;
 }
 
@@ -490,7 +492,7 @@ void QImageReader::setDevice(QIODevice *device)
     d->device = device;
     d->deleteDevice = false;
     delete d->handler;
-    d->handler = 0;
+    d->handler = Q_NULLPTR;
 }
 
 /*!
@@ -801,7 +803,7 @@ bool QImageReader::read(QImage *image)
         return false;
     }
 
-    if (!d->handler && !d->initHandler())
+    if (!d->initHandler())
         return false;
 
     // set the handler specific options.
