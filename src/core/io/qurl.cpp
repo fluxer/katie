@@ -3486,7 +3486,7 @@ QString QUrl::fromAce(const QByteArray &domain)
     const UIDNA *globalidna = qGlobalIDNA()->idna;
     if (Q_UNLIKELY(!globalidna)) {
         qWarning("QUrl::fromAce: no IDNA instance");
-        return QByteArray();
+        return QString();
     }
 
     const QString utf8 = QString::fromUtf8(domain);
