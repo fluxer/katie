@@ -310,7 +310,6 @@ public:
     void setAuthority(const QString &auth);
     void setUserInfo(const QString &userInfo);
     QString userInfo(QUrl::FormattingOptions options = QUrl::None) const;
-    void setEncodedAuthority(const QByteArray &authority);
     void setEncodedUserInfo(const QUrlParseData *parseData);
     void setEncodedUrl(const QByteArray &encodedUrl, QUrl::ParsingMode parsingMode);
     QString fragmentImpl() const;
