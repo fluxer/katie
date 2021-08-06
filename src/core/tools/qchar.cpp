@@ -1644,10 +1644,4 @@ QDataStream &operator>>(QDataStream &in, QChar &chr)
     Use toUpper() instead.
 */
 
-/*!
-    \fn bool QChar::networkOrdered()
-
-    See if QSysInfo::ByteOrder == QSysInfo::BigEndian instead.
-*/
-
 QT_END_NAMESPACE

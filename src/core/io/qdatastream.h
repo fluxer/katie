@@ -55,8 +55,9 @@ public:
     };
 
     enum ByteOrder {
-        BigEndian = QSysInfo::BigEndian,
-        LittleEndian = QSysInfo::LittleEndian
+        BigEndian = Q_BIG_ENDIAN,
+        LittleEndian = Q_LITTLE_ENDIAN,
+        HostEndian = Q_BYTE_ORDER
     };
 
     enum DataStatus {

@@ -449,7 +449,7 @@ void QX11PixmapData::fromImage(const QImage &img,
             Q_ASSERT(false);
         }
 
-        if ((xi->byte_order == MSBFirst) != (QSysInfo::ByteOrder == QSysInfo::BigEndian)) {
+        if ((xi->byte_order == MSBFirst) != (Q_BYTE_ORDER == Q_BIG_ENDIAN)) {
             uint *xidata = (uint *)xi->data;
             uint *xiend = xidata + w*h;
             while (xidata < xiend) {
@@ -568,7 +568,7 @@ void QX11PixmapData::fromImage(const QImage &img,
                BPP32_MSB, BPP32_LSB
         } mode = BPP8;
 
-        bool same_msb_lsb = (xi->byte_order == MSBFirst) == (QSysInfo::ByteOrder == QSysInfo::BigEndian);
+        bool same_msb_lsb = (xi->byte_order == MSBFirst) == (Q_BYTE_ORDER == Q_BIG_ENDIAN);
 
         if(bppc == 8) // 8 bit
             mode = BPP8;
@@ -1366,8 +1366,8 @@ QImage QX11PixmapData::takeQImageFromXImage(XImage *xi) const
     xi->data = 0;
 
     // we may have to swap the byte order
-    if ((QSysInfo::ByteOrder == QSysInfo::LittleEndian && xi->byte_order == MSBFirst)
-        || (QSysInfo::ByteOrder == QSysInfo::BigEndian && xi->byte_order == LSBFirst))
+    if ((Q_BYTE_ORDER == Q_LITTLE_ENDIAN && xi->byte_order == MSBFirst)
+        || (Q_BYTE_ORDER == Q_BIG_ENDIAN && xi->byte_order == LSBFirst))
     {
         const int bpl = image.bytesPerLine();
         uchar* dest = image.bits();

@@ -661,7 +661,6 @@ classlist = [
     "QSvgWidget",
     "QSwipeGesture",
     "QSyntaxHighlighter",
-    "QSysInfo",
     "QSystemSemaphore",
     "QSystemTrayIcon",
     "Qt",

@@ -3003,9 +3003,11 @@ void tst_QDataStream::streamRealDataTypes()
 
 void tst_QDataStream::floatingPointNaN()
 {
-    QDataStream::ByteOrder bo = QSysInfo::ByteOrder == QSysInfo::BigEndian
-                                ? QDataStream::LittleEndian
-                                : QDataStream::BigEndian;
+#if Q_BYTE_ORDER == Q_BIG_ENDIAN
+    QDataStream::ByteOrder bo = QDataStream::LittleEndian;
+#else
+    QDataStream::ByteOrder bo = QDataStream::BigEndian;
+#endif
 
     // Test and verify that values that become (s)nan's after swapping endianness
     // don't change in the process.

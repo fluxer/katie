@@ -300,23 +300,6 @@ typedef double qreal;
 #  define QT_RETHROW throw
 #endif
 
-/*
-   System information
-*/
-class Q_CORE_EXPORT QSysInfo {
-public:
-    enum Endian {
-        BigEndian,
-        LittleEndian,
-
-#if Q_BYTE_ORDER == Q_BIG_ENDIAN
-        ByteOrder = BigEndian
-#elif Q_BYTE_ORDER == Q_LITTLE_ENDIAN
-        ByteOrder = LittleEndian
-#endif
-    };
-};
-
 Q_CORE_EXPORT const char *qVersion();
 
 /*

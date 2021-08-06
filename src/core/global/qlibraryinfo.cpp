@@ -38,7 +38,7 @@ QT_BEGIN_NAMESPACE
     that are compiled into the Katie library. For more information, see
     the \l {Using Katie.conf} documentation.
 
-    \sa QSysInfo, {Using Katie.conf}
+    \sa {Using Katie.conf}
 */
 
 /*!

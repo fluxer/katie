@@ -1768,8 +1768,8 @@ Q_GUI_EXPORT void qt_x11_drawImage(const QRect &rect, const QPoint &pos, const Q
     const int h = rect.height();
 
     int image_byte_order = ImageByteOrder(qt_x11Data->display);
-    if ((QSysInfo::ByteOrder == QSysInfo::BigEndian && ((image_byte_order == LSBFirst) || bgr_layout))
-        || (image_byte_order == MSBFirst && QSysInfo::ByteOrder == QSysInfo::LittleEndian)
+    if ((Q_BYTE_ORDER == Q_BIG_ENDIAN && ((image_byte_order == LSBFirst) || bgr_layout))
+        || (image_byte_order == MSBFirst && Q_BYTE_ORDER == Q_LITTLE_ENDIAN)
         || (image_byte_order == LSBFirst && bgr_layout))
     {
         QImage im = image->copy(rect);
@@ -1778,19 +1778,19 @@ Q_GUI_EXPORT void qt_x11_drawImage(const QRect &rect, const QPoint &pos, const Q
         for (int i=0; i < h; i++) {
             uint *p = data;
             uint *end = p + w;
-            if (bgr_layout && image_byte_order == MSBFirst && QSysInfo::ByteOrder == QSysInfo::LittleEndian) {
+            if (bgr_layout && image_byte_order == MSBFirst && Q_BYTE_ORDER == Q_LITTLE_ENDIAN) {
                 while (p < end) {
                     *p = ((*p << 8) & 0xffffff00) | ((*p >> 24) & 0x000000ff);
                     p++;
                 }
-            } else if ((image_byte_order == LSBFirst && QSysInfo::ByteOrder == QSysInfo::BigEndian)
-                    || (image_byte_order == MSBFirst && QSysInfo::ByteOrder == QSysInfo::LittleEndian)) {
+            } else if ((image_byte_order == LSBFirst && Q_BYTE_ORDER == Q_BIG_ENDIAN)
+                    || (image_byte_order == MSBFirst && Q_BYTE_ORDER == Q_LITTLE_ENDIAN)) {
                 while (p < end) {
                     *p = ((*p << 24) & 0xff000000) | ((*p << 8) & 0x00ff0000)
                         | ((*p >> 8) & 0x0000ff00) | ((*p >> 24) & 0x000000ff);
                     p++;
                 }
-            } else if ((image_byte_order == MSBFirst && QSysInfo::ByteOrder == QSysInfo::BigEndian)
+            } else if ((image_byte_order == MSBFirst && Q_BYTE_ORDER == Q_BIG_ENDIAN)
                        || (image_byte_order == LSBFirst && bgr_layout))
             {
                 while (p < end) {

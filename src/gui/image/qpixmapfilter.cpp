@@ -315,16 +315,16 @@ static inline void qt_blurinner_alphaOnly(uchar *bptr, int &z, int alpha)
     *(bptr) = z >> (zprec + aprec);
 }
 
-static const int alphaIndex = (QSysInfo::ByteOrder == QSysInfo::BigEndian ? 0 : 3);
-
 static inline void qt_blurrow(QImage & im, int line, int alpha, bool alphaOnly)
 {
     uchar *bptr = im.scanLine(line);
 
     int zR = 0, zG = 0, zB = 0, zA = 0;
 
+#if Q_BYTE_ORDER == Q_LITTLE_ENDIAN
     if (alphaOnly && im.format() != QImage::Format_Indexed8)
-        bptr += alphaIndex;
+        bptr += 3;
+#endif
 
     const int stride = im.depth() >> 3;
     const int im_width = im.width();

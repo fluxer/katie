@@ -166,7 +166,6 @@ include/katie/QtCore/QStringList
 include/katie/QtCore/QStringListIterator
 include/katie/QtCore/QStringMatcher
 include/katie/QtCore/QStringRef
-include/katie/QtCore/QSysInfo
 include/katie/QtCore/QSystemSemaphore
 include/katie/QtCore/QTemporaryFile
 include/katie/QtCore/QTextBoundaryFinder

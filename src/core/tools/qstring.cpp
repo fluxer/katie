@@ -6666,7 +6666,7 @@ QString &QString::setRawData(const QChar *unicode, int size)
 QDataStream &operator<<(QDataStream &out, const QString &str)
 {
     if (!str.isEmpty()) {
-        if ((out.byteOrder() == QDataStream::BigEndian) == (QSysInfo::ByteOrder == QSysInfo::BigEndian)) {
+        if (out.byteOrder() == QDataStream::HostEndian) {
             out.writeBytes(reinterpret_cast<const char *>(str.unicode()), sizeof(QChar) * str.length());
         } else {
             QSTACKARRAY(ushort, buffer, str.length());
@@ -6722,8 +6722,7 @@ QDataStream &operator>>(QDataStream &in, QString &str)
             allocated += blockSize;
         }
 
-        if ((in.byteOrder() == QDataStream::BigEndian)
-                != (QSysInfo::ByteOrder == QSysInfo::BigEndian)) {
+        if (in.byteOrder() != QDataStream::HostEndian) {
             ushort *data = reinterpret_cast<ushort *>(str.data());
             while (len--) {
                 *data = qbswap(*data);

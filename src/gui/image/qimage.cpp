@@ -1598,15 +1598,6 @@ void QImage::invertPixels(InvertMode mode)
     parameter instead.
 */
 
-/*! \fn QImage::Endian QImage::systemByteOrder()
-
-    Determines the host computer byte order. Returns
-    QImage::LittleEndian (LSB first) or QImage::BigEndian (MSB first).
-
-    This function is no longer relevant for QImage. Use QSysInfo
-    instead.
-*/
-
 /*!
     \since 4.6
     Resizes the color table to contain \a colorCount entries.
@@ -3950,16 +3941,6 @@ void QImage::setDotsPerMeterY(int y)
 
     Makes a call to QPixmap::convertToImage().
 */
-
-/*! \fn QImage::Endian QImage::systemBitOrder()
-
-    Determines the bit order of the display hardware. Returns
-    QImage::LittleEndian (LSB first) or QImage::BigEndian (MSB first).
-
-    This function is no longer relevant for QImage. Use QSysInfo
-    instead.
-*/
-
 
 /*!
     \internal

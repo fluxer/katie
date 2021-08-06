@@ -179,6 +179,7 @@ QT_BEGIN_NAMESPACE
 
     \value BigEndian Most significant byte first (the default)
     \value LittleEndian Least significant byte first
+    \value HostEndian Either BigEndian or LittleEndian, depends on the host endian
 */
 
 /*!
@@ -242,7 +243,7 @@ QT_BEGIN_NAMESPACE
 QDataStream::QDataStream()
     : dev(nullptr),
     owndev(false),
-    noswap(QSysInfo::ByteOrder == QSysInfo::BigEndian),
+    noswap(QDataStream::HostEndian == QDataStream::BigEndian),
     byteorder(QDataStream::BigEndian),
     ver(QDataStream::Qt_Default),
     q_status(QDataStream::Ok),
@@ -265,7 +266,7 @@ QDataStream::QDataStream()
 QDataStream::QDataStream(QIODevice *device)
     : dev(device),
     owndev(false),
-    noswap(QSysInfo::ByteOrder == QSysInfo::BigEndian),
+    noswap(QDataStream::HostEndian == QDataStream::BigEndian),
     byteorder(QDataStream::BigEndian),
     ver(QDataStream::Qt_Default),
     q_status(QDataStream::Ok),
@@ -290,7 +291,7 @@ QDataStream::QDataStream(QIODevice *device)
 QDataStream::QDataStream(QByteArray *a, QIODevice::OpenMode flags)
     : dev(nullptr),
     owndev(true),
-    noswap(QSysInfo::ByteOrder == QSysInfo::BigEndian),
+    noswap(QDataStream::HostEndian == QDataStream::BigEndian),
     byteorder(QDataStream::BigEndian),
     ver(QDataStream::Qt_Default),
     q_status(QDataStream::Ok),
@@ -315,7 +316,7 @@ QDataStream::QDataStream(QByteArray *a, QIODevice::OpenMode flags)
 QDataStream::QDataStream(const QByteArray &a)
     : dev(nullptr),
     owndev(true),
-    noswap(QSysInfo::ByteOrder == QSysInfo::BigEndian),
+    noswap(QDataStream::HostEndian == QDataStream::BigEndian),
     byteorder(QDataStream::BigEndian),
     ver(QDataStream::Qt_Default),
     q_status(QDataStream::Ok),
@@ -486,11 +487,7 @@ void QDataStream::setStatus(DataStatus status)
 void QDataStream::setByteOrder(ByteOrder bo)
 {
     byteorder = bo;
-#if Q_BYTE_ORDER == Q_BIG_ENDIAN
-    noswap = (byteorder == BigEndian);
-#else
-    noswap = (byteorder == LittleEndian);
-#endif
+    noswap = (byteorder == QDataStream::HostEndian);
 }
 
 /*!

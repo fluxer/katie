@@ -474,7 +474,7 @@ QT_BEGIN_NAMESPACE
     Qt's version number, i.e the version the application is compiled
     against.
 
-    \sa <QtAlgorithms>, QSysInfo
+    \sa <QtAlgorithms>
 */
 
 /*!
@@ -805,27 +805,6 @@ const char *qVersion()
 /*****************************************************************************
   System detection routines
  *****************************************************************************/
-
-/*!
-    \class QSysInfo
-    \brief The QSysInfo class provides information about the system.
-
-    \list
-    \o \l ByteOrder specifies whether the platform is big-endian or
-       little-endian.
-    \endlist
-
-    \sa QLibraryInfo
-*/
-
-/*!
-    \enum QSysInfo::Endian
-
-    \value BigEndian  Big-endian byte order (also called Network byte order)
-    \value LittleEndian  Little-endian byte order
-    \value ByteOrder  Equals BigEndian or LittleEndian, depending on
-                      the platform's byte order.
-*/
 
 /*!
     \macro Q_WS_X11
