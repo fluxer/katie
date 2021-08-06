@@ -50,7 +50,11 @@ QSvgTinyDocument::~QSvgTinyDocument()
 {
 }
 
+#ifdef QT_BUILD_INTERNAL
+Q_AUTOTEST_EXPORT QByteArray qt_inflateGZipDataFrom(QIODevice *device)
+#else
 static QByteArray qt_inflateGZipDataFrom(QIODevice *device)
+#endif
 {
     if (!device)
         return QByteArray();
