@@ -130,11 +130,9 @@ void QRasterWindowSurface::flush(QWidget *widget, const QRegion &rgn, const QPoi
     const QImage *src = d->image;
     if (src->format() != QImage::Format_RGB32 || src->depth() != 32 || depth != 32) {
         Q_ASSERT(src->depth() >= 16);
-        const QImage sub_src(src->scanLine(br.y()) + br.x() * (uint(src->depth()) / 8),
-                                br.width(), br.height(), src->bytesPerLine(), src->format());
         QX11PixmapData data(QPixmapData::PixmapType);
         data.xinfo = widget->x11Info();
-        data.fromImage(sub_src, Qt::NoOpaqueDetection);
+        data.fromImage(src->copy(br), Qt::NoOpaqueDetection);
         XCopyArea(qt_x11Data->display, data.handle(), widget->handle(), d_ptr->gc, 0 , 0 , br.width(), br.height(), wpos.x(), wpos.y());
     } else {
         // qpaintengine_x11.cpp
