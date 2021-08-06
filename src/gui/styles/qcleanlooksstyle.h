@@ -42,21 +42,21 @@ public:
     QPalette standardPalette () const;
     void drawPrimitive(PrimitiveElement elem,
                         const QStyleOption *option,
-                        QPainter *painter, const QWidget *widget = Q_NULLPTR) const;
+                        QPainter *painter, const QWidget *widget = nullptr) const;
     void drawControl(ControlElement ce, const QStyleOption *option, QPainter *painter,
                                 const QWidget *widget) const;
-    int pixelMetric(PixelMetric metric, const QStyleOption *option = Q_NULLPTR, const QWidget *widget = Q_NULLPTR) const;
+    int pixelMetric(PixelMetric metric, const QStyleOption *option = nullptr, const QWidget *widget = nullptr) const;
     void drawComplexControl(ComplexControl control, const QStyleOptionComplex *option,
                             QPainter *painter, const QWidget *widget) const;
-    QRect subElementRect(SubElement r, const QStyleOption *opt, const QWidget *widget = Q_NULLPTR) const;
+    QRect subElementRect(SubElement r, const QStyleOption *opt, const QWidget *widget = nullptr) const;
     QSize sizeFromContents(ContentsType type, const QStyleOption *option,
                            const QSize &size, const QWidget *widget) const;
     QRect subControlRect(ComplexControl cc, const QStyleOptionComplex *opt,
                          SubControl sc, const QWidget *widget) const;
-    int styleHint(StyleHint hint, const QStyleOption *option = Q_NULLPTR, const QWidget *widget = Q_NULLPTR,
-                  QStyleHintReturn *returnData = Q_NULLPTR) const;
+    int styleHint(StyleHint hint, const QStyleOption *option = nullptr, const QWidget *widget = nullptr,
+                  QStyleHintReturn *returnData = nullptr) const;
     QPixmap standardPixmap(StandardPixmap standardPixmap, const QStyleOption *opt,
-                           const QWidget *widget = Q_NULLPTR) const;
+                           const QWidget *widget = nullptr) const;
     void drawItemText(QPainter *painter, const QRect &rect,
                               int flags, const QPalette &pal, bool enabled,
                               const QString &text, QPalette::ColorRole textRole = QPalette::NoRole) const;

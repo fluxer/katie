@@ -49,7 +49,7 @@ class QCalendarTextNavigator: public QObject
 {
     Q_OBJECT
 public:
-    QCalendarTextNavigator(QObject *parent = Q_NULLPTR)
+    QCalendarTextNavigator(QObject *parent = nullptr)
         : QObject(parent), m_dateText(0), m_dateFrame(0), m_dateValidator(0), m_widget(0), m_editDelay(1500), m_date(QDate::currentDate()) { }
 
     QWidget *widget() const;

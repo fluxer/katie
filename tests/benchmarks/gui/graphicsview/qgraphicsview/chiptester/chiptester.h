@@ -36,7 +36,7 @@ public:
         ZoomInOut,
         Translate
     };
-    ChipTester(QWidget *parent = Q_NULLPTR);
+    ChipTester(QWidget *parent = nullptr);
 
     void setAntialias(bool enabled);
     void setOpenGL(bool enabled);

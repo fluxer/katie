@@ -35,7 +35,7 @@ class LinePropertySheet: public QDesignerPropertySheet
     Q_OBJECT
     Q_INTERFACES(QDesignerPropertySheetExtension)
 public:
-    explicit LinePropertySheet(Line *object, QObject *parent = Q_NULLPTR);
+    explicit LinePropertySheet(Line *object, QObject *parent = nullptr);
     virtual ~LinePropertySheet();
 
     virtual void setProperty(int index, const QVariant &value);

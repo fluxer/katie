@@ -35,7 +35,7 @@ class Q_GUI_EXPORT QAnimationGroup : public QAbstractAnimation
     Q_OBJECT
 
 public:
-    QAnimationGroup(QObject *parent = Q_NULLPTR);
+    QAnimationGroup(QObject *parent = nullptr);
     ~QAnimationGroup();
 
     QAbstractAnimation *animationAt(int index) const;

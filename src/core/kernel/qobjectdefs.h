@@ -157,7 +157,7 @@ class QMetaClassInfo;
 class Q_CORE_EXPORT QGenericArgument
 {
 public:
-    inline QGenericArgument(const char *aName = Q_NULLPTR, const void *aData = Q_NULLPTR)
+    inline QGenericArgument(const char *aName = nullptr, const void *aData = nullptr)
         : _data(aData), _name(aName) {}
     inline void *data() const { return const_cast<void *>(_data); }
     inline const char *name() const { return _name; }
@@ -170,7 +170,7 @@ private:
 class Q_CORE_EXPORT QGenericReturnArgument: public QGenericArgument
 {
 public:
-    inline QGenericReturnArgument(const char *aName = Q_NULLPTR, void *aData = Q_NULLPTR)
+    inline QGenericReturnArgument(const char *aName = nullptr, void *aData = nullptr)
         : QGenericArgument(aName, aData)
         {}
 };
@@ -245,7 +245,7 @@ struct Q_CORE_EXPORT QMetaObject
     // internal index-based connect
     static bool connect(const QObject *sender, int signal_index,
                         const QObject *receiver, int method_index,
-                        int type = 0, int *types = Q_NULLPTR);
+                        int type = 0, int *types = nullptr);
     // internal index-based disconnect
     static bool disconnect(const QObject *sender, int signal_index,
                            const QObject *receiver, int method_index);

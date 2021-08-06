@@ -154,7 +154,7 @@ inline bool QCoreApplication::sendEvent(QObject *receiver, QEvent *event)
 inline bool QCoreApplication::sendSpontaneousEvent(QObject *receiver, QEvent *event)
 { if (event) event->spont = true; return self ? self->notifyInternal(receiver, event) : false; }
 
-inline void QCoreApplication::sendPostedEvents() { sendPostedEvents(Q_NULLPTR, 0); }
+inline void QCoreApplication::sendPostedEvents() { sendPostedEvents(nullptr, 0); }
 
 #ifdef QT_NO_TRANSLATION
 // Simple versions

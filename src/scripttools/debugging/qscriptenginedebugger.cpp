@@ -229,7 +229,7 @@ class WidgetClosedNotifier : public QObject
 {
     Q_OBJECT
 public:
-    WidgetClosedNotifier(QWidget *w, QObject *parent = Q_NULLPTR)
+    WidgetClosedNotifier(QWidget *w, QObject *parent = nullptr)
         : QObject(parent), widget(w)
     {
         w->installEventFilter(this);

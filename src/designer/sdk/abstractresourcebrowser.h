@@ -33,7 +33,7 @@ class Q_DESIGNER_EXPORT QDesignerResourceBrowserInterface: public QWidget
 {
     Q_OBJECT
 public:
-    QDesignerResourceBrowserInterface(QWidget *parent = Q_NULLPTR);
+    QDesignerResourceBrowserInterface(QWidget *parent = nullptr);
     virtual ~QDesignerResourceBrowserInterface();
 
     virtual void setCurrentPath(const QString &filePath) = 0;

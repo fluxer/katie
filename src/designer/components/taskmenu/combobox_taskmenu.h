@@ -40,7 +40,7 @@ class ComboBoxTaskMenu: public QDesignerTaskMenu
     Q_OBJECT
 public:
     explicit ComboBoxTaskMenu(QComboBox *button,
-                              QObject *parent = Q_NULLPTR);
+                              QObject *parent = nullptr);
     virtual ~ComboBoxTaskMenu();
 
     virtual QAction *preferredEditAction() const;

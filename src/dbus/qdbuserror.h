@@ -64,7 +64,7 @@ public:
         InvalidMember
     };
 
-    QDBusError(const DBusError *error = Q_NULLPTR);
+    QDBusError(const DBusError *error = nullptr);
     QDBusError(const QDBusMessage& msg);
     QDBusError(ErrorType error, const QString &message);
     QDBusError(const QDBusError &other);

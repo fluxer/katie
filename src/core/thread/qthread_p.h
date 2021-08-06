@@ -54,7 +54,7 @@ public:
     QEvent *event;
     int priority;
     inline QPostEvent()
-        : receiver(Q_NULLPTR), event(Q_NULLPTR), priority(0)
+        : receiver(nullptr), event(nullptr), priority(0)
     { }
     inline QPostEvent(QObject *r, QEvent *e, int p)
         : receiver(r), event(e), priority(p)

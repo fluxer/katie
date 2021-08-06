@@ -49,7 +49,7 @@ public:
     };
     Q_DECLARE_FLAGS(SubWindowOptions, SubWindowOption)
 
-    QMdiSubWindow(QWidget *parent = Q_NULLPTR, Qt::WindowFlags flags = 0);
+    QMdiSubWindow(QWidget *parent = nullptr, Qt::WindowFlags flags = 0);
     ~QMdiSubWindow();
 
     QSize sizeHint() const;

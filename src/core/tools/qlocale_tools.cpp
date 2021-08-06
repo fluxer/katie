@@ -212,13 +212,13 @@ bool removeGroupSeparators(QLocalePrivate::CharBuff *num)
 /******************************************************************************
 ** Helpers for string casing and collation
 */
-static UCollator *icuCollator = Q_NULLPTR;
+static UCollator *icuCollator = nullptr;
 
 static void qt_deinitLocale()
 {
     if (icuCollator) {
         ucol_close(icuCollator);
-        icuCollator = Q_NULLPTR;
+        icuCollator = nullptr;
     }
 }
 Q_DESTRUCTOR_FUNCTION(qt_deinitLocale);

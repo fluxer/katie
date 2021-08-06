@@ -61,7 +61,7 @@ public:
                    QGraphicsEffect::PixmapPadMode mode = QGraphicsEffect::PadToEffectiveBoundingRect) const;
 
 protected:
-    QGraphicsEffectSource(QGraphicsEffectSourcePrivate &dd, QObject *parent = Q_NULLPTR);
+    QGraphicsEffectSource(QGraphicsEffectSourcePrivate &dd, QObject *parent = nullptr);
 
 private:
     Q_DECLARE_PRIVATE(QGraphicsEffectSource)
@@ -124,7 +124,7 @@ class Q_GUI_EXPORT QGraphicsEffectPrivate : public QObjectPrivate
     Q_DECLARE_PUBLIC(QGraphicsEffect)
 public:
     QGraphicsEffectPrivate()
-        : source(Q_NULLPTR),
+        : source(nullptr),
         isEnabled(true)
     {
     }

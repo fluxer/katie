@@ -78,7 +78,7 @@ private:
 };
 
 LanguageResourceDialogPrivate::LanguageResourceDialogPrivate(QDesignerResourceBrowserInterface *rb) :
-    q_ptr(Q_NULLPTR),
+    q_ptr(nullptr),
     m_browser(rb),
     m_dialogButtonBox(new QDialogButtonBox(QDialogButtonBox::Ok | QDialogButtonBox::Cancel))
 {
@@ -158,7 +158,7 @@ LanguageResourceDialog* LanguageResourceDialog::create(QDesignerFormEditorInterf
     if (QDesignerIntegration *di = qobject_cast<QDesignerIntegration*>(core->integration()))
         if (QDesignerResourceBrowserInterface *rb = di->createResourceBrowser(0))
             return new LanguageResourceDialog(rb, parent);
-    return Q_NULLPTR;
+    return nullptr;
 }
 
 // ------------ IconSelectorPrivate
@@ -203,16 +203,16 @@ public:
 };
 
 IconSelectorPrivate::IconSelectorPrivate() :
-    q_ptr(Q_NULLPTR),
+    q_ptr(nullptr),
     m_emptyIcon(emptyPixmap()),
-    m_stateComboBox(Q_NULLPTR),
-    m_iconButton(Q_NULLPTR),
-    m_resetAction(Q_NULLPTR),
-    m_resetAllAction(Q_NULLPTR),
-    m_iconCache(Q_NULLPTR),
-    m_pixmapCache(Q_NULLPTR),
-    m_resourceModel(Q_NULLPTR),
-    m_core(Q_NULLPTR)
+    m_stateComboBox(nullptr),
+    m_iconButton(nullptr),
+    m_resetAction(nullptr),
+    m_resetAllAction(nullptr),
+    m_iconCache(nullptr),
+    m_pixmapCache(nullptr),
+    m_resourceModel(nullptr),
+    m_core(nullptr)
 {
 }
 void IconSelectorPrivate::slotUpdate()
@@ -526,7 +526,7 @@ void IconSelector::setPixmapCache(DesignerPixmapCache *pixmapCache)
 // Validator for theme line edit, accepts empty or non-blank strings.
 class BlankSuppressingValidator : public QValidator {
 public:
-    explicit BlankSuppressingValidator(QObject * parent = Q_NULLPTR) : QValidator(parent) {}
+    explicit BlankSuppressingValidator(QObject * parent = nullptr) : QValidator(parent) {}
 
     virtual State validate(QString &input, int &pos) const {
         const int blankPos = input.indexOf(QLatin1Char(' '));

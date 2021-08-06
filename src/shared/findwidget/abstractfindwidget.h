@@ -50,7 +50,7 @@ public:
     };
     Q_DECLARE_FLAGS(FindFlags, FindFlag)
 
-    explicit AbstractFindWidget(FindFlags flags = FindFlags(), QWidget *parent = Q_NULLPTR);
+    explicit AbstractFindWidget(FindFlags flags = FindFlags(), QWidget *parent = nullptr);
     virtual ~AbstractFindWidget();
 
     bool eventFilter(QObject *object, QEvent *e);

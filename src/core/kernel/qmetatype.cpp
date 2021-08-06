@@ -312,14 +312,14 @@ struct QMetaTypeGuiHelper
     QMetaType::LoadOperator loadOp;
 #endif
 };
-Q_CORE_EXPORT const QMetaTypeGuiHelper *qMetaTypeGuiHelper = Q_NULLPTR;
+Q_CORE_EXPORT const QMetaTypeGuiHelper *qMetaTypeGuiHelper = nullptr;
 
 class QCustomTypeInfo
 {
 public:
-    QCustomTypeInfo() : constr(Q_NULLPTR), destr(Q_NULLPTR),
+    QCustomTypeInfo() : constr(nullptr), destr(nullptr),
 #ifndef QT_NO_DATASTREAM
-    saveOp(Q_NULLPTR), loadOp(Q_NULLPTR),
+    saveOp(nullptr), loadOp(nullptr),
 #endif
     alias(-1)
     {}
@@ -387,10 +387,10 @@ const char *QMetaType::typeName(int type)
         QReadLocker locker(customTypesLock());
         const QVector<QCustomTypeInfo> * const ct = customTypes();
         return ct && ct->count() > type - User && !ct->at(type - User).typeName.isEmpty()
-                ? ct->at(type - User).typeName.constData() : Q_NULLPTR;
+                ? ct->at(type - User).typeName.constData() : nullptr;
     }
 
-    return Q_NULLPTR;
+    return nullptr;
 }
 
 /*! \internal
@@ -502,8 +502,8 @@ int QMetaType::registerTypedef(const char* typeName, int aliasId)
     QCustomTypeInfo inf;
     inf.typeName = normalizedTypeName;
     inf.alias = aliasId;
-    inf.constr = Q_NULLPTR;
-    inf.destr = Q_NULLPTR;
+    inf.constr = nullptr;
+    inf.destr = nullptr;
     ct->append(inf);
     return aliasId;
 }
@@ -531,8 +531,8 @@ void QMetaType::unregisterType(const char *typeName)
         if (ct->at(v).typeName == typeName) {
             QCustomTypeInfo &inf = (*ct)[v];
             inf.typeName.clear();
-            inf.constr = Q_NULLPTR;
-            inf.destr = Q_NULLPTR;
+            inf.constr = nullptr;
+            inf.destr = nullptr;
             inf.alias = -1;
         }
     }

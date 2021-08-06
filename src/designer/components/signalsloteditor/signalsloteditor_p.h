@@ -82,7 +82,7 @@ class ConnectionModel : public QAbstractItemModel
 {
     Q_OBJECT
 public:
-    explicit ConnectionModel(QObject *parent = Q_NULLPTR);
+    explicit ConnectionModel(QObject *parent = nullptr);
     void setEditor(SignalSlotEditor *editor = 0);
 
     virtual QModelIndex index(int row, int column,

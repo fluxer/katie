@@ -63,7 +63,7 @@ public:
         SpanningRole = 2
     };
 
-    explicit QFormLayout(QWidget *parent = Q_NULLPTR);
+    explicit QFormLayout(QWidget *parent = nullptr);
     ~QFormLayout();
 
     void setFieldGrowthPolicy(FieldGrowthPolicy policy);

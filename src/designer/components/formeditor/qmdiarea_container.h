@@ -41,7 +41,7 @@ class QMdiAreaContainer: public QObject, public QDesignerContainerExtension
     Q_OBJECT
     Q_INTERFACES(QDesignerContainerExtension)
 public:
-    explicit QMdiAreaContainer(QMdiArea *widget, QObject *parent = Q_NULLPTR);
+    explicit QMdiAreaContainer(QMdiArea *widget, QObject *parent = nullptr);
 
     virtual int count() const;
     virtual QWidget *widget(int index) const;
@@ -66,7 +66,7 @@ class QMdiAreaPropertySheet: public QDesignerPropertySheet
     Q_OBJECT
     Q_INTERFACES(QDesignerPropertySheetExtension)
 public:
-    explicit QMdiAreaPropertySheet(QWidget *mdiArea, QObject *parent = Q_NULLPTR);
+    explicit QMdiAreaPropertySheet(QWidget *mdiArea, QObject *parent = nullptr);
 
     virtual void setProperty(int index, const QVariant &value);
     virtual bool reset(int index);

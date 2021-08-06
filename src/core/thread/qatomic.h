@@ -146,7 +146,7 @@ template <typename T>
 class Q_CORE_EXPORT QAtomicPointer
 {
    public:
-      inline QAtomicPointer(T *value = Q_NULLPTR) : m_data(value) {
+      inline QAtomicPointer(T *value = nullptr) : m_data(value) {
       }
 
       inline QAtomicPointer(const QAtomicPointer<T> &other) {

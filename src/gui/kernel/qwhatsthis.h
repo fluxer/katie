@@ -45,7 +45,7 @@ public:
     static void showText(const QPoint &pos, const QString &text, QWidget *w = 0);
     static void hideText();
 
-    static QAction *createAction(QObject *parent = Q_NULLPTR);
+    static QAction *createAction(QObject *parent = nullptr);
 
 };
 

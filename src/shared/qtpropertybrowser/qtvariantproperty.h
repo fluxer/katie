@@ -54,7 +54,7 @@ class QtVariantPropertyManager : public QtAbstractPropertyManager
 {
     Q_OBJECT
 public:
-    QtVariantPropertyManager(QObject *parent = Q_NULLPTR);
+    QtVariantPropertyManager(QObject *parent = nullptr);
     ~QtVariantPropertyManager();
 
     virtual QtVariantProperty *addProperty(int propertyType, const QString &name = QString());
@@ -137,7 +137,7 @@ class QtVariantEditorFactory : public QtAbstractEditorFactory<QtVariantPropertyM
 {
     Q_OBJECT
 public:
-    QtVariantEditorFactory(QObject *parent = Q_NULLPTR);
+    QtVariantEditorFactory(QObject *parent = nullptr);
     ~QtVariantEditorFactory();
 protected:
     void connectPropertyManager(QtVariantPropertyManager *manager);

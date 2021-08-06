@@ -39,7 +39,7 @@ class Q_GUI_EXPORT QRubberBand : public QWidget
 
 public:
     enum Shape { Line, Rectangle };
-    explicit QRubberBand(Shape, QWidget *parent = Q_NULLPTR);
+    explicit QRubberBand(Shape, QWidget *parent = nullptr);
     ~QRubberBand();
 
     Shape shape() const;

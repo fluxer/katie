@@ -41,8 +41,8 @@ class Q_GUI_EXPORT QPrintDialog : public QAbstractPrintDialog
     Q_PROPERTY(PrintDialogOptions options READ options WRITE setOptions)
 
 public:
-    explicit QPrintDialog(QPrinter *printer, QWidget *parent = Q_NULLPTR);
-    explicit QPrintDialog(QWidget *parent = Q_NULLPTR);
+    explicit QPrintDialog(QPrinter *printer, QWidget *parent = nullptr);
+    explicit QPrintDialog(QWidget *parent = nullptr);
     ~QPrintDialog();
 
     int exec();

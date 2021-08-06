@@ -139,7 +139,7 @@ Q_CORE_EXPORT QString qt_resolveUserName(uint userId)
         size_max = 1024;
     QSTACKARRAY(char, buf, size_max);
     struct passwd entry;
-    struct passwd *pw = Q_NULLPTR;
+    struct passwd *pw = nullptr;
     ::getpwuid_r(userId, &entry, buf, size_max, &pw);
 #else
     struct passwd *pw = ::getpwuid(userId);
@@ -164,7 +164,7 @@ QString QFileSystemEngine::resolveGroupName(uint groupId)
         size_max = 1024;
     QSTACKARRAY(char, buf, size_max);
     struct group entry;
-    struct group *gr = Q_NULLPTR;
+    struct group *gr = nullptr;
     ::getgrgid_r(groupId, &entry, buf, size_max, &gr);
 #else
     struct group *gr = ::getgrgid(groupId);
@@ -328,7 +328,7 @@ bool QFileSystemEngine::copyFile(const QFileSystemEntry &source, const QFileSyst
 
     QT_OFF_T tocopy = st.st_size;
 #ifdef Q_OS_LINUX
-    ssize_t sendresult = ::sendfile(targetfd, sourcefd, Q_NULLPTR, tocopy);
+    ssize_t sendresult = ::sendfile(targetfd, sourcefd, nullptr, tocopy);
     while (sendresult != tocopy) {
         if (sendresult == -1) {
             *error = errno;
@@ -346,7 +346,7 @@ bool QFileSystemEngine::copyFile(const QFileSystemEntry &source, const QFileSyst
 #  define SF_SYNC 0
 #endif
     QT_OFF_T totalwrite = 0;
-    int sendresult = ::sendfile(sourcefd, targetfd, QT_OFF_T(0), size_t(0), Q_NULLPTR, &totalwrite, SF_SYNC);
+    int sendresult = ::sendfile(sourcefd, targetfd, QT_OFF_T(0), size_t(0), nullptr, &totalwrite, SF_SYNC);
     if (QT_OFF_T(sendresult) != totalwrite) {
         *error = errno;
         qt_safe_close(sourcefd);

@@ -240,7 +240,7 @@ QT_BEGIN_NAMESPACE
 */
 
 QDataStream::QDataStream()
-    : dev(Q_NULLPTR),
+    : dev(nullptr),
     owndev(false),
     noswap(QSysInfo::ByteOrder == QSysInfo::BigEndian),
     byteorder(QDataStream::BigEndian),
@@ -288,7 +288,7 @@ QDataStream::QDataStream(QIODevice *device)
 */
 
 QDataStream::QDataStream(QByteArray *a, QIODevice::OpenMode flags)
-    : dev(Q_NULLPTR),
+    : dev(nullptr),
     owndev(true),
     noswap(QSysInfo::ByteOrder == QSysInfo::BigEndian),
     byteorder(QDataStream::BigEndian),
@@ -313,7 +313,7 @@ QDataStream::QDataStream(QByteArray *a, QIODevice::OpenMode flags)
     is created to wrap the byte array.
 */
 QDataStream::QDataStream(const QByteArray &a)
-    : dev(Q_NULLPTR),
+    : dev(nullptr),
     owndev(true),
     noswap(QSysInfo::ByteOrder == QSysInfo::BigEndian),
     byteorder(QDataStream::BigEndian),

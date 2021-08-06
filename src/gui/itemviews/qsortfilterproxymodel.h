@@ -52,7 +52,7 @@ class Q_GUI_EXPORT QSortFilterProxyModel : public QAbstractProxyModel
     Q_PROPERTY(int filterRole READ filterRole WRITE setFilterRole)
 
 public:
-    QSortFilterProxyModel(QObject *parent = Q_NULLPTR);
+    QSortFilterProxyModel(QObject *parent = nullptr);
     ~QSortFilterProxyModel();
 
     void setSourceModel(QAbstractItemModel *sourceModel);

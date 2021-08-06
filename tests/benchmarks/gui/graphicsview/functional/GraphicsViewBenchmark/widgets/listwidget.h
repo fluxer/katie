@@ -37,7 +37,7 @@ class ListWidget : public GvbWidget
     Q_OBJECT
 
 public:
-    ListWidget(QGraphicsWidget *parent = Q_NULLPTR);
+    ListWidget(QGraphicsWidget *parent = nullptr);
     virtual ~ListWidget();
     void addItem(QGraphicsWidget *item);
     void insertItem(int index, QGraphicsWidget *item);

@@ -1490,7 +1490,7 @@ void QX11PaintEnginePrivate::fillPolygon_dev(const QPointF *polygonPoints, int p
     Q_Q(QX11PaintEngine);
 
     int clippedCount = 0;
-    QPointF *clippedPoints = Q_NULLPTR;
+    QPointF *clippedPoints = nullptr;
 
 #ifndef QT_NO_XRENDER
     //can change if we switch to pen if gcMode != BrushGC
@@ -1616,7 +1616,7 @@ void QX11PaintEnginePrivate::strokePolygon_translated(const QPointF *polygonPoin
 void QX11PaintEnginePrivate::strokePolygon_dev(const QPointF *polygonPoints, int pointCount, bool close)
 {
     int clippedCount = 0;
-    QPointF *clippedPoints = Q_NULLPTR;
+    QPointF *clippedPoints = nullptr;
     polygonClipper.clipPolygon(polygonPoints, pointCount,
                                &clippedPoints, &clippedCount, close);
 

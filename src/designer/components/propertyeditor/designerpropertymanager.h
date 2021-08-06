@@ -59,7 +59,7 @@ class ResetDecorator : public QObject
 {
     Q_OBJECT
 public:
-    ResetDecorator(QObject *parent = Q_NULLPTR) : QObject(parent), m_spacing(-1) {}
+    ResetDecorator(QObject *parent = nullptr) : QObject(parent), m_spacing(-1) {}
     ~ResetDecorator();
 
     void connectPropertyManager(QtAbstractPropertyManager *manager);
@@ -82,7 +82,7 @@ class DesignerPropertyManager : public QtVariantPropertyManager
 {
     Q_OBJECT
 public:
-    explicit DesignerPropertyManager(QObject *parent = Q_NULLPTR);
+    explicit DesignerPropertyManager(QObject *parent = nullptr);
     ~DesignerPropertyManager();
 
     virtual QStringList attributes(int propertyType) const;
@@ -221,7 +221,7 @@ class DesignerEditorFactory : public QtVariantEditorFactory
 {
     Q_OBJECT
 public:
-    explicit DesignerEditorFactory(QDesignerFormEditorInterface *core, QObject *parent = Q_NULLPTR);
+    explicit DesignerEditorFactory(QDesignerFormEditorInterface *core, QObject *parent = nullptr);
     ~DesignerEditorFactory();
     void setSpacing(int spacing);
     void setFormWindowBase(FormWindowBase *fwb);

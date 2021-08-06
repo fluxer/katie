@@ -123,7 +123,7 @@ class QCalendarPopup : public QWidget
 {
     Q_OBJECT
 public:
-    QCalendarPopup(QWidget *parent = Q_NULLPTR, QCalendarWidget *cw = 0);
+    QCalendarPopup(QWidget *parent = nullptr, QCalendarWidget *cw = 0);
     QDate selectedDate() { return verifyCalendarInstance()->selectedDate(); }
     void setDate(const QDate &date);
     void setDateRange(const QDate &min, const QDate &max);

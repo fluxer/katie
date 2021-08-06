@@ -88,7 +88,7 @@ PassRefPtr<RegExp> RegExp::create(const UString& pattern, const UString& flags)
 
 void RegExp::compile()
 {
-    m_regExp = Q_NULLPTR;
+    m_regExp = nullptr;
 
     int regexOptions = PCRE_JAVASCRIPT_COMPAT | PCRE_NO_UTF8_CHECK;
     if (ignoreCase())
@@ -96,9 +96,9 @@ void RegExp::compile()
     if (multiline())
         regexOptions |= PCRE_MULTILINE;
     int errorOffset;
-    m_regExp = pcre_compile(m_pattern.ascii(), regexOptions, &m_constructionError, &errorOffset, Q_NULLPTR);
+    m_regExp = pcre_compile(m_pattern.ascii(), regexOptions, &m_constructionError, &errorOffset, nullptr);
 
-    pcre_fullinfo(m_regExp, Q_NULLPTR, PCRE_INFO_CAPTURECOUNT, &m_numSubpatterns);
+    pcre_fullinfo(m_regExp, nullptr, PCRE_INFO_CAPTURECOUNT, &m_numSubpatterns);
 }
 
 int RegExp::match(const UString& s, int startOffset, Vector<int, 32>* ovector)
@@ -126,7 +126,7 @@ int RegExp::match(const UString& s, int startOffset, Vector<int, 32>* ovector)
             offsetVector = ovector->data();
         }
 
-        const int numMatches = pcre_exec(m_regExp, Q_NULLPTR, s.ascii(), s.size(), startOffset, 0, offsetVector, offsetVectorSize);
+        const int numMatches = pcre_exec(m_regExp, nullptr, s.ascii(), s.size(), startOffset, 0, offsetVector, offsetVectorSize);
 
         if (numMatches < 0) {
 #ifndef QT_NO_DEBUG

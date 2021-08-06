@@ -155,7 +155,7 @@ void tst_QTextCursor::cleanup()
 {
     cursor = QTextCursor();
     delete doc;
-    doc = Q_NULLPTR;
+    doc = nullptr;
 }
 
 void tst_QTextCursor::navigation1()

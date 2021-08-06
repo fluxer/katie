@@ -43,7 +43,7 @@ QT_BEGIN_NAMESPACE
 class CustomProxyModel : public QSortFilterProxyModel
 {
 public:
-    CustomProxyModel(QObject *parent = Q_NULLPTR)
+    CustomProxyModel(QObject *parent = nullptr)
         : QSortFilterProxyModel(parent) {}
 
     bool hasChildren(const QModelIndex &parent) const
@@ -171,7 +171,7 @@ class QScriptDebuggerLocalsItemDelegate
 {
     Q_OBJECT
 public:
-    QScriptDebuggerLocalsItemDelegate(QObject *parent = Q_NULLPTR);
+    QScriptDebuggerLocalsItemDelegate(QObject *parent = nullptr);
 
     QWidget *createEditor(QWidget *parent, const QStyleOptionViewItem &option, const QModelIndex &index) const;
     void setModelData(QWidget *editor, QAbstractItemModel *model, const QModelIndex &index) const;

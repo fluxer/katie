@@ -38,7 +38,7 @@ class QMainWindowContainer: public QObject, public QDesignerContainerExtension
     Q_OBJECT
     Q_INTERFACES(QDesignerContainerExtension)
 public:
-    explicit QMainWindowContainer(QMainWindow *widget, QObject *parent = Q_NULLPTR);
+    explicit QMainWindowContainer(QMainWindow *widget, QObject *parent = nullptr);
 
     virtual int count() const;
     virtual QWidget *widget(int index) const;

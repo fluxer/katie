@@ -250,7 +250,7 @@ public:
     {
         if (!globalStatic.pointer->ref.deref())
             delete globalStatic.pointer;
-        globalStatic.pointer = Q_NULLPTR;
+        globalStatic.pointer = nullptr;
         globalStatic.destroyed = true;
     }
 };

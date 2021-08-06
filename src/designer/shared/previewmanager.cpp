@@ -107,7 +107,7 @@ QSizeF DesignerZoomProxyWidget::sizeHint(Qt::SizeHint which, const QSizeF & cons
 class DesignerZoomWidget : public ZoomWidget {
     Q_DISABLE_COPY(DesignerZoomWidget)
 public:
-    DesignerZoomWidget(QWidget *parent = Q_NULLPTR);
+    DesignerZoomWidget(QWidget *parent = nullptr);
 private:
     virtual QGraphicsProxyWidget *createProxyWidget(QGraphicsItem *parent = 0, Qt::WindowFlags wFlags = 0) const;
 };

@@ -89,12 +89,12 @@ static QStyleSheetStyleCaches *styleSheetCaches = 0;
  * The first instance of QStyleSheetStyle will set globalStyleSheetStyle to itself. The second one
  * will notice the globalStyleSheetStyle is not istelf and call its base style directly.
  */
-static const QStyleSheetStyle *globalStyleSheetStyle = Q_NULLPTR;
+static const QStyleSheetStyle *globalStyleSheetStyle = nullptr;
 class QStyleSheetStyleRecursionGuard
 {
     public:
         QStyleSheetStyleRecursionGuard(const QStyleSheetStyle *that)
-            :  guarded(globalStyleSheetStyle == Q_NULLPTR)
+            :  guarded(globalStyleSheetStyle == nullptr)
             {
                 if (guarded) globalStyleSheetStyle = that;
             }
@@ -102,7 +102,7 @@ class QStyleSheetStyleRecursionGuard
         const bool guarded;
 };
 #define RECURSION_GUARD(RETURN) \
-    if (globalStyleSheetStyle != Q_NULLPTR && globalStyleSheetStyle != this) { RETURN; } \
+    if (globalStyleSheetStyle != nullptr && globalStyleSheetStyle != this) { RETURN; } \
     QStyleSheetStyleRecursionGuard recursion_guard(this);
 
 #define ceilInt(x) ((int)(x) + ((x) > 0 && (x) != (int)(x)))

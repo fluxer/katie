@@ -82,7 +82,7 @@ namespace qdesigner_internal {
 class ElidingLabel : public QWidget
 {
 public:
-    ElidingLabel(const QString &text = QString(), QWidget *parent = Q_NULLPTR)
+    ElidingLabel(const QString &text = QString(), QWidget *parent = nullptr)
         : QWidget(parent),
         m_text(text),
         m_mode(Qt::ElideRight) {
@@ -183,7 +183,7 @@ void PropertyEditor::setupPaletteProperty(QtVariantProperty *property)
     m_updatingBrowser = false;
 }
 
-static inline QToolButton *createDropDownButton(QAction *defaultAction, QWidget *parent = Q_NULLPTR)
+static inline QToolButton *createDropDownButton(QAction *defaultAction, QWidget *parent = nullptr)
 {
     QToolButton *rc = new QToolButton(parent);
     rc->setDefaultAction(defaultAction);

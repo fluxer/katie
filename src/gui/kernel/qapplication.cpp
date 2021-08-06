@@ -361,13 +361,13 @@ static bool force_reverse = false;
 Q_GLOBAL_STATIC(PaletteHash, app_palettes)
 Q_GLOBAL_STATIC(FontHash, app_fonts)
 
-QWidgetList *QApplicationPrivate::popupWidgets = Q_NULLPTR;  // has keyboard input focus
+QWidgetList *QApplicationPrivate::popupWidgets = nullptr;  // has keyboard input focus
 
-QDesktopWidget *qt_desktopWidget = Q_NULLPTR;                // root window widgets
+QDesktopWidget *qt_desktopWidget = nullptr;                // root window widgets
 #ifndef QT_NO_CLIPBOARD
-QClipboard *qt_clipboard = Q_NULLPTR;                        // global clipboard object
+QClipboard *qt_clipboard = nullptr;                        // global clipboard object
 #endif
-QWidgetList *qt_modal_stack = Q_NULLPTR;                     // stack of modal widgets
+QWidgetList *qt_modal_stack = nullptr;                     // stack of modal widgets
 
 /*!
     \internal
@@ -627,7 +627,7 @@ QWidget *QApplication::activePopupWidget()
 {
     if (QApplicationPrivate::popupWidgets)
         return QApplicationPrivate::popupWidgets->last();
-    return Q_NULLPTR;
+    return nullptr;
 }
 
 
@@ -662,7 +662,7 @@ QApplication::~QApplication()
 #ifndef QT_NO_CLIPBOARD
     // flush clipboard contents
     if (qt_clipboard) {
-        QClipboardEvent event(Q_NULLPTR);
+        QClipboardEvent event(nullptr);
         QApplication::sendEvent(qt_clipboard, &event);
     }
 #endif
@@ -693,11 +693,11 @@ QApplication::~QApplication()
     }
 
     delete qt_desktopWidget;
-    qt_desktopWidget = Q_NULLPTR;
+    qt_desktopWidget = nullptr;
 
 #ifndef QT_NO_CLIPBOARD
     delete qt_clipboard;
-    qt_clipboard = Q_NULLPTR;
+    qt_clipboard = nullptr;
 #endif
 
     delete QApplicationPrivate::app_pal;
@@ -2427,9 +2427,9 @@ QClipboard *QApplication::clipboard()
     if (!qt_clipboard) {
         if (Q_UNLIKELY(!qApp)) {
             qWarning("QApplication: Must construct a QApplication before accessing a QClipboard");
-            return Q_NULLPTR;
+            return nullptr;
         }
-        qt_clipboard = new QClipboard(Q_NULLPTR);
+        qt_clipboard = new QClipboard(nullptr);
     }
     return qt_clipboard;
 }
@@ -3918,7 +3918,7 @@ bool QApplicationPrivate::notify_helper(QObject *receiver, QEvent * e)
 
 bool QApplicationPrivate::inPopupMode() const
 {
-    return QApplicationPrivate::popupWidgets != Q_NULLPTR;
+    return QApplicationPrivate::popupWidgets != nullptr;
 }
 
 /*!

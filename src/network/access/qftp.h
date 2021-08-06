@@ -39,7 +39,7 @@ class Q_NETWORK_EXPORT QFtp : public QObject
     Q_OBJECT
 
 public:
-    explicit QFtp(QObject *parent = Q_NULLPTR);
+    explicit QFtp(QObject *parent = nullptr);
     virtual ~QFtp();
 
     enum State {

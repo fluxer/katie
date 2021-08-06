@@ -378,7 +378,7 @@ template<class T, void (T::*method)(int)>
 class TickAnimationProxy : public QAbstractAnimation
 {
 public:
-    TickAnimationProxy(T *p, QObject *parent = Q_NULLPTR) : QAbstractAnimation(parent), m_p(p) {}
+    TickAnimationProxy(T *p, QObject *parent = nullptr) : QAbstractAnimation(parent), m_p(p) {}
     virtual int duration() const { return -1; }
 protected:
     virtual void updateCurrentTime(int msec) { (m_p->*method)(msec); }

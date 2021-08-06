@@ -35,7 +35,7 @@ class QLayoutWidgetPropertySheet: public QDesignerPropertySheet
     Q_OBJECT
     Q_INTERFACES(QDesignerPropertySheetExtension)
 public:
-    explicit QLayoutWidgetPropertySheet(QLayoutWidget *object, QObject *parent = Q_NULLPTR);
+    explicit QLayoutWidgetPropertySheet(QLayoutWidget *object, QObject *parent = nullptr);
     virtual ~QLayoutWidgetPropertySheet();
 
     virtual void setProperty(int index, const QVariant &value);

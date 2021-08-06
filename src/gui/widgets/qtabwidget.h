@@ -58,7 +58,7 @@ public:
         East
     };
 
-    explicit QTabWidget(QWidget *parent = Q_NULLPTR);
+    explicit QTabWidget(QWidget *parent = nullptr);
     ~QTabWidget();
 
     int addTab(QWidget *widget, const QString &);

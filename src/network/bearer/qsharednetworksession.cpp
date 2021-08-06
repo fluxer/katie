@@ -26,7 +26,7 @@
 
 QT_BEGIN_NAMESPACE
 
-thread_local QSharedNetworkSessionManager* tls = Q_NULLPTR;
+thread_local QSharedNetworkSessionManager* tls = nullptr;
 
 inline QSharedNetworkSessionManager* sharedNetworkSessionManager()
 {

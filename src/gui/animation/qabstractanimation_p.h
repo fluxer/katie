@@ -60,7 +60,7 @@ public:
           hasRegisteredTimer(false),
           isPause(false),
           isGroup(false),
-          group(Q_NULLPTR)
+          group(nullptr)
     {
     }
 

@@ -140,10 +140,10 @@ class QPainterPrivate
     Q_DECLARE_PUBLIC(QPainter)
 public:
     QPainterPrivate(QPainter *painter)
-    : q_ptr(painter), d_ptrs(Q_NULLPTR), state(Q_NULLPTR), dummyState(Q_NULLPTR), txinv(false),
-        inDestructor(false), d_ptrs_size(0), refcount(1), device(Q_NULLPTR),
-        original_device(Q_NULLPTR), helper_device(Q_NULLPTR), engine(Q_NULLPTR),
-        extended(Q_NULLPTR)
+    : q_ptr(painter), d_ptrs(nullptr), state(nullptr), dummyState(nullptr), txinv(false),
+        inDestructor(false), d_ptrs_size(0), refcount(1), device(nullptr),
+        original_device(nullptr), helper_device(nullptr), engine(nullptr),
+        extended(nullptr)
     {
     }
 

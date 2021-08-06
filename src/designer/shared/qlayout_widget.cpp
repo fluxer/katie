@@ -1538,7 +1538,7 @@ namespace {
 class QBoxLayoutSupport: public QLayoutSupport
 {
 public:
-    QBoxLayoutSupport(QDesignerFormWindowInterface *formWindow, QWidget *widget, Qt::Orientation orientation, QObject *parent = Q_NULLPTR);
+    QBoxLayoutSupport(QDesignerFormWindowInterface *formWindow, QWidget *widget, Qt::Orientation orientation, QObject *parent = nullptr);
 
     virtual void insertWidget(QWidget *widget, const QPair<int, int> &cell);
     virtual void removeWidget(QWidget *widget);
@@ -1668,7 +1668,7 @@ class GridLikeLayoutSupportBase: public QLayoutSupport
 {
 public:
 
-    GridLikeLayoutSupportBase(QDesignerFormWindowInterface *formWindow, QWidget *widget, LayoutHelper *helper, QObject *parent = Q_NULLPTR) :
+    GridLikeLayoutSupportBase(QDesignerFormWindowInterface *formWindow, QWidget *widget, LayoutHelper *helper, QObject *parent = nullptr) :
         QLayoutSupport(formWindow, widget, helper, parent) {}
 
     void insertWidget(QWidget *widget, const QPair<int, int> &cell);
@@ -1782,7 +1782,7 @@ class QGridLayoutSupport: public GridLikeLayoutSupportBase<QGridLayout>
 {
 public:
 
-    QGridLayoutSupport(QDesignerFormWindowInterface *formWindow, QWidget *widget, QObject *parent = Q_NULLPTR);
+    QGridLayoutSupport(QDesignerFormWindowInterface *formWindow, QWidget *widget, QObject *parent = nullptr);
 
     virtual void simplify();
     virtual void insertRow(int row);
@@ -1829,7 +1829,7 @@ void QGridLayoutSupport::simplify()
 class QFormLayoutSupport: public GridLikeLayoutSupportBase<QFormLayout>
 {
 public:
-    QFormLayoutSupport(QDesignerFormWindowInterface *formWindow, QWidget *widget, QObject *parent = Q_NULLPTR);
+    QFormLayoutSupport(QDesignerFormWindowInterface *formWindow, QWidget *widget, QObject *parent = nullptr);
 
     virtual void simplify() {}
     virtual void insertRow(int /*row*/) {}

@@ -50,7 +50,7 @@ namespace qdesigner_internal {
 class ZoomSettingsWidget : public QGroupBox {
     Q_DISABLE_COPY(ZoomSettingsWidget)
 public:
-    explicit ZoomSettingsWidget(QWidget *parent = Q_NULLPTR);
+    explicit ZoomSettingsWidget(QWidget *parent = nullptr);
 
     void fromSettings(const QDesignerSharedSettings &s);
     void toSettings(QDesignerSharedSettings &s) const;

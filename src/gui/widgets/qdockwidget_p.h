@@ -112,7 +112,7 @@ class Q_GUI_EXPORT QDockWidgetLayout : public QLayout
 {
     Q_OBJECT
 public:
-    QDockWidgetLayout(QWidget *parent = Q_NULLPTR);
+    QDockWidgetLayout(QWidget *parent = nullptr);
     ~QDockWidgetLayout();
     void addItem(QLayoutItem *item);
     QLayoutItem *itemAt(int index) const;

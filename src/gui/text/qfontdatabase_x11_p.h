@@ -952,7 +952,7 @@ static QFontEngine *tryPatternLoad(FcPattern *match, int screen,
     FM_DEBUG("passes charset test\n");
 
     if (!match) // probably no fonts available.
-        return Q_NULLPTR;
+        return nullptr;
 
     if (script != QUnicodeTables::Common) {
         // skip font if it doesn't support the language we want
@@ -968,9 +968,9 @@ special_char:
             // need to check the charset, as the langset doesn't work for some scripts
             FcCharSet *cs;
             if (FcPatternGetCharSet(match, FC_CHARSET, 0, &cs) != FcResultMatch)
-                return Q_NULLPTR;
+                return nullptr;
             if (!FcCharSetHasChar(cs, specialCharsTbl[script]))
-                return Q_NULLPTR;
+                return nullptr;
         }
     }
 
@@ -984,7 +984,7 @@ special_char:
     if (engine->invalid()) {
         FM_DEBUG("   --> invalid!\n");
         delete engine;
-        engine = Q_NULLPTR;
+        engine = nullptr;
     }
     return engine;
 }
@@ -1077,7 +1077,7 @@ static FcPattern *queryFont(const FcChar8 *file, const QByteArray &data, int id,
     extern FT_Library qt_getFreetype();
     FT_Library lib = qt_getFreetype();
 
-    FcPattern *pattern = Q_NULLPTR;
+    FcPattern *pattern = nullptr;
 
     FT_Face face;
     if (!FT_New_Memory_Face(lib, (const FT_Byte *)data.constData(), data.size(), id, &face)) {
@@ -1196,7 +1196,7 @@ static void registerFont(QFontDatabasePrivate::ApplicationFont *fnt)
 
         int n = 0;
         for (int i = 0; ; i++) {
-            FcChar8 *familylang = Q_NULLPTR;
+            FcChar8 *familylang = nullptr;
             if (FcPatternGetString(pattern, FC_FAMILYLANG, i, &familylang) != FcResultMatch)
                 break;
             QString familyLang = QString::fromUtf8((const char *) familylang);
@@ -1206,7 +1206,7 @@ static void registerFont(QFontDatabasePrivate::ApplicationFont *fnt)
             }
         }
 
-        FcChar8 *fam = Q_NULLPTR;
+        FcChar8 *fam = nullptr;
         if (FcPatternGetString(pattern, FC_FAMILY, n, &fam) == FcResultMatch) {
             families << QString::fromUtf8(reinterpret_cast<const char *>(fam));
         }

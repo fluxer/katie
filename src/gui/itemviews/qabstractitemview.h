@@ -101,7 +101,7 @@ public:
         ScrollPerPixel
     };
 
-    explicit QAbstractItemView(QWidget *parent = Q_NULLPTR);
+    explicit QAbstractItemView(QWidget *parent = nullptr);
     ~QAbstractItemView();
 
     virtual void setModel(QAbstractItemModel *model);
@@ -241,7 +241,7 @@ Q_SIGNALS:
     void viewportEntered();
 
 protected:
-    QAbstractItemView(QAbstractItemViewPrivate &, QWidget *parent = Q_NULLPTR);
+    QAbstractItemView(QAbstractItemViewPrivate &, QWidget *parent = nullptr);
 
     void setHorizontalStepsPerItem(int steps);
     int horizontalStepsPerItem() const;

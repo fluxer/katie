@@ -32,7 +32,7 @@ class PingerServer : public QDBusServer
     Q_OBJECT
     Q_CLASSINFO("D-Bus Interface", "com.trolltech.autotests.qpinger")
 public:
-    PingerServer(QString addr = "unix:tmpdir=/tmp", QObject *parent = Q_NULLPTR)
+    PingerServer(QString addr = "unix:tmpdir=/tmp", QObject *parent = nullptr)
         : QDBusServer(addr, parent),
           m_conn("none")
     {

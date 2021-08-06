@@ -33,7 +33,7 @@ QT_BEGIN_NAMESPACE
 class QScriptErrorLogWidgetOutputEdit : public QTextEdit
 {
 public:
-    QScriptErrorLogWidgetOutputEdit(QWidget *parent = Q_NULLPTR)
+    QScriptErrorLogWidgetOutputEdit(QWidget *parent = nullptr)
         : QTextEdit(parent)
     {
         setReadOnly(true);

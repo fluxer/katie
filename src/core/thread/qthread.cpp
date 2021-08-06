@@ -40,7 +40,7 @@ QT_BEGIN_NAMESPACE
 
 QThreadData::QThreadData()
     : quitNow(false), canWait(true), isAdopted(false), loopLevel(0),
-    thread(Q_NULLPTR), eventDispatcher(Q_NULLPTR), _ref(1)
+    thread(nullptr), eventDispatcher(nullptr), _ref(1)
 {
     // fprintf(stderr, "QThreadData %p created\n", this);
 }
@@ -50,7 +50,7 @@ QThreadData::~QThreadData()
     Q_ASSERT(_ref == 0);
 
     delete thread;
-    thread = Q_NULLPTR;
+    thread = nullptr;
 
     for (int i = 0; i < postEventList.size(); ++i) {
         const QPostEvent &pe = postEventList.at(i);
@@ -366,7 +366,7 @@ QThread::~QThread()
     if (Q_UNLIKELY(d->running && !d->finished && !d->data->isAdopted))
         qWarning("QThread: Destroyed while thread is still running");
 
-    d->data->thread = Q_NULLPTR;
+    d->data->thread = nullptr;
 }
 
 /*!
@@ -670,7 +670,7 @@ QThread::Priority QThread::priority() const
 #else // QT_NO_THREAD
 
 QThread::QThread(QObject *parent)
-    : QObject(*(new QThreadPrivate), Q_NULLPTR){
+    : QObject(*(new QThreadPrivate), nullptr){
     Q_D(QThread);
     d->data->thread = this;
 }
@@ -680,13 +680,13 @@ QThread *QThread::currentThread()
     return QThreadData::current()->thread;
 }
 
-static QThreadData *currentdata = Q_NULLPTR;
+static QThreadData *currentdata = nullptr;
 
 QThreadData* QThreadData::current()
 {
     if (!currentdata) {
         QScopedPointer<QThreadData> newdata(new QThreadData());
-        newdata->thread = Q_NULLPTR; // new QAdoptedThread(newdata.data());
+        newdata->thread = nullptr; // new QAdoptedThread(newdata.data());
         currentdata = newdata.take();
         currentdata->deref();
     }

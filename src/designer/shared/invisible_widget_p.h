@@ -43,7 +43,7 @@ class Q_DESIGNER_EXPORT InvisibleWidget: public QWidget
 {
     Q_OBJECT
 public:
-    InvisibleWidget(QWidget *parent = Q_NULLPTR);
+    InvisibleWidget(QWidget *parent = nullptr);
 };
 
 } // namespace qdesigner_internal

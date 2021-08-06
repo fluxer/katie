@@ -253,7 +253,7 @@ void Identifier::checkSameIdentifierTable(JSGlobalData* globalData)
 #endif
 
 
-thread_local ThreadIdentifierTableData* g_identifierTableSpecific = Q_NULLPTR;
+thread_local ThreadIdentifierTableData* g_identifierTableSpecific = nullptr;
 
 IdentifierTable* defaultIdentifierTable()
 {

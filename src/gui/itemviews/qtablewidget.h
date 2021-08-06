@@ -193,8 +193,8 @@ class Q_GUI_EXPORT QTableWidget : public QTableView
 
     friend class QTableModel;
 public:
-    explicit QTableWidget(QWidget *parent = Q_NULLPTR);
-    QTableWidget(int rows, int columns, QWidget *parent = Q_NULLPTR);
+    explicit QTableWidget(QWidget *parent = nullptr);
+    QTableWidget(int rows, int columns, QWidget *parent = nullptr);
     ~QTableWidget();
 
     void setRowCount(int rows);

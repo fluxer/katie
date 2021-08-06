@@ -42,7 +42,7 @@ class QStackedWidgetContainer: public QObject, public QDesignerContainerExtensio
     Q_OBJECT
     Q_INTERFACES(QDesignerContainerExtension)
 public:
-    explicit QStackedWidgetContainer(QStackedWidget *widget, QObject *parent = Q_NULLPTR);
+    explicit QStackedWidgetContainer(QStackedWidget *widget, QObject *parent = nullptr);
 
     virtual int count() const { return m_widget->count(); }
     virtual QWidget *widget(int index) const { return m_widget->widget(index); }
@@ -64,7 +64,7 @@ class QTabWidgetContainer: public QObject, public QDesignerContainerExtension
     Q_OBJECT
     Q_INTERFACES(QDesignerContainerExtension)
 public:
-    explicit QTabWidgetContainer(QTabWidget *widget, QObject *parent = Q_NULLPTR);
+    explicit QTabWidgetContainer(QTabWidget *widget, QObject *parent = nullptr);
 
     virtual int count() const { return m_widget->count(); }
     virtual QWidget *widget(int index) const { return m_widget->widget(index); }
@@ -86,7 +86,7 @@ class QToolBoxContainer: public QObject, public QDesignerContainerExtension
     Q_OBJECT
     Q_INTERFACES(QDesignerContainerExtension)
 public:
-    explicit QToolBoxContainer(QToolBox *widget, QObject *parent = Q_NULLPTR);
+    explicit QToolBoxContainer(QToolBox *widget, QObject *parent = nullptr);
 
     virtual int count() const { return m_widget->count(); }
     virtual QWidget *widget(int index) const { return m_widget->widget(index); }
@@ -169,7 +169,7 @@ class QScrollAreaContainer: public QObject, public SingleChildContainer<QScrollA
     Q_OBJECT
     Q_INTERFACES(QDesignerContainerExtension)
 public:
-    explicit QScrollAreaContainer(QScrollArea *widget, QObject *parent = Q_NULLPTR);
+    explicit QScrollAreaContainer(QScrollArea *widget, QObject *parent = nullptr);
 };
 
 // --------------- QDockWidgetContainer
@@ -178,7 +178,7 @@ class QDockWidgetContainer: public QObject, public SingleChildContainer<QDockWid
     Q_OBJECT
     Q_INTERFACES(QDesignerContainerExtension)
 public:
-    explicit QDockWidgetContainer(QDockWidget *widget, QObject *parent = Q_NULLPTR);
+    explicit QDockWidgetContainer(QDockWidget *widget, QObject *parent = nullptr);
 };
 
 typedef ExtensionFactory<QDesignerContainerExtension, QStackedWidget, QStackedWidgetContainer> QDesignerStackedWidgetContainerFactory;

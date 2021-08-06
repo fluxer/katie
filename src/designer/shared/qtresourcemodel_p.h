@@ -76,7 +76,7 @@ class Q_DESIGNER_EXPORT QtResourceModel : public QObject // one instance per who
 {
     Q_OBJECT
 public:
-    QtResourceModel(QObject *parent = Q_NULLPTR);
+    QtResourceModel(QObject *parent = nullptr);
     ~QtResourceModel();
 
     QStringList loadedQrcFiles() const;

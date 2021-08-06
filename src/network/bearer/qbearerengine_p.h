@@ -57,7 +57,7 @@ class Q_NETWORK_EXPORT QBearerEngine : public QObject
     friend class QNetworkConfigurationManagerPrivate;
 
 public:
-    explicit QBearerEngine(QObject *parent = Q_NULLPTR);
+    explicit QBearerEngine(QObject *parent = nullptr);
     virtual ~QBearerEngine();
 
     virtual bool hasIdentifier(const QString &id) const = 0;

@@ -35,7 +35,7 @@ class SpacerPropertySheet: public QDesignerPropertySheet
     Q_OBJECT
     Q_INTERFACES(QDesignerPropertySheetExtension)
 public:
-    explicit SpacerPropertySheet(Spacer *object, QObject *parent = Q_NULLPTR);
+    explicit SpacerPropertySheet(Spacer *object, QObject *parent = nullptr);
     virtual ~SpacerPropertySheet();
 
     virtual void setProperty(int index, const QVariant &value);

@@ -154,7 +154,7 @@ public:
         uchar *address;
     };
 
-    virtual bool extension(Extension extension, const ExtensionOption *option = Q_NULLPTR, ExtensionReturn *output = Q_NULLPTR);
+    virtual bool extension(Extension extension, const ExtensionOption *option = nullptr, ExtensionReturn *output = nullptr);
     virtual bool supportsExtension(Extension extension) const;
 
     // Factory

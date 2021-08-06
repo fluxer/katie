@@ -70,7 +70,7 @@ int qFindByteArray(
 char* qstrdup(const char *src)
 {
     if (!src)
-        return Q_NULLPTR;
+        return nullptr;
     char *dst = new char[strlen(src) + 1];
     return strcpy(dst, src);
 }
@@ -90,7 +90,7 @@ char* qstrdup(const char *src)
 char* qstrcpy(char *dst, const char *src)
 {
     if (!src)
-        return Q_NULLPTR;
+        return nullptr;
     return strcpy(dst, src);
 }
 
@@ -116,7 +116,7 @@ char* qstrcpy(char *dst, const char *src)
 char* qstrncpy(char *dst, const char *src, uint len)
 {
     if (!src || !dst)
-        return Q_NULLPTR;
+        return nullptr;
     strncpy(dst, src, len);
     if (len > 0)
         dst[len-1] = '\0';

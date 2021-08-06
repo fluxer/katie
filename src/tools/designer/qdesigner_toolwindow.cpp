@@ -142,7 +142,7 @@ QRect QDesignerToolWindow::availableToolWindowGeometry() const
 
 //  ---------------------- PropertyEditorToolWindow
 
-static inline QWidget *createPropertyEditor(QDesignerFormEditorInterface *core, QWidget *parent = Q_NULLPTR)
+static inline QWidget *createPropertyEditor(QDesignerFormEditorInterface *core, QWidget *parent = nullptr)
 {
     QDesignerPropertyEditorInterface *widget = QDesignerComponents::createPropertyEditor(core, parent);
     core->setPropertyEditor(widget);
@@ -199,7 +199,7 @@ void PropertyEditorToolWindow::showEvent(QShowEvent *event)
 
 //  ---------------------- ActionEditorToolWindow
 
-static inline QWidget *createActionEditor(QDesignerFormEditorInterface *core, QWidget *parent = Q_NULLPTR)
+static inline QWidget *createActionEditor(QDesignerFormEditorInterface *core, QWidget *parent = nullptr)
 {
     QDesignerActionEditorInterface *widget = QDesignerComponents::createActionEditor(core, parent);
     core->setActionEditor(widget);
@@ -241,7 +241,7 @@ QRect ActionEditorToolWindow::geometryHint() const
 
 //  ---------------------- ObjectInspectorToolWindow
 
-static inline QWidget *createObjectInspector(QDesignerFormEditorInterface *core, QWidget *parent = Q_NULLPTR)
+static inline QWidget *createObjectInspector(QDesignerFormEditorInterface *core, QWidget *parent = nullptr)
 {
     QDesignerObjectInspectorInterface *widget = QDesignerComponents::createObjectInspector(core, parent);
     core->setObjectInspector(widget);
@@ -351,7 +351,7 @@ QRect SignalSlotEditorToolWindow::geometryHint() const
 
 //  ---------------------- WidgetBoxToolWindow
 
-static inline QWidget *createWidgetBox(QDesignerFormEditorInterface *core, QWidget *parent = Q_NULLPTR)
+static inline QWidget *createWidgetBox(QDesignerFormEditorInterface *core, QWidget *parent = nullptr)
 {
     QDesignerWidgetBoxInterface *widget = QDesignerComponents::createWidgetBox(core, parent);
     core->setWidgetBox(widget);

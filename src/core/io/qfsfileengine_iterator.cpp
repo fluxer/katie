@@ -30,7 +30,7 @@ QT_BEGIN_NAMESPACE
 
 QFSFileEngineIterator::QFSFileEngineIterator(QDir::Filters filters, const QStringList &filterNames)
     : QAbstractFileEngineIterator(filters, filterNames)
-    , nativeIterator(Q_NULLPTR)
+    , nativeIterator(nullptr)
     , done(false)
 {
 }
@@ -70,7 +70,7 @@ void QFSFileEngineIterator::advance() const
     } else {
         done = true;
         delete nativeIterator;
-        nativeIterator = Q_NULLPTR;
+        nativeIterator = nullptr;
     }
 }
 

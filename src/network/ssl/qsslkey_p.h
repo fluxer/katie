@@ -47,9 +47,9 @@ class QSslKeyPrivate
 public:
     inline QSslKeyPrivate()
         : isNull(true)
-        , rsa(Q_NULLPTR)
-        , dsa(Q_NULLPTR)
-        , dh(Q_NULLPTR)
+        , rsa(nullptr)
+        , dsa(nullptr)
+        , dh(nullptr)
     {
     }
 

@@ -35,10 +35,10 @@ class Q_CORE_EXPORT QModelIndex
     friend class QAbstractItemModel;
     friend class QProxyModel;
 public:
-    inline QModelIndex() : r(-1), c(-1), p(Q_NULLPTR), m(Q_NULLPTR) {}
+    inline QModelIndex() : r(-1), c(-1), p(nullptr), m(nullptr) {}
     inline QModelIndex(const QModelIndex &other)
         : r(other.r), c(other.c), p(other.p), m(other.m) {}
-    inline ~QModelIndex() { p = Q_NULLPTR; m = Q_NULLPTR; }
+    inline ~QModelIndex() { p = nullptr; m = nullptr; }
     inline int row() const { return r; }
     inline int column() const { return c; }
     inline void *internalPointer() const { return p; }
@@ -49,7 +49,7 @@ public:
     inline QVariant data(int role = Qt::DisplayRole) const;
     inline Qt::ItemFlags flags() const;
     inline const QAbstractItemModel *model() const { return m; }
-    inline bool isValid() const { return (r >= 0) && (c >= 0) && (m != Q_NULLPTR); }
+    inline bool isValid() const { return (r >= 0) && (c >= 0) && (m != nullptr); }
     inline bool operator==(const QModelIndex &other) const
         { return (other.r == r) && (other.p == p) && (other.c == c) && (other.m == m); }
     inline bool operator!=(const QModelIndex &other) const
@@ -140,7 +140,7 @@ class Q_CORE_EXPORT QAbstractItemModel : public QObject
     friend class QIdentityProxyModel;
 public:
 
-    explicit QAbstractItemModel(QObject *parent = Q_NULLPTR);
+    explicit QAbstractItemModel(QObject *parent = nullptr);
     virtual ~QAbstractItemModel();
 
     bool hasIndex(int row, int column, const QModelIndex &parent = QModelIndex()) const;
@@ -240,9 +240,9 @@ public Q_SLOTS:
     virtual void revert();
 
 protected:
-    QAbstractItemModel(QAbstractItemModelPrivate &dd, QObject *parent = Q_NULLPTR);
+    QAbstractItemModel(QAbstractItemModelPrivate &dd, QObject *parent = nullptr);
 
-    inline QModelIndex createIndex(int row, int column, void *data = Q_NULLPTR) const;
+    inline QModelIndex createIndex(int row, int column, void *data = nullptr) const;
     inline QModelIndex createIndex(int row, int column, int id) const;
     inline QModelIndex createIndex(int row, int column, quint32 id) const;
 
@@ -308,7 +308,7 @@ class Q_CORE_EXPORT QAbstractTableModel : public QAbstractItemModel
     Q_OBJECT
 
 public:
-    explicit QAbstractTableModel(QObject *parent = Q_NULLPTR);
+    explicit QAbstractTableModel(QObject *parent = nullptr);
     ~QAbstractTableModel();
 
     QModelIndex index(int row, int column, const QModelIndex &parent = QModelIndex()) const;
@@ -328,7 +328,7 @@ class Q_CORE_EXPORT QAbstractListModel : public QAbstractItemModel
     Q_OBJECT
 
 public:
-    explicit QAbstractListModel(QObject *parent = Q_NULLPTR);
+    explicit QAbstractListModel(QObject *parent = nullptr);
     ~QAbstractListModel();
 
     QModelIndex index(int row, int column = 0, const QModelIndex &parent = QModelIndex()) const;

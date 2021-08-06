@@ -51,8 +51,8 @@ public:
         FitInView
     };
 
-    explicit QPrintPreviewWidget(QPrinter *printer, QWidget *parent = Q_NULLPTR, Qt::WindowFlags flags = 0);
-    explicit QPrintPreviewWidget(QWidget *parent = Q_NULLPTR, Qt::WindowFlags flags = 0);
+    explicit QPrintPreviewWidget(QPrinter *printer, QWidget *parent = nullptr, Qt::WindowFlags flags = 0);
+    explicit QPrintPreviewWidget(QWidget *parent = nullptr, Qt::WindowFlags flags = 0);
     ~QPrintPreviewWidget();
 
     qreal zoomFactor() const;

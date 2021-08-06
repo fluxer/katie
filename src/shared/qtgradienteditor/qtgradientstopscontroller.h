@@ -32,7 +32,7 @@ class QtGradientStopsController : public QObject
 {
     Q_OBJECT
 public:
-    QtGradientStopsController(QObject *parent = Q_NULLPTR);
+    QtGradientStopsController(QObject *parent = nullptr);
     ~QtGradientStopsController();
 
     void setUi(Ui_QtGradientEditor *editor);

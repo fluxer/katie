@@ -280,7 +280,7 @@ class Q_DESIGNER_EXPORT DesignerPixmapCache : public QObject
 {
     Q_OBJECT
 public:
-    DesignerPixmapCache(QObject *parent = Q_NULLPTR);
+    DesignerPixmapCache(QObject *parent = nullptr);
     QPixmap pixmap(const PropertySheetPixmapValue &value) const;
     void clear();
 signals:
@@ -294,7 +294,7 @@ class Q_DESIGNER_EXPORT DesignerIconCache : public QObject
 {
     Q_OBJECT
 public:
-    explicit DesignerIconCache(DesignerPixmapCache *pixmapCache, QObject *parent = Q_NULLPTR);
+    explicit DesignerIconCache(DesignerPixmapCache *pixmapCache, QObject *parent = nullptr);
     QIcon icon(const PropertySheetIconValue &value) const;
     void clear();
 signals:

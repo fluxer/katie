@@ -456,7 +456,7 @@ bool QPixmapIconEngine::write(QDataStream &out) const
   Constructs a null icon.
 */
 QIcon::QIcon()
-    : d(Q_NULLPTR)
+    : d(nullptr)
 {
 }
 
@@ -464,7 +464,7 @@ QIcon::QIcon()
   Constructs an icon from a \a pixmap.
  */
 QIcon::QIcon(const QPixmap &pixmap)
-    : d(Q_NULLPTR)
+    : d(nullptr)
 {
     addPixmap(pixmap);
 }
@@ -498,7 +498,7 @@ QIcon::QIcon(const QIcon &other)
     complete list of the supported file formats.
 */
 QIcon::QIcon(const QString &fileName)
-    : d(Q_NULLPTR)
+    : d(nullptr)
 {
     addFile(fileName);
 }

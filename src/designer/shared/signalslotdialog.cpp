@@ -113,7 +113,7 @@ namespace {
     // on closing (adds missing parentheses).
     class SignatureDelegate : public QItemDelegate {
     public:
-        SignatureDelegate(QObject *parent = Q_NULLPTR);
+        SignatureDelegate(QObject *parent = nullptr);
         virtual QWidget *createEditor (QWidget *parent, const QStyleOptionViewItem &option, const QModelIndex &index ) const;
         virtual void setModelData (QWidget *editor, QAbstractItemModel *model, const QModelIndex &index) const;
 

@@ -1619,7 +1619,7 @@ QVariant::QVariant(const char *val)
 */
 
 QVariant::QVariant(Type type)
-{ create(type, Q_NULLPTR); }
+{ create(type, nullptr); }
 QVariant::QVariant(int typeOrUserType, const void *copy)
 { create(typeOrUserType, copy); d.is_null = false; }
 
@@ -1823,7 +1823,7 @@ void QVariant::clear()
 const char *QVariant::typeToName(Type typ)
 {
     if (typ == Invalid)
-        return Q_NULLPTR;
+        return nullptr;
     if (typ == UserType)
         return "UserType";
 
@@ -1870,7 +1870,7 @@ void QVariant::load(QDataStream &s)
             return;
         }
     }
-    create(static_cast<int>(u), Q_NULLPTR);
+    create(static_cast<int>(u), nullptr);
     d.is_null = is_null;
 
     if (!isValid()) {
@@ -1979,7 +1979,7 @@ inline T qVariantToHelper(const QVariant::Private &d, QVariant::Type t,
         return *v_cast<T>(&d);
 
     T ret;
-    handler->convert(&d, t, &ret, Q_NULLPTR);
+    handler->convert(&d, t, &ret, nullptr);
     return ret;
 }
 
@@ -2400,7 +2400,7 @@ bool QVariant::toBool() const
         return d.data.b;
 
     bool res = false;
-    handler->convert(&d, Bool, &res, Q_NULLPTR);
+    handler->convert(&d, Bool, &res, nullptr);
 
     return res;
 }
@@ -2907,7 +2907,7 @@ bool QVariant::convert(Type t)
     if (!oldValue.canConvert(t))
         return false;
 
-    create(t, Q_NULLPTR);
+    create(t, nullptr);
     if (oldValue.isNull())
         return false;
 

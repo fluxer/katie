@@ -112,7 +112,7 @@ void QFormBuilderExtra::applyInternalProperties() const
 bool QFormBuilderExtra::applyBuddy(const QString &buddyName, BuddyMode applyMode, QLabel *label)
 {
     if (buddyName.isEmpty()) {
-        label->setBuddy(Q_NULLPTR);
+        label->setBuddy(nullptr);
         return false;
     }
 
@@ -124,7 +124,7 @@ bool QFormBuilderExtra::applyBuddy(const QString &buddyName, BuddyMode applyMode
         }
     }
 
-    label->setBuddy(Q_NULLPTR);
+    label->setBuddy(nullptr);
     return false;
 }
 

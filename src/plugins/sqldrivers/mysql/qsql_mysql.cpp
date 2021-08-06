@@ -47,11 +47,11 @@ QT_BEGIN_NAMESPACE
 class QMYSQLDriverPrivate
 {
 public:
-    QMYSQLDriverPrivate() : mysql(Q_NULLPTR),
+    QMYSQLDriverPrivate() : mysql(nullptr),
 #ifndef QT_NO_TEXTCODEC
         tc(QTextCodec::codecForLocale())
 #else
-        tc(Q_NULLPTR)
+        tc(nullptr)
 #endif
         { }
     MYSQL *mysql;
@@ -132,9 +132,9 @@ class QMYSQLResultPrivate : public QObject
 {
     Q_OBJECT
 public:
-    QMYSQLResultPrivate(const QMYSQLDriver* dp, const QMYSQLResult* d) : driver(dp), result(Q_NULLPTR),
+    QMYSQLResultPrivate(const QMYSQLDriver* dp, const QMYSQLResult* d) : driver(dp), result(nullptr),
         q(d), rowsAffected(0), hasBlobs(false)
-        , stmt(Q_NULLPTR), meta(Q_NULLPTR), inBinds(Q_NULLPTR), outBinds(Q_NULLPTR)
+        , stmt(nullptr), meta(nullptr), inBinds(nullptr), outBinds(nullptr)
         , preparedQuery(false)
         {
             connect(dp, SIGNAL(destroyed()), this, SLOT(driverDestroyed()));
@@ -154,8 +154,8 @@ public:
     struct QMyField
     {
         QMyField()
-            : outField(Q_NULLPTR), nullIndicator(false), bufLength(0ul),
-              myField(Q_NULLPTR), type(QVariant::Invalid)
+            : outField(nullptr), nullIndicator(false), bufLength(0ul),
+              myField(nullptr), type(QVariant::Invalid)
         {}
         char *outField;
         my_bool nullIndicator;
@@ -710,7 +710,7 @@ bool QMYSQLResult::nextResult()
 
     if (d->result && isSelect())
         mysql_free_result(d->result);
-    d->result = Q_NULLPTR;
+    d->result = nullptr;
     setSelect(false);
    
     for (int i = 0; i < d->fields.count(); ++i)
@@ -995,9 +995,9 @@ static inline void qLibraryInit()
         return;
 
 # if MYSQL_VERSION_ID < 50000 || MYSQL_VERSION_ID >= 50003
-    if (mysql_library_init(0, Q_NULLPTR, Q_NULLPTR)) {
+    if (mysql_library_init(0, nullptr, nullptr)) {
 # else
-    if (mysql_server_init(0, Q_NULLPTR, Q_NULLPTR)) {
+    if (mysql_server_init(0, nullptr, nullptr)) {
 # endif
         qWarning("QMYSQLDriver::qServerInit: unable to start server.");
     }
@@ -1134,7 +1134,7 @@ bool QMYSQLDriver::open(const QString& db,
         }
     }
 
-    if ((d->mysql = mysql_init(Q_NULLPTR)) &&
+    if ((d->mysql = mysql_init(nullptr)) &&
             mysql_real_connect(d->mysql,
                                host.isNull() ? static_cast<const char *>(0)
                                              : host.toLocal8Bit().constData(),
@@ -1190,7 +1190,7 @@ void QMYSQLDriver::close()
     if (isOpen()) {
         mysql_thread_end();
         mysql_close(d->mysql);
-        d->mysql = Q_NULLPTR;
+        d->mysql = nullptr;
         setOpen(false);
         setOpenError(false);
     }

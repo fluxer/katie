@@ -68,9 +68,9 @@ class Q_GUI_EXPORT QTextControl : public QObject
     Q_PROPERTY(bool openExternalLinks READ openExternalLinks WRITE setOpenExternalLinks)
     Q_PROPERTY(bool ignoreUnusedNavigationEvents READ ignoreUnusedNavigationEvents WRITE setIgnoreUnusedNavigationEvents)
 public:
-    explicit QTextControl(QObject *parent = Q_NULLPTR);
-    explicit QTextControl(const QString &text, QObject *parent = Q_NULLPTR);
-    explicit QTextControl(QTextDocument *doc, QObject *parent = Q_NULLPTR);
+    explicit QTextControl(QObject *parent = nullptr);
+    explicit QTextControl(const QString &text, QObject *parent = nullptr);
+    explicit QTextControl(QTextDocument *doc, QObject *parent = nullptr);
     virtual ~QTextControl();
 
     void setDocument(QTextDocument *document);

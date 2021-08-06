@@ -48,8 +48,8 @@ private:
     Q_PROPERTY(bool separatorsCollapsible READ separatorsCollapsible WRITE setSeparatorsCollapsible)
 
 public:
-    explicit QMenu(QWidget *parent = Q_NULLPTR);
-    explicit QMenu(const QString &title, QWidget *parent = Q_NULLPTR);
+    explicit QMenu(QWidget *parent = nullptr);
+    explicit QMenu(const QString &title, QWidget *parent = nullptr);
     ~QMenu();
 
 #ifdef Q_NO_USING_KEYWORD
@@ -86,12 +86,12 @@ public:
     void setActiveAction(QAction *act);
     QAction *activeAction() const;
 
-    void popup(const QPoint &pos, QAction *at = Q_NULLPTR);
+    void popup(const QPoint &pos, QAction *at = nullptr);
     QAction *exec();
-    QAction *exec(const QPoint &pos, QAction *at = Q_NULLPTR);
+    QAction *exec(const QPoint &pos, QAction *at = nullptr);
 
     static QAction *exec(const QList<QAction*> &actions, const QPoint &pos,
-            QAction *at = Q_NULLPTR, QWidget *parent = Q_NULLPTR);
+            QAction *at = nullptr, QWidget *parent = nullptr);
 
     QSize sizeHint() const;
 
@@ -147,7 +147,7 @@ private:
 
 
 protected:
-    QMenu(QMenuPrivate &dd, QWidget* parent = Q_NULLPTR);
+    QMenu(QMenuPrivate &dd, QWidget* parent = nullptr);
 
 private:
     Q_DISABLE_COPY(QMenu)

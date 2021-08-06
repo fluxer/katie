@@ -49,7 +49,7 @@ class Q_DESIGNER_EXPORT QDesignerFormWindowManager
 {
     Q_OBJECT
 public:
-    explicit QDesignerFormWindowManager(QObject *parent = Q_NULLPTR);
+    explicit QDesignerFormWindowManager(QObject *parent = nullptr);
     virtual ~QDesignerFormWindowManager();
 
     virtual QAction *actionDefaultPreview() const;

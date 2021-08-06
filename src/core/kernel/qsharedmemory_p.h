@@ -75,7 +75,7 @@ public:
     {
         if (q_sm && q_sm->lock())
             return true;
-        q_sm = Q_NULLPTR;
+        q_sm = nullptr;
         return false;
     }
 

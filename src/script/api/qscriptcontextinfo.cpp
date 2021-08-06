@@ -210,7 +210,7 @@ QScriptContextInfoPrivate::~QScriptContextInfoPrivate()
   previously created QScriptContextInfo.
 */
 QScriptContextInfo::QScriptContextInfo(const QScriptContext *context)
-    : d_ptr(Q_NULLPTR)
+    : d_ptr(nullptr)
 {
     if (context) {
         d_ptr = new QScriptContextInfoPrivate(context);
@@ -231,7 +231,7 @@ QScriptContextInfo::QScriptContextInfo(const QScriptContextInfo &other)
   \sa isNull()
 */
 QScriptContextInfo::QScriptContextInfo()
-    : d_ptr(Q_NULLPTR)
+    : d_ptr(nullptr)
 {
 }
 

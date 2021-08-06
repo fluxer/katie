@@ -101,7 +101,7 @@ QStyle *QStyleFactory::create(const QString& key)
         }
     }
 #endif
-    return Q_NULLPTR;
+    return nullptr;
 }
 
 /*!

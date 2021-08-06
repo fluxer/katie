@@ -55,7 +55,7 @@ void QDBusConnectionManager::setSender(const QDBusConnectionPrivate *s)
 
 QDBusConnectionPrivate *QDBusConnectionManager::connection(const QString &name) const
 {
-    return connectionHash.value(name, Q_NULLPTR);
+    return connectionHash.value(name, nullptr);
 }
 
 void QDBusConnectionManager::removeConnection(const QString &name)
@@ -571,10 +571,10 @@ QDBusMessage QDBusConnection::call(const QDBusMessage &message, QDBus::CallMode 
 QDBusPendingCall QDBusConnection::asyncCall(const QDBusMessage &message, int timeout) const
 {
     if (Q_UNLIKELY(!d || !d->connection)) {
-        return QDBusPendingCall(Q_NULLPTR); // null pointer -> disconnected
+        return QDBusPendingCall(nullptr); // null pointer -> disconnected
     }
 
-    QDBusPendingCallPrivate *priv = d->sendWithReplyAsync(message, Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, timeout);
+    QDBusPendingCallPrivate *priv = d->sendWithReplyAsync(message, nullptr, nullptr, nullptr, timeout);
     return QDBusPendingCall(priv);
 }
 

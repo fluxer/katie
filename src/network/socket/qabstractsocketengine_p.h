@@ -66,7 +66,7 @@ public:
     static QAbstractSocketEngine *createSocketEngine(QAbstractSocket::SocketType socketType, const QNetworkProxy &, QObject *parent);
     static QAbstractSocketEngine *createSocketEngine(int socketDescripter, QObject *parent);
 
-    QAbstractSocketEngine(QObject *parent = Q_NULLPTR);
+    QAbstractSocketEngine(QObject *parent = nullptr);
 
     enum SocketOption {
         NonBlockingSocketOption,
@@ -161,7 +161,7 @@ public Q_SLOTS:
 public:
     void setReceiver(QAbstractSocketEngineReceiver *receiver);
 protected:
-    QAbstractSocketEngine(QAbstractSocketEnginePrivate &dd, QObject *parent = Q_NULLPTR);
+    QAbstractSocketEngine(QAbstractSocketEnginePrivate &dd, QObject *parent = nullptr);
 
     void setError(QAbstractSocket::SocketError error, const QString &errorString);
     void setState(QAbstractSocket::SocketState state);

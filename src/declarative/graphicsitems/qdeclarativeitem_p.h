@@ -422,7 +422,7 @@ class QDeclarativeLayoutMirroringAttached : public QObject
     Q_PROPERTY(bool childrenInherit READ childrenInherit WRITE setChildrenInherit NOTIFY childrenInheritChanged)
 
 public:
-    explicit QDeclarativeLayoutMirroringAttached(QObject *parent = Q_NULLPTR);
+    explicit QDeclarativeLayoutMirroringAttached(QObject *parent = nullptr);
 
     bool enabled() const;
     void setEnabled(bool);
@@ -445,7 +445,7 @@ class QDeclarativeKeysAttachedPrivate : public QObjectPrivate
 public:
     QDeclarativeKeysAttachedPrivate()
         : QObjectPrivate(), inPress(false), inRelease(false)
-        , enabled(true), item(Q_NULLPTR)
+        , enabled(true), item(nullptr)
     {}
 
     QGraphicsItem *finalFocusProxy(QGraphicsItem *item) const

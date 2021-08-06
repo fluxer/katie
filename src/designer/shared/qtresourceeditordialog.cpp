@@ -264,7 +264,7 @@ class QtQrcManager : public QObject
 {
     Q_OBJECT
 public:
-    QtQrcManager(QObject *parent = Q_NULLPTR);
+    QtQrcManager(QObject *parent = nullptr);
     ~QtQrcManager();
 
     QList<QtQrcFile *> qrcFiles() const;

@@ -172,7 +172,7 @@ void QMotifStyle::timerEvent(QTimerEvent *event)
 
 QMotifStylePrivate::QMotifStylePrivate(bool useHighlightCols)
     : QCommonStylePrivate(),
-    focus(Q_NULLPTR),
+    focus(nullptr),
     highlightCols(useHighlightCols),
 #ifndef QT_NO_PROGRESSBAR
     animationFps(25), animateTimer(0), animateStep(0)

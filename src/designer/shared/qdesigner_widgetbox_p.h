@@ -49,7 +49,7 @@ class Q_DESIGNER_EXPORT QDesignerWidgetBox : public QDesignerWidgetBoxInterface
 public:
     enum LoadMode { LoadMerge, LoadReplace, LoadCustomWidgetsOnly };
 
-    explicit QDesignerWidgetBox(QWidget *parent = Q_NULLPTR, Qt::WindowFlags flags = 0);
+    explicit QDesignerWidgetBox(QWidget *parent = nullptr, Qt::WindowFlags flags = 0);
 
     LoadMode loadMode() const;
     void setLoadMode(LoadMode lm);

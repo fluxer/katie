@@ -188,7 +188,7 @@ public:
     int getDigit(const QDateTime &dt, int index) const;
     bool setDigit(QDateTime &t, int index, int newval) const;
     int parseSection(const QDateTime &currentValue, int sectionIndex, QString &txt, int &cursorPosition,
-                     int index, QDateTimeParser::State &state, int *used = Q_NULLPTR) const;
+                     int index, QDateTimeParser::State &state, int *used = nullptr) const;
     int absoluteMax(int index, const QDateTime &value = QDateTime()) const;
     int absoluteMin(int index) const;
     bool parseFormat(const QString &format);
@@ -198,12 +198,12 @@ public:
 
 #ifndef QT_NO_TEXTDATE
     int findMonth(const QString &str1, int monthstart, int sectionIndex,
-                  QString *monthName = 0, int *used = Q_NULLPTR) const;
+                  QString *monthName = 0, int *used = nullptr) const;
     int findDay(const QString &str1, int intDaystart, int sectionIndex,
                 QString *dayName = 0, int *used = 0) const;
     int findTimeZone(QString str1, const QDateTime &when, int *used = 0) const;
 #endif
-    int findAmPm(QString &str1, int index, int *used = Q_NULLPTR) const;
+    int findAmPm(QString &str1, int index, int *used = nullptr) const;
     int maxChange(int s) const;
     bool potentialValue(const QString &str, int min, int max, int index,
                         const QDateTime &currentValue, int insert) const;

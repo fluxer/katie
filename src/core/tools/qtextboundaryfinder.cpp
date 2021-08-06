@@ -69,12 +69,12 @@ private:
 };
 
 QTextBoundaryFinderPrivate::QTextBoundaryFinderPrivate()
-    : type(QTextBoundaryFinder::Grapheme), pos(0), breakiter(Q_NULLPTR)
+    : type(QTextBoundaryFinder::Grapheme), pos(0), breakiter(nullptr)
 {
 }
 
 QTextBoundaryFinderPrivate::QTextBoundaryFinderPrivate(const QTextBoundaryFinder::BoundaryType type, const QString &text)
-    : type(type), pos(0), string(text), breakiter(Q_NULLPTR)
+    : type(type), pos(0), string(text), breakiter(nullptr)
 {
     if (Q_LIKELY(!string.isEmpty())) {
         UErrorCode error = U_ZERO_ERROR;
@@ -82,7 +82,7 @@ QTextBoundaryFinderPrivate::QTextBoundaryFinderPrivate(const QTextBoundaryFinder
             reinterpret_cast<const UChar*>(string.unicode()), string.size(), &error);
         if (Q_UNLIKELY(U_FAILURE(error))) {
             qWarning("QTextBoundaryFinder::QTextBoundaryFinder: ubrk_open() failed %s", u_errorName(error));
-            breakiter = Q_NULLPTR;
+            breakiter = nullptr;
         }
     }
 }
@@ -184,17 +184,17 @@ QTextBoundaryFinder &QTextBoundaryFinder::operator=(const QTextBoundaryFinder &o
     }
 
     UErrorCode error = U_ZERO_ERROR;
-    d->breakiter = ubrk_safeClone(other.d->breakiter, Q_NULLPTR, Q_NULLPTR, &error);
+    d->breakiter = ubrk_safeClone(other.d->breakiter, nullptr, nullptr, &error);
     if (Q_UNLIKELY(U_FAILURE(error))) {
         qWarning("QTextBoundaryFinder: ubrk_safeClone() failed %s", u_errorName(error));
-        d->breakiter = Q_NULLPTR;
+        d->breakiter = nullptr;
     }
     error = U_ZERO_ERROR;
     ubrk_setText(d->breakiter, reinterpret_cast<const UChar*>(d->string.unicode()), d->string.size(), &error);
     if (Q_UNLIKELY(U_FAILURE(error))) {
         qWarning("QTextBoundaryFinder: ubrk_setText() failed %s", u_errorName(error));
         ubrk_close(d->breakiter);
-        d->breakiter = Q_NULLPTR;
+        d->breakiter = nullptr;
     }
 
     return *this;

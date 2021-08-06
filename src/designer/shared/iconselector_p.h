@@ -58,7 +58,7 @@ class Q_DESIGNER_EXPORT LanguageResourceDialog : public QDialog
 {
     Q_OBJECT
 
-    explicit LanguageResourceDialog(QDesignerResourceBrowserInterface *rb, QWidget *parent = Q_NULLPTR);
+    explicit LanguageResourceDialog(QDesignerResourceBrowserInterface *rb, QWidget *parent = nullptr);
 
 public:
     virtual ~LanguageResourceDialog();
@@ -81,7 +81,7 @@ class Q_DESIGNER_EXPORT IconSelector: public QWidget
 {
     Q_OBJECT
 public:
-    IconSelector(QWidget *parent = Q_NULLPTR);
+    IconSelector(QWidget *parent = nullptr);
     virtual ~IconSelector();
 
     void setFormEditor(QDesignerFormEditorInterface *core); // required for dialog gui.
@@ -121,7 +121,7 @@ class Q_DESIGNER_EXPORT IconThemeEditor : public QWidget
     Q_OBJECT
     Q_PROPERTY(QString theme READ theme WRITE setTheme DESIGNABLE true)
 public:
-    explicit IconThemeEditor(QWidget *parent = Q_NULLPTR, bool wantResetButton = true);
+    explicit IconThemeEditor(QWidget *parent = nullptr, bool wantResetButton = true);
     virtual ~IconThemeEditor();
 
     QString theme() const;

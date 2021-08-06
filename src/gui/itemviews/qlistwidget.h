@@ -177,7 +177,7 @@ class Q_GUI_EXPORT QListWidget : public QListView
     friend class QListWidgetItem;
     friend class QListModel;
 public:
-    explicit QListWidget(QWidget *parent = Q_NULLPTR);
+    explicit QListWidget(QWidget *parent = nullptr);
     ~QListWidget();
 
     QListWidgetItem *item(int row) const;

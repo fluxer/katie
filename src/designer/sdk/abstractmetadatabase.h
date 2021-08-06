@@ -54,7 +54,7 @@ class Q_DESIGNER_EXPORT QDesignerMetaDataBaseInterface: public QObject
 {
     Q_OBJECT
 public:
-    QDesignerMetaDataBaseInterface(QObject *parent = Q_NULLPTR);
+    QDesignerMetaDataBaseInterface(QObject *parent = nullptr);
     virtual ~QDesignerMetaDataBaseInterface();
 
     virtual QDesignerMetaDataBaseItemInterface *item(QObject *object) const = 0;

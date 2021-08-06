@@ -187,7 +187,7 @@ class QGraphicsWidgetStyles
 public:
     QStyle *styleForWidget(const QGraphicsWidget *widget) const
     {
-        return styles.value(widget, Q_NULLPTR);
+        return styles.value(widget, nullptr);
     }
 
     void setStyleForWidget(QGraphicsWidget *widget, QStyle *style)

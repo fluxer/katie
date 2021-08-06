@@ -31,7 +31,7 @@ class QtColorButton : public QToolButton
     Q_OBJECT
     Q_PROPERTY(bool backgroundCheckered READ isBackgroundCheckered WRITE setBackgroundCheckered)
 public:
-    QtColorButton(QWidget *parent = Q_NULLPTR);
+    QtColorButton(QWidget *parent = nullptr);
     ~QtColorButton();
 
     bool isBackgroundCheckered() const;

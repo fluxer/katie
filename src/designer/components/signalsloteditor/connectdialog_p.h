@@ -47,7 +47,7 @@ class ConnectDialog : public QDialog
 {
     Q_OBJECT
 public:
-    ConnectDialog(QDesignerFormWindowInterface *formWindow, QWidget *sender, QWidget *receiver, QWidget *parent = Q_NULLPTR);
+    ConnectDialog(QDesignerFormWindowInterface *formWindow, QWidget *sender, QWidget *receiver, QWidget *parent = nullptr);
 
     QString signal() const;
     QString slot() const;

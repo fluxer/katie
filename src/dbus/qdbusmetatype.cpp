@@ -46,7 +46,7 @@ QT_BEGIN_NAMESPACE
 class QDBusCustomTypeInfo
 {
 public:
-    QDBusCustomTypeInfo() : signature(0, '\0'), marshall(Q_NULLPTR), demarshall(Q_NULLPTR)
+    QDBusCustomTypeInfo() : signature(0, '\0'), marshall(nullptr), demarshall(nullptr)
     { }
 
     // Suggestion:
@@ -397,7 +397,7 @@ const char *QDBusMetaType::typeToSignature(int type)
         QReadLocker locker(customTypesLock());
         QVector<QDBusCustomTypeInfo> *ct = customTypes();
         if (type >= ct->size())
-            return Q_NULLPTR;           // type not registered with us
+            return nullptr;           // type not registered with us
 
         const QDBusCustomTypeInfo &info = ct->at(type);
 
@@ -405,7 +405,7 @@ const char *QDBusMetaType::typeToSignature(int type)
             return info.signature;
 
         if (!info.marshall)
-            return Q_NULLPTR;           // type not registered with us
+            return nullptr;           // type not registered with us
     }
 
     // call to user code to construct the signature type

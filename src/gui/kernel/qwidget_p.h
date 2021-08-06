@@ -300,7 +300,7 @@ public:
     void render(QPaintDevice *target, const QPoint &targetOffset, const QRegion &sourceRegion,
                 QWidget::RenderFlags renderFlags, bool readyToRender);
     void drawWidget(QPaintDevice *pdev, const QRegion &rgn, const QPoint &offset, int flags,
-                    QPainter *sharedPainter = Q_NULLPTR, QWidgetBackingStore *backingStore = Q_NULLPTR);
+                    QPainter *sharedPainter = nullptr, QWidgetBackingStore *backingStore = nullptr);
 
 
     void paintSiblingsRecursive(QPaintDevice *pdev, const QObjectList& children, int index,
@@ -316,7 +316,7 @@ public:
     QRect clipRect() const;
     QRegion clipRegion() const;
     void subtractOpaqueChildren(QRegion &rgn, const QRect &clipRect) const;
-    void subtractOpaqueSiblings(QRegion &source, bool *hasDirtySiblingsAbove = Q_NULLPTR,
+    void subtractOpaqueSiblings(QRegion &source, bool *hasDirtySiblingsAbove = nullptr,
                                 bool alsoNonOpaque = false) const;
     void clipToEffectiveMask(QRegion &region) const;
     void updateIsOpaque();
@@ -370,7 +370,7 @@ public:
     void _q_showIfNotHidden();
 
     void setEnabled_helper(bool);
-    static void adjustFlags(Qt::WindowFlags &flags, QWidget *w = Q_NULLPTR);
+    static void adjustFlags(Qt::WindowFlags &flags, QWidget *w = nullptr);
 
     void updateFrameStrut();
     QRect frameStrut() const;
@@ -398,7 +398,7 @@ public:
 
     void getLayoutItemMargins(int *left, int *top, int *right, int *bottom) const;
     void setLayoutItemMargins(int left, int top, int right, int bottom);
-    void setLayoutItemMargins(QStyle::SubElement element, const QStyleOption *opt = Q_NULLPTR);
+    void setLayoutItemMargins(QStyle::SubElement element, const QStyleOption *opt = nullptr);
 
     inline QWidget *effectiveFocusWidget() {
         QWidget *w = q_func();
@@ -447,7 +447,7 @@ public:
     }
 
     inline void restoreRedirected()
-    { redirectDev = Q_NULLPTR; }
+    { redirectDev = nullptr; }
 
     inline void enforceNativeChildren()
     {
@@ -671,14 +671,14 @@ inline QTLWExtra *QWidgetPrivate::topData() const
 
 inline QTLWExtra *QWidgetPrivate::maybeTopData() const
 {
-    return extra ? extra->topextra : Q_NULLPTR;
+    return extra ? extra->topextra : nullptr;
 }
 
 inline QPainter *QWidgetPrivate::sharedPainter() const
 {
     Q_Q(const QWidget);
     QTLWExtra *x = q->window()->d_func()->maybeTopData();
-    return x ? x->sharedPainter : Q_NULLPTR;
+    return x ? x->sharedPainter : nullptr;
 }
 
 inline void QWidgetPrivate::setSharedPainter(QPainter *painter)
@@ -699,7 +699,7 @@ inline QWidgetBackingStore *QWidgetPrivate::maybeBackingStore() const
 {
     Q_Q(const QWidget);
     QTLWExtra *x = q->window()->d_func()->maybeTopData();
-    return x ? x->backingStore.data() : Q_NULLPTR;
+    return x ? x->backingStore.data() : nullptr;
 }
 
 QT_END_NAMESPACE

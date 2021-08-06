@@ -3080,7 +3080,7 @@ QTouchEvent::TouchPoint &QTouchEvent::TouchPoint::operator=(const QTouchEvent::T
     Creates new QGestureEvent containing a list of \a gestures.
 */
 QGestureEvent::QGestureEvent(const QList<QGesture *> &gestures)
-    : QEvent(QEvent::Gesture), m_gestures(gestures), m_widget(Q_NULLPTR)
+    : QEvent(QEvent::Gesture), m_gestures(gestures), m_widget(nullptr)
 {
 }
 

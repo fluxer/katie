@@ -56,7 +56,7 @@ class QWellArray : public QWidget
     Q_PROPERTY(int selectedRow READ selectedRow)
 
 public:
-    QWellArray(int rows, int cols, QWidget* parent = Q_NULLPTR);
+    QWellArray(int rows, int cols, QWidget* parent = nullptr);
     ~QWellArray() {}
 
     int selectedColumn() const { return selCol; }
@@ -589,7 +589,7 @@ class QColorLuminancePicker : public QWidget
 {
     Q_OBJECT
 public:
-    QColorLuminancePicker(QWidget* parent = Q_NULLPTR);
+    QColorLuminancePicker(QWidget* parent = nullptr);
     ~QColorLuminancePicker();
 
 public slots:

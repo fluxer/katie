@@ -296,7 +296,7 @@ void Generator::generateCode()
             fprintf(out, "    &%s::staticMetaObject,\n", extraList.at(i).constData());
         }
         fprintf(out, "#endif //Q_NO_DATA_RELOCATION\n");
-        fprintf(out, "    Q_NULLPTR\n};\n\n");
+        fprintf(out, "    nullptr\n};\n\n");
     }
 
 //
@@ -308,23 +308,23 @@ void Generator::generateCode()
         fprintf(out, "const QMetaObject %s::staticMetaObject = {\n", cdef->qualified.constData());
 
     if (isQObject)
-        fprintf(out, "    { Q_NULLPTR, ");
+        fprintf(out, "    { nullptr, ");
     else if (cdef->superclassList.size())
         fprintf(out, "    { &%s::staticMetaObject, ", purestSuperClass.constData());
     else
-        fprintf(out, "    { Q_NULLPTR, ");
+        fprintf(out, "    { nullptr, ");
     fprintf(out, "qt_meta_stringdata_%s,\n      qt_meta_data_%s, ",
              qualifiedClassNameIdentifier.constData(), qualifiedClassNameIdentifier.constData());
     if (cdef->hasQObject && !isQt)
         fprintf(out, " qt_static_metacall, ");
     else
-        fprintf(out, " Q_NULLPTR, ");
+        fprintf(out, " nullptr, ");
 
     if (extraList.isEmpty())
-        fprintf(out, "Q_NULLPTR, ");
+        fprintf(out, "nullptr, ");
     else
         fprintf(out, "qt_meta_extradata_%s, ", qualifiedClassNameIdentifier.constData());
-    fprintf(out, "Q_NULLPTR}\n};\n\n");
+    fprintf(out, "nullptr}\n};\n\n");
 
     if(isQt)
         return;
@@ -346,7 +346,7 @@ void Generator::generateCode()
 // Generate smart cast function
 //
     fprintf(out, "\nvoid *%s::qt_metacast(const char *_clname)\n{\n", cdef->qualified.constData());
-    fprintf(out, "    if (!_clname) return Q_NULLPTR;\n");
+    fprintf(out, "    if (!_clname) return nullptr;\n");
     fprintf(out, "    if (!strcmp(_clname, qt_meta_stringdata_%s))\n"
                   "        return static_cast<void*>(this);\n",
             qualifiedClassNameIdentifier.constData());
@@ -370,7 +370,7 @@ void Generator::generateCode()
     if (!purestSuperClass.isEmpty() && !isQObject) {
         fprintf(out, "    return %s::qt_metacast(_clname);\n", purestSuperClass.constData());
     } else {
-        fprintf(out, "    return Q_NULLPTR;\n");
+        fprintf(out, "    return nullptr;\n");
     }
     fprintf(out, "}\n");
 
@@ -923,7 +923,7 @@ void Generator::generateSignal(FunctionDef *def,int index)
 
     if (def->arguments.isEmpty() && def->normalizedType.isEmpty()) {
         fprintf(out, ")%s\n{\n"
-                "    QMetaObject::activate(%s, &staticMetaObject, %d, Q_NULLPTR);\n"
+                "    QMetaObject::activate(%s, &staticMetaObject, %d, nullptr);\n"
                 "}\n", constQualifier, thisPtr.constData(), index);
         return;
     }
@@ -941,7 +941,7 @@ void Generator::generateSignal(FunctionDef *def,int index)
 
     fprintf(out, "    void *_a[] = { ");
     if (def->normalizedType.isEmpty()) {
-        fprintf(out, "Q_NULLPTR");
+        fprintf(out, "nullptr");
     } else {
         if (def->returnTypeIsVolatile)
              fprintf(out, "const_cast<void*>(static_cast<const volatile void*>(&_t0))");

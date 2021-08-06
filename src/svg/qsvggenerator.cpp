@@ -68,7 +68,7 @@ class QSvgPaintEnginePrivate : public QPaintEnginePrivate
 {
 public:
     QSvgPaintEnginePrivate()
-        : outputDevice(Q_NULLPTR),
+        : outputDevice(nullptr),
         resolution(72),
         afterFirstUpdate(false),
         numGradients(0)

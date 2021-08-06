@@ -47,8 +47,8 @@ class Q_GUI_EXPORT QSplitter : public QFrame
     Q_PROPERTY(bool childrenCollapsible READ childrenCollapsible WRITE setChildrenCollapsible)
 
 public:
-    explicit QSplitter(QWidget* parent = Q_NULLPTR);
-    explicit QSplitter(Qt::Orientation, QWidget* parent = Q_NULLPTR);
+    explicit QSplitter(QWidget* parent = nullptr);
+    explicit QSplitter(Qt::Orientation, QWidget* parent = nullptr);
     ~QSplitter();
 
     void addWidget(QWidget *widget);

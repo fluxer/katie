@@ -79,8 +79,8 @@ public:
     Q_DECLARE_FLAGS(AutoFormatting, AutoFormattingFlag)
 
 
-    explicit QTextEdit(QWidget *parent = Q_NULLPTR);
-    explicit QTextEdit(const QString &text, QWidget *parent = Q_NULLPTR);
+    explicit QTextEdit(QWidget *parent = nullptr);
+    explicit QTextEdit(const QString &text, QWidget *parent = nullptr);
     virtual ~QTextEdit();
 
     void setDocument(QTextDocument *document);

@@ -131,7 +131,7 @@ template <typename T> class QXmlStreamSimpleStack {
     T *data;
     int tos, cap;
 public:
-    inline QXmlStreamSimpleStack():data(Q_NULLPTR), tos(-1), cap(0){}
+    inline QXmlStreamSimpleStack():data(nullptr), tos(-1), cap(0){}
     inline ~QXmlStreamSimpleStack(){ if (data) free(data); }
 
     inline void reserve(int extraCapacity) {
@@ -468,7 +468,7 @@ public:
     int fastScanLiteralContent();
     int fastScanSpace();
     int fastScanContentCharList();
-    int fastScanName(int *prefix = Q_NULLPTR);
+    int fastScanName(int *prefix = nullptr);
     inline int fastScanNMTOKEN();
 
 

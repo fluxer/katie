@@ -74,7 +74,7 @@ public:
     Q_DECLARE_FLAGS(Options, Option)
 
     QFileDialog(QWidget *parent, Qt::WindowFlags f);
-    explicit QFileDialog(QWidget *parent = Q_NULLPTR,
+    explicit QFileDialog(QWidget *parent = nullptr,
                          const QString &caption = QString(),
                          const QString &directory = QString(),
                          const QString &filter = QString());
@@ -162,26 +162,26 @@ Q_SIGNALS:
 
 public:
 
-    static QString getOpenFileName(QWidget *parent = Q_NULLPTR,
+    static QString getOpenFileName(QWidget *parent = nullptr,
                                    const QString &caption = QString(),
                                    const QString &dir = QString(),
                                    const QString &filter = QString(),
                                    QString *selectedFilter = 0,
                                    Options options = 0);
 
-    static QString getSaveFileName(QWidget *parent = Q_NULLPTR,
+    static QString getSaveFileName(QWidget *parent = nullptr,
                                    const QString &caption = QString(),
                                    const QString &dir = QString(),
                                    const QString &filter = QString(),
                                    QString *selectedFilter = 0,
                                    Options options = 0);
 
-    static QString getExistingDirectory(QWidget *parent = Q_NULLPTR,
+    static QString getExistingDirectory(QWidget *parent = nullptr,
                                         const QString &caption = QString(),
                                         const QString &dir = QString(),
                                         Options options = ShowDirsOnly);
 
-    static QStringList getOpenFileNames(QWidget *parent = Q_NULLPTR,
+    static QStringList getOpenFileNames(QWidget *parent = nullptr,
                                         const QString &caption = QString(),
                                         const QString &dir = QString(),
                                         const QString &filter = QString(),

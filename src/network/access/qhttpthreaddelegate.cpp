@@ -152,7 +152,7 @@ public:
     }
 };
 
-thread_local QNetworkAccessCache* QHttpThreadDelegate::connections = Q_NULLPTR;
+thread_local QNetworkAccessCache* QHttpThreadDelegate::connections = nullptr;
 
 QHttpThreadDelegate::~QHttpThreadDelegate()
 {
@@ -207,7 +207,7 @@ void QHttpThreadDelegate::startRequestSynchronously()
     synchronousRequestLoop.exec();
 
     connections->releaseEntry(cacheKey);
-    connections = Q_NULLPTR;
+    connections = nullptr;
 
 #ifdef QHTTPTHREADDELEGATE_DEBUG
     qDebug() << "QHttpThreadDelegate::startRequestSynchronously() thread=" << QThread::currentThreadId() << "finished";

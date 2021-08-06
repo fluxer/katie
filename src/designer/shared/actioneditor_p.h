@@ -59,7 +59,7 @@ class Q_DESIGNER_EXPORT ActionEditor: public QDesignerActionEditorInterface
 {
     Q_OBJECT
 public:
-    explicit ActionEditor(QDesignerFormEditorInterface *core, QWidget *parent = Q_NULLPTR, Qt::WindowFlags flags = 0);
+    explicit ActionEditor(QDesignerFormEditorInterface *core, QWidget *parent = nullptr, Qt::WindowFlags flags = 0);
     virtual ~ActionEditor();
 
     QDesignerFormWindowInterface *formWindow() const;

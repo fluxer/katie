@@ -136,7 +136,7 @@ class Q_DESIGNER_EXPORT WidgetDataBase: public QDesignerWidgetDataBaseInterface
 {
     Q_OBJECT
 public:
-    explicit WidgetDataBase(QDesignerFormEditorInterface *core, QObject *parent = Q_NULLPTR);
+    explicit WidgetDataBase(QDesignerFormEditorInterface *core, QObject *parent = nullptr);
     virtual ~WidgetDataBase();
 
     virtual QDesignerFormEditorInterface *core() const;

@@ -55,8 +55,8 @@ class QGraphicsWidgetPrivate : public QGraphicsItemPrivate
     Q_DECLARE_PUBLIC(QGraphicsWidget)
 public:
     QGraphicsWidgetPrivate()
-        : margins(Q_NULLPTR),
-          layout(Q_NULLPTR),
+        : margins(nullptr),
+          layout(nullptr),
           inheritedPaletteResolveMask(0),
           inheritedFontResolveMask(0),
           polished(false),
@@ -65,10 +65,10 @@ public:
           autoFillBackground(false),
           refCountInvokeRelayout(0),
           focusPolicy(Qt::NoFocus),
-          focusNext(Q_NULLPTR),
-          focusPrev(Q_NULLPTR),
+          focusNext(nullptr),
+          focusPrev(nullptr),
           windowFlags(0),
-          windowData(Q_NULLPTR),
+          windowData(nullptr),
           setWindowFrameMargins(false),
           windowFrameMargins(0)
     { }

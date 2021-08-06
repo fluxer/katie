@@ -341,7 +341,7 @@ void QDBusAdaptorConnector::qt_static_metacall(QObject *_o, QMetaObject::Call _c
 
 const QMetaObject QDBusAdaptorConnector::staticMetaObject = {
     { &QObject::staticMetaObject, qt_meta_stringdata_QDBusAdaptorConnector,
-      qt_meta_data_QDBusAdaptorConnector, qt_static_metacall, Q_NULLPTR, Q_NULLPTR }
+      qt_meta_data_QDBusAdaptorConnector, qt_static_metacall, nullptr, nullptr }
 };
 
 #ifdef Q_NO_DATA_RELOCATION
@@ -355,7 +355,7 @@ const QMetaObject *QDBusAdaptorConnector::metaObject() const
 
 void *QDBusAdaptorConnector::qt_metacast(const char *_clname)
 {
-    if (!_clname) return Q_NULLPTR;
+    if (!_clname) return nullptr;
     if (!strcmp(_clname, qt_meta_stringdata_QDBusAdaptorConnector))
         return static_cast<void*>(const_cast< QDBusAdaptorConnector*>(this));
     return QObject::qt_metacast(_clname);
@@ -377,7 +377,7 @@ int QDBusAdaptorConnector::qt_metacall(QMetaObject::Call _c, int _id, void **_a)
 // SIGNAL 0
 void QDBusAdaptorConnector::relaySignal(QObject * _t1, const QMetaObject * _t2, int _t3, const QVariantList & _t4)
 {
-    void *_a[] = { Q_NULLPTR, const_cast<void*>(reinterpret_cast<const void*>(&_t1)), const_cast<void*>(reinterpret_cast<const void*>(&_t2)), const_cast<void*>(reinterpret_cast<const void*>(&_t3)), const_cast<void*>(reinterpret_cast<const void*>(&_t4)) };
+    void *_a[] = { nullptr, const_cast<void*>(reinterpret_cast<const void*>(&_t1)), const_cast<void*>(reinterpret_cast<const void*>(&_t2)), const_cast<void*>(reinterpret_cast<const void*>(&_t3)), const_cast<void*>(reinterpret_cast<const void*>(&_t4)) };
     QMetaObject::activate(this, &staticMetaObject, 0, _a);
 }
 

@@ -109,7 +109,7 @@ namespace qdesigner_internal {
 // Delegate with object name validator for the object name column
 class ObjectInspectorDelegate : public QItemDelegate {
 public:
-    explicit ObjectInspectorDelegate(QObject *parent = Q_NULLPTR);
+    explicit ObjectInspectorDelegate(QObject *parent = nullptr);
 
     virtual QWidget *createEditor(QWidget *parent, const QStyleOptionViewItem &option, const QModelIndex &index) const;
 };
@@ -136,7 +136,7 @@ QWidget *ObjectInspectorDelegate::createEditor(QWidget *parent, const QStyleOpti
 
 class ObjectInspectorTreeView : public QTreeView {
 public:
-    ObjectInspectorTreeView(QWidget *parent = Q_NULLPTR) :  QTreeView(parent) {}
+    ObjectInspectorTreeView(QWidget *parent = nullptr) :  QTreeView(parent) {}
 
 protected:
     virtual void mouseMoveEvent (QMouseEvent * event);

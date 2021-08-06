@@ -118,7 +118,7 @@ public:
 class QDomNodePrivate
 {
 public:
-    QDomNodePrivate(QDomDocumentPrivate*, QDomNodePrivate* parent = Q_NULLPTR);
+    QDomNodePrivate(QDomDocumentPrivate*, QDomNodePrivate* parent = nullptr);
     QDomNodePrivate(QDomNodePrivate* n, bool deep);
     virtual ~QDomNodePrivate();
 
@@ -265,7 +265,7 @@ public:
 class QDomDocumentTypePrivate : public QDomNodePrivate
 {
 public:
-    QDomDocumentTypePrivate(QDomDocumentPrivate*, QDomNodePrivate* parent = Q_NULLPTR);
+    QDomDocumentTypePrivate(QDomDocumentPrivate*, QDomNodePrivate* parent = nullptr);
     QDomDocumentTypePrivate(QDomDocumentTypePrivate* n, bool deep);
     ~QDomDocumentTypePrivate();
     void init();
@@ -293,7 +293,7 @@ public:
 class QDomDocumentFragmentPrivate : public QDomNodePrivate
 {
 public:
-    QDomDocumentFragmentPrivate(QDomDocumentPrivate*, QDomNodePrivate* parent = Q_NULLPTR);
+    QDomDocumentFragmentPrivate(QDomDocumentPrivate*, QDomNodePrivate* parent = nullptr);
     QDomDocumentFragmentPrivate(QDomNodePrivate* n, bool deep);
 
     // Reimplemented from QDomNodePrivate
@@ -883,7 +883,7 @@ QDomImplementationPrivate* QDomImplementationPrivate::clone()
     Constructs a QDomImplementation object.
 */
 QDomImplementation::QDomImplementation()
-    : impl(Q_NULLPTR)
+    : impl(nullptr)
 {
 }
 
@@ -1279,7 +1279,7 @@ int QDomNodeListPrivate::length() const
     Creates an empty node list.
 */
 QDomNodeList::QDomNodeList()
-    : impl(Q_NULLPTR)
+    : impl(nullptr)
 {
 }
 
@@ -1409,11 +1409,11 @@ inline void QDomNodePrivate::setOwnerDocument(QDomDocumentPrivate *doc)
 
 QDomNodePrivate::QDomNodePrivate(QDomDocumentPrivate *doc, QDomNodePrivate *par)
     : ref(1),
-    prev(Q_NULLPTR),
-    next(Q_NULLPTR),
-    ownerNode(Q_NULLPTR),
-    first(Q_NULLPTR),
-    last(Q_NULLPTR),
+    prev(nullptr),
+    next(nullptr),
+    ownerNode(nullptr),
+    first(nullptr),
+    last(nullptr),
     createdWithDom1Interface(true),
     hasParent(false),
     lineNumber(-1),
@@ -1428,11 +1428,11 @@ QDomNodePrivate::QDomNodePrivate(QDomDocumentPrivate *doc, QDomNodePrivate *par)
 
 QDomNodePrivate::QDomNodePrivate(QDomNodePrivate *n, bool deep)
     : ref(1),
-    prev(Q_NULLPTR),
-    next(Q_NULLPTR),
-    ownerNode(Q_NULLPTR),
-    first(Q_NULLPTR),
-    last(Q_NULLPTR),
+    prev(nullptr),
+    next(nullptr),
+    ownerNode(nullptr),
+    first(nullptr),
+    last(nullptr),
     name(n->name),
     value(n->value),
     prefix(n->prefix),
@@ -1982,7 +1982,7 @@ void QDomNodePrivate::setLocation(int lineNumber, int columnNumber)
     Constructs a \link isNull() null\endlink node.
 */
 QDomNode::QDomNode()
-    : impl(Q_NULLPTR)
+    : impl(nullptr)
 {
 }
 
@@ -2595,7 +2595,7 @@ bool QDomNode::hasChildNodes() const
 */
 bool QDomNode::isNull() const
 {
-    return (impl == Q_NULLPTR);
+    return (impl == nullptr);
 }
 
 /*!
@@ -2608,7 +2608,7 @@ void QDomNode::clear()
 {
     if (impl && !impl->ref.deref())
         delete impl;
-    impl = Q_NULLPTR;
+    impl = nullptr;
 }
 
 /*!
@@ -3043,7 +3043,7 @@ void QDomNamedNodeMapPrivate::clearMap()
 
 QDomNodePrivate* QDomNamedNodeMapPrivate::namedItem(const QString& name) const
 {
-    return map.value(name, Q_NULLPTR);
+    return map.value(name, nullptr);
 }
 
 QDomNodePrivate* QDomNamedNodeMapPrivate::namedItemNS(const QString& nsURI, const QString& localName) const
@@ -3100,11 +3100,11 @@ QDomNodePrivate* QDomNamedNodeMapPrivate::setNamedItemNS(QDomNodePrivate* arg)
 QDomNodePrivate* QDomNamedNodeMapPrivate::removeNamedItem(const QString& name)
 {
     if (readonly)
-        return Q_NULLPTR;
+        return nullptr;
 
     QDomNodePrivate* p = namedItem(name);
     if (!p)
-        return Q_NULLPTR;
+        return nullptr;
     if (appendToParent)
         return parent->removeChild(p);
 
@@ -3186,7 +3186,7 @@ bool QDomNamedNodeMapPrivate::containsNS(const QString& nsURI, const QString & l
     Constructs an empty named node map.
 */
 QDomNamedNodeMap::QDomNamedNodeMap()
-    : impl(Q_NULLPTR)
+    : impl(nullptr)
 {
 }
 
@@ -6757,7 +6757,7 @@ bool QDomDocument::setContent(QXmlInputSource *source, QXmlReader *reader, QStri
 {
     if (!impl)
         impl = new QDomDocumentPrivate();
-    return IMPL->setContent(source, reader, Q_NULLPTR, errorMsg, errorLine, errorColumn);
+    return IMPL->setContent(source, reader, nullptr, errorMsg, errorLine, errorColumn);
 }
 
 /*!

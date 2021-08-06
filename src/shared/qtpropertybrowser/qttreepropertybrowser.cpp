@@ -99,7 +99,7 @@ class QtPropertyEditorView : public QTreeWidget
 {
     Q_OBJECT
 public:
-    QtPropertyEditorView(QWidget *parent = Q_NULLPTR);
+    QtPropertyEditorView(QWidget *parent = nullptr);
 
     void setEditorPrivate(QtTreePropertyBrowserPrivate *editorPrivate)
         { m_editorPrivate = editorPrivate; }
@@ -199,7 +199,7 @@ class QtPropertyEditorDelegate : public QItemDelegate
 {
     Q_OBJECT
 public:
-    QtPropertyEditorDelegate(QObject *parent = Q_NULLPTR)
+    QtPropertyEditorDelegate(QObject *parent = nullptr)
         : QItemDelegate(parent), m_editorPrivate(0), m_editedItem(0), m_editedWidget(0)
         {}
 

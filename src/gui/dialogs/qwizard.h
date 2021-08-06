@@ -102,7 +102,7 @@ public:
 
     Q_DECLARE_FLAGS(WizardOptions, WizardOption)
 
-    explicit QWizard(QWidget *parent = Q_NULLPTR, Qt::WindowFlags flags = 0);
+    explicit QWizard(QWidget *parent = nullptr, Qt::WindowFlags flags = 0);
     ~QWizard();
 
     int addPage(QWizardPage *page);
@@ -194,7 +194,7 @@ class Q_GUI_EXPORT QWizardPage : public QWidget
     Q_PROPERTY(QString subTitle READ subTitle WRITE setSubTitle)
 
 public:
-    QWizardPage(QWidget *parent = Q_NULLPTR);
+    QWizardPage(QWidget *parent = nullptr);
 
     void setTitle(const QString &title);
     QString title() const;

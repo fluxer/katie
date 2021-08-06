@@ -33,7 +33,7 @@ class QtGroupBoxPropertyBrowser : public QtAbstractPropertyBrowser
     Q_OBJECT
 public:
 
-    QtGroupBoxPropertyBrowser(QWidget *parent = Q_NULLPTR);
+    QtGroupBoxPropertyBrowser(QWidget *parent = nullptr);
     ~QtGroupBoxPropertyBrowser();
 
 protected:

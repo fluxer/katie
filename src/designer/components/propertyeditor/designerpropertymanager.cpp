@@ -593,7 +593,7 @@ class ResetWidget : public QWidget
 {
     Q_OBJECT
 public:
-    ResetWidget(QtProperty *property, QWidget *parent = Q_NULLPTR);
+    ResetWidget(QtProperty *property, QWidget *parent = nullptr);
 
     void setWidget(QWidget *widget);
     void setResetEnabled(bool enabled);

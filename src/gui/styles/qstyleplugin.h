@@ -47,7 +47,7 @@ class Q_GUI_EXPORT QStylePlugin : public QObject, public QStyleFactoryInterface
     Q_OBJECT
     Q_INTERFACES(QStyleFactoryInterface:QFactoryInterface)
 public:
-    explicit QStylePlugin(QObject *parent = Q_NULLPTR);
+    explicit QStylePlugin(QObject *parent = nullptr);
     ~QStylePlugin();
 
     virtual QStringList keys() const = 0;

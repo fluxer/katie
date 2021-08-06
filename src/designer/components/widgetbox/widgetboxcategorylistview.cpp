@@ -102,7 +102,7 @@ WidgetBoxCategoryEntry::WidgetBoxCategoryEntry(const QDesignerWidgetBoxInterface
 
 class WidgetBoxCategoryModel : public QAbstractListModel {
 public:
-    explicit WidgetBoxCategoryModel(QDesignerFormEditorInterface *core, QObject *parent = Q_NULLPTR);
+    explicit WidgetBoxCategoryModel(QDesignerFormEditorInterface *core, QObject *parent = nullptr);
 
     // QAbstractListModel
     virtual QVariant data(const QModelIndex &index, int role = Qt::DisplayRole) const;
@@ -326,7 +326,7 @@ QDesignerWidgetBoxInterface::Widget WidgetBoxCategoryModel::widgetAt(int row) co
 class WidgetBoxCategoryEntryDelegate : public QItemDelegate
 {
 public:
-    explicit WidgetBoxCategoryEntryDelegate(QWidget *parent = Q_NULLPTR) : QItemDelegate(parent) {}
+    explicit WidgetBoxCategoryEntryDelegate(QWidget *parent = nullptr) : QItemDelegate(parent) {}
     QWidget *createEditor(QWidget *parent,
                           const QStyleOptionViewItem &option,
                           const QModelIndex &index) const;

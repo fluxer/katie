@@ -54,7 +54,7 @@ QDirPrivate::QDirPrivate(const QString &path, const QStringList &nameFilters_, Q
     , nameFilters(nameFilters_)
     , sort(sort_)
     , filters(filters_)
-    , fileEngine(Q_NULLPTR)
+    , fileEngine(nullptr)
     , fileListsInitialized(false)
 {
     setPath(path.isEmpty() ? QString::fromLatin1(".") : path);
@@ -78,7 +78,7 @@ QDirPrivate::QDirPrivate(const QDirPrivate &copy)
     , nameFilters(copy.nameFilters)
     , sort(copy.sort)
     , filters(copy.filters)
-    , fileEngine(Q_NULLPTR)
+    , fileEngine(nullptr)
     , fileListsInitialized(false)
     , dirEntry(copy.dirEntry)
     , metaData(copy.metaData)

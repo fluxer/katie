@@ -113,7 +113,7 @@ class QObjectPrototypeObject : public QObject
 {
     Q_OBJECT
 public:
-    QObjectPrototypeObject(QObject *parent = Q_NULLPTR)
+    QObjectPrototypeObject(QObject *parent = nullptr)
         : QObject(parent) { }
     ~QObjectPrototypeObject() { }
 };

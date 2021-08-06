@@ -94,7 +94,7 @@ class QScriptDebuggerBackendEventReceiver : public QObject
 {
 public:
     QScriptDebuggerBackendEventReceiver(QScriptDebuggerBackendPrivate *backend,
-                                        QObject *parent = Q_NULLPTR)
+                                        QObject *parent = nullptr)
         : QObject(parent), m_backend(backend) {}
     ~QScriptDebuggerBackendEventReceiver() {}
 

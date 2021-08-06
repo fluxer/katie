@@ -51,7 +51,7 @@ class Q_DESIGNER_EXPORT RichTextEditorDialog : public QDialog
 {
     Q_OBJECT
 public:
-    explicit RichTextEditorDialog(QDesignerFormEditorInterface *core, QWidget *parent = Q_NULLPTR);
+    explicit RichTextEditorDialog(QDesignerFormEditorInterface *core, QWidget *parent = nullptr);
     ~RichTextEditorDialog();
 
     int showDialog();

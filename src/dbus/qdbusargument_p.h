@@ -51,7 +51,7 @@ public:
     };
 
     inline QDBusArgumentPrivate(Direction direct, int cap)
-        : message(Q_NULLPTR), ref(1), direction(direct), capabilities(cap)
+        : message(nullptr), ref(1), direction(direct), capabilities(cap)
     { }
     ~QDBusArgumentPrivate();
 
@@ -82,7 +82,7 @@ class QDBusMarshaller: public QDBusArgumentPrivate
 {
 public:
     QDBusMarshaller(int flags) : QDBusArgumentPrivate(Marshalling, flags),
-        parent(Q_NULLPTR), ba(Q_NULLPTR), closeCode(0), ok(true)
+        parent(nullptr), ba(nullptr), closeCode(0), ok(true)
     { }
     ~QDBusMarshaller();
 
@@ -138,7 +138,7 @@ class QDBusDemarshaller: public QDBusArgumentPrivate
 {
 public:
     inline QDBusDemarshaller(int flags) : QDBusArgumentPrivate(Demarshalling, flags),
-        parent(Q_NULLPTR)
+        parent(nullptr)
     { }
     ~QDBusDemarshaller();
 

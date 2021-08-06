@@ -41,7 +41,7 @@ class Q_GUI_EXPORT QAbstractScrollArea : public QFrame
     Q_PROPERTY(Qt::ScrollBarPolicy horizontalScrollBarPolicy READ horizontalScrollBarPolicy WRITE setHorizontalScrollBarPolicy)
 
 public:
-    explicit QAbstractScrollArea(QWidget* parent = Q_NULLPTR);
+    explicit QAbstractScrollArea(QWidget* parent = nullptr);
     ~QAbstractScrollArea();
 
     Qt::ScrollBarPolicy verticalScrollBarPolicy() const;
@@ -72,7 +72,7 @@ protected Q_SLOTS:
     void setupViewport(QWidget *viewport);
 
 protected:
-    QAbstractScrollArea(QAbstractScrollAreaPrivate &dd, QWidget *parent = Q_NULLPTR);
+    QAbstractScrollArea(QAbstractScrollAreaPrivate &dd, QWidget *parent = nullptr);
     void setViewportMargins(int left, int top, int right, int bottom);
     void setViewportMargins(const QMargins &margins);
 

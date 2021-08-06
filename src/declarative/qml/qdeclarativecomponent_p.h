@@ -110,7 +110,7 @@ class QDeclarativeComponentAttached : public QObject
 {
     Q_OBJECT
 public:
-    QDeclarativeComponentAttached(QObject *parent = Q_NULLPTR);
+    QDeclarativeComponentAttached(QObject *parent = nullptr);
     ~QDeclarativeComponentAttached();
 
     void add(QDeclarativeComponentAttached **a) {

@@ -30,7 +30,7 @@ class GvbWidget : public QGraphicsWidget
 
 public:
 
-    GvbWidget(QGraphicsItem *parent = Q_NULLPTR, Qt::WindowFlags wFlags = 0);
+    GvbWidget(QGraphicsItem *parent = nullptr, Qt::WindowFlags wFlags = 0);
     ~GvbWidget();
     virtual void keyPressEvent(QKeyEvent *event);
 };

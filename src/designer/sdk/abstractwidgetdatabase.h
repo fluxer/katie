@@ -82,7 +82,7 @@ class Q_DESIGNER_EXPORT QDesignerWidgetDataBaseInterface: public QObject
 {
     Q_OBJECT
 public:
-    QDesignerWidgetDataBaseInterface(QObject *parent = Q_NULLPTR);
+    QDesignerWidgetDataBaseInterface(QObject *parent = nullptr);
     virtual ~QDesignerWidgetDataBaseInterface();
 
     virtual int count() const;

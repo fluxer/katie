@@ -63,7 +63,7 @@ public:
 
 */
 QThreadPoolThread::QThreadPoolThread(QThreadPoolPrivate *manager)
-    :manager(manager), runnable(Q_NULLPTR)
+    :manager(manager), runnable(nullptr)
 { }
 
 /* \internal
@@ -74,7 +74,7 @@ void QThreadPoolThread::run()
     QMutexLocker locker(&manager->mutex);
     for(;;) {
         QRunnable *r = runnable;
-        runnable = Q_NULLPTR;
+        runnable = nullptr;
 
         do {
             if (r) {
@@ -102,8 +102,8 @@ void QThreadPoolThread::run()
             if (manager->tooManyThreadsActive())
                 break;
 
-            r = !manager->queue.isEmpty() ? manager->queue.takeFirst().first : Q_NULLPTR;
-        } while (r != Q_NULLPTR);
+            r = !manager->queue.isEmpty() ? manager->queue.takeFirst().first : nullptr;
+        } while (r != nullptr);
 
         if (manager->isExiting) {
             registerThreadInactive();
@@ -169,7 +169,7 @@ bool QThreadPoolPrivate::tryStart(QRunnable *task)
     if (!expiredThreads.isEmpty()) {
         // restart an expired thread
         QThreadPoolThread *thread = expiredThreads.dequeue();
-        Q_ASSERT(thread->runnable == Q_NULLPTR);
+        Q_ASSERT(thread->runnable == nullptr);
 
         ++activeThreads;
 
@@ -285,7 +285,7 @@ bool QThreadPoolPrivate::waitForDone(int msecs)
 */
 void QThreadPoolPrivate::stealRunnable(QRunnable *runnable)
 {
-    if (runnable == Q_NULLPTR || queue.isEmpty())
+    if (runnable == nullptr || queue.isEmpty())
         return;
     bool found = false;
     {

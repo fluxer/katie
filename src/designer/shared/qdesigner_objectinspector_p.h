@@ -64,7 +64,7 @@ class Q_DESIGNER_EXPORT QDesignerObjectInspector: public QDesignerObjectInspecto
 {
     Q_OBJECT
 public:
-    explicit QDesignerObjectInspector(QWidget *parent = Q_NULLPTR, Qt::WindowFlags flags = 0);
+    explicit QDesignerObjectInspector(QWidget *parent = nullptr, Qt::WindowFlags flags = 0);
 
     // Select a qobject unmanaged by form window
     virtual bool selectObject(QObject *o) = 0;

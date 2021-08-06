@@ -39,8 +39,8 @@ class Q_GUI_EXPORT QPrintPreviewDialog : public QDialog
     Q_DECLARE_PRIVATE(QPrintPreviewDialog)
 
 public:
-    explicit QPrintPreviewDialog(QWidget *parent = Q_NULLPTR, Qt::WindowFlags flags = 0);
-    explicit QPrintPreviewDialog(QPrinter *printer, QWidget *parent = Q_NULLPTR, Qt::WindowFlags flags = 0);
+    explicit QPrintPreviewDialog(QWidget *parent = nullptr, Qt::WindowFlags flags = 0);
+    explicit QPrintPreviewDialog(QPrinter *printer, QWidget *parent = nullptr, Qt::WindowFlags flags = 0);
     ~QPrintPreviewDialog();
 
 #ifdef Q_NO_USING_KEYWORD

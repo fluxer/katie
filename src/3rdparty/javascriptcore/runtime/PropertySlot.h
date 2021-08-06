@@ -38,9 +38,9 @@ namespace JSC {
     class PropertySlot {
     public:
         PropertySlot()
-            : m_getterFunc(Q_NULLPTR),
-            m_valueSlot(Q_NULLPTR),
-            m_registerSlot(Q_NULLPTR)
+            : m_getterFunc(nullptr),
+            m_valueSlot(nullptr),
+            m_registerSlot(nullptr)
         {
             clearBase();
             clearOffset();
@@ -49,9 +49,9 @@ namespace JSC {
 
         explicit PropertySlot(const JSValue base)
             : m_slotBase(base),
-            m_getterFunc(Q_NULLPTR),
-            m_valueSlot(Q_NULLPTR),
-            m_registerSlot(Q_NULLPTR)
+            m_getterFunc(nullptr),
+            m_valueSlot(nullptr),
+            m_registerSlot(nullptr)
         {
             clearOffset();
             clearValue();

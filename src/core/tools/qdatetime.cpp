@@ -2780,7 +2780,7 @@ QTime QTime::currentTime()
     QTime ct;
     // posix compliant system
     struct timeval tv;
-    ::gettimeofday(&tv, Q_NULLPTR);
+    ::gettimeofday(&tv, nullptr);
 
 #if !defined(QT_NO_THREAD)
     // use the reentrant version of localtime() where available
@@ -2801,7 +2801,7 @@ QDateTime QDateTime::currentDateTime()
     // posix compliant system
     // we have milliseconds
     struct timeval tv;
-    ::gettimeofday(&tv, Q_NULLPTR);
+    ::gettimeofday(&tv, nullptr);
 
 #if !defined(QT_NO_THREAD)
     // use the reentrant version of localtime() where available
@@ -2827,7 +2827,7 @@ QDateTime QDateTime::currentDateTimeUtc()
     // posix compliant system
     // we have milliseconds
     struct timeval tv;
-    ::gettimeofday(&tv, Q_NULLPTR);
+    ::gettimeofday(&tv, nullptr);
 
 #if !defined(QT_NO_THREAD)
     // use the reentrant version of gmtime_r() where available
@@ -2850,7 +2850,7 @@ qint64 QDateTime::currentMSecsSinceEpoch()
     // posix compliant system
     // we have milliseconds
     struct timeval tv;
-    gettimeofday(&tv, Q_NULLPTR);
+    gettimeofday(&tv, nullptr);
     return qint64(tv.tv_sec) * Q_INT64_C(1000) + tv.tv_usec / 1000;
 }
 
@@ -3884,7 +3884,7 @@ bool QDateTimeParser::parseFormat(const QString &newFormat)
     QDTPDEBUGN("parseFormat: %s", newFormat.toLatin1().constData());
 
     QVector<SectionNode> newSectionNodes;
-    Sections newDisplay = Q_NULLPTR;
+    Sections newDisplay = nullptr;
     QStringList newSeparators;
     int index = 0;
     int add = 0;
@@ -4426,7 +4426,7 @@ QDateTimeParser::StateNode QDateTimeParser::parse(QString &input, int &cursorPos
             }
             pos += separators.at(index).size();
             sectionNodes[index].pos = pos;
-            int *current = Q_NULLPTR;
+            int *current = nullptr;
             const SectionNode sn = sectionNodes.at(index);
             int used;
 

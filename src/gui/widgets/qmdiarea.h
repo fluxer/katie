@@ -68,7 +68,7 @@ public:
         TabbedView
     };
 
-    QMdiArea(QWidget *parent = Q_NULLPTR);
+    QMdiArea(QWidget *parent = nullptr);
     ~QMdiArea();
 
     QSize sizeHint() const;

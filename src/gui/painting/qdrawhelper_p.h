@@ -213,7 +213,7 @@ struct QTextureData
 
 struct QSpanData
 {
-    QSpanData() : tempImage(Q_NULLPTR) {}
+    QSpanData() : tempImage(nullptr) {}
     ~QSpanData() { delete tempImage; }
 
     QRasterBuffer *rasterBuffer;

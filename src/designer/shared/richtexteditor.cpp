@@ -157,10 +157,10 @@ class RichTextEditor : public QTextEdit
 {
     Q_OBJECT
 public:
-    explicit RichTextEditor(QWidget *parent = Q_NULLPTR);
+    explicit RichTextEditor(QWidget *parent = nullptr);
     void setDefaultFont(QFont font);
 
-    QToolBar *createToolBar(QDesignerFormEditorInterface *core, QWidget *parent = Q_NULLPTR);
+    QToolBar *createToolBar(QDesignerFormEditorInterface *core, QWidget *parent = nullptr);
 
     bool simplifyRichText() const      { return m_simplifyRichText; }
 
@@ -184,7 +184,7 @@ class AddLinkDialog : public QDialog
     Q_OBJECT
 
 public:
-    AddLinkDialog(RichTextEditor *editor, QWidget *parent = Q_NULLPTR);
+    AddLinkDialog(RichTextEditor *editor, QWidget *parent = nullptr);
     ~AddLinkDialog();
 
     int showDialog();
@@ -253,7 +253,7 @@ class HtmlTextEdit : public QTextEdit
     Q_OBJECT
 
 public:
-    HtmlTextEdit(QWidget *parent = Q_NULLPTR)
+    HtmlTextEdit(QWidget *parent = nullptr)
         : QTextEdit(parent)
     {}
 
@@ -358,7 +358,7 @@ class RichTextEditorToolBar : public QToolBar
 public:
     RichTextEditorToolBar(QDesignerFormEditorInterface *core,
                           RichTextEditor *editor,
-                          QWidget *parent = Q_NULLPTR);
+                          QWidget *parent = nullptr);
 
 public slots:
     void updateActions();
@@ -394,7 +394,7 @@ private:
 
 static QAction *createCheckableAction(const QIcon &icon, const QString &text,
                                       QObject *receiver, const char *slot,
-                                      QObject *parent = Q_NULLPTR)
+                                      QObject *parent = nullptr)
 {
     QAction *result = new QAction(parent);
     result->setIcon(icon);

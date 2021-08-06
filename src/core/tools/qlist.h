@@ -142,7 +142,7 @@ public:
         typedef T *pointer;
         typedef T &reference;
 
-        inline iterator() : i(Q_NULLPTR) {}
+        inline iterator() : i(nullptr) {}
         inline iterator(Node *n) : i(n) {}
         inline iterator(const iterator &o): i(o.i){}
         inline T &operator*() const { return i->t(); }
@@ -189,7 +189,7 @@ public:
         typedef const T *pointer;
         typedef const T &reference;
 
-        inline const_iterator() : i(Q_NULLPTR) {}
+        inline const_iterator() : i(nullptr) {}
         inline const_iterator(Node *n) : i(n) {}
         inline const_iterator(const const_iterator &o): i(o.i) {}
 #ifdef QT_STRICT_ITERATORS

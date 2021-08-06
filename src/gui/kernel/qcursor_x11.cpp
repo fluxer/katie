@@ -35,7 +35,7 @@ extern QPixmap qt_toX11Pixmap(const QPixmap &pixmap); // qpixmap_x11.cpp
  *****************************************************************************/
 
 QCursorData::QCursorData(Qt::CursorShape s)
-    : ref(1), cshape(s), bm(Q_NULLPTR), bmm(Q_NULLPTR), hx(0), hy(0), hcurs(0), pm(0)
+    : ref(1), cshape(s), bm(nullptr), bmm(nullptr), hx(0), hy(0), hcurs(0), pm(0)
 {
 }
 
@@ -183,7 +183,7 @@ static const struct CursorTblData {
     const char* alternative;
 } CursorTbl[] = {
     { XC_left_ptr, "left_ptr", "default" }, // Qt::ArrowCursor
-    { XC_center_ptr, "up_arrow", Q_NULLPTR }, // Qt::UpArrowCursor
+    { XC_center_ptr, "up_arrow", nullptr }, // Qt::UpArrowCursor
     { XC_crosshair, "cross", "crosshair" }, // Qt::CrossCursor
     { XC_watch, "wait", "watch" }, // Qt::WaitCursor
     { XC_xterm, "ibeam", "text" }, // Qt::IBeamCursor
@@ -191,8 +191,8 @@ static const struct CursorTblData {
     { XC_sb_h_double_arrow, "size_hor", "ew-resize" }, // Qt::SizeHorCursor
     { XC_top_right_corner, "size_bdiag", "nwse-resize" }, // Qt::SizeBDiagCursor
     { XC_bottom_right_corner, "size_fdiag", "nesw-resize" }, // Qt::SizeFDiagCursor
-    { XC_fleur, "size_all", Q_NULLPTR }, // Qt::SizeAllCursor
-    { -1, "blank", Q_NULLPTR }, // Qt::BlankCursor
+    { XC_fleur, "size_all", nullptr }, // Qt::SizeAllCursor
+    { -1, "blank", nullptr }, // Qt::BlankCursor
     { XC_sb_v_double_arrow, "split_v", "row-resize" }, // Qt::SplitVCursor
     { XC_sb_h_double_arrow, "split_h", "col-resize" }, // Qt::SplitHCursor
     { XC_hand2, "pointing_hand", "pointer" }, // Qt::PointingHandCursor

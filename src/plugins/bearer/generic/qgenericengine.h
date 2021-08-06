@@ -39,7 +39,7 @@ class QGenericEngine : public QBearerEngineImpl
     Q_OBJECT
 
 public:
-    QGenericEngine(QObject *parent = Q_NULLPTR);
+    QGenericEngine(QObject *parent = nullptr);
     ~QGenericEngine();
 
     QString getInterfaceFromId(const QString &id);

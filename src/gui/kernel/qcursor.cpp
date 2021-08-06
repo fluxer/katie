@@ -281,7 +281,7 @@ QDataStream &operator>>(QDataStream &s, QCursor &c)
 */
 
 QCursor::QCursor(const QPixmap &pixmap, int hotX, int hotY)
-    : d(Q_NULLPTR)
+    : d(nullptr)
 {
     d = QCursorData::setBitmap(QBitmap(pixmap), pixmap.mask(), hotX, hotY);
     d->pixmap = pixmap;

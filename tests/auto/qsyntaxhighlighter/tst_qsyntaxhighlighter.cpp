@@ -98,7 +98,7 @@ void tst_QSyntaxHighlighter::init()
 void tst_QSyntaxHighlighter::cleanup()
 {
     delete doc;
-    doc = Q_NULLPTR;
+    doc = nullptr;
 }
 
 class TestHighlighter : public QSyntaxHighlighter

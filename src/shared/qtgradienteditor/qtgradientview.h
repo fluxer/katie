@@ -36,7 +36,7 @@ class QtGradientView : public QWidget
 {
     Q_OBJECT
 public:
-    QtGradientView(QWidget *parent = Q_NULLPTR);
+    QtGradientView(QWidget *parent = nullptr);
 
     void setGradientManager(QtGradientManager *manager);
     QtGradientManager *gradientManager() const;

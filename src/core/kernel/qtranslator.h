@@ -36,7 +36,7 @@ class Q_CORE_EXPORT QTranslator : public QObject
 {
     Q_OBJECT
 public:
-    explicit QTranslator(QObject *parent = Q_NULLPTR);
+    explicit QTranslator(QObject *parent = nullptr);
     ~QTranslator();
 
     virtual QString translate(const char *context, const char *sourceText) const;

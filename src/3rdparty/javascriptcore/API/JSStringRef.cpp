@@ -93,7 +93,7 @@ size_t JSStringGetUTF8CString(JSStringRef string, char* buffer, size_t bufferSiz
     QTextEncoder encoder(codec, QTextCodec::DefaultConversion);
     QByteArray result = encoder.fromUnicode(reinterpret_cast<const QChar*>(string->characters()), string->length());
     if (encoder.hasFailure()) {
-        buffer = Q_NULLPTR;
+        buffer = nullptr;
         return 0;
     }
     buffer = result.data();

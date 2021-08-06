@@ -56,7 +56,7 @@ public:
         Custom = Fixed
     };
 
-    explicit QHeaderView(Qt::Orientation orientation, QWidget *parent = Q_NULLPTR);
+    explicit QHeaderView(Qt::Orientation orientation, QWidget *parent = nullptr);
     virtual ~QHeaderView();
 
     void setModel(QAbstractItemModel *model);
@@ -166,7 +166,7 @@ protected Q_SLOTS:
     void sectionsAboutToBeRemoved(const QModelIndex &parent, int logicalFirst, int logicalLast);
 
 protected:
-    QHeaderView(QHeaderViewPrivate &dd, Qt::Orientation orientation, QWidget *parent = Q_NULLPTR);
+    QHeaderView(QHeaderViewPrivate &dd, Qt::Orientation orientation, QWidget *parent = nullptr);
     void initialize();
 
     void initializeSections();

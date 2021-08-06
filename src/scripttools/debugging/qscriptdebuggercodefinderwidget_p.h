@@ -43,7 +43,7 @@ class Q_AUTOTEST_EXPORT QScriptDebuggerCodeFinderWidget:
 {
     Q_OBJECT
 public:
-    QScriptDebuggerCodeFinderWidget(QWidget *parent = Q_NULLPTR);
+    QScriptDebuggerCodeFinderWidget(QWidget *parent = nullptr);
     ~QScriptDebuggerCodeFinderWidget();
 
     int findOptions() const;

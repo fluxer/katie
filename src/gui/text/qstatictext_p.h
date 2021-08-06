@@ -43,7 +43,7 @@ QT_BEGIN_NAMESPACE
 class Q_GUI_EXPORT QStaticTextItem
 {
 public:
-    QStaticTextItem() : chars(Q_NULLPTR), numChars(0), m_fontEngine(Q_NULLPTR) {}
+    QStaticTextItem() : chars(nullptr), numChars(0), m_fontEngine(nullptr) {}
 
     QStaticTextItem(const QStaticTextItem &other)
     {
@@ -60,7 +60,7 @@ public:
         font = other.font;
         color = other.color;
 
-        m_fontEngine = Q_NULLPTR;
+        m_fontEngine = nullptr;
         setFontEngine(other.fontEngine());
     }
 

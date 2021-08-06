@@ -77,7 +77,7 @@ public:
         SuspendedState
     };
 
-    QScriptEngineDebugger(QObject *parent = Q_NULLPTR);
+    QScriptEngineDebugger(QObject *parent = nullptr);
     ~QScriptEngineDebugger();
 
     void attachTo(QScriptEngine *engine);
@@ -89,8 +89,8 @@ public:
 #ifndef QT_NO_MAINWINDOW
     QMainWindow *standardWindow() const;
 #endif
-    QToolBar *createStandardToolBar(QWidget *parent = Q_NULLPTR);
-    QMenu *createStandardMenu(QWidget *parent = Q_NULLPTR);
+    QToolBar *createStandardToolBar(QWidget *parent = nullptr);
+    QMenu *createStandardMenu(QWidget *parent = nullptr);
 
     QWidget *widget(DebuggerWidget widget) const;
     QAction *action(DebuggerAction action) const;

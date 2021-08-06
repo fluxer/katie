@@ -53,7 +53,7 @@ class Q_GUI_EXPORT QAccessiblePlugin : public QObject, public QAccessibleFactory
     Q_OBJECT
     Q_INTERFACES(QAccessibleFactoryInterface:QFactoryInterface)
 public:
-    explicit QAccessiblePlugin(QObject *parent = Q_NULLPTR);
+    explicit QAccessiblePlugin(QObject *parent = nullptr);
     ~QAccessiblePlugin();
 
     virtual QStringList keys() const = 0;

@@ -47,7 +47,7 @@ class PreviewFrame : public QFrame
     Q_OBJECT
 
 public:
-    PreviewFrame(QWidget *parent = Q_NULLPTR);
+    PreviewFrame(QWidget *parent = nullptr);
     void setPreviewPalette(const QPalette &pal);
     void setPreviewVisible(bool val);
     QString previewText() const;

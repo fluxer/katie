@@ -567,7 +567,7 @@ static const uchar bitflip[256] = {
 
 QImage::QImage()
     : QPaintDevice(),
-    d(Q_NULLPTR)
+    d(nullptr)
 {
 }
 
@@ -607,7 +607,7 @@ QImage::QImage(const QSize &size, Format format)
 QImageData *QImageData::create(uchar *data, int width, int height,  int bpl, QImage::Format format, bool readOnly)
 {
     if (Q_UNLIKELY(format == QImage::Format_Invalid))
-        return Q_NULLPTR;
+        return nullptr;
 
     const int depth = qt_depthForFormat(format);
     const int min_bytes_per_line = (width * depth + 7)/8;
@@ -622,7 +622,7 @@ QImageData *QImageData::create(uchar *data, int width, int height,  int bpl, QIm
         || bpl <= 0
         || bpl < min_bytes_per_line
         || INT_MAX/uint(bpl) < uint(height))) {
-        return Q_NULLPTR; // invalid parameter(s)
+        return nullptr; // invalid parameter(s)
     }
 
     QScopedPointer<QImageData> d(new QImageData);
@@ -758,7 +758,7 @@ QImage::QImage(const uchar *data, int width, int height, int bytesPerLine, Forma
 
 QImage::QImage(const QString &fileName, const char *format)
     : QPaintDevice(),
-    d(Q_NULLPTR)
+    d(nullptr)
 {
     load(fileName, format);
 }
@@ -790,7 +790,7 @@ QImage::QImage(const QString &fileName, const char *format)
 #ifndef QT_NO_CAST_FROM_ASCII
 QImage::QImage(const char *fileName, const char *format)
     : QPaintDevice(),
-    d(Q_NULLPTR)
+    d(nullptr)
 {
     load(QString::fromAscii(fileName), format);
 }
@@ -817,7 +817,7 @@ extern bool qt_read_xpm_array(const char * const *source, QImage &image);
 
 QImage::QImage(const char * const xpm[])
     : QPaintDevice(),
-    d(Q_NULLPTR)
+    d(nullptr)
 {
     if (Q_UNLIKELY(!xpm))
         return;
@@ -855,7 +855,7 @@ QImage::QImage(const char * const xpm[])
 
 QImage::QImage(const QImage &image)
     : QPaintDevice(),
-    d(Q_NULLPTR)
+    d(nullptr)
 {
     if (image.paintingActive()) {
         operator=(image.copy());

@@ -98,7 +98,7 @@ private:
 // PropertySheet to handle the page properties
 class Q_DESIGNER_EXPORT QTabWidgetPropertySheet : public QDesignerPropertySheet {
 public:
-    explicit QTabWidgetPropertySheet(QTabWidget *object, QObject *parent = Q_NULLPTR);
+    explicit QTabWidgetPropertySheet(QTabWidget *object, QObject *parent = nullptr);
 
     virtual void setProperty(int index, const QVariant &value);
     virtual QVariant property(int index) const;

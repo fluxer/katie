@@ -158,9 +158,9 @@ public:
         ConnectionModeHttps
     };
 
-    explicit QHttp(QObject *parent = Q_NULLPTR);
-    QHttp(const QString &hostname, quint16 port = 80, QObject *parent = Q_NULLPTR);
-    QHttp(const QString &hostname, ConnectionMode mode, quint16 port = 0, QObject *parent = Q_NULLPTR);
+    explicit QHttp(QObject *parent = nullptr);
+    QHttp(const QString &hostname, quint16 port = 80, QObject *parent = nullptr);
+    QHttp(const QString &hostname, ConnectionMode mode, quint16 port = 0, QObject *parent = nullptr);
     virtual ~QHttp();
 
     enum State {

@@ -40,7 +40,7 @@ class Q_GUI_EXPORT QToolBox : public QFrame
     Q_PROPERTY(int count READ count)
 
 public:
-    explicit QToolBox(QWidget *parent = Q_NULLPTR, Qt::WindowFlags f = 0);
+    explicit QToolBox(QWidget *parent = nullptr, Qt::WindowFlags f = 0);
     ~QToolBox();
 
     int addItem(QWidget *widget, const QString &text);

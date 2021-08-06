@@ -121,7 +121,7 @@ private:
 // PropertySheet to handle the "currentPageName" property
 class Q_DESIGNER_EXPORT QStackedWidgetPropertySheet : public QDesignerPropertySheet {
 public:
-    explicit QStackedWidgetPropertySheet(QStackedWidget *object, QObject *parent = Q_NULLPTR);
+    explicit QStackedWidgetPropertySheet(QStackedWidget *object, QObject *parent = nullptr);
 
     virtual void setProperty(int index, const QVariant &value);
     virtual QVariant property(int index) const;

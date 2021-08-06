@@ -46,7 +46,7 @@ class Q_DESIGNER_EXPORT PlainTextEditorDialog : public QDialog
 {
     Q_OBJECT
 public:
-    explicit PlainTextEditorDialog(QDesignerFormEditorInterface *core, QWidget *parent = Q_NULLPTR);
+    explicit PlainTextEditorDialog(QDesignerFormEditorInterface *core, QWidget *parent = nullptr);
     ~PlainTextEditorDialog();
 
     int showDialog();

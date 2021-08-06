@@ -81,7 +81,7 @@ class ParallelAnimationWrapper : public QParallelAnimationGroup
 {
     Q_OBJECT
 public:
-    ParallelAnimationWrapper(QObject *parent = Q_NULLPTR) : QParallelAnimationGroup(parent) {}
+    ParallelAnimationWrapper(QObject *parent = nullptr) : QParallelAnimationGroup(parent) {}
     QDeclarativeTransitionPrivate *trans;
 protected:
     virtual void updateState(QAbstractAnimation::State newState, QAbstractAnimation::State oldState);

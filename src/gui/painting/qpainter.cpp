@@ -1420,7 +1420,7 @@ bool QPainter::begin(QPaintDevice *pd)
 
     d->device = pd;
 
-    d->extended = d->engine->isExtended() ? static_cast<QPaintEngineEx *>(d->engine) : Q_NULLPTR;
+    d->extended = d->engine->isExtended() ? static_cast<QPaintEngineEx *>(d->engine) : nullptr;
 
     // Setup new state...
     Q_ASSERT(!d->state);
@@ -1600,7 +1600,7 @@ bool QPainter::end()
     }
 
     if (d->extended) {
-        d->extended = Q_NULLPTR;
+        d->extended = nullptr;
     }
 
     qt_cleanup_painter_state(d);
@@ -5040,7 +5040,7 @@ void QPainter::drawStaticText(const QPointF &topLeftPosition, const QStaticText 
 
     // If we don't have an extended paint engine, or if the painter is projected,
     // we go through standard code path
-    if (d->extended == Q_NULLPTR || !d->state->matrix.isAffine()) {
+    if (d->extended == nullptr || !d->state->matrix.isAffine()) {
         staticText_d->paintText(topLeftPosition, this);
         return;
     }
@@ -6478,7 +6478,7 @@ void qt_format_text(const QFont &fnt, const QRectF &_r,
     qt_format_text(fnt, _r,
                     tf, 0, str, brect,
                     tabstops, ta, tabarraylen,
-                    Q_NULLPTR);
+                    nullptr);
 }
 void qt_format_text(const QFont &fnt, const QRectF &_r,
                     int tf, const QTextOption *option, const QString& str, QRectF *brect,

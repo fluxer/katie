@@ -31,7 +31,7 @@ class QtGradientWidget : public QWidget
     Q_OBJECT
     Q_PROPERTY(bool backgroundCheckered READ isBackgroundCheckered WRITE setBackgroundCheckered)
 public:
-    QtGradientWidget(QWidget *parent = Q_NULLPTR);
+    QtGradientWidget(QWidget *parent = nullptr);
     ~QtGradientWidget();
 
     QSize minimumSizeHint() const;

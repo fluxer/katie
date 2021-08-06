@@ -51,7 +51,7 @@ class Q_GUI_EXPORT QGesture : public QObject
     Q_PROPERTY(bool hasHotSpot READ hasHotSpot)
 
 public:
-    explicit QGesture(QObject *parent = Q_NULLPTR);
+    explicit QGesture(QObject *parent = nullptr);
     ~QGesture();
 
     Qt::GestureType gestureType() const;
@@ -95,7 +95,7 @@ class Q_GUI_EXPORT QPanGesture : public QGesture
     Q_PRIVATE_PROPERTY(QPanGesture::d_func(), qreal verticalVelocity READ verticalVelocity WRITE setVerticalVelocity)
 
 public:
-    QPanGesture(QObject *parent = Q_NULLPTR);
+    QPanGesture(QObject *parent = nullptr);
 
     QPointF lastOffset() const;
     QPointF offset() const;
@@ -140,7 +140,7 @@ public:
     Q_PROPERTY(QPointF centerPoint READ centerPoint WRITE setCenterPoint)
 
 public:
-    QPinchGesture(QObject *parent = Q_NULLPTR);
+    QPinchGesture(QObject *parent = nullptr);
 
     ChangeFlags totalChangeFlags() const;
     void setTotalChangeFlags(ChangeFlags value);
@@ -194,7 +194,7 @@ class Q_GUI_EXPORT QSwipeGesture : public QGesture
 
 public:
     enum SwipeDirection { NoDirection, Left, Right, Up, Down };
-    QSwipeGesture(QObject *parent = Q_NULLPTR);
+    QSwipeGesture(QObject *parent = nullptr);
 
     SwipeDirection horizontalDirection() const;
     SwipeDirection verticalDirection() const;
@@ -214,7 +214,7 @@ class Q_GUI_EXPORT QTapGesture : public QGesture
     Q_PROPERTY(QPointF position READ position WRITE setPosition)
 
 public:
-    QTapGesture(QObject *parent = Q_NULLPTR);
+    QTapGesture(QObject *parent = nullptr);
 
     QPointF position() const;
     void setPosition(const QPointF &pos);
@@ -231,7 +231,7 @@ class Q_GUI_EXPORT QTapAndHoldGesture : public QGesture
     Q_PROPERTY(QPointF position READ position WRITE setPosition)
 
 public:
-    QTapAndHoldGesture(QObject *parent = Q_NULLPTR);
+    QTapAndHoldGesture(QObject *parent = nullptr);
 
     QPointF position() const;
     void setPosition(const QPointF &pos);

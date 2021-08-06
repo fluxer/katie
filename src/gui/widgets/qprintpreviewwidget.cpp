@@ -128,7 +128,7 @@ class GraphicsView : public QGraphicsView
 {
     Q_OBJECT
 public:
-    GraphicsView(QWidget* parent = Q_NULLPTR)
+    GraphicsView(QWidget* parent = nullptr)
         : QGraphicsView(parent)
     {
     }

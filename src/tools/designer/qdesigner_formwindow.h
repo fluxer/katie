@@ -35,7 +35,7 @@ class QDesignerFormWindow: public QWidget
     Q_OBJECT
 public:
     QDesignerFormWindow(QDesignerFormWindowInterface *formWindow, QDesignerWorkbench *workbench,
-                        QWidget *parent = Q_NULLPTR, Qt::WindowFlags flags = 0);
+                        QWidget *parent = nullptr, Qt::WindowFlags flags = 0);
 
     void firstShow();
 

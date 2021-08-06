@@ -51,7 +51,7 @@ public:
     int dayOfYear() const;
     int daysInMonth() const;
     int daysInYear() const;
-    int weekNumber(int *yearNum = Q_NULLPTR) const;
+    int weekNumber(int *yearNum = nullptr) const;
 
 #ifndef QT_NO_TEXTDATE
     static QString shortMonthName(int month, MonthNameType type = QDate::DateFormat);

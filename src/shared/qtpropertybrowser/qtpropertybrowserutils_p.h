@@ -83,7 +83,7 @@ public:
 class QtBoolEdit : public QWidget {
     Q_OBJECT
 public:
-    QtBoolEdit(QWidget *parent = Q_NULLPTR);
+    QtBoolEdit(QWidget *parent = nullptr);
 
     bool textVisible() const { return m_textVisible; }
     void setTextVisible(bool textVisible);
@@ -111,7 +111,7 @@ class QtKeySequenceEdit : public QWidget
 {
     Q_OBJECT
 public:
-    QtKeySequenceEdit(QWidget *parent = Q_NULLPTR);
+    QtKeySequenceEdit(QWidget *parent = nullptr);
 
     QKeySequence keySequence() const;
     bool eventFilter(QObject *o, QEvent *e);

@@ -80,7 +80,7 @@ public:
     // }
 
     QDBusPendingCallPrivate(const QDBusMessage &sent, QDBusConnectionPrivate *connection)
-        : sentMessage(sent), connection(connection), watcherHelper(Q_NULLPTR), pending(Q_NULLPTR),
+        : sentMessage(sent), connection(connection), watcherHelper(nullptr), pending(nullptr),
           waitingForFinished(false)
     { }
     ~QDBusPendingCallPrivate();

@@ -40,7 +40,7 @@ class Q_UITOOLS_EXPORT QUiLoader : public QObject
 {
     Q_OBJECT
 public:
-    QUiLoader(QObject *parent = Q_NULLPTR);
+    QUiLoader(QObject *parent = nullptr);
     virtual ~QUiLoader();
 
     QStringList pluginPaths() const;
@@ -51,10 +51,10 @@ public:
     QStringList availableWidgets() const;
     QStringList availableLayouts() const;
 
-    virtual QWidget *createWidget(const QString &className, QWidget *parent = Q_NULLPTR, const QString &name = QString());
-    virtual QLayout *createLayout(const QString &className, QObject *parent = Q_NULLPTR, const QString &name = QString());
-    virtual QActionGroup *createActionGroup(QObject *parent = Q_NULLPTR, const QString &name = QString());
-    virtual QAction *createAction(QObject *parent = Q_NULLPTR, const QString &name = QString());
+    virtual QWidget *createWidget(const QString &className, QWidget *parent = nullptr, const QString &name = QString());
+    virtual QLayout *createLayout(const QString &className, QObject *parent = nullptr, const QString &name = QString());
+    virtual QActionGroup *createActionGroup(QObject *parent = nullptr, const QString &name = QString());
+    virtual QAction *createAction(QObject *parent = nullptr, const QString &name = QString());
 
     void setWorkingDirectory(const QDir &dir);
     QDir workingDirectory() const;

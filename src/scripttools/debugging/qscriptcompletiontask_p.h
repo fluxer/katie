@@ -55,7 +55,7 @@ public:
         QScriptDebuggerCommandSchedulerInterface *commandScheduler,
         QScriptDebuggerJobSchedulerInterface *jobScheduler,
         QScriptDebuggerConsole *console,
-        QObject *parent = Q_NULLPTR);
+        QObject *parent = nullptr);
     ~QScriptCompletionTask();
 
     void start();

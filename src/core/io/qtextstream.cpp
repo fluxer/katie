@@ -433,9 +433,9 @@ void QTextStreamPrivate::reset()
     realNumberNotation = QTextStream::SmartNotation;
     numberFlags = 0;
 
-    device = Q_NULLPTR;
+    device = nullptr;
     deleteDevice = false;
-    string = Q_NULLPTR;
+    string = nullptr;
     stringOffset = 0;
 
     readBufferOffset = 0;

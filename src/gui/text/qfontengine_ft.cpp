@@ -77,7 +77,7 @@ public:
     QHash<QFontEngine::FaceId, QFreetypeFace *> faces;
 };
 
-thread_local QtFreetypeData* theFreetypeData = Q_NULLPTR;
+thread_local QtFreetypeData* theFreetypeData = nullptr;
 
 QtFreetypeData *qt_getFreetypeData()
 {
@@ -1401,7 +1401,7 @@ bool QFontEngineFT::stringToCMap(const QChar *str, int len, QGlyphLayout *glyphs
 
 #if !defined(QT_NO_FONTCONFIG)
     extern std::recursive_mutex& qt_fontdatabase_mutex();
-    std::recursive_mutex *mtx = Q_NULLPTR;
+    std::recursive_mutex *mtx = nullptr;
 #endif
 
     bool mirrored = flags & QTextEngine::RightToLeft;

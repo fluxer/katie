@@ -1246,7 +1246,7 @@ Q_TEST_EXPORT void qtest_qParseArgs(int argc, char *argv[], bool qml)
 
             int colon = -1;
             QSTACKARRAY(char, buf, 512);
-            char *data = Q_NULLPTR;
+            char *data = nullptr;
             int off;
             for(off = 0; *(argv[i]+off); ++off) {
                 if (*(argv[i]+off) == ':') {

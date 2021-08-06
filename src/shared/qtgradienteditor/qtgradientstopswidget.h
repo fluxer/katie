@@ -34,7 +34,7 @@ class QtGradientStopsWidget : public QAbstractScrollArea
     Q_OBJECT
     Q_PROPERTY(bool backgroundCheckered READ isBackgroundCheckered WRITE setBackgroundCheckered)
 public:
-    QtGradientStopsWidget(QWidget *parent = Q_NULLPTR);
+    QtGradientStopsWidget(QWidget *parent = nullptr);
     ~QtGradientStopsWidget();
 
     QSize minimumSizeHint() const;

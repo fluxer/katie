@@ -31,9 +31,9 @@ template <class Key, class T>
 class Q_CORE_EXPORT QCache
 {
     struct Node {
-        inline Node() : keyPtr(Q_NULLPTR) {}
+        inline Node() : keyPtr(nullptr) {}
         inline Node(T *data, int cost)
-            : keyPtr(Q_NULLPTR), t(data), c(cost), p(Q_NULLPTR), n(Q_NULLPTR) {}
+            : keyPtr(nullptr), t(data), c(cost), p(nullptr), n(nullptr) {}
         const Key *keyPtr;
         T *t;
         int c;
@@ -56,14 +56,14 @@ class Q_CORE_EXPORT QCache
     inline T *relink(const Key &key) {
         typename QHash<Key, Node>::iterator i = hash.find(key);
         if (i == hash.end())
-            return Q_NULLPTR;
+            return nullptr;
 
         Node &n = *i;
         if (f != &n) {
             if (n.p) n.p->n = n.n;
             if (n.n) n.n->p = n.p;
             if (l == &n) l = n.p;
-            n.p = Q_NULLPTR;
+            n.p = nullptr;
             n.n = f;
             f->p = &n;
             f = &n;
@@ -102,12 +102,12 @@ private:
 
 template <class Key, class T>
 inline QCache<Key, T>::QCache(int amaxCost)
-    : f(Q_NULLPTR), l(Q_NULLPTR), mx(amaxCost), total(0) {}
+    : f(nullptr), l(nullptr), mx(amaxCost), total(0) {}
 
 template <class Key, class T>
 inline void QCache<Key,T>::clear()
 { while (f) { delete f->t; f = f->n; }
- hash.clear(); l = Q_NULLPTR; total = 0; }
+ hash.clear(); l = nullptr; total = 0; }
 
 template <class Key, class T>
 inline void QCache<Key,T>::setMaxCost(int m)
@@ -138,11 +138,11 @@ inline T *QCache<Key,T>::take(const Key &key)
 {
     typename QHash<Key, Node>::iterator i = hash.find(key);
     if (i == hash.end())
-        return Q_NULLPTR;
+        return nullptr;
 
     Node &n = *i;
     T *t = n.t;
-    n.t = Q_NULLPTR;
+    n.t = nullptr;
     unlink(n);
     return t;
 }

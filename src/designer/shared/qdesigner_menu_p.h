@@ -59,7 +59,7 @@ class Q_DESIGNER_EXPORT QDesignerMenu: public QMenu
 {
     Q_OBJECT
 public:
-    QDesignerMenu(QWidget *parent = Q_NULLPTR);
+    QDesignerMenu(QWidget *parent = nullptr);
     virtual ~QDesignerMenu();
 
     bool eventFilter(QObject *object, QEvent *event);

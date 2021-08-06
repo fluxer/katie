@@ -47,7 +47,7 @@ class Q_AUTOTEST_EXPORT QDeclarativeTimeLine : public QAbstractAnimation
 {
 Q_OBJECT
 public:
-    QDeclarativeTimeLine(QObject *parent = Q_NULLPTR);
+    QDeclarativeTimeLine(QObject *parent = nullptr);
     ~QDeclarativeTimeLine();
 
     enum SyncMode { LocalSync, GlobalSync };

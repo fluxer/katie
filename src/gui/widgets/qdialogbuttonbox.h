@@ -87,10 +87,10 @@ public:
 
     Q_DECLARE_FLAGS(StandardButtons, StandardButton)
 
-    QDialogButtonBox(QWidget *parent = Q_NULLPTR);
-    QDialogButtonBox(Qt::Orientation orientation, QWidget *parent = Q_NULLPTR);
+    QDialogButtonBox(QWidget *parent = nullptr);
+    QDialogButtonBox(Qt::Orientation orientation, QWidget *parent = nullptr);
     QDialogButtonBox(StandardButtons buttons, Qt::Orientation orientation = Qt::Horizontal,
-                     QWidget *parent = Q_NULLPTR);
+                     QWidget *parent = nullptr);
     ~QDialogButtonBox();
 
     void setOrientation(Qt::Orientation orientation);

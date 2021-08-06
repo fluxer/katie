@@ -53,7 +53,7 @@ Q_GLOBAL_STATIC(QReadWriteLock, dbDictLock)
 class QSqlDatabasePrivate
 {
 public:
-    QSqlDatabasePrivate(QSqlDriver *dr = Q_NULLPTR):
+    QSqlDatabasePrivate(QSqlDriver *dr = nullptr):
         ref(1),
         driver(dr),
         port(-1),

@@ -44,7 +44,7 @@ class Q_GUI_EXPORT QSpinBox : public QAbstractSpinBox
     Q_PROPERTY(int value READ value WRITE setValue NOTIFY valueChanged USER true)
 
 public:
-    explicit QSpinBox(QWidget *parent = Q_NULLPTR);
+    explicit QSpinBox(QWidget *parent = nullptr);
 
     int value() const;
 
@@ -102,7 +102,7 @@ class Q_GUI_EXPORT QDoubleSpinBox : public QAbstractSpinBox
     Q_PROPERTY(double singleStep READ singleStep WRITE setSingleStep)
     Q_PROPERTY(double value READ value WRITE setValue NOTIFY valueChanged USER true)
 public:
-    explicit QDoubleSpinBox(QWidget *parent = Q_NULLPTR);
+    explicit QDoubleSpinBox(QWidget *parent = nullptr);
 
     double value() const;
 

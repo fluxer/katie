@@ -1010,7 +1010,7 @@ void qBadAlloc()
 #ifndef QT_NO_EXECINFO
 static void qt_print_backtrace()
 {
-    ::setvbuf(stderr, Q_NULLPTR, _IONBF, 0);
+    ::setvbuf(stderr, nullptr, _IONBF, 0);
     QSTACKARRAY(void*, buffer, 256);
     int  nptrs = backtrace(buffer, sizeof(buffer));
     char **strings = backtrace_symbols(buffer, nptrs);
@@ -1022,7 +1022,7 @@ static void qt_print_backtrace()
     for (int i = 0; i < nptrs; i++) {
 #ifdef QT_HAVE_CXXABI_H
         int status;
-        char* demangled = abi::__cxa_demangle(strings[i], Q_NULLPTR, Q_NULLPTR, &status);
+        char* demangled = abi::__cxa_demangle(strings[i], nullptr, nullptr, &status);
         if (status == 0) {
             ::fprintf(stderr, " %s\n", demangled);
             ::free(demangled);

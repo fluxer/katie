@@ -37,7 +37,7 @@ class BrushManagerProxy : public QObject
 {
     Q_OBJECT
 public:
-    explicit BrushManagerProxy(QDesignerFormEditorInterface *core, QObject *parent = Q_NULLPTR);
+    explicit BrushManagerProxy(QDesignerFormEditorInterface *core, QObject *parent = nullptr);
     ~BrushManagerProxy();
 
     void setBrushManager(QtBrushManager *manager);

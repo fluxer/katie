@@ -85,7 +85,7 @@ class Q_DESIGNER_EXPORT MetaDataBase: public QDesignerMetaDataBaseInterface
 {
     Q_OBJECT
 public:
-    explicit MetaDataBase(QDesignerFormEditorInterface *core, QObject *parent = Q_NULLPTR);
+    explicit MetaDataBase(QDesignerFormEditorInterface *core, QObject *parent = nullptr);
     virtual ~MetaDataBase();
 
     virtual QDesignerFormEditorInterface *core() const;

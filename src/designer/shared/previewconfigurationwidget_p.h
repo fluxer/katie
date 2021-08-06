@@ -50,7 +50,7 @@ class Q_DESIGNER_EXPORT PreviewConfigurationWidget : public QGroupBox
     Q_OBJECT
 public:
     explicit PreviewConfigurationWidget(QDesignerFormEditorInterface *core,
-                                        QWidget *parent = Q_NULLPTR);
+                                        QWidget *parent = nullptr);
     virtual ~PreviewConfigurationWidget();
     void saveState();
 

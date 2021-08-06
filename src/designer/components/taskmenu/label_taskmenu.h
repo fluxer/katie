@@ -38,7 +38,7 @@ class LabelTaskMenu: public QDesignerTaskMenu
 {
     Q_OBJECT
 public:
-    explicit LabelTaskMenu(QLabel *button, QObject *parent = Q_NULLPTR);
+    explicit LabelTaskMenu(QLabel *button, QObject *parent = nullptr);
 
     virtual QAction *preferredEditAction() const;
     virtual QList<QAction*> taskActions() const;

@@ -104,7 +104,7 @@ QT_BEGIN_NAMESPACE
  */
 
 /*!
-    \fn QScopedPointer::QScopedPointer(T *p = Q_NULLPTR)
+    \fn QScopedPointer::QScopedPointer(T *p = nullptr)
 
     Constructs this QScopedPointer instance and sets its pointer to \a p.
 */
@@ -177,7 +177,7 @@ QT_BEGIN_NAMESPACE
 */
 
 /*!
-    \fn void QScopedPointer::reset(T *other = Q_NULLPTR)
+    \fn void QScopedPointer::reset(T *other = nullptr)
 
     Deletes the existing object it is pointing to if any, and sets its pointer to
     \a other. QScopedPointer now owns \a other and will delete it in its

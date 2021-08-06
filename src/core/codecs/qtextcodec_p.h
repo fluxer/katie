@@ -51,7 +51,7 @@ public:
 
     struct ConverterState {
         ConverterState(ConversionFlags f = DefaultConversion)
-            : flags(f), invalidChars(0), d(Q_NULLPTR) { }
+            : flags(f), invalidChars(0), d(nullptr) { }
         ~ConverterState() { }
         ConversionFlags flags;
         int invalidChars;

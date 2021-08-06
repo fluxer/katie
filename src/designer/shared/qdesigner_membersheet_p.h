@@ -47,7 +47,7 @@ class Q_DESIGNER_EXPORT QDesignerMemberSheet: public QObject, public QDesignerMe
     Q_INTERFACES(QDesignerMemberSheetExtension)
 
 public:
-    explicit QDesignerMemberSheet(QObject *object, QObject *parent = Q_NULLPTR);
+    explicit QDesignerMemberSheet(QObject *object, QObject *parent = nullptr);
     virtual ~QDesignerMemberSheet();
 
     virtual int indexOf(const QString &name) const;

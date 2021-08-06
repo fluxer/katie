@@ -205,7 +205,7 @@ public:
 };
 
 QImageIOHandlerPrivate::QImageIOHandlerPrivate()
-    : device(Q_NULLPTR)
+    : device(nullptr)
 {
 }
 

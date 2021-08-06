@@ -40,7 +40,7 @@ class ToolBarTaskMenu : public QObject, public QDesignerTaskMenuExtension
     Q_OBJECT
     Q_INTERFACES(QDesignerTaskMenuExtension)
 public:
-    explicit ToolBarTaskMenu(QToolBar *tb, QObject *parent = Q_NULLPTR);
+    explicit ToolBarTaskMenu(QToolBar *tb, QObject *parent = nullptr);
 
     virtual QAction *preferredEditAction() const;
     virtual QList<QAction*> taskActions() const;
@@ -55,7 +55,7 @@ class StatusBarTaskMenu : public QObject, public QDesignerTaskMenuExtension
     Q_OBJECT
     Q_INTERFACES(QDesignerTaskMenuExtension)
 public:
-    explicit StatusBarTaskMenu(QStatusBar *tb, QObject *parent = Q_NULLPTR);
+    explicit StatusBarTaskMenu(QStatusBar *tb, QObject *parent = nullptr);
 
     virtual QAction *preferredEditAction() const;
     virtual QList<QAction*> taskActions() const;

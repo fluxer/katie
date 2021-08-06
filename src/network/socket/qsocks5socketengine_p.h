@@ -46,7 +46,7 @@ class Q_AUTOTEST_EXPORT QSocks5SocketEngine : public QAbstractSocketEngine
 {
     Q_OBJECT
 public:
-    QSocks5SocketEngine(QObject *parent = Q_NULLPTR);
+    QSocks5SocketEngine(QObject *parent = nullptr);
     ~QSocks5SocketEngine();
 
     bool initialize(QAbstractSocket::SocketType type, QAbstractSocket::NetworkLayerProtocol protocol = QAbstractSocket::IPv4Protocol);

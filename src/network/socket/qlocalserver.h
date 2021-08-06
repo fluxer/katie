@@ -42,7 +42,7 @@ Q_SIGNALS:
     void newConnection();
 
 public:
-    QLocalServer(QObject *parent = Q_NULLPTR);
+    QLocalServer(QObject *parent = nullptr);
     ~QLocalServer();
 
     void close();

@@ -63,7 +63,7 @@ static const char *ResourceViewDialogC = "ResourceDialog";
 // ---------------- ResourceListWidget: A list widget that has drag enabled
 class ResourceListWidget : public QListWidget {
 public:
-    ResourceListWidget(QWidget *parent = Q_NULLPTR);
+    ResourceListWidget(QWidget *parent = nullptr);
 
 protected:
     virtual void startDrag(Qt::DropActions supportedActions);

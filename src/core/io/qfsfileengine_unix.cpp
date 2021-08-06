@@ -88,7 +88,7 @@ uchar *QFSFileEnginePrivate::map(qint64 offset, qint64 size)
     QT_OFF_T realOffset = QT_OFF_T(offset);
     realOffset &= ~(QT_OFF_T(pageSize - 1));
 
-    void *mapAddress = QT_MMAP(Q_NULLPTR, realSize,
+    void *mapAddress = QT_MMAP(nullptr, realSize,
                    access, MAP_SHARED, fd, realOffset);
     if (mapAddress != MAP_FAILED) {
         uchar *address = extra + static_cast<uchar*>(mapAddress);

@@ -188,11 +188,11 @@ bool QSharedMemoryPrivate::attach(QSharedMemory::AccessMode mode)
 
     // grab the memory
     int mprot = (mode == QSharedMemory::ReadOnly ? PROT_READ : PROT_READ | PROT_WRITE);
-    memory = QT_MMAP(Q_NULLPTR, size, mprot, MAP_SHARED, hand, 0);
+    memory = QT_MMAP(nullptr, size, mprot, MAP_SHARED, hand, 0);
     if (memory == MAP_FAILED || !memory) {
         setErrorString(QLatin1String("QSharedMemory::attach (mmap)"));
         cleanHandle();
-        memory = Q_NULLPTR;
+        memory = nullptr;
         size = 0;
         return false;
     }
@@ -207,7 +207,7 @@ bool QSharedMemoryPrivate::detach()
         setErrorString(QLatin1String("QSharedMemory::detach (munmap)"));
         return false;
     }
-    memory = Q_NULLPTR;
+    memory = nullptr;
     size = 0;
 
     // get the number of current attachments

@@ -211,7 +211,7 @@ void QFileSystemWatcherPrivate::initNativeEngine()
 }
 
 QFileSystemWatcherPrivate::QFileSystemWatcherPrivate()
-    : watcher(Q_NULLPTR)
+    : watcher(nullptr)
 {
 }
 
@@ -360,7 +360,7 @@ QFileSystemWatcher::~QFileSystemWatcher()
     Q_D(QFileSystemWatcher);
     if (d->watcher) {
         delete d->watcher;
-        d->watcher = Q_NULLPTR;
+        d->watcher = nullptr;
     }
 }
 

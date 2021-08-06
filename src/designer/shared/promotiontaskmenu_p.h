@@ -61,7 +61,7 @@ public:
         ModeUnmanagedMultiSelection
     };
 
-    explicit PromotionTaskMenu(QWidget *widget,Mode mode = ModeManagedMultiSelection, QObject *parent = Q_NULLPTR);
+    explicit PromotionTaskMenu(QWidget *widget,Mode mode = ModeManagedMultiSelection, QObject *parent = nullptr);
 
     Mode mode() const;
     void setMode(Mode m);

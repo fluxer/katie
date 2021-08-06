@@ -44,8 +44,8 @@ class Q_GUI_EXPORT QLCDNumber : public QFrame // LCD number widget
     Q_PROPERTY(int intValue READ intValue WRITE display)
 
 public:
-    explicit QLCDNumber(QWidget* parent = Q_NULLPTR);
-    explicit QLCDNumber(uint numDigits, QWidget* parent = Q_NULLPTR);
+    explicit QLCDNumber(QWidget* parent = nullptr);
+    explicit QLCDNumber(uint numDigits, QWidget* parent = nullptr);
     ~QLCDNumber();
 
     enum Mode {

@@ -43,7 +43,7 @@ class Q_AUTOTEST_EXPORT QScriptDebuggerStackWidget:
 {
     Q_OBJECT
 public:
-    QScriptDebuggerStackWidget(QWidget *parent = Q_NULLPTR);
+    QScriptDebuggerStackWidget(QWidget *parent = nullptr);
     ~QScriptDebuggerStackWidget();
 
     QAbstractItemModel *stackModel() const;

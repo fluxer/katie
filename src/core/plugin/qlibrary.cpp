@@ -218,7 +218,7 @@ Q_GLOBAL_STATIC(LibraryData, libraryData)
 static LibraryMap *libraryMap()
 {
     LibraryData *data = libraryData();
-    return data ? &data->libraryMap : Q_NULLPTR;
+    return data ? &data->libraryMap : nullptr;
 }
 
 QLibraryPrivate::QLibraryPrivate(const QString &canonicalFileName, const QString &version)
@@ -290,7 +290,7 @@ QLibraryPrivate::~QLibraryPrivate()
 void *QLibraryPrivate::resolve(const char *symbol)
 {
     if (!pHnd)
-        return Q_NULLPTR;
+        return nullptr;
     return resolve_sys(symbol);
 }
 

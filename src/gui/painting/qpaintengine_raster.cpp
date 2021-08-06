@@ -2797,7 +2797,7 @@ QRasterBuffer::QRasterBuffer()
     compositionMode(QPainter::CompositionMode_SourceOver),
     m_width(0),
     m_height(0),
-    m_buffer(Q_NULLPTR)
+    m_buffer(nullptr)
 {
 }
 

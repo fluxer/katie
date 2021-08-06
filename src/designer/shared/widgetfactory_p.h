@@ -59,7 +59,7 @@ class Q_DESIGNER_EXPORT WidgetFactory: public QDesignerWidgetFactoryInterface
 {
     Q_OBJECT
 public:
-    explicit WidgetFactory(QDesignerFormEditorInterface *core, QObject *parent = Q_NULLPTR);
+    explicit WidgetFactory(QDesignerFormEditorInterface *core, QObject *parent = nullptr);
     ~WidgetFactory();
 
     virtual QWidget* containerOfWidget(QWidget *widget) const;

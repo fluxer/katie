@@ -219,13 +219,13 @@ public:
 };
 
 QXmlInputSourcePrivate::QXmlInputSourcePrivate()
-    : inputDevice(Q_NULLPTR),
+    : inputDevice(nullptr),
     unicode(str.unicode()),
     pos(0),
     length(0),
     nextReturnedEndOfData(true), // first call to next() will call fetchData()
 #ifndef QT_NO_TEXTCODEC
-    encMapper(Q_NULLPTR),
+    encMapper(nullptr),
 #endif
     lookingForEncodingDecl(true)
 {
@@ -1287,7 +1287,7 @@ QString QXmlInputSource::fromRawData(const QByteArray &data, bool beginning)
         return QString();
     if (beginning) {
         delete d->encMapper;
-        d->encMapper = Q_NULLPTR;
+        d->encMapper = nullptr;
     }
 
     int mib = 106; // fallback to UTF-8 even for non-UTF data
@@ -2272,7 +2272,7 @@ bool QXmlDefaultHandler::unparsedEntityDecl(const QString&, const QString&,
 bool QXmlDefaultHandler::resolveEntity(const QString&, const QString&,
         QXmlInputSource*& ret)
 {
-    ret = Q_NULLPTR;
+    ret = nullptr;
     return true;
 }
 
@@ -2418,14 +2418,14 @@ QXmlSimpleReaderPrivate::QXmlSimpleReaderPrivate(QXmlSimpleReader *reader)
     reportWhitespaceCharData(true),
     reportEntities(false),
     locator(new QXmlSimpleReaderLocator(reader)),
-    parseStack(Q_NULLPTR),
-    contentHnd(Q_NULLPTR),
-    errorHnd(Q_NULLPTR),
-    dtdHnd(Q_NULLPTR),
-    entityRes(Q_NULLPTR),
-    lexicalHnd(Q_NULLPTR),
-    declHnd(Q_NULLPTR),
-    inputSource(Q_NULLPTR)
+    parseStack(nullptr),
+    contentHnd(nullptr),
+    errorHnd(nullptr),
+    dtdHnd(nullptr),
+    entityRes(nullptr),
+    lexicalHnd(nullptr),
+    declHnd(nullptr),
+    inputSource(nullptr)
 {
 }
 
@@ -2854,7 +2854,7 @@ void* QXmlSimpleReader::property(const QString&, bool *ok) const
 {
     if (ok)
         *ok = false;
-    return Q_NULLPTR;
+    return nullptr;
 }
 
 /*! \reimp
@@ -3033,7 +3033,7 @@ bool QXmlSimpleReader::parse(const QXmlInputSource *input, bool incremental)
         d->initIncrementalParsing();
     } else {
         delete d->parseStack;
-        d->parseStack = Q_NULLPTR;
+        d->parseStack = nullptr;
     }
     d->init(input);
 
@@ -3142,7 +3142,7 @@ bool QXmlSimpleReaderPrivate::parseBeginOrContinue(int state, bool incremental)
     // call the handler
     if (contentHnd) {
         delete parseStack;
-        parseStack = Q_NULLPTR;
+        parseStack = nullptr;
         if (!contentHnd->endDocument()) {
             reportParseError(contentHnd->errorString());
             return false;
@@ -5074,7 +5074,7 @@ bool QXmlSimpleReaderPrivate::parsePEReference()
                     } else if (entityRes) {
                         QMap<QString,QXmlSimpleReaderPrivate::ExternParameterEntity>::Iterator it2;
                         it2 = externParameterEntities.find(ref());
-                        QXmlInputSource *ret = Q_NULLPTR;
+                        QXmlInputSource *ret = nullptr;
                         if (it2 != externParameterEntities.end()) {
                             if (!entityRes->resolveEntity((*it2).publicId, (*it2).systemId, ret)) {
                                 delete ret;
@@ -7424,7 +7424,7 @@ bool QXmlSimpleReaderPrivate::processReference()
                             // Included if validating
                             bool skipIt = true;
                             if (entityRes) {
-                                QXmlInputSource *ret = Q_NULLPTR;
+                                QXmlInputSource *ret = nullptr;
                                 if (!entityRes->resolveEntity((*itExtern).publicId, (*itExtern).systemId, ret)) {
                                     delete ret;
                                     reportParseError(entityRes->errorString());
@@ -7756,7 +7756,7 @@ void QXmlSimpleReaderPrivate::parseFailed(ParseFunction where, int state)
   state to the parse stack. This is used when you are doing an incremental
   parsing and reach the end of file too early.
 
-  Only call this function when d->parseStack!=Q_NULLPTR.
+  Only call this function when d->parseStack!=nullptr.
 */
 void QXmlSimpleReaderPrivate::pushParseState(ParseFunction function, int state)
 {

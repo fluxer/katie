@@ -45,7 +45,7 @@ class QScriptDebuggerFrontendEventReceiver : public QObject
 {
 public:
     QScriptDebuggerFrontendEventReceiver(QScriptDebuggerFrontendPrivate *frontend,
-                                         QObject *parent = Q_NULLPTR);
+                                         QObject *parent = nullptr);
     ~QScriptDebuggerFrontendEventReceiver();
 
     bool event(QEvent *);

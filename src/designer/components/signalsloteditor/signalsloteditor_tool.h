@@ -42,7 +42,7 @@ class QT_SIGNALSLOTEDITOR_EXPORT SignalSlotEditorTool: public QDesignerFormWindo
 {
     Q_OBJECT
 public:
-    explicit SignalSlotEditorTool(QDesignerFormWindowInterface *formWindow, QObject *parent = Q_NULLPTR);
+    explicit SignalSlotEditorTool(QDesignerFormWindowInterface *formWindow, QObject *parent = nullptr);
     virtual ~SignalSlotEditorTool();
 
     virtual QDesignerFormEditorInterface *core() const;

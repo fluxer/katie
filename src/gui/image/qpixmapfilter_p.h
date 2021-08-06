@@ -77,7 +77,7 @@ class Q_GUI_EXPORT QPixmapBlurFilter : public QPixmapFilter
     Q_DECLARE_PRIVATE(QPixmapBlurFilter)
 
 public:
-    QPixmapBlurFilter(QObject *parent = Q_NULLPTR);
+    QPixmapBlurFilter(QObject *parent = nullptr);
     ~QPixmapBlurFilter();
 
     void setRadius(qreal radius);
@@ -98,7 +98,7 @@ class Q_GUI_EXPORT QPixmapColorizeFilter : public QPixmapFilter
     Q_DECLARE_PRIVATE(QPixmapColorizeFilter)
 
 public:
-    QPixmapColorizeFilter(QObject *parent = Q_NULLPTR);
+    QPixmapColorizeFilter(QObject *parent = nullptr);
 
     void setColor(const QColor& color);
     QColor color() const;
@@ -117,7 +117,7 @@ class Q_GUI_EXPORT QPixmapDropShadowFilter : public QPixmapFilter
     Q_DECLARE_PRIVATE(QPixmapDropShadowFilter)
 
 public:
-    QPixmapDropShadowFilter(QObject *parent = Q_NULLPTR);
+    QPixmapDropShadowFilter(QObject *parent = nullptr);
     ~QPixmapDropShadowFilter();
 
     QRectF boundingRectFor(const QRectF &rect) const;

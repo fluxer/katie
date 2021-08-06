@@ -32,7 +32,7 @@ QT_BEGIN_NAMESPACE
 class QScriptDebugOutputWidgetOutputEdit : public QPlainTextEdit
 {
 public:
-    QScriptDebugOutputWidgetOutputEdit(QWidget *parent = Q_NULLPTR)
+    QScriptDebugOutputWidgetOutputEdit(QWidget *parent = nullptr)
         : QPlainTextEdit(parent)
     {
         setReadOnly(true);

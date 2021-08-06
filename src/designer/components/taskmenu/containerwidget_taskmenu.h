@@ -50,7 +50,7 @@ class ContainerWidgetTaskMenu: public QDesignerTaskMenu
 {
     Q_OBJECT
 public:
-    explicit ContainerWidgetTaskMenu(QWidget *widget, ContainerType type, QObject *parent = Q_NULLPTR);
+    explicit ContainerWidgetTaskMenu(QWidget *widget, ContainerType type, QObject *parent = nullptr);
     virtual ~ContainerWidgetTaskMenu();
 
     virtual QAction *preferredEditAction() const;
@@ -89,7 +89,7 @@ private:
 class WizardContainerWidgetTaskMenu : public ContainerWidgetTaskMenu {
     Q_OBJECT
 public:
-    explicit WizardContainerWidgetTaskMenu(QWizard *w, QObject *parent = Q_NULLPTR);
+    explicit WizardContainerWidgetTaskMenu(QWizard *w, QObject *parent = nullptr);
 
     virtual QList<QAction*> taskActions() const;
 
@@ -104,8 +104,8 @@ private:
 class MdiContainerWidgetTaskMenu : public ContainerWidgetTaskMenu {
     Q_OBJECT
 public:
-    explicit MdiContainerWidgetTaskMenu(QMdiArea *m, QObject *parent = Q_NULLPTR);
-    explicit MdiContainerWidgetTaskMenu(QWorkspace *m, QObject *parent = Q_NULLPTR);
+    explicit MdiContainerWidgetTaskMenu(QMdiArea *m, QObject *parent = nullptr);
+    explicit MdiContainerWidgetTaskMenu(QWorkspace *m, QObject *parent = nullptr);
 
     virtual QList<QAction*> taskActions() const;
 private:

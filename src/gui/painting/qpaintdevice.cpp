@@ -51,12 +51,12 @@ Qt::HANDLE Q_GUI_EXPORT qt_x11Handle(const QPaintDevice *pd)
 */
 const Q_GUI_EXPORT QX11Info *qt_x11Info(const QPaintDevice *pd)
 {
-    if (!pd) return Q_NULLPTR;
+    if (!pd) return nullptr;
     if (pd->devType() == QInternal::Widget)
         return &static_cast<const QWidget *>(pd)->x11Info();
     else if (pd->devType() == QInternal::Pixmap)
         return &static_cast<const QPixmap *>(pd)->x11Info();
-    return Q_NULLPTR;
+    return nullptr;
 }
 
 QPaintDevice::QPaintDevice()

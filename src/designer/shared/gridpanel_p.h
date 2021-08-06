@@ -46,7 +46,7 @@ class Q_DESIGNER_EXPORT GridPanel : public QWidget
 {
     Q_OBJECT
 public:
-    GridPanel(QWidget *parent = Q_NULLPTR);
+    GridPanel(QWidget *parent = nullptr);
     ~GridPanel();
 
     void setTitle(const QString &title);

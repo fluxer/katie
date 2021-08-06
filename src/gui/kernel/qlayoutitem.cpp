@@ -284,7 +284,7 @@ void QLayoutItem::invalidate()
 */
 QLayout * QLayoutItem::layout()
 {
-    return Q_NULLPTR;
+    return nullptr;
 }
 
 /*!

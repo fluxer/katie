@@ -34,7 +34,7 @@
 
 #define CRASH() do { \
     *(int *)(uintptr_t)0xbbadbeef = 0; \
-    ((void(*)())Q_NULLPTR)(); /* More reliable, but doesn't say BBADBEEF */ \
+    ((void(*)())nullptr)(); /* More reliable, but doesn't say BBADBEEF */ \
 } while(false)
 
 /* COMPILE_ASSERT */

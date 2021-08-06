@@ -47,7 +47,7 @@
 
 QT_BEGIN_NAMESPACE
 
-static const QLocalePrivate *default_lp = Q_NULLPTR;
+static const QLocalePrivate *default_lp = nullptr;
 static QLocale::NumberOptions default_number_options = 0;
 
 /******************************************************************************
@@ -724,7 +724,7 @@ short QLocale::toShort(const QString &s, bool *ok, int base) const
 {
     qlonglong i = toLongLong(s, ok, base);
     if (i < SHRT_MIN || i > SHRT_MAX) {
-        if (ok != Q_NULLPTR)
+        if (ok != nullptr)
             *ok = false;
         return 0;
     }
@@ -752,7 +752,7 @@ ushort QLocale::toUShort(const QString &s, bool *ok, int base) const
 {
     qulonglong i = toULongLong(s, ok, base);
     if (i > USHRT_MAX) {
-        if (ok != Q_NULLPTR)
+        if (ok != nullptr)
             *ok = false;
         return 0;
     }
@@ -780,7 +780,7 @@ int QLocale::toInt(const QString &s, bool *ok, int base) const
 {
     qlonglong i = toLongLong(s, ok, base);
     if (i < INT_MIN || i > INT_MAX) {
-        if (ok != Q_NULLPTR)
+        if (ok != nullptr)
             *ok = false;
         return 0;
     }
@@ -808,7 +808,7 @@ uint QLocale::toUInt(const QString &s, bool *ok, int base) const
 {
     qulonglong i = toULongLong(s, ok, base);
     if (i > UINT_MAX) {
-        if (ok != Q_NULLPTR)
+        if (ok != nullptr)
             *ok = false;
         return 0;
     }
@@ -2366,7 +2366,7 @@ float QLocalePrivate::stringToFloat(const QString &number, bool *ok,
     CharBuff buff;
     if (!numberToCLocale(group().unicode() == 0xa0 ? number.trimmed() : number,
                          group_sep_mode, &buff)) {
-        if (ok != Q_NULLPTR)
+        if (ok != nullptr)
             *ok = false;
         return 0.0;
     }
@@ -2379,7 +2379,7 @@ double QLocalePrivate::stringToDouble(const QString &number, bool *ok,
     CharBuff buff;
     if (!numberToCLocale(group().unicode() == 0xa0 ? number.trimmed() : number,
                          group_sep_mode, &buff)) {
-        if (ok != Q_NULLPTR)
+        if (ok != nullptr)
             *ok = false;
         return 0.0;
     }
@@ -2392,7 +2392,7 @@ qlonglong QLocalePrivate::stringToLongLong(const QString &number, int base,
     CharBuff buff;
     if (!numberToCLocale(group().unicode() == 0xa0 ? number.trimmed() : number,
                          group_sep_mode, &buff)) {
-        if (ok != Q_NULLPTR)
+        if (ok != nullptr)
             *ok = false;
         return 0;
     }
@@ -2406,7 +2406,7 @@ qulonglong QLocalePrivate::stringToUnsLongLong(const QString &number, int base,
     CharBuff buff;
     if (!numberToCLocale(group().unicode() == 0xa0 ? number.trimmed() : number,
                          group_sep_mode, &buff)) {
-        if (ok != Q_NULLPTR)
+        if (ok != nullptr)
             *ok = false;
         return 0;
     }
@@ -2417,13 +2417,13 @@ qulonglong QLocalePrivate::stringToUnsLongLong(const QString &number, int base,
 float QLocalePrivate::bytearrayToFloat(const char *num, bool *ok)
 {
     if (Q_UNLIKELY(*num == '\0')) {
-        if (ok != Q_NULLPTR)
+        if (ok != nullptr)
             *ok = false;
         return 0.0;
     }
 
     // strtof() sets errno to ERANGE on nan/infinity
-    if (ok != Q_NULLPTR)
+    if (ok != nullptr)
         *ok = true;
     if (qstrcmp(num, "nan") == 0)
         return qSNaN();
@@ -2436,14 +2436,14 @@ float QLocalePrivate::bytearrayToFloat(const char *num, bool *ok)
     Q_RESET_ERRNO
     float ret = std::strtof(num, &endptr);
     if ((ret == 0.0l && errno == ERANGE) || ret == HUGE_VALF || ret == -HUGE_VALF) {
-        if (ok != Q_NULLPTR)
+        if (ok != nullptr)
             *ok = false;
         return 0.0;
     }
 
     if (*endptr != '\0') {
         // stopped at a non-digit character after converting some digits
-        if (ok != Q_NULLPTR)
+        if (ok != nullptr)
             *ok = false;
         return 0.0;
     }
@@ -2454,13 +2454,13 @@ float QLocalePrivate::bytearrayToFloat(const char *num, bool *ok)
 double QLocalePrivate::bytearrayToDouble(const char *num, bool *ok)
 {
     if (Q_UNLIKELY(*num == '\0')) {
-        if (ok != Q_NULLPTR)
+        if (ok != nullptr)
             *ok = false;
         return 0.0;
     }
 
     // strtod() sets errno to ERANGE on nan/infinity
-    if (ok != Q_NULLPTR)
+    if (ok != nullptr)
         *ok = true;
     if (qstrcmp(num, "nan") == 0)
         return qSNaN();
@@ -2473,14 +2473,14 @@ double QLocalePrivate::bytearrayToDouble(const char *num, bool *ok)
     Q_RESET_ERRNO
     double ret = std::strtod(num, &endptr);
     if ((ret == 0.0l && errno == ERANGE) || ret == HUGE_VAL || ret == -HUGE_VAL) {
-        if (ok != Q_NULLPTR)
+        if (ok != nullptr)
             *ok = false;
         return 0.0;
     }
 
     if (*endptr != '\0') {
         // stopped at a non-digit character after converting some digits
-        if (ok != Q_NULLPTR)
+        if (ok != nullptr)
             *ok = false;
         return 0.0;
     }
@@ -2491,7 +2491,7 @@ double QLocalePrivate::bytearrayToDouble(const char *num, bool *ok)
 qlonglong QLocalePrivate::bytearrayToLongLong(const char *num, int base, bool *ok)
 {
     if (Q_UNLIKELY(*num == '\0')) {
-        if (ok != Q_NULLPTR)
+        if (ok != nullptr)
             *ok = false;
         return 0;
     }
@@ -2500,19 +2500,19 @@ qlonglong QLocalePrivate::bytearrayToLongLong(const char *num, int base, bool *o
     Q_RESET_ERRNO
     qlonglong ret = std::strtoll(num, &endptr, base);
     if ((ret == LLONG_MIN || ret == LLONG_MAX) && (errno == ERANGE || errno == EINVAL)) {
-        if (ok != Q_NULLPTR)
+        if (ok != nullptr)
             *ok = false;
         return 0;
     }
 
     if (*endptr != '\0') {
         // stopped at a non-digit character after converting some digits
-        if (ok != Q_NULLPTR)
+        if (ok != nullptr)
             *ok = false;
         return 0;
     }
 
-    if (ok != Q_NULLPTR)
+    if (ok != nullptr)
         *ok = true;
     return ret;
 }
@@ -2522,7 +2522,7 @@ qulonglong QLocalePrivate::bytearrayToUnsLongLong(const char *num, int base, boo
     // for compatibility strings starting with negative sign shall return 0 and set ok to false,
     // standard C library implementation handles it like overflow
     if (Q_UNLIKELY(*num == '\0' || *num == '-')) {
-        if (ok != Q_NULLPTR)
+        if (ok != nullptr)
             *ok = false;
         return 0;
     }
@@ -2531,19 +2531,19 @@ qulonglong QLocalePrivate::bytearrayToUnsLongLong(const char *num, int base, boo
     Q_RESET_ERRNO
     qulonglong ret = std::strtoull(num, &endptr, base);
     if (ret == ULLONG_MAX && (errno == ERANGE || errno == EINVAL)) {
-        if (ok != Q_NULLPTR)
+        if (ok != nullptr)
             *ok = false;
         return 0;
     }
 
     if (*endptr != '\0') {
         // stopped at a non-digit character after converting some digits
-        if (ok != Q_NULLPTR)
+        if (ok != nullptr)
             *ok = false;
         return 0;
     }
 
-    if (ok != Q_NULLPTR)
+    if (ok != nullptr)
         *ok = true;
     return ret;
 }

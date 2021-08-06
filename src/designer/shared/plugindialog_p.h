@@ -45,7 +45,7 @@ class PluginDialog : public QDialog
 {
     Q_OBJECT
 public:
-    explicit PluginDialog(QDesignerFormEditorInterface *core, QWidget *parent = Q_NULLPTR);
+    explicit PluginDialog(QDesignerFormEditorInterface *core, QWidget *parent = nullptr);
 
 private slots:
     void updateCustomWidgetPlugins();

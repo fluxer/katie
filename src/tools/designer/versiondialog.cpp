@@ -36,7 +36,7 @@ class VersionLabel : public QLabel
 {
     Q_OBJECT
 public:
-    VersionLabel(QWidget *parent = Q_NULLPTR);
+    VersionLabel(QWidget *parent = nullptr);
 
 signals:
     void triggered();

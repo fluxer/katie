@@ -58,8 +58,8 @@ static inline bool nameMatch(const QByteArray &name, const QByteArray &name2)
     return (ucnv_compareNames(iana, name2.constData()) == 0);
 }
 
-static QTextCodec *localeMapper = Q_NULLPTR;
-QTextCodec *QTextCodec::cftr = Q_NULLPTR;
+static QTextCodec *localeMapper = nullptr;
+QTextCodec *QTextCodec::cftr = nullptr;
 #ifndef QT_NO_THREAD
 Q_GLOBAL_STATIC(QMutex, textCodecsMutex)
 #endif
@@ -85,7 +85,7 @@ QTextCodecCleanup::~QTextCodecCleanup()
     for (int i = 0; i < this->size(); i++) {
         delete this->at(i);
     }
-    localeMapper = Q_NULLPTR;
+    localeMapper = nullptr;
 }
 Q_GLOBAL_STATIC(QTextCodecCleanup, qGlobalQTextCodec)
 
@@ -175,12 +175,12 @@ QTextCodec::ConverterState& QTextCodec::ConverterState::operator=(const QTextCod
             ucnv_close(static_cast<UConverter *>(d));
         }
         UErrorCode error = U_ZERO_ERROR;
-        d = ucnv_safeClone(static_cast<UConverter*>(other.d), Q_NULLPTR, Q_NULLPTR, &error);
+        d = ucnv_safeClone(static_cast<UConverter*>(other.d), nullptr, nullptr, &error);
         if (Q_UNLIKELY(U_FAILURE(error))) {
 #ifdef Q_DEBUG_TEXTCODEC
             qWarning("ConverterState: ucnv_safeClone() failed %s", u_errorName(error));
 #endif
-            d = Q_NULLPTR;
+            d = nullptr;
         }
     }
     return *this;
@@ -436,7 +436,7 @@ QTextCodec::~QTextCodec()
 QTextCodec *QTextCodec::codecForName(const QByteArray &name)
 {
     if (name.isEmpty())
-        return Q_NULLPTR;
+        return nullptr;
 
     if (name == "System")
         return QTextCodec::codecForLocale();
@@ -464,7 +464,7 @@ QTextCodec *QTextCodec::codecForName(const QByteArray &name)
         }
     }
 
-    return Q_NULLPTR;
+    return nullptr;
 }
 
 
@@ -492,7 +492,7 @@ QTextCodec* QTextCodec::codecForMib(int mib)
         }
     }
 
-    return Q_NULLPTR;
+    return nullptr;
 }
 
 /*!
@@ -661,7 +661,7 @@ QTextEncoder* QTextCodec::makeEncoder(QTextCodec::ConversionFlags flags) const
 */
 QByteArray QTextCodec::fromUnicode(const QString& str) const
 {
-    return convertFromUnicode(str.constData(), str.length(), Q_NULLPTR);
+    return convertFromUnicode(str.constData(), str.length(), nullptr);
 }
 
 /*!
@@ -681,7 +681,7 @@ QByteArray QTextCodec::fromUnicode(const QString& str) const
 */
 QString QTextCodec::toUnicode(const QByteArray& a) const
 {
-    return convertToUnicode(a.constData(), a.length(), Q_NULLPTR);
+    return convertToUnicode(a.constData(), a.length(), nullptr);
 }
 
 /*!
@@ -717,7 +717,7 @@ bool QTextCodec::canEncode(const QString& s) const
 */
 QString QTextCodec::toUnicode(const char *chars) const
 {
-    return convertToUnicode(chars, qstrlen(chars), Q_NULLPTR);
+    return convertToUnicode(chars, qstrlen(chars), nullptr);
 }
 
 
@@ -947,7 +947,7 @@ QString QTextDecoder::toUnicode(const QByteArray &ba)
 QTextCodec *QTextCodec::codecForHtml(const QByteArray &ba, QTextCodec *defaultCodec)
 {
     // determine charset
-    QTextCodec *c = QTextCodec::codecForUtfText(ba, Q_NULLPTR);
+    QTextCodec *c = QTextCodec::codecForUtfText(ba, nullptr);
     if (!c) {
         QByteArray header = ba.left(512).toLower();
         int pos = header.indexOf("http-equiv=");

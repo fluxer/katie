@@ -128,7 +128,7 @@ struct QRelation
 class QRelatedTableModel : public QSqlTableModel
 {
 public:
-    QRelatedTableModel(QRelation *rel, QObject *parent = Q_NULLPTR, QSqlDatabase db = QSqlDatabase());
+    QRelatedTableModel(QRelation *rel, QObject *parent = nullptr, QSqlDatabase db = QSqlDatabase());
     bool select();
 private:
     bool firstSelect;

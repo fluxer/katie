@@ -42,7 +42,7 @@ class Q_GUI_EXPORT QFontComboBox : public QComboBox
     Q_ENUMS(FontSelection)
 
 public:
-    explicit QFontComboBox(QWidget *parent = Q_NULLPTR);
+    explicit QFontComboBox(QWidget *parent = nullptr);
     ~QFontComboBox();
 
     enum FontFilter {

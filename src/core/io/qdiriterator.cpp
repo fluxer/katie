@@ -377,7 +377,7 @@ bool QDirIteratorPrivate::matchesFilters(const QString &fileName, const QFileInf
     \sa hasNext(), next(), IteratorFlags
 */
 QDirIterator::QDirIterator(const QDir &dir, IteratorFlags flags)
-    : d(Q_NULLPTR)
+    : d(nullptr)
 {
     const QDirPrivate *priv = dir.d_ptr.constData();
     d = new QDirIteratorPrivate(priv->dirEntry, priv->nameFilters, priv->filters, flags, priv->fileEngine);

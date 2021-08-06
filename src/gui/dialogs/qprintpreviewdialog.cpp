@@ -87,7 +87,7 @@ class LineEdit : public QLineEdit
 {
     Q_OBJECT
 public:
-    LineEdit(QWidget* parent = Q_NULLPTR)
+    LineEdit(QWidget* parent = nullptr)
         : QLineEdit(parent)
     {
         setContextMenuPolicy(Qt::NoContextMenu);

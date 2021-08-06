@@ -57,7 +57,7 @@ class Q_GUI_EXPORT QGuiPlatformPlugin : public QObject, public QGuiPlatformPlugi
             PH_ItemView_ActivateItemOnSingleClick
         };
 
-        explicit QGuiPlatformPlugin(QObject *parent = Q_NULLPTR);
+        explicit QGuiPlatformPlugin(QObject *parent = nullptr);
         ~QGuiPlatformPlugin();
 
         virtual QStringList keys() const;

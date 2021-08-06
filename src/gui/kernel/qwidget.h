@@ -170,7 +170,7 @@ public:
     };
     Q_DECLARE_FLAGS(RenderFlags, RenderFlag)
 
-    explicit QWidget(QWidget* parent = Q_NULLPTR, Qt::WindowFlags f = 0);
+    explicit QWidget(QWidget* parent = nullptr, Qt::WindowFlags f = 0);
     ~QWidget();
 
     int devType() const;

@@ -976,10 +976,10 @@ bool qt_read_xpm_array(const char * const * source, QImage &image)
 
     int cpp, ncols, w, h, index = 0;
 
-    if (!read_xpm_header(Q_NULLPTR, source, index, state, &cpp, &ncols, &w, &h))
+    if (!read_xpm_header(nullptr, source, index, state, &cpp, &ncols, &w, &h))
         return false;
 
-    return read_xpm_body(Q_NULLPTR, source, index, state, cpp, ncols, w, h, image);
+    return read_xpm_body(nullptr, source, index, state, cpp, ncols, w, h, image);
 }
 
 static const char* xpm_color_name(int cpp, int index)
@@ -1108,7 +1108,7 @@ QXpmHandler::QXpmHandler()
 bool QXpmHandler::readHeader()
 {
     state = Error;
-    if (!read_xpm_header(device(), Q_NULLPTR, index, buffer, &cpp, &ncols, &width, &height))
+    if (!read_xpm_header(device(), nullptr, index, buffer, &cpp, &ncols, &width, &height))
         return false;
     state = ReadHeader;
     return true;
@@ -1154,7 +1154,7 @@ bool QXpmHandler::read(QImage *image)
         return false;
     }
 
-    if (!read_xpm_body(device(), Q_NULLPTR, index, buffer, cpp, ncols, width, height, *image)) {
+    if (!read_xpm_body(device(), nullptr, index, buffer, cpp, ncols, width, height, *image)) {
         state = Error;
         return false;
     }

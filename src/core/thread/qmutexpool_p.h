@@ -49,13 +49,13 @@ class Q_CORE_EXPORT QMutexPoolBase
 {
 public:
     QMutexPoolBase() {
-        mutexes.fill(Q_NULLPTR);
+        mutexes.fill(nullptr);
     }
 
     ~QMutexPoolBase() {
         for (int index = 0; index < QMUTEXPOOL_SIZE; ++index) {
             delete mutexes[index];
-            mutexes[index] = Q_NULLPTR;
+            mutexes[index] = nullptr;
         }
     }
 
@@ -73,7 +73,7 @@ private:
     T *createMutex(int index) {
         // mutex not created, create one
         T *newMutex = new T();
-        if (!mutexes[index].testAndSetOrdered(Q_NULLPTR, newMutex))
+        if (!mutexes[index].testAndSetOrdered(nullptr, newMutex))
             delete newMutex;
         return mutexes[index];
     }

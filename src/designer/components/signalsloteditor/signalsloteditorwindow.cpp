@@ -388,7 +388,7 @@ class InlineEditorModel : public QStandardItemModel
 public:
     enum {  TitleItem = 1 };
 
-    InlineEditorModel(int rows, int cols, QObject *parent = Q_NULLPTR);
+    InlineEditorModel(int rows, int cols, QObject *parent = nullptr);
 
     void addTitle(const QString &title);
     void addTextList(const QMap<QString, bool> &text_list);
@@ -479,7 +479,7 @@ class InlineEditor : public QComboBox
     Q_OBJECT
     Q_PROPERTY(QString text READ text WRITE setText USER true)
 public:
-    InlineEditor(QWidget *parent = Q_NULLPTR);
+    InlineEditor(QWidget *parent = nullptr);
 
     QString text() const;
     void setText(const QString &text);
@@ -551,7 +551,7 @@ class ConnectionDelegate : public QItemDelegate
 {
     Q_OBJECT
 public:
-    ConnectionDelegate(QWidget *parent = Q_NULLPTR);
+    ConnectionDelegate(QWidget *parent = nullptr);
 
     void setForm(QDesignerFormWindowInterface *form);
 

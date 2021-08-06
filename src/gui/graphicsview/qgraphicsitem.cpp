@@ -1481,15 +1481,15 @@ QGraphicsScene *QGraphicsItem::scene() const
 QGraphicsItemGroup *QGraphicsItem::group() const
 {
     if (!d_ptr->isMemberOfGroup)
-        return Q_NULLPTR;
+        return nullptr;
     QGraphicsItem *parent = const_cast<QGraphicsItem *>(this);
     while ((parent = parent->d_ptr->parent)) {
         if (QGraphicsItemGroup *group = qgraphicsitem_cast<QGraphicsItemGroup *>(parent))
             return group;
     }
-    // Unreachable; if d_ptr->isMemberOfGroup is != Q_NULLPTR, then one parent of this
+    // Unreachable; if d_ptr->isMemberOfGroup is != nullptr, then one parent of this
     // item is a group item.
-    return Q_NULLPTR;
+    return nullptr;
 }
 
 /*!
@@ -1610,7 +1610,7 @@ QGraphicsItem *QGraphicsItem::panel() const
 {
     if (d_ptr->flags & ItemIsPanel)
         return const_cast<QGraphicsItem *>(this);
-    return d_ptr->parent ? d_ptr->parent->panel() : Q_NULLPTR;
+    return d_ptr->parent ? d_ptr->parent->panel() : nullptr;
 }
 
 /*!
@@ -1621,7 +1621,7 @@ QGraphicsItem *QGraphicsItem::panel() const
 */
 QGraphicsObject *QGraphicsItem::toGraphicsObject()
 {
-    return d_ptr->isObject ? static_cast<QGraphicsObject *>(this) : Q_NULLPTR;
+    return d_ptr->isObject ? static_cast<QGraphicsObject *>(this) : nullptr;
 }
 
 /*!
@@ -1632,7 +1632,7 @@ QGraphicsObject *QGraphicsItem::toGraphicsObject()
 */
 const QGraphicsObject *QGraphicsItem::toGraphicsObject() const
 {
-    return d_ptr->isObject ? static_cast<const QGraphicsObject *>(this) : Q_NULLPTR;
+    return d_ptr->isObject ? static_cast<const QGraphicsObject *>(this) : nullptr;
 }
 
 /*!

@@ -36,7 +36,7 @@ class QUndoModel : public QAbstractItemModel
 {
     Q_OBJECT
 public:
-    QUndoModel(QObject *parent = Q_NULLPTR);
+    QUndoModel(QObject *parent = nullptr);
 
     QUndoStack *stack() const;
 

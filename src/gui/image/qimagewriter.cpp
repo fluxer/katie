@@ -100,7 +100,7 @@ static QImageIOHandler *createWriteHandlerHelper(QIODevice *device,
     const QByteArray &format)
 {
     QByteArray form = format.toLower();
-    QImageIOHandler *handler = Q_NULLPTR;
+    QImageIOHandler *handler = nullptr;
 
     // check if any built-in handlers can write the image
     if (form == "png") {
@@ -140,7 +140,7 @@ static QImageIOHandler *createWriteHandlerHelper(QIODevice *device,
 #endif // QT_NO_LIBRARY
 
     if (!handler)
-        return Q_NULLPTR;
+        return nullptr;
 
     handler->setDevice(device);
     if (!form.isEmpty())
@@ -174,9 +174,9 @@ public:
     \internal
 */
 QImageWriterPrivate::QImageWriterPrivate()
-    : device(Q_NULLPTR),
+    : device(nullptr),
     deleteDevice(false),
-    handler(Q_NULLPTR),
+    handler(nullptr),
     quality(-1),
     compression(0),
     gamma(0.0),

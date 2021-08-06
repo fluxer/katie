@@ -39,7 +39,7 @@ class QT_FORMEDITOR_EXPORT QtBrushManager : public QDesignerBrushManagerInterfac
 {
     Q_OBJECT
 public:
-    QtBrushManager(QObject *parent = Q_NULLPTR);
+    QtBrushManager(QObject *parent = nullptr);
     ~QtBrushManager();
 
     QBrush brush(const QString &name) const;

@@ -44,7 +44,7 @@ class QScriptNewBreakpointWidget : public QWidget
 {
     Q_OBJECT
 public:
-    QScriptNewBreakpointWidget(QWidget *parent = Q_NULLPTR)
+    QScriptNewBreakpointWidget(QWidget *parent = nullptr)
         : QWidget(parent) {
         QHBoxLayout *hboxLayout = new QHBoxLayout(this);
         hboxLayout->setSpacing(6);
@@ -179,7 +179,7 @@ class QScriptBreakpointsItemDelegate : public QStyledItemDelegate
 {
     Q_OBJECT
 public:
-    QScriptBreakpointsItemDelegate(QObject *parent = Q_NULLPTR)
+    QScriptBreakpointsItemDelegate(QObject *parent = nullptr)
         : QStyledItemDelegate(parent) {}
 
     QWidget *createEditor(QWidget *parent,

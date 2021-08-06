@@ -232,7 +232,7 @@ struct QIDNA {
 };
 
 QIDNA::QIDNA()
-    : idna(Q_NULLPTR)
+    : idna(nullptr)
 {
     UErrorCode error = U_ZERO_ERROR;
     idna = uidna_openUTS46(UIDNA_ALLOW_UNASSIGNED | UIDNA_USE_STD3_RULES, &error);

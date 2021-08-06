@@ -480,7 +480,7 @@ void QWidgetPrivate::create_sys(WId window, bool initializeWindow, bool destroyO
     if (!window)
         initializeWindow = true;
 
-    QX11Info *parentXinfo = parentWidget ? &parentWidget->d_func()->xinfo : Q_NULLPTR;
+    QX11Info *parentXinfo = parentWidget ? &parentWidget->d_func()->xinfo : nullptr;
 
     if (desktop &&
         qt_x11_create_desktop_on_screen >= 0 &&

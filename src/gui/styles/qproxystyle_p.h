@@ -48,7 +48,7 @@ public:
     void ensureBaseStyle() const;
 private:
     QProxyStylePrivate() :
-    QCommonStylePrivate(), baseStyle(Q_NULLPTR) {}
+    QCommonStylePrivate(), baseStyle(nullptr) {}
     mutable QPointer<QStyle> baseStyle;
 };
 

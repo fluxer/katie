@@ -777,7 +777,7 @@ const char* UString::UTF8String() const
     QTextEncoder encoder(codec, QTextCodec::DefaultConversion);
     QByteArray result = encoder.fromUnicode(reinterpret_cast<const QChar*>(data()), size());
     if (encoder.hasFailure()) {
-        return Q_NULLPTR;
+        return nullptr;
     }
     return result.constData();
 }

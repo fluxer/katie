@@ -621,8 +621,8 @@ QProcessPrivate::QProcessPrivate()
     dying(false),
     emittedReadyRead(false),
     emittedBytesWritten(false),
-    startupSocketNotifier(Q_NULLPTR),
-    deathNotifier(Q_NULLPTR),
+    startupSocketNotifier(nullptr),
+    deathNotifier(nullptr),
     exitCode(0),
     exitStatus(QProcess::NormalExit),
     crashed(false)

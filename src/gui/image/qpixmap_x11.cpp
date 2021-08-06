@@ -1037,7 +1037,7 @@ Qt::HANDLE QX11PixmapData::createBitmapFromImage(const QImage &image)
     }
 
     char  *bits;
-    uchar *tmp_bits = Q_NULLPTR;
+    uchar *tmp_bits = nullptr;
     int w = img.width();
     int h = img.height();
     int bpl = (w + 7) / 8;

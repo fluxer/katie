@@ -4813,7 +4813,7 @@ qint64 QString::toLongLong(bool *ok, int base) const
     def_locale.setNumberOptions(QLocale::RejectGroupSeparator);
     qint64 result = def_locale.toLongLong(*this, &my_ok, base);
     if (my_ok) {
-        if (ok != Q_NULLPTR)
+        if (ok != nullptr)
             *ok = true;
         return result;
     }
@@ -4856,7 +4856,7 @@ quint64 QString::toULongLong(bool *ok, int base) const
     def_locale.setNumberOptions(QLocale::RejectGroupSeparator);
     quint64 result = def_locale.toULongLong(*this, &my_ok, base);
     if (my_ok) {
-        if (ok != Q_NULLPTR)
+        if (ok != nullptr)
             *ok = true;
         return result;
     }
@@ -5094,7 +5094,7 @@ double QString::toDouble(bool *ok) const
     def_locale.setNumberOptions(QLocale::RejectGroupSeparator);
     double result = def_locale.toDouble(*this, &my_ok);
     if (my_ok) {
-        if (ok != Q_NULLPTR)
+        if (ok != nullptr)
             *ok = true;
         return result;
     }
@@ -5124,7 +5124,7 @@ float QString::toFloat(bool *ok) const
     def_locale.setNumberOptions(QLocale::RejectGroupSeparator);
     double result = def_locale.toFloat(*this, &my_ok);
     if (my_ok) {
-        if (ok != Q_NULLPTR)
+        if (ok != nullptr)
             *ok = true;
         return result;
     }
@@ -5479,7 +5479,7 @@ QStringList QString::split(const QRegExp &rx, SplitBehavior behavior) const
 QString QString::normalized(QString::NormalizationForm mode) const
 {
     UErrorCode error = U_ZERO_ERROR;
-    const UNormalizer2 *normalizer = Q_NULLPTR;
+    const UNormalizer2 *normalizer = nullptr;
     switch (mode) {
         case QString::NormalizationForm_D: {
             normalizer = unorm2_getNFDInstance(&error);

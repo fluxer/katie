@@ -98,7 +98,7 @@ public:
     };
     // ConnectionList is a singly-linked list
     struct ConnectionList {
-        ConnectionList() : first(Q_NULLPTR), last(Q_NULLPTR) {}
+        ConnectionList() : first(nullptr), last(nullptr) {}
         Connection *first;
         Connection *last;
     };
@@ -241,8 +241,8 @@ public:
     QMetaCallEvent(ushort method_offset, ushort method_relative,
                    QObjectPrivate::StaticMetaCallFunction callFunction,
                    const QObject *sender, int signalId,
-                   int nargs = 0, int *types = Q_NULLPTR, void **args = Q_NULLPTR,
-                   QSemaphore *semaphore = Q_NULLPTR);
+                   int nargs = 0, int *types = nullptr, void **args = nullptr,
+                   QSemaphore *semaphore = nullptr);
     ~QMetaCallEvent();
 
     inline int id() const { return method_offset_ + method_relative_; }

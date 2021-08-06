@@ -53,7 +53,7 @@ class Q_DESIGNER_EXPORT Spacer: public QWidget
     Q_PROPERTY(QSize sizeHint READ sizeHintProperty WRITE setSizeHintProperty DESIGNABLE true STORED true)
 
 public:
-    Spacer(QWidget *parent = Q_NULLPTR);
+    Spacer(QWidget *parent = nullptr);
 
     QSize sizeHint() const;
 

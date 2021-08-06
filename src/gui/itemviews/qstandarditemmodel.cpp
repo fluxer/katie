@@ -1677,7 +1677,7 @@ QStandardItem *QStandardItem::child(int row, int column) const
     Q_D(const QStandardItem);
     int index = d->childIndex(row, column);
     if (index == -1)
-        return Q_NULLPTR;
+        return nullptr;
     return d->children.at(index);
 }
 
@@ -1694,7 +1694,7 @@ QStandardItem *QStandardItem::child(int row, int column) const
 QStandardItem *QStandardItem::takeChild(int row, int column)
 {
     Q_D(QStandardItem);
-    QStandardItem *item = Q_NULLPTR;
+    QStandardItem *item = nullptr;
     int index = d->childIndex(row, column);
     if (index != -1) {
         item = d->children.at(index);

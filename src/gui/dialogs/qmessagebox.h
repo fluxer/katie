@@ -108,9 +108,9 @@ public:
 
     Q_DECLARE_FLAGS(StandardButtons, StandardButton)
 
-    explicit QMessageBox(QWidget *parent = Q_NULLPTR);
+    explicit QMessageBox(QWidget *parent = nullptr);
     QMessageBox(Icon icon, const QString &title, const QString &text,
-                StandardButtons buttons = NoButton, QWidget *parent = Q_NULLPTR,
+                StandardButtons buttons = NoButton, QWidget *parent = nullptr,
                 Qt::WindowFlags flags = Qt::Dialog);
     ~QMessageBox();
 

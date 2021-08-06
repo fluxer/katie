@@ -74,10 +74,10 @@ public:
 
     typedef QMap<QString, QVariant> SettingsMap;
 
-    explicit QSettings(QObject *parent = Q_NULLPTR);
-    QSettings(Scope scope, QObject *parent = Q_NULLPTR);
-    QSettings(Format format, Scope scope, QObject *parent = Q_NULLPTR);
-    QSettings(const QString &fileName, Format format = NativeFormat, QObject *parent = Q_NULLPTR);
+    explicit QSettings(QObject *parent = nullptr);
+    QSettings(Scope scope, QObject *parent = nullptr);
+    QSettings(Format format, Scope scope, QObject *parent = nullptr);
+    QSettings(const QString &fileName, Format format = NativeFormat, QObject *parent = nullptr);
     ~QSettings();
 
     void clear();

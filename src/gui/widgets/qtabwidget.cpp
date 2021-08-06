@@ -188,9 +188,9 @@ public:
 };
 
 QTabWidgetPrivate::QTabWidgetPrivate()
-    : tabs(Q_NULLPTR), stack(Q_NULLPTR), dirty(true),
+    : tabs(nullptr), stack(nullptr), dirty(true),
       pos(QTabWidget::North), shape(QTabWidget::Rounded),
-      leftCornerWidget(Q_NULLPTR), rightCornerWidget(Q_NULLPTR)
+      leftCornerWidget(nullptr), rightCornerWidget(nullptr)
 {}
 
 QTabWidgetPrivate::~QTabWidgetPrivate()

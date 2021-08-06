@@ -50,7 +50,7 @@ class Q_DESIGNER_EXPORT MorphMenu : public QObject {
 public:
     typedef QList<QAction *> ActionList;
 
-    explicit MorphMenu(QObject *parent = Q_NULLPTR);
+    explicit MorphMenu(QObject *parent = nullptr);
 
     void populate(QWidget *w, QDesignerFormWindowInterface *fw, ActionList& al);
     void populate(QWidget *w, QDesignerFormWindowInterface *fw, QMenu& m);

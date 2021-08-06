@@ -909,10 +909,10 @@ struct QRegExpMatchState
 
     const QRegExpEngine *eng;
 
-    inline QRegExpMatchState() : bigArray(Q_NULLPTR), captured(Q_NULLPTR) {}
+    inline QRegExpMatchState() : bigArray(nullptr), captured(nullptr) {}
     inline ~QRegExpMatchState() { free(bigArray); }
 
-    void drain() { free(bigArray); bigArray = Q_NULLPTR; captured = Q_NULLPTR; } // to save memory
+    void drain() { free(bigArray); bigArray = nullptr; captured = nullptr; } // to save memory
     void prepareForMatch(QRegExpEngine *eng);
     void match(const QChar *str, int len, int pos, bool minimal,
         bool oneTest, int caretIndex);
@@ -3115,7 +3115,7 @@ int QRegExpEngine::parse(const QChar *pattern, int len)
 #endif
     box.cat(middleBox);
     box.cat(rightBox);
-    yyCharClass.reset(Q_NULLPTR);
+    yyCharClass.reset(nullptr);
 
 #ifndef QT_NO_REGEXP_CAPTURE
     for (int i = 0; i < nf; ++i) {
@@ -3393,9 +3393,9 @@ struct QRegExpPrivate
     QRegExpMatchState matchState;
 
     inline QRegExpPrivate()
-        : eng(Q_NULLPTR), engineKey(QString(), QRegExp::RegExp, Qt::CaseSensitive), minimal(false) { }
+        : eng(nullptr), engineKey(QString(), QRegExp::RegExp, Qt::CaseSensitive), minimal(false) { }
     inline QRegExpPrivate(const QRegExpEngineKey &key)
-        : eng(Q_NULLPTR), engineKey(key), minimal(false) {}
+        : eng(nullptr), engineKey(key), minimal(false) {}
 };
 
 #if !defined(QT_NO_REGEXP_OPTIM)
@@ -3468,7 +3468,7 @@ static void invalidateEngine(QRegExpPrivate *priv)
 {
     if (priv->eng) {
         derefEngine(priv->eng, priv->engineKey);
-        priv->eng = Q_NULLPTR;
+        priv->eng = nullptr;
         priv->matchState.drain();
     }
 }

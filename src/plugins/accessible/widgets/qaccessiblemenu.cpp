@@ -473,7 +473,7 @@ int QAccessibleMenuItem::indexOfChild( const QAccessibleInterface * child ) cons
 
 bool QAccessibleMenuItem::isValid() const
 {
-    return (m_action != Q_NULLPTR);
+    return (m_action != nullptr);
 }
 
 int QAccessibleMenuItem::navigate(RelationFlag relation, int entry, QAccessibleInterface ** target ) const

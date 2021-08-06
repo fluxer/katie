@@ -1581,7 +1581,7 @@ class FeedbackItemDelegate : public QItemDelegate
 {
     Q_OBJECT
 public:
-    FeedbackItemDelegate(QObject *parent = Q_NULLPTR) : QItemDelegate(parent) { }
+    FeedbackItemDelegate(QObject *parent = nullptr) : QItemDelegate(parent) { }
 
     virtual void paint(QPainter *painter, const QStyleOptionViewItem &option,
                     const QModelIndex & index) const;

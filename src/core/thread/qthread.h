@@ -41,7 +41,7 @@ public:
     static int idealThreadCount();
     static void yieldCurrentThread();
 
-    explicit QThread(QObject *parent = Q_NULLPTR);
+    explicit QThread(QObject *parent = nullptr);
     ~QThread();
 
     enum Priority {
@@ -94,7 +94,7 @@ protected:
     static void setTerminationEnabled(bool enabled = true);
 
 protected:
-    QThread(QThreadPrivate &dd, QObject *parent = Q_NULLPTR);
+    QThread(QThreadPrivate &dd, QObject *parent = nullptr);
 
 private:
     Q_OBJECT
@@ -114,10 +114,10 @@ public:
         { return Qt::HANDLE(currentThread()); }
 
 protected:
-    QThread(QThreadPrivate &dd, QObject *parent = Q_NULLPTR);
+    QThread(QThreadPrivate &dd, QObject *parent = nullptr);
 
 private:
-    explicit QThread(QObject *parent = Q_NULLPTR);
+    explicit QThread(QObject *parent = nullptr);
     static QThread *instance;
 
     friend class QCoreApplication;

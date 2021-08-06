@@ -57,7 +57,7 @@ public:
     enum LayoutMode { SinglePass, Batched };
     enum ViewMode { ListMode, IconMode };
 
-    explicit QListView(QWidget *parent = Q_NULLPTR);
+    explicit QListView(QWidget *parent = nullptr);
     ~QListView();
 
     void setMovement(Movement movement);
@@ -116,7 +116,7 @@ Q_SIGNALS:
     void indexesMoved(const QModelIndexList &indexes);
 
 protected:
-    QListView(QListViewPrivate &, QWidget *parent = Q_NULLPTR);
+    QListView(QListViewPrivate &, QWidget *parent = nullptr);
 
     void scrollContentsBy(int dx, int dy);
 

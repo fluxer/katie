@@ -38,7 +38,7 @@ class Q_DECLARATIVE_PRIVATE_EXPORT QDeclarativeApplication : public QObject
     Q_PROPERTY(Qt::LayoutDirection layoutDirection READ layoutDirection NOTIFY layoutDirectionChanged)
 
 public:
-    explicit QDeclarativeApplication(QObject *parent = Q_NULLPTR);
+    explicit QDeclarativeApplication(QObject *parent = nullptr);
     virtual ~QDeclarativeApplication();
     bool active() const;
     Qt::LayoutDirection layoutDirection() const;

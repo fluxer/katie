@@ -35,8 +35,8 @@ class Q_GUI_EXPORT QStringListModel : public QAbstractListModel
 {
     Q_OBJECT
 public:
-    explicit QStringListModel(QObject *parent = Q_NULLPTR);
-    QStringListModel(const QStringList &strings, QObject *parent = Q_NULLPTR);
+    explicit QStringListModel(QObject *parent = nullptr);
+    QStringListModel(const QStringList &strings, QObject *parent = nullptr);
 
     int rowCount(const QModelIndex &parent = QModelIndex()) const;
 

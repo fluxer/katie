@@ -163,11 +163,11 @@ QRect QWindowSurface::geometry() const
 QImage* QWindowSurface::buffer(const QWidget *widget)
 {
     if (widget->window() != window())
-        return Q_NULLPTR;
+        return nullptr;
 
     QPaintDevice *pdev = paintDevice();
     if (!pdev || pdev->devType() != QInternal::Image)
-        return Q_NULLPTR;
+        return nullptr;
 
     const QPoint off = offset(widget);
     QImage *img = static_cast<QImage*>(pdev);
@@ -176,7 +176,7 @@ QImage* QWindowSurface::buffer(const QWidget *widget)
     rect &= QRect(QPoint(), img->size());
 
     if (rect.isEmpty())
-        return Q_NULLPTR;
+        return nullptr;
 
     img = new QImage(img->copy(rect));
     d_ptr->bufferImages.append(img);

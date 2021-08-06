@@ -114,7 +114,7 @@ bool QPixmapCache::find(const QString &key, QPixmap* pixmap)
     QPixmap *ptr = pm_cache()->object(key);
     if (ptr && pixmap)
         *pixmap = *ptr;
-    return ptr != Q_NULLPTR;
+    return ptr != nullptr;
 }
 
 /*!

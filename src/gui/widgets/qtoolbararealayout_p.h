@@ -76,7 +76,7 @@ class QStyleOptionToolBar;
 class QToolBarAreaLayoutItem
 {
 public:
-    QToolBarAreaLayoutItem(QLayoutItem *item = Q_NULLPTR)
+    QToolBarAreaLayoutItem(QLayoutItem *item = nullptr)
         : widgetItem(item), pos(0), size(-1), preferredSize(-1), gap(false) {}
 
     bool skip() const;

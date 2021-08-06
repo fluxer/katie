@@ -137,7 +137,7 @@ int main(int argc, char *argv[])
 {
     QApplication *app = new QApplication(argc, argv);
     QScriptEngine *eng = new QScriptEngine(app);
-    QScriptEngineDebugger *debugger = Q_NULLPTR;
+    QScriptEngineDebugger *debugger = nullptr;
 
     QScriptValue globalObject = eng->globalObject();
 

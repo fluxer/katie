@@ -49,7 +49,7 @@ public:
     explicit QPixmap(QPixmapData *data);
     QPixmap(int w, int h);
     QPixmap(const QSize &);
-    QPixmap(const QString& fileName, const char *format = Q_NULLPTR, Qt::ImageConversionFlags flags = Qt::AutoColor);
+    QPixmap(const QString& fileName, const char *format = nullptr, Qt::ImageConversionFlags flags = Qt::AutoColor);
 #ifndef QT_NO_IMAGEFORMAT_XPM
     QPixmap(const char * const xpm[]);
 #endif
@@ -117,19 +117,19 @@ public:
     static QPixmap fromImage(const QImage &image, Qt::ImageConversionFlags flags = Qt::AutoColor);
     static QPixmap fromImageReader(QImageReader *imageReader, Qt::ImageConversionFlags flags = Qt::AutoColor);
 
-    bool load(const QString& fileName, const char *format = Q_NULLPTR, Qt::ImageConversionFlags flags = Qt::AutoColor);
-    bool loadFromData(const uchar *buf, uint len, const char* format = Q_NULLPTR, Qt::ImageConversionFlags flags = Qt::AutoColor);
-    inline bool loadFromData(const QByteArray &data, const char* format = Q_NULLPTR, Qt::ImageConversionFlags flags = Qt::AutoColor);
-    bool save(const QString& fileName, const char* format = Q_NULLPTR, int quality = -1) const;
-    bool save(QIODevice* device, const char* format = Q_NULLPTR, int quality = -1) const;
+    bool load(const QString& fileName, const char *format = nullptr, Qt::ImageConversionFlags flags = Qt::AutoColor);
+    bool loadFromData(const uchar *buf, uint len, const char* format = nullptr, Qt::ImageConversionFlags flags = Qt::AutoColor);
+    inline bool loadFromData(const QByteArray &data, const char* format = nullptr, Qt::ImageConversionFlags flags = Qt::AutoColor);
+    bool save(const QString& fileName, const char* format = nullptr, int quality = -1) const;
+    bool save(QIODevice* device, const char* format = nullptr, int quality = -1) const;
 
     bool convertFromImage(const QImage &img, Qt::ImageConversionFlags flags = Qt::AutoColor);
 
     inline QPixmap copy(int x, int y, int width, int height) const;
     QPixmap copy(const QRect &rect = QRect()) const;
 
-    inline void scroll(int dx, int dy, int x, int y, int width, int height, QRegion *exposed = Q_NULLPTR);
-    void scroll(int dx, int dy, const QRect &rect, QRegion *exposed = Q_NULLPTR);
+    inline void scroll(int dx, int dy, int x, int y, int width, int height, QRegion *exposed = nullptr);
+    void scroll(int dx, int dy, const QRect &rect, QRegion *exposed = nullptr);
 
     qint64 cacheKey() const;
 

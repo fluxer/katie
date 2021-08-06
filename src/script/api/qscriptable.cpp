@@ -113,7 +113,7 @@ QScriptContext *QScriptable::context() const
     if (QScriptEngine *e = engine())
         return e->currentContext();
 
-    return Q_NULLPTR;
+    return nullptr;
 }
 
 /*!

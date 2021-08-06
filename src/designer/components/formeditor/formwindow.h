@@ -62,7 +62,7 @@ class QT_FORMEDITOR_EXPORT FormWindow: public FormWindowBase
     Q_OBJECT
 
 public:
-    explicit FormWindow(FormEditor *core, QWidget *parent = Q_NULLPTR, Qt::WindowFlags flags = 0);
+    explicit FormWindow(FormEditor *core, QWidget *parent = nullptr, Qt::WindowFlags flags = 0);
     virtual ~FormWindow();
 
     virtual QDesignerFormEditorInterface *core() const;

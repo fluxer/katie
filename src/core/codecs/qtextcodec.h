@@ -82,7 +82,7 @@ public:
 
     struct Q_CORE_EXPORT ConverterState {
         ConverterState(ConversionFlags f = DefaultConversion)
-            : flags(f), invalidChars(0), d(Q_NULLPTR)
+            : flags(f), invalidChars(0), d(nullptr)
         {
         }
         ~ConverterState();
@@ -100,9 +100,9 @@ public:
         ConverterState& operator=(const ConverterState &other);
     };
 
-    QString toUnicode(const char *in, int length, ConverterState *state = Q_NULLPTR) const
+    QString toUnicode(const char *in, int length, ConverterState *state = nullptr) const
         { return convertToUnicode(in, length, state); }
-    QByteArray fromUnicode(const QChar *in, int length, ConverterState *state = Q_NULLPTR) const
+    QByteArray fromUnicode(const QChar *in, int length, ConverterState *state = nullptr) const
         { return convertFromUnicode(in, length, state); }
 
     QTextDecoder* makeDecoder(ConversionFlags flags = DefaultConversion) const;

@@ -46,7 +46,7 @@ class Q_AUTOTEST_EXPORT QDeclarativeSmoothedAnimation : public QDeclarativeNumbe
 public:
     enum ReversingMode { Eased, Immediate, Sync };
 
-    QDeclarativeSmoothedAnimation(QObject *parent = Q_NULLPTR);
+    QDeclarativeSmoothedAnimation(QObject *parent = nullptr);
     ~QDeclarativeSmoothedAnimation();
 
     ReversingMode reversingMode() const;

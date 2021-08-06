@@ -419,7 +419,7 @@ static const QTextHtmlElement *lookupElementHelper(const QString &element)
             return &elementsTbl[i];
         }
     }
-    return Q_NULLPTR;
+    return nullptr;
 }
 
 // quotes newlines as "\\n"

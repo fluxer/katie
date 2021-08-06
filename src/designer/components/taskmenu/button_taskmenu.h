@@ -44,7 +44,7 @@ class ButtonGroupMenu : public QObject
     Q_OBJECT
     Q_DISABLE_COPY(ButtonGroupMenu)
 public:
-    ButtonGroupMenu(QObject *parent = Q_NULLPTR);
+    ButtonGroupMenu(QObject *parent = nullptr);
 
     void initialize(QDesignerFormWindowInterface *formWindow,
                     QButtonGroup *buttonGroup = 0,
@@ -74,7 +74,7 @@ class ButtonGroupTaskMenu : public QObject, public QDesignerTaskMenuExtension
     Q_DISABLE_COPY(ButtonGroupTaskMenu)
     Q_INTERFACES(QDesignerTaskMenuExtension)
 public:
-    explicit ButtonGroupTaskMenu(QButtonGroup *buttonGroup, QObject *parent = Q_NULLPTR);
+    explicit ButtonGroupTaskMenu(QButtonGroup *buttonGroup, QObject *parent = nullptr);
 
     virtual QAction *preferredEditAction() const;
     virtual QList<QAction*> taskActions() const;
@@ -91,7 +91,7 @@ class ButtonTaskMenu: public QDesignerTaskMenu
     Q_OBJECT
     Q_DISABLE_COPY(ButtonTaskMenu)
 public:
-    explicit ButtonTaskMenu(QAbstractButton *button, QObject *parent = Q_NULLPTR);
+    explicit ButtonTaskMenu(QAbstractButton *button, QObject *parent = nullptr);
     virtual ~ButtonTaskMenu();
 
     virtual QAction *preferredEditAction() const;
@@ -137,7 +137,7 @@ class CommandLinkButtonTaskMenu: public ButtonTaskMenu
     Q_OBJECT
     Q_DISABLE_COPY(CommandLinkButtonTaskMenu)
 public:
-    explicit CommandLinkButtonTaskMenu(QCommandLinkButton *button, QObject *parent = Q_NULLPTR);
+    explicit CommandLinkButtonTaskMenu(QCommandLinkButton *button, QObject *parent = nullptr);
 };
 
 typedef ExtensionFactory<QDesignerTaskMenuExtension, QButtonGroup, ButtonGroupTaskMenu> ButtonGroupTaskMenuFactory;

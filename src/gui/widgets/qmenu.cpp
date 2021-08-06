@@ -2262,7 +2262,7 @@ QMenu::event(QEvent *e)
         break;
     }
     case QEvent::Show: {
-        d->mouseDown = Q_NULLPTR;
+        d->mouseDown = nullptr;
         d->updateActionRects();
         if (d->currentAction)
             d->popupAction(d->currentAction, 0, false);

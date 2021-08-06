@@ -48,7 +48,7 @@ class Q_DESIGNER_EXPORT QDesignerWidget : public QWidget
 {
     Q_OBJECT
 public:
-    explicit QDesignerWidget(QDesignerFormWindowInterface* formWindow, QWidget *parent = Q_NULLPTR);
+    explicit QDesignerWidget(QDesignerFormWindowInterface* formWindow, QWidget *parent = nullptr);
     virtual ~QDesignerWidget();
 
     QDesignerFormWindowInterface* formWindow() const;

@@ -154,7 +154,7 @@ class QColumnViewDelegate : public QItemDelegate
 {
 
 public:
-    explicit QColumnViewDelegate(QObject *parent = Q_NULLPTR) : QItemDelegate(parent) {}
+    explicit QColumnViewDelegate(QObject *parent = nullptr) : QItemDelegate(parent) {}
     ~QColumnViewDelegate() {}
 
     void paint(QPainter *painter,

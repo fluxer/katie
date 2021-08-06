@@ -961,7 +961,7 @@ static void icu_to_callback (
 }
 
 QIcuCodec::QIcuCodec(const QByteArray &name)
-    : m_name(name), m_callbackstate(Q_NULLPTR)
+    : m_name(name), m_callbackstate(nullptr)
 {
 }
 
@@ -1148,7 +1148,7 @@ QList<int> QIcuCodec::allMibs()
 QTextCodec *QIcuCodec::codecForUtf(const QByteArray &text, QTextCodec *defaultCodec)
 {
     UErrorCode error = U_ZERO_ERROR;
-    const char* name = ucnv_detectUnicodeSignature(text.constData(), text.size(), Q_NULLPTR, &error);
+    const char* name = ucnv_detectUnicodeSignature(text.constData(), text.size(), nullptr, &error);
     if (Q_UNLIKELY(U_FAILURE(error))) {
         return defaultCodec;
     } else if (name) {
@@ -1247,7 +1247,7 @@ UConverter *QIcuCodec::getConverter(QTextCodec::ConverterState *state) const
         UErrorCode error = U_ZERO_ERROR;
         state->d = ucnv_open(m_name.constData(), &error);
         if (Q_UNLIKELY(U_FAILURE(error))) {
-            return Q_NULLPTR;
+            return nullptr;
         }
 
         error = U_ZERO_ERROR;
@@ -1258,9 +1258,9 @@ UConverter *QIcuCodec::getConverter(QTextCodec::ConverterState *state) const
         }
 
         error = U_ZERO_ERROR;
-        ucnv_setToUCallBack(static_cast<UConverter *>(state->d), icu_to_callback, this, Q_NULLPTR, Q_NULLPTR, &error);
+        ucnv_setToUCallBack(static_cast<UConverter *>(state->d), icu_to_callback, this, nullptr, nullptr, &error);
         error = U_ZERO_ERROR;
-        ucnv_setFromUCallBack(static_cast<UConverter *>(state->d), icu_from_callback, this, Q_NULLPTR, Q_NULLPTR, &error);
+        ucnv_setFromUCallBack(static_cast<UConverter *>(state->d), icu_from_callback, this, nullptr, nullptr, &error);
 
         m_callbackstate = state;
     }

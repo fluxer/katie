@@ -471,7 +471,7 @@ QTemporaryFile *QTemporaryFile::createLocalFile(QFile &file)
 {
     if (QAbstractFileEngine *engine = file.fileEngine()) {
         if(engine->fileFlags(QAbstractFileEngine::FlagsMask) & QAbstractFileEngine::LocalDiskFlag)
-            return Q_NULLPTR; //local already
+            return nullptr; //local already
         //cache
         bool wasOpen = file.isOpen();
         qint64 old_off = 0;

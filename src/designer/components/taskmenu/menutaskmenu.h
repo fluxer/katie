@@ -45,7 +45,7 @@ class MenuTaskMenu : public QObject, public QDesignerTaskMenuExtension
     Q_OBJECT
     Q_INTERFACES(QDesignerTaskMenuExtension)
 public:
-    explicit MenuTaskMenu(QDesignerMenu *menu, QObject *parent = Q_NULLPTR);
+    explicit MenuTaskMenu(QDesignerMenu *menu, QObject *parent = nullptr);
 
     virtual QAction *preferredEditAction() const;
     virtual QList<QAction*> taskActions() const;
@@ -67,7 +67,7 @@ class MenuBarTaskMenu : public QObject, public QDesignerTaskMenuExtension
     Q_OBJECT
     Q_INTERFACES(QDesignerTaskMenuExtension)
 public:
-    explicit MenuBarTaskMenu(QDesignerMenuBar *bar, QObject *parent = Q_NULLPTR);
+    explicit MenuBarTaskMenu(QDesignerMenuBar *bar, QObject *parent = nullptr);
 
     virtual QAction *preferredEditAction() const;
     virtual QList<QAction*> taskActions() const;

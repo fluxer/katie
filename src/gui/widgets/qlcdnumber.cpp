@@ -701,7 +701,7 @@ void QLCDNumber::paintEvent(QPaintEvent *)
     if (d->smallPoint)
         d->drawString(d->digitStr, p, &d->points);
     else
-        d->drawString(d->digitStr, p, Q_NULLPTR);
+        d->drawString(d->digitStr, p, nullptr);
 }
 
 

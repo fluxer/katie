@@ -49,7 +49,7 @@ class QLocalServerPrivate : public QObjectPrivate
 
 public:
     QLocalServerPrivate() :
-            listenSocket(-1), socketNotifier(Q_NULLPTR),
+            listenSocket(-1), socketNotifier(nullptr),
             maxPendingConnections(30), error(QAbstractSocket::UnknownSocketError)
     {
     }

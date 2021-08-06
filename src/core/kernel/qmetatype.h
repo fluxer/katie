@@ -91,7 +91,7 @@ public:
     static int type(const char *typeName);
     static const char *typeName(int type);
     static bool isRegistered(int type);
-    static void *construct(int type, const void *copy = Q_NULLPTR);
+    static void *construct(int type, const void *copy = nullptr);
     static void destroy(int type, void *data);
     static void unregisterType(const char *typeName);
 
@@ -155,7 +155,7 @@ namespace QtPrivate {
 }
 
 template <typename T>
-int qRegisterMetaType(const char *typeName, T * dummy = Q_NULLPTR)
+int qRegisterMetaType(const char *typeName, T * dummy = nullptr)
 {
     const int typedefOf = dummy ? -1 : QtPrivate::QMetaTypeIdHelper<T>::qt_metatype_id();
     if (typedefOf != -1)
@@ -172,7 +172,7 @@ int qRegisterMetaType(const char *typeName, T * dummy = Q_NULLPTR)
 
 #ifndef QT_NO_DATASTREAM
 template <typename T>
-void qRegisterMetaTypeStreamOperators(const char *typeName, T * /* dummy */ = Q_NULLPTR)
+void qRegisterMetaTypeStreamOperators(const char *typeName, T * /* dummy */ = nullptr)
 {
     typedef void(*SavePtr)(QDataStream &, const T *);
     typedef void(*LoadPtr)(QDataStream &, T *);
@@ -192,7 +192,7 @@ inline int qMetaTypeId()
 }
 
 template <typename T>
-inline int qRegisterMetaType(T * dummy = Q_NULLPTR)
+inline int qRegisterMetaType(T * dummy = nullptr)
 {
     return qMetaTypeId<T>();
 }

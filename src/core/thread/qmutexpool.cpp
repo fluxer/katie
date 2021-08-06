@@ -36,7 +36,7 @@ std::recursive_mutex *QRecursiveMutexPool::globalInstanceGet(const void *address
 {
     QRecursiveMutexPool * const globalInstance = globalMutexPool();
     if (!globalInstance)
-        return Q_NULLPTR;
+        return nullptr;
     return globalInstance->get(address);
 }
 

@@ -41,7 +41,7 @@ class EmbeddedOptionsControl : public QWidget {
     Q_DISABLE_COPY(EmbeddedOptionsControl)
     Q_OBJECT
 public:
-    explicit EmbeddedOptionsControl(QDesignerFormEditorInterface *core, QWidget *parent = Q_NULLPTR);
+    explicit EmbeddedOptionsControl(QDesignerFormEditorInterface *core, QWidget *parent = nullptr);
     ~EmbeddedOptionsControl();
 
     bool isDirty() const;

@@ -50,7 +50,7 @@ class QNetworkManagerEngine : public QBearerEngineImpl
     Q_OBJECT
 
 public:
-    QNetworkManagerEngine(QObject *parent = Q_NULLPTR);
+    QNetworkManagerEngine(QObject *parent = nullptr);
     ~QNetworkManagerEngine();
 
     bool networkManagerAvailable() const;

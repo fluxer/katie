@@ -128,10 +128,10 @@ static QImageIOHandler *createReadHandlerHelper(QIODevice *device,
                                                 bool autoDetectImageFormat)
 {
     if (!autoDetectImageFormat && format.isEmpty())
-        return Q_NULLPTR;
+        return nullptr;
 
     QByteArray form = format.toLower();
-    QImageIOHandler *handler = Q_NULLPTR;
+    QImageIOHandler *handler = nullptr;
 
     // check if we have built-in support for the format first
     if (form == "png") {
@@ -256,7 +256,7 @@ static QImageIOHandler *createReadHandlerHelper(QIODevice *device,
         qDebug() << "QImageReader::createReadHandler: no handlers found. giving up.";
 #endif
         // no handler: give up.
-        return Q_NULLPTR;
+        return nullptr;
     }
 
     return handler;
@@ -292,9 +292,9 @@ public:
 */
 QImageReaderPrivate::QImageReaderPrivate()
     : autoDetectImageFormat(true),
-    device(Q_NULLPTR),
+    device(nullptr),
     deleteDevice(false),
-    handler(Q_NULLPTR),
+    handler(nullptr),
     quality(-1),
     imageReaderError(QImageReader::UnknownError)
 {
@@ -393,7 +393,7 @@ QImageReader::~QImageReader()
 void QImageReader::setFormat(const QByteArray &format)
 {
     delete d->handler;
-    d->handler = Q_NULLPTR;
+    d->handler = nullptr;
     d->format = format;
 }
 
@@ -497,7 +497,7 @@ void QImageReader::setDevice(QIODevice *device)
     d->device = device;
     d->deleteDevice = false;
     delete d->handler;
-    d->handler = Q_NULLPTR;
+    d->handler = nullptr;
 }
 
 /*!

@@ -40,7 +40,7 @@ public:
         DisconnectionError,
     };
 
-    QBearerEngineImpl(QObject *parent = Q_NULLPTR) : QBearerEngine(parent) {}
+    QBearerEngineImpl(QObject *parent = nullptr) : QBearerEngine(parent) {}
     ~QBearerEngineImpl() {}
 
     virtual void connectToId(const QString &id) = 0;

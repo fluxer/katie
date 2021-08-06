@@ -136,7 +136,7 @@ Q_SIGNALS:
     void directoryLoaded(const QString &path);
 
 public:
-    QFileInfoGatherer(QObject *parent = Q_NULLPTR);
+    QFileInfoGatherer(QObject *parent = nullptr);
     ~QFileInfoGatherer();
 
     void clear();

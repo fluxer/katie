@@ -78,7 +78,7 @@ class QUndoAction : public QAction
 {
     Q_OBJECT
 public:
-    QUndoAction(const QString &prefix, QObject *parent = Q_NULLPTR);
+    QUndoAction(const QString &prefix, QObject *parent = nullptr);
     void setTextFormat(const QString &textFormat, const QString &defaultText);
 public Q_SLOTS:
     void setPrefixedText(const QString &text);

@@ -74,7 +74,7 @@ def touint(fromstring):
 def tochar(fromstring):
     if fromstring:
         return '"%s\\0"' % fromstring
-    return 'Q_NULLPTR'
+    return 'nullptr'
 
 def tochararray(fromstringlist):
     result = '{ '

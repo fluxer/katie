@@ -842,7 +842,7 @@ class QWorkspaceChild : public QWidget
     friend class QWorkspaceTitleBar;
 
 public:
-    QWorkspaceChild(QWidget* window, QWorkspace* parent = Q_NULLPTR, Qt::WindowFlags flags = 0);
+    QWorkspaceChild(QWidget* window, QWorkspace* parent = nullptr, Qt::WindowFlags flags = 0);
     ~QWorkspaceChild();
 
     void setActive(bool);

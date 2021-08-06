@@ -37,26 +37,26 @@ public:
     QCommonStyle();
 
     void drawPrimitive(PrimitiveElement pe, const QStyleOption *opt, QPainter *p,
-                       const QWidget *w = Q_NULLPTR) const;
+                       const QWidget *w = nullptr) const;
     void drawControl(ControlElement element, const QStyleOption *opt, QPainter *p,
-                     const QWidget *w = Q_NULLPTR) const;
-    QRect subElementRect(SubElement r, const QStyleOption *opt, const QWidget *widget = Q_NULLPTR) const;
+                     const QWidget *w = nullptr) const;
+    QRect subElementRect(SubElement r, const QStyleOption *opt, const QWidget *widget = nullptr) const;
     void drawComplexControl(ComplexControl cc, const QStyleOptionComplex *opt, QPainter *p,
-                            const QWidget *w = Q_NULLPTR) const;
+                            const QWidget *w = nullptr) const;
     SubControl hitTestComplexControl(ComplexControl cc, const QStyleOptionComplex *opt,
-                                     const QPoint &pt, const QWidget *w = Q_NULLPTR) const;
+                                     const QPoint &pt, const QWidget *w = nullptr) const;
     QRect subControlRect(ComplexControl cc, const QStyleOptionComplex *opt, SubControl sc,
-                         const QWidget *w = Q_NULLPTR) const;
+                         const QWidget *w = nullptr) const;
     QSize sizeFromContents(ContentsType ct, const QStyleOption *opt,
-                           const QSize &contentsSize, const QWidget *widget = Q_NULLPTR) const;
+                           const QSize &contentsSize, const QWidget *widget = nullptr) const;
 
-    int pixelMetric(PixelMetric m, const QStyleOption *opt = Q_NULLPTR, const QWidget *widget = Q_NULLPTR) const;
+    int pixelMetric(PixelMetric m, const QStyleOption *opt = nullptr, const QWidget *widget = nullptr) const;
 
-    int styleHint(StyleHint sh, const QStyleOption *opt = Q_NULLPTR, const QWidget *w = Q_NULLPTR,
-                  QStyleHintReturn *shret = Q_NULLPTR) const;
+    int styleHint(StyleHint sh, const QStyleOption *opt = nullptr, const QWidget *w = nullptr,
+                  QStyleHintReturn *shret = nullptr) const;
 
-    QPixmap standardPixmap(StandardPixmap sp, const QStyleOption *opt = Q_NULLPTR,
-                           const QWidget *widget = Q_NULLPTR) const;
+    QPixmap standardPixmap(StandardPixmap sp, const QStyleOption *opt = nullptr,
+                           const QWidget *widget = nullptr) const;
 
     QPixmap generatedIconPixmap(QIcon::Mode iconMode, const QPixmap &pixmap,
                                 const QStyleOption *opt) const;
@@ -64,8 +64,8 @@ public:
     void unpolish(QWidget *widget);
     void unpolish(QApplication *application);
 
-    virtual QIcon standardIcon(StandardPixmap standardIcon, const QStyleOption *opt = Q_NULLPTR,
-                       const QWidget *widget = Q_NULLPTR) const;
+    virtual QIcon standardIcon(StandardPixmap standardIcon, const QStyleOption *opt = nullptr,
+                       const QWidget *widget = nullptr) const;
 
 protected:
     QCommonStyle(QCommonStylePrivate &dd);

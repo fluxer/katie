@@ -43,7 +43,7 @@ class Q_AUTOTEST_EXPORT QScriptErrorLogWidget:
 {
     Q_OBJECT
 public:
-    QScriptErrorLogWidget(QWidget *parent = Q_NULLPTR);
+    QScriptErrorLogWidget(QWidget *parent = nullptr);
     ~QScriptErrorLogWidget();
 
     void message(QtMsgType type, const QString &text,

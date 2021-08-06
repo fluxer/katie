@@ -26,7 +26,7 @@
 
 QT_BEGIN_NAMESPACE
 
-static const char *error_msg = Q_NULLPTR;
+static const char *error_msg = nullptr;
 
 void Parser::error(int rollback) {
     index -= rollback;

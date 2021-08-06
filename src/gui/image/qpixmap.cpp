@@ -1640,7 +1640,7 @@ QPixmap QPixmap::alphaChannel() const
 */
 QPaintEngine *QPixmap::paintEngine() const
 {
-    return data ? data->paintEngine() : Q_NULLPTR;
+    return data ? data->paintEngine() : nullptr;
 }
 
 /*!
@@ -1813,7 +1813,7 @@ QPixmapData* QPixmap::pixmapData() const
     if (data)
         return data.data();
 
-    return Q_NULLPTR;
+    return nullptr;
 }
 
 /*! \fn const QX11Info &QPixmap::x11Info() const

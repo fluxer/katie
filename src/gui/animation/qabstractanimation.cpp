@@ -138,7 +138,7 @@
 
 QT_BEGIN_NAMESPACE
 
-thread_local QUnifiedTimer* unifiedTimer = Q_NULLPTR;
+thread_local QUnifiedTimer* unifiedTimer = nullptr;
 
 QUnifiedTimer::QUnifiedTimer() :
     QObject(), lastTick(0), currentAnimationIdx(0), insideTick(false),

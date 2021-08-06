@@ -42,7 +42,7 @@ class Q_SQL_EXPORT QSqlTableModel: public QSqlQueryModel
 public:
     enum EditStrategy {OnFieldChange, OnRowChange, OnManualSubmit};
 
-    explicit QSqlTableModel(QObject *parent = Q_NULLPTR, QSqlDatabase db = QSqlDatabase());
+    explicit QSqlTableModel(QObject *parent = nullptr, QSqlDatabase db = QSqlDatabase());
     virtual ~QSqlTableModel();
 
     virtual bool select();
@@ -99,7 +99,7 @@ Q_SIGNALS:
     void beforeDelete(int row);
 
 protected:
-    QSqlTableModel(QSqlTableModelPrivate &dd, QObject *parent = Q_NULLPTR, QSqlDatabase db = QSqlDatabase());
+    QSqlTableModel(QSqlTableModelPrivate &dd, QObject *parent = nullptr, QSqlDatabase db = QSqlDatabase());
 
     virtual bool updateRowInTable(int row, const QSqlRecord &values);
     virtual bool insertRowIntoTable(const QSqlRecord &values);

@@ -43,7 +43,7 @@ QT_BEGIN_NAMESPACE
 class QPersistentModelIndexData
 {
 public:
-    QPersistentModelIndexData() : model(Q_NULLPTR) {}
+    QPersistentModelIndexData() : model(nullptr) {}
     QPersistentModelIndexData(const QModelIndex &idx) : index(idx), model(idx.model()) {}
     QModelIndex index;
     QAtomicInt ref;
@@ -75,7 +75,7 @@ public:
     void itemsMoved(const QModelIndex &srcParent, int srcFirst, int srcLast, const QModelIndex &destinationParent, int destinationChild, Qt::Orientation orientation);
     bool allowMove(const QModelIndex &srcParent, int srcFirst, int srcLast, const QModelIndex &destinationParent, int destinationChild, Qt::Orientation orientation);
     
-    inline QModelIndex createIndex(int row, int column, void *data = Q_NULLPTR) const {
+    inline QModelIndex createIndex(int row, int column, void *data = nullptr) const {
         return q_func()->createIndex(row, column, data);
     }
 
@@ -90,7 +90,7 @@ public:
     inline void invalidatePersistentIndexes() {
         foreach (QPersistentModelIndexData *data, persistent.indexes) {
             data->index = QModelIndex();
-            data->model = Q_NULLPTR;
+            data->model = nullptr;
         }
         persistent.indexes.clear();
     }
@@ -106,7 +106,7 @@ public:
             QPersistentModelIndexData *data = *it;
             persistent.indexes.erase(it);
             data->index = QModelIndex();
-            data->model = Q_NULLPTR;
+            data->model = nullptr;
         }
     }
 

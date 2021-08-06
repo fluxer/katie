@@ -46,7 +46,7 @@ class Q_AUTOTEST_EXPORT QScriptDebuggerStackModel
     : public QAbstractTableModel
 {
 public:
-    QScriptDebuggerStackModel(QObject *parent = Q_NULLPTR);
+    QScriptDebuggerStackModel(QObject *parent = nullptr);
     ~QScriptDebuggerStackModel();
 
     QList<QScriptContextInfo> contextInfos() const;

@@ -211,14 +211,14 @@ class Q_CORE_EXPORT QVariant
     void detach();
     inline bool isDetached() const { return !d.is_shared || d.data.shared->ref == 1; }
 
-    int toInt(bool *ok = Q_NULLPTR) const;
-    uint toUInt(bool *ok = Q_NULLPTR) const;
-    qlonglong toLongLong(bool *ok = Q_NULLPTR) const;
-    qulonglong toULongLong(bool *ok = Q_NULLPTR) const;
+    int toInt(bool *ok = nullptr) const;
+    uint toUInt(bool *ok = nullptr) const;
+    qlonglong toLongLong(bool *ok = nullptr) const;
+    qulonglong toULongLong(bool *ok = nullptr) const;
     bool toBool() const;
-    double toDouble(bool *ok = Q_NULLPTR) const;
-    float toFloat(bool *ok = Q_NULLPTR) const;
-    qreal toReal(bool *ok = Q_NULLPTR) const;
+    double toDouble(bool *ok = nullptr) const;
+    float toFloat(bool *ok = nullptr) const;
+    qreal toReal(bool *ok = nullptr) const;
     QByteArray toByteArray() const;
     QBitArray toBitArray() const;
     QString toString() const;
@@ -287,7 +287,7 @@ class Q_CORE_EXPORT QVariant
     };
     struct Private
     {
-        inline Private(): type(Invalid), is_shared(false), is_null(true) { data.ptr = Q_NULLPTR; }
+        inline Private(): type(Invalid), is_shared(false), is_null(true) { data.ptr = nullptr; }
         inline Private(const Private &other)
             : data(other.data), type(other.type),
               is_shared(other.is_shared), is_null(other.is_null)
@@ -372,7 +372,7 @@ typedef QMap<QString, QVariant> QVariantMap;
 typedef QHash<QString, QVariant> QVariantHash;
 
 inline bool qvariant_cast_helper(const QVariant &v, QVariant::Type tp, void *ptr)
-{ return QVariant::handler->convert(&v.d, tp, ptr, Q_NULLPTR); }
+{ return QVariant::handler->convert(&v.d, tp, ptr, nullptr); }
 
 template <typename T>
 inline QVariant qVariantFromValue(const T &t)

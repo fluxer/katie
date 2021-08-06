@@ -2095,7 +2095,7 @@ void QScript::QObjectConnectionManager::qt_static_metacall(QObject *_o, QMetaObj
 
 const QMetaObject QScript::QObjectConnectionManager::staticMetaObject = {
     { &QObject::staticMetaObject, qt_meta_stringdata_QScript__QObjectConnectionManager,
-      qt_meta_data_QScript__QObjectConnectionManager, qt_static_metacall, Q_NULLPTR, Q_NULLPTR }
+      qt_meta_data_QScript__QObjectConnectionManager, qt_static_metacall, nullptr, nullptr }
 };
 
 
@@ -2110,7 +2110,7 @@ const QMetaObject *QScript::QObjectConnectionManager::metaObject() const
 
 void *QScript::QObjectConnectionManager::qt_metacast(const char *_clname)
 {
-    if (!_clname) return Q_NULLPTR;
+    if (!_clname) return nullptr;
     if (!strcmp(_clname, qt_meta_stringdata_QScript__QObjectConnectionManager))
         return static_cast<void*>(this);
     return QObject::qt_metacast(_clname);

@@ -58,7 +58,7 @@ QAbstractFileEngine *QAbstractFileEngine::create(const QString &fileName)
     // fall back to regular file engine
     return new QFSFileEngine(fileName);
 #else
-    return Q_NULLPTR;
+    return nullptr;
 #endif
 }
 

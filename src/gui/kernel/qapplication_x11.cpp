@@ -2564,7 +2564,7 @@ void QApplicationPrivate::closePopup(QWidget *popup)
     }
     if (QApplicationPrivate::popupWidgets->count() == 0) {                // this was the last popup
         delete QApplicationPrivate::popupWidgets;
-        QApplicationPrivate::popupWidgets = Q_NULLPTR;
+        QApplicationPrivate::popupWidgets = nullptr;
         if (!qt_nograb() && popupGrabOk) {        // grabbing not disabled
             Display *dpy = qt_x11Data->display;
             if (popup->geometry().contains(QPoint(mouseGlobalXPos, mouseGlobalYPos))
@@ -3705,7 +3705,7 @@ static void sm_performSaveYourself(QSessionManagerPrivate* smd)
 
     // generate a new session key
     struct timeval tv;
-    ::gettimeofday(&tv, Q_NULLPTR);
+    ::gettimeofday(&tv, nullptr);
     smd->sessionKey  = QString::number(qulonglong(tv.tv_sec)) + QLatin1Char('_') + QString::number(qulonglong(tv.tv_usec));
 
     QStringList arguments = qApp->arguments();

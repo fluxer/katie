@@ -43,7 +43,7 @@ class Q_AUTOTEST_EXPORT QScriptDebugOutputWidget:
 {
     Q_OBJECT
 public:
-    QScriptDebugOutputWidget(QWidget *parent = Q_NULLPTR);
+    QScriptDebugOutputWidget(QWidget *parent = nullptr);
     ~QScriptDebugOutputWidget();
 
     void message(QtMsgType type, const QString &text,

@@ -2544,7 +2544,7 @@ QTextDocument *QTextCursor::document() const
 {
     if (d->priv)
         return d->priv->document();
-    return Q_NULLPTR; // document went away
+    return nullptr; // document went away
 }
 
 /*!

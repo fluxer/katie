@@ -124,8 +124,8 @@ struct QMetaObjectPrivate
                               int *signalIndex, int *methodIndex);
     static bool connect(const QObject *sender, int signal_index,
                         const QObject *receiver, int method_index_relative,
-                        const QMetaObject *rmeta = Q_NULLPTR,
-                        int type = 0, int *types = Q_NULLPTR);
+                        const QMetaObject *rmeta = nullptr,
+                        int type = 0, int *types = nullptr);
     static bool disconnect(const QObject *sender, int signal_index,
                            const QObject *receiver, int method_index,
                            DisconnectType = DisconnectAll);

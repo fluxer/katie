@@ -51,7 +51,7 @@ class QConnmanEngine : public QBearerEngineImpl
     Q_OBJECT
 
 public:
-    QConnmanEngine(QObject *parent = Q_NULLPTR);
+    QConnmanEngine(QObject *parent = nullptr);
     ~QConnmanEngine();
 
     bool connmanAvailable() const;

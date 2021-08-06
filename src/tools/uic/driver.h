@@ -48,8 +48,8 @@ public:
 
     // tools
     bool printDependencies(const QString &fileName);
-    bool uic(const QString &fileName, QTextStream *output = Q_NULLPTR);
-    bool uic(const QString &fileName, DomUI *ui, QTextStream *output = Q_NULLPTR);
+    bool uic(const QString &fileName, QTextStream *output = nullptr);
+    bool uic(const QString &fileName, DomUI *ui, QTextStream *output = nullptr);
 
     // configuration
     inline QTextStream &output() const { return *m_output; }

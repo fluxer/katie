@@ -42,7 +42,7 @@ class QScriptablePrivate
 {
 public:
     inline QScriptablePrivate()
-        : engine(Q_NULLPTR)
+        : engine(nullptr)
         { }
 
     static inline QScriptablePrivate *get(QScriptable *q)

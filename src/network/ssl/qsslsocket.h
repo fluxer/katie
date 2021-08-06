@@ -53,7 +53,7 @@ public:
         AutoVerifyPeer
     };
 
-    QSslSocket(QObject *parent = Q_NULLPTR);
+    QSslSocket(QObject *parent = nullptr);
     ~QSslSocket();
 
     virtual void connectToHost(const QString &hostName, quint16 port, OpenMode mode = ReadWrite);

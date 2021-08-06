@@ -2911,7 +2911,7 @@ static QSvgStyleProperty *createSolidColorNode(QSvgNode *parent,
 
     QColor color;
     if (!constructColor(solidColorStr, solidOpacityStr, color, handler))
-        return Q_NULLPTR;
+        return nullptr;
     return new QSvgSolidColorStyle(color);
 }
 
@@ -3184,7 +3184,7 @@ static QSvgNode *createUseNode(QSvgNode *parent,
     }
 
     qWarning("link %s hasn't been detected!", qPrintable(linkId));
-    return Q_NULLPTR;
+    return nullptr;
 }
 
 static QSvgNode *createVideoNode(QSvgNode *parent,
@@ -3192,7 +3192,7 @@ static QSvgNode *createVideoNode(QSvgNode *parent,
                                  QSvgHandler *)
 {
     Q_UNUSED(parent); Q_UNUSED(attributes);
-    return Q_NULLPTR;
+    return nullptr;
 }
 
 typedef QSvgNode *(*FactoryMethod)(QSvgNode *, const QXmlStreamAttributes &, QSvgHandler *);
@@ -3200,7 +3200,7 @@ typedef QSvgNode *(*FactoryMethod)(QSvgNode *, const QXmlStreamAttributes &, QSv
 static FactoryMethod findGroupFactory(const QString &name)
 {
     if (name.isEmpty())
-        return Q_NULLPTR;
+        return nullptr;
 
     QStringRef ref(&name, 1, name.length() - 1);
     switch (name.at(0).unicode()) {
@@ -3217,13 +3217,13 @@ static FactoryMethod findGroupFactory(const QString &name)
     default:
         break;
     }
-    return Q_NULLPTR;
+    return nullptr;
 }
 
 static FactoryMethod findGraphicsFactory(const QString &name)
 {
     if (name.isEmpty())
-        return Q_NULLPTR;
+        return nullptr;
 
     QStringRef ref(&name, 1, name.length() - 1);
     switch (name.at(0).unicode()) {
@@ -3264,7 +3264,7 @@ static FactoryMethod findGraphicsFactory(const QString &name)
     default:
         break;
     }
-    return Q_NULLPTR;
+    return nullptr;
 }
 
 typedef bool (*ParseMethod)(QSvgNode *, const QXmlStreamAttributes &, QSvgHandler *);
@@ -3272,7 +3272,7 @@ typedef bool (*ParseMethod)(QSvgNode *, const QXmlStreamAttributes &, QSvgHandle
 static ParseMethod findUtilFactory(const QString &name)
 {
     if (name.isEmpty())
-        return Q_NULLPTR;
+        return nullptr;
 
     QStringRef ref(&name, 1, name.length() - 1);
     switch (name.at(0).unicode()) {
@@ -3314,7 +3314,7 @@ static ParseMethod findUtilFactory(const QString &name)
     default:
         break;
     }
-    return Q_NULLPTR;
+    return nullptr;
 }
 
 typedef QSvgStyleProperty *(*StyleFactoryMethod)(QSvgNode *,
@@ -3324,7 +3324,7 @@ typedef QSvgStyleProperty *(*StyleFactoryMethod)(QSvgNode *,
 static StyleFactoryMethod findStyleFactoryMethod(const QString &name)
 {
     if (name.isEmpty())
-        return Q_NULLPTR;
+        return nullptr;
 
     QStringRef ref(&name, 1, name.length() - 1);
     switch (name.at(0).unicode()) {
@@ -3343,7 +3343,7 @@ static StyleFactoryMethod findStyleFactoryMethod(const QString &name)
     default:
         break;
     }
-    return Q_NULLPTR;
+    return nullptr;
 }
 
 typedef bool (*StyleParseMethod)(QSvgStyleProperty *,
@@ -3353,7 +3353,7 @@ typedef bool (*StyleParseMethod)(QSvgStyleProperty *,
 static StyleParseMethod findStyleUtilFactoryMethod(const QString &name)
 {
     if (name.isEmpty())
-        return Q_NULLPTR;
+        return nullptr;
 
     QStringRef ref(&name, 1, name.length() - 1);
     switch (name.at(0).unicode()) {
@@ -3375,7 +3375,7 @@ static StyleParseMethod findStyleUtilFactoryMethod(const QString &name)
     default:
         break;
     }
-    return Q_NULLPTR;
+    return nullptr;
 }
 
 QSvgHandler::QSvgHandler(QIODevice *device) : xml(new QXmlStreamReader(device))
@@ -3445,7 +3445,7 @@ void QSvgHandler::init()
 bool QSvgHandler::startElement(const QString &localName,
                                const QXmlStreamAttributes &attributes)
 {
-    QSvgNode *node = Q_NULLPTR;
+    QSvgNode *node = nullptr;
 
     pushColorCopy();
 

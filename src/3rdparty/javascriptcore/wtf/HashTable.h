@@ -464,7 +464,7 @@ namespace WTF {
         int i = h & sizeMask;
 
         if (!table)
-            return Q_NULLPTR;
+            return nullptr;
 
 #if DUMP_HASHTABLE_STATS
         atomicIncrement(&HashTableStats::numAccesses);
@@ -480,10 +480,10 @@ namespace WTF {
                     return entry;
                 
                 if (isEmptyBucket(*entry))
-                    return Q_NULLPTR;
+                    return nullptr;
             } else {
                 if (isEmptyBucket(*entry))
-                    return Q_NULLPTR;
+                    return nullptr;
                 
                 if (!isDeletedBucket(*entry) && HashTranslator::equal(Extractor::extract(*entry), key))
                     return entry;
@@ -516,7 +516,7 @@ namespace WTF {
         int probeCount = 0;
 #endif
 
-        ValueType* deletedEntry = Q_NULLPTR;
+        ValueType* deletedEntry = nullptr;
 
         while (1) {
             ValueType* entry = table + i;
@@ -568,7 +568,7 @@ namespace WTF {
         int probeCount = 0;
 #endif
 
-        ValueType* deletedEntry = Q_NULLPTR;
+        ValueType* deletedEntry = nullptr;
 
         while (1) {
             ValueType* entry = table + i;
@@ -628,7 +628,7 @@ namespace WTF {
         int probeCount = 0;
 #endif
 
-        ValueType* deletedEntry = Q_NULLPTR;
+        ValueType* deletedEntry = nullptr;
         ValueType* entry;
         while (1) {
             entry = table + i;

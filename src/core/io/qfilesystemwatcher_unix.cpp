@@ -56,7 +56,7 @@ QFileSystemWatcherEngineUnix *QFileSystemWatcherEngineUnix::create()
     int fd = kqueue();
 #endif
     if (Q_UNLIKELY(fd == -1)) {
-        return Q_NULLPTR;
+        return nullptr;
     }
     return new QFileSystemWatcherEngineUnix(fd);
 }

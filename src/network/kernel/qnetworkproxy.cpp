@@ -219,7 +219,7 @@ class QGlobalNetworkProxy
 {
 public:
     QGlobalNetworkProxy()
-        : applicationLevelProxy(Q_NULLPTR)
+        : applicationLevelProxy(nullptr)
         , applicationLevelProxyFactory(new QSystemConfigurationProxyFactory())
     {
     }
@@ -238,7 +238,7 @@ public:
         }
         applicationLevelProxy = new QNetworkProxy(proxy);
         delete applicationLevelProxyFactory;
-        applicationLevelProxyFactory = Q_NULLPTR;
+        applicationLevelProxyFactory = nullptr;
     }
 
     void setApplicationProxyFactory(QNetworkProxyFactory *factory)
@@ -246,7 +246,7 @@ public:
         QMutexLocker lock(&mutex);
         if (applicationLevelProxy) {
             delete applicationLevelProxy;
-            applicationLevelProxy = Q_NULLPTR;
+            applicationLevelProxy = nullptr;
         }
         delete applicationLevelProxyFactory;
         applicationLevelProxyFactory = factory;
@@ -1274,7 +1274,7 @@ void QNetworkProxyFactory::setUseSystemConfiguration(bool enable)
     if (enable) {
         setApplicationProxyFactory(new QSystemConfigurationProxyFactory());
     } else {
-        setApplicationProxyFactory(Q_NULLPTR);
+        setApplicationProxyFactory(nullptr);
     }
 }
 

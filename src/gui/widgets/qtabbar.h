@@ -54,7 +54,7 @@ class Q_GUI_EXPORT QTabBar: public QWidget
     Q_PROPERTY(bool documentMode READ documentMode WRITE setDocumentMode)
 
 public:
-    explicit QTabBar(QWidget* parent = Q_NULLPTR);
+    explicit QTabBar(QWidget* parent = nullptr);
     ~QTabBar();
 
     enum Shape {

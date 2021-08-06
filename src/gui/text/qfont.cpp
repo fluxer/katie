@@ -2321,7 +2321,7 @@ static const int slow_timeout = 300000; //  5m
 
 const uint QFontCache::min_cost = 4*1024; // 4mb
 
-thread_local QFontCache* theFontCache = Q_NULLPTR;
+thread_local QFontCache* theFontCache = nullptr;
 
 QFontCache *QFontCache::instance()
 {

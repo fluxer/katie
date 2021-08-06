@@ -87,7 +87,7 @@ class PaletteModel : public QAbstractTableModel
     Q_OBJECT
     Q_PROPERTY(QPalette::ColorRole colorRole READ colorRole)
 public:
-    explicit PaletteModel(QObject *parent = Q_NULLPTR);
+    explicit PaletteModel(QObject *parent = nullptr);
 
     int rowCount(const QModelIndex &parent = QModelIndex()) const;
     int columnCount(const QModelIndex &parent = QModelIndex()) const;
@@ -119,7 +119,7 @@ class BrushEditor : public QWidget
 {
     Q_OBJECT
 public:
-    explicit BrushEditor(QWidget *parent = Q_NULLPTR);
+    explicit BrushEditor(QWidget *parent = nullptr);
 
     void setBrush(const QBrush &brush);
     QBrush brush() const;
@@ -137,7 +137,7 @@ class RoleEditor : public QWidget
 {
     Q_OBJECT
 public:
-    explicit RoleEditor(QWidget *parent = Q_NULLPTR);
+    explicit RoleEditor(QWidget *parent = nullptr);
 
     void setLabel(const QString &label);
     void setEdited(bool on);
@@ -156,7 +156,7 @@ class ColorDelegate : public QItemDelegate
     Q_OBJECT
 
 public:
-    explicit ColorDelegate(QObject *parent = Q_NULLPTR);
+    explicit ColorDelegate(QObject *parent = nullptr);
 
     QWidget *createEditor(QWidget *parent, const QStyleOptionViewItem &option,
                 const QModelIndex &index) const;

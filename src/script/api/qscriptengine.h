@@ -235,7 +235,7 @@ private:
     friend inline bool qscriptvalue_cast_helper(const QScriptValue &, int, void *);
 
 protected:
-    QScriptEngine(QScriptEnginePrivate &dd, QObject *parent = Q_NULLPTR);
+    QScriptEngine(QScriptEnginePrivate &dd, QObject *parent = nullptr);
 
 private:
     Q_DECLARE_PRIVATE(QScriptEngine)
@@ -324,7 +324,7 @@ int qScriptRegisterMetaType(
     QScriptValue (*toScriptValue)(QScriptEngine *, const T &t),
     void (*fromScriptValue)(const QScriptValue &, T &t),
     const QScriptValue &prototype = QScriptValue(),
-    T * /* dummy */ = Q_NULLPTR
+    T * /* dummy */ = nullptr
 )
 {
     const int id = qRegisterMetaType<T>(); // make sure it's registered
@@ -364,7 +364,7 @@ template<typename T>
 int qScriptRegisterSequenceMetaType(
     QScriptEngine *engine,
     const QScriptValue &prototype = QScriptValue(),
-    T * /* dummy */ = Q_NULLPTR
+    T * /* dummy */ = nullptr
 )
 {
     return qScriptRegisterMetaType<T>(engine, qScriptValueFromSequence,

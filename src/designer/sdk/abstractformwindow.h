@@ -48,7 +48,7 @@ public:
     Q_DECLARE_FLAGS(Feature, FeatureFlag)
 
 public:
-    QDesignerFormWindowInterface(QWidget *parent = Q_NULLPTR, Qt::WindowFlags flags = 0);
+    QDesignerFormWindowInterface(QWidget *parent = nullptr, Qt::WindowFlags flags = 0);
     virtual ~QDesignerFormWindowInterface();
 
     virtual QString fileName() const = 0;

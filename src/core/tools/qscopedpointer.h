@@ -79,7 +79,7 @@ public:
     {
         T *oldD = this->d;
         Cleanup::cleanup(oldD);
-        this->d = Q_NULLPTR;
+        this->d = nullptr;
     }
 
     inline T &operator*() const
@@ -101,7 +101,7 @@ public:
 
     inline operator RestrictedBool() const
     {
-        return isNull() ? Q_NULLPTR : &QScopedPointer::d;
+        return isNull() ? nullptr : &QScopedPointer::d;
     }
 
     inline T *data() const
@@ -114,7 +114,7 @@ public:
         return !d;
     }
 
-    inline void reset(T *other = Q_NULLPTR)
+    inline void reset(T *other = nullptr)
     {
         if (d == other)
             return;
@@ -126,7 +126,7 @@ public:
     inline T *take()
     {
         T *oldD = d;
-        d = Q_NULLPTR;
+        d = nullptr;
         return oldD;
     }
 

@@ -922,7 +922,7 @@ void QDBusConnectionPrivate::deliverCall(QObject *object, const QDBusMessage &ms
         QPointer<QObject> ptr = object;
         fail = object->qt_metacall(QMetaObject::InvokeMetaMethod,
                                    slotIdx, params.data()) >= 0;
-        QDBusConnectionPrivate::setSender(Q_NULLPTR);
+        QDBusConnectionPrivate::setSender(nullptr);
         // the object might be deleted in the slot
         if (!ptr.isNull())
             QDBusContextPrivate::set(object, old);
@@ -981,7 +981,7 @@ QDBusConnectionPrivate::~QDBusConnectionPrivate()
         // we need to destroy it before we finish destroying ourself
         Q_ASSERT(ref.load() == 0);
         QObject *obj = (QObject*)busService;
-        disconnect(obj, Q_NULLPTR, this, Q_NULLPTR);
+        disconnect(obj, nullptr, this, nullptr);
         delete obj;
     }
 

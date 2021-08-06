@@ -72,7 +72,7 @@ Q_SIGNALS:
     void destroyingItem(QDeclarativeItem *item);
 
 protected:
-    QDeclarativeVisualModel(QObjectPrivate &dd, QObject *parent = Q_NULLPTR)
+    QDeclarativeVisualModel(QObjectPrivate &dd, QObject *parent = nullptr)
         : QObject(dd, parent) {}
 
 private:

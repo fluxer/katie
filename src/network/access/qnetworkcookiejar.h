@@ -37,7 +37,7 @@ class Q_NETWORK_EXPORT QNetworkCookieJar: public QObject
 {
     Q_OBJECT
 public:
-    QNetworkCookieJar(QObject *parent = Q_NULLPTR);
+    QNetworkCookieJar(QObject *parent = nullptr);
     virtual ~QNetworkCookieJar();
 
     virtual QList<QNetworkCookie> cookiesForUrl(const QUrl &url) const;

@@ -67,9 +67,9 @@ public:
 #ifndef QT_NO_IMAGEFORMAT_XPM
     explicit QImage(const char * const xpm[]);
 #endif
-    explicit QImage(const QString &fileName, const char *format = Q_NULLPTR);
+    explicit QImage(const QString &fileName, const char *format = nullptr);
 #ifndef QT_NO_CAST_FROM_ASCII
-    explicit QImage(const char *fileName, const char *format = Q_NULLPTR);
+    explicit QImage(const char *fileName, const char *format = nullptr);
 #endif
 
     QImage(const QImage &);
@@ -178,16 +178,16 @@ public:
 
 
     bool load(QIODevice *device, const char* format);
-    bool load(const QString &fileName, const char* format = Q_NULLPTR);
-    bool loadFromData(const char *buf, int len, const char *format = Q_NULLPTR);
-    inline bool loadFromData(const QByteArray &data, const char* aformat = Q_NULLPTR)
+    bool load(const QString &fileName, const char* format = nullptr);
+    bool loadFromData(const char *buf, int len, const char *format = nullptr);
+    inline bool loadFromData(const QByteArray &data, const char* aformat = nullptr)
         { return loadFromData(data.constData(), data.size(), aformat); }
 
-    bool save(const QString &fileName, const char* format = Q_NULLPTR, int quality=-1) const;
-    bool save(QIODevice *device, const char* format = Q_NULLPTR, int quality=-1) const;
+    bool save(const QString &fileName, const char* format = nullptr, int quality=-1) const;
+    bool save(QIODevice *device, const char* format = nullptr, int quality=-1) const;
 
-    static QImage fromData(const char *data, int size, const char *format = Q_NULLPTR);
-    inline static QImage fromData(const QByteArray &data, const char *format = Q_NULLPTR)
+    static QImage fromData(const char *data, int size, const char *format = nullptr);
+    inline static QImage fromData(const QByteArray &data, const char *format = nullptr)
         { return fromData(data.constData(), data.size(), format); }
 
     qint64 cacheKey() const;

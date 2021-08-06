@@ -39,7 +39,7 @@ class GroupBoxTaskMenu: public QDesignerTaskMenu
 {
     Q_OBJECT
 public:
-    explicit GroupBoxTaskMenu(QGroupBox *groupbox, QObject *parent = Q_NULLPTR);
+    explicit GroupBoxTaskMenu(QGroupBox *groupbox, QObject *parent = nullptr);
 
     virtual QAction *preferredEditAction() const;
     virtual QList<QAction*> taskActions() const;

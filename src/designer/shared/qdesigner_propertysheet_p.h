@@ -60,7 +60,7 @@ class Q_DESIGNER_EXPORT QDesignerPropertySheet: public QObject, public QDesigner
     Q_OBJECT
     Q_INTERFACES(QDesignerPropertySheetExtension QDesignerDynamicPropertySheetExtension)
 public:
-    explicit QDesignerPropertySheet(QObject *object, QObject *parent = Q_NULLPTR);
+    explicit QDesignerPropertySheet(QObject *object, QObject *parent = nullptr);
     virtual ~QDesignerPropertySheet();
 
     virtual int indexOf(const QString &name) const;

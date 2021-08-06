@@ -231,7 +231,7 @@ void QJsonDocumentPrivate::mapToJson(const QVariantMap &jsonmap, json_t *jroot, 
 }
 
 QJsonDocument::QJsonDocument()
-   : d_ptr(Q_NULLPTR)
+   : d_ptr(nullptr)
 {
 }
 

@@ -79,7 +79,7 @@ class Q_CORE_EXPORT QObject
     Q_DECLARE_PRIVATE(QObject)
 
 public:
-    Q_INVOKABLE explicit QObject(QObject *parent = Q_NULLPTR);
+    Q_INVOKABLE explicit QObject(QObject *parent = nullptr);
     virtual ~QObject();
 
     virtual bool event(QEvent *);
@@ -124,7 +124,7 @@ public:
             QList<void *> *voidList;
         } u;
         u.typedList = &list;
-        qt_qFindChildren_helper(this, aName, Q_NULLPTR, reinterpret_cast<T>(0)->staticMetaObject, u.voidList);
+        qt_qFindChildren_helper(this, aName, nullptr, reinterpret_cast<T>(0)->staticMetaObject, u.voidList);
         return list;
     }
 
@@ -171,11 +171,11 @@ public:
                            const QObject *receiver, const char *member);
     static bool disconnect(const QObject *sender, const QMetaMethod &signal,
                            const QObject *receiver, const QMetaMethod &member);
-    inline bool disconnect(const char *signal = Q_NULLPTR,
-                           const QObject *receiver = Q_NULLPTR, const char *member = Q_NULLPTR)
+    inline bool disconnect(const char *signal = nullptr,
+                           const QObject *receiver = nullptr, const char *member = nullptr)
         { return disconnect(this, signal, receiver, member); }
-    inline bool disconnect(const QObject *receiver, const char *member = Q_NULLPTR)
-        { return disconnect(this, Q_NULLPTR, receiver, member); }
+    inline bool disconnect(const QObject *receiver, const char *member = nullptr)
+        { return disconnect(this, nullptr, receiver, member); }
 
     void dumpObjectTree();
     void dumpObjectInfo();
@@ -187,13 +187,13 @@ public:
 #endif // QT_NO_PROPERTIES
 
 Q_SIGNALS:
-    void destroyed(QObject * = Q_NULLPTR);
+    void destroyed(QObject * = nullptr);
 
 public:
     inline QObject *parent() const { return d_ptr->parent; }
 
     inline bool inherits(const char *classname) const
-        { return const_cast<QObject *>(this)->qt_metacast(classname) != Q_NULLPTR; }
+        { return const_cast<QObject *>(this)->qt_metacast(classname) != nullptr; }
 
 public Q_SLOTS:
     void deleteLater();
@@ -210,7 +210,7 @@ protected:
     virtual void connectNotify(const char *signal);
     virtual void disconnectNotify(const char *signal);
 
-    QObject(QObjectPrivate &dd, QObject *parent = Q_NULLPTR);
+    QObject(QObjectPrivate &dd, QObject *parent = nullptr);
 
     QObjectData* d_ptr;
 
@@ -249,7 +249,7 @@ inline T qobject_cast(const QObject *object)
 
 
 template <class T> inline const char * qobject_interface_iid()
-{ return Q_NULLPTR; }
+{ return nullptr; }
 
 #ifndef Q_MOC_RUN
 #  define Q_DECLARE_INTERFACE(IFace, IId) \
@@ -257,9 +257,9 @@ template <class T> inline const char * qobject_interface_iid()
     template <> inline const char *qobject_interface_iid<IFace *>() \
     { return IId; } \
     template <> inline IFace *qobject_cast<IFace *>(QObject *object) \
-    { return reinterpret_cast<IFace *>((object ? object->qt_metacast(IId) : Q_NULLPTR)); } \
+    { return reinterpret_cast<IFace *>((object ? object->qt_metacast(IId) : nullptr)); } \
     template <> inline IFace *qobject_cast<IFace *>(const QObject *object) \
-    { return reinterpret_cast<IFace *>((object ? const_cast<QObject *>(object)->qt_metacast(IId) : Q_NULLPTR)); } \
+    { return reinterpret_cast<IFace *>((object ? const_cast<QObject *>(object)->qt_metacast(IId) : nullptr)); } \
     QT_END_NAMESPACE
 #endif // Q_MOC_RUN
 

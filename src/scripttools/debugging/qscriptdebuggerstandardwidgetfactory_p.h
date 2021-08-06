@@ -43,7 +43,7 @@ class Q_AUTOTEST_EXPORT QScriptDebuggerStandardWidgetFactory
     : public QObject, public QScriptDebuggerWidgetFactoryInterface
 {
 public:
-    QScriptDebuggerStandardWidgetFactory(QObject *parent = Q_NULLPTR);
+    QScriptDebuggerStandardWidgetFactory(QObject *parent = nullptr);
     virtual ~QScriptDebuggerStandardWidgetFactory();
 
     QScriptDebugOutputWidgetInterface *createDebugOutputWidget();

@@ -1251,14 +1251,14 @@ public:
     QString nativeLanguageName() const;
     QString nativeCountryName() const;
 
-    short toShort(const QString &s, bool *ok = Q_NULLPTR, int base = 0) const;
-    ushort toUShort(const QString &s, bool *ok = Q_NULLPTR, int base = 0) const;
-    int toInt(const QString &s, bool *ok = Q_NULLPTR, int base = 0) const;
-    uint toUInt(const QString &s, bool *ok = Q_NULLPTR, int base = 0) const;
-    qlonglong toLongLong(const QString &s, bool *ok = Q_NULLPTR, int base = 0) const;
-    qulonglong toULongLong(const QString &s, bool *ok = Q_NULLPTR, int base = 0) const;
-    float toFloat(const QString &s, bool *ok = Q_NULLPTR) const;
-    double toDouble(const QString &s, bool *ok = Q_NULLPTR) const;
+    short toShort(const QString &s, bool *ok = nullptr, int base = 0) const;
+    ushort toUShort(const QString &s, bool *ok = nullptr, int base = 0) const;
+    int toInt(const QString &s, bool *ok = nullptr, int base = 0) const;
+    uint toUInt(const QString &s, bool *ok = nullptr, int base = 0) const;
+    qlonglong toLongLong(const QString &s, bool *ok = nullptr, int base = 0) const;
+    qulonglong toULongLong(const QString &s, bool *ok = nullptr, int base = 0) const;
+    float toFloat(const QString &s, bool *ok = nullptr) const;
+    double toDouble(const QString &s, bool *ok = nullptr) const;
 
     QString toString(qlonglong i) const;
     QString toString(qulonglong i) const;

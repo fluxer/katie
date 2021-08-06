@@ -105,8 +105,8 @@ struct StrokeHandler {
 
 QPaintEngineExPrivate::QPaintEngineExPrivate()
     : dasher(&stroker),
-      strokeHandler(Q_NULLPTR),
-      activeStroker(Q_NULLPTR),
+      strokeHandler(nullptr),
+      activeStroker(nullptr),
       strokerPen(Qt::NoPen)
 {
 }

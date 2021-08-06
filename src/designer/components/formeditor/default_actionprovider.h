@@ -57,7 +57,7 @@ class QT_FORMEDITOR_EXPORT QToolBarActionProvider: public QObject, public Action
     Q_OBJECT
     Q_INTERFACES(QDesignerActionProviderExtension)
 public:
-    explicit QToolBarActionProvider(QToolBar *widget, QObject *parent = Q_NULLPTR);
+    explicit QToolBarActionProvider(QToolBar *widget, QObject *parent = nullptr);
 
     virtual QRect actionGeometry(QAction *action) const;
     virtual QAction *actionAt(const QPoint &pos) const;
@@ -75,7 +75,7 @@ class QT_FORMEDITOR_EXPORT QMenuBarActionProvider: public QObject, public Action
     Q_OBJECT
     Q_INTERFACES(QDesignerActionProviderExtension)
 public:
-    explicit QMenuBarActionProvider(QMenuBar *widget, QObject *parent = Q_NULLPTR);
+    explicit QMenuBarActionProvider(QMenuBar *widget, QObject *parent = nullptr);
 
     virtual QRect actionGeometry(QAction *action) const;
     virtual QAction *actionAt(const QPoint &pos) const;
@@ -90,7 +90,7 @@ class QT_FORMEDITOR_EXPORT QMenuActionProvider: public QObject, public ActionPro
     Q_OBJECT
     Q_INTERFACES(QDesignerActionProviderExtension)
 public:
-    explicit QMenuActionProvider(QMenu *widget, QObject *parent = Q_NULLPTR);
+    explicit QMenuActionProvider(QMenu *widget, QObject *parent = nullptr);
 
     virtual QRect actionGeometry(QAction *action) const;
     virtual QAction *actionAt(const QPoint &pos) const;
