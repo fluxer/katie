@@ -346,6 +346,7 @@ void QPainterPrivate::draw_helper(const QPainterPath &originalPath)
     p.setBrushOrigin(state->brushOrigin);
 
     p.setRenderHint(QPainter::Antialiasing, state->renderHints & QPainter::Antialiasing);
+    p.setRenderHint(QPainter::TextAntialiasing, state->renderHints & QPainter::TextAntialiasing);
     p.setRenderHint(QPainter::SmoothPixmapTransform,
                     state->renderHints & QPainter::SmoothPixmapTransform);
 
