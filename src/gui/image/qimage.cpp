@@ -2370,11 +2370,6 @@ static void QT_FASTCALL convert_ARGB_PM_to_Indexed8(QImageData *dst, const QImag
     convert_RGB_to_Indexed8(dst, tmp.data(), flags);
 }
 
-static void QT_FASTCALL convert_ARGB_to_Indexed8(QImageData *dst, const QImageData *src, Qt::ImageConversionFlags flags)
-{
-    convert_RGB_to_Indexed8(dst, src, flags);
-}
-
 static void QT_FASTCALL convert_Indexed8_to_X32(QImageData *dest, const QImageData *src, Qt::ImageConversionFlags)
 {
     Q_ASSERT(src->format == QImage::Format_Indexed8);
@@ -2578,7 +2573,7 @@ static Image_Converter converter_map[QImage::NImageFormats][QImage::NImageFormat
         0,
         convert_X_to_Mono,
         convert_X_to_Mono,
-        convert_ARGB_to_Indexed8,
+        convert_RGB_to_Indexed8,
         mask_alpha_converter,
         0,
         convert_ARGB_to_ARGB_PM,
