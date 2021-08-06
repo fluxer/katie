@@ -992,11 +992,12 @@ QImage QImage::copy(const QRect& r) const
         // make sure we don't crash.
         if (image.d->nbytes != d->nbytes) {
             int bpl = qMin(bytesPerLine(), image.bytesPerLine());
+            uchar* bits = image.bits();
             for (int i = 0; i < height(); i++)
-                memcpy(image.scanLine(i), constScanLine(i), bpl);
+                ::memcpy(QFAST_SCAN_LINE(bits, bpl, i), constScanLine(i), bpl);
         } else {
             // using bits() to detach
-            memcpy(image.bits(), d->data, d->nbytes);
+            ::memcpy(image.bits(), d->data, d->nbytes);
         }
         image.d->colortable = d->colortable;
         image.d->dpmx = d->dpmx;
