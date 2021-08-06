@@ -817,7 +817,7 @@ void QJpegHandler::setOption(ImageOption option, const QVariant &value)
     case Quality: {
         const int newquality = value.toInt();
         // -1 means default quality.
-        d->quality = (newquality >= 0 ? qMin(newquality,100) : 75);
+        d->quality = (newquality >= 0 ? qMin(newquality, 100) : 75);
         break;
     }
     case ScaledSize:

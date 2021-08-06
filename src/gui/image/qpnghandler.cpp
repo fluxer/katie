@@ -35,8 +35,6 @@
 
 QT_BEGIN_NAMESPACE
 
-enum { QPNGDefaultQuality = Z_BEST_SPEED };
-
 #if Q_BYTE_ORDER == Q_BIG_ENDIAN
 #  define QFILLER_ORDER PNG_FILLER_BEFORE
 #else
@@ -61,7 +59,7 @@ public:
     };
 
     QPngHandlerPrivate(QPngHandler *qq)
-        : gamma(0.0), quality(QPNGDefaultQuality), png_ptr(0), info_ptr(0),
+        : gamma(0.0), png_ptr(0), info_ptr(0),
           end_info(0), row_pointers(0), state(Ready), q(qq)
     { }
 
@@ -95,7 +93,7 @@ public:
 
     void setGamma(float);
 
-    bool writeImage(const QImage& img, int quality);
+    bool writeImage(const QImage& img);
 
     QIODevice* device() { return dev; }
 
@@ -497,7 +495,7 @@ void QPNGImageWriter::setGamma(float g)
     gamma = g;
 }
 
-bool QPNGImageWriter::writeImage(const QImage& image, int quality_in)
+bool QPNGImageWriter::writeImage(const QImage& image)
 {
     png_structp png_ptr = png_create_write_struct(PNG_LIBPNG_VER_STRING,0,0,0);
     if (!png_ptr) {
@@ -516,9 +514,6 @@ bool QPNGImageWriter::writeImage(const QImage& image, int quality_in)
         png_destroy_write_struct(&png_ptr, &info_ptr);
         return false;
     }
-
-    Q_ASSERT(quality_in >= 0 && quality_in <= 9);
-    png_set_compression_level(png_ptr, quality_in);
 
     png_set_write_fn(png_ptr, (void*)this, qpiw_write_fn, qpiw_flush_fn);
 
@@ -677,22 +672,14 @@ bool QPngHandler::read(QImage *image)
 bool QPngHandler::write(const QImage &image)
 {
     QPNGImageWriter writer(device());
-    int quality = d->quality;
-    if (quality >= 0) {
-        quality = qMin(quality, 100);
-        quality = (100-quality) * 9 / 91; // map [0,100] -> [9,0]
-    } else {
-        quality = QPNGDefaultQuality;
-    }
     writer.setGamma(d->gamma);
-    return writer.writeImage(image, quality);
+    return writer.writeImage(image);
 }
 
 bool QPngHandler::supportsOption(ImageOption option) const
 {
     return option == Gamma
         || option == ImageFormat
-        || option == Quality
         || option == Size;
 }
 
@@ -705,8 +692,6 @@ QVariant QPngHandler::option(ImageOption option) const
 
     if (option == Gamma)
         return d->gamma;
-    else if (option == Quality)
-        return d->quality;
     else if (option == Size)
         return QSize(png_get_image_width(d->png_ptr, d->info_ptr),
                      png_get_image_height(d->png_ptr, d->info_ptr));
