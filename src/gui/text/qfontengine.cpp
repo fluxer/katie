@@ -30,6 +30,7 @@
 #include "qendian.h"
 #include "qharfbuzz_p.h"
 #include "qdrawhelper_p.h"
+#include "qcorecommon_p.h"
 
 QT_BEGIN_NAMESPACE
 
@@ -459,7 +460,7 @@ static void collectSingleContour(qreal x0, qreal y0, uint *grid, int x, int y, i
 
 Q_GUI_EXPORT void qt_addBitmapToPath(qreal x0, qreal y0, const uchar *image_data, int bpl, int w, int h, QPainterPath *path)
 {
-    uint *grid = new uint[(w+1)*(h+1)];
+    QSTACKARRAY(uint, grid, (w+1)*(h+1));
     // set up edges
     for (int y = 0; y <= h; ++y) {
         for (int x = 0; x <= w; ++x) {
@@ -489,7 +490,6 @@ Q_GUI_EXPORT void qt_addBitmapToPath(qreal x0, qreal y0, const uchar *image_data
             collectSingleContour(x0, y0, grid, x, y, w, h, path);
         }
     }
-    delete [] grid;
 }
 
 #undef GRID
