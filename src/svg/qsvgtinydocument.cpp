@@ -56,8 +56,7 @@ Q_AUTOTEST_EXPORT QByteArray qt_inflateGZipDataFrom(QIODevice *device)
 static QByteArray qt_inflateGZipDataFrom(QIODevice *device)
 #endif
 {
-    if (!device)
-        return QByteArray();
+    Q_ASSERT(device);
 
     if (!device->isOpen())
         device->open(QIODevice::ReadOnly);
