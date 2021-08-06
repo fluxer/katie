@@ -50,7 +50,7 @@ static qint64 getticks()
     struct timespec ts;
     if (::clock_gettime(clockId, &ts) == -1)
         return 0;
-    return (ts.tv_sec + ts.tv_nsec);
+    return (ts.tv_sec * 1000000000) + ts.tv_nsec;
 }
 
 static inline double elapsed(qint64 after, qint64 before)
