@@ -45,11 +45,7 @@ static void translate_color(const QColor &color, QString *color_string,
     Q_ASSERT(color_string);
     Q_ASSERT(opacity_string);
 
-    *color_string =
-        QString::fromLatin1("#%1%2%3")
-        .arg(color.red(), 2, 16, QLatin1Char('0'))
-        .arg(color.green(), 2, 16, QLatin1Char('0'))
-        .arg(color.blue(), 2, 16, QLatin1Char('0'));
+    *color_string = color.name();
     *opacity_string = QString::number(color.alphaF());
 }
 
