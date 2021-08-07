@@ -132,22 +132,10 @@ static inline int ucstrcmp(const QChar *a, int alen, const QChar *b, int blen)
 }
 
 // Unicode case-insensitive compare two same-sized strings
-static inline int ucstrnicmp(const ushort *a, const ushort *b, int l)
+static inline int ucstrnicmp(const QChar *a, const QChar *b, int l)
 {
     return u_strncasecmp(reinterpret_cast<const UChar*>(a),
         reinterpret_cast<const UChar*>(b), l, U_FOLD_CASE_DEFAULT);
-}
-
-static inline bool qMemEquals(const QChar *a, const QChar *b, int length)
-{
-    if (a == b || !length)
-        return true;
-    return ucstrncmp(a, b, length) == 0;
-}
-
-static inline bool qMemEquals(const ushort *a, const ushort *b, int length)
-{
-    return qMemEquals(reinterpret_cast<const QChar *>(a), reinterpret_cast<const QChar *>(b), length);
 }
 
 /*!
@@ -1787,10 +1775,7 @@ QString &QString::replace(QChar c, const QLatin1String &after, Qt::CaseSensitivi
 */
 bool QString::operator==(const QString &other) const
 {
-    if (d->size != other.d->size)
-        return false;
-
-    return qMemEquals(d->data, other.d->data, d->size);
+    return ucstrcmp(constData(), size(), other.constData(), other.size()) == 0;
 }
 
 /*!
@@ -2202,7 +2187,7 @@ int qFindString(
 
         while (haystack <= end) {
             hashHaystack += foldCase(haystack + sl_minus_1, haystack_start);
-            if (hashHaystack == hashNeedle && ucstrnicmp(needle, haystack, sl) == 0)
+            if (hashHaystack == hashNeedle && ucstrnicmp((const QChar *)needle, (const QChar *)haystack, sl) == 0)
                 return haystack - (const ushort *)haystack0;
 
             REHASH(foldCase(haystack, haystack_start));
@@ -2278,7 +2263,7 @@ static int lastIndexOfHelper(const ushort *haystack, int from, const ushort *nee
 
         while (haystack >= end) {
             hashHaystack += foldCase(haystack, end);
-            if (hashHaystack == hashNeedle && ucstrnicmp(needle, haystack, sl) == 0)
+            if (hashHaystack == hashNeedle && ucstrnicmp((const QChar *)needle, (const QChar *)haystack, sl) == 0)
                 return haystack - end;
             --haystack;
             REHASH(foldCase(haystack + sl, end));
@@ -2375,7 +2360,7 @@ int QString::lastIndexOf(const QLatin1String &str, int from, Qt::CaseSensitivity
 int QString::lastIndexOf(QChar ch, int from, Qt::CaseSensitivity cs) const
 {
     return qt_last_index_of(unicode(), size(), ch, from, cs);
-    }
+}
 
 /*!
   \since 4.8
@@ -7168,9 +7153,9 @@ QString QStringRef::toString() const {
    Returns true if string reference \a s1 is lexically equal to string reference \a s2; otherwise
    returns false.
 */
-bool operator==(const QStringRef &s1,const QStringRef &s2)
-{ return (s1.size() == s2.size() &&
-          qMemEquals(s1.unicode(), s2.unicode(), s1.size()));
+bool operator==(const QStringRef &s1, const QStringRef &s2)
+{
+    return (ucstrcmp(s1.unicode(), s1.size(), s2.unicode(), s2.size()) == 0);
 }
 
 /*! \relates QStringRef
@@ -7178,9 +7163,9 @@ bool operator==(const QStringRef &s1,const QStringRef &s2)
    Returns true if string \a s1 is lexically equal to string reference \a s2; otherwise
    returns false.
 */
-bool operator==(const QString &s1,const QStringRef &s2)
-{ return (s1.size() == s2.size() &&
-          qMemEquals(s1.unicode(), s2.unicode(), s1.size()));
+bool operator==(const QString &s1, const QStringRef &s2)
+{
+    return (ucstrcmp(s1.unicode(), s1.size(), s2.unicode(), s2.size()) == 0);
 }
 
 /*! \relates QStringRef
@@ -8068,13 +8053,10 @@ static inline bool qt_starts_with(const QChar *haystack, int haystackLen,
     if (needleLen > haystackLen)
         return false;
 
-    const ushort *h = reinterpret_cast<const ushort*>(haystack);
-    const ushort *n = reinterpret_cast<const ushort*>(needle);
-
     if (cs == Qt::CaseSensitive) {
-        return qMemEquals(h, n, needleLen);
+        return (ucstrncmp(haystack, needle, needleLen) == 0);
     }
-    return (ucstrnicmp(h, n, needleLen) == 0);
+    return (ucstrnicmp(haystack, needle, needleLen) == 0);
 }
 
 static inline bool qt_starts_with(const QChar *haystack, int haystackLen,
@@ -8108,13 +8090,10 @@ static inline bool qt_ends_with(const QChar *haystack, int haystackLen,
     if (pos < 0)
         return false;
 
-    const ushort *h = reinterpret_cast<const ushort*>(haystack);
-    const ushort *n = reinterpret_cast<const ushort*>(needle);
-
     if (cs == Qt::CaseSensitive) {
-        return qMemEquals(h + pos, n, needleLen);
+        return (ucstrncmp(haystack + pos, needle, needleLen) == 0);
     }
-    return (ucstrnicmp(h + pos, n, needleLen) == 0);
+    return (ucstrnicmp(haystack + pos, needle, needleLen) == 0);
 }
 
 
