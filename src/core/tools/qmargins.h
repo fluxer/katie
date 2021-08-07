@@ -47,14 +47,14 @@ public:
     void setRight(int right);
     void setBottom(int bottom);
 
+    inline bool operator==(const QMargins &other) const;
+    inline bool operator!=(const QMargins &other) const { return !operator==(other); };
+
 private:
     int m_left;
     int m_top;
     int m_right;
     int m_bottom;
-
-    inline bool operator==(const QMargins &other) const;
-    inline bool operator!=(const QMargins &other) const { return !operator==(other); };
 };
 
 Q_DECLARE_TYPEINFO(QMargins, Q_MOVABLE_TYPE);
