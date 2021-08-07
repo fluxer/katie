@@ -26,6 +26,7 @@
 #include "qdatastream.h"
 #include "qvariant.h"
 #include "qdebug.h"
+#include "qcorecommon_p.h"
 
 #ifdef Q_WS_X11
 #  include "qapplication.h"
@@ -643,9 +644,9 @@ QColor::QColor(Spec spec)
 
 QString QColor::name() const
 {
-    QString s;
-    s.sprintf("#%02x%02x%02x", red(), green(), blue());
-    return s;
+    QSTACKARRAY(char, sprintfbuf, 8);
+    ::sprintf(sprintfbuf, "#%02x%02x%02x", red(), green(), blue());
+    return QString::fromLatin1(sprintfbuf);
 }
 
 /*!
