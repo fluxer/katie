@@ -32,6 +32,7 @@
 #include "qsocketnotifier.h"
 #include "qthread.h"
 #include "qstandardpaths.h"
+#include "qcorecommon_p.h"
 
 #include <errno.h>
 #include <stdlib.h>
@@ -47,39 +48,6 @@
 extern char **environ;
 
 QT_BEGIN_NAMESPACE
-
-#if defined QPROCESS_DEBUG
-#include <ctype.h>
-/*
-    Returns a human readable representation of the first \a len
-    characters in \a data.
-*/
-
-static QByteArray qt_prettyDebug(const char *data, int len, int maxSize)
-{
-    if (!data) return "(null)";
-    QByteArray out;
-    for (int i = 0; i < len; ++i) {
-        char c = data[i];
-        if (isprint(c)) {
-            out += c;
-        } else switch (c) {
-        case '\n': out += "\\n"; break;
-        case '\r': out += "\\r"; break;
-        case '\t': out += "\\t"; break;
-        default:
-            QString tmp;
-            tmp.sprintf("\\%o", c);
-            out += tmp.toLatin1();
-        }
-    }
-
-    if (len < maxSize)
-        out += "...";
-
-    return out;
-}
-#endif
 
 // POSIX requires PIPE_BUF to be 512 or larger
 // so we will use 512

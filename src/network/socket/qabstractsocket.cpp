@@ -359,13 +359,11 @@
 #include "qelapsedtimer.h"
 #include "qscopedvaluerollback.h"
 #include "qsslsocket.h"
+#include "qdebug.h"
 #include "qthread_p.h"
 #include "qcore_unix_p.h"
 #include "qnetworkcommon_p.h"
-
-#ifdef QABSTRACTSOCKET_DEBUG
-#include "qdebug.h"
-#endif
+#include "qcorecommon_p.h"
 
 #include <time.h>
 
@@ -377,42 +375,6 @@
 #define QT_CONNECT_TIMEOUT 30000
 
 QT_BEGIN_NAMESPACE
-
-#if defined QABSTRACTSOCKET_DEBUG
-QT_BEGIN_INCLUDE_NAMESPACE
-#include "qstring.h"
-#include <ctype.h>
-QT_END_INCLUDE_NAMESPACE
-
-/*
-    Returns a human readable representation of the first \a len
-    characters in \a data.
-*/
-static QByteArray qt_prettyDebug(const char *data, int len, int maxLength)
-{
-    if (!data) return "(null)";
-    QByteArray out;
-    for (int i = 0; i < len; ++i) {
-        char c = data[i];
-        if (isprint(int(uchar(c)))) {
-            out += c;
-        } else switch (c) {
-        case '\n': out += "\\n"; break;
-        case '\r': out += "\\r"; break;
-        case '\t': out += "\\t"; break;
-        default:
-            QString tmp;
-            tmp.sprintf("\\%o", c);
-            out += tmp.toLatin1();
-        }
-    }
-
-    if (len < maxLength)
-        out += "...";
-
-    return out;
-}
-#endif
 
 static bool isProxyError(QAbstractSocket::SocketError error)
 {

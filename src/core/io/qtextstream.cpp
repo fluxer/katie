@@ -215,41 +215,6 @@
 #  include "qtextcodec.h"
 #endif
 
-#if defined QTEXTSTREAM_DEBUG
-#include <ctype.h>
-
-QT_BEGIN_NAMESPACE
-
-// Returns a human readable representation of the first \a len
-// characters in \a data.
-static QByteArray qt_prettyDebug(const char *data, int len, int maxSize)
-{
-    if (!data) return "(null)";
-    QByteArray out;
-    for (int i = 0; i < len; ++i) {
-        char c = data[i];
-        if (isprint(int(uchar(c)))) {
-            out += c;
-        } else switch (c) {
-        case '\n': out += "\\n"; break;
-        case '\r': out += "\\r"; break;
-        case '\t': out += "\\t"; break;
-        default:
-            QString tmp;
-            tmp.sprintf("\\x%x", (unsigned int)(unsigned char)c);
-            out += tmp.toLatin1();
-        }
-    }
-
-    if (len < maxSize)
-        out += "...";
-
-    return out;
-}
-QT_END_NAMESPACE
-
-#endif
-
 // A precondition macro
 #define Q_VOID
 #define CHECK_VALID_STREAM(x) do { \

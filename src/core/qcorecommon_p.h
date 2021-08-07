@@ -5,6 +5,7 @@
 
 #include <time.h>
 #include <limits.h>
+#include <ctype.h>
 
 QT_BEGIN_NAMESPACE
 
@@ -42,6 +43,34 @@ static inline QString timeZone()
 {
     ::tzset();
     return QString::fromLocal8Bit(tzname[1]);
+}
+
+// Returns a human readable representation of the first \a len
+// characters in \a data.
+static inline QByteArray qt_prettyDebug(const char *data, int len, int maxSize)
+{
+    if (!data) return "(null)";
+    QByteArray out;
+    for (int i = 0; i < len; ++i) {
+        char c = data[i];
+        if (isprint(int(uchar(c)))) {
+            out += c;
+        } else switch (c) {
+        case '\n': out += "\\n"; break;
+        case '\r': out += "\\r"; break;
+        case '\t': out += "\\t"; break;
+        default:
+            QSTACKARRAY(char, buf, 5);
+            qsnprintf(buf, sizeof(buf), "\\%3o", c);
+            buf[4] = '\0';
+            out += QByteArray(buf);
+        }
+    }
+
+    if (len < maxSize)
+        out += "...";
+
+    return out;
 }
 
 QT_END_NAMESPACE

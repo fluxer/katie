@@ -34,45 +34,6 @@
 
 //#define QPROCESS_DEBUG
 
-#if defined QPROCESS_DEBUG
-
-#include <ctype.h>
-
-QT_BEGIN_NAMESPACE
-/*
-    Returns a human readable representation of the first \a len
-    characters in \a data.
-*/
-static QByteArray qt_prettyDebug(const char *data, int len, int maxSize)
-{
-    if (!data) return "(null)";
-    QByteArray out;
-    for (int i = 0; i < len && i < maxSize; ++i) {
-        char c = data[i];
-        if (isprint(c)) {
-            out += c;
-        } else switch (c) {
-        case '\n': out += "\\n"; break;
-        case '\r': out += "\\r"; break;
-        case '\t': out += "\\t"; break;
-        default:
-            QSTACKARRAY(char, buf, 5);
-            qsnprintf(buf, sizeof(buf), "\\%3o", c);
-            buf[4] = '\0';
-            out += QByteArray(buf);
-        }
-    }
-
-    if (len < maxSize)
-        out += "...";
-
-    return out;
-}
-
-QT_END_NAMESPACE
-
-#endif
-
 #ifndef QT_NO_PROCESS
 extern char **environ;
 

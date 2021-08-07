@@ -44,44 +44,7 @@
 #  include <sys/filio.h> // FIONREAD
 #endif
 
-#if defined QNATIVESOCKETENGINE_DEBUG
-#include "qstring.h"
-#include <ctype.h>
-#endif
-
 QT_BEGIN_NAMESPACE
-
-#if defined QNATIVESOCKETENGINE_DEBUG
-
-/*
-    Returns a human readable representation of the first \a len
-    characters in \a data.
-*/
-static QByteArray qt_prettyDebug(const char *data, int len, int maxSize)
-{
-    if (!data) return "(null)";
-    QByteArray out;
-    for (int i = 0; i < len; ++i) {
-        char c = data[i];
-        if (isprint(c)) {
-            out += c;
-        } else switch (c) {
-        case '\n': out += "\\n"; break;
-        case '\r': out += "\\r"; break;
-        case '\t': out += "\\t"; break;
-        default:
-            QString tmp;
-            tmp.sprintf("\\%o", c);
-            out += tmp.toLatin1();
-        }
-    }
-
-    if (len < maxSize)
-        out += "...";
-
-    return out;
-}
-#endif
 
 /*
     Extracts the port and address from a sockaddr, and stores them in
