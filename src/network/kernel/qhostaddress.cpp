@@ -26,6 +26,7 @@
 #include "qstringlist.h"
 #include "qendian.h"
 #include "qnativesocketengine_p.h"
+#include "qcorecommon_p.h"
 
 #ifndef QT_NO_DATASTREAM
 #include "qdatastream.h"
@@ -676,7 +677,7 @@ QString QHostAddress::toString() const
     }
 
     if (d->protocol == QAbstractSocket::IPv6Protocol) {
-        quint16 ugle[8];
+        QSTACKARRAY(quint16, ugle, 8);
         for (int i = 0; i < 8; i++) {
             ugle[i] = (quint16(d->a6[2*i]) << 8) | quint16(d->a6[2*i+1]);
         }
