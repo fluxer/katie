@@ -645,7 +645,7 @@ QColor::QColor(Spec spec)
 QString QColor::name() const
 {
     QSTACKARRAY(char, sprintfbuf, 8);
-    ::sprintf(sprintfbuf, "#%02x%02x%02x", red(), green(), blue());
+    qsnprintf(sprintfbuf, sizeof(sprintfbuf), "#%02x%02x%02x", red(), green(), blue());
     return QString::fromLatin1(sprintfbuf);
 }
 
