@@ -167,8 +167,6 @@ public:
 
     bool isDetached() const;
 private:
-    static int decodeString(const QString &ks);
-    static QString encodeString(int key);
     void setKey(int key, int index);
 
     QKeySequencePrivate *d;
@@ -176,7 +174,6 @@ private:
     friend Q_GUI_EXPORT QDataStream &operator<<(QDataStream &in, const QKeySequence &ks);
     friend Q_GUI_EXPORT QDataStream &operator>>(QDataStream &in, QKeySequence &ks);
     friend class QShortcutMap;
-    friend class QShortcut;
 
 public:
     typedef QKeySequencePrivate * DataPtr;

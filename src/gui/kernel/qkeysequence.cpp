@@ -844,7 +844,7 @@ const short QKeySequencePrivate::numberOfKeyBindings = sizeof(QKeySequencePrivat
 QKeySequence::QKeySequence(StandardKey key)
 {
     const QList <QKeySequence> bindings = keyBindings(key);
-    //pick only the first/primary shortcut from current bindings
+    // pick only the first/primary shortcut from current bindings
     if (bindings.size() > 0) {
         d = bindings.first().d; 
         d->ref.ref();
@@ -1069,14 +1069,6 @@ struct QModifKeyName {
     const QString name;
 };
 
-/*!
-  Constructs a single key from the string \a str.
-*/
-int QKeySequence::decodeString(const QString &str)
-{
-    return QKeySequencePrivate::decodeString(str, NativeText);
-}
-
 int QKeySequencePrivate::decodeString(const QString &str, QKeySequence::SequenceFormat format)
 {
     int ret = 0;
@@ -1132,16 +1124,6 @@ int QKeySequencePrivate::decodeString(const QString &str, QKeySequence::Sequence
     }
 
     return ret;
-}
-
-/*!
-    Creates a shortcut string for \a key. For example,
-    Qt::CTRL+Qt::Key_O gives "Ctrl+O". The strings, "Ctrl", "Shift", etc. are
-    translated (using QObject::tr()) in the "QShortcut" context.
- */
-QString QKeySequence::encodeString(int key)
-{
-    return QKeySequencePrivate::encodeString(key, NativeText);
 }
 
 static inline void addKey(QString &str, const QString &theKey, QKeySequence::SequenceFormat format)
@@ -1354,16 +1336,13 @@ bool QKeySequence::isDetached() const
 
     If the key sequence has no keys, an empty string is returned.
 
-    On Mac OS X, the string returned resembles the sequence that is
-    shown in the menu bar.
-
     \sa fromString()
 */
 QString QKeySequence::toString(SequenceFormat format) const
 {
     QString finalString;
     // A standard string, with no translation or anything like that. In some ways it will
-    // look like our latin case on Windows and X11
+    // look like our latin case on X11
     for (int i = 0; i < count(); ++i) {
         finalString += d->encodeString(d->key[i], format);
         finalString += QLatin1String(", ");
