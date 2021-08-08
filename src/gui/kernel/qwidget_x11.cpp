@@ -293,14 +293,8 @@ void qt_x11_wait_for_window_manager(QWidget *w, bool sendPostedEvents)
     if (!w || (!w->isWindow() && !w->internalWinId()))
         return;
     QApplication::flush();
-    XEvent ev;
-    QElapsedTimer t;
-    t.start();
-    static const int maximumWaitTime = 2000;
     if (!w->testAttribute(Qt::WA_WState_Created))
         return;
-
-    WId winid = w->internalWinId();
 
     // first deliver events that are already in the local queue
     if (sendPostedEvents)
@@ -315,6 +309,10 @@ void qt_x11_wait_for_window_manager(QWidget *w, bool sendPostedEvents)
         Initial, Mapped
     } state = Initial;
 
+    WId winid = w->internalWinId();
+    XEvent ev;
+    QElapsedTimer t;
+    t.start();
     do {
         if (XEventsQueued(qt_x11Data->display, QueuedAlready)) {
             XNextEvent(qt_x11Data->display, &ev);
@@ -338,9 +336,7 @@ void qt_x11_wait_for_window_manager(QWidget *w, bool sendPostedEvents)
             if (!XEventsQueued(qt_x11Data->display, QueuedAfterFlush))
                 qApp->syncX(); // non-busy wait
         }
-        if (t.elapsed() > maximumWaitTime)
-            return;
-    } while(1);
+    } while(t.elapsed() < 2000);
 }
 
 Q_GUI_EXPORT void qt_x11_wait_for_window_manager(QWidget *w)
