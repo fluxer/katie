@@ -814,8 +814,6 @@ template <typename Wrapper> static inline typename Wrapper::pointer qGetPtrHelpe
 #define QT_TRANSLATE_NOOP(scope, x) (x)
 #define QT_TRANSLATE_NOOP_UTF8(scope, x) (x)
 
-#define QDOC_PROPERTY(text)
-
 /*
    When RTTI is not available, define this macro to force any uses of
    dynamic_cast to cause a compile failure.
