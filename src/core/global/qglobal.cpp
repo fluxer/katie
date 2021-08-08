@@ -1198,11 +1198,12 @@ void qt_message_output(QtMsgType msgType, const char *buf)
 /*!
     \internal
 */
-static void qt_message(QtMsgType msgType, const char *msg, va_list ap)
+static void qt_message(QtMsgType msgType, const char *format, va_list ap)
 {
-    if (Q_LIKELY(msg)) {
-        QByteArray buf = QString().vsprintf(msg, ap).toLocal8Bit();
-        qt_message_output(msgType, buf.constData());
+    if (Q_LIKELY(format)) {
+        QSTACKARRAY(char, messagebuf, 1024);
+        qvsnprintf(messagebuf, sizeof(messagebuf), format, ap);
+        qt_message_output(msgType, messagebuf);
     }
 }
 
