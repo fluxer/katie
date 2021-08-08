@@ -130,7 +130,6 @@ QT_USE_NAMESPACE
 #define Q_OUTOFLINE_TEMPLATE
 #define Q_INLINE_TEMPLATE inline
 #define Q_TYPENAME typename
-#define Q_DECL_CONSTEXPR constexpr
 
 #define Q_CONSTRUCTOR_FUNCTION(AFUNC) \
     static const int __init_variable__ ## AFUNC = AFUNC();
@@ -491,35 +490,35 @@ public:
    Utility macros and inline functions
 */
 template <typename T>
-Q_DECL_CONSTEXPR inline T qAbs(const T &t)
+constexpr inline T qAbs(const T &t)
 {
     return t >= 0 ? t : -t;
 }
 
 template <typename T>
-Q_DECL_CONSTEXPR inline const T &qMin(const T &a, const T &b)
+constexpr inline const T &qMin(const T &a, const T &b)
 {
     return (a < b) ? a : b;
 }
 
 template <typename T>
-Q_DECL_CONSTEXPR inline const T &qMax(const T &a, const T &b)
+constexpr inline const T &qMax(const T &a, const T &b)
 {
     return (a < b) ? b : a;
 }
 
 template <typename T>
-Q_DECL_CONSTEXPR inline const T &qBound(const T &min, const T &val, const T &max)
+constexpr inline const T &qBound(const T &min, const T &val, const T &max)
 {
     return qMax(min, qMin(max, val));
 }
 
-Q_DECL_CONSTEXPR static inline bool qFuzzyCompare(double p1, double p2)
+constexpr static inline bool qFuzzyCompare(double p1, double p2)
 {
     return (qAbs(p1 - p2) <= 0.000000000001 * qMin(qAbs(p1), qAbs(p2)));
 }
 
-Q_DECL_CONSTEXPR static inline bool qFuzzyCompare(float p1, float p2)
+constexpr static inline bool qFuzzyCompare(float p1, float p2)
 {
     return (qAbs(p1 - p2) <= 0.00001f * qMin(qAbs(p1), qAbs(p2)));
 }
@@ -527,7 +526,7 @@ Q_DECL_CONSTEXPR static inline bool qFuzzyCompare(float p1, float p2)
 /*!
   \internal
 */
-Q_DECL_CONSTEXPR static inline bool qFuzzyIsNull(double d)
+constexpr static inline bool qFuzzyIsNull(double d)
 {
     return qAbs(d) <= 0.000000000001;
 }
@@ -535,7 +534,7 @@ Q_DECL_CONSTEXPR static inline bool qFuzzyIsNull(double d)
 /*!
   \internal
 */
-Q_DECL_CONSTEXPR static inline bool qFuzzyIsNull(float f)
+constexpr static inline bool qFuzzyIsNull(float f)
 {
     return qAbs(f) <= 0.00001f;
 }
@@ -703,9 +702,9 @@ class QFlags
     int i;
 public:
     typedef Enum enum_type;
-    Q_DECL_CONSTEXPR inline QFlags(const QFlags &f) : i(f.i) {}
-    Q_DECL_CONSTEXPR inline QFlags(Enum f) : i(f) {}
-    Q_DECL_CONSTEXPR inline QFlags(Zero = 0) : i(0) {}
+    constexpr inline QFlags(const QFlags &f) : i(f.i) {}
+    constexpr inline QFlags(Enum f) : i(f) {}
+    constexpr inline QFlags(Zero = 0) : i(0) {}
     inline QFlags(QFlag f) : i(f) {}
 
     inline QFlags &operator=(const QFlags &f) { i = f.i; return *this; }
@@ -716,18 +715,18 @@ public:
     inline QFlags &operator^=(QFlags f) { i ^= f.i; return *this; }
     inline QFlags &operator^=(Enum f) { i ^= f; return *this; }
 
-    Q_DECL_CONSTEXPR  inline operator int() const { return i; }
+    constexpr  inline operator int() const { return i; }
 
-    Q_DECL_CONSTEXPR inline QFlags operator|(QFlags f) const { return QFlags(Enum(i | f.i)); }
-    Q_DECL_CONSTEXPR inline QFlags operator|(Enum f) const { return QFlags(Enum(i | f)); }
-    Q_DECL_CONSTEXPR inline QFlags operator^(QFlags f) const { return QFlags(Enum(i ^ f.i)); }
-    Q_DECL_CONSTEXPR inline QFlags operator^(Enum f) const { return QFlags(Enum(i ^ f)); }
-    Q_DECL_CONSTEXPR inline QFlags operator&(int mask) const { return QFlags(Enum(i & mask)); }
-    Q_DECL_CONSTEXPR inline QFlags operator&(uint mask) const { return QFlags(Enum(i & mask)); }
-    Q_DECL_CONSTEXPR inline QFlags operator&(Enum f) const { return QFlags(Enum(i & f)); }
-    Q_DECL_CONSTEXPR inline QFlags operator~() const { return QFlags(Enum(~i)); }
+    constexpr inline QFlags operator|(QFlags f) const { return QFlags(Enum(i | f.i)); }
+    constexpr inline QFlags operator|(Enum f) const { return QFlags(Enum(i | f)); }
+    constexpr inline QFlags operator^(QFlags f) const { return QFlags(Enum(i ^ f.i)); }
+    constexpr inline QFlags operator^(Enum f) const { return QFlags(Enum(i ^ f)); }
+    constexpr inline QFlags operator&(int mask) const { return QFlags(Enum(i & mask)); }
+    constexpr inline QFlags operator&(uint mask) const { return QFlags(Enum(i & mask)); }
+    constexpr inline QFlags operator&(Enum f) const { return QFlags(Enum(i & f)); }
+    constexpr inline QFlags operator~() const { return QFlags(Enum(~i)); }
 
-    Q_DECL_CONSTEXPR inline bool operator!() const { return !i; }
+    constexpr inline bool operator!() const { return !i; }
 
     inline bool testFlag(Enum f) const { return (i & f) == f && (f != 0 || i == int(f) ); }
 };
@@ -740,9 +739,9 @@ inline QIncompatibleFlag operator|(Flags::enum_type f1, int f2) \
 { return QIncompatibleFlag(int(f1) | f2); }
 
 #define Q_DECLARE_OPERATORS_FOR_FLAGS(Flags) \
-Q_DECL_CONSTEXPR inline QFlags<Flags::enum_type> operator|(Flags::enum_type f1, Flags::enum_type f2) \
+constexpr inline QFlags<Flags::enum_type> operator|(Flags::enum_type f1, Flags::enum_type f2) \
 { return QFlags<Flags::enum_type>(f1) | f2; } \
-Q_DECL_CONSTEXPR inline QFlags<Flags::enum_type> operator|(Flags::enum_type f1, QFlags<Flags::enum_type> f2) \
+constexpr inline QFlags<Flags::enum_type> operator|(Flags::enum_type f1, QFlags<Flags::enum_type> f2) \
 { return f2 | f1; } Q_DECLARE_INCOMPATIBLE_FLAGS(Flags)
 
 
