@@ -662,6 +662,7 @@ static const struct KeyNameTblData {
 */
 
     // decoding compatibility
+    { Qt::Key_Print,                    QT_TRANSLATE_NOOP("QShortcut", "Print") },
     { Qt::Key_Insert,                   QT_TRANSLATE_NOOP("QShortcut", "Ins") },
     { Qt::Key_Escape,                   QT_TRANSLATE_NOOP("QShortcut", "Esc") },
     { Qt::Key_Delete,                   QT_TRANSLATE_NOOP("QShortcut", "Del") },
