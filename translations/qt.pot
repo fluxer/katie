@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-07-24 03:04+0300\n"
+"POT-Creation-Date: 2021-08-08 04:33+0300\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -166,36 +166,36 @@ msgstr ""
 msgid "No file engine available or engine does not support UnMapExtension"
 msgstr ""
 
-#: src/core/io/qprocess.cpp:706 src/core/io/qprocess.cpp:758
+#: src/core/io/qprocess.cpp:667 src/core/io/qprocess.cpp:719
 msgid "Error reading from process"
 msgstr ""
 
-#: src/core/io/qprocess.cpp:805
+#: src/core/io/qprocess.cpp:766
 msgid "Error writing to process"
 msgstr ""
 
-#: src/core/io/qprocess.cpp:868
+#: src/core/io/qprocess.cpp:829
 msgid "Process crashed"
 msgstr ""
 
-#: src/core/io/qprocess.cpp:1769
+#: src/core/io/qprocess.cpp:1730
 msgid "No program defined"
 msgstr ""
 
-#: src/core/io/qprocess_unix.cpp:381
+#: src/core/io/qprocess_unix.cpp:349
 msgid "Could not open input redirection for reading"
 msgstr ""
 
-#: src/core/io/qprocess_unix.cpp:393
+#: src/core/io/qprocess_unix.cpp:361
 msgid "Could not open output redirection for writing"
 msgstr ""
 
-#: src/core/io/qprocess_unix.cpp:597
+#: src/core/io/qprocess_unix.cpp:565
 msgid "Resource error (fork failure): %1"
 msgstr ""
 
-#: src/core/io/qprocess_unix.cpp:834 src/core/io/qprocess_unix.cpp:882
-#: src/core/io/qprocess_unix.cpp:952 src/core/io/qprocess_unix.cpp:1014
+#: src/core/io/qprocess_unix.cpp:802 src/core/io/qprocess_unix.cpp:850
+#: src/core/io/qprocess_unix.cpp:920 src/core/io/qprocess_unix.cpp:982
 msgid "Process operation timed out"
 msgstr ""
 
@@ -1865,27 +1865,27 @@ msgstr ""
 msgid "&OK"
 msgstr ""
 
-#: src/gui/image/qimagereader.cpp:457
+#: src/gui/image/qimagereader.cpp:321
 msgctxt "QImageReader"
 msgid "Invalid device"
 msgstr ""
 
-#: src/gui/image/qimagereader.cpp:484
+#: src/gui/image/qimagereader.cpp:327
 msgctxt "QImageReader"
 msgid "File not found"
 msgstr ""
 
-#: src/gui/image/qimagereader.cpp:493
+#: src/gui/image/qimagereader.cpp:334
 msgctxt "QImageReader"
 msgid "Unsupported image format"
 msgstr ""
 
-#: src/gui/image/qimagereader.cpp:990
+#: src/gui/image/qimagereader.cpp:833
 msgctxt "QImageReader"
 msgid "Unable to read image data"
 msgstr ""
 
-#: src/gui/image/qimagereader.cpp:1181
+#: src/gui/image/qimagereader.cpp:1024
 msgctxt "QImageReader"
 msgid "Unknown error"
 msgstr ""
@@ -4749,40 +4749,40 @@ msgstr ""
 msgid "Error loading local certificate, %1"
 msgstr ""
 
-#: src/network/ssl/qsslsocket_openssl.cpp:260
+#: src/network/ssl/qsslsocket_openssl.cpp:270
 msgid "Error loading private key, %1"
 msgstr ""
 
-#: src/network/ssl/qsslsocket_openssl.cpp:267
+#: src/network/ssl/qsslsocket_openssl.cpp:277
 msgid "Private key does not certify public key, %1"
 msgstr ""
 
-#: src/network/ssl/qsslsocket_openssl.cpp:287
+#: src/network/ssl/qsslsocket_openssl.cpp:297
 msgid "Error creating SSL session, %1"
 msgstr ""
 
-#: src/network/ssl/qsslsocket_openssl.cpp:321
+#: src/network/ssl/qsslsocket_openssl.cpp:331
 msgid "Error creating SSL session: %1"
 msgstr ""
 
-#: src/network/ssl/qsslsocket_openssl.cpp:542
+#: src/network/ssl/qsslsocket_openssl.cpp:552
 msgid "Unable to write data: %1"
 msgstr ""
 
-#: src/network/ssl/qsslsocket_openssl.cpp:613
+#: src/network/ssl/qsslsocket_openssl.cpp:623
 msgid "Unable to decrypt data: %1"
 msgstr ""
 
-#: src/network/ssl/qsslsocket_openssl.cpp:686
+#: src/network/ssl/qsslsocket_openssl.cpp:696
 msgid "The TLS/SSL connection has been closed"
 msgstr ""
 
-#: src/network/ssl/qsslsocket_openssl.cpp:694
 #: src/network/ssl/qsslsocket_openssl.cpp:704
+#: src/network/ssl/qsslsocket_openssl.cpp:714
 msgid "Error while reading: %1"
 msgstr ""
 
-#: src/network/ssl/qsslsocket_openssl.cpp:798
+#: src/network/ssl/qsslsocket_openssl.cpp:808
 msgid "Error during SSL handshake: %1"
 msgstr ""
 
@@ -4798,7 +4798,7 @@ msgstr ""
 
 #: src/network/kernel/qhostinfo_unix.cpp:87
 #: src/network/kernel/qhostinfo_unix.cpp:173
-#: src/network/socket/qabstractsocket.cpp:873
+#: src/network/socket/qabstractsocket.cpp:835
 #: src/network/socket/qhttpsocketengine.cpp:651
 #: src/network/socket/qsocks5socketengine.cpp:626
 #: src/network/socket/qsocks5socketengine.cpp:652
@@ -4822,9 +4822,9 @@ msgid "Invalid configuration."
 msgstr ""
 
 #: src/network/socket/qtcpserver.cpp:266 src/network/socket/qtcpserver.cpp:388
-#: src/network/socket/qabstractsocket.cpp:524
-#: src/network/socket/qabstractsocket.cpp:1311
-#: src/network/socket/qabstractsocket.cpp:1521
+#: src/network/socket/qabstractsocket.cpp:486
+#: src/network/socket/qabstractsocket.cpp:1273
+#: src/network/socket/qabstractsocket.cpp:1483
 msgid "Operation on socket is not supported"
 msgstr ""
 
@@ -4846,23 +4846,23 @@ msgstr ""
 msgid "%1: Unknown error %2"
 msgstr ""
 
-#: src/network/socket/qabstractsocket.cpp:915
+#: src/network/socket/qabstractsocket.cpp:877
 #: src/network/socket/qhttpsocketengine.cpp:654
 #: src/network/socket/qnativesocketengine.cpp:214
 #: src/network/socket/qsocks5socketengine.cpp:656
 msgid "Connection refused"
 msgstr ""
 
-#: src/network/socket/qabstractsocket.cpp:1057
+#: src/network/socket/qabstractsocket.cpp:1019
 #: src/network/socket/qnativesocketengine.cpp:211
 msgid "Connection timed out"
 msgstr ""
 
-#: src/network/socket/qabstractsocket.cpp:1698
+#: src/network/socket/qabstractsocket.cpp:1660
 msgid "Socket operation timed out"
 msgstr ""
 
-#: src/network/socket/qabstractsocket.cpp:2109
+#: src/network/socket/qabstractsocket.cpp:2071
 msgid "Socket is not connected"
 msgstr ""
 
