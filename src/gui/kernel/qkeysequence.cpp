@@ -1015,7 +1015,7 @@ int QKeySequence::count() const
 */
 bool QKeySequence::isEmpty() const
 {
-    return !d->key[0];
+    return (d->key[0] <= 0);
 }
 
 
@@ -1097,11 +1097,18 @@ int QKeySequencePrivate::decodeString(const QString &str, QKeySequence::Sequence
         // Rational: A modifier will contain the name AND +, so longer than 1, a length of 1 is just
         // the remaining part of the shortcut (ei. The 'C' in "Ctrl+C"), so no need to check that.
         if (sub.length() > 1) {
+            bool foundmatch = false;
             foreach (const QModifKeyName &mkf, modifs) {
                 if (sub == mkf.name) {
+                    foundmatch = true;
                     ret |= mkf.qt_key;
                     break; // Shortcut, since if we find an other it would/should just be a dup
                 }
+            }
+
+            if (!foundmatch) {
+                // invalid meta key, that's invalid shortcut
+                return 0;
             }
         }
         lastI = i + 1;
@@ -1111,6 +1118,7 @@ int QKeySequencePrivate::decodeString(const QString &str, QKeySequence::Sequence
     if(p > 0)
         accel = accel.mid(p + 1);
 
+    bool foundmatch = false;
     // For NativeText, check the traslation table first,
     // if we don't find anything then try it out with just the untranlated stuff.
     // PortableText will only try the untranlated table.
@@ -1120,8 +1128,14 @@ int QKeySequencePrivate::decodeString(const QString &str, QKeySequence::Sequence
                         : QString::fromLatin1(KeyNameTbl[i].name));
         if (accel == keyName.toLower()) {
             ret |= KeyNameTbl[i].key;
+            foundmatch = true;
             break;
         }
+    }
+
+    if (!foundmatch) {
+        // that's invalid shortcut
+        return 0;
     }
 
     return ret;
