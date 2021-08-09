@@ -8046,10 +8046,10 @@ static inline int qt_find_latin1_string(const QChar *haystack, int size,
 static inline bool qt_starts_with(const QChar *haystack, int haystackLen,
                                   const QChar *needle, int needleLen, Qt::CaseSensitivity cs)
 {
+    if (needleLen == 0)
+        return true;
     if (haystackLen == 0)
         return needleLen == 0;
-    if (needleLen == 0)
-        return haystackLen == 0;
     if (needleLen > haystackLen)
         return false;
 
@@ -8062,9 +8062,11 @@ static inline bool qt_starts_with(const QChar *haystack, int haystackLen,
 static inline bool qt_starts_with(const QChar *haystack, int haystackLen,
                                   const QLatin1String &needle, Qt::CaseSensitivity cs)
 {
-    if (haystackLen == 0)
-        return !needle.latin1() || *needle.latin1() == 0;
     const int slen = qstrlen(needle.latin1());
+    if (slen == 0)
+        return true;
+    if (haystackLen == 0)
+        return slen == 0;
     if (slen > haystackLen)
         return false;
     const ushort *data = reinterpret_cast<const ushort*>(haystack);
