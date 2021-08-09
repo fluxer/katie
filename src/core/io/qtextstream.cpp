@@ -468,7 +468,7 @@ bool QTextStreamPrivate::fillReadBuffer(qint64 maxBytes)
     // convert to unicode
     readBuffer += codec->toUnicode(buffer.constData(), bytesRead, &readConverterState);
 #else
-    readBuffer += QString::fromLatin1(buffer.constData());
+    readBuffer += QString::fromAscii(buffer.constData());
 #endif
 
     // reset the Text flag.
@@ -2064,9 +2064,10 @@ QTextStream &QTextStream::operator>>(QString &str)
 /*!
     \overload
 
-    Converts the word to ISO-8859-1, then stores it in \a array.
+    Converts the word to Unicode via the stream codec, then stores it in
+    \a array.
 
-    \sa QString::toLatin1()
+    \sa QTextCodec::fromUnicode(), QString::toAscii()
 */
 QTextStream &QTextStream::operator>>(QByteArray &array)
 {
@@ -2084,8 +2085,11 @@ QTextStream &QTextStream::operator>>(QByteArray &array)
         return *this;
     }
 
-    for (int i = 0; i < length; ++i)
-        array += ptr[i].toLatin1();
+#ifndef QT_NO_TEXTCODEC
+    array = d->codec->fromUnicode(QString(ptr, length));
+#else
+    array = QString(ptr, length).toAscii();
+#endif
 
     d->consumeLastToken();
     return *this;
@@ -2396,7 +2400,7 @@ QTextStream &QTextStream::operator<<(const QByteArray &array)
     \overload
 
     Writes the constant string pointed to by \a string to the stream. \a
-    string is assumed to be in ISO-8859-1 encoding. This operator
+    string is encoded via the stream codec. This operator
     is convenient when working with constant string data. Example:
 
     \snippet doc/src/snippets/code/src_corelib_io_qtextstream.cpp 8
@@ -2404,12 +2408,18 @@ QTextStream &QTextStream::operator<<(const QByteArray &array)
     Warning: QTextStream assumes that \a string points to a string of
     text, terminated by a '\0' character. If there is no terminating
     '\0' character, your application may crash.
+
+    \sa QTextCodec::toUnicode(), QString::fromAscii()
 */
 QTextStream &QTextStream::operator<<(const char *string)
 {
     Q_D(QTextStream);
     CHECK_VALID_STREAM(*this);
-    d->putString(QLatin1String(string));
+#ifndef QT_NO_TEXTCODEC
+    d->putString(d->codec->toUnicode(string, qstrlen(string)));
+#else
+    d->putString(QString::fromAscii(string));
+#endif
     return *this;
 }
 
