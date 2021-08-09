@@ -220,11 +220,11 @@ bool QTestResult::verify(bool statement, const char *statementStr,
     QSTACKARRAY(char, msg, 1024);
 
     if (QTestLog::verboseLevel() >= 2) {
-        QTest::qt_snprintf(msg, 1024, "QVERIFY(%s)", statementStr);
+        QTest::qt_snprintf(msg, sizeof(msg), "QVERIFY(%s)", statementStr);
         QTestLog::info(msg, file, line);
     }
 
-    QTest::qt_snprintf(msg, 1024, "'%s' returned FALSE. (%s)", statementStr, description);
+    QTest::qt_snprintf(msg, sizeof(msg), "'%s' returned FALSE. (%s)", statementStr, description);
 
     return checkStatement(statement, msg, file, line);
 }
@@ -248,7 +248,7 @@ bool QTestResult::compare(bool success, const char *msg, char *val1, char *val2,
         return compare(success, msg, file, line);
 
     QSTACKARRAY(char, buf, 1024);
-    QTest::qt_snprintf(buf, 1024, "%s\n   Actual (%s): %s\n   Expected (%s): %s", msg,
+    QTest::qt_snprintf(buf, sizeof(buf), "%s\n   Actual (%s): %s\n   Expected (%s): %s", msg,
                        actual, val1 ? val1 : "<null>",
                        expected, val2 ? val2 : "<null>");
     delete [] val1;

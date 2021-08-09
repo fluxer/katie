@@ -1391,7 +1391,7 @@ static bool qInvokeTestMethod(const char *slotName, const char *data=0)
 
     QBenchmarkGlobalData::current->context.slotName = QString::fromLatin1(slotName);
 
-    char member[512];
+    QSTACKARRAY(char, member, 512);
     QTestTable table;
 
     char *slot = qstrdup(slotName);
@@ -1409,7 +1409,7 @@ static bool qInvokeTestMethod(const char *slotName, const char *data=0)
 
         if (curGlobalDataIndex == 0) {
             QTestResult::setCurrentTestLocation(QTestResult::DataFunc);
-            QTest::qt_snprintf(member, 512, "%s_data()", slot);
+            QTest::qt_snprintf(member, sizeof(member), "%s_data()", slot);
             invokeMethod(QTest::currentTestObject, member);
 
             // if we encounter a SkipAll in the _data slot, we skip the whole
