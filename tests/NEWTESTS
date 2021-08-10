@@ -1,0 +1,16 @@
+tests/auto/qbytearray/
+tests/auto/qdom/
+tests/auto/qgraphicseffect/
+tests/auto/qgraphicsitem/
+tests/auto/qhttpnetworkconnection/
+tests/auto/qnetworkcookiejar/
+tests/auto/qobject/
+tests/auto/qprocess/
+tests/auto/qsemaphore/
+tests/auto/qstring/
+tests/auto/qsvgdevice/
+tests/auto/qsvggenerator/
+tests/auto/qsvgrenderer/
+tests/auto/qtextboundaryfinder/
+tests/auto/qurl/
+tests/auto/qxmlsimplereader/ 
