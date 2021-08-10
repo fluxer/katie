@@ -170,13 +170,22 @@ bool QFSFileEngine::open(QIODevice::OpenMode openMode)
     }
 
     // Try to open the file.
-    QByteArray native = d->fileEntry.nativeFilePath();
+    const QByteArray native = d->fileEntry.nativeFilePath();
     d->fd = qt_safe_open(native.constData(), flags, 0666);
 
     // On failure, return and report the error.
     if (d->fd == -1) {
         setError(errno == EMFILE ? QFile::ResourceError : QFile::OpenError,
                  qt_error_string(errno));
+        return false;
+    }
+
+    // Refuse to open directories, EISDIR is not a thing (by standards) for
+    // non-write modes.
+    QT_STATBUF statbuf;
+    if (QT_FSTAT(d->fd, &statbuf) == 0 && S_ISDIR(statbuf.st_mode)) {
+        setError(QFile::OpenError, QLatin1String("file to open is a directory"));
+        qt_safe_close(d->fd);
         return false;
     }
 
@@ -232,7 +241,7 @@ bool QFSFileEngine::open(QIODevice::OpenMode openMode, int fd)
     on success; otherwise returns false.
 
     The \a handleFlags argument specifies whether the file handle will be
-    closed by Qt. See the QFile::FileHandleFlags documentation for more
+    closed by Katie. See the QFile::FileHandleFlags documentation for more
     information.
 */
 bool QFSFileEngine::open(QIODevice::OpenMode openMode, int fd, QFile::FileHandleFlags handleFlags)
@@ -414,7 +423,7 @@ qint64 QFSFileEngine::write(const char *data, qint64 len)
                 || (result > 0 && (writtenBytes += result) < len));
     }
 
-    if (len &&  writtenBytes == 0) {
+    if (len && writtenBytes == 0) {
         writtenBytes = -1;
         setError(errno == ENOSPC ? QFile::ResourceError : QFile::WriteError, qt_error_string(errno));
     }
