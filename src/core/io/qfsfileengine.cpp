@@ -161,6 +161,14 @@ bool QFSFileEngine::open(QIODevice::OpenMode openMode)
             flags |= QT_OPEN_TRUNC;
     }
 
+    if (d->openMode & QFile::Unbuffered) {
+#ifdef O_DSYNC
+        flags |= O_DSYNC;
+#else
+        flags |= O_SYNC;
+#endif
+    }
+
     // Try to open the file.
     QByteArray native = d->fileEntry.nativeFilePath();
     d->fd = qt_safe_open(native.constData(), flags, 0666);

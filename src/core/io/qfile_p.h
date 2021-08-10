@@ -35,7 +35,6 @@
 
 #include "qabstractfileengine.h"
 #include "qiodevice_p.h"
-#include "qringbuffer_p.h"
 
 QT_BEGIN_NAMESPACE
 
@@ -52,12 +51,6 @@ protected:
 
     QString fileName;
     mutable QAbstractFileEngine *fileEngine;
-
-    bool lastWasWrite;
-    QRingBuffer writeBuffer;
-    inline bool ensureFlushed() const;
-
-    bool putCharHelper(char c);
 
     QFile::FileError error;
     void setError(QFile::FileError err);

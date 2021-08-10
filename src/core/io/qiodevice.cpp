@@ -1338,15 +1338,7 @@ void QIODevice::ungetChar(char c)
 */
 bool QIODevice::putChar(char c)
 {
-    return d_func()->putCharHelper(c);
-}
-
-/*!
-    \internal
-*/
-bool QIODevicePrivate::putCharHelper(char c)
-{
-    return q_func()->write(&c, 1) == 1;
+    return QIODevice::write(&c, 1) == 1;
 }
 
 /*!

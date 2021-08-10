@@ -38,7 +38,7 @@ QT_BEGIN_NAMESPACE
 
 //************* QFilePrivate
 QFilePrivate::QFilePrivate()
-    : fileEngine(0), lastWasWrite(false),
+    : fileEngine(0),
       error(QFile::NoError)
 {
 }
@@ -79,19 +79,6 @@ QFilePrivate::openExternalFile(int flags, FILE *fh, QFile::FileHandleFlags handl
     fileEngine = fe;
     return fe->open(QIODevice::OpenMode(flags), fh, handleFlags);
 #endif
-}
-
-
-inline bool QFilePrivate::ensureFlushed() const
-{
-    // This function ensures that the write buffer has been flushed (const
-    // because certain const functions need to call it.
-    if (lastWasWrite) {
-        const_cast<QFilePrivate *>(this)->lastWasWrite = false;
-        if (!const_cast<QFile *>(q_func())->flush())
-            return false;
-    }
-    return true;
 }
 
 void
@@ -808,9 +795,7 @@ bool QFile::open(OpenMode mode)
         return false;
     }
 
-    // QIODevice provides the buffering, so there's no need to request it from the file engine.
-    if (fileEngine()->open(mode | QIODevice::Unbuffered))
-    {
+    if (fileEngine()->open(mode)) {
         QIODevice::open(mode);
         return true;
     }
@@ -1043,8 +1028,6 @@ bool QFile::unmap(uchar *address)
 bool QFile::resize(qint64 sz)
 {
     Q_D(QFile);
-    if (!d->ensureFlushed())
-        return false;
     fileEngine();
     if (isOpen() && d->fileEngine->pos() > sz)
         seek(sz);
@@ -1127,14 +1110,6 @@ bool QFile::setPermissions(const QString &fileName, Permissions permissions)
     return QFile(fileName).setPermissions(permissions);
 }
 
-static inline qint64 _qfile_writeData(QAbstractFileEngine *engine, QRingBuffer *buffer)
-{
-    const qint64 ret = engine->write(buffer->readPointer(), buffer->nextDataBlockSize());
-    if (ret > 0)
-        buffer->free(ret);
-    return ret;
-}
-
 /*!
     Flushes any buffered data to the file. Returns true if successful;
     otherwise returns false.
@@ -1146,17 +1121,6 @@ bool QFile::flush()
     if (!d->fileEngine) {
         qWarning("QFile::flush: No file engine. Is IODevice open?");
         return false;
-    }
-
-    if (!d->writeBuffer.isEmpty()) {
-        const qint64 size = d->writeBuffer.size();
-        if (_qfile_writeData(d->fileEngine, &d->writeBuffer) != size) {
-            QFile::FileError err = d->fileEngine->error();
-            if(err == QFile::UnspecifiedError)
-                err = QFile::WriteError;
-            d->setError(err, d->fileEngine->errorString());
-            return false;
-        }
     }
 
     if (!d->fileEngine->flush()) {
@@ -1182,10 +1146,6 @@ void QFile::close()
     const bool flushed = flush();
     QIODevice::close();
 
-    // reset write buffer
-    d->lastWasWrite = false;
-    d->writeBuffer.clear();
-
     // keep earlier error from flush
     if (d->fileEngine->close() && flushed)
         unsetError();
@@ -1204,8 +1164,6 @@ void QFile::close()
 qint64 QFile::size() const
 {
     Q_D(const QFile);
-    if (!d->ensureFlushed())
-        return 0;
     return fileEngine()->size();
 }
 
@@ -1223,15 +1181,8 @@ bool QFile::atEnd() const
 {
     Q_D(const QFile);
 
-    // If there's buffered data left, we're not at the end.
-    if (!d->buffer.isEmpty())
-        return false;
-
     if (!isOpen())
         return true;
-
-    if (!d->ensureFlushed())
-        return false;
 
     // Fall back to checking how much is available (will stat files).
     return bytesAvailable() == 0;
@@ -1264,9 +1215,6 @@ bool QFile::seek(qint64 off)
     if (off == d->pos && off == d->devicePos)
         return true; //avoid expensive flush for NOP seek to current position
 
-    if (!d->ensureFlushed())
-        return false;
-
     if (!d->fileEngine->seek(off) || !QIODevice::seek(off)) {
         QFile::FileError err = d->fileEngine->error();
         if(err == QFile::UnspecifiedError)
@@ -1284,9 +1232,6 @@ bool QFile::seek(qint64 off)
 qint64 QFile::readLineData(char *data, qint64 maxlen)
 {
     Q_D(QFile);
-    if (!d->ensureFlushed())
-        return -1;
-
     if (d->fileEngine->supportsExtension(QAbstractFileEngine::FastReadLineExtension)) {
         return d->fileEngine->readLine(data, maxlen);
     }
@@ -1302,8 +1247,6 @@ qint64 QFile::readData(char *data, qint64 len)
 {
     Q_D(QFile);
     unsetError();
-    if (!d->ensureFlushed())
-        return -1;
 
     qint64 read = d->fileEngine->read(data, len);
     if(read < 0) {
@@ -1317,81 +1260,21 @@ qint64 QFile::readData(char *data, qint64 len)
 }
 
 /*!
-    \internal
-*/
-bool QFilePrivate::putCharHelper(char c)
-{
-#ifdef QT_NO_QOBJECT
-    return QIODevicePrivate::putCharHelper(c);
-#else
-
-    // Cutoff for code that doesn't only touch the buffer.
-    int writeBufferSize = writeBuffer.size();
-    if ((openMode & QIODevice::Unbuffered) || writeBufferSize + 1 >= QT_BUFFSIZE) {
-        return QIODevicePrivate::putCharHelper(c);
-    }
-
-    if (!(openMode & QIODevice::WriteOnly)) {
-        if (openMode == QIODevice::NotOpen)
-            qWarning("QIODevice::putChar: Closed device");
-        else
-            qWarning("QIODevice::putChar: ReadOnly device");
-        return false;
-    }
-
-    // Make sure the device is positioned correctly.
-    const bool sequential = isSequential();
-    if (pos != devicePos && !sequential && !q_func()->seek(pos))
-        return false;
-
-    lastWasWrite = true;
-
-    // Write to buffer.
-    *writeBuffer.reserve(1) = c;
-
-    if (!sequential) {
-        pos += 1;
-        devicePos += 1;
-        if (!buffer.isEmpty())
-            buffer.skip(1);
-    }
-
-    return true;
-#endif
-}
-
-/*!
   \reimp
 */
 qint64 QFile::writeData(const char *data, qint64 len)
 {
     Q_D(QFile);
     unsetError();
-    d->lastWasWrite = true;
-    bool buffered = !(d->openMode & Unbuffered);
 
-    // Flush buffered data if this read will overflow.
-    if (buffered && (d->writeBuffer.size() + len) > QT_BUFFSIZE) {
-        if (!flush())
-            return -1;
+    qint64 ret = d->fileEngine->write(data, len);
+    if(ret < 0) {
+        QFile::FileError err = d->fileEngine->error();
+        if(err == QFile::UnspecifiedError)
+            err = QFile::WriteError;
+        d->setError(err, d->fileEngine->errorString());
     }
-
-    // Write directly to the engine if the block size is larger than
-    // the write buffer size.
-    if (!buffered || len > QT_BUFFSIZE) {
-        qint64 ret = d->fileEngine->write(data, len);
-        if(ret < 0) {
-            QFile::FileError err = d->fileEngine->error();
-            if(err == QFile::UnspecifiedError)
-                err = QFile::WriteError;
-            d->setError(err, d->fileEngine->errorString());
-        }
-        return ret;
-    }
-
-    // Write to the buffer.
-    d->writeBuffer.append(data, len);
-    return len;
+    return ret;
 }
 
 /*!

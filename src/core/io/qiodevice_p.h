@@ -194,8 +194,6 @@ public:
     qint64 devicePos;
     bool baseReadLineDataCalled;
 
-    virtual bool putCharHelper(char c);
-
     enum AccessMode {
         Unset,
         Sequential,
