@@ -1164,6 +1164,7 @@ void QFile::close()
 qint64 QFile::size() const
 {
     Q_D(const QFile);
+    fileEngine()->fileFlags(QAbstractFileEngine::Refresh);
     return fileEngine()->size();
 }
 
@@ -1184,7 +1185,7 @@ bool QFile::atEnd() const
     if (!isOpen())
         return true;
 
-    // Fall back to checking how much is available (will stat files).
+    // Check how much is available (will re-stat file).
     return bytesAvailable() == 0;
 }
 
@@ -1213,7 +1214,7 @@ bool QFile::seek(qint64 off)
     }
 
     if (off == d->pos && off == d->devicePos)
-        return true; //avoid expensive flush for NOP seek to current position
+        return true; // avoid expensive flush for NOP seek to current position
 
     if (!d->fileEngine->seek(off) || !QIODevice::seek(off)) {
         QFile::FileError err = d->fileEngine->error();
