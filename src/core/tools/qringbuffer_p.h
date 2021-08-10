@@ -224,8 +224,7 @@ public:
     inline void ungetChar(char c) {
         --head;
         if (head < 0) {
-            buffers.prepend(QByteArray());
-            buffers[0].resize(QT_BUFFSIZE);
+            buffers.prepend(QByteArray(QT_BUFFSIZE, Qt::Uninitialized));
             head = QT_BUFFSIZE - 1;
             ++tailBuffer;
         }
