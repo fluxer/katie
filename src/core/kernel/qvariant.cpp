@@ -2451,7 +2451,11 @@ float QVariant::toFloat(bool *ok) const
 */
 qreal QVariant::toReal(bool *ok) const
 {
-    return qNumVariantToHelper<qreal>(d, handler, ok, d.data.real);
+#if defined(QT_NO_FPU)
+    return qNumVariantToHelper<qreal>(d, handler, ok, d.data.f);
+#else
+    return qNumVariantToHelper<qreal>(d, handler, ok, d.data.d);
+#endif
 }
 
 /*!
