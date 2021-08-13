@@ -387,8 +387,13 @@ bool QFileSystemEngine::renameFile(const QFileSystemEntry &source, const QFileSy
 {
     const QByteArray spath = source.nativeFilePath();
     const QByteArray tpath = target.nativeFilePath();
+#ifdef QT_HAVE_RENAMEAT2
+    if (::renameat2(AT_FDCWD, spath.constData(), AT_FDCWD, tpath.constData(), RENAME_NOREPLACE) == 0)
+        return true;
+#else
     if (::rename(spath.constData(), tpath.constData()) == 0)
         return true;
+#endif
     *error = errno;
     return false;
 }

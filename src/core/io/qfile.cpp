@@ -566,6 +566,7 @@ QFile::rename(const QString &newName)
         qWarning("QFile::rename: Empty or null file name");
         return false;
     }
+#ifndef QT_HAVE_RENAMEAT2
     if (QFile(newName).exists()) {
         // ### Race condition. If a file is moved in after this, it /will/ be
         // overwritten. On Unix, the proper solution is to use hardlinks:
@@ -573,6 +574,7 @@ QFile::rename(const QString &newName)
         d->setError(QFile::RenameError, tr("Destination file exists"));
         return false;
     }
+#endif
     unsetError();
     close();
     if(error() == QFile::NoError) {
