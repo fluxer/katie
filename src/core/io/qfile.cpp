@@ -383,7 +383,7 @@ void
 QFile::setFileName(const QString &name)
 {
     Q_D(QFile);
-    if (isOpen()) {
+    if (Q_UNLIKELY(isOpen())) {
         qWarning("QFile::setFileName: File (%s) is already opened",
                  qPrintable(fileName()));
         close();
@@ -514,7 +514,7 @@ bool
 QFile::remove()
 {
     Q_D(QFile);
-    if (d->fileName.isEmpty()) {
+    if (Q_UNLIKELY(d->fileName.isEmpty())) {
         qWarning("QFile::remove: Empty or null file name");
         return false;
     }
@@ -562,7 +562,7 @@ bool
 QFile::rename(const QString &newName)
 {
     Q_D(QFile);
-    if (d->fileName.isEmpty()) {
+    if (Q_UNLIKELY(d->fileName.isEmpty())) {
         qWarning("QFile::rename: Empty or null file name");
         return false;
     }
@@ -670,7 +670,7 @@ bool
 QFile::link(const QString &linkName)
 {
     Q_D(QFile);
-    if (d->fileName.isEmpty()) {
+    if (Q_UNLIKELY(d->fileName.isEmpty())) {
         qWarning("QFile::link: Empty or null file name");
         return false;
     }
@@ -716,7 +716,7 @@ bool
 QFile::copy(const QString &newName)
 {
     Q_D(QFile);
-    if (d->fileName.isEmpty()) {
+    if (Q_UNLIKELY(d->fileName.isEmpty())) {
         qWarning("QFile::copy: Empty or null file name");
         return false;
     }
@@ -782,7 +782,7 @@ bool QFile::isSequential() const
 bool QFile::open(OpenMode mode)
 {
     Q_D(QFile);
-    if (isOpen()) {
+    if (Q_UNLIKELY(isOpen())) {
         qWarning("QFile::open: File (%s) already open", qPrintable(fileName()));
         return false;
     }
@@ -790,7 +790,7 @@ bool QFile::open(OpenMode mode)
         mode |= WriteOnly;
 
     unsetError();
-    if ((mode & (ReadOnly | WriteOnly)) == 0) {
+    if (Q_UNLIKELY((mode & (ReadOnly | WriteOnly)) == 0)) {
         qWarning("QIODevice::open: File access not specified");
         return false;
     }
@@ -846,14 +846,14 @@ bool QFile::open(OpenMode mode)
 */
 bool QFile::open(FILE *fh, OpenMode mode, FileHandleFlags handleFlags)
 {
-    if (isOpen()) {
+    if (Q_UNLIKELY(isOpen())) {
         qWarning("QFile::open: File (%s) already open", qPrintable(fileName()));
         return false;
     }
     if (mode & Append)
         mode |= WriteOnly;
     unsetError();
-    if ((mode & (ReadOnly | WriteOnly)) == 0) {
+    if (Q_UNLIKELY((mode & (ReadOnly | WriteOnly)) == 0)) {
         qWarning("QFile::open: File access not specified");
         return false;
     }
@@ -906,14 +906,14 @@ bool QFile::open(FILE *fh, OpenMode mode, FileHandleFlags handleFlags)
 */
 bool QFile::open(int fd, OpenMode mode, FileHandleFlags handleFlags)
 {
-    if (isOpen()) {
+    if (Q_UNLIKELY(isOpen())) {
         qWarning("QFile::open: File (%s) already open", qPrintable(fileName()));
         return false;
     }
     if (mode & Append)
         mode |= WriteOnly;
     unsetError();
-    if ((mode & (ReadOnly | WriteOnly)) == 0) {
+    if (Q_UNLIKELY((mode & (ReadOnly | WriteOnly)) == 0)) {
         qWarning("QFile::open: File access not specified");
         return false;
     }
@@ -1118,7 +1118,7 @@ bool QFile::setPermissions(const QString &fileName, Permissions permissions)
 bool QFile::flush()
 {
     Q_D(QFile);
-    if (!d->fileEngine) {
+    if (Q_UNLIKELY(!d->fileEngine)) {
         qWarning("QFile::flush: No file engine. Is IODevice open?");
         return false;
     }
@@ -1208,7 +1208,7 @@ bool QFile::atEnd() const
 bool QFile::seek(qint64 off)
 {
     Q_D(QFile);
-    if (!isOpen()) {
+    if (Q_UNLIKELY(!isOpen())) {
         qWarning("QFile::seek: IODevice is not open");
         return false;
     }
