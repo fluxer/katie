@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-08-13 19:35+0300\n"
+"POT-Creation-Date: 2021-08-13 23:30+0300\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -154,15 +154,7 @@ msgstr ""
 msgid "Destination file exists"
 msgstr ""
 
-#: src/core/io/qfile.cpp:588
-msgid "Will not rename sequential file using block copy"
-msgstr ""
-
-#: src/core/io/qfile.cpp:611
-msgid "Cannot remove source file"
-msgstr ""
-
-#: src/core/io/qfile.cpp:1003
+#: src/core/io/qfile.cpp:961
 msgid "No file engine available or engine does not support UnMapExtension"
 msgstr ""
 
