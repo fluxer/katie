@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-08-08 04:33+0300\n"
+"POT-Creation-Date: 2021-08-13 19:35+0300\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -43,7 +43,7 @@ msgid "The plugin uses incompatible Katie library: %1 (%2, %3)"
 msgstr ""
 
 #: src/core/plugin/qlibrary.cpp:796 src/core/plugin/qpluginloader.cpp:279
-#: src/core/io/qiodevice.cpp:1527 src/network/ssl/qsslerror.cpp:249
+#: src/core/io/qiodevice.cpp:1519 src/network/ssl/qsslerror.cpp:249
 #: src/network/socket/qnativesocketengine.cpp:250
 #: src/network/access/qftp.cpp:1428 src/uitools/formscriptrunner.cpp:104
 msgid "Unknown error"
@@ -150,19 +150,19 @@ msgctxt "QStandardPaths"
 msgid "Download"
 msgstr ""
 
-#: src/core/io/qfile.cpp:586
+#: src/core/io/qfile.cpp:573
 msgid "Destination file exists"
 msgstr ""
 
-#: src/core/io/qfile.cpp:601
+#: src/core/io/qfile.cpp:588
 msgid "Will not rename sequential file using block copy"
 msgstr ""
 
-#: src/core/io/qfile.cpp:624
+#: src/core/io/qfile.cpp:611
 msgid "Cannot remove source file"
 msgstr ""
 
-#: src/core/io/qfile.cpp:1023
+#: src/core/io/qfile.cpp:1003
 msgid "No file engine available or engine does not support UnMapExtension"
 msgstr ""
 
@@ -4403,71 +4403,76 @@ msgstr ""
 
 #: src/gui/kernel/qkeysequence.cpp:665
 msgctxt "QShortcut"
-msgid "Ins"
+msgid "Print"
 msgstr ""
 
 #: src/gui/kernel/qkeysequence.cpp:666
 msgctxt "QShortcut"
-msgid "Esc"
+msgid "Ins"
 msgstr ""
 
 #: src/gui/kernel/qkeysequence.cpp:667
 msgctxt "QShortcut"
-msgid "Del"
+msgid "Esc"
 msgstr ""
 
 #: src/gui/kernel/qkeysequence.cpp:668
 msgctxt "QShortcut"
-msgid "PgUp"
+msgid "Del"
 msgstr ""
 
 #: src/gui/kernel/qkeysequence.cpp:669
 msgctxt "QShortcut"
-msgid "PgDown"
+msgid "PgUp"
 msgstr ""
 
 #: src/gui/kernel/qkeysequence.cpp:670
 msgctxt "QShortcut"
-msgid "SysReq"
+msgid "PgDown"
 msgstr ""
 
 #: src/gui/kernel/qkeysequence.cpp:671
 msgctxt "QShortcut"
-msgid "CapsLock"
+msgid "SysReq"
 msgstr ""
 
 #: src/gui/kernel/qkeysequence.cpp:672
 msgctxt "QShortcut"
-msgid "NumLock"
+msgid "CapsLock"
 msgstr ""
 
 #: src/gui/kernel/qkeysequence.cpp:673
 msgctxt "QShortcut"
-msgid "ScrollLock"
+msgid "NumLock"
 msgstr ""
 
 #: src/gui/kernel/qkeysequence.cpp:674
 msgctxt "QShortcut"
+msgid "ScrollLock"
+msgstr ""
+
+#: src/gui/kernel/qkeysequence.cpp:675
+msgctxt "QShortcut"
 msgid "ShiftLock"
 msgstr ""
 
-#: src/gui/kernel/qkeysequence.cpp:1088 src/gui/kernel/qkeysequence.cpp:1163
+#: src/gui/kernel/qkeysequence.cpp:1081 src/gui/kernel/qkeysequence.cpp:1160
 msgid "Ctrl"
 msgstr ""
 
-#: src/gui/kernel/qkeysequence.cpp:1089 src/gui/kernel/qkeysequence.cpp:1167
+#: src/gui/kernel/qkeysequence.cpp:1082 src/gui/kernel/qkeysequence.cpp:1164
 msgid "Shift"
 msgstr ""
 
-#: src/gui/kernel/qkeysequence.cpp:1090 src/gui/kernel/qkeysequence.cpp:1165
+#: src/gui/kernel/qkeysequence.cpp:1083 src/gui/kernel/qkeysequence.cpp:1162
 msgid "Alt"
 msgstr ""
 
-#: src/gui/kernel/qkeysequence.cpp:1091 src/gui/kernel/qkeysequence.cpp:1161
+#: src/gui/kernel/qkeysequence.cpp:1084 src/gui/kernel/qkeysequence.cpp:1158
 msgid "Meta"
 msgstr ""
 
-#: src/gui/kernel/qkeysequence.cpp:1150
+#: src/gui/kernel/qkeysequence.cpp:1147
 msgid "+"
 msgstr ""
 

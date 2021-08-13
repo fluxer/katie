@@ -1,7 +1,7 @@
 # https://docs.fedoraproject.org/en-US/packaging-guidelines/
 
 Name: katie
-Version: 4.10.0
+Version: 4.11.0
 Release: 1%{?dist}
 Summary: C++ toolkit derived from the Qt 4.8 framework
 License: BSD and LGPLv2+
@@ -66,6 +66,9 @@ This package includes headers, pkg-config and CMake files.
 %{_libdir}/cmake/Katie/*
 
 %changelog
+* Fri Aug 13 2021 Ivailo Monev <xakepa10@gmail.com> - 4.11.0-1
+- package update
+
 * Mon Feb 8 2020 Ivailo Monev <xakepa10@gmail.com> - 4.10.0-1
 - package update
 

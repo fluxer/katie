@@ -1,4 +1,10 @@
-katie (4.10.0) unstable; urgency=medium
+katie (4.11.0) unstable; urgency=medium
+
+  * Fifth package update
+
+ -- Ivailo Monev <xakepa10@gmail.com>  Fri, 13 Aug 2020 07:32:58 +0200
+ 
+katie (4.10.0) stable; urgency=medium
 
   * Fourth package update
 
