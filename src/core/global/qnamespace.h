@@ -96,291 +96,6 @@ public:
         transparent
     };
 
-    enum KeyboardModifier {
-        NoModifier           = 0x00000000,
-        ShiftModifier        = 0x02000000,
-        ControlModifier      = 0x04000000,
-        AltModifier          = 0x08000000,
-        MetaModifier         = 0x10000000,
-        KeypadModifier       = 0x20000000,
-        GroupSwitchModifier  = 0x40000000,
-        // Do not extend the mask to include 0x01000000
-        KeyboardModifierMask = 0xfe000000
-    };
-    Q_DECLARE_FLAGS(KeyboardModifiers, KeyboardModifier)
-
-    // shorter names for shortcuts
-    enum Modifier {
-        META          = Qt::MetaModifier,
-        SHIFT         = Qt::ShiftModifier,
-        CTRL          = Qt::ControlModifier,
-        ALT           = Qt::AltModifier,
-        MODIFIER_MASK = KeyboardModifierMask
-    };
-
-    enum MouseButton {
-        NoButton         = 0x00000000,
-        LeftButton       = 0x00000001,
-        RightButton      = 0x00000002,
-        MiddleButton     = 0x00000004,
-        MouseButtonMask  = 0x000000ff
-    };
-    Q_DECLARE_FLAGS(MouseButtons, MouseButton)
-
-
-    enum Orientation {
-        Horizontal = 0x1,
-        Vertical = 0x2
-    };
-    Q_DECLARE_FLAGS(Orientations, Orientation)
-
-    enum FocusPolicy {
-        NoFocus = 0,
-        TabFocus = 0x1,
-        ClickFocus = 0x2,
-        StrongFocus = TabFocus | ClickFocus | 0x8,
-        WheelFocus = StrongFocus | 0x4
-    };
-
-    enum SortOrder {
-        AscendingOrder,
-        DescendingOrder
-    };
-
-    enum TileRule {
-        StretchTile,
-        RepeatTile,
-        RoundTile
-    };
-
-    // Text formatting flags for QPainter::drawText and QLabel.
-    // The following two enums can be combined to one integer which
-    // is passed as 'flags' to drawText and qt_format_text.
-    enum AlignmentFlag {
-        AlignLeft = 0x0001,
-        AlignLeading = AlignLeft,
-        AlignRight = 0x0002,
-        AlignTrailing = AlignRight,
-        AlignHCenter = 0x0004,
-        AlignJustify = 0x0008,
-        AlignAbsolute = 0x0010,
-        AlignHorizontal_Mask = AlignLeft | AlignRight | AlignHCenter | AlignJustify | AlignAbsolute,
-
-        AlignTop = 0x0020,
-        AlignBottom = 0x0040,
-        AlignVCenter = 0x0080,
-        AlignVertical_Mask = AlignTop | AlignBottom | AlignVCenter,
-
-        AlignCenter = AlignVCenter | AlignHCenter
-    };
-    Q_DECLARE_FLAGS(Alignment, AlignmentFlag)
-
-    enum TextFlag {
-        TextSingleLine = 0x0100,
-        TextDontClip = 0x0200,
-        TextExpandTabs = 0x0400,
-        TextShowMnemonic = 0x0800,
-        TextWordWrap = 0x1000,
-        TextWrapAnywhere = 0x2000,
-        TextDontPrint = 0x4000,
-        TextIncludeTrailingSpaces = 0x08000000,
-        TextHideMnemonic = 0x8000,
-        TextJustificationForced = 0x10000,
-        TextForceLeftToRight = 0x20000,
-        TextForceRightToLeft = 0x40000,
-        TextLongestVariant = 0x80000
-    };
-
-    enum TextElideMode {
-        ElideLeft,
-        ElideRight,
-        ElideMiddle,
-        ElideNone
-    };
-
-    enum WindowType {
-        Widget = 0x00000000,
-        Window = 0x00000001,
-        Dialog = 0x00000002 | Window,
-        Sheet = 0x00000004 | Window,
-        Drawer = 0x00000006 | Window,
-        Popup = 0x00000008 | Window,
-        Tool = 0x0000000a | Window,
-        ToolTip = 0x0000000c | Window,
-        SplashScreen = 0x0000000e | Window,
-        Desktop = 0x00000010 | Window,
-        SubWindow =  0x00000012,
-
-        WindowType_Mask = 0x000000ff,
-        X11BypassWindowManagerHint = 0x00000100,
-        FramelessWindowHint = 0x00000200,
-        WindowTitleHint = 0x00000400,
-        WindowSystemMenuHint = 0x00000800,
-        WindowMinimizeButtonHint = 0x00001000,
-        WindowMaximizeButtonHint = 0x00002000,
-        WindowMinMaxButtonsHint = WindowMinimizeButtonHint | WindowMaximizeButtonHint,
-        WindowContextHelpButtonHint = 0x00004000,
-        WindowShadeButtonHint = 0x00008000,
-        WindowStaysOnTopHint = 0x00010000,
-        CustomizeWindowHint = 0x00020000,
-        WindowStaysOnBottomHint = 0x00040000,
-        WindowCloseButtonHint = 0x00080000,
-        BypassGraphicsProxyWidget = 0x00100000
-    };
-    Q_DECLARE_FLAGS(WindowFlags, WindowType)
-
-    enum WindowState {
-        WindowNoState    = 0x00000000,
-        WindowMinimized  = 0x00000001,
-        WindowMaximized  = 0x00000002,
-        WindowFullScreen = 0x00000004,
-        WindowActive     = 0x00000008
-    };
-    Q_DECLARE_FLAGS(WindowStates, WindowState)
-
-    enum WidgetAttribute {
-        WA_Disabled = 0,
-        WA_UnderMouse = 1,
-        WA_MouseTracking = 2,
-        WA_OpaquePaintEvent = 3,
-        WA_NoBackground = WA_OpaquePaintEvent, // ## deprecated
-        WA_StaticContents = 4,
-        WA_PaintOnScreen = 5,
-        WA_NoSystemBackground = 6,
-        WA_UpdatesDisabled = 7,
-        WA_Mapped = 8,
-        WA_PaintOutsidePaintEvent = 9,
-        WA_ForceDisabled = 10,
-        WA_PendingMoveEvent = 11,
-        WA_PendingResizeEvent = 12,
-        WA_SetPalette = 13,
-        WA_SetFont = 14,
-        WA_SetCursor = 15,
-        WA_NoChildEventsFromChildren = 16,
-        WA_WindowModified = 17,
-        WA_Resized = 18,
-        WA_Moved = 19,
-        WA_CustomWhatsThis = 20,
-        WA_LayoutOnEntireRect = 21,
-        WA_OutsideWSRange = 22,
-        WA_TransparentForMouseEvents = 23,
-        WA_PaintUnclipped = 24,
-        WA_NoMouseReplay = 25,
-        WA_DeleteOnClose = 26,
-        WA_RightToLeft = 27,
-        WA_NoChildEventsForParent = 28,
-        WA_ShowModal = 29, // ## deprecated
-        WA_MouseNoMask = 30,
-        WA_GroupLeader = 31, // ## deprecated
-        WA_NoMousePropagation = 32, // ## for now, might go away.
-        WA_Hover = 33,
-        WA_QuitOnClose = 34,
-        WA_KeyboardFocusChange = 35,
-        WA_AcceptDrops = 36,
-        WA_WindowPropagation = 37,
-        WA_AlwaysShowToolTips = 38,
-        WA_SetStyle = 39,
-        WA_SetLocale = 40,
-        WA_LayoutUsesWidgetRect = 41,
-        WA_ShowWithoutActivating = 42,
-        WA_NativeWindow = 43,
-        WA_DontCreateNativeAncestors = 44,
-        WA_TranslucentBackground = 45,
-        WA_AcceptTouchEvents = 46,
-        WA_TouchPadAcceptSingleTouchEvents = 47,
-        WA_LockPortraitOrientation = 48,
-        WA_LockLandscapeOrientation = 49,
-        WA_AutoOrientation = 50,
-        WA_X11DoNotAcceptFocus = 51,
-        WA_X11BypassTransientForHint = 52,
-
-        // window types from http://standards.freedesktop.org/wm-spec/
-        WA_X11NetWmWindowTypeDesktop = 53,
-        WA_X11NetWmWindowTypeDock = 54,
-        WA_X11NetWmWindowTypeToolBar = 55,
-        WA_X11NetWmWindowTypeMenu = 56,
-        WA_X11NetWmWindowTypeUtility = 57,
-        WA_X11NetWmWindowTypeSplash = 58,
-        WA_X11NetWmWindowTypeDialog = 59,
-        WA_X11NetWmWindowTypeDropDownMenu = 60,
-        WA_X11NetWmWindowTypePopupMenu = 61,
-        WA_X11NetWmWindowTypeToolTip = 62,
-        WA_X11NetWmWindowTypeNotification = 63,
-        WA_X11NetWmWindowTypeCombo = 64,
-        WA_X11NetWmWindowTypeDND = 65,
-
-        // internal
-        WA_LaidOut = 66,
-        WA_GrabbedShortcut = 67,
-        WA_DontShowOnScreen = 68,
-        WA_ForceUpdatesDisabled = 69,
-        WA_StyledBackground = 70,
-        WA_StyleSheet = 71,
-        WA_DropSiteRegistered = 72,
-        WA_WState_Visible = 73,
-        WA_WState_Hidden = 74,
-        WA_WState_Created = 75,
-        WA_WState_InPaintEvent = 76,
-        WA_WState_Reparented = 77,
-        WA_WState_Polished = 78,
-        WA_WState_OwnSizePolicy = 79,
-        WA_WState_ExplicitShowHide = 80,
-        WA_WState_ConfigPending = 81,
-        WA_WState_AcceptedTouchBeginEvent = 82,
-        WA_SetWindowIcon = 83,
-        WA_SetLayoutDirection = 84,
-        WA_SetWindowModality = 85,
-        WA_NoX11EventCompression = 86,
-
-        // Add new attributes before this line
-        WA_AttributeCount
-    };
-
-    enum ApplicationAttribute {
-        AA_ImmediateWidgetCreation = 0,
-        AA_DontShowIconsInMenus = 1,
-        AA_NativeWindows = 2,
-        AA_DontCreateNativeWidgetSiblings = 3,
-        AA_X11InitThreads = 4,
-
-        // Add new attributes before this line
-        AA_AttributeCount
-    };
-
-    // Image conversion flags.  The unusual ordering is caused by
-    // compatibility and default requirements.
-    enum ImageConversionFlag {
-        ColorMode_Mask          = 0x00000003,
-        AutoColor               = 0x00000000,
-        ColorOnly               = 0x00000003,
-        MonoOnly                = 0x00000002,
-        // Reserved             = 0x00000001,
-
-        AlphaDither_Mask        = 0x0000000c,
-        ThresholdAlphaDither    = 0x00000000,
-        OrderedAlphaDither      = 0x00000004,
-        DiffuseAlphaDither      = 0x00000008,
-
-        Dither_Mask             = 0x00000030,
-        DiffuseDither           = 0x00000000,
-        OrderedDither           = 0x00000010,
-        ThresholdDither         = 0x00000020,
-        // ReservedDither       = 0x00000030,
-
-        DitherMode_Mask         = 0x000000c0,
-        AutoDither              = 0x00000000,
-        PreferDither            = 0x00000040,
-        AvoidDither             = 0x00000080,
-
-        NoOpaqueDetection       = 0x00000100
-    };
-    Q_DECLARE_FLAGS(ImageConversionFlags, ImageConversionFlag)
-
-    enum BGMode {
-        TransparentMode,
-        OpaqueMode
-    };
-
     enum Key {
         // misc
         Key_Backspace                     = 0xff08,
@@ -891,6 +606,291 @@ public:
         Key_Enter = 0xff8d,
         Key_AltGr = 0xfe03,
         Key_unknown = 0xffffff
+    };
+
+    enum KeyboardModifier {
+        NoModifier           = 0x00000000,
+        ShiftModifier        = 0x02000000,
+        ControlModifier      = 0x04000000,
+        AltModifier          = 0x08000000,
+        MetaModifier         = 0x10000000,
+        KeypadModifier       = 0x20000000,
+        GroupSwitchModifier  = 0x40000000,
+        // Do not extend the mask to include 0x01000000
+        KeyboardModifierMask = 0xfe000000
+    };
+    Q_DECLARE_FLAGS(KeyboardModifiers, KeyboardModifier)
+
+    // shorter names for shortcuts
+    enum Modifier {
+        META          = Qt::MetaModifier,
+        SHIFT         = Qt::ShiftModifier,
+        CTRL          = Qt::ControlModifier,
+        ALT           = Qt::AltModifier,
+        MODIFIER_MASK = KeyboardModifierMask
+    };
+
+    enum MouseButton {
+        NoButton         = 0x00000000,
+        LeftButton       = 0x00000001,
+        RightButton      = 0x00000002,
+        MiddleButton     = 0x00000004,
+        MouseButtonMask  = 0x000000ff
+    };
+    Q_DECLARE_FLAGS(MouseButtons, MouseButton)
+
+
+    enum Orientation {
+        Horizontal = 0x1,
+        Vertical = 0x2
+    };
+    Q_DECLARE_FLAGS(Orientations, Orientation)
+
+    enum FocusPolicy {
+        NoFocus = 0,
+        TabFocus = 0x1,
+        ClickFocus = 0x2,
+        StrongFocus = TabFocus | ClickFocus | 0x8,
+        WheelFocus = StrongFocus | 0x4
+    };
+
+    enum SortOrder {
+        AscendingOrder,
+        DescendingOrder
+    };
+
+    enum TileRule {
+        StretchTile,
+        RepeatTile,
+        RoundTile
+    };
+
+    // Text formatting flags for QPainter::drawText and QLabel.
+    // The following two enums can be combined to one integer which
+    // is passed as 'flags' to drawText and qt_format_text.
+    enum AlignmentFlag {
+        AlignLeft = 0x0001,
+        AlignLeading = AlignLeft,
+        AlignRight = 0x0002,
+        AlignTrailing = AlignRight,
+        AlignHCenter = 0x0004,
+        AlignJustify = 0x0008,
+        AlignAbsolute = 0x0010,
+        AlignHorizontal_Mask = AlignLeft | AlignRight | AlignHCenter | AlignJustify | AlignAbsolute,
+
+        AlignTop = 0x0020,
+        AlignBottom = 0x0040,
+        AlignVCenter = 0x0080,
+        AlignVertical_Mask = AlignTop | AlignBottom | AlignVCenter,
+
+        AlignCenter = AlignVCenter | AlignHCenter
+    };
+    Q_DECLARE_FLAGS(Alignment, AlignmentFlag)
+
+    enum TextFlag {
+        TextSingleLine = 0x0100,
+        TextDontClip = 0x0200,
+        TextExpandTabs = 0x0400,
+        TextShowMnemonic = 0x0800,
+        TextWordWrap = 0x1000,
+        TextWrapAnywhere = 0x2000,
+        TextDontPrint = 0x4000,
+        TextIncludeTrailingSpaces = 0x08000000,
+        TextHideMnemonic = 0x8000,
+        TextJustificationForced = 0x10000,
+        TextForceLeftToRight = 0x20000,
+        TextForceRightToLeft = 0x40000,
+        TextLongestVariant = 0x80000
+    };
+
+    enum TextElideMode {
+        ElideLeft,
+        ElideRight,
+        ElideMiddle,
+        ElideNone
+    };
+
+    enum WindowType {
+        Widget = 0x00000000,
+        Window = 0x00000001,
+        Dialog = 0x00000002 | Window,
+        Sheet = 0x00000004 | Window,
+        Drawer = 0x00000006 | Window,
+        Popup = 0x00000008 | Window,
+        Tool = 0x0000000a | Window,
+        ToolTip = 0x0000000c | Window,
+        SplashScreen = 0x0000000e | Window,
+        Desktop = 0x00000010 | Window,
+        SubWindow =  0x00000012,
+
+        WindowType_Mask = 0x000000ff,
+        X11BypassWindowManagerHint = 0x00000100,
+        FramelessWindowHint = 0x00000200,
+        WindowTitleHint = 0x00000400,
+        WindowSystemMenuHint = 0x00000800,
+        WindowMinimizeButtonHint = 0x00001000,
+        WindowMaximizeButtonHint = 0x00002000,
+        WindowMinMaxButtonsHint = WindowMinimizeButtonHint | WindowMaximizeButtonHint,
+        WindowContextHelpButtonHint = 0x00004000,
+        WindowShadeButtonHint = 0x00008000,
+        WindowStaysOnTopHint = 0x00010000,
+        CustomizeWindowHint = 0x00020000,
+        WindowStaysOnBottomHint = 0x00040000,
+        WindowCloseButtonHint = 0x00080000,
+        BypassGraphicsProxyWidget = 0x00100000
+    };
+    Q_DECLARE_FLAGS(WindowFlags, WindowType)
+
+    enum WindowState {
+        WindowNoState    = 0x00000000,
+        WindowMinimized  = 0x00000001,
+        WindowMaximized  = 0x00000002,
+        WindowFullScreen = 0x00000004,
+        WindowActive     = 0x00000008
+    };
+    Q_DECLARE_FLAGS(WindowStates, WindowState)
+
+    enum WidgetAttribute {
+        WA_Disabled = 0,
+        WA_UnderMouse = 1,
+        WA_MouseTracking = 2,
+        WA_OpaquePaintEvent = 3,
+        WA_NoBackground = WA_OpaquePaintEvent, // ## deprecated
+        WA_StaticContents = 4,
+        WA_PaintOnScreen = 5,
+        WA_NoSystemBackground = 6,
+        WA_UpdatesDisabled = 7,
+        WA_Mapped = 8,
+        WA_PaintOutsidePaintEvent = 9,
+        WA_ForceDisabled = 10,
+        WA_PendingMoveEvent = 11,
+        WA_PendingResizeEvent = 12,
+        WA_SetPalette = 13,
+        WA_SetFont = 14,
+        WA_SetCursor = 15,
+        WA_NoChildEventsFromChildren = 16,
+        WA_WindowModified = 17,
+        WA_Resized = 18,
+        WA_Moved = 19,
+        WA_CustomWhatsThis = 20,
+        WA_LayoutOnEntireRect = 21,
+        WA_OutsideWSRange = 22,
+        WA_TransparentForMouseEvents = 23,
+        WA_PaintUnclipped = 24,
+        WA_NoMouseReplay = 25,
+        WA_DeleteOnClose = 26,
+        WA_RightToLeft = 27,
+        WA_NoChildEventsForParent = 28,
+        WA_ShowModal = 29, // ## deprecated
+        WA_MouseNoMask = 30,
+        WA_GroupLeader = 31, // ## deprecated
+        WA_NoMousePropagation = 32, // ## for now, might go away.
+        WA_Hover = 33,
+        WA_QuitOnClose = 34,
+        WA_KeyboardFocusChange = 35,
+        WA_AcceptDrops = 36,
+        WA_WindowPropagation = 37,
+        WA_AlwaysShowToolTips = 38,
+        WA_SetStyle = 39,
+        WA_SetLocale = 40,
+        WA_LayoutUsesWidgetRect = 41,
+        WA_ShowWithoutActivating = 42,
+        WA_NativeWindow = 43,
+        WA_DontCreateNativeAncestors = 44,
+        WA_TranslucentBackground = 45,
+        WA_AcceptTouchEvents = 46,
+        WA_TouchPadAcceptSingleTouchEvents = 47,
+        WA_LockPortraitOrientation = 48,
+        WA_LockLandscapeOrientation = 49,
+        WA_AutoOrientation = 50,
+        WA_X11DoNotAcceptFocus = 51,
+        WA_X11BypassTransientForHint = 52,
+
+        // window types from http://standards.freedesktop.org/wm-spec/
+        WA_X11NetWmWindowTypeDesktop = 53,
+        WA_X11NetWmWindowTypeDock = 54,
+        WA_X11NetWmWindowTypeToolBar = 55,
+        WA_X11NetWmWindowTypeMenu = 56,
+        WA_X11NetWmWindowTypeUtility = 57,
+        WA_X11NetWmWindowTypeSplash = 58,
+        WA_X11NetWmWindowTypeDialog = 59,
+        WA_X11NetWmWindowTypeDropDownMenu = 60,
+        WA_X11NetWmWindowTypePopupMenu = 61,
+        WA_X11NetWmWindowTypeToolTip = 62,
+        WA_X11NetWmWindowTypeNotification = 63,
+        WA_X11NetWmWindowTypeCombo = 64,
+        WA_X11NetWmWindowTypeDND = 65,
+
+        // internal
+        WA_LaidOut = 66,
+        WA_GrabbedShortcut = 67,
+        WA_DontShowOnScreen = 68,
+        WA_ForceUpdatesDisabled = 69,
+        WA_StyledBackground = 70,
+        WA_StyleSheet = 71,
+        WA_DropSiteRegistered = 72,
+        WA_WState_Visible = 73,
+        WA_WState_Hidden = 74,
+        WA_WState_Created = 75,
+        WA_WState_InPaintEvent = 76,
+        WA_WState_Reparented = 77,
+        WA_WState_Polished = 78,
+        WA_WState_OwnSizePolicy = 79,
+        WA_WState_ExplicitShowHide = 80,
+        WA_WState_ConfigPending = 81,
+        WA_WState_AcceptedTouchBeginEvent = 82,
+        WA_SetWindowIcon = 83,
+        WA_SetLayoutDirection = 84,
+        WA_SetWindowModality = 85,
+        WA_NoX11EventCompression = 86,
+
+        // Add new attributes before this line
+        WA_AttributeCount
+    };
+
+    enum ApplicationAttribute {
+        AA_ImmediateWidgetCreation = 0,
+        AA_DontShowIconsInMenus = 1,
+        AA_NativeWindows = 2,
+        AA_DontCreateNativeWidgetSiblings = 3,
+        AA_X11InitThreads = 4,
+
+        // Add new attributes before this line
+        AA_AttributeCount
+    };
+
+    // Image conversion flags.  The unusual ordering is caused by
+    // compatibility and default requirements.
+    enum ImageConversionFlag {
+        ColorMode_Mask          = 0x00000003,
+        AutoColor               = 0x00000000,
+        ColorOnly               = 0x00000003,
+        MonoOnly                = 0x00000002,
+        // Reserved             = 0x00000001,
+
+        AlphaDither_Mask        = 0x0000000c,
+        ThresholdAlphaDither    = 0x00000000,
+        OrderedAlphaDither      = 0x00000004,
+        DiffuseAlphaDither      = 0x00000008,
+
+        Dither_Mask             = 0x00000030,
+        DiffuseDither           = 0x00000000,
+        OrderedDither           = 0x00000010,
+        ThresholdDither         = 0x00000020,
+        // ReservedDither       = 0x00000030,
+
+        DitherMode_Mask         = 0x000000c0,
+        AutoDither              = 0x00000000,
+        PreferDither            = 0x00000040,
+        AvoidDither             = 0x00000080,
+
+        NoOpaqueDetection       = 0x00000100
+    };
+    Q_DECLARE_FLAGS(ImageConversionFlags, ImageConversionFlag)
+
+    enum BGMode {
+        TransparentMode,
+        OpaqueMode
     };
 
     enum ArrowType {
