@@ -71,7 +71,6 @@ public:
                            QIcon::State state) = 0;
     QString filename;
     QIconDirInfo dir;
-    static int count;
 };
 
 struct ScalableEntry : public QIconLoaderEngineEntry
