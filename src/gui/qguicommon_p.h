@@ -9,13 +9,14 @@
 
 QT_BEGIN_NAMESPACE
 
-inline static QVector<QRgb> monoColorTable()
+inline static const QVector<QRgb>& monoColorTable()
 {
-    QVector<QRgb> colortable;
-    // same as QColor(Qt::color0).rgba() and qRgba(255, 255, 255, 255)
-    colortable.append(4294967295);
-    // same as QColor(Qt::color1).rgba() and qRgba(0, 0, 0, 255)
-    colortable.append(4278190080);
+    static const QVector<QRgb> colortable = {
+        // same as QColor(Qt::color0).rgba() and qRgba(255, 255, 255, 255)
+        4294967295,
+        // same as QColor(Qt::color1).rgba() and qRgba(0, 0, 0, 255)
+        4278190080
+    };
     return colortable;
 }
 
