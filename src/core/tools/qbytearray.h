@@ -78,7 +78,6 @@ inline int qvsnprintf(char *str, size_t n, const char *fmt, va_list ap)
 
 // qChecksum: Internet checksum
 Q_CORE_EXPORT quint16 qChecksum(const char *s, uint len);
-Q_CORE_EXPORT quint32 qChecksum32(const char *s, uint len);
 
 class QByteRef;
 class QString;

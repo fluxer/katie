@@ -36,7 +36,6 @@
 #include <stdlib.h>
 
 #ifndef QT_NO_COMPRESS
-#include <zlib.h>
 #include <zstd.h>
 #include <zstd_errors.h>
 #endif // QT_NO_COMPRESS
@@ -291,26 +290,6 @@ quint16 qChecksum(const char *data, uint len)
         crc = ((crc >> 4) & 0x0fff) ^ crc_tbl[((crc ^ c) & 15)];
     }
     return ~crc & 0xffff;
-}
-
-/*!
-    \relates QByteArray
-
-    Returns the CRC-32 checksum of the first \a len bytes of \a data.
-
-    The checksum is independent of the byte order (endianness).
-*/
-quint32 qChecksum32(const char *data, uint len)
-{
-#ifndef QT_NO_COMPRESS
-    quint32 crc_32 = ::crc32(0, 0, 0);
-    return ::crc32(crc_32, reinterpret_cast<const uchar *>(data), len);
-#else
-    Q_UNUSED(data)
-    Q_UNUSED(len)
-    Q_ASSERT_X(false, "qChecksum32", "Function is a stub!");
-    return 0;
-#endif
 }
 
 #ifndef QT_NO_COMPRESS
