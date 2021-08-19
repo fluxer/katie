@@ -4332,11 +4332,15 @@ QImage QImage::alphaChannel() const
 
     QImage image(w, h, Format_Indexed8);
     QIMAGE_SANITYCHECK_MEMORY(image);
-    image.setColorCount(256);
 
+    // TODO: use static color table instead of creating one every time this method is called
     // set up gray scale table.
-    for (int i=0; i<256; ++i)
-        image.setColor(i, qRgb(i, i, i));
+    QVector<QRgb> colortable;
+    colortable.reserve(255);
+    for (int i=0; i<256; i++) {
+        colortable.append(qRgb(i, i, i));
+    }
+    image.setColorTable(colortable);
 
     if (!hasAlphaChannel()) {
         image.fill(255);
