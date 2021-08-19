@@ -62,7 +62,7 @@ There are several things you should be aware before considering Katie:
   - support for generating SHA-256 and SHA-512 hash sums (SHA-2)
   - support for generating CRC-32 checksums via qChecksum32() function
   - verification section for plugins build with Clang
-  - faster alternatives to qCompress() and qUncompress()
+  - qCompress() and qUncompress() use ZSTD which is much faster
   - stack backtrace on assert, crash or warning via execinfo
   - brief manual pages for all command-line tools
   - desktop files, Shell profile and dynamic linker/loader config
