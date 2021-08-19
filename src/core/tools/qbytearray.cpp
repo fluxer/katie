@@ -681,12 +681,26 @@ QByteArray::Data QByteArray::shared_empty = { QAtomicInt(1),
     Assigns \a other to this byte array and returns a reference to
     this byte array.
 */
-QByteArray &QByteArray::operator=(const QByteArray & other)
+QByteArray &QByteArray::operator=(const QByteArray &other)
 {
-    other.d->ref.ref();
+    Data *x;
+    if (other.isNull()) {
+        x = &shared_null;
+    } else if (other.isEmpty()) {
+        x = &shared_empty;
+    } else {
+        int len = other.d->size;
+        if (d->ref != 1 || len > d->alloc || (len < d->size && len < d->alloc >> 1))
+            reallocData(len);
+        x = d;
+        memcpy(x->data, other.d->data, len );
+        x->size = len;
+        x->data[len] = '\0';
+    }
+    x->ref.ref();
     if (!d->ref.deref())
-        freeData(d);
-    d = other.d;
+         freeData(d);
+    d = x;
     return *this;
 }
 
@@ -709,8 +723,9 @@ QByteArray &QByteArray::operator=(const char *str)
         if (d->ref != 1 || len > d->alloc || (len < d->size && len < d->alloc >> 1))
             reallocData(len);
         x = d;
-        memcpy(x->data, str, len + 1); // include null terminator
+        memcpy(x->data, str, len);
         x->size = len;
+        x->data[len] = '\0';
     }
     x->ref.ref();
     if (!d->ref.deref())
