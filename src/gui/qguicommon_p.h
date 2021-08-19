@@ -9,6 +9,16 @@
 
 QT_BEGIN_NAMESPACE
 
+inline static QVector<QRgb> monoColorTable()
+{
+    QVector<QRgb> colortable;
+    // same as QColor(Qt::color0).rgba() and qRgba(255, 255, 255, 255)
+    colortable.append(4294967295);
+    // same as QColor(Qt::color1).rgba() and qRgba(0, 0, 0, 255)
+    colortable.append(4278190080);
+    return colortable;
+}
+
 inline static QColor mergedColors(const QColor &colorA, const QColor &colorB, int factor = 50)
 {
     const int maxFactor = 100;

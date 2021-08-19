@@ -28,6 +28,7 @@
 #include "qvariant.h"
 #include "qvector.h"
 #include "qdrawhelper_p.h"
+#include "qguicommon_p.h"
 
 #include <zlib.h>
 #include <png.h>
@@ -166,9 +167,7 @@ void setup_qt(QImage& image, png_structp png_ptr, png_infop info_ptr, float scre
                 if (image.isNull())
                     return;
             }
-            image.setColorCount(2);
-            image.setColor(1, qRgb(0,0,0));
-            image.setColor(0, qRgb(255,255,255));
+            image.setColorTable(monoColorTable());
         } else if (bit_depth == 16 && png_get_valid(png_ptr, info_ptr, PNG_INFO_tRNS)) {
             png_set_expand(png_ptr);
             png_set_strip_16(png_ptr);

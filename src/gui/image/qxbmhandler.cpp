@@ -22,6 +22,7 @@
 #include "qplatformdefs.h"
 #include "qxbmhandler_p.h"
 #include "qcorecommon_p.h"
+#include "qguicommon_p.h"
 
 #ifndef QT_NO_IMAGEFORMAT_XBM
 
@@ -125,9 +126,7 @@ static bool read_xbm_body(QIODevice *device, int w, int h, QImage *outImage)
             return false;
     }
 
-    outImage->setColorCount(2);
-    outImage->setColor(0, qRgb(255,255,255));        // white
-    outImage->setColor(1, qRgb(0,0,0));                // black
+    outImage->setColorTable(monoColorTable());
 
     int           x = 0, y = 0;
     uchar *b = outImage->scanLine(0);

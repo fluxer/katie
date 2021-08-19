@@ -37,6 +37,7 @@
 #include "qpaintengine_raster_p.h"
 #include "qimage_p.h"
 #include "qcorecommon_p.h"
+#include "qguicommon_p.h"
 #include "qx11info_x11.h"
 
 #include <ctype.h>
@@ -3242,12 +3243,7 @@ QImage QImage::createHeuristicMask(bool clipTight) const
     int h = height();
     QImage m(w, h, Format_MonoLSB);
     QIMAGE_SANITYCHECK_MEMORY(m);
-    QVector<QRgb> colortable;
-    // same as QColor(Qt::color0).rgba() and qRgba(255, 255, 255, 255)
-    colortable.append(4294967295);
-    // same as QColor(Qt::color1).rgba() and qRgba(0, 0, 0, 255)
-    colortable.append(4278190080);
-    m.setColorTable(colortable);
+    m.setColorTable(monoColorTable());
     m.fill(0xff);
 
     QRgb background = PIX(0,0);
