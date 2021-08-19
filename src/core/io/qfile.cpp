@@ -1125,7 +1125,7 @@ qint64 QFile::size() const
 {
     Q_D(const QFile);
     fileEngine()->fileFlags(QAbstractFileEngine::Refresh);
-    return fileEngine()->size();
+    return d->fileEngine->size();
 }
 
 /*!
@@ -1140,8 +1140,6 @@ qint64 QFile::size() const
 
 bool QFile::atEnd() const
 {
-    Q_D(const QFile);
-
     if (!isOpen())
         return true;
 
