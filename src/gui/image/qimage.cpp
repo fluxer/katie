@@ -3242,9 +3242,12 @@ QImage QImage::createHeuristicMask(bool clipTight) const
     int h = height();
     QImage m(w, h, Format_MonoLSB);
     QIMAGE_SANITYCHECK_MEMORY(m);
-    m.setColorCount(2);
-    m.setColor(0, QColor(Qt::color0).rgba());
-    m.setColor(1, QColor(Qt::color1).rgba());
+    QVector<QRgb> colortable;
+    // same as QColor(Qt::color0).rgba() and qRgba(255, 255, 255, 255)
+    colortable.append(4294967295);
+    // same as QColor(Qt::color1).rgba() and qRgba(0, 0, 0, 255)
+    colortable.append(4278190080);
+    m.setColorTable(colortable);
     m.fill(0xff);
 
     QRgb background = PIX(0,0);
