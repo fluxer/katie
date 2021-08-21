@@ -1411,11 +1411,7 @@ QByteArray &QByteArray::append(const QByteArray &ba)
     if (isEmpty()) {
         *this = ba;
     } else if (!ba.isEmpty()) {
-        if (d->ref != 1 || d->size + ba.d->size > d->alloc)
-            reallocData(d->size + ba.d->size);
-        memcpy(d->data + d->size, ba.d->data, ba.d->size);
-        d->size += ba.d->size;
-        d->data[d->size] = '\0';
+        append(ba.constData(), ba.size());
     }
     return *this;
 }
@@ -1465,8 +1461,9 @@ QByteArray &QByteArray::append(const char *str, int len)
     if (str && len) {
         if (d->ref != 1 || d->size + len > d->alloc)
             reallocData(d->size + len);
-        memcpy(d->data + d->size, str, len + 1); // include null terminator
+        memcpy(d->data + d->size, str, len);
         d->size += len;
+        d->data[d->size] = '\0';
     }
     return *this;
 }
