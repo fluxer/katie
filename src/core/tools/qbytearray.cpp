@@ -1329,9 +1329,7 @@ QByteArray &QByteArray::prepend(const QByteArray &ba)
     if (isEmpty()) {
         *this = ba;
     } else if (!ba.isEmpty()) {
-        QByteArray tmp = *this;
-        *this = ba;
-        append(tmp);
+        prepend(ba.constData(), ba.size());
     }
     return *this;
 }
@@ -1356,7 +1354,7 @@ QByteArray &QByteArray::prepend(const char *str)
 
 QByteArray &QByteArray::prepend(const char *str, int len)
 {
-    if (str) {
+    if (str && len > 0) {
         if (d->ref != 1 || d->size + len > d->alloc)
             reallocData(d->size + len);
         memmove(d->data+len, d->data, d->size);
