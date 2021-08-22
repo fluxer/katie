@@ -332,7 +332,7 @@ QByteArray qCompress(const char* data, int nbytes, int compressionLevel)
 
     const size_t bndresult = ZSTD_compressBound(nbytes);
     if (Q_UNLIKELY(bndresult <= 0)) {
-        qWarning("qCompress: compression bound is negative or zero");
+        qWarning("qCompress: Compression boundary is negative or zero");
         return QByteArray();
     }
 
@@ -380,7 +380,7 @@ QByteArray qUncompress(const char* data, int nbytes)
 
     const unsigned long long uncompressedsize = ZSTD_getDecompressedSize(data, nbytes);
     if (Q_UNLIKELY(uncompressedsize <= 0)) {
-        qWarning("qUncompress: uncompression size is negative or zero");
+        qWarning("qUncompress: Uncompressed size is negative or zero");
         return QByteArray();
     }
 
