@@ -48,8 +48,6 @@ Q_GUI_EXPORT extern bool qt_scaleForTransform(const QTransform &transform, qreal
 void dumpClip(int width, int height, const QClipData *clip);
 #endif
 
-#define QT_FAST_SPANS
-
 /********************************************************************************
  * Span functions
  */
@@ -1159,49 +1157,6 @@ void QRasterPaintEngine::drawRects(const QRect *rects, int rectCount)
     }
 }
 
-/*!
-    \reimp
-*/
-void QRasterPaintEngine::drawRects(const QRectF *rects, int rectCount)
-{
-#ifdef QT_DEBUG_DRAW
-    qDebug(" - QRasterPaintEngine::drawRect(QRectF*), rectCount=%d", rectCount);
-#endif
-#ifdef QT_FAST_SPANS
-    Q_D(QRasterPaintEngine);
-    ensureRasterState();
-    QRasterPaintEngineState *s = state();
-
-
-    if (s->flags.tx_noshear) {
-        ensureBrush();
-        if (s->brushData.blend) {
-            d->initializeRasterizer(&s->brushData);
-            for (int i = 0; i < rectCount; ++i) {
-                const QRectF &rect = rects[i].normalized();
-                if (rect.isEmpty())
-                    continue;
-                const QPointF a = s->matrix.map((rect.topLeft() + rect.bottomLeft()) * 0.5f);
-                const QPointF b = s->matrix.map((rect.topRight() + rect.bottomRight()) * 0.5f);
-                d->rasterizer->rasterizeLine(a, b, rect.height() / rect.width());
-            }
-        }
-
-        ensurePen();
-        if (s->penData.blend) {
-            QRectVectorPath path;
-            for (int i = 0; i < rectCount; ++i) {
-                path.set(rects[i]);
-                QPaintEngineEx::stroke(path, s->lastPen);
-            }
-        }
-
-        return;
-    }
-#endif // QT_FAST_SPANS
-    QPaintEngineEx::drawRects(rects, rectCount);
-}
-
 
 /*!
     \internal
@@ -1469,7 +1424,7 @@ void QRasterPaintEngine::drawPolygon(const QPointF *points, int pointCount, Poly
 
     if (mode != PolylineMode && isRect((qreal *) points, pointCount)) {
         QRectF r(points[0], points[2]);
-        drawRects(&r, 1);
+        QPaintEngineEx::drawRects(&r, 1);
         return;
     }
 
@@ -1777,25 +1732,6 @@ void QRasterPaintEngine::drawImage(const QRectF &r, const QImage &img, const QRe
             return;
         }
 
-#ifdef QT_FAST_SPANS
-        ensureRasterState();
-        if (s->flags.tx_noshear || s->matrix.type() == QTransform::TxScale) {
-            d->initializeRasterizer(&d->image_filler_xform);
-            d->rasterizer->setAntialiased(s->flags.antialiased);
-
-            const QPointF offs = s->flags.antialiased ? QPointF() : QPointF(aliasedCoordinateDelta, aliasedCoordinateDelta);
-
-            const QRectF &rect = r.normalized();
-            const QPointF a = s->matrix.map((rect.topLeft() + rect.bottomLeft()) * 0.5f) - offs;
-            const QPointF b = s->matrix.map((rect.topRight() + rect.bottomRight()) * 0.5f) - offs;
-
-            if (s->flags.tx_noshear)
-                d->rasterizer->rasterizeLine(a, b, rect.height() / rect.width());
-            else
-                d->rasterizer->rasterizeLine(a, b, qAbs((s->matrix.m22() * rect.height()) / (s->matrix.m11() * rect.width())));
-            return;
-        }
-#endif
         const qreal offs = s->flags.antialiased ? qreal(0) : aliasedCoordinateDelta;
         QPainterPath path;
         path.addRect(r);
@@ -1857,22 +1793,6 @@ void QRasterPaintEngine::drawTiledPixmap(const QRectF &r, const QPixmap &pixmap,
             return;
         d->image_filler_xform.setupMatrix(copy, s->flags.bilinear);
 
-#ifdef QT_FAST_SPANS
-        ensureRasterState();
-        if (s->flags.tx_noshear || s->matrix.type() == QTransform::TxScale) {
-            d->initializeRasterizer(&d->image_filler_xform);
-            d->rasterizer->setAntialiased(s->flags.antialiased);
-
-            const QRectF &rect = r.normalized();
-            const QPointF a = s->matrix.map((rect.topLeft() + rect.bottomLeft()) * 0.5f);
-            const QPointF b = s->matrix.map((rect.topRight() + rect.bottomRight()) * 0.5f);
-            if (s->flags.tx_noshear)
-                d->rasterizer->rasterizeLine(a, b, rect.height() / rect.width());
-            else
-                d->rasterizer->rasterizeLine(a, b, qAbs((s->matrix.m22() * rect.height()) / (s->matrix.m11() * rect.width())));
-            return;
-        }
-#endif
         QPainterPath path;
         path.addRect(r);
         fillPath(path, &d->image_filler_xform);
