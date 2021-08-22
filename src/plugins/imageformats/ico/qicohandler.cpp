@@ -35,6 +35,7 @@
 #include <QtCore/QBuffer>
 #include "qvariant.h"
 #include "qcorecommon_p.h"
+#include "qguicommon_p.h"
 
 QT_BEGIN_NAMESPACE
 
@@ -563,9 +564,7 @@ QImage ICOReader::iconAt(int index)
                         if (!image.isNull()) {
                             QImage mask(image.width(), image.height(), QImage::Format_Mono);
                             if (!mask.isNull()) {
-                                mask.setColorCount(2);
-                                mask.setColor(0, qRgba(255,255,255,0xff));
-                                mask.setColor(1, qRgba(0  ,0  ,0  ,0xff));
+                                mask.setColorTable(monoColorTable());
                                 read1BitBMP(mask);
                                 if (!mask.isNull()) {
                                     img = QImage(image.width(), image.height(), QImage::Format_ARGB32 );
