@@ -2396,13 +2396,7 @@ qulonglong QVariant::toULongLong(bool *ok) const
 */
 bool QVariant::toBool() const
 {
-    if (d.type == Bool)
-        return d.data.b;
-
-    bool res = false;
-    handler->convert(&d, Bool, &res, nullptr);
-
-    return res;
+    return qVariantToHelper<bool>(d, Bool, handler);
 }
 
 /*!
