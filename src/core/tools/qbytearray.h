@@ -304,7 +304,6 @@ private:
     QByteArray(Data *dd, int /*dummy*/, int /*dummy*/) : d(dd) {}
     static void freeData(Data *);
     void reallocData(int alloc);
-    void expand(int i);
     QByteArray nulTerminated() const;
 
     friend class QByteRef;
@@ -362,13 +361,13 @@ class Q_CORE_EXPORT QByteRef {
     friend class QByteArray;
 public:
     inline operator char() const
-        { return i < a.d->size ? a.d->data[i] : char(0); }
+    { return i < a.d->size ? a.d->data[i] : char(0); }
     inline QByteRef &operator=(char c)
-        { if (i >= a.d->size) a.expand(i); else a.detach();
-          a.d->data[i] = c;  return *this; }
+    { if (i >= a.d->size) a.resize(i+1); else a.detach();
+        a.d->data[i] = c; return *this; }
     inline QByteRef &operator=(const QByteRef &c)
-        { if (i >= a.d->size) a.expand(i); else a.detach();
-          a.d->data[i] = c.a.d->data[c.i];  return *this; }
+    { if (i >= a.d->size) a.resize(i+1); else a.detach();
+        a.d->data[i] = c.a.d->data[c.i]; return *this; }
     inline bool operator==(char c) const
     { return a.d->data[i] == c; }
     inline bool operator!=(char c) const

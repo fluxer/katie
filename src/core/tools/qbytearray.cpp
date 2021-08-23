@@ -1279,11 +1279,6 @@ void QByteArray::reallocData(int alloc)
     }
 }
 
-void QByteArray::expand(int i)
-{
-    resize(qMax(i + 1, d->size));
-}
-
 /*!
    \internal
    Return a QByteArray that is sure to be NUL-terminated.
