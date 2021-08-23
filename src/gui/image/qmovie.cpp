@@ -160,7 +160,7 @@
 #include "qimagereader.h"
 #include "qpixmap.h"
 #include "qrect.h"
-#include "qdatetime.h"
+#include "qelapsedtimer.h"
 #include "qtimer.h"
 #include "qpair.h"
 #include "qmap.h"
@@ -415,7 +415,7 @@ QFrameInfo QMoviePrivate::infoForFrame(int frameNumber)
 */
 bool QMoviePrivate::next()
 {
-    QTime time;
+    QElapsedTimer time;
     time.start();
     QFrameInfo info = infoForFrame(nextFrameNumber);
     if (!info.isValid())
