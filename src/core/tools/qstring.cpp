@@ -6691,20 +6691,12 @@ QDataStream &operator>>(QDataStream &in, QString &str)
             return in;
         }
 
-        const quint32 Step = 1024 * 1024;
-        quint32 len = bytes / 2;
-        quint32 allocated = 0;
-
-        while (allocated < len) {
-            int blockSize = qMin(Step, len - allocated);
-            str.resize(allocated + blockSize);
-            if (in.readRawData(reinterpret_cast<char *>(str.data()) + allocated * 2,
-                                blockSize * 2) != blockSize * 2) {
-                str.clear();
-                in.setStatus(QDataStream::ReadPastEnd);
-                return in;
-            }
-            allocated += blockSize;
+        int len = (bytes / sizeof(QChar));
+        str.resize(len);
+        if (in.readRawData(reinterpret_cast<char *>(str.data()), bytes) != bytes) {
+            str.clear();
+            in.setStatus(QDataStream::ReadPastEnd);
+            return in;
         }
 
         if (in.byteOrder() != QDataStream::HostEndian) {
