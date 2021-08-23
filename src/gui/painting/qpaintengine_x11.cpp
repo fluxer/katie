@@ -1211,11 +1211,11 @@ void QX11PaintEngine::updatePen(const QPen &pen)
     vals.graphics_exposures = false;
     if (d->pdev_depth == 1) {
         vals.foreground = qGray(pen.color().rgb()) > 127 ? 0 : 1;
-        vals.background = qGray(QColor(Qt::transparent).rgb()) > 127 ? 0 : 1;
+        vals.background = qGray(qt_transparentrgb) > 127 ? 0 : 1;
     } else if (d->pdev->devType() == QInternal::Pixmap && d->pdev_depth == 32
         && qt_x11Data->use_xrender) {
         vals.foreground = pen.color().rgba();
-        vals.background = QColor(Qt::transparent).rgba();
+        vals.background = qt_transparentrgba;
     } else {
         QColormap cmap = QColormap::instance(d->scrn);
         vals.foreground = cmap.pixel(pen.color());

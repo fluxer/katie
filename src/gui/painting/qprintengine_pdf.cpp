@@ -34,6 +34,7 @@
 #include "qprintengine_pdf_p.h"
 #include "qdrawhelper_p.h"
 #include "qcorecommon_p.h"
+#include "qguicommon_p.h"
 
 #ifndef QT_NO_PRINTER
 
@@ -500,8 +501,8 @@ int QPdfEnginePrivate::addImage(const QImage &img, bool *bitmap, qint64 serial_n
     QImage image = img;
     QImage::Format format = image.format();
     if (image.depth() == 1 && *bitmap && img.colorTable().size() == 2
-        && img.colorTable().at(0) == QColor(Qt::black).rgba()
-        && img.colorTable().at(1) == QColor(Qt::white).rgba())
+        && img.colorTable().at(0) == qt_blackrgba
+        && img.colorTable().at(1) == qt_whitergba)
     {
         if (format == QImage::Format_MonoLSB)
             image = image.convertToFormat(QImage::Format_Mono);

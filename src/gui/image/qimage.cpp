@@ -98,8 +98,8 @@ QImageData * QImageData::create(const QSize &size, QImage::Format format)
     if (depth == 1) {
         // QImage::Format_Mono or QImage::Format_MonoLSB
         d->colortable.resize(2);
-        d->colortable[0] = QColor(Qt::black).rgba();
-        d->colortable[1] = QColor(Qt::white).rgba();
+        d->colortable[0] = qt_blackrgba;
+        d->colortable[1] = qt_whitergba;
     }
 
     d->width = width;
