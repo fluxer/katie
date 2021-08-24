@@ -1,6 +1,5 @@
 katie_test(tst_qobject
     ${CMAKE_CURRENT_SOURCE_DIR}/tst_qobject.cpp
-    # ${CMAKE_CURRENT_SOURCE_DIR}/moc_oldnormalizeobject.cpp
 )
 
 target_link_libraries(tst_qobject KtNetwork)

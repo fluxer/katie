@@ -72,7 +72,6 @@ private slots:
     void namespaces();
     void threadSignalEmissionCrash();
     void thread();
-    void thread0();
     void moveToThread();
     void sender();
     void declareInterface();
@@ -1345,27 +1344,6 @@ public:
     { (void) exec(); }
 };
 
-void tst_QObject::thread0()
-{
-    QObject *object = new QObject;
-    object->moveToThread(0);
-    QObject *child = new QObject(object);
-    QCOMPARE(child->parent(), object);
-    QCOMPARE(child->thread(), (QThread *)0);
-
-#if 0
-    // We don't support moving children into a parent that has no thread
-    // affinity (yet?).
-    QObject *child2 = new QObject;
-    child2->moveToThread(0);
-    child2->setParent(object);
-    QCOMPARE(child2->parent(), object);
-    QCOMPARE(child2->thread(), (QThread *)0);
-#endif
-
-    delete object;
-}
-
 void tst_QObject::moveToThread()
 {
     QThread *currentThread = QThread::currentThread();
@@ -1450,17 +1428,8 @@ void tst_QObject::moveToThread()
 
         connect(object, SIGNAL(theSignal()), &thread, SLOT(quit()), Qt::DirectConnection);
 
-#if defined(Q_OS_SYMBIAN)
-        // Child timer will be registered after parent timer in the new
-        // thread, and 10ms is less than symbian timer resolution, so
-        // child->timerEventThread compare after thread.wait() will
-        // usually fail unless timers are farther apart.
-        child->startTimer(100);
-        object->startTimer(150);
-#else
         child->startTimer(90);
         object->startTimer(100);
-#endif
 
         QCOMPARE(object->thread(), currentThread);
         QCOMPARE(child->thread(), currentThread);
