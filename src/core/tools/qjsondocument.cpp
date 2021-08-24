@@ -68,7 +68,9 @@ QVariantMap QJsonDocumentPrivate::jsonToMap(const QByteArray &jsondata)
             json_object_foreach(jroot, jkey, jobject) {
                 switch(json_typeof(jobject)) {
                     case JSON_OBJECT: {
-                        result.insert(jkey, jsonToMap(json_dumps(jobject, 0)));
+                        char* jdata = json_dumps(jobject, 0);
+                        result.insert(jkey, jsonToMap(jdata));
+                        ::free(jdata);
                         break;
                     }
                     case JSON_ARRAY: {
@@ -77,7 +79,9 @@ QVariantMap QJsonDocumentPrivate::jsonToMap(const QByteArray &jsondata)
                             json_t *jarray = json_array_get(jobject, i);
                             switch(json_typeof(jarray)) {
                                 case JSON_OBJECT: {
-                                    listvalue.append(jsonToMap(json_dumps(jarray, 0)));
+                                    char* jdata = json_dumps(jarray, 0);
+                                    listvalue.append(jsonToMap(jdata));
+                                    ::free(jdata);
                                     break;
                                 }
                                 case JSON_STRING: {
@@ -282,7 +286,9 @@ QJsonDocument QJsonDocument::fromVariant(const QVariant &variant)
     d->map = variant.toMap();
     json_t *jroot = json_object();
     d->mapToJson(d->map, jroot, 1);
-    d->json = json_dumps(jroot, jflags);
+    char *jdata = json_dumps(jroot, jflags);
+    d->json = jdata;
+    ::free(jdata);
     json_decref(jroot);
 
     QJsonDocument jd;
