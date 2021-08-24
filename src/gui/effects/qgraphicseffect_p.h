@@ -49,8 +49,11 @@ class Q_GUI_EXPORT QGraphicsEffectSource : public QObject
     Q_OBJECT
 public:
     ~QGraphicsEffectSource();
+    const QGraphicsItem *graphicsItem() const;
     const QWidget *widget() const;
+    const QStyleOption *styleOption() const;
 
+    bool isPixmap() const;
     void draw(QPainter *painter);
     void update();
 
@@ -96,9 +99,12 @@ public:
     virtual void detach() = 0;
     virtual QRectF boundingRect(Qt::CoordinateSystem system) const = 0;
     virtual QRect deviceRect() const = 0;
+    virtual const QGraphicsItem *graphicsItem() const = 0;
     virtual const QWidget *widget() const = 0;
+    virtual const QStyleOption *styleOption() const = 0;
     virtual void draw(QPainter *p) = 0;
     virtual void update() = 0;
+    virtual bool isPixmap() const = 0;
     virtual QPixmap pixmap(Qt::CoordinateSystem system, QPoint *offset = 0,
                            QGraphicsEffect::PixmapPadMode mode = QGraphicsEffect::PadToTransparentBorder) const = 0;
     virtual void effectBoundingRectChanged() = 0;
