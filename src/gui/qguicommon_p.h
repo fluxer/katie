@@ -11,7 +11,7 @@ QT_BEGIN_NAMESPACE
 
 // same as QColor(Qt::color0).rgba() and QColor(Qt::white).rgba()
 static const QRgb qt_whitergba = qRgba(255, 255, 255, 255);
-// same as QColor(Qt::color1).rgba() and QColor(Qt::white).rgba()
+// same as QColor(Qt::color1).rgba() and QColor(Qt::black).rgba()
 static const QRgb qt_blackrgba = qRgba(0, 0, 0, 255);
 // same as QColor(Qt::transparent).rgba()
 static const QRgb qt_transparentrgba = qRgba(0, 0, 0, 0);
