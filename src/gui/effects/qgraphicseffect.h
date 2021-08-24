@@ -82,7 +82,6 @@ protected:
     virtual void sourceChanged(ChangeFlags flags);
     void updateBoundingRect();
 
-    QT_DEPRECATED bool sourceIsPixmap() const;
     QRectF sourceBoundingRect(Qt::CoordinateSystem system = Qt::LogicalCoordinates) const;
     void drawSource(QPainter *painter);
     QPixmap sourcePixmap(Qt::CoordinateSystem system = Qt::LogicalCoordinates,

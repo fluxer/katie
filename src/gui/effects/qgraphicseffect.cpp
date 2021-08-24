@@ -222,19 +222,6 @@ void QGraphicsEffectSource::update()
 }
 
 /*!
-    Returns true if the source effectively is a pixmap, e.g., a
-    QGraphicsPixmapItem.
-
-    This function is useful for optimization purposes. For instance, there's no
-    point in drawing the source in device coordinates to avoid pixmap scaling
-    if this function returns true - the source pixmap will be scaled anyways.
-*/
-bool QGraphicsEffect::sourceIsPixmap() const
-{
-    return false;
-}
-
-/*!
     Returns a pixmap with the source painted into it.
 
     The \a system specifies which coordinate system to be used for the source.
