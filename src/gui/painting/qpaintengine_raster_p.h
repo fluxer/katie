@@ -142,7 +142,6 @@ public:
     void fillRect(const QRectF &rect, const QColor &color);
 
     void drawRects(const QRect  *rects, int rectCount);
-    void drawRects(const QRectF *rects, int rectCount);
 
     void drawPixmap(const QPointF &p, const QPixmap &pm);
     void drawPixmap(const QRectF &r, const QPixmap &pm, const QRectF &sr);

@@ -37,6 +37,7 @@
 #include "qpaintengine_raster_p.h"
 #include "qimage_p.h"
 #include "qcorecommon_p.h"
+#include "qguicommon_p.h"
 #include "qx11info_x11.h"
 
 #include <ctype.h>
@@ -97,8 +98,8 @@ QImageData * QImageData::create(const QSize &size, QImage::Format format)
     if (depth == 1) {
         // QImage::Format_Mono or QImage::Format_MonoLSB
         d->colortable.resize(2);
-        d->colortable[0] = QColor(Qt::black).rgba();
-        d->colortable[1] = QColor(Qt::white).rgba();
+        d->colortable[0] = qt_blackrgba;
+        d->colortable[1] = qt_whitergba;
     }
 
     d->width = width;
@@ -2372,9 +2373,7 @@ static void QT_FASTCALL convert_Indexed8_to_X32(QImageData *dest, const QImageDa
 
     QVector<QRgb> colorTable = fix_color_table(src->colortable, dest->format);
     if (colorTable.size() == 0) {
-        colorTable.resize(256);
-        for (int i=0; i<256; ++i)
-            colorTable[i] = qRgb(i, i, i);
+        colorTable = monoColorTable();
     }
 
     int w = src->width;
@@ -3242,9 +3241,7 @@ QImage QImage::createHeuristicMask(bool clipTight) const
     int h = height();
     QImage m(w, h, Format_MonoLSB);
     QIMAGE_SANITYCHECK_MEMORY(m);
-    m.setColorCount(2);
-    m.setColor(0, QColor(Qt::color0).rgba());
-    m.setColor(1, QColor(Qt::color1).rgba());
+    m.setColorTable(monoColorTable());
     m.fill(0xff);
 
     QRgb background = PIX(0,0);
@@ -4329,11 +4326,9 @@ QImage QImage::alphaChannel() const
 
     QImage image(w, h, Format_Indexed8);
     QIMAGE_SANITYCHECK_MEMORY(image);
-    image.setColorCount(256);
 
     // set up gray scale table.
-    for (int i=0; i<256; ++i)
-        image.setColor(i, qRgb(i, i, i));
+    image.setColorTable(grayColorTable());
 
     if (!hasAlphaChannel()) {
         image.fill(255);

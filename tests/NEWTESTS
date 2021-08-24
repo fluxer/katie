@@ -1,6 +1,5 @@
 tests/auto/qbytearray/
 tests/auto/qdom/
-tests/auto/qgraphicseffect/
 tests/auto/qgraphicsitem/
 tests/auto/qhttpnetworkconnection/
 tests/auto/qnetworkcookiejar/

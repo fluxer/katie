@@ -27,6 +27,7 @@
 #include "qpainter.h"
 #include "qapplication_p.h"
 #include "qdrawhelper_p.h"
+#include "qguicommon_p.h"
 
 QT_BEGIN_NAMESPACE
 
@@ -265,8 +266,7 @@ QBitmap QBitmap::fromData(const QSize &size, const uchar *bits, QImage::Format m
     Q_ASSERT(monoFormat == QImage::Format_Mono || monoFormat == QImage::Format_MonoLSB);
 
     QImage image(size, monoFormat);
-    image.setColor(0, QColor(Qt::color0).rgb());
-    image.setColor(1, QColor(Qt::color1).rgb());
+    image.setColorTable(monoColorTable());
 
     const int bpl = image.bytesPerLine();
     uchar* dest = image.bits();

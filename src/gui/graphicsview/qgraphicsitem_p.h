@@ -637,7 +637,7 @@ public:
     { return item; }
 
     inline const QWidget *widget() const
-    { return 0; }
+    { return nullptr; }
 
     inline void update() {
         item->d_ptr->updateDueToGraphicsEffect = true;

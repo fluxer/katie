@@ -27,6 +27,7 @@
 #include "qbuffer.h"
 #include "qplatformdefs.h"
 #include "qcorecommon_p.h"
+#include "qguicommon_p.h"
 
 #include <stdio.h>      // jpeglib needs this to be pre-included
 #include <setjmp.h>
@@ -224,9 +225,7 @@ static bool ensureValidImage(QImage *dest, struct jpeg_decompress_struct *info,
         *dest = QImage(size, format);
 
         if (format == QImage::Format_Indexed8) {
-            dest->setColorCount(256);
-            for (int i = 0; i < 256; i++)
-                dest->setColor(i, qRgb(i,i,i));
+            dest->setColorTable(grayColorTable());
         }
     }
 

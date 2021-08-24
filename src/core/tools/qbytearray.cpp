@@ -35,10 +35,7 @@
 #include <string.h>
 #include <stdlib.h>
 
-// #define QT_FAST_COMPRESS
-
 #ifndef QT_NO_COMPRESS
-#include <zlib.h>
 #include <zstd.h>
 #include <zstd_errors.h>
 #endif // QT_NO_COMPRESS
@@ -295,180 +292,9 @@ quint16 qChecksum(const char *data, uint len)
     return ~crc & 0xffff;
 }
 
-/*!
-    \relates QByteArray
-
-    Returns the CRC-32 checksum of the first \a len bytes of \a data.
-
-    The checksum is independent of the byte order (endianness).
-*/
-quint32 qChecksum32(const char *data, uint len)
-{
 #ifndef QT_NO_COMPRESS
-    quint32 crc_32 = ::crc32(0, 0, 0);
-    return ::crc32(crc_32, reinterpret_cast<const uchar *>(data), len);
-#else
-    Q_UNUSED(data)
-    Q_UNUSED(len)
-    Q_ASSERT_X(false, "qChecksum32", "Function is a stub!");
-    return 0;
-#endif
-}
-
 /*!
     \fn QByteArray qCompress(const QByteArray& data, int compressionLevel)
-
-    \relates QByteArray
-
-    Compresses the \a data byte array and returns the compressed data
-    in a new byte array.
-
-    The \a compressionLevel parameter specifies how much compression
-    should be used. Valid values are between 0 and 9, with 9
-    corresponding to the greatest compression (i.e. smaller compressed
-    data) at the cost of using a slower algorithm. Smaller values (8,
-    7, ..., 1) provide successively less compression at slightly
-    faster speeds. The value 0 corresponds to no compression at all.
-    The default value is -1, which specifies zlib's default
-    compression.
-
-    \sa qUncompress()
-*/
-
-/*! \relates QByteArray
-
-    \overload
-
-    Compresses the first \a nbytes of \a data and returns the
-    compressed data in a new byte array.
-*/
-
-#ifndef QT_NO_COMPRESS
-QByteArray qCompress(const uchar* data, int nbytes, int compressionLevel)
-{
-#ifdef QT_FAST_COMPRESS
-    return qFastCompress(reinterpret_cast<const char*>(data), nbytes, compressionLevel);
-#else
-    if (Q_UNLIKELY(!data)) {
-        qWarning("qCompress: Data is null");
-        return QByteArray();
-    } else if (Q_UNLIKELY(nbytes <= 0)) {
-        qWarning("qCompress:  Data size is negative or zero");
-        return QByteArray(4, '\0');
-    }
-
-    if (compressionLevel < -1 || compressionLevel > 9)
-        compressionLevel = -1;
-
-    ulong len = ::compressBound(nbytes) + 4;
-    QByteArray bazip(len, Qt::Uninitialized);
-    const int res = ::compress2(reinterpret_cast<uchar*>(bazip.data() + 4),
-        &len, data, nbytes, compressionLevel);
-
-    switch (res) {
-        case Z_OK: {
-            bazip.resize(len + 4);
-            bazip[0] = (nbytes & 0xff000000) >> 24;
-            bazip[1] = (nbytes & 0x00ff0000) >> 16;
-            bazip[2] = (nbytes & 0x0000ff00) >> 8;
-            bazip[3] = (nbytes & 0x000000ff);
-            break;
-        }
-        case Z_BUF_ERROR:
-        case Z_MEM_ERROR: {
-            qWarning("qCompress: Not enough memory");
-            bazip.clear();
-            break;
-        }
-        default: {
-            qWarning("qCompress: Unknown error (%d)", res);
-            bazip.clear();
-            break;
-        }
-    };
-
-    return bazip;
-#endif // QT_FAST_COMPRESS
-}
-
-/*!
-    \fn QByteArray qUncompress(const QByteArray &data)
-
-    \relates QByteArray
-
-    Uncompresses the \a data byte array and returns a new byte array
-    with the uncompressed data.
-
-    Returns an empty QByteArray if the input data was corrupt.
-
-    This function will uncompress data compressed with qCompress()
-    from this and any earlier Qt version, back to Qt 3.1 when this
-    feature was added.
-
-    \bold{Note:} If you want to use this function to uncompress external
-    data that was compressed using zlib, you first need to prepend a four
-    byte header to the byte array containing the data. The header must
-    contain the expected length (in bytes) of the uncompressed data,
-    expressed as an unsigned, big-endian, 32-bit integer.
-
-    \sa qCompress()
-*/
-
-/*! \relates QByteArray
-
-    \overload
-
-    Uncompresses the first \a nbytes of \a data and returns a new byte
-    array with the uncompressed data.
-*/
-
-QByteArray qUncompress(const uchar* data, int nbytes)
-{
-#ifdef QT_FAST_COMPRESS
-    return qFastUncompress(reinterpret_cast<const char*>(data), nbytes);
-#else
-    if (Q_UNLIKELY(!data)) {
-        qWarning("qUncompress: Data is null");
-        return QByteArray();
-    } else if (Q_UNLIKELY(nbytes <= 4)) {
-        qWarning("qUncompress: Input data is corrupted");
-        return QByteArray();
-    }
-
-    ulong len = (data[0] << 24) | (data[1] << 16) | (data[2] << 8) | (data[3]);
-    QByteArray baunzip(len, Qt::Uninitialized);
-    const int res = ::uncompress(reinterpret_cast<uchar*>(baunzip.data()),
-        &len, data + 4, nbytes - 4);
-
-    switch (res) {
-        case Z_OK: {
-            baunzip.resize(len);
-            break;
-        }
-        case Z_BUF_ERROR:
-        case Z_MEM_ERROR: {
-            qWarning("qUncompress: Not enough memory");
-            baunzip.clear();
-            break;
-        }
-        case Z_DATA_ERROR: {
-            qWarning("qUncompress: Z_DATA_ERROR: Input data is corrupted");
-            baunzip.clear();
-            break;
-         }
-        default: {
-            qWarning("qUncompress: Unknown error (%d)", res);
-            baunzip.clear();
-            break;
-        }
-     }
-
-    return baunzip;
-#endif // QT_FAST_COMPRESS
-}
-
-/*!
-    \fn QByteArray qFastCompress(const QByteArray& data, int compressionLevel)
 
     \relates QByteArray
 
@@ -484,7 +310,7 @@ QByteArray qUncompress(const uchar* data, int nbytes)
     The default value is 1, which results in good trade-off between
     compression ratio and speed.
 
-    \sa qFastUncompress()
+    \sa qUncompress()
 */
 
 /*! \relates QByteArray
@@ -494,27 +320,26 @@ QByteArray qUncompress(const uchar* data, int nbytes)
     Compresses the first \a nbytes of \a data and returns the
     compressed data in a new byte array.
 */
-
-QByteArray qFastCompress(const char* data, int nbytes, int compressionLevel)
+QByteArray qCompress(const char* data, int nbytes, int compressionLevel)
 {
     if (Q_UNLIKELY(!data)) {
-        qWarning("qFastCompress: Data is null");
+        qWarning("qCompress: Data is null");
         return QByteArray();
     } else if (Q_UNLIKELY(nbytes <= 0)) {
-        qWarning("qFastUncompress: Data size is negative or zero");
+        qWarning("qCompress: Data size is negative or zero");
         return QByteArray();
     }
 
     const size_t bndresult = ZSTD_compressBound(nbytes);
     if (Q_UNLIKELY(bndresult <= 0)) {
-        qWarning("qFastUncompress: compression bound is negative or zero");
+        qWarning("qCompress: Compression boundary is negative or zero");
         return QByteArray();
     }
 
     QSTACKARRAY(char, cmpbuffer, bndresult);
     const size_t cmpresult = ZSTD_compress(cmpbuffer, bndresult, data, nbytes, compressionLevel);
     if (Q_UNLIKELY(ZSTD_isError(cmpresult))) {
-        qWarning("qFastCompress: Could not compress data (%s)", ZSTD_getErrorString(ZSTD_getErrorCode(cmpresult)));
+        qWarning("qCompress: Could not compress data (%s)", ZSTD_getErrorString(ZSTD_getErrorCode(cmpresult)));
         return QByteArray();
     }
 
@@ -522,7 +347,7 @@ QByteArray qFastCompress(const char* data, int nbytes, int compressionLevel)
 }
 
 /*!
-    \fn QByteArray qFastUncompress(const QByteArray &data)
+    \fn QByteArray qUncompress(const QByteArray &data)
 
     \relates QByteArray
 
@@ -531,12 +356,9 @@ QByteArray qFastCompress(const char* data, int nbytes, int compressionLevel)
 
     Returns an empty QByteArray if the input data was corrupt.
 
-    This function will uncompress data compressed with qFastCompress().
+    This function will uncompress data compressed with qCompress().
 
-    \bold{Note:} This function uses format different from that used by
-    qCompress and cannot decompress zlib data.
-
-    \sa qFastCompress()
+    \sa qCompress()
 */
 
 /*! \relates QByteArray
@@ -546,27 +368,26 @@ QByteArray qFastCompress(const char* data, int nbytes, int compressionLevel)
     Uncompresses the first \a nbytes of \a data and returns a new byte
     array with the uncompressed data.
 */
-
-QByteArray qFastUncompress(const char* data, int nbytes)
+QByteArray qUncompress(const char* data, int nbytes)
 {
     if (Q_UNLIKELY(!data)) {
-        qWarning("qFastUncompress: Data is null");
+        qWarning("qUncompress: Data is null");
         return QByteArray();
     } else if (Q_UNLIKELY(nbytes <= 0)) {
-        qWarning("qFastUncompress: Data size is negative or zero");
+        qWarning("qUncompress: Data size is negative or zero");
         return QByteArray();
     }
 
     const unsigned long long uncompressedsize = ZSTD_getDecompressedSize(data, nbytes);
     if (Q_UNLIKELY(uncompressedsize <= 0)) {
-        qWarning("qFastUncompress: uncompression size is negative or zero");
+        qWarning("qUncompress: Uncompressed size is negative or zero");
         return QByteArray();
     }
 
     QSTACKARRAY(char, decbuffer, uncompressedsize);
     const size_t decresult = ZSTD_decompress(decbuffer, uncompressedsize, data, nbytes);
     if (Q_UNLIKELY(ZSTD_isError(decresult))) {
-        qWarning("qFastCompress: Could not uncompress data (%s)", ZSTD_getErrorString(ZSTD_getErrorCode(decresult)));
+        qWarning("qUncompress: Could not uncompress data (%s)", ZSTD_getErrorString(ZSTD_getErrorCode(decresult)));
         return QByteArray();
     }
 
@@ -860,12 +681,26 @@ QByteArray::Data QByteArray::shared_empty = { QAtomicInt(1),
     Assigns \a other to this byte array and returns a reference to
     this byte array.
 */
-QByteArray &QByteArray::operator=(const QByteArray & other)
+QByteArray &QByteArray::operator=(const QByteArray &other)
 {
-    other.d->ref.ref();
+    Data *x;
+    if (other.isNull()) {
+        x = &shared_null;
+    } else if (other.isEmpty()) {
+        x = &shared_empty;
+    } else {
+        int len = other.d->size;
+        if (d->ref != 1 || len > d->alloc || (len < d->size && len < d->alloc >> 1))
+            reallocData(len);
+        x = d;
+        memcpy(x->data, other.d->data, len );
+        x->size = len;
+        x->data[len] = '\0';
+    }
+    x->ref.ref();
     if (!d->ref.deref())
-        freeData(d);
-    d = other.d;
+         freeData(d);
+    d = x;
     return *this;
 }
 
@@ -888,8 +723,9 @@ QByteArray &QByteArray::operator=(const char *str)
         if (d->ref != 1 || len > d->alloc || (len < d->size && len < d->alloc >> 1))
             reallocData(len);
         x = d;
-        memcpy(x->data, str, len + 1); // include null terminator
+        memcpy(x->data, str, len);
         x->size = len;
+        x->data[len] = '\0';
     }
     x->ref.ref();
     if (!d->ref.deref())
@@ -1443,11 +1279,6 @@ void QByteArray::reallocData(int alloc)
     }
 }
 
-void QByteArray::expand(int i)
-{
-    resize(qMax(i + 1, d->size));
-}
-
 /*!
    \internal
    Return a QByteArray that is sure to be NUL-terminated.
@@ -1493,9 +1324,7 @@ QByteArray &QByteArray::prepend(const QByteArray &ba)
     if (isEmpty()) {
         *this = ba;
     } else if (!ba.isEmpty()) {
-        QByteArray tmp = *this;
-        *this = ba;
-        append(tmp);
+        prepend(ba.constData(), ba.size());
     }
     return *this;
 }
@@ -1520,7 +1349,7 @@ QByteArray &QByteArray::prepend(const char *str)
 
 QByteArray &QByteArray::prepend(const char *str, int len)
 {
-    if (str) {
+    if (str && len > 0) {
         if (d->ref != 1 || d->size + len > d->alloc)
             reallocData(d->size + len);
         memmove(d->data+len, d->data, d->size);
@@ -1577,11 +1406,7 @@ QByteArray &QByteArray::append(const QByteArray &ba)
     if (isEmpty()) {
         *this = ba;
     } else if (!ba.isEmpty()) {
-        if (d->ref != 1 || d->size + ba.d->size > d->alloc)
-            reallocData(d->size + ba.d->size);
-        memcpy(d->data + d->size, ba.d->data, ba.d->size);
-        d->size += ba.d->size;
-        d->data[d->size] = '\0';
+        append(ba.constData(), ba.size());
     }
     return *this;
 }
@@ -1631,8 +1456,9 @@ QByteArray &QByteArray::append(const char *str, int len)
     if (str && len) {
         if (d->ref != 1 || d->size + len > d->alloc)
             reallocData(d->size + len);
-        memcpy(d->data + d->size, str, len + 1); // include null terminator
+        memcpy(d->data + d->size, str, len);
         d->size += len;
+        d->data[d->size] = '\0';
     }
     return *this;
 }
@@ -2681,19 +2507,12 @@ QDataStream &operator>>(QDataStream &in, QByteArray &ba)
     if (len == 0xffffffff)
         return in;
 
-    const quint32 Step = 1024 * 1024;
-    quint32 allocated = 0;
-
-    do {
-        int blockSize = qMin(Step, len - allocated);
-        ba.resize(allocated + blockSize);
-        if (in.readRawData(ba.data() + allocated, blockSize) != blockSize) {
-            ba.clear();
-            in.setStatus(QDataStream::ReadPastEnd);
-            return in;
-        }
-        allocated += blockSize;
-    } while (allocated < len);
+    ba.resize(len);
+    if (in.readRawData(ba.data(), len) != len) {
+        ba.clear();
+        in.setStatus(QDataStream::ReadPastEnd);
+        return in;
+    }
 
     return in;
 }

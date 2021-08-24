@@ -439,7 +439,7 @@ qint64 QResource::size() const
 /*!
     Returns direct access to a read only segment of data that this resource
     represents. If the resource is compressed the data returns is
-    compressed and qFastUncompress() must be used to access the data. If
+    compressed and qUncompress() must be used to access the data. If
     the resource is a directory 0 is returned.
 
     \sa size(), isCompressed(), isFile()
@@ -1013,7 +1013,7 @@ QResourceFileEngine::QResourceFileEngine(const QString &file) :
     Q_D(QResourceFileEngine);
     d->resource.setFileName(file);
     if(d->resource.isCompressed() && d->resource.size()) {
-        d->uncompressed = qFastUncompress(reinterpret_cast<const char*>(d->resource.data()), d->resource.size());
+        d->uncompressed = qUncompress(reinterpret_cast<const char*>(d->resource.data()), d->resource.size());
     }
 }
 

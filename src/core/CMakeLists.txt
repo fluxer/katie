@@ -1,6 +1,5 @@
 # add_definitions()
 set(EXTRA_CORE_LIBS
-    ${ZLIB_LIBRARIES}
     ${ICU_LIBRARIES}
     ${ZSTD_LIBRARIES}
     ${JANSSON_LIBRARIES}
@@ -109,7 +108,6 @@ include_directories(
     ${CMAKE_BINARY_DIR}/include
     ${CMAKE_BINARY_DIR}/privateinclude
     ${CMAKE_BINARY_DIR}/include/QtCore
-    ${ZLIB_INCLUDE_DIRS}
     ${ICU_INCLUDES}
     ${ZSTD_INCLUDES}
     ${JANSSON_INCLUDES}

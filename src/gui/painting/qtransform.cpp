@@ -1531,16 +1531,15 @@ static inline bool lineTo_clipped(QPainterPath &path, const QTransform &transfor
 Q_GUI_EXPORT
 bool qt_scaleForTransform(const QTransform &transform, qreal *scale)
 {
+    Q_ASSERT(scale);
     const QTransform::TransformationType type = transform.type();
     if (type <= QTransform::TxTranslate) {
-        if (scale)
-            *scale = 1;
+        *scale = 1;
         return true;
     } else if (type == QTransform::TxScale) {
         const qreal xScale = qAbs(transform.m11());
         const qreal yScale = qAbs(transform.m22());
-        if (scale)
-            *scale = qMax(xScale, yScale);
+        *scale = qMax(xScale, yScale);
         return qFuzzyCompare(xScale, yScale);
     }
 
@@ -1548,8 +1547,7 @@ bool qt_scaleForTransform(const QTransform &transform, qreal *scale)
                          + transform.m21() * transform.m21();
     const qreal yScale = transform.m12() * transform.m12()
                          + transform.m22() * transform.m22();
-    if (scale)
-        *scale = qSqrt(qMax(xScale, yScale));
+    *scale = qSqrt(qMax(xScale, yScale));
     return type == QTransform::TxRotate && qFuzzyCompare(xScale, yScale);
 }
 static inline bool cubicTo_clipped(QPainterPath &path, const QTransform &transform, const QPointF &a, const QPointF &b, const QPointF &c, const QPointF &d, bool needsMoveTo)

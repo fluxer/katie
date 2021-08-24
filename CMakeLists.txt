@@ -92,9 +92,9 @@ endif()
 
 # mostly relevant to the build process, also stored in the version file for CMake and in qconfig.h.cmake
 set(KATIE_MAJOR "4")
-set(KATIE_MINOR "10")
+set(KATIE_MINOR "11")
 set(KATIE_MICRO "0")
-set(KATIE_HEX "0x041000")
+set(KATIE_HEX "0x041100")
 set(KATIE_VERSION "${KATIE_MAJOR}.${KATIE_MINOR}.${KATIE_MICRO}")
 
 # only for the build process
@@ -461,6 +461,7 @@ katie_check_function(pipe2 "unistd.h")
 katie_check_function(accept4 "sys/socket.h")
 katie_check_function(paccept "sys/socket.h")
 katie_check_function(getdomainname "unistd.h")
+katie_check_function(renameat2 "stdio.h")
 katie_check_struct(tm tm_gmtoff "time.h")
 katie_check_struct(tm tm_zone "time.h")
 katie_check_struct(sockaddr_ll sll_addr "netpacket/packet.h")

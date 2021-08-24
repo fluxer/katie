@@ -2396,13 +2396,7 @@ qulonglong QVariant::toULongLong(bool *ok) const
 */
 bool QVariant::toBool() const
 {
-    if (d.type == Bool)
-        return d.data.b;
-
-    bool res = false;
-    handler->convert(&d, Bool, &res, nullptr);
-
-    return res;
+    return qVariantToHelper<bool>(d, Bool, handler);
 }
 
 /*!
@@ -2451,7 +2445,11 @@ float QVariant::toFloat(bool *ok) const
 */
 qreal QVariant::toReal(bool *ok) const
 {
-    return qNumVariantToHelper<qreal>(d, handler, ok, d.data.real);
+#if defined(QT_NO_FPU)
+    return qNumVariantToHelper<qreal>(d, handler, ok, d.data.f);
+#else
+    return qNumVariantToHelper<qreal>(d, handler, ok, d.data.d);
+#endif
 }
 
 /*!

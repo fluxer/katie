@@ -34,10 +34,6 @@ private slots:
     void append_data();
     void compress_uncompress_data();
     void compress_uncompress();
-    void fast_compress_uncompress_data();
-    void fast_compress_uncompress();
-    void compress_uncompress_ratio_data();
-    void compress_uncompress_ratio();
     void to_from_base64();
     void to_from_hex();
 };
@@ -95,37 +91,6 @@ void tst_qbytearray::compress_uncompress()
         QByteArray decompressed = qUncompress(compressed);
         QVERIFY(decompressed == lorem);
     }
-}
-
-void tst_qbytearray::fast_compress_uncompress_data() {
-    compress_uncompress_data();
-}
-
-void tst_qbytearray::fast_compress_uncompress() {
-    QFETCH(int, level);
-
-    QBENCHMARK {
-        QByteArray compressed = qFastCompress(lorem, level);
-        QVERIFY(!compressed.isEmpty());
-        QByteArray decompressed = qFastUncompress(compressed);
-        QVERIFY(decompressed == lorem);
-    }
-}
-
-void tst_qbytearray::compress_uncompress_ratio_data() {
-    compress_uncompress_data();
-}
-
-void tst_qbytearray::compress_uncompress_ratio() {
-    QFETCH(int, level);
-
-    QByteArray compressed = qCompress(lorem, level);
-    QVERIFY(!compressed.isEmpty());
-    QByteArray fastcompressed = qFastCompress(lorem, level);
-    QVERIFY(!fastcompressed.isEmpty());
-    const double ratio = (compressed.size() / 100.0) - (fastcompressed.size() / 100.0);
-    const QByteArray favoured = QByteArray(ratio < 0 ? "qCompress" : "qFastCompress");
-    qDebug() << "ratio in favour of:" << favoured << ratio;
 }
 
 void tst_qbytearray::to_from_base64() {

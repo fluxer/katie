@@ -65,9 +65,7 @@ public:
     qint64 scriptId() const;
     QString fileName() const;
     int lineNumber() const;
-#ifdef QT_DEPRECATED
     QT_DEPRECATED int columnNumber() const;
-#endif
 
     QString functionName() const;
     FunctionType functionType() const;

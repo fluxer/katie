@@ -831,8 +831,8 @@ template <typename Wrapper> static inline typename Wrapper::pointer qGetPtrHelpe
    operator to disable copying (the compiler gives an error message).
 */
 #define Q_DISABLE_COPY(Class) \
-    Class(const Class &); \
-    Class &operator=(const Class &);
+    Class(const Class &) = delete; \
+    Class &operator=(const Class &) = delete;
 
 class QByteArray;
 Q_CORE_EXPORT QByteArray qgetenv(const char *varName);

@@ -27,6 +27,7 @@
 #include "qvariant.h"
 #include "qvector.h"
 #include "qcorecommon_p.h"
+#include "qguicommon_p.h"
 
 #include <ctype.h>
 
@@ -221,10 +222,8 @@ static bool read_pbm_body(QIODevice *device, char type, int w, int h, int mcc, Q
         }
     }
 
-    if (nbits == 1) {                                // bitmap
-        outImage->setColorCount(2);
-        outImage->setColor(0, qRgb(255,255,255)); // white
-        outImage->setColor(1, qRgb(0,0,0));        // black
+    if (nbits == 1) {                                // black/white bitmap
+        outImage->setColorTable(monoColorTable());
     } else if (nbits == 8) {                        // graymap
         outImage->setColorCount(maxc+1);
         for (int i=0; i<=maxc; i++)

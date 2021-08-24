@@ -1604,9 +1604,7 @@ QImage QX11PixmapData::toImage(const XImage *xi, const QRect &rect) const
     }
 
     if (d == 1) {                                // bitmap
-        image.setColorCount(2);
-        image.setColor(0, qRgb(255,255,255));
-        image.setColor(1, qRgb(0,0,0));
+        image.setColorTable(monoColorTable());
     } else if (!trucol) {                        // pixmap with colormap
         QSTACKARRAY(uchar, use, 256);            // pixel-in-use table
         QSTACKARRAY(uchar, pix, 256);            // pixel translation table
