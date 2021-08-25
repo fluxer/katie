@@ -22,6 +22,9 @@ QT_BEGIN_NAMESPACE
     arraytype arrayname[arraysize]; \
     ::memset(arrayname, 0, arraysize * sizeof(arraytype));
 
+static const qreal q_deg2rad = qreal(0.01745329251994329576923690768489); /* pi/180 */
+static const qreal q_rad2deg = qreal(57.295779513082320876798154814105); /* 180/pi */
+
 static inline uint foldCase(const ushort *ch, const ushort *start)
 {
     uint c = *ch;

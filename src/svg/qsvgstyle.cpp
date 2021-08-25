@@ -27,13 +27,13 @@
 #include "qsvggraphics_p.h"
 #include "qsvgnode_p.h"
 #include "qsvgtinydocument_p.h"
-
 #include "qpainter.h"
 #include "qpair.h"
 #include "qcolor.h"
 #include "qdebug.h"
 #include "qmath.h"
 #include "qnumeric.h"
+#include "qcorecommon_p.h"
 
 QT_BEGIN_NAMESPACE
 
@@ -651,7 +651,6 @@ void QSvgAnimateTransform::revert(QPainter *p, QSvgExtraStates &)
 
 void QSvgAnimateTransform::resolveMatrix(const QSvgNode *node)
 {
-    static const qreal deg2rad = qreal(0.017453292519943295769);
     qreal totalTimeElapsed = node->document()->currentElapsed();
     if (totalTimeElapsed < m_from || m_finished)
         return;
@@ -751,7 +750,7 @@ void QSvgAnimateTransform::resolveMatrix(const QSvgNode *node)
         qreal transXDiff = (to1-from1) * percentOfAnimation;
         qreal transX = from1 + transXDiff;
         m_transform = QTransform();
-        m_transform.shear(qTan(transX * deg2rad), 0);
+        m_transform.shear(qTan(transX * q_deg2rad), 0);
         break;
     }
     case SkewY: {
@@ -766,7 +765,7 @@ void QSvgAnimateTransform::resolveMatrix(const QSvgNode *node)
         qreal transYDiff = (to1 - from1) * percentOfAnimation;
         qreal transY = from1 + transYDiff;
         m_transform = QTransform();
-        m_transform.shear(0, qTan(transY * deg2rad));
+        m_transform.shear(0, qTan(transY * q_deg2rad));
         break;
     }
     default:

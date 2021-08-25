@@ -372,7 +372,6 @@ inline static int lowest_bit(uint v)
     return i==32 ? -1 : i;
 }
 
-static const qreal deg2rad = qreal(0.017453292519943295769);        // pi/180
 static const qreal inv_dist_to_plane = 1. / 1024.;
 
 #ifndef QT_NO_IMAGEFORMAT_XPM
