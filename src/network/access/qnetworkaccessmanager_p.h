@@ -38,7 +38,6 @@
 #include "qnetworkaccessbackend_p.h"
 #include "qobject_p.h"
 #include "QtNetwork/qnetworkproxy.h"
-#include "QtNetwork/qnetworksession.h"
 #include "qnetworkaccessauthenticationmanager_p.h"
 
 QT_BEGIN_NAMESPACE
@@ -58,13 +57,6 @@ public:
 #endif
 #ifndef QT_NO_NETWORKPROXY
           proxyFactory(0),
-#endif
-#ifndef QT_NO_BEARERMANAGEMENT
-          lastSessionState(QNetworkSession::Invalid),
-          networkAccessible(QNetworkAccessManager::Accessible),
-          activeReplyCount(0),
-          online(false),
-          initializeSession(true),
 #endif
           cookieJarCreated(false),
           authenticationManager(new QNetworkAccessAuthenticationManager)
@@ -92,17 +84,6 @@ public:
 
     QNetworkAccessBackend *findBackend(QNetworkAccessManager::Operation op, const QNetworkRequest &request);
 
-#ifndef QT_NO_BEARERMANAGEMENT
-    void createSession(const QNetworkConfiguration &config);
-    QSharedPointer<QNetworkSession> getNetworkSession() const;
-
-    void _q_networkSessionClosed();
-    void _q_networkSessionNewConfigurationActivated();
-    void _q_networkSessionPreferredConfigurationChanged(const QNetworkConfiguration &config,
-                                                        bool isSeamless);
-    void _q_networkSessionStateChanged(QNetworkSession::State state);
-#endif
-
     QNetworkRequest prepareMultipart(const QNetworkRequest &request, QHttpMultiPart *multiPart);
 
     // this is the cache for storing downloaded files
@@ -117,17 +98,6 @@ public:
 #ifndef QT_NO_NETWORKPROXY
     QNetworkProxy proxy;
     QNetworkProxyFactory *proxyFactory;
-#endif
-
-#ifndef QT_NO_BEARERMANAGEMENT
-    QSharedPointer<QNetworkSession> networkSessionStrongRef;
-    QWeakPointer<QNetworkSession> networkSessionWeakRef;
-    QNetworkSession::State lastSessionState;
-    QString networkConfiguration;
-    QNetworkAccessManager::NetworkAccessibility networkAccessible;
-    int activeReplyCount;
-    bool online;
-    bool initializeSession;
 #endif
 
     bool cookieJarCreated;

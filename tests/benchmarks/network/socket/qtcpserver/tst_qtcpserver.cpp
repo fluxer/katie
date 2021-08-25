@@ -28,9 +28,6 @@
 #include <qstringlist.h>
 #include <qplatformdefs.h>
 #include <qhostinfo.h>
-#include <QNetworkConfiguration>
-#include <QNetworkConfigurationManager>
-#include <QNetworkSession>
 #include <QNetworkProxy>
 
 Q_DECLARE_METATYPE(QNetworkProxy)
@@ -56,12 +53,6 @@ private slots:
     void ipv4LoopbackPerformanceTest();
     void ipv6LoopbackPerformanceTest();
     void ipv4PerformanceTest();
-private:
-#ifndef QT_NO_BEARERMANAGEMENT
-    QNetworkConfigurationManager *netConfMan;
-    QNetworkConfiguration networkConfiguration;
-    QSharedPointer<QNetworkSession> networkSession;
-#endif
 };
 
 tst_QTcpServer::tst_QTcpServer()
@@ -70,22 +61,6 @@ tst_QTcpServer::tst_QTcpServer()
 
 void tst_QTcpServer::initTestCase()
 {
-#ifndef QT_NO_BEARERMANAGEMENT
-    netConfMan = new QNetworkConfigurationManager(this);
-    netConfMan->updateConfigurations();
-    connect(netConfMan, SIGNAL(updateCompleted()), &QTestEventLoop::instance(), SLOT(exitLoop()));
-    QTestEventLoop::instance().enterLoop(10);
-    networkConfiguration = netConfMan->defaultConfiguration();
-    if (networkConfiguration.isValid()) {
-        networkSession = QSharedPointer<QNetworkSession>(new QNetworkSession(networkConfiguration));
-        if (!networkSession->isOpen()) {
-            networkSession->open();
-            QVERIFY(networkSession->waitForOpened(30000));
-        }
-    } else {
-        QVERIFY(!(netConfMan->capabilities() & QNetworkConfigurationManager::NetworkSessionRequired));
-    }
-#endif
 }
 
 tst_QTcpServer::~tst_QTcpServer()

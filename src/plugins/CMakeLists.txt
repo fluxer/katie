@@ -21,30 +21,6 @@ if(WITH_ACCESSIBILITY)
 endif()
 
 
-set(CMAKE_LIBRARY_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}/plugins/bearer")
-set(CMAKE_ARCHIVE_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}/plugins/bearer")
-
-set(SHAREDBEARER_SOURCES
-    ${CMAKE_CURRENT_SOURCE_DIR}/bearer/qnetworksession_impl.cpp
-)
-set(SHAREDBEARER_HEADERS
-    ${CMAKE_CURRENT_SOURCE_DIR}/bearer/qnetworksession_impl.h
-    ${CMAKE_CURRENT_SOURCE_DIR}/bearer/qbearerengine_impl.h
-)
-katie_setup_target(sharedbearer ${SHAREDBEARER_SOURCES} ${SHAREDBEARER_HEADERS})
-add_library(sharedbearer OBJECT ${sharedbearer_SOURCES})
-target_include_directories(sharedbearer PUBLIC
-    ${CMAKE_CURRENT_SOURCE_DIR}/bearer
-    ${CMAKE_CURRENT_BINARY_DIR}/bearer
-)
-
-add_subdirectory(bearer/generic)
-if(CMAKE_SYSTEM_NAME MATCHES "Linux" AND WITH_DBUS AND DBUS_FOUND)
-    add_subdirectory(bearer/connman)
-    add_subdirectory(bearer/networkmanager)
-endif()
-
-
 set(CMAKE_LIBRARY_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}/plugins/iconengines")
 set(CMAKE_ARCHIVE_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}/plugins/iconengines")
 add_subdirectory(iconengines/svgiconengine)

@@ -1212,8 +1212,6 @@ include/katie/QtNetwork/QLocalSocket
 include/katie/QtNetwork/QNetworkAccessManager
 include/katie/QtNetwork/QNetworkAddressEntry
 include/katie/QtNetwork/QNetworkCacheMetaData
-include/katie/QtNetwork/QNetworkConfiguration
-include/katie/QtNetwork/QNetworkConfigurationManager
 include/katie/QtNetwork/QNetworkCookie
 include/katie/QtNetwork/QNetworkCookieJar
 include/katie/QtNetwork/QNetworkDiskCache
@@ -1223,7 +1221,6 @@ include/katie/QtNetwork/QNetworkProxyFactory
 include/katie/QtNetwork/QNetworkProxyQuery
 include/katie/QtNetwork/QNetworkReply
 include/katie/QtNetwork/QNetworkRequest
-include/katie/QtNetwork/QNetworkSession
 include/katie/QtNetwork/QSsl
 include/katie/QtNetwork/QSslCertificate
 include/katie/QtNetwork/QSslCipher
@@ -1249,8 +1246,6 @@ include/katie/QtNetwork/qhttpmultipart.h
 include/katie/QtNetwork/qlocalserver.h
 include/katie/QtNetwork/qlocalsocket.h
 include/katie/QtNetwork/qnetworkaccessmanager.h
-include/katie/QtNetwork/qnetworkconfigmanager.h
-include/katie/QtNetwork/qnetworkconfiguration.h
 include/katie/QtNetwork/qnetworkcookie.h
 include/katie/QtNetwork/qnetworkcookiejar.h
 include/katie/QtNetwork/qnetworkdiskcache.h
@@ -1258,7 +1253,6 @@ include/katie/QtNetwork/qnetworkinterface.h
 include/katie/QtNetwork/qnetworkproxy.h
 include/katie/QtNetwork/qnetworkreply.h
 include/katie/QtNetwork/qnetworkrequest.h
-include/katie/QtNetwork/qnetworksession.h
 include/katie/QtNetwork/qssl.h
 include/katie/QtNetwork/qsslcertificate.h
 include/katie/QtNetwork/qsslcipher.h
@@ -1457,7 +1451,6 @@ lib/katie/imports/Qt/labs/gestures/qmldir
 lib/katie/imports/Qt/labs/particles/libqmlparticlesplugin.so
 lib/katie/imports/Qt/labs/particles/qmldir
 lib/katie/plugins/accessible/libqtaccessiblewidgets.so
-lib/katie/plugins/bearer/libqgenericbearer.so
 lib/katie/plugins/designer/libqdeclarativeview.so
 lib/katie/plugins/iconengines/libqsvgicon.so
 lib/katie/plugins/imageformats/libqgif.so

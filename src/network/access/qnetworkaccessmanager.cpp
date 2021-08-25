@@ -26,9 +26,7 @@
 #include "qnetworkreply_p.h"
 #include "qnetworkcookie.h"
 #include "qabstractnetworkcache.h"
-#include "qnetworksession.h"
 #include "qnetworkcookiejar.h"
-#include "qsharednetworksession_p.h"
 #include "qnetworkaccesshttpbackend_p.h"
 #include "qnetworkaccessftpbackend_p.h"
 #include "qnetworkaccessfilebackend_p.h"
@@ -41,7 +39,6 @@
 #include "qvector.h"
 #include "qauthenticator_p.h"
 #include "qsslconfiguration.h"
-#include "qnetworkconfigmanager.h"
 #include "qhttpmultipart.h"
 #include "qhttpmultipart_p.h"
 #include "qthread.h"
@@ -122,32 +119,6 @@ static void ensureInitialized()
     A more involved example, assuming the manager is already existent,
     can be:
     \snippet doc/src/snippets/code/src_network_access_qnetworkaccessmanager.cpp 1
-
-    \section1 Network and Roaming support
-
-    With the addition of the \l {Bearer Management} API to Qt 4.7
-    QNetworkAccessManager gained the ability to manage network connections.
-    QNetworkAccessManager can start the network interface if the device is
-    offline and terminates the interface if the current process is the last
-    one to use the uplink. Note that some platform utilize grace periods from
-    when the last application stops using a uplink until the system actually
-    terminates the connectivity link. Roaming is equally transparent. Any
-    queued/pending network requests are automatically transferred to new
-    access point.
-
-    Clients wanting to utilize this feature should not require any changes. In fact
-    it is likely that existing platform specific connection code can simply be
-    removed from the application.
-
-    \note The network and roaming support in QNetworkAccessManager is conditional
-    upon the platform supporting connection management. The
-    \l QNetworkConfigurationManager::NetworkSessionRequired can be used to
-    detect whether QNetworkAccessManager utilizes this feature. Currently only
-    Meego/Harmattan and Symbian platforms provide connection management support.
-
-    \note This feature cannot be used in combination with the Bearer Management
-    API as provided by QtMobility. Applications have to migrate to the Qt version
-    of Bearer Management.
 
     \sa QNetworkRequest, QNetworkReply, QNetworkProxy
 */
@@ -697,136 +668,6 @@ QNetworkReply *QNetworkAccessManager::deleteResource(const QNetworkRequest &requ
     return d_func()->postProcess(createRequest(QNetworkAccessManager::DeleteOperation, request));
 }
 
-#ifndef QT_NO_BEARERMANAGEMENT
-
-/*!
-    \since 4.7
-
-    Sets the network configuration that will be used when creating the
-    \l {QNetworkSession}{network session} to \a config.
-
-    The network configuration is used to create and open a network session before any request that
-    requires network access is process.  If no network configuration is explicitly set via this
-    function the network configuration returned by
-    QNetworkConfigurationManager::defaultConfiguration() will be used.
-
-    To restore the default network configuration set the network configuration to the value
-    returned from QNetworkConfigurationManager::defaultConfiguration().
-
-    \snippet doc/src/snippets/code/src_network_access_qnetworkaccessmanager.cpp 2
-
-    If an invalid network configuration is set, a network session will not be created.  In this
-    case network requests will be processed regardless, but may fail.  For example:
-
-    \snippet doc/src/snippets/code/src_network_access_qnetworkaccessmanager.cpp 3
-
-    \sa configuration(), QNetworkSession
-*/
-void QNetworkAccessManager::setConfiguration(const QNetworkConfiguration &config)
-{
-    d_func()->createSession(config);
-}
-
-/*!
-    \since 4.7
-
-    Returns the network configuration that will be used to create the
-    \l {QNetworkSession}{network session} which will be used when processing network requests.
-
-    \sa setConfiguration(), activeConfiguration()
-*/
-QNetworkConfiguration QNetworkAccessManager::configuration() const
-{
-    Q_D(const QNetworkAccessManager);
-
-    QSharedPointer<QNetworkSession> session(d->getNetworkSession());
-    if (session)
-        return session->configuration();
-    else
-        return QNetworkConfiguration();
-}
-
-/*!
-    \since 4.7
-
-    Returns the current active network configuration.
-
-    If the network configuration returned by configuration() is of type
-    QNetworkConfiguration::ServiceNetwork this function will return the current active child
-    network configuration of that configuration.  Otherwise returns the same network configuration
-    as configuration().
-
-    Use this function to return the actual network configuration currently in use by the network
-    session.
-
-    \sa configuration()
-*/
-QNetworkConfiguration QNetworkAccessManager::activeConfiguration() const
-{
-    Q_D(const QNetworkAccessManager);
-
-    QSharedPointer<QNetworkSession> networkSession(d->getNetworkSession());
-    if (networkSession) {
-        QNetworkConfigurationManager manager;
-
-        return manager.configurationFromIdentifier(
-            networkSession->sessionProperty(QLatin1String("ActiveConfiguration")).toString());
-    } else {
-        return QNetworkConfiguration();
-    }
-}
-
-/*!
-    \since 4.7
-
-    Overrides the reported network accessibility.  If \a accessible is NotAccessible the reported
-    network accessiblity will always be NotAccessible.  Otherwise the reported network
-    accessibility will reflect the actual device state.
-*/
-void QNetworkAccessManager::setNetworkAccessible(QNetworkAccessManager::NetworkAccessibility accessible)
-{
-    Q_D(QNetworkAccessManager);
-
-    if (d->networkAccessible != accessible) {
-        NetworkAccessibility previous = networkAccessible();
-        d->networkAccessible = accessible;
-        NetworkAccessibility current = networkAccessible();
-        if (previous != current)
-            emit networkAccessibleChanged(current);
-    }
-}
-
-/*!
-    \since 4.7
-
-    Returns the current network accessibility.
-*/
-QNetworkAccessManager::NetworkAccessibility QNetworkAccessManager::networkAccessible() const
-{
-    Q_D(const QNetworkAccessManager);
-
-    QSharedPointer<QNetworkSession> networkSession(d->getNetworkSession());
-    if (networkSession) {
-        // d->online holds online/offline state of this network session.
-        if (d->online)
-            return d->networkAccessible;
-        else
-            return NotAccessible;
-    } else {
-        // Network accessibility is either disabled or unknown.
-        return (d->networkAccessible == NotAccessible) ? NotAccessible : UnknownAccessibility;
-    }
-}
-
-QSharedPointer<QNetworkSession> QNetworkAccessManagerPrivate::getNetworkSession() const
-{
-    if (networkSessionStrongRef)
-        return networkSessionStrongRef;
-    return networkSessionWeakRef.toStrongRef();
-}
-
-#endif // QT_NO_BEARERMANAGEMENT
-
 /*!
     \since 4.7
 
@@ -887,7 +728,6 @@ QNetworkReply *QNetworkAccessManager::createRequest(QNetworkAccessManager::Opera
         return new QNetworkReplyDataImpl(this, req, op);
     }
 
-    // A request with QNetworkRequest::AlwaysCache does not need any bearer management
     QNetworkRequest::CacheLoadControl mode =
         static_cast<QNetworkRequest::CacheLoadControl>(
             req.attribute(QNetworkRequest::CacheLoadControlAttribute,
@@ -906,26 +746,6 @@ QNetworkReply *QNetworkAccessManager::createRequest(QNetworkAccessManager::Opera
         priv->setup(op, req, outgoingData);
         return reply;
     }
-
-#ifndef QT_NO_BEARERMANAGEMENT
-    // Return a disabled network reply if network access is disabled.
-    // Except if the scheme is empty or file://.
-    if (!d->networkAccessible && !isLocalFile) {
-        return new QDisabledNetworkReply(this, req, op);
-    }
-
-    if (!d->networkSessionStrongRef && (d->initializeSession || !d->networkConfiguration.isEmpty())) {
-        QNetworkConfigurationManager manager;
-        if (!d->networkConfiguration.isEmpty()) {
-            d->createSession(manager.configurationFromIdentifier(d->networkConfiguration));
-        } else {
-            if (manager.capabilities() & QNetworkConfigurationManager::NetworkSessionRequired)
-                d->createSession(manager.defaultConfiguration());
-            else
-                d->initializeSession = false;
-        }
-    }
-#endif
 
     QNetworkRequest request = req;
     if (!request.header(QNetworkRequest::ContentLengthHeader).isValid() &&
@@ -946,14 +766,7 @@ QNetworkReply *QNetworkAccessManager::createRequest(QNetworkAccessManager::Opera
     }
 
     // first step: create the reply
-    QUrl url = request.url();
     QNetworkReplyImpl *reply = new QNetworkReplyImpl(this);
-#ifndef QT_NO_BEARERMANAGEMENT
-    if (!isLocalFile) {
-        connect(this, SIGNAL(networkSessionConnected()),
-                reply, SLOT(_q_networkSessionConnected()));
-    }
-#endif
     QNetworkReplyImplPrivate *priv = reply->d_func();
     priv->manager = this;
 
@@ -984,15 +797,6 @@ void QNetworkAccessManagerPrivate::_q_replyFinished()
     QNetworkReply *reply = qobject_cast<QNetworkReply *>(q->sender());
     if (reply)
         emit q->finished(reply);
-
-#ifndef QT_NO_BEARERMANAGEMENT
-    // If there are no active requests, release our reference to the network session.
-    // It will not be destroyed immediately, but rather when the connection cache is flushed
-    // after 2 minutes.
-    activeReplyCount--;
-    if (networkSessionStrongRef && activeReplyCount == 0)
-        networkSessionStrongRef.clear();
-#endif
 }
 
 void QNetworkAccessManagerPrivate::_q_replySslErrors(const QList<QSslError> &errors)
@@ -1009,10 +813,6 @@ QNetworkReply *QNetworkAccessManagerPrivate::postProcess(QNetworkReply *reply)
     QNetworkReplyPrivate::setManager(reply, q);
     q->connect(reply, SIGNAL(finished()), SLOT(_q_replyFinished()));
     q->connect(reply, SIGNAL(sslErrors(QList<QSslError>)), SLOT(_q_replySslErrors(QList<QSslError>)));
-#ifndef QT_NO_BEARERMANAGEMENT
-    activeReplyCount++;
-#endif
-
     return reply;
 }
 
@@ -1143,97 +943,6 @@ QNetworkAccessManagerPrivate::~QNetworkAccessManagerPrivate()
     }
 #endif
 }
-
-#ifndef QT_NO_BEARERMANAGEMENT
-void QNetworkAccessManagerPrivate::createSession(const QNetworkConfiguration &config)
-{
-    Q_Q(QNetworkAccessManager);
-
-    initializeSession = false;
-
-    //resurrect weak ref if possible
-    networkSessionStrongRef = networkSessionWeakRef.toStrongRef();
-
-    QSharedPointer<QNetworkSession> newSession;
-    if (config.isValid())
-        newSession = QSharedNetworkSessionManager::getSession(config);
-
-    if (networkSessionStrongRef) {
-        //do nothing if new and old session are the same
-        if (networkSessionStrongRef == newSession)
-            return;
-        //disconnect from old session
-        QObject::disconnect(networkSessionStrongRef.data(), SIGNAL(opened()), q, SIGNAL(networkSessionConnected()));
-        QObject::disconnect(networkSessionStrongRef.data(), SIGNAL(closed()), q, SLOT(_q_networkSessionClosed()));
-        QObject::disconnect(networkSessionStrongRef.data(), SIGNAL(stateChanged(QNetworkSession::State)),
-            q, SLOT(_q_networkSessionStateChanged(QNetworkSession::State)));
-    }
-
-    //switch to new session (null if config was invalid)
-    networkSessionStrongRef = newSession;
-    networkSessionWeakRef = networkSessionStrongRef.toWeakRef();
-
-    if (!networkSessionStrongRef) {
-        online = false;
-
-        if (networkAccessible == QNetworkAccessManager::NotAccessible)
-            emit q->networkAccessibleChanged(QNetworkAccessManager::NotAccessible);
-        else
-            emit q->networkAccessibleChanged(QNetworkAccessManager::UnknownAccessibility);
-
-        return;
-    }
-
-    //connect to new session
-    QObject::connect(networkSessionStrongRef.data(), SIGNAL(opened()), q, SIGNAL(networkSessionConnected()), Qt::QueuedConnection);
-    //QueuedConnection is used to avoid deleting the networkSession inside its closed signal
-    QObject::connect(networkSessionStrongRef.data(), SIGNAL(closed()), q, SLOT(_q_networkSessionClosed()), Qt::QueuedConnection);
-    QObject::connect(networkSessionStrongRef.data(), SIGNAL(stateChanged(QNetworkSession::State)),
-                     q, SLOT(_q_networkSessionStateChanged(QNetworkSession::State)), Qt::QueuedConnection);
-
-    _q_networkSessionStateChanged(networkSessionStrongRef->state());
-}
-
-void QNetworkAccessManagerPrivate::_q_networkSessionClosed()
-{
-    Q_Q(QNetworkAccessManager);
-    QSharedPointer<QNetworkSession> networkSession(getNetworkSession());
-    if (networkSession) {
-        networkConfiguration = networkSession->configuration().identifier();
-
-        //disconnect from old session
-        QObject::disconnect(networkSession.data(), SIGNAL(opened()), q, SIGNAL(networkSessionConnected()));
-        QObject::disconnect(networkSession.data(), SIGNAL(closed()), q, SLOT(_q_networkSessionClosed()));
-        QObject::disconnect(networkSession.data(), SIGNAL(stateChanged(QNetworkSession::State)),
-            q, SLOT(_q_networkSessionStateChanged(QNetworkSession::State)));
-        networkSessionStrongRef.clear();
-        networkSessionWeakRef.clear();
-    }
-}
-
-void QNetworkAccessManagerPrivate::_q_networkSessionStateChanged(QNetworkSession::State state)
-{
-    Q_Q(QNetworkAccessManager);
-
-    //Do not emit the networkSessionConnected signal here, except for roaming -> connected
-    //transition, otherwise it is emitted twice in a row when opening a connection.
-    if (state == QNetworkSession::Connected && lastSessionState == QNetworkSession::Roaming)
-        emit q->networkSessionConnected();
-    lastSessionState = state;
-
-    if (online) {
-        if (state != QNetworkSession::Connected && state != QNetworkSession::Roaming) {
-            online = false;
-            emit q->networkAccessibleChanged(QNetworkAccessManager::NotAccessible);
-        }
-    } else {
-        if (state == QNetworkSession::Connected || state == QNetworkSession::Roaming) {
-            online = true;
-            emit q->networkAccessibleChanged(networkAccessible);
-        }
-    }
-}
-#endif // QT_NO_BEARERMANAGEMENT
 
 QNetworkRequest QNetworkAccessManagerPrivate::prepareMultipart(const QNetworkRequest &request, QHttpMultiPart *multiPart)
 {

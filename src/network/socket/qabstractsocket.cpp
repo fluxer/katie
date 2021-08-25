@@ -349,7 +349,6 @@
 #include "qabstractsocket.h"
 #include "qabstractsocket_p.h"
 #include "qhostinfo_p.h"
-#include "qnetworksession_p.h"
 #include "qabstracteventdispatcher.h"
 #include "qhostaddress.h"
 #include "qhostinfo.h"
@@ -486,10 +485,6 @@ bool QAbstractSocketPrivate::initSocketLayer(QAbstractSocket::NetworkLayerProtoc
         q->setErrorString(QAbstractSocket::tr("Operation on socket is not supported"));
         return false;
     }
-#ifndef QT_NO_BEARERMANAGEMENT
-    //copy network session down to the socket engine (if it has been set)
-    socketEngine->setProperty("_q_networksession", q->property("_q_networksession"));
-#endif
 #ifndef QT_NO_NETWORKPROXY
     //copy user agent to socket engine (if it has been set)
     socketEngine->setProperty("_q_user-agent", q->property("_q_user-agent"));
@@ -1483,10 +1478,6 @@ bool QAbstractSocket::setSocketDescriptor(int socketDescriptor, SocketState sock
         setErrorString(tr("Operation on socket is not supported"));
         return false;
     }
-#ifndef QT_NO_BEARERMANAGEMENT
-    //copy network session down to the socket engine (if it has been set)
-    d->socketEngine->setProperty("_q_networksession", property("_q_networksession"));
-#endif
     bool result = d->socketEngine->initialize(socketDescriptor, socketState);
     if (!result) {
         d->socketError = d->socketEngine->error();

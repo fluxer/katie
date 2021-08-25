@@ -26,7 +26,6 @@
 #include "QtCore/qcoreapplication.h"
 #include "QtCore/qdatetime.h"
 #include "QtNetwork/qsslconfiguration.h"
-#include "QtNetwork/qnetworksession.h"
 #include "QtNetwork/qnetworkcookiejar.h"
 #include "qnetworkaccesshttpbackend_p.h"
 #include "qnetworkaccessmanager_p.h"
@@ -71,36 +70,11 @@ void QNetworkReplyImplPrivate::_q_startOperation()
     }
 
     if (!backend->start()) {
-#ifndef QT_NO_BEARERMANAGEMENT
-        // backend failed to start because the session state is not Connected.
-        // QNetworkAccessManager will call _q_startOperation again for us when the session
-        // state changes.
-        state = WaitingForSession;
-
-        QSharedPointer<QNetworkSession> session(manager->d_func()->getNetworkSession());
-
-        if (session) {
-            Q_Q(QNetworkReplyImpl);
-
-            QObject::connect(session.data(), SIGNAL(error(QNetworkSession::SessionError)),
-                             q, SLOT(_q_networkSessionFailed()), Qt::QueuedConnection);
-
-            if (!session->isOpen())
-                session->open();
-        } else {
-            qWarning("Backend is waiting for QNetworkSession to connect, but there is none!");
-            state = Working;
-            error(QNetworkReplyImpl::UnknownNetworkError,
-                  QCoreApplication::translate("QNetworkReply", "Network session error."));
-            finished();
-        }
-#else
         qWarning("Backend start failed");
         state = Working;
         error(QNetworkReplyImpl::UnknownNetworkError,
               QCoreApplication::translate("QNetworkReply", "backend start error."));
         finished();
-#endif
         return;
     }
 
@@ -239,54 +213,6 @@ void QNetworkReplyImplPrivate::_q_bufferOutgoingData()
         }
     }
 }
-
-#ifndef QT_NO_BEARERMANAGEMENT
-void QNetworkReplyImplPrivate::_q_networkSessionConnected()
-{
-    Q_Q(QNetworkReplyImpl);
-
-    if (manager.isNull())
-        return;
-
-    QSharedPointer<QNetworkSession> session = manager->d_func()->getNetworkSession();
-    if (!session)
-        return;
-
-    if (session->state() != QNetworkSession::Connected)
-        return;
-
-#ifndef QT_NO_NETWORKPROXY
-    // Re-set proxies here as new session might have changed them
-    proxyList = manager->d_func()->queryProxy(QNetworkProxyQuery(request.url()));
-#endif
-
-    switch (state) {
-    case QNetworkReplyImplPrivate::Buffering:
-    case QNetworkReplyImplPrivate::Working:
-    case QNetworkReplyImplPrivate::Reconnecting:
-        // Migrate existing downloads to new network connection.
-        migrateBackend();
-        break;
-    case QNetworkReplyImplPrivate::WaitingForSession:
-        // Start waiting requests.
-        QMetaObject::invokeMethod(q, "_q_startOperation", Qt::QueuedConnection);
-        break;
-    default:
-        ;
-    }
-}
-
-void QNetworkReplyImplPrivate::_q_networkSessionFailed()
-{
-    // Abort waiting and working replies.
-    if (state == WaitingForSession || state == Working) {
-        state = Working;
-        error(QNetworkReplyImpl::UnknownNetworkError,
-              QCoreApplication::translate("QNetworkReply", "Network session error."));
-        finished();
-    }
-}
-#endif
 
 void QNetworkReplyImplPrivate::setup(QNetworkAccessManager::Operation op, const QNetworkRequest &req,
                                      QIODevice *data)
@@ -730,29 +656,6 @@ void QNetworkReplyImplPrivate::finished()
     if (preMigrationDownloaded != Q_INT64_C(-1))
         totalSize = totalSize.toLongLong() + preMigrationDownloaded;
 
-    if (!manager.isNull()) {
-#ifndef QT_NO_BEARERMANAGEMENT
-        QSharedPointer<QNetworkSession> session (manager->d_func()->getNetworkSession());
-        if (session && session->state() == QNetworkSession::Roaming &&
-            state == Working && errorCode != QNetworkReply::OperationCanceledError) {
-            // only content with a known size will fail with a temporary network failure error
-            if (!totalSize.isNull()) {
-                if (QVariant(bytesDownloaded) != totalSize) {
-                    if (migrateBackend()) {
-                        // either we are migrating or the request is finished/aborted
-                        if (state == Reconnecting || state == WaitingForSession) {
-                            resumeNotificationHandling();
-                            return; // exit early if we are migrating.
-                        }
-                    } else {
-                        error(QNetworkReply::TemporaryNetworkFailureError,
-                              QNetworkReply::tr("Temporary network failure."));
-                    }
-                }
-            }
-        }
-#endif
-    }
     resumeNotificationHandling();
 
     state = Finished;
@@ -1072,32 +975,6 @@ bool QNetworkReplyImplPrivate::migrateBackend()
 
     return true;
 }
-
-#ifndef QT_NO_BEARERMANAGEMENT
-QDisabledNetworkReply::QDisabledNetworkReply(QObject *parent,
-                                             const QNetworkRequest &req,
-                                             QNetworkAccessManager::Operation op)
-:   QNetworkReply(parent)
-{
-    setRequest(req);
-    setUrl(req.url());
-    setOperation(op);
-
-    qRegisterMetaType<QNetworkReply::NetworkError>("QNetworkReply::NetworkError");
-
-    QString msg = QCoreApplication::translate("QNetworkAccessManager",
-                                              "Network access is disabled.");
-    setError(UnknownNetworkError, msg);
-
-    QMetaObject::invokeMethod(this, "error", Qt::QueuedConnection,
-        Q_ARG(QNetworkReply::NetworkError, UnknownNetworkError));
-    QMetaObject::invokeMethod(this, "finished", Qt::QueuedConnection);
-}
-
-QDisabledNetworkReply::~QDisabledNetworkReply()
-{
-}
-#endif
 
 QT_END_NAMESPACE
 

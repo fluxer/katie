@@ -101,6 +101,7 @@
 #define QT_NO_TEXTCODECPLUGIN
 #define QT_NO_SYSTEMLOCALE
 #define QT_NO_STL_WCHAR
+#define QT_NO_BEARERMANAGEMENT
 
 // Not supported, used to bootstrap
 #cmakedefine QT_NO_QOBJECT
@@ -148,7 +149,6 @@
 #cmakedefine QT_NO_ACTION
 #cmakedefine QT_NO_ANIMATION
 #cmakedefine QT_NO_BACKINGSTORE
-#cmakedefine QT_NO_BEARERMANAGEMENT
 #cmakedefine QT_NO_BUTTONGROUP
 #cmakedefine QT_NO_CALENDARWIDGET
 #cmakedefine QT_NO_CAST_FROM_ASCII
@@ -402,11 +402,6 @@
 // QXmlStreamWriter
 #if !defined(QT_NO_XMLSTREAMWRITER) && defined(QT_NO_XMLSTREAM)
 #  define QT_NO_XMLSTREAMWRITER
-#endif
-
-// Bearer Management
-#if !defined(QT_NO_BEARERMANAGEMENT) && defined(QT_NO_LIBRARY)
-#  define QT_NO_BEARERMANAGEMENT
 #endif
 
 // Context menu

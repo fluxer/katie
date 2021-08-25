@@ -30,10 +30,6 @@
 
 #ifndef QT_NO_HTTP
 
-#ifndef QT_NO_BEARERMANAGEMENT
-#include "qnetworksession_p.h"
-#endif
-
 QT_BEGIN_NAMESPACE
 
 // TODO: Put channel specific stuff here so it does not polute qhttpnetworkconnection.cpp
@@ -67,11 +63,6 @@ void QHttpNetworkConnectionChannel::init()
         socket = new QSslSocket;
     else
         socket = new QTcpSocket;
-#ifndef QT_NO_BEARERMANAGEMENT
-    //push session down to socket
-    if (networkSession)
-        socket->setProperty("_q_networksession", QVariant::fromValue(networkSession));
-#endif
 #ifndef QT_NO_NETWORKPROXY
     // Set by QNAM anyway, but let's be safe here
     socket->setProxy(QNetworkProxy::NoProxy);

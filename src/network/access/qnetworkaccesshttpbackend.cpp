@@ -27,7 +27,6 @@
 #include "qabstractnetworkcache.h"
 #include "qnetworkrequest.h"
 #include "qnetworkreply.h"
-#include "qnetworksession_p.h"
 #include "qnetworkrequest_p.h"
 #include "qnetworkcookie_p.h"
 #include "qdatetime.h"
@@ -496,11 +495,6 @@ void QNetworkAccessHttpBackend::postRequest()
 
     // Create the HTTP thread delegate
     QHttpThreadDelegate *delegate = new QHttpThreadDelegate;
-#ifndef QT_NO_BEARERMANAGEMENT
-    QVariant v(property("_q_networksession"));
-    if (v.isValid())
-        delegate->networkSession = qvariant_cast<QSharedPointer<QNetworkSession> >(v);
-#endif
 
     // For the synchronous HTTP, this is the normal way the delegate gets deleted
     // For the asynchronous HTTP this is a safety measure, the delegate deletes itself when HTTP is finished

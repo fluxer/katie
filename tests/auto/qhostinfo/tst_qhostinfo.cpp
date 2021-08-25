@@ -29,12 +29,6 @@
 #include <qhostinfo.h>
 #include "qhostinfo_p.h"
 
-#ifndef QT_NO_BEARERMANAGEMENT
-#include <QtNetwork/qnetworkconfigmanager.h>
-#include <QtNetwork/qnetworkconfiguration.h>
-#include <QtNetwork/qnetworksession.h>
-#endif
-
 #include "../network-settings.h"
 #include "../../shared/util.h"
 
@@ -85,11 +79,6 @@ private:
     bool lookupDone;
     int lookupsDoneCounter;
     QHostInfo lookupResults;
-#ifndef QT_NO_BEARERMANAGEMENT
-    QNetworkConfigurationManager *netConfMan;
-    QNetworkConfiguration networkConfiguration;
-    QScopedPointer<QNetworkSession> networkSession;
-#endif
 };
 
 // Testing get/set functions
@@ -130,23 +119,6 @@ tst_QHostInfo::~tst_QHostInfo()
 
 void tst_QHostInfo::initTestCase()
 {
-#ifndef QT_NO_BEARERMANAGEMENT
-    netConfMan = new QNetworkConfigurationManager(this);
-    netConfMan->updateConfigurations();
-    connect(netConfMan, SIGNAL(updateCompleted()), &QTestEventLoop::instance(), SLOT(exitLoop()));
-    QTestEventLoop::instance().enterLoop(10);
-    networkConfiguration = netConfMan->defaultConfiguration();
-    if (networkConfiguration.isValid()) {
-        networkSession.reset(new QNetworkSession(networkConfiguration));
-        if (!networkSession->isOpen()) {
-            networkSession->open();
-            QVERIFY(networkSession->waitForOpened(30000));
-        }
-    } else {
-        QVERIFY(!(netConfMan->capabilities() & QNetworkConfigurationManager::NetworkSessionRequired));
-    }
-#endif
-
     ipv6Available = QtNetworkSettings::supportsIPv6();
 
     // run each testcase with and without test enabled
