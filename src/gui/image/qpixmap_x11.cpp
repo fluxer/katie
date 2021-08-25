@@ -476,7 +476,7 @@ void QX11PixmapData::fromImage(const QImage &img,
             image = image.convertToFormat(QImage::Format_ARGB32);
 
         const QImage &cimage = image;
-        QRgb  pix[256];                                // pixel translation table
+        QSTACKARRAY(QRgb, pix, 256);                // pixel translation table
         const bool  d8 = (d == 8);
         const uint  red_mask          = (uint)visual->red_mask;
         const uint  green_mask  = (uint)visual->green_mask;
@@ -488,7 +488,7 @@ void QX11PixmapData::fromImage(const QImage &img,
         const uint  gbits = highest_bit(green_mask) - lowest_bit(green_mask) + 1;
         const uint  bbits = highest_bit(blue_mask) - lowest_bit(blue_mask) + 1;
 
-        if (d8) {                                // setup pixel translation
+        if (d8) {                                   // setup pixel translation
             QVector<QRgb> ctable = cimage.colorTable();
             for (int i=0; i < cimage.colorCount(); i++) {
                 int r = qRed  (ctable[i]);
@@ -506,7 +506,7 @@ void QX11PixmapData::fromImage(const QImage &img,
         Q_CHECK_PTR(xi);
         newbits = (uchar *)::malloc(size_t(xi->bytes_per_line) * h);
         Q_CHECK_PTR(newbits);
-        if (!newbits)                                // no memory
+        if (!newbits)                               // no memory
             return;
         int bppc = xi->bits_per_pixel;
 
@@ -844,26 +844,25 @@ void QX11PixmapData::fromImage(const QImage &img,
     }
 
     if (d == 8 && !trucol) {                        // 8 bit pixmap
-        int  pop[256];                                // pixel popularity
+        QSTACKARRAY(int, pop, 256);                 // pixel popularity
 
         if (image.colorCount() == 0)
             image.setColorCount(1);
 
         const QImage &cimage = image;
-        memset(pop, 0, sizeof(int)*256);        // reset popularity array
-        for (int i = 0; i < h; i++) {                        // for each scanline...
+        for (int i = 0; i < h; i++) {               // for each scanline...
             const uchar* p = cimage.constScanLine(i);
             const uchar *end = p + w;
-            while (p < end)                        // compute popularity
+            while (p < end)                         // compute popularity
                 pop[*p++]++;
         }
 
         newbits = (uchar *)::malloc(nbytes);        // copy image into newbits
         Q_CHECK_PTR(newbits);
-        if (!newbits)                                // no memory
+        if (!newbits)                               // no memory
             return;
         uchar* p = newbits;
-        ::memcpy(p, cimage.bits(), nbytes);        // copy image data into newbits
+        ::memcpy(p, cimage.bits(), nbytes);         // copy image data into newbits
 
         /*
          * The code below picks the most important colors. It is based on the
@@ -871,9 +870,9 @@ void QX11PixmapData::fromImage(const QImage &img,
          */
 
         struct PIX {                                // pixel sort element
-            uchar r,g,b,n;                        // color + pad
-            int          use;                                // popularity
-            int          index;                        // index in colormap
+            uchar r,g,b,n;                          // color + pad
+            int          use;                       // popularity
+            int          index;                     // index in colormap
             int          mindist;
         };
         int ncols = 0;
@@ -889,22 +888,21 @@ void QX11PixmapData::fromImage(const QImage &img,
         if (ncols == 0)
             ncols = 1;
 
-        PIX pixarr[256];                        // pixel array
-        PIX pixarr_sorted[256];                        // pixel array (sorted)
-        memset(pixarr, 0, ncols*sizeof(PIX));
-        PIX *px                   = &pixarr[0];
-        int  maxpop = 0;
-        int  maxpix = 0;
+        QSTACKARRAY(PIX, pixarr, 256);              // pixel array
+        QSTACKARRAY(PIX, pixarr_sorted, 256);       // pixel array (sorted)
+        PIX *px = &pixarr[0];
+        int maxpop = 0;
+        int maxpix = 0;
         uint j = 0;
         QVector<QRgb> ctable = cimage.colorTable();
-        for (int i = 0; i < 256; i++) {                // init pixel array
+        for (int i = 0; i < 256; i++) {             // init pixel array
             if (pop[i] > 0) {
                 px->r = qRed  (ctable[i]);
                 px->g = qGreen(ctable[i]);
                 px->b = qBlue (ctable[i]);
                 px->n = 0;
                 px->use = pop[i];
-                if (pop[i] > maxpop) {        // select most popular entry
+                if (pop[i] > maxpop) {              // select most popular entry
                     maxpop = pop[i];
                     maxpix = j;
                 }
@@ -917,14 +915,14 @@ void QX11PixmapData::fromImage(const QImage &img,
         pixarr_sorted[0] = pixarr[maxpix];
         pixarr[maxpix].use = 0;
 
-        for (int i = 1; i < ncols; i++) {                // sort pixels
+        for (int i = 1; i < ncols; i++) {           // sort pixels
             int minpix = -1, mindist = -1;
             px = &pixarr_sorted[i-1];
             int r = px->r;
             int g = px->g;
             int b = px->b;
             int dist;
-            if ((i & 1) || i<10) {                // sort on max distance
+            if ((i & 1) || i<10) {                  // sort on max distance
                 for (int j=0; j<ncols; j++) {
                     px = &pixarr[j];
                     if (px->use) {
@@ -960,32 +958,32 @@ void QX11PixmapData::fromImage(const QImage &img,
         }
 
         QColormap cmap = QColormap::instance(xinfo.screen());
-        uint pix[256];                                // pixel translation table
+        QSTACKARRAY(uint, pix, 256);                // pixel translation table
         px = &pixarr_sorted[0];
-        for (int i = 0; i < ncols; i++) {                // allocate colors
+        for (int i = 0; i < ncols; i++) {           // allocate colors
             QColor c(px->r, px->g, px->b);
             pix[px->index] = cmap.pixel(c);
             px++;
         }
 
         p = newbits;
-        for (int i = 0; i < nbytes; i++) {                // translate pixels
+        for (int i = 0; i < nbytes; i++) {          // translate pixels
             *p = pix[*p];
             p++;
         }
     }
 
-    if (!xi) {                                // X image not created
+    if (!xi) {                                      // X image not created
         xi = XCreateImage(dpy, visual, dd, ZPixmap, 0, 0, w, h, 32, 0);
-        if (xi->bits_per_pixel == 16) {        // convert 8 bpp ==> 16 bpp
+        if (xi->bits_per_pixel == 16) {             // convert 8 bpp ==> 16 bpp
             ushort *p2;
             int            p2inc = xi->bytes_per_line/sizeof(ushort);
             ushort *newerbits = (ushort *)::malloc(size_t(xi->bytes_per_line) * h);
             Q_CHECK_PTR(newerbits);
-            if (!newerbits)                                // no memory
+            if (!newerbits)                         // no memory
                 return;
             uchar* p = newbits;
-            for (int y = 0; y < h; y++) {                // OOPS: Do right byte order!!
+            for (int y = 0; y < h; y++) {           // OOPS: Do right byte order!!
                 p2 = newerbits + p2inc*y;
                 for (int x = 0; x < w; x++)
                     *p2++ = *p++;
