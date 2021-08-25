@@ -27,6 +27,7 @@
 #include <QImage>
 #include <QPaintEngine>
 #include <qmath.h>
+#include <qguicommon_p.h>
 
 #include <qpixmap_raster_p.h>
 
@@ -1156,8 +1157,6 @@ void tst_QPainter::clipAndFill()
 
 QTransform tst_QPainter::transformForAngle(qreal angle)
 {
-    static const qreal inv_dist_to_plane = 1. / 1024.;
-
     QTransform transform;
 
     QTransform rotTrans;
