@@ -128,7 +128,7 @@ int QDialPrivate::valueFromPoint(const QPoint &p) const
     double xx = (double)p.x() - q->width()/2.0;
     double a = (xx || yy) ? qAtan2(yy, xx) : 0;
 
-    if (a < M_PI / -2)
+    if (a < -M_PI_2)
         a = a + M_PI * 2;
 
     int dist = 0;

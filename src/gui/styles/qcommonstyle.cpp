@@ -3000,7 +3000,7 @@ static QPolygonF calcArrow(const QStyleOptionSlider *dial, qreal &a)
     int currentSliderPosition = dial->upsideDown ? dial->sliderPosition : (dial->maximum - dial->sliderPosition);
 
     if (dial->maximum == dial->minimum)
-        a = M_PI / 2;
+        a = M_PI_2;
     else if (dial->dialWrapping)
         a = M_PI * 3 / 2 - (currentSliderPosition - dial->minimum) * 2 * M_PI
             / (dial->maximum - dial->minimum);

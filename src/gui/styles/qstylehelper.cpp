@@ -71,7 +71,7 @@ static QPointF calcRadialPos(const QStyleOptionSlider *dial, qreal offset)
     const int currentSliderPosition = dial->upsideDown ? dial->sliderPosition : (dial->maximum - dial->sliderPosition);
     qreal a = 0;
     if (dial->maximum == dial->minimum)
-        a = M_PI / 2;
+        a = M_PI_2;
     else if (dial->dialWrapping)
         a = M_PI * 3 / 2 - (currentSliderPosition - dial->minimum) * 2 * M_PI
             / (dial->maximum - dial->minimum);
