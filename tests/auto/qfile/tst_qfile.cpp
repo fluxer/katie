@@ -32,15 +32,9 @@
 #include <QFileInfo>
 #include <QHostInfo>
 #include <QProcess>
-# include <sys/types.h>
-# include <unistd.h>
-#if defined(Q_OS_LINUX)
-# include <sys/vfs.h>
-#elif defined(Q_OS_FREEBSD)
-# include <sys/param.h>
-# include <sys/mount.h>
-#endif
 
+#include <sys/types.h>
+#include <unistd.h>
 #include <stdio.h>
 #include <errno.h>
 
@@ -1991,8 +1985,6 @@ void tst_QFile::virtualFile()
     QString fname;
 #if defined(Q_OS_LINUX)
     fname = "/proc/self/maps";
-#elif defined(Q_OS_FREEBSD) || defined(Q_OS_NETBSD)
-    fname = "/proc/curproc/map";
 #else
     QSKIP("This platform does not have 0-sized virtual files", SkipAll);
 #endif
