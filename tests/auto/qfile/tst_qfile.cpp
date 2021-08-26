@@ -47,6 +47,8 @@ Q_DECLARE_METATYPE(QFile::FileError)
 //TESTED_CLASS=
 //TESTED_FILES=
 
+static const bool currentuserisroot = (::getuid() == 0);
+
 class tst_QFile : public QObject
 {
     Q_OBJECT
@@ -455,9 +457,10 @@ void tst_QFile::open()
 
     QFETCH( bool, ok );
 
-    if (::getuid() == 0)
+    if (currentuserisroot) {
         // root and Chuck Norris don't care for file permissions. Skip.
         QSKIP("Running this test as root doesn't make sense", SkipAll);
+    }
 
     if (filename.isEmpty())
         QTest::ignoreMessage(QtWarningMsg, "QFSFileEngine::open: No file name specified");
@@ -2054,9 +2057,13 @@ void tst_QFile::rename_data()
     QTest::newRow("a -> .") << QString("a") << QString(".") << false;
     QTest::newRow("renamefile -> renamefile") << QString("renamefile") << QString("renamefile") << false;
     QTest::newRow("renamefile -> noreadfile") << QString("renamefile") << QString("noreadfile") << false;
-    QTest::newRow("renamefile -> /etc/renamefile") << QString("renamefile") << QString("/etc/renamefile") << false;
     QTest::newRow("renamefile -> renamedfile") << QString("renamefile") << QString("renamedfile") << true;
     QTest::newRow("renamefile -> ..") << QString("renamefile") << QString("..") << false;
+
+    if (!currentuserisroot) {
+        // root and Chuck Norris don't care for permissions.
+        QTest::newRow("renamefile -> /etc/renamefile") << QString("renamefile") << QString("/etc/renamefile") << false;
+    }
 }
 
 void tst_QFile::rename()
@@ -2515,7 +2522,7 @@ void tst_QFile::map()
 
     file.close();
 
-    if (::getuid() != 0)
+    if (!currentuserisroot)
         // root always has permissions
     {
         // Change permissions on a file, just to confirm it would fail
