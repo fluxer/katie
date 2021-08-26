@@ -340,19 +340,6 @@ bool QFileSystemEngine::copyFile(const QFileSystemEntry &source, const QFileSyst
         // sendfile64() may use internal types (different from off_t), do not use it
         sendresult = ::sendfile(targetfd, sourcefd, &tocopy, tocopy);
     }
-#elif defined(Q_OS_FREEBSD) || defined(Q_OS_DRAGONFLY)
-// DragonFly BSD does not have SF_SYNC defined
-#ifndef SF_SYNC
-#  define SF_SYNC 0
-#endif
-    QT_OFF_T totalwrite = 0;
-    int sendresult = ::sendfile(sourcefd, targetfd, QT_OFF_T(0), size_t(0), nullptr, &totalwrite, SF_SYNC);
-    if (QT_OFF_T(sendresult) != totalwrite) {
-        *error = errno;
-        qt_safe_close(sourcefd);
-        qt_safe_close(targetfd);
-        return false;
-    }
 #else
     qint64 totalwrite = 0;
     QSTACKARRAY(char, copybuffer, QT_BUFFSIZE);
