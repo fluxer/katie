@@ -58,20 +58,6 @@ static JSValue QT_FASTCALL stringProtoFuncToLowerCase(ExecState*, JSObject*, JSV
 static JSValue QT_FASTCALL stringProtoFuncToUpperCase(ExecState*, JSObject*, JSValue, const ArgList&);
 static JSValue QT_FASTCALL stringProtoFuncLocaleCompare(ExecState*, JSObject*, JSValue, const ArgList&);
 
-static JSValue QT_FASTCALL stringProtoFuncBig(ExecState*, JSObject*, JSValue, const ArgList&);
-static JSValue QT_FASTCALL stringProtoFuncSmall(ExecState*, JSObject*, JSValue, const ArgList&);
-static JSValue QT_FASTCALL stringProtoFuncBlink(ExecState*, JSObject*, JSValue, const ArgList&);
-static JSValue QT_FASTCALL stringProtoFuncBold(ExecState*, JSObject*, JSValue, const ArgList&);
-static JSValue QT_FASTCALL stringProtoFuncFixed(ExecState*, JSObject*, JSValue, const ArgList&);
-static JSValue QT_FASTCALL stringProtoFuncItalics(ExecState*, JSObject*, JSValue, const ArgList&);
-static JSValue QT_FASTCALL stringProtoFuncStrike(ExecState*, JSObject*, JSValue, const ArgList&);
-static JSValue QT_FASTCALL stringProtoFuncSub(ExecState*, JSObject*, JSValue, const ArgList&);
-static JSValue QT_FASTCALL stringProtoFuncSup(ExecState*, JSObject*, JSValue, const ArgList&);
-static JSValue QT_FASTCALL stringProtoFuncFontcolor(ExecState*, JSObject*, JSValue, const ArgList&);
-static JSValue QT_FASTCALL stringProtoFuncFontsize(ExecState*, JSObject*, JSValue, const ArgList&);
-static JSValue QT_FASTCALL stringProtoFuncAnchor(ExecState*, JSObject*, JSValue, const ArgList&);
-static JSValue QT_FASTCALL stringProtoFuncLink(ExecState*, JSObject*, JSValue, const ArgList&);
-
 static JSValue QT_FASTCALL stringProtoFuncTrim(ExecState*, JSObject*, JSValue, const ArgList&);
 static JSValue QT_FASTCALL stringProtoFuncTrimLeft(ExecState*, JSObject*, JSValue, const ArgList&);
 static JSValue QT_FASTCALL stringProtoFuncTrimRight(ExecState*, JSObject*, JSValue, const ArgList&);
@@ -108,19 +94,6 @@ const ClassInfo StringPrototype::info = { "String", &StringObject::info, ExecSta
     toLocaleLowerCase     stringProtoFuncToLowerCase       DontEnum|Function       0
     toLocaleUpperCase     stringProtoFuncToUpperCase       DontEnum|Function       0
 
-    big                   stringProtoFuncBig               DontEnum|Function       0
-    small                 stringProtoFuncSmall             DontEnum|Function       0
-    blink                 stringProtoFuncBlink             DontEnum|Function       0
-    bold                  stringProtoFuncBold              DontEnum|Function       0
-    fixed                 stringProtoFuncFixed             DontEnum|Function       0
-    italics               stringProtoFuncItalics           DontEnum|Function       0
-    strike                stringProtoFuncStrike            DontEnum|Function       0
-    sub                   stringProtoFuncSub               DontEnum|Function       0
-    sup                   stringProtoFuncSup               DontEnum|Function       0
-    fontcolor             stringProtoFuncFontcolor         DontEnum|Function       1
-    fontsize              stringProtoFuncFontsize          DontEnum|Function       1
-    anchor                stringProtoFuncAnchor            DontEnum|Function       1
-    link                  stringProtoFuncLink              DontEnum|Function       1
     trim                  stringProtoFuncTrim              DontEnum|Function       0
     trimLeft              stringProtoFuncTrimLeft          DontEnum|Function       0
     trimRight             stringProtoFuncTrimRight         DontEnum|Function       0
@@ -729,149 +702,6 @@ JSValue QT_FASTCALL stringProtoFuncLocaleCompare(ExecState* exec, JSObject*, JSV
     UString s = thisValue.toThisString(exec);
     JSValue a0 = args.at(0);
     return jsNumber(exec, localeCompare(s, a0.toString(exec)));
-}
-
-JSValue QT_FASTCALL stringProtoFuncBig(ExecState* exec, JSObject*, JSValue thisValue, const ArgList&)
-{
-    UString s = thisValue.toThisString(exec);
-    return jsNontrivialString(exec, makeString("<big>", s, "</big>"));
-}
-
-JSValue QT_FASTCALL stringProtoFuncSmall(ExecState* exec, JSObject*, JSValue thisValue, const ArgList&)
-{
-    UString s = thisValue.toThisString(exec);
-    return jsNontrivialString(exec, makeString("<small>", s, "</small>"));
-}
-
-JSValue QT_FASTCALL stringProtoFuncBlink(ExecState* exec, JSObject*, JSValue thisValue, const ArgList&)
-{
-    UString s = thisValue.toThisString(exec);
-    return jsNontrivialString(exec, makeString("<blink>", s, "</blink>"));
-}
-
-JSValue QT_FASTCALL stringProtoFuncBold(ExecState* exec, JSObject*, JSValue thisValue, const ArgList&)
-{
-    UString s = thisValue.toThisString(exec);
-    return jsNontrivialString(exec, makeString("<b>", s, "</b>"));
-}
-
-JSValue QT_FASTCALL stringProtoFuncFixed(ExecState* exec, JSObject*, JSValue thisValue, const ArgList&)
-{
-    UString s = thisValue.toThisString(exec);
-    return jsString(exec, makeString("<tt>", s, "</tt>"));
-}
-
-JSValue QT_FASTCALL stringProtoFuncItalics(ExecState* exec, JSObject*, JSValue thisValue, const ArgList&)
-{
-    UString s = thisValue.toThisString(exec);
-    return jsNontrivialString(exec, makeString("<i>", s, "</i>"));
-}
-
-JSValue QT_FASTCALL stringProtoFuncStrike(ExecState* exec, JSObject*, JSValue thisValue, const ArgList&)
-{
-    UString s = thisValue.toThisString(exec);
-    return jsNontrivialString(exec, makeString("<strike>", s, "</strike>"));
-}
-
-JSValue QT_FASTCALL stringProtoFuncSub(ExecState* exec, JSObject*, JSValue thisValue, const ArgList&)
-{
-    UString s = thisValue.toThisString(exec);
-    return jsNontrivialString(exec, makeString("<sub>", s, "</sub>"));
-}
-
-JSValue QT_FASTCALL stringProtoFuncSup(ExecState* exec, JSObject*, JSValue thisValue, const ArgList&)
-{
-    UString s = thisValue.toThisString(exec);
-    return jsNontrivialString(exec, makeString("<sup>", s, "</sup>"));
-}
-
-JSValue QT_FASTCALL stringProtoFuncFontcolor(ExecState* exec, JSObject*, JSValue thisValue, const ArgList& args)
-{
-    UString s = thisValue.toThisString(exec);
-    JSValue a0 = args.at(0);
-    return jsNontrivialString(exec, makeString("<font color=\"", a0.toString(exec), "\">", s, "</font>"));
-}
-
-JSValue QT_FASTCALL stringProtoFuncFontsize(ExecState* exec, JSObject*, JSValue thisValue, const ArgList& args)
-{
-    UString s = thisValue.toThisString(exec);
-    JSValue a0 = args.at(0);
-
-    uint32_t smallInteger;
-    if (a0.getUInt32(smallInteger) && smallInteger <= 9) {
-        unsigned stringSize = s.size();
-        unsigned bufferSize = 22 + stringSize;
-        UChar* buffer;
-        PassRefPtr<UStringImpl> impl = UStringImpl::tryCreateUninitialized(bufferSize, buffer);
-        if (!impl)
-            return jsUndefined();
-        buffer[0] = '<';
-        buffer[1] = 'f';
-        buffer[2] = 'o';
-        buffer[3] = 'n';
-        buffer[4] = 't';
-        buffer[5] = ' ';
-        buffer[6] = 's';
-        buffer[7] = 'i';
-        buffer[8] = 'z';
-        buffer[9] = 'e';
-        buffer[10] = '=';
-        buffer[11] = '"';
-        buffer[12] = '0' + smallInteger;
-        buffer[13] = '"';
-        buffer[14] = '>';
-        memcpy(&buffer[15], s.data(), stringSize * sizeof(UChar));
-        buffer[15 + stringSize] = '<';
-        buffer[16 + stringSize] = '/';
-        buffer[17 + stringSize] = 'f';
-        buffer[18 + stringSize] = 'o';
-        buffer[19 + stringSize] = 'n';
-        buffer[20 + stringSize] = 't';
-        buffer[21 + stringSize] = '>';
-        return jsNontrivialString(exec, impl);
-    }
-
-    return jsNontrivialString(exec, makeString("<font size=\"", a0.toString(exec), "\">", s, "</font>"));
-}
-
-JSValue QT_FASTCALL stringProtoFuncAnchor(ExecState* exec, JSObject*, JSValue thisValue, const ArgList& args)
-{
-    UString s = thisValue.toThisString(exec);
-    JSValue a0 = args.at(0);
-    return jsNontrivialString(exec, makeString("<a name=\"", a0.toString(exec), "\">", s, "</a>"));
-}
-
-JSValue QT_FASTCALL stringProtoFuncLink(ExecState* exec, JSObject*, JSValue thisValue, const ArgList& args)
-{
-    UString s = thisValue.toThisString(exec);
-    JSValue a0 = args.at(0);
-    UString linkText = a0.toString(exec);
-
-    unsigned linkTextSize = linkText.size();
-    unsigned stringSize = s.size();
-    unsigned bufferSize = 15 + linkTextSize + stringSize;
-    UChar* buffer;
-    PassRefPtr<UStringImpl> impl = UStringImpl::tryCreateUninitialized(bufferSize, buffer);
-    if (!impl)
-        return jsUndefined();
-    buffer[0] = '<';
-    buffer[1] = 'a';
-    buffer[2] = ' ';
-    buffer[3] = 'h';
-    buffer[4] = 'r';
-    buffer[5] = 'e';
-    buffer[6] = 'f';
-    buffer[7] = '=';
-    buffer[8] = '"';
-    memcpy(&buffer[9], linkText.data(), linkTextSize * sizeof(UChar));
-    buffer[9 + linkTextSize] = '"';
-    buffer[10 + linkTextSize] = '>';
-    memcpy(&buffer[11 + linkTextSize], s.data(), stringSize * sizeof(UChar));
-    buffer[11 + linkTextSize + stringSize] = '<';
-    buffer[12 + linkTextSize + stringSize] = '/';
-    buffer[13 + linkTextSize + stringSize] = 'a';
-    buffer[14 + linkTextSize + stringSize] = '>';
-    return jsNontrivialString(exec, impl);
 }
 
 enum {
