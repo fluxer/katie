@@ -186,7 +186,7 @@ static int translateKeySym(const uint key)
     return key;
 }
 
-static bool getX11AutoRepeat() {
+static int getX11AutoRepeat() {
     XKeyboardState state;
     XGetKeyboardControl(qt_x11Data->display, &state);
     if (state.global_auto_repeat == AutoRepeatModeOn) {
@@ -238,7 +238,7 @@ bool QKeyMapper::translateKeyEvent(QWidget *keyWidget, const XEvent *event)
         if (curr_autorep.serial == event->xkey.serial ||
             (event->xkey.window == curr_autorep.window &&
             event->xkey.keycode == curr_autorep.keycode &&
-            event->xkey.time - curr_autorep.time < qt_x11_autorepeat)) {
+            event->xkey.time - curr_autorep.time < qulonglong(qt_x11_autorepeat))) {
             autorepeat = true;
         }
         curr_autorep = {

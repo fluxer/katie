@@ -109,7 +109,8 @@ static void iod_read_fn(png_structp png_ptr, png_bytep data, png_size_t length)
     QPngHandlerPrivate *d = (QPngHandlerPrivate *)png_get_io_ptr(png_ptr);
     QIODevice *in = d->q->device();
 
-    int nr = in->read((char*)data, length);
+    Q_ASSERT(sizeof(uint) == sizeof(png_size_t)); // may overflow otherwise
+    uint nr = in->read((char*)data, length);
     if (nr != length) {
         png_error(png_ptr, "Read Error");
     }

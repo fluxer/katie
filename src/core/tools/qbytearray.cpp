@@ -2508,7 +2508,8 @@ QDataStream &operator>>(QDataStream &in, QByteArray &ba)
         return in;
 
     ba.resize(len);
-    if (in.readRawData(ba.data(), len) != len) {
+    const quint32 readlen = in.readRawData(ba.data(), len);
+    if (readlen != len) {
         ba.clear();
         in.setStatus(QDataStream::ReadPastEnd);
         return in;

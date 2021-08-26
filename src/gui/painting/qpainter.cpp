@@ -173,7 +173,7 @@ bool QPainterPrivate::attachPainterPrivate(QPainter *q, QPaintDevice *pdev)
         sp->d_ptr->d_ptrs_size = 4;
         sp->d_ptr->d_ptrs = (QPainterPrivate **)::malloc(4 * sizeof(QPainterPrivate *));
         Q_CHECK_PTR(sp->d_ptr->d_ptrs);
-    } else if (sp->d_ptr->refcount - 1 == sp->d_ptr->d_ptrs_size) {
+    } else if (sp->d_ptr->refcount - 1 == uint(sp->d_ptr->d_ptrs_size)) {
         // However, to support corner cases we grow the array dynamically if needed.
         sp->d_ptr->d_ptrs_size <<= 1;
         const int newSize = sp->d_ptr->d_ptrs_size * sizeof(QPainterPrivate *);

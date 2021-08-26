@@ -1186,16 +1186,15 @@ void QClipboard::setMimeData(QMimeData* src, Mode mode)
     Atom atom, sentinel_atom;
     QClipboardData *d;
     switch (mode) {
-    case QClipboard::Selection:
-        atom = XA_PRIMARY;
-        sentinel_atom = ATOM(_QT_SELECTION_SENTINEL);
-        d = selectionData();
-        break;
-
     case QClipboard::Clipboard:
         atom = ATOM(CLIPBOARD);
         sentinel_atom = ATOM(_QT_CLIPBOARD_SENTINEL);
         d = clipboardData();
+        break;
+    case QClipboard::Selection:
+        atom = XA_PRIMARY;
+        sentinel_atom = ATOM(_QT_SELECTION_SENTINEL);
+        d = selectionData();
         break;
     }
 

@@ -1830,7 +1830,7 @@ QString WriteInitialization::pixCall(const QString &t, const QString &text) cons
         type += QLatin1String("()");
         return type;
     }
-    if (const DomImage *image = findImage(text)) {
+    if (hasImage(text)) {
         QString rc = WriteIconInitialization::iconFromDataFunction();
         rc += QLatin1Char('(');
         rc += text;
@@ -2335,21 +2335,9 @@ void WriteInitialization::acceptConnection(DomConnection *connection)
         << ");\n";
 }
 
-DomImage *WriteInitialization::findImage(const QString &name) const
+bool WriteInitialization::hasImage(const QString &name) const
 {
-    return m_registeredImages.value(name);
-}
-
-DomWidget *WriteInitialization::findWidget(const QLatin1String &widgetClass)
-{
-    for (int i = m_widgetChain.count() - 1; i >= 0; --i) {
-        DomWidget *widget = m_widgetChain.at(i);
-
-        if (widget && m_uic->customWidgetsInfo()->extends(widget->attributeClass(), widgetClass))
-            return widget;
-    }
-
-    return 0;
+    return m_registeredImages.contains(name);
 }
 
 void WriteInitialization::acceptImage(DomImage *image)

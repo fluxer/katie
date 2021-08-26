@@ -6693,7 +6693,8 @@ QDataStream &operator>>(QDataStream &in, QString &str)
 
         int len = (bytes / sizeof(QChar));
         str.resize(len);
-        if (in.readRawData(reinterpret_cast<char *>(str.data()), bytes) != bytes) {
+        const quint32 readlen = in.readRawData(reinterpret_cast<char *>(str.data()), bytes);
+        if (readlen != bytes) {
             str.clear();
             in.setStatus(QDataStream::ReadPastEnd);
             return in;
