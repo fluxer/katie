@@ -149,12 +149,11 @@ int QNativeSocketEnginePrivate::option(QNativeSocketEngine::SocketOption opt) co
     case QNativeSocketEngine::NonBlockingSocketOption:
         break;
     case QNativeSocketEngine::BroadcastSocketOption:
+        n = SO_BROADCAST;
         break;
     case QNativeSocketEngine::AddressReusable:
         n = SO_REUSEADDR;
         break;
-    case QNativeSocketEngine::BindExclusively:
-        return true;
     case QNativeSocketEngine::ReceiveOutOfBandData:
         n = SO_OOBINLINE;
         break;
@@ -252,8 +251,6 @@ bool QNativeSocketEnginePrivate::setOption(QNativeSocketEngine::SocketOption opt
         n = SO_REUSEADDR;
 #endif
         break;
-    case QNativeSocketEngine::BindExclusively:
-        return true;
     case QNativeSocketEngine::ReceiveOutOfBandData:
         n = SO_OOBINLINE;
         break;
