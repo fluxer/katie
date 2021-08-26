@@ -53,7 +53,7 @@ QT_BEGIN_NAMESPACE
 // so we will use 512
 static const int errorBufferMax = 512;
 
-static int qt_qprocess_deadChild_pipe[2];
+static int qt_qprocess_deadChild_pipe[2] = { -1, -1 };
 static struct sigaction qt_sa_old_sigchld_handler;
 static void qt_sa_sigchld_sigaction(int signum, siginfo_t *info, void *context)
 {
