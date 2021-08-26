@@ -110,8 +110,7 @@ void QNetworkReplyImplPrivate::_q_copyReadyRead()
             break;
 
         bytesToRead = qBound<qint64>(1, bytesToRead, copyDevice->bytesAvailable());
-        QByteArray byteData;
-        byteData.resize(bytesToRead);
+        QByteArray byteData(bytesToRead, Qt::Uninitialized);
         qint64 bytesActuallyRead = copyDevice->read(byteData.data(), byteData.size());
         if (bytesActuallyRead == -1) {
             byteData.clear();

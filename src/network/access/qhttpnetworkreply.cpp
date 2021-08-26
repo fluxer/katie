@@ -742,8 +742,7 @@ qint64 QHttpNetworkReplyPrivate::readReplyBodyRaw(QAbstractSocket *socket, QByte
         toBeRead = qMin<qint64>(toBeRead, readBufferMaxSize);
 
     while (toBeRead > 0) {
-        QByteArray byteData;
-        byteData.resize(toBeRead);
+        QByteArray byteData(toBeRead, Qt::Uninitialized);
         qint64 haveRead = socket->read(byteData.data(), byteData.size());
         if (haveRead <= 0) {
             // ### error checking here

@@ -2645,8 +2645,7 @@ void QHttpPrivate::postMoreData()
     // if it is really an ssl socket, check more than just bytesToWrite()
     if ((socket->bytesToWrite() + (sslSocket ? sslSocket->encryptedBytesToWrite() : 0)) == 0) {
         int max = qMin<qint64>(4096, postDevice->size() - postDevice->pos());
-        QByteArray arr;
-        arr.resize(max);
+        QByteArray arr(max, Qt::Uninitialized);
 
         int n = postDevice->read(arr.data(), max);
         if (n < 0) {
