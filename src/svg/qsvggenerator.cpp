@@ -889,7 +889,7 @@ void QSvgPaintEngine::drawImage(const QRectF &r, const QImage &image,
 
     QByteArray data;
     QBuffer buffer(&data);
-    buffer.open(QBuffer::ReadWrite);
+    buffer.open(QBuffer::WriteOnly);
     image.save(&buffer, "PNG");
     buffer.close();
     stream() << "xlink:href=\"data:image/png;base64,"
