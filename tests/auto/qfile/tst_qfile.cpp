@@ -1154,6 +1154,11 @@ void tst_QFile::copyRemovesTemporaryFile() const
 
 void tst_QFile::copyShouldntOverwrite()
 {
+    if (currentuserisroot) {
+        // root and Chuck Norris don't care for file permissions. Skip.
+        QSKIP("Running this test as root doesn't make sense", SkipAll);
+    }
+
     // Copy should not overwrite existing files.
     QFile::remove("tst_qfile.cpy");
     QFile file(SRCDIR "tst_qfile.cpp");
