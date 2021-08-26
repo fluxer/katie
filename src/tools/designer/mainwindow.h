@@ -121,7 +121,6 @@ private slots:
     void updateToolBarMenu();
 
 private:
-    QMainWindow *m_configureableMainWindow;
     QWidget *m_parent;
     QMenu *m_toolBarMenu;
     QtToolBarManager *m_manager;

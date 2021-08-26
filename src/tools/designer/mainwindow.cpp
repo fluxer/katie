@@ -196,7 +196,6 @@ ToolBarManager::ToolBarManager(QMainWindow *configureableMainWindow,
                                          const QList<QToolBar *> &toolbars,
                                          const QList<QDesignerToolWindow*> &toolWindows) :
     QObject(parent),
-    m_configureableMainWindow(configureableMainWindow),
     m_parent(parent),
     m_toolBarMenu(toolBarMenu),
     m_manager(new QtToolBarManager(this)),
