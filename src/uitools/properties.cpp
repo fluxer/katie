@@ -637,7 +637,8 @@ DomProperty *variantToDomProperty(QAbstractFormBuilder *afb, const QMetaObject *
         dom->setElementDisabled(afb->saveColorGroup(palette));
 
         dom_prop->setElementPalette(dom);
-    } break;
+        break;
+    }
     case QVariant::Brush:
         dom_prop->setElementBrush(afb->saveBrush(qvariant_cast<QBrush>(v)));
         break;
@@ -655,7 +656,8 @@ DomProperty *variantToDomProperty(QAbstractFormBuilder *afb, const QMetaObject *
             break;
         }
         uiLibWarning(msgCannotWriteProperty(pname, v));
-    } return 0;
+        return nullptr;
+    }
     }
     return dom_prop;
 }
