@@ -1371,8 +1371,7 @@ void tst_QVariant::writeToReadFromDataStream_data()
     QTest::addColumn<QVariant>("writeVariant");
     QTest::addColumn<bool>("isNull");
     {
-        typedef QList<QVariant> variantsList;
-        variantsList valuelist;
+        QVariantList valuelist;
         valuelist << QVariant( 1 ) << QVariant( QString("Two") ) << QVariant( 3.45 );
         QVariant var(valuelist);
         QTest::newRow( "list_valid" ) << var << false;
@@ -1422,8 +1421,7 @@ void tst_QVariant::writeToReadFromDataStream_data()
     QTest::newRow( "image_valid" ) << qVariantFromValue( image ) << false;
     QTest::newRow( "keysequence_valid" ) << qVariantFromValue( QKeySequence( Qt::CTRL + Qt::Key_A ) ) << false;
     QTest::newRow( "int_valid" ) << QVariant( -123 ) << false;
-    typedef QList<QVariant> variantsList;
-//     variantsList valuelist;
+//     QVariantList valuelist;
 //     valuelist << QVariant( 1 ) << QVariant( QString("Two") ) << QVariant( 3.45 );
 //     QTest::newRow( "list_valid" ) << QVariant( valuelist ) << false;
     typedef QMap<QString, QVariant> variantsMap;
