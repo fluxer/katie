@@ -172,7 +172,7 @@ int qRegisterMetaType(const char *typeName, T * dummy = nullptr)
 
 #ifndef QT_NO_DATASTREAM
 template <typename T>
-void qRegisterMetaTypeStreamOperators(const char *typeName, T * /* dummy */ = nullptr)
+void qRegisterMetaTypeStreamOperators(const char *typeName)
 {
     typedef void(*SavePtr)(QDataStream &, const T *);
     typedef void(*LoadPtr)(QDataStream &, T *);
@@ -192,7 +192,7 @@ inline int qMetaTypeId()
 }
 
 template <typename T>
-inline int qRegisterMetaType(T * dummy = nullptr)
+inline int qRegisterMetaType()
 {
     return qMetaTypeId<T>();
 }
