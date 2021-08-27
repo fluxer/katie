@@ -109,8 +109,7 @@ static void iod_read_fn(png_structp png_ptr, png_bytep data, png_size_t length)
     QPngHandlerPrivate *d = (QPngHandlerPrivate *)png_get_io_ptr(png_ptr);
     QIODevice *in = d->q->device();
 
-    Q_ASSERT(sizeof(uint) == sizeof(png_size_t)); // may overflow otherwise
-    uint nr = in->read((char*)data, length);
+    png_size_t nr = in->read((char*)data, length);
     if (nr != length) {
         png_error(png_ptr, "Read Error");
     }
@@ -122,7 +121,7 @@ static void qpiw_write_fn(png_structp png_ptr, png_bytep data, png_size_t length
     QPNGImageWriter* qpiw = (QPNGImageWriter*)png_get_io_ptr(png_ptr);
     QIODevice* out = qpiw->device();
 
-    uint nr = out->write((char*)data, length);
+    png_size_t nr = out->write((char*)data, length);
     if (nr != length) {
         png_error(png_ptr, "Write Error");
     }
