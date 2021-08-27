@@ -53,9 +53,11 @@
 
 QT_BEGIN_NAMESPACE
 
-QSystemSemaphorePrivate::QSystemSemaphorePrivate() :
+QSystemSemaphorePrivate::QSystemSemaphorePrivate()
+    : initialValue(0),
     semaphore(QT_SEM_FAILED),
-    createdSemaphore(false), error(QSystemSemaphore::NoError)
+    createdSemaphore(false),
+    error(QSystemSemaphore::NoError)
 {
 }
 
