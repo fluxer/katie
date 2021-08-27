@@ -1458,24 +1458,24 @@ void tst_QVariant::writeToReadFromDataStream_data()
     QTest::newRow( "regexp_empty" ) << QVariant(QRegExp()) << false;
 
     // types known to QMetaType, but not part of QVariant::Type
-    QTest::newRow("QMetaType::Long invalid") << QVariant(QMetaType::Int, (void *) 0) << false;
+    QTest::newRow("QMetaType::Long invalid") << QVariant(QMetaType::Long, (void *) 0) << false;
     long longInt = -1l;
-    QTest::newRow("QMetaType::Long") << QVariant(QMetaType::Int, &longInt) << false;
-    QTest::newRow("QMetaType::Short invalid") << QVariant(QMetaType::Int, (void *) 0) << false;
+    QTest::newRow("QMetaType::Long") << QVariant(QMetaType::Long, &longInt) << false;
+    QTest::newRow("QMetaType::Short invalid") << QVariant(QMetaType::Short, (void *) 0) << false;
     short shortInt = 1;
-    QTest::newRow("QMetaType::Short") << QVariant(QMetaType::Int, &shortInt) << false;
-    QTest::newRow("QMetaType::Char invalid") << QVariant(QMetaType::Int, (void *) 0) << false;
+    QTest::newRow("QMetaType::Short") << QVariant(QMetaType::Short, &shortInt) << false;
+    QTest::newRow("QMetaType::Char invalid") << QVariant(QMetaType::Char, (void *) 0) << false;
     char ch = 'c';
-    QTest::newRow("QMetaType::Char") << QVariant(QMetaType::Int, &ch) << false;
-    QTest::newRow("QMetaType::ULong invalid") << QVariant(QMetaType::UInt, (void *) 0) << false;
+    QTest::newRow("QMetaType::Char") << QVariant(QMetaType::Char, &ch) << false;
+    QTest::newRow("QMetaType::ULong invalid") << QVariant(QMetaType::ULong, (void *) 0) << false;
     ulong ulongInt = 1ul;
-    QTest::newRow("QMetaType::ULong") << QVariant(QMetaType::UInt, &ulongInt) << false;
-    QTest::newRow("QMetaType::UShort invalid") << QVariant(QMetaType::UInt, (void *) 0) << false;
+    QTest::newRow("QMetaType::ULong") << QVariant(QMetaType::ULong, &ulongInt) << false;
+    QTest::newRow("QMetaType::UShort invalid") << QVariant(QMetaType::UShort, (void *) 0) << false;
     ushort ushortInt = 1u;
-    QTest::newRow("QMetaType::UShort") << QVariant(QMetaType::UInt, &ushortInt) << false;
-    QTest::newRow("QMetaType::UChar invalid") << QVariant(QMetaType::UInt, (void *) 0) << false;
+    QTest::newRow("QMetaType::UShort") << QVariant(QMetaType::UShort, &ushortInt) << false;
+    QTest::newRow("QMetaType::UChar invalid") << QVariant(QMetaType::UChar, (void *) 0) << false;
     uchar uch = 0xf0;
-    QTest::newRow("QMetaType::UChar") << QVariant(QMetaType::UInt, &uch) << false;
+    QTest::newRow("QMetaType::UChar") << QVariant(QMetaType::UChar, &uch) << false;
     QTest::newRow("QMetaType::Float invalid") << QVariant(QMetaType::Float, (void *) 0) << false;
     float f = 1.234f;
     QTest::newRow("QMetaType::Float") << QVariant(QMetaType::Float, &f) << false;
