@@ -26,7 +26,6 @@
 #include "qcorecommon_p.h"
 
 #ifdef Q_WS_X11
-#include "qfontengine_x11_p.h"
 #include "qfontengine_ft_p.h"
 #include <ft2build.h>
 #include FT_FREETYPE_H
