@@ -186,8 +186,8 @@ add_feature_info(benchmarks KATIE_BENCHMARKS "build automatic benchmarks")
 option(KATIE_UTILS "Build maintainance utilities" OFF)
 add_feature_info(utils KATIE_UTILS "build maintainance utilities")
 
-# v1.2.0+ required for compressBound()
-find_package(ZLIB 1.2.0)
+# v0.4+ required for inflateInit2() but that is pre-release
+find_package(ZLIB)
 set_package_properties(ZLIB PROPERTIES
     PURPOSE "Required for compression support"
     DESCRIPTION "A Massively Spiffy Yet Delicately Unobtrusive Compression Library"
