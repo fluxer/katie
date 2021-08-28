@@ -23,6 +23,7 @@
 #include "qpaintengine_raster_p.h"
 #include "qpainter_p.h"
 #include "qmath.h"
+#include "qcorecommon_p.h"
 
 QT_BEGIN_NAMESPACE
 
@@ -2653,7 +2654,7 @@ static inline Operator getOperator(const QSpanData *data, const QSpan *spans, in
 static void blend_color_generic(int count, const QSpan *spans, void *userData)
 {
     QSpanData *data = reinterpret_cast<QSpanData *>(userData);
-    uint buffer[buffer_size];
+    QSTACKARRAY(uint, buffer, buffer_size);
     Operator op = getOperator(data, spans, count);
 
     while (count--) {
@@ -2676,8 +2677,8 @@ static void blend_src_generic(int count, const QSpan *spans, void *userData)
 {
     QSpanData *data = reinterpret_cast<QSpanData *>(userData);
 
-    uint buffer[buffer_size];
-    uint src_buffer[buffer_size];
+    QSTACKARRAY(uint, buffer, buffer_size);
+    QSTACKARRAY(uint, src_buffer, buffer_size);
     Operator op = getOperator(data, spans, count);
 
     uint const_alpha = 256;
@@ -2736,8 +2737,8 @@ static void blend_untransformed_generic(int count, const QSpan *spans, void *use
 {
     QSpanData *data = reinterpret_cast<QSpanData *>(userData);
 
-    uint buffer[buffer_size];
-    uint src_buffer[buffer_size];
+    QSTACKARRAY(uint, buffer, buffer_size);
+    QSTACKARRAY(uint, src_buffer, buffer_size);
     Operator op = getOperator(data, spans, count);
 
     const int image_width = data->texture.width;
@@ -2781,8 +2782,8 @@ static void blend_tiled_generic(int count, const QSpan *spans, void *userData)
 {
     QSpanData *data = reinterpret_cast<QSpanData *>(userData);
 
-    uint buffer[buffer_size];
-    uint src_buffer[buffer_size];
+    QSTACKARRAY(uint, buffer, buffer_size);
+    QSTACKARRAY(uint, src_buffer, buffer_size);
     Operator op = getOperator(data, spans, count);
 
     const int image_width = data->texture.width;
