@@ -1272,11 +1272,11 @@ void QX11PaintEngine::updateBrush(const QBrush &brush, const QPointF &origin)
     vals.graphics_exposures = false;
     if (d->pdev_depth == 1) {
         vals.foreground = qGray(d->cbrush.color().rgb()) > 127 ? 0 : 1;
-        vals.background = qGray(QColor(Qt::transparent).rgb()) > 127 ? 0 : 1;
+        vals.background = qGray(qt_transparentrgb) > 127 ? 0 : 1;
     } else if (qt_x11Data->use_xrender && d->pdev->devType() == QInternal::Pixmap
                && d->pdev_depth == 32) {
         vals.foreground = d->cbrush.color().rgba();
-        vals.background = QColor(Qt::transparent).rgba();
+        vals.background = qt_transparentrgba;
     } else {
         QColormap cmap = QColormap::instance(d->scrn);
         vals.foreground = cmap.pixel(d->cbrush.color());

@@ -1026,12 +1026,10 @@ void QX11PixmapData::fromImage(const QImage &img,
 Qt::HANDLE QX11PixmapData::createBitmapFromImage(const QImage &image)
 {
     QImage img = image.convertToFormat(QImage::Format_MonoLSB);
-    const QRgb c0 = QColor(Qt::black).rgb();
-    const QRgb c1 = QColor(Qt::white).rgb();
-    if (img.color(0) == c0 && img.color(1) == c1) {
+    if (img.color(0) == qt_blackrgb && img.color(1) == qt_whitergb) {
         img.invertPixels();
-        img.setColor(0, c1);
-        img.setColor(1, c0);
+        img.setColor(0, qt_whitergb);
+        img.setColor(1, qt_blackrgb);
     }
 
     char  *bits;
