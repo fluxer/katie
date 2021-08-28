@@ -2510,7 +2510,7 @@ static void QT_FASTCALL convert_RGB32_to_RGB16(QImageData *dest, const QImageDat
 
 
 // first index source, second dest
-static Image_Converter converter_map[QImage::NImageFormats][QImage::NImageFormats] =
+static const Image_Converter converter_map[QImage::NImageFormats][QImage::NImageFormats] =
 {
     {
         0, 0, 0, 0, 0, 0, 0, 0
@@ -2609,8 +2609,7 @@ QImage QImage::convertToFormat(Format format, Qt::ImageConversionFlags flags) co
     if (format == Format_Invalid || d->format == Format_Invalid)
         return QImage();
 
-    const Image_Converter *converterPtr = &converter_map[d->format][format];
-    Image_Converter converter = *converterPtr;
+    const Image_Converter converter = converter_map[d->format][format];
     if (converter) {
         QImage image(d->width, d->height, format);
 
@@ -2723,8 +2722,7 @@ QImage QImage::convertToFormat(Format format, const QVector<QRgb> &colorTable, Q
         return convertWithPalette(*this, format, colorTable);
     }
 
-    const Image_Converter *converterPtr = &converter_map[d->format][format];
-    Image_Converter converter = *converterPtr;
+    const Image_Converter converter = converter_map[d->format][format];
     if (!converter)
         return QImage();
 
