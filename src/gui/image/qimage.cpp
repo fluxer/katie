@@ -2975,8 +2975,8 @@ bool QImage::isGrayscale() const
         for (int i = 0; i < colorCount(); i++)
             if (d->colortable.at(i) != qRgb(i,i,i))
                 return false;
-        return true;
         }
+        return true;
     }
     return false;
 }
