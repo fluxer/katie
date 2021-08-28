@@ -36,6 +36,7 @@
 #include "qhash.h"
 #include "qpaintengine_raster_p.h"
 #include "qimage_p.h"
+#include "qvarlengtharray.h"
 #include "qcorecommon_p.h"
 #include "qguicommon_p.h"
 #include "qx11info_x11.h"
@@ -1847,7 +1848,7 @@ static void dither_to_Mono(QImageData *dst, const QImageData *src,
 
     switch (dithermode) {
     case Diffuse: {
-        QScopedArrayPointer<int> lineBuffer(new int[src->width * 2]);
+        QVarLengthArray<int> lineBuffer(src->width * 2);
         int *line1 = lineBuffer.data();
         int *line2 = lineBuffer.data() + src->width;
         int bmwidth = (src->width+7)/8;
@@ -2222,7 +2223,7 @@ static void QT_FASTCALL convert_RGB_to_Indexed8(QImageData *dst, const QImageDat
             int* line1[3];
             int* line2[3];
             int* pv[3];
-            QScopedArrayPointer<int> lineBuffer(new int[src->width * 9]);
+            QVarLengthArray<int> lineBuffer(src->width * 9);
             line1[0] = lineBuffer.data();
             line2[0] = lineBuffer.data() + src->width;
             line1[1] = lineBuffer.data() + src->width * 2;
