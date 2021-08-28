@@ -1534,8 +1534,9 @@ void QImage::fill(const QColor &color)
 
     } else if (d->depth == 8) {
         uint pixel = 0;
+        const QRgb crgba = color.rgba();
         for (int i=0; i<d->colortable.size(); ++i) {
-            if (color.rgba() == d->colortable.at(i)) {
+            if (crgba == d->colortable.at(i)) {
                 pixel = i;
                 break;
             }
