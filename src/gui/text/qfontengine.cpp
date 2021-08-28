@@ -31,6 +31,7 @@
 #include "qharfbuzz_p.h"
 #include "qdrawhelper_p.h"
 #include "qcorecommon_p.h"
+#include "qguicommon_p.h"
 
 QT_BEGIN_NAMESPACE
 
@@ -632,10 +633,7 @@ QImage QFontEngine::alphaMapForGlyph(glyph_t glyph)
     p.end();
 
     QImage indexed(im.width(), im.height(), QImage::Format_Indexed8);
-    QVector<QRgb> colors(256);
-    for (int i=0; i<256; ++i)
-        colors[i] = qRgba(0, 0, 0, i);
-    indexed.setColorTable(colors);
+    indexed.setColorTable(alphaColorTable());
 
     const int bpl = indexed.bytesPerLine();
     uchar *dest = indexed.bits();
@@ -1210,10 +1208,7 @@ QFontEngine::Type QFontEngineBox::type() const
 QImage QFontEngineBox::alphaMapForGlyph(glyph_t)
 {
     QImage image(_size, _size, QImage::Format_Indexed8);
-    QVector<QRgb> colors(256);
-    for (int i=0; i<256; ++i)
-        colors[i] = qRgba(0, 0, 0, i);
-    image.setColorTable(colors);
+    image.setColorTable(alphaColorTable());
     image.fill(0);
 
     // can't use qpainter for index8; so use setPixel to draw our rectangle.
