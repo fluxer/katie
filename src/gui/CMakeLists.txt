@@ -522,6 +522,7 @@ set(GUI_HEADERS
     ${CMAKE_CURRENT_SOURCE_DIR}/text/qstatictext_p.h
     ${CMAKE_CURRENT_SOURCE_DIR}/text/qstatictext.h
     ${CMAKE_CURRENT_SOURCE_DIR}/text/qharfbuzz_p.h
+    ${CMAKE_CURRENT_SOURCE_DIR}/text/qfontengine_ft_p.h
     ${CMAKE_CURRENT_SOURCE_DIR}/text/qfontengine_x11_p.h
     ${CMAKE_CURRENT_SOURCE_DIR}/text/qfontdatabase_x11_p.h
     ${CMAKE_CURRENT_SOURCE_DIR}/text/qunicodetables_p.h
@@ -825,6 +826,7 @@ set(GUI_SOURCES
     ${CMAKE_CURRENT_SOURCE_DIR}/styles/qstyle.qrc
     ${CMAKE_CURRENT_SOURCE_DIR}/text/qfont.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/text/qfontengine.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/text/qfontengine_ft.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/text/qfontsubset.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/text/qfontmetrics.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/text/qfontdatabase.cpp
@@ -955,15 +957,6 @@ if(WITH_CUPS AND CUPS_FOUND)
 endif()
 
 if(WITH_FONTCONFIG AND FONTCONFIG_FOUND)
-    set(GUI_HEADERS
-        ${GUI_HEADERS}
-        ${CMAKE_CURRENT_SOURCE_DIR}/text/qfontengine_ft_p.h
-    )
-    set(GUI_SOURCES
-        ${GUI_SOURCES}
-        ${CMAKE_CURRENT_SOURCE_DIR}/text/qfontengine_ft.cpp
-    )
-
     set(EXTRA_GUI_LIBS
         ${EXTRA_GUI_LIBS}
         ${FONTCONFIG_LIBRARIES}

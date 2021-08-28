@@ -773,6 +773,7 @@ static void initializeFontDb()
 // font loader
 // --------------------------------------------------------------------------------------
 
+#ifndef QT_NO_FONTCONFIG
 static const char *styleHint(const QFontDef &request)
 {
     const char *stylehint = 0;
@@ -794,7 +795,6 @@ static const char *styleHint(const QFontDef &request)
     return stylehint;
 }
 
-#ifndef QT_NO_FONTCONFIG
 static void qt_addPatternProps(FcPattern *pattern, int screen, QUnicodeTables::Script script, const QFontDef &request)
 {
     double size_value = qMax(qreal(1.), request.pixelSize);
@@ -1136,8 +1136,8 @@ void QFontDatabase::load(const QFontPrivate *d, int script)
 #ifndef QT_NO_FONTCONFIG
         if (qt_x11Data->has_fontconfig) {
             fe = loadFc(d, static_cast<QUnicodeTables::Script>(script), req);
-#endif
         }
+#endif
         if (!fe) {
             fe = new QFontEngineBox(req.pixelSize);
             fe->fontDef = QFontDef();
