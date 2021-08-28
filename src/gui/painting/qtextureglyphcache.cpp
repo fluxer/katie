@@ -324,7 +324,7 @@ void QImageTextureGlyphCache::createTextureData(int width, int height)
     case QFontEngineGlyphCache::Raster_A8: {
         m_image = QImage(width, height, QImage::Format_Indexed8);
         m_image.fill(0);
-        m_image.setColorTable(A8ColorTable());
+        m_image.setColorTable(grayColorTable());
         break;
     }
     case QFontEngineGlyphCache::Raster_RGBMask:
