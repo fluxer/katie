@@ -1081,18 +1081,6 @@ QByteArray QFontEngine::convertToPostscriptFontFamilyName(const QByteArray &fami
     return f;
 }
 
-Q_GLOBAL_STATIC_WITH_INITIALIZER(QVector<QRgb>, qt_grayPalette, {
-    x->resize(256);
-    QRgb *it = x->data();
-    for (int i = 0; i < x->size(); ++i, ++it)
-        *it = 0xff000000 | i | (i<<8) | (i<<16);
-})
-
-const QVector<QRgb> &QFontEngine::grayPalette()
-{
-    return *qt_grayPalette();
-}
-
 QFixed QFontEngine::lastRightBearing(const QGlyphLayout &glyphs, bool round)
 {
     if (glyphs.numGlyphs >= 1) {
