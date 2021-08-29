@@ -2126,8 +2126,7 @@ QString Qt::escape(const QString& plain)
 QString Qt::convertFromPlainText(const QString &plain, Qt::WhiteSpaceMode mode)
 {
     int col = 0;
-    QString rich;
-    rich += QLatin1String("<p>");
+    QString rich(QLatin1String("<p>"));
     for (int i = 0; i < plain.length(); ++i) {
         if (plain[i] == QLatin1Char('\n')){
             int c = 1;
