@@ -86,7 +86,6 @@ public:
 
     qint64 scriptId;
     int lineNumber;
-    int columnNumber;
     QString fileName;
 
     QString functionName;
@@ -110,7 +109,6 @@ QScriptContextInfoPrivate::QScriptContextInfoPrivate()
     functionEndLineNumber = -1;
     scriptId = -1;
     lineNumber = -1;
-    columnNumber = -1;
 }
 
 /*!
@@ -125,7 +123,6 @@ QScriptContextInfoPrivate::QScriptContextInfoPrivate(const QScriptContext *conte
     functionEndLineNumber = -1;
     scriptId = -1;
     lineNumber = -1;
-    columnNumber = -1;
 
     JSC::CallFrame *frame = const_cast<JSC::CallFrame *>(QScriptEnginePrivate::frameForContext(context));
 
@@ -291,7 +288,7 @@ QString QScriptContextInfo::fileName() const
   The line number is only available if Qt Script code is being
   executed.
 
-  \sa columnNumber(), fileName()
+  \sa fileName()
 */
 int QScriptContextInfo::lineNumber() const
 {
@@ -299,17 +296,6 @@ int QScriptContextInfo::lineNumber() const
     if (!d)
         return -1;
     return d->lineNumber;
-}
-
-/*!
-  \obsolete
-*/
-int QScriptContextInfo::columnNumber() const
-{
-    Q_D(const QScriptContextInfo);
-    if (!d)
-        return -1;
-    return d->columnNumber;
 }
 
 /*!
@@ -437,7 +423,6 @@ bool QScriptContextInfo::operator==(const QScriptContextInfo &other) const
         return false;
     return ((d->scriptId == od->scriptId)
             && (d->lineNumber == od->lineNumber)
-            && (d->columnNumber == od->columnNumber)
             && (d->fileName == od->fileName)
             && (d->functionName == od->functionName)
             && (d->functionType == od->functionType)
@@ -468,7 +453,6 @@ QDataStream &operator<<(QDataStream &out, const QScriptContextInfo &info)
 {
     out << info.scriptId();
     out << (qint32)info.lineNumber();
-    out << (qint32)info.columnNumber();
 
     out << (quint32)info.functionType();
     out << (qint32)info.functionStartLineNumber();
@@ -501,10 +485,6 @@ Q_SCRIPT_EXPORT QDataStream &operator>>(QDataStream &in, QScriptContextInfo &inf
     qint32 line;
     in >> line;
     info.d_ptr->lineNumber = line;
-
-    qint32 column;
-    in >> column;
-    info.d_ptr->columnNumber = column;
 
     quint32 ftype;
     in >> ftype;
