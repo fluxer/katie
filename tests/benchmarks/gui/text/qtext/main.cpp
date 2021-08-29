@@ -49,10 +49,6 @@ private slots:
     void shaping_data();
     void shaping();
 
-    void odfWriting_empty();
-    void odfWriting_text();
-    void odfWriting_images();
-
     void constructControl();
     void constructDocument();
 
@@ -143,64 +139,6 @@ void tst_QText::shaping()
         lay.createLine();
         lay.endLayout();
     }
-}
-
-void tst_QText::odfWriting_empty()
-{
-    QVERIFY(QTextDocumentWriter::supportedDocumentFormats().contains("ODF")); // odf compiled in
-    QTextDocument *doc = new QTextDocument();
-    // write it
-    QBENCHMARK {
-        QBuffer buffer;
-        buffer.open(QIODevice::WriteOnly);
-        QTextDocumentWriter writer(&buffer, "ODF");
-        writer.write(doc);
-    }
-    delete doc;
-}
-
-void tst_QText::odfWriting_text()
-{
-    QTextDocument *doc = new QTextDocument();
-    QTextCursor cursor(doc);
-    QTextBlockFormat bf;
-    bf.setIndent(2);
-    cursor.insertBlock(bf);
-    cursor.insertText(m_lorem);
-    bf.setTopMargin(10);
-    cursor.insertBlock(bf);
-    cursor.insertText(m_lorem);
-    bf.setRightMargin(30);
-    cursor.insertBlock(bf);
-    cursor.insertText(m_lorem);
-
-    // write it
-    QBENCHMARK {
-        QBuffer buffer;
-        buffer.open(QIODevice::WriteOnly);
-        QTextDocumentWriter writer(&buffer, "ODF");
-        writer.write(doc);
-    }
-    delete doc;
-}
-
-void tst_QText::odfWriting_images()
-{
-    QTextDocument *doc = new QTextDocument();
-    QTextCursor cursor(doc);
-    cursor.insertText(m_lorem);
-    QImage image(400, 200, QImage::Format_ARGB32_Premultiplied);
-    cursor.insertImage(image);
-    cursor.insertText(m_lorem);
-
-    // write it
-    QBENCHMARK {
-        QBuffer buffer;
-        buffer.open(QIODevice::WriteOnly);
-        QTextDocumentWriter writer(&buffer, "ODF");
-        writer.write(doc);
-    }
-    delete doc;
 }
 
 QSize tst_QText::setupTextLayout(QTextLayout *layout, bool wrap, int wrapWidth)

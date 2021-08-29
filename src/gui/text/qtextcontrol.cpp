@@ -2840,13 +2840,8 @@ void QUnicodeControlCharacterMenu::menuActionTriggered()
 QStringList QTextEditMimeData::formats() const
 {
     if (!fragment.isEmpty())
-        return QStringList() << QString::fromLatin1("text/plain") << QString::fromLatin1("text/html")
-#ifndef QT_NO_TEXTODFWRITER
-            << QString::fromLatin1("application/vnd.oasis.opendocument.text")
-#endif
-        ;
-    else
-        return QMimeData::formats();
+        return QStringList() << QString::fromLatin1("text/plain") << QString::fromLatin1("text/html");
+    return QMimeData::formats();
 }
 
 QVariant QTextEditMimeData::retrieveData(const QString &mimeType, QVariant::Type type) const
@@ -2861,15 +2856,6 @@ void QTextEditMimeData::setup() const
     QTextEditMimeData *that = const_cast<QTextEditMimeData *>(this);
 #ifndef QT_NO_TEXTHTMLPARSER
     that->setData(QLatin1String("text/html"), fragment.toHtml("utf-8").toUtf8());
-#endif
-#ifndef QT_NO_TEXTODFWRITER
-    {
-        QBuffer buffer;
-        QTextDocumentWriter writer(&buffer, "ODF");
-        writer.write(fragment);
-        buffer.close();
-        that->setData(QLatin1String("application/vnd.oasis.opendocument.text"), buffer.data());
-    }
 #endif
     that->setText(fragment.toPlainText());
     fragment = QTextDocumentFragment();
