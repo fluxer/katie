@@ -9,6 +9,12 @@ function(KATIE_DEFINITION DEF)
     add_definitions(${DEF} ${ARGN})
 endfunction()
 
+# a function that sets config option variable to ON so that it is stored as
+# disabled in qconfig.h
+function(KATIE_CONFIG CONF)
+    set(${CONF} TRUE PARENT_SCOPE)
+endfunction()
+
 # a function to check for header presence, if header is found a definition is
 # added
 function(KATIE_CHECK_HEADER FORHEADER)

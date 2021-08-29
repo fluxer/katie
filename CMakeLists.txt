@@ -476,15 +476,6 @@ cmake_reset_check_state()
 katie_check_proc(exe)
 katie_check_proc(cmdline)
 
-configure_file(
-    ${CMAKE_SOURCE_DIR}/src/core/global/qconfig.h.cmake
-    ${CMAKE_BINARY_DIR}/include/QtCore/qconfig.h
-)
-configure_file(
-    ${CMAKE_SOURCE_DIR}/src/core/global/qconfig.cpp.cmake
-    ${CMAKE_BINARY_DIR}/include/qconfig.cpp
-)
-
 if(KATIE_TESTS OR KATIE_BENCHMARKS)
     message(WARNING "Deploying tests/benchmarks build is a bad idea")
     enable_testing()
@@ -506,35 +497,35 @@ endforeach()
 
 # optional packages
 if(NOT WITH_FONTCONFIG OR NOT FONTCONFIG_FOUND)
-    katie_definition(-DQT_NO_FONTCONFIG)
+    katie_config(QT_NO_FONTCONFIG)
 endif()
 
 if(NOT WITH_DBUS OR NOT DBUS_FOUND)
-    katie_definition(-DQT_NO_DBUS)
+    katie_config(QT_NO_DBUS)
 else()
     set(KATIE_COMPONENTS "${KATIE_COMPONENTS} DBus")
     set(KATIE_TOOLS "${KATIE_TOOLS} qdbus qdbusxml2cpp qdbuscpp2xml qdbusviewer")
 endif()
 
 if(NOT WITH_CUPS OR NOT CUPS_FOUND)
-    katie_definition(-DQT_NO_CUPS)
+    katie_config(QT_NO_CUPS)
 endif()
 
 if(NOT WITH_INTL OR NOT INTL_FOUND)
-    katie_definition(-DQT_NO_TRANSLATION)
+    katie_config(QT_NO_TRANSLATION)
 endif()
 
 if(NOT WITH_EXECINFO OR NOT EXECINFO_FOUND)
-    katie_definition(-DQT_NO_EXECINFO)
+    katie_config(QT_NO_EXECINFO)
 endif()
 
 # optional and conditional features
 if(NOT CMAKE_BUILD_TYPE STREQUAL "Debug")
-    katie_definition(-DQT_NO_DEBUG)
+    katie_config(QT_NO_DEBUG)
 endif()
 
 if(NOT WITH_ACCESSIBILITY)
-    katie_definition(-DQT_NO_ACCESSIBILITY)
+    katie_config(QT_NO_ACCESSIBILITY)
 endif()
 
 add_library(pic_test ${KATIE_TYPE}  EXCLUDE_FROM_ALL "${CMAKE_SOURCE_DIR}/cmake/pic.cpp")
@@ -548,17 +539,27 @@ foreach(x11ext Xshape Xinerama Xrandr Xrender Xfixes Xcursor)
     if(NOT X11_${x11ext}_FOUND)
         message(WARNING "The X11 ${x11ext} extension was not found")
         string(TOUPPER "${x11ext}" upperext)
-        katie_definition(-DQT_NO_${upperext})
+        katie_config(QT_NO_${upperext})
     endif()
 endforeach()
 if(NOT X11_Xext_FOUND)
     message(WARNING "The X11 Xext extension was not found")
-    katie_definition(-DQT_NO_XSYNC -DQT_NO_XSHAPE)
+    katie_config(QT_NO_XSYNC)
+    katie_config(QT_NO_XSHAPE)
 endif()
 if(NOT X11_SM_FOUND OR NOT X11_ICE_FOUND)
     message(WARNING "X11 SM/ICE was not found thus disabling session manager support")
-    katie_definition(-DQT_NO_SESSIONMANAGER)
+    katie_config(QT_NO_SESSIONMANAGER)
 endif()
+
+configure_file(
+    ${CMAKE_SOURCE_DIR}/src/core/global/qconfig.h.cmake
+    ${CMAKE_BINARY_DIR}/include/QtCore/qconfig.h
+)
+configure_file(
+    ${CMAKE_SOURCE_DIR}/src/core/global/qconfig.cpp.cmake
+    ${CMAKE_BINARY_DIR}/include/qconfig.cpp
+)
 
 add_subdirectory(src/shared)
 
