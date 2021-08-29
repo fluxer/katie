@@ -2007,7 +2007,7 @@ static QPainter::CompositionMode svgToQtCompositionMode(const QString &op)
     } else if (op == QLatin1String("exclusion")) {
         return QPainter::CompositionMode_Exclusion;
     } else {
-        qDebug() <<"Operation: " << op << " is not implemented";
+        qWarning() << "Operation: " << op << " is not implemented";
     }
 
     return QPainter::CompositionMode_SourceOver;
