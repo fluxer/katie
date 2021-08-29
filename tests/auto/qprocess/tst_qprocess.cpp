@@ -180,9 +180,9 @@ tst_QProcess::tst_QProcess()
     // Set current directory such that the test binaries are found.
 #endif
 
-    // TODO: copy nospace to:
-    // one space
-    // two space s
+
+    QVERIFY(QFile::copy("./test Space In Name/qprocess_testSpaceInName", "./test Space In Name/qprocess_testSpaceInName_one space"));
+    QVERIFY(QFile::copy("./test Space In Name/qprocess_testSpaceInName", "./test Space In Name/qprocess_testSpaceInName_two space s"));
 }
 
 tst_QProcess::~tst_QProcess()
@@ -1267,9 +1267,9 @@ void tst_QProcess::spaceArgsTest()
     static const int timeOutMs = 5000;
 
     QStringList programs;
-    programs << QString::fromLatin1("testProcessSpacesArgs/nospace")
-             << QString::fromLatin1("testProcessSpacesArgs/one space")
-             << QString::fromLatin1("testProcessSpacesArgs/two space s");
+    programs << QString::fromLatin1("./test Space In Name/qprocess_testSpaceInName")
+             << QString::fromLatin1("./test Space In Name/qprocess_testSpaceInName_one space")
+             << QString::fromLatin1("./test Space In Name/qprocess_testSpaceInName_two space s");
 
     process = new QProcess(this);
 
