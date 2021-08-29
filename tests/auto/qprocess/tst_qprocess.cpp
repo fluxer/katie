@@ -1815,8 +1815,8 @@ void tst_QProcess::detachedWorkingDirectoryAndPid()
 
     infoFile.remove();
 
-    QString workingDir = QDir::currentPath() + "/qprocess_testDetached";
-    QVERIFY(QFile::exists(workingDir));
+    QString workingDir = QDir::tempPath();
+    QVERIFY(QDir(workingDir).exists());
 
     QStringList args;
     args << infoFile.fileName();
