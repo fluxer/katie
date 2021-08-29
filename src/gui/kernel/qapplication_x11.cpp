@@ -912,7 +912,7 @@ static void getXDefault(const char *group, const char *key, bool *val)
         }
     }
 }
-#endif
+#endif // QT_NO_FONTCONFIG
 
 #if !defined(QT_NO_DEBUG) && defined(QT_HAVE_PROC_CMDLINE) && defined(QT_HAVE_PROC_EXE)
 // Find out if our parent process is gdb by looking at the 'exe' symlink under /proc,.
@@ -1261,7 +1261,7 @@ void qt_init(QApplicationPrivate *priv, Display *display,
                 break;
             }
         }
-#endif
+#endif // QT_NO_XRENDER
 
         char *rgba = XGetDefault(qt_x11Data->display, "Xft", FC_RGBA);
         if (rgba) {
@@ -1296,7 +1296,7 @@ void qt_init(QApplicationPrivate *priv, Display *display,
     getXDefault("Xft", FC_HINTING, &qt_x11Data->fc_autohint);
     getXDefault("Xft", FC_MINSPACE, &qt_x11Data->fc_autohint);
 #endif
-#endif // QT_NO_XRENDER
+#endif // QT_NO_FONTCONFIG
 
     // initialize key mapper
     QKeyMapper::changeKeyboard();
