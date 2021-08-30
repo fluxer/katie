@@ -79,7 +79,7 @@ uint qHash(const QStringRef &key)
 
 uint qHash(const QBitArray &bitArray)
 {
-    return hash(reinterpret_cast<const uchar *>(bitArray.d.constData()), qMax(0, bitArray.d.size() - 1));
+    return hash(reinterpret_cast<const uchar *>(bitArray.d.constData()), qMax(0, bitArray.d.size()));
 }
 
 /*
