@@ -1384,11 +1384,8 @@ QByteArray QMetaObjectBuilder::toRelocatableData(bool *ok) const
         return QByteArray();
     }
 
-    QByteArray data;
-    data.resize(size);
-    char *buf = data.data();
-    memset(buf, 0, size);
-    buildMetaObject(d, buf, true);
+    QByteArray data(size, '\0');
+    buildMetaObject(d, data.data(), true);
     if (ok) *ok = true;
     return data;
 }

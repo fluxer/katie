@@ -745,8 +745,7 @@ QByteArray QDeclarativeListModelParser::compile(const QList<QDeclarativeCustomPa
                instr.count() * sizeof(ListInstruction) +
                data.count();
 
-    QByteArray rv;
-    rv.resize(size);
+    QByteArray rv(size, Qt::Uninitialized);
 
     ListModelData *lmd = (ListModelData *)rv.data();
     lmd->dataOffset = sizeof(ListModelData) +
