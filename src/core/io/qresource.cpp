@@ -497,7 +497,6 @@ inline QString QResourceRoot::name(int node) const
         return QString();
     const int offset = findOffset(node);
 
-    QString ret;
     int name_offset = (tree[offset+0] << 24) + (tree[offset+1] << 16) +
                       (tree[offset+2] << 8) + (tree[offset+3] << 0);
     const short name_length = (names[name_offset+0] << 8) +
@@ -505,7 +504,7 @@ inline QString QResourceRoot::name(int node) const
     name_offset += 2;
     name_offset += 4; //jump past hash
 
-    ret.resize(name_length);
+    QString ret(name_length, Qt::Uninitialized);
     QChar *strData = ret.data();
     for(int i = 0; i < name_length*2; i+=2) {
         QChar c(names[name_offset+i+1], names[name_offset+i]);
