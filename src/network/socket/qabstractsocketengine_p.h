@@ -74,7 +74,6 @@ public:
         ReceiveBufferSocketOption,
         SendBufferSocketOption,
         AddressReusable,
-        BindExclusively,
         ReceiveOutOfBandData,
         LowDelayOption,
         KeepAliveOption,

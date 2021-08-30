@@ -177,6 +177,7 @@ bool QFSFileEngine::open(QIODevice::OpenMode openMode)
     if (d->fd == -1) {
         setError(errno == EMFILE ? QFile::ResourceError : QFile::OpenError,
                  qt_error_string(errno));
+        d->openMode = QIODevice::NotOpen;
         return false;
     }
 
@@ -186,21 +187,24 @@ bool QFSFileEngine::open(QIODevice::OpenMode openMode)
     if (QT_FSTAT(d->fd, &statbuf) == 0 && S_ISDIR(statbuf.st_mode)) {
         setError(QFile::OpenError, QLatin1String("file to open is a directory"));
         qt_safe_close(d->fd);
+        d->openMode = QIODevice::NotOpen;
+        d->fd = -1;
         return false;
     }
 
-    d->closeFileHandle = true;
-
     // Seek to the end when in Append mode.
     if (d->openMode & QFile::Append) {
-        QT_OFF_T ret;
-        Q_EINTR_LOOP(ret, QT_LSEEK(d->fd, 0, SEEK_END));
-        if (ret == -1) {
+        if (QT_LSEEK(d->fd, 0, SEEK_END) == -1) {
             setError(errno == EMFILE ? QFile::ResourceError : QFile::OpenError,
                      qt_error_string(errno));
+            qt_safe_close(d->fd);
+            d->openMode = QIODevice::NotOpen;
+            d->fd = -1;
             return false;
         }
     }
+
+    d->closeFileHandle = true;
 
     return true;
 }
@@ -264,15 +268,14 @@ bool QFSFileEngine::open(QIODevice::OpenMode openMode, int fd, QFile::FileHandle
 
     // Seek to the end when in Append mode.
     if (d->openMode & QFile::Append) {
-        QT_OFF_T ret;
-        Q_EINTR_LOOP(ret, QT_LSEEK(d->fd, 0, SEEK_END));
-        if (ret == -1) {
+        if (QT_LSEEK(d->fd, 0, SEEK_END) == -1) {
             setError(errno == EMFILE ? QFile::ResourceError : QFile::OpenError,
                      qt_error_string(errno));
-
+            if (d->closeFileHandle) {
+                qt_safe_close(d->fd);
+            }
             d->openMode = QIODevice::NotOpen;
             d->fd = -1;
-
             return false;
         }
     }

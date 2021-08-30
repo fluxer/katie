@@ -2,7 +2,7 @@ add_definitions(
     -DKATIE_TOOLS_SUFFIX="${KATIE_TOOLS_SUFFIX}"
 )
 set(EXTRA_DESIGNER_LIBS
-    KtCore KtGui KtXml KtUiTools
+    KtCore KtGui KtXml KtUiTools KtScript
 )
 
 set(DESIGNER_PUBLIC_HEADERS
@@ -274,7 +274,7 @@ add_subdirectory(components)
 
 katie_generate_misc("${DESIGNER_HEADERS}" QtDesigner)
 katie_generate_public("${DESIGNER_PUBLIC_HEADERS}" QtDesigner)
-katie_generate_package(KtDesigner "KtCore KtGui KtXml KtUiTools")
+katie_generate_package(KtDesigner "KtCore KtGui KtXml KtUiTools KtScript")
 katie_setup_target(KtDesigner ${DESIGNER_SOURCES} ${DESIGNER_HEADERS})
 
 add_library(KtDesigner ${KATIE_TYPE} ${KtDesigner_SOURCES}

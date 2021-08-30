@@ -43,11 +43,6 @@
 #include <QElapsedTimer>
 #include <QCache>
 
-#include <QNetworkSession>
-#include <QSharedPointer>
-
-
-
 QT_BEGIN_NAMESPACE
 
 

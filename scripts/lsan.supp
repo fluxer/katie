@@ -1,2 +1,3 @@
 leak:libicuuc.so
 leak:libfontconfig.so
+leak:Katie::QTextCodec::codecForName

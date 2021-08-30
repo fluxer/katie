@@ -36,6 +36,7 @@
 #include "qhash.h"
 #include "qpaintengine_raster_p.h"
 #include "qimage_p.h"
+#include "qvarlengtharray.h"
 #include "qcorecommon_p.h"
 #include "qguicommon_p.h"
 #include "qx11info_x11.h"
@@ -1534,8 +1535,9 @@ void QImage::fill(const QColor &color)
 
     } else if (d->depth == 8) {
         uint pixel = 0;
+        const QRgb crgba = color.rgba();
         for (int i=0; i<d->colortable.size(); ++i) {
-            if (color.rgba() == d->colortable.at(i)) {
+            if (crgba == d->colortable.at(i)) {
                 pixel = i;
                 break;
             }
@@ -1846,7 +1848,7 @@ static void dither_to_Mono(QImageData *dst, const QImageData *src,
 
     switch (dithermode) {
     case Diffuse: {
-        QScopedArrayPointer<int> lineBuffer(new int[src->width * 2]);
+        QVarLengthArray<int> lineBuffer(src->width * 2);
         int *line1 = lineBuffer.data();
         int *line2 = lineBuffer.data() + src->width;
         int bmwidth = (src->width+7)/8;
@@ -2221,7 +2223,7 @@ static void QT_FASTCALL convert_RGB_to_Indexed8(QImageData *dst, const QImageDat
             int* line1[3];
             int* line2[3];
             int* pv[3];
-            QScopedArrayPointer<int> lineBuffer(new int[src->width * 9]);
+            QVarLengthArray<int> lineBuffer(src->width * 9);
             line1[0] = lineBuffer.data();
             line2[0] = lineBuffer.data() + src->width;
             line1[1] = lineBuffer.data() + src->width * 2;
@@ -2510,7 +2512,7 @@ static void QT_FASTCALL convert_RGB32_to_RGB16(QImageData *dest, const QImageDat
 
 
 // first index source, second dest
-static Image_Converter converter_map[QImage::NImageFormats][QImage::NImageFormats] =
+static const Image_Converter converter_map[QImage::NImageFormats][QImage::NImageFormats] =
 {
     {
         0, 0, 0, 0, 0, 0, 0, 0
@@ -2609,8 +2611,7 @@ QImage QImage::convertToFormat(Format format, Qt::ImageConversionFlags flags) co
     if (format == Format_Invalid || d->format == Format_Invalid)
         return QImage();
 
-    const Image_Converter *converterPtr = &converter_map[d->format][format];
-    Image_Converter converter = *converterPtr;
+    const Image_Converter converter = converter_map[d->format][format];
     if (converter) {
         QImage image(d->width, d->height, format);
 
@@ -2723,8 +2724,7 @@ QImage QImage::convertToFormat(Format format, const QVector<QRgb> &colorTable, Q
         return convertWithPalette(*this, format, colorTable);
     }
 
-    const Image_Converter *converterPtr = &converter_map[d->format][format];
-    Image_Converter converter = *converterPtr;
+    const Image_Converter converter = converter_map[d->format][format];
     if (!converter)
         return QImage();
 
@@ -2976,8 +2976,8 @@ bool QImage::isGrayscale() const
         for (int i = 0; i < colorCount(); i++)
             if (d->colortable.at(i) != qRgb(i,i,i))
                 return false;
-        return true;
         }
+        return true;
     }
     return false;
 }
@@ -3804,22 +3804,20 @@ bool QImage::operator==(const QImage & i) const
         if (d->format >= Format_ARGB32) { // all bits defined
             const int n = d->width * d->depth / 8;
             if (n == d->bytes_per_line && n == i.d->bytes_per_line) {
-                if (memcmp(bits(), i.constBits(), d->nbytes))
+                if (memcmp(constBits(), i.constBits(), d->nbytes))
                     return false;
             } else {
                 for (int y = 0; y < d->height; ++y) {
-                    if (memcmp(scanLine(y), i.scanLine(y), n))
+                    if (memcmp(constScanLine(y), i.constScanLine(y), n))
                         return false;
                 }
             }
         } else {
             const int w = width();
             const int h = height();
-            const QVector<QRgb> &colortable = d->colortable;
-            const QVector<QRgb> &icolortable = i.d->colortable;
             for (int y=0; y<h; ++y) {
                 for (int x=0; x<w; ++x) {
-                    if (colortable[pixelIndex(x, y)] != icolortable[i.pixelIndex(x, y)])
+                    if (d->colortable.at(pixelIndex(x, y)) != i.d->colortable.at(i.pixelIndex(x, y)))
                         return false;
                 }
             }

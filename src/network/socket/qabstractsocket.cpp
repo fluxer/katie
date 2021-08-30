@@ -349,7 +349,6 @@
 #include "qabstractsocket.h"
 #include "qabstractsocket_p.h"
 #include "qhostinfo_p.h"
-#include "qnetworksession_p.h"
 #include "qabstracteventdispatcher.h"
 #include "qhostaddress.h"
 #include "qhostinfo.h"
@@ -486,10 +485,6 @@ bool QAbstractSocketPrivate::initSocketLayer(QAbstractSocket::NetworkLayerProtoc
         q->setErrorString(QAbstractSocket::tr("Operation on socket is not supported"));
         return false;
     }
-#ifndef QT_NO_BEARERMANAGEMENT
-    //copy network session down to the socket engine (if it has been set)
-    socketEngine->setProperty("_q_networksession", q->property("_q_networksession"));
-#endif
 #ifndef QT_NO_NETWORKPROXY
     //copy user agent to socket engine (if it has been set)
     socketEngine->setProperty("_q_user-agent", q->property("_q_user-agent"));
@@ -1483,10 +1478,6 @@ bool QAbstractSocket::setSocketDescriptor(int socketDescriptor, SocketState sock
         setErrorString(tr("Operation on socket is not supported"));
         return false;
     }
-#ifndef QT_NO_BEARERMANAGEMENT
-    //copy network session down to the socket engine (if it has been set)
-    d->socketEngine->setProperty("_q_networksession", property("_q_networksession"));
-#endif
     bool result = d->socketEngine->initialize(socketDescriptor, socketState);
     if (!result) {
         d->socketError = d->socketEngine->error();
@@ -1530,18 +1521,15 @@ void QAbstractSocket::setSocketOption(QAbstractSocket::SocketOption option, cons
         case LowDelayOption:
             d_func()->socketEngine->setOption(QAbstractSocketEngine::LowDelayOption, value.toInt());
             break;
-
         case KeepAliveOption:
             d_func()->socketEngine->setOption(QAbstractSocketEngine::KeepAliveOption, value.toInt());
             break;
-
         case MulticastTtlOption:
-                d_func()->socketEngine->setOption(QAbstractSocketEngine::MulticastTtlOption, value.toInt());
-                break;
-
+            d_func()->socketEngine->setOption(QAbstractSocketEngine::MulticastTtlOption, value.toInt());
+            break;
         case MulticastLoopbackOption:
-                d_func()->socketEngine->setOption(QAbstractSocketEngine::MulticastLoopbackOption, value.toInt());
-                break;
+            d_func()->socketEngine->setOption(QAbstractSocketEngine::MulticastLoopbackOption, value.toInt());
+            break;
     }
 }
 
@@ -1561,17 +1549,15 @@ QVariant QAbstractSocket::socketOption(QAbstractSocket::SocketOption option)
         case LowDelayOption:
             ret = d_func()->socketEngine->option(QAbstractSocketEngine::LowDelayOption);
             break;
-
         case KeepAliveOption:
             ret = d_func()->socketEngine->option(QAbstractSocketEngine::KeepAliveOption);
             break;
-
         case MulticastTtlOption:
-                ret = d_func()->socketEngine->option(QAbstractSocketEngine::MulticastTtlOption);
-                break;
+            ret = d_func()->socketEngine->option(QAbstractSocketEngine::MulticastTtlOption);
+            break;
         case MulticastLoopbackOption:
-                ret = d_func()->socketEngine->option(QAbstractSocketEngine::MulticastLoopbackOption);
-                break;
+            ret = d_func()->socketEngine->option(QAbstractSocketEngine::MulticastLoopbackOption);
+            break;
     }
     if (ret == -1)
         return QVariant();

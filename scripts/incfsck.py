@@ -377,7 +377,6 @@ incmap = {
         'QIPv6Address': 'qhostaddress.h',
         'QNetworkAddressEntry': 'qnetworkinterface.h',
         'QNetworkCacheMetaData': 'qabstractnetworkcache.h',
-        'QNetworkConfigurationManager': 'qnetworkconfigmanager.h',
         'QNetworkProxyFactory': 'qnetworkproxy.h',
         'QNetworkProxyQuery': 'qnetworkproxy.h',
         'Q_IPV6ADDR': 'qhostaddress.h',

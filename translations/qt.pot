@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-08-13 23:30+0300\n"
+"POT-Creation-Date: 2021-08-25 17:50+0300\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -45,7 +45,7 @@ msgstr ""
 #: src/core/plugin/qlibrary.cpp:796 src/core/plugin/qpluginloader.cpp:279
 #: src/core/io/qiodevice.cpp:1519 src/network/ssl/qsslerror.cpp:249
 #: src/network/socket/qnativesocketengine.cpp:250
-#: src/network/access/qftp.cpp:1428 src/uitools/formscriptrunner.cpp:104
+#: src/network/access/qftp.cpp:1415 src/uitools/formscriptrunner.cpp:104
 msgid "Unknown error"
 msgstr ""
 
@@ -150,11 +150,11 @@ msgctxt "QStandardPaths"
 msgid "Download"
 msgstr ""
 
-#: src/core/io/qfile.cpp:573
+#: src/core/io/qfile.cpp:574
 msgid "Destination file exists"
 msgstr ""
 
-#: src/core/io/qfile.cpp:961
+#: src/core/io/qfile.cpp:963
 msgid "No file engine available or engine does not support UnMapExtension"
 msgstr ""
 
@@ -336,27 +336,27 @@ msgctxt "QJsonDocument"
 msgid "Data is empty"
 msgstr ""
 
-#: src/core/tools/qjsondocument.cpp:108
+#: src/core/tools/qjsondocument.cpp:112
 msgctxt "QJsonDocument"
 msgid "Unknown JSON type in array"
 msgstr ""
 
-#: src/core/tools/qjsondocument.cpp:141 src/core/tools/qjsondocument.cpp:224
+#: src/core/tools/qjsondocument.cpp:145 src/core/tools/qjsondocument.cpp:228
 msgctxt "QJsonDocument"
 msgid "Unknown JSON type"
 msgstr ""
 
-#: src/core/tools/qjsondocument.cpp:149
+#: src/core/tools/qjsondocument.cpp:153
 msgctxt "QJsonDocument"
 msgid "Rootless array/values are not supported"
 msgstr ""
 
-#: src/core/tools/qjsondocument.cpp:164
+#: src/core/tools/qjsondocument.cpp:168
 msgctxt "QJsonDocument"
 msgid "Data map is empty"
 msgstr ""
 
-#: src/core/tools/qjsondocument.cpp:167
+#: src/core/tools/qjsondocument.cpp:171
 msgctxt "QJsonDocument"
 msgid "Maximum depth reached"
 msgstr ""
@@ -4783,7 +4783,7 @@ msgstr ""
 msgid "Error during SSL handshake: %1"
 msgstr ""
 
-#: src/network/kernel/qhostinfo_p.h:79
+#: src/network/kernel/qhostinfo_p.h:74
 msgctxt "QHostInfo"
 msgid "Unknown error"
 msgstr ""
@@ -4795,10 +4795,10 @@ msgstr ""
 
 #: src/network/kernel/qhostinfo_unix.cpp:87
 #: src/network/kernel/qhostinfo_unix.cpp:173
-#: src/network/socket/qabstractsocket.cpp:835
-#: src/network/socket/qhttpsocketengine.cpp:651
-#: src/network/socket/qsocks5socketengine.cpp:626
-#: src/network/socket/qsocks5socketengine.cpp:652
+#: src/network/socket/qabstractsocket.cpp:830
+#: src/network/socket/qhttpsocketengine.cpp:648
+#: src/network/socket/qsocks5socketengine.cpp:620
+#: src/network/socket/qsocks5socketengine.cpp:646
 msgid "Host not found"
 msgstr ""
 
@@ -4814,14 +4814,10 @@ msgstr ""
 msgid "Unknown address type"
 msgstr ""
 
-#: src/network/bearer/qnetworksession.cpp:432
-msgid "Invalid configuration."
-msgstr ""
-
-#: src/network/socket/qtcpserver.cpp:266 src/network/socket/qtcpserver.cpp:388
-#: src/network/socket/qabstractsocket.cpp:486
-#: src/network/socket/qabstractsocket.cpp:1273
-#: src/network/socket/qabstractsocket.cpp:1483
+#: src/network/socket/qtcpserver.cpp:266 src/network/socket/qtcpserver.cpp:384
+#: src/network/socket/qabstractsocket.cpp:485
+#: src/network/socket/qabstractsocket.cpp:1268
+#: src/network/socket/qabstractsocket.cpp:1478
 msgid "Operation on socket is not supported"
 msgstr ""
 
@@ -4843,59 +4839,59 @@ msgstr ""
 msgid "%1: Unknown error %2"
 msgstr ""
 
-#: src/network/socket/qabstractsocket.cpp:877
-#: src/network/socket/qhttpsocketengine.cpp:654
+#: src/network/socket/qabstractsocket.cpp:872
+#: src/network/socket/qhttpsocketengine.cpp:651
 #: src/network/socket/qnativesocketengine.cpp:214
-#: src/network/socket/qsocks5socketengine.cpp:656
+#: src/network/socket/qsocks5socketengine.cpp:650
 msgid "Connection refused"
 msgstr ""
 
-#: src/network/socket/qabstractsocket.cpp:1019
+#: src/network/socket/qabstractsocket.cpp:1014
 #: src/network/socket/qnativesocketengine.cpp:211
 msgid "Connection timed out"
 msgstr ""
 
-#: src/network/socket/qabstractsocket.cpp:1660
+#: src/network/socket/qabstractsocket.cpp:1651
 msgid "Socket operation timed out"
 msgstr ""
 
-#: src/network/socket/qabstractsocket.cpp:2071
+#: src/network/socket/qabstractsocket.cpp:2062
 msgid "Socket is not connected"
 msgstr ""
 
-#: src/network/socket/qhttpsocketengine.cpp:551
+#: src/network/socket/qhttpsocketengine.cpp:548
 msgid "Did not receive HTTP response from proxy"
 msgstr ""
 
-#: src/network/socket/qhttpsocketengine.cpp:587
+#: src/network/socket/qhttpsocketengine.cpp:584
 msgid "Error parsing authentication request from proxy"
 msgstr ""
 
-#: src/network/socket/qhttpsocketengine.cpp:621
+#: src/network/socket/qhttpsocketengine.cpp:618
 msgid "Authentication required"
 msgstr ""
 
-#: src/network/socket/qhttpsocketengine.cpp:648
+#: src/network/socket/qhttpsocketengine.cpp:645
 msgid "Proxy denied connection"
 msgstr ""
 
-#: src/network/socket/qhttpsocketengine.cpp:658
+#: src/network/socket/qhttpsocketengine.cpp:655
 msgid "Error communicating with HTTP proxy"
 msgstr ""
 
-#: src/network/socket/qhttpsocketengine.cpp:681
+#: src/network/socket/qhttpsocketengine.cpp:678
 msgid "Proxy server not found"
 msgstr ""
 
-#: src/network/socket/qhttpsocketengine.cpp:683
+#: src/network/socket/qhttpsocketengine.cpp:680
 msgid "Proxy connection refused"
 msgstr ""
 
-#: src/network/socket/qhttpsocketengine.cpp:685
+#: src/network/socket/qhttpsocketengine.cpp:682
 msgid "Proxy server connection timed out"
 msgstr ""
 
-#: src/network/socket/qhttpsocketengine.cpp:687
+#: src/network/socket/qhttpsocketengine.cpp:684
 msgid "Proxy connection closed prematurely"
 msgstr ""
 
@@ -4940,7 +4936,7 @@ msgid "Host unreachable"
 msgstr ""
 
 #: src/network/socket/qnativesocketengine.cpp:205
-#: src/network/socket/qsocks5socketengine.cpp:648
+#: src/network/socket/qsocks5socketengine.cpp:642
 msgid "Network unreachable"
 msgstr ""
 
@@ -5032,105 +5028,105 @@ msgstr ""
 msgid "This platform does not support IPv6"
 msgstr ""
 
-#: src/network/socket/qsocks5socketengine.cpp:581
+#: src/network/socket/qsocks5socketengine.cpp:575
 msgid "Connection to proxy refused"
 msgstr ""
 
-#: src/network/socket/qsocks5socketengine.cpp:585
+#: src/network/socket/qsocks5socketengine.cpp:579
 msgid "Connection to proxy closed prematurely"
 msgstr ""
 
-#: src/network/socket/qsocks5socketengine.cpp:589
+#: src/network/socket/qsocks5socketengine.cpp:583
 msgid "Proxy host not found"
 msgstr ""
 
-#: src/network/socket/qsocks5socketengine.cpp:594
+#: src/network/socket/qsocks5socketengine.cpp:588
 msgid "Connection to proxy timed out"
 msgstr ""
 
-#: src/network/socket/qsocks5socketengine.cpp:611
+#: src/network/socket/qsocks5socketengine.cpp:605
 msgid "Proxy authentication failed"
 msgstr ""
 
-#: src/network/socket/qsocks5socketengine.cpp:612
+#: src/network/socket/qsocks5socketengine.cpp:606
 msgid "Proxy authentication failed: %1"
 msgstr ""
 
-#: src/network/socket/qsocks5socketengine.cpp:621
+#: src/network/socket/qsocks5socketengine.cpp:615
 msgid "SOCKS version 5 protocol error"
 msgstr ""
 
-#: src/network/socket/qsocks5socketengine.cpp:640
+#: src/network/socket/qsocks5socketengine.cpp:634
 msgid "General SOCKSv5 server failure"
 msgstr ""
 
-#: src/network/socket/qsocks5socketengine.cpp:644
+#: src/network/socket/qsocks5socketengine.cpp:638
 msgid "Connection not allowed by SOCKSv5 server"
 msgstr ""
 
-#: src/network/socket/qsocks5socketengine.cpp:660
+#: src/network/socket/qsocks5socketengine.cpp:654
 msgid "TTL expired"
 msgstr ""
 
-#: src/network/socket/qsocks5socketengine.cpp:664
+#: src/network/socket/qsocks5socketengine.cpp:658
 msgid "SOCKSv5 command not supported"
 msgstr ""
 
-#: src/network/socket/qsocks5socketengine.cpp:668
+#: src/network/socket/qsocks5socketengine.cpp:662
 msgid "Address type not supported"
 msgstr ""
 
-#: src/network/socket/qsocks5socketengine.cpp:673
+#: src/network/socket/qsocks5socketengine.cpp:667
 msgid "Unknown SOCKSv5 proxy error code 0x%1"
 msgstr ""
 
-#: src/network/socket/qsocks5socketengine.cpp:1365
+#: src/network/socket/qsocks5socketengine.cpp:1356
 msgctxt "QSocks5SocketEngine"
 msgid "Network operation timed out"
 msgstr ""
 
-#: src/network/access/qhttpnetworkconnection.cpp:656
+#: src/network/access/qhttpnetworkconnection.cpp:652
 #: src/network/access/qhttp.cpp:2591
 msgctxt "QHttp"
 msgid "Host %1 not found"
 msgstr ""
 
-#: src/network/access/qhttpnetworkconnection.cpp:659
+#: src/network/access/qhttpnetworkconnection.cpp:655
 msgctxt "QHttp"
 msgid "Connection refused"
 msgstr ""
 
-#: src/network/access/qhttpnetworkconnection.cpp:662
+#: src/network/access/qhttpnetworkconnection.cpp:658
 msgctxt "QHttp"
 msgid "Connection closed"
 msgstr ""
 
-#: src/network/access/qhttpnetworkconnection.cpp:665
+#: src/network/access/qhttpnetworkconnection.cpp:661
 msgctxt "QAbstractSocket"
 msgid "Socket operation timed out"
 msgstr ""
 
-#: src/network/access/qhttpnetworkconnection.cpp:668
+#: src/network/access/qhttpnetworkconnection.cpp:664
 msgctxt "QHttp"
 msgid "Proxy requires authentication"
 msgstr ""
 
-#: src/network/access/qhttpnetworkconnection.cpp:671
+#: src/network/access/qhttpnetworkconnection.cpp:667
 msgctxt "QHttp"
 msgid "Host requires authentication"
 msgstr ""
 
-#: src/network/access/qhttpnetworkconnection.cpp:674
+#: src/network/access/qhttpnetworkconnection.cpp:670
 msgctxt "QHttp"
 msgid "Data corrupted"
 msgstr ""
 
-#: src/network/access/qhttpnetworkconnection.cpp:677
+#: src/network/access/qhttpnetworkconnection.cpp:673
 msgctxt "QHttp"
 msgid "Unknown protocol specified"
 msgstr ""
 
-#: src/network/access/qhttpnetworkconnection.cpp:680
+#: src/network/access/qhttpnetworkconnection.cpp:676
 msgctxt "QHttp"
 msgid "SSL handshake failed"
 msgstr ""
@@ -5149,7 +5145,7 @@ msgid "Remote host closed the connection prematurely on %1"
 msgstr ""
 
 #: src/network/access/qnetworkaccessftpbackend.cpp:114
-#: src/network/access/qnetworkaccesshttpbackend.cpp:404
+#: src/network/access/qnetworkaccesshttpbackend.cpp:403
 msgid "No suitable proxy found"
 msgstr ""
 
@@ -5157,15 +5153,15 @@ msgstr ""
 msgid "Cannot open %1: is a directory"
 msgstr ""
 
-#: src/network/access/qnetworkaccessftpbackend.cpp:228
+#: src/network/access/qnetworkaccessftpbackend.cpp:224
 msgid "Logging in to %1 failed: authentication required"
 msgstr ""
 
-#: src/network/access/qnetworkaccessftpbackend.cpp:260
+#: src/network/access/qnetworkaccessftpbackend.cpp:256
 msgid "Error while downloading %1: %2"
 msgstr ""
 
-#: src/network/access/qnetworkaccessftpbackend.cpp:262
+#: src/network/access/qnetworkaccessftpbackend.cpp:258
 msgid "Error while uploading %1: %2"
 msgstr ""
 
@@ -5243,130 +5239,115 @@ msgctxt "QHttp"
 msgid "Error writing response to device"
 msgstr ""
 
-#: src/network/access/qhttpthreaddelegate.cpp:407
-#: src/network/access/qhttpthreaddelegate.cpp:430
+#: src/network/access/qhttpthreaddelegate.cpp:398
+#: src/network/access/qhttpthreaddelegate.cpp:421
 msgctxt "QNetworkReply"
 msgid "Error downloading %1 - server replied: %2"
 msgstr ""
 
-#: src/network/access/qnetworkreplyimpl.cpp:68
+#: src/network/access/qnetworkreplyimpl.cpp:67
 msgctxt "QNetworkReply"
 msgid "Protocol \"%1\" is unknown"
 msgstr ""
 
-#: src/network/access/qnetworkreplyimpl.cpp:94
-#: src/network/access/qnetworkreplyimpl.cpp:285
-msgctxt "QNetworkReply"
-msgid "Network session error."
-msgstr ""
-
-#: src/network/access/qnetworkreplyimpl.cpp:101
+#: src/network/access/qnetworkreplyimpl.cpp:76
 msgctxt "QNetworkReply"
 msgid "backend start error."
 msgstr ""
 
-#: src/network/access/qnetworkreplyimpl.cpp:749
-msgid "Temporary network failure."
-msgstr ""
-
-#: src/network/access/qnetworkreplyimpl.cpp:864
-#: src/network/access/qnetworkreplyimpl.cpp:894
+#: src/network/access/qnetworkreplyimpl.cpp:767
+#: src/network/access/qnetworkreplyimpl.cpp:797
 msgid "Operation canceled"
 msgstr ""
 
-#: src/network/access/qnetworkreplyimpl.cpp:1089
-msgctxt "QNetworkAccessManager"
-msgid "Network access is disabled."
-msgstr ""
-
-#: src/network/access/qftp.cpp:856
+#: src/network/access/qftp.cpp:843
 msgid "Not connected"
 msgstr ""
 
-#: src/network/access/qftp.cpp:935
+#: src/network/access/qftp.cpp:922
 msgid "Host %1 not found"
 msgstr ""
 
-#: src/network/access/qftp.cpp:939
+#: src/network/access/qftp.cpp:926
 msgid "Connection refused to host %1"
 msgstr ""
 
-#: src/network/access/qftp.cpp:943
+#: src/network/access/qftp.cpp:930
 msgid "Connection timed out to host %1"
 msgstr ""
 
-#: src/network/access/qftp.cpp:1047
+#: src/network/access/qftp.cpp:1034
 msgid "Connected to host %1"
 msgstr ""
 
-#: src/network/access/qftp.cpp:1255
+#: src/network/access/qftp.cpp:1242
 msgid "Connection refused for data connection"
 msgstr ""
 
-#: src/network/access/qftp.cpp:2329
+#: src/network/access/qftp.cpp:2312
 msgctxt "QFtp"
 msgid ""
 "Connecting to host failed:\n"
 "%1"
 msgstr ""
 
-#: src/network/access/qftp.cpp:2333
+#: src/network/access/qftp.cpp:2316
 msgctxt "QFtp"
 msgid ""
 "Login failed:\n"
 "%1"
 msgstr ""
 
-#: src/network/access/qftp.cpp:2337
+#: src/network/access/qftp.cpp:2320
 msgctxt "QFtp"
 msgid ""
 "Listing directory failed:\n"
 "%1"
 msgstr ""
 
-#: src/network/access/qftp.cpp:2341
+#: src/network/access/qftp.cpp:2324
 msgctxt "QFtp"
 msgid ""
 "Changing directory failed:\n"
 "%1"
 msgstr ""
 
-#: src/network/access/qftp.cpp:2345
+#: src/network/access/qftp.cpp:2328
 msgctxt "QFtp"
 msgid ""
 "Downloading file failed:\n"
 "%1"
 msgstr ""
 
-#: src/network/access/qftp.cpp:2349
+#: src/network/access/qftp.cpp:2332
 msgctxt "QFtp"
 msgid ""
 "Uploading file failed:\n"
 "%1"
 msgstr ""
 
-#: src/network/access/qftp.cpp:2353
+#: src/network/access/qftp.cpp:2336
 msgctxt "QFtp"
 msgid ""
 "Removing file failed:\n"
 "%1"
 msgstr ""
 
-#: src/network/access/qftp.cpp:2357
+#: src/network/access/qftp.cpp:2340
 msgctxt "QFtp"
 msgid ""
 "Creating directory failed:\n"
 "%1"
 msgstr ""
 
-#: src/network/access/qftp.cpp:2361
+#: src/network/access/qftp.cpp:2344
 msgctxt "QFtp"
 msgid ""
 "Removing directory failed:\n"
 "%1"
 msgstr ""
 
-#: src/network/access/qftp.cpp:2389
+#: src/network/access/qftp.cpp:2372
 msgctxt "QFtp"
 msgid "Connection closed"
 msgstr ""
@@ -5525,26 +5506,6 @@ msgstr ""
 
 #: src/plugins/imageformats/tga/qtgafile.cpp:170
 msgid "Could not reset to start position"
-msgstr ""
-
-#: src/plugins/bearer/qnetworksession_impl.cpp:233
-msgid "Unknown session error."
-msgstr ""
-
-#: src/plugins/bearer/qnetworksession_impl.cpp:235
-msgid "The session was aborted by the user or system."
-msgstr ""
-
-#: src/plugins/bearer/qnetworksession_impl.cpp:237
-msgid "The requested operation is not supported by the system."
-msgstr ""
-
-#: src/plugins/bearer/qnetworksession_impl.cpp:239
-msgid "The specified configuration cannot be used."
-msgstr ""
-
-#: src/plugins/bearer/qnetworksession_impl.cpp:241
-msgid "Roaming was aborted or is not possible."
 msgstr ""
 
 #: src/plugins/sqldrivers/psql/qsql_psql.cpp:184

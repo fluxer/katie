@@ -30,7 +30,6 @@ private slots:
     void repeated_result();
     void intermediary_result_data();
     void intermediary_result();
-    void sha1();
 };
 
 void tst_QCryptographicHash::repeated_result_data()
@@ -79,6 +78,16 @@ void tst_QCryptographicHash::intermediary_result_data()
                           << QByteArray("abc") << QByteArray("abc")
                           << QByteArray::fromHex("A9993E364706816ABA3E25717850C26C9CD0D89D")
                           << QByteArray::fromHex("F8C1D87006FBF7E5CC4B026C3138BC046883DC71");
+
+    QTest::newRow("sha256") << int(QCryptographicHash::Sha256)
+                          << QByteArray("abc") << QByteArray("abc")
+                          << QByteArray::fromHex("BA7816BF8F01CFEA414140DE5DAE2223B00361A396177A9CB410FF61F20015AD")
+                          << QByteArray::fromHex("BBB59DA3AF939F7AF5F360F2CEB80A496E3BAE1CD87DDE426DB0AE40677E1C2C");
+
+    QTest::newRow("sha512") << int(QCryptographicHash::Sha512)
+                          << QByteArray("abc") << QByteArray("abc")
+                          << QByteArray::fromHex("DDAF35A193617ABACC417349AE20413112E6FA4E89A97EA20A9EEEE64B55D39A2192992A274FC1A836BA3C23A3FEEBBD454D4423643CE80E2A9AC94FA54CA49F")
+                          << QByteArray::fromHex("F3C41E7B63EE869596FC28BAD64120612C520F65928AB4D126C72C6998B551B8FF1CEDDFED4373E6717554DC89D1EEE6F0AB22FD3675E561ABA9AE26A3EEC53B");
 }
 
 void tst_QCryptographicHash::intermediary_result()
@@ -104,30 +113,6 @@ void tst_QCryptographicHash::intermediary_result()
 
     hash.reset();
 }
-
-
-void tst_QCryptographicHash::sha1()
-{
-//  SHA1("abc") =
-//      A9993E36 4706816A BA3E2571 7850C26C 9CD0D89D
-    QCOMPARE(QCryptographicHash::hash("abc", QCryptographicHash::Sha1).toHex().toUpper(),
-             QByteArray("A9993E364706816ABA3E25717850C26C9CD0D89D"));
-             
-//  SHA1("abcdbcdecdefdefgefghfghighijhijkijkljklmklmnlmnomnopnopq") =
-//      84983E44 1C3BD26E BAAE4AA1 F95129E5 E54670F1
-    QCOMPARE(QCryptographicHash::hash("abcdbcdecdefdefgefghfghighijhijkijkljklmklmnlmnomnopnopq",
-                                      QCryptographicHash::Sha1).toHex().toUpper(),
-             QByteArray("84983E441C3BD26EBAAE4AA1F95129E5E54670F1"));
-             
-//  SHA1(A million repetitions of "a") =
-//      34AA973C D4C4DAA4 F61EEB2B DBAD2731 6534016F
-    QByteArray as;
-    for (int i = 0; i < 1000000; ++i)
-        as += 'a';
-    QCOMPARE(QCryptographicHash::hash(as, QCryptographicHash::Sha1).toHex().toUpper(), 
-             QByteArray("34AA973CD4C4DAA4F61EEB2BDBAD27316534016F"));
-}
-
 
 QTEST_MAIN(tst_QCryptographicHash)
 

@@ -32,15 +32,9 @@
 #include <QFileInfo>
 #include <QHostInfo>
 #include <QProcess>
-# include <sys/types.h>
-# include <unistd.h>
-#if defined(Q_OS_LINUX)
-# include <sys/vfs.h>
-#elif defined(Q_OS_FREEBSD)
-# include <sys/param.h>
-# include <sys/mount.h>
-#endif
 
+#include <sys/types.h>
+#include <unistd.h>
 #include <stdio.h>
 #include <errno.h>
 
@@ -52,6 +46,8 @@ Q_DECLARE_METATYPE(QFile::FileError)
 
 //TESTED_CLASS=
 //TESTED_FILES=
+
+static const bool currentuserisroot = (::getuid() == 0);
 
 class tst_QFile : public QObject
 {
@@ -461,9 +457,10 @@ void tst_QFile::open()
 
     QFETCH( bool, ok );
 
-    if (::getuid() == 0)
+    if (currentuserisroot) {
         // root and Chuck Norris don't care for file permissions. Skip.
         QSKIP("Running this test as root doesn't make sense", SkipAll);
+    }
 
     if (filename.isEmpty())
         QTest::ignoreMessage(QtWarningMsg, "QFSFileEngine::open: No file name specified");
@@ -1157,6 +1154,11 @@ void tst_QFile::copyRemovesTemporaryFile() const
 
 void tst_QFile::copyShouldntOverwrite()
 {
+    if (currentuserisroot) {
+        // root and Chuck Norris don't care for file permissions. Skip.
+        QSKIP("Running this test as root doesn't make sense", SkipAll);
+    }
+
     // Copy should not overwrite existing files.
     QFile::remove("tst_qfile.cpy");
     QFile file(SRCDIR "tst_qfile.cpp");
@@ -1757,7 +1759,7 @@ public:
     virtual ~MyEngine() {}
 
     void setFileName(const QString &) {}
-    bool open(int ) { return false; }
+    bool open(QIODevice::OpenMode) { return false; }
     bool close() { return false; }
     bool flush() { return false; }
     qint64 size() const { return 123 + number; }
@@ -1991,8 +1993,6 @@ void tst_QFile::virtualFile()
     QString fname;
 #if defined(Q_OS_LINUX)
     fname = "/proc/self/maps";
-#elif defined(Q_OS_FREEBSD) || defined(Q_OS_NETBSD)
-    fname = "/proc/curproc/map";
 #else
     QSKIP("This platform does not have 0-sized virtual files", SkipAll);
 #endif
@@ -2062,9 +2062,13 @@ void tst_QFile::rename_data()
     QTest::newRow("a -> .") << QString("a") << QString(".") << false;
     QTest::newRow("renamefile -> renamefile") << QString("renamefile") << QString("renamefile") << false;
     QTest::newRow("renamefile -> noreadfile") << QString("renamefile") << QString("noreadfile") << false;
-    QTest::newRow("renamefile -> /etc/renamefile") << QString("renamefile") << QString("/etc/renamefile") << false;
     QTest::newRow("renamefile -> renamedfile") << QString("renamefile") << QString("renamedfile") << true;
     QTest::newRow("renamefile -> ..") << QString("renamefile") << QString("..") << false;
+
+    if (!currentuserisroot) {
+        // root and Chuck Norris don't care for permissions.
+        QTest::newRow("renamefile -> /etc/renamefile") << QString("renamefile") << QString("/etc/renamefile") << false;
+    }
 }
 
 void tst_QFile::rename()
@@ -2523,7 +2527,7 @@ void tst_QFile::map()
 
     file.close();
 
-    if (::getuid() != 0)
+    if (!currentuserisroot)
         // root always has permissions
     {
         // Change permissions on a file, just to confirm it would fail

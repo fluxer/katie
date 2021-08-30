@@ -1026,13 +1026,11 @@ static QMatrix parseTransformationMatrix(const QStringRef &value)
         } else if (state == SkewX) {
             if (points.count() != 1)
                 goto error;
-            const qreal deg2rad = qreal(0.017453292519943295769);
-            matrix.shear(qTan(points[0]*deg2rad), 0);
+            matrix.shear(qTan(points[0]*q_deg2rad), 0);
         } else if (state == SkewY) {
             if (points.count() != 1)
                 goto error;
-            const qreal deg2rad = qreal(0.017453292519943295769);
-            matrix.shear(0, qTan(points[0]*deg2rad));
+            matrix.shear(0, qTan(points[0]*q_deg2rad));
         }
     }
   error:
@@ -1453,9 +1451,9 @@ static bool parsePathDataFast(const QStringRef &dataStr, QPainterPath &path)
                  // As per 1.2  spec 8.3.2 The "moveto" commands
                  // If a 'moveto' is followed by multiple pairs of coordinates without explicit commands,
                  // the subsequent pairs shall be treated as implicit 'lineto' commands.
-                 pathElem = QLatin1Char('l');
-            }
+                pathElem = QLatin1Char('l');
                 break;
+            }
             case 'M': {
                 if (count < 2) {
                     num++;
@@ -1472,8 +1470,8 @@ static bool parsePathDataFast(const QStringRef &dataStr, QPainterPath &path)
                 // If a 'moveto' is followed by multiple pairs of coordinates without explicit commands,
                 // the subsequent pairs shall be treated as implicit 'lineto' commands.
                 pathElem = QLatin1Char('L');
-            }
                 break;
+            }
             case 'z':
             case 'Z': {
                 x = x0;
@@ -1481,8 +1479,8 @@ static bool parsePathDataFast(const QStringRef &dataStr, QPainterPath &path)
                 count--; // skip dummy
                 num++;
                 path.closeSubpath();
-            }
                 break;
+            }
             case 'l': {
                 if (count < 2) {
                     num++;
@@ -1494,9 +1492,8 @@ static bool parsePathDataFast(const QStringRef &dataStr, QPainterPath &path)
                 num += 2;
                 count -= 2;
                 path.lineTo(x, y);
-
-            }
                 break;
+            }
             case 'L': {
                 if (count < 2) {
                     num++;
@@ -1508,36 +1505,36 @@ static bool parsePathDataFast(const QStringRef &dataStr, QPainterPath &path)
                 num += 2;
                 count -= 2;
                 path.lineTo(x, y);
-            }
                 break;
+            }
             case 'h': {
                 x = num[0] + offsetX;
                 num++;
                 count--;
                 path.lineTo(x, y);
-            }
                 break;
+            }
             case 'H': {
                 x = num[0];
                 num++;
                 count--;
                 path.lineTo(x, y);
-            }
                 break;
+            }
             case 'v': {
                 y = num[0] + offsetY;
                 num++;
                 count--;
                 path.lineTo(x, y);
-            }
                 break;
+            }
             case 'V': {
                 y = num[0];
                 num++;
                 count--;
                 path.lineTo(x, y);
-            }
                 break;
+            }
             case 'c': {
                 if (count < 6) {
                     num += count;
@@ -1711,8 +1708,8 @@ static bool parsePathDataFast(const QStringRef &dataStr, QPainterPath &path)
 
                 x = ex;
                 y = ey;
-            }
                 break;
+            }
             case 'A': {
                 if (count < 7) {
                     num += count;
@@ -1734,8 +1731,8 @@ static bool parsePathDataFast(const QStringRef &dataStr, QPainterPath &path)
 
                 x = ex;
                 y = ey;
-            }
                 break;
+            }
             default:
                 return false;
             }
@@ -2009,7 +2006,7 @@ static QPainter::CompositionMode svgToQtCompositionMode(const QString &op)
     } else if (op == QLatin1String("exclusion")) {
         return QPainter::CompositionMode_Exclusion;
     } else {
-        qDebug() <<"Operation: " << op << " is not implemented";
+        qWarning() << "Operation: " << op << " is not implemented";
     }
 
     return QPainter::CompositionMode_SourceOver;

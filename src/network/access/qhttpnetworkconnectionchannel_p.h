@@ -92,9 +92,6 @@ public:
     bool proxyCredentialsSent;
     bool ignoreAllSslErrors;
     QList<QSslError> ignoreSslErrorsList;
-#ifndef QT_NO_BEARERMANAGEMENT
-    QSharedPointer<QNetworkSession> networkSession;
-#endif
 
     // HTTP pipelining -> http://en.wikipedia.org/wiki/Http_pipelining
     enum PipeliningSupport {

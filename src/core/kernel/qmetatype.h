@@ -155,9 +155,9 @@ namespace QtPrivate {
 }
 
 template <typename T>
-int qRegisterMetaType(const char *typeName, T * dummy = nullptr)
+int qRegisterMetaType(const char *typeName, bool notypedef = false)
 {
-    const int typedefOf = dummy ? -1 : QtPrivate::QMetaTypeIdHelper<T>::qt_metatype_id();
+    const int typedefOf = (notypedef ? -1 : QtPrivate::QMetaTypeIdHelper<T>::qt_metatype_id());
     if (typedefOf != -1)
         return QMetaType::registerTypedef(typeName, typedefOf);
 
@@ -172,7 +172,7 @@ int qRegisterMetaType(const char *typeName, T * dummy = nullptr)
 
 #ifndef QT_NO_DATASTREAM
 template <typename T>
-void qRegisterMetaTypeStreamOperators(const char *typeName, T * /* dummy */ = nullptr)
+void qRegisterMetaTypeStreamOperators(const char *typeName)
 {
     typedef void(*SavePtr)(QDataStream &, const T *);
     typedef void(*LoadPtr)(QDataStream &, T *);
@@ -192,7 +192,7 @@ inline int qMetaTypeId()
 }
 
 template <typename T>
-inline int qRegisterMetaType(T * dummy = nullptr)
+inline int qRegisterMetaType()
 {
     return qMetaTypeId<T>();
 }
@@ -224,8 +224,7 @@ inline int qRegisterMetaTypeStreamOperators()
         static int qt_metatype_id()                                     \
             {                                                           \
                 static int metatype_id =                                \
-                    qRegisterMetaType< TYPE >(#TYPE,                    \
-                    reinterpret_cast< TYPE *>(quintptr(-1)));           \
+                    qRegisterMetaType< TYPE >(#TYPE, true);             \
                 return metatype_id;                                     \
             }                                                           \
     };                                                                  \

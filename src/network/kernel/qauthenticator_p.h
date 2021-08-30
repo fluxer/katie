@@ -46,7 +46,7 @@ class QHttpResponseHeader;
 class Q_AUTOTEST_EXPORT QAuthenticatorPrivate
 {
 public:
-    enum Method { None, Basic, Plain, Login, Ntlm, CramMd5, DigestMd5 };
+    enum Method { None, Basic, Ntlm, DigestMd5 };
     QAuthenticatorPrivate();
     ~QAuthenticatorPrivate();
 

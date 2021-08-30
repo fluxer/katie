@@ -191,7 +191,7 @@ bool QLocalServer::isListening() const
 bool QLocalServer::listen(const QString &name)
 {
     Q_D(QLocalServer);
-    if (isListening()) {
+    if (Q_UNLIKELY(isListening())) {
         qWarning("QLocalServer::listen() called when already listening");
         return false;
     }

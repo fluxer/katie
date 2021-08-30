@@ -853,7 +853,7 @@ void QGraphicsItemPrivate::updateAncestorFlag(QGraphicsItem::GraphicsItemFlag ch
 
 void QGraphicsItemPrivate::updateAncestorFlags()
 {
-    int flags = 0;
+    uint flags = 0;
     if (parent) {
         // Inherit the parent's ancestor flags.
         QGraphicsItemPrivate *pd = parent->d_ptr.data();
@@ -1773,7 +1773,7 @@ void QGraphicsItem::setFlags(GraphicsItemFlags flags)
 
     // Flags that alter the geometry of the item (or its children).
     const quint32 geomChangeFlagsMask = (ItemClipsChildrenToShape | ItemClipsToShape | ItemIgnoresTransformations | ItemIsSelectable);
-    bool fullUpdate = (quint32(flags) & geomChangeFlagsMask) != (d_ptr->flags & geomChangeFlagsMask);
+    bool fullUpdate = (quint32(flags) & geomChangeFlagsMask) != (quint32(d_ptr->flags) & geomChangeFlagsMask);
     if (fullUpdate)
         d_ptr->updatePaintedViewBoundingRects(/*children=*/true);
 

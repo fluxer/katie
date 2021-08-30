@@ -31,8 +31,6 @@
 
 QT_BEGIN_NAMESPACE
 
-class QFileExtension;
-class QFileExtensionResult;
 class QVariant;
 class QAbstractFileEngineIterator;
 class QAbstractFileEnginePrivate;

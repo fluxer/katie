@@ -35,7 +35,7 @@ katie_generate_package(KtXml "KtCore")
 katie_setup_target(KtXml ${XML_SOURCES} ${XML_HEADERS})
 
 add_library(KtXml ${KATIE_TYPE} ${KtXml_SOURCES})
-target_link_libraries(KtXml ${EXTRA_XML_LIBS})
+target_link_libraries(KtXml PRIVATE ${EXTRA_XML_LIBS})
 set_target_properties(KtXml PROPERTIES
     VERSION ${KATIE_MAJOR}.${KATIE_MINOR}
     SOVERSION ${KATIE_VERSION}

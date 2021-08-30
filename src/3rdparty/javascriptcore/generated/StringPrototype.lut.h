@@ -4,7 +4,7 @@
 
 namespace JSC {
 
-static const struct HashTableValue stringTableValues[36] = {
+static const struct HashTableValue stringTableValues[23] = {
    { "toString", DontEnum|Function, (intptr_t)stringProtoFuncToString, (intptr_t)0 },
    { "valueOf", DontEnum|Function, (intptr_t)stringProtoFuncToString, (intptr_t)0 },
    { "charAt", DontEnum|Function, (intptr_t)stringProtoFuncCharAt, (intptr_t)1 },
@@ -24,19 +24,6 @@ static const struct HashTableValue stringTableValues[36] = {
    { "localeCompare", DontEnum|Function, (intptr_t)stringProtoFuncLocaleCompare, (intptr_t)1 },
    { "toLocaleLowerCase", DontEnum|Function, (intptr_t)stringProtoFuncToLowerCase, (intptr_t)0 },
    { "toLocaleUpperCase", DontEnum|Function, (intptr_t)stringProtoFuncToUpperCase, (intptr_t)0 },
-   { "big", DontEnum|Function, (intptr_t)stringProtoFuncBig, (intptr_t)0 },
-   { "small", DontEnum|Function, (intptr_t)stringProtoFuncSmall, (intptr_t)0 },
-   { "blink", DontEnum|Function, (intptr_t)stringProtoFuncBlink, (intptr_t)0 },
-   { "bold", DontEnum|Function, (intptr_t)stringProtoFuncBold, (intptr_t)0 },
-   { "fixed", DontEnum|Function, (intptr_t)stringProtoFuncFixed, (intptr_t)0 },
-   { "italics", DontEnum|Function, (intptr_t)stringProtoFuncItalics, (intptr_t)0 },
-   { "strike", DontEnum|Function, (intptr_t)stringProtoFuncStrike, (intptr_t)0 },
-   { "sub", DontEnum|Function, (intptr_t)stringProtoFuncSub, (intptr_t)0 },
-   { "sup", DontEnum|Function, (intptr_t)stringProtoFuncSup, (intptr_t)0 },
-   { "fontcolor", DontEnum|Function, (intptr_t)stringProtoFuncFontcolor, (intptr_t)1 },
-   { "fontsize", DontEnum|Function, (intptr_t)stringProtoFuncFontsize, (intptr_t)1 },
-   { "anchor", DontEnum|Function, (intptr_t)stringProtoFuncAnchor, (intptr_t)1 },
-   { "link", DontEnum|Function, (intptr_t)stringProtoFuncLink, (intptr_t)1 },
    { "trim", DontEnum|Function, (intptr_t)stringProtoFuncTrim, (intptr_t)0 },
    { "trimLeft", DontEnum|Function, (intptr_t)stringProtoFuncTrimLeft, (intptr_t)0 },
    { "trimRight", DontEnum|Function, (intptr_t)stringProtoFuncTrimRight, (intptr_t)0 },
@@ -44,5 +31,5 @@ static const struct HashTableValue stringTableValues[36] = {
 };
 
 extern const HashTable stringTable =
-    { 133, 127, stringTableValues, 0 };
+    { 66, 63, stringTableValues, 0 };
 } // namespace

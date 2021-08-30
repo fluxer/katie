@@ -307,7 +307,6 @@ public:
             d_func()->attributes.stroke = QLatin1String("none");
             d_func()->attributes.strokeOpacity = QString();
             return;
-            break;
         case Qt::SolidLine: {
             QString color, colorOpacity;
 
@@ -318,8 +317,8 @@ public:
 
             stream() << QLatin1String("stroke=\"")<<color<< QLatin1String("\" ");
             stream() << QLatin1String("stroke-opacity=\"")<<colorOpacity<< QLatin1String("\" ");
-        }
             break;
+        }
         case Qt::DashLine:
         case Qt::DotLine:
         case Qt::DashDotLine:
@@ -397,8 +396,8 @@ public:
                      << colorOpacity << "\" ";
             d_func()->attributes.fill = color;
             d_func()->attributes.fillOpacity = colorOpacity;
-        }
             break;
+        }
         case Qt::LinearGradientPattern:
             saveLinearGradientBrush(sbrush.gradient());
             d_func()->attributes.fill = QString::fromLatin1("url(#%1)").arg(d_func()->currentGradientName);
@@ -424,7 +423,7 @@ public:
             return;
             break;
         default:
-           break;
+            break;
         }
     }
     void qfontToSvg(const QFont &sfont)
@@ -451,6 +450,7 @@ public:
             break;
         default:
             svgWeight *= 10;
+            break;
         }
 
         d->attributes.font_weight = QString::number(svgWeight);
@@ -889,7 +889,7 @@ void QSvgPaintEngine::drawImage(const QRectF &r, const QImage &image,
 
     QByteArray data;
     QBuffer buffer(&data);
-    buffer.open(QBuffer::ReadWrite);
+    buffer.open(QBuffer::WriteOnly);
     image.save(&buffer, "PNG");
     buffer.close();
     stream() << "xlink:href=\"data:image/png;base64,"

@@ -1102,11 +1102,7 @@ QList<int> QFontDatabase::pointSizes(const QString &family,
     if (!fam) return sizes;
 
 
-#ifdef Q_WS_X11
-    int dpi = QX11Info::appDpiY();
-#else
-    const int dpi = QX11Info::appDpiY(); // embedded
-#endif
+    const int dpi = QX11Info::appDpiY();
 
     for (int j = 0; j < fam->count; j++) {
         QtFontFoundry *foundry = fam->foundries[j];

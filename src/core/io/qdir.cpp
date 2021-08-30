@@ -39,11 +39,6 @@
 #include "qscopedpointer.h"
 #include "qcorecommon_p.h"
 
-#ifndef QT_BOOTSTRAPPED
-#  include "qresource.h"
-#  include "qreadwritelock.h"
-#endif
-
 #include <stdlib.h>
 
 QT_BEGIN_NAMESPACE

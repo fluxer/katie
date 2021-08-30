@@ -46,6 +46,7 @@ There are several things you should be aware before considering Katie:
   - dropped Valgrind support
   - dropped recursive mutex and lock support
   - dropped wide character and string support
+  - dropped network interfaces management support
 
  - some additions have been made: 
   - JSON document handler

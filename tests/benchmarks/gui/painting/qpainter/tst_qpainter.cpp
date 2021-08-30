@@ -27,6 +27,7 @@
 #include <QImage>
 #include <QPaintEngine>
 #include <qmath.h>
+#include <qguicommon_p.h>
 
 #include <qpixmap_raster_p.h>
 
@@ -628,14 +629,6 @@ void tst_QPainter::drawPixmap_data()
         "ARGB32",
         "ARGB32_pm",
         "RGB16",
-        "ARGB8565_pm",
-        "RGB666",
-        "ARGB6666_pm",
-        "RGB555",
-        "ARGB8555_pm",
-        "RGB888",
-        "RGB444",
-        "ARGB4444_pm"
     };
 
     for (int tar=4; tar<QImage::NImageFormats; ++tar) {
@@ -1156,8 +1149,6 @@ void tst_QPainter::clipAndFill()
 
 QTransform tst_QPainter::transformForAngle(qreal angle)
 {
-    static const qreal inv_dist_to_plane = 1. / 1024.;
-
     QTransform transform;
 
     QTransform rotTrans;

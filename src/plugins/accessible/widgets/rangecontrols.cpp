@@ -853,7 +853,7 @@ QRect QAccessibleDial::rect(int child) const
                                                         : (dial()->maximum() - dial()->value());
         qreal angle = 0;
         if (dial()->maximum() == dial()->minimum()) {
-            angle = M_PI / 2;
+            angle = M_PI_2;
         } else if (dial()->wrapping()) {
             angle = M_PI * 3 / 2 - (sliderValue - dial()->minimum()) * 2 * M_PI
                     / (dial()->maximum() - dial()->minimum());

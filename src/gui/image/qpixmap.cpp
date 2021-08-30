@@ -379,7 +379,7 @@ void QPixmap::scroll(int dx, int dy, const QRect &rect, QRegion *exposed)
 
 QPixmap &QPixmap::operator=(const QPixmap &pixmap)
 {
-    if (paintingActive()) {
+    if (Q_UNLIKELY(paintingActive())) {
         qWarning("QPixmap::operator=: Cannot assign to pixmap during painting");
         return *this;
     }
@@ -626,12 +626,12 @@ int QPixmap::depth() const
 */
 void QPixmap::setMask(const QBitmap &mask)
 {
-    if (paintingActive()) {
+    if (Q_UNLIKELY(paintingActive())) {
         qWarning("QPixmap::setMask: Cannot set mask while pixmap is being painted on");
         return;
     }
 
-    if (!mask.isNull() && mask.size() != size()) {
+    if (Q_UNLIKELY(!mask.isNull() && mask.size() != size())) {
         qWarning("QPixmap::setMask() mask size differs from pixmap size");
         return;
     }
@@ -870,7 +870,7 @@ void QPixmap::fill(const QColor &color)
 
     // Some people are probably already calling fill while a painter is active, so to not break
     // their programs, only print a warning and return when the fill operation could cause a crash.
-    if (paintingActive() && (color.alpha() != 255) && !hasAlphaChannel()) {
+    if (Q_UNLIKELY(paintingActive() && (color.alpha() != 255) && !hasAlphaChannel())) {
         qWarning("QPixmap::fill: Cannot fill while pixmap is being painted on");
         return;
     }
@@ -1201,7 +1201,7 @@ bool QPixmap::convertFromImage(const QImage &image, Qt::ImageConversionFlags fla
 */
 QPixmap QPixmap::scaled(const QSize& s, Qt::AspectRatioMode aspectMode, Qt::TransformationMode mode) const
 {
-    if (isNull()) {
+    if (Q_UNLIKELY(isNull())) {
         qWarning("QPixmap::scaled: Pixmap is a null pixmap");
         return QPixmap();
     }
@@ -1236,7 +1236,7 @@ QPixmap QPixmap::scaled(const QSize& s, Qt::AspectRatioMode aspectMode, Qt::Tran
 */
 QPixmap QPixmap::scaledToWidth(int w, Qt::TransformationMode mode) const
 {
-    if (isNull()) {
+    if (Q_UNLIKELY(isNull())) {
         qWarning("QPixmap::scaleWidth: Pixmap is a null pixmap");
         return copy();
     }
@@ -1264,7 +1264,7 @@ QPixmap QPixmap::scaledToWidth(int w, Qt::TransformationMode mode) const
 */
 QPixmap QPixmap::scaledToHeight(int h, Qt::TransformationMode mode) const
 {
-    if (isNull()) {
+    if (Q_UNLIKELY(isNull())) {
         qWarning("QPixmap::scaleHeight: Pixmap is a null pixmap");
         return copy();
     }
@@ -1587,13 +1587,13 @@ void QPixmap::setAlphaChannel(const QPixmap &alphaChannel)
     if (alphaChannel.isNull())
         return;
 
-    if (paintingActive()) {
+    if (Q_UNLIKELY(paintingActive())) {
         qWarning("QPixmap::setAlphaChannel: "
                  "Cannot set alpha channel while pixmap is being painted on");
         return;
     }
 
-    if (width() != alphaChannel.width() && height() != alphaChannel.height()) {
+    if (Q_UNLIKELY(width() != alphaChannel.width() && height() != alphaChannel.height())) {
         qWarning("QPixmap::setAlphaChannel: "
                  "The pixmap and the alpha channel pixmap must have the same size");
         return;

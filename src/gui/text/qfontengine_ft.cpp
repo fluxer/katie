@@ -28,6 +28,7 @@
 #include "qmath.h"
 #include "qharfbuzz_p.h"
 #include "qfontengine_ft_p.h"
+#include "qguicommon_p.h"
 
 #include <ft2build.h>
 #include FT_FREETYPE_H
@@ -1697,14 +1698,11 @@ QImage QFontEngineFT::alphaMapForGlyph(glyph_t g, QFixed subPixelPosition)
 
     QImage img(glyph->width, glyph->height, antialias ? QImage::Format_Indexed8 : QImage::Format_Mono);
     if (antialias) {
-        QVector<QRgb> colors(256);
-        for (int i=0; i<256; ++i)
-            colors[i] = qRgba(0, 0, 0, i);
-        img.setColorTable(colors);
+        img.setColorTable(alphaColorTable());
     } else {
         QVector<QRgb> colors(2);
-        colors[0] = qRgba(0, 0, 0, 0);
-        colors[1] = qRgba(0, 0, 0, 255);
+        colors[0] = qt_transparentrgba;
+        colors[1] = qt_blackrgba;
         img.setColorTable(colors);
     }
     Q_ASSERT(img.bytesPerLine() == pitch);

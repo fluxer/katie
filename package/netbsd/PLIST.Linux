@@ -1,3 +1,0 @@
-@comment $NetBSD$
-lib/katie/plugins/bearer/libqconnmanbearer.so
-lib/katie/plugins/bearer/libqnmbearer.so

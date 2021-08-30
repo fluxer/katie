@@ -1636,14 +1636,15 @@ static const qint16 FontSubstitutesTblSize = sizeof(FontSubstitutesTbl) / sizeof
 // create substitution dict
 static void initFontSubst()
 {
+#if !defined(QT_NO_FONTCONFIG)
+    if (qt_x11Data->has_fontconfig)
+        return;
+#endif
+
     QFontSubst *fontSubst = globalFontSubst();
     Q_ASSERT(fontSubst != 0);
     if (!fontSubst->isEmpty())
         return;
-#if defined(Q_WS_X11) && !defined(QT_NO_FONTCONFIG)
-    if (qt_x11Data->has_fontconfig)
-        return;
-#endif
 
     for (qint16 i = 0; i < FontSubstitutesTblSize; i++) {
         QStringList &list = (*fontSubst)[FontSubstitutesTbl[i].original];

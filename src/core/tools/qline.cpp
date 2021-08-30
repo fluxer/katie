@@ -24,6 +24,7 @@
 #include "qdatastream.h"
 #include "qmath.h"
 #include "qnumeric.h"
+#include "qcorecommon_p.h"
 
 QT_BEGIN_NAMESPACE
 
@@ -281,16 +282,6 @@ QDataStream &operator>>(QDataStream &stream, QLine &line)
 }
 
 #endif // QT_NO_DATASTREAM
-
-inline static qreal q_deg2rad(qreal x)
-{
-    return x * qreal(0.01745329251994329576923690768489);    /* pi/180 */
-}
-
-inline static qreal q_rad2deg(qreal x)
-{
-    return x * qreal(57.295779513082320876798154814105);    /* 180/pi */
-}
 
 /*!
     \class QLineF
@@ -563,7 +554,7 @@ qreal QLineF::angle() const
     const qreal dx = pt2.x() - pt1.x();
     const qreal dy = pt2.y() - pt1.y();
 
-    const qreal theta = q_rad2deg(qAtan2(-dy, dx));
+    const qreal theta = (qAtan2(-dy, dx) * q_rad2deg);
 
     const qreal theta_normalized = theta < 0 ? theta + 360 : theta;
 
@@ -587,7 +578,7 @@ qreal QLineF::angle() const
 */
 void QLineF::setAngle(qreal angle)
 {
-    const qreal angleR = q_deg2rad(angle);
+    const qreal angleR = (angle * q_deg2rad);
     const qreal l = length();
 
     const qreal dx = qCos(angleR) * l;
@@ -609,7 +600,7 @@ void QLineF::setAngle(qreal angle)
 */
 QLineF QLineF::fromPolar(qreal length, qreal angle)
 {
-    const qreal angleR = q_deg2rad(angle);
+    const qreal angleR = (angle * q_deg2rad);
     return QLineF(0, 0, qCos(angleR) * length, -qSin(angleR) * length);
 }
 
@@ -801,7 +792,7 @@ qreal QLineF::angle(const QLineF &l) const
     qreal cos_line = (dx()*l.dx() + dy()*l.dy()) / (length()*l.length());
     // only accept cos_line in the range [-1,1], if it is outside, use 0 (we return 0 rather than PI for those cases)
     if (cos_line >= qreal(-1.0) && cos_line <= qreal(1.0))
-        return q_rad2deg(qAcos(cos_line));
+        return (qAcos(cos_line) * q_rad2deg);
     return 0;
 }
 

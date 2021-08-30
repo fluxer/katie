@@ -132,26 +132,21 @@ struct QGradientBrushData : public QBrushData
 
 struct QBrushDataPointerDeleter
 {
-    static inline void deleteData(QBrushData *d)
-    {
-        switch (d->style) {
-        case Qt::TexturePattern:
-            delete static_cast<QTexturedBrushData*>(d);
-            break;
-        case Qt::LinearGradientPattern:
-        case Qt::RadialGradientPattern:
-        case Qt::ConicalGradientPattern:
-            delete static_cast<QGradientBrushData*>(d);
-            break;
-        default:
-            delete d;
-        }
-    }
-
     static inline void cleanup(QBrushData *d)
     {
         if (d && !d->ref.deref()) {
-            deleteData(d);
+            switch (d->style) {
+            case Qt::TexturePattern:
+                delete static_cast<QTexturedBrushData*>(d);
+                break;
+            case Qt::LinearGradientPattern:
+            case Qt::RadialGradientPattern:
+            case Qt::ConicalGradientPattern:
+                delete static_cast<QGradientBrushData*>(d);
+                break;
+            default:
+                delete d;
+            }
         }
     }
 };
@@ -469,12 +464,6 @@ QBrush::QBrush(const QGradient &gradient)
 QBrush::~QBrush()
 {
 }
-
-void QBrush::cleanUp(QBrushData *x)
-{
-    QBrushDataPointerDeleter::deleteData(x);
-}
-
 
 void QBrush::detach(Qt::BrushStyle newStyle)
 {

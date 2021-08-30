@@ -191,7 +191,6 @@ static QScriptValue contextInfoToScriptValue(QScriptEngine *eng, const QScriptCo
     out.setProperty(QString::fromLatin1("scriptId"), QScriptValue(eng, qsreal(in.scriptId())));
     out.setProperty(QString::fromLatin1("fileName"), QScriptValue(eng, in.fileName()));
     out.setProperty(QString::fromLatin1("lineNumber"), QScriptValue(eng, in.lineNumber()));
-    out.setProperty(QString::fromLatin1("columnNumber"), QScriptValue(eng, in.columnNumber()));
     out.setProperty(QString::fromLatin1("functionName"), QScriptValue(eng, in.functionName()));
     return out;
 }

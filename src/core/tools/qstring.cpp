@@ -3202,7 +3202,7 @@ QByteArray QString::toAscii() const
 {
 #ifndef QT_NO_TEXTCODEC
     if (codecForCStrings)
-        return codecForCStrings->fromUnicode(*this);
+        return codecForCStrings->fromUnicode(unicode(), length());
 #endif // QT_NO_TEXTCODEC
     return toLatin1();
 }
@@ -3234,7 +3234,7 @@ static QByteArray toLocal8Bit_helper(const QChar *data, int length)
 QByteArray QString::toLocal8Bit() const
 {
 #ifndef QT_NO_TEXTCODEC
-    return QTextCodec::codecForLocale()->fromUnicode(*this);
+    return QTextCodec::codecForLocale()->fromUnicode(unicode(), length());
 #else
     return toLatin1();
 #endif // QT_NO_TEXTCODEC
@@ -6693,7 +6693,8 @@ QDataStream &operator>>(QDataStream &in, QString &str)
 
         int len = (bytes / sizeof(QChar));
         str.resize(len);
-        if (in.readRawData(reinterpret_cast<char *>(str.data()), bytes) != bytes) {
+        const quint32 readlen = in.readRawData(reinterpret_cast<char *>(str.data()), bytes);
+        if (readlen != bytes) {
             str.clear();
             in.setStatus(QDataStream::ReadPastEnd);
             return in;

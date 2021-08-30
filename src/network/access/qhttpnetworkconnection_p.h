@@ -35,7 +35,6 @@
 #include <QtNetwork/qnetworkrequest.h>
 #include <QtNetwork/qnetworkreply.h>
 #include <QtNetwork/qabstractsocket.h>
-#include <QtNetwork/qnetworksession.h>
 #include <QtNetwork/qsslsocket.h>
 #include <QtNetwork/qsslerror.h>
 
@@ -47,7 +46,6 @@
 #include "qhttpnetworkheader_p.h"
 #include "qhttpnetworkrequest_p.h"
 #include "qhttpnetworkreply_p.h"
-
 #include "qhttpnetworkconnectionchannel_p.h"
 
 #ifndef QT_NO_HTTP
@@ -64,13 +62,8 @@ class Q_AUTOTEST_EXPORT QHttpNetworkConnection : public QObject
     Q_OBJECT
 public:
 
-#ifndef QT_NO_BEARERMANAGEMENT
-    QHttpNetworkConnection(const QString &hostName, quint16 port = 80, bool encrypt = false, QObject *parent = nullptr, QSharedPointer<QNetworkSession> networkSession = QSharedPointer<QNetworkSession>());
-    QHttpNetworkConnection(quint16 channelCount, const QString &hostName, quint16 port = 80, bool encrypt = false, QObject *parent = nullptr, QSharedPointer<QNetworkSession> networkSession = QSharedPointer<QNetworkSession>());
-#else
     QHttpNetworkConnection(const QString &hostName, quint16 port = 80, bool encrypt = false, QObject *parent = nullptr);
     QHttpNetworkConnection(quint16 channelCount, const QString &hostName, quint16 port = 80, bool encrypt = false, QObject *parent = nullptr);
-#endif
     ~QHttpNetworkConnection();
 
     //The hostname to which this is connected to.
@@ -185,10 +178,6 @@ public:
     //The request queues
     QList<HttpMessagePair> highPriorityQueue;
     QList<HttpMessagePair> lowPriorityQueue;
-
-#ifndef QT_NO_BEARERMANAGEMENT
-    QSharedPointer<QNetworkSession> networkSession;
-#endif
 
     friend class QHttpNetworkConnectionChannel;
 };

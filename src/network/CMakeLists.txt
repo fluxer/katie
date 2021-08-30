@@ -16,7 +16,6 @@ set(NETWORK_PUBLIC_HEADERS
     QLocalServer
     QLocalSocket
     QNetworkAccessManager
-    QNetworkConfiguration
     QNetworkCookie
     QNetworkCookieJar
     QNetworkDiskCache
@@ -24,7 +23,6 @@ set(NETWORK_PUBLIC_HEADERS
     QNetworkProxy
     QNetworkReply
     QNetworkRequest
-    QNetworkSession
     QSsl
     QSslCertificate
     QSslCipher
@@ -85,15 +83,6 @@ set(NETWORK_HEADERS
     ${CMAKE_CURRENT_SOURCE_DIR}/access/qhttpthreaddelegate_p.h
     ${CMAKE_CURRENT_SOURCE_DIR}/access/qhttpmultipart.h
     ${CMAKE_CURRENT_SOURCE_DIR}/access/qhttpmultipart_p.h
-    ${CMAKE_CURRENT_SOURCE_DIR}/bearer/qnetworkconfiguration.h
-    ${CMAKE_CURRENT_SOURCE_DIR}/bearer/qnetworksession.h
-    ${CMAKE_CURRENT_SOURCE_DIR}/bearer/qnetworkconfigmanager.h
-    ${CMAKE_CURRENT_SOURCE_DIR}/bearer/qnetworkconfigmanager_p.h
-    ${CMAKE_CURRENT_SOURCE_DIR}/bearer/qnetworkconfiguration_p.h
-    ${CMAKE_CURRENT_SOURCE_DIR}/bearer/qnetworksession_p.h
-    ${CMAKE_CURRENT_SOURCE_DIR}/bearer/qbearerengine_p.h
-    ${CMAKE_CURRENT_SOURCE_DIR}/bearer/qbearerplugin_p.h
-    ${CMAKE_CURRENT_SOURCE_DIR}/bearer/qsharednetworksession_p.h
     ${CMAKE_CURRENT_SOURCE_DIR}/kernel/qauthenticator.h
     ${CMAKE_CURRENT_SOURCE_DIR}/kernel/qauthenticator_p.h
     ${CMAKE_CURRENT_SOURCE_DIR}/kernel/qcryptographichash.h
@@ -163,13 +152,6 @@ set(NETWORK_SOURCES
     ${CMAKE_CURRENT_SOURCE_DIR}/access/qnetworkdiskcache.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/access/qhttpthreaddelegate.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/access/qhttpmultipart.cpp
-    ${CMAKE_CURRENT_SOURCE_DIR}/bearer/qnetworksession.cpp
-    ${CMAKE_CURRENT_SOURCE_DIR}/bearer/qnetworkconfigmanager.cpp
-    ${CMAKE_CURRENT_SOURCE_DIR}/bearer/qnetworkconfiguration.cpp
-    ${CMAKE_CURRENT_SOURCE_DIR}/bearer/qnetworkconfigmanager_p.cpp
-    ${CMAKE_CURRENT_SOURCE_DIR}/bearer/qbearerengine.cpp
-    ${CMAKE_CURRENT_SOURCE_DIR}/bearer/qbearerplugin.cpp
-    ${CMAKE_CURRENT_SOURCE_DIR}/bearer/qsharednetworksession.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/kernel/qauthenticator.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/kernel/qcryptographichash.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/kernel/qhostaddress.cpp

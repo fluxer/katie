@@ -30,6 +30,7 @@
 #include "qnumeric.h"
 #include "qbezier_p.h"
 #include "qguicommon_p.h"
+#include "qcorecommon_p.h"
 
 QT_BEGIN_NAMESPACE
 
@@ -599,7 +600,7 @@ QTransform & QTransform::rotate(qreal a, Qt::Axis axis)
     else if (a == 180.)
         cosa = -1.;
     else{
-        qreal b = deg2rad*a;          // convert to radians
+        qreal b = q_deg2rad*a;          // convert to radians
         sina = qSin(b);               // fast and convenient
         cosa = qCos(b);
     }

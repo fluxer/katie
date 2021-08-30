@@ -78,10 +78,6 @@ public:
     Q_PRIVATE_SLOT(d_func(), void _q_copyReadChannelFinished())
     Q_PRIVATE_SLOT(d_func(), void _q_bufferOutgoingData())
     Q_PRIVATE_SLOT(d_func(), void _q_bufferOutgoingDataFinished())
-#ifndef QT_NO_BEARERMANAGEMENT
-    Q_PRIVATE_SLOT(d_func(), void _q_networkSessionConnected())
-    Q_PRIVATE_SLOT(d_func(), void _q_networkSessionFailed())
-#endif
     Q_PRIVATE_SLOT(d_func(), void _q_cacheDestroyed())
     Q_PRIVATE_SLOT(d_func(), void _q_cacheSaveDeviceAboutToClose())
 };
@@ -116,10 +112,6 @@ public:
     void _q_copyReadChannelFinished();
     void _q_bufferOutgoingData();
     void _q_bufferOutgoingDataFinished();
-#ifndef QT_NO_BEARERMANAGEMENT
-    void _q_networkSessionConnected();
-    void _q_networkSessionFailed();
-#endif
     void _q_cacheDestroyed();
     void _q_cacheSaveDeviceAboutToClose();
 
@@ -198,22 +190,6 @@ public:
 
     Q_DECLARE_PUBLIC(QNetworkReplyImpl)
 };
-
-#ifndef QT_NO_BEARERMANAGEMENT
-class QDisabledNetworkReply : public QNetworkReply
-{
-    Q_OBJECT
-
-public:
-    QDisabledNetworkReply(QObject *parent, const QNetworkRequest &req,
-                          QNetworkAccessManager::Operation op);
-    ~QDisabledNetworkReply();
-
-    void abort() { }
-protected:
-    qint64 readData(char *, qint64) { return -1; }
-};
-#endif
 
 QT_END_NAMESPACE
 

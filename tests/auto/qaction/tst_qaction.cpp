@@ -300,6 +300,7 @@ void tst_QAction::task200823_tooltip()
 
     QString ref = QString("foo (%1)").arg(QKeySequence(shortcut).toString());
     QCOMPARE(action->toolTip(), ref);
+    delete action;
 }
 
 void tst_QAction::task229128TriggeredSignalWithoutActiongroup()

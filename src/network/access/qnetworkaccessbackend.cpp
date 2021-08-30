@@ -21,13 +21,11 @@
 
 #include "qnetworkaccessbackend_p.h"
 #include "qnetworkaccessmanager_p.h"
-#include "qnetworkconfigmanager.h"
 #include "qnetworkrequest.h"
 #include "qnetworkreply.h"
 #include "qnetworkreply_p.h"
 #include "qhash.h"
 #include "qmutex.h"
-#include "qnetworksession_p.h"
 #include "qnetworkaccesscachebackend_p.h"
 #include "qabstractnetworkcache.h"
 #include "qhostinfo.h"
@@ -342,58 +340,9 @@ void QNetworkAccessBackend::sslErrors(const QList<QSslError> &errors)
 */
 bool QNetworkAccessBackend::start()
 {
-#ifndef QT_NO_BEARERMANAGEMENT
-    // For bearer, check if session start is required
-    QSharedPointer<QNetworkSession> networkSession(manager->getNetworkSession());
-    if (networkSession) {
-        // session required
-        if (networkSession->isOpen() &&
-            networkSession->state() == QNetworkSession::Connected) {
-            // Session is already open and ready to use.
-            // copy network session down to the backend
-            setProperty("_q_networksession", QVariant::fromValue(networkSession));
-        } else {
-            // Session not ready, but can skip for loopback connections
-
-            // This is not ideal.
-            const QString host = reply->url.host();
-
-            if (host == QLatin1String("localhost") ||
-                QHostAddress(host) == QHostAddress::LocalHost ||
-                QHostAddress(host) == QHostAddress::LocalHostIPv6) {
-                // Don't need an open session for localhost access.
-            } else {
-                // need to wait for session to be opened
-                return false;
-            }
-        }
-    }
-#endif
-
 #ifndef QT_NO_NETWORKPROXY
-#ifndef QT_NO_BEARERMANAGEMENT
-    // Get the proxy settings from the network session (in the case of service networks,
-    // the proxy settings change depending which AP was activated)
-    QNetworkSession *session = networkSession.data();
-    QNetworkConfiguration config;
-    if (session) {
-        QNetworkConfigurationManager configManager;
-        // The active configuration tells us what IAP is in use
-        QVariant v = session->sessionProperty(QLatin1String("ActiveConfiguration"));
-        if (v.isValid())
-            config = configManager.configurationFromIdentifier(qvariant_cast<QString>(v));
-        // Fallback to using the configuration if no active configuration
-        if (!config.isValid())
-            config = session->configuration();
-        // or unspecified configuration if that is no good either
-        if (!config.isValid())
-            config = QNetworkConfiguration();
-    }
-    reply->proxyList = manager->queryProxy(QNetworkProxyQuery(config, url()));
-#else // QT_NO_BEARERMANAGEMENT
-    // Without bearer management, the proxy depends only on the url
+    // the proxy depends only on the url
     reply->proxyList = manager->queryProxy(QNetworkProxyQuery(url()));
-#endif
 #endif
 
     // now start the request

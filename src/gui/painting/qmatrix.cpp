@@ -26,7 +26,7 @@
 #include "qpainterpath.h"
 #include "qvariant.h"
 #include "qmath.h"
-#include "qguicommon_p.h"
+#include "qcorecommon_p.h"
 
 #include <limits.h>
 
@@ -880,7 +880,7 @@ QMatrix &QMatrix::rotate(qreal a)
     else if (a == 180.)
         cosa = -1.;
     else{
-        qreal b = deg2rad*a;                        // convert to radians
+        qreal b = q_deg2rad*a;        // convert to radians
         sina = qSin(b);               // fast and convenient
         cosa = qCos(b);
     }

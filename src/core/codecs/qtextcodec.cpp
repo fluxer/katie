@@ -157,7 +157,7 @@ static void setupLocaleMapper()
 QTextCodec::ConverterState::~ConverterState()
 {
     if (d) {
-        ucnv_close(static_cast<UConverter *>(d));
+        ucnv_close(static_cast<UConverter*>(d));
     }
 }
 
@@ -170,10 +170,11 @@ QTextCodec::ConverterState& QTextCodec::ConverterState::operator=(const QTextCod
 {
     flags = other.flags;
     invalidChars = other.invalidChars;
+    if (d) {
+        ucnv_close(static_cast<UConverter*>(d));
+        d = nullptr;
+    }
     if (other.d) {
-        if (d) {
-            ucnv_close(static_cast<UConverter *>(d));
-        }
         UErrorCode error = U_ZERO_ERROR;
         d = ucnv_safeClone(static_cast<UConverter*>(other.d), nullptr, nullptr, &error);
         if (Q_UNLIKELY(U_FAILURE(error))) {

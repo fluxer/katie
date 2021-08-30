@@ -974,7 +974,7 @@ void QTextEngine::shapeTextWithHarfbuzz(int item) const
 
     entire_shaper_item.num_glyphs = qMax(layoutData->glyphLayout.numGlyphs - layoutData->used, int(entire_shaper_item.item.length));
     if (! ensureSpace(entire_shaper_item.num_glyphs)) {
-        if (hasCaseChange(si))
+        if (hasCaseChange(si) && entire_shaper_item.string != upperCased)
             delete [] const_cast<HB_UChar16 *>(entire_shaper_item.string);
         return;
     }
@@ -982,7 +982,7 @@ void QTextEngine::shapeTextWithHarfbuzz(int item) const
 
     if (!stringToGlyphs(&entire_shaper_item, &initialGlyphs, font)) {
         if (! ensureSpace(entire_shaper_item.num_glyphs)) {
-            if (hasCaseChange(si))
+            if (hasCaseChange(si) && entire_shaper_item.string != upperCased)
                 delete [] const_cast<HB_UChar16 *>(entire_shaper_item.string);
             return;
         }
@@ -1062,7 +1062,7 @@ void QTextEngine::shapeTextWithHarfbuzz(int item) const
 
         do {
             if (! ensureSpace(glyph_pos + shaper_item.num_glyphs + remaining_glyphs)) {
-                if (hasCaseChange(si))
+                if (hasCaseChange(si) && entire_shaper_item.string != upperCased)
                     delete [] const_cast<HB_UChar16 *>(entire_shaper_item.string);
                 return;
             }
