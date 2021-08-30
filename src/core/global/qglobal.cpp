@@ -968,24 +968,6 @@ const char *qVersion()
     If this macro is used outside a function, the behavior is undefined.
  */
 
-/*
-  The Q_CHECK_PTR macro calls this function if an allocation check
-  fails.
-*/
-void qt_check_pointer(const char *n, int l)
-{
-    qFatal("In file %s, line %d: Out of memory", n, l);
-}
-
-/* \internal
-   Allows you to throw an exception without including <new>
-   Called internally from Q_CHECK_PTR on certain OS combinations
-*/
-void qBadAlloc()
-{
-    QT_THROW(std::bad_alloc());
-}
-
 #ifndef QT_NO_EXECINFO
 static void qt_print_backtrace()
 {
@@ -1111,6 +1093,15 @@ void qt_assert_x(const char *where, const char *what, const char *file, int line
         qt_print_backtrace();
 #endif
     qFatal("ASSERT failure in %s: \"%s\", file %s, line %d", where, what, file, line);
+}
+
+/*
+  The Q_CHECK_PTR macro calls this function if an allocation check
+  fails.
+*/
+void qt_check_pointer(const char *file, int line)
+{
+    qFatal("In file %s, line %d: Out of memory", file, line);
 }
 
 static QtMsgHandler handler = 0;                // pointer to debug handler
