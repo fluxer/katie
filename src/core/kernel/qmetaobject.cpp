@@ -2237,11 +2237,11 @@ bool QMetaProperty::write(QObject *object, const QVariant &value) const
     int t = QVariant::Invalid;
     if (isEnumType()) {
         if (v.type() == QVariant::String) {
-            const char* cValue = value.toByteArray().constData();
+            const QByteArray bValue = value.toByteArray();
             if (isFlagType())
-                v = QVariant(menum.keysToValue(cValue));
+                v = QVariant(menum.keysToValue(bValue.constData()));
             else
-                v = QVariant(menum.keyToValue(cValue));
+                v = QVariant(menum.keyToValue(bValue.constData()));
         } else if (v.type() != QVariant::Int && v.type() != QVariant::UInt) {
             int enumMetaTypeId = QMetaType::type(qualifiedName(menum).constData());
             if ((enumMetaTypeId == 0) || (v.userType() != enumMetaTypeId) || !v.constData())
