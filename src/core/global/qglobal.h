@@ -122,11 +122,11 @@ QT_USE_NAMESPACE
 #define Q_ALIGNOF(type)   __alignof__(type)
 #define Q_TYPEOF(expr)    __typeof__(expr)
 #define Q_DECL_ALIGN(n)   __attribute__((__aligned__(n)))
-#define Q_REQUIRED_RESULT __attribute__ ((warn_unused_result))
+#define Q_REQUIRED_RESULT __attribute__((warn_unused_result))
 #define Q_LIKELY(expr)    __builtin_expect(!!(expr), true)
 #define Q_UNLIKELY(expr)  __builtin_expect(!!(expr), false)
 #define Q_FUNC_INFO       __PRETTY_FUNCTION__
-#define Q_PACKED          __attribute__ ((__packed__))
+#define Q_PACKED          __attribute__((__packed__))
 #define Q_OUTOFLINE_TEMPLATE
 #define Q_INLINE_TEMPLATE inline
 #define Q_TYPENAME typename
@@ -189,15 +189,7 @@ QT_END_INCLUDE_NAMESPACE
 #if defined(Q_MOC_RUN)
 #  define Q_DECL_DEPRECATED Q_DECL_DEPRECATED
 #else
-#  define Q_DECL_DEPRECATED __attribute__ ((__deprecated__))
-#endif
-
-#if defined(Q_MOC_RUN)
-#  define Q_DECL_CONSTRUCTOR_DEPRECATED Q_DECL_CONSTRUCTOR_DEPRECATED
-#elif defined(Q_NO_DEPRECATED_CONSTRUCTORS)
-#  define Q_DECL_CONSTRUCTOR_DEPRECATED
-#else
-#  define Q_DECL_CONSTRUCTOR_DEPRECATED Q_DECL_DEPRECATED
+#  define Q_DECL_DEPRECATED __attribute__((__deprecated__))
 #endif
 
 #if defined(QT_NO_DEPRECATED)
@@ -207,7 +199,7 @@ QT_END_INCLUDE_NAMESPACE
 #  undef QT_DEPRECATED
 #  define QT_DEPRECATED Q_DECL_DEPRECATED
 #  undef QT_DEPRECATED_CONSTRUCTOR
-#  define QT_DEPRECATED_CONSTRUCTOR explicit Q_DECL_CONSTRUCTOR_DEPRECATED
+#  define QT_DEPRECATED_CONSTRUCTOR explicit Q_DECL_DEPRECATED
 #else
 #  undef QT_DEPRECATED
 #  define QT_DEPRECATED
@@ -217,7 +209,7 @@ QT_END_INCLUDE_NAMESPACE
 
 #ifdef QT_ASCII_CAST_WARNINGS
 #  define QT_ASCII_CAST_WARN Q_DECL_DEPRECATED
-#  define QT_ASCII_CAST_WARN_CONSTRUCTOR Q_DECL_CONSTRUCTOR_DEPRECATED
+#  define QT_ASCII_CAST_WARN_CONSTRUCTOR QT_DEPRECATED_CONSTRUCTOR
 #else
 #  define QT_ASCII_CAST_WARN
 #  define QT_ASCII_CAST_WARN_CONSTRUCTOR
@@ -370,25 +362,25 @@ class QString;
 
 Q_CORE_EXPORT void qDebug(const char *, ...) /* print debug message */
 #if !defined(__INSURE__)
-    __attribute__ ((format (printf, 1, 2)))
+    __attribute__((format (printf, 1, 2)))
 #endif
 ;
 
 Q_CORE_EXPORT void qWarning(const char *, ...) /* print warning message */
 #if !defined(__INSURE__)
-    __attribute__ ((format (printf, 1, 2)))
+    __attribute__((format (printf, 1, 2)))
 #endif
 ;
 
 Q_CORE_EXPORT QString qt_error_string(int errorCode);
 Q_CORE_EXPORT void qCritical(const char *, ...) /* print critical message */
 #if !defined(__INSURE__)
-    __attribute__ ((format (printf, 1, 2)))
+    __attribute__((format (printf, 1, 2)))
 #endif
 ;
 Q_CORE_EXPORT void qFatal(const char *, ...) /* print fatal message and exit */
 #if !defined(__INSURE__)
-    __attribute__ ((format (printf, 1, 2)))
+    __attribute__((format (printf, 1, 2)))
 #endif
 ;
 

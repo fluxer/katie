@@ -36,7 +36,7 @@ typedef QObject *(*QtPluginInstanceFunction)();
 
 #if !defined(QT_NO_PLUGIN_CHECK)
 #  define Q_PLUGIN_VERIFICATION_SECTION \
-    __attribute__ ((section (".ktplugin"))) __attribute__((used)) \
+    __attribute__((section (".ktplugin"))) __attribute__((used)) \
     static const char kt_plugin_verification_data[] = QT_VERSION_HEX_STR;
 #else
 #  define Q_PLUGIN_VERIFICATION_SECTION
