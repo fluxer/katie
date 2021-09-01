@@ -129,7 +129,6 @@ QT_USE_NAMESPACE
 #define Q_PACKED          __attribute__((__packed__))
 #define Q_OUTOFLINE_TEMPLATE
 #define Q_INLINE_TEMPLATE inline
-#define Q_TYPENAME typename
 
 #define Q_CONSTRUCTOR_FUNCTION(AFUNC) \
     static const int __init_variable__ ## AFUNC = AFUNC();
@@ -360,6 +359,8 @@ Q_CORE_EXPORT const char *qVersion();
 class QString;
 #define qPrintable(string) QString(string).toLocal8Bit().constData()
 
+Q_CORE_EXPORT QString qt_error_string(int errorCode);
+
 Q_CORE_EXPORT void qDebug(const char *, ...) /* print debug message */
 #if !defined(__INSURE__)
     __attribute__((format (printf, 1, 2)))
@@ -372,7 +373,6 @@ Q_CORE_EXPORT void qWarning(const char *, ...) /* print warning message */
 #endif
 ;
 
-Q_CORE_EXPORT QString qt_error_string(int errorCode);
 Q_CORE_EXPORT void qCritical(const char *, ...) /* print critical message */
 #if !defined(__INSURE__)
     __attribute__((format (printf, 1, 2)))

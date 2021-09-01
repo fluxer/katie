@@ -124,7 +124,7 @@ template <class T>
 inline QDebug operator<<(QDebug debug, const QList<T> &list)
 {
     debug.nospace() << '(';
-    for (Q_TYPENAME QList<T>::size_type i = 0; i < list.count(); ++i) {
+    for (typename QList<T>::size_type i = 0; i < list.count(); ++i) {
         if (i)
             debug << ", ";
         debug << list.at(i);
