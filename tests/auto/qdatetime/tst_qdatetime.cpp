@@ -1445,6 +1445,9 @@ void tst_QDateTime::dateTimeFromStringFormat_data()
     QTest::newRow("data16") << QString("2005-06-28T07:57:30.001Z")
                             << QString("yyyy-MM-ddThh:mm:ss.zZ")
                             << QDateTime(QDate(2005, 06, 28), QTime(07, 57, 30, 1));
+    QTest::newRow("data17") << QString("2005-06-28T07:57:30.001t")
+                            << QString("yyyy-MM-ddThh:mm:ss.zt")
+                            << QDateTime(QDate(2005, 06, 28), QTime(07, 57, 30, 1));
 
 }
 

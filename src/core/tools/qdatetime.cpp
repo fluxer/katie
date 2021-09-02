@@ -3710,8 +3710,7 @@ int QDateTimeParser::absoluteMax(int s, const QDateTime &cur) const
                                    // parseSection. We want it to be
                                    // 23 for the stepBy case.
 
-    case TimeZoneSection: return +14 * 3600; // No known zone > 14 hrs East of Greenwich
-                                             // (Kiritimati, Christmas Island, Kiribati)
+    case TimeZoneSection: return 3600;
     case MinuteSection:
     case SecondSection: return 59;
     case MSecSection: return 999;
@@ -3741,7 +3740,7 @@ int QDateTimeParser::absoluteMin(int s) const
 {
     const SectionNode &sn = sectionNode(s);
     switch (sn.type) {
-    case TimeZoneSection: return -14 * 3600; // No known zone > 12 hrs West of Greenwich (Baker Island, USA)
+    case TimeZoneSection:
     case Hour24Section:
     case Hour12Section:
     case MinuteSection:
@@ -4123,8 +4122,7 @@ int QDateTimeParser::sectionMaxSize(Section s, int count) const
     case MSecSection: return 3;
     case YearSection: return 4;
     case YearSection2Digits: return 2;
-    // Arbitrarily many tokens (each up to 14 bytes) joined with / separators:
-    case TimeZoneSection: return std::numeric_limits<int>::max();
+    case TimeZoneSection: return 3600;
 
     case CalendarPopupSection:
     case Internal:
@@ -4250,15 +4248,17 @@ int QDateTimeParser::parseSection(const QDateTime &currentValue, int sectionInde
         if (state != Invalid) {
             text.replace(index, used, sectiontext.left(used));
         }
-        break; }
-    case TimeZoneSection:
+        break;
+    }
+    case TimeZoneSection: {
         num = findTimeZone(sectiontext, currentValue, &used);
         state = (used > 0 &&
                  absoluteMax(sectionIndex) >= num &&
                  num >= absoluteMin(sectionIndex)) ? Acceptable : Invalid;
         break;
+    }
     case MonthSection:
-    case DayOfWeekSection:
+    case DayOfWeekSection: {
         if (sn.count >= 3) {
             if (sn.type == MonthSection) {
                 int min = 1;
@@ -4277,8 +4277,10 @@ int QDateTimeParser::parseSection(const QDateTime &currentValue, int sectionInde
             } else {
                 state = Intermediate;
             }
-            break; }
+            break;
+        }
         // fall through
+    }
     case DaySection:
     case YearSection:
     case YearSection2Digits:
@@ -4366,7 +4368,8 @@ int QDateTimeParser::parseSection(const QDateTime &currentValue, int sectionInde
                 }
             }
         }
-        break; }
+        break;
+    }
     default:
         qWarning("QDateTimeParser::parseSection Internal error (%s %d)",
                  qPrintable(sectionName(sn.type)), sectionIndex);
@@ -4807,7 +4810,7 @@ int QDateTimeParser::findDay(const QString &str1, int startDay, int sectionIndex
 int QDateTimeParser::findTimeZone(QString str, const QDateTime &when, int *used) const
 {
     const QString tz = timeZone();
-    if (str.contains(tz)) {
+    if (str == QLatin1String("t") || str == tz) {
         QDTPDEBUG << "findTimeZone" << tz;
         *used = tz.size();
         return QDateTime(when.date(), when.time(), Qt::LocalTime).utcOffset();
