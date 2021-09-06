@@ -1106,25 +1106,6 @@ void qt_check_pointer(const char *file, int line)
 
 static QtMsgHandler handler = 0;                // pointer to debug handler
 
-QString qt_error_string(int errorCode)
-{
-    // There are two incompatible versions of strerror_r:
-    // a) the XSI/POSIX.1 version, which returns an int,
-    //    indicating success or not
-    // b) the GNU version, which returns a char*, which may or may not
-    //    be the beginning of the buffer we used
-    // The GNU libc manpage for strerror_r says you should use the the XSI
-    // version in portable code.
-#if !defined(QT_NO_THREAD)
-    QSTACKARRAY(char, errbuf, 1024);
-    ::strerror_r(errorCode, errbuf, sizeof(errbuf));
-    return QString::fromLocal8Bit(errbuf);
-#else
-    return QString::fromLocal8Bit(::strerror(errorCode));
-#endif
-}
-
-
 /*!
     \fn QtMsgHandler qInstallMsgHandler(QtMsgHandler handler)
     \relates <QtGlobal>
