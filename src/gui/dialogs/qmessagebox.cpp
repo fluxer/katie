@@ -1456,17 +1456,9 @@ void QMessageBox::aboutQt(QWidget *parent, const QString &title)
         ).arg(QLatin1String(QT_VERSION_STR));
     QString translatedTextAboutQtText = QMessageBox::tr(
         "<p>Katie is a C++ toolkit derived from the Qt 4.8 framework.</p>"
-        "<p>Katie is available under two different licensing options designed "
-        "to accommodate the needs of our various users.</p>"
-        "<p>Katie licensed under the GNU LGPL version 3 is appropriate for the "
-        "development of Qt&nbsp;applications provided you can comply with the terms "
-        "and conditions of the GNU LGPL version 3.</p>"
-        "<p>Katie licensed under the GNU LGPL version 2.1 is appropriate for the "
-        "development of applications provided you can comply with the terms "
-        "and conditions of the GNU LGPL version 2.1.</p>"
+        "<p>Katie is licensed under the GNU LGPL version 2.1</p>"
         "<p>Copyright (C) 2015 The Qt Company Ltd and other contributors.</p>"
         "<p>Copyright (C) 2016 Ivailo Monev</p>"
-        "<p>Qt and the Qt logo are trademarks of The Qt Company Ltd.</p>"
         "<p>See <a href=\"https://github.com/fluxer/katie\">github.com/fluxer/katie</a> for more information.</p>"
         );
     QMessageBox *msgBox = new QMessageBox(parent);

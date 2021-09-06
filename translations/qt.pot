@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-08-25 17:50+0300\n"
+"POT-Creation-Date: 2021-09-07 01:25+0300\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -45,7 +45,7 @@ msgstr ""
 #: src/core/plugin/qlibrary.cpp:796 src/core/plugin/qpluginloader.cpp:279
 #: src/core/io/qiodevice.cpp:1519 src/network/ssl/qsslerror.cpp:249
 #: src/network/socket/qnativesocketengine.cpp:250
-#: src/network/access/qftp.cpp:1415 src/uitools/formscriptrunner.cpp:104
+#: src/network/access/qftp.cpp:1414 src/uitools/formscriptrunner.cpp:104
 msgid "Unknown error"
 msgstr ""
 
@@ -150,11 +150,11 @@ msgctxt "QStandardPaths"
 msgid "Download"
 msgstr ""
 
-#: src/core/io/qfile.cpp:574
+#: src/core/io/qfile.cpp:558
 msgid "Destination file exists"
 msgstr ""
 
-#: src/core/io/qfile.cpp:963
+#: src/core/io/qfile.cpp:947
 msgid "No file engine available or engine does not support UnMapExtension"
 msgstr ""
 
@@ -182,12 +182,12 @@ msgstr ""
 msgid "Could not open output redirection for writing"
 msgstr ""
 
-#: src/core/io/qprocess_unix.cpp:565
+#: src/core/io/qprocess_unix.cpp:564
 msgid "Resource error (fork failure): %1"
 msgstr ""
 
-#: src/core/io/qprocess_unix.cpp:802 src/core/io/qprocess_unix.cpp:850
-#: src/core/io/qprocess_unix.cpp:920 src/core/io/qprocess_unix.cpp:982
+#: src/core/io/qprocess_unix.cpp:801 src/core/io/qprocess_unix.cpp:849
+#: src/core/io/qprocess_unix.cpp:919 src/core/io/qprocess_unix.cpp:981
 msgid "Process operation timed out"
 msgstr ""
 
@@ -232,7 +232,7 @@ msgid "%1: unknown error %2"
 msgstr ""
 
 #: src/core/kernel/qsharedmemory_unix.cpp:106
-#: src/core/kernel/qsystemsemaphore_unix.cpp:113
+#: src/core/kernel/qsystemsemaphore_unix.cpp:115
 msgid "%1: key is empty"
 msgstr ""
 
@@ -241,32 +241,32 @@ msgstr ""
 msgid "%1: bad name"
 msgstr ""
 
-#: src/core/kernel/qsystemsemaphore_unix.cpp:68
+#: src/core/kernel/qsystemsemaphore_unix.cpp:70
 msgctxt "QSystemSemaphore"
 msgid "%1: permission denied"
 msgstr ""
 
-#: src/core/kernel/qsystemsemaphore_unix.cpp:72
+#: src/core/kernel/qsystemsemaphore_unix.cpp:74
 msgctxt "QSystemSemaphore"
 msgid "%1: already exists"
 msgstr ""
 
-#: src/core/kernel/qsystemsemaphore_unix.cpp:76
+#: src/core/kernel/qsystemsemaphore_unix.cpp:78
 msgctxt "QSystemSemaphore"
 msgid "%1: does not exist"
 msgstr ""
 
-#: src/core/kernel/qsystemsemaphore_unix.cpp:85
+#: src/core/kernel/qsystemsemaphore_unix.cpp:87
 msgctxt "QSystemSemaphore"
 msgid "%1: out of resources"
 msgstr ""
 
-#: src/core/kernel/qsystemsemaphore_unix.cpp:89
+#: src/core/kernel/qsystemsemaphore_unix.cpp:91
 msgctxt "QSystemSemaphore"
 msgid "%1: name error"
 msgstr ""
 
-#: src/core/kernel/qsystemsemaphore_unix.cpp:93
+#: src/core/kernel/qsystemsemaphore_unix.cpp:95
 msgctxt "QSystemSemaphore"
 msgid "%1: unknown error %2"
 msgstr ""
@@ -1353,20 +1353,13 @@ msgstr ""
 #: src/gui/dialogs/qmessagebox.cpp:1458
 msgid ""
 "<p>Katie is a C++ toolkit derived from the Qt 4.8 framework.</p><p>Katie is "
-"available under two different licensing options designed to accommodate the "
-"needs of our various users.</p><p>Katie licensed under the GNU LGPL version "
-"3 is appropriate for the development of Qt&nbsp;applications provided you "
-"can comply with the terms and conditions of the GNU LGPL version 3.</"
-"p><p>Katie licensed under the GNU LGPL version 2.1 is appropriate for the "
-"development of applications provided you can comply with the terms and "
-"conditions of the GNU LGPL version 2.1.</p><p>Copyright (C) 2015 The Qt "
+"licensed under the GNU LGPL version 2.1</p><p>Copyright (C) 2015 The Qt "
 "Company Ltd and other contributors.</p><p>Copyright (C) 2016 Ivailo Monev</"
-"p><p>Qt and the Qt logo are trademarks of The Qt Company Ltd.</p><p>See <a "
-"href=\"https://github.com/fluxer/katie\">github.com/fluxer/katie</a> for "
-"more information.</p>"
+"p><p>See <a href=\"https://github.com/fluxer/katie\">github.com/fluxer/"
+"katie</a> for more information.</p>"
 msgstr ""
 
-#: src/gui/dialogs/qmessagebox.cpp:1474
+#: src/gui/dialogs/qmessagebox.cpp:1466
 msgid "About Katie"
 msgstr ""
 
@@ -4851,11 +4844,11 @@ msgstr ""
 msgid "Connection timed out"
 msgstr ""
 
-#: src/network/socket/qabstractsocket.cpp:1651
+#: src/network/socket/qabstractsocket.cpp:1646
 msgid "Socket operation timed out"
 msgstr ""
 
-#: src/network/socket/qabstractsocket.cpp:2062
+#: src/network/socket/qabstractsocket.cpp:2057
 msgid "Socket is not connected"
 msgstr ""
 
@@ -5209,32 +5202,32 @@ msgctxt "QHttp"
 msgid "HTTP request failed"
 msgstr ""
 
-#: src/network/access/qhttp.cpp:2699
+#: src/network/access/qhttp.cpp:2698
 msgctxt "QHttp"
 msgid "Invalid HTTP response header"
 msgstr ""
 
-#: src/network/access/qhttp.cpp:2727
+#: src/network/access/qhttp.cpp:2726
 msgctxt "QHttp"
 msgid "Unknown authentication method"
 msgstr ""
 
-#: src/network/access/qhttp.cpp:2737
+#: src/network/access/qhttp.cpp:2736
 msgctxt "QHttp"
 msgid "Proxy authentication required"
 msgstr ""
 
-#: src/network/access/qhttp.cpp:2741
+#: src/network/access/qhttp.cpp:2740
 msgctxt "QHttp"
 msgid "Authentication required"
 msgstr ""
 
-#: src/network/access/qhttp.cpp:2824 src/network/access/qhttp.cpp:2872
+#: src/network/access/qhttp.cpp:2823 src/network/access/qhttp.cpp:2871
 msgctxt "QHttp"
 msgid "Invalid HTTP chunked body"
 msgstr ""
 
-#: src/network/access/qhttp.cpp:2910
+#: src/network/access/qhttp.cpp:2909
 msgctxt "QHttp"
 msgid "Error writing response to device"
 msgstr ""
@@ -5255,99 +5248,99 @@ msgctxt "QNetworkReply"
 msgid "backend start error."
 msgstr ""
 
-#: src/network/access/qnetworkreplyimpl.cpp:767
-#: src/network/access/qnetworkreplyimpl.cpp:797
+#: src/network/access/qnetworkreplyimpl.cpp:766
+#: src/network/access/qnetworkreplyimpl.cpp:796
 msgid "Operation canceled"
 msgstr ""
 
-#: src/network/access/qftp.cpp:843
+#: src/network/access/qftp.cpp:842
 msgid "Not connected"
 msgstr ""
 
-#: src/network/access/qftp.cpp:922
+#: src/network/access/qftp.cpp:921
 msgid "Host %1 not found"
 msgstr ""
 
-#: src/network/access/qftp.cpp:926
+#: src/network/access/qftp.cpp:925
 msgid "Connection refused to host %1"
 msgstr ""
 
-#: src/network/access/qftp.cpp:930
+#: src/network/access/qftp.cpp:929
 msgid "Connection timed out to host %1"
 msgstr ""
 
-#: src/network/access/qftp.cpp:1034
+#: src/network/access/qftp.cpp:1033
 msgid "Connected to host %1"
 msgstr ""
 
-#: src/network/access/qftp.cpp:1242
+#: src/network/access/qftp.cpp:1241
 msgid "Connection refused for data connection"
 msgstr ""
 
-#: src/network/access/qftp.cpp:2312
+#: src/network/access/qftp.cpp:2311
 msgctxt "QFtp"
 msgid ""
 "Connecting to host failed:\n"
 "%1"
 msgstr ""
 
-#: src/network/access/qftp.cpp:2316
+#: src/network/access/qftp.cpp:2315
 msgctxt "QFtp"
 msgid ""
 "Login failed:\n"
 "%1"
 msgstr ""
 
-#: src/network/access/qftp.cpp:2320
+#: src/network/access/qftp.cpp:2319
 msgctxt "QFtp"
 msgid ""
 "Listing directory failed:\n"
 "%1"
 msgstr ""
 
-#: src/network/access/qftp.cpp:2324
+#: src/network/access/qftp.cpp:2323
 msgctxt "QFtp"
 msgid ""
 "Changing directory failed:\n"
 "%1"
 msgstr ""
 
-#: src/network/access/qftp.cpp:2328
+#: src/network/access/qftp.cpp:2327
 msgctxt "QFtp"
 msgid ""
 "Downloading file failed:\n"
 "%1"
 msgstr ""
 
-#: src/network/access/qftp.cpp:2332
+#: src/network/access/qftp.cpp:2331
 msgctxt "QFtp"
 msgid ""
 "Uploading file failed:\n"
 "%1"
 msgstr ""
 
-#: src/network/access/qftp.cpp:2336
+#: src/network/access/qftp.cpp:2335
 msgctxt "QFtp"
 msgid ""
 "Removing file failed:\n"
 "%1"
 msgstr ""
 
-#: src/network/access/qftp.cpp:2340
+#: src/network/access/qftp.cpp:2339
 msgctxt "QFtp"
 msgid ""
 "Creating directory failed:\n"
 "%1"
 msgstr ""
 
-#: src/network/access/qftp.cpp:2344
+#: src/network/access/qftp.cpp:2343
 msgctxt "QFtp"
 msgid ""
 "Removing directory failed:\n"
 "%1"
 msgstr ""
 
-#: src/network/access/qftp.cpp:2372
+#: src/network/access/qftp.cpp:2371
 msgctxt "QFtp"
 msgid "Connection closed"
 msgstr ""
