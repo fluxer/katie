@@ -28,6 +28,8 @@
 
 #include <sched.h>
 #include <errno.h>
+#include <unistd.h>
+#include <time.h>
 #include <pthread.h>
 
 #if defined(QT_HAVE_PRCTL)
@@ -42,9 +44,6 @@
 #if !defined(Q_OS_OPENBSD) && defined(_POSIX_THREAD_PRIORITY_SCHEDULING) && (_POSIX_THREAD_PRIORITY_SCHEDULING-0 >= 0)
 #define QT_HAS_THREAD_PRIORITY_SCHEDULING
 #endif
-
-#include <chrono>
-#include <thread>
 
 QT_BEGIN_NAMESPACE
 
@@ -238,7 +237,11 @@ Qt::HANDLE QThread::currentThreadId()
 
 int QThread::idealThreadCount()
 {
-    return std::thread::hardware_concurrency();
+#ifdef _SC_NPROCESSORS_ONLN
+    return sysconf(_SC_NPROCESSORS_ONLN);
+#else
+    return 1;
+#endif
 }
 
 void QThread::yieldCurrentThread()
@@ -248,17 +251,20 @@ void QThread::yieldCurrentThread()
 
 void QThread::sleep(unsigned long secs)
 {
-    std::this_thread::sleep_for(std::chrono::seconds(secs));
+    struct timespec ts = { time_t(secs), 0 };
+    ::nanosleep(&ts, NULL);
 }
 
 void QThread::msleep(unsigned long msecs)
 {
-    std::this_thread::sleep_for(std::chrono::milliseconds(msecs));
+    struct timespec ts = { time_t(msecs) / 1000, long(msecs % 1000) * 1000000 };
+    ::nanosleep(&ts, NULL);
 }
 
 void QThread::usleep(unsigned long usecs)
 {
-    std::this_thread::sleep_for(std::chrono::microseconds(usecs));
+    struct timespec ts = { time_t(usecs) / 1000000, long(usecs % 1000000) * 1000 };
+    ::nanosleep(&ts, NULL);
 }
 
 #ifdef QT_HAS_THREAD_PRIORITY_SCHEDULING
