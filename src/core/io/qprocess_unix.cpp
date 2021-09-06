@@ -673,7 +673,7 @@ void QProcessPrivate::execChild(const char *workingDir, char **path, char **argv
 
 bool QProcessPrivate::processStarted()
 {
-    ushort buf[errorBufferMax];
+    QSTACKARRAY(ushort, buf, errorBufferMax);
     qint64 i = qt_safe_read(childStartedPipe[0], &buf, sizeof buf);
     if (startupSocketNotifier) {
         startupSocketNotifier->setEnabled(false);
