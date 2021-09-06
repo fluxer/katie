@@ -15,6 +15,6 @@ shift
 
 cd "$(dirname "$bin")"
 if [ -z "$DBUS_SESSION_BUS_ADDRESS" ];then
-    exec dbus-run-session -- @CMAKE_CROSSCOMPILING_EMULATOR@ "./$(basename "$bin")" $@
+    exec dbus-run-session -- @CMAKE_CROSSCOMPILING_EMULATOR@ "./$(basename "$bin")" "$@"
 fi
-exec @CMAKE_CROSSCOMPILING_EMULATOR@ "./$(basename "$bin")" $@
+exec @CMAKE_CROSSCOMPILING_EMULATOR@ "./$(basename "$bin")" "$@"
