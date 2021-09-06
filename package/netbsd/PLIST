@@ -742,10 +742,8 @@ include/katie/QtGui/QImageIOHandlerFactoryInterface
 include/katie/QtGui/QImageIOPlugin
 include/katie/QtGui/QImageReader
 include/katie/QtGui/QImageWriter
-include/katie/QtGui/QInputContextFactoryInterface
 include/katie/QtGui/QInputDialog
 include/katie/QtGui/QInputEvent
-include/katie/QtGui/QInputMethodEvent
 include/katie/QtGui/QIntValidator
 include/katie/QtGui/QItemDelegate
 include/katie/QtGui/QItemEditorCreator

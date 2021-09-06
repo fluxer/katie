@@ -968,24 +968,6 @@ const char *qVersion()
     If this macro is used outside a function, the behavior is undefined.
  */
 
-/*
-  The Q_CHECK_PTR macro calls this function if an allocation check
-  fails.
-*/
-void qt_check_pointer(const char *n, int l)
-{
-    qFatal("In file %s, line %d: Out of memory", n, l);
-}
-
-/* \internal
-   Allows you to throw an exception without including <new>
-   Called internally from Q_CHECK_PTR on certain OS combinations
-*/
-void qBadAlloc()
-{
-    QT_THROW(std::bad_alloc());
-}
-
 #ifndef QT_NO_EXECINFO
 static void qt_print_backtrace()
 {
@@ -1113,26 +1095,16 @@ void qt_assert_x(const char *where, const char *what, const char *file, int line
     qFatal("ASSERT failure in %s: \"%s\", file %s, line %d", where, what, file, line);
 }
 
-static QtMsgHandler handler = 0;                // pointer to debug handler
-
-QString qt_error_string(int errorCode)
+/*
+  The Q_CHECK_PTR macro calls this function if an allocation check
+  fails.
+*/
+void qt_check_pointer(const char *file, int line)
 {
-    // There are two incompatible versions of strerror_r:
-    // a) the XSI/POSIX.1 version, which returns an int,
-    //    indicating success or not
-    // b) the GNU version, which returns a char*, which may or may not
-    //    be the beginning of the buffer we used
-    // The GNU libc manpage for strerror_r says you should use the the XSI
-    // version in portable code.
-#if !defined(QT_NO_THREAD)
-    QSTACKARRAY(char, errbuf, 1024);
-    ::strerror_r(errorCode, errbuf, sizeof(errbuf));
-    return QString::fromLocal8Bit(errbuf);
-#else
-    return QString::fromLocal8Bit(::strerror(errorCode));
-#endif
+    qFatal("In file %s, line %d: Out of memory", file, line);
 }
 
+static QtMsgHandler handler = 0;                // pointer to debug handler
 
 /*!
     \fn QtMsgHandler qInstallMsgHandler(QtMsgHandler handler)

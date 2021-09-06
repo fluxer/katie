@@ -429,9 +429,8 @@ static char **_q_dupEnvironment(const QProcessEnvironment &environment, int *env
 
     const QStringList envkeys = environment.keys();
 
-    char **envp = new char *[envkeys.count() + 2];
+    char **envp = new char *[envkeys.count() + 1];
     envp[envkeys.count()] = 0;
-    envp[envkeys.count() + 1] = 0;
 
     foreach (const QString &envkey, envkeys) {
         QByteArray key = envkey.toLocal8Bit();
@@ -674,7 +673,7 @@ void QProcessPrivate::execChild(const char *workingDir, char **path, char **argv
 
 bool QProcessPrivate::processStarted()
 {
-    ushort buf[errorBufferMax];
+    QSTACKARRAY(ushort, buf, errorBufferMax);
     qint64 i = qt_safe_read(childStartedPipe[0], &buf, sizeof buf);
     if (startupSocketNotifier) {
         startupSocketNotifier->setEnabled(false);

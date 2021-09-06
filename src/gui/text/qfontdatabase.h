@@ -54,7 +54,6 @@ public:
 
     QFont font(const QString &family, const QString &style, int pointSize) const;
 
-    bool isBitmapScalable(const QString &family, const QString &style = QString()) const;
     bool isSmoothlyScalable(const QString &family, const QString &style = QString()) const;
     bool isScalable(const QString &family, const QString &style = QString()) const;
     bool isFixedPitch(const QString &family, const QString &style = QString()) const;

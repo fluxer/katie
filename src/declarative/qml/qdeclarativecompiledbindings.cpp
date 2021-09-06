@@ -2822,8 +2822,7 @@ QByteArray QDeclarativeBindingCompilerPrivate::buildSignalTable() const
 
 QByteArray QDeclarativeBindingCompilerPrivate::buildExceptionData() const
 {
-    QByteArray rv;
-    rv.resize(committed.exceptions.count() * sizeof(quint64));
+    QByteArray rv(committed.exceptions.count() * sizeof(quint64), Qt::Uninitialized);
     ::memcpy(rv.data(), committed.exceptions.constData(), rv.size());
     return rv;
 }

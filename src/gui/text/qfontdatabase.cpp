@@ -878,8 +878,7 @@ QString QFontDatabase::styleString(const QFontInfo &fontInfo)
 
     A family and style combination can be checked to see if it is
     italic() or bold(), and to retrieve its weight(). Similarly we can
-    call isBitmapScalable(), isSmoothlyScalable(), isScalable() and
-    isFixedPitch().
+    call isSmoothlyScalable(), isScalable() and isFixedPitch().
 
     Use the styleString() to obtain a text version of a style.
 
@@ -1010,28 +1009,11 @@ bool QFontDatabase::isFixedPitch(const QString &family,
 
 /*!
     Returns true if the font that has family \a family and style \a
-    style is a scalable bitmap font; otherwise returns false. Scaling
-    a bitmap font usually produces an unattractive hardly readable
-    result, because the pixels of the font are scaled. If you need to
-    scale a bitmap font it is better to scale it to one of the fixed
-    sizes returned by smoothSizes().
-
-    \sa isScalable(), isSmoothlyScalable()
-*/
-bool QFontDatabase::isBitmapScalable(const QString &family,
-                                      const QString &style) const
-{
-    return false;
-}
-
-
-/*!
-    Returns true if the font that has family \a family and style \a
     style is smoothly scalable; otherwise returns false. If this
     function returns true, it's safe to scale this font to any size,
     and the result will always look attractive.
 
-    \sa isScalable(), isBitmapScalable()
+    \sa isScalable()
 */
 bool QFontDatabase::isSmoothlyScalable(const QString &family, const QString &style) const
 {
@@ -1065,15 +1047,12 @@ bool QFontDatabase::isSmoothlyScalable(const QString &family, const QString &sty
     Returns true if the font that has family \a family and style \a
     style is scalable; otherwise returns false.
 
-    \sa isBitmapScalable(), isSmoothlyScalable()
+    \sa isSmoothlyScalable()
 */
 bool  QFontDatabase::isScalable(const QString &family,
                                  const QString &style) const
 {
-    std::lock_guard<std::recursive_mutex> locker(qGlobalFontDatabaseMutex);
-    if (isSmoothlyScalable(family, style))
-        return true;
-    return isBitmapScalable(family, style);
+    return isSmoothlyScalable(family, style);
 }
 
 

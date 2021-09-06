@@ -134,12 +134,12 @@ public:
 
     QString    &vsprintf(const char *format, va_list ap)
 #if !defined(__INSURE__)
-        __attribute__ ((format (printf, 2, 0)))
+        __attribute__((format (printf, 2, 0)))
 #endif
         ;
     QString    &sprintf(const char *format, ...)
 #if !defined(__INSURE__)
-        __attribute__ ((format (printf, 2, 3)))
+        __attribute__((format (printf, 2, 3)))
 #endif
         ;
 
