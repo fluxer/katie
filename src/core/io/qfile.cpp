@@ -65,22 +65,6 @@ QFilePrivate::openExternalFile(int flags, int fd, QFile::FileHandleFlags handleF
 #endif
 }
 
-bool
-QFilePrivate::openExternalFile(int flags, FILE *fh, QFile::FileHandleFlags handleFlags)
-{
-#ifdef QT_NO_FSFILEENGINE
-    Q_UNUSED(flags);
-    Q_UNUSED(fh);
-    return false;
-#else
-    delete fileEngine;
-    fileEngine = 0;
-    QFSFileEngine *fe = new QFSFileEngine;
-    fileEngine = fe;
-    return fe->open(QIODevice::OpenMode(flags), fh, handleFlags);
-#endif
-}
-
 void
 QFilePrivate::setError(QFile::FileError err)
 {
@@ -818,7 +802,7 @@ bool QFile::open(FILE *fh, OpenMode mode, FileHandleFlags handleFlags)
         return false;
     }
     Q_D(QFile);
-    if (d->openExternalFile(mode, fh, handleFlags)) {
+    if (d->openExternalFile(mode, QT_FILENO(fh), handleFlags)) {
         QIODevice::open(mode);
         if (mode & Append) {
             seek(size());
