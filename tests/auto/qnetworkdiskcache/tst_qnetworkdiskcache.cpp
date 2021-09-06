@@ -634,7 +634,7 @@ public:
                 cache.remove(url);
             if (qrand() % 5 == 1)
                 cache.clear();
-            sleep(0);
+            QThread::sleep(0);
         }
         //qDebug() << "read!" << read << i;
     }

@@ -136,7 +136,7 @@ void QWidgetBackingStore::showYellowThing(QWidget *widget, const QRegion &toBePa
         pe->setSystemClip(QRegion());
 
     QApplication::syncX();
-    ::usleep(1000 * msec);
+    QThread::msleep(msec);
 }
 
 bool QWidgetBackingStore::flushPaint(QWidget *widget, const QRegion &rgn)

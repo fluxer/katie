@@ -33,9 +33,9 @@
 //on solaris, threads that loop one the release bool variable
 //needs to sleep more than 1 usec.
 #ifdef Q_OS_SOLARIS
-# define RWTESTSLEEP usleep(10);
+# define RWTESTSLEEP QThread::usleep(10);
 #else
-# define RWTESTSLEEP usleep(1);
+# define RWTESTSLEEP QThread::usleep(1);
 #endif
 
 #include <stdio.h>
@@ -467,9 +467,9 @@ public:
 /*
     for(runTime msecs)
         read-lock
-        msleep(holdTime msecs)
+        QThread::msleep(holdTime msecs)
         release lock
-        msleep(waitTime msecs)
+        QThread::msleep(waitTime msecs)
 */
 class ReadLockLoopThread : public QThread
 {
@@ -493,9 +493,9 @@ public:
         while (t.elapsed()<runTime)  {
             testRwlock.lockForRead();
             if(print) printf("reading\n");
-            if (holdTime) msleep(holdTime);
+            if (holdTime) QThread::msleep(holdTime);
             testRwlock.unlock();
-            if (waitTime) msleep(waitTime);
+            if (waitTime) QThread::msleep(waitTime);
         }
     }
 };
@@ -503,9 +503,9 @@ public:
 /*
     for(runTime msecs)
         write-lock
-        msleep(holdTime msecs)
+        QThread::msleep(holdTime msecs)
         release lock
-        msleep(waitTime msecs)
+        QThread::msleep(waitTime msecs)
 */
 class WriteLockLoopThread : public QThread
 {
@@ -529,9 +529,9 @@ public:
         while (t.elapsed() < runTime)  {
             testRwlock.lockForWrite();
             if (print) printf(".");
-            if (holdTime) msleep(holdTime);
+            if (holdTime) QThread::msleep(holdTime);
             testRwlock.unlock();
-            if (waitTime) msleep(waitTime);
+            if (waitTime) QThread::msleep(waitTime);
         }
     }
 };
@@ -544,7 +544,7 @@ volatile int count=0;
         count to maxval
         set count to 0
         release lock
-        msleep waitTime
+        QThread::msleep(waitTime)
 */
 class WriteLockCountThread : public QThread
 {
@@ -576,7 +576,7 @@ public:
             }
             count=0;
             testRwlock.unlock();
-            msleep(waitTime);
+            QThread::msleep(waitTime);
         }
     }
 };
@@ -586,7 +586,7 @@ public:
         read-lock
         verify count==0
         release lock
-        msleep waitTime
+        QThread::msleep(waitTime)
 */
 class ReadLockCountThread : public QThread
 {
@@ -608,7 +608,7 @@ public:
             if(count)
                 qFatal("Non-zero count at Read! (%d)",count );
             testRwlock.unlock();
-            msleep(waitTime);
+            QThread::msleep(waitTime);
         }
     }
 };
