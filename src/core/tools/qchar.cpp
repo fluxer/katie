@@ -1165,7 +1165,7 @@ QString QChar::decomposition(const uint ucs4)
 
 /*!
     Returns the tag defining the composition of the character. Returns
-    QChar::Single if no decomposition exists.
+    QChar::NoDecomposition if no decomposition exists.
 */
 QChar::Decomposition QChar::decompositionTag() const
 {
@@ -1175,7 +1175,7 @@ QChar::Decomposition QChar::decompositionTag() const
 /*!
     \overload
     Returns the tag defining the composition of the UCS-4-encoded character
-    specified by \a ucs4. Returns QChar::Single if no decomposition exists.
+    specified by \a ucs4. Returns QChar::NoDecomposition if no decomposition exists.
 */
 QChar::Decomposition QChar::decompositionTag(const uint ucs4)
 {
