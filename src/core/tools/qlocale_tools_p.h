@@ -78,7 +78,14 @@ static inline bool qIsDigit(char ch)
 static inline char qToLower(char ch)
 {
     if (ch >= 'A' && ch <= 'Z')
-        return (ch - 'A' + 'a');
+        return (ch + 32);
+    return ch;
+}
+
+static inline char qToUpper(char ch)
+{
+    if (ch >= 'a' && ch <= 'z')
+        return (ch - 32);
     return ch;
 }
 
