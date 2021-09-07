@@ -1339,18 +1339,23 @@ QString QLocale::toString(double i, char f, int prec) const
 
     if (qIsUpper(f))
         flags = QLocalePrivate::CapitalEorX;
-    f = qToLower(f);
 
     switch (f) {
         case 'f':
+        case 'F': {
             form = QLocalePrivate::DFDecimal;
             break;
+        }
         case 'e':
+        case 'E': {
             form = QLocalePrivate::DFExponent;
             break;
+        }
         case 'g':
+        case 'G': {
             form = QLocalePrivate::DFSignificantDigits;
             break;
+        }
         default:
             break;
     }
