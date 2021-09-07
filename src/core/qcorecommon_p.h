@@ -56,7 +56,12 @@ static inline QString timeZone()
 #else
     struct tm *t = ::localtime(&ltime);
 #endif // !QT_NO_THREAD
+
+#if defined(QT_HAVE_TM_TM_ZONE)
+    return QString::fromLocal8Bit(t->tm_zone);
+#else
     return QString::fromLocal8Bit(tzname[t->tm_isdst]);
+#endif
 }
 
 // Returns a human readable representation of the first \a len
