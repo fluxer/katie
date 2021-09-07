@@ -2764,7 +2764,7 @@ QDate QDate::currentDate()
 
 #if !defined(QT_NO_THREAD)
     // use the reentrant version of localtime() where available
-    tzset();
+    ::tzset();
     struct tm res;
     struct tm *t = ::localtime_r(&ltime, &res);
 #else
@@ -2784,7 +2784,7 @@ QTime QTime::currentTime()
 
 #if !defined(QT_NO_THREAD)
     // use the reentrant version of localtime() where available
-    tzset();
+    ::tzset();
     struct tm res;
     struct tm *t = ::localtime_r(&tv.tv_sec, &res);
 #else
@@ -2805,7 +2805,7 @@ QDateTime QDateTime::currentDateTime()
 
 #if !defined(QT_NO_THREAD)
     // use the reentrant version of localtime() where available
-    tzset();
+    ::tzset();
     struct tm res;
     struct tm *t = ::localtime_r(&tv.tv_sec, &res);
 #else
@@ -3464,7 +3464,7 @@ static QDateTimePrivate::Spec utcToLocal(QDate &date, QTime &time)
 
 #if !defined(QT_NO_THREAD)
     // use the reentrant version of localtime() where available
-    tzset();
+    ::tzset();
     struct tm res;
     struct tm *brokenDown = ::localtime_r(&secsSince1Jan1970UTC, &res);
 #else

@@ -44,8 +44,19 @@ static inline uint foldCase(const uint ch, uint &last)
 
 static inline QString timeZone()
 {
+    // posix compliant system
+    time_t ltime;
+    ::time(&ltime);
+
     ::tzset();
-    return QString::fromLocal8Bit(tzname[1]);
+#if !defined(QT_NO_THREAD)
+    // use the reentrant version of localtime() where available
+    struct tm res;
+    struct tm *t = ::localtime_r(&ltime, &res);
+#else
+    struct tm *t = ::localtime(&ltime);
+#endif // !QT_NO_THREAD
+    return QString::fromLocal8Bit(tzname[t->tm_isdst]);
 }
 
 // Returns a human readable representation of the first \a len
