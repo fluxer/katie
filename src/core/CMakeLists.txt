@@ -394,7 +394,6 @@ set(CORE_SOURCES
     ${CMAKE_CURRENT_SOURCE_DIR}/tools/qtextboundaryfinder.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/tools/qtimeline.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/tools/qvector.cpp
-    ${CMAKE_CURRENT_SOURCE_DIR}/tools/qvsnprintf.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/tools/qelapsedtimer_unix.cpp
 )
 

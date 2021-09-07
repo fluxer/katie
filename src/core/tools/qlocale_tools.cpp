@@ -34,7 +34,7 @@ QT_BEGIN_NAMESPACE
 
 QString qulltoa(qulonglong l, int base, const QChar zero)
 {
-    ushort buff[65]; // length of MAX_ULLONG in base 2
+    QSTACKARRAY(ushort, buff, 65); // length of MAX_ULLONG in base 2
     ushort *p = buff + 65;
 
     if (base != 10 || zero.unicode() == '0') {
@@ -323,13 +323,14 @@ SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 ----------------------------------------------------------------------
 */
 // the code bellow is copy from musl libc, modified to not use static buffer
+// and use snprintf() instead of sprintf()
 char *qfcvt(double x, int n, int *dp, int *sign, char* buf)
 {
     QSTACKARRAY(char, tmp, 1500);
     int i, lz;
 
     if (n > 1400) n = 1400;
-    sprintf(tmp, "%.*f", n, x);
+    ::snprintf(tmp, sizeof(tmp), "%.*f", n, x);
     i = (tmp[0] == '-');
     if (tmp[i] == '0') lz = strspn(tmp+i+2, "0");
     else lz = -(int)strcspn(tmp+i, ".");
@@ -350,7 +351,7 @@ char *qecvt(double x, int n, int *dp, int *sign, char* buf)
     int i, j;
 
     if (n-1 > 15) n = 15;
-    sprintf(tmp, "%.*e", n-1, x);
+    ::snprintf(tmp, sizeof(tmp), "%.*e", n-1, x);
     i = *sign = (tmp[0]=='-');
     for (j=0; tmp[i]!='e'; j+=(tmp[i++]!='.'))
         buf[j] = tmp[i];

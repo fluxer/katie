@@ -4420,7 +4420,7 @@ QString &QString::sprintf(const char *cformat, ...)
 {
     va_list ap;
     va_start(ap, cformat);
-    QString &s = vsprintf(cformat, ap);
+    QString &s = QString::vsprintf(cformat, ap);
     va_end(ap);
     return s;
 }
@@ -4644,14 +4644,24 @@ QString &QString::vsprintf(const char* cformat, va_list ap)
                     flags |= QLocalePrivate::CapitalEorX;
 
                 int base = 10;
-                switch (qToLower(*c)) {
+                switch (*c) {
                     case 'o':
-                        base = 8; break;
+                    case 'O': {
+                        base = 8;
+                        break;
+                    }
                     case 'u':
-                        base = 10; break;
+                    case 'U': {
+                        base = 10;
+                        break;
+                    }
                     case 'x':
-                        base = 16; break;
-                    default: break;
+                    case 'X': {
+                        base = 16;
+                        break;
+                    }
+                    default:
+                        break;
                 }
                 subst = locale.d()->unsLongLongToString(u, precision, base, width, flags);
                 ++c;
@@ -4675,12 +4685,26 @@ QString &QString::vsprintf(const char* cformat, va_list ap)
                     flags |= QLocalePrivate::CapitalEorX;
 
                 QLocalePrivate::DoubleForm form = QLocalePrivate::DFDecimal;
-                switch (qToLower(*c)) {
-                    case 'e': form = QLocalePrivate::DFExponent; break;
-                    case 'a':                             // not supported - decimal form used instead
-                    case 'f': form = QLocalePrivate::DFDecimal; break;
-                    case 'g': form = QLocalePrivate::DFSignificantDigits; break;
-                    default: break;
+                switch (*c) {
+                    case 'e':
+                    case 'E': {
+                        form = QLocalePrivate::DFExponent;
+                        break;
+                    }
+                    case 'a': // not supported - decimal form used instead
+                    case 'A':
+                    case 'f':
+                    case 'F': {
+                        form = QLocalePrivate::DFDecimal;
+                        break;
+                    }
+                    case 'g':
+                    case 'G': {
+                        form = QLocalePrivate::DFSignificantDigits;
+                        break;
+                    }
+                    default:
+                        break;
                 }
                 subst = locale.d()->doubleToString(d, precision, form, width, flags);
                 ++c;
@@ -5320,23 +5344,29 @@ QString QString::number(double n, char f, int prec)
 
     if (qIsUpper(f))
         flags = QLocalePrivate::CapitalEorX;
-    f = qToLower(f);
 
     switch (f) {
         case 'f':
+        case 'F': {
             form = QLocalePrivate::DFDecimal;
             break;
+        }
         case 'e':
+        case 'E': {
             form = QLocalePrivate::DFExponent;
             break;
+        }
         case 'g':
+        case 'G': {
             form = QLocalePrivate::DFSignificantDigits;
             break;
-        default:
+        }
+        default: {
 #if defined(QT_CHECK_RANGE)
             qWarning("QString::number: Invalid format char '%c'", f);
 #endif
             break;
+        }
     }
 
     QLocale locale(QLocale::C);
@@ -6102,24 +6132,30 @@ QString QString::arg(double a, int fieldWidth, char fmt, int prec, const QChar &
 
     if (qIsUpper(fmt))
         flags |= QLocalePrivate::CapitalEorX;
-    fmt = qToLower(fmt);
 
     QLocalePrivate::DoubleForm form = QLocalePrivate::DFDecimal;
     switch (fmt) {
-    case 'f':
-        form = QLocalePrivate::DFDecimal;
-        break;
-    case 'e':
-        form = QLocalePrivate::DFExponent;
-        break;
-    case 'g':
-        form = QLocalePrivate::DFSignificantDigits;
-        break;
-    default:
+        case 'f':
+        case 'F': {
+            form = QLocalePrivate::DFDecimal;
+            break;
+        }
+        case 'e':
+        case 'E': {
+            form = QLocalePrivate::DFExponent;
+            break;
+        }
+        case 'g':
+        case 'G': {
+            form = QLocalePrivate::DFSignificantDigits;
+            break;
+        }
+        default: {
 #if defined(QT_CHECK_RANGE)
-        qWarning("QString::arg: Invalid format char '%c'", fmt);
+            qWarning("QString::arg: Invalid format char '%c'", fmt);
 #endif
-        break;
+            break;
+        }
     }
 
     QString arg;

@@ -27,7 +27,6 @@
 
 #include <string.h>
 #include <stdarg.h>
-#include <stdio.h>
 #include <string>
 
 QT_BEGIN_NAMESPACE
@@ -69,12 +68,6 @@ inline int qstrnicmp(const char *str1, const char *str2, uint len)
     return (str1 && str2) ? strncasecmp(str1, str2, len)
         : (str1 ? 1 : (str2 ? -1 : 0));
 }
-
-// implemented in qvsnprintf.cpp
-Q_CORE_EXPORT int qsnprintf(char *str, size_t n, const char *fmt, ...);
-inline int qvsnprintf(char *str, size_t n, const char *fmt, va_list ap)
-{ return ::vsnprintf(str, n, fmt, ap); }
-
 
 // qChecksum: Internet checksum
 Q_CORE_EXPORT quint16 qChecksum(const char *s, uint len);

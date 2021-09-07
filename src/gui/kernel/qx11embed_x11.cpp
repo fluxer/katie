@@ -29,6 +29,7 @@
 #include "qstyleoption.h"
 #include "qelapsedtimer.h"
 #include "qpointer.h"
+#include "qthread.h"
 #include "qdebug.h"
 #include "qwidget_p.h"
 #include "qx11info_x11.h"
@@ -1167,7 +1168,7 @@ void QX11EmbedContainer::embedClient(WId id)
         XEvent event;
         if (!XCheckIfEvent(x11Info().display(), &event, functor, (XPointer) &data)) {
             XSync(x11Info().display(), False);
-            usleep(50000);
+            QThread::usleep(50000);
             continue;
         }
 

@@ -234,13 +234,13 @@ public:
         time.start();
         switch (sleepType) {
         case Second:
-            sleep(interval);
+            QThread::sleep(interval);
             break;
         case Millisecond:
-            msleep(interval);
+            QThread::msleep(interval);
             break;
         case Microsecond:
-            usleep(interval);
+            QThread::usleep(interval);
             break;
         }
         elapsed = time.elapsed();

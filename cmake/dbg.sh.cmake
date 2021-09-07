@@ -14,4 +14,4 @@ bin="$1"
 shift
 
 cd "$(dirname "$bin")"
-exec gdb --args "./$(basename "$bin")" $@
+exec gdb --args "./$(basename "$bin")" "$@"

@@ -54,38 +54,37 @@ static QLocale::NumberOptions default_number_options = 0;
 ** Helpers for accessing Qt locale database
 */
 
-static bool qt_splitLocaleName(const QString &name, QString &lang, QString &script, QString &cntry)
+static bool qt_splitLocaleName(const QByteArray &name, QByteArray &lang, QByteArray &script, QByteArray &cntry)
 {
-    const QByteArray latinname = name.toLatin1();
     QSTACKARRAY(char, getbuffer, 20);
     UErrorCode error = U_ZERO_ERROR;
-    const int langresult = uloc_getLanguage(latinname.constData(), getbuffer, sizeof(getbuffer), &error);
+    const int langresult = uloc_getLanguage(name.constData(), getbuffer, sizeof(getbuffer), &error);
     if (Q_UNLIKELY(U_FAILURE(error))) {
         qWarning("qt_splitLocaleName: uloc_getLanguage(%s) failed %s",
-            latinname.constData(), u_errorName(error));
+            name.constData(), u_errorName(error));
         return false;
     }
-    lang = QString::fromLatin1(getbuffer, langresult);
+    lang = QByteArray(getbuffer, langresult);
 
     error = U_ZERO_ERROR;
     ::memset(getbuffer, '\0', sizeof(getbuffer) * sizeof(char));
-    const int scriptresult = uloc_getScript(latinname.constData(), getbuffer, sizeof(getbuffer), &error);
+    const int scriptresult = uloc_getScript(name.constData(), getbuffer, sizeof(getbuffer), &error);
     if (Q_UNLIKELY(U_FAILURE(error))) {
         qWarning("qt_splitLocaleName: uloc_getScript(%s) failed %s",
-            latinname.constData(), u_errorName(error));
+            name.constData(), u_errorName(error));
         return false;
     }
-    script = QString::fromLatin1(getbuffer, scriptresult);
+    script = QByteArray(getbuffer, scriptresult);
 
     error = U_ZERO_ERROR;
     ::memset(getbuffer, '\0', sizeof(getbuffer) * sizeof(char));
-    const int countryresult = uloc_getCountry(latinname.constData(), getbuffer, sizeof(getbuffer), &error);
+    const int countryresult = uloc_getCountry(name.constData(), getbuffer, sizeof(getbuffer), &error);
     if (Q_UNLIKELY(U_FAILURE(error))) {
         qWarning("qt_splitLocaleName: uloc_getCountry(%s) failed %s",
-            latinname.constData(), u_errorName(error));
+            name.constData(), u_errorName(error));
         return false;
     }
-    cntry = QString::fromLatin1(getbuffer, countryresult);
+    cntry = QByteArray(getbuffer, countryresult);
 
     return true;
 }
@@ -132,15 +131,15 @@ static int qt_repeatCount(const QString &s, int i)
     return j - i;
 }
 
-static const QLocalePrivate *findLocale(const QString &name)
+static const QLocalePrivate *findLocale(const QByteArray &name)
 {
     if (name.isEmpty()) {
         return &localeTbl[0];
     }
 
-    QString lang_code;
-    QString script_code;
-    QString cntry_code;
+    QByteArray lang_code;
+    QByteArray script_code;
+    QByteArray cntry_code;
     if (Q_UNLIKELY(!qt_splitLocaleName(name, lang_code, script_code, cntry_code))) {
         return &localeTbl[0];
     }
@@ -164,7 +163,7 @@ static const QLocalePrivate *defaultPrivate()
         if (lang.isEmpty()) {
             lang = qgetenv("LANG");
         }
-        default_lp = findLocale(QString::fromLatin1(lang.constData()));
+        default_lp = findLocale(lang);
     }
     return default_lp;
 }
@@ -179,9 +178,9 @@ static inline QString getLocaleData(const char *data)
     return QString::fromUtf8(data);
 }
 
-QLocale::Language QLocalePrivate::codeToLanguage(const QString &code)
+QLocale::Language QLocalePrivate::codeToLanguage(const QByteArray &code)
 {
-    QString lower = code.toLower();
+    QByteArray lower = code.toLower();
 
     for (qint16 i = 0; i < languageAliasTblSize; i++) {
         if (languageAliasTbl[i].original == lower) {
@@ -191,19 +190,19 @@ QLocale::Language QLocalePrivate::codeToLanguage(const QString &code)
     }
 
     for (qint16 i = 0; i < languageTblSize; i++) {
-        if (QLatin1String(languageTbl[i].code) == lower)
+        if (languageTbl[i].code == lower)
             return languageTbl[i].language;
     }
 
     return QLocale::C;
 }
 
-QLocale::Script QLocalePrivate::codeToScript(const QString &code)
+QLocale::Script QLocalePrivate::codeToScript(const QByteArray &code)
 {
     // script is titlecased in our data
-    QString title = code.toLower();
+    QByteArray title = code.toLower();
     if (title.size() > 0) {
-        title[0] = code.at(0).toUpper();
+        title[0] = qToUpper(code.at(0));
     }
 
     for (qint16 i = 0; i < scriptAliasTblSize; i++) {
@@ -214,15 +213,15 @@ QLocale::Script QLocalePrivate::codeToScript(const QString &code)
     }
 
     for (qint16 i = 0; i < scriptTblSize; i++) {
-        if (QLatin1String(scriptTbl[i].code) == title)
+        if (scriptTbl[i].code == title)
             return scriptTbl[i].script;
     }
     return QLocale::AnyScript;
 }
 
-QLocale::Country QLocalePrivate::codeToCountry(const QString &code)
+QLocale::Country QLocalePrivate::codeToCountry(const QByteArray &code)
 {
-    QString upper = code.toUpper();
+    QByteArray upper = code.toUpper();
 
     for (qint16 i = 0; i < countryAliasTblSize; i++) {
         if (countryAliasTbl[i].original == upper) {
@@ -232,7 +231,7 @@ QLocale::Country QLocalePrivate::codeToCountry(const QString &code)
     }
 
     for (qint16 i = 0; i < countryTblSize; i++) {
-        if (QLatin1String(countryTbl[i].code) == upper)
+        if (countryTbl[i].code == upper)
             return countryTbl[i].country;
     }
 
@@ -254,28 +253,28 @@ QString QLocalePrivate::bcp47Name() const
     const int countrylen = qstrlen(country);
     const int totallen = langlen + scriptlen + countrylen + (script ? 1 : 0) + (country ? 1 : 0);
 
-    QSTACKARRAY(QChar, bcp, totallen);
+    QSTACKARRAY(char, bcp, totallen);
     int datapos = 0;
     for (int i = 0; i < langlen; i++) {
-        bcp[datapos] = ushort(lang[i]);
+        bcp[datapos] = lang[i];
         datapos++;
     }
     if (script) {
-        bcp[datapos++] = QLatin1Char('-');
+        bcp[datapos++] = '-';
         for (int i = 0; i < scriptlen; i++) {
-            bcp[datapos] = ushort(script[i]);
+            bcp[datapos] = script[i];
             datapos++;
         }
     }
     if (country) {
-        bcp[datapos++] = QLatin1Char('-');
+        bcp[datapos++] = '-';
         for (int i = 0; i < countrylen; i++) {
-            bcp[datapos] = ushort(country[i]);
+            bcp[datapos] = country[i];
             datapos++;
         }
     }
 
-    return QString(bcp, totallen);
+    return QString::fromLatin1(bcp, totallen);
 }
 
 const QLocalePrivate *QLocalePrivate::findLocale(QLocale::Language language, QLocale::Script script, QLocale::Country country)
@@ -376,7 +375,7 @@ static quint16 localePrivateIndex(const QLocalePrivate *p)
 QLocale::QLocale(const QString &name)
 {
     p.numberOptions = 0;
-    p.index = localePrivateIndex(findLocale(name));
+    p.index = localePrivateIndex(findLocale(name.toLatin1()));
 }
 
 /*!
@@ -1339,18 +1338,23 @@ QString QLocale::toString(double i, char f, int prec) const
 
     if (qIsUpper(f))
         flags = QLocalePrivate::CapitalEorX;
-    f = qToLower(f);
 
     switch (f) {
         case 'f':
+        case 'F': {
             form = QLocalePrivate::DFDecimal;
             break;
+        }
         case 'e':
+        case 'E': {
             form = QLocalePrivate::DFExponent;
             break;
+        }
         case 'g':
+        case 'G': {
             form = QLocalePrivate::DFSignificantDigits;
             break;
+        }
         default:
             break;
     }

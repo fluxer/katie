@@ -435,7 +435,7 @@ static int qt_x_errhandler(Display *dpy, XErrorEvent *err)
     XGetErrorText(dpy, err->error_code, errstr, maxerrlen);
     QSTACKARRAY(char, buffer, maxerrlen);
     QSTACKARRAY(char, request_str, maxerrlen);
-    qsnprintf(buffer, maxerrlen, "%d", err->request_code);
+    ::snprintf(buffer, maxerrlen, "%d", err->request_code);
     XGetErrorDatabaseText(dpy, "XRequest", buffer, "", request_str, maxerrlen);
     if (err->request_code < 128) {
         // X error for a normal protocol request
@@ -456,11 +456,11 @@ static int qt_x_errhandler(Display *dpy, XErrorEvent *err)
 
         QSTACKARRAY(char, minor_str, maxerrlen);
         if (extensionName) {
-            qsnprintf(buffer, maxerrlen, "%s.%d", extensionName, err->minor_code);
+            ::snprintf(buffer, maxerrlen, "%s.%d", extensionName, err->minor_code);
             XGetErrorDatabaseText(dpy, "XRequest", buffer, "", minor_str, maxerrlen);
         } else {
             extensionName = "Unknown extension";
-            qsnprintf(minor_str, maxerrlen, "Unknown request");
+            ::snprintf(minor_str, maxerrlen, "Unknown request");
         }
         qWarning( "X Error: %s %d\n"
                   "  Extension:    %d (%s)\n"

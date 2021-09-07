@@ -32,6 +32,7 @@
 #include "qfileinfo.h"
 #include "qdir.h"
 #include "qprocess.h"
+#include "qthread.h"
 #include "qdebug.h"
 #include "qscopedpointer.h"
 #include "qtestlog_p.h"
@@ -857,7 +858,7 @@ int qt_snprintf(char *str, int size, const char *format, ...)
     int res = 0;
 
     va_start(ap, format);
-    qvsnprintf(str, size, format, ap);
+    ::vsnprintf(str, size, format, ap);
     va_end(ap);
     str[size - 1] = '\0';
 
@@ -2019,9 +2020,9 @@ bool QTest::currentTestFailed()
 
     \a ms must be greater than 0.
 
-    \bold {Note:} The qSleep() function calls either \c nanosleep() on
-    unix or \c Sleep() on windows, so the accuracy of time spent in
-    qSleep() depends on the operating system.
+    \bold {Note:} The qSleep() function calls \c QThread::msleep(),
+    so the accuracy of time spent in qSleep() depends on the
+    operating system.
 
     Example:
     \snippet doc/src/snippets/code/src_qtestlib_qtestcase.cpp 23
@@ -2032,8 +2033,7 @@ void QTest::qSleep(int ms)
 {
     QTEST_ASSERT(ms > 0);
 
-    struct timespec ts = { ms / 1000, (ms % 1000) * 1000 * 1000 };
-    nanosleep(&ts, NULL);
+    QThread::msleep(ms);
 }
 
 /*! \internal

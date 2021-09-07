@@ -670,10 +670,10 @@ QString QHostAddress::toString() const
     QT_ENSURE_PARSED(this);
     if (d->protocol == QAbstractSocket::IPv4Protocol) {
         const quint32 i = toIPv4Address();
-        QSTACKARRAY(char, sprintfbuf, 20);
-        qsnprintf(sprintfbuf, sizeof(sprintfbuf), "%d.%d.%d.%d",
+        QSTACKARRAY(char, snprintfbuf, 20);
+        ::snprintf(snprintfbuf, sizeof(snprintfbuf), "%d.%d.%d.%d",
             (i>>24) & 0xff, (i>>16) & 0xff, (i >> 8) & 0xff, i & 0xff);
-        return QString::fromLatin1(sprintfbuf);
+        return QString::fromLatin1(snprintfbuf);
     }
 
     if (d->protocol == QAbstractSocket::IPv6Protocol) {

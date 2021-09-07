@@ -439,15 +439,15 @@ def printlocaledata(frommap, key):
 
 def printaliastable(frommap, prefix):
     print('''static const struct %sAliasTblData {
-    const QLatin1String original;
-    const QLatin1String substitute;
+    const char* original;
+    const char* substitute;
 } %sAliasTbl[] = {''' % (prefix, prefix))
 
     for key in sorted(frommap):
         # territories and scripts entries can contain multiple replacements, add one for each
         splitvalue = frommap[key].split(' ')
         for value in splitvalue:
-            print('    { QLatin1String("%s"), QLatin1String("%s") },' % (key, value))
+            print('    { "%s", "%s" },' % (key, value))
 
     print('};')
     print('static const qint16 %sAliasTblSize = sizeof(%sAliasTbl) / sizeof(%sAliasTblData);\n' % (prefix, prefix, prefix))

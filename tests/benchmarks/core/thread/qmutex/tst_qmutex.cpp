@@ -222,7 +222,7 @@ public:
                 if (use2mutexes)
                     NativeMutexLock(mutex2);
                 if (msleepDuration >= 0)
-                    msleep(msleepDuration);
+                    QThread::msleep(msleepDuration);
                 if (use2mutexes)
                     NativeMutexUnlock(mutex2);
                 NativeMutexUnlock(mutex1);
@@ -291,7 +291,7 @@ public:
                 if (use2mutexes)
                     mutex2->lock();
                 if (msleepDuration >= 0)
-                    msleep(msleepDuration);
+                    QThread::msleep(msleepDuration);
                 if (use2mutexes)
                     mutex2->unlock();
                 mutex1->unlock();
@@ -355,7 +355,7 @@ public:
                     QMutexLocker locker1(mutex1);
                     QMutexLocker locker2(use2mutexes ? mutex2 : 0);
                     if (msleepDuration >= 0)
-                        msleep(msleepDuration);
+                        QThread::msleep(msleepDuration);
                 }
 
                 QThread::yieldCurrentThread();

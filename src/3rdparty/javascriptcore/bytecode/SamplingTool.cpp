@@ -98,7 +98,7 @@ ThreadIdentifier SamplingThread::s_samplingThread;
 void* SamplingThread::threadStartFunc(void*)
 {
     while (s_running) {
-        usleep(1000000 / s_hertz);
+        QThread::usleep(1000000 / s_hertz);
 
 #if ENABLE(SAMPLING_FLAGS)
         SamplingFlags::sample();

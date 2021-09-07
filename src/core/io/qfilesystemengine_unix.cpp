@@ -561,7 +561,6 @@ void QFileSystemMetaData::fillFromDirEnt(const QT_DIRENT &entry, const QFileSyst
         case DT_SOCK: {
             entryFlags = QFileSystemMetaData::SequentialType
                 | QFileSystemMetaData::ExistsAttribute;
-
             break;
         }
         case DT_LNK: {
