@@ -80,7 +80,7 @@ static inline QByteArray qt_prettyDebug(const char *data, int len, int maxSize)
         case '\t': out += "\\t"; break;
         default:
             QSTACKARRAY(char, buf, 5);
-            qsnprintf(buf, sizeof(buf), "\\%3o", c);
+            ::snprintf(buf, sizeof(buf), "\\%3o", c);
             buf[4] = '\0';
             out += QByteArray(buf);
         }

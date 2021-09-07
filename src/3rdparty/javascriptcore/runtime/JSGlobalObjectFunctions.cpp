@@ -384,13 +384,13 @@ JSValue QT_FASTCALL globalFuncEscape(ExecState* exec, JSObject*, JSValue, const 
         int u = c[0];
         if (u > 255) {
             char tmp[7];
-            sprintf(tmp, "%%u%04X", u);
+            ::snprintf(tmp, sizeof(tmp), "%%u%04X", u);
             s = UString(tmp);
         } else if (u != 0 && strchr(do_not_escape, static_cast<char>(u)))
             s = UString(c, 1);
         else {
             char tmp[4];
-            sprintf(tmp, "%%%02X", u);
+            ::snprintf(tmp, sizeof(tmp), "%%%02X", u);
             s = UString(tmp);
         }
         builder.append(s);

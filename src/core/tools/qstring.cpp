@@ -4420,7 +4420,7 @@ QString &QString::sprintf(const char *cformat, ...)
 {
     va_list ap;
     va_start(ap, cformat);
-    QString &s = vsprintf(cformat, ap);
+    QString &s = QString::vsprintf(cformat, ap);
     va_end(ap);
     return s;
 }

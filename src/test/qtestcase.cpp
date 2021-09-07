@@ -858,7 +858,7 @@ int qt_snprintf(char *str, int size, const char *format, ...)
     int res = 0;
 
     va_start(ap, format);
-    qvsnprintf(str, size, format, ap);
+    ::vsnprintf(str, size, format, ap);
     va_end(ap);
     str[size - 1] = '\0';
 

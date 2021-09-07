@@ -111,7 +111,7 @@ QString QNetworkInterfacePrivate::makeHwAddress(int len, uchar *data)
             result += QLatin1Char(':');
 
         QSTACKARRAY(char, buf, 3);
-        sprintf(buf, "%02hX", ushort(data[i]));
+        ::snprintf(buf, sizeof(buf), "%02hX", ushort(data[i]));
         result += QString::fromLatin1(buf);
     }
     return result;

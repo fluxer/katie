@@ -96,7 +96,7 @@ int qt_asprintf(QTestCharBuffer *str, const char *format, ...)
 
     for (;;) {
         va_start(ap, format);
-        res = qvsnprintf(str->data(), size, format, ap);
+        res = ::vsnprintf(str->data(), size, format, ap);
         va_end(ap);
         str->data()[size - 1] = '\0';
         if (res >= 0 && res < size) {
