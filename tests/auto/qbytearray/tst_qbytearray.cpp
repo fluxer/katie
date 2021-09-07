@@ -68,7 +68,6 @@ private slots:
     void base64();
     void fromBase64_data();
     void fromBase64();
-    void qvsnprintf();
     void qstrlen();
     void qstrnlen();
     void qstrcpy();
@@ -512,31 +511,6 @@ void tst_QByteArray::fromBase64()
     QByteArray arr = QByteArray::fromBase64(base64);
     QCOMPARE(arr, rawdata);
 }
-
-void tst_QByteArray::qvsnprintf()
-{
-    char buf[20];
-    ::memset(buf, 42, sizeof(buf));
-
-    QCOMPARE(::qsnprintf(buf, 10, "%s", "bubu"), 4);
-    QCOMPARE(static_cast<const char *>(buf), "bubu");
-    QCOMPARE(buf[5], char(42));
-
-    ::memset(buf, 42, sizeof(buf));
-    QCOMPARE(::qsnprintf(buf, 5, "%s", "bubu"), 4);
-    QCOMPARE(static_cast<const char *>(buf), "bubu");
-    QCOMPARE(buf[5], char(42));
-
-    ::memset(buf, 42, sizeof(buf));
-    // Every other system in this world reports the amount of data that could have been written
-    QCOMPARE(::qsnprintf(buf, 3, "%s", "bubu"), 4);
-    QCOMPARE(static_cast<const char*>(buf), "bu");
-    QCOMPARE(buf[4], char(42));
-
-    ::memset(buf, 42, sizeof(buf));
-    QCOMPARE(::qsnprintf(buf, 10, ""), 0);
-}
-
 
 void tst_QByteArray::qstrlen()
 {
