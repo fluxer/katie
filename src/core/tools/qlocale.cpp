@@ -254,28 +254,28 @@ QString QLocalePrivate::bcp47Name() const
     const int countrylen = qstrlen(country);
     const int totallen = langlen + scriptlen + countrylen + (script ? 1 : 0) + (country ? 1 : 0);
 
-    QSTACKARRAY(QChar, bcp, totallen);
+    QSTACKARRAY(char, bcp, totallen);
     int datapos = 0;
     for (int i = 0; i < langlen; i++) {
-        bcp[datapos] = ushort(lang[i]);
+        bcp[datapos] = lang[i];
         datapos++;
     }
     if (script) {
-        bcp[datapos++] = QLatin1Char('-');
+        bcp[datapos++] = '-';
         for (int i = 0; i < scriptlen; i++) {
-            bcp[datapos] = ushort(script[i]);
+            bcp[datapos] = script[i];
             datapos++;
         }
     }
     if (country) {
-        bcp[datapos++] = QLatin1Char('-');
+        bcp[datapos++] = '-';
         for (int i = 0; i < countrylen; i++) {
-            bcp[datapos] = ushort(country[i]);
+            bcp[datapos] = country[i];
             datapos++;
         }
     }
 
-    return QString(bcp, totallen);
+    return QString::fromLatin1(bcp, totallen);
 }
 
 const QLocalePrivate *QLocalePrivate::findLocale(QLocale::Language language, QLocale::Script script, QLocale::Country country)
