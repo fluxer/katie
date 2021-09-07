@@ -34,7 +34,7 @@ QT_BEGIN_NAMESPACE
 
 QString qulltoa(qulonglong l, int base, const QChar zero)
 {
-    ushort buff[65]; // length of MAX_ULLONG in base 2
+    QSTACKARRAY(ushort, buff, 65); // length of MAX_ULLONG in base 2
     ushort *p = buff + 65;
 
     if (base != 10 || zero.unicode() == '0') {
