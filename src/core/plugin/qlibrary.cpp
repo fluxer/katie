@@ -438,7 +438,7 @@ bool QLibraryPrivate::isPlugin()
 
 #ifndef QT_NO_SETTINGS
         QStringList queried;
-        queried << QString::number(qt_version, 16) << lastModified;
+        queried << QString::number(qt_version) << lastModified;
         settings->setValue(regkey, queried);
     }
 #endif
@@ -455,16 +455,15 @@ bool QLibraryPrivate::isPlugin()
 
     pluginState = IsNotAPlugin; // be pessimistic
 
-    const uint current = QByteArray(QT_VERSION_HEX_STR).toUInt();
-    if (qt_version < current) {
+    if (qt_version < QT_VERSION) {
         if (qt_debug_component()) {
             qWarning("Plugin uses incompatible Katie library: %s (%d, %d)\n",
-                QFile::encodeName(fileName).data(), qt_version, current);
+                QFile::encodeName(fileName).data(), qt_version, QT_VERSION);
         }
         errorString = QLibrary::tr("The plugin uses incompatible Katie library: %1 (%2, %3)")
             .arg(fileName)
             .arg(qt_version)
-            .arg(current);
+            .arg(QT_VERSION);
     } else {
         pluginState = IsAPlugin;
     }
