@@ -251,7 +251,7 @@ QByteArray QSslCertificate::serialNumber() const
 {
     std::lock_guard<std::recursive_mutex> lock(*QRecursiveMutexPool::globalInstanceGet(d.data()));
     if (d->serialNumberString.isEmpty() && d->x509) {
-        ASN1_INTEGER *serialNumber = X509_get_serialNumber(d->x509);
+        const ASN1_INTEGER *serialNumber = X509_get0_serialNumber(d->x509);
         // if we cannot convert to a long, just output the hexadecimal number
         if (serialNumber->length > 4) {
             QByteArray hexString;
