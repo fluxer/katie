@@ -2,6 +2,25 @@
 
 set -e
 
+demanglersrc="/tmp/demangler.cpp"
+demanglerfile="/tmp/demangler"
+printf "
+#include <stdlib.h>
+#include <stdio.h>
+#include <cxxabi.h>
+
+int main(int argc, char** argv) {
+    int status;
+    char* demangled = abi::__cxa_demangle(argv[1], nullptr, nullptr, &status);
+    if (status == 0) {
+        ::printf(\"%%s\\\n\", demangled);
+        ::free(demangled);
+    }
+    return 0;
+}
+" > "$demanglersrc"
+g++ "$demanglersrc" -o "$demanglerfile"
+
 sofile="$@"
 sobase="$(basename $sofile)"
 sosym="/tmp/$sobase.sym"
@@ -18,7 +37,7 @@ readelf -s -W "$stripfile" | awk -F' ' '{print $8}' > "$stripsym"
 uniq "$sosym" "$usosym"
 uniq "$stripsym" "$ustripsym"
 while read line; do
-    grep -q "^${line}$" "$ustripsym" || echo "$line"
+    grep -q "^${line}$" "$ustripsym" || "$demanglerfile" "$line"
 done < "$usosym"
 
-rm -vf "$stripfile" "$sosym" "$usosym" "$stripsym" "$ustripsym"
+rm -vf "$demanglersrc" "$demanglerfile" "$stripfile" "$sosym" "$usosym" "$stripsym" "$ustripsym"
