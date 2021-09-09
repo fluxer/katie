@@ -673,9 +673,9 @@ QString QDate::toString(Qt::DateFormat f) const
         case Qt::ISODate: {
             if (year() < 0 || year() > 9999)
                 return QString();
-            QString month(QString::number(m).rightJustified(2, QLatin1Char('0')));
-            QString day(QString::number(d).rightJustified(2, QLatin1Char('0')));
-            return QString::number(y) + QLatin1Char('-') + month + QLatin1Char('-') + day;
+            QSTACKARRAY(char, snprintfbuf, 11);
+            ::snprintf(snprintfbuf, sizeof(snprintfbuf), "%4i-%02i-%02i", y, m, d);
+            return QString::fromLatin1(snprintfbuf, sizeof(snprintfbuf) - 1);
         }
     }
 
@@ -1413,20 +1413,21 @@ QString QTime::toString(Qt::DateFormat format) const
 
     switch (format) {
         case Qt::SystemLocaleShortDate:
-        case Qt::SystemLocaleLongDate:
+        case Qt::SystemLocaleLongDate: {
             return QLocale::system().toString(*this, format == Qt::SystemLocaleLongDate ? QLocale::LongFormat
                                             : QLocale::ShortFormat);
+        }
         case Qt::DefaultLocaleShortDate:
-        case Qt::DefaultLocaleLongDate:
+        case Qt::DefaultLocaleLongDate: {
             return QLocale().toString(*this, format == Qt::DefaultLocaleLongDate ? QLocale::LongFormat
                                     : QLocale::ShortFormat);
-
+        }
         case Qt::ISODate:
-        case Qt::TextDate:
-            return QString::fromLatin1("%1:%2:%3")
-                .arg(hour(), 2, 10, QLatin1Char('0'))
-                .arg(minute(), 2, 10, QLatin1Char('0'))
-                .arg(second(), 2, 10, QLatin1Char('0'));
+        case Qt::TextDate: {
+            QSTACKARRAY(char, snprintfbuf, 9);
+            ::snprintf(snprintfbuf, sizeof(snprintfbuf), "%02i:%02i:%02i", hour(), minute(), second());
+            return QString::fromLatin1(snprintfbuf, sizeof(snprintfbuf) - 1);
+        }
     }
 
     return QString();
