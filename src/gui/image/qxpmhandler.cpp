@@ -1032,7 +1032,7 @@ static bool write_xpm_image(const QImage &sourceImage, QIODevice *device, const 
 
     // build color table
     for(int y = 0; y < h; y++) {
-        QRgb * yp = (QRgb *)image.scanLine(y);
+        const QRgb * yp = (const QRgb *)image.constScanLine(y);
         for(int x = 0; x < w; x++) {
             QRgb color = *(yp + x);
             if (!colorMap.contains(color))
@@ -1078,7 +1078,7 @@ static bool write_xpm_image(const QImage &sourceImage, QIODevice *device, const 
     // write pixels, limit to 4 characters per pixel
     line.truncate(cpp*w);
     for(int y = 0; y < h; y++) {
-        QRgb * yp = (QRgb *) image.scanLine(y);
+        const QRgb * yp = (const QRgb *) image.constScanLine(y);
         int cc = 0;
         for(int x = 0; x < w; x++) {
             int color = (int)(*(yp + x));
