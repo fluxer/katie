@@ -566,11 +566,9 @@ void QStaticTextPrivate::paintText(const QPointF &topLeftPosition, QPainter *p)
     } else {
         QTextDocument document;
 #ifndef QT_NO_CSSPARSER
-        QColor color = p->pen().color();
-        document.setDefaultStyleSheet(QString::fromLatin1("body { color: #%1%2%3 }")
-                                      .arg(QString::number(color.red(), 16), 2, QLatin1Char('0'))
-                                      .arg(QString::number(color.green(), 16), 2, QLatin1Char('0'))
-                                      .arg(QString::number(color.blue(), 16), 2, QLatin1Char('0')));
+        const QColor color = p->pen().color();
+        document.setDefaultStyleSheet(QString::fromLatin1("body { color: %1 }")
+                                      .arg(color.name()));
 #endif
         document.setDefaultFont(font);
         document.setDocumentMargin(0.0);        
