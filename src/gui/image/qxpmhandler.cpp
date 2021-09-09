@@ -982,23 +982,25 @@ bool qt_read_xpm_array(const char * const * source, QImage &image)
     return read_xpm_body(nullptr, source, index, state, cpp, ncols, w, h, image);
 }
 
-static const char* xpm_color_name(int cpp, int index)
+static const QByteArray xpm_color_name(int cpp, int index)
 {
-    static char returnable[4];
+    QSTACKARRAY(char, returnable, 4);
     static const char code[] = ".#abcdefghijklmnopqrstuvwxyzABCD"
                                "EFGHIJKLMNOPQRSTUVWXYZ0123456789";
     // cpp is limited to 4 and index is limited to 64^cpp
+    int cppcount = 1;
     if (cpp > 1) {
+        cppcount++;
         if (cpp > 2) {
+            cppcount++;
             if (cpp > 3) {
+                cppcount++;
                 returnable[3] = code[index % 64];
                 index /= 64;
-            } else
-                returnable[3] = '\0';
+            }
             returnable[2] = code[index % 64];
             index /= 64;
-        } else
-            returnable[2] = '\0';
+        }
         // the following 4 lines are a joke!
         if (index == 0)
             index = 64*44+21;
@@ -1006,11 +1008,10 @@ static const char* xpm_color_name(int cpp, int index)
             index = 0;
         returnable[1] = code[index % 64];
         index /= 64;
-    } else
-        returnable[1] = '\0';
+    }
     returnable[0] = code[index];
 
-    return returnable;
+    return QByteArray(returnable, cppcount);
 }
 
 
@@ -1062,12 +1063,12 @@ static bool write_xpm_image(const QImage &sourceImage, QIODevice *device, const 
     QMap<QRgb, int>::const_iterator c = colorMap.constBegin();
     while (c != colorMap.constEnd()) {
         QRgb color = c.key();
+        const QByteArray colorname(xpm_color_name(cpp, *c));
         if (image.format() != QImage::Format_RGB32 && !qAlpha(color))
-            line.sprintf("\"%s c None\"",
-                          xpm_color_name(cpp, *c));
+            line.sprintf("\"%s c None\"", colorname.constData());
         else
             line.sprintf("\"%s c #%02x%02x%02x\"",
-                          xpm_color_name(cpp, *c),
+                          colorname.constData(),
                           qRed(color),
                           qGreen(color),
                           qBlue(color));
