@@ -130,30 +130,29 @@ public:
     QRect cellRect(int row, int col) const;
 
     inline QLayoutItem *itemAt(int index) const {
-        if (index < things.count())
+        if (index >= 0 && index < things.count())
             return things.at(index)->item();
-        else
-            return 0;
+        return nullptr;
     }
     inline QLayoutItem *takeAt(int index) {
         Q_Q(QGridLayout);
-        if (index < things.count()) {
+        if (index >= 0 && index < things.count()) {
             if (QGridBox *b = things.takeAt(index)) {
                 QLayoutItem *item = b->takeItem();
                 if (QLayout *l = item->layout()) {
                     // sanity check in case the user passed something weird to QObject::setParent()
                     if (l->parent() == q)
-                        l->setParent(0);
+                        l->setParent(nullptr);
                 }
                 delete b;
                 return item;
             }
         }
-        return 0;
+        return nullptr;
     }
 
     void getItemPosition(int index, int *row, int *column, int *rowSpan, int *columnSpan) {
-        if (index < things.count()) {
+        if (index >= 0 && index < things.count()) {
             QGridBox *b =  things.at(index);
             int toRow = b->toRow(rr);
             int toCol = b->toCol(cc);
