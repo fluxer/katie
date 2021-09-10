@@ -257,13 +257,8 @@ public:
         }
 
         foreach(QGradientStop stop, stops) {
-            QString color =
-                QString::fromLatin1("#%1%2%3")
-                .arg(stop.second.red(), 2, 16, QLatin1Char('0'))
-                .arg(stop.second.green(), 2, 16, QLatin1Char('0'))
-                .arg(stop.second.blue(), 2, 16, QLatin1Char('0'));
             str << QLatin1String("    <stop offset=\"")<< stop.first << QLatin1String("\" ")
-                << QLatin1String("stop-color=\"") << color << QLatin1String("\" ")
+                << QLatin1String("stop-color=\"") << stop.second.name() << QLatin1String("\" ")
                 << QLatin1String("stop-opacity=\"") << stop.second.alphaF() <<QLatin1String("\" />\n");
         }
     }

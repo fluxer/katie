@@ -430,6 +430,8 @@ private:
     int head, tail;
     int tailBuffer; // always buffers.size() - 1
     int bufferSize;
+
+    Q_DISABLE_COPY(QRingBuffer)
 };
 
 QT_END_NAMESPACE

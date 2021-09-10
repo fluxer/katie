@@ -1090,20 +1090,21 @@ QChar QXmlInputSource::next()
             d->nextReturnedEndOfData = false;
             fetchData();
             if (d->pos >= d->length) {
-                return EndOfDocument;
+                return QXmlInputSource::EndOfDocument;
             }
             return next();
         }
         d->nextReturnedEndOfData = true;
-        return EndOfData;
+        return QXmlInputSource::EndOfData;
     }
 
     // QXmlInputSource has no way to signal encoding errors. The best we can do
     // is return EndOfDocument. We do *not* return EndOfData, because the reader
     // will then just call this function again to get the next char.
     QChar c = d->unicode[d->pos++];
-    if (c.unicode() == EndOfData)
-        c = EndOfDocument;
+    if (c.unicode() == QXmlInputSource::EndOfData) {
+        return QXmlInputSource::EndOfDocument;
+    }
     return c;
 }
 

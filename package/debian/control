@@ -10,14 +10,13 @@ Build-Depends: debhelper (>= 9~), libssl-dev, zlib1g-dev, libzstd-dev,
  libcups2-dev, libfreetype6-dev, libfontconfig1-dev, libpcre3-dev,
  libdbus-1-dev, unixodbc-dev, libicu-dev, libsqlite3-dev, cmake, git,
  xserver-xorg-dev, libxinerama-dev, libxrandr-dev, libxrender-dev,
- libxcursor-dev, libsm-dev, libpq-dev, libmariadbclient-dev, libmariadbd-dev,
- unifdef | dpkg
+ libxcursor-dev, libsm-dev, unifdef | dpkg
 
 Package: katie-runtime
 Architecture: amd64 arm64 armel armhf i386 mips mips64el mipsel ppc64el s390x hurd-i386
 Section: x11
 Depends: ${shlibs:Depends}, ${misc:Depends}, xdg-utils
-Recommends: unixodbc, libpq5, libmariadbclient, xserver-xorg-core
+Recommends: unixodbc, xserver-xorg-core
 Description: C++ toolkit derived from the Qt 4.8 framework
  Katie is continuation of the Qt4 C++ toolkit with the goal to keep it alive,
  clean it up, fix some bugs and backport some features from Qt5. It is based

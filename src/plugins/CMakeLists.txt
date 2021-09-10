@@ -49,14 +49,8 @@ endif()
 
 set(CMAKE_LIBRARY_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}/plugins/sqldrivers")
 set(CMAKE_ARCHIVE_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}/plugins/sqldrivers")
-if(WITH_MYSQL AND MYSQL_FOUND)
-    add_subdirectory(sqldrivers/mysql)
-endif()
 if(WITH_ODBC AND ODBC_FOUND)
     add_subdirectory(sqldrivers/odbc)
-endif()
-if(WITH_POSTGRESQL AND POSTGRESQL_FOUND)
-    add_subdirectory(sqldrivers/psql)
 endif()
 
 

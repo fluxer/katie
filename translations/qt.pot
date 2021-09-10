@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-09-07 01:25+0300\n"
+"POT-Creation-Date: 2021-09-10 05:02+0300\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -38,11 +38,11 @@ msgstr ""
 msgid "The file '%1' is not a valid Katie plugin."
 msgstr ""
 
-#: src/core/plugin/qlibrary.cpp:464
+#: src/core/plugin/qlibrary.cpp:463
 msgid "The plugin uses incompatible Katie library: %1 (%2, %3)"
 msgstr ""
 
-#: src/core/plugin/qlibrary.cpp:796 src/core/plugin/qpluginloader.cpp:279
+#: src/core/plugin/qlibrary.cpp:795 src/core/plugin/qpluginloader.cpp:279
 #: src/core/io/qiodevice.cpp:1519 src/network/ssl/qsslerror.cpp:249
 #: src/network/socket/qnativesocketengine.cpp:250
 #: src/network/access/qftp.cpp:1414 src/uitools/formscriptrunner.cpp:104
@@ -5501,42 +5501,6 @@ msgstr ""
 msgid "Could not reset to start position"
 msgstr ""
 
-#: src/plugins/sqldrivers/psql/qsql_psql.cpp:184
-msgctxt "QPSQLResult"
-msgid "Unable to create query"
-msgstr ""
-
-#: src/plugins/sqldrivers/psql/qsql_psql.cpp:548
-msgctxt "QPSQLResult"
-msgid "Unable to prepare statement"
-msgstr ""
-
-#: src/plugins/sqldrivers/psql/qsql_psql.cpp:794
-#: src/plugins/sqldrivers/odbc/qsql_odbc.cpp:1786
-#: src/plugins/sqldrivers/mysql/qsql_mysql.cpp:1164
-msgid "Unable to connect"
-msgstr ""
-
-#: src/plugins/sqldrivers/psql/qsql_psql.cpp:843
-msgid "Could not begin transaction"
-msgstr ""
-
-#: src/plugins/sqldrivers/psql/qsql_psql.cpp:871
-msgid "Could not commit transaction"
-msgstr ""
-
-#: src/plugins/sqldrivers/psql/qsql_psql.cpp:888
-msgid "Could not rollback transaction"
-msgstr ""
-
-#: src/plugins/sqldrivers/psql/qsql_psql.cpp:1172
-msgid "Unable to subscribe"
-msgstr ""
-
-#: src/plugins/sqldrivers/psql/qsql_psql.cpp:1204
-msgid "Unable to unsubscribe"
-msgstr ""
-
 #: src/plugins/sqldrivers/odbc/qsql_odbc.cpp:887
 #: src/plugins/sqldrivers/odbc/qsql_odbc.cpp:1226
 msgctxt "QODBCResult"
@@ -5587,6 +5551,10 @@ msgctxt "QODBCResult"
 msgid "Unable to bind variable"
 msgstr ""
 
+#: src/plugins/sqldrivers/odbc/qsql_odbc.cpp:1786
+msgid "Unable to connect"
+msgstr ""
+
 #: src/plugins/sqldrivers/odbc/qsql_odbc.cpp:1792
 msgid "Unable to connect - Driver doesn't support all functionality required"
 msgstr ""
@@ -5596,86 +5564,17 @@ msgid "Unable to disable autocommit"
 msgstr ""
 
 #: src/plugins/sqldrivers/odbc/qsql_odbc.cpp:2082
-#: src/plugins/sqldrivers/mysql/qsql_mysql.cpp:1318
 #: src/sql/drivers/qsql_sqlite.cpp:633
 msgid "Unable to commit transaction"
 msgstr ""
 
 #: src/plugins/sqldrivers/odbc/qsql_odbc.cpp:2099
-#: src/plugins/sqldrivers/mysql/qsql_mysql.cpp:1335
 #: src/sql/drivers/qsql_sqlite.cpp:648
 msgid "Unable to rollback transaction"
 msgstr ""
 
 #: src/plugins/sqldrivers/odbc/qsql_odbc.cpp:2114
 msgid "Unable to enable autocommit"
-msgstr ""
-
-#: src/plugins/sqldrivers/mysql/qsql_mysql.cpp:445
-#: src/plugins/sqldrivers/mysql/qsql_mysql.cpp:472
-msgctxt "QMYSQLResult"
-msgid "Unable to fetch data"
-msgstr ""
-
-#: src/plugins/sqldrivers/mysql/qsql_mysql.cpp:624
-msgctxt "QMYSQLResult"
-msgid "Unable to execute query"
-msgstr ""
-
-#: src/plugins/sqldrivers/mysql/qsql_mysql.cpp:630
-msgctxt "QMYSQLResult"
-msgid "Unable to store result"
-msgstr ""
-
-#: src/plugins/sqldrivers/mysql/qsql_mysql.cpp:722
-msgctxt "QMYSQLResult"
-msgid "Unable to execute next query"
-msgstr ""
-
-#: src/plugins/sqldrivers/mysql/qsql_mysql.cpp:732
-msgctxt "QMYSQLResult"
-msgid "Unable to store next result"
-msgstr ""
-
-#: src/plugins/sqldrivers/mysql/qsql_mysql.cpp:799
-#: src/plugins/sqldrivers/mysql/qsql_mysql.cpp:808
-msgctxt "QMYSQLResult"
-msgid "Unable to prepare statement"
-msgstr ""
-
-#: src/plugins/sqldrivers/mysql/qsql_mysql.cpp:840
-msgctxt "QMYSQLResult"
-msgid "Unable to reset statement"
-msgstr ""
-
-#: src/plugins/sqldrivers/mysql/qsql_mysql.cpp:931
-msgctxt "QMYSQLResult"
-msgid "Unable to bind value"
-msgstr ""
-
-#: src/plugins/sqldrivers/mysql/qsql_mysql.cpp:942
-msgctxt "QMYSQLResult"
-msgid "Unable to execute statement"
-msgstr ""
-
-#: src/plugins/sqldrivers/mysql/qsql_mysql.cpp:956
-#: src/plugins/sqldrivers/mysql/qsql_mysql.cpp:977
-msgctxt "QMYSQLResult"
-msgid "Unable to bind outvalues"
-msgstr ""
-
-#: src/plugins/sqldrivers/mysql/qsql_mysql.cpp:965
-msgctxt "QMYSQLResult"
-msgid "Unable to store statement results"
-msgstr ""
-
-#: src/plugins/sqldrivers/mysql/qsql_mysql.cpp:1153
-msgid "Unable to open database '"
-msgstr ""
-
-#: src/plugins/sqldrivers/mysql/qsql_mysql.cpp:1301
-#: src/sql/drivers/qsql_sqlite.cpp:618
-msgid "Unable to begin transaction"
 msgstr ""
 
 #: src/scripttools/debugging/qscriptedit.cpp:391
@@ -5962,6 +5861,10 @@ msgstr ""
 
 #: src/sql/drivers/qsql_sqlite.cpp:599
 msgid "Error closing database"
+msgstr ""
+
+#: src/sql/drivers/qsql_sqlite.cpp:618
+msgid "Unable to begin transaction"
 msgstr ""
 
 #: src/uitools/formbuilderextra.cpp:349

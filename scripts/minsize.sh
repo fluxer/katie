@@ -8,8 +8,8 @@ rm -rf "$cwd/../minsize"
 mkdir -p "$cwd/../minsize"
 cd "$cwd/../minsize"
 
-export CFLAGS="$CFLAGS -flto"
-export CXXFLAGS="$CXXFLAGS -flto -fno-exceptions"
+# export CFLAGS="$CFLAGS -flto"
+# export CXXFLAGS="$CXXFLAGS -flto -fno-exceptions"
 
 cmake ../ -DCMAKE_BUILD_TYPE=MinSizeRel \
     -DCMAKE_INSTALL_PREFIX=/usr $@

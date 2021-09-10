@@ -26,7 +26,6 @@
 #include <QtCore/qnamespace.h>
 
 #include <string.h>
-#include <stdarg.h>
 #include <string>
 
 QT_BEGIN_NAMESPACE

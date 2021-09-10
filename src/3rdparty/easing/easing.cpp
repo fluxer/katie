@@ -34,7 +34,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 #include <QtCore/qmath.h>
 
-QT_USE_NAMESPACE
+QT_BEGIN_NAMESPACE
 
 static inline qreal sinProgress_helper(qreal value)
 {
@@ -73,10 +73,10 @@ static inline qreal easeOutElastic_helper(qreal t, qreal b, qreal a, qreal p)
         a = b;
         s = p / 4.0f;
     } else {
-        s = p / (2 * M_PI) * ::qAsin(b / a);
+        s = p / (2 * M_PI) * qAsin(b / a);
     }
 
-    return (a*::qPow(2.0f,-10*t) * ::qSin( (t-s)*(2*M_PI)/p ) + b);
+    return (a*qPow(2.0f,-10*t) * qSin( (t-s)*(2*M_PI)/p ) + b);
 }
 
 static inline qreal easeInElastic_helper(qreal t, qreal b, qreal c, qreal a, qreal p)
@@ -85,15 +85,15 @@ static inline qreal easeInElastic_helper(qreal t, qreal b, qreal c, qreal a, qre
     if (t==1) return b+c;
 
     qreal s;
-    if(a < ::qFabs(c)) {
+    if(a < qFabs(c)) {
         a = c;
         s = p / 4.0f;
     } else {
-        s = p / (2 * M_PI) * ::qAsin(c / a);
+        s = p / (2 * M_PI) * qAsin(c / a);
     }
 
     qreal t_adj = t - 1.0f;
-    return -(a*::qPow(2.0f,10*t_adj) * ::qSin( (t_adj-s)*(2*M_PI)/p )) + b;
+    return -(a*qPow(2.0f,10*t_adj) * qSin( (t_adj-s)*(2*M_PI)/p )) + b;
 }
 
 /**
@@ -320,7 +320,7 @@ static qreal easeOutInQuint(qreal t)
  */
 static qreal easeInSine(qreal t)
 {
-    return (t == 1.0) ? 1.0 : -::qCos(t * M_PI_2) + 1.0;
+    return (t == 1.0) ? 1.0 : -qCos(t * M_PI_2) + 1.0;
 }
 
 /**
@@ -331,7 +331,7 @@ static qreal easeInSine(qreal t)
  */
 static qreal easeOutSine(qreal t)
 {
-    return ::qSin(t* M_PI_2);
+    return qSin(t* M_PI_2);
 }
 
 /**
@@ -342,7 +342,7 @@ static qreal easeOutSine(qreal t)
  */
 static qreal easeInOutSine(qreal t)
 {
-    return -0.5 * (::qCos(M_PI*t) - 1);
+    return -0.5 * (qCos(M_PI*t) - 1);
 }
 
 /**
@@ -365,7 +365,7 @@ static qreal easeOutInSine(qreal t)
  */
 static qreal easeInExpo(qreal t)
 {
-    return (t==0 || t == 1.0) ? t : ::qPow(2.0, 10 * (t - 1)) - qreal(0.001);
+    return (t==0 || t == 1.0) ? t : qPow(2.0, 10 * (t - 1)) - qreal(0.001);
 }
 
 /**
@@ -376,7 +376,7 @@ static qreal easeInExpo(qreal t)
  */
 static qreal easeOutExpo(qreal t)
 {
-    return (t==1.0) ? 1.0 : 1.001 * (-::qPow(2.0f, -10 * t) + 1);
+    return (t==1.0) ? 1.0 : 1.001 * (-qPow(2.0f, -10 * t) + 1);
 }
 
 /**
@@ -390,8 +390,8 @@ static qreal easeInOutExpo(qreal t)
     if (t==0.0) return qreal(0.0);
     if (t==1.0) return qreal(1.0);
     t*=2.0;
-    if (t < 1) return 0.5 * ::qPow(qreal(2.0), 10 * (t - 1)) - 0.0005;
-    return 0.5 * 1.0005 * (-::qPow(qreal(2.0), -10 * (t - 1)) + 2);
+    if (t < 1) return 0.5 * qPow(qreal(2.0), 10 * (t - 1)) - 0.0005;
+    return 0.5 * 1.0005 * (-qPow(qreal(2.0), -10 * (t - 1)) + 2);
 }
 
 /**
@@ -503,11 +503,11 @@ static qreal easeInOutElastic(qreal t, qreal a, qreal p)
         a = 1.0;
         s = p / 4.0f;
     } else {
-        s = p / (2 * M_PI) * ::qAsin(1.0 / a);
+        s = p / (2 * M_PI) * qAsin(1.0 / a);
     }
 
-    if (t < 1) return -.5*(a*::qPow(2.0f,10*(t-1)) * ::qSin( (t-1-s)*(2*M_PI)/p ));
-    return a*::qPow(2.0f,-10*(t-1)) * ::qSin( (t-1-s)*(2*M_PI)/p )*.5 + 1.0;
+    if (t < 1) return -.5*(a*qPow(2.0f,10*(t-1)) * qSin( (t-1-s)*(2*M_PI)/p ));
+    return a*qPow(2.0f,-10*(t-1)) * qSin( (t-1-s)*(2*M_PI)/p )*.5 + 1.0;
 }
 
 /**
@@ -675,3 +675,4 @@ static qreal easeCosineCurve(qreal t)
     return (qCos(((t * M_PI * 2)) - M_PI_2) + 1) / 2;
 }
 
+QT_END_NAMESPACE

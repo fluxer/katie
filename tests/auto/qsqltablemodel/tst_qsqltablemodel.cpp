@@ -86,8 +86,6 @@ private slots:
 
     void emptyTable_data() { generic_data(); }
     void emptyTable();
-    void tablesAndSchemas_data() { generic_data("QPSQL"); }
-    void tablesAndSchemas();
     void whitespaceInIdentifiers_data() { generic_data(); }
     void whitespaceInIdentifiers();
     void primaryKeyOrder_data() { generic_data("QSQLITE"); }
@@ -148,10 +146,6 @@ void tst_QSqlTableModel::dropTestTables()
             tableNames << qTableName("qtestw hitespace", db.driver());
 
         tst_Databases::safeDropTables(db, tableNames);
-
-        if (db.driverName().startsWith("QPSQL")) {
-            q.exec("DROP SCHEMA " + qTableName("testschema", __FILE__) + " CASCADE");
-        }
     }
 }
 
@@ -947,27 +941,6 @@ void tst_QSqlTableModel::emptyTable()
 
     QVERIFY_SQL(model, select());
     QCOMPARE(model.rowCount(), 0);
-    QCOMPARE(model.columnCount(), 1);
-}
-
-void tst_QSqlTableModel::tablesAndSchemas()
-{
-    QFETCH(QString, dbName);
-    QSqlDatabase db = QSqlDatabase::database(dbName);
-    CHECK_DATABASE(db);
-
-    QSqlQuery q(db);
-    q.exec("DROP SCHEMA " + qTableName("testschema", __FILE__) + " CASCADE");
-    QVERIFY_SQL( q, exec("create schema " + qTableName("testschema", __FILE__)));
-    QString tableName = qTableName("testschema", __FILE__) + '.' + qTableName("testtable", __FILE__);
-    QVERIFY_SQL( q, exec("create table " + tableName + "(id int)"));
-    QVERIFY_SQL( q, exec("insert into " + tableName + " values(1)"));
-    QVERIFY_SQL( q, exec("insert into " + tableName + " values(2)"));
-
-    QSqlTableModel model(0, db);
-    model.setTable(tableName);
-    QVERIFY_SQL(model, select());
-    QCOMPARE(model.rowCount(), 2);
     QCOMPARE(model.columnCount(), 1);
 }
 

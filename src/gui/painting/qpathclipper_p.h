@@ -37,9 +37,6 @@
 #include "qlist.h"
 #include "qdatabuffer_p.h"
 
-#include <stdio.h>
-
-
 QT_BEGIN_NAMESPACE
 
 
@@ -246,8 +243,6 @@ public:
 
 private:
     void intersectAndAdd();
-
-    void printNode(int i, FILE *handle);
 
     void removeEdge(int ei);
 

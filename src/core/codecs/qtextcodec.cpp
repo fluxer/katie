@@ -39,6 +39,7 @@
 #include <ctype.h>
 #include <locale.h>
 #include <langinfo.h>
+#include <unicode/uclean.h>
 
 // enabling this is not exception safe!
 // #define Q_DEBUG_TEXTCODEC
@@ -86,6 +87,9 @@ QTextCodecCleanup::~QTextCodecCleanup()
         delete this->at(i);
     }
     localeMapper = nullptr;
+#ifndef QT_NO_DEBUG
+    u_cleanup();
+#endif
 }
 Q_GLOBAL_STATIC(QTextCodecCleanup, qGlobalQTextCodec)
 

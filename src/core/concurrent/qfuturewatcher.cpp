@@ -412,27 +412,32 @@ void QFutureWatcherBasePrivate::sendCallOutEvent(QFutureCallOutEvent *event)
     Q_Q(QFutureWatcherBase);
 
     switch (event->callOutType) {
-        case QFutureCallOutEvent::Started:
+        case QFutureCallOutEvent::Started: {
             emit q->started();
-        break;
-        case QFutureCallOutEvent::Finished:
+            break;
+        }
+        case QFutureCallOutEvent::Finished: {
             finished = true;
             emit q->finished();
-        break;
-        case QFutureCallOutEvent::Canceled:
+            break;
+        }
+        case QFutureCallOutEvent::Canceled: {
             pendingResultsReady = 0;
             emit q->canceled();
-        break;
-        case QFutureCallOutEvent::Paused:
+            break;
+        }
+        case QFutureCallOutEvent::Paused: {
             if (q->futureInterface().isCanceled())
                 break;
             emit q->paused();
-        break;
-        case QFutureCallOutEvent::Resumed:
+            break;
+        }
+        case QFutureCallOutEvent::Resumed: {
             if (q->futureInterface().isCanceled())
                 break;
             emit q->resumed();
-        break;
+            break;
+        }
         case QFutureCallOutEvent::ResultsReady: {
             if (q->futureInterface().isCanceled())
                 break;
@@ -450,20 +455,23 @@ void QFutureWatcherBasePrivate::sendCallOutEvent(QFutureCallOutEvent *event)
 
             for (int i = beginIndex; i < endIndex; ++i)
                 emit q->resultReadyAt(i);
-
-        } break;
-        case QFutureCallOutEvent::Progress:
+            break;
+        }
+        case QFutureCallOutEvent::Progress: {
             if (q->futureInterface().isCanceled())
                 break;
 
             emit q->progressValueChanged(event->index1);
             if (!event->text.isNull()) // ###
                 q->progressTextChanged(event->text);
-        break;
-        case QFutureCallOutEvent::ProgressRange:
+            break;
+        }
+        case QFutureCallOutEvent::ProgressRange: {
             emit q->progressRangeChanged(event->index1, event->index2);
-        break;
-        default: break;
+            break;
+        }
+        default:
+            break;
     }
 }
 

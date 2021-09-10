@@ -457,9 +457,7 @@ QStringList QSqlDatabase::connectionNames()
 
     \table
     \header \i Driver Type \i Description
-    \row \i QMYSQL   \i MySQL Driver
-    \row \i QODBC    \i ODBC Driver (includes Microsoft SQL Server)
-    \row \i QPSQL    \i PostgreSQL Driver
+    \row \i QODBC    \i ODBC version 3 or above
     \row \i QSQLITE  \i SQLite version 3 or above
     \endtable
 
@@ -957,7 +955,7 @@ QSqlRecord QSqlDatabase::record(const QString& tablename) const
     database client used:
 
     \table
-    \header \i ODBC \i MySQL \i PostgreSQL
+    \header \i ODBC
     \row
 
     \i
@@ -974,46 +972,9 @@ QSqlRecord QSqlDatabase::record(const QString& tablename) const
     \endlist
 
     \i
-    \list
-    \i CLIENT_COMPRESS
-    \i CLIENT_FOUND_ROWS
-    \i CLIENT_IGNORE_SPACE
-    \i CLIENT_SSL
-    \i CLIENT_ODBC
-    \i CLIENT_NO_SCHEMA
-    \i CLIENT_INTERACTIVE
-    \i UNIX_SOCKET
-    \i MYSQL_OPT_RECONNECT
-    \endlist
-
-    \i
-    \list
-    \i connect_timeout
-    \i options
-    \i tty
-    \i requiressl
-    \i service
-    \endlist
-
-    \header \i DB2 \i OCI \i TDS
-    \row
-
-    \i
-    \list
-    \i SQL_ATTR_ACCESS_MODE
-    \i SQL_ATTR_LOGIN_TIMEOUT
-    \endlist
-
-    \i
-    \list
-    \i OCI_ATTR_PREFETCH_ROWS
-    \i OCI_ATTR_PREFETCH_MEMORY
-    \endlist
-
-    \i
     \e none
 
-    \header \i SQLite \i Interbase
+    \header \i SQLite
     \row
 
     \i
@@ -1021,12 +982,6 @@ QSqlRecord QSqlDatabase::record(const QString& tablename) const
     \i QSQLITE_BUSY_TIMEOUT
     \i QSQLITE_OPEN_READONLY
     \i QSQLITE_ENABLE_SHARED_CACHE
-    \endlist
-
-    \i
-    \list
-    \i ISC_DPB_LC_CTYPE
-    \i ISC_DPB_SQL_ROLE_NAME
     \endlist
 
     \endtable
@@ -1076,49 +1031,13 @@ bool QSqlDatabase::isDriverAvailable(const QString& name)
     yourself. It might be your own database driver, or you might just
     need to instantiate one of the Qt drivers yourself. If you do
     this, it is recommended that you include the driver code in your
-    application. For example, you can create a PostgreSQL connection
-    with your own QPSQL driver like this:
+    application.
 
-    \snippet doc/src/snippets/code/src_sql_kernel_qsqldatabase.cpp 5
-    \codeline
-    \snippet doc/src/snippets/code/src_sql_kernel_qsqldatabase.cpp 6
-
-    The above code sets up a PostgreSQL connection and instantiates a
-    QPSQLDriver object. Next, addDatabase() is called to add the
-    connection to the known connections so that it can be used by the
-    Qt SQL classes. When a driver is instantiated with a connection
-    handle (or set of handles), Qt assumes that you have already
-    opened the database connection.
-
-    \note We assume that \c qtdir is the directory where Qt is
-    installed. This will pull in the code that is needed to use the
-    PostgreSQL client library and to instantiate a QPSQLDriver object,
-    assuming that you have the PostgreSQL headers somewhere in your
-    include search path.
-
-    Remember that you must link your application against the database
-    client library. Make sure the client library is in your linker's
-    search path, and add lines like these to your \c{.pro} file:
-
-    \snippet doc/src/snippets/code/src_sql_kernel_qsqldatabase.cpp 7
-
-    The method described works for all the supplied drivers.  The only
-    difference will be in the driver constructor arguments.  Here is a
-    table of the drivers included with Qt, their source code files,
-    and their constructor arguments:
+    Here is a table of the drivers included with Qt, their name and
+    their constructor arguments:
 
     \table
     \header \i Driver \i Class name \i Constructor arguments \i File to include
-    \row
-    \i QPSQL
-    \i QPSQLDriver
-    \i PGconn *connection
-    \i \c qsql_psql.cpp
-    \row
-    \i QMYSQL
-    \i QMYSQLDriver
-    \i MYSQL *connection
-    \i \c qsql_mysql.cpp
     \row
     \i QODBC
     \i QODBCDriver
@@ -1131,11 +1050,6 @@ bool QSqlDatabase::isDriverAvailable(const QString& name)
     \i \c qsql_sqlite.cpp
     \row
     \endtable
-
-    The host name (or service name) is needed when constructing the
-    QTDSDriver for creating new connections for internal queries. This
-    is to prevent blocking when several QSqlQuery objects are used
-    simultaneously.
 
     \warning Adding a database connection with the same connection
     name as an existing connection, causes the existing connection to

@@ -67,23 +67,14 @@ private slots:
     void eventNotification_data() { generic_data(); }
     void eventNotification();
     void addDatabase();
-    void errorReporting_data();
-    void errorReporting();
 
     //database specific tests
-    void recordMySQL_data() { generic_data("QMYSQL"); }
-    void recordMySQL();
-    void recordPSQL_data() { generic_data("QPSQL"); }
-    void recordPSQL();
     void recordSQLite_data() { generic_data("QSQLITE"); }
     void recordSQLite();
     void recordAccess_data() { generic_data("QODBC"); }
     void recordAccess();
     void recordSQLServer_data() { generic_data("QODBC"); }
     void recordSQLServer();
-
-    void eventNotificationPSQL_data() { generic_data("QPSQL"); }
-    void eventNotificationPSQL();
 
     //database specific 64 bit integer test
     void bigIntField_data() { generic_data(); }
@@ -107,21 +98,8 @@ private slots:
     void precisionPolicy_data() { generic_data(); }
     void precisionPolicy();
 
-    void psql_schemas_data() { generic_data("QPSQL"); }
-    void psql_schemas();
-    void psql_escapedIdentifiers_data() { generic_data("QPSQL"); }
-    void psql_escapedIdentifiers();
-    void psql_escapeBytea_data() { generic_data("QPSQL"); }
-    void psql_escapeBytea();
-    void bug_249059_data() { generic_data("QPSQL"); }
-    void bug_249059();
-
     void mysqlOdbc_unsignedIntegers_data() { generic_data(); }
     void mysqlOdbc_unsignedIntegers();
-    void mysql_multiselect_data() { generic_data("QMYSQL"); }
-    void mysql_multiselect();  // For task 144331
-    void mysql_savepointtest_data() { generic_data("QMYSQL"); }
-    void mysql_savepointtest();
 
     void accessOdbc_strings_data() { generic_data(); }
     void accessOdbc_strings();
@@ -194,13 +172,12 @@ static int createFieldTable(const FieldDef fieldDefs[], QSqlDatabase db)
     QSqlQuery q(db);
     // construct a create table statement consisting of all fieldtypes
     QString qs = "create table " + qTableName("qtestfields", __FILE__);
-    QString autoName = tst_Databases::autoFieldName(db);
     if (tst_Databases::isMSAccess(db))
         qs.append(" (id int not null");
     else if (tst_Databases::isPostgreSQL(db))
         qs.append(" (id serial not null");
     else
-        qs.append(QString("(id integer not null %1 primary key").arg(autoName));
+        qs.append(QString("(id integer not null primary key"));
 
     int i = 0;
     for (i = 0; !fieldDefs[ i ].typeName.isNull(); ++i) {
@@ -235,11 +212,7 @@ void tst_QSqlDatabase::createTestTables(QSqlDatabase db)
     if (!db.isValid())
     return;
     QSqlQuery q(db);
-    if (db.driverName().startsWith("QMYSQL"))
-        // ### stupid workaround until we find a way to hardcode this
-        // in the MySQL server startup script
-        q.exec("set table_type=innodb");
-    else if (tst_Databases::isSqlServer(db)) {
+    if (tst_Databases::isSqlServer(db)) {
         QVERIFY_SQL(q, exec("SET ANSI_DEFAULTS ON"));
         QVERIFY_SQL(q, exec("SET IMPLICIT_TRANSACTIONS OFF"));
     } else if(tst_Databases::isPostgreSQL(db))
@@ -297,14 +270,7 @@ void tst_QSqlDatabase::dropTestTables(QSqlDatabase db)
             << qTableName("testqGetString", __FILE__)
             << qTableName("qtest_sqlguid", __FILE__)
             << qTableName("uint_table", __FILE__)
-            << qTableName("uint_test", __FILE__)
-            << qTableName("bug_249059", __FILE__);
-
-    QSqlQuery q(QString(), db);
-    if (db.driverName().startsWith("QPSQL")) {
-        q.exec("drop schema " + qTableName("qtestschema", __FILE__) + " cascade");
-        q.exec("drop schema " + qTableName("qtestScHeMa", __FILE__) + " cascade");
-    }
+            << qTableName("uint_test", __FILE__);
 
     if (testWhiteSpaceNames(db.driverName()))
         tableNames <<  db.driver()->escapeIdentifier(qTableName("qtest", __FILE__) + " test", QSqlDriver::TableName);
@@ -383,36 +349,6 @@ void tst_QSqlDatabase::addDatabase()
     QVERIFY(!QSqlDatabase::contains("INVALID_CONNECTION"));
 }
 
-void tst_QSqlDatabase::errorReporting_data()
-{
-    QTest::addColumn<QString>("driver");
-
-    QTest::newRow("QMYSQL") << QString::fromLatin1("QMYSQL");
-    QTest::newRow("QPSQL") << QString::fromLatin1("QPSQL");
-}
-
-void tst_QSqlDatabase::errorReporting()
-{
-    QFETCH(QString, driver);
-
-    if (!QSqlDatabase::drivers().contains(driver))
-        QSKIP(QString::fromLatin1("Database driver %1 not available").arg(driver).toLocal8Bit().constData(), SkipSingle);
-
-    const QString dbName = QLatin1String("errorReportingDb-") + driver;
-    QSqlDatabase db = QSqlDatabase::addDatabase(driver, dbName);
-
-    db.setHostName(QLatin1String("127.0.0.1"));
-    db.setDatabaseName(QLatin1String("NonExistantDatabase"));
-    db.setUserName(QLatin1String("InvalidUser"));
-    db.setPassword(QLatin1String("IncorrectPassword"));
-
-    QVERIFY(!db.open());
-
-    db = QSqlDatabase();
-
-    QSqlDatabase::removeDatabase(dbName);
-}
-
 void tst_QSqlDatabase::open()
 {
     QFETCH(QString, dbName);
@@ -447,9 +383,6 @@ void tst_QSqlDatabase::tables()
     bool tempTables = false;
 
     QSqlQuery q(db);
-    if ( db.driverName().startsWith( "QMYSQL" ) && tst_Databases::getMySqlVersion( db ).section( QChar('.'), 0, 0 ).toInt()<5 )
-        QSKIP( "Test requires MySQL >= 5.0", SkipSingle );
-
 
     if (!q.exec("CREATE VIEW " + qtest_view + " as select * from " + qtest)) {
         qDebug() << "DBMS '" << tst_Databases::dbToString(db) << "' cannot handle VIEWs:"
@@ -492,10 +425,6 @@ void tst_QSqlDatabase::tables()
     if (tempTables)
         QVERIFY(tables.contains(temp_tab, Qt::CaseInsensitive));
     QVERIFY(tables.contains(qtest, Qt::CaseInsensitive));
-
-    if (db.driverName().startsWith("QPSQL")) {
-        QVERIFY(tables.contains(qtest + " test"));
-    }
 }
 
 void tst_QSqlDatabase::whitespaceInIdentifiers()
@@ -581,8 +510,6 @@ void tst_QSqlDatabase::record()
 void tst_QSqlDatabase::testRecord(const FieldDef fieldDefs[], const QSqlRecord& inf, QSqlDatabase db)
 {
     int i = 0;
-    if (!tst_Databases::autoFieldName(db).isEmpty()) // Currently only MySQL is tested
-        QVERIFY2(inf.field(i).isAutoValue(), qPrintable(inf.field(i).name() + " should be reporting as an autovalue"));
     for (i = 0; !fieldDefs[ i ].typeName.isNull(); ++i) {
         QCOMPARE(inf.field(i+1).name().toUpper(), fieldDefs[ i ].fieldName().toUpper());
         if (inf.field(i+1).type() != fieldDefs[ i ].type) {
@@ -609,146 +536,6 @@ void tst_QSqlDatabase::commonFieldTest(const FieldDef fieldDefs[], QSqlDatabase 
 
     QSqlQuery q(db);
     QVERIFY_SQL(q, exec("select * from " + qTableName("qtestfields", __FILE__)));
-}
-
-void tst_QSqlDatabase::recordPSQL()
-{
-    QFETCH(QString, dbName);
-    QSqlDatabase db = QSqlDatabase::database(dbName);
-    CHECK_DATABASE(db);
-
-    FieldDef byteadef;
-    if (db.driver()->hasFeature(QSqlDriver::BLOB))
-        byteadef = FieldDef("bytea", QVariant::ByteArray, QByteArray("bl\\ah"));
-    static FieldDef fieldDefs[] = {
-    FieldDef("bigint", QVariant::LongLong,	Q_INT64_C(9223372036854775807)),
-    FieldDef("bigserial", QVariant::LongLong, 100, false),
-    FieldDef("bit", QVariant::String,	"1"), // a bit in postgres is a bit-string
-    FieldDef("box", QVariant::String,	"(5,6),(1,2)"),
-    FieldDef("char(20)", QVariant::String, "blah5678901234567890"),
-    FieldDef("varchar(20)", QVariant::String, "blah5678901234567890"),
-    FieldDef("cidr", QVariant::String,	"12.123.0.0/24"),
-    FieldDef("circle", QVariant::String,	"<(1,2),3>"),
-    FieldDef("date", QVariant::Date,	QDate::currentDate()),
-    FieldDef("float8", QVariant::Double,	1.12345678912),
-    FieldDef("inet", QVariant::String,	"12.123.12.23"),
-    FieldDef("integer", QVariant::Int,	2147483647),
-    FieldDef("interval", QVariant::String, "1 day 12:59:10"),
-//	LOL... you can create a "line" datatype in PostgreSQL <= 7.2.x but
-//	as soon as you want to insert data you get a "not implemented yet" error
-//	FieldDef("line", QVariant::Polygon, QPolygon(QRect(1, 2, 3, 4))),
-    FieldDef("lseg", QVariant::String,     "[(1,1),(2,2)]"),
-    FieldDef("macaddr", QVariant::String, "08:00:2b:01:02:03"),
-    FieldDef("money", QVariant::String,	"$12.23"),
-    FieldDef("numeric", QVariant::Double,  1.2345678912),
-    FieldDef("path", QVariant::String,	"((1,2),(3,2),(3,5),(1,5))"),
-    FieldDef("point", QVariant::String,	"(1,2)"),
-    FieldDef("polygon", QVariant::String,	"((1,2),(3,2),(3,5),(1,5))"),
-    FieldDef("real", QVariant::Double,	1.1234),
-    FieldDef("smallint", QVariant::Int,	32767),
-    FieldDef("serial", QVariant::Int,	100, false),
-    FieldDef("text", QVariant::String,	"blah"),
-    FieldDef("time(6)", QVariant::Time,	QTime(1, 2, 3)),
-    FieldDef("timetz", QVariant::Time,	QTime(1, 2, 3)),
-    FieldDef("timestamp(6)", QVariant::DateTime, QDateTime::currentDateTime()),
-    FieldDef("timestamptz", QVariant::DateTime, QDateTime::currentDateTime()),
-    byteadef,
-
-    FieldDef()
-    };
-
-    QSqlQuery q(db);
-
-    if(tst_Databases::isPostgreSQL(db))
-        QVERIFY_SQL( q, exec("set client_min_messages='warning'"));
-
-    q.exec("drop sequence " + qTableName("qtestfields", __FILE__) + "_t_bigserial_seq");
-    q.exec("drop sequence " + qTableName("qtestfields", __FILE__) + "_t_serial_seq");
-    // older psql cut off the table name
-    q.exec("drop sequence " + qTableName("qtestfields", __FILE__).left(15) + "_t_bigserial_seq");
-    q.exec("drop sequence " + qTableName("qtestfields", __FILE__).left(18) + "_t_serial_seq");
-
-    const int fieldCount = createFieldTable(fieldDefs, db);
-    QVERIFY(fieldCount > 0);
-
-    commonFieldTest(fieldDefs, db, fieldCount);
-    for (int i = 0; i < ITERATION_COUNT; ++i) {
-        // increase serial values
-        for (int i2 = 0; !fieldDefs[ i2 ].typeName.isNull(); ++i2) {
-            if (fieldDefs[ i2 ].typeName == "serial" ||
-            fieldDefs[ i2 ].typeName == "bigserial") {
-
-            FieldDef def = fieldDefs[ i2 ];
-            def.val = def.val.toInt() + 1;
-            fieldDefs[ i2 ] = def;
-            }
-        }
-    }
-}
-
-void tst_QSqlDatabase::recordMySQL()
-{
-    QFETCH(QString, dbName);
-    QSqlDatabase db = QSqlDatabase::database(dbName);
-    CHECK_DATABASE(db);
-
-    FieldDef bin10, varbin10;
-    int major = tst_Databases::getMySqlVersion( db ).section( QChar('.'), 0, 0 ).toInt();
-    int minor = tst_Databases::getMySqlVersion( db ).section( QChar('.'), 1, 1 ).toInt();
-    int revision = tst_Databases::getMySqlVersion( db ).section( QChar('.'), 2, 2 ).toInt();
-    int vernum = (major << 16) + (minor << 8) + revision;
-
-    /* The below is broken in mysql below 5.0.15
-        see http://dev.mysql.com/doc/refman/5.0/en/binary-varbinary.html
-        specifically: Before MySQL 5.0.15, the pad value is space. Values are right-padded
-        with space on insert, and trailing spaces are removed on select.
-    */
-    if( vernum >= ((5 << 16) + 15) ) {
-        bin10 = FieldDef("binary(10)", QVariant::ByteArray, QString("123abc    "));
-        varbin10 = FieldDef("varbinary(10)", QVariant::ByteArray, QString("123abcv   "));
-    }
-
-    static QDateTime dt(QDate::currentDate(), QTime(1, 2, 3, 0));
-    static const FieldDef fieldDefs[] = {
-    FieldDef("tinyint", QVariant::Int,	    127),
-    FieldDef("tinyint unsigned", QVariant::UInt, 255),
-    FieldDef("smallint", QVariant::Int,	    32767),
-    FieldDef("smallint unsigned", QVariant::UInt, 65535),
-    FieldDef("mediumint", QVariant::Int,	    8388607),
-    FieldDef("mediumint unsigned", QVariant::UInt, 16777215),
-    FieldDef("integer", QVariant::Int,	    2147483647),
-    FieldDef("integer unsigned", QVariant::UInt, 4294967295u),
-    FieldDef("bigint", QVariant::LongLong,	    Q_INT64_C(9223372036854775807)),
-    FieldDef("bigint unsigned", QVariant::ULongLong, Q_UINT64_C(18446744073709551615)),
-    FieldDef("float", QVariant::Double,	    1.12345),
-    FieldDef("double", QVariant::Double,	    1.123456789),
-    FieldDef("decimal(10, 9)", QVariant::Double,1.123456789),
-    FieldDef("numeric(5, 2)", QVariant::Double, 123.67),
-    FieldDef("date", QVariant::Date,	    QDate::currentDate()),
-    FieldDef("datetime", QVariant::DateTime,   dt),
-    FieldDef("timestamp", QVariant::DateTime,  dt, false),
-    FieldDef("time", QVariant::Time,	    dt.time()),
-    FieldDef("year", QVariant::Int,	    2003),
-    FieldDef("char(20)", QVariant::String,	    "Blah"),
-    FieldDef("varchar(20)", QVariant::String,  "BlahBlah"),
-    FieldDef("tinytext", QVariant::String,    QString("blah5")),
-    FieldDef("text", QVariant::String,	    QString("blah6")),
-    FieldDef("mediumtext", QVariant::String,  QString("blah7")),
-    FieldDef("longtext", QVariant::String,    QString("blah8")),
-    // SET OF?
-
-    FieldDef()
-    };
-
-    const int fieldCount = createFieldTable(fieldDefs, db);
-    QVERIFY(fieldCount > 0);
-
-    commonFieldTest(fieldDefs, db, fieldCount);
-
-    QSqlQuery q(db);
-    QVERIFY_SQL(q, exec("SELECT DATE_SUB(CURDATE(), INTERVAL 2 DAY)"));
-    QVERIFY(q.next());
-    QCOMPARE(q.value(0).toDateTime().date(), QDate::currentDate().addDays(-2));
 }
 
 void tst_QSqlDatabase::recordSQLite()
@@ -876,12 +663,7 @@ void tst_QSqlDatabase::transaction()
     QCOMPARE(q.value(0).toInt(), 41);
     q.clear(); // for SQLite which does not allow any references on rows that shall be rolled back
     if (!db.rollback()) {
-        if (db.driverName().startsWith("QMYSQL")) {
-            qDebug() << "MySQL:" <<  tst_Databases::printError(db.lastError());
-            QSKIP("MySQL transaction failed ", SkipSingle); //non-fatal
-        } else {
-            QFAIL("Could not rollback transaction: " + tst_Databases::printError(db.lastError()));
-        }
+        QFAIL("Could not rollback transaction: " + tst_Databases::printError(db.lastError()));
     }
 
     QVERIFY_SQL(q, exec("select * from " + qtest + " where id = 41"));
@@ -903,9 +685,7 @@ void tst_QSqlDatabase::bigIntField()
     QSqlQuery q(db);
     q.setForwardOnly(true);
 
-    if (drvName.startsWith("QMYSQL")) {
-        QVERIFY_SQL(q, exec("create table " + qtest_bigint + " (id int, t_s64bit bigint, t_u64bit bigint unsigned)"));
-    } else if (drvName.startsWith("QPSQL") || tst_Databases::isSqlServer(db)) {
+    if (tst_Databases::isSqlServer(db)) {
         QVERIFY_SQL(q, exec("create table " + qtest_bigint + "(id int, t_s64bit bigint, t_u64bit bigint)"));
     } else {
         QSKIP("no 64 bit integer support", SkipAll);
@@ -914,26 +694,16 @@ void tst_QSqlDatabase::bigIntField()
     qlonglong ll = Q_INT64_C(9223372036854775807);
     qulonglong ull = Q_UINT64_C(18446744073709551615);
 
-    if (drvName.startsWith("QMYSQL")) {
-        q.bindValue(0, 0);
-        q.bindValue(1, ll);
-        q.bindValue(2, ull);
-        QVERIFY_SQL(q, exec());
-        q.bindValue(0, 1);
-        q.bindValue(1, -ll);
-        q.bindValue(2, ull);
-        QVERIFY_SQL(q, exec());
-    } else {
-        // usinged bigint fields not supported - a cast is necessary
-        q.bindValue(0, 0);
-        q.bindValue(1, ll);
-        q.bindValue(2, (qlonglong) ull);
-        QVERIFY_SQL(q, exec());
-        q.bindValue(0, 1);
-        q.bindValue(1, -ll);
-        q.bindValue(2,  (qlonglong) ull);
-        QVERIFY_SQL(q, exec());
-    }
+
+    // usinged bigint fields not supported - a cast is necessary
+    q.bindValue(0, 0);
+    q.bindValue(1, ll);
+    q.bindValue(2, (qlonglong) ull);
+    QVERIFY_SQL(q, exec());
+    q.bindValue(0, 1);
+    q.bindValue(1, -ll);
+    q.bindValue(2,  (qlonglong) ull);
+    QVERIFY_SQL(q, exec());
     QVERIFY(q.exec("select * from " + qtest_bigint + " order by id"));
     QVERIFY(q.next());
     QCOMPARE(q.value(1).toDouble(), (double)ll);
@@ -951,9 +721,7 @@ void tst_QSqlDatabase::caseSensivity()
     CHECK_DATABASE(db);
 
     bool cs = false;
-    if (db.driverName().startsWith("QMYSQL")
-     || db.driverName().startsWith("QSQLITE")
-     || db.driverName().startsWith("QTDS")
+    if (db.driverName().startsWith("QSQLITE")
      || db.driverName().startsWith("QODBC"))
     cs = true;
 
@@ -990,146 +758,6 @@ void tst_QSqlDatabase::noEscapedFieldNamesInRecord()
     QCOMPARE(q.record().fieldName(0), fieldname);
 }
 
-void tst_QSqlDatabase::psql_schemas()
-{
-    QFETCH(QString, dbName);
-    QSqlDatabase db = QSqlDatabase::database(dbName);
-    CHECK_DATABASE(db);
-
-    if (!db.tables(QSql::SystemTables).contains("pg_namespace"))
-        QSKIP("server does not support schemas", SkipSingle);
-
-    QSqlQuery q(db);
-
-    if(tst_Databases::isPostgreSQL(db)) {
-        QVERIFY_SQL( q, exec("set client_min_messages='warning'"));
-    }
-
-    QVERIFY_SQL(q, exec("CREATE SCHEMA " + qTableName("qtestschema", __FILE__)));
-
-    QString table = qTableName("qtestschema", __FILE__) + '.' + qTableName("qtesttable", __FILE__);
-    QVERIFY_SQL(q, exec("CREATE TABLE " + table + " (id int primary key, name varchar(20))"));
-
-    QVERIFY(db.tables().contains(table));
-
-    QSqlRecord rec = db.record(table);
-    QCOMPARE(rec.count(), 2);
-    QCOMPARE(rec.fieldName(0), QString("id"));
-    QCOMPARE(rec.fieldName(1), QString("name"));
-
-    QSqlIndex idx = db.primaryIndex(table);
-    QCOMPARE(idx.count(), 1);
-    QCOMPARE(idx.fieldName(0), QString("id"));
-}
-
-void tst_QSqlDatabase::psql_escapedIdentifiers()
-{
-    QFETCH(QString, dbName);
-    QSqlDatabase db = QSqlDatabase::database(dbName);
-    QSqlDriver* drv = db.driver();
-    CHECK_DATABASE(db);
-
-    if (!db.tables(QSql::SystemTables).contains("pg_namespace"))
-        QSKIP("server does not support schemas", SkipSingle);
-
-    QSqlQuery q(db);
-
-    if(tst_Databases::isPostgreSQL(db))
-        QVERIFY_SQL( q, exec("set client_min_messages='warning'"));
-
-    const QString schemaName(qTableName("qtestScHeMa", __FILE__)),
-                  tableName(qTableName("qtest", __FILE__)),
-                  field1Name(QLatin1String("fIeLdNaMe")),
-                  field2Name(QLatin1String("ZuLu"));
-
-    q.exec(QString("DROP SCHEMA \"%1\" CASCADE").arg(schemaName));
-    QString createSchema = QString("CREATE SCHEMA \"%1\"").arg(schemaName);
-    QVERIFY_SQL(q, exec(createSchema));
-    QString createTable = QString("CREATE TABLE \"%1\".\"%2\" (\"%3\" int PRIMARY KEY, \"%4\" varchar(20))").arg(schemaName).arg(tableName).arg(field1Name).arg(field2Name);
-    QVERIFY_SQL(q, exec(createTable));
-
-    QVERIFY(db.tables().contains(schemaName + '.' + tableName, Qt::CaseSensitive));
-
-    QSqlField fld1(field1Name, QVariant::Int);
-    QSqlField fld2(field2Name, QVariant::String);
-    QSqlRecord rec;
-    rec.append(fld1);
-    rec.append(fld2);
-
-    QVERIFY_SQL(q, exec(drv->sqlStatement(QSqlDriver::SelectStatement, db.driver()->escapeIdentifier(schemaName, QSqlDriver::TableName) + '.' + db.driver()->escapeIdentifier(tableName, QSqlDriver::TableName), rec, false)));
-
-    rec = q.record();
-    QCOMPARE(rec.count(), 2);
-    QCOMPARE(rec.fieldName(0), field1Name);
-    QCOMPARE(rec.fieldName(1), field2Name);
-    QCOMPARE(rec.field(0).type(), QVariant::Int);
-
-    q.exec(QString("DROP SCHEMA \"%1\" CASCADE").arg(schemaName));
-}
-
-void tst_QSqlDatabase::psql_escapeBytea()
-{
-    QFETCH(QString, dbName);
-    QSqlDatabase db = QSqlDatabase::database(dbName);
-    CHECK_DATABASE(db);
-
-    const char dta[4] = {'\x71', '\x14', '\x32', '\x81'};
-    QByteArray ba(dta, 4);
-
-    QSqlQuery q(db);
-    const QString tableName(qTableName("batable", __FILE__));
-    QVERIFY_SQL(q, exec(QString("CREATE TABLE %1 (ba bytea)").arg(tableName)));
-
-    QSqlQuery iq(db);
-    QVERIFY_SQL(iq, prepare(QString("INSERT INTO %1 VALUES (?)").arg(tableName)));
-    iq.bindValue(0, QVariant(ba));
-    QVERIFY_SQL(iq, exec());
-
-    QVERIFY_SQL(q, exec(QString("SELECT ba FROM %1").arg(tableName)));
-    QVERIFY_SQL(q, next());
-
-    QByteArray res = q.value(0).toByteArray();
-    int i = 0;
-    for (; i < ba.size(); ++i){
-        if (ba[i] != res[i])
-            break;
-    }
-
-    QCOMPARE(i, 4);
-}
-
-void tst_QSqlDatabase::bug_249059()
-{
-    QFETCH(QString, dbName);
-    QSqlDatabase db = QSqlDatabase::database(dbName);
-    CHECK_DATABASE(db);
-
-    QSqlQuery q(db);
-    const QString tableName(qTableName("bug_249059", __FILE__));
-    QVERIFY_SQL(q, exec(QString("CREATE TABLE %1 (dt timestamp, t time)").arg(tableName)));
-
-    QSqlQuery iq(db);
-    QVERIFY_SQL(iq, prepare(QString("INSERT INTO %1 VALUES (?, ?)").arg(tableName)));
-    iq.bindValue(0, QVariant(QString("2001-09-09 04:05:06.789 -5:00")));
-    iq.bindValue(1, QVariant(QString("04:05:06.789 -5:00")));
-    QVERIFY_SQL(iq, exec());
-    iq.bindValue(0, QVariant(QString("2001-09-09 04:05:06.789 +5:00")));
-    iq.bindValue(1, QVariant(QString("04:05:06.789 +5:00")));
-    QVERIFY_SQL(iq, exec());
-
-    QVERIFY_SQL(q, exec(QString("SELECT dt, t FROM %1").arg(tableName)));
-    QVERIFY_SQL(q, next());
-    QDateTime dt1=q.value(0).toDateTime();
-    QTime t1=q.value(1).toTime();
-    QVERIFY_SQL(q, next());
-    QDateTime dt2=q.value(0).toDateTime();
-    QTime t2=q.value(1).toTime();
-
-    // These will fail when timezone support is added, when that's the case, set the second record to 14:05:06.789 and it should work correctly
-    QCOMPARE(dt1, dt2);
-    QCOMPARE(t1, t2);
-}
-
 // This test should be rewritten to work with Oracle as well - or the Oracle driver
 // should be fixed to make this test pass (handle overflows)
 void tst_QSqlDatabase::precisionPolicy()
@@ -1137,7 +765,6 @@ void tst_QSqlDatabase::precisionPolicy()
     QFETCH(QString, dbName);
     QSqlDatabase db = QSqlDatabase::database(dbName);
     CHECK_DATABASE(db);
-//     DBMS_SPECIFIC(db, "QPSQL");
 
     QSqlQuery q(db);
     const QString tableName(qTableName("qtest_prec", __FILE__));
@@ -1410,22 +1037,6 @@ void tst_QSqlDatabase::odbc_testqGetString()
     QCOMPARE(q.value(1).toString().length(), 65538);
 }
 
-
-void tst_QSqlDatabase::mysql_multiselect()
-{
-    QFETCH(QString, dbName);
-    QSqlDatabase db = QSqlDatabase::database(dbName);
-    CHECK_DATABASE(db);
-    const QString qtest(qTableName("qtest", __FILE__));
-
-    QSqlQuery q(db);
-    QVERIFY_SQL(q, exec("SELECT * FROM " + qtest + "; SELECT * FROM " + qtest));
-    QVERIFY_SQL(q, next());
-    QVERIFY_SQL(q, exec("SELECT * FROM " + qtest + "; SELECT * FROM " + qtest));
-    QVERIFY_SQL(q, next());
-    QVERIFY_SQL(q, exec("SELECT * FROM " + qtest));
-}
-
 // This test isn't really necessary as SQL_GUID / uniqueidentifier is
 // already tested in recordSQLServer().
 void tst_QSqlDatabase::odbc_uniqueidentifier()
@@ -1539,26 +1150,6 @@ void tst_QSqlDatabase::eventNotification()
     db.open();
 }
 
-void tst_QSqlDatabase::eventNotificationPSQL()
-{
-    QFETCH(QString, dbName);
-    QSqlDatabase db = QSqlDatabase::database(dbName);
-    CHECK_DATABASE(db);
-
-    QSqlQuery query(db);
-    QString procedureName = qTableName("posteventProc", __FILE__);
-
-    QSqlDriver &driver=*(db.driver());
-    QVERIFY_SQL(driver, subscribeToNotification(procedureName));
-    QSignalSpy spy(db.driver(), SIGNAL(notification(const QString&)));
-    query.exec(QString("NOTIFY \"%1\"").arg(procedureName));
-    QCoreApplication::processEvents();
-    QCOMPARE(spy.count(), 1);
-    QList<QVariant> arguments = spy.takeFirst();
-    QVERIFY(arguments.at(0).toString() == procedureName);
-    QVERIFY_SQL(driver, unsubscribeFromNotification(procedureName));
-}
-
 void tst_QSqlDatabase::sqlite_bindAndFetchUInt()
 {
     QFETCH(QString, dbName);
@@ -1600,18 +1191,6 @@ void tst_QSqlDatabase::sqlStatementUseIsNull_189093()
 
     QString statment = driver->sqlStatement(QSqlDriver::WhereStatement, QString("qtest"), q.record(), false);
     QCOMPARE(statment.count("IS NULL", Qt::CaseInsensitive), 2);
-}
-
-void tst_QSqlDatabase::mysql_savepointtest()
-{
-    QFETCH(QString, dbName);
-    QSqlDatabase db = QSqlDatabase::database(dbName);
-    CHECK_DATABASE(db);
-
-    QSqlQuery q(db);
-    QVERIFY_SQL(q, exec("begin"));
-    QVERIFY_SQL(q, exec("insert into "+qTableName("qtest", __FILE__)+" VALUES (54, 'foo', 'foo', 54.54)"));
-    QVERIFY_SQL(q, exec("savepoint foo"));
 }
 
 void tst_QSqlDatabase::sqlite_enable_cache_mode()

@@ -44,7 +44,6 @@
 #include <string.h>
 #include <stdlib.h>
 #include <stdio.h>
-#include <stdarg.h>
 
 #include <unicode/ustring.h>
 #include <unicode/unorm2.h>
@@ -5658,7 +5657,7 @@ static ArgEscapeData findArgEscapes(const QString &s)
 }
 
 static QString replaceArgEscapes(const QString &s, const ArgEscapeData &d, int field_width,
-                                 const QString &arg, const QString &larg, const QChar &fillChar = QLatin1Char(' '))
+                                 const QString &arg, const QString &larg, const QChar &fillChar)
 {
     const QChar *uc_begin = s.unicode();
     const QChar *uc_end = uc_begin + s.length();

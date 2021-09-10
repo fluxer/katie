@@ -28,6 +28,7 @@
 #include "qapplication.h"
 #include "qpaintengine.h"
 #include "qgraphicsproxywidget.h"
+#include "qthread.h"
 #include "qwidget_p.h"
 #include "qwindowsurface_raster_p.h"
 #include "qapplication_p.h"

@@ -233,10 +233,11 @@ public:
 
     inline ~QGlobalStaticDeleter()
     {
-        if (!globalStatic.pointer->ref.deref())
+        if (!globalStatic.pointer->ref.deref()) {
             delete globalStatic.pointer;
-        globalStatic.pointer = nullptr;
-        globalStatic.destroyed = true;
+            globalStatic.pointer = nullptr;
+            globalStatic.destroyed = true;
+        }
     }
 };
 

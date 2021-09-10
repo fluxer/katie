@@ -105,8 +105,6 @@ private slots:
     void char1SelectUnicode();
     void synonyms_data() { generic_data(); }
     void synonyms();
-    void mysqlOutValues_data() { generic_data("QMYSQL"); }
-    void mysqlOutValues();
     void prepare_bind_exec_data() { generic_data(); }
     void prepare_bind_exec();
     void prepared_select_data() { generic_data(); }
@@ -125,12 +123,8 @@ private slots:
     void lastQuery();
     void bindBool_data() { generic_data(); }
     void bindBool();
-    void bindWithDoubleColonCastOperator_data() { generic_data(); }
-    void bindWithDoubleColonCastOperator();
     void queryOnInvalidDatabase_data() { generic_data(); }
     void queryOnInvalidDatabase();
-    void createQueryOnClosedDatabase_data() { generic_data(); }
-    void createQueryOnClosedDatabase();
     void seekForwardOnlyQuery_data() { generic_data(); }
     void seekForwardOnlyQuery();
     void reExecutePreparedForwardOnlyQuery_data() { generic_data(); }
@@ -151,23 +145,12 @@ private slots:
 
     void task_250026_data() { generic_data("QODBC"); }
     void task_250026();
-    void task_205701_data() { generic_data("QMYSQL"); }
-    void task_205701();
-
-    void task_233829_data() { generic_data("QPSQL"); }
-    void task_233829();
 
     void sqlServerReturn0_data() { generic_data(); }
     void sqlServerReturn0();
 
-    void QTBUG_5251_data() { generic_data("QPSQL"); }
-    void QTBUG_5251();
     void QTBUG_6618_data() { generic_data("QODBC"); }
     void QTBUG_6618();
-    void QTBUG_6852_data() { generic_data("QMYSQL"); }
-    void QTBUG_6852();
-    void QTBUG_5765_data() { generic_data("QMYSQL"); }
-    void QTBUG_5765();
     void QTBUG_21884_data() { generic_data("QSQLITE"); }
     void QTBUG_21884();
     void QTBUG_16967_data() { generic_data("QSQLITE"); }
@@ -297,9 +280,6 @@ void tst_QSqlQuery::dropTestTables( QSqlDatabase db )
                << qTableName("test141895", __FILE__)
                << qTableName( "bug2192", __FILE__);
 
-    if ( db.driverName().startsWith("QPSQL") )
-        tablenames << qTableName("task_233829", __FILE__);
-
     if ( db.driverName().startsWith("QSQLITE") )
         tablenames << qTableName( "record_sqlite", __FILE__ );
 
@@ -319,17 +299,13 @@ void tst_QSqlQuery::createTestTables( QSqlDatabase db )
 {
     QSqlQuery q( db );
 
-    if ( db.driverName().startsWith( "QMYSQL" ) )
-        // ### stupid workaround until we find a way to hardcode this
-        // in the MySQL server startup script
-        q.exec( "set table_type=innodb" );
-    else if(tst_Databases::isPostgreSQL(db))
+    if(tst_Databases::isPostgreSQL(db))
         QVERIFY_SQL( q, exec("set client_min_messages='warning'"));
 
     if(tst_Databases::isPostgreSQL(db))
         QVERIFY_SQL( q, exec( "create table " + qtest + " (id serial NOT NULL, t_varchar varchar(20), t_char char(20), primary key(id)) WITH OIDS" ) );
     else
-        QVERIFY_SQL( q, exec( "create table " + qtest + " (id int "+tst_Databases::autoFieldName(db) +" NOT NULL, t_varchar varchar(20), t_char char(20), primary key(id))" ) );
+        QVERIFY_SQL( q, exec( "create table " + qtest + " (id int NOT NULL, t_varchar varchar(20), t_char char(20), primary key(id))" ) );
 
     if ( tst_Databases::isSqlServer( db ) )
         QVERIFY_SQL( q, exec( "create table " + qTableName( "qtest_null", __FILE__ ) + " (id int null, t_varchar varchar(20) null)" ) );
@@ -385,19 +361,11 @@ void tst_QSqlQuery::char1SelectUnicode()
         QString uniStr( QChar(0x0915) ); // DEVANAGARI LETTER KA
         QSqlQuery q( db );
 
-        if ( db.driverName().startsWith( "QMYSQL" ) && tst_Databases::getMySqlVersion( db ).section( QChar('.'), 0, 0 ).toInt()<5 )
-            QSKIP( "Test requires MySQL >= 5.0", SkipSingle );
-
         QString createQuery;
         const QString char1SelectUnicode(qTableName( "char1SU", __FILE__ ));
 
         if ( tst_Databases::isSqlServer( db ) )
             createQuery = "create table " + char1SelectUnicode + "(id nchar(1))";
-        else if ( db.driverName().startsWith( "QPSQL" ) )
-            createQuery = "create table " + char1SelectUnicode + " (id char(3))";
-        else if ( db.driverName().startsWith( "QMYSQL" ) )
-            createQuery = "create table " + char1SelectUnicode + " (id char(1)) "
-                          "default character set 'utf8'";
         else
             createQuery = "create table " + char1SelectUnicode + " (id char(1))";
 
@@ -422,57 +390,6 @@ void tst_QSqlQuery::char1SelectUnicode()
     }
     else
         QSKIP( "Database not unicode capable", SkipSingle );
-}
-
-void tst_QSqlQuery::mysqlOutValues()
-{
-    QFETCH( QString, dbName );
-    QSqlDatabase db = QSqlDatabase::database( dbName );
-    CHECK_DATABASE( db );
-    const QString hello(qTableName( "hello", __FILE__ )), qtestproc(qTableName( "qtestproc", __FILE__ ));
-
-    QSqlQuery q( db );
-
-    if ( db.driverName().startsWith( "QMYSQL" ) && tst_Databases::getMySqlVersion( db ).section( QChar('.'), 0, 0 ).toInt()<5 )
-        QSKIP( "Test requires MySQL >= 5.0", SkipSingle );
-
-    q.exec( "drop function " + hello );
-
-    QVERIFY_SQL( q, exec( "create function " + hello + " (s char(20)) returns varchar(50) return concat('Hello ', s)" ) );
-
-    QVERIFY_SQL( q, exec( "select " + hello + "('world')" ) );
-    QVERIFY_SQL( q, next() );
-
-    QCOMPARE( q.value( 0 ).toString(), QString( "Hello world" ) );
-
-    QVERIFY_SQL( q, prepare( "select " + hello + "('harald')" ) );
-    QVERIFY_SQL( q, exec() );
-    QVERIFY_SQL( q, next() );
-
-    QCOMPARE( q.value( 0 ).toString(), QString( "Hello harald" ) );
-
-    QVERIFY_SQL( q, exec( "drop function " + hello ) );
-
-    q.exec( "drop procedure " + qtestproc );
-
-    QVERIFY_SQL( q, exec( "create procedure " + qtestproc + " () "
-                            "BEGIN select * from " + qtest + " order by id; END" ) );
-    QVERIFY_SQL( q, exec( "call " + qtestproc + "()" ) );
-    QVERIFY_SQL( q, next() );
-    QCOMPARE( q.value( 1 ).toString(), QString( "VarChar1" ) );
-
-    QVERIFY_SQL( q, exec( "drop procedure " + qtestproc ) );
-
-    QVERIFY_SQL( q, exec( "create procedure " + qtestproc + " (OUT param1 INT) "
-                            "BEGIN set param1 = 42; END" ) );
-
-    QVERIFY_SQL( q, exec( "call " + qtestproc + " (@out)" ) );
-    QVERIFY_SQL( q, exec( "select @out" ) );
-    QCOMPARE( q.record().fieldName( 0 ), QString( "@out" ) );
-    QVERIFY_SQL( q, next() );
-    QCOMPARE( q.value( 0 ).toInt(), 42 );
-
-    QVERIFY_SQL( q, exec( "drop procedure " + qtestproc ) );
 }
 
 void tst_QSqlQuery::bindBool()
@@ -1086,14 +1003,8 @@ void tst_QSqlQuery::precision()
             while ( precStr[i] != 0 && *( precStr + i ) == val[i].toLatin1() )
                 i++;
 
-            // MySQL and TDS have crappy precisions by default
-            if ( db.driverName().startsWith( "QMYSQL" ) ) {
-                if ( i < 17 )
-                    QWARN( "MySQL didn't return the right precision" );
-            } else {
-                QWARN( QString( tst_Databases::dbToString( db ) + " didn't return the right precision (" +
-                                QString::number( i ) + " out of 21), " + val ).toLatin1() );
-            }
+            QWARN( QString( tst_Databases::dbToString( db ) + " didn't return the right precision (" +
+                            QString::number( i ) + " out of 21), " + val ).toLatin1() );
         }
     } // SQLITE scope
 }
@@ -1136,9 +1047,6 @@ void tst_QSqlQuery::transaction()
     // this is the standard SQL
     QString startTransactionStr( "start transaction" );
 
-    if ( db.driverName().startsWith( "QMYSQL" ) )
-        startTransactionStr = "begin work";
-
     QSqlQuery q( db );
 
     QSqlQuery q2( db );
@@ -1174,11 +1082,7 @@ void tst_QSqlQuery::transaction()
     QCOMPARE( q.value( 0 ).toInt(), 41 );
 
     if ( !q.exec( "rollback" ) ) {
-        if ( db.driverName().startsWith( "QMYSQL" ) ) {
-            qDebug( "MySQL: %s", qPrintable(tst_Databases::printError( q.lastError() ) ) );
-            QSKIP( "MySQL transaction failed ", SkipSingle ); //non-fatal
-        } else
-            QFAIL( "Could not rollback transaction: " + tst_Databases::printError( q.lastError() ) );
+        QFAIL( "Could not rollback transaction: " + tst_Databases::printError( q.lastError() ) );
     }
 
     QVERIFY_SQL( q, exec( "select * from" + qtest + " where id = 41" ) );
@@ -1282,9 +1186,6 @@ void tst_QSqlQuery::prepare_bind_exec()
         bool useUnicode = db.driver()->hasFeature( QSqlDriver::Unicode );
 
         QSqlQuery q( db );
-
-        if ( db.driverName().startsWith( "QMYSQL" ) && tst_Databases::getMySqlVersion( db ).section( QChar('.'), 0, 0 ).toInt()<5 )
-            useUnicode = false;
 
         QString createQuery;
 
@@ -1793,40 +1694,6 @@ void tst_QSqlQuery::lastQuery()
     QCOMPARE( q.executedQuery(), sql );
 }
 
-void tst_QSqlQuery::bindWithDoubleColonCastOperator()
-{
-    QFETCH( QString, dbName );
-    QSqlDatabase db = QSqlDatabase::database( dbName );
-    CHECK_DATABASE( db );
-
-    // Only PostgreSQL support the double-colon cast operator
-
-    if ( !db.driverName().startsWith( "QPSQL" ) ) {
-        QSKIP( "Test requires PostgreSQL", SkipSingle );
-        return;
-    }
-
-    const QString tablename(qTableName( "bindtest", __FILE__ ));
-
-    QSqlQuery q( db );
-
-    QVERIFY_SQL( q, exec( "create table " + tablename + " (id1 int, id2 int, id3 int, fld1 int, fld2 int)" ) );
-    QVERIFY_SQL( q, exec( "insert into " + tablename + " values (1, 2, 3, 10, 5)" ) );
-
-    QVERIFY_SQL( q, prepare( "select sum((fld1 - fld2)::int) from " + tablename + " where id1 = :myid1 and id2 =:myid2 and id3=:myid3" ) );
-    q.bindValue( ":myid1", 1 );
-    q.bindValue( ":myid2", 2 );
-    q.bindValue( ":myid3", 3 );
-
-    QVERIFY_SQL( q, exec() );
-    QVERIFY_SQL( q, next() );
-
-    if ( db.driver()->hasFeature( QSqlDriver::PreparedQueries ) )
-        QCOMPARE( q.executedQuery(), QString( "select sum((fld1 - fld2)::int) from " + tablename + " where id1 = ? and id2 =? and id3=?" ) );
-    else
-        QCOMPARE( q.executedQuery(), QString( "select sum((fld1 - fld2)::int) from " + tablename + " where id1 = 1 and id2 =2 and id3=3" ) );
-}
-
 /* For task 157397: Using QSqlQuery with an invalid QSqlDatabase
    does not set the last error of the query.
    This test function will output some warnings, that's ok.
@@ -1854,40 +1721,6 @@ void tst_QSqlQuery::queryOnInvalidDatabase()
         QVERIFY2( query.lastError().isValid(),
                   qPrintable( QString( "query.lastError().isValid() should be true!" ) ) );
     }
-}
-
-/* For task 159138: Error on instantiating a sql-query before explicitly
-   opening the database. This is something we don't support, so this isn't
-   really a bug. However some of the drivers are nice enough to support it.
-*/
-void tst_QSqlQuery::createQueryOnClosedDatabase()
-{
-    QFETCH( QString, dbName );
-    QSqlDatabase db = QSqlDatabase::database( dbName );
-    CHECK_DATABASE( db );
-
-    // Only supported by these drivers
-
-    if ( !db.driverName().startsWith( "QPSQL" )
-        && !db.driverName().startsWith( "QMYSQL" ) ) {
-        QSKIP( "Test is specific for PostgreSQL and MySql", SkipSingle );
-        return;
-    }
-
-    db.close();
-
-    QSqlQuery q( db );
-    db.open();
-    QVERIFY_SQL( q, exec( QString( "select * from %1 where id = 1" ).arg( qtest ) ) );
-
-    QVERIFY_SQL( q, next() );
-    QCOMPARE( q.value( 0 ).toInt(), 1 );
-    QCOMPARE( q.value( 1 ).toString().trimmed(), QLatin1String( "VarChar1" ) );
-    QCOMPARE( q.value( 2 ).toString().trimmed(), QLatin1String( "Char1" ) );
-
-    db.close();
-    QVERIFY2( !q.exec( QString( "select * from %1 where id = 1" ).arg( qtest ) ),
-              qPrintable( QString( "This can't happen! The query should not have been executed!" ) ) );
 }
 
 void tst_QSqlQuery::reExecutePreparedForwardOnlyQuery()
@@ -2009,15 +1842,6 @@ void tst_QSqlQuery::nextResult()
 
     QSqlQuery q( db );
 
-    if ( db.driverName().startsWith( "QMYSQL" ) && tst_Databases::getMySqlVersion( db ).section( QChar('.'), 0, 0 ).toInt()<5 )
-        QSKIP( "Test requires MySQL >= 5.0", SkipSingle );
-
-    enum DriverType { ODBC, MYSQL };
-    DriverType driverType = ODBC;
-
-    if ( db.driverName().startsWith( "QMYSQL" ) )
-        driverType = MYSQL;
-
     const QString tableName(qTableName( "more_results", __FILE__ ));
 
     QVERIFY_SQL( q, exec( "CREATE TABLE " + tableName + " (id integer, text varchar(20), num numeric(6, 3), empty varchar(10));" ) );
@@ -2049,8 +1873,7 @@ void tst_QSqlQuery::nextResult()
 
     // Query that returns two result sets (batch sql)
     // When working with multiple result sets SQL Server insists on non-scrollable cursors
-    if ( driverType == ODBC )
-        q.setForwardOnly( true );
+    q.setForwardOnly( true );
 
     QVERIFY_SQL( q, exec( "SELECT id FROM " + tableName + "; SELECT text, num FROM " + tableName + ';' ) );
 
@@ -2070,10 +1893,7 @@ void tst_QSqlQuery::nextResult()
 
     QCOMPARE( q.record().field( 1 ).name().toUpper(), QString( "NUM" ) );
 
-    if ( driverType == MYSQL )
-        QCOMPARE( q.record().field( 1 ).type(), QVariant::String );
-    else
-        QCOMPARE( q.record().field( 1 ).type(), QVariant::Double );
+    QCOMPARE( q.record().field( 1 ).type(), QVariant::Double );
 
     QVERIFY( q.next() );                    // Move to first row of the second result set
 
@@ -2126,24 +1946,12 @@ void tst_QSqlQuery::nextResult()
 
     q.exec( QString( "DROP PROCEDURE %1;" ).arg( procName ) );
 
-    if ( driverType == MYSQL )
-        QVERIFY_SQL( q, exec( QString( "CREATE PROCEDURE %1()"
-                                         "\nBEGIN"
-                                         "\nSELECT id, text FROM %2;"
-                                         "\nSELECT empty, num, text, id FROM %3;"
-                                         "\nEND" ).arg( procName ).arg( tableName ).arg( tableName ) ) );
-    else
-        QVERIFY_SQL( q, exec( QString( "CREATE PROCEDURE %1"
-                                         "\nAS"
-                                         "\nSELECT id, text FROM %2"
-                                         "\nSELECT empty, num, text, id FROM %3" ).arg( procName ).arg( tableName ).arg( tableName ) ) );
+    QVERIFY_SQL( q, exec( QString( "CREATE PROCEDURE %1"
+                                   "\nAS"
+                                   "\nSELECT id, text FROM %2"
+                                   "\nSELECT empty, num, text, id FROM %3" ).arg( procName ).arg( tableName ).arg( tableName ) ) );
 
-    if ( driverType == MYSQL ) {
-        q.setForwardOnly( true );
-        QVERIFY_SQL( q, exec( QString( "CALL %1()" ).arg( procName ) ) );
-    } else {
-        QVERIFY_SQL( q, exec( QString( "EXEC %1" ).arg( procName ) ) );
-    }
+    QVERIFY_SQL( q, exec( QString( "EXEC %1" ).arg( procName ) ) );
 
     for ( int i = 0; i < 4; i++ ) {
         QVERIFY_SQL( q, next() );
@@ -2161,13 +1969,6 @@ void tst_QSqlQuery::nextResult()
         QCOMPARE( q.value( 1 ).toDouble(), 1.1*( 1+i ) );
         QCOMPARE( q.value( 2 ).toString(), tstStrings.at( i ) );
         QCOMPARE( q.value( 3 ).toInt(), 1+i );
-    }
-
-    // MySQL also counts the CALL itself as a result
-    if ( driverType == MYSQL ) {
-        QVERIFY( q.nextResult() );
-        QVERIFY( !q.isSelect() );           // ... but it's not a select
-        QCOMPARE( q.numRowsAffected(), 0 ); // ... and no rows are affected (at least not with this procedure)
     }
 
     QVERIFY( !q.nextResult() );
@@ -2200,9 +2001,7 @@ void tst_QSqlQuery::blobsPreparedQuery()
     // In PostgreSQL a BLOB is not called a BLOB, but a BYTEA! :-)
     // ... and in SQL Server it can be called a lot, but IMAGE will do.
     QString typeName( "BLOB" );
-    if ( db.driverName().startsWith( "QPSQL" ) )
-        typeName = "BYTEA";
-    else if ( db.driverName().startsWith( "QODBC" ) && tst_Databases::isSqlServer( db ))
+    if ( db.driverName().startsWith( "QODBC" ) && tst_Databases::isSqlServer( db ))
         typeName = "IMAGE";
 
     QVERIFY_SQL( q, exec( QString( "CREATE TABLE %1(id INTEGER, data %2)" ).arg( tableName ).arg( typeName ) ) );
@@ -2310,21 +2109,6 @@ void tst_QSqlQuery::task_250026()
 	QCOMPARE( q.value( 0 ).toString().length(), data1026.length() );
 }
 
-void tst_QSqlQuery::task_205701()
-{
-    QSqlDatabase qsdb = QSqlDatabase::addDatabase("QMYSQL", "atest");
-    qsdb.setHostName("test");
-    qsdb.setDatabaseName("test");
-    qsdb.setUserName("test");
-    qsdb.setPassword("test");
-    qsdb.open();
-
-//     {
-        QSqlQuery query(qsdb);
-//     }
-    QSqlDatabase::removeDatabase("atest");
-}
-
 #ifdef NOT_READY_YET
 // For task: 229811
 void tst_QSqlQuery::task_229811()
@@ -2409,25 +2193,6 @@ void tst_QSqlQuery::task_234422()
 
 #endif
 
-void tst_QSqlQuery::task_233829()
-{
-    QFETCH( QString, dbName );
-    QSqlDatabase db = QSqlDatabase::database( dbName );
-    CHECK_DATABASE( db );
-
-    QSqlQuery q( db );
-    const QString tableName(qTableName("task_233829", __FILE__));
-    QVERIFY_SQL(q,exec("CREATE TABLE " + tableName  + "(dbl1 double precision,dbl2 double precision) without oids;"));
-
-    QString queryString("INSERT INTO " + tableName +"(dbl1, dbl2) VALUES(?,?)");
-
-    double k = 0.0;
-    QVERIFY_SQL(q,prepare(queryString));
-    q.bindValue(0,0.0 / k); // nan
-    q.bindValue(1,0.0 / k); // nan
-    QVERIFY_SQL(q,exec());
-}
-
 void tst_QSqlQuery::sqlServerReturn0()
 {
     QFETCH( QString, dbName );
@@ -2456,37 +2221,6 @@ void tst_QSqlQuery::sqlServerReturn0()
     QVERIFY_SQL(q, next());
 }
 
-void tst_QSqlQuery::QTBUG_5251()
-{
-    QFETCH( QString, dbName );
-    QSqlDatabase db = QSqlDatabase::database( dbName );
-    CHECK_DATABASE( db );
-    const QString timetest(qTableName("timetest", __FILE__));
-
-    if (!db.driverName().startsWith( "QPSQL" )) return;
-
-    QSqlQuery q(db);
-    q.exec("DROP TABLE " + timetest);
-    QVERIFY_SQL(q, exec("CREATE TABLE  " + timetest + " (t  TIME)"));
-    QVERIFY_SQL(q, exec("INSERT INTO " + timetest +  " VALUES ('1:2:3.666')"));
-
-    QSqlTableModel timetestModel(0,db);
-    timetestModel.setEditStrategy(QSqlTableModel::OnManualSubmit);
-    timetestModel.setTable(timetest);
-    QVERIFY_SQL(timetestModel, select());
-
-    QCOMPARE(timetestModel.record(0).field(0).value().toTime().toString("HH:mm:ss.zzz"), QString("01:02:03.666"));
-    QVERIFY_SQL(timetestModel,setData(timetestModel.index(0, 0), QTime(0,12,34,500)));
-    QCOMPARE(timetestModel.record(0).field(0).value().toTime().toString("HH:mm:ss.zzz"), QString("00:12:34.500"));
-    QVERIFY_SQL(timetestModel, submitAll());
-    QCOMPARE(timetestModel.record(0).field(0).value().toTime().toString("HH:mm:ss.zzz"), QString("00:12:34.500"));
-
-    QVERIFY_SQL(q, exec("UPDATE " + timetest + " SET t = '0:11:22.33'"));
-    QVERIFY_SQL(timetestModel, select());
-    QCOMPARE(timetestModel.record(0).field(0).value().toTime().toString("HH:mm:ss.zzz"), QString("00:11:22.330"));
-
-}
-
 void tst_QSqlQuery::QTBUG_6618()
 {
     QFETCH( QString, dbName );
@@ -2507,75 +2241,6 @@ void tst_QSqlQuery::QTBUG_6618()
                          "end\n" ));
     q.exec( "{call " + qTableName( "tst_raiseError", __FILE__ ) + "}" );
     QVERIFY(q.lastError().text().contains(errorString));
-}
-
-void tst_QSqlQuery::QTBUG_6852()
-{
-    QFETCH( QString, dbName );
-    QSqlDatabase db = QSqlDatabase::database( dbName );
-    CHECK_DATABASE( db );
-    if ( tst_Databases::getMySqlVersion( db ).section( QChar('.'), 0, 0 ).toInt()<5 )
-        QSKIP( "Test requires MySQL >= 5.0", SkipSingle );
-
-    QSqlQuery q(db);
-    const QString tableName(qTableName("bug6852", __FILE__)), procName(qTableName("bug6852_proc", __FILE__));
-
-    QVERIFY_SQL(q, exec("DROP PROCEDURE IF EXISTS "+procName));
-    QVERIFY_SQL(q, exec("CREATE TABLE "+tableName+"(\n"
-                        "MainKey INT NOT NULL,\n"
-                        "OtherTextCol VARCHAR(45) NOT NULL,\n"
-                        "PRIMARY KEY(`MainKey`))"));
-    QVERIFY_SQL(q, exec("INSERT INTO "+tableName+" VALUES(0, \"Disabled\")"));
-    QVERIFY_SQL(q, exec("INSERT INTO "+tableName+" VALUES(5, \"Error Only\")"));
-    QVERIFY_SQL(q, exec("INSERT INTO "+tableName+" VALUES(10, \"Enabled\")"));
-    QVERIFY_SQL(q, exec("INSERT INTO "+tableName+" VALUES(15, \"Always\")"));
-    QVERIFY_SQL(q, exec("CREATE PROCEDURE "+procName+"()\n"
-                        "READS SQL DATA\n"
-                        "BEGIN\n"
-                        "  SET @st = 'SELECT MainKey, OtherTextCol from "+tableName+"';\n"
-                        "  PREPARE stmt from @st;\n"
-                        "  EXECUTE stmt;\n"
-                        "END;"));
-
-    QVERIFY_SQL(q, exec("CALL "+procName+"()"));
-    QVERIFY_SQL(q, next());
-    QCOMPARE(q.value(0).toInt(), 0);
-    QCOMPARE(q.value(1).toString(), QLatin1String("Disabled"));
-}
-
-void tst_QSqlQuery::QTBUG_5765()
-{
-    QFETCH( QString, dbName );
-    QSqlDatabase db = QSqlDatabase::database( dbName );
-    CHECK_DATABASE( db );
-
-    QSqlQuery q(db);
-    const QString tableName(qTableName("bug5765", __FILE__));
-
-    QVERIFY_SQL(q, exec("CREATE TABLE "+tableName+"(testval TINYINT(1) DEFAULT 0)"));
-    q.prepare("INSERT INTO "+tableName+" SET testval = :VALUE");
-    q.bindValue(":VALUE", 1);
-    QVERIFY_SQL(q, exec());
-    q.bindValue(":VALUE", 12);
-    QVERIFY_SQL(q, exec());
-    q.bindValue(":VALUE", 123);
-    QVERIFY_SQL(q, exec());
-    QString sql="select testval from "+tableName;
-    QVERIFY_SQL(q, exec(sql));
-    QVERIFY_SQL(q, next());
-    QCOMPARE(q.value(0).toInt(), 1);
-    QVERIFY_SQL(q, next());
-    QCOMPARE(q.value(0).toInt(), 12);
-    QVERIFY_SQL(q, next());
-    QCOMPARE(q.value(0).toInt(), 123);
-    QVERIFY_SQL(q, prepare(sql));
-    QVERIFY_SQL(q, exec());
-    QVERIFY_SQL(q, next());
-    QCOMPARE(q.value(0).toInt(), 1);
-    QVERIFY_SQL(q, next());
-    QCOMPARE(q.value(0).toInt(), 12);
-    QVERIFY_SQL(q, next());
-    QCOMPARE(q.value(0).toInt(), 123);
 }
 
 /**
