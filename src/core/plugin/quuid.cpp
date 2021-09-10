@@ -428,9 +428,9 @@ QUuid QUuid::fromRfc4122(const QByteArray &bytes)
 */
 QString QUuid::toString() const
 {
-    QSTACKARRAY(QChar, data, 38);
+    QSTACKARRAY(char, data, 38);
     _q_uuidToHex(data, data1, data2, data3, data4);
-    return QString(data, 38);
+    return QString::fromLatin1(data, 38);
 }
 
 /*!
