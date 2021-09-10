@@ -33,6 +33,7 @@ There are several things you should be aware before considering Katie:
   - no SIMD, zero performance impact with decent compiler
   - state machine is no more
   - removed non-open source DB2, OCI, TDS and InterBase database drivers
+  - removed PostgreSQL and MySQL database drivers
   - removed 3rd party sources that are very common nowdays
   - dropped non-open source and discontinued platforms support
   - dropped dnotify filesystem watcher support

@@ -76,10 +76,8 @@ inline static QString qTableName( const QString& prefix, QSqlDriver* driver )
 
 inline static bool testWhiteSpaceNames( const QString &name )
 {
-    return name.startsWith( QLatin1String("QPSQL") )
-           || name.startsWith( QLatin1String("QODBC") )
-           || name.startsWith( QLatin1String("QSQLITE") )
-           || name.startsWith( QLatin1String("QMYSQL") );
+    return name.startsWith( QLatin1String("QODBC") )
+           || name.startsWith( QLatin1String("QSQLITE") );
 }
 
 class tst_Databases
@@ -189,34 +187,6 @@ public:
 
     void addDbs()
     {
-//      This requires a local ODBC data source to be configured( pointing to a MySql database )
-//         addDb( "QODBC", "mysqlodbc", "troll", "trond" );
-//         addDb( "QODBC", "SqlServer", "troll", "trond" );
-//         addDb( "QODBC", "silencetestdb", "troll", "trond", "silence" );
-//         addDb( "QODBC", "horseheadtestdb", "troll", "trondk", "horsehead" );
-
-//         addDb( "QMYSQL3", "testdb", "troll", "trond", "horsehead.nokia.troll.no" );
-//         addDb( "QMYSQL3", "testdb", "troll", "trond", "horsehead.nokia.troll.no", 3307 );
-//         addDb( "QMYSQL3", "testdb", "troll", "trond", "horsehead.nokia.troll.no", 3308, "CLIENT_COMPRESS=1;CLIENT_SSL=1" ); // MySQL 4.1.1
-//         addDb( "QMYSQL3", "testdb", "troll", "trond", "horsehead.nokia.troll.no", 3309, "CLIENT_COMPRESS=1;CLIENT_SSL=1" ); // MySQL 5.0.18 Linux
-//         addDb( "QMYSQL3", "testdb", "troll", "trond", "silence.nokia.troll.no" ); // MySQL 5.1.36 Windows
-
-//         addDb( "QMYSQL3", "testdb", "testuser", "Ee4Gabf6_", "bq-mysql41.apac.nokia.com" ); // MySQL 4.1.22-2.el4  linux
-//         addDb( "QMYSQL3", "testdb", "testuser", "Ee4Gabf6_", "bq-mysql50.apac.nokia.com" ); // MySQL 5.0.45-7.el5 linux
-//         addDb( "QMYSQL3", "testdb", "testuser", "Ee4Gabf6_", "bq-mysql51.apac.nokia.com" ); // MySQL 5.1.36-6.7.2.i586 linux
-
-//         addDb( "QPSQL7", "testdb", "troll", "trond", "horsehead.nokia.troll.no" ); // V7.2 NOT SUPPORTED!
-//         addDb( "QPSQL7", "testdb", "troll", "trond", "horsehead.nokia.troll.no", 5434 ); // V7.2 NOT SUPPORTED! Multi-byte
-//         addDb( "QPSQL7", "testdb", "troll", "trond", "horsehead.nokia.troll.no", 5435 ); // V7.3
-//         addDb( "QPSQL7", "testdb", "troll", "trond", "horsehead.nokia.troll.no", 5436 ); // V7.4
-//         addDb( "QPSQL7", "testdb", "troll", "trond", "horsehead.nokia.troll.no", 5437 ); // V8.0.3
-//         addDb( "QPSQL7", "testdb", "troll", "trond", "silence.nokia.troll.no" );         // V8.2.1, UTF-8
-
-//         addDb( "QPSQL7", "testdb", "testuser", "Ee4Gabf6_", "bq-postgres74.apac.nokia.com" );         // Version 7.4.19-1.el4_6.1
-//         addDb( "QPSQL7", "testdb", "testuser", "Ee4Gabf6_", "bq-pgsql81.apac.nokia.com" );         // Version 8.1.11-1.el5_1.1
-//         addDb( "QPSQL7", "testdb", "testuser", "Ee4Gabf6_", "bq-pgsql84.apac.nokia.com" );         // Version 8.4.1-2.1.i586
-//         addDb( "QPSQL7", "testdb", "testuser", "Ee4Gabf6_", "bq-pgsql90.apac.nokia.com" );         // Version 9.0.0
-
 //      use in-memory database to prevent local files
 //         addDb("QSQLITE", ":memory:");
          addDb( QLatin1String("QSQLITE"), QDir::toNativeSeparators(sqLiteFileName()));
@@ -370,28 +340,12 @@ public:
     // blobSize is only used if the db doesn't have a generic blob type
     static QString blobTypeName( QSqlDatabase db, int blobSize = 10000 )
     {
-        if ( db.driverName().startsWith( QLatin1String("QMYSQL") ) )
-            return QLatin1String( "longblob" );
-
-        if ( db.driverName().startsWith( QLatin1String("QPSQL") ) )
-            return QLatin1String( "bytea" );
-
         if ( db.driverName().startsWith( QLatin1String("QSQLITE") ) )
             return QLatin1String( "blob" );
 
         qDebug() <<  "tst_Databases::blobTypeName: Don't know the blob type for" << dbToString( db );
 
         return QLatin1String( "blob" );
-    }
-
-    static QString autoFieldName( QSqlDatabase db )
-    {
-        if ( db.driverName().startsWith( QLatin1String("QMYSQL") ) )
-            return QLatin1String( "AUTO_INCREMENT" );
-/*        if ( db.driverName().startsWith( QLatin1String("QPSQL") ) )
-            return QLatin1String( "SERIAL" );*/
-
-        return QString();
     }
 
     static QByteArray printError( const QSqlError& err )
@@ -434,12 +388,12 @@ public:
 
     static bool isPostgreSQL( QSqlDatabase db )
     {
-        return db.driverName().startsWith(QLatin1String("QPSQL")) || (db.driverName().startsWith(QLatin1String("QODBC")) && ( db.databaseName().contains(QLatin1String("PostgreSQL"), Qt::CaseInsensitive) || db.databaseName().contains(QLatin1String("pgsql"), Qt::CaseInsensitive) ) );
+        return db.driverName().startsWith(QLatin1String("QODBC")) && ( db.databaseName().contains(QLatin1String("PostgreSQL"), Qt::CaseInsensitive) || db.databaseName().contains(QLatin1String("pgsql"), Qt::CaseInsensitive) );
     }
 
     static bool isMySQL( QSqlDatabase db )
     {
-        return db.driverName().startsWith(QLatin1String("QMYSQL")) || (db.driverName().startsWith(QLatin1String("QODBC")) && db.databaseName().contains(QLatin1String("MySQL"), Qt::CaseInsensitive) );
+        return db.driverName().startsWith(QLatin1String("QODBC")) && db.databaseName().contains(QLatin1String("MySQL"), Qt::CaseInsensitive);
     }
 
     // -1 on fail, else Oracle version
@@ -460,26 +414,6 @@ public:
         }
 
         return ver;
-    }
-
-    static QString getMySqlVersion( const QSqlDatabase &db )
-    {
-        QSqlQuery q(db);
-        q.exec( QLatin1String("select version()") );
-        if(q.next())
-            return q.value( 0 ).toString();
-        else
-            return QString();
-    }
-
-    static QString getPSQLVersion( const QSqlDatabase &db )
-    {
-        QSqlQuery q(db);
-        q.exec( QLatin1String("select version()") );
-        if(q.next())
-            return q.value( 0 ).toString();
-        else
-            return QString();
     }
 
     QString sqLiteFileName() // Return a temporary file name for SQLite DB

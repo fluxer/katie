@@ -1461,9 +1461,7 @@ lib/katie/plugins/imageformats/libqsvg.so
 lib/katie/plugins/imageformats/libqtga.so
 lib/katie/plugins/imageformats/libqtiff.so
 lib/katie/plugins/script/libqtscriptdbus.so
-${PLIST.mysql}lib/katie/plugins/sqldrivers/libqsqlmysql.so
 lib/katie/plugins/sqldrivers/libqsqlodbc.so
-${PLIST.pgsql}lib/katie/plugins/sqldrivers/libqsqlpsql.so
 lib/libKtCore.so
 lib/libKtCore.so.4.11
 lib/libKtCore.so.4.11.0

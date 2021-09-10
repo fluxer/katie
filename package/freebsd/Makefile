@@ -25,20 +25,11 @@ LIB_DEPENDS = libzstd.so:archivers/zstd libicuuc.so:devel/icu \
 	libcups.so:print/cups libiodbc.so:databases/libiodbc
 CMAKE_ARGS = -DKATIE_TOOLS_SUFFIX="-katie"
 
-OPTIONS_DEFINE = NLS MYSQL PGSQL
+OPTIONS_DEFINE = NLS
 OPTIONS_SUB = yes
 NLS_DESC = Build translator and translations
 NLS_USES = gettext
 NLS_CMAKE_ON = -DWITH_INTL=TRUE
 NLS_CMAKE_OFF = -DWITH_INTL=FALSE
-MYSQL_DESC = Build MySQL database plugin
-MYSQL_USES = mysql
-MYSQL_CMAKE_ON = -DWITH_MYSQL=TRUE
-MYSQL_CMAKE_OFF = -DWITH_MYSQL=FALSE
-PGSQL_DESC = Build PostgreSQL database plugin
-PGSQL_USES = pgsql
-WANT_PGSQL = client
-PGSQL_CMAKE_ON = -DWITH_POSTGRESQL=TRUE
-PGSQL_CMAKE_OFF = -DWITH_POSTGRESQL=FALSE
 
 .include <bsd.port.mk>

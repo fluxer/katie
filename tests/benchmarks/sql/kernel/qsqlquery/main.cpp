@@ -158,9 +158,6 @@ void tst_QSqlQuery::dropTestTables( QSqlDatabase db )
                << qTableName( QLatin1String("test141895"), __FILE__)
                << qTableName( QLatin1String("qtest_oraOCINumber"), __FILE__);
 
-    if ( db.driverName().startsWith( QLatin1String("QPSQL") ) )
-        tablenames << qTableName( QLatin1String("task_233829"), __FILE__);
-
     if ( db.driverName().startsWith( QLatin1String("QSQLITE") ) )
         tablenames << qTableName( QLatin1String("record_sqlite"), __FILE__ );
 
@@ -180,19 +177,15 @@ void tst_QSqlQuery::createTestTables( QSqlDatabase db )
 {
     QSqlQuery q( db );
 
-    if ( db.driverName().startsWith( QLatin1String("QMYSQL") ) )
-        // ### stupid workaround until we find a way to hardcode this
-        // in the MySQL server startup script
-        q.exec(  QLatin1String("set table_type=innodb") );
-    else if (tst_Databases::isPostgreSQL(db))
+    if (tst_Databases::isPostgreSQL(db))
         QVERIFY_SQL( q, exec( QLatin1String("set client_min_messages='warning'") ));
 
     if (tst_Databases::isPostgreSQL(db))
         QVERIFY_SQL( q, exec(  QLatin1String("create table ") + qtest +  QLatin1String(" (id serial NOT NULL, t_varchar varchar(20), t_char char(20), primary key(id)) WITH OIDS") ) );
     else
-        QVERIFY_SQL( q, exec(  QLatin1String("create table ") + qtest +  QLatin1String(" (id int ") + tst_Databases::autoFieldName(db) +  QLatin1String(" NOT NULL, t_varchar varchar(20), t_char char(20), primary key(id))") ) );
+        QVERIFY_SQL( q, exec(  QLatin1String("create table ") + qtest +  QLatin1String(" (id int NOT NULL, t_varchar varchar(20), t_char char(20), primary key(id))") ) );
 
-    if ( tst_Databases::isSqlServer( db ) || db.driverName().startsWith( QLatin1String("QTDS") ) )
+    if ( tst_Databases::isSqlServer( db ) )
         QVERIFY_SQL( q, exec( QLatin1String("create table ") + qTableName( QLatin1String( "qtest_null"), __FILE__ ) + QLatin1String(" (id int null, t_varchar varchar(20) null)") ) );
     else
         QVERIFY_SQL( q, exec( QLatin1String("create table ") + qTableName( QLatin1String("qtest_null"), __FILE__ ) + QLatin1String(" (id int, t_varchar varchar(20))") ) );
@@ -221,8 +214,6 @@ void tst_QSqlQuery::benchmark()
     QFETCH( QString, dbName );
     QSqlDatabase db = QSqlDatabase::database( dbName );
     CHECK_DATABASE( db );
-    if ( tst_Databases::getMySqlVersion( db ).section( QLatin1Char('.'), 0, 0 ).toInt()<5 )
-        QSKIP( "Test requires MySQL >= 5.0", SkipSingle );
 
     QSqlQuery q(db);
     const QString tableName(qTableName(QLatin1String("benchmark"), __FILE__));

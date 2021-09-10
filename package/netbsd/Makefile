@@ -23,8 +23,6 @@ DL_AUTO_VARS = yes
 
 DEPENDS = xdg-utils-[0-9]*:../../misc/xdg-utils
 
-.include "options.mk"
-
 .include "../../sysutils/desktop-file-utils/desktopdb.mk"
 .include "../../archivers/zstd/buildlink3.mk"
 .include "../../textproc/jansson/buildlink3.mk"
