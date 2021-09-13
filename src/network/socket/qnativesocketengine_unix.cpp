@@ -57,9 +57,7 @@ static inline void qt_socket_getPortAndAddress(const qt_sockaddr *s, quint16 *po
         Q_IPV6ADDR tmp;
         memcpy(&tmp, &s->a6.sin6_addr, sizeof(tmp));
         if (addr) {
-            QHostAddress tmpAddress;
-            tmpAddress.setAddress(tmp);
-            *addr = tmpAddress;
+            addr->setAddress(tmp);
 #ifndef QT_NO_IPV6IFNAME
             QSTACKARRAY(char, scopeid, IFNAMSIZ);
             if (::if_indextoname(s->a6.sin6_scope_id, scopeid)) {
@@ -76,9 +74,7 @@ static inline void qt_socket_getPortAndAddress(const qt_sockaddr *s, quint16 *po
     if (port)
         *port = ntohs(s->a4.sin_port);
     if (addr) {
-        QHostAddress tmpAddress;
-        tmpAddress.setAddress(ntohl(s->a4.sin_addr.s_addr));
-        *addr = tmpAddress;
+        addr->setAddress(ntohl(s->a4.sin_addr.s_addr));
     }
 }
 

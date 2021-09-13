@@ -136,16 +136,14 @@ QHostInfo QHostInfoAgent::fromName(const QString &hostName)
                 qDebug() << "getaddrinfo node: flags:" << node->ai_flags << "family:" << node->ai_family << "ai_socktype:" << node->ai_socktype << "ai_protocol:" << node->ai_protocol << "ai_addrlen:" << node->ai_addrlen;
 #endif
             if (node->ai_family == AF_INET) {
-                QHostAddress addr;
-                addr.setAddress(ntohl(((sockaddr_in *) node->ai_addr)->sin_addr.s_addr));
+                QHostAddress addr(ntohl(((sockaddr_in *) node->ai_addr)->sin_addr.s_addr));
                 if (!addresses.contains(addr))
                     addresses.append(addr);
             }
 #ifndef QT_NO_IPV6
             else if (node->ai_family == AF_INET6) {
-                QHostAddress addr;
                 sockaddr_in6 *sa6 = (sockaddr_in6 *) node->ai_addr;
-                addr.setAddress(sa6->sin6_addr.s6_addr);
+                QHostAddress addr(sa6->sin6_addr.s6_addr);
                 if (sa6->sin6_scope_id)
                     addr.setScopeId(QString::number(sa6->sin6_scope_id));
                 if (!addresses.contains(addr))
