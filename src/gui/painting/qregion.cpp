@@ -29,6 +29,7 @@
 #include "qdebug.h"
 #include "qimage.h"
 #include "qbitmap.h"
+#include "qcorecommon_p.h"
 
 #include <stdlib.h>
 
@@ -900,8 +901,7 @@ Q_AUTOTEST_EXPORT QPainterPath qt_regionToPath(const QRegion &region)
 
     const QVector<QRect> rects = region.rects();
 
-    QVarLengthArray<Segment> segments;
-    segments.resize(4 * rects.size());
+    QSTACKARRAY(Segment, segments, 4 * rects.size());
 
     const QRect *rect = rects.constData();
     const QRect *end = rect + rects.size();

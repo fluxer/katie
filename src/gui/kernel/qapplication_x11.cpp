@@ -44,7 +44,6 @@
 #include "qhash.h"
 #include "qevent.h"
 #include "qevent_p.h"
-#include "qvarlengtharray.h"
 #include "qdebug.h"
 #include "qcursor_p.h"
 #include "qiconloader_p.h"
