@@ -35,11 +35,13 @@
 #include <arpa/inet.h>
 
 #ifdef Q_OS_SOLARIS
-# include <sys/sockio.h>
+#  include <sys/sockio.h>
 #endif
 
 #ifdef QT_HAVE_GETIFADDRS
-# include <ifaddrs.h>
+#  include <ifaddrs.h>
+#else
+#  include <sys/ioctl.h>
 #endif
 
 #ifndef SIOCGIFBRDADDR
@@ -87,8 +89,88 @@ static QNetworkInterface::InterfaceFlags convertFlags(uint rawFlags)
     return flags;
 }
 
-#ifndef QT_HAVE_GETIFADDRS
-// getifaddrs not available
+#ifdef QT_HAVE_GETIFADDRS
+
+static QList<QNetworkInterfacePrivate *> createInterfaces(ifaddrs *rawList)
+{
+    QList<QNetworkInterfacePrivate *> interfaces;
+
+    // make sure there's one entry for each interface
+    for (ifaddrs *ptr = rawList; ptr; ptr = ptr->ifa_next) {
+        // Get the interface index
+        int ifindex = ::if_nametoindex(ptr->ifa_name);
+
+        QList<QNetworkInterfacePrivate *>::Iterator if_it = interfaces.begin();
+        for ( ; if_it != interfaces.end(); ++if_it)
+            if ((*if_it)->index == ifindex)
+                // this one has been added already
+                break;
+
+        if (if_it == interfaces.end()) {
+            // none found, create
+            QNetworkInterfacePrivate *iface = new QNetworkInterfacePrivate;
+            interfaces << iface;
+
+            iface->index = ifindex;
+            iface->name = QString::fromLatin1(ptr->ifa_name);
+            iface->flags = convertFlags(ptr->ifa_flags);
+        }
+    }
+
+    return interfaces;
+}
+
+static QList<QNetworkInterfacePrivate *> interfaceListing()
+{
+    QList<QNetworkInterfacePrivate *> interfaces;
+
+    int socket = qt_safe_socket(AF_INET, SOCK_STREAM, IPPROTO_IP);
+    if (socket == -1)
+        return interfaces;      // error
+
+    ifaddrs *interfaceListing;
+    if (::getifaddrs(&interfaceListing) == -1) {
+        // error
+        qt_safe_close(socket);
+        return interfaces;
+    }
+
+    interfaces = createInterfaces(interfaceListing);
+    for (ifaddrs *ptr = interfaceListing; ptr; ptr = ptr->ifa_next) {
+        // Get the interface index
+        int ifindex = ::if_nametoindex(ptr->ifa_name);
+        QNetworkInterfacePrivate *iface = 0;
+        QList<QNetworkInterfacePrivate *>::Iterator if_it = interfaces.begin();
+        for ( ; if_it != interfaces.end(); ++if_it)
+            if ((*if_it)->index == ifindex) {
+                // found this interface already
+                iface = *if_it;
+                break;
+            }
+        if (!iface) {
+            // skip all non-IP interfaces
+            continue;
+        }
+
+        QNetworkAddressEntry entry;
+        entry.setIp(addressFromSockaddr(ptr->ifa_addr));
+        if (entry.ip().isNull())
+            // could not parse the address
+            continue;
+
+        entry.setNetmask(addressFromSockaddr(ptr->ifa_netmask));
+        if (iface->flags & QNetworkInterface::CanBroadcast)
+            entry.setBroadcast(addressFromSockaddr(ptr->ifa_broadaddr));
+
+        iface->addressEntries << entry;
+    }
+
+    ::freeifaddrs(interfaceListing);
+    qt_safe_close(socket);
+    return interfaces;
+}
+
+#else // QT_HAVE_GETIFADDRS
 
 static const int STORAGEBUFFER_GROWTH = 256;
 
@@ -247,170 +329,7 @@ static QList<QNetworkInterfacePrivate *> interfaceListing()
     return interfaces;
 }
 
-#else
-// use getifaddrs
-
-// platform-specific defs:
-# ifdef Q_OS_LINUX
-QT_BEGIN_INCLUDE_NAMESPACE
-#  include <features.h>
-QT_END_INCLUDE_NAMESPACE
-# endif
-
-# if defined(QT_HAVE_SOCKADDR_LL_SLL_ADDR)
-#  include <netpacket/packet.h>
-
-static QList<QNetworkInterfacePrivate *> createInterfaces(ifaddrs *rawList)
-{
-    QList<QNetworkInterfacePrivate *> interfaces;
-
-    for (ifaddrs *ptr = rawList; ptr; ptr = ptr->ifa_next) {
-        if ( !ptr->ifa_addr )
-            continue;
-
-        // Get the interface index
-        int ifindex = if_nametoindex(ptr->ifa_name);
-
-        // on Linux we use AF_PACKET and sockaddr_ll to obtain hHwAddress
-        QList<QNetworkInterfacePrivate *>::Iterator if_it = interfaces.begin();
-        for ( ; if_it != interfaces.end(); ++if_it)
-            if ((*if_it)->index == ifindex) {
-                // this one has been added already
-                if ( ptr->ifa_addr->sa_family == AF_PACKET
-                        && (*if_it)->hardwareAddress.isEmpty()) {
-                    sockaddr_ll *sll = (sockaddr_ll *)ptr->ifa_addr;
-                    (*if_it)->hardwareAddress = (*if_it)->makeHwAddress(sll->sll_halen, (uchar*)sll->sll_addr);
-                }
-                break;
-            }
-        if ( if_it != interfaces.end() ) 
-            continue;
-        
-        QNetworkInterfacePrivate *iface = new QNetworkInterfacePrivate;
-        interfaces << iface;
-        iface->index = ifindex;
-        iface->name = QString::fromLatin1(ptr->ifa_name);
-        iface->flags = convertFlags(ptr->ifa_flags);
-
-        if ( ptr->ifa_addr->sa_family == AF_PACKET ) {
-            sockaddr_ll *sll = (sockaddr_ll *)ptr->ifa_addr;
-            iface->hardwareAddress = iface->makeHwAddress(sll->sll_halen, (uchar*)sll->sll_addr);
-        }
-    }
-
-    return interfaces;
-}
-
-# elif defined(QT_HAVE_SOCKADDR_DL_SDL_INDEX)
-QT_BEGIN_INCLUDE_NAMESPACE
-#  include <net/if_dl.h>
-QT_END_INCLUDE_NAMESPACE
-
-static QList<QNetworkInterfacePrivate *> createInterfaces(ifaddrs *rawList)
-{
-    QList<QNetworkInterfacePrivate *> interfaces;
-
-    // on NetBSD we use AF_LINK and sockaddr_dl
-    // scan the list for that family
-    for (ifaddrs *ptr = rawList; ptr; ptr = ptr->ifa_next)
-        if (ptr->ifa_addr && ptr->ifa_addr->sa_family == AF_LINK) {
-            QNetworkInterfacePrivate *iface = new QNetworkInterfacePrivate;
-            interfaces << iface;
-
-            sockaddr_dl *sdl = (sockaddr_dl *)ptr->ifa_addr;
-            iface->index = sdl->sdl_index;
-            iface->name = QString::fromLatin1(ptr->ifa_name);
-            iface->flags = convertFlags(ptr->ifa_flags);
-            iface->hardwareAddress = iface->makeHwAddress(sdl->sdl_alen, (uchar*)LLADDR(sdl));
-        }
-
-    return interfaces;
-}
-
-# else  // Generic version
-
-static QList<QNetworkInterfacePrivate *> createInterfaces(ifaddrs *rawList)
-{
-    QList<QNetworkInterfacePrivate *> interfaces;
-
-    // make sure there's one entry for each interface
-    for (ifaddrs *ptr = rawList; ptr; ptr = ptr->ifa_next) {
-        // Get the interface index
-        int ifindex = ::if_nametoindex(ptr->ifa_name);
-
-        QList<QNetworkInterfacePrivate *>::Iterator if_it = interfaces.begin();
-        for ( ; if_it != interfaces.end(); ++if_it)
-            if ((*if_it)->index == ifindex)
-                // this one has been added already
-                break;
-
-        if (if_it == interfaces.end()) {
-            // none found, create
-            QNetworkInterfacePrivate *iface = new QNetworkInterfacePrivate;
-            interfaces << iface;
-
-            iface->index = ifindex;
-            iface->name = QString::fromLatin1(ptr->ifa_name);
-            iface->flags = convertFlags(ptr->ifa_flags);
-        }
-    }
-
-    return interfaces;
-}
-
-# endif
-
-
-static QList<QNetworkInterfacePrivate *> interfaceListing()
-{
-    QList<QNetworkInterfacePrivate *> interfaces;
-
-    int socket = qt_safe_socket(AF_INET, SOCK_STREAM, IPPROTO_IP);
-    if (socket == -1)
-        return interfaces;      // error
-
-    ifaddrs *interfaceListing;
-    if (::getifaddrs(&interfaceListing) == -1) {
-        // error
-        qt_safe_close(socket);
-        return interfaces;
-    }
-
-    interfaces = createInterfaces(interfaceListing);
-    for (ifaddrs *ptr = interfaceListing; ptr; ptr = ptr->ifa_next) {
-        // Get the interface index
-        int ifindex = if_nametoindex(ptr->ifa_name);
-        QNetworkInterfacePrivate *iface = 0;
-        QList<QNetworkInterfacePrivate *>::Iterator if_it = interfaces.begin();
-        for ( ; if_it != interfaces.end(); ++if_it)
-            if ((*if_it)->index == ifindex) {
-                // found this interface already
-                iface = *if_it;
-                break;
-            }
-        if (!iface) {
-            // skip all non-IP interfaces
-            continue;
-        }
-
-        QNetworkAddressEntry entry;
-        entry.setIp(addressFromSockaddr(ptr->ifa_addr));
-        if (entry.ip().isNull())
-            // could not parse the address
-            continue;
-
-        entry.setNetmask(addressFromSockaddr(ptr->ifa_netmask));
-        if (iface->flags & QNetworkInterface::CanBroadcast)
-            entry.setBroadcast(addressFromSockaddr(ptr->ifa_broadaddr));
-
-        iface->addressEntries << entry;
-    }
-
-    ::freeifaddrs(interfaceListing);
-    qt_safe_close(socket);
-    return interfaces;
-}
-#endif
+#endif // QT_HAVE_GETIFADDRS
 
 QList<QNetworkInterfacePrivate *> QNetworkInterfaceManager::scan()
 {

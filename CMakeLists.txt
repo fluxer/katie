@@ -440,8 +440,6 @@ katie_check_function(getdomainname "unistd.h")
 katie_check_function(renameat2 "stdio.h")
 katie_check_struct(tm tm_gmtoff "time.h")
 katie_check_struct(tm tm_zone "time.h")
-katie_check_struct(sockaddr_ll sll_addr "netpacket/packet.h")
-katie_check_struct(sockaddr_dl sdl_index "net/if_dl.h")
 katie_check_struct(dirent d_type "dirent.h")
 
 cmake_reset_check_state()
