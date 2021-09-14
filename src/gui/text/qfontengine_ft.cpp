@@ -1696,9 +1696,7 @@ QImage QFontEngineFT::alphaMapForGlyph(glyph_t g, QFixed subPixelPosition)
     if (antialias) {
         img.setColorTable(alphaColorTable());
     } else {
-        QVector<QRgb> colors(2);
-        colors[0] = qt_transparentrgba;
-        colors[1] = qt_blackrgba;
+        static const QVector<QRgb> colors = { qt_transparentrgba, qt_blackrgba };
         img.setColorTable(colors);
     }
     Q_ASSERT(img.bytesPerLine() == pitch);
