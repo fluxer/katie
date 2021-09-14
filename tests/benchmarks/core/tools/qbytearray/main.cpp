@@ -36,6 +36,8 @@ private slots:
     void compress_uncompress();
     void to_from_base64();
     void to_from_hex();
+    void bench_qstrcmp();
+    void bench_qstrncmp();
 };
 
 
@@ -111,6 +113,20 @@ void tst_qbytearray::to_from_hex() {
     }
 }
 
+void tst_qbytearray::bench_qstrcmp() {
+    QBENCHMARK {
+        const int result = qstrcmp(lorem.constData(), lorem.constData());
+        Q_UNUSED(result);
+    }
+}
+
+void tst_qbytearray::bench_qstrncmp() {
+    static const int loremsize = lorem.size();
+    QBENCHMARK {
+        const int result = qstrncmp(lorem.constData(), lorem.constData(), loremsize);
+        Q_UNUSED(result);
+    }
+}
 
 QTEST_MAIN(tst_qbytearray)
 
