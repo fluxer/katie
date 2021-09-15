@@ -4569,22 +4569,13 @@ QImage QImage::transformed(const QTransform &matrix, Qt::TransformationMode mode
     // compute size of target image
     QTransform mat = trueMatrix(matrix, ws, hs);
     bool complex_xform = false;
-    if (mat.type() == QTransform::TxNone) {
-        // identity matrix
-        return *this;
-    } else if (mat.type() == QTransform::TxRotate) {
-        if (mat.m12() == 1. && mat.m21() == -1.) {
-            return rotated90(*this);
-        } if (mat.m11() == -1. && mat.m22() == -1.) {
+    bool scale_xform = false;
+    if (mat.type() <= QTransform::TxScale) {
+        if (mat.type() == QTransform::TxNone) // identity matrix
+            return *this;
+        else if (mat.m11() == -1. && mat.m22() == -1.)
             return rotated180(*this);
-        } else if (mat.m12() == -1. && mat.m21() == 1.) {
-            return rotated270(*this);
-        } else if (mat.m12() == 0. && mat.m21() == 0.) {
-            return *this;
-        } else {
-            return *this;
-        }
-    } else if (mat.type() <= QTransform::TxScale) {
+
         if (mode == Qt::FastTransformation) {
             hd = qRound(qAbs(mat.m22()) * hs);
             wd = qRound(qAbs(mat.m11()) * ws);
@@ -4592,7 +4583,15 @@ QImage QImage::transformed(const QTransform &matrix, Qt::TransformationMode mode
             hd = int(qAbs(mat.m22()) * hs + 0.9999);
             wd = int(qAbs(mat.m11()) * ws + 0.9999);
         }
+        scale_xform = true;
     } else {
+        if (mat.type() <= QTransform::TxRotate && mat.m11() == 0 && mat.m22() == 0) {
+            if (mat.m12() == 1. && mat.m21() == -1.)
+                return rotated90(*this);
+            else if (mat.m12() == -1. && mat.m21() == 1.)
+                return rotated270(*this);
+        }
+
         QPolygonF a(QRectF(0, 0, ws, hs));
         a = mat.map(a);
         QRect r = a.boundingRect().toAlignedRect();
@@ -4604,12 +4603,22 @@ QImage QImage::transformed(const QTransform &matrix, Qt::TransformationMode mode
     if (wd == 0 || hd == 0)
         return QImage();
 
-    QImage dImage(wd, hd, d->format);
+    const int bpp = depth();
+
+    QImage::Format target_format = d->format;
+
+    if (complex_xform || mode == Qt::SmoothTransformation) {
+        if (d->format < QImage::Format_RGB32 || !hasAlphaChannel()) {
+            target_format = Format_ARGB32_Premultiplied;
+        }
+    }
+
+    QImage dImage(wd, hd, target_format);
     QIMAGE_SANITYCHECK_MEMORY(dImage);
 
-    if (d->format == QImage::Format_MonoLSB
-        || d->format == QImage::Format_Mono
-        || d->format == QImage::Format_Indexed8) {
+    if (target_format == QImage::Format_MonoLSB
+        || target_format == QImage::Format_Mono
+        || target_format == QImage::Format_Indexed8) {
         dImage.d->colortable = d->colortable;
         dImage.d->has_alpha_clut = d->has_alpha_clut | complex_xform;
     }
@@ -4617,7 +4626,6 @@ QImage QImage::transformed(const QTransform &matrix, Qt::TransformationMode mode
     dImage.d->dpmx = dotsPerMeterX();
     dImage.d->dpmy = dotsPerMeterY();
 
-    const int bpp = depth();
     switch (bpp) {
         // initizialize the data
         case 8:
@@ -4636,8 +4644,12 @@ QImage QImage::transformed(const QTransform &matrix, Qt::TransformationMode mode
             break;
     }
 
-    if (d->format >= QImage::Format_RGB32) {
+    if (target_format >= QImage::Format_RGB32) {
         QPainter p(&dImage);
+        if (mode == Qt::SmoothTransformation) {
+            p.setRenderHint(QPainter::Antialiasing);
+            p.setRenderHint(QPainter::SmoothPixmapTransform);
+        }
         p.setTransform(mat);
         p.drawImage(QPoint(0, 0), *this);
     } else {
