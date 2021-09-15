@@ -1462,20 +1462,23 @@ void QImage::fill(uint pixel)
         } else {
             pixel &= 0xff;
         }
-        qt_rectfill<quint8>(d->data, pixel, 0, 0,
-                            w, d->height, d->bytes_per_line);
+        qt_rectfill<quint8>(d->data, pixel, 0, 0, w, d->height, d->bytes_per_line);
         return;
     } else if (d->depth == 16) {
-        qt_rectfill<quint16>(reinterpret_cast<quint16*>(d->data), pixel,
-                             0, 0, d->width, d->height, d->bytes_per_line);
+        qt_rectfill<quint16>(
+            reinterpret_cast<quint16*>(d->data), qt_colorConvert<quint16, quint32>(pixel, 0),
+            0, 0, d->width, d->height, d->bytes_per_line
+        );
         return;
     }
 
     if (d->format == Format_RGB32)
         pixel |= 0xff000000;
 
-    qt_rectfill<uint>(reinterpret_cast<uint*>(d->data), pixel,
-                      0, 0, d->width, d->height, d->bytes_per_line);
+    qt_rectfill<quint32>(
+        reinterpret_cast<quint32*>(d->data), pixel,
+        0, 0, d->width, d->height, d->bytes_per_line
+    );
 }
 
 
