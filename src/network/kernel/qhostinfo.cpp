@@ -427,8 +427,7 @@ void QHostInfoCache::put(const QString &name, const QHostInfo &info)
 
     QHostInfoCacheElement* element = new QHostInfoCacheElement();
     element->info = info;
-    element->age = QElapsedTimer();
-    element->age.start();
+    element->age.restart();
 
     QMutexLocker locker(&this->mutex);
     cache.insert(name, element); // cache will take ownership
