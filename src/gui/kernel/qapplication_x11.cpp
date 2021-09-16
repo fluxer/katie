@@ -60,10 +60,7 @@
 #include "qbackingstore_p.h"
 #include "qcorecommon_p.h"
 
-#ifndef QT_GUI_DOUBLE_CLICK_RADIUS
 #define QT_GUI_DOUBLE_CLICK_RADIUS 5
-#endif
-
 
 //#define ALIEN_DEBUG
 
