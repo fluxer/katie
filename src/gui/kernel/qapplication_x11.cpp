@@ -78,6 +78,10 @@
 #  include <errno.h>
 #endif
 
+#ifndef QT_NO_FONTCONFIG
+#include <fontconfig/fontconfig.h>
+#endif
+
 QT_BEGIN_NAMESPACE
 
 /* Warning: if you modify this string, modify the list of atoms in qt_x11_p.h as well! */
