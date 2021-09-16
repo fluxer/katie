@@ -28,7 +28,7 @@ WANTLIB = ${COMPILER_LIBCXX} ICE SM X11 Xcursor Xext Xfixes Xinerama Xrandr \
 	Xrender fontconfig freetype zstd icui18n icuuc pcre png jpeg tiff \
 	dbus-1 cups iodbc sqlite3 intl ssl z c crypto m
 SEPARATE_BUILD = Yes
-CONFIGURE_ARGS = -DKATIE_TOOLS_SUFFIX="-katie"
+CONFIGURE_ARGS = -DKATIE_TOOLS_SUFFIX="-katie" -Wno-dev
 
 SHARED_LIBS = \
 	KtCore                4.11 \

@@ -23,7 +23,7 @@ LIB_DEPENDS = libzstd.so:archivers/zstd libicuuc.so:devel/icu \
 	libtiff.so:graphics/tiff libfreetype.so:print/freetype2 \
 	libfontconfig.so:x11-fonts/fontconfig libdbus-1.so:devel/dbus \
 	libcups.so:print/cups libiodbc.so:databases/libiodbc
-CMAKE_ARGS = -DKATIE_TOOLS_SUFFIX="-katie"
+CMAKE_ARGS = -DKATIE_TOOLS_SUFFIX="-katie" -Wno-dev
 
 OPTIONS_DEFINE = NLS
 OPTIONS_SUB = yes
