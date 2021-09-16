@@ -73,8 +73,6 @@ set(GUI_PUBLIC_HEADERS
     QFormLayout
     QFrame
     QGenericMatrix
-    QGesture
-    QGestureRecognizer
     QGraphicsAnchorLayout
     QGraphicsEffect
     QGraphicsGridLayout
@@ -400,11 +398,6 @@ set(GUI_HEADERS
     ${CMAKE_CURRENT_SOURCE_DIR}/kernel/qwidgetaction_p.h
     ${CMAKE_CURRENT_SOURCE_DIR}/kernel/qwindowdefs.h
     ${CMAKE_CURRENT_SOURCE_DIR}/kernel/qkeymapper_p.h
-    ${CMAKE_CURRENT_SOURCE_DIR}/kernel/qgesture.h
-    ${CMAKE_CURRENT_SOURCE_DIR}/kernel/qgesture_p.h
-    ${CMAKE_CURRENT_SOURCE_DIR}/kernel/qstandardgestures_p.h
-    ${CMAKE_CURRENT_SOURCE_DIR}/kernel/qgesturerecognizer.h
-    ${CMAKE_CURRENT_SOURCE_DIR}/kernel/qgesturemanager_p.h
     ${CMAKE_CURRENT_SOURCE_DIR}/kernel/qguiplatformplugin.h
     ${CMAKE_CURRENT_SOURCE_DIR}/kernel/qt_x11_p.h
     ${CMAKE_CURRENT_SOURCE_DIR}/kernel/qx11embed_x11.h
@@ -749,10 +742,6 @@ set(GUI_SOURCES
     ${CMAKE_CURRENT_SOURCE_DIR}/kernel/qwidget.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/kernel/qwidgetaction.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/kernel/qkeymapper.cpp
-    ${CMAKE_CURRENT_SOURCE_DIR}/kernel/qgesture.cpp
-    ${CMAKE_CURRENT_SOURCE_DIR}/kernel/qstandardgestures.cpp
-    ${CMAKE_CURRENT_SOURCE_DIR}/kernel/qgesturerecognizer.cpp
-    ${CMAKE_CURRENT_SOURCE_DIR}/kernel/qgesturemanager.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/kernel/qdesktopwidget.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/kernel/qguiplatformplugin.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/kernel/qapplication_x11.cpp

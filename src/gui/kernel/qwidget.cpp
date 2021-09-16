@@ -58,7 +58,6 @@
 #include "QtGui/qabstractscrollarea.h"
 #include "qabstractscrollarea_p.h"
 #include "qevent_p.h"
-#include "qgesturemanager_p.h"
 
 #ifndef QT_NO_ACCESSIBILITY
 # include "qaccessible.h"
@@ -1112,11 +1111,6 @@ QWidget::~QWidget()
 
     if (Q_UNLIKELY(paintingActive()))
         qWarning("QWidget: %s (%s) deleted while being painted", objectName().toLocal8Bit().data(), metaObject()->className());
-
-#ifndef QT_NO_GESTURES
-    foreach (Qt::GestureType type, d->gestureContext.keys())
-        ungrabGesture(type);
-#endif
 
 #ifndef QT_NO_ACTION
     // remove all actions from this widget
@@ -7094,9 +7088,6 @@ bool QWidget::event(QEvent *event)
         case QEvent::MouseButtonRelease:
         case QEvent::MouseButtonDblClick:
         case QEvent::MouseMove:
-        case QEvent::TouchBegin:
-        case QEvent::TouchUpdate:
-        case QEvent::TouchEnd:
         case QEvent::ContextMenu:
 #ifndef QT_NO_WHEELEVENT
         case QEvent::Wheel:
@@ -7443,47 +7434,6 @@ bool QWidget::event(QEvent *event)
         }
         break;
     }
-    case QEvent::TouchBegin:
-    case QEvent::TouchUpdate:
-    case QEvent::TouchEnd: {
-        QTouchEvent *touchEvent = static_cast<QTouchEvent *>(event);
-        const QTouchEvent::TouchPoint &touchPoint = touchEvent->touchPoints().first();
-        if (touchPoint.isPrimary() || touchEvent->deviceType() == QTouchEvent::TouchPad)
-            break;
-
-        // fake a mouse event!
-        QEvent::Type eventType = QEvent::None;
-        switch (touchEvent->type()) {
-        case QEvent::TouchBegin:
-            eventType = QEvent::MouseButtonPress;
-            break;
-        case QEvent::TouchUpdate:
-            eventType = QEvent::MouseMove;
-            break;
-        case QEvent::TouchEnd:
-            eventType = QEvent::MouseButtonRelease;
-            break;
-        default:
-            Q_ASSERT(!true);
-            break;
-        }
-        if (eventType == QEvent::None)
-            break;
-
-        QMouseEvent mouseEvent(eventType,
-                               touchPoint.pos().toPoint(),
-                               touchPoint.screenPos().toPoint(),
-                               Qt::LeftButton,
-                               Qt::LeftButton,
-                               touchEvent->modifiers());
-        (void) QApplication::sendEvent(this, &mouseEvent);
-        break;
-    }
-#ifndef QT_NO_GESTURES
-    case QEvent::Gesture:
-        event->ignore();
-        break;
-#endif
 #ifndef QT_NO_PROPERTIES
     case QEvent::DynamicPropertyChange: {
         const QByteArray &propName = static_cast<QDynamicPropertyChangeEvent *>(event)->propertyName();
@@ -10185,36 +10135,6 @@ QGraphicsProxyWidget *QWidget::graphicsProxyWidget() const
 
     Synonym for QList<QWidget *>.
 */
-
-#ifndef QT_NO_GESTURES
-/*!
-    Subscribes the widget to a given \a gesture with specific \a flags.
-
-    \sa ungrabGesture(), QGestureEvent
-    \since 4.6
-*/
-void QWidget::grabGesture(Qt::GestureType gesture, Qt::GestureFlags flags)
-{
-    Q_D(QWidget);
-    d->gestureContext.insert(gesture, flags);
-    (void)QGestureManager::instance(); // create a gesture manager
-}
-
-/*!
-    Unsubscribes the widget from a given \a gesture type
-
-    \sa grabGesture(), QGestureEvent
-    \since 4.6
-*/
-void QWidget::ungrabGesture(Qt::GestureType gesture)
-{
-    Q_D(QWidget);
-    if (d->gestureContext.remove(gesture)) {
-        if (QGestureManager *manager = QGestureManager::instance())
-            manager->cleanupCachedGestures(this, gesture);
-    }
-}
-#endif // QT_NO_GESTURES
 
 /*!
     \typedef WId

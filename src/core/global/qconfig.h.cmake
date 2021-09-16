@@ -102,6 +102,7 @@
 #define QT_NO_SYSTEMLOCALE
 #define QT_NO_STL_WCHAR
 #define QT_NO_BEARERMANAGEMENT
+#define QT_NO_GESTURES
 
 // Not supported, used to bootstrap
 #cmakedefine QT_NO_QOBJECT
@@ -193,7 +194,6 @@
 #cmakedefine QT_NO_FSCOMPLETER
 #cmakedefine QT_NO_FSFILEENGINE
 #cmakedefine QT_NO_FTP
-#cmakedefine QT_NO_GESTURES
 #cmakedefine QT_NO_GRAPHICSEFFECT
 #cmakedefine QT_NO_GRAPHICSSVGITEM
 #cmakedefine QT_NO_GRAPHICSVIEW

@@ -46,7 +46,6 @@
 #include "QtGui/qgraphicsproxywidget.h"
 #include "QtGui/qgraphicsscene.h"
 #include "QtGui/qgraphicsview.h"
-#include "qgesture_p.h"
 
 #ifdef Q_WS_X11
 #include "QtGui/qx11info_x11.h"
@@ -562,9 +561,6 @@ public:
     QPoint redirectOffset;
 #ifndef QT_NO_ACTION
     QList<QAction*> actions;
-#endif
-#ifndef QT_NO_GESTURES
-    QMap<Qt::GestureType, Qt::GestureFlags> gestureContext;
 #endif
 
     // Bit fields.

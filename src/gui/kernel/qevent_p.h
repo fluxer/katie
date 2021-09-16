@@ -39,35 +39,6 @@ QT_BEGIN_NAMESPACE
 // We mean it.
 //
 
-class QTouchEventTouchPointPrivate
-{
-public:
-    inline QTouchEventTouchPointPrivate(int id)
-        : ref(1),
-          id(id),
-          state(Qt::TouchPointReleased),
-          pressure(qreal(-1.))
-    { }
-
-    inline QTouchEventTouchPointPrivate *detach()
-    {
-        QTouchEventTouchPointPrivate *d = new QTouchEventTouchPointPrivate(*this);
-        d->ref = 1;
-        if (!this->ref.deref())
-            delete this;
-        return d;
-    }
-
-    QAtomicInt ref;
-    int id;
-    Qt::TouchPointStates state;
-    QRectF rect, sceneRect, screenRect;
-    QPointF normalizedPos,
-            startPos, startScenePos, startScreenPos, startNormalizedPos,
-            lastPos, lastScenePos, lastScreenPos, lastNormalizedPos;
-    qreal pressure;
-};
-
 #ifndef QT_NO_CLIPBOARD
 class Q_GUI_EXPORT QClipboardEvent : public QEvent
 {

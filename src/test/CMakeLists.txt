@@ -52,7 +52,6 @@ set(TEST_HEADERS
     ${CMAKE_CURRENT_SOURCE_DIR}/qtestmouse.h
     ${CMAKE_CURRENT_SOURCE_DIR}/qtestspontaneevent.h
     ${CMAKE_CURRENT_SOURCE_DIR}/qtestsystem.h
-    ${CMAKE_CURRENT_SOURCE_DIR}/qtesttouch.h
     ${CMAKE_CURRENT_SOURCE_DIR}/qtestxmlstreamer.h
     ${CMAKE_CURRENT_SOURCE_DIR}/qtestxunitstreamer.h
     ${CMAKE_CURRENT_SOURCE_DIR}/qbenchmarkmetric.h

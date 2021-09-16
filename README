@@ -48,6 +48,7 @@ There are several things you should be aware before considering Katie:
   - dropped recursive mutex and lock support
   - dropped wide character and string support
   - dropped network interfaces management support
+  - dropped no-op touch devices support
 
  - some additions have been made: 
   - JSON document handler

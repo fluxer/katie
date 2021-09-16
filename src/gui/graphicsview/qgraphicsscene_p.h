@@ -93,7 +93,6 @@ public:
     bool allItemsIgnoreHoverEvents;
     bool allItemsUseDefaultCursor;
     bool painterStateProtection;
-    bool allItemsIgnoreTouchEvents;
 
     QRectF growingItemsBoundingRect;
 
@@ -269,31 +268,7 @@ public:
 
     QStyleOptionGraphicsItem styleOptionTmp;
 
-    QMap<int, QTouchEvent::TouchPoint> sceneCurrentTouchPoints;
-    QMap<int, QGraphicsItem *> itemForTouchPointId;
-    static void updateTouchPointsForItem(QGraphicsItem *item, QTouchEvent *touchEvent);
-    int findClosestTouchPointId(const QPointF &scenePos);
-    void touchEventHandler(QTouchEvent *touchEvent);
-    bool sendTouchBeginEvent(QGraphicsItem *item, QTouchEvent *touchEvent);
-    void enableTouchEventsOnViews();
-
     QList<QGraphicsObject *> cachedTargetItems;
-#ifndef QT_NO_GESTURES
-    QHash<QGraphicsObject *, QSet<QGesture *> > cachedItemGestures;
-    QHash<QGraphicsObject *, QSet<QGesture *> > cachedAlreadyDeliveredGestures;
-    QHash<QGesture *, QGraphicsObject *> gestureTargets;
-    QHash<Qt::GestureType, int>  grabbedGestures;
-    void gestureEventHandler(QGestureEvent *event);
-    void gestureTargetsAtHotSpots(const QSet<QGesture *> &gestures,
-                           Qt::GestureFlag flag,
-                           QHash<QGraphicsObject *, QSet<QGesture *> > *targets,
-                           QSet<QGraphicsObject *> *itemsSet = 0,
-                           QSet<QGesture *> *normal = 0,
-                           QSet<QGesture *> *conflicts = 0);
-    void cancelGesturesForChildren(QGesture *original);
-    void grabGesture(QGraphicsItem *, Qt::GestureType gesture);
-    void ungrabGesture(QGraphicsItem *, Qt::GestureType gesture);
-#endif // QT_NO_GESTURES
 
     QList<QGraphicsItem *> modalPanels;
     void enterModal(QGraphicsItem *item,

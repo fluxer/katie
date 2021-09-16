@@ -298,11 +298,6 @@ public:
     void setGraphicsEffect(QGraphicsEffect *effect);
 #endif //QT_NO_GRAPHICSEFFECT
 
-#ifndef QT_NO_GESTURES
-    void grabGesture(Qt::GestureType type, Qt::GestureFlags flags = Qt::GestureFlags());
-    void ungrabGesture(Qt::GestureType type);
-#endif
-
 public Q_SLOTS:
     void setWindowTitle(const QString &);
 #ifndef QT_NO_STYLE_STYLESHEET
@@ -615,9 +610,6 @@ private:
     friend class QX11EmbedWidgetPrivate;
     friend class QX11EmbedContainerPrivate;
     friend struct QWidgetExceptionCleaner;
-#ifndef QT_NO_GESTURES
-    friend class QGestureManager;
-#endif // QT_NO_GESTURES
     friend class QWidgetEffectSourcePrivate;
 
 #ifdef Q_WS_X11

@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-09-10 05:02+0300\n"
+"POT-Creation-Date: 2021-09-17 02:15+0300\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -361,20 +361,20 @@ msgctxt "QJsonDocument"
 msgid "Maximum depth reached"
 msgstr ""
 
-#: src/declarative/graphicsitems/qdeclarativeitemsmodule.cpp:83
+#: src/declarative/graphicsitems/qdeclarativeitemsmodule.cpp:82
 msgctxt "QDeclarativeAnimatedImage"
 msgid "Katie was built without support for QMovie"
 msgstr ""
 
-#: src/declarative/graphicsitems/qdeclarativeitemsmodule.cpp:155
+#: src/declarative/graphicsitems/qdeclarativeitemsmodule.cpp:154
 msgid "KeyNavigation is only available via attached properties"
 msgstr ""
 
-#: src/declarative/graphicsitems/qdeclarativeitemsmodule.cpp:156
+#: src/declarative/graphicsitems/qdeclarativeitemsmodule.cpp:155
 msgid "Keys is only available via attached properties"
 msgstr ""
 
-#: src/declarative/graphicsitems/qdeclarativeitemsmodule.cpp:181
+#: src/declarative/graphicsitems/qdeclarativeitemsmodule.cpp:177
 msgid "LayoutMirroring is only available via attached properties"
 msgstr ""
 
@@ -1410,47 +1410,47 @@ msgstr ""
 msgid "Sample"
 msgstr ""
 
-#: src/gui/dialogs/qcolordialog.cpp:1202
+#: src/gui/dialogs/qcolordialog.cpp:1203
 msgid "Hu&e:"
 msgstr ""
 
-#: src/gui/dialogs/qcolordialog.cpp:1203
+#: src/gui/dialogs/qcolordialog.cpp:1204
 msgid "&Sat:"
 msgstr ""
 
-#: src/gui/dialogs/qcolordialog.cpp:1204
+#: src/gui/dialogs/qcolordialog.cpp:1205
 msgid "&Val:"
 msgstr ""
 
-#: src/gui/dialogs/qcolordialog.cpp:1205
+#: src/gui/dialogs/qcolordialog.cpp:1206
 msgid "&Red:"
 msgstr ""
 
-#: src/gui/dialogs/qcolordialog.cpp:1206
+#: src/gui/dialogs/qcolordialog.cpp:1207
 msgid "&Green:"
 msgstr ""
 
-#: src/gui/dialogs/qcolordialog.cpp:1207
+#: src/gui/dialogs/qcolordialog.cpp:1208
 msgid "Bl&ue:"
 msgstr ""
 
-#: src/gui/dialogs/qcolordialog.cpp:1208
+#: src/gui/dialogs/qcolordialog.cpp:1209
 msgid "A&lpha channel:"
 msgstr ""
 
-#: src/gui/dialogs/qcolordialog.cpp:1309
+#: src/gui/dialogs/qcolordialog.cpp:1310
 msgid "Select Color"
 msgstr ""
 
-#: src/gui/dialogs/qcolordialog.cpp:1436
+#: src/gui/dialogs/qcolordialog.cpp:1437
 msgid "&Basic colors"
 msgstr ""
 
-#: src/gui/dialogs/qcolordialog.cpp:1437
+#: src/gui/dialogs/qcolordialog.cpp:1438
 msgid "&Custom colors"
 msgstr ""
 
-#: src/gui/dialogs/qcolordialog.cpp:1438
+#: src/gui/dialogs/qcolordialog.cpp:1439
 msgid "&Add to Custom Colors"
 msgstr ""
 
@@ -1865,12 +1865,12 @@ msgctxt "QImageReader"
 msgid "Unsupported image format"
 msgstr ""
 
-#: src/gui/image/qimagereader.cpp:833
+#: src/gui/image/qimagereader.cpp:826
 msgctxt "QImageReader"
 msgid "Unable to read image data"
 msgstr ""
 
-#: src/gui/image/qimagereader.cpp:1024
+#: src/gui/image/qimagereader.cpp:1017
 msgctxt "QImageReader"
 msgid "Unknown error"
 msgstr ""
@@ -2173,11 +2173,11 @@ msgstr ""
 msgid "Step &down"
 msgstr ""
 
-#: src/gui/kernel/qwidget.cpp:5086
+#: src/gui/kernel/qwidget.cpp:5080
 msgid "*"
 msgstr ""
 
-#: src/gui/kernel/qapplication.cpp:1664
+#: src/gui/kernel/qapplication.cpp:1653
 msgid "QT_LAYOUT_DIRECTION"
 msgstr ""
 
@@ -4787,7 +4787,7 @@ msgid "No host name given"
 msgstr ""
 
 #: src/network/kernel/qhostinfo_unix.cpp:87
-#: src/network/kernel/qhostinfo_unix.cpp:173
+#: src/network/kernel/qhostinfo_unix.cpp:171
 #: src/network/socket/qabstractsocket.cpp:830
 #: src/network/socket/qhttpsocketengine.cpp:648
 #: src/network/socket/qsocks5socketengine.cpp:620
@@ -4803,7 +4803,7 @@ msgstr ""
 msgid "Invalid hostname"
 msgstr ""
 
-#: src/network/kernel/qhostinfo_unix.cpp:161
+#: src/network/kernel/qhostinfo_unix.cpp:159
 msgid "Unknown address type"
 msgstr ""
 

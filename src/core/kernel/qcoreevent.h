@@ -187,18 +187,10 @@ public:
         GrabKeyboard = 120,
         UngrabKeyboard = 121,
 
-        TouchBegin = 122,
-        TouchUpdate = 123,
-        TouchEnd = 124,
+        RequestSoftwareInputPanel = 122,
+        CloseSoftwareInputPanel = 123,
 
-        RequestSoftwareInputPanel = 125,
-        CloseSoftwareInputPanel = 126,
-
-        WinIdChange = 127,
-#ifndef QT_NO_GESTURES
-        Gesture = 128,
-        GestureOverride = 129,
-#endif
+        WinIdChange = 124,
 
         User = 1000,                            // first user event id
         MaxUser = 65535                         // last user event id
@@ -238,9 +230,6 @@ private:
     friend class QGraphicsScene;
     friend class QGraphicsScenePrivate;
     friend class QSpontaneKeyEvent;
-#ifndef QT_NO_GESTURES
-    friend class QGestureManager;
-#endif
 };
 
 class Q_CORE_EXPORT QTimerEvent : public QEvent

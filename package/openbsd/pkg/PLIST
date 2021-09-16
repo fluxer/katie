@@ -681,9 +681,6 @@ include/katie/QtGui/QFontMetricsF
 include/katie/QtGui/QFormLayout
 include/katie/QtGui/QFrame
 include/katie/QtGui/QGenericMatrix
-include/katie/QtGui/QGesture
-include/katie/QtGui/QGestureEvent
-include/katie/QtGui/QGestureRecognizer
 include/katie/QtGui/QGradient
 include/katie/QtGui/QGradientStop
 include/katie/QtGui/QGradientStops
@@ -798,11 +795,9 @@ include/katie/QtGui/QPainterPath
 include/katie/QtGui/QPainterPathPrivate
 include/katie/QtGui/QPainterPathStroker
 include/katie/QtGui/QPalette
-include/katie/QtGui/QPanGesture
 include/katie/QtGui/QParallelAnimationGroup
 include/katie/QtGui/QPauseAnimation
 include/katie/QtGui/QPen
-include/katie/QtGui/QPinchGesture
 include/katie/QtGui/QPixmap
 include/katie/QtGui/QPixmapCache
 include/katie/QtGui/QPlainTextDocumentLayout
@@ -900,7 +895,6 @@ include/katie/QtGui/QStyleOptionViewItemV4
 include/katie/QtGui/QStylePainter
 include/katie/QtGui/QStylePlugin
 include/katie/QtGui/QStyledItemDelegate
-include/katie/QtGui/QSwipeGesture
 include/katie/QtGui/QSyntaxHighlighter
 include/katie/QtGui/QSystemTrayIcon
 include/katie/QtGui/QTabBar
@@ -909,8 +903,6 @@ include/katie/QtGui/QTableView
 include/katie/QtGui/QTableWidget
 include/katie/QtGui/QTableWidgetItem
 include/katie/QtGui/QTableWidgetSelectionRange
-include/katie/QtGui/QTapAndHoldGesture
-include/katie/QtGui/QTapGesture
 include/katie/QtGui/QTextBlock
 include/katie/QtGui/QTextBlockFormat
 include/katie/QtGui/QTextBlockGroup
@@ -948,7 +940,6 @@ include/katie/QtGui/QToolBar
 include/katie/QtGui/QToolBox
 include/katie/QtGui/QToolButton
 include/katie/QtGui/QToolTip
-include/katie/QtGui/QTouchEvent
 include/katie/QtGui/QTransform
 include/katie/QtGui/QTreeView
 include/katie/QtGui/QTreeWidget
@@ -1051,8 +1042,6 @@ include/katie/QtGui/qfontmetrics.h
 include/katie/QtGui/qformlayout.h
 include/katie/QtGui/qframe.h
 include/katie/QtGui/qgenericmatrix.h
-include/katie/QtGui/qgesture.h
-include/katie/QtGui/qgesturerecognizer.h
 include/katie/QtGui/qgraphicsanchorlayout.h
 include/katie/QtGui/qgraphicseffect.h
 include/katie/QtGui/qgraphicsgridlayout.h
@@ -1396,7 +1385,6 @@ include/katie/QtTest/qtestlightxmlstreamer.h
 include/katie/QtTest/qtestmouse.h
 include/katie/QtTest/qtestspontaneevent.h
 include/katie/QtTest/qtestsystem.h
-include/katie/QtTest/qtesttouch.h
 include/katie/QtTest/qtestxmlstreamer.h
 include/katie/QtTest/qtestxunitstreamer.h
 include/katie/QtUiTools/
@@ -1466,9 +1454,6 @@ lib/katie/imports/Qt/labs/
 lib/katie/imports/Qt/labs/folderlistmodel/
 @so lib/katie/imports/Qt/labs/folderlistmodel/libqmlfolderlistmodelplugin.so
 lib/katie/imports/Qt/labs/folderlistmodel/qmldir
-lib/katie/imports/Qt/labs/gestures/
-@so lib/katie/imports/Qt/labs/gestures/libqmlgesturesplugin.so
-lib/katie/imports/Qt/labs/gestures/qmldir
 lib/katie/imports/Qt/labs/particles/
 @so lib/katie/imports/Qt/labs/particles/libqmlparticlesplugin.so
 lib/katie/imports/Qt/labs/particles/qmldir

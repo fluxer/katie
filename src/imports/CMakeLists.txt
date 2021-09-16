@@ -28,12 +28,3 @@ configure_file(
     "${CMAKE_BINARY_DIR}/imports/Qt/labs/particles/qmldir"
 )
 add_subdirectory(particles)
-
-
-set(CMAKE_LIBRARY_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}/imports/Qt/labs/gestures")
-set(CMAKE_ARCHIVE_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}/imports/Qt/labs/gestures")
-configure_file(
-    "${CMAKE_CURRENT_SOURCE_DIR}/gestures/qmldir"
-    "${CMAKE_BINARY_DIR}/imports/Qt/labs/gestures/qmldir"
-)
-add_subdirectory(gestures)

@@ -64,10 +64,6 @@ Qt {
     Q_ENUMS(WindowType WindowState WindowModality WidgetAttribute ApplicationAttribute)
     Q_FLAGS(WindowFlags WindowStates)
     Q_ENUMS(ConnectionType)
-#ifndef QT_NO_GESTURES
-    Q_ENUMS(GestureState)
-    Q_ENUMS(GestureType)
-#endif
     Q_ENUMS(CursorMoveStyle)
 
 public:
@@ -798,51 +794,48 @@ public:
         WA_NativeWindow = 43,
         WA_DontCreateNativeAncestors = 44,
         WA_TranslucentBackground = 45,
-        WA_AcceptTouchEvents = 46,
-        WA_TouchPadAcceptSingleTouchEvents = 47,
-        WA_LockPortraitOrientation = 48,
-        WA_LockLandscapeOrientation = 49,
-        WA_AutoOrientation = 50,
-        WA_X11DoNotAcceptFocus = 51,
-        WA_X11BypassTransientForHint = 52,
+        WA_LockPortraitOrientation = 46,
+        WA_LockLandscapeOrientation = 47,
+        WA_AutoOrientation = 48,
+        WA_X11DoNotAcceptFocus = 49,
+        WA_X11BypassTransientForHint = 50,
 
         // window types from http://standards.freedesktop.org/wm-spec/
-        WA_X11NetWmWindowTypeDesktop = 53,
-        WA_X11NetWmWindowTypeDock = 54,
-        WA_X11NetWmWindowTypeToolBar = 55,
-        WA_X11NetWmWindowTypeMenu = 56,
-        WA_X11NetWmWindowTypeUtility = 57,
-        WA_X11NetWmWindowTypeSplash = 58,
-        WA_X11NetWmWindowTypeDialog = 59,
-        WA_X11NetWmWindowTypeDropDownMenu = 60,
-        WA_X11NetWmWindowTypePopupMenu = 61,
-        WA_X11NetWmWindowTypeToolTip = 62,
-        WA_X11NetWmWindowTypeNotification = 63,
-        WA_X11NetWmWindowTypeCombo = 64,
-        WA_X11NetWmWindowTypeDND = 65,
+        WA_X11NetWmWindowTypeDesktop = 51,
+        WA_X11NetWmWindowTypeDock = 52,
+        WA_X11NetWmWindowTypeToolBar = 53,
+        WA_X11NetWmWindowTypeMenu = 54,
+        WA_X11NetWmWindowTypeUtility = 55,
+        WA_X11NetWmWindowTypeSplash = 56,
+        WA_X11NetWmWindowTypeDialog = 57,
+        WA_X11NetWmWindowTypeDropDownMenu = 58,
+        WA_X11NetWmWindowTypePopupMenu = 59,
+        WA_X11NetWmWindowTypeToolTip = 60,
+        WA_X11NetWmWindowTypeNotification = 61,
+        WA_X11NetWmWindowTypeCombo = 62,
+        WA_X11NetWmWindowTypeDND = 63,
 
         // internal
-        WA_LaidOut = 66,
-        WA_GrabbedShortcut = 67,
-        WA_DontShowOnScreen = 68,
-        WA_ForceUpdatesDisabled = 69,
-        WA_StyledBackground = 70,
-        WA_StyleSheet = 71,
-        WA_DropSiteRegistered = 72,
-        WA_WState_Visible = 73,
-        WA_WState_Hidden = 74,
-        WA_WState_Created = 75,
-        WA_WState_InPaintEvent = 76,
-        WA_WState_Reparented = 77,
-        WA_WState_Polished = 78,
-        WA_WState_OwnSizePolicy = 79,
-        WA_WState_ExplicitShowHide = 80,
-        WA_WState_ConfigPending = 81,
-        WA_WState_AcceptedTouchBeginEvent = 82,
-        WA_SetWindowIcon = 83,
-        WA_SetLayoutDirection = 84,
-        WA_SetWindowModality = 85,
-        WA_NoX11EventCompression = 86,
+        WA_LaidOut = 64,
+        WA_GrabbedShortcut = 65,
+        WA_DontShowOnScreen = 66,
+        WA_ForceUpdatesDisabled = 67,
+        WA_StyledBackground = 68,
+        WA_StyleSheet = 69,
+        WA_DropSiteRegistered = 70,
+        WA_WState_Visible = 71,
+        WA_WState_Hidden = 72,
+        WA_WState_Created = 73,
+        WA_WState_InPaintEvent = 74,
+        WA_WState_Reparented = 75,
+        WA_WState_Polished = 76,
+        WA_WState_OwnSizePolicy = 77,
+        WA_WState_ExplicitShowHide = 78,
+        WA_WState_ConfigPending = 79,
+        WA_SetWindowIcon = 80,
+        WA_SetLayoutDirection = 81,
+        WA_SetWindowModality = 82,
+        WA_NoX11EventCompression = 83,
 
         // Add new attributes before this line
         WA_AttributeCount
@@ -1301,44 +1294,6 @@ public:
         LogicalCoordinates
     };
 
-    enum TouchPointState {
-        TouchPointPressed    = 0x01,
-        TouchPointMoved      = 0x02,
-        TouchPointStationary = 0x04,
-        TouchPointReleased   = 0x08,
-        TouchPointStateMask  = 0x0f,
-
-        TouchPointPrimary    = 0x10
-    };
-    Q_DECLARE_FLAGS(TouchPointStates, TouchPointState)
-
-#ifndef QT_NO_GESTURES
-    enum GestureState {
-        NoGesture,
-        GestureStarted  = 1,
-        GestureUpdated  = 2,
-        GestureFinished = 3,
-        GestureCanceled = 4
-    };
-
-    enum GestureType {
-        TapGesture        = 1,
-        TapAndHoldGesture = 2,
-        PanGesture        = 3,
-        PinchGesture      = 4,
-        SwipeGesture      = 5,
-
-        CustomGesture     = 0x0100,
-    };
-
-    enum GestureFlag {
-        DontStartGestureOnChildren = 0x01,
-        ReceivePartialGestures     = 0x02,
-        IgnoredGesturesPropagateToParent = 0x04
-    };
-    Q_DECLARE_FLAGS(GestureFlags, GestureFlag)
-#endif // QT_NO_GESTURES
-
     enum CursorMoveStyle {
         LogicalMoveStyle,
         VisualMoveStyle
@@ -1377,10 +1332,6 @@ Q_DECLARE_OPERATORS_FOR_FLAGS(Qt::DropActions)
 Q_DECLARE_OPERATORS_FOR_FLAGS(Qt::ItemFlags)
 Q_DECLARE_OPERATORS_FOR_FLAGS(Qt::MatchFlags)
 Q_DECLARE_OPERATORS_FOR_FLAGS(Qt::TextInteractionFlags)
-Q_DECLARE_OPERATORS_FOR_FLAGS(Qt::TouchPointStates)
-#ifndef QT_NO_GESTURES
-Q_DECLARE_OPERATORS_FOR_FLAGS(Qt::GestureFlags)
-#endif
 
 typedef bool (*qInternalCallback)(void **);
 

@@ -53,7 +53,6 @@
 #include "qdeclarativevisualitemmodel_p.h"
 #include "qdeclarativegraphicswidget_p.h"
 #include "qdeclarativeanchors_p.h"
-#include "qdeclarativepincharea_p.h"
 
 QT_BEGIN_NAMESPACE
 
@@ -156,9 +155,6 @@ void QDeclarativeItemModule::defineModule()
     qmlRegisterUncreatableType<QDeclarativeKeysAttached>("QtQuick",1,0,"Keys",QDeclarativeKeysAttached::tr("Keys is only available via attached properties"));
 
     // QtQuick 1.1 items
-    qmlRegisterType<QDeclarativePinchArea>("QtQuick",1,1,"PinchArea");
-    qmlRegisterType<QDeclarativePinch>("QtQuick",1,1,"Pinch");
-    qmlRegisterType<QDeclarativePinchEvent>();
     qmlRegisterType<QDeclarativeItem,1>("QtQuick",1,1,"Item");
     qmlRegisterType<QDeclarativeMouseArea,1>("QtQuick",1,1,"MouseArea");
     qmlRegisterType<QDeclarativeFlickable,1>("QtQuick",1,1,"Flickable");
