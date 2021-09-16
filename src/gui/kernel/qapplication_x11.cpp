@@ -458,16 +458,14 @@ static int qt_x_errhandler(Display *dpy, XErrorEvent *err)
             extensionName = "Unknown extension";
             ::snprintf(minor_str, maxerrlen, "Unknown request");
         }
-        qWarning( "X Error: %s %d\n"
-                  "  Extension:    %d (%s)\n"
-                  "  Minor opcode: %d (%s)\n"
-                  "  Resource id:  0x%lx",
-                  errstr, err->error_code,
-                  err->request_code,
-                  extensionName,
-                  err->minor_code,
-                  minor_str,
-                  err->resourceid );
+        qWarning("X Error: %s %d\n"
+                 "  Extension:    %d (%s)\n"
+                 "  Minor opcode: %d (%s)\n"
+                 "  Resource id:  0x%lx",
+                 errstr, err->error_code,
+                 err->request_code, extensionName,
+                 err->minor_code, minor_str,
+                 err->resourceid);
     }
 
     // ### we really should distinguish between severe, non-severe and
