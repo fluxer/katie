@@ -403,7 +403,6 @@ public:
     { return reinterpret_cast<QAccessibleTable2Interface *>(cast_helper(QAccessible2::Table2Interface)); }
 
     // FIXME
-    virtual QVariant virtual_hook(const QVariant &data);
     virtual QAccessible2Interface *interface_cast(QAccessible2::InterfaceType)
     { return 0; }
 

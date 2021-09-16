@@ -1118,11 +1118,6 @@ QVariant QAccessibleInterface::invokeMethod(Method method, int child, const QVar
     return QVariant();
 }
 
-QVariant QAccessibleInterface::virtual_hook(const QVariant &)
-{
-    return QVariant();
-}
-
 /*! \internal */
 QAccessible2Interface *QAccessibleInterface::cast_helper(QAccessible2::InterfaceType t)
 {
