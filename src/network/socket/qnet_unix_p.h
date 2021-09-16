@@ -97,11 +97,13 @@ static inline int qt_safe_sendto(int sockfd, const void *buf, size_t len, int fl
 #ifdef MSG_NOSIGNAL
     flags |= MSG_NOSIGNAL;
 #else
-    qt_ignore_sigpipe();
+    const sighandler_t handler = qt_ignore_sigpipe();
 #endif
-
     int ret;
     Q_EINTR_LOOP(ret, ::sendto(sockfd, buf, len, flags, to, tolen));
+#ifndef MSG_NOSIGNAL
+    qt_restore_sigpipe(handler);
+#endif
     return ret;
 }
 

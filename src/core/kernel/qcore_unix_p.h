@@ -102,20 +102,14 @@ inline timeval operator*(const timeval &t1, int mul)
     return normalizedTimeval(tmp);
 }
 
-static inline void qt_ignore_sigpipe()
+static inline sighandler_t qt_ignore_sigpipe()
 {
-    // Set to ignore SIGPIPE once only.
-    static QAtomicInt atom(0);
-    if (!atom) {
-        // More than one thread could turn off SIGPIPE at the same time
-        // But that's acceptable because they all would be doing the same
-        // action
-        struct sigaction noaction;
-        memset(&noaction, 0, sizeof(noaction));
-        noaction.sa_handler = SIG_IGN;
-        ::sigaction(SIGPIPE, &noaction, nullptr);
-        atom = 1;
-    }
+    return ::signal(SIGPIPE, SIG_IGN);
+}
+
+static inline void qt_restore_sigpipe(const sighandler_t handler)
+{
+    ::signal(SIGPIPE, handler);
 }
 
 // don't call QT_OPEN or ::open, call qt_safe_open
@@ -206,8 +200,10 @@ static inline qint64 qt_safe_write(int fd, const void *data, qint64 len)
 
 static inline qint64 qt_safe_write_nosignal(int fd, const void *data, qint64 len)
 {
-    qt_ignore_sigpipe();
-    return qt_safe_write(fd, data, len);
+    const sighandler_t handler = qt_ignore_sigpipe();
+    const qint64 ret = qt_safe_write(fd, data, len);
+    qt_restore_sigpipe(handler);
+    return ret;
 }
 
 // don't call QT_CREAT or ::creat, call qt_safe_creat
