@@ -559,7 +559,7 @@ Q_GUI_EXPORT void qt_grayscale(const QImage &image, QImage &dest)
     unsigned int *outData = (unsigned int *)dest.bits();
 
     if (dest.size() == image.size() && image.rect() == srcRect) {
-        const unsigned int *data = (const unsigned int *)image.bits();
+        const unsigned int *data = (const unsigned int *)image.constBits();
         // a bit faster loop for grayscaling everything
         int pixels = dest.width() * dest.height();
         for (int i = 0; i < pixels; ++i) {
@@ -569,7 +569,7 @@ Q_GUI_EXPORT void qt_grayscale(const QImage &image, QImage &dest)
     } else {
         int yd = destRect.top();
         for (int y = srcRect.top(); y <= srcRect.bottom() && y < image.height(); y++) {
-            const unsigned int *data = (const unsigned int*)image.scanLine(y);
+            const unsigned int *data = (const unsigned int*)image.constScanLine(y);
             outData = (unsigned int*)dest.scanLine(yd++);
             int xd = destRect.left();
             for (int x = srcRect.left(); x <= srcRect.right() && x < image.width(); x++) {

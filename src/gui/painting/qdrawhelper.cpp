@@ -2826,81 +2826,17 @@ static void blend_tiled_generic(int count, const QSpan *spans, void *userData)
     }
 }
 
-/* Image formats here are target formats */
-static const ProcessSpans processTextureSpans[NBlendTypes][QImage::NImageFormats] = {
-    // Untransformed
-    {
-        0, // Invalid
-        blend_untransformed_generic, // Mono
-        blend_untransformed_generic, // MonoLsb
-        blend_untransformed_generic, // Indexed8
-        blend_untransformed_generic, // RGB32
-        blend_untransformed_generic, // ARGB32
-        blend_untransformed_generic, // ARGB32_Premultiplied
-        blend_untransformed_generic // RGB16
-    },
-    // Tiled
-    {
-        0, // Invalid
-        blend_tiled_generic, // Mono
-        blend_tiled_generic, // MonoLsb
-        blend_tiled_generic, // Indexed8
-        blend_tiled_generic, // RGB32
-        blend_tiled_generic, // ARGB32
-        blend_tiled_generic, // ARGB32_Premultiplied
-        blend_tiled_generic // RGB16
-    },
-    // Transformed
-    {
-        0, // Invalid
-        blend_src_generic, // Mono
-        blend_src_generic, // MonoLsb
-        blend_src_generic, // Indexed8
-        blend_src_generic, // RGB32
-        blend_src_generic, // ARGB32
-        blend_src_generic, // ARGB32_Premultiplied
-        blend_src_generic // RGB16
-    },
-     // TransformedTiled
-    {
-        0,
-        blend_src_generic, // Mono
-        blend_src_generic, // MonoLsb
-        blend_src_generic, // Indexed8
-        blend_src_generic, // RGB32
-        blend_src_generic, // ARGB32
-        blend_src_generic, // ARGB32_Premultiplied
-        blend_src_generic // RGB16
-    },
-    // Bilinear
-    {
-        0,
-        blend_src_generic, // Mono
-        blend_src_generic, // MonoLsb
-        blend_src_generic, // Indexed8
-        blend_src_generic, // RGB32
-        blend_src_generic, // ARGB32
-        blend_src_generic, // ARGB32_Premultiplied
-        blend_src_generic // RGB16
-    },
-    // BilinearTiled
-    {
-        0,
-        blend_src_generic, // Mono
-        blend_src_generic, // MonoLsb
-        blend_src_generic, // Indexed8
-        blend_src_generic, // RGB32
-        blend_src_generic, // ARGB32
-        blend_src_generic, // ARGB32_Premultiplied
-        blend_src_generic // RGB16
-    }
-};
-
 void qBlendTexture(int count, const QSpan *spans, void *userData)
 {
     QSpanData *data = reinterpret_cast<QSpanData *>(userData);
-    ProcessSpans proc = processTextureSpans[getBlendType(data)][data->rasterBuffer->format];
-    proc(count, spans, userData);
+    Q_ASSERT(data->rasterBuffer->format != QImage::Format_Invalid);
+    if (data->txop <= QTransform::TxTranslate && data->texture.type == QTextureData::Tiled) {
+        blend_tiled_generic(count, spans, userData);
+    } else if (data->txop <= QTransform::TxTranslate) {
+        blend_untransformed_generic(count, spans, userData);
+    } else {
+        blend_src_generic(count, spans, userData);
+    }
 }
 
 template <class DST>
