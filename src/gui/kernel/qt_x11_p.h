@@ -96,10 +96,6 @@
 #include <X11/SM/SMlib.h>
 #endif
 
-#ifndef QT_NO_FONTCONFIG
-#include <fontconfig/fontconfig.h>
-#endif
-
 QT_BEGIN_NAMESPACE
 
 class QWidget;

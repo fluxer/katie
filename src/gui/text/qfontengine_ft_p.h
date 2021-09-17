@@ -62,8 +62,7 @@ public:
     QFontEngine::Properties properties() const;
     bool getSfntTable(uint tag, uchar *buffer, uint *length) const;
 
-    static QFreetypeFace *getFace(const QFontEngine::FaceId &face_id,
-                                  const QByteArray &fontData = QByteArray());
+    static QFreetypeFace *getFace(const QFontEngine::FaceId &face_id);
     void release(const QFontEngine::FaceId &face_id);
 
     // locks the struct for usage. Any read/write operations require locking.
@@ -268,8 +267,7 @@ private:
     QFontEngineFT(const QFontDef &fd);
     virtual ~QFontEngineFT();
 
-    bool init(FaceId faceId, bool antiaalias, GlyphFormat defaultFormat = Format_None,
-              const QByteArray &fontData = QByteArray());
+    bool init(FaceId faceId, bool antiaalias, GlyphFormat defaultFormat = Format_None);
     bool init(FaceId faceId, bool antialias, GlyphFormat format,
               QFreetypeFace *freetypeFace);
 

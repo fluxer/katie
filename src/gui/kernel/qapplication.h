@@ -223,15 +223,8 @@ private:
     friend class QAction;
     friend class QFontDatabasePrivate;
 
-#ifndef QT_NO_GESTURES
-    friend class QGestureManager;
-#endif
-
 #if defined(Q_WS_X11)
     Q_PRIVATE_SLOT(d_func(), void _q_alertTimeOut())
-#endif
-#if defined(QT_RX71_MULTITOUCH)
-    Q_PRIVATE_SLOT(d_func(), void _q_readRX71MultiTouchEvents())
 #endif
 };
 

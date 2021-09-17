@@ -194,8 +194,6 @@ public:
         isObject(false),
         ignoreVisible(false),
         ignoreOpacity(false),
-        acceptTouchEvents(false),
-        acceptedTouchBeginEvent(false),
         filtersDescendantEvents(false),
         sceneTransformTranslateOnly(false),
         notifyBoundingRectChanged(false),
@@ -494,9 +492,6 @@ public:
     QGraphicsItem *subFocusItem;
     QGraphicsItem *focusScopeItem;
     QGraphicsItem::PanelModality panelModality;
-#ifndef QT_NO_GESTURES
-    QMap<Qt::GestureType, Qt::GestureFlags> gestureContext;
-#endif
 
     bool visible;
     bool explicitlyHidden;
@@ -526,8 +521,6 @@ public:
     bool isObject;
     bool ignoreVisible;
     bool ignoreOpacity;
-    bool acceptTouchEvents;
-    bool acceptedTouchBeginEvent;
     bool filtersDescendantEvents;
     bool sceneTransformTranslateOnly;
     bool notifyBoundingRectChanged;

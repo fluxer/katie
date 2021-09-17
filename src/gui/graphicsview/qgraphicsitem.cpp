@@ -726,8 +726,6 @@
 #include "qpixmap_x11_p.h"
 #endif
 
-#include "qgesturemanager_p.h"
-
 #include <math.h>
 
 QT_BEGIN_NAMESPACE
@@ -1407,16 +1405,6 @@ QGraphicsItem::~QGraphicsItem()
 
     d_ptr->inDestructor = true;
     d_ptr->removeExtraItemCache();
-
-#ifndef QT_NO_GESTURES
-    if (d_ptr->isObject && !d_ptr->gestureContext.isEmpty()) {
-        QGraphicsObject *o = static_cast<QGraphicsObject *>(this);
-        if (QGestureManager *manager = QGestureManager::instance()) {
-            foreach (Qt::GestureType type, d_ptr->gestureContext.keys())
-                manager->cleanupCachedGestures(o, type);
-        }
-    }
-#endif
 
     clearFocus();
     setFocusProxy(0);
@@ -2936,36 +2924,6 @@ void QGraphicsItem::setAcceptHoverEvents(bool enabled)
     if (d_ptr->acceptsHover && d_ptr->scene && d_ptr->scene->d_func()->allItemsIgnoreHoverEvents) {
         d_ptr->scene->d_func()->allItemsIgnoreHoverEvents = false;
         d_ptr->scene->d_func()->enableMouseTrackingOnViews();
-    }
-}
-
-/*! \since 4.6
-
-    Returns true if an item accepts \l{QTouchEvent}{touch events};
-    otherwise, returns false. By default, items do not accept touch events.
-
-    \sa setAcceptTouchEvents()
-*/
-bool QGraphicsItem::acceptTouchEvents() const
-{
-    return d_ptr->acceptTouchEvents;
-}
-
-/*!
-    \since 4.6
-
-    If \a enabled is true, this item will accept \l{QTouchEvent}{touch events};
-    otherwise, it will ignore them. By default, items do not accept
-    touch events.
-*/
-void QGraphicsItem::setAcceptTouchEvents(bool enabled)
-{
-    if (d_ptr->acceptTouchEvents == enabled)
-        return;
-    d_ptr->acceptTouchEvents = enabled;
-    if (d_ptr->acceptTouchEvents && d_ptr->scene && d_ptr->scene->d_func()->allItemsIgnoreTouchEvents) {
-        d_ptr->scene->d_func()->allItemsIgnoreTouchEvents = false;
-        d_ptr->scene->d_func()->enableTouchEventsOnViews();
     }
 }
 
@@ -7381,32 +7339,6 @@ QGraphicsObject::QGraphicsObject(QGraphicsItemPrivate &dd, QGraphicsItem *parent
 {
     QGraphicsItem::d_ptr->isObject = true;
 }
-
-#ifndef QT_NO_GESTURES
-/*!
-    Subscribes the graphics object to the given \a gesture with specific \a flags.
-
-    \sa ungrabGesture(), QGestureEvent
-*/
-void QGraphicsObject::grabGesture(Qt::GestureType gesture, Qt::GestureFlags flags)
-{
-    bool contains = QGraphicsItem::d_ptr->gestureContext.contains(gesture);
-    QGraphicsItem::d_ptr->gestureContext.insert(gesture, flags);
-    if (!contains && QGraphicsItem::d_ptr->scene)
-        QGraphicsItem::d_ptr->scene->d_func()->grabGesture(this, gesture);
-}
-
-/*!
-    Unsubscribes the graphics object from the given \a gesture.
-
-    \sa grabGesture(), QGestureEvent
-*/
-void QGraphicsObject::ungrabGesture(Qt::GestureType gesture)
-{
-    if (QGraphicsItem::d_ptr->gestureContext.remove(gesture) && QGraphicsItem::d_ptr->scene)
-        QGraphicsItem::d_ptr->scene->d_func()->ungrabGesture(this, gesture);
-}
-#endif // QT_NO_GESTURES
 
 void QGraphicsItemPrivate::children_append(QDeclarativeListProperty<QGraphicsObject> *list, QGraphicsObject *item)
 {

@@ -44,6 +44,7 @@
 #include "qdialogbuttonbox.h"
 #include "qguiplatformplugin.h"
 #include "qcoreapplication_p.h"
+#include "qguicommon_p.h"
 
 QT_BEGIN_NAMESPACE
 
@@ -399,7 +400,7 @@ int QColorDialog::customCount()
 QRgb QColorDialog::customColor(int index)
 {
     if (index >= customCount())
-        return qRgb(255, 255, 255);
+        return qt_whitergb;
     initRGB();
     return cusrgb[index];
 }

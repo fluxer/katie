@@ -216,8 +216,6 @@ public:
 
     bool acceptHoverEvents() const;
     void setAcceptHoverEvents(bool enabled);
-    bool acceptTouchEvents() const;
-    void setAcceptTouchEvents(bool enabled);
 
     bool filtersChildEvents() const;
     void setFiltersChildEvents(bool enabled);
@@ -441,9 +439,6 @@ private:
     friend class QGraphicsSceneBspTreeIndexPrivate;
     friend class QGraphicsItemEffectSourcePrivate;
     friend class QGraphicsTransformPrivate;
-#ifndef QT_NO_GESTURES
-    friend class QGestureManager;
-#endif
     friend class ::tst_QGraphicsItem;
     friend bool qt_closestLeaf(const QGraphicsItem *, const QGraphicsItem *);
     friend bool qt_closestItemFirst(const QGraphicsItem *, const QGraphicsItem *);
@@ -525,11 +520,6 @@ class Q_GUI_EXPORT QGraphicsObject : public QObject, public QGraphicsItem
     Q_INTERFACES(QGraphicsItem)
 public:
     QGraphicsObject(QGraphicsItem *parent = 0);
-
-#ifndef QT_NO_GESTURES
-    void grabGesture(Qt::GestureType type, Qt::GestureFlags flags = Qt::GestureFlags());
-    void ungrabGesture(Qt::GestureType type);
-#endif
 
 Q_SIGNALS:
     void parentChanged();

@@ -57,10 +57,6 @@ class QClipboard;
 class QGraphicsScene;
 class QObject;
 class QWidget;
-class QSocketNotifier;
-#ifndef QT_NO_GESTURES
-class QGestureManager;
-#endif
 
 #ifndef QT_NO_CLIPBOARD
 extern QClipboard *qt_clipboard;
@@ -199,44 +195,6 @@ public:
     void sendSyntheticEnterLeave(QWidget *widget);
 #endif
 
-#ifndef QT_NO_GESTURES
-    QGestureManager *gestureManager;
-    QWidget *gestureWidget;
-#endif
-
-    QMap<int, QWeakPointer<QWidget> > widgetForTouchPointId;
-    QMap<int, QTouchEvent::TouchPoint> appCurrentTouchPoints;
-    static void updateTouchPointsForWidget(QWidget *widget, QTouchEvent *touchEvent);
-    void initializeMultitouch();
-    void initializeMultitouch_sys();
-    void cleanupMultitouch();
-    void cleanupMultitouch_sys();
-    int findClosestTouchPointId(const QPointF &screenPos);
-    void appendTouchPoint(const QTouchEvent::TouchPoint &touchPoint);
-    void removeTouchPoint(int touchPointId);
-    static void translateRawTouchEvent(QWidget *widget,
-                                       QTouchEvent::DeviceType deviceType,
-                                       const QList<QTouchEvent::TouchPoint> &touchPoints);
-
-#ifdef QT_RX71_MULTITOUCH
-    bool hasRX71MultiTouch;
-
-    struct RX71TouchPointState {
-        QSocketNotifier *socketNotifier;
-        QTouchEvent::TouchPoint touchPoint;
-
-        int minX, maxX, scaleX;
-        int minY, maxY, scaleY;
-        int minZ, maxZ;
-    };
-    QList<RX71TouchPointState> allRX71TouchPoints;
-
-    bool readRX71MultiTouchEvents(int deviceNumber);
-    void fakeMouseEventFromRX71TouchEvent();
-    void _q_readRX71MultiTouchEvents();
-#endif
-
-
 private:
     static QApplicationPrivate *self;
 
@@ -245,10 +203,6 @@ private:
                                                 Qt::FocusReason focusReason);
     static bool shouldSetFocus(QWidget *w, Qt::FocusPolicy policy);
 };
-
-Q_GUI_EXPORT void qt_translateRawTouchEvent(QWidget *window,
-                                            QTouchEvent::DeviceType deviceType,
-                                            const QList<QTouchEvent::TouchPoint> &touchPoints);
 
 #if defined(Q_WS_X11)
   extern void qt_x11_enforce_cursor(QWidget *, bool);

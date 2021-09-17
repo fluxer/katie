@@ -954,24 +954,9 @@
     has no effect on non-X11 platforms. \note Qt automatically sets this
     attribute on the feedback widget used during a drag.
 
-    \value WA_AcceptTouchEvents Allows touch events (see QTouchEvent)
-    to be sent to the widget. Must be set on all widgets that can
-    handle touch events. Without this attribute set, events from a
-    touch device will be sent as mouse events.
-
-    \value WA_TouchPadAcceptSingleTouchEvents Allows touchpad single
-    touch events to be sent to the widget.
-
     \value WA_X11DoNotAcceptFocus Asks the window manager to not give focus
     to this top level window. This attribute has no effect on non-X11
     platforms.
-
-    \value WA_LockPortraitOrientation Locks the widget to a portrait orientation,
-    ignoring changes to the display's orientation with respect to the user.
-    \value WA_LockLandscapeOrientation Locks the widget to a landscape orientation,
-    ignoring changes to the display's orientation with respect to the user.
-    \value WA_AutoOrientation Causes the widget to change orientation whenever the
-    display changes orientation with respect to the user.
 
     \omitvalue WA_DropSiteRegistered
     \omitvalue WA_SetLayoutDirection
@@ -993,7 +978,6 @@
     \omitvalue WA_StyleSheet
     \omitvalue WA_X11BypassTransientForHint
     \omitvalue WA_SetWindowModality
-    \omitvalue WA_WState_AcceptedTouchBeginEvent
     \omitvalue WA_NoX11EventCompression
 */
 
@@ -2379,66 +2363,4 @@
 
     \value LogicalCoordinates Coordinates are relative to the upper-left corner
     of the object.
-*/
-
-/*!
-    \enum Qt::GestureState
-    \since 4.6
-
-    This enum type describes the state of a gesture.
-
-    \value GestureStarted   A continuous gesture has started.
-    \value GestureUpdated   A gesture continues.
-    \value GestureFinished  A gesture has finished.
-    \value GestureCanceled  A gesture was canceled.
-    \omitvalue NoGesture
-
-    \sa QGesture
-*/
-
-/*!
-    \enum Qt::GestureType
-    \since 4.6
-
-    This enum type describes the standard gestures.
-
-    \value TapGesture        A Tap gesture.
-    \value TapAndHoldGesture A Tap-And-Hold (Long-Tap) gesture.
-    \value PanGesture        A Pan gesture.
-    \value PinchGesture      A Pinch gesture.
-    \value SwipeGesture      A Swipe gesture.
-    \value CustomGesture A flag that can be used to test if the gesture is a
-    user-defined gesture ID.
-
-    User-defined gestures are registered with the
-    QGestureRecognizer::registerRecognizer() function which generates a custom
-    gesture ID with the Qt::CustomGesture flag set.
-
-    \sa QGesture, QWidget::grabGesture(), QGraphicsObject::grabGesture()
-*/
-
-/*!
-    \enum Qt::GestureFlag
-    \since 4.6
-
-    This enum type describes additional flags that can be used when subscribing
-    to a gesture.
-
-    \value DontStartGestureOnChildren By default gestures can start on the
-    widget or over any of its children. Use this flag to disable this and allow
-    a gesture to start on the widget only.
-
-    \value ReceivePartialGestures Allows any ignored gesture events to be
-    propagated to parent widgets which have specified this hint. By default
-    only gestures that are in the Qt::GestureStarted state are propagated and
-    the widget always gets the full gesture sequence starting with a gesture in
-    the Qt::GestureStarted state and ending with a gesture in the
-    Qt::GestureFinished or Qt::GestureCanceled states.
-
-    \value IgnoredGesturesPropagateToParent Since Qt 4.7, this flag allows you
-    to fine-tune gesture event propagation. By setting the flag when
-    \l{QGraphicsObject::grabGesture()}{grabbing} a gesture all ignored partial
-    gestures will propagate to their parent items.
-
-    \sa QWidget::grabGesture(), QGraphicsObject::grabGesture()
 */

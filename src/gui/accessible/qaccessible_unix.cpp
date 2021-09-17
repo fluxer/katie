@@ -28,8 +28,6 @@
 #include "qvector.h"
 #include "qfactoryloader_p.h"
 
-#include <stdlib.h>
-
 QT_BEGIN_NAMESPACE
 
 #ifndef QT_NO_LIBRARY
@@ -37,16 +35,13 @@ Q_GLOBAL_STATIC_WITH_ARGS(QFactoryLoader, bridgeloader,
     (QAccessibleBridgeFactoryInterface_iid, QLatin1String("/accessiblebridge")))
 #endif
 Q_GLOBAL_STATIC(QVector<QAccessibleBridge *>, bridges)
-static bool isInit = false;
 
 void QAccessible::initialize()
 {
-    if (isInit)
+    static const int shouldinit = qgetenv("QT_ACCESSIBILITY").toInt();
+    if (!shouldinit)
         return;
-    isInit = true;
 
-    if (qgetenv("QT_ACCESSIBILITY") != "1")
-        return;
 #ifndef QT_NO_LIBRARY
     const QStringList l = bridgeloader()->keys();
     for (int i = 0; i < l.count(); ++i) {
@@ -106,10 +101,7 @@ void QAccessible::setRootObject(QObject *o)
     }
 
     initialize();
-    if (bridges()->isEmpty())
-        return;
-
-    if (!o)
+    if (bridges()->isEmpty() || !o)
         return;
 
     for (int i = 0; i < bridges()->count(); ++i) {

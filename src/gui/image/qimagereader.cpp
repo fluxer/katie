@@ -427,28 +427,22 @@ QByteArray QImageReader::format() const
     it is disabled. By default, autodetection is enabled.
 
     QImageReader uses an extensive approach to detecting the image format;
-    firstly, if you pass a file name to QImageReader, it will attempt to
-    detect the file extension if the given file name does not point to an
-    existing file, by appending supported default extensions to the given file
-    name, one at a time. It then uses the following approach to detect the
-    image format:
+    firstly, if you pass a file name to QImageReader. It uses the following
+    approach to detect the image format:
 
     \list
 
-    \o Image plugins are queried first, based on either the optional format
-    string, or the file name suffix (if the source device is a file). No
-    content detection is done at this stage. QImageReader will choose the
-    first plugin that supports reading for this format.
+    \o Built-in handlers are checked based on format string.
 
-    \o If no plugin supports the image format, Qt's built-in handlers are
-    checked based on either the optional format string, or the file name
-    suffix.
+    \o If no built-in image handler recognizes the format and auto detection
+    is enabled the image contents is inspected.
 
-    \o If no capable plugins or built-in handlers are found, each plugin is
-    tested by inspecting the content of the data stream.
+    \o Image plugins are queried based on the format string. No content
+    detection is done at this stage. QImageReader will choose the first
+    plugin that supports reading for this format.
 
-    \o If no plugins could detect the image format based on data contents,
-    each built-in image handler is tested by inspecting the contents.
+    \o If no capable plugins handlers are found, each plugin is tested by
+    inspecting the content.
 
     \o Finally, if all above approaches fail, QImageReader will report failure
     when trying to read the image.
@@ -456,8 +450,7 @@ QByteArray QImageReader::format() const
     \endlist
 
     By disabling image format autodetection, QImageReader will only query the
-    plugins and built-in handlers based on the format string (i.e., no file
-    name extensions are tested).
+    plugins and built-in handlers based on the format string.
 
     \sa QImageIOHandler::canRead(), QImageIOPlugin::capabilities()
 */

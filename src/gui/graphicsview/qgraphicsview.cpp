@@ -279,23 +279,6 @@ inline int q_round_bound(qreal d) //### (int)(qreal) INT_MAX != INT_MAX for sing
     return d >= 0.0 ? int(d + qreal(0.5)) : int(d - int(d-1) + qreal(0.5)) + int(d-1);
 }
 
-void QGraphicsViewPrivate::translateTouchEvent(QGraphicsViewPrivate *d, QTouchEvent *touchEvent)
-{
-    QList<QTouchEvent::TouchPoint> touchPoints = touchEvent->touchPoints();
-    for (int i = 0; i < touchPoints.count(); ++i) {
-        QTouchEvent::TouchPoint &touchPoint = touchPoints[i];
-        // the scene will set the item local pos, startPos, lastPos, and rect before delivering to
-        // an item, but for now those functions are returning the view's local coordinates
-        touchPoint.setSceneRect(d->mapToScene(touchPoint.rect()));
-        touchPoint.setStartScenePos(d->mapToScene(touchPoint.startPos()));
-        touchPoint.setLastScenePos(d->mapToScene(touchPoint.lastPos()));
-
-        // screenPos, startScreenPos, lastScreenPos, and screenRect are already set
-    }
-
-    touchEvent->setTouchPoints(touchPoints);
-}
-
 /*!
     \internal
 */
@@ -1576,10 +1559,6 @@ void QGraphicsView::setScene(QGraphicsScene *scene)
             d->viewport->setMouseTracking(true);
         }
 
-        // enable touch events if any items is interested in them
-        if (!d->scene->d_func()->allItemsIgnoreTouchEvents)
-            d->viewport->setAttribute(Qt::WA_AcceptTouchEvents);
-
         if (isActiveWindow() && isVisible()) {
             QEvent windowActivate(QEvent::WindowActivate);
             QApplication::sendEvent(d->scene, &windowActivate);
@@ -2587,17 +2566,6 @@ void QGraphicsView::setupViewport(QWidget *widget)
         widget->setMouseTracking(true);
     }
 
-    // enable touch events if any items is interested in them
-    if (d->scene && !d->scene->d_func()->allItemsIgnoreTouchEvents)
-        widget->setAttribute(Qt::WA_AcceptTouchEvents);
-
-#ifndef QT_NO_GESTURES
-    if (d->scene) {
-        foreach (Qt::GestureType gesture, d->scene->d_func()->grabbedGestures.keys())
-            widget->grabGesture(gesture);
-    }
-#endif
-
     widget->setAcceptDrops(acceptDrops());
 }
 
@@ -2736,38 +2704,6 @@ bool QGraphicsView::viewportEvent(QEvent *event)
         }
         break;
     }
-    case QEvent::TouchBegin:
-    case QEvent::TouchUpdate:
-    case QEvent::TouchEnd:
-    {
-        if (!isEnabled())
-            return false;
-
-        if (d->scene && d->sceneInteractionAllowed) {
-            // Convert and deliver the touch event to the scene.
-            QTouchEvent *touchEvent = static_cast<QTouchEvent *>(event);
-            touchEvent->setWidget(viewport());
-            QGraphicsViewPrivate::translateTouchEvent(d, touchEvent);
-            (void) QApplication::sendEvent(d->scene, touchEvent);
-        }
-
-        return true;
-    }
-#ifndef QT_NO_GESTURES
-    case QEvent::Gesture:
-    case QEvent::GestureOverride:
-    {
-        if (!isEnabled())
-            return false;
-
-        if (d->scene && d->sceneInteractionAllowed) {
-            QGestureEvent *gestureEvent = static_cast<QGestureEvent *>(event);
-            gestureEvent->setWidget(viewport());
-            (void) QApplication::sendEvent(d->scene, gestureEvent);
-        }
-        return true;
-    }
-#endif // QT_NO_GESTURES
     default:
         break;
     }

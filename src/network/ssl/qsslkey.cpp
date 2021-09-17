@@ -91,7 +91,7 @@ void QSslKeyPrivate::decodePem(const QByteArray &pem, const QByteArray &passPhra
     if (!QSslSocket::supportsSsl())
         return;
 
-    BIO *bio = BIO_new_mem_buf(const_cast<char *>(pem.data()), pem.size());
+    BIO *bio = BIO_new_mem_buf(pem.constData(), pem.size());
     if (!bio)
         return;
 

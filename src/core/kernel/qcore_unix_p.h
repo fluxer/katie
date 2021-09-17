@@ -104,17 +104,14 @@ inline timeval operator*(const timeval &t1, int mul)
 
 static inline void qt_ignore_sigpipe()
 {
-    // Set to ignore SIGPIPE once only.
-    static QAtomicInt atom(0);
-    if (!atom) {
-        // More than one thread could turn off SIGPIPE at the same time
-        // But that's acceptable because they all would be doing the same
-        // action
+    // ignore SIGPIPE once per-thread only
+    thread_local bool sigpipe_ignored = false;
+    if (!sigpipe_ignored) {
         struct sigaction noaction;
         memset(&noaction, 0, sizeof(noaction));
         noaction.sa_handler = SIG_IGN;
         ::sigaction(SIGPIPE, &noaction, nullptr);
-        atom = 1;
+        sigpipe_ignored = true;
     }
 }
 

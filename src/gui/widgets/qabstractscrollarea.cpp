@@ -264,9 +264,6 @@ void QAbstractScrollAreaPrivate::init()
     q->setFrameStyle(QFrame::StyledPanel | QFrame::Sunken);
     q->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
     layoutChildren();
-#ifndef QT_NO_GESTURES
-    viewport->grabGesture(Qt::PanGesture);
-#endif
 }
 
 void QAbstractScrollAreaPrivate::layoutChildren()
@@ -426,9 +423,6 @@ void QAbstractScrollArea::setViewport(QWidget *widget)
         d->viewport->setParent(this);
         d->viewport->setFocusProxy(this);
         d->viewport->installEventFilter(d->viewportFilter.data());
-#ifndef QT_NO_GESTURES
-        d->viewport->grabGesture(Qt::PanGesture);
-#endif
         d->layoutChildren();
         if (isVisible())
             d->viewport->show();
@@ -829,33 +823,7 @@ bool QAbstractScrollArea::event(QEvent *e)
     case QEvent::DragMove:
     case QEvent::DragLeave:
 #endif
-        // ignore touch events in case they have been propagated from the viewport
-    case QEvent::TouchBegin:
-    case QEvent::TouchUpdate:
-    case QEvent::TouchEnd:
         return false;
-#ifndef QT_NO_GESTURES
-    case QEvent::Gesture:
-    {
-        QGestureEvent *ge = static_cast<QGestureEvent *>(e);
-        QPanGesture *g = static_cast<QPanGesture *>(ge->gesture(Qt::PanGesture));
-        if (g) {
-            QScrollBar *hBar = horizontalScrollBar();
-            QScrollBar *vBar = verticalScrollBar();
-            QPointF delta = g->delta();
-            if (!delta.isNull()) {
-                if (QApplication::isRightToLeft())
-                    delta.rx() *= -1;
-                int newX = hBar->value() - delta.x();
-                int newY = vBar->value() - delta.y();
-                hBar->setValue(newX);
-                vBar->setValue(newY);
-            }
-            return true;
-        }
-        return false;
-    }
-#endif // QT_NO_GESTURES
     case QEvent::StyleChange:
     case QEvent::LayoutDirectionChange:
     case QEvent::ApplicationLayoutDirectionChange:
@@ -896,9 +864,6 @@ bool QAbstractScrollArea::viewportEvent(QEvent *e)
     case QEvent::MouseButtonPress:
     case QEvent::MouseButtonRelease:
     case QEvent::MouseButtonDblClick:
-    case QEvent::TouchBegin:
-    case QEvent::TouchUpdate:
-    case QEvent::TouchEnd:
     case QEvent::MouseMove:
     case QEvent::ContextMenu:
 #ifndef QT_NO_WHEELEVENT
@@ -912,11 +877,7 @@ bool QAbstractScrollArea::viewportEvent(QEvent *e)
 #endif
         return QFrame::event(e);
     case QEvent::LayoutRequest:
-#ifndef QT_NO_GESTURES
-    case QEvent::Gesture:
-    case QEvent::GestureOverride:
         return event(e);
-#endif
     default:
         break;
     }

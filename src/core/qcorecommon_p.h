@@ -81,7 +81,6 @@ static inline QByteArray qt_prettyDebug(const char *data, int len, int maxSize)
         default:
             QSTACKARRAY(char, buf, 5);
             ::snprintf(buf, sizeof(buf), "\\%3o", c);
-            buf[4] = '\0';
             out += QByteArray(buf);
         }
     }

@@ -56,8 +56,6 @@ static bool read_xbm_header(QIODevice *device, int& w, int& h)
     qint64 readBytes = 0;
     qint64 totalReadBytes = 0;
 
-    buf[0] = '\0';
-
     // skip initial comment, if any
     while (buf[0] != '#') {
         readBytes = device->readLine(buf, buflen);
@@ -73,9 +71,7 @@ static bool read_xbm_header(QIODevice *device, int& w, int& h)
             return false;
     }
 
-    buf[readBytes - 1] = '\0';
-    QString sbuf;
-    sbuf = QString::fromLatin1(buf);
+    QString sbuf = QString::fromLatin1(buf, readBytes);
 
     // "#define .._width <num>"
     if (r1.indexIn(sbuf) == 0 &&
@@ -86,9 +82,8 @@ static bool read_xbm_header(QIODevice *device, int& w, int& h)
     readBytes = device->readLine(buf, buflen);
     if (readBytes <= 0)
         return false;
-    buf[readBytes - 1] = '\0';
 
-    sbuf = QString::fromLatin1(buf);
+    sbuf = QString::fromLatin1(buf, readBytes);
 
     if (r1.indexIn(sbuf) == 0 &&
          r2.indexIn(sbuf, r1.matchedLength()) == r1.matchedLength())

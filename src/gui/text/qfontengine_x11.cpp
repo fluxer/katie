@@ -32,7 +32,6 @@
 #include "qfontdatabase.h"
 #include "qpaintdevice.h"
 #include "qpainter.h"
-#include "qvarlengtharray.h"
 #include "qwidget.h"
 #include "qsettings.h"
 #include "qfile.h"

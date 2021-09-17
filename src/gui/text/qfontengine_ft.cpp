@@ -132,10 +132,9 @@ HB_Error QFreetypeFace::getPointInOutline(HB_Glyph glyph, int flags, hb_uint32 p
  * Returns the freetype face or 0 in case of an empty file or any other problems
  * (like not being able to open the file)
  */
-QFreetypeFace *QFreetypeFace::getFace(const QFontEngine::FaceId &face_id,
-                                      const QByteArray &fontData)
+QFreetypeFace *QFreetypeFace::getFace(const QFontEngine::FaceId &face_id)
 {
-    if (face_id.filename.isEmpty() && fontData.isEmpty())
+    if (face_id.filename.isEmpty())
         return 0;
 
     QtFreetypeData *freetypeData = qt_getFreetypeData();
@@ -165,8 +164,6 @@ QFreetypeFace *QFreetypeFace::getFace(const QFontEngine::FaceId &face_id,
                 }
                 newFreetype->fontData = file.readAll();
             }
-        } else {
-            newFreetype->fontData = fontData;
         }
         if (!newFreetype->fontData.isEmpty()) {
             if (FT_New_Memory_Face(freetypeData->library, (const FT_Byte *)newFreetype->fontData.constData(), newFreetype->fontData.size(), face_id.index, &face)) {
@@ -584,10 +581,9 @@ void QFontEngineFT::freeGlyphSets()
         freeServerGlyphSet(transformedGlyphSets.at(i).id);
 }
 
-bool QFontEngineFT::init(FaceId faceId, bool antialias, GlyphFormat format,
-                         const QByteArray &fontData)
+bool QFontEngineFT::init(FaceId faceId, bool antialias, GlyphFormat format)
 {
-    return init(faceId, antialias, format, QFreetypeFace::getFace(faceId, fontData));
+    return init(faceId, antialias, format, QFreetypeFace::getFace(faceId));
 }
 
 bool QFontEngineFT::init(FaceId faceId, bool antialias, GlyphFormat format,
@@ -1700,9 +1696,7 @@ QImage QFontEngineFT::alphaMapForGlyph(glyph_t g, QFixed subPixelPosition)
     if (antialias) {
         img.setColorTable(alphaColorTable());
     } else {
-        QVector<QRgb> colors(2);
-        colors[0] = qt_transparentrgba;
-        colors[1] = qt_blackrgba;
+        static const QVector<QRgb> colors = { qt_transparentrgba, qt_blackrgba };
         img.setColorTable(colors);
     }
     Q_ASSERT(img.bytesPerLine() == pitch);

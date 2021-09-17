@@ -34,13 +34,6 @@
 
 QT_BEGIN_NAMESPACE
 
-
-inline static bool qt_launch(const QUrl &url, const QString &client)
-{
-    QString command = client + QLatin1Char(' ') + url.toEncoded();
-    return QProcess::startDetached(command);
-}
-
 class QOpenUrlHandlerRegistry : public QObject
 {
     Q_OBJECT
@@ -172,33 +165,8 @@ bool QDesktopServices::openUrl(const QUrl &url)
     if (!url.isValid())
         return false;
 
-    if (url.scheme() == QLatin1String("file") || url.scheme() == QLatin1String("mailto")) {
-        if (qt_launch(url, QLatin1String("xdg-open")))
-            return true;
-
-        if (qt_launch(url, QLatin1String("firefox")))
-            return true;
-        if (qt_launch(url, QLatin1String("chromium")))
-            return true;
-        if (qt_launch(url, QLatin1String("opera")))
-            return true;
-        return false;
-    }
-
-    if (qt_launch(url, QLatin1String("xdg-open")))
-        return true;
-    if (qt_launch(url, QLatin1String(qgetenv("DEFAULT_BROWSER"))))
-        return true;
-    if (qt_launch(url, QLatin1String(qgetenv("BROWSER"))))
-        return true;
-
-    if (qt_launch(url, QLatin1String("firefox")))
-        return true;
-    if (qt_launch(url, QLatin1String("chromium")))
-        return true;
-    if (qt_launch(url, QLatin1String("opera")))
-        return true;
-    return false;
+    const QString command = QLatin1String("xdg-open ") + url.toEncoded();
+    return QProcess::startDetached(command);
 }
 
 /*!

@@ -56,8 +56,6 @@
 #include "qapplication_p.h"
 #include "qevent_p.h"
 #include "qwidget_p.h"
-#include "qgesture.h"
-#include "qgesturemanager_p.h"
 #include "qdatetime.h"
 
 #ifndef QT_NO_LIBRARY
@@ -101,11 +99,6 @@ QApplicationPrivate::QApplicationPrivate(int &argc, char **argv)
 #endif
 
     quitOnLastWindowClosed = true;
-
-#ifndef QT_NO_GESTURES
-    gestureManager = 0;
-    gestureWidget = 0;
-#endif // QT_NO_GESTURES
 
     if (!self)
         self = this;
@@ -545,8 +538,6 @@ void QApplicationPrivate::construct(Display *dpy, Qt::HANDLE visual, Qt::HANDLE 
 
     if (qgetenv("QT_USE_NATIVE_WINDOWS").toInt() > 0)
         q->setAttribute(Qt::AA_NativeWindows);
-
-    initializeMultitouch();
 }
 
 #if defined(Q_WS_X11)
@@ -730,8 +721,6 @@ QApplication::~QApplication()
 #ifndef QT_NO_DRAGANDDROP
     delete QDragManager::self();
 #endif
-
-    d->cleanupMultitouch();
 
     qt_cleanup();
 
@@ -2994,53 +2983,6 @@ bool QApplication::notify(QObject *receiver, QEvent *e)
 #endif // !QT_NO_WHEELEVENT
     }
 
-#ifndef QT_NO_GESTURES
-    // walk through parents and check for gestures
-    if (d->gestureManager) {
-        switch (e->type()) {
-        case QEvent::Paint:
-        case QEvent::MetaCall:
-        case QEvent::DeferredDelete:
-        case QEvent::DragEnter:
-        case QEvent::DragMove:
-        case QEvent::DragLeave:
-        case QEvent::Drop:
-        case QEvent::ChildAdded:
-        case QEvent::ChildPolished:
-        case QEvent::ChildRemoved:
-        case QEvent::UpdateRequest:
-        case QEvent::UpdateLater:
-        case QEvent::AccessibilityPrepare:
-        case QEvent::LocaleChange:
-        case QEvent::Style:
-        case QEvent::StyleChange:
-        case QEvent::AccessibilityHelp:
-        case QEvent::AccessibilityDescription:
-        case QEvent::GraphicsSceneDragEnter:
-        case QEvent::GraphicsSceneDragMove:
-        case QEvent::GraphicsSceneDragLeave:
-        case QEvent::GraphicsSceneDrop:
-        case QEvent::DynamicPropertyChange:
-        case QEvent::NetworkReplyUpdated:
-            break;
-        default:
-            if (d->gestureManager->thread() == QThread::currentThread()) {
-                if (receiver->isWidgetType()) {
-                    if (d->gestureManager->filterEvent(static_cast<QWidget *>(receiver), e))
-                        return true;
-                } else {
-                    // a special case for events that go to QGesture objects.
-                    // We pass the object to the gesture manager and it'll figure
-                    // out if it's QGesture or not.
-                    if (d->gestureManager->filterEvent(receiver, e))
-                        return true;
-                }
-            }
-            break;
-        }
-    }
-#endif // QT_NO_GESTURES
-
     // User input and window activation makes tooltips sleep
     switch (e->type()) {
     case QEvent::Wheel:
@@ -3390,130 +3332,6 @@ bool QApplication::notify(QObject *receiver, QEvent *e)
         }
         break;
 #endif
-    case QEvent::TouchBegin:
-    // Note: TouchUpdate and TouchEnd events are never propagated
-    {
-        QWidget *widget = static_cast<QWidget *>(receiver);
-        QTouchEvent *touchEvent = static_cast<QTouchEvent *>(e);
-        bool eventAccepted = touchEvent->isAccepted();
-        if (widget->testAttribute(Qt::WA_AcceptTouchEvents) && e->spontaneous()) {
-            // give the widget focus if the focus policy allows it
-            QApplicationPrivate::giveFocusAccordingToFocusPolicy(widget,
-                                                                 Qt::ClickFocus,
-                                                                 Qt::MouseFocusReason);
-        }
-
-        while (widget) {
-            // first, try to deliver the touch event
-            bool acceptTouchEvents = widget->testAttribute(Qt::WA_AcceptTouchEvents);
-            touchEvent->setWidget(widget);
-            touchEvent->setAccepted(acceptTouchEvents);
-            QWeakPointer<QWidget> p = widget;
-            res = acceptTouchEvents && d->notify_helper(widget, touchEvent);
-            eventAccepted = touchEvent->isAccepted();
-            if (p.isNull()) {
-                // widget was deleted
-                widget = 0;
-            } else {
-                widget->setAttribute(Qt::WA_WState_AcceptedTouchBeginEvent, res && eventAccepted);
-            }
-            touchEvent->spont = false;
-            if (res && eventAccepted) {
-                // the first widget to accept the TouchBegin gets an implicit grab.
-                for (int i = 0; i < touchEvent->touchPoints().count(); ++i) {
-                    const QTouchEvent::TouchPoint &touchPoint = touchEvent->touchPoints().at(i);
-                    d->widgetForTouchPointId[touchPoint.id()] = widget;
-                }
-                break;
-            } else if (p.isNull() || widget->isWindow() || widget->testAttribute(Qt::WA_NoMousePropagation)) {
-                break;
-            }
-            QPoint offset = widget->pos();
-            widget = widget->parentWidget();
-            touchEvent->setWidget(widget);
-            for (int i = 0; i < touchEvent->_touchPoints.size(); ++i) {
-                QTouchEvent::TouchPoint &pt = touchEvent->_touchPoints[i];
-                QRectF rect = pt.rect();
-                rect.moveCenter(offset);
-                pt.d->rect = rect;
-                pt.d->startPos = pt.startPos() + offset;
-                pt.d->lastPos = pt.lastPos() + offset;
-            }
-        }
-
-        touchEvent->setAccepted(eventAccepted);
-        break;
-    }
-
-#ifndef QT_NO_GESTURES
-    case QEvent::Gesture:
-    case QEvent::GestureOverride:
-    {
-        if (receiver->isWidgetType()) {
-            QWidget *w = static_cast<QWidget *>(receiver);
-            QGestureEvent *gestureEvent = static_cast<QGestureEvent *>(e);
-            QList<QGesture *> allGestures = gestureEvent->gestures();
-
-            bool eventAccepted = gestureEvent->isAccepted();
-            bool wasAccepted = eventAccepted;
-            while (w) {
-                // send only gestures the widget expects
-                QList<QGesture *> gestures;
-                QWidgetPrivate *wd = w->d_func();
-                for (int i = 0; i < allGestures.size();) {
-                    QGesture *g = allGestures.at(i);
-                    Qt::GestureType type = g->gestureType();
-                    QMap<Qt::GestureType, Qt::GestureFlags>::iterator contextit =
-                            wd->gestureContext.find(type);
-                    bool deliver = contextit != wd->gestureContext.end() &&
-                        (g->state() == Qt::GestureStarted || w == receiver ||
-                         (contextit.value() & Qt::ReceivePartialGestures));
-                    if (deliver) {
-                        allGestures.removeAt(i);
-                        gestures.append(g);
-                    } else {
-                        ++i;
-                    }
-                }
-                if (!gestures.isEmpty()) { // we have gestures for this w
-                    QGestureEvent ge(gestures);
-                    ge.t = gestureEvent->t;
-                    ge.spont = gestureEvent->spont;
-                    ge.m_accept = wasAccepted;
-                    ge.m_accepted = gestureEvent->m_accepted;
-                    res = d->notify_helper(w, &ge);
-                    gestureEvent->spont = false;
-                    eventAccepted = ge.isAccepted();
-                    for (int i = 0; i < gestures.size(); ++i) {
-                        QGesture *g = gestures.at(i);
-                        // Ignore res [event return value] because handling of multiple gestures
-                        // packed into a single QEvent depends on not consuming the event
-                        if (eventAccepted || ge.isAccepted(g)) {
-                            // if the gesture was accepted, mark the target widget for it
-                            gestureEvent->m_targetWidgets[g->gestureType()] = w;
-                            gestureEvent->setAccepted(g, true);
-                        } else {
-                            // if the gesture was explicitly ignored by the application,
-                            // put it back so a parent can get it
-                            allGestures.append(g);
-                        }
-                    }
-                }
-                if (allGestures.isEmpty()) // everything delivered
-                    break;
-                if (w->isWindow())
-                    break;
-                w = w->parentWidget();
-            }
-            foreach (QGesture *g, allGestures)
-                gestureEvent->setAccepted(g, false);
-            gestureEvent->m_accept = false; // to make sure we check individual gestures
-        } else {
-            res = d->notify_helper(receiver, e);
-        }
-        break;
-    }
-#endif // QT_NO_GESTURES
     case QEvent::RequestSoftwareInputPanel:
     case QEvent::CloseSoftwareInputPanel:
     default:
@@ -4263,234 +4081,6 @@ bool QApplicationPrivate::shouldSetFocus(QWidget *w, Qt::FocusPolicy policy)
   Synchronizes with the X server in the X11 implementation.
   This normally takes some time. Does nothing on other platforms.
 */
-
-void QApplicationPrivate::updateTouchPointsForWidget(QWidget *widget, QTouchEvent *touchEvent)
-{
-    for (int i = 0; i < touchEvent->touchPoints().count(); ++i) {
-        QTouchEvent::TouchPoint &touchPoint = touchEvent->_touchPoints[i];
-
-        // preserve the sub-pixel resolution
-        QRectF rect = touchPoint.screenRect();
-        const QPointF screenPos = rect.center();
-        const QPointF delta = screenPos - screenPos.toPoint();
-
-        rect.moveCenter(widget->mapFromGlobal(screenPos.toPoint()) + delta);
-        touchPoint.d->rect = rect;
-        if (touchPoint.state() == Qt::TouchPointPressed) {
-            touchPoint.d->startPos = widget->mapFromGlobal(touchPoint.startScreenPos().toPoint()) + delta;
-            touchPoint.d->lastPos = widget->mapFromGlobal(touchPoint.lastScreenPos().toPoint()) + delta;
-        }
-    }
-}
-
-void QApplicationPrivate::initializeMultitouch()
-{
-    widgetForTouchPointId.clear();
-    appCurrentTouchPoints.clear();
-
-    initializeMultitouch_sys();
-}
-
-void QApplicationPrivate::cleanupMultitouch()
-{
-    cleanupMultitouch_sys();
-
-    widgetForTouchPointId.clear();
-    appCurrentTouchPoints.clear();
-}
-
-int QApplicationPrivate::findClosestTouchPointId(const QPointF &screenPos)
-{
-    int closestTouchPointId = -1;
-    qreal closestDistance = qreal(0.);
-    foreach (const QTouchEvent::TouchPoint &touchPoint, appCurrentTouchPoints) {
-        qreal distance = QLineF(screenPos, touchPoint.screenPos()).length();
-        if (closestTouchPointId == -1 || distance < closestDistance) {
-            closestTouchPointId = touchPoint.id();
-            closestDistance = distance;
-        }
-    }
-    return closestTouchPointId;
-}
-
-void QApplicationPrivate::translateRawTouchEvent(QWidget *window,
-                                                 QTouchEvent::DeviceType deviceType,
-                                                 const QList<QTouchEvent::TouchPoint> &touchPoints)
-{
-    QApplicationPrivate *d = self;
-    typedef QPair<Qt::TouchPointStates, QList<QTouchEvent::TouchPoint> > StatesAndTouchPoints;
-    QHash<QWidget *, StatesAndTouchPoints> widgetsNeedingEvents;
-
-    for (int i = 0; i < touchPoints.count(); ++i) {
-        QTouchEvent::TouchPoint touchPoint = touchPoints.at(i);
-        // explicitly detach from the original touch point that we got, so even
-        // if the touchpoint structs are reused, we will make a copy that we'll
-        // deliver to the user (which might want to store the struct for later use).
-        touchPoint.d = touchPoint.d->detach();
-
-        // update state
-        QWeakPointer<QWidget> widget;
-        switch (touchPoint.state()) {
-        case Qt::TouchPointPressed:
-        {
-            if (deviceType == QTouchEvent::TouchPad) {
-                // on touch-pads, send all touch points to the same widget
-                widget = d->widgetForTouchPointId.isEmpty()
-                         ? QWeakPointer<QWidget>()
-                         : d->widgetForTouchPointId.constBegin().value();
-            }
-
-            if (!widget) {
-                // determine which widget this event will go to
-                if (!window)
-                    window = QApplication::topLevelAt(touchPoint.screenPos().toPoint());
-                if (!window)
-                    continue;
-                widget = window->childAt(window->mapFromGlobal(touchPoint.screenPos().toPoint()));
-                if (!widget)
-                    widget = window;
-            }
-
-            if (deviceType == QTouchEvent::TouchScreen) {
-                int closestTouchPointId = d->findClosestTouchPointId(touchPoint.screenPos());
-                QWidget *closestWidget = d->widgetForTouchPointId.value(closestTouchPointId).data();
-                if (closestWidget
-                    && (widget.data()->isAncestorOf(closestWidget) || closestWidget->isAncestorOf(widget.data()))) {
-                    widget = closestWidget;
-                }
-            }
-
-            d->widgetForTouchPointId[touchPoint.id()] = widget;
-            touchPoint.d->startScreenPos = touchPoint.screenPos();
-            touchPoint.d->lastScreenPos = touchPoint.screenPos();
-            touchPoint.d->startNormalizedPos = touchPoint.normalizedPos();
-            touchPoint.d->lastNormalizedPos = touchPoint.normalizedPos();
-            if (touchPoint.pressure() < qreal(0.))
-                touchPoint.d->pressure = qreal(1.);
-
-            d->appCurrentTouchPoints.insert(touchPoint.id(), touchPoint);
-            break;
-        }
-        case Qt::TouchPointReleased:
-        {
-            widget = d->widgetForTouchPointId.take(touchPoint.id());
-            if (!widget)
-                continue;
-
-            QTouchEvent::TouchPoint previousTouchPoint = d->appCurrentTouchPoints.take(touchPoint.id());
-            touchPoint.d->startScreenPos = previousTouchPoint.startScreenPos();
-            touchPoint.d->lastScreenPos = previousTouchPoint.screenPos();
-            touchPoint.d->startPos = previousTouchPoint.startPos();
-            touchPoint.d->lastPos = previousTouchPoint.pos();
-            touchPoint.d->startNormalizedPos = previousTouchPoint.startNormalizedPos();
-            touchPoint.d->lastNormalizedPos = previousTouchPoint.normalizedPos();
-            if (touchPoint.pressure() < qreal(0.))
-                touchPoint.d->pressure = qreal(0.);
-            break;
-        }
-        default:
-            widget = d->widgetForTouchPointId.value(touchPoint.id());
-            if (!widget)
-                continue;
-
-            Q_ASSERT(d->appCurrentTouchPoints.contains(touchPoint.id()));
-            QTouchEvent::TouchPoint previousTouchPoint = d->appCurrentTouchPoints.value(touchPoint.id());
-            touchPoint.d->startScreenPos = previousTouchPoint.startScreenPos();
-            touchPoint.d->lastScreenPos = previousTouchPoint.screenPos();
-            touchPoint.d->startPos = previousTouchPoint.startPos();
-            touchPoint.d->lastPos = previousTouchPoint.pos();
-            touchPoint.d->startNormalizedPos = previousTouchPoint.startNormalizedPos();
-            touchPoint.d->lastNormalizedPos = previousTouchPoint.normalizedPos();
-            if (touchPoint.pressure() < qreal(0.))
-                touchPoint.d->pressure = qreal(1.);
-            d->appCurrentTouchPoints[touchPoint.id()] = touchPoint;
-            break;
-        }
-        Q_ASSERT(widget.data() != 0);
-
-        // make the *scene* functions return the same as the *screen* functions
-        touchPoint.d->sceneRect = touchPoint.screenRect();
-        touchPoint.d->startScenePos = touchPoint.startScreenPos();
-        touchPoint.d->lastScenePos = touchPoint.lastScreenPos();
-
-        StatesAndTouchPoints &maskAndPoints = widgetsNeedingEvents[widget.data()];
-        maskAndPoints.first |= touchPoint.state();
-        if (touchPoint.isPrimary())
-            maskAndPoints.first |= Qt::TouchPointPrimary;
-        maskAndPoints.second.append(touchPoint);
-    }
-
-    if (widgetsNeedingEvents.isEmpty())
-        return;
-
-    QHash<QWidget *, StatesAndTouchPoints>::ConstIterator it = widgetsNeedingEvents.constBegin();
-    const QHash<QWidget *, StatesAndTouchPoints>::ConstIterator end = widgetsNeedingEvents.constEnd();
-    for (; it != end; ++it) {
-        QWidget *widget = it.key();
-        if (!QApplicationPrivate::tryModalHelper(widget))
-            continue;
-
-        QEvent::Type eventType;
-        switch (it.value().first & Qt::TouchPointStateMask) {
-        case Qt::TouchPointPressed:
-            eventType = QEvent::TouchBegin;
-            break;
-        case Qt::TouchPointReleased:
-            eventType = QEvent::TouchEnd;
-            break;
-        case Qt::TouchPointStationary:
-            // don't send the event if nothing changed
-            continue;
-        default:
-            eventType = QEvent::TouchUpdate;
-            break;
-        }
-
-        QTouchEvent touchEvent(eventType,
-                               deviceType,
-                               QApplication::keyboardModifiers(),
-                               it.value().first,
-                               it.value().second);
-        updateTouchPointsForWidget(widget, &touchEvent);
-
-        switch (touchEvent.type()) {
-        case QEvent::TouchBegin:
-        {
-            // if the TouchBegin handler recurses, we assume that means the event
-            // has been implicitly accepted and continue to send touch events
-            widget->setAttribute(Qt::WA_WState_AcceptedTouchBeginEvent);
-            (void ) QApplication::sendSpontaneousEvent(widget, &touchEvent);
-            break;
-        }
-        default:
-            if (widget->testAttribute(Qt::WA_WState_AcceptedTouchBeginEvent)) {
-                if (touchEvent.type() == QEvent::TouchEnd)
-                    widget->setAttribute(Qt::WA_WState_AcceptedTouchBeginEvent, false);
-                (void) QApplication::sendSpontaneousEvent(widget, &touchEvent);
-            }
-            break;
-        }
-    }
-}
-
-Q_GUI_EXPORT void qt_translateRawTouchEvent(QWidget *window,
-                                            QTouchEvent::DeviceType deviceType,
-                                            const QList<QTouchEvent::TouchPoint> &touchPoints)
-{
-    QApplicationPrivate::translateRawTouchEvent(window, deviceType, touchPoints);
-}
-
-#ifndef QT_NO_GESTURES
-QGestureManager* QGestureManager::instance()
-{
-    QApplicationPrivate *qAppPriv = QApplicationPrivate::instance();
-    if (!qAppPriv)
-        return 0;
-    if (!qAppPriv->gestureManager)
-        qAppPriv->gestureManager = new QGestureManager(qApp);
-    return qAppPriv->gestureManager;
-}
-#endif // QT_NO_GESTURES
 
 QT_END_NAMESPACE
 

@@ -1449,31 +1449,6 @@ bool QPlainTextEdit::event(QEvent *e)
                || e->type() == QEvent::ToolTip) {
         d->sendControlEvent(e);
     }
-#ifndef QT_NO_GESTURES
-    else if (e->type() == QEvent::Gesture) {
-        QGestureEvent *ge = static_cast<QGestureEvent *>(e);
-        QPanGesture *g = static_cast<QPanGesture *>(ge->gesture(Qt::PanGesture));
-        if (g) {
-            QScrollBar *hBar = horizontalScrollBar();
-            QScrollBar *vBar = verticalScrollBar();
-            if (g->state() == Qt::GestureStarted)
-                d->originalOffsetY = vBar->value();
-            QPointF offset = g->offset();
-            if (!offset.isNull()) {
-                if (QApplication::isRightToLeft())
-                    offset.rx() *= -1;
-                // QPlainTextEdit scrolls by lines only in vertical direction
-                QFontMetrics fm(document()->defaultFont());
-                int lineHeight = fm.height();
-                int newX = hBar->value() - g->delta().x();
-                int newY = d->originalOffsetY - offset.y()/lineHeight;
-                hBar->setValue(newX);
-                vBar->setValue(newY);
-            }
-        }
-        return true;
-    }
-#endif // QT_NO_GESTURES
     return QAbstractScrollArea::event(e);
 }
 

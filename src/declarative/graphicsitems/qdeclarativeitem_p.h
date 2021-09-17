@@ -39,18 +39,15 @@
 #include "qdeclarativeanchors_p_p.h"
 #include "qdeclarativeitemchangelistener_p.h"
 #include "qpodvector_p.h"
-
 #include "qdeclarativestate_p.h"
 #include "qdeclarativenullablevalue_p_p.h"
 #include "qdeclarativenotifier_p.h"
 #include "qdeclarativeglobal_p.h"
-
 #include "qdeclarative.h"
 #include "qdeclarativecontext.h"
-
-#include <QtCore/qlist.h>
-#include <QtCore/qdebug.h>
-
+#include "qlist.h"
+#include "qdebug.h"
+#include "qelapsedtimer.h"
 #include "qgraphicsitem_p.h"
 
 QT_BEGIN_NAMESPACE

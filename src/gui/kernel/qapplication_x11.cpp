@@ -44,7 +44,6 @@
 #include "qhash.h"
 #include "qevent.h"
 #include "qevent_p.h"
-#include "qvarlengtharray.h"
 #include "qdebug.h"
 #include "qcursor_p.h"
 #include "qiconloader_p.h"
@@ -61,10 +60,7 @@
 #include "qbackingstore_p.h"
 #include "qcorecommon_p.h"
 
-#ifndef QT_GUI_DOUBLE_CLICK_RADIUS
 #define QT_GUI_DOUBLE_CLICK_RADIUS 5
-#endif
-
 
 //#define ALIEN_DEBUG
 
@@ -76,10 +72,8 @@
 #include <ctype.h>
 #include <pwd.h>
 
-#ifdef QT_RX71_MULTITOUCH
-#  include "qsocketnotifier.h"
-#  include <linux/input.h>
-#  include <errno.h>
+#ifndef QT_NO_FONTCONFIG
+#include <fontconfig/fontconfig.h>
 #endif
 
 QT_BEGIN_NAMESPACE
@@ -462,16 +456,14 @@ static int qt_x_errhandler(Display *dpy, XErrorEvent *err)
             extensionName = "Unknown extension";
             ::snprintf(minor_str, maxerrlen, "Unknown request");
         }
-        qWarning( "X Error: %s %d\n"
-                  "  Extension:    %d (%s)\n"
-                  "  Minor opcode: %d (%s)\n"
-                  "  Resource id:  0x%lx",
-                  errstr, err->error_code,
-                  err->request_code,
-                  extensionName,
-                  err->minor_code,
-                  minor_str,
-                  err->resourceid );
+        qWarning("X Error: %s %d\n"
+                 "  Extension:    %d (%s)\n"
+                 "  Minor opcode: %d (%s)\n"
+                 "  Resource id:  0x%lx",
+                 errstr, err->error_code,
+                 err->request_code, extensionName,
+                 err->minor_code, minor_str,
+                 err->resourceid);
     }
 
     // ### we really should distinguish between severe, non-severe and
@@ -4029,227 +4021,6 @@ void QSessionManager::requestPhase2()
 }
 
 #endif // QT_NO_SESSIONMANAGER
-
-#if defined(QT_RX71_MULTITOUCH)
-
-static inline int testBit(const char *array, int bit)
-{
-    return (array[bit/8] & (1<<(bit%8)));
-}
-
-static int openRX71Device(const QByteArray &deviceName)
-{
-    int fd = qt_safe_open(deviceName, O_RDONLY | O_NONBLOCK);
-    if (fd == -1) {
-        fd = -errno;
-        return fd;
-    }
-
-    // fetch the event type mask and check that the device reports absolute coordinates
-    char eventTypeMask[(EV_MAX + sizeof(char) - 1) * sizeof(char) + 1];
-    memset(eventTypeMask, 0, sizeof(eventTypeMask));
-    if (::ioctl(fd, EVIOCGBIT(0, sizeof(eventTypeMask)), eventTypeMask) < 0) {
-        qt_safe_close(fd);
-        return -1;
-    }
-    if (!testBit(eventTypeMask, EV_ABS)) {
-        qt_safe_close(fd);
-        return -1;
-    }
-
-    // make sure that we can get the absolute X and Y positions from the device
-    char absMask[(ABS_MAX + sizeof(char) - 1) * sizeof(char) + 1];
-    ::memset(absMask, 0, sizeof(absMask));
-    if (::ioctl(fd, EVIOCGBIT(EV_ABS, sizeof(absMask)), absMask) < 0) {
-        qt_safe_close(fd);
-        return -1;
-    }
-    if (!testBit(absMask, ABS_X) || !testBit(absMask, ABS_Y)) {
-        qt_safe_close(fd);
-        return -1;
-    }
-
-    return fd;
-}
-
-void QApplicationPrivate::initializeMultitouch_sys()
-{
-    Q_Q(QApplication);
-
-    QByteArray deviceName = QByteArray("/dev/input/event");
-    int currentDeviceNumber = 0;
-    for (;;) {
-        int fd = openRX71Device(QByteArray(deviceName + QByteArray::number(currentDeviceNumber++)));
-        if (fd == -ENOENT) {
-            // no more devices
-            break;
-        }
-        if (fd < 0) {
-            // not a touch device
-            continue;
-        }
-
-        struct input_absinfo abs_x, abs_y, abs_z;
-        ::ioctl(fd, EVIOCGABS(ABS_X), &abs_x);
-        ::ioctl(fd, EVIOCGABS(ABS_Y), &abs_y);
-        ::ioctl(fd, EVIOCGABS(ABS_Z), &abs_z);
-
-        int deviceNumber = allRX71TouchPoints.count();
-
-        QSocketNotifier *socketNotifier = new QSocketNotifier(fd, QSocketNotifier::Read, q);
-        QObject::connect(socketNotifier, SIGNAL(activated(int)), q, SLOT(_q_readRX71MultiTouchEvents()));
-
-        RX71TouchPointState touchPointState = {
-            socketNotifier,
-            QTouchEvent::TouchPoint(deviceNumber),
-
-            abs_x.minimum, abs_x.maximum, q->desktop()->screenGeometry().width(),
-            abs_y.minimum, abs_y.maximum, q->desktop()->screenGeometry().height(),
-            abs_z.minimum, abs_z.maximum
-        };
-        allRX71TouchPoints.append(touchPointState);
-    }
-
-    hasRX71MultiTouch = allRX71TouchPoints.count() > 1;
-    if (!hasRX71MultiTouch) {
-        for (int i = 0; i < allRX71TouchPoints.count(); ++i) {
-            QSocketNotifier *socketNotifier = allRX71TouchPoints.at(i).socketNotifier;
-            close(socketNotifier->socket());
-            delete socketNotifier;
-        }
-        allRX71TouchPoints.clear();
-    }
-}
-
-void QApplicationPrivate::cleanupMultitouch_sys()
-{
-    hasRX71MultiTouch = false;
-    for (int i = 0; i < allRX71TouchPoints.count(); ++i) {
-        QSocketNotifier *socketNotifier = allRX71TouchPoints.at(i).socketNotifier;
-        close(socketNotifier->socket());
-        delete socketNotifier;
-    }
-    allRX71TouchPoints.clear();
-}
-
-bool QApplicationPrivate::readRX71MultiTouchEvents(int deviceNumber)
-{
-    RX71TouchPointState &touchPointState = allRX71TouchPoints[deviceNumber];
-    QSocketNotifier *socketNotifier = touchPointState.socketNotifier;
-    int fd = socketNotifier->socket();
-
-    QTouchEvent::TouchPoint &touchPoint = touchPointState.touchPoint;
-
-    bool down = touchPoint.state() != Qt::TouchPointReleased;
-    if (down)
-        touchPoint.setState(Qt::TouchPointStationary);
-
-    bool changed = false;
-    for (;;) {
-        struct input_event inputEvent;
-        int bytesRead = read(fd, &inputEvent, sizeof(inputEvent));
-        if (bytesRead <= 0)
-            break;
-        if (bytesRead != sizeof(inputEvent)) {
-            qWarning("Qt: INTERNAL ERROR: short read in readRX71MultiTouchEvents()");
-            return false;
-        }
-
-        switch (inputEvent.type) {
-        case EV_SYN:
-            changed = true;
-            switch (touchPoint.state()) {
-            case Qt::TouchPointPressed:
-            case Qt::TouchPointReleased:
-                // make sure we don't compress pressed and releases with any other events
-                return changed;
-            default:
-                break;
-            }
-            continue;
-        case EV_KEY:
-        case EV_ABS:
-            break;
-        default:
-            qWarning("Qt: WARNING: unknown event type %d on multitouch device", inputEvent.type);
-            continue;
-        }
-
-        QPointF screenPos = touchPoint.screenPos();
-        switch (inputEvent.code) {
-        case BTN_TOUCH:
-            if (!down && inputEvent.value != 0)
-                touchPoint.setState(Qt::TouchPointPressed);
-            else if (down && inputEvent.value == 0)
-                touchPoint.setState(Qt::TouchPointReleased);
-            break;
-        case ABS_TOOL_WIDTH:
-        case ABS_VOLUME:
-        case ABS_PRESSURE:
-            // ignore for now
-            break;
-        case ABS_X:
-        {
-            qreal newValue = ((qreal(inputEvent.value - touchPointState.minX)
-                              / qreal(touchPointState.maxX - touchPointState.minX))
-                              * touchPointState.scaleX);
-            screenPos.rx() = newValue;
-            touchPoint.setScreenPos(screenPos);
-            break;
-        }
-        case ABS_Y:
-        {
-            qreal newValue = ((qreal(inputEvent.value - touchPointState.minY)
-                              / qreal(touchPointState.maxY - touchPointState.minY))
-                              * touchPointState.scaleY);
-            screenPos.ry() = newValue;
-            touchPoint.setScreenPos(screenPos);
-            break;
-        }
-        case ABS_Z:
-        {
-            // map Z (signal strength) to pressure for now
-            qreal newValue = (qreal(inputEvent.value - touchPointState.minZ)
-                              / qreal(touchPointState.maxZ - touchPointState.minZ));
-            touchPoint.setPressure(newValue);
-            break;
-        }
-        default:
-            qWarning("Qt: WARNING: unknown event code %d on multitouch device", inputEvent.code);
-            continue;
-        }
-    }
-
-    if (down && touchPoint.state() != Qt::TouchPointReleased)
-        touchPoint.setState(changed ? Qt::TouchPointMoved : Qt::TouchPointStationary);
-
-    return changed;
-}
-
-void QApplicationPrivate::_q_readRX71MultiTouchEvents()
-{
-    // read touch events from all devices
-    bool changed = false;
-    for (int i = 0; i < allRX71TouchPoints.count(); ++i)
-        changed = readRX71MultiTouchEvents(i) || changed;
-    if (!changed)
-        return;
-
-    QList<QTouchEvent::TouchPoint> touchPoints;
-    for (int i = 0; i < allRX71TouchPoints.count(); ++i)
-        touchPoints.append(allRX71TouchPoints.at(i).touchPoint);
-
-    translateRawTouchEvent(0, QTouchEvent::TouchScreen, touchPoints);
-}
-
-#else // !QT_RX71_MULTITOUCH
-
-void QApplicationPrivate::initializeMultitouch_sys()
-{ }
-void QApplicationPrivate::cleanupMultitouch_sys()
-{ }
-
-#endif // QT_RX71_MULTITOUCH
 
 QT_END_NAMESPACE
 

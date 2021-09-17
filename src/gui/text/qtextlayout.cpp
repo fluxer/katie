@@ -36,6 +36,7 @@
 #include "qdebug.h"
 #include "qfontengine_p.h"
 #include "qfontengine_ft_p.h"
+#include "qcorecommon_p.h"
 
 #include <limits.h>
 
@@ -2443,11 +2444,11 @@ int QTextLine::xToCursor(qreal _x, CursorPosition cpos) const
     x -= eng->alignLine(line);
 //     qDebug("xToCursor: x=%f, cpos=%d", x.toReal(), cpos);
 
-    QVarLengthArray<int> visualOrder(nItems);
-    QVarLengthArray<unsigned char> levels(nItems);
+    QSTACKARRAY(int, visualOrder, nItems);
+    QSTACKARRAY(unsigned char, levels, nItems);
     for (int i = 0; i < nItems; ++i)
         levels[i] = eng->layoutData->items[i+firstItem].analysis.bidiLevel;
-    QTextEngine::bidiReorder(nItems, levels.data(), visualOrder.data());
+    QTextEngine::bidiReorder(nItems, levels, visualOrder);
 
     bool visual = eng->visualCursorMovement();
     if (x <= 0) {

@@ -40,13 +40,6 @@
 
 QT_BEGIN_NAMESPACE
 
-union qt_sockaddr {
-    sockaddr a;
-    sockaddr_in a4;
-    sockaddr_in6 a6;
-    sockaddr_storage storage;
-};
-
 class QNativeSocketEnginePrivate;
 #ifndef QT_NO_NETWORKINTERFACE
 class QNetworkInterface;
