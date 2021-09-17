@@ -760,7 +760,6 @@ bool QX11EmbedWidget::x11Event(XEvent *event)
                     XFree(prop_return);
             }
         }
-
         break;
     case ClientMessage:
         // XEMBED messages have message_type _XEMBED
@@ -783,8 +782,8 @@ bool QX11EmbedWidget::x11Event(XEvent *event)
                     QEvent ev(QEvent::WindowActivate);
                     QApplication::sendEvent(this, &ev);
                 }
-            }
                 break;
+            }
             case XEMBED_WINDOW_DEACTIVATE: {
                 // When we receive an XEMBED_WINDOW_DEACTIVATE, we simply send
                 // ourselves a WindowDeactivate event. Real activation happens
@@ -796,8 +795,8 @@ bool QX11EmbedWidget::x11Event(XEvent *event)
                     QEvent ev(QEvent::WindowDeactivate);
                     QApplication::sendEvent(this, &ev);
                 }
-            }
                 break;
+            }
             case XEMBED_EMBEDDED_NOTIFY: {
 #ifdef QX11EMBED_DEBUG
                 qDebug() << "QX11EmbedWidget::x11Event: client"
@@ -812,8 +811,8 @@ bool QX11EmbedWidget::x11Event(XEvent *event)
                 // client's embedded flag.
                 d->setEmbedded();
                 emit embedded();
-            }
                 break;
+            }
             case XEMBED_FOCUS_IN:
                 // don't set the focus if a modal dialog is open
                 if (qApp->activeModalWidget())
@@ -880,7 +879,6 @@ bool QX11EmbedWidget::x11Event(XEvent *event)
         } else {
             // Non-XEMBED client messages are not interesting.
         }
-
         break;
     default:
         // Ignore all other x11 events.
@@ -1433,7 +1431,7 @@ bool QX11EmbedContainer::x11Event(XEvent *event)
                 break;
             }
 
-	    case XEMBED_FOCUS_NEXT: {
+            case XEMBED_FOCUS_NEXT: {
                 // Client sends this event when it received a tab
                 // forward and was at the end of its focus chain. If
                 // we are the only widget in the focus chain, we send
