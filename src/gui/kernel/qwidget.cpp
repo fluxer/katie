@@ -912,10 +912,12 @@ void QWidgetPrivate::init(QWidget *parentWidget, Qt::WindowFlags f)
     if (allWidgets)
         allWidgets->insert(q);
 
-    QWidget *desktopWidget = 0;
     if (parentWidget && parentWidget->windowType() == Qt::Desktop) {
-        desktopWidget = parentWidget;
-        parentWidget = 0;
+#if defined(Q_WS_X11)
+        // make sure the widget is created on the same screen as the
+        // programmer specified desktop widget
+        xinfo = parentWidget->d_func()->xinfo;
+#endif
     }
 
     q->data = &data;
@@ -924,16 +926,6 @@ void QWidgetPrivate::init(QWidget *parentWidget, Qt::WindowFlags f)
         Q_ASSERT_X(q->thread() == qApp->thread(), "QWidget",
                    "Widgets must be created in the GUI thread.");
     }
-
-#if defined(Q_WS_X11)
-    if (desktopWidget) {
-        // make sure the widget is created on the same screen as the
-        // programmer specified desktop widget
-        xinfo = desktopWidget->d_func()->xinfo;
-    }
-#else
-    Q_UNUSED(desktopWidget);
-#endif
 
     data.fstrut_dirty = true;
 
