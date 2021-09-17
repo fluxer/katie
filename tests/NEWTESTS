@@ -11,6 +11,5 @@ tests/auto/qsvgrenderer/
 tests/auto/qtextboundaryfinder/
 tests/auto/qurl/
 tests/auto/qxmlsimplereader/
-tests/auto/qpainterpath/
 tests/auto/qgridlayout/
 tests/auto/qdbuspendingreply/
