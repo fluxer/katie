@@ -58,7 +58,7 @@ public:
     QVector<int> getReverseMap() const;
     QByteArray glyphName(unsigned int glyph, const QVector<int> reverseMap) const;
 
-    static QByteArray glyphName(unsigned short unicode, bool symbol);
+    static QByteArray glyphName(unsigned short unicode);
 
     int addGlyph(int index);
     const int object_id;
