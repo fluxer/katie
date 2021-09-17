@@ -68,7 +68,6 @@ public:
     mutable int downloaded_glyphs;
     mutable bool standard_font;
     int nGlyphs() const { return glyph_indices.size(); }
-    mutable QFixed emSquare;
     mutable QVector<QFixed> widths;
 };
 

@@ -265,7 +265,7 @@ QByteArray QFontSubset::widthArray() const
 
     QByteArray width;
     QPdf::ByteStream s(&width);
-    QFixed scale = QFixed(1000)/emSquare;
+    static const QFixed scale = QFixed(1000)/QFixed(2048);
 
     QFixed defWidth = widths[0];
     //qDebug("defWidth=%d, scale=%f", defWidth.toInt(), scale.toReal());
@@ -1299,7 +1299,6 @@ QByteArray QFontSubset::toTruetype() const
 
     QFontEngine::Properties properties = fontEngine->properties();
     // initialize some stuff needed in createWidthArray
-    emSquare = 2048;
     widths.resize(nGlyphs());
 
     // head table
