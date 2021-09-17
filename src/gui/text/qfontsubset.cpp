@@ -269,7 +269,7 @@ QByteArray QFontSubset::widthArray() const
 
     QFixed defWidth = widths[0];
     //qDebug("defWidth=%d, scale=%f", defWidth.toInt(), scale.toReal());
-    for (int i = 0; i < nGlyphs(); ++i) {
+    for (int i = 0; i < glyph_indices.size(); ++i) {
         if (defWidth != widths[i])
             defWidth = 0;
     }
@@ -277,12 +277,12 @@ QByteArray QFontSubset::widthArray() const
         s << "/DW " << (defWidth*scale).toInt();
     } else {
         s << "/W [";
-        for (int g = 0; g < nGlyphs();) {
+        for (int g = 0; g < glyph_indices.size();) {
             QFixed w = widths[g];
             int start = g;
             int startLinear = 0;
             ++g;
-            while (g < nGlyphs()) {
+            while (g < glyph_indices.size()) {
                 QFixed nw = widths[g];
                 if (nw == w) {
                 if (!startLinear)
@@ -363,7 +363,7 @@ QByteArray QFontSubset::createToUnicodeMap() const
     QPdf::ByteStream s(&ranges);
 
     QSTACKARRAY(char, buf, 5);
-    for (int g = 1; g < nGlyphs(); ) {
+    for (int g = 1; g < glyph_indices.size(); ) {
         int uc0 = reverseMap.at(g);
         if (!uc0) {
             ++g;
@@ -372,7 +372,7 @@ QByteArray QFontSubset::createToUnicodeMap() const
         int start = g;
         int startLinear = 0;
         ++g;
-        while (g < nGlyphs()) {
+        while (g < glyph_indices.size()) {
             int uc = reverseMap[g];
             // cmaps can't have the high byte changing within one range, so we need to break on that as well
             if (!uc || (g>>8) != (start >> 8))
@@ -1299,7 +1299,7 @@ QByteArray QFontSubset::toTruetype() const
 
     QFontEngine::Properties properties = fontEngine->properties();
     // initialize some stuff needed in createWidthArray
-    widths.resize(nGlyphs());
+    widths.resize(glyph_indices.size());
 
     // head table
     font.head.font_revision = 0x00010000;
@@ -1329,12 +1329,12 @@ QByteArray QFontSubset::toTruetype() const
     font.maxp.maxCompositeContours = 0;
     font.maxp.maxComponentElements = 0;
     font.maxp.maxComponentDepth = 0;
-    font.maxp.numGlyphs = nGlyphs();
+    font.maxp.numGlyphs = glyph_indices.size();
 
 
 
     uint sumAdvances = 0;
-    for (int i = 0; i < nGlyphs(); ++i) {
+    for (int i = 0; i < glyph_indices.size(); ++i) {
         glyph_t g = glyph_indices.at(i);
         QPainterPath path;
         glyph_metrics_t metric;
