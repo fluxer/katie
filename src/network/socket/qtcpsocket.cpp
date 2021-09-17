@@ -47,10 +47,8 @@
     {Loopback Example}, {Torrent Example}
 */
 
-#include "qlist.h"
 #include "qtcpsocket_p.h"
 #include "qtcpsocket.h"
-#include "qhostaddress.h"
 
 QT_BEGIN_NAMESPACE
 
