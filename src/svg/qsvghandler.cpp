@@ -824,16 +824,12 @@ static qreal convertToPixels(qreal len, QSvgHandler::LengthType type)
         break;
     case QSvgHandler::LT_PT:
         return len * 1.25;
-        break;
     case QSvgHandler::LT_MM:
         return len * 3.543307;
-        break;
     case QSvgHandler::LT_CM:
         return len * 35.43307;
-        break;
     case QSvgHandler::LT_IN:
         return len * 90;
-        break;
     case QSvgHandler::LT_OTHER:
         break;
     default:
