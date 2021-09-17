@@ -9067,24 +9067,6 @@ void QWidget::setAttribute(Qt::WidgetAttribute attribute, bool on)
         }
         break;
     }
-    case Qt::WA_LockPortraitOrientation:
-    case Qt::WA_LockLandscapeOrientation:
-    case Qt::WA_AutoOrientation: {
-        static const Qt::WidgetAttribute orientations[3] = {
-            Qt::WA_LockPortraitOrientation,
-            Qt::WA_LockLandscapeOrientation,
-            Qt::WA_AutoOrientation
-        };
-
-        if (on) {
-            // We can only have one of these set at a time
-            for (int i = 0; i < 3; ++i) {
-                if (orientations[i] != attribute)
-                    d->widget_attributes.set(orientations[i], false);
-            }
-        }
-        break;
-    }
     default:
         break;
     }
