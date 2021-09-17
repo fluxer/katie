@@ -38,6 +38,7 @@
 #include "qpathclipper_p.h"
 #include "qstroker_p.h"
 #include "qtextengine_p.h"
+#include "qguicommon_p.h"
 
 #include <limits.h>
 
@@ -2172,8 +2173,6 @@ bool QPainterPath::operator==(const QPainterPath &path) const
         return false;
     else if (d->elements.size() != path.d_func()->elements.size())
         return false;
-
-    static const qreal qt_epsilon = std::numeric_limits<qreal>::epsilon();;
 
     QSizeF epsilon = boundingRect().size();
     epsilon.rwidth() *= qt_epsilon;

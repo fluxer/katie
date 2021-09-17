@@ -20,11 +20,11 @@
 ****************************************************************************/
 
 #include "qpathclipper_p.h"
-
 #include "qbezier_p.h"
 #include "qmath.h"
 #include "qnumeric.h"
 #include "qdebug.h"
+#include "qguicommon_p.h"
 
 /**
   The algorithm is as follows:
@@ -46,7 +46,7 @@ QT_BEGIN_NAMESPACE
 
 static inline bool fuzzyIsNull(qreal d)
 {
-    return qAbs(d) <= std::numeric_limits<qreal>::epsilon();
+    return qAbs(d) <= qt_epsilon;
 }
 
 static inline bool comparePoints(const QPointF &a, const QPointF &b)

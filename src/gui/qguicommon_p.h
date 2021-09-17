@@ -9,6 +9,12 @@
 
 QT_BEGIN_NAMESPACE
 
+#ifdef QT_NO_FPU
+static const qreal qt_epsilon = qreal(1e-12);
+#else
+static const qreal qt_epsilon = qreal(1e-5);
+#endif
+
 // same as QColor(Qt::color0).rgba() and QColor(Qt::white).rgba()
 static const QRgb qt_whitergba = qRgba(255, 255, 255, 255);
 // same as QColor(Qt::color0).rgb() and QColor(Qt::white).rgb()
