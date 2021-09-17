@@ -13,3 +13,4 @@ tests/auto/qurl/
 tests/auto/qxmlsimplereader/
 tests/auto/qgridlayout/
 tests/auto/qdbuspendingreply/
+tests/auto/qimage/
