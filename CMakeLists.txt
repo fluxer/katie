@@ -423,6 +423,19 @@ endif()
 # only Solaris is known to have these
 find_library(SOCKET_LIBRARY NAMES socket)
 find_library(NSL_LIBRARY NAMES nsl)
+set(SOCKET_AND_NSL_LIBRARIES)
+if(SOCKET_LIBRARY)
+    set(SOCKET_AND_NSL_LIBRARIES
+        ${SOCKET_AND_NSL_LIBRARIES}
+        ${SOCKET_LIBRARY}
+    )
+endif()
+if(NSL_LIBRARY)
+    set(SOCKET_AND_NSL_LIBRARIES
+        ${SOCKET_AND_NSL_LIBRARIES}
+        ${NSL_LIBRARY}
+    )
+endif()
 
 # used in components, tests and JavaScriptCore
 katie_check_header("cxxabi.h")
@@ -449,20 +462,7 @@ katie_check_function(pthread_setname_np "pthread.h")
 cmake_reset_check_state()
 
 cmake_reset_check_state()
-set(socket_and_nls_libraries)
-if(SOCKET_LIBRARY)
-    set(socket_and_nls_libraries
-        ${socket_and_nls_libraries}
-        ${SOCKET_LIBRARY}
-    )
-endif()
-if(NSL_LIBRARY)
-    set(socket_and_nls_libraries
-        ${socket_and_nls_libraries}
-        ${NSL_LIBRARY}
-    )
-endif()
-set(CMAKE_REQUIRED_LIBRARIES ${socket_and_nls_libraries})
+set(CMAKE_REQUIRED_LIBRARIES ${SOCKET_AND_NSL_LIBRARIES})
 katie_check_function(getifaddrs "ifaddrs.h")
 katie_check_function(accept4 "sys/socket.h")
 katie_check_function(paccept "sys/socket.h")
