@@ -1639,6 +1639,7 @@ public:
 
 void tst_QListWidget::QTBUG14363_completerWithAnyKeyPressedEditTriggers()
 {
+#if 0
     QListWidget listWidget;
     listWidget.setEditTriggers(QAbstractItemView::AnyKeyPressed);
     listWidget.setItemDelegate(new ItemDelegate);
@@ -1658,6 +1659,7 @@ void tst_QListWidget::QTBUG14363_completerWithAnyKeyPressedEditTriggers()
     QVERIFY(le);
     QCOMPARE(le->text(), QString("completer"));
     QCOMPARE(le->completer()->currentCompletion(), QString("completer"));
+#endif
 }
 
 QTEST_MAIN(tst_QListWidget)
