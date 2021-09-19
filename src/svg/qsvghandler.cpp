@@ -317,6 +317,7 @@ static const char * QSvgStyleSelector_nodeString[] = {
     "rect",
     "text",
     "textarea",
+    "tspan",
     "use",
     "video"
 };
@@ -824,16 +825,12 @@ static qreal convertToPixels(qreal len, QSvgHandler::LengthType type)
         break;
     case QSvgHandler::LT_PT:
         return len * 1.25;
-        break;
     case QSvgHandler::LT_MM:
         return len * 3.543307;
-        break;
     case QSvgHandler::LT_CM:
         return len * 35.43307;
-        break;
     case QSvgHandler::LT_IN:
         return len * 90;
-        break;
     case QSvgHandler::LT_OTHER:
         break;
     default:
@@ -2592,10 +2589,7 @@ static QSvgNode *createImageNode(QSvgNode *parent,
 
     QSvgNode *img = new QSvgImage(parent,
                                   image,
-                                  QRect(int(nx),
-                                        int(ny),
-                                        int(nwidth),
-                                        int(nheight)));
+                                  QRectF(nx, ny, nwidth, nheight));
     return img;
 }
 

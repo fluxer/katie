@@ -420,22 +420,36 @@ else()
     message(FATAL_ERROR "Unknown CPU '${KATIE_PROCESSOR}'")
 endif()
 
+# only Solaris is known to have these
+find_library(SOCKET_LIBRARY NAMES socket)
+find_library(NSL_LIBRARY NAMES nsl)
+set(SOCKET_AND_NSL_LIBRARIES)
+if(SOCKET_LIBRARY)
+    set(SOCKET_AND_NSL_LIBRARIES
+        ${SOCKET_AND_NSL_LIBRARIES}
+        ${SOCKET_LIBRARY}
+    )
+endif()
+if(NSL_LIBRARY)
+    set(SOCKET_AND_NSL_LIBRARIES
+        ${SOCKET_AND_NSL_LIBRARIES}
+        ${NSL_LIBRARY}
+    )
+endif()
+
 # used in components, tests and JavaScriptCore
 katie_check_header("cxxabi.h")
 katie_check_function(posix_memalign "stdlib.h")
 katie_check_function(getprogname "stdlib.h")
-katie_check_function(arc4random "stdlib.h")
+katie_check_function(arc4random_uniform "stdlib.h")
 katie_check_function(get_current_dir_name "unistd.h")
 katie_check_function(prctl "sys/prctl.h")
 katie_check_function(feenableexcept "fenv.h")
 katie_check_function(madvise "sys/mman.h")
-katie_check_function(getifaddrs "ifaddrs.h")
 katie_check_function(timegm "time.h")
 katie_check_function(inotify_init1 "sys/inotify.h")
 katie_check_function(kevent "sys/event.h")
 katie_check_function(pipe2 "unistd.h")
-katie_check_function(accept4 "sys/socket.h")
-katie_check_function(paccept "sys/socket.h")
 katie_check_function(getdomainname "unistd.h")
 katie_check_function(renameat2 "stdio.h")
 katie_check_struct(tm tm_gmtoff "time.h")
@@ -445,6 +459,13 @@ katie_check_struct(dirent d_type "dirent.h")
 cmake_reset_check_state()
 set(CMAKE_REQUIRED_LIBRARIES ${CMAKE_THREAD_LIBS_INIT})
 katie_check_function(pthread_setname_np "pthread.h")
+cmake_reset_check_state()
+
+cmake_reset_check_state()
+set(CMAKE_REQUIRED_LIBRARIES ${SOCKET_AND_NSL_LIBRARIES})
+katie_check_function(getifaddrs "ifaddrs.h")
+katie_check_function(accept4 "sys/socket.h")
+katie_check_function(paccept "sys/socket.h")
 cmake_reset_check_state()
 
 katie_check_proc(exe)

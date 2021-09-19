@@ -149,33 +149,36 @@ void QAlphaWidget::run()
 bool QAlphaWidget::eventFilter(QObject *o, QEvent *e)
 {
     switch (e->type()) {
-    case QEvent::Move:
-	    if (o != widget)
-	        break;
-	    move(widget->geometry().x(),widget->geometry().y());
-	    update();
-	    break;
-    case QEvent::Hide:
-    case QEvent::Close:
-	    if (o != widget)
-	        break;
-    case QEvent::MouseButtonPress:
-	case QEvent::MouseButtonDblClick:
-	    showWidget = false;
-	    render();
-	    break;
-    case QEvent::KeyPress: {
-	        QKeyEvent *ke = (QKeyEvent*)e;
+        case QEvent::Move: {
+            if (o != widget)
+                break;
+            move(widget->geometry().x(),widget->geometry().y());
+            update();
+            break;
+        }
+        case QEvent::Hide:
+        case QEvent::Close: {
+            if (o != widget)
+                break;
+        }
+        case QEvent::MouseButtonPress:
+        case QEvent::MouseButtonDblClick: {
+            showWidget = false;
+            render();
+            break;
+        }
+        case QEvent::KeyPress: {
+            QKeyEvent *ke = (QKeyEvent*)e;
             if (ke->key() == Qt::Key_Escape) {
-		        showWidget = false;
+                showWidget = false;
             } else {
-		        duration = 0;
+                duration = 0;
             }
-	        render();
-	        break;
-	}
-    default:
-	    break;
+            render();
+            break;
+        }
+        default:
+            break;
     }
     return QWidget::eventFilter(o, e);
 }

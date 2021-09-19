@@ -257,16 +257,18 @@ void QLocalSocketPrivate::_q_connectToSocket()
         connectingPathName += QLatin1Char('/') + connectingName;
     }
 
+    const QByteArray connectingPathNameLatin = connectingPathName.toLatin1();
+
     struct sockaddr_un name;
     name.sun_family = PF_UNIX;
-    if (sizeof(name.sun_path) < (uint)connectingPathName.toLatin1().size() + 1) {
+    if (sizeof(name.sun_path) < (uint)connectingPathNameLatin.size() + 1) {
         QString function = QLatin1String("QLocalSocket::connectToServer");
         errorOccurred(QLocalSocket::ServerNotFoundError, function);
         return;
     }
-    ::memcpy(name.sun_path, connectingPathName.toLatin1().data(),
-             connectingPathName.toLatin1().size() + 1);
-    if (-1 == qt_safe_connect(connectingSocket, (struct sockaddr *)&name, sizeof(name))) {
+    ::memcpy(name.sun_path, connectingPathNameLatin.constData(),
+             connectingPathNameLatin.size() + 1);
+    if (qt_safe_connect(connectingSocket, (struct sockaddr *)&name, sizeof(name)) == -1) {
         QString function = QLatin1String("QLocalSocket::connectToServer");
         switch (errno)
         {

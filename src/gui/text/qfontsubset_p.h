@@ -42,7 +42,7 @@ QT_BEGIN_NAMESPACE
 class QFontSubset
 {
 public:
-    QFontSubset(QFontEngine *fe, int obj_id = 0)
+    QFontSubset(QFontEngine *fe, int obj_id)
         : object_id(obj_id), noEmbed(false), fontEngine(fe), downloaded_glyphs(0), standard_font(false)
         { fontEngine->ref.ref(); addGlyph(0); }
     ~QFontSubset() {
@@ -58,7 +58,7 @@ public:
     QVector<int> getReverseMap() const;
     QByteArray glyphName(unsigned int glyph, const QVector<int> reverseMap) const;
 
-    static QByteArray glyphName(unsigned short unicode, bool symbol);
+    static QByteArray glyphName(unsigned short unicode);
 
     int addGlyph(int index);
     const int object_id;
@@ -67,8 +67,6 @@ public:
     QList<int> glyph_indices;
     mutable int downloaded_glyphs;
     mutable bool standard_font;
-    int nGlyphs() const { return glyph_indices.size(); }
-    mutable QFixed emSquare;
     mutable QVector<QFixed> widths;
 };
 

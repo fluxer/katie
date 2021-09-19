@@ -146,7 +146,7 @@ static void cleanup_scale_tables()
 */
 static void build_scale_table(uint **table, uint nBits)
 {
-    if (nBits > 7) {
+    if (Q_UNLIKELY(nBits > 7)) {
         qWarning("build_scale_table: internal error, nBits = %i", nBits);
         return;
     }
@@ -216,7 +216,7 @@ void QX11PixmapData::resize(int width, int height)
         hd = 0;
         picture = 0;
         d = 0;
-        if (!make_null)
+        if (Q_UNLIKELY(!make_null))
             qWarning("QPixmap: Invalid pixmap parameters");
         return;
     }
@@ -990,9 +990,8 @@ void QX11PixmapData::fromImage(const QImage &img,
             }
             free(newbits);
             newbits = (uchar *)newerbits;
-        } else if (xi->bits_per_pixel != 8) {
-            qWarning("QPixmap::fromImage: Display not supported "
-                     "(bpp=%d)", xi->bits_per_pixel);
+        } else if (Q_UNLIKELY(xi->bits_per_pixel != 8)) {
+            qWarning("QPixmap::fromImage: Display not supported (bpp=%d)", xi->bits_per_pixel);
         }
         xi->data = (char *)newbits;
     }
@@ -1880,7 +1879,7 @@ int QPixmap::x11SetDefaultScreen(int screen)
 
 void QPixmap::x11SetScreen(int screen)
 {
-    if (paintingActive()) {
+    if (Q_UNLIKELY(paintingActive())) {
         qWarning("QPixmap::x11SetScreen(): Cannot change screens during painting");
         return;
     }
