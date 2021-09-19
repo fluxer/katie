@@ -24,7 +24,6 @@
 
 #include <QtGui/qlistview.h>
 #include <QtCore/qvariant.h>
-#include <QtCore/qvector.h>
 #include <QtGui/qitemselectionmodel.h>
 
 
@@ -132,7 +131,6 @@ public:
 
 private:
     int rtti;
-    QVector<void *> dummy;
     QListWidget *view;
     QListWidgetItemPrivate *d;
     Qt::ItemFlags itemFlags;
