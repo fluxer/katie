@@ -1271,7 +1271,7 @@ void QByteArray::reallocData(int alloc)
             freeData(d);
         d = x;
     } else {
-        Data *x = static_cast<Data *>(realloc(d, sizeof(Data) + alloc));
+        Data *x = static_cast<Data *>(::realloc(d, sizeof(Data) + alloc));
         Q_CHECK_PTR(x);
         x->alloc = alloc;
         x->data = x->array;
