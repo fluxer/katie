@@ -44,32 +44,33 @@ QT_BEGIN_NAMESPACE
     do { \
         qreal FX_ = x; \
         qreal FY_ = y; \
-        switch(t) {    \
-        case TxNone:   \
-            nx = FX_;  \
-            ny = FY_;  \
-            break;     \
+        switch(t) { \
+        case TxNone: \
+            nx = FX_; \
+            ny = FY_; \
+            break; \
         case TxTranslate: \
             nx = FX_ + affine._dx; \
             ny = FY_ + affine._dy; \
-            break;                 \
-        case TxScale:              \
-            nx = affine._m11 * FX_ + affine._dx; \
-            ny = affine._m22 * FY_ + affine._dy; \
-            break;                               \
-        case TxRotate:                           \
-        case TxShear:                            \
+            break; \
+        case TxScale:                           \
+            nx = affine._m11 * FX_ + affine._dx;  \
+            ny = affine._m22 * FY_ + affine._dy;  \
+            break;                              \
+        case TxRotate: \
+        case TxShear: \
             nx = affine._m11 * FX_ + affine._m21 * FY_ + affine._dx; \
             ny = affine._m12 * FX_ + affine._m22 * FY_ + affine._dy; \
-            break;                                                   \
-        case TxProject:                                              \
-            qreal w = (m_13 * FX_ + m_23 * FY_ + m_33);              \
-            if (w < Q_NEAR_CLIP) w = Q_NEAR_CLIP;                    \
-            w = 1./w;                                                \
-            nx = affine._m11 * FX_ + affine._m21 * FY_ + affine._dx * w; \
-            ny = affine._m12 * FX_ + affine._m22 * FY_ + affine._dy * w; \
-            break;                                                       \
-        }                                                                \
+            break; \
+        case TxProject: \
+            nx = affine._m11 * FX_ + affine._m21 * FY_ + affine._dx; \
+            ny = affine._m12 * FX_ + affine._m22 * FY_ + affine._dy; \
+            qreal w = (m_13 * FX_ + m_23 * FY_ + m_33); \
+            if (w < qreal(Q_NEAR_CLIP)) w = qreal(Q_NEAR_CLIP); \
+            w = 1./w; \
+            nx *= w; \
+            ny *= w; \
+        } \
     } while (0)
 
 /*!
@@ -1122,9 +1123,11 @@ QPoint QTransform::map(const QPoint &p) const
         y = affine._m12 * fx + affine._m22 * fy + affine._dy;
         break;
     case TxProject:
+        x = affine._m11 * fx + affine._m21 * fy + affine._dx;
+        y = affine._m12 * fx + affine._m22 * fy + affine._dy;
         qreal w = 1./(m_13 * fx + m_23 * fy + m_33);
-        x = affine._m11 * fx + affine._m21 * fy + affine._dx * w;
-        y = affine._m12 * fx + affine._m22 * fy + affine._dy * w;
+        x *= w;
+        y *= w;
         break;
     }
     return QPoint(qRound(x), qRound(y));
@@ -1173,9 +1176,11 @@ QPointF QTransform::map(const QPointF &p) const
         y = affine._m12 * fx + affine._m22 * fy + affine._dy;
         break;
     case TxProject:
+        x = affine._m11 * fx + affine._m21 * fy + affine._dx;
+        y = affine._m12 * fx + affine._m22 * fy + affine._dy;
         qreal w = 1./(m_13 * fx + m_23 * fy + m_33);
-        x = affine._m11 * fx + affine._m21 * fy + affine._dx * w;
-        y = affine._m12 * fx + affine._m22 * fy + affine._dy * w;
+        x *= w;
+        y *= w;
         break;
     }
     return QPointF(x, y);
@@ -1252,12 +1257,16 @@ QLine QTransform::map(const QLine &l) const
         y2 = affine._m12 * fx2 + affine._m22 * fy2 + affine._dy;
         break;
     case TxProject:
+        x1 = affine._m11 * fx1 + affine._m21 * fy1 + affine._dx;
+        y1 = affine._m12 * fx1 + affine._m22 * fy1 + affine._dy;
+        x2 = affine._m11 * fx2 + affine._m21 * fy2 + affine._dx;
+        y2 = affine._m12 * fx2 + affine._m22 * fy2 + affine._dy;
         qreal w = 1./(m_13 * fx1 + m_23 * fy1 + m_33);
-        x1 = affine._m11 * fx1 + affine._m21 * fy1 + affine._dx * w;
-        y1 = affine._m12 * fx1 + affine._m22 * fy1 + affine._dy * w;
+        x1 *= w;
+        y1 *= w;
         w = 1./(m_13 * fx2 + m_23 * fy2 + m_33);
-        x2 = affine._m11 * fx2 + affine._m21 * fy2 + affine._dx * w;
-        y2 = affine._m12 * fx2 + affine._m22 * fy2 + affine._dy * w;
+        x2 *= w;
+        y2 *= w;
         break;
     }
     return QLine(qRound(x1), qRound(y1), qRound(x2), qRound(y2));
@@ -1265,9 +1274,7 @@ QLine QTransform::map(const QLine &l) const
 
 /*!
     \overload
-
     \fn QLineF QTransform::map(const QLineF &line) const
-
     Creates and returns a QLine object that is a copy of the given \a
     line, mapped into the coordinate system defined by this matrix.
     Note that the transformed coordinates are rounded to the nearest
@@ -1311,12 +1318,16 @@ QLineF QTransform::map(const QLineF &l) const
         y2 = affine._m12 * fx2 + affine._m22 * fy2 + affine._dy;
         break;
     case TxProject:
+        x1 = affine._m11 * fx1 + affine._m21 * fy1 + affine._dx;
+        y1 = affine._m12 * fx1 + affine._m22 * fy1 + affine._dy;
+        x2 = affine._m11 * fx2 + affine._m21 * fy2 + affine._dx;
+        y2 = affine._m12 * fx2 + affine._m22 * fy2 + affine._dy;
         qreal w = 1./(m_13 * fx1 + m_23 * fy1 + m_33);
-        x1 = affine._m11 * fx1 + affine._m21 * fy1 + affine._dx * w;
-        y1 = affine._m12 * fx1 + affine._m22 * fy1 + affine._dy * w;
+        x1 *= w;
+        y1 *= w;
         w = 1./(m_13 * fx2 + m_23 * fy2 + m_33);
-        x2 = affine._m11 * fx2 + affine._m21 * fy2 + affine._dx * w;
-        y2 = affine._m12 * fx2 + affine._m22 * fy2 + affine._dy * w;
+        x2 *= w;
+        y2 *= w;
         break;
     }
     return QLineF(x1, y1, x2, y2);
