@@ -1850,7 +1850,6 @@ bool QTextStreamPrivate::getReal(double *f)
         return false;
     if (!f)
         return true;
-    buf[i] = '\0';
 
     // backward-compatibility. Old implementation supported +nan/-nan
     // for some reason. QLocale only checks for lower-case
@@ -1867,7 +1866,7 @@ bool QTextStreamPrivate::getReal(double *f)
         return true;
     }
     bool ok;
-    *f = locale.toDouble(QString::fromLatin1(buf), &ok);
+    *f = locale.toDouble(QString::fromLatin1(buf, i), &ok);
     return ok;
 }
 
