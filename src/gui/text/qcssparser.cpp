@@ -341,7 +341,6 @@ ValueExtractor::ValueExtractor(const QVector<Declaration> &decls, const QPalette
 LengthData ValueExtractor::lengthValue(const Value& v)
 {
     QString s = v.variant.toString();
-    s.reserve(s.length());
     LengthData data;
     data.unit = LengthData::None;
     if (s.endsWith(QLatin1String("px"), Qt::CaseInsensitive))
