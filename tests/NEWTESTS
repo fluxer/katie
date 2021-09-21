@@ -16,3 +16,4 @@ tests/auto/qdbuspendingreply/
 tests/auto/qimage/
 tests/auto/qdoublevalidator/
 tests/auto/qaccessibility/
+tests/auto/qcalendarwidget/
