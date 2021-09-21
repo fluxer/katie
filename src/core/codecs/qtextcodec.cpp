@@ -83,8 +83,8 @@ public:
 */
 QTextCodecCleanup::~QTextCodecCleanup()
 {
-    for (int i = 0; i < this->size(); i++) {
-        delete this->at(i);
+    while (begin() != end()) {
+        delete *begin();
     }
     localeMapper = nullptr;
 #ifndef QT_NO_DEBUG

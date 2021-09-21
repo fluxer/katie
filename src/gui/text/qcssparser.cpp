@@ -222,19 +222,18 @@ static const QCssKnownValue valuesTbl[NumKnownValues - 1] = {
     { QLatin1String("xx-large"), Value_XXLarge }
 };
 
-//Map id to strings as they appears in the 'values' array above
-static const short indexOfId[NumKnownValues] = { 0, 41, 48, 42, 49, 54, 35, 26, 70, 71, 25, 43, 5, 63, 47,
-    29, 58, 59, 27, 51, 61, 6, 10, 39, 56, 19, 13, 17, 18, 20, 21, 50, 24, 46, 67, 37, 3, 2, 40, 62, 16,
-    11, 57, 14, 32, 64, 33, 65, 55, 66, 34, 69, 8, 28, 38, 12, 36, 60, 7, 9, 4, 68, 53, 22, 23, 30, 31,
-    1, 15, 0, 52, 45, 44 };
-
 QString Value::toString() const
 {
     if (type == KnownIdentifier) {
-        return valuesTbl[indexOfId[variant.toInt()]].name;
-    } else {
-        return variant.toString();
+        const int id = variant.toInt();
+        for (int i = 0; i < NumKnownValues - 1; i++) {
+            if (id == valuesTbl[i].id) {
+                return valuesTbl[i].name;
+            }
+        }
+        Q_ASSERT_X(false, "QCss::Value::toString", "Name of identifier is not known");
     }
+    return variant.toString();
 }
 
 static const QCssKnownValue pseudosTbl[NumPseudos - 1] = {
@@ -342,7 +341,6 @@ ValueExtractor::ValueExtractor(const QVector<Declaration> &decls, const QPalette
 LengthData ValueExtractor::lengthValue(const Value& v)
 {
     QString s = v.variant.toString();
-    s.reserve(s.length());
     LengthData data;
     data.unit = LengthData::None;
     if (s.endsWith(QLatin1String("px"), Qt::CaseInsensitive))

@@ -918,7 +918,6 @@ static bool read_xpm_body(
                 }
             } else {
                 QSTACKARRAY(char, b, 16);
-                b[cpp] = '\0';
                 for (x=0; x<w && d<end; x++) {
                     memcpy(b, (char *)d, cpp);
                     *p++ = (uchar)colorMap[xpmHash(b)];
@@ -936,7 +935,6 @@ static bool read_xpm_body(
             uchar *end = d + buf.length();
             int x;
             QSTACKARRAY(char, b, 16);
-            b[cpp] = '\0';
             for (x = 0; x < w && d < end; x++) {
                 memcpy(b, (char *)d, cpp);
                 *p++ = (QRgb)colorMap[xpmHash(b)];

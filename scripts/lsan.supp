@@ -1,3 +1,1 @@
 leak:libfontconfig.so
-leak:Katie::QTextCodec::codecForName
-leak:Katie::QTextCodec::codecForMib

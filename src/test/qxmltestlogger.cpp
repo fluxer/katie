@@ -363,7 +363,7 @@ int QXmlTestLogger::xmlCdata(QTestCharBuffer *destBuf, char const* src, size_t n
             return (dest-begin);
         }
 
-        if (!strncmp(src, CDATA_END, sizeof(CDATA_END)-1)) {
+        if (strncmp(src, CDATA_END, sizeof(CDATA_END)-1) == 0) {
             if (dest + sizeof(CDATA_END_ESCAPED) < end) {
                 strcpy(dest, CDATA_END_ESCAPED);
                 src += sizeof(CDATA_END)-1;

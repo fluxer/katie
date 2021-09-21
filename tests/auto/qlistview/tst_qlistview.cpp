@@ -1409,9 +1409,10 @@ void tst_QListView::emptyItemSize()
 void tst_QListView::task203585_selectAll()
 {
     //we make sure that "select all" doesn't select the hidden items
+    QStringListModel model(QStringList() << "foo");
     QListView view;
     view.setSelectionMode(QAbstractItemView::ExtendedSelection);
-    view.setModel(new QStringListModel( QStringList() << "foo"));
+    view.setModel(&model);
     view.setRowHidden(0, true);
     view.selectAll();
     QVERIFY(view.selectionModel()->selectedIndexes().isEmpty());

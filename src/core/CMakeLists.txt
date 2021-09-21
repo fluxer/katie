@@ -278,6 +278,7 @@ set(CORE_HEADERS
     ${CMAKE_CURRENT_SOURCE_DIR}/tools/qvector.h
     ${CMAKE_CURRENT_SOURCE_DIR}/tools/qiterator.h
     ${CMAKE_CURRENT_SOURCE_DIR}/tools/qpair.h
+    ${CMAKE_CURRENT_SOURCE_DIR}/tools/qstdcontainers_p.h
     ${CMAKE_CURRENT_SOURCE_DIR}/qcorecommon_p.h
 )
 

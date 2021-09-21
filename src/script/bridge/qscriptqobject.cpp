@@ -2111,7 +2111,7 @@ const QMetaObject *QScript::QObjectConnectionManager::metaObject() const
 void *QScript::QObjectConnectionManager::qt_metacast(const char *_clname)
 {
     if (!_clname) return nullptr;
-    if (!strcmp(_clname, qt_meta_stringdata_QScript__QObjectConnectionManager))
+    if (strcmp(_clname, qt_meta_stringdata_QScript__QObjectConnectionManager) == 0)
         return static_cast<void*>(this);
     return QObject::qt_metacast(_clname);
 }

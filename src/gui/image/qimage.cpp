@@ -2378,7 +2378,7 @@ static void QT_FASTCALL convert_Indexed8_to_X32(QImageData *dest, const QImageDa
 
     QVector<QRgb> colorTable = fix_color_table(src->colortable, dest->format);
     if (colorTable.size() == 0) {
-        colorTable = monoColorTable();
+        colorTable = grayColorTable();
     }
 
     int w = src->width;
