@@ -419,7 +419,7 @@ static int qMetaTypeCustomType_unlocked(const char *typeName, int length)
     for (int v = 0; v < ct->count(); ++v) {
         const QCustomTypeInfo &customInfo = ct->at(v);
         if ((length == customInfo.typeName.size())
-            && !strcmp(typeName, customInfo.typeName.constData())) {
+            && strcmp(typeName, customInfo.typeName.constData()) == 0) {
             if (customInfo.alias >= 0)
                 return customInfo.alias;
             return v + QMetaType::User;

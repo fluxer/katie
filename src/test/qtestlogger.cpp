@@ -209,20 +209,17 @@ void QTestLogger::addIncident(IncidentTypes type, const char *description,
     if (resultAttr) {
         const char* oldResult = resultAttr->value();
         bool overwrite = false;
-        if (!strcmp(oldResult, "pass")) {
+        if (strcmp(oldResult, "pass") == 0) {
             overwrite = true;
-        }
-        else if (!strcmp(oldResult, "xfail")) {
+        } else if (strcmp(oldResult, "xfail") == 0) {
             overwrite = (type == QAbstractTestLogger::XPass || type == QAbstractTestLogger::Fail);
-        }
-        else if (!strcmp(oldResult, "xpass")) {
+        } else if (strcmp(oldResult, "xpass") == 0) {
             overwrite = (type == QAbstractTestLogger::Fail);
         }
         if (overwrite) {
             resultAttr->setPair(QTest::AI_Result, typeBuf);
         }
-    }
-    else {
+    } else {
         currentLogElement->addAttribute(QTest::AI_Result, typeBuf);
     }
 

@@ -356,7 +356,7 @@ const QMetaObject *QDBusAdaptorConnector::metaObject() const
 void *QDBusAdaptorConnector::qt_metacast(const char *_clname)
 {
     if (!_clname) return nullptr;
-    if (!strcmp(_clname, qt_meta_stringdata_QDBusAdaptorConnector))
+    if (strcmp(_clname, qt_meta_stringdata_QDBusAdaptorConnector) == 0)
         return static_cast<void*>(const_cast< QDBusAdaptorConnector*>(this));
     return QObject::qt_metacast(_clname);
 }

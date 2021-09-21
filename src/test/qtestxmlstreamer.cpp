@@ -139,10 +139,10 @@ void QTestXmlStreamer::formatEnd(const QTestElement *element, QTestCharBuffer *f
     if (element->elementType() == QTest::LET_TestCase) {
         bool failed = false;
         for (QTestElement* child = element->childElements(); child; child = child->nextElement()) {
-            if (   child->elementType() == QTest::LET_Failure
+            if (child->elementType() == QTest::LET_Failure
                 && child->attribute(QTest::AI_Result)
-                && (    !strcmp(child->attributeValue(QTest::AI_Result), "fail")
-                    ||  !strcmp(child->attributeValue(QTest::AI_Result), "xpass"))
+                && (strcmp(child->attributeValue(QTest::AI_Result), "fail") == 0
+                    || strcmp(child->attributeValue(QTest::AI_Result), "xpass") == 0)
                 )
             {
                 failed = true;
