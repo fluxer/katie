@@ -258,19 +258,14 @@ static inline pid_t qt_safe_waitpid(pid_t pid, int *status, int options)
 }
 
 // don't call ::poll, call qt_safe_poll
-static inline int qt_safe_poll(int fd, int events, int timeout, int *revents)
+static inline int qt_safe_poll(struct pollfd *fds, nfds_t nfds, int timeout)
 {
-    struct pollfd pd;
-    ::memset(&pd, 0, sizeof(struct pollfd));
-    pd.fd = fd;
-    pd.events = events;
     int ret;
-    Q_EINTR_LOOP(ret, ::poll(&pd, 1, timeout));
-    if ((pd.revents & POLLERR) != 0 || (pd.revents & POLLHUP) != 0 || (pd.revents & POLLNVAL) != 0) {
+    Q_EINTR_LOOP(ret, ::poll(fds, nfds, timeout));
+    if ((fds->revents & POLLERR) != 0 || (fds->revents & POLLHUP) != 0 || (fds->revents & POLLNVAL) != 0) {
         // select() compat
         return -1;
     }
-    *revents = pd.revents;
     return ret;
 }
 

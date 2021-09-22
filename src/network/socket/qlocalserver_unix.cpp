@@ -162,8 +162,11 @@ void QLocalServerPrivate::_q_onNewConnection()
 
 void QLocalServerPrivate::waitForNewConnection(int msec, bool *timedOut)
 {
-    int revents = 0;
-    int result = qt_safe_poll(listenSocket, POLLIN, msec, &revents);
+    struct pollfd fds;
+    ::memset(&fds, 0, sizeof(struct pollfd));
+    fds.fd = listenSocket;
+    fds.events = POLLIN;
+    int result = qt_safe_poll(&fds, 1, msec);
     if (result == -1) {
         setError(QLatin1String("QLocalServer::waitForNewConnection"));
         closeServer();

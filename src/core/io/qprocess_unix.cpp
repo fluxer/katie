@@ -793,10 +793,11 @@ bool QProcessPrivate::waitForStarted(int msecs)
            childStartedPipe[0]);
 #endif
 
-    fd_set fds;
-    FD_ZERO(&fds);
-    FD_SET(childStartedPipe[0], &fds);
-    if (select_msecs(childStartedPipe[0] + 1, &fds, 0, msecs) == 0) {
+    struct pollfd fds;
+    ::memset(&fds, 0, sizeof(struct pollfd));
+    fds.fd = childStartedPipe[0];
+    fds.events = POLLIN;
+    if (qt_safe_poll(&fds, 1, msecs) == 0) {
         processError = QProcess::Timedout;
         q->setErrorString(QProcess::tr("Process operation timed out"));
 #if defined (QPROCESS_DEBUG)

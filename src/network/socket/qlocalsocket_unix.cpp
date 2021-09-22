@@ -505,8 +505,11 @@ bool QLocalSocket::waitForConnected(int msec)
         if (msec == 0)
             msec = 1000;
 
-        int revents = 0;
-        int result = qt_safe_poll(d->connectingSocket, POLLIN, msec, &revents);
+        struct pollfd fds;
+        ::memset(&fds, 0, sizeof(struct pollfd));
+        fds.fd = d->connectingSocket;
+        fds.events = POLLIN;
+        int result = qt_safe_poll(&fds, 1, msec);
         if (result == -1) {
             d->errorOccurred( QLocalSocket::UnknownSocketError,
                     QLatin1String("QLocalSocket::waitForConnected"));

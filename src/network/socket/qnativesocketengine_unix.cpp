@@ -987,26 +987,31 @@ qint64 QNativeSocketEnginePrivate::nativeRead(char *data, qint64 maxSize)
 
 int QNativeSocketEnginePrivate::nativeSelect(int timeout, bool selectForRead) const
 {
-    int revents = 0;
-    return qt_safe_poll(socketDescriptor, selectForRead ? POLLIN : POLLOUT, timeout, &revents);
+    struct pollfd fds;
+    ::memset(&fds, 0, sizeof(struct pollfd));
+    fds.fd = socketDescriptor;
+    fds.events = (selectForRead ? POLLIN : POLLOUT);
+    return qt_safe_poll(&fds, 1, timeout);
 }
 
 int QNativeSocketEnginePrivate::nativeSelect(int timeout, bool checkRead, bool checkWrite,
                        bool *selectForRead, bool *selectForWrite) const
 {
-    int events = 0;
+    struct pollfd fds;
+    ::memset(&fds, 0, sizeof(struct pollfd));
+    fds.fd = socketDescriptor;
+    fds.events = 0;
     if (checkRead) {
-        events |= POLLIN;
+        fds.events |= POLLIN;
     }
     if (checkWrite) {
-        events |= POLLOUT;
+        fds.events |= POLLOUT;
     }
-    int revents = 0;
 
-    int ret = qt_safe_poll(socketDescriptor, events, timeout, &revents);
+    int ret = qt_safe_poll(&fds, 1, timeout);
     if (ret > 0) {
-        *selectForRead = ((revents & POLLIN) != 0);
-        *selectForWrite = ((revents & POLLOUT) != 0);
+        *selectForRead = ((fds.revents & POLLIN) != 0);
+        *selectForWrite = ((fds.revents & POLLOUT) != 0);
     }
     return ret;
 }
