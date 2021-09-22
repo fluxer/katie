@@ -180,10 +180,6 @@ QProcessManager::~QProcessManager()
 void QProcessManager::run()
 {
     forever {
-        fd_set readset;
-        FD_ZERO(&readset);
-        FD_SET(qt_qprocess_deadChild_pipe[0], &readset);
-
 #if defined (QPROCESS_DEBUG)
         qDebug() << "QProcessManager::run() waiting for children to die";
 #endif
@@ -191,10 +187,12 @@ void QProcessManager::run()
         // block forever, or until activity is detected on the dead child
         // pipe. the only other peers are the SIGCHLD signal handler, and the
         // QProcessManager destructor.
-        int nselect = ::select(qt_qprocess_deadChild_pipe[0] + 1, &readset, 0, 0, 0);
+        struct pollfd fds;
+        ::memset(&fds, 0, sizeof(struct pollfd));
+        fds.fd = qt_qprocess_deadChild_pipe[0];
+        fds.events = POLLIN;
+        int nselect = qt_safe_poll(&fds, 1, -1);
         if (nselect < 0) {
-            if (errno == EINTR)
-                continue;
             break;
         }
 
