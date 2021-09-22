@@ -912,8 +912,7 @@ qint64 QNativeSocketEnginePrivate::nativeWrite(const char *data, qint64 len)
 {
     Q_Q(QNativeSocketEngine);
 
-    ssize_t writtenBytes;
-    writtenBytes = qt_safe_write_nosignal(socketDescriptor, data, len);
+    ssize_t writtenBytes = qt_safe_write_nosignal(socketDescriptor, data, len);
 
     if (writtenBytes < 0) {
         switch (errno) {
