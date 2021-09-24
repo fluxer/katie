@@ -262,9 +262,11 @@ static inline int qt_safe_poll(struct pollfd *fds, nfds_t nfds, int timeout)
 {
     int ret;
     Q_EINTR_LOOP(ret, ::poll(fds, nfds, timeout));
-    if ((fds->revents & POLLERR) != 0 || (fds->revents & POLLHUP) != 0 || (fds->revents & POLLNVAL) != 0) {
-        // select() compat
-        return -1;
+    for (nfds_t i = 0; i < nfds; i++) {
+        if ((fds[i].revents & POLLERR) != 0 || (fds[i].revents & POLLHUP) != 0 || (fds[i].revents & POLLNVAL) != 0) {
+            // select() compat
+            return -1;
+        }
     }
     return ret;
 }
