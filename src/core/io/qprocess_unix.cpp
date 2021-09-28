@@ -216,7 +216,7 @@ void QProcessManager::catchDeadChildren()
         qt_safe_write((*it)->d_func()->deathPipe[1], "", 1);
 
 #if defined (QPROCESS_DEBUG)
-        qDebug() << "QProcessManager::run() sending death notice to" << process;
+        qDebug() << "QProcessManager::run() sending death notice to" << (*it);
 #endif
         ++it;
     }
