@@ -42,6 +42,8 @@ QT_BEGIN_NAMESPACE
 static const long maxOpenFiles = sysconf(_SC_OPEN_MAX);
 #endif
 
+static const char *sockTypeString[] = { "Read", "Write", "Exception" };
+
 QEventDispatcherUNIXPrivate::QEventDispatcherUNIXPrivate()
     : sn_highest(-1),
     interrupt(false)
@@ -99,40 +101,18 @@ int QEventDispatcherUNIXPrivate::doSelect(QEventLoop::ProcessEventsFlags flags, 
         if (errno == EBADF) {
             // it seems a socket notifier has a bad fd... find out
             // which one it is and disable it
-            fd_set fdset;
-            timeval tm;
-            tm.tv_sec = tm.tv_usec = 0l;
-
             for (int type = 0; type < 3; type++) {
                 foreach (QSockNot *sn, sn_vec[type].list) {
+                    struct pollfd fds;
+                    ::memset(&fds, 0, sizeof(struct pollfd));
+                    fds.fd = sn->fd;
+                    fds.events = 0;
 
-                    FD_ZERO(&fdset);
-                    FD_SET(sn->fd, &fdset);
-
-                    int ret = -1;
-                    switch (type) {
-                        case 0: {
-                            // read
-                            ret = qt_safe_select(sn->fd + 1, &fdset, 0, 0, &tm);
-                            break;
-                        }
-                        case 1: {
-                            // write
-                            ret = qt_safe_select(sn->fd + 1, 0, &fdset, 0, &tm);
-                            break;
-                        }
-                        case 2: {
-                            // except
-                            ret = qt_safe_select(sn->fd + 1, 0, 0, &fdset, &tm);
-                            break;
-                        }
-                    }
-
-                    if (ret == -1 && errno == EBADF) {
+                    int ret = qt_safe_poll(&fds, 1, 0);
+                    if (ret == -1 && (fds.revents & POLLNVAL) != 0) {
                         // disable the invalid socket notifier
-                        static const char *t[] = { "Read", "Write", "Exception" };
                         qWarning("QSocketNotifier: Invalid socket %d and type '%s', disabling...",
-                                 sn->fd, t[type]);
+                                    sn->fd, sockTypeString[type]);
                         sn->obj->setEnabled(false);
                     }
                 }
@@ -617,9 +597,8 @@ void QEventDispatcherUNIX::registerSocketNotifier(QSocketNotifier *notifier)
         if (p->fd < sockfd)
             break;
         if (p->fd == sockfd) {
-            static const char *t[] = { "Read", "Write", "Exception" };
             qWarning("QSocketNotifier: Multiple socket notifiers for "
-                      "same socket %d and type %s", sockfd, t[type]);
+                      "same socket %d and type %s", sockfd, sockTypeString[type]);
         }
     }
     list.insert(i, sn);
