@@ -659,8 +659,8 @@ void QProcessPrivate::execChild(const char *workingDir, char **path, char **argv
 
 bool QProcessPrivate::processStarted()
 {
-    QSTACKARRAY(ushort, buf, errorBufferMax);
-    qint64 i = qt_safe_read(childStartedPipe[0], &buf, sizeof buf);
+    QSTACKARRAY(QChar, buf, errorBufferMax);
+    qint64 i = qt_safe_read(childStartedPipe[0], &buf, sizeof(buf));
     if (startupSocketNotifier) {
         startupSocketNotifier->setEnabled(false);
         startupSocketNotifier->deleteLater();
@@ -675,7 +675,7 @@ bool QProcessPrivate::processStarted()
 
     // did we read an error message?
     if (i > 0)
-        q_func()->setErrorString(QString((const QChar *)buf, i / sizeof(QChar)));
+        q_func()->setErrorString(QString(buf, i / sizeof(QChar)));
 
     return i <= 0;
 }
