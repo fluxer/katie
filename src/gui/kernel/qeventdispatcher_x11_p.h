@@ -54,8 +54,7 @@ public:
     void flush();
 
 protected:
-    int select(int nfds, fd_set *readfds, fd_set *writefds, fd_set *exceptfds,
-               timeval *timeout) final;
+    int select(QEventDispatcherPollSet &pollset, int timeout) final;
 };
 
 QT_END_NAMESPACE

@@ -141,15 +141,20 @@ void QEventDispatcherX11::flush()
     XFlush(qt_x11Data->display);
 }
 
-int QEventDispatcherX11::select(int nfds, fd_set *readfds, fd_set *writefds, fd_set *exceptfds,
-                                timeval *timeout)
+int QEventDispatcherX11::select(QEventDispatcherPollSet &pollset, int timeout)
 {
     int xfd = ConnectionNumber(qt_x11Data->display);
     if (Q_LIKELY(xfd > 0)) {
-        nfds = qMax(nfds - 1, xfd) + 1;
-        FD_SET(xfd, readfds);
+        struct pollfd fds;
+        ::memset(&fds, 0, sizeof(struct pollfd));
+        fds.fd = xfd;
+        fds.events = POLLIN;
+        // ### hardcopy because QTypeInfo<T>::isComplex is false only for pointers
+        QEventDispatcherPollSet copy(pollset);
+        copy.append(fds);
+        return QEventDispatcherUNIX::select(copy, timeout);
     }
-    return QEventDispatcherUNIX::select(nfds, readfds, writefds, exceptfds, timeout);
+    return QEventDispatcherUNIX::select(pollset, timeout);
 }
 
 QT_END_NAMESPACE

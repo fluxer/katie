@@ -36,12 +36,14 @@
 #include "QtCore/qabstracteventdispatcher.h"
 #include "qabstracteventdispatcher_p.h"
 #include "qcore_unix_p.h"
-#include "qvarlengtharray.h"
+#include "qstdcontainers_p.h"
 
 #include <sys/time.h>
 #include <sys/select.h>
 
 QT_BEGIN_NAMESPACE
+
+typedef QStdVector<struct pollfd> QEventDispatcherPollSet;
 
 // internal timer info
 struct QTimerInfo {
@@ -85,28 +87,6 @@ public:
     int activateTimers();
 };
 
-struct QSockNot
-{
-    QSocketNotifier *obj;
-    int fd;
-    fd_set *queue;
-};
-
-class QSockNotType
-{
-public:
-    QSockNotType();
-    ~QSockNotType();
-
-    typedef QVarLengthArray<QSockNot*, 32> List;
-
-    List list;
-    fd_set select_fds;
-    fd_set enabled_fds;
-    fd_set pending_fds;
-
-};
-
 class QEventDispatcherUNIXPrivate;
 
 class Q_CORE_EXPORT QEventDispatcherUNIX : public QAbstractEventDispatcher
@@ -141,8 +121,7 @@ protected:
     int activateTimers();
     int activateSocketNotifiers();
 
-    virtual int select(int nfds, fd_set *readfds, fd_set *writefds, fd_set *exceptfds,
-                       timeval *timeout);
+    virtual int select(QEventDispatcherPollSet &pollset, int timeout);
 };
 
 class Q_CORE_EXPORT QEventDispatcherUNIXPrivate : public QAbstractEventDispatcherPrivate
@@ -153,21 +132,14 @@ public:
     QEventDispatcherUNIXPrivate();
     ~QEventDispatcherUNIXPrivate();
 
-    int doSelect(QEventLoop::ProcessEventsFlags flags, timeval *timeout);
-    int initThreadWakeUp();
-    int processThreadWakeUp(int nsel);
+    int doSelect(QEventLoop::ProcessEventsFlags flags, int timeout);
 
     int thread_pipe[2];
 
-    // highest fd for all socket notifiers
-    int sn_highest;
-    // 3 socket notifier types - read, write and exception
-    QSockNotType sn_vec[3];
+    QStdVector<QSocketNotifier*> sn_select;
+    QStdVector<QSocketNotifier*> sn_pending;
 
     QTimerInfoList timerList;
-
-    // pending socket notifiers list
-    QSockNotType::List sn_pending_list;
 
     QAtomicInt wakeUps;
     bool interrupt;
