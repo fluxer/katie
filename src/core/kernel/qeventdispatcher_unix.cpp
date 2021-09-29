@@ -43,6 +43,8 @@ QT_BEGIN_NAMESPACE
 static const long maxOpenFiles = sysconf(_SC_OPEN_MAX);
 #endif
 
+static const char *sockTypeString[] = { "Read", "Write", "Exception" };
+
 QEventDispatcherUNIXPrivate::QEventDispatcherUNIXPrivate()
     : interrupt(false)
 {
@@ -119,7 +121,6 @@ int QEventDispatcherUNIXPrivate::doSelect(QEventLoop::ProcessEventsFlags flags, 
                 }
                 Q_ASSERT_X(sn != nullptr, "QSocketNotifier", "Internal error");
                 // disable the invalid socket notifier
-                static const char *sockTypeString[] = { "Read", "Write", "Exception" };
                 qWarning("QSocketNotifier: Invalid socket %d and type '%s', disabling...",
                          sn->socket(), sockTypeString[sn->type()]);
                 sn->setEnabled(false);
@@ -133,6 +134,7 @@ int QEventDispatcherUNIXPrivate::doSelect(QEventLoop::ProcessEventsFlags flags, 
 
     int nevents = 0;
     if (nsel > 0 && (tpfds.revents & POLLIN) != 0) {
+        nevents++;
         // some other thread woke us up... consume the data on the thread pipe so that
         // select doesn't immediately return next time
         QSTACKARRAY(char, c, 16);
@@ -143,7 +145,6 @@ int QEventDispatcherUNIXPrivate::doSelect(QEventLoop::ProcessEventsFlags flags, 
             // hopefully, this is dead code
             qWarning("QEventDispatcherUNIX: internal error, wakeUps.testAndSetRelease(1, 0) failed!");
         }
-        nevents++;
     }
 
     // if select says data is ready on any socket, then set the socket notifier to pending
@@ -563,8 +564,8 @@ QEventDispatcherUNIX::registeredTimers(QObject *object) const
 void QEventDispatcherUNIX::registerSocketNotifier(QSocketNotifier *notifier)
 {
     Q_ASSERT(notifier);
-#ifndef QT_NO_DEBUG
     int sockfd = notifier->socket();
+#ifndef QT_NO_DEBUG
     if (Q_UNLIKELY(sockfd < 0 || sockfd >= maxOpenFiles)) {
         qWarning("QSocketNotifier: Internal error");
         return;
@@ -575,6 +576,13 @@ void QEventDispatcherUNIX::registerSocketNotifier(QSocketNotifier *notifier)
 #endif
 
     Q_D(QEventDispatcherUNIX);
+    foreach (const QSocketNotifier *sn, d->sn_select) {
+        if (sn->socket() == sockfd) {
+            qWarning("QSocketNotifier: Multiple socket notifiers for "
+                     "same socket %d and type %s", sockfd, sockTypeString[notifier->type()]);
+        }
+    }
+
     d->sn_select.append(notifier);
 }
 
