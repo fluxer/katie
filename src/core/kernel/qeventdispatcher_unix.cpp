@@ -80,13 +80,12 @@ int QEventDispatcherUNIXPrivate::doSelect(QEventLoop::ProcessEventsFlags flags, 
     pollset.append(tpfds);
 
     if (! (flags & QEventLoop::ExcludeSocketNotifiers)) {
-        for (int i = 0; i < sn_select.size(); i++) {
-            QSocketNotifier *p = sn_select.at(i);
+        foreach (const QSocketNotifier *sn, sn_select) {
 
             struct pollfd fds;
             ::memset(&fds, 0, sizeof(struct pollfd));
-            fds.fd = p->socket();
-            switch (p->type()) {
+            fds.fd = sn->socket();
+            switch (sn->type()) {
                 case QSocketNotifier::Read: {
                     fds.events = POLLIN;
                     break;
@@ -107,20 +106,28 @@ int QEventDispatcherUNIXPrivate::doSelect(QEventLoop::ProcessEventsFlags flags, 
     int nsel = q->select(pollset, timeout);
 
     if (nsel == -1) {
-        for (int i = 1; i < pollset.size(); i++) {
-            // TODO: make it work for multiple sockets
-            struct pollfd p = pollset.at(i);
+        QEventDispatcherPollSet::iterator it = (pollset.begin() + 1);
+        while (it != pollset.end()) {
+            struct pollfd p = (*it);
             if ((p.revents & POLLNVAL) != 0) {
-                QSocketNotifier *sn = sn_select.at(i - 1);
+                QSocketNotifier *sn = nullptr;
+                foreach (QSocketNotifier *snit, sn_select) {
+                    if (snit->socket() == p.fd) {
+                        sn = snit;
+                        break;
+                    }
+                }
+                Q_ASSERT_X(sn != nullptr, "QSocketNotifier", "Internal error");
                 // disable the invalid socket notifier
                 static const char *sockTypeString[] = { "Read", "Write", "Exception" };
                 qWarning("QSocketNotifier: Invalid socket %d and type '%s', disabling...",
                          sn->socket(), sockTypeString[sn->type()]);
                 sn->setEnabled(false);
-                pollset.remove(i);
-                sn_select.remove(i - 1);
-                break;
+                it = pollset.erase(it);
+                sn_select.removeOne(sn);
+                continue;
             }
+            it++;
         }
     }
 
@@ -586,19 +593,8 @@ void QEventDispatcherUNIX::unregisterSocketNotifier(QSocketNotifier *notifier)
 #endif
 
     Q_D(QEventDispatcherUNIX);
-    for (int i = 0; i < d->sn_select.count(); i++) {
-        if (d->sn_select.at(i) == notifier) {
-            d->sn_select.remove(i);
-            break;
-        }
-    }
-
-    for (int i = 0; i < d->sn_pending.count(); i++) {
-        if (d->sn_pending.at(i) == notifier) {
-            d->sn_pending.remove(i);
-            break;
-        }
-    }
+    d->sn_select.removeOne(notifier);
+    d->sn_pending.removeOne(notifier);
 }
 
 void QEventDispatcherUNIX::setSocketNotifierPending(QSocketNotifier *notifier)
@@ -634,8 +630,7 @@ int QEventDispatcherUNIX::activateSocketNotifiers()
     int n_act = 0;
     QEvent event(QEvent::SockAct);
     while (!d->sn_pending.isEmpty()) {
-        QSocketNotifier *sn = d->sn_pending.value(0);
-        d->sn_pending.remove(0);
+        QSocketNotifier *sn = d->sn_pending.takeFirst();
         QCoreApplication::sendEvent(sn, &event);
         n_act++;
     }
