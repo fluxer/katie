@@ -25,7 +25,6 @@
 #include "qiodevice.h"
 #include "qhostaddress.h"
 #include "qelapsedtimer.h"
-#include "qvarlengtharray.h"
 #include "qnetworkinterface.h"
 #include "qcorecommon_p.h"
 
@@ -724,22 +723,24 @@ bool QNativeSocketEnginePrivate::nativeHasPendingDatagrams() const
 
 qint64 QNativeSocketEnginePrivate::nativePendingDatagramSize() const
 {
-    QVarLengthArray<char, 8192> udpMessagePeekBuffer(8192);
+    ssize_t udpMessagePeekBufferSize = 8192;
     ssize_t recvResult = -1;
 
     for (;;) {
+        QSTACKARRAY(char, udpMessagePeekBuffer, udpMessagePeekBufferSize);
+
         // the data written to udpMessagePeekBuffer is discarded, so
         // this function is still reentrant although it might not look
         // so.
-        recvResult = ::recv(socketDescriptor, udpMessagePeekBuffer.data(),
-            udpMessagePeekBuffer.size(), MSG_PEEK);
+        recvResult = ::recv(socketDescriptor, udpMessagePeekBuffer,
+            udpMessagePeekBufferSize, MSG_PEEK);
         if (recvResult == -1 && errno == EINTR)
             continue;
 
-        if (recvResult != (ssize_t) udpMessagePeekBuffer.size())
+        if (recvResult != udpMessagePeekBufferSize)
             break;
 
-        udpMessagePeekBuffer.resize(udpMessagePeekBuffer.size() * 2);
+        udpMessagePeekBufferSize = (udpMessagePeekBufferSize * 2);
     }
 
 #if defined (QNATIVESOCKETENGINE_DEBUG)
