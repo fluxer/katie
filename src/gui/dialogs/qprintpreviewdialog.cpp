@@ -221,9 +221,9 @@ void QPrintPreviewDialogPrivate::init(QPrinter *_printer)
     LineEdit *zoomEditor = new LineEdit;
     zoomEditor->setValidator(new ZoomFactorValidator(1, 1000, 1, zoomEditor));
     zoomFactor->setLineEdit(zoomEditor);
-    static const short factorsX2[] = { 25, 50, 100, 200, 250, 300, 400, 800, 1600 };
-    for (int i = 0; i < int(sizeof(factorsX2) / sizeof(factorsX2[0])); ++i)
-        zoomFactor->addItem(QPrintPreviewDialog::tr("%1%").arg(factorsX2[i] / 2.0));
+    static const qreal factorsTbl[] = { 12.5, 25.0, 50.0, 100.0, 125.0, 150.0, 200.0, 400.0, 800.0 };
+    for (int i = 0; i < int(sizeof(factorsTbl) / sizeof(factorsTbl[0])); ++i)
+        zoomFactor->addItem(QPrintPreviewDialog::tr("%1%").arg(factorsTbl[i]));
     QObject::connect(zoomFactor->lineEdit(), SIGNAL(editingFinished()),
                      q, SLOT(_q_zoomFactorChanged()));
     QObject::connect(zoomFactor, SIGNAL(currentIndexChanged(int)),

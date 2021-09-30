@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-09-17 02:15+0300\n"
+"POT-Creation-Date: 2021-09-30 19:38+0300\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -174,20 +174,20 @@ msgstr ""
 msgid "No program defined"
 msgstr ""
 
-#: src/core/io/qprocess_unix.cpp:349
+#: src/core/io/qprocess_unix.cpp:335
 msgid "Could not open input redirection for reading"
 msgstr ""
 
-#: src/core/io/qprocess_unix.cpp:361
+#: src/core/io/qprocess_unix.cpp:347
 msgid "Could not open output redirection for writing"
 msgstr ""
 
-#: src/core/io/qprocess_unix.cpp:564
+#: src/core/io/qprocess_unix.cpp:550
 msgid "Resource error (fork failure): %1"
 msgstr ""
 
-#: src/core/io/qprocess_unix.cpp:801 src/core/io/qprocess_unix.cpp:849
-#: src/core/io/qprocess_unix.cpp:919 src/core/io/qprocess_unix.cpp:981
+#: src/core/io/qprocess_unix.cpp:788 src/core/io/qprocess_unix.cpp:836
+#: src/core/io/qprocess_unix.cpp:906 src/core/io/qprocess_unix.cpp:968
 msgid "Process operation timed out"
 msgstr ""
 
@@ -2173,7 +2173,7 @@ msgstr ""
 msgid "Step &down"
 msgstr ""
 
-#: src/gui/kernel/qwidget.cpp:5080
+#: src/gui/kernel/qwidget.cpp:5072
 msgid "*"
 msgstr ""
 
@@ -4814,20 +4814,20 @@ msgstr ""
 msgid "Operation on socket is not supported"
 msgstr ""
 
-#: src/network/socket/qlocalserver_unix.cpp:191
+#: src/network/socket/qlocalserver_unix.cpp:187
 msgid "%1: Permission denied"
 msgstr ""
 
-#: src/network/socket/qlocalserver_unix.cpp:199
+#: src/network/socket/qlocalserver_unix.cpp:195
 #: src/network/socket/qlocalserver.cpp:202
 msgid "%1: Name error"
 msgstr ""
 
-#: src/network/socket/qlocalserver_unix.cpp:203
+#: src/network/socket/qlocalserver_unix.cpp:199
 msgid "%1: Address in use"
 msgstr ""
 
-#: src/network/socket/qlocalserver_unix.cpp:208
+#: src/network/socket/qlocalserver_unix.cpp:204
 #: src/network/socket/qlocalsocket_unix.cpp:141
 msgid "%1: Unknown error %2"
 msgstr ""
