@@ -563,7 +563,7 @@ void QPrintPreviewDialogPrivate::_q_zoomFactorChanged()
     factor = qMax(qreal(1.0), qMin(qreal(1000.0), factor));
     if (ok) {
         preview->setZoomFactor(factor/100.0);
-        zoomFactor->setEditText(QString::number(factor));
+        zoomFactor->setEditText(QString::fromLatin1("%1%").arg(factor));
         setFitting(false);
     }
 }
