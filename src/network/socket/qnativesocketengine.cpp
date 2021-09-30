@@ -596,11 +596,7 @@ bool QNativeSocketEngine::listen()
     Q_CHECK_STATE(QNativeSocketEngine::listen(), QAbstractSocket::BoundState, false);
     Q_CHECK_TYPE(QNativeSocketEngine::listen(), QAbstractSocket::TcpSocket, false);
 
-    // We're using a backlog of 50. Most modern kernels support TCP
-    // syncookies by default, and if they do, the backlog is ignored.
-    // When there is no support for TCP syncookies, this value is
-    // fine.
-    return d->nativeListen(50);
+    return d->nativeListen(SOMAXCONN);
 }
 
 /*!

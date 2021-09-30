@@ -97,7 +97,7 @@ bool QLocalServerPrivate::listen(const QString &requestedServerName)
     }
 
     // listen for connections
-    if (-1 == ::listen(listenSocket, 50)) {
+    if (-1 == ::listen(listenSocket, SOMAXCONN)) {
         setError(QLatin1String("QLocalServer::listen"));
         closeServer();
         listenSocket = -1;
