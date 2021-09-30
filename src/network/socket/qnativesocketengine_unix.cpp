@@ -501,6 +501,16 @@ bool QNativeSocketEnginePrivate::nativeListen(int backlog)
 int QNativeSocketEnginePrivate::nativeAccept()
 {
     int acceptedDescriptor = qt_safe_accept(socketDescriptor, 0, 0);
+    if (acceptedDescriptor == -1) {
+        switch (errno) {
+        case EOPNOTSUPP:
+            setError(QAbstractSocket::UnsupportedSocketOperationError,
+                     OperationUnsupportedErrorString);
+            break;
+        default:
+            break;
+        }
+    }
 
     return acceptedDescriptor;
 }
