@@ -476,6 +476,10 @@ bool QNativeSocketEnginePrivate::nativeListen(int backlog)
             setError(QAbstractSocket::AddressInUseError,
                      PortInuseErrorString);
             break;
+        case EOPNOTSUPP:
+            setError(QAbstractSocket::UnsupportedSocketOperationError,
+                     OperationUnsupportedErrorString);
+            break;
         default:
             break;
         }
