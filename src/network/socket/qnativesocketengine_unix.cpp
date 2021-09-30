@@ -358,12 +358,11 @@ bool QNativeSocketEnginePrivate::nativeConnect(const QHostAddress &addr, quint16
             break;
         case EINPROGRESS:
         case EALREADY:
-            setError(QAbstractSocket::UnfinishedSocketOperationError, InvalidSocketErrorString);
+            setError(QAbstractSocket::UnfinishedSocketOperationError, ResourceErrorString);
             socketState = QAbstractSocket::ConnectingState;
             break;
         case EAGAIN:
-            setError(QAbstractSocket::UnfinishedSocketOperationError, InvalidSocketErrorString);
-            setError(QAbstractSocket::SocketResourceError, ResourceErrorString);
+            setError(QAbstractSocket::UnfinishedSocketOperationError, ResourceErrorString);
             break;
         case EACCES:
         case EPERM:
