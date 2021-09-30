@@ -79,6 +79,13 @@ static inline int qt_safe_connect(int sockfd, const struct sockaddr *addr, QT_SO
     return ret;
 }
 
+static inline ssize_t qt_safe_recvfrom(int sockfd, void *buf, size_t len, int flags, struct sockaddr *from, QT_SOCKLEN_T *fromlen)
+{
+    ssize_t ret;
+    Q_EINTR_LOOP(ret, ::recvfrom(sockfd, buf, len, flags, from, fromlen));
+    return ret;
+}
+
 static inline int qt_safe_sendto(int sockfd, const void *buf, size_t len, int flags, const struct sockaddr *to, QT_SOCKLEN_T tolen)
 {
 #ifdef MSG_NOSIGNAL
