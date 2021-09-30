@@ -87,16 +87,6 @@ public:
         }
     }
 
-    void insertBlank(int idx, int count) {
-        int newSize = m_count + count;
-        reserve(newSize);
-        int moveCount = m_count - idx;
-        if (moveCount) 
-            ::memmove(m_data + idx + count,  m_data + idx, 
-                      moveCount * sizeof(T));
-        m_count = newSize;
-    }
-
     void remove(int idx, int count = 1) {
         int moveCount = m_count - (idx + count);
         if (moveCount)
