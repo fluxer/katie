@@ -723,15 +723,12 @@ bool QNativeSocketEnginePrivate::nativeHasPendingDatagrams() const
 
 qint64 QNativeSocketEnginePrivate::nativePendingDatagramSize() const
 {
-    ssize_t udpMessagePeekBufferSize = 8192;
+    ssize_t udpMessagePeekBufferSize = QT_BUFFSIZE;
     ssize_t recvResult = -1;
 
     for (;;) {
         QSTACKARRAY(char, udpMessagePeekBuffer, udpMessagePeekBufferSize);
 
-        // the data written to udpMessagePeekBuffer is discarded, so
-        // this function is still reentrant although it might not look
-        // so.
         recvResult = ::recv(socketDescriptor, udpMessagePeekBuffer,
             udpMessagePeekBufferSize, MSG_PEEK);
         if (recvResult == -1 && errno == EINTR)
