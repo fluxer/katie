@@ -311,10 +311,11 @@ static bool addCircle(const QBezier *b, qreal offset, QBezier *o)
 
     }
 
-    QPointF circle[3];
-    circle[0] = QPointF(b->x1, b->y1) + normals[0]*offset;
-    circle[1] = QPointF(qreal(0.5)*(b->x1 + b->x4), qreal(0.5)*(b->y1 + b->y4)) + normals[1]*offset;
-    circle[2] = QPointF(b->x4, b->y4) + normals[2]*offset;
+    QPointF circle[3] = {
+        QPointF(b->x1, b->y1) + normals[0]*offset,
+        QPointF(qreal(0.5)*(b->x1 + b->x4), qreal(0.5)*(b->y1 + b->y4)) + normals[1]*offset,
+        QPointF(b->x4, b->y4) + normals[2]*offset
+    };
 
     for (int i = 0; i < 2; ++i) {
         qreal kappa = qreal(2.0) * KAPPA * sign * offset * angles[i];
