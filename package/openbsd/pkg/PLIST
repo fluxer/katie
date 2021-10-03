@@ -1295,37 +1295,6 @@ include/katie/QtScriptTools/
 include/katie/QtScriptTools/QScriptEngineDebugger
 include/katie/QtScriptTools/QtScriptTools
 include/katie/QtScriptTools/qscriptenginedebugger.h
-include/katie/QtSql/
-include/katie/QtSql/QSqlDatabase
-include/katie/QtSql/QSqlDriver
-include/katie/QtSql/QSqlDriverFactoryInterface
-include/katie/QtSql/QSqlDriverPlugin
-include/katie/QtSql/QSqlError
-include/katie/QtSql/QSqlField
-include/katie/QtSql/QSqlIndex
-include/katie/QtSql/QSqlQuery
-include/katie/QtSql/QSqlQueryModel
-include/katie/QtSql/QSqlRecord
-include/katie/QtSql/QSqlRelation
-include/katie/QtSql/QSqlRelationalDelegate
-include/katie/QtSql/QSqlRelationalTableModel
-include/katie/QtSql/QSqlResult
-include/katie/QtSql/QSqlTableModel
-include/katie/QtSql/QtSql
-include/katie/QtSql/qsql.h
-include/katie/QtSql/qsqldatabase.h
-include/katie/QtSql/qsqldriver.h
-include/katie/QtSql/qsqldriverplugin.h
-include/katie/QtSql/qsqlerror.h
-include/katie/QtSql/qsqlfield.h
-include/katie/QtSql/qsqlindex.h
-include/katie/QtSql/qsqlquery.h
-include/katie/QtSql/qsqlquerymodel.h
-include/katie/QtSql/qsqlrecord.h
-include/katie/QtSql/qsqlrelationaldelegate.h
-include/katie/QtSql/qsqlrelationaltablemodel.h
-include/katie/QtSql/qsqlresult.h
-include/katie/QtSql/qsqltablemodel.h
 include/katie/QtSvg/
 include/katie/QtSvg/QGraphicsSvgItem
 include/katie/QtSvg/QSvgGenerator
@@ -1473,8 +1442,6 @@ lib/katie/plugins/imageformats/
 @so lib/katie/plugins/imageformats/libqtiff.so
 lib/katie/plugins/script/
 @so lib/katie/plugins/script/libqtscriptdbus.so
-lib/katie/plugins/sqldrivers/
-@so lib/katie/plugins/sqldrivers/libqsqlodbc.so
 @lib lib/libKtCore.so.${LIBKtCore_VERSION}
 @lib lib/libKtDBus.so.${LIBKtDBus_VERSION}
 @lib lib/libKtDeclarative.so.${LIBKtDeclarative_VERSION}
@@ -1484,7 +1451,6 @@ lib/katie/plugins/sqldrivers/
 @lib lib/libKtNetwork.so.${LIBKtNetwork_VERSION}
 @lib lib/libKtScript.so.${LIBKtScript_VERSION}
 @lib lib/libKtScriptTools.so.${LIBKtScriptTools_VERSION}
-@lib lib/libKtSql.so.${LIBKtSql_VERSION}
 @lib lib/libKtSvg.so.${LIBKtSvg_VERSION}
 @lib lib/libKtTest.so.${LIBKtTest_VERSION}
 @lib lib/libKtUiTools.so.${LIBKtUiTools_VERSION}
@@ -1498,7 +1464,6 @@ lib/pkgconfig/KtGui.pc
 lib/pkgconfig/KtNetwork.pc
 lib/pkgconfig/KtScript.pc
 lib/pkgconfig/KtScriptTools.pc
-lib/pkgconfig/KtSql.pc
 lib/pkgconfig/KtSvg.pc
 lib/pkgconfig/KtTest.pc
 lib/pkgconfig/KtUiTools.pc

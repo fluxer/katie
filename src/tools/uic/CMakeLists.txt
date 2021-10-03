@@ -15,7 +15,6 @@ set(UIC_SOURCES
     ${CMAKE_CURRENT_SOURCE_DIR}/uicmain.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/uic.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/customwidgetsinfo.cpp
-    ${CMAKE_CURRENT_SOURCE_DIR}/databaseinfo.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/driver.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/treewalker.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/ui4.cpp

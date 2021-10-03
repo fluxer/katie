@@ -247,12 +247,6 @@ typedef double qreal;
 #  define Q_GUI_EXPORT Q_DECL_IMPORT
 #endif
 
-#ifdef KtSql_EXPORTS
-#  define Q_SQL_EXPORT Q_DECL_EXPORT
-#else
-#  define Q_SQL_EXPORT Q_DECL_IMPORT
-#endif
-
 #ifdef KtNetwork_EXPORTS
 #  define Q_NETWORK_EXPORT Q_DECL_EXPORT
 #else

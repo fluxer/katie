@@ -39,7 +39,6 @@ Uic::Uic(Driver *d)
      : drv(d),
        out(d->output()),
        opt(d->option()),
-       info(),
        externalPix(true)
 {
 }
@@ -213,7 +212,6 @@ bool Uic::write(DomUI *ui)
 
     externalPix = ui->elementImages() == 0;
 
-    info.acceptUI(ui);
     cWidgetsInfo.acceptUI(ui);
     WriteIncludes writeIncludes(this);
     writeIncludes.acceptUI(ui);

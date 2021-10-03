@@ -124,7 +124,7 @@ set(KATIE_TYPE SHARED CACHE STRING "Build type")
 # used by the the designer tool. if it is ever needed for something it can just be added here,
 # Q_DESIGNER_COMPONENTS_EXPORT must be introduced and genmap.py adjusted - the rest of the
 # build system has everything in place.
-set(KATIE_COMPONENTS "Core Gui Declarative Designer Network Sql Svg Xml Script ScriptTools Test UiTools")
+set(KATIE_COMPONENTS "Core Gui Declarative Designer Network Svg Xml Script ScriptTools Test UiTools")
 set(KATIE_TOOLS "moc uic rcc designer qscript qtconfig")
 
 set(KATIE_HEADERS_PATH "${CMAKE_INSTALL_FULL_INCLUDEDIR}/katie" CACHE PATH "Headers installation path")
@@ -269,15 +269,6 @@ set_package_properties(PNG PROPERTIES
     TYPE REQUIRED
 )
 
-# v3.5.0+ required for sqlite3_open_v2()
-find_package(Sqlite 3.5.0)
-set_package_properties(Sqlite PROPERTIES
-    PURPOSE "Required for SQLite database support"
-    DESCRIPTION "Software library that implements SQL database engine"
-    URL "https://www.sqlite.org/"
-    TYPE REQUIRED
-)
-
 find_package(JPEG)
 set_package_properties(JPEG PROPERTIES
     PURPOSE "JPEG format handler"
@@ -318,15 +309,6 @@ set_package_properties(DBus PROPERTIES
     PURPOSE "Required for D-Bus support"
     DESCRIPTION "Message bus system, a simple way for applications to talk to one another"
     URL "https://www.freedesktop.org/wiki/Software/dbus"
-    TYPE RECOMMENDED
-)
-
-# v3.0+ required for SQLSetEnvAttr() and many other but unixODBC versioning is different
-find_package(ODBC)
-set_package_properties(ODBC PROPERTIES
-    PURPOSE "Required for ODBC database support"
-    DESCRIPTION "The definitive standard for ODBC on non MS Windows platforms"
-    URL "http://www.unixodbc.org"
     TYPE RECOMMENDED
 )
 
@@ -571,7 +553,6 @@ add_subdirectory(src/network)
 add_subdirectory(src/plugins)
 add_subdirectory(src/script)
 add_subdirectory(src/scripttools)
-add_subdirectory(src/sql)
 add_subdirectory(src/svg)
 add_subdirectory(src/test)
 add_subdirectory(src/uitools)
@@ -855,8 +836,6 @@ katie_generate_obsolete(QSizeF QtCore qsize.h)
 katie_generate_obsolete(QSpacerItem QtGui qlayoutitem.h)
 katie_generate_obsolete(QSplitterHandle QtGui qsplitter.h)
 katie_generate_obsolete(QSpontaneKeyEvent QtTest qtestspontaneevent.h)
-katie_generate_obsolete(QSqlDriverFactoryInterface QtSql qsqldriverplugin.h)
-katie_generate_obsolete(QSqlRelation QtSql qsqlrelationaltablemodel.h)
 katie_generate_obsolete(QStandardItemEditorCreator QtGui qitemeditorfactory.h)
 katie_generate_obsolete(QStandardItem QtGui qstandarditemmodel.h)
 katie_generate_obsolete(QStatusTipEvent QtGui qevent.h)

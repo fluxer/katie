@@ -11,7 +11,6 @@ include_directories(
     ${CMAKE_BINARY_DIR}/include/QtDeclarative
     ${CMAKE_BINARY_DIR}/include/QtDesigner
     ${CMAKE_BINARY_DIR}/include/QtNetwork
-    ${CMAKE_BINARY_DIR}/include/QtSql
     ${CMAKE_BINARY_DIR}/include/QtSvg
     ${CMAKE_BINARY_DIR}/include/QtXml
     ${CMAKE_BINARY_DIR}/include/QtScript

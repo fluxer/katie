@@ -10,10 +10,9 @@ pkgdesc='C++ toolkit derived from the Qt 4.8 framework'
 arch=('i486' 'i686' 'pentium4' 'x86_64' 'arm')
 url='https://github.com/fluxer/katie'
 license=('LGPL' 'BSD')
-depends=('libsm' 'libxcursor' 'libxinerama' 'icu' 'libcups' 'libxrandr' 'sqlite'
-        'fontconfig' 'xdg-utils' 'jansson')
-makedepends=('cmake' 'git' 'unixodbc' 'unifdef')
-optdepends=('unixodbc: ODBC driver')
+depends=('libsm' 'libxcursor' 'libxinerama' 'icu' 'libcups' 'libxrandr' 'fontconfig'
+         'xdg-utils' 'jansson')
+makedepends=('cmake' 'git' 'unifdef')
 source=("git+https://github.com/fluxer/katie")
 sha1sums=('SKIP')
 conflicts=('katie')

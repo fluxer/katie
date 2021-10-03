@@ -372,10 +372,6 @@ incmap = {
         'QNetworkProxyQuery': 'qnetworkproxy.h',
         'Q_IPV6ADDR': 'qhostaddress.h',
     },
-    'QtSql': {
-        'QSqlDriverFactoryInterface': 'qsqldriverplugin.h',
-        'QSqlRelation': 'qsqlrelationaltablemodel.h',
-    },
     'QtTest': {
         'QEventSizeOfChecker': 'qtestspontaneevent.h',
         'QSpontaneKeyEvent': 'qtestspontaneevent.h',

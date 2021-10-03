@@ -578,9 +578,6 @@ void QDataWidgetMapper::revert()
 
     Returns true if all the values were submitted, otherwise false.
 
-    Note: For database models, QSqlQueryModel::lastError() can be
-    used to retrieve the last error.
-
     \sa revert(), setSubmitPolicy()
  */
 bool QDataWidgetMapper::submit()

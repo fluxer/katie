@@ -7,13 +7,13 @@ There are several things you should be aware before considering Katie:
  - some components and tools have been removed:
   - QMake, Linguist, Assistant, checksdk, macdeployqt, pixeltool, qconfig,
     qdoc, qev, qvfb, runonphone and other non-essential
-  - Qt3Support, QtWebKit, QtHelp, QtXmlPatterns, QtOpenGL, ActiveQt, Phonon and
-    QtMultimedia
+  - Qt3Support, QtWebKit, QtHelp, QtXmlPatterns, QtOpenGL, ActiveQt, Phonon,
+    QtMultimedia and QtSql
 
  - some things have changed:
   - QMake build system replaced with CMake
-  - zlib, zstd, Jansson, OpenSSL, PCRE, Freetype, ICU, X11, libpng and SQLite
-    are required for building
+  - zlib, zstd, Jansson, OpenSSL, PCRE, Freetype, ICU, X11 and libpng are
+    required for building
   - OpenSSL, D-Bus and CUPS must be linked to during build
   - QtUiTools is build as shared library by default
   - moc, uic, rcc, etc. are linked to components
@@ -22,7 +22,6 @@ There are several things you should be aware before considering Katie:
     e.g. QIconEngineV2 into QIconEngine and QKeyEventEx into QKeyEvent
   - QGuiPlatformPlugin class is public
   - updated localizations data from Common Locale Data Repository v39
-  - SQLite driver uses UTF-8 encoding instead of UTF-16
   - default text codec for C-strings is UTF-8
   - QTranslator uses gettext for translations
   - OpenVG is no longer supported graphics output
@@ -32,8 +31,6 @@ There are several things you should be aware before considering Katie:
   - QML debugger and inspector have been removed, potentially dangerous
   - no SIMD, zero performance impact with decent compiler
   - state machine is no more
-  - removed non-open source DB2, OCI, TDS and InterBase database drivers
-  - removed PostgreSQL and MySQL database drivers
   - removed 3rd party sources that are very common nowdays
   - dropped non-open source and discontinued platforms support
   - dropped dnotify filesystem watcher support
@@ -54,13 +51,11 @@ There are several things you should be aware before considering Katie:
   - JSON document handler
   - standard directories handler
   - building with OpenSSL v1.1+ is possible
-  - building with IODBC instead of unixODBC is possible
   - building with LTO is possible and supported, if the toolchain can handle it
   - alternative libc implementations support
   - additional text codecs via ICU converter
   - Unicode v5.0+ characters and partial scripts support
   - support for AArch64 architecture
-  - support for PostgreSQL v9.1+
   - support for locale aliases
   - support for generating SHA-256 and SHA-512 hash sums (SHA-2)
   - verification section for plugins build with Clang

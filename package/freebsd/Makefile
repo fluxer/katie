@@ -13,7 +13,7 @@ DISTFILES = master.tar.gz
 DIST_SUBDIR = ${PORTNAME}
 WRKSRC = ${WRKDIR}/katie-master
 
-USES = compiler:c++11-lang pkgconfig cmake ssl xorg jpeg sqlite:3 desktop-file-utils
+USES = compiler:c++11-lang pkgconfig cmake ssl xorg jpeg  desktop-file-utils
 USE_XORG = x11 xinerama xrandr xrender xfixes xcursor xext sm ice
 USE_LDCONFIG = yes
 RUN_DEPENDS = xdg-open:devel/xdg-utils
@@ -22,7 +22,7 @@ LIB_DEPENDS = libzstd.so:archivers/zstd libicuuc.so:devel/icu \
 	libpcre.so:devel/pcre libpng.so:graphics/png \
 	libtiff.so:graphics/tiff libfreetype.so:print/freetype2 \
 	libfontconfig.so:x11-fonts/fontconfig libdbus-1.so:devel/dbus \
-	libcups.so:print/cups libiodbc.so:databases/libiodbc
+	libcups.so:print/cups
 CMAKE_ARGS = -DKATIE_TOOLS_SUFFIX="-katie" -Wno-dev
 
 OPTIONS_DEFINE = NLS
