@@ -37,7 +37,6 @@
 #include <QtCore/qmutex.h>
 #include <QtCore/qthread.h>
 #include <QtCore/qurl.h>
-#include <QtCore/qvarlengtharray.h>
 #include "qcorecommon_p.h"
 
 QT_BEGIN_NAMESPACE
@@ -578,16 +577,15 @@ void QSslSocketBackendPrivate::transmit()
         }
 
         // Check if we've got any data to be written to the socket.
-        QVarLengthArray<char, 4096> data;
         int pendingBytes;
         while (plainSocket->isValid() && (pendingBytes = BIO_pending(writeBio)) > 0
             && plainSocket->openMode() != QIODevice::NotOpen) {
             // Read encrypted data from the write BIO into a buffer.
-            data.resize(pendingBytes);
-            int encryptedBytesRead = BIO_read(writeBio, data.data(), pendingBytes);
+            QSTACKARRAY(char, data, pendingBytes);
+            int encryptedBytesRead = BIO_read(writeBio, data, pendingBytes);
 
             // Write encrypted data from the buffer to the socket.
-            qint64 actualWritten = plainSocket->write(data.constData(), encryptedBytesRead);
+            qint64 actualWritten = plainSocket->write(data, encryptedBytesRead);
 #ifdef QSSLSOCKET_DEBUG
             qDebug() << "QSslSocketBackendPrivate::transmit: wrote" << encryptedBytesRead << "encrypted bytes to the socket" << actualWritten << "actual.";
 #endif
@@ -605,19 +603,19 @@ void QSslSocketBackendPrivate::transmit()
         if (!connectionEncrypted || !readBufferMaxSize || readBuffer.size() < readBufferMaxSize)
             while ((pendingBytes = plainSocket->bytesAvailable()) > 0) {
                 // Read encrypted data from the socket into a buffer.
-                data.resize(pendingBytes);
+                QSTACKARRAY(char, data, pendingBytes);
                 // just peek() here because BIO_write could write less data than expected
-                int encryptedBytesRead = plainSocket->peek(data.data(), pendingBytes);
+                int encryptedBytesRead = plainSocket->peek(data, pendingBytes);
 #ifdef QSSLSOCKET_DEBUG
                 qDebug() << "QSslSocketBackendPrivate::transmit: read" << encryptedBytesRead << "encrypted bytes from the socket";
 #endif
                 // Write encrypted data from the buffer into the read BIO.
-                int writtenToBio = BIO_write(readBio, data.constData(), encryptedBytesRead);
+                int writtenToBio = BIO_write(readBio, data, encryptedBytesRead);
 
                 // do the actual read() here and throw away the results.
                 if (writtenToBio > 0) {
                     // ### TODO: make this cheaper by not making it memcpy. E.g. make it work with data=0x0 or make it work with seek
-                    plainSocket->read(data.data(), writtenToBio);
+                    plainSocket->read(data, writtenToBio);
                 } else {
                     // ### Better error handling.
                     q->setErrorString(QSslSocket::tr("Unable to decrypt data: %1").arg(getErrorsFromOpenSsl()));
