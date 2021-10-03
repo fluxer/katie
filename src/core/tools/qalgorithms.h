@@ -74,7 +74,7 @@ inline typename Container::const_iterator qFind(const Container &container, cons
 template <typename InputIterator, typename T, typename Size>
 inline void qCount(InputIterator first, InputIterator last, const T &value, Size &n)
 {
-    n = std::count(first, last, value);
+    n += std::count(first, last, value);
 }
 
 template <typename Container, typename T, typename Size>
