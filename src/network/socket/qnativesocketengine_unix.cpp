@@ -876,7 +876,7 @@ bool QNativeSocketEnginePrivate::fetchConnectionParameters()
     }
 
     // Determine the remote address
-    if (!::getpeername(socketDescriptor, sockAddrPtr, &sockAddrSize))
+    if (::getpeername(socketDescriptor, sockAddrPtr, &sockAddrSize) == 0)
         qt_socket_getPortAndAddress(&ss, &peerPort, &peerAddress);
 
     // Determine the socket type (UDP/TCP)
