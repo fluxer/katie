@@ -1313,7 +1313,7 @@ void QWizardPrivate::updateButtonLayout()
 
         const int ArraySize = 12;
         QWizard::WizardButton array[ArraySize];
-        memset(array, -1, sizeof(array));
+        memset(array, QWizard::NoButton, sizeof(array));
         Q_ASSERT(array[0] == QWizard::NoButton);
 
         if (opts & QWizard::HaveHelpButton) {
