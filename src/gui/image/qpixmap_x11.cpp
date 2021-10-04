@@ -354,8 +354,6 @@ void QX11PixmapData::fromImage(const QImage &img,
 
 #ifndef QT_NO_XRENDER
     if (alphaCheck.hasXRenderAndAlpha()) {
-        const QImage &cimage = image;
-
         d = 32;
 
         if (QX11Info::appDepth() != d) {
@@ -385,12 +383,12 @@ void QX11PixmapData::fromImage(const QImage &img,
         Q_CHECK_PTR(newbits);
         xi->data = (char *)newbits;
 
-        switch(cimage.format()) {
+        switch(image.format()) {
         case QImage::Format_Indexed8: {
-            QVector<QRgb> colorTable = cimage.colorTable();
+            QVector<QRgb> colorTable = image.colorTable();
             uint *xidata = (uint *)xi->data;
             for (int y = 0; y < h; ++y) {
-                const uchar *p = cimage.constScanLine(y);
+                const uchar *p = image.constScanLine(y);
                 for (int x = 0; x < w; ++x) {
                     const QRgb rgb = colorTable[p[x]];
                     const int a = qAlpha(rgb);
@@ -410,7 +408,7 @@ void QX11PixmapData::fromImage(const QImage &img,
         case QImage::Format_RGB32: {
             uint *xidata = (uint *)xi->data;
             for (int y = 0; y < h; ++y) {
-                const QRgb *p = (const QRgb *) cimage.constScanLine(y);
+                const QRgb *p = (const QRgb *) image.constScanLine(y);
                 for (int x = 0; x < w; ++x)
                     *xidata++ = p[x] | 0xff000000;
             }
@@ -419,7 +417,7 @@ void QX11PixmapData::fromImage(const QImage &img,
         case QImage::Format_ARGB32: {
             uint *xidata = (uint *)xi->data;
             for (int y = 0; y < h; ++y) {
-                const QRgb *p = (const QRgb *) cimage.constScanLine(y);
+                const QRgb *p = (const QRgb *) image.constScanLine(y);
                 for (int x = 0; x < w; ++x) {
                     const QRgb rgb = p[x];
                     const int a = qAlpha(rgb);
@@ -439,7 +437,7 @@ void QX11PixmapData::fromImage(const QImage &img,
         case QImage::Format_ARGB32_Premultiplied: {
             uint *xidata = (uint *)xi->data;
             for (int y = 0; y < h; ++y) {
-                const QRgb *p = (const QRgb *) cimage.constScanLine(y);
+                const QRgb *p = (const QRgb *) image.constScanLine(y);
                 memcpy(xidata, p, w*sizeof(QRgb));
                 xidata += w;
             }
@@ -475,7 +473,6 @@ void QX11PixmapData::fromImage(const QImage &img,
         if (image.format() == QImage::Format_ARGB32_Premultiplied)
             image = image.convertToFormat(QImage::Format_ARGB32);
 
-        const QImage &cimage = image;
         QSTACKARRAY(QRgb, pix, 256);                // pixel translation table
         const bool  d8 = (d == 8);
         const uint  red_mask          = (uint)visual->red_mask;
@@ -489,8 +486,8 @@ void QX11PixmapData::fromImage(const QImage &img,
         const uint  bbits = highest_bit(blue_mask) - lowest_bit(blue_mask) + 1;
 
         if (d8) {                                   // setup pixel translation
-            QVector<QRgb> ctable = cimage.colorTable();
-            for (int i=0; i < cimage.colorCount(); i++) {
+            QVector<QRgb> ctable = image.colorTable();
+            for (int i=0; i < image.colorCount(); i++) {
                 int r = qRed  (ctable[i]);
                 int g = qGreen(ctable[i]);
                 int b = qBlue (ctable[i]);
@@ -654,7 +651,7 @@ void QX11PixmapData::fromImage(const QImage &img,
 
 #define CYCLE(body)                                             \
         for (int y=0; y<h; y++) {                               \
-            const uchar* src = cimage.constScanLine(y);              \
+            const uchar* src = image.constScanLine(y);          \
             uchar* dst = newbits + xi->bytes_per_line*y;        \
             const QRgb* p = (const QRgb *)src;                  \
             body                                                \
@@ -848,10 +845,8 @@ void QX11PixmapData::fromImage(const QImage &img,
 
         if (image.colorCount() == 0)
             image.setColorCount(1);
-
-        const QImage &cimage = image;
         for (int i = 0; i < h; i++) {               // for each scanline...
-            const uchar* p = cimage.constScanLine(i);
+            const uchar* p = image.constScanLine(i);
             const uchar *end = p + w;
             while (p < end)                         // compute popularity
                 pop[*p++]++;
@@ -862,7 +857,7 @@ void QX11PixmapData::fromImage(const QImage &img,
         if (!newbits)                               // no memory
             return;
         uchar* p = newbits;
-        ::memcpy(p, cimage.bits(), nbytes);         // copy image data into newbits
+        ::memcpy(p, image.constBits(), nbytes);     // copy image data into newbits
 
         /*
          * The code below picks the most important colors. It is based on the
@@ -876,11 +871,11 @@ void QX11PixmapData::fromImage(const QImage &img,
             int          mindist;
         };
         int ncols = 0;
-        for (int i=0; i< cimage.colorCount(); i++) { // compute number of colors
+        for (int i=0; i< image.colorCount(); i++) { // compute number of colors
             if (pop[i] > 0)
                 ncols++;
         }
-        for (int i = cimage.colorCount(); i < 256; i++) // ignore out-of-range pixels
+        for (int i = image.colorCount(); i < 256; i++) // ignore out-of-range pixels
             pop[i] = 0;
 
         // works since we make sure above to have at least
@@ -894,7 +889,7 @@ void QX11PixmapData::fromImage(const QImage &img,
         int maxpop = 0;
         int maxpix = 0;
         uint j = 0;
-        QVector<QRgb> ctable = cimage.colorTable();
+        QVector<QRgb> ctable = image.colorTable();
         for (int i = 0; i < 256; i++) {             // init pixel array
             if (pop[i] > 0) {
                 px->r = qRed  (ctable[i]);
