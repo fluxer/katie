@@ -501,19 +501,15 @@ bool QLocalSocket::waitForConnected(int msec)
         return (state() == ConnectedState);
 
     if (state() == ConnectingState) {
-        fd_set fds;
-        FD_ZERO(&fds);
-        FD_SET(d->connectingSocket, &fds);
-
-        timeval timeout;
-        timeout.tv_sec = msec / 1000;
-        timeout.tv_usec = (msec % 1000) * 1000;
-
-        // timeout can not be 0 or else select will return an error.
+        // if timeout is 0 poll() will return immidiatly.
         if (msec == 0)
-            timeout.tv_usec = 1000;
+            msec = 1000;
 
-        int result = qt_safe_select(d->connectingSocket + 1, &fds, 0, 0, (msec == -1) ? 0 : &timeout);
+        struct pollfd fds;
+        ::memset(&fds, 0, sizeof(struct pollfd));
+        fds.fd = d->connectingSocket;
+        fds.events = POLLIN;
+        int result = qt_safe_poll(&fds, 1, msec);
         if (result == -1) {
             d->errorOccurred( QLocalSocket::UnknownSocketError,
                     QLatin1String("QLocalSocket::waitForConnected"));

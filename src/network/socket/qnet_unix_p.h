@@ -79,15 +79,14 @@ static inline int qt_safe_connect(int sockfd, const struct sockaddr *addr, QT_SO
     return ret;
 }
 
-#if defined(socket)
-# undef socket
-#endif
-#if defined(accept)
-# undef accept
-#endif
+static inline ssize_t qt_safe_recvfrom(int sockfd, void *buf, size_t len, int flags, struct sockaddr *from, QT_SOCKLEN_T *fromlen)
+{
+    ssize_t ret;
+    Q_EINTR_LOOP(ret, ::recvfrom(sockfd, buf, len, flags, from, fromlen));
+    return ret;
+}
 
-// VxWorks' headers do not specify any const modifiers
-static inline int qt_safe_sendto(int sockfd, const void *buf, size_t len, int flags, const struct sockaddr *to, QT_SOCKLEN_T tolen)
+static inline ssize_t qt_safe_sendto(int sockfd, const void *buf, size_t len, int flags, const struct sockaddr *to, QT_SOCKLEN_T tolen)
 {
 #ifdef MSG_NOSIGNAL
     flags |= MSG_NOSIGNAL;
@@ -95,7 +94,7 @@ static inline int qt_safe_sendto(int sockfd, const void *buf, size_t len, int fl
     qt_ignore_sigpipe();
 #endif
 
-    int ret;
+    ssize_t ret;
     Q_EINTR_LOOP(ret, ::sendto(sockfd, buf, len, flags, to, tolen));
     return ret;
 }

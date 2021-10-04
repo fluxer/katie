@@ -25,7 +25,6 @@
 #include "ui4.h"
 #include "utils.h"
 #include "uic.h"
-#include "databaseinfo.h"
 #include "globaldefs.h"
 
 #include <QtCore/QTextStream>
@@ -494,15 +493,6 @@ void WriteInitialization::acceptUI(DomUI *node)
 
     if (m_activateScripts)
         writeSetupUIScriptVariableDeclarations(m_indent, m_output);
-
-    foreach (const QString &connection, m_uic->databaseInfo()->connections()) {
-
-        if (connection == QLatin1String("(default)"))
-            continue;
-
-        const QString varConn = connection + QLatin1String("Connection");
-        m_output << m_indent << varConn << " = QSqlDatabase::database(" << fixString(connection, m_dindent) << ");\n";
-    }
 
     acceptWidget(node->elementWidget());
 
@@ -1148,14 +1138,6 @@ void WriteInitialization::writeProperties(const QString &varName,
             m_delayedOut << m_indent << varName << "->layout()->setSpacing("
                        << p->elementNumber() << ");\n";
             continue;
-        } else if (propertyName == QLatin1String("database")
-                    && p->elementStringList()) {
-            // Sql support
-            continue;
-        } else if (propertyName == QLatin1String("frameworkCode")
-                    && p->kind() == DomProperty::Bool) {
-            // Sql support
-            continue;
         } else if (propertyName == QLatin1String("orientation")
                     && m_uic->customWidgetsInfo()->extends(className, QLatin1String("Line"))) {
             // Line support
@@ -1184,8 +1166,12 @@ void WriteInitialization::writeProperties(const QString &varName,
         } else if (propertyName == QLatin1String("bottomMargin") && p->kind() == DomProperty::Number) {
             bottomMargin = p->elementNumber();
             continue;
-        } else if (propertyName == QLatin1String("frameShadow"))
+        } else if (propertyName == QLatin1String("frameShadow")) {
             frameShadowEncountered = true;
+        } else if (propertyName == QLatin1String("database") || propertyName == QLatin1String("frameworkCode")) {
+            // Sql no longer supported
+            continue;
+        }
 
         bool stdset = m_stdsetdef;
         if (p->hasAttributeStdset())

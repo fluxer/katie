@@ -26,7 +26,6 @@
 #include "driver.h"
 #include "ui4.h"
 #include "uic.h"
-#include "databaseinfo.h"
 #include "customwidgetsinfo.h"
 
 #include <QtCore/QTextStream>
@@ -140,13 +139,6 @@ void WriteDeclaration::acceptUI(DomUI *node)
     m_output << "class " << exportMacro << m_option.prefix << className << "\n"
            << "{\n"
            << "public:\n";
-
-    foreach (const QString &connection, m_uic->databaseInfo()->connections()) {
-        if (connection == QLatin1String("(default)"))
-            continue;
-
-        m_output << m_option.indent << "QSqlDatabase " << connection << "Connection;\n";
-    }
 
     TreeWalker::acceptWidget(node->elementWidget());
     if (const DomButtonGroups *domButtonGroups = node->elementButtonGroups())

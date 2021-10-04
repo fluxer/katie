@@ -25,7 +25,6 @@
 #include "qiodevice.h"
 #include "qhostaddress.h"
 #include "qelapsedtimer.h"
-#include "qvarlengtharray.h"
 #include "qnetworkinterface.h"
 #include "qcorecommon_p.h"
 
@@ -358,12 +357,11 @@ bool QNativeSocketEnginePrivate::nativeConnect(const QHostAddress &addr, quint16
             break;
         case EINPROGRESS:
         case EALREADY:
-            setError(QAbstractSocket::UnfinishedSocketOperationError, InvalidSocketErrorString);
+            setError(QAbstractSocket::UnfinishedSocketOperationError, ResourceErrorString);
             socketState = QAbstractSocket::ConnectingState;
             break;
         case EAGAIN:
-            setError(QAbstractSocket::UnfinishedSocketOperationError, InvalidSocketErrorString);
-            setError(QAbstractSocket::SocketResourceError, ResourceErrorString);
+            setError(QAbstractSocket::UnfinishedSocketOperationError, ResourceErrorString);
             break;
         case EACCES:
         case EPERM:
@@ -476,6 +474,10 @@ bool QNativeSocketEnginePrivate::nativeListen(int backlog)
             setError(QAbstractSocket::AddressInUseError,
                      PortInuseErrorString);
             break;
+        case EOPNOTSUPP:
+            setError(QAbstractSocket::UnsupportedSocketOperationError,
+                     OperationUnsupportedErrorString);
+            break;
         default:
             break;
         }
@@ -498,6 +500,16 @@ bool QNativeSocketEnginePrivate::nativeListen(int backlog)
 int QNativeSocketEnginePrivate::nativeAccept()
 {
     int acceptedDescriptor = qt_safe_accept(socketDescriptor, 0, 0);
+    if (acceptedDescriptor == -1) {
+        switch (errno) {
+        case EOPNOTSUPP:
+            setError(QAbstractSocket::UnsupportedSocketOperationError,
+                     OperationUnsupportedErrorString);
+            break;
+        default:
+            break;
+        }
+    }
 
     return acceptedDescriptor;
 }
@@ -513,7 +525,7 @@ static bool multicastMembershipHelper(QNativeSocketEnginePrivate *d,
     int level = 0;
     int sockOpt = 0;
     void *sockArg;
-    int sockArgSize;
+    QT_SOCKLEN_T sockArgSize;
 
     ip_mreq mreq4;
 #ifndef QT_NO_IPV6
@@ -695,9 +707,8 @@ bool QNativeSocketEnginePrivate::nativeHasPendingDatagrams() const
 
     // Peek 0 bytes into the next message. The size of the message may
     // well be 0, so we can't check recvfrom's return value.
-    ssize_t readBytes;
     char c;
-    Q_EINTR_LOOP(readBytes, ::recvfrom(socketDescriptor, &c, 1, MSG_PEEK, sockAddrPtr, &sz));
+    ssize_t readBytes = qt_safe_recvfrom(socketDescriptor, &c, 1, MSG_PEEK, sockAddrPtr, &sz);
 
     // If there's no error, or if our buffer was too small, there must be a
     // pending datagram.
@@ -712,22 +723,21 @@ bool QNativeSocketEnginePrivate::nativeHasPendingDatagrams() const
 
 qint64 QNativeSocketEnginePrivate::nativePendingDatagramSize() const
 {
-    QVarLengthArray<char, 8192> udpMessagePeekBuffer(8192);
+    ssize_t udpMessagePeekBufferSize = QT_BUFFSIZE;
     ssize_t recvResult = -1;
 
     for (;;) {
-        // the data written to udpMessagePeekBuffer is discarded, so
-        // this function is still reentrant although it might not look
-        // so.
-        recvResult = ::recv(socketDescriptor, udpMessagePeekBuffer.data(),
-            udpMessagePeekBuffer.size(), MSG_PEEK);
+        QSTACKARRAY(char, udpMessagePeekBuffer, udpMessagePeekBufferSize);
+
+        recvResult = ::recv(socketDescriptor, udpMessagePeekBuffer,
+            udpMessagePeekBufferSize, MSG_PEEK);
         if (recvResult == -1 && errno == EINTR)
             continue;
 
-        if (recvResult != (ssize_t) udpMessagePeekBuffer.size())
+        if (recvResult != udpMessagePeekBufferSize)
             break;
 
-        udpMessagePeekBuffer.resize(udpMessagePeekBuffer.size() * 2);
+        udpMessagePeekBufferSize = (udpMessagePeekBufferSize * 2);
     }
 
 #if defined (QNATIVESOCKETENGINE_DEBUG)
@@ -746,10 +756,9 @@ qint64 QNativeSocketEnginePrivate::nativeReceiveDatagram(char *data, qint64 maxS
 
     struct sockaddr* sockAddrPtr = (struct sockaddr*) &ss;
 
-    ssize_t recvFromResult = 0;
     char c;
-    Q_EINTR_LOOP(recvFromResult, ::recvfrom(socketDescriptor, maxSize ? data : &c, maxSize ? maxSize : 1,
-                                    0, sockAddrPtr, &sockAddrSize));
+    ssize_t recvFromResult = qt_safe_recvfrom(socketDescriptor, maxSize ? data : &c,
+                                              maxSize ? maxSize : 1, 0, sockAddrPtr, &sockAddrSize);
 
     if (recvFromResult == -1) {
         setError(QAbstractSocket::NetworkError, ReceiveDatagramErrorString);
@@ -867,7 +876,7 @@ bool QNativeSocketEnginePrivate::fetchConnectionParameters()
     }
 
     // Determine the remote address
-    if (!::getpeername(socketDescriptor, sockAddrPtr, &sockAddrSize))
+    if (::getpeername(socketDescriptor, sockAddrPtr, &sockAddrSize) == 0)
         qt_socket_getPortAndAddress(&ss, &peerPort, &peerAddress);
 
     // Determine the socket type (UDP/TCP)
@@ -912,8 +921,7 @@ qint64 QNativeSocketEnginePrivate::nativeWrite(const char *data, qint64 len)
 {
     Q_Q(QNativeSocketEngine);
 
-    ssize_t writtenBytes;
-    writtenBytes = qt_safe_write_nosignal(socketDescriptor, data, len);
+    ssize_t writtenBytes = qt_safe_write_nosignal(socketDescriptor, data, len);
 
     if (writtenBytes < 0) {
         switch (errno) {
@@ -988,48 +996,32 @@ qint64 QNativeSocketEnginePrivate::nativeRead(char *data, qint64 maxSize)
 
 int QNativeSocketEnginePrivate::nativeSelect(int timeout, bool selectForRead) const
 {
-    fd_set fds;
-    FD_ZERO(&fds);
-    FD_SET(socketDescriptor, &fds);
-
-    struct timeval tv;
-    tv.tv_sec = timeout / 1000;
-    tv.tv_usec = (timeout % 1000) * 1000;
-
-    int retval;
-    if (selectForRead)
-        retval = qt_safe_select(socketDescriptor + 1, &fds, 0, 0, timeout < 0 ? 0 : &tv);
-    else
-        retval = qt_safe_select(socketDescriptor + 1, 0, &fds, 0, timeout < 0 ? 0 : &tv);
-
-    return retval;
+    struct pollfd fds;
+    ::memset(&fds, 0, sizeof(struct pollfd));
+    fds.fd = socketDescriptor;
+    fds.events = (selectForRead ? POLLIN : POLLOUT);
+    return qt_safe_poll(&fds, 1, timeout);
 }
 
 int QNativeSocketEnginePrivate::nativeSelect(int timeout, bool checkRead, bool checkWrite,
                        bool *selectForRead, bool *selectForWrite) const
 {
-    fd_set fdread;
-    FD_ZERO(&fdread);
-    if (checkRead)
-        FD_SET(socketDescriptor, &fdread);
+    struct pollfd fds;
+    ::memset(&fds, 0, sizeof(struct pollfd));
+    fds.fd = socketDescriptor;
+    fds.events = 0;
+    if (checkRead) {
+        fds.events |= POLLIN;
+    }
+    if (checkWrite) {
+        fds.events |= POLLOUT;
+    }
 
-    fd_set fdwrite;
-    FD_ZERO(&fdwrite);
-    if (checkWrite)
-        FD_SET(socketDescriptor, &fdwrite);
-
-    struct timeval tv;
-    tv.tv_sec = timeout / 1000;
-    tv.tv_usec = (timeout % 1000) * 1000;
-
-    int ret;
-    ret = qt_safe_select(socketDescriptor + 1, &fdread, &fdwrite, 0, timeout < 0 ? 0 : &tv);
-
-    if (ret <= 0)
-        return ret;
-    *selectForRead = FD_ISSET(socketDescriptor, &fdread);
-    *selectForWrite = FD_ISSET(socketDescriptor, &fdwrite);
-
+    int ret = qt_safe_poll(&fds, 1, timeout);
+    if (ret > 0) {
+        *selectForRead = ((fds.revents & POLLIN) != 0);
+        *selectForWrite = ((fds.revents & POLLOUT) != 0);
+    }
     return ret;
 }
 

@@ -341,9 +341,9 @@ bool QFileSystemEngine::copyFile(const QFileSystemEntry &source, const QFileSyst
         sendresult = ::sendfile(targetfd, sourcefd, &tocopy, tocopy);
     }
 #else
-    qint64 totalwrite = 0;
+    QT_OFF_T totalwrite = 0;
     QSTACKARRAY(char, copybuffer, QT_BUFFSIZE);
-    while (QT_OFF_T(totalwrite) != tocopy) {
+    while (totalwrite != tocopy) {
         const qint64 readresult = qt_safe_read(sourcefd, copybuffer, sizeof(copybuffer));
         if (readresult == -1) {
             *error = errno;

@@ -39,7 +39,7 @@ class Q_DECLARATIVE_PRIVATE_EXPORT QDeclarativePen : public QObject
     Q_PROPERTY(QColor color READ color WRITE setColor NOTIFY penChanged)
 public:
     QDeclarativePen(QObject *parent=0)
-        : QObject(parent), _width(1), _color("#000000"), _valid(false)
+        : QObject(parent), _width(1), _color(Qt::black), _valid(false)
     {}
 
     int width() const { return _width; }

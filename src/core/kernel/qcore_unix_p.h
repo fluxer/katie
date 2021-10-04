@@ -36,6 +36,7 @@
 #include "qplatformdefs.h"
 #include "qatomic.h"
 
+#include <poll.h>
 #include <string.h>
 #include <sys/wait.h>
 #include <errno.h>
@@ -253,6 +254,20 @@ static inline pid_t qt_safe_waitpid(pid_t pid, int *status, int options)
 {
     pid_t ret;
     Q_EINTR_LOOP(ret, ::waitpid(pid, status, options));
+    return ret;
+}
+
+// don't call ::poll, call qt_safe_poll
+static inline int qt_safe_poll(struct pollfd *fds, nfds_t nfds, int timeout)
+{
+    int ret;
+    Q_EINTR_LOOP(ret, ::poll(fds, nfds, timeout));
+    for (nfds_t i = 0; i < nfds; i++) {
+        if ((fds[i].revents & POLLERR) != 0 || (fds[i].revents & POLLHUP) != 0 || (fds[i].revents & POLLNVAL) != 0) {
+            // select() compat
+            return -1;
+        }
+    }
     return ret;
 }
 

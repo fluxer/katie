@@ -2033,14 +2033,13 @@ int QApplication::x11ProcessEvent(XEvent* event)
     case XKeyPress:                                // keyboard event
         qt_net_update_user_time(widget->window(), qt_x11Data->userTime);
         // fallthrough intended
-    case XKeyRelease:
-        {
-            if (keywidget && keywidget->isEnabled()) { // should always exist
-                // qDebug("sending key event");
-                qt_keymapper()->translateKeyEvent(keywidget, event);
-            }
-            break;
+    case XKeyRelease: {
+        if (keywidget && keywidget->isEnabled()) { // should always exist
+            // qDebug("sending key event");
+            qt_keymapper()->translateKeyEvent(keywidget, event);
         }
+        break;
+    }
 
     case GraphicsExpose:
     case Expose:                                // paint event
@@ -2070,8 +2069,8 @@ int QApplication::x11ProcessEvent(XEvent* event)
             // sure we know what focus mode we are using...
             qt_check_focus_model();
         }
-    }
         break;
+    }
 
     case XFocusOut:                                // lost focus
         if ((widget->windowType() == Qt::Desktop))
@@ -2144,8 +2143,8 @@ int QApplication::x11ProcessEvent(XEvent* event)
         qt_last_mouse_receiver = enter;
         if (!d->inPopupMode() || widget->window() == activePopupWidget())
             widget->translateMouseEvent(event); //we don't get MotionNotify, emulate it
-    }
         break;
+    }
     case LeaveNotify: {                        // leave window
         QWidget *mouseGrabber = QWidget::mouseGrabber();
         if (mouseGrabber && !d->inPopupMode())
@@ -2227,8 +2226,8 @@ int QApplication::x11ProcessEvent(XEvent* event)
             curWin = 0;
             qt_last_mouse_receiver = 0;
         }
-    }
         break;
+    }
 
     case UnmapNotify:                                // window hidden
         if (widget->isWindow()) {

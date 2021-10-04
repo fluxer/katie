@@ -44,6 +44,7 @@ private slots:
     void unexpectedDisconnection();
     void mixingWithTimers();
     void posixSockets();
+    void invalidFD();
 };
 
 tst_QSocketNotifier::tst_QSocketNotifier()
@@ -281,6 +282,20 @@ void tst_QSocketNotifier::posixSockets()
         QCOMPARE(passive->readAll(), QByteArray("goodbye",8));
     }
     qt_safe_close(posixSocket);
+}
+
+void tst_QSocketNotifier::invalidFD()
+{
+    int posixSocket = qt_safe_socket(AF_INET, SOCK_STREAM, 0);
+    QSocketNotifier sn(posixSocket, QSocketNotifier::Write);
+    QCoreApplication::processEvents();
+
+    qt_safe_close(posixSocket);
+    QByteArray errorbytes("QSocketNotifier: Invalid socket ");
+    errorbytes.append(QByteArray::number(posixSocket));
+    errorbytes.append(" and type 'Write', disabling...");
+    QTest::ignoreMessage(QtWarningMsg, errorbytes.constData());
+    QCoreApplication::processEvents();
 }
 
 QTEST_MAIN(tst_QSocketNotifier)

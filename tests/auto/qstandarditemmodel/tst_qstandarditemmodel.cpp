@@ -1632,6 +1632,7 @@ void tst_QStandardItemModel::removeRowsAndColumns()
         QCOMPARE(row_taken[c]->text() , row_list[6] + "x" + col_list[c]);
     row_list.remove(6);
     VERIFY_MODEL
+    qDeleteAll(row_taken);
 
     QList<QStandardItem *> col_taken = model.takeColumn(10);
     QCOMPARE(col_taken.count(), row_list.count());
@@ -1639,6 +1640,7 @@ void tst_QStandardItemModel::removeRowsAndColumns()
         QCOMPARE(col_taken[r]->text() , row_list[r] + "x" + col_list[10]);
     col_list.remove(10);
     VERIFY_MODEL
+    qDeleteAll(col_taken);
 }
 
 QTEST_MAIN(tst_QStandardItemModel)

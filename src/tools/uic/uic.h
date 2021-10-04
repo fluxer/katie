@@ -22,7 +22,6 @@
 #ifndef UIC_H
 #define UIC_H
 
-#include "databaseinfo.h"
 #include "customwidgetsinfo.h"
 #include <QtCore/QString>
 #include <QtCore/QStringList>
@@ -74,9 +73,6 @@ public:
     inline void setExternalPixmap(bool b)
     { externalPix = b; }
 
-    inline const DatabaseInfo *databaseInfo() const
-    { return &info; }
-
     inline const CustomWidgetsInfo *customWidgetsInfo() const
     { return &cWidgetsInfo; }
 
@@ -106,7 +102,6 @@ private:
     Driver *drv;
     QTextStream &out;
     Option &opt;
-    DatabaseInfo info;
     CustomWidgetsInfo cWidgetsInfo;
     QString pixFunction;
     bool externalPix;

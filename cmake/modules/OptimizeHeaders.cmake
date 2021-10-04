@@ -33,7 +33,6 @@ set(unifdef_arguments
     # exports
     -UKtCore_EXPORTS
     -UKtGui_EXPORTS
-    -UKtSql_EXPORTS
     -UKtNetwork_EXPORTS
     -UKtSvg_EXPORTS
     -UKtTest_EXPORTS

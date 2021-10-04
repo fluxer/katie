@@ -452,7 +452,15 @@ QByteArray QSslKey::toPem(const QByteArray &passPhrase) const
 */
 Qt::HANDLE QSslKey::handle() const
 {
-    return (d->algorithm == QSsl::Rsa) ? Qt::HANDLE(d->rsa) : Qt::HANDLE(d->dsa);
+    switch (d->algorithm) {
+        case QSsl::Rsa:
+            return Qt::HANDLE(d->rsa);
+        case QSsl::Dsa:
+            return Qt::HANDLE(d->dsa);
+        case QSsl::Dh:
+            return Qt::HANDLE(d->dh);
+    }
+    Q_UNREACHABLE();
 }
 
 /*!

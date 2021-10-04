@@ -97,7 +97,7 @@ bool QLocalServerPrivate::listen(const QString &requestedServerName)
     }
 
     // listen for connections
-    if (-1 == ::listen(listenSocket, 50)) {
+    if (-1 == ::listen(listenSocket, SOMAXCONN)) {
         setError(QLatin1String("QLocalServer::listen"));
         closeServer();
         listenSocket = -1;
@@ -162,16 +162,12 @@ void QLocalServerPrivate::_q_onNewConnection()
 
 void QLocalServerPrivate::waitForNewConnection(int msec, bool *timedOut)
 {
-    fd_set readfds;
-    FD_ZERO(&readfds);
-    FD_SET(listenSocket, &readfds);
-
-    timeval timeout;
-    timeout.tv_sec = msec / 1000;
-    timeout.tv_usec = (msec % 1000) * 1000;
-
-    int result = qt_safe_select(listenSocket + 1, &readfds, 0, 0, (msec == -1) ? 0 : &timeout);
-    if (-1 == result) {
+    struct pollfd fds;
+    ::memset(&fds, 0, sizeof(struct pollfd));
+    fds.fd = listenSocket;
+    fds.events = POLLIN;
+    int result = qt_safe_poll(&fds, 1, msec);
+    if (result == -1) {
         setError(QLatin1String("QLocalServer::waitForNewConnection"));
         closeServer();
     }

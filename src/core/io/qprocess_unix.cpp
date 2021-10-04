@@ -92,11 +92,6 @@ static inline void add_fd(int &nfds, int fd, fd_set *fdset)
         nfds = fd;
 }
 
-struct QProcessInfo {
-    QProcess *process;
-    int deathPipe;
-};
-
 class QProcessManager : public QThread
 {
     Q_OBJECT
@@ -106,14 +101,14 @@ public:
 
     void run();
     void catchDeadChildren();
-    void add(pid_t pid, QProcess *process);
+    void add(QProcess *process);
     void remove(QProcess *process);
     void lock();
     void unlock();
 
 private:
     QMutex mutex;
-    QHash<pid_t, QProcessInfo *> children;
+    QVector<QProcess*> children;
 };
 
 
@@ -167,7 +162,7 @@ QProcessManager::~QProcessManager()
     qt_qprocess_deadChild_pipe[0] = -1;
     qt_qprocess_deadChild_pipe[1] = -1;
 
-    qDeleteAll(children.values());
+    qDeleteAll(children);
     children.clear();
 
     struct sigaction currentAction;
@@ -180,10 +175,6 @@ QProcessManager::~QProcessManager()
 void QProcessManager::run()
 {
     forever {
-        fd_set readset;
-        FD_ZERO(&readset);
-        FD_SET(qt_qprocess_deadChild_pipe[0], &readset);
-
 #if defined (QPROCESS_DEBUG)
         qDebug() << "QProcessManager::run() waiting for children to die";
 #endif
@@ -191,10 +182,12 @@ void QProcessManager::run()
         // block forever, or until activity is detected on the dead child
         // pipe. the only other peers are the SIGCHLD signal handler, and the
         // QProcessManager destructor.
-        int nselect = ::select(qt_qprocess_deadChild_pipe[0] + 1, &readset, 0, 0, 0);
+        struct pollfd fds;
+        ::memset(&fds, 0, sizeof(struct pollfd));
+        fds.fd = qt_qprocess_deadChild_pipe[0];
+        fds.events = POLLIN;
+        int nselect = qt_safe_poll(&fds, 1, -1);
         if (nselect < 0) {
-            if (errno == EINTR)
-                continue;
             break;
         }
 
@@ -216,46 +209,39 @@ void QProcessManager::catchDeadChildren()
 
     // try to catch all children whose pid we have registered, and whose
     // deathPipe is still valid (i.e, we have not already notified it).
-    QHash<pid_t, QProcessInfo *>::const_iterator it = children.constBegin();
+    QVector<QProcess *>::const_iterator it = children.constBegin();
     while (it != children.constEnd()) {
         // notify all children that they may have died. they need to run
         // waitpid() in their own thread.
-        QProcessInfo *info = it.value();
-        qt_safe_write(info->deathPipe, "", 1);
+        qt_safe_write((*it)->d_func()->deathPipe[1], "", 1);
 
 #if defined (QPROCESS_DEBUG)
-        qDebug() << "QProcessManager::run() sending death notice to" << info->process;
+        qDebug() << "QProcessManager::run() sending death notice to" << (*it);
 #endif
         ++it;
     }
 }
 
-void QProcessManager::add(pid_t pid, QProcess *process)
+void QProcessManager::add(QProcess *process)
 {
     // locked by startProcess()
 #if defined (QPROCESS_DEBUG)
-    qDebug() << "QProcessManager::add() adding pid" << pid << "process" << process;
+    qDebug() << "QProcessManager::add() adding pid" << process->pid() << "process" << process;
 #endif
-
-    // insert a new info structure for this process
-    QProcessInfo *info = new QProcessInfo;
-    info->process = process;
-    info->deathPipe = process->d_func()->deathPipe[1];
-
-    children.insert(pid, info);
+    children.append(process);
 }
 
 void QProcessManager::remove(QProcess *process)
 {
     QMutexLocker locker(&mutex);
 
-    pid_t pid = process->d_func()->pid;
-    QProcessInfo *info = children.take(pid);
+    const int procindex = children.indexOf(process);
+    if (procindex >= 0) {
 #if defined (QPROCESS_DEBUG)
-    if (info)
-        qDebug() << "QProcessManager::remove() removing pid" << pid << "process" << info->process;
+        qDebug() << "QProcessManager::remove() removing pid" << process->d_func()->pid << "process" << process;
 #endif
-    delete info;
+        children.remove(procindex);
+    }
 }
 
 void QProcessManager::lock()
@@ -575,7 +561,7 @@ void QProcessPrivate::startProcess()
 
     // Register the child. In the mean time, we can get a SIGCHLD, so we need
     // to keep the lock held to avoid a race to catch the child.
-    processManager()->add(childPid, q);
+    processManager()->add(q);
     pid = childPid;
     processManager()->unlock();
 
@@ -673,8 +659,8 @@ void QProcessPrivate::execChild(const char *workingDir, char **path, char **argv
 
 bool QProcessPrivate::processStarted()
 {
-    QSTACKARRAY(ushort, buf, errorBufferMax);
-    qint64 i = qt_safe_read(childStartedPipe[0], &buf, sizeof buf);
+    QSTACKARRAY(QChar, buf, errorBufferMax);
+    qint64 i = qt_safe_read(childStartedPipe[0], &buf, sizeof(buf));
     if (startupSocketNotifier) {
         startupSocketNotifier->setEnabled(false);
         startupSocketNotifier->deleteLater();
@@ -689,7 +675,7 @@ bool QProcessPrivate::processStarted()
 
     // did we read an error message?
     if (i > 0)
-        q_func()->setErrorString(QString((const QChar *)buf, i / sizeof(QChar)));
+        q_func()->setErrorString(QString(buf, i / sizeof(QChar)));
 
     return i <= 0;
 }
@@ -793,10 +779,11 @@ bool QProcessPrivate::waitForStarted(int msecs)
            childStartedPipe[0]);
 #endif
 
-    fd_set fds;
-    FD_ZERO(&fds);
-    FD_SET(childStartedPipe[0], &fds);
-    if (select_msecs(childStartedPipe[0] + 1, &fds, 0, msecs) == 0) {
+    struct pollfd fds;
+    ::memset(&fds, 0, sizeof(struct pollfd));
+    fds.fd = childStartedPipe[0];
+    fds.events = POLLIN;
+    if (qt_safe_poll(&fds, 1, msecs) == 0) {
         processError = QProcess::Timedout;
         q->setErrorString(QProcess::tr("Process operation timed out"));
 #if defined (QPROCESS_DEBUG)

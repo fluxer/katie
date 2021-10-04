@@ -148,8 +148,6 @@ public:
     virtual bool canResume() const { return false; }
     virtual void setResumeOffset(quint64 offset) { Q_UNUSED(offset); }
 
-    virtual bool processRequestSynchronously() { return false; }
-
 protected:
     // Create the device used for reading the upload data
     QNonContiguousByteDevice* createUploadByteDevice();

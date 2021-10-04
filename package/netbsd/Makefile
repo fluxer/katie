@@ -45,8 +45,6 @@ DEPENDS = xdg-utils-[0-9]*:../../misc/xdg-utils
 .include "../../graphics/tiff/buildlink3.mk"
 .include "../../print/cups-base/buildlink3.mk"
 .include "../../sysutils/dbus/buildlink3.mk"
-.include "../../databases/sqlite3/buildlink3.mk"
-.include "../../databases/iodbc/buildlink3.mk"
 .include "../../mk/pthread.buildlink3.mk"
 .include "../../mk/jpeg.buildlink3.mk"
 .include "../../mk/dlopen.buildlink3.mk"

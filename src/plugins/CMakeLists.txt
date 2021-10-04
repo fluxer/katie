@@ -8,7 +8,6 @@ include_directories(
     ${CMAKE_BINARY_DIR}/include/QtDesigner
     ${CMAKE_BINARY_DIR}/include/QtNetwork
     ${CMAKE_BINARY_DIR}/include/QtScript
-    ${CMAKE_BINARY_DIR}/include/QtSql
     ${CMAKE_BINARY_DIR}/include/QtSvg
 )
 
@@ -44,13 +43,6 @@ set(CMAKE_LIBRARY_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}/plugins/script")
 set(CMAKE_ARCHIVE_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}/plugins/script")
 if(WITH_DBUS AND DBUS_FOUND)
     add_subdirectory(script/qtdbus)
-endif()
-
-
-set(CMAKE_LIBRARY_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}/plugins/sqldrivers")
-set(CMAKE_ARCHIVE_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}/plugins/sqldrivers")
-if(WITH_ODBC AND ODBC_FOUND)
-    add_subdirectory(sqldrivers/odbc)
 endif()
 
 

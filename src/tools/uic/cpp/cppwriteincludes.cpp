@@ -23,7 +23,6 @@
 #include "driver.h"
 #include "ui4.h"
 #include "uic.h"
-#include "databaseinfo.h"
 
 #include <QtCore/QDebug>
 #include <QtCore/QFileInfo>
@@ -527,20 +526,6 @@ static const struct ClassTblData {
     { QLatin1String("QSplashScreen"), QLatin1String("QtGui/qsplashscreen.h") },
     { QLatin1String("QSplitter"), QLatin1String("QtGui/qsplitter.h") },
     { QLatin1String("QSplitterHandle"), QLatin1String("QtGui/qsplitter.h") },
-    { QLatin1String("QSqlDatabase"), QLatin1String("QtSql/qsqldatabase.h") },
-    { QLatin1String("QSqlDriver"), QLatin1String("QtSql/qsqldriver.h") },
-    { QLatin1String("QSqlDriverFactoryInterface"), QLatin1String("QtSql/qsqldriverplugin.h") },
-    { QLatin1String("QSqlDriverPlugin"), QLatin1String("QtSql/qsqldriverplugin.h") },
-    { QLatin1String("QSqlError"), QLatin1String("QtSql/qsqlerror.h") },
-    { QLatin1String("QSqlField"), QLatin1String("QtSql/qsqlfield.h") },
-    { QLatin1String("QSqlIndex"), QLatin1String("QtSql/qsqlindex.h") },
-    { QLatin1String("QSqlQuery"), QLatin1String("QtSql/qsqlquery.h") },
-    { QLatin1String("QSqlQueryModel"), QLatin1String("QtSql/qsqlquerymodel.h") },
-    { QLatin1String("QSqlRecord"), QLatin1String("QtSql/qsqlrecord.h") },
-    { QLatin1String("QSqlRelation"), QLatin1String("QtSql/qsqlrelationaltablemodel.h") },
-    { QLatin1String("QSqlRelationalTableModel"), QLatin1String("QtSql/qsqlrelationaltablemodel.h") },
-    { QLatin1String("QSqlResult"), QLatin1String("QtSql/qsqlresult.h") },
-    { QLatin1String("QSqlTableModel"), QLatin1String("QtSql/qsqltablemodel.h") },
     { QLatin1String("QSslCertificate"), QLatin1String("QtNetwork/qsslcertificate.h") },
     { QLatin1String("QSslCipher"), QLatin1String("QtNetwork/qsslcipher.h") },
     { QLatin1String("QSslConfiguration"), QLatin1String("QtNetwork/qsslconfiguration.h") },

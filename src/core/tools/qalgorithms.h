@@ -50,13 +50,13 @@ inline bool qEqual(InputIterator1 first1, InputIterator1 last1, InputIterator2 f
 template <typename ForwardIterator, typename T>
 inline void qFill(ForwardIterator first, ForwardIterator last, const T &val)
 {
-    return std::fill(first, last, val);
+    std::fill(first, last, val);
 }
 
 template <typename Container, typename T>
 inline void qFill(Container &container, const T &val)
 {
-    return std::fill_n(container, val);
+    qFill(container.begin(), container.end(), val);
 }
 
 template <typename InputIterator, typename T>
@@ -74,7 +74,7 @@ inline typename Container::const_iterator qFind(const Container &container, cons
 template <typename InputIterator, typename T, typename Size>
 inline void qCount(InputIterator first, InputIterator last, const T &value, Size &n)
 {
-    n = std::count(first, last, value);
+    n += std::count(first, last, value);
 }
 
 template <typename Container, typename T, typename Size>
