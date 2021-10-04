@@ -1772,8 +1772,7 @@ recalc_minmax_widths:
     if (pageHeight <= 0)
         pageHeight = QFIXED_MAX;
 
-    QVector<QFixed> heightToDistribute;
-    heightToDistribute.resize(columns);
+    QVarLengthArray<QFixed> heightToDistribute(columns);
 
     td->headerHeight = 0;
     const int headerRowCount = qMin(table->format().headerRowCount(), rows - 1);
