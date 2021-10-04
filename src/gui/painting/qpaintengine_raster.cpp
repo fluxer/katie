@@ -36,6 +36,7 @@
 #include "qpaintengine_raster_p.h"
 #include "qoutlinemapper_p.h"
 #include "qguicommon_p.h"
+#include "qcorecommon_p.h"
 
 #include <limits.h>
 
