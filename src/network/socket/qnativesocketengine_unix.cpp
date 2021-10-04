@@ -525,7 +525,7 @@ static bool multicastMembershipHelper(QNativeSocketEnginePrivate *d,
     int level = 0;
     int sockOpt = 0;
     void *sockArg;
-    int sockArgSize;
+    QT_SOCKLEN_T sockArgSize;
 
     ip_mreq mreq4;
 #ifndef QT_NO_IPV6
