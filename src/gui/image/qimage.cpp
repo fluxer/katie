@@ -1783,18 +1783,22 @@ static void QT_FASTCALL mask_alpha_converter(QImageData *dest, const QImageData 
 
 static QVector<QRgb> fix_color_table(const QVector<QRgb> &ctbl, QImage::Format format)
 {
-    QVector<QRgb> colorTable = ctbl;
     if (format == QImage::Format_RGB32) {
         // check if the color table has alpha
-        for (int i = 0; i < colorTable.size(); ++i)
+        QVector<QRgb> colorTable(ctbl);
+        for (int i = 0; i < colorTable.size(); ++i) {
             if (qAlpha(colorTable.at(i)) != 255)
                 colorTable[i] = colorTable.at(i) | 0xff000000;
+        }
+        return colorTable;
     } else if (format == QImage::Format_ARGB32_Premultiplied) {
         // check if the color table has alpha
+        QVector<QRgb> colorTable(ctbl);
         for (int i = 0; i < colorTable.size(); ++i)
             colorTable[i] = PREMUL(colorTable.at(i));
+        return colorTable;
     }
-    return colorTable;
+    return ctbl;
 }
 
 //
