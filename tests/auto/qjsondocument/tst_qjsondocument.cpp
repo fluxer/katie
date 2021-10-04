@@ -167,7 +167,7 @@ void tst_QJsonDocument::eq_not_eq()
 
     // constructor crash test
     QJsonDocument nulljsondoc3(nulljsondoc);
-
+    QCOMPARE(nulljsondoc3, nulljsondoc);
 }
 
 QTEST_MAIN(tst_QJsonDocument)
