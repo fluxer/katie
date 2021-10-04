@@ -23,16 +23,14 @@
 
 #ifndef QT_NO_GRAPHICSVIEW
 
-#include <math.h>
-
 #include "qgraphicslayoutitem.h"
 #include "qgridlayoutengine_p.h"
 #include "qstyleoption.h"
-#include "qvarlengtharray.h"
 #include "qgraphicswidget_p.h"
+#include "qvarlengtharray.h"
 #include "qdebug.h"
-
-#include <QtCore/qmath.h>
+#include "qmath.h"
+#include "qcorecommon_p.h"
 
 QT_BEGIN_NAMESPACE
 
@@ -192,8 +190,8 @@ void QGridLayoutRowData::calculateGeometries(int start, int end, qreal targetSiz
     targetSize = qMax(totalBox.q_minimumSize, targetSize);
 
     int n = end - start;
-    QVarLengthArray<qreal> newSizes(n);
-    QVarLengthArray<qreal> factors(n);
+    QSTACKARRAY(qreal, newSizes, n);
+    QSTACKARRAY(qreal, factors, n);
     qreal sumFactors = 0.0;
     int sumStretches = 0;
     qreal sumAvailable;
