@@ -304,6 +304,7 @@ void QLocalSocketPrivate::_q_connectToSocket()
             break;
         default:
             errorOccurred(QLocalSocket::UnknownSocketError, function);
+            break;
         }
         return;
     }
