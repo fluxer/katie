@@ -29,9 +29,6 @@
 #include <float.h>
 #include <limits.h>
 #include <math.h>
-#if defined(Q_OS_SOLARIS)
-#   include <ieeefp.h>
-#endif
 
 
 Q_DECLARE_METATYPE(qlonglong)
