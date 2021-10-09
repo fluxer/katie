@@ -110,9 +110,9 @@ QString QNetworkInterfacePrivate::makeHwAddress(int len, uchar *data)
         if (i)
             result += QLatin1Char(':');
 
-        QSTACKARRAY(char, buf, 3);
-        ::snprintf(buf, sizeof(buf), "%02hX", ushort(data[i]));
-        result += QString::fromLatin1(buf);
+        QSTACKARRAY(char, snprintfbuf, 3);
+        ::snprintf(snprintfbuf, sizeof(snprintfbuf), "%02hX", ushort(data[i]));
+        result += QString::fromLatin1(snprintfbuf, sizeof(snprintfbuf) - 1);
     }
     return result;
 }
