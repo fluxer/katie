@@ -28,8 +28,10 @@
 #include <qhash.h>
 #include <qbytearray.h>
 #include <qdatastream.h>
-
 #include "qnet_unix_p.h"
+
+#include <netinet/in.h>
+#include <arpa/inet.h>
 
 //TESTED_CLASS=
 //TESTED_FILES=
