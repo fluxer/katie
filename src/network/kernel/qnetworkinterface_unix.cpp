@@ -32,6 +32,7 @@
 #include <sys/types.h>
 #include <sys/socket.h>
 #include <net/if.h>
+#include <netinet/in.h>
 #include <arpa/inet.h>
 
 #ifdef Q_OS_SOLARIS
