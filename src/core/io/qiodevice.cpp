@@ -64,8 +64,6 @@ inline void debugBinaryString(const char *data, qint64 maxlen)
 }
 #endif
 
-#define Q_VOID
-
 #define CHECK_MAXLEN(function, returnType) \
     do { \
         if (Q_UNLIKELY(maxSize < 0)) { \

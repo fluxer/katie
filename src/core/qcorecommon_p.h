@@ -9,6 +9,8 @@
 
 QT_BEGIN_NAMESPACE
 
+#define Q_VOID
+
 #define QBYTEARRAY_MAX INT_MAX
 
 // enough space to hold BOM, each char as surrogate pair and terminator

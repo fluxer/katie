@@ -216,7 +216,6 @@
 #endif
 
 // A precondition macro
-#define Q_VOID
 #define CHECK_VALID_STREAM(x) do { \
     if (!d->string && !d->device) { \
         qWarning("QTextStream: No device"); \
