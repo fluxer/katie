@@ -167,24 +167,22 @@ int QNativeSocketEnginePrivate::option(QNativeSocketEngine::SocketOption opt) co
         if (socketProtocol == QAbstractSocket::IPv6Protocol) {
             level = IPPROTO_IPV6;
             n = IPV6_MULTICAST_HOPS;
-        } else
-#endif
-        {
-            level = IPPROTO_IP;
-            n = IP_MULTICAST_TTL;
+            break;
         }
+#endif
+        level = IPPROTO_IP;
+        n = IP_MULTICAST_TTL;
         break;
     case QNativeSocketEngine::MulticastLoopbackOption:
 #ifndef QT_NO_IPV6
         if (socketProtocol == QAbstractSocket::IPv6Protocol) {
             level = IPPROTO_IPV6;
             n = IPV6_MULTICAST_LOOP;
-        } else
-#endif
-        {
-            level = IPPROTO_IP;
-            n = IP_MULTICAST_LOOP;
+            break;
         }
+#endif
+        level = IPPROTO_IP;
+        n = IP_MULTICAST_LOOP;
         break;
     }
 
@@ -254,24 +252,22 @@ bool QNativeSocketEnginePrivate::setOption(QNativeSocketEngine::SocketOption opt
         if (socketProtocol == QAbstractSocket::IPv6Protocol) {
             level = IPPROTO_IPV6;
             n = IPV6_MULTICAST_HOPS;
-        } else
-#endif
-        {
-            level = IPPROTO_IP;
-            n = IP_MULTICAST_TTL;
+            break;
         }
+#endif
+        level = IPPROTO_IP;
+        n = IP_MULTICAST_TTL;
         break;
     case QNativeSocketEngine::MulticastLoopbackOption:
 #ifndef QT_NO_IPV6
         if (socketProtocol == QAbstractSocket::IPv6Protocol) {
             level = IPPROTO_IPV6;
             n = IPV6_MULTICAST_LOOP;
-        } else
-#endif
-        {
-            level = IPPROTO_IP;
-            n = IP_MULTICAST_LOOP;
+            break;
         }
+#endif
+        level = IPPROTO_IP;
+        n = IP_MULTICAST_LOOP;
         break;
     }
 
