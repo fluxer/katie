@@ -74,14 +74,17 @@ static inline QByteArray qt_prettyDebug(const char *data, int len, int maxSize)
         char c = data[i];
         if (isprint(int(uchar(c)))) {
             out += c;
-        } else switch (c) {
-        case '\n': out += "\\n"; break;
-        case '\r': out += "\\r"; break;
-        case '\t': out += "\\t"; break;
-        default:
-            QSTACKARRAY(char, buf, 5);
-            ::snprintf(buf, sizeof(buf), "\\%3o", c);
-            out += QByteArray(buf);
+        } else {
+            switch (c) {
+                case '\n': out += "\\n"; break;
+                case '\r': out += "\\r"; break;
+                case '\t': out += "\\t"; break;
+                default: {
+                    QSTACKARRAY(char, snprintfbuf, 5);
+                    ::snprintf(snprintfbuf, sizeof(snprintfbuf), "\\%3o", c);
+                    out += QByteArray(snprintfbuf, sizeof(snprintfbuf) - 1);
+                }
+            }
         }
     }
 
