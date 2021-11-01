@@ -72,7 +72,7 @@ static inline QByteArray qt_prettyDebug(const char *data, int len, int maxSize)
     QByteArray out;
     for (int i = 0; i < len; ++i) {
         char c = data[i];
-        if (isprint(int(uchar(c)))) {
+        if (isprint(int(c))) {
             out += c;
         } else {
             switch (c) {

@@ -1940,7 +1940,7 @@ qint64 QAbstractSocket::readData(char *data, qint64 maxSize)
         *data = d->readBuffer.getChar();
 #if defined (QABSTRACTSOCKET_DEBUG)
         qDebug("QAbstractSocket::readData(%p '%c (0x%.2x)', 1) == 1 [char buffer]",
-               data, isprint(int(uchar(*data))) ? *data : '?', *data);
+               data, isprint(int(*data)) ? *data : '?', *data);
 #endif
         if (d->readBuffer.isEmpty() && d->socketEngine && d->socketEngine->isValid())
             d->socketEngine->setReadNotificationEnabled(true);
@@ -1992,7 +1992,7 @@ qint64 QAbstractSocket::readData(char *data, qint64 maxSize)
         // Just return, readyRead will be emitted again
 #if defined (QABSTRACTSOCKET_DEBUG)
         qDebug("QAbstractSocket::readData(%p '%c (0x%.2x)', %lli) == %lli [buffer]",
-               data, isprint(int(uchar(*data))) ? *data : '?', *data, maxSize, readSoFar);
+               data, isprint(int(*data)) ? *data : '?', *data, maxSize, readSoFar);
 #endif
 
         if (d->readBuffer.isEmpty() && d->socketEngine)

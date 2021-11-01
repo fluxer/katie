@@ -51,7 +51,7 @@ void debugBinaryString(const QByteArray &input)
             for (int j = tmp.size(); j < 16 + 1; ++j)
                 printf("   ");
             for (int j = 0; j < tmp.size(); ++j)
-                printf("%c", isprint(int(uchar(tmp[j]))) ? tmp[j] : '.');
+                printf("%c", isprint(int(tmp[j])) ? tmp[j] : '.');
             tmp.clear();
         }
     }
@@ -764,7 +764,7 @@ qint64 QIODevice::read(char *data, qint64 maxSize)
             *data = c;
 #if defined QIODEVICE_DEBUG
             printf("%p \tread 0x%hhx (%c) returning 1 (shortcut)\n", this,
-                   int(c), isprint(c) ? c : '?');
+                   int(c), isprint(int(c)) ? c : '?');
 #endif
             if (d->buffer.isEmpty())
                 readData(data, 0);
