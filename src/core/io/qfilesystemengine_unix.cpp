@@ -60,7 +60,7 @@ QFileSystemEntry QFileSystemEngine::getLinkTarget(const QFileSystemEntry &link, 
             if (!ret.isEmpty() && !ret.endsWith(QLatin1Char('/')))
                 ret += QLatin1Char('/');
         }
-        ret += QFile::decodeName(QByteArray(readlinkbuf));
+        ret += QFile::decodeName(QByteArray(readlinkbuf, len));
 
         if (!ret.startsWith(QLatin1Char('/'))) {
             if (link.filePath().startsWith(QLatin1Char('/'))) {
