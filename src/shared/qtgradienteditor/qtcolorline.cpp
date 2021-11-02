@@ -827,7 +827,7 @@ void QtColorLinePrivate::paintEvent(QPaintEvent *)
                 p.setClipRect(r[1].adjusted(0, 0, -qRound(r[1].width() * coef), 0), Qt::UniteClip);
             }
             p.setBrush(Qt::NoBrush);
-            p.setPen(QPen(QColor(c.rgb())));
+            p.setPen(QPen(c));
 
             p.drawRect(r[1].adjusted(0, 0, -1, -1));
         //    p.drawRect(r[1].adjusted(1, 1, -2, -2));
@@ -843,7 +843,7 @@ void QtColorLinePrivate::paintEvent(QPaintEvent *)
             } else {
 
             }
-            QColor semiColor(c.rgb());
+            QColor semiColor(c);
             semiColor.setAlpha((c.alpha() + 0xFF) / 2);
             p.setPen(QPen(semiColor));
             p.drawRect(r[1].adjusted(0, 0, -1, -1));
@@ -880,12 +880,12 @@ void QtColorLinePrivate::paintEvent(QPaintEvent *)
                        colorRect.height() / 4 + colorRect.top(),
                        colorRect.width() / 2,
                        colorRect.height() / 2,
-                       QColor(c.rgb()));
+                       c);
             */
             /*
             if (m_component != QtColorLine::Alpha) {
-                p.fillRect(colorRect.adjusted(0, colorRect.height() * 4 / 5, 0, 0), QColor(c.rgb()));
-                p.fillRect(colorRect.adjusted(0, 0, 0, -colorRect.height() * 4 / 5), QColor(c.rgb()));
+                p.fillRect(colorRect.adjusted(0, colorRect.height() * 4 / 5, 0, 0), c);
+                p.fillRect(colorRect.adjusted(0, 0, 0, -colorRect.height() * 4 / 5), c);
             }
             */
         }
