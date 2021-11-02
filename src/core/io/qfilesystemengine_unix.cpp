@@ -85,11 +85,11 @@ QFileSystemEntry QFileSystemEngine::canonicalName(const QFileSystemEntry &entry,
         return entry;
 
     QByteArray path = entry.nativeFilePath();
-    char *ret = ::realpath(path.constData(), (char*)0);
+    QSTACKARRAY(char, realpathbuf, PATH_MAX);
+    char *ret = ::realpath(path.constData(), realpathbuf);
     if (ret) {
         data.entryFlags |= QFileSystemMetaData::ExistsAttribute;
         QString canonicalPath = QDir::cleanPath(QString::fromLocal8Bit(ret));
-        ::free(ret);
         return QFileSystemEntry(canonicalPath);
     } else if (errno == ENOENT) { // file doesn't exist
         data.entryFlags &= ~(QFileSystemMetaData::ExistsAttribute);
