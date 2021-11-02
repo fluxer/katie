@@ -392,7 +392,7 @@ void QDeclarativeRectangle::generateRoundedRect()
             QPainter p(&(d->rectImage));
             p.setRenderHint(QPainter::Antialiasing);
             if (d->pen && d->pen->isValid()) {
-                QPen pn(QColor(d->pen->color()), d->pen->width());
+                QPen pn(d->pen->color(), d->pen->width());
                 p.setPen(pn);
             } else {
                 p.setPen(Qt::NoPen);
@@ -429,7 +429,7 @@ void QDeclarativeRectangle::generateBorderedRect()
             QPainter p(&(d->rectImage));
             p.setRenderHint(QPainter::Antialiasing);
             if (d->pen && d->pen->isValid()) {
-                QPen pn(QColor(d->pen->color()), d->pen->width());
+                QPen pn(d->pen->color(), d->pen->width());
                 pn.setJoinStyle(Qt::MiterJoin);
                 p.setPen(pn);
             } else {
@@ -472,7 +472,7 @@ void QDeclarativeRectangle::drawRect(QPainter &p)
         // XXX This path is still slower than the image path
         // Image path won't work for gradients or invalid radius though
         if (d->pen && d->pen->isValid()) {
-            QPen pn(QColor(d->pen->color()), d->pen->width());
+            QPen pn(d->pen->color(), d->pen->width());
             pn.setJoinStyle(Qt::MiterJoin);
             p.setPen(pn);
         } else {
