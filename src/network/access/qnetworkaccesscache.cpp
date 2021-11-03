@@ -114,7 +114,7 @@ void QNetworkAccessCache::clear()
 }
 
 /*!
-    Appens the entry given by @p key to the end of the linked list.
+    Appends the entry given by @p key to the end of the linked list.
     (i.e., makes it the newest entry)
  */
 void QNetworkAccessCache::linkEntry(const QByteArray &key)
