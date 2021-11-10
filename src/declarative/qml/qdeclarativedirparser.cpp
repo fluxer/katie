@@ -90,7 +90,7 @@ bool QDeclarativeDirParser::parse()
             _source = QString::fromUtf8(file.readAll());
         } else {
             QDeclarativeError error;
-            error.setDescription(QString::fromUtf8("module \"$$URI$$\" definition \"%1\" not readable").arg(_filePathSouce));
+            error.setDescription(QString::fromLocal8Bit("module \"$$URI$$\" definition \"%1\" not readable").arg(_filePathSouce));
             _errors.prepend(error);
             return false;
         }
