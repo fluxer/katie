@@ -87,7 +87,7 @@ bool QDeclarativeDirParser::parse()
     if (_source.isEmpty() && !_filePathSouce.isEmpty()) {
         QFile file(_filePathSouce);
         if (file.open(QFile::ReadOnly)) {
-            _source = QString::fromUtf8(file.readAll());
+            _source = QString::fromLatin1(file.readAll());
         } else {
             QDeclarativeError error;
             error.setDescription(QString::fromLocal8Bit("module \"$$URI$$\" definition \"%1\" not readable").arg(_filePathSouce));
@@ -146,7 +146,7 @@ bool QDeclarativeDirParser::parse()
         } else if (sections[0] == QLatin1String("plugin")) {
             if (sectionCount < 2) {
                 reportError(lineNumber, -1,
-                            QString::fromUtf8("plugin directive requires 2 arguments, but %1 were provided").arg(sectionCount + 1));
+                            QString::fromLatin1("plugin directive requires 2 arguments, but %1 were provided").arg(sectionCount + 1));
 
                 continue;
             }
@@ -183,7 +183,7 @@ bool QDeclarativeDirParser::parse()
             }
         } else {
             reportError(lineNumber, -1, 
-                        QString::fromUtf8("a component declaration requires 3 arguments, but %1 were provided").arg(sectionCount + 1));
+                        QString::fromLatin1("a component declaration requires 3 arguments, but %1 were provided").arg(sectionCount + 1));
         }
     }
 
