@@ -287,10 +287,6 @@ bool QDeclarativeImportedNamespace::find_helper(QDeclarativeTypeLoader *typeLoad
                 if ((vmaj == -1) || (c.majorVersion < vmaj || (c.majorVersion == vmaj && vmin >= c.minorVersion))) {
                     QUrl url = QUrl(urls.at(i) + QLatin1Char('/') + QString::fromUtf8(type) + QLatin1String(".qml"));
                     QUrl candidate = url.resolved(QUrl(c.fileName));
-                    if (c.internal && base) {
-                        if (base->resolved(QUrl(c.fileName)) != candidate)
-                            continue; // failed attempt to access an internal type
-                    }
                     if (base && *base == candidate) {
                         if (typeRecursionDetected)
                             *typeRecursionDetected = true;

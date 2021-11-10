@@ -155,22 +155,6 @@ bool QDeclarativeDirParser::parse()
 
             _plugins.append(entry);
 
-        } else if (sections[0] == QLatin1String("internal")) {
-            if (sectionCount != 3) {
-                reportError(lineNumber, -1,
-                            QString::fromUtf8("internal types require 2 arguments, but %1 were provided").arg(sectionCount + 1));
-                continue;
-            }
-            Component entry(sections[1], sections[2], -1, -1);
-            entry.internal = true;
-            _components.append(entry);
-        } else if (sections[0] == QLatin1String("typeinfo")) {
-            if (sectionCount != 2) {
-                reportError(lineNumber, -1,
-                            QString::fromUtf8("typeinfo requires 1 argument, but %1 were provided").arg(sectionCount - 1));
-                continue;
-            }
-
         } else if (sectionCount == 2) {
             // No version specified (should only be used for relative qmldir files)
             const Component entry(sections[0], sections[1], -1, -1);
