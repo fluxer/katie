@@ -438,29 +438,29 @@ bool ProcessAST::visit(AST::UiImport *node)
 
 bool ProcessAST::visit(AST::UiPublicMember *node)
 {
-    const struct TypeNameToType {
-        const char *name;
+    static const struct TypeNameToTypeTblData {
+        const QLatin1String name;
         Object::DynamicProperty::Type type;
         const char *qtName;
-    } propTypeNameToTypes[] = {
-        { "int", Object::DynamicProperty::Int, "int" },
-        { "bool", Object::DynamicProperty::Bool, "bool" },
-        { "double", Object::DynamicProperty::Real, "double" },
-        { "real", Object::DynamicProperty::Real, "qreal" },
-        { "string", Object::DynamicProperty::String, "QString" },
-        { "url", Object::DynamicProperty::Url, "QUrl" },
-        { "color", Object::DynamicProperty::Color, "QColor" },
+    } propTypeNameToTypesTbl[] = {
+        { QLatin1String("int"), Object::DynamicProperty::Int, "int" },
+        { QLatin1String("bool"), Object::DynamicProperty::Bool, "bool" },
+        { QLatin1String("double"), Object::DynamicProperty::Real, "double" },
+        { QLatin1String("real"), Object::DynamicProperty::Real, "qreal" },
+        { QLatin1String("string"), Object::DynamicProperty::String, "QString" },
+        { QLatin1String("url"), Object::DynamicProperty::Url, "QUrl" },
+        { QLatin1String("color"), Object::DynamicProperty::Color, "QColor" },
         // Internally QTime, QDate and QDateTime are all supported.
         // To be more consistent with JavaScript we expose only
         // QDateTime as it matches closely with the Date JS type.
         // We also call it "date" to match.
         // { "time", Object::DynamicProperty::Time, "QTime" },
         // { "date", Object::DynamicProperty::Date, "QDate" },
-        { "date", Object::DynamicProperty::DateTime, "QDateTime" },
-        { "variant", Object::DynamicProperty::Variant, "QVariant" }
+        { QLatin1String("date"), Object::DynamicProperty::DateTime, "QDateTime" },
+        { QLatin1String("variant"), Object::DynamicProperty::Variant, "QVariant" }
     };
-    const int propTypeNameToTypesCount = sizeof(propTypeNameToTypes) /
-                                         sizeof(propTypeNameToTypes[0]);
+    static const int propTypeNameToTypesTblSize = sizeof(propTypeNameToTypesTbl) /
+                                         sizeof(TypeNameToTypeTblData);
 
     if(node->type == AST::UiPublicMember::Signal) {
         const QString name = node->name->asString();
@@ -472,9 +472,9 @@ bool ProcessAST::visit(AST::UiPublicMember *node)
         while (p) {
             const QString memberType = p->type->asString();
             const char *qtType = 0;
-            for(int ii = 0; !qtType && ii < propTypeNameToTypesCount; ++ii) {
-                if(QLatin1String(propTypeNameToTypes[ii].name) == memberType)
-                    qtType = propTypeNameToTypes[ii].qtName;
+            for(int ii = 0; !qtType && ii < propTypeNameToTypesTblSize; ++ii) {
+                if(propTypeNameToTypesTbl[ii].name == memberType)
+                    qtType = propTypeNameToTypesTbl[ii].qtName;
             }
 
             if (!qtType) {
@@ -504,9 +504,9 @@ bool ProcessAST::visit(AST::UiPublicMember *node)
             typeFound = true;
         }
 
-        for(int ii = 0; !typeFound && ii < propTypeNameToTypesCount; ++ii) {
-            if(QLatin1String(propTypeNameToTypes[ii].name) == memberType) {
-                type = propTypeNameToTypes[ii].type;
+        for(int ii = 0; !typeFound && ii < propTypeNameToTypesTblSize; ++ii) {
+            if(propTypeNameToTypesTbl[ii].name == memberType) {
+                type = propTypeNameToTypesTbl[ii].type;
                 typeFound = true;
             }
         }
