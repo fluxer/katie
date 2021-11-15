@@ -442,10 +442,11 @@ void tst_QFileSystemWatcher::cleanup()
 
 void tst_QFileSystemWatcher::nonExistingFile()
 {
-    // Don't crash...
+    // Don't crash and watch for its creation
+    const QStringList nonexisting = QStringList() << "file_that_does_not_exist.txt";
     QFileSystemWatcher watcher;
-    watcher.addPath("file_that_does_not_exist.txt");
-    QVERIFY(true);
+    watcher.addPaths(nonexisting);
+    QCOMPARE(watcher.files(), nonexisting);
 }
 
 void tst_QFileSystemWatcher::removeFileAndUnWatch()
