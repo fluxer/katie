@@ -49,7 +49,7 @@ private slots:
 
     void watchFileAndItsDirectory();
 
-    void nonExistingFile();
+    void nonExistingFileAndDirectory();
 
     void removeFileAndUnWatch();
 
@@ -440,13 +440,64 @@ void tst_QFileSystemWatcher::cleanup()
     QDir().rmdir("testDir");
 }
 
-void tst_QFileSystemWatcher::nonExistingFile()
+void tst_QFileSystemWatcher::nonExistingFileAndDirectory()
 {
     // Don't crash and watch for its creation
-    const QStringList nonexisting = QStringList() << "file_that_does_not_exist.txt";
+    const QStringList nonexistingfiles = QStringList()
+        << "file_that_does_not_exist.txt"
+        << "foo/bar.txt";
+    const QStringList nonexistingdirs = QStringList()
+        << "dir_that_does_not_exist/"
+        << "dir_foo/dir_bar/";
     QFileSystemWatcher watcher;
-    watcher.addPaths(nonexisting);
-    QCOMPARE(watcher.files(), nonexisting);
+    watcher.addPaths(nonexistingfiles);
+    watcher.addPaths(nonexistingdirs);
+    QCOMPARE(watcher.files(), nonexistingfiles);
+    QCOMPARE(watcher.directories(), nonexistingdirs);
+
+    QSignalSpy fileChangedSpy(&watcher, SIGNAL(fileChanged(const QString &)));
+    QSignalSpy dirChangedSpy(&watcher, SIGNAL(directoryChanged(const QString &)));
+    QEventLoop eventLoop;
+    QTimer timer;
+    connect(&timer, SIGNAL(timeout()), &eventLoop, SLOT(quit()));
+
+    QDir().mkdir("dir_that_does_not_exist");
+    timer.start(3000);
+    eventLoop.exec();
+    QCOMPARE(dirChangedSpy.count(), 1);
+
+    dirChangedSpy.clear();
+    QDir().mkdir("dir_foo");
+    QDir("dir_foo").mkdir("dir_bar");
+    timer.start(3000);
+    eventLoop.exec();
+    QCOMPARE(dirChangedSpy.count(), 1);
+
+    fileChangedSpy.clear();
+    QFile testFile1("file_that_does_not_exist.txt");
+    QVERIFY(testFile1.open(QIODevice::WriteOnly | QIODevice::Truncate));
+    testFile1.write(QByteArray("hello"));
+    testFile1.close();
+    timer.start(3000);
+    eventLoop.exec();
+    QCOMPARE(fileChangedSpy.count(), 1);
+
+    fileChangedSpy.clear();
+    QDir().mkdir("foo");
+    QFile testFile2("foo/bar.txt");
+    QVERIFY(testFile2.open(QIODevice::WriteOnly | QIODevice::Truncate));
+    testFile2.write(QByteArray("hello"));
+    testFile2.close();
+    timer.start(3000);
+    eventLoop.exec();
+    QCOMPARE(fileChangedSpy.count(), 1);
+
+    testFile1.remove();
+    testFile2.remove();
+    QDir().rmdir("foo");
+    QDir("dir_foo").rmdir("dir_bar");
+    QDir().rmdir("dir_foo");
+    QDir().rmdir("dir_that_does_not_exist");
 }
 
 void tst_QFileSystemWatcher::removeFileAndUnWatch()
