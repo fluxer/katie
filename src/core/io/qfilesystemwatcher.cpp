@@ -101,22 +101,6 @@ void QFileSystemWatcherPrivate::_q_directoryChanged(const QString &path, bool re
     they have been renamed or removed from disk, and directories once
     they have been removed from disk.
 
-    \note On systems running a Linux kernel without inotify support,
-    file systems that contain watched paths cannot be unmounted.
-
-    \note The act of monitoring files and directories for
-    modifications consumes system resources. This implies there is a
-    limit to the number of files and directories your process can
-    monitor simultaneously. On all BSD variants, for example, an open
-    file descriptor is required for each monitored file. Some system
-    limits the number of open file descriptors to 256 by default.
-    This means that addPath() and addPaths() will fail if your process
-    tries to add more than 256 files or directories to the file system
-    monitor. Also note that your process may have other file
-    descriptors open in addition to the ones for files being monitored,
-    and these other open descriptors also count in the total.
-
-
     \sa QFile, QDir
 */
 
@@ -154,19 +138,13 @@ QFileSystemWatcher::~QFileSystemWatcher()
 }
 
 /*!
-    Adds \a path to the file system watcher if \a path exists. The
-    path is not added if it does not exist, or if it is already being
-    monitored by the file system watcher.
+    Adds \a path to the file system watcher. The path is not added
+    if it is already being monitored by the file system watcher.
 
     If \a path specifies a directory, the directoryChanged() signal
     will be emitted when \a path is modified or removed from disk;
     otherwise the fileChanged() signal is emitted when \a path is
     modified, renamed or removed.
-
-    \note There is a system dependent limit to the number of files and
-    directories that can be monitored simultaneously. If this limit
-    has been reached, \a path will not be added to the file system
-    watcher, and a warning message will be printed to \e{stderr}.
 
     \sa addPaths(), removePath()
 */
@@ -181,19 +159,13 @@ void QFileSystemWatcher::addPath(const QString &path)
 
 /*!
     Adds each path in \a paths to the file system watcher. Paths are
-    not added if they not exist, or if they are already being
-    monitored by the file system watcher.
+    not added if they are already being monitored by the file system
+    watcher.
 
     If a path specifies a directory, the directoryChanged() signal
     will be emitted when the path is modified or removed from disk;
     otherwise the fileChanged() signal is emitted when the path is
     modified, renamed, or removed.
-
-    \note There is a system dependent limit to the number of files and
-    directories that can be monitored simultaneously. If this limit
-    has been reached, the excess \a paths will not be added to the
-    file system watcher, and a warning message will be printed to
-    \e{stderr} for each path that could not be added.
 
     \sa addPath(), removePaths()
 */
