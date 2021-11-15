@@ -33,7 +33,7 @@
 // We mean it.
 //
 
-#include "qfilesystemwatcher_p.h"
+#include "qglobal.h"
 
 #ifndef QT_NO_FILESYSTEMWATCHER
 
@@ -48,7 +48,7 @@
 QT_BEGIN_NAMESPACE
 
 
-class QFileSystemWatcherEngineUnix : public QFileSystemWatcherEngine
+class QFileSystemWatcherEngineUnix : public QObject
 {
     Q_OBJECT
 
@@ -59,6 +59,10 @@ public:
 
     QStringList addPaths(const QStringList &paths, QStringList *files, QStringList *directories);
     QStringList removePaths(const QStringList &paths, QStringList *files, QStringList *directories);
+
+Q_SIGNALS:
+    void fileChanged(const QString &path, bool removed);
+    void directoryChanged(const QString &path, bool removed);
 
 private Q_SLOTS:
     void timeout();

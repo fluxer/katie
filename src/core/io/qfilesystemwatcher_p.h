@@ -38,37 +38,11 @@
 #ifndef QT_NO_FILESYSTEMWATCHER
 
 #include "qobject_p.h"
+#include "qfilesystemwatcher_unix_p.h"
 
 #include <QtCore/qstringlist.h>
 
 QT_BEGIN_NAMESPACE
-
-class QFileSystemWatcherEngine : public QObject
-{
-    Q_OBJECT
-
-protected:
-    inline QFileSystemWatcherEngine()
-    {
-    }
-
-public:
-    // fills \a files and \a directories with the \a paths it could
-    // watch, and returns a list of paths this engine could not watch
-    virtual QStringList addPaths(const QStringList &paths,
-                                 QStringList *files,
-                                 QStringList *directories) = 0;
-    // removes \a paths from \a files and \a directories, and returns
-    // a list of paths this engine does not know about (either addPath
-    // failed or wasn't called)
-    virtual QStringList removePaths(const QStringList &paths,
-                                    QStringList *files,
-                                    QStringList *directories) = 0;
-
-Q_SIGNALS:
-    void fileChanged(const QString &path, bool removed);
-    void directoryChanged(const QString &path, bool removed);
-};
 
 class QFileSystemWatcherPrivate : public QObjectPrivate
 {
@@ -78,7 +52,7 @@ public:
     QFileSystemWatcherPrivate();
     void init();
 
-    QFileSystemWatcherEngine *watcher;
+    QFileSystemWatcherEngineUnix *watcher;
     QStringList files, directories;
 
     // private slots
