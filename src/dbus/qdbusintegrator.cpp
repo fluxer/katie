@@ -942,8 +942,6 @@ void QDBusConnectionPrivate::deliverCall(QObject *object, const QDBusMessage &ms
                                       QLatin1String("Failed to deliver message")));
         }
     }
-
-    return;
 }
 
 QDBusConnectionPrivate::QDBusConnectionPrivate(QObject *p)
