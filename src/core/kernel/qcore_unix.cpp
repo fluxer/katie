@@ -76,7 +76,7 @@ bool QStatInfo::operator==(const QStatInfo &other) const
         || m_gid != other.m_gid || m_mtime != other.m_mtime) {
         return false;
     }
-    return (m_path == other.m_path);
+    return (m_entries == other.m_entries && m_path == other.m_path);
 }
 
 bool QStatInfo::dirEquals(const QStatInfo &other) const
@@ -97,44 +97,43 @@ QList<QStatInfo> QStatInfo::dirInfos(const QByteArray &nativepath, const QString
 {
     QList<QStatInfo> result;
     QT_DIR *dir = QT_OPENDIR(nativepath.constData());
-    QT_DIRENT *dirent = QT_READDIR(dir);
-    while (dirent) {
-        if (qstrcmp(".", dirent->d_name) == 0 || qstrcmp("..", dirent->d_name) == 0) {
-            dirent = QT_READDIR(dir);
-            continue;
-        }
+    if (dir) {
+        QT_DIRENT *dirent = QT_READDIR(dir);
+        while (dirent) {
+            if (qstrcmp(".", dirent->d_name) == 0 || qstrcmp("..", dirent->d_name) == 0) {
+                dirent = QT_READDIR(dir);
+                continue;
+            }
+            const QString dirlocal = QString::fromLocal8Bit(dirent->d_name);
+            const QString fulllocal = QString::fromLatin1("%1/%2").arg(localpath, dirlocal);
 #ifdef QT_HAVE_DIRENT_D_TYPE
-        const QString dirlocal = QString::fromLocal8Bit(dirent->d_name);
-        switch (dirent->d_type) {
-            case DT_BLK:
-            case DT_CHR:
-            case DT_FIFO:
-            case DT_SOCK:
-            case DT_LNK:
-            case DT_REG: {
-                const QString fulllocal = QString::fromLatin1("%1/%2").arg(localpath, dirlocal);
-                result.append(QStatInfo(fulllocal));
-                break;
+            switch (dirent->d_type) {
+                case DT_BLK:
+                case DT_CHR:
+                case DT_FIFO:
+                case DT_SOCK:
+                case DT_LNK:
+                case DT_REG:
+                case DT_DIR: {
+                    result.append(QStatInfo(fulllocal, false));
+                    break;
+                }
+                case DT_UNKNOWN:
+                default: {
+                    break;
+                }
             }
-            case DT_DIR:
-            case DT_UNKNOWN:
-            default: {
-                break;
-            }
-        }
 #else
-        const QString fulllocal = QString::fromLatin1("%1/%2").arg(localpath, dirlocal);
-        const QByteArray fullnative = fulllocal.toLocal8Bit();
-        QT_STATBUF statbuf;
-        if (QT_STAT(fullnative.constData(), &statbuf) == 0) {
-            if (!S_ISDIR(statbuf.st_mode)) {
-                result.append(QStatInfo(fulllocal));
+            const QByteArray fullnative = fulllocal.toLocal8Bit();
+            QT_STATBUF statbuf;
+            if (QT_STAT(fullnative.constData(), &statbuf) == 0) {
+                result.append(QStatInfo(fulllocal, false));
             }
-        }
 #endif
-        dirent = QT_READDIR(dir);
+            dirent = QT_READDIR(dir);
+        }
+        QT_CLOSEDIR(dir);
     }
-    QT_CLOSEDIR(dir);
     return result;
 }
 
