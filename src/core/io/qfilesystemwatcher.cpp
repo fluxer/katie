@@ -146,6 +146,11 @@ QFileSystemWatcher::~QFileSystemWatcher()
     otherwise the fileChanged() signal is emitted when \a path is
     modified, renamed or removed.
 
+    \note To watch for the creation of non-existing directories you
+    must ensure that the directory path to watch for ends with
+    trainling slash, otherwise it cannot be distinguished from file
+    path.
+
     \sa addPaths(), removePath()
 */
 void QFileSystemWatcher::addPath(const QString &path)
