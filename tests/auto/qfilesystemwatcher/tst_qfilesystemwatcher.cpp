@@ -38,10 +38,8 @@ public:
     tst_QFileSystemWatcher();
 
 private slots:
-    void basicTest_data();
     void basicTest();
 
-    void watchDirectory_data() { basicTest_data(); }
     void watchDirectory();
 
     void addPath();
@@ -49,7 +47,6 @@ private slots:
     void addPaths();
     void removePaths();
 
-    void watchFileAndItsDirectory_data() { basicTest_data(); }
     void watchFileAndItsDirectory();
 
     void nonExistingFile();
@@ -65,21 +62,8 @@ tst_QFileSystemWatcher::tst_QFileSystemWatcher()
 {
 }
 
-void tst_QFileSystemWatcher::basicTest_data()
-{
-    QTest::addColumn<QString>("backend");
-#if defined(QT_HAVE_INOTIFY_INIT1) || defined(QT_HAVE_KEVENT)
-    // we have native engines for linux, freebsd, openbsd, netbsd and dragonfly
-    QTest::newRow("native") << "native";
-#endif
-    QTest::newRow("poller") << "poller";
-}
-
 void tst_QFileSystemWatcher::basicTest()
 {
-    QFETCH(QString, backend);
-    qDebug() << "Testing" << backend << "engine";
-
     // create test file
     QFile testFile("testfile.txt");
     testFile.setPermissions(QFile::ReadOwner | QFile::WriteOwner);
@@ -91,8 +75,6 @@ void tst_QFileSystemWatcher::basicTest()
     // set some file permissions
     testFile.setPermissions(QFile::ReadOwner | QFile::WriteOwner);
 
-    // create watcher, forcing it to use a specific backend
-    setObjectName(QLatin1String("_qt_autotest_force_engine_") + backend);
     QFileSystemWatcher watcher(this);
     watcher.removePath(testFile.fileName());
     watcher.addPath(testFile.fileName());
@@ -214,16 +196,12 @@ void tst_QFileSystemWatcher::basicTest()
 
 void tst_QFileSystemWatcher::watchDirectory()
 {
-    QFETCH(QString, backend);
-    qDebug() << "Testing" << backend << "engine";
-
     QDir().mkdir("testDir");
     QDir testDir("testDir");
 
     QString testFileName = testDir.filePath("testFile.txt");
     QFile::remove(testFileName);
 
-    setObjectName(QLatin1String("_qt_autotest_force_engine_") + backend);
     QFileSystemWatcher watcher(this);
     watcher.addPath(testDir.dirName());
 
@@ -360,7 +338,6 @@ class SignalTest : public QObject {
 
 void tst_QFileSystemWatcher::watchFileAndItsDirectory()
 {
-    QFETCH(QString, backend);
     QDir().mkdir("testDir");
     QDir testDir("testDir");
 
@@ -376,7 +353,6 @@ void tst_QFileSystemWatcher::watchFileAndItsDirectory()
     testFile.write(QByteArray("hello"));
     testFile.close();
 
-    setObjectName(QLatin1String("_qt_autotest_force_engine_") + backend);
     QFileSystemWatcher watcher(this);
 
     watcher.addPath(testDir.dirName());

@@ -77,8 +77,6 @@ class QFileSystemWatcherPrivate : public QObjectPrivate
 public:
     QFileSystemWatcherPrivate();
     void init();
-    void initNativeEngine();
-    void initPollerEngine();
 
     QFileSystemWatcherEngine *watcher;
     QStringList files, directories;

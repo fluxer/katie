@@ -37,33 +37,72 @@
 
 #ifndef QT_NO_FILESYSTEMWATCHER
 
-#include <QtCore/qhash.h>
-#include <QtCore/qsocketnotifier.h>
+#include "qhash.h"
+#include "qfile.h"
+#include "qdir.h"
+#include "qfileinfo.h"
+#include "qdatetime.h"
+#include "qtimer.h"
 
 QT_BEGIN_NAMESPACE
+
 
 class QFileSystemWatcherEngineUnix : public QFileSystemWatcherEngine
 {
     Q_OBJECT
 
-public:
-    ~QFileSystemWatcherEngineUnix();
+    class FileInfo
+    {
+        uint ownerId;
+        uint groupId;
+        QFile::Permissions permissions;
+        QDateTime lastModified;
+        QStringList entries;
 
-    static QFileSystemWatcherEngineUnix *create();
+    public:
+        FileInfo(const QFileInfo &fileInfo)
+            : ownerId(fileInfo.ownerId()),
+              groupId(fileInfo.groupId()),
+              permissions(fileInfo.permissions()),
+              lastModified(fileInfo.lastModified())
+        { 
+            if (fileInfo.isDir()) {
+                entries = fileInfo.absoluteDir().entryList(QDir::AllEntries);
+            }
+        }
+        FileInfo &operator=(const QFileInfo &fileInfo)
+        {
+            *this = FileInfo(fileInfo);
+            return *this;
+        }
+
+        bool operator!=(const QFileInfo &fileInfo) const
+        {
+            if (ownerId != fileInfo.ownerId()
+                    || groupId != fileInfo.groupId()
+                    || permissions != fileInfo.permissions()
+                    || lastModified != fileInfo.lastModified()) {
+                return true;
+            }
+            if (fileInfo.isDir() && entries != fileInfo.absoluteDir().entryList(QDir::AllEntries))
+                return true;
+            return false;
+        }
+    };
+
+    QHash<QString, FileInfo> files, directories;
+
+public:
+    QFileSystemWatcherEngineUnix();
 
     QStringList addPaths(const QStringList &paths, QStringList *files, QStringList *directories);
     QStringList removePaths(const QStringList &paths, QStringList *files, QStringList *directories);
 
 private Q_SLOTS:
-    void readFromFd();
+    void timeout();
 
 private:
-    QFileSystemWatcherEngineUnix(int fd);
-
-    int sockfd;
-    QHash<QString, int> pathToID;
-    QHash<int, QString> idToPath;
-    QSocketNotifier notifier;
+    QTimer timer;
 };
 
 
