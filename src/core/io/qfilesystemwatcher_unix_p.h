@@ -43,6 +43,7 @@
 #include "qfileinfo.h"
 #include "qdatetime.h"
 #include "qtimer.h"
+#include "qcore_unix_p.h"
 
 QT_BEGIN_NAMESPACE
 
@@ -51,46 +52,7 @@ class QFileSystemWatcherEngineUnix : public QFileSystemWatcherEngine
 {
     Q_OBJECT
 
-    class FileInfo
-    {
-        uint ownerId;
-        uint groupId;
-        QFile::Permissions permissions;
-        QDateTime lastModified;
-        QStringList entries;
-
-    public:
-        FileInfo(const QFileInfo &fileInfo)
-            : ownerId(fileInfo.ownerId()),
-              groupId(fileInfo.groupId()),
-              permissions(fileInfo.permissions()),
-              lastModified(fileInfo.lastModified())
-        { 
-            if (fileInfo.isDir()) {
-                entries = fileInfo.absoluteDir().entryList(QDir::AllEntries);
-            }
-        }
-        FileInfo &operator=(const QFileInfo &fileInfo)
-        {
-            *this = FileInfo(fileInfo);
-            return *this;
-        }
-
-        bool operator!=(const QFileInfo &fileInfo) const
-        {
-            if (ownerId != fileInfo.ownerId()
-                    || groupId != fileInfo.groupId()
-                    || permissions != fileInfo.permissions()
-                    || lastModified != fileInfo.lastModified()) {
-                return true;
-            }
-            if (fileInfo.isDir() && entries != fileInfo.absoluteDir().entryList(QDir::AllEntries))
-                return true;
-            return false;
-        }
-    };
-
-    QHash<QString, FileInfo> files, directories;
+    QHash<QString, QStatInfo> files, directories;
 
 public:
     QFileSystemWatcherEngineUnix();

@@ -43,12 +43,12 @@ QStringList QFileSystemWatcherEngineUnix::addPaths(const QStringList &paths,
 {
     QStringList p = paths;
     foreach (const QString &path, p) {
-        QFileInfo fi(path);
+        QStatInfo fi(path);
         if (fi.isDir() || path.endsWith(QLatin1Char('/'))) {
             if (!directories->contains(path))
                 directories->append(path);
             if (!path.endsWith(QLatin1Char('/')))
-                fi = QFileInfo(path + QLatin1Char('/'));
+                fi = QStatInfo(path + QLatin1Char('/'));
             this->directories.insert(path, fi);
         } else {
             if (!files->contains(path))
@@ -88,11 +88,11 @@ QStringList QFileSystemWatcherEngineUnix::removePaths(const QStringList &paths,
 
 void QFileSystemWatcherEngineUnix::timeout()
 {
-    QMutableHashIterator<QString, FileInfo> fit(files);
+    QMutableHashIterator<QString, QStatInfo> fit(files);
     while (fit.hasNext()) {
-        QHash<QString, FileInfo>::iterator x = fit.next();
+        QHash<QString, QStatInfo>::iterator x = fit.next();
         QString path = x.key();
-        QFileInfo fi(path);
+        QStatInfo fi(path);
         if (x.value() != fi) {
             if (!fi.exists()) {
                 fit.remove();
@@ -103,14 +103,14 @@ void QFileSystemWatcherEngineUnix::timeout()
             }
         }
     }
-    QMutableHashIterator<QString, FileInfo> dit(directories);
+    QMutableHashIterator<QString, QStatInfo> dit(directories);
     while (dit.hasNext()) {
-        QHash<QString, FileInfo>::iterator x = dit.next();
+        QHash<QString, QStatInfo>::iterator x = dit.next();
         QString path = x.key();
-        QFileInfo fi(path);
+        QStatInfo fi(path);
         if (!path.endsWith(QLatin1Char('/')))
-            fi = QFileInfo(path + QLatin1Char('/'));
-        if (x.value() != fi) {
+            fi = QStatInfo(path + QLatin1Char('/'));
+        if (!fi.dirEquals(x.value())) {
             if (!fi.exists()) {
                 dit.remove();
                 emit directoryChanged(path, true);

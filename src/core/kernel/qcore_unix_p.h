@@ -35,6 +35,8 @@
 
 #include "qplatformdefs.h"
 #include "qatomic.h"
+#include "qlist.h"
+#include "qstring.h"
 
 #include <poll.h>
 #include <string.h>
@@ -57,6 +59,33 @@
 
 
 QT_BEGIN_NAMESPACE
+
+class QStatInfo {
+public:
+    QStatInfo(const QString &path, const bool listdir = true);
+    QStatInfo(const QStatInfo &other);
+
+    QStatInfo& operator=(const QStatInfo &other);
+    bool operator==(const QStatInfo &other) const;
+    inline bool operator!=(const QStatInfo &other) const
+        { return !operator==(other); }
+
+    inline bool isDir() const
+        { return S_ISDIR(m_mode); }
+    inline bool exists() const
+        { return (m_mode != 0); }
+
+    bool dirEquals(const QStatInfo &other) const;
+    static QList<QStatInfo> dirInfos(const QByteArray &nativepath, const QString &localpath);
+
+private:
+    mode_t m_mode;
+    uid_t m_uid;
+    gid_t m_gid;
+    time_t m_mtime;
+    QList<QStatInfo> m_entries;
+    QByteArray m_path;
+};
 
 // Internal operator functions for timevals
 inline timeval &normalizedTimeval(timeval &t)

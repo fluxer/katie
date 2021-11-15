@@ -21,12 +21,123 @@
 
 #include "qcore_unix_p.h"
 #include "qelapsedtimer.h"
+#include "qbytearray.h"
+#include "qdebug.h"
 
 #include <sys/select.h>
 #include <sys/time.h>
 #include <stdlib.h>
 
 QT_BEGIN_NAMESPACE
+
+QStatInfo::QStatInfo(const QString &path, const bool listdir)
+    : m_mode(0),
+    m_uid(-2),
+    m_gid(-2),
+    m_mtime(0),
+    m_path(path.toLocal8Bit())
+{
+    QT_STATBUF statbuf;
+    if (QT_STAT(m_path.constData(), &statbuf) == 0) {
+        m_mode = statbuf.st_mode;
+        m_uid = statbuf.st_uid;
+        m_gid = statbuf.st_gid;
+        m_mtime = statbuf.st_mtime;
+        if (listdir && S_ISDIR(statbuf.st_mode)) {
+            m_entries = dirInfos(m_path, path);
+        }
+    }
+}
+
+QStatInfo::QStatInfo(const QStatInfo &other)
+    : m_mode(other.m_mode),
+    m_uid(other.m_uid),
+    m_gid(other.m_gid),
+    m_mtime(other.m_mtime),
+    m_entries(other.m_entries),
+    m_path(other.m_path)
+{
+}
+
+QStatInfo& QStatInfo::operator=(const QStatInfo &other)
+{
+    m_mode = other.m_mode;
+    m_uid = other.m_uid;
+    m_gid = other.m_gid;
+    m_mtime = other.m_mtime;
+    m_entries = other.m_entries;
+    m_path = other.m_path;
+    return *this;
+}
+
+bool QStatInfo::operator==(const QStatInfo &other) const
+{
+    if (m_mode != other.m_mode || m_uid != other.m_uid
+        || m_gid != other.m_gid || m_mtime != other.m_mtime) {
+        return false;
+    }
+    return (m_path == other.m_path);
+}
+
+bool QStatInfo::dirEquals(const QStatInfo &other) const
+{
+    if (*this != other) {
+        return false;
+    }
+    if (isDir() && other.isDir()) {
+        const QString localpath = QString::fromLocal8Bit(other.m_path);
+        if (m_entries != dirInfos(other.m_path, localpath)) {
+            return false;
+        }
+    }
+    return true;
+}
+
+QList<QStatInfo> QStatInfo::dirInfos(const QByteArray &nativepath, const QString &localpath)
+{
+    QList<QStatInfo> result;
+    QT_DIR *dir = QT_OPENDIR(nativepath.constData());
+    QT_DIRENT *dirent = QT_READDIR(dir);
+    while (dirent) {
+        if (qstrcmp(".", dirent->d_name) == 0 || qstrcmp("..", dirent->d_name) == 0) {
+            dirent = QT_READDIR(dir);
+            continue;
+        }
+#ifdef QT_HAVE_DIRENT_D_TYPE
+        const QString dirlocal = QString::fromLocal8Bit(dirent->d_name);
+        switch (dirent->d_type) {
+            case DT_BLK:
+            case DT_CHR:
+            case DT_FIFO:
+            case DT_SOCK:
+            case DT_LNK:
+            case DT_REG: {
+                const QString fulllocal = QString::fromLatin1("%1/%2").arg(localpath, dirlocal);
+                result.append(QStatInfo(fulllocal));
+                break;
+            }
+            case DT_DIR:
+            case DT_UNKNOWN:
+            default: {
+                break;
+            }
+        }
+#else
+        const QString fulllocal = QString::fromLatin1("%1/%2").arg(localpath, dirlocal);
+        const QByteArray fullnative = fulllocal.toLocal8Bit();
+        QT_STATBUF statbuf;
+        if (QT_STAT(fullnative.constData(), &statbuf) == 0) {
+            if (!S_ISDIR(statbuf.st_mode)) {
+                result.append(QStatInfo(fulllocal));
+            }
+        }
+#endif
+        dirent = QT_READDIR(dir);
+    }
+    QT_CLOSEDIR(dir);
+    return result;
+}
+
 
 static inline bool time_update(struct timeval *tv, const struct timeval &start,
                                const struct timeval &timeout)
