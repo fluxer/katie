@@ -26,7 +26,7 @@
         const int __step = 50; \
         const int __timeout = 5000; \
         if (!(__expr)) { \
-            QTest::qWait(0); \
+            QTest::qWait(__step); \
         } \
         for (int __i = 0; __i < __timeout && !(__expr); __i+=__step) { \
             QTest::qWait(__step); \
@@ -40,7 +40,7 @@
         const int __step = 50; \
         const int __timeout = 5000; \
         if ((__expr) != (__expected)) { \
-            QTest::qWait(0); \
+            QTest::qWait(__step); \
         } \
         for (int __i = 0; __i < __timeout && ((__expr) != (__expected)); __i+=__step) { \
             QTest::qWait(__step); \
