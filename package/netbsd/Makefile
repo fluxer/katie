@@ -17,7 +17,7 @@ WRKSRC = ${WRKDIR}/katie-${DISTNAME}
 
 USE_CMAKE = yes
 CMAKE_ARGS = -DKATIE_TOOLS_SUFFIX="-katie" -Wno-dev
-USE_LANGUAGES = c c++11
+USE_LANGUAGES = c c++
 USE_TOOLS = pkg-config msgfmt
 DL_AUTO_VARS = yes
 
