@@ -34,11 +34,11 @@
 #include "qstyleoption.h"
 #include "qvector.h"
 #include "qapplication.h"
-#include "qvarlengtharray.h"
 #include "qabstractitemdelegate.h"
 #include "qvariant.h"
 #include "qheaderview_p.h"
 #include "qabstractitemmodel_p.h"
+#include "qcorecommon_p.h"
 
 #ifndef QT_NO_DATASTREAM
 #include "qdatastream.h"
@@ -721,8 +721,8 @@ void QHeaderView::moveSection(int from, int to)
     int visual = from;
 
     int affected_count = qAbs(to - from) + 1;
-    QVarLengthArray<int> sizes(affected_count);
-    QVarLengthArray<ResizeMode> modes(affected_count);
+    QSTACKARRAY(int, sizes, affected_count);
+    QSTACKARRAY(ResizeMode, modes, affected_count);
 
     // move sections and indices
     if (to > from) {
