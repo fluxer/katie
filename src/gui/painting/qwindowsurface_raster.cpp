@@ -83,7 +83,7 @@ void QRasterWindowSurface::beginPaint(const QRegion &rgn)
     if (!qt_widget_private(window())->isOpaque && window()->testAttribute(Qt::WA_TranslucentBackground)) {
         QPainter p(d_ptr->image);
         p.setCompositionMode(QPainter::CompositionMode_Source);
-        foreach (const QRect r, rgn.rects()) {
+        foreach (const QRect &r, rgn.rects()) {
             p.fillRect(r, Qt::transparent);
         }
     }
