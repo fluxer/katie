@@ -1430,6 +1430,11 @@ void tst_QCompleter::QTBUG_14292_filesystem()
     edit.setFocus();
     QTRY_VERIFY(edit.hasFocus());
 
+    // Wait for all file system model slots/timers to trigger
+    // until the model sees the subdirectories.
+    QApplication::processEvents();
+    // QTest::qWait(3000);
+
     QVERIFY(!comp.popup()->isVisible());
     edit.setText(tmpDir.path());
     QTest::keyClick(&edit, '/');
