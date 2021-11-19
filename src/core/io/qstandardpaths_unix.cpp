@@ -29,6 +29,7 @@
 #include "qtextstream.h"
 #include "qfilesystemengine_p.h"
 #include "qcoreapplication.h"
+#include "qcore_unix_p.h"
 
 #include <errno.h>
 #include <stdlib.h>
@@ -121,10 +122,10 @@ QString QStandardPaths::writableLocation(StandardLocation type)
                 qWarning("QStandardPaths: XDG_RUNTIME_DIR not set, defaulting to '%s'", qPrintable(xdgRuntimeDir));
             }
             // "The directory MUST be owned by the user"
-            QFileInfo fileInfo(xdgRuntimeDir);
-            if (fileInfo.ownerId() != myUid) {
+            QStatInfo statInfo(xdgRuntimeDir);
+            if (statInfo.ownerId() != myUid) {
                 qWarning("QStandardPaths: wrong ownership on runtime directory %s, %d instead of %d", qPrintable(xdgRuntimeDir),
-                        fileInfo.ownerId(), myUid);
+                        statInfo.ownerId(), myUid);
                 return QString();
             }
             // "and he MUST be the only one having read and write access to it. Its Unix access mode MUST be 0700."

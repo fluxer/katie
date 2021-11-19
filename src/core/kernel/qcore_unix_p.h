@@ -70,10 +70,21 @@ public:
     inline bool operator!=(const QStatInfo &other) const
         { return !operator==(other); }
 
-    inline bool isDir() const
-        { return S_ISDIR(m_mode); }
+    inline off_t size() const
+        { return m_size; }
+    inline uid_t ownerId() const
+        { return m_uid; }
+    inline gid_t groupId() const
+        { return m_gid; }
     inline bool exists() const
         { return (m_mode != 0); }
+    inline bool isFile() const
+        { return S_ISREG(m_mode); }
+    inline bool isDir() const
+        { return S_ISDIR(m_mode); }
+    bool isReadable() const;
+    bool isWritable() const;
+    bool isExecutable() const;
 
     bool dirEquals(const QStatInfo &other) const;
     static QList<QStatInfo> dirInfos(const QByteArray &nativepath, const QString &localpath);
@@ -83,6 +94,7 @@ private:
     uid_t m_uid;
     gid_t m_gid;
     time_t m_mtime;
+    off_t m_size;
     QList<QStatInfo> m_entries;
     QByteArray m_path;
 };

@@ -35,6 +35,7 @@ QStatInfo::QStatInfo(const QString &path, const bool listdir)
     m_uid(-2),
     m_gid(-2),
     m_mtime(0),
+    m_size(0),
     m_path(path.toLocal8Bit())
 {
     QT_STATBUF statbuf;
@@ -43,6 +44,7 @@ QStatInfo::QStatInfo(const QString &path, const bool listdir)
         m_uid = statbuf.st_uid;
         m_gid = statbuf.st_gid;
         m_mtime = statbuf.st_mtime;
+        m_size = statbuf.st_size;
         if (listdir && S_ISDIR(statbuf.st_mode)) {
             m_entries = dirInfos(m_path, path);
         }
@@ -54,6 +56,7 @@ QStatInfo::QStatInfo(const QStatInfo &other)
     m_uid(other.m_uid),
     m_gid(other.m_gid),
     m_mtime(other.m_mtime),
+    m_size(other.m_size),
     m_entries(other.m_entries),
     m_path(other.m_path)
 {
@@ -65,6 +68,7 @@ QStatInfo& QStatInfo::operator=(const QStatInfo &other)
     m_uid = other.m_uid;
     m_gid = other.m_gid;
     m_mtime = other.m_mtime;
+    m_size = other.m_size;
     m_entries = other.m_entries;
     m_path = other.m_path;
     return *this;
@@ -73,10 +77,26 @@ QStatInfo& QStatInfo::operator=(const QStatInfo &other)
 bool QStatInfo::operator==(const QStatInfo &other) const
 {
     if (m_mode != other.m_mode || m_uid != other.m_uid
-        || m_gid != other.m_gid || m_mtime != other.m_mtime) {
+        || m_gid != other.m_gid || m_mtime != other.m_mtime
+        || m_size != other.m_size) {
         return false;
     }
     return (m_entries == other.m_entries && m_path == other.m_path);
+}
+
+bool QStatInfo::isReadable() const
+{
+    return (QT_ACCESS(m_path.constData(), R_OK) == 0);
+}
+
+bool QStatInfo::isWritable() const
+{
+    return (QT_ACCESS(m_path.constData(), W_OK) == 0);
+}
+
+bool QStatInfo::isExecutable() const
+{
+    return (QT_ACCESS(m_path.constData(), X_OK) == 0);
 }
 
 bool QStatInfo::dirEquals(const QStatInfo &other) const

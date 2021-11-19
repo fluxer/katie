@@ -23,7 +23,6 @@
 #include "qfilesystemengine_p.h"
 #include "qfsfileengine.h"
 #include "qfile.h"
-#include "qfileinfo.h"
 #include "qcore_unix_p.h"
 #include "qcorecommon_p.h"
 
