@@ -29,11 +29,30 @@
 #include <qevent.h>
 #include <qlineedit.h>
 #include <QBoxLayout>
+#include "qx11info_x11.h"
+#include "qt_x11_p.h"
 
 #include "../../shared/util.h"
 
 //TESTED_CLASS=
 //TESTED_FILES=gui/kernel/qevent.h gui/kernel/qevent.cpp
+
+
+static bool hasNetWM()
+{
+    Atom type;
+    int format;
+    unsigned long nitems, after;
+    unsigned char *data = 0;
+
+    int e = XGetWindowProperty(qt_x11Data->display, QX11Info::appRootWindow(),
+                               ATOM(_NET_SUPPORTED), 0, 0,
+                               False, XA_ATOM, &type, &format, &nitems, &after, &data);
+    if (data) {
+        XFree(data);
+    }
+    return (e == Success && type == XA_ATOM && format == 32);
+}
 
 class FocusLineEdit : public QLineEdit
 {
@@ -136,8 +155,7 @@ void tst_QFocusEvent::cleanup()
 
 void tst_QFocusEvent::initWidget()
 {
-    // On X11 we have to ensure the event was processed before doing any checking, on Windows
-    // this is processed straight away.
+    // On X11 we have to ensure the event was processed before doing any checking
     QApplication::setActiveWindow(childFocusWidgetOne);
 
     for (int i = 0; i < 1000; ++i) {
@@ -319,6 +337,10 @@ void tst_QFocusEvent::checkReason_focusWidget()
 
 void tst_QFocusEvent::checkReason_ActiveWindow()
 {
+    if ( !hasNetWM() ) {
+        QSKIP("No X11 WM, focus is borked", SkipAll);
+    }
+
     initWidget();
 
     QDialog* d = new QDialog( testFocusWidget );
@@ -336,7 +358,6 @@ void tst_QFocusEvent::checkReason_ActiveWindow()
     QVERIFY( !childFocusWidgetOne->hasFocus() );
 
     d->hide();
-    QTest::qWait(100);
 
     QTRY_VERIFY(childFocusWidgetOne->focusInEventRecieved);
     QVERIFY(childFocusWidgetOne->focusInEventGotFocus);
