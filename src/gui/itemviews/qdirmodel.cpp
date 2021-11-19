@@ -548,8 +548,7 @@ bool QDirModel::dropMimeData(const QMimeData *data, Qt::DropAction action,
     case Qt::MoveAction:
         for (; it != urls.constEnd(); ++it) {
             QString path = (*it).toLocalFile();
-            if (QFile::copy(path, to + QFileInfo(path).fileName())
-               && QFile::remove(path)) {
+            if (QFile::rename(path, to + QFileInfo(path).fileName())) {
                 QModelIndex idx=index(QFileInfo(path).path());
                 if (idx.isValid()) {
                     refresh(idx);
