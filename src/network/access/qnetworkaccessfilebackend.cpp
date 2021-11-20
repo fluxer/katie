@@ -45,7 +45,7 @@ QNetworkAccessFileBackendFactory::create(QNetworkAccessManager::Operation op,
     }
 
     QUrl url = request.url();
-    if (url.scheme().compare(QLatin1String("qrc"), Qt::CaseInsensitive) == 0 || url.isLocalFile()) {
+    if (url.isLocalFile()) {
         return new QNetworkAccessFileBackend;
     } else if (!url.isEmpty() && url.authority().isEmpty()) {
         // check if QFile could, in theory, open this URL via the file engines
@@ -94,10 +94,7 @@ void QNetworkAccessFileBackend::open()
 
     QString fileName = url.toLocalFile();
     if (fileName.isEmpty()) {
-        if (url.scheme() == QLatin1String("qrc"))
-            fileName = QLatin1Char(':') + url.path();
-        else
-            fileName = url.toString(QUrl::RemoveAuthority | QUrl::RemoveFragment | QUrl::RemoveQuery);
+        fileName = url.toString(QUrl::RemoveAuthority | QUrl::RemoveFragment | QUrl::RemoveQuery);
     }
     file.setFileName(fileName);
 
