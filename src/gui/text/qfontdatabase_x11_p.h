@@ -354,7 +354,11 @@ static const char *specialLanguagesTbl[] = {
     "xco-uz", // Chorasmian
     "dv-mv", // DivesAkuru
     "zkt-cn", // KhitanSmallScript
-    "ku-ge" // Yezidi
+    "ku-ge", // Yezidi
+    0, // OldUyghur
+    0, // Tangsa
+    0, // Toto
+    0, // Vithkuqi
 };
 enum { SpecialLanguageCount = sizeof(specialLanguagesTbl) / sizeof(const char *) };
 
@@ -516,6 +520,11 @@ static const uint specialCharsTbl[] = {
     0x11900, // DivesAkuru
     0x16FE4, // KhitanSmallScript
     0x10E80, // Yezidi
+    0x12F90, // CyproMinoan
+    0x10F70, // OldUyghur
+    0x16A70, // Tangsa
+    0x1E290, // Toto
+    0x10570, // Vithkuqi
 };
 enum { SpecialCharCount = sizeof(specialCharsTbl) / sizeof(uint) };
 
