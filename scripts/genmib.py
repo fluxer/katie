@@ -16,11 +16,11 @@ def fixalias(alias):
 
 tree = ET.parse('character-sets.xml')
 registry = tree.find('{http://www.iana.org/assignments}registry')
-for record in registry.getchildren():
+for record in registry:
     recordnames = []
     recordvalue = None
 
-    for recordchild in record.getchildren():
+    for recordchild in record:
         if recordchild.tag == '{http://www.iana.org/assignments}name':
             recordnames.append(recordchild.text)
         elif recordchild.tag == '{http://www.iana.org/assignments}value':
