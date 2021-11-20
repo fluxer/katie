@@ -791,10 +791,6 @@ QString QDeclarativeImportDatabase::resolvePlugin(const QDir &qmldirPath, const 
             resolvedPath = pluginPath;
         }
 
-        // hack for resources, should probably go away
-        if (resolvedPath.startsWith(QLatin1String(":/")))
-            resolvedPath = QCoreApplication::applicationDirPath();
-
         QDir dir(resolvedPath);
         foreach (const QString &suffix, validSuffixList) {
             QString pluginFileName = QLatin1String("lib");
