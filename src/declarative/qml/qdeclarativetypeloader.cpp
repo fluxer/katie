@@ -747,12 +747,8 @@ Returns a empty string if the path does not exist.
 */
 QString QDeclarativeTypeLoader::absoluteFilePath(const QString &path)
 {
-    if (path.isEmpty())
+    if (path.isEmpty()) {
         return QString();
-    if (path.at(0) == QLatin1Char(':')) {
-        // qrc resource
-        QFileInfo fileInfo(path);
-        return fileInfo.isFile() ? fileInfo.absoluteFilePath() : QString();
     }
 
     int lastSlash = path.lastIndexOf(QLatin1Char('/'));
