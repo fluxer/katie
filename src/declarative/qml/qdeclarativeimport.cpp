@@ -768,15 +768,14 @@ bool QDeclarativeImports::addImport(QDeclarativeImportDatabase *importDb,
 QString QDeclarativeImportDatabase::resolvePlugin(const QDir &qmldirPath, const QString &qmldirPluginPath, 
                                                   const QString &baseName)
 {
-    static QStringList validSuffixList = QStringList()  << QLatin1String(".so");
-
     // Examples of valid library names:
     //  libfoo.so
 
-   QStringList searchPaths = filePluginPath;
+    QStringList searchPaths = filePluginPath;
     bool qmldirPluginPathIsRelative = QDir::isRelativePath(qmldirPluginPath);
-    if (!qmldirPluginPathIsRelative)
+    if (!qmldirPluginPathIsRelative) {
         searchPaths.prepend(qmldirPluginPath);
+    }
 
     foreach (const QString &pluginPath, searchPaths) {
 
@@ -792,16 +791,14 @@ QString QDeclarativeImportDatabase::resolvePlugin(const QDir &qmldirPath, const 
         }
 
         QDir dir(resolvedPath);
-        foreach (const QString &suffix, validSuffixList) {
-            QString pluginFileName = QLatin1String("lib");
+        QString pluginFileName = QLatin1String("lib");
+        pluginFileName += baseName;
+        pluginFileName += QLatin1String(".so");
 
-            pluginFileName += baseName;
-            pluginFileName += suffix;
+        QFileInfo fileInfo(dir, pluginFileName);
 
-            QFileInfo fileInfo(dir, pluginFileName);
-
-            if (fileInfo.exists())
-                return fileInfo.absoluteFilePath();
+        if (fileInfo.exists()) {
+            return fileInfo.absoluteFilePath();
         }
     }
 
