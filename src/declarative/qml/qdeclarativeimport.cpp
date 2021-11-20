@@ -31,7 +31,7 @@
 #include "qdeclarativeglobal_p.h"
 #include "qdeclarativetypenamecache_p.h"
 #include "qdeclarativeengine_p.h"
-
+#include "qcore_unix_p.h"
 
 QT_BEGIN_NAMESPACE
 
@@ -515,7 +515,7 @@ bool QDeclarativeImportsPrivate::add(const QDeclarativeDirComponents &qmldircomp
             QString localFile = QDeclarativeEnginePrivate::urlToLocalFile(importUrl);
             if (!localFile.isEmpty()) {
                 QString dir = QDeclarativeEnginePrivate::urlToLocalFile(base.resolved(QUrl(uri)));
-                QFileInfo dirinfo(dir);
+                QStatInfo dirinfo(dir);
                 if (dir.isEmpty() || !dirinfo.exists() || !dirinfo.isDir()) {
                     if (errorString)
                         *errorString = QDeclarativeImportDatabase::tr("\"%1\": no such directory").arg(uri_arg);
@@ -532,7 +532,7 @@ bool QDeclarativeImportsPrivate::add(const QDeclarativeDirComponents &qmldircomp
                 if (prefix.isEmpty()) {
                     // directory must at least exist for valid import
                     QString localFile = QDeclarativeEnginePrivate::urlToLocalFile(base.resolved(QUrl(uri)));
-                    QFileInfo dirinfo(localFile);
+                    QStatInfo dirinfo(localFile);
                     if (localFile.isEmpty() || !dirinfo.exists() || !dirinfo.isDir()) {
                         if (errorString) {
                             if (localFile.isEmpty())
