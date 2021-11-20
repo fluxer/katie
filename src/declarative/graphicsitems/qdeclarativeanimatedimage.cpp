@@ -251,7 +251,7 @@ void QDeclarativeAnimatedImage::load()
             emit progressChanged(d->progress);
     } else {
 #ifndef QT_NO_LOCALFILE_OPTIMIZED_QML
-        QString lf = QDeclarativeEnginePrivate::urlToLocalFileOrQrc(d->url);
+        QString lf = QDeclarativeEnginePrivate::urlToLocalFile(d->url);
         if (!lf.isEmpty()) {
             //### should be unified with movieRequestFinished
             d->_movie = new QMovie(lf);

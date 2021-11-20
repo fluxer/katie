@@ -303,7 +303,7 @@ bool QDeclarativeImportedNamespace::find_helper(QDeclarativeTypeLoader *typeLoad
     if (!typeWasDeclaredInQmldir  && !isLibrary.at(i)) {
         // XXX search non-files too! (eg. zip files, see QT-524)
         QUrl url = QUrl(urls.at(i) + QLatin1Char('/') + QString::fromUtf8(type) + QLatin1String(".qml"));
-        QString file = QDeclarativeEnginePrivate::urlToLocalFileOrQrc(url);
+        QString file = QDeclarativeEnginePrivate::urlToLocalFile(url);
         if (!typeLoader->absoluteFilePath(file).isEmpty()) {
             if (base && *base == url) { // no recursion
                 if (typeRecursionDetected)
@@ -512,30 +512,30 @@ bool QDeclarativeImportsPrivate::add(const QDeclarativeDirComponents &qmldircomp
 
         if (importType == QDeclarativeScriptParser::Import::File && qmldircomponents.isEmpty()) {
             QUrl importUrl = base.resolved(QUrl(uri + QLatin1String("/qmldir")));
-            QString localFileOrQrc = QDeclarativeEnginePrivate::urlToLocalFileOrQrc(importUrl);
-            if (!localFileOrQrc.isEmpty()) {
-                QString dir = QDeclarativeEnginePrivate::urlToLocalFileOrQrc(base.resolved(QUrl(uri)));
+            QString localFile = QDeclarativeEnginePrivate::urlToLocalFile(importUrl);
+            if (!localFile.isEmpty()) {
+                QString dir = QDeclarativeEnginePrivate::urlToLocalFile(base.resolved(QUrl(uri)));
                 QFileInfo dirinfo(dir);
                 if (dir.isEmpty() || !dirinfo.exists() || !dirinfo.isDir()) {
                     if (errorString)
                         *errorString = QDeclarativeImportDatabase::tr("\"%1\": no such directory").arg(uri_arg);
                     return false; // local import dirs must exist
                 }
-                uri = resolvedUri(QDeclarativeEnginePrivate::urlToLocalFileOrQrc(base.resolved(QUrl(uri))), database);
+                uri = resolvedUri(QDeclarativeEnginePrivate::urlToLocalFile(base.resolved(QUrl(uri))), database);
                 if (uri.endsWith(QLatin1Char('/')))
                     uri.chop(1);
-                if (!typeLoader->absoluteFilePath(localFileOrQrc).isEmpty()) {
-                    if (!importExtension(localFileOrQrc,uri,database,&qmldircomponents,errorString))
+                if (!typeLoader->absoluteFilePath(localFile).isEmpty()) {
+                    if (!importExtension(localFile, uri,database,&qmldircomponents,errorString))
                         return false;
                 }
             } else {
                 if (prefix.isEmpty()) {
                     // directory must at least exist for valid import
-                    QString localFileOrQrc = QDeclarativeEnginePrivate::urlToLocalFileOrQrc(base.resolved(QUrl(uri)));
-                    QFileInfo dirinfo(localFileOrQrc);
-                    if (localFileOrQrc.isEmpty() || !dirinfo.exists() || !dirinfo.isDir()) {
+                    QString localFile = QDeclarativeEnginePrivate::urlToLocalFile(base.resolved(QUrl(uri)));
+                    QFileInfo dirinfo(localFile);
+                    if (localFile.isEmpty() || !dirinfo.exists() || !dirinfo.isDir()) {
                         if (errorString) {
-                            if (localFileOrQrc.isEmpty())
+                            if (localFile.isEmpty())
                                 *errorString = QDeclarativeImportDatabase::tr("import \"%1\" has no qmldir and no namespace").arg(uri);
                             else
                                 *errorString = QDeclarativeImportDatabase::tr("\"%1\": no such directory").arg(uri);

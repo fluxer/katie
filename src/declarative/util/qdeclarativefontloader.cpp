@@ -177,7 +177,7 @@ void QDeclarativeFontLoader::setSource(const QUrl &url)
     emit sourceChanged();
 
 #ifndef QT_NO_LOCALFILE_OPTIMIZED_QML
-    QString localFile = QDeclarativeEnginePrivate::urlToLocalFileOrQrc(d->url);
+    QString localFile = QDeclarativeEnginePrivate::urlToLocalFile(d->url);
     if (!localFile.isEmpty()) {
         if (!d->fonts.contains(d->url)) {
             int id = QFontDatabase::addApplicationFont(localFile);

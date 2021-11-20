@@ -462,7 +462,7 @@ void QDeclarativePixmapReader::processJob(QDeclarativePixmapReply *runningJob, c
         if (!cancelled.contains(runningJob)) runningJob->postReply(errorCode, errorStr, readSize, image);
         mutex.unlock();
     } else {
-        QString lf = QDeclarativeEnginePrivate::urlToLocalFileOrQrc(url);
+        QString lf = QDeclarativeEnginePrivate::urlToLocalFile(url);
         if (!lf.isEmpty()) {
             // Image is local - load/decode immediately
             QImage image;
@@ -820,7 +820,7 @@ static QDeclarativePixmapData* createPixmapDataSync(QDeclarativeEngine *engine, 
             QDeclarativePixmap::tr("Failed to get image from provider: %1").arg(url.toString()));
     }
 
-    QString localFile = QDeclarativeEnginePrivate::urlToLocalFileOrQrc(url);
+    QString localFile = QDeclarativeEnginePrivate::urlToLocalFile(url);
     if (localFile.isEmpty()) 
         return 0;
 

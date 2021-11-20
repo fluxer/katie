@@ -173,7 +173,7 @@ QScriptValue QDeclarativeInclude::include(QScriptContext *ctxt, QScriptEngine *e
         urlString = url.toString();
     }
 
-    QString localFile = QDeclarativeEnginePrivate::urlToLocalFileOrQrc(url);
+    QString localFile = QDeclarativeEnginePrivate::urlToLocalFile(url);
 
     QScriptValue func = ctxt->argument(1);
     if (!func.isFunction())
@@ -242,7 +242,7 @@ QScriptValue QDeclarativeInclude::worker_include(QScriptContext *ctxt, QScriptEn
         urlString = url.toString();
     }
 
-    QString localFile = QDeclarativeEnginePrivate::urlToLocalFileOrQrc(url);
+    QString localFile = QDeclarativeEnginePrivate::urlToLocalFile(url);
 
     QScriptValue func = ctxt->argument(1);
     if (!func.isFunction())

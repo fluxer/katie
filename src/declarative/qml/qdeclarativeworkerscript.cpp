@@ -282,7 +282,7 @@ void QDeclarativeWorkerScriptEnginePrivate::processLoad(int id, const QUrl &url)
     if (url.isRelative())
         return;
 
-    QString fileName = QDeclarativeEnginePrivate::urlToLocalFileOrQrc(url);
+    QString fileName = QDeclarativeEnginePrivate::urlToLocalFile(url);
 
     QFile f(fileName);
     if (f.open(QIODevice::ReadOnly)) {
