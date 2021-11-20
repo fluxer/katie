@@ -39,7 +39,6 @@
 
 QT_BEGIN_NAMESPACE
 
-DEFINE_BOOL_CONFIG_OPTION(qmlExperimental, QML_EXPERIMENTAL)
 DEFINE_BOOL_CONFIG_OPTION(qmlDisableOptimizer, QML_DISABLE_OPTIMIZER)
 DEFINE_BOOL_CONFIG_OPTION(qmlDisableFastProperties, QML_DISABLE_FAST_PROPERTIES)
 
@@ -385,15 +384,8 @@ struct Instr {
         Done,                    /* done */ \
         /* Speculative property resolution */ \
         InitString,              /* initstring */ \
-        FindGeneric,             /* find */ \
-        FindGenericTerminal,     /* find */ \
         FindProperty,            /* find */ \
-        FindPropertyTerminal,    /* find */ \
-        CleanupGeneric,          /* cleanup */ \
-        ConvertGenericToReal,    /* unaryop */ \
-        ConvertGenericToBool,    /* unaryop */ \
-        ConvertGenericToString,  /* unaryop */ \
-        ConvertGenericToUrl      /* unaryop */
+        FindPropertyTerminal,    /* find */
     };
 
     union {
@@ -1082,32 +1074,11 @@ static void dumpInstruction(const Instr *instr)
     case Instr::InitString:
         qWarning().nospace() << "\t" << "InitString" << "\t\t" << instr->initstring.offset << "\t" << instr->initstring.dataIdx;
         break;
-    case Instr::FindGeneric:
-        qWarning().nospace() << "\t" << "FindGeneric" << "\t\t" << instr->find.reg << "\t" << instr->find.name;
-        break;
-    case Instr::FindGenericTerminal:
-        qWarning().nospace() << "\t" << "FindGenericTerminal" << "\t" << instr->find.reg << "\t" <<  instr->find.name;
-        break;
     case Instr::FindProperty:
         qWarning().nospace() << "\t" << "FindProperty" << "\t\t" << instr->find.reg << "\t" << instr->find.src << "\t" << instr->find.name;
         break;
     case Instr::FindPropertyTerminal:
         qWarning().nospace() << "\t" << "FindPropertyTerminal" << "\t" << instr->find.reg << "\t" << instr->find.src << "\t" << instr->find.name;
-        break;
-    case Instr::CleanupGeneric:
-        qWarning().nospace() << "\t" << "CleanupGeneric" << "\t\t" << instr->cleanup.reg;
-        break;
-    case Instr::ConvertGenericToReal:
-        qWarning().nospace() << "\t" << "ConvertGenericToReal" << "\t" << instr->unaryop.output << "\t" << instr->unaryop.src;
-        break;
-    case Instr::ConvertGenericToBool:
-        qWarning().nospace() << "\t" << "ConvertGenericToBool" << "\t" << instr->unaryop.output << "\t" << instr->unaryop.src;
-        break;
-    case Instr::ConvertGenericToString:
-        qWarning().nospace() << "\t" << "ConvertGenericToString" << "\t" << instr->unaryop.output << "\t" << instr->unaryop.src;
-        break;
-    case Instr::ConvertGenericToUrl:
-        qWarning().nospace() << "\t" << "ConvertGenericToUrl" << "\t" << instr->unaryop.output << "\t" << instr->unaryop.src;
         break;
     default:
         qWarning().nospace() << "\t" << "Unknown";
@@ -1485,26 +1456,6 @@ void QDeclarativeCompiledBindingsPrivate::run(int instrIndex,
         }
     QML_END_INSTR(InitString)
 
-    QML_BEGIN_INSTR(FindGenericTerminal)
-        // We start the search in the parent context, as we know that the 
-        // name is not present in the current context or it would have been
-        // found during the static compile
-        findgeneric(registers + instr->find.reg, instr->find.subscribeIndex, 
-                    context->parent,
-                    identifiers[instr->find.name].identifier, 
-                    instr->common.type == Instr::FindGenericTerminal);
-    QML_END_INSTR(FindGenericTerminal)
-
-    QML_BEGIN_INSTR(FindGeneric)
-        // We start the search in the parent context, as we know that the
-        // name is not present in the current context or it would have been
-        // found during the static compile
-        findgeneric(registers + instr->find.reg, instr->find.subscribeIndex,
-                    context->parent,
-                    identifiers[instr->find.name].identifier,
-                    instr->common.type == Instr::FindGenericTerminal);
-    QML_END_INSTR(FindGeneric)
-
     QML_BEGIN_INSTR(FindPropertyTerminal)
     {
         const Register &object = registers[instr->find.src];
@@ -1534,70 +1485,6 @@ void QDeclarativeCompiledBindingsPrivate::run(int instrIndex,
                      instr->common.type == Instr::FindPropertyTerminal);
     }
     QML_END_INSTR(FindProperty)
-
-    QML_BEGIN_INSTR(CleanupGeneric)
-    {
-        int type = registers[instr->cleanup.reg].gettype();
-        if (type == qMetaTypeId<QVariant>()) {
-            registers[instr->cleanup.reg].getvariantptr()->~QVariant();
-#ifdef REGISTER_CLEANUP_DEBUG
-        registers[instr->cleanup.reg].setUndefined();
-#endif
-        } else if (type == QMetaType::QString) {
-            registers[instr->cleanup.reg].getstringptr()->~QString();
-#ifdef REGISTER_CLEANUP_DEBUG
-        registers[instr->cleanup.reg].setUndefined();
-#endif
-        } else if (type == QMetaType::QUrl) {
-            registers[instr->cleanup.reg].geturlptr()->~QUrl();
-#ifdef REGISTER_CLEANUP_DEBUG
-        registers[instr->cleanup.reg].setUndefined();
-#endif
-        }
-    }
-    QML_END_INSTR(CleanupGeneric)
-
-    QML_BEGIN_INSTR(ConvertGenericToReal)
-    {
-        Register &output = registers[instr->unaryop.output];
-        Register &input = registers[instr->unaryop.src];
-        bool ok = true;
-        output.setqreal(toReal(&input, input.gettype(), &ok));
-        if (!ok) output.setUndefined();
-    }
-    QML_END_INSTR(ConvertGenericToReal)
-
-    QML_BEGIN_INSTR(ConvertGenericToBool)
-    {
-        Register &output = registers[instr->unaryop.output];
-        Register &input = registers[instr->unaryop.src];
-        bool ok = true;
-        output.setbool(toBool(&input, input.gettype(), &ok));
-        if (!ok) output.setUndefined();
-    }
-    QML_END_INSTR(ConvertGenericToBool)
-
-    QML_BEGIN_INSTR(ConvertGenericToString)
-    {
-        Register &output = registers[instr->unaryop.output];
-        Register &input = registers[instr->unaryop.src];
-        bool ok = true;
-        QString str = toString(&input, input.gettype(), &ok);
-        if (ok) { new (output.getstringptr()) QString(str); output.settype(QMetaType::QString); }
-        else { output.setUndefined(); }
-    }
-    QML_END_INSTR(ConvertGenericToString)
-
-    QML_BEGIN_INSTR(ConvertGenericToUrl)
-    {
-        Register &output = registers[instr->unaryop.output];
-        Register &input = registers[instr->unaryop.src];
-        bool ok = true;
-        QUrl url = toUrl(&input, input.gettype(), context, &ok);
-        if (ok) { new (output.geturlptr()) QUrl(url); output.settype(QMetaType::QUrl); }
-        else { output.setUndefined(); }
-    }
-    QML_END_INSTR(ConvertGenericToUrl)
 
     default:
         qFatal("EEK");
@@ -1686,125 +1573,55 @@ bool QDeclarativeBindingCompilerPrivate::compile(QDeclarativeJS::AST::Node *node
     if (!parseExpression(node, type)) 
         return false;
 
-    if (subscriptionSet.count() > 0xFFFF ||
-            registeredStrings.count() > 0xFFFF)
+    if (subscriptionSet.count() > 0xFFFF || registeredStrings.count() > 0xFFFF)
         return false;
 
     if (type.unknownType) {
-        if (!qmlExperimental())
-            return false;
+        return false;
+    }
 
-        if (destination->type != QMetaType::QReal &&
-            destination->type != QVariant::String &&
-            destination->type != QMetaType::Bool &&
-            destination->type != QVariant::Url)
-            return false;
+    // Can we store the final value?
+    if (type.type == QVariant::Int &&
+        destination->type == QMetaType::QReal) {
+        Instr instr;
+        instr.common.type = Instr::ConvertIntToReal;
+        instr.unaryop.output = type.reg;
+        instr.unaryop.src = type.reg;
+        bytecode << instr;
+        type.type = QMetaType::QReal;
+    } else if (type.type == QMetaType::QReal &&
+                destination->type == QVariant::Int) {
+        Instr instr;
+        instr.common.type = Instr::ConvertRealToInt;
+        instr.unaryop.output = type.reg;
+        instr.unaryop.src = type.reg;
+        bytecode << instr;
+        type.type = QVariant::Int;
+    } else if (type.type == destination->type) {
+    } else {
+        const QMetaObject *from = type.metaObject;
+        const QMetaObject *to = engine->rawMetaObjectForType(destination->type);
 
-        int convertReg = acquireReg();
-        if (convertReg == -1)
-            return false;
+        if (QDeclarativePropertyPrivate::canConvert(from, to))
+            type.type = destination->type;
+    }
 
-        if (destination->type == QMetaType::QReal) {
-            Instr convert;
-            convert.common.type = Instr::ConvertGenericToReal;
-            convert.unaryop.output = convertReg;
-            convert.unaryop.src = type.reg;
-            bytecode << convert;
-        } else if (destination->type == QVariant::String) {
-            Instr convert;
-            convert.common.type = Instr::ConvertGenericToString;
-            convert.unaryop.output = convertReg;
-            convert.unaryop.src = type.reg;
-            bytecode << convert;
-        } else if (destination->type == QMetaType::Bool) {
-            Instr convert;
-            convert.common.type = Instr::ConvertGenericToBool;
-            convert.unaryop.output = convertReg;
-            convert.unaryop.src = type.reg;
-            bytecode << convert;
-        } else if (destination->type == QVariant::Url) {
-            Instr convert;
-            convert.common.type = Instr::ConvertGenericToUrl;
-            convert.unaryop.output = convertReg;
-            convert.unaryop.src = type.reg;
-            bytecode << convert;
-        }
-
-        Instr cleanup;
-        cleanup.common.type = Instr::CleanupGeneric;
-        cleanup.cleanup.reg = type.reg;
-        bytecode << cleanup;
-
+    if (type.type == destination->type) {
         Instr instr;
         instr.common.type = Instr::Store;
         instr.store.output = 0;
         instr.store.index = destination->index;
-        instr.store.reg = convertReg;
+        instr.store.reg = type.reg;
         instr.store.exceptionId = exceptionId(node->expressionCast());
         bytecode << instr;
 
-        if (destination->type == QVariant::String) {
-            Instr cleanup;
-            cleanup.common.type = Instr::CleanupString;
-            cleanup.cleanup.reg = convertReg;
-            bytecode << cleanup;
-        } else if (destination->type == QVariant::Url) {
-            Instr cleanup;
-            cleanup.common.type = Instr::CleanupUrl;
-            cleanup.cleanup.reg = convertReg;
-            bytecode << cleanup;
-        }
-
-        releaseReg(convertReg);
+        releaseReg(type.reg);
 
         Instr done;
         done.common.type = Instr::Done;
         bytecode << done;
-
     } else {
-        // Can we store the final value?
-        if (type.type == QVariant::Int &&
-            destination->type == QMetaType::QReal) {
-            Instr instr;
-            instr.common.type = Instr::ConvertIntToReal;
-            instr.unaryop.output = type.reg;
-            instr.unaryop.src = type.reg;
-            bytecode << instr;
-            type.type = QMetaType::QReal;
-        } else if (type.type == QMetaType::QReal &&
-                   destination->type == QVariant::Int) {
-            Instr instr;
-            instr.common.type = Instr::ConvertRealToInt;
-            instr.unaryop.output = type.reg;
-            instr.unaryop.src = type.reg;
-            bytecode << instr;
-            type.type = QVariant::Int;
-        } else if (type.type == destination->type) {
-        } else {
-            const QMetaObject *from = type.metaObject;
-            const QMetaObject *to = engine->rawMetaObjectForType(destination->type);
-
-            if (QDeclarativePropertyPrivate::canConvert(from, to))
-                type.type = destination->type;
-        }
-
-        if (type.type == destination->type) {
-            Instr instr;
-            instr.common.type = Instr::Store;
-            instr.store.output = 0;
-            instr.store.index = destination->index;
-            instr.store.reg = type.reg;
-            instr.store.exceptionId = exceptionId(node->expressionCast());
-            bytecode << instr;
-
-            releaseReg(type.reg);
-
-            Instr done;
-            done.common.type = Instr::Done;
-            bytecode << done;
-        } else {
-            return false;
-        }
+        return false;
     }
 
     return true;
@@ -1978,26 +1795,6 @@ bool QDeclarativeBindingCompilerPrivate::parseName(AST::Node *node, Result &type
 
                     if (!fetch(type, component->metaObject(), reg, d1Idx, subscribeName, nameNodes.at(ii)))
                         return false;
-                } else if (qmlExperimental()) {
-                    Instr find;
-                    if (nameParts.count() == 1)
-                        find.common.type = Instr::FindGenericTerminal;
-                    else
-                        find.common.type = Instr::FindGeneric;
-
-                    find.find.reg = reg;
-                    find.find.src = -1;
-                    find.find.name = registerString(name);
-                    find.find.exceptionId = exceptionId(nameNodes.at(ii));
-
-                    subscribeName << QString(QLatin1String("$$$Generic_") + name);
-                    if (subscription(subscribeName, &type)) 
-                        find.find.subscribeIndex = subscriptionIndex(subscribeName);
-                    else
-                        find.find.subscribeIndex = -1;
-
-                    bytecode << find;
-                    type.unknownType = true;
                 } 
 
                 if (!type.unknownType && type.type == -1)
@@ -2137,34 +1934,8 @@ bool QDeclarativeBindingCompilerPrivate::numberArith(Result &type, const Result 
     int lhsTmp = -1;
     int rhsTmp = -1;
 
-    if (lhs.unknownType) {
-        if (!qmlExperimental())
-            return false;
-
-        lhsTmp = acquireReg();
-        if (lhsTmp == -1)
-            return false;
-
-        Instr conv;
-        conv.common.type = Instr::ConvertGenericToReal;
-        conv.unaryop.output = lhsTmp;
-        conv.unaryop.src = lhs.reg;
-        bytecode << conv;
-    }
-
-    if (rhs.unknownType) {
-        if (!qmlExperimental())
-            return false;
-
-        rhsTmp = acquireReg();
-        if (rhsTmp == -1)
-            return false;
-
-        Instr conv;
-        conv.common.type = Instr::ConvertGenericToReal;
-        conv.unaryop.output = rhsTmp;
-        conv.unaryop.src = rhs.reg;
-        bytecode << conv;
+    if (lhs.unknownType || rhs.unknownType) {
+        return false;
     }
 
     Instr arith;
@@ -2202,34 +1973,8 @@ bool QDeclarativeBindingCompilerPrivate::stringArith(Result &type, const Result 
     int lhsTmp = -1;
     int rhsTmp = -1;
 
-    if (lhs.unknownType) {
-        if (!qmlExperimental())
-            return false;
-
-        lhsTmp = acquireReg(Instr::CleanupString);
-        if (lhsTmp == -1)
-            return false;
-
-        Instr convert;
-        convert.common.type = Instr::ConvertGenericToString;
-        convert.unaryop.output = lhsTmp;
-        convert.unaryop.src = lhs.reg;
-        bytecode << convert;
-    }
-
-    if (rhs.unknownType) {
-        if (!qmlExperimental())
-            return false;
-
-        rhsTmp = acquireReg(Instr::CleanupString);
-        if (rhsTmp == -1)
-            return false;
-
-        Instr convert;
-        convert.common.type = Instr::ConvertGenericToString;
-        convert.unaryop.output = rhsTmp;
-        convert.unaryop.src = rhs.reg;
-        bytecode << convert;
+    if (lhs.unknownType || rhs.unknownType) {
+        return false;
     }
 
     type.reg = acquireReg(Instr::CleanupString);
@@ -2775,7 +2520,7 @@ int QDeclarativeBindingCompiler::compile(const Expression &expression, QDeclarat
 {
     if (!expression.expression.asAST()) return false;
 
-    if (!qmlExperimental() && expression.property->isValueTypeSubProperty)
+    if (expression.property->isValueTypeSubProperty)
         return -1;
 
     if (qmlDisableOptimizer())
