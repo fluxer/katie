@@ -355,10 +355,10 @@ static const char *specialLanguagesTbl[] = {
     "dv-mv", // DivesAkuru
     "zkt-cn", // KhitanSmallScript
     "ku-ge", // Yezidi
-    0, // OldUyghur
-    0, // Tangsa
-    0, // Toto
-    0, // Vithkuqi
+    "ug-cn", // OldUyghur
+    "ntm-in", // Tangsa
+    "txo-in", // Toto
+    "sq-al", // Vithkuqi
 };
 enum { SpecialLanguageCount = sizeof(specialLanguagesTbl) / sizeof(const char *) };
 

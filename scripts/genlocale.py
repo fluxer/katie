@@ -2,7 +2,7 @@
 #-*- coding: UTF-8 -*-
 
 # See https://github.com/fluxer/katie/wiki/Unicode-support
-# Data is from https://unicode.org/Public/cldr/39/core.zip
+# Data is from https://unicode.org/Public/cldr/40/core.zip
 
 import os, sys, glob, re
 import xml.etree.ElementTree as ET
@@ -54,6 +54,7 @@ def normalizestring(fromstring):
     result = result.replace(u'ã', 'a')
     result = result.replace(u'é', 'e')
     result = result.replace(u'í', 'i')
+    result = result.replace(u'ā', 'a')
     return result
 
 def xmlmerge(fromxml, fromxml2):
