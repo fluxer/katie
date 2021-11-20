@@ -3584,11 +3584,8 @@ QStringList QScriptEngine::availableExtensions() const
             continue;
 
         // look for C++ plugins
-        QFileInfoList files = dir.entryInfoList(QDir::Files);
-        for (int j = 0; j < files.count(); ++j) {
-            QFileInfo entry = files.at(j);
-            QString filePath = entry.canonicalFilePath();
-            QPluginLoader loader(filePath);
+        foreach (const QFileInfo &entry, dir.entryInfoList(QDir::Files)) {
+            QPluginLoader loader(entry.canonicalFilePath());
             QScriptExtensionInterface *iface;
             iface = qobject_cast<QScriptExtensionInterface*>(loader.instance());
             if (iface) {
