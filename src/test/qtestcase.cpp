@@ -29,7 +29,6 @@
 #include "qvarlengtharray.h"
 #include "qcoreapplication.h"
 #include "qfile.h"
-#include "qfileinfo.h"
 #include "qdir.h"
 #include "qprocess.h"
 #include "qthread.h"
