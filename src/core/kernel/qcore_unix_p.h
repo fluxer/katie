@@ -37,6 +37,7 @@
 #include "qatomic.h"
 #include "qlist.h"
 #include "qstring.h"
+#include "qdatetime.h"
 
 #include <poll.h>
 #include <string.h>
@@ -76,6 +77,8 @@ public:
         { return m_uid; }
     inline gid_t groupId() const
         { return m_gid; }
+    inline QDateTime lastModified() const
+        { return QDateTime::fromTime_t(m_mtime); }
     inline bool exists() const
         { return (m_mode != 0); }
     inline bool isFile() const

@@ -24,8 +24,8 @@
 #include "qurlinfo.h"
 #include "qdir.h"
 #include "qnoncontiguousbytedevice_p.h"
-
-#include <QtCore/QCoreApplication>
+#include "qcoreapplication.h"
+#include "qcore_unix_p.h"
 
 QT_BEGIN_NAMESPACE
 
@@ -196,14 +196,14 @@ void QNetworkAccessFileBackend::downstreamReadyWrite()
 
 bool QNetworkAccessFileBackend::loadFileInfo()
 {
-    QFileInfo fi(file);
-    setHeader(QNetworkRequest::LastModifiedHeader, fi.lastModified());
-    setHeader(QNetworkRequest::ContentLengthHeader, fi.size());
+    QStatInfo si(file.fileName());
+    setHeader(QNetworkRequest::LastModifiedHeader, si.lastModified());
+    setHeader(QNetworkRequest::ContentLengthHeader, qint64(si.size()));
 
     // signal we're open
     metaDataChanged();
 
-    if (fi.isDir()) {
+    if (si.isDir()) {
         error(QNetworkReply::ContentOperationNotPermittedError,
               QCoreApplication::translate("QNetworkAccessFileBackend", "Cannot open %1: Path is a directory").arg(url().toString()));
         finished();
