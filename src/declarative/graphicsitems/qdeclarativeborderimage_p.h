@@ -30,7 +30,6 @@ QT_BEGIN_NAMESPACE
 
 
 class QDeclarativeScaleGrid;
-class QDeclarativeGridScaledImage;
 class QDeclarativeBorderImagePrivate;
 class Q_AUTOTEST_EXPORT QDeclarativeBorderImage : public QDeclarativeImageBase
 {
@@ -67,13 +66,9 @@ Q_SIGNALS:
 protected:
     virtual void load();
 
-private:
-    void setGridScaledImage(const QDeclarativeGridScaledImage& sci);
-
 private Q_SLOTS:
     void doUpdate();
     void requestFinished();
-    void sciRequestFinished();
 
 private:
     Q_DISABLE_COPY(QDeclarativeBorderImage)
