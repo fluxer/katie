@@ -30,28 +30,20 @@
 #include "qdeclarativeutilmodule_p.h"
 #include "qdeclarativecommon_p.h"
 
-#include <QtCore/qdebug.h>
-#include <QtCore/qstringlist.h>
-#include <QtCore/qmetaobject.h>
-#include <QtCore/qbitarray.h>
-#include <QtCore/qreadwritelock.h>
-#include "qfileinfo.h"
+#include "qdebug.h"
+#include "qstringlist.h"
+#include "qmetaobject.h"
+#include "qbitarray.h"
+#include "qreadwritelock.h"
 #include "qdir.h"
 #include "qmetatype.h"
 #include "qobjectdefs.h"
 #include "qdatetime.h"
 #include "qbytearray.h"
-#include "qreadwritelock.h"
 #include "qstring.h"
-#include "qstringlist.h"
 #include "qvector.h"
 #include "qlocale.h"
-#include "qcryptographichash.h"
 #include "qscriptvalue.h"
-
-#include <ctype.h>
-
-#include "qbitarray.h"
 #include "qurl.h"
 #include "qvariant.h"
 #include "qsize.h"
@@ -59,6 +51,9 @@
 #include "qrect.h"
 #include "qline.h"
 #include "qvector3d.h"
+
+#include <ctype.h>
+
 #define NS(x) QT_PREPEND_NAMESPACE(x)
 
 QT_BEGIN_NAMESPACE
