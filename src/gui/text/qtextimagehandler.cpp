@@ -38,10 +38,8 @@ static QPixmap getPixmap(QTextDocument *doc, const QTextImageFormat &format)
 {
     QPixmap pm;
 
-    QString name = format.name();
-    if (name.startsWith(QLatin1String(":/"))) // auto-detect resources
-        name.prepend(QLatin1String("qrc"));
-    QUrl url = QUrl::fromEncoded(name.toUtf8());
+    const QString name(format.name());
+    const QUrl url = QUrl::fromEncoded(name.toUtf8());
     const QVariant data = doc->resource(QTextDocument::ImageResource, url);
     if (data.type() == QVariant::Pixmap || data.type() == QVariant::Image) {
         pm = qvariant_cast<QPixmap>(data);
@@ -58,7 +56,6 @@ static QPixmap getPixmap(QTextDocument *doc, const QTextImageFormat &format)
 #endif
         QImage img;
         // try direct loading
-        name = format.name(); // remove qrc:/ prefix again
         if (name.isEmpty() || !img.load(name)) {
             return QPixmap(QLatin1String(":/trolltech/styles/commonstyle/images/file-16.png"));
         }
@@ -112,10 +109,8 @@ static QImage getImage(QTextDocument *doc, const QTextImageFormat &format)
 {
     QImage image;
 
-    QString name = format.name();
-    if (name.startsWith(QLatin1String(":/"))) // auto-detect resources
-        name.prepend(QLatin1String("qrc"));
-    QUrl url = QUrl::fromEncoded(name.toUtf8());
+    const QString name(format.name());
+    const QUrl url = QUrl::fromEncoded(name.toUtf8());
     const QVariant data = doc->resource(QTextDocument::ImageResource, url);
     if (data.type() == QVariant::Image) {
         image = qvariant_cast<QImage>(data);
@@ -132,7 +127,6 @@ static QImage getImage(QTextDocument *doc, const QTextImageFormat &format)
 #endif
 
         // try direct loading
-        name = format.name(); // remove qrc:/ prefix again
         if (name.isEmpty() || !image.load(name)) {
             return QImage(QLatin1String(":/trolltech/styles/commonstyle/images/file-16.png"));
         }

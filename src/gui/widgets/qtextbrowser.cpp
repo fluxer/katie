@@ -122,11 +122,7 @@ public:
 
 QString QTextBrowserPrivate::findFile(const QUrl &name) const
 {
-    QString fileName;
-    if (name.scheme() == QLatin1String("qrc"))
-        fileName = QLatin1String(":/") + name.path();
-    else
-        fileName = name.toLocalFile();
+    const QString fileName(name.toLocalFile());
 
     if (QFileInfo(fileName).isAbsolute())
         return fileName;
@@ -188,11 +184,9 @@ void QTextBrowserPrivate::_q_activateAnchor(const QString &href)
 
     if ((openExternalLinks
          && url.scheme() != QLatin1String("file")
-         && url.scheme() != QLatin1String("qrc")
          && !url.isRelative())
         || (url.isRelative() && !currentURL.isRelative()
-            && currentURL.scheme() != QLatin1String("file")
-            && currentURL.scheme() != QLatin1String("qrc"))) {
+            && currentURL.scheme() != QLatin1String("file"))) {
         QStandardPaths::openUrl(url);
         return;
     }
@@ -382,11 +376,7 @@ void QTextBrowserPrivate::restoreHistoryEntry(const HistoryEntry &entry)
     function to supply new document text in a slot connected to this
     signal.
 
-    If you want to load documents stored in the Qt resource system use
-    \c{qrc} as the scheme in the URL to load. For example, for the document
-    resource path \c{:/docs/index.html} use \c{qrc:/docs/index.html} as
-    the URL with setSource(). To access local files, use \c{file} as the
-    scheme in the URL.
+    To access local files, use \c{file} as the scheme in the URL.
 
     \sa QTextEdit, QTextDocument
 */
@@ -891,7 +881,7 @@ int QTextBrowser::backwardHistoryCount() const
     Specifies whether QTextBrowser should automatically open links to external
     sources using QStandardPaths::openUrl() instead of emitting the
     anchorClicked signal. Links are considered external if their scheme is
-    neither file or qrc.
+    not file.
 
     The default value is false.
 */
