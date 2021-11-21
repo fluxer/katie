@@ -192,9 +192,9 @@ QStringList QStandardPaths::standardLocations(StandardLocation type)
         }
 
         case StandardLocation::DataLocation: {
-            const QString xdghome(getEnvName("XDG_DATA_HOME"));
-            if (!xdghome.isEmpty()) {
-                result.append(xdghome);
+            const QString location(getEnvName("XDG_DATA_HOME"));
+            if (!location.isEmpty()) {
+                result.append(location);
             } else {
                 result.append(QDir::homePath() + QLatin1String("/.local/share"));
             }
@@ -217,16 +217,16 @@ QStringList QStandardPaths::standardLocations(StandardLocation type)
             break;
         }
         case StandardLocation::ConfigLocation: {
-            const QString xdghome(getEnvName("XDG_CONFIG_HOME"));
-            if (!xdghome.isEmpty()) {
-                result.append(xdghome);
+            const QString location(getEnvName("XDG_CONFIG_HOME"));
+            if (!location.isEmpty()) {
+                result.append(location);
             } else {
                 result.append(QDir::homePath() + QLatin1String("/.config"));
             }
 
-            const QString location(getEnvName("XDG_CONFIG_DIRS"));
-            if (!location.isEmpty()) {
-                result.append(location);
+            const QStringList locations(getEnvListName("XDG_CONFIG_DIRS"));
+            if (!locations.isEmpty()) {
+                result.append(locations);
             } else {
                 result.append(QDir::homePath() + QLatin1String("/etc/xdg"));
             }
