@@ -34,38 +34,7 @@ class QAccessibleObjectPrivate
 {
 public:
     QPointer<QObject> object;
-
-    QList<QByteArray> actionList() const;
 };
-
-QList<QByteArray> QAccessibleObjectPrivate::actionList() const
-{
-    QList<QByteArray> actionList;
-
-    if (!object)
-        return actionList;
-
-    const QMetaObject *mo = object->metaObject();
-    Q_ASSERT(mo);
-
-    QByteArray defaultAction = QMetaObject::normalizedSignature(
-        mo->classInfo(mo->indexOfClassInfo("DefaultSlot")).value());
-
-    for (int i = 0; i < mo->methodCount(); ++i) {
-        const QMetaMethod member = mo->method(i);
-        if (member.methodType() != QMetaMethod::Slot && member.access() != QMetaMethod::Public)
-            continue;
-
-        if (!qstrcmp(member.tag(), "QACCESSIBLE_SLOT")) {
-            if (member.signature() == defaultAction)
-                actionList.prepend(defaultAction);
-            else
-                actionList << member.signature();
-        }
-    }
-
-    return actionList;
-}
 
 /*!
     \class QAccessibleObject
