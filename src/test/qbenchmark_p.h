@@ -106,7 +106,6 @@ public:
     int iterationCount;
     int medianIterationCount;
     bool verboseOutput;
-    QString callgrindOutFileBase;
 };
 
 /*
