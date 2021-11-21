@@ -1738,7 +1738,7 @@ QScriptValue QDeclarativeEnginePrivate::desktopOpenUrl(QScriptContext *ctxt, QSc
 {
     if(ctxt->argumentCount() < 1)
         return QScriptValue(e, false);
-    bool ret = StandardPaths::openUrl(QDeclarativeScriptEngine::get(e)->resolvedUrl(ctxt, QUrl(ctxt->argument(0).toString())));
+    bool ret = QStandardPaths::openUrl(QDeclarativeScriptEngine::get(e)->resolvedUrl(ctxt, QUrl(ctxt->argument(0).toString())));
     return QScriptValue(e, ret);
 }
 
