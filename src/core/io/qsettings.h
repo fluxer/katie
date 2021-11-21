@@ -67,16 +67,10 @@ public:
         CustomFormat16
     };
 
-    enum Scope {
-        UserScope,
-        SystemScope
-    };
-
     typedef QMap<QString, QVariant> SettingsMap;
 
     explicit QSettings(QObject *parent = nullptr);
-    QSettings(Scope scope, QObject *parent = nullptr);
-    QSettings(Format format, Scope scope, QObject *parent = nullptr);
+    QSettings(Format format, QObject *parent = nullptr);
     QSettings(const QString &fileName, Format format = NativeFormat, QObject *parent = nullptr);
     ~QSettings();
 
@@ -101,7 +95,6 @@ public:
 
     QString fileName() const;
     Format format() const;
-    Scope scope() const;
 
     typedef bool (*ReadFunc)(QIODevice &device, SettingsMap &map);
     typedef bool (*WriteFunc)(QIODevice &device, const SettingsMap &map);

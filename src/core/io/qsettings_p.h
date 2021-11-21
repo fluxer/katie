@@ -45,7 +45,7 @@ class QSettingsPrivate
     Q_DECLARE_PUBLIC(QSettings)
 
 public:
-    QSettingsPrivate(QSettings::Format format, QSettings::Scope scope);
+    QSettingsPrivate(QSettings::Format format);
     QSettingsPrivate(const QString &fileName, QSettings::Format format);
     ~QSettingsPrivate();
 
@@ -60,7 +60,6 @@ public:
     static QStringList splitArgs(const QString &s, int idx);
 
     QSettings::Format format;
-    QSettings::Scope scope;
     QSettings::SettingsStatus status;
     QString filename;
     QSettings::SettingsMap map;
