@@ -463,7 +463,7 @@ namespace { // within qdesigner_internal
 class PositionSortPredicate {
 public:
     PositionSortPredicate(Qt::Orientation orientation) : m_orientation(orientation) {}
-    bool operator()(const QWidget* w1, const QWidget* w2) {
+    bool operator()(const QWidget* w1, const QWidget* w2) const {
         return m_orientation == Qt::Horizontal ? w1->x() < w2->x() : w1->y() < w2->y();
     }
     private:

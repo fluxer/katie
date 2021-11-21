@@ -298,6 +298,11 @@ namespace QUnicodeTables {
         DivesAkuru,
         KhitanSmallScript,
         Yezidi,
+        CyproMinoan,
+        OldUyghur,
+        Tangsa,
+        Toto,
+        Vithkuqi,
 
         ScriptCount
     };

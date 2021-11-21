@@ -343,8 +343,8 @@ void QDBusMetaObjectGenerator::write(QDBusMetaObject *obj)
     if (className.isEmpty())
         className = QLatin1String("QDBusInterface");
 
-    QVarLengthArray<int> idata;
-    idata.resize(sizeof(QDBusMetaObjectPrivate) / sizeof(int));
+    static const int QDBusMetaObjectPrivateSize = (sizeof(QDBusMetaObjectPrivate) / sizeof(int));
+    QVarLengthArray<int> idata(QDBusMetaObjectPrivateSize);
 
     QDBusMetaObjectPrivate *header = reinterpret_cast<QDBusMetaObjectPrivate *>(idata.data());
     header->revision = qmetaobjectrevision;

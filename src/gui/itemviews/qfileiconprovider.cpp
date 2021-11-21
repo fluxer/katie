@@ -23,7 +23,6 @@
 
 #ifndef QT_NO_FILEICONPROVIDER
 
-#include "qfileinfo.h"
 #include "qapplication.h"
 #include "qdir.h"
 #include "qpixmapcache.h"

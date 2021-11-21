@@ -21,7 +21,7 @@ There are several things you should be aware before considering Katie:
   - versioned and extended classes have been merged into the base class,
     e.g. QIconEngineV2 into QIconEngine and QKeyEventEx into QKeyEvent
   - QGuiPlatformPlugin class is public
-  - updated localizations data from Common Locale Data Repository v39
+  - updated localizations data from Common Locale Data Repository v40
   - default text codec for C-strings is UTF-8
   - QTranslator uses gettext for translations
   - OpenVG is no longer supported graphics output
@@ -83,7 +83,7 @@ QTBUG-12564, QTBUG-20028, QTBUG-71967, QTBUG-70956, QTBUG-71446, QTBUG-61307,
 QTBUG-27287, QTBUG-25143, QTBUG-22833, QTBUG-57399, QTBUG-59159, QTBUG-15773,
 QTBUG-70506, QTBUG-46054, QTBUG-11223, QTBUG-63108, QTBUG-6932, QTBUG-42365,
 QTBUG-83817, QTBUG-4341, QTBUG-36933, QTBUG-49113, QTBUG-69920, QTBUG-40015,
-QTBUG-54942, QTBUG-91261, QTBUG-73445, QTBUG-21098
+QTBUG-54942, QTBUG-91261, QTBUG-73445, QTBUG-21098, QTBUG-59966
 
 Unless you use QMake and QDoc porting to Katie or even supporting it along with
 Qt4 in the same codebase is trivial and requires only minor changes because

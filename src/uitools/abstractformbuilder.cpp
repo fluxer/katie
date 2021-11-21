@@ -28,7 +28,6 @@
 
 #include <QtCore/QVariant>
 #include <QtCore/qmetaobject.h>
-#include <QtCore/QFileInfo>
 #include <QtCore/QDir>
 #include <QtCore/QQueue>
 #include <QtCore/QHash>

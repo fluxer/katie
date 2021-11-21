@@ -99,7 +99,6 @@
 #include "qdebug.h"
 #endif
 #include "qfile.h"
-#include "qfileinfo.h"
 #include "qimage.h"
 #include "qimageiohandler.h"
 #include "qlist.h"

@@ -31,7 +31,7 @@
 #include "qdeclarativeglobal_p.h"
 #include "qdeclarativetypenamecache_p.h"
 #include "qdeclarativeengine_p.h"
-
+#include "qcore_unix_p.h"
 
 QT_BEGIN_NAMESPACE
 
@@ -287,10 +287,6 @@ bool QDeclarativeImportedNamespace::find_helper(QDeclarativeTypeLoader *typeLoad
                 if ((vmaj == -1) || (c.majorVersion < vmaj || (c.majorVersion == vmaj && vmin >= c.minorVersion))) {
                     QUrl url = QUrl(urls.at(i) + QLatin1Char('/') + QString::fromUtf8(type) + QLatin1String(".qml"));
                     QUrl candidate = url.resolved(QUrl(c.fileName));
-                    if (c.internal && base) {
-                        if (base->resolved(QUrl(c.fileName)) != candidate)
-                            continue; // failed attempt to access an internal type
-                    }
                     if (base && *base == candidate) {
                         if (typeRecursionDetected)
                             *typeRecursionDetected = true;
@@ -307,7 +303,7 @@ bool QDeclarativeImportedNamespace::find_helper(QDeclarativeTypeLoader *typeLoad
     if (!typeWasDeclaredInQmldir  && !isLibrary.at(i)) {
         // XXX search non-files too! (eg. zip files, see QT-524)
         QUrl url = QUrl(urls.at(i) + QLatin1Char('/') + QString::fromUtf8(type) + QLatin1String(".qml"));
-        QString file = QDeclarativeEnginePrivate::urlToLocalFileOrQrc(url);
+        QString file = QDeclarativeEnginePrivate::urlToLocalFile(url);
         if (!typeLoader->absoluteFilePath(file).isEmpty()) {
             if (base && *base == url) { // no recursion
                 if (typeRecursionDetected)
@@ -516,30 +512,30 @@ bool QDeclarativeImportsPrivate::add(const QDeclarativeDirComponents &qmldircomp
 
         if (importType == QDeclarativeScriptParser::Import::File && qmldircomponents.isEmpty()) {
             QUrl importUrl = base.resolved(QUrl(uri + QLatin1String("/qmldir")));
-            QString localFileOrQrc = QDeclarativeEnginePrivate::urlToLocalFileOrQrc(importUrl);
-            if (!localFileOrQrc.isEmpty()) {
-                QString dir = QDeclarativeEnginePrivate::urlToLocalFileOrQrc(base.resolved(QUrl(uri)));
-                QFileInfo dirinfo(dir);
+            QString localFile = QDeclarativeEnginePrivate::urlToLocalFile(importUrl);
+            if (!localFile.isEmpty()) {
+                QString dir = QDeclarativeEnginePrivate::urlToLocalFile(base.resolved(QUrl(uri)));
+                QStatInfo dirinfo(dir);
                 if (dir.isEmpty() || !dirinfo.exists() || !dirinfo.isDir()) {
                     if (errorString)
                         *errorString = QDeclarativeImportDatabase::tr("\"%1\": no such directory").arg(uri_arg);
                     return false; // local import dirs must exist
                 }
-                uri = resolvedUri(QDeclarativeEnginePrivate::urlToLocalFileOrQrc(base.resolved(QUrl(uri))), database);
+                uri = resolvedUri(QDeclarativeEnginePrivate::urlToLocalFile(base.resolved(QUrl(uri))), database);
                 if (uri.endsWith(QLatin1Char('/')))
                     uri.chop(1);
-                if (!typeLoader->absoluteFilePath(localFileOrQrc).isEmpty()) {
-                    if (!importExtension(localFileOrQrc,uri,database,&qmldircomponents,errorString))
+                if (!typeLoader->absoluteFilePath(localFile).isEmpty()) {
+                    if (!importExtension(localFile, uri,database,&qmldircomponents,errorString))
                         return false;
                 }
             } else {
                 if (prefix.isEmpty()) {
                     // directory must at least exist for valid import
-                    QString localFileOrQrc = QDeclarativeEnginePrivate::urlToLocalFileOrQrc(base.resolved(QUrl(uri)));
-                    QFileInfo dirinfo(localFileOrQrc);
-                    if (localFileOrQrc.isEmpty() || !dirinfo.exists() || !dirinfo.isDir()) {
+                    QString localFile = QDeclarativeEnginePrivate::urlToLocalFile(base.resolved(QUrl(uri)));
+                    QStatInfo dirinfo(localFile);
+                    if (localFile.isEmpty() || !dirinfo.exists() || !dirinfo.isDir()) {
                         if (errorString) {
-                            if (localFileOrQrc.isEmpty())
+                            if (localFile.isEmpty())
                                 *errorString = QDeclarativeImportDatabase::tr("import \"%1\" has no qmldir and no namespace").arg(uri);
                             else
                                 *errorString = QDeclarativeImportDatabase::tr("\"%1\": no such directory").arg(uri);
@@ -772,15 +768,14 @@ bool QDeclarativeImports::addImport(QDeclarativeImportDatabase *importDb,
 QString QDeclarativeImportDatabase::resolvePlugin(const QDir &qmldirPath, const QString &qmldirPluginPath, 
                                                   const QString &baseName)
 {
-    static QStringList validSuffixList = QStringList()  << QLatin1String(".so");
-
     // Examples of valid library names:
     //  libfoo.so
 
-   QStringList searchPaths = filePluginPath;
+    QStringList searchPaths = filePluginPath;
     bool qmldirPluginPathIsRelative = QDir::isRelativePath(qmldirPluginPath);
-    if (!qmldirPluginPathIsRelative)
+    if (!qmldirPluginPathIsRelative) {
         searchPaths.prepend(qmldirPluginPath);
+    }
 
     foreach (const QString &pluginPath, searchPaths) {
 
@@ -795,21 +790,15 @@ QString QDeclarativeImportDatabase::resolvePlugin(const QDir &qmldirPath, const 
             resolvedPath = pluginPath;
         }
 
-        // hack for resources, should probably go away
-        if (resolvedPath.startsWith(QLatin1String(":/")))
-            resolvedPath = QCoreApplication::applicationDirPath();
-
         QDir dir(resolvedPath);
-        foreach (const QString &suffix, validSuffixList) {
-            QString pluginFileName = QLatin1String("lib");
+        QString pluginFileName = QLatin1String("lib");
+        pluginFileName += baseName;
+        pluginFileName += QLatin1String(".so");
 
-            pluginFileName += baseName;
-            pluginFileName += suffix;
+        QFileInfo fileInfo(dir, pluginFileName);
 
-            QFileInfo fileInfo(dir, pluginFileName);
-
-            if (fileInfo.exists())
-                return fileInfo.absoluteFilePath();
+        if (fileInfo.exists()) {
+            return fileInfo.absoluteFilePath();
         }
     }
 

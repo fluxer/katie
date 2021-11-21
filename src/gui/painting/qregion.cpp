@@ -576,8 +576,8 @@ bool QRegion::intersects(const QRegion &region) const
     if (rectCount() == 1 && region.rectCount() == 1)
         return true;
 
-    foreach (const QRect i1, rects()) {
-        foreach (const QRect i2, region.rects()) {
+    foreach (const QRect &i1, rects()) {
+        foreach (const QRect &i2, region.rects()) {
             if (rect_intersects(i1, i2))
                 return true;
         }
@@ -4146,7 +4146,7 @@ bool QRegion::intersects(const QRect &rect) const
     if (d->qt_rgn->numRects == 1)
         return true;
 
-    foreach (const QRect it, rects()) {
+    foreach (const QRect &it, rects()) {
         if (rect_intersects(r, it))
             return true;
     }

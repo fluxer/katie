@@ -73,36 +73,6 @@ private:
     int _bottom;
 };
 
-class Q_DECLARATIVE_PRIVATE_EXPORT QDeclarativeGridScaledImage
-{
-public:
-    QDeclarativeGridScaledImage();
-    QDeclarativeGridScaledImage(const QDeclarativeGridScaledImage &);
-    QDeclarativeGridScaledImage(QIODevice*);
-    QDeclarativeGridScaledImage &operator=(const QDeclarativeGridScaledImage &);
-    bool isValid() const;
-    int gridLeft() const;
-    int gridRight() const;
-    int gridTop() const;
-    int gridBottom() const;
-    QDeclarativeBorderImage::TileMode horizontalTileRule() const { return _h; }
-    QDeclarativeBorderImage::TileMode verticalTileRule() const { return _v; }
-
-    QString pixmapUrl() const;
-
-private:
-    static QDeclarativeBorderImage::TileMode stringToRule(const QString &);
-
-private:
-    int _l;
-    int _r;
-    int _t;
-    int _b;
-    QDeclarativeBorderImage::TileMode _h;
-    QDeclarativeBorderImage::TileMode _v;
-    QString _pix;
-};
-
 QT_END_NAMESPACE
 
 QML_DECLARE_TYPE(QDeclarativeScaleGrid)

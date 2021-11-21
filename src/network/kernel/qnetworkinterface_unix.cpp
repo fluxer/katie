@@ -32,6 +32,7 @@
 #include <sys/types.h>
 #include <sys/socket.h>
 #include <net/if.h>
+#include <netinet/in.h>
 #include <arpa/inet.h>
 
 #ifdef Q_OS_SOLARIS
@@ -66,7 +67,7 @@ static QHostAddress addressFromSockaddr(sockaddr *sa)
 #ifndef QT_NO_IPV6IFNAME
             QSTACKARRAY(char, scopeid, IFNAMSIZ);
             if (::if_indextoname(scope, scopeid)) {
-                address.setScopeId(QLatin1String(scopeid));
+                address.setScopeId(QString::fromLatin1(scopeid));
             } else
 #endif
                 address.setScopeId(QString::number(scope));

@@ -1173,13 +1173,8 @@ QUrl QDeclarativeEnginePrivate::getUrl(QScriptContext *ctxt)
     return contextClass->urlFromValue(scopeNode);
 }
 
-QString QDeclarativeEnginePrivate::urlToLocalFileOrQrc(const QUrl& url)
+QString QDeclarativeEnginePrivate::urlToLocalFile(const QUrl& url)
 {
-    if (url.scheme().compare(QLatin1String("qrc"), Qt::CaseInsensitive) == 0) {
-        if (url.authority().isEmpty())
-            return QLatin1Char(':') + url.path();
-        return QString();
-    }
     return url.toLocalFile();
 }
 

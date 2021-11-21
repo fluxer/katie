@@ -13,7 +13,7 @@ DISTFILES = master.tar.gz
 DIST_SUBDIR = ${PORTNAME}
 WRKSRC = ${WRKDIR}/katie-master
 
-USES = compiler:c++11-lang pkgconfig cmake ssl xorg jpeg  desktop-file-utils
+USES = compiler:c++11-lang pkgconfig cmake ssl xorg jpeg desktop-file-utils
 USE_XORG = x11 xinerama xrandr xrender xfixes xcursor xext sm ice
 USE_LDCONFIG = yes
 RUN_DEPENDS = xdg-open:devel/xdg-utils

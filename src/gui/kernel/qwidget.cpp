@@ -43,7 +43,6 @@
 #include "qdebug.h"
 #include "qstylesheetstyle_p.h"
 #include "qstyle_p.h"
-#include "qfileinfo.h"
 #include "qgraphicseffect_p.h"
 #include "qwindowsurface_p.h"
 #include "qbackingstore_p.h"

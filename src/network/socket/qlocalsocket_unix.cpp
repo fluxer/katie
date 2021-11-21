@@ -177,6 +177,7 @@ void QLocalSocketPrivate::errorOccurred(QLocalSocket::LocalSocketError error, co
     case QLocalSocket::UnknownSocketError:
     default:
         unixSocket.setSocketError(QAbstractSocket::UnknownSocketError);
+        break;
     }
 
     q->setErrorString(generateErrorString(error, function));
@@ -303,6 +304,7 @@ void QLocalSocketPrivate::_q_connectToSocket()
             break;
         default:
             errorOccurred(QLocalSocket::UnknownSocketError, function);
+            break;
         }
         return;
     }

@@ -76,17 +76,16 @@ public:
     struct Component
     {
         Component()
-            : majorVersion(0), minorVersion(0), internal(false) {}
+            : majorVersion(0), minorVersion(0) {}
 
         Component(const QString &typeName, const QString &fileName, int majorVersion, int minorVersion)
-            : typeName(typeName), fileName(fileName), majorVersion(majorVersion), minorVersion(minorVersion),
-            internal(false) {}
+            : typeName(typeName), fileName(fileName), majorVersion(majorVersion), minorVersion(minorVersion)
+            {}
 
         QString typeName;
         QString fileName;
         int majorVersion;
         int minorVersion;
-        bool internal;
     };
 
     QList<Component> components() const;
@@ -102,7 +101,7 @@ private:
     QString _filePathSouce;
     QList<Component> _components;
     QList<Plugin> _plugins;
-    unsigned _isParsed: 1;
+    bool _isParsed;
 };
 
 typedef QList<QDeclarativeDirParser::Component> QDeclarativeDirComponents;

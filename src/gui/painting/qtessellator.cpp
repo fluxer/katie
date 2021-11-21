@@ -110,7 +110,7 @@ public:
     {
     public:
         EdgeSorter(int _y) : y(_y) {}
-        bool operator() (const Edge *e1, const Edge *e2);
+        bool operator() (const Edge *e1, const Edge *e2) const;
         int y;
     };
 
@@ -363,7 +363,7 @@ Q27Dot5 QTessellatorPrivate::Edge::positionAt(Q27Dot5 y) const
     return (v0->x + d*(y - v0->y)/(v1->y-v0->y));
 }
 
-bool QTessellatorPrivate::EdgeSorter::operator() (const Edge *e1, const Edge *e2)
+bool QTessellatorPrivate::EdgeSorter::operator() (const Edge *e1, const Edge *e2) const
 {
     return e1->isLeftOf(*e2, y);
 }

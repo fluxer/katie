@@ -38,17 +38,15 @@
 
 QT_BEGIN_NAMESPACE
 
-class QNetworkReply;
 class QDeclarativeBorderImagePrivate : public QDeclarativeImageBasePrivate
 {
     Q_DECLARE_PUBLIC(QDeclarativeBorderImage)
 
 public:
     QDeclarativeBorderImagePrivate()
-      : border(0), sciReply(0),
+      : border(0),
         horizontalTileMode(QDeclarativeBorderImage::Stretch),
-        verticalTileMode(QDeclarativeBorderImage::Stretch),
-        redirectCount(0)
+        verticalTileMode(QDeclarativeBorderImage::Stretch)
     {
     }
 
@@ -74,11 +72,8 @@ public:
     }
 
     QDeclarativeScaleGrid *border;
-    QUrl sciurl;
-    QNetworkReply *sciReply;
     QDeclarativeBorderImage::TileMode horizontalTileMode;
     QDeclarativeBorderImage::TileMode verticalTileMode;
-    int redirectCount;
 };
 
 QT_END_NAMESPACE

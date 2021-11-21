@@ -291,7 +291,7 @@ void QX11PixmapData::fromImage(const QImage &img,
         xinfo.setX11Data(xd);
     }
 
-    if (pixelType() == BitmapType) {
+    if (pixelType() == BitmapType || d == 1) {
         bitmapFromImage(img);
         return;
     }
@@ -305,56 +305,18 @@ void QX11PixmapData::fromImage(const QImage &img,
     QX11AlphaDetector alphaCheck(&img, flags);
     const int dd = alphaCheck.hasXRenderAndAlpha() ? 32 : xinfo.depth();
 
-    QImage image = img;
-
-    // must be monochrome
-    if (dd == 1 || (flags & Qt::ColorMode_Mask) == Qt::MonoOnly) {
-        if (d != 1) {
-            // dither
-            image = image.convertToFormat(QImage::Format_MonoLSB, flags);
-            d = 1;
-        }
-    } else { // can be both
-        bool conv8 = false;
-        if (d > 8 && dd <= 8) { // convert to 8 bit
-            if ((flags & Qt::DitherMode_Mask) == Qt::AutoDither)
-                flags = (flags & ~Qt::DitherMode_Mask)
-                        | Qt::PreferDither;
-            conv8 = true;
-        } else if ((flags & Qt::ColorMode_Mask) == Qt::ColorOnly) {
-            conv8 = (d == 1);                        // native depth wanted
-        } else if (d == 1) {
-            if (image.colorCount() == 2) {
-                QRgb c0 = image.color(0);        // Auto: convert to best
-                QRgb c1 = image.color(1);
-                conv8 = qMin(c0,c1) != qt_blackrgb || qMax(c0,c1) != qt_whitergb;
-            } else {
-                // eg. 1-color monochrome images (they do exist).
-                conv8 = true;
-            }
-        }
-        if (conv8) {
-            image = image.convertToFormat(QImage::Format_Indexed8, flags);
-            d = 8;
-        }
-    }
-
-    if (d == 1 || d == 16 || d == 24) {
-        image = image.convertToFormat(QImage::Format_RGB32, flags);
-        fromImage(image, Qt::AutoColor);
-        return;
-    }
-
     Display *dpy   = qt_x11Data->display;
     Visual *visual = (Visual *)xinfo.visual();
-    XImage *xi = 0;
-    bool    trucol = (visual->c_class >= TrueColor);
-    int     nbytes = image.byteCount();
-    uchar  *newbits= 0;
+    XImage *xi = nullptr;
+    uchar  *newbits = nullptr;
+
+    QImage image(img);
 
 #ifndef QT_NO_XRENDER
     if (alphaCheck.hasXRenderAndAlpha()) {
-        const QImage &cimage = image;
+        if (d == 16) {
+            image = image.convertToFormat(QImage::Format_RGB32, flags);
+        }
 
         d = 32;
 
@@ -385,12 +347,12 @@ void QX11PixmapData::fromImage(const QImage &img,
         Q_CHECK_PTR(newbits);
         xi->data = (char *)newbits;
 
-        switch(cimage.format()) {
+        switch(image.format()) {
         case QImage::Format_Indexed8: {
-            QVector<QRgb> colorTable = cimage.colorTable();
+            QVector<QRgb> colorTable = image.colorTable();
             uint *xidata = (uint *)xi->data;
             for (int y = 0; y < h; ++y) {
-                const uchar *p = cimage.constScanLine(y);
+                const uchar *p = image.constScanLine(y);
                 for (int x = 0; x < w; ++x) {
                     const QRgb rgb = colorTable[p[x]];
                     const int a = qAlpha(rgb);
@@ -410,7 +372,7 @@ void QX11PixmapData::fromImage(const QImage &img,
         case QImage::Format_RGB32: {
             uint *xidata = (uint *)xi->data;
             for (int y = 0; y < h; ++y) {
-                const QRgb *p = (const QRgb *) cimage.constScanLine(y);
+                const QRgb *p = (const QRgb *) image.constScanLine(y);
                 for (int x = 0; x < w; ++x)
                     *xidata++ = p[x] | 0xff000000;
             }
@@ -419,7 +381,7 @@ void QX11PixmapData::fromImage(const QImage &img,
         case QImage::Format_ARGB32: {
             uint *xidata = (uint *)xi->data;
             for (int y = 0; y < h; ++y) {
-                const QRgb *p = (const QRgb *) cimage.constScanLine(y);
+                const QRgb *p = (const QRgb *) image.constScanLine(y);
                 for (int x = 0; x < w; ++x) {
                     const QRgb rgb = p[x];
                     const int a = qAlpha(rgb);
@@ -439,7 +401,7 @@ void QX11PixmapData::fromImage(const QImage &img,
         case QImage::Format_ARGB32_Premultiplied: {
             uint *xidata = (uint *)xi->data;
             for (int y = 0; y < h; ++y) {
-                const QRgb *p = (const QRgb *) cimage.constScanLine(y);
+                const QRgb *p = (const QRgb *) image.constScanLine(y);
                 memcpy(xidata, p, w*sizeof(QRgb));
                 xidata += w;
             }
@@ -471,529 +433,23 @@ void QX11PixmapData::fromImage(const QImage &img,
     }
 #endif // QT_NO_XRENDER
 
-    if (trucol) {                                // truecolor display
-        if (image.format() == QImage::Format_ARGB32_Premultiplied)
-            image = image.convertToFormat(QImage::Format_ARGB32);
-
-        const QImage &cimage = image;
-        QSTACKARRAY(QRgb, pix, 256);                // pixel translation table
-        const bool  d8 = (d == 8);
-        const uint  red_mask          = (uint)visual->red_mask;
-        const uint  green_mask  = (uint)visual->green_mask;
-        const uint  blue_mask          = (uint)visual->blue_mask;
-        const int   red_shift          = highest_bit(red_mask)   - 7;
-        const int   green_shift = highest_bit(green_mask) - 7;
-        const int   blue_shift  = highest_bit(blue_mask)  - 7;
-        const uint  rbits = highest_bit(red_mask) - lowest_bit(red_mask) + 1;
-        const uint  gbits = highest_bit(green_mask) - lowest_bit(green_mask) + 1;
-        const uint  bbits = highest_bit(blue_mask) - lowest_bit(blue_mask) + 1;
-
-        if (d8) {                                   // setup pixel translation
-            QVector<QRgb> ctable = cimage.colorTable();
-            for (int i=0; i < cimage.colorCount(); i++) {
-                int r = qRed  (ctable[i]);
-                int g = qGreen(ctable[i]);
-                int b = qBlue (ctable[i]);
-                r = red_shift        > 0 ? r << red_shift   : r >> -red_shift;
-                g = green_shift > 0 ? g << green_shift : g >> -green_shift;
-                b = blue_shift        > 0 ? b << blue_shift  : b >> -blue_shift;
-                pix[i] = (b & blue_mask) | (g & green_mask) | (r & red_mask)
-                         | ~(blue_mask | green_mask | red_mask);
-            }
-        }
-
+    if (!xi) {                                      // X image not created
         xi = XCreateImage(dpy, visual, dd, ZPixmap, 0, 0, w, h, 32, 0);
         Q_CHECK_PTR(xi);
         newbits = (uchar *)::malloc(size_t(xi->bytes_per_line) * h);
         Q_CHECK_PTR(newbits);
-        if (!newbits)                               // no memory
-            return;
-        int bppc = xi->bits_per_pixel;
-
-        bool contig_bits = n_bits(red_mask) == rbits &&
-                           n_bits(green_mask) == gbits &&
-                           n_bits(blue_mask) == bbits;
-        bool dither_tc =
-            // Want it?
-            (flags & Qt::Dither_Mask) != Qt::ThresholdDither &&
-            (flags & Qt::DitherMode_Mask) != Qt::AvoidDither &&
-            // Need it?
-            bppc < 24 && !d8 &&
-            // Can do it? (Contiguous bits?)
-            contig_bits;
-
-        static bool init=false;
-        static int D[16][16];
-        if (dither_tc && !init) {
-            // I also contributed this code to XV - WWA.
-            /*
-              The dither matrix, D, is obtained with this formula:
-
-              D2 = [0 2]
-              [3 1]
-
-
-              D2*n = [4*Dn       4*Dn+2*Un]
-              [4*Dn+3*Un  4*Dn+1*Un]
-            */
-            int n,i,j;
-            init=1;
-
-            /* Set D2 */
-            D[0][0]=0;
-            D[1][0]=2;
-            D[0][1]=3;
-            D[1][1]=1;
-
-            /* Expand using recursive definition given above */
-            for (n=2; n<16; n*=2) {
-                for (i=0; i<n; i++) {
-                    for (j=0; j<n; j++) {
-                        D[i][j]*=4;
-                        D[i+n][j]=D[i][j]+2;
-                        D[i][j+n]=D[i][j]+3;
-                        D[i+n][j+n]=D[i][j]+1;
-                    }
-                }
-            }
-            init=true;
-        }
-
-        enum { BPP8,
-               BPP16_565, BPP16_555,
-               BPP16_MSB, BPP16_LSB,
-               BPP24_888,
-               BPP24_MSB, BPP24_LSB,
-               BPP32_8888,
-               BPP32_MSB, BPP32_LSB
-        } mode = BPP8;
-
-        bool same_msb_lsb = (xi->byte_order == MSBFirst) == (Q_BYTE_ORDER == Q_BIG_ENDIAN);
-
-        if(bppc == 8) // 8 bit
-            mode = BPP8;
-        else if(bppc == 16) { // 16 bit MSB/LSB
-            if(red_shift == 8 && green_shift == 3 && blue_shift == -3 && !d8 && same_msb_lsb)
-                mode = BPP16_565;
-            else if(red_shift == 7 && green_shift == 2 && blue_shift == -3 && !d8 && same_msb_lsb)
-                mode = BPP16_555;
-            else
-                mode = (xi->byte_order == LSBFirst) ? BPP16_LSB : BPP16_MSB;
-        } else if(bppc == 24) { // 24 bit MSB/LSB
-            if (red_shift == 16 && green_shift == 8 && blue_shift == 0 && !d8 && same_msb_lsb)
-                mode = BPP24_888;
-            else
-                mode = (xi->byte_order == LSBFirst) ? BPP24_LSB : BPP24_MSB;
-        } else if(bppc == 32) { // 32 bit MSB/LSB
-            if(red_shift == 16 && green_shift == 8 && blue_shift == 0 && !d8 && same_msb_lsb)
-                mode = BPP32_8888;
-            else
-                mode = (xi->byte_order == LSBFirst) ? BPP32_LSB : BPP32_MSB;
-        } else
-            qFatal("Logic error 3");
-
-#define GET_PIXEL                                                       \
-        uint pixel;                                                     \
-        if (d8) pixel = pix[*src++];                                    \
-        else {                                                          \
-            int r = qRed  (*p);                                         \
-            int g = qGreen(*p);                                         \
-            int b = qBlue (*p++);                                       \
-            r = red_shift   > 0                                         \
-                ? r << red_shift   : r >> -red_shift;                   \
-            g = green_shift > 0                                         \
-                ? g << green_shift : g >> -green_shift;                 \
-            b = blue_shift  > 0                                         \
-                ? b << blue_shift  : b >> -blue_shift;                  \
-            pixel = (r & red_mask)|(g & green_mask) | (b & blue_mask)   \
-                    | ~(blue_mask | green_mask | red_mask);             \
-        }
-
-#define GET_PIXEL_DITHER_TC                                             \
-        int r = qRed  (*p);                                             \
-        int g = qGreen(*p);                                             \
-        int b = qBlue (*p++);                                           \
-        const int thres = D[x%16][y%16];                                \
-        if (r <= (255-(1<<(8-rbits))) && ((r<<rbits) & 255)             \
-            > thres)                                                    \
-            r += (1<<(8-rbits));                                        \
-        if (g <= (255-(1<<(8-gbits))) && ((g<<gbits) & 255)             \
-            > thres)                                                    \
-            g += (1<<(8-gbits));                                        \
-        if (b <= (255-(1<<(8-bbits))) && ((b<<bbits) & 255)             \
-            > thres)                                                    \
-            b += (1<<(8-bbits));                                        \
-        r = red_shift   > 0                                             \
-            ? r << red_shift   : r >> -red_shift;                       \
-        g = green_shift > 0                                             \
-            ? g << green_shift : g >> -green_shift;                     \
-        b = blue_shift  > 0                                             \
-            ? b << blue_shift  : b >> -blue_shift;                      \
-        uint pixel = (r & red_mask)|(g & green_mask) | (b & blue_mask);
-
-// again, optimized case
-// can't be optimized that much :(
-#define GET_PIXEL_DITHER_TC_OPT(red_shift,green_shift,blue_shift,red_mask,green_mask,blue_mask, \
-                                rbits,gbits,bbits)                      \
-        const int thres = D[x%16][y%16];                                \
-        int r = qRed  (*p);                                             \
-        if (r <= (255-(1<<(8-rbits))) && ((r<<rbits) & 255)             \
-            > thres)                                                    \
-            r += (1<<(8-rbits));                                        \
-        int g = qGreen(*p);                                             \
-        if (g <= (255-(1<<(8-gbits))) && ((g<<gbits) & 255)             \
-            > thres)                                                    \
-            g += (1<<(8-gbits));                                        \
-        int b = qBlue (*p++);                                           \
-        if (b <= (255-(1<<(8-bbits))) && ((b<<bbits) & 255)             \
-            > thres)                                                    \
-            b += (1<<(8-bbits));                                        \
-        uint pixel = ((r red_shift) & red_mask)                         \
-                     | ((g green_shift) & green_mask)                   \
-                     | ((b blue_shift) & blue_mask);
-
-#define CYCLE(body)                                             \
-        for (int y=0; y<h; y++) {                               \
-            const uchar* src = cimage.constScanLine(y);              \
-            uchar* dst = newbits + xi->bytes_per_line*y;        \
-            const QRgb* p = (const QRgb *)src;                  \
-            body                                                \
-        }
-
-        if (dither_tc) {
-            switch (mode) {
-            case BPP16_565: {
-                CYCLE(
-                    quint16* dst16 = (quint16*)dst;
-                    for (int x=0; x<w; x++) {
-                        GET_PIXEL_DITHER_TC_OPT(<<8,<<3,>>3,0xf800,0x7e0,0x1f,5,6,5)
-                            *dst16++ = pixel;
-                    }
-                )
-                break;
-            }
-            case BPP16_555: {
-                CYCLE(
-                    quint16* dst16 = (quint16*)dst;
-                    for (int x=0; x<w; x++) {
-                        GET_PIXEL_DITHER_TC_OPT(<<7,<<2,>>3,0x7c00,0x3e0,0x1f,5,5,5)
-                            *dst16++ = pixel;
-                    }
-                )
-                break;
-            }
-            case BPP16_MSB: {
-                // 16 bit MSB
-                CYCLE(
-                    for (int x=0; x<w; x++) {
-                        GET_PIXEL_DITHER_TC
-                            *dst++ = (pixel >> 8);
-                        *dst++ = pixel;
-                    }
-                )
-                break;
-            }
-            case BPP16_LSB: {
-                // 16 bit LSB
-                CYCLE(
-                    for (int x=0; x<w; x++) {
-                        GET_PIXEL_DITHER_TC
-                            *dst++ = pixel;
-                        *dst++ = pixel >> 8;
-                    }
-                )
-                break;
-            }
-            default:
-                qFatal("Logic error");
-            }
-        } else {
-            switch (mode) {
-            case BPP8: {
-                // 8 bit
-                CYCLE(
-                    Q_UNUSED(p);
-                    for (int x=0; x<w; x++)
-                        *dst++ = pix[*src++];
-                )
-                break;
-            }
-            case BPP16_565: {
-                CYCLE(
-                    quint16* dst16 = (quint16*)dst;
-                    for (int x = 0; x < w; x++) {
-                        *dst16++ = ((*p >> 8) & 0xf800)
-                                   | ((*p >> 5) & 0x7e0)
-                                   | ((*p >> 3) & 0x1f);
-                        ++p;
-                    }
-                )
-                break;
-            }
-            case BPP16_555: {
-                CYCLE(
-                    quint16* dst16 = (quint16*)dst;
-                    for (int x=0; x<w; x++) {
-                        *dst16++ = ((*p >> 9) & 0x7c00)
-                                   | ((*p >> 6) & 0x3e0)
-                                   | ((*p >> 3) & 0x1f);
-                        ++p;
-                    }
-                )
-                break;
-            }
-            case BPP16_MSB: {
-                // 16 bit MSB
-                CYCLE(
-                    for (int x=0; x<w; x++) {
-                        GET_PIXEL
-                            *dst++ = (pixel >> 8);
-                        *dst++ = pixel;
-                    }
-                )
-                break;
-            }
-            case BPP16_LSB: {
-                // 16 bit LSB
-                CYCLE(
-                    for (int x=0; x<w; x++) {
-                        GET_PIXEL
-                            *dst++ = pixel;
-                        *dst++ = pixel >> 8;
-                    }
-                )
-                break;
-            }
-            case BPP24_888: {
-                CYCLE(
-                    for (int x=0; x<w; x++) {
-#if Q_BYTE_ORDER == Q_BIG_ENDIAN
-                        *dst++ = qRed  (*p);
-                        *dst++ = qGreen(*p);
-                        *dst++ = qBlue (*p++);
-#else
-                        *dst++ = qBlue (*p);
-                        *dst++ = qGreen(*p);
-                        *dst++ = qRed  (*p++);
-#endif
-                    }
-                )
-                break;
-            }
-            case BPP24_MSB: {
-                // 24 bit MSB
-                CYCLE(
-                    for (int x=0; x<w; x++) {
-                        GET_PIXEL
-                            *dst++ = pixel >> 16;
-                        *dst++ = pixel >> 8;
-                        *dst++ = pixel;
-                    }
-                )
-                break;
-            }
-            case BPP24_LSB: {
-                // 24 bit LSB
-                CYCLE(
-                    for (int x=0; x<w; x++) {
-                        GET_PIXEL
-                            *dst++ = pixel;
-                        *dst++ = pixel >> 8;
-                        *dst++ = pixel >> 16;
-                    }
-                )
-                break;
-            }
-            case BPP32_8888: {
-                CYCLE(
-                    memcpy(dst, p, w * 4);
-                )
-                break;
-            }
-            case BPP32_MSB: {
-                // 32 bit MSB
-                CYCLE(
-                    for (int x=0; x<w; x++) {
-                        GET_PIXEL
-                            *dst++ = pixel >> 24;
-                        *dst++ = pixel >> 16;
-                        *dst++ = pixel >> 8;
-                        *dst++ = pixel;
-                    }
-                )
-                break;
-            }
-            case BPP32_LSB: {
-                // 32 bit LSB
-                CYCLE(
-                    for (int x=0; x<w; x++) {
-                        GET_PIXEL
-                            *dst++ = pixel;
-                        *dst++ = pixel >> 8;
-                        *dst++ = pixel >> 16;
-                        *dst++ = pixel >> 24;
-                    }
-                )
-                break;
-            }
-            default:
-                qFatal("Logic error 2");
-            }
-        }
         xi->data = (char *)newbits;
-    }
 
-    if (d == 8 && !trucol) {                        // 8 bit pixmap
-        QSTACKARRAY(int, pop, 256);                 // pixel popularity
-
-        if (image.colorCount() == 0)
-            image.setColorCount(1);
-
-        const QImage &cimage = image;
-        for (int i = 0; i < h; i++) {               // for each scanline...
-            const uchar* p = cimage.constScanLine(i);
-            const uchar *end = p + w;
-            while (p < end)                         // compute popularity
-                pop[*p++]++;
+        if (image.format() != QImage::Format_RGB32) {
+            image = image.convertToFormat(QImage::Format_RGB32, flags);
         }
 
-        newbits = (uchar *)::malloc(nbytes);        // copy image into newbits
-        Q_CHECK_PTR(newbits);
-        if (!newbits)                               // no memory
-            return;
-        uchar* p = newbits;
-        ::memcpy(p, cimage.bits(), nbytes);         // copy image data into newbits
-
-        /*
-         * The code below picks the most important colors. It is based on the
-         * diversity algorithm, implemented in XV 3.10. XV is (C) by John Bradley.
-         */
-
-        struct PIX {                                // pixel sort element
-            uchar r,g,b,n;                          // color + pad
-            int          use;                       // popularity
-            int          index;                     // index in colormap
-            int          mindist;
-        };
-        int ncols = 0;
-        for (int i=0; i< cimage.colorCount(); i++) { // compute number of colors
-            if (pop[i] > 0)
-                ncols++;
+        uint *xidata = (uint *)xi->data;
+        for (int y = 0; y < h; ++y) {
+            const QRgb *p = (const QRgb *) image.constScanLine(y);
+            for (int x = 0; x < w; ++x)
+                *xidata++ = p[x] | 0xff000000;
         }
-        for (int i = cimage.colorCount(); i < 256; i++) // ignore out-of-range pixels
-            pop[i] = 0;
-
-        // works since we make sure above to have at least
-        // one color in the image
-        if (ncols == 0)
-            ncols = 1;
-
-        QSTACKARRAY(PIX, pixarr, 256);              // pixel array
-        QSTACKARRAY(PIX, pixarr_sorted, 256);       // pixel array (sorted)
-        PIX *px = &pixarr[0];
-        int maxpop = 0;
-        int maxpix = 0;
-        uint j = 0;
-        QVector<QRgb> ctable = cimage.colorTable();
-        for (int i = 0; i < 256; i++) {             // init pixel array
-            if (pop[i] > 0) {
-                px->r = qRed  (ctable[i]);
-                px->g = qGreen(ctable[i]);
-                px->b = qBlue (ctable[i]);
-                px->n = 0;
-                px->use = pop[i];
-                if (pop[i] > maxpop) {              // select most popular entry
-                    maxpop = pop[i];
-                    maxpix = j;
-                }
-                px->index = i;
-                px->mindist = 1000000;
-                px++;
-                j++;
-            }
-        }
-        pixarr_sorted[0] = pixarr[maxpix];
-        pixarr[maxpix].use = 0;
-
-        for (int i = 1; i < ncols; i++) {           // sort pixels
-            int minpix = -1, mindist = -1;
-            px = &pixarr_sorted[i-1];
-            int r = px->r;
-            int g = px->g;
-            int b = px->b;
-            int dist;
-            if ((i & 1) || i<10) {                  // sort on max distance
-                for (int j=0; j<ncols; j++) {
-                    px = &pixarr[j];
-                    if (px->use) {
-                        dist = (px->r - r)*(px->r - r) +
-                               (px->g - g)*(px->g - g) +
-                               (px->b - b)*(px->b - b);
-                        if (px->mindist > dist)
-                            px->mindist = dist;
-                        if (px->mindist > mindist) {
-                            mindist = px->mindist;
-                            minpix = j;
-                        }
-                    }
-                }
-            } else {                                // sort on max popularity
-                for (int j=0; j<ncols; j++) {
-                    px = &pixarr[j];
-                    if (px->use) {
-                        dist = (px->r - r)*(px->r - r) +
-                               (px->g - g)*(px->g - g) +
-                               (px->b - b)*(px->b - b);
-                        if (px->mindist > dist)
-                            px->mindist = dist;
-                        if (px->use > mindist) {
-                            mindist = px->use;
-                            minpix = j;
-                        }
-                    }
-                }
-            }
-            pixarr_sorted[i] = pixarr[minpix];
-            pixarr[minpix].use = 0;
-        }
-
-        QColormap cmap = QColormap::instance(xinfo.screen());
-        QSTACKARRAY(uint, pix, 256);                // pixel translation table
-        px = &pixarr_sorted[0];
-        for (int i = 0; i < ncols; i++) {           // allocate colors
-            QColor c(px->r, px->g, px->b);
-            pix[px->index] = cmap.pixel(c);
-            px++;
-        }
-
-        p = newbits;
-        for (int i = 0; i < nbytes; i++) {          // translate pixels
-            *p = pix[*p];
-            p++;
-        }
-    }
-
-    if (!xi) {                                      // X image not created
-        xi = XCreateImage(dpy, visual, dd, ZPixmap, 0, 0, w, h, 32, 0);
-        if (xi->bits_per_pixel == 16) {             // convert 8 bpp ==> 16 bpp
-            ushort *p2;
-            int            p2inc = xi->bytes_per_line/sizeof(ushort);
-            ushort *newerbits = (ushort *)::malloc(size_t(xi->bytes_per_line) * h);
-            Q_CHECK_PTR(newerbits);
-            if (!newerbits)                         // no memory
-                return;
-            uchar* p = newbits;
-            for (int y = 0; y < h; y++) {           // OOPS: Do right byte order!!
-                p2 = newerbits + p2inc*y;
-                for (int x = 0; x < w; x++)
-                    *p2++ = *p++;
-            }
-            free(newbits);
-            newbits = (uchar *)newerbits;
-        } else if (Q_UNLIKELY(xi->bits_per_pixel != 8)) {
-            qWarning("QPixmap::fromImage: Display not supported (bpp=%d)", xi->bits_per_pixel);
-        }
-        xi->data = (char *)newbits;
     }
 
     hd = (Qt::HANDLE)XCreatePixmap(qt_x11Data->display,

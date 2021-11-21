@@ -167,24 +167,22 @@ int QNativeSocketEnginePrivate::option(QNativeSocketEngine::SocketOption opt) co
         if (socketProtocol == QAbstractSocket::IPv6Protocol) {
             level = IPPROTO_IPV6;
             n = IPV6_MULTICAST_HOPS;
-        } else
-#endif
-        {
-            level = IPPROTO_IP;
-            n = IP_MULTICAST_TTL;
+            break;
         }
+#endif
+        level = IPPROTO_IP;
+        n = IP_MULTICAST_TTL;
         break;
     case QNativeSocketEngine::MulticastLoopbackOption:
 #ifndef QT_NO_IPV6
         if (socketProtocol == QAbstractSocket::IPv6Protocol) {
             level = IPPROTO_IPV6;
             n = IPV6_MULTICAST_LOOP;
-        } else
-#endif
-        {
-            level = IPPROTO_IP;
-            n = IP_MULTICAST_LOOP;
+            break;
         }
+#endif
+        level = IPPROTO_IP;
+        n = IP_MULTICAST_LOOP;
         break;
     }
 
@@ -237,17 +235,7 @@ bool QNativeSocketEnginePrivate::setOption(QNativeSocketEngine::SocketOption opt
         return true;
     }
     case QNativeSocketEngine::AddressReusable:
-#if defined(SO_REUSEPORT)
-        // on OS X, SO_REUSEADDR isn't sufficient to allow multiple binds to the
-        // same port (which is useful for multicast UDP). SO_REUSEPORT is, but
-        // we most definitely do not want to use this for TCP. See QTBUG-6305.
-        if (socketType == QAbstractSocket::UdpSocket)
-            n = SO_REUSEPORT;
-        else
-            n = SO_REUSEADDR;
-#else
         n = SO_REUSEADDR;
-#endif
         break;
     case QNativeSocketEngine::ReceiveOutOfBandData:
         n = SO_OOBINLINE;
@@ -264,24 +252,22 @@ bool QNativeSocketEnginePrivate::setOption(QNativeSocketEngine::SocketOption opt
         if (socketProtocol == QAbstractSocket::IPv6Protocol) {
             level = IPPROTO_IPV6;
             n = IPV6_MULTICAST_HOPS;
-        } else
-#endif
-        {
-            level = IPPROTO_IP;
-            n = IP_MULTICAST_TTL;
+            break;
         }
+#endif
+        level = IPPROTO_IP;
+        n = IP_MULTICAST_TTL;
         break;
     case QNativeSocketEngine::MulticastLoopbackOption:
 #ifndef QT_NO_IPV6
         if (socketProtocol == QAbstractSocket::IPv6Protocol) {
             level = IPPROTO_IPV6;
             n = IPV6_MULTICAST_LOOP;
-        } else
-#endif
-        {
-            level = IPPROTO_IP;
-            n = IP_MULTICAST_LOOP;
+            break;
         }
+#endif
+        level = IPPROTO_IP;
+        n = IP_MULTICAST_LOOP;
         break;
     }
 
@@ -921,7 +907,7 @@ qint64 QNativeSocketEnginePrivate::nativeWrite(const char *data, qint64 len)
 {
     Q_Q(QNativeSocketEngine);
 
-    ssize_t writtenBytes = qt_safe_write_nosignal(socketDescriptor, data, len);
+    qint64 writtenBytes = qt_safe_write_nosignal(socketDescriptor, data, len);
 
     if (writtenBytes < 0) {
         switch (errno) {
@@ -948,7 +934,7 @@ qint64 QNativeSocketEnginePrivate::nativeWrite(const char *data, qint64 len)
                                 (int) len).data(), len, (int) writtenBytes);
 #endif
 
-    return qint64(writtenBytes);
+    return writtenBytes;
 }
 /*
 */

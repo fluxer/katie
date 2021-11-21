@@ -9,6 +9,8 @@
 
 QT_BEGIN_NAMESPACE
 
+#define Q_VOID
+
 #define QBYTEARRAY_MAX INT_MAX
 
 // enough space to hold BOM, each char as surrogate pair and terminator
@@ -72,16 +74,19 @@ static inline QByteArray qt_prettyDebug(const char *data, int len, int maxSize)
     QByteArray out;
     for (int i = 0; i < len; ++i) {
         char c = data[i];
-        if (isprint(int(uchar(c)))) {
+        if (isprint(int(c))) {
             out += c;
-        } else switch (c) {
-        case '\n': out += "\\n"; break;
-        case '\r': out += "\\r"; break;
-        case '\t': out += "\\t"; break;
-        default:
-            QSTACKARRAY(char, buf, 5);
-            ::snprintf(buf, sizeof(buf), "\\%3o", c);
-            out += QByteArray(buf);
+        } else {
+            switch (c) {
+                case '\n': out += "\\n"; break;
+                case '\r': out += "\\r"; break;
+                case '\t': out += "\\t"; break;
+                default: {
+                    QSTACKARRAY(char, snprintfbuf, 5);
+                    ::snprintf(snprintfbuf, sizeof(snprintfbuf), "\\%3o", c);
+                    out += QByteArray(snprintfbuf, sizeof(snprintfbuf) - 1);
+                }
+            }
         }
     }
 

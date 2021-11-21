@@ -29,7 +29,7 @@
 #include "qhash.h"
 #include "qobject.h"
 #include "qcoreapplication.h"
-
+#include "qcore_unix_p.h"
 
 QT_BEGIN_NAMESPACE
 
@@ -173,15 +173,16 @@ QT_BEGIN_NAMESPACE
 
 static inline bool existsAsSpecified(const QString &path, QStandardPaths::LocateOption options)
 {
+    QStatInfo info(path);
     if (options == QStandardPaths::LocateDirectory) {
-        return QDir(path).exists();
+        return info.isDir();
     }
-    return QFileInfo(path).isFile();
+    return info.isFile();
 }
 
 static inline QString checkExecutable(const QString &path)
 {
-    const QFileInfo info(path);
+    const QStatInfo info(path);
     if (info.isFile() && info.isExecutable()) {
         return QDir::cleanPath(path);
     }

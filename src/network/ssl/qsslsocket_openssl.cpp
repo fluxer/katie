@@ -33,7 +33,6 @@
 #include <QtCore/qdiriterator.h>
 #include <QtCore/qelapsedtimer.h>
 #include <QtCore/qfile.h>
-#include <QtCore/qfileinfo.h>
 #include <QtCore/qmutex.h>
 #include <QtCore/qthread.h>
 #include <QtCore/qurl.h>

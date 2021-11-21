@@ -23,7 +23,6 @@
 
 #include "qplugin.h"
 #include "qpluginloader.h"
-#include "qfileinfo.h"
 #include "qlibrary_p.h"
 #include "qdebug.h"
 #include "qdir.h"

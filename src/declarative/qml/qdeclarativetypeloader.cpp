@@ -502,7 +502,7 @@ void QDeclarativeDataLoader::load(QDeclarativeDataBlob *blob)
         return;
     }
 
-    QString lf = QDeclarativeEnginePrivate::urlToLocalFileOrQrc(blob->m_url);
+    QString lf = QDeclarativeEnginePrivate::urlToLocalFile(blob->m_url);
 
     if (!lf.isEmpty()) {
         QFile file(lf);
@@ -670,8 +670,8 @@ Returns a QDeclarativeTypeData for the specified \a url.  The QDeclarativeTypeDa
 QDeclarativeTypeData *QDeclarativeTypeLoader::get(const QUrl &url)
 {
     Q_ASSERT(!url.isRelative() && 
-            (QDeclarativeEnginePrivate::urlToLocalFileOrQrc(url).isEmpty() || 
-             !QDir::isRelativePath(QDeclarativeEnginePrivate::urlToLocalFileOrQrc(url))));
+            (QDeclarativeEnginePrivate::urlToLocalFile(url).isEmpty() || 
+             !QDir::isRelativePath(QDeclarativeEnginePrivate::urlToLocalFile(url))));
 
     QDeclarativeTypeData *typeData = m_typeCache.value(url);
 
@@ -704,8 +704,8 @@ Returns a QDeclarativeScriptData for \a url.  The QDeclarativeScriptData may be 
 QDeclarativeScriptData *QDeclarativeTypeLoader::getScript(const QUrl &url)
 {
     Q_ASSERT(!url.isRelative() && 
-            (QDeclarativeEnginePrivate::urlToLocalFileOrQrc(url).isEmpty() || 
-             !QDir::isRelativePath(QDeclarativeEnginePrivate::urlToLocalFileOrQrc(url))));
+            (QDeclarativeEnginePrivate::urlToLocalFile(url).isEmpty() || 
+             !QDir::isRelativePath(QDeclarativeEnginePrivate::urlToLocalFile(url))));
 
     QDeclarativeScriptData *scriptData = m_scriptCache.value(url);
 
@@ -725,8 +725,8 @@ Returns a QDeclarativeQmldirData for \a url.  The QDeclarativeQmldirData may be 
 QDeclarativeQmldirData *QDeclarativeTypeLoader::getQmldir(const QUrl &url)
 {
     Q_ASSERT(!url.isRelative() && 
-            (QDeclarativeEnginePrivate::urlToLocalFileOrQrc(url).isEmpty() || 
-             !QDir::isRelativePath(QDeclarativeEnginePrivate::urlToLocalFileOrQrc(url))));
+            (QDeclarativeEnginePrivate::urlToLocalFile(url).isEmpty() || 
+             !QDir::isRelativePath(QDeclarativeEnginePrivate::urlToLocalFile(url))));
 
     QDeclarativeQmldirData *qmldirData = m_qmldirCache.value(url);
 
@@ -747,12 +747,8 @@ Returns a empty string if the path does not exist.
 */
 QString QDeclarativeTypeLoader::absoluteFilePath(const QString &path)
 {
-    if (path.isEmpty())
+    if (path.isEmpty()) {
         return QString();
-    if (path.at(0) == QLatin1Char(':')) {
-        // qrc resource
-        QFileInfo fileInfo(path);
-        return fileInfo.isFile() ? fileInfo.absoluteFilePath() : QString();
     }
 
     int lastSlash = path.lastIndexOf(QLatin1Char('/'));
@@ -951,7 +947,7 @@ void QDeclarativeTypeData::dataReceived(const QByteArray &data)
     foreach (const QDeclarativeScriptParser::Import &import, scriptParser.imports()) {
         if (import.type == QDeclarativeScriptParser::Import::File && import.qualifier.isEmpty()) {
             QUrl importUrl = finalUrl().resolved(QUrl(import.uri + QLatin1String("/qmldir")));
-            if (QDeclarativeEnginePrivate::urlToLocalFileOrQrc(importUrl).isEmpty()) {
+            if (QDeclarativeEnginePrivate::urlToLocalFile(importUrl).isEmpty()) {
                 QDeclarativeQmldirData *data = typeLoader()->getQmldir(importUrl);
                 addDependency(data);
                 m_qmldirs << data;
@@ -972,7 +968,7 @@ void QDeclarativeTypeData::dataReceived(const QByteArray &data)
 
     if (!finalUrl().scheme().isEmpty()) {
         QUrl importUrl = finalUrl().resolved(QUrl(QLatin1String("qmldir")));
-        if (QDeclarativeEnginePrivate::urlToLocalFileOrQrc(importUrl).isEmpty()) {
+        if (QDeclarativeEnginePrivate::urlToLocalFile(importUrl).isEmpty()) {
             QDeclarativeQmldirData *data = typeLoader()->getQmldir(importUrl);
             addDependency(data);
             m_qmldirs << data;

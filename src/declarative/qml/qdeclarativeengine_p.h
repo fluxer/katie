@@ -285,7 +285,7 @@ public:
     QDeclarativeContextData *getContext(QScriptContext *);
     QUrl getUrl(QScriptContext *);
 
-    static QString urlToLocalFileOrQrc(const QUrl& url);
+    static QString urlToLocalFile(const QUrl& url);
 
     static void defineModule();
 };

@@ -960,9 +960,9 @@ void tst_QLocale::formatDateTime_data()
     QTest::newRow("5nn_NO") << "nn_NO" << QDateTime(QDate(1974, 1, 1), QTime(15, 14, 13))
                             << "dd/MM/yyy z" << "01/01/74y 0";
     QTest::newRow("6nn_NO") << "nn_NO" << QDateTime(QDate(1974, 12, 2), QTime(15, 14, 13))
-                            << "ddd/MMM/yy AP" << "må./des./74 E.M.";
+                            << "ddd/MMM/yy AP" << "må./des./74 PM";
     QTest::newRow("7nn_NO") << "nn_NO" << QDateTime(QDate(1974, 12, 2), QTime(15, 14, 13))
-                            << "dddd/MMMM/y apa" << "måndag/M12/y e.m.e.m.";
+                            << "dddd/MMMM/y apa" << "måndag/M12/y pmpm";
     QTest::newRow("8nn_NO") << "nn_NO" << QDateTime(QDate(1974, 12, 2), QTime(15, 14, 13))
                             << "ddddd/MMMMM/yy ss" << "måndag2/M1212/74 13";
     QTest::newRow("9nn_NO") << "nn_NO" << QDateTime(QDate(1974, 12, 1), QTime(15, 14, 13))
@@ -1214,7 +1214,7 @@ void tst_QLocale::dayName_data()
 
     QTest::newRow("ru_RU long")  << QString("ru_RU") << QString::fromUtf8("воскресенье") << 7 << QLocale::LongFormat;
     QTest::newRow("ru_RU short")  << QString("ru_RU") << QString::fromUtf8("вс") << 7 << QLocale::ShortFormat;
-    QTest::newRow("ru_RU narrow")  << QString("ru_RU") << QString::fromUtf8("вс") << 7 << QLocale::NarrowFormat;
+    QTest::newRow("ru_RU narrow")  << QString("ru_RU") << QString::fromUtf8("7") << 7 << QLocale::NarrowFormat;
 }
 
 void tst_QLocale::dayName()

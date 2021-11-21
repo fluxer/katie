@@ -27,6 +27,7 @@
 #include "qmutex.h"
 #include "qcoreapplication.h"
 #include "qlibraryinfo.h"
+#include "qcore_unix_p.h"
 
 #ifndef QT_NO_SETTINGS
 
@@ -228,8 +229,8 @@ static QString getSettingsPath(QSettings::Scope scope, const QString &filename, 
     }
 
     foreach (const QString &location, locations) {
-        QFileInfo info(location);
-        if (info.isWritable()) {
+        QStatInfo locationinfo(location);
+        if (locationinfo.isWritable()) {
             return createLeadingDir(location + QDir::separator() + nameandext);
         }
     }
@@ -261,7 +262,7 @@ QSettingsPrivate::~QSettingsPrivate()
 
 void QSettingsPrivate::read()
 {
-    QFileInfo fileinfo(filename);
+    QStatInfo fileinfo(filename);
     if (!fileinfo.isReadable() || fileinfo.size() == 0) {
         status = QSettings::AccessError;
         // no warning, fileinfo.exists() may return false if not readable
@@ -1051,7 +1052,7 @@ bool QSettings::isWritable() const
         return true;
     }
     // if the file does not exist, check if it can be created
-    QFileInfo dirinfo(fileinfo.absolutePath());
+    QStatInfo dirinfo(fileinfo.absolutePath());
     return dirinfo.isWritable();
 }
 

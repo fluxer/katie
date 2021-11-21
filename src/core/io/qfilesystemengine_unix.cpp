@@ -23,7 +23,6 @@
 #include "qfilesystemengine_p.h"
 #include "qfsfileengine.h"
 #include "qfile.h"
-#include "qfileinfo.h"
 #include "qcore_unix_p.h"
 #include "qcorecommon_p.h"
 
@@ -60,7 +59,7 @@ QFileSystemEntry QFileSystemEngine::getLinkTarget(const QFileSystemEntry &link, 
             if (!ret.isEmpty() && !ret.endsWith(QLatin1Char('/')))
                 ret += QLatin1Char('/');
         }
-        ret += QFile::decodeName(QByteArray(readlinkbuf));
+        ret += QFile::decodeName(QByteArray(readlinkbuf, len));
 
         if (!ret.startsWith(QLatin1Char('/'))) {
             if (link.filePath().startsWith(QLatin1Char('/'))) {
@@ -85,11 +84,11 @@ QFileSystemEntry QFileSystemEngine::canonicalName(const QFileSystemEntry &entry,
         return entry;
 
     QByteArray path = entry.nativeFilePath();
-    char *ret = ::realpath(path.constData(), (char*)0);
+    QSTACKARRAY(char, realpathbuf, PATH_MAX);
+    char *ret = ::realpath(path.constData(), realpathbuf);
     if (ret) {
         data.entryFlags |= QFileSystemMetaData::ExistsAttribute;
         QString canonicalPath = QDir::cleanPath(QString::fromLocal8Bit(ret));
-        ::free(ret);
         return QFileSystemEntry(canonicalPath);
     } else if (errno == ENOENT) { // file doesn't exist
         data.entryFlags &= ~(QFileSystemMetaData::ExistsAttribute);

@@ -1430,15 +1430,19 @@ void tst_QCompleter::QTBUG_14292_filesystem()
     edit.setFocus();
     QTRY_VERIFY(edit.hasFocus());
 
+    // Wait for all file system model slots/timers to trigger
+    QTest::qWait(3000);
+
     QVERIFY(!comp.popup()->isVisible());
     edit.setText(tmpDir.path());
     QTest::keyClick(&edit, '/');
     QTRY_VERIFY(comp.popup()->isVisible());
     QCOMPARE(comp.popup()->model()->rowCount(), 2);
-    QApplication::processEvents();
     QTest::keyClick(&edit, 'h');
+    QApplication::processEvents();
     QCOMPARE(comp.popup()->model()->rowCount(), 2);
     QTest::keyClick(&edit, 'e');
+    QApplication::processEvents();
     QCOMPARE(comp.popup()->model()->rowCount(), 1);
     QTest::keyClick(&edit, 'r');
     QTRY_VERIFY(!comp.popup()->isVisible());
@@ -1449,8 +1453,7 @@ void tst_QCompleter::QTBUG_14292_filesystem()
     QTRY_VERIFY(!comp.popup()->isVisible());
     QVERIFY(fs.createDirectory(tmpDir.filePath("nothingThere")));
     //there is no reason creating a file should open a popup, it did in Qt 4.7.0
-    QTest::qWait(60);
-    QVERIFY(!comp.popup()->isVisible());
+    QTRY_VERIFY(!comp.popup()->isVisible());
 
     QTest::keyClick(&edit, Qt::Key_Backspace);
     QTRY_VERIFY(comp.popup()->isVisible());
@@ -1466,8 +1469,7 @@ void tst_QCompleter::QTBUG_14292_filesystem()
 
     QVERIFY(fs.createDirectory(tmpDir.filePath("hemo")));
     //there is no reason creating a file should open a popup, it did in Qt 4.7.0
-    QTest::qWait(60);
-    QVERIFY(!comp.popup()->isVisible());
+    QTRY_VERIFY(!comp.popup()->isVisible());
 }
 
 QTEST_MAIN(tst_QCompleter)

@@ -37,11 +37,6 @@
 
 #include <sys/types.h>
 #include <sys/socket.h>
-#include <netinet/in.h>
-
-// for inet_addr
-#include <netdb.h>
-#include <arpa/inet.h>
 
 QT_BEGIN_NAMESPACE
 

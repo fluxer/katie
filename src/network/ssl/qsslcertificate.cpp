@@ -98,13 +98,13 @@
 #include "qdir.h"
 #include "qdiriterator.h"
 #include "qfile.h"
-#include "qfileinfo.h"
 #include "qmap.h"
 #include "qmutex.h"
 #include "qmutexpool_p.h"
 #include "qstring.h"
 #include "qstringlist.h"
 #include "qcorecommon_p.h"
+#include "qcore_unix_p.h"
 
 QT_BEGIN_NAMESPACE
 
@@ -549,7 +549,7 @@ QList<QSslCertificate> QSslCertificate::fromPath(const QString &path,
     }
 
     // The path is a file.
-    if (pos == -1 && QFileInfo(pathPrefix).isFile()) {
+    if (pos == -1 && QStatInfo(pathPrefix).isFile()) {
         QFile file(pathPrefix);
         if (file.open(QIODevice::ReadOnly | QIODevice::Text))
             return QSslCertificate::fromData(file.readAll(),format);

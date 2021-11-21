@@ -994,7 +994,7 @@ QVariant QDeclarativePropertyPrivate::readValueProperty()
     }
 }
 
-//writeEnumProperty MIRRORS the relelvant bit of QMetaProperty::write AND MUST BE KEPT IN SYNC!
+//writeEnumProperty MIRRORS the relevant bit of QMetaProperty::write AND MUST BE KEPT IN SYNC!
 bool QDeclarativePropertyPrivate::writeEnumProperty(const QMetaProperty &prop, int idx, QObject *object, const QVariant &value, int flags)
 {
     if (!object || !prop.isWritable())

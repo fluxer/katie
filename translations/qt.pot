@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-10-03 05:35+0300\n"
+"POT-Creation-Date: 2021-11-16 06:07+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -43,8 +43,8 @@ msgid "The plugin uses incompatible Katie library: %1 (%2, %3)"
 msgstr ""
 
 #: src/core/plugin/qlibrary.cpp:795 src/core/plugin/qpluginloader.cpp:279
-#: src/core/io/qiodevice.cpp:1519 src/network/ssl/qsslerror.cpp:249
-#: src/network/socket/qnativesocketengine.cpp:250
+#: src/core/io/qiodevice.cpp:1517 src/network/ssl/qsslerror.cpp:249
+#: src/network/socket/qnativesocketengine.cpp:249
 #: src/network/access/qftp.cpp:1414 src/uitools/formscriptrunner.cpp:104
 msgid "Unknown error"
 msgstr ""
@@ -803,58 +803,58 @@ msgstr ""
 msgid "Alias property exceeds alias bounds"
 msgstr ""
 
-#: src/declarative/qml/qdeclarativeimport.cpp:360
+#: src/declarative/qml/qdeclarativeimport.cpp:356
 msgid "plugin cannot be loaded for module \"%1\": %2"
 msgstr ""
 
-#: src/declarative/qml/qdeclarativeimport.cpp:365
+#: src/declarative/qml/qdeclarativeimport.cpp:361
 msgid "module \"%1\" plugin \"%2\" not found"
 msgstr ""
 
-#: src/declarative/qml/qdeclarativeimport.cpp:509
-#: src/declarative/qml/qdeclarativeimport.cpp:577
+#: src/declarative/qml/qdeclarativeimport.cpp:505
+#: src/declarative/qml/qdeclarativeimport.cpp:573
 msgid "module \"%1\" version %2.%3 is not installed"
 msgstr ""
 
-#: src/declarative/qml/qdeclarativeimport.cpp:511
+#: src/declarative/qml/qdeclarativeimport.cpp:507
 msgid "module \"%1\" is not installed"
 msgstr ""
 
-#: src/declarative/qml/qdeclarativeimport.cpp:525
-#: src/declarative/qml/qdeclarativeimport.cpp:545
+#: src/declarative/qml/qdeclarativeimport.cpp:521
+#: src/declarative/qml/qdeclarativeimport.cpp:541
 msgid "\"%1\": no such directory"
 msgstr ""
 
-#: src/declarative/qml/qdeclarativeimport.cpp:543
+#: src/declarative/qml/qdeclarativeimport.cpp:539
 msgid "import \"%1\" has no qmldir and no namespace"
 msgstr ""
 
-#: src/declarative/qml/qdeclarativeimport.cpp:611
+#: src/declarative/qml/qdeclarativeimport.cpp:607
 msgid "- %1 is not a namespace"
 msgstr ""
 
-#: src/declarative/qml/qdeclarativeimport.cpp:617
+#: src/declarative/qml/qdeclarativeimport.cpp:613
 msgid "- nested namespaces not allowed"
 msgstr ""
 
+#: src/declarative/qml/qdeclarativeimport.cpp:660
 #: src/declarative/qml/qdeclarativeimport.cpp:664
-#: src/declarative/qml/qdeclarativeimport.cpp:668
 msgid "local directory"
 msgstr ""
 
-#: src/declarative/qml/qdeclarativeimport.cpp:674
+#: src/declarative/qml/qdeclarativeimport.cpp:670
 msgid "is ambiguous. Found in %1 and in %2"
 msgstr ""
 
-#: src/declarative/qml/qdeclarativeimport.cpp:678
+#: src/declarative/qml/qdeclarativeimport.cpp:674
 msgid "is ambiguous. Found in %1 in version %2.%3 and %4.%5"
 msgstr ""
 
-#: src/declarative/qml/qdeclarativeimport.cpp:692
+#: src/declarative/qml/qdeclarativeimport.cpp:688
 msgid "is instantiated recursively"
 msgstr ""
 
-#: src/declarative/qml/qdeclarativeimport.cpp:694
+#: src/declarative/qml/qdeclarativeimport.cpp:690
 msgid "is not a type"
 msgstr ""
 
@@ -4723,56 +4723,56 @@ msgstr ""
 msgid "The peer certificate is blacklisted"
 msgstr ""
 
-#: src/network/ssl/qsslsocket_openssl.cpp:156
+#: src/network/ssl/qsslsocket_openssl.cpp:155
 msgid "Error creating SSL context (%1)"
 msgstr ""
 
-#: src/network/ssl/qsslsocket_openssl.cpp:206
+#: src/network/ssl/qsslsocket_openssl.cpp:205
 msgid "Invalid or empty cipher list (%1)"
 msgstr ""
 
-#: src/network/ssl/qsslsocket_openssl.cpp:238
+#: src/network/ssl/qsslsocket_openssl.cpp:237
 msgid "Cannot provide a certificate with no key, %1"
 msgstr ""
 
-#: src/network/ssl/qsslsocket_openssl.cpp:245
+#: src/network/ssl/qsslsocket_openssl.cpp:244
 msgid "Error loading local certificate, %1"
 msgstr ""
 
-#: src/network/ssl/qsslsocket_openssl.cpp:270
+#: src/network/ssl/qsslsocket_openssl.cpp:269
 msgid "Error loading private key, %1"
 msgstr ""
 
-#: src/network/ssl/qsslsocket_openssl.cpp:277
+#: src/network/ssl/qsslsocket_openssl.cpp:276
 msgid "Private key does not certify public key, %1"
 msgstr ""
 
-#: src/network/ssl/qsslsocket_openssl.cpp:297
+#: src/network/ssl/qsslsocket_openssl.cpp:296
 msgid "Error creating SSL session, %1"
 msgstr ""
 
-#: src/network/ssl/qsslsocket_openssl.cpp:331
+#: src/network/ssl/qsslsocket_openssl.cpp:330
 msgid "Error creating SSL session: %1"
 msgstr ""
 
-#: src/network/ssl/qsslsocket_openssl.cpp:552
+#: src/network/ssl/qsslsocket_openssl.cpp:551
 msgid "Unable to write data: %1"
 msgstr ""
 
-#: src/network/ssl/qsslsocket_openssl.cpp:623
+#: src/network/ssl/qsslsocket_openssl.cpp:621
 msgid "Unable to decrypt data: %1"
 msgstr ""
 
-#: src/network/ssl/qsslsocket_openssl.cpp:696
+#: src/network/ssl/qsslsocket_openssl.cpp:694
 msgid "The TLS/SSL connection has been closed"
 msgstr ""
 
-#: src/network/ssl/qsslsocket_openssl.cpp:704
-#: src/network/ssl/qsslsocket_openssl.cpp:714
+#: src/network/ssl/qsslsocket_openssl.cpp:702
+#: src/network/ssl/qsslsocket_openssl.cpp:712
 msgid "Error while reading: %1"
 msgstr ""
 
-#: src/network/ssl/qsslsocket_openssl.cpp:808
+#: src/network/ssl/qsslsocket_openssl.cpp:806
 msgid "Error during SSL handshake: %1"
 msgstr ""
 
@@ -4834,13 +4834,13 @@ msgstr ""
 
 #: src/network/socket/qabstractsocket.cpp:872
 #: src/network/socket/qhttpsocketengine.cpp:651
-#: src/network/socket/qnativesocketengine.cpp:214
+#: src/network/socket/qnativesocketengine.cpp:213
 #: src/network/socket/qsocks5socketengine.cpp:650
 msgid "Connection refused"
 msgstr ""
 
 #: src/network/socket/qabstractsocket.cpp:1014
-#: src/network/socket/qnativesocketengine.cpp:211
+#: src/network/socket/qnativesocketengine.cpp:210
 msgid "Connection timed out"
 msgstr ""
 
@@ -4888,96 +4888,96 @@ msgstr ""
 msgid "Proxy connection closed prematurely"
 msgstr ""
 
-#: src/network/socket/qnativesocketengine.cpp:175
+#: src/network/socket/qnativesocketengine.cpp:174
 msgid "Unable to initialize non-blocking socket"
 msgstr ""
 
-#: src/network/socket/qnativesocketengine.cpp:178
+#: src/network/socket/qnativesocketengine.cpp:177
 msgid "Unable to initialize broadcast socket"
 msgstr ""
 
-#: src/network/socket/qnativesocketengine.cpp:181
+#: src/network/socket/qnativesocketengine.cpp:180
 msgid "Attempt to use IPv6 socket on a platform with no IPv6 support"
 msgstr ""
 
-#: src/network/socket/qnativesocketengine.cpp:184
+#: src/network/socket/qnativesocketengine.cpp:183
 msgid "The remote host closed the connection"
 msgstr ""
 
-#: src/network/socket/qnativesocketengine.cpp:187
+#: src/network/socket/qnativesocketengine.cpp:186
 msgid "Network operation timed out"
 msgstr ""
 
-#: src/network/socket/qnativesocketengine.cpp:190
+#: src/network/socket/qnativesocketengine.cpp:189
 msgid "Out of resources"
 msgstr ""
 
-#: src/network/socket/qnativesocketengine.cpp:193
+#: src/network/socket/qnativesocketengine.cpp:192
 msgid "Unsupported socket operation"
 msgstr ""
 
-#: src/network/socket/qnativesocketengine.cpp:196
+#: src/network/socket/qnativesocketengine.cpp:195
 msgid "Protocol type not supported"
 msgstr ""
 
-#: src/network/socket/qnativesocketengine.cpp:199
+#: src/network/socket/qnativesocketengine.cpp:198
 msgid "Invalid socket descriptor"
 msgstr ""
 
-#: src/network/socket/qnativesocketengine.cpp:202
+#: src/network/socket/qnativesocketengine.cpp:201
 msgid "Host unreachable"
 msgstr ""
 
-#: src/network/socket/qnativesocketengine.cpp:205
+#: src/network/socket/qnativesocketengine.cpp:204
 #: src/network/socket/qsocks5socketengine.cpp:642
 msgid "Network unreachable"
 msgstr ""
 
-#: src/network/socket/qnativesocketengine.cpp:208
+#: src/network/socket/qnativesocketengine.cpp:207
 msgid "Permission denied"
 msgstr ""
 
-#: src/network/socket/qnativesocketengine.cpp:217
+#: src/network/socket/qnativesocketengine.cpp:216
 msgid "The bound address is already in use"
 msgstr ""
 
-#: src/network/socket/qnativesocketengine.cpp:220
+#: src/network/socket/qnativesocketengine.cpp:219
 msgid "The address is not available"
 msgstr ""
 
-#: src/network/socket/qnativesocketengine.cpp:223
+#: src/network/socket/qnativesocketengine.cpp:222
 msgid "The address is protected"
 msgstr ""
 
-#: src/network/socket/qnativesocketengine.cpp:226
+#: src/network/socket/qnativesocketengine.cpp:225
 msgid "Datagram was too large to send"
 msgstr ""
 
-#: src/network/socket/qnativesocketengine.cpp:229
+#: src/network/socket/qnativesocketengine.cpp:228
 msgid "Unable to send a message"
 msgstr ""
 
-#: src/network/socket/qnativesocketengine.cpp:232
+#: src/network/socket/qnativesocketengine.cpp:231
 msgid "Unable to receive a message"
 msgstr ""
 
-#: src/network/socket/qnativesocketengine.cpp:235
+#: src/network/socket/qnativesocketengine.cpp:234
 msgid "Unable to write"
 msgstr ""
 
-#: src/network/socket/qnativesocketengine.cpp:238
+#: src/network/socket/qnativesocketengine.cpp:237
 msgid "Network error"
 msgstr ""
 
-#: src/network/socket/qnativesocketengine.cpp:241
+#: src/network/socket/qnativesocketengine.cpp:240
 msgid "Another socket is already listening on the same port"
 msgstr ""
 
-#: src/network/socket/qnativesocketengine.cpp:244
+#: src/network/socket/qnativesocketengine.cpp:243
 msgid "Operation on non-socket"
 msgstr ""
 
-#: src/network/socket/qnativesocketengine.cpp:247
+#: src/network/socket/qnativesocketengine.cpp:246
 msgid "The proxy type is invalid for this operation"
 msgstr ""
 

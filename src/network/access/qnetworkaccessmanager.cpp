@@ -719,12 +719,12 @@ QNetworkReply *QNetworkAccessManager::createRequest(QNetworkAccessManager::Opera
     // fast path for GET on file:// URLs
     // The QNetworkAccessFileBackend will right now only be used for PUT
     if ((op == QNetworkAccessManager::GetOperation || op == QNetworkAccessManager::HeadOperation)
-        && (isLocalFile || scheme == QLatin1String("qrc"))) {
+        && isLocalFile) {
         return new QNetworkReplyFileImpl(this, req, op);
     }
 
     if ((op == QNetworkAccessManager::GetOperation || op == QNetworkAccessManager::HeadOperation)
-            && scheme == QLatin1String("data")) {
+        && scheme == QLatin1String("data")) {
         return new QNetworkReplyDataImpl(this, req, op);
     }
 

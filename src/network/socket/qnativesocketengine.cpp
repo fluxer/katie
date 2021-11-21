@@ -83,6 +83,7 @@
 #include "qnativesocketengine_p.h"
 #include "qthread_p.h"
 #include "qobject_p.h"
+#include "qcorecommon_p.h"
 
 #if !defined(QT_NO_NETWORKPROXY)
 # include "qnetworkproxy.h"
@@ -93,8 +94,6 @@
 QT_BEGIN_NAMESPACE
 
 //#define QNATIVESOCKETENGINE_DEBUG
-
-#define Q_VOID
 
 // Common checks
 #define Q_CHECK_VALID_SOCKETLAYER(function, returnValue) do { \

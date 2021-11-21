@@ -38,10 +38,8 @@ public:
     tst_QFileSystemWatcher();
 
 private slots:
-    void basicTest_data();
     void basicTest();
 
-    void watchDirectory_data() { basicTest_data(); }
     void watchDirectory();
 
     void addPath();
@@ -49,10 +47,9 @@ private slots:
     void addPaths();
     void removePaths();
 
-    void watchFileAndItsDirectory_data() { basicTest_data(); }
     void watchFileAndItsDirectory();
 
-    void nonExistingFile();
+    void nonExistingFileAndDirectory();
 
     void removeFileAndUnWatch();
 
@@ -65,21 +62,8 @@ tst_QFileSystemWatcher::tst_QFileSystemWatcher()
 {
 }
 
-void tst_QFileSystemWatcher::basicTest_data()
-{
-    QTest::addColumn<QString>("backend");
-#if defined(QT_HAVE_INOTIFY_INIT1) || defined(QT_HAVE_KEVENT)
-    // we have native engines for linux, freebsd, openbsd, netbsd and dragonfly
-    QTest::newRow("native") << "native";
-#endif
-    QTest::newRow("poller") << "poller";
-}
-
 void tst_QFileSystemWatcher::basicTest()
 {
-    QFETCH(QString, backend);
-    qDebug() << "Testing" << backend << "engine";
-
     // create test file
     QFile testFile("testfile.txt");
     testFile.setPermissions(QFile::ReadOwner | QFile::WriteOwner);
@@ -91,8 +75,6 @@ void tst_QFileSystemWatcher::basicTest()
     // set some file permissions
     testFile.setPermissions(QFile::ReadOwner | QFile::WriteOwner);
 
-    // create watcher, forcing it to use a specific backend
-    setObjectName(QLatin1String("_qt_autotest_force_engine_") + backend);
     QFileSystemWatcher watcher(this);
     watcher.removePath(testFile.fileName());
     watcher.addPath(testFile.fileName());
@@ -214,16 +196,12 @@ void tst_QFileSystemWatcher::basicTest()
 
 void tst_QFileSystemWatcher::watchDirectory()
 {
-    QFETCH(QString, backend);
-    qDebug() << "Testing" << backend << "engine";
-
     QDir().mkdir("testDir");
     QDir testDir("testDir");
 
     QString testFileName = testDir.filePath("testFile.txt");
     QFile::remove(testFileName);
 
-    setObjectName(QLatin1String("_qt_autotest_force_engine_") + backend);
     QFileSystemWatcher watcher(this);
     watcher.addPath(testDir.dirName());
 
@@ -360,7 +338,6 @@ class SignalTest : public QObject {
 
 void tst_QFileSystemWatcher::watchFileAndItsDirectory()
 {
-    QFETCH(QString, backend);
     QDir().mkdir("testDir");
     QDir testDir("testDir");
 
@@ -376,7 +353,6 @@ void tst_QFileSystemWatcher::watchFileAndItsDirectory()
     testFile.write(QByteArray("hello"));
     testFile.close();
 
-    setObjectName(QLatin1String("_qt_autotest_force_engine_") + backend);
     QFileSystemWatcher watcher(this);
 
     watcher.addPath(testDir.dirName());
@@ -464,12 +440,64 @@ void tst_QFileSystemWatcher::cleanup()
     QDir().rmdir("testDir");
 }
 
-void tst_QFileSystemWatcher::nonExistingFile()
+void tst_QFileSystemWatcher::nonExistingFileAndDirectory()
 {
-    // Don't crash...
+    // Don't crash and watch for its creation
+    const QStringList nonexistingfiles = QStringList()
+        << "file_that_does_not_exist.txt"
+        << "foo/bar.txt";
+    const QStringList nonexistingdirs = QStringList()
+        << "dir_that_does_not_exist/"
+        << "dir_foo/dir_bar/";
     QFileSystemWatcher watcher;
-    watcher.addPath("file_that_does_not_exist.txt");
-    QVERIFY(true);
+    watcher.addPaths(nonexistingfiles);
+    watcher.addPaths(nonexistingdirs);
+    QCOMPARE(watcher.files(), nonexistingfiles);
+    QCOMPARE(watcher.directories(), nonexistingdirs);
+
+    QSignalSpy fileChangedSpy(&watcher, SIGNAL(fileChanged(const QString &)));
+    QSignalSpy dirChangedSpy(&watcher, SIGNAL(directoryChanged(const QString &)));
+    QEventLoop eventLoop;
+    QTimer timer;
+    connect(&timer, SIGNAL(timeout()), &eventLoop, SLOT(quit()));
+
+    QDir().mkdir("dir_that_does_not_exist");
+    timer.start(3000);
+    eventLoop.exec();
+    QCOMPARE(dirChangedSpy.count(), 1);
+
+    dirChangedSpy.clear();
+    QDir().mkdir("dir_foo");
+    QDir("dir_foo").mkdir("dir_bar");
+    timer.start(3000);
+    eventLoop.exec();
+    QCOMPARE(dirChangedSpy.count(), 1);
+
+    fileChangedSpy.clear();
+    QFile testFile1("file_that_does_not_exist.txt");
+    QVERIFY(testFile1.open(QIODevice::WriteOnly | QIODevice::Truncate));
+    testFile1.write(QByteArray("hello"));
+    testFile1.close();
+    timer.start(3000);
+    eventLoop.exec();
+    QCOMPARE(fileChangedSpy.count(), 1);
+
+    fileChangedSpy.clear();
+    QDir().mkdir("foo");
+    QFile testFile2("foo/bar.txt");
+    QVERIFY(testFile2.open(QIODevice::WriteOnly | QIODevice::Truncate));
+    testFile2.write(QByteArray("hello"));
+    testFile2.close();
+    timer.start(3000);
+    eventLoop.exec();
+    QCOMPARE(fileChangedSpy.count(), 1);
+
+    testFile1.remove();
+    testFile2.remove();
+    QDir().rmdir("foo");
+    QDir("dir_foo").rmdir("dir_bar");
+    QDir().rmdir("dir_foo");
+    QDir().rmdir("dir_that_does_not_exist");
 }
 
 void tst_QFileSystemWatcher::removeFileAndUnWatch()

@@ -83,7 +83,7 @@
     \note For the current keyboard input locale take a look at
     QApplication::keyboardInputLocale().
 
-    QLocale's data is based on Common Locale Data Repository v39.
+    QLocale's data is based on Common Locale Data Repository v40.
 
     The double-to-string and string-to-double conversion functions are
     covered by the following licenses:
@@ -583,6 +583,7 @@
     \value Rapanui
     \value Rarotongan
     \value Riffian
+    \value Rohingya
     \value Romagnol
     \value Romanian
     \value Romansh
@@ -598,6 +599,11 @@
     \value Sakha
     \value SamaritanAramaic
     \value Samburu
+    \value SamiInari
+    \value SamiLule
+    \value SamiNorthern
+    \value SamiSkolt
+    \value SamiSouthern
     \value Samoan
     \value Samogitian
     \value Sandawe
@@ -1117,6 +1123,7 @@
     \value CirthScript
     \value CopticScript
     \value CypriotScript
+    \value CyproMinoanScript
     \value CyrillicScript
     \value DeseretScript
     \value DevanagariScript
@@ -1147,6 +1154,7 @@
     \value HanScript
     \value HangulScript
     \value HanifiRohingyaScript
+    \value HanifiScript
     \value HanunooScript
     \value HanwithBopomofoScript
     \value HatranScript
@@ -1223,6 +1231,7 @@
     \value OldPersianScript
     \value OldSogdianScript
     \value OldSouthArabianScript
+    \value OldUyghurScript
     \value OrkhonScript
     \value OsageScript
     \value OsmanyaScript
@@ -1262,6 +1271,7 @@
     \value TaiVietScript
     \value TakriScript
     \value TamilScript
+    \value TangsaScript
     \value TangutScript
     \value TeluguScript
     \value TengwarScript
@@ -1270,6 +1280,7 @@
     \value TibetanScript
     \value TifinaghScript
     \value TirhutaScript
+    \value TotoScript
     \value TraditionalHanScript
     \value TraditionalScript
     \value UCASScript
@@ -1279,6 +1290,7 @@
     \value VaiScript
     \value VarangKshitiScript
     \value VisibleSpeechScript
+    \value VithkuqiScript
     \value WanchoScript
     \value WesternSyriacScript
     \value WoleaiScript

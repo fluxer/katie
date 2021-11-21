@@ -2452,7 +2452,7 @@ QString& QString::replace(const QRegExp &rx, const QString &after)
             This is the harder case where we have back-references.
         */
         if (numBackRefs > 0) {
-            QVarLengthArray<QStringCapture, 16> captures(numBackRefs);
+            QSTACKARRAY(QStringCapture, captures, numBackRefs);
             int j = 0;
 
             for (int i = 0; i < al - 1; i++) {

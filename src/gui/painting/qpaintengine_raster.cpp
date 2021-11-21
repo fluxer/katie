@@ -36,6 +36,7 @@
 #include "qpaintengine_raster_p.h"
 #include "qoutlinemapper_p.h"
 #include "qguicommon_p.h"
+#include "qcorecommon_p.h"
 
 #include <limits.h>
 
@@ -1493,10 +1494,10 @@ void QRasterPaintEngine::drawPolygon(const QPoint *points, int pointCount, Polyg
     // Do the outline...
     if (s->penData.blend) {
         const int count = pointCount * 2;
-        QVarLengthArray<qreal> fpoints(count);
+        QSTACKARRAY(qreal, fpoints, count);
         for (int i=0; i<count; ++i)
             fpoints[i] = ((int *) points)[i];
-        QVectorPath vp((qreal *) fpoints.data(), pointCount, 0, QVectorPath::polygonFlags(mode));
+        QVectorPath vp((qreal *) fpoints, pointCount, 0, QVectorPath::polygonFlags(mode));
 
         QPaintEngineEx::stroke(vp, s->lastPen);
     }

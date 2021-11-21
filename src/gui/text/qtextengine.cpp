@@ -1266,7 +1266,7 @@ void QTextEngine::itemize() const
         }
     }
 
-    QVarLengthArray<QScriptAnalysis, 4096> scriptAnalysis(length);
+    QVarLengthArray<QScriptAnalysis> scriptAnalysis(length);
     QScriptAnalysis *analysis = scriptAnalysis.data();
 
     QBidiControl control(rtl);

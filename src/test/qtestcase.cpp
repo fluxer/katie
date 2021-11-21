@@ -29,7 +29,6 @@
 #include "qvarlengtharray.h"
 #include "qcoreapplication.h"
 #include "qfile.h"
-#include "qfileinfo.h"
 #include "qdir.h"
 #include "qprocess.h"
 #include "qthread.h"
@@ -1736,7 +1735,7 @@ int QTest::qExec(QObject *testObject, const QStringList &arguments)
 
     for(int i = 0; i < argc; ++i)
     {
-        args.append(arguments.at(i).toLocal8Bit().constData());
+        args.append(arguments.at(i).toLocal8Bit());
         argv[i] = args.last().data();
     }
 

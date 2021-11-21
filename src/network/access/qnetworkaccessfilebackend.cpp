@@ -24,8 +24,8 @@
 #include "qurlinfo.h"
 #include "qdir.h"
 #include "qnoncontiguousbytedevice_p.h"
-
-#include <QtCore/QCoreApplication>
+#include "qcoreapplication.h"
+#include "qcore_unix_p.h"
 
 QT_BEGIN_NAMESPACE
 
@@ -45,7 +45,7 @@ QNetworkAccessFileBackendFactory::create(QNetworkAccessManager::Operation op,
     }
 
     QUrl url = request.url();
-    if (url.scheme().compare(QLatin1String("qrc"), Qt::CaseInsensitive) == 0 || url.isLocalFile()) {
+    if (url.isLocalFile()) {
         return new QNetworkAccessFileBackend;
     } else if (!url.isEmpty() && url.authority().isEmpty()) {
         // check if QFile could, in theory, open this URL via the file engines
@@ -94,10 +94,7 @@ void QNetworkAccessFileBackend::open()
 
     QString fileName = url.toLocalFile();
     if (fileName.isEmpty()) {
-        if (url.scheme() == QLatin1String("qrc"))
-            fileName = QLatin1Char(':') + url.path();
-        else
-            fileName = url.toString(QUrl::RemoveAuthority | QUrl::RemoveFragment | QUrl::RemoveQuery);
+        fileName = url.toString(QUrl::RemoveAuthority | QUrl::RemoveFragment | QUrl::RemoveQuery);
     }
     file.setFileName(fileName);
 
@@ -199,14 +196,14 @@ void QNetworkAccessFileBackend::downstreamReadyWrite()
 
 bool QNetworkAccessFileBackend::loadFileInfo()
 {
-    QFileInfo fi(file);
-    setHeader(QNetworkRequest::LastModifiedHeader, fi.lastModified());
-    setHeader(QNetworkRequest::ContentLengthHeader, fi.size());
+    QStatInfo si(file.fileName());
+    setHeader(QNetworkRequest::LastModifiedHeader, si.lastModified());
+    setHeader(QNetworkRequest::ContentLengthHeader, qint64(si.size()));
 
     // signal we're open
     metaDataChanged();
 
-    if (fi.isDir()) {
+    if (si.isDir()) {
         error(QNetworkReply::ContentOperationNotPermittedError,
               QCoreApplication::translate("QNetworkAccessFileBackend", "Cannot open %1: Path is a directory").arg(url().toString()));
         finished();

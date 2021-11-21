@@ -271,32 +271,33 @@ bool QNetmaskAddress::setAddress(const QHostAddress &address)
 
     while (ptr < end) {
         switch (*ptr) {
-        case 255:
-            netmask += 8;
-            ++ptr;
-            continue;
-
-        default:
-            d->clear();
-            return false;       // invalid IP-style netmask
-
-            // the rest always falls through
-        case 254:
-            ++netmask;
-        case 252:
-            ++netmask;
-        case 248:
-            ++netmask;
-        case 240:
-            ++netmask;
-        case 224:
-            ++netmask;
-        case 192:
-            ++netmask;
-        case 128:
-            ++netmask;
-        case 0:
-            break;
+            case 255: {
+                netmask += 8;
+                ++ptr;
+                continue;
+            }
+            // intended fall throughs
+            case 254:
+                ++netmask;
+            case 252:
+                ++netmask;
+            case 248:
+                ++netmask;
+            case 240:
+                ++netmask;
+            case 224:
+                ++netmask;
+            case 192:
+                ++netmask;
+            case 128:
+                ++netmask;
+            case 0:
+                break;
+            // invalid IP-style netmask
+            default: {
+                d->clear();
+                return false;
+            }
         }
         break;
     }
@@ -477,23 +478,28 @@ QHostAddress::QHostAddress(SpecialAddress address)
     : d(new QHostAddressPrivate)
 {
     switch (address) {
-    case Null:
-        break;
-    case Broadcast:
-        setAddress(QLatin1String("255.255.255.255"));
-        break;
-    case LocalHost:
-        setAddress(QLatin1String("127.0.0.1"));
-        break;
-    case LocalHostIPv6:
-        setAddress(QLatin1String("::1"));
-        break;
-    case Any:
-        setAddress(QLatin1String("0.0.0.0"));
-        break;
-    case AnyIPv6:
-        setAddress(QLatin1String("::"));
-        break;
+        case Null:
+            break;
+        case Broadcast: {
+            setAddress(QLatin1String("255.255.255.255"));
+            break;
+        }
+        case LocalHost: {
+            setAddress(QLatin1String("127.0.0.1"));
+            break;
+        }
+        case LocalHostIPv6: {
+            setAddress(QLatin1String("::1"));
+            break;
+        }
+        case Any: {
+            setAddress(QLatin1String("0.0.0.0"));
+            break;
+        }
+        case AnyIPv6: {
+            setAddress(QLatin1String("::"));
+            break;
+        }
     }
 }
 
@@ -1072,19 +1078,19 @@ QDataStream &operator<<(QDataStream &out, const QHostAddress &address)
     prot = qint8(address.protocol());
     out << prot;
     switch (address.protocol()) {
-    case QAbstractSocket::UnknownNetworkLayerProtocol:
-        break;
-    case QAbstractSocket::IPv4Protocol:
-        out << address.toIPv4Address();
-        break;
-    case QAbstractSocket::IPv6Protocol:
-    {
-        Q_IPV6ADDR ipv6 = address.toIPv6Address();
-        for (int i = 0; i < 16; ++i)
-            out << ipv6[i];
-        out << address.scopeId();
-    }
-        break;
+        case QAbstractSocket::UnknownNetworkLayerProtocol:
+            break;
+        case QAbstractSocket::IPv4Protocol: {
+            out << address.toIPv4Address();
+            break;
+        }
+        case QAbstractSocket::IPv6Protocol: {
+            Q_IPV6ADDR ipv6 = address.toIPv6Address();
+            for (int i = 0; i < 16; ++i)
+                out << ipv6[i];
+            out << address.scopeId();
+            break;
+        }
     }
     return out;
 }
@@ -1101,31 +1107,31 @@ QDataStream &operator>>(QDataStream &in, QHostAddress &address)
     qint8 prot;
     in >> prot;
     switch (QAbstractSocket::NetworkLayerProtocol(prot)) {
-    case QAbstractSocket::UnknownNetworkLayerProtocol:
-        address.clear();
-        break;
-    case QAbstractSocket::IPv4Protocol:
-    {
-        quint32 ipv4;
-        in >> ipv4;
-        address.setAddress(ipv4);
-    }
-        break;
-    case QAbstractSocket::IPv6Protocol:
-    {
-        Q_IPV6ADDR ipv6;
-        for (int i = 0; i < 16; ++i)
-            in >> ipv6[i];
-        address.setAddress(ipv6);
+        case QAbstractSocket::UnknownNetworkLayerProtocol: {
+            address.clear();
+            break;
+        }
+        case QAbstractSocket::IPv4Protocol: {
+            quint32 ipv4;
+            in >> ipv4;
+            address.setAddress(ipv4);
+            break;
+        }
+        case QAbstractSocket::IPv6Protocol: {
+            Q_IPV6ADDR ipv6;
+            for (int i = 0; i < 16; ++i)
+                in >> ipv6[i];
+            address.setAddress(ipv6);
 
-        QString scope;
-        in >> scope;
-        address.setScopeId(scope);
-    }
-        break;
-    default:
-        address.clear();
-        in.setStatus(QDataStream::ReadCorruptData);
+            QString scope;
+            in >> scope;
+            address.setScopeId(scope);
+            break;
+        }
+        default: {
+            address.clear();
+            in.setStatus(QDataStream::ReadCorruptData);
+        }
     }
     return in;
 }

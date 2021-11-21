@@ -33,37 +33,42 @@
 // We mean it.
 //
 
-#include "qfilesystemwatcher_p.h"
+#include "qglobal.h"
 
 #ifndef QT_NO_FILESYSTEMWATCHER
 
-#include <QtCore/qhash.h>
-#include <QtCore/qsocketnotifier.h>
+#include "qhash.h"
+#include "qfile.h"
+#include "qdir.h"
+#include "qfileinfo.h"
+#include "qdatetime.h"
+#include "qtimer.h"
+#include "qcore_unix_p.h"
 
 QT_BEGIN_NAMESPACE
 
-class QFileSystemWatcherEngineUnix : public QFileSystemWatcherEngine
+
+class QFileSystemWatcherEngineUnix : public QObject
 {
     Q_OBJECT
 
-public:
-    ~QFileSystemWatcherEngineUnix();
+    QHash<QString, QStatInfo> files, directories;
 
-    static QFileSystemWatcherEngineUnix *create();
+public:
+    QFileSystemWatcherEngineUnix();
 
     QStringList addPaths(const QStringList &paths, QStringList *files, QStringList *directories);
     QStringList removePaths(const QStringList &paths, QStringList *files, QStringList *directories);
 
+Q_SIGNALS:
+    void fileChanged(const QString &path, bool removed);
+    void directoryChanged(const QString &path, bool removed);
+
 private Q_SLOTS:
-    void readFromFd();
+    void timeout();
 
 private:
-    QFileSystemWatcherEngineUnix(int fd);
-
-    int sockfd;
-    QHash<QString, int> pathToID;
-    QHash<int, QString> idToPath;
-    QSocketNotifier notifier;
+    QTimer timer;
 };
 
 

@@ -88,7 +88,7 @@ QPixmap QtColorButtonPrivate::generatePixmap() const
 
     p.fillRect(r.width() / 4 + corr, r.height() / 4 + corr,
                r.width() / 2, r.height() / 2,
-               QColor(shownColor().rgb()));
+               shownColor());
     p.drawRect(pix.rect().adjusted(0, 0, -1, -1));
 
     return pix;
@@ -167,12 +167,12 @@ void QtColorButton::paintEvent(QPaintEvent *event)
     //const int adjX = qRound(r.width() / 4.0);
     //const int adjY = qRound(r.height() / 4.0);
     //p.fillRect(r.adjusted(adjX, adjY, -adjX, -adjY),
-    //           QColor(d_ptr->shownColor().rgb()));
+    //           d_ptr->shownColor());
     /*
     p.fillRect(r.adjusted(0, r.height() * 3 / 4, 0, 0),
-               QColor(d_ptr->shownColor().rgb()));
+               d_ptr->shownColor());
     p.fillRect(r.adjusted(0, 0, 0, -r.height() * 3 / 4),
-               QColor(d_ptr->shownColor().rgb()));
+               d_ptr->shownColor());
                */
     /*
     const QColor frameColor0(0, 0, 0, qRound(0.2 * (0xFF - d_ptr->shownColor().alpha())));

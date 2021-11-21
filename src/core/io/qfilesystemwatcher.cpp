@@ -24,233 +24,21 @@
 
 #ifndef QT_NO_FILESYSTEMWATCHER
 
-#include "qdatetime.h"
 #include "qdebug.h"
-#include "qdir.h"
-#include "qfileinfo.h"
-#include "qset.h"
-#include "qtimer.h"
 #include "qfilesystemwatcher_unix_p.h"
 
 QT_BEGIN_NAMESPACE
 
-enum { PollingInterval = 1000 };
-
-class QPollingFileSystemWatcherEngine : public QFileSystemWatcherEngine
-{
-    Q_OBJECT
-
-    class FileInfo
-    {
-        uint ownerId;
-        uint groupId;
-        QFile::Permissions permissions;
-        QDateTime lastModified;
-        QStringList entries;
-
-    public:
-        FileInfo(const QFileInfo &fileInfo)
-            : ownerId(fileInfo.ownerId()),
-              groupId(fileInfo.groupId()),
-              permissions(fileInfo.permissions()),
-              lastModified(fileInfo.lastModified())
-        { 
-            if (fileInfo.isDir()) {
-                entries = fileInfo.absoluteDir().entryList(QDir::AllEntries);
-            }
-        }
-        FileInfo &operator=(const QFileInfo &fileInfo)
-        {
-            *this = FileInfo(fileInfo);
-            return *this;
-        }
-
-        bool operator!=(const QFileInfo &fileInfo) const
-        {
-            if (fileInfo.isDir() && entries != fileInfo.absoluteDir().entryList(QDir::AllEntries))
-                return true;
-            return (ownerId != fileInfo.ownerId()
-                    || groupId != fileInfo.groupId()
-                    || permissions != fileInfo.permissions()
-                    || lastModified != fileInfo.lastModified());
-        }
-    };
-
-    QHash<QString, FileInfo> files, directories;
-
-public:
-    QPollingFileSystemWatcherEngine();
-
-    QStringList addPaths(const QStringList &paths, QStringList *files, QStringList *directories);
-    QStringList removePaths(const QStringList &paths, QStringList *files, QStringList *directories);
-
-private Q_SLOTS:
-    void timeout();
-
-private:
-    QTimer timer;
-};
-
-QPollingFileSystemWatcherEngine::QPollingFileSystemWatcherEngine()
-    : timer(this)
-{
-    connect(&timer, SIGNAL(timeout()), this, SLOT(timeout()));
-    timer.start(PollingInterval);
-}
-
-QStringList QPollingFileSystemWatcherEngine::addPaths(const QStringList &paths,
-                                                      QStringList *files,
-                                                      QStringList *directories)
-{
-    QStringList p = paths;
-    foreach (const QString &path, p) {
-        QFileInfo fi(path);
-        if (!fi.exists())
-            continue;
-        if (fi.isDir()) {
-            if (!directories->contains(path))
-                directories->append(path);
-            if (!path.endsWith(QLatin1Char('/')))
-                fi = QFileInfo(path + QLatin1Char('/'));
-            this->directories.insert(path, fi);
-        } else {
-            if (!files->contains(path))
-                files->append(path);
-            this->files.insert(path, fi);
-        }
-        p.removeAll(path);
-    }
-    if ((!this->files.isEmpty() ||
-         !this->directories.isEmpty()) &&
-        !timer.isActive()) {
-        timer.start(PollingInterval);
-    }
-    return p;
-}
-
-QStringList QPollingFileSystemWatcherEngine::removePaths(const QStringList &paths,
-                                                         QStringList *files,
-                                                         QStringList *directories)
-{
-    QStringList p = paths;
-    foreach (const QString &path, p) {
-        if (this->directories.remove(path)) {
-            directories->removeAll(path);
-            p.removeAll(path);
-        } else if (this->files.remove(path)) {
-            files->removeAll(path);
-            p.removeAll(path);
-        }
-    }
-    if (this->files.isEmpty() &&
-        this->directories.isEmpty()) {
-        timer.stop();
-    }
-    return p;
-}
-
-void QPollingFileSystemWatcherEngine::timeout()
-{
-    QMutableHashIterator<QString, FileInfo> fit(files);
-    while (fit.hasNext()) {
-        QHash<QString, FileInfo>::iterator x = fit.next();
-        QString path = x.key();
-        QFileInfo fi(path);
-        if (!fi.exists()) {
-            fit.remove();
-            emit fileChanged(path, true);
-        } else if (x.value() != fi) {
-            x.value() = fi;
-            emit fileChanged(path, false);
-        }
-    }
-    QMutableHashIterator<QString, FileInfo> dit(directories);
-    while (dit.hasNext()) {
-        QHash<QString, FileInfo>::iterator x = dit.next();
-        QString path = x.key();
-        QFileInfo fi(path);
-        if (!path.endsWith(QLatin1Char('/')))
-            fi = QFileInfo(path + QLatin1Char('/'));
-        if (!fi.exists()) {
-            dit.remove();
-            emit directoryChanged(path, true);
-        } else if (x.value() != fi) {
-            fi.refresh();
-            if (!fi.exists()) {
-                dit.remove();
-                emit directoryChanged(path, true);
-            } else {
-                x.value() = fi;
-                emit directoryChanged(path, false);
-            }
-        }
-        
-    }
-}
-
-
-void QFileSystemWatcherPrivate::initNativeEngine()
-{
-    Q_ASSERT(!watcher);
-    Q_Q(const QFileSystemWatcher);
-
-#if defined(QT_HAVE_INOTIFY_INIT1) || defined(QT_HAVE_KEVENT)
-    watcher = QFileSystemWatcherEngineUnix::create();
-#endif
-
-    if (watcher) {
-        QObject::connect(watcher,
-                         SIGNAL(fileChanged(QString,bool)),
-                         q,
-                         SLOT(_q_fileChanged(QString,bool)));
-        QObject::connect(watcher,
-                         SIGNAL(directoryChanged(QString,bool)),
-                         q,
-                         SLOT(_q_directoryChanged(QString,bool)));
-    }
-}
 
 QFileSystemWatcherPrivate::QFileSystemWatcherPrivate()
-    : watcher(nullptr)
+    : watcher(new QFileSystemWatcherEngineUnix())
 {
 }
+
 
 void QFileSystemWatcherPrivate::init()
 {
-#ifdef QT_BUILD_INTERNAL
     Q_Q(const QFileSystemWatcher);
-
-    const QObject *parent = q->parent();
-    if (parent && parent->objectName().startsWith(QLatin1String("_qt_autotest_force_engine_"))) {
-        // Autotest override case - use the explicitly selected engine only
-        QString forceName = parent->objectName().mid(26);
-        if (forceName == QLatin1String("poller")) {
-            qDebug() << "QFileSystemWatcher: skipping native engine, using only polling engine";
-            initPollerEngine();
-        } else if (forceName == QLatin1String("native")) {
-            qDebug() << "QFileSystemWatcher: skipping polling engine, using only native engine";
-            initNativeEngine();
-        } else {
-            qDebug() << "QFileSystemWatcher: unknown engine, using native engine";
-            initNativeEngine();
-        }
-    } else {
-#endif // QT_BUILD_INTERNAL
-        // Normal runtime case - search intelligently for best engine
-        initNativeEngine();
-        if (!watcher) {
-            initPollerEngine();
-        }
-#ifdef QT_BUILD_INTERNAL
-    }
-#endif // QT_BUILD_INTERNAL
-}
-
-void QFileSystemWatcherPrivate::initPollerEngine()
-{
-    Q_ASSERT(!watcher);
-    Q_Q(const QFileSystemWatcher);
-    watcher = new QPollingFileSystemWatcherEngine; // that was a mouthful
     QObject::connect(watcher,
                      SIGNAL(fileChanged(QString,bool)),
                      q,
@@ -260,6 +48,7 @@ void QFileSystemWatcherPrivate::initPollerEngine()
                      q,
                      SLOT(_q_directoryChanged(QString,bool)));
 }
+
 
 void QFileSystemWatcherPrivate::_q_fileChanged(const QString &path, bool removed)
 {
@@ -312,22 +101,6 @@ void QFileSystemWatcherPrivate::_q_directoryChanged(const QString &path, bool re
     they have been renamed or removed from disk, and directories once
     they have been removed from disk.
 
-    \note On systems running a Linux kernel without inotify support,
-    file systems that contain watched paths cannot be unmounted.
-
-    \note The act of monitoring files and directories for
-    modifications consumes system resources. This implies there is a
-    limit to the number of files and directories your process can
-    monitor simultaneously. On all BSD variants, for example, an open
-    file descriptor is required for each monitored file. Some system
-    limits the number of open file descriptors to 256 by default.
-    This means that addPath() and addPaths() will fail if your process
-    tries to add more than 256 files or directories to the file system
-    monitor. Also note that your process may have other file
-    descriptors open in addition to the ones for files being monitored,
-    and these other open descriptors also count in the total.
-
-
     \sa QFile, QDir
 */
 
@@ -365,19 +138,18 @@ QFileSystemWatcher::~QFileSystemWatcher()
 }
 
 /*!
-    Adds \a path to the file system watcher if \a path exists. The
-    path is not added if it does not exist, or if it is already being
-    monitored by the file system watcher.
+    Adds \a path to the file system watcher. The path is not added
+    if it is already being monitored by the file system watcher.
 
     If \a path specifies a directory, the directoryChanged() signal
     will be emitted when \a path is modified or removed from disk;
     otherwise the fileChanged() signal is emitted when \a path is
     modified, renamed or removed.
 
-    \note There is a system dependent limit to the number of files and
-    directories that can be monitored simultaneously. If this limit
-    has been reached, \a path will not be added to the file system
-    watcher, and a warning message will be printed to \e{stderr}.
+    \note To watch for the creation of non-existing directories you
+    must ensure that the directory path to watch for ends with
+    trainling slash, otherwise it cannot be distinguished from file
+    path.
 
     \sa addPaths(), removePath()
 */
@@ -392,19 +164,13 @@ void QFileSystemWatcher::addPath(const QString &path)
 
 /*!
     Adds each path in \a paths to the file system watcher. Paths are
-    not added if they not exist, or if they are already being
-    monitored by the file system watcher.
+    not added if they are already being monitored by the file system
+    watcher.
 
     If a path specifies a directory, the directoryChanged() signal
     will be emitted when the path is modified or removed from disk;
     otherwise the fileChanged() signal is emitted when the path is
     modified, renamed, or removed.
-
-    \note There is a system dependent limit to the number of files and
-    directories that can be monitored simultaneously. If this limit
-    has been reached, the excess \a paths will not be added to the
-    file system watcher, and a warning message will be printed to
-    \e{stderr} for each path that could not be added.
 
     \sa addPath(), removePaths()
 */
@@ -508,9 +274,7 @@ QStringList QFileSystemWatcher::files() const
 
 QT_END_NAMESPACE
 
-#include "moc_qfilesystemwatcher.cpp"
 #include "moc_qfilesystemwatcher.h"
-#include "moc_qfilesystemwatcher_p.h"
 
 #endif // QT_NO_FILESYSTEMWATCHER
 

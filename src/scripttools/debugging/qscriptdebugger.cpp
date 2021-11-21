@@ -63,7 +63,6 @@
 
 #include <QtCore/qcoreapplication.h>
 #include <QtCore/qdir.h>
-#include <QtCore/qfileinfo.h>
 #include <QtCore/qstringlist.h>
 #include <QtCore/qdebug.h>
 

@@ -20,11 +20,10 @@
 ****************************************************************************/
 
 #include "qnetworkreplyfileimpl_p.h"
-
-#include "QtCore/qdatetime.h"
-#include <QtCore/QCoreApplication>
-#include <QtCore/QFileInfo>
-#include <QDebug>
+#include "qdatetime.h"
+#include "qcoreapplication.h"
+#include "qdebug.h"
+#include "qcore_unix_p.h"
 
 QT_BEGIN_NAMESPACE
 
@@ -65,14 +64,11 @@ QNetworkReplyFileImpl::QNetworkReplyFileImpl(QObject *parent, const QNetworkRequ
 
     QString fileName = url.toLocalFile();
     if (fileName.isEmpty()) {
-        if (url.scheme() == QLatin1String("qrc"))
-            fileName = QLatin1Char(':') + url.path();
-        else
-            fileName = url.toString(QUrl::RemoveAuthority | QUrl::RemoveFragment | QUrl::RemoveQuery);
+        fileName = url.toString(QUrl::RemoveAuthority | QUrl::RemoveFragment | QUrl::RemoveQuery);
     }
 
-    QFileInfo fi(fileName);
-    if (fi.isDir()) {
+    QStatInfo si(fileName);
+    if (si.isDir()) {
         QString msg = QCoreApplication::translate("QNetworkAccessFileBackend", "Cannot open %1: Path is a directory").arg(url.toString());
         setError(QNetworkReply::ContentOperationNotPermittedError, msg);
         QMetaObject::invokeMethod(this, "error", Qt::QueuedConnection,
@@ -102,8 +98,8 @@ QNetworkReplyFileImpl::QNetworkReplyFileImpl(QObject *parent, const QNetworkRequ
         return;
     }
 
-    setHeader(QNetworkRequest::LastModifiedHeader, fi.lastModified());
-    d->realFileSize = fi.size();
+    setHeader(QNetworkRequest::LastModifiedHeader, si.lastModified());
+    d->realFileSize = si.size();
     setHeader(QNetworkRequest::ContentLengthHeader, d->realFileSize);
 
     QMetaObject::invokeMethod(this, "metaDataChanged", Qt::QueuedConnection);
