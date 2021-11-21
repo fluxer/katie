@@ -509,9 +509,6 @@ void QFormBuilder::applyProperties(QObject *o, const QList<DomProperty*> &proper
             // apply only the size part of a geometry for the root widget
             static_cast<QWidget*>(o)->resize(qvariant_cast<QRect>(v).size());
         } else if (fb->applyPropertyInternally(o, attributeName, v)) {
-        } else if (isWidget && !qstrcmp("QFrame", o->metaObject()->className ()) && attributeName == strings.orientationProperty) {
-            // ### special-casing for Line (QFrame) -- try to fix me
-            o->setProperty("frameShape", v); // v is of QFrame::Shape enum
         } else {
             o->setProperty(attributeName.toUtf8(), v);
         }

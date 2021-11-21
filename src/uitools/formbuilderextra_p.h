@@ -183,7 +183,6 @@ struct Q_UITOOLS_EXPORT QFormBuilderStrings {
     const QString objectNameProperty;
     const QString trueValue;
     const QString falseValue;
-    const QString horizontalPostFix;
     const QString separator;
     const QString defaultTitle;
     const QString titleAttribute;

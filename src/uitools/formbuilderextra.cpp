@@ -455,7 +455,6 @@ QFormBuilderStrings::QFormBuilderStrings() :
     objectNameProperty(QLatin1String("objectName")),
     trueValue(QLatin1String("true")),
     falseValue(QLatin1String("false")),
-    horizontalPostFix(QLatin1String("Horizontal")),
     separator(QLatin1String("separator")),
     defaultTitle(QLatin1String("Page")),
     titleAttribute(QLatin1String("title")),
