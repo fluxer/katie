@@ -105,7 +105,7 @@ static QString searchExecutable(const QStringList &searchPaths, const QString &e
 QString QStandardPaths::writableLocation(StandardLocation type)
 {
     foreach (const QString &location, standardLocations(type)) {
-        QStatInfo info(location);
+        const QStatInfo info(location);
         if (info.isDir()) {
             return location;
         } else {
@@ -261,7 +261,7 @@ QStringList QStandardPaths::standardLocations(StandardLocation type)
 
 QString QStandardPaths::findExecutable(const QString &executableName, const QStringList &paths)
 {
-    QStatInfo info(executableName);
+    const QStatInfo info(executableName);
     if (info.isFile() && info.isExecutable()) {
         return QDir::cleanPath(executableName);
     }
