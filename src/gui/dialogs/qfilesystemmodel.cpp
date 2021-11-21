@@ -27,6 +27,7 @@
 #include "qdebug.h"
 #include "qmessagebox.h"
 #include "qapplication.h"
+#include "qcore_unix_p.h"
 
 QT_BEGIN_NAMESPACE
 
@@ -185,7 +186,7 @@ bool QFileSystemModel::remove(const QModelIndex &aindex)
 
     bool error = false;
     for (int i = 0; i < children.count(); ++i) {
-        QFileInfo info(children.at(i));
+        QStatInfo info(children.at(i));
         QModelIndex modelIndex = index(children.at(i));
         if (info.isDir()) {
             QDir dir;

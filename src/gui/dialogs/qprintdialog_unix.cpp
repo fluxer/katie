@@ -35,6 +35,7 @@
 #include <QtGui/qstyleditemdelegate.h>
 #include <QtGui/qprinter.h>
 #include "qprinterinfo_unix_p.h"
+#include "qcore_unix_p.h"
 
 #include "ui_qprintpropertieswidget.h"
 #include "ui_qprintsettingsoutput.h"
@@ -830,14 +831,14 @@ bool QUnixPrintWidgetPrivate::checkFields()
     if (widget.filename->isEnabled()) {
         QString file = widget.filename->text();
         QFile f(file);
-        QFileInfo fi(f);
-        bool exists = fi.exists();
+        QStatInfo si(file);
+        bool exists = si.exists();
         bool opened = false;
-        if (exists && fi.isDir()) {
+        if (exists && si.isDir()) {
             QMessageBox::warning(q, q->windowTitle(),
                             QPrintDialog::tr("%1 is a directory.\nPlease choose a different file name.").arg(file));
             return false;
-        } else if ((exists && !fi.isWritable()) || !(opened = f.open(QFile::Append))) {
+        } else if ((exists && !si.isWritable()) || !(opened = f.open(QFile::Append))) {
             QMessageBox::warning(q, q->windowTitle(),
                             QPrintDialog::tr("File %1 is not writable.\nPlease choose a different file name.").arg(file));
             return false;

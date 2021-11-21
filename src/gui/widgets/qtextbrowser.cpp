@@ -37,6 +37,7 @@
 #include "qwhatsthis.h"
 #include "qtextobject.h"
 #include "qstandardpaths.h"
+#include "qcore_unix_p.h"
 
 QT_BEGIN_NAMESPACE
 
@@ -131,7 +132,7 @@ QString QTextBrowserPrivate::findFile(const QUrl &name) const
         if (!path.endsWith(QLatin1Char('/')))
             path.append(QLatin1Char('/'));
         path.append(fileName);
-        if (QFileInfo(path).isReadable())
+        if (QStatInfo(path).isReadable())
             return path;
     }
 
