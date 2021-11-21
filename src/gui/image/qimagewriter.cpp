@@ -77,7 +77,6 @@
 
 #include "qbytearray.h"
 #include "qfile.h"
-#include "qfileinfo.h"
 #include "qimageiohandler.h"
 #include "qset.h"
 #include "qvariant.h"

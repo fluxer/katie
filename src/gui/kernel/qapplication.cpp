@@ -29,7 +29,6 @@
 #include "qdir.h"
 #include "qevent.h"
 #include "qfile.h"
-#include "qfileinfo.h"
 #include "qgraphicsscene.h"
 #include "qhash.h"
 #include "qset.h"

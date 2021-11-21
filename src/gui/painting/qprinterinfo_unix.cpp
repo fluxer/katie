@@ -23,7 +23,6 @@
 #include "qprinterinfo_p.h"
 
 #include "qfile.h"
-#include "qfileinfo.h"
 #include "qdir.h"
 #include "qprintdialog.h"
 #include "qtextstream.h"
