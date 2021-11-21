@@ -143,7 +143,7 @@ QStringList QStandardPaths::standardLocations(StandardLocation type)
             result.append(QDir::homePath() + QLatin1String("/Documents"));
             break;
         }
-        case StandardLocation::DownloadLocation: {
+        case StandardLocation::DownloadsLocation: {
             const QString location(getUserDirName("XDG_DOWNLOAD_DIR=", 17));
             if (!location.isEmpty()) {
                 result.append(location);

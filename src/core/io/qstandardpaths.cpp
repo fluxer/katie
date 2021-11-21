@@ -49,7 +49,7 @@ QT_BEGIN_NAMESPACE
 
     \value DesktopLocation
     \value DocumentsLocation
-    \value DownloadLocation
+    \value DownloadsLocation
     \value VideosLocation
     \value MusicLocation
     \value PicturesLocation
@@ -69,7 +69,7 @@ QT_BEGIN_NAMESPACE
          \li "$HOME/Desktop"
     \row \li DocumentsLocation
          \li "$HOME/Documents"
-    \row \li DownloadLocation
+    \row \li DownloadsLocation
          \li "$HOME/Downloads"
     \row \li VideosLocation
          \li "$HOME/Videos"
@@ -187,7 +187,7 @@ QString QStandardPaths::displayName(StandardLocation type)
         case DocumentsLocation: {
             return QCoreApplication::translate("QStandardPaths", "Documents");
         }
-        case DownloadLocation: {
+        case DownloadsLocation: {
             return QCoreApplication::translate("QStandardPaths", "Download");
         }
         case VideosLocation: {

@@ -32,7 +32,7 @@ public:
     enum StandardLocation {
         DesktopLocation,
         DocumentsLocation,
-        DownloadLocation,
+        DownloadsLocation,
         VideosLocation,
         MusicLocation,
         PicturesLocation,
