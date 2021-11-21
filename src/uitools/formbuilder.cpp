@@ -179,8 +179,8 @@ QWidget *QFormBuilder::createWidget(const QString &widgetName, QWidget *parentWi
         }
 
 #define DECLARE_LAYOUT(L, C)
-#define DECLARE_WIDGET(W, C) else if (!qstrcmp(widgetNameC, #W)) { Q_ASSERT(w == 0); w = new W(parentWidget); }
-#define DECLARE_WIDGET_1(W, C) else if (!qstrcmp(widgetNameC, #W)) { Q_ASSERT(w == 0); w = new W(0, parentWidget); }
+#define DECLARE_WIDGET(W, C) else if (qstrcmp(widgetNameC, #W) == 0) { Q_ASSERT(w == 0); w = new W(parentWidget); }
+#define DECLARE_WIDGET_1(W, C) else if (qstrcmp(widgetNameC, #W) == 0) { Q_ASSERT(w == 0); w = new W(0, parentWidget); }
 
 #include "widgets.table"
 

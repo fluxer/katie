@@ -2760,7 +2760,7 @@ void QMetaObject::connectSlotsByName(QObject *o)
                     if (method.methodType() != QMetaMethod::Signal)
                         continue;
 
-                    if (!qstrncmp(method.signature(), slot + len + 4, slotlen)) {
+                    if (qstrncmp(method.signature(), slot + len + 4, slotlen) == 0) {
                         int signalOffset, methodOffset;
                         computeOffsets(method.enclosingMetaObject(), &signalOffset, &methodOffset);
                         sigIndex = k + - methodOffset + signalOffset;

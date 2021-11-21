@@ -279,7 +279,7 @@ QWidget *QDesignerIntegration::containerWindow(QWidget *widget) const
     while (widget) {
         if (widget->isWindow())
             break;
-        if (!qstrcmp(widget->metaObject()->className(), "QMdiSubWindow"))
+        if (qstrcmp(widget->metaObject()->className(), "QMdiSubWindow") == 0)
             break;
 
         widget = widget->parentWidget();

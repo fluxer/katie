@@ -372,7 +372,7 @@ void tst_QScriptQObject::readMetaProperty_dataHelper(const QMetaObject *mo)
 
     for (int i = 0; i < mo->propertyCount(); ++i) {
         QMetaProperty prop = mo->property(i);
-        if (!qstrcmp(prop.name(), "default"))
+        if (qstrcmp(prop.name(), "default") == 0)
             continue; // skip reserved word
         QTest::newRow(prop.name()) << prop.name();
     }
@@ -416,7 +416,7 @@ void tst_QScriptQObject::readAllMetaPropertiesHelper(QObject *o)
     const QMetaObject *mo = o->metaObject();
     for (int i = 0; i < mo->propertyCount(); ++i) {
         QMetaProperty prop = mo->property(i);
-        if (!qstrcmp(prop.name(), "default"))
+        if (qstrcmp(prop.name(), "default") == 0)
             continue; // skip reserved word
         code.append(QString::fromLatin1("    this.%0;\n").arg(prop.name()));
     }

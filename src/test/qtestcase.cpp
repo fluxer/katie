@@ -1359,7 +1359,7 @@ static bool qInvokeTestMethod(const char *slotName, const char *data=0)
 
             /* For each entry in the data table, do: */
             do {
-                if (!data || !qstrcmp(data, table.testData(curDataIndex)->dataTag())) {
+                if (!data || qstrcmp(data, table.testData(curDataIndex)->dataTag()) == 0) {
                     foundFunction = true;
                     QTestDataSetter s(curDataIndex >= dataCount ? static_cast<QTestData *>(0)
                                                       : table.testData(curDataIndex));

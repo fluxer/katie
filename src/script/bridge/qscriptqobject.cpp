@@ -189,7 +189,7 @@ static inline bool methodNameEquals(const QMetaMethod &method,
                                     const char *signature, int nameLength)
 {
     const char *otherSignature = method.signature();
-    return !qstrncmp(otherSignature, signature, nameLength)
+    return (qstrncmp(otherSignature, signature, nameLength) == 0)
         && (otherSignature[nameLength] == '(');
 }
 
@@ -1838,7 +1838,7 @@ bool QMetaObjectWrapperObject::getOwnPropertySlot(
         QMetaEnum e = meta->enumerator(i);
         for (int j = 0; j < e.keyCount(); ++j) {
             const char *key = e.key(j);
-            if (!qstrcmp(key, name.constData())) {
+            if (qstrcmp(key, name.constData()) == 0) {
                 slot.setValue(JSC::JSValue(exec, e.value(j)));
                 return true;
             }
@@ -1870,7 +1870,7 @@ bool QMetaObjectWrapperObject::getOwnPropertyDescriptor(
         QMetaEnum e = meta->enumerator(i);
         for (int j = 0; j < e.keyCount(); ++j) {
             const char *key = e.key(j);
-            if (!qstrcmp(key, name.constData())) {
+            if (qstrcmp(key, name.constData()) == 0) {
                 descriptor.setDescriptor(JSC::JSValue(exec, e.value(j)),
                                          JSC::ReadOnly | JSC::DontDelete);
                 return true;
@@ -1897,7 +1897,7 @@ void QMetaObjectWrapperObject::put(JSC::ExecState* exec, const JSC::Identifier& 
         for (int i = 0; i < meta->enumeratorCount(); ++i) {
             QMetaEnum e = meta->enumerator(i);
             for (int j = 0; j < e.keyCount(); ++j) {
-                if (!qstrcmp(e.key(j), name.constData()))
+                if (qstrcmp(e.key(j), name.constData()) == 0)
                     return;
             }
         }
@@ -1916,7 +1916,7 @@ bool QMetaObjectWrapperObject::deleteProperty(
         for (int i = 0; i < meta->enumeratorCount(); ++i) {
             QMetaEnum e = meta->enumerator(i);
             for (int j = 0; j < e.keyCount(); ++j) {
-                if (!qstrcmp(e.key(j), name.constData()))
+                if (qstrcmp(e.key(j), name.constData()) == 0)
                     return false;
             }
         }
