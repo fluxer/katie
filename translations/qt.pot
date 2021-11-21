@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-11-16 06:07+0200\n"
+"POT-Creation-Date: 2021-11-21 16:59+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -30,7 +30,7 @@ msgid "Plugin verification data mismatch in '%1'"
 msgstr ""
 
 #: src/core/plugin/qlibrary.cpp:414 src/core/plugin/qlibrary.cpp:449
-#: src/core/plugin/qpluginloader.cpp:262
+#: src/core/plugin/qpluginloader.cpp:261
 msgid "The shared library was not found."
 msgstr ""
 
@@ -42,10 +42,10 @@ msgstr ""
 msgid "The plugin uses incompatible Katie library: %1 (%2, %3)"
 msgstr ""
 
-#: src/core/plugin/qlibrary.cpp:795 src/core/plugin/qpluginloader.cpp:279
+#: src/core/plugin/qlibrary.cpp:795 src/core/plugin/qpluginloader.cpp:278
 #: src/core/io/qiodevice.cpp:1517 src/network/ssl/qsslerror.cpp:249
 #: src/network/socket/qnativesocketengine.cpp:249
-#: src/network/access/qftp.cpp:1414 src/uitools/formscriptrunner.cpp:104
+#: src/network/access/qftp.cpp:1413 src/uitools/formscriptrunner.cpp:104
 msgid "Unknown error"
 msgstr ""
 
@@ -61,93 +61,78 @@ msgstr ""
 msgid "Cannot resolve symbol \"%1\" in %2: %3"
 msgstr ""
 
-#: src/core/plugin/qpluginloader.cpp:217
+#: src/core/plugin/qpluginloader.cpp:216
 msgid "The plugin was not loaded."
 msgstr ""
 
-#: src/core/io/qstandardpaths.cpp:283
+#: src/core/io/qstandardpaths.cpp:199
 msgctxt "QStandardPaths"
 msgid "Desktop"
 msgstr ""
 
-#: src/core/io/qstandardpaths.cpp:285
+#: src/core/io/qstandardpaths.cpp:202
 msgctxt "QStandardPaths"
 msgid "Documents"
 msgstr ""
 
-#: src/core/io/qstandardpaths.cpp:287
+#: src/core/io/qstandardpaths.cpp:205
 msgctxt "QStandardPaths"
-msgid "Fonts"
+msgid "Download"
 msgstr ""
 
-#: src/core/io/qstandardpaths.cpp:289
+#: src/core/io/qstandardpaths.cpp:208
 msgctxt "QStandardPaths"
-msgid "Applications"
+msgid "Videos"
 msgstr ""
 
-#: src/core/io/qstandardpaths.cpp:291
+#: src/core/io/qstandardpaths.cpp:211
 msgctxt "QStandardPaths"
 msgid "Music"
 msgstr ""
 
-#: src/core/io/qstandardpaths.cpp:293
-msgctxt "QStandardPaths"
-msgid "Movies"
-msgstr ""
-
-#: src/core/io/qstandardpaths.cpp:295
+#: src/core/io/qstandardpaths.cpp:214
 msgctxt "QStandardPaths"
 msgid "Pictures"
 msgstr ""
 
-#: src/core/io/qstandardpaths.cpp:297
+#: src/core/io/qstandardpaths.cpp:217
 msgctxt "QStandardPaths"
-msgid "Temporary Directory"
+msgid "Public Share"
 msgstr ""
 
-#: src/core/io/qstandardpaths.cpp:299
+#: src/core/io/qstandardpaths.cpp:220
 msgctxt "QStandardPaths"
-msgid "Home"
+msgid "Templates"
 msgstr ""
 
-#: src/core/io/qstandardpaths.cpp:301
+#: src/core/io/qstandardpaths.cpp:223
 msgctxt "QStandardPaths"
 msgid "Application Data"
 msgstr ""
 
-#: src/core/io/qstandardpaths.cpp:303
+#: src/core/io/qstandardpaths.cpp:226
 msgctxt "QStandardPaths"
 msgid "Cache"
 msgstr ""
 
-#: src/core/io/qstandardpaths.cpp:305
-msgctxt "QStandardPaths"
-msgid "Shared Data"
-msgstr ""
-
-#: src/core/io/qstandardpaths.cpp:307
-msgctxt "QStandardPaths"
-msgid "Runtime"
-msgstr ""
-
-#: src/core/io/qstandardpaths.cpp:309
+#: src/core/io/qstandardpaths.cpp:229
 msgctxt "QStandardPaths"
 msgid "Configuration"
 msgstr ""
 
-#: src/core/io/qstandardpaths.cpp:311
+#: src/core/io/qstandardpaths.cpp:232
 msgctxt "QStandardPaths"
-msgid "Shared Configuration"
+msgid "Runtime"
 msgstr ""
 
-#: src/core/io/qstandardpaths.cpp:313
+#: src/core/io/qstandardpaths.cpp:235
 msgctxt "QStandardPaths"
-msgid "Shared Cache"
+msgid "State"
 msgstr ""
 
-#: src/core/io/qstandardpaths.cpp:315
+#: src/core/io/qstandardpaths.cpp:238
 msgctxt "QStandardPaths"
-msgid "Download"
+msgid "Executable"
 msgstr ""
 
 #: src/core/io/qfile.cpp:558
@@ -977,24 +962,24 @@ msgctxt "QDeclarativeParser"
 msgid "JavaScript declaration outside Script element"
 msgstr ""
 
-#: src/declarative/qml/qdeclarativecompiledbindings.cpp:325
+#: src/declarative/qml/qdeclarativecompiledbindings.cpp:319
 msgctxt "QDeclarativeCompiledBindings"
 msgid "Binding loop detected for property \"%1\""
 msgstr ""
 
-#: src/declarative/qml/qdeclarativetypeloader.cpp:902
+#: src/declarative/qml/qdeclarativetypeloader.cpp:898
 msgid "Script %1 unavailable"
 msgstr ""
 
-#: src/declarative/qml/qdeclarativetypeloader.cpp:920
+#: src/declarative/qml/qdeclarativetypeloader.cpp:916
 msgid "Type %1 unavailable"
 msgstr ""
 
-#: src/declarative/qml/qdeclarativetypeloader.cpp:1106
+#: src/declarative/qml/qdeclarativetypeloader.cpp:1102
 msgid "Namespace %1 cannot be used as a type"
 msgstr ""
 
-#: src/declarative/qml/qdeclarativetypeloader.cpp:1108
+#: src/declarative/qml/qdeclarativetypeloader.cpp:1104
 msgid "%1 %2"
 msgstr ""
 
@@ -1196,12 +1181,12 @@ msgstr ""
 msgid "Animation is an abstract class"
 msgstr ""
 
-#: src/gui/accessible/qaccessibleobject.cpp:353
+#: src/gui/accessible/qaccessibleobject.cpp:322
 #: src/plugins/accessible/widgets/complexwidgets.cpp:1597
 msgid "Activate"
 msgstr ""
 
-#: src/gui/accessible/qaccessibleobject.cpp:355
+#: src/gui/accessible/qaccessibleobject.cpp:324
 msgid "Activates the program's main window"
 msgstr ""
 
@@ -1214,7 +1199,7 @@ msgid "< &Back"
 msgstr ""
 
 #: src/gui/dialogs/qwizard.cpp:581
-#: src/scripttools/debugging/qscriptdebugger.cpp:1667
+#: src/scripttools/debugging/qscriptdebugger.cpp:1666
 msgid "Continue"
 msgstr ""
 
@@ -1689,7 +1674,7 @@ msgstr ""
 msgid "Save As"
 msgstr ""
 
-#: src/gui/dialogs/qfiledialog.cpp:511 src/gui/dialogs/qfiledialog.cpp:1012
+#: src/gui/dialogs/qfiledialog.cpp:511 src/gui/dialogs/qfiledialog.cpp:1011
 msgid "All Files (*)"
 msgstr ""
 
@@ -1713,90 +1698,90 @@ msgstr ""
 msgid "&New Folder"
 msgstr ""
 
-#: src/gui/dialogs/qfiledialog.cpp:533 src/gui/dialogs/qfiledialog.cpp:1193
+#: src/gui/dialogs/qfiledialog.cpp:533 src/gui/dialogs/qfiledialog.cpp:1192
 msgid "Directory:"
 msgstr ""
 
-#: src/gui/dialogs/qfiledialog.cpp:535 src/gui/dialogs/qfiledialog.cpp:1199
+#: src/gui/dialogs/qfiledialog.cpp:535 src/gui/dialogs/qfiledialog.cpp:1198
 msgid "File &name:"
 msgstr ""
 
-#: src/gui/dialogs/qfiledialog.cpp:1186 src/gui/dialogs/qfiledialog.cpp:1241
-#: src/gui/dialogs/qfiledialog.cpp:2688
+#: src/gui/dialogs/qfiledialog.cpp:1185 src/gui/dialogs/qfiledialog.cpp:1240
+#: src/gui/dialogs/qfiledialog.cpp:2687
 msgid "&Open"
 msgstr ""
 
-#: src/gui/dialogs/qfiledialog.cpp:1186 src/gui/dialogs/qfiledialog.cpp:1241
+#: src/gui/dialogs/qfiledialog.cpp:1185 src/gui/dialogs/qfiledialog.cpp:1240
 msgid "&Save"
 msgstr ""
 
-#: src/gui/dialogs/qfiledialog.cpp:1189
+#: src/gui/dialogs/qfiledialog.cpp:1188
 msgid "Directories"
 msgstr ""
 
-#: src/gui/dialogs/qfiledialog.cpp:1196 src/gui/dialogs/qfiledialog.cpp:1239
+#: src/gui/dialogs/qfiledialog.cpp:1195 src/gui/dialogs/qfiledialog.cpp:1238
 msgid "&Choose"
 msgstr ""
 
-#: src/gui/dialogs/qfiledialog.cpp:1906 src/gui/dialogs/qfiledialog.cpp:2759
+#: src/gui/dialogs/qfiledialog.cpp:1905 src/gui/dialogs/qfiledialog.cpp:2758
 msgid ""
 "%1\n"
 "Directory not found.\n"
 "Please verify the correct directory name was given."
 msgstr ""
 
-#: src/gui/dialogs/qfiledialog.cpp:1940
+#: src/gui/dialogs/qfiledialog.cpp:1939
 msgid ""
 "%1 already exists.\n"
 "Do you want to replace it?"
 msgstr ""
 
-#: src/gui/dialogs/qfiledialog.cpp:1960
+#: src/gui/dialogs/qfiledialog.cpp:1959
 msgid ""
 "%1\n"
 "File not found.\n"
 "Please verify the correct file name was given."
 msgstr ""
 
-#: src/gui/dialogs/qfiledialog.cpp:2409
+#: src/gui/dialogs/qfiledialog.cpp:2408
 msgid "New Folder"
 msgstr ""
 
-#: src/gui/dialogs/qfiledialog.cpp:2537
+#: src/gui/dialogs/qfiledialog.cpp:2536
 msgid ""
 "'%1' is write protected.\n"
 "Do you want to delete it anyway?"
 msgstr ""
 
-#: src/gui/dialogs/qfiledialog.cpp:2542
+#: src/gui/dialogs/qfiledialog.cpp:2541
 msgid "Are sure you want to delete '%1'?"
 msgstr ""
 
-#: src/gui/dialogs/qfiledialog.cpp:2557
+#: src/gui/dialogs/qfiledialog.cpp:2556
 msgid "Could not delete directory."
 msgstr ""
 
-#: src/gui/dialogs/qfiledialog.cpp:2955
+#: src/gui/dialogs/qfiledialog.cpp:2954
 msgid "Recent Places"
 msgstr ""
 
 #: src/gui/dialogs/qfilesystemmodel.cpp:643
-#: src/gui/itemviews/qdirmodel.cpp:1205
+#: src/gui/itemviews/qdirmodel.cpp:1204
 msgid "%1 TB"
 msgstr ""
 
 #: src/gui/dialogs/qfilesystemmodel.cpp:645
-#: src/gui/itemviews/qdirmodel.cpp:1207
+#: src/gui/itemviews/qdirmodel.cpp:1206
 msgid "%1 GB"
 msgstr ""
 
 #: src/gui/dialogs/qfilesystemmodel.cpp:647
-#: src/gui/itemviews/qdirmodel.cpp:1209
+#: src/gui/itemviews/qdirmodel.cpp:1208
 msgid "%1 MB"
 msgstr ""
 
 #: src/gui/dialogs/qfilesystemmodel.cpp:649
-#: src/gui/itemviews/qdirmodel.cpp:1211
+#: src/gui/itemviews/qdirmodel.cpp:1210
 msgid "%1 KB"
 msgstr ""
 
@@ -1850,27 +1835,27 @@ msgstr ""
 msgid "&OK"
 msgstr ""
 
-#: src/gui/image/qimagereader.cpp:321
+#: src/gui/image/qimagereader.cpp:320
 msgctxt "QImageReader"
 msgid "Invalid device"
 msgstr ""
 
-#: src/gui/image/qimagereader.cpp:327
+#: src/gui/image/qimagereader.cpp:326
 msgctxt "QImageReader"
 msgid "File not found"
 msgstr ""
 
-#: src/gui/image/qimagereader.cpp:334
+#: src/gui/image/qimagereader.cpp:333
 msgctxt "QImageReader"
 msgid "Unsupported image format"
 msgstr ""
 
-#: src/gui/image/qimagereader.cpp:826
+#: src/gui/image/qimagereader.cpp:825
 msgctxt "QImageReader"
 msgid "Unable to read image data"
 msgstr ""
 
-#: src/gui/image/qimagereader.cpp:1017
+#: src/gui/image/qimagereader.cpp:1016
 msgctxt "QImageReader"
 msgid "Unknown error"
 msgstr ""
@@ -2173,11 +2158,11 @@ msgstr ""
 msgid "Step &down"
 msgstr ""
 
-#: src/gui/kernel/qwidget.cpp:5072
+#: src/gui/kernel/qwidget.cpp:5071
 msgid "*"
 msgstr ""
 
-#: src/gui/kernel/qapplication.cpp:1653
+#: src/gui/kernel/qapplication.cpp:1652
 msgid "QT_LAYOUT_DIRECTION"
 msgstr ""
 
@@ -4461,12 +4446,12 @@ msgstr ""
 msgid "+"
 msgstr ""
 
-#: src/gui/itemviews/qdirmodel.cpp:793
+#: src/gui/itemviews/qdirmodel.cpp:792
 msgctxt "QFileDialog"
 msgid "My Computer"
 msgstr ""
 
-#: src/gui/itemviews/qdirmodel.cpp:1212
+#: src/gui/itemviews/qdirmodel.cpp:1211
 msgid "%1 byte(s)"
 msgstr ""
 
@@ -4478,28 +4463,28 @@ msgstr ""
 msgid "True"
 msgstr ""
 
-#: src/gui/itemviews/qfileiconprovider.cpp:133
+#: src/gui/itemviews/qfileiconprovider.cpp:132
 msgctxt "QFileDialog"
 msgid "Drive"
 msgstr ""
 
+#: src/gui/itemviews/qfileiconprovider.cpp:135
 #: src/gui/itemviews/qfileiconprovider.cpp:136
-#: src/gui/itemviews/qfileiconprovider.cpp:137
 msgctxt "QFileDialog"
 msgid "File"
 msgstr ""
 
-#: src/gui/itemviews/qfileiconprovider.cpp:141
+#: src/gui/itemviews/qfileiconprovider.cpp:140
 msgctxt "QFileDialog"
 msgid "Folder"
 msgstr ""
 
-#: src/gui/itemviews/qfileiconprovider.cpp:146
+#: src/gui/itemviews/qfileiconprovider.cpp:145
 msgctxt "QFileDialog"
 msgid "Shortcut"
 msgstr ""
 
-#: src/gui/itemviews/qfileiconprovider.cpp:150
+#: src/gui/itemviews/qfileiconprovider.cpp:149
 msgctxt "QFileDialog"
 msgid "Unknown"
 msgstr ""
@@ -4723,56 +4708,56 @@ msgstr ""
 msgid "The peer certificate is blacklisted"
 msgstr ""
 
-#: src/network/ssl/qsslsocket_openssl.cpp:155
+#: src/network/ssl/qsslsocket_openssl.cpp:154
 msgid "Error creating SSL context (%1)"
 msgstr ""
 
-#: src/network/ssl/qsslsocket_openssl.cpp:205
+#: src/network/ssl/qsslsocket_openssl.cpp:204
 msgid "Invalid or empty cipher list (%1)"
 msgstr ""
 
-#: src/network/ssl/qsslsocket_openssl.cpp:237
+#: src/network/ssl/qsslsocket_openssl.cpp:236
 msgid "Cannot provide a certificate with no key, %1"
 msgstr ""
 
-#: src/network/ssl/qsslsocket_openssl.cpp:244
+#: src/network/ssl/qsslsocket_openssl.cpp:243
 msgid "Error loading local certificate, %1"
 msgstr ""
 
-#: src/network/ssl/qsslsocket_openssl.cpp:269
+#: src/network/ssl/qsslsocket_openssl.cpp:268
 msgid "Error loading private key, %1"
 msgstr ""
 
-#: src/network/ssl/qsslsocket_openssl.cpp:276
+#: src/network/ssl/qsslsocket_openssl.cpp:275
 msgid "Private key does not certify public key, %1"
 msgstr ""
 
-#: src/network/ssl/qsslsocket_openssl.cpp:296
+#: src/network/ssl/qsslsocket_openssl.cpp:295
 msgid "Error creating SSL session, %1"
 msgstr ""
 
-#: src/network/ssl/qsslsocket_openssl.cpp:330
+#: src/network/ssl/qsslsocket_openssl.cpp:329
 msgid "Error creating SSL session: %1"
 msgstr ""
 
-#: src/network/ssl/qsslsocket_openssl.cpp:551
+#: src/network/ssl/qsslsocket_openssl.cpp:550
 msgid "Unable to write data: %1"
 msgstr ""
 
-#: src/network/ssl/qsslsocket_openssl.cpp:621
+#: src/network/ssl/qsslsocket_openssl.cpp:620
 msgid "Unable to decrypt data: %1"
 msgstr ""
 
-#: src/network/ssl/qsslsocket_openssl.cpp:694
+#: src/network/ssl/qsslsocket_openssl.cpp:693
 msgid "The TLS/SSL connection has been closed"
 msgstr ""
 
-#: src/network/ssl/qsslsocket_openssl.cpp:702
-#: src/network/ssl/qsslsocket_openssl.cpp:712
+#: src/network/ssl/qsslsocket_openssl.cpp:701
+#: src/network/ssl/qsslsocket_openssl.cpp:711
 msgid "Error while reading: %1"
 msgstr ""
 
-#: src/network/ssl/qsslsocket_openssl.cpp:806
+#: src/network/ssl/qsslsocket_openssl.cpp:805
 msgid "Error during SSL handshake: %1"
 msgstr ""
 
@@ -5163,7 +5148,7 @@ msgctxt "QNetworkAccessDataBackend"
 msgid "Invalid URI: %1"
 msgstr ""
 
-#: src/network/access/qnetworkaccesscachebackend.cpp:46
+#: src/network/access/qnetworkaccesscachebackend.cpp:45
 msgctxt "QNetworkAccessCacheBackend"
 msgid "Error opening %1"
 msgstr ""
@@ -5253,122 +5238,122 @@ msgstr ""
 msgid "Operation canceled"
 msgstr ""
 
-#: src/network/access/qftp.cpp:842
+#: src/network/access/qftp.cpp:841
 msgid "Not connected"
 msgstr ""
 
-#: src/network/access/qftp.cpp:921
+#: src/network/access/qftp.cpp:920
 msgid "Host %1 not found"
 msgstr ""
 
-#: src/network/access/qftp.cpp:925
+#: src/network/access/qftp.cpp:924
 msgid "Connection refused to host %1"
 msgstr ""
 
-#: src/network/access/qftp.cpp:929
+#: src/network/access/qftp.cpp:928
 msgid "Connection timed out to host %1"
 msgstr ""
 
-#: src/network/access/qftp.cpp:1033
+#: src/network/access/qftp.cpp:1032
 msgid "Connected to host %1"
 msgstr ""
 
-#: src/network/access/qftp.cpp:1241
+#: src/network/access/qftp.cpp:1240
 msgid "Connection refused for data connection"
 msgstr ""
 
-#: src/network/access/qftp.cpp:2311
+#: src/network/access/qftp.cpp:2310
 msgctxt "QFtp"
 msgid ""
 "Connecting to host failed:\n"
 "%1"
 msgstr ""
 
-#: src/network/access/qftp.cpp:2315
+#: src/network/access/qftp.cpp:2314
 msgctxt "QFtp"
 msgid ""
 "Login failed:\n"
 "%1"
 msgstr ""
 
-#: src/network/access/qftp.cpp:2319
+#: src/network/access/qftp.cpp:2318
 msgctxt "QFtp"
 msgid ""
 "Listing directory failed:\n"
 "%1"
 msgstr ""
 
-#: src/network/access/qftp.cpp:2323
+#: src/network/access/qftp.cpp:2322
 msgctxt "QFtp"
 msgid ""
 "Changing directory failed:\n"
 "%1"
 msgstr ""
 
-#: src/network/access/qftp.cpp:2327
+#: src/network/access/qftp.cpp:2326
 msgctxt "QFtp"
 msgid ""
 "Downloading file failed:\n"
 "%1"
 msgstr ""
 
-#: src/network/access/qftp.cpp:2331
+#: src/network/access/qftp.cpp:2330
 msgctxt "QFtp"
 msgid ""
 "Uploading file failed:\n"
 "%1"
 msgstr ""
 
-#: src/network/access/qftp.cpp:2335
+#: src/network/access/qftp.cpp:2334
 msgctxt "QFtp"
 msgid ""
 "Removing file failed:\n"
 "%1"
 msgstr ""
 
-#: src/network/access/qftp.cpp:2339
+#: src/network/access/qftp.cpp:2338
 msgctxt "QFtp"
 msgid ""
 "Creating directory failed:\n"
 "%1"
 msgstr ""
 
-#: src/network/access/qftp.cpp:2343
+#: src/network/access/qftp.cpp:2342
 msgctxt "QFtp"
 msgid ""
 "Removing directory failed:\n"
 "%1"
 msgstr ""
 
-#: src/network/access/qftp.cpp:2371
+#: src/network/access/qftp.cpp:2370
 msgctxt "QFtp"
 msgid "Connection closed"
 msgstr ""
 
 #: src/network/access/qnetworkaccessfilebackend.cpp:87
-#: src/network/access/qnetworkreplyfileimpl.cpp:54
+#: src/network/access/qnetworkreplyfileimpl.cpp:53
 msgctxt "QNetworkAccessFileBackend"
 msgid "Request for opening non-local file %1"
 msgstr ""
 
-#: src/network/access/qnetworkaccessfilebackend.cpp:131
-#: src/network/access/qnetworkreplyfileimpl.cpp:89
+#: src/network/access/qnetworkaccessfilebackend.cpp:128
+#: src/network/access/qnetworkreplyfileimpl.cpp:85
 msgctxt "QNetworkAccessFileBackend"
 msgid "Error opening %1: %2"
 msgstr ""
 
-#: src/network/access/qnetworkaccessfilebackend.cpp:169
+#: src/network/access/qnetworkaccessfilebackend.cpp:166
 msgctxt "QNetworkAccessFileBackend"
 msgid "Write error writing to %1: %2"
 msgstr ""
 
-#: src/network/access/qnetworkaccessfilebackend.cpp:211
-#: src/network/access/qnetworkreplyfileimpl.cpp:76
+#: src/network/access/qnetworkaccessfilebackend.cpp:208
+#: src/network/access/qnetworkreplyfileimpl.cpp:72
 msgctxt "QNetworkAccessFileBackend"
 msgid "Cannot open %1: Path is a directory"
 msgstr ""
 
-#: src/network/access/qnetworkaccessfilebackend.cpp:231
+#: src/network/access/qnetworkaccessfilebackend.cpp:228
 msgctxt "QNetworkAccessFileBackend"
 msgid "Read error reading from %1: %2"
 msgstr ""
@@ -5502,7 +5487,7 @@ msgid "Could not reset to start position"
 msgstr ""
 
 #: src/scripttools/debugging/qscriptedit.cpp:391
-#: src/scripttools/debugging/qscriptdebugger.cpp:1768
+#: src/scripttools/debugging/qscriptdebugger.cpp:1767
 msgid "Toggle Breakpoint"
 msgstr ""
 
@@ -5577,108 +5562,108 @@ msgctxt "QScriptBreakpointsModel"
 msgid "Hit-count"
 msgstr ""
 
-#: src/scripttools/debugging/qscriptdebugger.cpp:860
-#: src/scripttools/debugging/qscriptdebugger.cpp:1871
+#: src/scripttools/debugging/qscriptdebugger.cpp:859
+#: src/scripttools/debugging/qscriptdebugger.cpp:1870
 msgid "Go to Line"
 msgstr ""
 
-#: src/scripttools/debugging/qscriptdebugger.cpp:861
+#: src/scripttools/debugging/qscriptdebugger.cpp:860
 msgid "Line:"
 msgstr ""
 
-#: src/scripttools/debugging/qscriptdebugger.cpp:1650
+#: src/scripttools/debugging/qscriptdebugger.cpp:1649
 msgid "Interrupt"
 msgstr ""
 
-#: src/scripttools/debugging/qscriptdebugger.cpp:1652
+#: src/scripttools/debugging/qscriptdebugger.cpp:1651
 msgid "Shift+F5"
 msgstr ""
 
-#: src/scripttools/debugging/qscriptdebugger.cpp:1669
+#: src/scripttools/debugging/qscriptdebugger.cpp:1668
 msgid "F5"
 msgstr ""
 
-#: src/scripttools/debugging/qscriptdebugger.cpp:1684
+#: src/scripttools/debugging/qscriptdebugger.cpp:1683
 msgid "Step Into"
 msgstr ""
 
-#: src/scripttools/debugging/qscriptdebugger.cpp:1686
+#: src/scripttools/debugging/qscriptdebugger.cpp:1685
 msgid "F11"
 msgstr ""
 
-#: src/scripttools/debugging/qscriptdebugger.cpp:1701
+#: src/scripttools/debugging/qscriptdebugger.cpp:1700
 msgid "Step Over"
 msgstr ""
 
-#: src/scripttools/debugging/qscriptdebugger.cpp:1703
+#: src/scripttools/debugging/qscriptdebugger.cpp:1702
 msgid "F10"
 msgstr ""
 
-#: src/scripttools/debugging/qscriptdebugger.cpp:1718
+#: src/scripttools/debugging/qscriptdebugger.cpp:1717
 msgid "Step Out"
 msgstr ""
 
-#: src/scripttools/debugging/qscriptdebugger.cpp:1720
+#: src/scripttools/debugging/qscriptdebugger.cpp:1719
 msgid "Shift+F11"
 msgstr ""
 
-#: src/scripttools/debugging/qscriptdebugger.cpp:1735
+#: src/scripttools/debugging/qscriptdebugger.cpp:1734
 msgid "Run to Cursor"
 msgstr ""
 
-#: src/scripttools/debugging/qscriptdebugger.cpp:1737
+#: src/scripttools/debugging/qscriptdebugger.cpp:1736
 msgid "Ctrl+F10"
 msgstr ""
 
-#: src/scripttools/debugging/qscriptdebugger.cpp:1753
+#: src/scripttools/debugging/qscriptdebugger.cpp:1752
 msgid "Run to New Script"
 msgstr ""
 
-#: src/scripttools/debugging/qscriptdebugger.cpp:1769
+#: src/scripttools/debugging/qscriptdebugger.cpp:1768
 msgid "F9"
 msgstr ""
 
-#: src/scripttools/debugging/qscriptdebugger.cpp:1783
+#: src/scripttools/debugging/qscriptdebugger.cpp:1782
 msgid "Clear Debug Output"
 msgstr ""
 
-#: src/scripttools/debugging/qscriptdebugger.cpp:1796
+#: src/scripttools/debugging/qscriptdebugger.cpp:1795
 msgid "Clear Error Log"
 msgstr ""
 
-#: src/scripttools/debugging/qscriptdebugger.cpp:1809
+#: src/scripttools/debugging/qscriptdebugger.cpp:1808
 msgid "Clear Console"
 msgstr ""
 
-#: src/scripttools/debugging/qscriptdebugger.cpp:1823
+#: src/scripttools/debugging/qscriptdebugger.cpp:1822
 msgid "&Find in Script..."
 msgstr ""
 
-#: src/scripttools/debugging/qscriptdebugger.cpp:1824
+#: src/scripttools/debugging/qscriptdebugger.cpp:1823
 msgid "Ctrl+F"
 msgstr ""
 
-#: src/scripttools/debugging/qscriptdebugger.cpp:1841
+#: src/scripttools/debugging/qscriptdebugger.cpp:1840
 msgid "Find &Next"
 msgstr ""
 
-#: src/scripttools/debugging/qscriptdebugger.cpp:1843
+#: src/scripttools/debugging/qscriptdebugger.cpp:1842
 msgid "F3"
 msgstr ""
 
-#: src/scripttools/debugging/qscriptdebugger.cpp:1856
+#: src/scripttools/debugging/qscriptdebugger.cpp:1855
 msgid "Find &Previous"
 msgstr ""
 
-#: src/scripttools/debugging/qscriptdebugger.cpp:1858
+#: src/scripttools/debugging/qscriptdebugger.cpp:1857
 msgid "Shift+F3"
 msgstr ""
 
-#: src/scripttools/debugging/qscriptdebugger.cpp:1872
+#: src/scripttools/debugging/qscriptdebugger.cpp:1871
 msgid "Ctrl+G"
 msgstr ""
 
-#: src/scripttools/debugging/qscriptdebugger.cpp:1883
+#: src/scripttools/debugging/qscriptdebugger.cpp:1882
 msgid "Debug"
 msgstr ""
 
@@ -5758,17 +5743,17 @@ msgctxt "QFormBuilder"
 msgid "The set-type property %1 could not be read."
 msgstr ""
 
-#: src/uitools/properties.cpp:109
+#: src/uitools/properties.cpp:104
 msgctxt "QFormBuilder"
 msgid "The enumeration-type property %1 could not be read."
 msgstr ""
 
-#: src/uitools/properties.cpp:298
+#: src/uitools/properties.cpp:292
 msgctxt "QFormBuilder"
 msgid "Reading properties of the type %1 is not supported yet."
 msgstr ""
 
-#: src/uitools/properties.cpp:571
+#: src/uitools/properties.cpp:565
 msgctxt "QFormBuilder"
 msgid "The property %1 could not be written. The type %2 is not supported yet."
 msgstr ""
@@ -5805,33 +5790,33 @@ msgid ""
 "Script: %3"
 msgstr ""
 
-#: src/uitools/abstractformbuilder.cpp:183
+#: src/uitools/abstractformbuilder.cpp:182
 msgctxt "QAbstractFormBuilder"
 msgid "Unexpected element <%1>"
 msgstr ""
 
-#: src/uitools/abstractformbuilder.cpp:188
+#: src/uitools/abstractformbuilder.cpp:187
 msgctxt "QAbstractFormBuilder"
 msgid ""
 "An error has occurred while reading the UI file at line %1, column %2: %3"
 msgstr ""
 
-#: src/uitools/abstractformbuilder.cpp:194
+#: src/uitools/abstractformbuilder.cpp:193
 msgctxt "QAbstractFormBuilder"
 msgid "Invalid UI file: The root element <ui> is missing."
 msgstr ""
 
-#: src/uitools/abstractformbuilder.cpp:298
+#: src/uitools/abstractformbuilder.cpp:297
 msgctxt "QAbstractFormBuilder"
 msgid "The creation of a widget of the class '%1' failed."
 msgstr ""
 
-#: src/uitools/abstractformbuilder.cpp:594
+#: src/uitools/abstractformbuilder.cpp:593
 msgctxt "QAbstractFormBuilder"
 msgid "Attempt to add child that is not of class QWizardPage to QWizard."
 msgstr ""
 
-#: src/uitools/abstractformbuilder.cpp:656
+#: src/uitools/abstractformbuilder.cpp:655
 msgctxt "QAbstractFormBuilder"
 msgid ""
 "Attempt to add a layout to a widget '%1' (%2) which already has a layout of "
@@ -5839,27 +5824,27 @@ msgid ""
 "This indicates an inconsistency in the ui-file."
 msgstr ""
 
-#: src/uitools/abstractformbuilder.cpp:866
+#: src/uitools/abstractformbuilder.cpp:865
 msgctxt "QAbstractFormBuilder"
 msgid "Empty widget item in %1 '%2'."
 msgstr ""
 
-#: src/uitools/abstractformbuilder.cpp:1612
+#: src/uitools/abstractformbuilder.cpp:1611
 msgctxt "QAbstractFormBuilder"
 msgid "Flags property are not supported yet."
 msgstr ""
 
-#: src/uitools/abstractformbuilder.cpp:1693
+#: src/uitools/abstractformbuilder.cpp:1692
 msgctxt "QAbstractFormBuilder"
 msgid "While applying tab stops: The widget '%1' could not be found."
 msgstr ""
 
-#: src/uitools/abstractformbuilder.cpp:2439
+#: src/uitools/abstractformbuilder.cpp:2438
 msgctxt "QAbstractFormBuilder"
 msgid "Invalid QButtonGroup reference '%1' referenced by '%2'."
 msgstr ""
 
-#: src/uitools/abstractformbuilder.cpp:2950
+#: src/uitools/abstractformbuilder.cpp:2949
 msgctxt "QAbstractFormBuilder"
 msgid "This version of the uitools library is linked without script support."
 msgstr ""
