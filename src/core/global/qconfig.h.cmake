@@ -172,7 +172,6 @@
 #cmakedefine QT_NO_DEBUG
 #cmakedefine QT_NO_DEBUG_PLUGIN_CHECK
 #cmakedefine QT_NO_DEBUG_STREAM
-#cmakedefine QT_NO_DESKTOPSERVICES
 #cmakedefine QT_NO_DIAL
 #cmakedefine QT_NO_DIALOGBUTTONBOX
 #cmakedefine QT_NO_DIRMODEL

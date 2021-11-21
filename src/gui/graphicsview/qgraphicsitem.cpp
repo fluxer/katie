@@ -9840,7 +9840,7 @@ bool QGraphicsTextItem::tabChangesFocus() const
     \property QGraphicsTextItem::openExternalLinks
 
     Specifies whether QGraphicsTextItem should automatically open links using
-    QDesktopServices::openUrl() instead of emitting the
+    QStandardPaths::openUrl() instead of emitting the
     linkActivated signal.
 
     The default value is false.

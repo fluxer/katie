@@ -643,7 +643,6 @@ include/katie/QtGui/QCursor
 include/katie/QtGui/QDataWidgetMapper
 include/katie/QtGui/QDateEdit
 include/katie/QtGui/QDateTimeEdit
-include/katie/QtGui/QDesktopServices
 include/katie/QtGui/QDesktopWidget
 include/katie/QtGui/QDial
 include/katie/QtGui/QDialog
@@ -1010,7 +1009,6 @@ include/katie/QtGui/qcompleter.h
 include/katie/QtGui/qcursor.h
 include/katie/QtGui/qdatawidgetmapper.h
 include/katie/QtGui/qdatetimeedit.h
-include/katie/QtGui/qdesktopservices.h
 include/katie/QtGui/qdesktopwidget.h
 include/katie/QtGui/qdial.h
 include/katie/QtGui/qdialog.h

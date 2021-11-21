@@ -216,7 +216,6 @@ static const struct ClassTblData {
     { QLatin1String("QDesignerWidgetBoxInterface"), QLatin1String("QtDesigner/abstractwidgetbox.h") },
     { QLatin1String("QDesignerWidgetDataBaseInterface"), QLatin1String("QtDesigner/abstractwidgetdatabase.h") },
     { QLatin1String("QDesignerWidgetFactoryInterface"), QLatin1String("QtDesigner/abstractwidgetfactory.h") },
-    { QLatin1String("QDesktopServices"), QLatin1String("QtGui/qdesktopservices.h") },
     { QLatin1String("QDesktopWidget"), QLatin1String("QtGui/qdesktopwidget.h") },
     { QLatin1String("QDial"), QLatin1String("QtGui/qdial.h") },
     { QLatin1String("QDialog"), QLatin1String("QtGui/qdialog.h") },

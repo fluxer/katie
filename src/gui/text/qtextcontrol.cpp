@@ -53,7 +53,7 @@
 #include "qtexttable.h"
 #include "qvariant.h"
 #include "qurl.h"
-#include "qdesktopservices.h"
+#include "qstandardpaths.h"
 #include "qtooltip.h"
 #include "qstyleoption.h"
 #include "qlineedit.h"
@@ -2454,11 +2454,9 @@ void QTextControlPrivate::activateLinkUnderCursor(QString href)
     }
     repaintOldAndNewSelection(oldCursor);
 
-#ifndef QT_NO_DESKTOPSERVICES
     if (openExternalLinks)
-        QDesktopServices::openUrl(href);
+        QStandardPaths::openUrl(href);
     else
-#endif
         emit q_func()->linkActivated(href);
 }
 

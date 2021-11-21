@@ -36,7 +36,7 @@
 #include "qdir.h"
 #include "qwhatsthis.h"
 #include "qtextobject.h"
-#include "qdesktopservices.h"
+#include "qstandardpaths.h"
 
 QT_BEGIN_NAMESPACE
 
@@ -186,7 +186,6 @@ void QTextBrowserPrivate::_q_activateAnchor(const QString &href)
 
     textOrSourceChanged = false;
 
-#ifndef QT_NO_DESKTOPSERVICES
     if ((openExternalLinks
          && url.scheme() != QLatin1String("file")
          && url.scheme() != QLatin1String("qrc")
@@ -194,10 +193,9 @@ void QTextBrowserPrivate::_q_activateAnchor(const QString &href)
         || (url.isRelative() && !currentURL.isRelative()
             && currentURL.scheme() != QLatin1String("file")
             && currentURL.scheme() != QLatin1String("qrc"))) {
-        QDesktopServices::openUrl(url);
+        QStandardPaths::openUrl(url);
         return;
     }
-#endif
 
     emit q->anchorClicked(url);
 
@@ -891,7 +889,7 @@ int QTextBrowser::backwardHistoryCount() const
     \since 4.2
 
     Specifies whether QTextBrowser should automatically open links to external
-    sources using QDesktopServices::openUrl() instead of emitting the
+    sources using QStandardPaths::openUrl() instead of emitting the
     anchorClicked signal. Links are considered external if their scheme is
     neither file or qrc.
 
