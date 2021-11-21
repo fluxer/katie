@@ -97,9 +97,7 @@ public:
 
     QBenchmarkGlobalData();
     ~QBenchmarkGlobalData();
-    enum Mode { WallTime, TickCounter, EventCounter };
-    void setMode(Mode mode);
-    Mode mode() const { return mode_; }
+    void setMetric(QTest::QBenchmarkMetric metric);
     int adjustMedianIterationCount();
 
     QBenchmarkMeasurerBase *measurer;
@@ -109,8 +107,6 @@ public:
     int medianIterationCount;
     bool verboseOutput;
     QString callgrindOutFileBase;
-private:
-    Mode mode_;
 };
 
 /*
