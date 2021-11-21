@@ -178,11 +178,6 @@ public:
                       int subIdx, 
                       const QScriptDeclarativeClass::Identifier &name,
                       bool isTerminal);
-    void findgeneric(Register *output,                                 // value output
-                     int subIdx,                                       // Subscription index in config
-                     QDeclarativeContextData *context,                 // Context to search in
-                     const QScriptDeclarativeClass::Identifier &name, 
-                     bool isTerminal);
 };
 
 QDeclarativeCompiledBindingsPrivate::QDeclarativeCompiledBindingsPrivate()
@@ -866,65 +861,6 @@ bool QDeclarativeCompiledBindingsPrivate::findproperty(QObject *obj, Register *o
         output->setUndefined();
         return false;
     }
-}
-
-void QDeclarativeCompiledBindingsPrivate::findgeneric(Register *output, 
-                                                      int subIdx,      
-                                                      QDeclarativeContextData *context,
-                                                      const QScriptDeclarativeClass::Identifier &name, 
-                                                      bool isTerminal)
-{
-    QDeclarativeEnginePrivate *enginePriv = QDeclarativeEnginePrivate::get(context->engine);
-
-    while (context) {
-
-        int contextPropertyIndex = context->propertyNames?context->propertyNames->value(name):-1;
-
-
-        if (contextPropertyIndex != -1) {
-
-            if (contextPropertyIndex < context->idValueCount) {
-                output->setQObject(context->idValues[contextPropertyIndex]);
-                output->settype(QMetaType::QObjectStar);
-
-                if (subIdx != -1) 
-                    subscribeId(context, contextPropertyIndex, subIdx);
-
-            } else {
-                QDeclarativeContextPrivate *cp = context->asQDeclarativeContextPrivate();
-                const QVariant &value = cp->propertyValues.at(contextPropertyIndex);
-
-                if (isTerminal) {
-                    new (output->typeDataPtr()) QVariant(value);
-                    output->settype(qMetaTypeId<QVariant>());
-                } else {
-                    bool ok;
-                    output->setQObject(variantToQObject(value, &ok));
-                    if (!ok) { output->setUndefined(); }
-                    else { output->settype(QMetaType::QObjectStar); }
-                    return;
-                }
-
-                if (subIdx != -1) 
-                    subscribe(context->asQDeclarativeContext(), contextPropertyIndex + cp->notifyIndex, subIdx);
-
-
-            }
-
-            return;
-        }
-
-        if (QObject *root = context->contextObject) {
-
-            if (findproperty(root, output, enginePriv, subIdx, name, isTerminal))
-                return;
-
-        }
-
-        context = context->parent;
-    }
-
-    output->setUndefined();
 }
 
 void QDeclarativeCompiledBindingsPrivate::init()
