@@ -22,9 +22,9 @@
 #define QSTANDARDPATHS_H
 
 #include <QtCore/qstringlist.h>
+#include <QtCore/qurl.h>
 
 QT_BEGIN_NAMESPACE
-
 
 class Q_CORE_EXPORT QStandardPaths
 {
@@ -60,6 +60,8 @@ public:
     static QString displayName(StandardLocation type);
 
     static QString findExecutable(const QString &executableName, const QStringList &paths = QStringList());
+
+    static bool openUrl(const QUrl &url);
 
 private:
     Q_DISABLE_COPY(QStandardPaths)

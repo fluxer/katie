@@ -21,6 +21,7 @@
 #include "qstandardpaths.h"
 #include "qdir.h"
 #include "qfile.h"
+#include "qprocess.h"
 #include "qcore_unix_p.h"
 
 QT_BEGIN_NAMESPACE
@@ -272,6 +273,16 @@ QString QStandardPaths::findExecutable(const QString &executableName, const QStr
     }
 
     return searchExecutable(paths, executableName);
+}
+
+bool QStandardPaths::openUrl(const QUrl &url)
+{
+    if (!url.isValid()) {
+        return false;
+    }
+
+    const QString command = QLatin1String("xdg-open ") + url.toEncoded();
+    return QProcess::startDetached(command);
 }
 
 QT_END_NAMESPACE

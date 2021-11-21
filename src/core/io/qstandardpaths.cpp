@@ -176,20 +176,6 @@ QStringList QStandardPaths::locateAll(StandardLocation type, const QString &file
 }
 
 /*!
-    \fn QString QStandardPaths::findExecutable(const QString &executableName, const QStringList &paths)
-
-    Finds the executable named \a executableName in the paths specified by
-    \a paths, or the system paths if \a paths is empty. The system path is
-    determined by the PATH environment variable.
-
-    Symlinks are not resolved, in order to preserve behavior for the case of
-    executables whose behavior depends on the name they are invoked with.
-
-    Returns the absolute file path to the executable or an empty string if not
-    found.
-*/
-
-/*!
     Returns a localized display name for the given location \a type.
 */
 QString QStandardPaths::displayName(StandardLocation type)
@@ -240,5 +226,27 @@ QString QStandardPaths::displayName(StandardLocation type)
     }
     Q_UNREACHABLE();
 }
+
+/*!
+    \fn QString QStandardPaths::findExecutable(const QString &executableName, const QStringList &paths)
+
+    Finds the executable named \a executableName in the paths specified by
+    \a paths, or the system paths if \a paths is empty. The system path is
+    determined by the PATH environment variable.
+
+    Symlinks are not resolved, in order to preserve behavior for the case of
+    executables whose behavior depends on the name they are invoked with.
+
+    Returns the absolute file path to the executable or an empty string if not
+    found.
+*/
+
+/*!
+    \fn QString QStandardPaths::openUrl(const QUrl &url)
+
+    Opens the URL \a url with the associated application for it.
+
+    Returns true upon success and false otherwise.
+*/
 
 QT_END_NAMESPACE
