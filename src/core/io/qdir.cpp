@@ -153,9 +153,9 @@ struct QDirSortItem
 
 class QDirSortItemComparator
 {
-    int qt_cmp_si_sort_flags;
+    QDir::SortFlags qt_cmp_si_sort_flags;
 public:
-    QDirSortItemComparator(int flags) : qt_cmp_si_sort_flags(flags) {}
+    QDirSortItemComparator(QDir::SortFlags flags) : qt_cmp_si_sort_flags(flags) {}
     bool operator()(const QDirSortItem &, const QDirSortItem &) const;
 };
 
