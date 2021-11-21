@@ -44,13 +44,9 @@ public:
     enum StandardLocation {
         DesktopLocation,
         DocumentsLocation,
-        FontsLocation,
-        ApplicationsLocation,
         MusicLocation,
         MoviesLocation,
         PicturesLocation,
-        TempLocation,
-        HomeLocation,
         DataLocation,
         CacheLocation
     };

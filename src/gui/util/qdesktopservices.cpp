@@ -226,13 +226,9 @@ void QDesktopServices::unsetUrlHandler(const QString &scheme)
 
     \value DesktopLocation Returns the user's desktop directory.
     \value DocumentsLocation Returns the user's document.
-    \value FontsLocation Returns the user's fonts.
-    \value ApplicationsLocation Returns the user's applications.
     \value MusicLocation Returns the users music.
     \value MoviesLocation Returns the user's movies.
     \value PicturesLocation Returns the user's pictures.
-    \value TempLocation Returns the system's temporary directory.
-    \value HomeLocation Returns the user's home directory.
     \value DataLocation Returns a directory location where persistent
            application data can be stored. QCoreApplication::applicationName
            and QCoreApplication::organizationName should work on all
@@ -254,7 +250,30 @@ void QDesktopServices::unsetUrlHandler(const QString &scheme)
 */
 QString QDesktopServices::storageLocation(StandardLocation type)
 {
-    return QStandardPaths::writableLocation(static_cast<QStandardPaths::StandardLocation>(type));
+    switch (type) {
+        case StandardLocation::DesktopLocation: {
+            return QStandardPaths::writableLocation(QStandardPaths::DesktopLocation);
+        }
+        case StandardLocation::DocumentsLocation: {
+            return QStandardPaths::writableLocation(QStandardPaths::DocumentsLocation);
+        }
+        case StandardLocation::MusicLocation: {
+            return QStandardPaths::writableLocation(QStandardPaths::MusicLocation);
+        }
+        case StandardLocation::MoviesLocation: {
+            return QStandardPaths::writableLocation(QStandardPaths::VideosLocation);
+        }
+        case StandardLocation::PicturesLocation: {
+            return QStandardPaths::writableLocation(QStandardPaths::PicturesLocation);
+        }
+        case StandardLocation::DataLocation: {
+            return QStandardPaths::writableLocation(QStandardPaths::DataLocation);
+        }
+        case StandardLocation::CacheLocation: {
+            return QStandardPaths::writableLocation(QStandardPaths::CacheLocation);
+        }
+    }
+    Q_UNREACHABLE();
 }
 
 /*!
@@ -263,7 +282,30 @@ QString QDesktopServices::storageLocation(StandardLocation type)
 */
 QString QDesktopServices::displayName(StandardLocation type)
 {
-    return QStandardPaths::displayName(static_cast<QStandardPaths::StandardLocation>(type));
+    switch (type) {
+        case StandardLocation::DesktopLocation: {
+            return QStandardPaths::displayName(QStandardPaths::DesktopLocation);
+        }
+        case StandardLocation::DocumentsLocation: {
+            return QStandardPaths::displayName(QStandardPaths::DocumentsLocation);
+        }
+        case StandardLocation::MusicLocation: {
+            return QStandardPaths::displayName(QStandardPaths::MusicLocation);
+        }
+        case StandardLocation::MoviesLocation: {
+            return QStandardPaths::displayName(QStandardPaths::VideosLocation);
+        }
+        case StandardLocation::PicturesLocation: {
+            return QStandardPaths::displayName(QStandardPaths::PicturesLocation);
+        }
+        case StandardLocation::DataLocation: {
+            return QStandardPaths::displayName(QStandardPaths::DataLocation);
+        }
+        case StandardLocation::CacheLocation: {
+            return QStandardPaths::displayName(QStandardPaths::CacheLocation);
+        }
+    }
+    Q_UNREACHABLE();
 }
 
 QT_END_NAMESPACE

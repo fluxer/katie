@@ -225,7 +225,20 @@ static QString getSettingsPath(QSettings::Scope scope, const QString &filename, 
 
     QStringList locations = QStandardPaths::standardLocations(QStandardPaths::ConfigLocation);
     if (scope == QSettings::UserScope) {
-        locations = QStandardPaths::standardLocations(QStandardPaths::GenericConfigLocation);
+        QStringList userlocations;
+        const QString apporg = QCoreApplication::organizationName();
+        const QString appname = QCoreApplication::applicationName();
+        foreach (const QString &location, locations) {
+            QString path(location);
+            if (!apporg.isEmpty()) {
+                path += QLatin1Char('/') + apporg;
+            }
+            if (!appname.isEmpty()) {
+                path += QLatin1Char('/') + appname;
+            }
+            userlocations += path;
+        }
+        locations = userlocations;
     }
 
     foreach (const QString &location, locations) {

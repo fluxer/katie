@@ -53,34 +53,18 @@ QT_BEGIN_NAMESPACE
 
     \value DesktopLocation Returns the user's desktop directory.
     \value DocumentsLocation Returns the user's document.
-    \value FontsLocation Returns the user's fonts.
-    \value ApplicationsLocation Returns the user's applications.
-    \value MusicLocation Returns the user's music.
-    \value MoviesLocation Returns the user's movies.
-    \value PicturesLocation Returns the user's pictures.
-    \value TempLocation Returns the system's temporary directory.
-    \value HomeLocation Returns the user's home directory.
-    \value DataLocation Returns a directory location where persistent
-           application data can be stored. QCoreApplication::organizationName
-           and QCoreApplication::applicationName are appended to the directory location
-           returned for GenericDataLocation.
-    \value CacheLocation Returns a directory location where user-specific
-           non-essential (cached) data should be written.
-    \value GenericCacheLocation Returns a directory location where user-specific
-           non-essential (cached) data, shared across applications, should be written.
-    \value GenericDataLocation Returns a directory location where persistent
-           data shared across applications can be stored.
-    \value RuntimeLocation Returns a directory location where runtime communication
-           files should be written. For instance unix local sockets.
-    \value ConfigLocation Returns a directory location where user-specific
-           configuration files should be written. This may be either a generic value
-           or application-specific, and the returned path is never empty.
-    \value DownloadLocation Returns a directory for user's downloaded files. This is a generic value.
+    \value DownloadLocation Returns a directory for user's downloaded files.
            If no directory specific for downloads exists, a sensible fallback for storing user
            documents is returned.
-    \value GenericConfigLocation Returns a directory location where user-specific
-           configuration files shared between multiple applications should be written.
-           This is a generic value and the returned path is never empty.
+    \value VideosLocation Returns the user's movies.
+    \value MusicLocation Returns the user's music.
+    \value PicturesLocation Returns the user's pictures.
+    \value PublicLocation Returns the user's public share.
+    \value TemplatesLocation Returns the user's templates.
+    \value DataLocation Returns a directory location where persistent
+           application data can be stored.
+    \value CacheLocation Returns a directory location where user-specific
+           non-essential (cached) data should be written.
 
     The following table gives examples of paths on different operating systems.
     The first path is the writable path (unless noted). Other, additional
@@ -92,38 +76,27 @@ QT_BEGIN_NAMESPACE
          \li "~/Desktop"
     \row \li DocumentsLocation
          \li "~/Documents"
-    \row \li FontsLocation
-         \li "~/.fonts"
-    \row \li ApplicationsLocation
-         \li "~/.local/share/applications", "/usr/local/share/applications", "/usr/share/applications"
+    \row \li DownloadLocation
+         \li "~/Downloads"
+    \row \li VideosLocation
+         \li "~/Videos"
     \row \li MusicLocation
          \li "~/Music"
-    \row \li MoviesLocation
-         \li "~/Videos"
     \row \li PicturesLocation
          \li "~/Pictures"
-    \row \li TempLocation
-         \li "/var/tmp"
-         \li "/tmp"
-    \row \li HomeLocation
-         \li "~"
+    \row \li PublicLocation
+         \li "~/Public"
+    \row \li Templates
+         \li "~/Templates"
     \row \li DataLocation
          \li "~/.local/share/<APPNAME>", "/usr/local/share/<APPNAME>", "/usr/share/<APPNAME>"
     \row \li CacheLocation
          \li "~/.cache/<APPNAME>"
-    \row \li GenericDataLocation
-         \li "~/.local/share", "/usr/local/share", "/usr/share"
+    \row \li ConfigLocation
+         \li "~/.config", "/etc/xdg"
     \row \li RuntimeLocation
          \li "/var/tmp"
          \li "/run/user/<USER>"
-    \row \li ConfigLocation
-         \li "~/.config", "/etc/xdg"
-    \row \li GenericConfigLocation
-         \li "~/.config", "/etc/xdg"
-    \row \li DownloadLocation
-         \li "~/Downloads"
-    \row \li GenericCacheLocation
-         \li "~/.cache"
     \endtable
 
     In the table above, \c <APPNAME> is usually the organization name, the
@@ -284,36 +257,26 @@ QString QStandardPaths::displayName(StandardLocation type)
             return QCoreApplication::translate("QStandardPaths", "Desktop");
         case DocumentsLocation:
             return QCoreApplication::translate("QStandardPaths", "Documents");
-        case FontsLocation:
-            return QCoreApplication::translate("QStandardPaths", "Fonts");
-        case ApplicationsLocation:
-            return QCoreApplication::translate("QStandardPaths", "Applications");
+        case DownloadLocation:
+            return QCoreApplication::translate("QStandardPaths", "Download");
+        case VideosLocation:
+            return QCoreApplication::translate("QStandardPaths", "Videos");
         case MusicLocation:
             return QCoreApplication::translate("QStandardPaths", "Music");
-        case MoviesLocation:
-            return QCoreApplication::translate("QStandardPaths", "Movies");
         case PicturesLocation:
             return QCoreApplication::translate("QStandardPaths", "Pictures");
-        case TempLocation:
-            return QCoreApplication::translate("QStandardPaths", "Temporary Directory");
-        case HomeLocation:
-            return QCoreApplication::translate("QStandardPaths", "Home");
+        case PublicLocation:
+            return QCoreApplication::translate("QStandardPaths", "Public Share");
+        case TemplatesLocation:
+            return QCoreApplication::translate("QStandardPaths", "Templates");
         case DataLocation:
             return QCoreApplication::translate("QStandardPaths", "Application Data");
         case CacheLocation:
             return QCoreApplication::translate("QStandardPaths", "Cache");
-        case GenericDataLocation:
-            return QCoreApplication::translate("QStandardPaths", "Shared Data");
-        case RuntimeLocation:
-            return QCoreApplication::translate("QStandardPaths", "Runtime");
         case ConfigLocation:
             return QCoreApplication::translate("QStandardPaths", "Configuration");
-        case GenericConfigLocation:
-            return QCoreApplication::translate("QStandardPaths", "Shared Configuration");
-        case GenericCacheLocation:
-            return QCoreApplication::translate("QStandardPaths", "Shared Cache");
-        case DownloadLocation:
-            return QCoreApplication::translate("QStandardPaths", "Download");
+        case RuntimeLocation:
+            return QCoreApplication::translate("QStandardPaths", "Runtime");
     }
     Q_UNREACHABLE();
 }

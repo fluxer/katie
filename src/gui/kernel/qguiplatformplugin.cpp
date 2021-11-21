@@ -138,7 +138,7 @@ QStringList QGuiPlatformPlugin::iconThemeSearchPaths()
     if (homeDir.exists())
         paths.append(homeDir.path());
 
-    foreach (const QString &it, QStandardPaths::standardLocations(QStandardPaths::GenericDataLocation)) {
+    foreach (const QString &it, QStandardPaths::standardLocations(QStandardPaths::DataLocation)) {
         QDir dir(it);
         if (dir.exists())
             paths.append(dir.path() + QLatin1String("/icons"));

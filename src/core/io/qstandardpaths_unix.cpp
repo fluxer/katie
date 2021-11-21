@@ -58,24 +58,19 @@ QString QStandardPaths::writableLocation(StandardLocation type)
             return QDir::homePath() + QLatin1String("/Desktop");
         case DocumentsLocation:
             return QDir::homePath() + QLatin1String("/Documents");
-        case PicturesLocation:
-            return QDir::homePath() + QLatin1String("/Pictures");
-        case FontsLocation:
-            return QDir::homePath() + QLatin1String("/.fonts");
-        case MusicLocation:
-            return QDir::homePath() + QLatin1String("/Music");
-        case MoviesLocation:
-            return QDir::homePath() + QLatin1String("/Videos");
         case DownloadLocation:
             return QDir::homePath() + QLatin1String("/Downloads");
-        case ApplicationsLocation:
-            return writableLocation(GenericDataLocation) + QLatin1String("/applications");
-        case HomeLocation:
-            return QDir::homePath();
-        case TempLocation:
-            return QDir::tempPath();
-        case CacheLocation:
-        case GenericCacheLocation: {
+        case PicturesLocation:
+            return QDir::homePath() + QLatin1String("/Pictures");
+        case MusicLocation:
+            return QDir::homePath() + QLatin1String("/Music");
+        case VideosLocation:
+            return QDir::homePath() + QLatin1String("/Videos");
+        case TemplatesLocation:
+            return QDir::homePath() + QLatin1String("/Templates");
+        case PublicLocation:
+            return QDir::homePath() + QLatin1String("/Public");
+        case CacheLocation: {
             // http://standards.freedesktop.org/basedir-spec/basedir-spec-0.6.html
             static QString xdgCacheHome = QFile::decodeName(qgetenv("XDG_CACHE_HOME"));
             if (xdgCacheHome.isEmpty()) {
@@ -86,8 +81,7 @@ QString QStandardPaths::writableLocation(StandardLocation type)
             }
             return xdgCacheHome;
         }
-        case DataLocation:
-        case GenericDataLocation: {
+        case DataLocation: {
             static QString xdgDataHome = QFile::decodeName(qgetenv("XDG_DATA_HOME"));
             if (xdgDataHome.isEmpty()) {
                 xdgDataHome = QDir::homePath() + QLatin1String("/.local/share");
@@ -97,8 +91,7 @@ QString QStandardPaths::writableLocation(StandardLocation type)
             }
             return xdgDataHome;
         }
-        case ConfigLocation:
-        case GenericConfigLocation: {
+        case ConfigLocation: {
             // http://standards.freedesktop.org/basedir-spec/latest/
             static QString xdgConfigHome = QFile::decodeName(qgetenv("XDG_CONFIG_HOME"));
             if (xdgConfigHome.isEmpty()) {
@@ -178,6 +171,10 @@ QString QStandardPaths::writableLocation(StandardLocation type)
                 value = lines.value(QLatin1String("DOCUMENTS"));
                 break;
             }
+            case DownloadLocation: {
+                value = lines.value(QLatin1String("DOWNLOAD"));
+                break;
+            }
             case PicturesLocation: {
                 value = lines.value(QLatin1String("PICTURES"));
                 break;
@@ -186,12 +183,16 @@ QString QStandardPaths::writableLocation(StandardLocation type)
                 value = lines.value(QLatin1String("MUSIC"));
                 break;
             }
-            case MoviesLocation: {
+            case VideosLocation: {
                 value = lines.value(QLatin1String("VIDEOS"));
                 break;
             }
-            case DownloadLocation: {
-                value = lines.value(QLatin1String("DOWNLOAD"));
+            case TemplatesLocation: {
+                value = lines.value(QLatin1String("TEMPLATES"));
+                break;
+            }
+            case PublicLocation: {
+                value = lines.value(QLatin1String("PUBLICSHARE"));
                 break;
             }
             default:
@@ -226,8 +227,7 @@ QStringList QStandardPaths::standardLocations(StandardLocation type)
 {
     QStringList dirs;
     switch (type) {
-        case ConfigLocation:
-        case GenericConfigLocation: {
+        case ConfigLocation: {
             // http://standards.freedesktop.org/basedir-spec/latest/
             static const QString xdgConfigDirs = QFile::decodeName(qgetenv("XDG_CONFIG_DIRS"));
             if (xdgConfigDirs.isEmpty()) {
@@ -237,22 +237,8 @@ QStringList QStandardPaths::standardLocations(StandardLocation type)
             }
             break;
         }
-        case GenericDataLocation: {
-            dirs = xdgDataDirs();
-            break;
-        }
-        case ApplicationsLocation: {
-            dirs = xdgDataDirs();
-            for (int i = 0; i < dirs.count(); ++i) {
-                dirs[i].append(QLatin1String("/applications"));
-            }
-            break;
-        }
         case DataLocation: {
             dirs = xdgDataDirs();
-            for (int i = 0; i < dirs.count(); ++i) {
-                appendOrganizationAndApp(dirs[i]);
-            }
             break;
         }
         default:

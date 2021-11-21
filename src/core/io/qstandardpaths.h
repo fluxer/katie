@@ -33,25 +33,20 @@ QT_BEGIN_NAMESPACE
 class Q_CORE_EXPORT QStandardPaths
 {
 public:
-    // Do not re-order, must match QDesktopServices
     enum StandardLocation {
         DesktopLocation,
         DocumentsLocation,
-        FontsLocation,
-        ApplicationsLocation,
+        DownloadLocation,
+        VideosLocation,
         MusicLocation,
-        MoviesLocation,
         PicturesLocation,
-        TempLocation,
-        HomeLocation,
+        PublicLocation,
+        TemplatesLocation,
+
         DataLocation,
         CacheLocation,
-        GenericDataLocation,
-        RuntimeLocation,
         ConfigLocation,
-        DownloadLocation,
-        GenericCacheLocation,
-        GenericConfigLocation
+        RuntimeLocation
     };
 
     enum LocateOption {
