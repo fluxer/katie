@@ -31,7 +31,6 @@ QT_BEGIN_NAMESPACE
   
   \value WalltimeMilliseconds   Clock time in milliseconds
   \value CPUTicks               CPU time
-  \value InstructionReads       Instruction reads
   \value Events                 Event count
 
   \sa QTest::benchmarkMetricName(), QTest::benchmarkMetricUnit()
@@ -50,8 +49,6 @@ const char * QTest::benchmarkMetricName(QBenchmarkMetric metric)
             return "WalltimeMilliseconds";
         case CPUTicks:
             return "CPUTicks";
-        case InstructionReads:
-            return "InstructionReads";
         case Events:
             return "Events";
     }
@@ -70,8 +67,6 @@ const char * QTest::benchmarkMetricUnit(QBenchmarkMetric metric)
             return "msecs";
         case CPUTicks:
             return "CPU ticks";
-        case InstructionReads:
-            return "instruction reads";
         case Events:
             return "events";
     }

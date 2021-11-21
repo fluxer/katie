@@ -33,7 +33,6 @@ namespace QTest {
 enum QBenchmarkMetric {
     WalltimeMilliseconds,
     CPUTicks,
-    InstructionReads,
     Events
 };
 
