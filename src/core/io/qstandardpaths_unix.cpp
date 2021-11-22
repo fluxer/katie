@@ -51,7 +51,7 @@ static QStringList getEnvListName(const char* const name)
 static QString getUserDirName(const char* const name, const int namesize)
 {
     QString xdgconfig;
-    const QByteArray xdgconfighome = qgetenv("XDG_CONFIG_HOME");
+    const QByteArray xdgconfighome(qgetenv("XDG_CONFIG_HOME"));
     if (!xdgconfighome.isEmpty()) {
         xdgconfig = QFile::decodeName(xdgconfighome) + QLatin1String("/user-dirs.dirs");
     } else {
