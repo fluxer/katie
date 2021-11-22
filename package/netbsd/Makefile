@@ -22,6 +22,7 @@ USE_TOOLS = pkg-config msgfmt
 DL_AUTO_VARS = yes
 
 DEPENDS = xdg-utils-[0-9]*:../../misc/xdg-utils
+BUILD_DEPENDS = unifdef-[0-9]*:../../devel/unifdef
 
 .include "../../sysutils/desktop-file-utils/desktopdb.mk"
 .include "../../archivers/zstd/buildlink3.mk"
