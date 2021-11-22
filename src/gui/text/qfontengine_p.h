@@ -329,7 +329,7 @@ public:
 
 protected:
     friend class QPSPrintEnginePrivate;
-    friend class QPSPrintEngineFontMulti;
+
     virtual void loadEngine(int at) = 0;
     QVector<QFontEngine *> engines;
 };
