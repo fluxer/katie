@@ -41,7 +41,7 @@ QString qt_error_string(int errorCode)
 {
 #if !defined(QT_NO_THREAD)
     QSTACKARRAY(char, errbuf, 1024);
-    strerror_r(errorCode, errbuf, sizeof(errbuf));
+    ::strerror_r(errorCode, errbuf, sizeof(errbuf));
     return QString::fromLocal8Bit(errbuf);
 #else
     return QString::fromLocal8Bit(::strerror(errorCode));
