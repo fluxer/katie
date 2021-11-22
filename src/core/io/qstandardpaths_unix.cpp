@@ -242,7 +242,7 @@ QStringList QStandardPaths::standardLocations(StandardLocation type)
         }
         case StandardLocation::RuntimeLocation: {
             const QString location(getEnvName("XDG_RUNTIME_DIR"));
-            if (!location.isEmpty()) {
+            if (Q_UNLIKELY(!location.isEmpty())) {
                 result.append(location);
             } else {
                 qWarning("QStandardPaths: runtime directory is not set, using fallback");
