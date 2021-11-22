@@ -46,9 +46,8 @@ class QStringSplitter
 {
 public:
     QStringSplitter(const QString &s)
-        : m_string(s), m_pos(0)
+        : m_string(s), m_pos(0), m_splitChar(QLatin1Char('/'))
     {
-        m_splitChar = QLatin1Char('/');
     }
 
     inline bool hasNext() {
@@ -65,8 +64,8 @@ public:
     }
 
     QString m_string;
-    QChar m_splitChar;
     int m_pos;
+    const QChar m_splitChar;
 };
 
 
