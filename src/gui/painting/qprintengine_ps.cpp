@@ -154,7 +154,7 @@ QPSPrintEnginePrivate::QPSPrintEnginePrivate(QPrinter::PrinterMode m)
     : QPdfBaseEnginePrivate(m),
       printerState(QPrinter::Idle), hugeDocument(false), headerDone(false)
 {
-    useAlphaEngine = true;
+    useAlphaEngine = false;
     postscript = true;
 
     firstPage = true;
