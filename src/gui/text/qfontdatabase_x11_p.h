@@ -355,6 +355,7 @@ static const char *specialLanguagesTbl[] = {
     "dv-mv", // DivesAkuru
     "zkt-cn", // KhitanSmallScript
     "ku-ge", // Yezidi
+    0, // CyproMinoan
     "ug-cn", // OldUyghur
     "ntm-in", // Tangsa
     "txo-in", // Toto
