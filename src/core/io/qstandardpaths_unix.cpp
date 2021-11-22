@@ -67,8 +67,15 @@ static QString getUserDirName(const char* const name, const int namesize)
         const QByteArray xdgline(xdgconfigfile.readLine());
         if (xdgline.startsWith(name)) {
             QByteArray xdglocation(xdgline.mid(namesize, xdgline.size() - namesize));
+            xdglocation = xdglocation.trimmed();
             if (xdglocation.contains("$HOME")) {
                 xdglocation.replace("$HOME", QFile::encodeName(QDir::homePath()));
+            }
+            if (xdglocation.startsWith('"')) {
+                xdglocation = xdglocation.mid(1, xdglocation.size() - 1);
+            }
+            if (xdglocation.endsWith('"')) {
+                xdglocation.chop(1);
             }
             return QFile::decodeName(xdglocation);
         }
