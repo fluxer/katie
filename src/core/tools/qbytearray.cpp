@@ -3762,20 +3762,15 @@ QByteArray QByteArray::fromHex(const QByteArray &hexEncoded)
 QByteArray QByteArray::toHex() const
 {
     QByteArray hex(d->size * 2, Qt::Uninitialized);
-    char *hexData = hex.d->data;
+    char *hexdata = hex.d->data;
     const uchar *data = (const uchar *)d->data;
+
+    static const char tohex[] = "0123456789abcdef";
     for (int i = 0; i < d->size; ++i) {
-        int j = (data[i] >> 4) & 0xf;
-        if (j <= 9)
-            hexData[i*2] = (j + '0');
-         else
-            hexData[i*2] = (j + 'a' - 10);
-        j = data[i] & 0xf;
-        if (j <= 9)
-            hexData[i*2+1] = (j + '0');
-         else
-            hexData[i*2+1] = (j + 'a' - 10);
+        *hexdata++ = tohex[(data[i] >> 4) & 0xf];
+        *hexdata++ = tohex[data[i] & 0xf];
     }
+
     return hex;
 }
 
