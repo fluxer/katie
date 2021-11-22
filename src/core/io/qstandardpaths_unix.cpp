@@ -63,7 +63,7 @@ static QString getUserDirName(const char* const name, const int namesize)
         return QString();
     }
 
-    while (true) {
+    while (!xdgconfigfile.atEnd()) {
         const QByteArray xdgline(xdgconfigfile.readLine());
         if (xdgline.startsWith(name)) {
             QByteArray xdglocation(xdgline.mid(namesize, xdgline.size() - namesize));
@@ -78,10 +78,6 @@ static QString getUserDirName(const char* const name, const int namesize)
                 xdglocation.chop(1);
             }
             return QFile::decodeName(xdglocation);
-        }
-
-        if (xdgconfigfile.atEnd()) {
-            break;
         }
     }
 
