@@ -364,6 +364,7 @@ static const struct KeyNameTblData {
     { Qt::Key_BracketRight,             QT_TRANSLATE_NOOP("QShortcut", "]") },
     { Qt::Key_AsciiCircum,              QT_TRANSLATE_NOOP("QShortcut", "^") },
     { Qt::Key_Underscore,               QT_TRANSLATE_NOOP("QShortcut", "_") },
+    { Qt::Key_Grave,                    QT_TRANSLATE_NOOP("QShortcut", "`") },
     { Qt::Key_BraceLeft,                QT_TRANSLATE_NOOP("QShortcut", "{") },
     { Qt::Key_Bar,                      QT_TRANSLATE_NOOP("QShortcut", "|") },
     { Qt::Key_BraceRight,               QT_TRANSLATE_NOOP("QShortcut", "}") },
