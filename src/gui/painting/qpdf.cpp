@@ -781,8 +781,7 @@ void QPdf::Stroker::strokePath(const QPainterPath &path)
 QByteArray QPdf::ascii85Encode(const QByteArray &input)
 {
     int isize = input.size()/4*4;
-    QByteArray output;
-    output.resize(input.size()*5/4+7);
+    QByteArray output(input.size()*5/4+7, Qt::Uninitialized);
     char *out = output.data();
     const uchar *in = (const uchar *)input.constData();
     for (int i = 0; i < isize; i += 4) {
