@@ -1406,15 +1406,10 @@ QKeySequence QKeySequence::fromString(const QString &str, SequenceFormat format)
 */
 QDataStream &operator<<(QDataStream &s, const QKeySequence &keysequence)
 {
-    QList<quint32> list;
-    list << keysequence.d->key[0];
-
-    if (keysequence.count() > 1) {
-        list << keysequence.d->key[1];
-        list << keysequence.d->key[2];
-        list << keysequence.d->key[3];
-    }
-    s << list;
+    s << keysequence.d->key[0];
+    s << keysequence.d->key[1];
+    s << keysequence.d->key[2];
+    s << keysequence.d->key[3];
     return s;
 }
 
@@ -1429,11 +1424,16 @@ QDataStream &operator<<(QDataStream &s, const QKeySequence &keysequence)
 */
 QDataStream &operator>>(QDataStream &s, QKeySequence &keysequence)
 {
-    qAtomicDetach(keysequence.d);
-    QList<quint32> list;
-    s >> list;
-    for (int i = 0; i < 4; ++i)
-        keysequence.d->key[i] = list.value(i);
+    int keys[4] = { 0, 0, 0, 0 };
+    for (int i = 0; i < 4; ++i) {
+        if (Q_UNLIKELY(s.atEnd())) {
+            keysequence = QKeySequence();
+            s.setStatus(QDataStream::ReadCorruptData);
+            return s;
+        }
+        s >> keys[i];
+    }
+    keysequence = QKeySequence(keys[0], keys[1], keys[2], keys[3]);
     return s;
 }
 
