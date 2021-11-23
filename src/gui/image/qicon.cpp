@@ -243,7 +243,7 @@ QPixmap QPixmapIconEngine::pixmap(const QSize &size, QIcon::Mode mode, QIcon::St
     if (!QPixmapCache::find(key + HexString<uint>(mode), pm)) {
         if (pm.size() != actualSize)
             pm = pm.scaled(actualSize, Qt::IgnoreAspectRatio, Qt::SmoothTransformation);
-        if (pe->mode != mode && mode != QIcon::Normal) {
+        if (pe && pe->mode != mode && mode != QIcon::Normal) {
             QStyleOption opt(0);
             opt.palette = QApplication::palette();
             QPixmap generated = QApplication::style()->generatedIconPixmap(mode, pm, &opt);
