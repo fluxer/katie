@@ -834,7 +834,7 @@ const short QKeySequencePrivate::numberOfKeyBindings = sizeof(QKeySequencePrivat
     \value ZoomOut          Zoom out.
 */
 
-QKeySequence::QKeySequenceData QKeySequence::shared_empty = { QAtomicInt(1), 0, 0, 0, 0 };
+QKeySequence::QKeySequenceData QKeySequence::shared_empty = { QAtomicInt(1), { 0, 0, 0, 0 } };
 
 /*!
     \since 4.2
