@@ -1233,7 +1233,9 @@ void QColor::setAlpha(int alpha)
     Drawing}{Alpha-Blended Drawing}
 */
 qreal QColor::alphaF() const
-{ return ct.argb.alpha / qreal(USHRT_MAX); }
+{
+    return ct.argb.alpha / qreal(USHRT_MAX);
+}
 
 /*!
     Sets the alpha of this color to \a alpha. qreal alpha is specified in the
