@@ -3727,7 +3727,8 @@ void QRegion::cleanUp(QRegion::QRegionData *x)
     if (x->xrectangles)
         free(x->xrectangles);
 #endif
-    delete x;
+    if (x != &shared_empty)
+        delete x;
 }
 
 QRegion::~QRegion()
