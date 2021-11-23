@@ -144,10 +144,10 @@ def todatetimeformat(fromformat):
         'c' : 'ddd', 'cc' : 'ddd', 'ccc' : 'ddd', 'ccccc' : 'ddd', 'cccc' : 'dddd', # stand-alone local day of week
         'K' : 'h', # Hour 0-11
         'k' : 'H', # Hour 1-24
-        'z' : 't', 'zz' : 't', 'zzz' : 't', 'zzzz' : 't', # timezone
-        'Z' : 't', 'ZZ' : 't', 'ZZZ' : 't', 'ZZZZ' : 't', # timezone
-        'v' : 't', 'vv' : 't', 'vvv' : 't', 'vvvv' : 't', # timezone
-        'V' : 't', 'VV' : 't', 'VVV' : 't', 'VVVV' : 't',  # timezone
+        'z' : 'Z', 'zz' : 'Z', 'zzz' : 'Z', 'zzzz' : 'Z', # timezone
+        'Z' : 'Z', 'ZZ' : 'Z', 'ZZZ' : 'Z', 'ZZZZ' : 'Z', # timezone
+        'v' : 'Z', 'vv' : 'Z', 'vvv' : 'Z', 'vvvv' : 'Z', # timezone
+        'V' : 'Z', 'VV' : 'Z', 'VVV' : 'Z', 'VVVV' : 'Z',  # timezone
         'L' : 'M', # stand-alone month names. not supported
     }
     replacementregex = {
