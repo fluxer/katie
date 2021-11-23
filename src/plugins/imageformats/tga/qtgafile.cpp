@@ -226,6 +226,8 @@ QImage QTgaFile::readImage()
         reader = new Tga24Reader();
     else if (bitsPerPixel == 32)
         reader = new Tga32Reader();
+    else
+        return QImage();
     TgaReader &read = *reader;
 
     // For now only deal with yCorner, since no one uses xCorner == 1
