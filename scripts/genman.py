@@ -23,7 +23,7 @@ for root, sdir, lfiles in os.walk('%s/../src/tools' % cwd):
             ofile = ifile.replace('.pod', '.1')
             subprocess.check_call(
                 (pod2man,
-                '--release=Katie 4.11.0',
+                '--release=Katie 4.11.1',
                 '--center=Katie Manual',
                 '--section=1',
                 '--utf8',

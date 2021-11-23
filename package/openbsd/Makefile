@@ -3,7 +3,7 @@
 # https://www.openbsd.org/faq/ports/
 
 DISTNAME = katie
-PKGNAME = katie-4.11.0.d20201231
+PKGNAME = katie-4.11.1.d20201231
 CATEGORIES = devel x11 net www
 MAINTAINER = Ivailo Monev <xakepa10@gmail.com>
 COMMENT = C++ toolkit derived from the Qt 4.8 framework
