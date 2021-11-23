@@ -834,6 +834,8 @@ const short QKeySequencePrivate::numberOfKeyBindings = sizeof(QKeySequencePrivat
     \value ZoomOut          Zoom out.
 */
 
+QKeySequence::QKeySequenceData QKeySequence::shared_empty = { QAtomicInt(1), 0, 0, 0, 0 };
+
 /*!
     \since 4.2
 
@@ -851,7 +853,12 @@ QKeySequence::QKeySequence(StandardKey key)
         d = bindings.first().d; 
         d->ref.ref();
     } else {
-        d = new QKeySequencePrivate();
+        d = new QKeySequenceData();
+        d->ref.ref();
+        d->key[0] = 0;
+        d->key[1] = 0;
+        d->key[2] = 0;
+        d->key[3] = 0;
     }
 }
 
@@ -860,9 +867,8 @@ QKeySequence::QKeySequence(StandardKey key)
     Constructs an empty key sequence.
 */
 QKeySequence::QKeySequence()
+    : d(&shared_empty)
 {
-    static QKeySequencePrivate shared_empty;
-    d = &shared_empty;
     d->ref.ref();
 }
 
@@ -888,8 +894,14 @@ QKeySequence::QKeySequence()
     necessary, but it provides some context for the human translator.
 */
 QKeySequence::QKeySequence(const QString &key, QKeySequence::SequenceFormat format)
-    : d(new QKeySequencePrivate())
+    : d(new QKeySequenceData())
 {
+    d->ref.ref();
+    d->key[0] = 0;
+    d->key[1] = 0;
+    d->key[2] = 0;
+    d->key[3] = 0;
+
     QString keyseq = key;
     QString part;
     int n = 0;
@@ -932,8 +944,9 @@ QKeySequence::QKeySequence(const QString &key, QKeySequence::SequenceFormat form
     Qt::ALT, or Qt::META.
 */
 QKeySequence::QKeySequence(int k1, int k2, int k3, int k4)
-    : d(new QKeySequencePrivate())
+    : d(new QKeySequenceData())
 {
+    d->ref.ref();
     d->key[0] = k1;
     d->key[1] = k2;
     d->key[2] = k3;
@@ -974,7 +987,7 @@ QList<QKeySequence> QKeySequence::keyBindings(StandardKey key)
  */
 QKeySequence::~QKeySequence()
 {
-    if (!d->ref.deref())
+    if (d != &shared_empty && !d->ref.deref())
         delete d;
 }
 
@@ -1360,7 +1373,7 @@ QString QKeySequence::toString(SequenceFormat format) const
     // A standard string, with no translation or anything like that. In some ways it will
     // look like our latin case on X11
     for (int i = 0; i < count(); ++i) {
-        finalString += d->encodeString(d->key[i], format);
+        finalString += QKeySequencePrivate::encodeString(d->key[i], format);
         finalString += QLatin1String(", ");
     }
     finalString.truncate(finalString.length() - 2);

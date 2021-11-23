@@ -169,14 +169,22 @@ public:
 private:
     void setKey(int key, int index);
 
-    QKeySequencePrivate *d;
+    struct QKeySequenceData
+    {
+        QAtomicInt ref;
+        int key[4];
+    };
+
+    QKeySequenceData *d;
+
+    static QKeySequenceData shared_empty;
 
     friend Q_GUI_EXPORT QDataStream &operator<<(QDataStream &in, const QKeySequence &ks);
     friend Q_GUI_EXPORT QDataStream &operator>>(QDataStream &in, QKeySequence &ks);
     friend class QShortcutMap;
 
 public:
-    typedef QKeySequencePrivate * DataPtr;
+    typedef QKeySequenceData * DataPtr;
     inline DataPtr &data_ptr() { return d; }
 };
 Q_DECLARE_TYPEINFO(QKeySequence, Q_MOVABLE_TYPE);
