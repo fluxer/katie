@@ -34,15 +34,11 @@
 #include <QtCore/qnumeric.h>
 #include "qdeclarativeanchors_p_p.h"
 #include "qdeclarativeglobal_p.h"
-#include "qdeclarativefastproperties_p.h"
 #include "qdeclarativecommon_p.h"
 
 QT_BEGIN_NAMESPACE
 
 DEFINE_BOOL_CONFIG_OPTION(qmlDisableOptimizer, QML_DISABLE_OPTIMIZER)
-DEFINE_BOOL_CONFIG_OPTION(qmlDisableFastProperties, QML_DISABLE_FAST_PROPERTIES)
-
-Q_GLOBAL_STATIC(QDeclarativeFastProperties, fastProperties)
 
 #define QML_BEGIN_INSTR(I) case Instr::I:
 #define QML_END_INSTR(I) break;
@@ -345,7 +341,6 @@ struct Instr {
         BindingId,               /* id */ \
         Subscribe,               /* subscribe */ \
         SubscribeId,             /* subscribe */ \
-        FetchAndSubscribe,       /* fetchAndSubscribe */ \
         LoadId,                  /* load */ \
         LoadScope,               /* load */ \
         LoadRoot,                /* load */ \
@@ -426,14 +421,6 @@ struct Instr {
             quint8 exceptionId;
             quint32 index;
         } store;
-        struct {
-            quint8 type;
-            qint8 output;
-            qint8 objectReg;
-            quint8 exceptionId;
-            quint16 subscription;
-            quint16 function;
-        } fetchAndSubscribe;
         struct {
             quint8 type;
             qint8 output;
@@ -911,9 +898,6 @@ static void dumpInstruction(const Instr *instr)
     case Instr::SubscribeId:
         qWarning().nospace() << "\t" << "SubscribeId" << "\t\t" << instr->subscribe.offset << "\t" << instr->subscribe.reg << "\t" << instr->subscribe.index;
         break;
-    case Instr::FetchAndSubscribe:
-        qWarning().nospace() << "\t" << "FetchAndSubscribe" << "\t" << instr->fetchAndSubscribe.output << "\t" << instr->fetchAndSubscribe.objectReg << "\t" << instr->fetchAndSubscribe.subscription;
-        break;
     case Instr::LoadId:
         qWarning().nospace() << "\t" << "LoadId" << "\t\t\t" << instr->load.index << "\t" << instr->load.reg;
         break;
@@ -1069,32 +1053,6 @@ void QDeclarativeCompiledBindingsPrivate::run(int instrIndex,
         subscribe(o, instr->subscribe.index, instr->subscribe.offset);
     }
     QML_END_INSTR(Subscribe)
-
-    QML_BEGIN_INSTR(FetchAndSubscribe)
-    {
-        const Register &input = registers[instr->fetchAndSubscribe.objectReg];
-        Register &output = registers[instr->fetchAndSubscribe.output];
-
-        if (input.isUndefined()) {
-            throwException(instr->fetchAndSubscribe.exceptionId, error, program, context);
-            return;
-        }
-
-        QObject *object = input.getQObject();
-        if (!object) {
-            output.setUndefined();
-        } else {
-            int subIdx = instr->fetchAndSubscribe.subscription;
-            QDeclarativeCompiledBindingsPrivate::Subscription *sub = 0;
-            if (subIdx != -1) {
-                sub = (subscriptions + subIdx);
-                sub->target = q;
-                sub->targetMethod = methodCount + subIdx; 
-            }
-            fastProperties()->accessor(instr->fetchAndSubscribe.function)(object, output.typeDataPtr(), sub);
-        }
-    }
-    QML_END_INSTR(FetchAndSubscribe)
 
     QML_BEGIN_INSTR(LoadId)
         registers[instr->load.reg].setQObject(context->idValues[instr->load.index].data());
@@ -2224,33 +2182,22 @@ bool QDeclarativeBindingCompilerPrivate::fetch(Result &rv, const QMetaObject *mo
     if (prop.revision() > 0)
         return false;
 
-    int fastFetchIndex = fastProperties()->accessorIndexForProperty(mo, idx);
-
     Instr fetch;
 
-    if (!qmlDisableFastProperties() && fastFetchIndex != -1) {
-        fetch.common.type = Instr::FetchAndSubscribe;
-        fetch.fetchAndSubscribe.objectReg = reg;
-        fetch.fetchAndSubscribe.output = reg;
-        fetch.fetchAndSubscribe.function = fastFetchIndex;
-        fetch.fetchAndSubscribe.subscription = subscriptionIndex(subName);
-        fetch.fetchAndSubscribe.exceptionId = exceptionId(node);
-    } else {
-        if (subscription(subName, &rv) && prop.hasNotifySignal() && prop.notifySignalIndex() != -1) {
-            Instr sub;
-            sub.common.type = Instr::Subscribe;
-            sub.subscribe.offset = subscriptionIndex(subName);
-            sub.subscribe.reg = reg;
-            sub.subscribe.index = prop.notifySignalIndex();
-            bytecode << sub;
-        }
-
-        fetch.common.type = Instr::Fetch;
-        fetch.fetch.objectReg = reg;
-        fetch.fetch.index = idx;
-        fetch.fetch.output = reg;
-        fetch.fetch.exceptionId = exceptionId(node);
+    if (subscription(subName, &rv) && prop.hasNotifySignal() && prop.notifySignalIndex() != -1) {
+        Instr sub;
+        sub.common.type = Instr::Subscribe;
+        sub.subscribe.offset = subscriptionIndex(subName);
+        sub.subscribe.reg = reg;
+        sub.subscribe.index = prop.notifySignalIndex();
+        bytecode << sub;
     }
+
+    fetch.common.type = Instr::Fetch;
+    fetch.fetch.objectReg = reg;
+    fetch.fetch.index = idx;
+    fetch.fetch.output = reg;
+    fetch.fetch.exceptionId = exceptionId(node);
 
     rv.type = prop.userType();
     rv.metaObject = engine->metaObjectForType(rv.type);

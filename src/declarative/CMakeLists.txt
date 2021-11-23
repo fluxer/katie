@@ -130,7 +130,6 @@ set(DECLARATIVE_HEADERS
     ${CMAKE_CURRENT_SOURCE_DIR}/qml/qpodvector_p.h
     ${CMAKE_CURRENT_SOURCE_DIR}/qml/qdeclarativevaluetype_p.h
     ${CMAKE_CURRENT_SOURCE_DIR}/qml/qdeclarativecompiledbindings_p.h
-    ${CMAKE_CURRENT_SOURCE_DIR}/qml/qdeclarativefastproperties_p.h
     ${CMAKE_CURRENT_SOURCE_DIR}/qml/qmetaobjectbuilder_p.h
     ${CMAKE_CURRENT_SOURCE_DIR}/qml/qdeclarativecleanup_p.h
     ${CMAKE_CURRENT_SOURCE_DIR}/qml/qdeclarativepropertycache_p.h
@@ -260,7 +259,6 @@ set(DECLARATIVE_SOURCES
     ${CMAKE_CURRENT_SOURCE_DIR}/qml/qdeclarativerewrite.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/qml/qdeclarativevaluetype.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/qml/qdeclarativecompiledbindings.cpp
-    ${CMAKE_CURRENT_SOURCE_DIR}/qml/qdeclarativefastproperties.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/qml/qmetaobjectbuilder.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/qml/qdeclarativecleanup.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/qml/qdeclarativepropertycache.cpp
