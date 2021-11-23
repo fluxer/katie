@@ -27,10 +27,7 @@
 #include <qdeclarativebinding_p.h>
 #include <qdir.h>
 
-inline QUrl TEST_FILE(const QString &filename)
-{
-    return QUrl::fromLocalFile(QLatin1String(SRCDIR) + QLatin1String("/data/") + filename);
-}
+#include "../../shared/util.h"
 
 class MyQmlObject : public QObject
 {

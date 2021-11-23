@@ -48,3 +48,5 @@
         QCOMPARE(__expr, __expected); \
     } while(0)
 
+#define TEST_FILE(__filename) \
+    QUrl::fromLocalFile(QLatin1String(SRCDIR) + QLatin1String("/data/") + QLatin1String(__filename))
