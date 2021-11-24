@@ -2408,9 +2408,10 @@ void QFileDialogPrivate::_q_createDirectory()
     QString newFolderString = QFileDialog::tr("New Folder");
     QString folderName = newFolderString;
     QString prefix = q->directory().absolutePath() + QDir::separator();
-    if (QFile::exists(prefix + folderName)) {
+    const QStatInfo statinfo(prefix + folderName);
+    if (statinfo.isDir()) {
         qlonglong suffix = 2;
-        while (QFile::exists(prefix + folderName)) {
+        while (QStatInfo(prefix + folderName).isDir()) {
             folderName = newFolderString + QString::number(suffix++);
         }
     }
