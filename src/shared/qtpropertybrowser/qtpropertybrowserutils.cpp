@@ -350,19 +350,15 @@ void QtKeySequenceEdit::handleKeyEvent(QKeyEvent *e)
     nextKey |= translateModifiers(e->modifiers(), e->text());
     int k0 = m_keySequence[0];
     int k1 = m_keySequence[1];
-    int k2 = m_keySequence[2];
-    int k3 = m_keySequence[3];
     switch (m_num) {
-        case 0: k0 = nextKey; k1 = 0; k2 = 0; k3 = 0; break;
-        case 1: k1 = nextKey; k2 = 0; k3 = 0; break;
-        case 2: k2 = nextKey; k3 = 0; break;
-        case 3: k3 = nextKey; break;
+        case 0: k0 = nextKey; k1 = 0; break;
+        case 1: k1 = nextKey; break;
         default: break;
     }
     ++m_num;
-    if (m_num > 3)
+    if (m_num > 1)
         m_num = 0;
-    m_keySequence = QKeySequence(k0, k1, k2, k3);
+    m_keySequence = QKeySequence(k0, k1);
     m_lineEdit->setText(m_keySequence.toString(QKeySequence::NativeText));
     e->accept();
     emit keySequenceChanged(m_keySequence);

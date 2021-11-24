@@ -82,7 +82,7 @@ void tst_QKeySequence::swap()
 {
     QKeySequence ks1(Qt::CTRL+Qt::Key_O);
     QKeySequence ks2(Qt::CTRL+Qt::Key_L);
-    ks1.swap(ks2);
+    qSwap(ks1, ks2);
     QCOMPARE(ks1[0], int(Qt::CTRL+Qt::Key_L));
     QCOMPARE(ks2[0], int(Qt::CTRL+Qt::Key_O));
 }
@@ -290,8 +290,8 @@ void tst_QKeySequence::toString_data()
     QTest::newRow("Ctrl+Plus") << QString("Ctrl++") << QString("Ctrl++") << QString("Ctrl++");
     QTest::newRow("Ctrl+,") << QString("Ctrl+,") << QString("Ctrl+,") << QString("Ctrl+,");
     QTest::newRow("Ctrl+,,Ctrl+,") << QString("Ctrl+,,Ctrl+,") << QString("Ctrl+,, Ctrl+,") << QString("Ctrl+,, Ctrl+,");
-    QTest::newRow("MultiKey") << QString("Alt+X, Ctrl+Y, Z") << QString("Alt+X, Ctrl+Y, Z")
-                           << QString("Alt+X, Ctrl+Y, Z");
+    QTest::newRow("MultiKey") << QString("Alt+X, Ctrl+Y") << QString("Alt+X, Ctrl+Y")
+                           << QString("Alt+X, Ctrl+Y");
 
     QTest::newRow("Invalid") << QString("Ctrly") << QString("") << QString("");
 }

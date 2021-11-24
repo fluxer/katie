@@ -124,7 +124,7 @@ public:
 
     QKeySequence();
     QKeySequence(const QString &key, SequenceFormat format = NativeText);
-    QKeySequence(int k1, int k2 = 0, int k3 = 0, int k4 = 0);
+    QKeySequence(int k1, int k2 = 0);
     QKeySequence(const QKeySequence &ks);
     QKeySequence(StandardKey key);
     ~QKeySequence();
@@ -149,11 +149,7 @@ public:
     operator int() const;
     int operator[](uint i) const;
     QKeySequence &operator=(const QKeySequence &other);
-#ifdef Q_COMPILER_RVALUE_REFS
-    inline QKeySequence &operator=(QKeySequence &&other)
-    { qSwap(d, other.d); return *this; }
-#endif
-    inline void swap(QKeySequence &other) { qSwap(d, other.d); }
+
     bool operator==(const QKeySequence &other) const;
     inline bool operator!= (const QKeySequence &other) const
     { return !(*this == other); }
@@ -165,30 +161,15 @@ public:
     inline bool operator>= (const QKeySequence &other) const
     { return !(*this < other); }
 
-    bool isDetached() const;
 private:
-    void setKey(int key, int index);
-
-    struct QKeySequenceData
-    {
-        QAtomicInt ref;
-        int key[4];
-    };
-
-    QKeySequenceData *d;
-
-    static QKeySequenceData shared_empty;
+    int key1;
+    int key2;
 
     friend Q_GUI_EXPORT QDataStream &operator<<(QDataStream &in, const QKeySequence &ks);
     friend Q_GUI_EXPORT QDataStream &operator>>(QDataStream &in, QKeySequence &ks);
     friend class QShortcutMap;
-
-public:
-    typedef QKeySequenceData * DataPtr;
-    inline DataPtr &data_ptr() { return d; }
 };
 Q_DECLARE_TYPEINFO(QKeySequence, Q_MOVABLE_TYPE);
-Q_DECLARE_SHARED(QKeySequence)
 
 #ifndef QT_NO_DEBUG_STREAM
 Q_GUI_EXPORT QDebug operator<<(QDebug, const QKeySequence &);

@@ -537,7 +537,20 @@ void QShortcutMap::createNewSequences(QKeyEvent *e, QVector<QKeySequence> &ksl)
             } else {
                 curKsl = QKeySequence();
             }
-            curKsl.setKey(possibleKeys.at(pkNum), index);
+            switch (index) {
+                case 0: {
+                    curKsl.key1 = possibleKeys.at(pkNum);
+                    break;
+                }
+                case 1: {
+                    curKsl.key2 = possibleKeys.at(pkNum);
+                    break;
+                }
+                default: {
+                    Q_ASSERT_X(false, "QShortcutMap::createNewSequences", "index out of range");
+                    break;
+                }
+            }
         }
     }
 }

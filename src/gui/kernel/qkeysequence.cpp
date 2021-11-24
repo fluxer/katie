@@ -147,7 +147,7 @@ QT_BEGIN_NAMESPACE
 
     \section1 GNU Emacs Style Key Sequences
 
-    Key sequences similar to those used in \l{GNU Emacs}, allowing up to four
+    Key sequences similar to those used in \l{GNU Emacs}, allowing up to two
     key codes, can be created by using the multiple argument constructor,
     or by passing a human-readable string of comma-separated key sequences.
 
@@ -834,8 +834,6 @@ const short QKeySequencePrivate::numberOfKeyBindings = sizeof(QKeySequencePrivat
     \value ZoomOut          Zoom out.
 */
 
-QKeySequence::QKeySequenceData QKeySequence::shared_empty = { QAtomicInt(1), { 0, 0, 0, 0 } };
-
 /*!
     \since 4.2
 
@@ -850,15 +848,12 @@ QKeySequence::QKeySequence(StandardKey key)
     const QList <QKeySequence> bindings = keyBindings(key);
     // pick only the first/primary shortcut from current bindings
     if (bindings.size() > 0) {
-        d = bindings.first().d; 
-        d->ref.ref();
+        const QKeySequence &first = bindings.first();
+        key1 = first.key1;
+        key2 = first.key2;
     } else {
-        d = new QKeySequenceData();
-        d->ref.ref();
-        d->key[0] = 0;
-        d->key[1] = 0;
-        d->key[2] = 0;
-        d->key[3] = 0;
+        key1 = 0;
+        key2 = 0;
     }
 }
 
@@ -867,9 +862,8 @@ QKeySequence::QKeySequence(StandardKey key)
     Constructs an empty key sequence.
 */
 QKeySequence::QKeySequence()
-    : d(&shared_empty)
+    : key1(0), key2(0)
 {
-    d->ref.ref();
 }
 
 /*!
@@ -879,8 +873,8 @@ QKeySequence::QKeySequence()
     their translated equivalents in the "QShortcut" context (using
     QObject::tr()).
 
-    Up to four key codes may be entered by separating them with
-    commas, e.g. "Alt+X,Ctrl+S,Q".
+    Up to two key codes may be entered by separating them with
+    commas, e.g. "Alt+X,Ctrl+S".
 
     \a key should be in NativeText format.
 
@@ -894,22 +888,16 @@ QKeySequence::QKeySequence()
     necessary, but it provides some context for the human translator.
 */
 QKeySequence::QKeySequence(const QString &key, QKeySequence::SequenceFormat format)
-    : d(new QKeySequenceData())
+    : key1(0), key2(0)
 {
-    d->ref.ref();
-    d->key[0] = 0;
-    d->key[1] = 0;
-    d->key[2] = 0;
-    d->key[3] = 0;
-
     QString keyseq = key;
     QString part;
     int n = 0;
     int p = 0, diff = 0;
 
     // Run through the whole string, but stop
-    // if we have 4 keys before the end.
-    while (keyseq.length() && n < 4) {
+    // if we have 2 keys before the end.
+    while (keyseq.length() && n < 2) {
         // We MUST use something to separate each sequence, and space
         // does not cut it, since some of the key names have space
         // in them.. (Let's hope no one translate with a comma in it)
@@ -930,36 +918,33 @@ QKeySequence::QKeySequence(const QString &key, QKeySequence::SequenceFormat form
         }
         part = keyseq.left(-1 == p ? keyseq.length() : p - diff);
         keyseq = keyseq.right(-1 == p ? 0 : keyseq.length() - (p + 1));
-        d->key[n] = QKeySequencePrivate::decodeString(part, format);
+        if (n == 0) {
+            key1 = QKeySequencePrivate::decodeString(part, format);
+        } else {
+            key2 = QKeySequencePrivate::decodeString(part, format);
+        }
         ++n;
     }
 }
 
 /*!
-    Constructs a key sequence with up to 4 keys \a k1, \a k2,
-    \a k3 and \a k4.
+    Constructs a key sequence with up to 2 keys \a k1 and \a k2.
 
     The key codes are listed in Qt::Key and can be combined with
     modifiers (see Qt::Modifier) such as Qt::SHIFT, Qt::CTRL,
     Qt::ALT, or Qt::META.
 */
-QKeySequence::QKeySequence(int k1, int k2, int k3, int k4)
-    : d(new QKeySequenceData())
+QKeySequence::QKeySequence(int k1, int k2)
+    : key1(k1), key2(k2)
 {
-    d->ref.ref();
-    d->key[0] = k1;
-    d->key[1] = k2;
-    d->key[2] = k3;
-    d->key[3] = k4;
 }
 
 /*!
     Copy constructor. Makes a copy of \a keysequence.
  */
 QKeySequence::QKeySequence(const QKeySequence& keysequence)
-    : d(keysequence.d)
+    : key1(keysequence.key1), key2(keysequence.key2)
 {
-    d->ref.ref();
 }
 
 /*!
@@ -987,51 +972,19 @@ QList<QKeySequence> QKeySequence::keyBindings(StandardKey key)
  */
 QKeySequence::~QKeySequence()
 {
-    if (d != &shared_empty && !d->ref.deref())
-        delete d;
-}
-
-/*!
-    \internal
-    KeySequences should never be modified, but rather just created.
-    Internally though we do need to modify to keep pace in event
-    delivery.
-*/
-
-void QKeySequence::setKey(int key, int index)
-{
-    Q_ASSERT_X(index >= 0 && index < 4, "QKeySequence::setKey", "index out of range");
-    if (d == &shared_empty || d->ref.load() != 1) {
-        int keys[4] = { d->key[0], d->key[1], d->key[2], d->key[3] };
-        if (d != &shared_empty && !d->ref.deref()) {
-            delete d;
-        }
-
-        d = new QKeySequenceData();
-        d->ref = 1;
-        d->key[0] = keys[0];
-        d->key[1] = keys[1];
-        d->key[2] = keys[2];
-        d->key[3] = keys[3];
-    }
-    d->key[index] = key;
 }
 
 /*!
     Returns the number of keys in the key sequence.
-    The maximum is 4.
+    The maximum is 2.
  */
 int QKeySequence::count() const
 {
-    if (!d->key[0])
+    if (!key1)
         return 0;
-    if (!d->key[1])
+    if (!key2)
         return 1;
-    if (!d->key[2])
-        return 2;
-    if (!d->key[3])
-        return 3;
-    return 4;
+    return 2;
 }
 
 
@@ -1041,7 +994,7 @@ int QKeySequence::count() const
 */
 bool QKeySequence::isEmpty() const
 {
-    return (d->key[0] <= 0);
+    return (key1 <= 0);
 }
 
 
@@ -1225,8 +1178,11 @@ QKeySequence::SequenceMatch QKeySequence::matches(const QKeySequence &seq) const
     if (userN > seqN)
         return SequenceMatch::NoMatch;
 
-    for (int i = 0; i < userN; i++) {
-        if (d->key[i] != seq.d->key[i])
+    if (userN == 1) {
+        if (key1 != seq.key1)
+            return SequenceMatch::NoMatch;
+    } else if (userN == 2) {
+        if (key2 != seq.key2)
             return SequenceMatch::NoMatch;
     }
 
@@ -1253,7 +1209,7 @@ QKeySequence::operator QVariant() const
 QKeySequence::operator int () const
 {
     if (1 <= count())
-        return d->key[0];
+        return key1;
     return 0;
 }
 
@@ -1264,8 +1220,16 @@ QKeySequence::operator int () const
  */
 int QKeySequence::operator[](uint index) const
 {
-    Q_ASSERT_X(index < 4, "QKeySequence::operator[]", "index out of range");
-    return d->key[index];
+    Q_ASSERT_X(index < 2, "QKeySequence::operator[]", "index out of range");
+    switch (index) {
+        case 0: {
+            return key1;
+        }
+        case 1: {
+            return key2;
+        }
+    }
+    Q_UNREACHABLE();
 }
 
 
@@ -1275,7 +1239,8 @@ int QKeySequence::operator[](uint index) const
  */
 QKeySequence &QKeySequence::operator=(const QKeySequence &other)
 {
-    qAtomicAssign(d, other.d);
+    key1 = other.key1;
+    key2 = other.key2;
     return *this;
 }
 
@@ -1301,10 +1266,7 @@ QKeySequence &QKeySequence::operator=(const QKeySequence &other)
  */
 bool QKeySequence::operator==(const QKeySequence &other) const
 {
-    return (d->key[0] == other.d->key[0] &&
-            d->key[1] == other.d->key[1] &&
-            d->key[2] == other.d->key[2] &&
-            d->key[3] == other.d->key[3]);
+    return (key1 == other.key1 && key2 == other.key2);
 }
 
 
@@ -1322,9 +1284,10 @@ bool QKeySequence::operator==(const QKeySequence &other) const
 */
 bool QKeySequence::operator< (const QKeySequence &other) const
 {
-    for (int i = 0; i < 4; ++i)
-        if (d->key[i] != other.d->key[i])
-            return d->key[i] < other.d->key[i];
+    if (key1 != other.key1)
+        return key1 < other.key1;
+    if (key2 != other.key2)
+        return key2 < other.key2;
     return false;
 }
 
@@ -1356,14 +1319,6 @@ bool QKeySequence::operator< (const QKeySequence &other) const
 */
 
 /*!
-    \internal
-*/
-bool QKeySequence::isDetached() const
-{
-    return d->ref == 1;
-}
-
-/*!
     \since 4.1
 
     Return a string representation of the key sequence,
@@ -1381,15 +1336,22 @@ bool QKeySequence::isDetached() const
 */
 QString QKeySequence::toString(SequenceFormat format) const
 {
-    QString finalString;
     // A standard string, with no translation or anything like that. In some ways it will
     // look like our latin case on X11
-    for (int i = 0; i < count(); ++i) {
-        finalString += QKeySequencePrivate::encodeString(d->key[i], format);
-        finalString += QLatin1String(", ");
+    switch (count()) {
+        case 0: {
+            return QString();
+        }
+        case 1: {
+            return QKeySequencePrivate::encodeString(key1, format);
+        }
+        case 2: {
+            const QString firststring(QKeySequencePrivate::encodeString(key1, format));
+            const QString secondstring(QKeySequencePrivate::encodeString(key2, format));
+            return QString::fromLatin1("%1, %2").arg(firststring, secondstring);
+        }
     }
-    finalString.truncate(finalString.length() - 2);
-    return finalString;
+    Q_UNREACHABLE();
 }
 
 /*!
@@ -1418,10 +1380,8 @@ QKeySequence QKeySequence::fromString(const QString &str, SequenceFormat format)
 */
 QDataStream &operator<<(QDataStream &s, const QKeySequence &keysequence)
 {
-    s << keysequence.d->key[0];
-    s << keysequence.d->key[1];
-    s << keysequence.d->key[2];
-    s << keysequence.d->key[3];
+    s << keysequence.key1;
+    s << keysequence.key2;
     return s;
 }
 
@@ -1436,8 +1396,8 @@ QDataStream &operator<<(QDataStream &s, const QKeySequence &keysequence)
 */
 QDataStream &operator>>(QDataStream &s, QKeySequence &keysequence)
 {
-    int keys[4] = { 0, 0, 0, 0 };
-    for (int i = 0; i < 4; ++i) {
+    int keys[2] = { 0, 0 };
+    for (int i = 0; i < 2; ++i) {
         if (Q_UNLIKELY(s.atEnd())) {
             keysequence = QKeySequence();
             s.setStatus(QDataStream::ReadCorruptData);
@@ -1445,7 +1405,7 @@ QDataStream &operator>>(QDataStream &s, QKeySequence &keysequence)
         }
         s >> keys[i];
     }
-    keysequence = QKeySequence(keys[0], keys[1], keys[2], keys[3]);
+    keysequence = QKeySequence(keys[0], keys[1]);
     return s;
 }
 
