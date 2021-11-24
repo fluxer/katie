@@ -39,6 +39,7 @@
 #include "qvector.h"
 #include "qdir.h"
 #include "qfilesystementry_p.h"
+#include "qcore_unix_p.h"
 
 #include <errno.h>
 
@@ -268,7 +269,8 @@ QLibraryPrivate *QLibraryPrivate::findOrCreate(const QString &fileName, const QS
             if (!suffix.isEmpty() && name.endsWith(suffix))
                 continue;
             const QString attempt = path + prefix + name + suffix;
-            if (QFile::exists(attempt)) {
+            const QStatInfo statinfo(attempt);
+            if (statinfo.isFile()) {
                 return new QLibraryPrivate(attempt, version);
             }
         }
@@ -416,10 +418,10 @@ bool QLibraryPrivate::isPlugin()
         return false;
     }
 
-    QFileInfo fileinfo(fileName);
+    const QStatInfo statinfo(fileName);
 
 #ifndef QT_NO_DATESTRING
-    lastModified  = fileinfo.lastModified().toString(Qt::ISODate);
+    lastModified  = statinfo.lastModified().toString(Qt::ISODate);
 #endif
     QString regkey = QString::fromLatin1("Katie Plugin Cache %1/%2")
                      .arg(QLatin1String(QT_VERSION_HEX_STR))

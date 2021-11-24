@@ -33,6 +33,7 @@
 #include "qcryptographichash.h"
 #include "qdebug.h"
 #include "qcorecommon_p.h"
+#include "qcore_unix_p.h"
 
 #define CACHE_POSTFIX QLatin1String(".d")
 #define PREPARED_SLASH QLatin1String("prepared/")
@@ -255,7 +256,8 @@ void QNetworkDiskCachePrivate::storeItem(QCacheItem *cacheItem)
     QString fileName = cacheFileName(cacheItem->metaData.url());
     Q_ASSERT(!fileName.isEmpty());
 
-    if (QFile::exists(fileName)) {
+    const QStatInfo statinfo(fileName);
+    if (statinfo.isFile()) {
         if (!QFile::remove(fileName)) {
             qWarning() << "QNetworkDiskCache: couldn't remove the cache file " << fileName;
             return;

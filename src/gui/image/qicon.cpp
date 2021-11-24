@@ -80,7 +80,7 @@ typedef QCache<QString, QIcon> IconCache;
 Q_GLOBAL_STATIC(IconCache, qtIconCache)
 
 QIconPrivate::QIconPrivate()
-    : engine(0), ref(1),
+    : engine(nullptr), ref(1),
     serialNum(serialNumCounter.fetchAndAddRelaxed(1)),
     detach_no(0)
 {

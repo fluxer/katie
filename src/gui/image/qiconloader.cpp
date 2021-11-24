@@ -25,7 +25,9 @@
 #include "qicon_p.h"
 #include "qguiplatformplugin.h"
 #include "qfactoryloader_p.h"
+#include "qstylehelper_p.h"
 #include "qguicommon_p.h"
+#include "qcore_unix_p.h"
 
 #include <QtGui/QIconEnginePlugin>
 #include <QtGui/QPixmapCache>
@@ -36,8 +38,6 @@
 #include <QtCore/QDir>
 #include <QtCore/QSettings>
 #include <QtGui/QPainter>
-
-#include "qstylehelper_p.h"
 
 #include <limits.h>
 
@@ -111,7 +111,8 @@ QIconTheme::QIconTheme(const QString &themeName)
 {
     foreach (const QString &it, QIcon::themeSearchPaths()) {
         QString themeDir = it + QLatin1Char('/') + themeName;
-        if (QFile::exists(themeDir + QLatin1String("/index.theme"))) {
+        const QStatInfo statinfo(themeDir + QLatin1String("/index.theme"));
+        if (statinfo.isFile()) {
             m_contentDir = themeDir;
             m_valid = true;
             break;
@@ -190,7 +191,8 @@ QThemeIconEntries QIconLoader::findIconHelper(const QString &themeName,
     foreach (const QIconDirInfo &dirInfo, theme.keyList()) {
         const QString subDir = contentDir + dirInfo.path + QLatin1Char('/');
         const QString pngPath = subDir + iconName + QLatin1String(".png");
-        if (QFile::exists(pngPath)) {
+        const QStatInfo pnginfo(pngPath);
+        if (pnginfo.isFile()) {
             PixmapEntry *iconEntry = new PixmapEntry;
             iconEntry->dir = dirInfo;
             iconEntry->filename = pngPath;
@@ -199,7 +201,8 @@ QThemeIconEntries QIconLoader::findIconHelper(const QString &themeName,
             entries.prepend(iconEntry);
         } else if (m_supportsSvg) {
             const QString svgPath = subDir + iconName + QLatin1String(".svg");
-            if (QFile::exists(svgPath)) {
+            const QStatInfo svginfo(pngPath);
+            if (svginfo.isFile()) {
                 ScalableEntry *iconEntry = new ScalableEntry;
                 iconEntry->dir = dirInfo;
                 iconEntry->filename = svgPath;
