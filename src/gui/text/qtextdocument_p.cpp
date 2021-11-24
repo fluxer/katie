@@ -31,6 +31,7 @@
 #include "qtextdocumentlayout_p.h"
 #include "qtexttable.h"
 #include "qtextengine_p.h"
+#include "qcorecommon_p.h"
 
 #include <stdlib.h>
 
@@ -1307,7 +1308,10 @@ void QTextDocumentPrivate::adjustDocumentChangesAndCursors(int from, int addedOr
 QString QTextDocumentPrivate::plainText() const
 {
     const int len = length();
-    QChar result[len];
+    if (len <= 0) {
+        return QString();
+    }
+    QSTACKARRAY(QChar, result, len);
     int resultoffset = 0;
     const QChar *text_unicode = text.unicode();
     for (QTextDocumentPrivate::FragmentIterator it = begin(); it != end(); ++it) {
