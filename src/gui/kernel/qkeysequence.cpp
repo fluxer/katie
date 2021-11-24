@@ -1001,7 +1001,19 @@ QKeySequence::~QKeySequence()
 void QKeySequence::setKey(int key, int index)
 {
     Q_ASSERT_X(index >= 0 && index < 4, "QKeySequence::setKey", "index out of range");
-    qAtomicDetach(d);
+    if (d == &shared_empty || d->ref.load() != 1) {
+        int keys[4] = { d->key[0], d->key[1], d->key[2], d->key[3] };
+        if (d != &shared_empty && !d->ref.deref()) {
+            delete d;
+        }
+
+        d = new QKeySequenceData();
+        d->ref = 1;
+        d->key[0] = keys[0];
+        d->key[1] = keys[1];
+        d->key[2] = keys[2];
+        d->key[3] = keys[3];
+    }
     d->key[index] = key;
 }
 
