@@ -555,9 +555,8 @@ public:
         Key_Control                       = 0xffffff9,
         Key_Meta                          = 0xffffffa,
         Key_Alt                           = 0xffffffb,
-        Key_Backtab                       = 0xffffffc,
-        Key_Direction_L                   = 0xffffffd,
-        Key_Direction_R                   = 0xffffffe,
+        Key_Direction_L                   = 0xffffffc,
+        Key_Direction_R                   = 0xffffffd,
 
         // compatibility
         Key_PageUp = Key_Page_Up,
@@ -602,6 +601,7 @@ public:
         Key_Any = Key_Space,
         Key_Enter = 0xff8d,
         Key_AltGr = 0xfe03,
+        Key_Backtab = 0xfe20,
         Key_unknown = 0xffffff
     };
 
