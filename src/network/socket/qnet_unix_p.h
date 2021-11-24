@@ -56,14 +56,19 @@ static inline int qt_safe_socket(int domain, int type, int protocol)
 static inline int qt_safe_accept(int s, struct sockaddr *addr, QT_SOCKLEN_T *addrlen)
 {
 #if defined(QT_HAVE_ACCEPT4) && defined(SOCK_CLOEXEC)
-    return ::accept4(s, addr, addrlen, SOCK_CLOEXEC);
+    int ret;
+    Q_EINTR_LOOP(ret, ::accept4(s, addr, addrlen, SOCK_CLOEXEC));
+    return ret;
 #elif defined(QT_HAVE_PACCEPT) && defined(SOCK_CLOEXEC)
-    return ::paccept(s, addr, addrlen, NULL, SOCK_CLOEXEC);
+    int ret;
+    Q_EINTR_LOOP(ret, ::paccept(s, addr, addrlen, NULL, SOCK_CLOEXEC));
+    return ret;
 #else
-    int fd = ::accept(s, addr, addrlen);
-    if (fd != -1)
-        ::fcntl(fd, F_SETFD, FD_CLOEXEC);
-    return fd;
+    int ret;
+    Q_EINTR_LOOP(ret, ::accept(s, addr, addrlen));
+    if (ret != -1)
+        ::fcntl(ret, F_SETFD, FD_CLOEXEC);
+    return ret;
 #endif
 }
 
