@@ -19,3 +19,4 @@ tests/auto/qaccessibility/
 tests/auto/qcalendarwidget/
 tests/auto/qintvalidator/
 tests/auto/qfilesystemmodel/
+tests/auto/qshortcut/
