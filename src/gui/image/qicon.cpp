@@ -529,11 +529,7 @@ QIcon::~QIcon()
 */
 QIcon &QIcon::operator=(const QIcon &other)
 {
-    if (other.d)
-        other.d->ref.ref();
-    if (d && !d->ref.deref())
-        delete d;
-    d = other.d;
+    qAtomicAssign(d, other.d);
     return *this;
 }
 
