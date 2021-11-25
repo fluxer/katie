@@ -1534,7 +1534,7 @@ Qt::HANDLE QX11PixmapData::x11ConvertToDefaultDepth()
 void QX11PixmapData::copy(const QPixmapData *data, const QRect &rect)
 {
     if (data->pixelType() == BitmapType) {
-        fromImage(data->toImage().copy(rect), Qt::AutoColor);
+        fromImage(data->toImage(rect), Qt::AutoColor);
         return;
     }
 

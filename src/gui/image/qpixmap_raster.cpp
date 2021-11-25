@@ -139,7 +139,7 @@ extern void qt_scrollRectInImage(QImage *img, const QRect &rect, const QPoint &o
 
 void QRasterPixmapData::copy(const QPixmapData *data, const QRect &rect)
 {
-    fromImage(data->toImage(rect).copy(), Qt::NoOpaqueDetection);
+    fromImage(data->toImage(rect), Qt::NoOpaqueDetection);
 }
 
 bool QRasterPixmapData::scroll(int dx, int dy, const QRect &rect)
