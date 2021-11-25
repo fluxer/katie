@@ -86,6 +86,10 @@ QIconPrivate::QIconPrivate()
 {
 }
 
+QIconPrivate::~QIconPrivate() {
+    delete engine;
+}
+
 QPixmapIconEngine::QPixmapIconEngine()
 {
 }

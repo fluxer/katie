@@ -46,10 +46,7 @@ class QIconPrivate
 {
 public:
     QIconPrivate();
-
-    ~QIconPrivate() {
-        delete engine;
-    }
+    ~QIconPrivate();
 
     QIconEngine *engine;
 
