@@ -326,21 +326,19 @@ bool QFileSystemEngine::copyFile(const QFileSystemEntry &source, const QFileSyst
     }
 
     QT_OFF_T tocopy = st.st_size;
+    QT_OFF_T totalwrite = 0;
 #ifdef Q_OS_LINUX
-    ssize_t sendresult = ::sendfile(targetfd, sourcefd, nullptr, tocopy);
-    while (sendresult != tocopy) {
+    while (totalwrite != tocopy) {
+        // sendfile64() may use internal types (different from off_t), do not use it
+        const ssize_t sendresult = ::sendfile(targetfd, sourcefd, &totalwrite, tocopy - totalwrite);
         if (sendresult == -1) {
             *error = errno;
             qt_safe_close(sourcefd);
             qt_safe_close(targetfd);
             return false;
         }
-        tocopy -= sendresult;
-        // sendfile64() may use internal types (different from off_t), do not use it
-        sendresult = ::sendfile(targetfd, sourcefd, &tocopy, tocopy);
     }
 #else
-    QT_OFF_T totalwrite = 0;
     QSTACKARRAY(char, copybuffer, QT_BUFFSIZE);
     while (totalwrite != tocopy) {
         const qint64 readresult = qt_safe_read(sourcefd, copybuffer, sizeof(copybuffer));
