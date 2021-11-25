@@ -378,10 +378,8 @@ QCursor::QCursor()
     \sa setShape()
 */
 QCursor::QCursor(Qt::CursorShape shape)
-    : d(0)
+    : d(nullptr)
 {
-    if (!QCursorData::initialized)
-        QCursorData::initialize();
     setShape(shape);
 }
 
