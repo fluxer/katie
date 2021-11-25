@@ -296,7 +296,7 @@ void QIconLoaderEngine::paint(QPainter *painter, const QRect &rect,
 
 /*
  * This algorithm is defined by the freedesktop spec:
- * http://standards.freedesktop.org/icon-theme-spec/icon-theme-spec-latest.html
+ * https://specifications.freedesktop.org/icon-theme-spec/icon-theme-spec-latest.html#icon_lookup
  */
 static bool directoryMatchesSize(const QIconDirInfo &dir, int iconsize)
 {
@@ -304,7 +304,7 @@ static bool directoryMatchesSize(const QIconDirInfo &dir, int iconsize)
         return dir.size == iconsize;
 
     } else if (dir.type == QIconDirInfo::Scalable) {
-        return dir.size <= dir.maxSize &&
+        return iconsize <= dir.maxSize &&
                 iconsize >= dir.minSize;
 
     } else if (dir.type == QIconDirInfo::Threshold) {
@@ -318,7 +318,7 @@ static bool directoryMatchesSize(const QIconDirInfo &dir, int iconsize)
 
 /*
  * This algorithm is defined by the freedesktop spec:
- * http://standards.freedesktop.org/icon-theme-spec/icon-theme-spec-latest.html
+ * https://specifications.freedesktop.org/icon-theme-spec/icon-theme-spec-latest.html#icon_lookup
  */
 static int directorySizeDistance(const QIconDirInfo &dir, int iconsize)
 {
