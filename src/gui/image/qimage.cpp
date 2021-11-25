@@ -894,11 +894,7 @@ QImage &QImage::operator=(const QImage &image)
     if (image.paintingActive()) {
         operator=(image.copy());
     } else {
-        if (image.d)
-            image.d->ref.ref();
-        if (d && !d->ref.deref())
-            delete d;
-        d = image.d;
+        qAtomicAssign(d, image.d);
     }
     return *this;
 }

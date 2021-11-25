@@ -469,14 +469,14 @@ QPoint QCursor::hotSpot() const
 }
 
 /*!
-    Constructs a copy of the cursor \a c.
+    Constructs a copy of the cursor \a other.
 */
 
-QCursor::QCursor(const QCursor &c)
+QCursor::QCursor(const QCursor &other)
 {
     if (!QCursorData::initialized)
         QCursorData::initialize();
-    d = c.d;
+    d = other.d;
     d->ref.ref();
 }
 
@@ -492,19 +492,15 @@ QCursor::~QCursor()
 
 
 /*!
-    Assigns \a c to this cursor and returns a reference to this
+    Assigns \a other to this cursor and returns a reference to this
     cursor.
 */
 
-QCursor &QCursor::operator=(const QCursor &c)
+QCursor &QCursor::operator=(const QCursor &other)
 {
     if (!QCursorData::initialized)
         QCursorData::initialize();
-    if (c.d)
-        c.d->ref.ref();
-    if (d && !d->ref.deref())
-        delete d;
-    d = c.d;
+    qAtomicAssign(d, other.d);
     return *this;
 }
 
@@ -515,10 +511,7 @@ QCursor::operator QVariant() const
 {
     return QVariant(QVariant::Cursor, this);
 }
+
 QT_END_NAMESPACE
+
 #endif // QT_NO_CURSOR
-
-
-
-
-

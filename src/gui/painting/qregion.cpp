@@ -3742,6 +3742,8 @@ QRegion::~QRegion()
 
 QRegion &QRegion::operator=(const QRegion &r)
 {
+    if (d == r.d)
+        return *this;
     r.d->ref.ref();
     if (!d->ref.deref())
         cleanUp(d);

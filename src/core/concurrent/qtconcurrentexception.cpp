@@ -124,11 +124,11 @@ class Base
 {
 public:
     Base(Exception *exception)
-    : exception(exception), refCount(1), hasThrown(false) { }
+    : exception(exception), ref(1), hasThrown(false) { }
     ~Base() { delete exception; }
 
     Exception *exception;
-    QAtomicInt refCount;
+    QAtomicInt ref;
     bool hasThrown;
 };
 
@@ -138,24 +138,17 @@ ExceptionHolder::ExceptionHolder(Exception *exception)
 ExceptionHolder::ExceptionHolder(const ExceptionHolder &other)
 : base(other.base)
 {
-    base->refCount.ref();
+    base->ref.ref();
 }
 
 void ExceptionHolder::operator=(const ExceptionHolder &other)
 {
-    if (base == other.base)
-        return;
-
-    if (!base->refCount.deref())
-        delete base;
-
-    base = other.base;
-    base->refCount.ref();
+    qAtomicAssign(base, other.base);
 }
 
 ExceptionHolder::~ExceptionHolder()
 {
-    if (!base->refCount.deref())
+    if (!base->ref.deref())
         delete base;
 }
 

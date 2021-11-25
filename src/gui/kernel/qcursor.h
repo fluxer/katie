@@ -58,7 +58,7 @@ public:
     QCursor(const QPixmap &pixmap, int hotX=-1, int hotY=-1);
     QCursor(const QCursor &cursor);
     ~QCursor();
-    QCursor &operator=(const QCursor &cursor);
+    QCursor &operator=(const QCursor &other);
 #ifdef Q_COMPILER_RVALUE_REFS
     inline QCursor &operator=(QCursor &&other)
     { qSwap(d, other.d); return *this; }

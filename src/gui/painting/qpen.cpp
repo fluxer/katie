@@ -338,9 +338,9 @@ void QPen::detach()
         return;
 
     QPenPrivate *x = new QPenPrivate(*d);
+    x->ref.ref();
     if (!d->ref.deref())
         delete d;
-    x->ref = 1;
     d = x;
 }
 
