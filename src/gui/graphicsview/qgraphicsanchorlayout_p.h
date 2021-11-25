@@ -113,7 +113,7 @@ struct AnchorData : public QSimplexVariable {
     virtual ~AnchorData();
 
     virtual void updateChildrenSizes() {}
-    void refreshSizeHints(const QLayoutStyleInfo *styleInfo = 0);
+    void refreshSizeHints(const QLayoutStyleInfo *styleInfo = nullptr);
 
 #ifndef QT_NO_DEBUG
     void dump(int indent = 2);

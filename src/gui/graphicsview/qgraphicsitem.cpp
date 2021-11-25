@@ -2395,23 +2395,26 @@ void QGraphicsItemPrivate::setEnabledHelper(bool newEnabled, bool explicitly, bo
 
     // Certain properties are dropped when an item is disabled.
     if (!newEnabled) {
-        if (scene && scene->mouseGrabberItem() == q_ptr)
-            q_ptr->ungrabMouse();
-        if (q_ptr->hasFocus()) {
-            // Disabling the closest non-panel ancestor of the focus item
-            // causes focus to pop to the next item, otherwise it's cleared.
-            QGraphicsItem *focusItem = scene->focusItem();
-            if (isWidget && !focusItem->isPanel() && q_ptr->isAncestorOf(focusItem)) {
-                do {
-                    if (focusItem == q_ptr) {
-                        static_cast<QGraphicsWidget *>(q_ptr)->focusNextPrevChild(true);
-                        break;
-                    }
-                } while ((focusItem = focusItem->parentWidget()) && !focusItem->isPanel());
+        if (scene) {
+            if (scene->mouseGrabberItem() == q_ptr)
+                q_ptr->ungrabMouse();
+            if (q_ptr->hasFocus()) {
+                // Disabling the closest non-panel ancestor of the focus item
+                // causes focus to pop to the next item, otherwise it's cleared.
+                QGraphicsItem *focusItem = scene->focusItem();
+                bool clear = true;
+                if (isWidget && !focusItem->isPanel() && q_ptr->isAncestorOf(focusItem)) {
+                    do {
+                        if (focusItem == q_ptr) {
+                            clear = !static_cast<QGraphicsWidget *>(q_ptr)->focusNextPrevChild(true);
+                            break;
+                        }
+                    } while ((focusItem = focusItem->parentWidget()) && !focusItem->isPanel());
+                }
+                // Clear focus if previous steps didn't move it to another widget
+                if (clear)
+                    q_ptr->clearFocus();
             }
-            // Clear focus if previous steps didn't move it to another widget
-            if (q_ptr->hasFocus())
-                q_ptr->clearFocus();
         }
         if (q_ptr->isSelected())
             q_ptr->setSelected(false);
@@ -6981,14 +6984,14 @@ void QGraphicsItem::mouseMoveEvent(QGraphicsSceneMouseEvent *event)
             if ((item->flags() & ItemIsMovable) && !QGraphicsItemPrivate::movableAncestorIsSelected(item)) {
                 QPointF currentParentPos;
                 QPointF buttonDownParentPos;
-                if (item->d_ptr->ancestorFlags & QGraphicsItemPrivate::AncestorIgnoresTransformations) {
+                if (view && (item->d_ptr->ancestorFlags & QGraphicsItemPrivate::AncestorIgnoresTransformations)) {
                     // Items whose ancestors ignore transformations need to
                     // map screen coordinates to local coordinates, then map
                     // those to the parent.
                     QTransform viewToItemTransform = (item->deviceTransform(view->viewportTransform())).inverted();
                     currentParentPos = mapToParent(viewToItemTransform.map(QPointF(view->mapFromGlobal(event->screenPos()))));
                     buttonDownParentPos = mapToParent(viewToItemTransform.map(QPointF(view->mapFromGlobal(event->buttonDownScreenPos(Qt::LeftButton)))));
-                } else if (item->flags() & ItemIgnoresTransformations) {
+                } else if (view && (item->flags() & ItemIgnoresTransformations)) {
                     // Root items that ignore transformations need to
                     // calculate their diff by mapping viewport coordinates
                     // directly to parent coordinates.
