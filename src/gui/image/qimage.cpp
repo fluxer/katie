@@ -1745,13 +1745,20 @@ static void QT_FASTCALL swap_bit_order(QImageData *dest, const QImageData *src, 
 
     dest->colortable = src->colortable;
 
+    const int src_bpl = (src->width + 7) / 8;
+    const int src_pad = src->bytes_per_line - src_bpl;
+    const int dest_bpl = (dest->width + 7) / 8;
+    const int dest_pad = dest->bytes_per_line - dest_bpl;
     const uchar *src_data = src->data;
-    const uchar *end = src->data + src->nbytes;
     uchar *dest_data = dest->data;
-    while (src_data < end) {
-        *dest_data = bitflip[*src_data];
-        ++src_data;
-        ++dest_data;
+    for (int i = 0; i < src->height; ++i) {
+        for (int x = 0; x < src_bpl; ++x) {
+            *dest_data = bitflip[*src_data];
+            ++src_data;
+            ++dest_data;
+        }
+        src_data += src_pad;
+        dest_data += dest_pad;
     }
 }
 
