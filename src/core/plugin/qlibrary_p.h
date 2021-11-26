@@ -53,7 +53,6 @@ public:
 
     QString fileName;
     QString qualifiedFileName;
-    QString fullVersion;
 
     bool load();
     bool loadPlugin(); // loads and resolves instance
@@ -74,7 +73,7 @@ public:
     bool isPlugin();
 
 private:
-    explicit QLibraryPrivate(const QString &canonicalFileName, const QString &version);
+    explicit QLibraryPrivate(const QString &canonicalFileName);
     ~QLibraryPrivate();
 
     bool load_sys();

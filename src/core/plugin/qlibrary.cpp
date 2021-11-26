@@ -222,11 +222,13 @@ static LibraryMap *libraryMap()
     return data ? &data->libraryMap : nullptr;
 }
 
-QLibraryPrivate::QLibraryPrivate(const QString &canonicalFileName, const QString &version)
-    : did_load(false), pHnd(0), fileName(canonicalFileName), fullVersion(version),
+QLibraryPrivate::QLibraryPrivate(const QString &canonicalFileName)
+    : did_load(false), pHnd(0), fileName(canonicalFileName),
      instance(0), qt_version(0), libraryRefCount(1), libraryUnloadCount(0),
      pluginState(MightBeAPlugin)
-{ libraryMap()->insert(canonicalFileName, this); }
+{
+    libraryMap()->insert(canonicalFileName, this);
+}
 
 QLibraryPrivate *QLibraryPrivate::findOrCreate(const QString &fileName, const QString &version)
 {
@@ -271,12 +273,12 @@ QLibraryPrivate *QLibraryPrivate::findOrCreate(const QString &fileName, const QS
             const QString attempt = path + prefix + name + suffix;
             const QStatInfo statinfo(attempt);
             if (statinfo.isFile()) {
-                return new QLibraryPrivate(attempt, version);
+                return new QLibraryPrivate(attempt);
             }
         }
     }
 
-    return new QLibraryPrivate(fileName, version);
+    return new QLibraryPrivate(fileName);
 }
 
 QLibraryPrivate::~QLibraryPrivate()
