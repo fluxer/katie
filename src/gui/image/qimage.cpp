@@ -4575,14 +4575,23 @@ QImage QImage::transformed(const QTransform &matrix, Qt::TransformationMode mode
 
     // compute size of target image
     QTransform mat = trueMatrix(matrix, ws, hs);
-    bool complex_xform = false;
-    bool scale_xform = false;
-    if (mat.type() <= QTransform::TxScale) {
-        if (mat.type() == QTransform::TxNone) // identity matrix
-            return *this;
-        else if (mat.m11() == -1. && mat.m22() == -1.)
-            return rotated180(*this);
 
+    if (mat.type() == QTransform::TxNone) {
+        // identity matrix
+        return *this;
+    }
+
+    if (mat.type() == QTransform::TxRotate) {
+        if (mat.m11() == 0 && mat.m12() == 1.0 && mat.m21() == -1. && mat.m22() == 0)
+            return rotated90(*this);
+        else if (mat.m11() == 0 && mat.m12() == -1.0 && mat.m21() == 1.0 && mat.m22() == 0 )
+            return rotated270(*this);
+        else if (mat.m11() == -1.0 && mat.m12() == 0 && mat.m21() == 0 && mat.m22() == -1.0)
+            return rotated180(*this);
+    }
+
+    bool complex_xform = false;
+    if (mat.type() == QTransform::TxScale) {
         if (mode == Qt::FastTransformation) {
             hd = qRound(qAbs(mat.m22()) * hs);
             wd = qRound(qAbs(mat.m11()) * ws);
@@ -4590,15 +4599,7 @@ QImage QImage::transformed(const QTransform &matrix, Qt::TransformationMode mode
             hd = int(qAbs(mat.m22()) * hs + 0.9999);
             wd = int(qAbs(mat.m11()) * ws + 0.9999);
         }
-        scale_xform = true;
     } else {
-        if (mat.type() <= QTransform::TxRotate && mat.m11() == 0 && mat.m22() == 0) {
-            if (mat.m12() == 1. && mat.m21() == -1.)
-                return rotated90(*this);
-            else if (mat.m12() == -1. && mat.m21() == 1.)
-                return rotated270(*this);
-        }
-
         QPolygonF a(QRectF(0, 0, ws, hs));
         a = mat.map(a);
         QRect r = a.boundingRect().toAlignedRect();
