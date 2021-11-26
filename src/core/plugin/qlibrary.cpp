@@ -641,7 +641,7 @@ void QLibrary::setFileName(const QString &fileName)
 QString QLibrary::fileName() const
 {
     if (d)
-        return d->qualifiedFileName.isEmpty() ? d->fileName : d->qualifiedFileName;
+        return d->fileName;
     return QString();
 }
 

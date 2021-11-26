@@ -52,7 +52,6 @@ public:
     void *pHnd;
 
     QString fileName;
-    QString qualifiedFileName;
 
     bool load();
     bool loadPlugin(); // loads and resolves instance
