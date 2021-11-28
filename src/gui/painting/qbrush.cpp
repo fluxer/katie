@@ -554,10 +554,13 @@ const QColor &QBrush::color() const
     \sa color()
 */
 
-void QBrush::setColor(const QColor &c)
+void QBrush::setColor(const QColor &color)
 {
+    if (d->color == color)
+        return
+
     detach(d->style);
-    d->color = c;
+    d->color = color;
 }
 
 /*!
