@@ -707,14 +707,16 @@ void QRasterPaintEnginePrivate::systemStateChanged()
 
 void QRasterPaintEnginePrivate::updateMatrixData(QSpanData *spanData, const QBrush &b, const QTransform &m)
 {
-    if (b.d->style == Qt::NoBrush || b.d->style == Qt::SolidPattern)
+    const Qt::BrushStyle bstyle(b.style());
+    if (bstyle == Qt::NoBrush || bstyle == Qt::SolidPattern)
         return;
 
     Q_Q(QRasterPaintEngine);
     bool bilinear = q->state()->flags.bilinear;
 
-    if (b.d->transform.type() > QTransform::TxNone) { // FALCON: optimize
-        spanData->setupMatrix(b.transform() * m, bilinear);
+    const QTransform btransform(b.transform());
+    if (btransform.type() > QTransform::TxNone) { // FALCON: optimize
+        spanData->setupMatrix(btransform * m, bilinear);
     } else if (m.type() <= QTransform::TxTranslate) {
         // specialize setupMatrix for translation matrices
         // to avoid needless matrix inversion

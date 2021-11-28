@@ -3468,7 +3468,7 @@ void QPainter::setBrush(const QBrush &brush)
         return;
     }
 
-    if (d->state->brush.d == brush.d)
+    if (d->state->brush == brush)
         return;
 
     if (d->extended) {

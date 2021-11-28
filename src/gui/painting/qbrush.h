@@ -25,7 +25,6 @@
 #include <QtCore/qpair.h>
 #include <QtCore/qpoint.h>
 #include <QtCore/qvector.h>
-#include <QtCore/qscopedpointer.h>
 #include <QtGui/qcolor.h>
 #include <QtGui/qmatrix.h>
 #include <QtGui/qtransform.h>
@@ -38,15 +37,7 @@ QT_BEGIN_NAMESPACE
 class QPixmap;
 class QGradient;
 class QVariant;
-struct QBrushDataPointerDeleter;
-
-struct QBrushData
-{
-    QAtomicInt ref;
-    Qt::BrushStyle style;
-    QColor color;
-    QTransform transform;
-};
+class QBrushData;
 
 class Q_GUI_EXPORT QBrush
 {
@@ -66,7 +57,7 @@ public:
     QBrush(const QGradient &gradient);
 
     ~QBrush();
-    QBrush &operator=(const QBrush &brush);
+    QBrush &operator=(const QBrush &other);
 #ifdef Q_COMPILER_RVALUE_REFS
     inline QBrush &operator=(QBrush &&other)
     { qSwap(d, other.d); return *this; }
@@ -75,13 +66,13 @@ public:
 
     operator QVariant() const;
 
-    inline Qt::BrushStyle style() const;
+    Qt::BrushStyle style() const;
     void setStyle(Qt::BrushStyle);
 
-    inline const QMatrix &matrix() const;
+    const QMatrix &matrix() const;
     void setMatrix(const QMatrix &mat);
 
-    inline QTransform transform() const;
+    QTransform transform() const;
     void setTransform(const QTransform &);
 
     QPixmap texture() const;
@@ -90,7 +81,7 @@ public:
     QImage textureImage() const;
     void setTextureImage(const QImage &image);
 
-    inline const QColor &color() const;
+    const QColor &color() const;
     void setColor(const QColor &color);
     inline void setColor(Qt::GlobalColor color);
 
@@ -98,34 +89,23 @@ public:
 
     bool isOpaque() const;
 
-    bool operator==(const QBrush &b) const;
-    inline bool operator!=(const QBrush &b) const { return !(operator==(b)); }
+    bool operator==(const QBrush &other) const;
+    inline bool operator!=(const QBrush &other) const { return !(operator==(other)); }
 
 
 private:
-#if defined(Q_WS_X11)
-    friend class QX11PaintEngine;
-#endif
-    friend class QRasterPaintEngine;
-    friend class QRasterPaintEnginePrivate;
-    friend struct QSpanData;
-    friend class QPainter;
     friend bool Q_GUI_EXPORT qHasPixmapTexture(const QBrush& brush);
+
     void detach(Qt::BrushStyle newStyle);
     void init(const QColor &color, Qt::BrushStyle bs);
-    QScopedPointer<QBrushData, QBrushDataPointerDeleter> d;
 
-public:
-    inline bool isDetached() const;
-    typedef QScopedPointer<QBrushData, QBrushDataPointerDeleter> DataPtr;
-    inline DataPtr &data_ptr() { return d; }
+    QBrushData *d;
 };
 
 inline void QBrush::setColor(Qt::GlobalColor acolor)
 { setColor(QColor(acolor)); }
 
 Q_DECLARE_TYPEINFO(QBrush, Q_MOVABLE_TYPE);
-Q_DECLARE_SHARED(QBrush)
 
 /*****************************************************************************
   QBrush stream functions
@@ -139,14 +119,6 @@ Q_GUI_EXPORT QDataStream &operator>>(QDataStream &, QBrush &);
 #ifndef QT_NO_DEBUG_STREAM
 Q_GUI_EXPORT QDebug operator<<(QDebug, const QBrush &);
 #endif
-
-inline Qt::BrushStyle QBrush::style() const { return d->style; }
-inline const QColor &QBrush::color() const { return d->color; }
-inline const QMatrix &QBrush::matrix() const { return d->transform.toAffine(); }
-inline QTransform QBrush::transform() const { return d->transform; }
-inline bool QBrush::isDetached() const { return d->ref == 1; }
-
-
 
 /*******************************************************************************
  * QGradients
