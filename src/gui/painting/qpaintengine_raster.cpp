@@ -1095,7 +1095,7 @@ static void fillRect_normalized(const QRect &r, QSpanData *data,
     ProcessSpans blend = isUnclipped ? data->unclipped_blend : data->blend;
 
     const int nspans = 256;
-    QT_FT_Span spans[nspans];
+    QSTACKARRAY(QT_FT_Span, spans, nspans);
 
     Q_ASSERT(data->blend);
     int y = y1;
@@ -2478,7 +2478,7 @@ void QRasterPaintEngine::drawBitmap(const QPointF &pos, const QImage &image, QSp
     Q_ASSERT(image.depth() == 1);
 
     const int spanCount = 256;
-    QT_FT_Span spans[spanCount];
+    QSTACKARRAY(QT_FT_Span, spans, spanCount);
     int n = 0;
 
     // Boundaries
