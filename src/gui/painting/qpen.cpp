@@ -663,13 +663,12 @@ QColor QPen::color() const
     \sa setBrush(), color()
 */
 
-void QPen::setColor(const QColor &c)
+void QPen::setColor(const QColor &color)
 {
-    QBrush brush(c);
-    if (d->brush == brush)
+    if (d->brush.color() == color)
         return;
     qAtomicDetach(d);
-    d->brush = brush;
+    d->brush.setColor(color);
 }
 
 
