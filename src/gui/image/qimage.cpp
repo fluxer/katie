@@ -59,7 +59,7 @@ QT_BEGIN_NAMESPACE
 QAtomicInt qimage_serial_number(1);
 
 QImageData::QImageData()
-    : ref(0), width(0), height(0), depth(0), nbytes(0), data(0),
+    : ref(1), width(0), height(0), depth(0), nbytes(0), data(0),
       format(QImage::Format_ARGB32), bytes_per_line(0),
       ser_no(qimage_serial_number.fetchAndAddRelaxed(1)),
       detach_no(0),
@@ -118,7 +118,6 @@ QImageData * QImageData::create(const QSize &size, QImage::Format format)
         return 0;
     }
 
-    d->ref.ref();
     return d.take();
 
 }
@@ -640,7 +639,6 @@ QImageData *QImageData::create(uchar *data, int width, int height,  int bpl, QIm
     d->bytes_per_line = bpl;
     d->nbytes = d->bytes_per_line * height;
 
-    d->ref.ref();
     return d.take();
 }
 
