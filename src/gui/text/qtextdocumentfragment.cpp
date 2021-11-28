@@ -282,7 +282,7 @@ QTextDocumentFragment::QTextDocumentFragment(const QTextDocument *document)
     \sa isEmpty() QTextCursor::selection()
 */
 QTextDocumentFragment::QTextDocumentFragment(const QTextCursor &cursor)
-    : d(0)
+    : d(nullptr)
 {
     if (!cursor.hasSelection())
         return;

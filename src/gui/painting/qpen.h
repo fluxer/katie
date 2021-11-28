@@ -95,7 +95,6 @@ private:
     friend Q_GUI_EXPORT QDataStream &operator>>(QDataStream &, QPen &);
     friend Q_GUI_EXPORT QDataStream &operator<<(QDataStream &, const QPen &);
 
-    void detach();
     QPenPrivate *d;
 
 public:

@@ -208,52 +208,21 @@ QT_BEGIN_NAMESPACE
 */
 inline QPenPrivate::QPenPrivate(const QBrush &_brush, qreal _width, Qt::PenStyle penStyle,
                                 Qt::PenCapStyle _capStyle, Qt::PenJoinStyle _joinStyle)
-    : dashOffset(0), miterLimit(2), cosmetic(false)
+    : ref(1), width(_width), brush(_brush), style(penStyle), capStyle(_capStyle),
+    joinStyle(_joinStyle), dashOffset(0), miterLimit(2), cosmetic(false)
 {
-    ref = 1;
-    width = _width;
-    brush = _brush;
-    style = penStyle;
-    capStyle = _capStyle;
-    joinStyle = _joinStyle;
 }
 
 static const Qt::PenCapStyle qpen_default_cap = Qt::SquareCap;
 static const Qt::PenJoinStyle qpen_default_join = Qt::BevelJoin;
-
-// Special deleter that only deletes if the ref-count goes to zero
-template <>
-class QGlobalStaticDeleter<QPenPrivate>
-{
-public:
-    QGlobalStatic<QPenPrivate> &globalStatic;
-    QGlobalStaticDeleter(QGlobalStatic<QPenPrivate> &_globalStatic)
-        : globalStatic(_globalStatic)
-    { }
-
-    inline ~QGlobalStaticDeleter()
-    {
-        if (!globalStatic.pointer->ref.deref()) {
-            delete globalStatic.pointer;
-            globalStatic.pointer = nullptr;
-            globalStatic.destroyed = true;
-        }
-    }
-};
-
-Q_GLOBAL_STATIC_WITH_ARGS(QPenPrivate, defaultPenInstance,
-                          (Qt::black, 0, Qt::SolidLine, qpen_default_cap, qpen_default_join))
-Q_GLOBAL_STATIC_WITH_ARGS(QPenPrivate, nullPenInstance,
-                          (Qt::black, 0, Qt::NoPen, qpen_default_cap, qpen_default_join))
 
 /*!
     Constructs a default black solid line pen with 0 width.
 */
 
 QPen::QPen()
+    : d(new QPenPrivate(QBrush(Qt::black), 0, Qt::SolidLine, qpen_default_cap, qpen_default_join))
 {
-    d = defaultPenInstance();
-    d->ref.ref();
 }
 
 /*!
@@ -265,10 +234,9 @@ QPen::QPen()
 QPen::QPen(Qt::PenStyle style)
 {
     if (style == Qt::NoPen) {
-        d = nullPenInstance();
-        d->ref.ref();
+        d = new QPenPrivate(QBrush(Qt::black), 0, Qt::NoPen, qpen_default_cap, qpen_default_join);
     } else {
-        d = new QPenPrivate(Qt::black, 0, style, qpen_default_cap, qpen_default_join);
+        d = new QPenPrivate(QBrush(Qt::black), 0, style, qpen_default_cap, qpen_default_join);
     }
 }
 
@@ -280,8 +248,8 @@ QPen::QPen(Qt::PenStyle style)
 */
 
 QPen::QPen(const QColor &color)
+    : d(new QPenPrivate(color, 0, Qt::SolidLine, qpen_default_cap, qpen_default_join))
 {
-    d = new QPenPrivate(color, 0, Qt::SolidLine, qpen_default_cap, qpen_default_join);
 }
 
 
@@ -295,8 +263,8 @@ QPen::QPen(const QColor &color)
 */
 
 QPen::QPen(const QBrush &brush, qreal width, Qt::PenStyle s, Qt::PenCapStyle c, Qt::PenJoinStyle j)
+    : d(new QPenPrivate(brush, width, s, c, j))
 {
-    d = new QPenPrivate(brush, width, s, c, j);
 }
 
 /*!
@@ -306,8 +274,8 @@ QPen::QPen(const QBrush &brush, qreal width, Qt::PenStyle s, Qt::PenCapStyle c, 
 */
 
 QPen::QPen(const QPen &p)
+    : d(p.d)
 {
-    d = p.d;
     d->ref.ref();
 }
 
@@ -321,29 +289,6 @@ QPen::~QPen()
     if (!d->ref.deref())
         delete d;
 }
-
-/*!
-    \fn void QPen::detach()
-    Detaches from shared pen data to make sure that this pen is the
-    only one referring the data.
-
-    If multiple pens share common data, this pen dereferences the data
-    and gets a copy of the data. Nothing is done if there is just a
-    single reference.
-*/
-
-void QPen::detach()
-{
-    if (d->ref == 1)
-        return;
-
-    QPenPrivate *x = new QPenPrivate(*d);
-    x->ref.ref();
-    if (!d->ref.deref())
-        delete d;
-    d = x;
-}
-
 
 /*!
     \fn QPen &QPen::operator=(const QPen &pen)
@@ -404,7 +349,7 @@ void QPen::setStyle(Qt::PenStyle s)
 {
     if (d->style == s)
         return;
-    detach();
+    qAtomicDetach(d);
     d->style = s;
     d->dashOffset = 0;
 
@@ -482,7 +427,7 @@ void QPen::setDashPattern(const QVector<qreal> &pattern)
 {
     if (pattern.isEmpty() || d->dashPattern == pattern)
         return;
-    detach();
+    qAtomicDetach(d);
 
     d->dashPattern = pattern;
     d->style = Qt::CustomDashLine;
@@ -525,7 +470,7 @@ void QPen::setDashOffset(qreal offset)
 {
     if (qFuzzyCompare(offset, d->dashOffset))
         return;
-    detach();
+    qAtomicDetach(d);
     d->dashOffset = offset;
     if (d->style != Qt::CustomDashLine) {
         d->dashPattern = dashPattern();
@@ -564,7 +509,7 @@ void QPen::setMiterLimit(qreal limit)
 {
     if (d->miterLimit == limit)
         return;
-    detach();
+    qAtomicDetach(d);
     d->miterLimit = limit;
 }
 
@@ -615,7 +560,7 @@ void QPen::setWidth(int width)
         qWarning("QPen::setWidth: Setting a pen width with a negative value is not defined");
     if ((qreal)width == d->width)
         return;
-    detach();
+    qAtomicDetach(d);
     d->width = width;
 }
 
@@ -639,7 +584,7 @@ void QPen::setWidthF(qreal width)
         qWarning("QPen::setWidthF: Setting a pen width with a negative value is not defined");
     if (qAbs(d->width - width) < 0.00000001f)
         return;
-    detach();
+    qAtomicDetach(d);
     d->width = width;
 }
 
@@ -667,7 +612,7 @@ void QPen::setCapStyle(Qt::PenCapStyle c)
 {
     if (d->capStyle == c)
         return;
-    detach();
+    qAtomicDetach(d);
     d->capStyle = c;
 }
 
@@ -694,7 +639,7 @@ void QPen::setJoinStyle(Qt::PenJoinStyle j)
 {
     if (d->joinStyle == j)
         return;
-    detach();
+    qAtomicDetach(d);
     d->joinStyle = j;
 }
 
@@ -723,7 +668,7 @@ void QPen::setColor(const QColor &c)
     QBrush brush(c);
     if (d->brush == brush)
         return;
-    detach();
+    qAtomicDetach(d);
     d->brush = brush;
 }
 
@@ -746,7 +691,7 @@ void QPen::setBrush(const QBrush &brush)
 {
     if (d->brush == brush)
         return;
-    detach();
+    qAtomicDetach(d);
     d->brush = brush;
 }
 
@@ -793,7 +738,7 @@ void QPen::setCosmetic(bool cosmetic)
 {
     if (d->cosmetic == cosmetic)
         return;
-    detach();
+    qAtomicDetach(d);
     d->cosmetic = cosmetic;
 }
 
@@ -927,9 +872,9 @@ QDataStream &operator>>(QDataStream &s, QPen &p)
 #endif
     s >> dashOffset;
 
-    p.detach();
-    p.d->width = width;
+    qAtomicDetach(p.d);
     p.d->brush = brush;
+    p.d->width = width;
     p.d->style = Qt::PenStyle(style);
     p.d->capStyle = Qt::PenCapStyle(capStyle);
     p.d->joinStyle = Qt::PenJoinStyle(joinStyle);
