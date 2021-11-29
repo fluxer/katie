@@ -254,7 +254,7 @@ QPageSetupWidget::QPageSetupWidget(QWidget *parent)
 
 #ifdef PSD_ENABLE_PAPERSOURCE
     for (int i=0; paperSourceNames[i]; ++i)
-        widget.paperSource->insertItem(paperSourceNames[i]);
+        widget.paperSource->addItem(paperSourceNames[i]);
 #else
     widget.paperSourceLabel->setVisible(false);
     widget.paperSource->setVisible(false);
@@ -299,7 +299,7 @@ void QPageSetupWidget::setPrinter(QPrinter *printer)
     widget.landscape->setChecked(printer->orientation() == QPrinter::Landscape);
 
 #ifdef PSD_ENABLE_PAPERSOURCE
-    widget.paperSource->setCurrentItem(printer->paperSource());
+    widget.paperSource->setCurrentIndex(printer->paperSource());
 #endif
     Q_ASSERT(m_blockSignals);
     m_blockSignals = false;
