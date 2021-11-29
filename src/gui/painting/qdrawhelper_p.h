@@ -182,9 +182,10 @@ struct QGradientData
 #define GRADIENT_STOPTABLE_SIZE 1024
 #define GRADIENT_STOPTABLE_SIZE_SHIFT 10
 
-    uint* colorTable; //[GRADIENT_STOPTABLE_SIZE];
-
+    uint colorTable[GRADIENT_STOPTABLE_SIZE];
     bool alphaColor;
+
+    void generateGradientColorTable(const QGradient& g, int opacity);
 };
 
 struct QTextureData
