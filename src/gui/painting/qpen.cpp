@@ -786,19 +786,6 @@ bool QPen::operator==(const QPen &p) const
             && p.d->cosmetic == d->cosmetic);
 }
 
-
-/*!
-    \fn bool QPen::isDetached() const
-
-    \internal
-*/
-
-bool QPen::isDetached() const
-{
-    return d->ref == 1;
-}
-
-
 /*****************************************************************************
   QPen stream functions
  *****************************************************************************/
