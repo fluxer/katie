@@ -1427,17 +1427,6 @@ QDebug operator<<(QDebug dbg, const QKeySequence &p)
 
 #endif // QT_NO_SHORTCUT
 
-
-/*!
-    \typedef QKeySequence::DataPtr
-    \internal
-*/
-
- /*!
-    \fn DataPtr &QKeySequence::data_ptr()
-    \internal
-*/
-
 QT_END_NAMESPACE
 
 
