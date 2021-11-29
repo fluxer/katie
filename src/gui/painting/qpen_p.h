@@ -41,6 +41,9 @@ class QPenPrivate {
 public:
     QPenPrivate(const QBrush &brush, qreal width, Qt::PenStyle, Qt::PenCapStyle,
                 Qt::PenJoinStyle _joinStyle);
+    // for qAtomicDetach()
+    QPenPrivate(const QPenPrivate &other);
+
     QAtomicInt ref;
     qreal width;
     QBrush brush;

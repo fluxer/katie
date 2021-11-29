@@ -206,10 +206,17 @@ QT_BEGIN_NAMESPACE
 /*!
   \internal
 */
-inline QPenPrivate::QPenPrivate(const QBrush &_brush, qreal _width, Qt::PenStyle penStyle,
+QPenPrivate::QPenPrivate(const QBrush &_brush, qreal _width, Qt::PenStyle penStyle,
                                 Qt::PenCapStyle _capStyle, Qt::PenJoinStyle _joinStyle)
     : ref(1), width(_width), brush(_brush), style(penStyle), capStyle(_capStyle),
     joinStyle(_joinStyle), dashOffset(0), miterLimit(2), cosmetic(false)
+{
+}
+
+QPenPrivate::QPenPrivate(const QPenPrivate &other)
+    : ref(1), width(other.width), brush(other.brush), style(other.style), capStyle(other.capStyle),
+    joinStyle(other.joinStyle), dashOffset(other.dashOffset), miterLimit(other.miterLimit),
+    cosmetic(other.cosmetic)
 {
 }
 
