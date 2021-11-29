@@ -125,11 +125,11 @@
 #include "qabstractanimation.h"
 #include "qanimationgroup.h"
 #include "qabstractanimation_p.h"
-
-#include <QtCore/qdebug.h>
-#include <QtCore/qmath.h>
-#include <QtCore/qcoreevent.h>
-#include <QtCore/qpointer.h>
+#include "qdebug.h"
+#include "qmath.h"
+#include "qcoreevent.h"
+#include "qpointer.h"
+#include "qcorecommon_p.h"
 
 #ifndef QT_NO_ANIMATION
 
@@ -138,7 +138,7 @@
 
 QT_BEGIN_NAMESPACE
 
-thread_local QUnifiedTimer* unifiedTimer = nullptr;
+QTHREADLOCAL(QUnifiedTimer, unifiedTimer);
 
 QUnifiedTimer::QUnifiedTimer() :
     QObject(), lastTick(0), currentAnimationIdx(0), insideTick(false),

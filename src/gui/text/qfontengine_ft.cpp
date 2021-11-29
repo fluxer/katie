@@ -29,6 +29,7 @@
 #include "qharfbuzz_p.h"
 #include "qfontengine_ft_p.h"
 #include "qguicommon_p.h"
+#include "qcorecommon_p.h"
 
 #include <ft2build.h>
 #include FT_FREETYPE_H
@@ -78,7 +79,7 @@ public:
     QHash<QFontEngine::FaceId, QFreetypeFace *> faces;
 };
 
-thread_local QtFreetypeData* theFreetypeData = nullptr;
+QTHREADLOCAL(QtFreetypeData, theFreetypeData);
 
 QtFreetypeData *qt_getFreetypeData()
 {
