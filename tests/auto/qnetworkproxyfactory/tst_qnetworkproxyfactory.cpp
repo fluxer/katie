@@ -74,7 +74,7 @@ QString tst_QNetworkProxyFactory::formatProxyName(const QNetworkProxy & proxy) c
 {
     QString proxyName;
     if (!proxy.user().isNull())
-        proxyName.append("%1:%2@").arg(proxy.user(), proxy.password());
+        proxyName = QString::fromLatin1("%1:%2@").arg(proxy.user(), proxy.password());
     proxyName.append(QString("%1:%2").arg(proxy.hostName()).arg(proxy.port()));
     proxyName.append(QString(" (type=%1, capabilities=%2)").arg(proxy.type()).arg(proxy.capabilities()));
 
