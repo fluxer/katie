@@ -909,17 +909,6 @@ QDebug operator<<(QDebug dbg, const QPen &p)
 }
 #endif
 
-/*!
-    \fn DataPtr &QPen::data_ptr()
-    \internal
-*/
-
-/*!
-    \typedef QPen::DataPtr
-
-    \internal
-*/
-
 QT_END_NAMESPACE
 
 #undef QT_COMPILING_QPEN
