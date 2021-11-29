@@ -347,6 +347,7 @@ void tst_QGridLayout::setMinAndMaxSize()
 
 
     layout.removeItem(spacer);
+    delete spacer;
 
     rightChild.hide();
     QApplication::sendPostedEvents(0, 0);
