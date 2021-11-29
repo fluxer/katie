@@ -74,10 +74,6 @@ QT_BEGIN_NAMESPACE
     \sa  QPixmap, QImage, QImageReader, QImageWriter
 */
 
-/*! \typedef QBitmap::DataPtr
-  \internal
- */
-
 /*!
     Constructs a null bitmap.
 
