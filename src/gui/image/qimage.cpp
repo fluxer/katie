@@ -4567,10 +4567,6 @@ QImage QImage::transformed(const QTransform &matrix, Qt::TransformationMode mode
     int ws = width();
     int hs = height();
 
-    // target image data
-    int wd;
-    int hd;
-
     // compute size of target image
     QTransform mat = trueMatrix(matrix, ws, hs);
 
@@ -4588,6 +4584,9 @@ QImage QImage::transformed(const QTransform &matrix, Qt::TransformationMode mode
             return rotated180(*this);
     }
 
+    // target image data
+    int wd;
+    int hd;
     bool complex_xform = false;
     if (mat.type() == QTransform::TxScale) {
         if (mode == Qt::FastTransformation) {
@@ -4608,8 +4607,6 @@ QImage QImage::transformed(const QTransform &matrix, Qt::TransformationMode mode
 
     if (wd == 0 || hd == 0)
         return QImage();
-
-    const int bpp = depth();
 
     QImage::Format target_format = d->format;
 
@@ -4632,6 +4629,7 @@ QImage QImage::transformed(const QTransform &matrix, Qt::TransformationMode mode
     dImage.d->dpmx = dotsPerMeterX();
     dImage.d->dpmy = dotsPerMeterY();
 
+    const int bpp = depth();
     switch (bpp) {
         // initizialize the data
         case 8:
