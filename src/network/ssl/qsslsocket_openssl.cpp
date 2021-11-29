@@ -930,15 +930,19 @@ bool QSslSocketBackendPrivate::startHandshake()
         plainSocket->setReadBufferSize(32768);
 
 #ifdef QT_DECRYPT_SSL_TRAFFIC
-    if (ssl->session && ssl->s3) {
-        const char *mk = reinterpret_cast<const char *>(ssl->session->master_key);
-        QByteArray masterKey(mk, ssl->session->master_key_length);
-        const char *random = reinterpret_cast<const char *>(ssl->s3->client_random);
-        QByteArray clientRandom(random, SSL3_RANDOM_SIZE);
+    const SSL_SESSION* const session = SSL_get_session(ssl);
+    if (session) {
+        QSTACKARRAY(uchar, mk, SSL_MAX_MASTER_KEY_LENGTH);
+        SSL_SESSION_get_master_key(session, mk, SSL_MAX_MASTER_KEY_LENGTH);
+        QByteArray masterKey(reinterpret_cast<char *>(mk));
+
+        QSTACKARRAY(uchar, random, SSL3_RANDOM_SIZE);
+        SSL_get_client_random(ssl, random, SSL3_RANDOM_SIZE);
+        QByteArray clientRandom(reinterpret_cast<const char *>(random));
 
         // different format, needed for e.g. older Wireshark versions:
-//        const char *sid = reinterpret_cast<const char *>(ssl->session->session_id);
-//        QByteArray sessionID(sid, ssl->session->session_id_length);
+//        const char *sid = reinterpret_cast<const char *>(session->session_id);
+//        QByteArray sessionID(sid, session->session_id_length);
 //        QByteArray debugLineRSA("RSA Session-ID:");
 //        debugLineRSA.append(sessionID.toHex().toUpper());
 //        debugLineRSA.append(" Master-Key:");
