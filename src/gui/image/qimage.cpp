@@ -3480,12 +3480,10 @@ QImage QImage::mirrored(bool horizontal, bool vertical) const
         return *this;
 
     QTransform transform;
-    if (horizontal && !vertical) {
+    if (horizontal) {
         transform.rotate(-180.0, Qt::YAxis);
-    } else if (horizontal && vertical) {
-        transform.rotate(-180.0, Qt::YAxis);
-        transform.rotate(-180.0, Qt::XAxis);
-    } else if (!horizontal && vertical) {
+    }
+    if (vertical) {
         transform.rotate(-180.0, Qt::XAxis);
     }
 
