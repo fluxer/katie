@@ -253,7 +253,6 @@ static bool write_pbm_image(QIODevice *out, const QImage &sourceImage, const QBy
     if (image.depth() == 1 && image.colorCount() == 2) {
         if (qGray(image.color(0)) < qGray(image.color(1))) {
             // 0=dark/black, 1=light/white - invert
-            image.detach();
             for (int y=0; y<image.height(); y++) {
                 uchar *p = image.scanLine(y);
                 uchar *end = p + image.bytesPerLine();
