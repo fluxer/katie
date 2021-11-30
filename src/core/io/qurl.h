@@ -166,8 +166,6 @@ public:
 
     static QUrl fromUserInput(const QString &userInput);
 
-    void detach();
-
     bool operator <(const QUrl &url) const;
     bool operator ==(const QUrl &url) const;
     bool operator !=(const QUrl &url) const;

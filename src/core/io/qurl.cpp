@@ -3633,22 +3633,6 @@ QUrl &QUrl::operator =(const QString &url)
 
 /*! \internal
 
-    Forces a detach.
-*/
-void QUrl::detach()
-{
-    if (!d) {
-        d = new QUrlPrivate;
-    } else {
-        // Public method, so it must lock first.
-        QMutexLocker lock(&d->mutex);
-        detach(lock);
-    }
-}
-
-
-/*! \internal
-
     Forces a detach. Unlocks \a locker once the detaching is done.
 
     It's ok to access private members afterwards, without lock, since
