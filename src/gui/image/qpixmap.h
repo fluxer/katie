@@ -183,6 +183,7 @@ public:
 };
 
 Q_DECLARE_SHARED(QPixmap)
+Q_DECLARE_TYPEINFO(QPixmap, Q_MOVABLE_TYPE);
 
 inline QPixmap QPixmap::copy(int ax, int ay, int awidth, int aheight) const
 {
