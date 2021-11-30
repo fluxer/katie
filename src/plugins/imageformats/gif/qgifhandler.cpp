@@ -220,7 +220,6 @@ int QGIFFormat::decode(QImage *image, const uchar *buffer, int length,
         table[1] = &stack[(1 << max_lzw_bits) * 3];
     }
 
-    image->detach();
     int bpl = image->bytesPerLine();
     unsigned char *bits = image->bits();
 
