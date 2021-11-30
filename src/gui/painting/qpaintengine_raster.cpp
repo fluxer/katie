@@ -3375,7 +3375,7 @@ void QSpanData::setupMatrix(const QTransform &matrix, bool bilin)
 
 void QSpanData::initTexture(const QImage *image, int alpha, QTextureData::Type _type, const QRect &sourceRect)
 {
-    const QImageData *d = image->data_ptr();
+    const QImageData *d = image->d;
     if (!d || d->height == 0) {
         texture.imageData = 0;
         texture.width = 0;

@@ -69,8 +69,6 @@ public:
         { paint(painter, QRect(x, y, w, h), alignment, mode, state); }
 
     bool isNull() const;
-    bool isDetached() const;
-    void detach();
 
     qint64 cacheKey() const;
 
@@ -89,18 +87,16 @@ public:
     static void setThemeName(const QString &path);
 
 private:
+    void detach();
+
     QIconPrivate *d;
+
 #if !defined(QT_NO_DATASTREAM)
     friend Q_GUI_EXPORT QDataStream &operator<<(QDataStream &, const QIcon &);
     friend Q_GUI_EXPORT QDataStream &operator>>(QDataStream &, QIcon &);
 #endif
-
-public:
-    typedef QIconPrivate * DataPtr;
-    inline DataPtr &data_ptr() { return d; }
 };
 
-Q_DECLARE_SHARED(QIcon)
 Q_DECLARE_TYPEINFO(QIcon, Q_MOVABLE_TYPE);
 
 #if !defined(QT_NO_DATASTREAM)

@@ -89,8 +89,6 @@ public:
     bool operator==(const QImage &) const;
     bool operator!=(const QImage &) const;
     operator QVariant() const;
-    void detach();
-    bool isDetached() const;
 
     QImage copy(const QRect &rect = QRect()) const;
     inline QImage copy(int x, int y, int w, int h) const
@@ -204,18 +202,18 @@ protected:
     virtual int metric(PaintDeviceMetric metric) const;
 
 private:
+    void detach();
+
     QImageData *d;
 
+    friend class QPixmap;
+    friend class QPainter;
     friend class QRasterPixmapData;
-    friend class QPixmapCacheEntry;
-
-public:
-    typedef QImageData * DataPtr;
-    inline DataPtr &data_ptr() { return d; }
-    inline const DataPtr &data_ptr() const { return d; }
+    friend class QX11PixmapData;
+    friend class QX11AlphaDetector;
+    friend class QSpanData;
 };
 
-Q_DECLARE_SHARED(QImage)
 Q_DECLARE_TYPEINFO(QImage, Q_MOVABLE_TYPE);
 
 // QImage stream functions

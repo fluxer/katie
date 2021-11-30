@@ -661,10 +661,9 @@ inline void qSwap(T &value1, T &value2)
      Q_DECLARE_SHARED(type);
 
    where 'type' is the name of the type to specialize.  NOTE: shared
-   types must declare a 'bool isDetached(void) const;' member for this
-   to work.
+   types must declare a 'DataPtr data_ptr();' method for this to work.
 */
-#define Q_DECLARE_SHARED(TYPE)                                          \
+#define Q_DECLARE_SHARED(TYPE) \
 template <> inline void qSwap<TYPE>(TYPE &value1, TYPE &value2) \
 { qSwap(value1.data_ptr(), value2.data_ptr()); } \
 QT_END_NAMESPACE \

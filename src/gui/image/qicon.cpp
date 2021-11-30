@@ -655,13 +655,6 @@ bool QIcon::isNull() const
     return !d;
 }
 
-/*!\internal
- */
-bool QIcon::isDetached() const
-{
-    return !d || d->ref == 1;
-}
-
 /*! \internal
  */
 void QIcon::detach()
@@ -977,17 +970,6 @@ QDataStream &operator>>(QDataStream &s, QIcon &icon)
 
 #endif //QT_NO_DATASTREAM
 
-
-
-/*!
-    \fn DataPtr &QIcon::data_ptr()
-    \internal
-*/
-
-/*!
-    \typedef QIcon::DataPtr
-    \internal
-*/
-
 QT_END_NAMESPACE
+
 #endif //QT_NO_ICON

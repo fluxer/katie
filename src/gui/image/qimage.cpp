@@ -1018,7 +1018,7 @@ QImage::operator QVariant() const
 
     Nothing is done if there is just a single reference.
 
-    \sa copy(), isDetached(), {Implicit Data Sharing}
+    \sa copy(), {Implicit Data Sharing}
 */
 void QImage::detach()
 {
@@ -4196,20 +4196,6 @@ qint64 QImage::cacheKey() const
 }
 
 /*!
-    \internal
-
-    Returns true if the image is detached; otherwise returns false.
-
-    \sa detach(), {Implicit Data Sharing}
-*/
-
-bool QImage::isDetached() const
-{
-    return d && d->ref == 1;
-}
-
-
-/*!
     \obsolete
     Sets the alpha channel of this image to the given \a alphaChannel.
 
@@ -4613,20 +4599,4 @@ QTransform QImage::trueMatrix(const QTransform &matrix, int w, int h)
     return matrix * QTransform().translate(-delta.x(), -delta.y());
 }
 
-/*!
-    \typedef QImage::DataPtr
-    \internal
-*/
-
-/*!
-    \fn DataPtr & QImage::data_ptr()
-    \internal
-*/
-
 QT_END_NAMESPACE
-
-
-
-
-
-
