@@ -56,6 +56,94 @@ QT_BEGIN_NAMESPACE
         return QImage(); \
     }
 
+static QImage rotated90(const QImage &image) {
+    QImage out(image.height(), image.width(), image.format());
+    QIMAGE_SANITYCHECK_MEMORY(out);
+    if (image.colorCount() > 0)
+        out.setColorTable(image.colorTable());
+    int w = image.width();
+    int h = image.height();
+    switch (image.format()) {
+    case QImage::Format_RGB32:
+    case QImage::Format_ARGB32:
+    case QImage::Format_ARGB32_Premultiplied:
+        qt_memrotate270(reinterpret_cast<const quint32*>(image.constBits()),
+                        w, h, image.bytesPerLine(),
+                        reinterpret_cast<quint32*>(out.bits()),
+                        out.bytesPerLine());
+        break;
+    case QImage::Format_RGB16:
+        qt_memrotate270(reinterpret_cast<const quint16*>(image.constBits()),
+                        w, h, image.bytesPerLine(),
+                        reinterpret_cast<quint16*>(out.bits()),
+                        out.bytesPerLine());
+        break;
+    case QImage::Format_Indexed8:
+        qt_memrotate270(reinterpret_cast<const quint8*>(image.constBits()),
+                        w, h, image.bytesPerLine(),
+                        reinterpret_cast<quint8*>(out.bits()),
+                        out.bytesPerLine());
+        break;
+    default:
+        for (int y=0; y<h; ++y) {
+            if (image.colorCount())
+                for (int x=0; x<w; ++x)
+                    out.setPixel(h-y-1, x, image.pixelIndex(x, y));
+            else
+                for (int x=0; x<w; ++x)
+                    out.setPixel(h-y-1, x, image.pixel(x, y));
+        }
+        break;
+    }
+    return out;
+}
+
+static QImage rotated180(const QImage &image) {
+    return image.mirrored(true, true);
+}
+
+static QImage rotated270(const QImage &image) {
+    QImage out(image.height(), image.width(), image.format());
+    QIMAGE_SANITYCHECK_MEMORY(out);
+    if (image.colorCount() > 0)
+        out.setColorTable(image.colorTable());
+    int w = image.width();
+    int h = image.height();
+    switch (image.format()) {
+    case QImage::Format_RGB32:
+    case QImage::Format_ARGB32:
+    case QImage::Format_ARGB32_Premultiplied:
+        qt_memrotate90(reinterpret_cast<const quint32*>(image.constBits()),
+                       w, h, image.bytesPerLine(),
+                       reinterpret_cast<quint32*>(out.bits()),
+                       out.bytesPerLine());
+        break;
+    case QImage::Format_RGB16:
+       qt_memrotate90(reinterpret_cast<const quint16*>(image.constBits()),
+                       w, h, image.bytesPerLine(),
+                       reinterpret_cast<quint16*>(out.bits()),
+                       out.bytesPerLine());
+        break;
+    case QImage::Format_Indexed8:
+        qt_memrotate90(reinterpret_cast<const quint8*>(image.constBits()),
+                       w, h, image.bytesPerLine(),
+                       reinterpret_cast<quint8*>(out.bits()),
+                       out.bytesPerLine());
+        break;
+    default:
+        for (int y=0; y<h; ++y) {
+            if (image.colorCount())
+                for (int x=0; x<w; ++x)
+                    out.setPixel(y, w-x-1, image.pixelIndex(x, y));
+            else
+                for (int x=0; x<w; ++x)
+                    out.setPixel(y, w-x-1, image.pixel(x, y));
+        }
+        break;
+    }
+    return out;
+}
+
 QAtomicInt qimage_serial_number(1);
 
 QImageData::QImageData()
@@ -3374,19 +3462,6 @@ QImage QImage::createMaskFromColor(QRgb color, Qt::MaskMode mode) const
     Use mirrored() instead.
 */
 
-template<class T> inline void do_mirror_data(QImageData *dst, QImageData *src,
-                                             int dstX0, int dstY0,
-                                             int dstXIncr, int dstYIncr,
-                                             int w, int h)
-{
-    for (int srcY = 0, dstY = dstY0; srcY < h; ++srcY, dstY += dstYIncr) {
-        const T *srcPtr = (const T *) (src->data + srcY * src->bytes_per_line);
-        T *dstPtr = (T *) (dst->data + dstY * dst->bytes_per_line);
-        for (int srcX = 0, dstX = dstX0; srcX < w; ++srcX, dstX += dstXIncr)
-            dstPtr[dstX] = srcPtr[srcX];
-    }
-}
-
 /*!
     Returns a mirror of the image, mirrored in the horizontal and/or
     the vertical direction depending on whether \a horizontal and \a
@@ -3404,88 +3479,17 @@ QImage QImage::mirrored(bool horizontal, bool vertical) const
     if ((d->width <= 1 && d->height <= 1) || (!horizontal && !vertical))
         return *this;
 
-    // Create result image, copy colormap
-    QImage result(d->width, d->height, d->format);
-    QIMAGE_SANITYCHECK_MEMORY(result);
-
-    result.d->colortable = d->colortable;
-    result.d->has_alpha_clut = d->has_alpha_clut;
-    result.d->dpmx = d->dpmx;
-    result.d->dpmy = d->dpmy;
-
-    int w = d->width;
-    int h = d->height;
-    int depth = d->depth;
-
-    if (d->depth == 1) {
-        w = (w + 7) / 8; // byte aligned width
-        depth = 8;
+    QTransform transform;
+    if (horizontal && !vertical) {
+        transform.rotate(-180.0, Qt::YAxis);
+    } else if (horizontal && vertical) {
+        transform.rotate(-180.0, Qt::YAxis);
+        transform.rotate(-180.0, Qt::XAxis);
+    } else if (!horizontal && vertical) {
+        transform.rotate(-180.0, Qt::XAxis);
     }
 
-    int dstX0 = 0, dstXIncr = 1;
-    int dstY0 = 0, dstYIncr = 1;
-    if (horizontal) {
-        // 0 -> w-1, 1 -> w-2, 2 -> w-3, ...
-        dstX0 = w - 1;
-        dstXIncr = -1;
-    }
-    if (vertical) {
-        // 0 -> h-1, 1 -> h-2, 2 -> h-3, ...
-        dstY0 = h - 1;
-        dstYIncr = -1;
-    }
-
-    switch (depth) {
-    case 32:
-        do_mirror_data<quint32>(result.d, d, dstX0, dstY0, dstXIncr, dstYIncr, w, h);
-        break;
-    case 16:
-        do_mirror_data<quint16>(result.d, d, dstX0, dstY0, dstXIncr, dstYIncr, w, h);
-        break;
-    case 8:
-        do_mirror_data<quint8>(result.d, d, dstX0, dstY0, dstXIncr, dstYIncr, w, h);
-        break;
-    default:
-        Q_ASSERT(false);
-        break;
-    }
-
-    // The bytes are now all in the correct place. In addition, the bits in the individual
-    // bytes have to be flipped too when horizontally mirroring a 1 bit-per-pixel image.
-    if (horizontal && result.d->depth == 1) {
-        Q_ASSERT(result.d->format == QImage::Format_Mono || result.d->format == QImage::Format_MonoLSB);
-        const int shift = 8 - (result.d->width % 8);
-        for (int y = 0; y < h; ++y) {
-            uchar *begin = result.d->data + y * result.d->bytes_per_line;
-            uchar *end = begin + result.d->bytes_per_line;
-            for (uchar *p = begin; p < end; ++p) {
-                *p = bitflip[*p];
-                // When the data is non-byte aligned, an extra bit shift (of the number of
-                // unused bits at the end) is needed for the entire scanline.
-                if (shift != 8 && p != begin) {
-                    if (result.d->format == QImage::Format_Mono) {
-                        for (int i = 0; i < shift; ++i) {
-                            p[-1] <<= 1;
-                            p[-1] |= (*p & (128 >> i)) >> (7 - i);
-                        }
-                    } else {
-                        for (int i = 0; i < shift; ++i) {
-                            p[-1] >>= 1;
-                            p[-1] |= (*p & (1 << i)) << (7 - i);
-                        }
-                    }
-                }
-            }
-            if (shift != 8) {
-                if (result.d->format == QImage::Format_Mono)
-                    end[-1] <<= shift;
-                else
-                    end[-1] >>= shift;
-            }
-        }
-    }
-
-    return result;
+    return transformed(transform);
 }
 
 /*!
@@ -4450,96 +4454,6 @@ int QImage::bitPlaneCount() const
 
     Use scaledToHeight() instead.
 */
-
-
-static QImage rotated90(const QImage &image) {
-    QImage out(image.height(), image.width(), image.format());
-    QIMAGE_SANITYCHECK_MEMORY(out);
-    if (image.colorCount() > 0)
-        out.setColorTable(image.colorTable());
-    int w = image.width();
-    int h = image.height();
-    switch (image.format()) {
-    case QImage::Format_RGB32:
-    case QImage::Format_ARGB32:
-    case QImage::Format_ARGB32_Premultiplied:
-        qt_memrotate270(reinterpret_cast<const quint32*>(image.constBits()),
-                        w, h, image.bytesPerLine(),
-                        reinterpret_cast<quint32*>(out.bits()),
-                        out.bytesPerLine());
-        break;
-    case QImage::Format_RGB16:
-        qt_memrotate270(reinterpret_cast<const quint16*>(image.constBits()),
-                        w, h, image.bytesPerLine(),
-                        reinterpret_cast<quint16*>(out.bits()),
-                        out.bytesPerLine());
-        break;
-    case QImage::Format_Indexed8:
-        qt_memrotate270(reinterpret_cast<const quint8*>(image.constBits()),
-                        w, h, image.bytesPerLine(),
-                        reinterpret_cast<quint8*>(out.bits()),
-                        out.bytesPerLine());
-        break;
-    default:
-        for (int y=0; y<h; ++y) {
-            if (image.colorCount())
-                for (int x=0; x<w; ++x)
-                    out.setPixel(h-y-1, x, image.pixelIndex(x, y));
-            else
-                for (int x=0; x<w; ++x)
-                    out.setPixel(h-y-1, x, image.pixel(x, y));
-        }
-        break;
-    }
-    return out;
-}
-
-
-static QImage rotated180(const QImage &image) {
-    return image.mirrored(true, true);
-}
-
-static QImage rotated270(const QImage &image) {
-    QImage out(image.height(), image.width(), image.format());
-    QIMAGE_SANITYCHECK_MEMORY(out);
-    if (image.colorCount() > 0)
-        out.setColorTable(image.colorTable());
-    int w = image.width();
-    int h = image.height();
-    switch (image.format()) {
-    case QImage::Format_RGB32:
-    case QImage::Format_ARGB32:
-    case QImage::Format_ARGB32_Premultiplied:
-        qt_memrotate90(reinterpret_cast<const quint32*>(image.constBits()),
-                       w, h, image.bytesPerLine(),
-                       reinterpret_cast<quint32*>(out.bits()),
-                       out.bytesPerLine());
-        break;
-    case QImage::Format_RGB16:
-       qt_memrotate90(reinterpret_cast<const quint16*>(image.constBits()),
-                       w, h, image.bytesPerLine(),
-                       reinterpret_cast<quint16*>(out.bits()),
-                       out.bytesPerLine());
-        break;
-    case QImage::Format_Indexed8:
-        qt_memrotate90(reinterpret_cast<const quint8*>(image.constBits()),
-                       w, h, image.bytesPerLine(),
-                       reinterpret_cast<quint8*>(out.bits()),
-                       out.bytesPerLine());
-        break;
-    default:
-        for (int y=0; y<h; ++y) {
-            if (image.colorCount())
-                for (int x=0; x<w; ++x)
-                    out.setPixel(y, w-x-1, image.pixelIndex(x, y));
-            else
-                for (int x=0; x<w; ++x)
-                    out.setPixel(y, w-x-1, image.pixel(x, y));
-        }
-        break;
-    }
-    return out;
-}
 
 /*!
     Returns a copy of the image that is transformed using the given
