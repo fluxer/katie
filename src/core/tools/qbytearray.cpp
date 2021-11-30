@@ -903,11 +903,6 @@ QByteArray &QByteArray::operator=(const char *str)
     \internal
 */
 
-/*! \fn bool QByteArray::isDetached() const
-
-    \internal
-*/
-
 /*! \fn char QByteArray::at(int i) const
 
     Returns the character at index position \a i in the byte array.
@@ -4132,16 +4127,6 @@ QByteArray QByteArray::toPercentEncoding(const QByteArray &exclude, const QByteA
     \fn int QByteArray::findRev(const QString &s, int from = -1) const
 
     Use lastIndexOf() instead.
-*/
-
-/*!
-    \fn DataPtr &QByteArray::data_ptr()
-    \internal
-*/
-
-/*!
-    \typedef QByteArray::DataPtr
-    \internal
 */
 
 QT_END_NAMESPACE

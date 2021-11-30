@@ -121,7 +121,6 @@ public:
     const char *data() const;
     inline const char *constData() const;
     inline void detach();
-    bool isDetached() const;
     void clear();
 
     char at(int i) const;
@@ -300,9 +299,6 @@ private:
 
     friend class QByteRef;
     friend class QString;
-public:
-    typedef Data * DataPtr;
-    inline DataPtr &data_ptr() { return d; }
 };
 
 inline QByteArray::QByteArray(): d(&shared_null) { d->ref.ref(); }
@@ -331,8 +327,6 @@ inline const char *QByteArray::constData() const
 { return d->data; }
 inline void QByteArray::detach()
 { if (d->ref != 1 || d->data != d->array) reallocData(d->size); }
-inline bool QByteArray::isDetached() const
-{ return d->ref == 1; }
 inline QByteArray::QByteArray(const QByteArray &a) : d(a.d)
 { d->ref.ref(); }
 
@@ -499,7 +493,6 @@ inline QByteArray qUncompress(const QByteArray& data)
 #endif
 
 Q_DECLARE_TYPEINFO(QByteArray, Q_MOVABLE_TYPE);
-Q_DECLARE_SHARED(QByteArray)
 
 static inline int qstrcmp(const char *str1, const QByteArray &str2)
 { return qstrcmp(str1, str2.constData()); }

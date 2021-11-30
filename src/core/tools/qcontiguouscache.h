@@ -76,7 +76,6 @@ public:
     inline ~QContiguousCache() { if (!d) return; if (!d->ref.deref()) free(p); }
 
     inline void detach() { if (d->ref != 1) detach_helper(); }
-    inline bool isDetached() const { return d->ref == 1; }
 
     QContiguousCache<T> &operator=(const QContiguousCache<T> &other);
 #ifdef Q_COMPILER_RVALUE_REFS

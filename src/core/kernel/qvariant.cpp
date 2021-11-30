@@ -1783,12 +1783,6 @@ void QVariant::detach()
     d.data.shared = dd.data.shared;
 }
 
-/*!
-    \fn bool QVariant::isDetached() const
-
-    \internal
-*/
-
 // ### Qt 5: change typeName()(and froends= to return a QString. Suggestion from Harald.
 /*!
     Returns the name of the type stored in the variant. The returned
@@ -3246,16 +3240,6 @@ QDebug operator<<(QDebug dbg, const QVariant::Type p)
     \since 4.5
 
     Synonym for QHash<QString, QVariant>.
-*/
-
-/*!
-    \typedef QVariant::DataPtr
-    \internal
-*/
-
-/*!
-    \fn DataPtr &QVariant::data_ptr()
-    \internal
 */
 
 QT_END_NAMESPACE

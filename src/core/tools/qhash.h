@@ -189,7 +189,6 @@ public:
     inline void squeeze() { reserve(1); }
 
     inline void detach() { if (d->ref != 1) detach_helper(); }
-    inline bool isDetached() const { return d->ref == 1; }
 
     void clear();
 

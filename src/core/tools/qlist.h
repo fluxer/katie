@@ -102,7 +102,6 @@ public:
     inline int size() const { return p.size(); }
 
     inline void detach() { if (d->ref != 1) detach_helper(d->alloc); }
-    inline bool isDetached() const { return d->ref == 1; }
 
     inline bool isEmpty() const { return p.isEmpty(); }
 

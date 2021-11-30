@@ -163,7 +163,6 @@ public:
     inline bool isEmpty() const { return d->size == 0; }
 
     inline void detach() { if (d->ref != 1) detach_helper(); }
-    inline bool isDetached() const { return d->ref == 1; }
     inline void setInsertInOrder(bool ordered) { d->insertInOrder = ordered; }
 
     void clear();

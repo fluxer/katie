@@ -133,9 +133,6 @@ public:
 
     qint64 cacheKey() const;
 
-    bool isDetached() const;
-    void detach();
-
     bool isQBitmap() const;
 
 #if defined(Q_WS_X11)
@@ -161,6 +158,7 @@ private:
 
     QPixmap(const QSize &s, int type);
     void init(int, int, int);
+    void detach();
     QPixmapData* pixmapData() const;
 
     friend class QPixmapData;
@@ -172,17 +170,13 @@ private:
     friend class QX11PaintEngine;
     friend class QWidgetPrivate;
     friend class QRasterBuffer;
+    friend QPixmap qt_toX11Pixmap(const QPixmap &pixmap);
+
 #if !defined(QT_NO_DATASTREAM)
     friend Q_GUI_EXPORT QDataStream &operator>>(QDataStream &, QPixmap &);
 #endif
-
-public:
-    typedef QExplicitlySharedDataPointer<QPixmapData> DataPtr;
-    inline DataPtr &data_ptr() { return data; }
-    inline const DataPtr &data_ptr() const { return data; }
 };
 
-Q_DECLARE_SHARED(QPixmap)
 Q_DECLARE_TYPEINFO(QPixmap, Q_MOVABLE_TYPE);
 
 inline QPixmap QPixmap::copy(int ax, int ay, int awidth, int aheight) const

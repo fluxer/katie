@@ -656,24 +656,6 @@ inline void qSwap(T &value1, T &value2)
 }
 
 /*
-   Specialize a shared type with:
-
-     Q_DECLARE_SHARED(type);
-
-   where 'type' is the name of the type to specialize.  NOTE: shared
-   types must declare a 'DataPtr data_ptr();' method for this to work.
-*/
-#define Q_DECLARE_SHARED(TYPE) \
-template <> inline void qSwap<TYPE>(TYPE &value1, TYPE &value2) \
-{ qSwap(value1.data_ptr(), value2.data_ptr()); } \
-QT_END_NAMESPACE \
-namespace std { \
-    template<> inline void swap<QT_PREPEND_NAMESPACE(TYPE)>(QT_PREPEND_NAMESPACE(TYPE) &value1, QT_PREPEND_NAMESPACE(TYPE) &value2) \
-    { swap(value1.data_ptr(), value2.data_ptr()); } \
-} \
-QT_BEGIN_NAMESPACE
-
-/*
    QTypeInfo primitive specializations
 */
 Q_DECLARE_TYPEINFO(bool, Q_PRIMITIVE_TYPE);

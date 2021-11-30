@@ -71,7 +71,6 @@ public:
     inline int size() const { return d->size; }
     inline void detach()
     { if (d->ref != 1) detach_helper(); }
-    inline bool isDetached() const { return d->ref == 1; }
 
     inline bool isEmpty() const { return d->size == 0; }
 

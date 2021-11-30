@@ -51,8 +51,6 @@ public:
                             QImage::Format monoFormat = QImage::Format_MonoLSB);
 };
 
-Q_DECLARE_SHARED(QBitmap)
-
 QT_END_NAMESPACE
 
 

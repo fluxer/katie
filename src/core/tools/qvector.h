@@ -92,7 +92,6 @@ public:
     inline void squeeze() { reallocData(d->size, d->size); d->capacity = false; }
 
     inline void detach() { if (d->ref != 1) detach_helper(); }
-    inline bool isDetached() const { return d->ref == 1; }
 
     inline T *data() { detach(); return p->array; }
     inline const T *data() const { return p->array; }

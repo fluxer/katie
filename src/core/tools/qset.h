@@ -60,7 +60,6 @@ public:
     inline void squeeze() { q_hash.squeeze(); }
 
     inline void detach() { q_hash.detach(); }
-    inline bool isDetached() const { return q_hash.isDetached(); }
 
     inline void clear() { q_hash.clear(); }
 

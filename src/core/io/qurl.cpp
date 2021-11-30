@@ -3673,15 +3673,6 @@ void QUrl::detach(QMutexLocker &locker)
 }
 
 /*!
-    \internal
-*/
-bool QUrl::isDetached() const
-{
-    return !d || d->ref == 1;
-}
-
-
-/*!
     Returns a QUrl representation of \a localFile, interpreted as a local
     file. This function accepts paths separated by slashes as well as the
     native separator for this platform.
@@ -3982,16 +3973,6 @@ QString QUrl::errorString() const
     QMutexLocker lock(&d->mutex);
     return d->createErrorString();
 }
-
-/*!
-    \typedef QUrl::DataPtr
-    \internal
-*/
-
-/*!
-    \fn DataPtr &QUrl::data_ptr()
-    \internal
-*/
 
 // The following code has the following copyright:
 /*

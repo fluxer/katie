@@ -174,11 +174,6 @@ QLinkedListData QLinkedListData::shared_null = {
     \internal
 */
 
-/*! \fn bool QLinkedList::isDetached() const
-
-    \internal
-*/
-
 /*! \fn bool QLinkedList::isEmpty() const
 
     Returns true if the list contains no items; otherwise returns

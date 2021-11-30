@@ -166,9 +166,6 @@ void removeAll_test(const QList<int> &i10, ushort valueToRemove, int itemsToRemo
         QCOMPARE(removedCount, itemsToRemove * N);
         QCOMPARE(l.size() + removedCount, list.size());
         QVERIFY(!l.contains(valueToRemove));
-
-        QCOMPARE(MyBase::liveCount, isComplex ? l.isDetached() ? list.size() + l.size() + 1 : list.size() + 1 : 1);
-        QCOMPARE(MyBase::copyCount, isComplex ? l.isDetached() ? list.size() + l.size() : list.size() : 0);
     }
     if (isComplex)
         QCOMPARE(MyBase::errorCount, 0);

@@ -57,7 +57,7 @@ QPixmap qt_toX11Pixmap(const QPixmap &pixmap)
     if (pixmap.isNull())
         return QPixmap();
 
-    if (pixmap.data_ptr()->classId() == QPixmapData::X11Class)
+    if (pixmap.data->classId() == QPixmapData::X11Class)
         return pixmap;
 
     return qt_toX11Pixmap(pixmap.toImage());
