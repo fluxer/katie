@@ -100,9 +100,6 @@ public:
     inline bool operator!=(const QList<T> &l) const { return !(*this == l); }
 
     inline int size() const { return p.size(); }
-
-    inline void detach() { if (d->ref != 1) detach_helper(d->alloc); }
-
     inline bool isEmpty() const { return p.isEmpty(); }
 
     void clear();
@@ -288,6 +285,7 @@ public:
     { std::list<T> tmp; qCopy(constBegin(), constEnd(), std::back_inserter(tmp)); return tmp; }
 
 private:
+    inline void detach() { if (d->ref != 1) detach_helper(d->alloc); }
     void detach_helper(int alloc);
 
     void node_construct(Node *n, const T &t);

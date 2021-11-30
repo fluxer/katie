@@ -59,8 +59,6 @@ public:
 
     inline void squeeze() { q_hash.squeeze(); }
 
-    inline void detach() { q_hash.detach(); }
-
     inline void clear() { q_hash.clear(); }
 
     inline bool remove(const T &value) { return q_hash.remove(value) != 0; }

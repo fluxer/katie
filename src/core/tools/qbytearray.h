@@ -120,7 +120,6 @@ public:
     char *data();
     const char *data() const;
     inline const char *constData() const;
-    inline void detach();
     void clear();
 
     char at(int i) const;
@@ -296,6 +295,7 @@ private:
     static void freeData(Data *);
     void reallocData(int alloc);
     QByteArray nulTerminated() const;
+    inline void detach();
 
     friend class QByteRef;
     friend class QString;

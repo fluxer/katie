@@ -59,7 +59,6 @@ public:
 
     void resize(int size);
 
-    inline void detach() { d.detach(); }
     inline void clear() { d.clear(); }
 
     bool testBit(int i) const;

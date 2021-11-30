@@ -57,10 +57,16 @@ public:
     void setOption(const QString &opt, const QVariant &value);
 
     bool isNull() const;
-    void detach();
 private:
-    friend class QAuthenticatorPrivate;
+    void detach();
+
     QAuthenticatorPrivate *d;
+
+    friend class QAuthenticatorPrivate;
+    friend class QHttpPrivate;
+    friend class QHttpNetworkConnectionPrivate;
+    friend class QHttpSocketEngine;
+    friend class QHttpNetworkConnectionChannel;
 };
 
 QT_END_NAMESPACE

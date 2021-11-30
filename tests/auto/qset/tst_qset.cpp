@@ -51,7 +51,6 @@ private slots:
     void capacity();
     void reserve();
     void squeeze();
-    void detach();
     void clear();
     void remove();
     void contains();
@@ -248,19 +247,6 @@ void tst_QSet::squeeze()
         set.remove(i);
     set.squeeze();
     QVERIFY(set.capacity() < 100);
-}
-
-void tst_QSet::detach()
-{
-    QSet<int> set;
-    set.detach();
-
-    set.insert(1);
-    set.insert(2);
-    set.detach();
-
-    QSet<int> copy = set;
-    set.detach();
 }
 
 void tst_QSet::clear()

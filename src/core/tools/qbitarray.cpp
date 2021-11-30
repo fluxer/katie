@@ -228,11 +228,6 @@ void QBitArray::fill(bool value, int begin, int end)
         setBit(begin++, value);
 }
 
-/*! \fn void QBitArray::detach()
-
-    \internal
-*/
-
 /*! \fn void QBitArray::clear()
 
     Clears the contents of the bit array and makes it empty.

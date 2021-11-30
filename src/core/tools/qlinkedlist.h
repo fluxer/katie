@@ -69,9 +69,6 @@ public:
     inline bool operator!=(const QLinkedList<T> &l) const { return !(*this == l); }
 
     inline int size() const { return d->size; }
-    inline void detach()
-    { if (d->ref != 1) detach_helper(); }
-
     inline bool isEmpty() const { return d->size == 0; }
 
     void clear();
@@ -206,6 +203,7 @@ public:
     inline QLinkedList<T> &operator<<(const QLinkedList<T> &l) { *this += l; return *this; }
 
 private:
+    inline void detach() { if (d->ref != 1) detach_helper(); }
     void detach_helper();
     void freeData(QLinkedListData*);
 };

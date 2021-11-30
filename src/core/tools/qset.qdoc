@@ -216,15 +216,6 @@
 */
 
 /*!
-    \fn void QSet::detach()
-
-    \internal
-
-    Detaches this set from any other sets with which it may share
-    data.
-*/
-
-/*!
     \fn void QSet::clear()
 
     Removes all elements from the set.

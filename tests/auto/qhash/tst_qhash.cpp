@@ -299,7 +299,6 @@ void tst_QHash::insert1()
         }
         {
             Hash hash2 = hash;
-            hash2.detach();
             hash2.remove(1);
             QVERIFY(hash2.size() == 1);
             hash2.remove(1);
@@ -310,8 +309,6 @@ void tst_QHash::insert1()
             QVERIFY(hash2.size() == 0);
             QVERIFY(hash.size() == 2);
         }
-
-        hash.detach();
 
         {
             Hash::iterator it1 = hash.find(1);

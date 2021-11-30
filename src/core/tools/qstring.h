@@ -80,7 +80,6 @@ public:
     inline const QChar *data() const;
     inline const QChar *constData() const;
 
-    inline void detach();
     void clear();
 
     inline const QChar at(int i) const;
@@ -472,6 +471,7 @@ private:
     static void freeData(Data *);
     void reallocData(int alloc);
     void expand(int i);
+    inline void detach();
     QString multiArg(int numArgs, const QString **args) const;
     static int compare_helper(const QChar *data1, int length1,
                               const QChar *data2, int length2,

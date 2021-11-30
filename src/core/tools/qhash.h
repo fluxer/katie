@@ -188,8 +188,6 @@ public:
     void reserve(int size);
     inline void squeeze() { reserve(1); }
 
-    inline void detach() { if (d->ref != 1) detach_helper(); }
-
     void clear();
 
     int remove(const Key &key);
@@ -368,6 +366,7 @@ public:
 #endif
 
 private:
+    inline void detach() { if (d->ref != 1) detach_helper(); }
     void detach_helper();
     void freeData(QHashData *d);
     Node **findNode(const Key &key, uint *hp = nullptr) const;
