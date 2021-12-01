@@ -1628,13 +1628,9 @@ void QImage::fill(const QColor &color)
             }
         }
         fill(pixel);
-
     } else {
-        QPainter p(this);
-        p.setCompositionMode(QPainter::CompositionMode_Source);
-        p.fillRect(rect(), color);
+        Q_ASSERT_X(false, "QImage::fill", "internal error");
     }
-
 }
 
 /*!
