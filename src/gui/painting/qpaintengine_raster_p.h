@@ -187,7 +187,7 @@ public:
 protected:
     QRasterPaintEngine(QRasterPaintEnginePrivate &d, QPaintDevice *);
 private:
-    friend struct QSpanData;
+    friend class QSpanData;
     void init();
 
     void fillRect(const QRectF &rect, QSpanData *data);

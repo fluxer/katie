@@ -48,7 +48,7 @@ QT_BEGIN_NAMESPACE
  */
 typedef QT_FT_Span QSpan;
 
-struct QSpanData;
+class QSpanData;
 class QRasterBuffer;
 class QClipData;
 class QRasterPaintEngine;
@@ -212,8 +212,9 @@ struct QTextureData
     int const_alpha;
 };
 
-struct QSpanData
+class QSpanData
 {
+public:
     QSpanData() : tempImage(nullptr) {}
     ~QSpanData() { delete tempImage; }
 
