@@ -120,9 +120,7 @@ static inline QPaintEngine::PaintEngineFeatures svgEngineFeatures()
 {
     return QPaintEngine::PaintEngineFeatures(
         QPaintEngine::AllFeatures
-        & ~QPaintEngine::PatternBrush
         & ~QPaintEngine::PerspectiveTransform
-        & ~QPaintEngine::ConicalGradientFill
         & ~QPaintEngine::PorterDuff);
 }
 

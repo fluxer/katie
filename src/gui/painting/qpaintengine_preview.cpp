@@ -47,7 +47,7 @@ public:
 
 
 QPreviewPaintEngine::QPreviewPaintEngine()
-    : QPaintEngine(*(new QPreviewPaintEnginePrivate), PaintEngineFeatures(AllFeatures & ~ObjectBoundingModeGradients))
+    : QPaintEngine(*(new QPreviewPaintEnginePrivate), PaintEngineFeatures(QPaintEngine::AllFeatures))
 {
     Q_D(QPreviewPaintEngine);
     d->proxy_print_engine = 0;

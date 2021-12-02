@@ -342,22 +342,13 @@ void QX11PaintEnginePrivate::systemStateChanged()
 static QPaintEngine::PaintEngineFeatures qt_decide_features()
 {
     QPaintEngine::PaintEngineFeatures features =
-        QPaintEngine::PrimitiveTransform
-        | QPaintEngine::PatternBrush
-        | QPaintEngine::AlphaBlend
+        QPaintEngine::AlphaBlend
         | QPaintEngine::PainterPaths
         | QPaintEngine::RasterOpModes;
 
     if (qt_x11Data->use_xrender) {
         features |= QPaintEngine::Antialiasing;
         features |= QPaintEngine::PorterDuff;
-        features |= QPaintEngine::MaskedBrush;
-#if 0
-        if (qt_x11Data->xrender_minor > 10) {
-            features |= QPaintEngine::LinearGradientFill;
-            // ###
-        }
-#endif
     }
 
     return features;

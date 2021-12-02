@@ -625,11 +625,9 @@ void QPSPrintEnginePrivate::flushPage(bool last)
 
 QPSPrintEngine::QPSPrintEngine(QPrinter::PrinterMode m)
     : QPdfBaseEngine(*(new QPSPrintEnginePrivate(m)),
-                     PrimitiveTransform
-                     | PatternTransform
+                     PatternTransform
                      | PixmapTransform
                      | PainterPaths
-                     | PatternBrush
         )
 {
 }
