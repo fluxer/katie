@@ -194,8 +194,6 @@ public:
     QPaintEngineEx *extended;
 };
 
-QString qt_generate_brush_key(const QBrush &brush);
-
 QT_END_NAMESPACE
 
 #endif // QPAINTER_P_H
