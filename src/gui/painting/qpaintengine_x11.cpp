@@ -263,7 +263,7 @@ static Picture getPatternFill(int screen, const QBrush &b)
 
     XRenderFillRectangle(qt_x11Data->display, PictOpSrc, qt_x11Data->pattern_fills[i].picture, &bg_color, 0, 0, 8, 8);
 
-    QPixmap pattern(qt_pixmapForBrush(b.style()));
+    QPixmap pattern(qt_toX11Pixmap(qt_pixmapForBrush(b.style())));
     XRenderPictureAttributes attrs;
     attrs.repeat = true;
     XRenderChangePicture(qt_x11Data->display, pattern.x11PictureHandle(), CPRepeat, &attrs);
