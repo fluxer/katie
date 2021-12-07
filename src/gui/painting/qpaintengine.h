@@ -150,8 +150,6 @@ public:
     void setSystemRect(const QRect &rect);
     QRect systemRect() const;
 
-    virtual QPoint coordinateOffset() const;
-
     enum Type {
         X11,
         PostScript,

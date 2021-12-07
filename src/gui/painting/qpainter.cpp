@@ -190,7 +190,6 @@ bool QPainterPrivate::attachPainterPrivate(QPainter *q, QPaintDevice *pdev)
     q->initFrom(widget);
     QPoint offset;
     widget->d_func()->redirected(&offset);
-    offset += q->d_ptr->engine->coordinateOffset();
 
     // Update system rect.
     q->d_ptr->state->ww = q->d_ptr->state->vw = widget->width();
@@ -1538,9 +1537,6 @@ bool QPainter::begin(QPaintDevice *pd)
         d->state->ww = d->state->vw = pd->metric(QPaintDevice::PdmWidth);
         d->state->wh = d->state->vh = pd->metric(QPaintDevice::PdmHeight);
     }
-
-    const QPoint coordinateOffset = d->engine->coordinateOffset();
-    d->state->redirectionMatrix.translate(-coordinateOffset.x(), -coordinateOffset.y());
 
     Q_ASSERT(d->engine->isActive());
 
