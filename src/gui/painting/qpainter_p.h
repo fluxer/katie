@@ -174,7 +174,6 @@ public:
 
     void draw_helper(const QPainterPath &path);
     void drawStretchedGradient(const QPainterPath &path);
-    void drawOpaqueBackground(const QPainterPath &path);
 
     void updateMatrix();
     void updateInvMatrix();

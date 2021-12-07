@@ -384,25 +384,6 @@ void QPainterPrivate::draw_helper(const QPainterPath &originalPath)
     q->restore();
 }
 
-void QPainterPrivate::drawOpaqueBackground(const QPainterPath &path)
-{
-    Q_Q(QPainter);
-
-    q->setBackgroundMode(Qt::TransparentMode);
-
-    if (state->brush.style() != Qt::NoBrush) {
-        q->fillPath(path, state->bgBrush.color());
-        q->fillPath(path, state->brush);
-    }
-
-    if (state->pen.style() != Qt::NoPen) {
-        q->strokePath(path, QPen(state->bgBrush.color(), state->pen.width()));
-        q->strokePath(path, state->pen);
-    }
-
-    q->setBackgroundMode(Qt::OpaqueMode);
-}
-
 static inline QBrush stretchGradientToUserSpace(const QBrush &brush, const QRectF &boundingRect)
 {
     Q_ASSERT(brush.style() >= Qt::LinearGradientPattern
