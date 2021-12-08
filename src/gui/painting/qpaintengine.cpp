@@ -177,7 +177,6 @@ QFont QTextItem::font() const
   \value PixmapTransform    The engine can transform pixmaps, including
                             rotation and shearing.
   \value PorterDuff         The engine supports Porter-Duff operations
-  \value RasterOpModes      The engine supports bitwise raster operations.
   \value AllFeatures        All of the above features. This enum value is usually
                             used as a bit mask.
 */

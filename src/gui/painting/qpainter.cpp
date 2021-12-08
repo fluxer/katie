@@ -1597,15 +1597,6 @@ void QPainter::setBrushOrigin(const QPointF &p)
     the source, are merged with the pixel in another image, the
     destination.
 
-    Please note that the bitwise raster operation modes, denoted with
-    a RasterOp prefix, are only natively supported in the X11 and
-    raster paint engines. This means that the only way to utilize
-    these modes on the Mac is via a QImage. The RasterOp denoted blend
-    modes are \e not supported for pens and brushes with alpha
-    components. Also, turning on the QPainter::Antialiasing render
-    hint will effectively disable the RasterOp modes.
-
-
      \image qpainter-compositionmode1.png
      \image qpainter-compositionmode2.png
 
@@ -1721,38 +1712,6 @@ void QPainter::setBrushOrigin(const QPointF &p)
     with white inverts the destination color, whereas painting with
     black leaves the destination color unchanged.
 
-    \value RasterOp_SourceOrDestination Does a bitwise OR operation on
-    the source and destination pixels (src OR dst).
-
-    \value RasterOp_SourceAndDestination Does a bitwise AND operation
-    on the source and destination pixels (src AND dst).
-
-    \value RasterOp_SourceXorDestination Does a bitwise XOR operation
-    on the source and destination pixels (src XOR dst).
-
-    \value RasterOp_NotSourceAndNotDestination Does a bitwise NOR
-    operation on the source and destination pixels ((NOT src) AND (NOT
-    dst)).
-
-    \value RasterOp_NotSourceOrNotDestination Does a bitwise NAND
-    operation on the source and destination pixels ((NOT src) OR (NOT
-    dst)).
-
-    \value RasterOp_NotSourceXorDestination Does a bitwise operation
-    where the source pixels are inverted and then XOR'ed with the
-    destination ((NOT src) XOR dst).
-
-    \value RasterOp_NotSource Does a bitwise operation where the
-    source pixels are inverted (NOT src).
-
-    \value RasterOp_NotSourceAndDestination Does a bitwise operation
-    where the source is inverted and then AND'ed with the destination
-    ((NOT src) AND dst).
-
-    \value RasterOp_SourceAndNotDestination Does a bitwise operation
-    where the source is AND'ed with the inverted destination pixels
-    (src AND (NOT dst)).
-
     \sa compositionMode(), setCompositionMode(), {QPainter#Composition
     Modes}{Composition Modes}, {Image Composition Example}
 */
@@ -1761,8 +1720,7 @@ void QPainter::setBrushOrigin(const QPointF &p)
     Sets the composition mode to the given \a mode.
 
     \warning Only a QPainter operating on a QImage fully supports all
-    composition modes. The RasterOp modes are supported for X11 as
-    described in compositionMode().
+    composition modes.
 
     \sa compositionMode()
 */
@@ -1776,13 +1734,7 @@ void QPainter::setCompositionMode(CompositionMode mode)
     if (d->state->composition_mode == mode)
         return;
 
-    if (mode >= QPainter::RasterOp_SourceOrDestination) {
-        if (Q_UNLIKELY(!d->engine->hasFeature(QPaintEngine::RasterOpModes))) {
-            qWarning("QPainter::setCompositionMode: "
-                     "Raster operation modes not supported on device");
-            return;
-        }
-    } else if (mode >= QPainter::CompositionMode_Plus) {
+    if (mode >= QPainter::CompositionMode_Plus) {
         if (Q_UNLIKELY(!d->engine->hasFeature(QPaintEngine::BlendModes))) {
             qWarning("QPainter::setCompositionMode: "
                      "Blend modes not supported on device");

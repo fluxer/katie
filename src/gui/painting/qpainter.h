@@ -103,17 +103,6 @@ public:
         CompositionMode_SoftLight,
         CompositionMode_Difference,
         CompositionMode_Exclusion,
-
-        // ROPs
-        RasterOp_SourceOrDestination,
-        RasterOp_SourceAndDestination,
-        RasterOp_SourceXorDestination,
-        RasterOp_NotSourceAndNotDestination,
-        RasterOp_NotSourceOrNotDestination,
-        RasterOp_NotSourceXorDestination,
-        RasterOp_NotSource,
-        RasterOp_NotSourceAndDestination,
-        RasterOp_SourceAndNotDestination
     };
     void setCompositionMode(CompositionMode mode);
     CompositionMode compositionMode() const;

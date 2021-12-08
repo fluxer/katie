@@ -525,10 +525,6 @@ void QRasterPaintEngine::updateState(const QPaintEngineState &state)
                 cairo_set_operator(d->m_cairo, CAIRO_OPERATOR_EXCLUSION);
                 break;
             }
-            default: {
-                qWarning() << Q_FUNC_INFO << "Composition mode not implemented" << statecomposition;
-                break;
-            }
         }
         QT_CHECK_RASTER_STATUS(d->m_cairo)
     }
