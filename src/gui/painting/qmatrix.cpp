@@ -182,10 +182,6 @@ QT_BEGIN_NAMESPACE
 /*****************************************************************************
   QMatrix member functions
  *****************************************************************************/
-/*!
-    \fn QMatrix::QMatrix(Qt::Initialization)
-    \internal
-*/
 
 /*!
     Constructs an identity matrix.

@@ -4554,7 +4554,7 @@ void QGraphicsScenePrivate::drawSubtreeRecursive(QGraphicsItem *item, QPainter *
     if (itemIsFullyTransparent && (!itemHasChildren || item->d_ptr->childrenCombineOpacity()))
         return;
 
-    QTransform transform(Qt::Uninitialized);
+    QTransform transform;
     QTransform *transformPtr = 0;
     bool translateOnlyTransform = false;
 #define ENSURE_TRANSFORM_PTR \
