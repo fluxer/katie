@@ -788,6 +788,7 @@ void QRasterPaintEngine::drawImage(const QRectF &r, const QImage &image, const Q
 #endif
 
         cairo_move_to(d->m_cairo, r.x(), r.y());
+        QT_CHECK_RASTER_STATUS(d->m_cairo)
     }
 
     cairo_set_source(d->m_cairo, cairopattern);
@@ -816,6 +817,7 @@ void QRasterPaintEngine::drawTextItem(const QPointF &p, const QTextItem &textIte
     updateFont(textItem.font());
 
     cairo_move_to(d->m_cairo, p.x(), p.y());
+    QT_CHECK_RASTER_STATUS(d->m_cairo)
 
     cairo_push_group(d->m_cairo);
     QT_CHECK_RASTER_STATUS(d->m_cairo)
