@@ -874,6 +874,30 @@ void QRasterPaintEngine::updateFont(const QFont &font)
         }
     }
 
+    cairo_font_options_t* cairooptions = cairo_font_options_create();
+    cairo_get_font_options(d->m_cairo, cairooptions);
+    switch (font.hintingPreference()) {
+        case QFont::PreferDefaultHinting: {
+            cairo_font_options_set_hint_style(cairooptions, CAIRO_HINT_STYLE_DEFAULT);
+            break;
+        }
+        case QFont::PreferNoHinting: {
+            cairo_font_options_set_hint_style(cairooptions, CAIRO_HINT_STYLE_NONE);
+            break;
+        }
+        case QFont::PreferVerticalHinting: {
+            cairo_font_options_set_hint_style(cairooptions, CAIRO_HINT_STYLE_SLIGHT);
+            break;
+        }
+        case QFont::PreferFullHinting: {
+            cairo_font_options_set_hint_style(cairooptions, CAIRO_HINT_STYLE_FULL);
+            break;
+        }
+    }
+    cairo_set_font_options(d->m_cairo, cairooptions);
+    QT_CHECK_RASTER_STATUS(d->m_cairo)
+    cairo_font_options_destroy(cairooptions);
+
     cairo_set_font_size(d->m_cairo, font.pointSizeF());
     QT_CHECK_RASTER_STATUS(d->m_cairo)
     cairo_select_font_face(d->m_cairo, fontfamily.constData(), cairofontslant, cairofontweight);
