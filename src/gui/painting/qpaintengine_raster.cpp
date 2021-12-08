@@ -55,7 +55,7 @@ extern QPainterPath qt_regionToPath(const QRegion &region); // in qregion.cpp
 #  define QT_CHECK_RASTER_STATUS(cairo) \
      { \
          const cairo_status_t cairostatus = cairo_status(cairo); \
-         if (cairostatus != CAIRO_STATUS_SUCCESS) { \
+         if (Q_UNLIKELY(cairostatus != CAIRO_STATUS_SUCCESS)) { \
              qWarning() << Q_FUNC_INFO << cairo_status_to_string(cairostatus); \
          } \
      }
@@ -139,22 +139,22 @@ static cairo_status_t qt_cairo_read(void *closure, unsigned char *data, unsigned
 {
     QBuffer* buffer = static_cast<QBuffer*>(closure);
 
-    if (buffer->read(reinterpret_cast<char*>(data), length) != length) {
-        return CAIRO_STATUS_READ_ERROR;
+    if (Q_LIKELY(buffer->read(reinterpret_cast<char*>(data), length) == length)) {
+        return CAIRO_STATUS_SUCCESS;
     }
 
-    return CAIRO_STATUS_SUCCESS;
+    return CAIRO_STATUS_READ_ERROR;
 }
 
 static cairo_status_t qt_cairo_write(void *closure, const unsigned char *data, unsigned int length)
 {
     QBuffer* buffer = static_cast<QBuffer*>(closure);
 
-    if (buffer->write(reinterpret_cast<const char*>(data), length) != length) {
-        return CAIRO_STATUS_WRITE_ERROR;
+    if (Q_LIKELY(buffer->write(reinterpret_cast<const char*>(data), length) == length)) {
+        return CAIRO_STATUS_SUCCESS;
     }
 
-    return CAIRO_STATUS_SUCCESS;
+    return CAIRO_STATUS_WRITE_ERROR;
 }
 
 QRasterPaintEnginePrivate::QRasterPaintEnginePrivate()
