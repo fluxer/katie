@@ -978,7 +978,7 @@ void tst_QImage::cacheKey()
     QImage image2 = image1;
 
     QVERIFY(image2.cacheKey() == image1.cacheKey());
-    image2.detach();
+    (void)image2.bits();
     QVERIFY(image2.cacheKey() != image1.cacheKey());
     QVERIFY(image1.cacheKey() == image1_key);
 }
