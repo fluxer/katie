@@ -421,9 +421,7 @@ void QRasterPaintEngine::updateState(const QPaintEngineState &state)
         QT_CHECK_RASTER_STATUS(d->m_cairo)
         cairo_font_options_destroy(cairooptions);
 
-        if (statehints & QPainter::NonCosmeticDefaultPen) {
-            qWarning() << Q_FUNC_INFO << "Non-cosmetic default pen is not implemented";
-        }
+        // QPainter::NonCosmeticDefaultPen handled internally by QPainterPrivate::updateState()
     }
 
     if (stateflags & QPaintEngine::DirtyCompositionMode) {
