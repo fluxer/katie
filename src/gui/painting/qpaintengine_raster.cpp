@@ -553,7 +553,11 @@ void QRasterPaintEngine::updateState(const QPaintEngineState &state)
             default: {
                 cairo_reset_clip(d->m_cairo);
                 QT_CHECK_RASTER_STATUS(d->m_cairo)
-                drawPath(statepath);
+                const QRectF pathrect(statepath.boundingRect());
+                cairo_rectangle(d->m_cairo,
+                    pathrect.x(), pathrect.y(),
+                    pathrect.width(), pathrect.height()
+                );
                 cairo_clip(d->m_cairo);
                 QT_CHECK_RASTER_STATUS(d->m_cairo)
                 break;
@@ -573,9 +577,14 @@ void QRasterPaintEngine::updateState(const QPaintEngineState &state)
                 cairo_reset_clip(d->m_cairo);
                 QT_CHECK_RASTER_STATUS(d->m_cairo)
                 if (!stateregion.isEmpty()) {
-                    drawPath(qt_regionToPath(stateregion));
-                    cairo_clip(d->m_cairo);
-                    QT_CHECK_RASTER_STATUS(d->m_cairo)
+                    foreach (const QRect &regionrect, stateregion.rects()) {
+                        cairo_rectangle(d->m_cairo,
+                            regionrect.x(), regionrect.y(),
+                            regionrect.width(), regionrect.height()
+                        );
+                        cairo_clip(d->m_cairo);
+                        QT_CHECK_RASTER_STATUS(d->m_cairo)
+                    }
                 }
                 break;
             }
@@ -656,6 +665,8 @@ void QRasterPaintEngine::drawPolygon(const QPointF *points, int pointCount, QPai
         QT_CHECK_RASTER_STATUS(d->m_cairo)
     }
 
+    cairo_push_group(d->m_cairo);
+    QT_CHECK_RASTER_STATUS(d->m_cairo)
     switch (mode) {
         case QPaintEngine::WindingMode: {
             const QPen statepen(state->pen());
@@ -663,31 +674,44 @@ void QRasterPaintEngine::drawPolygon(const QPointF *points, int pointCount, QPai
 
             if (statepen.style() != Qt::NoPen && statepen.brush().style() != Qt::NoBrush) {
                 cairo_pattern_t* cairopattern = penPattern(statepen);
-                applyPattern(cairopattern);
+                cairo_set_source(d->m_cairo, cairopattern);
+                QT_CHECK_RASTER_STATUS(d->m_cairo)
                 cairo_stroke(d->m_cairo);
                 QT_CHECK_RASTER_STATUS(d->m_cairo)
-                revertPattern(cairopattern);
+                cairo_pattern_destroy(cairopattern);
+            } else {
+                cairo_stroke_preserve(d->m_cairo);
+                QT_CHECK_RASTER_STATUS(d->m_cairo)
             }
 
+            cairo_set_fill_rule(d->m_cairo, CAIRO_FILL_RULE_WINDING);
+            QT_CHECK_RASTER_STATUS(d->m_cairo)
             if (statebrush.style() != Qt::NoBrush) {
-                cairo_set_fill_rule(d->m_cairo, CAIRO_FILL_RULE_WINDING);
-                QT_CHECK_RASTER_STATUS(d->m_cairo)
-
                 cairo_pattern_t* cairopattern = brushPattern(statebrush);
-                applyPattern(cairopattern);
+                cairo_set_source(d->m_cairo, cairopattern);
+                QT_CHECK_RASTER_STATUS(d->m_cairo)
                 cairo_fill(d->m_cairo);
                 QT_CHECK_RASTER_STATUS(d->m_cairo)
-                revertPattern(cairopattern);
+                cairo_pattern_destroy(cairopattern);
+            } else {
+                cairo_fill_preserve(d->m_cairo);
+                QT_CHECK_RASTER_STATUS(d->m_cairo)
             }
             break;
         }
         case QPaintEngine::PolylineMode: {
             const QPen statepen(state->pen());
-            cairo_pattern_t* cairopattern = penPattern(statepen);
-            applyPattern(cairopattern);
-            cairo_stroke(d->m_cairo);
-            QT_CHECK_RASTER_STATUS(d->m_cairo)
-            revertPattern(cairopattern);
+            if (statepen.style() != Qt::NoPen) {
+                cairo_pattern_t* cairopattern = penPattern(statepen);
+                cairo_set_source(d->m_cairo, cairopattern);
+                QT_CHECK_RASTER_STATUS(d->m_cairo)
+                cairo_stroke(d->m_cairo);
+                QT_CHECK_RASTER_STATUS(d->m_cairo)
+                cairo_pattern_destroy(cairopattern);
+            } else {
+                cairo_stroke_preserve(d->m_cairo);
+                QT_CHECK_RASTER_STATUS(d->m_cairo)
+            }
             break;
         }
         default: {
@@ -696,24 +720,36 @@ void QRasterPaintEngine::drawPolygon(const QPointF *points, int pointCount, QPai
 
             if (statepen.style() != Qt::NoPen && statepen.brush().style() != Qt::NoBrush) {
                 cairo_pattern_t* cairopattern = penPattern(statepen);
-                applyPattern(cairopattern);
+                cairo_set_source(d->m_cairo, cairopattern);
+                QT_CHECK_RASTER_STATUS(d->m_cairo)
                 cairo_stroke(d->m_cairo);
                 QT_CHECK_RASTER_STATUS(d->m_cairo)
-                revertPattern(cairopattern);
+                cairo_pattern_destroy(cairopattern);
+            } else {
+                cairo_stroke_preserve(d->m_cairo);
+                QT_CHECK_RASTER_STATUS(d->m_cairo)
             }
 
+            cairo_set_fill_rule(d->m_cairo, CAIRO_FILL_RULE_EVEN_ODD);
+            QT_CHECK_RASTER_STATUS(d->m_cairo)
             if (statebrush.style() != Qt::NoBrush) {
-                cairo_set_fill_rule(d->m_cairo, CAIRO_FILL_RULE_EVEN_ODD);
-
                 cairo_pattern_t* cairopattern = brushPattern(statebrush);
-                applyPattern(cairopattern);
+                cairo_set_source(d->m_cairo, cairopattern);
+                QT_CHECK_RASTER_STATUS(d->m_cairo)
                 cairo_fill(d->m_cairo);
                 QT_CHECK_RASTER_STATUS(d->m_cairo)
-                revertPattern(cairopattern);
+                cairo_pattern_destroy(cairopattern);
+            } else {
+                cairo_fill_preserve(d->m_cairo);
+                QT_CHECK_RASTER_STATUS(d->m_cairo)
             }
             break;
         }
     }
+    cairo_pop_group_to_source(d->m_cairo);
+    QT_CHECK_RASTER_STATUS(d->m_cairo)
+    cairo_paint_with_alpha(d->m_cairo, state->opacity());
+    QT_CHECK_RASTER_STATUS(d->m_cairo)
 }
 
 void QRasterPaintEngine::drawPixmap(const QRectF &r, const QPixmap &pixmap, const QRectF &sr)
@@ -751,16 +787,19 @@ void QRasterPaintEngine::drawImage(const QRectF &r, const QImage &image, const Q
         sourceimage = sourceimage.scaled(r.size().toSize(), Qt::IgnoreAspectRatio);
 #endif
 
-        QPainterPath imagepath(cairoPoint());
-        imagepath.addRect(r);
-        drawPath(imagepath);
+        cairo_move_to(d->m_cairo, r.x(), r.y());
     }
-    applyPattern(cairopattern);
+
+    cairo_set_source(d->m_cairo, cairopattern);
+    QT_CHECK_RASTER_STATUS(d->m_cairo)
 #ifdef QT_RASTER_DEBUG
     const QByteArray surfaceout = QByteArray("/tmp/surface-") + QByteArray::number(sourceimage.cacheKey()) + ".png";
     cairo_surface_write_to_png(d->m_cairosurface, surfaceout.constData());
 #endif
-    revertPattern(cairopattern);
+    cairo_paint_with_alpha(d->m_cairo, state->opacity());
+    QT_CHECK_RASTER_STATUS(d->m_cairo)
+    cairo_pattern_destroy(cairopattern);
+    QT_CHECK_RASTER_STATUS(d->m_cairo)
 }
 
 void QRasterPaintEngine::drawTextItem(const QPointF &p, const QTextItem &textItem)
@@ -776,11 +815,27 @@ void QRasterPaintEngine::drawTextItem(const QPointF &p, const QTextItem &textIte
 
     updateFont(textItem.font());
 
-    QPainterPath textpath(cairoPoint());
-    textpath.moveTo(p);
-    drawPath(textpath);
+    cairo_move_to(d->m_cairo, p.x(), p.y());
 
-    cairo_show_text(d->m_cairo, text.constData());
+    cairo_push_group(d->m_cairo);
+    QT_CHECK_RASTER_STATUS(d->m_cairo)
+
+    cairo_text_path(d->m_cairo, text.constData());
+    QT_CHECK_RASTER_STATUS(d->m_cairo)
+
+    cairo_pattern_t* cairopattern = penPattern(state->pen());
+    cairo_set_source(d->m_cairo, cairopattern);
+    QT_CHECK_RASTER_STATUS(d->m_cairo)
+
+    cairo_fill_preserve(d->m_cairo);
+    QT_CHECK_RASTER_STATUS(d->m_cairo)
+
+    QT_CHECK_RASTER_STATUS(d->m_cairo)
+    cairo_pattern_destroy(cairopattern);
+
+    cairo_pop_group_to_source(d->m_cairo);
+    QT_CHECK_RASTER_STATUS(d->m_cairo)
+    cairo_paint_with_alpha(d->m_cairo, state->opacity());
     QT_CHECK_RASTER_STATUS(d->m_cairo)
 
     updateFont(statefont);
@@ -1033,67 +1088,6 @@ cairo_pattern_t* QRasterPaintEngine::brushPattern(const QBrush &brush)
     }
 
     return cairopattern;
-}
-
-void QRasterPaintEngine::applyPattern(cairo_pattern_t *cairopattern)
-{
-    Q_D(QRasterPaintEngine);
-
-    // qDebug() << Q_FUNC_INFO;
-
-    cairo_paint_with_alpha(d->m_cairo, state->opacity());
-    QT_CHECK_RASTER_STATUS(d->m_cairo)
-    cairo_set_source(d->m_cairo, cairopattern);
-    QT_CHECK_RASTER_STATUS(d->m_cairo)
-}
-
-void QRasterPaintEngine::revertPattern(cairo_pattern_t *cairopattern)
-{
-    Q_D(QRasterPaintEngine);
-
-    // qDebug() << Q_FUNC_INFO;
-
-    cairo_paint_with_alpha(d->m_cairo, state->opacity());
-    QT_CHECK_RASTER_STATUS(d->m_cairo)
-    cairo_pattern_destroy(cairopattern);
-    QT_CHECK_RASTER_STATUS(d->m_cairo)
-}
-
-QRegion QRasterPaintEngine::cairoClip()
-{
-    Q_D(QRasterPaintEngine);
-
-    // qDebug() << Q_FUNC_INFO;
-
-    cairo_rectangle_list_t* cairorectangles = cairo_copy_clip_rectangle_list(d->m_cairo);
-    QT_CHECK_RASTER_STATUS(d->m_cairo)
-
-    QRegion clipregion;
-    for (int i = 0; i < cairorectangles->num_rectangles; i++) {
-        clipregion.unite(
-            QRect(
-                qRound(cairorectangles->rectangles[i].x), qRound(cairorectangles->rectangles[i].y),
-                cairorectangles->rectangles[i].width, cairorectangles->rectangles[i].height
-            )
-        );
-    }
-
-    cairo_rectangle_list_destroy(cairorectangles);
-
-    return clipregion;
-}
-
-QPointF QRasterPaintEngine::cairoPoint()
-{
-    Q_D(QRasterPaintEngine);
-
-    // qDebug() << Q_FUNC_INFO;
-
-    double cairox = 0.0;
-    double cairoy = 0.0;
-    cairo_get_current_point(d->m_cairo, &cairox, &cairoy);
-
-    return QPointF(cairox, cairoy);
 }
 
 QT_END_NAMESPACE
