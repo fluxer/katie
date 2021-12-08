@@ -661,6 +661,9 @@ void QRasterPaintEngine::drawPolygon(const QPointF *points, int pointCount, QPai
         QT_CHECK_RASTER_STATUS(d->m_cairo)
     }
 
+    cairo_pattern_t* penpattern = nullptr;
+    cairo_pattern_t* brushpattern = nullptr;
+
     cairo_push_group(d->m_cairo);
     QT_CHECK_RASTER_STATUS(d->m_cairo)
     switch (mode) {
@@ -669,12 +672,11 @@ void QRasterPaintEngine::drawPolygon(const QPointF *points, int pointCount, QPai
             const QBrush statebrush(state->brush());
 
             if (statepen.style() != Qt::NoPen && statepen.brush().style() != Qt::NoBrush) {
-                cairo_pattern_t* cairopattern = penPattern(statepen);
-                cairo_set_source(d->m_cairo, cairopattern);
+                penpattern = penPattern(statepen);
+                cairo_set_source(d->m_cairo, penpattern);
                 QT_CHECK_RASTER_STATUS(d->m_cairo)
                 cairo_stroke(d->m_cairo);
                 QT_CHECK_RASTER_STATUS(d->m_cairo)
-                cairo_pattern_destroy(cairopattern);
             } else {
                 cairo_stroke_preserve(d->m_cairo);
                 QT_CHECK_RASTER_STATUS(d->m_cairo)
@@ -683,12 +685,11 @@ void QRasterPaintEngine::drawPolygon(const QPointF *points, int pointCount, QPai
             cairo_set_fill_rule(d->m_cairo, CAIRO_FILL_RULE_WINDING);
             QT_CHECK_RASTER_STATUS(d->m_cairo)
             if (statebrush.style() != Qt::NoBrush) {
-                cairo_pattern_t* cairopattern = brushPattern(statebrush);
-                cairo_set_source(d->m_cairo, cairopattern);
+                brushpattern = brushPattern(statebrush);
+                cairo_set_source(d->m_cairo, brushpattern);
                 QT_CHECK_RASTER_STATUS(d->m_cairo)
                 cairo_fill(d->m_cairo);
                 QT_CHECK_RASTER_STATUS(d->m_cairo)
-                cairo_pattern_destroy(cairopattern);
             } else {
                 cairo_fill_preserve(d->m_cairo);
                 QT_CHECK_RASTER_STATUS(d->m_cairo)
@@ -698,12 +699,11 @@ void QRasterPaintEngine::drawPolygon(const QPointF *points, int pointCount, QPai
         case QPaintEngine::PolylineMode: {
             const QPen statepen(state->pen());
             if (statepen.style() != Qt::NoPen) {
-                cairo_pattern_t* cairopattern = penPattern(statepen);
-                cairo_set_source(d->m_cairo, cairopattern);
+                penpattern = penPattern(statepen);
+                cairo_set_source(d->m_cairo, penpattern);
                 QT_CHECK_RASTER_STATUS(d->m_cairo)
                 cairo_stroke(d->m_cairo);
                 QT_CHECK_RASTER_STATUS(d->m_cairo)
-                cairo_pattern_destroy(cairopattern);
             } else {
                 cairo_stroke_preserve(d->m_cairo);
                 QT_CHECK_RASTER_STATUS(d->m_cairo)
@@ -715,12 +715,11 @@ void QRasterPaintEngine::drawPolygon(const QPointF *points, int pointCount, QPai
             const QBrush statebrush(state->brush());
 
             if (statepen.style() != Qt::NoPen && statepen.brush().style() != Qt::NoBrush) {
-                cairo_pattern_t* cairopattern = penPattern(statepen);
-                cairo_set_source(d->m_cairo, cairopattern);
+                penpattern = penPattern(statepen);
+                cairo_set_source(d->m_cairo, penpattern);
                 QT_CHECK_RASTER_STATUS(d->m_cairo)
                 cairo_stroke(d->m_cairo);
                 QT_CHECK_RASTER_STATUS(d->m_cairo)
-                cairo_pattern_destroy(cairopattern);
             } else {
                 cairo_stroke_preserve(d->m_cairo);
                 QT_CHECK_RASTER_STATUS(d->m_cairo)
@@ -729,12 +728,11 @@ void QRasterPaintEngine::drawPolygon(const QPointF *points, int pointCount, QPai
             cairo_set_fill_rule(d->m_cairo, CAIRO_FILL_RULE_EVEN_ODD);
             QT_CHECK_RASTER_STATUS(d->m_cairo)
             if (statebrush.style() != Qt::NoBrush) {
-                cairo_pattern_t* cairopattern = brushPattern(statebrush);
-                cairo_set_source(d->m_cairo, cairopattern);
+                brushpattern = brushPattern(statebrush);
+                cairo_set_source(d->m_cairo, brushpattern);
                 QT_CHECK_RASTER_STATUS(d->m_cairo)
                 cairo_fill(d->m_cairo);
                 QT_CHECK_RASTER_STATUS(d->m_cairo)
-                cairo_pattern_destroy(cairopattern);
             } else {
                 cairo_fill_preserve(d->m_cairo);
                 QT_CHECK_RASTER_STATUS(d->m_cairo)
@@ -746,6 +744,13 @@ void QRasterPaintEngine::drawPolygon(const QPointF *points, int pointCount, QPai
     QT_CHECK_RASTER_STATUS(d->m_cairo)
     cairo_paint_with_alpha(d->m_cairo, state->opacity());
     QT_CHECK_RASTER_STATUS(d->m_cairo)
+
+    if (penpattern) {
+        cairo_pattern_destroy(penpattern);
+    }
+    if (brushpattern) {
+        cairo_pattern_destroy(brushpattern);
+    }
 }
 
 void QRasterPaintEngine::drawPixmap(const QRectF &r, const QPixmap &pixmap, const QRectF &sr)
@@ -828,13 +833,14 @@ void QRasterPaintEngine::drawTextItem(const QPointF &p, const QTextItem &textIte
     cairo_fill_preserve(d->m_cairo);
     QT_CHECK_RASTER_STATUS(d->m_cairo)
 
-    QT_CHECK_RASTER_STATUS(d->m_cairo)
-    cairo_pattern_destroy(cairopattern);
-
     cairo_pop_group_to_source(d->m_cairo);
     QT_CHECK_RASTER_STATUS(d->m_cairo)
+
     cairo_paint_with_alpha(d->m_cairo, state->opacity());
     QT_CHECK_RASTER_STATUS(d->m_cairo)
+
+    QT_CHECK_RASTER_STATUS(d->m_cairo)
+    cairo_pattern_destroy(cairopattern);
 
     updateFont(statefont);
 }
