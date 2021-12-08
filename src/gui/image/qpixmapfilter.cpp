@@ -23,8 +23,6 @@
 #include "qpixmap.h"
 #include "qpixmapfilter_p.h"
 #include "qapplication_p.h"
-#include "qpaintengineex_p.h"
-#include "qpaintengine_raster_p.h"
 #include "qmath.h"
 #include "qmemrotate_p.h"
 #include "qdrawhelper_p.h"

@@ -46,7 +46,6 @@
 #include "qgraphicseffect_p.h"
 #include "qwindowsurface_p.h"
 #include "qbackingstore_p.h"
-#include "qpaintengine_raster_p.h"
 #include "qwindowsurface_raster_p.h"
 #include "qwidget_p.h"
 #include "qaction_p.h"

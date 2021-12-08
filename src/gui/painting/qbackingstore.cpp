@@ -32,7 +32,6 @@
 #include "qwidget_p.h"
 #include "qwindowsurface_raster_p.h"
 #include "qapplication_p.h"
-#include "qpaintengine_raster_p.h"
 #include "qgraphicseffect_p.h"
 
 QT_BEGIN_NAMESPACE

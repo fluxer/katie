@@ -38,7 +38,6 @@ class QPainterPathData;
 class QPainterPathStrokerPrivate;
 class QPolygonF;
 class QRegion;
-class QVectorPath;
 
 class Q_GUI_EXPORT QPainterPath
 {
@@ -201,8 +200,6 @@ private:
     friend class QPainterPathStrokerPrivate;
     friend class QMatrix;
     friend class QTransform;
-    friend class QVectorPath;
-    friend Q_GUI_EXPORT const QVectorPath &qtVectorPathForPath(const QPainterPath &);
 
 #ifndef QT_NO_DATASTREAM
     friend Q_GUI_EXPORT QDataStream &operator<<(QDataStream &, const QPainterPath &);
@@ -219,7 +216,6 @@ public:
     friend class QPainterPathStrokerPrivate;
     friend class QMatrix;
     friend class QTransform;
-    friend class QVectorPath;
     friend struct QPainterPathPrivateDeleter;
 #ifndef QT_NO_DATASTREAM
     friend Q_GUI_EXPORT QDataStream &operator<<(QDataStream &, const QPainterPath &);

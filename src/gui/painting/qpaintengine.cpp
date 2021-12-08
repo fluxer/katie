@@ -29,7 +29,6 @@
 #include "qtextengine_p.h"
 #include "qvarlengtharray.h"
 #include "qfontengine_p.h"
-#include "qpaintengineex_p.h"
 
 
 QT_BEGIN_NAMESPACE
@@ -566,14 +565,6 @@ void QPaintEngine::drawImage(const QRectF &r, const QImage &image, const QRectF 
 */
 
 /*!
-    \fn bool QPaintEngine::isExtended() const
-
-    \internal
-
-    Returns true if the paint engine is a QPaintEngineEx derivative.
-*/
-
-/*!
     \fn void QPaintEngine::updateState(const QPaintEngineState &state)
 
     Reimplement this function to update the state of a paint engine.
@@ -596,7 +587,6 @@ QPaintEngine::QPaintEngine(PaintEngineFeatures caps)
     : state(0),
       gccaps(caps),
       active(false),
-      extended(false),
       d_ptr(new QPaintEnginePrivate)
 {
     d_ptr->q_ptr = this;
@@ -610,7 +600,6 @@ QPaintEngine::QPaintEngine(QPaintEnginePrivate &dptr, PaintEngineFeatures caps)
     : state(0),
       gccaps(caps),
       active(false),
-      extended(false),
       d_ptr(&dptr)
 {
     d_ptr->q_ptr = this;
@@ -778,6 +767,20 @@ void QPaintEngine::setPaintDevice(QPaintDevice *device)
 QPaintDevice *QPaintEngine::paintDevice() const
 {
     return d_func()->pdev;
+}
+
+/*!
+    \internal
+
+    Returns the offset from the painters origo to the engines
+    origo. This value is used by QPainter for engines who have
+    internal double buffering.
+
+    This function only makes sense when the engine is active.
+*/
+QPoint QPaintEngine::coordinateOffset() const
+{
+    return QPoint();
 }
 
 /*!

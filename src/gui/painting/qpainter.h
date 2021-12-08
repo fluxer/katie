@@ -394,7 +394,6 @@ private:
     friend class QFontEngineBox;
     friend class QFontEngineFT;
     friend class QPaintEngine;
-    friend class QPaintEngineExPrivate;
     friend class QX11PaintEngine;
     friend class QX11PaintEnginePrivate;
     friend class QRasterPaintEngine;

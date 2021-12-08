@@ -150,6 +150,8 @@ public:
     void setSystemRect(const QRect &rect);
     QRect systemRect() const;
 
+    virtual QPoint coordinateOffset() const;
+
     enum Type {
         X11,
         PostScript,
@@ -170,8 +172,6 @@ public:
 
     QPainter *painter() const;
 
-    inline bool isExtended() const { return extended; }
-
 protected:
     QPaintEngine(QPaintEnginePrivate &data, PaintEngineFeatures devcaps=0);
 
@@ -179,7 +179,6 @@ protected:
     PaintEngineFeatures gccaps;
 
     bool active;
-    bool extended;
 
     QScopedPointer<QPaintEnginePrivate> d_ptr;
 

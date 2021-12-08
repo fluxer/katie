@@ -3955,7 +3955,8 @@ QPaintEngine *QImage::paintEngine() const
         return 0;
 
     if (!d->paintEngine) {
-        d->paintEngine = new QRasterPaintEngine(const_cast<QImage *>(this));
+        d->paintEngine = new QRasterPaintEngine();
+        d->paintEngine->setPaintDevice(const_cast<QImage *>(this));
     }
 
     return d->paintEngine;

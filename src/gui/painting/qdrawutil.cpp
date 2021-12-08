@@ -25,7 +25,7 @@
 #include "qapplication.h"
 #include "qpainter.h"
 #include "qpalette.h"
-#include "qpaintengineex_p.h"
+#include "qpen.h"
 #include "qmath.h"
 #include "qstylehelper_p.h"
 

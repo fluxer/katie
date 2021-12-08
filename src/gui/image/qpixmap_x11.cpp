@@ -1499,6 +1499,11 @@ QPaintEngine* QX11PixmapData::paintEngine() const
     return that->pengine;
 }
 
+void QX11PixmapData::setPaintEngine(QPaintEngine *_pengine)
+{
+    pengine = (QX11PaintEngine*)_pengine;
+}
+
 Qt::HANDLE QPixmap::x11PictureHandle() const
 {
 #ifndef QT_NO_XRENDER

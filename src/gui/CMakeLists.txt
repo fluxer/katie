@@ -4,6 +4,7 @@ set(EXTRA_GUI_LIBS
     ${FREETYPE_LIBRARIES}
     ${X11_X11_LIB}
     ${PNG_LIBRARIES}
+    ${CAIRO_LIBRARIES}
 )
 
 set(GUI_PUBLIC_HEADERS
@@ -221,6 +222,7 @@ include_directories(
     ${FREETYPE_INCLUDE_DIRS}
     ${X11_INCLUDE_DIR}
     ${PNG_INCLUDE_DIRS}
+    ${CAIRO_INCLUDES}
 )
 
 set(GUI_HEADERS
@@ -417,18 +419,15 @@ set(GUI_HEADERS
     ${CMAKE_CURRENT_SOURCE_DIR}/painting/qdrawutil.h
     ${CMAKE_CURRENT_SOURCE_DIR}/painting/qmatrix.h
     ${CMAKE_CURRENT_SOURCE_DIR}/painting/qmemrotate_p.h
-    ${CMAKE_CURRENT_SOURCE_DIR}/painting/qoutlinemapper_p.h
     ${CMAKE_CURRENT_SOURCE_DIR}/painting/qpaintdevice.h
     ${CMAKE_CURRENT_SOURCE_DIR}/painting/qpaintengine.h
     ${CMAKE_CURRENT_SOURCE_DIR}/painting/qpaintengine_p.h
     ${CMAKE_CURRENT_SOURCE_DIR}/painting/qpaintengine_alpha_p.h
     ${CMAKE_CURRENT_SOURCE_DIR}/painting/qpaintengine_preview_p.h
-    ${CMAKE_CURRENT_SOURCE_DIR}/painting/qpaintengineex_p.h
     ${CMAKE_CURRENT_SOURCE_DIR}/painting/qpainter.h
     ${CMAKE_CURRENT_SOURCE_DIR}/painting/qpainter_p.h
     ${CMAKE_CURRENT_SOURCE_DIR}/painting/qpainterpath.h
     ${CMAKE_CURRENT_SOURCE_DIR}/painting/qpainterpath_p.h
-    ${CMAKE_CURRENT_SOURCE_DIR}/painting/qvectorpath_p.h
     ${CMAKE_CURRENT_SOURCE_DIR}/painting/qpathclipper_p.h
     ${CMAKE_CURRENT_SOURCE_DIR}/painting/qpdf_p.h
     ${CMAKE_CURRENT_SOURCE_DIR}/painting/qpen.h
@@ -441,7 +440,6 @@ set(GUI_HEADERS
     ${CMAKE_CURRENT_SOURCE_DIR}/painting/qprinter_p.h
     ${CMAKE_CURRENT_SOURCE_DIR}/painting/qprinterinfo.h
     ${CMAKE_CURRENT_SOURCE_DIR}/painting/qprinterinfo_p.h
-    ${CMAKE_CURRENT_SOURCE_DIR}/painting/qrasterizer_p.h
     ${CMAKE_CURRENT_SOURCE_DIR}/painting/qregion.h
     ${CMAKE_CURRENT_SOURCE_DIR}/painting/qstroker_p.h
     ${CMAKE_CURRENT_SOURCE_DIR}/painting/qstylepainter.h
@@ -451,7 +449,6 @@ set(GUI_HEADERS
     ${CMAKE_CURRENT_SOURCE_DIR}/painting/qwindowsurface_p.h
     ${CMAKE_CURRENT_SOURCE_DIR}/painting/qpaintengine_raster_p.h
     ${CMAKE_CURRENT_SOURCE_DIR}/painting/qdrawhelper_p.h
-    ${CMAKE_CURRENT_SOURCE_DIR}/painting/qrasterdefs_p.h
     ${CMAKE_CURRENT_SOURCE_DIR}/painting/qbackingstore_p.h
     ${CMAKE_CURRENT_SOURCE_DIR}/painting/qdatabuffer_p.h
     ${CMAKE_CURRENT_SOURCE_DIR}/painting/qpen_p.h
@@ -765,12 +762,10 @@ set(GUI_SOURCES
     ${CMAKE_CURRENT_SOURCE_DIR}/painting/qcssutil.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/painting/qdrawutil.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/painting/qmatrix.cpp
-    ${CMAKE_CURRENT_SOURCE_DIR}/painting/qoutlinemapper.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/painting/qpaintdevice.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/painting/qpaintengine.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/painting/qpaintengine_alpha.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/painting/qpaintengine_preview.cpp
-    ${CMAKE_CURRENT_SOURCE_DIR}/painting/qpaintengineex.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/painting/qpainter.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/painting/qpainterpath.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/painting/qpathclipper.cpp
@@ -781,7 +776,6 @@ set(GUI_SOURCES
     ${CMAKE_CURRENT_SOURCE_DIR}/painting/qprintengine_ps.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/painting/qprinter.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/painting/qprinterinfo.cpp
-    ${CMAKE_CURRENT_SOURCE_DIR}/painting/qrasterizer.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/painting/qregion.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/painting/qstroker.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/painting/qstylepainter.cpp
@@ -790,11 +784,9 @@ set(GUI_SOURCES
     ${CMAKE_CURRENT_SOURCE_DIR}/painting/qtransform.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/painting/qwindowsurface.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/painting/qpaintengine_raster.cpp
-    ${CMAKE_CURRENT_SOURCE_DIR}/painting/qdrawhelper.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/painting/qbackingstore.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/painting/qwindowsurface_raster.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/painting/qprinterinfo_unix.cpp
-    ${CMAKE_CURRENT_SOURCE_DIR}/painting/qgrayraster.c
     ${CMAKE_CURRENT_SOURCE_DIR}/painting/qcolormap_x11.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/painting/qpaintengine_x11.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/styles/qstyle.cpp

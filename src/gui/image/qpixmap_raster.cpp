@@ -237,6 +237,11 @@ QPaintEngine* QRasterPixmapData::paintEngine() const
     return image.paintEngine();
 }
 
+void QRasterPixmapData::setPaintEngine(QPaintEngine *_pengine)
+{
+    image.d->paintEngine = _pengine;
+}
+
 int QRasterPixmapData::metric(QPaintDevice::PaintDeviceMetric metric) const
 {
     if (!image.d)

@@ -242,6 +242,14 @@ set_package_properties(X11 PROPERTIES
     TYPE REQUIRED
 )
 
+find_package(Cairo)
+set_package_properties(Cairo PROPERTIES
+    PURPOSE "Required for painting"
+    DESCRIPTION "2D graphics library with support for multiple output devices"
+    URL "https://cairographics.org/"
+    TYPE REQUIRED
+)
+
 # v2.1.10+ required for FT_GlyphSlot_Embolden()
 find_package(Freetype 2.1.10)
 set_package_properties(Freetype PROPERTIES
