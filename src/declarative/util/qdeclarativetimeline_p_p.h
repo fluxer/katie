@@ -50,10 +50,6 @@ public:
     QDeclarativeTimeLine(QObject *parent = nullptr);
     ~QDeclarativeTimeLine();
 
-    enum SyncMode { LocalSync, GlobalSync };
-    SyncMode syncMode() const;
-    void setSyncMode(SyncMode);
-
     void pause(QDeclarativeTimeLineObject &, int);
     void callback(const QDeclarativeTimeLineCallback &);
     void set(QDeclarativeTimeLineValue &, qreal);

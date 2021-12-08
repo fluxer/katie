@@ -586,7 +586,7 @@ int QLabel::heightForWidth(int w) const
     \since 4.2
 
     Specifies whether QLabel should automatically open links using
-    QDesktopServices::openUrl() instead of emitting the
+    QStandardPaths::openUrl() instead of emitting the
     linkActivated() signal.
 
     \bold{Note:} The textInteractionFlags set on the label need to include

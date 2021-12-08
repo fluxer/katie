@@ -190,7 +190,6 @@ bool QPainterPrivate::attachPainterPrivate(QPainter *q, QPaintDevice *pdev)
     q->initFrom(widget);
     QPoint offset;
     widget->d_func()->redirected(&offset);
-    offset += q->d_ptr->engine->coordinateOffset();
 
     // Update system rect.
     q->d_ptr->state->ww = q->d_ptr->state->vw = widget->width();
@@ -382,25 +381,6 @@ void QPainterPrivate::draw_helper(const QPainterPath &originalPath)
                  QRectF(0, 0, absPathRect.width(), absPathRect.height()),
                  Qt::OrderedDither | Qt::OrderedAlphaDither);
     q->restore();
-}
-
-void QPainterPrivate::drawOpaqueBackground(const QPainterPath &path)
-{
-    Q_Q(QPainter);
-
-    q->setBackgroundMode(Qt::TransparentMode);
-
-    if (state->brush.style() != Qt::NoBrush) {
-        q->fillPath(path, state->bgBrush.color());
-        q->fillPath(path, state->brush);
-    }
-
-    if (state->pen.style() != Qt::NoPen) {
-        q->strokePath(path, QPen(state->bgBrush.color(), state->pen.width()));
-        q->strokePath(path, state->pen);
-    }
-
-    q->setBackgroundMode(Qt::OpaqueMode);
 }
 
 static inline QBrush stretchGradientToUserSpace(const QBrush &brush, const QRectF &boundingRect)
@@ -1538,9 +1518,6 @@ bool QPainter::begin(QPaintDevice *pd)
         d->state->ww = d->state->vw = pd->metric(QPaintDevice::PdmWidth);
         d->state->wh = d->state->vh = pd->metric(QPaintDevice::PdmHeight);
     }
-
-    const QPoint coordinateOffset = d->engine->coordinateOffset();
-    d->state->redirectionMatrix.translate(-coordinateOffset.x(), -coordinateOffset.y());
 
     Q_ASSERT(d->engine->isActive());
 
@@ -3468,7 +3445,7 @@ void QPainter::setBrush(const QBrush &brush)
         return;
     }
 
-    if (d->state->brush.d == brush.d)
+    if (d->state->brush == brush)
         return;
 
     if (d->extended) {

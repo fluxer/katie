@@ -49,13 +49,14 @@ static void translate_color(const QColor &color, QString *color_string,
     *opacity_string = QString::number(color.alphaF());
 }
 
-static void translate_dashPattern(QVector<qreal> pattern, const qreal& width, QString *pattern_string)
+static void translate_dashPattern(const QVector<qreal> &pattern, const qreal& width, QString *pattern_string)
 {
     Q_ASSERT(pattern_string);
 
     // Note that SVG operates in absolute lengths, whereas Qt uses a length/width ratio.
-    foreach (qreal entry, pattern)
+    foreach (qreal entry, pattern) {
         *pattern_string += QString::fromLatin1("%1,").arg(entry * width);
+    }
 
     pattern_string->chop(1);
 }
@@ -119,9 +120,7 @@ static inline QPaintEngine::PaintEngineFeatures svgEngineFeatures()
 {
     return QPaintEngine::PaintEngineFeatures(
         QPaintEngine::AllFeatures
-        & ~QPaintEngine::PatternBrush
         & ~QPaintEngine::PerspectiveTransform
-        & ~QPaintEngine::ConicalGradientFill
         & ~QPaintEngine::PorterDuff);
 }
 

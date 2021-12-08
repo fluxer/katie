@@ -2416,6 +2416,8 @@ QString QDateTime::toString(Qt::DateFormat f) const
             \i use AM/PM display. \e AP will be replaced by either "AM" or "PM".
     \row \i ap
             \i use am/pm display. \e ap will be replaced by either "am" or "pm".
+    \row \i Z
+            \i the timezone name or abbreviation.
     \endtable
 
     All other input characters will be ignored. Any sequence of characters that
@@ -3996,7 +3998,7 @@ bool QDateTimeParser::parseFormat(const QString &newFormat)
                     newDisplay |= sn.type;
                 }
                 break;
-            case 't':
+            case 'Z':
                 if (parserType != QVariant::Time) {
                     const SectionNode sn = { TimeZoneSection, i - add, countRepeat(newFormat, i, 4) };
                     newSectionNodes.append(sn);
@@ -4811,7 +4813,7 @@ int QDateTimeParser::findDay(const QString &str1, int startDay, int sectionIndex
 int QDateTimeParser::findTimeZone(QString str, const QDateTime &when, int *used) const
 {
     const QString tz = timeZone();
-    if (str == QLatin1String("t") || str == tz) {
+    if (str == QLatin1String("Z") || str == tz) {
         QDTPDEBUG << "findTimeZone" << tz;
         *used = tz.size();
         return QDateTime(when.date(), when.time(), Qt::LocalTime).utcOffset();
@@ -5007,7 +5009,7 @@ QString QDateTimeParser::sectionFormat(Section s, int count) const
 {
     QChar fillChar;
     switch (s) {
-    case TimeZoneSection: fillChar = QLatin1Char('t'); break;
+    case TimeZoneSection: fillChar = QLatin1Char('Z'); break;
     case AmPmSection: return count == 1 ? QLatin1String("AP") : QLatin1String("ap");
     case MSecSection: fillChar = QLatin1Char('z'); break;
     case SecondSection: fillChar = QLatin1Char('s'); break;

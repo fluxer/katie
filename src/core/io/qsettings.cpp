@@ -211,7 +211,7 @@ static inline QString createLeadingDir(const QString &filename)
     return filename;
 }
 
-static QString getSettingsPath(QSettings::Scope scope, const QString &filename, const QString &extension)
+static QString getSettingsPath(const QString &filename, const QString &extension)
 {
     QFileInfo info(filename);
     if (info.isAbsolute()) {
@@ -223,11 +223,7 @@ static QString getSettingsPath(QSettings::Scope scope, const QString &filename, 
         nameandext += extension;
     }
 
-    QStringList locations = QStandardPaths::standardLocations(QStandardPaths::ConfigLocation);
-    if (scope == QSettings::UserScope) {
-        locations = QStandardPaths::standardLocations(QStandardPaths::GenericConfigLocation);
-    }
-
+    const QStringList locations = QStandardPaths::standardLocations(QStandardPaths::ConfigLocation);
     foreach (const QString &location, locations) {
         QStatInfo locationinfo(location);
         if (locationinfo.isWritable()) {
@@ -238,20 +234,20 @@ static QString getSettingsPath(QSettings::Scope scope, const QString &filename, 
     return createLeadingDir(locations.first() + QDir::separator() + nameandext);
 }
 
-QSettingsPrivate::QSettingsPrivate(QSettings::Format format, QSettings::Scope scope)
-    : format(format), scope(scope), status(QSettings::NoError), shouldwrite(false)
+QSettingsPrivate::QSettingsPrivate(QSettings::Format format)
+    : format(format), status(QSettings::NoError), shouldwrite(false)
 {
     QSettingsCustomFormat handler = getSettingsFormat(format);
-    filename = getSettingsPath(scope, QCoreApplication::applicationName(), handler.extension);
+    filename = getSettingsPath(QCoreApplication::applicationName(), handler.extension);
     readFunc = handler.readFunc;
     writeFunc = handler.writeFunc;
 }
 
 QSettingsPrivate::QSettingsPrivate(const QString &fileName, QSettings::Format format)
-    : format(format), scope(QSettings::UserScope), status(QSettings::NoError), shouldwrite(false)
+    : format(format), status(QSettings::NoError), shouldwrite(false)
 {
     QSettingsCustomFormat handler = getSettingsFormat(format);
-    filename = getSettingsPath(scope, fileName, handler.extension);
+    filename = getSettingsPath(fileName, handler.extension);
     readFunc = handler.readFunc;
     writeFunc = handler.writeFunc;
 }
@@ -565,7 +561,7 @@ QStringList QSettingsPrivate::splitArgs(const QString &s, int idx)
 
     If you want to use specific format instead of the native, you
     can pass QSettings::IniFormat as the first argument to the
-    QSettings constructor, followed by the scope.
+    QSettings constructor.
 
     \section1 Restoring the State of a GUI Application
 
@@ -711,33 +707,15 @@ QStringList QSettingsPrivate::splitArgs(const QString &s, int idx)
     \sa registerFormat()
 */
 
-/*! \enum QSettings::Scope
-
-    This enum specifies whether settings are user-specific or shared
-    by all users of the same system.
-
-    \value UserScope  Store settings in a location specific to the
-                      current user (e.g., in the user's home
-                      directory).
-    \value SystemScope  Store settings in a global location, so that
-                        all users on the same machine access the same
-                        set of settings.
-*/
-
 /*!
     Constructs a QSettings object for accessing settings of the
-    application called \a application from the organization called \a
-    organization, and with parent \a parent.
+    application set previously with a call to
+    QCoreApplication::setApplicationName().
 
-    If \a scope is QSettings::UserScope, the QSettings object searches
-    user-specific settings only. If \a scope is QSettings::SystemScope,
-    the QSettings object ignores user-specific settings and provides
-    access to system-wide settings.
-
-    The storage format is set to QSettings::NativeFormat.
+    \sa QCoreApplication::setApplicationName()
 */
-QSettings::QSettings(Scope scope, QObject *parent)
-    : QObject(*new QSettingsPrivate(NativeFormat, scope), parent)
+QSettings::QSettings(QObject *parent)
+    : QObject(*new QSettingsPrivate(QSettings::NativeFormat), parent)
 {
     QMutexLocker locker(qSettingsMutex());
     qGlobalSettings()->append(this);
@@ -746,21 +724,15 @@ QSettings::QSettings(Scope scope, QObject *parent)
 }
 
 /*!
-    Constructs a QSettings object for accessing settings of the
-    application called \a application from the organization called
-    \a organization, and with parent \a parent.
-
-    If \a scope is QSettings::UserScope, the QSettings object searches
-    user-specific settings only. If \a scope is QSettings::SystemScope,
-    the QSettings object ignores user-specific settings and provides
-    access to system-wide settings.
+    Constructs a QSettings object for accessing settings with parent
+    \a parent.
 
     If \a format is QSettings::NativeFormat, the native JSON API is used
     for storing settings. If \a format is QSettings::IniFormat, the INI
     format is used.
 */
-QSettings::QSettings(Format format, Scope scope, QObject *parent)
-    : QObject(*new QSettingsPrivate(format, scope), parent)
+QSettings::QSettings(Format format, QObject *parent)
+    : QObject(*new QSettingsPrivate(format), parent)
 {
     QMutexLocker locker(qSettingsMutex());
     qGlobalSettings()->append(this);
@@ -790,25 +762,6 @@ QSettings::QSettings(Format format, Scope scope, QObject *parent)
 */
 QSettings::QSettings(const QString &fileName, Format format, QObject *parent)
     : QObject(*new QSettingsPrivate(fileName, format), parent)
-{
-    QMutexLocker locker(qSettingsMutex());
-    qGlobalSettings()->append(this);
-    Q_D(QSettings);
-    d->read();
-}
-
-/*!
-    Constructs a QSettings object for accessing settings of the
-    application set previously with a call to
-    QCoreApplication::setApplicationName().
-
-    The scope is QSettings::UserScope and the format is
-    QSettings::NativeFormat.
-
-    \sa QCoreApplication::setApplicationName()
-*/
-QSettings::QSettings(QObject *parent)
-    : QObject(*new QSettingsPrivate(QSettings::NativeFormat, UserScope), parent)
 {
     QMutexLocker locker(qSettingsMutex());
     qGlobalSettings()->append(this);
@@ -878,25 +831,12 @@ QString QSettings::fileName() const
 
     Returns the format used for storing the settings.
 
-    \sa fileName(), scope()
+    \sa fileName()
 */
 QSettings::Format QSettings::format() const
 {
     Q_D(const QSettings);
     return d->format;
-}
-
-/*!
-    \since 4.4
-
-    Returns the scope used for storing the settings.
-
-    \sa format()
-*/
-QSettings::Scope QSettings::scope() const
-{
-    Q_D(const QSettings);
-    return d->scope;
 }
 
 /*!

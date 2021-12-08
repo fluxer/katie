@@ -67,9 +67,10 @@ QNetworkReplyDataImpl::QNetworkReplyDataImpl(QObject *parent, const QNetworkRequ
     }
 }
 
-void QNetworkReplyDataImpl::abort()
+qint64 QNetworkReplyDataImpl::size() const
 {
-    QNetworkReply::close();
+    Q_D(const QNetworkReplyDataImpl);
+    return d->decodedData.size();
 }
 
 qint64 QNetworkReplyDataImpl::bytesAvailable() const
@@ -78,15 +79,14 @@ qint64 QNetworkReplyDataImpl::bytesAvailable() const
     return QNetworkReply::bytesAvailable() + d->decodedData.bytesAvailable();
 }
 
-bool QNetworkReplyDataImpl::isSequential () const
+void QNetworkReplyDataImpl::abort()
 {
-    return true;
+    QNetworkReply::close();
 }
 
-qint64 QNetworkReplyDataImpl::size() const
+bool QNetworkReplyDataImpl::isSequential() const
 {
-    Q_D(const QNetworkReplyDataImpl);
-    return d->decodedData.size();
+    return true;
 }
 
 /*!
@@ -102,7 +102,6 @@ qint64 QNetworkReplyDataImpl::readData(char *data, qint64 maxlen)
 
     return d->decodedData.read(data, maxlen);
 }
-
 
 QT_END_NAMESPACE
 

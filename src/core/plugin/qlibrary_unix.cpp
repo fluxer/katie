@@ -55,7 +55,6 @@ bool QLibraryPrivate::load_sys()
     if (!pHnd) {
         errorString = QLibrary::tr("Cannot load library %1: %2").arg(fileName).arg(qdlerror());
     } else {
-        qualifiedFileName = fileName;
         errorString.clear();
     }
     return (pHnd != 0);

@@ -569,11 +569,14 @@ QColormap QColormap::instance(int screen)
 */
 QColormap::QColormap()
     : d(new QColormapPrivate)
-{}
+{
+}
 
 QColormap::QColormap(const QColormap &colormap)
-    :d (colormap.d)
-{ d->ref.ref(); }
+    : d(colormap.d)
+{
+    d->ref.ref();
+}
 
 QColormap::~QColormap()
 {
@@ -585,10 +588,14 @@ QColormap::~QColormap()
 }
 
 QColormap::Mode QColormap::mode() const
-{ return d->mode; }
+{
+    return d->mode;
+}
 
 int QColormap::depth() const
-{ return d->depth; }
+{
+    return d->depth;
+}
 
 int QColormap::size() const
 {
@@ -635,7 +642,9 @@ const QColor QColormap::colorAt(uint pixel) const
 }
 
 const QVector<QColor> QColormap::colormap() const
-{ return d->colors; }
+{
+    return d->colors;
+}
 
 QColormap &QColormap::operator=(const QColormap &colormap)
 {
@@ -644,5 +653,3 @@ QColormap &QColormap::operator=(const QColormap &colormap)
 }
 
 QT_END_NAMESPACE
-
-

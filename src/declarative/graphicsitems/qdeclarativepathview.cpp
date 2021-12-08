@@ -1098,7 +1098,7 @@ void QDeclarativePathViewPrivate::handleMousePressEvent(QGraphicsSceneMouseEvent
 
     lastElapsed = 0;
     lastDist = 0;
-    QDeclarativeItemPrivate::start(lastPosTime);
+    lastPosTime.start();
     tl.clear();
 }
 
@@ -1142,7 +1142,7 @@ void QDeclarativePathViewPrivate::handleMouseMoveEvent(QGraphicsSceneMouseEvent 
             else if (diff < -modelCount/2)
                 diff += modelCount;
 
-            lastElapsed = QDeclarativeItemPrivate::restart(lastPosTime);
+            lastElapsed = lastPosTime.restart();
             lastDist = diff;
             startPc = newPc;
         }
@@ -1174,7 +1174,7 @@ void QDeclarativePathViewPrivate::handleMouseReleaseEvent(QGraphicsSceneMouseEve
     if (!interactive || !lastPosTime.isValid())
         return;
 
-    qreal elapsed = qreal(lastElapsed + QDeclarativeItemPrivate::elapsed(lastPosTime)) / 1000.;
+    qreal elapsed = qreal(lastElapsed + lastPosTime.elapsed()) / 1000.;
     qreal velocity = elapsed > 0. ? lastDist / elapsed : 0;
     if (model && modelCount && qAbs(velocity) > qreal(1.)) {
         qreal count = pathItems == -1 ? modelCount : pathItems;

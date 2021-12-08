@@ -1,10 +1,6 @@
 /****************************************************************************
 **
-** Copyright (c) 2012-2015 Barbara Geller
-** Copyright (c) 2012-2015 Ansel Sermersheim
-** Copyright (c) 2012-2014 Digia Plc and/or its subsidiary(-ies).
-** Copyright (c) 2008-2012 Nokia Corporation and/or its subsidiary(-ies).
-** Copyright (C) 2016 Ivailo Monev
+** Copyright (C) 2021 Ivailo Monev
 **
 ** This file is part of the QtCore module of the Katie Toolkit.
 **
@@ -26,32 +22,29 @@
 #define QSTANDARDPATHS_H
 
 #include <QtCore/qstringlist.h>
+#include <QtCore/qurl.h>
 
 QT_BEGIN_NAMESPACE
-
 
 class Q_CORE_EXPORT QStandardPaths
 {
 public:
-    // Do not re-order, must match QDesktopServices
     enum StandardLocation {
         DesktopLocation,
         DocumentsLocation,
-        FontsLocation,
-        ApplicationsLocation,
+        DownloadsLocation,
+        VideosLocation,
         MusicLocation,
-        MoviesLocation,
         PicturesLocation,
-        TempLocation,
-        HomeLocation,
+        PublicLocation,
+        TemplatesLocation,
+
         DataLocation,
         CacheLocation,
-        GenericDataLocation,
-        RuntimeLocation,
         ConfigLocation,
-        DownloadLocation,
-        GenericCacheLocation,
-        GenericConfigLocation
+        RuntimeLocation,
+        StateLocation,
+        ExecutableLocation
     };
 
     enum LocateOption {
@@ -67,6 +60,8 @@ public:
     static QString displayName(StandardLocation type);
 
     static QString findExecutable(const QString &executableName, const QStringList &paths = QStringList());
+
+    static bool openUrl(const QUrl &url);
 
 private:
     Q_DISABLE_COPY(QStandardPaths)

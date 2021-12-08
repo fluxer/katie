@@ -108,6 +108,21 @@ QNetworkReplyFileImpl::QNetworkReplyFileImpl(QObject *parent, const QNetworkRequ
     QMetaObject::invokeMethod(this, "readyRead", Qt::QueuedConnection);
     QMetaObject::invokeMethod(this, "finished", Qt::QueuedConnection);
 }
+
+qint64 QNetworkReplyFileImpl::size() const
+{
+    Q_D(const QNetworkReplyFileImpl);
+    return d->realFileSize;
+}
+
+qint64 QNetworkReplyFileImpl::bytesAvailable() const
+{
+    Q_D(const QNetworkReplyFileImpl);
+    if (!d->realFile.isOpen())
+        return QNetworkReply::bytesAvailable();
+    return QNetworkReply::bytesAvailable() + d->realFile.bytesAvailable();
+}
+
 void QNetworkReplyFileImpl::close()
 {
     Q_D(QNetworkReplyFileImpl);
@@ -122,23 +137,9 @@ void QNetworkReplyFileImpl::abort()
     d->realFile.close();
 }
 
-qint64 QNetworkReplyFileImpl::bytesAvailable() const
-{
-    Q_D(const QNetworkReplyFileImpl);
-    if (!d->realFile.isOpen())
-        return QNetworkReply::bytesAvailable();
-    return QNetworkReply::bytesAvailable() + d->realFile.bytesAvailable();
-}
-
 bool QNetworkReplyFileImpl::isSequential () const
 {
     return true;
-}
-
-qint64 QNetworkReplyFileImpl::size() const
-{
-    Q_D(const QNetworkReplyFileImpl);
-    return d->realFileSize;
 }
 
 /*!

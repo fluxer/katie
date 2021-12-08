@@ -48,7 +48,7 @@ QT_BEGIN_NAMESPACE
  */
 typedef QT_FT_Span QSpan;
 
-struct QSpanData;
+class QSpanData;
 class QRasterBuffer;
 class QClipData;
 class QRasterPaintEngine;
@@ -182,9 +182,10 @@ struct QGradientData
 #define GRADIENT_STOPTABLE_SIZE 1024
 #define GRADIENT_STOPTABLE_SIZE_SHIFT 10
 
-    uint* colorTable; //[GRADIENT_STOPTABLE_SIZE];
-
+    uint colorTable[GRADIENT_STOPTABLE_SIZE];
     bool alphaColor;
+
+    void generateGradientColorTable(const QGradient& g, int opacity);
 };
 
 struct QTextureData
@@ -211,8 +212,9 @@ struct QTextureData
     int const_alpha;
 };
 
-struct QSpanData
+class QSpanData
 {
+public:
     QSpanData() : tempImage(nullptr) {}
     ~QSpanData() { delete tempImage; }
 

@@ -228,16 +228,6 @@ void QBitArray::fill(bool value, int begin, int end)
         setBit(begin++, value);
 }
 
-/*! \fn bool QBitArray::isDetached() const
-
-    \internal
-*/
-
-/*! \fn void QBitArray::detach()
-
-    \internal
-*/
-
 /*! \fn void QBitArray::clear()
 
     Clears the contents of the bit array and makes it empty.
@@ -695,15 +685,5 @@ QDebug operator<<(QDebug dbg, const QBitArray &array)
     return dbg.space();
 }
 #endif
-
-/*!
-    \fn DataPtr &QBitArray::data_ptr()
-    \internal
-*/
-
-/*!
-    \typedef QBitArray::DataPtr
-    \internal
-*/
 
 QT_END_NAMESPACE

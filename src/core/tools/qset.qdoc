@@ -216,27 +216,6 @@
 */
 
 /*!
-    \fn void QSet::detach()
-
-    \internal
-
-    Detaches this set from any other sets with which it may share
-    data.
-
-    \sa isDetached()
-*/
-
-/*! \fn bool QSet::isDetached() const
-
-    \internal
-
-    Returns true if the set's internal data isn't shared with any
-    other set object; otherwise returns false.
-
-    \sa detach()
-*/
-
-/*!
     \fn void QSet::clear()
 
     Removes all elements from the set.

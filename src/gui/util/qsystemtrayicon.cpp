@@ -81,7 +81,7 @@ QT_BEGIN_NAMESPACE
     of type QEvent::ToolTip. Additionally, the QSystemTrayIcon receives wheel events of
     type QEvent::Wheel. These are not supported on any other platform.
 
-    \sa QDesktopServices, QDesktopWidget, {Desktop Integration}, {System Tray Icon Example}
+    \sa QStandardPaths, QDesktopWidget, {Desktop Integration}, {System Tray Icon Example}
 */
 
 /*!

@@ -3339,7 +3339,7 @@ void QGraphicsView::paintEvent(QPaintEvent *event)
             const int numItems = itemList.size();
             QGraphicsItem **itemArray = &itemList[0]; // Relies on QList internals, but is perfectly valid.
             QStyleOptionGraphicsItem *styleOptionArray = d->allocStyleOptionsArray(numItems);
-            QTransform transform(Qt::Uninitialized);
+            QTransform transform;
             for (int i = 0; i < numItems; ++i) {
                 QGraphicsItem *item = itemArray[i];
                 QGraphicsItemPrivate *itemd = item->d_ptr.data();

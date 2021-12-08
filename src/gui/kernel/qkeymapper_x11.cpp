@@ -154,7 +154,7 @@ static const struct KeyTblData {
     { XK_Alt_L,                   Qt::Key_Alt },
     { XK_Alt_R,                   Qt::Key_Alt },
     { 0x1000FF74,                 Qt::Key_Backtab },        // hardcoded HP backtab
-    { 0xFE20,                     Qt::Key_Backtab },        // hardcoded XK_ISO_Left_Tab
+    { 0xfd05,                     Qt::Key_Backtab },        // hardcoded XK_3270_BackTab
 
     // misc
     { XK_Clear,                   Qt::Key_Delete },

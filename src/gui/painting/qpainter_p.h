@@ -174,7 +174,6 @@ public:
 
     void draw_helper(const QPainterPath &path);
     void drawStretchedGradient(const QPainterPath &path);
-    void drawOpaqueBackground(const QPainterPath &path);
 
     void updateMatrix();
     void updateInvMatrix();
@@ -193,8 +192,6 @@ public:
     QPaintEngine *engine;
     QPaintEngineEx *extended;
 };
-
-QString qt_generate_brush_key(const QBrush &brush);
 
 QT_END_NAMESPACE
 

@@ -325,9 +325,10 @@ void QAlphaPaintEngine::flushAndInit(bool init)
     }
 
     if (init) {
-        gccaps = PaintEngineFeatures(AllFeatures & ~QPaintEngine::ObjectBoundingModeGradients);
+        gccaps = PaintEngineFeatures(QPaintEngine::AllFeatures);
 
-        d->m_pic = new QImage();
+        d->m_pic = new QImage(QSize(1024, 1024), QImage::Format_RGB32);
+        d->m_pic->fill(Qt::white);
         d->m_picpainter = new QPainter(d->m_pic);
         d->m_picengine = d->m_picpainter->paintEngine();
 

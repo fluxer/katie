@@ -39,6 +39,7 @@
 #include "qvector.h"
 #include "qdir.h"
 #include "qfilesystementry_p.h"
+#include "qcore_unix_p.h"
 
 #include <errno.h>
 
@@ -221,11 +222,13 @@ static LibraryMap *libraryMap()
     return data ? &data->libraryMap : nullptr;
 }
 
-QLibraryPrivate::QLibraryPrivate(const QString &canonicalFileName, const QString &version)
-    : did_load(false), pHnd(0), fileName(canonicalFileName), fullVersion(version),
+QLibraryPrivate::QLibraryPrivate(const QString &canonicalFileName)
+    : did_load(false), pHnd(0), fileName(canonicalFileName),
      instance(0), qt_version(0), libraryRefCount(1), libraryUnloadCount(0),
      pluginState(MightBeAPlugin)
-{ libraryMap()->insert(canonicalFileName, this); }
+{
+    libraryMap()->insert(canonicalFileName, this);
+}
 
 QLibraryPrivate *QLibraryPrivate::findOrCreate(const QString &fileName, const QString &version)
 {
@@ -268,13 +271,14 @@ QLibraryPrivate *QLibraryPrivate::findOrCreate(const QString &fileName, const QS
             if (!suffix.isEmpty() && name.endsWith(suffix))
                 continue;
             const QString attempt = path + prefix + name + suffix;
-            if (QFile::exists(attempt)) {
-                return new QLibraryPrivate(attempt, version);
+            const QStatInfo statinfo(attempt);
+            if (statinfo.isFile()) {
+                return new QLibraryPrivate(attempt);
             }
         }
     }
 
-    return new QLibraryPrivate(fileName, version);
+    return new QLibraryPrivate(fileName);
 }
 
 QLibraryPrivate::~QLibraryPrivate()
@@ -416,10 +420,10 @@ bool QLibraryPrivate::isPlugin()
         return false;
     }
 
-    QFileInfo fileinfo(fileName);
+    const QStatInfo statinfo(fileName);
 
 #ifndef QT_NO_DATESTRING
-    lastModified  = fileinfo.lastModified().toString(Qt::ISODate);
+    lastModified  = statinfo.lastModified().toString(Qt::ISODate);
 #endif
     QString regkey = QString::fromLatin1("Katie Plugin Cache %1/%2")
                      .arg(QLatin1String(QT_VERSION_HEX_STR))
@@ -637,7 +641,7 @@ void QLibrary::setFileName(const QString &fileName)
 QString QLibrary::fileName() const
 {
     if (d)
-        return d->qualifiedFileName.isEmpty() ? d->fileName : d->qualifiedFileName;
+        return d->fileName;
     return QString();
 }
 

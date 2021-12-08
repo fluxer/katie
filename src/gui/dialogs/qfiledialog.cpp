@@ -39,6 +39,7 @@
 #include "qstylepainter.h"
 #include "qcoreapplication_p.h"
 #include "qcorecommon_p.h"
+#include "qcore_unix_p.h"
 #include "ui_qfiledialog.h"
 
 #include <stdlib.h>
@@ -842,7 +843,8 @@ QStringList QFileDialogPrivate::typedFiles() const
     QString editText = lineEdit()->text();
     if (!editText.contains(QLatin1Char('"'))) {
         const QString prefix = q->directory().absolutePath() + QDir::separator();
-        if (QFile::exists(prefix + editText))
+        const QStatInfo statinfo(prefix + editText);
+        if (statinfo.isFile())
             files << editText;
         else
             files << qt_tildeExpansion(editText);
@@ -855,7 +857,8 @@ QStringList QFileDialogPrivate::typedFiles() const
                 continue; // Every even token is a separator
             const QString token = tokens.at(i);
             const QString prefix = q->directory().absolutePath() + QDir::separator();
-            if (QFile::exists(prefix + token))
+            const QStatInfo statinfo(prefix + token);
+            if (statinfo.isFile())
                 files << token;
             else
                 files << qt_tildeExpansion(token);
@@ -2408,9 +2411,10 @@ void QFileDialogPrivate::_q_createDirectory()
     QString newFolderString = QFileDialog::tr("New Folder");
     QString folderName = newFolderString;
     QString prefix = q->directory().absolutePath() + QDir::separator();
-    if (QFile::exists(prefix + folderName)) {
+    const QStatInfo statinfo(prefix + folderName);
+    if (statinfo.isDir()) {
         qlonglong suffix = 2;
-        while (QFile::exists(prefix + folderName)) {
+        while (QStatInfo(prefix + folderName).isDir()) {
             folderName = newFolderString + QString::number(suffix++);
         }
     }

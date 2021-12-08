@@ -44,10 +44,10 @@ bool QLocalServerPrivate::removeServer(const QString &name)
     } else {
         fileName = QDir::tempPath() + QLatin1Char('/') + name;
     }
-    if (QFile::exists(fileName))
+    const QStatInfo statinfo(fileName);
+    if (statinfo.isFile())
         return QFile::remove(fileName);
-    else
-        return true;
+    return true;
 }
 
 bool QLocalServerPrivate::listen(const QString &requestedServerName)

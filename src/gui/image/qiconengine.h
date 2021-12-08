@@ -40,7 +40,7 @@ public:
     virtual void addFile(const QString &fileName, const QSize &size, QIcon::Mode mode, QIcon::State state);
 
     virtual QString key() const;
-    virtual QIconEngine *clone() const;
+    virtual QIconEngine *clone() const = 0;
     virtual bool read(QDataStream &in);
     virtual bool write(QDataStream &out) const;
 

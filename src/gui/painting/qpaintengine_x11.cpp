@@ -263,7 +263,7 @@ static Picture getPatternFill(int screen, const QBrush &b)
 
     XRenderFillRectangle(qt_x11Data->display, PictOpSrc, qt_x11Data->pattern_fills[i].picture, &bg_color, 0, 0, 8, 8);
 
-    QPixmap pattern(qt_pixmapForBrush(b.style()));
+    QPixmap pattern(qt_toX11Pixmap(qt_pixmapForBrush(b.style())));
     XRenderPictureAttributes attrs;
     attrs.repeat = true;
     XRenderChangePicture(qt_x11Data->display, pattern.x11PictureHandle(), CPRepeat, &attrs);
@@ -342,22 +342,13 @@ void QX11PaintEnginePrivate::systemStateChanged()
 static QPaintEngine::PaintEngineFeatures qt_decide_features()
 {
     QPaintEngine::PaintEngineFeatures features =
-        QPaintEngine::PrimitiveTransform
-        | QPaintEngine::PatternBrush
-        | QPaintEngine::AlphaBlend
+        QPaintEngine::AlphaBlend
         | QPaintEngine::PainterPaths
         | QPaintEngine::RasterOpModes;
 
     if (qt_x11Data->use_xrender) {
         features |= QPaintEngine::Antialiasing;
         features |= QPaintEngine::PorterDuff;
-        features |= QPaintEngine::MaskedBrush;
-#if 0
-        if (qt_x11Data->xrender_minor > 10) {
-            features |= QPaintEngine::LinearGradientFill;
-            // ###
-        }
-#endif
     }
 
     return features;

@@ -1,8 +1,14 @@
-katie (4.11.0) unstable; urgency=medium
+katie (4.11.1) unstable; urgency=medium
+
+  * Sixed package update
+
+ -- Ivailo Monev <xakepa10@gmail.com>  Tue, 23 Nov 2021 12:49:58 +0200
+ 
+katie (4.11.0) stable; urgency=medium
 
   * Fifth package update
 
- -- Ivailo Monev <xakepa10@gmail.com>  Fri, 13 Aug 2020 07:32:58 +0200
+ -- Ivailo Monev <xakepa10@gmail.com>  Fri, 13 Aug 2021 07:32:58 +0200
  
 katie (4.10.0) stable; urgency=medium
 

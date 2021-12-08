@@ -59,8 +59,6 @@ public:
 
     void resize(int size);
 
-    inline void detach() { d.detach(); }
-    inline bool isDetached() const { return d.isDetached(); }
     inline void clear() { d.clear(); }
 
     bool testBit(int i) const;
@@ -87,10 +85,6 @@ public:
     void fill(bool val, int first, int last);
 
     inline void truncate(int pos) { if (pos < size()) resize(pos); }
-
-public:
-    typedef QByteArray::DataPtr DataPtr;
-    inline DataPtr &data_ptr() { return d.data_ptr(); }
 };
 
 inline bool QBitArray::fill(bool aval, int asize)
@@ -154,7 +148,6 @@ Q_CORE_EXPORT QDebug operator<<(QDebug, const QBitArray &);
 #endif
 
 Q_DECLARE_TYPEINFO(QBitArray, Q_MOVABLE_TYPE);
-Q_DECLARE_SHARED(QBitArray)
 
 QT_END_NAMESPACE
 

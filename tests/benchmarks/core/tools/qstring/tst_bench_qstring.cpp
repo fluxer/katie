@@ -150,7 +150,7 @@ void tst_QString::fromLatin1() const
 
     QByteArray copy1 = latin1, copy2 = latin1, copy3 = latin1;
     copy1.chop(1);
-    copy2.detach();
+    copy2.chop(1);
     copy3 += latin1; // longer length
     copy2.clear();
 

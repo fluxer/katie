@@ -51,7 +51,6 @@ set(GUI_PUBLIC_HEADERS
     QCursor
     QDataWidgetMapper
     QDateTimeEdit
-    QDesktopServices
     QDesktopWidget
     QDial
     QDialog
@@ -522,7 +521,6 @@ set(GUI_HEADERS
     ${CMAKE_CURRENT_SOURCE_DIR}/util/qsystemtrayicon.h
     ${CMAKE_CURRENT_SOURCE_DIR}/util/qcompleter.h
     ${CMAKE_CURRENT_SOURCE_DIR}/util/qcompleter_p.h
-    ${CMAKE_CURRENT_SOURCE_DIR}/util/qdesktopservices.h
     ${CMAKE_CURRENT_SOURCE_DIR}/util/qsystemtrayicon_p.h
     ${CMAKE_CURRENT_SOURCE_DIR}/util/qundogroup.h
     ${CMAKE_CURRENT_SOURCE_DIR}/util/qundostack.h
@@ -844,7 +842,6 @@ set(GUI_SOURCES
     ${CMAKE_CURRENT_SOURCE_DIR}/text/qunicodetables.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/util/qsystemtrayicon.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/util/qcompleter.cpp
-    ${CMAKE_CURRENT_SOURCE_DIR}/util/qdesktopservices.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/util/qundogroup.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/util/qundostack.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/util/qundoview.cpp

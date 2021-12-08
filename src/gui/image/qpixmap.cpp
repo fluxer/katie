@@ -1107,16 +1107,6 @@ QDataStream &operator>>(QDataStream &stream, QPixmap &pixmap)
 
 #endif // QT_NO_DATASTREAM
 
-
-/*!
-    \internal
-*/
-
-bool QPixmap::isDetached() const
-{
-    return data && data->ref == 1;
-}
-
 /*!
     \fn QImage QPixmap::convertToImage() const
 
@@ -1505,17 +1495,6 @@ QPixmap QPixmap::transformed(const QMatrix &matrix, Qt::TransformationMode mode)
     becomes invalid when the QApplication instance is destroyed.
 
     \sa QBitmap, QImage, QImageReader, QImageWriter
-*/
-
-
-/*!
-    \typedef QPixmap::DataPtr
-    \internal
-*/
-
-/*!
-    \fn DataPtr &QPixmap::data_ptr()
-    \internal
 */
 
 /*!

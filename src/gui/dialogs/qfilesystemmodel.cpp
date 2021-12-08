@@ -27,6 +27,7 @@
 #include "qdebug.h"
 #include "qmessagebox.h"
 #include "qapplication.h"
+#include "qcore_unix_p.h"
 
 QT_BEGIN_NAMESPACE
 
@@ -185,7 +186,7 @@ bool QFileSystemModel::remove(const QModelIndex &aindex)
 
     bool error = false;
     for (int i = 0; i < children.count(); ++i) {
-        QFileInfo info(children.at(i));
+        QStatInfo info(children.at(i));
         QModelIndex modelIndex = index(children.at(i));
         if (info.isDir()) {
             QDir dir;
@@ -763,38 +764,49 @@ bool QFileSystemModel::setData(const QModelIndex &idx, const QVariant &value, in
 QVariant QFileSystemModel::headerData(int section, Qt::Orientation orientation, int role) const
 {
     switch (role) {
-    case Qt::DecorationRole:
-        if (section == 0) {
-            // ### TODO oh man this is ugly and doesn't even work all the way!
-            // it is still 2 pixels off
-            QImage pixmap(16, 1, QImage::Format_Mono);
-            pixmap.fill(0);
-            pixmap.setAlphaChannel(pixmap.createAlphaMask());
-            return pixmap;
+        case Qt::DecorationRole: {
+            if (section == 0) {
+                // ### TODO oh man this is ugly and doesn't even work all the way!
+                // it is still 2 pixels off
+                QImage pixmap(16, 1, QImage::Format_Mono);
+                pixmap.fill(0);
+                pixmap.setAlphaChannel(pixmap.createAlphaMask());
+                return pixmap;
+            }
+            break;
         }
-        break;
-    case Qt::TextAlignmentRole:
-        return Qt::AlignLeft;
+        case Qt::TextAlignmentRole: {
+            return Qt::AlignLeft;
+        }
     }
 
-    if (orientation != Qt::Horizontal || role != Qt::DisplayRole)
+    if (orientation != Qt::Horizontal || role != Qt::DisplayRole) {
         return QAbstractItemModel::headerData(section, orientation, role);
+    }
 
     QString returnValue;
     switch (section) {
-    case 0: returnValue = tr("Name");
+        case 0: {
+            returnValue = tr("Name");
             break;
-    case 1: returnValue = tr("Size");
+        }
+        case 1: {
+            returnValue = tr("Size");
             break;
-    case 2: returnValue = tr("Type");
+        }
+        case 2: {
+            returnValue = tr("Type");
             break;
-    // Windows   - Type
-    // OS X      - Kind
-    // Konqueror - File Type
-    // Nautilus  - Type
-    case 3: returnValue = tr("Date Modified");
+        }
+        // Konqueror - File Type
+        // Nautilus  - Type
+        case 3: {
+            returnValue = tr("Date Modified");
             break;
-    default: return QVariant();
+        }
+        default: {
+            break;
+        }
     }
     return returnValue;
 }

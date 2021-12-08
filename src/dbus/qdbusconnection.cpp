@@ -274,6 +274,8 @@ QDBusConnection::~QDBusConnection()
 */
 QDBusConnection &QDBusConnection::operator=(const QDBusConnection &other)
 {
+    if (d == other.d)
+        return *this;
     if (other.d)
         other.d->ref.ref();
     if (d && !d->ref.deref())

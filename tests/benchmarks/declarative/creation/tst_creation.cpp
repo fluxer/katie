@@ -31,6 +31,8 @@
 #include <qdeclarativetextinput_p.h>
 #include <qobject_p.h>
 
+#include "../../../shared/util.h"
+
 class tst_creation : public QObject
 {
     Q_OBJECT
@@ -87,11 +89,6 @@ tst_creation::tst_creation()
 
     //get rid of initialization effects
     QDeclarativeTextInput te;
-}
-
-inline QUrl TEST_FILE(const QString &filename)
-{
-    return QUrl::fromLocalFile(QLatin1String(SRCDIR) + QLatin1String("/data/") + filename);
 }
 
 void tst_creation::qobject_cpp()
@@ -286,7 +283,7 @@ void tst_creation::itemtree_data_cpp()
 
 void tst_creation::itemtree_qml()
 {
-    QDeclarativeComponent component(&engine, TEST_FILE(QLatin1String("item.qml")));
+    QDeclarativeComponent component(&engine, TEST_FILE("item.qml"));
     QObject *obj = component.create();
     delete obj;
 

@@ -101,14 +101,8 @@ QVariant domPropertyToVariant(QAbstractFormBuilder *afb,const QMetaObject *meta,
         // emulated by hacks in the formbuilder (size policy/orientation)
         fixEnum(enumValue);
         if (index == -1) {
-            // ### special-casing for Line (QFrame) -- fix for 4.2. Jambi hack for enumerations
-            if (!qstrcmp(meta->className(), "QFrame")
-                && (pname == QByteArray("orientation"))) {
-                return QVariant(enumValue == QFormBuilderStrings::instance().horizontalPostFix ? QFrame::HLine : QFrame::VLine);
-            } else {
-                uiLibWarning(QCoreApplication::translate("QFormBuilder", "The enumeration-type property %1 could not be read.").arg(p->attributeName()));
-                return QVariant();
-            }
+            uiLibWarning(QCoreApplication::translate("QFormBuilder", "The enumeration-type property %1 could not be read.").arg(p->attributeName()));
+            return QVariant();
         }
 
         const QMetaEnum e = meta->property(index).enumerator();

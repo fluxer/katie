@@ -745,14 +745,14 @@ void QDeclarativeFlickablePrivate::handleMousePressEvent(QGraphicsSceneMouseEven
     vData.dragMaxBound = q->maxYExtent();
     fixupMode = Normal;
     lastPos = QPoint();
-    QDeclarativeItemPrivate::start(lastPosTime);
+    lastPosTime.start();
     pressPos = event->pos();
     hData.pressPos = hData.move.value();
     vData.pressPos = vData.move.value();
     hData.flicking = false;
     vData.flicking = false;
-    QDeclarativeItemPrivate::start(pressTime);
-    QDeclarativeItemPrivate::start(velocityTime);
+    pressTime.start();
+    velocityTime.start();
 }
 
 void QDeclarativeFlickablePrivate::handleMouseMoveEvent(QGraphicsSceneMouseEvent *event)
@@ -768,7 +768,7 @@ void QDeclarativeFlickablePrivate::handleMouseMoveEvent(QGraphicsSceneMouseEvent
 
     if (q->yflick()) {
         int dy = int(event->pos().y() - pressPos.y());
-        if (qAbs(dy) > QApplication::startDragDistance() || QDeclarativeItemPrivate::elapsed(pressTime) > 200) {
+        if (qAbs(dy) > QApplication::startDragDistance() || pressTime.elapsed() > 200) {
             if (!vMoved)
                 vData.dragStartOffset = dy;
             qreal newY = dy + vData.pressPos - vData.dragStartOffset;
@@ -797,7 +797,7 @@ void QDeclarativeFlickablePrivate::handleMouseMoveEvent(QGraphicsSceneMouseEvent
 
     if (q->xflick()) {
         int dx = int(event->pos().x() - pressPos.x());
-        if (qAbs(dx) > QApplication::startDragDistance() || QDeclarativeItemPrivate::elapsed(pressTime) > 200) {
+        if (qAbs(dx) > QApplication::startDragDistance() || pressTime.elapsed() > 200) {
             if (!hMoved)
                 hData.dragStartOffset = dx;
             qreal newX = dx + hData.pressPos - hData.dragStartOffset;
@@ -844,10 +844,10 @@ void QDeclarativeFlickablePrivate::handleMouseMoveEvent(QGraphicsSceneMouseEvent
     }
 
     if (!lastPos.isNull()) {
-        qreal elapsed = qreal(QDeclarativeItemPrivate::elapsed(lastPosTime)) / 1000.;
+        qreal elapsed = qreal(lastPosTime.elapsed()) / 1000.;
         if (elapsed <= 0)
             return;
-        QDeclarativeItemPrivate::restart(lastPosTime);
+        lastPosTime.restart();
         qreal dy = event->pos().y()-lastPos.y();
         if (q->yflick() && !rejectY)
             vData.addVelocitySample(dy/elapsed, maxVelocity);
@@ -869,7 +869,7 @@ void QDeclarativeFlickablePrivate::handleMouseReleaseEvent(QGraphicsSceneMouseEv
         return;
 
     // if we drag then pause before release we should not cause a flick.
-    qint64 elapsed = QDeclarativeItemPrivate::elapsed(lastPosTime);
+    qint64 elapsed = lastPosTime.elapsed();
 
     vData.updateVelocity();
     hData.updateVelocity();
@@ -1096,7 +1096,7 @@ void QDeclarativeFlickable::viewportMoved()
     qreal prevX = d->lastFlickablePosition.x();
     qreal prevY = d->lastFlickablePosition.y();
     if (d->pressed || d->calcVelocity) {
-        int elapsed = QDeclarativeItemPrivate::restart(d->velocityTime);
+        int elapsed = d->velocityTime.restart();
         if (elapsed > 0) {
             qreal horizontalVelocity = (prevX - d->hData.move.value()) * 1000 / elapsed;
             if (qAbs(horizontalVelocity) > 0) {

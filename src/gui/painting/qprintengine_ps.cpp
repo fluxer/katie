@@ -154,7 +154,7 @@ QPSPrintEnginePrivate::QPSPrintEnginePrivate(QPrinter::PrinterMode m)
     : QPdfBaseEnginePrivate(m),
       printerState(QPrinter::Idle), hugeDocument(false), headerDone(false)
 {
-    useAlphaEngine = true;
+    useAlphaEngine = false;
     postscript = true;
 
     firstPage = true;
@@ -625,11 +625,9 @@ void QPSPrintEnginePrivate::flushPage(bool last)
 
 QPSPrintEngine::QPSPrintEngine(QPrinter::PrinterMode m)
     : QPdfBaseEngine(*(new QPSPrintEnginePrivate(m)),
-                     PrimitiveTransform
-                     | PatternTransform
+                     PatternTransform
                      | PixmapTransform
                      | PainterPaths
-                     | PatternBrush
         )
 {
 }

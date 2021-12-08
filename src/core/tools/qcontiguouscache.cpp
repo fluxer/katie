@@ -123,10 +123,6 @@ MyRecord record(int row) const
     \internal
 */
 
-/*! \fn bool QContiguousCache::isDetached() const
-    \internal
-*/
-
 /*! \typedef QContiguousCache::value_type
   \internal
  */

@@ -44,12 +44,12 @@ QFutureInterfaceBase::QFutureInterfaceBase(State initialState)
 QFutureInterfaceBase::QFutureInterfaceBase(const QFutureInterfaceBase &other)
     : d(other.d)
 {
-    d->refCount.ref();
+    d->ref.ref();
 }
 
 QFutureInterfaceBase::~QFutureInterfaceBase()
 {
-    if (!d->refCount.deref())
+    if (!d->ref.deref())
         delete d;
 }
 
@@ -352,20 +352,17 @@ const QtConcurrent::ResultStoreBase &QFutureInterfaceBase::resultStoreBase() con
 
 QFutureInterfaceBase &QFutureInterfaceBase::operator=(const QFutureInterfaceBase &other)
 {
-    other.d->refCount.ref();
-    if (!d->refCount.deref())
-        delete d;
-    d = other.d;
+    qAtomicAssign(d, other.d);
     return *this;
 }
 
 bool QFutureInterfaceBase::referenceCountIsOne() const
 {
-    return d->refCount == 1;
+    return d->ref == 1;
 }
 
 QFutureInterfaceBasePrivate::QFutureInterfaceBasePrivate(QFutureInterfaceBase::State initialState)
-    : refCount(1), m_progressValue(0), m_progressMinimum(0), m_progressMaximum(0),
+    : ref(1), m_progressValue(0), m_progressMinimum(0), m_progressMaximum(0),
       state(initialState), pendingResults(0),
       manualProgress(false), m_expectedResultCount(0), runnable(0)
 {

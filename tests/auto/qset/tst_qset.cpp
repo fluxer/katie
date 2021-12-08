@@ -51,8 +51,6 @@ private slots:
     void capacity();
     void reserve();
     void squeeze();
-    void detach();
-    void isDetached();
     void clear();
     void remove();
     void contains();
@@ -249,38 +247,6 @@ void tst_QSet::squeeze()
         set.remove(i);
     set.squeeze();
     QVERIFY(set.capacity() < 100);
-}
-
-void tst_QSet::detach()
-{
-    QSet<int> set;
-    set.detach();
-
-    set.insert(1);
-    set.insert(2);
-    set.detach();
-
-    QSet<int> copy = set;
-    set.detach();
-}
-
-void tst_QSet::isDetached()
-{
-    QSet<int> set1, set2;
-    QVERIFY(!set1.isDetached()); // shared_null
-    QVERIFY(!set2.isDetached()); // shared_null
-
-    set1.insert(1);
-    QVERIFY(set1.isDetached());
-    QVERIFY(!set2.isDetached()); // shared_null
-
-    set2 = set1;
-    QVERIFY(!set1.isDetached());
-    QVERIFY(!set2.isDetached());
-
-    set1.detach();
-    QVERIFY(set1.isDetached());
-    QVERIFY(set2.isDetached());
 }
 
 void tst_QSet::clear()

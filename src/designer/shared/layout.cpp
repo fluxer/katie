@@ -422,11 +422,11 @@ void Layout::breakLayout()
 static QString suggestLayoutName(const char *className)
 {
     // Legacy
-    if (!qstrcmp(className, "QHBoxLayout"))
+    if (qstrcmp(className, "QHBoxLayout") == 0)
         return QLatin1String("horizontalLayout");
-    if (!qstrcmp(className, "QVBoxLayout"))
+    if (qstrcmp(className, "QVBoxLayout") == 0)
         return QLatin1String("verticalLayout");
-    if (!qstrcmp(className, "QGridLayout"))
+    if (qstrcmp(className, "QGridLayout") == 0)
         return QLatin1String("gridLayout");
 
     return qtify(QString::fromUtf8(className));

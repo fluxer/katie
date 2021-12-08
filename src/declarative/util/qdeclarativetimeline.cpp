@@ -105,13 +105,12 @@ struct QDeclarativeTimeLinePrivate
 
     int order;
 
-    QDeclarativeTimeLine::SyncMode syncMode;
     int syncAdj;
     QList<QPair<int, Update> > *updateQueue;
 };
 
 QDeclarativeTimeLinePrivate::QDeclarativeTimeLinePrivate(QDeclarativeTimeLine *parent)
-: length(0), syncPoint(0), q(parent), clockRunning(false), prevTime(0), order(0), syncMode(QDeclarativeTimeLine::LocalSync), syncAdj(0), updateQueue(0)
+: length(0), syncPoint(0), q(parent), clockRunning(false), prevTime(0), order(0), syncAdj(0), updateQueue(0)
 {
 }
 
@@ -148,19 +147,12 @@ void QDeclarativeTimeLinePrivate::add(QDeclarativeTimeLineObject &g, const Op &o
         prevTime = 0;
         clockRunning = true;
 
-        if (syncMode == QDeclarativeTimeLine::LocalSync)  {
-            syncAdj = -1;
-        } else {
-            syncAdj = 0;
-        }
+        syncAdj = -1;
         q->start();
-/*        q->tick(0);
-        if (syncMode == QDeclarativeTimeLine::LocalSync)  {
-            syncAdj = -1;
-        } else {
-            syncAdj = 0;
-        }
-        */
+/*
+        q->tick(0);
+        syncAdj = -1;
+*/
     }
 }
 
@@ -307,26 +299,6 @@ QDeclarativeTimeLine::~QDeclarativeTimeLine()
         iter.key()->_t = 0;
 
     delete d; d = 0;
-}
-
-/*!
-    \enum QDeclarativeTimeLine::SyncMode
- */
-
-/*!
-    Return the timeline's synchronization mode.
- */
-QDeclarativeTimeLine::SyncMode QDeclarativeTimeLine::syncMode() const
-{
-    return d->syncMode;
-}
-
-/*!
-    Set the timeline's synchronization mode to \a syncMode.
- */
-void QDeclarativeTimeLine::setSyncMode(SyncMode syncMode)
-{
-    d->syncMode = syncMode;
 }
 
 /*!
@@ -829,11 +801,7 @@ void QDeclarativeTimeLine::remove(QDeclarativeTimeLineObject *v)
         d->prevTime = 0;
         d->clockRunning = true;
 
-        if (d->syncMode == QDeclarativeTimeLine::LocalSync) {
-            d->syncAdj = -1;
-        } else {
-            d->syncAdj = 0;
-        }
+        d->syncAdj = -1;
         start();
     }
 

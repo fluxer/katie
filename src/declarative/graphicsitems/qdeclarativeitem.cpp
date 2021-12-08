@@ -3597,58 +3597,6 @@ QDebug operator<<(QDebug debug, QDeclarativeItem *item)
 }
 #endif
 
-qint64 QDeclarativeItemPrivate::consistentTime = -1;
-void QDeclarativeItemPrivate::setConsistentTime(qint64 t)
-{
-    consistentTime = t;
-}
-
-class QElapsedTimerConsistentTimeHack
-{
-public:
-    void start() {
-        t1 = QDeclarativeItemPrivate::consistentTime;
-        t2 = 0;
-    }
-    qint64 elapsed() {
-        return QDeclarativeItemPrivate::consistentTime - t1;
-    }
-    qint64 restart() {
-        qint64 val = QDeclarativeItemPrivate::consistentTime - t1;
-        t1 = QDeclarativeItemPrivate::consistentTime;
-        t2 = 0;
-        return val;
-    }
-
-private:
-    qint64 t1;
-    qint64 t2;
-};
-
-void QDeclarativeItemPrivate::start(QElapsedTimer &t)
-{
-    if (QDeclarativeItemPrivate::consistentTime == -1)
-        t.start();
-    else
-        ((QElapsedTimerConsistentTimeHack*)&t)->start();
-}
-
-qint64 QDeclarativeItemPrivate::elapsed(QElapsedTimer &t)
-{
-    if (QDeclarativeItemPrivate::consistentTime == -1)
-        return t.elapsed();
-    else
-        return ((QElapsedTimerConsistentTimeHack*)&t)->elapsed();
-}
-
-qint64 QDeclarativeItemPrivate::restart(QElapsedTimer &t)
-{
-    if (QDeclarativeItemPrivate::consistentTime == -1)
-        return t.restart();
-    else
-        return ((QElapsedTimerConsistentTimeHack*)&t)->restart();
-}
-
 QT_END_NAMESPACE
 
 

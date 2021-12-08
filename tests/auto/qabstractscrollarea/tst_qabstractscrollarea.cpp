@@ -327,7 +327,8 @@ void tst_QAbstractScrollArea::task214488_layoutDirection()
     scrollArea.setLayoutDirection(dir);
 
     int refValue = hbar->value();
-    qApp->sendEvent(&scrollArea, new QKeyEvent(QEvent::KeyPress, key, Qt::NoModifier));
+    QKeyEvent event(QEvent::KeyPress, key, Qt::NoModifier);
+    qApp->sendEvent(&scrollArea, &event);
     QVERIFY(lessThan ? (hbar->value() < refValue) : (hbar->value() > refValue));
 }
 

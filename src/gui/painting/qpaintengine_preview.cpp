@@ -47,7 +47,7 @@ public:
 
 
 QPreviewPaintEngine::QPreviewPaintEngine()
-    : QPaintEngine(*(new QPreviewPaintEnginePrivate), PaintEngineFeatures(AllFeatures & ~ObjectBoundingModeGradients))
+    : QPaintEngine(*(new QPreviewPaintEnginePrivate), PaintEngineFeatures(QPaintEngine::AllFeatures))
 {
     Q_D(QPreviewPaintEngine);
     d->proxy_print_engine = 0;
@@ -68,7 +68,7 @@ bool QPreviewPaintEngine::begin(QPaintDevice *)
     qDeleteAll(d->pages);
     d->pages.clear();
 
-    QImage *page = new QImage;
+    QImage *page = new QImage(QSize(1024, 1024), QImage::Format_RGB32);
     d->painter = new QPainter(page);
     d->engine = d->painter->paintEngine();
     d->pages.append(page);
@@ -127,7 +127,7 @@ bool QPreviewPaintEngine::newPage()
 {
     Q_D(QPreviewPaintEngine);
 
-    QImage *page = new QImage;
+    QImage *page = new QImage(QSize(1024, 1024), QImage::Format_RGB32);
     QPainter *tmp_painter = new QPainter(page);
     QPaintEngine *tmp_engine = tmp_painter->paintEngine();
 

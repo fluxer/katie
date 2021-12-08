@@ -91,9 +91,6 @@ public:
     void reserve(int size);
     inline void squeeze() { reallocData(d->size, d->size); d->capacity = false; }
 
-    inline void detach() { if (d->ref != 1) detach_helper(); }
-    inline bool isDetached() const { return d->ref == 1; }
-
     inline T *data() { detach(); return p->array; }
     inline const T *data() const { return p->array; }
     inline const T *constData() const { return p->array; }
@@ -253,7 +250,9 @@ public:
     { QVector<T> tmp; tmp.reserve(int(vector.size())); qCopy(vector.begin(), vector.end(), std::back_inserter(tmp)); return tmp; }
     inline std::vector<T> toStdVector() const
     { std::vector<T> tmp; tmp.reserve(size()); qCopy(constBegin(), constEnd(), std::back_inserter(tmp)); return tmp; }
+
 private:
+    inline void detach() { if (d->ref != 1) detach_helper(); }
     void detach_helper();
     QVectorData *mallocData(int alloc);
     void reallocData(int size, int alloc);

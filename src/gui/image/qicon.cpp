@@ -80,10 +80,14 @@ typedef QCache<QString, QIcon> IconCache;
 Q_GLOBAL_STATIC(IconCache, qtIconCache)
 
 QIconPrivate::QIconPrivate()
-    : engine(0), ref(1),
+    : engine(nullptr), ref(1),
     serialNum(serialNumCounter.fetchAndAddRelaxed(1)),
     detach_no(0)
 {
+}
+
+QIconPrivate::~QIconPrivate() {
+    delete engine;
 }
 
 QPixmapIconEngine::QPixmapIconEngine()
@@ -243,7 +247,7 @@ QPixmap QPixmapIconEngine::pixmap(const QSize &size, QIcon::Mode mode, QIcon::St
     if (!QPixmapCache::find(key + HexString<uint>(mode), pm)) {
         if (pm.size() != actualSize)
             pm = pm.scaled(actualSize, Qt::IgnoreAspectRatio, Qt::SmoothTransformation);
-        if (pe->mode != mode && mode != QIcon::Normal) {
+        if (pe && pe->mode != mode && mode != QIcon::Normal) {
             QStyleOption opt(0);
             opt.palette = QApplication::palette();
             QPixmap generated = QApplication::style()->generatedIconPixmap(mode, pm, &opt);
@@ -529,11 +533,7 @@ QIcon::~QIcon()
 */
 QIcon &QIcon::operator=(const QIcon &other)
 {
-    if (other.d)
-        other.d->ref.ref();
-    if (d && !d->ref.deref())
-        delete d;
-    d = other.d;
+    qAtomicAssign(d, other.d);
     return *this;
 }
 
@@ -653,13 +653,6 @@ void QIcon::paint(QPainter *painter, const QRect &rect, Qt::Alignment alignment,
 bool QIcon::isNull() const
 {
     return !d;
-}
-
-/*!\internal
- */
-bool QIcon::isDetached() const
-{
-    return !d || d->ref == 1;
 }
 
 /*! \internal
@@ -977,17 +970,6 @@ QDataStream &operator>>(QDataStream &s, QIcon &icon)
 
 #endif //QT_NO_DATASTREAM
 
-
-
-/*!
-    \fn DataPtr &QIcon::data_ptr()
-    \internal
-*/
-
-/*!
-    \typedef QIcon::DataPtr
-    \internal
-*/
-
 QT_END_NAMESPACE
+
 #endif //QT_NO_ICON

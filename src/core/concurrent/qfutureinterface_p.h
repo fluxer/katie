@@ -109,7 +109,7 @@ class QFutureInterfaceBasePrivate
 public:
     QFutureInterfaceBasePrivate(QFutureInterfaceBase::State initialState);
 
-    QAtomicInt refCount;
+    QAtomicInt ref;
     QMutex m_mutex;
     QWaitCondition waitCondition;
     QList<QFutureCallOutInterface *> outputConnections;

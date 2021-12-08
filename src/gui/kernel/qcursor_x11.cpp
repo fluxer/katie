@@ -75,14 +75,10 @@ QCursorData *QCursorData::setBitmap(const QBitmap &bitmap, const QBitmap &mask, 
         c->ref.ref();
         return c;
     }
-    QCursorData *d = new QCursorData;
-    d->ref = 1;
+    QCursorData *d = new QCursorData(Qt::BitmapCursor);
 
     d->bm  = new QBitmap(qt_toX11Pixmap(bitmap));
     d->bmm = new QBitmap(qt_toX11Pixmap(mask));
-
-    d->hcurs = 0;
-    d->cshape = Qt::BitmapCursor;
     d->hx = hotX >= 0 ? hotX : bitmap.width() / 2;
     d->hy = hotY >= 0 ? hotY : bitmap.height() / 2;
     d->fg.red   = 0x0000;

@@ -65,13 +65,7 @@ void QPdfPage::streamImage(int w, int h, int object)
 inline QPaintEngine::PaintEngineFeatures qt_pdf_decide_features()
 {
     QPaintEngine::PaintEngineFeatures f = QPaintEngine::AllFeatures;
-    f &= ~(QPaintEngine::PorterDuff | QPaintEngine::PerspectiveTransform
-           | QPaintEngine::ObjectBoundingModeGradients
-#ifndef USE_NATIVE_GRADIENTS
-           | QPaintEngine::LinearGradientFill
-#endif
-           | QPaintEngine::RadialGradientFill
-           | QPaintEngine::ConicalGradientFill);
+    f &= ~(QPaintEngine::PorterDuff | QPaintEngine::PerspectiveTransform);
     return f;
 }
 

@@ -80,8 +80,6 @@ public:
     inline const QChar *data() const;
     inline const QChar *constData() const;
 
-    inline void detach();
-    inline bool isDetached() const;
     void clear();
 
     inline const QChar at(int i) const;
@@ -473,6 +471,7 @@ private:
     static void freeData(Data *);
     void reallocData(int alloc);
     void expand(int i);
+    inline void detach();
     QString multiArg(int numArgs, const QString **args) const;
     static int compare_helper(const QChar *data1, int length1,
                               const QChar *data2, int length2,
@@ -490,9 +489,6 @@ private:
     friend class QStringRef;
     friend inline bool qStringComparisonHelper(const QString &s1, const char *s2);
     friend inline bool qStringComparisonHelper(const QStringRef &s1, const char *s2);
-public:
-    typedef Data * DataPtr;
-    inline DataPtr &data_ptr() { return d; }
 };
 
 
@@ -559,8 +555,6 @@ inline const QChar *QString::constData() const
 { return reinterpret_cast<const QChar*>(d->data); }
 inline void QString::detach()
 { if (d->ref != 1 || d->data != d->array) reallocData(d->size); }
-inline bool QString::isDetached() const
-{ return d->ref == 1; }
 inline QString &QString::operator=(const QLatin1String &s)
 {
     *this = fromLatin1(s.latin1());
@@ -856,7 +850,6 @@ Q_CORE_EXPORT QDataStream &operator>>(QDataStream &, QString &);
 
 
 Q_DECLARE_TYPEINFO(QString, Q_MOVABLE_TYPE);
-Q_DECLARE_SHARED(QString)
 Q_DECLARE_OPERATORS_FOR_FLAGS(QString::SectionFlags)
 
 

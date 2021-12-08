@@ -282,7 +282,7 @@ QTextDocumentFragment::QTextDocumentFragment(const QTextDocument *document)
     \sa isEmpty() QTextCursor::selection()
 */
 QTextDocumentFragment::QTextDocumentFragment(const QTextCursor &cursor)
-    : d(0)
+    : d(nullptr)
 {
     if (!cursor.hasSelection())
         return;
@@ -309,11 +309,7 @@ QTextDocumentFragment::QTextDocumentFragment(const QTextDocumentFragment &rhs)
 */
 QTextDocumentFragment &QTextDocumentFragment::operator=(const QTextDocumentFragment &rhs)
 {
-    if (rhs.d)
-        rhs.d->ref.ref();
-    if (d && !d->ref.deref())
-        delete d;
-    d = rhs.d;
+    qAtomicAssign(d, rhs.d);
     return *this;
 }
 

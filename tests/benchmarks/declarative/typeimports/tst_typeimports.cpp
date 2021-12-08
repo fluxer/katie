@@ -24,6 +24,8 @@
 #include <QDeclarativeComponent>
 #include <QDebug>
 
+#include "../../../shared/util.h"
+
 class tst_typeimports : public QObject
 {
     Q_OBJECT
@@ -86,15 +88,10 @@ tst_typeimports::tst_typeimports()
     qmlRegisterType<TestType4>("Qt.test", 2, 0, "TestType4");
 }
 
-inline QUrl TEST_FILE(const QString &filename)
-{
-    return QUrl::fromLocalFile(QLatin1String(SRCDIR) + QLatin1String("/data/") + filename);
-}
-
 void tst_typeimports::cpp()
 {
     QBENCHMARK {
-        QDeclarativeComponent component(&engine, TEST_FILE(QLatin1String("cpp.qml")));
+        QDeclarativeComponent component(&engine, TEST_FILE("cpp.qml"));
         QVERIFY(component.isReady());
     }
 }
@@ -102,10 +99,10 @@ void tst_typeimports::cpp()
 void tst_typeimports::qml()
 {
     //get rid of initialization effects
-    { QDeclarativeComponent component(&engine, TEST_FILE(QLatin1String("qml.qml"))); }
+    { QDeclarativeComponent component(&engine, TEST_FILE("qml.qml")); }
 
     QBENCHMARK {
-        QDeclarativeComponent component(&engine, TEST_FILE(QLatin1String("qml.qml")));
+        QDeclarativeComponent component(&engine, TEST_FILE("qml.qml"));
         QVERIFY(component.isReady());
     }
 }

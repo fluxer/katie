@@ -134,6 +134,7 @@
 #include "QtGui/qevent.h"
 #include "QtGui/qdesktopwidget.h"
 #include "QtGui/qlineedit.h"
+#include "qcore_unix_p.h"
 
 #include <limits.h>
 
@@ -824,14 +825,14 @@ void QCompleterPrivate::_q_complete(QModelIndex index, bool highlighted)
 #ifndef QT_NO_DIRMODEL
         // add a trailing separator in inline
         if (mode == QCompleter::InlineCompletion) {
-            if (qobject_cast<QDirModel *>(proxy->sourceModel()) && QFileInfo(completion).isDir())
+            if (qobject_cast<QDirModel *>(proxy->sourceModel()) && QStatInfo(completion).isDir())
                 completion += QDir::separator();
         }
 #endif
 #ifndef QT_NO_FILESYSTEMMODEL
         // add a trailing separator in inline
         if (mode == QCompleter::InlineCompletion) {
-            if (qobject_cast<QFileSystemModel *>(proxy->sourceModel()) && QFileInfo(completion).isDir())
+            if (qobject_cast<QFileSystemModel *>(proxy->sourceModel()) && QStatInfo(completion).isDir())
                 completion += QDir::separator();
         }
 #endif

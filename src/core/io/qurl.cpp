@@ -3633,22 +3633,6 @@ QUrl &QUrl::operator =(const QString &url)
 
 /*! \internal
 
-    Forces a detach.
-*/
-void QUrl::detach()
-{
-    if (!d) {
-        d = new QUrlPrivate;
-    } else {
-        // Public method, so it must lock first.
-        QMutexLocker lock(&d->mutex);
-        detach(lock);
-    }
-}
-
-
-/*! \internal
-
     Forces a detach. Unlocks \a locker once the detaching is done.
 
     It's ok to access private members afterwards, without lock, since
@@ -3671,15 +3655,6 @@ void QUrl::detach(QMutexLocker &locker)
     if (!x->ref.deref())
         delete x;
 }
-
-/*!
-    \internal
-*/
-bool QUrl::isDetached() const
-{
-    return !d || d->ref == 1;
-}
-
 
 /*!
     Returns a QUrl representation of \a localFile, interpreted as a local
@@ -3982,16 +3957,6 @@ QString QUrl::errorString() const
     QMutexLocker lock(&d->mutex);
     return d->createErrorString();
 }
-
-/*!
-    \typedef QUrl::DataPtr
-    \internal
-*/
-
-/*!
-    \fn DataPtr &QUrl::data_ptr()
-    \internal
-*/
 
 // The following code has the following copyright:
 /*

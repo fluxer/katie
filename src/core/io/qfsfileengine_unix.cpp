@@ -349,15 +349,18 @@ bool QFSFileEngine::setPermissions(uint perms)
 bool QFSFileEngine::setSize(qint64 size)
 {
     Q_D(QFSFileEngine);
-    bool ret = false;
-    if (d->fd != -1)
-        ret = QT_FTRUNCATE(d->fd, size) == 0;
-    else
-        ret = QT_TRUNCATE(d->fileEntry.nativeFilePath().constData(), size) == 0;
+    int ret = 0;
+    if (d->fd != -1) {
+        Q_EINTR_LOOP(ret, QT_FTRUNCATE(d->fd, size));
+    } else {
+        Q_EINTR_LOOP(ret, QT_TRUNCATE(d->fileEntry.nativeFilePath().constData(), size));
+    }
     d->metaData.clearFlags(QFileSystemMetaData::SizeAttribute);
-    if (!ret)
+    if (ret == -1) {
         setError(QFile::ResizeError, qt_error_string(errno));
-    return ret;
+        return false;
+    }
+    return true;
 }
 
 QDateTime QFSFileEngine::fileTime(FileTime time) const

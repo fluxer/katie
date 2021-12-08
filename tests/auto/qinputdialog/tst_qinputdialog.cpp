@@ -27,7 +27,7 @@
 #include <QLineEdit>
 #include <QComboBox>
 #include <QDialogButtonBox>
-#include <qinputdialog.h>
+#include <QInputDialog>
 
 //TESTED_CLASS=
 //TESTED_FILES=
@@ -77,7 +77,7 @@ QString normalizeNumericString(const QString &s)
 
 void _keyClick(QWidget *widget, char key)
 {
-    (widget, key);
+    QTest::keyClick(widget, key);
 }
 
 void _keyClick(QWidget *widget, Qt::Key key)

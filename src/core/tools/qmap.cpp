@@ -426,18 +426,6 @@ void QMapData::dump()
 
     Detaches this map from any other maps with which it may share
     data.
-
-    \sa isDetached()
-*/
-
-/*! \fn bool QMap::isDetached() const
-
-    \internal
-
-    Returns true if the map's internal data isn't shared with any
-    other map object; otherwise returns false.
-
-    \sa detach()
 */
 
 /*! \fn void QMap::setInsertInOrder(bool ordered)

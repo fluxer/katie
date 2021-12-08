@@ -57,7 +57,7 @@ QPixmap qt_toX11Pixmap(const QPixmap &pixmap)
     if (pixmap.isNull())
         return QPixmap();
 
-    if (pixmap.data_ptr()->classId() == QPixmapData::X11Class)
+    if (pixmap.data->classId() == QPixmapData::X11Class)
         return pixmap;
 
     return qt_toX11Pixmap(pixmap.toImage());
@@ -240,7 +240,7 @@ struct QX11AlphaDetector
             return has;
         // Will implicitly also check format and return quickly for opaque types...
         checked = true;
-        has = image->isNull() ? false : image->data_ptr()->checkForAlphaPixels();
+        has = image->isNull() ? false : image->d->checkForAlphaPixels();
         return has;
     }
 
@@ -813,7 +813,7 @@ QImage QX11PixmapData::takeQImageFromXImage(XImage *xi) const
 
     QImage image((uchar *)xi->data, xi->width, xi->height, xi->bytes_per_line, format);
     // take ownership
-    image.data_ptr()->own_data = true;
+    image.d->own_data = true;
     xi->data = 0;
 
     // we may have to swap the byte order
@@ -1534,7 +1534,7 @@ Qt::HANDLE QX11PixmapData::x11ConvertToDefaultDepth()
 void QX11PixmapData::copy(const QPixmapData *data, const QRect &rect)
 {
     if (data->pixelType() == BitmapType) {
-        fromImage(data->toImage().copy(rect), Qt::AutoColor);
+        fromImage(data->toImage(rect), Qt::AutoColor);
         return;
     }
 

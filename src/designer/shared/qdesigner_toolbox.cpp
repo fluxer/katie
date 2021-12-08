@@ -67,7 +67,7 @@ bool QToolBoxHelper::eventFilter(QObject *watched, QEvent *event)
         // Install on the buttons
         if (watched == m_toolbox) {
             QChildEvent *ce = static_cast<QChildEvent *>(event);
-            if (!qstrcmp(ce->child()->metaObject()->className(), "QToolBoxButton"))
+            if (qstrcmp(ce->child()->metaObject()->className(), "QToolBoxButton") == 0)
                 ce->child()->installEventFilter(this);
         }
         break;

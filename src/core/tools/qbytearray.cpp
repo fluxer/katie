@@ -903,11 +903,6 @@ QByteArray &QByteArray::operator=(const char *str)
     \internal
 */
 
-/*! \fn bool QByteArray::isDetached() const
-
-    \internal
-*/
-
 /*! \fn char QByteArray::at(int i) const
 
     Returns the character at index position \a i in the byte array.
@@ -3712,7 +3707,7 @@ QByteArray QByteArray::fromBase64(const QByteArray &base64)
 }
 
 /*!
-    Returns a decoded copy of the hex encoded array \a hexEncoded. Input is not checked
+    Returns a decoded copy of the hex encoded array \a hexEncoded. Input is checked
     for validity; invalid characters in the input are skipped, enabling the
     decoding process to continue with subsequent characters.
 
@@ -3725,31 +3720,39 @@ QByteArray QByteArray::fromBase64(const QByteArray &base64)
 QByteArray QByteArray::fromHex(const QByteArray &hexEncoded)
 {
     QByteArray res((hexEncoded.size() + 1)/ 2, Qt::Uninitialized);
-    uchar *result = (uchar *)res.d->data + res.size();
+    char *result = res.d->data + res.size();
 
-    bool odd_digit = true;
+    int invalidcount = 0;
+    bool oddhex = true;
     for (int i = hexEncoded.size() - 1; i >= 0; --i) {
         int ch = hexEncoded.at(i);
         int tmp;
-        if (ch >= '0' && ch <= '9')
-            tmp = ch - '0';
-        else if (ch >= 'a' && ch <= 'f')
-            tmp = ch - 'a' + 10;
-        else if (ch >= 'A' && ch <= 'F')
+        if (ch >= '0' && ch <= '9') {
+            tmp = (ch - '0');
+        } else if (ch >= 'a' && ch <= 'f') {
+            tmp = (ch - 'a' + 10);
+        } else if (ch >= 'A' && ch <= 'F') {
             tmp = ch - 'A' + 10;
-        else
+        } else {
+            invalidcount++;
             continue;
-        if (odd_digit) {
+        }
+
+        if (oddhex) {
             --result;
             *result = tmp;
-            odd_digit = false;
+            oddhex = false;
         } else {
-            *result |= tmp << 4;
-            odd_digit = true;
+            *result |= (tmp << 4);
+            oddhex = true;
         }
     }
 
-    res.remove(0, result - (const uchar *)res.constData());
+    if (Q_UNLIKELY(invalidcount > 0)) {
+        qWarning("QByteArray::fromHex: Invalid character in hex");
+        res.remove(0, invalidcount);
+    }
+
     return res;
 }
 
@@ -3762,20 +3765,15 @@ QByteArray QByteArray::fromHex(const QByteArray &hexEncoded)
 QByteArray QByteArray::toHex() const
 {
     QByteArray hex(d->size * 2, Qt::Uninitialized);
-    char *hexData = hex.d->data;
+    char *hexdata = hex.d->data;
     const uchar *data = (const uchar *)d->data;
+
+    static const char tohex[] = "0123456789abcdef";
     for (int i = 0; i < d->size; ++i) {
-        int j = (data[i] >> 4) & 0xf;
-        if (j <= 9)
-            hexData[i*2] = (j + '0');
-         else
-            hexData[i*2] = (j + 'a' - 10);
-        j = data[i] & 0xf;
-        if (j <= 9)
-            hexData[i*2+1] = (j + '0');
-         else
-            hexData[i*2+1] = (j + 'a' - 10);
+        *hexdata++ = tohex[(data[i] >> 4) & 0xf];
+        *hexdata++ = tohex[data[i] & 0xf];
     }
+
     return hex;
 }
 
@@ -4129,16 +4127,6 @@ QByteArray QByteArray::toPercentEncoding(const QByteArray &exclude, const QByteA
     \fn int QByteArray::findRev(const QString &s, int from = -1) const
 
     Use lastIndexOf() instead.
-*/
-
-/*!
-    \fn DataPtr &QByteArray::data_ptr()
-    \internal
-*/
-
-/*!
-    \typedef QByteArray::DataPtr
-    \internal
 */
 
 QT_END_NAMESPACE

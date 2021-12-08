@@ -1084,9 +1084,9 @@ Q_TEST_EXPORT void qtest_qParseArgs(int argc, char *argv[], bool qml)
         } else if (strcmp(argv[i], "-keyevent-verbose") == 0) {
             QTest::keyVerbose = 1;
         } else if (strcmp(argv[i], "-tickcounter") == 0) {
-            QBenchmarkGlobalData::current->setMode(QBenchmarkGlobalData::TickCounter);
+            QBenchmarkGlobalData::current->setMetric(QTest::QBenchmarkMetric::CPUTicks);
         } else if (strcmp(argv[i], "-eventcounter") == 0) {
-            QBenchmarkGlobalData::current->setMode(QBenchmarkGlobalData::EventCounter);
+            QBenchmarkGlobalData::current->setMetric(QTest::QBenchmarkMetric::Events);
         } else if (strcmp(argv[i], "-random") == 0) {
             QTest::randomOrder = true;
         } else if (strcmp(argv[i], "-seed") == 0) {
@@ -1359,7 +1359,7 @@ static bool qInvokeTestMethod(const char *slotName, const char *data=0)
 
             /* For each entry in the data table, do: */
             do {
-                if (!data || !qstrcmp(data, table.testData(curDataIndex)->dataTag())) {
+                if (!data || qstrcmp(data, table.testData(curDataIndex)->dataTag()) == 0) {
                     foundFunction = true;
                     QTestDataSetter s(curDataIndex >= dataCount ? static_cast<QTestData *>(0)
                                                       : table.testData(curDataIndex));

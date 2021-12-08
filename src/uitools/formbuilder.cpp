@@ -179,8 +179,8 @@ QWidget *QFormBuilder::createWidget(const QString &widgetName, QWidget *parentWi
         }
 
 #define DECLARE_LAYOUT(L, C)
-#define DECLARE_WIDGET(W, C) else if (!qstrcmp(widgetNameC, #W)) { Q_ASSERT(w == 0); w = new W(parentWidget); }
-#define DECLARE_WIDGET_1(W, C) else if (!qstrcmp(widgetNameC, #W)) { Q_ASSERT(w == 0); w = new W(0, parentWidget); }
+#define DECLARE_WIDGET(W, C) else if (qstrcmp(widgetNameC, #W) == 0) { Q_ASSERT(w == 0); w = new W(parentWidget); }
+#define DECLARE_WIDGET_1(W, C) else if (qstrcmp(widgetNameC, #W) == 0) { Q_ASSERT(w == 0); w = new W(0, parentWidget); }
 
 #include "widgets.table"
 
@@ -509,9 +509,6 @@ void QFormBuilder::applyProperties(QObject *o, const QList<DomProperty*> &proper
             // apply only the size part of a geometry for the root widget
             static_cast<QWidget*>(o)->resize(qvariant_cast<QRect>(v).size());
         } else if (fb->applyPropertyInternally(o, attributeName, v)) {
-        } else if (isWidget && !qstrcmp("QFrame", o->metaObject()->className ()) && attributeName == strings.orientationProperty) {
-            // ### special-casing for Line (QFrame) -- try to fix me
-            o->setProperty("frameShape", v); // v is of QFrame::Shape enum
         } else {
             o->setProperty(attributeName.toUtf8(), v);
         }

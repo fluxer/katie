@@ -65,25 +65,17 @@ class Q_GUI_EXPORT QPaintEngine
     Q_DECLARE_PRIVATE(QPaintEngine)
 public:
     enum PaintEngineFeature {
-        PrimitiveTransform          = 0x00000001, // Can transform primitives brushes
-        PatternTransform            = 0x00000002, // Can transform pattern brushes
-        PixmapTransform             = 0x00000004, // Can transform pixmaps
-        PatternBrush                = 0x00000008, // Can fill with pixmaps and standard patterns
-        LinearGradientFill          = 0x00000010, // Can fill gradient areas
-        RadialGradientFill          = 0x00000020, // Can render radial gradients
-        ConicalGradientFill         = 0x00000040, // Can render conical gradients
-        AlphaBlend                  = 0x00000080, // Can do source over alpha blend
-        PorterDuff                  = 0x00000100, // Can do general porter duff compositions
-        PainterPaths                = 0x00000200, // Can fill, outline and clip paths
-        Antialiasing                = 0x00000400, // Can antialias lines
-        BrushStroke                 = 0x00000800, // Can render brush based pens
-        ConstantOpacity             = 0x00001000, // Can render at constant opacity
-        MaskedBrush                 = 0x00002000, // Can fill with textures that has an alpha channel or mask
-        PerspectiveTransform        = 0x00004000, // Can do perspective transformations
-        BlendModes                  = 0x00008000, // Can do extended Porter&Duff composition
-        ObjectBoundingModeGradients = 0x00010000, // Can do object bounding mode gradients
-        RasterOpModes               = 0x00020000, // Can do logical raster operations
-        PaintOutsidePaintEvent      = 0x20000000, // Engine is capable of painting outside paint events
+        PatternTransform            = 0x00000001, // Can transform pattern brushes
+        PixmapTransform             = 0x00000002, // Can transform pixmaps
+        AlphaBlend                  = 0x00000004, // Can do source over alpha blend
+        PorterDuff                  = 0x00000008, // Can do general porter duff compositions
+        PainterPaths                = 0x00000010, // Can fill, outline and clip paths
+        Antialiasing                = 0x00000020, // Can antialias lines
+        ConstantOpacity             = 0x00000040, // Can render at constant opacity
+        PerspectiveTransform        = 0x00000080, // Can do perspective transformations
+        BlendModes                  = 0x00000100, // Can do extended Porter&Duff composition
+        RasterOpModes               = 0x00000200, // Can do logical raster operations
+        PaintOutsidePaintEvent      = 0x00000400, // Engine is capable of painting outside paint events
 
         AllFeatures                 = 0xffffffff  // For convenience
     };
@@ -157,8 +149,6 @@ public:
 
     void setSystemRect(const QRect &rect);
     QRect systemRect() const;
-
-    virtual QPoint coordinateOffset() const;
 
     enum Type {
         X11,

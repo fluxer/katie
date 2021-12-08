@@ -101,7 +101,7 @@ void QRasterPixmapData::fromImage(const QImage &sourceImage,
             if (!sourceImage.hasAlphaChannel()) {
                 format = opaqueFormat;
             } else if ((flags & Qt::NoOpaqueDetection) == 0
-                       && !sourceImage.data_ptr()->checkForAlphaPixels())
+                       && !sourceImage.d->checkForAlphaPixels())
             {
                 format = opaqueFormat;
             } else {
@@ -139,7 +139,7 @@ extern void qt_scrollRectInImage(QImage *img, const QRect &rect, const QPoint &o
 
 void QRasterPixmapData::copy(const QPixmapData *data, const QRect &rect)
 {
-    fromImage(data->toImage(rect).copy(), Qt::NoOpaqueDetection);
+    fromImage(data->toImage(rect), Qt::NoOpaqueDetection);
 }
 
 bool QRasterPixmapData::scroll(int dx, int dy, const QRect &rect)
@@ -208,7 +208,7 @@ bool QRasterPixmapData::hasAlphaChannel() const
 QImage QRasterPixmapData::toImage() const
 {
     if (!image.isNull()) {
-        const QImageData *data = image.data_ptr();
+        const QImageData *data = image.d;
         if (data->paintEngine && data->paintEngine->isActive()
             && data->paintEngine->paintDevice() == &image)
         {

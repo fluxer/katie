@@ -37,14 +37,13 @@ QT_BEGIN_NAMESPACE
 QBenchmarkGlobalData *QBenchmarkGlobalData::current;
 
 QBenchmarkGlobalData::QBenchmarkGlobalData()
-    : measurer(0)
+    : measurer(nullptr)
     , walltimeMinimum(-1)
     , iterationCount(-1)
     , medianIterationCount(1)
     , verboseOutput(false)
-    , mode_(WallTime)
 {
-    setMode(mode_);
+    setMetric(QTest::QBenchmarkMetric::WalltimeMilliseconds);
 }
 
 QBenchmarkGlobalData::~QBenchmarkGlobalData()
@@ -53,17 +52,15 @@ QBenchmarkGlobalData::~QBenchmarkGlobalData()
     QBenchmarkGlobalData::current = 0;
 }
 
-void QBenchmarkGlobalData::setMode(Mode mode)
+void QBenchmarkGlobalData::setMetric(QTest::QBenchmarkMetric metric)
 {
-    mode_ = mode;
-
     if (measurer)
         delete measurer;
 
-    if (mode_ == EventCounter) {
-        measurer = new QBenchmarkEvent;
-    } else if (mode_ == TickCounter) {
+    if (metric == QTest::QBenchmarkMetric::CPUTicks) {
         measurer = new QBenchmarkTickMeasurer;
+    } else if (metric == QTest::QBenchmarkMetric::Events) {
+        measurer = new QBenchmarkEvent;
     } else {
         measurer = new QBenchmarkTimeMeasurer;
     }

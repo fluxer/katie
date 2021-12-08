@@ -45,7 +45,7 @@ QT_BEGIN_NAMESPACE
 QSizeF qt_printerPaperSize(QPrinter::Orientation, QPrinter::PaperSize, QPrinter::Unit, int);
 
 // Disabled until we have support for papersources on unix
-// #define PSD_ENABLE_PAPERSOURCE
+// #define QT_PSD_ENABLE_PAPERSOURCE
 
 static void populatePaperSizes(QComboBox* cb)
 {
@@ -88,7 +88,7 @@ static QSizeF sizeForOrientation(QPrinter::Orientation orientation, const QSizeF
     return (orientation == QPrinter::Portrait) ? size : QSizeF(size.height(), size.width());
 }
 
-#ifdef PSD_ENABLE_PAPERSOURCE
+#ifdef QT_PSD_ENABLE_PAPERSOURCE
 static const char *paperSourceNames[] = {
     "Only One",
     "Lower",
@@ -113,7 +113,7 @@ struct PaperSourceNames
     QPrinter::PaperSource paperSource;
     const char *name;
 };
-#endif
+#endif // QT_PSD_ENABLE_PAPERSOURCE
 
 
 class QPagePreview : public QWidget
@@ -252,9 +252,9 @@ QPageSetupWidget::QPageSetupWidget(QWidget *parent)
 
     setAttribute(Qt::WA_WState_Polished, false);
 
-#ifdef PSD_ENABLE_PAPERSOURCE
+#ifdef QT_PSD_ENABLE_PAPERSOURCE
     for (int i=0; paperSourceNames[i]; ++i)
-        widget.paperSource->insertItem(paperSourceNames[i]);
+        widget.paperSource->addItem(paperSourceNames[i]);
 #else
     widget.paperSourceLabel->setVisible(false);
     widget.paperSource->setVisible(false);
@@ -298,8 +298,8 @@ void QPageSetupWidget::setPrinter(QPrinter *printer)
 
     widget.landscape->setChecked(printer->orientation() == QPrinter::Landscape);
 
-#ifdef PSD_ENABLE_PAPERSOURCE
-    widget.paperSource->setCurrentItem(printer->paperSource());
+#ifdef QT_PSD_ENABLE_PAPERSOURCE
+    widget.paperSource->setCurrentIndex(printer->paperSource());
 #endif
     Q_ASSERT(m_blockSignals);
     m_blockSignals = false;
@@ -344,7 +344,7 @@ void QPageSetupWidget::setupPrinter() const
     else
         m_printer->setPaperSize(static_cast<QPrinter::PaperSize>(ps));
 
-#ifdef PSD_ENABLE_PAPERSOURCE
+#ifdef QT_PSD_ENABLE_PAPERSOURCE
     m_printer->setPaperSource((QPrinter::PaperSource)widget.paperSource->currentIndex());
 #endif
     m_printer->setPageMargins(m_leftMargin, m_topMargin, m_rightMargin, m_bottomMargin, QPrinter::Point);

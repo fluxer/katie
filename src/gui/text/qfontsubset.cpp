@@ -229,7 +229,7 @@ static FT_Face ft_face(const QFontEngine *engine)
     return 0;
 }
 
-QByteArray QFontSubset::glyphName(unsigned int glyph, const QVector<int> reverseMap) const
+QByteArray QFontSubset::glyphName(unsigned int glyph, const QVector<int> &reverseMap) const
 {
     uint glyphIndex = glyph_indices[glyph];
 

@@ -718,6 +718,7 @@ bool QDeclarativeMetaType::isModule(const QByteArray &module, int versionMajor, 
         }
     }
 
+    QReadLocker lock(metaTypeDataLock());
     QDeclarativeMetaTypeData *data = metaTypeData();
     QDeclarativeMetaTypeData::ModuleInfoHash::Iterator it = data->modules.find(module);
     return it != data->modules.end()

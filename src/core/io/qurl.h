@@ -166,9 +166,6 @@ public:
 
     static QUrl fromUserInput(const QString &userInput);
 
-    void detach();
-    bool isDetached() const;
-
     bool operator <(const QUrl &url) const;
     bool operator ==(const QUrl &url) const;
     bool operator !=(const QUrl &url) const;
@@ -186,10 +183,8 @@ public:
 
 private:
     void detach(QMutexLocker &locker);
+
     QUrlPrivate *d;
-public:
-    typedef QUrlPrivate* DataPtr;
-    inline DataPtr &data_ptr() { return d; }
 };
 
 inline uint qHash(const QUrl &url)
@@ -198,7 +193,6 @@ inline uint qHash(const QUrl &url)
 }
 
 Q_DECLARE_TYPEINFO(QUrl, Q_MOVABLE_TYPE);
-Q_DECLARE_SHARED(QUrl)
 Q_DECLARE_OPERATORS_FOR_FLAGS(QUrl::FormattingOptions)
 
 #ifndef QT_NO_DATASTREAM

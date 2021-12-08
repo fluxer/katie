@@ -261,7 +261,8 @@ public:
         Key_Backslash                     = 0x005c,
         Key_BracketRight                  = 0x005d,
         Key_AsciiCircum                   = 0x005e,
-        Key_Underscore                    = 0x0060,
+        Key_Underscore                    = 0x005f,
+        Key_Grave                         = 0x0060,
         Key_BraceLeft                     = 0x007b,
         Key_Bar                           = 0x007c,
         Key_BraceRight                    = 0x007d,
@@ -554,9 +555,8 @@ public:
         Key_Control                       = 0xffffff9,
         Key_Meta                          = 0xffffffa,
         Key_Alt                           = 0xffffffb,
-        Key_Backtab                       = 0xffffffc,
-        Key_Direction_L                   = 0xffffffd,
-        Key_Direction_R                   = 0xffffffe,
+        Key_Direction_L                   = 0xffffffc,
+        Key_Direction_R                   = 0xffffffd,
 
         // compatibility
         Key_PageUp = Key_Page_Up,
@@ -589,7 +589,7 @@ public:
         Key_ooblique = Key_oslash,
         Key_Ooblique = Key_Oslash,
         Key_Thorn = Key_THORN,
-        Key_QuoteLeft = Key_Underscore,
+        Key_QuoteLeft = Key_Grave,
         Key_QuoteRight = Key_Apostrophe,
         Key_Eth = Key_ETH,
         Key_Henkan_Mode = Key_Henkan,
@@ -601,6 +601,7 @@ public:
         Key_Any = Key_Space,
         Key_Enter = 0xff8d,
         Key_AltGr = 0xfe03,
+        Key_Backtab = 0xfe20,
         Key_unknown = 0xffffff
     };
 

@@ -42,6 +42,8 @@
 #  include "../network-settings.h"
 #endif
 
+// #define TEST_LFS
+
 Q_DECLARE_METATYPE(QFile::FileError)
 
 //TESTED_CLASS=
@@ -108,7 +110,9 @@ private slots:
     void readTextFile2();
     void writeTextFile_data();
     void writeTextFile();
-    /* void largeFileSupport(); */
+#ifdef TEST_LFS
+    void largeFileSupport();
+#endif
     void tailFile();
     void flush();
     void bufferedRead();
@@ -1595,61 +1599,25 @@ void tst_QFile::FILEReadWrite()
 }
 
 
-/*
-#include <qglobal.h>
-#define BUFFSIZE 1
-#define FILESIZE   0x10000000f
+#ifdef TEST_LFS
 void tst_QFile::largeFileSupport()
 {
-#ifdef Q_OS_SOLARIS
-    QSKIP("Solaris does not support statfs", SkipAll);
-#else
-    qlonglong sizeNeeded = 2147483647;
-    sizeNeeded *= 2;
-    sizeNeeded += 1024;
-    qlonglong freespace = qlonglong(0);
-    struct statfs info;
-    if (statfs(const_cast<char *>(QDir::currentPath().toLocal8Bit().constData()), &info) == 0) {
-        freespace = qlonglong(info.f_bavail * info.f_bsize);
-        if (freespace > sizeNeeded) {
-            QFile bigFile("bigfile");
-            if (bigFile.open(QFile::ReadWrite)) {
-                char c[BUFFSIZE] = {'a'};
-                QVERIFY(bigFile.write(c, BUFFSIZE) == BUFFSIZE);
-                qlonglong oldPos = bigFile.pos();
-                QVERIFY(bigFile.resize(sizeNeeded));
-                QCOMPARE(oldPos, bigFile.pos());
-                QVERIFY(bigFile.seek(sizeNeeded - BUFFSIZE));
-                QVERIFY(bigFile.write(c, BUFFSIZE) == BUFFSIZE);
+    static const QString largefilesrc(QDir::currentPath() + "/largefilesrc.txt");
+    static const QString largefilerename(QDir::currentPath() + "/largefilerename.txt");
+    static const QString largefilecopy(QDir::currentPath() + "/largefilecopy.txt");
 
-                bigFile.close();
-                if (bigFile.open(QFile::ReadOnly)) {
-                    QVERIFY(bigFile.read(c, BUFFSIZE) == BUFFSIZE);
-                    int i = 0;
-                    for (i=0; i<BUFFSIZE; i++)
-                        QCOMPARE(c[i], 'a');
-                    QVERIFY(bigFile.seek(sizeNeeded - BUFFSIZE));
-                    QVERIFY(bigFile.read(c, BUFFSIZE) == BUFFSIZE);
-                    for (i=0; i<BUFFSIZE; i++)
-                        QCOMPARE(c[i], 'a');
-                    bigFile.close();
-                    QVERIFY(bigFile.remove());
-                } else {
-                    QVERIFY(bigFile.remove());
-                    QFAIL("Could not reopen file");
-                }
-            } else {
-                QFAIL("Could not open file");
-            }
-        } else {
-            QSKIP("Not enough space to run test", SkipSingle);
-        }
-    } else {
-        QFAIL("Could not determin disk space");
-    }
-#endif
+    QFile largefile(largefilesrc);
+    QVERIFY(largefile.open(QIODevice::Truncate | QIODevice::ReadWrite));
+    QVERIFY(largefile.write("foo"));
+    QVERIFY(largefile.resize(4000000000));
+    largefile.close();
+
+    QVERIFY(QFile::rename(largefilesrc, largefilerename));
+    QVERIFY(QFile::copy(largefilerename, largefilecopy));
+    QVERIFY(QFile::remove(largefilerename));
+    QVERIFY(QFile::remove(largefilecopy));
 }
-*/
+#endif // TEST_LFS
 
 void tst_QFile::i18nFileName_data()
 {

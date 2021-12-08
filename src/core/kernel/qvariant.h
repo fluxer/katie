@@ -209,7 +209,6 @@ class Q_CORE_EXPORT QVariant
     void clear();
 
     void detach();
-    inline bool isDetached() const { return !d.is_shared || d.data.shared->ref == 1; }
 
     int toInt(bool *ok = nullptr) const;
     uint toUInt(bool *ok = nullptr) const;
@@ -361,9 +360,6 @@ private:
 #endif
     // force compile error, prevent QVariant(QVariant::Type, int) to be called
     inline QVariant(bool, int) { Q_ASSERT(false); }
-public:
-    typedef Private DataPtr;
-    inline DataPtr &data_ptr() { return d; }
 };
 
 typedef QList<QVariant> QVariantList;
@@ -428,7 +424,6 @@ template<> inline QVariant qvariant_cast<QVariant>(const QVariant &v)
 }
 #endif // QT_MOC
 
-Q_DECLARE_SHARED(QVariant)
 Q_DECLARE_TYPEINFO(QVariant, Q_MOVABLE_TYPE);
 
 #ifndef QT_NO_DEBUG_STREAM

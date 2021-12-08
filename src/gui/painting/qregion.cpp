@@ -3420,8 +3420,10 @@ static QRegionPrivate *PolygonRegion(const QPoint *Pts, int Count, int rule)
         return region;
     }
 
-    if (!(pETEs = static_cast<EdgeTableEntry *>(malloc(sizeof(EdgeTableEntry) * Count))))
+    if (!(pETEs = static_cast<EdgeTableEntry *>(malloc(sizeof(EdgeTableEntry) * Count)))) {
+        delete region;
         return 0;
+    }
 
     region->vectorize();
 
@@ -3727,7 +3729,8 @@ void QRegion::cleanUp(QRegion::QRegionData *x)
     if (x->xrectangles)
         free(x->xrectangles);
 #endif
-    delete x;
+    if (x != &shared_empty)
+        delete x;
 }
 
 QRegion::~QRegion()
@@ -3739,6 +3742,8 @@ QRegion::~QRegion()
 
 QRegion &QRegion::operator=(const QRegion &r)
 {
+    if (d == r.d)
+        return *this;
     r.d->ref.ref();
     if (!d->ref.deref())
         cleanUp(d);

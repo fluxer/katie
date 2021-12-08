@@ -49,11 +49,7 @@ public:
     static QBitmap fromImage(const QImage &image, Qt::ImageConversionFlags flags = Qt::AutoColor);
     static QBitmap fromData(const QSize &size, const uchar *bits,
                             QImage::Format monoFormat = QImage::Format_MonoLSB);
-
-    typedef QExplicitlySharedDataPointer<QPixmapData> DataPtr;
 };
-Q_DECLARE_SHARED(QBitmap)
-
 
 QT_END_NAMESPACE
 

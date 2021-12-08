@@ -212,7 +212,7 @@ void AnchorData::refreshSizeHints(const QLayoutStyleInfo *styleInfo)
         if (anchorPrivate->hasSize) {
             // Anchor has user-defined size
             prefSizeHint = anchorPrivate->preferredSize;
-        } else {
+        } else if (styleInfo) {
             // Fetch size information from style
             const Qt::Orientation orient = Qt::Orientation(QGraphicsAnchorLayoutPrivate::edgeOrientation(from->m_edge) + 1);
             qreal s = styleInfo->defaultSpacing(orient);
@@ -228,6 +228,8 @@ void AnchorData::refreshSizeHints(const QLayoutStyleInfo *styleInfo)
                     s = 0;
             }
             prefSizeHint = s;
+        } else {
+            prefSizeHint = 0;
         }
     }
 

@@ -63,7 +63,7 @@ QT_BEGIN_NAMESPACE
 
 class Q_CORE_EXPORT QStatInfo {
 public:
-    QStatInfo(const QString &path, const bool listdir = true);
+    QStatInfo(const QString &path, const bool listdir = false);
     QStatInfo(const QStatInfo &other);
 
     QStatInfo& operator=(const QStatInfo &other);

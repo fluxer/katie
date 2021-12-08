@@ -1885,7 +1885,7 @@ QString QLocalePrivate::dateTimeToString(const QString &format, const QDate *dat
                 }
                 break;
 
-            case 't':
+            case 'Z':
                 used = true;
                 repeat = 1;
                 result.append(timeZone());

@@ -4,7 +4,7 @@ Maintainer: Ivailo Monev <xakepa10@gmail.com>
 Homepage: https://github.com/fluxer/katie
 Vcs-Git: git://github.com/fluxer/katie.git
 Vcs-browser: https://github.com/fluxer/katie
-Standards-Version: 4.11.0
+Standards-Version: 4.11.1
 Build-Depends: debhelper (>= 9~), libssl-dev, zlib1g-dev, libzstd-dev,
  libc6-dev, libjansson-dev, libpng-dev, libjpeg-dev, libtiff5-dev,
  libcups2-dev, libfreetype6-dev, libfontconfig1-dev, libpcre3-dev,

@@ -187,7 +187,6 @@ classlist = [
     "QDesignerWidgetDataBaseInterface",
     "QDesignerWidgetDataBaseItemInterface",
     "QDesignerWidgetFactoryInterface",
-    "QDesktopServices",
     "QDesktopWidget",
     "QDial",
     "QDialog",

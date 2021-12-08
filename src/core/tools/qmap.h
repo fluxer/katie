@@ -159,11 +159,9 @@ public:
     inline bool operator!=(const QMap<Key, T> &other) const { return !(*this == other); }
 
     inline int size() const { return d->size; }
-
     inline bool isEmpty() const { return d->size == 0; }
 
     inline void detach() { if (d->ref != 1) detach_helper(); }
-    inline bool isDetached() const { return d->ref == 1; }
     inline void setInsertInOrder(bool ordered) { d->insertInOrder = ordered; }
 
     void clear();

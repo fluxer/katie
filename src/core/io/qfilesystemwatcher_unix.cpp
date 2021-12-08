@@ -43,12 +43,12 @@ QStringList QFileSystemWatcherEngineUnix::addPaths(const QStringList &paths,
 {
     QStringList p = paths;
     foreach (const QString &path, p) {
-        QStatInfo fi(path);
+        QStatInfo fi(path, true);
         if (fi.isDir() || path.endsWith(QLatin1Char('/'))) {
             if (!directories->contains(path))
                 directories->append(path);
             if (!path.endsWith(QLatin1Char('/')))
-                fi = QStatInfo(path + QLatin1Char('/'));
+                fi = QStatInfo(path + QLatin1Char('/'), true);
             this->directories.insert(path, fi);
         } else {
             if (!files->contains(path))
@@ -107,9 +107,9 @@ void QFileSystemWatcherEngineUnix::timeout()
     while (dit.hasNext()) {
         QHash<QString, QStatInfo>::iterator x = dit.next();
         QString path = x.key();
-        QStatInfo fi(path);
+        QStatInfo fi(path, true);
         if (!path.endsWith(QLatin1Char('/')))
-            fi = QStatInfo(path + QLatin1Char('/'));
+            fi = QStatInfo(path + QLatin1Char('/'), true);
         if (!fi.dirEquals(x.value())) {
             if (!fi.exists()) {
                 dit.remove();

@@ -828,11 +828,6 @@ QString::QString(const QChar ch)
     \internal
 */
 
-/*! \fn bool QString::isDetached() const
-
-    \internal
-*/
-
 void QString::freeData(Data *d)
 {
     if (d != &shared_null && d != &shared_empty)
@@ -7305,18 +7300,6 @@ bool operator<(const QStringRef &s1,const QStringRef &s2)
     Constructs a string reference to the given \a string and assigns it to
     this string reference, returning the result.
 */
-
-/*!
-    \typedef QString::DataPtr
-    \internal
-*/
-
-/*!
-    \fn DataPtr & QString::data_ptr()
-    \internal
-*/
-
-
 
 /*!  Appends the string reference to \a string, and returns a new
 reference to the combined string data.

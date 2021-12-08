@@ -238,7 +238,6 @@ private slots:
     void convertByteArrayToBool_data() const;
     void toIntFromQString() const;
     void toIntFromDouble() const;
-    void task256984_setValue();
 
     void numericalConvert();
     void moreCustomTypes();
@@ -2889,21 +2888,6 @@ void tst_QVariant::toIntFromDouble() const
 
     QVERIFY( ok == true );
     QCOMPARE(result, 2147483630);
-}
-
-void tst_QVariant::task256984_setValue()
-{
-    QTransform t; //we just take a value so that we're sure that it will be shared
-    QVariant v1 = t;
-    QVERIFY( v1.isDetached() );
-    QVariant v2 = v1;
-    QVERIFY( !v1.isDetached() );
-    QVERIFY( !v2.isDetached() );
-
-    qVariantSetValue(v2, 3); //set an integer value
-
-    QVERIFY( v1.isDetached() );
-    QVERIFY( v2.isDetached() );
 }
 
 void tst_QVariant::numericalConvert()

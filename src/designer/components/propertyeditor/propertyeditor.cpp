@@ -778,7 +778,7 @@ void PropertyEditor::updatePropertySheet()
 
 static inline QLayout *layoutOfQLayoutWidget(QObject *o)
 {
-    if (o->isWidgetType() && !qstrcmp(o->metaObject()->className(), "QLayoutWidget"))
+    if (o->isWidgetType() && qstrcmp(o->metaObject()->className(), "QLayoutWidget") == 0)
         return static_cast<QWidget*>(o)->layout();
     return 0;
 }

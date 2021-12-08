@@ -108,7 +108,7 @@ double integerFromString(const char *buf, int size, int radix)
     }
     double result;
     if (j == i) {
-        if (!qstrcmp(buf, "Infinity"))
+        if (qstrcmp(buf, "Infinity") == 0)
             result = qInf();
         else
             result = qSNaN();

@@ -777,18 +777,6 @@ void QHashData::checkSanity()
 
     Detaches this hash from any other hashes with which it may share
     data.
-
-    \sa isDetached()
-*/
-
-/*! \fn bool QHash::isDetached() const
-
-    \internal
-
-    Returns true if the hash's internal data isn't shared with any
-    other hash object; otherwise returns false.
-
-    \sa detach()
 */
 
 /*! \fn void QHash::clear()

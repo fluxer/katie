@@ -160,6 +160,8 @@ QHttpThreadDelegate::~QHttpThreadDelegate()
     // and release the entry for this QHttpNetworkConnection
     if (connections && !cacheKey.isEmpty()) {
         connections->releaseEntry(cacheKey);
+        delete connections;
+        connections = nullptr;
     }
 }
 
@@ -202,6 +204,7 @@ void QHttpThreadDelegate::startRequestSynchronously()
     synchronousRequestLoop.exec();
 
     connections->releaseEntry(cacheKey);
+    delete connections;
     connections = nullptr;
 
 #ifdef QHTTPTHREADDELEGATE_DEBUG

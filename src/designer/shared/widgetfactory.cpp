@@ -266,7 +266,7 @@ QWidget*  WidgetFactory::createCustomWidget(const QString &className, QWidget *p
     const QByteArray classNameB = className.toUtf8();
     const char *classNameC = classNameB.constData();
 
-    if (qstrcmp(createdClassNameC, classNameC) && !rc->inherits(classNameC))
+    if (qstrcmp(createdClassNameC, classNameC) != 0 && !rc->inherits(classNameC))
         designerWarning(tr("A class name mismatch occurred when creating a widget using the custom widget factory registered for widgets of class %1."
                            " It returned a widget of class %2.").arg(className).arg(QString::fromUtf8(createdClassNameC)));
     return rc;
@@ -345,8 +345,8 @@ QWidget *WidgetFactory::createWidget(const QString &widgetName, QWidget *parentW
         }
 
 #define DECLARE_LAYOUT(L, C)
-#define DECLARE_WIDGET(W, C) else if (!qstrcmp(widgetNameC, #W)) { Q_ASSERT(w == 0); w = new W(parentWidget); }
-#define DECLARE_WIDGET_1(W, C) else if (!qstrcmp(widgetNameC, #W)) { Q_ASSERT(w == 0); w = new W(0, parentWidget); }
+#define DECLARE_WIDGET(W, C) else if (qstrcmp(widgetNameC, #W) == 0) { Q_ASSERT(w == 0); w = new W(parentWidget); }
+#define DECLARE_WIDGET_1(W, C) else if (qstrcmp(widgetNameC, #W) == 0) { Q_ASSERT(w == 0); w = new W(0, parentWidget); }
 
 #include "widgets.table"
 
