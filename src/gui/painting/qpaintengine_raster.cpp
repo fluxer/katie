@@ -847,6 +847,7 @@ void QRasterPaintEngine::drawTextItem(const QPointF &p, const QTextItem &textIte
 
     const QByteArray text(textItem.text().toUtf8());
     const QFont statefont(state->font());
+    const QPen statepen(state->pen());
 
     // TODO: implement text item flags
 
@@ -858,7 +859,8 @@ void QRasterPaintEngine::drawTextItem(const QPointF &p, const QTextItem &textIte
     cairo_push_group(d->m_cairo);
     QT_CHECK_RASTER_STATUS(d->m_cairo)
 
-    cairo_pattern_t* cairopattern = penPattern(state->pen());
+    Q_ASSERT_X(statepen.style() != Qt::NoPen, "QRasterPaintEngine::drawTextItem", "internal error");
+    cairo_pattern_t* cairopattern = penPattern(statepen);
     cairo_set_source(d->m_cairo, cairopattern);
     QT_CHECK_RASTER_STATUS(d->m_cairo)
 
