@@ -725,7 +725,7 @@ void tst_QPainter::compositionModes_data()
     QTest::addColumn<QSize>("size");
     QTest::addColumn<QColor>("color");
 
-    const int n = QPainter::RasterOp_SourceAndNotDestination;
+    const int n = QPainter::CompositionMode_Exclusion;
     for (int i = 0; i <= n; ++i) {
         QString title("%1:%2");
         QTest::newRow(qPrintable(title.arg(i).arg("10x10:opaque")))
@@ -753,8 +753,7 @@ void tst_QPainter::compositionModes()
     src.fill(color);
 
     QPixmap dest = rasterPixmap(size);
-    if (mode < QPainter::RasterOp_SourceOrDestination)
-        color.setAlpha(127); // porter-duff needs an alpha channel
+    color.setAlpha(127); // porter-duff needs an alpha channel
     dest.fill(color);
 
     QPainter p(&dest);
