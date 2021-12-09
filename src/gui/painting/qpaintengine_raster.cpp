@@ -810,7 +810,7 @@ void QRasterPaintEngine::drawTextItem(const QPointF &p, const QTextItem &textIte
     const QByteArray text(textItem.text().toUtf8());
     const QFont statefont(state->font());
 
-    // TODO: implement text item flags and extents
+    // TODO: implement text item flags
 
     updateFont(textItem.font());
 
@@ -820,14 +820,11 @@ void QRasterPaintEngine::drawTextItem(const QPointF &p, const QTextItem &textIte
     cairo_push_group(d->m_cairo);
     QT_CHECK_RASTER_STATUS(d->m_cairo)
 
-    cairo_text_path(d->m_cairo, text.constData());
-    QT_CHECK_RASTER_STATUS(d->m_cairo)
-
     cairo_pattern_t* cairopattern = penPattern(state->pen());
     cairo_set_source(d->m_cairo, cairopattern);
     QT_CHECK_RASTER_STATUS(d->m_cairo)
 
-    cairo_fill_preserve(d->m_cairo);
+    cairo_show_text(d->m_cairo, text.constData());
     QT_CHECK_RASTER_STATUS(d->m_cairo)
 
     cairo_pop_group_to_source(d->m_cairo);
