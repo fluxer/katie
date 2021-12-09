@@ -83,7 +83,6 @@ public:
 
     cairo_t* m_cairo;
     cairo_surface_t* m_cairosurface;
-    cairo_format_t m_cairoformat;
     cairo_filter_t m_cairofilter;
 };
 

@@ -159,8 +159,7 @@ static cairo_status_t qt_cairo_write(void *closure, const unsigned char *data, u
 
 QRasterPaintEnginePrivate::QRasterPaintEnginePrivate()
     : m_cairo(nullptr),
-    m_cairosurface(nullptr),
-    m_cairoformat(CAIRO_FORMAT_ARGB32)
+    m_cairosurface(nullptr)
 {
 #if 0
     QT_DUMP_BRUSH_BITS(Qt::Dense1Pattern)
@@ -224,28 +223,33 @@ bool QRasterPaintEngine::begin(QPaintDevice *pdev)
         case QInternal::Image: {
             const QImage* image = reinterpret_cast<QImage*>(pdev);
             const QSize imagesize(image->size());
+            cairo_format_t cairoformat = CAIRO_FORMAT_ARGB32;
             switch (image->format()) {
                 case QImage::Format_RGB16: {
-                    d->m_cairoformat = CAIRO_FORMAT_RGB16_565;
+                    cairoformat = CAIRO_FORMAT_RGB16_565;
                     break;
                 }
                 case QImage::Format_RGB32: {
-                    d->m_cairoformat = CAIRO_FORMAT_RGB24;
+                    cairoformat = CAIRO_FORMAT_RGB24;
                     break;
                 }
                 default: {
-                    d->m_cairoformat = CAIRO_FORMAT_ARGB32;
+                    cairoformat = CAIRO_FORMAT_ARGB32;
                     break;
                 }
             }
-            d->m_cairosurface = cairo_image_surface_create(d->m_cairoformat, imagesize.width(), imagesize.height());
+            d->m_cairosurface = cairo_image_surface_create(
+                cairoformat, imagesize.width(), imagesize.height()
+            );
             break;
         }
         case QInternal::Pixmap: {
-            d->m_cairoformat = CAIRO_FORMAT_ARGB32;
             const QPixmap* pixmap = reinterpret_cast<QPixmap*>(pdev);
             const QSize pixmapsize(pixmap->size());
-            d->m_cairosurface = cairo_image_surface_create(d->m_cairoformat, pixmapsize.width(), pixmapsize.height());
+            d->m_cairosurface = cairo_image_surface_create(
+                CAIRO_FORMAT_ARGB32,
+                pixmapsize.width(), pixmapsize.height()
+            );
             break;
         }
         default: {
@@ -259,14 +263,14 @@ bool QRasterPaintEngine::begin(QPaintDevice *pdev)
     }
 
     if (Q_UNLIKELY(!d->m_cairosurface || !d->m_cairo)) {
-        qWarning() << Q_FUNC_INFO << "Could not create surface or context";
+        qWarning("QRasterPaintEngine: Could not create surface or context");
         return false;
     }
 
-    const cairo_format_t cairoformat = cairo_image_surface_get_format(d->m_cairosurface);
-    if (Q_UNLIKELY(cairoformat != d->m_cairoformat)) {
+    const cairo_status_t cairostatus = cairo_status(d->m_cairo);
+    if (Q_UNLIKELY(cairostatus != CAIRO_STATUS_SUCCESS)) {
         // happens with big images
-        qWarning() << Q_FUNC_INFO << "Surface format is not the one it should be" << d->m_cairoformat;
+        qWarning("QRasterPaintEngine: Surface format is not the one it should be");
         return false;
     }
 
@@ -937,12 +941,12 @@ cairo_pattern_t* QRasterPaintEngine::imagePattern(const QImage &image, Qt::Image
 #endif
 
     if (Q_UNLIKELY(!imagesurface)) {
-        qWarning() << Q_FUNC_INFO << "Could not create image surface";
+        qWarning("QRasterPaintEngine: Could not create image surface");
         return nullptr;
     }
     const cairo_format_t surfaceformat = cairo_image_surface_get_format(imagesurface);
     if (Q_UNLIKELY(surfaceformat != cairoformat)) {
-        qWarning() << Q_FUNC_INFO << "Image surface format is not the one it should be" << cairoformat;
+        qWarning("QRasterPaintEngine: Image surface format is not %d", cairoformat);
         return nullptr;
     }
 
@@ -1087,7 +1091,7 @@ cairo_pattern_t* QRasterPaintEngine::brushPattern(const QBrush &brush)
         }
         case Qt::ConicalGradientPattern: {
             // TODO: implement
-            qWarning() << Q_FUNC_INFO << "Brush pattern not implemented" << brush.style();
+            qWarning("QRasterPaintEngine: Conical gradient brush pattern is not implemented");
             break;
         }
         case Qt::TexturePattern: {
