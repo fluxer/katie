@@ -820,12 +820,18 @@ void QRasterPaintEngine::drawImage(const QRectF &r, const QImage &image, const Q
         QT_CHECK_RASTER_STATUS(d->m_cairo)
     }
 
+    cairo_push_group(d->m_cairo);
+    QT_CHECK_RASTER_STATUS(d->m_cairo)
     cairo_set_source(d->m_cairo, cairopattern);
     QT_CHECK_RASTER_STATUS(d->m_cairo)
 #ifdef QT_RASTER_DEBUG
     const QByteArray surfaceout = QByteArray("/tmp/surface-") + QByteArray::number(sourceimage.cacheKey()) + ".png";
     cairo_surface_write_to_png(d->m_cairosurface, surfaceout.constData());
 #endif
+    QT_CHECK_RASTER_STATUS(d->m_cairo)
+    cairo_paint_with_alpha(d->m_cairo, state->opacity());
+    cairo_pop_group_to_source(d->m_cairo);
+    QT_CHECK_RASTER_STATUS(d->m_cairo)
     cairo_paint_with_alpha(d->m_cairo, state->opacity());
     QT_CHECK_RASTER_STATUS(d->m_cairo)
     cairo_pattern_destroy(cairopattern);
