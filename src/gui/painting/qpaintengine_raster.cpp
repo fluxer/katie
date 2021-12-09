@@ -425,8 +425,7 @@ void QRasterPaintEngine::updateState(const QPaintEngineState &state)
     }
 
     if (stateflags & QPaintEngine::DirtyCompositionMode) {
-        const QPainter::CompositionMode statecomposition(state.compositionMode());
-        switch (statecomposition) {
+        switch (state.compositionMode()) {
             case QPainter::CompositionMode_SourceOver: {
                 cairo_set_operator(d->m_cairo, CAIRO_OPERATOR_OVER);
                 break;
@@ -536,15 +535,16 @@ void QRasterPaintEngine::updateState(const QPaintEngineState &state)
     }
 
     if (stateflags & QPaintEngine::DirtyClipPath) {
-        const QPainterPath statepath(state.clipPath());
-
         switch (state.clipOperation()) {
             case Qt::NoClip: {
                 cairo_reset_clip(d->m_cairo);
                 QT_CHECK_RASTER_STATUS(d->m_cairo)
                 break;
             }
+            // the clip can grow only if reset
             default: {
+                const QPainterPath statepath(state.clipPath());
+
                 cairo_reset_clip(d->m_cairo);
                 QT_CHECK_RASTER_STATUS(d->m_cairo)
                 const QRectF pathrect(statepath.boundingRect());
@@ -558,16 +558,15 @@ void QRasterPaintEngine::updateState(const QPaintEngineState &state)
             }
         }
     } else if (stateflags & QPaintEngine::DirtyClipRegion) {
-        const QRegion stateregion(state.clipRegion());
-
         switch (state.clipOperation()) {
             case Qt::NoClip: {
                 cairo_reset_clip(d->m_cairo);
                 QT_CHECK_RASTER_STATUS(d->m_cairo)
                 break;
             }
-            // the clip can grow only if reset
             default: {
+                const QRegion stateregion(state.clipRegion());
+
                 cairo_reset_clip(d->m_cairo);
                 QT_CHECK_RASTER_STATUS(d->m_cairo)
                 if (!stateregion.isEmpty()) {
