@@ -796,7 +796,7 @@ void QRasterPaintEngine::drawImage(const QRectF &r, const QImage &image, const Q
     // qDebug() << Q_FUNC_INFO << r << image.cacheKey() << sr << flags;
 
     QImage sourceimage(image.copy(sr.toRect()));
-    cairo_pattern_t* cairopattern = imagePattern(sourceimage);
+    cairo_pattern_t* cairopattern = imagePattern(sourceimage, flags);
 
     if (!r.isEmpty()) {
 #ifdef QT_RASTER_EXPERIMENTAL
