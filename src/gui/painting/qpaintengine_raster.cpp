@@ -864,7 +864,6 @@ void QRasterPaintEngine::drawTextItem(const QPointF &p, const QTextItem &textIte
     cairo_paint_with_alpha(d->m_cairo, state->opacity());
     QT_CHECK_RASTER_STATUS(d->m_cairo)
 
-    QT_CHECK_RASTER_STATUS(d->m_cairo)
     cairo_pattern_destroy(cairopattern);
 
     updateFont(statefont);
@@ -1117,8 +1116,8 @@ cairo_pattern_t* QRasterPaintEngine::brushPattern(const QBrush &brush)
             break;
         }
         case Qt::ConicalGradientPattern: {
-            // TODO: implement
-            qWarning("QRasterPaintEngine: Conical gradient brush pattern is not implemented");
+            // TODO: drop support for conical gradient entirely
+            qWarning("QRasterPaintEngine: Conical gradient brush pattern is not supported");
             break;
         }
         case Qt::TexturePattern: {
