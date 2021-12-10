@@ -31,7 +31,6 @@
 QT_BEGIN_NAMESPACE
 
 // #define QT_RASTER_DEBUG
-// #define QT_RASTER_EXPERIMENTAL
 #define QT_RASTER_STATUS
 
 extern QImage qt_imageForBrush(int brushStyle); // in qbrush.cpp
@@ -101,7 +100,7 @@ static QImage qt_colorizeBitmap(const QImage &image, const QColor &color)
     }
 
     QImage sourceImage = image.convertToFormat(QImage::Format_MonoLSB);
-    QImage dest = QImage(sourceImage.size(), QImage::Format_ARGB32_Premultiplied);
+    QImage dest(sourceImage.size(), QImage::Format_ARGB32_Premultiplied);
 
     QRgb fg = PREMUL(color.rgba());
     QRgb bg = 0;
@@ -121,7 +120,8 @@ static QImage qt_colorizeBitmap(const QImage &image, const QColor &color)
 
 QRasterPaintEnginePrivate::QRasterPaintEnginePrivate()
     : m_cairo(nullptr),
-    m_cairosurface(nullptr)
+    m_cairosurface(nullptr),
+    m_cairobackground(nullptr)
 {
 #if 0
     QT_DUMP_BRUSH_BITS(Qt::Dense1Pattern)
@@ -236,6 +236,10 @@ bool QRasterPaintEngine::begin(QPaintDevice *pdev)
         return false;
     }
 
+    d->m_cairobackground = cairo_pattern_create_rgba(0.0, 0.0, 0.0, 0.0);
+    pushPattern(d->m_cairobackground);
+    setDirty(QPaintEngine::DirtyBackground);
+
     return true;
 }
 
@@ -250,8 +254,7 @@ bool QRasterPaintEngine::end()
         return true;
     }
 
-    cairo_paint_with_alpha(d->m_cairo, state->opacity());
-    QT_CHECK_RASTER_STATUS(d->m_cairo)
+    popPattern(d->m_cairobackground);
 
     bool result = false;
     const QPaintDevice* paintdevice(paintDevice());
@@ -415,6 +418,28 @@ void QRasterPaintEngine::updateState(const QPaintEngineState &state)
         cairo_font_options_destroy(cairooptions);
 
         // QPainter::NonCosmeticDefaultPen handled internally by QPainterPrivate::updateState()
+    }
+
+    if (stateflags & QPaintEngine::DirtyBackground || stateflags & QPaintEngine::DirtyBackgroundMode) {
+        const QColor statecolor(state.backgroundBrush().color());
+        popPattern(d->m_cairobackground);
+        switch (state.backgroundMode()) {
+            case Qt::TransparentMode: {
+                d->m_cairobackground = cairo_pattern_create_rgba(
+                    statecolor.redF(), statecolor.greenF(), statecolor.blueF(),
+                    0.0
+                );
+                break;
+            }
+            case Qt::OpaqueMode: {
+                d->m_cairobackground = cairo_pattern_create_rgba(
+                    statecolor.redF(), statecolor.greenF(), statecolor.blueF(),
+                    1.0
+                );
+                break;
+            }
+        }
+        pushPattern(d->m_cairobackground);
     }
 
     if (stateflags & QPaintEngine::DirtyCompositionMode) {
@@ -761,25 +786,7 @@ void QRasterPaintEngine::drawImage(const QRectF &r, const QImage &image, const Q
     cairo_pattern_t* cairopattern = imagePattern(sourceimage, flags);
 
     if (!r.isEmpty()) {
-#ifdef QT_RASTER_EXPERIMENTAL
-        const QSizeF imagesize(sourceimage.size());
-        QSizeF scaled(imagesize);
-        scaled.scale(r.size(), Qt::IgnoreAspectRatio);
-        // qDebug() << Q_FUNC_INFO << image.cacheKey() << r.size() << scaled;
-
-        cairo_matrix_t cairomatrix;
-        cairo_pattern_get_matrix(cairopattern, &cairomatrix);
-        cairo_matrix_scale(&cairomatrix,
-            scaled.height() / imagesize.height(),
-            scaled.width() / imagesize.width()
-        );
-        cairo_pattern_set_matrix(cairopattern, &cairomatrix);
-#else
-        sourceimage = sourceimage.scaled(r.size().toSize(), Qt::IgnoreAspectRatio);
-#endif
-
-        cairo_move_to(d->m_cairo, r.x(), r.y());
-        QT_CHECK_RASTER_STATUS(d->m_cairo)
+        cairo_rectangle(d->m_cairo, r.x(), r.y(), r.width(), r.height());
     }
 
     pushPattern(cairopattern);
