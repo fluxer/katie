@@ -877,7 +877,7 @@ void QPainterPrivate::updateState(QPainterState *newState)
 
     \list
 
-    \o Simple transformations, meaning translation and scaling, pluss
+    \o Simple transformations, meaning translation and scaling, plus
     0, 90, 180, 270 degree rotations.
 
     \o \c drawPixmap() in combination with simple transformations and
@@ -4076,60 +4076,10 @@ void QPainter::drawPixmap(const QPointF &p, const QPixmap &pm)
            p.x(), p.y(), pm.width(), pm.height());
 #endif
 
-    Q_D(QPainter);
+    const int w = pm.width();
+    const int h = pm.height();
 
-    if (!d->engine || pm.isNull())
-        return;
-
-#ifndef QT_NO_DEBUG
-    qt_painter_thread_test(d->device->devType(), "drawPixmap()", true);
-#endif
-
-    qreal x = p.x();
-    qreal y = p.y();
-
-    int w = pm.width();
-    int h = pm.height();
-
-    if (w <= 0)
-        return;
-
-    // Emulate opaque background for bitmaps
-    if (d->state->bgMode == Qt::OpaqueMode && pm.isQBitmap()) {
-        fillRect(QRectF(x, y, w, h), d->state->bgBrush.color());
-    }
-
-    d->updateState(d->state);
-
-    if ((d->state->matrix.type() > QTransform::TxTranslate
-         && !d->engine->hasFeature(QPaintEngine::PixmapTransform))
-        || (!d->state->matrix.isAffine() && !d->engine->hasFeature(QPaintEngine::PerspectiveTransform))
-        || (d->state->opacity != 1.0 && !d->engine->hasFeature(QPaintEngine::ConstantOpacity)))
-    {
-        save();
-        // If there is no rotation involved we have to make sure we use the
-        // antialiased and not the aliased coordinate system by rounding the coordinates.
-        if (d->state->matrix.type() <= QTransform::TxScale) {
-            const QPointF p = roundInDeviceCoordinates(QPointF(x, y), d->state->matrix);
-            x = p.x();
-            y = p.y();
-        }
-        translate(x, y);
-        setBackgroundMode(Qt::TransparentMode);
-        QBrush brush(d->state->pen.color(), pm);
-        setBrush(brush);
-        setPen(Qt::NoPen);
-        setBrushOrigin(QPointF(0, 0));
-
-        drawRect(pm.rect());
-        restore();
-    } else {
-        if (!d->engine->hasFeature(QPaintEngine::PixmapTransform)) {
-            x += d->state->matrix.dx();
-            y += d->state->matrix.dy();
-        }
-        d->engine->drawPixmap(QRectF(x, y, w, h), pm, QRectF(0, 0, w, h));
-    }
+    drawPixmap(QRectF(p.x(), p.y(), w, h), pm, QRectF(0, 0, w, h));
 }
 
 void QPainter::drawPixmap(const QRectF &r, const QPixmap &pm, const QRectF &sr)
@@ -4359,51 +4309,15 @@ void QPainter::drawPixmap(const QRectF &r, const QPixmap &pm, const QRectF &sr)
 
 void QPainter::drawImage(const QPointF &p, const QImage &image)
 {
-    Q_D(QPainter);
+#if defined QT_DEBUG_DRAW
+    printf("QPainter::drawImage(), p=[%.2f,%.2f], img=[%d,%d]\n",
+           p.x(), p.y(), image.width(), image.height());
+#endif
 
-    if (!d->engine || image.isNull())
-        return;
+    const int w = image.width();
+    const int h = image.height();
 
-    qreal x = p.x();
-    qreal y = p.y();
-
-    int w = image.width();
-    int h = image.height();
-
-    d->updateState(d->state);
-
-    if (((d->state->matrix.type() > QTransform::TxTranslate)
-         && !d->engine->hasFeature(QPaintEngine::PixmapTransform))
-        || (!d->state->matrix.isAffine() && !d->engine->hasFeature(QPaintEngine::PerspectiveTransform))
-        || (d->state->opacity != 1.0 && !d->engine->hasFeature(QPaintEngine::ConstantOpacity)))
-    {
-        save();
-        // If there is no rotation involved we have to make sure we use the
-        // antialiased and not the aliased coordinate system by rounding the coordinates.
-        if (d->state->matrix.type() <= QTransform::TxScale) {
-            const QPointF p = roundInDeviceCoordinates(QPointF(x, y), d->state->matrix);
-            x = p.x();
-            y = p.y();
-        }
-        translate(x, y);
-        setBackgroundMode(Qt::TransparentMode);
-        QBrush brush(image);
-        setBrush(brush);
-        setPen(Qt::NoPen);
-        setBrushOrigin(QPointF(0, 0));
-
-        drawRect(image.rect());
-        restore();
-        return;
-    }
-
-    if (d->state->matrix.type() == QTransform::TxTranslate
-        && !d->engine->hasFeature(QPaintEngine::PixmapTransform)) {
-        x += d->state->matrix.dx();
-        y += d->state->matrix.dy();
-    }
-
-    d->engine->drawImage(QRectF(x, y, w, h), image, QRectF(0, 0, w, h), Qt::AutoColor);
+    drawImage(QRectF(p.x(), p.y(), w, h), image, QRectF(0, 0, w, h), Qt::AutoColor);
 }
 
 void QPainter::drawImage(const QRectF &targetRect, const QImage &image, const QRectF &sourceRect,
