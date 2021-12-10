@@ -70,6 +70,8 @@ private:
     cairo_pattern_t* imagePattern(const QImage &image, Qt::ImageConversionFlags flags = Qt::AutoColor);
     cairo_pattern_t* penPattern(const QPen &pen);
     cairo_pattern_t* brushPattern(const QBrush &brush);
+    void pushPattern(cairo_pattern_t* cairopattern);
+    void popPattern(cairo_pattern_t* cairopattern);
 
     Q_DISABLE_COPY(QRasterPaintEngine)
 };

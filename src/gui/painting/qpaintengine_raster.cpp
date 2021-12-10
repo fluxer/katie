@@ -820,10 +820,8 @@ void QRasterPaintEngine::drawImage(const QRectF &r, const QImage &image, const Q
         QT_CHECK_RASTER_STATUS(d->m_cairo)
     }
 
-    cairo_push_group(d->m_cairo);
-    QT_CHECK_RASTER_STATUS(d->m_cairo)
-    cairo_set_source(d->m_cairo, cairopattern);
-    QT_CHECK_RASTER_STATUS(d->m_cairo)
+    pushPattern(cairopattern);
+
 #ifdef QT_RASTER_DEBUG
     const QByteArray surfaceout = QByteArray("/tmp/surface-") + QByteArray::number(sourceimage.cacheKey()) + ".png";
     cairo_surface_write_to_png(d->m_cairosurface, surfaceout.constData());
@@ -831,12 +829,7 @@ void QRasterPaintEngine::drawImage(const QRectF &r, const QImage &image, const Q
     cairo_paint_with_alpha(d->m_cairo, state->opacity());
     QT_CHECK_RASTER_STATUS(d->m_cairo)
 
-    cairo_pop_group_to_source(d->m_cairo);
-    QT_CHECK_RASTER_STATUS(d->m_cairo)
-    cairo_paint_with_alpha(d->m_cairo, state->opacity());
-    QT_CHECK_RASTER_STATUS(d->m_cairo)
-
-    cairo_pattern_destroy(cairopattern);
+    popPattern(cairopattern);
 }
 
 void QRasterPaintEngine::drawTextItem(const QPointF &p, const QTextItem &textItem)
@@ -856,24 +849,15 @@ void QRasterPaintEngine::drawTextItem(const QPointF &p, const QTextItem &textIte
     cairo_move_to(d->m_cairo, p.x(), p.y());
     QT_CHECK_RASTER_STATUS(d->m_cairo)
 
-    cairo_push_group(d->m_cairo);
-    QT_CHECK_RASTER_STATUS(d->m_cairo)
-
     Q_ASSERT_X(statepen.style() != Qt::NoPen, "QRasterPaintEngine::drawTextItem", "internal error");
     cairo_pattern_t* cairopattern = penPattern(statepen);
-    cairo_set_source(d->m_cairo, cairopattern);
-    QT_CHECK_RASTER_STATUS(d->m_cairo)
+
+    pushPattern(cairopattern);
 
     cairo_show_text(d->m_cairo, text.constData());
     QT_CHECK_RASTER_STATUS(d->m_cairo)
 
-    cairo_pop_group_to_source(d->m_cairo);
-    QT_CHECK_RASTER_STATUS(d->m_cairo)
-
-    cairo_paint_with_alpha(d->m_cairo, state->opacity());
-    QT_CHECK_RASTER_STATUS(d->m_cairo)
-
-    cairo_pattern_destroy(cairopattern);
+    popPattern(cairopattern);
 
     updateFont(statefont);
 }
@@ -1150,6 +1134,31 @@ cairo_pattern_t* QRasterPaintEngine::brushPattern(const QBrush &brush)
     }
 
     return cairopattern;
+}
+
+void QRasterPaintEngine::pushPattern(cairo_pattern_t* cairopattern)
+{
+    Q_D(QRasterPaintEngine);
+
+    // qDebug() << Q_FUNC_INFO << cairopattern;
+
+    cairo_push_group(d->m_cairo);
+    QT_CHECK_RASTER_STATUS(d->m_cairo)
+    cairo_set_source(d->m_cairo, cairopattern);
+    QT_CHECK_RASTER_STATUS(d->m_cairo)
+}
+
+void QRasterPaintEngine::popPattern(cairo_pattern_t* cairopattern)
+{
+    Q_D(QRasterPaintEngine);
+
+    // qDebug() << Q_FUNC_INFO << cairopattern;
+
+    cairo_pop_group_to_source(d->m_cairo);
+    QT_CHECK_RASTER_STATUS(d->m_cairo)
+    cairo_paint_with_alpha(d->m_cairo, state->opacity());
+    QT_CHECK_RASTER_STATUS(d->m_cairo)
+    cairo_pattern_destroy(cairopattern);
 }
 
 QT_END_NAMESPACE
