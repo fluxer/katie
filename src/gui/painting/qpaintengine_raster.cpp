@@ -207,7 +207,13 @@ bool QRasterPaintEngine::begin(QPaintDevice *pdev)
 
     d->m_cairobackground = cairo_pattern_create_rgba(0.0, 0.0, 0.0, 0.0);
     pushPattern(d->m_cairobackground);
+
+    setDirty(QPaintEngine::DirtyTransform);
+    setDirty(QPaintEngine::DirtyHints);
     setDirty(QPaintEngine::DirtyBackground);
+    setDirty(QPaintEngine::DirtyCompositionMode);
+    setDirty(QPaintEngine::DirtyPen);
+    setDirty(QPaintEngine::DirtyFont);
 
     return true;
 }
@@ -761,10 +767,6 @@ void QRasterPaintEngine::drawImage(const QRectF &r, const QImage &image, const Q
 
     pushPattern(cairopattern);
 
-#ifdef QT_RASTER_DEBUG
-    const QByteArray surfaceout = QByteArray("/tmp/surface-") + QByteArray::number(sourceimage.cacheKey()) + ".png";
-    cairo_surface_write_to_png(d->m_cairosurface, surfaceout.constData());
-#endif
     cairo_paint_with_alpha(d->m_cairo, state->opacity());
     QT_CHECK_RASTER_STATUS(d->m_cairo)
 
@@ -882,21 +884,14 @@ cairo_pattern_t* QRasterPaintEngine::imagePattern(const QImage &image, Qt::Image
             break;
         }
         default: {
-            sourceimage = sourceimage.convertToFormat(QImage::Format_ARGB32_Premultiplied, flags);
+            cairoformat = CAIRO_FORMAT_ARGB32;
+            sourceimage = sourceimage.convertToFormat(QImage::Format_ARGB32_Premultiplied);
             break;
         }
     }
 
     cairo_surface_t* cairosurface = cairo_image_surface_create_for_data((uchar*)sourceimage.bits(),
         cairoformat, sourceimage.width(), sourceimage.height(), sourceimage.bytesPerLine());
-
-#ifdef QT_RASTER_DEBUG
-    const QByteArray sourceout = QByteArray("/tmp/source-") + QByteArray::number(image.cacheKey()) + ".png";
-    sourceimage.save(sourceout, "PNG");
-
-    const QByteArray surfaceout = QByteArray("/tmp/surface-") + QByteArray::number(image.cacheKey()) + ".png";
-    cairo_surface_write_to_png(cairosurface, surfaceout.constData());
-#endif
 
     if (Q_UNLIKELY(!cairosurface)) {
         qWarning("QRasterPaintEngine: Could not create image surface");
@@ -907,6 +902,15 @@ cairo_pattern_t* QRasterPaintEngine::imagePattern(const QImage &image, Qt::Image
         qWarning("QRasterPaintEngine: Image surface format is not %d", cairoformat);
         return nullptr;
     }
+
+#ifdef QT_RASTER_DEBUG
+    const QByteArray sourceout = QByteArray("/tmp/source-") + QByteArray::number(image.cacheKey()) + ".png";
+    sourceimage.save(sourceout, "PNG");
+
+    const QByteArray surfaceout = QByteArray("/tmp/surface-") + QByteArray::number(image.cacheKey()) + ".png";
+    cairo_surface_write_to_png(cairosurface, surfaceout.constData());
+#endif
+
 
     cairo_pattern_t* cairopattern = cairo_pattern_create_for_surface(cairosurface);
     cairo_pattern_set_filter(cairopattern, d->m_cairofilter);
