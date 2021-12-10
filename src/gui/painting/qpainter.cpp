@@ -1017,7 +1017,7 @@ void QPainterPrivate::updateState(QPainterState *newState)
 
     \list
 
-    \o Simple transformations, meaning translation and scaling, pluss
+    \o Simple transformations, meaning translation and scaling, plus
     0, 90, 180, 270 degree rotations.
 
     \o \c drawPixmap() in combination with simple transformations and
