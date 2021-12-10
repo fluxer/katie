@@ -30,6 +30,12 @@
 
 QT_BEGIN_NAMESPACE
 
+#if Q_BYTE_ORDER == Q_BIG_ENDIAN
+static const QImage::Format qt_cairo_mono_format = QImage::Format_Mono;
+#else
+static const QImage::Format qt_cairo_mono_format = QImage::Format_MonoLSB;
+#endif
+
 // #define QT_RASTER_DEBUG
 #define QT_RASTER_STATUS
 
@@ -156,6 +162,10 @@ bool QRasterPaintEngine::begin(QPaintDevice *pdev)
             const QSize imagesize(image->size());
             cairo_format_t cairoformat = CAIRO_FORMAT_ARGB32;
             switch (image->format()) {
+                case qt_cairo_mono_format: {
+                    cairoformat = CAIRO_FORMAT_A1;
+                    break;
+                }
                 case QImage::Format_RGB16: {
                     cairoformat = CAIRO_FORMAT_RGB16_565;
                     break;
@@ -237,6 +247,7 @@ bool QRasterPaintEngine::end()
         case QInternal::Image: {
             QImage* image = (QImage*)paintdevice;
             switch (image->format()) {
+                case qt_cairo_mono_format:
                 case QImage::Format_RGB16:
                 case QImage::Format_RGB32:
                 case QImage::Format_ARGB32_Premultiplied: {
@@ -265,6 +276,7 @@ bool QRasterPaintEngine::end()
             if (pixmapdata->classId() == QPixmapData::RasterClass) {
                 QImage &image = static_cast<QRasterPixmapData *>(pixmapdata)->image;
                 switch (image.format()) {
+                    case qt_cairo_mono_format:
                     case QImage::Format_RGB16:
                     case QImage::Format_RGB32:
                     case QImage::Format_ARGB32_Premultiplied: {
@@ -871,6 +883,10 @@ cairo_pattern_t* QRasterPaintEngine::imagePattern(const QImage &image, Qt::Image
     QImage sourceimage(image);
     cairo_format_t cairoformat = CAIRO_FORMAT_ARGB32;
     switch (sourceimage.format()) {
+        case qt_cairo_mono_format: {
+            cairoformat = CAIRO_FORMAT_A1;
+            break;
+        }
         case QImage::Format_RGB16: {
             cairoformat = CAIRO_FORMAT_RGB16_565;
             break;
