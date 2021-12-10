@@ -797,7 +797,11 @@ void QRasterPaintEngine::drawTextItem(const QPointF &p, const QTextItem &textIte
 
     // TODO: implement text item flags
 
-    updateFont(textItem.font());
+    // TODO: what is the point of global font setup when each text item has its own?
+    const bool statefontissame = (statefont == textItem.font());
+    if (!statefontissame) {
+        updateFont(textItem.font());
+    }
 
     cairo_move_to(d->m_cairo, p.x(), p.y());
     QT_CHECK_RASTER_STATUS(d->m_cairo)
@@ -812,7 +816,9 @@ void QRasterPaintEngine::drawTextItem(const QPointF &p, const QTextItem &textIte
 
     popPattern(cairopattern);
 
-    updateFont(statefont);
+    if (!statefontissame) {
+        updateFont(statefont);
+    }
 }
 
 void QRasterPaintEngine::updateFont(const QFont &font)
