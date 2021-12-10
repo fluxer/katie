@@ -36,21 +36,6 @@ QT_BEGIN_NAMESPACE
 extern QImage qt_imageForBrush(int brushStyle); // in qbrush.cpp
 extern QPainterPath qt_regionToPath(const QRegion &region); // in qregion.cpp
 
-#define QT_DUMP_BRUSH_BITS(style) \
-    { \
-        QImage sourceimage(qt_imageForBrush(style)); \
-        sourceimage = sourceimage.convertToFormat(QImage::Format_ARGB32_Premultiplied); \
-        const uchar* sourcedata = sourceimage.constBits(); \
-        qDebug() << "begin" << # style; \
-        { \
-            QDebug dbg(QtMsgType::QtDebugMsg); \
-            for (int i = 0; i < sourceimage.byteCount(); i++) { \
-                dbg.nospace() << sourcedata[i] << ", "; \
-            } \
-        } \
-        qDebug() << "end" << # style; \
-    }
-
 #ifdef QT_RASTER_STATUS
 #  define QT_CHECK_RASTER_STATUS(cairo) \
      { \
@@ -123,23 +108,7 @@ QRasterPaintEnginePrivate::QRasterPaintEnginePrivate()
     m_cairosurface(nullptr),
     m_cairobackground(nullptr)
 {
-#if 0
-    QT_DUMP_BRUSH_BITS(Qt::Dense1Pattern)
-    QT_DUMP_BRUSH_BITS(Qt::Dense2Pattern)
-    QT_DUMP_BRUSH_BITS(Qt::Dense3Pattern)
-    QT_DUMP_BRUSH_BITS(Qt::Dense4Pattern)
-    QT_DUMP_BRUSH_BITS(Qt::Dense5Pattern)
-    QT_DUMP_BRUSH_BITS(Qt::Dense6Pattern)
-    QT_DUMP_BRUSH_BITS(Qt::Dense7Pattern)
-    QT_DUMP_BRUSH_BITS(Qt::HorPattern)
-    QT_DUMP_BRUSH_BITS(Qt::VerPattern)
-    QT_DUMP_BRUSH_BITS(Qt::CrossPattern)
-    QT_DUMP_BRUSH_BITS(Qt::BDiagPattern)
-    QT_DUMP_BRUSH_BITS(Qt::FDiagPattern)
-    QT_DUMP_BRUSH_BITS(Qt::DiagCrossPattern)
-#endif
 }
-#undef QT_DUMP_BRUSH_BITS
 
 QRasterPaintEnginePrivate::~QRasterPaintEnginePrivate()
 {
@@ -422,6 +391,7 @@ void QRasterPaintEngine::updateState(const QPaintEngineState &state)
 
     if (stateflags & QPaintEngine::DirtyBackground || stateflags & QPaintEngine::DirtyBackgroundMode) {
         const QColor statecolor(state.backgroundBrush().color());
+
         popPattern(d->m_cairobackground);
         switch (state.backgroundMode()) {
             case Qt::TransparentMode: {
@@ -917,31 +887,31 @@ cairo_pattern_t* QRasterPaintEngine::imagePattern(const QImage &image, Qt::Image
         }
     }
 
-    cairo_surface_t* imagesurface = cairo_image_surface_create_for_data((uchar*)sourceimage.bits(),
+    cairo_surface_t* cairosurface = cairo_image_surface_create_for_data((uchar*)sourceimage.bits(),
         cairoformat, sourceimage.width(), sourceimage.height(), sourceimage.bytesPerLine());
 
 #ifdef QT_RASTER_DEBUG
     const QByteArray sourceout = QByteArray("/tmp/source-") + QByteArray::number(image.cacheKey()) + ".png";
     sourceimage.save(sourceout, "PNG");
 
-    const QByteArray imageout = QByteArray("/tmp/image-") + QByteArray::number(image.cacheKey()) + ".png";
-    cairo_surface_write_to_png(imagesurface, imageout.constData());
+    const QByteArray surfaceout = QByteArray("/tmp/surface-") + QByteArray::number(image.cacheKey()) + ".png";
+    cairo_surface_write_to_png(cairosurface, surfaceout.constData());
 #endif
 
-    if (Q_UNLIKELY(!imagesurface)) {
+    if (Q_UNLIKELY(!cairosurface)) {
         qWarning("QRasterPaintEngine: Could not create image surface");
         return nullptr;
     }
-    const cairo_format_t surfaceformat = cairo_image_surface_get_format(imagesurface);
-    if (Q_UNLIKELY(surfaceformat != cairoformat)) {
+    const cairo_format_t cairosurfaceformat = cairo_image_surface_get_format(cairosurface);
+    if (Q_UNLIKELY(cairosurfaceformat != cairoformat)) {
         qWarning("QRasterPaintEngine: Image surface format is not %d", cairoformat);
         return nullptr;
     }
 
-    cairo_pattern_t* cairopattern = cairo_pattern_create_for_surface(imagesurface);
+    cairo_pattern_t* cairopattern = cairo_pattern_create_for_surface(cairosurface);
     cairo_pattern_set_filter(cairopattern, d->m_cairofilter);
 
-    cairo_surface_destroy(imagesurface);
+    cairo_surface_destroy(cairosurface);
 
     return cairopattern;
 }
@@ -1119,6 +1089,7 @@ void QRasterPaintEngine::popPattern(cairo_pattern_t* cairopattern)
     QT_CHECK_RASTER_STATUS(d->m_cairo)
     cairo_paint_with_alpha(d->m_cairo, state->opacity());
     QT_CHECK_RASTER_STATUS(d->m_cairo)
+
     cairo_pattern_destroy(cairopattern);
 }
 
