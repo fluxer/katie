@@ -558,6 +558,7 @@ void QRasterPaintEngine::updateState(const QPaintEngineState &state)
                     pathrect.x(), pathrect.y(),
                     pathrect.width(), pathrect.height()
                 );
+                QT_CHECK_RASTER_STATUS(d->m_cairo)
                 cairo_clip(d->m_cairo);
                 QT_CHECK_RASTER_STATUS(d->m_cairo)
                 break;
@@ -581,6 +582,7 @@ void QRasterPaintEngine::updateState(const QPaintEngineState &state)
                             regionrect.x(), regionrect.y(),
                             regionrect.width(), regionrect.height()
                         );
+                        QT_CHECK_RASTER_STATUS(d->m_cairo)
                         cairo_clip(d->m_cairo);
                         QT_CHECK_RASTER_STATUS(d->m_cairo)
                     }
@@ -775,6 +777,7 @@ void QRasterPaintEngine::drawImage(const QRectF &r, const QImage &image, const Q
 
     if (!r.isEmpty()) {
         cairo_rectangle(d->m_cairo, r.x(), r.y(), r.width(), r.height());
+        QT_CHECK_RASTER_STATUS(d->m_cairo)
     }
 
     pushPattern(cairopattern);
