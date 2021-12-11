@@ -68,7 +68,6 @@ public:
     QImage toImage() const;
     QImage toImage(const QRect &rect) const;
     QPaintEngine* paintEngine() const;
-    void setPaintEngine(QPaintEngine *paintEngine);
 
     Qt::HANDLE handle() const { return hd; }
     Qt::HANDLE x11ConvertToDefaultDepth();

@@ -59,7 +59,6 @@ public:
     QImage toImage() const;
     QImage toImage(const QRect &rect) const;
     QPaintEngine* paintEngine() const;
-    void setPaintEngine(QPaintEngine *paintEngine);
     QImage* buffer();
 
 protected:

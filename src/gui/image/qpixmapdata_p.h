@@ -82,7 +82,6 @@ public:
     virtual QImage toImage() const = 0;
     virtual QImage toImage(const QRect &rect) const;
     virtual QPaintEngine* paintEngine() const = 0;
-    virtual void setPaintEngine(QPaintEngine *paintEngine) = 0;
 
     inline PixelType pixelType() const { return type; }
     inline ClassId classId() const { return id; }
