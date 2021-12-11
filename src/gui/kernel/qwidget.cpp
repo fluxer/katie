@@ -4526,21 +4526,21 @@ void QWidgetPrivate::render_helper(QPainter *painter, const QPoint &targetOffset
     Q_Q(QWidget);
     const QTransform originalTransform = painter->worldTransform();
     if (!originalTransform.isScaling()) {
-        // Render via a pixmap.
+        // Render via a image.
         const QRect rect = toBePainted.boundingRect();
         const QSize size = rect.size();
         if (size.isNull())
             return;
 
-        QPixmap pixmap(size);
+        QImage image(size, QImage::Format_ARGB32_Premultiplied);
         if (!(renderFlags & QWidget::DrawWindowBackground) || !isOpaque)
-            pixmap.fill(Qt::transparent);
-        q->render(&pixmap, QPoint(), toBePainted, renderFlags);
+            image.fill(Qt::transparent);
+        q->render(&image, QPoint(), toBePainted, renderFlags);
 
-        painter->drawPixmap(targetOffset, pixmap);
+        painter->drawImage(targetOffset, image);
 
     } else {
-        // Render via a pixmap in device coordinates (to avoid pixmap scaling).
+        // Render via a image in device coordinates (to avoid image scaling).
         QTransform transform = originalTransform;
         transform.translate(targetOffset.x(), targetOffset.y());
 
@@ -4552,21 +4552,21 @@ void QWidgetPrivate::render_helper(QPainter *painter, const QPoint &targetOffset
         QRect deviceRect = transform.mapRect(QRectF(0, 0, rect.width(), rect.height())).toAlignedRect();
         deviceRect &= QRect(0, 0, device->width(), device->height());
 
-        QPixmap pixmap(deviceRect.size());
-        pixmap.fill(Qt::transparent);
+        QImage image(deviceRect.size(), QImage::Format_ARGB32_Premultiplied);
+        image.fill(Qt::transparent);
 
-        // Create a pixmap device coordinate painter.
-        QPainter pixmapPainter(&pixmap);
-        pixmapPainter.setRenderHints(painter->renderHints());
+        // Create a image device coordinate painter.
+        QPainter imagePainter(&image);
+        imagePainter.setRenderHints(painter->renderHints());
         transform *= QTransform::fromTranslate(-deviceRect.x(), -deviceRect.y());
-        pixmapPainter.setTransform(transform);
+        imagePainter.setTransform(transform);
 
-        q->render(&pixmapPainter, QPoint(), toBePainted, renderFlags);
-        pixmapPainter.end();
+        q->render(&imagePainter, QPoint(), toBePainted, renderFlags);
+        imagePainter.end();
 
-        // And then draw the pixmap.
+        // And then draw the image.
         painter->setTransform(QTransform());
-        painter->drawPixmap(deviceRect.topLeft(), pixmap);
+        painter->drawImage(deviceRect.topLeft(), image);
         painter->setTransform(originalTransform);
     }
 }
