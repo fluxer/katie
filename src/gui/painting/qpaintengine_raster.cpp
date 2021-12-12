@@ -168,9 +168,11 @@ bool QRasterPaintEngine::begin(QPaintDevice *pdev)
             const QPixmap* pixmap = reinterpret_cast<QPixmap*>(pdev);
             QPixmapData *pixmapdata = pixmap->pixmapData();
             const bool israsterpixmap = (pixmapdata->classId() == QPixmapData::RasterClass);
-            Q_ASSERT_X(israsterpixmap, "QRasterPaintEngine::end", "internal error");
+            Q_ASSERT_X(israsterpixmap, "QRasterPaintEngine::begin", "internal error");
 
             image = pixmapdata->buffer();
+
+            setPaintDevice(image);
             break;
         }
         default: {
@@ -256,23 +258,7 @@ bool QRasterPaintEngine::end()
 
     popPattern(d->m_cairobackground);
 
-    QImage *image = nullptr;
-    switch (paintDevice()->devType()) {
-        case QInternal::Image: {
-            image = reinterpret_cast<QImage*>(paintDevice());
-            break;
-        }
-        case QInternal::Pixmap: {
-            QPixmap* pixmap = reinterpret_cast<QPixmap*>(paintDevice());
-            QPixmapData *pixmapdata = pixmap->pixmapData();
-            image = &(static_cast<QRasterPixmapData *>(pixmapdata)->image);
-            break;
-        }
-        default: {
-            Q_ASSERT_X(false, "QRasterPaintEngine::end", "internal error");
-            break;
-        }
-    }
+    const QImage *image = reinterpret_cast<QImage*>(paintDevice());
 
     bool result = false;
     switch (image->format()) {
