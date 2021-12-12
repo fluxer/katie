@@ -186,6 +186,9 @@ bool QRasterPaintEngine::begin(QPaintDevice *pdev)
         }
         case QInternal::Pixmap: {
             const QPixmap* pixmap = reinterpret_cast<QPixmap*>(pdev);
+            QPixmapData *pixmapdata = pixmap->pixmapData();
+            const bool israsterpixmap = (pixmapdata->classId() == QPixmapData::RasterClass);
+            Q_ASSERT_X(israsterpixmap, "QRasterPaintEngine::end", "internal error");
             const QSize pixmapsize(pixmap->size());
             d->m_cairosurface = cairo_image_surface_create(
                 CAIRO_FORMAT_ARGB32,
@@ -242,10 +245,9 @@ bool QRasterPaintEngine::end()
     popPattern(d->m_cairobackground);
 
     bool result = false;
-    const QPaintDevice* paintdevice(paintDevice());
-    switch (paintdevice->devType()) {
+    switch (paintDevice()->devType()) {
         case QInternal::Image: {
-            QImage* image = (QImage*)paintdevice;
+            QImage* image = reinterpret_cast<QImage*>(paintDevice());
             switch (image->format()) {
                 case qt_cairo_mono_format:
                 case QImage::Format_RGB16:
@@ -271,10 +273,8 @@ bool QRasterPaintEngine::end()
             break;
         }
         case QInternal::Pixmap: {
-            QPixmap* pixmap = (QPixmap*)paintdevice;
+            QPixmap* pixmap = reinterpret_cast<QPixmap*>(paintDevice());
             QPixmapData *pixmapdata = pixmap->pixmapData();
-            const bool israsterpixmap = (pixmapdata->classId() == QPixmapData::RasterClass);
-            Q_ASSERT_X(israsterpixmap, "QRasterPaintEngine::end", "internal error");
             QImage &image = static_cast<QRasterPixmapData *>(pixmapdata)->image;
             switch (image.format()) {
                 case qt_cairo_mono_format:
@@ -898,8 +898,11 @@ cairo_pattern_t* QRasterPaintEngine::imagePattern(const QImage &image, Qt::Image
         }
     }
 
-    cairo_surface_t* cairosurface = cairo_image_surface_create_for_data((uchar*)sourceimage.bits(),
-        cairoformat, sourceimage.width(), sourceimage.height(), sourceimage.bytesPerLine());
+    cairo_surface_t* cairosurface = cairo_image_surface_create_for_data(
+        reinterpret_cast<uchar*>(sourceimage.bits()),
+        cairoformat, sourceimage.width(), sourceimage.height(),
+        sourceimage.bytesPerLine()
+    );
 
     if (Q_UNLIKELY(!cairosurface)) {
         qWarning("QRasterPaintEngine: Could not create image surface");
