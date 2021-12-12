@@ -53,6 +53,7 @@ extern QPainterPath qt_regionToPath(const QRegion &region); // in qregion.cpp
 #endif
 
 static const QPaintEngine::PaintEngineFeatures qt_raster_features =
+    QPaintEngine::PainterPaths |
     QPaintEngine::PerspectiveTransform |
     QPaintEngine::PatternTransform |
     QPaintEngine::ConstantOpacity |
@@ -586,6 +587,58 @@ void QRasterPaintEngine::updateState(const QPaintEngineState &state)
     }
 }
 
+void QRasterPaintEngine::drawPath(const QPainterPath &path)
+{
+    Q_D(QRasterPaintEngine);
+
+    // qDebug() << Q_FUNC_INFO << points << pointCount << mode;
+
+    cairo_new_path(d->m_cairo);
+    QT_CHECK_RASTER_STATUS(d->m_cairo)
+    for (int i = 0; i < path.elementCount(); i++) {
+        const QPainterPath::Element pathelement = path.elementAt(i);
+        switch (pathelement.type) {
+            case QPainterPath::MoveToElement: {
+                cairo_move_to(d->m_cairo, pathelement.x, pathelement.y);
+                QT_CHECK_RASTER_STATUS(d->m_cairo)
+                break;
+            }
+            case QPainterPath::LineToElement: {
+                cairo_line_to(d->m_cairo, pathelement.x, pathelement.y);
+                QT_CHECK_RASTER_STATUS(d->m_cairo)
+                break;
+            }
+            case QPainterPath::CurveToElement: {
+                cairo_curve_to(d->m_cairo,
+                    pathelement.x, pathelement.y,
+                    path.elementAt(i + 1).x, path.elementAt(i + 1).y,
+                    path.elementAt(i + 2).x, path.elementAt(i + 2).y
+                );
+                QT_CHECK_RASTER_STATUS(d->m_cairo)
+                i += 2;
+                break;
+            }
+            case QPainterPath::CurveToDataElement: {
+                Q_ASSERT_X(false, "QRasterPaintEngine::drawPath", "internal error");
+                break;
+            }
+        }
+    }
+    cairo_close_path(d->m_cairo);
+    QT_CHECK_RASTER_STATUS(d->m_cairo)
+
+    switch (path.fillRule()) {
+        case Qt::WindingFill: {
+            strokeAndFill(CAIRO_FILL_RULE_WINDING);
+            break;
+        }
+        case Qt::OddEvenFill: {
+            strokeAndFill(CAIRO_FILL_RULE_EVEN_ODD);
+            break;
+        }
+    }
+}
+
 void QRasterPaintEngine::drawPolygon(const QPointF *points, int pointCount, QPaintEngine::PolygonDrawMode mode)
 {
     Q_D(QRasterPaintEngine);
@@ -605,95 +658,32 @@ void QRasterPaintEngine::drawPolygon(const QPointF *points, int pointCount, QPai
         QT_CHECK_RASTER_STATUS(d->m_cairo)
     }
 
-    cairo_pattern_t* penpattern = nullptr;
-    cairo_pattern_t* brushpattern = nullptr;
-
-    cairo_push_group(d->m_cairo);
-    QT_CHECK_RASTER_STATUS(d->m_cairo)
     switch (mode) {
         case QPaintEngine::WindingMode: {
-            const QPen statepen(state->pen());
-            const QBrush statebrush(state->brush());
-
-            if (statepen.style() != Qt::NoPen && statepen.brush().style() != Qt::NoBrush) {
-                penpattern = penPattern(statepen);
-                cairo_set_source(d->m_cairo, penpattern);
-                QT_CHECK_RASTER_STATUS(d->m_cairo)
-                cairo_stroke(d->m_cairo);
-                QT_CHECK_RASTER_STATUS(d->m_cairo)
-            } else {
-                cairo_stroke_preserve(d->m_cairo);
-                QT_CHECK_RASTER_STATUS(d->m_cairo)
-            }
-
-            cairo_set_fill_rule(d->m_cairo, CAIRO_FILL_RULE_WINDING);
-            QT_CHECK_RASTER_STATUS(d->m_cairo)
-            if (statebrush.style() != Qt::NoBrush) {
-                brushpattern = brushPattern(statebrush);
-                cairo_set_source(d->m_cairo, brushpattern);
-                QT_CHECK_RASTER_STATUS(d->m_cairo)
-                cairo_fill(d->m_cairo);
-                QT_CHECK_RASTER_STATUS(d->m_cairo)
-            } else {
-                cairo_fill_preserve(d->m_cairo);
-                QT_CHECK_RASTER_STATUS(d->m_cairo)
-            }
+            strokeAndFill(CAIRO_FILL_RULE_WINDING);
             break;
         }
         case QPaintEngine::PolylineMode: {
             const QPen statepen(state->pen());
             if (statepen.style() != Qt::NoPen) {
-                penpattern = penPattern(statepen);
-                cairo_set_source(d->m_cairo, penpattern);
+                cairo_pattern_t* cairopattern = penPattern(statepen);
+                pushPattern(cairopattern);
                 QT_CHECK_RASTER_STATUS(d->m_cairo)
                 cairo_stroke(d->m_cairo);
                 QT_CHECK_RASTER_STATUS(d->m_cairo)
+                popPattern(cairopattern);
             } else {
                 cairo_stroke_preserve(d->m_cairo);
+                QT_CHECK_RASTER_STATUS(d->m_cairo)
+                cairo_paint_with_alpha(d->m_cairo, state->opacity());
                 QT_CHECK_RASTER_STATUS(d->m_cairo)
             }
             break;
         }
         default: {
-            const QPen statepen(state->pen());
-            const QBrush statebrush(state->brush());
-
-            if (statepen.style() != Qt::NoPen && statepen.brush().style() != Qt::NoBrush) {
-                penpattern = penPattern(statepen);
-                cairo_set_source(d->m_cairo, penpattern);
-                QT_CHECK_RASTER_STATUS(d->m_cairo)
-                cairo_stroke(d->m_cairo);
-                QT_CHECK_RASTER_STATUS(d->m_cairo)
-            } else {
-                cairo_stroke_preserve(d->m_cairo);
-                QT_CHECK_RASTER_STATUS(d->m_cairo)
-            }
-
-            cairo_set_fill_rule(d->m_cairo, CAIRO_FILL_RULE_EVEN_ODD);
-            QT_CHECK_RASTER_STATUS(d->m_cairo)
-            if (statebrush.style() != Qt::NoBrush) {
-                brushpattern = brushPattern(statebrush);
-                cairo_set_source(d->m_cairo, brushpattern);
-                QT_CHECK_RASTER_STATUS(d->m_cairo)
-                cairo_fill(d->m_cairo);
-                QT_CHECK_RASTER_STATUS(d->m_cairo)
-            } else {
-                cairo_fill_preserve(d->m_cairo);
-                QT_CHECK_RASTER_STATUS(d->m_cairo)
-            }
+            strokeAndFill(CAIRO_FILL_RULE_EVEN_ODD);
             break;
         }
-    }
-    cairo_pop_group_to_source(d->m_cairo);
-    QT_CHECK_RASTER_STATUS(d->m_cairo)
-    cairo_paint_with_alpha(d->m_cairo, state->opacity());
-    QT_CHECK_RASTER_STATUS(d->m_cairo)
-
-    if (penpattern) {
-        cairo_pattern_destroy(penpattern);
-    }
-    if (brushpattern) {
-        cairo_pattern_destroy(brushpattern);
     }
 }
 
@@ -1062,6 +1052,56 @@ void QRasterPaintEngine::popPattern(cairo_pattern_t* cairopattern)
     QT_CHECK_RASTER_STATUS(d->m_cairo)
 
     cairo_pattern_destroy(cairopattern);
+}
+
+void QRasterPaintEngine::strokeAndFill(const cairo_fill_rule_t cairorule)
+{
+    Q_D(QRasterPaintEngine);
+
+    // qDebug() << Q_FUNC_INFO << cairorule;
+
+    const QPen statepen(state->pen());
+    const QBrush statebrush(state->brush());
+    cairo_pattern_t* penpattern = nullptr;
+    cairo_pattern_t* brushpattern = nullptr;
+
+    cairo_push_group(d->m_cairo);
+    QT_CHECK_RASTER_STATUS(d->m_cairo)
+    if (statepen.style() != Qt::NoPen && statepen.brush().style() != Qt::NoBrush) {
+        penpattern = penPattern(statepen);
+        cairo_set_source(d->m_cairo, penpattern);
+        QT_CHECK_RASTER_STATUS(d->m_cairo)
+        cairo_stroke(d->m_cairo);
+        QT_CHECK_RASTER_STATUS(d->m_cairo)
+    } else {
+        cairo_stroke_preserve(d->m_cairo);
+        QT_CHECK_RASTER_STATUS(d->m_cairo)
+    }
+
+    cairo_set_fill_rule(d->m_cairo, cairorule);
+    QT_CHECK_RASTER_STATUS(d->m_cairo)
+    if (statebrush.style() != Qt::NoBrush) {
+        brushpattern = brushPattern(statebrush);
+        cairo_set_source(d->m_cairo, brushpattern);
+        QT_CHECK_RASTER_STATUS(d->m_cairo)
+        cairo_fill(d->m_cairo);
+        QT_CHECK_RASTER_STATUS(d->m_cairo)
+    } else {
+        cairo_fill_preserve(d->m_cairo);
+        QT_CHECK_RASTER_STATUS(d->m_cairo)
+    }
+
+    cairo_pop_group_to_source(d->m_cairo);
+    QT_CHECK_RASTER_STATUS(d->m_cairo)
+    cairo_paint_with_alpha(d->m_cairo, state->opacity());
+    QT_CHECK_RASTER_STATUS(d->m_cairo)
+
+    if (penpattern) {
+        cairo_pattern_destroy(penpattern);
+    }
+    if (brushpattern) {
+        cairo_pattern_destroy(brushpattern);
+    }
 }
 
 QT_END_NAMESPACE

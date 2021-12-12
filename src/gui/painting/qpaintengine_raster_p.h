@@ -53,6 +53,7 @@ public:
 
     void updateState(const QPaintEngineState &state) final;
 
+    void drawPath(const QPainterPath &path) final;
     void drawPolygon(const QPointF *points, int pointCount, QPaintEngine::PolygonDrawMode mode) final;
     void drawPixmap(const QRectF &r, const QPixmap &pixmap, const QRectF &sr) final;
     void drawImage(const QRectF &r, const QImage &image, const QRectF &sr,
@@ -72,6 +73,8 @@ private:
     cairo_pattern_t* brushPattern(const QBrush &brush);
     void pushPattern(cairo_pattern_t* cairopattern);
     void popPattern(cairo_pattern_t* cairopattern);
+
+    void strokeAndFill(const cairo_fill_rule_t cairorule);
 
     Q_DISABLE_COPY(QRasterPaintEngine)
 };
