@@ -21,11 +21,9 @@
 #include "qpaintengine_raster_p.h"
 #include "qpen.h"
 #include "qfont.h"
-#include "qbuffer.h"
 #include "qdebug.h"
 #include "qimage_p.h"
 #include "qpixmapdata_p.h"
-#include "qpixmap_raster_p.h"
 #include "qdrawhelper_p.h"
 
 QT_BEGIN_NAMESPACE
@@ -61,28 +59,6 @@ static const QPaintEngine::PaintEngineFeatures qt_raster_features =
     QPaintEngine::PorterDuff |
     QPaintEngine::BlendModes |
     QPaintEngine::Antialiasing;
-
-static cairo_status_t qt_cairo_read(void *closure, unsigned char *data, unsigned int length)
-{
-    QBuffer* buffer = static_cast<QBuffer*>(closure);
-
-    if (Q_LIKELY(buffer->read(reinterpret_cast<char*>(data), length) == length)) {
-        return CAIRO_STATUS_SUCCESS;
-    }
-
-    return CAIRO_STATUS_READ_ERROR;
-}
-
-static cairo_status_t qt_cairo_write(void *closure, const unsigned char *data, unsigned int length)
-{
-    QBuffer* buffer = static_cast<QBuffer*>(closure);
-
-    if (Q_LIKELY(buffer->write(reinterpret_cast<const char*>(data), length) == length)) {
-        return CAIRO_STATUS_SUCCESS;
-    }
-
-    return CAIRO_STATUS_WRITE_ERROR;
-}
 
 static QImage qt_colorizeBitmap(const QImage &image, const QColor &color)
 {
