@@ -177,6 +177,10 @@ bool QRasterPaintEngine::begin(QPaintDevice *pdev)
                     cairoformat = CAIRO_FORMAT_RGB24;
                     break;
                 }
+                case QImage::Format_ARGB32_Premultiplied: {
+                    cairoformat = CAIRO_FORMAT_ARGB32;
+                    break;
+                }
                 default: {
                     cairoformat = CAIRO_FORMAT_ARGB32;
                     sourceimage = sourceimage.convertToFormat(QImage::Format_ARGB32_Premultiplied);
