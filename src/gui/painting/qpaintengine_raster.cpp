@@ -313,7 +313,7 @@ void QRasterPaintEngine::updateState(const QPaintEngineState &state)
 {
     Q_D(QRasterPaintEngine);
 
-#if 0
+#if QT_RASTER_DEBUG
     qDebug() << Q_FUNC_INFO << state.pen() << state.brush() << state.brushOrigin()
         << state.backgroundBrush() << state.backgroundMode() << state.font()
         << state.matrix() << state.transform() << state.clipOperation()
