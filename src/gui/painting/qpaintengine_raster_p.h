@@ -86,6 +86,7 @@ public:
     cairo_t* m_cairo;
     cairo_surface_t* m_cairosurface;
     cairo_pattern_t* m_cairobackground;
+    uchar* m_imagebits;
     cairo_filter_t m_cairofilter;
 };
 
