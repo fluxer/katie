@@ -158,43 +158,10 @@ bool QRasterPaintEngine::begin(QPaintDevice *pdev)
         }
     }
 
+    QImage *image = nullptr;
     switch (pdev->devType()) {
         case QInternal::Image: {
-            const QImage* image = reinterpret_cast<QImage*>(pdev);
-            QImage sourceimage(*image);
-
-            cairo_format_t cairoformat = CAIRO_FORMAT_ARGB32;
-            switch (image->format()) {
-                case qt_cairo_mono_format: {
-                    cairoformat = CAIRO_FORMAT_A1;
-                    break;
-                }
-                case QImage::Format_RGB16: {
-                    cairoformat = CAIRO_FORMAT_RGB16_565;
-                    break;
-                }
-                case QImage::Format_RGB32: {
-                    cairoformat = CAIRO_FORMAT_RGB24;
-                    break;
-                }
-                case QImage::Format_ARGB32_Premultiplied: {
-                    cairoformat = CAIRO_FORMAT_ARGB32;
-                    break;
-                }
-                default: {
-                    cairoformat = CAIRO_FORMAT_ARGB32;
-                    sourceimage = sourceimage.convertToFormat(QImage::Format_ARGB32_Premultiplied);
-                    break;
-                }
-            }
-
-            d->m_imagebits = static_cast<uchar*>(::malloc(sourceimage.byteCount() * sizeof(uchar)));
-            ::memcpy(d->m_imagebits, sourceimage.constBits(), sourceimage.byteCount());
-            d->m_cairosurface = cairo_image_surface_create_for_data(
-                d->m_imagebits, cairoformat,
-                sourceimage.width(), sourceimage.height(),
-                sourceimage.bytesPerLine()
-            );
+            image = reinterpret_cast<QImage*>(pdev);
             break;
         }
         case QInternal::Pixmap: {
@@ -203,15 +170,7 @@ bool QRasterPaintEngine::begin(QPaintDevice *pdev)
             const bool israsterpixmap = (pixmapdata->classId() == QPixmapData::RasterClass);
             Q_ASSERT_X(israsterpixmap, "QRasterPaintEngine::end", "internal error");
 
-            QImage sourceimage(*pixmapdata->buffer());
-            sourceimage = sourceimage.convertToFormat(QImage::Format_ARGB32_Premultiplied);
-            d->m_imagebits = static_cast<uchar*>(::malloc(sourceimage.byteCount() * sizeof(uchar)));
-            ::memcpy(d->m_imagebits, sourceimage.constBits(), sourceimage.byteCount());
-            d->m_cairosurface = cairo_image_surface_create_for_data(
-                d->m_imagebits, CAIRO_FORMAT_ARGB32,
-                sourceimage.width(), sourceimage.height(),
-                sourceimage.bytesPerLine()
-            );
+            image = pixmapdata->buffer();
             break;
         }
         default: {
@@ -219,6 +178,41 @@ bool QRasterPaintEngine::begin(QPaintDevice *pdev)
             break;
         }
     }
+
+    QImage sourceimage(*image);
+    cairo_format_t cairoformat = CAIRO_FORMAT_ARGB32;
+    switch (image->format()) {
+        case qt_cairo_mono_format: {
+            cairoformat = CAIRO_FORMAT_A1;
+            break;
+        }
+        case QImage::Format_RGB16: {
+            cairoformat = CAIRO_FORMAT_RGB16_565;
+            break;
+        }
+        case QImage::Format_RGB32: {
+            cairoformat = CAIRO_FORMAT_RGB24;
+            break;
+        }
+        case QImage::Format_ARGB32_Premultiplied: {
+            cairoformat = CAIRO_FORMAT_ARGB32;
+            break;
+        }
+        default: {
+            cairoformat = CAIRO_FORMAT_ARGB32;
+            sourceimage = sourceimage.convertToFormat(QImage::Format_ARGB32_Premultiplied);
+            break;
+        }
+    }
+
+    d->m_imagebits = static_cast<uchar*>(::malloc(sourceimage.byteCount() * sizeof(uchar)));
+    ::memcpy(d->m_imagebits, sourceimage.constBits(), sourceimage.byteCount());
+    d->m_cairosurface = cairo_image_surface_create_for_data(
+        d->m_imagebits, cairoformat,
+        sourceimage.width(), sourceimage.height(),
+        sourceimage.bytesPerLine()
+    );
+
     if (Q_LIKELY(d->m_cairosurface)) {
         d->m_cairo = cairo_create(d->m_cairosurface);
         QT_CHECK_RASTER_STATUS(d->m_cairo)
@@ -262,64 +256,44 @@ bool QRasterPaintEngine::end()
 
     popPattern(d->m_cairobackground);
 
-    bool result = false;
+    QImage *image = nullptr;
     switch (paintDevice()->devType()) {
         case QInternal::Image: {
-            QImage* image = reinterpret_cast<QImage*>(paintDevice());
-            switch (image->format()) {
-                case qt_cairo_mono_format:
-                case QImage::Format_RGB16:
-                case QImage::Format_RGB32:
-                case QImage::Format_ARGB32_Premultiplied: {
-                    Q_ASSERT_X(image->d->ref == 1, "QRasterPaintEngine::end", "internal error");
-                    const uchar* cairodata = cairo_image_surface_get_data(d->m_cairosurface);
-                    ::memcpy(image->d->data, cairodata, image->byteCount());
-                    result = true;
-                    break;
-                }
-                default: {
-                    Q_ASSERT_X(image->d->ref == 1, "QRasterPaintEngine::end", "internal error");
-                    QImage converted(image->size(), QImage::Format_ARGB32_Premultiplied);
-                    const uchar* cairodata = cairo_image_surface_get_data(d->m_cairosurface);
-                    ::memcpy(converted.d->data, cairodata, image->byteCount());
-                    converted = converted.convertToFormat(image->format());
-                    ::memcpy(image->d->data, converted.d->data, image->byteCount());
-                    result = true;
-                    break;
-                }
-            }
+            image = reinterpret_cast<QImage*>(paintDevice());
             break;
         }
         case QInternal::Pixmap: {
             QPixmap* pixmap = reinterpret_cast<QPixmap*>(paintDevice());
             QPixmapData *pixmapdata = pixmap->pixmapData();
-            QImage &image = static_cast<QRasterPixmapData *>(pixmapdata)->image;
-            switch (image.format()) {
-                case qt_cairo_mono_format:
-                case QImage::Format_RGB16:
-                case QImage::Format_RGB32:
-                case QImage::Format_ARGB32_Premultiplied: {
-                    Q_ASSERT_X(image.d->ref == 1, "QRasterPaintEngine::end", "internal error");
-                    const uchar* cairodata = cairo_image_surface_get_data(d->m_cairosurface);
-                    ::memcpy(image.d->data, cairodata, image.byteCount());
-                    result = true;
-                    break;
-                }
-                default: {
-                    Q_ASSERT_X(image.d->ref == 1, "QRasterPaintEngine::end", "internal error");
-                    QImage converted(image.size(), QImage::Format_ARGB32_Premultiplied);
-                    const uchar* cairodata = cairo_image_surface_get_data(d->m_cairosurface);
-                    ::memcpy(converted.d->data, cairodata, image.byteCount());
-                    converted = converted.convertToFormat(image.format());
-                    ::memcpy(image.d->data, converted.d->data, image.byteCount());
-                    result = true;
-                    break;
-                }
-            }
+            image = &(static_cast<QRasterPixmapData *>(pixmapdata)->image);
             break;
         }
         default: {
             Q_ASSERT_X(false, "QRasterPaintEngine::end", "internal error");
+            break;
+        }
+    }
+
+    bool result = false;
+    switch (image->format()) {
+        case qt_cairo_mono_format:
+        case QImage::Format_RGB16:
+        case QImage::Format_RGB32:
+        case QImage::Format_ARGB32_Premultiplied: {
+            Q_ASSERT_X(image->d->ref == 1, "QRasterPaintEngine::end", "internal error");
+            const uchar* cairodata = cairo_image_surface_get_data(d->m_cairosurface);
+            ::memcpy(image->d->data, cairodata, image->byteCount());
+            result = true;
+            break;
+        }
+        default: {
+            Q_ASSERT_X(image->d->ref == 1, "QRasterPaintEngine::end", "internal error");
+            QImage converted(image->size(), QImage::Format_ARGB32_Premultiplied);
+            const uchar* cairodata = cairo_image_surface_get_data(d->m_cairosurface);
+            ::memcpy(converted.d->data, cairodata, image->byteCount());
+            converted = converted.convertToFormat(image->format());
+            ::memcpy(image->d->data, converted.constBits(), image->byteCount());
+            result = true;
             break;
         }
     }
