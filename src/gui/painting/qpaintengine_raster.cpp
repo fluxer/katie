@@ -1035,7 +1035,13 @@ cairo_pattern_t* QRasterPaintEngine::brushPattern(const QBrush &brush)
     }
 
     if (Q_LIKELY(cairopattern)) {
-        const QTransform brushtransform(brush.transform());
+        const QPointF stateorigin(state->brushOrigin());
+        QTransform brushtransform(brush.transform());
+
+        if (!stateorigin.isNull()) {
+            brushtransform.translate(stateorigin.x(), stateorigin.y());
+        }
+
         cairo_matrix_t cairomatrix;
         cairo_matrix_init(&cairomatrix,
             brushtransform.m11(), brushtransform.m12(),
