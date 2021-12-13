@@ -90,7 +90,7 @@ QRasterPaintEnginePrivate::QRasterPaintEnginePrivate()
     m_cairosurface(nullptr),
     m_cairobackground(nullptr),
     m_imagebits(nullptr),
-    m_cairofilter(CAIRO_FILTER_FAST)
+    m_cairofilter(CAIRO_FILTER_NEAREST)
 {
 }
 
@@ -354,9 +354,9 @@ void QRasterPaintEngine::updateState(const QPaintEngineState &state)
         QT_CHECK_RASTER_STATUS(d->m_cairo)
 
         if (statehints & QPainter::SmoothPixmapTransform) {
-            d->m_cairofilter = CAIRO_FILTER_BEST;
+            d->m_cairofilter = CAIRO_FILTER_BILINEAR;
         } else {
-            d->m_cairofilter = CAIRO_FILTER_FAST;
+            d->m_cairofilter = CAIRO_FILTER_NEAREST;
         }
 
         cairo_font_options_t* cairooptions = cairo_font_options_create();
