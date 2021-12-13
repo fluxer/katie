@@ -38,7 +38,6 @@ static const QImage::Format qt_cairo_mono_format = QImage::Format_MonoLSB;
 #define QT_RASTER_STATUS
 
 extern QImage qt_imageForBrush(int brushStyle); // in qbrush.cpp
-extern QPainterPath qt_regionToPath(const QRegion &region); // in qregion.cpp
 
 #ifdef QT_RASTER_STATUS
 #  define QT_CHECK_RASTER_STATUS(cairo) \
@@ -105,6 +104,10 @@ QRasterPaintEnginePrivate::~QRasterPaintEnginePrivate()
 
     if (m_cairosurface) {
         cairo_surface_destroy(m_cairosurface);
+    }
+
+    if (m_imagebits) {
+        ::free(m_imagebits);
     }
 }
 
@@ -217,7 +220,6 @@ bool QRasterPaintEngine::begin(QPaintDevice *pdev)
     setDirty(QPaintEngine::DirtyBackground);
     setDirty(QPaintEngine::DirtyCompositionMode);
     setDirty(QPaintEngine::DirtyPen);
-    setDirty(QPaintEngine::DirtyFont);
 
     return true;
 }
@@ -268,6 +270,7 @@ bool QRasterPaintEngine::end()
     d->m_cairosurface = nullptr;
 
     ::free(d->m_imagebits);
+    d->m_imagebits = nullptr;
 
     return result;
 }
@@ -581,10 +584,6 @@ void QRasterPaintEngine::updateState(const QPaintEngineState &state)
         cairo_set_dash(d->m_cairo, pendashpattern.data(), pendashpattern.size(), statepen.dashOffset());
         QT_CHECK_RASTER_STATUS(d->m_cairo)
     }
-
-    if (stateflags & QPaintEngine::DirtyFont) {
-        updateFont(state.font());
-    }
 }
 
 void QRasterPaintEngine::drawPath(const QPainterPath &path)
@@ -729,7 +728,6 @@ void QRasterPaintEngine::drawTextItem(const QPointF &p, const QTextItem &textIte
 
     // TODO: implement text item flags
 
-    // TODO: what is the point of global font setup when each text item has its own?
     const bool statefontissame = (statefont == textItem.font());
     if (!statefontissame) {
         updateFont(textItem.font());
