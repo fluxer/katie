@@ -93,9 +93,6 @@ static inline uint INV_PREMUL(uint x) {
             | ((255*qBlue(x)) / alpha));
 }
 
-#define ARGB_COMBINE_ALPHA(argb, alpha) \
-    ((((argb >> 24) * alpha) >> 8) << 24) | (argb & 0x00ffffff)
-
 template <class DST, class SRC>
 inline DST qt_colorConvert(const SRC color, const DST dummy)
 {
