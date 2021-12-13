@@ -222,6 +222,8 @@ bool QRasterPaintEngine::begin(QPaintDevice *pdev)
     setDirty(QPaintEngine::DirtyCompositionMode);
     setDirty(QPaintEngine::DirtyPen);
 
+    updateFont(state->font());
+
     return true;
 }
 
@@ -239,7 +241,6 @@ bool QRasterPaintEngine::end()
     popPattern(d->m_cairobackground);
 
     QImage *image = nullptr;
-    bool result = false;
     // something changed the paint device between begin() and end()? that's
     // absolutely the wrong thing to do
     switch (d->pdev->devType()) {
@@ -262,6 +263,7 @@ bool QRasterPaintEngine::end()
         }
     }
 
+    bool result = false;
     switch (image->format()) {
         case qt_cairo_mono_format:
         case QImage::Format_RGB16:
