@@ -152,6 +152,7 @@ bool QRasterPaintEngine::begin(QPaintDevice *pdev)
 
             image = pixmapdata->buffer();
 
+            // set it to the actual image
             setPaintDevice(image);
             break;
         }
@@ -237,9 +238,30 @@ bool QRasterPaintEngine::end()
 
     popPattern(d->m_cairobackground);
 
-    const QImage *image = reinterpret_cast<QImage*>(paintDevice());
-
+    QImage *image = nullptr;
     bool result = false;
+    // something changed the paint device between begin() and end()? that's
+    // absolutely the wrong thing to do
+    switch (d->pdev->devType()) {
+        case QInternal::Image: {
+            image = reinterpret_cast<QImage*>(d->pdev);
+            break;
+        }
+        case QInternal::Pixmap: {
+            const QPixmap* pixmap = reinterpret_cast<QPixmap*>(d->pdev);
+            QPixmapData *pixmapdata = pixmap->pixmapData();
+            const bool israsterpixmap = (pixmapdata->classId() == QPixmapData::RasterClass);
+            Q_ASSERT_X(israsterpixmap, "QRasterPaintEngine::end", "internal error");
+
+            image = pixmapdata->buffer();
+            break;
+        }
+        default: {
+            Q_ASSERT_X(false, "QRasterPaintEngine::end", "internal error");
+            break;
+        }
+    }
+
     switch (image->format()) {
         case qt_cairo_mono_format:
         case QImage::Format_RGB16:
@@ -843,7 +865,7 @@ cairo_pattern_t* QRasterPaintEngine::imagePattern(const QImage &image, Qt::Image
     }
 
     cairo_surface_t* cairosurface = cairo_image_surface_create_for_data(
-        reinterpret_cast<uchar*>(sourceimage.bits()),
+        const_cast<uchar*>(sourceimage.constBits()),
         cairoformat, sourceimage.width(), sourceimage.height(),
         sourceimage.bytesPerLine()
     );
