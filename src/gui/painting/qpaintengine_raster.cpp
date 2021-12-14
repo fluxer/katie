@@ -836,7 +836,7 @@ void QRasterPaintEngine::updateFont(const QFont &font)
     QT_CHECK_RASTER_STATUS(d->m_cairo)
 }
 
-cairo_pattern_t* QRasterPaintEngine::imagePattern(const QImage &image, Qt::ImageConversionFlags flags)
+cairo_pattern_t* QRasterPaintEngine::imagePattern(const QImage &image, const Qt::ImageConversionFlags flags)
 {
     Q_D(QRasterPaintEngine);
 
@@ -863,7 +863,7 @@ cairo_pattern_t* QRasterPaintEngine::imagePattern(const QImage &image, Qt::Image
         }
         default: {
             cairoformat = CAIRO_FORMAT_ARGB32;
-            sourceimage = sourceimage.convertToFormat(QImage::Format_ARGB32_Premultiplied);
+            sourceimage = sourceimage.convertToFormat(QImage::Format_ARGB32_Premultiplied, flags);
             break;
         }
     }
