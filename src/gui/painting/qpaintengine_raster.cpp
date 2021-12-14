@@ -34,6 +34,8 @@ static const QImage::Format qt_cairo_mono_format = QImage::Format_Mono;
 static const QImage::Format qt_cairo_mono_format = QImage::Format_MonoLSB;
 #endif
 
+static const cairo_filter_t qt_cairo_filter = CAIRO_FILTER_NEAREST;
+
 // #define QT_RASTER_DEBUG
 #define QT_RASTER_STATUS
 
@@ -90,7 +92,7 @@ QRasterPaintEnginePrivate::QRasterPaintEnginePrivate()
     m_cairosurface(nullptr),
     m_cairobackground(nullptr),
     m_imagebits(nullptr),
-    m_cairofilter(CAIRO_FILTER_NEAREST)
+    m_cairofilter(qt_cairo_filter)
 {
 }
 
@@ -911,7 +913,7 @@ cairo_pattern_t* QRasterPaintEngine::penPattern(const QPen &pen)
         pencolor.redF(), pencolor.greenF(), pencolor.blueF(),
         pencolor.alphaF()
     );
-    cairo_pattern_set_filter(cairopattern, d->m_cairofilter);
+    cairo_pattern_set_filter(cairopattern, qt_cairo_filter);
 
     return cairopattern;
 }
@@ -934,6 +936,7 @@ cairo_pattern_t* QRasterPaintEngine::brushPattern(const QBrush &brush)
                 brushcolor.redF(), brushcolor.greenF(), brushcolor.blueF(),
                 brushcolor.alphaF()
             );
+            cairo_pattern_set_filter(cairopattern, qt_cairo_filter);
             break;
         }
         case Qt::Dense1Pattern:
@@ -983,6 +986,7 @@ cairo_pattern_t* QRasterPaintEngine::brushPattern(const QBrush &brush)
                 }
             }
 
+            cairo_pattern_set_filter(cairopattern, qt_cairo_filter);
             break;
         }
         case Qt::RadialGradientPattern: {
@@ -1017,6 +1021,7 @@ cairo_pattern_t* QRasterPaintEngine::brushPattern(const QBrush &brush)
                 }
             }
 
+            cairo_pattern_set_filter(cairopattern, qt_cairo_filter);
             break;
         }
         case Qt::ConicalGradientPattern: {
@@ -1049,8 +1054,6 @@ cairo_pattern_t* QRasterPaintEngine::brushPattern(const QBrush &brush)
             brushtransform.dx(), brushtransform.dy()
         );
         cairo_pattern_set_matrix(cairopattern, &cairomatrix);
-
-        cairo_pattern_set_filter(cairopattern, d->m_cairofilter);
     }
 
     return cairopattern;
