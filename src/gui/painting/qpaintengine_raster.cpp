@@ -869,7 +869,7 @@ cairo_pattern_t* QRasterPaintEngine::imagePattern(const QImage &image, Qt::Image
     }
 
     cairo_surface_t* cairosurface = cairo_image_surface_create_for_data(
-        const_cast<uchar*>(sourceimage.constBits()),
+        sourceimage.d->data,
         cairoformat, sourceimage.width(), sourceimage.height(),
         sourceimage.bytesPerLine()
     );
