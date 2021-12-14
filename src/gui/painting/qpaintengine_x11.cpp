@@ -343,8 +343,7 @@ static QPaintEngine::PaintEngineFeatures qt_decide_features()
 {
     QPaintEngine::PaintEngineFeatures features =
         QPaintEngine::AlphaBlend
-        | QPaintEngine::PainterPaths
-        | QPaintEngine::RasterOpModes;
+        | QPaintEngine::PainterPaths;
 
     if (qt_x11Data->use_xrender) {
         features |= QPaintEngine::Antialiasing;
@@ -1046,33 +1045,6 @@ void QX11PaintEngine::updateState(const QPaintEngineState &state)
                 d->composition_mode = PictOpXor;
                 break;
 #endif
-            case QPainter::RasterOp_SourceOrDestination:
-                function = GXor;
-                break;
-            case QPainter::RasterOp_SourceAndDestination:
-                function = GXand;
-                break;
-            case QPainter::RasterOp_SourceXorDestination:
-                function = GXxor;
-                break;
-            case QPainter::RasterOp_NotSourceAndNotDestination:
-                function = GXnor;
-                break;
-            case QPainter::RasterOp_NotSourceOrNotDestination:
-                function = GXnand;
-                break;
-            case QPainter::RasterOp_NotSourceXorDestination:
-                function = GXequiv;
-                break;
-            case QPainter::RasterOp_NotSource:
-                function = GXcopyInverted;
-                break;
-            case QPainter::RasterOp_SourceAndNotDestination:
-                function = GXandReverse;
-                break;
-            case QPainter::RasterOp_NotSourceAndDestination:
-                function = GXandInverted;
-                break;
             default:
                 break;
         }
