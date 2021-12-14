@@ -903,8 +903,6 @@ cairo_pattern_t* QRasterPaintEngine::imagePattern(const QImage &image, Qt::Image
 
 cairo_pattern_t* QRasterPaintEngine::penPattern(const QPen &pen)
 {
-    Q_D(QRasterPaintEngine);
-
     // qDebug() << Q_FUNC_INFO << pen;
 
     const QColor pencolor(pen.color());
@@ -920,8 +918,6 @@ cairo_pattern_t* QRasterPaintEngine::penPattern(const QPen &pen)
 
 cairo_pattern_t* QRasterPaintEngine::brushPattern(const QBrush &brush)
 {
-    Q_D(QRasterPaintEngine);
-
     // qDebug() << Q_FUNC_INFO << brush;
 
     cairo_pattern_t* cairopattern = nullptr;
