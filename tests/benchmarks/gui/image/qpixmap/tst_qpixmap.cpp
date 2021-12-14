@@ -255,7 +255,7 @@ void tst_QPixmap::fromImageReader_data()
     image.save(QString::fromLatin1("test.png"));
 
     // RGB32
-    const QString rgb32Path = tempDir + QString::fromLatin1("/rgb32.jpg");
+    const QString rgb32Path = tempDir + QString::fromLatin1("/rgb32.png");
     image.save(rgb32Path);
     QTest::newRow("gradient RGB32") << rgb32Path;
 

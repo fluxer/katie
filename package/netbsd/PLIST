@@ -1409,11 +1409,7 @@ lib/katie/plugins/accessible/libqtaccessiblewidgets.so
 lib/katie/plugins/designer/libqdeclarativeview.so
 lib/katie/plugins/iconengines/libqsvgicon.so
 lib/katie/plugins/imageformats/libqgif.so
-lib/katie/plugins/imageformats/libqico.so
-lib/katie/plugins/imageformats/libqjpeg.so
 lib/katie/plugins/imageformats/libqsvg.so
-lib/katie/plugins/imageformats/libqtga.so
-lib/katie/plugins/imageformats/libqtiff.so
 lib/katie/plugins/script/libqtscriptdbus.so
 lib/libKtCore.so
 lib/libKtCore.so.4.12

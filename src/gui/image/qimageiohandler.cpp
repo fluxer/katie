@@ -490,11 +490,11 @@ QImageIOPlugin::~QImageIOPlugin()
 
     Returns the capabilities on the plugin, based on the data in \a
     device and the format \a format. For example, if the
-    QImageIOHandler supports the BMP format, and the data in the
-    device starts with the characters "BM", this function should
-    return \l CanRead. If \a format is "bmp" and the handler supports
-    both reading and writing, this function should return \l CanRead |
-    \l CanWrite.
+    QImageIOHandler supports the PNG format, and the data in the
+    device starts with the magick bits for that format, this function
+    should return \l CanRead. If \a format is "png" and the handler
+    supports both reading and writing, this function should return
+    \l CanRead | \l CanWrite.
 */
 
 /*!
@@ -503,7 +503,7 @@ QImageIOPlugin::~QImageIOPlugin()
     Returns the list of image keys this plugin supports.
 
     These keys are usually the names of the image formats that are implemented
-    in the plugin (e.g., "jpg" or "gif").
+    in the plugin (e.g., "svg" or "gif").
 
     \sa capabilities()
 */

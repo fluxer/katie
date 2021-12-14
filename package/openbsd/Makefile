@@ -22,10 +22,9 @@ MODULES = devel/cmake
 BUILD_DEPENDS = devel/gettext,-tools
 RUN_DEPENDS = devel/desktop-file-utils devel/xdg-utils
 LIB_DEPENDS = archivers/zstd textproc/icu4c devel/jansson devel/pcre \
-	graphics/png graphics/jpeg graphics/tiff x11/dbus print/cups,-libs \
-	devel/gettext,-runtime
+	graphics/png x11/dbus print/cups,-libs devel/gettext,-runtime
 WANTLIB = ${COMPILER_LIBCXX} ICE SM X11 Xcursor Xext Xfixes Xinerama Xrandr \
-	Xrender fontconfig freetype zstd icui18n icuuc pcre png jpeg tiff \
+	Xrender fontconfig freetype zstd icui18n icuuc pcre png \
 	dbus-1 cups intl ssl z c crypto m
 SEPARATE_BUILD = Yes
 CONFIGURE_ARGS = -DKATIE_TOOLS_SUFFIX="-katie" -Wno-dev

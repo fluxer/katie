@@ -146,20 +146,11 @@ set(KATIE_TOOLS_SUFFIX "" CACHE STRING "Tools (moc, uic, rcc, etc.) suffix")
 option(WITH_CUPS "Build CUPS support" ON)
 add_feature_info(cups WITH_CUPS "build CUPS support")
 
-option(WITH_JPEG "Build JPEG support" ON)
-add_feature_info(jpeg WITH_JPEG "build JPEG support")
-
-option(WITH_TIFF "Build TIFF support" ON)
-add_feature_info(tiff WITH_TIFF "build TIFF support")
-
 option(WITH_DBUS "Build D-Bus support" ON)
 add_feature_info(dbus WITH_DBUS "build D-Bus support")
 
 option(WITH_FONTCONFIG "Build Fontconfig support" ON)
 add_feature_info(fontconfig WITH_FONTCONFIG "build Fontconfig support")
-
-option(WITH_ODBC "Build ODBC database plugin" ON)
-add_feature_info(odbc WITH_ODBC "build ODBC support")
 
 option(WITH_INTL "Build Intl support" ON)
 add_feature_info(intl WITH_INTL "build Intl support")
@@ -267,23 +258,6 @@ set_package_properties(PNG PROPERTIES
     DESCRIPTION "A collection of routines used to create PNG format graphics files"
     URL "http://www.libpng.org/pub/png/libpng.html"
     TYPE REQUIRED
-)
-
-find_package(JPEG)
-set_package_properties(JPEG PROPERTIES
-    PURPOSE "JPEG format handler"
-    DESCRIPTION "JPEG image codec with accelerated baseline compression and decompression"
-    URL "https://libjpeg-turbo.virtualgl.org/"
-    TYPE RECOMMENDED
-)
-
-# v3.6.0+ required for TIFFReadRGBAImageOriented()
-find_package(TIFF 3.6.0)
-set_package_properties(TIFF PROPERTIES
-    PURPOSE "TIFF format handler"
-    DESCRIPTION "Library for manipulation of TIFF images"
-    URL "http://www.libtiff.org/"
-    TYPE RECOMMENDED
 )
 
 find_package(Cups)

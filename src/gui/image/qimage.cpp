@@ -313,16 +313,12 @@ bool QImageData::checkForAlphaPixels() const
     formats:
 
     \table
-    \header \o Format \o Description                      \o Qt's support
-    \row    \o BMP    \o Windows Bitmap                   \o Read/write
+    \header \o Format \o Description                      \o Katie's support
     \row    \o GIF    \o Graphic Interchange Format (optional) \o Read
-    \row    \o JPG    \o Joint Photographic Experts Group \o Read/write
-    \row    \o JPEG   \o Joint Photographic Experts Group \o Read/write
     \row    \o PNG    \o Portable Network Graphics        \o Read/write
     \row    \o PBM    \o Portable Bitmap                  \o Read
     \row    \o PGM    \o Portable Graymap                 \o Read
     \row    \o PPM    \o Portable Pixmap                  \o Read/write
-    \row    \o TIFF   \o Tagged Image File Format         \o Read/write
     \row    \o XBM    \o X11 Bitmap                       \o Read/write
     \row    \o XPM    \o X11 Pixmap                       \o Read/write
     \endtable
@@ -3571,7 +3567,7 @@ QImage QImage::rgbSwapped() const
     the image was successfully loaded; otherwise returns false.
 
     The loader attempts to read the image using the specified \a format, e.g.,
-    PNG or JPG. If \a format is not specified (which is the default), the
+    PNG or XPM. If \a format is not specified (which is the default), the
     loader probes the file for a header to guess the file format.
 
     The file name can either refer to an actual file on disk or to one
@@ -3621,7 +3617,7 @@ bool QImage::load(QIODevice* device, const char* format)
     returns false.
 
     The loader attempts to read the image using the specified \a format, e.g.,
-    PNG or JPG. If \a format is not specified (which is the default), the
+    PNG or XPM. If \a format is not specified (which is the default), the
     loader probes the file for a header to guess the file format.
 
     \sa {QImage#Reading and Writing Image Files}{Reading and Writing Image Files}
@@ -3742,9 +3738,9 @@ bool QImageData::doImageIO(const QImage *image, QImageWriter *writer, int qualit
     \fn QDataStream &operator<<(QDataStream &stream, const QImage &image)
     \relates QImage
 
-    Writes the given \a image to the given \a stream as a PNG image,
-    or as a BMP image if the stream's version is 1. Note that writing
-    the stream to a file will not produce a valid image file.
+    Writes the given \a image to the given \a stream as a PNG image.
+    Note that writing the stream to a file will not produce a valid
+    image file.
 
     \sa QImage::save(), {Serializing Qt Data Types}
 */

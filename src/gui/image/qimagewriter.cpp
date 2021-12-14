@@ -87,7 +87,6 @@
 #include "qguicommon_p.h"
 
 // image handlers
-#include "qbmphandler_p.h"
 #include "qppmhandler_p.h"
 #include "qxbmhandler_p.h"
 #include "qxpmhandler_p.h"
@@ -104,10 +103,6 @@ static QImageIOHandler *createWriteHandlerHelper(QIODevice *device,
     // check if any built-in handlers can write the image
     if (form == "png") {
         handler = new QPngHandler;
-#ifndef QT_NO_IMAGEFORMAT_BMP
-    } else if (form == "bmp") {
-        handler = new QBmpHandler;
-#endif
 #ifndef QT_NO_IMAGEFORMAT_XPM
     } else if (form == "xpm") {
         handler = new QXpmHandler;
@@ -328,7 +323,7 @@ QString QImageWriter::fileName() const
     support setting the quality, this value is ignored.
 
     The value range of \a quality depends on the image format. For
-    example, the "jpeg" format supports a quality range from 0 (low
+    example, the "png" format supports a quality range from 0 (low
     quality, high compression) to 100 (high quality, low compression).
 
     \sa quality()
@@ -353,9 +348,7 @@ int QImageWriter::quality() const
     of an image. For image formats that do not support setting the
     compression, this value is ignored.
 
-    The value range of \a compression depends on the image format. For
-    example, the "tiff" format supports two values, 0(no compression) and
-    1(LZW-compression).
+    The value range of \a compression depends on the image format.
 
     \sa compression()
 */
@@ -508,12 +501,8 @@ bool QImageWriter::supportsOption(QImageIOHandler::ImageOption option) const
 
     \table
     \header \o Format \o Description
-    \row    \o BMP    \o Windows Bitmap
-    \row    \o JPG    \o Joint Photographic Experts Group
-    \row    \o JPEG   \o Joint Photographic Experts Group
     \row    \o PNG    \o Portable Network Graphics
     \row    \o PPM    \o Portable Pixmap
-    \row    \o TIFF   \o Tagged Image File Format
     \row    \o XBM    \o X11 Bitmap
     \row    \o XPM    \o X11 Pixmap
     \endtable
@@ -530,9 +519,6 @@ QList<QByteArray> QImageWriter::supportedImageFormats()
 {
     QList<QByteArray> formats;
     formats << "png";
-#ifndef QT_NO_IMAGEFORMAT_BMP
-    formats << "bmp";
-#endif
 #ifndef QT_NO_IMAGEFORMAT_PPM
     formats << "ppm";
 #endif

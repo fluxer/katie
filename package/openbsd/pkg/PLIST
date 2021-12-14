@@ -1433,11 +1433,7 @@ lib/katie/plugins/iconengines/
 @so lib/katie/plugins/iconengines/libqsvgicon.so
 lib/katie/plugins/imageformats/
 @so lib/katie/plugins/imageformats/libqgif.so
-@so lib/katie/plugins/imageformats/libqico.so
-@so lib/katie/plugins/imageformats/libqjpeg.so
 @so lib/katie/plugins/imageformats/libqsvg.so
-@so lib/katie/plugins/imageformats/libqtga.so
-@so lib/katie/plugins/imageformats/libqtiff.so
 lib/katie/plugins/script/
 @so lib/katie/plugins/script/libqtscriptdbus.so
 @lib lib/libKtCore.so.${LIBKtCore_VERSION}

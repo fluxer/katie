@@ -114,7 +114,6 @@
 #include "qguicommon_p.h"
 
 // image handlers
-#include "qbmphandler_p.h"
 #include "qppmhandler_p.h"
 #include "qxbmhandler_p.h"
 #include "qxpmhandler_p.h"
@@ -135,10 +134,6 @@ static QImageIOHandler *createReadHandlerHelper(QIODevice *device,
     // check if we have built-in support for the format first
     if (form == "png") {
         handler = new QPngHandler;
-#ifndef QT_NO_IMAGEFORMAT_BMP
-    } else if (form == "bmp") {
-        handler = new QBmpHandler;
-#endif
 #ifndef QT_NO_IMAGEFORMAT_XPM
     } else if (form == "xpm") {
         handler = new QXpmHandler;
@@ -172,11 +167,6 @@ static QImageIOHandler *createReadHandlerHelper(QIODevice *device,
         if (QPngHandler::canRead(device)) {
             handler = new QPngHandler;
         }
-#ifndef QT_NO_IMAGEFORMAT_BMP
-        if (!handler && QBmpHandler::canRead(device)) {
-            handler = new QBmpHandler;
-        }
-#endif
 #ifndef QT_NO_IMAGEFORMAT_XPM
         if (!handler && QXpmHandler::canRead(device)) {
             handler = new QXpmHandler;
@@ -506,7 +496,7 @@ QIODevice *QImageReader::device() const
     QImageReader will create a QFile object and open it in \l
     QIODevice::ReadOnly mode, and use this when reading images.
 
-    If \a fileName does not include a file extension (e.g., .png or .bmp),
+    If \a fileName does not include a file extension (e.g., .png or .xpm),
     QImageReader will cycle through all supported extensions until it finds
     a matching file.
 
@@ -541,7 +531,7 @@ QString QImageReader::fileName() const
     support setting the quality, this value is ignored.
 
     The value range of \a quality depends on the image format. For
-    example, the "jpeg" format supports a quality range from 0 (low
+    example, the "png" format supports a quality range from 0 (low
     quality, high compression) to 100 (high quality, low compression).
 
     \sa quality()
@@ -1024,10 +1014,7 @@ QString QImageReader::errorString() const
     false.
 
     Different image formats support different options. Call this function to
-    determine whether a certain option is supported by the current format. For
-    example, the PNG format allows you to embed text into the image's metadata
-    (see text()), and the BMP format allows you to determine the image's size
-    without loading the whole image into memory (see size()).
+    determine whether a certain option is supported by the current format.
 
     \snippet doc/src/snippets/code/src_gui_image_qimagereader.cpp 3
 
@@ -1078,31 +1065,18 @@ QByteArray QImageReader::imageFormat(QIODevice *device)
 
     \table
     \header \o Format \o Description
-    \row    \o BMP    \o Windows Bitmap
     \row    \o GIF    \o Graphic Interchange Format (optional)
-    \row    \o JPG    \o Joint Photographic Experts Group
-    \row    \o JPEG   \o Joint Photographic Experts Group
     \row    \o PNG    \o Portable Network Graphics
     \row    \o PBM    \o Portable Bitmap
     \row    \o PGM    \o Portable Graymap
     \row    \o PPM    \o Portable Pixmap
-    \row    \o TIFF   \o Tagged Image File Format
     \row    \o XBM    \o X11 Bitmap
     \row    \o XPM    \o X11 Pixmap
     \row    \o SVG    \o Scalable Vector Graphics
-    \row    \o TGA    \o Targa Image Format
     \endtable
 
     Reading and writing SVG files is supported through Qt's
     \l{QtSvg Module}{SVG Module}.
-
-    TGA support only extends to reading non-RLE compressed files.  In particular
-    calls to \l{http://doc.qt.io/qt-4.8/qimageioplugin.html#capabilities}{capabilities}
-    for the tga plugin returns only QImageIOPlugin::CanRead, not QImageIOPlugin::CanWrite.
-
-    To configure Qt with GIF support, pass \c -qt-gif to the \c
-    configure script or check the appropriate option in the graphical
-    installer.
 
     Note that the QApplication instance must be created before this function is
     called.
@@ -1113,9 +1087,6 @@ QList<QByteArray> QImageReader::supportedImageFormats()
 {
     QList<QByteArray> formats = QList<QByteArray>()
         << "png"
-#ifndef QT_NO_IMAGEFORMAT_BMP
-        << "bmp"
-#endif
 #ifndef QT_NO_IMAGEFORMAT_PPM
         << "ppm" << "pgm" << "pbm"
 #endif

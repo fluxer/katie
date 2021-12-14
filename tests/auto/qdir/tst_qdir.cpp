@@ -1455,7 +1455,7 @@ void tst_QDir::equalityOperator_data()
         << false;
 
     QTest::newRow("diff-namefilters") << SRCDIR << "*.cpp" << int(QDir::Name) << int(QDir::Files)
-        << SRCDIR << "*.jpg" << int(QDir::Name) << int(QDir::Files)
+        << SRCDIR << "*.png" << int(QDir::Name) << int(QDir::Files)
         << false;
 }
 
