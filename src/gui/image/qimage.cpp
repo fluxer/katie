@@ -2712,11 +2712,10 @@ QImage QImage::convertToFormat(Format format, Qt::ImageConversionFlags flags) co
     const Image_Converter converter = converter_map[d->format][format];
     if (converter) {
         QImage image(d->width, d->height, format);
-
         QIMAGE_SANITYCHECK_MEMORY(image);
 
-        image.setDotsPerMeterY(dotsPerMeterY());
-        image.setDotsPerMeterX(dotsPerMeterX());
+        image.d->dpmx = dotsPerMeterX();
+        image.d->dpmy = dotsPerMeterY();
 
         converter(image.d, d, flags);
         return image;
