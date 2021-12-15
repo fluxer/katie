@@ -1065,7 +1065,6 @@ QByteArray QImageReader::imageFormat(QIODevice *device)
 
     \table
     \header \o Format \o Description
-    \row    \o GIF    \o Graphic Interchange Format (optional)
     \row    \o PNG    \o Portable Network Graphics
     \row    \o PBM    \o Portable Bitmap
     \row    \o PGM    \o Portable Graymap

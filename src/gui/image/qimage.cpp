@@ -314,7 +314,6 @@ bool QImageData::checkForAlphaPixels() const
 
     \table
     \header \o Format \o Description                      \o Katie's support
-    \row    \o GIF    \o Graphic Interchange Format (optional) \o Read
     \row    \o PNG    \o Portable Network Graphics        \o Read/write
     \row    \o PBM    \o Portable Bitmap                  \o Read
     \row    \o PGM    \o Portable Graymap                 \o Read

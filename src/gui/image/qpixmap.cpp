@@ -1385,7 +1385,6 @@ QPixmap QPixmap::transformed(const QMatrix &matrix, Qt::TransformationMode mode)
 
     \table
     \header \o Format \o Description                      \o Qt's support
-    \row    \o GIF    \o Graphic Interchange Format (optional) \o Read
     \row    \o PNG    \o Portable Network Graphics        \o Read/write
     \row    \o PBM    \o Portable Bitmap                  \o Read
     \row    \o PGM    \o Portable Graymap                 \o Read

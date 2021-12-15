@@ -80,8 +80,6 @@ tst_QImageReader::tst_QImageReader()
     images << QPair<QString, QByteArray>(QLatin1String("runners.ppm"), QByteArray("ppm"));
     images << QPair<QString, QByteArray>(QLatin1String("test.ppm"), QByteArray("ppm"));
     images << QPair<QString, QByteArray>(QLatin1String("gnus.xbm"), QByteArray("xbm"));
-    images << QPair<QString, QByteArray>(QLatin1String("earth.gif"), QByteArray("gif"));
-    images << QPair<QString, QByteArray>(QLatin1String("trolltech.gif"), QByteArray("gif"));
 }
 
 tst_QImageReader::~tst_QImageReader()

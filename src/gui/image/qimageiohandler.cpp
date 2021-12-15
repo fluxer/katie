@@ -155,7 +155,7 @@
     knows which image formats your plugin supports.
 
     Different plugins can support different capabilities. For example,
-    you may have one plugin that supports reading the GIF format, and
+    you may have one plugin that supports reading the SVG format, and
     another that supports writing. Qt will select the correct plugin
     for the job, depending on the return value of capabilities(). If
     several plugins support the same capability, Qt will select one
@@ -503,7 +503,7 @@ QImageIOPlugin::~QImageIOPlugin()
     Returns the list of image keys this plugin supports.
 
     These keys are usually the names of the image formats that are implemented
-    in the plugin (e.g., "svg" or "gif").
+    in the plugin (e.g., "svg").
 
     \sa capabilities()
 */
