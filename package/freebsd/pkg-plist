@@ -1405,7 +1405,6 @@ lib/katie/imports/Qt/labs/particles/qmldir
 lib/katie/plugins/accessible/libqtaccessiblewidgets.so
 lib/katie/plugins/designer/libqdeclarativeview.so
 lib/katie/plugins/iconengines/libqsvgicon.so
-lib/katie/plugins/imageformats/libqgif.so
 lib/katie/plugins/imageformats/libqsvg.so
 lib/katie/plugins/script/libqtscriptdbus.so
 lib/libKtCore.so

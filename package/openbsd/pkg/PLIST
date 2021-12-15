@@ -1432,7 +1432,6 @@ lib/katie/plugins/designer/
 lib/katie/plugins/iconengines/
 @so lib/katie/plugins/iconengines/libqsvgicon.so
 lib/katie/plugins/imageformats/
-@so lib/katie/plugins/imageformats/libqgif.so
 @so lib/katie/plugins/imageformats/libqsvg.so
 lib/katie/plugins/script/
 @so lib/katie/plugins/script/libqtscriptdbus.so
