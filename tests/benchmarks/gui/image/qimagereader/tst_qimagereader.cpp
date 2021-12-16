@@ -79,7 +79,6 @@ tst_QImageReader::tst_QImageReader()
     images << QPair<QString, QByteArray>(QLatin1String("teapot.ppm"), QByteArray("ppm"));
     images << QPair<QString, QByteArray>(QLatin1String("runners.ppm"), QByteArray("ppm"));
     images << QPair<QString, QByteArray>(QLatin1String("test.ppm"), QByteArray("ppm"));
-    images << QPair<QString, QByteArray>(QLatin1String("gnus.xbm"), QByteArray("xbm"));
 }
 
 tst_QImageReader::~tst_QImageReader()

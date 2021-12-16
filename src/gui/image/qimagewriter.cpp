@@ -88,7 +88,6 @@
 
 // image handlers
 #include "qppmhandler_p.h"
-#include "qxbmhandler_p.h"
 #include "qxpmhandler_p.h"
 #include "qpnghandler_p.h"
 
@@ -106,10 +105,6 @@ static QImageIOHandler *createWriteHandlerHelper(QIODevice *device,
 #ifndef QT_NO_IMAGEFORMAT_XPM
     } else if (form == "xpm") {
         handler = new QXpmHandler;
-#endif
-#ifndef QT_NO_IMAGEFORMAT_XBM
-    } else if (form == "xbm") {
-        handler = new QXbmHandler;
 #endif
 #ifndef QT_NO_IMAGEFORMAT_PPM
     } else if (form == "pbm" || form == "pbmraw" || form == "pgm"
@@ -503,7 +498,6 @@ bool QImageWriter::supportsOption(QImageIOHandler::ImageOption option) const
     \header \o Format \o Description
     \row    \o PNG    \o Portable Network Graphics
     \row    \o PPM    \o Portable Pixmap
-    \row    \o XBM    \o X11 Bitmap
     \row    \o XPM    \o X11 Pixmap
     \endtable
 
@@ -521,9 +515,6 @@ QList<QByteArray> QImageWriter::supportedImageFormats()
     formats << "png";
 #ifndef QT_NO_IMAGEFORMAT_PPM
     formats << "ppm";
-#endif
-#ifndef QT_NO_IMAGEFORMAT_XBM
-    formats << "xbm";
 #endif
 #ifndef QT_NO_IMAGEFORMAT_XPM
     formats << "xpm";

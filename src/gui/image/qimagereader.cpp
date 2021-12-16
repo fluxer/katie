@@ -115,7 +115,6 @@
 
 // image handlers
 #include "qppmhandler_p.h"
-#include "qxbmhandler_p.h"
 #include "qxpmhandler_p.h"
 #include "qpnghandler_p.h"
 
@@ -137,10 +136,6 @@ static QImageIOHandler *createReadHandlerHelper(QIODevice *device,
 #ifndef QT_NO_IMAGEFORMAT_XPM
     } else if (form == "xpm") {
         handler = new QXpmHandler;
-#endif
-#ifndef QT_NO_IMAGEFORMAT_XBM
-    } else if (form == "xbm") {
-        handler = new QXbmHandler;
 #endif
 #ifndef QT_NO_IMAGEFORMAT_PPM
     } else if (form == "pbm" || form == "pbmraw" || form == "pgm"
@@ -177,11 +172,6 @@ static QImageIOHandler *createReadHandlerHelper(QIODevice *device,
         if (!handler && QPpmHandler::canRead(device, &subType)) {
             handler = new QPpmHandler;
             handler->setOption(QImageIOHandler::SubType, subType);
-        }
-#endif
-#ifndef QT_NO_IMAGEFORMAT_XBM
-        if (!handler && QXbmHandler::canRead(device)) {
-            handler = new QXbmHandler;
         }
 #endif
     }
@@ -1069,7 +1059,6 @@ QByteArray QImageReader::imageFormat(QIODevice *device)
     \row    \o PBM    \o Portable Bitmap
     \row    \o PGM    \o Portable Graymap
     \row    \o PPM    \o Portable Pixmap
-    \row    \o XBM    \o X11 Bitmap
     \row    \o XPM    \o X11 Pixmap
     \row    \o SVG    \o Scalable Vector Graphics
     \endtable
@@ -1088,9 +1077,6 @@ QList<QByteArray> QImageReader::supportedImageFormats()
         << "png"
 #ifndef QT_NO_IMAGEFORMAT_PPM
         << "ppm" << "pgm" << "pbm"
-#endif
-#ifndef QT_NO_IMAGEFORMAT_XBM
-        << "xbm"
 #endif
 #ifndef QT_NO_IMAGEFORMAT_XPM
         << "xpm"

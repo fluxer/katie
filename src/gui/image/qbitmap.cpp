@@ -249,8 +249,7 @@ QBitmap QBitmap::fromImage(const QImage &image, Qt::ImageConversionFlags flags)
 
     The bitmap data has to be byte aligned and provided in in the bit
     order specified by \a monoFormat. The mono format must be either
-    QImage::Format_Mono or QImage::Format_MonoLSB. Use
-    QImage::Format_Mono to specify data on the XBM format.
+    QImage::Format_Mono or QImage::Format_MonoLSB.
 
     \sa fromImage()
 
