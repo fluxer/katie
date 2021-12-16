@@ -30,10 +30,6 @@
 #include "qdrawhelper_p.h"
 #include "qguicommon_p.h"
 
-#include <zlib.h>
-#include <png.h>
-#include <pngconf.h>
-
 QT_BEGIN_NAMESPACE
 
 #if Q_BYTE_ORDER == Q_BIG_ENDIAN
@@ -49,67 +45,15 @@ QT_BEGIN_NAMESPACE
   Never to grayscale.
 */
 
-class QPngHandlerPrivate
-{
-public:
-    enum State {
-        Ready,
-        ReadHeader,
-        ReadingEnd,
-        Error
-    };
-
-    QPngHandlerPrivate(QPngHandler *qq)
-        : gamma(0.0), png_ptr(0), info_ptr(0),
-          end_info(0), row_pointers(0), state(Ready), q(qq)
-    { }
-
-    float gamma;
-    int quality;
-
-    png_struct *png_ptr;
-    png_info *info_ptr;
-    png_info *end_info;
-    png_byte **row_pointers;
-
-    bool readPngHeader();
-    bool readPngImage(QImage *image);
-
-    QImage::Format readImageFormat();
-
-    State state;
-
-    QPngHandler *q;
-};
-
-
 #if defined(Q_C_CALLBACKS)
 extern "C" {
 #endif
 
-class QPNGImageWriter {
-public:
-    explicit QPNGImageWriter(QIODevice*);
-    ~QPNGImageWriter();
-
-    void setGamma(float);
-
-    bool writeImage(const QImage& img);
-
-    QIODevice* device() { return dev; }
-
-private:
-    QIODevice* dev;
-    int frames_written;
-    float gamma;
-};
-
 static void iod_read_fn(png_structp png_ptr, png_bytep data, png_size_t length)
 {
-    QPngHandlerPrivate *d = (QPngHandlerPrivate *)png_get_io_ptr(png_ptr);
-    QIODevice *in = d->q->device();
+    QPngHandler *handler = (QPngHandler *)png_get_io_ptr(png_ptr);
 
-    png_size_t nr = in->read((char*)data, length);
+    png_size_t nr = handler->device()->read((char*)data, length);
     if (nr != length) {
         png_error(png_ptr, "Read Error");
     }
@@ -118,10 +62,9 @@ static void iod_read_fn(png_structp png_ptr, png_bytep data, png_size_t length)
 
 static void qpiw_write_fn(png_structp png_ptr, png_bytep data, png_size_t length)
 {
-    QPNGImageWriter* qpiw = (QPNGImageWriter*)png_get_io_ptr(png_ptr);
-    QIODevice* out = qpiw->device();
+    QPngHandler *handler = (QPngHandler *)png_get_io_ptr(png_ptr);
 
-    png_size_t nr = out->write((char*)data, length);
+    png_size_t nr = handler->device()->write((char*)data, length);
     if (nr != length) {
         png_error(png_ptr, "Write Error");
     }
@@ -137,14 +80,8 @@ static void qpiw_flush_fn(png_structp /* png_ptr */)
 #endif
 
 static
-void setup_qt(QImage& image, png_structp png_ptr, png_infop info_ptr, float screen_gamma)
+void setup_qt(QImage& image, png_structp png_ptr, png_infop info_ptr)
 {
-    if (screen_gamma != 0.0 && png_get_valid(png_ptr, info_ptr, PNG_INFO_gAMA)) {
-        double file_gamma;
-        png_get_gAMA(png_ptr, info_ptr, &file_gamma);
-        png_set_gamma(png_ptr, screen_gamma, file_gamma);
-    }
-
     png_uint_32 width;
     png_uint_32 height;
     int bit_depth;
@@ -296,12 +233,46 @@ static void qt_png_warning(png_structp /*png_ptr*/, png_const_charp message)
 }
 #endif
 
-/*!
-    \internal
-*/
-bool QPngHandlerPrivate::readPngHeader()
+
+QPngHandler::QPngHandler()
+    : png_ptr(0),
+    info_ptr(0),
+    end_info(0),
+    row_pointers(0)
 {
-    state = Error;
+}
+
+QPngHandler::~QPngHandler()
+{
+    if (png_ptr)
+        png_destroy_read_struct(&png_ptr, &info_ptr, &end_info);
+}
+
+bool QPngHandler::canRead() const
+{
+    if (QPngHandler::canRead(device())) {
+        setFormat("png");
+        return true;
+    }
+
+    return false;
+}
+
+bool QPngHandler::canRead(QIODevice *device)
+{
+    if (Q_UNLIKELY(!device)) {
+        qWarning("QPngHandler::canRead() called with no device");
+        return false;
+    }
+
+    return device->peek(8) == "\x89\x50\x4E\x47\x0D\x0A\x1A\x0A";
+}
+
+bool QPngHandler::read(QImage *image)
+{
+    if (!canRead())
+        return false;
+
     png_ptr = png_create_read_struct(PNG_LIBPNG_VER_STRING,0,0,0);
     if (!png_ptr)
         return false;
@@ -331,39 +302,20 @@ bool QPngHandlerPrivate::readPngHeader()
     png_set_read_fn(png_ptr, this, iod_read_fn);
     png_read_info(png_ptr, info_ptr);
 
-    state = ReadHeader;
-    return true;
-}
-
-/*!
-    \internal
-*/
-bool QPngHandlerPrivate::readPngImage(QImage *outImage)
-{
-    if (state == Error)
-        return false;
-
-    if (state == Ready && !readPngHeader()) {
-        state = Error;
-        return false;
-    }
-
     row_pointers = 0;
     if (setjmp(png_jmpbuf(png_ptr))) {
         png_destroy_read_struct(&png_ptr, &info_ptr, &end_info);
         delete [] row_pointers;
         png_ptr = 0;
-        state = Error;
         return false;
     }
 
-    setup_qt(*outImage, png_ptr, info_ptr, gamma);
+    setup_qt(*image, png_ptr, info_ptr);
 
-    if (outImage->isNull()) {
+    if (image->isNull()) {
         png_destroy_read_struct(&png_ptr, &info_ptr, &end_info);
         delete [] row_pointers;
         png_ptr = 0;
-        state = Error;
         return false;
     }
 
@@ -378,8 +330,8 @@ bool QPngHandlerPrivate::readPngImage(QImage *outImage)
                  0, 0, 0);
     png_get_oFFs(png_ptr, info_ptr, &offset_x, &offset_y, &unit_type);
 
-    uchar *data = outImage->bits();
-    int bpl = outImage->bytesPerLine();
+    uchar *data = image->bits();
+    int bpl = image->bytesPerLine();
     row_pointers = new png_bytep[height];
 
     for (uint y = 0; y < height; y++)
@@ -387,39 +339,19 @@ bool QPngHandlerPrivate::readPngImage(QImage *outImage)
 
     png_read_image(png_ptr, row_pointers);
 
-#if 0 // libpng takes care of this.
-    png_get_valid(png_ptr, info_ptr, PNG_INFO_tRNS)
-        if (outImage->depth()==32 && png_get_valid(png_ptr, info_ptr, PNG_INFO_tRNS)) {
-            QRgb trans = 0xFF000000 | qRgb(
-                (info_ptr->trans_values.red << 8 >> bit_depth)&0xff,
-                (info_ptr->trans_values.green << 8 >> bit_depth)&0xff,
-                (info_ptr->trans_values.blue << 8 >> bit_depth)&0xff);
-            for (uint y=0; y<height; y++) {
-                for (uint x=0; x<info_ptr->width; x++) {
-                    if (((uint**)jt)[y][x] == trans) {
-                        ((uint**)jt)[y][x] &= 0x00FFFFFF;
-                    } else {
-                    }
-                }
-            }
-        }
-#endif
+    image->setDotsPerMeterX(png_get_x_pixels_per_meter(png_ptr,info_ptr));
+    image->setDotsPerMeterY(png_get_y_pixels_per_meter(png_ptr,info_ptr));
 
-    outImage->setDotsPerMeterX(png_get_x_pixels_per_meter(png_ptr,info_ptr));
-    outImage->setDotsPerMeterY(png_get_y_pixels_per_meter(png_ptr,info_ptr));
-
-    state = ReadingEnd;
     png_read_end(png_ptr, end_info);
 
     png_destroy_read_struct(&png_ptr, &info_ptr, &end_info);
     delete [] row_pointers;
     png_ptr = 0;
-    state = Ready;
 
     // sanity check palette entries
     if (color_type == PNG_COLOR_TYPE_PALETTE
-        && outImage->format() == QImage::Format_Indexed8) {
-        int color_table_size = outImage->colorCount();
+        && image->format() == QImage::Format_Indexed8) {
+        int color_table_size = image->colorCount();
         for (int y=0; y<(int)height; ++y) {
             uchar *p = QFAST_SCAN_LINE(data, bpl, y);
             uchar *end = p + width;
@@ -434,67 +366,7 @@ bool QPngHandlerPrivate::readPngImage(QImage *outImage)
     return true;
 }
 
-QImage::Format QPngHandlerPrivate::readImageFormat()
-{
-        QImage::Format format = QImage::Format_Invalid;
-        png_uint_32 width, height;
-        int bit_depth, color_type;
-        png_colorp palette;
-        int num_palette;
-        png_get_IHDR(png_ptr, info_ptr, &width, &height, &bit_depth, &color_type, 0, 0, 0);
-        if (color_type == PNG_COLOR_TYPE_GRAY) {
-            // Black & White or 8-bit grayscale
-            if (bit_depth == 1 && png_get_channels(png_ptr, info_ptr) == 1) {
-                format = QImage::Format_Mono;
-            } else if (bit_depth == 16 && png_get_valid(png_ptr, info_ptr, PNG_INFO_tRNS)) {
-                format = QImage::Format_ARGB32;
-            } else {
-                format = QImage::Format_Indexed8;
-            }
-        } else if (color_type == PNG_COLOR_TYPE_PALETTE
-                   && png_get_PLTE(png_ptr, info_ptr, &palette, &num_palette)
-                   && num_palette <= 256)
-        {
-            // 1-bit and 8-bit color
-            if (bit_depth != 1)
-                png_set_packing(png_ptr);
-            png_read_update_info(png_ptr, info_ptr);
-            png_get_IHDR(png_ptr, info_ptr, &width, &height, &bit_depth, &color_type, 0, 0, 0);
-            format = bit_depth == 1 ? QImage::Format_Mono : QImage::Format_Indexed8;
-        } else {
-            // 32-bit
-            if (bit_depth == 16)
-                png_set_strip_16(png_ptr);
-
-            format = QImage::Format_ARGB32;
-            // Only add filler if no alpha, or we can get 5 channel data.
-            if (!(color_type & PNG_COLOR_MASK_ALPHA)
-                && !png_get_valid(png_ptr, info_ptr, PNG_INFO_tRNS)) {
-                // We want 4 bytes, but it isn't an alpha channel
-                format = QImage::Format_RGB32;
-            }
-        }
-
-        return format;
-}
-
-QPNGImageWriter::QPNGImageWriter(QIODevice* iod) :
-    dev(iod),
-    frames_written(0),
-    gamma(0.0)
-{
-}
-
-QPNGImageWriter::~QPNGImageWriter()
-{
-}
-
-void QPNGImageWriter::setGamma(float g)
-{
-    gamma = g;
-}
-
-bool QPNGImageWriter::writeImage(const QImage& image)
+bool QPngHandler::write(const QImage &image)
 {
     png_structp png_ptr = png_create_write_struct(PNG_LIBPNG_VER_STRING,0,0,0);
     if (!png_ptr) {
@@ -527,10 +399,6 @@ bool QPNGImageWriter::writeImage(const QImage& image)
     png_set_IHDR(png_ptr, info_ptr, image.width(), image.height(),
                  image.depth() == 1 ? 1 : 8, // per channel
                  color_type, 0, 0, 0);       // sets #channels
-
-    if (gamma != 0.0) {
-        png_set_gAMA(png_ptr, info_ptr, 1.0/gamma);
-    }
 
     png_color_8 sig_bit;
     sig_bit.red = 8;
@@ -574,9 +442,6 @@ bool QPNGImageWriter::writeImage(const QImage& image)
     png_set_bgr(png_ptr);
 #endif
 
-    if (frames_written > 0)
-        png_set_sig_bytes(png_ptr, 8);
-
     if (image.dotsPerMeterX() > 0 || image.dotsPerMeterY() > 0) {
         png_set_pHYs(png_ptr, info_ptr,
                 image.dotsPerMeterX(), image.dotsPerMeterY(),
@@ -619,92 +484,10 @@ bool QPNGImageWriter::writeImage(const QImage& image)
     }
 
     png_write_end(png_ptr, info_ptr);
-    frames_written++;
 
     png_destroy_write_struct(&png_ptr, &info_ptr);
 
     return true;
-}
-
-QPngHandler::QPngHandler()
-    : d(new QPngHandlerPrivate(this))
-{
-}
-
-QPngHandler::~QPngHandler()
-{
-    if (d->png_ptr)
-        png_destroy_read_struct(&d->png_ptr, &d->info_ptr, &d->end_info);
-    delete d;
-}
-
-bool QPngHandler::canRead() const
-{
-    if (d->state == QPngHandlerPrivate::Ready && !canRead(device()))
-        return false;
-
-    if (d->state != QPngHandlerPrivate::Error) {
-        setFormat("png");
-        return true;
-    }
-
-    return false;
-}
-
-bool QPngHandler::canRead(QIODevice *device)
-{
-    if (Q_UNLIKELY(!device)) {
-        qWarning("QPngHandler::canRead() called with no device");
-        return false;
-    }
-
-    return device->peek(8) == "\x89\x50\x4E\x47\x0D\x0A\x1A\x0A";
-}
-
-bool QPngHandler::read(QImage *image)
-{
-    if (!canRead())
-        return false;
-    return d->readPngImage(image);
-}
-
-bool QPngHandler::write(const QImage &image)
-{
-    QPNGImageWriter writer(device());
-    writer.setGamma(d->gamma);
-    return writer.writeImage(image);
-}
-
-bool QPngHandler::supportsOption(ImageOption option) const
-{
-    return option == Gamma
-        || option == ImageFormat
-        || option == Size;
-}
-
-QVariant QPngHandler::option(ImageOption option) const
-{
-    if (d->state == QPngHandlerPrivate::Error)
-        return QVariant();
-    if (d->state == QPngHandlerPrivate::Ready && !d->readPngHeader())
-        return QVariant();
-
-    if (option == Gamma)
-        return d->gamma;
-    else if (option == Size)
-        return QSize(png_get_image_width(d->png_ptr, d->info_ptr),
-                     png_get_image_height(d->png_ptr, d->info_ptr));
-    else if (option == ImageFormat)
-        return d->readImageFormat();
-    return 0;
-}
-
-void QPngHandler::setOption(ImageOption option, const QVariant &value)
-{
-    if (option == Gamma)
-        d->gamma = value.toFloat();
-    else if (option == Quality)
-        d->quality = value.toInt();
 }
 
 QByteArray QPngHandler::name() const
