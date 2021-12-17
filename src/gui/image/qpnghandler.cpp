@@ -112,10 +112,9 @@ static void setup_qt(QImage& image, png_structp png_ptr, png_infop info_ptr)
         // We want 4 bytes, but it isn't an alpha channel
         format = QImage::Format_RGB32;
     }
-    if (image.size() != QSize(width, height) || image.format() != format) {
-        image = QImage(width, height, format);
-        if (image.isNull())
-            return;
+    image = QImage(width, height, format);
+    if (image.isNull()) {
+        return;
     }
 
 #if Q_BYTE_ORDER == Q_BIG_ENDIAN
