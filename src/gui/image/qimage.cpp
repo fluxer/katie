@@ -3806,48 +3806,10 @@ bool QImage::operator==(const QImage & i) const
         return false;
     }
 
-    if (i.d->format != d->format) {
-        for (int h = 0; h < d->height; h++) {
-            for (int w = 0; w < d->width; w++) {
-                if (pixel(w, h) != i.pixel(w, h)) {
-                    return false;
-                }
-            }
-        }
-        return true;
-    }
-
-    if (d->format != Format_RGB32) {
-        if (d->format >= Format_ARGB32) { // all bits defined
-            const int n = d->width * d->depth / 8;
-            if (n == d->bytes_per_line && n == i.d->bytes_per_line) {
-                if (memcmp(constBits(), i.constBits(), d->nbytes))
-                    return false;
-            } else {
-                for (int y = 0; y < d->height; ++y) {
-                    if (memcmp(constScanLine(y), i.constScanLine(y), n))
-                        return false;
-                }
-            }
-        } else {
-            const int w = width();
-            const int h = height();
-            for (int y=0; y<h; ++y) {
-                for (int x=0; x<w; ++x) {
-                    if (d->colortable.at(pixelIndex(x, y)) != i.d->colortable.at(i.pixelIndex(x, y)))
-                        return false;
-                }
-            }
-        }
-    } else {
-        //alpha channel undefined, so we must mask it out
-        for(int l = 0; l < d->height; l++) {
-            int w = d->width;
-            const uint *p1 = reinterpret_cast<const uint*>(scanLine(l));
-            const uint *p2 = reinterpret_cast<const uint*>(i.scanLine(l));
-            while (w--) {
-                if ((*p1++ & 0x00ffffff) != (*p2++ & 0x00ffffff))
-                    return false;
+    for (int h = 0; h < d->height; h++) {
+        for (int w = 0; w < d->width; w++) {
+            if (pixel(w, h) != i.pixel(w, h)) {
+                return false;
             }
         }
     }
