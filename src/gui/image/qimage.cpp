@@ -3806,6 +3806,11 @@ bool QImage::operator==(const QImage & i) const
         return false;
     }
 
+    if (i.d->format == d->format && i.d->nbytes == d->nbytes
+        && d->format >= QImage::Format_RGB32 && d->format <= QImage::Format_RGB16) {
+        return (memcmp(constBits(), i.constBits(), d->nbytes) == 0);
+    }
+
     for (int h = 0; h < d->height; h++) {
         for (int w = 0; w < d->width; w++) {
             if (pixel(w, h) != i.pixel(w, h)) {
