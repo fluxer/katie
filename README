@@ -39,7 +39,7 @@ There are several things you should be aware before considering Katie:
   - dropped Motif Drag-And-Drop (DND) support
   - dropped LPR support
   - dropped static plugins support
-  - dropped MNG image format support
+  - dropped XBM, PGM, MNG, BMP, ICO, TGA, JPEG, TIFF and GIF image format support
   - dropped obscure (24-bit) image formats support
   - dropped Valgrind support
   - dropped recursive mutex and lock support

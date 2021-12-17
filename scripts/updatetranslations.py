@@ -3,7 +3,7 @@
 import os, glob, subprocess
 
 components = ('core', 'dbus', 'declarative', 'gui', 'network', 'plugins',
-    'script', 'scripttools', 'sql', 'svg', 'test', 'uitools', 'xml')
+    'script', 'scripttools', 'svg', 'test', 'uitools', 'xml')
 cfiles = []
 tfiles = []
 

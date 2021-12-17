@@ -74,7 +74,7 @@ public:
         ConstantOpacity             = 0x00000040, // Can render at constant opacity
         PerspectiveTransform        = 0x00000080, // Can do perspective transformations
         BlendModes                  = 0x00000100, // Can do extended Porter&Duff composition
-        PaintOutsidePaintEvent      = 0x00000400, // Engine is capable of painting outside paint events
+        PaintOutsidePaintEvent      = 0x00000200, // Engine is capable of painting outside paint events
 
         AllFeatures                 = 0xffffffff  // For convenience
     };

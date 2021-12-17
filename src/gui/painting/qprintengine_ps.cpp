@@ -272,80 +272,73 @@ static QByteArray compressHelper(const QImage &image, bool gray, int *format)
 
     Q_ASSERT(image.format() != QImage::Format_ARGB32_Premultiplied);
 
-    if (depth != 1 && !gray && QImageWriter::supportedImageFormats().contains("jpeg")) {
-        QBuffer buffer(&pixelData);
-        QImageWriter writer(&buffer, "jpeg");
-        writer.setQuality(94);
-        writer.write(image);
-        *format = DCT;
-    } else {
-        int width = image.width();
-        int height = image.height();
-        int size = width*height;
 
-        if (depth == 1)
-            size = (width+7)/8*height;
-        else if (!gray)
-            size = size*3;
+    int width = image.width();
+    int height = image.height();
+    int size = width*height;
 
-        pixelData.resize(size);
-        uchar *pixel = (uchar *)pixelData.data();
-        int i = 0;
-        if (depth == 1) {
-            QImage::Format format = image.format();
-            memset(pixel, 0xff, size);
-            for(int y=0; y < height; y++) {
-                const uchar * s = image.scanLine(y);
-                for(int x=0; x < width; x++) {
-                    // need to copy bit for bit...
-                    bool b = (format == QImage::Format_MonoLSB) ?
-                             (*(s + (x >> 3)) >> (x & 7)) & 1 :
-                             (*(s + (x >> 3)) << (x & 7)) & 0x80 ;
-                    if (b)
-                        pixel[i >> 3] ^= (0x80 >> (i & 7));
+    if (depth == 1)
+        size = (width+7)/8*height;
+    else if (!gray)
+        size = size*3;
+
+    pixelData.resize(size);
+    uchar *pixel = (uchar *)pixelData.data();
+    int i = 0;
+    if (depth == 1) {
+        QImage::Format format = image.format();
+        memset(pixel, 0xff, size);
+        for(int y=0; y < height; y++) {
+            const uchar * s = image.scanLine(y);
+            for(int x=0; x < width; x++) {
+                // need to copy bit for bit...
+                bool b = (format == QImage::Format_MonoLSB) ?
+                            (*(s + (x >> 3)) >> (x & 7)) & 1 :
+                            (*(s + (x >> 3)) << (x & 7)) & 0x80 ;
+                if (b)
+                    pixel[i >> 3] ^= (0x80 >> (i & 7));
+                i++;
+            }
+            // we need to align to 8 bit here
+            i = (i+7) & 0xffffff8;
+        }
+    } else if (depth == 8) {
+        for(int y=0; y < height; y++) {
+            const uchar * s = image.scanLine(y);
+            for(int x=0; x < width; x++) {
+                QRgb rgb = image.color(s[x]);
+                if (gray) {
+                    pixel[i] = (unsigned char) qGray(rgb);
                     i++;
-                }
-                // we need to align to 8 bit here
-                i = (i+7) & 0xffffff8;
-            }
-        } else if (depth == 8) {
-            for(int y=0; y < height; y++) {
-                const uchar * s = image.scanLine(y);
-                for(int x=0; x < width; x++) {
-                    QRgb rgb = image.color(s[x]);
-                    if (gray) {
-                        pixel[i] = (unsigned char) qGray(rgb);
-                        i++;
-                    } else {
-                        pixel[i] = (unsigned char) qRed(rgb);
-                        pixel[i+1] = (unsigned char) qGreen(rgb);
-                        pixel[i+2] = (unsigned char) qBlue(rgb);
-                        i += 3;
-                    }
-                }
-            }
-        } else {
-            for(int y=0; y < height; y++) {
-                QRgb * s = (QRgb*)(image.scanLine(y));
-                for(int x=0; x < width; x++) {
-                    QRgb rgb = (*s++);
-                    if (gray) {
-                        pixel[i] = (unsigned char) qGray(rgb);
-                        i++;
-                    } else {
-                        pixel[i] = (unsigned char) qRed(rgb);
-                        pixel[i+1] = (unsigned char) qGreen(rgb);
-                        pixel[i+2] = (unsigned char) qBlue(rgb);
-                        i += 3;
-                    }
+                } else {
+                    pixel[i] = (unsigned char) qRed(rgb);
+                    pixel[i+1] = (unsigned char) qGreen(rgb);
+                    pixel[i+2] = (unsigned char) qBlue(rgb);
+                    i += 3;
                 }
             }
         }
-        *format = Raw;
-        if (depth == 1) {
-            pixelData = runlengthEncode(pixelData);
-            *format = Runlength;
+    } else {
+        for(int y=0; y < height; y++) {
+            QRgb * s = (QRgb*)(image.scanLine(y));
+            for(int x=0; x < width; x++) {
+                QRgb rgb = (*s++);
+                if (gray) {
+                    pixel[i] = (unsigned char) qGray(rgb);
+                    i++;
+                } else {
+                    pixel[i] = (unsigned char) qRed(rgb);
+                    pixel[i+1] = (unsigned char) qGreen(rgb);
+                    pixel[i+2] = (unsigned char) qBlue(rgb);
+                    i += 3;
+                }
+            }
         }
+    }
+    *format = Raw;
+    if (depth == 1) {
+        pixelData = runlengthEncode(pixelData);
+        *format = Runlength;
     }
     return QPdf::ascii85Encode(pixelData);
 }

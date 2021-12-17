@@ -102,7 +102,7 @@ public:
         CompositionMode_HardLight,
         CompositionMode_SoftLight,
         CompositionMode_Difference,
-        CompositionMode_Exclusion,
+        CompositionMode_Exclusion
     };
     void setCompositionMode(CompositionMode mode);
     CompositionMode compositionMode() const;

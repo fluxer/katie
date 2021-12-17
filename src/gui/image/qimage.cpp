@@ -313,17 +313,11 @@ bool QImageData::checkForAlphaPixels() const
     formats:
 
     \table
-    \header \o Format \o Description                      \o Qt's support
-    \row    \o BMP    \o Windows Bitmap                   \o Read/write
-    \row    \o GIF    \o Graphic Interchange Format (optional) \o Read
-    \row    \o JPG    \o Joint Photographic Experts Group \o Read/write
-    \row    \o JPEG   \o Joint Photographic Experts Group \o Read/write
+    \header \o Format \o Description                      \o Katie's support
     \row    \o PNG    \o Portable Network Graphics        \o Read/write
     \row    \o PBM    \o Portable Bitmap                  \o Read
     \row    \o PGM    \o Portable Graymap                 \o Read
     \row    \o PPM    \o Portable Pixmap                  \o Read/write
-    \row    \o TIFF   \o Tagged Image File Format         \o Read/write
-    \row    \o XBM    \o X11 Bitmap                       \o Read/write
     \row    \o XPM    \o X11 Pixmap                       \o Read/write
     \endtable
 
@@ -3571,7 +3565,7 @@ QImage QImage::rgbSwapped() const
     the image was successfully loaded; otherwise returns false.
 
     The loader attempts to read the image using the specified \a format, e.g.,
-    PNG or JPG. If \a format is not specified (which is the default), the
+    PNG or XPM. If \a format is not specified (which is the default), the
     loader probes the file for a header to guess the file format.
 
     The file name can either refer to an actual file on disk or to one
@@ -3621,7 +3615,7 @@ bool QImage::load(QIODevice* device, const char* format)
     returns false.
 
     The loader attempts to read the image using the specified \a format, e.g.,
-    PNG or JPG. If \a format is not specified (which is the default), the
+    PNG or XPM. If \a format is not specified (which is the default), the
     loader probes the file for a header to guess the file format.
 
     \sa {QImage#Reading and Writing Image Files}{Reading and Writing Image Files}
@@ -3742,9 +3736,9 @@ bool QImageData::doImageIO(const QImage *image, QImageWriter *writer, int qualit
     \fn QDataStream &operator<<(QDataStream &stream, const QImage &image)
     \relates QImage
 
-    Writes the given \a image to the given \a stream as a PNG image,
-    or as a BMP image if the stream's version is 1. Note that writing
-    the stream to a file will not produce a valid image file.
+    Writes the given \a image to the given \a stream as a PNG image.
+    Note that writing the stream to a file will not produce a valid
+    image file.
 
     \sa QImage::save(), {Serializing Qt Data Types}
 */
@@ -3808,40 +3802,19 @@ bool QImage::operator==(const QImage & i) const
         return false;
 
     // obviously different stuff?
-    if (i.d->height != d->height || i.d->width != d->width || i.d->format != d->format)
+    if (i.d->height != d->height || i.d->width != d->width) {
         return false;
+    }
 
-    if (d->format != Format_RGB32) {
-        if (d->format >= Format_ARGB32) { // all bits defined
-            const int n = d->width * d->depth / 8;
-            if (n == d->bytes_per_line && n == i.d->bytes_per_line) {
-                if (memcmp(constBits(), i.constBits(), d->nbytes))
-                    return false;
-            } else {
-                for (int y = 0; y < d->height; ++y) {
-                    if (memcmp(constScanLine(y), i.constScanLine(y), n))
-                        return false;
-                }
-            }
-        } else {
-            const int w = width();
-            const int h = height();
-            for (int y=0; y<h; ++y) {
-                for (int x=0; x<w; ++x) {
-                    if (d->colortable.at(pixelIndex(x, y)) != i.d->colortable.at(i.pixelIndex(x, y)))
-                        return false;
-                }
-            }
-        }
-    } else {
-        //alpha channel undefined, so we must mask it out
-        for(int l = 0; l < d->height; l++) {
-            int w = d->width;
-            const uint *p1 = reinterpret_cast<const uint*>(scanLine(l));
-            const uint *p2 = reinterpret_cast<const uint*>(i.scanLine(l));
-            while (w--) {
-                if ((*p1++ & 0x00ffffff) != (*p2++ & 0x00ffffff))
-                    return false;
+    if (i.d->format == d->format && i.d->nbytes == d->nbytes
+        && d->format >= QImage::Format_RGB32 && d->format <= QImage::Format_RGB16) {
+        return (memcmp(constBits(), i.constBits(), d->nbytes) == 0);
+    }
+
+    for (int h = 0; h < d->height; h++) {
+        for (int w = 0; w < d->width; w++) {
+            if (pixel(w, h) != i.pixel(w, h)) {
+                return false;
             }
         }
     }

@@ -233,8 +233,9 @@ void QX11PixmapData::resize(int width, int height)
 #endif // QT_NO_XRENDER
 }
 
-struct QX11AlphaDetector
+class QX11AlphaDetector
 {
+public:
     bool hasAlpha() const {
         if (checked)
             return has;
@@ -343,85 +344,7 @@ void QX11PixmapData::fromImage(const QImage &img,
 
         xi = XCreateImage(dpy, visual, d, ZPixmap, 0, 0, w, h, 32, 0);
         Q_CHECK_PTR(xi);
-        newbits = (uchar *)::malloc(size_t(xi->bytes_per_line) * h);
-        Q_CHECK_PTR(newbits);
-        xi->data = (char *)newbits;
-
-        switch(image.format()) {
-        case QImage::Format_Indexed8: {
-            QVector<QRgb> colorTable = image.colorTable();
-            uint *xidata = (uint *)xi->data;
-            for (int y = 0; y < h; ++y) {
-                const uchar *p = image.constScanLine(y);
-                for (int x = 0; x < w; ++x) {
-                    const QRgb rgb = colorTable[p[x]];
-                    const int a = qAlpha(rgb);
-                    if (a == 0xff)
-                        *xidata = rgb;
-                    else
-                        // RENDER expects premultiplied alpha
-                        *xidata = qRgba(qt_div_255(qRed(rgb) * a),
-                                        qt_div_255(qGreen(rgb) * a),
-                                        qt_div_255(qBlue(rgb) * a),
-                                        a);
-                    ++xidata;
-                }
-            }
-            break;
-        }
-        case QImage::Format_RGB32: {
-            uint *xidata = (uint *)xi->data;
-            for (int y = 0; y < h; ++y) {
-                const QRgb *p = (const QRgb *) image.constScanLine(y);
-                for (int x = 0; x < w; ++x)
-                    *xidata++ = p[x] | 0xff000000;
-            }
-            break;
-        }
-        case QImage::Format_ARGB32: {
-            uint *xidata = (uint *)xi->data;
-            for (int y = 0; y < h; ++y) {
-                const QRgb *p = (const QRgb *) image.constScanLine(y);
-                for (int x = 0; x < w; ++x) {
-                    const QRgb rgb = p[x];
-                    const int a = qAlpha(rgb);
-                    if (a == 0xff)
-                        *xidata = rgb;
-                    else
-                        // RENDER expects premultiplied alpha
-                        *xidata = qRgba(qt_div_255(qRed(rgb) * a),
-                                        qt_div_255(qGreen(rgb) * a),
-                                        qt_div_255(qBlue(rgb) * a),
-                                        a);
-                    ++xidata;
-                }
-            }
-            break;
-        }
-        case QImage::Format_ARGB32_Premultiplied: {
-            uint *xidata = (uint *)xi->data;
-            for (int y = 0; y < h; ++y) {
-                const QRgb *p = (const QRgb *) image.constScanLine(y);
-                memcpy(xidata, p, w*sizeof(QRgb));
-                xidata += w;
-            }
-            break;
-        }
-        default:
-            Q_ASSERT(false);
-        }
-
-        if ((xi->byte_order == MSBFirst) != (Q_BYTE_ORDER == Q_BIG_ENDIAN)) {
-            uint *xidata = (uint *)xi->data;
-            uint *xiend = xidata + w*h;
-            while (xidata < xiend) {
-                *xidata = (*xidata >> 24)
-                          | ((*xidata >> 8) & 0xff00)
-                          | ((*xidata << 8) & 0xff0000)
-                          | (*xidata << 24);
-                ++xidata;
-            }
-        }
+        QX11Data::copyQImageToXImage(image, xi);
 
         GC gc = XCreateGC(dpy, hd, 0, 0);
         XPutImage(dpy, hd, gc, xi, 0, 0, 0, 0, w, h);
@@ -433,23 +356,14 @@ void QX11PixmapData::fromImage(const QImage &img,
     }
 #endif // QT_NO_XRENDER
 
-    if (!xi) {                                      // X image not created
-        xi = XCreateImage(dpy, visual, dd, ZPixmap, 0, 0, w, h, 32, 0);
-        Q_CHECK_PTR(xi);
-        newbits = (uchar *)::malloc(size_t(xi->bytes_per_line) * h);
-        Q_CHECK_PTR(newbits);
-        xi->data = (char *)newbits;
-
+    if (!xi) { // X image not created
         if (image.format() != QImage::Format_RGB32) {
             image = image.convertToFormat(QImage::Format_RGB32, flags);
         }
 
-        uint *xidata = (uint *)xi->data;
-        for (int y = 0; y < h; ++y) {
-            const QRgb *p = (const QRgb *) image.constScanLine(y);
-            for (int x = 0; x < w; ++x)
-                *xidata++ = p[x] | 0xff000000;
-        }
+        xi = XCreateImage(dpy, visual, dd, ZPixmap, 0, 0, w, h, 32, 0);
+        Q_CHECK_PTR(xi);
+        QX11Data::copyQImageToXImage(image, xi);
     }
 
     hd = (Qt::HANDLE)XCreatePixmap(qt_x11Data->display,

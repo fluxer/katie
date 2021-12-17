@@ -2917,8 +2917,7 @@ QTextTableFormat::QTextTableFormat(const QTextFormat &fmt)
     occupy is specified using setWidth() and setHeight().
 
     Images can be supplied in any format for which Qt has an image
-    reader, so SVG drawings can be included alongside PNG, TIFF and
-    other bitmap formats.
+    reader, so SVG drawings can be included alongside PNG.
 
     \sa QImage, QImageReader
 */

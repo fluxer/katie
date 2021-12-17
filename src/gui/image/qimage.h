@@ -212,6 +212,7 @@ private:
     friend class QRasterPixmapData;
     friend class QX11PixmapData;
     friend class QX11AlphaDetector;
+    friend class QPngHandler;
 };
 
 Q_DECLARE_TYPEINFO(QImage, Q_MOVABLE_TYPE);

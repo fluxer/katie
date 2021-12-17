@@ -341,17 +341,13 @@ static QString imageFilter()
 {
     QString filter = QApplication::translate("IconSelector", "All Pixmaps (");
     const QList<QByteArray> supportedImageFormats = QImageReader::supportedImageFormats();
-    const QString jpeg = QLatin1String("JPEG");
     const int count = supportedImageFormats.count();
     for (int i = 0; i< count; ++i) {
         if (i)
             filter += QLatin1Char(' ');
         filter += QLatin1String("*.");
         const QString outputFormat = QString::fromUtf8(supportedImageFormats.at(i));
-        if (outputFormat != jpeg)
-            filter += outputFormat.toLower();
-        else
-            filter += QLatin1String("jpg *.jpeg");
+        filter += outputFormat.toLower();
     }
     filter += QLatin1Char(')');
     return filter;

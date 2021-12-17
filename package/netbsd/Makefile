@@ -4,7 +4,7 @@
 # https://www.netbsd.org/docs/pkgsrc/
 
 DISTNAME = master
-PKGNAME = katie-4.11.1.d20201231
+PKGNAME = katie-4.12.0.d20201231
 CATEGORIES = devel x11 net www
 MAINTAINER = xakepa10@gmail.com
 COMMENT = C++ toolkit deived from the Qt 4.8 framework
@@ -43,10 +43,8 @@ BUILD_DEPENDS = unifdef-[0-9]*:../../devel/unifdef
 .include "../../fonts/fontconfig/buildlink3.mk"
 .include "../../graphics/freetype2/buildlink3.mk"
 .include "../../graphics/png/buildlink3.mk"
-.include "../../graphics/tiff/buildlink3.mk"
 .include "../../print/cups-base/buildlink3.mk"
 .include "../../sysutils/dbus/buildlink3.mk"
 .include "../../mk/pthread.buildlink3.mk"
-.include "../../mk/jpeg.buildlink3.mk"
 .include "../../mk/dlopen.buildlink3.mk"
 .include "../../mk/bsd.pkg.mk"

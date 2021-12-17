@@ -4,19 +4,18 @@ Maintainer: Ivailo Monev <xakepa10@gmail.com>
 Homepage: https://github.com/fluxer/katie
 Vcs-Git: git://github.com/fluxer/katie.git
 Vcs-browser: https://github.com/fluxer/katie
-Standards-Version: 4.11.1
+Standards-Version: 4.12.0
 Build-Depends: debhelper (>= 9~), libssl-dev, zlib1g-dev, libzstd-dev,
- libc6-dev, libjansson-dev, libpng-dev, libjpeg-dev, libtiff5-dev,
- libcups2-dev, libfreetype6-dev, libfontconfig1-dev, libpcre3-dev,
- libdbus-1-dev, libicu-dev, cmake, git, xserver-xorg-dev,
- libxinerama-dev, libxrandr-dev, libxrender-dev, libxcursor-dev,
- libsm-dev, unifdef | dpkg
+ libc6-dev, libjansson-dev, libpng-dev, libcups2-dev, libfreetype6-dev,
+ libfontconfig1-dev, libpcre3-dev, libdbus-1-dev, libicu-dev, cmake,
+ git, xserver-xorg-dev, libxinerama-dev, libxrandr-dev, libxrender-dev,
+ libxcursor-dev, libsm-dev, unifdef | dpkg
 
 Package: katie-runtime
 Architecture: amd64 arm64 armel armhf i386 mips mips64el mipsel ppc64el s390x hurd-i386
 Section: x11
 Depends: ${shlibs:Depends}, ${misc:Depends}, xdg-utils
-Recommends: unixodbc, xserver-xorg-core
+Recommends: xserver-xorg-core
 Description: C++ toolkit derived from the Qt 4.8 framework
  Katie is continuation of the Qt4 C++ toolkit with the goal to keep it alive,
  clean it up, fix some bugs and backport some features from Qt5. It is based

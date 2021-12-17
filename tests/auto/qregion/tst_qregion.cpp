@@ -300,11 +300,11 @@ void tst_QRegion::emptyPolygonRegion()
     QTEST(r.rects(), "rects");
 }
 
-
+/* XPM */
 static const char *circle_xpm[] = {
     "20 20 2 1",
-    "	c #FFFFFF",
-    ".	c #000000",
+    " c #FFFFFF",
+    ". c #000000",
     "       ......       ",
     "     ..........     ",
     "   ..............   ",
