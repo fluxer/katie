@@ -233,8 +233,9 @@ void QX11PixmapData::resize(int width, int height)
 #endif // QT_NO_XRENDER
 }
 
-struct QX11AlphaDetector
+class QX11AlphaDetector
 {
+public:
     bool hasAlpha() const {
         if (checked)
             return has;
