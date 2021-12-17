@@ -3802,8 +3802,20 @@ bool QImage::operator==(const QImage & i) const
         return false;
 
     // obviously different stuff?
-    if (i.d->height != d->height || i.d->width != d->width || i.d->format != d->format)
+    if (i.d->height != d->height || i.d->width != d->width) {
         return false;
+    }
+
+    if (i.d->format != d->format) {
+        for (int h = 0; h < d->height; h++) {
+            for (int w = 0; w < d->width; w++) {
+                if (pixel(w, h) != i.pixel(w, h)) {
+                    return false;
+                }
+            }
+        }
+        return true;
+    }
 
     if (d->format != Format_RGB32) {
         if (d->format >= Format_ARGB32) { // all bits defined
