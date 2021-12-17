@@ -748,6 +748,7 @@ set(GUI_SOURCES
     ${CMAKE_CURRENT_SOURCE_DIR}/kernel/qx11info_x11.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/kernel/qkeymapper_x11.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/kernel/qeventdispatcher_x11.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/kernel/qt_x11.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/math3d/qgenericmatrix.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/math3d/qmatrix4x4.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/math3d/qquaternion.cpp
@@ -995,6 +996,7 @@ katie_unity_exclude(
     ${CMAKE_CURRENT_SOURCE_DIR}/kernel/qwidget_x11.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/kernel/qx11embed_x11.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/kernel/qx11info_x11.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/kernel/qt_x11.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/painting/qbackingstore.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/painting/qcolor.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/painting/qcolormap_x11.cpp

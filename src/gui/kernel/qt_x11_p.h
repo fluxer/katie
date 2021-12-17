@@ -256,6 +256,9 @@ struct QX11Data
     XRenderColor preMultiply(const QColor &c);
 #endif
 
+    static void copyQImageToXImage(const QImage &image, XImage *ximage);
+    static void copyXImageToQImage(XImage *ximage, QImage &image);
+
     bool has_fontconfig;
     bool fc_antialias;
     int fc_hint_style;
