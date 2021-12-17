@@ -20,13 +20,9 @@
 ****************************************************************************/
 
 #include "qpnghandler_p.h"
-#include "qcoreapplication.h"
 #include "qiodevice.h"
 #include "qimage.h"
-#include "qlist.h"
-#include "qtextcodec.h"
-#include "qvariant.h"
-#include "qvector.h"
+#include "qimage_p.h"
 #include "qdrawhelper_p.h"
 #include "qguicommon_p.h"
 
@@ -339,8 +335,8 @@ bool QPngHandler::read(QImage *image)
 
     png_read_image(png_ptr, row_pointers);
 
-    image->setDotsPerMeterX(png_get_x_pixels_per_meter(png_ptr,info_ptr));
-    image->setDotsPerMeterY(png_get_y_pixels_per_meter(png_ptr,info_ptr));
+    image->d->dpmx = png_get_x_pixels_per_meter(png_ptr,info_ptr);
+    image->d->dpmy = png_get_y_pixels_per_meter(png_ptr,info_ptr);
 
     png_read_end(png_ptr, end_info);
 
