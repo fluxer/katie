@@ -239,24 +239,14 @@ void tst_QImage::formatHandlersInput_data()
 {
     QTest::addColumn<QString>("testFormat");
     QTest::addColumn<QString>("testFile");
-    #ifdef SRCDIR
     const QString prefix = QLatin1String(SRCDIR) + "/images/";
-    #else
-    const QString prefix = "images/";
-    #endif
 
     // add a new line here when a file is added
-    QTest::newRow("ICO") << "ICO" << prefix + "image.ico";
     QTest::newRow("PNG") << "PNG" << prefix + "image.png";
-    QTest::newRow("GIF") << "GIF" << prefix + "image.gif";
-    QTest::newRow("BMP") << "BMP" << prefix + "image.bmp";
-    QTest::newRow("JPEG") << "JPEG" << prefix + "image.jpg";
     QTest::newRow("PBM") << "PBM" << prefix + "image.pbm";
     QTest::newRow("PGM") << "PGM" << prefix + "image.pgm";
     QTest::newRow("PPM") << "PPM" << prefix + "image.ppm";
-    QTest::newRow("XBM") << "XBM" << prefix + "image.xbm";
-    QTest::newRow("XPM") << "XPM" << prefix + "image.xpm";
-    QTest::newRow("TIFF") << "TIFF" << prefix + "image.tif";
+    QTest::newRow("XPM") << "XPM" << prefix + "image.xpm";;
 }
 
 void tst_QImage::formatHandlersInput()
