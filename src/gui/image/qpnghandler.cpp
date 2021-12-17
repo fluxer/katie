@@ -26,6 +26,10 @@
 #include "qdrawhelper_p.h"
 #include "qguicommon_p.h"
 
+#include <zlib.h>
+#include <png.h>
+#include <pngconf.h>
+
 QT_BEGIN_NAMESPACE
 
 #if Q_BYTE_ORDER == Q_BIG_ENDIAN
@@ -231,17 +235,11 @@ static void qt_png_warning(png_structp /*png_ptr*/, png_const_charp message)
 
 
 QPngHandler::QPngHandler()
-    : png_ptr(0),
-    info_ptr(0),
-    end_info(0),
-    row_pointers(0)
 {
 }
 
 QPngHandler::~QPngHandler()
 {
-    if (png_ptr)
-        png_destroy_read_struct(&png_ptr, &info_ptr, &end_info);
 }
 
 bool QPngHandler::canRead() const
@@ -269,40 +267,34 @@ bool QPngHandler::read(QImage *image)
     if (!canRead())
         return false;
 
-    png_ptr = png_create_read_struct(PNG_LIBPNG_VER_STRING,0,0,0);
+    png_struct *png_ptr = png_create_read_struct(PNG_LIBPNG_VER_STRING,0,0,0);
     if (!png_ptr)
         return false;
 
     png_set_error_fn(png_ptr, 0, 0, qt_png_warning);
 
-    info_ptr = png_create_info_struct(png_ptr);
+    png_info *info_ptr = png_create_info_struct(png_ptr);
     if (!info_ptr) {
         png_destroy_read_struct(&png_ptr, 0, 0);
-        png_ptr = 0;
         return false;
     }
 
-    end_info = png_create_info_struct(png_ptr);
+    png_info *end_info = png_create_info_struct(png_ptr);
     if (!end_info) {
         png_destroy_read_struct(&png_ptr, &info_ptr, 0);
-        png_ptr = 0;
         return false;
     }
 
     if (setjmp(png_jmpbuf(png_ptr))) {
         png_destroy_read_struct(&png_ptr, &info_ptr, &end_info);
-        png_ptr = 0;
         return false;
     }
 
     png_set_read_fn(png_ptr, this, iod_read_fn);
     png_read_info(png_ptr, info_ptr);
 
-    row_pointers = 0;
     if (setjmp(png_jmpbuf(png_ptr))) {
         png_destroy_read_struct(&png_ptr, &info_ptr, &end_info);
-        delete [] row_pointers;
-        png_ptr = 0;
         return false;
     }
 
@@ -310,8 +302,6 @@ bool QPngHandler::read(QImage *image)
 
     if (image->isNull()) {
         png_destroy_read_struct(&png_ptr, &info_ptr, &end_info);
-        delete [] row_pointers;
-        png_ptr = 0;
         return false;
     }
 
@@ -328,7 +318,7 @@ bool QPngHandler::read(QImage *image)
 
     uchar *data = image->bits();
     int bpl = image->bytesPerLine();
-    row_pointers = new png_bytep[height];
+    png_byte **row_pointers = new png_bytep[height];
 
     for (uint y = 0; y < height; y++)
         row_pointers[y] = data + y * bpl;
@@ -342,7 +332,6 @@ bool QPngHandler::read(QImage *image)
 
     png_destroy_read_struct(&png_ptr, &info_ptr, &end_info);
     delete [] row_pointers;
-    png_ptr = 0;
 
     // sanity check palette entries
     if (color_type == PNG_COLOR_TYPE_PALETTE

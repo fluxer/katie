@@ -35,10 +35,6 @@
 
 #include "QtGui/qimageiohandler.h"
 
-#include <zlib.h>
-#include <png.h>
-#include <pngconf.h>
-
 QT_BEGIN_NAMESPACE
 
 class QPngHandler : public QImageIOHandler
@@ -54,12 +50,6 @@ public:
     QByteArray name() const;
 
     static bool canRead(QIODevice *device);
-
-private:
-    png_struct *png_ptr;
-    png_info *info_ptr;
-    png_info *end_info;
-    png_byte **row_pointers;
 };
 
 QT_END_NAMESPACE
