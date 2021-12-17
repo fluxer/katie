@@ -295,14 +295,15 @@ bool QPngHandler::write(const QImage &image)
 
     png_bytep* row_pointers = new png_bytep[height];
     for (int y=0; y<height; y++) {
-        row_pointers[y] = (png_bytep)image.constScanLine(y);
+        row_pointers[y] = (png_bytep)copy.constScanLine(y);
     }
     png_write_image(png_ptr, row_pointers);
-    delete [] row_pointers;
 
     png_write_end(png_ptr, info_ptr);
 
     png_destroy_write_struct(&png_ptr, &info_ptr);
+
+    delete [] row_pointers;
 
     return true;
 }
