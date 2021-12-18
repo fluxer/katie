@@ -322,7 +322,7 @@ static inline void qt_blurrow(QImage & im, int line, int alpha, bool alphaOnly)
     int zR = 0, zG = 0, zB = 0, zA = 0;
 
 #if Q_BYTE_ORDER == Q_LITTLE_ENDIAN
-    if (alphaOnly && im.format() != QImage::Format_Indexed8)
+    if (alphaOnly)
         bptr += 3;
 #endif
 
