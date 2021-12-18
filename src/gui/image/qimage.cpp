@@ -165,21 +165,25 @@ QImageData::QImageData()
 */
 QImageData * QImageData::create(const QSize &size, QImage::Format format)
 {
-    if (!size.isValid() || format == QImage::Format_Invalid)
-        return 0;                                // invalid parameter(s)
+    if (!size.isValid() || format == QImage::Format_Invalid) {
+        // invalid parameter(s)
+        return 0;
+    }
 
     uint width = size.width();
     uint height = size.height();
     uint depth = qt_depthForFormat(format);
-    const int bytes_per_line = ((width * depth + 31) >> 5) << 2; // bytes per scanline (must be multiple of 4)
+    // bytes per scanline (must be multiple of 4)
+    const int bytes_per_line = ((width * depth + 31) >> 5) << 2;
 
     // sanity check for potential overflows
     if (INT_MAX/depth < width
         || bytes_per_line <= 0
         || height <= 0
         || INT_MAX/uint(bytes_per_line) < height
-        || INT_MAX/sizeof(uchar *) < uint(height))
+        || INT_MAX/sizeof(uchar *) < uint(height)) {
         return 0;
+    }
 
     QScopedPointer<QImageData> d(new QImageData);
     if (depth == 1) {
@@ -3786,16 +3790,16 @@ QDataStream &operator>>(QDataStream &s, QImage &image)
         return s;
     }
 
-    const qint64 result = s.readRawData(reinterpret_cast<char*>(image.bits()), bytecount);
+    const qint64 result = s.readRawData(reinterpret_cast<char*>(image.d->data), bytecount);
     if (Q_UNLIKELY(result != bytecount)) {
         image = QImage();
         s.setStatus(QDataStream::ReadPastEnd);
         return s;
     }
 
-    image.setColorTable(colortable);
-    image.setDotsPerMeterX(dotsperx);
-    image.setDotsPerMeterY(dotspery);
+    image.d->colortable = colortable;
+    image.d->dpmx = dotsperx;
+    image.d->dpmy = dotspery;
 
     return s;
 }
