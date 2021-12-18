@@ -21,6 +21,7 @@
 
 #include "qcolor.h"
 #include "qimage.h"
+#include "qbitmap.h"
 #include "qdrawhelper_p.h"
 #include "qt_x11_p.h"
 #include "qx11info_x11.h"
@@ -181,14 +182,29 @@ void QX11Data::copyXImageToQImage(XImage *ximage, QImage &image)
 {
     Q_ASSERT(ximage);
 
-    QImage qimage(ximage->height, ximage->height, QImage::systemFormat());
     for (int h = 0; h < ximage->height; h++) {
         for (int w = 0; w < ximage->width; w++) {
             const unsigned long xpixel = XGetPixel(ximage, w, h);
-            qimage.setPixel(w, h, xpixel);
+            image.setPixel(w, h, xpixel);
         }
     }
-    image = qimage;
+}
+
+void QX11Data::copyXImageToQImageWithMask(XImage *ximage, QImage &image, const QImage &mask)
+{
+    Q_ASSERT(ximage);
+
+    for (int h = 0; h < ximage->height; h++) {
+        for (int w = 0; w < ximage->width; w++) {
+            const unsigned long xpixel = XGetPixel(ximage, w, h);
+            image.setPixel(w, h, xpixel);
+        }
+    }
+
+    const QImage::Format imageformat = image.format();
+    QPixmap pixmap = QPixmap::fromImage(image);
+    pixmap.setMask(QBitmap::fromImage(mask));
+    image = pixmap.toImage().convertToFormat(imageformat);
 }
 
 QT_END_NAMESPACE
