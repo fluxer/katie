@@ -790,7 +790,7 @@ QImage QX11PixmapData::toImage(const QRect &rect) const
     if (d == 1 && xi->bitmap_bit_order == LSBFirst) {
         format = QImage::Format_MonoLSB;
     } else if (d == 1) {
-        format = QImage::Format_MonoLSB;
+        format = QImage::Format_Mono;
     } else if (x11_mask) {
         format = QImage::Format_ARGB32;
     }
