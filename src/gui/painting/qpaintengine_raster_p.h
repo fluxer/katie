@@ -65,8 +65,6 @@ protected:
     QRasterPaintEngine(QRasterPaintEnginePrivate &dptr);
 
 private:
-    void updateFont(const QFont &font);
-
     cairo_pattern_t* backgroundPattern(const QColor &color);
     cairo_pattern_t* imagePattern(const QImage &image, const Qt::ImageConversionFlags flags = Qt::AutoColor);
     cairo_pattern_t* penPattern(const QPen &pen);
