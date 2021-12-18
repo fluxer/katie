@@ -194,12 +194,7 @@ void QX11Data::copyXImageToQImageWithMask(XImage *ximage, QImage &image, const Q
 {
     Q_ASSERT(ximage);
 
-    for (int h = 0; h < ximage->height; h++) {
-        for (int w = 0; w < ximage->width; w++) {
-            const unsigned long xpixel = XGetPixel(ximage, w, h);
-            image.setPixel(w, h, xpixel);
-        }
-    }
+    QX11Data::copyXImageToQImage(ximage, image);
 
     const QImage::Format imageformat = image.format();
     QPixmap pixmap = QPixmap::fromImage(image);
