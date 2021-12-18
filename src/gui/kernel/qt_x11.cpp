@@ -97,7 +97,6 @@ void QX11Data::copyQImageToXImage(const QImage &image, XImage *ximage)
         }
     }
 #else
-
     const int w = image.width();
     const int h = image.height();
     switch(image.format()) {
@@ -181,11 +180,57 @@ void QX11Data::copyQImageToXImage(const QImage &image, XImage *ximage)
 void QX11Data::copyXImageToQImage(XImage *ximage, QImage &image)
 {
     Q_ASSERT(ximage);
+    Q_ASSERT(ximage->width == image.width);
+    Q_ASSERT(ximage->height == image.height);
 
-    for (int h = 0; h < ximage->height; h++) {
-        for (int w = 0; w < ximage->width; w++) {
-            const unsigned long xpixel = XGetPixel(ximage, w, h);
-            image.setPixel(w, h, xpixel);
+    switch (image.format()) {
+        case QImage::Format_RGB32: {
+            uchar *imagedata = image.bits();
+            const int imagebpl = image.bytesPerLine();
+            for (int h = 0; h < ximage->height; h++) {
+                uchar* imageline = QFAST_SCAN_LINE(imagedata, imagebpl, h);
+                for (int w = 0; w < ximage->width; w++) {
+                    const uint xpixel = XGetPixel(ximage, w, h);
+                    //make sure alpha is 255, we depend on it in qdrawhelper for cases
+                    // when image is set as a texture pattern on a qbrush
+                    ((uint *)imageline)[w] = uint(255 << 24) | xpixel;
+                }
+            }
+            break;
+        }
+        case QImage::Format_ARGB32:
+        case QImage::Format_ARGB32_Premultiplied: {
+            uchar *imagedata = image.bits();
+            const int imagebpl = image.bytesPerLine();
+            for (int h = 0; h < ximage->height; h++) {
+                uchar* imageline = QFAST_SCAN_LINE(imagedata, imagebpl, h);
+                for (int w = 0; w < ximage->width; w++) {
+                    const uint xpixel = XGetPixel(ximage, w, h);
+                    ((uint *)imageline)[w] = xpixel;
+                }
+            }
+            break;
+        }
+        case QImage::Format_RGB16: {
+            uchar *imagedata = image.bits();
+            const int imagebpl = image.bytesPerLine();
+            for (int h = 0; h < ximage->height; h++) {
+                uchar* imageline = QFAST_SCAN_LINE(imagedata, imagebpl, h);
+                for (int w = 0; w < ximage->width; w++) {
+                    const quint32 xpixel = XGetPixel(ximage, w, h);
+                    ((quint16 *)imageline)[w] = qt_colorConvert<quint16, quint32>(xpixel, 0);
+                }
+            }
+            break;
+        }
+        default: {
+            for (int h = 0; h < ximage->height; h++) {
+                for (int w = 0; w < ximage->width; w++) {
+                    const unsigned long xpixel = XGetPixel(ximage, w, h);
+                    image.setPixel(w, h, xpixel);
+                }
+            }
+            break;
         }
     }
 }

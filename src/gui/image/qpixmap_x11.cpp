@@ -801,10 +801,6 @@ QImage QX11PixmapData::toImage(const QRect &rect) const
         return image;
     }
 
-    if (format == QImage::Format_Mono || format == QImage::Format_MonoLSB) {
-        image.setColorTable(monoColorTable());
-    }
-
     if (x11_mask) {
         QImage alpha;
         if (rect.contains(QRect(0, 0, w, h))) {

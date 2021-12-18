@@ -2968,46 +2968,52 @@ void QImage::setPixel(int x, int y, uint index_or_rgb)
         qWarning("setPixel: Out of memory");
         return;
     }
-    const quint32 p = index_or_rgb;
     switch(d->format) {
-    case Format_Mono:
-    case Format_MonoLSB:
-        if (Q_UNLIKELY(index_or_rgb > 1)) {
-            qWarning("QImage::setPixel: Index %d out of range", index_or_rgb);
-        } else if (format() == Format_MonoLSB) {
-            if (index_or_rgb==0)
-                *(s + (x >> 3)) &= ~(1 << (x & 7));
-            else
-                *(s + (x >> 3)) |= (1 << (x & 7));
-        } else {
-            if (index_or_rgb==0)
-                *(s + (x >> 3)) &= ~(1 << (7-(x & 7)));
-            else
-                *(s + (x >> 3)) |= (1 << (7-(x & 7)));
+        case Format_Mono:
+        case Format_MonoLSB: {
+            if (Q_UNLIKELY(index_or_rgb > 1)) {
+                qWarning("QImage::setPixel: Index %d out of range", index_or_rgb);
+            } else if (format() == Format_MonoLSB) {
+                if (index_or_rgb==0)
+                    *(s + (x >> 3)) &= ~(1 << (x & 7));
+                else
+                    *(s + (x >> 3)) |= (1 << (x & 7));
+            } else {
+                if (index_or_rgb==0)
+                    *(s + (x >> 3)) &= ~(1 << (7-(x & 7)));
+                else
+                    *(s + (x >> 3)) |= (1 << (7-(x & 7)));
+            }
+            break;
         }
-        break;
-    case Format_Indexed8:
-        if (Q_UNLIKELY(index_or_rgb >= (uint)d->colortable.size())) {
-            qWarning("QImage::setPixel: Index %d out of range", index_or_rgb);
-            return;
+        case Format_Indexed8: {
+            if (Q_UNLIKELY(index_or_rgb >= (uint)d->colortable.size())) {
+                qWarning("QImage::setPixel: Index %d out of range", index_or_rgb);
+                return;
+            }
+            s[x] = index_or_rgb;
+            break;
         }
-        s[x] = index_or_rgb;
-        break;
-    case Format_RGB32:
-        //make sure alpha is 255, we depend on it in qdrawhelper for cases
-        // when image is set as a texture pattern on a qbrush
-        ((uint *)s)[x] = uint(255 << 24) | index_or_rgb;
-        break;
-    case Format_ARGB32:
-    case Format_ARGB32_Premultiplied:
-        ((uint *)s)[x] = index_or_rgb;
-        break;
-    case Format_RGB16:
-        ((quint16 *)s)[x] = qt_colorConvert<quint16, quint32>(p, 0);
-        break;
-    case Format_Invalid:
-    case NImageFormats:
-        Q_ASSERT(false);
+        case Format_RGB32: {
+            //make sure alpha is 255, we depend on it in qdrawhelper for cases
+            // when image is set as a texture pattern on a qbrush
+            ((uint *)s)[x] = uint(255 << 24) | index_or_rgb;
+            break;
+        }
+        case Format_ARGB32:
+        case Format_ARGB32_Premultiplied: {
+            ((uint *)s)[x] = index_or_rgb;
+            break;
+        }
+        case Format_RGB16: {
+            const quint32 p = index_or_rgb;
+            ((quint16 *)s)[x] = qt_colorConvert<quint16, quint32>(p, 0);
+            break;
+        }
+        case Format_Invalid:
+        case NImageFormats: {
+            Q_ASSERT(false);
+        }
     }
 }
 
