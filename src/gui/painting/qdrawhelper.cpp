@@ -1039,53 +1039,6 @@ static const uint * QT_FASTCALL qt_fetch_radial_gradient(uint *buffer, const Ope
     return b;
 }
 
-static const uint * QT_FASTCALL qt_fetch_conical_gradient(uint *buffer, const Operator *, const QSpanData *data,
-                                                          int y, int x, int length)
-{
-    const uint *b = buffer;
-    qreal rx = data->m21 * (y + qreal(0.5))
-               + data->dx + data->m11 * (x + qreal(0.5));
-    qreal ry = data->m22 * (y + qreal(0.5))
-               + data->dy + data->m12 * (x + qreal(0.5));
-    bool affine = !data->m13 && !data->m23;
-
-    const uint *end = buffer + length;
-    if (affine) {
-        rx -= data->gradient.conical.center.x;
-        ry -= data->gradient.conical.center.y;
-        while (buffer < end) {
-            qreal angle = qAtan2(ry, rx) + data->gradient.conical.angle;
-
-            *buffer = qt_gradient_pixel(&data->gradient, 1 - angle / (2*M_PI));
-
-            rx += data->m11;
-            ry += data->m12;
-            ++buffer;
-        }
-    } else {
-        qreal rw = data->m23 * (y + qreal(0.5))
-                   + data->m33 + data->m13 * (x + qreal(0.5));
-        if (!rw)
-            rw = 1;
-        while (buffer < end) {
-            qreal angle = qAtan2(ry/rw - data->gradient.conical.center.x,
-                                rx/rw - data->gradient.conical.center.y)
-                          + data->gradient.conical.angle;
-
-            *buffer = qt_gradient_pixel(&data->gradient, 1. - angle / (2*M_PI));
-
-            rx += data->m11;
-            ry += data->m12;
-            rw += data->m13;
-            if (!rw) {
-                rw += data->m13;
-            }
-            ++buffer;
-        }
-    }
-    return b;
-}
-
 /* The constant alpha factor describes an alpha factor that gets applied
    to the result of the composition operation combining it with the destination.
 
@@ -2593,10 +2546,6 @@ static inline Operator getOperator(const QSpanData *data, const QSpan *spans, in
         solidSource = !data->gradient.alphaColor;
         getRadialGradientValues(&op.radial, data);
         op.src_fetch = qt_fetch_radial_gradient;
-        break;
-    case QSpanData::ConicalGradient:
-        solidSource = !data->gradient.alphaColor;
-        op.src_fetch = qt_fetch_conical_gradient;
         break;
     case QSpanData::Texture:
         solidSource = !data->texture.hasAlpha;

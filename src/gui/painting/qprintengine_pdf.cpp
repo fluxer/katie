@@ -409,7 +409,7 @@ int QPdfEnginePrivate::addBrushPattern(const QTransform &m, bool *specifyColor, 
     //qDebug() << brushOrigin << matrix;
 
     Qt::BrushStyle style = brush.style();
-    if (style == Qt::LinearGradientPattern) {// && style <= Qt::ConicalGradientPattern) {
+    if (style == Qt::LinearGradientPattern) {
 #ifdef USE_NATIVE_GRADIENTS
         *specifyColor = false;
         return gradientBrush(b, matrix, gStateObject);

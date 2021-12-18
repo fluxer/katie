@@ -554,9 +554,7 @@ void ColorDelegate::paint(QPainter *painter, const QStyleOptionViewItem &opt,
         option.font.setBold(true);
     }
     QBrush br = qvariant_cast<QBrush>(index.model()->data(index, BrushRole));
-    if (br.style() == Qt::LinearGradientPattern ||
-            br.style() == Qt::RadialGradientPattern ||
-            br.style() == Qt::ConicalGradientPattern) {
+    if (br.style() == Qt::LinearGradientPattern || br.style() == Qt::RadialGradientPattern) {
         painter->save();
         painter->translate(option.rect.x(), option.rect.y());
         painter->scale(option.rect.width(), option.rect.height());

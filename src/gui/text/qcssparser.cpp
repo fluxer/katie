@@ -724,7 +724,6 @@ static BrushData parseBrushValue(const QCss::Value &v, const QPalette &pal)
     static const QStringList gradFuncs = QStringList()
         << QLatin1String("qlineargradient")
         << QLatin1String("qradialgradient")
-        << QLatin1String("qconicalgradient")
         << QLatin1String("qgradient");
     int gradType = -1;
 
@@ -798,19 +797,6 @@ static BrushData parseBrushValue(const QCss::Value &v, const QPalette &pal)
         if (spread != -1)
             rg.setSpread(QGradient::Spread(spread));
         BrushData bd = QBrush(rg);
-        if (dependsOnThePalette)
-            bd.type = BrushData::DependsOnThePalette;
-        return bd;
-    }
-
-    if (gradType == 2) {
-        QConicalGradient cg(vars.value(QLatin1String("cx")), vars.value(QLatin1String("cy")),
-                            vars.value(QLatin1String("angle")));
-        cg.setCoordinateMode(QGradient::ObjectBoundingMode);
-        cg.setStops(stops);
-        if (spread != -1)
-            cg.setSpread(QGradient::Spread(spread));
-        BrushData bd = QBrush(cg);
         if (dependsOnThePalette)
             bd.type = BrushData::DependsOnThePalette;
         return bd;

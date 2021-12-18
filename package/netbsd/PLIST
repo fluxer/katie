@@ -640,7 +640,6 @@ include/katie/QtGui/QComboBox
 include/katie/QtGui/QCommandLinkButton
 include/katie/QtGui/QCommonStyle
 include/katie/QtGui/QCompleter
-include/katie/QtGui/QConicalGradient
 include/katie/QtGui/QContextMenuEvent
 include/katie/QtGui/QCursor
 include/katie/QtGui/QDataWidgetMapper

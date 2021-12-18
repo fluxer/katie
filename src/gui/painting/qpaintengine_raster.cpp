@@ -3203,20 +3203,19 @@ void QSpanData::setup(const QBrush &brush, int alpha, QPainter::CompositionMode 
 {
     Qt::BrushStyle brushStyle = brush.style();
     switch (brushStyle) {
-    case Qt::SolidPattern: {
-        type = Solid;
-        const QColor c = brush.color();
-        const QRgb rgba = c.rgba();
-        solid.color = PREMUL(ARGB_COMBINE_ALPHA(rgba, alpha));
-        if ((solid.color & 0xff000000) == 0
-            && compositionMode == QPainter::CompositionMode_SourceOver) {
-            type = None;
+        case Qt::SolidPattern: {
+            type = Solid;
+            const QColor c = brush.color();
+            const QRgb rgba = c.rgba();
+            solid.color = PREMUL(ARGB_COMBINE_ALPHA(rgba, alpha));
+            if ((solid.color & 0xff000000) == 0
+                && compositionMode == QPainter::CompositionMode_SourceOver) {
+                type = None;
+            }
+            break;
         }
-        break;
-    }
 
-    case Qt::LinearGradientPattern:
-        {
+        case Qt::LinearGradientPattern: {
             type = LinearGradient;
             const QLinearGradient *g = static_cast<const QLinearGradient *>(brush.gradient());
             gradient.alphaColor = !brush.isOpaque() || alpha != 256;
@@ -3232,8 +3231,7 @@ void QSpanData::setup(const QBrush &brush, int alpha, QPainter::CompositionMode 
             break;
         }
 
-    case Qt::RadialGradientPattern:
-        {
+        case Qt::RadialGradientPattern: {
             type = RadialGradient;
             const QRadialGradient *g = static_cast<const QRadialGradient *>(brush.gradient());
             gradient.alphaColor = !brush.isOpaque() || alpha != 256;
@@ -3250,60 +3248,47 @@ void QSpanData::setup(const QBrush &brush, int alpha, QPainter::CompositionMode 
             radialData.focal.x = focal.x();
             radialData.focal.y = focal.y();
             radialData.focal.radius = g->focalRadius();
+            break;
         }
-        break;
 
-    case Qt::ConicalGradientPattern:
-        {
-            type = ConicalGradient;
-            const QConicalGradient *g = static_cast<const QConicalGradient *>(brush.gradient());
-            gradient.alphaColor = !brush.isOpaque() || alpha != 256;
-            gradient.generateGradientColorTable(*g, alpha);
-            gradient.spread = QGradient::RepeatSpread;
-
-            QConicalGradientData &conicalData = gradient.conical;
-
-            QPointF center = g->center();
-            conicalData.center.x = center.x();
-            conicalData.center.y = center.y();
-            conicalData.angle = g->angle() * 2 * M_PI / 360.0;
+        case Qt::Dense1Pattern:
+        case Qt::Dense2Pattern:
+        case Qt::Dense3Pattern:
+        case Qt::Dense4Pattern:
+        case Qt::Dense5Pattern:
+        case Qt::Dense6Pattern:
+        case Qt::Dense7Pattern:
+        case Qt::HorPattern:
+        case Qt::VerPattern:
+        case Qt::CrossPattern:
+        case Qt::BDiagPattern:
+        case Qt::FDiagPattern:
+        case Qt::DiagCrossPattern: {
+            type = Texture;
+            if (!tempImage)
+                tempImage = new QImage();
+            *tempImage = rasterBuffer->colorizeBitmap(qt_imageForBrush(brushStyle), brush.color());
+            initTexture(tempImage, alpha, QTextureData::Tiled);
+            break;
         }
-        break;
 
-    case Qt::Dense1Pattern:
-    case Qt::Dense2Pattern:
-    case Qt::Dense3Pattern:
-    case Qt::Dense4Pattern:
-    case Qt::Dense5Pattern:
-    case Qt::Dense6Pattern:
-    case Qt::Dense7Pattern:
-    case Qt::HorPattern:
-    case Qt::VerPattern:
-    case Qt::CrossPattern:
-    case Qt::BDiagPattern:
-    case Qt::FDiagPattern:
-    case Qt::DiagCrossPattern:
-        type = Texture;
-        if (!tempImage)
-            tempImage = new QImage();
-        *tempImage = rasterBuffer->colorizeBitmap(qt_imageForBrush(brushStyle), brush.color());
-        initTexture(tempImage, alpha, QTextureData::Tiled);
-        break;
-    case Qt::TexturePattern:
-        type = Texture;
-        if (!tempImage)
-            tempImage = new QImage();
+        case Qt::TexturePattern: {
+            type = Texture;
+            if (!tempImage)
+                tempImage = new QImage();
 
-        if (qHasPixmapTexture(brush) && brush.texture().isQBitmap())
-            *tempImage = rasterBuffer->colorizeBitmap(brush.textureImage(), brush.color());
-        else
-            *tempImage = brush.textureImage();
-        initTexture(tempImage, alpha, QTextureData::Tiled, tempImage->rect());
-        break;
+            if (qHasPixmapTexture(brush) && brush.texture().isQBitmap())
+                *tempImage = rasterBuffer->colorizeBitmap(brush.textureImage(), brush.color());
+            else
+                *tempImage = brush.textureImage();
+            initTexture(tempImage, alpha, QTextureData::Tiled, tempImage->rect());
+            break;
+        }
 
-    case Qt::NoBrush:
-        type = None;
-        break;
+        case Qt::NoBrush: {
+            type = None;
+            break;
+        }
     }
     adjustSpanMethods();
 }
@@ -3329,7 +3314,6 @@ void QSpanData::adjustSpanMethods()
         break;
     case LinearGradient:
     case RadialGradient:
-    case ConicalGradient:
         unclipped_blend = rasterBuffer->drawHelper->blendGradient;
         break;
     case Texture:

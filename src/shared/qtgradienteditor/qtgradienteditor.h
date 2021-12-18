@@ -73,17 +73,12 @@ private:
     Q_PRIVATE_SLOT(d_func(), void slotFocalRadialXChanged(double value))
     Q_PRIVATE_SLOT(d_func(), void slotFocalRadialYChanged(double value))
     Q_PRIVATE_SLOT(d_func(), void slotRadiusRadialChanged(double value))
-    Q_PRIVATE_SLOT(d_func(), void slotCentralConicalXChanged(double value))
-    Q_PRIVATE_SLOT(d_func(), void slotCentralConicalYChanged(double value))
-    Q_PRIVATE_SLOT(d_func(), void slotAngleConicalChanged(double value))
     Q_PRIVATE_SLOT(d_func(), void slotDetailsChanged(bool details))
     Q_PRIVATE_SLOT(d_func(), void startLinearChanged(const QPointF &))
     Q_PRIVATE_SLOT(d_func(), void endLinearChanged(const QPointF &))
     Q_PRIVATE_SLOT(d_func(), void centralRadialChanged(const QPointF &))
     Q_PRIVATE_SLOT(d_func(), void focalRadialChanged(const QPointF &))
     Q_PRIVATE_SLOT(d_func(), void radiusRadialChanged(qreal))
-    Q_PRIVATE_SLOT(d_func(), void centralConicalChanged(const QPointF &))
-    Q_PRIVATE_SLOT(d_func(), void angleConicalChanged(qreal))
 };
 
 QT_END_NAMESPACE

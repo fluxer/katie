@@ -160,15 +160,6 @@ struct QRadialGradientData
     } focal;
 };
 
-struct QConicalGradientData
-{
-    struct {
-        qreal x;
-        qreal y;
-    } center;
-    qreal angle;
-};
-
 struct QGradientData
 {
     QGradient::Spread spread;
@@ -176,7 +167,6 @@ struct QGradientData
     union {
         QLinearGradientData linear;
         QRadialGradientData radial;
-        QConicalGradientData conical;
     };
 
 #define GRADIENT_STOPTABLE_SIZE 1024
@@ -232,7 +222,6 @@ public:
         Solid,
         LinearGradient,
         RadialGradient,
-        ConicalGradient,
         Texture
     } type;
     QTransform::TransformationType txop;

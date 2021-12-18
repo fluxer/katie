@@ -194,7 +194,6 @@ incmap = {
         'QBrushData': 'qbrush.h',
         'QClipboardEvent': 'qevent.h',
         'QCloseEvent': 'qevent.h',
-        'QConicalGradient': 'qbrush.h',
         'QContextMenuEvent': 'qevent.h',
         'QDateEdit': 'qdatetimeedit.h',
         'QDoubleSpinBox': 'qspinbox.h',

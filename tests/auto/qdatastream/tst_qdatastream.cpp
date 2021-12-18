@@ -2901,8 +2901,6 @@ void tst_QDataStream::streamRealDataTypes()
     color.setAlphaF(0.5);
     QRadialGradient radialGradient(5, 6, 7, 8, 9);
     QBrush radialBrush(radialGradient);
-    QConicalGradient conicalGradient(5, 6, 7);
-    QBrush conicalBrush(conicalGradient);
 
     QFile file("datastream.tmp");
 
@@ -2917,7 +2915,7 @@ void tst_QDataStream::streamRealDataTypes()
         stream << picture;
         stream << QTextLength(QTextLength::VariableLength, 1.5);
         stream << color;
-        stream << radialBrush << conicalBrush;
+        stream << radialBrush;
         stream << QPen(QBrush(Qt::red), 1.5);
 
         file.close();
@@ -2932,7 +2930,6 @@ void tst_QDataStream::streamRealDataTypes()
     QTextLength textLength;
     QColor col;
     QBrush rGrad;
-    QBrush cGrad;
     QPen pen;
 
     QVERIFY(file.open(QIODevice::ReadOnly));
@@ -2987,16 +2984,8 @@ void tst_QDataStream::streamRealDataTypes()
     QCOMPARE(((QRadialGradient *)rGrad.gradient())->center(), ((QRadialGradient *)radialBrush.gradient())->center());
     QCOMPARE(((QRadialGradient *)rGrad.gradient())->focalPoint(), ((QRadialGradient *)radialBrush.gradient())->focalPoint());
     QCOMPARE(((QRadialGradient *)rGrad.gradient())->radius(), ((QRadialGradient *)radialBrush.gradient())->radius());
-    stream >> cGrad;
-    QCOMPARE(cGrad.style(), conicalBrush.style());
-    QCOMPARE(cGrad.matrix(), conicalBrush.matrix());
-    QCOMPARE(cGrad.gradient()->type(), conicalBrush.gradient()->type());
-    QCOMPARE(cGrad.gradient()->stops(), conicalBrush.gradient()->stops());
-    QCOMPARE(cGrad.gradient()->spread(), conicalBrush.gradient()->spread());
-    QCOMPARE(((QConicalGradient *)cGrad.gradient())->center(), ((QConicalGradient *)conicalBrush.gradient())->center());
-    QCOMPARE(((QConicalGradient *)cGrad.gradient())->angle(), ((QConicalGradient *)conicalBrush.gradient())->angle());
+    // TODO: QLinearGradient test
 
-    QCOMPARE(cGrad, conicalBrush);
     stream >> pen;
     QCOMPARE(pen.widthF(), qreal(1.5));
 

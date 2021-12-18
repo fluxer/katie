@@ -95,7 +95,6 @@ classlist = [
     "QCommandLinkButton",
     "QCommonStyle",
     "QCompleter",
-    "QConicalGradient",
     "QContextMenuEvent",
     "QContiguousCache",
     "QContiguousCacheData",

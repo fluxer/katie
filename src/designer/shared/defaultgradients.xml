@@ -9,28 +9,6 @@
    </stopData>
   </gradientData>
  </gradient>
- <gradient name="Czech" >
-  <gradientData centerX="0.5" centerY="0.5" spread="RepeatSpread" coordinateMode="StretchToDeviceMode" type="ConicalGradient" angle="0" >
-   <stopData position="0" >
-    <colorData g="255" r="255" a="255" b="255" />
-   </stopData>
-   <stopData position="0.373978669201521" >
-    <colorData g="255" r="255" a="255" b="255" />
-   </stopData>
-   <stopData position="0.3739913434727503" >
-    <colorData g="30" r="33" a="255" b="255" />
-   </stopData>
-   <stopData position="0.6240176679340937" >
-    <colorData g="30" r="33" a="255" b="255" />
-   </stopData>
-   <stopData position="0.6240430164765525" >
-    <colorData g="0" r="255" a="255" b="0" />
-   </stopData>
-   <stopData position="1" >
-    <colorData g="0" r="255" a="255" b="0" />
-   </stopData>
-  </gradientData>
- </gradient>
  <gradient name="Dutch" >
   <gradientData spread="PadSpread" startX="0" startY="0" coordinateMode="StretchToDeviceMode" type="LinearGradient" endX="0" endY="1" >
    <stopData position="0" >
@@ -178,55 +156,6 @@
    </stopData>
    <stopData position="1" >
     <colorData g="255" r="255" a="255" b="0" />
-   </stopData>
-  </gradientData>
- </gradient>
- <gradient name="Golden" >
-  <gradientData centerX="0.5" centerY="0.5" spread="PadSpread" coordinateMode="StretchToDeviceMode" type="ConicalGradient" angle="0" >
-   <stopData position="0" >
-    <colorData g="40" r="35" a="255" b="3" />
-   </stopData>
-   <stopData position="0.16" >
-    <colorData g="106" r="136" a="255" b="22" />
-   </stopData>
-   <stopData position="0.225" >
-    <colorData g="140" r="166" a="255" b="41" />
-   </stopData>
-   <stopData position="0.285" >
-    <colorData g="181" r="204" a="255" b="74" />
-   </stopData>
-   <stopData position="0.345" >
-    <colorData g="219" r="235" a="255" b="102" />
-   </stopData>
-   <stopData position="0.415" >
-    <colorData g="236" r="245" a="255" b="112" />
-   </stopData>
-   <stopData position="0.52" >
-    <colorData g="190" r="209" a="255" b="76" />
-   </stopData>
-   <stopData position="0.57" >
-    <colorData g="156" r="187" a="255" b="51" />
-   </stopData>
-   <stopData position="0.635" >
-    <colorData g="142" r="168" a="255" b="42" />
-   </stopData>
-   <stopData position="0.695" >
-    <colorData g="174" r="202" a="255" b="68" />
-   </stopData>
-   <stopData position="0.75" >
-    <colorData g="202" r="218" a="255" b="86" />
-   </stopData>
-   <stopData position="0.8149999999999999" >
-    <colorData g="187" r="208" a="255" b="73" />
-   </stopData>
-   <stopData position="0.88" >
-    <colorData g="156" r="187" a="255" b="51" />
-   </stopData>
-   <stopData position="0.9350000000000001" >
-    <colorData g="108" r="137" a="255" b="26" />
-   </stopData>
-   <stopData position="1" >
-    <colorData g="40" r="35" a="255" b="3" />
    </stopData>
   </gradientData>
  </gradient>
@@ -395,40 +324,6 @@
    </stopData>
    <stopData position="0.9350000000000001" >
     <colorData g="236" r="239" a="255" b="55" />
-   </stopData>
-  </gradientData>
- </gradient>
- <gradient name="SunRay" >
-  <gradientData centerX="0" centerY="0" spread="RepeatSpread" coordinateMode="StretchToDeviceMode" type="ConicalGradient" angle="135" >
-   <stopData position="0" >
-    <colorData g="255" r="255" a="69" b="0" />
-   </stopData>
-   <stopData position="0.375" >
-    <colorData g="255" r="255" a="69" b="0" />
-   </stopData>
-   <stopData position="0.4235329090018885" >
-    <colorData g="255" r="251" a="145" b="0" />
-   </stopData>
-   <stopData position="0.45" >
-    <colorData g="255" r="247" a="208" b="0" />
-   </stopData>
-   <stopData position="0.4775811200061043" >
-    <colorData g="244" r="255" a="130" b="71" />
-   </stopData>
-   <stopData position="0.5187165775401069" >
-    <colorData g="218" r="255" a="130" b="71" />
-   </stopData>
-   <stopData position="0.55" >
-    <colorData g="255" r="255" a="255" b="0" />
-   </stopData>
-   <stopData position="0.5775401069518716" >
-    <colorData g="203" r="255" a="130" b="0" />
-   </stopData>
-   <stopData position="0.625" >
-    <colorData g="255" r="255" a="69" b="0" />
-   </stopData>
-   <stopData position="1" >
-    <colorData g="255" r="255" a="69" b="0" />
    </stopData>
   </gradientData>
  </gradient>

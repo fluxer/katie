@@ -1788,11 +1788,6 @@ public:
     inline void setAttributeRadius(double a) { m_attr_radius = a; m_has_attr_radius = true; }
     inline void clearAttributeRadius() { m_has_attr_radius = false; }
 
-    inline bool hasAttributeAngle() const { return m_has_attr_angle; }
-    inline double attributeAngle() const { return m_attr_angle; }
-    inline void setAttributeAngle(double a) { m_attr_angle = a; m_has_attr_angle = true; }
-    inline void clearAttributeAngle() { m_has_attr_angle = false; }
-
     inline bool hasAttributeType() const { return m_has_attr_type; }
     inline QString attributeType() const { return m_attr_type; }
     inline void setAttributeType(const QString& a) { m_attr_type = a; m_has_attr_type = true; }
@@ -1843,9 +1838,6 @@ private:
 
     double m_attr_radius;
     bool m_has_attr_radius;
-
-    double m_attr_angle;
-    bool m_has_attr_angle;
 
     QString m_attr_type;
     bool m_has_attr_type;

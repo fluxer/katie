@@ -67,12 +67,11 @@ static void qt_draw_decoration_for_glyphs(QPainter *painter, const glyph_t *glyp
 static inline QGradient::CoordinateMode coordinateMode(const QBrush &brush)
 {
     switch (brush.style()) {
-    case Qt::LinearGradientPattern:
-    case Qt::RadialGradientPattern:
-    case Qt::ConicalGradientPattern:
-        return brush.gradient()->coordinateMode();
-    default:
-        ;
+        case Qt::LinearGradientPattern:
+        case Qt::RadialGradientPattern:
+            return brush.gradient()->coordinateMode();
+        default:
+            ;
     }
     return QGradient::LogicalMode;
 }
@@ -385,8 +384,8 @@ void QPainterPrivate::draw_helper(const QPainterPath &originalPath)
 
 static inline QBrush stretchGradientToUserSpace(const QBrush &brush, const QRectF &boundingRect)
 {
-    Q_ASSERT(brush.style() >= Qt::LinearGradientPattern
-             && brush.style() <= Qt::ConicalGradientPattern);
+    Q_ASSERT(brush.style() == Qt::LinearGradientPattern
+             || brush.style() == Qt::RadialGradientPattern);
 
     QTransform gradientToUser(boundingRect.width(), 0, 0, boundingRect.height(),
                               boundingRect.x(), boundingRect.y());
@@ -5807,8 +5806,7 @@ void QPainter::eraseRect(const QRectF &r)
 static inline bool needsResolving(const QBrush &brush)
 {
     Qt::BrushStyle s = brush.style();
-    return ((s == Qt::LinearGradientPattern || s == Qt::RadialGradientPattern ||
-             s == Qt::ConicalGradientPattern) &&
+    return ((s == Qt::LinearGradientPattern || s == Qt::RadialGradientPattern) &&
             brush.gradient()->coordinateMode() == QGradient::ObjectBoundingMode);
 }
 
