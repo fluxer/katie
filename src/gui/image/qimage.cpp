@@ -48,8 +48,6 @@
 
 QT_BEGIN_NAMESPACE
 
-#define QIMAGE_STREAM_FORMAT "png"
-
 #define QIMAGE_SANITYCHECK_MEMORY(image) \
     if (Q_UNLIKELY((image).isNull())) { \
         qWarning("QImage: out of memory, returning null image"); \
@@ -3736,22 +3734,22 @@ bool QImageData::doImageIO(const QImage *image, QImageWriter *writer, int qualit
     \fn QDataStream &operator<<(QDataStream &stream, const QImage &image)
     \relates QImage
 
-    Writes the given \a image to the given \a stream as a PNG image.
-    Note that writing the stream to a file will not produce a valid
-    image file.
+    Writes the given \a image to the given \a stream. Note that
+    writing the stream to a file will not produce a valid image file.
 
     \sa QImage::save(), {Serializing Qt Data Types}
 */
 
 QDataStream &operator<<(QDataStream &s, const QImage &image)
 {
-    if (image.isNull()) {
-        s << (qint32) 0; // null image marker
-        return s;
-    }
-    s << (qint32) 1;
-    QImageWriter writer(s.device(), QIMAGE_STREAM_FORMAT);
-    writer.write(image);
+    s << (qint32) image.format();
+    s << (qint64) image.width();
+    s << (qint64) image.height();
+    s << (qint64) image.dotsPerMeterX();
+    s << (qint64) image.dotsPerMeterY();
+    s << (qint64) image.byteCount();
+    s << image.colorTable();
+    s.writeRawData(reinterpret_cast<const char*>(image.constBits()), image.byteCount());
     return s;
 }
 
@@ -3767,13 +3765,38 @@ QDataStream &operator<<(QDataStream &s, const QImage &image)
 
 QDataStream &operator>>(QDataStream &s, QImage &image)
 {
-    qint32 nullMarker;
-    s >> nullMarker;
-    if (!nullMarker) {
-        image = QImage(); // null image
+    qint32 format;
+    qint64 width;
+    qint64 height;
+    qint64 dotsperx;
+    qint64 dotspery;
+    qint64 bytecount;
+    QVector<QRgb> colortable;
+    s >> format;
+    s >> width;
+    s >> height;
+    s >> dotsperx;
+    s >> dotspery;
+    s >> bytecount;
+    s >> colortable;
+
+    image = QImage(width, height, static_cast<QImage::Format>(format));
+    if (image.isNull()) {
+        // could be a default-constructed image
         return s;
     }
-    image = QImageReader(s.device(), QIMAGE_STREAM_FORMAT).read();
+
+    const qint64 result = s.readRawData(reinterpret_cast<char*>(image.bits()), bytecount);
+    if (Q_UNLIKELY(result != bytecount)) {
+        image = QImage();
+        s.setStatus(QDataStream::ReadPastEnd);
+        return s;
+    }
+
+    image.setColorTable(colortable);
+    image.setDotsPerMeterX(dotsperx);
+    image.setDotsPerMeterY(dotspery);
+
     return s;
 }
 #endif // QT_NO_DATASTREAM
