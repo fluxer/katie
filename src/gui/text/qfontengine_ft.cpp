@@ -1863,17 +1863,4 @@ bool QFontEngineFT::initFromFontEngine(const QFontEngineFT *fe)
     return true;
 }
 
-QFontEngine *QFontEngineFT::cloneWithSize(qreal pixelSize) const
-{
-    QFontDef fontDef;
-    fontDef.pixelSize = pixelSize;
-    QFontEngineFT *fe = new QFontEngineFT(fontDef);
-    if (!fe->initFromFontEngine(this)) {
-        delete fe;
-        return 0;
-    } else {
-        return fe;
-    }
-}
-
 QT_END_NAMESPACE

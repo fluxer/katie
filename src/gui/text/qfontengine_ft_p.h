@@ -282,7 +282,6 @@ private:
 
     void setDefaultHintStyle(HintStyle style);
 
-    virtual QFontEngine *cloneWithSize(qreal pixelSize) const;
     bool initFromFontEngine(const QFontEngineFT *fontEngine);
 
     HintStyle defaultHintStyle() const { return default_hint_style; }
