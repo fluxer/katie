@@ -320,7 +320,7 @@ static inline void qt_blurrow(QImage & im, int line, int alpha, bool alphaOnly)
     int zR = 0, zG = 0, zB = 0, zA = 0;
 
 #if Q_BYTE_ORDER == Q_LITTLE_ENDIAN
-    if (alphaOnly && im.format() != QImage::Format_Indexed8)
+    if (alphaOnly)
         bptr += 3;
 #endif
 
@@ -407,42 +407,16 @@ static void expblur(QImage &img, qreal radius, bool improvedQuality, bool alphaO
 
 static QImage qt_halfScaled(const QImage &source)
 {
+    Q_ASSERT(source.format() == QImage::Format_ARGB32_Premultiplied
+             || source.format() == QImage::Format_RGB32);
+
     if (source.width() < 2 || source.height() < 2)
         return QImage();
 
-    QImage srcImage = source;
+    QImage dest(source.width() / 2, source.height() / 2, source.format());
 
-    if (source.format() == QImage::Format_Indexed8) {
-        // assumes grayscale
-        QImage dest(source.width() / 2, source.height() / 2, srcImage.format());
-
-        const uchar *src = srcImage.constBits();
-        int sx = srcImage.bytesPerLine();
-        int sx2 = sx << 1;
-
-        uchar *dst = dest.bits();
-        int dx = dest.bytesPerLine();
-        int ww = dest.width();
-        int hh = dest.height();
-
-        for (int y = hh; y; --y, dst += dx, src += sx2) {
-            const uchar *p1 = src;
-            const uchar *p2 = src + sx;
-            uchar *q = dst;
-            for (int x = ww; x; --x, ++q, p1 += 2, p2 += 2)
-                *q = ((int(p1[0]) + int(p1[1]) + int(p2[0]) + int(p2[1])) + 2) >> 2;
-        }
-
-        return dest;
-    } else if (source.format() != QImage::Format_ARGB32_Premultiplied
-               && source.format() != QImage::Format_RGB32) {
-        srcImage = source.convertToFormat(QImage::Format_ARGB32_Premultiplied);
-    }
-
-    QImage dest(source.width() / 2, source.height() / 2, srcImage.format());
-
-    const quint32 *src = reinterpret_cast<const quint32*>(srcImage.constBits());
-    int sx = srcImage.bytesPerLine() >> 2;
+    const quint32 *src = reinterpret_cast<const quint32*>(source.constBits());
+    int sx = source.bytesPerLine() >> 2;
     int sx2 = sx << 1;
 
     quint32 *dst = reinterpret_cast<quint32*>(dest.bits());

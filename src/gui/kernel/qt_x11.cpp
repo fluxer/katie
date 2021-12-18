@@ -21,6 +21,7 @@
 
 #include "qcolor.h"
 #include "qimage.h"
+#include "qbitmap.h"
 #include "qdrawhelper_p.h"
 #include "qt_x11_p.h"
 #include "qx11info_x11.h"
@@ -88,82 +89,80 @@ void QX11Data::copyQImageToXImage(const QImage &image, XImage *ximage)
     ximage->data = static_cast<char*>(::malloc(size_t(ximage->bytes_per_line) * image.height()));
     Q_CHECK_PTR(ximage->data);
 
-#if 0
-    for (int h = 0; h < image.height(); h++) {
-        for (int w = 0; w < image.width(); w++) {
-            const QRgb pixel = image.pixel(w, h);
-            XPutPixel(ximage, w, h, pixel);
-        }
-    }
-#else
-
+    bool checkbyteorder = true;
     const int w = image.width();
     const int h = image.height();
     switch(image.format()) {
-    case QImage::Format_Indexed8: {
-        QVector<QRgb> colorTable = image.colorTable();
-        uint *xidata = (uint *)ximage->data;
-        for (int y = 0; y < h; ++y) {
-            const uchar *p = image.constScanLine(y);
-            for (int x = 0; x < w; ++x) {
-                const QRgb rgb = colorTable[p[x]];
-                const int a = qAlpha(rgb);
-                if (a == 0xff)
-                    *xidata = rgb;
-                else
-                    // RENDER expects premultiplied alpha
-                    *xidata = qRgba(qt_div_255(qRed(rgb) * a),
-                                    qt_div_255(qGreen(rgb) * a),
-                                    qt_div_255(qBlue(rgb) * a),
-                                    a);
-                ++xidata;
+        case QImage::Format_Indexed8: {
+            QVector<QRgb> colorTable = image.colorTable();
+            uint *xidata = (uint *)ximage->data;
+            for (int y = 0; y < h; ++y) {
+                const uchar *p = image.constScanLine(y);
+                for (int x = 0; x < w; ++x) {
+                    const QRgb rgb = colorTable[p[x]];
+                    const int a = qAlpha(rgb);
+                    if (a == 0xff) {
+                        *xidata = rgb;
+                    } else {
+                        // RENDER expects premultiplied alpha
+                        *xidata = qRgba(qt_div_255(qRed(rgb) * a),
+                                        qt_div_255(qGreen(rgb) * a),
+                                        qt_div_255(qBlue(rgb) * a),
+                                        a);
+                    }
+                    ++xidata;
+                }
             }
+            break;
         }
-        break;
-    }
-    case QImage::Format_RGB32: {
-        uint *xidata = (uint *)ximage->data;
-        for (int y = 0; y < h; ++y) {
-            const QRgb *p = (const QRgb *) image.constScanLine(y);
-            for (int x = 0; x < w; ++x)
-                *xidata++ = p[x] | 0xff000000;
-        }
-        break;
-    }
-    case QImage::Format_ARGB32: {
-        uint *xidata = (uint *)ximage->data;
-        for (int y = 0; y < h; ++y) {
-            const QRgb *p = (const QRgb *) image.constScanLine(y);
-            for (int x = 0; x < w; ++x) {
-                const QRgb rgb = p[x];
-                const int a = qAlpha(rgb);
-                if (a == 0xff)
-                    *xidata = rgb;
-                else
-                    // RENDER expects premultiplied alpha
-                    *xidata = qRgba(qt_div_255(qRed(rgb) * a),
-                                    qt_div_255(qGreen(rgb) * a),
-                                    qt_div_255(qBlue(rgb) * a),
-                                    a);
-                ++xidata;
+        case QImage::Format_RGB32: {
+            uint *xidata = (uint *)ximage->data;
+            for (int y = 0; y < h; ++y) {
+                const QRgb *p = (const QRgb *) image.constScanLine(y);
+                for (int x = 0; x < w; ++x) {
+                    *xidata++ = p[x] | 0xff000000;
+                }
             }
+            break;
         }
-        break;
-    }
-    case QImage::Format_ARGB32_Premultiplied: {
-        uint *xidata = (uint *)ximage->data;
-        for (int y = 0; y < h; ++y) {
-            const QRgb *p = (const QRgb *) image.constScanLine(y);
-            memcpy(xidata, p, w*sizeof(QRgb));
-            xidata += w;
+        case QImage::Format_ARGB32: {
+            uint *xidata = (uint *)ximage->data;
+            for (int y = 0; y < h; ++y) {
+                const QRgb *p = (const QRgb *) image.constScanLine(y);
+                for (int x = 0; x < w; ++x) {
+                    const QRgb rgb = p[x];
+                    const int a = qAlpha(rgb);
+                    if (a == 0xff) {
+                        *xidata = rgb;
+                    } else {
+                        // RENDER expects premultiplied alpha
+                        *xidata = qRgba(qt_div_255(qRed(rgb) * a),
+                                        qt_div_255(qGreen(rgb) * a),
+                                        qt_div_255(qBlue(rgb) * a),
+                                        a);
+                    }
+                    ++xidata;
+                }
+            }
+            break;
         }
-        break;
-    }
-    default:
-        Q_ASSERT(false);
+        case QImage::Format_ARGB32_Premultiplied: {
+            ::memcpy(ximage->data, image.constBits(), image.byteCount());
+            break;
+        }
+        default: {
+            checkbyteorder = false;
+            for (int h = 0; h < image.height(); h++) {
+                for (int w = 0; w < image.width(); w++) {
+                    const QRgb pixel = image.pixel(w, h);
+                    XPutPixel(ximage, w, h, pixel);
+                }
+            }
+            break;
+        }
     }
 
-    if ((ximage->byte_order == MSBFirst) != (Q_BYTE_ORDER == Q_BIG_ENDIAN)) {
+    if (checkbyteorder && (ximage->byte_order == MSBFirst) != (Q_BYTE_ORDER == Q_BIG_ENDIAN)) {
         uint *xidata = (uint *)ximage->data;
         uint *xiend = xidata + w*h;
         while (xidata < xiend) {
@@ -174,21 +173,76 @@ void QX11Data::copyQImageToXImage(const QImage &image, XImage *ximage)
             ++xidata;
         }
     }
-#endif
 }
 
 void QX11Data::copyXImageToQImage(XImage *ximage, QImage &image)
 {
     Q_ASSERT(ximage);
+    Q_ASSERT(ximage->width == image.width);
+    Q_ASSERT(ximage->height == image.height);
 
-    QImage qimage(ximage->height, ximage->height, QImage::systemFormat());
-    for (int h = 0; h < ximage->height; h++) {
-        for (int w = 0; w < ximage->width; w++) {
-            const unsigned long xpixel = XGetPixel(ximage, w, h);
-            qimage.setPixel(w, h, xpixel);
+    switch (image.format()) {
+        case QImage::Format_RGB32: {
+            uchar *imagedata = image.bits();
+            const int imagebpl = image.bytesPerLine();
+            for (int h = 0; h < ximage->height; h++) {
+                uchar* imageline = QFAST_SCAN_LINE(imagedata, imagebpl, h);
+                for (int w = 0; w < ximage->width; w++) {
+                    const uint xpixel = XGetPixel(ximage, w, h);
+                    //make sure alpha is 255, we depend on it in qdrawhelper for cases
+                    // when image is set as a texture pattern on a qbrush
+                    ((uint *)imageline)[w] = uint(255 << 24) | xpixel;
+                }
+            }
+            break;
+        }
+        case QImage::Format_ARGB32:
+        case QImage::Format_ARGB32_Premultiplied: {
+            uchar *imagedata = image.bits();
+            const int imagebpl = image.bytesPerLine();
+            for (int h = 0; h < ximage->height; h++) {
+                uchar* imageline = QFAST_SCAN_LINE(imagedata, imagebpl, h);
+                for (int w = 0; w < ximage->width; w++) {
+                    const uint xpixel = XGetPixel(ximage, w, h);
+                    ((uint *)imageline)[w] = xpixel;
+                }
+            }
+            break;
+        }
+        case QImage::Format_RGB16: {
+            uchar *imagedata = image.bits();
+            const int imagebpl = image.bytesPerLine();
+            for (int h = 0; h < ximage->height; h++) {
+                uchar* imageline = QFAST_SCAN_LINE(imagedata, imagebpl, h);
+                for (int w = 0; w < ximage->width; w++) {
+                    const quint32 xpixel = XGetPixel(ximage, w, h);
+                    ((quint16 *)imageline)[w] = qt_colorConvert<quint16, quint32>(xpixel, 0);
+                }
+            }
+            break;
+        }
+        default: {
+            for (int h = 0; h < ximage->height; h++) {
+                for (int w = 0; w < ximage->width; w++) {
+                    const unsigned long xpixel = XGetPixel(ximage, w, h);
+                    image.setPixel(w, h, xpixel);
+                }
+            }
+            break;
         }
     }
-    image = qimage;
+}
+
+void QX11Data::copyXImageToQImageWithMask(XImage *ximage, QImage &image, const QImage &mask)
+{
+    Q_ASSERT(ximage);
+
+    QX11Data::copyXImageToQImage(ximage, image);
+
+    const QImage::Format imageformat = image.format();
+    QPixmap pixmap = QPixmap::fromImage(image);
+    pixmap.setMask(QBitmap::fromImage(mask));
+    image = pixmap.toImage().convertToFormat(imageformat);
 }
 
 QT_END_NAMESPACE

@@ -452,7 +452,7 @@ void QFreetypeFace::addGlyphToPath(FT_Face face, FT_GlyphSlot g, const QFixedPoi
 
 extern void qt_addBitmapToPath(qreal x0, qreal y0, const uchar *image_data, int bpl, int w, int h, QPainterPath *path);
 
-void QFreetypeFace::addBitmapToPath(FT_GlyphSlot slot, const QFixedPoint &point, QPainterPath *path, bool)
+void QFreetypeFace::addBitmapToPath(FT_GlyphSlot slot, const QFixedPoint &point, QPainterPath *path)
 {
     if (slot->format != FT_GLYPH_FORMAT_BITMAP
         || slot->bitmap.pixel_mode != FT_PIXEL_MODE_MONO)
@@ -1861,19 +1861,6 @@ bool QFontEngineFT::initFromFontEngine(const QFontEngineFT *fe)
     embeddedbitmap = fe->embeddedbitmap;
 
     return true;
-}
-
-QFontEngine *QFontEngineFT::cloneWithSize(qreal pixelSize) const
-{
-    QFontDef fontDef;
-    fontDef.pixelSize = pixelSize;
-    QFontEngineFT *fe = new QFontEngineFT(fontDef);
-    if (!fe->initFromFontEngine(this)) {
-        delete fe;
-        return 0;
-    } else {
-        return fe;
-    }
 }
 
 QT_END_NAMESPACE

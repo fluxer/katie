@@ -169,33 +169,33 @@ void QRasterPixmapData::setMask(const QBitmap &mask)
         const int h = image.height();
 
         switch (image.depth()) {
-        case 1: {
-            const QImage imageMask = mask.toImage().convertToFormat(image.format());
-            const int bpl = image.bytesPerLine();
-            uchar *dest = image.bits();
-            for (int y = 0; y < h; ++y) {
-                const uchar *mscan = imageMask.constScanLine(y);
-                uchar *tscan = QFAST_SCAN_LINE(dest, bpl, y);
-                for (int i = 0; i < bpl; ++i)
-                    tscan[i] &= mscan[i];
-            }
-            break;
-        }
-        default: {
-            const QImage imageMask = mask.toImage().convertToFormat(QImage::Format_MonoLSB);
-            image = image.convertToFormat(QImage::Format_ARGB32_Premultiplied);
-            const int bpl = image.bytesPerLine();
-            uchar *dest = image.bits();
-            for (int y = 0; y < h; ++y) {
-                const uchar *mscan = imageMask.constScanLine(y);
-                QRgb *tscan = reinterpret_cast<QRgb*>(QFAST_SCAN_LINE(dest, bpl, y));
-                for (int x = 0; x < w; ++x) {
-                    if (!(mscan[x>>3] & qt_pixmap_bit_mask[x&7]))
-                        tscan[x] = 0;
+            case 1: {
+                const QImage imageMask = mask.toImage().convertToFormat(image.format());
+                const int bpl = image.bytesPerLine();
+                uchar *dest = image.bits();
+                for (int y = 0; y < h; ++y) {
+                    const uchar *mscan = imageMask.constScanLine(y);
+                    uchar *tscan = QFAST_SCAN_LINE(dest, bpl, y);
+                    for (int i = 0; i < bpl; ++i)
+                        tscan[i] &= mscan[i];
                 }
+                break;
             }
-            break;
-        }
+            default: {
+                const QImage imageMask = mask.toImage().convertToFormat(QImage::Format_MonoLSB);
+                image = image.convertToFormat(QImage::Format_ARGB32_Premultiplied);
+                const int bpl = image.bytesPerLine();
+                uchar *dest = image.bits();
+                for (int y = 0; y < h; ++y) {
+                    const uchar *mscan = imageMask.constScanLine(y);
+                    QRgb *tscan = reinterpret_cast<QRgb*>(QFAST_SCAN_LINE(dest, bpl, y));
+                    for (int x = 0; x < w; ++x) {
+                        if (!(mscan[x>>3] & qt_pixmap_bit_mask[x&7]))
+                            tscan[x] = 0;
+                    }
+                }
+                break;
+            }
         }
     }
 }

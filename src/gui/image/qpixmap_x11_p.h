@@ -89,8 +89,6 @@ private:
 
     void release();
 
-    QImage toImage(const XImage *xi, const QRect &rect) const;
-
     QBitmap mask_to_bitmap(int screen) const;
     static Qt::HANDLE bitmap_to_mask(const QBitmap &, int screen);
     void bitmapFromImage(const QImage &image);

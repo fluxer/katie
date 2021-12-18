@@ -258,6 +258,7 @@ struct QX11Data
 
     static void copyQImageToXImage(const QImage &image, XImage *ximage);
     static void copyXImageToQImage(XImage *ximage, QImage &image);
+    static void copyXImageToQImageWithMask(XImage *ximage, QImage &image, const QImage &mask);
 
     bool has_fontconfig;
     bool fc_antialias;

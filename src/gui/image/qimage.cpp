@@ -48,8 +48,6 @@
 
 QT_BEGIN_NAMESPACE
 
-#define QIMAGE_STREAM_FORMAT "png"
-
 #define QIMAGE_SANITYCHECK_MEMORY(image) \
     if (Q_UNLIKELY((image).isNull())) { \
         qWarning("QImage: out of memory, returning null image"); \
@@ -167,21 +165,25 @@ QImageData::QImageData()
 */
 QImageData * QImageData::create(const QSize &size, QImage::Format format)
 {
-    if (!size.isValid() || format == QImage::Format_Invalid)
-        return 0;                                // invalid parameter(s)
+    if (!size.isValid() || format == QImage::Format_Invalid) {
+        // invalid parameter(s)
+        return 0;
+    }
 
     uint width = size.width();
     uint height = size.height();
     uint depth = qt_depthForFormat(format);
-    const int bytes_per_line = ((width * depth + 31) >> 5) << 2; // bytes per scanline (must be multiple of 4)
+    // bytes per scanline (must be multiple of 4)
+    const int bytes_per_line = ((width * depth + 31) >> 5) << 2;
 
     // sanity check for potential overflows
     if (INT_MAX/depth < width
         || bytes_per_line <= 0
         || height <= 0
         || INT_MAX/uint(bytes_per_line) < height
-        || INT_MAX/sizeof(uchar *) < uint(height))
+        || INT_MAX/sizeof(uchar *) < uint(height)) {
         return 0;
+    }
 
     QScopedPointer<QImageData> d(new QImageData);
     if (depth == 1) {
@@ -2966,46 +2968,52 @@ void QImage::setPixel(int x, int y, uint index_or_rgb)
         qWarning("setPixel: Out of memory");
         return;
     }
-    const quint32 p = index_or_rgb;
     switch(d->format) {
-    case Format_Mono:
-    case Format_MonoLSB:
-        if (Q_UNLIKELY(index_or_rgb > 1)) {
-            qWarning("QImage::setPixel: Index %d out of range", index_or_rgb);
-        } else if (format() == Format_MonoLSB) {
-            if (index_or_rgb==0)
-                *(s + (x >> 3)) &= ~(1 << (x & 7));
-            else
-                *(s + (x >> 3)) |= (1 << (x & 7));
-        } else {
-            if (index_or_rgb==0)
-                *(s + (x >> 3)) &= ~(1 << (7-(x & 7)));
-            else
-                *(s + (x >> 3)) |= (1 << (7-(x & 7)));
+        case Format_Mono:
+        case Format_MonoLSB: {
+            if (Q_UNLIKELY(index_or_rgb > 1)) {
+                qWarning("QImage::setPixel: Index %d out of range", index_or_rgb);
+            } else if (format() == Format_MonoLSB) {
+                if (index_or_rgb==0)
+                    *(s + (x >> 3)) &= ~(1 << (x & 7));
+                else
+                    *(s + (x >> 3)) |= (1 << (x & 7));
+            } else {
+                if (index_or_rgb==0)
+                    *(s + (x >> 3)) &= ~(1 << (7-(x & 7)));
+                else
+                    *(s + (x >> 3)) |= (1 << (7-(x & 7)));
+            }
+            break;
         }
-        break;
-    case Format_Indexed8:
-        if (Q_UNLIKELY(index_or_rgb >= (uint)d->colortable.size())) {
-            qWarning("QImage::setPixel: Index %d out of range", index_or_rgb);
-            return;
+        case Format_Indexed8: {
+            if (Q_UNLIKELY(index_or_rgb >= (uint)d->colortable.size())) {
+                qWarning("QImage::setPixel: Index %d out of range", index_or_rgb);
+                return;
+            }
+            s[x] = index_or_rgb;
+            break;
         }
-        s[x] = index_or_rgb;
-        break;
-    case Format_RGB32:
-        //make sure alpha is 255, we depend on it in qdrawhelper for cases
-        // when image is set as a texture pattern on a qbrush
-        ((uint *)s)[x] = uint(255 << 24) | index_or_rgb;
-        break;
-    case Format_ARGB32:
-    case Format_ARGB32_Premultiplied:
-        ((uint *)s)[x] = index_or_rgb;
-        break;
-    case Format_RGB16:
-        ((quint16 *)s)[x] = qt_colorConvert<quint16, quint32>(p, 0);
-        break;
-    case Format_Invalid:
-    case NImageFormats:
-        Q_ASSERT(false);
+        case Format_RGB32: {
+            //make sure alpha is 255, we depend on it in qdrawhelper for cases
+            // when image is set as a texture pattern on a qbrush
+            ((uint *)s)[x] = uint(255 << 24) | index_or_rgb;
+            break;
+        }
+        case Format_ARGB32:
+        case Format_ARGB32_Premultiplied: {
+            ((uint *)s)[x] = index_or_rgb;
+            break;
+        }
+        case Format_RGB16: {
+            const quint32 p = index_or_rgb;
+            ((quint16 *)s)[x] = qt_colorConvert<quint16, quint32>(p, 0);
+            break;
+        }
+        case Format_Invalid:
+        case NImageFormats: {
+            Q_ASSERT(false);
+        }
     }
 }
 
@@ -3736,22 +3744,22 @@ bool QImageData::doImageIO(const QImage *image, QImageWriter *writer, int qualit
     \fn QDataStream &operator<<(QDataStream &stream, const QImage &image)
     \relates QImage
 
-    Writes the given \a image to the given \a stream as a PNG image.
-    Note that writing the stream to a file will not produce a valid
-    image file.
+    Writes the given \a image to the given \a stream. Note that
+    writing the stream to a file will not produce a valid image file.
 
     \sa QImage::save(), {Serializing Qt Data Types}
 */
 
 QDataStream &operator<<(QDataStream &s, const QImage &image)
 {
-    if (image.isNull()) {
-        s << (qint32) 0; // null image marker
-        return s;
-    }
-    s << (qint32) 1;
-    QImageWriter writer(s.device(), QIMAGE_STREAM_FORMAT);
-    writer.write(image);
+    s << (qint32) image.format();
+    s << (qint64) image.width();
+    s << (qint64) image.height();
+    s << (qint64) image.dotsPerMeterX();
+    s << (qint64) image.dotsPerMeterY();
+    s << (qint64) image.byteCount();
+    s << image.colorTable();
+    s.writeRawData(reinterpret_cast<const char*>(image.constBits()), image.byteCount());
     return s;
 }
 
@@ -3767,13 +3775,38 @@ QDataStream &operator<<(QDataStream &s, const QImage &image)
 
 QDataStream &operator>>(QDataStream &s, QImage &image)
 {
-    qint32 nullMarker;
-    s >> nullMarker;
-    if (!nullMarker) {
-        image = QImage(); // null image
+    qint32 format;
+    qint64 width;
+    qint64 height;
+    qint64 dotsperx;
+    qint64 dotspery;
+    qint64 bytecount;
+    QVector<QRgb> colortable;
+    s >> format;
+    s >> width;
+    s >> height;
+    s >> dotsperx;
+    s >> dotspery;
+    s >> bytecount;
+    s >> colortable;
+
+    image = QImage(width, height, static_cast<QImage::Format>(format));
+    if (image.isNull()) {
+        // could be a default-constructed image
         return s;
     }
-    image = QImageReader(s.device(), QIMAGE_STREAM_FORMAT).read();
+
+    const qint64 result = s.readRawData(reinterpret_cast<char*>(image.d->data), bytecount);
+    if (Q_UNLIKELY(result != bytecount)) {
+        image = QImage();
+        s.setStatus(QDataStream::ReadPastEnd);
+        return s;
+    }
+
+    image.d->colortable = colortable;
+    image.d->dpmx = dotsperx;
+    image.d->dpmy = dotspery;
+
     return s;
 }
 #endif // QT_NO_DATASTREAM

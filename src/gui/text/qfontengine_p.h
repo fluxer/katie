@@ -101,7 +101,6 @@ public:
     struct FaceId {
         FaceId() : index(0), encoding(0) {}
         QByteArray filename;
-        QByteArray uuid;
         int index;
         int encoding;
     };
@@ -180,8 +179,6 @@ public:
 
     virtual int glyphCount() const;
 
-    virtual QFontEngine *cloneWithSize(qreal /*pixelSize*/) const { return 0; }
-
     HB_Font harfbuzzFont() const;
     HB_Face harfbuzzFace() const;
 
@@ -239,7 +236,7 @@ inline bool operator ==(const QFontEngine::FaceId &f1, const QFontEngine::FaceId
 
 inline uint qHash(const QFontEngine::FaceId &f)
 {
-    return qHash((f.index << 16) + f.encoding) + qHash(f.filename + f.uuid);
+    return qHash((f.index << 16) + f.encoding) + qHash(f.filename);
 }
 
 

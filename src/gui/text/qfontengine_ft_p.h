@@ -93,7 +93,7 @@ public:
     HB_Error getPointInOutline(HB_Glyph glyph, int flags, hb_uint32 point, HB_Fixed *xpos, HB_Fixed *ypos, hb_uint32 *nPoints);
 
     static void addGlyphToPath(FT_Face face, FT_GlyphSlot g, const QFixedPoint &point, QPainterPath *path, FT_Fixed x_scale, FT_Fixed y_scale);
-    static void addBitmapToPath(FT_GlyphSlot slot, const QFixedPoint &point, QPainterPath *path, bool = false);
+    static void addBitmapToPath(FT_GlyphSlot slot, const QFixedPoint &point, QPainterPath *path);
 
 private:
     friend class QFontEngineFT;
@@ -282,7 +282,6 @@ private:
 
     void setDefaultHintStyle(HintStyle style);
 
-    virtual QFontEngine *cloneWithSize(qreal pixelSize) const;
     bool initFromFontEngine(const QFontEngineFT *fontEngine);
 
     HintStyle defaultHintStyle() const { return default_hint_style; }

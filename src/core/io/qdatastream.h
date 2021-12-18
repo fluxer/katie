@@ -48,7 +48,7 @@ public:
         Qt_4_9 = Qt_4_8,
         Qt_4_10 = Qt_4_9,
         Qt_4_11 = Qt_4_10,
-        Qt_4_12 = Qt_4_11,
+        Qt_4_12 = 13,
 #if QT_VERSION > 0x041200
 #error Add the datastream version for this version
         Qt_4_13 = Qt_4_12

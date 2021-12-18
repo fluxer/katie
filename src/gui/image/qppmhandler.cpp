@@ -183,16 +183,6 @@ static bool read_pbm_body(QIODevice *device, char type, int w, int h, int mcc, Q
                     bitsLeft -= 8;
                     *p++ = b;
                 }
-            } else if (nbits == 8) {
-                if (mcc == maxc) {
-                    while (n--) {
-                        *p++ = read_pbm_int(device);
-                    }
-                } else {
-                    while (n--) {
-                        *p++ = read_pbm_int(device) * maxc / mcc;
-                    }
-                }
             } else {                                // 32 bits
                 n /= 4;
                 int r, g, b;
@@ -219,10 +209,6 @@ static bool read_pbm_body(QIODevice *device, char type, int w, int h, int mcc, Q
 
     if (nbits == 1) {                                // black/white bitmap
         outImage->setColorTable(monoColorTable());
-    } else if (nbits == 8) {                        // graymap
-        outImage->setColorCount(maxc+1);
-        for (int i=0; i<=maxc; i++)
-            outImage->setColor(i, qRgb(i*255/maxc,i*255/maxc,i*255/maxc));
     }
 
     return true;
@@ -230,18 +216,15 @@ static bool read_pbm_body(QIODevice *device, char type, int w, int h, int mcc, Q
 
 static bool write_pbm_image(QIODevice *out, const QImage &sourceImage, const QByteArray &sourceFormat)
 {
-    QByteArray str;
     QImage image = sourceImage;
-    QByteArray format = sourceFormat;
-
-    format = format.left(3);                        // ignore RAW part
+    const QByteArray format = sourceFormat.left(3); // ignore RAW part
 
     if (format == "pbm") {
         image = image.convertToFormat(QImage::Format_Mono);
-    } else if (image.depth() == 1) {
-        image = image.convertToFormat(QImage::Format_Indexed8);
-    } else if (image.format() == QImage::Format_RGB16) {
-        image = image.convertToFormat(QImage::Format_RGB32);
+    } else if (format == "ppm") {
+        image = image.convertToFormat(QImage::Format_ARGB32);
+    } else {
+        return false;
     }
 
     if (image.depth() == 1 && image.colorCount() == 2) {
@@ -259,7 +242,7 @@ static bool write_pbm_image(QIODevice *out, const QImage &sourceImage, const QBy
     uint w = image.width();
     uint h = image.height();
 
-    str = "P\n";
+    QByteArray str("P\n");
     str += QByteArray::number(w);
     str += ' ';
     str += QByteArray::number(h);
@@ -274,30 +257,6 @@ static bool write_pbm_image(QIODevice *out, const QImage &sourceImage, const QBy
             for (uint y=0; y<h; y++) {
                 uchar* line = image.scanLine(y);
                 if (w != (uint)out->write((char*)line, w))
-                    return false;
-            }
-            break;
-        }
-
-        case 8: {
-            str.insert(1, '6');
-            str.append("255\n");
-            if (out->write(str, str.length()) != str.length())
-                return false;
-            QVector<QRgb> color = image.colorTable();
-            uint bpl = w*3;
-            QSTACKARRAY(uchar, buf, bpl);
-            for (uint y=0; y<h; y++) {
-                uchar *b = image.scanLine(y);
-                uchar *p = buf;
-                uchar *end = buf+bpl;
-                while (p < end) {
-                    QRgb rgb = color[*b++];
-                    *p++ = qRed(rgb);
-                    *p++ = qGreen(rgb);
-                    *p++ = qBlue(rgb);
-                }
-                if (bpl != (uint)out->write((char*)buf, bpl))
                     return false;
             }
             break;
