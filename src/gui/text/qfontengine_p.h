@@ -101,7 +101,6 @@ public:
     struct FaceId {
         FaceId() : index(0), encoding(0) {}
         QByteArray filename;
-        QByteArray uuid;
         int index;
         int encoding;
     };
@@ -237,7 +236,7 @@ inline bool operator ==(const QFontEngine::FaceId &f1, const QFontEngine::FaceId
 
 inline uint qHash(const QFontEngine::FaceId &f)
 {
-    return qHash((f.index << 16) + f.encoding) + qHash(f.filename + f.uuid);
+    return qHash((f.index << 16) + f.encoding) + qHash(f.filename);
 }
 
 
