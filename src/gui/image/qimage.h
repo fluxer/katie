@@ -213,7 +213,9 @@ private:
     friend class QX11AlphaDetector;
     friend class QSpanData;
     friend class QPngHandler;
+#if !defined(QT_NO_DATASTREAM)
     friend Q_GUI_EXPORT QDataStream &operator>>(QDataStream &, QImage &);
+#endif
 };
 
 Q_DECLARE_TYPEINFO(QImage, Q_MOVABLE_TYPE);
