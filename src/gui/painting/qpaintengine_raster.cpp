@@ -215,12 +215,11 @@ bool QRasterPaintEngine::begin(QPaintDevice *pdev)
         return false;
     }
 
-    d->m_cairobackground = cairo_pattern_create_rgba(0.0, 0.0, 0.0, 0.0);
+    d->m_cairobackground = backgroundPattern(state->backgroundBrush().color());
     pushPattern(d->m_cairobackground);
 
     setDirty(QPaintEngine::DirtyTransform);
     setDirty(QPaintEngine::DirtyHints);
-    setDirty(QPaintEngine::DirtyBackground);
     setDirty(QPaintEngine::DirtyCompositionMode);
     setDirty(QPaintEngine::DirtyPen);
 
@@ -380,22 +379,7 @@ void QRasterPaintEngine::updateState(const QPaintEngineState &state)
         const QColor statecolor(state.backgroundBrush().color());
 
         popPattern(d->m_cairobackground);
-        switch (state.backgroundMode()) {
-            case Qt::TransparentMode: {
-                d->m_cairobackground = cairo_pattern_create_rgba(
-                    statecolor.redF(), statecolor.greenF(), statecolor.blueF(),
-                    0.0
-                );
-                break;
-            }
-            case Qt::OpaqueMode: {
-                d->m_cairobackground = cairo_pattern_create_rgba(
-                    statecolor.redF(), statecolor.greenF(), statecolor.blueF(),
-                    1.0
-                );
-                break;
-            }
-        }
+        d->m_cairobackground = backgroundPattern(statecolor);
         pushPattern(d->m_cairobackground);
     }
 
@@ -834,6 +818,32 @@ void QRasterPaintEngine::updateFont(const QFont &font)
     QT_CHECK_RASTER_STATUS(d->m_cairo)
     cairo_select_font_face(d->m_cairo, fontfamily.constData(), cairofontslant, cairofontweight);
     QT_CHECK_RASTER_STATUS(d->m_cairo)
+}
+
+cairo_pattern_t* QRasterPaintEngine::backgroundPattern(const QColor &color)
+{
+    Q_D(QRasterPaintEngine);
+
+    // qDebug() << Q_FUNC_INFO << color;
+
+    cairo_pattern_t* cairopattern = nullptr;
+    switch (state->backgroundMode()) {
+        case Qt::TransparentMode: {
+            cairopattern = cairo_pattern_create_rgba(
+                color.redF(), color.greenF(), color.blueF(),
+                0.0
+            );
+            break;
+        }
+        case Qt::OpaqueMode: {
+            cairopattern = cairo_pattern_create_rgba(
+                color.redF(), color.greenF(), color.blueF(),
+                1.0
+            );
+            break;
+        }
+    }
+    return cairopattern;
 }
 
 cairo_pattern_t* QRasterPaintEngine::imagePattern(const QImage &image, const Qt::ImageConversionFlags flags)
