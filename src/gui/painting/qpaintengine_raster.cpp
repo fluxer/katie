@@ -223,8 +223,6 @@ bool QRasterPaintEngine::begin(QPaintDevice *pdev)
     setDirty(QPaintEngine::DirtyCompositionMode);
     setDirty(QPaintEngine::DirtyPen);
 
-    updateFont(state->font());
-
     return true;
 }
 
@@ -724,100 +722,6 @@ void QRasterPaintEngine::drawImage(const QRectF &r, const QImage &image, const Q
     QT_CHECK_RASTER_STATUS(d->m_cairo)
 
     popPattern(cairopattern);
-}
-
-void QRasterPaintEngine::drawTextItem(const QPointF &p, const QTextItem &textItem)
-{
-    Q_D(QRasterPaintEngine);
-
-    // qDebug() << Q_FUNC_INFO << p << textItem.text();
-
-    const QByteArray text(textItem.text().toUtf8());
-    const QFont statefont(state->font());
-    const QPen statepen(state->pen());
-
-    // TODO: implement text item flags
-
-    const bool statefontissame = (statefont == textItem.font());
-    if (!statefontissame) {
-        updateFont(textItem.font());
-    }
-
-    cairo_move_to(d->m_cairo, p.x(), p.y());
-    QT_CHECK_RASTER_STATUS(d->m_cairo)
-
-    Q_ASSERT_X(statepen.style() != Qt::NoPen, "QRasterPaintEngine::drawTextItem", "internal error");
-    cairo_pattern_t* cairopattern = penPattern(statepen);
-
-    pushPattern(cairopattern);
-
-    cairo_show_text(d->m_cairo, text.constData());
-    QT_CHECK_RASTER_STATUS(d->m_cairo)
-
-    popPattern(cairopattern);
-
-    if (!statefontissame) {
-        updateFont(statefont);
-    }
-}
-
-void QRasterPaintEngine::updateFont(const QFont &font)
-{
-    Q_D(QRasterPaintEngine);
-
-    // qDebug() << Q_FUNC_INFO << font;
-
-    const QByteArray fontfamily(font.family().toUtf8());
-
-    cairo_font_weight_t cairofontweight = CAIRO_FONT_WEIGHT_NORMAL;
-    if (font.bold()) {
-        cairofontweight = CAIRO_FONT_WEIGHT_BOLD;
-    }
-
-    cairo_font_slant_t cairofontslant = CAIRO_FONT_SLANT_NORMAL;
-    switch (font.style()) {
-        case QFont::StyleNormal: {
-            cairofontslant = CAIRO_FONT_SLANT_NORMAL;
-            break;
-        }
-        case QFont::StyleItalic: {
-            cairofontslant = CAIRO_FONT_SLANT_ITALIC;
-            break;
-        }
-        case QFont::StyleOblique: {
-            cairofontslant = CAIRO_FONT_SLANT_OBLIQUE;
-            break;
-        }
-    }
-
-    cairo_font_options_t* cairooptions = cairo_font_options_create();
-    cairo_get_font_options(d->m_cairo, cairooptions);
-    switch (font.hintingPreference()) {
-        case QFont::PreferDefaultHinting: {
-            cairo_font_options_set_hint_style(cairooptions, CAIRO_HINT_STYLE_DEFAULT);
-            break;
-        }
-        case QFont::PreferNoHinting: {
-            cairo_font_options_set_hint_style(cairooptions, CAIRO_HINT_STYLE_NONE);
-            break;
-        }
-        case QFont::PreferVerticalHinting: {
-            cairo_font_options_set_hint_style(cairooptions, CAIRO_HINT_STYLE_SLIGHT);
-            break;
-        }
-        case QFont::PreferFullHinting: {
-            cairo_font_options_set_hint_style(cairooptions, CAIRO_HINT_STYLE_FULL);
-            break;
-        }
-    }
-    cairo_set_font_options(d->m_cairo, cairooptions);
-    QT_CHECK_RASTER_STATUS(d->m_cairo)
-    cairo_font_options_destroy(cairooptions);
-
-    cairo_set_font_size(d->m_cairo, font.pointSizeF());
-    QT_CHECK_RASTER_STATUS(d->m_cairo)
-    cairo_select_font_face(d->m_cairo, fontfamily.constData(), cairofontslant, cairofontweight);
-    QT_CHECK_RASTER_STATUS(d->m_cairo)
 }
 
 cairo_pattern_t* QRasterPaintEngine::backgroundPattern(const QColor &color)

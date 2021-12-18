@@ -58,7 +58,6 @@ public:
     void drawPixmap(const QRectF &r, const QPixmap &pixmap, const QRectF &sr) final;
     void drawImage(const QRectF &r, const QImage &image, const QRectF &sr,
                    Qt::ImageConversionFlags flags = Qt::AutoColor) final;
-    void drawTextItem(const QPointF &p, const QTextItem &textItem) final;
 
     QPaintEngine::Type type() const final { return QPaintEngine::Raster; }
 
