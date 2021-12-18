@@ -94,7 +94,6 @@ void QX11Data::copyQImageToXImage(const QImage &image, XImage *ximage)
     const int h = image.height();
     switch(image.format()) {
         case QImage::Format_Indexed8: {
-            qDebug() << Q_FUNC_INFO << "Format_Indexed8";
             QVector<QRgb> colorTable = image.colorTable();
             uint *xidata = (uint *)ximage->data;
             for (int y = 0; y < h; ++y) {
