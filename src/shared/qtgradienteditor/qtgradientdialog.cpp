@@ -83,11 +83,9 @@ void QtGradientDialogPrivate::slotAboutToShowDetails(bool details, int extension
     \row
     \o \inlineimage qtgradientdialoglineareditor.png
     \o \inlineimage qtgradientdialogradialeditor.png
-    \o \inlineimage qtgradientdialogconicaleditor.png
     \header
     \o Editing linear type
     \o Editing radial type
-    \o Editing conical type
     \row
     \o The user can change the start and final point positions by dragging the circular handles.
     \o The user can change the center and focal point positions by dragging the circular handles

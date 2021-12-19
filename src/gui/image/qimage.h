@@ -214,6 +214,7 @@ private:
     friend class QX11AlphaDetector;
     friend class QPngHandler;
 #if !defined(QT_NO_DATASTREAM)
+    friend Q_GUI_EXPORT QDataStream &operator<<(QDataStream &, const QImage &);
     friend Q_GUI_EXPORT QDataStream &operator>>(QDataStream &, QImage &);
 #endif
 };

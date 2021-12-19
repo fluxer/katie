@@ -483,7 +483,7 @@ public:
     bool hasPalette() const { return pal != 0; }
     bool hasBackground() const { return bg != 0 && (!bg->pixmap.isNull() || bg->brush.style() != Qt::NoBrush); }
     bool hasGradientBackground() const { return bg && bg->brush.style() >= Qt::LinearGradientPattern
-                                                   && bg->brush.style() <= Qt::ConicalGradientPattern; }
+                                                   && bg->brush.style() <= Qt::RadialGradientPattern; }
 
     bool hasNativeBorder() const {
         return bd == 0

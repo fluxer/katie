@@ -140,7 +140,6 @@ static const struct ClassTblData {
     { QLatin1String("QCommandLinkButton"), QLatin1String("QtGui/qcommandlinkbutton.h") },
     { QLatin1String("QCommonStyle"), QLatin1String("QtGui/qcommonstyle.h") },
     { QLatin1String("QCompleter"), QLatin1String("QtGui/qcompleter.h") },
-    { QLatin1String("QConicalGradient"), QLatin1String("QtGui/qbrush.h") },
     { QLatin1String("QContextMenuEvent"), QLatin1String("QtGui/qevent.h") },
     { QLatin1String("QContiguousCache"), QLatin1String("QtCore/qcontiguouscache.h") },
     { QLatin1String("QContiguousCacheData"), QLatin1String("QtCore/qcontiguouscache.h") },

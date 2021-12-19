@@ -295,7 +295,6 @@
                 <xs:attribute name="focalx" type="xs:double" use="required" />
                 <xs:attribute name="focaly" type="xs:double" use="required" />
                 <xs:attribute name="radius" type="xs:double" use="required" />
-                <xs:attribute name="angle" type="xs:double" use="required" />
                 <xs:attribute name="type" type="xs:string" use="required" />
                 <xs:attribute name="spread" type="xs:string" use="required" />
                 <xs:attribute name="coordinatemode" type="xs:string" use="required" />

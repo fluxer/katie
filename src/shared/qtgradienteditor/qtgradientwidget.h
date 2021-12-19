@@ -64,12 +64,6 @@ public:
     void setRadiusRadial(qreal radius);
     qreal radiusRadial() const;
 
-    void setCentralConical(const QPointF &point);
-    QPointF centralConical() const;
-
-    void setAngleConical(qreal angle);
-    qreal angleConical() const;
-
 public slots:
     void setGradientStops(const QGradientStops &stops);
 signals:
@@ -79,8 +73,6 @@ signals:
     void centralRadialChanged(const QPointF &point);
     void focalRadialChanged(const QPointF &point);
     void radiusRadialChanged(qreal radius);
-    void centralConicalChanged(const QPointF &point);
-    void angleConicalChanged(qreal angle);
 
 protected:
     void paintEvent(QPaintEvent *e);

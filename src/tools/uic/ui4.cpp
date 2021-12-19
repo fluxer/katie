@@ -4101,8 +4101,6 @@ void DomGradient::clear(bool clear_all)
     m_attr_focalY = 0.0;
     m_has_attr_radius = false;
     m_attr_radius = 0.0;
-    m_has_attr_angle = false;
-    m_attr_angle = 0.0;
     m_has_attr_type = false;
     m_has_attr_spread = false;
     m_has_attr_coordinateMode = false;
@@ -4132,8 +4130,6 @@ DomGradient::DomGradient()
     m_attr_focalY = 0.0;
     m_has_attr_radius = false;
     m_attr_radius = 0.0;
-    m_has_attr_angle = false;
-    m_attr_angle = 0.0;
     m_has_attr_type = false;
     m_has_attr_spread = false;
     m_has_attr_coordinateMode = false;
@@ -4184,10 +4180,6 @@ void DomGradient::read(QXmlStreamReader &reader)
         }
         if (name == QLatin1String("radius")) {
             setAttributeRadius(attribute.value().toString().toDouble());
-            continue;
-        }
-        if (name == QLatin1String("angle")) {
-            setAttributeAngle(attribute.value().toString().toDouble());
             continue;
         }
         if (name == QLatin1String("type")) {
@@ -4262,9 +4254,6 @@ void DomGradient::write(QXmlStreamWriter &writer, const QString &tagName) const
 
     if (hasAttributeRadius())
         writer.writeAttribute(QLatin1String("radius"), QString::number(attributeRadius(), 'f', 15));
-
-    if (hasAttributeAngle())
-        writer.writeAttribute(QLatin1String("angle"), QString::number(attributeAngle(), 'f', 15));
 
     if (hasAttributeType())
         writer.writeAttribute(QLatin1String("type"), attributeType());

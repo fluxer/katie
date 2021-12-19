@@ -217,10 +217,6 @@ public:
         saveGradientStops(str, g);
         str << QLatin1String("</radialGradient>") << endl;
     }
-    void saveConicalGradientBrush(const QGradient *)
-    {
-        qWarning("svg's don't support conical gradients!");
-    }
 
     void saveGradientStops(QTextStream &str, const QGradient *g) {
         QGradientStops stops = g->stops();
@@ -400,12 +396,6 @@ public:
             break;
         case Qt::RadialGradientPattern:
             saveRadialGradientBrush(sbrush.gradient());
-            d_func()->attributes.fill = QString::fromLatin1("url(#%1)").arg(d_func()->currentGradientName);
-            d_func()->attributes.fillOpacity = QString();
-            stream() << QLatin1String("fill=\"url(#") << d_func()->currentGradientName << QLatin1String(")\" ");
-            break;
-        case Qt::ConicalGradientPattern:
-            saveConicalGradientBrush(sbrush.gradient());
             d_func()->attributes.fill = QString::fromLatin1("url(#%1)").arg(d_func()->currentGradientName);
             d_func()->attributes.fillOpacity = QString();
             stream() << QLatin1String("fill=\"url(#") << d_func()->currentGradientName << QLatin1String(")\" ");

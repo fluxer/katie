@@ -33,8 +33,6 @@ static QString gradientTypeToString(QGradient::Type type)
         return QLatin1String("LinearGradient");
     if (type == QGradient::RadialGradient)
         return QLatin1String("RadialGradient");
-    if (type == QGradient::ConicalGradient)
-        return QLatin1String("ConicalGradient");
     return QLatin1String("NoGradient");
 }
 
@@ -44,8 +42,6 @@ static QGradient::Type stringToGradientType(const QString &name)
         return QGradient::LinearGradient;
     if (name == QLatin1String("RadialGradient"))
         return QGradient::RadialGradient;
-    if (name == QLatin1String("ConicalGradient"))
-        return QGradient::ConicalGradient;
     return QGradient::NoGradient;
 }
 
@@ -144,11 +140,6 @@ static QDomElement saveGradient(QDomDocument &doc, const QGradient &gradient)
         gradElem.setAttribute(QLatin1String("focalX"), QString::number(g.focalPoint().x()));
         gradElem.setAttribute(QLatin1String("focalY"), QString::number(g.focalPoint().y()));
         gradElem.setAttribute(QLatin1String("radius"), QString::number(g.radius()));
-    } else if (type == QGradient::ConicalGradient) {
-        const QConicalGradient &g = *static_cast<const QConicalGradient*>(&gradient);
-        gradElem.setAttribute(QLatin1String("centerX"), QString::number(g.center().x()));
-        gradElem.setAttribute(QLatin1String("centerY"), QString::number(g.center().y()));
-        gradElem.setAttribute(QLatin1String("angle"), QString::number(g.angle()));
     }
 
     return gradElem;
@@ -195,11 +186,6 @@ static QGradient loadGradient(const QDomElement &elem)
         g.setCenter(elem.attribute(QLatin1String("centerX")).toDouble(), elem.attribute(QLatin1String("centerY")).toDouble());
         g.setFocalPoint(elem.attribute(QLatin1String("focalX")).toDouble(), elem.attribute(QLatin1String("focalY")).toDouble());
         g.setRadius(elem.attribute(QLatin1String("radius")).toDouble());
-        gradient = g;
-    } else if (type == QGradient::ConicalGradient) {
-        QConicalGradient g;
-        g.setCenter(elem.attribute(QLatin1String("centerX")).toDouble(), elem.attribute(QLatin1String("centerY")).toDouble());
-        g.setAngle(elem.attribute(QLatin1String("angle")).toDouble());
         gradient = g;
     }
 
@@ -303,9 +289,6 @@ static QString styleSheetFillName(const QGradient &gradient)
         case QGradient::RadialGradient:
             result += QLatin1String("qradialgradient");
             break;
-        case QGradient::ConicalGradient:
-            result += QLatin1String("qconicalgradient");
-            break;
         default:
             qWarning() << "QtGradientUtils::styleSheetFillName(): gradient type" << gradient.type() << "not supported!";
             break;
@@ -318,24 +301,22 @@ static QStringList styleSheetParameters(const QGradient &gradient)
 {
     QStringList result;
 
-    if (gradient.type() != QGradient::ConicalGradient) {
-        QString spread;
-        switch (gradient.spread()) {
-            case QGradient::PadSpread:
-                spread = QLatin1String("pad");
-                break;
-            case QGradient::ReflectSpread:
-                spread = QLatin1String("reflect");
-                break;
-            case QGradient::RepeatSpread:
-                spread = QLatin1String("repeat");
-                break;
-            default:
-                qWarning() << "QtGradientUtils::styleSheetParameters(): gradient spread" << gradient.spread() << "not supported!";
-                break;
-        }
-        result << QLatin1String("spread:") + spread;
+    QString spread;
+    switch (gradient.spread()) {
+        case QGradient::PadSpread:
+            spread = QLatin1String("pad");
+            break;
+        case QGradient::ReflectSpread:
+            spread = QLatin1String("reflect");
+            break;
+        case QGradient::RepeatSpread:
+            spread = QLatin1String("repeat");
+            break;
+        default:
+            qWarning() << "QtGradientUtils::styleSheetParameters(): gradient spread" << gradient.spread() << "not supported!";
+            break;
     }
+    result << QLatin1String("spread:") + spread;
 
     switch (gradient.type()) {
         case QGradient::LinearGradient: {
@@ -353,13 +334,6 @@ static QStringList styleSheetParameters(const QGradient &gradient)
                 << QLatin1String("radius:") + QString::number(radialGradient->radius())
                 << QLatin1String("fx:")     + QString::number(radialGradient->focalPoint().x())
                 << QLatin1String("fy:")     + QString::number(radialGradient->focalPoint().y());
-            break;
-        }
-        case QGradient::ConicalGradient: {
-            const QConicalGradient *conicalGradient = static_cast<const QConicalGradient*>(&gradient);
-            result << QLatin1String("cx:") + QString::number(conicalGradient->center().x())
-                << QLatin1String("cy:")    + QString::number(conicalGradient->center().y())
-                << QLatin1String("angle:") + QString::number(conicalGradient->angle());
             break;
         }
         default:

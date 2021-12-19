@@ -801,6 +801,10 @@ QImage QX11PixmapData::toImage(const QRect &rect) const
         return image;
     }
 
+    if (image.depth() == 1) {
+        image.setColorTable(monoColorTable());
+    }
+
     if (x11_mask) {
         QImage alpha;
         if (rect.contains(QRect(0, 0, w, h))) {

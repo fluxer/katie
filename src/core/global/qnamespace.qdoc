@@ -324,7 +324,6 @@
     \value FDiagPattern  Forward diagonal lines.
     \value DiagCrossPattern  Crossing diagonal lines.
     \value LinearGradientPattern  Linear gradient (set using a dedicated QBrush constructor).
-    \value ConicalGradientPattern  Conical gradient (set using a dedicated QBrush constructor).
     \value RadialGradientPattern  Radial gradient (set using a dedicated QBrush constructor).
     \value TexturePattern  Custom pattern (see QBrush::setTexture()).
 

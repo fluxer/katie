@@ -1687,8 +1687,7 @@ void WriteInitialization::writeBrush(const DomBrush *brush, const QString &brush
         style = brush->attributeBrushStyle();
 
     if (style == QLatin1String("LinearGradientPattern") ||
-            style == QLatin1String("RadialGradientPattern") ||
-            style == QLatin1String("ConicalGradientPattern")) {
+            style == QLatin1String("RadialGradientPattern")) {
         const DomGradient *gradient = brush->elementGradient();
         const QString gradientType = gradient->attributeType();
         const QString gradientName = m_driver->unique(QLatin1String("gradient"));
@@ -1705,11 +1704,6 @@ void WriteInitialization::writeBrush(const DomBrush *brush, const QString &brush
                 << ", " << gradient->attributeRadius()
                 << ", " << gradient->attributeFocalX()
                 << ", " << gradient->attributeFocalY() << ");\n";
-        } else if (gradientType == QLatin1String("ConicalGradient")) {
-            m_output << m_indent << "QConicalGradient " << gradientName
-                << '(' << gradient->attributeCentralX()
-                << ", " << gradient->attributeCentralY()
-                << ", " << gradient->attributeAngle() << ");\n";
         }
 
         m_output << m_indent << gradientName << ".setSpread(QGradient::"
