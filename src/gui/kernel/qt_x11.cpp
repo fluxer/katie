@@ -178,8 +178,8 @@ void QX11Data::copyQImageToXImage(const QImage &image, XImage *ximage)
 void QX11Data::copyXImageToQImage(XImage *ximage, QImage &image)
 {
     Q_ASSERT(ximage);
-    Q_ASSERT(ximage->width == image.width);
-    Q_ASSERT(ximage->height == image.height);
+    Q_ASSERT(ximage->width == image.width());
+    Q_ASSERT(ximage->height == image.height());
 
     switch (image.format()) {
         case QImage::Format_RGB32: {
