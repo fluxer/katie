@@ -197,12 +197,9 @@ QImageData * QImageData::create(const QSize &size, QImage::Format format)
     d->height = height;
     d->depth = depth;
     d->format = format;
-    d->has_alpha_clut = false;
-
     d->bytes_per_line = bytes_per_line;
-
     d->nbytes = d->bytes_per_line*height;
-    d->data  = (uchar *)malloc(d->nbytes);
+    d->data = static_cast<uchar*>(::malloc(d->nbytes));
 
     if (!d->data) {
         return 0;
@@ -3752,14 +3749,15 @@ bool QImageData::doImageIO(const QImage *image, QImageWriter *writer, int qualit
 
 QDataStream &operator<<(QDataStream &s, const QImage &image)
 {
-    s << (qint32) image.format();
+    const bool alphaclut = (image.d ? image.d->has_alpha_clut : false);
+    s << (qint8) image.format();
     s << (qint64) image.width();
     s << (qint64) image.height();
     s << (qint64) image.dotsPerMeterX();
     s << (qint64) image.dotsPerMeterY();
     s << (qint64) image.byteCount();
     s << image.colorTable();
-    s << (bool)image.d->has_alpha_clut;
+    s << (bool)alphaclut;
     s.writeRawData(reinterpret_cast<const char*>(image.constBits()), image.byteCount());
     return s;
 }
@@ -3776,7 +3774,7 @@ QDataStream &operator<<(QDataStream &s, const QImage &image)
 
 QDataStream &operator>>(QDataStream &s, QImage &image)
 {
-    qint32 format;
+    qint8 format;
     qint64 width;
     qint64 height;
     qint64 dotsperx;
