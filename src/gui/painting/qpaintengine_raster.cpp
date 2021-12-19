@@ -546,7 +546,11 @@ void QRasterPaintEngine::updateState(const QPaintEngineState &state)
     if (stateflags & QPaintEngine::DirtyPen) {
         const QPen statepen(state.pen());
 
-        cairo_set_line_width(d->m_cairo, statepen.widthF());
+        if (statepen.isCosmetic()) {
+            cairo_set_line_width(d->m_cairo, 1.0);
+        } else {
+            cairo_set_line_width(d->m_cairo, statepen.widthF());
+        }
         QT_CHECK_RASTER_STATUS(d->m_cairo)
 
         switch (statepen.capStyle()) {
