@@ -604,8 +604,6 @@ Q_GLOBAL_STATIC_WITH_ARGS(QFactoryLoader, imageloader,
     (QImageIOHandlerFactoryInterface_iid, QLatin1String("/imageformats")))
 #endif
 
-static const uchar qt_pixmap_bit_mask[] = { 0x01, 0x02, 0x04, 0x08, 0x10, 0x20, 0x40, 0x80 };
-
 #ifndef QT_NO_TABBAR
 inline static bool verticalTabs(QTabBar::Shape shape)
 {

@@ -240,9 +240,8 @@ void QX11Data::copyXImageToQImageWithMask(XImage *ximage, QImage &image, const Q
     QX11Data::copyXImageToQImage(ximage, image);
 
     const QImage::Format imageformat = image.format();
-    QPixmap pixmap = QPixmap::fromImage(image);
-    pixmap.setMask(QBitmap::fromImage(mask));
-    image = pixmap.toImage().convertToFormat(imageformat);
+    image = qt_mask_image(image, mask);
+    image = image.convertToFormat(imageformat);
 }
 
 QT_END_NAMESPACE
