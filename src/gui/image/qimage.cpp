@@ -3759,6 +3759,7 @@ QDataStream &operator<<(QDataStream &s, const QImage &image)
     s << (qint64) image.dotsPerMeterY();
     s << (qint64) image.byteCount();
     s << image.colorTable();
+    s << (bool)image.d->has_alpha_clut;
     s.writeRawData(reinterpret_cast<const char*>(image.constBits()), image.byteCount());
     return s;
 }
@@ -3782,6 +3783,7 @@ QDataStream &operator>>(QDataStream &s, QImage &image)
     qint64 dotspery;
     qint64 bytecount;
     QVector<QRgb> colortable;
+    bool alphaclut;
     s >> format;
     s >> width;
     s >> height;
@@ -3789,6 +3791,7 @@ QDataStream &operator>>(QDataStream &s, QImage &image)
     s >> dotspery;
     s >> bytecount;
     s >> colortable;
+    s >> alphaclut;
 
     image = QImage(width, height, static_cast<QImage::Format>(format));
     if (image.isNull()) {
@@ -3803,6 +3806,7 @@ QDataStream &operator>>(QDataStream &s, QImage &image)
         return s;
     }
 
+    image.d->has_alpha_clut = alphaclut;
     image.d->colortable = colortable;
     image.d->dpmx = dotsperx;
     image.d->dpmy = dotspery;
