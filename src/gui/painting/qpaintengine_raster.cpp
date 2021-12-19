@@ -934,11 +934,6 @@ cairo_pattern_t* QRasterPaintEngine::brushPattern(const QBrush &brush)
             cairo_pattern_set_filter(cairopattern, qt_cairo_filter);
             break;
         }
-        case Qt::ConicalGradientPattern: {
-            // TODO: drop support for conical gradient entirely
-            qWarning("QRasterPaintEngine: Conical gradient brush pattern is not supported");
-            break;
-        }
         case Qt::TexturePattern: {
             if (qHasPixmapTexture(brush) && brush.texture().isQBitmap()) {
                 cairopattern = imagePattern(qt_colorizeBitmap(brush.textureImage(), brush.color()));
