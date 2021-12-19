@@ -726,8 +726,6 @@ void QRasterPaintEngine::drawImage(const QRectF &r, const QImage &image, const Q
 
 cairo_pattern_t* QRasterPaintEngine::backgroundPattern(const QColor &color)
 {
-    Q_D(QRasterPaintEngine);
-
     // qDebug() << Q_FUNC_INFO << color;
 
     cairo_pattern_t* cairopattern = nullptr;
