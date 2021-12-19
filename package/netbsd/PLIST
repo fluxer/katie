@@ -1397,7 +1397,7 @@ include/katie/QtXml/qxml.h
 include/katie/QtXml/qxmlstream.h
 lib/cmake/Katie/KatieConfig.cmake
 lib/cmake/Katie/KatieConfigVersion.cmake
-lib/cmake/Katie/KatieTargets-relwithdebinfo.cmake
+lib/cmake/Katie/KatieTargets-noconfig.cmake
 lib/cmake/Katie/KatieTargets.cmake
 lib/cmake/Katie/Qt4UseFile.cmake
 lib/katie/imports/Qt/labs/folderlistmodel/libqmlfolderlistmodelplugin.so
