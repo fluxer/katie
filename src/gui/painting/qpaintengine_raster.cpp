@@ -492,53 +492,33 @@ void QRasterPaintEngine::updateState(const QPaintEngineState &state)
     }
 
     if (stateflags & QPaintEngine::DirtyClipPath) {
-        switch (state.clipOperation()) {
-            case Qt::NoClip: {
-                cairo_reset_clip(d->m_cairo);
-                QT_CHECK_RASTER_STATUS(d->m_cairo)
-                break;
-            }
-            // the clip can grow only if reset
-            default: {
-                const QPainterPath statepath(state.clipPath());
+        // the clip can grow only if reset
+        const QPainterPath statepath(state.clipPath());
 
-                cairo_reset_clip(d->m_cairo);
-                QT_CHECK_RASTER_STATUS(d->m_cairo)
-                const QRectF pathrect(statepath.boundingRect());
+        cairo_reset_clip(d->m_cairo);
+        QT_CHECK_RASTER_STATUS(d->m_cairo)
+        const QRectF pathrect(statepath.boundingRect());
+        cairo_rectangle(d->m_cairo,
+            pathrect.x(), pathrect.y(),
+            pathrect.width(), pathrect.height()
+        );
+        QT_CHECK_RASTER_STATUS(d->m_cairo)
+        cairo_clip(d->m_cairo);
+        QT_CHECK_RASTER_STATUS(d->m_cairo)
+    } else if (stateflags & QPaintEngine::DirtyClipRegion) {
+        const QRegion stateregion(state.clipRegion());
+
+        cairo_reset_clip(d->m_cairo);
+        QT_CHECK_RASTER_STATUS(d->m_cairo)
+        if (!stateregion.isEmpty()) {
+            foreach (const QRect &regionrect, stateregion.rects()) {
                 cairo_rectangle(d->m_cairo,
-                    pathrect.x(), pathrect.y(),
-                    pathrect.width(), pathrect.height()
+                    regionrect.x(), regionrect.y(),
+                    regionrect.width(), regionrect.height()
                 );
                 QT_CHECK_RASTER_STATUS(d->m_cairo)
                 cairo_clip(d->m_cairo);
                 QT_CHECK_RASTER_STATUS(d->m_cairo)
-                break;
-            }
-        }
-    } else if (stateflags & QPaintEngine::DirtyClipRegion) {
-        switch (state.clipOperation()) {
-            case Qt::NoClip: {
-                cairo_reset_clip(d->m_cairo);
-                QT_CHECK_RASTER_STATUS(d->m_cairo)
-                break;
-            }
-            default: {
-                const QRegion stateregion(state.clipRegion());
-
-                cairo_reset_clip(d->m_cairo);
-                QT_CHECK_RASTER_STATUS(d->m_cairo)
-                if (!stateregion.isEmpty()) {
-                    foreach (const QRect &regionrect, stateregion.rects()) {
-                        cairo_rectangle(d->m_cairo,
-                            regionrect.x(), regionrect.y(),
-                            regionrect.width(), regionrect.height()
-                        );
-                        QT_CHECK_RASTER_STATUS(d->m_cairo)
-                        cairo_clip(d->m_cairo);
-                        QT_CHECK_RASTER_STATUS(d->m_cairo)
-                    }
-                }
-                break;
             }
         }
     }
