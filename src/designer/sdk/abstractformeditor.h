@@ -36,7 +36,6 @@ class QDesignerMetaDataBaseInterface;
 class QDesignerWidgetFactoryInterface;
 class QDesignerObjectInspectorInterface;
 class QDesignerPromotionInterface;
-class QDesignerBrushManagerInterface;
 class QDesignerIconCacheInterface;
 class QDesignerActionEditorInterface;
 class QDesignerIntegrationInterface;
@@ -46,7 +45,6 @@ class QDesignerDialogGuiInterface;
 class QDesignerSettingsInterface;
 class QDesignerOptionsPageInterface;
 class QtResourceModel;
-class QtGradientManager;
 
 class QWidget;
 
@@ -72,7 +70,6 @@ public:
     QDesignerMetaDataBaseInterface *metaDataBase() const;
     QDesignerPromotionInterface *promotion() const;
     QDesignerWidgetFactoryInterface *widgetFactory() const;
-    QDesignerBrushManagerInterface *brushManager() const;
     QDesignerIconCacheInterface *iconCache() const;
     QDesignerActionEditorInterface *actionEditor() const;
     QDesignerIntegrationInterface *integration() const;
@@ -82,7 +79,6 @@ public:
     QDesignerSettingsInterface *settingsManager() const;
     QString resourceLocation() const;
     QtResourceModel *resourceModel() const;
-    QtGradientManager *gradientManager() const;
     QList<QDesignerOptionsPageInterface*> optionsPages() const;
 
     void setTopLevel(QWidget *topLevel);
@@ -96,7 +92,6 @@ public:
     void setDialogGui(QDesignerDialogGuiInterface *dialogGui);
     void setSettingsManager(QDesignerSettingsInterface *settingsManager);
     void setResourceModel(QtResourceModel *model);
-    void setGradientManager(QtGradientManager *manager);
     void setOptionsPages(const QList<QDesignerOptionsPageInterface*> &optionsPages);
 
 protected:
@@ -106,7 +101,6 @@ protected:
     void setPromotion(QDesignerPromotionInterface *promotion);
     void setWidgetFactory(QDesignerWidgetFactoryInterface *widgetFactory);
     void setExtensionManager(QExtensionManager *extensionManager);
-    void setBrushManager(QDesignerBrushManagerInterface *brushManager);
     void setIconCache(QDesignerIconCacheInterface *cache);
 
 private:
@@ -119,7 +113,6 @@ private:
     QPointer<QDesignerWidgetDataBaseInterface> m_pad7;
     QPointer<QDesignerWidgetFactoryInterface> m_pad8;
     QPointer<QDesignerObjectInspectorInterface> m_pad9;
-    QPointer<QDesignerBrushManagerInterface> m_pad10;
     QPointer<QDesignerIconCacheInterface> m_pad11;
     QPointer<QDesignerActionEditorInterface> m_pad12;
     QDesignerFormEditorInterfacePrivate *d;

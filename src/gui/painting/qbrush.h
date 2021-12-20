@@ -147,7 +147,6 @@ public:
 
     enum CoordinateMode {
         LogicalMode,
-        StretchToDeviceMode,
         ObjectBoundingMode
     };
 

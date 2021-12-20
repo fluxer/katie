@@ -40,8 +40,6 @@ set(DESIGNERCOMPONENTS_HEADERS
     ${CMAKE_CURRENT_SOURCE_DIR}/formeditor/qmdiarea_container.h
     ${CMAKE_CURRENT_SOURCE_DIR}/formeditor/qwizard_container.h
     ${CMAKE_CURRENT_SOURCE_DIR}/formeditor/default_layoutdecoration.h
-    ${CMAKE_CURRENT_SOURCE_DIR}/formeditor/qtbrushmanager.h
-    ${CMAKE_CURRENT_SOURCE_DIR}/formeditor/brushmanagerproxy.h
     ${CMAKE_CURRENT_SOURCE_DIR}/formeditor/iconcache.h
     ${CMAKE_CURRENT_SOURCE_DIR}/formeditor/tool_widgeteditor.h
     ${CMAKE_CURRENT_SOURCE_DIR}/formeditor/formeditor_optionspage.h
@@ -59,6 +57,7 @@ set(DESIGNERCOMPONENTS_HEADERS
     ${CMAKE_CURRENT_SOURCE_DIR}/propertyeditor/designerpropertymanager.h
     ${CMAKE_CURRENT_SOURCE_DIR}/propertyeditor/paletteeditor.h
     ${CMAKE_CURRENT_SOURCE_DIR}/propertyeditor/paletteeditorbutton.h
+    ${CMAKE_CURRENT_SOURCE_DIR}/propertyeditor/qtcolorbutton.h
     ${CMAKE_CURRENT_SOURCE_DIR}/propertyeditor/stringlisteditor.h
     ${CMAKE_CURRENT_SOURCE_DIR}/propertyeditor/stringlisteditorbutton.h
     ${CMAKE_CURRENT_SOURCE_DIR}/propertyeditor/previewwidget.h
@@ -68,14 +67,6 @@ set(DESIGNERCOMPONENTS_HEADERS
     ${CMAKE_CURRENT_SOURCE_DIR}/propertyeditor/fontpropertymanager.h
     ${CMAKE_CURRENT_SOURCE_DIR}/propertyeditor/propertyeditor_global.h
     ${CMAKE_CURRENT_SOURCE_DIR}/propertyeditor/qlonglongvalidator.h
-    ${CMAKE_CURRENT_SOURCE_DIR}/signalsloteditor/signalslot_utils_p.h
-    ${CMAKE_CURRENT_SOURCE_DIR}/signalsloteditor/connectdialog_p.h
-    ${CMAKE_CURRENT_SOURCE_DIR}/signalsloteditor/signalsloteditor.h
-    ${CMAKE_CURRENT_SOURCE_DIR}/signalsloteditor/signalsloteditor_tool.h
-    ${CMAKE_CURRENT_SOURCE_DIR}/signalsloteditor/signalsloteditor_plugin.h
-    ${CMAKE_CURRENT_SOURCE_DIR}/signalsloteditor/signalsloteditor_global.h
-    ${CMAKE_CURRENT_SOURCE_DIR}/signalsloteditor/signalsloteditor_p.h
-    ${CMAKE_CURRENT_SOURCE_DIR}/signalsloteditor/signalsloteditorwindow.h
     ${CMAKE_CURRENT_SOURCE_DIR}/tabordereditor/tabordereditor.h
     ${CMAKE_CURRENT_SOURCE_DIR}/tabordereditor/tabordereditor_plugin.h
     ${CMAKE_CURRENT_SOURCE_DIR}/tabordereditor/tabordereditor_tool.h
@@ -136,8 +127,6 @@ set(DESIGNERCOMPONENTS_SOURCES
     ${CMAKE_CURRENT_SOURCE_DIR}/formeditor/default_layoutdecoration.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/formeditor/default_actionprovider.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/formeditor/tool_widgeteditor.cpp
-    ${CMAKE_CURRENT_SOURCE_DIR}/formeditor/qtbrushmanager.cpp
-    ${CMAKE_CURRENT_SOURCE_DIR}/formeditor/brushmanagerproxy.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/formeditor/iconcache.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/formeditor/formeditor_optionspage.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/formeditor/embeddedoptionspage.cpp
@@ -154,6 +143,7 @@ set(DESIGNERCOMPONENTS_SOURCES
     ${CMAKE_CURRENT_SOURCE_DIR}/propertyeditor/designerpropertymanager.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/propertyeditor/paletteeditor.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/propertyeditor/paletteeditorbutton.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/propertyeditor/qtcolorbutton.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/propertyeditor/stringlisteditor.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/propertyeditor/stringlisteditorbutton.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/propertyeditor/previewwidget.cpp
@@ -167,13 +157,6 @@ set(DESIGNERCOMPONENTS_SOURCES
     ${CMAKE_CURRENT_SOURCE_DIR}/propertyeditor/stringlisteditor.ui
     ${CMAKE_CURRENT_SOURCE_DIR}/propertyeditor/previewwidget.ui
     ${CMAKE_CURRENT_SOURCE_DIR}/propertyeditor/newdynamicpropertydialog.ui
-    ${CMAKE_CURRENT_SOURCE_DIR}/signalsloteditor/signalslot_utils.cpp
-    ${CMAKE_CURRENT_SOURCE_DIR}/signalsloteditor/connectdialog.cpp
-    ${CMAKE_CURRENT_SOURCE_DIR}/signalsloteditor/signalsloteditor.cpp
-    ${CMAKE_CURRENT_SOURCE_DIR}/signalsloteditor/signalsloteditor_tool.cpp
-    ${CMAKE_CURRENT_SOURCE_DIR}/signalsloteditor/signalsloteditor_plugin.cpp
-    ${CMAKE_CURRENT_SOURCE_DIR}/signalsloteditor/signalsloteditorwindow.cpp
-    ${CMAKE_CURRENT_SOURCE_DIR}/signalsloteditor/connectdialog.ui
     ${CMAKE_CURRENT_SOURCE_DIR}/tabordereditor/tabordereditor.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/tabordereditor/tabordereditor_tool.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/tabordereditor/tabordereditor_plugin.cpp
@@ -216,7 +199,6 @@ katie_setup_target(KtDesignerComponents ${DESIGNERCOMPONENTS_SOURCES} ${DESIGNER
 add_library(KtDesignerComponents ${KATIE_TYPE} ${KtDesignerComponents_SOURCES}
     $<TARGET_OBJECTS:sharedfindwidget>
     $<TARGET_OBJECTS:sharedqtpropertybrowser>
-    $<TARGET_OBJECTS:sharedqtgradienteditor>
 )
 target_link_libraries(KtDesignerComponents PRIVATE ${EXTRA_DESIGNERCOMPONENTS_LIBS})
 set_target_properties(KtDesignerComponents PROPERTIES
@@ -225,7 +207,7 @@ set_target_properties(KtDesignerComponents PROPERTIES
     EXPORT_NAME DesignerComponents
 )
 
-katie_setup_object(KtDesignerComponents sharedfindwidget sharedqtpropertybrowser sharedqtgradienteditor)
+katie_setup_object(KtDesignerComponents sharedfindwidget sharedqtpropertybrowser)
 
 install(
     TARGETS KtDesignerComponents

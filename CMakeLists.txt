@@ -15,10 +15,6 @@ endif()
 
 project(Katie C CXX)
 
-if(NOT CMAKE_BUILD_TYPE)
-    set(CMAKE_BUILD_TYPE RelWithDebInfo)
-endif()
-
 set(CMAKE_MODULE_PATH "${CMAKE_SOURCE_DIR}/cmake/modules")
 set(CMAKE_AUTOMOC FALSE)
 set(CMAKE_AUTOUIC FALSE)
@@ -609,7 +605,6 @@ katie_generate_obsolete(QDeclarativeListReference QtDeclarative qdeclarativelist
 katie_generate_obsolete(QDeclarativeProperties QtDeclarative qdeclarativeproperty.h)
 katie_generate_obsolete(QDeclarativeTypeInfo QtDeclarative qdeclarativeprivate.h)
 katie_generate_obsolete(QDesignerActionEditorInterface QtDesigner abstractactioneditor.h)
-katie_generate_obsolete(QDesignerBrushManagerInterface QtDesigner abstractbrushmanager.h)
 katie_generate_obsolete(QDesignerComponents QtDesigner qdesigner_components.h)
 katie_generate_obsolete(QDesignerContainerExtension QtDesigner container.h)
 katie_generate_obsolete(QDesignerCustomWidgetCollectionInterface QtDesigner customwidget.h)

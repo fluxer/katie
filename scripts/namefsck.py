@@ -155,7 +155,6 @@ classlist = [
     "QDeclarativeTypeInfo",
     "QDeclarativeView",
     "QDesignerActionEditorInterface",
-    "QDesignerBrushManagerInterface",
     "QDesignerComponents",
     "QDesignerContainerExtension",
     "QDesignerCustomWidgetCollectionInterface",

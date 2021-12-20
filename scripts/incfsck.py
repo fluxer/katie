@@ -133,7 +133,6 @@ incmap = {
         'QAbstractExtensionManager': 'extension.h',
         'QAbstractFormBuilder': 'abstractformbuilder.h',
         'QDesignerActionEditorInterface': 'abstractactioneditor.h',
-        'QDesignerBrushManagerInterface': 'abstractbrushmanager.h',
         'QDesignerComponents': 'qdesigner_components.h',
         'QDesignerContainerExtension': 'container.h',
         'QDesignerCustomWidgetCollectionInterface': 'customwidget.h',

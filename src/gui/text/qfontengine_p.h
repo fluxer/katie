@@ -240,9 +240,6 @@ inline uint qHash(const QFontEngine::FaceId &f)
 }
 
 
-class QGlyph;
-
-
 class QFontEngineBox : public QFontEngine
 {
 public:

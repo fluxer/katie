@@ -1225,10 +1225,6 @@ QGradientStops QGradient::stops() const
 
     \value LogicalMode This is the default mode. The gradient coordinates
     are specified logical space just like the object coordinates.
-    \value StretchToDeviceMode In this mode the gradient coordinates
-    are relative to the bounding rectangle of the paint device,
-    with (0,0) in the top left corner, and (1,1) in the bottom right
-    corner of the paint device.
     \value ObjectBoundingMode In this mode the gradient coordinates are
     relative to the bounding rectangle of the object being drawn, with
     (0,0) in the top left corner, and (1,1) in the bottom right corner

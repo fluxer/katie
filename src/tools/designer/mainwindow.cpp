@@ -374,13 +374,8 @@ void DockedMainWindow::restoreSettings(const QDesignerSettings &s, const DockWid
     s.restoreGeometry(this, QRect(desktopArea.topLeft(), QSize(QWIDGETSIZE_MAX, QWIDGETSIZE_MAX)));
 
     const QByteArray mainWindowState = s.mainWindowState(DockedMode);
-    const bool restored = !mainWindowState.isEmpty() && restoreState(mainWindowState, version);
-    if (!restored) {
-        // Default: Tabify less relevant windows bottom/right.
-        tabifyDockWidget(dws.at(QDesignerToolWindow::SignalSlotEditor),
-                         dws.at(QDesignerToolWindow::ActionEditor));
-        tabifyDockWidget(dws.at(QDesignerToolWindow::ActionEditor),
-                         dws.at(QDesignerToolWindow::ResourceEditor));
+    if (!mainWindowState.isEmpty()) {
+        restoreState(mainWindowState, version);
     }
 }
 

@@ -280,85 +280,43 @@ void QPainterPrivate::drawStretchedGradient(const QPainterPath &path)
 
     QRectF boundingRect;
 
-    // Draw the xformed fill if the brush is a stretch gradient.
+    // Draw the xformed fill.
     if (brush.style() != Qt::NoBrush) {
-        if (brushMode == QGradient::StretchToDeviceMode) {
-            q->setPen(Qt::NoPen);
-            changedPen = pen.style() != Qt::NoPen;
-            q->scale(sw, sh);
-            updateState(state);
+        needsFill = true;
 
-            const qreal isw = 1.0 / sw;
-            const qreal ish = 1.0 / sh;
-            QTransform inv(isw, 0, 0, ish, 0, 0);
-            engine->drawPath(path * inv);
-            q->scale(isw, ish);
-        } else {
-            needsFill = true;
-
-            if (brushMode == QGradient::ObjectBoundingMode) {
-                Q_ASSERT(engine->hasFeature(QPaintEngine::PatternTransform));
-                boundingRect = path.boundingRect();
-                q->setBrush(stretchGradientToUserSpace(brush, boundingRect));
-                changedBrush = true;
-            }
+        if (brushMode == QGradient::ObjectBoundingMode) {
+            Q_ASSERT(engine->hasFeature(QPaintEngine::PatternTransform));
+            boundingRect = path.boundingRect();
+            q->setBrush(stretchGradientToUserSpace(brush, boundingRect));
+            changedBrush = true;
         }
     }
 
     if (pen.style() != Qt::NoPen) {
-        // Draw the xformed outline if the pen is a stretch gradient.
-        if (penMode == QGradient::StretchToDeviceMode) {
-            q->setPen(Qt::NoPen);
-            changedPen = true;
-
-            if (needsFill) {
-                updateState(state);
-                engine->drawPath(path);
-            }
-
-            q->scale(sw, sh);
-            q->setBrush(pen.brush());
+        // Draw the xformed outline.
+        if (!needsFill && brush.style() != Qt::NoBrush) {
+            q->setBrush(Qt::NoBrush);
             changedBrush = true;
-            updateState(state);
-
-            QPainterPathStroker stroker;
-            stroker.setDashPattern(pen.style());
-            stroker.setWidth(pen.widthF());
-            stroker.setJoinStyle(pen.joinStyle());
-            stroker.setCapStyle(pen.capStyle());
-            stroker.setMiterLimit(pen.miterLimit());
-            QPainterPath stroke = stroker.createStroke(path);
-
-            const qreal isw = 1.0 / sw;
-            const qreal ish = 1.0 / sh;
-            QTransform inv(isw, 0, 0, ish, 0, 0);
-            engine->drawPath(stroke * inv);
-            q->scale(isw, ish);
-        } else {
-            if (!needsFill && brush.style() != Qt::NoBrush) {
-                q->setBrush(Qt::NoBrush);
-                changedBrush = true;
-            }
-
-            if (penMode == QGradient::ObjectBoundingMode) {
-                Q_ASSERT(engine->hasFeature(QPaintEngine::PatternTransform));
-
-                // avoid computing the bounding rect twice
-                if (!needsFill || brushMode != QGradient::ObjectBoundingMode)
-                    boundingRect = path.boundingRect();
-
-                QPen p = pen;
-                p.setBrush(stretchGradientToUserSpace(pen.brush(), boundingRect));
-                q->setPen(p);
-                changedPen = true;
-            } else if (changedPen) {
-                q->setPen(pen);
-                changedPen = false;
-            }
-
-            updateState(state);
-            engine->drawPath(path);
         }
+
+        if (penMode == QGradient::ObjectBoundingMode) {
+            Q_ASSERT(engine->hasFeature(QPaintEngine::PatternTransform));
+
+            // avoid computing the bounding rect twice
+            if (!needsFill || brushMode != QGradient::ObjectBoundingMode)
+                boundingRect = path.boundingRect();
+
+            QPen p = pen;
+            p.setBrush(stretchGradientToUserSpace(pen.brush(), boundingRect));
+            q->setPen(p);
+            changedPen = true;
+        } else if (changedPen) {
+            q->setPen(pen);
+            changedPen = false;
+        }
+
+        updateState(state);
+        engine->drawPath(path);
     } else if (needsFill) {
         if (pen.style() != Qt::NoPen) {
             q->setPen(Qt::NoPen);
