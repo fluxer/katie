@@ -265,9 +265,6 @@ void QPainterPrivate::drawStretchedGradient(const QPainterPath &path)
 {
     Q_Q(QPainter);
 
-    const qreal sw = helper_device->width();
-    const qreal sh = helper_device->height();
-
     bool changedPen = false;
     bool changedBrush = false;
     bool needsFill = false;
@@ -1166,7 +1163,6 @@ bool QPainter::begin(QPaintDevice *pd)
 
     Q_D(QPainter);
 
-    d->helper_device = pd;
     d->original_device = pd;
     QPaintDevice *rpd = 0;
 

@@ -104,67 +104,6 @@ Qt::HANDLE QX11PixmapData::bitmap_to_mask(const QBitmap &bitmap, int screen)
     return mask;
 }
 
-/*****************************************************************************
-  Internal functions
- *****************************************************************************/
-
-// Returns position of highest bit set or -1 if none
-static int highest_bit(uint v)
-{
-    int i;
-    uint b = (uint)1 << 31;
-    for (i=31; ((b & v) == 0) && i>=0;         i--)
-        b >>= 1;
-    return i;
-}
-
-// Counts the number of bits set in 'v'
-static uint n_bits(uint v)
-{
-    int i = 0;
-    while (v) {
-        v = v & (v - 1);
-        i++;
-    }
-    return i;
-}
-
-static uint *red_scale_table   = 0;
-static uint *green_scale_table = 0;
-static uint *blue_scale_table  = 0;
-
-static void cleanup_scale_tables()
-{
-    delete[] red_scale_table;
-    delete[] green_scale_table;
-    delete[] blue_scale_table;
-}
-
-/*
-  Could do smart bitshifting, but the "obvious" algorithm only works for
-  nBits >= 4. This is more robust.
-*/
-static void build_scale_table(uint **table, uint nBits)
-{
-    if (Q_UNLIKELY(nBits > 7)) {
-        qWarning("build_scale_table: internal error, nBits = %i", nBits);
-        return;
-    }
-    if (!*table) {
-        static bool firstTable = true;
-        if (firstTable) {
-            qAddPostRoutine(cleanup_scale_tables);
-            firstTable = false;
-        }
-        *table = new uint[256];
-    }
-    int   maxVal   = (1 << nBits) - 1;
-    int   valShift = 8 - nBits;
-    int i;
-    for(i = 0 ; i < maxVal + 1 ; i++)
-        (*table)[i << valShift] = i*255/maxVal;
-}
-
 static int defaultScreen = -1;
 
 /*****************************************************************************
@@ -309,7 +248,6 @@ void QX11PixmapData::fromImage(const QImage &img,
     Display *dpy   = qt_x11Data->display;
     Visual *visual = (Visual *)xinfo.visual();
     XImage *xi = nullptr;
-    uchar  *newbits = nullptr;
 
     QImage image(img);
 
