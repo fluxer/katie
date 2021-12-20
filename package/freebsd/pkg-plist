@@ -544,11 +544,6 @@ include/katie/QtDesignerComponents/qmainwindow_container.h
 include/katie/QtDesignerComponents/qmdiarea_container.h
 include/katie/QtDesignerComponents/qwizard_container.h
 include/katie/QtDesignerComponents/qworkspace_container.h
-include/katie/QtDesignerComponents/signalsloteditor.h
-include/katie/QtDesignerComponents/signalsloteditor_global.h
-include/katie/QtDesignerComponents/signalsloteditor_plugin.h
-include/katie/QtDesignerComponents/signalsloteditor_tool.h
-include/katie/QtDesignerComponents/signalsloteditorwindow.h
 include/katie/QtDesignerComponents/spacer_propertysheet.h
 include/katie/QtDesignerComponents/stringlisteditor.h
 include/katie/QtDesignerComponents/stringlisteditorbutton.h
