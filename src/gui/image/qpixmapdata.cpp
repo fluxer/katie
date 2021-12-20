@@ -104,24 +104,6 @@ bool QPixmapData::fromData(const uchar *buf, uint len, const char *format, Qt::I
     return !isNull();
 }
 
-void QPixmapData::copy(const QPixmapData *data, const QRect &rect)
-{
-    fromImage(data->toImage(rect), Qt::NoOpaqueDetection);
-}
-
-bool QPixmapData::scroll(int dx, int dy, const QRect &rect)
-{
-    Q_UNUSED(dx);
-    Q_UNUSED(dy);
-    Q_UNUSED(rect);
-    return false;
-}
-
-void QPixmapData::setMask(const QBitmap &mask)
-{
-    fromImage(qt_mask_image(toImage(), mask.toImage()), Qt::AutoColor);
-}
-
 QBitmap QPixmapData::mask() const
 {
     if (!hasAlphaChannel())
