@@ -41,8 +41,6 @@
 #include "qdesigner_stackedbox_p.h"
 #include "qdesigner_toolbox_p.h"
 #include "qdesigner_tabwidget_p.h"
-#include "qtbrushmanager.h"
-#include "brushmanagerproxy.h"
 #include "iconcache.h"
 #include "qtresourcemodel_p.h"
 #include "qdesigner_integration_p.h"
@@ -133,11 +131,6 @@ FormEditor::FormEditor(QObject *parent)
 
     setIconCache(new IconCache(this));
 
-    QtBrushManager *brushManager = new QtBrushManager(this);
-    setBrushManager(brushManager);
-
-    BrushManagerProxy *brushProxy = new BrushManagerProxy(this, this);
-    brushProxy->setBrushManager(brushManager);
     setPromotion(new QDesignerPromotion(this));
 
     QtResourceModel *resourceModel = new QtResourceModel(this);

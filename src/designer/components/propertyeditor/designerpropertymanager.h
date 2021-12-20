@@ -204,7 +204,6 @@ private:
     PropertyFontMap m_stringFontAttributes;
     PropertyBoolMap m_stringThemeAttributes;
 
-    BrushPropertyManager m_brushManager;
     FontPropertyManager m_fontManager;
 
     QMap<QtProperty *, QPixmap> m_defaultPixmaps;

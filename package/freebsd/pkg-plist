@@ -417,7 +417,6 @@ include/katie/QtDesigner/QAbstractExtensionFactory
 include/katie/QtDesigner/QAbstractExtensionManager
 include/katie/QtDesigner/QAbstractFormBuilder
 include/katie/QtDesigner/QDesignerActionEditorInterface
-include/katie/QtDesigner/QDesignerBrushManagerInterface
 include/katie/QtDesigner/QDesignerComponents
 include/katie/QtDesigner/QDesignerContainerExtension
 include/katie/QtDesigner/QDesignerCustomWidgetCollectionInterface
@@ -453,7 +452,6 @@ include/katie/QtDesigner/QExtensionManager
 include/katie/QtDesigner/QFormBuilder
 include/katie/QtDesigner/QtDesigner
 include/katie/QtDesigner/abstractactioneditor.h
-include/katie/QtDesigner/abstractbrushmanager.h
 include/katie/QtDesigner/abstractdnditem.h
 include/katie/QtDesigner/abstractformeditor.h
 include/katie/QtDesigner/abstractformeditorplugin.h
@@ -489,7 +487,6 @@ include/katie/QtDesigner/qdesignerexportwidget.h
 include/katie/QtDesigner/qextensionmanager.h
 include/katie/QtDesigner/taskmenu.h
 include/katie/QtDesignerComponents/QtDesignerComponents
-include/katie/QtDesignerComponents/brushmanagerproxy.h
 include/katie/QtDesignerComponents/brushpropertymanager.h
 include/katie/QtDesignerComponents/buddyeditor.h
 include/katie/QtDesignerComponents/buddyeditor_global.h
@@ -545,7 +542,6 @@ include/katie/QtDesignerComponents/qlayoutwidget_propertysheet.h
 include/katie/QtDesignerComponents/qlonglongvalidator.h
 include/katie/QtDesignerComponents/qmainwindow_container.h
 include/katie/QtDesignerComponents/qmdiarea_container.h
-include/katie/QtDesignerComponents/qtbrushmanager.h
 include/katie/QtDesignerComponents/qwizard_container.h
 include/katie/QtDesignerComponents/qworkspace_container.h
 include/katie/QtDesignerComponents/signalsloteditor.h

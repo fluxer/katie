@@ -22,9 +22,6 @@
 #include "stylesheeteditor_p.h"
 #include "csshighlighter_p.h"
 #include "iconselector_p.h"
-#include "qtgradientmanager.h"
-#include "qtgradientviewdialog.h"
-#include "qtgradientutils.h"
 #include "qdesigner_integration_p.h"
 #include "qdesigner_utils_p.h"
 #include "abstractsettings_p.h"
@@ -71,7 +68,6 @@ StyleSheetEditorDialog::StyleSheetEditorDialog(QDesignerFormEditorInterface *cor
     m_validityLabel(new QLabel(tr("Valid Style Sheet"))),
     m_core(core),
     m_addResourceAction(new QAction(tr("Add Resource..."), this)),
-    m_addGradientAction(new QAction(tr("Add Gradient..."), this)),
     m_addColorAction(new QAction(tr("Add Color..."), this)),
     m_addFontAction(new QAction(tr("Add Font..."), this))
 {
@@ -99,15 +95,12 @@ StyleSheetEditorDialog::StyleSheetEditorDialog(QDesignerFormEditorInterface *cor
                 this, SLOT(slotContextMenuRequested(QPoint)));
 
     QSignalMapper *resourceActionMapper = new QSignalMapper(this);
-    QSignalMapper *gradientActionMapper = new QSignalMapper(this);
     QSignalMapper *colorActionMapper = new QSignalMapper(this);
 
     resourceActionMapper->setMapping(m_addResourceAction, QString());
-    gradientActionMapper->setMapping(m_addGradientAction, QString());
     colorActionMapper->setMapping(m_addColorAction, QString());
 
     connect(m_addResourceAction, SIGNAL(triggered()), resourceActionMapper, SLOT(map()));
-    connect(m_addGradientAction, SIGNAL(triggered()), gradientActionMapper, SLOT(map()));
     connect(m_addColorAction, SIGNAL(triggered()), colorActionMapper, SLOT(map()));
     connect(m_addFontAction, SIGNAL(triggered()), this, SLOT(slotAddFont()));
 
@@ -146,24 +139,18 @@ StyleSheetEditorDialog::StyleSheetEditorDialog(QDesignerFormEditorInterface *cor
     }
 
     for (int colorProperty = 0; colorProperties[colorProperty]; ++colorProperty) {
-        QAction *gradientAction = gradientActionMenu->addAction(QLatin1String(colorProperties[colorProperty]));
         QAction *colorAction = colorActionMenu->addAction(QLatin1String(colorProperties[colorProperty]));
-        connect(gradientAction, SIGNAL(triggered()), gradientActionMapper, SLOT(map()));
         connect(colorAction, SIGNAL(triggered()), colorActionMapper, SLOT(map()));
-        gradientActionMapper->setMapping(gradientAction, QLatin1String(colorProperties[colorProperty]));
         colorActionMapper->setMapping(colorAction, QLatin1String(colorProperties[colorProperty]));
     }
 
     connect(resourceActionMapper, SIGNAL(mapped(QString)), this, SLOT(slotAddResource(QString)));
-    connect(gradientActionMapper, SIGNAL(mapped(QString)), this, SLOT(slotAddGradient(QString)));
     connect(colorActionMapper, SIGNAL(mapped(QString)), this, SLOT(slotAddColor(QString)));
 
     m_addResourceAction->setMenu(resourceActionMenu);
-    m_addGradientAction->setMenu(gradientActionMenu);
     m_addColorAction->setMenu(colorActionMenu);
 
     toolBar->addAction(m_addResourceAction);
-    toolBar->addAction(m_addGradientAction);
     toolBar->addAction(m_addColorAction);
     toolBar->addAction(m_addFontAction);
 
@@ -199,7 +186,6 @@ void StyleSheetEditorDialog::slotContextMenuRequested(const QPoint &pos)
     QMenu *menu = m_editor->createStandardContextMenu();
     menu->addSeparator();
     menu->addAction(m_addResourceAction);
-    menu->addAction(m_addGradientAction);
     menu->exec(mapToGlobal(pos));
     delete menu;
 }
@@ -209,14 +195,6 @@ void StyleSheetEditorDialog::slotAddResource(const QString &property)
     const QString path = IconSelector::choosePixmapResource(m_core, m_core->resourceModel(), QString(), this);
     if (!path.isEmpty())
         insertCssProperty(property, QString(QLatin1String("url(%1)")).arg(path));
-}
-
-void StyleSheetEditorDialog::slotAddGradient(const QString &property)
-{
-    bool ok;
-    const QGradient grad = QtGradientViewDialog::getGradient(&ok, m_core->gradientManager(), this);
-    if (ok)
-        insertCssProperty(property, QtGradientUtils::styleSheetCode(grad));
 }
 
 void StyleSheetEditorDialog::slotAddColor(const QString &property)

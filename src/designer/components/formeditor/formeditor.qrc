@@ -108,7 +108,4 @@
     <file>images/win/down.png</file>
     <file>images/win/up.png</file>
   </qresource>
-  <qresource prefix="/trolltech/brushes">
-    <file>defaultbrushes.xml</file>
-  </qresource>
 </RCC>

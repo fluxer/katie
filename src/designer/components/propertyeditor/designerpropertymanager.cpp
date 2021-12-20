@@ -941,8 +941,6 @@ void DesignerPropertyManager::slotValueChanged(QtProperty *property, const QVari
     } else if (m_iconValues.contains(property)) {
         enableSubPropertyHandling = m_sourceOfChange;
     } else {
-        if (m_brushManager.valueChanged(this, property, value) == BrushPropertyManager::Unchanged)
-            return;
         if (m_fontManager.valueChanged(this, property, value) == FontPropertyManager::Unchanged)
             return;
     }
@@ -995,7 +993,6 @@ void DesignerPropertyManager::slotPropertyDestroyed(QtProperty *property)
         m_iconSubPropertyToProperty.remove(property);
     } else {
         m_fontManager.slotPropertyDestroyed(property);
-        m_brushManager.slotPropertyDestroyed(property);
     }
 }
 
@@ -1431,9 +1428,6 @@ QString DesignerPropertyManager::valueText(const QtProperty *property) const
         return QString();
     }
 
-    QString rc;
-    if (m_brushManager.valueText(property, &rc))
-        return rc;
     return QtVariantPropertyManager::valueText(property);
 }
 
@@ -1496,10 +1490,6 @@ QIcon DesignerPropertyManager::valueIcon(const QtProperty *property) const
             return fwb->pixmapCache()->pixmap(m_pixmapValues.value(const_cast<QtProperty *>(property)));
     } else if (m_stringThemeAttributes.value(const_cast<QtProperty *>(property), false)) {
         return QIcon::fromTheme(value(property).toString());
-    } else {
-        QIcon rc;
-        if (m_brushManager.valueIcon(property, &rc))
-            return rc;
     }
 
     return QtVariantPropertyManager::valueIcon(property);
@@ -1534,9 +1524,6 @@ QVariant DesignerPropertyManager::value(const QtProperty *property) const
     if (m_stringListValues.contains(const_cast<QtProperty *>(property)))
         return m_stringListValues.value(const_cast<QtProperty *>(property));
 
-    QVariant rc;
-    if (m_brushManager.value(property, &rc))
-        return rc;
     return QtVariantPropertyManager::value(property);
 }
 
@@ -1894,16 +1881,6 @@ void DesignerPropertyManager::setValue(QtProperty *property, const QVariant &val
 
         return;
     }
-    switch (m_brushManager.setValue(this, property, value)) {
-    case BrushPropertyManager::Unchanged:
-        return;
-    case BrushPropertyManager::Changed:
-        emit QtVariantPropertyManager::valueChanged(property, value);
-        emit propertyChanged(property);
-        return;
-    default:
-        break;
-    }
     m_fontManager.setValue(this, property, value);
     QtVariantPropertyManager::setValue(property, value);
     if (QtVariantPropertyManager::valueType(property) == QVariant::String)
@@ -1948,9 +1925,6 @@ void DesignerPropertyManager::initializeProperty(QtProperty *property)
         break;
     case QVariant::StringList:
         m_stringListValues[property] = QStringList();
-        break;
-    case QVariant::Brush:
-        m_brushManager.initializeProperty(this, property, enumTypeId());
         break;
     default:
         if (type == designerFlagTypeId()) {
@@ -2175,7 +2149,6 @@ void DesignerPropertyManager::uninitializeProperty(QtProperty *property)
     m_stringListValues.remove(property);
 
     m_fontManager.uninitializeProperty(property);
-    m_brushManager.uninitializeProperty(property);
 
     QtVariantPropertyManager::uninitializeProperty(property);
 }

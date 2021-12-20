@@ -47,7 +47,7 @@ public:
     virtual ~QDesignerDialogGuiInterface();
 
     enum Message { FormLoadFailureMessage, UiVersionMismatchMessage, ResourceLoadFailureMessage,
-                   TopLevelSpacerMessage, PropertyEditorMessage, SignalSlotEditorMessage, FormEditorMessage,
+                   TopLevelSpacerMessage, PropertyEditorMessage, FormEditorMessage,
                    PreviewFailureMessage, PromotionErrorMessage, ResourceEditorMessage,
                    ScriptDialogMessage, SignalSlotDialogMessage, OtherMessage, FileChangedMessage };
 
