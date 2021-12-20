@@ -2774,109 +2774,97 @@ void QClipData::initialize()
         m_clipLines = (ClipLine *)calloc(sizeof(ClipLine), clipSpanHeight);
 
     Q_CHECK_PTR(m_clipLines);
-    QT_TRY {
-        m_spans = (QSpan *)malloc(clipSpanHeight*sizeof(QSpan));
-        allocated = clipSpanHeight;
-        Q_CHECK_PTR(m_spans);
+    m_spans = (QSpan *)malloc(clipSpanHeight*sizeof(QSpan));
+    allocated = clipSpanHeight;
+    Q_CHECK_PTR(m_spans);
 
-        QT_TRY {
-            if (hasRectClip) {
-                int y = 0;
-                while (y < ymin) {
-                    m_clipLines[y].spans = 0;
-                    m_clipLines[y].count = 0;
-                    ++y;
-                }
+    if (hasRectClip) {
+        int y = 0;
+        while (y < ymin) {
+            m_clipLines[y].spans = 0;
+            m_clipLines[y].count = 0;
+            ++y;
+        }
 
-                const int len = clipRect.width();
-                count = 0;
-                while (y < ymax) {
+        const int len = clipRect.width();
+        count = 0;
+        while (y < ymax) {
+            QSpan *span = m_spans + count;
+            span->x = xmin;
+            span->len = len;
+            span->y = y;
+            span->coverage = 255;
+            ++count;
+
+            m_clipLines[y].spans = span;
+            m_clipLines[y].count = 1;
+            ++y;
+        }
+
+        while (y < clipSpanHeight) {
+            m_clipLines[y].spans = 0;
+            m_clipLines[y].count = 0;
+            ++y;
+        }
+    } else if (hasRegionClip) {
+
+        const QVector<QRect> rects = clipRegion.rects();
+        const int numRects = rects.size();
+
+        { // resize
+            const int maxSpans = (ymax - ymin) * numRects;
+            if (maxSpans > allocated) {
+                m_spans = (QSpan *)::realloc(m_spans, maxSpans * sizeof(QSpan));
+                Q_CHECK_PTR(m_spans);
+                allocated = maxSpans;
+            }
+        }
+
+        int y = 0;
+        int firstInBand = 0;
+        count = 0;
+        while (firstInBand < numRects) {
+            const int currMinY = rects.at(firstInBand).y();
+            const int currMaxY = currMinY + rects.at(firstInBand).height();
+
+            while (y < currMinY) {
+                m_clipLines[y].spans = 0;
+                m_clipLines[y].count = 0;
+                ++y;
+            }
+
+            int lastInBand = firstInBand;
+            while (lastInBand + 1 < numRects && rects.at(lastInBand+1).top() == y)
+                ++lastInBand;
+
+            while (y < currMaxY) {
+
+                m_clipLines[y].spans = m_spans + count;
+                m_clipLines[y].count = lastInBand - firstInBand + 1;
+
+                for (int r = firstInBand; r <= lastInBand; ++r) {
+                    const QRect &currRect = rects.at(r);
                     QSpan *span = m_spans + count;
-                    span->x = xmin;
-                    span->len = len;
+                    span->x = currRect.x();
+                    span->len = currRect.width();
                     span->y = y;
                     span->coverage = 255;
                     ++count;
-
-                    m_clipLines[y].spans = span;
-                    m_clipLines[y].count = 1;
-                    ++y;
                 }
-
-                while (y < clipSpanHeight) {
-                    m_clipLines[y].spans = 0;
-                    m_clipLines[y].count = 0;
-                    ++y;
-                }
-            } else if (hasRegionClip) {
-
-                const QVector<QRect> rects = clipRegion.rects();
-                const int numRects = rects.size();
-
-                { // resize
-                    const int maxSpans = (ymax - ymin) * numRects;
-                    if (maxSpans > allocated) {
-                        m_spans = (QSpan *)::realloc(m_spans, maxSpans * sizeof(QSpan));
-                        Q_CHECK_PTR(m_spans);
-                        allocated = maxSpans;
-                    }
-                }
-
-                int y = 0;
-                int firstInBand = 0;
-                count = 0;
-                while (firstInBand < numRects) {
-                    const int currMinY = rects.at(firstInBand).y();
-                    const int currMaxY = currMinY + rects.at(firstInBand).height();
-
-                    while (y < currMinY) {
-                        m_clipLines[y].spans = 0;
-                        m_clipLines[y].count = 0;
-                        ++y;
-                    }
-
-                    int lastInBand = firstInBand;
-                    while (lastInBand + 1 < numRects && rects.at(lastInBand+1).top() == y)
-                        ++lastInBand;
-
-                    while (y < currMaxY) {
-
-                        m_clipLines[y].spans = m_spans + count;
-                        m_clipLines[y].count = lastInBand - firstInBand + 1;
-
-                        for (int r = firstInBand; r <= lastInBand; ++r) {
-                            const QRect &currRect = rects.at(r);
-                            QSpan *span = m_spans + count;
-                            span->x = currRect.x();
-                            span->len = currRect.width();
-                            span->y = y;
-                            span->coverage = 255;
-                            ++count;
-                        }
-                        ++y;
-                    }
-
-                    firstInBand = lastInBand + 1;
-                }
-
-                Q_ASSERT(count <= allocated);
-
-                while (y < clipSpanHeight) {
-                    m_clipLines[y].spans = 0;
-                    m_clipLines[y].count = 0;
-                    ++y;
-                }
-
+                ++y;
             }
-        } QT_CATCH(...) {
-            free(m_spans); // have to free m_spans again or someone might think that we were successfully initialized.
-            m_spans = 0;
-            QT_RETHROW;
+
+            firstInBand = lastInBand + 1;
         }
-    } QT_CATCH(...) {
-        free(m_clipLines); // same for clipLines
-        m_clipLines = 0;
-        QT_RETHROW;
+
+        Q_ASSERT(count <= allocated);
+
+        while (y < clipSpanHeight) {
+            m_clipLines[y].spans = 0;
+            m_clipLines[y].count = 0;
+            ++y;
+        }
+
     }
 }
 

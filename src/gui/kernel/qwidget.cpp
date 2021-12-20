@@ -822,12 +822,7 @@ struct QWidgetExceptionCleaner
 QWidget::QWidget(QWidget *parent, Qt::WindowFlags f)
     : QObject(*new QWidgetPrivate, 0), QPaintDevice()
 {
-    QT_TRY {
-        d_func()->init(parent, f);
-    } QT_CATCH(...) {
-        QWidgetExceptionCleaner::cleanup(this, d_func());
-        QT_RETHROW;
-    }
+    d_func()->init(parent, f);
 }
 
 
@@ -837,12 +832,7 @@ QWidget::QWidget(QWidgetPrivate &dd, QWidget* parent, Qt::WindowFlags f)
     : QObject(dd, 0), QPaintDevice()
 {
     Q_D(QWidget);
-    QT_TRY {
-        d->init(parent, f);
-    } QT_CATCH(...) {
-        QWidgetExceptionCleaner::cleanup(this, d_func());
-        QT_RETHROW;
-    }
+    d->init(parent, f);
 }
 
 /*!
@@ -1133,26 +1123,12 @@ QWidget::~QWidget()
         d->focus_next = d->focus_prev = 0;
     }
 
-
-    QT_TRY {
-        clearFocus();
-    } QT_CATCH(...) {
-        // swallow this problem because we are in a destructor
-    }
+    clearFocus();
 
     d->setDirtyOpaqueRegion();
 
     if (isWindow() && isVisible() && internalWinId()) {
-        QT_TRY {
-            d->close_helper(QWidgetPrivate::CloseNoEvent);
-        } QT_CATCH(...) {
-            // if we're out of memory, at least hide the window.
-            QT_TRY {
-                hide();
-            } QT_CATCH(...) {
-                // and if that also doesn't work, then give up
-            }
-        }
+        d->close_helper(QWidgetPrivate::CloseNoEvent);
     }
 
 #if defined(Q_WS_X11)
@@ -1195,21 +1171,13 @@ QWidget::~QWidget()
 
     QApplication::removePostedEvents(this);
 
-    QT_TRY {
-        destroy();                                        // platform-dependent cleanup
-    } QT_CATCH(...) {
-        // if this fails we can't do anything about it but at least we are not allowed to throw.
-    }
+    destroy();                                        // platform-dependent cleanup
 
     if (QWidgetPrivate::allWidgets) // might have been deleted by ~QApplication
         QWidgetPrivate::allWidgets->remove(this);
 
-    QT_TRY {
-        QEvent e(QEvent::Destroy);
-        QCoreApplication::sendEvent(this, &e);
-    } QT_CATCH(const std::exception&) {
-        // if this fails we can't do anything about it but at least we are not allowed to throw.
-    }
+    QEvent e(QEvent::Destroy);
+    QCoreApplication::sendEvent(this, &e);
 }
 
 void QWidgetPrivate::setWinId(WId id)                // set widget identifier

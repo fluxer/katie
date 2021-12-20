@@ -3415,12 +3415,7 @@ static void derefEngine(QRegExpEngine *eng, const QRegExpEngineKey &key)
 #if !defined(QT_NO_REGEXP_OPTIM)
         if (globalEngineCache()) {
             QMutexLocker locker(regexpMutex());
-            QT_TRY {
-                globalEngineCache()->insert(key, eng, 4 + key.pattern.length() / 4);
-            } QT_CATCH(const std::bad_alloc &) {
-                // in case of an exception (e.g. oom), just delete the engine
-                delete eng;
-            }
+            globalEngineCache()->insert(key, eng, 4 + key.pattern.length() / 4);
         } else {
             delete eng;
         }

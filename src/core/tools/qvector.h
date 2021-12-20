@@ -441,23 +441,18 @@ void QVector<T>::reallocData(int asize, int aalloc)
     }
 
     if (QTypeInfo<T>::isComplex) {
-        QT_TRY {
-            pOld = p->array + x.d->size;
-            pNew = x.p->array + x.d->size;
-            // copy objects from the old array into the new array
-            const int toMove = qMin(asize, d->size);
-            while (x.d->size < toMove) {
-                new (pNew++) T(*pOld++);
-                x.d->size++;
-            }
-            // construct all new objects when growing
-            while (x.d->size < asize) {
-                new (pNew++) T;
-                x.d->size++;
-            }
-        } QT_CATCH (...) {
-            freeData(x.p);
-            QT_RETHROW;
+        pOld = p->array + x.d->size;
+        pNew = x.p->array + x.d->size;
+        // copy objects from the old array into the new array
+        const int toMove = qMin(asize, d->size);
+        while (x.d->size < toMove) {
+            new (pNew++) T(*pOld++);
+            x.d->size++;
+        }
+        // construct all new objects when growing
+        while (x.d->size < asize) {
+            new (pNew++) T;
+            x.d->size++;
         }
 
     } else if (asize > x.d->size) {

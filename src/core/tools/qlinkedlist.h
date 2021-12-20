@@ -225,16 +225,10 @@ void QLinkedList<T>::detach_helper()
     Node *original = e->n;
     Node *copy = x.e;
     while (original != e) {
-        QT_TRY {
-            copy->n = new Node(original->t);
-            copy->n->p = copy;
-            original = original->n;
-            copy = copy->n;
-        } QT_CATCH(...) {
-            copy->n = x.e;
-            freeData(x.d);
-            QT_RETHROW;
-        }
+        copy->n = new Node(original->t);
+        copy->n->p = copy;
+        original = original->n;
+        copy = copy->n;
     }
     copy->n = x.e;
     x.e->p = copy;
@@ -439,19 +433,12 @@ QLinkedList<T> &QLinkedList<T>::operator+=(const QLinkedList<T> &l)
     d->size += n;
     Node *original = l.e->n;
     while (n--) {
-        QT_TRY {
-            Node *copy = new Node(original->t);
-            original = original->n;
-            copy->n = e;
-            copy->p = e->p;
-            copy->p->n = copy;
-            e->p = copy;
-        } QT_CATCH(...) {
-            // restore the original list
-            while (n++<d->size)
-                removeLast();
-            QT_RETHROW;
-        }
+        Node *copy = new Node(original->t);
+        original = original->n;
+        copy->n = e;
+        copy->p = e->p;
+        copy->p->n = copy;
+        e->p = copy;
     }
     return *this;
 }

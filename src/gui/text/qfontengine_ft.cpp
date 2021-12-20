@@ -230,13 +230,7 @@ QFreetypeFace *QFreetypeFace::getFace(const QFontEngine::FaceId &face_id)
 #endif
 
         FT_Set_Charmap(newFreetype->face, newFreetype->unicode_map);
-        QT_TRY {
-            freetypeData->faces.insert(face_id, newFreetype.data());
-        } QT_CATCH(...) {
-            newFreetype.take()->release(face_id);
-            // we could return null in principle instead of throwing
-            QT_RETHROW;
-        }
+        freetypeData->faces.insert(face_id, newFreetype.data());
         freetype = newFreetype.take();
     }
     return freetype;

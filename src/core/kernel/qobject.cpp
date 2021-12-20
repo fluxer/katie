@@ -556,14 +556,9 @@ QObject::QObject(QObject *parent)
     d->q_ptr = this;
     d->threadData->ref();
     if (parent) {
-        QT_TRY {
-            if (!check_parent_thread(parent, parent->d_func()->threadData, d->threadData))
-                parent = nullptr;
-            setParent(parent);
-        } QT_CATCH(...) {
-            d->threadData->deref();
-            QT_RETHROW;
-        }
+        if (!check_parent_thread(parent, parent->d_func()->threadData, d->threadData))
+            parent = nullptr;
+        setParent(parent);
     }
     objectCount.ref();
 }
@@ -578,21 +573,16 @@ QObject::QObject(QObjectPrivate &dd, QObject *parent)
     d->q_ptr = this;
     d->threadData->ref();
     if (parent) {
-        QT_TRY {
-            if (!check_parent_thread(parent, parent->d_func()->threadData, d->threadData))
-                parent = nullptr;
-            if (d->isWidget) {
-                if (parent) {
-                    d->parent = parent;
-                    d->parent->d_func()->children.append(this);
-                }
-                // no events sent here, this is done at the end of the QWidget constructor
-            } else {
-                setParent(parent);
+        if (!check_parent_thread(parent, parent->d_func()->threadData, d->threadData))
+            parent = nullptr;
+        if (d->isWidget) {
+            if (parent) {
+                d->parent = parent;
+                d->parent->d_func()->children.append(this);
             }
-        } QT_CATCH(...) {
-            d->threadData->deref();
-            QT_RETHROW;
+            // no events sent here, this is done at the end of the QWidget constructor
+        } else {
+            setParent(parent);
         }
     }
     objectCount.ref();
@@ -921,12 +911,7 @@ bool QObject::event(QEvent *e)
             currentSender.ref = 1;
             QObjectPrivate::Sender * const previousSender =
                 QObjectPrivate::setCurrentSender(this, &currentSender);
-            QT_TRY {
-                mce->placeMetaCall(this);
-            } QT_CATCH(...) {
-                QObjectPrivate::resetCurrentSender(this, &currentSender, previousSender);
-                QT_RETHROW;
-            }
+            mce->placeMetaCall(this);
             QObjectPrivate::resetCurrentSender(this, &currentSender, previousSender);
             break;
         }
@@ -2577,12 +2562,7 @@ bool QMetaObjectPrivate::connect(const QObject *sender, int signal_index,
     c->nextConnectionList = nullptr;
     c->callFunction = callFunction;
 
-    QT_TRY {
-        QObjectPrivate::get(s)->addConnection(signal_index, c);
-    } QT_CATCH(...) {
-        delete c;
-        QT_RETHROW;
-    }
+    QObjectPrivate::get(s)->addConnection(signal_index, c);
 
     c->prev = &(QObjectPrivate::get(r)->senders);
     c->next = *c->prev;
@@ -2927,19 +2907,7 @@ void QMetaObject::activate(QObject *sender, const QMetaObject *m, int local_sign
                 if (qt_signal_spy_callback_set.slot_begin_callback)
                     qt_signal_spy_callback_set.slot_begin_callback(receiver, c->method(), argv ? argv : empty_argv);
 
-                QT_TRY {
-                    callFunction(receiver, QMetaObject::InvokeMetaMethod, method_relative, argv ? argv : empty_argv);
-                } QT_CATCH(...) {
-                    locker.relock();
-                    if (receiverInSameThread)
-                        QObjectPrivate::resetCurrentSender(receiver, &currentSender, previousSender);
-
-                    --connectionLists->inUse;
-                    Q_ASSERT(connectionLists->inUse >= 0);
-                    if (connectionLists->orphaned && !connectionLists->inUse)
-                        delete connectionLists;
-                    QT_RETHROW;
-                }
+                callFunction(receiver, QMetaObject::InvokeMetaMethod, method_relative, argv ? argv : empty_argv);
                 locker.relock();
             } else {
                 const int method = method_relative + c->method_offset;
@@ -2951,19 +2919,7 @@ void QMetaObject::activate(QObject *sender, const QMetaObject *m, int local_sign
                                                                 argv ? argv : empty_argv);
                 }
 
-                QT_TRY {
-                    metacall(receiver, QMetaObject::InvokeMetaMethod, method, argv ? argv : empty_argv);
-                } QT_CATCH(...) {
-                    locker.relock();
-                    if (receiverInSameThread)
-                        QObjectPrivate::resetCurrentSender(receiver, &currentSender, previousSender);
-
-                    --connectionLists->inUse;
-                    Q_ASSERT(connectionLists->inUse >= 0);
-                    if (connectionLists->orphaned && !connectionLists->inUse)
-                        delete connectionLists;
-                    QT_RETHROW;
-                }
+                metacall(receiver, QMetaObject::InvokeMetaMethod, method, argv ? argv : empty_argv);
                 locker.relock();
             }
 

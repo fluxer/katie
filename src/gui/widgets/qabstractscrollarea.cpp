@@ -365,12 +365,7 @@ QAbstractScrollArea::QAbstractScrollArea(QAbstractScrollAreaPrivate &dd, QWidget
     :QFrame(dd, parent)
 {
     Q_D(QAbstractScrollArea);
-    QT_TRY {
-        d->init();
-    } QT_CATCH(...) {
-        d->viewportFilter.reset();
-        QT_RETHROW;
-    }
+    d->init();
 }
 
 /*!
@@ -382,12 +377,7 @@ QAbstractScrollArea::QAbstractScrollArea(QWidget *parent)
     :QFrame(*new QAbstractScrollAreaPrivate, parent)
 {
     Q_D(QAbstractScrollArea);
-    QT_TRY {
-        d->init();
-    } QT_CATCH(...) {
-        d->viewportFilter.reset();
-        QT_RETHROW;
-    }
+    d->init();
 }
 
 

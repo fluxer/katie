@@ -1088,13 +1088,10 @@ QPainter::QPainter(QPaintDevice *pd)
 QPainter::~QPainter()
 {
     d_ptr->inDestructor = true;
-    QT_TRY {
-        if (isActive())
-            end();
-        else if (d_ptr->refcount > 1)
-            d_ptr->detachPainterPrivate(this);
-    } QT_CATCH(...) {
-        // don't throw anything in the destructor.
+    if (isActive()) {
+        end();
+    } else if (d_ptr->refcount > 1) {
+        d_ptr->detachPainterPrivate(this);
     }
     if (d_ptr) {
         // Make sure we haven't messed things up.
