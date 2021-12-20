@@ -210,7 +210,6 @@ static QByteArray runlengthEncode(const QByteArray &input)
     State state = Undef;
 
     int i = 1;
-    int written = 0;
     while (1) {
         bool flush = (i == input.size());
         if (!flush) {
@@ -234,12 +233,10 @@ static QByteArray runlengthEncode(const QByteArray &input)
             if (state == Equal) {
                 out.append((char)(uchar)(257-size));
                 out.append(last);
-                written += size;
             } else {
                 out.append((char)(uchar)size-1);
                 while (start < i)
                     out.append(data[start++]);
-                written += size;
             }
             state = Undef;
             start = i;

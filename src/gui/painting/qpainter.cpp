@@ -332,8 +332,6 @@ void QPainterPrivate::draw_helper(const QPainterPath &originalPath)
 
     QPainter p(&image);
 
-    p.d_ptr->helper_device = helper_device;
-
     p.setOpacity(state->opacity);
     p.translate(-absPathRect.x(), -absPathRect.y());
     p.setTransform(state->matrix, true);
@@ -401,9 +399,6 @@ static inline QBrush stretchGradientToUserSpace(const QBrush &brush, const QRect
 void QPainterPrivate::drawStretchedGradient(const QPainterPath &path)
 {
     Q_Q(QPainter);
-
-    const qreal sw = helper_device->width();
-    const qreal sh = helper_device->height();
 
     bool changedPen = false;
     bool changedBrush = false;
@@ -1319,7 +1314,6 @@ bool QPainter::begin(QPaintDevice *pd)
 
     Q_D(QPainter);
 
-    d->helper_device = pd;
     d->original_device = pd;
     QPaintDevice *rpd = 0;
 
