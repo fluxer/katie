@@ -652,49 +652,22 @@ void QRasterPaintEngine::drawPath(const QPainterPath &path)
 
 void QRasterPaintEngine::drawPolygon(const QPointF *points, int pointCount, QPaintEngine::PolygonDrawMode mode)
 {
-    Q_D(QRasterPaintEngine);
-
     // qDebug() << Q_FUNC_INFO << points << pointCount << mode;
 
-    cairo_new_path(d->m_cairo);
-    QT_CHECK_RASTER_STATUS(d->m_cairo)
-    cairo_move_to(d->m_cairo, points[0].x(), points[0].y());
-    QT_CHECK_RASTER_STATUS(d->m_cairo)
+    QPainterPath path(points[0]);
     for (int i = 1; i < pointCount; i++) {
-        cairo_line_to(d->m_cairo, points[i].x(), points[i].y());
-        QT_CHECK_RASTER_STATUS(d->m_cairo)
+        path.lineTo(points[i]);
     }
-    if (mode != QPaintEngine::PolylineMode) {
-        cairo_close_path(d->m_cairo);
-        QT_CHECK_RASTER_STATUS(d->m_cairo)
-    }
-
-    switch (mode) {
-        case QPaintEngine::WindingMode: {
-            strokeAndFill(CAIRO_FILL_RULE_WINDING);
-            break;
-        }
-        case QPaintEngine::PolylineMode: {
-            const QPen statepen(state->pen());
-            if (statepen.style() != Qt::NoPen) {
-                cairo_pattern_t* cairopattern = penPattern(statepen);
-                pushPattern(cairopattern);
-                QT_CHECK_RASTER_STATUS(d->m_cairo)
-                cairo_stroke(d->m_cairo);
-                QT_CHECK_RASTER_STATUS(d->m_cairo)
-                popPattern(cairopattern);
-            } else {
-                cairo_stroke_preserve(d->m_cairo);
-                QT_CHECK_RASTER_STATUS(d->m_cairo)
-                cairo_paint_with_alpha(d->m_cairo, state->opacity());
-                QT_CHECK_RASTER_STATUS(d->m_cairo)
-            }
-            break;
-        }
-        default: {
-            strokeAndFill(CAIRO_FILL_RULE_EVEN_ODD);
-            break;
-        }
+    if (mode == QPaintEngine::PolylineMode) {
+        const QBrush statebrush(state->brush());
+        painter()->setBrush(QBrush(Qt::NoBrush));
+        path.setFillRule(Qt::WindingFill);
+        drawPath(path);
+        painter()->setBrush(statebrush);
+    } else {
+        path.setFillRule(mode == QPaintEngine::OddEvenMode ? Qt::OddEvenFill : Qt::WindingFill);
+        path.closeSubpath();
+        drawPath(path);
     }
 }
 
