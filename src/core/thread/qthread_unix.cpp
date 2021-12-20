@@ -108,16 +108,8 @@ QThreadData *QThreadData::current()
     QThreadData *data = currentThreadData;
     if (!data) {
         data = new QThreadData();
-        QT_TRY {
-            set_thread_data(data);
-            data->thread = new QAdoptedThread(data);
-        } QT_CATCH(...) {
-            currentThreadData = nullptr;
-            pthread_setspecific(current_thread_data_key, nullptr);
-            data->deref();
-            data = nullptr;
-            QT_RETHROW;
-        }
+        set_thread_data(data);
+        data->thread = new QAdoptedThread(data);
         data->deref();
 
         data->isAdopted = true;

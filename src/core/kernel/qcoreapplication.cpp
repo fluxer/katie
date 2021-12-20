@@ -372,12 +372,7 @@ QCoreApplication::~QCoreApplication()
 
 #if !defined(QT_NO_THREAD) && !defined(QT_NO_CONCURRENT)
     // Synchronize and stop the global thread pool threads.
-    QThreadPool *globalThreadPool = 0;
-    QT_TRY {
-        globalThreadPool = QThreadPool::globalInstance();
-    } QT_CATCH (...) {
-        // swallow the exception, since destructors shouldn't throw
-    }
+    QThreadPool *globalThreadPool = QThreadPool::globalInstance();
     if (globalThreadPool)
         globalThreadPool->waitForDone();
 #endif
@@ -451,13 +446,7 @@ bool QCoreApplication::notifyInternal(QObject *receiver, QEvent *event)
     QThreadData *threadData = d->threadData;
     ++threadData->loopLevel;
 
-    bool returnValue;
-    QT_TRY {
-        returnValue = notify(receiver, event);
-    } QT_CATCH (...) {
-        --threadData->loopLevel;
-        QT_RETHROW;
-    }
+    bool returnValue = notify(receiver, event);
 
     --threadData->loopLevel;
     return returnValue;
@@ -1023,21 +1012,7 @@ void QCoreApplicationPrivate::sendPostedEvents(QObject *receiver, int event_type
 
         locker.unlock();
         // after all that work, it's time to deliver the event.
-        QT_TRY {
-            QCoreApplication::sendEvent(r, e);
-        } QT_CATCH (...) {
-            delete e;
-            locker.relock();
-
-            // since we were interrupted, we need another pass to make sure we clean everything up
-            data->canWait = false;
-
-            // uglehack: copied from below
-            --data->postEventList.recursion;
-            if (!data->postEventList.recursion && !data->canWait && data->eventDispatcher)
-                data->eventDispatcher->wakeUp();
-            QT_RETHROW;              // rethrow
-        }
+        QCoreApplication::sendEvent(r, e);
 
         delete e;
         locker.relock();

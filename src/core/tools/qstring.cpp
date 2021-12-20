@@ -1470,58 +1470,52 @@ void QString::replace_helper(uint *indices, int nIndices, int blen, const QChar 
         ::memcpy(afterBuffer, after, alen*sizeof(QChar));
     }
 
-    QT_TRY {
-        if (blen == alen) {
-            // replace in place
-            detach();
-            for (int i = 0; i < nIndices; ++i)
-                memcpy(d->data + indices[i], afterBuffer, alen * sizeof(QChar));
-        } else if (alen < blen) {
-            // replace from front
-            detach();
-            uint to = indices[0];
-            if (alen)
-                memcpy(d->data+to, after, alen*sizeof(QChar));
-            to += alen;
-            uint movestart = indices[0] + blen;
-            for (int i = 1; i < nIndices; ++i) {
-                int msize = indices[i] - movestart;
-                if (msize > 0) {
-                    memmove(d->data + to, d->data + movestart, msize * sizeof(QChar));
-                    to += msize;
-                }
-                if (alen) {
-                    memcpy(d->data + to, afterBuffer, alen*sizeof(QChar));
-                    to += alen;
-                }
-                movestart = indices[i] + blen;
-            }
-            int msize = d->size - movestart;
-            if (msize > 0)
+    if (blen == alen) {
+        // replace in place
+        detach();
+        for (int i = 0; i < nIndices; ++i)
+            memcpy(d->data + indices[i], afterBuffer, alen * sizeof(QChar));
+    } else if (alen < blen) {
+        // replace from front
+        detach();
+        uint to = indices[0];
+        if (alen)
+            memcpy(d->data+to, after, alen*sizeof(QChar));
+        to += alen;
+        uint movestart = indices[0] + blen;
+        for (int i = 1; i < nIndices; ++i) {
+            int msize = indices[i] - movestart;
+            if (msize > 0) {
                 memmove(d->data + to, d->data + movestart, msize * sizeof(QChar));
-            resize(d->size - nIndices*(blen-alen));
-        } else {
-            // replace from back
-            int adjust = nIndices*(alen-blen);
-            int newLen = d->size + adjust;
-            int moveend = d->size;
-            resize(newLen);
-
-            while (nIndices) {
-                --nIndices;
-                int movestart = indices[nIndices] + blen;
-                int insertstart = indices[nIndices] + nIndices*(alen-blen);
-                int moveto = insertstart + alen;
-                memmove(d->data + moveto, d->data + movestart,
-                        (moveend - movestart)*sizeof(QChar));
-                memcpy(d->data + insertstart, afterBuffer, alen*sizeof(QChar));
-                moveend = movestart-blen;
+                to += msize;
             }
+            if (alen) {
+                memcpy(d->data + to, afterBuffer, alen*sizeof(QChar));
+                to += alen;
+            }
+            movestart = indices[i] + blen;
         }
-    } QT_CATCH(const std::bad_alloc &) {
-        if (afterBuffer != after)
-            free(afterBuffer);
-        QT_RETHROW;
+        int msize = d->size - movestart;
+        if (msize > 0)
+            memmove(d->data + to, d->data + movestart, msize * sizeof(QChar));
+        resize(d->size - nIndices*(blen-alen));
+    } else {
+        // replace from back
+        int adjust = nIndices*(alen-blen);
+        int newLen = d->size + adjust;
+        int moveend = d->size;
+        resize(newLen);
+
+        while (nIndices) {
+            --nIndices;
+            int movestart = indices[nIndices] + blen;
+            int insertstart = indices[nIndices] + nIndices*(alen-blen);
+            int moveto = insertstart + alen;
+            memmove(d->data + moveto, d->data + movestart,
+                    (moveend - movestart)*sizeof(QChar));
+            memcpy(d->data + insertstart, afterBuffer, alen*sizeof(QChar));
+            moveend = movestart-blen;
+        }
     }
     if (afterBuffer != after)
         free(afterBuffer);

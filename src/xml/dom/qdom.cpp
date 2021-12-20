@@ -3447,18 +3447,13 @@ QDomDocumentTypePrivate::~QDomDocumentTypePrivate()
 void QDomDocumentTypePrivate::init()
 {
     entities = new QDomNamedNodeMapPrivate(this);
-    QT_TRY {
-        notations = new QDomNamedNodeMapPrivate(this);
-        publicId.clear();
-        systemId.clear();
-        internalSubset.clear();
+    notations = new QDomNamedNodeMapPrivate(this);
+    publicId.clear();
+    systemId.clear();
+    internalSubset.clear();
 
-        entities->setAppendToParent(true);
-        notations->setAppendToParent(true);
-    } QT_CATCH(...) {
-        delete entities;
-        QT_RETHROW;
-    }
+    entities->setAppendToParent(true);
+    notations->setAppendToParent(true);
 }
 
 QDomNodePrivate* QDomDocumentTypePrivate::cloneNode(bool deep)

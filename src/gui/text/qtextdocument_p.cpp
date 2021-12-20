@@ -218,46 +218,41 @@ void QTextDocumentPrivate::clear()
     }
 
     QList<QTextCursorPrivate *>oldCursors = cursors;
-    QT_TRY{
-        cursors.clear();
+    cursors.clear();
 
-        QMap<int, QTextObject *>::Iterator objectIt = objects.begin();
-        while (objectIt != objects.end()) {
-            if (*objectIt != rtFrame) {
-                delete *objectIt;
-                objectIt = objects.erase(objectIt);
-            } else {
-                ++objectIt;
-            }
+    QMap<int, QTextObject *>::Iterator objectIt = objects.begin();
+    while (objectIt != objects.end()) {
+        if (*objectIt != rtFrame) {
+            delete *objectIt;
+            objectIt = objects.erase(objectIt);
+        } else {
+            ++objectIt;
         }
-        // also clear out the remaining root frame pointer
-        // (we're going to delete the object further down)
-        objects.clear();
-
-        title.clear();
-        clearUndoRedoStacks(QTextDocument::UndoAndRedoStacks);
-        text = QString();
-        unreachableCharacterCount = 0;
-        modifiedState = 0;
-        modified = false;
-        formats = QTextFormatCollection();
-        int len = fragments.length();
-        fragments.clear();
-        blocks.clear();
-        cachedResources.clear();
-        delete rtFrame;
-        rtFrame = 0;
-        init();
-        cursors = oldCursors;
-        inContentsChange = true;
-        q->contentsChange(0, len, 0);
-        inContentsChange = false;
-        if (lout)
-            lout->documentChanged(0, len, 0);
-    } QT_CATCH(...) {
-        cursors = oldCursors; // at least recover the cursors
-        QT_RETHROW;
     }
+    // also clear out the remaining root frame pointer
+    // (we're going to delete the object further down)
+    objects.clear();
+
+    title.clear();
+    clearUndoRedoStacks(QTextDocument::UndoAndRedoStacks);
+    text = QString();
+    unreachableCharacterCount = 0;
+    modifiedState = 0;
+    modified = false;
+    formats = QTextFormatCollection();
+    int len = fragments.length();
+    fragments.clear();
+    blocks.clear();
+    cachedResources.clear();
+    delete rtFrame;
+    rtFrame = 0;
+    init();
+    cursors = oldCursors;
+    inContentsChange = true;
+    q->contentsChange(0, len, 0);
+    inContentsChange = false;
+    if (lout)
+        lout->documentChanged(0, len, 0);
 }
 
 QTextDocumentPrivate::~QTextDocumentPrivate()

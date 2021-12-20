@@ -192,12 +192,7 @@ QIODevice *QNetworkDiskCache::prepare(const QNetworkCacheMetaData &metaData)
         cacheItem->data.open(QBuffer::ReadWrite);
         device = &(cacheItem->data);
     } else {
-        QString templateName = d->tmpCacheFileName();
-        QT_TRY {
-            cacheItem->file = new QTemporaryFile(templateName, &cacheItem->data);
-        } QT_CATCH(...) {
-            cacheItem->file = 0;
-        }
+        cacheItem->file = new QTemporaryFile(d->tmpCacheFileName(), &cacheItem->data);
         if (!cacheItem->file || !cacheItem->file->open()) {
             qWarning() << "QNetworkDiskCache::prepare() unable to open temporary file";
             cacheItem.reset();

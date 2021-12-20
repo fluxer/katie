@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-12-18 15:42+0200\n"
+"POT-Creation-Date: 2021-12-20 12:00+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -1358,7 +1358,7 @@ msgctxt "QPrintPreviewDialog"
 msgid "Page Setup"
 msgstr ""
 
-#: src/gui/dialogs/qdialog.cpp:495 src/gui/kernel/qwhatsthis.cpp:468
+#: src/gui/dialogs/qdialog.cpp:491 src/gui/kernel/qwhatsthis.cpp:468
 msgid "What's This?"
 msgstr ""
 
@@ -2158,7 +2158,7 @@ msgstr ""
 msgid "Step &down"
 msgstr ""
 
-#: src/gui/kernel/qwidget.cpp:5071
+#: src/gui/kernel/qwidget.cpp:5039
 msgid "*"
 msgstr ""
 
@@ -5794,22 +5794,22 @@ msgctxt "QAbstractFormBuilder"
 msgid "Empty widget item in %1 '%2'."
 msgstr ""
 
-#: src/uitools/abstractformbuilder.cpp:1611
+#: src/uitools/abstractformbuilder.cpp:1599
 msgctxt "QAbstractFormBuilder"
 msgid "Flags property are not supported yet."
 msgstr ""
 
-#: src/uitools/abstractformbuilder.cpp:1692
+#: src/uitools/abstractformbuilder.cpp:1680
 msgctxt "QAbstractFormBuilder"
 msgid "While applying tab stops: The widget '%1' could not be found."
 msgstr ""
 
-#: src/uitools/abstractformbuilder.cpp:2438
+#: src/uitools/abstractformbuilder.cpp:2426
 msgctxt "QAbstractFormBuilder"
 msgid "Invalid QButtonGroup reference '%1' referenced by '%2'."
 msgstr ""
 
-#: src/uitools/abstractformbuilder.cpp:2949
+#: src/uitools/abstractformbuilder.cpp:2937
 msgctxt "QAbstractFormBuilder"
 msgid "This version of the uitools library is linked without script support."
 msgstr ""

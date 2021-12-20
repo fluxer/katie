@@ -82,53 +82,6 @@ static void qt_png_flush(png_structp /* png_ptr */)
 }
 #endif
 
-static void setup_qt(QImage& image, png_structp png_ptr, png_infop info_ptr)
-{
-    png_uint_32 width;
-    png_uint_32 height;
-    int bit_depth;
-    int color_type;
-    png_get_IHDR(png_ptr, info_ptr, &width, &height, &bit_depth, &color_type, 0, 0, 0);
-    png_set_interlace_handling(png_ptr);
-
-    // 32-bit
-    if (bit_depth == 16) {
-        png_set_strip_16(png_ptr);
-    }
-
-    png_set_expand(png_ptr);
-
-    if (color_type == PNG_COLOR_TYPE_GRAY || color_type == PNG_COLOR_TYPE_GRAY_ALPHA) {
-        png_set_gray_to_rgb(png_ptr);
-    } else if (color_type == PNG_COLOR_TYPE_PALETTE) {
-        png_set_palette_to_rgb(png_ptr);
-    }
-
-    QImage::Format format = QImage::Format_ARGB32;
-    // Only add filler if no alpha, or we can get 5 channel data.
-    if (!(color_type & PNG_COLOR_MASK_ALPHA)
-        && !png_get_valid(png_ptr, info_ptr, PNG_INFO_tRNS)) {
-        png_set_filler(png_ptr, 0xff, QFILLER_ORDER);
-        // We want 4 bytes, but it isn't an alpha channel
-        format = QImage::Format_RGB32;
-    }
-    image = QImage(width, height, format);
-    if (image.isNull()) {
-        return;
-    }
-
-#if Q_BYTE_ORDER == Q_BIG_ENDIAN
-    png_set_swap_alpha(png_ptr);
-#endif
-
-    png_read_update_info(png_ptr, info_ptr);
-
-    // Qt==ARGB==Big(ARGB)==Little(BGRA)
-#if Q_BYTE_ORDER == Q_LITTLE_ENDIAN
-    png_set_bgr(png_ptr);
-#endif
-}
-
 QPngHandler::QPngHandler()
 {
 }
@@ -190,21 +143,49 @@ bool QPngHandler::read(QImage *image)
     png_set_read_fn(png_ptr, this, qt_png_read);
     png_read_info(png_ptr, info_ptr);
 
-    if (setjmp(png_jmpbuf(png_ptr))) {
-        png_destroy_read_struct(&png_ptr, &info_ptr, &end_info);
-        return false;
+    png_uint_32 width;
+    png_uint_32 height;
+    int bit_depth;
+    int color_type;
+    png_get_IHDR(png_ptr, info_ptr, &width, &height, &bit_depth, &color_type, 0, 0, 0);
+    png_set_interlace_handling(png_ptr);
+
+    if (bit_depth == 16) {
+        png_set_strip_16(png_ptr);
     }
 
-    setup_qt(*image, png_ptr, info_ptr);
+    png_set_expand(png_ptr);
 
+    if (color_type == PNG_COLOR_TYPE_GRAY || color_type == PNG_COLOR_TYPE_GRAY_ALPHA) {
+        png_set_gray_to_rgb(png_ptr);
+    } else if (color_type == PNG_COLOR_TYPE_PALETTE) {
+        png_set_palette_to_rgb(png_ptr);
+    }
+
+    QImage::Format format = QImage::Format_ARGB32;
+    // Only add filler if no alpha, or we can get 5 channel data.
+    if (!(color_type & PNG_COLOR_MASK_ALPHA)
+        && !png_get_valid(png_ptr, info_ptr, PNG_INFO_tRNS)) {
+        png_set_filler(png_ptr, 0xff, QFILLER_ORDER);
+        // We want 4 bytes, but it isn't an alpha channel
+        format = QImage::Format_RGB32;
+    }
+    *image = QImage(width, height, format);
     if (image->isNull()) {
         png_destroy_read_struct(&png_ptr, &info_ptr, &end_info);
         return false;
     }
 
-    png_uint_32 width = 0;
-    png_uint_32 height = 0;
-    png_get_IHDR(png_ptr, info_ptr, &width, &height, 0, 0, 0, 0, 0);
+#if Q_BYTE_ORDER == Q_BIG_ENDIAN
+    png_set_swap_alpha(png_ptr);
+#endif
+
+    png_read_update_info(png_ptr, info_ptr);
+
+    // Qt==ARGB==Big(ARGB)==Little(BGRA)
+#if Q_BYTE_ORDER == Q_LITTLE_ENDIAN
+    png_set_bgr(png_ptr);
+#endif
 
     uchar *data = image->bits();
     const int bpl = image->bytesPerLine();

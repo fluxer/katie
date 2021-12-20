@@ -3222,19 +3222,13 @@ int QTextFormatCollection::indexForFormat(const QTextFormat &format)
     int idx = formats.size();
     formats.append(format);
 
-    QT_TRY{
-        QTextFormat &f = formats.last();
-        if (!f.d)
-            f.d = new QTextFormatPrivate;
-        f.d->resolveFont(defaultFnt);
+    QTextFormat &f = formats.last();
+    if (!f.d)
+        f.d = new QTextFormatPrivate;
+    f.d->resolveFont(defaultFnt);
 
-        if (!hashes.contains(hash, idx))
-            hashes.insert(hash, idx);
-
-    } QT_CATCH(...) {
-        formats.pop_back();
-        QT_RETHROW;
-    }
+    if (!hashes.contains(hash, idx))
+        hashes.insert(hash, idx);
     return idx;
 }
 

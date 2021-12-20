@@ -67,13 +67,13 @@ public:
     virtual bool fromData(const uchar *buffer, uint len, const char *format,
                           Qt::ImageConversionFlags flags);
 
-    virtual void copy(const QPixmapData *data, const QRect &rect);
-    virtual bool scroll(int dx, int dy, const QRect &rect);
+    virtual void copy(const QPixmapData *data, const QRect &rect) = 0;
+    virtual bool scroll(int dx, int dy, const QRect &rect) = 0;
 
     virtual int metric(QPaintDevice::PaintDeviceMetric metric) const = 0;
     virtual void fill(const QColor &color) = 0;
     virtual QBitmap mask() const;
-    virtual void setMask(const QBitmap &mask);
+    virtual void setMask(const QBitmap &mask) = 0;
     virtual bool hasAlphaChannel() const = 0;
     virtual QPixmap transformed(const QTransform &matrix,
                                 Qt::TransformationMode mode) const;

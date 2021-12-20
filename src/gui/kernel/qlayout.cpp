@@ -125,12 +125,7 @@ QLayout::QLayout(QLayoutPrivate &dd, QLayout *lay, QWidget *w)
         } else {
             d->topLevel = true;
             w->d_func()->layout = this;
-            QT_TRY {
-                invalidate();
-            } QT_CATCH(...) {
-                w->d_func()->layout = 0;
-                QT_RETHROW;
-            }
+            invalidate();
         }
     }
 }
