@@ -35,23 +35,6 @@
 
 QT_BEGIN_NAMESPACE
 
-static inline bool qtransform_equals_no_translate(const QTransform &a, const QTransform &b)
-{
-    if (a.type() <= QTransform::TxTranslate && b.type() <= QTransform::TxTranslate) {
-        return true;
-    } else {
-        // We always use paths for perspective text anyway, so no
-        // point in checking the full matrix...
-        Q_ASSERT(a.type() < QTransform::TxProject);
-        Q_ASSERT(b.type() < QTransform::TxProject);
-
-        return a.m11() == b.m11()
-            && a.m12() == b.m12()
-            && a.m21() == b.m21()
-            && a.m22() == b.m22();
-    }
-}
-
 // Harfbuzz helper functions
 
 static HB_Bool hb_stringToGlyphs(HB_Font font, const HB_UChar16 *string, hb_uint32 length, HB_Glyph *glyphs, hb_uint32 *numGlyphs, HB_Bool rightToLeft)
@@ -164,12 +147,10 @@ QFontEngine::QFontEngine()
     hbFont.userData = this;
 
     hbFace = qHBNewFace(this, hb_getSFntTable);
-    glyphFormat = -1;
 }
 
 QFontEngine::~QFontEngine()
 {
-    m_glyphCaches.clear();
     qHBFreeFace(hbFace);
 }
 
@@ -676,36 +657,6 @@ QByteArray QFontEngine::getSfntTable(uint tag) const
     if (!getSfntTableData(tag, reinterpret_cast<uchar *>(table.data()), &len))
         return QByteArray();
     return table;
-}
-
-void QFontEngine::setGlyphCache(QFontEngineGlyphCache *data)
-{
-    Q_ASSERT(data);
-
-    GlyphCacheEntry entry;
-    entry.cache = data;
-    if (m_glyphCaches.contains(entry))
-        return;
-
-    // Limit the glyph caches to 4. This covers all 90 degree rotations and limits
-    // memory use when there is continuous or random rotation
-    if (m_glyphCaches.size() == 4)
-        m_glyphCaches.removeLast();
-
-    m_glyphCaches.push_front(entry);
-
-}
-
-QFontEngineGlyphCache *QFontEngine::glyphCache(QFontEngineGlyphCache::Type type, const QTransform &transform) const
-{
-    for (QLinkedList<GlyphCacheEntry>::const_iterator it = m_glyphCaches.constBegin(), end = m_glyphCaches.constEnd(); it != end; ++it) {
-        QFontEngineGlyphCache *c = it->cache.data();
-        if (type == c->cacheType()
-            && qtransform_equals_no_translate(c->m_transform, transform)) {
-            return c;
-        }
-    }
-    return 0;
 }
 
 #if defined(Q_WS_X11)
