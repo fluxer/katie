@@ -221,10 +221,28 @@ void QX11Data::copyXImageToQImage(XImage *ximage, QImage &image)
             }
             break;
         }
+        case QImage::Format_Indexed8: {
+            QVector<QRgb> colortable;
+            for (int h = 0; h < ximage->height; h++) {
+                for (int w = 0; w < ximage->width; w++) {
+                    const uint xpixel = XGetPixel(ximage, w, h);
+                    colortable.append(QRgb(xpixel));
+                }
+            }
+            image.setColorTable(colortable);
+
+            for (int h = 0; h < ximage->height; h++) {
+                for (int w = 0; w < ximage->width; w++) {
+                    const uint xpixel = XGetPixel(ximage, w, h);
+                    image.setPixel(w, h, xpixel);
+                }
+            }
+            break;
+        }
         default: {
             for (int h = 0; h < ximage->height; h++) {
                 for (int w = 0; w < ximage->width; w++) {
-                    const unsigned long xpixel = XGetPixel(ximage, w, h);
+                    const uint xpixel = XGetPixel(ximage, w, h);
                     image.setPixel(w, h, xpixel);
                 }
             }
