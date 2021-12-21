@@ -296,9 +296,9 @@ bool QRasterPaintEngine::begin(QPaintDevice *device)
     }
 #endif
 
+    d->glyphCacheType = QFontEngineGlyphCache::Raster_A8;
     if (d->mono_surface)
         d->glyphCacheType = QFontEngineGlyphCache::Raster_Mono;
-    d->glyphCacheType = QFontEngineGlyphCache::Raster_A8;
 
     setActive(true);
     return true;
