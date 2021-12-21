@@ -155,7 +155,6 @@ private slots:
     void childWidgetViewport();
 
     void fillRect_objectBoundingModeGradient();
-    void fillRect_stretchToDeviceMode();
     void monoImages();
 
     void linearGradientSymmetry_data();
@@ -2818,21 +2817,6 @@ void tst_QPainter::fillRect_objectBoundingModeGradient()
     p.end();
 
     QCOMPARE(a, b);
-}
-
-void tst_QPainter::fillRect_stretchToDeviceMode()
-{
-    QImage img(64, 64, QImage::Format_ARGB32_Premultiplied);
-
-    QLinearGradient g(QPoint(0, 0), QPoint(0, 1));
-    g.setCoordinateMode(QGradient::StretchToDeviceMode);
-
-    QPainter p(&img);
-    p.fillRect(img.rect(), g);
-    p.end();
-
-    for (int i = 1; i < img.height(); ++i)
-        QVERIFY(img.pixel(0, i) != img.pixel(0, i-1));
 }
 
 void tst_QPainter::monoImages()
