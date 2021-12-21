@@ -2984,7 +2984,7 @@ void QImage::setPixel(int x, int y, uint index_or_rgb)
             break;
         }
         case Format_Indexed8: {
-            if (Q_UNLIKELY(index_or_rgb >= (uint)d->colortable.size())) {
+            if (Q_UNLIKELY(!d->colortable.contains(index_or_rgb))) {
                 qWarning("QImage::setPixel: Index %d out of range", index_or_rgb);
                 return;
             }
