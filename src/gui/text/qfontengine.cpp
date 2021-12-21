@@ -547,36 +547,6 @@ QImage QFontEngine::alphaMapForGlyph(glyph_t glyph, QFixed /*subPixelPosition*/)
     return alphaMapForGlyph(glyph);
 }
 
-QImage QFontEngine::alphaMapForGlyph(glyph_t glyph, QFixed subPixelPosition, const QTransform &t)
-{
-    QImage i = alphaMapForGlyph(glyph, subPixelPosition);
-    if (t.type() > QTransform::TxTranslate)
-        i = i.transformed(t).convertToFormat(QImage::Format_Indexed8);
-    Q_ASSERT(i.depth() <= 8); // To verify that transformed didn't change the format...
-
-    return i;
-}
-
-QImage QFontEngine::alphaRGBMapForGlyph(glyph_t glyph, QFixed subPixelPosition, const QTransform &t)
-{
-    QImage alphaMask = alphaMapForGlyph(glyph, subPixelPosition, t);
-    QImage rgbMask(alphaMask.width(), alphaMask.height(), QImage::Format_RGB32);
-
-    QVector<QRgb> colorTable = alphaMask.colorTable();
-    const int bpl = rgbMask.bytesPerLine();
-    uchar *dest = rgbMask.bits();
-    for (int y=0; y<alphaMask.height(); ++y) {
-        uint *line = reinterpret_cast<uint*>(QFAST_SCAN_LINE(dest, bpl, y));
-        const uchar *src = (const uchar *) alphaMask.constScanLine(y);
-        for (int x=0; x<alphaMask.width(); ++x) {
-            int val = qAlpha(colorTable.at(src[x]));
-            line[x] = qRgb(val, val, val);
-        }
-    }
-
-    return rgbMask;
-}
-
 QImage QFontEngine::alphaMapForGlyph(glyph_t glyph)
 {
     glyph_metrics_t gm = boundingBox(glyph);

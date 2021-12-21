@@ -141,8 +141,6 @@ public:
      */
     virtual QImage alphaMapForGlyph(glyph_t);
     virtual QImage alphaMapForGlyph(glyph_t glyph, QFixed subPixelPosition);
-    virtual QImage alphaMapForGlyph(glyph_t, QFixed subPixelPosition, const QTransform &t);
-    virtual QImage alphaRGBMapForGlyph(glyph_t, QFixed subPixelPosition, const QTransform &t);
 
     virtual glyph_metrics_t alphaMapBoundingBox(glyph_t glyph, QFixed /*subPixelPosition*/, const QTransform &matrix, GlyphFormat /*format*/)
     {

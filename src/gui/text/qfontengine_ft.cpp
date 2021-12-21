@@ -1697,28 +1697,6 @@ QImage QFontEngineFT::alphaMapForGlyph(glyph_t g, QFixed subPixelPosition)
     return img;
 }
 
-QImage QFontEngineFT::alphaRGBMapForGlyph(glyph_t g, QFixed subPixelPosition, const QTransform &t)
-{
-    if (t.type() > QTransform::TxTranslate)
-        return QFontEngine::alphaRGBMapForGlyph(g, subPixelPosition, t);
-
-    lockFace();
-
-    GlyphFormat glyph_format = Format_A32;
-
-    Glyph *glyph = defaultGlyphSet.outline_drawing ? 0 : loadGlyph(g, subPixelPosition, glyph_format);
-    if (!glyph) {
-        unlockFace();
-        return QFontEngine::alphaRGBMapForGlyph(g, subPixelPosition, t);
-    }
-
-    QImage img(glyph->width, glyph->height, QImage::Format_RGB32);
-    memcpy(img.bits(), glyph->data, 4 * glyph->width * glyph->height);
-    unlockFace();
-
-    return img;
-}
-
 int QFontEngineFT::glyphCount() const
 {
     int count = 0;
