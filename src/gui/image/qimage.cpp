@@ -4543,15 +4543,15 @@ QImage QImage::transformed(const QTransform &matrix, Qt::TransformationMode mode
             if (dImage.d->colortable.size() < 256) {
                 // colors are left in the color table, so pick that one as transparent
                 dImage.d->colortable.append(0x0);
-                memset(dImage.bits(), dImage.d->colortable.size() - 1, dImage.byteCount());
+                memset(dImage.d->data, dImage.d->colortable.size() - 1, dImage.byteCount());
             } else {
-                memset(dImage.bits(), 0, dImage.byteCount());
+                memset(dImage.d->data, 0, dImage.byteCount());
             }
             break;
         case 1:
         case 16:
         case 32:
-            memset(dImage.bits(), 0x00, dImage.byteCount());
+            memset(dImage.d->data, 0x00, dImage.byteCount());
             break;
     }
 
