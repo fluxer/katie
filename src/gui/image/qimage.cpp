@@ -667,6 +667,9 @@ QImage::QImage(int width, int height, Format format)
     : QPaintDevice(),
     d(QImageData::create(QSize(width, height), format))
 {
+    // so it happens that something is using unitialized QImage for drawing
+    // despite the warning above
+    fill(qt_blackrgba);
 }
 
 /*!
@@ -682,6 +685,7 @@ QImage::QImage(const QSize &size, Format format)
     : QPaintDevice(),
     d(QImageData::create(size, format))
 {
+    fill(qt_blackrgba);
 }
 
 
