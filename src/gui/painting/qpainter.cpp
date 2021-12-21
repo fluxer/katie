@@ -67,12 +67,11 @@ static void qt_draw_decoration_for_glyphs(QPainter *painter, const glyph_t *glyp
 static inline QGradient::CoordinateMode coordinateMode(const QBrush &brush)
 {
     switch (brush.style()) {
-    case Qt::LinearGradientPattern:
-    case Qt::RadialGradientPattern:
-    case Qt::ConicalGradientPattern:
-        return brush.gradient()->coordinateMode();
-    default:
-        ;
+        case Qt::LinearGradientPattern:
+        case Qt::RadialGradientPattern:
+            return brush.gradient()->coordinateMode();
+        default:
+            ;
     }
     return QGradient::LogicalMode;
 }
@@ -333,8 +332,6 @@ void QPainterPrivate::draw_helper(const QPainterPath &originalPath)
 
     QPainter p(&image);
 
-    p.d_ptr->helper_device = helper_device;
-
     p.setOpacity(state->opacity);
     p.translate(-absPathRect.x(), -absPathRect.y());
     p.setTransform(state->matrix, true);
@@ -385,8 +382,8 @@ void QPainterPrivate::draw_helper(const QPainterPath &originalPath)
 
 static inline QBrush stretchGradientToUserSpace(const QBrush &brush, const QRectF &boundingRect)
 {
-    Q_ASSERT(brush.style() >= Qt::LinearGradientPattern
-             && brush.style() <= Qt::ConicalGradientPattern);
+    Q_ASSERT(brush.style() == Qt::LinearGradientPattern
+             || brush.style() == Qt::RadialGradientPattern);
 
     QTransform gradientToUser(boundingRect.width(), 0, 0, boundingRect.height(),
                               boundingRect.x(), boundingRect.y());
@@ -403,9 +400,6 @@ void QPainterPrivate::drawStretchedGradient(const QPainterPath &path)
 {
     Q_Q(QPainter);
 
-    const qreal sw = helper_device->width();
-    const qreal sh = helper_device->height();
-
     bool changedPen = false;
     bool changedBrush = false;
     bool needsFill = false;
@@ -418,85 +412,43 @@ void QPainterPrivate::drawStretchedGradient(const QPainterPath &path)
 
     QRectF boundingRect;
 
-    // Draw the xformed fill if the brush is a stretch gradient.
+    // Draw the xformed fill.
     if (brush.style() != Qt::NoBrush) {
-        if (brushMode == QGradient::StretchToDeviceMode) {
-            q->setPen(Qt::NoPen);
-            changedPen = pen.style() != Qt::NoPen;
-            q->scale(sw, sh);
-            updateState(state);
+        needsFill = true;
 
-            const qreal isw = 1.0 / sw;
-            const qreal ish = 1.0 / sh;
-            QTransform inv(isw, 0, 0, ish, 0, 0);
-            engine->drawPath(path * inv);
-            q->scale(isw, ish);
-        } else {
-            needsFill = true;
-
-            if (brushMode == QGradient::ObjectBoundingMode) {
-                Q_ASSERT(engine->hasFeature(QPaintEngine::PatternTransform));
-                boundingRect = path.boundingRect();
-                q->setBrush(stretchGradientToUserSpace(brush, boundingRect));
-                changedBrush = true;
-            }
+        if (brushMode == QGradient::ObjectBoundingMode) {
+            Q_ASSERT(engine->hasFeature(QPaintEngine::PatternTransform));
+            boundingRect = path.boundingRect();
+            q->setBrush(stretchGradientToUserSpace(brush, boundingRect));
+            changedBrush = true;
         }
     }
 
     if (pen.style() != Qt::NoPen) {
-        // Draw the xformed outline if the pen is a stretch gradient.
-        if (penMode == QGradient::StretchToDeviceMode) {
-            q->setPen(Qt::NoPen);
-            changedPen = true;
-
-            if (needsFill) {
-                updateState(state);
-                engine->drawPath(path);
-            }
-
-            q->scale(sw, sh);
-            q->setBrush(pen.brush());
+        // Draw the xformed outline.
+        if (!needsFill && brush.style() != Qt::NoBrush) {
+            q->setBrush(Qt::NoBrush);
             changedBrush = true;
-            updateState(state);
-
-            QPainterPathStroker stroker;
-            stroker.setDashPattern(pen.style());
-            stroker.setWidth(pen.widthF());
-            stroker.setJoinStyle(pen.joinStyle());
-            stroker.setCapStyle(pen.capStyle());
-            stroker.setMiterLimit(pen.miterLimit());
-            QPainterPath stroke = stroker.createStroke(path);
-
-            const qreal isw = 1.0 / sw;
-            const qreal ish = 1.0 / sh;
-            QTransform inv(isw, 0, 0, ish, 0, 0);
-            engine->drawPath(stroke * inv);
-            q->scale(isw, ish);
-        } else {
-            if (!needsFill && brush.style() != Qt::NoBrush) {
-                q->setBrush(Qt::NoBrush);
-                changedBrush = true;
-            }
-
-            if (penMode == QGradient::ObjectBoundingMode) {
-                Q_ASSERT(engine->hasFeature(QPaintEngine::PatternTransform));
-
-                // avoid computing the bounding rect twice
-                if (!needsFill || brushMode != QGradient::ObjectBoundingMode)
-                    boundingRect = path.boundingRect();
-
-                QPen p = pen;
-                p.setBrush(stretchGradientToUserSpace(pen.brush(), boundingRect));
-                q->setPen(p);
-                changedPen = true;
-            } else if (changedPen) {
-                q->setPen(pen);
-                changedPen = false;
-            }
-
-            updateState(state);
-            engine->drawPath(path);
         }
+
+        if (penMode == QGradient::ObjectBoundingMode) {
+            Q_ASSERT(engine->hasFeature(QPaintEngine::PatternTransform));
+
+            // avoid computing the bounding rect twice
+            if (!needsFill || brushMode != QGradient::ObjectBoundingMode)
+                boundingRect = path.boundingRect();
+
+            QPen p = pen;
+            p.setBrush(stretchGradientToUserSpace(pen.brush(), boundingRect));
+            q->setPen(p);
+            changedPen = true;
+        } else if (changedPen) {
+            q->setPen(pen);
+            changedPen = false;
+        }
+
+        updateState(state);
+        engine->drawPath(path);
     } else if (needsFill) {
         if (pen.style() != Qt::NoPen) {
             q->setPen(Qt::NoPen);
@@ -1017,7 +969,7 @@ void QPainterPrivate::updateState(QPainterState *newState)
 
     \list
 
-    \o Simple transformations, meaning translation and scaling, pluss
+    \o Simple transformations, meaning translation and scaling, plus
     0, 90, 180, 270 degree rotations.
 
     \o \c drawPixmap() in combination with simple transformations and
@@ -1131,13 +1083,10 @@ QPainter::QPainter(QPaintDevice *pd)
 QPainter::~QPainter()
 {
     d_ptr->inDestructor = true;
-    QT_TRY {
-        if (isActive())
-            end();
-        else if (d_ptr->refcount > 1)
-            d_ptr->detachPainterPrivate(this);
-    } QT_CATCH(...) {
-        // don't throw anything in the destructor.
+    if (isActive()) {
+        end();
+    } else if (d_ptr->refcount > 1) {
+        d_ptr->detachPainterPrivate(this);
     }
     if (d_ptr) {
         // Make sure we haven't messed things up.
@@ -1365,7 +1314,6 @@ bool QPainter::begin(QPaintDevice *pd)
 
     Q_D(QPainter);
 
-    d->helper_device = pd;
     d->original_device = pd;
     QPaintDevice *rpd = 0;
 
@@ -1764,15 +1712,6 @@ void QPainter::setBrushOrigin(const QPointF &p)
     the source, are merged with the pixel in another image, the
     destination.
 
-    Please note that the bitwise raster operation modes, denoted with
-    a RasterOp prefix, are only natively supported in the X11 and
-    raster paint engines. This means that the only way to utilize
-    these modes on the Mac is via a QImage. The RasterOp denoted blend
-    modes are \e not supported for pens and brushes with alpha
-    components. Also, turning on the QPainter::Antialiasing render
-    hint will effectively disable the RasterOp modes.
-
-
      \image qpainter-compositionmode1.png
      \image qpainter-compositionmode2.png
 
@@ -1888,38 +1827,6 @@ void QPainter::setBrushOrigin(const QPointF &p)
     with white inverts the destination color, whereas painting with
     black leaves the destination color unchanged.
 
-    \value RasterOp_SourceOrDestination Does a bitwise OR operation on
-    the source and destination pixels (src OR dst).
-
-    \value RasterOp_SourceAndDestination Does a bitwise AND operation
-    on the source and destination pixels (src AND dst).
-
-    \value RasterOp_SourceXorDestination Does a bitwise XOR operation
-    on the source and destination pixels (src XOR dst).
-
-    \value RasterOp_NotSourceAndNotDestination Does a bitwise NOR
-    operation on the source and destination pixels ((NOT src) AND (NOT
-    dst)).
-
-    \value RasterOp_NotSourceOrNotDestination Does a bitwise NAND
-    operation on the source and destination pixels ((NOT src) OR (NOT
-    dst)).
-
-    \value RasterOp_NotSourceXorDestination Does a bitwise operation
-    where the source pixels are inverted and then XOR'ed with the
-    destination ((NOT src) XOR dst).
-
-    \value RasterOp_NotSource Does a bitwise operation where the
-    source pixels are inverted (NOT src).
-
-    \value RasterOp_NotSourceAndDestination Does a bitwise operation
-    where the source is inverted and then AND'ed with the destination
-    ((NOT src) AND dst).
-
-    \value RasterOp_SourceAndNotDestination Does a bitwise operation
-    where the source is AND'ed with the inverted destination pixels
-    (src AND (NOT dst)).
-
     \sa compositionMode(), setCompositionMode(), {QPainter#Composition
     Modes}{Composition Modes}, {Image Composition Example}
 */
@@ -1928,8 +1835,7 @@ void QPainter::setBrushOrigin(const QPointF &p)
     Sets the composition mode to the given \a mode.
 
     \warning Only a QPainter operating on a QImage fully supports all
-    composition modes. The RasterOp modes are supported for X11 as
-    described in compositionMode().
+    composition modes.
 
     \sa compositionMode()
 */
@@ -1948,13 +1854,7 @@ void QPainter::setCompositionMode(CompositionMode mode)
         return;
     }
 
-    if (mode >= QPainter::RasterOp_SourceOrDestination) {
-        if (Q_UNLIKELY(!d->engine->hasFeature(QPaintEngine::RasterOpModes))) {
-            qWarning("QPainter::setCompositionMode: "
-                     "Raster operation modes not supported on device");
-            return;
-        }
-    } else if (mode >= QPainter::CompositionMode_Plus) {
+    if (mode >= QPainter::CompositionMode_Plus) {
         if (Q_UNLIKELY(!d->engine->hasFeature(QPaintEngine::BlendModes))) {
             qWarning("QPainter::setCompositionMode: "
                      "Blend modes not supported on device");
@@ -4481,65 +4381,10 @@ void QPainter::drawPixmap(const QPointF &p, const QPixmap &pm)
            p.x(), p.y(), pm.width(), pm.height());
 #endif
 
-    Q_D(QPainter);
+    const int w = pm.width();
+    const int h = pm.height();
 
-    if (!d->engine || pm.isNull())
-        return;
-
-#ifndef QT_NO_DEBUG
-    qt_painter_thread_test(d->device->devType(), "drawPixmap()", true);
-#endif
-
-    if (d->extended) {
-        d->extended->drawPixmap(p, pm);
-        return;
-    }
-
-    qreal x = p.x();
-    qreal y = p.y();
-
-    int w = pm.width();
-    int h = pm.height();
-
-    if (w <= 0)
-        return;
-
-    // Emulate opaque background for bitmaps
-    if (d->state->bgMode == Qt::OpaqueMode && pm.isQBitmap()) {
-        fillRect(QRectF(x, y, w, h), d->state->bgBrush.color());
-    }
-
-    d->updateState(d->state);
-
-    if ((d->state->matrix.type() > QTransform::TxTranslate
-         && !d->engine->hasFeature(QPaintEngine::PixmapTransform))
-        || (!d->state->matrix.isAffine() && !d->engine->hasFeature(QPaintEngine::PerspectiveTransform))
-        || (d->state->opacity != 1.0 && !d->engine->hasFeature(QPaintEngine::ConstantOpacity)))
-    {
-        save();
-        // If there is no rotation involved we have to make sure we use the
-        // antialiased and not the aliased coordinate system by rounding the coordinates.
-        if (d->state->matrix.type() <= QTransform::TxScale) {
-            const QPointF p = roundInDeviceCoordinates(QPointF(x, y), d->state->matrix);
-            x = p.x();
-            y = p.y();
-        }
-        translate(x, y);
-        setBackgroundMode(Qt::TransparentMode);
-        QBrush brush(d->state->pen.color(), pm);
-        setBrush(brush);
-        setPen(Qt::NoPen);
-        setBrushOrigin(QPointF(0, 0));
-
-        drawRect(pm.rect());
-        restore();
-    } else {
-        if (!d->engine->hasFeature(QPaintEngine::PixmapTransform)) {
-            x += d->state->matrix.dx();
-            y += d->state->matrix.dy();
-        }
-        d->engine->drawPixmap(QRectF(x, y, w, h), pm, QRectF(0, 0, w, h));
-    }
+    drawPixmap(QRectF(p.x(), p.y(), w, h), pm, QRectF(0, 0, w, h));
 }
 
 void QPainter::drawPixmap(const QRectF &r, const QPixmap &pm, const QRectF &sr)
@@ -4774,56 +4619,15 @@ void QPainter::drawPixmap(const QRectF &r, const QPixmap &pm, const QRectF &sr)
 
 void QPainter::drawImage(const QPointF &p, const QImage &image)
 {
-    Q_D(QPainter);
+#if defined QT_DEBUG_DRAW
+    printf("QPainter::drawImage(), p=[%.2f,%.2f], img=[%d,%d]\n",
+           p.x(), p.y(), image.width(), image.height());
+#endif
 
-    if (!d->engine || image.isNull())
-        return;
+    const int w = image.width();
+    const int h = image.height();
 
-    if (d->extended) {
-        d->extended->drawImage(p, image);
-        return;
-    }
-
-    qreal x = p.x();
-    qreal y = p.y();
-
-    int w = image.width();
-    int h = image.height();
-
-    d->updateState(d->state);
-
-    if (((d->state->matrix.type() > QTransform::TxTranslate)
-         && !d->engine->hasFeature(QPaintEngine::PixmapTransform))
-        || (!d->state->matrix.isAffine() && !d->engine->hasFeature(QPaintEngine::PerspectiveTransform))
-        || (d->state->opacity != 1.0 && !d->engine->hasFeature(QPaintEngine::ConstantOpacity)))
-    {
-        save();
-        // If there is no rotation involved we have to make sure we use the
-        // antialiased and not the aliased coordinate system by rounding the coordinates.
-        if (d->state->matrix.type() <= QTransform::TxScale) {
-            const QPointF p = roundInDeviceCoordinates(QPointF(x, y), d->state->matrix);
-            x = p.x();
-            y = p.y();
-        }
-        translate(x, y);
-        setBackgroundMode(Qt::TransparentMode);
-        QBrush brush(image);
-        setBrush(brush);
-        setPen(Qt::NoPen);
-        setBrushOrigin(QPointF(0, 0));
-
-        drawRect(image.rect());
-        restore();
-        return;
-    }
-
-    if (d->state->matrix.type() == QTransform::TxTranslate
-        && !d->engine->hasFeature(QPaintEngine::PixmapTransform)) {
-        x += d->state->matrix.dx();
-        y += d->state->matrix.dy();
-    }
-
-    d->engine->drawImage(QRectF(x, y, w, h), image, QRectF(0, 0, w, h), Qt::AutoColor);
+    drawImage(QRectF(p.x(), p.y(), w, h), image, QRectF(0, 0, w, h), Qt::AutoColor);
 }
 
 void QPainter::drawImage(const QRectF &targetRect, const QImage &image, const QRectF &sourceRect,
@@ -5951,8 +5755,7 @@ void QPainter::eraseRect(const QRectF &r)
 static inline bool needsResolving(const QBrush &brush)
 {
     Qt::BrushStyle s = brush.style();
-    return ((s == Qt::LinearGradientPattern || s == Qt::RadialGradientPattern ||
-             s == Qt::ConicalGradientPattern) &&
+    return ((s == Qt::LinearGradientPattern || s == Qt::RadialGradientPattern) &&
             brush.gradient()->coordinateMode() == QGradient::ObjectBoundingMode);
 }
 

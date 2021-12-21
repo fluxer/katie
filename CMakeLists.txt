@@ -15,10 +15,6 @@ endif()
 
 project(Katie C CXX)
 
-if(NOT CMAKE_BUILD_TYPE)
-    set(CMAKE_BUILD_TYPE RelWithDebInfo)
-endif()
-
 set(CMAKE_MODULE_PATH "${CMAKE_SOURCE_DIR}/cmake/modules")
 set(CMAKE_AUTOMOC FALSE)
 set(CMAKE_AUTOUIC FALSE)
@@ -92,9 +88,9 @@ endif()
 
 # mostly relevant to the build process, also stored in the version file for CMake and in qconfig.h.cmake
 set(KATIE_MAJOR "4")
-set(KATIE_MINOR "11")
-set(KATIE_MICRO "1")
-set(KATIE_HEX "0x041101")
+set(KATIE_MINOR "12")
+set(KATIE_MICRO "0")
+set(KATIE_HEX "0x041200")
 set(KATIE_VERSION "${KATIE_MAJOR}.${KATIE_MINOR}.${KATIE_MICRO}")
 
 # only for the build process
@@ -146,20 +142,11 @@ set(KATIE_TOOLS_SUFFIX "" CACHE STRING "Tools (moc, uic, rcc, etc.) suffix")
 option(WITH_CUPS "Build CUPS support" ON)
 add_feature_info(cups WITH_CUPS "build CUPS support")
 
-option(WITH_JPEG "Build JPEG support" ON)
-add_feature_info(jpeg WITH_JPEG "build JPEG support")
-
-option(WITH_TIFF "Build TIFF support" ON)
-add_feature_info(tiff WITH_TIFF "build TIFF support")
-
 option(WITH_DBUS "Build D-Bus support" ON)
 add_feature_info(dbus WITH_DBUS "build D-Bus support")
 
 option(WITH_FONTCONFIG "Build Fontconfig support" ON)
 add_feature_info(fontconfig WITH_FONTCONFIG "build Fontconfig support")
-
-option(WITH_ODBC "Build ODBC database plugin" ON)
-add_feature_info(odbc WITH_ODBC "build ODBC support")
 
 option(WITH_INTL "Build Intl support" ON)
 add_feature_info(intl WITH_INTL "build Intl support")
@@ -267,23 +254,6 @@ set_package_properties(PNG PROPERTIES
     DESCRIPTION "A collection of routines used to create PNG format graphics files"
     URL "http://www.libpng.org/pub/png/libpng.html"
     TYPE REQUIRED
-)
-
-find_package(JPEG)
-set_package_properties(JPEG PROPERTIES
-    PURPOSE "JPEG format handler"
-    DESCRIPTION "JPEG image codec with accelerated baseline compression and decompression"
-    URL "https://libjpeg-turbo.virtualgl.org/"
-    TYPE RECOMMENDED
-)
-
-# v3.6.0+ required for TIFFReadRGBAImageOriented()
-find_package(TIFF 3.6.0)
-set_package_properties(TIFF PROPERTIES
-    PURPOSE "TIFF format handler"
-    DESCRIPTION "Library for manipulation of TIFF images"
-    URL "http://www.libtiff.org/"
-    TYPE RECOMMENDED
 )
 
 find_package(Cups)
@@ -610,7 +580,6 @@ katie_generate_obsolete(QCharRef QtCore qstring.h)
 katie_generate_obsolete(QChildEvent QtCore qcoreevent.h)
 katie_generate_obsolete(QClipboardEvent QtGui qevent.h)
 katie_generate_obsolete(QCloseEvent QtGui qevent.h)
-katie_generate_obsolete(QConicalGradient QtGui qbrush.h)
 katie_generate_obsolete(QContextMenuEvent QtGui qevent.h)
 katie_generate_obsolete(QContiguousCacheData QtCore qcontiguouscache.h)
 katie_generate_obsolete(QContiguousCacheTypedData QtCore qcontiguouscache.h)
@@ -628,7 +597,6 @@ katie_generate_obsolete(QDeclarativeListReference QtDeclarative qdeclarativelist
 katie_generate_obsolete(QDeclarativeProperties QtDeclarative qdeclarativeproperty.h)
 katie_generate_obsolete(QDeclarativeTypeInfo QtDeclarative qdeclarativeprivate.h)
 katie_generate_obsolete(QDesignerActionEditorInterface QtDesigner abstractactioneditor.h)
-katie_generate_obsolete(QDesignerBrushManagerInterface QtDesigner abstractbrushmanager.h)
 katie_generate_obsolete(QDesignerComponents QtDesigner qdesigner_components.h)
 katie_generate_obsolete(QDesignerContainerExtension QtDesigner container.h)
 katie_generate_obsolete(QDesignerCustomWidgetCollectionInterface QtDesigner customwidget.h)

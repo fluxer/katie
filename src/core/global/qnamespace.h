@@ -935,7 +935,6 @@ public:
         DiagCrossPattern,
         LinearGradientPattern,
         RadialGradientPattern,
-        ConicalGradientPattern,
         TexturePattern
     };
 

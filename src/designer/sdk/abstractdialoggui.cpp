@@ -48,7 +48,6 @@ QT_BEGIN_NAMESPACE
    \value ResourceLoadFailureMessage  Resources specified in a file could not be found
    \value TopLevelSpacerMessage       Spacer items detected on a container without layout
    \value PropertyEditorMessage       Messages of the propert yeditor
-   \value SignalSlotEditorMessage     Messages of the signal / slot editor
    \value FormEditorMessage           Messages of the form editor
    \value PreviewFailureMessage       A preview could not be created
    \value PromotionErrorMessage       Messages related to promotion of a widget

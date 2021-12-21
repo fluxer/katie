@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-11-22 10:21+0200\n"
+"POT-Creation-Date: 2021-12-20 12:00+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -716,11 +716,7 @@ msgstr ""
 msgid "Resource Browser"
 msgstr ""
 
-#: src/tools/designer/qdesigner_toolwindow.cpp:332
-msgid "Signal/Slot Editor"
-msgstr ""
-
-#: src/tools/designer/qdesigner_toolwindow.cpp:373
+#: src/tools/designer/qdesigner_toolwindow.cpp:339
 #: src/tools/designer/qdesigner_workbench.cpp:382
 msgid "Widget Box"
 msgstr ""

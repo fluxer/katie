@@ -27,8 +27,6 @@
 #include "pluginmanager_p.h"
 #include "widgetfactory_p.h"
 #include "qdesigner_widgetbox_p.h"
-#include "qtgradientmanager.h"
-#include "qtgradientutils.h"
 #include "qtresourcemodel_p.h"
 
 // sdk
@@ -56,14 +54,11 @@ namespace qdesigner_internal {
 class QDesignerIntegrationPrivate {
 public:
     QDesignerIntegrationPrivate()
-        : m_gradientManager(0),
-          m_fileWatcherBehaviour(QDesignerIntegration::PromptAndReload),
+        : m_fileWatcherBehaviour(QDesignerIntegration::PromptAndReload),
           m_resourceEditingEnabled(true),
           m_slotNavigationEnabled(false)
     {}
 
-    QString m_gradientsPath;
-    QtGradientManager *m_gradientManager;
     QDesignerIntegration::ResourceFileWatcherBehaviour m_fileWatcherBehaviour;
     bool m_resourceEditingEnabled;
     bool m_slotNavigationEnabled;
@@ -81,11 +76,6 @@ QDesignerIntegration::QDesignerIntegration(QDesignerFormEditorInterface *core, Q
 
 QDesignerIntegration::~QDesignerIntegration()
 {
-    QFile f(m_d->m_gradientsPath);
-    if (f.open(QIODevice::WriteOnly)) {
-        f.write(QtGradientUtils::saveState(m_d->m_gradientManager).toUtf8());
-        f.close();
-    }
     delete m_d;
 }
 
@@ -113,28 +103,6 @@ void QDesignerIntegration::initialize()
 
     connect(core()->formWindowManager(), SIGNAL(activeFormWindowChanged(QDesignerFormWindowInterface*)),
             this, SLOT(updateActiveFormWindow(QDesignerFormWindowInterface*)));
-
-    m_d->m_gradientManager = new QtGradientManager(this);
-    core()->setGradientManager(m_d->m_gradientManager);
-
-    QString designerFolder = QDir::homePath();
-    designerFolder += QDir::separator();
-    designerFolder += QLatin1String(".designer");
-    m_d->m_gradientsPath = designerFolder;
-    m_d->m_gradientsPath += QDir::separator();
-    m_d->m_gradientsPath += QLatin1String("gradients.xml");
-
-    QFile f(m_d->m_gradientsPath);
-    if (f.open(QIODevice::ReadOnly)) {
-        QtGradientUtils::restoreState(m_d->m_gradientManager, QString::fromAscii(f.readAll()));
-        f.close();
-    } else {
-        QFile defaultGradients(QLatin1String(":/trolltech/designer/defaultgradients.xml"));
-        if (defaultGradients.open(QIODevice::ReadOnly)) {
-            QtGradientUtils::restoreState(m_d->m_gradientManager, QString::fromAscii(defaultGradients.readAll()));
-            defaultGradients.close();
-        }
-    }
 
     if (WidgetDataBase *widgetDataBase = qobject_cast<WidgetDataBase*>(core()->widgetDataBase()))
         widgetDataBase->grabStandardWidgetBoxIcons();

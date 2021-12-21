@@ -155,7 +155,7 @@
     knows which image formats your plugin supports.
 
     Different plugins can support different capabilities. For example,
-    you may have one plugin that supports reading the GIF format, and
+    you may have one plugin that supports reading the SVG format, and
     another that supports writing. Qt will select the correct plugin
     for the job, depending on the return value of capabilities(). If
     several plugins support the same capability, Qt will select one
@@ -490,11 +490,11 @@ QImageIOPlugin::~QImageIOPlugin()
 
     Returns the capabilities on the plugin, based on the data in \a
     device and the format \a format. For example, if the
-    QImageIOHandler supports the BMP format, and the data in the
-    device starts with the characters "BM", this function should
-    return \l CanRead. If \a format is "bmp" and the handler supports
-    both reading and writing, this function should return \l CanRead |
-    \l CanWrite.
+    QImageIOHandler supports the PNG format, and the data in the
+    device starts with the magick bits for that format, this function
+    should return \l CanRead. If \a format is "png" and the handler
+    supports both reading and writing, this function should return
+    \l CanRead | \l CanWrite.
 */
 
 /*!
@@ -503,7 +503,7 @@ QImageIOPlugin::~QImageIOPlugin()
     Returns the list of image keys this plugin supports.
 
     These keys are usually the names of the image formats that are implemented
-    in the plugin (e.g., "jpg" or "gif").
+    in the plugin (e.g., "svg").
 
     \sa capabilities()
 */

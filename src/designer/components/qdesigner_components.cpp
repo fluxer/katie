@@ -32,9 +32,7 @@
 #include "propertyeditor/propertyeditor.h"
 #include "objectinspector/objectinspector.h"
 #include "taskmenu/taskmenu_component.h"
-#include "signalsloteditor/signalsloteditorwindow.h"
 #include "buddyeditor/buddyeditor_plugin.h"
-#include "signalsloteditor/signalsloteditor_plugin.h"
 #include "tabordereditor/tabordereditor_plugin.h"
 
 #include <QtDesigner/abstractlanguage.h>
@@ -81,7 +79,6 @@ void QDesignerComponents::initializeResources()
     initResources();
 }
 
-static qdesigner_internal::SignalSlotEditorPlugin* signalsloteditorplugin = new qdesigner_internal::SignalSlotEditorPlugin();
 static qdesigner_internal::BuddyEditorPlugin* buddyeditorplugin = new qdesigner_internal::BuddyEditorPlugin();
 static qdesigner_internal::TabOrderEditorPlugin* tabordereditorplugin = new qdesigner_internal::TabOrderEditorPlugin();
 
@@ -91,7 +88,6 @@ QObjectList QDesignerComponents::initializePlugins(QDesignerFormEditorInterface 
 {
     qdesigner_internal::QDesignerIntegration::initializePlugins(core);
     static QObjectList builtin = QObjectList()
-        << signalsloteditorplugin
         << buddyeditorplugin
         << tabordereditorplugin;
     return builtin;
@@ -218,13 +214,6 @@ QWidget *QDesignerComponents::createResourceEditor(QDesignerFormEditorInterface 
     if (designerIntegration)
         resourceView->setResourceEditingEnabled(designerIntegration->isResourceEditingEnabled());
     return resourceView;
-}
-
-/*!
-    Returns a new signal-slot editor with the given \a parent for the \a core interface.*/
-QWidget *QDesignerComponents::createSignalSlotEditor(QDesignerFormEditorInterface *core, QWidget *parent)
-{
-    return new qdesigner_internal::SignalSlotEditorWindow(core, parent);
 }
 
 QT_END_NAMESPACE

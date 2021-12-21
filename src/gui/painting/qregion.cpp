@@ -3443,40 +3443,86 @@ static QRegionPrivate *PolygonRegion(const QPoint *Pts, int Count, int rule)
         return 0;
     }
 
+    if (rule == EvenOddRule) {
+        /*
+            *  for each scanline
+            */
+        for (y = ET.ymin; y < ET.ymax; ++y) {
 
-    QT_TRY {
-        if (rule == EvenOddRule) {
             /*
-             *  for each scanline
-             */
-            for (y = ET.ymin; y < ET.ymax; ++y) {
+                *  Add a new edge to the active edge table when we
+                *  get to the next edge.
+                */
+            if (pSLL && y == pSLL->scanline) {
+                loadAET(&AET, pSLL->edgelist);
+                pSLL = pSLL->next;
+            }
+            pPrevAET = &AET;
+            pAET = AET.next;
+
+            /*
+                *  for each active edge
+                */
+            while (pAET) {
+                pts->setX(pAET->bres.minor_axis);
+                pts->setY(y);
+                ++pts;
+                ++iPts;
 
                 /*
-                 *  Add a new edge to the active edge table when we
-                 *  get to the next edge.
-                 */
-                if (pSLL && y == pSLL->scanline) {
-                    loadAET(&AET, pSLL->edgelist);
-                    pSLL = pSLL->next;
+                    *  send out the buffer
+                    */
+                if (iPts == NUMPTSTOBUFFER) {
+                    tmpPtBlock = (POINTBLOCK *)malloc(sizeof(POINTBLOCK));
+                    Q_CHECK_PTR(tmpPtBlock);
+                    tmpPtBlock->pts = reinterpret_cast<QPoint *>(tmpPtBlock->data);
+                    curPtBlock->next = tmpPtBlock;
+                    curPtBlock = tmpPtBlock;
+                    pts = curPtBlock->pts;
+                    ++numFullPtBlocks;
+                    iPts = 0;
                 }
-                pPrevAET = &AET;
-                pAET = AET.next;
+                EVALUATEEDGEEVENODD(pAET, pPrevAET, y)
+            }
+            InsertionSort(&AET);
+        }
+    } else {
+        /*
+            *  for each scanline
+            */
+        for (y = ET.ymin; y < ET.ymax; ++y) {
+            /*
+                *  Add a new edge to the active edge table when we
+                *  get to the next edge.
+                */
+            if (pSLL && y == pSLL->scanline) {
+                loadAET(&AET, pSLL->edgelist);
+                computeWAET(&AET);
+                pSLL = pSLL->next;
+            }
+            pPrevAET = &AET;
+            pAET = AET.next;
+            pWETE = pAET;
 
+            /*
+                *  for each active edge
+                */
+            while (pAET) {
                 /*
-                 *  for each active edge
-                 */
-                while (pAET) {
+                    *  add to the buffer only those edges that
+                    *  are in the Winding active edge table.
+                    */
+                if (pWETE == pAET) {
                     pts->setX(pAET->bres.minor_axis);
                     pts->setY(y);
                     ++pts;
                     ++iPts;
 
                     /*
-                     *  send out the buffer
-                     */
+                        *  send out the buffer
+                        */
                     if (iPts == NUMPTSTOBUFFER) {
-                        tmpPtBlock = (POINTBLOCK *)malloc(sizeof(POINTBLOCK));
-                        Q_CHECK_PTR(tmpPtBlock);
+                        tmpPtBlock = static_cast<POINTBLOCK *>(malloc(sizeof(POINTBLOCK)));
                         tmpPtBlock->pts = reinterpret_cast<QPoint *>(tmpPtBlock->data);
                         curPtBlock->next = tmpPtBlock;
                         curPtBlock = tmpPtBlock;
@@ -3484,79 +3530,20 @@ static QRegionPrivate *PolygonRegion(const QPoint *Pts, int Count, int rule)
                         ++numFullPtBlocks;
                         iPts = 0;
                     }
-                    EVALUATEEDGEEVENODD(pAET, pPrevAET, y)
+                    pWETE = pWETE->nextWETE;
                 }
-                InsertionSort(&AET);
+                EVALUATEEDGEWINDING(pAET, pPrevAET, y, fixWAET)
             }
-        } else {
+
             /*
-             *  for each scanline
-             */
-            for (y = ET.ymin; y < ET.ymax; ++y) {
-                /*
-                 *  Add a new edge to the active edge table when we
-                 *  get to the next edge.
-                 */
-                if (pSLL && y == pSLL->scanline) {
-                    loadAET(&AET, pSLL->edgelist);
-                    computeWAET(&AET);
-                    pSLL = pSLL->next;
-                }
-                pPrevAET = &AET;
-                pAET = AET.next;
-                pWETE = pAET;
-
-                /*
-                 *  for each active edge
-                 */
-                while (pAET) {
-                    /*
-                     *  add to the buffer only those edges that
-                     *  are in the Winding active edge table.
-                     */
-                    if (pWETE == pAET) {
-                        pts->setX(pAET->bres.minor_axis);
-                        pts->setY(y);
-                        ++pts;
-                        ++iPts;
-
-                        /*
-                         *  send out the buffer
-                         */
-                        if (iPts == NUMPTSTOBUFFER) {
-                            tmpPtBlock = static_cast<POINTBLOCK *>(malloc(sizeof(POINTBLOCK)));
-                            tmpPtBlock->pts = reinterpret_cast<QPoint *>(tmpPtBlock->data);
-                            curPtBlock->next = tmpPtBlock;
-                            curPtBlock = tmpPtBlock;
-                            pts = curPtBlock->pts;
-                            ++numFullPtBlocks;
-                            iPts = 0;
-                        }
-                        pWETE = pWETE->nextWETE;
-                    }
-                    EVALUATEEDGEWINDING(pAET, pPrevAET, y, fixWAET)
-                }
-
-                /*
-                 *  recompute the winding active edge table if
-                 *  we just resorted or have exited an edge.
-                 */
-                if (InsertionSort(&AET) || fixWAET) {
-                    computeWAET(&AET);
-                    fixWAET = false;
-                }
+                *  recompute the winding active edge table if
+                *  we just resorted or have exited an edge.
+                */
+            if (InsertionSort(&AET) || fixWAET) {
+                computeWAET(&AET);
+                fixWAET = false;
             }
         }
-    } QT_CATCH(...) {
-        FreeStorage(SLLBlock.next);
-        PtsToRegion(numFullPtBlocks, iPts, &FirstPtBlock, region);
-        for (curPtBlock = FirstPtBlock.next; --numFullPtBlocks >= 0;) {
-            tmpPtBlock = curPtBlock->next;
-            free(curPtBlock);
-            curPtBlock = tmpPtBlock;
-        }
-        free(pETEs);
-        return 0; // this function returns 0 in case of an error
     }
 
     FreeStorage(SLLBlock.next);

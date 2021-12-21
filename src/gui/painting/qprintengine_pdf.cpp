@@ -409,7 +409,7 @@ int QPdfEnginePrivate::addBrushPattern(const QTransform &m, bool *specifyColor, 
     //qDebug() << brushOrigin << matrix;
 
     Qt::BrushStyle style = brush.style();
-    if (style == Qt::LinearGradientPattern) {// && style <= Qt::ConicalGradientPattern) {
+    if (style == Qt::LinearGradientPattern) {
 #ifdef USE_NATIVE_GRADIENTS
         *specifyColor = false;
         return gradientBrush(b, matrix, gStateObject);
@@ -530,59 +530,36 @@ int QPdfEnginePrivate::addImage(const QImage &img, bool *bitmap, qint64 serial_n
         bool hasAlpha = false;
         bool hasMask = false;
 
-        if (QImageWriter::supportedImageFormats().contains("jpeg") && colorMode != QPrinter::GrayScale) {
-            QBuffer buffer(&imageData);
-            QImageWriter writer(&buffer, "jpeg");
-            writer.setQuality(94);
-            writer.write(image);
-            dct = true;
-
-            if (format != QImage::Format_RGB32) {
-                softMaskData.resize(w * h);
-                uchar *sdata = (uchar *)softMaskData.data();
-                for (int y = 0; y < h; ++y) {
-                    const QRgb *rgb = (const QRgb *)image.constScanLine(y);
-                    for (int x = 0; x < w; ++x) {
-                        uchar alpha = qAlpha(*rgb);
-                        *sdata++ = alpha;
-                        hasMask |= (alpha < 255);
-                        hasAlpha |= (alpha != 0 && alpha != 255);
-                        ++rgb;
-                    }
+        imageData.resize(colorMode == QPrinter::GrayScale ? w * h : 3 * w * h);
+        uchar *data = (uchar *)imageData.data();
+        softMaskData.resize(w * h);
+        uchar *sdata = (uchar *)softMaskData.data();
+        for (int y = 0; y < h; ++y) {
+            const QRgb *rgb = (const QRgb *)image.constScanLine(y);
+            if (colorMode == QPrinter::GrayScale) {
+                for (int x = 0; x < w; ++x) {
+                    *(data++) = qGray(*rgb);
+                    uchar alpha = qAlpha(*rgb);
+                    *sdata++ = alpha;
+                    hasMask |= (alpha < 255);
+                    hasAlpha |= (alpha != 0 && alpha != 255);
+                    ++rgb;
+                }
+            } else {
+                for (int x = 0; x < w; ++x) {
+                    *(data++) = qRed(*rgb);
+                    *(data++) = qGreen(*rgb);
+                    *(data++) = qBlue(*rgb);
+                    uchar alpha = qAlpha(*rgb);
+                    *sdata++ = alpha;
+                    hasMask |= (alpha < 255);
+                    hasAlpha |= (alpha != 0 && alpha != 255);
+                    ++rgb;
                 }
             }
-        } else {
-            imageData.resize(colorMode == QPrinter::GrayScale ? w * h : 3 * w * h);
-            uchar *data = (uchar *)imageData.data();
-            softMaskData.resize(w * h);
-            uchar *sdata = (uchar *)softMaskData.data();
-            for (int y = 0; y < h; ++y) {
-                const QRgb *rgb = (const QRgb *)image.constScanLine(y);
-                if (colorMode == QPrinter::GrayScale) {
-                    for (int x = 0; x < w; ++x) {
-                        *(data++) = qGray(*rgb);
-                        uchar alpha = qAlpha(*rgb);
-                        *sdata++ = alpha;
-                        hasMask |= (alpha < 255);
-                        hasAlpha |= (alpha != 0 && alpha != 255);
-                        ++rgb;
-                    }
-                } else {
-                    for (int x = 0; x < w; ++x) {
-                        *(data++) = qRed(*rgb);
-                        *(data++) = qGreen(*rgb);
-                        *(data++) = qBlue(*rgb);
-                        uchar alpha = qAlpha(*rgb);
-                        *sdata++ = alpha;
-                        hasMask |= (alpha < 255);
-                        hasAlpha |= (alpha != 0 && alpha != 255);
-                        ++rgb;
-                    }
-                }
-            }
-            if (format == QImage::Format_RGB32)
-                hasAlpha = hasMask = false;
         }
+        if (format == QImage::Format_RGB32)
+            hasAlpha = hasMask = false;
         int maskObject = 0;
         int softMaskObject = 0;
         if (hasAlpha) {

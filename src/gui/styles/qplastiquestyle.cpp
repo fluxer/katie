@@ -445,12 +445,6 @@ static void qBrushSetAlphaF(QBrush *brush, qreal alpha)
             *brush = QBrush(grad);
             break;
         }
-        case QGradient::ConicalGradient: {
-            QConicalGradient grad = *static_cast<const QConicalGradient *>(gradient);
-            grad.setStops(stops);
-            *brush = QBrush(grad);
-            break;
-        }
         default:
             qWarning("QPlastiqueStyle::qBrushLight() - unknown gradient type"
                      " - falling back to QLinearGradient");
@@ -508,12 +502,6 @@ static QBrush qBrushLight(QBrush brush, int light)
             brush = QBrush(grad);
             break;
         }
-        case QGradient::ConicalGradient: {
-            QConicalGradient grad = *static_cast<const QConicalGradient *>(gradient);
-            grad.setStops(stops);
-            brush = QBrush(grad);
-            break;
-        }
         default:
             qWarning("QPlastiqueStyle::qBrushLight() - unknown gradient type"
                      " - falling back to QLinearGradient");
@@ -566,12 +554,6 @@ static QBrush qBrushDark(QBrush brush, int dark)
         switch (gradient->type()) {
         case QGradient::RadialGradient: {
             QRadialGradient grad = *static_cast<const QRadialGradient *>(gradient);
-            grad.setStops(stops);
-            brush = QBrush(grad);
-            break;
-        }
-        case QGradient::ConicalGradient: {
-            QConicalGradient grad = *static_cast<const QConicalGradient *>(gradient);
             grad.setStops(stops);
             brush = QBrush(grad);
             break;

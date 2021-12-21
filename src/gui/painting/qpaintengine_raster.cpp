@@ -296,9 +296,9 @@ bool QRasterPaintEngine::begin(QPaintDevice *device)
     }
 #endif
 
+    d->glyphCacheType = QFontEngineGlyphCache::Raster_A8;
     if (d->mono_surface)
         d->glyphCacheType = QFontEngineGlyphCache::Raster_Mono;
-    d->glyphCacheType = QFontEngineGlyphCache::Raster_A8;
 
     setActive(true);
     return true;
@@ -2142,10 +2142,10 @@ bool QRasterPaintEngine::drawCachedGlyphs(int numGlyphs, const glyph_t *glyphs,
                 : d->glyphCacheType;
 
         QImageTextureGlyphCache *cache =
-            static_cast<QImageTextureGlyphCache *>(fontEngine->glyphCache(0, glyphType, s->matrix));
+            static_cast<QImageTextureGlyphCache *>(fontEngine->glyphCache(glyphType, s->matrix));
         if (!cache) {
             cache = new QImageTextureGlyphCache(glyphType, s->matrix);
-            fontEngine->setGlyphCache(0, cache);
+            fontEngine->setGlyphCache(cache);
         }
 
         cache->populate(fontEngine, numGlyphs, glyphs, positions);
@@ -2774,109 +2774,97 @@ void QClipData::initialize()
         m_clipLines = (ClipLine *)calloc(sizeof(ClipLine), clipSpanHeight);
 
     Q_CHECK_PTR(m_clipLines);
-    QT_TRY {
-        m_spans = (QSpan *)malloc(clipSpanHeight*sizeof(QSpan));
-        allocated = clipSpanHeight;
-        Q_CHECK_PTR(m_spans);
+    m_spans = (QSpan *)malloc(clipSpanHeight*sizeof(QSpan));
+    allocated = clipSpanHeight;
+    Q_CHECK_PTR(m_spans);
 
-        QT_TRY {
-            if (hasRectClip) {
-                int y = 0;
-                while (y < ymin) {
-                    m_clipLines[y].spans = 0;
-                    m_clipLines[y].count = 0;
-                    ++y;
-                }
+    if (hasRectClip) {
+        int y = 0;
+        while (y < ymin) {
+            m_clipLines[y].spans = 0;
+            m_clipLines[y].count = 0;
+            ++y;
+        }
 
-                const int len = clipRect.width();
-                count = 0;
-                while (y < ymax) {
+        const int len = clipRect.width();
+        count = 0;
+        while (y < ymax) {
+            QSpan *span = m_spans + count;
+            span->x = xmin;
+            span->len = len;
+            span->y = y;
+            span->coverage = 255;
+            ++count;
+
+            m_clipLines[y].spans = span;
+            m_clipLines[y].count = 1;
+            ++y;
+        }
+
+        while (y < clipSpanHeight) {
+            m_clipLines[y].spans = 0;
+            m_clipLines[y].count = 0;
+            ++y;
+        }
+    } else if (hasRegionClip) {
+
+        const QVector<QRect> rects = clipRegion.rects();
+        const int numRects = rects.size();
+
+        { // resize
+            const int maxSpans = (ymax - ymin) * numRects;
+            if (maxSpans > allocated) {
+                m_spans = (QSpan *)::realloc(m_spans, maxSpans * sizeof(QSpan));
+                Q_CHECK_PTR(m_spans);
+                allocated = maxSpans;
+            }
+        }
+
+        int y = 0;
+        int firstInBand = 0;
+        count = 0;
+        while (firstInBand < numRects) {
+            const int currMinY = rects.at(firstInBand).y();
+            const int currMaxY = currMinY + rects.at(firstInBand).height();
+
+            while (y < currMinY) {
+                m_clipLines[y].spans = 0;
+                m_clipLines[y].count = 0;
+                ++y;
+            }
+
+            int lastInBand = firstInBand;
+            while (lastInBand + 1 < numRects && rects.at(lastInBand+1).top() == y)
+                ++lastInBand;
+
+            while (y < currMaxY) {
+
+                m_clipLines[y].spans = m_spans + count;
+                m_clipLines[y].count = lastInBand - firstInBand + 1;
+
+                for (int r = firstInBand; r <= lastInBand; ++r) {
+                    const QRect &currRect = rects.at(r);
                     QSpan *span = m_spans + count;
-                    span->x = xmin;
-                    span->len = len;
+                    span->x = currRect.x();
+                    span->len = currRect.width();
                     span->y = y;
                     span->coverage = 255;
                     ++count;
-
-                    m_clipLines[y].spans = span;
-                    m_clipLines[y].count = 1;
-                    ++y;
                 }
-
-                while (y < clipSpanHeight) {
-                    m_clipLines[y].spans = 0;
-                    m_clipLines[y].count = 0;
-                    ++y;
-                }
-            } else if (hasRegionClip) {
-
-                const QVector<QRect> rects = clipRegion.rects();
-                const int numRects = rects.size();
-
-                { // resize
-                    const int maxSpans = (ymax - ymin) * numRects;
-                    if (maxSpans > allocated) {
-                        m_spans = (QSpan *)::realloc(m_spans, maxSpans * sizeof(QSpan));
-                        Q_CHECK_PTR(m_spans);
-                        allocated = maxSpans;
-                    }
-                }
-
-                int y = 0;
-                int firstInBand = 0;
-                count = 0;
-                while (firstInBand < numRects) {
-                    const int currMinY = rects.at(firstInBand).y();
-                    const int currMaxY = currMinY + rects.at(firstInBand).height();
-
-                    while (y < currMinY) {
-                        m_clipLines[y].spans = 0;
-                        m_clipLines[y].count = 0;
-                        ++y;
-                    }
-
-                    int lastInBand = firstInBand;
-                    while (lastInBand + 1 < numRects && rects.at(lastInBand+1).top() == y)
-                        ++lastInBand;
-
-                    while (y < currMaxY) {
-
-                        m_clipLines[y].spans = m_spans + count;
-                        m_clipLines[y].count = lastInBand - firstInBand + 1;
-
-                        for (int r = firstInBand; r <= lastInBand; ++r) {
-                            const QRect &currRect = rects.at(r);
-                            QSpan *span = m_spans + count;
-                            span->x = currRect.x();
-                            span->len = currRect.width();
-                            span->y = y;
-                            span->coverage = 255;
-                            ++count;
-                        }
-                        ++y;
-                    }
-
-                    firstInBand = lastInBand + 1;
-                }
-
-                Q_ASSERT(count <= allocated);
-
-                while (y < clipSpanHeight) {
-                    m_clipLines[y].spans = 0;
-                    m_clipLines[y].count = 0;
-                    ++y;
-                }
-
+                ++y;
             }
-        } QT_CATCH(...) {
-            free(m_spans); // have to free m_spans again or someone might think that we were successfully initialized.
-            m_spans = 0;
-            QT_RETHROW;
+
+            firstInBand = lastInBand + 1;
         }
-    } QT_CATCH(...) {
-        free(m_clipLines); // same for clipLines
-        m_clipLines = 0;
-        QT_RETHROW;
+
+        Q_ASSERT(count <= allocated);
+
+        while (y < clipSpanHeight) {
+            m_clipLines[y].spans = 0;
+            m_clipLines[y].count = 0;
+            ++y;
+        }
+
     }
 }
 
@@ -3203,20 +3191,19 @@ void QSpanData::setup(const QBrush &brush, int alpha, QPainter::CompositionMode 
 {
     Qt::BrushStyle brushStyle = brush.style();
     switch (brushStyle) {
-    case Qt::SolidPattern: {
-        type = Solid;
-        const QColor c = brush.color();
-        const QRgb rgba = c.rgba();
-        solid.color = PREMUL(ARGB_COMBINE_ALPHA(rgba, alpha));
-        if ((solid.color & 0xff000000) == 0
-            && compositionMode == QPainter::CompositionMode_SourceOver) {
-            type = None;
+        case Qt::SolidPattern: {
+            type = Solid;
+            const QColor c = brush.color();
+            const QRgb rgba = c.rgba();
+            solid.color = PREMUL(ARGB_COMBINE_ALPHA(rgba, alpha));
+            if ((solid.color & 0xff000000) == 0
+                && compositionMode == QPainter::CompositionMode_SourceOver) {
+                type = None;
+            }
+            break;
         }
-        break;
-    }
 
-    case Qt::LinearGradientPattern:
-        {
+        case Qt::LinearGradientPattern: {
             type = LinearGradient;
             const QLinearGradient *g = static_cast<const QLinearGradient *>(brush.gradient());
             gradient.alphaColor = !brush.isOpaque() || alpha != 256;
@@ -3232,8 +3219,7 @@ void QSpanData::setup(const QBrush &brush, int alpha, QPainter::CompositionMode 
             break;
         }
 
-    case Qt::RadialGradientPattern:
-        {
+        case Qt::RadialGradientPattern: {
             type = RadialGradient;
             const QRadialGradient *g = static_cast<const QRadialGradient *>(brush.gradient());
             gradient.alphaColor = !brush.isOpaque() || alpha != 256;
@@ -3250,60 +3236,47 @@ void QSpanData::setup(const QBrush &brush, int alpha, QPainter::CompositionMode 
             radialData.focal.x = focal.x();
             radialData.focal.y = focal.y();
             radialData.focal.radius = g->focalRadius();
+            break;
         }
-        break;
 
-    case Qt::ConicalGradientPattern:
-        {
-            type = ConicalGradient;
-            const QConicalGradient *g = static_cast<const QConicalGradient *>(brush.gradient());
-            gradient.alphaColor = !brush.isOpaque() || alpha != 256;
-            gradient.generateGradientColorTable(*g, alpha);
-            gradient.spread = QGradient::RepeatSpread;
-
-            QConicalGradientData &conicalData = gradient.conical;
-
-            QPointF center = g->center();
-            conicalData.center.x = center.x();
-            conicalData.center.y = center.y();
-            conicalData.angle = g->angle() * 2 * M_PI / 360.0;
+        case Qt::Dense1Pattern:
+        case Qt::Dense2Pattern:
+        case Qt::Dense3Pattern:
+        case Qt::Dense4Pattern:
+        case Qt::Dense5Pattern:
+        case Qt::Dense6Pattern:
+        case Qt::Dense7Pattern:
+        case Qt::HorPattern:
+        case Qt::VerPattern:
+        case Qt::CrossPattern:
+        case Qt::BDiagPattern:
+        case Qt::FDiagPattern:
+        case Qt::DiagCrossPattern: {
+            type = Texture;
+            if (!tempImage)
+                tempImage = new QImage();
+            *tempImage = rasterBuffer->colorizeBitmap(qt_imageForBrush(brushStyle), brush.color());
+            initTexture(tempImage, alpha, QTextureData::Tiled);
+            break;
         }
-        break;
 
-    case Qt::Dense1Pattern:
-    case Qt::Dense2Pattern:
-    case Qt::Dense3Pattern:
-    case Qt::Dense4Pattern:
-    case Qt::Dense5Pattern:
-    case Qt::Dense6Pattern:
-    case Qt::Dense7Pattern:
-    case Qt::HorPattern:
-    case Qt::VerPattern:
-    case Qt::CrossPattern:
-    case Qt::BDiagPattern:
-    case Qt::FDiagPattern:
-    case Qt::DiagCrossPattern:
-        type = Texture;
-        if (!tempImage)
-            tempImage = new QImage();
-        *tempImage = rasterBuffer->colorizeBitmap(qt_imageForBrush(brushStyle), brush.color());
-        initTexture(tempImage, alpha, QTextureData::Tiled);
-        break;
-    case Qt::TexturePattern:
-        type = Texture;
-        if (!tempImage)
-            tempImage = new QImage();
+        case Qt::TexturePattern: {
+            type = Texture;
+            if (!tempImage)
+                tempImage = new QImage();
 
-        if (qHasPixmapTexture(brush) && brush.texture().isQBitmap())
-            *tempImage = rasterBuffer->colorizeBitmap(brush.textureImage(), brush.color());
-        else
-            *tempImage = brush.textureImage();
-        initTexture(tempImage, alpha, QTextureData::Tiled, tempImage->rect());
-        break;
+            if (qHasPixmapTexture(brush) && brush.texture().isQBitmap())
+                *tempImage = rasterBuffer->colorizeBitmap(brush.textureImage(), brush.color());
+            else
+                *tempImage = brush.textureImage();
+            initTexture(tempImage, alpha, QTextureData::Tiled, tempImage->rect());
+            break;
+        }
 
-    case Qt::NoBrush:
-        type = None;
-        break;
+        case Qt::NoBrush: {
+            type = None;
+            break;
+        }
     }
     adjustSpanMethods();
 }
@@ -3329,7 +3302,6 @@ void QSpanData::adjustSpanMethods()
         break;
     case LinearGradient:
     case RadialGradient:
-    case ConicalGradient:
         unclipped_blend = rasterBuffer->drawHelper->blendGradient;
         break;
     case Texture:

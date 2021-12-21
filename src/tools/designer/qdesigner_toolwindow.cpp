@@ -315,40 +315,6 @@ QRect ResourceEditorToolWindow::geometryHint() const
     return r;
 }
 
-//  ---------------------- SignalSlotEditorToolWindow
-
-class SignalSlotEditorToolWindow: public QDesignerToolWindow
-{
-public:
-    explicit SignalSlotEditorToolWindow(QDesignerWorkbench *workbench);
-
-    virtual QRect geometryHint() const;
-};
-
-SignalSlotEditorToolWindow::SignalSlotEditorToolWindow(QDesignerWorkbench *workbench) :
-    QDesignerToolWindow(workbench,
-                        QDesignerComponents::createSignalSlotEditor(workbench->core(), 0),
-                        QLatin1String("qt_designer_signalsloteditor"),
-                        QDesignerToolWindow::tr("Signal/Slot Editor"),
-                        QLatin1String("__qt_signal_slot_editor_tool_action"),
-                        Qt::RightDockWidgetArea)
-{
-}
-
-QRect SignalSlotEditorToolWindow::geometryHint() const
-{
-    const QRect g = availableToolWindowGeometry();
-    const int margin = workbench()->marginHint();
-
-    const QSize sz(g.width() * 1/3, g.height() * 1/6);
-    QRect r(QPoint(0, 0), sz);
-    r.moveCenter(g.center());
-    r.moveTop(margin + g.top());
-    if (debugToolWindow)
-        qDebug() << Q_FUNC_INFO << r;
-    return r;
-}
-
 //  ---------------------- WidgetBoxToolWindow
 
 static inline QWidget *createWidgetBox(QDesignerFormEditorInterface *core, QWidget *parent = nullptr)
@@ -397,8 +363,6 @@ QDesignerToolWindow *QDesignerToolWindow::createStandardToolWindow(StandardToolW
         return new ActionEditorToolWindow(workbench);
     case ResourceEditor:
         return new ResourceEditorToolWindow(workbench);
-    case SignalSlotEditor:
-        return new SignalSlotEditorToolWindow(workbench);
     case PropertyEditor:
         return new PropertyEditorToolWindow(workbench);
     case ObjectInspector:

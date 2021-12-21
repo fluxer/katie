@@ -1624,7 +1624,7 @@ void QPlainTextEditPrivate::relayoutDocument()
 static void fillBackground(QPainter *p, const QRectF &rect, QBrush brush, QRectF gradientRect = QRectF())
 {
     p->save();
-    if (brush.style() >= Qt::LinearGradientPattern && brush.style() <= Qt::ConicalGradientPattern) {
+    if (brush.style() == Qt::LinearGradientPattern || brush.style() == Qt::RadialGradientPattern) {
         if (!gradientRect.isNull()) {
             QTransform m = QTransform::fromTranslate(gradientRect.left(), gradientRect.top());
             m.scale(gradientRect.width(), gradientRect.height());

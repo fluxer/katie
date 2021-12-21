@@ -70,7 +70,7 @@ protected:
 public:
     // Note: The order influences the dock widget position.
     enum StandardToolWindow { WidgetBox,  ObjectInspector, PropertyEditor,
-                              ResourceEditor, ActionEditor, SignalSlotEditor,
+                              ResourceEditor, ActionEditor,
                               StandardToolWindowCount };
 
     static QDesignerToolWindow *createStandardToolWindow(StandardToolWindow which, QDesignerWorkbench *workbench);

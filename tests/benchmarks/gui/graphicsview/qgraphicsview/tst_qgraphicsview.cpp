@@ -742,7 +742,7 @@ void tst_QGraphicsView::moveItemCache()
 
     QGraphicsScene scene(0, 0, 300, 300);
 
-    QPixmap pix(QLatin1String(":/images/wine.jpeg"));
+    QPixmap pix(QLatin1String(":/images/wine.png"));
     QVERIFY(!pix.isNull());
 
     QList<QGraphicsItem *> items;
@@ -839,7 +839,7 @@ void tst_QGraphicsView::paintItemCache()
 
     QGraphicsScene scene(0, 0, 300, 300);
 
-    QPixmap pix(QLatin1String(":/images/wine.jpeg"));
+    QPixmap pix(QLatin1String(":/images/wine.png"));
     QVERIFY(!pix.isNull());
 
     QList<QGraphicsItem *> items;
@@ -854,7 +854,7 @@ void tst_QGraphicsView::paintItemCache()
     item->setPos(-100, -100);
     scene.addItem(item);
 
-    QPixmap pix2(QLatin1String(":/images/wine-big.jpeg"));
+    QPixmap pix2(QLatin1String(":/images/wine-big.png"));
     item = new UpdatedPixmapCacheItem(updatePartial);
     item->setPixmap(pix2);
     item->setCacheMode((QGraphicsItem::CacheMode)cacheMode);

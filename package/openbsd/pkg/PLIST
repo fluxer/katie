@@ -423,7 +423,6 @@ include/katie/QtDesigner/QAbstractExtensionFactory
 include/katie/QtDesigner/QAbstractExtensionManager
 include/katie/QtDesigner/QAbstractFormBuilder
 include/katie/QtDesigner/QDesignerActionEditorInterface
-include/katie/QtDesigner/QDesignerBrushManagerInterface
 include/katie/QtDesigner/QDesignerComponents
 include/katie/QtDesigner/QDesignerContainerExtension
 include/katie/QtDesigner/QDesignerCustomWidgetCollectionInterface
@@ -459,7 +458,6 @@ include/katie/QtDesigner/QExtensionManager
 include/katie/QtDesigner/QFormBuilder
 include/katie/QtDesigner/QtDesigner
 include/katie/QtDesigner/abstractactioneditor.h
-include/katie/QtDesigner/abstractbrushmanager.h
 include/katie/QtDesigner/abstractdnditem.h
 include/katie/QtDesigner/abstractformeditor.h
 include/katie/QtDesigner/abstractformeditorplugin.h
@@ -496,7 +494,6 @@ include/katie/QtDesigner/qextensionmanager.h
 include/katie/QtDesigner/taskmenu.h
 include/katie/QtDesignerComponents/
 include/katie/QtDesignerComponents/QtDesignerComponents
-include/katie/QtDesignerComponents/brushmanagerproxy.h
 include/katie/QtDesignerComponents/brushpropertymanager.h
 include/katie/QtDesignerComponents/buddyeditor.h
 include/katie/QtDesignerComponents/buddyeditor_global.h
@@ -552,14 +549,8 @@ include/katie/QtDesignerComponents/qlayoutwidget_propertysheet.h
 include/katie/QtDesignerComponents/qlonglongvalidator.h
 include/katie/QtDesignerComponents/qmainwindow_container.h
 include/katie/QtDesignerComponents/qmdiarea_container.h
-include/katie/QtDesignerComponents/qtbrushmanager.h
 include/katie/QtDesignerComponents/qwizard_container.h
 include/katie/QtDesignerComponents/qworkspace_container.h
-include/katie/QtDesignerComponents/signalsloteditor.h
-include/katie/QtDesignerComponents/signalsloteditor_global.h
-include/katie/QtDesignerComponents/signalsloteditor_plugin.h
-include/katie/QtDesignerComponents/signalsloteditor_tool.h
-include/katie/QtDesignerComponents/signalsloteditorwindow.h
 include/katie/QtDesignerComponents/spacer_propertysheet.h
 include/katie/QtDesignerComponents/stringlisteditor.h
 include/katie/QtDesignerComponents/stringlisteditorbutton.h
@@ -645,7 +636,6 @@ include/katie/QtGui/QComboBox
 include/katie/QtGui/QCommandLinkButton
 include/katie/QtGui/QCommonStyle
 include/katie/QtGui/QCompleter
-include/katie/QtGui/QConicalGradient
 include/katie/QtGui/QContextMenuEvent
 include/katie/QtGui/QCursor
 include/katie/QtGui/QDataWidgetMapper
@@ -1432,12 +1422,7 @@ lib/katie/plugins/designer/
 lib/katie/plugins/iconengines/
 @so lib/katie/plugins/iconengines/libqsvgicon.so
 lib/katie/plugins/imageformats/
-@so lib/katie/plugins/imageformats/libqgif.so
-@so lib/katie/plugins/imageformats/libqico.so
-@so lib/katie/plugins/imageformats/libqjpeg.so
 @so lib/katie/plugins/imageformats/libqsvg.so
-@so lib/katie/plugins/imageformats/libqtga.so
-@so lib/katie/plugins/imageformats/libqtiff.so
 lib/katie/plugins/script/
 @so lib/katie/plugins/script/libqtscriptdbus.so
 @lib lib/libKtCore.so.${LIBKtCore_VERSION}

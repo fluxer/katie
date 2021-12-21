@@ -46,7 +46,6 @@ set(DESIGNER_HEADERS
     ${CMAKE_CURRENT_SOURCE_DIR}/sdk/abstractwidgetfactory.h
     ${CMAKE_CURRENT_SOURCE_DIR}/sdk/abstractobjectinspector.h
     ${CMAKE_CURRENT_SOURCE_DIR}/sdk/abstractactioneditor.h
-    ${CMAKE_CURRENT_SOURCE_DIR}/sdk/abstractbrushmanager.h
     ${CMAKE_CURRENT_SOURCE_DIR}/sdk/abstracticoncache.h
     ${CMAKE_CURRENT_SOURCE_DIR}/sdk/abstractlanguage.h
     ${CMAKE_CURRENT_SOURCE_DIR}/sdk/abstractoptionspage_p.h
@@ -278,7 +277,6 @@ katie_generate_package(KtDesigner "KtCore KtGui KtXml KtUiTools KtScript")
 katie_setup_target(KtDesigner ${DESIGNER_SOURCES} ${DESIGNER_HEADERS})
 
 add_library(KtDesigner ${KATIE_TYPE} ${KtDesigner_SOURCES}
-    $<TARGET_OBJECTS:sharedqtgradienteditor>
     $<TARGET_OBJECTS:sharedqtpropertybrowser>
     $<TARGET_OBJECTS:sharedfindwidget>
 )
@@ -289,7 +287,7 @@ set_target_properties(KtDesigner PROPERTIES
     EXPORT_NAME Designer
 )
 
-katie_setup_object(KtDesigner sharedqtgradienteditor sharedqtpropertybrowser sharedfindwidget)
+katie_setup_object(KtDesigner sharedqtpropertybrowser sharedfindwidget)
 
 install(
     TARGETS KtDesigner

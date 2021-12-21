@@ -1443,11 +1443,6 @@ void tst_QCssParser::gradient_data()
          "spread: reflect, stop:0.2 rgb(1, 2, 3), stop: 0.5   rgba(1, 2, 3, 4))" << "linear" << QPointF(0, 0) << QPointF(0, 1)
                              << 1 << qreal(0.2) << QColor(1, 2, 3) << qreal(0.5) << QColor(1, 2, 3, 4);
 
-    QTest::newRow("conical gradient") <<
-     "selection-background-color: qconicalgradient(cx: 4, cy : 2, angle: 23, "
-         "spread: repeat, stop:0.2 rgb(1, 2, 3), stop:0.5 rgba(1, 2, 3, 4))" << "conical" << QPointF(4, 2) << QPointF()
-                             << 2 << qreal(0.2) << QColor(1, 2, 3) << qreal(0.5) << QColor(1, 2, 3, 4);
-
     /* wont pass: stop values are expected to be sorted
      QTest::newRow("unsorted-stop") <<
      "selection-background: lineargradient(x1:0, y1:0, x2:0, y2:1, "
@@ -1491,10 +1486,6 @@ void tst_QCssParser::gradient()
         const QLinearGradient *lg = static_cast<const QLinearGradient *>(sbg.gradient());
         QCOMPARE(lg->start(), start);
         QCOMPARE(lg->finalStop(), finalStop);
-    } else if (type == "conical") {
-        QVERIFY(sbg.style() == Qt::ConicalGradientPattern);
-        const QConicalGradient *cg = static_cast<const QConicalGradient *>(sbg.gradient());
-        QCOMPARE(cg->center(), start);
     }
     const QGradient *g = sbg.gradient();
     QCOMPARE(g->spread(), QGradient::Spread(spread));

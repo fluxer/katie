@@ -33,13 +33,11 @@
 #include <QtDesigner/abstractwidgetdatabase.h>
 #include <QtDesigner/abstractwidgetfactory.h>
 #include <QtDesigner/abstractobjectinspector.h>
-#include <QtDesigner/abstractbrushmanager.h>
 #include <QtDesigner/abstractintegration.h>
 #include <QtDesigner/abstracticoncache.h>
 #include <QtDesigner/abstractactioneditor.h>
 #include <pluginmanager_p.h>
 #include "qtresourcemodel_p.h"
-#include <qtgradientmanager.h>
 #include <widgetfactory_p.h>
 #include <shared_settings_p.h>
 #include <formwindowbase_p.h>
@@ -69,7 +67,6 @@ public:
     QPointer<QDesignerWidgetDataBaseInterface> m_widgetDataBase;
     QPointer<QDesignerWidgetFactoryInterface> m_widgetFactory;
     QPointer<QDesignerObjectInspectorInterface> m_objectInspector;
-    QPointer<QDesignerBrushManagerInterface> m_brushManager;
     QPointer<QDesignerIntegrationInterface> m_integration;
     QPointer<QDesignerIconCacheInterface> m_iconCache;
     QPointer<QDesignerActionEditorInterface> m_actionEditor;
@@ -79,7 +76,6 @@ public:
     QDesignerIntrospectionInterface *m_introspection;
     QDesignerDialogGuiInterface *m_dialogGui;
     QPointer<QtResourceModel> m_resourceModel;
-    QPointer<QtGradientManager> m_gradientManager; // instantiated and deleted by designer_integration
     QList<QDesignerOptionsPageInterface*> m_optionsPages;
 };
 
@@ -89,8 +85,7 @@ QDesignerFormEditorInterfacePrivate::QDesignerFormEditorInterfacePrivate() :
     m_promotion(0),
     m_introspection(0),
     m_dialogGui(0),
-    m_resourceModel(0),
-    m_gradientManager(0)
+    m_resourceModel(0)
 {
 }
 
@@ -376,24 +371,6 @@ void QDesignerFormEditorInterface::setObjectInspector(QDesignerObjectInspectorIn
 /*!
     \internal
 
-    Returns an interface to the brush manager used by the palette editor.
-*/
-QDesignerBrushManagerInterface *QDesignerFormEditorInterface::brushManager() const
-{
-    return d->m_brushManager;
-}
-
-/*!
-    \internal
-*/
-void QDesignerFormEditorInterface::setBrushManager(QDesignerBrushManagerInterface *brushManager)
-{
-    d->m_brushManager = brushManager;
-}
-
-/*!
-    \internal
-
     Returns an interface to the integration.
 */
 QDesignerIntegrationInterface *QDesignerFormEditorInterface::integration() const
@@ -489,27 +466,6 @@ QtResourceModel *QDesignerFormEditorInterface::resourceModel() const
 void QDesignerFormEditorInterface::setResourceModel(QtResourceModel *resourceModel)
 {
     d->m_resourceModel = resourceModel;
-}
-
-/*!
-    \internal
-    \since 4.4
-    Returns the gradient manager used by the style sheet editor.
-*/
-QtGradientManager *QDesignerFormEditorInterface::gradientManager() const
-{
-    return d->m_gradientManager;
-}
-
-/*!
-    \internal
-
-    Sets the gradient manager used by the style sheet editor to the specified
-    \a gradientManager.
-*/
-void QDesignerFormEditorInterface::setGradientManager(QtGradientManager *gradientManager)
-{
-    d->m_gradientManager = gradientManager;
 }
 
 /*!

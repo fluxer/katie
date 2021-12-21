@@ -406,7 +406,6 @@ void tst_QPainter::setupBrushes()
         lg.setStart(0, 0);
 
         QRadialGradient rg;
-        QConicalGradient cg;
 
         QGradientStops stops;
         if (j == 0) stops = gradient_white_black;
@@ -415,7 +414,6 @@ void tst_QPainter::setupBrushes()
         else if (j == 3) stops = gradient_white_alpha10;
         lg.setStops(stops);
         rg.setStops(stops);
-        cg.setStops(stops);
 
         for (int i=0; i<6; ++i) {
             lg.setSpread((QGradient::Spread) (i % 3));
@@ -438,10 +436,6 @@ void tst_QPainter::setupBrushes()
             rg.setCenter(0, 0);
             rg.setFocalPoint(50, 50);
             m_brushes[QLatin1String("radgrad-brush") + name] = QBrush(rg);
-
-            cg.setCenter(0, 0);
-            cg.setAngle(40);
-            m_brushes[QLatin1String("congrad-brush") + name] = QBrush(cg);
         }
     }
 
@@ -725,7 +719,7 @@ void tst_QPainter::compositionModes_data()
     QTest::addColumn<QSize>("size");
     QTest::addColumn<QColor>("color");
 
-    const int n = QPainter::RasterOp_SourceAndNotDestination;
+    const int n = QPainter::CompositionMode_Exclusion;
     for (int i = 0; i <= n; ++i) {
         QString title("%1:%2");
         QTest::newRow(qPrintable(title.arg(i).arg("10x10:opaque")))
@@ -753,8 +747,7 @@ void tst_QPainter::compositionModes()
     src.fill(color);
 
     QPixmap dest = rasterPixmap(size);
-    if (mode < QPainter::RasterOp_SourceOrDestination)
-        color.setAlpha(127); // porter-duff needs an alpha channel
+    color.setAlpha(127); // porter-duff needs an alpha channel
     dest.fill(color);
 
     QPainter p(&dest);

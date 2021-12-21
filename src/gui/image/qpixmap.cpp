@@ -1356,10 +1356,7 @@ QPixmap QPixmap::transformed(const QMatrix &matrix, Qt::TransformationMode mode)
     file, optionally manipulating the image data, before the QImage
     object is converted into a QPixmap to be shown on
     screen. Alternatively, if no manipulation is desired, the image
-    file can be loaded directly into a QPixmap. On Windows, the
-    QPixmap class also supports conversion between \c HBITMAP and
-    QPixmap. On Symbian, the QPixmap class also supports conversion
-    between CFbsBitmap and QPixmap.
+    file can be loaded directly into a QPixmap.
 
     QPixmap provides a collection of functions that can be used to
     obtain a variety of information about the pixmap. In addition,
@@ -1388,15 +1385,10 @@ QPixmap QPixmap::transformed(const QMatrix &matrix, Qt::TransformationMode mode)
 
     \table
     \header \o Format \o Description                      \o Qt's support
-    \row    \o BMP    \o Windows Bitmap                   \o Read/write
-    \row    \o GIF    \o Graphic Interchange Format (optional) \o Read
-    \row    \o JPG    \o Joint Photographic Experts Group \o Read/write
-    \row    \o JPEG   \o Joint Photographic Experts Group \o Read/write
     \row    \o PNG    \o Portable Network Graphics        \o Read/write
     \row    \o PBM    \o Portable Bitmap                  \o Read
     \row    \o PGM    \o Portable Graymap                 \o Read
     \row    \o PPM    \o Portable Pixmap                  \o Read/write
-    \row    \o XBM    \o X11 Bitmap                       \o Read/write
     \row    \o XPM    \o X11 Pixmap                       \o Read/write
     \endtable
 
@@ -1456,16 +1448,6 @@ QPixmap QPixmap::transformed(const QMatrix &matrix, Qt::TransformationMode mode)
     toImage() function. Likewise, a QImage can be converted into a
     QPixmap using the fromImage(). If this is too expensive an
     operation, you can use QBitmap::fromImage() instead.
-
-    In addition, on Windows, the QPixmap class supports conversion to
-    and from HBITMAP: the toWinHBITMAP() function creates a HBITMAP
-    equivalent to the QPixmap, based on the given HBitmapFormat, and
-    returns the HBITMAP handle. The fromWinHBITMAP() function returns
-    a QPixmap that is equivalent to the given bitmap which has the
-    specified format. The QPixmap class also supports conversion to
-    and from HICON: the toWinHICON() function creates a HICON equivalent
-    to the QPixmap, and returns the HICON handle. The fromWinHICON()
-    function returns a QPixmap that is equivalent to the given icon.
 
     In addition, on Symbian, the QPixmap class supports conversion to
     and from CFbsBitmap: the toSymbianCFbsBitmap() function creates
@@ -1587,7 +1569,7 @@ void QPixmap::setAlphaChannel(const QPixmap &alphaChannel)
     Returns the alpha channel of the pixmap as a new grayscale QPixmap in which
     each pixel's red, green, and blue values are given the alpha value of the
     original pixmap. The color depth of the returned pixmap is the system depth
-    on X11 and 8-bit on Windows and Mac OS X.
+    on X11 and 8-bit.
 
     You can use this function while debugging
     to get a visible image of the alpha channel. If the pixmap doesn't have an
@@ -1640,8 +1622,7 @@ QBitmap QPixmap::mask() const
 /*!
     Returns the default pixmap depth used by the application.
 
-    On Windows and Mac, the default depth is always 32. On X11 and
-    embedded, the depth of the screen will be returned by this
+    On X11 and the depth of the screen will be returned by this
     function.
 
     \sa depth(), QColormap::depth(), {QPixmap#Pixmap Information}{Pixmap Information}

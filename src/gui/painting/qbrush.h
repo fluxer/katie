@@ -136,7 +136,6 @@ public:
     enum Type {
         LinearGradient,
         RadialGradient,
-        ConicalGradient,
         NoGradient
     };
 
@@ -148,7 +147,6 @@ public:
 
     enum CoordinateMode {
         LogicalMode,
-        StretchToDeviceMode,
         ObjectBoundingMode
     };
 
@@ -182,7 +180,6 @@ public:
 private:
     friend class QLinearGradient;
     friend class QRadialGradient;
-    friend class QConicalGradient;
     friend class QBrush;
 
     Type m_type;
@@ -198,9 +195,6 @@ private:
         struct {
             qreal cx, cy, fx, fy, cradius;
         } radial;
-        struct {
-            qreal cx, cy, angle;
-        } conical;
     } m_data;
 };
 
@@ -255,23 +249,6 @@ public:
     void setFocalRadius(qreal radius);
 };
 
-
-class Q_GUI_EXPORT QConicalGradient : public QGradient
-{
-public:
-    QConicalGradient();
-    QConicalGradient(const QPointF &center, qreal startAngle);
-    QConicalGradient(qreal cx, qreal cy, qreal startAngle);
-
-    QPointF center() const;
-    void setCenter(const QPointF &center);
-    inline void setCenter(qreal x, qreal y) { setCenter(QPointF(x, y)); }
-
-    qreal angle() const;
-    void setAngle(qreal angle);
-};
-
 QT_END_NAMESPACE
-
 
 #endif // QBRUSH_H

@@ -104,67 +104,6 @@ Qt::HANDLE QX11PixmapData::bitmap_to_mask(const QBitmap &bitmap, int screen)
     return mask;
 }
 
-/*****************************************************************************
-  Internal functions
- *****************************************************************************/
-
-// Returns position of highest bit set or -1 if none
-static int highest_bit(uint v)
-{
-    int i;
-    uint b = (uint)1 << 31;
-    for (i=31; ((b & v) == 0) && i>=0;         i--)
-        b >>= 1;
-    return i;
-}
-
-// Counts the number of bits set in 'v'
-static uint n_bits(uint v)
-{
-    int i = 0;
-    while (v) {
-        v = v & (v - 1);
-        i++;
-    }
-    return i;
-}
-
-static uint *red_scale_table   = 0;
-static uint *green_scale_table = 0;
-static uint *blue_scale_table  = 0;
-
-static void cleanup_scale_tables()
-{
-    delete[] red_scale_table;
-    delete[] green_scale_table;
-    delete[] blue_scale_table;
-}
-
-/*
-  Could do smart bitshifting, but the "obvious" algorithm only works for
-  nBits >= 4. This is more robust.
-*/
-static void build_scale_table(uint **table, uint nBits)
-{
-    if (Q_UNLIKELY(nBits > 7)) {
-        qWarning("build_scale_table: internal error, nBits = %i", nBits);
-        return;
-    }
-    if (!*table) {
-        static bool firstTable = true;
-        if (firstTable) {
-            qAddPostRoutine(cleanup_scale_tables);
-            firstTable = false;
-        }
-        *table = new uint[256];
-    }
-    int   maxVal   = (1 << nBits) - 1;
-    int   valShift = 8 - nBits;
-    int i;
-    for(i = 0 ; i < maxVal + 1 ; i++)
-        (*table)[i << valShift] = i*255/maxVal;
-}
-
 static int defaultScreen = -1;
 
 /*****************************************************************************
@@ -233,8 +172,9 @@ void QX11PixmapData::resize(int width, int height)
 #endif // QT_NO_XRENDER
 }
 
-struct QX11AlphaDetector
+class QX11AlphaDetector
 {
+public:
     bool hasAlpha() const {
         if (checked)
             return has;
@@ -308,7 +248,6 @@ void QX11PixmapData::fromImage(const QImage &img,
     Display *dpy   = qt_x11Data->display;
     Visual *visual = (Visual *)xinfo.visual();
     XImage *xi = nullptr;
-    uchar  *newbits = nullptr;
 
     QImage image(img);
 
@@ -343,85 +282,7 @@ void QX11PixmapData::fromImage(const QImage &img,
 
         xi = XCreateImage(dpy, visual, d, ZPixmap, 0, 0, w, h, 32, 0);
         Q_CHECK_PTR(xi);
-        newbits = (uchar *)::malloc(size_t(xi->bytes_per_line) * h);
-        Q_CHECK_PTR(newbits);
-        xi->data = (char *)newbits;
-
-        switch(image.format()) {
-        case QImage::Format_Indexed8: {
-            QVector<QRgb> colorTable = image.colorTable();
-            uint *xidata = (uint *)xi->data;
-            for (int y = 0; y < h; ++y) {
-                const uchar *p = image.constScanLine(y);
-                for (int x = 0; x < w; ++x) {
-                    const QRgb rgb = colorTable[p[x]];
-                    const int a = qAlpha(rgb);
-                    if (a == 0xff)
-                        *xidata = rgb;
-                    else
-                        // RENDER expects premultiplied alpha
-                        *xidata = qRgba(qt_div_255(qRed(rgb) * a),
-                                        qt_div_255(qGreen(rgb) * a),
-                                        qt_div_255(qBlue(rgb) * a),
-                                        a);
-                    ++xidata;
-                }
-            }
-            break;
-        }
-        case QImage::Format_RGB32: {
-            uint *xidata = (uint *)xi->data;
-            for (int y = 0; y < h; ++y) {
-                const QRgb *p = (const QRgb *) image.constScanLine(y);
-                for (int x = 0; x < w; ++x)
-                    *xidata++ = p[x] | 0xff000000;
-            }
-            break;
-        }
-        case QImage::Format_ARGB32: {
-            uint *xidata = (uint *)xi->data;
-            for (int y = 0; y < h; ++y) {
-                const QRgb *p = (const QRgb *) image.constScanLine(y);
-                for (int x = 0; x < w; ++x) {
-                    const QRgb rgb = p[x];
-                    const int a = qAlpha(rgb);
-                    if (a == 0xff)
-                        *xidata = rgb;
-                    else
-                        // RENDER expects premultiplied alpha
-                        *xidata = qRgba(qt_div_255(qRed(rgb) * a),
-                                        qt_div_255(qGreen(rgb) * a),
-                                        qt_div_255(qBlue(rgb) * a),
-                                        a);
-                    ++xidata;
-                }
-            }
-            break;
-        }
-        case QImage::Format_ARGB32_Premultiplied: {
-            uint *xidata = (uint *)xi->data;
-            for (int y = 0; y < h; ++y) {
-                const QRgb *p = (const QRgb *) image.constScanLine(y);
-                memcpy(xidata, p, w*sizeof(QRgb));
-                xidata += w;
-            }
-            break;
-        }
-        default:
-            Q_ASSERT(false);
-        }
-
-        if ((xi->byte_order == MSBFirst) != (Q_BYTE_ORDER == Q_BIG_ENDIAN)) {
-            uint *xidata = (uint *)xi->data;
-            uint *xiend = xidata + w*h;
-            while (xidata < xiend) {
-                *xidata = (*xidata >> 24)
-                          | ((*xidata >> 8) & 0xff00)
-                          | ((*xidata << 8) & 0xff0000)
-                          | (*xidata << 24);
-                ++xidata;
-            }
-        }
+        QX11Data::copyQImageToXImage(image, xi);
 
         GC gc = XCreateGC(dpy, hd, 0, 0);
         XPutImage(dpy, hd, gc, xi, 0, 0, 0, 0, w, h);
@@ -433,23 +294,14 @@ void QX11PixmapData::fromImage(const QImage &img,
     }
 #endif // QT_NO_XRENDER
 
-    if (!xi) {                                      // X image not created
-        xi = XCreateImage(dpy, visual, dd, ZPixmap, 0, 0, w, h, 32, 0);
-        Q_CHECK_PTR(xi);
-        newbits = (uchar *)::malloc(size_t(xi->bytes_per_line) * h);
-        Q_CHECK_PTR(newbits);
-        xi->data = (char *)newbits;
-
+    if (!xi) { // X image not created
         if (image.format() != QImage::Format_RGB32) {
             image = image.convertToFormat(QImage::Format_RGB32, flags);
         }
 
-        uint *xidata = (uint *)xi->data;
-        for (int y = 0; y < h; ++y) {
-            const QRgb *p = (const QRgb *) image.constScanLine(y);
-            for (int x = 0; x < w; ++x)
-                *xidata++ = p[x] | 0xff000000;
-        }
+        xi = XCreateImage(dpy, visual, dd, ZPixmap, 0, 0, w, h, 32, 0);
+        Q_CHECK_PTR(xi);
+        QX11Data::copyQImageToXImage(image, xi);
     }
 
     hd = (Qt::HANDLE)XCreatePixmap(qt_x11Data->display,
@@ -862,13 +714,47 @@ QImage QX11PixmapData::toImage(const QRect &rect) const
                            AllPlanes, (depth() == 1) ? XYPixmap : ZPixmap);
 
     Q_CHECK_PTR(xi);
-    if (!xi)
+    if (!xi) {
         return QImage();
+    }
 
-    if (!x11_mask && canTakeQImageFromXImage(xi))
+    if (!x11_mask && canTakeQImageFromXImage(xi)) {
         return takeQImageFromXImage(xi);
+    }
 
-    QImage image = toImage(xi, rect);
+    const int d = depth();
+
+    QImage::Format format = QImage::systemFormat();
+    if (d == 1 && xi->bitmap_bit_order == LSBFirst) {
+        format = QImage::Format_MonoLSB;
+    } else if (d == 1) {
+        format = QImage::Format_Mono;
+    } else if (x11_mask) {
+        format = QImage::Format_ARGB32;
+    }
+
+    QImage image(xi->width, xi->height, format);
+    if (image.isNull()) {
+        // could not create image
+        return image;
+    }
+
+    if (image.depth() == 1) {
+        image.setColorTable(monoColorTable());
+    }
+
+    if (x11_mask) {
+        QImage alpha;
+        if (rect.contains(QRect(0, 0, w, h))) {
+            alpha = mask().toImage();
+        } else {
+            alpha = mask().toImage().copy(rect);
+        }
+        QX11Data::copyXImageToQImageWithMask(xi, image, alpha);
+    } else {
+        QX11Data::copyXImageToQImage(xi, image);
+    }
+
     qSafeXDestroyImage(xi);
     return image;
 }
@@ -891,256 +777,6 @@ QImage QX11PixmapData::toImage(const QRect &rect) const
 QImage QX11PixmapData::toImage() const
 {
     return toImage(QRect(0, 0, w, h));
-}
-
-QImage QX11PixmapData::toImage(const XImage *xi, const QRect &rect) const
-{
-    int d = depth();
-    Visual *visual = (Visual *)xinfo.visual();
-    bool trucol = (visual->c_class >= TrueColor) && d > 1;
-
-    QImage::Format format = QImage::Format_Mono;
-    if (d > 1 && d <= 8) {
-        d = 8;
-        format = QImage::Format_Indexed8;
-    }
-    // we could run into the situation where d == 8 AND trucol is true, which can
-    // cause problems when converting to and from images.  in this case, always treat
-    // the depth as 32...
-    if (d > 8 || trucol) {
-        d = 32;
-        format = QImage::Format_RGB32;
-    }
-
-    if (d == 1 && xi->bitmap_bit_order == LSBFirst)
-        format = QImage::Format_MonoLSB;
-    if (x11_mask && format == QImage::Format_RGB32)
-        format = QImage::Format_ARGB32;
-
-    QImage image(xi->width, xi->height, format);
-    if (image.isNull())                        // could not create image
-        return image;
-
-    QImage alpha;
-    if (x11_mask) {
-        if (rect.contains(QRect(0, 0, w, h)))
-            alpha = mask().toImage();
-        else
-            alpha = mask().toImage().copy(rect);
-    }
-    bool ale = alpha.format() == QImage::Format_MonoLSB;
-
-    if (trucol) {                                // truecolor
-        const uint red_mask = (uint)visual->red_mask;
-        const uint green_mask = (uint)visual->green_mask;
-        const uint blue_mask = (uint)visual->blue_mask;
-        const int  red_shift = highest_bit(red_mask) - 7;
-        const int  green_shift = highest_bit(green_mask) - 7;
-        const int  blue_shift = highest_bit(blue_mask) - 7;
-
-        const uint red_bits = n_bits(red_mask);
-        const uint green_bits = n_bits(green_mask);
-        const uint blue_bits = n_bits(blue_mask);
-
-        static uint red_table_bits = 0;
-        static uint green_table_bits = 0;
-        static uint blue_table_bits = 0;
-
-        if (red_bits < 8 && red_table_bits != red_bits) {
-            build_scale_table(&red_scale_table, red_bits);
-            red_table_bits = red_bits;
-        }
-        if (blue_bits < 8 && blue_table_bits != blue_bits) {
-            build_scale_table(&blue_scale_table, blue_bits);
-            blue_table_bits = blue_bits;
-        }
-        if (green_bits < 8 && green_table_bits != green_bits) {
-            build_scale_table(&green_scale_table, green_bits);
-            green_table_bits = green_bits;
-        }
-
-        int  r, g, b;
-
-        int bppc = xi->bits_per_pixel;
-
-        if (bppc > 8 && xi->byte_order == LSBFirst)
-            bppc++;
-
-        for (int y = 0; y < xi->height; ++y) {
-            uint pixel;
-            const uchar* asrc = x11_mask ? alpha.constScanLine(y) : 0;
-            QRgb *dst = (QRgb *)image.scanLine(y);
-            uchar *src = (uchar *)xi->data + xi->bytes_per_line*y;
-            for (int x = 0; x < xi->width; x++) {
-                switch (bppc) {
-                case 8:
-                    pixel = *src++;
-                    break;
-                case 16:                        // 16 bit MSB
-                    pixel = src[1] | (uint)src[0] << 8;
-                    src += 2;
-                    break;
-                case 17:                        // 16 bit LSB
-                    pixel = src[0] | (uint)src[1] << 8;
-                    src += 2;
-                    break;
-                case 24:                        // 24 bit MSB
-                    pixel = src[2] | (uint)src[1] << 8 | (uint)src[0] << 16;
-                    src += 3;
-                    break;
-                case 25:                        // 24 bit LSB
-                    pixel = src[0] | (uint)src[1] << 8 | (uint)src[2] << 16;
-                    src += 3;
-                    break;
-                case 32:                        // 32 bit MSB
-                    pixel = src[3] | (uint)src[2] << 8 | (uint)src[1] << 16 | (uint)src[0] << 24;
-                    src += 4;
-                    break;
-                case 33:                        // 32 bit LSB
-                    pixel = src[0] | (uint)src[1] << 8 | (uint)src[2] << 16 | (uint)src[3] << 24;
-                    src += 4;
-                    break;
-                default:                        // should not really happen
-                    x = xi->width;                        // leave loop
-                    y = xi->height;
-                    pixel = 0;                // eliminate compiler warning
-                    qWarning("QPixmap::convertToImage: Invalid depth %d", bppc);
-                }
-                if (red_shift > 0)
-                    r = (pixel & red_mask) >> red_shift;
-                else
-                    r = (pixel & red_mask) << -red_shift;
-                if (green_shift > 0)
-                    g = (pixel & green_mask) >> green_shift;
-                else
-                    g = (pixel & green_mask) << -green_shift;
-                if (blue_shift > 0)
-                    b = (pixel & blue_mask) >> blue_shift;
-                else
-                    b = (pixel & blue_mask) << -blue_shift;
-
-                if (red_bits < 8)
-                    r = red_scale_table[r];
-                if (green_bits < 8)
-                    g = green_scale_table[g];
-                if (blue_bits < 8)
-                    b = blue_scale_table[b];
-
-                if (x11_mask) {
-                    if (ale) {
-                        *dst++ = (asrc[x >> 3] & (1 << (x & 7))) ? qRgba(r, g, b, 0xff) : 0;
-                    } else {
-                        *dst++ = (asrc[x >> 3] & (0x80 >> (x & 7))) ? qRgba(r, g, b, 0xff) : 0;
-                    }
-                } else {
-                    *dst++ = qRgb(r, g, b);
-                }
-            }
-        }
-    } else if (xi->bits_per_pixel == d) {        // compatible depth
-        char *xidata = xi->data;                // copy each scanline
-        const int qbpl = image.bytesPerLine();
-        const int bpl = qMin(qbpl, xi->bytes_per_line);
-        uchar* qdata = image.bits();
-        for (int y=0; y<xi->height; y++) {
-            uchar* tscan = QFAST_SCAN_LINE(qdata, qbpl, y);
-            memcpy(tscan, xidata, bpl);
-            xidata += xi->bytes_per_line;
-        }
-    } else {
-        /* Typically 2 or 4 bits display depth */
-        qWarning("QPixmap::convertToImage: Display not supported (bpp=%d)",
-                 xi->bits_per_pixel);
-        return QImage();
-    }
-
-    if (d == 1) {                                // bitmap
-        image.setColorTable(monoColorTable());
-    } else if (!trucol) {                        // pixmap with colormap
-        QSTACKARRAY(uchar, use, 256);            // pixel-in-use table
-        QSTACKARRAY(uchar, pix, 256);            // pixel translation table
-        int ncols = 0;
-        int bpl = image.bytesPerLine();
-
-        if (x11_mask) {                         // which pixels are used?
-            for (int i = 0; i < xi->height; i++) {
-                const uchar* asrc = alpha.constScanLine(i);
-                const uchar *p = image.constScanLine(i);
-                if (ale) {
-                    for (int x = 0; x < xi->width; x++) {
-                        if (asrc[x >> 3] & (1 << (x & 7)))
-                            use[*p] = 1;
-                        ++p;
-                    }
-                } else {
-                    for (int x = 0; x < xi->width; x++) {
-                        if (asrc[x >> 3] & (0x80 >> (x & 7)))
-                            use[*p] = 1;
-                        ++p;
-                    }
-                }
-            }
-        } else {
-            for (int i = 0; i < xi->height; i++) {
-                const uchar *p = image.constScanLine(i);
-                const uchar *end = p + bpl;
-                while (p < end)
-                    use[*p++] = 1;
-            }
-        }
-        for (int i = 0; i < 256; i++) {                // build translation table
-            if (use[i])
-                pix[i] = ncols++;
-        }
-        for (int i = 0; i < xi->height; i++) {                        // translate pixels
-            uchar *p = image.scanLine(i);
-            const uchar *end = p + bpl;
-            while (p < end) {
-                *p = pix[*p];
-                p++;
-            }
-        }
-        if (x11_mask) {
-            int trans;
-            if (ncols < 256) {
-                trans = ncols++;
-                image.setColorCount(ncols);        // create color table
-                image.setColor(trans, 0x00000000);
-            } else {
-                image.setColorCount(ncols);        // create color table
-                // oh dear... no spare "transparent" pixel.
-                // use first pixel in image (as good as any).
-                trans = image.scanLine(0)[0];
-            }
-            for (int i = 0; i < xi->height; i++) {
-                const uchar* asrc = alpha.scanLine(i);
-                uchar *p = image.scanLine(i);
-                if (ale) {
-                    for (int x = 0; x < xi->width; x++) {
-                        if (!(asrc[x >> 3] & (1 << (x & 7))))
-                            *p = trans;
-                        ++p;
-                    }
-                } else {
-                    for (int x = 0; x < xi->width; x++) {
-                        if (!(asrc[x >> 3] & (1 << (7 -(x & 7)))))
-                            *p = trans;
-                        ++p;
-                    }
-                }
-            }
-        } else {
-            image.setColorCount(ncols);        // create color table
-        }
-        QVector<QColor> colors = QColormap::instance(xinfo.screen()).colormap();
-        int j = 0;
-        for (int i=0; i<colors.size(); i++) {                // translate pixels
-            if (use[i])
-                image.setColor(j++, 0xff000000 | colors.at(i).rgb());
-        }
-    }
-
-    return image;
 }
 
 /*!

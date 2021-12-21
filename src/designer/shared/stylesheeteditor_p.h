@@ -75,7 +75,6 @@ private slots:
     void validateStyleSheet();
     void slotContextMenuRequested(const QPoint &pos);
     void slotAddResource(const QString &property);
-    void slotAddGradient(const QString &property);
     void slotAddColor(const QString &property);
     void slotAddFont();
     void slotRequestHelp();
@@ -92,7 +91,6 @@ private:
     QLabel *m_validityLabel;
     QDesignerFormEditorInterface *m_core;
     QAction *m_addResourceAction;
-    QAction *m_addGradientAction;
     QAction *m_addColorAction;
     QAction *m_addFontAction;
 };

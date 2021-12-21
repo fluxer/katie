@@ -34,7 +34,7 @@
 QT_BEGIN_NAMESPACE
 
 /*****************************************************************************
-  PBM/PGM/PPM (ASCII and RAW) image read/write functions
+  PBM/PPM (ASCII and RAW) image read/write functions
  *****************************************************************************/
 
 static int read_pbm_int(QIODevice *d)
@@ -110,11 +110,6 @@ static bool read_pbm_body(QIODevice *device, char type, int w, int h, int mcc, Q
             nbits = 1;
             format = QImage::Format_Mono;
             break;
-        case '2':                                // ascii PGM
-        case '5':                                // raw PGM
-            nbits = 8;
-            format = QImage::Format_Indexed8;
-            break;
         case '3':                                // ascii PPM
         case '6':                                // raw PPM
             nbits = 32;
@@ -188,16 +183,6 @@ static bool read_pbm_body(QIODevice *device, char type, int w, int h, int mcc, Q
                     bitsLeft -= 8;
                     *p++ = b;
                 }
-            } else if (nbits == 8) {
-                if (mcc == maxc) {
-                    while (n--) {
-                        *p++ = read_pbm_int(device);
-                    }
-                } else {
-                    while (n--) {
-                        *p++ = read_pbm_int(device) * maxc / mcc;
-                    }
-                }
             } else {                                // 32 bits
                 n /= 4;
                 int r, g, b;
@@ -224,10 +209,6 @@ static bool read_pbm_body(QIODevice *device, char type, int w, int h, int mcc, Q
 
     if (nbits == 1) {                                // black/white bitmap
         outImage->setColorTable(monoColorTable());
-    } else if (nbits == 8) {                        // graymap
-        outImage->setColorCount(maxc+1);
-        for (int i=0; i<=maxc; i++)
-            outImage->setColor(i, qRgb(i*255/maxc,i*255/maxc,i*255/maxc));
     }
 
     return true;
@@ -235,19 +216,15 @@ static bool read_pbm_body(QIODevice *device, char type, int w, int h, int mcc, Q
 
 static bool write_pbm_image(QIODevice *out, const QImage &sourceImage, const QByteArray &sourceFormat)
 {
-    QByteArray str;
     QImage image = sourceImage;
-    QByteArray format = sourceFormat;
-
-    format = format.left(3);                        // ignore RAW part
-    bool gray = format == "pgm";
+    const QByteArray format = sourceFormat.left(3); // ignore RAW part
 
     if (format == "pbm") {
         image = image.convertToFormat(QImage::Format_Mono);
-    } else if (image.depth() == 1) {
-        image = image.convertToFormat(QImage::Format_Indexed8);
-    } else if (image.format() == QImage::Format_RGB16) {
-        image = image.convertToFormat(QImage::Format_RGB32);
+    } else if (format == "ppm") {
+        image = image.convertToFormat(QImage::Format_ARGB32);
+    } else {
+        return false;
     }
 
     if (image.depth() == 1 && image.colorCount() == 2) {
@@ -265,7 +242,7 @@ static bool write_pbm_image(QIODevice *out, const QImage &sourceImage, const QBy
     uint w = image.width();
     uint h = image.height();
 
-    str = "P\n";
+    QByteArray str("P\n");
     str += QByteArray::number(w);
     str += ' ';
     str += QByteArray::number(h);
@@ -285,60 +262,22 @@ static bool write_pbm_image(QIODevice *out, const QImage &sourceImage, const QBy
             break;
         }
 
-        case 8: {
-            str.insert(1, gray ? '5' : '6');
-            str.append("255\n");
-            if (out->write(str, str.length()) != str.length())
-                return false;
-            QVector<QRgb> color = image.colorTable();
-            uint bpl = w*(gray ? 1 : 3);
-            QSTACKARRAY(uchar, buf, bpl);
-            for (uint y=0; y<h; y++) {
-                uchar *b = image.scanLine(y);
-                uchar *p = buf;
-                uchar *end = buf+bpl;
-                if (gray) {
-                    while (p < end) {
-                        uchar g = (uchar)qGray(color[*b++]);
-                        *p++ = g;
-                    }
-                } else {
-                    while (p < end) {
-                        QRgb rgb = color[*b++];
-                        *p++ = qRed(rgb);
-                        *p++ = qGreen(rgb);
-                        *p++ = qBlue(rgb);
-                    }
-                }
-                if (bpl != (uint)out->write((char*)buf, bpl))
-                    return false;
-            }
-            break;
-        }
-
         case 32: {
-            str.insert(1, gray ? '5' : '6');
+            str.insert(1, '6');
             str.append("255\n");
             if (out->write(str, str.length()) != str.length())
                 return false;
-            uint bpl = w*(gray ? 1 : 3);
+            uint bpl = w*3;
             QSTACKARRAY(uchar, buf, bpl);
             for (uint y=0; y<h; y++) {
                 QRgb  *b = (QRgb*)image.scanLine(y);
                 uchar *p = buf;
                 uchar *end = buf+bpl;
-                if (gray) {
-                    while (p < end) {
-                        uchar g = (uchar)qGray(*b++);
-                        *p++ = g;
-                    }
-                } else {
-                    while (p < end) {
-                        QRgb rgb = *b++;
-                        *p++ = qRed(rgb);
-                        *p++ = qGreen(rgb);
-                        *p++ = qBlue(rgb);
-                    }
+                while (p < end) {
+                    QRgb rgb = *b++;
+                    *p++ = qRed(rgb);
+                    *p++ = qGreen(rgb);
+                    *p++ = qBlue(rgb);
                 }
                 if (bpl != (uint)out->write((char*)buf, bpl))
                     return false;
@@ -397,9 +336,6 @@ bool QPpmHandler::canRead(QIODevice *device, QByteArray *subType)
     if (head[1] == '1' || head[1] == '4') {
         if (subType)
             *subType = "pbm";
-    } else if (head[1] == '2' || head[1] == '5') {
-        if (subType)
-            *subType = "pgm";
     } else if (head[1] == '3' || head[1] == '6') {
         if (subType)
             *subType = "ppm";
@@ -459,11 +395,7 @@ QVariant QPpmHandler::option(ImageOption option) const
         switch (type) {
             case '1':                                // ascii PBM
             case '4':                                // raw PBM
-            format = QImage::Format_Mono;
-            break;
-            case '2':                                // ascii PGM
-            case '5':                                // raw PGM
-                format = QImage::Format_Indexed8;
+                format = QImage::Format_Mono;
                 break;
             case '3':                                // ascii PPM
             case '6':                                // raw PPM

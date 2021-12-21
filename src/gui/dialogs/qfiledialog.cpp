@@ -84,7 +84,7 @@ Q_GUI_EXPORT _qt_filedialog_save_filename_hook qt_filedialog_save_filename_hook 
   In the above example, a modal QFileDialog is created using a static
   function. The dialog initially displays the contents of the "/home/jana"
   directory, and displays files matching the patterns given in the
-  string "Image Files (*.png *.jpg *.bmp)". The parent of the file dialog
+  string "Image Files (*.png *.xpm)". The parent of the file dialog
   is set to \e this, and the window title is set to "Open Image".
 
   If you want to use multiple filters, separate each one with
@@ -111,11 +111,11 @@ Q_GUI_EXPORT _qt_filedialog_save_filename_hook qt_filedialog_save_filename_hook 
 
   \snippet doc/src/snippets/code/src_gui_dialogs_qfiledialog.cpp 3
 
-  In the above example, the filter is set to \c{"Images (*.png *.xpm *.jpg)"},
-  this means that only files with the extension \c png, \c xpm,
-  or \c jpg will be shown in the QFileDialog. You can apply
-  several filters by using setNameFilters(). Use selectNameFilter() to select
-  one of the filters you've given as the file dialog's default filter.
+  In the above example, the filter is set to \c{"Images (*.png *.xpm)"},
+  this means that only files with the extension \c png or \c xpm,
+  will be shown in the QFileDialog. You can apply several filters by
+  using setNameFilters(). Use selectNameFilter() to select one of the
+  filters you've given as the file dialog's default filter.
 
   The file dialog has two view modes: \l{QFileDialog::}{List} and
   \l{QFileDialog::}{Detail}.
@@ -1524,7 +1524,7 @@ QString QFileDialog::labelText(DialogLabel label) const
     example:
 
     \code
-    "Images (*.png *.xpm *.jpg);;Text files (*.txt);;XML files (*.xml)"
+    "Images (*.png *.xpm);;Text files (*.txt);;XML files (*.xml)"
     \endcode
 
     The \a options argument holds various options about how to run the dialog,
@@ -1603,7 +1603,7 @@ QString QFileDialog::getOpenFileName(QWidget *parent,
     filters, separate them with ';;', for instance:
 
     \code
-    "Images (*.png *.xpm *.jpg);;Text files (*.txt);;XML files (*.xml)"
+    "Images (*.png *.xpm);;Text files (*.txt);;XML files (*.xml)"
     \endcode
 
     The dialog's caption is set to \a caption. If \a caption is not specified
@@ -1685,7 +1685,7 @@ QStringList QFileDialog::getOpenFileNames(QWidget *parent,
     Multiple filters are separated with ';;'. For instance:
 
     \code
-    "Images (*.png *.xpm *.jpg);;Text files (*.txt);;XML files (*.xml)"
+    "Images (*.png *.xpm);;Text files (*.txt);;XML files (*.xml)"
     \endcode
 
     The \a options argument holds various options about how to run the dialog,
@@ -2766,7 +2766,7 @@ void QFileDialogPrivate::_q_goToDirectory(const QString &path)
     }
 }
 
-// Makes a list of filters from a normal filter string "Image Files (*.png *.jpg)"
+// Makes a list of filters from a normal filter string "Image Files (*.png *.xpm)"
 QStringList qt_clean_filter_list(const QString &filter)
 {
     QRegExp regexp(QString::fromLatin1(qt_file_dialog_filter_reg_exp));

@@ -37,7 +37,6 @@
 
 QT_BEGIN_NAMESPACE
 
-class QPngHandlerPrivate;
 class QPngHandler : public QImageIOHandler
 {
 public:
@@ -50,14 +49,7 @@ public:
 
     QByteArray name() const;
 
-    QVariant option(ImageOption option) const;
-    void setOption(ImageOption option, const QVariant &value);
-    bool supportsOption(ImageOption option) const;
-
     static bool canRead(QIODevice *device);
-
-private:
-    QPngHandlerPrivate *d;
 };
 
 QT_END_NAMESPACE

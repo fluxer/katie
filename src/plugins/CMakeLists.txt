@@ -27,17 +27,7 @@ add_subdirectory(iconengines/svgiconengine)
 
 set(CMAKE_LIBRARY_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}/plugins/imageformats")
 set(CMAKE_ARCHIVE_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}/plugins/imageformats")
-add_subdirectory(imageformats/gif)
-add_subdirectory(imageformats/ico)
 add_subdirectory(imageformats/svg)
-add_subdirectory(imageformats/tga)
-if(WITH_JPEG AND JPEG_FOUND)
-    add_subdirectory(imageformats/jpeg)
-endif()
-if(WITH_TIFF AND TIFF_FOUND)
-    add_subdirectory(imageformats/tiff)
-endif()
-
 
 set(CMAKE_LIBRARY_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}/plugins/script")
 set(CMAKE_ARCHIVE_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}/plugins/script")

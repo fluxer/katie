@@ -74,27 +74,11 @@ private:
 
 tst_QImageReader::tst_QImageReader()
 {
-    images << QPair<QString, QByteArray>(QLatin1String("colorful.bmp"), QByteArray("bmp"));
-    images << QPair<QString, QByteArray>(QLatin1String("font.bmp"), QByteArray("bmp"));
-    images << QPair<QString, QByteArray>(QLatin1String("crash-signed-char.bmp"), QByteArray("bmp"));
-    images << QPair<QString, QByteArray>(QLatin1String("4bpp-rle.bmp"), QByteArray("bmp"));
-    images << QPair<QString, QByteArray>(QLatin1String("tst7.bmp"), QByteArray("bmp"));
-    images << QPair<QString, QByteArray>(QLatin1String("16bpp.bmp"), QByteArray("bmp"));
-    images << QPair<QString, QByteArray>(QLatin1String("negativeheight.bmp"), QByteArray("bmp"));
     images << QPair<QString, QByteArray>(QLatin1String("marble.xpm"), QByteArray("xpm"));
     images << QPair<QString, QByteArray>(QLatin1String("kollada.png"), QByteArray("png"));
     images << QPair<QString, QByteArray>(QLatin1String("teapot.ppm"), QByteArray("ppm"));
     images << QPair<QString, QByteArray>(QLatin1String("runners.ppm"), QByteArray("ppm"));
     images << QPair<QString, QByteArray>(QLatin1String("test.ppm"), QByteArray("ppm"));
-    images << QPair<QString, QByteArray>(QLatin1String("gnus.xbm"), QByteArray("xbm"));
-#if defined QTEST_HAVE_JPEG
-    images << QPair<QString, QByteArray>(QLatin1String("beavis.jpg"), QByteArray("jpeg"));
-    images << QPair<QString, QByteArray>(QLatin1String("YCbCr_cmyk.jpg"), QByteArray("jpeg"));
-    images << QPair<QString, QByteArray>(QLatin1String("YCbCr_rgb.jpg"), QByteArray("jpeg"));
-    images << QPair<QString, QByteArray>(QLatin1String("task210380.jpg"), QByteArray("jpeg"));
-#endif
-    images << QPair<QString, QByteArray>(QLatin1String("earth.gif"), QByteArray("gif"));
-    images << QPair<QString, QByteArray>(QLatin1String("trolltech.gif"), QByteArray("gif"));
 }
 
 tst_QImageReader::~tst_QImageReader()

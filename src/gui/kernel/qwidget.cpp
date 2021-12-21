@@ -822,12 +822,7 @@ struct QWidgetExceptionCleaner
 QWidget::QWidget(QWidget *parent, Qt::WindowFlags f)
     : QObject(*new QWidgetPrivate, 0), QPaintDevice()
 {
-    QT_TRY {
-        d_func()->init(parent, f);
-    } QT_CATCH(...) {
-        QWidgetExceptionCleaner::cleanup(this, d_func());
-        QT_RETHROW;
-    }
+    d_func()->init(parent, f);
 }
 
 
@@ -837,12 +832,7 @@ QWidget::QWidget(QWidgetPrivate &dd, QWidget* parent, Qt::WindowFlags f)
     : QObject(dd, 0), QPaintDevice()
 {
     Q_D(QWidget);
-    QT_TRY {
-        d->init(parent, f);
-    } QT_CATCH(...) {
-        QWidgetExceptionCleaner::cleanup(this, d_func());
-        QT_RETHROW;
-    }
+    d->init(parent, f);
 }
 
 /*!
@@ -1133,26 +1123,12 @@ QWidget::~QWidget()
         d->focus_next = d->focus_prev = 0;
     }
 
-
-    QT_TRY {
-        clearFocus();
-    } QT_CATCH(...) {
-        // swallow this problem because we are in a destructor
-    }
+    clearFocus();
 
     d->setDirtyOpaqueRegion();
 
     if (isWindow() && isVisible() && internalWinId()) {
-        QT_TRY {
-            d->close_helper(QWidgetPrivate::CloseNoEvent);
-        } QT_CATCH(...) {
-            // if we're out of memory, at least hide the window.
-            QT_TRY {
-                hide();
-            } QT_CATCH(...) {
-                // and if that also doesn't work, then give up
-            }
-        }
+        d->close_helper(QWidgetPrivate::CloseNoEvent);
     }
 
 #if defined(Q_WS_X11)
@@ -1195,21 +1171,13 @@ QWidget::~QWidget()
 
     QApplication::removePostedEvents(this);
 
-    QT_TRY {
-        destroy();                                        // platform-dependent cleanup
-    } QT_CATCH(...) {
-        // if this fails we can't do anything about it but at least we are not allowed to throw.
-    }
+    destroy();                                        // platform-dependent cleanup
 
     if (QWidgetPrivate::allWidgets) // might have been deleted by ~QApplication
         QWidgetPrivate::allWidgets->remove(this);
 
-    QT_TRY {
-        QEvent e(QEvent::Destroy);
-        QCoreApplication::sendEvent(this, &e);
-    } QT_CATCH(const std::exception&) {
-        // if this fails we can't do anything about it but at least we are not allowed to throw.
-    }
+    QEvent e(QEvent::Destroy);
+    QCoreApplication::sendEvent(this, &e);
 }
 
 void QWidgetPrivate::setWinId(WId id)                // set widget identifier
@@ -4527,21 +4495,21 @@ void QWidgetPrivate::render_helper(QPainter *painter, const QPoint &targetOffset
     Q_Q(QWidget);
     const QTransform originalTransform = painter->worldTransform();
     if (!originalTransform.isScaling()) {
-        // Render via a pixmap.
+        // Render via a image.
         const QRect rect = toBePainted.boundingRect();
         const QSize size = rect.size();
         if (size.isNull())
             return;
 
-        QPixmap pixmap(size);
+        QImage image(size, QImage::Format_ARGB32_Premultiplied);
         if (!(renderFlags & QWidget::DrawWindowBackground) || !isOpaque)
-            pixmap.fill(Qt::transparent);
-        q->render(&pixmap, QPoint(), toBePainted, renderFlags);
+            image.fill(Qt::transparent);
+        q->render(&image, QPoint(), toBePainted, renderFlags);
 
-        painter->drawPixmap(targetOffset, pixmap);
+        painter->drawImage(targetOffset, image);
 
     } else {
-        // Render via a pixmap in device coordinates (to avoid pixmap scaling).
+        // Render via a image in device coordinates (to avoid image scaling).
         QTransform transform = originalTransform;
         transform.translate(targetOffset.x(), targetOffset.y());
 
@@ -4553,21 +4521,21 @@ void QWidgetPrivate::render_helper(QPainter *painter, const QPoint &targetOffset
         QRect deviceRect = transform.mapRect(QRectF(0, 0, rect.width(), rect.height())).toAlignedRect();
         deviceRect &= QRect(0, 0, device->width(), device->height());
 
-        QPixmap pixmap(deviceRect.size());
-        pixmap.fill(Qt::transparent);
+        QImage image(deviceRect.size(), QImage::Format_ARGB32_Premultiplied);
+        image.fill(Qt::transparent);
 
-        // Create a pixmap device coordinate painter.
-        QPainter pixmapPainter(&pixmap);
-        pixmapPainter.setRenderHints(painter->renderHints());
+        // Create a image device coordinate painter.
+        QPainter imagePainter(&image);
+        imagePainter.setRenderHints(painter->renderHints());
         transform *= QTransform::fromTranslate(-deviceRect.x(), -deviceRect.y());
-        pixmapPainter.setTransform(transform);
+        imagePainter.setTransform(transform);
 
-        q->render(&pixmapPainter, QPoint(), toBePainted, renderFlags);
-        pixmapPainter.end();
+        q->render(&imagePainter, QPoint(), toBePainted, renderFlags);
+        imagePainter.end();
 
-        // And then draw the pixmap.
+        // And then draw the image.
         painter->setTransform(QTransform());
-        painter->drawPixmap(deviceRect.topLeft(), pixmap);
+        painter->drawImage(deviceRect.topLeft(), image);
         painter->setTransform(originalTransform);
     }
 }

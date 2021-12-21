@@ -417,7 +417,7 @@ qint64 QFileSystemModel::size(const QModelIndex &index) const
 }
 
 /*!
-    Returns the type of file \a index such as "Directory" or "JPEG file".
+    Returns the type of file \a index such as "Directory" or "PNG file".
   */
 QString QFileSystemModel::type(const QModelIndex &index) const
 {
@@ -858,7 +858,7 @@ static inline QChar getNextChar(const QString &s, int location)
 
     Examples:
     1, 2, 10, 55, 100
-    01.jpg, 2.jpg, 10.jpg
+    01.png, 2.png, 10.png
 
     Note on the algorithm:
     Only as many characters as necessary are looked at and at most they all

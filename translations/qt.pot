@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-11-22 10:21+0200\n"
+"POT-Creation-Date: 2021-12-20 12:00+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -17,32 +17,32 @@ msgstr ""
 "Content-Type: text/plain; charset=CHARSET\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: src/core/plugin/qlibrary.cpp:175
+#: src/core/plugin/qlibrary.cpp:176
 msgid "'%1' is not ELF file"
 msgstr ""
 
-#: src/core/plugin/qlibrary.cpp:178
+#: src/core/plugin/qlibrary.cpp:179
 msgid "ELF class mismatch in '%1'"
 msgstr ""
 
-#: src/core/plugin/qlibrary.cpp:202
+#: src/core/plugin/qlibrary.cpp:203
 msgid "Plugin verification data mismatch in '%1'"
 msgstr ""
 
-#: src/core/plugin/qlibrary.cpp:414 src/core/plugin/qlibrary.cpp:449
+#: src/core/plugin/qlibrary.cpp:418 src/core/plugin/qlibrary.cpp:453
 #: src/core/plugin/qpluginloader.cpp:261
 msgid "The shared library was not found."
 msgstr ""
 
-#: src/core/plugin/qlibrary.cpp:451
+#: src/core/plugin/qlibrary.cpp:455
 msgid "The file '%1' is not a valid Katie plugin."
 msgstr ""
 
-#: src/core/plugin/qlibrary.cpp:463
+#: src/core/plugin/qlibrary.cpp:467
 msgid "The plugin uses incompatible Katie library: %1 (%2, %3)"
 msgstr ""
 
-#: src/core/plugin/qlibrary.cpp:795 src/core/plugin/qpluginloader.cpp:278
+#: src/core/plugin/qlibrary.cpp:799 src/core/plugin/qpluginloader.cpp:278
 #: src/core/io/qiodevice.cpp:1517 src/network/ssl/qsslerror.cpp:249
 #: src/network/socket/qnativesocketengine.cpp:249
 #: src/network/access/qftp.cpp:1413 src/uitools/formscriptrunner.cpp:104
@@ -53,11 +53,11 @@ msgstr ""
 msgid "Cannot load library %1: %2"
 msgstr ""
 
-#: src/core/plugin/qlibrary_unix.cpp:67
+#: src/core/plugin/qlibrary_unix.cpp:66
 msgid "Cannot unload library %1: %2"
 msgstr ""
 
-#: src/core/plugin/qlibrary_unix.cpp:78
+#: src/core/plugin/qlibrary_unix.cpp:77
 msgid "Cannot resolve symbol \"%1\" in %2: %3"
 msgstr ""
 
@@ -962,7 +962,7 @@ msgctxt "QDeclarativeParser"
 msgid "JavaScript declaration outside Script element"
 msgstr ""
 
-#: src/declarative/qml/qdeclarativecompiledbindings.cpp:319
+#: src/declarative/qml/qdeclarativecompiledbindings.cpp:315
 msgctxt "QDeclarativeCompiledBindings"
 msgid "Binding loop detected for property \"%1\""
 msgstr ""
@@ -1358,7 +1358,7 @@ msgctxt "QPrintPreviewDialog"
 msgid "Page Setup"
 msgstr ""
 
-#: src/gui/dialogs/qdialog.cpp:495 src/gui/kernel/qwhatsthis.cpp:468
+#: src/gui/dialogs/qdialog.cpp:491 src/gui/kernel/qwhatsthis.cpp:468
 msgid "What's This?"
 msgstr ""
 
@@ -1608,42 +1608,42 @@ msgstr ""
 msgid "Print to File (Postscript)"
 msgstr ""
 
-#: src/gui/dialogs/qprintdialog_unix.cpp:699
+#: src/gui/dialogs/qprintdialog_unix.cpp:700
 msgid "Local file"
 msgstr ""
 
-#: src/gui/dialogs/qprintdialog_unix.cpp:700
+#: src/gui/dialogs/qprintdialog_unix.cpp:701
 msgid "Write %1 file"
 msgstr ""
 
-#: src/gui/dialogs/qprintdialog_unix.cpp:761
+#: src/gui/dialogs/qprintdialog_unix.cpp:762
 msgid "Print To File ..."
 msgstr ""
 
-#: src/gui/dialogs/qprintdialog_unix.cpp:839
+#: src/gui/dialogs/qprintdialog_unix.cpp:840
 msgid ""
 "%1 is a directory.\n"
 "Please choose a different file name."
 msgstr ""
 
-#: src/gui/dialogs/qprintdialog_unix.cpp:843
+#: src/gui/dialogs/qprintdialog_unix.cpp:844
 msgid ""
 "File %1 is not writable.\n"
 "Please choose a different file name."
 msgstr ""
 
-#: src/gui/dialogs/qprintdialog_unix.cpp:847
+#: src/gui/dialogs/qprintdialog_unix.cpp:848
 msgid ""
 "%1 already exists.\n"
 "Do you want to overwrite it?"
 msgstr ""
 
-#: src/gui/dialogs/qprintdialog_unix.cpp:1136
+#: src/gui/dialogs/qprintdialog_unix.cpp:1137
 msgctxt "QPPDOptionsModel"
 msgid "Name"
 msgstr ""
 
-#: src/gui/dialogs/qprintdialog_unix.cpp:1138
+#: src/gui/dialogs/qprintdialog_unix.cpp:1139
 msgctxt "QPPDOptionsModel"
 msgid "Value"
 msgstr ""
@@ -1654,11 +1654,11 @@ msgctxt "QPrintDialog"
 msgid "Print"
 msgstr ""
 
-#: src/gui/dialogs/qfiledialog.cpp:492
+#: src/gui/dialogs/qfiledialog.cpp:493
 msgid "Find Directory"
 msgstr ""
 
-#: src/gui/dialogs/qfiledialog.cpp:494
+#: src/gui/dialogs/qfiledialog.cpp:495
 #: src/plugins/accessible/widgets/simplewidgets.cpp:96
 #: src/plugins/accessible/widgets/simplewidgets.cpp:411
 #: src/plugins/accessible/widgets/simplewidgets.cpp:419
@@ -1670,98 +1670,98 @@ msgstr ""
 msgid "Open"
 msgstr ""
 
-#: src/gui/dialogs/qfiledialog.cpp:496
+#: src/gui/dialogs/qfiledialog.cpp:497
 msgid "Save As"
 msgstr ""
 
-#: src/gui/dialogs/qfiledialog.cpp:511 src/gui/dialogs/qfiledialog.cpp:1011
+#: src/gui/dialogs/qfiledialog.cpp:512 src/gui/dialogs/qfiledialog.cpp:1014
 msgid "All Files (*)"
 msgstr ""
 
-#: src/gui/dialogs/qfiledialog.cpp:521
+#: src/gui/dialogs/qfiledialog.cpp:522
 msgid "Show "
 msgstr ""
 
-#: src/gui/dialogs/qfiledialog.cpp:525
+#: src/gui/dialogs/qfiledialog.cpp:526
 msgid "&Rename"
 msgstr ""
 
-#: src/gui/dialogs/qfiledialog.cpp:526
+#: src/gui/dialogs/qfiledialog.cpp:527
 msgid "&Delete"
 msgstr ""
 
-#: src/gui/dialogs/qfiledialog.cpp:527
+#: src/gui/dialogs/qfiledialog.cpp:528
 msgid "Show &hidden files"
 msgstr ""
 
-#: src/gui/dialogs/qfiledialog.cpp:528
+#: src/gui/dialogs/qfiledialog.cpp:529
 msgid "&New Folder"
 msgstr ""
 
-#: src/gui/dialogs/qfiledialog.cpp:533 src/gui/dialogs/qfiledialog.cpp:1192
+#: src/gui/dialogs/qfiledialog.cpp:534 src/gui/dialogs/qfiledialog.cpp:1195
 msgid "Directory:"
 msgstr ""
 
-#: src/gui/dialogs/qfiledialog.cpp:535 src/gui/dialogs/qfiledialog.cpp:1198
+#: src/gui/dialogs/qfiledialog.cpp:536 src/gui/dialogs/qfiledialog.cpp:1201
 msgid "File &name:"
 msgstr ""
 
-#: src/gui/dialogs/qfiledialog.cpp:1185 src/gui/dialogs/qfiledialog.cpp:1240
-#: src/gui/dialogs/qfiledialog.cpp:2687
+#: src/gui/dialogs/qfiledialog.cpp:1188 src/gui/dialogs/qfiledialog.cpp:1243
+#: src/gui/dialogs/qfiledialog.cpp:2691
 msgid "&Open"
 msgstr ""
 
-#: src/gui/dialogs/qfiledialog.cpp:1185 src/gui/dialogs/qfiledialog.cpp:1240
+#: src/gui/dialogs/qfiledialog.cpp:1188 src/gui/dialogs/qfiledialog.cpp:1243
 msgid "&Save"
 msgstr ""
 
-#: src/gui/dialogs/qfiledialog.cpp:1188
+#: src/gui/dialogs/qfiledialog.cpp:1191
 msgid "Directories"
 msgstr ""
 
-#: src/gui/dialogs/qfiledialog.cpp:1195 src/gui/dialogs/qfiledialog.cpp:1238
+#: src/gui/dialogs/qfiledialog.cpp:1198 src/gui/dialogs/qfiledialog.cpp:1241
 msgid "&Choose"
 msgstr ""
 
-#: src/gui/dialogs/qfiledialog.cpp:1905 src/gui/dialogs/qfiledialog.cpp:2758
+#: src/gui/dialogs/qfiledialog.cpp:1908 src/gui/dialogs/qfiledialog.cpp:2762
 msgid ""
 "%1\n"
 "Directory not found.\n"
 "Please verify the correct directory name was given."
 msgstr ""
 
-#: src/gui/dialogs/qfiledialog.cpp:1939
+#: src/gui/dialogs/qfiledialog.cpp:1942
 msgid ""
 "%1 already exists.\n"
 "Do you want to replace it?"
 msgstr ""
 
-#: src/gui/dialogs/qfiledialog.cpp:1959
+#: src/gui/dialogs/qfiledialog.cpp:1962
 msgid ""
 "%1\n"
 "File not found.\n"
 "Please verify the correct file name was given."
 msgstr ""
 
-#: src/gui/dialogs/qfiledialog.cpp:2408
+#: src/gui/dialogs/qfiledialog.cpp:2411
 msgid "New Folder"
 msgstr ""
 
-#: src/gui/dialogs/qfiledialog.cpp:2536
+#: src/gui/dialogs/qfiledialog.cpp:2540
 msgid ""
 "'%1' is write protected.\n"
 "Do you want to delete it anyway?"
 msgstr ""
 
-#: src/gui/dialogs/qfiledialog.cpp:2541
+#: src/gui/dialogs/qfiledialog.cpp:2545
 msgid "Are sure you want to delete '%1'?"
 msgstr ""
 
-#: src/gui/dialogs/qfiledialog.cpp:2556
+#: src/gui/dialogs/qfiledialog.cpp:2560
 msgid "Could not delete directory."
 msgstr ""
 
-#: src/gui/dialogs/qfiledialog.cpp:2954
+#: src/gui/dialogs/qfiledialog.cpp:2958
 msgid "Recent Places"
 msgstr ""
 
@@ -1799,19 +1799,19 @@ msgid ""
 "characters or no punctuations marks."
 msgstr ""
 
-#: src/gui/dialogs/qfilesystemmodel.cpp:786 src/gui/itemviews/qdirmodel.cpp:395
+#: src/gui/dialogs/qfilesystemmodel.cpp:790 src/gui/itemviews/qdirmodel.cpp:395
 msgid "Name"
 msgstr ""
 
-#: src/gui/dialogs/qfilesystemmodel.cpp:788 src/gui/itemviews/qdirmodel.cpp:396
+#: src/gui/dialogs/qfilesystemmodel.cpp:794 src/gui/itemviews/qdirmodel.cpp:396
 msgid "Size"
 msgstr ""
 
-#: src/gui/dialogs/qfilesystemmodel.cpp:790 src/gui/itemviews/qdirmodel.cpp:397
+#: src/gui/dialogs/qfilesystemmodel.cpp:798 src/gui/itemviews/qdirmodel.cpp:397
 msgid "Type"
 msgstr ""
 
-#: src/gui/dialogs/qfilesystemmodel.cpp:796 src/gui/itemviews/qdirmodel.cpp:400
+#: src/gui/dialogs/qfilesystemmodel.cpp:804 src/gui/itemviews/qdirmodel.cpp:400
 msgid "Date Modified"
 msgstr ""
 
@@ -1835,27 +1835,27 @@ msgstr ""
 msgid "&OK"
 msgstr ""
 
-#: src/gui/image/qimagereader.cpp:320
+#: src/gui/image/qimagereader.cpp:299
 msgctxt "QImageReader"
 msgid "Invalid device"
 msgstr ""
 
-#: src/gui/image/qimagereader.cpp:326
+#: src/gui/image/qimagereader.cpp:305
 msgctxt "QImageReader"
 msgid "File not found"
 msgstr ""
 
-#: src/gui/image/qimagereader.cpp:333
+#: src/gui/image/qimagereader.cpp:312
 msgctxt "QImageReader"
 msgid "Unsupported image format"
 msgstr ""
 
-#: src/gui/image/qimagereader.cpp:825
+#: src/gui/image/qimagereader.cpp:804
 msgctxt "QImageReader"
 msgid "Unable to read image data"
 msgstr ""
 
-#: src/gui/image/qimagereader.cpp:1016
+#: src/gui/image/qimagereader.cpp:995
 msgctxt "QImageReader"
 msgid "Unknown error"
 msgstr ""
@@ -2158,7 +2158,7 @@ msgstr ""
 msgid "Step &down"
 msgstr ""
 
-#: src/gui/kernel/qwidget.cpp:5071
+#: src/gui/kernel/qwidget.cpp:5039
 msgid "*"
 msgstr ""
 
@@ -4431,23 +4431,23 @@ msgctxt "QShortcut"
 msgid "ShiftLock"
 msgstr ""
 
-#: src/gui/kernel/qkeysequence.cpp:1082 src/gui/kernel/qkeysequence.cpp:1161
+#: src/gui/kernel/qkeysequence.cpp:1060 src/gui/kernel/qkeysequence.cpp:1139
 msgid "Ctrl"
 msgstr ""
 
-#: src/gui/kernel/qkeysequence.cpp:1083 src/gui/kernel/qkeysequence.cpp:1165
+#: src/gui/kernel/qkeysequence.cpp:1061 src/gui/kernel/qkeysequence.cpp:1143
 msgid "Shift"
 msgstr ""
 
-#: src/gui/kernel/qkeysequence.cpp:1084 src/gui/kernel/qkeysequence.cpp:1163
+#: src/gui/kernel/qkeysequence.cpp:1062 src/gui/kernel/qkeysequence.cpp:1141
 msgid "Alt"
 msgstr ""
 
-#: src/gui/kernel/qkeysequence.cpp:1085 src/gui/kernel/qkeysequence.cpp:1159
+#: src/gui/kernel/qkeysequence.cpp:1063 src/gui/kernel/qkeysequence.cpp:1137
 msgid "Meta"
 msgstr ""
 
-#: src/gui/kernel/qkeysequence.cpp:1148
+#: src/gui/kernel/qkeysequence.cpp:1126
 msgid "+"
 msgstr ""
 
@@ -5222,8 +5222,8 @@ msgctxt "QHttp"
 msgid "Error writing response to device"
 msgstr ""
 
-#: src/network/access/qhttpthreaddelegate.cpp:398
-#: src/network/access/qhttpthreaddelegate.cpp:421
+#: src/network/access/qhttpthreaddelegate.cpp:401
+#: src/network/access/qhttpthreaddelegate.cpp:424
 msgctxt "QNetworkReply"
 msgid "Error downloading %1 - server replied: %2"
 msgstr ""
@@ -5449,46 +5449,6 @@ msgstr ""
 
 #: src/plugins/accessible/widgets/complexwidgets.cpp:1607
 msgid "Activate the tab"
-msgstr ""
-
-#: src/plugins/imageformats/tga/qtgafile.cpp:118
-msgid "Could not read image data"
-msgstr ""
-
-#: src/plugins/imageformats/tga/qtgafile.cpp:123
-msgid "Sequential device (eg socket) for image read not supported"
-msgstr ""
-
-#: src/plugins/imageformats/tga/qtgafile.cpp:128
-msgid "Seek file/device for image read failed"
-msgstr ""
-
-#: src/plugins/imageformats/tga/qtgafile.cpp:134
-msgid "Image mHeader read failed"
-msgstr ""
-
-#: src/plugins/imageformats/tga/qtgafile.cpp:141
-msgid "Image type not supported"
-msgstr ""
-
-#: src/plugins/imageformats/tga/qtgafile.cpp:149
-msgid "Image depth not valid"
-msgstr ""
-
-#: src/plugins/imageformats/tga/qtgafile.cpp:154
-msgid "Could not seek to image read footer"
-msgstr ""
-
-#: src/plugins/imageformats/tga/qtgafile.cpp:162
-msgid "Could not read footer"
-msgstr ""
-
-#: src/plugins/imageformats/tga/qtgafile.cpp:166
-msgid "Image type (non-TrueVision 2.0) not supported"
-msgstr ""
-
-#: src/plugins/imageformats/tga/qtgafile.cpp:170
-msgid "Could not reset to start position"
 msgstr ""
 
 #: src/scripttools/debugging/qscriptedit.cpp:391
@@ -5834,22 +5794,22 @@ msgctxt "QAbstractFormBuilder"
 msgid "Empty widget item in %1 '%2'."
 msgstr ""
 
-#: src/uitools/abstractformbuilder.cpp:1611
+#: src/uitools/abstractformbuilder.cpp:1599
 msgctxt "QAbstractFormBuilder"
 msgid "Flags property are not supported yet."
 msgstr ""
 
-#: src/uitools/abstractformbuilder.cpp:1692
+#: src/uitools/abstractformbuilder.cpp:1680
 msgctxt "QAbstractFormBuilder"
 msgid "While applying tab stops: The widget '%1' could not be found."
 msgstr ""
 
-#: src/uitools/abstractformbuilder.cpp:2438
+#: src/uitools/abstractformbuilder.cpp:2426
 msgctxt "QAbstractFormBuilder"
 msgid "Invalid QButtonGroup reference '%1' referenced by '%2'."
 msgstr ""
 
-#: src/uitools/abstractformbuilder.cpp:2949
+#: src/uitools/abstractformbuilder.cpp:2937
 msgctxt "QAbstractFormBuilder"
 msgid "This version of the uitools library is linked without script support."
 msgstr ""

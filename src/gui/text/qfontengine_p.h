@@ -101,7 +101,6 @@ public:
     struct FaceId {
         FaceId() : index(0), encoding(0) {}
         QByteArray filename;
-        QByteArray uuid;
         int index;
         int encoding;
     };
@@ -143,7 +142,6 @@ public:
      */
     virtual QImage alphaMapForGlyph(glyph_t);
     virtual QImage alphaMapForGlyph(glyph_t glyph, QFixed subPixelPosition);
-    virtual QImage alphaMapForGlyph(glyph_t, const QTransform &t);
     virtual QImage alphaMapForGlyph(glyph_t, QFixed subPixelPosition, const QTransform &t);
     virtual QImage alphaRGBMapForGlyph(glyph_t, QFixed subPixelPosition, const QTransform &t);
 
@@ -180,15 +178,13 @@ public:
 
     virtual int glyphCount() const;
 
-    virtual QFontEngine *cloneWithSize(qreal /*pixelSize*/) const { return 0; }
-
     HB_Font harfbuzzFont() const;
     HB_Face harfbuzzFace() const;
 
     virtual HB_Error getPointInOutline(HB_Glyph glyph, int flags, hb_uint32 point, HB_Fixed *xpos, HB_Fixed *ypos, hb_uint32 *nPoints);
 
-    void setGlyphCache(void *key, QFontEngineGlyphCache *data);
-    QFontEngineGlyphCache *glyphCache(void *key, QFontEngineGlyphCache::Type type, const QTransform &transform) const;
+    void setGlyphCache(QFontEngineGlyphCache *data);
+    QFontEngineGlyphCache *glyphCache(QFontEngineGlyphCache::Type type, const QTransform &transform) const;
 
     static const uchar *getCMap(const uchar *table, uint tableSize, bool *isSymbolFont, int *cmapSize);
     static quint32 getTrueTypeGlyphIndex(const uchar *cmap, uint unicode);
@@ -224,9 +220,8 @@ protected:
 
 private:
     struct GlyphCacheEntry {
-        void *context;
         QExplicitlySharedDataPointer<QFontEngineGlyphCache> cache;
-        bool operator==(const GlyphCacheEntry &other) const { return context == other.context && cache == other.cache; }
+        bool operator==(const GlyphCacheEntry &other) const { return cache == other.cache; }
     };
 
     mutable QLinkedList<GlyphCacheEntry> m_glyphCaches;
@@ -239,11 +234,8 @@ inline bool operator ==(const QFontEngine::FaceId &f1, const QFontEngine::FaceId
 
 inline uint qHash(const QFontEngine::FaceId &f)
 {
-    return qHash((f.index << 16) + f.encoding) + qHash(f.filename + f.uuid);
+    return qHash((f.index << 16) + f.encoding) + qHash(f.filename);
 }
-
-
-class QGlyph;
 
 
 class QFontEngineBox : public QFontEngine

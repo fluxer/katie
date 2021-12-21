@@ -1012,9 +1012,7 @@ QBrush QAbstractFormBuilder::setupBrush(DomBrush *brush)
 
     const Qt::BrushStyle style = enumKeyOfObjectToValue<QAbstractFormBuilderGadget, Qt::BrushStyle>("brushStyle", brush->attributeBrushStyle().toLatin1());
 
-    if (style == Qt::LinearGradientPattern ||
-            style == Qt::RadialGradientPattern ||
-            style == Qt::ConicalGradientPattern) {
+    if (style == Qt::LinearGradientPattern || style == Qt::RadialGradientPattern) {
         const QMetaEnum gradientType_enum = metaEnum<QAbstractFormBuilderGadget>("gradientType");
         const QMetaEnum gradientSpread_enum = metaEnum<QAbstractFormBuilderGadget>("gradientSpread");
         const QMetaEnum gradientCoordinate_enum = metaEnum<QAbstractFormBuilderGadget>("gradientCoordinate");
@@ -1032,9 +1030,6 @@ QBrush QAbstractFormBuilder::setupBrush(DomBrush *brush)
             gr = new QRadialGradient(QPointF(gradient->attributeCentralX(), gradient->attributeCentralY()),
                             gradient->attributeRadius(),
                             QPointF(gradient->attributeFocalX(), gradient->attributeFocalY()));
-        } else if (type == QGradient::ConicalGradient) {
-            gr = new QConicalGradient(QPointF(gradient->attributeCentralX(), gradient->attributeCentralY()),
-                            gradient->attributeAngle());
         }
         if (!gr)
             return br;
@@ -1076,9 +1071,7 @@ DomBrush *QAbstractFormBuilder::saveBrush(const QBrush &br)
     DomBrush *brush = new DomBrush();
     const Qt::BrushStyle style = br.style();
     brush->setAttributeBrushStyle(QString::fromLatin1(brushStyle_enum.valueToKey(style)));
-    if (style == Qt::LinearGradientPattern ||
-                style == Qt::RadialGradientPattern ||
-                style == Qt::ConicalGradientPattern) {
+    if (style == Qt::LinearGradientPattern || style == Qt::RadialGradientPattern) {
         const QMetaEnum gradientType_enum = metaEnum<QAbstractFormBuilderGadget>("gradientType");
         const QMetaEnum gradientSpread_enum = metaEnum<QAbstractFormBuilderGadget>("gradientSpread");
         const QMetaEnum gradientCoordinate_enum = metaEnum<QAbstractFormBuilderGadget>("gradientCoordinate");
@@ -1118,11 +1111,6 @@ DomBrush *QAbstractFormBuilder::saveBrush(const QBrush &br)
             gradient->setAttributeFocalX(rgr->focalPoint().x());
             gradient->setAttributeFocalY(rgr->focalPoint().y());
             gradient->setAttributeRadius(rgr->radius());
-        } else if (type == QGradient::ConicalGradient) {
-            QConicalGradient *cgr = (QConicalGradient *)(gr);
-            gradient->setAttributeCentralX(cgr->center().x());
-            gradient->setAttributeCentralY(cgr->center().y());
-            gradient->setAttributeAngle(cgr->angle());
         }
 
         brush->setElementGradient(gradient);

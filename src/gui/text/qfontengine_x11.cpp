@@ -391,22 +391,6 @@ bool QFontEngineX11FT::uploadGlyphToServer(QGlyphSet *set, uint glyphid, Glyph *
 #endif
 }
 
-QFontEngine *QFontEngineX11FT::cloneWithSize(qreal pixelSize) const
-{
-    QFontDef fontDef;
-    fontDef.pixelSize = pixelSize;
-    QFontEngineX11FT *fe = new QFontEngineX11FT(fontDef);
-    if (!fe->initFromFontEngine(this)) {
-        delete fe;
-        return 0;
-    } else {
-#ifndef QT_NO_XRENDER
-        fe->xglyph_format = xglyph_format;
-#endif
-        return fe;
-    }
-}
-
 #endif // QT_NO_FONTCONFIG
 
 QT_END_NAMESPACE

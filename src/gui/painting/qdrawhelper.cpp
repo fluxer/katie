@@ -1039,53 +1039,6 @@ static const uint * QT_FASTCALL qt_fetch_radial_gradient(uint *buffer, const Ope
     return b;
 }
 
-static const uint * QT_FASTCALL qt_fetch_conical_gradient(uint *buffer, const Operator *, const QSpanData *data,
-                                                          int y, int x, int length)
-{
-    const uint *b = buffer;
-    qreal rx = data->m21 * (y + qreal(0.5))
-               + data->dx + data->m11 * (x + qreal(0.5));
-    qreal ry = data->m22 * (y + qreal(0.5))
-               + data->dy + data->m12 * (x + qreal(0.5));
-    bool affine = !data->m13 && !data->m23;
-
-    const uint *end = buffer + length;
-    if (affine) {
-        rx -= data->gradient.conical.center.x;
-        ry -= data->gradient.conical.center.y;
-        while (buffer < end) {
-            qreal angle = qAtan2(ry, rx) + data->gradient.conical.angle;
-
-            *buffer = qt_gradient_pixel(&data->gradient, 1 - angle / (2*M_PI));
-
-            rx += data->m11;
-            ry += data->m12;
-            ++buffer;
-        }
-    } else {
-        qreal rw = data->m23 * (y + qreal(0.5))
-                   + data->m33 + data->m13 * (x + qreal(0.5));
-        if (!rw)
-            rw = 1;
-        while (buffer < end) {
-            qreal angle = qAtan2(ry/rw - data->gradient.conical.center.x,
-                                rx/rw - data->gradient.conical.center.y)
-                          + data->gradient.conical.angle;
-
-            *buffer = qt_gradient_pixel(&data->gradient, 1. - angle / (2*M_PI));
-
-            rx += data->m11;
-            ry += data->m12;
-            rw += data->m13;
-            if (!rw) {
-                rw += data->m13;
-            }
-            ++buffer;
-        }
-    }
-    return b;
-}
-
 /* The constant alpha factor describes an alpha factor that gets applied
    to the result of the composition operation combining it with the destination.
 
@@ -2506,211 +2459,6 @@ static void QT_FASTCALL comp_func_Exclusion(uint *dest, const uint *src, const i
     }
 }
 
-static void QT_FASTCALL rasterop_solid_SourceOrDestination(uint *dest,
-                                                    int length,
-                                                    uint color,
-                                                    const uint const_alpha)
-{
-    Q_UNUSED(const_alpha);
-    while (length--)
-        *dest++ |= color;
-}
-
-static void QT_FASTCALL rasterop_SourceOrDestination(uint *dest,
-                                              const uint *src,
-                                              int length,
-                                              const uint const_alpha)
-{
-    Q_UNUSED(const_alpha);
-    while (length--)
-        *dest++ |= *src++;
-}
-
-static void QT_FASTCALL rasterop_solid_SourceAndDestination(uint *dest,
-                                                     int length,
-                                                     uint color,
-                                                     const uint const_alpha)
-{
-    Q_UNUSED(const_alpha);
-    color |= 0xff000000;
-    while (length--)
-        *dest++ &= color;
-}
-
-static void QT_FASTCALL rasterop_SourceAndDestination(uint *dest,
-                                               const uint *src,
-                                               int length,
-                                               const uint const_alpha)
-{
-    Q_UNUSED(const_alpha);
-    while (length--) {
-        *dest = (*src & *dest) | 0xff000000;
-        ++dest; ++src;
-    }
-}
-
-static void QT_FASTCALL rasterop_solid_SourceXorDestination(uint *dest,
-                                                     int length,
-                                                     uint color,
-                                                     const uint const_alpha)
-{
-    Q_UNUSED(const_alpha);
-    color &= 0x00ffffff;
-    while (length--)
-        *dest++ ^= color;
-}
-
-static void QT_FASTCALL rasterop_SourceXorDestination(uint *dest,
-                                               const uint *src,
-                                               int length,
-                                               const uint const_alpha)
-{
-    Q_UNUSED(const_alpha);
-    while (length--) {
-        *dest = (*src ^ *dest) | 0xff000000;
-        ++dest; ++src;
-    }
-}
-
-static void QT_FASTCALL rasterop_solid_NotSourceAndNotDestination(uint *dest,
-                                                           int length,
-                                                           uint color,
-                                                           const uint const_alpha)
-{
-    Q_UNUSED(const_alpha);
-    color = ~color;
-    while (length--) {
-        *dest = (color & ~(*dest)) | 0xff000000;
-        ++dest;
-    }
-}
-
-static void QT_FASTCALL rasterop_NotSourceAndNotDestination(uint *dest,
-                                                     const uint *src,
-                                                     int length,
-                                                     const uint const_alpha)
-{
-    Q_UNUSED(const_alpha);
-    while (length--) {
-        *dest = (~(*src) & ~(*dest)) | 0xff000000;
-        ++dest; ++src;
-    }
-}
-
-static void QT_FASTCALL rasterop_solid_NotSourceOrNotDestination(uint *dest,
-                                                          int length,
-                                                          uint color,
-                                                          const uint const_alpha)
-{
-    Q_UNUSED(const_alpha);
-    color = ~color | 0xff000000;
-    while (length--) {
-        *dest = color | ~(*dest);
-        ++dest;
-    }
-}
-
-static void QT_FASTCALL rasterop_NotSourceOrNotDestination(uint *dest,
-                                                    const uint *src,
-                                                    int length,
-                                                    const uint const_alpha)
-{
-    Q_UNUSED(const_alpha);
-    while (length--) {
-        *dest = ~(*src) | ~(*dest) | 0xff000000;
-        ++dest; ++src;
-    }
-}
-
-static void QT_FASTCALL rasterop_solid_NotSourceXorDestination(uint *dest,
-                                                        int length,
-                                                        uint color,
-                                                        const uint const_alpha)
-{
-    Q_UNUSED(const_alpha);
-    color = ~color & 0x00ffffff;
-    while (length--) {
-        *dest = color ^ (*dest);
-        ++dest;
-    }
-}
-
-static void QT_FASTCALL rasterop_NotSourceXorDestination(uint *dest,
-                                                  const uint *src,
-                                                  int length,
-                                                  const uint const_alpha)
-{
-    Q_UNUSED(const_alpha);
-    while (length--) {
-        *dest = ((~(*src)) ^ (*dest)) | 0xff000000;
-        ++dest; ++src;
-    }
-}
-
-static void QT_FASTCALL rasterop_solid_NotSource(uint *dest, const int length,
-                                          uint color, const uint const_alpha)
-{
-    Q_UNUSED(const_alpha);
-    qt_memfill(dest, ~color | 0xff000000, length);
-}
-
-static void QT_FASTCALL rasterop_NotSource(uint *dest, const uint *src,
-                                    int length, const uint const_alpha)
-{
-    Q_UNUSED(const_alpha);
-    while (length--)
-        *dest++ = ~(*src++) | 0xff000000;
-}
-
-static void QT_FASTCALL rasterop_solid_NotSourceAndDestination(uint *dest,
-                                                        int length,
-                                                        uint color,
-                                                        const uint const_alpha)
-{
-    Q_UNUSED(const_alpha);
-    color = ~color | 0xff000000;
-    while (length--) {
-        *dest = color & *dest;
-        ++dest;
-    }
-}
-
-static void QT_FASTCALL rasterop_NotSourceAndDestination(uint *dest,
-                                                  const uint *src,
-                                                  int length,
-                                                  const uint const_alpha)
-{
-    Q_UNUSED(const_alpha);
-    while (length--) {
-        *dest = (~(*src) & *dest) | 0xff000000;
-        ++dest; ++src;
-    }
-}
-
-static void QT_FASTCALL rasterop_solid_SourceAndNotDestination(uint *dest,
-                                                        int length,
-                                                        uint color,
-                                                        uint const_alpha)
-{
-    Q_UNUSED(const_alpha);
-    while (length--) {
-        *dest = (color & ~(*dest)) | 0xff000000;
-        ++dest;
-    }
-}
-
-static void QT_FASTCALL rasterop_SourceAndNotDestination(uint *dest,
-                                                  const uint *src,
-                                                  int length,
-                                                  const uint const_alpha)
-{
-    Q_UNUSED(const_alpha);
-    while (length--) {
-        *dest = (*src & ~(*dest)) | 0xff000000;
-        ++dest; ++src;
-    }
-}
-
 static const CompositionFunctionSolid functionForModeSolid[] = {
         comp_func_solid_SourceOver,
         comp_func_solid_DestinationOver,
@@ -2735,16 +2483,7 @@ static const CompositionFunctionSolid functionForModeSolid[] = {
         comp_func_solid_HardLight,
         comp_func_solid_SoftLight,
         comp_func_solid_Difference,
-        comp_func_solid_Exclusion,
-        rasterop_solid_SourceOrDestination,
-        rasterop_solid_SourceAndDestination,
-        rasterop_solid_SourceXorDestination,
-        rasterop_solid_NotSourceAndNotDestination,
-        rasterop_solid_NotSourceOrNotDestination,
-        rasterop_solid_NotSourceXorDestination,
-        rasterop_solid_NotSource,
-        rasterop_solid_NotSourceAndDestination,
-        rasterop_solid_SourceAndNotDestination
+        comp_func_solid_Exclusion
 };
 
 static const CompositionFunction functionForMode[] = {
@@ -2771,16 +2510,7 @@ static const CompositionFunction functionForMode[] = {
         comp_func_HardLight,
         comp_func_SoftLight,
         comp_func_Difference,
-        comp_func_Exclusion,
-        rasterop_SourceOrDestination,
-        rasterop_SourceAndDestination,
-        rasterop_SourceXorDestination,
-        rasterop_NotSourceAndNotDestination,
-        rasterop_NotSourceOrNotDestination,
-        rasterop_NotSourceXorDestination,
-        rasterop_NotSource,
-        rasterop_NotSourceAndDestination,
-        rasterop_SourceAndNotDestination
+        comp_func_Exclusion
 };
 
 static inline TextureBlendType getBlendType(const QSpanData *data)
@@ -2816,10 +2546,6 @@ static inline Operator getOperator(const QSpanData *data, const QSpan *spans, in
         solidSource = !data->gradient.alphaColor;
         getRadialGradientValues(&op.radial, data);
         op.src_fetch = qt_fetch_radial_gradient;
-        break;
-    case QSpanData::ConicalGradient:
-        solidSource = !data->gradient.alphaColor;
-        op.src_fetch = qt_fetch_conical_gradient;
         break;
     case QSpanData::Texture:
         solidSource = !data->texture.hasAlpha;
