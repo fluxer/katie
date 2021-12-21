@@ -566,21 +566,8 @@ QImage QFontEngine::alphaMapForGlyph(glyph_t glyph, QFixed /*subPixelPosition*/)
     return alphaMapForGlyph(glyph);
 }
 
-QImage QFontEngine::alphaMapForGlyph(glyph_t glyph, const QTransform &t)
-{
-    QImage i = alphaMapForGlyph(glyph);
-    if (t.type() > QTransform::TxTranslate)
-        i = i.transformed(t).convertToFormat(QImage::Format_Indexed8);
-    Q_ASSERT(i.depth() <= 8); // To verify that transformed didn't change the format...
-
-    return i;
-}
-
 QImage QFontEngine::alphaMapForGlyph(glyph_t glyph, QFixed subPixelPosition, const QTransform &t)
 {
-    if (! supportsSubPixelPositions())
-        return alphaMapForGlyph(glyph, t);
-
     QImage i = alphaMapForGlyph(glyph, subPixelPosition);
     if (t.type() > QTransform::TxTranslate)
         i = i.transformed(t).convertToFormat(QImage::Format_Indexed8);
@@ -589,9 +576,9 @@ QImage QFontEngine::alphaMapForGlyph(glyph_t glyph, QFixed subPixelPosition, con
     return i;
 }
 
-QImage QFontEngine::alphaRGBMapForGlyph(glyph_t glyph, QFixed /*subPixelPosition*/, const QTransform &t)
+QImage QFontEngine::alphaRGBMapForGlyph(glyph_t glyph, QFixed subPixelPosition, const QTransform &t)
 {
-    QImage alphaMask = alphaMapForGlyph(glyph, t);
+    QImage alphaMask = alphaMapForGlyph(glyph, subPixelPosition, t);
     QImage rgbMask(alphaMask.width(), alphaMask.height(), QImage::Format_RGB32);
 
     QVector<QRgb> colorTable = alphaMask.colorTable();
@@ -691,12 +678,11 @@ QByteArray QFontEngine::getSfntTable(uint tag) const
     return table;
 }
 
-void QFontEngine::setGlyphCache(void *key, QFontEngineGlyphCache *data)
+void QFontEngine::setGlyphCache(QFontEngineGlyphCache *data)
 {
     Q_ASSERT(data);
 
     GlyphCacheEntry entry;
-    entry.context = key;
     entry.cache = data;
     if (m_glyphCaches.contains(entry))
         return;
@@ -710,12 +696,11 @@ void QFontEngine::setGlyphCache(void *key, QFontEngineGlyphCache *data)
 
 }
 
-QFontEngineGlyphCache *QFontEngine::glyphCache(void *key, QFontEngineGlyphCache::Type type, const QTransform &transform) const
+QFontEngineGlyphCache *QFontEngine::glyphCache(QFontEngineGlyphCache::Type type, const QTransform &transform) const
 {
     for (QLinkedList<GlyphCacheEntry>::const_iterator it = m_glyphCaches.constBegin(), end = m_glyphCaches.constEnd(); it != end; ++it) {
         QFontEngineGlyphCache *c = it->cache.data();
-        if (key == it->context
-            && type == c->cacheType()
+        if (type == c->cacheType()
             && qtransform_equals_no_translate(c->m_transform, transform)) {
             return c;
         }
