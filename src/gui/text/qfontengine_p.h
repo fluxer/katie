@@ -184,8 +184,8 @@ public:
 
     virtual HB_Error getPointInOutline(HB_Glyph glyph, int flags, hb_uint32 point, HB_Fixed *xpos, HB_Fixed *ypos, hb_uint32 *nPoints);
 
-    void setGlyphCache(void *key, QFontEngineGlyphCache *data);
-    QFontEngineGlyphCache *glyphCache(void *key, QFontEngineGlyphCache::Type type, const QTransform &transform) const;
+    void setGlyphCache(QFontEngineGlyphCache *data);
+    QFontEngineGlyphCache *glyphCache(QFontEngineGlyphCache::Type type, const QTransform &transform) const;
 
     static const uchar *getCMap(const uchar *table, uint tableSize, bool *isSymbolFont, int *cmapSize);
     static quint32 getTrueTypeGlyphIndex(const uchar *cmap, uint unicode);
@@ -221,9 +221,8 @@ protected:
 
 private:
     struct GlyphCacheEntry {
-        void *context;
         QExplicitlySharedDataPointer<QFontEngineGlyphCache> cache;
-        bool operator==(const GlyphCacheEntry &other) const { return context == other.context && cache == other.cache; }
+        bool operator==(const GlyphCacheEntry &other) const { return cache == other.cache; }
     };
 
     mutable QLinkedList<GlyphCacheEntry> m_glyphCaches;

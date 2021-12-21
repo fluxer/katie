@@ -2142,10 +2142,10 @@ bool QRasterPaintEngine::drawCachedGlyphs(int numGlyphs, const glyph_t *glyphs,
                 : d->glyphCacheType;
 
         QImageTextureGlyphCache *cache =
-            static_cast<QImageTextureGlyphCache *>(fontEngine->glyphCache(0, glyphType, s->matrix));
+            static_cast<QImageTextureGlyphCache *>(fontEngine->glyphCache(glyphType, s->matrix));
         if (!cache) {
             cache = new QImageTextureGlyphCache(glyphType, s->matrix);
-            fontEngine->setGlyphCache(0, cache);
+            fontEngine->setGlyphCache(cache);
         }
 
         cache->populate(fontEngine, numGlyphs, glyphs, positions);
