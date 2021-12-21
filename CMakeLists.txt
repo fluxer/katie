@@ -229,7 +229,8 @@ set_package_properties(X11 PROPERTIES
     TYPE REQUIRED
 )
 
-find_package(Cairo)
+# v1.12+ required for CAIRO_ANTIALIAS_BEST
+find_package(Cairo 1.12)
 set_package_properties(Cairo PROPERTIES
     PURPOSE "Required for painting"
     DESCRIPTION "2D graphics library with support for multiple output devices"
