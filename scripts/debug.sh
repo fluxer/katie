@@ -8,7 +8,7 @@ rm -rf "$cwd/../debug"
 mkdir -p "$cwd/../debug"
 cd "$cwd/../debug"
 
-export CC=clang CXX=clang++
+export CC=clang-13 CXX=clang++-13
 export LSAN_OPTIONS=suppressions="$cwd/../scripts/lsan.supp"
 # undefined,float-cast-overflow,thread,memory,address
 sanitizers="address"

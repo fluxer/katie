@@ -28,39 +28,7 @@
 
 QT_BEGIN_NAMESPACE
 
-#if Q_BYTE_ORDER == Q_BIG_ENDIAN
-static const QImage::Format qt_cairo_mono_format = QImage::Format_Mono;
-#else
-static const QImage::Format qt_cairo_mono_format = QImage::Format_MonoLSB;
-#endif
-
-static const cairo_filter_t qt_cairo_filter = CAIRO_FILTER_NEAREST;
-
-// #define QT_RASTER_DEBUG
-#define QT_RASTER_STATUS
-
 extern QImage qt_imageForBrush(int brushStyle); // in qbrush.cpp
-
-#ifdef QT_RASTER_STATUS
-#  define QT_CHECK_RASTER_STATUS(cairo) \
-     { \
-         const cairo_status_t cairostatus = cairo_status(cairo); \
-         if (Q_UNLIKELY(cairostatus != CAIRO_STATUS_SUCCESS)) { \
-             qWarning() << Q_FUNC_INFO << cairo_status_to_string(cairostatus); \
-         } \
-     }
-#else
-#  define QT_CHECK_RASTER_STATUS(cairo)
-#endif
-
-static const QPaintEngine::PaintEngineFeatures qt_raster_features =
-    QPaintEngine::PainterPaths |
-    QPaintEngine::PerspectiveTransform |
-    QPaintEngine::PatternTransform |
-    QPaintEngine::ConstantOpacity |
-    QPaintEngine::PorterDuff |
-    QPaintEngine::BlendModes |
-    QPaintEngine::Antialiasing;
 
 static QImage qt_colorizeBitmap(const QImage &image, const QColor &color)
 {
@@ -87,30 +55,19 @@ static QImage qt_colorizeBitmap(const QImage &image, const QColor &color)
     return dest;
 }
 
+static const QPaintEngine::PaintEngineFeatures qt_raster_features =
+    QPaintEngine::PainterPaths |
+    QPaintEngine::PerspectiveTransform |
+    QPaintEngine::PatternTransform |
+    QPaintEngine::PorterDuff |
+    QPaintEngine::BlendModes;
+
 QRasterPaintEnginePrivate::QRasterPaintEnginePrivate()
-    : m_cairo(nullptr),
-    m_cairosurface(nullptr),
-    m_cairobackground(nullptr),
-    m_imagebits(nullptr),
-    m_cairofilter(qt_cairo_filter)
 {
 }
 
 QRasterPaintEnginePrivate::~QRasterPaintEnginePrivate()
 {
-    if (m_cairo) {
-        QT_CHECK_RASTER_STATUS(m_cairo)
-
-        cairo_destroy(m_cairo);
-    }
-
-    if (m_cairosurface) {
-        cairo_surface_destroy(m_cairosurface);
-    }
-
-    if (m_imagebits) {
-        ::free(m_imagebits);
-    }
 }
 
 QRasterPaintEngine::QRasterPaintEngine()
@@ -133,11 +90,11 @@ bool QRasterPaintEngine::begin(QPaintDevice *pdev)
 
     // qDebug() << Q_FUNC_INFO << pdev;
 
-    if (d->m_cairosurface || d->m_cairo) {
-        // should not happen but it does
-        if (!end()) {
-            return false;
-        }
+    // should not happen but it does
+    BLImageData imageData;
+    BLResult blresult = d->m_image.getData(&imageData);
+    if (blresult == BL_SUCCESS && imageData.pixelData && !end()) {
+        return false;
     }
 
     QImage *image = nullptr;
@@ -164,64 +121,8 @@ bool QRasterPaintEngine::begin(QPaintDevice *pdev)
         }
     }
 
-    QImage sourceimage(*image);
-    cairo_format_t cairoformat = CAIRO_FORMAT_ARGB32;
-    switch (image->format()) {
-        case qt_cairo_mono_format: {
-            cairoformat = CAIRO_FORMAT_A1;
-            break;
-        }
-        case QImage::Format_RGB16: {
-            cairoformat = CAIRO_FORMAT_RGB16_565;
-            break;
-        }
-        case QImage::Format_RGB32: {
-            cairoformat = CAIRO_FORMAT_RGB24;
-            break;
-        }
-        case QImage::Format_ARGB32_Premultiplied: {
-            cairoformat = CAIRO_FORMAT_ARGB32;
-            break;
-        }
-        default: {
-            cairoformat = CAIRO_FORMAT_ARGB32;
-            sourceimage = sourceimage.convertToFormat(QImage::Format_ARGB32_Premultiplied);
-            break;
-        }
-    }
-
-    d->m_imagebits = static_cast<uchar*>(::malloc(sourceimage.byteCount() * sizeof(uchar)));
-    ::memcpy(d->m_imagebits, sourceimage.constBits(), sourceimage.byteCount());
-    d->m_cairosurface = cairo_image_surface_create_for_data(
-        d->m_imagebits, cairoformat,
-        sourceimage.width(), sourceimage.height(),
-        sourceimage.bytesPerLine()
-    );
-
-    if (Q_LIKELY(d->m_cairosurface)) {
-        d->m_cairo = cairo_create(d->m_cairosurface);
-        QT_CHECK_RASTER_STATUS(d->m_cairo)
-    }
-
-    if (Q_UNLIKELY(!d->m_cairosurface || !d->m_cairo)) {
-        qWarning("QRasterPaintEngine: Could not create surface or context");
-        return false;
-    }
-
-    const cairo_status_t cairostatus = cairo_status(d->m_cairo);
-    if (Q_UNLIKELY(cairostatus != CAIRO_STATUS_SUCCESS)) {
-        // happens with big images
-        qWarning("QRasterPaintEngine: Surface format is not the one it should be");
-        return false;
-    }
-
-    d->m_cairobackground = backgroundPattern(state->backgroundBrush().color());
-    pushPattern(d->m_cairobackground);
-
-    setDirty(QPaintEngine::DirtyTransform);
-    setDirty(QPaintEngine::DirtyHints);
-    setDirty(QPaintEngine::DirtyCompositionMode);
-    setDirty(QPaintEngine::DirtyPen);
+    d->m_sourceimage = image->convertToFormat(QImage::Format_ARGB32_Premultiplied);
+    d->m_image = imageObject(d->m_sourceimage);
 
     return true;
 }
@@ -231,13 +132,6 @@ bool QRasterPaintEngine::end()
     Q_D(QRasterPaintEngine);
 
     // qDebug() << Q_FUNC_INFO;
-
-    if (!d->m_cairosurface || !d->m_cairo) {
-        // nothing painted?
-        return true;
-    }
-
-    popPattern(d->m_cairobackground);
 
     QImage *image = nullptr;
     // something changed the paint device between begin() and end()? that's
@@ -262,46 +156,28 @@ bool QRasterPaintEngine::end()
         }
     }
 
-    bool result = false;
-    switch (image->format()) {
-        case qt_cairo_mono_format:
-        case QImage::Format_RGB16:
-        case QImage::Format_RGB32:
-        case QImage::Format_ARGB32_Premultiplied: {
-            Q_ASSERT_X(image->d->ref == 1, "QRasterPaintEngine::end", "internal error");
-            const uchar* cairodata = cairo_image_surface_get_data(d->m_cairosurface);
-            ::memcpy(image->d->data, cairodata, image->byteCount());
-            result = true;
-            break;
-        }
-        default: {
-            Q_ASSERT_X(image->d->ref == 1, "QRasterPaintEngine::end", "internal error");
-            QImage converted(image->size(), QImage::Format_ARGB32_Premultiplied);
-            const uchar* cairodata = cairo_image_surface_get_data(d->m_cairosurface);
-            ::memcpy(converted.d->data, cairodata, image->byteCount());
-            converted = converted.convertToFormat(image->format());
-            ::memcpy(image->d->data, converted.constBits(), image->byteCount());
-            result = true;
-            break;
-        }
+    BLResult blresult = d->m_image.convert(BL_FORMAT_PRGB32);
+    if (blresult != BL_SUCCESS) {
+        qWarning("QRasterPaintEngine::end: Could not convert image");
+        return false;
     }
 
-    cairo_destroy(d->m_cairo);
-    d->m_cairo = nullptr;
+    BLImageData imageData;
+    blresult = d->m_image.getData(&imageData);
+    if (blresult != BL_SUCCESS) {
+        qWarning("QRasterPaintEngine::end: Could not get image data");
+        return false;
+    }
 
-    cairo_surface_destroy(d->m_cairosurface);
-    d->m_cairosurface = nullptr;
+    // Q_ASSERT_X(image->d->ref == 1, "QRasterPaintEngine::end", "internal error");
+    QImage converted = d->m_sourceimage.convertToFormat(image->format());
+    ::memcpy(image->d->data, converted.constBits(), image->byteCount());
 
-    ::free(d->m_imagebits);
-    d->m_imagebits = nullptr;
-
-    return result;
+    return true;
 }
 
 void QRasterPaintEngine::updateState(const QPaintEngineState &state)
 {
-    Q_D(QRasterPaintEngine);
-
 #if QT_RASTER_DEBUG
     qDebug() << Q_FUNC_INFO << state.pen() << state.brush() << state.brushOrigin()
         << state.backgroundBrush() << state.backgroundMode() << state.font()
@@ -309,273 +185,6 @@ void QRasterPaintEngine::updateState(const QPaintEngineState &state)
         << state.clipRegion() << state.clipPath() << state.isClipEnabled()
         << state.renderHints() << state.compositionMode() << state.opacity();
 #endif
-
-    const QPaintEngine::DirtyFlags stateflags = state.state();
-
-    // priority
-    if (stateflags & QPaintEngine::DirtyTransform) {
-        const QTransform statetransform(state.transform());
-
-        switch (statetransform.type()) {
-            case QTransform::TxNone: {
-                cairo_matrix_t cairomatrix;
-                cairo_matrix_init_identity(&cairomatrix);
-                cairo_set_matrix(d->m_cairo, &cairomatrix);
-                QT_CHECK_RASTER_STATUS(d->m_cairo)
-                break;
-            }
-            case QTransform::TxTranslate:
-            case QTransform::TxScale:
-            case QTransform::TxRotate:
-            case QTransform::TxShear:
-            case QTransform::TxProject: {
-                cairo_matrix_t cairomatrix;
-                cairo_matrix_init(&cairomatrix,
-                    statetransform.m11(), statetransform.m12(),
-                    statetransform.m21(), statetransform.m22(),
-                    statetransform.dx(), statetransform.dy()
-                );
-                cairo_set_matrix(d->m_cairo, &cairomatrix);
-                QT_CHECK_RASTER_STATUS(d->m_cairo)
-                break;
-            }
-        }
-    }
-
-    if (stateflags & QPaintEngine::DirtyHints) {
-        const QPainter::RenderHints statehints(state.renderHints());
-
-        if (statehints & QPainter::Antialiasing) {
-            cairo_set_antialias(d->m_cairo, CAIRO_ANTIALIAS_BEST);
-        } else {
-            cairo_set_antialias(d->m_cairo, CAIRO_ANTIALIAS_DEFAULT);
-        }
-        QT_CHECK_RASTER_STATUS(d->m_cairo)
-
-        if (statehints & QPainter::SmoothPixmapTransform) {
-            d->m_cairofilter = CAIRO_FILTER_BILINEAR;
-        } else {
-            d->m_cairofilter = CAIRO_FILTER_NEAREST;
-        }
-
-        cairo_font_options_t* cairooptions = cairo_font_options_create();
-        cairo_get_font_options(d->m_cairo, cairooptions);
-        QT_CHECK_RASTER_STATUS(d->m_cairo)
-        if (statehints & QPainter::TextAntialiasing) {
-            cairo_font_options_set_antialias(cairooptions, CAIRO_ANTIALIAS_SUBPIXEL);
-        } else {
-            cairo_font_options_set_antialias(cairooptions, CAIRO_ANTIALIAS_DEFAULT);
-        }
-        cairo_set_font_options(d->m_cairo, cairooptions);
-        QT_CHECK_RASTER_STATUS(d->m_cairo)
-        cairo_font_options_destroy(cairooptions);
-
-        // QPainter::NonCosmeticDefaultPen handled internally by QPainterPrivate::updateState()
-    }
-
-    if (stateflags & QPaintEngine::DirtyBackground || stateflags & QPaintEngine::DirtyBackgroundMode) {
-        const QColor statecolor(state.backgroundBrush().color());
-
-        popPattern(d->m_cairobackground);
-        d->m_cairobackground = backgroundPattern(statecolor);
-        pushPattern(d->m_cairobackground);
-    }
-
-    if (stateflags & QPaintEngine::DirtyCompositionMode) {
-        switch (state.compositionMode()) {
-            case QPainter::CompositionMode_SourceOver: {
-                cairo_set_operator(d->m_cairo, CAIRO_OPERATOR_OVER);
-                break;
-            }
-            case QPainter::CompositionMode_DestinationOver: {
-                cairo_set_operator(d->m_cairo, CAIRO_OPERATOR_DEST_OVER);
-                break;
-            }
-            case QPainter::CompositionMode_Clear: {
-                cairo_set_operator(d->m_cairo, CAIRO_OPERATOR_CLEAR);
-                break;
-            }
-            case QPainter::CompositionMode_Source: {
-                cairo_set_operator(d->m_cairo, CAIRO_OPERATOR_SOURCE);
-                break;
-            }
-            case QPainter::CompositionMode_Destination: {
-                cairo_set_operator(d->m_cairo, CAIRO_OPERATOR_DEST);
-                break;
-            }
-            case QPainter::CompositionMode_SourceIn: {
-                cairo_set_operator(d->m_cairo, CAIRO_OPERATOR_IN);
-                break;
-            }
-            case QPainter::CompositionMode_DestinationIn: {
-                cairo_set_operator(d->m_cairo, CAIRO_OPERATOR_DEST_IN);
-                break;
-            }
-            case QPainter::CompositionMode_SourceOut: {
-                cairo_set_operator(d->m_cairo, CAIRO_OPERATOR_OUT);
-                break;
-            }
-            case QPainter::CompositionMode_DestinationOut: {
-                cairo_set_operator(d->m_cairo, CAIRO_OPERATOR_DEST_OUT);
-                break;
-            }
-            case QPainter::CompositionMode_SourceAtop: {
-                cairo_set_operator(d->m_cairo, CAIRO_OPERATOR_ATOP);
-                break;
-            }
-            case QPainter::CompositionMode_DestinationAtop: {
-                cairo_set_operator(d->m_cairo, CAIRO_OPERATOR_DEST_ATOP);
-                break;
-            }
-            case QPainter::CompositionMode_Xor: {
-                cairo_set_operator(d->m_cairo, CAIRO_OPERATOR_XOR);
-                break;
-            }
-            case QPainter::CompositionMode_Plus: {
-                cairo_set_operator(d->m_cairo, CAIRO_OPERATOR_ADD);
-                break;
-            }
-            case QPainter::CompositionMode_Multiply: {
-                cairo_set_operator(d->m_cairo, CAIRO_OPERATOR_MULTIPLY);
-                break;
-            }
-            case QPainter::CompositionMode_Screen: {
-                cairo_set_operator(d->m_cairo, CAIRO_OPERATOR_SCREEN);
-                break;
-            }
-            case QPainter::CompositionMode_Overlay: {
-                cairo_set_operator(d->m_cairo, CAIRO_OPERATOR_OVERLAY);
-                break;
-            }
-            case QPainter::CompositionMode_Darken: {
-                cairo_set_operator(d->m_cairo, CAIRO_OPERATOR_DARKEN);
-                break;
-            }
-            case QPainter::CompositionMode_Lighten: {
-                cairo_set_operator(d->m_cairo, CAIRO_OPERATOR_LIGHTEN);
-                break;
-            }
-            case QPainter::CompositionMode_ColorDodge: {
-                cairo_set_operator(d->m_cairo, CAIRO_OPERATOR_COLOR_DODGE);
-                break;
-            }
-            case QPainter::CompositionMode_ColorBurn: {
-                cairo_set_operator(d->m_cairo, CAIRO_OPERATOR_COLOR_BURN);
-                break;
-            }
-            case QPainter::CompositionMode_HardLight: {
-                cairo_set_operator(d->m_cairo, CAIRO_OPERATOR_HARD_LIGHT);
-                break;
-            }
-            case QPainter::CompositionMode_SoftLight: {
-                cairo_set_operator(d->m_cairo, CAIRO_OPERATOR_SOFT_LIGHT);
-                break;
-            }
-            case QPainter::CompositionMode_Difference: {
-                cairo_set_operator(d->m_cairo, CAIRO_OPERATOR_DIFFERENCE);
-                break;
-            }
-            case QPainter::CompositionMode_Exclusion: {
-                cairo_set_operator(d->m_cairo, CAIRO_OPERATOR_EXCLUSION);
-                break;
-            }
-        }
-        QT_CHECK_RASTER_STATUS(d->m_cairo)
-    }
-
-    if (stateflags & QPaintEngine::DirtyClipEnabled) {
-        const bool stateclip(state.isClipEnabled());
-        if (!stateclip) {
-            cairo_reset_clip(d->m_cairo);
-            QT_CHECK_RASTER_STATUS(d->m_cairo)
-        }
-    }
-
-    if (stateflags & QPaintEngine::DirtyClipPath) {
-        // the clip can grow only if reset
-        const QPainterPath statepath(state.clipPath());
-
-        cairo_reset_clip(d->m_cairo);
-        QT_CHECK_RASTER_STATUS(d->m_cairo)
-        const QRectF pathrect(statepath.boundingRect());
-        cairo_rectangle(d->m_cairo,
-            pathrect.x(), pathrect.y(),
-            pathrect.width(), pathrect.height()
-        );
-        QT_CHECK_RASTER_STATUS(d->m_cairo)
-        cairo_clip(d->m_cairo);
-        QT_CHECK_RASTER_STATUS(d->m_cairo)
-    } else if (stateflags & QPaintEngine::DirtyClipRegion) {
-        const QRegion stateregion(state.clipRegion());
-
-        cairo_reset_clip(d->m_cairo);
-        QT_CHECK_RASTER_STATUS(d->m_cairo)
-        if (!stateregion.isEmpty()) {
-            foreach (const QRect &regionrect, stateregion.rects()) {
-                cairo_rectangle(d->m_cairo,
-                    regionrect.x(), regionrect.y(),
-                    regionrect.width(), regionrect.height()
-                );
-                QT_CHECK_RASTER_STATUS(d->m_cairo)
-                cairo_clip(d->m_cairo);
-                QT_CHECK_RASTER_STATUS(d->m_cairo)
-            }
-        }
-    }
-
-    if (stateflags & QPaintEngine::DirtyPen) {
-        const QPen statepen(state.pen());
-
-        if (statepen.isCosmetic()) {
-            cairo_set_line_width(d->m_cairo, 1.0);
-        } else {
-            cairo_set_line_width(d->m_cairo, statepen.widthF());
-        }
-        QT_CHECK_RASTER_STATUS(d->m_cairo)
-
-        switch (statepen.capStyle()) {
-            case Qt::FlatCap: {
-                cairo_set_line_cap(d->m_cairo, CAIRO_LINE_CAP_BUTT);
-                break;
-            }
-            case Qt::SquareCap: {
-                cairo_set_line_cap(d->m_cairo, CAIRO_LINE_CAP_SQUARE);
-                break;
-            }
-            case Qt::RoundCap: {
-                cairo_set_line_cap(d->m_cairo, CAIRO_LINE_CAP_ROUND);
-                break;
-            }
-        }
-        QT_CHECK_RASTER_STATUS(d->m_cairo)
-
-        switch (statepen.joinStyle()) {
-            case Qt::MiterJoin: {
-                cairo_set_line_join(d->m_cairo, CAIRO_LINE_JOIN_MITER);
-                break;
-            }
-            case Qt::BevelJoin: {
-                cairo_set_line_join(d->m_cairo, CAIRO_LINE_JOIN_BEVEL);
-                break;
-            }
-            case Qt::RoundJoin: {
-                cairo_set_line_join(d->m_cairo, CAIRO_LINE_JOIN_ROUND);
-                break;
-            }
-            case Qt::SvgMiterJoin: {
-                cairo_set_line_join(d->m_cairo, CAIRO_LINE_JOIN_MITER);
-                break;
-            }
-        }
-        QT_CHECK_RASTER_STATUS(d->m_cairo)
-
-        cairo_set_miter_limit(d->m_cairo, statepen.miterLimit());
-        QT_CHECK_RASTER_STATUS(d->m_cairo)
-
-        const QVector<qreal> pendashpattern(statepen.dashPattern());
-        cairo_set_dash(d->m_cairo, pendashpattern.data(), pendashpattern.size(), statepen.dashOffset());
-        QT_CHECK_RASTER_STATUS(d->m_cairo)
-    }
 }
 
 void QRasterPaintEngine::drawPath(const QPainterPath &path)
@@ -584,28 +193,197 @@ void QRasterPaintEngine::drawPath(const QPainterPath &path)
 
     // qDebug() << Q_FUNC_INFO << points << pointCount << mode;
 
-    cairo_new_path(d->m_cairo);
-    QT_CHECK_RASTER_STATUS(d->m_cairo)
+    BLContext blcontext(d->m_image);
+
+    const QTransform statetransform(state->transform());
+    BLMatrix2D blmatrix(
+        statetransform.m11(), statetransform.m12(),
+        statetransform.m21(), statetransform.m22(),
+        statetransform.dx(), statetransform.dy()
+    );
+    blcontext.transform(blmatrix);
+
+    switch (state->compositionMode()) {
+        case QPainter::CompositionMode_SourceOver: {
+            blcontext.setCompOp(BL_COMP_OP_SRC_OVER);
+            break;
+        }
+        case QPainter::CompositionMode_DestinationOver: {
+            blcontext.setCompOp(BL_COMP_OP_DST_OVER);
+            break;
+        }
+        case QPainter::CompositionMode_Clear: {
+            blcontext.setCompOp(BL_COMP_OP_CLEAR);
+            break;
+        }
+        case QPainter::CompositionMode_Source: {
+            blcontext.setCompOp(BL_COMP_OP_SRC_COPY);
+            break;
+        }
+        case QPainter::CompositionMode_Destination: {
+            blcontext.setCompOp(BL_COMP_OP_DST_COPY);
+            break;
+        }
+        case QPainter::CompositionMode_SourceIn: {
+            blcontext.setCompOp(BL_COMP_OP_SRC_IN);
+            break;
+        }
+        case QPainter::CompositionMode_DestinationIn: {
+            blcontext.setCompOp(BL_COMP_OP_DST_IN);
+            break;
+        }
+        case QPainter::CompositionMode_SourceOut: {
+            blcontext.setCompOp(BL_COMP_OP_SRC_OUT);
+            break;
+        }
+        case QPainter::CompositionMode_DestinationOut: {
+            blcontext.setCompOp(BL_COMP_OP_DST_OUT);
+            break;
+        }
+        case QPainter::CompositionMode_SourceAtop: {
+            blcontext.setCompOp(BL_COMP_OP_SRC_ATOP);
+            break;
+        }
+        case QPainter::CompositionMode_DestinationAtop: {
+            blcontext.setCompOp(BL_COMP_OP_SRC_ATOP);
+            break;
+        }
+        case QPainter::CompositionMode_Xor: {
+            blcontext.setCompOp(BL_COMP_OP_DST_ATOP);
+            break;
+        }
+        case QPainter::CompositionMode_Plus: {
+            blcontext.setCompOp(BL_COMP_OP_PLUS);
+            break;
+        }
+        case QPainter::CompositionMode_Multiply: {
+            blcontext.setCompOp(BL_COMP_OP_MULTIPLY);
+            break;
+        }
+        case QPainter::CompositionMode_Screen: {
+            blcontext.setCompOp(BL_COMP_OP_SCREEN);
+            break;
+        }
+        case QPainter::CompositionMode_Overlay: {
+            blcontext.setCompOp(BL_COMP_OP_OVERLAY);
+            break;
+        }
+        case QPainter::CompositionMode_Darken: {
+            blcontext.setCompOp(BL_COMP_OP_DARKEN);
+            break;
+        }
+        case QPainter::CompositionMode_Lighten: {
+            blcontext.setCompOp(BL_COMP_OP_LIGHTEN);
+            break;
+        }
+        case QPainter::CompositionMode_ColorDodge: {
+            blcontext.setCompOp(BL_COMP_OP_COLOR_DODGE);
+            break;
+        }
+        case QPainter::CompositionMode_ColorBurn: {
+            blcontext.setCompOp(BL_COMP_OP_COLOR_BURN);
+            break;
+        }
+        case QPainter::CompositionMode_HardLight: {
+            blcontext.setCompOp(BL_COMP_OP_HARD_LIGHT);
+            break;
+        }
+        case QPainter::CompositionMode_SoftLight: {
+            blcontext.setCompOp(BL_COMP_OP_SOFT_LIGHT);
+            break;
+        }
+        case QPainter::CompositionMode_Difference: {
+            blcontext.setCompOp(BL_COMP_OP_DIFFERENCE);
+            break;
+        }
+        case QPainter::CompositionMode_Exclusion: {
+            blcontext.setCompOp(BL_COMP_OP_EXCLUSION);
+            break;
+        }
+    }
+
+    // TODO: no clipping needed?
+#if 0
+    const QRegion stateregion(state->clipRegion());
+    if (!stateregion.isEmpty()) {
+        foreach (const QRect &regionrect, stateregion.rects()) {
+            blcontext.clipToRect(
+                regionrect.x(), regionrect.y(),
+                regionrect.width(), regionrect.height()
+            );
+        }
+    }
+#endif
+
+    const QPen statepen(state->pen());
+    if (statepen.isCosmetic()) {
+        blcontext.setStrokeWidth(1.0);
+    } else {
+        blcontext.setStrokeWidth(statepen.widthF());
+    }
+
+    switch (statepen.capStyle()) {
+        case Qt::FlatCap: {
+            blcontext.setStrokeCaps(BL_STROKE_CAP_BUTT);
+            break;
+        }
+        case Qt::SquareCap: {
+            blcontext.setStrokeCaps(BL_STROKE_CAP_SQUARE);
+            break;
+        }
+        case Qt::RoundCap: {
+            blcontext.setStrokeCaps(BL_STROKE_CAP_ROUND);
+            break;
+        }
+    }
+
+    switch (statepen.joinStyle()) {
+        case Qt::MiterJoin: {
+            blcontext.setStrokeJoin(BL_STROKE_JOIN_MITER_CLIP);
+            break;
+        }
+        case Qt::BevelJoin: {
+            blcontext.setStrokeJoin(BL_STROKE_JOIN_BEVEL);
+            break;
+        }
+        case Qt::RoundJoin: {
+            blcontext.setStrokeJoin(BL_STROKE_JOIN_MITER_ROUND);
+            break;
+        }
+        case Qt::SvgMiterJoin: {
+            blcontext.setStrokeJoin(BL_STROKE_JOIN_MITER_CLIP);
+            break;
+        }
+    }
+
+    blcontext.setStrokeMiterLimit(statepen.miterLimit());
+
+    const QVector<qreal> pendashpattern(statepen.dashPattern());
+    BLArray<double> blarray;
+    for (int i = 0; i < pendashpattern.size(); i++) {
+        blarray.append(pendashpattern.at(i));
+    }
+    blcontext.setStrokeDashArray(blarray);
+    blcontext.setStrokeDashOffset(statepen.dashOffset());
+
+    BLPath blpath;
     for (int i = 0; i < path.elementCount(); i++) {
         const QPainterPath::Element pathelement = path.elementAt(i);
         switch (pathelement.type) {
             case QPainterPath::MoveToElement: {
-                cairo_move_to(d->m_cairo, pathelement.x, pathelement.y);
-                QT_CHECK_RASTER_STATUS(d->m_cairo)
+                blpath.moveTo(pathelement.x, pathelement.y);
                 break;
             }
             case QPainterPath::LineToElement: {
-                cairo_line_to(d->m_cairo, pathelement.x, pathelement.y);
-                QT_CHECK_RASTER_STATUS(d->m_cairo)
+                blpath.lineTo(pathelement.x, pathelement.y);
                 break;
             }
             case QPainterPath::CurveToElement: {
-                cairo_curve_to(d->m_cairo,
+                blpath.cubicTo(
                     pathelement.x, pathelement.y,
                     path.elementAt(i + 1).x, path.elementAt(i + 1).y,
                     path.elementAt(i + 2).x, path.elementAt(i + 2).y
                 );
-                QT_CHECK_RASTER_STATUS(d->m_cairo)
                 i += 2;
                 break;
             }
@@ -615,19 +393,166 @@ void QRasterPaintEngine::drawPath(const QPainterPath &path)
             }
         }
     }
-    cairo_close_path(d->m_cairo);
-    QT_CHECK_RASTER_STATUS(d->m_cairo)
+
+    blcontext.setStrokeStyle(BLRgba32(statepen.color().rgba()));
+    blcontext.strokePath(blpath);
 
     switch (path.fillRule()) {
         case Qt::WindingFill: {
-            strokeAndFill(CAIRO_FILL_RULE_WINDING);
+            blcontext.setFillRule(BL_FILL_RULE_NON_ZERO);
             break;
         }
         case Qt::OddEvenFill: {
-            strokeAndFill(CAIRO_FILL_RULE_EVEN_ODD);
+            blcontext.setFillRule(BL_FILL_RULE_EVEN_ODD);
             break;
         }
     }
+
+    // TODO: set matrix for image patterns?
+    const QBrush statebrush(state->brush());
+    switch (statebrush.style()) {
+        case Qt::NoBrush: {
+            break;
+        }
+        case Qt::SolidPattern: {
+            blcontext.setFillStyle(BLRgba32(statebrush.color().rgba()));
+            blcontext.fillPath(blpath);
+            break;
+        }
+        case Qt::Dense1Pattern:
+        case Qt::Dense2Pattern:
+        case Qt::Dense3Pattern:
+        case Qt::Dense4Pattern:
+        case Qt::Dense5Pattern:
+        case Qt::Dense6Pattern:
+        case Qt::Dense7Pattern:
+        case Qt::HorPattern:
+        case Qt::VerPattern:
+        case Qt::CrossPattern:
+        case Qt::BDiagPattern:
+        case Qt::FDiagPattern:
+        case Qt::DiagCrossPattern: {
+            const QImage sourceimage(qt_imageForBrush(statebrush.style()).convertToFormat(QImage::Format_ARGB32_Premultiplied));
+            const BLImage blimage = imageObject(qt_colorizeBitmap(sourceimage, statebrush.color()));
+
+            blcontext.setFillStyle(BLPattern(blimage));
+            blcontext.fillPath(blpath);
+            break;
+        }
+        case Qt::LinearGradientPattern: {
+            const QLinearGradient* brushgradient(static_cast<const QLinearGradient*>(statebrush.gradient()));
+
+            BLExtendMode blextend = BL_EXTEND_MODE_PAD;
+            switch (brushgradient->spread()) {
+                case QGradient::PadSpread: {
+                    blextend = BL_EXTEND_MODE_PAD;
+                    break;
+                }
+                case QGradient::ReflectSpread: {
+                    blextend = BL_EXTEND_MODE_REFLECT;
+                    break;
+                }
+                case QGradient::RepeatSpread: {
+                    blextend = BL_EXTEND_MODE_REPEAT;
+                    break;
+                }
+            }
+
+            BLGradient blgradient(
+                BLLinearGradientValues(
+                    brushgradient->start().x(), brushgradient->start().y(),
+                    brushgradient->finalStop().x(), brushgradient->finalStop().y()
+                ),
+                blextend
+            );
+
+            foreach (const QGradientStop &gradientstop, brushgradient->stops()) {
+                blgradient.addStop(
+                    gradientstop.first, BLRgba32(gradientstop.second.rgba())
+                );
+            }
+
+            const QPointF stateorigin(state->brushOrigin());
+            const QTransform brushtransform(statebrush.transform());
+            BLMatrix2D blmatrix(
+                brushtransform.m11(), brushtransform.m12(),
+                brushtransform.m21(), brushtransform.m22(),
+                brushtransform.dx(), brushtransform.dy()
+            );
+            blmatrix.translate(stateorigin.x(), stateorigin.y());
+            blgradient.setMatrix(blmatrix);
+
+            blcontext.setFillStyle(blgradient);
+            blcontext.fillPath(blpath);
+            break;
+        }
+        case Qt::RadialGradientPattern: {
+            const QRadialGradient* brushgradient(static_cast<const QRadialGradient*>(statebrush.gradient()));
+
+            BLExtendMode blextend = BL_EXTEND_MODE_PAD;
+            switch (brushgradient->spread()) {
+                case QGradient::PadSpread: {
+                    blextend = BL_EXTEND_MODE_PAD;
+                    break;
+                }
+                case QGradient::ReflectSpread: {
+                    blextend = BL_EXTEND_MODE_REFLECT;
+                    break;
+                }
+                case QGradient::RepeatSpread: {
+                    blextend = BL_EXTEND_MODE_REPEAT;
+                    break;
+                }
+            }
+
+            BLGradient blgradient(
+                BLRadialGradientValues(
+                    brushgradient->center().x(), brushgradient->center().y(),
+                    // TODO: brushgradient->centerRadius(),
+                    brushgradient->focalPoint().x(), brushgradient->focalPoint().y(),
+                    brushgradient->focalRadius()
+                ),
+                blextend
+            );
+
+            foreach (const QGradientStop &gradientstop, brushgradient->stops()) {
+                blgradient.addStop(
+                    gradientstop.first, BLRgba32(gradientstop.second.rgba())
+                );
+            }
+
+            const QPointF stateorigin(state->brushOrigin());
+            const QTransform brushtransform(statebrush.transform());
+            BLMatrix2D blmatrix(
+                brushtransform.m11(), brushtransform.m12(),
+                brushtransform.m21(), brushtransform.m22(),
+                brushtransform.dx(), brushtransform.dy()
+            );
+            blmatrix.translate(stateorigin.x(), stateorigin.y());
+            blgradient.setMatrix(blmatrix);
+
+            blcontext.setFillStyle(blgradient);
+            blcontext.fillPath(blpath);
+            break;
+        }
+        case Qt::TexturePattern: {
+            BLImage blimage;
+            QImage sourceimage;
+            if (qHasPixmapTexture(statebrush) && statebrush.texture().isQBitmap()) {
+                sourceimage = qt_colorizeBitmap(statebrush.textureImage(), statebrush.color());
+            } else {
+                sourceimage = statebrush.textureImage();
+            }
+            sourceimage = sourceimage.convertToFormat(QImage::Format_ARGB32_Premultiplied);
+            blimage = imageObject(sourceimage);
+
+            blcontext.setFillStyle(BLPattern(blimage));
+            blcontext.fillPath(blpath);
+            break;
+        }
+    }
+
+    blcontext.end();
 }
 
 void QRasterPaintEngine::drawPolygon(const QPointF *points, int pointCount, QPaintEngine::PolygonDrawMode mode)
@@ -665,332 +590,29 @@ void QRasterPaintEngine::drawImage(const QRectF &r, const QImage &image, const Q
 
     // qDebug() << Q_FUNC_INFO << r << image.cacheKey() << sr << flags;
 
-    QImage sourceimage(image.copy(sr.toRect()));
-    cairo_pattern_t* cairopattern = imagePattern(sourceimage, flags);
+    const QImage sourceimage = image.copy(sr.toRect()).convertToFormat(QImage::Format_ARGB32_Premultiplied, flags);
+    const BLImage blimage = imageObject(sourceimage);
 
-    if (!r.isEmpty()) {
-        cairo_rectangle(d->m_cairo, r.x(), r.y(), r.width(), r.height());
-        QT_CHECK_RASTER_STATUS(d->m_cairo)
-    }
+    BLContext blcontext(d->m_image);
 
-    pushPattern(cairopattern);
+    blcontext.setFillStyle(BLPattern(blimage));
+    blcontext.fillRect(r.x(), r.y(), r.width(), r.height());
 
-    cairo_paint_with_alpha(d->m_cairo, state->opacity());
-    QT_CHECK_RASTER_STATUS(d->m_cairo)
-
-    popPattern(cairopattern);
+    blcontext.end();
 }
 
-cairo_pattern_t* QRasterPaintEngine::backgroundPattern(const QColor &color)
+BLImage QRasterPaintEngine::imageObject(const QImage &image)
 {
-    // qDebug() << Q_FUNC_INFO << color;
-
-    cairo_pattern_t* cairopattern = nullptr;
-    switch (state->backgroundMode()) {
-        case Qt::TransparentMode: {
-            cairopattern = cairo_pattern_create_rgba(
-                color.redF(), color.greenF(), color.blueF(),
-                0.0
-            );
-            break;
-        }
-        case Qt::OpaqueMode: {
-            cairopattern = cairo_pattern_create_rgba(
-                color.redF(), color.greenF(), color.blueF(),
-                1.0
-            );
-            break;
-        }
-    }
-    return cairopattern;
-}
-
-cairo_pattern_t* QRasterPaintEngine::imagePattern(const QImage &image, const Qt::ImageConversionFlags flags)
-{
-    Q_D(QRasterPaintEngine);
-
-    // qDebug() << Q_FUNC_INFO << image.cacheKey() << flags;
-
-    QImage sourceimage(image);
-    cairo_format_t cairoformat = CAIRO_FORMAT_ARGB32;
-    switch (sourceimage.format()) {
-        case qt_cairo_mono_format: {
-            cairoformat = CAIRO_FORMAT_A1;
-            break;
-        }
-        case QImage::Format_RGB16: {
-            cairoformat = CAIRO_FORMAT_RGB16_565;
-            break;
-        }
-        case QImage::Format_RGB32: {
-            cairoformat = CAIRO_FORMAT_RGB24;
-            break;
-        }
-        case QImage::Format_ARGB32_Premultiplied: {
-            cairoformat = CAIRO_FORMAT_ARGB32;
-            break;
-        }
-        default: {
-            cairoformat = CAIRO_FORMAT_ARGB32;
-            sourceimage = sourceimage.convertToFormat(QImage::Format_ARGB32_Premultiplied, flags);
-            break;
-        }
-    }
-
-    cairo_surface_t* cairosurface = cairo_image_surface_create_for_data(
-        sourceimage.d->data,
-        cairoformat, sourceimage.width(), sourceimage.height(),
-        sourceimage.bytesPerLine()
+    BLImage blimage;
+    const BLResult blresult = blimage.createFromData(
+        image.width(), image.height(),
+        BL_FORMAT_PRGB32, (void*)image.bits(), image.bytesPerLine()
     );
-
-    if (Q_UNLIKELY(!cairosurface)) {
-        qWarning("QRasterPaintEngine: Could not create image surface");
-        return nullptr;
+    if (blresult != BL_SUCCESS) {
+        qWarning("QRasterPaintEngine::imageObject: Could not create image");
+        return BLImage();
     }
-    const cairo_format_t cairosurfaceformat = cairo_image_surface_get_format(cairosurface);
-    if (Q_UNLIKELY(cairosurfaceformat != cairoformat)) {
-        qWarning("QRasterPaintEngine: Image surface format is not %d", cairoformat);
-        return nullptr;
-    }
-
-#ifdef QT_RASTER_DEBUG
-    const QByteArray sourceout = QByteArray("/tmp/source-") + QByteArray::number(image.cacheKey()) + ".png";
-    sourceimage.save(sourceout, "PNG");
-
-    const QByteArray surfaceout = QByteArray("/tmp/surface-") + QByteArray::number(image.cacheKey()) + ".png";
-    cairo_surface_write_to_png(cairosurface, surfaceout.constData());
-#endif
-
-
-    cairo_pattern_t* cairopattern = cairo_pattern_create_for_surface(cairosurface);
-    cairo_pattern_set_filter(cairopattern, d->m_cairofilter);
-
-    cairo_surface_destroy(cairosurface);
-
-    return cairopattern;
-}
-
-cairo_pattern_t* QRasterPaintEngine::penPattern(const QPen &pen)
-{
-    // qDebug() << Q_FUNC_INFO << pen;
-
-    const QColor pencolor(pen.color());
-
-    cairo_pattern_t* cairopattern = cairo_pattern_create_rgba(
-        pencolor.redF(), pencolor.greenF(), pencolor.blueF(),
-        pencolor.alphaF()
-    );
-    cairo_pattern_set_filter(cairopattern, qt_cairo_filter);
-
-    return cairopattern;
-}
-
-cairo_pattern_t* QRasterPaintEngine::brushPattern(const QBrush &brush)
-{
-    // qDebug() << Q_FUNC_INFO << brush;
-
-    cairo_pattern_t* cairopattern = nullptr;
-
-    switch (brush.style()) {
-        case Qt::NoBrush: {
-            break;
-        }
-        case Qt::SolidPattern: {
-            const QColor brushcolor(brush.color());
-            cairopattern = cairo_pattern_create_rgba(
-                brushcolor.redF(), brushcolor.greenF(), brushcolor.blueF(),
-                brushcolor.alphaF()
-            );
-            cairo_pattern_set_filter(cairopattern, qt_cairo_filter);
-            break;
-        }
-        case Qt::Dense1Pattern:
-        case Qt::Dense2Pattern:
-        case Qt::Dense3Pattern:
-        case Qt::Dense4Pattern:
-        case Qt::Dense5Pattern:
-        case Qt::Dense6Pattern:
-        case Qt::Dense7Pattern:
-        case Qt::HorPattern:
-        case Qt::VerPattern:
-        case Qt::CrossPattern:
-        case Qt::BDiagPattern:
-        case Qt::FDiagPattern:
-        case Qt::DiagCrossPattern: {
-            const QImage sourceimage(qt_imageForBrush(brush.style()));
-            cairopattern = imagePattern(qt_colorizeBitmap(sourceimage, brush.color()));
-            break;
-        }
-        case Qt::LinearGradientPattern: {
-            const QLinearGradient* brushgradient(static_cast<const QLinearGradient*>(brush.gradient()));
-            cairopattern = cairo_pattern_create_linear(
-                brushgradient->start().x(), brushgradient->start().y(),
-                brushgradient->finalStop().x(), brushgradient->finalStop().y()
-            );
-            foreach (const QGradientStop &gradientstop, brushgradient->stops()) {
-                const QColor gradientcolor(gradientstop.second);
-                cairo_pattern_add_color_stop_rgba(cairopattern,
-                    gradientstop.first,
-                    gradientcolor.redF(), gradientcolor.greenF(), gradientcolor.blueF(),
-                    gradientcolor.alphaF()
-                );
-            }
-
-            switch (brushgradient->spread()) {
-                case QGradient::PadSpread: {
-                    cairo_pattern_set_extend(cairopattern, CAIRO_EXTEND_PAD);
-                    break;
-                }
-                case QGradient::ReflectSpread: {
-                    cairo_pattern_set_extend(cairopattern, CAIRO_EXTEND_REFLECT);
-                    break;
-                }
-                case QGradient::RepeatSpread: {
-                    cairo_pattern_set_extend(cairopattern, CAIRO_EXTEND_REPEAT);
-                    break;
-                }
-            }
-
-            cairo_pattern_set_filter(cairopattern, qt_cairo_filter);
-            break;
-        }
-        case Qt::RadialGradientPattern: {
-            const QRadialGradient* brushgradient(static_cast<const QRadialGradient*>(brush.gradient()));
-            cairopattern = cairo_pattern_create_radial(
-                brushgradient->center().x(), brushgradient->center().y(),
-                brushgradient->centerRadius(),
-                brushgradient->focalPoint().x(), brushgradient->focalPoint().y(),
-                brushgradient->focalRadius()
-            );
-            foreach (const QGradientStop &gradientstop, brushgradient->stops()) {
-                const QColor gradientcolor(gradientstop.second);
-                cairo_pattern_add_color_stop_rgba(cairopattern,
-                    gradientstop.first,
-                    gradientcolor.redF(), gradientcolor.greenF(), gradientcolor.blueF(),
-                    gradientcolor.alphaF()
-                );
-            }
-
-            switch (brushgradient->spread()) {
-                case QGradient::PadSpread: {
-                    cairo_pattern_set_extend(cairopattern, CAIRO_EXTEND_PAD);
-                    break;
-                }
-                case QGradient::ReflectSpread: {
-                    cairo_pattern_set_extend(cairopattern, CAIRO_EXTEND_REFLECT);
-                    break;
-                }
-                case QGradient::RepeatSpread: {
-                    cairo_pattern_set_extend(cairopattern, CAIRO_EXTEND_REPEAT);
-                    break;
-                }
-            }
-
-            cairo_pattern_set_filter(cairopattern, qt_cairo_filter);
-            break;
-        }
-        case Qt::TexturePattern: {
-            if (qHasPixmapTexture(brush) && brush.texture().isQBitmap()) {
-                cairopattern = imagePattern(qt_colorizeBitmap(brush.textureImage(), brush.color()));
-            } else {
-                cairopattern = imagePattern(brush.textureImage());
-            }
-            break;
-        }
-    }
-
-    if (Q_LIKELY(cairopattern)) {
-        const QPointF stateorigin(state->brushOrigin());
-        const QTransform brushtransform(brush.transform());
-
-        cairo_matrix_t cairomatrix;
-        cairo_matrix_init(&cairomatrix,
-            brushtransform.m11(), brushtransform.m12(),
-            brushtransform.m21(), brushtransform.m22(),
-            brushtransform.dx(), brushtransform.dy()
-        );
-        cairo_matrix_translate(&cairomatrix, stateorigin.x(), stateorigin.y());
-
-        cairo_pattern_set_matrix(cairopattern, &cairomatrix);
-    }
-
-    return cairopattern;
-}
-
-void QRasterPaintEngine::pushPattern(cairo_pattern_t* cairopattern)
-{
-    Q_D(QRasterPaintEngine);
-
-    // qDebug() << Q_FUNC_INFO << cairopattern;
-
-    cairo_push_group(d->m_cairo);
-    QT_CHECK_RASTER_STATUS(d->m_cairo)
-    cairo_set_source(d->m_cairo, cairopattern);
-    QT_CHECK_RASTER_STATUS(d->m_cairo)
-}
-
-void QRasterPaintEngine::popPattern(cairo_pattern_t* cairopattern)
-{
-    Q_D(QRasterPaintEngine);
-
-    // qDebug() << Q_FUNC_INFO << cairopattern;
-
-    cairo_pop_group_to_source(d->m_cairo);
-    QT_CHECK_RASTER_STATUS(d->m_cairo)
-    cairo_paint_with_alpha(d->m_cairo, state->opacity());
-    QT_CHECK_RASTER_STATUS(d->m_cairo)
-
-    cairo_pattern_destroy(cairopattern);
-}
-
-void QRasterPaintEngine::strokeAndFill(const cairo_fill_rule_t cairorule)
-{
-    Q_D(QRasterPaintEngine);
-
-    // qDebug() << Q_FUNC_INFO << cairorule;
-
-    const QPen statepen(state->pen());
-    const QBrush statebrush(state->brush());
-    cairo_pattern_t* penpattern = nullptr;
-    cairo_pattern_t* brushpattern = nullptr;
-
-    cairo_push_group(d->m_cairo);
-    QT_CHECK_RASTER_STATUS(d->m_cairo)
-    if (statepen.style() != Qt::NoPen && statepen.brush().style() != Qt::NoBrush) {
-        penpattern = penPattern(statepen);
-        cairo_set_source(d->m_cairo, penpattern);
-        QT_CHECK_RASTER_STATUS(d->m_cairo)
-        cairo_stroke(d->m_cairo);
-        QT_CHECK_RASTER_STATUS(d->m_cairo)
-    } else {
-        cairo_stroke_preserve(d->m_cairo);
-        QT_CHECK_RASTER_STATUS(d->m_cairo)
-    }
-
-    cairo_set_fill_rule(d->m_cairo, cairorule);
-    QT_CHECK_RASTER_STATUS(d->m_cairo)
-    if (statebrush.style() != Qt::NoBrush) {
-        brushpattern = brushPattern(statebrush);
-        cairo_set_source(d->m_cairo, brushpattern);
-        QT_CHECK_RASTER_STATUS(d->m_cairo)
-        cairo_fill(d->m_cairo);
-        QT_CHECK_RASTER_STATUS(d->m_cairo)
-    } else {
-        cairo_fill_preserve(d->m_cairo);
-        QT_CHECK_RASTER_STATUS(d->m_cairo)
-    }
-
-    cairo_pop_group_to_source(d->m_cairo);
-    QT_CHECK_RASTER_STATUS(d->m_cairo)
-    cairo_paint_with_alpha(d->m_cairo, state->opacity());
-    QT_CHECK_RASTER_STATUS(d->m_cairo)
-
-    if (penpattern) {
-        cairo_pattern_destroy(penpattern);
-    }
-    if (brushpattern) {
-        cairo_pattern_destroy(brushpattern);
-    }
+    return blimage;
 }
 
 QT_END_NAMESPACE

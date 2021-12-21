@@ -35,7 +35,7 @@
 #include "qpaintengine.h"
 #include "qpaintengine_p.h"
 
-#include <cairo/cairo.h>
+#include "src/blend2d.h"
 
 QT_BEGIN_NAMESPACE
 
@@ -65,14 +65,7 @@ protected:
     QRasterPaintEngine(QRasterPaintEnginePrivate &dptr);
 
 private:
-    cairo_pattern_t* backgroundPattern(const QColor &color);
-    cairo_pattern_t* imagePattern(const QImage &image, const Qt::ImageConversionFlags flags = Qt::AutoColor);
-    cairo_pattern_t* penPattern(const QPen &pen);
-    cairo_pattern_t* brushPattern(const QBrush &brush);
-    void pushPattern(cairo_pattern_t* cairopattern);
-    void popPattern(cairo_pattern_t* cairopattern);
-
-    void strokeAndFill(const cairo_fill_rule_t cairorule);
+    BLImage imageObject(const QImage &image);
 
     Q_DISABLE_COPY(QRasterPaintEngine)
 };
@@ -84,11 +77,8 @@ public:
     QRasterPaintEnginePrivate();
     ~QRasterPaintEnginePrivate();
 
-    cairo_t* m_cairo;
-    cairo_surface_t* m_cairosurface;
-    cairo_pattern_t* m_cairobackground;
-    uchar* m_imagebits;
-    cairo_filter_t m_cairofilter;
+    BLImage m_image;
+    QImage m_sourceimage;
 };
 
 QT_END_NAMESPACE

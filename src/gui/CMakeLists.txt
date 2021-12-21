@@ -4,7 +4,6 @@ set(EXTRA_GUI_LIBS
     ${FREETYPE_LIBRARIES}
     ${X11_X11_LIB}
     ${PNG_LIBRARIES}
-    ${CAIRO_LIBRARIES}
 )
 
 set(GUI_PUBLIC_HEADERS
@@ -222,7 +221,8 @@ include_directories(
     ${FREETYPE_INCLUDE_DIRS}
     ${X11_INCLUDE_DIR}
     ${PNG_INCLUDE_DIRS}
-    ${CAIRO_INCLUDES}
+    ${CMAKE_SOURCE_DIR}/src/3rdparty/blend2d
+    ${CMAKE_SOURCE_DIR}/src/3rdparty/asmjit/src
 )
 
 set(GUI_HEADERS
@@ -903,6 +903,9 @@ set(GUI_SOURCES
     ${CMAKE_SOURCE_DIR}/src/3rdparty/harfbuzz/src/harfbuzz-stream.c
     ${CMAKE_SOURCE_DIR}/src/3rdparty/harfbuzz/src/harfbuzz-shaper-all.cpp
     ${CMAKE_SOURCE_DIR}/src/gui/text/qharfbuzz.cpp
+    
+    
+    ${BLEND2D_ALL_SRC_FILES}
 )
 
 # keep in sync with the top-level CMake file, only libraries setup is needed here

@@ -229,14 +229,6 @@ set_package_properties(X11 PROPERTIES
     TYPE REQUIRED
 )
 
-find_package(Cairo)
-set_package_properties(Cairo PROPERTIES
-    PURPOSE "Required for painting"
-    DESCRIPTION "2D graphics library with support for multiple output devices"
-    URL "https://cairographics.org/"
-    TYPE REQUIRED
-)
-
 # v2.1.10+ required for FT_GlyphSlot_Embolden()
 find_package(Freetype 2.1.10)
 set_package_properties(Freetype PROPERTIES
@@ -513,6 +505,12 @@ configure_file(
     ${CMAKE_SOURCE_DIR}/src/core/global/qconfig.cpp.cmake
     ${CMAKE_BINARY_DIR}/include/qconfig.cpp
 )
+
+set(BLEND2D_DIR "${CMAKE_SOURCE_DIR}/src/3rdparty/blend2d" CACHE PATH "Location of 'blend2d'")
+
+# Enable Blend2D static build.
+set(BLEND2D_EMBED TRUE)
+include("${BLEND2D_DIR}/CMakeLists.txt")
 
 add_subdirectory(src/shared)
 
