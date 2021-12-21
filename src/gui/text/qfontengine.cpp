@@ -570,8 +570,7 @@ QImage QFontEngine::alphaMapForGlyph(glyph_t glyph)
     p.drawPath(path);
     p.end();
 
-    QImage indexed(im.width(), im.height(), QImage::Format_Indexed8);
-    indexed.setColorTable(alphaColorTable());
+    QImage indexed(im.width(), im.height(), QImage::Format_ARGB32);
 
     const int bpl = indexed.bytesPerLine();
     uchar *dest = indexed.bits();
@@ -1113,8 +1112,7 @@ QFontEngine::Type QFontEngineBox::type() const
 
 QImage QFontEngineBox::alphaMapForGlyph(glyph_t)
 {
-    QImage image(_size, _size, QImage::Format_Indexed8);
-    image.setColorTable(alphaColorTable());
+    QImage image(_size, _size, QImage::Format_ARGB32);
     image.fill(0);
 
     // can't use qpainter for index8; so use setPixel to draw our rectangle.

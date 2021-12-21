@@ -302,20 +302,13 @@ QFontEngineX11FT::QFontEngineX11FT(FcPattern *pattern, const QFontDef &fd, int s
 
 #ifndef QT_NO_XRENDER
     if (qt_x11Data->use_xrender) {
-        int format = PictStandardA8;
+        int format = PictStandardARGB32;
         if (!antialias)
             format = PictStandardA1;
-        else if (subpixelType == Subpixel_RGB
-                 || subpixelType == Subpixel_BGR
-                 || subpixelType == Subpixel_VRGB
-                 || subpixelType == Subpixel_VBGR)
-            format = PictStandardARGB32;
         xglyph_format = format;
 
-        if (subpixelType != QFontEngineFT::Subpixel_None)
+        if (antialias)
             defaultFormat = Format_A32;
-        else if (antialias)
-            defaultFormat = Format_A8;
         else
             defaultFormat = Format_Mono;
     }

@@ -870,8 +870,7 @@ QFontEngineFT::Glyph *QFontEngineFT::loadGlyph(QGlyphSet *set, uint glyph,
         return 0;
     }
 
-    int pitch = (format == Format_Mono ? ((info.width + 31) & ~31) >> 3 :
-                 (format == Format_A8 ? (info.width + 3) & ~3 : info.width * 4));
+    int pitch = (format == Format_Mono ? ((info.width + 31) & ~31) >> 3 : info.width * 4);
     glyph_buffer_size = pitch * info.height;
     glyph_buffer = new uchar[glyph_buffer_size];
 
@@ -1670,7 +1669,7 @@ QImage QFontEngineFT::alphaMapForGlyph(glyph_t g, QFixed subPixelPosition)
 {
     lockFace();
 
-    GlyphFormat glyph_format = antialias ? Format_A8 : Format_Mono;
+    GlyphFormat glyph_format = antialias ? Format_A32 : Format_Mono;
 
     Glyph *glyph = defaultGlyphSet.outline_drawing ? 0 : loadGlyph(g, subPixelPosition, glyph_format);
     if (!glyph) {
@@ -1680,10 +1679,8 @@ QImage QFontEngineFT::alphaMapForGlyph(glyph_t g, QFixed subPixelPosition)
 
     const int pitch = antialias ? (glyph->width + 3) & ~3 : ((glyph->width + 31)/32) * 4;
 
-    QImage img(glyph->width, glyph->height, antialias ? QImage::Format_Indexed8 : QImage::Format_Mono);
-    if (antialias) {
-        img.setColorTable(alphaColorTable());
-    } else {
+    QImage img(glyph->width, glyph->height, antialias ? QImage::Format_ARGB32 : QImage::Format_Mono);
+    if (!antialias) {
         static const QVector<QRgb> colors = { qt_transparentrgba, qt_blackrgba };
         img.setColorTable(colors);
     }
@@ -1800,7 +1797,7 @@ HB_Error QFontEngineFT::getPointInOutline(HB_Glyph glyph, int flags, hb_uint32 p
     lockFace();
     bool hsubpixel = true;
     int vfactor = 1;
-    int load_flags = loadFlags(0, Format_A8, flags, hsubpixel, vfactor);
+    int load_flags = loadFlags(0, Format_A32, flags, hsubpixel, vfactor);
     HB_Error result = freetype->getPointInOutline(glyph, load_flags, point, xpos, ypos, nPoints);
     unlockFace();
     return result;

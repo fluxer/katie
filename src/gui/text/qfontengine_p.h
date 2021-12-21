@@ -71,7 +71,6 @@ public:
         Format_None,
         Format_Render = Format_None,
         Format_Mono,
-        Format_A8,
         Format_A32
     };
 
