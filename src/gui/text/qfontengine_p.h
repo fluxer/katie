@@ -38,7 +38,6 @@
 #include <QtCore/QLinkedList>
 #include "qtextengine_p.h"
 #include "qfont_p.h"
-#include "qfontengineglyphcache_p.h"
 
 struct glyph_metrics_t;
 typedef unsigned int glyph_t;
@@ -72,7 +71,6 @@ public:
         Format_None,
         Format_Render = Format_None,
         Format_Mono,
-        Format_A8,
         Format_A32
     };
 
@@ -142,13 +140,6 @@ public:
      */
     virtual QImage alphaMapForGlyph(glyph_t);
     virtual QImage alphaMapForGlyph(glyph_t glyph, QFixed subPixelPosition);
-    virtual QImage alphaMapForGlyph(glyph_t, QFixed subPixelPosition, const QTransform &t);
-    virtual QImage alphaRGBMapForGlyph(glyph_t, QFixed subPixelPosition, const QTransform &t);
-
-    virtual glyph_metrics_t alphaMapBoundingBox(glyph_t glyph, QFixed /*subPixelPosition*/, const QTransform &matrix, GlyphFormat /*format*/)
-    {
-        return boundingBox(glyph, matrix);
-    }
 
     virtual glyph_metrics_t boundingBox(const QGlyphLayout &glyphs) const = 0;
     virtual glyph_metrics_t boundingBox(glyph_t glyph) const = 0;
@@ -183,12 +174,6 @@ public:
 
     virtual HB_Error getPointInOutline(HB_Glyph glyph, int flags, hb_uint32 point, HB_Fixed *xpos, HB_Fixed *ypos, hb_uint32 *nPoints);
 
-    void setGlyphCache(QFontEngineGlyphCache *data);
-    QFontEngineGlyphCache *glyphCache(QFontEngineGlyphCache::Type type, const QTransform &transform) const;
-
-    static const uchar *getCMap(const uchar *table, uint tableSize, bool *isSymbolFont, int *cmapSize);
-    static quint32 getTrueTypeGlyphIndex(const uchar *cmap, uint unicode);
-
     static QByteArray convertToPostscriptFontFamilyName(const QByteArray &fontFamily);
 
     QAtomicInt ref;
@@ -213,18 +198,8 @@ public:
     void loadKerningPairs(QFixed scalingFactor);
 #endif
 
-    int glyphFormat;
-
 protected:
     QFixed lastRightBearing(const QGlyphLayout &glyphs, bool round = false);
-
-private:
-    struct GlyphCacheEntry {
-        QExplicitlySharedDataPointer<QFontEngineGlyphCache> cache;
-        bool operator==(const GlyphCacheEntry &other) const { return cache == other.cache; }
-    };
-
-    mutable QLinkedList<GlyphCacheEntry> m_glyphCaches;
 };
 
 inline bool operator ==(const QFontEngine::FaceId &f1, const QFontEngine::FaceId &f2)

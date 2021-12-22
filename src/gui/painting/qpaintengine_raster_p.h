@@ -40,7 +40,7 @@
 #include "qrasterizer_p.h"
 #include "qstroker_p.h"
 #include "qpainter_p.h"
-#include "qtextureglyphcache_p.h"
+#include "qfontengine_p.h"
 #include "qoutlinemapper_p.h"
 
 #include <stdlib.h>
@@ -176,9 +176,6 @@ public:
     void saveBuffer(const QString &s) const;
 #endif
 
-    void alphaPenBlt(const void* src, const int bpl, const int depth,
-                    int rx, int ry, int w, int h);
-
     Type type() const { return Raster; }
 
     bool supportsTransformations(const QFontEngine *fontEngine) const;
@@ -192,10 +189,6 @@ private:
 
     void fillRect(const QRectF &rect, QSpanData *data);
     void drawBitmap(const QPointF &pos, const QImage &image, QSpanData *fill);
-
-    bool drawCachedGlyphs(int numGlyphs, const glyph_t *glyphs, const QFixedPoint *positions,
-                          QFontEngine *fontEngine);
-
 
     bool setClipRectInDeviceCoords(const QRect &r, Qt::ClipOperation op);
 
@@ -268,14 +261,9 @@ public:
     QSpanData image_filler_xform;
     QSpanData solid_color_filler;
 
-
-    QFontEngineGlyphCache::Type glyphCacheType;
-
     QScopedPointer<QClipData> baseClip;
 
     int deviceDepth;
-
-    bool mono_surface;
 
     QScopedPointer<QRasterizer> rasterizer;
 };

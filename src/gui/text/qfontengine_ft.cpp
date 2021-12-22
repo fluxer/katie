@@ -593,13 +593,6 @@ bool QFontEngineFT::init(FaceId faceId, bool antialias, GlyphFormat format,
     defaultFormat = format;
     this->antialias = antialias;
 
-    if (!antialias)
-        glyphFormat = QFontEngineGlyphCache::Raster_Mono;
-    else if (format == Format_A8)
-        glyphFormat = QFontEngineGlyphCache::Raster_A8;
-    else if (format == Format_A32)
-        glyphFormat = QFontEngineGlyphCache::Raster_RGBMask;
-
     face_id = faceId;
 
     symbol = freetype->symbol_map != 0;
@@ -877,8 +870,7 @@ QFontEngineFT::Glyph *QFontEngineFT::loadGlyph(QGlyphSet *set, uint glyph,
         return 0;
     }
 
-    int pitch = (format == Format_Mono ? ((info.width + 31) & ~31) >> 3 :
-                 (format == Format_A8 ? (info.width + 3) & ~3 : info.width * 4));
+    int pitch = (format == Format_Mono ? ((info.width + 31) & ~31) >> 3 : info.width * 4);
     glyph_buffer_size = pitch * info.height;
     glyph_buffer = new uchar[glyph_buffer_size];
 
@@ -1594,11 +1586,6 @@ glyph_metrics_t QFontEngineFT::boundingBox(glyph_t glyph) const
 
 glyph_metrics_t QFontEngineFT::boundingBox(glyph_t glyph, const QTransform &matrix)
 {
-    return alphaMapBoundingBox(glyph, 0, matrix, QFontEngine::Format_None);
-}
-
-glyph_metrics_t QFontEngineFT::alphaMapBoundingBox(glyph_t glyph, QFixed subPixelPosition, const QTransform &matrix, QFontEngine::GlyphFormat format)
-{
     FT_Face face = 0;
     glyph_metrics_t overall;
     QGlyphSet *glyphSet = 0;
@@ -1642,12 +1629,12 @@ glyph_metrics_t QFontEngineFT::alphaMapBoundingBox(glyph_t glyph, QFixed subPixe
         glyphSet = &defaultGlyphSet;
     }
     Glyph * g = glyphSet->getGlyph(glyph);
-    if (!g || g->format != format) {
+    if (!g || g->format != QFontEngine::Format_None) {
         face = lockFace();
         FT_Matrix m = this->matrix;
         FT_Matrix_Multiply(&glyphSet->transformationMatrix, &m);
         freetype->matrix = m;
-        g = loadGlyph(glyphSet, glyph, subPixelPosition, format);
+        g = loadGlyph(glyphSet, glyph, 0, QFontEngine::Format_None);
     }
 
     if (g) {
@@ -1677,7 +1664,7 @@ QImage QFontEngineFT::alphaMapForGlyph(glyph_t g, QFixed subPixelPosition)
 {
     lockFace();
 
-    GlyphFormat glyph_format = antialias ? Format_A8 : Format_Mono;
+    GlyphFormat glyph_format = antialias ? Format_A32 : Format_Mono;
 
     Glyph *glyph = defaultGlyphSet.outline_drawing ? 0 : loadGlyph(g, subPixelPosition, glyph_format);
     if (!glyph) {
@@ -1685,12 +1672,10 @@ QImage QFontEngineFT::alphaMapForGlyph(glyph_t g, QFixed subPixelPosition)
         return QFontEngine::alphaMapForGlyph(g);
     }
 
-    const int pitch = antialias ? (glyph->width + 3) & ~3 : ((glyph->width + 31)/32) * 4;
+    const int pitch = (antialias ? glyph->width * 4 : ((glyph->width + 31) & ~31) >> 3);
 
-    QImage img(glyph->width, glyph->height, antialias ? QImage::Format_Indexed8 : QImage::Format_Mono);
-    if (antialias) {
-        img.setColorTable(alphaColorTable());
-    } else {
+    QImage img(glyph->width, glyph->height, antialias ? QImage::Format_ARGB32 : QImage::Format_Mono);
+    if (!antialias) {
         static const QVector<QRgb> colors = { qt_transparentrgba, qt_blackrgba };
         img.setColorTable(colors);
     }
@@ -1699,28 +1684,6 @@ QImage QFontEngineFT::alphaMapForGlyph(glyph_t g, QFixed subPixelPosition)
         for (int y = 0; y < glyph->height; ++y)
             memcpy(img.scanLine(y), &glyph->data[y * pitch], pitch);
     }
-    unlockFace();
-
-    return img;
-}
-
-QImage QFontEngineFT::alphaRGBMapForGlyph(glyph_t g, QFixed subPixelPosition, const QTransform &t)
-{
-    if (t.type() > QTransform::TxTranslate)
-        return QFontEngine::alphaRGBMapForGlyph(g, subPixelPosition, t);
-
-    lockFace();
-
-    GlyphFormat glyph_format = Format_A32;
-
-    Glyph *glyph = defaultGlyphSet.outline_drawing ? 0 : loadGlyph(g, subPixelPosition, glyph_format);
-    if (!glyph) {
-        unlockFace();
-        return QFontEngine::alphaRGBMapForGlyph(g, subPixelPosition, t);
-    }
-
-    QImage img(glyph->width, glyph->height, QImage::Format_RGB32);
-    memcpy(img.bits(), glyph->data, 4 * glyph->width * glyph->height);
     unlockFace();
 
     return img;
@@ -1829,7 +1792,7 @@ HB_Error QFontEngineFT::getPointInOutline(HB_Glyph glyph, int flags, hb_uint32 p
     lockFace();
     bool hsubpixel = true;
     int vfactor = 1;
-    int load_flags = loadFlags(0, Format_A8, flags, hsubpixel, vfactor);
+    int load_flags = loadFlags(0, Format_A32, flags, hsubpixel, vfactor);
     HB_Error result = freetype->getPointInOutline(glyph, load_flags, point, xpos, ypos, nPoints);
     unlockFace();
     return result;

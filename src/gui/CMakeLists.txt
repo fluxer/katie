@@ -444,7 +444,6 @@ set(GUI_HEADERS
     ${CMAKE_CURRENT_SOURCE_DIR}/painting/qstroker_p.h
     ${CMAKE_CURRENT_SOURCE_DIR}/painting/qstylepainter.h
     ${CMAKE_CURRENT_SOURCE_DIR}/painting/qtessellator_p.h
-    ${CMAKE_CURRENT_SOURCE_DIR}/painting/qtextureglyphcache_p.h
     ${CMAKE_CURRENT_SOURCE_DIR}/painting/qtransform.h
     ${CMAKE_CURRENT_SOURCE_DIR}/painting/qwindowsurface_p.h
     ${CMAKE_CURRENT_SOURCE_DIR}/painting/qpaintengine_raster_p.h
@@ -477,7 +476,6 @@ set(GUI_HEADERS
     ${CMAKE_CURRENT_SOURCE_DIR}/text/qfont.h
     ${CMAKE_CURRENT_SOURCE_DIR}/text/qfontdatabase.h
     ${CMAKE_CURRENT_SOURCE_DIR}/text/qfontengine_p.h
-    ${CMAKE_CURRENT_SOURCE_DIR}/text/qfontengineglyphcache_p.h
     ${CMAKE_CURRENT_SOURCE_DIR}/text/qfontinfo.h
     ${CMAKE_CURRENT_SOURCE_DIR}/text/qfontmetrics.h
     ${CMAKE_CURRENT_SOURCE_DIR}/text/qfont_p.h
@@ -783,7 +781,6 @@ set(GUI_SOURCES
     ${CMAKE_CURRENT_SOURCE_DIR}/painting/qstroker.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/painting/qstylepainter.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/painting/qtessellator.cpp
-    ${CMAKE_CURRENT_SOURCE_DIR}/painting/qtextureglyphcache.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/painting/qtransform.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/painting/qwindowsurface.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/painting/qpaintengine_raster.cpp

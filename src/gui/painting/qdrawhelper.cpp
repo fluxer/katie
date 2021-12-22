@@ -42,13 +42,6 @@ static inline uint INTERPOLATE_PIXEL_255(uint x, uint a, uint y, uint b) {
     return x;
 }
 
-static inline uint BYTE_MUL_RGB16(uint x, uint a) {
-    a += 1;
-    uint t = (((x & 0x07e0)*a) >> 8) & 0x07e0;
-    t |= (((x & 0xf81f)*(a>>2)) >> 6) & 0xf81f;
-    return t;
-}
-
 static inline QRgb qConvertRgb16To32(uint c)
 {
     return 0xff000000
@@ -2757,69 +2750,6 @@ void qBlendTexture(int count, const QSpan *spans, void *userData)
     }
 }
 
-template <class DST>
-inline void qt_bitmapblit_template(QRasterBuffer *rasterBuffer,
-                                   int x, int y, quint32 color,
-                                   const uchar *map,
-                                   int mapWidth, int mapHeight, int mapStride)
-{
-    const DST c = qt_colorConvert<DST, quint32>(color, 0);
-    DST *dest = reinterpret_cast<DST*>(rasterBuffer->scanLine(y)) + x;
-    const int destStride = rasterBuffer->bytesPerLine() / sizeof(DST);
-
-    if (mapWidth > 8) {
-        while (mapHeight--) {
-            int x0 = 0;
-            int n = 0;
-            for (int x = 0; x < mapWidth; x += 8) {
-                uchar s = map[x >> 3];
-                for (int i = 0; i < 8; ++i) {
-                    if (s & 0x80) {
-                        ++n;
-                    } else {
-                        if (n) {
-                            qt_memfill(dest + x0, c, n);
-                            x0 += n + 1;
-                            n = 0;
-                        } else {
-                            ++x0;
-                        }
-                        if (!s) {
-                            x0 += 8 - 1 - i;
-                            break;
-                        }
-                    }
-                    s <<= 1;
-                }
-            }
-            if (n)
-                qt_memfill(dest + x0, c, n);
-            dest += destStride;
-            map += mapStride;
-        }
-    } else {
-        while (mapHeight--) {
-            int x0 = 0;
-            int n = 0;
-            for (uchar s = *map; s; s <<= 1) {
-                if (s & 0x80) {
-                    ++n;
-                } else if (n) {
-                    qt_memfill(dest + x0, c, n);
-                    x0 += n + 1;
-                    n = 0;
-                } else {
-                    ++x0;
-                }
-            }
-            if (n)
-                qt_memfill(dest + x0, c, n);
-            dest += destStride;
-            map += mapStride;
-        }
-    }
-}
-
 static void qt_gradient_quint32(int count, const QSpan *spans, void *userData)
 {
     QSpanData *data = reinterpret_cast<QSpanData *>(userData);
@@ -2906,216 +2836,6 @@ static void qt_gradient_quint16(int count, const QSpan *spans, void *userData)
     }
 }
 
-inline static void qt_bitmapblit_quint32(QRasterBuffer *rasterBuffer,
-                                   int x, int y, quint32 color,
-                                   const uchar *map,
-                                   int mapWidth, int mapHeight, int mapStride)
-{
-    qt_bitmapblit_template<quint32>(rasterBuffer, x,  y,  color,
-                                    map, mapWidth, mapHeight, mapStride);
-}
-
-inline static void qt_bitmapblit_quint16(QRasterBuffer *rasterBuffer,
-                                   int x, int y, quint32 color,
-                                   const uchar *map,
-                                   int mapWidth, int mapHeight, int mapStride)
-{
-    qt_bitmapblit_template<quint16>(rasterBuffer, x,  y,  color,
-                                    map, mapWidth, mapHeight, mapStride);
-}
-
-static void qt_alphamapblit_quint16(QRasterBuffer *rasterBuffer,
-                                    int x, int y, quint32 color,
-                                    const uchar *map,
-                                    int mapWidth, int mapHeight, int mapStride,
-                                    const QClipData *)
-{
-    const quint16 c = qt_colorConvert<quint16, quint32>(color, 0);
-    quint16 *dest = reinterpret_cast<quint16*>(rasterBuffer->scanLine(y)) + x;
-    const int destStride = rasterBuffer->bytesPerLine() / sizeof(quint16);
-
-    while (mapHeight--) {
-        for (int i = 0; i < mapWidth; ++i) {
-            const int coverage = map[i];
-
-            if (coverage == 0) {
-                // nothing
-            } else if (coverage == 255) {
-                dest[i] = c;
-            } else {
-                int ialpha = 255 - coverage;
-                dest[i] = BYTE_MUL_RGB16(c, coverage)
-                          + BYTE_MUL_RGB16(dest[i], ialpha);
-            }
-        }
-        dest += destStride;
-        map += mapStride;
-    }
-}
-
-static inline void rgbBlendPixel(quint32 *dst, int coverage, int sr, int sg, int sb)
-{
-    // Do a gray alphablend...
-    int da = qAlpha(*dst);
-    int dr = qRed(*dst);
-    int dg = qGreen(*dst);
-    int db = qBlue(*dst);
-
-    if (da != 255) {
-
-        int a = qGray(coverage);
-        sr = qt_div_255(sr * a);
-        sg = qt_div_255(sg * a);
-        sb = qt_div_255(sb * a);
-
-        int ia = 255 - a;
-        dr = qt_div_255(dr * ia);
-        dg = qt_div_255(dg * ia);
-        db = qt_div_255(db * ia);
-
-        *dst = ((a + qt_div_255((255 - a) * da)) << 24)
-            |  ((sr + dr) << 16)
-            |  ((sg + dg) << 8)
-            |  ((sb + db));
-        return;
-    }
-
-    int mr = qRed(coverage);
-    int mg = qGreen(coverage);
-    int mb = qBlue(coverage);
-
-    int nr = qt_div_255((sr - dr) * mr) + dr;
-    int ng = qt_div_255((sg - dg) * mg) + dg;
-    int nb = qt_div_255((sb - db) * mb) + db;
-
-    *dst = qRgb(nr, ng, nb);
-}
-
-static void qt_alphamapblit_quint32(QRasterBuffer *rasterBuffer,
-                                    int x, int y, quint32 color,
-                                    const uchar *map,
-                                    int mapWidth, int mapHeight, int mapStride,
-                                    const QClipData *clip)
-{
-    const int destStride = rasterBuffer->bytesPerLine() / sizeof(quint32);
-
-    if (!clip) {
-        quint32 *dest = reinterpret_cast<quint32*>(rasterBuffer->scanLine(y)) + x;
-        while (mapHeight--) {
-            for (int i = 0; i < mapWidth; ++i) {
-                const int coverage = map[i];
-
-                if (coverage == 0) {
-                    // nothing
-                } else if (coverage == 255) {
-                    dest[i] = color;
-                } else {
-                    const int ialpha = 255 - coverage;
-                    dest[i] = INTERPOLATE_PIXEL_255(color, coverage, dest[i], ialpha);
-                }
-            }
-            dest += destStride;
-            map += mapStride;
-        }
-    } else {
-        const int bottom = qMin(y + mapHeight, rasterBuffer->height());
-
-        const int top = qMax(y, 0);
-        map += (top - y) * mapStride;
-
-        const_cast<QClipData *>(clip)->initialize();
-        for (int yp = top; yp<bottom; ++yp) {
-            const QClipData::ClipLine &line = clip->m_clipLines[yp];
-
-            quint32 *dest = reinterpret_cast<quint32 *>(rasterBuffer->scanLine(yp));
-
-            for (int i=0; i<line.count; ++i) {
-                const QSpan &clip = line.spans[i];
-
-                const int start = qMax<int>(x, clip.x);
-                const int end = qMin<int>(x + mapWidth, clip.x + clip.len);
-
-                for (int xp=start; xp<end; ++xp) {
-                    const int coverage = map[xp - x];
-
-                    if (coverage == 0) {
-                        // nothing
-                    } else if (coverage == 255) {
-                        dest[xp] = color;
-                    } else {
-                        const int ialpha = 255 - coverage;
-                        dest[xp] = INTERPOLATE_PIXEL_255(color, coverage, dest[xp], ialpha);
-                    }
-
-                } // for (i -> line.count)
-            } // for (yp -> bottom)
-            map += mapStride;
-        }
-    }
-}
-
-static void qt_alphargbblit_quint32(QRasterBuffer *rasterBuffer,
-                                    int x, int y, quint32 color,
-                                    const uint *src, int mapWidth, int mapHeight, int srcStride,
-                                    const QClipData *clip)
-{
-    int sr = qRed(color);
-    int sg = qGreen(color);
-    int sb = qBlue(color);
-    int sa = qAlpha(color);
-
-    if (sa == 0)
-        return;
-
-    if (!clip) {
-        quint32 *dst = reinterpret_cast<quint32*>(rasterBuffer->scanLine(y)) + x;
-        const int destStride = rasterBuffer->bytesPerLine() / sizeof(quint32);
-        while (mapHeight--) {
-            for (int i = 0; i < mapWidth; ++i) {
-                const uint coverage = src[i];
-                if (coverage == 0xffffffff) {
-                    dst[i] = color;
-                } else if (coverage != 0xff000000) {
-                    rgbBlendPixel(dst+i, coverage, sr, sg, sb);
-                }
-            }
-
-            dst += destStride;
-            src += srcStride;
-        }
-    } else {
-        int bottom = qMin(y + mapHeight, rasterBuffer->height());
-
-        int top = qMax(y, 0);
-        src += (top - y) * srcStride;
-
-        const_cast<QClipData *>(clip)->initialize();
-        for (int yp = top; yp<bottom; ++yp) {
-            const QClipData::ClipLine &line = clip->m_clipLines[yp];
-
-            quint32 *dst = reinterpret_cast<quint32 *>(rasterBuffer->scanLine(yp));
-
-            for (int i=0; i<line.count; ++i) {
-                const QSpan &clip = line.spans[i];
-
-                int start = qMax<int>(x, clip.x);
-                int end = qMin<int>(x + mapWidth, clip.x + clip.len);
-
-                for (int xp=start; xp<end; ++xp) {
-                    const uint coverage = src[xp - x];
-                    if (coverage == 0xffffffff) {
-                        dst[xp] = color;
-                    } else if (coverage != 0xff000000) {
-                        rgbBlendPixel(dst+xp, coverage, sr, sg, sb);
-                    }
-                }
-            } // for (i -> line.count)
-            src += srcStride;
-        } // for (yp -> bottom)
-
-    }
-}
-
 inline static void qt_rectfill_quint32(QRasterBuffer *rasterBuffer,
                                     int x, int y, int width, int height,
                                     quint32 color)
@@ -3148,59 +2868,47 @@ inline static void qt_rectfill_nonpremul_quint32(QRasterBuffer *rasterBuffer,
 DrawHelper qDrawHelper[QImage::NImageFormats] =
 {
     // Format_Invalid,
-    { 0, 0, 0, 0, 0, 0 },
+    { 0, 0, 0 },
     // Format_Mono,
     {
         blend_color_generic,
         blend_src_generic,
-        0, 0, 0, 0
+        0
     },
     // Format_MonoLSB,
     {
         blend_color_generic,
         blend_src_generic,
-        0, 0, 0, 0
+        0
     },
     // Format_Indexed8,
     {
         blend_color_generic,
         blend_src_generic,
-        0, 0, 0, 0
+        0
     },
     // Format_RGB32,
     {
         blend_color_generic,
         qt_gradient_quint32,
-        qt_bitmapblit_quint32,
-        qt_alphamapblit_quint32,
-        qt_alphargbblit_quint32,
         qt_rectfill_quint32
     },
     // Format_ARGB32,
     {
         blend_color_generic,
         qt_gradient_quint32,
-        qt_bitmapblit_quint32,
-        qt_alphamapblit_quint32,
-        qt_alphargbblit_quint32,
         qt_rectfill_nonpremul_quint32
     },
     // Format_ARGB32_Premultiplied
     {
         blend_color_generic,
         qt_gradient_quint32,
-        qt_bitmapblit_quint32,
-        qt_alphamapblit_quint32,
-        qt_alphargbblit_quint32,
         qt_rectfill_quint32
     },
     // Format_RGB16
     {
         blend_color_generic,
         qt_gradient_quint16,
-        qt_bitmapblit_quint16,
-        qt_alphamapblit_quint16,
-        0,
         qt_rectfill_quint16
     }
 };
