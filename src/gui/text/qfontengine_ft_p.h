@@ -120,7 +120,6 @@ public:
         signed char advance;
         signed char format;
         uchar *data;
-        bool uploadedToServer;
     };
 
     enum SubpixelAntialiasingType {
