@@ -568,10 +568,6 @@ QFontEngineFT::~QFontEngineFT()
         freetype->release(face_id);
 }
 
-void QFontEngineFT::freeGlyphSets()
-{
-}
-
 bool QFontEngineFT::init(FaceId faceId, bool antialias, GlyphFormat format)
 {
     return init(faceId, antialias, format, QFreetypeFace::getFace(faceId));

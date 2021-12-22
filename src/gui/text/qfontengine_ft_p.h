@@ -278,10 +278,8 @@ private:
     bool initFromFontEngine(const QFontEngineFT *fontEngine);
 
     HintStyle defaultHintStyle() const { return default_hint_style; }
+
 protected:
-
-    void freeGlyphSets();
-
     QFreetypeFace *freetype;
     int default_load_flags;
 

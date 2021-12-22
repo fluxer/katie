@@ -889,7 +889,6 @@ QImage QFontEngineBox::alphaMapForGlyph(glyph_t)
     QImage image(_size, _size, QImage::Format_ARGB32);
     image.fill(0);
 
-    // can't use qpainter for index8; so use setPixel to draw our rectangle.
     for (int i=2; i <= _size-3; ++i) {
         image.setPixel(i, 2, 255);
         image.setPixel(i, _size-3, 255);

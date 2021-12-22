@@ -308,7 +308,6 @@ QFontEngineX11FT::QFontEngineX11FT(FcPattern *pattern, const QFontDef &fd, int s
 
 QFontEngineX11FT::~QFontEngineX11FT()
 {
-    freeGlyphSets();
 }
 
 #endif // QT_NO_FONTCONFIG
