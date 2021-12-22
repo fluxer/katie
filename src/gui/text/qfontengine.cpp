@@ -799,7 +799,7 @@ void QFontEngineBox::addOutlineToPath(qreal x, qreal y, const QGlyphLayout &glyp
 
     QVarLengthArray<QFixedPoint> positions;
     QVarLengthArray<glyph_t> positioned_glyphs;
-    QTransform matrix = QTransform::fromTranslate(x, y - _size);
+    const QTransform matrix = QTransform::fromTranslate(x, y - _size);
     getGlyphPositions(glyphs, matrix, flags, positioned_glyphs, positions);
 
     QSize s(_size - 3, _size - 3);

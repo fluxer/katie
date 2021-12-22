@@ -1307,8 +1307,7 @@ void QFontEngineFT::addOutlineToPath(qreal x, qreal y, const QGlyphLayout &glyph
     } else {
         QVarLengthArray<QFixedPoint> positions;
         QVarLengthArray<glyph_t> positioned_glyphs;
-        QTransform matrix;
-        matrix.translate(x, y);
+        const QTransform matrix = QTransform::fromTranslate(x, y);
         getGlyphPositions(glyphs, matrix, flags, positioned_glyphs, positions);
 
         FT_Face face = lockFace(Unscaled);
