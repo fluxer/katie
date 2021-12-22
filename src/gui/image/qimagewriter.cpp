@@ -88,7 +88,6 @@
 
 // image handlers
 #include "qppmhandler_p.h"
-#include "qxpmhandler_p.h"
 #include "qpnghandler_p.h"
 
 QT_BEGIN_NAMESPACE
@@ -102,10 +101,6 @@ static QImageIOHandler *createWriteHandlerHelper(QIODevice *device,
     // check if any built-in handlers can write the image
     if (form == "png") {
         handler = new QPngHandler;
-#ifndef QT_NO_IMAGEFORMAT_XPM
-    } else if (form == "xpm") {
-        handler = new QXpmHandler;
-#endif
 #ifndef QT_NO_IMAGEFORMAT_PPM
     } else if (form == "pbm" || form == "pbmraw" || form == "ppm" || form == "ppmraw") {
         handler = new QPpmHandler;
@@ -497,7 +492,6 @@ bool QImageWriter::supportsOption(QImageIOHandler::ImageOption option) const
     \header \o Format \o Description
     \row    \o PNG    \o Portable Network Graphics
     \row    \o PPM    \o Portable Pixmap
-    \row    \o XPM    \o X11 Pixmap
     \endtable
 
     Reading and writing SVG files is supported through Qt's
@@ -514,9 +508,6 @@ QList<QByteArray> QImageWriter::supportedImageFormats()
     formats << "png";
 #ifndef QT_NO_IMAGEFORMAT_PPM
     formats << "ppm";
-#endif
-#ifndef QT_NO_IMAGEFORMAT_XPM
-    formats << "xpm";
 #endif
 
 #ifndef QT_NO_LIBRARY

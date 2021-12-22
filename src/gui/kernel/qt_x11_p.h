@@ -80,21 +80,25 @@
 #endif // QT_NO_XRENDER
 
 #ifndef QT_NO_XSYNC
-# include "X11/extensions/sync.h"
+#  include "X11/extensions/sync.h"
 #endif
 
 #ifndef QT_NO_XCURSOR
-#include <X11/Xcursor/Xcursor.h>
-#include <X11/cursorfont.h>
+#  include <X11/Xcursor/Xcursor.h>
+#  include <X11/cursorfont.h>
 #endif // QT_NO_XCURSOR
 
 #ifndef QT_NO_XFIXES
 #  include <X11/extensions/Xfixes.h>
 #endif // QT_NO_XFIXES
 
+#ifndef QT_NO_XPM
+#  include <X11/xpm.h>
+#endif // QT_NO_XPM
+
 #ifndef QT_NO_SESSIONMANAGER
-#include <X11/SM/SMlib.h>
-#endif
+#  include <X11/SM/SMlib.h>
+#endif // QT_NO_SESSIONMANAGER
 
 QT_BEGIN_NAMESPACE
 

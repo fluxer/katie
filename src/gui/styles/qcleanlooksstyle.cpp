@@ -4280,7 +4280,7 @@ QPixmap QCleanlooksStyle::standardPixmap(StandardPixmap standardPixmap, const QS
 {
     QPixmap pixmap;
 
-#ifndef QT_NO_IMAGEFORMAT_XPM
+#ifndef QT_NO_XPM
     switch (standardPixmap) {
     case SP_TitleBarNormalButton:
         return QPixmap((const char **)qt_cleanlooks_dock_widget_restore_xpm);
@@ -4293,7 +4293,7 @@ QPixmap QCleanlooksStyle::standardPixmap(StandardPixmap standardPixmap, const QS
     default:
         break;
     }
-#endif //QT_NO_IMAGEFORMAT_XPM
+#endif //QT_NO_XPM
 
     return QWindowsStyle::standardPixmap(standardPixmap, opt, widget);
 }

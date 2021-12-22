@@ -1,7 +1,6 @@
 /****************************************************************************
 **
-** Copyright (C) 2015 The Qt Company Ltd.
-** Copyright (C) 2016 Ivailo Monev
+** Copyright (C) 2021 Ivailo Monev
 **
 ** This file is part of the QtGui module of the Katie Toolkit.
 **
@@ -35,7 +34,7 @@
 
 #include "QtGui/qimageiohandler.h"
 
-#ifndef QT_NO_IMAGEFORMAT_XPM
+#ifndef QT_NO_XPM
 
 QT_BEGIN_NAMESPACE
 
@@ -45,35 +44,14 @@ public:
     QXpmHandler();
     bool canRead() const;
     bool read(QImage *image);
-    bool write(const QImage &image);
 
     static bool canRead(QIODevice *device);
 
     QByteArray name() const;
-
-    QVariant option(ImageOption option) const;
-    void setOption(ImageOption option, const QVariant &value);
-    bool supportsOption(ImageOption option) const;
-
-private:
-    bool readHeader();
-    enum State {
-        Ready,
-        ReadHeader,
-        Error
-    };
-    State state;
-    int width;
-    int height;
-    int ncols;
-    int cpp;
-    QByteArray buffer;
-    int index;
-    QString fileName;
 };
 
 QT_END_NAMESPACE
 
-#endif // QT_NO_IMAGEFORMAT_XPM
+#endif // QT_NO_XPM
 
 #endif // QXPMHANDLER_P_H

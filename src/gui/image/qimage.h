@@ -64,7 +64,7 @@ public:
     QImage(uchar *data, int width, int height, int bytesPerLine, Format format);
     QImage(const uchar *data, int width, int height, int bytesPerLine, Format format);
 
-#ifndef QT_NO_IMAGEFORMAT_XPM
+#ifndef QT_NO_XPM
     explicit QImage(const char * const xpm[]);
 #endif
     explicit QImage(const QString &fileName, const char *format = nullptr);

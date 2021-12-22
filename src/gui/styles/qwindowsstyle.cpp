@@ -336,7 +336,7 @@ int QWindowsStyle::pixelMetric(PixelMetric pm, const QStyleOption *opt, const QW
     return ret;
 }
 
-#ifndef QT_NO_IMAGEFORMAT_XPM
+#ifndef QT_NO_XPM
 
 /* XPM */
 static const char * const qt_windows_menu_xpm[] = {
@@ -547,7 +547,7 @@ static const char * qt_windows_dock_widget_close_xpm[] = {
 ".##..##.",
 "........",
 "........"};
-#endif //QT_NO_IMAGEFORMAT_XPM
+#endif //QT_NO_XPM
 
 /*!
  \reimp
@@ -555,7 +555,7 @@ static const char * qt_windows_dock_widget_close_xpm[] = {
 QPixmap QWindowsStyle::standardPixmap(StandardPixmap standardpixmap, const QStyleOption *opt,
                                       const QWidget *widget) const
 {
-#ifndef QT_NO_IMAGEFORMAT_XPM
+#ifndef QT_NO_XPM
     switch (standardpixmap) {
     case SP_TitleBarMenuButton:
         return QPixmap(qt_windows_menu_xpm);
@@ -586,7 +586,7 @@ QPixmap QWindowsStyle::standardPixmap(StandardPixmap standardpixmap, const QStyl
     default:
         break;
     }
-#endif //QT_NO_IMAGEFORMAT_XPM
+#endif //QT_NO_XPM
     return QCommonStyle::standardPixmap(standardpixmap, opt, widget);
 }
 

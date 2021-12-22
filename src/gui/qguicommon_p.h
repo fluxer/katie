@@ -382,7 +382,7 @@ inline static int lowest_bit(uint v)
 
 static const qreal inv_dist_to_plane = 1. / 1024.;
 
-#ifndef QT_NO_IMAGEFORMAT_XPM
+#ifndef QT_NO_XPM
 // Message box icons, from page 210 of the Windows style guide.
 
 // Hand-drawn to resemble Microsoft's icons, but in the Mac/Netscape palette.

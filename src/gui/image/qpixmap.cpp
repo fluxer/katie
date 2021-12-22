@@ -247,7 +247,7 @@ QPixmap::QPixmap(const QPixmap &pixmap)
     slightly more efficient (for example, when the code is in a shared
     library) and ROMable when the application is to be stored in ROM.
 */
-#ifndef QT_NO_IMAGEFORMAT_XPM
+#ifndef QT_NO_XPM
 QPixmap::QPixmap(const char * const xpm[])
     : QPaintDevice()
 {
