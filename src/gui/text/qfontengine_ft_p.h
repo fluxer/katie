@@ -284,10 +284,6 @@ protected:
 
     void freeGlyphSets();
 
-    virtual bool uploadGlyphToServer(QGlyphSet *set, uint glyphid, Glyph *g, GlyphInfo *info, int glyphDataSize) const;
-    virtual unsigned long allocateServerGlyphSet();
-    virtual void freeServerGlyphSet(unsigned long id);
-
     QFreetypeFace *freetype;
     int default_load_flags;
 
@@ -299,7 +295,6 @@ protected:
     bool embolden;
     SubpixelAntialiasingType subpixelType;
     int lcdFilterType;
-    bool canUploadGlyphsToServer;
     bool embeddedbitmap;
 
 private:

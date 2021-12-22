@@ -559,7 +559,6 @@ QFontEngineFT::QFontEngineFT(const QFontDef &fd)
     lcdFilterType = (int)((quintptr) FT_LCD_FILTER_DEFAULT);
 #endif
     defaultFormat = Format_None;
-    canUploadGlyphsToServer = false;
     embeddedbitmap = false;
 }
 
@@ -571,9 +570,6 @@ QFontEngineFT::~QFontEngineFT()
 
 void QFontEngineFT::freeGlyphSets()
 {
-    freeServerGlyphSet(defaultGlyphSet.id);
-    for (int i = 0; i < transformedGlyphSets.count(); ++i)
-        freeServerGlyphSet(transformedGlyphSets.at(i).id);
 }
 
 bool QFontEngineFT::init(FaceId faceId, bool antialias, GlyphFormat format)
@@ -645,7 +641,7 @@ bool QFontEngineFT::init(FaceId faceId, bool antialias, GlyphFormat format,
     unlockFace();
 
     fsType = freetype->fsType();
-    defaultGlyphSet.id = allocateServerGlyphSet();
+    defaultGlyphSet.id = 0;
     return true;
 }
 
@@ -694,12 +690,9 @@ QFontEngineFT::Glyph *QFontEngineFT::loadGlyph(QGlyphSet *set, uint glyph,
 {
 //     Q_ASSERT(freetype->lock == 1);
 
-    bool uploadToServer = false;
     if (format == Format_None) {
         if (defaultFormat != Format_None) {
             format = defaultFormat;
-            if (canUploadGlyphsToServer)
-                uploadToServer = true;
         } else {
             format = Format_Mono;
         }
@@ -707,13 +700,7 @@ QFontEngineFT::Glyph *QFontEngineFT::loadGlyph(QGlyphSet *set, uint glyph,
 
     Glyph *g = set->getGlyph(glyph, subPixelPosition);
     if (g && g->format == format) {
-        if (uploadToServer && !g->uploadedToServer) {
-            set->setGlyph(glyph, subPixelPosition, 0);
-            delete g;
-            g = 0;
-        } else {
-            return g;
-        }
+        return g;
     }
 
     QFontEngineFT::GlyphInfo info;
@@ -971,7 +958,6 @@ QFontEngineFT::Glyph *QFontEngineFT::loadGlyph(QGlyphSet *set, uint glyph,
 
     if (!g) {
         g = new Glyph;
-        g->uploadedToServer = false;
         g->data = 0;
     }
 
@@ -985,23 +971,9 @@ QFontEngineFT::Glyph *QFontEngineFT::loadGlyph(QGlyphSet *set, uint glyph,
     delete [] g->data;
     g->data = glyph_buffer;
 
-    if (uploadToServer) {
-        uploadGlyphToServer(set, glyph, g, &info, glyph_buffer_size);
-    }
-
     set->setGlyph(glyph, subPixelPosition, g);
 
     return g;
-}
-
-bool QFontEngineFT::uploadGlyphToServer(QGlyphSet *set, uint glyphid, Glyph *g, GlyphInfo *info, int glyphDataSize) const
-{
-    Q_UNUSED(set);
-    Q_UNUSED(glyphid);
-    Q_UNUSED(g);
-    Q_UNUSED(info);
-    Q_UNUSED(glyphDataSize);
-    return false;
 }
 
 QFontEngine::FaceId QFontEngineFT::faceId() const
@@ -1205,7 +1177,6 @@ QFontEngineFT::QGlyphSet *QFontEngineFT::loadTransformedGlyphSet(const QTransfor
         // don't cache more than 10 transformations
         if (transformedGlyphSets.count() >= 10) {
             transformedGlyphSets.move(transformedGlyphSets.size() - 1, 0);
-            freeServerGlyphSet(transformedGlyphSets.at(0).id);
         } else {
             transformedGlyphSets.prepend(QGlyphSet());
         }
@@ -1213,7 +1184,7 @@ QFontEngineFT::QGlyphSet *QFontEngineFT::loadTransformedGlyphSet(const QTransfor
 
         gs->clear();
 
-        gs->id = allocateServerGlyphSet();
+        gs->id = 0;
 
         gs->transformationMatrix = m;
         gs->outline_drawing = draw_as_outline;
@@ -1615,13 +1586,12 @@ glyph_metrics_t QFontEngineFT::boundingBox(glyph_t glyph, const QTransform &matr
             // don't cache more than 10 transformations
             if (transformedGlyphSets.count() >= 10) {
                 transformedGlyphSets.move(transformedGlyphSets.size() - 1, 0);
-                freeServerGlyphSet(transformedGlyphSets.at(0).id);
             } else {
                 transformedGlyphSets.prepend(QGlyphSet());
             }
             glyphSet = &transformedGlyphSets[0];
             glyphSet->clear();
-            glyphSet->id = allocateServerGlyphSet();
+            glyphSet->id = 0;
             glyphSet->transformationMatrix = m;
         }
         Q_ASSERT(glyphSet);
@@ -1777,16 +1747,6 @@ void QFontEngineFT::QGlyphSet::setGlyph(glyph_t index, QFixed subPixelPosition, 
     }
 }
 
-unsigned long QFontEngineFT::allocateServerGlyphSet()
-{
-    return 0;
-}
-
-void QFontEngineFT::freeServerGlyphSet(unsigned long id)
-{
-    Q_UNUSED(id);
-}
-
 HB_Error QFontEngineFT::getPointInOutline(HB_Glyph glyph, int flags, hb_uint32 point, HB_Fixed *xpos, HB_Fixed *ypos, hb_uint32 *nPoints)
 {
     lockFace();
@@ -1814,7 +1774,6 @@ bool QFontEngineFT::initFromFontEngine(const QFontEngineFT *fe)
     embolden = fe->embolden;
     subpixelType = fe->subpixelType;
     lcdFilterType = fe->lcdFilterType;
-    canUploadGlyphsToServer = fe->canUploadGlyphsToServer;
     embeddedbitmap = fe->embeddedbitmap;
 
     return true;

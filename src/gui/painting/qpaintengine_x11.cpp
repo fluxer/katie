@@ -2188,106 +2188,21 @@ void QX11PaintEngine::drawFreetype(const QPointF &p, const QTextItemInt &ti)
     if (!ti.glyphs.numGlyphs)
         return;
 
-    QFontEngineX11FT *ft = static_cast<QFontEngineX11FT *>(ti.fontEngine);
-
     if (!d->cpen.isSolid()) {
         QPaintEngine::drawTextItem(p, ti);
         return;
     }
 
-    const bool xrenderPath = (qt_x11Data->use_xrender
-                              && !(d->pdev->devType() == QInternal::Pixmap
-                                   && static_cast<const QPixmap *>(d->pdev)->data->pixelType() == QPixmapData::BitmapType));
-
+    QFontEngineX11FT *ft = static_cast<QFontEngineX11FT *>(ti.fontEngine);
     QVarLengthArray<QFixedPoint> positions;
     QVarLengthArray<glyph_t> glyphs;
     QTransform matrix;
 
-    if (xrenderPath)
-        matrix = d->matrix;
+
     matrix.translate(p.x(), p.y());
     ft->getGlyphPositions(ti.glyphs, matrix, ti.flags, glyphs, positions);
     if (glyphs.count() == 0)
         return;
-
-#ifndef QT_NO_XRENDER
-    QFontEngineFT::QGlyphSet *set = ft->defaultGlyphs();
-    if (d->txop >= QTransform::TxScale && xrenderPath)
-        set = ft->loadTransformedGlyphSet(d->matrix);
-
-    if (!set || set->outline_drawing
-        || !ft->loadGlyphs(set, glyphs.constData(), glyphs.size(), positions.constData(), QFontEngineFT::Format_Render))
-    {
-        QPaintEngine::drawTextItem(p, ti);
-        return;
-    }
-
-    if (xrenderPath) {
-        GlyphSet glyphSet = set->id;
-        const QColor &pen = d->cpen.color();
-        ::Picture src = qt_x11Data->getSolidFill(d->scrn, pen);
-        XRenderPictFormat *maskFormat = 0;
-        if (ft->xglyph_format != PictStandardA1)
-            maskFormat = XRenderFindStandardFormat(qt_x11Data->display, ft->xglyph_format);
-
-        enum { t_min = SHRT_MIN, t_max = SHRT_MAX };
-
-        int i = 0;
-        for (; i < glyphs.size()
-                 && (positions[i].x < t_min || positions[i].x > t_max
-                     || positions[i].y < t_min || positions[i].y > t_max);
-             ++i)
-            ;
-
-        if (i >= glyphs.size())
-            return;
-        ++i;
-
-        QFixed xp = positions[i - 1].x;
-        QFixed yp = positions[i - 1].y;
-        QFixed offs = QFixed::fromReal(aliasedCoordinateDelta);
-
-        XGlyphElt32 elt;
-        elt.glyphset = glyphSet;
-        elt.chars = &glyphs[i - 1];
-        elt.nchars = 1;
-        elt.xOff = qRound(xp + offs);
-        elt.yOff = qRound(yp + offs);
-        for (; i < glyphs.size(); ++i) {
-            if (positions[i].x < t_min || positions[i].x > t_max
-                || positions[i].y < t_min || positions[i].y > t_max) {
-                break;
-            }
-            QFontEngineFT::Glyph *g = ft->cachedGlyph(glyphs[i - 1]);
-            if (g
-                && positions[i].x == xp + g->advance
-                && positions[i].y == yp
-                && elt.nchars < 253 // don't draw more than 253 characters as some X servers
-                                    // hang with it
-                ) {
-                elt.nchars++;
-                xp += g->advance;
-            } else {
-                xp = positions[i].x;
-                yp = positions[i].y;
-
-                XRenderCompositeText32(qt_x11Data->display, PictOpOver, src, d->picture,
-                                       maskFormat, 0, 0, 0, 0,
-                                       &elt, 1);
-                elt.chars = &glyphs[i];
-                elt.nchars = 1;
-                elt.xOff = qRound(xp + offs);
-                elt.yOff = qRound(yp + offs);
-            }
-        }
-        XRenderCompositeText32(qt_x11Data->display, PictOpOver, src, d->picture,
-                               maskFormat, 0, 0, 0, 0,
-                               &elt, 1);
-
-        return;
-
-    }
-#endif
 
     QPainterPath path = path_for_glyphs(glyphs, positions, ft);
     if (path.elementCount() <= 1)
