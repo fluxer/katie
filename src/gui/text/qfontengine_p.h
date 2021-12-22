@@ -121,9 +121,6 @@ public:
     virtual void recalcAdvances(QGlyphLayout *, QTextEngine::ShaperFlags) const {}
     virtual void doKerning(QGlyphLayout *, QTextEngine::ShaperFlags) const;
 
-#if !defined(Q_WS_X11)
-    virtual void draw(QPaintEngine *p, qreal x, qreal y, const QTextItemInt &si) = 0;
-#endif
     virtual void addGlyphsToPath(glyph_t *glyphs, QFixedPoint *positions, int nglyphs,
                                  QPainterPath *path, QTextItem::RenderFlags flags);
 
@@ -217,9 +214,6 @@ public:
     virtual bool stringToCMap(const QChar *str, int len, QGlyphLayout *glyphs, int *nglyphs, QTextEngine::ShaperFlags flags) const;
     virtual void recalcAdvances(QGlyphLayout *, QTextEngine::ShaperFlags) const;
 
-#if !defined(Q_WS_X11)
-    void draw(QPaintEngine *p, qreal x, qreal y, const QTextItemInt &si);
-#endif
     virtual void addOutlineToPath(qreal x, qreal y, const QGlyphLayout &glyphs, QPainterPath *path, QTextItem::RenderFlags flags);
 
     virtual glyph_metrics_t boundingBox(const QGlyphLayout &glyphs) const;
