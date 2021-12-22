@@ -23,16 +23,13 @@
 #ifndef QT_NO_XPM
 
 #include "qimage.h"
-#include "qpixmap.h"
-#include "qbitmap.h"
 #include "qdebug.h"
 #include "qcorecommon_p.h"
-#include "qx11info_x11.h"
 #include "qt_x11_p.h"
 
 QT_BEGIN_NAMESPACE
 
-static inline QImage::Format qt_xpm_image_format(const XpmAttributes *xpmattributes)
+static inline QImage::Format qt_xpm_qimage_format(const XpmAttributes *xpmattributes)
 {
     QImage::Format format = QImage::systemFormat();
     for (int i = 0; i < xpmattributes->ncolors; i++) {
@@ -78,7 +75,7 @@ bool qt_read_xpm_array(const char* const *source, QImage &image)
         return false;
     }
 
-    const QImage::Format format = qt_xpm_image_format(&xpmattributes);
+    const QImage::Format format = qt_xpm_qimage_format(&xpmattributes);
     image = qt_ximagemask_to_qimage(ximage, ximagemask, format);
 
     XpmFreeAttributes(&xpmattributes);
@@ -141,7 +138,7 @@ bool QXpmHandler::read(QImage *image)
         return false;
     }
 
-    const QImage::Format format = qt_xpm_image_format(&xpmattributes);
+    const QImage::Format format = qt_xpm_qimage_format(&xpmattributes);
     *image = qt_ximagemask_to_qimage(ximage, ximagemask, format);
 
     XpmFreeAttributes(&xpmattributes);
