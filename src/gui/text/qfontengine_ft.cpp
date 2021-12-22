@@ -1444,78 +1444,6 @@ glyph_metrics_t QFontEngineFT::boundingBox(glyph_t glyph) const
     return overall;
 }
 
-glyph_metrics_t QFontEngineFT::boundingBox(glyph_t glyph, const QTransform &matrix)
-{
-    FT_Face face = 0;
-    glyph_metrics_t overall;
-    QGlyphSet *glyphSet = 0;
-    if (matrix.type() > QTransform::TxTranslate && FT_IS_SCALABLE(freetype->face)) {
-        FT_Matrix m;
-        m.xx = FT_Fixed(matrix.m11() * 65536);
-        m.xy = FT_Fixed(-matrix.m21() * 65536);
-        m.yx = FT_Fixed(-matrix.m12() * 65536);
-        m.yy = FT_Fixed(matrix.m22() * 65536);
-        for (int i = 0; i < transformedGlyphSets.count(); ++i) {
-            const QGlyphSet &g = transformedGlyphSets.at(i);
-            if (g.transformationMatrix.xx == m.xx
-                && g.transformationMatrix.xy == m.xy
-                && g.transformationMatrix.yx == m.yx
-                && g.transformationMatrix.yy == m.yy) {
-
-                // found a match, move it to the front
-                transformedGlyphSets.move(i, 0);
-                glyphSet = &transformedGlyphSets[0];
-                break;
-            }
-        }
-
-        if (!glyphSet) {
-            // don't cache more than 10 transformations
-            if (transformedGlyphSets.count() >= 10) {
-                transformedGlyphSets.move(transformedGlyphSets.size() - 1, 0);
-            } else {
-                transformedGlyphSets.prepend(QGlyphSet());
-            }
-            glyphSet = &transformedGlyphSets[0];
-            glyphSet->clear();
-            glyphSet->transformationMatrix = m;
-        }
-        Q_ASSERT(glyphSet);
-    } else {
-        glyphSet = &defaultGlyphSet;
-    }
-    Glyph * g = glyphSet->getGlyph(glyph);
-    if (!g || g->format != QFontEngine::Format_None) {
-        face = lockFace();
-        FT_Matrix m = this->matrix;
-        FT_Matrix_Multiply(&glyphSet->transformationMatrix, &m);
-        freetype->matrix = m;
-        g = loadGlyph(glyphSet, glyph, QFontEngine::Format_None);
-    }
-
-    if (g) {
-        overall.x = g->x;
-        overall.y = -g->y;
-        overall.width = g->width;
-        overall.height = g->height;
-        overall.xoff = g->advance;
-    } else {
-        int left  = FLOOR(face->glyph->metrics.horiBearingX);
-        int right = CEIL(face->glyph->metrics.horiBearingX + face->glyph->metrics.width);
-        int top    = CEIL(face->glyph->metrics.horiBearingY);
-        int bottom = FLOOR(face->glyph->metrics.horiBearingY - face->glyph->metrics.height);
-
-        overall.width = TRUNC(right-left);
-        overall.height = TRUNC(top-bottom);
-        overall.x = TRUNC(left);
-        overall.y = -TRUNC(top);
-        overall.xoff = TRUNC(ROUND(face->glyph->advance.x));
-    }
-    if (face)
-        unlockFace();
-    return overall;
-}
-
 QImage QFontEngineFT::alphaMapForGlyph(glyph_t g)
 {
     lockFace();
@@ -1594,10 +1522,6 @@ FT_Face QFontEngineFT::non_locked_face() const
 QFontEngineFT::QGlyphSet::QGlyphSet()
     : outline_drawing(false)
 {
-    transformationMatrix.xx = 0x10000;
-    transformationMatrix.yy = 0x10000;
-    transformationMatrix.xy = 0;
-    transformationMatrix.yx = 0;
     memset(fast_glyph_data, 0, sizeof(fast_glyph_data));
     fast_glyph_count = 0;
 }

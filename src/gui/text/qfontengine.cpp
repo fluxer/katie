@@ -189,16 +189,6 @@ HB_Face QFontEngine::harfbuzzFace() const
     return hbFace;
 }
 
-glyph_metrics_t QFontEngine::boundingBox(glyph_t glyph, const QTransform &matrix)
-{
-    glyph_metrics_t metrics = boundingBox(glyph);
-
-    if (matrix.type() > QTransform::TxTranslate) {
-        return metrics.transformed(matrix);
-    }
-    return metrics;
-}
-
 QFixed QFontEngine::xHeight() const
 {
     QGlyphLayoutArray<8> glyphs;

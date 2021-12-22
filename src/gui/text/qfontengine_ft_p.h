@@ -147,7 +147,7 @@ public:
     {
         QGlyphSet();
         ~QGlyphSet();
-        FT_Matrix transformationMatrix;
+
         bool outline_drawing;
 
         void clear();
@@ -203,7 +203,6 @@ private:
 
     virtual glyph_metrics_t boundingBox(const QGlyphLayout &glyphs) const;
     virtual glyph_metrics_t boundingBox(glyph_t glyph) const;
-    virtual glyph_metrics_t boundingBox(glyph_t glyph, const QTransform &matrix);
 
     virtual void recalcAdvances(QGlyphLayout *glyphs, QTextEngine::ShaperFlags flags) const;
     virtual QImage alphaMapForGlyph(glyph_t g);
@@ -268,7 +267,6 @@ private:
     GlyphFormat defaultFormat;
     FT_Matrix matrix;
 
-    QList<QGlyphSet> transformedGlyphSets;
     mutable QGlyphSet defaultGlyphSet;
 
     QFontEngine::FaceId face_id;
