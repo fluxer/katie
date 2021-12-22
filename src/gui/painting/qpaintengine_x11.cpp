@@ -2196,10 +2196,8 @@ void QX11PaintEngine::drawFreetype(const QPointF &p, const QTextItemInt &ti)
     QFontEngineX11FT *ft = static_cast<QFontEngineX11FT *>(ti.fontEngine);
     QVarLengthArray<QFixedPoint> positions;
     QVarLengthArray<glyph_t> glyphs;
-    QTransform matrix;
+    const QTransform matrix = QTransform::fromTranslate(p.x(), p.y());
 
-
-    matrix.translate(p.x(), p.y());
     ft->getGlyphPositions(ti.glyphs, matrix, ti.flags, glyphs, positions);
     if (glyphs.count() == 0)
         return;
