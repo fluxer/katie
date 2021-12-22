@@ -1280,9 +1280,6 @@ void QPainter::restore()
     \warning A paint device can only be painted by one painter at a
     time.
 
-    \warning Painting on a QImage with the format
-    QImage::Format_Indexed8 is not supported.
-
     \sa end(), QPainter()
 */
 
@@ -1412,11 +1409,6 @@ bool QPainter::begin(QPaintDevice *pd)
             Q_ASSERT(img);
             if (Q_UNLIKELY(img->isNull())) {
                 qWarning("QPainter::begin: Cannot paint on a null image");
-                qt_cleanup_painter_state(d);
-                return false;
-            } else if (Q_UNLIKELY(img->format() == QImage::Format_Indexed8)) {
-                // Painting on indexed8 images is not supported.
-                qWarning("QPainter::begin: Cannot paint on an image with the QImage::Format_Indexed8 format");
                 qt_cleanup_painter_state(d);
                 return false;
             }

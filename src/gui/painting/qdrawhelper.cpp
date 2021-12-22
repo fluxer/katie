@@ -299,7 +299,6 @@ static DestFetchProc destFetchProc[QImage::NImageFormats] =
     0, // Format_Invalid
     destFetchMono, // Format_Mono,
     destFetchMonoLsb, // Format_MonoLSB
-    0, // Format_Indexed8
     destFetchARGB32P, // Format_RGB32
     destFetchARGB32, // Format_ARGB32,
     destFetchARGB32P, // Format_ARGB32_Premultiplied
@@ -430,7 +429,6 @@ static DestStoreProc destStoreProc[QImage::NImageFormats] =
     0, // Format_Invalid
     destStoreMono, // Format_Mono,
     destStoreMonoLsb, // Format_MonoLSB
-    0, // Format_Indexed8
     destStoreRGB32, // Format_RGB32
     destStoreARGB32, // Format_ARGB32,
     destStoreRGB32, // Format_ARGB32_Premultiplied
@@ -474,13 +472,6 @@ uint QT_FASTCALL qt_fetchPixel<QImage::Format_MonoLSB>(const uchar *scanLine,
 }
 
 template<>
-uint QT_FASTCALL qt_fetchPixel<QImage::Format_Indexed8>(const uchar *scanLine,
-                                                     int x, const QVector<QRgb> *rgb)
-{
-    return PREMUL(rgb->at(scanLine[x]));
-}
-
-template<>
 uint QT_FASTCALL qt_fetchPixel<QImage::Format_ARGB32>(const uchar *scanLine,
                                                    int x, const QVector<QRgb> *)
 {
@@ -517,7 +508,6 @@ static const FetchPixelProc fetchPixelProc[QImage::NImageFormats] =
     0,
     qt_fetchPixel<QImage::Format_Mono>,
     qt_fetchPixel<QImage::Format_MonoLSB>,
-    qt_fetchPixel<QImage::Format_Indexed8>,
     qt_fetchPixel<QImage::Format_ARGB32_Premultiplied>,
     qt_fetchPixel<QImage::Format_ARGB32>,
     qt_fetchPixel<QImage::Format_ARGB32_Premultiplied>,
@@ -711,7 +701,6 @@ static const SourceFetchProc sourceFetch[NBlendTypes][QImage::NImageFormats] = {
         0, // Invalid
         fetchUntransformed<QImage::Format_Mono>,   // Mono
         fetchUntransformed<QImage::Format_MonoLSB>,   // MonoLsb
-        fetchUntransformed<QImage::Format_Indexed8>,   // Indexed8
         fetchUntransformed<QImage::Format_ARGB32_Premultiplied>,   // RGB32
         fetchUntransformed<QImage::Format_ARGB32>,   // ARGB32
         fetchUntransformed<QImage::Format_ARGB32_Premultiplied>,   // ARGB32_Premultiplied
@@ -722,7 +711,6 @@ static const SourceFetchProc sourceFetch[NBlendTypes][QImage::NImageFormats] = {
         0, // Invalid
         fetchUntransformed<QImage::Format_Mono>,   // Mono
         fetchUntransformed<QImage::Format_MonoLSB>,   // MonoLsb
-        fetchUntransformed<QImage::Format_Indexed8>,   // Indexed8
         fetchUntransformed<QImage::Format_ARGB32_Premultiplied>,   // RGB32
         fetchUntransformed<QImage::Format_ARGB32>,   // ARGB32
         fetchUntransformed<QImage::Format_ARGB32_Premultiplied>,   // ARGB32_Premultiplied
@@ -733,7 +721,6 @@ static const SourceFetchProc sourceFetch[NBlendTypes][QImage::NImageFormats] = {
         0, // Invalid
         fetchTransformed<BlendTransformed>,   // Mono
         fetchTransformed<BlendTransformed>,   // MonoLsb
-        fetchTransformed<BlendTransformed>,   // Indexed8
         fetchTransformed<BlendTransformed>,   // RGB32
         fetchTransformed<BlendTransformed>,   // ARGB32
         fetchTransformed<BlendTransformed>,   // ARGB32_Premultiplied
@@ -743,7 +730,6 @@ static const SourceFetchProc sourceFetch[NBlendTypes][QImage::NImageFormats] = {
         0, // TransformedTiled
         fetchTransformed<BlendTransformedTiled>,   // Mono
         fetchTransformed<BlendTransformedTiled>,   // MonoLsb
-        fetchTransformed<BlendTransformedTiled>,   // Indexed8
         fetchTransformed<BlendTransformedTiled>,   // RGB32
         fetchTransformed<BlendTransformedTiled>,   // ARGB32
         fetchTransformed<BlendTransformedTiled>,   // ARGB32_Premultiplied
@@ -753,7 +739,6 @@ static const SourceFetchProc sourceFetch[NBlendTypes][QImage::NImageFormats] = {
         0, // Bilinear
         fetchTransformedBilinear<BlendTransformedBilinear, QImage::Format_Invalid>,   // Mono
         fetchTransformedBilinear<BlendTransformedBilinear, QImage::Format_Invalid>,   // MonoLsb
-        fetchTransformedBilinear<BlendTransformedBilinear, QImage::Format_Invalid>,   // Indexed8
         fetchTransformedBilinear<BlendTransformedBilinear, QImage::Format_ARGB32_Premultiplied>,   // RGB32
         fetchTransformedBilinear<BlendTransformedBilinear, QImage::Format_ARGB32>,   // ARGB32
         fetchTransformedBilinear<BlendTransformedBilinear, QImage::Format_ARGB32_Premultiplied>,   // ARGB32_Premultiplied
@@ -763,7 +748,6 @@ static const SourceFetchProc sourceFetch[NBlendTypes][QImage::NImageFormats] = {
         0, // BilinearTiled
         fetchTransformedBilinear<BlendTransformedBilinearTiled, QImage::Format_Invalid>,   // Mono
         fetchTransformedBilinear<BlendTransformedBilinearTiled, QImage::Format_Invalid>,   // MonoLsb
-        fetchTransformedBilinear<BlendTransformedBilinearTiled, QImage::Format_Invalid>,   // Indexed8
         fetchTransformedBilinear<BlendTransformedBilinearTiled, QImage::Format_ARGB32_Premultiplied>,   // RGB32
         fetchTransformedBilinear<BlendTransformedBilinearTiled, QImage::Format_ARGB32>,   // ARGB32
         fetchTransformedBilinear<BlendTransformedBilinearTiled, QImage::Format_ARGB32_Premultiplied>,   // ARGB32_Premultiplied
@@ -2876,12 +2860,6 @@ DrawHelper qDrawHelper[QImage::NImageFormats] =
         0
     },
     // Format_MonoLSB,
-    {
-        blend_color_generic,
-        blend_src_generic,
-        0
-    },
-    // Format_Indexed8,
     {
         blend_color_generic,
         blend_src_generic,

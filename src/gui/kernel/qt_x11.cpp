@@ -93,28 +93,6 @@ void QX11Data::copyQImageToXImage(const QImage &image, XImage *ximage)
     const int w = image.width();
     const int h = image.height();
     switch(image.format()) {
-        case QImage::Format_Indexed8: {
-            QVector<QRgb> colorTable = image.colorTable();
-            uint *xidata = (uint *)ximage->data;
-            for (int y = 0; y < h; ++y) {
-                const uchar *p = image.constScanLine(y);
-                for (int x = 0; x < w; ++x) {
-                    const QRgb rgb = colorTable[p[x]];
-                    const int a = qAlpha(rgb);
-                    if (a == 0xff) {
-                        *xidata = rgb;
-                    } else {
-                        // RENDER expects premultiplied alpha
-                        *xidata = qRgba(qt_div_255(qRed(rgb) * a),
-                                        qt_div_255(qGreen(rgb) * a),
-                                        qt_div_255(qBlue(rgb) * a),
-                                        a);
-                    }
-                    ++xidata;
-                }
-            }
-            break;
-        }
         case QImage::Format_RGB32: {
             uint *xidata = (uint *)ximage->data;
             for (int y = 0; y < h; ++y) {
@@ -217,24 +195,6 @@ void QX11Data::copyXImageToQImage(XImage *ximage, QImage &image)
                 for (int w = 0; w < ximage->width; w++) {
                     const quint32 xpixel = XGetPixel(ximage, w, h);
                     ((quint16 *)imageline)[w] = qt_colorConvert<quint16, quint32>(xpixel, 0);
-                }
-            }
-            break;
-        }
-        case QImage::Format_Indexed8: {
-            QVector<QRgb> colortable;
-            for (int h = 0; h < ximage->height; h++) {
-                for (int w = 0; w < ximage->width; w++) {
-                    const uint xpixel = XGetPixel(ximage, w, h);
-                    colortable.append(QRgb(xpixel));
-                }
-            }
-            image.setColorTable(colortable);
-
-            for (int h = 0; h < ximage->height; h++) {
-                for (int w = 0; w < ximage->width; w++) {
-                    const uint xpixel = XGetPixel(ximage, w, h);
-                    image.setPixel(w, h, xpixel);
                 }
             }
             break;

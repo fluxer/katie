@@ -48,7 +48,6 @@ public:
         Format_Invalid,
         Format_Mono,
         Format_MonoLSB,
-        Format_Indexed8,
         Format_RGB32,
         Format_ARGB32,
         Format_ARGB32_Premultiplied,
