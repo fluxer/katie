@@ -641,7 +641,6 @@ bool QFontEngineFT::init(FaceId faceId, bool antialias, GlyphFormat format,
     unlockFace();
 
     fsType = freetype->fsType();
-    defaultGlyphSet.id = 0;
     return true;
 }
 
@@ -1184,8 +1183,6 @@ QFontEngineFT::QGlyphSet *QFontEngineFT::loadTransformedGlyphSet(const QTransfor
 
         gs->clear();
 
-        gs->id = 0;
-
         gs->transformationMatrix = m;
         gs->outline_drawing = draw_as_outline;
     }
@@ -1591,7 +1588,6 @@ glyph_metrics_t QFontEngineFT::boundingBox(glyph_t glyph, const QTransform &matr
             }
             glyphSet = &transformedGlyphSets[0];
             glyphSet->clear();
-            glyphSet->id = 0;
             glyphSet->transformationMatrix = m;
         }
         Q_ASSERT(glyphSet);
@@ -1706,7 +1702,7 @@ FT_Face QFontEngineFT::non_locked_face() const
 
 
 QFontEngineFT::QGlyphSet::QGlyphSet()
-    : id(0), outline_drawing(false)
+    : outline_drawing(false)
 {
     transformationMatrix.xx = 0x10000;
     transformationMatrix.yy = 0x10000;

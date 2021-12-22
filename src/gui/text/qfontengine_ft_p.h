@@ -161,7 +161,6 @@ public:
         QGlyphSet();
         ~QGlyphSet();
         FT_Matrix transformationMatrix;
-        unsigned long id; // server sided id, GlyphSet for X11
         bool outline_drawing;
 
         void clear();
