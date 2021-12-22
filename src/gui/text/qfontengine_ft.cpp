@@ -679,7 +679,6 @@ int QFontEngineFT::loadFlags(QGlyphSet *set, GlyphFormat format, int flags,
 }
 
 QFontEngineFT::Glyph *QFontEngineFT::loadGlyph(QGlyphSet *set, uint glyph,
-                                               QFixed subPixelPosition,
                                                GlyphFormat format,
                                                bool fetchMetricsOnly) const
 {
@@ -693,7 +692,7 @@ QFontEngineFT::Glyph *QFontEngineFT::loadGlyph(QGlyphSet *set, uint glyph,
         }
     }
 
-    Glyph *g = set->getGlyph(glyph, subPixelPosition);
+    Glyph *g = set->getGlyph(glyph);
     if (g && g->format == format) {
         return g;
     }
@@ -720,7 +719,7 @@ QFontEngineFT::Glyph *QFontEngineFT::loadGlyph(QGlyphSet *set, uint glyph,
     FT_Face face = freetype->face;
 
     FT_Vector v;
-    v.x = format == Format_Mono ? 0 : FT_Pos(subPixelPosition.toReal() * 64);
+    v.x = 0;
     v.y = 0;
     FT_Set_Transform(face, &freetype->matrix, &v);
 
@@ -825,10 +824,6 @@ QFontEngineFT::Glyph *QFontEngineFT::loadGlyph(QGlyphSet *set, uint glyph,
     top = CEIL(top);
 
     int hpixels = TRUNC(right - left);
-    // subpixel position requires one more pixel
-    if (subPixelPosition > 0 && format != Format_Mono)
-        hpixels++;
-
     if (hsubpixel)
         hpixels = hpixels*3 + 8;
     info.width = hpixels;
@@ -966,7 +961,7 @@ QFontEngineFT::Glyph *QFontEngineFT::loadGlyph(QGlyphSet *set, uint glyph,
     delete [] g->data;
     g->data = glyph_buffer;
 
-    set->setGlyph(glyph, subPixelPosition, g);
+    set->setGlyph(glyph, g);
 
     return g;
 }
@@ -1351,7 +1346,7 @@ void QFontEngineFT::recalcAdvances(QGlyphLayout *glyphs, QTextEngine::ShaperFlag
         } else {
             if (!face)
                 face = lockFace();
-            g = loadGlyph(glyphs->glyphs[i], 0, Format_None, true);
+            g = loadGlyph(glyphs->glyphs[i], Format_None, true);
             glyphs->advances_x[i] = design ? QFixed::fromFixed(face->glyph->linearHoriAdvance >> 10)
                                            : QFixed::fromFixed(face->glyph->metrics.horiAdvance).round();
         }
@@ -1380,7 +1375,7 @@ glyph_metrics_t QFontEngineFT::boundingBox(const QGlyphLayout &glyphs) const
         if (!g) {
             if (!face)
                 face = lockFace();
-            g = loadGlyph(glyphs.glyphs[i], 0, Format_None, true);
+            g = loadGlyph(glyphs.glyphs[i], Format_None, true);
         }
         if (g) {
             QFixed x = overall.xoff + glyphs.offsets[i].x + g->x;
@@ -1421,7 +1416,7 @@ glyph_metrics_t QFontEngineFT::boundingBox(glyph_t glyph) const
     Glyph *g = defaultGlyphSet.getGlyph(glyph);
     if (!g) {
         face = lockFace();
-        g = loadGlyph(glyph, 0, Format_None, true);
+        g = loadGlyph(glyph, Format_None, true);
     }
     if (g) {
         overall.x = g->x;
@@ -1494,7 +1489,7 @@ glyph_metrics_t QFontEngineFT::boundingBox(glyph_t glyph, const QTransform &matr
         FT_Matrix m = this->matrix;
         FT_Matrix_Multiply(&glyphSet->transformationMatrix, &m);
         freetype->matrix = m;
-        g = loadGlyph(glyphSet, glyph, 0, QFontEngine::Format_None);
+        g = loadGlyph(glyphSet, glyph, QFontEngine::Format_None);
     }
 
     if (g) {
@@ -1526,7 +1521,7 @@ QImage QFontEngineFT::alphaMapForGlyph(glyph_t g)
 
     GlyphFormat glyph_format = antialias ? Format_A32 : Format_Mono;
 
-    Glyph *glyph = defaultGlyphSet.outline_drawing ? 0 : loadGlyph(g, 0, glyph_format);
+    Glyph *glyph = defaultGlyphSet.outline_drawing ? 0 : loadGlyph(g, glyph_format);
     if (!glyph) {
         unlockFace();
         return QFontEngine::alphaMapForGlyph(g);
@@ -1626,14 +1621,14 @@ void QFontEngineFT::QGlyphSet::clear()
     glyph_data.clear();
 }
 
-void QFontEngineFT::QGlyphSet::setGlyph(glyph_t index, QFixed subPixelPosition, Glyph *glyph)
+void QFontEngineFT::QGlyphSet::setGlyph(glyph_t index, Glyph *glyph)
 {
-    if (useFastGlyphData(index, subPixelPosition)) {
+    if (useFastGlyphData(index)) {
         if (!fast_glyph_data[index])
             ++fast_glyph_count;
         fast_glyph_data[index] = glyph;
     } else {
-        glyph_data.insert(GlyphAndSubPixelPosition(index, subPixelPosition), glyph);
+        glyph_data.insert(index, glyph);
     }
 }
 

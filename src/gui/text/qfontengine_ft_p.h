@@ -143,19 +143,6 @@ public:
     };
 #endif
 
-    struct GlyphAndSubPixelPosition
-    {
-        GlyphAndSubPixelPosition(glyph_t g, QFixed spp) : glyph(g), subPixelPosition(spp) {}
-
-        bool operator==(const GlyphAndSubPixelPosition &other) const
-        {
-            return glyph == other.glyph && subPixelPosition == other.subPixelPosition;
-        }
-
-        glyph_t glyph;
-        QFixed subPixelPosition;
-    };
-
     struct QGlyphSet
     {
         QGlyphSet();
@@ -164,14 +151,14 @@ public:
         bool outline_drawing;
 
         void clear();
-        inline bool useFastGlyphData(glyph_t index, QFixed subPixelPosition) const {
-            return (index < 256 && subPixelPosition == 0);
+        static inline bool useFastGlyphData(glyph_t index) {
+            return (index < 256);
         }
-        inline Glyph *getGlyph(glyph_t index, QFixed subPixelPosition = 0) const;
-        void setGlyph(glyph_t index, QFixed spp, Glyph *glyph);
+        inline Glyph *getGlyph(glyph_t index) const;
+        void setGlyph(glyph_t index, Glyph *glyph);
 
 private:
-        mutable QHash<GlyphAndSubPixelPosition, Glyph *> glyph_data; // maps from glyph index to glyph data
+        mutable QHash<glyph_t, Glyph *> glyph_data; // maps from glyph index to glyph data
         mutable Glyph *fast_glyph_data[256]; // for fast lookup of glyphs < 256
         mutable int fast_glyph_count;
     };
@@ -241,9 +228,9 @@ private:
     inline bool invalid() const { return xsize == 0 && ysize == 0; }
     inline bool isBitmapFont() const { return defaultFormat == Format_Mono; }
 
-    inline Glyph *loadGlyph(uint glyph, QFixed subPixelPosition, GlyphFormat format = Format_None, bool fetchMetricsOnly = false) const
-    { return loadGlyph(&defaultGlyphSet, glyph, subPixelPosition, format, fetchMetricsOnly); }
-    Glyph *loadGlyph(QGlyphSet *set, uint glyph, QFixed subPixelPosition, GlyphFormat = Format_None, bool fetchMetricsOnly = false) const;
+    inline Glyph *loadGlyph(uint glyph, GlyphFormat format = Format_None, bool fetchMetricsOnly = false) const
+    { return loadGlyph(&defaultGlyphSet, glyph, format, fetchMetricsOnly); }
+    Glyph *loadGlyph(QGlyphSet *set, uint glyph, GlyphFormat = Format_None, bool fetchMetricsOnly = false) const;
 
     QFontEngineFT(const QFontDef &fd);
     virtual ~QFontEngineFT();
@@ -304,16 +291,11 @@ private:
     mutable bool kerning_pairs_loaded;
 };
 
-inline uint qHash(const QFontEngineFT::GlyphAndSubPixelPosition &g)
+inline QFontEngineFT::Glyph *QFontEngineFT::QGlyphSet::getGlyph(glyph_t index) const
 {
-    return (g.glyph << 8)  | (g.subPixelPosition * 10).round().toInt();
-}
-
-inline QFontEngineFT::Glyph *QFontEngineFT::QGlyphSet::getGlyph(glyph_t index, QFixed subPixelPosition) const
-{
-    if (useFastGlyphData(index, subPixelPosition))
+    if (useFastGlyphData(index))
         return fast_glyph_data[index];
-    return glyph_data.value(GlyphAndSubPixelPosition(index, subPixelPosition));
+    return glyph_data.value(index);
 }
 
 

@@ -236,7 +236,6 @@ public:
     inline int size() const { return _size; }
 
 private:
-    friend class QFontPrivate;
     int _size;
 };
 
