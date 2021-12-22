@@ -245,17 +245,6 @@ private:
     { return loadGlyph(&defaultGlyphSet, glyph, subPixelPosition, format, fetchMetricsOnly); }
     Glyph *loadGlyph(QGlyphSet *set, uint glyph, QFixed subPixelPosition, GlyphFormat = Format_None, bool fetchMetricsOnly = false) const;
 
-    QGlyphSet *defaultGlyphs() { return &defaultGlyphSet; }
-    GlyphFormat defaultGlyphFormat() const { return defaultFormat; }
-
-    inline Glyph *cachedGlyph(glyph_t g) const { return defaultGlyphSet.getGlyph(g, 0); }
-
-    QGlyphSet *loadTransformedGlyphSet(const QTransform &matrix);
-    QFixed subPixelPositionForX(QFixed x);
-    bool loadGlyphs(QGlyphSet *gs, const glyph_t *glyphs, int num_glyphs,
-                    const QFixedPoint *positions,
-                    GlyphFormat format = Format_None);
-
     QFontEngineFT(const QFontDef &fd);
     virtual ~QFontEngineFT();
 
