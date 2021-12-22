@@ -195,9 +195,6 @@ public:
     QVector<KernPair> kerning_pairs;
     void loadKerningPairs(QFixed scalingFactor);
 #endif
-
-protected:
-    QFixed lastRightBearing(const QGlyphLayout &glyphs, bool round = false);
 };
 
 inline bool operator ==(const QFontEngine::FaceId &f1, const QFontEngine::FaceId &f2)
