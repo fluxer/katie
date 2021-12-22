@@ -69,7 +69,6 @@ public:
 
     enum GlyphFormat {
         Format_None,
-        Format_Render = Format_None,
         Format_Mono,
         Format_A32
     };

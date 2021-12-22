@@ -257,7 +257,7 @@ private:
     QFixed subPixelPositionForX(QFixed x);
     bool loadGlyphs(QGlyphSet *gs, const glyph_t *glyphs, int num_glyphs,
                     const QFixedPoint *positions,
-                    GlyphFormat format = Format_Render);
+                    GlyphFormat format = Format_None);
 
     QFontEngineFT(const QFontDef &fd);
     virtual ~QFontEngineFT();
