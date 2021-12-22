@@ -131,10 +131,8 @@ public:
 
     /**
      * Create a qimage with the alpha values for the glyph.
-     * Returns an image indexed_8 with index values ranging from 0=fully transparent to 255=opaque
      */
     virtual QImage alphaMapForGlyph(glyph_t);
-    virtual QImage alphaMapForGlyph(glyph_t glyph, QFixed subPixelPosition);
 
     virtual glyph_metrics_t boundingBox(const QGlyphLayout &glyphs) const = 0;
     virtual glyph_metrics_t boundingBox(glyph_t glyph) const = 0;

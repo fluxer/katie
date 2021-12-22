@@ -1622,13 +1622,13 @@ glyph_metrics_t QFontEngineFT::boundingBox(glyph_t glyph, const QTransform &matr
     return overall;
 }
 
-QImage QFontEngineFT::alphaMapForGlyph(glyph_t g, QFixed subPixelPosition)
+QImage QFontEngineFT::alphaMapForGlyph(glyph_t g)
 {
     lockFace();
 
     GlyphFormat glyph_format = antialias ? Format_A32 : Format_Mono;
 
-    Glyph *glyph = defaultGlyphSet.outline_drawing ? 0 : loadGlyph(g, subPixelPosition, glyph_format);
+    Glyph *glyph = defaultGlyphSet.outline_drawing ? 0 : loadGlyph(g, 0, glyph_format);
     if (!glyph) {
         unlockFace();
         return QFontEngine::alphaMapForGlyph(g);
