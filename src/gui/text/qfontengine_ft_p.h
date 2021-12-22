@@ -166,11 +166,6 @@ private:
     virtual QFontEngine::FaceId faceId() const;
     virtual QFontEngine::Properties properties() const;
     virtual QFixed emSquareSize() const;
-    virtual bool supportsSubPixelPositions() const
-    {
-        return default_hint_style == HintLight ||
-               default_hint_style == HintNone;
-    }
 
     virtual bool getSfntTableData(uint tag, uchar *buffer, uint *length) const;
     virtual int synthesized() const;
@@ -257,7 +252,6 @@ private:
 protected:
     QFreetypeFace *freetype;
     int default_load_flags;
-
 
     HintStyle default_hint_style;
 

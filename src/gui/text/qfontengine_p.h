@@ -107,7 +107,6 @@ public:
         SynthesizedStretch = 0x4
     };
     virtual int synthesized() const { return 0; }
-    virtual bool supportsSubPixelPositions() const { return false; }
 
     virtual QFixed emSquareSize() const { return ascent(); }
 

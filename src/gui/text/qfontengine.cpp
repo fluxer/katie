@@ -1186,10 +1186,14 @@ glyph_metrics_t QFontEngineMulti::boundingBox(glyph_t glyph) const
 }
 
 QFixed QFontEngineMulti::ascent() const
-{ return engine(0)->ascent(); }
+{
+    return engine(0)->ascent();
+}
 
 QFixed QFontEngineMulti::descent() const
-{ return engine(0)->descent(); }
+{
+    return engine(0)->descent();
+}
 
 QFixed QFontEngineMulti::leading() const
 {

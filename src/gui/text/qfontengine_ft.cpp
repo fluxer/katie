@@ -554,9 +554,10 @@ QFontEngineFT::QFontEngineFT(const QFontDef &fd)
     default_load_flags = FT_LOAD_IGNORE_GLOBAL_ADVANCE_WIDTH;
     default_hint_style = HintNone;
     subpixelType = Subpixel_None;
-    lcdFilterType = 0;
 #if defined(FT_LCD_FILTER_H)
     lcdFilterType = (int)((quintptr) FT_LCD_FILTER_DEFAULT);
+#else
+    lcdFilterType = 0;
 #endif
     defaultFormat = Format_None;
     embeddedbitmap = false;
