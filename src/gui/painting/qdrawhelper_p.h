@@ -213,7 +213,8 @@ struct QTextureData
     int y2;
     int bytesPerLine;
     QImage::Format format;
-    const QVector<QRgb> *colorTable;
+    qint64 mono0;
+    qint64 mono1;
     bool hasAlpha;
     enum Type {
         Plain,

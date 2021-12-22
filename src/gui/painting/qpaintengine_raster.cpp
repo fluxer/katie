@@ -2315,7 +2315,7 @@ QImage::Format QRasterBuffer::prepare(QImage *image)
 
     format = image->format();
     drawHelper = qDrawHelper + format;
-    if (image->depth() == 1 && image->colorTable().size() == 2) {
+    if (image->depth() == 1) {
         monoDestinationWithClut = true;
         destColor0 = PREMUL(image->colorTable()[0]);
         destColor1 = PREMUL(image->colorTable()[1]);
@@ -2932,7 +2932,8 @@ void QSpanData::initTexture(const QImage *image, int alpha, QTextureData::Type _
         texture.y2 = 0;
         texture.bytesPerLine = 0;
         texture.format = QImage::Format_Invalid;
-        texture.colorTable = 0;
+        texture.mono0 = -1;
+        texture.mono1 = -1;
         texture.hasAlpha = alpha != 256;
     } else {
         texture.imageData = d->data;
@@ -2954,7 +2955,13 @@ void QSpanData::initTexture(const QImage *image, int alpha, QTextureData::Type _
         texture.bytesPerLine = d->bytes_per_line;
 
         texture.format = d->format;
-        texture.colorTable = (d->format <= QImage::Format_MonoLSB && !d->colortable.isEmpty()) ? &d->colortable : 0;
+        if (d->depth == 1) {
+            texture.mono0 = d->mono0;
+            texture.mono1 = d->mono1;
+        } else {
+            texture.mono0 = -1;
+            texture.mono1 = -1;
+        }
         texture.hasAlpha = image->hasAlphaChannel() || alpha != 256;
     }
     texture.const_alpha = alpha;

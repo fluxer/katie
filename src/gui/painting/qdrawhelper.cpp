@@ -451,56 +451,56 @@ static DestStoreProc destStoreProc[QImage::NImageFormats] =
 */
 
 template <QImage::Format format>
-static uint QT_FASTCALL qt_fetchPixel(const uchar *scanLine, int x, const QVector<QRgb> *rgb);
+static uint QT_FASTCALL qt_fetchPixel(const uchar *scanLine, int x, const QRgb rgb0, const QRgb rgb1);
 
 template<>
-uint QT_FASTCALL qt_fetchPixel<QImage::Format_Mono>(const uchar *scanLine,
-                                                 int x, const QVector<QRgb> *rgb)
+uint QT_FASTCALL qt_fetchPixel<QImage::Format_Mono>(const uchar *scanLine, int x,
+                                                    const QRgb rgb0, const QRgb rgb1)
 {
     bool pixel = scanLine[x>>3] & (0x80 >> (x & 7));
-    if (rgb) return PREMUL(rgb->at(pixel ? 1 : 0));
+    if (rgb0 != -1 && rgb1 != -1) return PREMUL(pixel ? rgb1 : rgb0);
     return pixel ? 0xff000000 : 0xffffffff;
 }
 
 template<>
-uint QT_FASTCALL qt_fetchPixel<QImage::Format_MonoLSB>(const uchar *scanLine,
-                                                    int x, const QVector<QRgb> *rgb)
+uint QT_FASTCALL qt_fetchPixel<QImage::Format_MonoLSB>(const uchar *scanLine, int x,
+                                                       const QRgb rgb0, const QRgb rgb1)
 {
     bool pixel = scanLine[x>>3] & (0x1 << (x & 7));
-    if (rgb) return PREMUL(rgb->at(pixel ? 1 : 0));
+    if (rgb0 != -1 && rgb1 != -1) return PREMUL(pixel ? rgb1 : rgb0);
     return pixel ? 0xff000000 : 0xffffffff;
 }
 
 template<>
-uint QT_FASTCALL qt_fetchPixel<QImage::Format_ARGB32>(const uchar *scanLine,
-                                                   int x, const QVector<QRgb> *)
+uint QT_FASTCALL qt_fetchPixel<QImage::Format_ARGB32>(const uchar *scanLine, int x,
+                                                      const QRgb, const QRgb)
 {
     return PREMUL(((const uint *)scanLine)[x]);
 }
 
 template<>
-uint QT_FASTCALL qt_fetchPixel<QImage::Format_ARGB32_Premultiplied>(const uchar *scanLine,
-                                                                 int x, const QVector<QRgb> *)
+uint QT_FASTCALL qt_fetchPixel<QImage::Format_ARGB32_Premultiplied>(const uchar *scanLine, int x,
+                                                                    const QRgb, const QRgb)
 {
     return ((const uint *)scanLine)[x];
 }
 
 template<>
-uint QT_FASTCALL qt_fetchPixel<QImage::Format_RGB16>(const uchar *scanLine,
-                                                  int x, const QVector<QRgb> *)
+uint QT_FASTCALL qt_fetchPixel<QImage::Format_RGB16>(const uchar *scanLine, int x,
+                                                     const QRgb, const QRgb)
 {
     return qConvertRgb16To32(((const ushort *)scanLine)[x]);
 }
 
 template<>
-uint QT_FASTCALL qt_fetchPixel<QImage::Format_Invalid>(const uchar *,
-                                                     int ,
-                                                     const QVector<QRgb> *)
+uint QT_FASTCALL qt_fetchPixel<QImage::Format_Invalid>(const uchar *, int,
+                                                      const QRgb, const QRgb)
 {
     return 0;
 }
 
-typedef uint (QT_FASTCALL *FetchPixelProc)(const uchar *scanLine, int x, const QVector<QRgb> *);
+typedef uint (QT_FASTCALL *FetchPixelProc)(const uchar *scanLine, int x,
+                                           const QRgb rgb0, const QRgb rgb1);
 
 
 static const FetchPixelProc fetchPixelProc[QImage::NImageFormats] =
@@ -530,7 +530,7 @@ static const uint * QT_FASTCALL fetchUntransformed(uint *buffer, const Operator 
 {
     const uchar *scanLine = data->texture.scanLine(y);
     for (int i = 0; i < length; ++i)
-        buffer[i] = qt_fetchPixel<format>(scanLine, x + i, data->texture.colorTable);
+        buffer[i] = qt_fetchPixel<format>(scanLine, x + i, data->texture.mono0, data->texture.mono1);
     return buffer;
 }
 
@@ -580,14 +580,14 @@ static const uint * QT_FASTCALL fetchTransformed(uint *buffer, const Operator *,
             if (py < 0) py += image_height;
 
             const uchar *scanLine = data->texture.scanLine(py);
-            *b = fetch(scanLine, px, data->texture.colorTable);
+            *b = fetch(scanLine, px, data->texture.mono0, data->texture.mono1);
         } else {
             if ((px < 0) || (px >= image_width)
                 || (py < 0) || (py >= image_height)) {
                 *b = uint(0);
             } else {
                 const uchar *scanLine = data->texture.scanLine(py);
-                *b = fetch(scanLine, px, data->texture.colorTable);
+                *b = fetch(scanLine, px, data->texture.mono0, data->texture.mono1);
             }
         }
         fx += fdx;
@@ -673,10 +673,10 @@ static const uint * QT_FASTCALL fetchTransformedBilinear(uint *buffer, const Ope
         const uchar *s1 = data->texture.scanLine(y1);
         const uchar *s2 = data->texture.scanLine(y2);
 
-        uint tl = fetch(s1, x1, data->texture.colorTable);
-        uint tr = fetch(s1, x2, data->texture.colorTable);
-        uint bl = fetch(s2, x1, data->texture.colorTable);
-        uint br = fetch(s2, x2, data->texture.colorTable);
+        uint tl = fetch(s1, x1, data->texture.mono0, data->texture.mono1);
+        uint tr = fetch(s1, x2, data->texture.mono0, data->texture.mono1);
+        uint bl = fetch(s2, x1, data->texture.mono0, data->texture.mono1);
+        uint br = fetch(s2, x2, data->texture.mono0, data->texture.mono1);
 
         uint xtop = INTERPOLATE_PIXEL_256(tl, idistx, tr, distx);
         uint xbot = INTERPOLATE_PIXEL_256(bl, idistx, br, distx);

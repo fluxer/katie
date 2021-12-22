@@ -33,7 +33,7 @@
 // We mean it.
 //
 
-#include <QVector>
+#include <QAtomicInt>
 
 QT_BEGIN_NAMESPACE
 
@@ -51,7 +51,8 @@ struct Q_GUI_EXPORT QImageData {        // internal image data
     int height;
     int depth;
     int nbytes;               // number of bytes data
-    QVector<QRgb> colortable;
+    QRgb mono0;
+    QRgb mono1;
     uchar *data;
     QImage::Format format;
     int bytes_per_line;

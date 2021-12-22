@@ -105,12 +105,10 @@ public:
     QRect rect() const;
 
     int depth() const;
-    int colorCount() const;
     int bitPlaneCount() const;
 
     QRgb color(int i) const;
     void setColor(int i, QRgb c);
-    void setColorCount(int);
 
     bool allGray() const;
     bool isGrayscale() const;

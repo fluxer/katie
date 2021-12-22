@@ -1811,11 +1811,6 @@ QPixmapData* QPixmap::pixmapData() const
     \internal
 */
 
-/*! \fn int QPixmap::colorCount() const
-    \since 4.6
-    \internal
-*/
-
 QT_END_NAMESPACE
 
 

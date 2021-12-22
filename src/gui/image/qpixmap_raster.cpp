@@ -216,7 +216,9 @@ int QRasterPixmapData::metric(QPaintDevice::PaintDeviceMetric metric) const
     case QPaintDevice::PdmHeightMM:
         return qRound(image.d->height * 25.4 / QX11Info::appDpiY());
     case QPaintDevice::PdmNumColors:
-        return image.d->colortable.size();
+        if (image.d->depth == 1)
+            return 2;
+        return 0;
     case QPaintDevice::PdmDepth:
         return depth();
     case QPaintDevice::PdmDpiX: // fall-through
