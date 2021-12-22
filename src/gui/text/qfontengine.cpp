@@ -875,13 +875,13 @@ QFontEngine::Type QFontEngineBox::type() const
 QImage QFontEngineBox::alphaMapForGlyph(glyph_t)
 {
     QImage image(_size, _size, QImage::Format_ARGB32);
-    image.fill(0);
+    image.fill(Qt::transparent);
 
     for (int i=2; i <= _size-3; ++i) {
-        image.setPixel(i, 2, 255);
-        image.setPixel(i, _size-3, 255);
-        image.setPixel(2, i, 255);
-        image.setPixel(_size-3, i, 255);
+        image.setPixel(i, 2, qt_whitergba);
+        image.setPixel(i, _size-3, qt_whitergba);
+        image.setPixel(2, i, qt_whitergba);
+        image.setPixel(_size-3, i, qt_whitergba);
     }
     return image;
 }
