@@ -245,7 +245,6 @@ protected:
     HintStyle default_hint_style;
 
     bool antialias;
-    bool transform;
     bool embolden;
     SubpixelAntialiasingType subpixelType;
     int lcdFilterType;

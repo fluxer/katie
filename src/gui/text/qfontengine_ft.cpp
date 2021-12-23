@@ -547,7 +547,6 @@ QFontEngineFT::QFontEngineFT(const QFontDef &fd)
     matrix.yx = 0;
     cache_cost = 100;
     kerning_pairs_loaded = false;
-    transform = false;
     embolden = false;
     antialias = true;
     freetype = 0;
@@ -600,8 +599,6 @@ bool QFontEngineFT::init(FaceId faceId, bool antialias, GlyphFormat format)
             matrix.xy = 0x10000*3/10;
         FT_Set_Transform(face, &matrix, 0);
         freetype->matrix = matrix;
-        if (fake_oblique)
-            transform = true;
         // fake bold
         if ((fontDef.weight == QFont::Bold) && !(face->style_flags & FT_STYLE_FLAG_BOLD) && !FT_IS_FIXED_WIDTH(face))
             embolden = true;
