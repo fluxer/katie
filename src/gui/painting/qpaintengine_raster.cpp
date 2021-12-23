@@ -354,7 +354,6 @@ QRasterPaintEngineState::QRasterPaintEngineState()
 
     flags.antialiased = false;
     flags.bilinear = false;
-    flags.fast_text = true;
     flags.tx_noshear = true;
 
     clip = 0;
@@ -555,16 +554,8 @@ void QRasterPaintEngine::updateRasterState()
 {
     QRasterPaintEngineState *s = state();
 
-    if (s->dirty & DirtyTransform)
+    if (s->dirty & DirtyTransform) {
         updateMatrix(s->matrix);
-
-    if (s->dirty & (DirtyPen|DirtyCompositionMode|DirtyOpacity)) {
-        const QPainter::CompositionMode mode = s->composition_mode;
-        s->flags.fast_text = (s->penData.type == QSpanData::Solid)
-                       && s->intOpacity == 256
-                       && (mode == QPainter::CompositionMode_Source
-                           || (mode == QPainter::CompositionMode_SourceOver
-                               && qAlpha(s->penData.solid.color) == 255));
     }
 
     s->dirty = 0;

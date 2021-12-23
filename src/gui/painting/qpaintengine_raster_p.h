@@ -86,7 +86,6 @@ public:
         bool non_complex_pen;           // can use rasterizer, rather than stroker
         bool antialiased;
         bool bilinear;
-        bool fast_text;
         bool tx_noshear;
     };
 
