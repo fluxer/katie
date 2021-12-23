@@ -571,13 +571,7 @@ QFontEngineFT::~QFontEngineFT()
 
 bool QFontEngineFT::init(FaceId faceId, bool antialias, GlyphFormat format)
 {
-    return init(faceId, antialias, format, QFreetypeFace::getFace(faceId));
-}
-
-bool QFontEngineFT::init(FaceId faceId, bool antialias, GlyphFormat format,
-                         QFreetypeFace *freetypeFace)
-{
-    freetype = freetypeFace;
+    freetype = QFreetypeFace::getFace(faceId);
     if (!freetype) {
         xsize = 0;
         ysize = 0;
@@ -639,11 +633,6 @@ bool QFontEngineFT::init(FaceId faceId, bool antialias, GlyphFormat format,
 
     fsType = freetype->fsType();
     return true;
-}
-
-void QFontEngineFT::setDefaultHintStyle(HintStyle style)
-{
-    default_hint_style = style;
 }
 
 int QFontEngineFT::loadFlags(QGlyphSet *set, GlyphFormat format, int flags,
@@ -1566,27 +1555,6 @@ HB_Error QFontEngineFT::getPointInOutline(HB_Glyph glyph, int flags, hb_uint32 p
     HB_Error result = freetype->getPointInOutline(glyph, load_flags, point, xpos, ypos, nPoints);
     unlockFace();
     return result;
-}
-
-bool QFontEngineFT::initFromFontEngine(const QFontEngineFT *fe)
-{
-    if (!init(fe->faceId(), fe->antialias, fe->defaultFormat, fe->freetype))
-        return false;
-
-    // Increase the reference of this QFreetypeFace since one more QFontEngineFT
-    // will be using it
-    freetype->ref.ref();
-
-    default_load_flags = fe->default_load_flags;
-    default_hint_style = fe->default_hint_style;
-    antialias = fe->antialias;
-    transform = fe->transform;
-    embolden = fe->embolden;
-    subpixelType = fe->subpixelType;
-    lcdFilterType = fe->lcdFilterType;
-    embeddedbitmap = fe->embeddedbitmap;
-
-    return true;
 }
 
 QT_END_NAMESPACE

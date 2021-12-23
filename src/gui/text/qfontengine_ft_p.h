@@ -218,9 +218,7 @@ private:
 
     FT_Face non_locked_face() const;
 
-    inline bool drawAntialiased() const { return antialias; }
     inline bool invalid() const { return xsize == 0 && ysize == 0; }
-    inline bool isBitmapFont() const { return defaultFormat == Format_Mono; }
 
     inline Glyph *loadGlyph(uint glyph, GlyphFormat format = Format_None, bool fetchMetricsOnly = false) const
     { return loadGlyph(&defaultGlyphSet, glyph, format, fetchMetricsOnly); }
@@ -230,8 +228,6 @@ private:
     virtual ~QFontEngineFT();
 
     bool init(FaceId faceId, bool antiaalias, GlyphFormat defaultFormat = Format_None);
-    bool init(FaceId faceId, bool antialias, GlyphFormat format,
-              QFreetypeFace *freetypeFace);
 
     virtual HB_Error getPointInOutline(HB_Glyph glyph, int flags, hb_uint32 point, HB_Fixed *xpos, HB_Fixed *ypos, hb_uint32 *nPoints);
 
@@ -241,12 +237,6 @@ private:
         HintMedium,
         HintFull
     };
-
-    void setDefaultHintStyle(HintStyle style);
-
-    bool initFromFontEngine(const QFontEngineFT *fontEngine);
-
-    HintStyle defaultHintStyle() const { return default_hint_style; }
 
 protected:
     QFreetypeFace *freetype;
