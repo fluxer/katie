@@ -698,9 +698,7 @@ static void initializeFontDb()
 #ifdef QFONTDATABASE_DEBUG
     FD_DEBUG("QFontDatabase: loaded FontConfig: %d ms", int(elapsedtimer.elapsed()));
 #endif
-#endif
 
-#ifndef QT_NO_FONTCONFIG
     for (int i = 0; i < db->count; i++) {
         for (int j = 0; j < db->families[i]->count; ++j) {        // each foundry
             QtFontFoundry *foundry = db->families[i]->foundries[j];
