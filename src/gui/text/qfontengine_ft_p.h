@@ -182,7 +182,7 @@ private:
     virtual QFixed lineThickness() const;
     virtual QFixed underlinePosition() const;
 
-    void doKerning(QGlyphLayout *, QTextEngine::ShaperFlags) const;
+    void doKerning(QGlyphLayout *, QTextEngine::ShaperFlags);
 
     inline virtual Type type() const
     { return QFontEngine::Freetype; }
@@ -269,7 +269,7 @@ private:
     QFixed underline_position;
 
     FT_Size_Metrics metrics;
-    mutable bool kerning_pairs_loaded;
+    bool kerning_pairs_loaded;
 };
 
 inline QFontEngineFT::Glyph *QFontEngineFT::QGlyphSet::getGlyph(glyph_t index) const

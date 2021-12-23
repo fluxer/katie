@@ -118,7 +118,7 @@ public:
      * advances of each glyph and set it on the layout.
      */
     virtual void recalcAdvances(QGlyphLayout *, QTextEngine::ShaperFlags) const {}
-    virtual void doKerning(QGlyphLayout *, QTextEngine::ShaperFlags) const;
+    virtual void doKerning(QGlyphLayout *, QTextEngine::ShaperFlags);
 
     virtual void addGlyphsToPath(glyph_t *glyphs, QFixedPoint *positions, int nglyphs,
                                  QPainterPath *path, QTextItem::RenderFlags flags);
@@ -250,7 +250,7 @@ public:
     virtual glyph_metrics_t boundingBox(glyph_t glyph) const;
 
     virtual void recalcAdvances(QGlyphLayout *, QTextEngine::ShaperFlags) const;
-    virtual void doKerning(QGlyphLayout *, QTextEngine::ShaperFlags) const;
+    virtual void doKerning(QGlyphLayout *, QTextEngine::ShaperFlags);
     virtual void addOutlineToPath(qreal, qreal, const QGlyphLayout &, QPainterPath *, QTextItem::RenderFlags flags);
     virtual void getGlyphBearings(glyph_t glyph, qreal *leftBearing = 0, qreal *rightBearing = 0);
 

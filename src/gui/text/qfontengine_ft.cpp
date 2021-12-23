@@ -626,9 +626,9 @@ bool QFontEngineFT::init(FaceId faceId, bool antialias, GlyphFormat format)
 
     fontDef.styleName = QString::fromUtf8(face->style_name);
 
-    unlockFace();
-
     fsType = freetype->fsType();
+
+    unlockFace();
     return true;
 }
 
@@ -1098,18 +1098,16 @@ QFixed QFontEngineFT::underlinePosition() const
     return underline_position;
 }
 
-void QFontEngineFT::doKerning(QGlyphLayout *g, QTextEngine::ShaperFlags flags) const
+void QFontEngineFT::doKerning(QGlyphLayout *g, QTextEngine::ShaperFlags flags)
 {
     if (!kerning_pairs_loaded) {
         kerning_pairs_loaded = true;
         lockFace();
         if (freetype->face->size->metrics.x_ppem != 0) {
             QFixed scalingFactor(freetype->face->units_per_EM/freetype->face->size->metrics.x_ppem);
-            unlockFace();
-            const_cast<QFontEngineFT *>(this)->loadKerningPairs(scalingFactor);
-        } else {
-            unlockFace();
+            loadKerningPairs(scalingFactor);
         }
+        unlockFace();
     }
     QFontEngine::doKerning(g, flags);
 }
@@ -1170,12 +1168,10 @@ bool QFontEngineFT::canRender(const QChar *string, int len)
         unlockFace();
     } else
 #endif
-    {
-        for ( int i = 0; i < len; i++ ) {
-            unsigned int uc = getChar(string, i, len);
-            if (!FT_Get_Char_Index(face, uc))
-                    return false;
-        }
+    for ( int i = 0; i < len; i++ ) {
+        unsigned int uc = getChar(string, i, len);
+        if (!FT_Get_Char_Index(face, uc))
+            return false;
     }
     return true;
 }

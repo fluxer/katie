@@ -632,7 +632,7 @@ static inline QFixed kerning(int left, int right, const QFontEngine::KernPair *p
     return 0;
 }
 
-void QFontEngine::doKerning(QGlyphLayout *glyphs, QTextEngine::ShaperFlags flags) const
+void QFontEngine::doKerning(QGlyphLayout *glyphs, QTextEngine::ShaperFlags flags)
 {
     int numPairs = kerning_pairs.size();
     if(!numPairs)
@@ -712,7 +712,7 @@ end:
 }
 
 #else
-void QFontEngine::doKerning(QGlyphLayout *, QTextEngine::ShaperFlags) const
+void QFontEngine::doKerning(QGlyphLayout *, QTextEngine::ShaperFlags)
 {
 }
 #endif
@@ -1125,7 +1125,7 @@ void QFontEngineMulti::recalcAdvances(QGlyphLayout *glyphs, QTextEngine::ShaperF
         glyphs->glyphs[i] = hi | glyphs->glyphs[i];
 }
 
-void QFontEngineMulti::doKerning(QGlyphLayout *glyphs, QTextEngine::ShaperFlags flags) const
+void QFontEngineMulti::doKerning(QGlyphLayout *glyphs, QTextEngine::ShaperFlags flags)
 {
     if (glyphs->numGlyphs <= 0)
         return;
