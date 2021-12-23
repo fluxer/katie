@@ -1776,6 +1776,7 @@ static void dither_to_Mono(QImageData *dst, const QImageData *src,
 {
     Q_ASSERT(src->width == dst->width);
     Q_ASSERT(src->height == dst->height);
+    Q_ASSERT(src->depth == 32);
     Q_ASSERT(dst->format == QImage::Format_Mono || dst->format == QImage::Format_MonoLSB);
 
     dst->mono0 = QRgb(0xffffffff);
@@ -2693,12 +2694,17 @@ QImage QImage::transformed(const QMatrix &matrix, Qt::TransformationMode mode) c
 */
 QImage QImage::createAlphaMask(Qt::ImageConversionFlags flags) const
 {
-    if (!d || d->format == QImage::Format_RGB32)
+    if (!d || d->format == QImage::Format_RGB32 || d->format == QImage::Format_RGB16)
         return QImage();
+
+    QImage source(*this);
+    if (d->depth != 32) {
+        source = source.convertToFormat(QImage::Format_ARGB32);
+    }
 
     QImage mask(d->width, d->height, Format_MonoLSB);
     if (!mask.isNull()) {
-        dither_to_Mono(mask.d, d, flags, true);
+        dither_to_Mono(mask.d, source.d, flags, true);
     }
     return mask;
 }
@@ -2857,7 +2863,7 @@ QImage QImage::createMaskFromColor(QRgb color, Qt::MaskMode mode) const
             s += bpl;
         }
     }
-    if  (mode == Qt::MaskOutColor)
+    if (mode == Qt::MaskOutColor)
         maskImage.invertPixels();
     return maskImage;
 }
