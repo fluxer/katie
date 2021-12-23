@@ -839,33 +839,6 @@ QRect QPaintEngine::systemRect() const
     return d_func()->systemRect;
 }
 
-void QPaintEnginePrivate::drawBoxTextItem(const QPointF &p, const QTextItemInt &ti)
-{
-    if (!ti.glyphs.numGlyphs)
-        return;
-
-    // any fixes here should probably also be done in QFontEngineBox::draw
-    const int size = qRound(ti.fontEngine->ascent());
-    QVarLengthArray<QFixedPoint> positions;
-    QVarLengthArray<glyph_t> glyphs;
-    QTransform matrix = QTransform::fromTranslate(p.x(), p.y() - size);
-    ti.fontEngine->getGlyphPositions(ti.glyphs, matrix, ti.flags, glyphs, positions);
-    if (glyphs.size() == 0)
-        return;
-
-    QSize s(size - 3, size - 3);
-
-    QPainter *painter = q_func()->state->painter();
-    painter->save();
-    painter->setBrush(Qt::NoBrush);
-    QPen pen = painter->pen();
-    pen.setWidthF(ti.fontEngine->lineThickness().toReal());
-    painter->setPen(pen);
-    for (int k = 0; k < positions.size(); k++)
-        painter->drawRect(QRectF(positions[k].toPointF(), s));
-    painter->restore();
-}
-
 QT_END_NAMESPACE
 
 
