@@ -32,9 +32,6 @@
 #include "qfontengine_x11_p.h"
 
 #ifndef QT_NO_FONTCONFIG
-#include <ft2build.h>
-#include FT_FREETYPE_H
-
 #include <fontconfig/fcfreetype.h>
 #endif
 
