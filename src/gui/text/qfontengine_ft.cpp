@@ -579,8 +579,6 @@ QFontEngineFT::Glyph *QFontEngineFT::loadGlyph(glyph_t glyph,
         return g;
     }
 
-    QFontEngineFT::GlyphInfo info;
-
     Q_ASSERT(format != Format_None);
     bool hsubpixel = false;
     int vfactor = 1;
@@ -622,10 +620,6 @@ QFontEngineFT::Glyph *QFontEngineFT::loadGlyph(glyph_t glyph,
     if (embolden) FT_GlyphSlot_Embolden(slot);
     FT_Library library = freetype->library;
 
-    info.xOff = TRUNC(ROUND(slot->advance.x));
-    info.yOff = 0;
-
-
     FT_Render_Mode rendermode = FT_RENDER_MODE_MONO;
 #if defined(FT_LCD_FILTER_H)
     if (antialias || hsubpixel) {
@@ -651,13 +645,13 @@ QFontEngineFT::Glyph *QFontEngineFT::loadGlyph(glyph_t glyph,
     FT_Library_SetLcdFilter(library, FT_LCD_FILTER_NONE);
 #endif
 
-    info.height = slot->bitmap.rows / vfactor;
-    info.width = ((rendermode == FT_RENDER_MODE_MONO) ? slot->bitmap.width : (slot->bitmap.width / 3));
-    info.x = -slot->bitmap_left;
-    info.y = slot->bitmap_top;
+    const unsigned short gheight = slot->bitmap.rows / vfactor;
+    const unsigned short gwidth = ((rendermode == FT_RENDER_MODE_MONO) ? slot->bitmap.width : (slot->bitmap.width / 3));
 
-    const int glyph_buffer_size = (rendermode == FT_RENDER_MODE_MONO ? (info.width * info.height) : (info.width * info.height * 4));
+    const int glyph_buffer_size = (rendermode == FT_RENDER_MODE_MONO ? (gwidth * gheight) : (gwidth * gheight * 4));
     if (!glyph_buffer_size) {
+        // e.g. 3 or 2798
+        // qWarning("glyph size is zero face=%p, glyph=%d", face, glyph);
         return 0;
     }
     Q_ASSERT(glyph_buffer_size >= 1);
@@ -671,15 +665,15 @@ QFontEngineFT::Glyph *QFontEngineFT::loadGlyph(glyph_t glyph,
 #if defined(FT_LCD_FILTER_H)
     if (rendermode == FT_RENDER_MODE_LCD) {
         Q_ASSERT(slot->bitmap.pixel_mode == FT_PIXEL_MODE_LCD);
-        convertRGBToARGB(slot->bitmap.buffer, (uint *)glyph_buffer, info.width, info.height, slot->bitmap.pitch, subpixelType != QFontEngineFT::Subpixel_RGB, useLegacyLcdFilter);
+        convertRGBToARGB(slot->bitmap.buffer, (uint *)glyph_buffer, gwidth, gheight, slot->bitmap.pitch, subpixelType != QFontEngineFT::Subpixel_RGB, useLegacyLcdFilter);
     } else if (rendermode == FT_RENDER_MODE_LCD_V) {
         Q_ASSERT(slot->bitmap.pixel_mode == FT_PIXEL_MODE_LCD_V);
-        convertRGBToARGB_V(slot->bitmap.buffer, (uint *)glyph_buffer, info.width, info.height, slot->bitmap.pitch, subpixelType != QFontEngineFT::Subpixel_VRGB, useLegacyLcdFilter);
+        convertRGBToARGB_V(slot->bitmap.buffer, (uint *)glyph_buffer, gwidth, gheight, slot->bitmap.pitch, subpixelType != QFontEngineFT::Subpixel_VRGB, useLegacyLcdFilter);
     } else
 #endif
     {
         Q_ASSERT(slot->bitmap.pixel_mode == FT_PIXEL_MODE_MONO);
-        const int bytes = ((((info.width + 7) & ~7) >> 3) * slot->bitmap.rows);
+        const int bytes = ((((gwidth + 7) & ~7) >> 3) * slot->bitmap.rows);
         ::memcpy(glyph_buffer, slot->bitmap.buffer, bytes);
     }
 
@@ -690,11 +684,11 @@ QFontEngineFT::Glyph *QFontEngineFT::loadGlyph(glyph_t glyph,
     }
 
     g->linearAdvance = slot->linearHoriAdvance >> 10;
-    g->width = info.width;
-    g->height = info.height;
-    g->x = -info.x;
-    g->y = info.y;
-    g->advance = info.xOff;
+    g->width = gwidth;
+    g->height = gheight;
+    g->x = slot->bitmap_left;
+    g->y = slot->bitmap_top;
+    g->advance = TRUNC(ROUND(slot->advance.x));
     g->format = format;
     delete [] g->data;
     g->data = glyph_buffer;

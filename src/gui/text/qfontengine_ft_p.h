@@ -113,19 +113,6 @@ public:
         Subpixel_VBGR
     };
 
-#if defined(Q_WS_X11) && !defined(QT_NO_XRENDER)
-    typedef XGlyphInfo GlyphInfo;
-#else
-    struct GlyphInfo {
-        unsigned short  width;
-        unsigned short  height;
-        short           x;
-        short           y;
-        short           xOff;
-        short           yOff;
-    };
-#endif
-
     struct QGlyphSet
     {
         QGlyphSet();
