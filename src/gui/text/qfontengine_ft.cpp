@@ -306,19 +306,6 @@ QFontEngine::Properties QFreetypeFace::properties() const
     return p;
 }
 
-bool QFreetypeFace::getSfntTable(uint tag, uchar *buffer, uint *length) const
-{
-    bool result = false;
-#if (FREETYPE_MAJOR*10000 + FREETYPE_MINOR*100 + FREETYPE_PATCH) > 20103
-    if (FT_IS_SFNT(face)) {
-        FT_ULong len = *length;
-        result = FT_Load_Sfnt_Table(face, tag, 0, buffer, &len) == FT_Err_Ok;
-        *length = len;
-    }
-#endif
-    return result;
-}
-
 /* Some fonts (such as MingLiu rely on hinting to scale different
    components to their correct sizes. While this is really broken (it
    should be done in the component glyph itself, not the hinter) we
@@ -956,7 +943,15 @@ QFixed QFontEngineFT::emSquareSize() const
 
 bool QFontEngineFT::getSfntTableData(uint tag, uchar *buffer, uint *length) const
 {
-    return freetype->getSfntTable(tag, buffer, length);
+    bool result = false;
+#if (FREETYPE_MAJOR*10000 + FREETYPE_MINOR*100 + FREETYPE_PATCH) > 20103
+    if (FT_IS_SFNT(freetype->face)) {
+        FT_ULong len = *length;
+        result = FT_Load_Sfnt_Table(freetype->face, tag, 0, buffer, &len) == FT_Err_Ok;
+        *length = len;
+    }
+#endif
+    return result;
 }
 
 int QFontEngineFT::synthesized() const

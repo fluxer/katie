@@ -60,7 +60,6 @@ class QFreetypeFace
 public:
     void computeSize(const QFontDef &fontDef, int *xsize, int *ysize, bool *outline_drawing);
     QFontEngine::Properties properties() const;
-    bool getSfntTable(uint tag, uchar *buffer, uint *length) const;
 
     static QFreetypeFace *getFace(const QFontEngine::FaceId &face_id);
     void release(const QFontEngine::FaceId &face_id);
