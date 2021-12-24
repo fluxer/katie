@@ -76,9 +76,6 @@ public:
     }
 
     FT_Face face;
-#ifndef QT_NO_FONTCONFIG
-    FcCharSet *charset;
-#endif
     int xsize; // 26.6
     int ysize; // 26.6
     FT_Matrix matrix;

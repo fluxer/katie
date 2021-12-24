@@ -298,12 +298,6 @@ QFontEngineX11FT::QFontEngineX11FT(FcPattern *pattern, const QFontDef &fd, int s
 
     if (!init(face_id, antialias, antialias ? Format_A32 : Format_Mono))
         return;
-
-    if (!freetype->charset) {
-        FcCharSet *cs;
-        FcPatternGetCharSet (pattern, FC_CHARSET, 0, &cs);
-        freetype->charset = FcCharSetCopy(cs);
-    }
 }
 
 QFontEngineX11FT::~QFontEngineX11FT()
