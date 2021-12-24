@@ -677,7 +677,6 @@ QFontEngineFT::Glyph *QFontEngineFT::loadGlyph(glyph_t glyph,
         ::memcpy(glyph_buffer, slot->bitmap.buffer, bytes);
     }
 
-
     if (!g) {
         g = new Glyph;
         g->data = 0;
@@ -1000,13 +999,10 @@ void QFontEngineFT::recalcAdvances(QGlyphLayout *glyphs, QTextEngine::ShaperFlag
                    default_hint_style == HintLight ||
                    (flags & HB_ShaperFlag_UseDesignMetrics)) && FT_IS_SCALABLE(face);
     for (int i = 0; i < glyphs->numGlyphs; i++) {
-        Glyph *g = defaultGlyphSet.getGlyph(glyphs->glyphs[i]);
-        // Since we are passing Format_None to loadGlyph, use same default format logic as loadGlyph
-        GlyphFormat acceptableFormat = (defaultFormat != Format_None) ? defaultFormat : Format_Mono;
-        if (g && g->format == acceptableFormat) {
+        Glyph *g = loadGlyph(glyphs->glyphs[i], Format_None, true);
+        if (g) {
             glyphs->advances_x[i] = design ? QFixed::fromFixed(g->linearAdvance) : QFixed(g->advance);
         } else {
-            g = loadGlyph(glyphs->glyphs[i], Format_None, true);
             glyphs->advances_x[i] = design ? QFixed::fromFixed(face->glyph->linearHoriAdvance >> 10)
                                            : QFixed::fromFixed(face->glyph->metrics.horiAdvance).round();
         }
@@ -1029,10 +1025,7 @@ glyph_metrics_t QFontEngineFT::boundingBox(const QGlyphLayout &glyphs) const
     QFixed ymax = 0;
     QFixed xmax = 0;
     for (int i = 0; i < glyphs.numGlyphs; i++) {
-        Glyph *g = defaultGlyphSet.getGlyph(glyphs.glyphs[i]);
-        if (!g) {
-            g = loadGlyph(glyphs.glyphs[i], Format_None, true);
-        }
+        Glyph *g = loadGlyph(glyphs.glyphs[i], Format_None, true);
         if (g) {
             QFixed x = overall.xoff + glyphs.offsets[i].x + g->x;
             QFixed y = overall.yoff + glyphs.offsets[i].y - g->y;
@@ -1066,10 +1059,7 @@ glyph_metrics_t QFontEngineFT::boundingBox(glyph_t glyph) const
 {
     FT_Face face = getFace();
     glyph_metrics_t overall;
-    Glyph *g = defaultGlyphSet.getGlyph(glyph);
-    if (!g) {
-        g = loadGlyph(glyph, Format_None, true);
-    }
+    Glyph *g = loadGlyph(glyph, Format_None, true);
     if (g) {
         overall.x = g->x;
         overall.y = -g->y;
