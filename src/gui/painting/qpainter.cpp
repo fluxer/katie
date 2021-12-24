@@ -4774,7 +4774,55 @@ void QPainter::drawImage(const QRectF &targetRect, const QImage &image, const QR
 
 void QPainter::drawText(const QPointF &p, const QString &str)
 {
-    drawText(p, str, 0, 0);
+#ifdef QT_DEBUG_DRAW
+    printf("QPainter::drawText(), pos=[%.2f,%.2f], str='%s'\n", p.x(), p.y(), str.toLatin1().constData());
+#endif
+
+    Q_D(QPainter);
+
+    if (!d->engine || str.isEmpty() || pen().style() == Qt::NoPen)
+        return;
+
+    QStackTextEngine engine(str, d->state->font);
+    engine.option.setTextDirection(d->state->layoutDirection);
+    engine.itemize();
+    QScriptLine line;
+    line.length = str.length();
+    engine.shapeLine(line);
+
+    int nItems = engine.layoutData->items.size();
+    QVarLengthArray<int> visualOrder(nItems);
+    QVarLengthArray<uchar> levels(nItems);
+    for (int i = 0; i < nItems; ++i)
+        levels[i] = engine.layoutData->items[i].analysis.bidiLevel;
+    QTextEngine::bidiReorder(nItems, levels.data(), visualOrder.data());
+
+    QFixed x = QFixed::fromReal(p.x());
+
+    for (int i = 0; i < nItems; ++i) {
+        int item = visualOrder[i];
+        const QScriptItem &si = engine.layoutData->items.at(item);
+        if (si.analysis.flags >= QScriptAnalysis::TabOrObject) {
+            x += si.width;
+            continue;
+        }
+        QFont f = engine.font(si);
+        QTextItemInt gf(si, &f);
+        gf.glyphs = engine.shapedGlyphs(&si);
+        gf.chars = engine.layoutData->string.unicode() + si.position;
+        gf.num_chars = engine.length(item);
+        if (engine.forceJustification) {
+            for (int j=0; j<gf.glyphs.numGlyphs; ++j)
+                gf.width += gf.glyphs.effectiveAdvance(j);
+        } else {
+            gf.width = si.width;
+        }
+        gf.logClusters = engine.logClusters(&si);
+
+        drawTextItem(QPointF(x.toReal(), p.y()), gf);
+
+        x += gf.width;
+    }
 }
 
 /*!
@@ -4900,73 +4948,6 @@ void QPainter::drawStaticText(const QPointF &topLeftPosition, const QStaticText 
 
     if (!staticText_d->untransformedCoordinates && oldMatrix.isTranslating())
         d->state->matrix = oldMatrix;
-}
-
-/*!
-   \internal
-*/
-void QPainter::drawText(const QPointF &p, const QString &str, int tf, int justificationPadding)
-{
-#ifdef QT_DEBUG_DRAW
-    printf("QPainter::drawText(), pos=[%.2f,%.2f], str='%s'\n", p.x(), p.y(), str.toLatin1().constData());
-#endif
-
-    Q_D(QPainter);
-
-    if (!d->engine || str.isEmpty() || pen().style() == Qt::NoPen)
-        return;
-
-    QStackTextEngine engine(str, d->state->font);
-    engine.option.setTextDirection(d->state->layoutDirection);
-    if (tf & (Qt::TextForceLeftToRight|Qt::TextForceRightToLeft)) {
-        engine.ignoreBidi = true;
-        engine.option.setTextDirection((tf & Qt::TextForceLeftToRight) ? Qt::LeftToRight : Qt::RightToLeft);
-    }
-    engine.itemize();
-    QScriptLine line;
-    line.length = str.length();
-    engine.shapeLine(line);
-
-    int nItems = engine.layoutData->items.size();
-    QVarLengthArray<int> visualOrder(nItems);
-    QVarLengthArray<uchar> levels(nItems);
-    for (int i = 0; i < nItems; ++i)
-        levels[i] = engine.layoutData->items[i].analysis.bidiLevel;
-    QTextEngine::bidiReorder(nItems, levels.data(), visualOrder.data());
-
-    if (justificationPadding > 0) {
-        engine.option.setAlignment(Qt::AlignJustify);
-        engine.forceJustification = true;
-        // this works because justify() is only interested in the difference between width and textWidth
-        line.width = justificationPadding;
-        engine.justify(line);
-    }
-    QFixed x = QFixed::fromReal(p.x());
-
-    for (int i = 0; i < nItems; ++i) {
-        int item = visualOrder[i];
-        const QScriptItem &si = engine.layoutData->items.at(item);
-        if (si.analysis.flags >= QScriptAnalysis::TabOrObject) {
-            x += si.width;
-            continue;
-        }
-        QFont f = engine.font(si);
-        QTextItemInt gf(si, &f);
-        gf.glyphs = engine.shapedGlyphs(&si);
-        gf.chars = engine.layoutData->string.unicode() + si.position;
-        gf.num_chars = engine.length(item);
-        if (engine.forceJustification) {
-            for (int j=0; j<gf.glyphs.numGlyphs; ++j)
-                gf.width += gf.glyphs.effectiveAdvance(j);
-        } else {
-            gf.width = si.width;
-        }
-        gf.logClusters = engine.logClusters(&si);
-
-        drawTextItem(QPointF(x.toReal(), p.y()), gf);
-
-        x += gf.width;
-    }
 }
 
 void QPainter::drawText(const QRect &r, int flags, const QString &str, QRect *br)
