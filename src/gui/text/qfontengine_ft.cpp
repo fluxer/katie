@@ -81,7 +81,6 @@ QFreetypeFace::QFreetypeFace(const QFontEngine::FaceId &face_id)
     matrix.yy = 0x10000;
     matrix.xy = 0;
     matrix.yx = 0;
-    ::memset(cmapCache, 0, sizeof(cmapCache));
 
     FT_Init_FreeType(&library);
 
@@ -1130,32 +1129,21 @@ bool QFontEngineFT::stringToCMap(const QChar *str, int len, QGlyphLayout *glyphs
         FT_Face face = freetype->face;
         for ( int i = 0; i < len; ++i ) {
             unsigned int uc = getChar(str, i, len);
-            glyphs->glyphs[glyph_pos] = uc < QFreetypeFace::cmapCacheSize ? freetype->cmapCache[uc] : 0;
-            if ( !glyphs->glyphs[glyph_pos] ) {
-                glyph_t glyph;
-                FT_Set_Charmap(face, freetype->symbol_map);
-                glyph = FT_Get_Char_Index(face, uc);
-                FT_Set_Charmap(face, freetype->unicode_map);
-                glyphs->glyphs[glyph_pos] = glyph;
-                if (uc < QFreetypeFace::cmapCacheSize)
-                    freetype->cmapCache[uc] = glyph;
-            }
+            FT_Set_Charmap(face, freetype->symbol_map);
+            glyph_t glyph = FT_Get_Char_Index(face, uc);
+            FT_Set_Charmap(face, freetype->unicode_map);
+            glyphs->glyphs[glyph_pos] = glyph;
             ++glyph_pos;
         }
     } else {
         FT_Face face = freetype->face;
         for (int i = 0; i < len; ++i) {
             unsigned int uc = getChar(str, i, len);
-            if (mirrored)
+            if (mirrored) {
                 uc = QChar::mirroredChar(uc);
-            glyphs->glyphs[glyph_pos] = uc < QFreetypeFace::cmapCacheSize ? freetype->cmapCache[uc] : 0;
-            if (!glyphs->glyphs[glyph_pos]) {
-                glyph_t glyph = FT_Get_Char_Index(face, uc);
-                glyphs->glyphs[glyph_pos] = glyph;
-                if (uc < QFreetypeFace::cmapCacheSize) {
-                    freetype->cmapCache[uc] = glyph;
-                }
             }
+            glyph_t glyph = FT_Get_Char_Index(face, uc);
+            glyphs->glyphs[glyph_pos] = glyph;
             ++glyph_pos;
         }
     }
@@ -1341,8 +1329,6 @@ FT_Face QFontEngineFT::non_locked_face() const
 QFontEngineFT::QGlyphSet::QGlyphSet()
     : outline_drawing(false)
 {
-    memset(fast_glyph_data, 0, sizeof(fast_glyph_data));
-    fast_glyph_count = 0;
 }
 
 QFontEngineFT::QGlyphSet::~QGlyphSet()
@@ -1352,28 +1338,13 @@ QFontEngineFT::QGlyphSet::~QGlyphSet()
 
 void QFontEngineFT::QGlyphSet::clear()
 {
-    if (fast_glyph_count > 0) {
-        for (int i = 0; i < 256; ++i) {
-            if (fast_glyph_data[i]) {
-                delete fast_glyph_data[i];
-                fast_glyph_data[i] = 0;
-            }
-        }
-        fast_glyph_count = 0;
-    }
     qDeleteAll(glyph_data);
     glyph_data.clear();
 }
 
 void QFontEngineFT::QGlyphSet::setGlyph(glyph_t index, Glyph *glyph)
 {
-    if (useFastGlyphData(index)) {
-        if (!fast_glyph_data[index])
-            ++fast_glyph_count;
-        fast_glyph_data[index] = glyph;
-    } else {
-        glyph_data.insert(index, glyph);
-    }
+    glyph_data.insert(index, glyph);
 }
 
 HB_Error QFontEngineFT::getPointInOutline(HB_Glyph glyph, int flags, hb_uint32 point, HB_Fixed *xpos, HB_Fixed *ypos, hb_uint32 *nPoints)

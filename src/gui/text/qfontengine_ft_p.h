@@ -71,9 +71,6 @@ public:
     FT_CharMap unicode_map;
     FT_CharMap symbol_map;
 
-    enum { cmapCacheSize = 0x200 };
-    glyph_t cmapCache[cmapCacheSize];
-
     int fsType() const;
 
     HB_Error getPointInOutline(HB_Glyph glyph, int flags, hb_uint32 point, HB_Fixed *xpos, HB_Fixed *ypos, hb_uint32 *nPoints);
@@ -137,16 +134,12 @@ public:
         bool outline_drawing;
 
         void clear();
-        static inline bool useFastGlyphData(glyph_t index) {
-            return (index < 256);
-        }
+
         inline Glyph *getGlyph(glyph_t index) const;
         void setGlyph(glyph_t index, Glyph *glyph);
 
 private:
         mutable QHash<glyph_t, Glyph *> glyph_data; // maps from glyph index to glyph data
-        mutable Glyph *fast_glyph_data[256]; // for fast lookup of glyphs < 256
-        mutable int fast_glyph_count;
     };
 
     virtual QFontEngine::FaceId faceId() const;
@@ -259,8 +252,6 @@ private:
 
 inline QFontEngineFT::Glyph *QFontEngineFT::QGlyphSet::getGlyph(glyph_t index) const
 {
-    if (useFastGlyphData(index))
-        return fast_glyph_data[index];
     return glyph_data.value(index, nullptr);
 }
 
