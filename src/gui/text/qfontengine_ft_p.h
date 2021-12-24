@@ -58,21 +58,11 @@ QT_BEGIN_NAMESPACE
 class QFreetypeFace
 {
 public:
+    QFreetypeFace(const QFontEngine::FaceId &face_id);
+    ~QFreetypeFace();
+
     void computeSize(const QFontDef &fontDef, int *xsize, int *ysize, bool *outline_drawing);
     QFontEngine::Properties properties() const;
-
-    static QFreetypeFace *getFace(const QFontEngine::FaceId &face_id);
-    void release(const QFontEngine::FaceId &face_id);
-
-    // locks the struct for usage. Any read/write operations require locking.
-    void lock()
-    {
-        _lock.lock();
-    }
-    void unlock()
-    {
-        _lock.unlock();
-    }
 
     FT_Face face;
     int xsize; // 26.6
@@ -92,12 +82,12 @@ public:
     static void addBitmapToPath(FT_GlyphSlot slot, const QFixedPoint &point, QPainterPath *path);
 
 private:
+    Q_DISABLE_COPY(QFreetypeFace);
+
     friend class QFontEngineFT;
-    friend class QScopedPointerDeleter<QFreetypeFace>;
-    QFreetypeFace() {}
-    ~QFreetypeFace() {}
-    QAtomicInt ref;
-    std::recursive_mutex _lock;
+
+    FT_Library library;
+
     QByteArray fontData;
 };
 
@@ -209,8 +199,7 @@ private:
         Scaled,
         Unscaled
     };
-    FT_Face lockFace(Scaling scale = Scaled) const;
-    void unlockFace() const;
+    FT_Face getFace(Scaling scale = Scaled) const;
 
     FT_Face non_locked_face() const;
 

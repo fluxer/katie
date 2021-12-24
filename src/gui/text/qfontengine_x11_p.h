@@ -37,8 +37,6 @@
 
 QT_BEGIN_NAMESPACE
 
-class QFreetypeFace;
-
 #ifndef QT_NO_FONTCONFIG
 
 class Q_GUI_EXPORT QFontEngineMultiFT : public QFontEngineMulti

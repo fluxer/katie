@@ -1079,8 +1079,8 @@ static FcPattern *queryFont(const FcChar8 *file, const QByteArray &data, int id,
     if (data.isEmpty())
         return FcFreeTypeQuery(file, id, blanks, count);
 
-    extern FT_Library qt_getFreetype();
-    FT_Library lib = qt_getFreetype();
+    FT_Library lib;
+    FT_Init_FreeType(&lib);
 
     FcPattern *pattern = nullptr;
 
@@ -1092,6 +1092,7 @@ static FcPattern *queryFont(const FcChar8 *file, const QByteArray &data, int id,
 
         FT_Done_Face(face);
     }
+    FT_Done_FreeType(lib);
 
     return pattern;
 }
