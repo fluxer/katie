@@ -261,7 +261,7 @@ inline QFontEngineFT::Glyph *QFontEngineFT::QGlyphSet::getGlyph(glyph_t index) c
 {
     if (useFastGlyphData(index))
         return fast_glyph_data[index];
-    return glyph_data.value(index);
+    return glyph_data.value(index, nullptr);
 }
 
 
