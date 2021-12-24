@@ -564,14 +564,8 @@ QFontEngineFT::Glyph *QFontEngineFT::loadGlyph(glyph_t glyph,
                                                GlyphFormat format,
                                                bool fetchMetricsOnly) const
 {
-//     Q_ASSERT(freetype->lock == 1);
-
     if (format == Format_None) {
-        if (defaultFormat != Format_None) {
-            format = defaultFormat;
-        } else {
-            format = Format_Mono;
-        }
+        format = defaultFormat;
     }
 
     Glyph *g = defaultGlyphSet.getGlyph(glyph);
