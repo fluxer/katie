@@ -47,10 +47,6 @@
 #include FT_CONFIG_OPTIONS_H
 #endif
 
-#if defined(FT_LCD_FILTER_H) && defined(FT_CONFIG_OPTION_SUBPIXEL_RENDERING)
-#define QT_USE_FREETYPE_LCDFILTER
-#endif
-
 #if defined(FT_ERRORS_H)
 #include FT_ERRORS_H
 #endif
@@ -431,26 +427,6 @@ static void convertRGBToARGB_V(const uchar *src, uint *dst, int width, int heigh
     }
 }
 
-static void convoluteBitmap(const uchar *src, uchar *dst, int width, int height, int pitch)
-{
-    // convolute the bitmap with a triangle filter to get rid of color fringes
-    // If we take account for a gamma value of 2, we end up with
-    // weights of 1, 4, 9, 4, 1. We use an approximation of 1, 3, 8, 3, 1 here,
-    // as this nicely sums up to 16 :)
-    int h = height;
-    while (h--) {
-        dst[0] = dst[1] = 0;
-        //
-        for (int x = 2; x < width - 2; ++x) {
-            uint sum = src[x-2] + 3*src[x-1] + 8*src[x] + 3*src[x+1] + src[x+2];
-            dst[x] = (uchar) (sum >> 4);
-        }
-        dst[width - 2] = dst[width - 1] = 0;
-        src += pitch;
-        dst += pitch;
-    }
-}
-
 QFontEngineFT::QFontEngineFT(const QFontDef &fd)
 {
     fontDef = fd;
@@ -461,17 +437,19 @@ QFontEngineFT::QFontEngineFT(const QFontDef &fd)
     cache_cost = 100;
     kerning_pairs_loaded = false;
     embolden = false;
-    antialias = true;
     freetype = 0;
     default_load_flags = FT_LOAD_IGNORE_GLOBAL_ADVANCE_WIDTH;
     default_hint_style = HintNone;
     subpixelType = Subpixel_None;
 #if defined(FT_LCD_FILTER_H)
     lcdFilterType = (int)((quintptr) FT_LCD_FILTER_DEFAULT);
+    antialias = true;
+    defaultFormat = Format_A32;
 #else
+    antialias = false;
+    defaultFormat = Format_Mono;
     lcdFilterType = 0;
 #endif
-    defaultFormat = Format_None;
     embeddedbitmap = false;
 }
 
@@ -488,8 +466,10 @@ bool QFontEngineFT::init(FaceId faceId, bool antialias, GlyphFormat format)
         ysize = 0;
         return false;
     }
+#if defined(FT_LCD_FILTER_H)
     defaultFormat = format;
     this->antialias = antialias;
+#endif
 
     face_id = faceId;
 
@@ -550,6 +530,10 @@ int QFontEngineFT::loadFlags(QGlyphSet *set, GlyphFormat format, int flags,
     int load_target = default_hint_style == HintLight
                       ? FT_LOAD_TARGET_LIGHT
                       : FT_LOAD_TARGET_NORMAL;
+
+    if (format == Format_None) {
+        format = defaultFormat;
+    }
 
     if (format == Format_Mono) {
         load_target = FT_LOAD_TARGET_MONO;
@@ -616,10 +600,7 @@ QFontEngineFT::Glyph *QFontEngineFT::loadGlyph(glyph_t glyph,
 
     FT_Face face = freetype->face;
 
-    FT_Vector v;
-    v.x = 0;
-    v.y = 0;
-    FT_Set_Transform(face, &freetype->matrix, &v);
+    FT_Set_Transform(face, &freetype->matrix, 0);
 
     FT_Error err = FT_Load_Glyph(face, glyph, load_flags);
     if (err && (load_flags & FT_LOAD_NO_BITMAP)) {
@@ -644,203 +625,62 @@ QFontEngineFT::Glyph *QFontEngineFT::loadGlyph(glyph_t glyph,
     info.xOff = TRUNC(ROUND(slot->advance.x));
     info.yOff = 0;
 
-    uchar *glyph_buffer = 0;
-    int glyph_buffer_size = 0;
-#if defined(QT_USE_FREETYPE_LCDFILTER)
-    bool useFreetypeRenderGlyph = false;
-    if (slot->format == FT_GLYPH_FORMAT_OUTLINE && (hsubpixel || vfactor != 1)) {
-        err = FT_Library_SetLcdFilter(library, (FT_LcdFilter)lcdFilterType);
-        if (err == FT_Err_Ok)
-            useFreetypeRenderGlyph = true;
+
+    FT_Render_Mode rendermode = FT_RENDER_MODE_MONO;
+#if defined(FT_LCD_FILTER_H)
+    if (antialias || hsubpixel) {
+        rendermode = FT_RENDER_MODE_LCD;
+    } else if (vfactor != 1) {
+        rendermode = FT_RENDER_MODE_LCD_V;
     }
 
-    if (useFreetypeRenderGlyph) {
-        err = FT_Render_Glyph(slot, hsubpixel ? FT_RENDER_MODE_LCD : FT_RENDER_MODE_LCD_V);
+    if (slot->format == FT_GLYPH_FORMAT_OUTLINE && (hsubpixel || vfactor != 1)) {
+        err = FT_Library_SetLcdFilter(library, (FT_LcdFilter)lcdFilterType);
+    }
+    if (err != FT_Err_Ok) {
+        qWarning("setting render filter failed err=%x face=%p, glyph=%d", err, face, glyph);
+    }
+#endif
 
-        if (err != FT_Err_Ok)
-            qWarning("render glyph failed err=%x face=%p, glyph=%d", err, face, glyph);
+    err = FT_Render_Glyph(slot, rendermode);
+    if (err != FT_Err_Ok) {
+        qWarning("render glyph failed err=%x face=%p, glyph=%d", err, face, glyph);
+    }
 
-        FT_Library_SetLcdFilter(library, FT_LCD_FILTER_NONE);
+#if defined(FT_LCD_FILTER_H)
+    FT_Library_SetLcdFilter(library, FT_LCD_FILTER_NONE);
+#endif
 
-        info.height = slot->bitmap.rows / vfactor;
-        info.width = hsubpixel ? slot->bitmap.width / 3 : slot->bitmap.width;
-        info.x = -slot->bitmap_left;
-        info.y = slot->bitmap_top;
+    info.height = slot->bitmap.rows / vfactor;
+    info.width = ((rendermode == FT_RENDER_MODE_MONO) ? slot->bitmap.width : (slot->bitmap.width / 3));
+    info.x = -slot->bitmap_left;
+    info.y = slot->bitmap_top;
 
-        glyph_buffer_size = info.width * info.height * 4;
-        Q_ASSERT(glyph_buffer_size >= 1);
-        glyph_buffer = new uchar[glyph_buffer_size];
+    const int glyph_buffer_size = (rendermode == FT_RENDER_MODE_MONO ? (info.width * info.height) : (info.width * info.height * 4));
+    if (!glyph_buffer_size) {
+        return 0;
+    }
+    Q_ASSERT(glyph_buffer_size >= 1);
+    uchar *glyph_buffer = new uchar[glyph_buffer_size];
 
-        if (hsubpixel)
-            convertRGBToARGB(slot->bitmap.buffer, (uint *)glyph_buffer, info.width, info.height, slot->bitmap.pitch, subpixelType != QFontEngineFT::Subpixel_RGB, false);
-        else if (vfactor != 1)
-            convertRGBToARGB_V(slot->bitmap.buffer, (uint *)glyph_buffer, info.width, info.height, slot->bitmap.pitch, subpixelType != QFontEngineFT::Subpixel_VRGB, false);
+    bool useLegacyLcdFilter = false;
+#if defined(FT_LCD_FILTER_H)
+    useLegacyLcdFilter = (lcdFilterType == FT_LCD_FILTER_LEGACY);
+#endif
+
+#if defined(FT_LCD_FILTER_H)
+    if (rendermode == FT_RENDER_MODE_LCD) {
+        Q_ASSERT(slot->bitmap.pixel_mode == FT_PIXEL_MODE_LCD);
+        convertRGBToARGB(slot->bitmap.buffer, (uint *)glyph_buffer, info.width, info.height, slot->bitmap.pitch, subpixelType != QFontEngineFT::Subpixel_RGB, useLegacyLcdFilter);
+    } else if (rendermode == FT_RENDER_MODE_LCD_V) {
+        Q_ASSERT(slot->bitmap.pixel_mode == FT_PIXEL_MODE_LCD_V);
+        convertRGBToARGB_V(slot->bitmap.buffer, (uint *)glyph_buffer, info.width, info.height, slot->bitmap.pitch, subpixelType != QFontEngineFT::Subpixel_VRGB, useLegacyLcdFilter);
     } else
 #endif
     {
-    int left  = slot->metrics.horiBearingX;
-    int right = slot->metrics.horiBearingX + slot->metrics.width;
-    int top    = slot->metrics.horiBearingY;
-    int bottom = slot->metrics.horiBearingY - slot->metrics.height;
-    if(transform && slot->format != FT_GLYPH_FORMAT_BITMAP) {
-        int l, r, t, b;
-        FT_Vector vector;
-        vector.x = left;
-        vector.y = top;
-        FT_Vector_Transform(&vector, &matrix);
-        l = r = vector.x;
-        t = b = vector.y;
-        vector.x = right;
-        vector.y = top;
-        FT_Vector_Transform(&vector, &matrix);
-        if (l > vector.x) l = vector.x;
-        if (r < vector.x) r = vector.x;
-        if (t < vector.y) t = vector.y;
-        if (b > vector.y) b = vector.y;
-        vector.x = right;
-        vector.y = bottom;
-        FT_Vector_Transform(&vector, &matrix);
-        if (l > vector.x) l = vector.x;
-        if (r < vector.x) r = vector.x;
-        if (t < vector.y) t = vector.y;
-        if (b > vector.y) b = vector.y;
-        vector.x = left;
-        vector.y = bottom;
-        FT_Vector_Transform(&vector, &matrix);
-        if (l > vector.x) l = vector.x;
-        if (r < vector.x) r = vector.x;
-        if (t < vector.y) t = vector.y;
-        if (b > vector.y) b = vector.y;
-        left = l;
-        right = r;
-        top = t;
-        bottom = b;
-    }
-    left = FLOOR(left);
-    right = CEIL(right);
-    bottom = FLOOR(bottom);
-    top = CEIL(top);
-
-    int hpixels = TRUNC(right - left);
-    if (hsubpixel)
-        hpixels = hpixels*3 + 8;
-    info.width = hpixels;
-    info.height = TRUNC(top - bottom);
-    info.x = -TRUNC(left);
-    info.y = TRUNC(top);
-    if (hsubpixel) {
-        info.width /= 3;
-        info.x += 1;
-    }
-
-    bool large_glyph = (((short)(slot->linearHoriAdvance>>10) != slot->linearHoriAdvance>>10)
-                        || ((uchar)(info.width) != info.width)
-                        || ((uchar)(info.height) != info.height)
-                        || ((signed char)(info.x) != info.x)
-                        || ((signed char)(info.y) != info.y)
-                        || ((signed char)(info.xOff) != info.xOff));
-
-    if (large_glyph) {
-        delete [] glyph_buffer;
-        return 0;
-    }
-
-    int pitch = (format == Format_Mono ? ((info.width + 31) & ~31) >> 3 : info.width * 4);
-    glyph_buffer_size = pitch * info.height;
-    glyph_buffer = new uchar[glyph_buffer_size];
-
-    if (slot->format == FT_GLYPH_FORMAT_OUTLINE) {
-        FT_Bitmap bitmap;
-        bitmap.rows = info.height*vfactor;
-        bitmap.width = hpixels;
-        bitmap.pitch = format == Format_Mono ? (((info.width + 31) & ~31) >> 3) : ((bitmap.width + 3) & ~3);
-        const size_t bitmapsize = (size_t(bitmap.rows) * bitmap.pitch);
-        if (!hsubpixel && vfactor == 1)
-            bitmap.buffer = glyph_buffer;
-        else
-            bitmap.buffer = new uchar[bitmapsize];
-        ::memset(bitmap.buffer, 0, bitmapsize);
-        bitmap.pixel_mode = format == Format_Mono ? FT_PIXEL_MODE_MONO : FT_PIXEL_MODE_GRAY;
-        FT_Matrix matrix;
-        matrix.xx = (hsubpixel ? 3 : 1) << 16;
-        matrix.yy = vfactor << 16;
-        matrix.yx = matrix.xy = 0;
-
-        FT_Outline_Transform(&slot->outline, &matrix);
-        FT_Outline_Translate(&slot->outline, (hsubpixel ? -3*left +(4<<6) : -left), FT_Pos(-bottom) * vfactor);
-        FT_Outline_Get_Bitmap(library, &slot->outline, &bitmap);
-        if (hsubpixel) {
-            Q_ASSERT (bitmap.pixel_mode == FT_PIXEL_MODE_GRAY);
-            Q_ASSERT(antialias);
-            uchar *convoluted = new uchar[bitmapsize];
-            bool useLegacyLcdFilter = false;
-#if defined(FC_LCD_FILTER) && defined(FT_LCD_FILTER_H)
-            useLegacyLcdFilter = (lcdFilterType == FT_LCD_FILTER_LEGACY);
-#endif
-            uchar *buffer = bitmap.buffer;
-            if (!useLegacyLcdFilter) {
-                convoluteBitmap(bitmap.buffer, convoluted, bitmap.width, info.height, bitmap.pitch);
-                buffer = convoluted;
-            }
-            convertRGBToARGB(buffer + 1, (uint *)glyph_buffer, info.width, info.height, bitmap.pitch, subpixelType != QFontEngineFT::Subpixel_RGB, useLegacyLcdFilter);
-            delete [] convoluted;
-        } else if (vfactor != 1) {
-            convertRGBToARGB_V(bitmap.buffer, (uint *)glyph_buffer, info.width, info.height, bitmap.pitch, subpixelType != QFontEngineFT::Subpixel_VRGB, true);
-        }
-
-        if (bitmap.buffer != glyph_buffer)
-            delete [] bitmap.buffer;
-    } else if (slot->format == FT_GLYPH_FORMAT_BITMAP) {
         Q_ASSERT(slot->bitmap.pixel_mode == FT_PIXEL_MODE_MONO);
-        uchar *src = slot->bitmap.buffer;
-        uchar *dst = glyph_buffer;
-        int h = slot->bitmap.rows;
-        if (format == Format_Mono) {
-            int bytes = ((info.width + 7) & ~7) >> 3;
-            while (h--) {
-                memcpy (dst, src, bytes);
-                dst += pitch;
-                src += slot->bitmap.pitch;
-            }
-        } else {
-            if (hsubpixel) {
-                while (h--) {
-                    uint *dd = (uint *)dst;
-                    *dd++ = 0;
-                    for (int x = 0; x < static_cast<int>(slot->bitmap.width); x++) {
-                        uint a = ((src[x >> 3] & (0x80 >> (x & 7))) ? 0xffffff : 0x000000);
-                        *dd++ = a;
-                    }
-                    *dd++ = 0;
-                    dst += pitch;
-                    src += slot->bitmap.pitch;
-                }
-            } else if (vfactor != 1) {
-                while (h--) {
-                    uint *dd = (uint *)dst;
-                    for (int x = 0; x < static_cast<int>(slot->bitmap.width); x++) {
-                        uint a = ((src[x >> 3] & (0x80 >> (x & 7))) ? 0xffffff : 0x000000);
-                        *dd++ = a;
-                    }
-                    dst += pitch;
-                    src += slot->bitmap.pitch;
-                }
-            } else {
-                while (h--) {
-                    for (int x = 0; x < static_cast<int>(slot->bitmap.width); x++) {
-                        unsigned char a = ((src[x >> 3] & (0x80 >> (x & 7))) ? 0xff : 0x00);
-                        dst[x] = a;
-                    }
-                    dst += pitch;
-                    src += slot->bitmap.pitch;
-                }
-            }
-        }
-    } else {
-        qWarning("QFontEngine: Glyph neither outline nor bitmap format=%d", slot->format);
-        delete [] glyph_buffer;
-        return 0;
-    }
+        const int bytes = ((((info.width + 7) & ~7) >> 3) * slot->bitmap.rows);
+        ::memcpy(glyph_buffer, slot->bitmap.buffer, bytes);
     }
 
 
@@ -1263,9 +1103,7 @@ QImage QFontEngineFT::alphaMapForGlyph(glyph_t g)
 {
     getFace();
 
-    GlyphFormat glyph_format = antialias ? Format_A32 : Format_Mono;
-
-    Glyph *glyph = defaultGlyphSet.outline_drawing ? 0 : loadGlyph(g, glyph_format);
+    Glyph *glyph = defaultGlyphSet.outline_drawing ? 0 : loadGlyph(g, Format_None);
     if (!glyph) {
         return QFontEngine::alphaMapForGlyph(g);
     }
@@ -1352,7 +1190,7 @@ HB_Error QFontEngineFT::getPointInOutline(HB_Glyph glyph, int flags, hb_uint32 p
     getFace();
     bool hsubpixel = true;
     int vfactor = 1;
-    int load_flags = loadFlags(0, Format_A32, flags, hsubpixel, vfactor);
+    int load_flags = loadFlags(0, Format_None, flags, hsubpixel, vfactor);
     HB_Error result = freetype->getPointInOutline(glyph, load_flags, point, xpos, ypos, nPoints);
     return result;
 }
