@@ -198,9 +198,7 @@ private:
 
     inline bool invalid() const { return xsize == 0 && ysize == 0; }
 
-    inline Glyph *loadGlyph(uint glyph, GlyphFormat format = Format_None, bool fetchMetricsOnly = false) const
-    { return loadGlyph(&defaultGlyphSet, glyph, format, fetchMetricsOnly); }
-    Glyph *loadGlyph(QGlyphSet *set, uint glyph, GlyphFormat = Format_None, bool fetchMetricsOnly = false) const;
+    Glyph *loadGlyph(glyph_t glyph, GlyphFormat format = Format_None, bool fetchMetricsOnly = false) const;
 
     QFontEngineFT(const QFontDef &fd);
     virtual ~QFontEngineFT();

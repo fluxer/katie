@@ -576,7 +576,7 @@ int QFontEngineFT::loadFlags(QGlyphSet *set, GlyphFormat format, int flags,
     return load_flags;
 }
 
-QFontEngineFT::Glyph *QFontEngineFT::loadGlyph(QGlyphSet *set, uint glyph,
+QFontEngineFT::Glyph *QFontEngineFT::loadGlyph(glyph_t glyph,
                                                GlyphFormat format,
                                                bool fetchMetricsOnly) const
 {
@@ -590,7 +590,7 @@ QFontEngineFT::Glyph *QFontEngineFT::loadGlyph(QGlyphSet *set, uint glyph,
         }
     }
 
-    Glyph *g = set->getGlyph(glyph);
+    Glyph *g = defaultGlyphSet.getGlyph(glyph);
     if (g && g->format == format) {
         return g;
     }
@@ -600,7 +600,7 @@ QFontEngineFT::Glyph *QFontEngineFT::loadGlyph(QGlyphSet *set, uint glyph,
     Q_ASSERT(format != Format_None);
     bool hsubpixel = false;
     int vfactor = 1;
-    int load_flags = loadFlags(set, format, 0, hsubpixel, vfactor);
+    int load_flags = loadFlags(&defaultGlyphSet, format, 0, hsubpixel, vfactor);
 
     if (format != Format_Mono && !embeddedbitmap)
         load_flags |= FT_LOAD_NO_BITMAP;
@@ -634,7 +634,7 @@ QFontEngineFT::Glyph *QFontEngineFT::loadGlyph(QGlyphSet *set, uint glyph,
     if (err != FT_Err_Ok)
         qWarning("load glyph failed err=%x face=%p, glyph=%d", err, face, glyph);
 
-    if (set->outline_drawing && fetchMetricsOnly)
+    if (defaultGlyphSet.outline_drawing && fetchMetricsOnly)
         return 0;
 
     FT_GlyphSlot slot = face->glyph;
@@ -859,7 +859,7 @@ QFontEngineFT::Glyph *QFontEngineFT::loadGlyph(QGlyphSet *set, uint glyph,
     delete [] g->data;
     g->data = glyph_buffer;
 
-    set->setGlyph(glyph, g);
+    defaultGlyphSet.setGlyph(glyph, g);
 
     return g;
 }
