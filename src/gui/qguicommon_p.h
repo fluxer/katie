@@ -28,9 +28,16 @@ static const QRgb qt_transparentrgba = qRgba(0, 0, 0, 0);
 // same as QColor(Qt::transparent).rgb()
 static const QRgb qt_transparentrgb = qRgb(0, 0, 0);
 
+
 inline static const QVector<QRgb>& monoColorTable()
 {
     static const QVector<QRgb> colortable = { qt_whitergba, qt_blackrgba };
+    return colortable;
+}
+
+inline static const QVector<QRgb>& alphaColorTable()
+{
+    static const QVector<QRgb> colortable = { qt_transparentrgba, qt_blackrgba };
     return colortable;
 }
 

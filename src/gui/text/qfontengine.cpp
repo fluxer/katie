@@ -35,8 +35,6 @@
 
 QT_BEGIN_NAMESPACE
 
-static const QVector<QRgb> qt_alphamapcolortable = { qt_transparentrgba, qt_blackrgba };
-
 // Harfbuzz helper functions
 
 static HB_Bool hb_stringToGlyphs(HB_Font font, const HB_UChar16 *string, hb_uint32 length, HB_Glyph *glyphs, hb_uint32 *numGlyphs, HB_Bool rightToLeft)
@@ -523,7 +521,7 @@ QImage QFontEngine::alphaMapForGlyph(glyph_t glyph)
         return QImage();
     QImage im(glyph_width, glyph_height, QImage::Format_Mono);
     im.fill(0);
-    im.setColorTable(qt_alphamapcolortable);
+    im.setColorTable(alphaColorTable());
     return im;
 }
 
@@ -818,7 +816,7 @@ QImage QFontEngineBox::alphaMapForGlyph(glyph_t)
 {
     QImage image(_size, _size, QImage::Format_Mono);
     image.fill(0);
-    image.setColorTable(qt_alphamapcolortable);
+    image.setColorTable(alphaColorTable());
 
     for (int i=2; i <= _size-3; ++i) {
         image.setPixel(i, 2, qt_blackrgba);

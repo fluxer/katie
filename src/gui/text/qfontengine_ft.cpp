@@ -893,8 +893,7 @@ QImage QFontEngineFT::alphaMapForGlyph(glyph_t g)
     const int pitch = (((glyph->width + 31) & ~31) >> 3);
 
     QImage img(glyph->width, glyph->height, QImage::Format_Mono);
-    static const QVector<QRgb> colors = { qt_transparentrgba, qt_blackrgba };
-    img.setColorTable(colors);
+    img.setColorTable(alphaColorTable());
     Q_ASSERT(img.bytesPerLine() == pitch);
     if (glyph->width) {
         for (int y = 0; y < glyph->height; ++y)
