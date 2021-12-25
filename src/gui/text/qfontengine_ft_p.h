@@ -190,20 +190,16 @@ private:
     };
 
 protected:
-    QFreetypeFace *freetype;
     int default_load_flags;
-
     HintStyle default_hint_style;
-
-    bool embolden;
 
 private:
     int loadFlags(QGlyphSet *set, int flags) const;
 
+    QFreetypeFace *freetype;
+    bool embolden;
     FT_Matrix matrix;
-
     mutable QGlyphSet defaultGlyphSet;
-
     QFontEngine::FaceId face_id;
 
     int xsize;

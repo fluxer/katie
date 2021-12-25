@@ -141,7 +141,6 @@ QFontEngine::QFontEngine()
     : QObject(),
     ref(0)
 {
-    cache_count = 0;
     fsType = 0;
     symbol = false;
     memset(&hbFont, 0, sizeof(hbFont));
@@ -709,7 +708,6 @@ QByteArray QFontEngine::convertToPostscriptFontFamilyName(const QByteArray &fami
 QFontEngineBox::QFontEngineBox(int size)
     : _size(size)
 {
-    cache_cost = sizeof(QFontEngineBox);
 }
 
 QFontEngineBox::~QFontEngineBox()
@@ -845,7 +843,6 @@ static inline glyph_t stripped(glyph_t glyph)
 QFontEngineMulti::QFontEngineMulti(int engineCount)
 {
     engines.fill(0, engineCount);
-    cache_cost = 0;
 }
 
 QFontEngineMulti::~QFontEngineMulti()

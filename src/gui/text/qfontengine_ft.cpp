@@ -19,9 +19,6 @@
 **
 ****************************************************************************/
 
-#include "qdir.h"
-#include "qmetatype.h"
-#include "qtextstream.h"
 #include "qvariant.h"
 #include "qfile.h"
 #include "qabstractfileengine.h"
@@ -375,7 +372,6 @@ QFontEngineFT::QFontEngineFT(const QFontDef &fd)
     matrix.yy = 0x10000;
     matrix.xy = 0;
     matrix.yx = 0;
-    cache_cost = 100;
     kerning_pairs_loaded = false;
     embolden = false;
     freetype = 0;

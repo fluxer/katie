@@ -163,8 +163,6 @@ public:
 
     QAtomicInt ref;
     QFontDef fontDef;
-    int cache_cost; // amount of mem used in kb by the font
-    int cache_count;
     int fsType;
     bool symbol;
     mutable HB_FontRec hbFont;

@@ -104,7 +104,6 @@ QFontEngineMultiFT::QFontEngineMultiFT(QFontEngine *fe, FcPattern *matchedPatter
     engines[0] = fe;
     engines.at(0)->ref.ref();
     fontDef = engines[0]->fontDef;
-    cache_cost = 100;
     firstFontIndex = 1;
 }
 
