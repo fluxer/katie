@@ -36,10 +36,6 @@
 #include FT_TYPE1_TABLES_H
 #include FT_GLYPH_H
 
-#if defined(FT_LCD_FILTER_H)
-#include FT_LCD_FILTER_H
-#endif
-
 #if defined(FT_CONFIG_OPTIONS_H)
 #include FT_CONFIG_OPTIONS_H
 #endif
