@@ -48,10 +48,6 @@
 #include FT_ERRORS_H
 #endif
 
-#if !defined(QT_MAX_CACHED_GLYPH_SIZE)
-#  define QT_MAX_CACHED_GLYPH_SIZE 64
-#endif
-
 QT_BEGIN_NAMESPACE
 
 #define FLOOR(x)    ((x) & -64)
