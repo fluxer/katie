@@ -342,9 +342,7 @@ extern void qt_addBitmapToPath(qreal x0, qreal y0, const uchar *image_data, int 
 
 void QFreetypeFace::addBitmapToPath(FT_GlyphSlot slot, const QFixedPoint &point, QPainterPath *path)
 {
-    if (slot->format != FT_GLYPH_FORMAT_BITMAP
-        || slot->bitmap.pixel_mode != FT_PIXEL_MODE_MONO)
-        return;
+    Q_ASSERT(slot->format == FT_GLYPH_FORMAT_BITMAP && slot->bitmap.pixel_mode == FT_PIXEL_MODE_MONO);
 
     QPointF cp = point.toPointF();
     qt_addBitmapToPath(cp.x() + TRUNC(slot->metrics.horiBearingX), cp.y() - TRUNC(slot->metrics.horiBearingY),
