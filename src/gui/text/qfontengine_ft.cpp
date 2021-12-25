@@ -206,8 +206,9 @@ QFontEngine::Properties QFreetypeFace::properties() const
     QFontEngine::Properties p;
     p.postscriptName = FT_Get_Postscript_Name(face);
     PS_FontInfoRec font_info;
-    if (FT_Get_PS_Font_Info(face, &font_info) == 0)
+    if (FT_Get_PS_Font_Info(face, &font_info) == 0) {
         p.copyright = font_info.notice;
+    }
     if (FT_IS_SCALABLE(face)) {
         p.ascent = face->ascender;
         p.descent = -face->descender;
@@ -221,7 +222,7 @@ QFontEngine::Properties QFreetypeFace::properties() const
         p.descent = QFixed::fromFixed(-face->size->metrics.descender);
         p.leading = QFixed::fromFixed(face->size->metrics.height - face->size->metrics.ascender + face->size->metrics.descender);
         p.emSquare = face->size->metrics.y_ppem;
-//        p.boundingBox = QRectF(-p.ascent.toReal(), 0, (p.ascent + p.descent).toReal(), face->size->metrics.max_advance/64.);
+        // p.boundingBox = QRectF(-p.ascent.toReal(), 0, (p.ascent + p.descent).toReal(), face->size->metrics.max_advance/64.);
         p.boundingBox = QRectF(0, -p.ascent.toReal(),
                                face->size->metrics.max_advance/64, (p.ascent + p.descent).toReal() );
     }
@@ -303,7 +304,7 @@ void QFreetypeFace::addGlyphToPath(FT_Face face, FT_GlyphSlot g, const QFixedPoi
                 case 1:
                 case 3: {
                     if (n == 2) {
-                    // qDebug() << "lineTo" << c[1];
+                        // qDebug() << "lineTo" << c[1];
                         path->lineTo(c[1]);
                         c[0] = c[1];
                         n = 1;
