@@ -497,8 +497,9 @@ QFontEngineFT::Glyph *QFontEngineFT::loadGlyph(glyph_t glyph, bool fetchMetricsO
         load_flags |= FT_LOAD_FORCE_AUTOHINT;
         err = FT_Load_Glyph(face, glyph, load_flags);
     }
-    if (err != FT_Err_Ok) {
+    if (Q_UNLIKELY(err != FT_Err_Ok)) {
         qWarning("load glyph failed err=%x face=%p, glyph=%d", err, face, glyph);
+        return 0;
     }
 
     if (fetchMetricsOnly) {
@@ -506,10 +507,12 @@ QFontEngineFT::Glyph *QFontEngineFT::loadGlyph(glyph_t glyph, bool fetchMetricsO
     }
 
     FT_GlyphSlot slot = face->glyph;
-    if (embolden) FT_GlyphSlot_Embolden(slot);
+    if (embolden) {
+        FT_GlyphSlot_Embolden(slot);
+    }
 
     err = FT_Render_Glyph(slot, FT_RENDER_MODE_MONO);
-    if (err != FT_Err_Ok) {
+    if (Q_UNLIKELY(err != FT_Err_Ok)) {
         qWarning("render glyph failed err=%x face=%p, glyph=%d", err, face, glyph);
     }
 
@@ -781,7 +784,6 @@ bool QFontEngineFT::stringToCMap(const QChar *str, int len, QGlyphLayout *glyphs
         return false;
     }
 
-    bool mirrored = flags & QTextEngine::RightToLeft;
     int glyph_pos = 0;
     if (freetype->symbol_map) {
         FT_Face face = freetype->face;
@@ -794,13 +796,13 @@ bool QFontEngineFT::stringToCMap(const QChar *str, int len, QGlyphLayout *glyphs
             ++glyph_pos;
         }
     } else {
-        FT_Face face = freetype->face;
+        bool mirrored = flags & QTextEngine::RightToLeft;
         for (int i = 0; i < len; ++i) {
             unsigned int uc = getChar(str, i, len);
             if (mirrored) {
                 uc = QChar::mirroredChar(uc);
             }
-            glyph_t glyph = FT_Get_Char_Index(face, uc);
+            glyph_t glyph = FT_Get_Char_Index(freetype->face, uc);
             glyphs->glyphs[glyph_pos] = glyph;
             ++glyph_pos;
         }
@@ -809,8 +811,9 @@ bool QFontEngineFT::stringToCMap(const QChar *str, int len, QGlyphLayout *glyphs
     *nglyphs = glyph_pos;
     glyphs->numGlyphs = glyph_pos;
 
-    if (flags & QTextEngine::GlyphIndicesOnly)
+    if (flags & QTextEngine::GlyphIndicesOnly) {
         return true;
+    }
 
     recalcAdvances(glyphs, flags);
 
