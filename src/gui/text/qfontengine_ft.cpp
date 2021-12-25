@@ -269,8 +269,8 @@ void QFreetypeFace::addGlyphToPath(FT_Face face, FT_GlyphSlot g, const QFixedPoi
             start += cp + QPointF(g->outline.points[last_point].x*factor, -g->outline.points[last_point].y*factor);
             start /= 2;
         }
-//         qDebug("contour: %d -- %d", i, g->outline.contours[j]);
-//         qDebug("first point at %f %f", start.x(), start.y());
+        // qDebug("contour: %d -- %d", i, g->outline.contours[j]);
+        // qDebug("first point at %f %f", start.x(), start.y());
         path->moveTo(start);
 
         QPointF c[4];
@@ -279,47 +279,50 @@ void QFreetypeFace::addGlyphToPath(FT_Face face, FT_GlyphSlot g, const QFixedPoi
         while (i < last_point) {
             ++i;
             c[n] = cp + QPointF(g->outline.points[i].x*factor, -g->outline.points[i].y*factor);
-//             qDebug() << "    i=" << i << " flag=" << (int)g->outline.tags[i] << "point=" << c[n];
+            // qDebug() << "    i=" << i << " flag=" << (int)g->outline.tags[i] << "point=" << c[n];
             ++n;
             switch (g->outline.tags[i] & 3) {
-            case 2:
-                // cubic bezier element
-                if (n < 4)
-                    continue;
-                c[3] = (c[3] + c[2])/2;
-                --i;
-                break;
-            case 0:
-                // quadratic bezier element
-                if (n < 3)
-                    continue;
-                c[3] = (c[1] + c[2])/2;
-                c[2] = (2*c[1] + c[3])/3;
-                c[1] = (2*c[1] + c[0])/3;
-                --i;
-                break;
-            case 1:
-            case 3:
-                if (n == 2) {
-//                     qDebug() << "lineTo" << c[1];
-                    path->lineTo(c[1]);
-                    c[0] = c[1];
-                    n = 1;
-                    continue;
-                } else if (n == 3) {
-                    c[3] = c[2];
+                case 2: {
+                    // cubic bezier element
+                    if (n < 4)
+                        continue;
+                    c[3] = (c[3] + c[2])/2;
+                    --i;
+                    break;
+                }
+                case 0: {
+                    // quadratic bezier element
+                    if (n < 3)
+                        continue;
+                    c[3] = (c[1] + c[2])/2;
                     c[2] = (2*c[1] + c[3])/3;
                     c[1] = (2*c[1] + c[0])/3;
+                    --i;
+                    break;
                 }
-                break;
+                case 1:
+                case 3: {
+                    if (n == 2) {
+                    // qDebug() << "lineTo" << c[1];
+                        path->lineTo(c[1]);
+                        c[0] = c[1];
+                        n = 1;
+                        continue;
+                    } else if (n == 3) {
+                        c[3] = c[2];
+                        c[2] = (2*c[1] + c[3])/3;
+                        c[1] = (2*c[1] + c[0])/3;
+                    }
+                    break;
+                }
             }
-//             qDebug() << "cubicTo" << c[1] << c[2] << c[3];
+            // qDebug() << "cubicTo" << c[1] << c[2] << c[3];
             path->cubicTo(c[1], c[2], c[3]);
             c[0] = c[3];
             n = 1;
         }
         if (n == 1) {
-//             qDebug() << "closeSubpath";
+            // qDebug() << "closeSubpath";
             path->closeSubpath();
         } else {
             c[3] = start;
@@ -327,7 +330,7 @@ void QFreetypeFace::addGlyphToPath(FT_Face face, FT_GlyphSlot g, const QFixedPoi
                 c[2] = (2*c[1] + c[3])/3;
                 c[1] = (2*c[1] + c[0])/3;
             }
-//             qDebug() << "cubicTo" << c[1] << c[2] << c[3];
+            // qDebug() << "cubicTo" << c[1] << c[2] << c[3];
             path->cubicTo(c[1], c[2], c[3]);
         }
         ++i;
