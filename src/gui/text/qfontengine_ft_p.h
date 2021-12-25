@@ -100,7 +100,6 @@ public:
         signed char x;
         signed char y;
         signed char advance;
-        signed char format;
         uchar *data;
     };
 
