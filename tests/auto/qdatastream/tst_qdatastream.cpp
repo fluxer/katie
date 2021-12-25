@@ -1436,7 +1436,7 @@ void tst_QDataStream::readQImage(QDataStream *s)
     QVERIFY(d12.width() == ref.width());
     QVERIFY(d12.height() == ref.height());
     QVERIFY(d12.depth() == ref.depth());
-    QVERIFY(d12.colorCount() == ref.colorCount());
+    QVERIFY(d12.colorTable() == ref.colorTable());
     QVERIFY(d12.hasAlphaChannel() == ref.hasAlphaChannel());
 
 //    qDebug("Alpha: %i %i", (int)d12.hasAlphaBuffer(), ref.hasAlphaBuffer());

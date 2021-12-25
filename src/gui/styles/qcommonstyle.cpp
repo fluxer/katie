@@ -59,7 +59,7 @@
 
 QT_BEGIN_NAMESPACE
 
-#ifndef QT_NO_IMAGEFORMAT_XPM
+#ifndef QT_NO_XPM
 static const char * const tree_branch_open_xpm[] = {
 "9 9 2 1",
 "  c None",
@@ -167,7 +167,7 @@ static const char * const filedialog_end_xpm[]={
     "aaeeeeeeeeeeeee.",
     "aaa.............",
     "aaaaaaaaaaaaaaaa"};
-#endif // QT_NO_IMAGEFORMAT_XPM
+#endif // QT_NO_XPM
 
 /*!
     \class QCommonStyle
@@ -360,7 +360,7 @@ void QCommonStyle::drawPrimitive(PrimitiveElement pe, const QStyleOption *opt, Q
         int bef_v = mid_v;
         int aft_h = mid_h;
         int aft_v = mid_v;
-#ifndef QT_NO_IMAGEFORMAT_XPM
+#ifndef QT_NO_XPM
         static const int decoration_size = 9;
         static QPixmap open(tree_branch_open_xpm);
         static QPixmap closed(tree_branch_closed_xpm);
@@ -372,7 +372,7 @@ void QCommonStyle::drawPrimitive(PrimitiveElement pe, const QStyleOption *opt, Q
             aft_v += delta;
             p->drawPixmap(bef_h, bef_v, opt->state & State_Open ? open : closed);
         }
-#endif // QT_NO_IMAGEFORMAT_XPM
+#endif // QT_NO_XPM
         if (opt->state & State_Item) {
             if (opt->direction == Qt::RightToLeft)
                 p->drawLine(opt->rect.left(), mid_v, bef_h, mid_v);
@@ -5212,7 +5212,7 @@ QPixmap QCommonStyle::standardPixmap(StandardPixmap sp, const QStyleOption *opti
         return pixmap;
 
     switch (sp) {
-#ifndef QT_NO_IMAGEFORMAT_XPM
+#ifndef QT_NO_XPM
     case SP_ToolBarHorizontalExtensionButton:
         if (rtl) {
             QImage im(tb_extension_arrow_h_xpm);

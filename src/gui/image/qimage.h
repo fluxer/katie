@@ -48,7 +48,6 @@ public:
         Format_Invalid,
         Format_Mono,
         Format_MonoLSB,
-        Format_Indexed8,
         Format_RGB32,
         Format_ARGB32,
         Format_ARGB32_Premultiplied,
@@ -64,7 +63,7 @@ public:
     QImage(uchar *data, int width, int height, int bytesPerLine, Format format);
     QImage(const uchar *data, int width, int height, int bytesPerLine, Format format);
 
-#ifndef QT_NO_IMAGEFORMAT_XPM
+#ifndef QT_NO_XPM
     explicit QImage(const char * const xpm[]);
 #endif
     explicit QImage(const QString &fileName, const char *format = nullptr);
@@ -106,12 +105,10 @@ public:
     QRect rect() const;
 
     int depth() const;
-    int colorCount() const;
     int bitPlaneCount() const;
 
     QRgb color(int i) const;
     void setColor(int i, QRgb c);
-    void setColorCount(int);
 
     bool allGray() const;
     bool isGrayscale() const;

@@ -489,7 +489,7 @@ if(NOT HAVE_pic)
 endif()
 
 # keep in sync with the GUI component CMake file, only definitions setup is needed here
-foreach(x11ext Xshape Xinerama Xrandr Xrender Xfixes Xcursor)
+foreach(x11ext Xshape Xinerama Xrandr Xrender Xfixes Xcursor Xpm)
     if(NOT X11_${x11ext}_FOUND)
         message(WARNING "The X11 ${x11ext} extension was not found")
         string(TOUPPER "${x11ext}" upperext)
@@ -502,7 +502,7 @@ if(NOT X11_Xext_FOUND)
     katie_config(QT_NO_XSHAPE)
 endif()
 if(NOT X11_SM_FOUND OR NOT X11_ICE_FOUND)
-    message(WARNING "X11 SM/ICE was not found thus disabling session manager support")
+    message(WARNING "The X11 SM/ICE was not found thus disabling session manager support")
     katie_config(QT_NO_SESSIONMANAGER)
 endif()
 

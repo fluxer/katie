@@ -37,8 +37,6 @@
 
 QT_BEGIN_NAMESPACE
 
-class QFreetypeFace;
-
 #ifndef QT_NO_FONTCONFIG
 
 class Q_GUI_EXPORT QFontEngineMultiFT : public QFontEngineMulti
@@ -64,15 +62,6 @@ public:
     explicit QFontEngineX11FT(const QFontDef &fontDef) : QFontEngineFT(fontDef) {}
     explicit QFontEngineX11FT(FcPattern *pattern, const QFontDef &fd, int screen);
     ~QFontEngineX11FT();
-
-#ifndef QT_NO_XRENDER
-    int xglyph_format;
-#endif
-
-protected:
-    virtual bool uploadGlyphToServer(QGlyphSet *set, uint glyphid, Glyph *g, GlyphInfo *info, int glyphDataSize) const;
-    virtual unsigned long allocateServerGlyphSet();
-    virtual void freeServerGlyphSet(unsigned long id);
 };
 
 #endif // QT_NO_FONTCONFIG

@@ -163,9 +163,8 @@ private:
 };
 
 
-class QFontCache : public QObject
+class QFontCache
 {
-    Q_OBJECT
 public:
     // note: these static functions work on a per-thread basis
     static QFontCache *instance();
@@ -204,31 +203,11 @@ public:
     void insertEngineData(const Key &key, QFontEngineData *engineData);
 
     // QFontEngine cache
-    struct Engine {
-        Engine() : data(0), timestamp(0), hits(0) { }
-        Engine(QFontEngine *d) : data(d), timestamp(0), hits(0) { }
-
-        QFontEngine *data;
-        uint timestamp;
-        uint hits;
-    };
-
-    typedef QMap<Key,Engine> EngineCache;
+    typedef QMap<Key,QFontEngine *> EngineCache;
     EngineCache engineCache;
 
     QFontEngine *findEngine(const Key &key);
     void insertEngine(const Key &key, QFontEngine *engine);
-
-    private:
-    void increaseCost(uint cost);
-    void decreaseCost(uint cost);
-    void timerEvent(QTimerEvent *event);
-
-    static const uint min_cost;
-    uint total_cost, max_cost;
-    uint current_timestamp;
-    bool fast;
-    int timer_id;
 };
 
 QT_END_NAMESPACE

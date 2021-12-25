@@ -227,7 +227,7 @@ static bool write_pbm_image(QIODevice *out, const QImage &sourceImage, const QBy
         return false;
     }
 
-    if (image.depth() == 1 && image.colorCount() == 2) {
+    if (image.depth() == 1) {
         if (qGray(image.color(0)) < qGray(image.color(1))) {
             // 0=dark/black, 1=light/white - invert
             for (int y=0; y<image.height(); y++) {

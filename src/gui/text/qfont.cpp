@@ -2309,19 +2309,6 @@ bool QFontInfo::exactMatch() const
 
 // **********************************************************************
 // QFontCache
-// **********************************************************************
-
-#ifdef QFONTCACHE_DEBUG
-// fast timeouts for debugging
-static const int fast_timeout =   1000;  // 1s
-static const int slow_timeout =   5000;  // 5s
-#else
-static const int fast_timeout =  10000; // 10s
-static const int slow_timeout = 300000; //  5m
-#endif // QFONTCACHE_DEBUG
-
-const uint QFontCache::min_cost = 4*1024; // 4mb
-
 thread_local QFontCache* theFontCache = nullptr;
 
 QFontCache *QFontCache::instance()
@@ -2340,8 +2327,6 @@ void QFontCache::cleanup()
 }
 
 QFontCache::QFontCache()
-    : QObject(), total_cost(0), max_cost(min_cost),
-      current_timestamp(0), fast(false), timer_id(-1)
 {
 }
 
@@ -2380,9 +2365,9 @@ void QFontCache::clear()
 
     for (EngineCache::Iterator it = engineCache.begin(), end = engineCache.end();
          it != end; ++it) {
-        if (!it->data->ref.deref()) {
-            delete it->data;
-            it->data = 0;
+        QFontEngine *engine = it.value();
+        if (!engine->ref.deref()) {
+            delete engine;
         }
     }
 
@@ -2394,7 +2379,9 @@ QFontEngineData *QFontCache::findEngineData(const Key &key) const
 {
     EngineDataCache::ConstIterator it = engineDataCache.find(key),
                                   end = engineDataCache.end();
-    if (it == end) return 0;
+    if (it == end) {
+        return nullptr;
+    }
 
     // found
     return it.value();
@@ -2407,262 +2394,34 @@ void QFontCache::insertEngineData(const Key &key, QFontEngineData *engineData)
     Q_ASSERT(!engineDataCache.contains(key));
     engineData->ref.ref(); // the cache has a reference
     engineDataCache.insert(key, engineData);
-    increaseCost(sizeof(QFontEngineData));
 }
 
 QFontEngine *QFontCache::findEngine(const Key &key)
 {
     EngineCache::Iterator it = engineCache.find(key),
                          end = engineCache.end();
-    if (it == end) return 0;
-
-    // found... update the hitcount and timestamp
-    it.value().hits++;
-    it.value().timestamp = ++current_timestamp;
+    if (it == end) {
+        return nullptr;
+    }
 
     FC_DEBUG("QFontCache: found font engine\n"
-             "  %p: timestamp %4u hits %3u ref %2d/%2d, type '%s'",
-             it.value().data, it.value().timestamp, it.value().hits,
-             int(it.value().data->ref), it.value().data->cache_count,
-             it.value().data->name());
+             "  %p: ref %2d, type '%s'",
+             it.value(), int(it.value()->ref), it.value()->name());
 
-    return it.value().data;
+    return it.value();
 }
 
 void QFontCache::insertEngine(const Key &key, QFontEngine *engine)
 {
     FC_DEBUG("QFontCache: inserting new engine %p", engine);
 
-    Engine data(engine);
-    data.timestamp = ++current_timestamp;
-
-    QFontEngine *oldEngine = engineCache.value(key).data;
+    QFontEngine *oldEngine = engineCache.value(key);
     engine->ref.ref(); // the cache has a reference
     if (oldEngine && !oldEngine->ref.deref())
         delete oldEngine;
 
-    engineCache.insert(key, data);
-
-    // only increase the cost if this is the first time we insert the engine
-    if (engine->cache_count == 0)
-        increaseCost(engine->cache_cost);
-
-    ++engine->cache_count;
+    engineCache.insert(key, engine);
 }
-
-void QFontCache::increaseCost(uint cost)
-{
-    cost = (cost + 512) / 1024; // store cost in kb
-    cost = cost > 0 ? cost : 1;
-    total_cost += cost;
-
-    FC_DEBUG("  COST: increased %u kb, total_cost %u kb, max_cost %u kb",
-            cost, total_cost, max_cost);
-
-    if (total_cost > max_cost) {
-        max_cost = total_cost;
-
-        if (timer_id == -1 || ! fast) {
-            FC_DEBUG("  TIMER: starting fast timer (%d ms)", fast_timeout);
-
-            if (timer_id != -1) killTimer(timer_id);
-            timer_id = startTimer(fast_timeout);
-            fast = true;
-        }
-    }
-}
-
-void QFontCache::decreaseCost(uint cost)
-{
-    cost = (cost + 512) / 1024; // cost is stored in kb
-    cost = cost > 0 ? cost : 1;
-    Q_ASSERT(cost <= total_cost);
-    total_cost -= cost;
-
-    FC_DEBUG("  COST: decreased %u kb, total_cost %u kb, max_cost %u kb",
-            cost, total_cost, max_cost);
-}
-
-void QFontCache::timerEvent(QTimerEvent *)
-{
-    FC_DEBUG("QFontCache::timerEvent: performing cache maintenance (timestamp %u)",
-              current_timestamp);
-
-    if (total_cost <= max_cost && max_cost <= min_cost) {
-        FC_DEBUG("  cache redused sufficiently, stopping timer");
-
-        killTimer(timer_id);
-        timer_id = -1;
-        fast = false;
-
-        return;
-    }
-
-    // go through the cache and count up everything in use
-    uint in_use_cost = 0;
-
-    {
-        FC_DEBUG("  SWEEP engine data:");
-
-        // make sure the cost of each engine data is at least 1kb
-        const uint engine_data_cost =
-            sizeof(QFontEngineData) > 1024 ? sizeof(QFontEngineData) : 1024;
-
-        EngineDataCache::ConstIterator it = engineDataCache.constBegin(),
-                                      end = engineDataCache.constEnd();
-        for (; it != end; ++it) {
-#ifdef QFONTCACHE_DEBUG
-            FC_DEBUG("    %p: ref %2d", it.value(), int(it.value()->ref));
-
-#  if defined(Q_WS_X11)
-            // print out all engines
-            for (int i = 0; i < QUnicodeTables::ScriptCount; ++i) {
-                if (! it.value()->engines[i])
-                    continue;
-                FC_DEBUG("      contains %p", it.value()->engines[i]);
-            }
-#  endif // Q_WS_X11
-#endif // QFONTCACHE_DEBUG
-
-            if (it.value()->ref > 1)
-                in_use_cost += engine_data_cost;
-        }
-    }
-
-    {
-        FC_DEBUG("  SWEEP engine:");
-
-        EngineCache::ConstIterator it = engineCache.constBegin(),
-                                  end = engineCache.constEnd();
-        for (; it != end; ++it) {
-            FC_DEBUG("    %p: timestamp %4u hits %2u ref %2d/%2d, cost %u bytes",
-                     it.value().data, it.value().timestamp, it.value().hits,
-                     int(it.value().data->ref), it.value().data->cache_count,
-                     it.value().data->cache_cost);
-
-            if (it.value().data->ref > 1)
-                in_use_cost += it.value().data->cache_cost / it.value().data->cache_count;
-        }
-
-        // attempt to make up for rounding errors
-        in_use_cost += engineCache.size();
-    }
-
-    in_use_cost = (in_use_cost + 512) / 1024; // cost is stored in kb
-
-    /*
-      calculate the new maximum cost for the cache
-
-      NOTE: in_use_cost is *not* correct due to rounding errors in the
-      above algorithm.  instead of worrying about getting the
-      calculation correct, we are more interested in speed, and use
-      in_use_cost as a floor for new_max_cost
-    */
-    uint new_max_cost = qMax(qMax(max_cost / 2, in_use_cost), min_cost);
-
-    FC_DEBUG("  after sweep, in use %u kb, total %u kb, max %u kb, new max %u kb",
-              in_use_cost, total_cost, max_cost, new_max_cost);
-
-    if (new_max_cost == max_cost) {
-        if (fast) {
-            FC_DEBUG("  cannot shrink cache, slowing timer");
-
-            killTimer(timer_id);
-            timer_id = startTimer(slow_timeout);
-            fast = false;
-        }
-
-        return;
-    } else if (! fast) {
-        FC_DEBUG("  dropping into passing gear");
-
-        killTimer(timer_id);
-        timer_id = startTimer(fast_timeout);
-        fast = true;
-    }
-
-    max_cost = new_max_cost;
-
-    {
-        FC_DEBUG("  CLEAN engine data:");
-
-        // clean out all unused engine data
-        EngineDataCache::Iterator it = engineDataCache.begin(),
-                                 end = engineDataCache.end();
-        while (it != end) {
-            if (it.value()->ref > 1) {
-                ++it;
-                continue;
-            }
-
-            EngineDataCache::Iterator rem = it++;
-
-            decreaseCost(sizeof(QFontEngineData));
-
-            FC_DEBUG("    %p", rem.value());
-
-            delete rem.value();
-            engineDataCache.erase(rem);
-        }
-    }
-
-    // clean out the engine cache just enough to get below our new max cost
-    uint current_cost;
-    do {
-        current_cost = total_cost;
-
-        EngineCache::Iterator it = engineCache.begin(),
-                             end = engineCache.end();
-        // determine the oldest and least popular of the unused engines
-        uint oldest = ~0u;
-        uint least_popular = ~0u;
-
-        for (; it != end; ++it) {
-            if (it.value().data->ref > 1)
-                continue;
-
-            if (it.value().timestamp < oldest &&
-                 it.value().hits <= least_popular) {
-                oldest = it.value().timestamp;
-                least_popular = it.value().hits;
-            }
-        }
-
-        FC_DEBUG("    oldest %u least popular %u", oldest, least_popular);
-
-        for (it = engineCache.begin(); it != end; ++it) {
-            if (it.value().data->ref == 1 &&
-                 it.value().timestamp == oldest &&
-                 it.value().hits == least_popular)
-                break;
-        }
-
-        if (it != end) {
-            FC_DEBUG("    %p: timestamp %4u hits %2u ref %2d/%2d, type '%s'",
-                     it.value().data, it.value().timestamp, it.value().hits,
-                     int(it.value().data->ref), it.value().data->cache_count,
-                     it.value().data->name());
-
-            if (--it.value().data->cache_count == 0) {
-                FC_DEBUG("    DELETE: last occurrence in cache");
-
-                decreaseCost(it.value().data->cache_cost);
-                if (!it.value().data->ref.deref())
-                    delete it.value().data;
-            } else {
-                /*
-                  this particular font engine is in the cache multiple
-                  times...  set current_cost to zero, so that we can
-                  keep looping to get rid of all occurrences
-                */
-                current_cost = 0;
-            }
-
-            engineCache.erase(it);
-        }
-    } while (current_cost != total_cost && total_cost > max_cost);
-}
-
 
 #ifndef QT_NO_DEBUG_STREAM
 QDebug operator<<(QDebug stream, const QFont &font)
@@ -2674,4 +2433,3 @@ QDebug operator<<(QDebug stream, const QFont &font)
 QT_END_NAMESPACE
 
 #include "moc_qfont.h"
-#include "moc_qfont_p.h"

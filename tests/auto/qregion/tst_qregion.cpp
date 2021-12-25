@@ -303,7 +303,7 @@ void tst_QRegion::emptyPolygonRegion()
 /* XPM */
 static const char *circle_xpm[] = {
     "20 20 2 1",
-    " c #FFFFFF",
+    "  c #FFFFFF",
     ". c #000000",
     "       ......       ",
     "     ..........     ",

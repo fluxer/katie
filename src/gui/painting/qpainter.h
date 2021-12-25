@@ -329,8 +329,6 @@ public:
     inline void drawText(const QPoint &p, const QString &s);
     inline void drawText(int x, int y, const QString &s);
 
-    void drawText(const QPointF &p, const QString &str, int tf, int justificationPadding);
-
     void drawText(const QRectF &r, int flags, const QString &text, QRectF *br = nullptr);
     void drawText(const QRect &r, int flags, const QString &text, QRect *br = nullptr);
     inline void drawText(int x, int y, int w, int h, int flags, const QString &text, QRect *br = nullptr);

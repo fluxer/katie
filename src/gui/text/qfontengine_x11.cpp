@@ -104,7 +104,6 @@ QFontEngineMultiFT::QFontEngineMultiFT(QFontEngine *fe, FcPattern *matchedPatter
     engines[0] = fe;
     engines.at(0)->ref.ref();
     fontDef = engines[0]->fontDef;
-    cache_cost = 100;
     firstFontIndex = 1;
 }
 
@@ -180,39 +179,14 @@ QFontEngineX11FT::QFontEngineX11FT(FcPattern *pattern, const QFontDef &fd, int s
     : QFontEngineFT(fd)
 {
 //     FcPatternPrint(pattern);
-    bool antialias = qt_x11Data->fc_antialias;
     QFontEngine::FaceId face_id;
     FcChar8 *fileName;
-    FcBool antiAlias;
 
     FcPatternGetString(pattern, FC_FILE, 0, &fileName);
     face_id.filename = (const char *)fileName;
 
     if (!FcPatternGetInteger(pattern, FC_INDEX, 0, &face_id.index))
         face_id.index = 0;
-
-    if (FcPatternGetBool(pattern, FC_ANTIALIAS, 0, &antiAlias) == FcResultMatch)
-        antialias = antiAlias;
-
-    canUploadGlyphsToServer = QApplication::testAttribute(Qt::AA_X11InitThreads) || (qApp->thread() == QThread::currentThread());
-
-    subpixelType = Subpixel_None;
-    if (antialias) {
-        int subpixel = qt_x11Data->display ? qt_x11Data->screens[screen].subpixel : FC_RGBA_UNKNOWN;
-        if (subpixel == FC_RGBA_UNKNOWN)
-            (void) FcPatternGetInteger(pattern, FC_RGBA, 0, &subpixel);
-        if (subpixel == FC_RGBA_UNKNOWN)
-            subpixel = FC_RGBA_NONE;
-
-        switch (subpixel) {
-            case FC_RGBA_NONE: subpixelType = Subpixel_None; break;
-            case FC_RGBA_RGB: subpixelType = Subpixel_RGB; break;
-            case FC_RGBA_BGR: subpixelType = Subpixel_BGR; break;
-            case FC_RGBA_VRGB: subpixelType = Subpixel_VRGB; break;
-            case FC_RGBA_VBGR: subpixelType = Subpixel_VBGR; break;
-            default: break;
-        }
-    }
 
     if (fd.hintingPreference != QFont::PreferDefaultHinting) {
         switch (fd.hintingPreference) {
@@ -265,123 +239,12 @@ QFontEngineX11FT::QFontEngineX11FT(FcPattern *pattern, const QFontDef &fd, int s
     }
 #endif
 
-#if defined(FC_LCD_FILTER) && defined(FT_LCD_FILTER_H)
-    {
-        int filter = FC_LCD_FILTER_NONE;
-        if (FcPatternGetInteger(pattern, FC_LCD_FILTER, 0, &filter) == FcResultMatch) {
-            switch (filter) {
-            case FC_LCD_FILTER_NONE:
-                lcdFilterType = FT_LCD_FILTER_NONE;
-                break;
-            case FC_LCD_FILTER_DEFAULT:
-                lcdFilterType = FT_LCD_FILTER_DEFAULT;
-                break;
-            case FC_LCD_FILTER_LIGHT:
-                lcdFilterType = FT_LCD_FILTER_LIGHT;
-                break;
-            case FC_LCD_FILTER_LEGACY:
-                lcdFilterType = FT_LCD_FILTER_LEGACY;
-                break;
-            default:
-                // new unknown lcd filter type?!
-                break;
-            }
-        }
-    }
-#endif
-
-#ifdef FC_EMBEDDED_BITMAP
-    {
-        FcBool b;
-        if (FcPatternGetBool(pattern, FC_EMBEDDED_BITMAP, 0, &b) == FcResultMatch)
-            embeddedbitmap = b;
-    }
-#endif
-
-    GlyphFormat defaultFormat = Format_None;
-
-#ifndef QT_NO_XRENDER
-    if (qt_x11Data->use_xrender) {
-        int format = PictStandardARGB32;
-        if (!antialias)
-            format = PictStandardA1;
-        xglyph_format = format;
-
-        if (antialias)
-            defaultFormat = Format_A32;
-        else
-            defaultFormat = Format_Mono;
-    }
-#endif
-
-    if (!init(face_id, antialias, defaultFormat))
+    if (!init(face_id))
         return;
-
-    if (!freetype->charset) {
-        FcCharSet *cs;
-        FcPatternGetCharSet (pattern, FC_CHARSET, 0, &cs);
-        freetype->charset = FcCharSetCopy(cs);
-    }
 }
 
 QFontEngineX11FT::~QFontEngineX11FT()
 {
-    freeGlyphSets();
-}
-
-unsigned long QFontEngineX11FT::allocateServerGlyphSet()
-{
-#ifndef QT_NO_XRENDER
-    if (!canUploadGlyphsToServer || !qt_x11Data->use_xrender)
-        return 0;
-    return XRenderCreateGlyphSet(qt_x11Data->display, XRenderFindStandardFormat(qt_x11Data->display, xglyph_format));
-#else
-    return 0;
-#endif
-}
-
-void QFontEngineX11FT::freeServerGlyphSet(unsigned long id)
-{
-#ifndef QT_NO_XRENDER
-    if (!id)
-        return;
-    XRenderFreeGlyphSet(qt_x11Data->display, id);
-#endif
-}
-
-bool QFontEngineX11FT::uploadGlyphToServer(QGlyphSet *set, uint glyphid, Glyph *g, GlyphInfo *info, int glyphDataSize) const
-{
-#ifndef QT_NO_XRENDER
-    if (!canUploadGlyphsToServer)
-        return false;
-    if (g->format == Format_Mono) {
-        /*
-         * swap bit order around; FreeType is always MSBFirst
-         */
-        if (BitmapBitOrder(qt_x11Data->display) != MSBFirst) {
-            unsigned char *line = g->data;
-            int i = glyphDataSize;
-            while (i--) {
-                unsigned char c;
-                c = *line;
-                c = ((c << 1) & 0xaa) | ((c >> 1) & 0x55);
-                c = ((c << 2) & 0xcc) | ((c >> 2) & 0x33);
-                c = ((c << 4) & 0xf0) | ((c >> 4) & 0x0f);
-                *line++ = c;
-            }
-        }
-    }
-
-    ::Glyph xglyph = glyphid;
-    XRenderAddGlyphs (qt_x11Data->display, set->id, &xglyph, info, 1, (const char *)g->data, glyphDataSize);
-    delete [] g->data;
-    g->data = 0;
-    g->format = Format_None;
-    g->uploadedToServer = true;
-    return true;
-#else
-    return false;
-#endif
 }
 
 #endif // QT_NO_FONTCONFIG

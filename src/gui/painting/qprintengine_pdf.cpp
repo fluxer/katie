@@ -494,7 +494,7 @@ int QPdfEnginePrivate::addImage(const QImage &img, bool *bitmap, qint64 serial_n
 
     QImage image = img;
     QImage::Format format = image.format();
-    if (image.depth() == 1 && *bitmap && img.colorTable().size() == 2
+    if (image.depth() == 1 && *bitmap
         && img.colorTable().at(0) == qt_blackrgba
         && img.colorTable().at(1) == qt_whitergba)
     {

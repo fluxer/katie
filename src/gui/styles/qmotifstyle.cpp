@@ -1986,7 +1986,7 @@ QMotifStyle::subElementRect(SubElement sr, const QStyleOption *opt, const QWidge
     return rect;
 }
 
-#ifndef QT_NO_IMAGEFORMAT_XPM
+#ifndef QT_NO_XPM
 static const char * const qt_motif_menu_xpm[] = {
 "16 16 11 1",
 "  c #000000",
@@ -2161,7 +2161,7 @@ QPixmap
 QMotifStyle::standardPixmap(StandardPixmap standardPixmap, const QStyleOption *opt,
                             const QWidget *widget) const
 {
-#ifndef QT_NO_IMAGEFORMAT_XPM
+#ifndef QT_NO_XPM
     switch (standardPixmap) {
     case SP_TitleBarMenuButton:
         return QPixmap(qt_motif_menu_xpm);

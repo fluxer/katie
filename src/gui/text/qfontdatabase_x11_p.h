@@ -32,9 +32,6 @@
 #include "qfontengine_x11_p.h"
 
 #ifndef QT_NO_FONTCONFIG
-#include <ft2build.h>
-#include FT_FREETYPE_H
-
 #include <fontconfig/fcfreetype.h>
 #endif
 
@@ -701,9 +698,7 @@ static void initializeFontDb()
 #ifdef QFONTDATABASE_DEBUG
     FD_DEBUG("QFontDatabase: loaded FontConfig: %d ms", int(elapsedtimer.elapsed()));
 #endif
-#endif
 
-#ifndef QT_NO_FONTCONFIG
     for (int i = 0; i < db->count; i++) {
         for (int j = 0; j < db->families[i]->count; ++j) {        // each foundry
             QtFontFoundry *foundry = db->families[i]->foundries[j];
@@ -1084,8 +1079,8 @@ static FcPattern *queryFont(const FcChar8 *file, const QByteArray &data, int id,
     if (data.isEmpty())
         return FcFreeTypeQuery(file, id, blanks, count);
 
-    extern FT_Library qt_getFreetype();
-    FT_Library lib = qt_getFreetype();
+    FT_Library lib;
+    FT_Init_FreeType(&lib);
 
     FcPattern *pattern = nullptr;
 
@@ -1097,6 +1092,7 @@ static FcPattern *queryFont(const FcChar8 *file, const QByteArray &data, int id,
 
         FT_Done_Face(face);
     }
+    FT_Done_FreeType(lib);
 
     return pattern;
 }

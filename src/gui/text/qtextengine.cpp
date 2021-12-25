@@ -2838,42 +2838,6 @@ QTextItemInt QTextItemInt::midItem(QFontEngine *fontEngine, int firstGlyphIndex,
     return ti;
 }
 
-
-QTransform qt_true_matrix(qreal w, qreal h, QTransform x)
-{
-    QRectF rect = x.mapRect(QRectF(0, 0, w, h));
-    return x * QTransform::fromTranslate(-rect.x(), -rect.y());
-}
-
-
-glyph_metrics_t glyph_metrics_t::transformed(const QTransform &matrix) const
-{
-    if (matrix.type() < QTransform::TxTranslate)
-        return *this;
-
-    glyph_metrics_t m = *this;
-
-    qreal w = width.toReal();
-    qreal h = height.toReal();
-    QTransform xform = qt_true_matrix(w, h, matrix);
-
-    QRectF rect(0, 0, w, h);
-    rect = xform.mapRect(rect);
-    m.width = QFixed::fromReal(rect.width());
-    m.height = QFixed::fromReal(rect.height());
-
-    QLineF l = xform.map(QLineF(x.toReal(), y.toReal(), xoff.toReal(), yoff.toReal()));
-
-    m.x = QFixed::fromReal(l.x1());
-    m.y = QFixed::fromReal(l.y1());
-
-    // The offset is relative to the baseline which is why we use dx/dy of the line
-    m.xoff = QFixed::fromReal(l.dx());
-    m.yoff = QFixed::fromReal(l.dy());
-
-    return m;
-}
-
 QTextLineItemIterator::QTextLineItemIterator(QTextEngine *_eng, int _lineNum, const QPointF &pos,
                                              const QTextLayout::FormatRange *_selection)
     : eng(_eng),
