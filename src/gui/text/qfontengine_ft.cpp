@@ -437,7 +437,7 @@ bool QFontEngineFT::init(FaceId faceId)
     return true;
 }
 
-int QFontEngineFT::loadFlags(QGlyphSet *set, int flags) const
+int QFontEngineFT::loadFlags(int flags) const
 {
     int load_flags = FT_LOAD_DEFAULT | default_load_flags;
 
@@ -463,7 +463,7 @@ QFontEngineFT::Glyph *QFontEngineFT::loadGlyph(glyph_t glyph, bool fetchMetricsO
         return g;
     }
 
-    int load_flags = loadFlags(&defaultGlyphSet, 0);
+    int load_flags = loadFlags(0);
     FT_Face face = freetype->face;
     FT_Error err = FT_Load_Glyph(face, glyph, load_flags);
     if (err && (load_flags & FT_LOAD_NO_BITMAP)) {
@@ -728,7 +728,7 @@ static inline unsigned int getChar(const QChar *str, int &i, const int len)
 bool QFontEngineFT::canRender(const QChar *string, int len)
 {
     FT_Face face = freetype->face;
-    for ( int i = 0; i < len; i++ ) {
+    for (int i = 0; i < len; i++ ) {
         unsigned int uc = getChar(string, i, len);
         if (!FT_Get_Char_Index(face, uc))
             return false;
@@ -742,10 +742,8 @@ void QFontEngineFT::addGlyphsToPath(glyph_t *glyphs, QFixedPoint *positions, int
     FT_Face face = getFace();
 
     for (int gl = 0; gl < numGlyphs; gl++) {
-        FT_UInt glyph = glyphs[gl];
-
-        int load_flags = loadFlags(&defaultGlyphSet, 0);
-        FT_Load_Glyph(face, glyph, load_flags);
+        int load_flags = loadFlags(0);
+        FT_Load_Glyph(face, glyphs[gl], load_flags);
 
         if (!FT_IS_SCALABLE(face))
             QFreetypeFace::addBitmapToPath(face->glyph, positions[gl], path);
@@ -765,7 +763,7 @@ bool QFontEngineFT::stringToCMap(const QChar *str, int len, QGlyphLayout *glyphs
     int glyph_pos = 0;
     if (freetype->symbol_map) {
         FT_Face face = freetype->face;
-        for ( int i = 0; i < len; ++i ) {
+        for (int i = 0; i < len; ++i ) {
             unsigned int uc = getChar(str, i, len);
             FT_Set_Charmap(face, freetype->symbol_map);
             glyph_t glyph = FT_Get_Char_Index(face, uc);
@@ -968,7 +966,7 @@ void QFontEngineFT::QGlyphSet::setGlyph(glyph_t index, Glyph *glyph)
 HB_Error QFontEngineFT::getPointInOutline(HB_Glyph glyph, int flags, hb_uint32 point, HB_Fixed *xpos, HB_Fixed *ypos, hb_uint32 *nPoints)
 {
     getFace();
-    int load_flags = loadFlags(0, flags);
+    int load_flags = loadFlags(flags);
     HB_Error result = freetype->getPointInOutline(glyph, load_flags, point, xpos, ypos, nPoints);
     return result;
 }

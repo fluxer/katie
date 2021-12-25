@@ -193,7 +193,7 @@ protected:
     HintStyle default_hint_style;
 
 private:
-    int loadFlags(QGlyphSet *set, int flags) const;
+    int loadFlags(int flags) const;
 
     QFreetypeFace *freetype;
     bool embolden;
