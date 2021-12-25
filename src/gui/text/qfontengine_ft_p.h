@@ -61,7 +61,7 @@ public:
     QFreetypeFace(const QFontEngine::FaceId &face_id);
     ~QFreetypeFace();
 
-    void computeSize(const QFontDef &fontDef, int *xsize, int *ysize, bool *outline_drawing);
+    void computeSize(const QFontDef &fontDef, int *xsize, int *ysize);
     QFontEngine::Properties properties() const;
 
     FT_Face face;
@@ -105,20 +105,10 @@ public:
         uchar *data;
     };
 
-    enum SubpixelAntialiasingType {
-        Subpixel_None,
-        Subpixel_RGB,
-        Subpixel_BGR,
-        Subpixel_VRGB,
-        Subpixel_VBGR
-    };
-
     struct QGlyphSet
     {
         QGlyphSet();
         ~QGlyphSet();
-
-        bool outline_drawing;
 
         void clear();
 
@@ -161,8 +151,6 @@ private:
 
     virtual void addGlyphsToPath(glyph_t *glyphs, QFixedPoint *positions, int nglyphs,
                          QPainterPath *path, QTextItem::RenderFlags flags);
-    virtual void addOutlineToPath(qreal x, qreal y, const QGlyphLayout &glyphs,
-                          QPainterPath *path, QTextItem::RenderFlags flags);
 
     virtual bool stringToCMap(const QChar *str, int len, QGlyphLayout *glyphs, int *nglyphs,
                       QTextEngine::ShaperFlags flags) const;
@@ -185,12 +173,12 @@ private:
 
     inline bool invalid() const { return xsize == 0 && ysize == 0; }
 
-    Glyph *loadGlyph(glyph_t glyph, GlyphFormat format = Format_None, bool fetchMetricsOnly = false) const;
+    Glyph *loadGlyph(glyph_t glyph, bool fetchMetricsOnly = false) const;
 
     QFontEngineFT(const QFontDef &fd);
     virtual ~QFontEngineFT();
 
-    bool init(FaceId faceId, bool antiaalias, GlyphFormat defaultFormat = Format_None);
+    bool init(FaceId faceId);
 
     virtual HB_Error getPointInOutline(HB_Glyph glyph, int flags, hb_uint32 point, HB_Fixed *xpos, HB_Fixed *ypos, hb_uint32 *nPoints);
 
@@ -207,16 +195,11 @@ protected:
 
     HintStyle default_hint_style;
 
-    bool antialias;
     bool embolden;
-    SubpixelAntialiasingType subpixelType;
-    int lcdFilterType;
-    bool embeddedbitmap;
 
 private:
-    int loadFlags(QGlyphSet *set, GlyphFormat format, int flags, bool &hsubpixel, int &vfactor) const;
+    int loadFlags(QGlyphSet *set, int flags) const;
 
-    GlyphFormat defaultFormat;
     FT_Matrix matrix;
 
     mutable QGlyphSet defaultGlyphSet;

@@ -115,7 +115,6 @@ struct QX11InfoData {
     Visual *visual;
     bool defaultColormap;
     bool defaultVisual;
-    int subpixel;
 };
 
 class QDrag;
@@ -265,7 +264,6 @@ struct QX11Data
     static void copyXImageToQImageWithMask(XImage *ximage, QImage &image, const QImage &mask);
 
     bool has_fontconfig;
-    bool fc_antialias;
     int fc_hint_style;
 
     char *startupId;

@@ -180,37 +180,14 @@ QFontEngineX11FT::QFontEngineX11FT(FcPattern *pattern, const QFontDef &fd, int s
     : QFontEngineFT(fd)
 {
 //     FcPatternPrint(pattern);
-    bool antialias = qt_x11Data->fc_antialias;
     QFontEngine::FaceId face_id;
     FcChar8 *fileName;
-    FcBool antiAlias;
 
     FcPatternGetString(pattern, FC_FILE, 0, &fileName);
     face_id.filename = (const char *)fileName;
 
     if (!FcPatternGetInteger(pattern, FC_INDEX, 0, &face_id.index))
         face_id.index = 0;
-
-    if (FcPatternGetBool(pattern, FC_ANTIALIAS, 0, &antiAlias) == FcResultMatch)
-        antialias = antiAlias;
-
-    subpixelType = Subpixel_None;
-    if (antialias) {
-        int subpixel = qt_x11Data->display ? qt_x11Data->screens[screen].subpixel : FC_RGBA_UNKNOWN;
-        if (subpixel == FC_RGBA_UNKNOWN)
-            (void) FcPatternGetInteger(pattern, FC_RGBA, 0, &subpixel);
-        if (subpixel == FC_RGBA_UNKNOWN)
-            subpixel = FC_RGBA_NONE;
-
-        switch (subpixel) {
-            case FC_RGBA_NONE: subpixelType = Subpixel_None; break;
-            case FC_RGBA_RGB: subpixelType = Subpixel_RGB; break;
-            case FC_RGBA_BGR: subpixelType = Subpixel_BGR; break;
-            case FC_RGBA_VRGB: subpixelType = Subpixel_VRGB; break;
-            case FC_RGBA_VBGR: subpixelType = Subpixel_VBGR; break;
-            default: break;
-        }
-    }
 
     if (fd.hintingPreference != QFont::PreferDefaultHinting) {
         switch (fd.hintingPreference) {
@@ -263,40 +240,7 @@ QFontEngineX11FT::QFontEngineX11FT(FcPattern *pattern, const QFontDef &fd, int s
     }
 #endif
 
-#if defined(FC_LCD_FILTER) && defined(FT_LCD_FILTER_H)
-    {
-        int filter = FC_LCD_FILTER_NONE;
-        if (FcPatternGetInteger(pattern, FC_LCD_FILTER, 0, &filter) == FcResultMatch) {
-            switch (filter) {
-            case FC_LCD_FILTER_NONE:
-                lcdFilterType = FT_LCD_FILTER_NONE;
-                break;
-            case FC_LCD_FILTER_DEFAULT:
-                lcdFilterType = FT_LCD_FILTER_DEFAULT;
-                break;
-            case FC_LCD_FILTER_LIGHT:
-                lcdFilterType = FT_LCD_FILTER_LIGHT;
-                break;
-            case FC_LCD_FILTER_LEGACY:
-                lcdFilterType = FT_LCD_FILTER_LEGACY;
-                break;
-            default:
-                // new unknown lcd filter type?!
-                break;
-            }
-        }
-    }
-#endif
-
-#ifdef FC_EMBEDDED_BITMAP
-    {
-        FcBool b;
-        if (FcPatternGetBool(pattern, FC_EMBEDDED_BITMAP, 0, &b) == FcResultMatch)
-            embeddedbitmap = b;
-    }
-#endif
-
-    if (!init(face_id, antialias, antialias ? Format_A32 : Format_Mono))
+    if (!init(face_id))
         return;
 }
 

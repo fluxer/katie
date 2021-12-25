@@ -67,12 +67,6 @@ public:
         Freetype
     };
 
-    enum GlyphFormat {
-        Format_None,
-        Format_Mono,
-        Format_A32
-    };
-
     QFontEngine();
     virtual ~QFontEngine();
 
@@ -126,10 +120,10 @@ public:
     void getGlyphPositions(const QGlyphLayout &glyphs, const QTransform &matrix, QTextItem::RenderFlags flags,
                            QVarLengthArray<glyph_t> &glyphs_out, QVarLengthArray<QFixedPoint> &positions);
 
-    virtual void addOutlineToPath(qreal, qreal, const QGlyphLayout &, QPainterPath *, QTextItem::RenderFlags flags);
+    void addOutlineToPath(qreal, qreal, const QGlyphLayout &, QPainterPath *, QTextItem::RenderFlags flags);
 
     /**
-     * Create a qimage with the alpha values for the glyph.
+     * Create a qimage for the glyph.
      */
     virtual QImage alphaMapForGlyph(glyph_t);
 

@@ -988,7 +988,6 @@ void qt_init(QApplicationPrivate *priv, Display *display,
 #if !defined(QT_NO_FONTCONFIG)
     if (qgetenv("QT_X11_NO_FONTCONFIG").isNull())
         qt_x11Data->has_fontconfig = FcInit();
-    qt_x11Data->fc_antialias = true;
 #endif
 
 #ifndef QT_NO_XRENDER
@@ -1226,58 +1225,6 @@ void qt_init(QApplicationPrivate *priv, Display *display,
             QX11Info::setAppDpiY(s, dpi);
         }
     }
-    for (int s = 0; s < ScreenCount(qt_x11Data->display); ++s) {
-        int subpixel = FC_RGBA_UNKNOWN;
-#if !defined(QT_NO_XRENDER) && (RENDER_MAJOR > 0 || RENDER_MINOR >= 6)
-        if (qt_x11Data->use_xrender) {
-            int rsp = XRenderQuerySubpixelOrder(qt_x11Data->display, s);
-            switch (rsp) {
-            case SubPixelHorizontalRGB:
-                subpixel = FC_RGBA_RGB;
-                break;
-            case SubPixelHorizontalBGR:
-                subpixel = FC_RGBA_BGR;
-                break;
-            case SubPixelVerticalRGB:
-                subpixel = FC_RGBA_VRGB;
-                break;
-            case SubPixelVerticalBGR:
-                subpixel = FC_RGBA_VBGR;
-                break;
-            case SubPixelNone:
-                subpixel = FC_RGBA_NONE;
-                break;
-            case SubPixelUnknown:
-            default:
-                subpixel = FC_RGBA_UNKNOWN;
-                break;
-            }
-        }
-#endif // QT_NO_XRENDER
-
-        char *rgba = XGetDefault(qt_x11Data->display, "Xft", FC_RGBA);
-        if (rgba) {
-            char *end = 0;
-            int v = strtol(rgba, &end, 0);
-            if (rgba != end) {
-                subpixel = v;
-            } else if (qstrncmp(rgba, "unknown", 7) == 0) {
-                subpixel = FC_RGBA_UNKNOWN;
-            } else if (qstrncmp(rgba, "rgb", 3) == 0) {
-                subpixel = FC_RGBA_RGB;
-            } else if (qstrncmp(rgba, "bgr", 3) == 0) {
-                subpixel = FC_RGBA_BGR;
-            } else if (qstrncmp(rgba, "vrgb", 4) == 0) {
-                subpixel = FC_RGBA_VRGB;
-            } else if (qstrncmp(rgba, "vbgr", 4) == 0) {
-                subpixel = FC_RGBA_VBGR;
-            } else if (qstrncmp(rgba, "none", 4) == 0) {
-                subpixel = FC_RGBA_NONE;
-            }
-        }
-        qt_x11Data->screens[s].subpixel = subpixel;
-    }
-    getXDefault("Xft", FC_ANTIALIAS, &qt_x11Data->fc_antialias);
 #ifdef FC_HINT_STYLE
     qt_x11Data->fc_hint_style = -1;
     getXDefault("Xft", FC_HINT_STYLE, &qt_x11Data->fc_hint_style);

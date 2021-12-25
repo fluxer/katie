@@ -35,6 +35,8 @@
 
 QT_BEGIN_NAMESPACE
 
+static const QVector<QRgb> qt_alphamapcolortable = { qt_transparentrgba, qt_blackrgba };
+
 // Harfbuzz helper functions
 
 static HB_Bool hb_stringToGlyphs(HB_Font font, const HB_UChar16 *string, hb_uint32 length, HB_Glyph *glyphs, hb_uint32 *numGlyphs, HB_Bool rightToLeft)
@@ -499,33 +501,12 @@ void QFontEngine::addGlyphsToPath(glyph_t *glyphs, QFixedPoint *positions, int n
         const int w = alphaMask.width();
         const int h = alphaMask.height();
         const int srcBpl = alphaMask.bytesPerLine();
-        QImage bitmap;
-        if (alphaMask.depth() == 1) {
-            bitmap = alphaMask;
-        } else {
-            bitmap = QImage(w, h, QImage::Format_Mono);
-            const uchar *imageData = alphaMask.bits();
-            const int destBpl = bitmap.bytesPerLine();
-            uchar *bitmapData = bitmap.bits();
-
-            for (int yi = 0; yi < h; ++yi) {
-                const uchar *src = imageData + yi*srcBpl;
-                uchar *dst = bitmapData + yi*destBpl;
-                for (int xi = 0; xi < w; ++xi) {
-                    const int byte = xi / 8;
-                    const int bit = xi % 8;
-                    if (bit == 0)
-                        dst[byte] = 0;
-                    if (src[xi])
-                        dst[byte] |= 128 >> bit;
-                }
-            }
-        }
-        const uchar *bitmap_data = bitmap.bits();
+        Q_ASSERT(alphaMask.depth() == 1);
+        const uchar *bitmap_data = alphaMask.constBits();
         QFixedPoint offset = g.offsets[i];
         advanceX += offset.x;
         advanceY += offset.y;
-        qt_addBitmapToPath((advanceX + metrics.x).toReal(), (advanceY + metrics.y).toReal(), bitmap_data, bitmap.bytesPerLine(), w, h, path);
+        qt_addBitmapToPath((advanceX + metrics.x).toReal(), (advanceY + metrics.y).toReal(), bitmap_data, srcBpl, w, h, path);
         advanceX += g.advances_x[i];
         advanceY += g.advances_y[i];
     }
@@ -541,31 +522,10 @@ QImage QFontEngine::alphaMapForGlyph(glyph_t glyph)
 
     if (glyph_width <= 0 || glyph_height <= 0)
         return QImage();
-    QFixedPoint pt;
-    pt.x = -glyph_x;
-    pt.y = -glyph_y; // the baseline
-    QPainterPath path;
-    QImage im(glyph_width + 4, glyph_height, QImage::Format_ARGB32_Premultiplied);
-    im.fill(Qt::transparent);
-    QPainter p(&im);
-    addGlyphsToPath(&glyph, &pt, 1, &path, 0);
-    p.setPen(Qt::NoPen);
-    p.setBrush(Qt::black);
-    p.drawPath(path);
-    p.end();
-
-    QImage indexed(im.width(), im.height(), QImage::Format_ARGB32);
-
-    const int bpl = indexed.bytesPerLine();
-    uchar *dest = indexed.bits();
-    for (int y=0; y<im.height(); ++y) {
-        uchar *line = QFAST_SCAN_LINE(dest, bpl, y);
-        const uint *src = reinterpret_cast<const uint*>(im.constScanLine(y));
-        for (int x=0; x<im.width(); ++x)
-            line[x] = qAlpha(src[x]);
-    }
-
-    return indexed;
+    QImage im(glyph_width, glyph_height, QImage::Format_Mono);
+    im.fill(0);
+    im.setColorTable(qt_alphamapcolortable);
+    return im;
 }
 
 QFontEngine::Properties QFontEngine::properties() const
@@ -858,14 +818,15 @@ QFontEngine::Type QFontEngineBox::type() const
 
 QImage QFontEngineBox::alphaMapForGlyph(glyph_t)
 {
-    QImage image(_size, _size, QImage::Format_ARGB32);
-    image.fill(Qt::transparent);
+    QImage image(_size, _size, QImage::Format_Mono);
+    image.fill(0);
+    image.setColorTable(qt_alphamapcolortable);
 
     for (int i=2; i <= _size-3; ++i) {
-        image.setPixel(i, 2, qt_whitergba);
-        image.setPixel(i, _size-3, qt_whitergba);
-        image.setPixel(2, i, qt_whitergba);
-        image.setPixel(_size-3, i, qt_whitergba);
+        image.setPixel(i, 2, qt_blackrgba);
+        image.setPixel(i, _size-3, qt_blackrgba);
+        image.setPixel(2, i, qt_blackrgba);
+        image.setPixel(_size-3, i, qt_blackrgba);
     }
     return image;
 }
