@@ -60,6 +60,7 @@
 QT_BEGIN_NAMESPACE
 
 #ifndef QT_NO_XPM
+/* XPM */
 static const char * const tree_branch_open_xpm[] = {
 "9 9 2 1",
 "  c None",
@@ -74,6 +75,7 @@ static const char * const tree_branch_open_xpm[] = {
 "#       #",
 "#########"};
 
+/* XPM */
 static const char * const tree_branch_closed_xpm[] = {
 "9 9 2 1",
 "  c None",
@@ -88,6 +90,7 @@ static const char * const tree_branch_closed_xpm[] = {
 "#       #",
 "#########"};
 
+/* XPM */
 static const char * const tb_extension_arrow_v_xpm[] = {
     "5 8 3 1",
     "            c None",
@@ -103,6 +106,7 @@ static const char * const tb_extension_arrow_v_xpm[] = {
     "++.++"
 };
 
+/* XPM */
 static const char * const tb_extension_arrow_h_xpm[] = {
     "8 5 3 1",
     "            c None",
@@ -115,6 +119,7 @@ static const char * const tb_extension_arrow_h_xpm[] = {
     "..++..++",
 };
 
+/* XPM */
 static const char * const filedialog_start_xpm[]={
     "16 15 8 1",
     "a c #cec6bd",
@@ -141,6 +146,7 @@ static const char * const filedialog_start_xpm[]={
     "...#############",
     "................"};
 
+/* XPM */
 static const char * const filedialog_end_xpm[]={
     "16 15 9 1",
     "d c #a0a0a0",

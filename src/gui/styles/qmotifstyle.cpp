@@ -1987,6 +1987,7 @@ QMotifStyle::subElementRect(SubElement sr, const QStyleOption *opt, const QWidge
 }
 
 #ifndef QT_NO_XPM
+/* XPM */
 static const char * const qt_motif_menu_xpm[] = {
 "16 16 11 1",
 "  c #000000",
@@ -2017,7 +2018,7 @@ static const char * const qt_motif_menu_xpm[] = {
 "................",
 "................"};
 
-
+/* XPM */
 static const char * const qt_motif_close_xpm[] = {
     "12 12 2 1",
     "       s None  c None",
@@ -2035,6 +2036,7 @@ static const char * const qt_motif_close_xpm[] = {
     "            ",
     "            "};
 
+/* XPM */
 static const char * const qt_motif_maximize_xpm[] = {
     "12 12 2 1",
     "       s None  c None",
@@ -2052,6 +2054,7 @@ static const char * const qt_motif_maximize_xpm[] = {
     "            ",
     "            "};
 
+/* XPM */
 static const char * const qt_motif_minimize_xpm[] = {
     "12 12 2 1",
     "       s None  c None",
@@ -2070,6 +2073,7 @@ static const char * const qt_motif_minimize_xpm[] = {
     "            "};
 
 #if 0 // ### not used???
+/* XPM */
 static const char * const qt_motif_normalize_xpm[] = {
     "12 12 2 1",
     "       s None  c None",
@@ -2088,6 +2092,7 @@ static const char * const qt_motif_normalize_xpm[] = {
     "            "};
 #endif
 
+/* XPM */
 static const char * const qt_motif_normalizeup_xpm[] = {
     "12 12 2 1",
     "       s None  c None",
@@ -2105,6 +2110,7 @@ static const char * const qt_motif_normalizeup_xpm[] = {
     "            ",
     "            "};
 
+/* XPM */
 static const char * const qt_motif_shade_xpm[] = {
     "12 12 2 1", "# c #000000",
     ". c None",
@@ -2121,7 +2127,7 @@ static const char * const qt_motif_shade_xpm[] = {
     "............",
     "............"};
 
-
+/* XPM */
 static const char * const qt_motif_unshade_xpm[] = {
     "12 12 2 1",
     "# c #000000",
@@ -2139,7 +2145,7 @@ static const char * const qt_motif_unshade_xpm[] = {
     "............",
     "............"};
 
-
+/* XPM */
 static const char * qt_motif_dock_window_close_xpm[] = {
     "8 8 2 1",
     "# c #000000",

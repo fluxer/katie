@@ -153,6 +153,7 @@ static const char * const qt_information_xpm[]={
     ".................cc**...........",
     "..................***...........",
     "...................**..........."};
+
 /* XPM */
 static const char* const qt_warning_xpm[]={
     "32 32 4 1",
@@ -192,6 +193,7 @@ static const char* const qt_warning_xpm[]={
     "..*************************bbbbb",
     "....bbbbbbbbbbbbbbbbbbbbbbbbbbb.",
     ".....bbbbbbbbbbbbbbbbbbbbbbbbb.."};
+
 /* XPM */
 static const char* const qt_critical_xpm[]={
     "32 32 4 1",
@@ -231,6 +233,7 @@ static const char* const qt_critical_xpm[]={
     ".........aa********aaaaa........",
     "...........aaaaaaaaaaa..........",
     ".............aaaaaaa............"};
+
 /* XPM */
 static const char *const qt_question_xpm[] = {
     "32 32 5 1",
