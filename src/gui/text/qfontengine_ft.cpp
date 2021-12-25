@@ -506,7 +506,7 @@ QFontEngineFT::Glyph *QFontEngineFT::loadGlyph(glyph_t glyph, bool fetchMetricsO
     uchar *glyph_buffer = new uchar[glyph_buffer_size];
 
     Q_ASSERT(slot->bitmap.pixel_mode == FT_PIXEL_MODE_MONO);
-    const int bytes = ((((gwidth + 7) & ~7) >> 3) * slot->bitmap.rows);
+    const int bytes = ((((gwidth + 7) & ~7) >> 3) * gheight);
     ::memcpy(glyph_buffer, slot->bitmap.buffer, bytes);
 
     g = new Glyph;
@@ -737,8 +737,8 @@ void QFontEngineFT::addGlyphsToPath(glyph_t *glyphs, QFixedPoint *positions, int
 {
     FT_Face face = getFace();
 
+    int load_flags = loadFlags(0);
     for (int gl = 0; gl < numGlyphs; gl++) {
-        int load_flags = loadFlags(0);
         FT_Load_Glyph(face, glyphs[gl], load_flags);
 
         if (!FT_IS_SCALABLE(face))
