@@ -69,16 +69,11 @@ QFreetypeFace::QFreetypeFace(const QFontEngine::FaceId &face_id)
     symbol_map(nullptr),
     library(nullptr)
 {
-
-    matrix.xx = 0x10000;
-    matrix.yy = 0x10000;
-    matrix.xy = 0;
-    matrix.yx = 0;
-
     FT_Init_FreeType(&library);
 
-    if (face_id.filename.isEmpty())
+    if (face_id.filename.isEmpty()) {
         return;
+    }
 
     if (!face_id.filename.isEmpty()) {
         QFile file(QString::fromUtf8(face_id.filename));
@@ -368,12 +363,9 @@ QFontEngineFT::Glyph::~Glyph()
 QFontEngineFT::QFontEngineFT(const QFontDef &fd)
 {
     fontDef = fd;
-    matrix.xx = 0x10000;
-    matrix.yy = 0x10000;
-    matrix.xy = 0;
-    matrix.yx = 0;
     kerning_pairs_loaded = false;
     embolden = false;
+    oblique = false;
     freetype = 0;
     default_load_flags = FT_LOAD_IGNORE_GLOBAL_ADVANCE_WIDTH;
     default_hint_style = HintNone;
@@ -408,14 +400,14 @@ bool QFontEngineFT::init(FaceId faceId)
     FT_Face face = getFace();
 
     if (FT_IS_SCALABLE(face)) {
-        bool fake_oblique = (fontDef.style != QFont::StyleNormal) && !(face->style_flags & FT_STYLE_FLAG_ITALIC);
-        if (fake_oblique)
-            matrix.xy = 0x10000*3/10;
-        FT_Set_Transform(face, &matrix, 0);
-        freetype->matrix = matrix;
+        // fake italic/oblique
+        if ((fontDef.style != QFont::StyleNormal) && !(face->style_flags & FT_STYLE_FLAG_ITALIC)) {
+            oblique = true;
+        }
         // fake bold
-        if ((fontDef.weight == QFont::Bold) && !(face->style_flags & FT_STYLE_FLAG_BOLD) && !FT_IS_FIXED_WIDTH(face))
+        if ((fontDef.weight == QFont::Bold) && !(face->style_flags & FT_STYLE_FLAG_BOLD) && !FT_IS_FIXED_WIDTH(face)) {
             embolden = true;
+        }
         // underline metrics
         line_thickness =  QFixed::fromFixed(FT_MulFix(face->underline_thickness, face->size->metrics.y_scale));
         underline_position = QFixed::fromFixed(-FT_MulFix(face->underline_position, face->size->metrics.y_scale));
@@ -472,21 +464,7 @@ QFontEngineFT::Glyph *QFontEngineFT::loadGlyph(glyph_t glyph, bool fetchMetricsO
     }
 
     int load_flags = loadFlags(&defaultGlyphSet, 0);
-
-    FT_Matrix matrix = freetype->matrix;
-    bool transform = matrix.xx != 0x10000
-                     || matrix.yy != 0x10000
-                     || matrix.xy != 0
-                     || matrix.yx != 0;
-
-    if (transform) {
-        load_flags |= FT_LOAD_NO_BITMAP;
-    }
-
     FT_Face face = freetype->face;
-
-    FT_Set_Transform(face, &freetype->matrix, 0);
-
     FT_Error err = FT_Load_Glyph(face, glyph, load_flags);
     if (err && (load_flags & FT_LOAD_NO_BITMAP)) {
         load_flags &= ~FT_LOAD_NO_BITMAP;
@@ -509,6 +487,9 @@ QFontEngineFT::Glyph *QFontEngineFT::loadGlyph(glyph_t glyph, bool fetchMetricsO
     FT_GlyphSlot slot = face->glyph;
     if (embolden) {
         FT_GlyphSlot_Embolden(slot);
+    }
+    if (oblique) {
+        FT_GlyphSlot_Oblique(slot);
     }
 
     err = FT_Render_Glyph(slot, FT_RENDER_MODE_MONO);
@@ -711,7 +692,6 @@ void QFontEngineFT::doKerning(QGlyphLayout *g, QTextEngine::ShaperFlags flags)
 void QFontEngineFT::getUnscaledGlyph(glyph_t glyph, QPainterPath *path, glyph_metrics_t *metrics)
 {
     FT_Face face = getFace(Unscaled);
-    FT_Set_Transform(face, 0, 0);
     FT_Load_Glyph(face, glyph, FT_LOAD_NO_BITMAP);
 
     int left  = face->glyph->metrics.horiBearingX;
@@ -733,8 +713,6 @@ void QFontEngineFT::getUnscaledGlyph(glyph_t glyph, QPainterPath *path, glyph_me
         QFreetypeFace::addBitmapToPath(face->glyph, p, path);
     else
         QFreetypeFace::addGlyphToPath(face, face->glyph, p, path, face->units_per_EM << 6, face->units_per_EM << 6);
-
-    FT_Set_Transform(face, &freetype->matrix, 0);
 }
 
 static inline unsigned int getChar(const QChar *str, int &i, const int len)
@@ -955,13 +933,6 @@ FT_Face QFontEngineFT::getFace(Scaling scale) const
         FT_Set_Char_Size(face, xsize, ysize, 0, 0);
         freetype->xsize = xsize;
         freetype->ysize = ysize;
-    }
-    if (freetype->matrix.xx != matrix.xx ||
-        freetype->matrix.yy != matrix.yy ||
-        freetype->matrix.xy != matrix.xy ||
-        freetype->matrix.yx != matrix.yx) {
-        freetype->matrix = matrix;
-        FT_Set_Transform(face, &freetype->matrix, 0);
     }
 
     return face;

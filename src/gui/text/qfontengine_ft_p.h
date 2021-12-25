@@ -67,7 +67,6 @@ public:
     FT_Face face;
     int xsize; // 26.6
     int ysize; // 26.6
-    FT_Matrix matrix;
     FT_CharMap unicode_map;
     FT_CharMap symbol_map;
 
@@ -198,7 +197,7 @@ private:
 
     QFreetypeFace *freetype;
     bool embolden;
-    FT_Matrix matrix;
+    bool oblique;
     mutable QGlyphSet defaultGlyphSet;
     QFontEngine::FaceId face_id;
 
