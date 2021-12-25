@@ -255,7 +255,7 @@ static void scaleOutline(FT_Face face, FT_GlyphSlot g, FT_Fixed x_scale, FT_Fixe
 
 void QFreetypeFace::addGlyphToPath(FT_Face face, FT_GlyphSlot g, const QFixedPoint &point, QPainterPath *path, FT_Fixed x_scale, FT_Fixed y_scale)
 {
-    const qreal factor = 1/64.;
+    static const qreal factor = (1.0 / 64.0);
     scaleOutline(face, g, x_scale, y_scale);
 
     QPointF cp = point.toPointF();
