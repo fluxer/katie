@@ -819,10 +819,10 @@ QImage QFontEngineBox::alphaMapForGlyph(glyph_t)
     image.setColorTable(alphaColorTable());
 
     for (int i=2; i <= _size-3; ++i) {
-        image.setPixel(i, 2, qt_blackrgba);
-        image.setPixel(i, _size-3, qt_blackrgba);
-        image.setPixel(2, i, qt_blackrgba);
-        image.setPixel(_size-3, i, qt_blackrgba);
+        image.setPixel(i, 2, 1);
+        image.setPixel(i, _size-3, 1);
+        image.setPixel(2, i, 1);
+        image.setPixel(_size-3, i, 1);
     }
     return image;
 }
