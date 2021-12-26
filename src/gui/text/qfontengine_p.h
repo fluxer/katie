@@ -146,8 +146,6 @@ public:
 
     virtual Type type() const = 0;
 
-    virtual int glyphCount() const;
-
     HB_Font harfbuzzFont() const;
     HB_Face harfbuzzFace() const;
 

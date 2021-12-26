@@ -776,16 +776,6 @@ glyph_metrics_t QFontEngineFT::boundingBox(glyph_t glyph) const
     return overall;
 }
 
-int QFontEngineFT::glyphCount() const
-{
-    int count = 0;
-    FT_Face face = getFace();
-    if (face) {
-        count = face->num_glyphs;
-    }
-    return count;
-}
-
 FT_Face QFontEngineFT::getFace(Scaling scale) const
 {
     FT_Face face = freetype->face;

@@ -522,14 +522,6 @@ void QFontEngine::doKerning(QGlyphLayout *, QTextEngine::ShaperFlags)
 }
 #endif
 
-int QFontEngine::glyphCount() const
-{
-    QByteArray maxpTable = getSfntTable(MAKE_TAG('m', 'a', 'x', 'p'));
-    if (maxpTable.size() < 6)
-        return 0;
-    return qFromBigEndian<quint16>(reinterpret_cast<const uchar *>(maxpTable.constData() + 4));
-}
-
 QByteArray QFontEngine::convertToPostscriptFontFamilyName(const QByteArray &family)
 {
     QByteArray f = family;

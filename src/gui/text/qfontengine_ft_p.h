@@ -156,8 +156,6 @@ private:
 
     virtual void recalcAdvances(QGlyphLayout *glyphs, QTextEngine::ShaperFlags flags) const;
 
-    virtual int glyphCount() const;
-
     enum Scaling {
         Scaled,
         Unscaled
