@@ -111,7 +111,8 @@ public:
         void setGlyph(glyph_t index, Glyph *glyph);
 
 private:
-        mutable QHash<glyph_t, Glyph *> glyph_data; // maps from glyph index to glyph data
+        // maps from glyph index to glyph data
+        QHash<glyph_t, Glyph *> glyph_data;
     };
 
     virtual QFontEngine::FaceId faceId() const;
