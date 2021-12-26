@@ -66,8 +66,6 @@ public:
     FT_Face face;
     int xsize; // 26.6
     int ysize; // 26.6
-    FT_CharMap unicode_map;
-    FT_CharMap symbol_map;
 
     int fsType() const;
 

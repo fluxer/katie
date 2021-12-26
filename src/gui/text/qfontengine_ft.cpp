@@ -57,8 +57,6 @@ QFreetypeFace::QFreetypeFace(const QFontEngine::FaceId &face_id)
     : face(nullptr),
     xsize(0),
     ysize(0),
-    unicode_map(nullptr),
-    symbol_map(nullptr),
     library(nullptr)
 {
     FT_Init_FreeType(&library);
@@ -93,32 +91,7 @@ QFreetypeFace::QFreetypeFace(const QFontEngine::FaceId &face_id)
         return;
     }
 
-    for (int i = 0; i < face->num_charmaps; ++i) {
-        FT_CharMap cm = face->charmaps[i];
-        switch(cm->encoding) {
-            case FT_ENCODING_UNICODE: {
-                unicode_map = cm;
-                break;
-            }
-            case FT_ENCODING_APPLE_ROMAN:
-            case FT_ENCODING_ADOBE_LATIN_1: {
-                if (!unicode_map || unicode_map->encoding != FT_ENCODING_UNICODE)
-                    unicode_map = cm;
-                break;
-            }
-            case FT_ENCODING_ADOBE_CUSTOM:
-            case FT_ENCODING_MS_SYMBOL: {
-                if (!symbol_map)
-                    symbol_map = cm;
-                break;
-            }
-            default: {
-                break;
-            }
-        }
-    }
-
-    FT_Set_Charmap(face, unicode_map);
+    FT_Select_Charmap(face, FT_ENCODING_UNICODE);
 }
 
 QFreetypeFace::~QFreetypeFace()
@@ -653,27 +626,15 @@ bool QFontEngineFT::stringToCMap(const QChar *str, int len, QGlyphLayout *glyphs
     }
 
     int glyph_pos = 0;
-    if (freetype->symbol_map) {
-        FT_Face face = freetype->face;
-        for (int i = 0; i < len; ++i ) {
-            unsigned int uc = getChar(str, i, len);
-            FT_Set_Charmap(face, freetype->symbol_map);
-            glyph_t glyph = FT_Get_Char_Index(face, uc);
-            FT_Set_Charmap(face, freetype->unicode_map);
-            glyphs->glyphs[glyph_pos] = glyph;
-            ++glyph_pos;
+    const bool mirrored = (flags & QTextEngine::RightToLeft);
+    for (int i = 0; i < len; ++i) {
+        unsigned int uc = getChar(str, i, len);
+        if (mirrored) {
+            uc = QChar::mirroredChar(uc);
         }
-    } else {
-        const bool mirrored = (flags & QTextEngine::RightToLeft);
-        for (int i = 0; i < len; ++i) {
-            unsigned int uc = getChar(str, i, len);
-            if (mirrored) {
-                uc = QChar::mirroredChar(uc);
-            }
-            glyph_t glyph = FT_Get_Char_Index(freetype->face, uc);
-            glyphs->glyphs[glyph_pos] = glyph;
-            ++glyph_pos;
-        }
+        glyph_t glyph = FT_Get_Char_Index(freetype->face, uc);
+        glyphs->glyphs[glyph_pos] = glyph;
+        ++glyph_pos;
     }
 
     *nglyphs = glyph_pos;
