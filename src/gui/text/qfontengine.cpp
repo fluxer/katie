@@ -374,98 +374,6 @@ void QFontEngine::addOutlineToPath(qreal x, qreal y, const QGlyphLayout &glyphs,
     addGlyphsToPath(positioned_glyphs.data(), positions.data(), positioned_glyphs.size(), path, flags);
 }
 
-#define GRID(x, y) grid[(y)*(w+1) + (x)]
-#define SET(x, y) (*(image_data + (y)*bpl + ((x) >> 3)) & (0x80 >> ((x) & 7)))
-
-enum { EdgeRight = 0x1,
-       EdgeDown = 0x2,
-       EdgeLeft = 0x4,
-       EdgeUp = 0x8
-};
-
-static void collectSingleContour(qreal x0, qreal y0, uint *grid, int x, int y, int w, int h, QPainterPath *path)
-{
-    Q_UNUSED(h);
-
-    path->moveTo(x + x0, y + y0);
-    while (GRID(x, y)) {
-        if (GRID(x, y) & EdgeRight) {
-            while (GRID(x, y) & EdgeRight) {
-                GRID(x, y) &= ~EdgeRight;
-                ++x;
-            }
-            Q_ASSERT(x <= w);
-            path->lineTo(x + x0, y + y0);
-            continue;
-        }
-        if (GRID(x, y) & EdgeDown) {
-            while (GRID(x, y) & EdgeDown) {
-                GRID(x, y) &= ~EdgeDown;
-                ++y;
-            }
-            Q_ASSERT(y <= h);
-            path->lineTo(x + x0, y + y0);
-            continue;
-        }
-        if (GRID(x, y) & EdgeLeft) {
-            while (GRID(x, y) & EdgeLeft) {
-                GRID(x, y) &= ~EdgeLeft;
-                --x;
-            }
-            Q_ASSERT(x >= 0);
-            path->lineTo(x + x0, y + y0);
-            continue;
-        }
-        if (GRID(x, y) & EdgeUp) {
-            while (GRID(x, y) & EdgeUp) {
-                GRID(x, y) &= ~EdgeUp;
-                --y;
-            }
-            Q_ASSERT(y >= 0);
-            path->lineTo(x + x0, y + y0);
-            continue;
-        }
-    }
-    path->closeSubpath();
-}
-
-Q_GUI_EXPORT void qt_addBitmapToPath(qreal x0, qreal y0, const uchar *image_data, int bpl, int w, int h, QPainterPath *path)
-{
-    QSTACKARRAY(uint, grid, (w+1)*(h+1));
-    // set up edges
-    for (int y = 0; y <= h; ++y) {
-        for (int x = 0; x <= w; ++x) {
-            bool topLeft = ((x == 0) && (y == 0)) ? false : SET(x - 1, y - 1);
-            bool topRight = ((x == w) && (y == 0)) ? false : SET(x, y - 1);
-            bool bottomLeft = ((x == 0) && (y == h)) ? false : SET(x - 1, y);
-            bool bottomRight = ((x == w) && (y == h)) ? false : SET(x, y);
-
-            GRID(x, y) = 0;
-            if ((!topRight) & bottomRight)
-                GRID(x, y) |= EdgeRight;
-            if ((!bottomRight) & bottomLeft)
-                GRID(x, y) |= EdgeDown;
-            if ((!bottomLeft) & topLeft)
-                GRID(x, y) |= EdgeLeft;
-            if ((!topLeft) & topRight)
-                GRID(x, y) |= EdgeUp;
-        }
-    }
-
-    // collect edges
-    for (int y = 0; y < h; ++y) {
-        for (int x = 0; x < w; ++x) {
-            if (!GRID(x, y))
-                continue;
-            // found start of a contour, follow it
-            collectSingleContour(x0, y0, grid, x, y, w, h, path);
-        }
-    }
-}
-
-#undef GRID
-#undef SET
-
 void QFontEngine::addGlyphsToPath(glyph_t *glyphs, QFixedPoint *positions, int nGlyphs,
                                   QPainterPath *path, QTextItem::RenderFlags flags)
 {
@@ -503,7 +411,11 @@ void QFontEngine::addGlyphsToPath(glyph_t *glyphs, QFixedPoint *positions, int n
         QFixedPoint offset = g.offsets[i];
         advanceX += offset.x;
         advanceY += offset.y;
-        qt_addBitmapToPath((advanceX + metrics.x).toReal(), (advanceY + metrics.y).toReal(), bitmap_data, srcBpl, w, h, path);
+
+        path->moveTo((advanceX + metrics.x).toReal(), (advanceY + metrics.y).toReal());
+        path->addRect(alphaMask.rect());
+        path->closeSubpath();
+
         advanceX += g.advances_x[i];
         advanceY += g.advances_y[i];
     }
@@ -522,6 +434,13 @@ QImage QFontEngine::alphaMapForGlyph(glyph_t glyph)
     QImage im(glyph_width, glyph_height, QImage::Format_Mono);
     im.fill(0);
     im.setColorTable(alphaColorTable());
+
+    for (int i=2; i <= glyph_width-3; ++i) {
+        im.setPixel(i, 2, 1);
+        im.setPixel(i, glyph_width-3, 1);
+        im.setPixel(2, i, 1);
+        im.setPixel(glyph_width-3, i, 1);
+    }
     return im;
 }
 

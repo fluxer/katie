@@ -75,7 +75,6 @@ public:
     HB_Error getPointInOutline(HB_Glyph glyph, int flags, hb_uint32 point, HB_Fixed *xpos, HB_Fixed *ypos, hb_uint32 *nPoints);
 
     static void addGlyphToPath(FT_Face face, FT_GlyphSlot g, const QFixedPoint &point, QPainterPath *path, FT_Fixed x_scale, FT_Fixed y_scale);
-    static void addBitmapToPath(FT_GlyphSlot slot, const QFixedPoint &point, QPainterPath *path);
 
 private:
     Q_DISABLE_COPY(QFreetypeFace);
@@ -100,7 +99,6 @@ public:
         signed char x;
         signed char y;
         signed char advance;
-        uchar *data;
     };
 
     struct QGlyphSet
@@ -157,7 +155,6 @@ private:
     virtual glyph_metrics_t boundingBox(glyph_t glyph) const;
 
     virtual void recalcAdvances(QGlyphLayout *glyphs, QTextEngine::ShaperFlags flags) const;
-    virtual QImage alphaMapForGlyph(glyph_t g);
 
     virtual int glyphCount() const;
 
