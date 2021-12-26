@@ -213,9 +213,6 @@ public:
     virtual qreal minRightBearing() const { return 0; }
     virtual QImage alphaMapForGlyph(glyph_t);
 
-#ifdef Q_WS_X11
-    int cmap() const;
-#endif
     virtual const char *name() const;
 
     virtual bool canRender(const QChar *string, int len);

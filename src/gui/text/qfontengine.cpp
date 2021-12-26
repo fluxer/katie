@@ -685,8 +685,6 @@ glyph_metrics_t QFontEngineBox::boundingBox(glyph_t) const
     return glyph_metrics_t(0, -_size, _size, _size, _size, 0);
 }
 
-
-
 QFixed QFontEngineBox::ascent() const
 {
     return _size;
@@ -707,13 +705,6 @@ qreal QFontEngineBox::maxCharWidth() const
 {
     return _size;
 }
-
-#ifdef Q_WS_X11
-int QFontEngineBox::cmap() const
-{
-    return -1;
-}
-#endif
 
 const char *QFontEngineBox::name() const
 {
