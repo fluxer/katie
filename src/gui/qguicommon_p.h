@@ -35,12 +35,6 @@ inline static const QVector<QRgb>& monoColorTable()
     return colortable;
 }
 
-inline static const QVector<QRgb>& alphaColorTable()
-{
-    static const QVector<QRgb> colortable = { qt_transparentrgba, qt_blackrgba };
-    return colortable;
-}
-
 inline static QColor mergedColors(const QColor &colorA, const QColor &colorB, int factor = 50)
 {
     const int maxFactor = 100;
