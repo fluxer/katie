@@ -87,32 +87,6 @@ class Q_GUI_EXPORT QFontEngineFT : public QFontEngine
 {
 public:
 
-    /* we don't cache glyphs that are too large anyway, so we can make this struct rather small */
-    struct Glyph {
-        ~Glyph();
-        short linearAdvance;
-        unsigned char width;
-        unsigned char height;
-        signed char x;
-        signed char y;
-        signed char advance;
-    };
-
-    struct QGlyphSet
-    {
-        QGlyphSet();
-        ~QGlyphSet();
-
-        void clear();
-
-        inline Glyph *getGlyph(glyph_t index) const;
-        void setGlyph(glyph_t index, Glyph *glyph);
-
-private:
-        // maps from glyph index to glyph data
-        QHash<glyph_t, Glyph *> glyph_data;
-    };
-
     virtual QFontEngine::FaceId faceId() const;
     virtual QFontEngine::Properties properties() const;
     virtual QFixed emSquareSize() const;
@@ -164,7 +138,7 @@ private:
 
     inline bool invalid() const { return xsize == 0 && ysize == 0; }
 
-    Glyph *loadGlyph(glyph_t glyph, bool fetchMetricsOnly = false) const;
+    bool loadGlyph(glyph_t glyph) const;
 
     QFontEngineFT(const QFontDef &fd);
     virtual ~QFontEngineFT();
@@ -190,7 +164,6 @@ private:
     QFreetypeFace *freetype;
     bool embolden;
     bool oblique;
-    mutable QGlyphSet defaultGlyphSet;
     QFontEngine::FaceId face_id;
 
     int xsize;
@@ -204,11 +177,6 @@ private:
     FT_Size_Metrics metrics;
     bool kerning_pairs_loaded;
 };
-
-inline QFontEngineFT::Glyph *QFontEngineFT::QGlyphSet::getGlyph(glyph_t index) const
-{
-    return glyph_data.value(index, nullptr);
-}
 
 
 QT_END_NAMESPACE

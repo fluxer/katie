@@ -257,10 +257,6 @@ void QFreetypeFace::addGlyphToPath(FT_Face face, FT_GlyphSlot g, const QFixedPoi
     }
 }
 
-QFontEngineFT::Glyph::~Glyph()
-{
-}
-
 QFontEngineFT::QFontEngineFT(const QFontDef &fd)
     : default_load_flags(FT_LOAD_IGNORE_GLOBAL_ADVANCE_WIDTH),
     default_hint_style(HintNone),
@@ -346,13 +342,8 @@ int QFontEngineFT::loadFlags(int flags) const
     return load_flags;
 }
 
-QFontEngineFT::Glyph *QFontEngineFT::loadGlyph(glyph_t glyph, bool fetchMetricsOnly) const
+bool QFontEngineFT::loadGlyph(glyph_t glyph) const
 {
-    Glyph *g = defaultGlyphSet.getGlyph(glyph);
-    if (g) {
-        return g;
-    }
-
     int load_flags = loadFlags(0);
     FT_Face face = freetype->face;
     FT_Error err = FT_Load_Glyph(face, glyph, load_flags);
@@ -365,14 +356,10 @@ QFontEngineFT::Glyph *QFontEngineFT::loadGlyph(glyph_t glyph, bool fetchMetricsO
     FT_GlyphSlot slot = face->glyph;
     if (Q_UNLIKELY(slot->format != FT_GLYPH_FORMAT_OUTLINE)) {
         qWarning("non-outline format is not supported format=%d face=%p, glyph=%d", slot->format, face, glyph);
-        return 0;
+        return false;
     } else if (Q_UNLIKELY(err != FT_Err_Ok)) {
         qWarning("load glyph failed err=%x face=%p, glyph=%d", err, face, glyph);
-        return 0;
-    }
-
-    if (fetchMetricsOnly) {
-        return 0;
+        return false;
     }
 
     if (embolden) {
@@ -382,22 +369,7 @@ QFontEngineFT::Glyph *QFontEngineFT::loadGlyph(glyph_t glyph, bool fetchMetricsO
         FT_GlyphSlot_Oblique(slot);
     }
 
-    err = FT_Render_Glyph(slot, FT_RENDER_MODE_MONO);
-    if (Q_UNLIKELY(err != FT_Err_Ok)) {
-        qWarning("render glyph failed err=%x face=%p, glyph=%d", err, face, glyph);
-    }
-
-    g = new Glyph;
-    g->linearAdvance = slot->linearHoriAdvance >> 10;
-    g->width = slot->bitmap.width;
-    g->height = slot->bitmap.rows;
-    g->x = slot->bitmap_left;
-    g->y = slot->bitmap_top;
-    g->advance = TRUNC(ROUND(slot->advance.x));
-
-    defaultGlyphSet.setGlyph(glyph, g);
-
-    return g;
+    return true;
 }
 
 QFontEngine::FaceId QFontEngineFT::faceId() const
@@ -562,8 +534,7 @@ void QFontEngineFT::doKerning(QGlyphLayout *g, QTextEngine::ShaperFlags flags)
 void QFontEngineFT::getUnscaledGlyph(glyph_t glyph, QPainterPath *path, glyph_metrics_t *metrics)
 {
     FT_Face face = getFace(Unscaled);
-    int load_flags = loadFlags(0);
-    FT_Load_Glyph(face, glyph, load_flags);
+    loadGlyph(glyph);
 
     int left  = face->glyph->metrics.horiBearingX;
     int right = face->glyph->metrics.horiBearingX + face->glyph->metrics.width;
@@ -609,9 +580,8 @@ void QFontEngineFT::addGlyphsToPath(glyph_t *glyphs, QFixedPoint *positions, int
 {
     FT_Face face = getFace();
 
-    int load_flags = loadFlags(0);
     for (int gl = 0; gl < numGlyphs; gl++) {
-        FT_Load_Glyph(face, glyphs[gl], load_flags);
+        loadGlyph(glyphs[gl]);
 
         QFreetypeFace::addGlyphToPath(face, face->glyph, positions[gl], path, face->units_per_EM << 6, face->units_per_EM << 6);
     }
@@ -656,13 +626,9 @@ void QFontEngineFT::recalcAdvances(QGlyphLayout *glyphs, QTextEngine::ShaperFlag
                    default_hint_style == HintLight ||
                    (flags & HB_ShaperFlag_UseDesignMetrics)) && FT_IS_SCALABLE(face);
     for (int i = 0; i < glyphs->numGlyphs; i++) {
-        Glyph *g = loadGlyph(glyphs->glyphs[i], true);
-        if (g) {
-            glyphs->advances_x[i] = design ? QFixed::fromFixed(g->linearAdvance) : QFixed(g->advance);
-        } else {
-            glyphs->advances_x[i] = design ? QFixed::fromFixed(face->glyph->linearHoriAdvance >> 10)
-                                           : QFixed::fromFixed(face->glyph->metrics.horiAdvance).round();
-        }
+        loadGlyph(glyphs->glyphs[i]);
+        glyphs->advances_x[i] = design ? QFixed::fromFixed(face->glyph->linearHoriAdvance >> 10)
+                                       : QFixed::fromFixed(face->glyph->metrics.horiAdvance).round();
         if (fontDef.styleStrategy & QFont::ForceIntegerMetrics)
             glyphs->advances_x[i] = glyphs->advances_x[i].round();
         glyphs->advances_y[i] = 0;
@@ -682,29 +648,20 @@ glyph_metrics_t QFontEngineFT::boundingBox(const QGlyphLayout &glyphs) const
     QFixed ymax = 0;
     QFixed xmax = 0;
     for (int i = 0; i < glyphs.numGlyphs; i++) {
-        Glyph *g = loadGlyph(glyphs.glyphs[i], true);
-        if (g) {
-            QFixed x = overall.xoff + glyphs.offsets[i].x + g->x;
-            QFixed y = overall.yoff + glyphs.offsets[i].y - g->y;
-            overall.x = qMin(overall.x, x);
-            overall.y = qMin(overall.y, y);
-            xmax = qMax(xmax, x + g->width);
-            ymax = qMax(ymax, y + g->height);
-            overall.xoff += qRound(g->advance);
-        } else {
-            int left  = FLOOR(face->glyph->metrics.horiBearingX);
-            int right = CEIL(face->glyph->metrics.horiBearingX + face->glyph->metrics.width);
-            int top    = CEIL(face->glyph->metrics.horiBearingY);
-            int bottom = FLOOR(face->glyph->metrics.horiBearingY - face->glyph->metrics.height);
+        loadGlyph(glyphs.glyphs[i]);
+        int left  = FLOOR(face->glyph->metrics.horiBearingX);
+        int right = CEIL(face->glyph->metrics.horiBearingX + face->glyph->metrics.width);
+        int top    = CEIL(face->glyph->metrics.horiBearingY);
+        int bottom = FLOOR(face->glyph->metrics.horiBearingY - face->glyph->metrics.height);
 
-            QFixed x = overall.xoff + glyphs.offsets[i].x - (-TRUNC(left));
-            QFixed y = overall.yoff + glyphs.offsets[i].y - TRUNC(top);
-            overall.x = qMin(overall.x, x);
-            overall.y = qMin(overall.y, y);
-            xmax = qMax(xmax, x + TRUNC(right - left));
-            ymax = qMax(ymax, y + TRUNC(top - bottom));
-            overall.xoff += qRound(TRUNC(ROUND(face->glyph->advance.x)));
-        }
+        QFixed x = overall.xoff + glyphs.offsets[i].x - (-TRUNC(left));
+        QFixed y = overall.yoff + glyphs.offsets[i].y - TRUNC(top);
+        overall.x = qMin(overall.x, x);
+        overall.y = qMin(overall.y, y);
+        xmax = qMax(xmax, x + TRUNC(right - left));
+        ymax = qMax(ymax, y + TRUNC(top - bottom));
+        overall.xoff += qRound(TRUNC(ROUND(face->glyph->advance.x)));
+
     }
     overall.height = qMax(overall.height, ymax - overall.y);
     overall.width = xmax - overall.x;
@@ -716,27 +673,17 @@ glyph_metrics_t QFontEngineFT::boundingBox(glyph_t glyph) const
 {
     FT_Face face = getFace();
     glyph_metrics_t overall;
-    Glyph *g = loadGlyph(glyph, true);
-    if (g) {
-        overall.x = g->x;
-        overall.y = -g->y;
-        overall.width = g->width;
-        overall.height = g->height;
-        overall.xoff = g->advance;
-        if (fontDef.styleStrategy & QFont::ForceIntegerMetrics)
-            overall.xoff = overall.xoff.round();
-    } else {
-        int left  = FLOOR(face->glyph->metrics.horiBearingX);
-        int right = CEIL(face->glyph->metrics.horiBearingX + face->glyph->metrics.width);
-        int top    = CEIL(face->glyph->metrics.horiBearingY);
-        int bottom = FLOOR(face->glyph->metrics.horiBearingY - face->glyph->metrics.height);
+    loadGlyph(glyph);
+    int left  = FLOOR(face->glyph->metrics.horiBearingX);
+    int right = CEIL(face->glyph->metrics.horiBearingX + face->glyph->metrics.width);
+    int top    = CEIL(face->glyph->metrics.horiBearingY);
+    int bottom = FLOOR(face->glyph->metrics.horiBearingY - face->glyph->metrics.height);
 
-        overall.width = TRUNC(right-left);
-        overall.height = TRUNC(top-bottom);
-        overall.x = TRUNC(left);
-        overall.y = -TRUNC(top);
-        overall.xoff = TRUNC(ROUND(face->glyph->advance.x));
-    }
+    overall.width = TRUNC(right-left);
+    overall.height = TRUNC(top-bottom);
+    overall.x = TRUNC(left);
+    overall.y = -TRUNC(top);
+    overall.xoff = TRUNC(ROUND(face->glyph->advance.x));
     return overall;
 }
 
@@ -760,27 +707,6 @@ FT_Face QFontEngineFT::getFace(Scaling scale) const
 FT_Face QFontEngineFT::non_locked_face() const
 {
     return freetype->face;
-}
-
-
-QFontEngineFT::QGlyphSet::QGlyphSet()
-{
-}
-
-QFontEngineFT::QGlyphSet::~QGlyphSet()
-{
-    clear();
-}
-
-void QFontEngineFT::QGlyphSet::clear()
-{
-    qDeleteAll(glyph_data);
-    glyph_data.clear();
-}
-
-void QFontEngineFT::QGlyphSet::setGlyph(glyph_t index, Glyph *glyph)
-{
-    glyph_data.insert(index, glyph);
 }
 
 HB_Error QFontEngineFT::getPointInOutline(HB_Glyph glyph, int flags, hb_uint32 point, HB_Fixed *xpos, HB_Fixed *ypos, hb_uint32 *nPoints)
