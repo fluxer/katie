@@ -289,16 +289,19 @@ QFontEngineFT::Glyph::~Glyph()
 }
 
 QFontEngineFT::QFontEngineFT(const QFontDef &fd)
+    : default_load_flags(FT_LOAD_IGNORE_GLOBAL_ADVANCE_WIDTH),
+    default_hint_style(HintNone),
+    freetype(nullptr),
+    embolden(false),
+    oblique(false),
+    xsize(0),
+    ysize(0),
+    line_thickness(QFixed::fromFixed(1)),
+    underline_position(QFixed::fromReal(0.8)),
+    kerning_pairs_loaded(false)
 {
     fontDef = fd;
-    kerning_pairs_loaded = false;
-    embolden = false;
-    oblique = false;
-    freetype = 0;
-    default_load_flags = FT_LOAD_IGNORE_GLOBAL_ADVANCE_WIDTH;
-    default_hint_style = HintNone;
-    xsize = 0;
-    ysize = 0;
+    ::memset(&metrics, 0, sizeof(FT_Size_Metrics));
 }
 
 QFontEngineFT::~QFontEngineFT()
