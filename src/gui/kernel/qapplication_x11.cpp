@@ -574,8 +574,6 @@ bool QApplicationPrivate::x11_apply_settings()
       globalStrut/width          - int
       globalStrut/height         - int
       GUIEffects                 - QStringList
-      Font Substitutions/ *      - QStringList
-      Font Substitutions/...     - QStringList
     */
 
     QPalette pal(Qt::black);
@@ -680,16 +678,6 @@ bool QApplicationPrivate::x11_apply_settings()
                                    effects.contains(QLatin1String("fadetooltip")));
     QApplication::setEffectEnabled(Qt::UI_AnimateToolBox,
                                    effects.contains(QLatin1String("animatetoolbox")));
-
-    if (!qt_x11Data->has_fontconfig) {
-        foreach (const QString &fam, settings->keys()) {
-            if (!fam.startsWith(QLatin1String("Qt/Font Substitutions/"))) {
-                continue;
-            }
-            QStringList subs = settings->value(fam).toStringList();
-            QFont::insertSubstitutions(fam, subs);
-        }
-    }
 
     qt_use_rtl_extensions = settings->value(QLatin1String("Qt/useRtlExtensions"), false).toBool();
 
