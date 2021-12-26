@@ -61,7 +61,6 @@ public:
     QFreetypeFace(const QFontEngine::FaceId &face_id);
     ~QFreetypeFace();
 
-    void computeSize(const QFontDef &fontDef, int *xsize, int *ysize);
     QFontEngine::Properties properties() const;
 
     FT_Face face;

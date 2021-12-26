@@ -157,12 +157,6 @@ HB_Error QFreetypeFace::getPointInOutline(HB_Glyph glyph, int flags, hb_uint32 p
     return HB_Err_Ok;
 }
 
-void QFreetypeFace::computeSize(const QFontDef &fontDef, int *xsize, int *ysize)
-{
-    *ysize = qRound(fontDef.pixelSize * 64);
-    *xsize = *ysize * fontDef.stretch / 100;
-}
-
 QFontEngine::Properties QFreetypeFace::properties() const
 {
     QFontEngine::Properties p;
@@ -324,7 +318,8 @@ bool QFontEngineFT::init(FaceId faceId)
     face_id = faceId;
 
     lbearing = rbearing = SHRT_MIN;
-    freetype->computeSize(fontDef, &xsize, &ysize);
+    ysize = qRound(fontDef.pixelSize * 64);
+    xsize = (ysize * fontDef.stretch / 100);
 
     FT_Face face = getFace();
     // fake italic/oblique
