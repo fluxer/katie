@@ -1062,7 +1062,7 @@ static HB_Bool arabicSyriacOpenTypeShape(HB_ShaperItem *item, HB_Bool *ot_ok)
     if (f + l + item->item.pos < item->stringLength) {
         ++l;
     }
-    if (item->item.script == HB_Script_NKo)
+    if (item->item.script == HB_Script_Nko)
         getNkoProperties(uc+f, l, props);
     else
         getArabicProperties(uc+f, l, props);
@@ -1105,7 +1105,7 @@ HB_Bool HB_ArabicShape(HB_ShaperItem *item)
     HB_STACKARRAY(HB_UChar16, shapedChars, item->item.length);
 
     assert(item->item.script == HB_Script_Arabic || item->item.script == HB_Script_Syriac
-           || item->item.script == HB_Script_NKo);
+           || item->item.script == HB_Script_Nko);
 
 #ifndef NO_OPENTYPE
 

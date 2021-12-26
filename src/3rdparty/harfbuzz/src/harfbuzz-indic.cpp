@@ -1046,6 +1046,42 @@ static const IndicOrdering * const indic_order[] = {
     sinhala_order // Sinhala
 };
 
+static inline int indic_table_entry(const HB_Script script)
+{
+    switch (script) {
+        case HB_Script_Devanagari: {
+            return 0;
+        }
+        case HB_Script_Bengali: {
+            return 1;
+        }
+        case HB_Script_Gurmukhi: {
+            return 2;
+        }
+        case HB_Script_Gujarati: {
+            return 3;
+        }
+        case HB_Script_Oriya: {
+            return 4;
+        }
+        case HB_Script_Tamil: {
+            return 5;
+        }
+        case HB_Script_Telugu: {
+            return 6;
+        }
+        case HB_Script_Kannada: {
+            return 7;
+        }
+        case HB_Script_Malayalam: {
+            return 8;
+        }
+        case HB_Script_Sinhala: {
+            return 9;
+        }
+    }
+    assert(false);
+}
 
 
 // vowel matras that have to be split into two parts.
@@ -1198,8 +1234,8 @@ static QString propertiesToString(int properties)
 static bool indic_shape_syllable(HB_Bool openType, HB_ShaperItem *item, bool invalid)
 {
     HB_Script script = item->item.script;
-    assert(script >= HB_Script_Devanagari && script <= HB_Script_Sinhala);
-    const unsigned short script_base = 0x0900 + 0x80*(script-HB_Script_Devanagari);
+    // assert(script >= HB_Script_Devanagari && script <= HB_Script_Sinhala);
+    const unsigned short script_base = 0x0900 + 0x80*(indic_table_entry(script));
     const unsigned short ra = script_base + 0x30;
     const unsigned short halant = script_base + 0x4d;
     const unsigned short nukta = script_base + 0x3c;
@@ -1216,7 +1252,7 @@ static bool indic_shape_syllable(HB_Bool openType, HB_ShaperItem *item, bool inv
     HB_STACKARRAY(HB_UChar16, reordered, len + 4);
     HB_STACKARRAY(hb_uint8, position, len + 4);
 
-    unsigned char properties = scriptProperties[script-HB_Script_Devanagari];
+    unsigned char properties = scriptProperties[indic_table_entry(script)];
 
     if (invalid) {
         *reordered = 0x25cc;
@@ -1463,7 +1499,7 @@ static bool indic_shape_syllable(HB_Bool openType, HB_ShaperItem *item, bool inv
 #endif
         // we continuosly position the matras and vowel marks and increase the fixed
         // until we reached the end.
-        const IndicOrdering *finalOrder = indic_order[script-HB_Script_Devanagari];
+        const IndicOrdering *finalOrder = indic_order[indic_table_entry(script)];
 
         IDEBUG("    reordering pass:");
         IDEBUG("        base=%d fixed=%d", base, fixed);
@@ -1812,7 +1848,7 @@ static int indic_nextSyllableBoundary(HB_Script script, const HB_UChar16 *s, int
 
 HB_Bool HB_IndicShape(HB_ShaperItem *item)
 {
-    assert(item->item.script >= HB_Script_Devanagari && item->item.script <= HB_Script_Sinhala);
+    // assert(item->item.script >= HB_Script_Devanagari && item->item.script <= HB_Script_Sinhala);
 
     HB_Bool openType = false;
 #ifndef NO_OPENTYPE
