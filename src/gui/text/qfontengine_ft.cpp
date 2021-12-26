@@ -323,13 +323,6 @@ bool QFontEngineFT::init(FaceId faceId)
 
     face_id = faceId;
 
-    symbol = (freetype->symbol_map != 0);
-    PS_FontInfoRec psrec;
-    // don't assume that type1 fonts are symbol fonts by default
-    if (FT_Get_PS_Font_Info(freetype->face, &psrec) == FT_Err_Ok) {
-        symbol = bool(fontDef.family.contains(QLatin1String("symbol"), Qt::CaseInsensitive));
-    }
-
     lbearing = rbearing = SHRT_MIN;
     freetype->computeSize(fontDef, &xsize, &ysize);
 
@@ -673,7 +666,7 @@ bool QFontEngineFT::stringToCMap(const QChar *str, int len, QGlyphLayout *glyphs
             ++glyph_pos;
         }
     } else {
-        bool mirrored = flags & QTextEngine::RightToLeft;
+        const bool mirrored = (flags & QTextEngine::RightToLeft);
         for (int i = 0; i < len; ++i) {
             unsigned int uc = getChar(str, i, len);
             if (mirrored) {

@@ -1002,26 +1002,6 @@ void QTextEngine::shapeTextWithHarfbuzz(int item) const
     itemBoundaries[0] = entire_shaper_item.item.pos;
     itemBoundaries[1] = 0;
 
-    if (font->type() == QFontEngine::Multi) {
-        uint lastEngine = 0;
-        int charIdx = entire_shaper_item.item.pos;
-        const int stringEnd = charIdx + entire_shaper_item.item.length;
-        for (quint32 i = 0; i < entire_shaper_item.num_glyphs; ++i, ++charIdx) {
-            uint engineIdx = initialGlyphs.glyphs[i] >> 24;
-            if (engineIdx != lastEngine && i > 0) {
-                itemBoundaries.append(charIdx);
-                itemBoundaries.append(i);
-            }
-            lastEngine = engineIdx;
-            if (HB_IsHighSurrogate(entire_shaper_item.string[charIdx])
-                && charIdx < stringEnd - 1
-                && HB_IsLowSurrogate(entire_shaper_item.string[charIdx + 1]))
-                ++charIdx;
-        }
-    }
-
-
-
     int remaining_glyphs = entire_shaper_item.num_glyphs;
     int glyph_pos = 0;
     // for each item shape using harfbuzz and store the results in our layoutData's glyphs array.
@@ -1041,20 +1021,12 @@ void QTextEngine::shapeTextWithHarfbuzz(int item) const
         if (shaper_item.num_glyphs < shaper_item.item.length)
             shaper_item.num_glyphs = shaper_item.item.length;
 
-        QFontEngine *actualFontEngine = font;
-        uint engineIdx = 0;
-        if (font->type() == QFontEngine::Multi) {
-            engineIdx = uint(availableGlyphs(&si).glyphs[glyph_pos] >> 24);
+        si.ascent = qMax(font->ascent(), si.ascent);
+        si.descent = qMax(font->descent(), si.descent);
+        si.leading = qMax(font->leading(), si.leading);
 
-            actualFontEngine = static_cast<QFontEngineMulti *>(font)->engine(engineIdx);
-        }
-
-        si.ascent = qMax(actualFontEngine->ascent(), si.ascent);
-        si.descent = qMax(actualFontEngine->descent(), si.descent);
-        si.leading = qMax(actualFontEngine->leading(), si.leading);
-
-        shaper_item.font = actualFontEngine->harfbuzzFont();
-        shaper_item.face = actualFontEngine->harfbuzzFace();
+        shaper_item.font = font->harfbuzzFont();
+        shaper_item.face = font->harfbuzzFace();
 
         shaper_item.glyphIndicesPresent = true;
 
@@ -1088,9 +1060,6 @@ void QTextEngine::shapeTextWithHarfbuzz(int item) const
 
         QGlyphLayout g = availableGlyphs(&si).mid(glyph_pos, shaper_item.num_glyphs);
         moveGlyphData(g.mid(shaper_item.num_glyphs), g.mid(shaper_item.initialGlyphCount), remaining_glyphs);
-
-        for (hb_uint32 i = 0; i < shaper_item.num_glyphs; ++i)
-            g.glyphs[i] = g.glyphs[i] | (engineIdx << 24);
 
         for (hb_uint32 i = 0; i < shaper_item.item.length; ++i)
             shaper_item.log_clusters[i] += glyph_pos;
@@ -2266,13 +2235,9 @@ QString QTextEngine::elidedText(Qt::TextElideMode mode, const QFixed &width, int
 
         QGlyphLayoutArray<1> ellipsisGlyph;
         {
-            QFontEngine *feForEllipsis = (fe->type() == QFontEngine::Multi)
-                ? static_cast<QFontEngineMulti *>(fe)->engine(0)
-                : fe;
-
-            if (feForEllipsis->canRender(&ellipsisChar, 1)) {
+            if (fe->canRender(&ellipsisChar, 1)) {
                 int nGlyphs = 1;
-                feForEllipsis->stringToCMap(&ellipsisChar, 1, &ellipsisGlyph, &nGlyphs, 0);
+                fe->stringToCMap(&ellipsisChar, 1, &ellipsisGlyph, &nGlyphs, 0);
             }
         }
 

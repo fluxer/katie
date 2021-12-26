@@ -65,8 +65,7 @@ public:
         PreferQuality       = 0x0040,
         PreferAntialias     = 0x0080,
         NoAntialias         = 0x0100,
-        ForceIntegerMetrics = 0x0200,
-        NoFontMerging       = 0x0400
+        ForceIntegerMetrics = 0x0200
     };
 
     enum HintingPreference {

@@ -63,7 +63,6 @@ class Q_GUI_EXPORT QFontEngine : public QObject
 public:
     enum Type {
         Box,
-        Multi,
         Freetype
     };
 
@@ -164,7 +163,6 @@ public:
     QAtomicInt ref;
     QFontDef fontDef;
     int fsType;
-    bool symbol;
     mutable HB_FontRec hbFont;
     HB_Face hbFace;
 #if defined(Q_WS_X11)
@@ -227,54 +225,6 @@ public:
 
 private:
     int _size;
-};
-
-class QFontEngineMulti : public QFontEngine
-{
-public:
-    explicit QFontEngineMulti(int engineCount);
-    ~QFontEngineMulti();
-
-    virtual bool stringToCMap(const QChar *str, int len, QGlyphLayout *glyphs, int *nglyphs,
-                      QTextEngine::ShaperFlags flags) const;
-
-    virtual glyph_metrics_t boundingBox(const QGlyphLayout &glyphs) const;
-    virtual glyph_metrics_t boundingBox(glyph_t glyph) const;
-
-    virtual void recalcAdvances(QGlyphLayout *, QTextEngine::ShaperFlags) const;
-    virtual void doKerning(QGlyphLayout *, QTextEngine::ShaperFlags);
-    virtual void addOutlineToPath(qreal, qreal, const QGlyphLayout &, QPainterPath *, QTextItem::RenderFlags flags);
-    virtual void getGlyphBearings(glyph_t glyph, qreal *leftBearing = 0, qreal *rightBearing = 0);
-
-    virtual QFixed ascent() const;
-    virtual QFixed descent() const;
-    virtual QFixed leading() const;
-    virtual QFixed xHeight() const;
-    virtual QFixed averageCharWidth() const;
-    virtual QImage alphaMapForGlyph(glyph_t);
-
-    virtual QFixed lineThickness() const;
-    virtual QFixed underlinePosition() const;
-    virtual qreal maxCharWidth() const;
-    virtual qreal minLeftBearing() const;
-    virtual qreal minRightBearing() const;
-
-    virtual inline Type type() const
-    { return QFontEngine::Multi; }
-
-    virtual bool canRender(const QChar *string, int len);
-    inline virtual const char *name() const
-    { return "Multi"; }
-
-    QFontEngine *engine(int at) const
-    {Q_ASSERT(at < engines.size()); return engines.at(at); }
-
-
-protected:
-    friend class QPSPrintEnginePrivate;
-
-    virtual void loadEngine(int at) = 0;
-    QVector<QFontEngine *> engines;
 };
 
 QT_END_NAMESPACE

@@ -82,100 +82,9 @@ QT_BEGIN_NAMESPACE
 #ifndef QT_NO_FONTCONFIG
 
 // ------------------------------------------------------------------
-// Multi FT engine
-// ------------------------------------------------------------------
-
-static QFontEngine *engineForPattern(FcPattern *match, const QFontDef &request, int screen)
-{
-    QFontEngineX11FT *engine = new QFontEngineX11FT(match, request, screen);
-    if (!engine->invalid())
-        return engine;
-
-    delete engine;
-    QFontEngine *fe = new QFontEngineBox(request.pixelSize);
-    fe->fontDef = request;
-    return fe;
-}
-
-QFontEngineMultiFT::QFontEngineMultiFT(QFontEngine *fe, FcPattern *matchedPattern, FcPattern *p, int s, const QFontDef &req)
-    : QFontEngineMulti(2), request(req), pattern(p), fontSet(0), screen(s)
-{
-    firstEnginePattern = FcPatternDuplicate(matchedPattern);
-    engines[0] = fe;
-    engines.at(0)->ref.ref();
-    fontDef = engines[0]->fontDef;
-    firstFontIndex = 1;
-}
-
-QFontEngineMultiFT::~QFontEngineMultiFT()
-{
-    extern std::recursive_mutex& qt_fontdatabase_mutex();
-    std::lock_guard<std::recursive_mutex> locker(qt_fontdatabase_mutex());
-
-    FcPatternDestroy(pattern);
-    if (firstEnginePattern)
-        FcPatternDestroy(firstEnginePattern);
-    if (fontSet)
-        FcFontSetDestroy(fontSet);
-}
-
-
-void QFontEngineMultiFT::loadEngine(int at)
-{
-    extern std::recursive_mutex& qt_fontdatabase_mutex();
-    std::lock_guard<std::recursive_mutex> locker(qt_fontdatabase_mutex());
-
-    extern QFontDef qt_FcPatternToQFontDef(FcPattern *pattern, const QFontDef &);
-    extern FcFontSet *qt_fontSetForPattern(FcPattern *pattern, const QFontDef &request);
-
-    Q_ASSERT(at > 0);
-    if (!fontSet) {
-        fontSet = qt_fontSetForPattern(pattern, request);
-
-        // it may happen that the fontset of fallbacks consists of only one font. In this case we
-        // have to fall back to the box fontengine as we cannot render the glyph.
-        if (fontSet->nfont == 1 && at == 1 && engines.size() == 2) {
-            Q_ASSERT(engines.at(at) == 0);
-            QFontEngine *fe = new QFontEngineBox(request.pixelSize);
-            fe->fontDef = request;
-            engines[at] = fe;
-            return;
-        }
-
-        if (firstEnginePattern) {
-
-            if (!FcPatternEqual(firstEnginePattern, fontSet->fonts[0]))
-                firstFontIndex = 0;
-
-            FcPatternDestroy(firstEnginePattern);
-            firstEnginePattern = 0;
-        }
-
-        engines.resize(fontSet->nfont + 1 - firstFontIndex);
-    }
-    Q_ASSERT(at < engines.size());
-    Q_ASSERT(engines.at(at) == 0);
-
-    FcPattern *match = FcFontRenderPrepare(NULL, pattern, fontSet->fonts[at + firstFontIndex - 1]);
-    QFontDef fontDef = qt_FcPatternToQFontDef(match, this->request);
-
-    // note: we use -1 for the script to make sure that we keep real
-    // FT engines separate from Multi engines in the font cache
-    QFontCache::Key key(fontDef, -1, screen);
-    QFontEngine *fontEngine = QFontCache::instance()->findEngine(key);
-    if (!fontEngine) {
-        fontEngine = engineForPattern(match, request, screen);
-        QFontCache::instance()->insertEngine(key, fontEngine);
-    }
-    FcPatternDestroy(match);
-    fontEngine->ref.ref();
-    engines[at] = fontEngine;
-}
-
-// ------------------------------------------------------------------
 // X11 FT engine
 // ------------------------------------------------------------------
-QFontEngineX11FT::QFontEngineX11FT(FcPattern *pattern, const QFontDef &fd, int screen)
+QFontEngineX11FT::QFontEngineX11FT(FcPattern *pattern, const QFontDef &fd)
     : QFontEngineFT(fd)
 {
 //     FcPatternPrint(pattern);
@@ -239,8 +148,7 @@ QFontEngineX11FT::QFontEngineX11FT(FcPattern *pattern, const QFontDef &fd, int s
     }
 #endif
 
-    if (!init(face_id))
-        return;
+    init(face_id);
 }
 
 QFontEngineX11FT::~QFontEngineX11FT()

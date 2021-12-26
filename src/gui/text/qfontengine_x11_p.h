@@ -39,28 +39,11 @@ QT_BEGIN_NAMESPACE
 
 #ifndef QT_NO_FONTCONFIG
 
-class Q_GUI_EXPORT QFontEngineMultiFT : public QFontEngineMulti
-{
-public:
-    QFontEngineMultiFT(QFontEngine *fe, FcPattern *firstEnginePattern, FcPattern *p, int s, const QFontDef &request);
-    ~QFontEngineMultiFT();
-
-    void loadEngine(int at);
-
-private:
-    QFontDef request;
-    FcPattern *pattern;
-    FcPattern *firstEnginePattern;
-    FcFontSet *fontSet;
-    int screen;
-    int firstFontIndex; // first font in fontset
-};
-
 class Q_GUI_EXPORT QFontEngineX11FT : public QFontEngineFT
 {
 public:
     explicit QFontEngineX11FT(const QFontDef &fontDef) : QFontEngineFT(fontDef) {}
-    explicit QFontEngineX11FT(FcPattern *pattern, const QFontDef &fd, int screen);
+    explicit QFontEngineX11FT(FcPattern *pattern, const QFontDef &fd);
     ~QFontEngineX11FT();
 };
 

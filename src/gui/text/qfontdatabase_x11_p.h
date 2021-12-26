@@ -985,7 +985,7 @@ special_char:
         FcPatternAddBool(match, FC_ANTIALIAS, false);
     }
 
-    QFontEngineX11FT *engine = new QFontEngineX11FT(match, qt_FcPatternToQFontDef(match, request), screen);
+    QFontEngineX11FT *engine = new QFontEngineX11FT(match, qt_FcPatternToQFontDef(match, request));
     if (engine->invalid()) {
         FM_DEBUG("   --> invalid!\n");
         delete engine;
@@ -1062,15 +1062,10 @@ static QFontEngine *loadFc(const QFontPrivate *fp, QUnicodeTables::Script script
         }
         FM_DEBUG("engine for script %d is %s\n", script, fe ? fe->fontDef.family.toLatin1().constData(): "(null)");
     }
-    if (fe
-        && script == QUnicodeTables::Common
-        && !(request.styleStrategy & QFont::NoFontMerging) && !fe->symbol) {
-        fe = new QFontEngineMultiFT(fe, match, pattern, fp->screen, request);
-    } else {
-        FcPatternDestroy(pattern);
-    }
-    if (match)
+    FcPatternDestroy(pattern);
+    if (match) {
         FcPatternDestroy(match);
+    }
     return fe;
 }
 
@@ -1149,17 +1144,8 @@ void QFontDatabase::load(const QFontPrivate *d, int script)
             fe->fontDef = QFontDef();
         }
     }
-    if (fe->symbol || (d->request.styleStrategy & QFont::NoFontMerging)) {
-        for (int i = 0; i < QUnicodeTables::ScriptCount; ++i) {
-            if (!d->engineData->engines[i]) {
-                d->engineData->engines[i] = fe;
-                fe->ref.ref();
-            }
-        }
-    } else {
-        d->engineData->engines[script] = fe;
-        fe->ref.ref();
-    }
+    d->engineData->engines[script] = fe;
+    fe->ref.ref();
     QFontCache::instance()->insertEngine(key, fe);
 }
 
