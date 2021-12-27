@@ -407,12 +407,15 @@ bool QFontEngineFT::getSfntTableData(uint tag, uchar *buffer, uint *length) cons
 int QFontEngineFT::synthesized() const
 {
     int s = 0;
-    if ((fontDef.style != QFont::StyleNormal) && !(freetype->face->style_flags & FT_STYLE_FLAG_ITALIC))
+    if (oblique) {
         s = SynthesizedItalic;
-    if ((fontDef.weight == QFont::Bold) && !(freetype->face->style_flags & FT_STYLE_FLAG_BOLD))
+    }
+    if (embolden) {
         s |= SynthesizedBold;
-    if (fontDef.stretch != 100)
+    }
+    if (fontDef.stretch != 100) {
         s |= SynthesizedStretch;
+    }
     return s;
 }
 
