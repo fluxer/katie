@@ -258,7 +258,7 @@ void QFreetypeFace::addGlyphToPath(FT_Face face, FT_GlyphSlot g, const QFixedPoi
 }
 
 QFontEngineFT::QFontEngineFT(const QFontDef &fd)
-    : default_load_flags(FT_LOAD_IGNORE_GLOBAL_ADVANCE_WIDTH),
+    : default_load_flags(FT_LOAD_IGNORE_GLOBAL_ADVANCE_WIDTH | FT_LOAD_NO_BITMAP),
     default_hint_style(HintNone),
     freetype(nullptr),
     embolden(false),
@@ -325,7 +325,7 @@ bool QFontEngineFT::init(FaceId faceId)
 
 int QFontEngineFT::loadFlags(int flags) const
 {
-    int load_flags = FT_LOAD_NO_BITMAP | default_load_flags;
+    int load_flags = default_load_flags;
 
     if (default_hint_style == HintNone || (flags & HB_ShaperFlag_UseDesignMetrics)) {
         load_flags |= FT_LOAD_NO_HINTING;
@@ -342,9 +342,8 @@ int QFontEngineFT::loadFlags(int flags) const
     return load_flags;
 }
 
-bool QFontEngineFT::loadGlyph(glyph_t glyph) const
+bool QFontEngineFT::loadGlyph(glyph_t glyph, int load_flags) const
 {
-    int load_flags = loadFlags(0);
     FT_Face face = freetype->face;
     FT_Error err = FT_Load_Glyph(face, glyph, load_flags);
     if (err == FT_Err_Too_Few_Arguments) {
@@ -534,7 +533,9 @@ void QFontEngineFT::doKerning(QGlyphLayout *g, QTextEngine::ShaperFlags flags)
 void QFontEngineFT::getUnscaledGlyph(glyph_t glyph, QPainterPath *path, glyph_metrics_t *metrics)
 {
     FT_Face face = getFace(Unscaled);
-    loadGlyph(glyph);
+
+    int load_flags = loadFlags(0);
+    loadGlyph(glyph, load_flags);
 
     int left  = face->glyph->metrics.horiBearingX;
     int right = face->glyph->metrics.horiBearingX + face->glyph->metrics.width;
@@ -581,8 +582,9 @@ void QFontEngineFT::addGlyphsToPath(glyph_t *glyphs, QFixedPoint *positions, int
 {
     FT_Face face = getFace();
 
+    int load_flags = loadFlags(0);
     for (int gl = 0; gl < numGlyphs; gl++) {
-        loadGlyph(glyphs[gl]);
+        loadGlyph(glyphs[gl], load_flags);
 
         QFreetypeFace::addGlyphToPath(face, face->glyph, positions[gl], path, face->units_per_EM << 6, face->units_per_EM << 6);
     }
@@ -626,8 +628,9 @@ void QFontEngineFT::recalcAdvances(QGlyphLayout *glyphs, QTextEngine::ShaperFlag
     bool design = (default_hint_style == HintNone ||
                    default_hint_style == HintLight ||
                    (flags & HB_ShaperFlag_UseDesignMetrics));
+    int load_flags = loadFlags(0);
     for (int i = 0; i < glyphs->numGlyphs; i++) {
-        loadGlyph(glyphs->glyphs[i]);
+        loadGlyph(glyphs->glyphs[i], load_flags);
         glyphs->advances_x[i] = design ? QFixed::fromFixed(face->glyph->linearHoriAdvance >> 10)
                                        : QFixed::fromFixed(face->glyph->metrics.horiAdvance).round();
         if (fontDef.styleStrategy & QFont::ForceIntegerMetrics)
@@ -648,8 +651,9 @@ glyph_metrics_t QFontEngineFT::boundingBox(const QGlyphLayout &glyphs) const
 
     QFixed ymax = 0;
     QFixed xmax = 0;
+    int load_flags = loadFlags(0);
     for (int i = 0; i < glyphs.numGlyphs; i++) {
-        loadGlyph(glyphs.glyphs[i]);
+        loadGlyph(glyphs.glyphs[i], load_flags);
         int left  = FLOOR(face->glyph->metrics.horiBearingX);
         int right = CEIL(face->glyph->metrics.horiBearingX + face->glyph->metrics.width);
         int top    = CEIL(face->glyph->metrics.horiBearingY);
@@ -674,7 +678,10 @@ glyph_metrics_t QFontEngineFT::boundingBox(glyph_t glyph) const
 {
     FT_Face face = getFace();
     glyph_metrics_t overall;
-    loadGlyph(glyph);
+
+    int load_flags = loadFlags(0);
+    loadGlyph(glyph, load_flags);
+
     int left  = FLOOR(face->glyph->metrics.horiBearingX);
     int right = CEIL(face->glyph->metrics.horiBearingX + face->glyph->metrics.width);
     int top    = CEIL(face->glyph->metrics.horiBearingY);

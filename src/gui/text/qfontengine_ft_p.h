@@ -138,8 +138,6 @@ public:
 
     inline bool invalid() const { return xsize == 0 && ysize == 0; }
 
-    bool loadGlyph(glyph_t glyph) const;
-
     QFontEngineFT(const QFontDef &fd);
     virtual ~QFontEngineFT();
 
@@ -160,6 +158,7 @@ protected:
 
 private:
     int loadFlags(int flags) const;
+    bool loadGlyph(glyph_t glyph, int load_flags) const;
 
     QFreetypeFace *freetype;
     bool embolden;
