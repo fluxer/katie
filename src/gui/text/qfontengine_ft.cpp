@@ -412,7 +412,7 @@ int QFontEngineFT::synthesized() const
         s = SynthesizedItalic;
     if ((fontDef.weight == QFont::Bold) && !(freetype->face->style_flags & FT_STYLE_FLAG_BOLD))
         s |= SynthesizedBold;
-    if (fontDef.stretch != 100 && FT_IS_SCALABLE(freetype->face))
+    if (fontDef.stretch != 100)
         s |= SynthesizedStretch;
     return s;
 }
@@ -569,8 +569,9 @@ bool QFontEngineFT::canRender(const QChar *string, int len)
     FT_Face face = freetype->face;
     for (int i = 0; i < len; i++ ) {
         unsigned int uc = getChar(string, i, len);
-        if (!FT_Get_Char_Index(face, uc))
+        if (!FT_Get_Char_Index(face, uc)) {
             return false;
+        }
     }
     return true;
 }
@@ -624,7 +625,7 @@ void QFontEngineFT::recalcAdvances(QGlyphLayout *glyphs, QTextEngine::ShaperFlag
     FT_Face face = getFace();
     bool design = (default_hint_style == HintNone ||
                    default_hint_style == HintLight ||
-                   (flags & HB_ShaperFlag_UseDesignMetrics)) && FT_IS_SCALABLE(face);
+                   (flags & HB_ShaperFlag_UseDesignMetrics));
     for (int i = 0; i < glyphs->numGlyphs; i++) {
         loadGlyph(glyphs->glyphs[i]);
         glyphs->advances_x[i] = design ? QFixed::fromFixed(face->glyph->linearHoriAdvance >> 10)
