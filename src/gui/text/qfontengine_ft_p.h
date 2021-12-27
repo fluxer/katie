@@ -61,22 +61,17 @@ public:
     QFreetypeFace(const QFontEngine::FaceId &face_id);
     ~QFreetypeFace();
 
-    void computeSize(const QFontDef &fontDef, int *xsize, int *ysize);
     QFontEngine::Properties properties() const;
 
     FT_Face face;
     int xsize; // 26.6
     int ysize; // 26.6
-    FT_Matrix matrix;
-    FT_CharMap unicode_map;
-    FT_CharMap symbol_map;
 
     int fsType() const;
 
     HB_Error getPointInOutline(HB_Glyph glyph, int flags, hb_uint32 point, HB_Fixed *xpos, HB_Fixed *ypos, hb_uint32 *nPoints);
 
     static void addGlyphToPath(FT_Face face, FT_GlyphSlot g, const QFixedPoint &point, QPainterPath *path, FT_Fixed x_scale, FT_Fixed y_scale);
-    static void addBitmapToPath(FT_GlyphSlot slot, const QFixedPoint &point, QPainterPath *path);
 
 private:
     Q_DISABLE_COPY(QFreetypeFace);
@@ -91,33 +86,6 @@ private:
 class Q_GUI_EXPORT QFontEngineFT : public QFontEngine
 {
 public:
-
-    /* we don't cache glyphs that are too large anyway, so we can make this struct rather small */
-    struct Glyph {
-        ~Glyph();
-        short linearAdvance;
-        unsigned char width;
-        unsigned char height;
-        signed char x;
-        signed char y;
-        signed char advance;
-        signed char format;
-        uchar *data;
-    };
-
-    struct QGlyphSet
-    {
-        QGlyphSet();
-        ~QGlyphSet();
-
-        void clear();
-
-        inline Glyph *getGlyph(glyph_t index) const;
-        void setGlyph(glyph_t index, Glyph *glyph);
-
-private:
-        mutable QHash<glyph_t, Glyph *> glyph_data; // maps from glyph index to glyph data
-    };
 
     virtual QFontEngine::FaceId faceId() const;
     virtual QFontEngine::Properties properties() const;
@@ -159,9 +127,6 @@ private:
     virtual glyph_metrics_t boundingBox(glyph_t glyph) const;
 
     virtual void recalcAdvances(QGlyphLayout *glyphs, QTextEngine::ShaperFlags flags) const;
-    virtual QImage alphaMapForGlyph(glyph_t g);
-
-    virtual int glyphCount() const;
 
     enum Scaling {
         Scaled,
@@ -172,8 +137,6 @@ private:
     FT_Face non_locked_face() const;
 
     inline bool invalid() const { return xsize == 0 && ysize == 0; }
-
-    Glyph *loadGlyph(glyph_t glyph, bool fetchMetricsOnly = false) const;
 
     QFontEngineFT(const QFontDef &fd);
     virtual ~QFontEngineFT();
@@ -194,12 +157,12 @@ protected:
     HintStyle default_hint_style;
 
 private:
-    int loadFlags(QGlyphSet *set, int flags) const;
+    int loadFlags(int flags) const;
+    bool loadGlyph(glyph_t glyph, int load_flags) const;
 
     QFreetypeFace *freetype;
     bool embolden;
-    FT_Matrix matrix;
-    mutable QGlyphSet defaultGlyphSet;
+    bool oblique;
     QFontEngine::FaceId face_id;
 
     int xsize;
@@ -213,11 +176,6 @@ private:
     FT_Size_Metrics metrics;
     bool kerning_pairs_loaded;
 };
-
-inline QFontEngineFT::Glyph *QFontEngineFT::QGlyphSet::getGlyph(glyph_t index) const
-{
-    return glyph_data.value(index, nullptr);
-}
 
 
 QT_END_NAMESPACE

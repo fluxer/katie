@@ -330,12 +330,6 @@ QFontEngineData::~QFontEngineData()
 
     The font-matching algorithm has a lastResortFamily() and
     lastResortFont() in cases where a suitable match cannot be found.
-    You can provide substitutions for font family names using
-    insertSubstitution() and insertSubstitutions(). Substitutions can
-    be removed with removeSubstitution(). Use substitute() to retrieve
-    a family's first substitute, or the family name itself if it has
-    no substitutes. Use substitutes() to retrieve a list of a family's
-    substitutes (which may be empty).
 
     Every QFont has a key() which you can use, for example, as the key
     in a cache or dictionary. If you want to store a user's font
@@ -663,7 +657,7 @@ QFont &QFont::operator=(const QFont &font)
     Returns the requested font family name, i.e. the name set in the
     constructor or the last setFont() call.
 
-    \sa setFamily() substitutes() substitute()
+    \sa setFamily()
 */
 QString QFont::family() const
 {
@@ -1209,11 +1203,6 @@ QFont::StyleHint QFont::styleHint() const
     \value ForceOutline forces the use of outline fonts.
     \value NoAntialias don't antialias the fonts.
     \value PreferAntialias antialias if possible.
-    \value NoFontMerging If the font selected for a certain writing system
-           does not contain a character requested to draw, then Qt automatically chooses a similar
-           looking font that contains the character. The NoFontMerging flag disables this feature.
-           Please note that enabling this flag will not prevent Qt from automatically picking a
-           suitable font when the selected font does not support the writing system of the text.
 
     Any of these may be OR-ed with one of these flags:
 
@@ -1611,134 +1600,6 @@ QFont QFont::resolve(const QFont &other) const
     \internal
 */
 
-
-
-
-
-/*****************************************************************************
-  QFont substitution management
- *****************************************************************************/
-
-typedef QHash<QString, QStringList> QFontSubst;
-Q_GLOBAL_STATIC(QFontSubst, globalFontSubst)
-
-static const struct FontSubstitutesTblData {
-    const QLatin1String original;
-    const QLatin1String substitute;
-} FontSubstitutesTbl[] = {
-    { QLatin1String("arial"), QLatin1String("helvetica") },
-    { QLatin1String("times new roman"), QLatin1String("times") },
-    { QLatin1String("courier new"), QLatin1String("courier") },
-    { QLatin1String("sans serif"), QLatin1String("helvetica") },
-};
-static const qint16 FontSubstitutesTblSize = sizeof(FontSubstitutesTbl) / sizeof(FontSubstitutesTblData);
-
-// create substitution dict
-static void initFontSubst()
-{
-#if !defined(QT_NO_FONTCONFIG)
-    if (qt_x11Data->has_fontconfig)
-        return;
-#endif
-
-    QFontSubst *fontSubst = globalFontSubst();
-    Q_ASSERT(fontSubst != 0);
-    if (!fontSubst->isEmpty())
-        return;
-
-    for (qint16 i = 0; i < FontSubstitutesTblSize; i++) {
-        QStringList &list = (*fontSubst)[FontSubstitutesTbl[i].original];
-        list.append(FontSubstitutesTbl[i].substitute);
-    }
-}
-
-/*!
-    Returns the first family name to be used whenever \a familyName is
-    specified. The lookup is case insensitive.
-
-    If there is no substitution for \a familyName, \a familyName is
-    returned.
-
-    To obtain a list of substitutions use substitutes().
-
-    \sa setFamily() insertSubstitutions() insertSubstitution() removeSubstitution()
-*/
-QString QFont::substitute(const QString &familyName)
-{
-    initFontSubst();
-
-    QFontSubst *fontSubst = globalFontSubst();
-    Q_ASSERT(fontSubst != 0);
-    QFontSubst::ConstIterator it = fontSubst->constFind(familyName.toLower());
-    if (it != fontSubst->constEnd() && !(*it).isEmpty())
-        return (*it).first();
-
-    return familyName;
-}
-
-
-/*!
-    Returns a list of family names to be used whenever \a familyName
-    is specified. The lookup is case insensitive.
-
-    If there is no substitution for \a familyName, an empty list is
-    returned.
-
-    \sa substitute() insertSubstitutions() insertSubstitution() removeSubstitution()
- */
-QStringList QFont::substitutes(const QString &familyName)
-{
-    initFontSubst();
-
-    QFontSubst *fontSubst = globalFontSubst();
-    Q_ASSERT(fontSubst != 0);
-    return fontSubst->value(familyName.toLower(), QStringList());
-}
-
-
-/*!
-    Inserts \a substituteName into the substitution
-    table for the family \a familyName.
-
-    \sa insertSubstitutions() removeSubstitution() substitutions() substitute() substitutes()
-*/
-void QFont::insertSubstitution(const QString &familyName,
-                               const QString &substituteName)
-{
-    initFontSubst();
-
-    QFontSubst *fontSubst = globalFontSubst();
-    Q_ASSERT(fontSubst != 0);
-    QStringList &list = (*fontSubst)[familyName.toLower()];
-    QString s = substituteName.toLower();
-    if (!list.contains(s))
-        list.append(s);
-}
-
-
-/*!
-    Inserts the list of families \a substituteNames into the
-    substitution list for \a familyName.
-
-    \sa insertSubstitution(), removeSubstitution(), substitutions(), substitute()
-*/
-void QFont::insertSubstitutions(const QString &familyName,
-                                const QStringList &substituteNames)
-{
-    initFontSubst();
-
-    QFontSubst *fontSubst = globalFontSubst();
-    Q_ASSERT(fontSubst != 0);
-    QStringList &list = (*fontSubst)[familyName.toLower()];
-    QStringList::ConstIterator it = substituteNames.constBegin();
-    while (it != substituteNames.constEnd()) {
-        QString s = (*it).toLower();
-        if (!list.contains(s))
-            list.append(s);
-        it++;
-    }
-}
-
 /*! \fn void QFont::initialize()
   \internal
 
@@ -1752,46 +1613,6 @@ void QFont::insertSubstitutions(const QString &familyName,
 
   Internal function that cleans up the font system.
 */
-
-// ### mark: should be called removeSubstitutions()
-/*!
-    Removes all the substitutions for \a familyName.
-
-    \sa insertSubstitutions(), insertSubstitution(), substitutions(), substitute()
-*/
-void QFont::removeSubstitution(const QString &familyName)
-{ // ### function name should be removeSubstitutions() or
-  // ### removeSubstitutionList()
-    initFontSubst();
-
-    QFontSubst *fontSubst = globalFontSubst();
-    Q_ASSERT(fontSubst != 0);
-    fontSubst->remove(familyName.toLower());
-}
-
-
-/*!
-    Returns a sorted list of substituted family names.
-
-    \sa insertSubstitution(), removeSubstitution(), substitute()
-*/
-QStringList QFont::substitutions()
-{
-    initFontSubst();
-
-    QFontSubst *fontSubst = globalFontSubst();
-    Q_ASSERT(fontSubst != 0);
-    QStringList ret;
-    QFontSubst::ConstIterator it = fontSubst->constBegin();
-
-    while (it != fontSubst->constEnd()) {
-        ret.append(it.key());
-        ++it;
-    }
-
-    ret.sort();
-    return ret;
-}
 
 
 /*  \internal

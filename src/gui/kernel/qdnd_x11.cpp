@@ -233,6 +233,7 @@ static QPixmap *defaultPm = 0;
 
 static const int default_pm_hotx = -2;
 static const int default_pm_hoty = -16;
+/* XPM */
 static const char* const default_pm[] = {
 "13 9 3 1",
 ".      c None",

@@ -553,8 +553,6 @@ const HB_ScriptEngine HB_ScriptEngines[] = {
     { HB_BasicShape, 0},
     // Adlam
     { HB_BasicShape, 0},
-    // Afaka
-    { HB_BasicShape, 0},
     // Ahom
     { HB_BasicShape, 0},
     // AnatolianHieroglyphs
@@ -569,17 +567,13 @@ const HB_ScriptEngine HB_ScriptEngines[] = {
     { HB_BasicShape, 0},
     // Bamum
     { HB_BasicShape, 0},
-    // Bangla
-    { HB_BasicShape, 0},
     // BassaVah
     { HB_BasicShape, 0},
     // Batak
     { HB_BasicShape, 0},
+    // Bengali
+    { HB_BasicShape, 0},
     // Bhaiksuki
-    { HB_BasicShape, 0},
-    // Blissymbols
-    { HB_BasicShape, 0},
-    // BookPahlavi
     { HB_BasicShape, 0},
     // Bopomofo
     { HB_BasicShape, 0},
@@ -591,6 +585,8 @@ const HB_ScriptEngine HB_ScriptEngines[] = {
     { HB_BasicShape, 0},
     // Buhid
     { HB_BasicShape, 0},
+    // CanadianAboriginal
+    { HB_BasicShape, 0},
     // Carian
     { HB_BasicShape, 0},
     // CaucasianAlbanian
@@ -601,11 +597,15 @@ const HB_ScriptEngine HB_ScriptEngines[] = {
     { HB_BasicShape, 0},
     // Cherokee
     { HB_BasicShape, 0},
-    // Cirth
+    // Chorasmian
     { HB_BasicShape, 0},
     // Coptic
     { HB_BasicShape, 0},
+    // Cuneiform
+    { HB_BasicShape, 0},
     // Cypriot
+    { HB_BasicShape, 0},
+    // CyproMinoan
     { HB_BasicShape, 0},
     // Cyrillic
     { HB_BasicShape, 0},
@@ -613,15 +613,11 @@ const HB_ScriptEngine HB_ScriptEngines[] = {
     { HB_BasicShape, 0},
     // Devanagari
     { HB_IndicShape, HB_IndicAttributes },
+    // DivesAkuru
+    { HB_BasicShape, 0 },
     // Dogra
     { HB_BasicShape, 0},
-    // Duployanshorthand
-    { HB_BasicShape, 0},
-    // EasternSyriac
-    { HB_BasicShape, 0},
-    // Egyptiandemotic
-    { HB_BasicShape, 0},
-    // Egyptianhieratic
+    // Duployan
     { HB_BasicShape, 0},
     // EgyptianHieroglyphs
     { HB_ArabicShape, 0},
@@ -629,19 +625,7 @@ const HB_ScriptEngine HB_ScriptEngines[] = {
     { HB_BasicShape, 0},
     // Elymaic
     { HB_BasicShape, 0},
-    // Emoji
-    { HB_BasicShape, 0},
-    // EstrangeloSyriac
-    { HB_BasicShape, 0},
     // Ethiopic
-    { HB_BasicShape, 0},
-    // FrakturLatin
-    { HB_BasicShape, 0},
-    // Fraser
-    { HB_BasicShape, 0},
-    // GaelicLatin
-    { HB_BasicShape, 0},
-    // GeorgianKhutsuri
     { HB_BasicShape, 0},
     // Georgian
     { HB_BasicShape, 0},
@@ -667,8 +651,6 @@ const HB_ScriptEngine HB_ScriptEngines[] = {
     { HB_BasicShape, 0},
     // Hanunoo
     { HB_BasicShape, 0},
-    // HanwithBopomofo
-    { HB_BasicShape, 0},
     // Hatran
     { HB_BasicShape, 0},
     // Hebrew
@@ -677,23 +659,13 @@ const HB_ScriptEngine HB_ScriptEngines[] = {
     { HB_BasicShape, 0},
     // ImperialAramaic
     { HB_BasicShape, 0},
-    // Indus
-    { HB_BasicShape, 0},
     // Inherited
     { HB_BasicShape, 0},
     // InscriptionalPahlavi
     { HB_BasicShape, 0},
     // InscriptionalParthian
     { HB_BasicShape, 0},
-    // Jamo
-    { HB_BasicShape, 0},
-    // Japanese
-    { HB_BasicShape, 0},
-    // Japanesesyllabaries
-    { HB_BasicShape, 0},
     // Javanese
-    { HB_BasicShape, 0},
-    // Jurchen
     { HB_BasicShape, 0},
     // Kaithi
     { HB_BasicShape, 0},
@@ -705,17 +677,13 @@ const HB_ScriptEngine HB_ScriptEngines[] = {
     { HB_BasicShape, 0},
     // Kharoshthi
     { HB_BasicShape, 0},
+    // KhitanSmallScript
+    { HB_BasicShape, 0},
     // Khmer
     { HB_KhmerShape, HB_KhmerAttributes },
     // Khojki
     { HB_BasicShape, 0},
     // Khudawadi
-    { HB_BasicShape, 0},
-    // Korean
-    { HB_BasicShape, 0},
-    // Kpelle
-    { HB_BasicShape, 0},
-    // Lanna
     { HB_BasicShape, 0},
     // Lao
     { HB_BasicShape, 0},
@@ -729,7 +697,7 @@ const HB_ScriptEngine HB_ScriptEngines[] = {
     { HB_BasicShape, 0},
     // LinearB
     { HB_BasicShape, 0},
-    // Loma
+    // Lisu
     { HB_BasicShape, 0},
     // Lycian
     { HB_BasicShape, 0},
@@ -741,7 +709,7 @@ const HB_ScriptEngine HB_ScriptEngines[] = {
     { HB_BasicShape, 0},
     // Malayalam
     { HB_IndicShape, HB_IndicAttributes },
-    // Mandaean
+    // Mandaic
     { HB_BasicShape, 0},
     // Manichaean
     { HB_BasicShape, 0},
@@ -749,25 +717,21 @@ const HB_ScriptEngine HB_ScriptEngines[] = {
     { HB_BasicShape, 0},
     // MasaramGondi
     { HB_BasicShape, 0},
-    // MathematicalNotation
-    { HB_BasicShape, 0},
-    // Mayanhieroglyphs
-    { HB_BasicShape, 0},
     // Medefaidrin
     { HB_BasicShape, 0},
-    // MeiteiMayek
+    // MeeteiMayek
     { HB_BasicShape, 0},
-    // Mende
+    // MendeKikakui
     { HB_BasicShape, 0},
     // MeroiticCursive
     { HB_BasicShape, 0},
-    // Meroitic
+    // MeroiticHieroglyphs
+    { HB_BasicShape, 0},
+    // Miao
     { HB_BasicShape, 0},
     // Modi
     { HB_BasicShape, 0},
     // Mongolian
-    { HB_BasicShape, 0},
-    // Moon
     { HB_BasicShape, 0},
     // Mro
     { HB_BasicShape, 0},
@@ -775,29 +739,23 @@ const HB_ScriptEngine HB_ScriptEngines[] = {
     { HB_BasicShape, 0},
     // Myanmar
     { HB_MyanmarShape, HB_MyanmarAttributes },
-    // Nko
-    { HB_ArabicShape, 0},
     // Nabataean
     { HB_BasicShape, 0},
     // Nandinagari
     { HB_BasicShape, 0},
-    // NaxiGeba
+    // Newa
     { HB_BasicShape, 0},
     // NewTaiLue
     { HB_BasicShape, 0},
-    // Newa
-    { HB_BasicShape, 0},
+    // Nko
+    { HB_ArabicShape, 0},
     // Nushu
     { HB_BasicShape, 0},
     // NyiakengPuachueHmong
     { HB_BasicShape, 0},
-    // Odia
-    { HB_BasicShape, 0},
     // Ogham
     { HB_BasicShape, 0},
     // OlChiki
-    { HB_BasicShape, 0},
-    // OldChurchSlavonicCyrillic
     { HB_BasicShape, 0},
     // OldHungarian
     { HB_BasicShape, 0},
@@ -813,7 +771,11 @@ const HB_ScriptEngine HB_ScriptEngines[] = {
     { HB_BasicShape, 0},
     // OldSouthArabian
     { HB_ArabicShape, 0},
-    // Orkhon
+    // OldTurkic
+    { HB_BasicShape, 0},
+    // OldUyghur
+    { HB_BasicShape, 0},
+    // Oriya
     { HB_BasicShape, 0},
     // Osage
     { HB_BasicShape, 0},
@@ -825,25 +787,17 @@ const HB_ScriptEngine HB_ScriptEngines[] = {
     { HB_BasicShape, 0},
     // PauCinHau
     { HB_BasicShape, 0},
-    // Phagspa
+    // PhagsPa
     { HB_BasicShape, 0},
     // Phoenician
-    { HB_BasicShape, 0},
-    // PollardPhonetic
     { HB_BasicShape, 0},
     // PsalterPahlavi
     { HB_BasicShape, 0},
     // Rejang
     { HB_BasicShape, 0},
-    // Rongorongo
-    { HB_BasicShape, 0},
     // Runic
     { HB_BasicShape, 0},
-    // SACuneiform
-    { HB_BasicShape, 0},
     // Samaritan
-    { HB_BasicShape, 0},
-    // Sarati
     { HB_BasicShape, 0},
     // Saurashtra
     { HB_BasicShape, 0},
@@ -854,8 +808,6 @@ const HB_ScriptEngine HB_ScriptEngines[] = {
     // Siddham
     { HB_BasicShape, 0},
     // SignWriting
-    { HB_BasicShape, 0},
-    // SimplifiedHan
     { HB_BasicShape, 0},
     // Sinhala
     { HB_IndicShape, HB_IndicAttributes },
@@ -869,8 +821,6 @@ const HB_ScriptEngine HB_ScriptEngines[] = {
     { HB_BasicShape, 0},
     // SylotiNagri
     { HB_BasicShape, 0},
-    // Symbols
-    { HB_BasicShape, 0},
     // Syriac
     { HB_ArabicShape, 0},
     // Tagalog
@@ -879,18 +829,20 @@ const HB_ScriptEngine HB_ScriptEngines[] = {
     { HB_BasicShape, 0},
     // TaiLe
     { HB_BasicShape, 0},
+    // TaiTham
+    { HB_BasicShape, 0},
     // TaiViet
     { HB_BasicShape, 0},
     // Takri
     { HB_BasicShape, 0},
     // Tamil
     { HB_IndicShape, HB_IndicAttributes },
+    // Tangsa
+    { HB_BasicShape, 0},
     // Tangut
     { HB_BasicShape, 0},
     // Telugu
     { HB_IndicShape, HB_IndicAttributes },
-    // Tengwar
-    { HB_BasicShape, 0},
     // Thaana
     { HB_BasicShape, 0},
     // Thai
@@ -901,31 +853,23 @@ const HB_ScriptEngine HB_ScriptEngines[] = {
     { HB_BasicShape, 0},
     // Tirhuta
     { HB_BasicShape, 0},
-    // TraditionalHan
-    { HB_BasicShape, 0},
-    // UCAS
+    // Toto
     { HB_BasicShape, 0},
     // Ugaritic
     { HB_BasicShape, 0},
-    // Unwritten
-    { HB_BasicShape, 0},
     // Vai
     { HB_BasicShape, 0},
-    // VarangKshiti
-    { HB_BasicShape, 0},
-    // VisibleSpeech
+    // Vithkuqi
     { HB_BasicShape, 0},
     // Wancho
     { HB_BasicShape, 0},
-    // WesternSyriac
+    // WarangCiti
     { HB_BasicShape, 0},
-    // Woleai
+    // Yezidi
     { HB_BasicShape, 0},
     // Yi
     { HB_BasicShape, 0},
     // ZanabazarSquare
-    { HB_BasicShape, 0},
-    // Zawgyi
     { HB_BasicShape, 0},
 };
 static const int NumEngines = sizeof(HB_ScriptEngines)/sizeof(HB_ScriptEngine);
@@ -1120,8 +1064,6 @@ static const OTScripts ot_scripts [] = {
     { DefaultScript, 0 },
     // Adlam
     { HB_MAKE_TAG('a', 'd', 'l', 'm'), 0 },
-    // Afaka
-    { HB_MAKE_TAG('a', 'f', 'a', 'k'), 0 },
     // Ahom
     { HB_MAKE_TAG('a', 'h', 'o', 'm'), 0 },
     // AnatolianHieroglyphs
@@ -1136,18 +1078,14 @@ static const OTScripts ot_scripts [] = {
     { HB_MAKE_TAG('b', 'a', 'l', 'i'), 0 },
     // Bamum
     { HB_MAKE_TAG('b', 'a', 'm', 'u'), 0 },
-    // Bangla
-    { HB_MAKE_TAG('b', 'e', 'n', 'g'), 0 },
     // BassaVah
     { HB_MAKE_TAG('b', 'a', 's', 's'), 0 },
     // Batak
     { HB_MAKE_TAG('b', 'a', 't', 'k'), 0 },
+    // Bengali
+    { DefaultScript, 0 },
     // Bhaiksuki
-    { HB_MAKE_TAG('b', 'h', 'k', 's'), 0 },
-    // Blissymbols
-    { HB_MAKE_TAG('b', 'l', 'i', 's'), 0 },
-    // BookPahlavi
-    { HB_MAKE_TAG('p', 'h', 'l', 'v'), 0 },
+    { DefaultScript, 0 },
     // Bopomofo
     { HB_MAKE_TAG('b', 'o', 'p', 'o'), 0 },
     // Brahmi
@@ -1158,6 +1096,8 @@ static const OTScripts ot_scripts [] = {
     { HB_MAKE_TAG('b', 'u', 'g', 'i'), 0 },
     // Buhid
     { HB_MAKE_TAG('b', 'u', 'h', 'd'), 0 },
+    // CanadianAboriginal
+    { DefaultScript, 0 },
     // Carian
     { HB_MAKE_TAG('c', 'a', 'r', 'i'), 0 },
     // CaucasianAlbanian
@@ -1168,48 +1108,36 @@ static const OTScripts ot_scripts [] = {
     { HB_MAKE_TAG('c', 'h', 'a', 'm'), 0 },
     // Cherokee
     { HB_MAKE_TAG('c', 'h', 'e', 'r'), 0 },
-    // Cirth
-    { HB_MAKE_TAG('c', 'i', 'r', 't'), 0 },
+    // Chorasmian
+    { DefaultScript, 0 },
     // Coptic
     { HB_MAKE_TAG('c', 'o', 'p', 't'), 0 },
+    // Cuneiform
+    { DefaultScript, 0 },
     // Cypriot
     { HB_MAKE_TAG('c', 'p', 'r', 't'), 0 },
+    // CyproMinoan
+    { DefaultScript, 0 },
     // Cyrillic
     { HB_MAKE_TAG('c', 'y', 'r', 'l'), 0 },
     // Deseret
     { HB_MAKE_TAG('d', 's', 'r', 't'), 0 },
     // Devanagari
     { HB_MAKE_TAG('d', 'e', 'v', 'a'), 1 },
+    // DivesAkuru
+    { DefaultScript, 0 },
     // Dogra
     { HB_MAKE_TAG('d', 'o', 'g', 'r'), 0 },
-    // Duployanshorthand
-    { HB_MAKE_TAG('d', 'u', 'p', 'l'), 0 },
-    // EasternSyriac
-    { HB_MAKE_TAG('s', 'y', 'r', 'c'), 0 },
-    // Egyptiandemotic
-    { HB_MAKE_TAG('e', 'g', 'y', 'p'), 0 },
-    // Egyptianhieratic
-    { HB_MAKE_TAG('e', 'g', 'y', 'p'), 0 },
-    // Egyptianhieroglyphs
+    // Duployan
+    { DefaultScript, 0 },
+    // EgyptianHieroglyphs
     { HB_MAKE_TAG('e', 'g', 'y', 'p'), 0 },
     // Elbasan
     { HB_MAKE_TAG('e', 'l', 'b', 'a'), 0 },
     // Elymaic
     { HB_MAKE_TAG('e', 'l', 'y', 'm'), 0 },
-    // Emoji
-    { HB_MAKE_TAG('z', 's', 'y', 'e'), 0 },
-    // EstrangeloSyriac
-    { HB_MAKE_TAG('s', 'y', 'r', 'c'), 0 },
     // Ethiopic
     { HB_MAKE_TAG('e', 't', 'h', 'i'), 0 },
-    // FrakturLatin
-    { HB_MAKE_TAG('l', 'a', 't', 'n'), 0 },
-    // Fraser
-    { HB_MAKE_TAG('l', 'i', 's', 'u'), 0 },
-    // GaelicLatin
-    { HB_MAKE_TAG('l', 'a', 't', 'n'), 0 },
-    // GeorgianKhutsuri
-    { HB_MAKE_TAG('g', 'e', 'o', 'r'), 0 },
     // Georgian
     { HB_MAKE_TAG('g', 'e', 'o', 'r'), 0 },
     // Glagolitic
@@ -1234,8 +1162,6 @@ static const OTScripts ot_scripts [] = {
     { HB_MAKE_TAG('r', 'o', 'h', 'g'), 0 },
     // Hanunoo
     { HB_MAKE_TAG('h', 'a', 'n', 'o'), 0 },
-    // HanwithBopomofo
-    { HB_MAKE_TAG('h', 'a', 'n', 'b'), 0 },
     // Hatran
     { HB_MAKE_TAG('h', 'a', 't', 'r'), 0 },
     // Hebrew
@@ -1244,24 +1170,14 @@ static const OTScripts ot_scripts [] = {
     { HB_MAKE_TAG('k', 'a', 'n', 'a'), 0 },
     // ImperialAramaic
     { HB_MAKE_TAG('a', 'r', 'm', 'i'), 0 },
-    // Indus
-    { HB_MAKE_TAG('i', 'n', 'd', 's'), 0 },
     // Inherited
     { HB_MAKE_TAG('z', 'i', 'n', 'h'), 0 },
     // InscriptionalPahlavi
     { HB_MAKE_TAG('p', 'h', 'l', 'i'), 0 },
     // InscriptionalParthian
     { HB_MAKE_TAG('p', 'r', 't', 'i'), 0 },
-    // Jamo
-    { HB_MAKE_TAG('j', 'a', 'm', 'o'), 0 },
-    // Japanese
-    { HB_MAKE_TAG('j', 'p', 'a', 'n'), 0 },
-    // Japanesesyllabaries
-    { HB_MAKE_TAG('h', 'r', 'k', 't'), 0 },
     // Javanese
     { HB_MAKE_TAG('j', 'a', 'v', 'a'), 0 },
-    // Jurchen
-    { HB_MAKE_TAG('j', 'u', 'r', 'c'), 0 },
     // Kaithi
     { HB_MAKE_TAG('k', 't', 'h', 'i'), 0 },
     // Kannada
@@ -1272,18 +1188,14 @@ static const OTScripts ot_scripts [] = {
     { HB_MAKE_TAG('k', 'a', 'l', 'i'), 0 },
     // Kharoshthi
     { HB_MAKE_TAG('k', 'h', 'a', 'r'), 0 },
+    // KhitanSmallScript
+    { DefaultScript, 0 },
     // Khmer
     { HB_MAKE_TAG('k', 'h', 'm', 'r'), 1 },
     // Khojki
     { HB_MAKE_TAG('k', 'h', 'o', 'j'), 0 },
     // Khudawadi
     { HB_MAKE_TAG('s', 'i', 'n', 'd'), 0 },
-    // Korean
-    { HB_MAKE_TAG('k', 'o', 'r', 'e'), 0 },
-    // Kpelle
-    { HB_MAKE_TAG('k', 'p', 'e', 'l'), 0 },
-    // Lanna
-    { HB_MAKE_TAG('l', 'a', 'n', 'a'), 0 },
     // Lao
     { HB_MAKE_TAG('l', 'a', 'o', ' '), 1 },
     // Latin
@@ -1296,8 +1208,8 @@ static const OTScripts ot_scripts [] = {
     { HB_MAKE_TAG('l', 'i', 'n', 'a'), 0 },
     // LinearB
     { HB_MAKE_TAG('l', 'i', 'n', 'b'), 0 },
-    // Loma
-    { HB_MAKE_TAG('l', 'o', 'm', 'a'), 0 },
+    // Lisu
+    { DefaultScript, 0 },
     // Lycian
     { HB_MAKE_TAG('l', 'y', 'c', 'i'), 0 },
     // Lydian
@@ -1308,64 +1220,54 @@ static const OTScripts ot_scripts [] = {
     { HB_MAKE_TAG('m', 'a', 'k', 'a'), 0 },
     // Malayalam
     { HB_MAKE_TAG('m', 'l', 'y', 'm'), 1 },
-    // Mandaean
-    { HB_MAKE_TAG('m', 'a', 'n', 'd'), 0 },
+    // Mandaic
+    { DefaultScript, 0 },
     // Manichaean
     { HB_MAKE_TAG('m', 'a', 'n', 'i'), 0 },
     // Marchen
     { HB_MAKE_TAG('m', 'a', 'r', 'c'), 0 },
     // MasaramGondi
     { HB_MAKE_TAG('g', 'o', 'n', 'm'), 0 },
-    // MathematicalNotation
-    { HB_MAKE_TAG('m', 'a', 't', 'h'), 0 },
-    // Mayanhieroglyphs
-    { HB_MAKE_TAG('m', 'a', 'y', 'a'), 0 },
     // Medefaidrin
     { HB_MAKE_TAG('m', 'e', 'd', 'f'), 0 },
-    // MeiteiMayek
-    { HB_MAKE_TAG('m', 't', 'e', 'i'), 0 },
-    // Mende
-    { HB_MAKE_TAG('m', 'e', 'n', 'd'), 0 },
+    // MeeteiMayek
+    { DefaultScript, 0 },
+    // MendeKikakui
+    { DefaultScript, 0 },
     // MeroiticCursive
     { HB_MAKE_TAG('m', 'e', 'r', 'c'), 0 },
-    // Meroitic
-    { HB_MAKE_TAG('m', 'e', 'r', 'o'), 0 },
+    // MeroiticHieroglyphs
+    { DefaultScript, 0 },
+    // Miao
+    { DefaultScript, 0 },
     // Modi
     { HB_MAKE_TAG('m', 'o', 'd', 'i'), 0 },
     // Mongolian
     { HB_MAKE_TAG('m', 'o', 'n', 'g'), 0 },
-    // Moon
-    { HB_MAKE_TAG('m', 'o', 'o', 'n'), 0 },
     // Mro
     { HB_MAKE_TAG('m', 'r', 'o', 'o'), 0 },
     // Multani
     { HB_MAKE_TAG('m', 'u', 'l', 't'), 0 },
     // Myanmar
     { HB_MAKE_TAG('m', 'y', 'm', 'r'), 1 },
-    // NKo
-    { HB_MAKE_TAG('n', 'k', 'o', ' '), 1 },
     // Nabataean
     { HB_MAKE_TAG('n', 'b', 'a', 't'), 0 },
     // Nandinagari
     { HB_MAKE_TAG('n', 'a', 'n', 'd'), 0 },
-    // NaxiGeba
-    { HB_MAKE_TAG('n', 'k', 'g', 'b'), 0 },
-    // NewTaiLue
-    { HB_MAKE_TAG('t', 'a', 'l', 'u'), 0 },
     // Newa
     { HB_MAKE_TAG('n', 'e', 'w', 'a'), 0 },
+    // NewTaiLue
+    { HB_MAKE_TAG('t', 'a', 'l', 'u'), 0 },
+    // NKo
+    { HB_MAKE_TAG('n', 'k', 'o', ' '), 1 },
     // Nushu
     { HB_MAKE_TAG('n', 's', 'h', 'u'), 0 },
     // NyiakengPuachueHmong
     { HB_MAKE_TAG('h', 'm', 'n', 'g'), 0 },
-    // Odia, v2 is ory2
-    { HB_MAKE_TAG('o', 'r', 'y', 'a'), 0 },
     // Ogham
     { HB_MAKE_TAG('o', 'g', 'a', 'm'), 0 },
     // OlChiki
     { HB_MAKE_TAG('o', 'l', 'c', 'k'), 0 },
-    // OldChurchSlavonicCyrillic
-    { HB_MAKE_TAG('c', 'y', 'r', 'l'), 0 },
     // OldHungarian
     { HB_MAKE_TAG('h', 'u', 'n', 'g'), 0 },
     // OldItalic
@@ -1380,8 +1282,12 @@ static const OTScripts ot_scripts [] = {
     { HB_MAKE_TAG('s', 'o', 'g', 'o'), 0 },
     // OldSouthArabian
     { HB_MAKE_TAG('s', 'a', 'r', 'b'), 1 },
-    // Orkhon
-    { HB_MAKE_TAG('o', 'r', 'k', 'h'), 0 },
+    // OldTurkic
+    { DefaultScript, 0 },
+    // OldUyghur
+    { DefaultScript, 0 },
+    // Oriya
+    { DefaultScript, 0 },
     // Osage
     { HB_MAKE_TAG('o', 's', 'g', 'e'), 0 },
     // Osmanya
@@ -1392,26 +1298,18 @@ static const OTScripts ot_scripts [] = {
     { HB_MAKE_TAG('p', 'a', 'l', 'm'), 0 },
     // PauCinHau
     { HB_MAKE_TAG('p', 'a', 'u', 'c'), 0 },
-    // Phagspa
+    // PhagsPa
     { HB_MAKE_TAG('p', 'h', 'a', 'g'), 0 },
     // Phoenician
     { HB_MAKE_TAG('p', 'h', 'n', 'x'), 0 },
-    // PollardPhonetic
-    { DefaultScript, 0 },
     // PsalterPahlavi
     { HB_MAKE_TAG('p', 'h', 'l', 'p'), 0 },
     // Rejang
     { HB_MAKE_TAG('r', 'j', 'n', 'g'), 0 },
-    // Rongorongo
-    { HB_MAKE_TAG('r', 'o', 'r', 'o'), 0 },
     // Runic
     { HB_MAKE_TAG('r', 'u', 'n', 'r'), 0 },
-    // SACuneiform
-    { HB_MAKE_TAG('x', 's', 'u', 'x'), 0 },
     // Samaritan
     { HB_MAKE_TAG('s', 'a', 'm', 'r'), 0 },
-    // Sarati
-    { HB_MAKE_TAG('s', 'a', 'r', 'a'), 0 },
     // Saurashtra
     { HB_MAKE_TAG('s', 'a', 'u', 'r'), 0 },
     // Sharada
@@ -1422,8 +1320,6 @@ static const OTScripts ot_scripts [] = {
     { HB_MAKE_TAG('s', 'i', 'd', 'd'), 0 },
     // SignWriting
     { HB_MAKE_TAG('s', 'g', 'n', 'w'), 0 },
-    // SimplifiedHan
-    { HB_MAKE_TAG('h', 'a', 'n', 's'), 0 },
     // Sinhala
     { HB_MAKE_TAG('s', 'i', 'n', 'h'), 1 },
     // Sogdian
@@ -1436,8 +1332,6 @@ static const OTScripts ot_scripts [] = {
     { HB_MAKE_TAG('s', 'u', 'n', 'd'), 0 },
     // SylotiNagri
     { HB_MAKE_TAG('s', 'y', 'l', 'o'), 0 },
-    // Symbols
-    { HB_MAKE_TAG('m', 'u', 's', 'c'), 0 },
     // Syriac
     { HB_MAKE_TAG('s', 'y', 'r', 'c'), 1 },
     // Tagalog
@@ -1446,18 +1340,20 @@ static const OTScripts ot_scripts [] = {
     { HB_MAKE_TAG('t', 'a', 'g', 'b'), 0 },
     // TaiLe
     { HB_MAKE_TAG('t', 'a', 'l', 'e'), 0 },
-    // TaiViet
-    { HB_MAKE_TAG('t', 'a', 'v', 't'), 0 },
+    // TaiLe
+    { HB_MAKE_TAG('t', 'a', 'l', 'e'), 0 },
+    // TaiTham
+    { DefaultScript, 0 },
     // Takri
     { HB_MAKE_TAG('t', 'a', 'k', 'r'), 0 },
     // Tamil
     { HB_MAKE_TAG('t', 'a', 'm', 'l'), 1 },
+    // Tangsa
+    { DefaultScript, 0 },
     // Tangut
     { HB_MAKE_TAG('t', 'a', 'n', 'g'), 0 },
     // Telugu
     { HB_MAKE_TAG('t', 'e', 'l', 'u'), 1 },
-    // Tengwar
-    { HB_MAKE_TAG('t', 'e', 'n', 'g'), 0 },
     // Thaana
     { HB_MAKE_TAG('t', 'h', 'a', 'a'), 1 },
     // Thai
@@ -1468,32 +1364,24 @@ static const OTScripts ot_scripts [] = {
     { HB_MAKE_TAG('t', 'f', 'n', 'g'), 0 },
     // Tirhuta
     { HB_MAKE_TAG('t', 'i', 'r', 'h'), 0 },
-    // TraditionalHan
-    { HB_MAKE_TAG('h', 'a', 'n', 't'), 0 },
-    // UCAS
+    // Toto
     { DefaultScript, 0 },
     // Ugaritic
     { HB_MAKE_TAG('u', 'g', 'a', 'r'), 0 },
-    // Unwritten
-    { HB_MAKE_TAG('z', 'x', 'x', 'x'), 0 },
     // Vai
     { HB_MAKE_TAG('v', 'a', 'i', 0), 0 },
-    // VarangKshiti
-    { HB_MAKE_TAG('w', 'a', 'r', 'a'), 0 },
-    // VisibleSpeech
-    { HB_MAKE_TAG('v', 'i', 's', 'p'), 0 },
+    // Vithkuqi
+    { DefaultScript, 0 },
     // Wancho
     { HB_MAKE_TAG('w', 'c', 'h', 'o'), 0 },
-    // WesternSyriac
-    { HB_MAKE_TAG('s', 'y', 'r', 'c'), 0 },
-    // Woleai
-    { HB_MAKE_TAG('w', 'o', 'l', 'e'), 0 },
+    // WarangCiti
+    { DefaultScript, 0 },
+    // Yezidi
+    { DefaultScript, 0 },
     // Yi
     { HB_MAKE_TAG('y', 'i', 0, 0), 0 },
     // ZanabazarSquare
     { HB_MAKE_TAG('z', 'a', 'n', 'b'), 0 },
-    // Zawgyi
-    { DefaultScript, 0 },
 };
 static const int NumOTScripts = sizeof(ot_scripts)/sizeof(OTScripts);
 

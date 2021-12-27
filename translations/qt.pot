@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-12-20 12:00+0200\n"
+"POT-Creation-Date: 2021-12-26 15:10+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -1358,7 +1358,7 @@ msgctxt "QPrintPreviewDialog"
 msgid "Page Setup"
 msgstr ""
 
-#: src/gui/dialogs/qdialog.cpp:491 src/gui/kernel/qwhatsthis.cpp:468
+#: src/gui/dialogs/qdialog.cpp:491 src/gui/kernel/qwhatsthis.cpp:469
 msgid "What's This?"
 msgstr ""
 
@@ -4514,24 +4514,24 @@ msgstr ""
 msgid "<empty>"
 msgstr ""
 
-#: src/gui/text/qfontdatabase.cpp:62 src/gui/text/qfontdatabase.cpp:825
+#: src/gui/text/qfontdatabase.cpp:62 src/gui/text/qfontdatabase.cpp:816
 msgctxt "QFontDatabase"
 msgid "Normal"
 msgstr ""
 
 #: src/gui/text/qfontdatabase.cpp:65 src/gui/text/qfontdatabase.cpp:77
-#: src/gui/text/qfontdatabase.cpp:813
+#: src/gui/text/qfontdatabase.cpp:804
 msgctxt "QFontDatabase"
 msgid "Bold"
 msgstr ""
 
-#: src/gui/text/qfontdatabase.cpp:68 src/gui/text/qfontdatabase.cpp:815
+#: src/gui/text/qfontdatabase.cpp:68 src/gui/text/qfontdatabase.cpp:806
 msgctxt "QFontDatabase"
 msgid "Demi Bold"
 msgstr ""
 
 #: src/gui/text/qfontdatabase.cpp:71 src/gui/text/qfontdatabase.cpp:89
-#: src/gui/text/qfontdatabase.cpp:811
+#: src/gui/text/qfontdatabase.cpp:802
 msgctxt "QFontDatabase"
 msgid "Black"
 msgstr ""
@@ -4541,17 +4541,17 @@ msgctxt "QFontDatabase"
 msgid "Demi"
 msgstr ""
 
-#: src/gui/text/qfontdatabase.cpp:85 src/gui/text/qfontdatabase.cpp:817
+#: src/gui/text/qfontdatabase.cpp:85 src/gui/text/qfontdatabase.cpp:808
 msgctxt "QFontDatabase"
 msgid "Light"
 msgstr ""
 
-#: src/gui/text/qfontdatabase.cpp:193 src/gui/text/qfontdatabase.cpp:820
+#: src/gui/text/qfontdatabase.cpp:193 src/gui/text/qfontdatabase.cpp:811
 msgctxt "QFontDatabase"
 msgid "Italic"
 msgstr ""
 
-#: src/gui/text/qfontdatabase.cpp:196 src/gui/text/qfontdatabase.cpp:822
+#: src/gui/text/qfontdatabase.cpp:196 src/gui/text/qfontdatabase.cpp:813
 msgctxt "QFontDatabase"
 msgid "Oblique"
 msgstr ""

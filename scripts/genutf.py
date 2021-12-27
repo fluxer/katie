@@ -228,7 +228,7 @@ elif 'script' in sys.argv:
     printswitch(switchmap)
     printifrange(rangemap)
 elif 'special' in sys.argv:
-    scriptslist = []
+    scriptsmap = {}
     for line in readlines('Scripts.txt'):
         tablesplit = line.split(';')
         codepoint = tablesplit[0].strip()
@@ -236,16 +236,19 @@ elif 'special' in sys.argv:
         if value in ('Inherited', 'Common'):
             # both are treated differently
             codepoint = '0'
-        if value in scriptslist:
+        if value in scriptsmap.keys():
             # only one per script
             continue
-        elif '..' in codepoint:
+        if '..' in codepoint:
             rangesplit = codepoint.split('..')
-            rangemin = rangesplit[0]
-            print('    0x%s, // %s' % (rangemin, value.replace('_', '')))
-        else:
-            print('    0x%s, // %s' % (codepoint, value.replace('_', '')))
-        scriptslist.append(value)
+            codepoint = rangesplit[0]
+        scriptsmap[value] = codepoint
+
+    print('    0x%s, // Common' % scriptsmap['Common'])
+    for value in sorted(scriptsmap.keys()):
+        if (value == 'Common'):
+            continue
+        print('    0x%s, // %s' % (scriptsmap[value], value.replace('_', '')))
 else:
     print('''usage: <combining|grapheme|word|sentence|line|script|special>
 

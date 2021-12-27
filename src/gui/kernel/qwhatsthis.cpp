@@ -310,6 +310,7 @@ void QWhatsThat::paintEvent(QPaintEvent*)
     }
 }
 
+/* XPM */
 static const char * const button_image[] = {
 "16 16 3 1",
 "         c None",

@@ -78,6 +78,7 @@ static const int plastiqueWindowsItemHMargin      =  3; // menu item hor text ma
 static const int plastiqueWindowsItemVMargin      =  2; // menu item ver text margin
 static const int plastiqueWindowsRightBorder      = 15; // right border on windows
 
+/* XPM */
 static const char * const qt_plastique_slider_verticalhandle[] = {
     "15 11 6 1",
     "   c None",
@@ -98,6 +99,7 @@ static const char * const qt_plastique_slider_verticalhandle[] = {
     "$+dddddddd+$   ",
     " $++++++++$    "};
 
+/* XPM */
 static const char * const qt_plastique_slider_verticalhandle_left[] = {
     "15 11 6 1",
     "   c None",
@@ -118,6 +120,7 @@ static const char * const qt_plastique_slider_verticalhandle_left[] = {
     "   $+dddddddd+$",
     "    $++++++++$ "};
 
+/* XPM */
 static const char * const qt_plastique_slider_horizontalhandle[] = {
     "11 15 6 1",
     "   c None",
@@ -142,6 +145,7 @@ static const char * const qt_plastique_slider_horizontalhandle[] = {
     "   $+d+$   ",
     "    $+$    "};
 
+/* XPM */
 static const char * const qt_plastique_slider_horizontalhandle_up[] = {
     "11 15 6 1",
     "   c None",
@@ -166,6 +170,7 @@ static const char * const qt_plastique_slider_horizontalhandle_up[] = {
     "$+ddddddd+$",
     " $+++++++$ "};
 
+/* XPM */
 static const char * const qt_plastique_scrollbar_button_arrow_left[] = {
     "4 7 2 1",
     "   c None",
@@ -178,6 +183,7 @@ static const char * const qt_plastique_scrollbar_button_arrow_left[] = {
     "  **",
     "   *"};
 
+/* XPM */
 static const char * const qt_plastique_scrollbar_button_arrow_right[] = {
     "4 7 2 1",
     "   c None",
@@ -190,6 +196,7 @@ static const char * const qt_plastique_scrollbar_button_arrow_right[] = {
     "**  ",
     "*   "};
 
+/* XPM */
 static const char * const qt_plastique_scrollbar_button_arrow_up[] = {
     "7 4 2 1",
     "   c None",
@@ -199,6 +206,7 @@ static const char * const qt_plastique_scrollbar_button_arrow_up[] = {
     " ***** ",
     "*******"};
 
+/* XPM */
 static const char * const qt_plastique_scrollbar_button_arrow_down[] = {
     "7 4 2 1",
     "   c None",
@@ -208,6 +216,7 @@ static const char * const qt_plastique_scrollbar_button_arrow_down[] = {
     "  ***  ",
     "   *   "};
 
+/* XPM */
 static const char * const qt_plastique_scrollbar_button_left[] = {
     "16 16 6 1",
     "   c None",
@@ -233,6 +242,7 @@ static const char * const qt_plastique_scrollbar_button_left[] = {
     ".+<<<<<<<<<<<<<+",
     " .+++++++++++++."};
 
+/* XPM */
 static const char * const qt_plastique_scrollbar_button_right[] = {
     "16 16 6 1",
     "   c None",
@@ -258,6 +268,7 @@ static const char * const qt_plastique_scrollbar_button_right[] = {
     "+<<<<<<<<<<<<<+.",
     ".+++++++++++++. "};
 
+/* XPM */
 static const char * const qt_plastique_scrollbar_button_up[] = {
     "16 16 6 1",
     "   c None",
@@ -283,6 +294,7 @@ static const char * const qt_plastique_scrollbar_button_up[] = {
     "+<<<<<<<<<<<<<<+",
     ".++++++++++++++."};
 
+/* XPM */
 static const char * const qt_plastique_scrollbar_button_down[] = {
     "16 16 6 1",
     "   c None",
@@ -308,6 +320,7 @@ static const char * const qt_plastique_scrollbar_button_down[] = {
     ".+<<<<<<<<<<<<+.",
     " .++++++++++++. "};
 
+/* XPM */
 static const char * const qt_plastique_scrollbar_slider_pattern_vertical[] = {
     "10 18 3 1",
     "   c None",
@@ -332,6 +345,7 @@ static const char * const qt_plastique_scrollbar_slider_pattern_vertical[] = {
     "..  ..  ..",
     ".+  .+  .+"};
 
+/* XPM */
 static const char * const qt_plastique_scrollbar_slider_pattern_horizontal[] = {
     "18 10 3 1",
     "   c None",
@@ -348,6 +362,7 @@ static const char * const qt_plastique_scrollbar_slider_pattern_horizontal[] = {
     "..  ..  ..  ..  ..",
     ".+  .+  .+  .+  .+"};
 
+/* XPM */
 static const char * const qt_plastique_toolbarhandle[] = {
     "6 6 4 1",
     "       c None",
@@ -361,6 +376,7 @@ static const char * const qt_plastique_toolbarhandle[] = {
     "   .+@",
     "    @@"};
 
+/* XPM */
 static const char * const qt_plastique_simple_toolbarhandle[] = {
     "3 3 4 1",
     "       c None",
@@ -371,6 +387,7 @@ static const char * const qt_plastique_simple_toolbarhandle[] = {
     ".+@",
     " @@"};
 
+/* XPM */
 static const char * const qt_plastique_titlebar_context_help[] = {
 "27 27 5 1",
 "  c None",

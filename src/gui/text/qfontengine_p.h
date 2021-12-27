@@ -63,7 +63,6 @@ class Q_GUI_EXPORT QFontEngine : public QObject
 public:
     enum Type {
         Box,
-        Multi,
         Freetype
     };
 
@@ -115,17 +114,12 @@ public:
     virtual void doKerning(QGlyphLayout *, QTextEngine::ShaperFlags);
 
     virtual void addGlyphsToPath(glyph_t *glyphs, QFixedPoint *positions, int nglyphs,
-                                 QPainterPath *path, QTextItem::RenderFlags flags);
+                                 QPainterPath *path, QTextItem::RenderFlags flags) = 0;
 
     void getGlyphPositions(const QGlyphLayout &glyphs, const QTransform &matrix, QTextItem::RenderFlags flags,
                            QVarLengthArray<glyph_t> &glyphs_out, QVarLengthArray<QFixedPoint> &positions);
 
-    void addOutlineToPath(qreal, qreal, const QGlyphLayout &, QPainterPath *, QTextItem::RenderFlags flags);
-
-    /**
-     * Create a qimage for the glyph.
-     */
-    virtual QImage alphaMapForGlyph(glyph_t);
+    virtual void addOutlineToPath(qreal, qreal, const QGlyphLayout &, QPainterPath *, QTextItem::RenderFlags flags);
 
     virtual glyph_metrics_t boundingBox(const QGlyphLayout &glyphs) const = 0;
     virtual glyph_metrics_t boundingBox(glyph_t glyph) const = 0;
@@ -152,8 +146,6 @@ public:
 
     virtual Type type() const = 0;
 
-    virtual int glyphCount() const;
-
     HB_Font harfbuzzFont() const;
     HB_Face harfbuzzFace() const;
 
@@ -164,7 +156,6 @@ public:
     QAtomicInt ref;
     QFontDef fontDef;
     int fsType;
-    bool symbol;
     mutable HB_FontRec hbFont;
     HB_Face hbFace;
 #if defined(Q_WS_X11)
@@ -203,6 +194,8 @@ public:
     virtual void recalcAdvances(QGlyphLayout *, QTextEngine::ShaperFlags) const;
 
     virtual void addOutlineToPath(qreal x, qreal y, const QGlyphLayout &glyphs, QPainterPath *path, QTextItem::RenderFlags flags);
+    virtual void addGlyphsToPath(glyph_t *glyphs, QFixedPoint *positions, int nglyphs,
+                                 QPainterPath *path, QTextItem::RenderFlags flags);
 
     virtual glyph_metrics_t boundingBox(const QGlyphLayout &glyphs) const;
     virtual glyph_metrics_t boundingBox(glyph_t glyph) const;
@@ -213,11 +206,7 @@ public:
     virtual qreal maxCharWidth() const;
     virtual qreal minLeftBearing() const { return 0; }
     virtual qreal minRightBearing() const { return 0; }
-    virtual QImage alphaMapForGlyph(glyph_t);
 
-#ifdef Q_WS_X11
-    int cmap() const;
-#endif
     virtual const char *name() const;
 
     virtual bool canRender(const QChar *string, int len);
@@ -227,54 +216,6 @@ public:
 
 private:
     int _size;
-};
-
-class QFontEngineMulti : public QFontEngine
-{
-public:
-    explicit QFontEngineMulti(int engineCount);
-    ~QFontEngineMulti();
-
-    virtual bool stringToCMap(const QChar *str, int len, QGlyphLayout *glyphs, int *nglyphs,
-                      QTextEngine::ShaperFlags flags) const;
-
-    virtual glyph_metrics_t boundingBox(const QGlyphLayout &glyphs) const;
-    virtual glyph_metrics_t boundingBox(glyph_t glyph) const;
-
-    virtual void recalcAdvances(QGlyphLayout *, QTextEngine::ShaperFlags) const;
-    virtual void doKerning(QGlyphLayout *, QTextEngine::ShaperFlags);
-    virtual void addOutlineToPath(qreal, qreal, const QGlyphLayout &, QPainterPath *, QTextItem::RenderFlags flags);
-    virtual void getGlyphBearings(glyph_t glyph, qreal *leftBearing = 0, qreal *rightBearing = 0);
-
-    virtual QFixed ascent() const;
-    virtual QFixed descent() const;
-    virtual QFixed leading() const;
-    virtual QFixed xHeight() const;
-    virtual QFixed averageCharWidth() const;
-    virtual QImage alphaMapForGlyph(glyph_t);
-
-    virtual QFixed lineThickness() const;
-    virtual QFixed underlinePosition() const;
-    virtual qreal maxCharWidth() const;
-    virtual qreal minLeftBearing() const;
-    virtual qreal minRightBearing() const;
-
-    virtual inline Type type() const
-    { return QFontEngine::Multi; }
-
-    virtual bool canRender(const QChar *string, int len);
-    inline virtual const char *name() const
-    { return "Multi"; }
-
-    QFontEngine *engine(int at) const
-    {Q_ASSERT(at < engines.size()); return engines.at(at); }
-
-
-protected:
-    friend class QPSPrintEnginePrivate;
-
-    virtual void loadEngine(int at) = 0;
-    QVector<QFontEngine *> engines;
 };
 
 QT_END_NAMESPACE

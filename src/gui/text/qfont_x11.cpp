@@ -140,10 +140,6 @@ void QFont::x11SetScreen(int screen)
 
 Qt::HANDLE QFont::handle() const
 {
-    QFontEngine *engine = d->engineForScript(QUnicodeTables::Common);
-    Q_ASSERT(engine != 0);
-    if (engine->type() == QFontEngine::Multi)
-        engine = static_cast<QFontEngineMulti *>(engine)->engine(0);
     return 0;
 }
 
@@ -151,8 +147,6 @@ Qt::HANDLE QFont::handle() const
 FT_Face QFont::freetypeFace() const
 {
     QFontEngine *engine = d->engineForScript(QUnicodeTables::Common);
-    if (engine->type() == QFontEngine::Multi)
-        engine = static_cast<QFontEngineMulti *>(engine)->engine(0);
     if (engine->type() == QFontEngine::Freetype) {
         const QFontEngineFT *ft = static_cast<const QFontEngineFT *>(engine);
         return ft->non_locked_face();

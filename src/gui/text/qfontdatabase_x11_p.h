@@ -363,166 +363,166 @@ enum { SpecialLanguageCount = sizeof(specialLanguagesTbl) / sizeof(const char *)
 // values obtained via genutf script
 static const uint specialCharsTbl[] = {
     0x0, // Common
-    0x0041, // Latin
-    0x0370, // Greek
-    0x0400, // Cyrillic
-    0x0531, // Armenian
-    0x0591, // Hebrew
+    0x1E900, // Adlam
+    0x11700, // Ahom
+    0x14400, // AnatolianHieroglyphs
     0x0600, // Arabic
-    0x0700, // Syriac
-    0x0780, // Thaana
-    0x0900, // Devanagari
+    0x0531, // Armenian
+    0x10B00, // Avestan
+    0x1B00, // Balinese
+    0xA6A0, // Bamum
+    0x16AD0, // BassaVah
+    0x1BC0, // Batak
     0x0980, // Bengali
-    0x0A01, // Gurmukhi
-    0x0A81, // Gujarati
-    0x0B01, // Oriya
-    0x0B82, // Tamil
-    0x0C00, // Telugu
-    0x0C80, // Kannada
-    0x0D00, // Malayalam
-    0x0D81, // Sinhala
-    0x0E01, // Thai
-    0x0E81, // Lao
-    0x0F00, // Tibetan
-    0x1000, // Myanmar
-    0x10A0, // Georgian
-    0x1100, // Hangul
-    0x1200, // Ethiopic
-    0x13A0, // Cherokee
-    0x1400, // CanadianAboriginal
-    0x1680, // Ogham
-    0x16A0, // Runic
-    0x1780, // Khmer
-    0x1800, // Mongolian
-    0x3041, // Hiragana
-    0x30A1, // Katakana
+    0x11C00, // Bhaiksuki
     0x02EA, // Bopomofo
-    0x2E80, // Han
-    0xA000, // Yi
-    0x10300, // OldItalic
-    0x10330, // Gothic
-    0x10400, // Deseret
-    0x0, // Inherited
-    0x1700, // Tagalog
-    0x1720, // Hanunoo
-    0x1740, // Buhid
-    0x1760, // Tagbanwa
-    0x1900, // Limbu
-    0x1950, // TaiLe
-    0x10000, // LinearB
-    0x10380, // Ugaritic
-    0x10450, // Shavian
-    0x10480, // Osmanya
-    0x10800, // Cypriot
+    0x11000, // Brahmi
     0x2800, // Braille
     0x1A00, // Buginese
-    0x03E2, // Coptic
-    0x1980, // NewTaiLue
-    0x2C00, // Glagolitic
-    0x2D30, // Tifinagh
-    0xA800, // SylotiNagri
-    0x103A0, // OldPersian
-    0x10A00, // Kharoshthi
-    0x1B00, // Balinese
-    0x12000, // Cuneiform
-    0x10900, // Phoenician
-    0xA840, // PhagsPa
-    0x07C0, // Nko
-    0x1B80, // Sundanese
-    0x1C00, // Lepcha
-    0x1C50, // OlChiki
-    0xA500, // Vai
-    0xA880, // Saurashtra
-    0xA900, // KayahLi
-    0xA930, // Rejang
-    0x10280, // Lycian
+    0x1740, // Buhid
+    0x1400, // CanadianAboriginal
     0x102A0, // Carian
-    0x10920, // Lydian
-    0xAA00, // Cham
-    0x1A20, // TaiTham
-    0xAA80, // TaiViet
-    0x10B00, // Avestan
-    0x13000, // EgyptianHieroglyphs
-    0x0800, // Samaritan
-    0xA4D0, // Lisu
-    0xA6A0, // Bamum
-    0xA980, // Javanese
-    0xAAE0, // MeeteiMayek
-    0x10840, // ImperialAramaic
-    0x10A60, // OldSouthArabian
-    0x10B40, // InscriptionalParthian
-    0x10B60, // InscriptionalPahlavi
-    0x10C00, // OldTurkic
-    0x11080, // Kaithi
-    0x1BC0, // Batak
-    0x11000, // Brahmi
-    0x0840, // Mandaic
+    0x10530, // CaucasianAlbanian
     0x11100, // Chakma
+    0xAA00, // Cham
+    0x13A0, // Cherokee
+    0x10FB0, // Chorasmian
+    0x03E2, // Coptic
+    0x12000, // Cuneiform
+    0x10800, // Cypriot
+    0x12F90, // CyproMinoan
+    0x0400, // Cyrillic
+    0x10400, // Deseret
+    0x0900, // Devanagari
+    0x11900, // DivesAkuru
+    0x11800, // Dogra
+    0x1BC00, // Duployan
+    0x13000, // EgyptianHieroglyphs
+    0x10500, // Elbasan
+    0x10FE0, // Elymaic
+    0x1200, // Ethiopic
+    0x10A0, // Georgian
+    0x2C00, // Glagolitic
+    0x10330, // Gothic
+    0x11300, // Grantha
+    0x0370, // Greek
+    0x0A81, // Gujarati
+    0x11D60, // GunjalaGondi
+    0x0A01, // Gurmukhi
+    0x2E80, // Han
+    0x1100, // Hangul
+    0x10D00, // HanifiRohingya
+    0x1720, // Hanunoo
+    0x108E0, // Hatran
+    0x0591, // Hebrew
+    0x3041, // Hiragana
+    0x10840, // ImperialAramaic
+    0x0, // Inherited
+    0x10B60, // InscriptionalPahlavi
+    0x10B40, // InscriptionalParthian
+    0xA980, // Javanese
+    0x11080, // Kaithi
+    0x0C80, // Kannada
+    0x30A1, // Katakana
+    0xA900, // KayahLi
+    0x10A00, // Kharoshthi
+    0x16FE4, // KhitanSmallScript
+    0x1780, // Khmer
+    0x11200, // Khojki
+    0x112B0, // Khudawadi
+    0x0E81, // Lao
+    0x0041, // Latin
+    0x1C00, // Lepcha
+    0x1900, // Limbu
+    0x10600, // LinearA
+    0x10000, // LinearB
+    0xA4D0, // Lisu
+    0x10280, // Lycian
+    0x10920, // Lydian
+    0x11150, // Mahajani
+    0x11EE0, // Makasar
+    0x0D00, // Malayalam
+    0x0840, // Mandaic
+    0x10AC0, // Manichaean
+    0x11C70, // Marchen
+    0x11D00, // MasaramGondi
+    0x16E40, // Medefaidrin
+    0xAAE0, // MeeteiMayek
+    0x1E800, // MendeKikakui
     0x109A0, // MeroiticCursive
     0x10980, // MeroiticHieroglyphs
     0x16F00, // Miao
-    0x11180, // Sharada
-    0x110D0, // SoraSompeng
-    0x11680, // Takri
-    0x10530, // CaucasianAlbanian
-    0x16AD0, // BassaVah
-    0x1BC00, // Duployan
-    0x10500, // Elbasan
-    0x11300, // Grantha
-    0x16B00, // PahawhHmong
-    0x11200, // Khojki
-    0x10600, // LinearA
-    0x11150, // Mahajani
-    0x10AC0, // Manichaean
-    0x1E800, // MendeKikakui
     0x11600, // Modi
+    0x1800, // Mongolian
     0x16A40, // Mro
-    0x10A80, // OldNorthArabian
+    0x11280, // Multani
+    0x1000, // Myanmar
     0x10880, // Nabataean
+    0x119A0, // Nandinagari
+    0x1980, // NewTaiLue
+    0x11400, // Newa
+    0x07C0, // Nko
+    0x16FE1, // Nushu
+    0x1E100, // NyiakengPuachueHmong
+    0x1680, // Ogham
+    0x1C50, // OlChiki
+    0x10C80, // OldHungarian
+    0x10300, // OldItalic
+    0x10A80, // OldNorthArabian
+    0x10350, // OldPermic
+    0x103A0, // OldPersian
+    0x10F00, // OldSogdian
+    0x10A60, // OldSouthArabian
+    0x10C00, // OldTurkic
+    0x10F70, // OldUyghur
+    0x0B01, // Oriya
+    0x104B0, // Osage
+    0x10480, // Osmanya
+    0x16B00, // PahawhHmong
     0x10860, // Palmyrene
     0x11AC0, // PauCinHau
-    0x10350, // OldPermic
+    0xA840, // PhagsPa
+    0x10900, // Phoenician
     0x10B80, // PsalterPahlavi
+    0xA930, // Rejang
+    0x16A0, // Runic
+    0x0800, // Samaritan
+    0xA880, // Saurashtra
+    0x11180, // Sharada
+    0x10450, // Shavian
     0x11580, // Siddham
-    0x112B0, // Khudawadi
-    0x11480, // Tirhuta
-    0x118A0, // WarangCiti
-    0x11700, // Ahom
-    0x14400, // AnatolianHieroglyphs
-    0x108E0, // Hatran
-    0x11280, // Multani
-    0x10C80, // OldHungarian
     0x1D800, // SignWriting
-    0x1E900, // Adlam
-    0x11C00, // Bhaiksuki
-    0x11C70, // Marchen
-    0x11400, // Newa
-    0x104B0, // Osage
-    0x16FE0, // Tangut
-    0x11D00, // MasaramGondi
-    0x16FE1, // Nushu
-    0x11A50, // Soyombo
-    0x11A00, // ZanabazarSquare
-    0x11800, // Dogra
-    0x11D60, // GunjalaGondi
-    0x11EE0, // Makasar
-    0x16E40, // Medefaidrin
-    0x10D00, // HanifiRohingya
+    0x0D81, // Sinhala
     0x10F30, // Sogdian
-    0x10F00, // OldSogdian
-    0x10FE0, // Elymaic
-    0x119A0, // Nandinagari
-    0x1E100, // NyiakengPuachueHmong
-    0x1E2C0, // Wancho
-    0x10FB0, // Chorasmian
-    0x11900, // DivesAkuru
-    0x16FE4, // KhitanSmallScript
-    0x10E80, // Yezidi
-    0x12F90, // CyproMinoan
-    0x10F70, // OldUyghur
+    0x110D0, // SoraSompeng
+    0x11A50, // Soyombo
+    0x1B80, // Sundanese
+    0xA800, // SylotiNagri
+    0x0700, // Syriac
+    0x1700, // Tagalog
+    0x1760, // Tagbanwa
+    0x1950, // TaiLe
+    0x1A20, // TaiTham
+    0xAA80, // TaiViet
+    0x11680, // Takri
+    0x0B82, // Tamil
     0x16A70, // Tangsa
+    0x16FE0, // Tangut
+    0x0C00, // Telugu
+    0x0780, // Thaana
+    0x0E01, // Thai
+    0x0F00, // Tibetan
+    0x2D30, // Tifinagh
+    0x11480, // Tirhuta
     0x1E290, // Toto
+    0x10380, // Ugaritic
+    0xA500, // Vai
     0x10570, // Vithkuqi
+    0x1E2C0, // Wancho
+    0x118A0, // WarangCiti
+    0x10E80, // Yezidi
+    0xA000, // Yi
+    0x11A00, // ZanabazarSquare
 };
 enum { SpecialCharCount = sizeof(specialCharsTbl) / sizeof(uint) };
 
@@ -985,7 +985,7 @@ special_char:
         FcPatternAddBool(match, FC_ANTIALIAS, false);
     }
 
-    QFontEngineX11FT *engine = new QFontEngineX11FT(match, qt_FcPatternToQFontDef(match, request), screen);
+    QFontEngineX11FT *engine = new QFontEngineX11FT(match, qt_FcPatternToQFontDef(match, request));
     if (engine->invalid()) {
         FM_DEBUG("   --> invalid!\n");
         delete engine;
@@ -1062,15 +1062,10 @@ static QFontEngine *loadFc(const QFontPrivate *fp, QUnicodeTables::Script script
         }
         FM_DEBUG("engine for script %d is %s\n", script, fe ? fe->fontDef.family.toLatin1().constData(): "(null)");
     }
-    if (fe
-        && script == QUnicodeTables::Common
-        && !(request.styleStrategy & QFont::NoFontMerging) && !fe->symbol) {
-        fe = new QFontEngineMultiFT(fe, match, pattern, fp->screen, request);
-    } else {
-        FcPatternDestroy(pattern);
-    }
-    if (match)
+    FcPatternDestroy(pattern);
+    if (match) {
         FcPatternDestroy(match);
+    }
     return fe;
 }
 
@@ -1149,17 +1144,8 @@ void QFontDatabase::load(const QFontPrivate *d, int script)
             fe->fontDef = QFontDef();
         }
     }
-    if (fe->symbol || (d->request.styleStrategy & QFont::NoFontMerging)) {
-        for (int i = 0; i < QUnicodeTables::ScriptCount; ++i) {
-            if (!d->engineData->engines[i]) {
-                d->engineData->engines[i] = fe;
-                fe->ref.ref();
-            }
-        }
-    } else {
-        d->engineData->engines[script] = fe;
-        fe->ref.ref();
-    }
+    d->engineData->engines[script] = fe;
+    fe->ref.ref();
     QFontCache::instance()->insertEngine(key, fe);
 }
 

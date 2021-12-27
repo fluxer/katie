@@ -28,6 +28,7 @@ static const QRgb qt_transparentrgba = qRgba(0, 0, 0, 0);
 // same as QColor(Qt::transparent).rgb()
 static const QRgb qt_transparentrgb = qRgb(0, 0, 0);
 
+
 inline static const QVector<QRgb>& monoColorTable()
 {
     static const QVector<QRgb> colortable = { qt_whitergba, qt_blackrgba };
@@ -153,6 +154,7 @@ static const char * const qt_information_xpm[]={
     ".................cc**...........",
     "..................***...........",
     "...................**..........."};
+
 /* XPM */
 static const char* const qt_warning_xpm[]={
     "32 32 4 1",
@@ -192,6 +194,7 @@ static const char* const qt_warning_xpm[]={
     "..*************************bbbbb",
     "....bbbbbbbbbbbbbbbbbbbbbbbbbbb.",
     ".....bbbbbbbbbbbbbbbbbbbbbbbbb.."};
+
 /* XPM */
 static const char* const qt_critical_xpm[]={
     "32 32 4 1",
@@ -231,6 +234,7 @@ static const char* const qt_critical_xpm[]={
     ".........aa********aaaaa........",
     "...........aaaaaaaaaaa..........",
     ".............aaaaaaa............"};
+
 /* XPM */
 static const char *const qt_question_xpm[] = {
     "32 32 5 1",

@@ -1094,7 +1094,6 @@ void QPdfBaseEngine::drawTextItem(const QPointF &p, const QTextItem &textItem)
     setBrush();
 
     const QTextItemInt &ti = static_cast<const QTextItemInt &>(textItem);
-    Q_ASSERT(ti.fontEngine->type() != QFontEngine::Multi);
     d->drawTextItem(p, ti);
     d->hasPen = hp;
     d->brush = b;

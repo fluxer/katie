@@ -430,6 +430,7 @@ static const char * const qt_windows_menu_xpm[] = {
 "++++++FG+++++++.",
 "++++++++++++++. "};
 
+/* XPM */
 static const char * const qt_windows_close_xpm[] = {
 "10 10 2 1",
 "# c #000000",
@@ -445,6 +446,7 @@ static const char * const qt_windows_close_xpm[] = {
 "..........",
 ".........."};
 
+/* XPM */
 static const char * const qt_windows_maximize_xpm[]={
 "10 10 2 1",
 "# c #000000",
@@ -460,6 +462,7 @@ static const char * const qt_windows_maximize_xpm[]={
 "#########.",
 ".........."};
 
+/* XPM */
 static const char * const qt_windows_minimize_xpm[] = {
 "10 10 2 1",
 "# c #000000",
@@ -475,6 +478,7 @@ static const char * const qt_windows_minimize_xpm[] = {
 ".#######..",
 ".........."};
 
+/* XPM */
 static const char * const qt_windows_normalizeup_xpm[] = {
 "10 10 2 1",
 "# c #000000",
@@ -490,6 +494,7 @@ static const char * const qt_windows_normalizeup_xpm[] = {
 ".######...",
 ".........."};
 
+/* XPM */
 static const char * const qt_windows_help_xpm[] = {
 "10 10 2 1",
 ". c None",
@@ -505,6 +510,7 @@ static const char * const qt_windows_help_xpm[] = {
 "....##....",
 ".........."};
 
+/* XPM */
 static const char * const qt_windows_shade_xpm[] = {
 "10 10 2 1",
 "# c #000000",
@@ -520,6 +526,7 @@ static const char * const qt_windows_shade_xpm[] = {
 "..........",
 ".........."};
 
+/* XPM */
 static const char * const qt_windows_unshade_xpm[] = {
 "10 10 2 1",
 "# c #000000",
@@ -535,6 +542,7 @@ static const char * const qt_windows_unshade_xpm[] = {
 "..........",
 ".........."};
 
+/* XPM */
 static const char * qt_windows_dock_widget_close_xpm[] = {
 "8 8 2 1",
 "# c #000000",
