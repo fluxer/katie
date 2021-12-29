@@ -51,7 +51,6 @@ public:
     bool overline() const;
     bool strikeOut() const;
     bool fixedPitch() const;
-    QFont::StyleHint styleHint() const;
 
     bool exactMatch() const;
 

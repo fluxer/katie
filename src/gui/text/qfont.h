@@ -43,18 +43,6 @@ class Q_GUI_EXPORT QFont
     Q_GADGET
     Q_ENUMS(StyleStrategy)
 public:
-    enum StyleHint {
-        Helvetica,  SansSerif = Helvetica,
-        Times,      Serif = Times,
-        Courier,    TypeWriter = Courier,
-        OldEnglish, Decorative = OldEnglish,
-        System,
-        AnyStyle,
-        Cursive,
-        Monospace,
-        Fantasy
-    };
-
     enum StyleStrategy {
         PreferDefault       = 0x0001,
         PreferBitmap        = 0x0002,
@@ -108,20 +96,19 @@ public:
     enum ResolveProperties {
         FamilyResolved              = 0x0001,
         SizeResolved                = 0x0002,
-        StyleHintResolved           = 0x0004,
-        StyleStrategyResolved       = 0x0008,
-        WeightResolved              = 0x0010,
-        StyleResolved               = 0x0020,
-        UnderlineResolved           = 0x0040,
-        OverlineResolved            = 0x0080,
-        StrikeOutResolved           = 0x0100,
-        FixedPitchResolved          = 0x0200,
-        StretchResolved             = 0x0400,
-        KerningResolved             = 0x0800,
-        LetterSpacingResolved       = 0x1000,
-        WordSpacingResolved         = 0x2000,
-        HintingPreferenceResolved   = 0x4000,
-        StyleNameResolved           = 0x8000,
+        StyleStrategyResolved       = 0x0004,
+        WeightResolved              = 0x0008,
+        StyleResolved               = 0x0010,
+        UnderlineResolved           = 0x0020,
+        OverlineResolved            = 0x0040,
+        StrikeOutResolved           = 0x0080,
+        FixedPitchResolved          = 0x0100,
+        StretchResolved             = 0x0200,
+        KerningResolved             = 0x0400,
+        LetterSpacingResolved       = 0x0800,
+        WordSpacingResolved         = 0x1000,
+        HintingPreferenceResolved   = 0x2000,
+        StyleNameResolved           = 0x4000,
         AllPropertiesResolved       = 0x1ffff
     };
 
@@ -172,9 +159,7 @@ public:
     bool kerning() const;
     void setKerning(bool);
 
-    StyleHint styleHint() const;
     StyleStrategy styleStrategy() const;
-    void setStyleHint(StyleHint, StyleStrategy = PreferDefault);
     void setStyleStrategy(StyleStrategy s);
 
     int stretch() const;

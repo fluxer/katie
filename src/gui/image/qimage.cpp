@@ -3537,8 +3537,7 @@ qint64 QImage::cacheKey() const
 {
     if (!d)
         return 0;
-    else
-        return (((qint64) d->ser_no) << 32) | ((qint64) d->detach_no);
+    return (((qint64) d->ser_no) << 32) | ((qint64) d->detach_no);
 }
 
 /*!

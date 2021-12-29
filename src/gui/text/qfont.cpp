@@ -99,8 +99,7 @@ bool QFontDef::exactMatch(const QFontDef &other) const
     QFontDatabase::parseFontName(family, this_foundry, this_family);
     QFontDatabase::parseFontName(other.family, other_foundry, other_family);
 
-    return (styleHint     == other.styleHint
-            && styleStrategy == other.styleStrategy
+    return (styleStrategy == other.styleStrategy
             && weight        == other.weight
             && style        == other.style
             && this_family   == other_family
@@ -171,9 +170,6 @@ void QFontPrivate::resolve(uint mask, const QFontPrivate *other)
         request.pointSize = other->request.pointSize;
         request.pixelSize = other->request.pixelSize;
     }
-
-    if (! (mask & QFont::StyleHintResolved))
-        request.styleHint = other->request.styleHint;
 
     if (! (mask & QFont::StyleStrategyResolved))
         request.styleStrategy = other->request.styleStrategy;
@@ -283,9 +279,8 @@ QFontEngineData::~QFontEngineData()
 
     If the requested font family is unavailable you can influence the
     \link #fontmatching font matching algorithm\endlink by choosing a
-    particular \l{QFont::StyleHint} and \l{QFont::StyleStrategy} with
-    setStyleHint(). The default family (corresponding to the current
-    style hint) is returned by defaultFamily().
+    particular \l{QFont::StyleStrategy} with setStyleStrategy(). The
+    default family is returned by defaultFamily().
 
     The font-matching algorithm has a lastResortFamily() and
     lastResortFont() in cases where a suitable match cannot be found.
@@ -311,13 +306,10 @@ QFontEngineData::~QFontEngineData()
     The font matching algorithm works as follows:
     \list 1
     \o The specified font family is searched for.
-    \o If not found, the styleHint() is used to select a replacement
-       family.
     \o Each replacement font family is searched for.
-    \o If none of these are found or there was no styleHint(), "helvetica"
-       will be searched for.
-    \o If "helvetica" isn't found Qt will try the lastResortFamily().
-    \o If the lastResortFamily() isn't found Qt will try the
+    \o If none of these are found "helvetica" will be searched for.
+    \o If "helvetica" isn't found Katie will try the lastResortFamily().
+    \o If the lastResortFamily() isn't found Katie will try the
        lastResortFont() which will always return a name of some kind.
     \endlist
 
@@ -391,7 +383,6 @@ QFontEngineData::~QFontEngineData()
 
     \value FamilyResolved
     \value SizeResolved
-    \value StyleHintResolved
     \value StyleStrategyResolved
     \value WeightResolved
     \value StyleResolved
@@ -456,10 +447,7 @@ QFontEngineData::~QFontEngineData()
 /*!
     \fn QString QFont::defaultFamily() const
 
-    Returns the family name that corresponds to the current style
-    hint.
-
-    \sa StyleHint styleHint() setStyleHint()
+    Returns the family name that corresponds to the current style.
 */
 
 /*!
@@ -556,7 +544,7 @@ QFont::QFont()
     algorithm.
 
     \sa Weight, setFamily(), setPointSize(), setWeight(), setItalic(),
-    setStyleHint() QApplication::font()
+    QApplication::font()
 */
 QFont::QFont(const QString &family, int pointSize, int weight, bool italic)
     : d(new QFontPrivate()), resolve_mask(QFont::FamilyResolved)
@@ -630,7 +618,7 @@ QString QFont::family() const
     available a family will be set using the \l{QFont}{font matching}
     algorithm.
 
-    \sa family(), setStyleHint(), QFontInfo
+    \sa family(), QFontInfo
 */
 void QFont::setFamily(const QString &family)
 {
@@ -1085,60 +1073,11 @@ void QFont::setKerning(bool enable)
 
     The style strategy affects the \l{QFont}{font matching} algorithm.
     See \l QFont::StyleStrategy for the list of available strategies.
-
-    \sa setStyleHint() QFont::StyleHint
 */
 QFont::StyleStrategy QFont::styleStrategy() const
 {
     return d->request.styleStrategy;
 }
-
-/*!
-    Returns the StyleHint.
-
-    The style hint affects the \l{QFont}{font matching} algorithm.
-    See \l QFont::StyleHint for the list of available hints.
-
-    \sa setStyleHint(), QFont::StyleStrategy QFontInfo::styleHint()
-*/
-QFont::StyleHint QFont::styleHint() const
-{
-    return d->request.styleHint;
-}
-
-/*!
-    \enum QFont::StyleHint
-
-    Style hints are used by the \l{QFont}{font matching} algorithm to
-    find an appropriate default family if a selected font family is
-    not available.
-
-    \value AnyStyle leaves the font matching algorithm to choose the
-           family. This is the default.
-
-    \value SansSerif the font matcher prefer sans serif fonts.
-    \value Helvetica is a synonym for \c SansSerif.
-
-    \value Serif the font matcher prefers serif fonts.
-    \value Times is a synonym for \c Serif.
-
-    \value TypeWriter the font matcher prefers fixed pitch fonts.
-    \value Courier a synonym for \c TypeWriter.
-
-    \value OldEnglish the font matcher prefers decorative fonts.
-    \value Decorative is a synonym for \c OldEnglish.
-
-    \value Monospace the font matcher prefers fonts that map to the
-    CSS generic font-family 'monospace'.
-
-    \value Fantasy the font matcher prefers fonts that map to the
-    CSS generic font-family 'fantasy'.
-
-    \value Cursive the font matcher prefers fonts that map to the
-    CSS generic font-family 'cursive'.
-
-    \value System the font matcher prefers system fonts.
-*/
 
 /*!
     \enum QFont::StyleStrategy
@@ -1168,32 +1107,6 @@ QFont::StyleHint QFont::styleHint() const
     \value ForceIntegerMetrics forces the use of integer values in font engines that support fractional
            font metrics.
 */
-
-/*!
-    Sets the style hint and strategy to \a hint and \a strategy,
-    respectively.
-
-    If these aren't set explicitly the style hint will default to
-    \c AnyStyle and the style strategy to \c PreferDefault.
-
-    Qt does not support style hints on X11 since this information
-    is not provided by the window system.
-
-    \sa StyleHint, styleHint(), StyleStrategy, styleStrategy(), QFontInfo
-*/
-void QFont::setStyleHint(StyleHint hint, StyleStrategy strategy)
-{
-    detach();
-
-    if ((resolve_mask & (QFont::StyleHintResolved | QFont::StyleStrategyResolved)) &&
-         d->request.styleHint == hint && d->request.styleStrategy == strategy)
-        return;
-
-    d->request.styleHint = hint;
-    d->request.styleStrategy = strategy;
-    resolve_mask |= QFont::StyleHintResolved;
-    resolve_mask |= QFont::StyleStrategyResolved;
-}
 
 /*!
     Sets the style strategy for the font to \a s.
@@ -1428,7 +1341,6 @@ bool QFont::operator<(const QFont &f) const
     if (r1.weight != r2.weight) return r1.weight < r2.weight;
     if (r1.style != r2.style) return r1.style < r2.style;
     if (r1.stretch != r2.stretch) return r1.stretch < r2.stretch;
-    if (r1.styleHint != r2.styleHint) return r1.styleHint < r2.styleHint;
     if (r1.styleStrategy != r2.styleStrategy) return r1.styleStrategy < r2.styleStrategy;
     if (r1.family != r2.family) return r1.family < r2.family;
 
@@ -1610,7 +1522,6 @@ QString QFont::toString() const
     return family() + comma +
         QString::number(     pointSizeF()) + comma +
         QString::number(      pixelSize()) + comma +
-        QString::number((int) styleHint()) + comma +
         QString::number(         weight()) + comma +
         QString::number((int)     style()) + comma +
         QString::number((int) underline()) + comma +
@@ -1631,7 +1542,7 @@ bool QFont::fromString(const QString &descrip)
     QStringList l(descrip.split(QLatin1Char(',')));
 
     int count = l.count();
-    if (!count || count > 9) {
+    if (!count || count > 8) {
         qWarning("QFont::fromString: Invalid description '%s'",
                  descrip.isEmpty() ? "(empty)" : descrip.toLatin1().data());
         return false;
@@ -1640,15 +1551,14 @@ bool QFont::fromString(const QString &descrip)
     setFamily(l[0]);
     if (count > 1 && l[1].toDouble() > 0.0)
         setPointSizeF(l[1].toDouble());
-    if (count == 9) {
+    if (count == 8) {
         if (l[2].toInt() > 0)
             setPixelSize(l[2].toInt());
-        setStyleHint((StyleHint) l[3].toInt());
-        setWeight(qMax(qMin(99, l[4].toInt()), 0));
-        setItalic(l[5].toInt());
-        setUnderline(l[6].toInt());
-        setStrikeOut(l[7].toInt());
-        setFixedPitch(l[8].toInt());
+        setWeight(qMax(qMin(99, l[3].toInt()), 0));
+        setItalic(l[4].toInt());
+        setUnderline(l[5].toInt());
+        setStrikeOut(l[6].toInt());
+        setFixedPitch(l[7].toInt());
 
         if (!d->request.fixedPitch) // assume 'false' fixedPitch equals default
             d->request.ignorePitch = true;
@@ -1680,7 +1590,6 @@ QDataStream &operator<<(QDataStream &s, const QFont &font)
     s << pointSize;
     s << pixelSize;
 
-    s << (qint8) font.d->request.styleHint;
     s << (qint8) font.d->request.styleStrategy;
     s << (qint8) font.d->request.weight
       << get_font_bits(s.version(), font.d.data());
@@ -1705,7 +1614,7 @@ QDataStream &operator>>(QDataStream &s, QFont &font)
     font.d = new QFontPrivate;
     font.resolve_mask = QFont::AllPropertiesResolved;
 
-    qint8 styleHint, styleStrategy = QFont::PreferDefault, bits;
+    qint8 styleStrategy = QFont::PreferDefault, bits;
     qint8 weight;
 
     s >> font.d->request.family;
@@ -1716,13 +1625,11 @@ QDataStream &operator>>(QDataStream &s, QFont &font)
     s >> pixelSize;
     font.d->request.pointSize = qreal(pointSize);
     font.d->request.pixelSize = qreal(pixelSize);
-    s >> styleHint;
     s >> styleStrategy;
 
     s >> weight;
     s >> bits;
 
-    font.d->request.styleHint = QFont::StyleHint(styleHint);
     font.d->request.styleStrategy = QFont::StyleStrategy(styleStrategy);
     font.d->request.weight = weight;
 
@@ -1763,9 +1670,9 @@ QDataStream &operator>>(QDataStream &s, QFont &font)
 
     The QFontInfo class provides the same access functions as QFont,
     e.g. family(), pointSize(), italic(), weight(), fixedPitch(),
-    styleHint() etc. But whilst the QFont access functions return the
-    values that were set, a QFontInfo object returns the values that
-    apply to the font that will actually be used to draw the text.
+    etc. But whilst the QFont access functions return the values that
+    were set, a QFontInfo object returns the values that apply to
+    the font that will actually be used to draw the text.
 
     For example, when the program asks for a 25pt Courier font on a
     machine that has a non-scalable 24pt Courier font, QFont will
@@ -2003,20 +1910,6 @@ bool QFontInfo::fixedPitch() const
     QFontEngine *engine = d->engineForScript(QUnicodeTables::Common);
     Q_ASSERT(engine != 0);
     return engine->fontDef.fixedPitch;
-}
-
-/*!
-    Returns the style of the matched window system font.
-
-    Currently only returns the style hint set in QFont.
-
-    \sa QFont::styleHint() QFont::StyleHint
-*/
-QFont::StyleHint QFontInfo::styleHint() const
-{
-    QFontEngine *engine = d->engineForScript(QUnicodeTables::Common);
-    Q_ASSERT(engine != 0);
-    return engine->fontDef.styleHint;
 }
 
 /*!

@@ -148,10 +148,9 @@ public:
         FirstFontProperty = 0x1FE0,
         FontLetterSpacing = FirstFontProperty,
         FontWordSpacing = 0x1FE1,
-        FontStyleHint = 0x1FE2,
-        FontStyleStrategy = 0x1FE3,
-        FontKerning = 0x1FE4,
-        FontHintingPreference = 0x1FE5,
+        FontStyleStrategy = 0x1FE2,
+        FontKerning = 0x1FE3,
+        FontHintingPreference = 0x1FE4,
         FontFamily = 0x2000,
         FontPointSize = 0x2001,
         FontSizeAdjustment = 0x2002,
@@ -423,12 +422,8 @@ public:
     inline bool fontFixedPitch() const
     { return boolProperty(FontFixedPitch); }
 
-    inline void setFontStyleHint(QFont::StyleHint hint, QFont::StyleStrategy strategy = QFont::PreferDefault)
-    { setProperty(FontStyleHint, hint); setProperty(FontStyleStrategy, strategy); }
     inline void setFontStyleStrategy(QFont::StyleStrategy strategy)
     { setProperty(FontStyleStrategy, strategy); }
-    QFont::StyleHint fontStyleHint() const
-    { return static_cast<QFont::StyleHint>(intProperty(FontStyleHint)); }
     QFont::StyleStrategy fontStyleStrategy() const
     { return static_cast<QFont::StyleStrategy>(intProperty(FontStyleStrategy)); }
 

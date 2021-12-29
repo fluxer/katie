@@ -386,10 +386,8 @@ void QTextFormatPrivate::recalcFont() const
                 const bool value = props.at(i).value.toBool();
                 if (f.fixedPitch() != value)
                     f.setFixedPitch(value);
-                break; }
-            case QTextFormat::FontStyleHint:
-                f.setStyleHint(static_cast<QFont::StyleHint>(props.at(i).value.toInt()), f.styleStrategy());
                 break;
+            }
             case QTextFormat::FontHintingPreference:
                 f.setHintingPreference(static_cast<QFont::HintingPreference>(props.at(i).value.toInt()));
                 break;
@@ -546,7 +544,6 @@ Q_GUI_EXPORT QDataStream &operator>>(QDataStream &stream, QTextFormat &fmt)
                                                 specified in percentage, with 100 as the default value.
     \value FontWordSpacing  Changes the default spacing between individual words. A positive value increases the word spacing
                                                  by the corresponding pixels; a negative value decreases the spacing.
-    \value FontStyleHint        Corresponds to the QFont::StyleHint property
     \value FontStyleStrategy    Corresponds to the QFont::StyleStrategy property
     \value FontKerning          Specifies whether the font has kerning turned on.
     \value FontHintingPreference Controls the use of hinting according to values
@@ -1464,20 +1461,6 @@ void QTextCharFormat::setUnderlineStyle(UnderlineStyle style)
     \sa font()
 */
 
-
-/*!
-    \since 4.5
-    \fn void QTextCharFormat::setFontStyleHint(QFont::StyleHint hint, QFont::StyleStrategy strategy)
-
-    Sets the font style \a hint and \a strategy.
-
-    Qt does not support style hints on X11 since this information is not provided by the window system.
-
-    \sa setFont()
-    \sa QFont::setStyleHint()
-*/
-
-
 /*!
     \since 4.5
     \fn void QTextCharFormat::setFontStyleStrategy(QFont::StyleStrategy strategy)
@@ -1829,7 +1812,6 @@ void QTextCharFormat::setFont(const QFont &font)
     setFontWordSpacing(font.wordSpacing());
     if (font.letterSpacingType() == QFont::PercentageSpacing)
         setFontLetterSpacing(font.letterSpacing());
-    setFontStyleHint(font.styleHint());
     setFontStyleStrategy(font.styleStrategy());
     setFontKerning(font.kerning());
 }

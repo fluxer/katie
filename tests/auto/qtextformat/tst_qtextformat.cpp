@@ -326,17 +326,14 @@ void tst_QTextFormat::testFontStyleSetters()
     QTextCharFormat format;
 
     // test the setters
-    format.setFontStyleHint(QFont::Serif);
-    QCOMPARE(format.font().styleHint(), QFont::Serif);
     QCOMPARE(format.font().styleStrategy(), QFont::PreferDefault);
     format.setFontStyleStrategy(QFont::PreferOutline);
     QCOMPARE(format.font().styleStrategy(), QFont::PreferOutline);
 
     // test setting properties through setFont()
     QFont font;
-    font.setStyleHint(QFont::SansSerif, QFont::PreferAntialias);
+    font.setStyleStrategy(QFont::PreferAntialias);
     format.setFont(font);
-    QCOMPARE(format.font().styleHint(), QFont::SansSerif);
     QCOMPARE(format.font().styleStrategy(), QFont::PreferAntialias);
 
     // test kerning

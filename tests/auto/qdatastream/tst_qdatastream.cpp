@@ -1397,7 +1397,6 @@ void tst_QDataStream::readQFont(QDataStream *s)
     QCOMPARE(d9.overline(), test.overline());
     QCOMPARE(d9.strikeOut(), test.strikeOut());
     QCOMPARE(d9.fixedPitch(), test.fixedPitch());
-    QCOMPARE(d9.styleHint(), test.styleHint());
     QCOMPARE(d9.toString(), test.toString());
 
     QCOMPARE(d9, test);

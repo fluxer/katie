@@ -149,10 +149,6 @@ QFontDef qt_FcPatternToQFontDef(FcPattern *pattern, const QFontDef &request)
 
     fontDef.pointSize = qt_pointSize(fontDef.pixelSize, qRound(dpi));
 
-    /* ###
-       fontDef.styleHint
-    */
-
     int weight;
     if (FcPatternGetInteger(pattern, FC_WEIGHT, 0, &weight) != FcResultMatch)
         weight = FC_WEIGHT_MEDIUM;
@@ -778,27 +774,6 @@ static void initializeFontDb()
 // --------------------------------------------------------------------------------------
 
 #ifndef QT_NO_FONTCONFIG
-static const char *styleHint(const QFontDef &request)
-{
-    const char *stylehint = 0;
-    switch (request.styleHint) {
-    case QFont::SansSerif:
-        stylehint = "sans-serif";
-        break;
-    case QFont::Serif:
-        stylehint = "serif";
-        break;
-    case QFont::TypeWriter:
-        stylehint = "monospace";
-        break;
-    default:
-        if (request.fixedPitch)
-            stylehint = "monospace";
-        break;
-    }
-    return stylehint;
-}
-
 static void qt_addPatternProps(FcPattern *pattern, int screen, QUnicodeTables::Script script, const QFontDef &request)
 {
     double size_value = qMax(qreal(1.), request.pixelSize);
@@ -895,12 +870,6 @@ static FcPattern *getFcPattern(const QFontPrivate *fp, QUnicodeTables::Script sc
                 FcPatternAddWeak(pattern, FC_FOUNDRY, value, FcTrue);
             }
         }
-    }
-
-    const char *stylehint = styleHint(request);
-    if (stylehint) {
-        value.u.s = (const FcChar8 *)stylehint;
-        FcPatternAddWeak(pattern, FC_FAMILY, value, FcTrue);
     }
 
     if (!request.ignorePitch) {

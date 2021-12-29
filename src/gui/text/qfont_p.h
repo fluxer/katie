@@ -50,7 +50,7 @@ struct QFontDef
 {
     inline QFontDef()
         : pointSize(-1.0), pixelSize(-1),
-          styleStrategy(QFont::PreferDefault), styleHint(QFont::AnyStyle),
+          styleStrategy(QFont::PreferDefault),
           fixedPitch(false), style(QFont::StyleNormal), weight(50), stretch(100),
           ignorePitch(true), hintingPreference(QFont::PreferDefaultHinting)
     {
@@ -63,7 +63,6 @@ struct QFontDef
     qreal pixelSize;
 
     QFont::StyleStrategy styleStrategy;
-    QFont::StyleHint styleHint;
 
     bool fixedPitch;
     QFont::Style style;
@@ -80,7 +79,6 @@ struct QFontDef
                     && weight == other.weight
                     && style == other.style
                     && stretch == other.stretch
-                    && styleHint == other.styleHint
                     && styleStrategy == other.styleStrategy
                     && ignorePitch == other.ignorePitch && fixedPitch == other.fixedPitch
                     && family == other.family
@@ -93,7 +91,6 @@ struct QFontDef
         if (weight != other.weight) return weight < other.weight;
         if (style != other.style) return style < other.style;
         if (stretch != other.stretch) return stretch < other.stretch;
-        if (styleHint != other.styleHint) return styleHint < other.styleHint;
         if (styleStrategy != other.styleStrategy) return styleStrategy < other.styleStrategy;
         if (family != other.family) return family < other.family;
         if (!styleName.isEmpty() && !other.styleName.isEmpty() && styleName != other.styleName)
