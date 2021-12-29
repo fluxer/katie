@@ -745,7 +745,6 @@ bool QFontEngineFT::stringToCMap(const QChar *str, int len, QGlyphLayout *glyphs
 
 void QFontEngineFT::recalcAdvances(QGlyphLayout *glyphs, QTextEngine::ShaperFlags flags) const
 {
-    FT_Face face = getFace();
     bool design = (default_hint_style == HintNone ||
                    default_hint_style == HintLight ||
                    (flags & HB_ShaperFlag_UseDesignMetrics));
@@ -770,7 +769,6 @@ glyph_metrics_t QFontEngineFT::boundingBox(const QGlyphLayout &glyphs) const
 
     QFixed ymax = 0;
     QFixed xmax = 0;
-    int load_flags = loadFlags(0);
     for (int i = 0; i < glyphs.numGlyphs; i++) {
         QFontMetric* metric = getMetrics(glyphs.glyphs[i]);
         Q_ASSERT(metric);
