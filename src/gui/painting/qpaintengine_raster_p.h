@@ -177,9 +177,6 @@ public:
 
     Type type() const { return Raster; }
 
-    bool supportsTransformations(const QFontEngine *fontEngine) const;
-    bool supportsTransformations(const qreal pixelSize, const QTransform &m) const;
-
 protected:
     QRasterPaintEngine(QRasterPaintEnginePrivate &d, QPaintDevice *);
 private:

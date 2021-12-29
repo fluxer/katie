@@ -27,9 +27,7 @@
 #include "qlabel.h"
 #include "qbitmap.h"
 #include "qmath.h"
-#include "qfontengine_ft_p.h"
 #include "qtextengine_p.h"
-#include "qfontengine_p.h"
 #include "qpixmap_raster_p.h"
 #include "qimage_p.h"
 #include "qstatictext_p.h"
@@ -2020,24 +2018,6 @@ void QRasterPaintEngine::drawEllipse(const QRectF &rect)
     ensurePen();
 
     QPaintEngineEx::drawEllipse(rect);
-}
-
-bool QRasterPaintEngine::supportsTransformations(const QFontEngine *fontEngine) const
-{
-    if (!state()->WxF)
-        return false;
-    return supportsTransformations(fontEngine->fontDef.pixelSize, state()->matrix);
-}
-
-bool QRasterPaintEngine::supportsTransformations(const qreal pixelSize, const QTransform &m) const
-{
-    if (m.type() >= QTransform::TxProject)
-        return true;
-
-    if (pixelSize * pixelSize * qAbs(m.determinant()) >= 64 * 64)
-        return true;
-
-    return false;
 }
 
 void QRasterPaintEngine::drawBitmap(const QPointF &pos, const QImage &image, QSpanData *fg)
