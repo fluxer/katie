@@ -648,7 +648,12 @@ bool QFontEngineFT::canRender(const QChar *string, int len)
     FT_Face face = freetype->face;
     for (int i = 0; i < len; i++ ) {
         unsigned int uc = getChar(string, i, len);
-        if (!FT_Get_Char_Index(face, uc)) {
+        glyph_t glyph = charcache.value(uc, 0);
+        if (glyph == 0) {
+            glyph = FT_Get_Char_Index(face, uc);
+            charcache.insert(uc, glyph);
+        }
+        if (glyph == 0) {
             return false;
         }
     }
@@ -678,14 +683,23 @@ bool QFontEngineFT::stringToCMap(const QChar *str, int len, QGlyphLayout *glyphs
 
     int glyph_pos = 0;
     const bool mirrored = (flags & QTextEngine::RightToLeft);
-    for (int i = 0; i < len; ++i) {
-        unsigned int uc = getChar(str, i, len);
-        if (mirrored) {
-            uc = QChar::mirroredChar(uc);
+    if (mirrored) {
+        for (int i = 0; i < len; ++i) {
+            unsigned int uc = getChar(str, i, len);
+            glyphs->glyphs[glyph_pos] = FT_Get_Char_Index(freetype->face, QChar::mirroredChar(uc));
+            ++glyph_pos;
         }
-        glyph_t glyph = FT_Get_Char_Index(freetype->face, uc);
-        glyphs->glyphs[glyph_pos] = glyph;
-        ++glyph_pos;
+    } else {
+        for (int i = 0; i < len; ++i) {
+            unsigned int uc = getChar(str, i, len);
+            glyph_t glyph = charcache.value(uc, 0);
+            if (glyph == 0) {
+                glyph = FT_Get_Char_Index(freetype->face, uc);
+                charcache.insert(uc, glyph);
+            }
+            glyphs->glyphs[glyph_pos] = glyph;
+            ++glyph_pos;
+        }
     }
 
     *nglyphs = glyph_pos;

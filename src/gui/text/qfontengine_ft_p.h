@@ -31,7 +31,6 @@
 // We mean it.
 //
 
-#include "qmutex.h"
 #include "qfontengine_p.h"
 
 #include <ft2build.h>
@@ -46,8 +45,6 @@
 #endif
 
 #include <harfbuzz-shaper.h>
-
-#include <unistd.h>
 
 QT_BEGIN_NAMESPACE
 
@@ -177,6 +174,9 @@ private:
 
     FT_Size_Metrics metrics;
     bool kerning_pairs_loaded;
+
+    typedef QMap<uint, glyph_t> CharCache;
+    mutable CharCache charcache;
 };
 
 
