@@ -1099,11 +1099,6 @@ QFont::StyleStrategy QFont::styleStrategy() const
 
     Any of these may be OR-ed with one of these flags:
 
-    \value PreferMatch prefer an exact match. The font matcher will try to
-           use the exact font size that has been specified.
-    \value PreferQuality prefer the best quality font. The font matcher
-           will use the nearest standard point size that the font
-           supports.
     \value ForceIntegerMetrics forces the use of integer values in font engines that support fractional
            font metrics.
 */

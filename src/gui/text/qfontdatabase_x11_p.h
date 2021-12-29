@@ -836,7 +836,7 @@ static void qt_addPatternProps(FcPattern *pattern, int screen, QUnicodeTables::S
 
 static bool preferScalable(const QFontDef &request)
 {
-    return request.styleStrategy & (QFont::PreferOutline|QFont::ForceOutline|QFont::PreferQuality|QFont::PreferAntialias);
+    return request.styleStrategy & (QFont::PreferOutline|QFont::ForceOutline|QFont::PreferAntialias);
 }
 
 
