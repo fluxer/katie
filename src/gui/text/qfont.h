@@ -58,14 +58,13 @@ public:
     enum StyleStrategy {
         PreferDefault       = 0x0001,
         PreferBitmap        = 0x0002,
-        PreferDevice        = 0x0004,
-        PreferOutline       = 0x0008,
-        ForceOutline        = 0x0010,
-        PreferMatch         = 0x0020,
-        PreferQuality       = 0x0040,
-        PreferAntialias     = 0x0080,
-        NoAntialias         = 0x0100,
-        ForceIntegerMetrics = 0x0200
+        PreferOutline       = 0x0004,
+        ForceOutline        = 0x0008,
+        PreferMatch         = 0x0010,
+        PreferQuality       = 0x0020,
+        PreferAntialias     = 0x0040,
+        NoAntialias         = 0x0080,
+        ForceIntegerMetrics = 0x0100
     };
 
     enum HintingPreference {

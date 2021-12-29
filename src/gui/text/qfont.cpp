@@ -1153,7 +1153,6 @@ QFont::StyleHint QFont::styleHint() const
            any type of font.
     \value PreferBitmap prefers bitmap fonts (as opposed to outline
            fonts).
-    \value PreferDevice prefers device fonts.
     \value PreferOutline prefers outline fonts (as opposed to bitmap fonts).
     \value ForceOutline forces the use of outline fonts.
     \value NoAntialias don't antialias the fonts.
