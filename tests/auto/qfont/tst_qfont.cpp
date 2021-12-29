@@ -234,13 +234,6 @@ void tst_QFont::compare()
         font.setOverline(false);
         QVERIFY( font == font2 );
         QVERIFY(!(font < font2));
-
-        font.setCapitalization(QFont::SmallCaps);
-        QVERIFY( font != font2 );
-        QCOMPARE(font < font2,!(font2 < font));
-        font.setCapitalization(QFont::MixedCase);
-        QVERIFY( font == font2 );
-        QVERIFY(!(font < font2));
     }
 }
 

@@ -94,7 +94,6 @@ static const QCssKnownValue propertiesTbl[NumProperties - 1] = {
     { QLatin1String("font-family"), FontFamily },
     { QLatin1String("font-size"), FontSize },
     { QLatin1String("font-style"), FontStyle },
-    { QLatin1String("font-variant"), FontVariant },
     { QLatin1String("font-weight"), FontWeight },
     { QLatin1String("height"), Height },
     { QLatin1String("image"), QtImage },
@@ -139,7 +138,6 @@ static const QCssKnownValue propertiesTbl[NumProperties - 1] = {
     { QLatin1String("text-align"), TextAlignment },
     { QLatin1String("text-decoration"), TextDecoration },
     { QLatin1String("text-indent"), TextIndent },
-    { QLatin1String("text-transform"), TextTransform },
     { QLatin1String("text-underline-style"), TextUnderlineStyle },
     { QLatin1String("top"), Top },
     { QLatin1String("vertical-align"), VerticalAlignment },
@@ -182,7 +180,6 @@ static const QCssKnownValue valuesTbl[NumKnownValues - 1] = {
     { QLatin1String("link-visited"), Value_LinkVisited },
     { QLatin1String("lower-alpha"), Value_LowerAlpha },
     { QLatin1String("lower-roman"), Value_LowerRoman },
-    { QLatin1String("lowercase"), Value_Lowercase },
     { QLatin1String("medium"), Value_Medium },
     { QLatin1String("mid"), Value_Mid },
     { QLatin1String("middle"), Value_Middle },
@@ -203,7 +200,6 @@ static const QCssKnownValue valuesTbl[NumKnownValues - 1] = {
     { QLatin1String("selected"), Value_Selected },
     { QLatin1String("shadow"), Value_Shadow },
     { QLatin1String("small"), Value_Small },
-    { QLatin1String("small-caps"), Value_SmallCaps },
     { QLatin1String("solid"), Value_Solid },
     { QLatin1String("square"), Value_Square },
     { QLatin1String("sub"), Value_Sub },
@@ -214,7 +210,6 @@ static const QCssKnownValue valuesTbl[NumKnownValues - 1] = {
     { QLatin1String("underline"), Value_Underline },
     { QLatin1String("upper-alpha"), Value_UpperAlpha },
     { QLatin1String("upper-roman"), Value_UpperRoman },
-    { QLatin1String("uppercase"), Value_Uppercase },
     { QLatin1String("wave"), Value_Wave },
     { QLatin1String("window"), Value_Window },
     { QLatin1String("window-text"), Value_WindowText },
@@ -1148,29 +1143,6 @@ static void parseShorthandFontProperty(const QVector<QCss::Value> &values, QFont
     }
 }
 
-static void setFontVariantFromValue(const QCss::Value &value, QFont *font)
-{
-    if (value.type == Value::KnownIdentifier) {
-        switch (value.variant.toInt()) {
-            case Value_Normal: font->setCapitalization(QFont::MixedCase); break;
-            case Value_SmallCaps: font->setCapitalization(QFont::SmallCaps); break;
-            default: break;
-        }
-    }
-}
-
-static void setTextTransformFromValue(const QCss::Value &value, QFont *font)
-{
-    if (value.type == Value::KnownIdentifier) {
-        switch (value.variant.toInt()) {
-            case Value_None: font->setCapitalization(QFont::MixedCase); break;
-            case Value_Uppercase: font->setCapitalization(QFont::AllUppercase); break;
-            case Value_Lowercase: font->setCapitalization(QFont::AllLowercase); break;
-            default: break;
-        }
-    }
-}
-
 bool ValueExtractor::extractFont(QFont *font, int *fontSizeAdjustment)
 {
     if (fontExtracted) {
@@ -1192,8 +1164,6 @@ bool ValueExtractor::extractFont(QFont *font, int *fontSizeAdjustment)
             case FontFamily: setFontFamilyFromValues(decl.d->values, font); break;
             case TextDecoration: setTextDecorationFromValues(decl.d->values, font); break;
             case Font: parseShorthandFontProperty(decl.d->values, font, fontSizeAdjustment); break;
-            case FontVariant: setFontVariantFromValue(val, font); break;
-            case TextTransform: setTextTransformFromValue(val, font); break;
             default: continue;
         }
         hit = true;

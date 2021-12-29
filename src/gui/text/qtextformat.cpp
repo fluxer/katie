@@ -382,9 +382,6 @@ void QTextFormatPrivate::recalcFont() const
             case QTextFormat::FontWordSpacing:
                 f.setWordSpacing(props.at(i).value.toReal());
                 break;
-            case QTextFormat::FontCapitalization:
-                f.setCapitalization(static_cast<QFont::Capitalization> (props.at(i).value.toInt()));
-                break;
             case QTextFormat::FontFixedPitch: {
                 const bool value = props.at(i).value.toBool();
                 if (f.fixedPitch() != value)
@@ -545,7 +542,6 @@ Q_GUI_EXPORT QDataStream &operator>>(QDataStream &stream, QTextFormat &fmt)
     \value FontUnderline \e{This property has been deprecated.} Use QTextFormat::TextUnderlineStyle instead.
     \value FontOverline
     \value FontStrikeOut
-    \value FontCapitalization Specifies the capitalization type that is to be applied to the text.
     \value FontLetterSpacing Changes the default spacing between individual letters in the font. The value is
                                                 specified in percentage, with 100 as the default value.
     \value FontWordSpacing  Changes the default spacing between individual words. A positive value increases the word spacing
@@ -1830,7 +1826,6 @@ void QTextCharFormat::setFont(const QFont &font)
     setFontOverline(font.overline());
     setFontStrikeOut(font.strikeOut());
     setFontFixedPitch(font.fixedPitch());
-    setFontCapitalization(font.capitalization());
     setFontWordSpacing(font.wordSpacing());
     if (font.letterSpacingType() == QFont::PercentageSpacing)
         setFontLetterSpacing(font.letterSpacing());
@@ -3002,24 +2997,6 @@ QTextImageFormat::QTextImageFormat(const QTextFormat &fmt)
     Returns the height of the rectangle occupied by the image.
 
     \sa width() setHeight()
-*/
-
-/*!
-    \fn void QTextCharFormat::setFontCapitalization(QFont::Capitalization capitalization)
-    \since 4.4
-
-    Sets the capitalization of the text that apppears in this font to \a capitalization.
-
-    A font's capitalization makes the text appear in the selected capitalization mode.
-
-    \sa fontCapitalization()
-*/
-
-/*!
-    \fn Capitalization QTextCharFormat::fontCapitalization() const
-    \since 4.4
-
-    Returns the current capitalization type of the font.
 */
 
 /*!

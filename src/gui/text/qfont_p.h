@@ -130,7 +130,6 @@ public:
     ~QFontPrivate();
 
     QFontEngine *engineForScript(QUnicodeTables::Script script) const;
-    void alterCharForCapitalization(QChar &c) const;
 
     QAtomicInt ref;
     QFontDef request;
@@ -142,15 +141,10 @@ public:
     bool overline;
     bool strikeOut;
     bool kerning;
-    QFont::Capitalization capital;
     bool letterSpacingIsAbsolute;
 
     QFixed letterSpacing;
     QFixed wordSpacing;
-
-    mutable QFontPrivate *scFont;
-    QFont smallCapsFont() const { return QFont(smallCapsFontPrivate()); }
-    QFontPrivate *smallCapsFontPrivate() const;
 
     static QFontPrivate *get(const QFont &font)
     {

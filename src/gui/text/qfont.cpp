@@ -114,7 +114,7 @@ bool QFontDef::exactMatch(const QFontDef &other) const
 QFontPrivate::QFontPrivate()
     : engineData(0), dpi(QX11Info::appDpiY()), screen(QX11Info::appScreen()),
       underline(false), overline(false), strikeOut(false), kerning(true),
-      capital(QFont::MixedCase), letterSpacingIsAbsolute(false), scFont(0)
+      letterSpacingIsAbsolute(false)
 {
 }
 
@@ -122,12 +122,9 @@ QFontPrivate::QFontPrivate(const QFontPrivate &other)
     : request(other.request), engineData(0), dpi(other.dpi), screen(other.screen),
       underline(other.underline), overline(other.overline),
       strikeOut(other.strikeOut), kerning(other.kerning),
-      capital(other.capital), letterSpacingIsAbsolute(other.letterSpacingIsAbsolute),
-      letterSpacing(other.letterSpacing), wordSpacing(other.wordSpacing),
-      scFont(other.scFont)
+      letterSpacingIsAbsolute(other.letterSpacingIsAbsolute),
+      letterSpacing(other.letterSpacing), wordSpacing(other.wordSpacing)
 {
-    if (scFont && scFont != this)
-        scFont->ref.ref();
 }
 
 QFontPrivate::~QFontPrivate()
@@ -135,9 +132,6 @@ QFontPrivate::~QFontPrivate()
     if (engineData && !engineData->ref.deref())
         delete engineData;
     engineData = 0;
-    if (scFont && scFont != this)
-        scFont->ref.deref();
-    scFont = 0;
 }
 
 extern std::recursive_mutex &qt_fontdatabase_mutex();
@@ -157,39 +151,6 @@ QFontEngine *QFontPrivate::engineForScript(QUnicodeTables::Script script) const
         QFontDatabase::load(this, script);
     return engineData->engines[script];
 }
-
-void QFontPrivate::alterCharForCapitalization(QChar &c) const {
-    switch (capital) {
-        case QFont::AllUppercase:
-        case QFont::SmallCaps:
-            c = c.toUpper();
-            break;
-        case QFont::AllLowercase:
-            c = c.toLower();
-            break;
-        // handled by the text engine
-        case QFont::MixedCase:
-        case QFont::Capitalize:
-            break;
-    }
-}
-
-QFontPrivate *QFontPrivate::smallCapsFontPrivate() const
-{
-    if (scFont)
-        return scFont;
-    QFont font(const_cast<QFontPrivate *>(this));
-    qreal pointSize = font.pointSizeF();
-    if (pointSize > 0)
-        font.setPointSizeF(pointSize * .7);
-    else
-        font.setPixelSize((font.pixelSize() * 7 + 5) / 10);
-    scFont = font.d.data();
-    if (scFont != this)
-        scFont->ref.ref();
-    return scFont;
-}
-
 
 void QFontPrivate::resolve(uint mask, const QFontPrivate *other)
 {
@@ -250,8 +211,6 @@ void QFontPrivate::resolve(uint mask, const QFontPrivate *other)
     }
     if (! (mask & QFont::WordSpacingResolved))
         wordSpacing = other->wordSpacing;
-    if (! (mask & QFont::CapitalizationResolved))
-        capital = other->capital;
 }
 
 
@@ -442,7 +401,6 @@ QFontEngineData::~QFontEngineData()
     \value FixedPitchResolved
     \value StretchResolved
     \value KerningResolved
-    \value CapitalizationResolved
     \value LetterSpacingResolved
     \value WordSpacingResolved
     \value CompletelyResolved
@@ -566,9 +524,6 @@ void QFont::detach()
         if (d->engineData && !d->engineData->ref.deref())
             delete d->engineData;
         d->engineData = 0;
-        if (d->scFont && d->scFont != d.data())
-            d->scFont->ref.deref();
-        d->scFont = 0;
         return;
     }
 
@@ -1415,51 +1370,6 @@ void QFont::setWordSpacing(qreal spacing)
 }
 
 /*!
-    \enum QFont::Capitalization
-    \since 4.4
-
-    Rendering option for text this font applies to.
-
-
-    \value MixedCase    This is the normal text rendering option where no capitalization change is applied.
-    \value AllUppercase This alters the text to be rendered in all uppercase type.
-    \value AllLowercase This alters the text to be rendered in all lowercase type.
-    \value SmallCaps    This alters the text to be rendered in small-caps type.
-    \value Capitalize   This alters the text to be rendered with the first character of each word as an uppercase character.
-*/
-
-/*!
-    \since 4.4
-    Sets the capitalization of the text in this font to \a caps.
-
-    A font's capitalization makes the text appear in the selected capitalization mode.
-
-    \sa capitalization()
-*/
-void QFont::setCapitalization(Capitalization caps)
-{
-    if ((resolve_mask & QFont::CapitalizationResolved) &&
-        d->capital == caps)
-        return;
-
-    detach();
-
-    d->capital = caps;
-    resolve_mask |= QFont::CapitalizationResolved;
-}
-
-/*!
-    \since 4.4
-    Returns the current capitalization type of the font.
-
-    \sa setCapitalization()
-*/
-QFont::Capitalization QFont::capitalization() const
-{
-    return d->capital;
-}
-
-/*!
     Returns true if a window system font exactly matching the settings
     of this font is available.
 
@@ -1490,7 +1400,6 @@ bool QFont::operator==(const QFont &f) const
                 && f.d->overline  == d->overline
                 && f.d->strikeOut == d->strikeOut
                 && f.d->kerning == d->kerning
-                && f.d->capital == d->capital
                 && f.d->letterSpacingIsAbsolute == d->letterSpacingIsAbsolute
                 && f.d->letterSpacing == d->letterSpacing
                 && f.d->wordSpacing == d->wordSpacing
@@ -1523,7 +1432,6 @@ bool QFont::operator<(const QFont &f) const
     if (r1.styleHint != r2.styleHint) return r1.styleHint < r2.styleHint;
     if (r1.styleStrategy != r2.styleStrategy) return r1.styleStrategy < r2.styleStrategy;
     if (r1.family != r2.family) return r1.family < r2.family;
-    if (f.d->capital != d->capital) return f.d->capital < d->capital;
 
     if (f.d->letterSpacingIsAbsolute != d->letterSpacingIsAbsolute) return f.d->letterSpacingIsAbsolute < d->letterSpacingIsAbsolute;
     if (f.d->letterSpacing != d->letterSpacing) return f.d->letterSpacing < d->letterSpacing;

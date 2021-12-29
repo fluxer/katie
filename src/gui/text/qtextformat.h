@@ -146,13 +146,12 @@ public:
 
         // character properties
         FirstFontProperty = 0x1FE0,
-        FontCapitalization = FirstFontProperty,
-        FontLetterSpacing = 0x1FE1,
-        FontWordSpacing = 0x1FE2,
-        FontStyleHint = 0x1FE3,
-        FontStyleStrategy = 0x1FE4,
-        FontKerning = 0x1FE5,
-        FontHintingPreference = 0x1FE6,
+        FontLetterSpacing = FirstFontProperty,
+        FontWordSpacing = 0x1FE1,
+        FontStyleHint = 0x1FE2,
+        FontStyleStrategy = 0x1FE3,
+        FontKerning = 0x1FE4,
+        FontHintingPreference = 0x1FE5,
         FontFamily = 0x2000,
         FontPointSize = 0x2001,
         FontSizeAdjustment = 0x2002,
@@ -391,10 +390,6 @@ public:
     { setProperty(FontItalic, italic); }
     inline bool fontItalic() const
     { return boolProperty(FontItalic); }
-    inline void setFontCapitalization(QFont::Capitalization capitalization)
-    { setProperty(FontCapitalization, capitalization); }
-    inline QFont::Capitalization fontCapitalization() const
-    { return static_cast<QFont::Capitalization>(intProperty(FontCapitalization)); }
     inline void setFontLetterSpacing(qreal spacing)
     { setProperty(FontLetterSpacing, spacing); }
     inline qreal fontLetterSpacing() const

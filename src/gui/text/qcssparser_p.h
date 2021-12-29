@@ -151,8 +151,6 @@ enum Property {
     OutlineTopRightRadius,
     OutlineBottomLeftRadius,
     OutlineBottomRightRadius,
-    FontVariant,
-    TextTransform,
     QtListNumberPrefix,
     QtListNumberSuffix,
     LineHeight,
@@ -208,9 +206,6 @@ enum KnownValue {
     Value_UpperAlpha,
     Value_LowerRoman,
     Value_UpperRoman,
-    Value_SmallCaps,
-    Value_Uppercase,
-    Value_Lowercase,
 
     /* keep these in same order as QPalette::ColorRole */
     Value_FirstColorRole,

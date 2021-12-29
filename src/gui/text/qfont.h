@@ -101,14 +101,6 @@ public:
         UltraExpanded  = 200
     };
 
-    enum Capitalization {
-        MixedCase,
-        AllUppercase,
-        AllLowercase,
-        SmallCaps,
-        Capitalize
-    };
-
     enum SpacingType {
         PercentageSpacing,
         AbsoluteSpacing
@@ -127,11 +119,10 @@ public:
         FixedPitchResolved          = 0x0200,
         StretchResolved             = 0x0400,
         KerningResolved             = 0x0800,
-        CapitalizationResolved      = 0x1000,
-        LetterSpacingResolved       = 0x2000,
-        WordSpacingResolved         = 0x4000,
-        HintingPreferenceResolved   = 0x8000,
-        StyleNameResolved           = 0x10000,
+        LetterSpacingResolved       = 0x1000,
+        WordSpacingResolved         = 0x2000,
+        HintingPreferenceResolved   = 0x4000,
+        StyleNameResolved           = 0x8000,
         AllPropertiesResolved       = 0x1ffff
     };
 
@@ -196,9 +187,6 @@ public:
 
     qreal wordSpacing() const;
     void setWordSpacing(qreal spacing);
-
-    void setCapitalization(Capitalization);
-    Capitalization capitalization() const;
 
     void setHintingPreference(HintingPreference hintingPreference);
     HintingPreference hintingPreference() const;
