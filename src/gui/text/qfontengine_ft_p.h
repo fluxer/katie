@@ -86,6 +86,13 @@ private:
 class Q_GUI_EXPORT QFontEngineFT : public QFontEngine
 {
 public:
+#ifndef QT_NO_FONTCONFIG
+    QFontEngineFT(const QFontDef &fd, FcPattern *pattern);
+#else
+    QFontEngineFT(const QFontDef &fd);
+#endif
+    virtual ~QFontEngineFT();
+
 
     virtual QFontEngine::FaceId faceId() const;
     virtual QFontEngine::Properties properties() const;
@@ -137,11 +144,6 @@ public:
     FT_Face non_locked_face() const;
 
     inline bool invalid() const { return xsize == 0 && ysize == 0; }
-
-    QFontEngineFT(const QFontDef &fd);
-    virtual ~QFontEngineFT();
-
-    bool init(FaceId faceId);
 
     virtual HB_Error getPointInOutline(HB_Glyph glyph, int flags, hb_uint32 point, HB_Fixed *xpos, HB_Fixed *ypos, hb_uint32 *nPoints);
 

@@ -44,6 +44,10 @@
 #include FT_ERRORS_H
 #endif
 
+#if defined(FT_LCD_FILTER_H)
+#include FT_LCD_FILTER_H
+#endif
+
 QT_BEGIN_NAMESPACE
 
 #define FLOOR(x)    ((x) & -64)
@@ -257,7 +261,11 @@ void QFreetypeFace::addGlyphToPath(FT_Face face, FT_GlyphSlot g, const QFixedPoi
     }
 }
 
+#ifndef QT_NO_FONTCONFIG
+QFontEngineFT::QFontEngineFT(const QFontDef &fd, FcPattern *pattern)
+#else
 QFontEngineFT::QFontEngineFT(const QFontDef &fd)
+#endif
     : default_load_flags(FT_LOAD_IGNORE_GLOBAL_ADVANCE_WIDTH | FT_LOAD_NO_BITMAP),
     default_hint_style(HintNone),
     freetype(nullptr),
@@ -271,23 +279,87 @@ QFontEngineFT::QFontEngineFT(const QFontDef &fd)
 {
     fontDef = fd;
     ::memset(&metrics, 0, sizeof(FT_Size_Metrics));
-}
 
-QFontEngineFT::~QFontEngineFT()
-{
-    delete freetype;
-}
+#ifndef QT_NO_FONTCONFIG
+    // FcPatternPrint(pattern);
+    FcChar8 *fileName;
 
-bool QFontEngineFT::init(FaceId faceId)
-{
-    freetype = new QFreetypeFace(faceId);
-    if (!freetype->face) {
-        return false;
-    } else if (!FT_IS_SCALABLE(freetype->face)) {
-        return false;
+    FcPatternGetString(pattern, FC_FILE, 0, &fileName);
+    face_id.filename = (const char *)fileName;
+
+    if (!FcPatternGetInteger(pattern, FC_INDEX, 0, &face_id.index)) {
+        face_id.index = 0;
     }
 
-    face_id = faceId;
+    if (fd.hintingPreference != QFont::PreferDefaultHinting) {
+        switch (fd.hintingPreference) {
+            case QFont::PreferNoHinting: {
+                default_hint_style = HintNone;
+                break;
+            }
+            case QFont::PreferVerticalHinting: {
+                default_hint_style = HintLight;
+                break;
+            }
+            case QFont::PreferFullHinting:
+            default: {
+                default_hint_style = HintFull;
+                break;
+            }
+        }
+    }
+#ifdef FC_HINT_STYLE
+    else {
+        int hint_style = 0;
+        if (FcPatternGetInteger(pattern, FC_HINT_STYLE, 0, &hint_style) == FcResultNoMatch
+            && qt_x11Data->fc_hint_style > -1) {
+            hint_style = qt_x11Data->fc_hint_style;
+        }
+
+        switch (hint_style) {
+            case FC_HINT_NONE: {
+                default_hint_style = HintNone;
+                break;
+            }
+            case FC_HINT_SLIGHT: {
+                default_hint_style = HintLight;
+                break;
+            }
+            case FC_HINT_MEDIUM: {
+                default_hint_style = HintMedium;
+                break;
+            }
+            default: {
+                default_hint_style = HintFull;
+                break;
+            }
+        }
+    }
+#endif
+
+#if defined(FC_AUTOHINT) && defined(FT_LOAD_FORCE_AUTOHINT)
+    {
+        bool autohint = false;
+        FcBool b;
+        if (FcPatternGetBool(pattern, FC_AUTOHINT, 0, &b) == FcResultMatch) {
+            autohint = b;
+        }
+        if (autohint) {
+            default_load_flags |= FT_LOAD_FORCE_AUTOHINT;
+        }
+    }
+#endif
+#else
+    face_id.filename = fd.family.toUtf8();
+    face_id.index = 0;
+#endif // QT_NO_FONTCONFIG
+
+    freetype = new QFreetypeFace(face_id);
+    if (!freetype->face) {
+        return;
+    } else if (!FT_IS_SCALABLE(freetype->face)) {
+        return;
+    }
 
     lbearing = rbearing = SHRT_MIN;
     ysize = qRound(fontDef.pixelSize * 64);
@@ -319,8 +391,11 @@ bool QFontEngineFT::init(FaceId faceId)
     fontDef.styleName = QString::fromUtf8(face->style_name);
 
     fsType = freetype->fsType();
+}
 
-    return true;
+QFontEngineFT::~QFontEngineFT()
+{
+    delete freetype;
 }
 
 int QFontEngineFT::loadFlags(int flags) const

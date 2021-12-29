@@ -27,9 +27,8 @@
 #include "qtemporaryfile.h"
 #include "qabstractfileengine.h"
 #include "qmath.h"
-
+#include "qfontengine_ft_p.h"
 #include "qx11info_x11.h"
-#include "qfontengine_x11_p.h"
 
 #ifndef QT_NO_FONTCONFIG
 #include <fontconfig/fcfreetype.h>
@@ -985,7 +984,7 @@ special_char:
         FcPatternAddBool(match, FC_ANTIALIAS, false);
     }
 
-    QFontEngineX11FT *engine = new QFontEngineX11FT(match, qt_FcPatternToQFontDef(match, request));
+    QFontEngineFT *engine = new QFontEngineFT(qt_FcPatternToQFontDef(match, request), match);
     if (engine->invalid()) {
         FM_DEBUG("   --> invalid!\n");
         delete engine;
