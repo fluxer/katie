@@ -149,7 +149,7 @@ FT_Face QFont::freetypeFace() const
     QFontEngine *engine = d->engineForScript(QUnicodeTables::Common);
     if (engine->type() == QFontEngine::Freetype) {
         const QFontEngineFT *ft = static_cast<const QFontEngineFT *>(engine);
-        return ft->non_locked_face();
+        return ft->getFace();
     }
     return 0;
 }

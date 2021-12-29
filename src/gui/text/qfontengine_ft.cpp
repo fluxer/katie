@@ -365,6 +365,7 @@ QFontEngineFT::QFontEngineFT(const QFontDef &fd)
     ysize = qRound(fontDef.pixelSize * 64);
     xsize = (ysize * fontDef.stretch / 100);
 
+    setFace(QFontEngineFT::Scaled);
     FT_Face face = getFace();
     // fake italic/oblique
     if ((fontDef.style != QFont::StyleNormal) && !(face->style_flags & FT_STYLE_FLAG_ITALIC)) {
@@ -395,6 +396,7 @@ QFontEngineFT::QFontEngineFT(const QFontDef &fd)
 
 QFontEngineFT::~QFontEngineFT()
 {
+    qDeleteAll(metriccache);
     delete freetype;
 }
 
@@ -444,6 +446,32 @@ bool QFontEngineFT::loadGlyph(glyph_t glyph, int load_flags) const
     }
 
     return true;
+}
+
+QFontMetric* QFontEngineFT::getMetrics(glyph_t glyph) const
+{
+    FT_Face face = getFace();
+
+    QFontMetric* metric = metriccache.value(glyph, nullptr);
+    if (metric) {
+        return metric;
+    }
+
+    int load_flags = loadFlags(0);
+    loadGlyph(glyph, load_flags);
+
+    metric = new QFontMetric();
+    metric->left = FLOOR(face->glyph->metrics.horiBearingX);
+    metric->right = CEIL(face->glyph->metrics.horiBearingX + face->glyph->metrics.width);
+    metric->top = CEIL(face->glyph->metrics.horiBearingY);
+    metric->bottom = FLOOR(face->glyph->metrics.horiBearingY - face->glyph->metrics.height);
+    metric->linearhoriadvance = (face->glyph->linearHoriAdvance >> 10);
+    metric->horiadvance = face->glyph->metrics.horiAdvance;
+    metric->advancex = ROUND(face->glyph->advance.x);
+
+    metriccache.insert(glyph, metric);
+
+    return metric;
 }
 
 QFontEngine::FaceId QFontEngineFT::faceId() const
@@ -514,7 +542,6 @@ QFixed QFontEngineFT::xHeight() const
 {
     TT_OS2 *os2 = (TT_OS2 *)FT_Get_Sfnt_Table(freetype->face, ft_sfnt_os2);
     if (os2 && os2->sxHeight) {
-        getFace();
         return QFixed(os2->sxHeight*freetype->face->size->metrics.y_ppem)/freetype->face->units_per_EM;
     }
     return QFontEngine::xHeight();
@@ -524,7 +551,6 @@ QFixed QFontEngineFT::averageCharWidth() const
 {
     TT_OS2 *os2 = (TT_OS2 *)FT_Get_Sfnt_Table(freetype->face, ft_sfnt_os2);
     if (os2 && os2->xAvgCharWidth) {
-        getFace();
         return QFixed(os2->xAvgCharWidth*freetype->face->size->metrics.x_ppem)/freetype->face->units_per_EM;
     }
     return QFontEngine::averageCharWidth();
@@ -599,7 +625,6 @@ void QFontEngineFT::doKerning(QGlyphLayout *g, QTextEngine::ShaperFlags flags)
 {
     if (!kerning_pairs_loaded) {
         kerning_pairs_loaded = true;
-        getFace();
         if (freetype->face->size->metrics.x_ppem != 0) {
             QFixed scalingFactor(freetype->face->units_per_EM/freetype->face->size->metrics.x_ppem);
             loadKerningPairs(scalingFactor);
@@ -610,7 +635,9 @@ void QFontEngineFT::doKerning(QGlyphLayout *g, QTextEngine::ShaperFlags flags)
 
 void QFontEngineFT::getUnscaledGlyph(glyph_t glyph, QPainterPath *path, glyph_metrics_t *metrics)
 {
-    FT_Face face = getFace(Unscaled);
+    setFace(QFontEngineFT::Unscaled);
+
+    FT_Face face = getFace();
 
     int load_flags = loadFlags(0);
     loadGlyph(glyph, load_flags);
@@ -631,6 +658,8 @@ void QFontEngineFT::getUnscaledGlyph(glyph_t glyph, QPainterPath *path, glyph_me
     metrics->xoff = QFixed::fromFixed(face->glyph->advance.x);
 
     QFreetypeFace::addGlyphToPath(face, face->glyph, p, path, face->units_per_EM << 6, face->units_per_EM << 6);
+
+    setFace(QFontEngineFT::Scaled);
 }
 
 static inline unsigned int getChar(const QChar *str, int &i, const int len)
@@ -720,11 +749,12 @@ void QFontEngineFT::recalcAdvances(QGlyphLayout *glyphs, QTextEngine::ShaperFlag
     bool design = (default_hint_style == HintNone ||
                    default_hint_style == HintLight ||
                    (flags & HB_ShaperFlag_UseDesignMetrics));
-    int load_flags = loadFlags(0);
     for (int i = 0; i < glyphs->numGlyphs; i++) {
-        loadGlyph(glyphs->glyphs[i], load_flags);
-        glyphs->advances_x[i] = design ? QFixed::fromFixed(face->glyph->linearHoriAdvance >> 10)
-                                       : QFixed::fromFixed(face->glyph->metrics.horiAdvance).round();
+        QFontMetric* metric = getMetrics(glyphs->glyphs[i]);
+        Q_ASSERT(metric);
+
+        glyphs->advances_x[i] = design ? QFixed::fromFixed(metric->linearhoriadvance)
+                                       : QFixed::fromFixed(metric->horiadvance).round();
         if (fontDef.styleStrategy & QFont::ForceIntegerMetrics)
             glyphs->advances_x[i] = glyphs->advances_x[i].round();
         glyphs->advances_y[i] = 0;
@@ -733,9 +763,6 @@ void QFontEngineFT::recalcAdvances(QGlyphLayout *glyphs, QTextEngine::ShaperFlag
 
 glyph_metrics_t QFontEngineFT::boundingBox(const QGlyphLayout &glyphs) const
 {
-
-    FT_Face face = getFace();
-
     glyph_metrics_t overall;
     // initialize with line height, we get the same behaviour on all platforms
     overall.y = -ascent();
@@ -745,19 +772,16 @@ glyph_metrics_t QFontEngineFT::boundingBox(const QGlyphLayout &glyphs) const
     QFixed xmax = 0;
     int load_flags = loadFlags(0);
     for (int i = 0; i < glyphs.numGlyphs; i++) {
-        loadGlyph(glyphs.glyphs[i], load_flags);
-        int left  = FLOOR(face->glyph->metrics.horiBearingX);
-        int right = CEIL(face->glyph->metrics.horiBearingX + face->glyph->metrics.width);
-        int top    = CEIL(face->glyph->metrics.horiBearingY);
-        int bottom = FLOOR(face->glyph->metrics.horiBearingY - face->glyph->metrics.height);
+        QFontMetric* metric = getMetrics(glyphs.glyphs[i]);
+        Q_ASSERT(metric);
 
-        QFixed x = overall.xoff + glyphs.offsets[i].x - (-TRUNC(left));
-        QFixed y = overall.yoff + glyphs.offsets[i].y - TRUNC(top);
+        QFixed x = overall.xoff + glyphs.offsets[i].x - (-TRUNC(metric->left));
+        QFixed y = overall.yoff + glyphs.offsets[i].y - TRUNC(metric->top);
         overall.x = qMin(overall.x, x);
         overall.y = qMin(overall.y, y);
-        xmax = qMax(xmax, x + TRUNC(right - left));
-        ymax = qMax(ymax, y + TRUNC(top - bottom));
-        overall.xoff += qRound(TRUNC(ROUND(face->glyph->advance.x)));
+        xmax = qMax(xmax, x + TRUNC(metric->right - metric->left));
+        ymax = qMax(ymax, y + TRUNC(metric->top - metric->bottom));
+        overall.xoff += qRound(TRUNC(metric->advancex));
 
     }
     overall.height = qMax(overall.height, ymax - overall.y);
@@ -768,50 +792,40 @@ glyph_metrics_t QFontEngineFT::boundingBox(const QGlyphLayout &glyphs) const
 
 glyph_metrics_t QFontEngineFT::boundingBox(glyph_t glyph) const
 {
-    FT_Face face = getFace();
     glyph_metrics_t overall;
 
-    int load_flags = loadFlags(0);
-    loadGlyph(glyph, load_flags);
+    QFontMetric* metric = getMetrics(glyph);
+    Q_ASSERT(metric);
 
-    int left  = FLOOR(face->glyph->metrics.horiBearingX);
-    int right = CEIL(face->glyph->metrics.horiBearingX + face->glyph->metrics.width);
-    int top    = CEIL(face->glyph->metrics.horiBearingY);
-    int bottom = FLOOR(face->glyph->metrics.horiBearingY - face->glyph->metrics.height);
-
-    overall.width = TRUNC(right-left);
-    overall.height = TRUNC(top-bottom);
-    overall.x = TRUNC(left);
-    overall.y = -TRUNC(top);
-    overall.xoff = TRUNC(ROUND(face->glyph->advance.x));
+    overall.width = TRUNC(metric->right - metric->left);
+    overall.height = TRUNC(metric->top - metric->bottom);
+    overall.x = TRUNC(metric->left);
+    overall.y = -TRUNC(metric->top);
+    overall.xoff = TRUNC(metric->advancex);
     return overall;
 }
 
-FT_Face QFontEngineFT::getFace(Scaling scale) const
+FT_Face QFontEngineFT::getFace() const
+{
+    return freetype->face;
+}
+
+void QFontEngineFT::setFace(Scaling scale)
 {
     FT_Face face = freetype->face;
     if (scale == Unscaled) {
         FT_Set_Char_Size(face, face->units_per_EM << 6, face->units_per_EM << 6, 0, 0);
         freetype->xsize = face->units_per_EM << 6;
         freetype->ysize = face->units_per_EM << 6;
-    } else if (freetype->xsize != xsize || freetype->ysize != ysize) {
+    } else {
         FT_Set_Char_Size(face, xsize, ysize, 0, 0);
         freetype->xsize = xsize;
         freetype->ysize = ysize;
     }
-
-    return face;
-}
-
-
-FT_Face QFontEngineFT::non_locked_face() const
-{
-    return freetype->face;
 }
 
 HB_Error QFontEngineFT::getPointInOutline(HB_Glyph glyph, int flags, hb_uint32 point, HB_Fixed *xpos, HB_Fixed *ypos, hb_uint32 *nPoints)
 {
-    getFace();
     int load_flags = loadFlags(flags);
     HB_Error result = freetype->getPointInOutline(glyph, load_flags, point, xpos, ypos, nPoints);
     return result;

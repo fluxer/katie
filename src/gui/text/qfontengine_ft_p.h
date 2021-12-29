@@ -48,6 +48,17 @@
 
 QT_BEGIN_NAMESPACE
 
+
+struct QFontMetric {
+    int left;
+    int right;
+    int top;
+    int bottom;
+    FT_Fixed linearhoriadvance;
+    FT_Pos horiadvance;
+    FT_Pos advancex;
+};
+
 /*
  * This struct represents one font file on disk (like Arial.ttf) and is shared between all the font engines
  * that show this font file (at different pixel sizes).
@@ -89,7 +100,6 @@ public:
     QFontEngineFT(const QFontDef &fd);
 #endif
     virtual ~QFontEngineFT();
-
 
     virtual QFontEngine::FaceId faceId() const;
     virtual QFontEngine::Properties properties() const;
@@ -136,9 +146,8 @@ public:
         Scaled,
         Unscaled
     };
-    FT_Face getFace(Scaling scale = Scaled) const;
-
-    FT_Face non_locked_face() const;
+    void setFace(Scaling scale);
+    FT_Face getFace() const;
 
     inline bool invalid() const { return xsize == 0 && ysize == 0; }
 
@@ -159,6 +168,8 @@ private:
     int loadFlags(int flags) const;
     bool loadGlyph(glyph_t glyph, int load_flags) const;
 
+    QFontMetric* getMetrics(glyph_t glyph) const;
+
     QFreetypeFace *freetype;
     bool embolden;
     bool oblique;
@@ -177,6 +188,9 @@ private:
 
     typedef QMap<uint, glyph_t> CharCache;
     mutable CharCache charcache;
+
+    typedef QMap<glyph_t, QFontMetric*> MetricCache;
+    mutable MetricCache metriccache;
 };
 
 
