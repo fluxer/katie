@@ -93,6 +93,8 @@ void QX11Data::copyQImageToXImage(const QImage &image, XImage *ximage)
     const int h = image.height();
 
     if (ximage->bits_per_pixel == image.depth()) {
+        bool checkbyteorder = true;
+
         switch(image.format()) {
             case QImage::Format_RGB32: {
                 uint *xidata = (uint *)ximage->data;
@@ -129,7 +131,30 @@ void QX11Data::copyQImageToXImage(const QImage &image, XImage *ximage)
                 ::memcpy(ximage->data, image.constBits(), image.byteCount());
                 break;
             }
+            default: {
+                checkbyteorder = false;
+                for (int h = 0; h < image.height(); h++) {
+                    for (int w = 0; w < image.width(); w++) {
+                        const QRgb pixel = image.pixel(w, h);
+                        XPutPixel(ximage, w, h, pixel);
+                    }
+                }
+                break;
+            }
         }
+
+        if (checkbyteorder && (ximage->byte_order == MSBFirst) != (Q_BYTE_ORDER == Q_BIG_ENDIAN)) {
+            uint *xidata = (uint *)ximage->data;
+            uint *xiend = xidata + w*h;
+            while (xidata < xiend) {
+                *xidata = (*xidata >> 24)
+                            | ((*xidata >> 8) & 0xff00)
+                            | ((*xidata << 8) & 0xff0000)
+                            | (*xidata << 24);
+                ++xidata;
+            }
+        }
+
         return;
     }
 
@@ -137,18 +162,6 @@ void QX11Data::copyQImageToXImage(const QImage &image, XImage *ximage)
         for (int w = 0; w < image.width(); w++) {
             const QRgb pixel = image.pixel(w, h);
             XPutPixel(ximage, w, h, pixel);
-        }
-    }
-
-    if ((ximage->byte_order == MSBFirst) != (Q_BYTE_ORDER == Q_BIG_ENDIAN)) {
-        uint *xidata = (uint *)ximage->data;
-        uint *xiend = xidata + w*h;
-        while (xidata < xiend) {
-            *xidata = (*xidata >> 24)
-                        | ((*xidata >> 8) & 0xff00)
-                        | ((*xidata << 8) & 0xff0000)
-                        | (*xidata << 24);
-            ++xidata;
         }
     }
 }
@@ -173,7 +186,7 @@ void QX11Data::copyXImageToQImage(XImage *ximage, QImage &image)
                         ((uint *)imageline)[w] = uint(255 << 24) | xpixel;
                     }
                 }
-                break;
+                return;
             }
             case QImage::Format_ARGB32:
             case QImage::Format_ARGB32_Premultiplied: {
@@ -186,7 +199,7 @@ void QX11Data::copyXImageToQImage(XImage *ximage, QImage &image)
                         ((uint *)imageline)[w] = xpixel;
                     }
                 }
-                break;
+                return;
             }
             case QImage::Format_RGB16: {
                 uchar *imagedata = image.bits();
@@ -198,10 +211,12 @@ void QX11Data::copyXImageToQImage(XImage *ximage, QImage &image)
                         ((quint16 *)imageline)[w] = xpixel;
                     }
                 }
+                return;
+            }
+            default: {
                 break;
             }
         }
-        return;
     }
 
     for (int h = 0; h < ximage->height; h++) {
