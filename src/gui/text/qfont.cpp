@@ -111,44 +111,36 @@ bool QFontDef::exactMatch(const QFontDef &other) const
 }
 
 QFontPrivate::QFontPrivate()
-    : engineData(0), dpi(QX11Info::appDpiY()), screen(QX11Info::appScreen()),
+    : engine(nullptr), dpi(QX11Info::appDpiY()), screen(QX11Info::appScreen()),
       underline(false), overline(false), strikeOut(false), kerning(true),
       letterSpacingIsAbsolute(false)
 {
 }
 
 QFontPrivate::QFontPrivate(const QFontPrivate &other)
-    : request(other.request), engineData(0), dpi(other.dpi), screen(other.screen),
+    : request(other.request), engine(other.engine), dpi(other.dpi), screen(other.screen),
       underline(other.underline), overline(other.overline),
       strikeOut(other.strikeOut), kerning(other.kerning),
       letterSpacingIsAbsolute(other.letterSpacingIsAbsolute),
       letterSpacing(other.letterSpacing), wordSpacing(other.wordSpacing)
 {
+    if (engine) {
+        engine->ref.ref();
+    }
 }
 
 QFontPrivate::~QFontPrivate()
 {
-    if (engineData && !engineData->ref.deref())
-        delete engineData;
-    engineData = 0;
+    if (engine) {
+        engine->ref.deref();
+    }
 }
-
-extern std::recursive_mutex &qt_fontdatabase_mutex();
 
 QFontEngine *QFontPrivate::engineForScript(QUnicodeTables::Script script) const
 {
-    std::lock_guard<std::recursive_mutex> locker(qt_fontdatabase_mutex());
     if (script > QUnicodeTables::ScriptCount)
         script = QUnicodeTables::Common;
-    if (engineData && engineData->fontCache != QFontCache::instance()) {
-        // throw out engineData that came from a different thread
-        if (!engineData->ref.deref())
-            delete engineData;
-        engineData = 0;
-    }
-    if (!engineData || !engineData->engines[script])
-        QFontDatabase::load(this, script);
-    return engineData->engines[script];
+    return QFontDatabase::load(this, script);
 }
 
 void QFontPrivate::resolve(uint mask, const QFontPrivate *other)
@@ -208,27 +200,6 @@ void QFontPrivate::resolve(uint mask, const QFontPrivate *other)
     if (! (mask & QFont::WordSpacingResolved))
         wordSpacing = other->wordSpacing;
 }
-
-
-
-
-QFontEngineData::QFontEngineData()
-    : ref(1), fontCache(QFontCache::instance())
-{
-    memset(engines, 0, QUnicodeTables::ScriptCount * sizeof(QFontEngine *));
-}
-
-QFontEngineData::~QFontEngineData()
-{
-    for (int i = 0; i < QUnicodeTables::ScriptCount; ++i) {
-        if (engines[i] && !engines[i]->ref.deref())
-            delete engines[i];
-        engines[i] = 0;
-    }
-}
-
-
-
 
 /*!
     \class QFont
@@ -509,9 +480,6 @@ QFont::QFont(QFontPrivate *data)
 void QFont::detach()
 {
     if (d->ref == 1) {
-        if (d->engineData && !d->engineData->ref.deref())
-            delete d->engineData;
-        d->engineData = 0;
         return;
     }
 
@@ -1950,8 +1918,8 @@ QFontCache::~QFontCache()
 {
     clear();
     {
-        EngineDataCache::ConstIterator it = engineDataCache.constBegin(),
-                                 end = engineDataCache.constEnd();
+        EngineCache::ConstIterator it = engineCache.constBegin(),
+                                 end = engineCache.constEnd();
         while (it != end) {
             if (!it.value()->ref.deref())
                 delete it.value();
@@ -1965,20 +1933,6 @@ QFontCache::~QFontCache()
 
 void QFontCache::clear()
 {
-    {
-        EngineDataCache::Iterator it = engineDataCache.begin(),
-                                 end = engineDataCache.end();
-        while (it != end) {
-            QFontEngineData *data = it.value();
-            for (int i = 0; i < QUnicodeTables::ScriptCount; ++i) {
-                if (data->engines[i] && !data->engines[i]->ref.deref())
-                    delete data->engines[i];
-                data->engines[i] = 0;
-            }
-            ++it;
-        }
-    }
-
     for (EngineCache::Iterator it = engineCache.begin(), end = engineCache.end();
          it != end; ++it) {
         QFontEngine *engine = it.value();
@@ -1988,28 +1942,6 @@ void QFontCache::clear()
     }
 
     engineCache.clear();
-}
-
-
-QFontEngineData *QFontCache::findEngineData(const Key &key) const
-{
-    EngineDataCache::ConstIterator it = engineDataCache.find(key),
-                                  end = engineDataCache.end();
-    if (it == end) {
-        return nullptr;
-    }
-
-    // found
-    return it.value();
-}
-
-void QFontCache::insertEngineData(const Key &key, QFontEngineData *engineData)
-{
-    FC_DEBUG("QFontCache: inserting new engine data %p", engineData);
-
-    Q_ASSERT(!engineDataCache.contains(key));
-    engineData->ref.ref(); // the cache has a reference
-    engineDataCache.insert(key, engineData);
 }
 
 QFontEngine *QFontCache::findEngine(const Key &key)
@@ -2030,11 +1962,6 @@ QFontEngine *QFontCache::findEngine(const Key &key)
 void QFontCache::insertEngine(const Key &key, QFontEngine *engine)
 {
     FC_DEBUG("QFontCache: inserting new engine %p", engine);
-
-    QFontEngine *oldEngine = engineCache.value(key);
-    engine->ref.ref(); // the cache has a reference
-    if (oldEngine && !oldEngine->ref.deref())
-        delete oldEngine;
 
     engineCache.insert(key, engine);
 }

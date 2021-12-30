@@ -32,7 +32,6 @@ QT_BEGIN_NAMESPACE
 class QFontInfo;
 class QStringList;
 template <class T> class QList;
-struct QFontDef;
 class QFontEngine;
 
 class QFontDatabasePrivate;
@@ -76,7 +75,7 @@ private:
     static void createDatabase();
     static void parseFontName(const QString &name, QString &foundry, QString &family);
     static QString resolveFontFamilyAlias(const QString &family);
-    static void load(const QFontPrivate *d, int script);
+    static QFontEngine* load(const QFontPrivate *d, int script);
 
     friend struct QFontDef;
     friend class QFontPrivate;

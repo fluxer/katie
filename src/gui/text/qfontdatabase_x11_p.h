@@ -1066,34 +1066,31 @@ static FcPattern *queryFont(const FcChar8 *file, const QByteArray &data, int id,
   Loads a QFontEngine for the specified \a script that matches the
   QFontDef \e request member variable.
 */
-void QFontDatabase::load(const QFontPrivate *d, int script)
+QFontEngine* QFontDatabase::load(const QFontPrivate *d, int script)
 {
     Q_ASSERT(script >= 0 && script < QUnicodeTables::ScriptCount);
 
     // normalize the request to get better caching
     QFontDef req = d->request;
-    if (req.pixelSize <= 0)
+    if (req.pixelSize <= 0) {
         req.pixelSize = qFloor(qt_pixelSize(req.pointSize, d->dpi) * 100.0 + 0.5) * 0.01;
-    if (req.pixelSize < 1)
+    }
+    if (req.pixelSize < 1) {
         req.pixelSize = 1;
+    }
 
-    if (req.weight == 0)
+    if (req.weight == 0) {
         req.weight = QFont::Normal;
-    if (req.stretch == 0)
+    }
+    if (req.stretch == 0) {
         req.stretch = 100;
+    }
 
     QFontCache::Key key(req, script, d->screen);
-    if (!d->engineData)
-        getEngineData(d, key);
-
-    // the cached engineData could have already loaded the engine we want
-    if (d->engineData->engines[script])
-        return;
-
     // set it to the actual pointsize, so QFontInfo will do the right thing
-    if (req.pointSize < 0)
+    if (req.pointSize < 0) {
         req.pointSize = qt_pointSize(req.pixelSize, d->dpi);
-
+    }
 
     QFontEngine *fe = QFontCache::instance()->findEngine(key);
 
@@ -1112,9 +1109,8 @@ void QFontDatabase::load(const QFontPrivate *d, int script)
             fe->fontDef = QFontDef();
         }
     }
-    d->engineData->engines[script] = fe;
-    fe->ref.ref();
     QFontCache::instance()->insertEngine(key, fe);
+    return fe;
 }
 
 static void registerFont(QFontDatabasePrivate::ApplicationFont *fnt)

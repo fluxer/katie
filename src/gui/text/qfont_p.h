@@ -102,19 +102,6 @@ struct QFontDef
     }
 };
 
-class QFontEngineData
-{
-public:
-    QFontEngineData();
-    ~QFontEngineData();
-
-    QAtomicInt ref;
-    QFontCache *fontCache;
-
-    QFontEngine *engines[QUnicodeTables::ScriptCount];
-};
-
-
 class Q_GUI_EXPORT QFontPrivate
 {
 public:
@@ -130,7 +117,7 @@ public:
 
     QAtomicInt ref;
     QFontDef request;
-    mutable QFontEngineData *engineData;
+    mutable QFontEngine *engine;
     int dpi;
     int screen;
 
@@ -165,8 +152,7 @@ public:
     ~QFontCache();
 
     void clear();
-    // universal key structure.  QFontEngineDatas and QFontEngines are cached using
-    // the same keys
+    // QFontEngines are cached using the same keys
     struct Key {
         Key() : script(0), screen(0) { }
         Key(const QFontDef &d, int c, int s = 0)
@@ -185,13 +171,6 @@ public:
         inline bool operator==(const Key &other) const
         { return def == other.def && script == other.script && screen == other.screen; }
     };
-
-    // QFontEngineData cache
-    typedef QMap<Key,QFontEngineData*> EngineDataCache;
-    EngineDataCache engineDataCache;
-
-    QFontEngineData *findEngineData(const Key &key) const;
-    void insertEngineData(const Key &key, QFontEngineData *engineData);
 
     // QFontEngine cache
     typedef QMap<Key,QFontEngine *> EngineCache;

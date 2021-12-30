@@ -509,17 +509,17 @@ bool QFontEngineFT::getSfntTableData(uint tag, uchar *buffer, uint *length) cons
 
 int QFontEngineFT::synthesized() const
 {
-    int s = 0;
+    int result = 0;
     if (oblique) {
-        s = SynthesizedItalic;
+        result = SynthesizedItalic;
     }
     if (embolden) {
-        s |= SynthesizedBold;
+        result |= SynthesizedBold;
     }
     if (fontDef.stretch != 100) {
-        s |= SynthesizedStretch;
+        result |= SynthesizedStretch;
     }
-    return s;
+    return result;
 }
 
 QFixed QFontEngineFT::ascent() const
