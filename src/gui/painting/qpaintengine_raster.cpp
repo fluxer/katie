@@ -819,6 +819,8 @@ cairo_pattern_t* QRasterPaintEngine::brushPattern(const QBrush &brush)
         case Qt::DiagCrossPattern: {
             const QImage sourceimage(qt_imageForBrush(brush.style()));
             cairopattern = imagePattern(qt_colorizeBitmap(sourceimage, brush.color()));
+
+            cairo_pattern_set_extend(cairopattern, CAIRO_EXTEND_REPEAT);
             break;
         }
         case Qt::LinearGradientPattern: {
@@ -895,6 +897,8 @@ cairo_pattern_t* QRasterPaintEngine::brushPattern(const QBrush &brush)
             } else {
                 cairopattern = imagePattern(brush.textureImage());
             }
+
+            cairo_pattern_set_extend(cairopattern, CAIRO_EXTEND_REPEAT);
             break;
         }
     }
