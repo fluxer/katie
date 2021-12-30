@@ -2835,9 +2835,6 @@ void tst_QPainter::monoImages()
     for (int i = 1; i < QImage::NImageFormats; ++i) {
         for (int j = 0; j < numColorPairs; ++j) {
             const QImage::Format format = QImage::Format(i);
-            if (format == QImage::Format_Indexed8)
-                continue;
-
             QImage img(2, 2, format);
 
             if (img.colorCount() > 0) {
@@ -3516,8 +3513,6 @@ void tst_QPainter::drawImage_data()
 
     for (int srcFormat = QImage::Format_Mono; srcFormat < QImage::NImageFormats; ++srcFormat) {
         for (int dstFormat = QImage::Format_Mono; dstFormat < QImage::NImageFormats; ++dstFormat) {
-            if (dstFormat == QImage::Format_Indexed8)
-                continue;
             for (int odd_x = 0; odd_x <= 1; ++odd_x) {
                 for (int odd_width = 0; odd_width <= 1; ++odd_width) {
                     QString description =
@@ -4234,7 +4229,6 @@ void tst_QPainter::taskQT4444_dontOverflowDashOffset()
 void tst_QPainter::painterBegin()
 {
     QImage nullImage;
-    QImage indexed8Image(16, 16, QImage::Format_Indexed8);
     QImage rgb32Image(16, 16, QImage::Format_RGB32);
     QImage argb32Image(16, 16, QImage::Format_ARGB32_Premultiplied);
 
@@ -4244,12 +4238,6 @@ void tst_QPainter::painterBegin()
     QVERIFY(!p.begin(&nullImage));
 
     // Check that the painter is not messed up by using it on another image.
-    QVERIFY(p.begin(&rgb32Image));
-    QVERIFY(p.end());
-
-    // If painting on indexed8 image fails, the painter state should still be OK.
-    if (p.begin(&indexed8Image))
-        QVERIFY(p.end());
     QVERIFY(p.begin(&rgb32Image));
     QVERIFY(p.end());
 
