@@ -19,8 +19,19 @@
 **
 ****************************************************************************/
 
-#ifndef QTCOLORBUTTON_H
-#define QTCOLORBUTTON_H
+//
+//  W A R N I N G
+//  -------------
+//
+// This file is not part of the Katie API.  It exists for the convenience
+// of Katie Designer.  This header
+// file may change from version to version without notice, or even be removed.
+//
+// We mean it.
+//
+
+#ifndef QTCOLORBUTTON_P_H
+#define QTCOLORBUTTON_P_H
 
 #include <QtGui/QToolButton>
 

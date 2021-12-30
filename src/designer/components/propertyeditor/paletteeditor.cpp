@@ -22,7 +22,7 @@
 #include "paletteeditor.h"
 
 #include <iconloader_p.h>
-#include <qtcolorbutton.h>
+#include <qtcolorbutton_p.h>
 
 #include <QtDesigner/abstractformeditor.h>
 #include <QtDesigner/abstractformwindowmanager.h>
