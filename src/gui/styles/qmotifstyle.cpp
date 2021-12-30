@@ -2190,45 +2190,53 @@ QMotifStyle::standardPixmap(StandardPixmap standardPixmap, const QStyleOption *o
         // All that color looks ugly in Motif
         const QPalette &pal = QApplication::palette();
         QImage image((const char **) qt_information_xpm);
-        image.setColor(2, 0xff000000 |
+        QMap<QRgb,QRgb> imagecolors;
+        imagecolors.insert(4288256409, 0xff000000 |
                         pal.color(QPalette::Active, QPalette::Dark).rgb());
-        image.setColor(3, 0xff000000 |
+        imagecolors.insert(4294967295, 0xff000000 |
                         pal.color(QPalette::Active, QPalette::Base).rgb());
-        image.setColor(4, 0xff000000 |
+        imagecolors.insert(4278190335, 0xff000000 |
                         pal.color(QPalette::Active, QPalette::Text).rgb());
+        image = replaceColors(image, imagecolors);
         return QPixmap::fromImage(image);
     }
     case SP_MessageBoxWarning: {
         const QPalette &pal = QApplication::palette();
         QImage image((const char **) qt_warning_xpm);
-        image.setColor(1, 0xff000000 |
+        QMap<QRgb,QRgb> imagecolors;
+        imagecolors.insert(4294967040, 0xff000000 |
                         pal.color(QPalette::Active, QPalette::Base).rgb());
-        image.setColor(2, 0xff000000 |
+        imagecolors.insert(4278190080, 0xff000000 |
                         pal.color(QPalette::Active, QPalette::Text).rgb());
-        image.setColor(3, 0xff000000 |
+        imagecolors.insert(4288256409, 0xff000000 |
                         pal.color(QPalette::Active, QPalette::Dark).rgb());
+        image = replaceColors(image, imagecolors);
         return QPixmap::fromImage(image);
     }
     case SP_MessageBoxCritical: {
         const QPalette &pal = QApplication::palette();
         QImage image((const char **) qt_critical_xpm);
-        image.setColor(1, 0xff000000 |
+        QMap<QRgb,QRgb> imagecolors;
+        imagecolors.insert(4288256409, 0xff000000 |
                         pal.color(QPalette::Active, QPalette::Dark).rgb());
-        image.setColor(2, 0xff000000 |
+        imagecolors.insert(4294901760, 0xff000000 |
                         pal.color(QPalette::Active, QPalette::Text).rgb());
-        image.setColor(3, 0xff000000 |
+        imagecolors.insert(4294967295, 0xff000000 |
                         pal.color(QPalette::Active, QPalette::Base).rgb());
+        image = replaceColors(image, imagecolors);
         return QPixmap::fromImage(image);
     }
     case SP_MessageBoxQuestion: {
         const QPalette &pal = QApplication::palette();
         QImage image((const char **) qt_question_xpm);
-        image.setColor(2, 0xff000000 |
+        QMap<QRgb,QRgb> imagecolors;
+        imagecolors.insert(4288256409, 0xff000000 |
                         pal.color(QPalette::Active, QPalette::Dark).rgb());
-        image.setColor(3, 0xff000000 |
+        imagecolors.insert(4294967295, 0xff000000 |
                         pal.color(QPalette::Active, QPalette::Base).rgb());
-        image.setColor(4, 0xff000000 |
+        imagecolors.insert(4278190335, 0xff000000 |
                         pal.color(QPalette::Active, QPalette::Text).rgb());
+        image = replaceColors(image, imagecolors);
         return QPixmap::fromImage(image);
     }
     default:

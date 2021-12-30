@@ -6,6 +6,7 @@
 #include "qimageiohandler.h"
 #include "qtabbar.h"
 #include "qtabwidget.h"
+#include "qmap.h"
 
 QT_BEGIN_NAMESPACE
 
@@ -43,6 +44,18 @@ inline static QColor mergedColors(const QColor &colorA, const QColor &colorB, in
     tmp.setGreen((tmp.green() * factor) / maxFactor + (colorB.green() * (maxFactor - factor)) / maxFactor);
     tmp.setBlue((tmp.blue() * factor) / maxFactor + (colorB.blue() * (maxFactor - factor)) / maxFactor);
     return tmp;
+}
+
+inline static QImage replaceColors(const QImage &source, const QMap<QRgb, QRgb> &colormap)
+{
+    QImage result(source);
+    for (int h = 0; h < source.height(); h++) {
+        for (int w = 0; w < source.width(); w++) {
+            const QRgb pixel = source.pixel(w, h);
+            result.setPixel(w, h, colormap.value(pixel, pixel));
+        }
+    }
+    return result;
 }
 
 Q_GLOBAL_STATIC(QWidget, globalStyleInfoWidget)
