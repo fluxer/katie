@@ -82,15 +82,12 @@ struct Q_AUTOTEST_EXPORT QScriptAnalysis
 {
     enum Flags {
         None = 0,
-        Lowercase = 1,
-        Uppercase = 2,
-        SmallCaps = 3,
-        LineOrParagraphSeparator = 4,
-        Space = 5,
+        LineOrParagraphSeparator = 1,
+        Space = 2,
         SpaceTabOrObject = Space,
-        Tab = 6,
+        Tab = 3,
         TabOrObject = Tab,
-        Object = 7
+        Object = 4
     };
     QUnicodeTables::Script script;
     unsigned short bidiLevel;  // Unicode Bidi algorithm embedding level (0-61)

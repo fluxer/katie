@@ -78,16 +78,10 @@ void tst_QFont::getSetCheck()
     QCOMPARE(QFont::StyleStrategy(QFont::PreferDefault), obj1.styleStrategy());
     obj1.setStyleStrategy(QFont::StyleStrategy(QFont::PreferBitmap));
     QCOMPARE(QFont::StyleStrategy(QFont::PreferBitmap), obj1.styleStrategy());
-    obj1.setStyleStrategy(QFont::StyleStrategy(QFont::PreferDevice));
-    QCOMPARE(QFont::StyleStrategy(QFont::PreferDevice), obj1.styleStrategy());
     obj1.setStyleStrategy(QFont::StyleStrategy(QFont::PreferOutline));
     QCOMPARE(QFont::StyleStrategy(QFont::PreferOutline), obj1.styleStrategy());
     obj1.setStyleStrategy(QFont::StyleStrategy(QFont::ForceOutline));
     QCOMPARE(QFont::StyleStrategy(QFont::ForceOutline), obj1.styleStrategy());
-    obj1.setStyleStrategy(QFont::StyleStrategy(QFont::PreferMatch));
-    QCOMPARE(QFont::StyleStrategy(QFont::PreferMatch), obj1.styleStrategy());
-    obj1.setStyleStrategy(QFont::StyleStrategy(QFont::PreferQuality));
-    QCOMPARE(QFont::StyleStrategy(QFont::PreferQuality), obj1.styleStrategy());
     obj1.setStyleStrategy(QFont::StyleStrategy(QFont::PreferAntialias));
     QCOMPARE(QFont::StyleStrategy(QFont::PreferAntialias), obj1.styleStrategy());
     obj1.setStyleStrategy(QFont::StyleStrategy(QFont::NoAntialias));
@@ -232,13 +226,6 @@ void tst_QFont::compare()
         QVERIFY( font != font2 );
         QCOMPARE(font < font2,!(font2 < font));
         font.setOverline(false);
-        QVERIFY( font == font2 );
-        QVERIFY(!(font < font2));
-
-        font.setCapitalization(QFont::SmallCaps);
-        QVERIFY( font != font2 );
-        QCOMPARE(font < font2,!(font2 < font));
-        font.setCapitalization(QFont::MixedCase);
         QVERIFY( font == font2 );
         QVERIFY(!(font < font2));
     }

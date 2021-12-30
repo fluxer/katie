@@ -361,8 +361,6 @@ int QFontMetrics::xHeight() const
 {
     QFontEngine *engine = d->engineForScript(QUnicodeTables::Common);
     Q_ASSERT(engine != 0);
-    if (d->capital == QFont::SmallCaps)
-        return qRound(d->smallCapsFontPrivate()->engineForScript(QUnicodeTables::Common)->ascent());
     return qRound(engine->xHeight());
 }
 
@@ -431,16 +429,10 @@ bool QFontMetrics::inFontUcs4(uint ucs4) const
 int QFontMetrics::leftBearing(QChar ch) const
 {
     const QUnicodeTables::Script script = QUnicodeTables::script(ch.unicode());
-    QFontEngine *engine;
-    if (d->capital == QFont::SmallCaps && ch.isLower())
-        engine = d->smallCapsFontPrivate()->engineForScript(script);
-    else
-        engine = d->engineForScript(script);
+    QFontEngine *engine = d->engineForScript(script);
     Q_ASSERT(engine != 0);
     if (engine->type() == QFontEngine::Box)
         return 0;
-
-    d->alterCharForCapitalization(ch);
 
     QGlyphLayoutArray<10> glyphs;
     int nglyphs = 9;
@@ -466,16 +458,10 @@ int QFontMetrics::leftBearing(QChar ch) const
 int QFontMetrics::rightBearing(QChar ch) const
 {
     const QUnicodeTables::Script script = QUnicodeTables::script(ch.unicode());
-    QFontEngine *engine;
-    if (d->capital == QFont::SmallCaps && ch.isLower())
-        engine = d->smallCapsFontPrivate()->engineForScript(script);
-    else
-        engine = d->engineForScript(script);
+    QFontEngine *engine = d->engineForScript(script);
     Q_ASSERT(engine != 0);
     if (engine->type() == QFontEngine::Box)
         return 0;
-
-    d->alterCharForCapitalization(ch);
 
     QGlyphLayoutArray<10> glyphs;
     int nglyphs = 9;
@@ -544,14 +530,8 @@ int QFontMetrics::width(QChar ch) const
         return 0;
 
     const QUnicodeTables::Script script = QUnicodeTables::script(ch.unicode());
-    QFontEngine *engine;
-    if (d->capital == QFont::SmallCaps && ch.isLower())
-        engine = d->smallCapsFontPrivate()->engineForScript(script);
-    else
-        engine = d->engineForScript(script);
+    QFontEngine *engine = d->engineForScript(script);
     Q_ASSERT(engine != 0);
-
-    d->alterCharForCapitalization(ch);
 
     QGlyphLayoutArray<8> glyphs;
     int nglyphs = 7;
@@ -592,14 +572,8 @@ int QFontMetrics::charWidth(const QString &text, int pos) const
     } else if (QChar::category(ch.unicode()) == QChar::Mark_NonSpacing) {
         width = 0;
     } else {
-        QFontEngine *engine;
-        if (d->capital == QFont::SmallCaps && ch.isLower())
-            engine = d->smallCapsFontPrivate()->engineForScript(script);
-        else
-            engine = d->engineForScript(script);
+        QFontEngine *engine = d->engineForScript(script);
         Q_ASSERT(engine != 0);
-
-        d->alterCharForCapitalization(ch);
 
         QGlyphLayoutArray<8> glyphs;
         int nglyphs = 7;
@@ -661,14 +635,8 @@ QRect QFontMetrics::boundingRect(const QString &text) const
 QRect QFontMetrics::boundingRect(QChar ch) const
 {
     const QUnicodeTables::Script script = QUnicodeTables::script(ch.unicode());
-    QFontEngine *engine;
-    if (d->capital == QFont::SmallCaps && ch.isLower())
-        engine = d->smallCapsFontPrivate()->engineForScript(script);
-    else
-        engine = d->engineForScript(script);
+    QFontEngine *engine = d->engineForScript(script);
     Q_ASSERT(engine != 0);
-
-    d->alterCharForCapitalization(ch);
 
     QGlyphLayoutArray<10> glyphs;
     int nglyphs = 9;
@@ -1208,8 +1176,6 @@ qreal QFontMetricsF::xHeight() const
 {
     QFontEngine *engine = d->engineForScript(QUnicodeTables::Common);
     Q_ASSERT(engine != 0);
-    if (d->capital == QFont::SmallCaps)
-        return d->smallCapsFontPrivate()->engineForScript(QUnicodeTables::Common)->ascent().toReal();
     return engine->xHeight().toReal();
 }
 
@@ -1278,16 +1244,10 @@ bool QFontMetricsF::inFontUcs4(uint ucs4) const
 qreal QFontMetricsF::leftBearing(QChar ch) const
 {
     const QUnicodeTables::Script script = QUnicodeTables::script(ch.unicode());
-    QFontEngine *engine;
-    if (d->capital == QFont::SmallCaps && ch.isLower())
-        engine = d->smallCapsFontPrivate()->engineForScript(script);
-    else
-        engine = d->engineForScript(script);
+    QFontEngine *engine = d->engineForScript(script);
     Q_ASSERT(engine != 0);
     if (engine->type() == QFontEngine::Box)
         return 0;
-
-    d->alterCharForCapitalization(ch);
 
     QGlyphLayoutArray<10> glyphs;
     int nglyphs = 9;
@@ -1313,16 +1273,10 @@ qreal QFontMetricsF::leftBearing(QChar ch) const
 qreal QFontMetricsF::rightBearing(QChar ch) const
 {
     const QUnicodeTables::Script script = QUnicodeTables::script(ch.unicode());
-    QFontEngine *engine;
-    if (d->capital == QFont::SmallCaps && ch.isLower())
-        engine = d->smallCapsFontPrivate()->engineForScript(script);
-    else
-        engine = d->engineForScript(script);
+    QFontEngine *engine = d->engineForScript(script);
     Q_ASSERT(engine != 0);
     if (engine->type() == QFontEngine::Box)
         return 0;
-
-    d->alterCharForCapitalization(ch);
 
     QGlyphLayoutArray<10> glyphs;
     int nglyphs = 9;
@@ -1385,14 +1339,8 @@ qreal QFontMetricsF::width(QChar ch) const
         return 0.;
 
     const QUnicodeTables::Script script = QUnicodeTables::script(ch.unicode());
-    QFontEngine *engine;
-    if (d->capital == QFont::SmallCaps && ch.isLower())
-        engine = d->smallCapsFontPrivate()->engineForScript(script);
-    else
-        engine = d->engineForScript(script);
+    QFontEngine *engine = d->engineForScript(script);
     Q_ASSERT(engine != 0);
-
-    d->alterCharForCapitalization(ch);
 
     QGlyphLayoutArray<8> glyphs;
     int nglyphs = 7;
@@ -1450,14 +1398,8 @@ QRectF QFontMetricsF::boundingRect(const QString &text) const
 QRectF QFontMetricsF::boundingRect(QChar ch) const
 {
     const QUnicodeTables::Script script = QUnicodeTables::script(ch.unicode());
-    QFontEngine *engine;
-    if (d->capital == QFont::SmallCaps && ch.isLower())
-        engine = d->smallCapsFontPrivate()->engineForScript(script);
-    else
-        engine = d->engineForScript(script);
+    QFontEngine *engine = d->engineForScript(script);
     Q_ASSERT(engine != 0);
-
-    d->alterCharForCapitalization(ch);
 
     QGlyphLayoutArray<10> glyphs;
     int nglyphs = 9;

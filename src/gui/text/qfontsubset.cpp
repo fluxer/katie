@@ -222,7 +222,7 @@ static FT_Face ft_face(const QFontEngine *engine)
 {
     if (engine->type() == QFontEngine::Freetype) {
         const QFontEngineFT *ft = static_cast<const QFontEngineFT *>(engine);
-        return ft->non_locked_face();
+        return ft->getFace();
     }
     return 0;
 }

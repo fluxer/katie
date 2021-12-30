@@ -31,7 +31,6 @@
 // We mean it.
 //
 
-#include "qmutex.h"
 #include "qfontengine_p.h"
 
 #include <ft2build.h>
@@ -47,9 +46,18 @@
 
 #include <harfbuzz-shaper.h>
 
-#include <unistd.h>
-
 QT_BEGIN_NAMESPACE
+
+
+struct QFontMetric {
+    int left;
+    int right;
+    int top;
+    int bottom;
+    FT_Fixed linearhoriadvance;
+    FT_Pos horiadvance;
+    FT_Pos advancex;
+};
 
 /*
  * This struct represents one font file on disk (like Arial.ttf) and is shared between all the font engines
@@ -86,6 +94,12 @@ private:
 class Q_GUI_EXPORT QFontEngineFT : public QFontEngine
 {
 public:
+#ifndef QT_NO_FONTCONFIG
+    QFontEngineFT(const QFontDef &fd, FcPattern *pattern);
+#else
+    QFontEngineFT(const QFontDef &fd);
+#endif
+    virtual ~QFontEngineFT();
 
     virtual QFontEngine::FaceId faceId() const;
     virtual QFontEngine::Properties properties() const;
@@ -132,16 +146,10 @@ public:
         Scaled,
         Unscaled
     };
-    FT_Face getFace(Scaling scale = Scaled) const;
-
-    FT_Face non_locked_face() const;
+    void setFace(Scaling scale);
+    FT_Face getFace() const;
 
     inline bool invalid() const { return xsize == 0 && ysize == 0; }
-
-    QFontEngineFT(const QFontDef &fd);
-    virtual ~QFontEngineFT();
-
-    bool init(FaceId faceId);
 
     virtual HB_Error getPointInOutline(HB_Glyph glyph, int flags, hb_uint32 point, HB_Fixed *xpos, HB_Fixed *ypos, hb_uint32 *nPoints);
 
@@ -160,6 +168,8 @@ private:
     int loadFlags(int flags) const;
     bool loadGlyph(glyph_t glyph, int load_flags) const;
 
+    QFontMetric* getMetrics(glyph_t glyph) const;
+
     QFreetypeFace *freetype;
     bool embolden;
     bool oblique;
@@ -175,6 +185,12 @@ private:
 
     FT_Size_Metrics metrics;
     bool kerning_pairs_loaded;
+
+    typedef QMap<uint, glyph_t> CharCache;
+    mutable CharCache charcache;
+
+    typedef QMap<glyph_t, QFontMetric*> MetricCache;
+    mutable MetricCache metriccache;
 };
 
 

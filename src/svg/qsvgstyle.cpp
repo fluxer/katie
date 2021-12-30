@@ -165,7 +165,6 @@ QSvgFontStyle::QSvgFontStyle(QSvgFont *font, QSvgTinyDocument *doc)
     , m_familySet(false)
     , m_sizeSet(false)
     , m_styleSet(false)
-    , m_variantSet(false)
     , m_weightSet(false)
     , m_textAnchorSet(false)
 {
@@ -177,7 +176,6 @@ QSvgFontStyle::QSvgFontStyle()
     , m_familySet(false)
     , m_sizeSet(false)
     , m_styleSet(false)
-    , m_variantSet(false)
     , m_weightSet(false)
     , m_textAnchorSet(false)
 {
@@ -224,9 +222,6 @@ void QSvgFontStyle::apply(QPainter *p, const QSvgNode *, QSvgExtraStates &states
 
     if (m_styleSet)
         font.setStyle(m_qfont.style());
-
-    if (m_variantSet)
-        font.setCapitalization(m_qfont.capitalization());
 
     if (m_weightSet) {
         if (m_weight == BOLDER) {

@@ -2111,17 +2111,6 @@ bool QTextHtmlExporter::emitCharFormatStyle(const QTextCharFormat &format)
         attributesEmitted = true;
     }
 
-    if (format.fontCapitalization() != QFont::MixedCase) {
-        const QFont::Capitalization caps = format.fontCapitalization();
-        if (caps == QFont::AllUppercase)
-            html += QLatin1String(" text-transform:uppercase;");
-        else if (caps == QFont::AllLowercase)
-            html += QLatin1String(" text-transform:lowercase;");
-        else if (caps == QFont::SmallCaps)
-            html += QLatin1String(" font-variant:small-caps;");
-        attributesEmitted = true;
-    }
-
     if (format.fontWordSpacing() != 0.0) {
         html += QLatin1String(" word-spacing:");
         html += QString::number(format.fontWordSpacing());

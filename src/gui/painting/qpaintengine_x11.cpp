@@ -45,7 +45,6 @@
 #include "qcolormap.h"
 #include "qstylehelper_p.h"
 #include "qpaintengine_p.h"
-#include "qfontengine_x11_p.h"
 #include "qpaintengine_x11_p.h"
 #include "qt_x11_p.h"
 #include "qguicommon_p.h"

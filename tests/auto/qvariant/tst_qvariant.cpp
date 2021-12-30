@@ -980,7 +980,7 @@ void tst_QVariant::toFont_data()
     QTest::addColumn<QFont>("result");
 
     QFont f("times",12,-1,false);
-    QTest::newRow( "string" ) << QVariant( QString( "times,12,-1,5,50,0,0,0,0" ) ) << f;
+    QTest::newRow( "string" ) << QVariant( QString( "times,12,-1,50,0,0,0,0" ) ) << f;
 }
 
 void tst_QVariant::toFont()
@@ -1180,7 +1180,7 @@ void tst_QVariant::toString_data()
     QTest::newRow( "qkeysequence" ) << qVariantFromValue( QKeySequence( Qt::CTRL + Qt::Key_A ) ) << QString( "Ctrl+A" );
 
     QFont font( "times", 12 );
-    QTest::newRow( "qfont" ) << qVariantFromValue( font ) << QString("times,12,-1,5,50,0,0,0,0");
+    QTest::newRow( "qfont" ) << qVariantFromValue( font ) << QString("times,12,-1,50,0,0,0,0");
     QTest::newRow( "qcolor" ) << qVariantFromValue( QColor( 10, 10, 10 ) ) << QString( "#0a0a0a" );
     QTest::newRow( "llong" ) << QVariant( (qlonglong)Q_INT64_C(123456789012) ) <<
         QString( "123456789012" );

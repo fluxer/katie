@@ -27,9 +27,8 @@
 #include "qtemporaryfile.h"
 #include "qabstractfileengine.h"
 #include "qmath.h"
-
+#include "qfontengine_ft_p.h"
 #include "qx11info_x11.h"
-#include "qfontengine_x11_p.h"
 
 #ifndef QT_NO_FONTCONFIG
 #include <fontconfig/fcfreetype.h>
@@ -149,10 +148,6 @@ QFontDef qt_FcPatternToQFontDef(FcPattern *pattern, const QFontDef &request)
         fontDef.pixelSize = 12;
 
     fontDef.pointSize = qt_pointSize(fontDef.pixelSize, qRound(dpi));
-
-    /* ###
-       fontDef.styleHint
-    */
 
     int weight;
     if (FcPatternGetInteger(pattern, FC_WEIGHT, 0, &weight) != FcResultMatch)
@@ -779,27 +774,6 @@ static void initializeFontDb()
 // --------------------------------------------------------------------------------------
 
 #ifndef QT_NO_FONTCONFIG
-static const char *styleHint(const QFontDef &request)
-{
-    const char *stylehint = 0;
-    switch (request.styleHint) {
-    case QFont::SansSerif:
-        stylehint = "sans-serif";
-        break;
-    case QFont::Serif:
-        stylehint = "serif";
-        break;
-    case QFont::TypeWriter:
-        stylehint = "monospace";
-        break;
-    default:
-        if (request.fixedPitch)
-            stylehint = "monospace";
-        break;
-    }
-    return stylehint;
-}
-
 static void qt_addPatternProps(FcPattern *pattern, int screen, QUnicodeTables::Script script, const QFontDef &request)
 {
     double size_value = qMax(qreal(1.), request.pixelSize);
@@ -862,7 +836,7 @@ static void qt_addPatternProps(FcPattern *pattern, int screen, QUnicodeTables::S
 
 static bool preferScalable(const QFontDef &request)
 {
-    return request.styleStrategy & (QFont::PreferOutline|QFont::ForceOutline|QFont::PreferQuality|QFont::PreferAntialias);
+    return request.styleStrategy & (QFont::PreferOutline|QFont::ForceOutline|QFont::PreferAntialias);
 }
 
 
@@ -896,12 +870,6 @@ static FcPattern *getFcPattern(const QFontPrivate *fp, QUnicodeTables::Script sc
                 FcPatternAddWeak(pattern, FC_FOUNDRY, value, FcTrue);
             }
         }
-    }
-
-    const char *stylehint = styleHint(request);
-    if (stylehint) {
-        value.u.s = (const FcChar8 *)stylehint;
-        FcPatternAddWeak(pattern, FC_FAMILY, value, FcTrue);
     }
 
     if (!request.ignorePitch) {
@@ -985,7 +953,7 @@ special_char:
         FcPatternAddBool(match, FC_ANTIALIAS, false);
     }
 
-    QFontEngineX11FT *engine = new QFontEngineX11FT(match, qt_FcPatternToQFontDef(match, request));
+    QFontEngineFT *engine = new QFontEngineFT(qt_FcPatternToQFontDef(match, request), match);
     if (engine->invalid()) {
         FM_DEBUG("   --> invalid!\n");
         delete engine;
@@ -1098,34 +1066,31 @@ static FcPattern *queryFont(const FcChar8 *file, const QByteArray &data, int id,
   Loads a QFontEngine for the specified \a script that matches the
   QFontDef \e request member variable.
 */
-void QFontDatabase::load(const QFontPrivate *d, int script)
+QFontEngine* QFontDatabase::load(const QFontPrivate *d, int script)
 {
     Q_ASSERT(script >= 0 && script < QUnicodeTables::ScriptCount);
 
     // normalize the request to get better caching
     QFontDef req = d->request;
-    if (req.pixelSize <= 0)
+    if (req.pixelSize <= 0) {
         req.pixelSize = qFloor(qt_pixelSize(req.pointSize, d->dpi) * 100.0 + 0.5) * 0.01;
-    if (req.pixelSize < 1)
+    }
+    if (req.pixelSize < 1) {
         req.pixelSize = 1;
+    }
 
-    if (req.weight == 0)
+    if (req.weight == 0) {
         req.weight = QFont::Normal;
-    if (req.stretch == 0)
+    }
+    if (req.stretch == 0) {
         req.stretch = 100;
+    }
 
     QFontCache::Key key(req, script, d->screen);
-    if (!d->engineData)
-        getEngineData(d, key);
-
-    // the cached engineData could have already loaded the engine we want
-    if (d->engineData->engines[script])
-        return;
-
     // set it to the actual pointsize, so QFontInfo will do the right thing
-    if (req.pointSize < 0)
+    if (req.pointSize < 0) {
         req.pointSize = qt_pointSize(req.pixelSize, d->dpi);
-
+    }
 
     QFontEngine *fe = QFontCache::instance()->findEngine(key);
 
@@ -1144,9 +1109,8 @@ void QFontDatabase::load(const QFontPrivate *d, int script)
             fe->fontDef = QFontDef();
         }
     }
-    d->engineData->engines[script] = fe;
-    fe->ref.ref();
     QFontCache::instance()->insertEngine(key, fe);
+    return fe;
 }
 
 static void registerFont(QFontDatabasePrivate::ApplicationFont *fnt)

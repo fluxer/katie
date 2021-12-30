@@ -1323,9 +1323,6 @@ void QTextHtmlParserNode::applyCssDeclarations(const QVector<QCss::Declaration> 
     if (f.resolve() & QFont::StrikeOutResolved)
         charFormat.setFontStrikeOut(f.strikeOut());
 
-    if (f.resolve() & QFont::CapitalizationResolved)
-        charFormat.setFontCapitalization(f.capitalization());
-
     if (adjustment >= -1)
         charFormat.setProperty(QTextFormat::FontSizeAdjustment, adjustment);
 
