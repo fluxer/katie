@@ -87,7 +87,6 @@ struct QSvgAttributes
     QStringRef fontSize;
     QStringRef fontStyle;
     QStringRef fontWeight;
-    QStringRef fontVariant;
     QStringRef textAnchor;
     QStringRef transform;
     QStringRef visibility;
@@ -143,8 +142,6 @@ QSvgAttributes::QSvgAttributes(const QXmlStreamAttributes &xmlAttributes, QSvgHa
                     fontStyle = value;
                 else if (name == QLatin1String("font-weight"))
                     fontWeight = value;
-                else if (name == QLatin1String("font-variant"))
-                    fontVariant = value;
                 break;
 
             case 'o':
@@ -235,8 +232,6 @@ QSvgAttributes::QSvgAttributes(const QXmlStreamAttributes &xmlAttributes, QSvgHa
                 fontStyle = value;
             else if (name == QLatin1String("font-weight"))
                 fontWeight = value;
-            else if (name == QLatin1String("font-variant"))
-                fontVariant = value;
             break;
 
         case 'i':
@@ -1140,7 +1135,7 @@ static void parseFont(QSvgNode *node,
                       QSvgHandler *handler)
 {
     if (attributes.fontFamily.isEmpty() && attributes.fontSize.isEmpty() && attributes.fontStyle.isEmpty() &&
-        attributes.fontWeight.isEmpty() && attributes.fontVariant.isEmpty() && attributes.textAnchor.isEmpty())
+        attributes.fontWeight.isEmpty() && attributes.textAnchor.isEmpty())
         return;
 
     QSvgTinyDocument *doc = node->document();
@@ -1218,13 +1213,6 @@ static void parseFont(QSvgNode *node,
                 fontStyle->setWeight(QSvgFontStyle::LIGHTER);
             }
         }
-    }
-
-    if (!attributes.fontVariant.isEmpty() && attributes.fontVariant != QT_INHERIT) {
-        if (attributes.fontVariant == QLatin1String("normal"))
-            fontStyle->setVariant(QFont::MixedCase);
-        else if (attributes.fontVariant == QLatin1String("small-caps"))
-            fontStyle->setVariant(QFont::SmallCaps);
     }
 
     if (!attributes.textAnchor.isEmpty() && attributes.textAnchor != QT_INHERIT) {

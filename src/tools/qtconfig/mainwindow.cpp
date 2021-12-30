@@ -74,18 +74,7 @@ static const char *font_text = QT_TRANSLATE_NOOP("MainWindow",
 "<p>Use this tab to select the default font for your Qt applications. "
 "The selected font is shown (initially as 'Sample Text') in the line "
 "edit below the Family, "
-"Style and Point Size drop down lists.</p>"
-"<p>Qt has a powerful font substitution feature that allows you to "
-"specify a list of substitute fonts.  Substitute fonts are used "
-"when a font cannot be loaded, or if the specified font doesn't have "
-"a particular character."
-"<p>For example, if you select the font Lucida, which doesn't have Korean "
-"characters, but need to show some Korean text using the Mincho font family "
-"you can do so by adding Mincho to the list. Once Mincho is added, any "
-"Korean characters that are not found in the Lucida font will be taken "
-"from the Mincho font.  Because the font substitutions are "
-"lists, you can also select multiple families, such as Song Ti (for "
-"use with Chinese text).");
+"Style and Point Size drop down lists.</p>.");
 
 static const char *interface_text = QT_TRANSLATE_NOOP("MainWindow",
 "<p><b><font size+=2>Interface</font></b></p>"
@@ -151,12 +140,10 @@ MainWindow::MainWindow()
     // signals and slots connections
     connect(ui->fontPathLineEdit, SIGNAL(returnPressed()), SLOT(addFontpath()));
     connect(ui->addFontPathButton, SIGNAL(clicked()), SLOT(addFontpath()));
-    connect(ui->addSubstitutionButton, SIGNAL(clicked()), SLOT(addSubstitute()));
     connect(ui->browseFontPathButton, SIGNAL(clicked()), SLOT(browseFontpath()));
     connect(ui->fontStyleCombo, SIGNAL(activated(int)), SLOT(buildFont()));
     connect(ui->pointSizeCombo, SIGNAL(activated(int)), SLOT(buildFont()));
     connect(ui->downFontpathButton, SIGNAL(clicked()), SLOT(downFontpath()));
-    connect(ui->downSubstitutionButton, SIGNAL(clicked()), SLOT(downSubstitute()));
     connect(ui->fontFamilyCombo, SIGNAL(activated(QString)), SLOT(familySelected(QString)));
     connect(ui->fileExitAction, SIGNAL(triggered()), SLOT(fileExit()));
     connect(ui->fileSaveAction, SIGNAL(triggered()), SLOT(fileSave()));
@@ -165,7 +152,6 @@ MainWindow::MainWindow()
     connect(ui->mainTabWidget, SIGNAL(currentChanged(int)), SLOT(pageChanged(int)));
     connect(ui->paletteCombo, SIGNAL(activated(int)), SLOT(paletteSelected(int)));
     connect(ui->removeFontpathButton, SIGNAL(clicked()), SLOT(removeFontpath()));
-    connect(ui->removeSubstitutionButton, SIGNAL(clicked()), SLOT(removeSubstitute()));
     connect(ui->toolBoxEffectCombo, SIGNAL(activated(int)), SLOT(somethingModified()));
     connect(ui->doubleClickIntervalSpinBox, SIGNAL(valueChanged(int)), SLOT(somethingModified()));
     connect(ui->cursorFlashTimeSpinBox, SIGNAL(valueChanged(int)), SLOT(somethingModified()));
@@ -180,10 +166,8 @@ MainWindow::MainWindow()
     connect(ui->fontEmbeddingCheckBox, SIGNAL(clicked()), SLOT(somethingModified()));
     connect(ui->rtlExtensionsCheckBox, SIGNAL(toggled(bool)), SLOT(somethingModified()));
     connect(ui->guiStyleCombo, SIGNAL(activated(QString)), SLOT(styleSelected(QString)));
-    connect(ui->familySubstitutionCombo, SIGNAL(activated(QString)), SLOT(substituteSelected(QString)));
     connect(ui->tunePaletteButton, SIGNAL(clicked()), SLOT(tunePalette()));
     connect(ui->upFontpathButton, SIGNAL(clicked()), SLOT(upFontpath()));
-    connect(ui->upSubstitutionButton, SIGNAL(clicked()), SLOT(upSubstitute()));
 
     modified = true;
     desktopThemeName = tr("Desktop Settings (Default)");
@@ -224,18 +208,6 @@ MainWindow::MainWindow()
     QStringList families = db.families();
     ui->fontFamilyCombo->addItems(families);
 
-    QStringList fs = families;
-    QStringList fs2 = QFont::substitutions();
-    QStringList::Iterator fsit = fs2.begin();
-    while (fsit != fs2.end()) {
-        if (!fs.contains(*fsit))
-            fs += *fsit;
-        fsit++;
-    }
-    fs.sort();
-    ui->familySubstitutionCombo->addItems(fs);
-
-    ui->chooseSubstitutionCombo->addItems(families);
     QList<int> sizes = db.standardSizes();
     foreach(int i, sizes)
         ui->pointSizeCombo->addItem(QString::number(i));
@@ -322,10 +294,6 @@ MainWindow::MainWindow()
             break;
         }
     }
-
-    QStringList subs = QFont::substitutes(ui->familySubstitutionCombo->currentText());
-    ui->substitutionsListBox->clear();
-    ui->substitutionsListBox->insertItems(0, subs);
 
     ui->rtlExtensionsCheckBox->setChecked(settings.value(QLatin1String("Qt/useRtlExtensions"), false)
                                           .toBool());
@@ -427,14 +395,6 @@ void MainWindow::fileSave()
         } else
             effects << QLatin1String("none");
         settings.setValue(QLatin1String("Qt/GUIEffects"), effects);
-
-        QStringList familysubs = QFont::substitutions();
-        QStringList::Iterator fit = familysubs.begin();
-        while (fit != familysubs.end()) {
-            QStringList subs = QFont::substitutes(*fit);
-            settings.setValue(QLatin1String("Qt/Font Substitutions/") + *fit, subs);
-            fit++;
-        }
     }
 
 #if defined(Q_WS_X11)
@@ -541,7 +501,6 @@ void MainWindow::familySelected(const QString &family)
     QStringList styles = db.styles(family);
     ui->fontStyleCombo->clear();
     ui->fontStyleCombo->addItems(styles);
-    ui->familySubstitutionCombo->addItem(family);
     buildFont();
 }
 
@@ -552,88 +511,6 @@ void MainWindow::buildFont()
                          ui->fontStyleCombo->currentText(),
                          ui->pointSizeCombo->currentText().toInt());
     ui->sampleLineEdit->setFont(font);
-    setModified(true);
-}
-
-void MainWindow::substituteSelected(const QString &family)
-{
-    QStringList subs = QFont::substitutes(family);
-    ui->substitutionsListBox->clear();
-    ui->substitutionsListBox->insertItems(0, subs);
-}
-
-void MainWindow::removeSubstitute()
-{
-    if (!ui->substitutionsListBox->currentItem())
-        return;
-
-    int row = ui->substitutionsListBox->currentRow();
-    QStringList subs = QFont::substitutes(ui->familySubstitutionCombo->currentText());
-    subs.removeAt(ui->substitutionsListBox->currentRow());
-    ui->substitutionsListBox->clear();
-    ui->substitutionsListBox->insertItems(0, subs);
-    if (row > ui->substitutionsListBox->count())
-        row = ui->substitutionsListBox->count() - 1;
-    ui->substitutionsListBox->setCurrentRow(row);
-    QFont::removeSubstitution(ui->familySubstitutionCombo->currentText());
-    QFont::insertSubstitutions(ui->familySubstitutionCombo->currentText(), subs);
-    setModified(true);
-}
-
-void MainWindow::addSubstitute()
-{
-    if (!ui->substitutionsListBox->currentItem()) {
-        QFont::insertSubstitution(ui->familySubstitutionCombo->currentText(),
-                                  ui->chooseSubstitutionCombo->currentText());
-        QStringList subs = QFont::substitutes(ui->familySubstitutionCombo->currentText());
-        ui->substitutionsListBox->clear();
-        ui->substitutionsListBox->insertItems(0, subs);
-        setModified(true);
-        return;
-    }
-
-    int row = ui->substitutionsListBox->currentRow();
-    QFont::insertSubstitution(ui->familySubstitutionCombo->currentText(), ui->chooseSubstitutionCombo->currentText());
-    QStringList subs = QFont::substitutes(ui->familySubstitutionCombo->currentText());
-    ui->substitutionsListBox->clear();
-    ui->substitutionsListBox->insertItems(0, subs);
-    ui->substitutionsListBox->setCurrentRow(row);
-    setModified(true);
-}
-
-void MainWindow::downSubstitute()
-{
-    if (!ui->substitutionsListBox->currentItem() || ui->substitutionsListBox->currentRow() >= ui->substitutionsListBox->count())
-        return;
-
-    int row = ui->substitutionsListBox->currentRow();
-    QStringList subs = QFont::substitutes(ui->familySubstitutionCombo->currentText());
-    QString fam = subs.at(row);
-    subs.removeAt(row);
-    subs.insert(row + 1, fam);
-    ui->substitutionsListBox->clear();
-    ui->substitutionsListBox->insertItems(0, subs);
-    ui->substitutionsListBox->setCurrentRow(row + 1);
-    QFont::removeSubstitution(ui->familySubstitutionCombo->currentText());
-    QFont::insertSubstitutions(ui->familySubstitutionCombo->currentText(), subs);
-    setModified(true);
-}
-
-void MainWindow::upSubstitute()
-{
-    if (!ui->substitutionsListBox->currentItem() || ui->substitutionsListBox->currentRow() < 1)
-        return;
-
-    int row = ui->substitutionsListBox->currentRow();
-    QStringList subs = QFont::substitutes(ui->familySubstitutionCombo->currentText());
-    QString fam = subs.at(row);
-    subs.removeAt(row);
-    subs.insert(row-1, fam);
-    ui->substitutionsListBox->clear();
-    ui->substitutionsListBox->insertItems(0, subs);
-    ui->substitutionsListBox->setCurrentRow(row - 1);
-    QFont::removeSubstitution(ui->familySubstitutionCombo->currentText());
-    QFont::insertSubstitutions(ui->familySubstitutionCombo->currentText(), subs);
     setModified(true);
 }
 

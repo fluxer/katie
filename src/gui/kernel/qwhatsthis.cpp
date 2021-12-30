@@ -310,6 +310,7 @@ void QWhatsThat::paintEvent(QPaintEvent*)
     }
 }
 
+/* XPM */
 static const char * const button_image[] = {
 "16 16 3 1",
 "         c None",
@@ -467,7 +468,7 @@ private slots:
 
 QWhatsThisAction::QWhatsThisAction(QObject *parent) : QAction(tr("What's This?"), parent)
 {
-#ifndef QT_NO_IMAGEFORMAT_XPM
+#ifndef QT_NO_XPM
     QPixmap p((const char**)button_image);
     setIcon(p);
 #endif

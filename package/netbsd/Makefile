@@ -38,6 +38,7 @@ BUILD_DEPENDS = unifdef-[0-9]*:../../devel/unifdef
 .include "../../x11/libXrandr/buildlink3.mk"
 .include "../../x11/libXrender/buildlink3.mk"
 .include "../../x11/libX11/buildlink3.mk"
+.include "../../x11/libXpm/buildlink3.mk"
 .include "../../x11/libICE/buildlink3.mk"
 .include "../../x11/libSM/buildlink3.mk"
 .include "../../fonts/fontconfig/buildlink3.mk"

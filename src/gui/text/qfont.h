@@ -43,30 +43,14 @@ class Q_GUI_EXPORT QFont
     Q_GADGET
     Q_ENUMS(StyleStrategy)
 public:
-    enum StyleHint {
-        Helvetica,  SansSerif = Helvetica,
-        Times,      Serif = Times,
-        Courier,    TypeWriter = Courier,
-        OldEnglish, Decorative = OldEnglish,
-        System,
-        AnyStyle,
-        Cursive,
-        Monospace,
-        Fantasy
-    };
-
     enum StyleStrategy {
         PreferDefault       = 0x0001,
         PreferBitmap        = 0x0002,
-        PreferDevice        = 0x0004,
-        PreferOutline       = 0x0008,
-        ForceOutline        = 0x0010,
-        PreferMatch         = 0x0020,
-        PreferQuality       = 0x0040,
-        PreferAntialias     = 0x0080,
-        NoAntialias         = 0x0100,
-        ForceIntegerMetrics = 0x0200,
-        NoFontMerging       = 0x0400
+        PreferOutline       = 0x0004,
+        ForceOutline        = 0x0008,
+        PreferAntialias     = 0x0010,
+        NoAntialias         = 0x0020,
+        ForceIntegerMetrics = 0x0040
     };
 
     enum HintingPreference {
@@ -102,14 +86,6 @@ public:
         UltraExpanded  = 200
     };
 
-    enum Capitalization {
-        MixedCase,
-        AllUppercase,
-        AllLowercase,
-        SmallCaps,
-        Capitalize
-    };
-
     enum SpacingType {
         PercentageSpacing,
         AbsoluteSpacing
@@ -118,21 +94,19 @@ public:
     enum ResolveProperties {
         FamilyResolved              = 0x0001,
         SizeResolved                = 0x0002,
-        StyleHintResolved           = 0x0004,
-        StyleStrategyResolved       = 0x0008,
-        WeightResolved              = 0x0010,
-        StyleResolved               = 0x0020,
-        UnderlineResolved           = 0x0040,
-        OverlineResolved            = 0x0080,
-        StrikeOutResolved           = 0x0100,
-        FixedPitchResolved          = 0x0200,
-        StretchResolved             = 0x0400,
-        KerningResolved             = 0x0800,
-        CapitalizationResolved      = 0x1000,
-        LetterSpacingResolved       = 0x2000,
-        WordSpacingResolved         = 0x4000,
-        HintingPreferenceResolved   = 0x8000,
-        StyleNameResolved           = 0x10000,
+        StyleStrategyResolved       = 0x0004,
+        WeightResolved              = 0x0008,
+        StyleResolved               = 0x0010,
+        UnderlineResolved           = 0x0020,
+        OverlineResolved            = 0x0040,
+        StrikeOutResolved           = 0x0080,
+        FixedPitchResolved          = 0x0100,
+        StretchResolved             = 0x0200,
+        KerningResolved             = 0x0400,
+        LetterSpacingResolved       = 0x0800,
+        WordSpacingResolved         = 0x1000,
+        HintingPreferenceResolved   = 0x2000,
+        StyleNameResolved           = 0x4000,
         AllPropertiesResolved       = 0x1ffff
     };
 
@@ -183,9 +157,7 @@ public:
     bool kerning() const;
     void setKerning(bool);
 
-    StyleHint styleHint() const;
     StyleStrategy styleStrategy() const;
-    void setStyleHint(StyleHint, StyleStrategy = PreferDefault);
     void setStyleStrategy(StyleStrategy s);
 
     int stretch() const;
@@ -197,9 +169,6 @@ public:
 
     qreal wordSpacing() const;
     void setWordSpacing(qreal spacing);
-
-    void setCapitalization(Capitalization);
-    Capitalization capitalization() const;
 
     void setHintingPreference(HintingPreference hintingPreference);
     HintingPreference hintingPreference() const;
@@ -228,12 +197,6 @@ public:
     QString toString() const;
     bool fromString(const QString &);
 
-    static QString substitute(const QString &);
-    static QStringList substitutes(const QString &);
-    static QStringList substitutions();
-    static void insertSubstitution(const QString&, const QString &);
-    static void insertSubstitutions(const QString&, const QStringList &);
-    static void removeSubstitution(const QString &);
     static void initialize();
     static void cleanup();
 

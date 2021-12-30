@@ -99,8 +99,7 @@ bool QFontDef::exactMatch(const QFontDef &other) const
     QFontDatabase::parseFontName(family, this_foundry, this_family);
     QFontDatabase::parseFontName(other.family, other_foundry, other_family);
 
-    return (styleHint     == other.styleHint
-            && styleStrategy == other.styleStrategy
+    return (styleStrategy == other.styleStrategy
             && weight        == other.weight
             && style        == other.style
             && this_family   == other_family
@@ -112,84 +111,37 @@ bool QFontDef::exactMatch(const QFontDef &other) const
 }
 
 QFontPrivate::QFontPrivate()
-    : engineData(0), dpi(QX11Info::appDpiY()), screen(QX11Info::appScreen()),
+    : engine(nullptr), dpi(QX11Info::appDpiY()), screen(QX11Info::appScreen()),
       underline(false), overline(false), strikeOut(false), kerning(true),
-      capital(QFont::MixedCase), letterSpacingIsAbsolute(false), scFont(0)
+      letterSpacingIsAbsolute(false)
 {
 }
 
 QFontPrivate::QFontPrivate(const QFontPrivate &other)
-    : request(other.request), engineData(0), dpi(other.dpi), screen(other.screen),
+    : request(other.request), engine(other.engine), dpi(other.dpi), screen(other.screen),
       underline(other.underline), overline(other.overline),
       strikeOut(other.strikeOut), kerning(other.kerning),
-      capital(other.capital), letterSpacingIsAbsolute(other.letterSpacingIsAbsolute),
-      letterSpacing(other.letterSpacing), wordSpacing(other.wordSpacing),
-      scFont(other.scFont)
+      letterSpacingIsAbsolute(other.letterSpacingIsAbsolute),
+      letterSpacing(other.letterSpacing), wordSpacing(other.wordSpacing)
 {
-    if (scFont && scFont != this)
-        scFont->ref.ref();
+    if (engine) {
+        engine->ref.ref();
+    }
 }
 
 QFontPrivate::~QFontPrivate()
 {
-    if (engineData && !engineData->ref.deref())
-        delete engineData;
-    engineData = 0;
-    if (scFont && scFont != this)
-        scFont->ref.deref();
-    scFont = 0;
+    if (engine) {
+        engine->ref.deref();
+    }
 }
-
-extern std::recursive_mutex &qt_fontdatabase_mutex();
 
 QFontEngine *QFontPrivate::engineForScript(QUnicodeTables::Script script) const
 {
-    std::lock_guard<std::recursive_mutex> locker(qt_fontdatabase_mutex());
     if (script > QUnicodeTables::ScriptCount)
         script = QUnicodeTables::Common;
-    if (engineData && engineData->fontCache != QFontCache::instance()) {
-        // throw out engineData that came from a different thread
-        if (!engineData->ref.deref())
-            delete engineData;
-        engineData = 0;
-    }
-    if (!engineData || !engineData->engines[script])
-        QFontDatabase::load(this, script);
-    return engineData->engines[script];
+    return QFontDatabase::load(this, script);
 }
-
-void QFontPrivate::alterCharForCapitalization(QChar &c) const {
-    switch (capital) {
-        case QFont::AllUppercase:
-        case QFont::SmallCaps:
-            c = c.toUpper();
-            break;
-        case QFont::AllLowercase:
-            c = c.toLower();
-            break;
-        // handled by the text engine
-        case QFont::MixedCase:
-        case QFont::Capitalize:
-            break;
-    }
-}
-
-QFontPrivate *QFontPrivate::smallCapsFontPrivate() const
-{
-    if (scFont)
-        return scFont;
-    QFont font(const_cast<QFontPrivate *>(this));
-    qreal pointSize = font.pointSizeF();
-    if (pointSize > 0)
-        font.setPointSizeF(pointSize * .7);
-    else
-        font.setPixelSize((font.pixelSize() * 7 + 5) / 10);
-    scFont = font.d.data();
-    if (scFont != this)
-        scFont->ref.ref();
-    return scFont;
-}
-
 
 void QFontPrivate::resolve(uint mask, const QFontPrivate *other)
 {
@@ -210,9 +162,6 @@ void QFontPrivate::resolve(uint mask, const QFontPrivate *other)
         request.pointSize = other->request.pointSize;
         request.pixelSize = other->request.pixelSize;
     }
-
-    if (! (mask & QFont::StyleHintResolved))
-        request.styleHint = other->request.styleHint;
 
     if (! (mask & QFont::StyleStrategyResolved))
         request.styleStrategy = other->request.styleStrategy;
@@ -250,30 +199,7 @@ void QFontPrivate::resolve(uint mask, const QFontPrivate *other)
     }
     if (! (mask & QFont::WordSpacingResolved))
         wordSpacing = other->wordSpacing;
-    if (! (mask & QFont::CapitalizationResolved))
-        capital = other->capital;
 }
-
-
-
-
-QFontEngineData::QFontEngineData()
-    : ref(1), fontCache(QFontCache::instance())
-{
-    memset(engines, 0, QUnicodeTables::ScriptCount * sizeof(QFontEngine *));
-}
-
-QFontEngineData::~QFontEngineData()
-{
-    for (int i = 0; i < QUnicodeTables::ScriptCount; ++i) {
-        if (engines[i] && !engines[i]->ref.deref())
-            delete engines[i];
-        engines[i] = 0;
-    }
-}
-
-
-
 
 /*!
     \class QFont
@@ -324,18 +250,11 @@ QFontEngineData::~QFontEngineData()
 
     If the requested font family is unavailable you can influence the
     \link #fontmatching font matching algorithm\endlink by choosing a
-    particular \l{QFont::StyleHint} and \l{QFont::StyleStrategy} with
-    setStyleHint(). The default family (corresponding to the current
-    style hint) is returned by defaultFamily().
+    particular \l{QFont::StyleStrategy} with setStyleStrategy(). The
+    default family is returned by defaultFamily().
 
     The font-matching algorithm has a lastResortFamily() and
     lastResortFont() in cases where a suitable match cannot be found.
-    You can provide substitutions for font family names using
-    insertSubstitution() and insertSubstitutions(). Substitutions can
-    be removed with removeSubstitution(). Use substitute() to retrieve
-    a family's first substitute, or the family name itself if it has
-    no substitutes. Use substitutes() to retrieve a list of a family's
-    substitutes (which may be empty).
 
     Every QFont has a key() which you can use, for example, as the key
     in a cache or dictionary. If you want to store a user's font
@@ -358,13 +277,10 @@ QFontEngineData::~QFontEngineData()
     The font matching algorithm works as follows:
     \list 1
     \o The specified font family is searched for.
-    \o If not found, the styleHint() is used to select a replacement
-       family.
     \o Each replacement font family is searched for.
-    \o If none of these are found or there was no styleHint(), "helvetica"
-       will be searched for.
-    \o If "helvetica" isn't found Qt will try the lastResortFamily().
-    \o If the lastResortFamily() isn't found Qt will try the
+    \o If none of these are found "helvetica" will be searched for.
+    \o If "helvetica" isn't found Katie will try the lastResortFamily().
+    \o If the lastResortFamily() isn't found Katie will try the
        lastResortFont() which will always return a name of some kind.
     \endlist
 
@@ -438,7 +354,6 @@ QFontEngineData::~QFontEngineData()
 
     \value FamilyResolved
     \value SizeResolved
-    \value StyleHintResolved
     \value StyleStrategyResolved
     \value WeightResolved
     \value StyleResolved
@@ -448,7 +363,6 @@ QFontEngineData::~QFontEngineData()
     \value FixedPitchResolved
     \value StretchResolved
     \value KerningResolved
-    \value CapitalizationResolved
     \value LetterSpacingResolved
     \value WordSpacingResolved
     \value CompletelyResolved
@@ -504,10 +418,7 @@ QFontEngineData::~QFontEngineData()
 /*!
     \fn QString QFont::defaultFamily() const
 
-    Returns the family name that corresponds to the current style
-    hint.
-
-    \sa StyleHint styleHint() setStyleHint()
+    Returns the family name that corresponds to the current style.
 */
 
 /*!
@@ -569,12 +480,6 @@ QFont::QFont(QFontPrivate *data)
 void QFont::detach()
 {
     if (d->ref == 1) {
-        if (d->engineData && !d->engineData->ref.deref())
-            delete d->engineData;
-        d->engineData = 0;
-        if (d->scFont && d->scFont != d.data())
-            d->scFont->ref.deref();
-        d->scFont = 0;
         return;
     }
 
@@ -607,7 +512,7 @@ QFont::QFont()
     algorithm.
 
     \sa Weight, setFamily(), setPointSize(), setWeight(), setItalic(),
-    setStyleHint() QApplication::font()
+    QApplication::font()
 */
 QFont::QFont(const QString &family, int pointSize, int weight, bool italic)
     : d(new QFontPrivate()), resolve_mask(QFont::FamilyResolved)
@@ -663,7 +568,7 @@ QFont &QFont::operator=(const QFont &font)
     Returns the requested font family name, i.e. the name set in the
     constructor or the last setFont() call.
 
-    \sa setFamily() substitutes() substitute()
+    \sa setFamily()
 */
 QString QFont::family() const
 {
@@ -681,7 +586,7 @@ QString QFont::family() const
     available a family will be set using the \l{QFont}{font matching}
     algorithm.
 
-    \sa family(), setStyleHint(), QFontInfo
+    \sa family(), QFontInfo
 */
 void QFont::setFamily(const QString &family)
 {
@@ -1136,60 +1041,11 @@ void QFont::setKerning(bool enable)
 
     The style strategy affects the \l{QFont}{font matching} algorithm.
     See \l QFont::StyleStrategy for the list of available strategies.
-
-    \sa setStyleHint() QFont::StyleHint
 */
 QFont::StyleStrategy QFont::styleStrategy() const
 {
     return d->request.styleStrategy;
 }
-
-/*!
-    Returns the StyleHint.
-
-    The style hint affects the \l{QFont}{font matching} algorithm.
-    See \l QFont::StyleHint for the list of available hints.
-
-    \sa setStyleHint(), QFont::StyleStrategy QFontInfo::styleHint()
-*/
-QFont::StyleHint QFont::styleHint() const
-{
-    return d->request.styleHint;
-}
-
-/*!
-    \enum QFont::StyleHint
-
-    Style hints are used by the \l{QFont}{font matching} algorithm to
-    find an appropriate default family if a selected font family is
-    not available.
-
-    \value AnyStyle leaves the font matching algorithm to choose the
-           family. This is the default.
-
-    \value SansSerif the font matcher prefer sans serif fonts.
-    \value Helvetica is a synonym for \c SansSerif.
-
-    \value Serif the font matcher prefers serif fonts.
-    \value Times is a synonym for \c Serif.
-
-    \value TypeWriter the font matcher prefers fixed pitch fonts.
-    \value Courier a synonym for \c TypeWriter.
-
-    \value OldEnglish the font matcher prefers decorative fonts.
-    \value Decorative is a synonym for \c OldEnglish.
-
-    \value Monospace the font matcher prefers fonts that map to the
-    CSS generic font-family 'monospace'.
-
-    \value Fantasy the font matcher prefers fonts that map to the
-    CSS generic font-family 'fantasy'.
-
-    \value Cursive the font matcher prefers fonts that map to the
-    CSS generic font-family 'cursive'.
-
-    \value System the font matcher prefers system fonts.
-*/
 
 /*!
     \enum QFont::StyleStrategy
@@ -1204,53 +1060,16 @@ QFont::StyleHint QFont::styleHint() const
            any type of font.
     \value PreferBitmap prefers bitmap fonts (as opposed to outline
            fonts).
-    \value PreferDevice prefers device fonts.
     \value PreferOutline prefers outline fonts (as opposed to bitmap fonts).
     \value ForceOutline forces the use of outline fonts.
     \value NoAntialias don't antialias the fonts.
     \value PreferAntialias antialias if possible.
-    \value NoFontMerging If the font selected for a certain writing system
-           does not contain a character requested to draw, then Qt automatically chooses a similar
-           looking font that contains the character. The NoFontMerging flag disables this feature.
-           Please note that enabling this flag will not prevent Qt from automatically picking a
-           suitable font when the selected font does not support the writing system of the text.
 
     Any of these may be OR-ed with one of these flags:
 
-    \value PreferMatch prefer an exact match. The font matcher will try to
-           use the exact font size that has been specified.
-    \value PreferQuality prefer the best quality font. The font matcher
-           will use the nearest standard point size that the font
-           supports.
     \value ForceIntegerMetrics forces the use of integer values in font engines that support fractional
            font metrics.
 */
-
-/*!
-    Sets the style hint and strategy to \a hint and \a strategy,
-    respectively.
-
-    If these aren't set explicitly the style hint will default to
-    \c AnyStyle and the style strategy to \c PreferDefault.
-
-    Qt does not support style hints on X11 since this information
-    is not provided by the window system.
-
-    \sa StyleHint, styleHint(), StyleStrategy, styleStrategy(), QFontInfo
-*/
-void QFont::setStyleHint(StyleHint hint, StyleStrategy strategy)
-{
-    detach();
-
-    if ((resolve_mask & (QFont::StyleHintResolved | QFont::StyleStrategyResolved)) &&
-         d->request.styleHint == hint && d->request.styleStrategy == strategy)
-        return;
-
-    d->request.styleHint = hint;
-    d->request.styleStrategy = strategy;
-    resolve_mask |= QFont::StyleHintResolved;
-    resolve_mask |= QFont::StyleStrategyResolved;
-}
 
 /*!
     Sets the style strategy for the font to \a s.
@@ -1426,51 +1245,6 @@ void QFont::setWordSpacing(qreal spacing)
 }
 
 /*!
-    \enum QFont::Capitalization
-    \since 4.4
-
-    Rendering option for text this font applies to.
-
-
-    \value MixedCase    This is the normal text rendering option where no capitalization change is applied.
-    \value AllUppercase This alters the text to be rendered in all uppercase type.
-    \value AllLowercase This alters the text to be rendered in all lowercase type.
-    \value SmallCaps    This alters the text to be rendered in small-caps type.
-    \value Capitalize   This alters the text to be rendered with the first character of each word as an uppercase character.
-*/
-
-/*!
-    \since 4.4
-    Sets the capitalization of the text in this font to \a caps.
-
-    A font's capitalization makes the text appear in the selected capitalization mode.
-
-    \sa capitalization()
-*/
-void QFont::setCapitalization(Capitalization caps)
-{
-    if ((resolve_mask & QFont::CapitalizationResolved) &&
-        d->capital == caps)
-        return;
-
-    detach();
-
-    d->capital = caps;
-    resolve_mask |= QFont::CapitalizationResolved;
-}
-
-/*!
-    \since 4.4
-    Returns the current capitalization type of the font.
-
-    \sa setCapitalization()
-*/
-QFont::Capitalization QFont::capitalization() const
-{
-    return d->capital;
-}
-
-/*!
     Returns true if a window system font exactly matching the settings
     of this font is available.
 
@@ -1501,7 +1275,6 @@ bool QFont::operator==(const QFont &f) const
                 && f.d->overline  == d->overline
                 && f.d->strikeOut == d->strikeOut
                 && f.d->kerning == d->kerning
-                && f.d->capital == d->capital
                 && f.d->letterSpacingIsAbsolute == d->letterSpacingIsAbsolute
                 && f.d->letterSpacing == d->letterSpacing
                 && f.d->wordSpacing == d->wordSpacing
@@ -1531,10 +1304,8 @@ bool QFont::operator<(const QFont &f) const
     if (r1.weight != r2.weight) return r1.weight < r2.weight;
     if (r1.style != r2.style) return r1.style < r2.style;
     if (r1.stretch != r2.stretch) return r1.stretch < r2.stretch;
-    if (r1.styleHint != r2.styleHint) return r1.styleHint < r2.styleHint;
     if (r1.styleStrategy != r2.styleStrategy) return r1.styleStrategy < r2.styleStrategy;
     if (r1.family != r2.family) return r1.family < r2.family;
-    if (f.d->capital != d->capital) return f.d->capital < d->capital;
 
     if (f.d->letterSpacingIsAbsolute != d->letterSpacingIsAbsolute) return f.d->letterSpacingIsAbsolute < d->letterSpacingIsAbsolute;
     if (f.d->letterSpacing != d->letterSpacing) return f.d->letterSpacing < d->letterSpacing;
@@ -1611,134 +1382,6 @@ QFont QFont::resolve(const QFont &other) const
     \internal
 */
 
-
-
-
-
-/*****************************************************************************
-  QFont substitution management
- *****************************************************************************/
-
-typedef QHash<QString, QStringList> QFontSubst;
-Q_GLOBAL_STATIC(QFontSubst, globalFontSubst)
-
-static const struct FontSubstitutesTblData {
-    const QLatin1String original;
-    const QLatin1String substitute;
-} FontSubstitutesTbl[] = {
-    { QLatin1String("arial"), QLatin1String("helvetica") },
-    { QLatin1String("times new roman"), QLatin1String("times") },
-    { QLatin1String("courier new"), QLatin1String("courier") },
-    { QLatin1String("sans serif"), QLatin1String("helvetica") },
-};
-static const qint16 FontSubstitutesTblSize = sizeof(FontSubstitutesTbl) / sizeof(FontSubstitutesTblData);
-
-// create substitution dict
-static void initFontSubst()
-{
-#if !defined(QT_NO_FONTCONFIG)
-    if (qt_x11Data->has_fontconfig)
-        return;
-#endif
-
-    QFontSubst *fontSubst = globalFontSubst();
-    Q_ASSERT(fontSubst != 0);
-    if (!fontSubst->isEmpty())
-        return;
-
-    for (qint16 i = 0; i < FontSubstitutesTblSize; i++) {
-        QStringList &list = (*fontSubst)[FontSubstitutesTbl[i].original];
-        list.append(FontSubstitutesTbl[i].substitute);
-    }
-}
-
-/*!
-    Returns the first family name to be used whenever \a familyName is
-    specified. The lookup is case insensitive.
-
-    If there is no substitution for \a familyName, \a familyName is
-    returned.
-
-    To obtain a list of substitutions use substitutes().
-
-    \sa setFamily() insertSubstitutions() insertSubstitution() removeSubstitution()
-*/
-QString QFont::substitute(const QString &familyName)
-{
-    initFontSubst();
-
-    QFontSubst *fontSubst = globalFontSubst();
-    Q_ASSERT(fontSubst != 0);
-    QFontSubst::ConstIterator it = fontSubst->constFind(familyName.toLower());
-    if (it != fontSubst->constEnd() && !(*it).isEmpty())
-        return (*it).first();
-
-    return familyName;
-}
-
-
-/*!
-    Returns a list of family names to be used whenever \a familyName
-    is specified. The lookup is case insensitive.
-
-    If there is no substitution for \a familyName, an empty list is
-    returned.
-
-    \sa substitute() insertSubstitutions() insertSubstitution() removeSubstitution()
- */
-QStringList QFont::substitutes(const QString &familyName)
-{
-    initFontSubst();
-
-    QFontSubst *fontSubst = globalFontSubst();
-    Q_ASSERT(fontSubst != 0);
-    return fontSubst->value(familyName.toLower(), QStringList());
-}
-
-
-/*!
-    Inserts \a substituteName into the substitution
-    table for the family \a familyName.
-
-    \sa insertSubstitutions() removeSubstitution() substitutions() substitute() substitutes()
-*/
-void QFont::insertSubstitution(const QString &familyName,
-                               const QString &substituteName)
-{
-    initFontSubst();
-
-    QFontSubst *fontSubst = globalFontSubst();
-    Q_ASSERT(fontSubst != 0);
-    QStringList &list = (*fontSubst)[familyName.toLower()];
-    QString s = substituteName.toLower();
-    if (!list.contains(s))
-        list.append(s);
-}
-
-
-/*!
-    Inserts the list of families \a substituteNames into the
-    substitution list for \a familyName.
-
-    \sa insertSubstitution(), removeSubstitution(), substitutions(), substitute()
-*/
-void QFont::insertSubstitutions(const QString &familyName,
-                                const QStringList &substituteNames)
-{
-    initFontSubst();
-
-    QFontSubst *fontSubst = globalFontSubst();
-    Q_ASSERT(fontSubst != 0);
-    QStringList &list = (*fontSubst)[familyName.toLower()];
-    QStringList::ConstIterator it = substituteNames.constBegin();
-    while (it != substituteNames.constEnd()) {
-        QString s = (*it).toLower();
-        if (!list.contains(s))
-            list.append(s);
-        it++;
-    }
-}
-
 /*! \fn void QFont::initialize()
   \internal
 
@@ -1752,46 +1395,6 @@ void QFont::insertSubstitutions(const QString &familyName,
 
   Internal function that cleans up the font system.
 */
-
-// ### mark: should be called removeSubstitutions()
-/*!
-    Removes all the substitutions for \a familyName.
-
-    \sa insertSubstitutions(), insertSubstitution(), substitutions(), substitute()
-*/
-void QFont::removeSubstitution(const QString &familyName)
-{ // ### function name should be removeSubstitutions() or
-  // ### removeSubstitutionList()
-    initFontSubst();
-
-    QFontSubst *fontSubst = globalFontSubst();
-    Q_ASSERT(fontSubst != 0);
-    fontSubst->remove(familyName.toLower());
-}
-
-
-/*!
-    Returns a sorted list of substituted family names.
-
-    \sa insertSubstitution(), removeSubstitution(), substitute()
-*/
-QStringList QFont::substitutions()
-{
-    initFontSubst();
-
-    QFontSubst *fontSubst = globalFontSubst();
-    Q_ASSERT(fontSubst != 0);
-    QStringList ret;
-    QFontSubst::ConstIterator it = fontSubst->constBegin();
-
-    while (it != fontSubst->constEnd()) {
-        ret.append(it.key());
-        ++it;
-    }
-
-    ret.sort();
-    return ret;
-}
 
 
 /*  \internal
@@ -1882,7 +1485,6 @@ QString QFont::toString() const
     return family() + comma +
         QString::number(     pointSizeF()) + comma +
         QString::number(      pixelSize()) + comma +
-        QString::number((int) styleHint()) + comma +
         QString::number(         weight()) + comma +
         QString::number((int)     style()) + comma +
         QString::number((int) underline()) + comma +
@@ -1903,7 +1505,7 @@ bool QFont::fromString(const QString &descrip)
     QStringList l(descrip.split(QLatin1Char(',')));
 
     int count = l.count();
-    if (!count || count > 9) {
+    if (!count || count > 8) {
         qWarning("QFont::fromString: Invalid description '%s'",
                  descrip.isEmpty() ? "(empty)" : descrip.toLatin1().data());
         return false;
@@ -1912,15 +1514,14 @@ bool QFont::fromString(const QString &descrip)
     setFamily(l[0]);
     if (count > 1 && l[1].toDouble() > 0.0)
         setPointSizeF(l[1].toDouble());
-    if (count == 9) {
+    if (count == 8) {
         if (l[2].toInt() > 0)
             setPixelSize(l[2].toInt());
-        setStyleHint((StyleHint) l[3].toInt());
-        setWeight(qMax(qMin(99, l[4].toInt()), 0));
-        setItalic(l[5].toInt());
-        setUnderline(l[6].toInt());
-        setStrikeOut(l[7].toInt());
-        setFixedPitch(l[8].toInt());
+        setWeight(qMax(qMin(99, l[3].toInt()), 0));
+        setItalic(l[4].toInt());
+        setUnderline(l[5].toInt());
+        setStrikeOut(l[6].toInt());
+        setFixedPitch(l[7].toInt());
 
         if (!d->request.fixedPitch) // assume 'false' fixedPitch equals default
             d->request.ignorePitch = true;
@@ -1952,7 +1553,6 @@ QDataStream &operator<<(QDataStream &s, const QFont &font)
     s << pointSize;
     s << pixelSize;
 
-    s << (qint8) font.d->request.styleHint;
     s << (qint8) font.d->request.styleStrategy;
     s << (qint8) font.d->request.weight
       << get_font_bits(s.version(), font.d.data());
@@ -1977,7 +1577,7 @@ QDataStream &operator>>(QDataStream &s, QFont &font)
     font.d = new QFontPrivate;
     font.resolve_mask = QFont::AllPropertiesResolved;
 
-    qint8 styleHint, styleStrategy = QFont::PreferDefault, bits;
+    qint8 styleStrategy = QFont::PreferDefault, bits;
     qint8 weight;
 
     s >> font.d->request.family;
@@ -1988,13 +1588,11 @@ QDataStream &operator>>(QDataStream &s, QFont &font)
     s >> pixelSize;
     font.d->request.pointSize = qreal(pointSize);
     font.d->request.pixelSize = qreal(pixelSize);
-    s >> styleHint;
     s >> styleStrategy;
 
     s >> weight;
     s >> bits;
 
-    font.d->request.styleHint = QFont::StyleHint(styleHint);
     font.d->request.styleStrategy = QFont::StyleStrategy(styleStrategy);
     font.d->request.weight = weight;
 
@@ -2035,9 +1633,9 @@ QDataStream &operator>>(QDataStream &s, QFont &font)
 
     The QFontInfo class provides the same access functions as QFont,
     e.g. family(), pointSize(), italic(), weight(), fixedPitch(),
-    styleHint() etc. But whilst the QFont access functions return the
-    values that were set, a QFontInfo object returns the values that
-    apply to the font that will actually be used to draw the text.
+    etc. But whilst the QFont access functions return the values that
+    were set, a QFontInfo object returns the values that apply to
+    the font that will actually be used to draw the text.
 
     For example, when the program asks for a 25pt Courier font on a
     machine that has a non-scalable 24pt Courier font, QFont will
@@ -2278,20 +1876,6 @@ bool QFontInfo::fixedPitch() const
 }
 
 /*!
-    Returns the style of the matched window system font.
-
-    Currently only returns the style hint set in QFont.
-
-    \sa QFont::styleHint() QFont::StyleHint
-*/
-QFont::StyleHint QFontInfo::styleHint() const
-{
-    QFontEngine *engine = d->engineForScript(QUnicodeTables::Common);
-    Q_ASSERT(engine != 0);
-    return engine->fontDef.styleHint;
-}
-
-/*!
     Returns true if the matched window system font is exactly the same
     as the one specified by the font; otherwise returns false.
 
@@ -2309,19 +1893,6 @@ bool QFontInfo::exactMatch() const
 
 // **********************************************************************
 // QFontCache
-// **********************************************************************
-
-#ifdef QFONTCACHE_DEBUG
-// fast timeouts for debugging
-static const int fast_timeout =   1000;  // 1s
-static const int slow_timeout =   5000;  // 5s
-#else
-static const int fast_timeout =  10000; // 10s
-static const int slow_timeout = 300000; //  5m
-#endif // QFONTCACHE_DEBUG
-
-const uint QFontCache::min_cost = 4*1024; // 4mb
-
 thread_local QFontCache* theFontCache = nullptr;
 
 QFontCache *QFontCache::instance()
@@ -2340,8 +1911,6 @@ void QFontCache::cleanup()
 }
 
 QFontCache::QFontCache()
-    : QObject(), total_cost(0), max_cost(min_cost),
-      current_timestamp(0), fast(false), timer_id(-1)
 {
 }
 
@@ -2349,8 +1918,8 @@ QFontCache::~QFontCache()
 {
     clear();
     {
-        EngineDataCache::ConstIterator it = engineDataCache.constBegin(),
-                                 end = engineDataCache.constEnd();
+        EngineCache::ConstIterator it = engineCache.constBegin(),
+                                 end = engineCache.constEnd();
         while (it != end) {
             if (!it.value()->ref.deref())
                 delete it.value();
@@ -2364,305 +1933,38 @@ QFontCache::~QFontCache()
 
 void QFontCache::clear()
 {
-    {
-        EngineDataCache::Iterator it = engineDataCache.begin(),
-                                 end = engineDataCache.end();
-        while (it != end) {
-            QFontEngineData *data = it.value();
-            for (int i = 0; i < QUnicodeTables::ScriptCount; ++i) {
-                if (data->engines[i] && !data->engines[i]->ref.deref())
-                    delete data->engines[i];
-                data->engines[i] = 0;
-            }
-            ++it;
-        }
-    }
-
     for (EngineCache::Iterator it = engineCache.begin(), end = engineCache.end();
          it != end; ++it) {
-        if (!it->data->ref.deref()) {
-            delete it->data;
-            it->data = 0;
+        QFontEngine *engine = it.value();
+        if (!engine->ref.deref()) {
+            delete engine;
         }
     }
 
     engineCache.clear();
 }
 
-
-QFontEngineData *QFontCache::findEngineData(const Key &key) const
-{
-    EngineDataCache::ConstIterator it = engineDataCache.find(key),
-                                  end = engineDataCache.end();
-    if (it == end) return 0;
-
-    // found
-    return it.value();
-}
-
-void QFontCache::insertEngineData(const Key &key, QFontEngineData *engineData)
-{
-    FC_DEBUG("QFontCache: inserting new engine data %p", engineData);
-
-    Q_ASSERT(!engineDataCache.contains(key));
-    engineData->ref.ref(); // the cache has a reference
-    engineDataCache.insert(key, engineData);
-    increaseCost(sizeof(QFontEngineData));
-}
-
 QFontEngine *QFontCache::findEngine(const Key &key)
 {
     EngineCache::Iterator it = engineCache.find(key),
                          end = engineCache.end();
-    if (it == end) return 0;
-
-    // found... update the hitcount and timestamp
-    it.value().hits++;
-    it.value().timestamp = ++current_timestamp;
+    if (it == end) {
+        return nullptr;
+    }
 
     FC_DEBUG("QFontCache: found font engine\n"
-             "  %p: timestamp %4u hits %3u ref %2d/%2d, type '%s'",
-             it.value().data, it.value().timestamp, it.value().hits,
-             int(it.value().data->ref), it.value().data->cache_count,
-             it.value().data->name());
+             "  %p: ref %2d, type '%s'",
+             it.value(), int(it.value()->ref), it.value()->name());
 
-    return it.value().data;
+    return it.value();
 }
 
 void QFontCache::insertEngine(const Key &key, QFontEngine *engine)
 {
     FC_DEBUG("QFontCache: inserting new engine %p", engine);
 
-    Engine data(engine);
-    data.timestamp = ++current_timestamp;
-
-    QFontEngine *oldEngine = engineCache.value(key).data;
-    engine->ref.ref(); // the cache has a reference
-    if (oldEngine && !oldEngine->ref.deref())
-        delete oldEngine;
-
-    engineCache.insert(key, data);
-
-    // only increase the cost if this is the first time we insert the engine
-    if (engine->cache_count == 0)
-        increaseCost(engine->cache_cost);
-
-    ++engine->cache_count;
+    engineCache.insert(key, engine);
 }
-
-void QFontCache::increaseCost(uint cost)
-{
-    cost = (cost + 512) / 1024; // store cost in kb
-    cost = cost > 0 ? cost : 1;
-    total_cost += cost;
-
-    FC_DEBUG("  COST: increased %u kb, total_cost %u kb, max_cost %u kb",
-            cost, total_cost, max_cost);
-
-    if (total_cost > max_cost) {
-        max_cost = total_cost;
-
-        if (timer_id == -1 || ! fast) {
-            FC_DEBUG("  TIMER: starting fast timer (%d ms)", fast_timeout);
-
-            if (timer_id != -1) killTimer(timer_id);
-            timer_id = startTimer(fast_timeout);
-            fast = true;
-        }
-    }
-}
-
-void QFontCache::decreaseCost(uint cost)
-{
-    cost = (cost + 512) / 1024; // cost is stored in kb
-    cost = cost > 0 ? cost : 1;
-    Q_ASSERT(cost <= total_cost);
-    total_cost -= cost;
-
-    FC_DEBUG("  COST: decreased %u kb, total_cost %u kb, max_cost %u kb",
-            cost, total_cost, max_cost);
-}
-
-void QFontCache::timerEvent(QTimerEvent *)
-{
-    FC_DEBUG("QFontCache::timerEvent: performing cache maintenance (timestamp %u)",
-              current_timestamp);
-
-    if (total_cost <= max_cost && max_cost <= min_cost) {
-        FC_DEBUG("  cache redused sufficiently, stopping timer");
-
-        killTimer(timer_id);
-        timer_id = -1;
-        fast = false;
-
-        return;
-    }
-
-    // go through the cache and count up everything in use
-    uint in_use_cost = 0;
-
-    {
-        FC_DEBUG("  SWEEP engine data:");
-
-        // make sure the cost of each engine data is at least 1kb
-        const uint engine_data_cost =
-            sizeof(QFontEngineData) > 1024 ? sizeof(QFontEngineData) : 1024;
-
-        EngineDataCache::ConstIterator it = engineDataCache.constBegin(),
-                                      end = engineDataCache.constEnd();
-        for (; it != end; ++it) {
-#ifdef QFONTCACHE_DEBUG
-            FC_DEBUG("    %p: ref %2d", it.value(), int(it.value()->ref));
-
-#  if defined(Q_WS_X11)
-            // print out all engines
-            for (int i = 0; i < QUnicodeTables::ScriptCount; ++i) {
-                if (! it.value()->engines[i])
-                    continue;
-                FC_DEBUG("      contains %p", it.value()->engines[i]);
-            }
-#  endif // Q_WS_X11
-#endif // QFONTCACHE_DEBUG
-
-            if (it.value()->ref > 1)
-                in_use_cost += engine_data_cost;
-        }
-    }
-
-    {
-        FC_DEBUG("  SWEEP engine:");
-
-        EngineCache::ConstIterator it = engineCache.constBegin(),
-                                  end = engineCache.constEnd();
-        for (; it != end; ++it) {
-            FC_DEBUG("    %p: timestamp %4u hits %2u ref %2d/%2d, cost %u bytes",
-                     it.value().data, it.value().timestamp, it.value().hits,
-                     int(it.value().data->ref), it.value().data->cache_count,
-                     it.value().data->cache_cost);
-
-            if (it.value().data->ref > 1)
-                in_use_cost += it.value().data->cache_cost / it.value().data->cache_count;
-        }
-
-        // attempt to make up for rounding errors
-        in_use_cost += engineCache.size();
-    }
-
-    in_use_cost = (in_use_cost + 512) / 1024; // cost is stored in kb
-
-    /*
-      calculate the new maximum cost for the cache
-
-      NOTE: in_use_cost is *not* correct due to rounding errors in the
-      above algorithm.  instead of worrying about getting the
-      calculation correct, we are more interested in speed, and use
-      in_use_cost as a floor for new_max_cost
-    */
-    uint new_max_cost = qMax(qMax(max_cost / 2, in_use_cost), min_cost);
-
-    FC_DEBUG("  after sweep, in use %u kb, total %u kb, max %u kb, new max %u kb",
-              in_use_cost, total_cost, max_cost, new_max_cost);
-
-    if (new_max_cost == max_cost) {
-        if (fast) {
-            FC_DEBUG("  cannot shrink cache, slowing timer");
-
-            killTimer(timer_id);
-            timer_id = startTimer(slow_timeout);
-            fast = false;
-        }
-
-        return;
-    } else if (! fast) {
-        FC_DEBUG("  dropping into passing gear");
-
-        killTimer(timer_id);
-        timer_id = startTimer(fast_timeout);
-        fast = true;
-    }
-
-    max_cost = new_max_cost;
-
-    {
-        FC_DEBUG("  CLEAN engine data:");
-
-        // clean out all unused engine data
-        EngineDataCache::Iterator it = engineDataCache.begin(),
-                                 end = engineDataCache.end();
-        while (it != end) {
-            if (it.value()->ref > 1) {
-                ++it;
-                continue;
-            }
-
-            EngineDataCache::Iterator rem = it++;
-
-            decreaseCost(sizeof(QFontEngineData));
-
-            FC_DEBUG("    %p", rem.value());
-
-            delete rem.value();
-            engineDataCache.erase(rem);
-        }
-    }
-
-    // clean out the engine cache just enough to get below our new max cost
-    uint current_cost;
-    do {
-        current_cost = total_cost;
-
-        EngineCache::Iterator it = engineCache.begin(),
-                             end = engineCache.end();
-        // determine the oldest and least popular of the unused engines
-        uint oldest = ~0u;
-        uint least_popular = ~0u;
-
-        for (; it != end; ++it) {
-            if (it.value().data->ref > 1)
-                continue;
-
-            if (it.value().timestamp < oldest &&
-                 it.value().hits <= least_popular) {
-                oldest = it.value().timestamp;
-                least_popular = it.value().hits;
-            }
-        }
-
-        FC_DEBUG("    oldest %u least popular %u", oldest, least_popular);
-
-        for (it = engineCache.begin(); it != end; ++it) {
-            if (it.value().data->ref == 1 &&
-                 it.value().timestamp == oldest &&
-                 it.value().hits == least_popular)
-                break;
-        }
-
-        if (it != end) {
-            FC_DEBUG("    %p: timestamp %4u hits %2u ref %2d/%2d, type '%s'",
-                     it.value().data, it.value().timestamp, it.value().hits,
-                     int(it.value().data->ref), it.value().data->cache_count,
-                     it.value().data->name());
-
-            if (--it.value().data->cache_count == 0) {
-                FC_DEBUG("    DELETE: last occurrence in cache");
-
-                decreaseCost(it.value().data->cache_cost);
-                if (!it.value().data->ref.deref())
-                    delete it.value().data;
-            } else {
-                /*
-                  this particular font engine is in the cache multiple
-                  times...  set current_cost to zero, so that we can
-                  keep looping to get rid of all occurrences
-                */
-                current_cost = 0;
-            }
-
-            engineCache.erase(it);
-        }
-    } while (current_cost != total_cost && total_cost > max_cost);
-}
-
 
 #ifndef QT_NO_DEBUG_STREAM
 QDebug operator<<(QDebug stream, const QFont &font)
@@ -2674,4 +1976,3 @@ QDebug operator<<(QDebug stream, const QFont &font)
 QT_END_NAMESPACE
 
 #include "moc_qfont.h"
-#include "moc_qfont_p.h"

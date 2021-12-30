@@ -467,21 +467,6 @@ struct QtFontDesc
 static void match(int script, const QFontDef &request, const QString &family_name,
                   const QString &foundry_name, QtFontDesc *desc);
 
-#if defined(Q_WS_X11)
-static void getEngineData(const QFontPrivate *d, const QFontCache::Key &key)
-{
-    // look for the requested font in the engine data cache
-    d->engineData = QFontCache::instance()->findEngineData(key);
-    if (!d->engineData) {
-        // create a new one
-        d->engineData = new QFontEngineData;
-        QFontCache::instance()->insertEngineData(key, d->engineData);
-    } else {
-        d->engineData->ref.ref();
-    }
-}
-#endif
-
 static QStringList familyList(const QFontDef &req)
 {
     // list of families to try
@@ -497,15 +482,6 @@ static QStringList familyList(const QFontDef &req)
             str = str.mid(1, str.length() - 2);
         family_list << str;
     }
-
-    // append the substitute list for each family in family_list
-    QStringList subs_list;
-    QStringList::ConstIterator it = family_list.constBegin(), end = family_list.constEnd();
-    for (; it != end; ++it)
-        subs_list += QFont::substitutes(*it);
-//         qDebug() << "adding substs: " << subs_list;
-
-    family_list += subs_list;
 
     return family_list;
 }
@@ -1358,7 +1334,9 @@ void QFontDatabase::parseFontName(const QString &name, QString &foundry, QString
 }
 
 void QFontDatabase::createDatabase()
-{ initializeFontDb(); }
+{
+    initializeFontDb();
+}
 
 // used from qfontengine_ft.cpp
 Q_GUI_EXPORT QByteArray qt_fontdata_from_index(int index)

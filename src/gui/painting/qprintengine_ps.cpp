@@ -299,22 +299,6 @@ static QByteArray compressHelper(const QImage &image, bool gray, int *format)
             // we need to align to 8 bit here
             i = (i+7) & 0xffffff8;
         }
-    } else if (depth == 8) {
-        for(int y=0; y < height; y++) {
-            const uchar * s = image.scanLine(y);
-            for(int x=0; x < width; x++) {
-                QRgb rgb = image.color(s[x]);
-                if (gray) {
-                    pixel[i] = (unsigned char) qGray(rgb);
-                    i++;
-                } else {
-                    pixel[i] = (unsigned char) qRed(rgb);
-                    pixel[i+1] = (unsigned char) qGreen(rgb);
-                    pixel[i+2] = (unsigned char) qBlue(rgb);
-                    i += 3;
-                }
-            }
-        }
     } else {
         for(int y=0; y < height; y++) {
             QRgb * s = (QRgb*)(image.scanLine(y));
@@ -743,7 +727,7 @@ void QPSPrintEngine::drawImageInternal(const QRectF &r, QImage image, bool bitma
     // engine
     if (!d->useAlphaEngine && !bitmap) {
         if (image.format() == QImage::Format_Mono || image.format() == QImage::Format_MonoLSB)
-            image = image.convertToFormat(QImage::Format_Indexed8);
+            image = image.convertToFormat(QImage::Format_ARGB32);
         if (image.hasAlphaChannel()) {
             // get better alpha dithering
             int xscale = image.width();

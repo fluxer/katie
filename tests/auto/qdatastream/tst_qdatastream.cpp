@@ -1397,7 +1397,6 @@ void tst_QDataStream::readQFont(QDataStream *s)
     QCOMPARE(d9.overline(), test.overline());
     QCOMPARE(d9.strikeOut(), test.strikeOut());
     QCOMPARE(d9.fixedPitch(), test.fixedPitch());
-    QCOMPARE(d9.styleHint(), test.styleHint());
     QCOMPARE(d9.toString(), test.toString());
 
     QCOMPARE(d9, test);
@@ -1436,7 +1435,7 @@ void tst_QDataStream::readQImage(QDataStream *s)
     QVERIFY(d12.width() == ref.width());
     QVERIFY(d12.height() == ref.height());
     QVERIFY(d12.depth() == ref.depth());
-    QVERIFY(d12.colorCount() == ref.colorCount());
+    QVERIFY(d12.colorTable() == ref.colorTable());
     QVERIFY(d12.hasAlphaChannel() == ref.hasAlphaChannel());
 
 //    qDebug("Alpha: %i %i", (int)d12.hasAlphaBuffer(), ref.hasAlphaBuffer());

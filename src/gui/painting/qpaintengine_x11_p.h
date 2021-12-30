@@ -84,7 +84,6 @@ public:
     void drawPixmap(const QRectF &r, const QPixmap &pm, const QRectF &sr);
     void drawTiledPixmap(const QRectF &r, const QPixmap &pixmap, const QPointF &s);
     void drawPath(const QPainterPath &path);
-    void drawTextItem(const QPointF &p, const QTextItem &textItem);
     void drawImage(const QRectF &r, const QImage &img, const QRectF &sr,
                    Qt::ImageConversionFlags flags = Qt::AutoColor);
 
@@ -94,10 +93,6 @@ public:
 
 protected:
     QX11PaintEngine(QX11PaintEnginePrivate &dptr);
-
-#ifndef QT_NO_FONTCONFIG
-    void drawFreetype(const QPointF &p, const QTextItemInt &si);
-#endif
 
     friend class QPixmap;
     friend class QFontEngineBox;

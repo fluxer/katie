@@ -220,12 +220,10 @@ QByteArray QFontSubset::glyphName(unsigned short unicode)
 
 static FT_Face ft_face(const QFontEngine *engine)
 {
-#if defined(Q_WS_X11) && !defined(QT_NO_FONTCONFIG)
     if (engine->type() == QFontEngine::Freetype) {
         const QFontEngineFT *ft = static_cast<const QFontEngineFT *>(engine);
-        return ft->non_locked_face();
+        return ft->getFace();
     }
-#endif
     return 0;
 }
 

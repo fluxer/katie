@@ -88,7 +88,6 @@ private slots:
 
     void toHtmlBodyBgColor();
     void toHtmlRootFrameProperties();
-    void capitalizationHtmlInExport();
     void wordspacingHtmlExport();
 
     void cursorPositionChanged();
@@ -1704,47 +1703,6 @@ void tst_QTextDocument::toHtmlRootFrameProperties()
     expectedOutput.append(htmlTail);
 
     QCOMPARE(doc.toHtml(), expectedOutput);
-}
-
-void tst_QTextDocument::capitalizationHtmlInExport()
-{
-    doc->setPlainText("Test");
-
-    QRegExp re(".*span style=\"(.*)\">Test.*");
-    QVERIFY(re.exactMatch(doc->toHtml()) == false); // no span
-
-    QTextCursor cursor(doc);
-    cursor.setPosition(4, QTextCursor::KeepAnchor);
-    QTextCharFormat cf;
-    cf.setFontCapitalization(QFont::SmallCaps);
-    cursor.mergeCharFormat(cf);
-
-    const QString smallcaps = doc->toHtml();
-    QVERIFY(re.exactMatch(doc->toHtml()));
-    QCOMPARE(re.captureCount(), 1);
-    QCOMPARE(re.cap(1).trimmed(), QString("font-variant:small-caps;"));
-
-    cf.setFontCapitalization(QFont::AllUppercase);
-    cursor.mergeCharFormat(cf);
-    const QString uppercase = doc->toHtml();
-    QVERIFY(re.exactMatch(doc->toHtml()));
-    QCOMPARE(re.captureCount(), 1);
-    QCOMPARE(re.cap(1).trimmed(), QString("text-transform:uppercase;"));
-
-    cf.setFontCapitalization(QFont::AllLowercase);
-    cursor.mergeCharFormat(cf);
-    const QString lowercase = doc->toHtml();
-    QVERIFY(re.exactMatch(doc->toHtml()));
-    QCOMPARE(re.captureCount(), 1);
-    QCOMPARE(re.cap(1).trimmed(), QString("text-transform:lowercase;"));
-
-    doc->setHtml(smallcaps);
-    cursor.setPosition(1);
-    QCOMPARE(cursor.charFormat().fontCapitalization(), QFont::SmallCaps);
-    doc->setHtml(uppercase);
-    QCOMPARE(cursor.charFormat().fontCapitalization(), QFont::AllUppercase);
-    doc->setHtml(lowercase);
-    QCOMPARE(cursor.charFormat().fontCapitalization(), QFont::AllLowercase);
 }
 
 void tst_QTextDocument::wordspacingHtmlExport()

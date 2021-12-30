@@ -55,7 +55,6 @@ private slots:
     void resetFont();
     void isCopyOf();
     void italicOblique();
-    void insertAndRemoveSubstitutions();
     void serializeSpacing();
     void lastResortFont();
 };
@@ -79,16 +78,10 @@ void tst_QFont::getSetCheck()
     QCOMPARE(QFont::StyleStrategy(QFont::PreferDefault), obj1.styleStrategy());
     obj1.setStyleStrategy(QFont::StyleStrategy(QFont::PreferBitmap));
     QCOMPARE(QFont::StyleStrategy(QFont::PreferBitmap), obj1.styleStrategy());
-    obj1.setStyleStrategy(QFont::StyleStrategy(QFont::PreferDevice));
-    QCOMPARE(QFont::StyleStrategy(QFont::PreferDevice), obj1.styleStrategy());
     obj1.setStyleStrategy(QFont::StyleStrategy(QFont::PreferOutline));
     QCOMPARE(QFont::StyleStrategy(QFont::PreferOutline), obj1.styleStrategy());
     obj1.setStyleStrategy(QFont::StyleStrategy(QFont::ForceOutline));
     QCOMPARE(QFont::StyleStrategy(QFont::ForceOutline), obj1.styleStrategy());
-    obj1.setStyleStrategy(QFont::StyleStrategy(QFont::PreferMatch));
-    QCOMPARE(QFont::StyleStrategy(QFont::PreferMatch), obj1.styleStrategy());
-    obj1.setStyleStrategy(QFont::StyleStrategy(QFont::PreferQuality));
-    QCOMPARE(QFont::StyleStrategy(QFont::PreferQuality), obj1.styleStrategy());
     obj1.setStyleStrategy(QFont::StyleStrategy(QFont::PreferAntialias));
     QCOMPARE(QFont::StyleStrategy(QFont::PreferAntialias), obj1.styleStrategy());
     obj1.setStyleStrategy(QFont::StyleStrategy(QFont::NoAntialias));
@@ -235,13 +228,6 @@ void tst_QFont::compare()
         font.setOverline(false);
         QVERIFY( font == font2 );
         QVERIFY(!(font < font2));
-
-        font.setCapitalization(QFont::SmallCaps);
-        QVERIFY( font != font2 );
-        QCOMPARE(font < font2,!(font2 < font));
-        font.setCapitalization(QFont::MixedCase);
-        QVERIFY( font == font2 );
-        QVERIFY(!(font < font2));
     }
 }
 
@@ -333,32 +319,6 @@ void tst_QFont::isCopyOf()
     font3.setPointSize(font.pointSize());
     QVERIFY(!font3.isCopyOf(font));
 }
-
-void tst_QFont::insertAndRemoveSubstitutions()
-{
-    QFont::removeSubstitution("BogusFontFamily");
-    // make sure it is empty before we start
-    QVERIFY(QFont::substitutes("BogusFontFamily").isEmpty());
-    QVERIFY(QFont::substitutes("bogusfontfamily").isEmpty());
-
-    // inserting Foo
-    QFont::insertSubstitution("BogusFontFamily", "Foo");
-    QCOMPARE(QFont::substitutes("BogusFontFamily").count(), 1);
-    QCOMPARE(QFont::substitutes("bogusfontfamily").count(), 1);
-
-    // inserting Bar and Baz
-    QStringList moreFonts;
-    moreFonts << "Bar" << "Baz";
-    QFont::insertSubstitutions("BogusFontFamily", moreFonts);
-    QCOMPARE(QFont::substitutes("BogusFontFamily").count(), 3);
-    QCOMPARE(QFont::substitutes("bogusfontfamily").count(), 3);
-
-    QFont::removeSubstitution("BogusFontFamily");
-    // make sure it is empty again
-    QVERIFY(QFont::substitutes("BogusFontFamily").isEmpty());
-    QVERIFY(QFont::substitutes("bogusfontfamily").isEmpty());
-}
-
 
 static QFont copyFont(const QFont &font1) // copy using a QDataStream
 {

@@ -953,16 +953,6 @@ void QDeclarativeFontValueType::setPixelSize(int size)
     }
 }
 
-QDeclarativeFontValueType::Capitalization QDeclarativeFontValueType::capitalization() const
-{
-    return (QDeclarativeFontValueType::Capitalization)font.capitalization();
-}
-
-void QDeclarativeFontValueType::setCapitalization(QDeclarativeFontValueType::Capitalization c)
-{
-    font.setCapitalization((QFont::Capitalization)c);
-}
-
 qreal QDeclarativeFontValueType::letterSpacing() const
 {
     return font.letterSpacing();

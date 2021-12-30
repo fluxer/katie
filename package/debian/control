@@ -9,7 +9,7 @@ Build-Depends: debhelper (>= 9~), libssl-dev, zlib1g-dev, libzstd-dev,
  libc6-dev, libjansson-dev, libpng-dev, libcups2-dev, libfreetype6-dev,
  libfontconfig1-dev, libpcre3-dev, libdbus-1-dev, libicu-dev, cmake,
  git, xserver-xorg-dev, libxinerama-dev, libxrandr-dev, libxrender-dev,
- libxcursor-dev, libsm-dev, unifdef | dpkg
+ libxcursor-dev, libsm-dev, libxpm-dev, unifdef | dpkg
 
 Package: katie-runtime
 Architecture: amd64 arm64 armel armhf i386 mips mips64el mipsel ppc64el s390x hurd-i386

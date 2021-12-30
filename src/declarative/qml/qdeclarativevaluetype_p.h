@@ -454,7 +454,6 @@ class Q_AUTOTEST_EXPORT QDeclarativeFontValueType : public QDeclarativeValueType
 {
     Q_OBJECT
     Q_ENUMS(FontWeight)
-    Q_ENUMS(Capitalization)
 
     Q_PROPERTY(QString family READ family WRITE setFamily)
     Q_PROPERTY(bool bold READ bold WRITE setBold)
@@ -465,7 +464,6 @@ class Q_AUTOTEST_EXPORT QDeclarativeFontValueType : public QDeclarativeValueType
     Q_PROPERTY(bool strikeout READ strikeout WRITE setStrikeout)
     Q_PROPERTY(qreal pointSize READ pointSize WRITE setPointSize)
     Q_PROPERTY(int pixelSize READ pixelSize WRITE setPixelSize)
-    Q_PROPERTY(Capitalization capitalization READ capitalization WRITE setCapitalization)
     Q_PROPERTY(qreal letterSpacing READ letterSpacing WRITE setLetterSpacing)
     Q_PROPERTY(qreal wordSpacing READ wordSpacing WRITE setWordSpacing)
 
@@ -475,11 +473,6 @@ public:
                        DemiBold = QFont::DemiBold,
                        Bold = QFont::Bold,
                        Black = QFont::Black };
-    enum Capitalization { MixedCase = QFont::MixedCase,
-                           AllUppercase = QFont::AllUppercase,
-                           AllLowercase = QFont::AllLowercase,
-                           SmallCaps = QFont::SmallCaps,
-                           Capitalize = QFont::Capitalize };
 
     QDeclarativeFontValueType(QObject *parent = nullptr);
 
@@ -514,9 +507,6 @@ public:
 
     int pixelSize() const;
     void setPixelSize(int size);
-
-    Capitalization capitalization() const;
-    void setCapitalization(Capitalization);
 
     qreal letterSpacing() const;
     void setLetterSpacing(qreal spacing);

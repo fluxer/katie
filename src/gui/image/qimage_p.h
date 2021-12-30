@@ -33,7 +33,7 @@
 // We mean it.
 //
 
-#include <QVector>
+#include <QAtomicInt>
 
 QT_BEGIN_NAMESPACE
 
@@ -51,7 +51,8 @@ struct Q_GUI_EXPORT QImageData {        // internal image data
     int height;
     int depth;
     int nbytes;               // number of bytes data
-    QVector<QRgb> colortable;
+    QRgb mono0;
+    QRgb mono1;
     uchar *data;
     QImage::Format format;
     int bytes_per_line;
@@ -81,8 +82,6 @@ static inline int qt_depthForFormat(QImage::Format format)
     case QImage::Format_Mono:
     case QImage::Format_MonoLSB:
         return 1;
-    case QImage::Format_Indexed8:
-        return 8;
     case QImage::Format_RGB32:
     case QImage::Format_ARGB32:
     case QImage::Format_ARGB32_Premultiplied:

@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-12-20 12:00+0200\n"
+"POT-Creation-Date: 2021-12-26 15:10+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -42,19 +42,10 @@ msgid ""
 "<p><b><font size+=2>Fonts</font></b></p><hr><p>Use this tab to select the "
 "default font for your Qt applications. The selected font is shown (initially "
 "as 'Sample Text') in the line edit below the Family, Style and Point Size "
-"drop down lists.</p><p>Qt has a powerful font substitution feature that "
-"allows you to specify a list of substitute fonts.  Substitute fonts are used "
-"when a font cannot be loaded, or if the specified font doesn't have a "
-"particular character.<p>For example, if you select the font Lucida, which "
-"doesn't have Korean characters, but need to show some Korean text using the "
-"Mincho font family you can do so by adding Mincho to the list. Once Mincho "
-"is added, any Korean characters that are not found in the Lucida font will "
-"be taken from the Mincho font.  Because the font substitutions are lists, "
-"you can also select multiple families, such as Song Ti (for use with Chinese "
-"text)."
+"drop down lists.</p>."
 msgstr ""
 
-#: src/tools/qtconfig/mainwindow.cpp:91
+#: src/tools/qtconfig/mainwindow.cpp:80
 msgctxt "MainWindow"
 msgid ""
 "<p><b><font size+=2>Interface</font></b></p><hr><p>Use this tab to customize "
@@ -69,7 +60,7 @@ msgid ""
 "disable the Global Strut feature."
 msgstr ""
 
-#: src/tools/qtconfig/mainwindow.cpp:106
+#: src/tools/qtconfig/mainwindow.cpp:95
 msgctxt "MainWindow"
 msgid ""
 "<p><b><font size+=2>Printer</font></b></p><hr><p>Use this tab to configure "
@@ -82,50 +73,50 @@ msgid ""
 "the X server font path is used."
 msgstr ""
 
-#: src/tools/qtconfig/mainwindow.cpp:189
+#: src/tools/qtconfig/mainwindow.cpp:173
 msgid "Desktop Settings (Default)"
 msgstr ""
 
-#: src/tools/qtconfig/mainwindow.cpp:195
+#: src/tools/qtconfig/mainwindow.cpp:179
 msgid "Choose style and palette based on your desktop settings."
 msgstr ""
 
-#: src/tools/qtconfig/mainwindow.cpp:210
+#: src/tools/qtconfig/mainwindow.cpp:194
 msgid "Unknown"
 msgstr ""
 
-#: src/tools/qtconfig/mainwindow.cpp:356
+#: src/tools/qtconfig/mainwindow.cpp:324
 msgid "No changes to be saved."
 msgstr ""
 
-#: src/tools/qtconfig/mainwindow.cpp:360
+#: src/tools/qtconfig/mainwindow.cpp:328
 msgid "Saving changes..."
 msgstr ""
 
-#: src/tools/qtconfig/mainwindow.cpp:445
+#: src/tools/qtconfig/mainwindow.cpp:405
 msgid "Saved changes."
 msgstr ""
 
-#: src/tools/qtconfig/mainwindow.cpp:711
+#: src/tools/qtconfig/mainwindow.cpp:588
 msgid "Select a Directory"
 msgstr ""
 
-#: src/tools/qtconfig/mainwindow.cpp:726
+#: src/tools/qtconfig/mainwindow.cpp:603
 msgid ""
 "<h3>%1</h3><br/>Version %2<br/><br/>Copyright (C) 2015 The Qt Company Ltd."
 "<br/><br/>Copyright (C) 2016 Ivailo Monev"
 msgstr ""
 
-#: src/tools/qtconfig/mainwindow.cpp:731 src/tools/qtconfig/mainwindow.cpp:732
-#: src/tools/qtconfig/mainwindow.cpp:739
+#: src/tools/qtconfig/mainwindow.cpp:608 src/tools/qtconfig/mainwindow.cpp:609
+#: src/tools/qtconfig/mainwindow.cpp:616
 msgid "Katie Configuration"
 msgstr ""
 
-#: src/tools/qtconfig/mainwindow.cpp:758
+#: src/tools/qtconfig/mainwindow.cpp:635
 msgid "Save Changes"
 msgstr ""
 
-#: src/tools/qtconfig/mainwindow.cpp:759
+#: src/tools/qtconfig/mainwindow.cpp:636
 msgid "Save changes to settings?"
 msgstr ""
 

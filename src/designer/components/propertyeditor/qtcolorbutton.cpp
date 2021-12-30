@@ -19,7 +19,7 @@
 **
 ****************************************************************************/
 
-#include "qtcolorbutton.h"
+#include "qtcolorbutton_p.h"
 #include <QtCore/QMimeData>
 #include <QtGui/QColorDialog>
 #include <QtGui/QPainter>

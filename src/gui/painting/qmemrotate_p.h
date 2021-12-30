@@ -108,7 +108,6 @@ static inline void qt_memrotate270(const srctype *src, int w, int h, int sstride
     qt_memrotate270_template(src, w, h, sstride, dest, dstride);    \
 }
 
-QT_IMPL_MEMROTATE(quint8, quint8)
 QT_IMPL_MEMROTATE(quint16, quint16)
 QT_IMPL_MEMROTATE(quint32, quint32)
 

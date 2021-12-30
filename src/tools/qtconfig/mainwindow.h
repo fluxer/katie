@@ -47,11 +47,6 @@ public slots:
     virtual void paletteSelected(int);
     virtual void styleSelected(const QString &);
     virtual void familySelected(const QString &);
-    virtual void substituteSelected(const QString &);
-    virtual void removeSubstitute();
-    virtual void addSubstitute();
-    virtual void downSubstitute();
-    virtual void upSubstitute();
     virtual void removeFontpath();
     virtual void addFontpath();
     virtual void downFontpath();

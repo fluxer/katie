@@ -32,7 +32,7 @@
 #include "qtextcodec.h"
 #include "qunicodetables_p.h"
 #include "qfontengine_p.h"
-#include "qfontengine_x11_p.h"
+#include "qfontengine_ft_p.h"
 #include "qtextengine_p.h"
 #include "qt_x11_p.h"
 #include "qx11info_x11.h"
@@ -140,10 +140,6 @@ void QFont::x11SetScreen(int screen)
 
 Qt::HANDLE QFont::handle() const
 {
-    QFontEngine *engine = d->engineForScript(QUnicodeTables::Common);
-    Q_ASSERT(engine != 0);
-    if (engine->type() == QFontEngine::Multi)
-        engine = static_cast<QFontEngineMulti *>(engine)->engine(0);
     return 0;
 }
 
@@ -151,14 +147,10 @@ Qt::HANDLE QFont::handle() const
 FT_Face QFont::freetypeFace() const
 {
     QFontEngine *engine = d->engineForScript(QUnicodeTables::Common);
-    if (engine->type() == QFontEngine::Multi)
-        engine = static_cast<QFontEngineMulti *>(engine)->engine(0);
-#ifndef QT_NO_FONTCONFIG
     if (engine->type() == QFontEngine::Freetype) {
         const QFontEngineFT *ft = static_cast<const QFontEngineFT *>(engine);
-        return ft->non_locked_face();
+        return ft->getFace();
     }
-#endif
     return 0;
 }
 
@@ -169,30 +161,7 @@ QString QFont::lastResortFamily() const
 
 QString QFont::defaultFamily() const
 {
-    switch (d->request.styleHint) {
-    case QFont::Times:
-        return QString::fromLatin1("Times");
-
-    case QFont::Courier:
-        return QString::fromLatin1("Courier");
-
-    case QFont::Monospace:
-        return QString::fromLatin1("Courier New");
-
-    case QFont::Cursive:
-        return QString::fromLatin1("Comic Sans MS");
-
-    case QFont::Fantasy:
-        return QString::fromLatin1("Impact");
-
-    case QFont::Decorative:
-        return QString::fromLatin1("Old English");
-
-    case QFont::Helvetica:
-    case QFont::System:
-    default:
-        return QString::fromLatin1("Helvetica");
-    }
+    return QString::fromLatin1("Helvetica");
 }
 
 static const char* LastResortFontsTbl[] = {

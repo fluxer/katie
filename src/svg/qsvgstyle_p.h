@@ -339,12 +339,6 @@ public:
         m_styleSet = true;
     }
 
-    void setVariant(QFont::Capitalization fontVariant)
-    {
-        m_qfont.setCapitalization(fontVariant);
-        m_variantSet = true;
-    }
-
     static int SVGToQtWeight(int weight);
 
     void setWeight(int weight)
@@ -381,7 +375,6 @@ private:
     bool m_familySet;
     bool m_sizeSet;
     bool m_styleSet;
-    bool m_variantSet;
     bool m_weightSet;
     bool m_textAnchorSet;
 };

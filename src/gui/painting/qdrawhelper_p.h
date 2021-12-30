@@ -94,22 +94,6 @@ class QClipData;
 class QRasterPaintEngine;
 
 typedef QT_FT_SpanFunc ProcessSpans;
-typedef void (*BitmapBlitFunc)(QRasterBuffer *rasterBuffer,
-                               int x, int y, quint32 color,
-                               const uchar *bitmap,
-                               int mapWidth, int mapHeight, int mapStride);
-
-typedef void (*AlphamapBlitFunc)(QRasterBuffer *rasterBuffer,
-                                 int x, int y, quint32 color,
-                                 const uchar *bitmap,
-                                 int mapWidth, int mapHeight, int mapStride,
-                                 const QClipData *clip);
-
-typedef void (*AlphaRGBBlitFunc)(QRasterBuffer *rasterBuffer,
-                                 int x, int y, quint32 color,
-                                 const uint *rgbmask,
-                                 int mapWidth, int mapHeight, int mapStride,
-                                 const QClipData *clip);
 
 typedef void (*RectFillFunc)(QRasterBuffer *rasterBuffer,
                              int x, int y, int width, int height,
@@ -118,9 +102,6 @@ typedef void (*RectFillFunc)(QRasterBuffer *rasterBuffer,
 struct DrawHelper {
     ProcessSpans blendColor;
     ProcessSpans blendGradient;
-    BitmapBlitFunc bitmapBlit;
-    AlphamapBlitFunc alphamapBlit;
-    AlphaRGBBlitFunc alphaRGBBlit;
     RectFillFunc fillRect;
 };
 
@@ -232,7 +213,8 @@ struct QTextureData
     int y2;
     int bytesPerLine;
     QImage::Format format;
-    const QVector<QRgb> *colorTable;
+    qint64 mono0;
+    qint64 mono1;
     bool hasAlpha;
     enum Type {
         Plain,
@@ -251,9 +233,6 @@ public:
     QRasterBuffer *rasterBuffer;
     ProcessSpans blend;
     ProcessSpans unclipped_blend;
-    BitmapBlitFunc bitmapBlit;
-    AlphamapBlitFunc alphamapBlit;
-    AlphaRGBBlitFunc alphaRGBBlit;
     RectFillFunc fillRect;
     qreal m11, m12, m13, m21, m22, m23, m33, dx, dy;   // inverse xform matrix
     const QClipData *clip;

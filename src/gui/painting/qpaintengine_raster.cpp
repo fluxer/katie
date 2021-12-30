@@ -27,9 +27,7 @@
 #include "qlabel.h"
 #include "qbitmap.h"
 #include "qmath.h"
-#include "qfontengine_ft_p.h"
 #include "qtextengine_p.h"
-#include "qfontengine_p.h"
 #include "qpixmap_raster_p.h"
 #include "qimage_p.h"
 #include "qstatictext_p.h"
@@ -214,7 +212,6 @@ void QRasterPaintEngine::init()
 
     d->deviceDepth = d->device->depth();
 
-    d->mono_surface = false;
     gccaps &= ~PorterDuff;
 
     if (Q_UNLIKELY(d->device->devType() != QInternal::Image)) {
@@ -225,16 +222,9 @@ void QRasterPaintEngine::init()
 
     QImage::Format format = d->rasterBuffer->prepare(static_cast<QImage *>(d->device));
     switch (format) {
-    case QImage::Format_MonoLSB:
-    case QImage::Format_Mono:
-        d->mono_surface = true;
-        break;
     case QImage::Format_ARGB32_Premultiplied:
     case QImage::Format_ARGB32:
         gccaps |= PorterDuff;
-        break;
-    case QImage::Format_RGB32:
-    case QImage::Format_RGB16:
         break;
     default:
         break;
@@ -295,10 +285,6 @@ bool QRasterPaintEngine::begin(QPaintDevice *device)
         dumpClip(d->rasterBuffer->width(), d->rasterBuffer->height(), &*d->baseClip);
     }
 #endif
-
-    d->glyphCacheType = QFontEngineGlyphCache::Raster_A8;
-    if (d->mono_surface)
-        d->glyphCacheType = QFontEngineGlyphCache::Raster_Mono;
 
     setActive(true);
     return true;
@@ -366,7 +352,6 @@ QRasterPaintEngineState::QRasterPaintEngineState()
 
     flags.antialiased = false;
     flags.bilinear = false;
-    flags.fast_text = true;
     flags.tx_noshear = true;
 
     clip = 0;
@@ -567,16 +552,8 @@ void QRasterPaintEngine::updateRasterState()
 {
     QRasterPaintEngineState *s = state();
 
-    if (s->dirty & DirtyTransform)
+    if (s->dirty & DirtyTransform) {
         updateMatrix(s->matrix);
-
-    if (s->dirty & (DirtyPen|DirtyCompositionMode|DirtyOpacity)) {
-        const QPainter::CompositionMode mode = s->composition_mode;
-        s->flags.fast_text = (s->penData.type == QSpanData::Solid)
-                       && s->intOpacity == 256
-                       && (mode == QPainter::CompositionMode_Source
-                           || (mode == QPainter::CompositionMode_SourceOver
-                               && qAlpha(s->penData.solid.color) == 255));
     }
 
     s->dirty = 0;
@@ -1813,382 +1790,6 @@ void QRasterPaintEngine::drawTiledPixmap(const QRectF &r, const QPixmap &pixmap,
     }
 }
 
-
-//QWS hack
-static inline bool monoVal(const uchar* s, int x)
-{
-    return  (s[x>>3] << (x&7)) & 0x80;
-}
-
-/*!
-    \internal
-*/
-void QRasterPaintEngine::alphaPenBlt(const void* src, const int bpl, const int depth,
-                                    int rx, int ry, int w, int h)
-{
-    Q_D(QRasterPaintEngine);
-    QRasterPaintEngineState *s = state();
-
-    if (!s->penData.blend)
-        return;
-
-    QRasterBuffer *rb = d->rasterBuffer.data();
-
-    const QRect rect(rx, ry, w, h);
-    const QClipData *clip = d->clip();
-    bool unclipped = false;
-    if (clip) {
-        // inlined QRect::intersects
-        const bool intersects = qMax(clip->xmin, rect.left()) <= qMin(clip->xmax - 1, rect.right())
-                                && qMax(clip->ymin, rect.top()) <= qMin(clip->ymax - 1, rect.bottom());
-
-        if (clip->hasRectClip) {
-            unclipped = rx > clip->xmin
-                        && rx + w < clip->xmax
-                        && ry > clip->ymin
-                        && ry + h < clip->ymax;
-        }
-
-        if (!intersects)
-            return;
-    } else {
-        // inlined QRect::intersects
-        const bool intersects = qMax(0, rect.left()) <= qMin(rb->width() - 1, rect.right())
-                                && qMax(0, rect.top()) <= qMin(rb->height() - 1, rect.bottom());
-        if (!intersects)
-            return;
-
-        // inlined QRect::contains
-        const bool contains = rect.left() >= 0 && rect.right() < rb->width()
-                              && rect.top() >= 0 && rect.bottom() < rb->height();
-
-        unclipped = contains && d->isUnclipped_normalized(rect);
-    }
-
-    ProcessSpans blend = unclipped ? s->penData.unclipped_blend : s->penData.blend;
-    const uchar * scanline = static_cast<const uchar *>(src);
-
-    if (s->flags.fast_text) {
-        if (unclipped) {
-            if (depth == 1) {
-                if (s->penData.bitmapBlit) {
-                    s->penData.bitmapBlit(rb, rx, ry, s->penData.solid.color,
-                                          scanline, w, h, bpl);
-                    return;
-                }
-            } else if (depth == 8) {
-                if (s->penData.alphamapBlit) {
-                    s->penData.alphamapBlit(rb, rx, ry, s->penData.solid.color,
-                                            scanline, w, h, bpl, 0);
-                    return;
-                }
-            } else if (depth == 32) {
-                // (A)RGB Alpha mask where the alpha component is not used.
-                if (s->penData.alphaRGBBlit) {
-                    s->penData.alphaRGBBlit(rb, rx, ry, s->penData.solid.color,
-                                            (const uint *) scanline, w, h, bpl / 4, 0);
-                    return;
-                }
-            }
-        } else if (d->deviceDepth == 32 && (depth == 8 || depth == 32)) {
-            // (A)RGB Alpha mask where the alpha component is not used.
-            if (!clip) {
-                int nx = qMax(0, rx);
-                int ny = qMax(0, ry);
-
-                // Move scanline pointer to compensate for moved x and y
-                int xdiff = nx - rx;
-                int ydiff = ny - ry;
-                scanline += ydiff * bpl;
-                scanline += xdiff * (depth == 32 ? 4 : 1);
-
-                w -= xdiff;
-                h -= ydiff;
-
-                if (nx + w > d->rasterBuffer->width())
-                    w = d->rasterBuffer->width() - nx;
-                if (ny + h > d->rasterBuffer->height())
-                    h = d->rasterBuffer->height() - ny;
-
-                rx = nx;
-                ry = ny;
-            }
-            if (depth == 8 && s->penData.alphamapBlit) {
-                s->penData.alphamapBlit(rb, rx, ry, s->penData.solid.color,
-                                        scanline, w, h, bpl, clip);
-            } else if (depth == 32 && s->penData.alphaRGBBlit) {
-                s->penData.alphaRGBBlit(rb, rx, ry, s->penData.solid.color,
-                                        (const uint *) scanline, w, h, bpl / 4, clip);
-            }
-            return;
-        }
-    }
-
-    int x0 = 0;
-    if (rx < 0) {
-        x0 = -rx;
-        w -= x0;
-    }
-
-    int y0 = 0;
-    if (ry < 0) {
-        y0 = -ry;
-        scanline += bpl * y0;
-        h -= y0;
-    }
-
-    w = qMin(w, rb->width() - qMax(0, rx));
-    h = qMin(h, rb->height() - qMax(0, ry));
-
-    if (w <= 0 || h <= 0)
-        return;
-
-    const int NSPANS = 256;
-    QSpan spans[NSPANS];
-    int current = 0;
-
-    const int x1 = x0 + w;
-    const int y1 = y0 + h;
-
-    if (depth == 1) {
-        for (int y = y0; y < y1; ++y) {
-            for (int x = x0; x < x1; ) {
-                if (!monoVal(scanline, x)) {
-                    ++x;
-                    continue;
-                }
-
-                if (current == NSPANS) {
-                    blend(current, spans, &s->penData);
-                    current = 0;
-                }
-                spans[current].x = x + rx;
-                spans[current].y = y + ry;
-                spans[current].coverage = 255;
-                int len = 1;
-                ++x;
-                // extend span until we find a different one.
-                while (x < x1 && monoVal(scanline, x)) {
-                    ++x;
-                    ++len;
-                }
-                spans[current].len = len;
-                ++current;
-            }
-            scanline += bpl;
-        }
-    } else if (depth == 8) {
-        for (int y = y0; y < y1; ++y) {
-            for (int x = x0; x < x1; ) {
-                // Skip those with 0 coverage
-                if (scanline[x] == 0) {
-                    ++x;
-                    continue;
-                }
-
-                if (current == NSPANS) {
-                    blend(current, spans, &s->penData);
-                    current = 0;
-                }
-                int coverage = scanline[x];
-                spans[current].x = x + rx;
-                spans[current].y = y + ry;
-                spans[current].coverage = coverage;
-                int len = 1;
-                ++x;
-
-                // extend span until we find a different one.
-                while (x < x1 && scanline[x] == coverage) {
-                    ++x;
-                    ++len;
-                }
-                spans[current].len = len;
-                ++current;
-            }
-            scanline += bpl;
-        }
-    } else { // 32-bit alpha...
-        uint *sl = (uint *) src;
-        for (int y = y0; y < y1; ++y) {
-            for (int x = x0; x < x1; ) {
-                // Skip those with 0 coverage
-                if ((sl[x] & 0x00ffffff) == 0) {
-                    ++x;
-                    continue;
-                }
-
-                if (current == NSPANS) {
-                    blend(current, spans, &s->penData);
-                    current = 0;
-                }
-                uint rgbCoverage = sl[x];
-                int coverage = qGreen(rgbCoverage);
-                spans[current].x = x + rx;
-                spans[current].y = y + ry;
-                spans[current].coverage = coverage;
-                int len = 1;
-                ++x;
-
-                // extend span until we find a different one.
-                while (x < x1 && sl[x] == rgbCoverage) {
-                    ++x;
-                    ++len;
-                }
-                spans[current].len = len;
-                ++current;
-            }
-            sl += bpl / sizeof(uint);
-        }
-    }
-//     qDebug() << "alphaPenBlt: num spans=" << current
-//              << "span:" << spans->x << spans->y << spans->len << spans->coverage;
-        // Call span func for current set of spans.
-    if (current != 0)
-        blend(current, spans, &s->penData);
-}
-
-bool QRasterPaintEngine::drawCachedGlyphs(int numGlyphs, const glyph_t *glyphs,
-                                          const QFixedPoint *positions, QFontEngine *fontEngine)
-{
-    Q_D(QRasterPaintEngine);
-    QRasterPaintEngineState *s = state();
-    const QFixed offs = QFixed::fromReal(aliasedCoordinateDelta);
-
-    if (fontEngine->type() == QFontEngine::Freetype) {
-        QFontEngineFT *fe = static_cast<QFontEngineFT *>(fontEngine);
-        const QFixed xOffs = fe->supportsSubPixelPositions() ? 0 : offs;
-        QFontEngineFT::GlyphFormat neededFormat =
-            painter()->device()->devType() == QInternal::Widget
-            ? fe->defaultGlyphFormat()
-            : QFontEngineFT::Format_A8;
-
-        if (d_func()->mono_surface
-            || fe->isBitmapFont() // alphaPenBlt can handle mono, too
-            )
-            neededFormat = QFontEngineFT::Format_Mono;
-
-        if (neededFormat == QFontEngineFT::Format_None)
-            neededFormat = QFontEngineFT::Format_A8;
-
-        QFontEngineFT::QGlyphSet *gset = fe->defaultGlyphs();
-        if (s->matrix.type() >= QTransform::TxScale) {
-            if (s->matrix.isAffine())
-                gset = fe->loadTransformedGlyphSet(s->matrix);
-            else
-                gset = 0;
-        }
-
-        if (!gset || gset->outline_drawing
-            || !fe->loadGlyphs(gset, glyphs, numGlyphs, positions, neededFormat))
-            return false;
-
-        FT_Face lockedFace = 0;
-
-        int depth;
-        switch (neededFormat) {
-        case QFontEngineFT::Format_Mono:
-            depth = 1;
-            break;
-        case QFontEngineFT::Format_A8:
-            depth = 8;
-            break;
-        case QFontEngineFT::Format_A32:
-            depth = 32;
-            break;
-        default:
-            Q_ASSERT(false);
-            depth = 0;
-        };
-
-        for (int i = 0; i < numGlyphs; i++) {
-            QFixed spp = fe->subPixelPositionForX(positions[i].x);
-            QFontEngineFT::Glyph *glyph = gset->getGlyph(glyphs[i], spp);
-
-            if (!glyph || glyph->format != neededFormat) {
-                if (!lockedFace)
-                    lockedFace = fe->lockFace();
-                glyph = fe->loadGlyph(gset, glyphs[i], spp, neededFormat);
-            }
-
-            if (!glyph || !glyph->data)
-                continue;
-
-            int pitch;
-            switch (neededFormat) {
-            case QFontEngineFT::Format_Mono:
-                pitch = ((glyph->width + 31) & ~31) >> 3;
-                break;
-            case QFontEngineFT::Format_A8:
-                pitch = (glyph->width + 3) & ~3;
-                break;
-            case QFontEngineFT::Format_A32:
-                pitch = glyph->width * 4;
-                break;
-            default:
-                Q_ASSERT(false);
-                pitch = 0;
-            };
-
-            alphaPenBlt(glyph->data, pitch, depth,
-                        qFloor(positions[i].x + xOffs) + glyph->x,
-                        qFloor(positions[i].y + offs) - glyph->y,
-                        glyph->width, glyph->height);
-        }
-        if (lockedFace)
-            fe->unlockFace();
-    } else {
-        QFontEngineGlyphCache::Type glyphType = fontEngine->glyphFormat >= 0
-                ? QFontEngineGlyphCache::Type(fontEngine->glyphFormat)
-                : d->glyphCacheType;
-
-        QImageTextureGlyphCache *cache =
-            static_cast<QImageTextureGlyphCache *>(fontEngine->glyphCache(glyphType, s->matrix));
-        if (!cache) {
-            cache = new QImageTextureGlyphCache(glyphType, s->matrix);
-            fontEngine->setGlyphCache(cache);
-        }
-
-        cache->populate(fontEngine, numGlyphs, glyphs, positions);
-        cache->fillInPendingGlyphs();
-
-        const QImage &image = cache->image();
-        int bpl = image.bytesPerLine();
-
-        int depth = image.depth();
-        int rightShift = 0;
-        int leftShift = 0;
-        if (depth == 32)
-            leftShift = 2; // multiply by 4
-        else if (depth == 1)
-            rightShift = 3; // divide by 8
-
-        const uchar *bits = image.constBits();
-        for (int i=0; i<numGlyphs; ++i) {
-
-            QFixed subPixelPosition = cache->subPixelPositionForX(positions[i].x);
-            QTextureGlyphCache::GlyphAndSubPixelPosition glyph(glyphs[i], subPixelPosition);
-            const QTextureGlyphCache::Coord &c = cache->coords[glyph];
-            if (c.isNull())
-                continue;
-
-            int x = qFloor(positions[i].x) + c.baseLineX ;
-            int y = qFloor(positions[i].y + offs) - c.baseLineY;
-
-            // printf("drawing [%d %d %d %d] baseline [%d %d], glyph: %d, to: %d %d, pos: %d %d\n",
-            //        c.x, c.y,
-            //        c.w, c.h,
-            //        c.baseLineX, c.baseLineY,
-            //        glyphs[i],
-            //        x, y,
-            //        positions[i].x.toInt(), positions[i].y.toInt());
-
-            alphaPenBlt(bits + ((c.x << leftShift) >> rightShift) + c.y * bpl, bpl, depth, x, y, c.w, c.h);
-        }
-    }
-    return true;
-}
-
-
 /*!
  * Returns true if the rectangle is completely within the current clip
  * state of the paint engine.
@@ -2281,13 +1882,7 @@ void QRasterPaintEngine::drawStaticTextItem(QStaticTextItem *textItem)
     ensurePen();
     ensureRasterState();
 
-    QFontEngine *fontEngine = textItem->fontEngine();
-    if (!supportsTransformations(fontEngine)) {
-        drawCachedGlyphs(textItem->numGlyphs, textItem->glyphs, textItem->glyphPositions,
-                         fontEngine);
-    } else {
-        QPaintEngineEx::drawStaticTextItem(textItem);
-    }
+    QPaintEngineEx::drawStaticTextItem(textItem);
 }
 
 /*!
@@ -2296,42 +1891,17 @@ void QRasterPaintEngine::drawStaticTextItem(QStaticTextItem *textItem)
 void QRasterPaintEngine::drawTextItem(const QPointF &p, const QTextItem &textItem)
 {
     const QTextItemInt &ti = static_cast<const QTextItemInt &>(textItem);
-    QRasterPaintEngineState *s = state();
 
 #ifdef QT_DEBUG_DRAW
     Q_D(QRasterPaintEngine);
-    fprintf(stderr," - QRasterPaintEngine::drawTextItem(), (%.2f,%.2f), string=%s ct=%d\n",
-           p.x(), p.y(), QString::fromRawData(ti.chars, ti.num_chars).toLatin1().data(),
-           d->glyphCacheType);
+    fprintf(stderr," - QRasterPaintEngine::drawTextItem(), (%.2f,%.2f), string=%s\n",
+           p.x(), p.y(), QString::fromRawData(ti.chars, ti.num_chars).toLatin1().data());
 #endif
 
     ensurePen();
     ensureRasterState();
 
-    QFontEngine *fontEngine = ti.fontEngine;
-
-#if defined(Q_WS_X11)
-    if (fontEngine->type() != QFontEngine::Freetype) {
-        QPaintEngineEx::drawTextItem(p, ti);
-        return;
-    }
-
-    QFontEngineFT *fe = static_cast<QFontEngineFT *>(fontEngine);
-
-    QTransform matrix = s->matrix;
-    matrix.translate(p.x(), p.y());
-
-    QVarLengthArray<QFixedPoint> positions;
-    QVarLengthArray<glyph_t> glyphs;
-    fe->getGlyphPositions(ti.glyphs, matrix, ti.flags, glyphs, positions);
-    if (glyphs.size() == 0)
-        return;
-
-    if (!drawCachedGlyphs(glyphs.size(), glyphs.constData(), positions.constData(), fontEngine))
-        QPaintEngine::drawTextItem(p, ti);
-#else
     QPaintEngineEx::drawTextItem(p, ti);
-#endif
 }
 
 /*!
@@ -2448,24 +2018,6 @@ void QRasterPaintEngine::drawEllipse(const QRectF &rect)
     ensurePen();
 
     QPaintEngineEx::drawEllipse(rect);
-}
-
-bool QRasterPaintEngine::supportsTransformations(const QFontEngine *fontEngine) const
-{
-    if (!state()->WxF)
-        return false;
-    return supportsTransformations(fontEngine->fontDef.pixelSize, state()->matrix);
-}
-
-bool QRasterPaintEngine::supportsTransformations(const qreal pixelSize, const QTransform &m) const
-{
-    if (m.type() >= QTransform::TxProject)
-        return true;
-
-    if (pixelSize * pixelSize * qAbs(m.determinant()) >= 64 * 64)
-        return true;
-
-    return false;
 }
 
 void QRasterPaintEngine::drawBitmap(const QPointF &pos, const QImage &image, QSpanData *fg)
@@ -2734,7 +2286,7 @@ QImage::Format QRasterBuffer::prepare(QImage *image)
 
     format = image->format();
     drawHelper = qDrawHelper + format;
-    if (image->depth() == 1 && image->colorTable().size() == 2) {
+    if (image->depth() == 1) {
         monoDestinationWithClut = true;
         destColor0 = PREMUL(image->colorTable()[0]);
         destColor1 = PREMUL(image->colorTable()[1]);
@@ -3283,10 +2835,6 @@ void QSpanData::setup(const QBrush &brush, int alpha, QPainter::CompositionMode 
 
 void QSpanData::adjustSpanMethods()
 {
-    bitmapBlit = 0;
-    alphamapBlit = 0;
-    alphaRGBBlit = 0;
-
     fillRect = 0;
 
     switch(type) {
@@ -3295,9 +2843,6 @@ void QSpanData::adjustSpanMethods()
         break;
     case Solid:
         unclipped_blend = rasterBuffer->drawHelper->blendColor;
-        bitmapBlit = rasterBuffer->drawHelper->bitmapBlit;
-        alphamapBlit = rasterBuffer->drawHelper->alphamapBlit;
-        alphaRGBBlit = rasterBuffer->drawHelper->alphaRGBBlit;
         fillRect = rasterBuffer->drawHelper->fillRect;
         break;
     case LinearGradient:
@@ -3358,7 +2903,8 @@ void QSpanData::initTexture(const QImage *image, int alpha, QTextureData::Type _
         texture.y2 = 0;
         texture.bytesPerLine = 0;
         texture.format = QImage::Format_Invalid;
-        texture.colorTable = 0;
+        texture.mono0 = -1;
+        texture.mono1 = -1;
         texture.hasAlpha = alpha != 256;
     } else {
         texture.imageData = d->data;
@@ -3380,7 +2926,13 @@ void QSpanData::initTexture(const QImage *image, int alpha, QTextureData::Type _
         texture.bytesPerLine = d->bytes_per_line;
 
         texture.format = d->format;
-        texture.colorTable = (d->format <= QImage::Format_Indexed8 && !d->colortable.isEmpty()) ? &d->colortable : 0;
+        if (d->depth == 1) {
+            texture.mono0 = d->mono0;
+            texture.mono1 = d->mono1;
+        } else {
+            texture.mono0 = -1;
+            texture.mono1 = -1;
+        }
         texture.hasAlpha = image->hasAlphaChannel() || alpha != 256;
     }
     texture.const_alpha = alpha;

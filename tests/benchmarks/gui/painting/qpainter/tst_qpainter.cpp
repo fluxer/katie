@@ -618,7 +618,6 @@ void tst_QPainter::drawPixmap_data()
         "Invalid",
         "Mono",
         "MonoLSB",
-        "Indexed8",
         "RGB32",
         "ARGB32",
         "ARGB32_pm",

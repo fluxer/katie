@@ -89,6 +89,7 @@ static const char * const qt_cleanlooks_dock_widget_close_xpm[] = {
     " +@@@@@@@+ ",
     "           "};
 
+/* XPM */
 static const char * const qt_cleanlooks_arrow_down_xpm[] = {
     "11 7 2 1",
     " 	c None",
@@ -101,6 +102,7 @@ static const char * const qt_cleanlooks_arrow_down_xpm[] = {
     "    xxx    ",
     "     x     "};
 
+/* XPM */
 static const char * const qt_cleanlooks_arrow_up_xpm[] = {
     "11 7 2 1",
     " 	c None",
@@ -113,6 +115,7 @@ static const char * const qt_cleanlooks_arrow_up_xpm[] = {
     "  x     x  ",
     "           "};
 
+/* XPM */
 static const char * const qt_cleanlooks_dock_widget_restore_xpm[] = {
     "11 13 7 1",
     " 	c None",
@@ -136,6 +139,7 @@ static const char * const qt_cleanlooks_dock_widget_restore_xpm[] = {
     " +@@@@@@@+ ",
     "           "};
 
+/* XPM */
 static const char * const qt_cleanlooks_workspace_minimize[] = {
     "11 13 7 1",
     " 	c None",
@@ -159,7 +163,7 @@ static const char * const qt_cleanlooks_workspace_minimize[] = {
     " +@@@@@@@+ ",
     "           "};
 
-
+/* XPM */
 static const char * const qt_cleanlooks_titlebar_context_help[] = {
     "10 10 3 1",
     "  c None",
@@ -176,6 +180,7 @@ static const char * const qt_cleanlooks_titlebar_context_help[] = {
     "    ##    ",
     "    ##    "};
 
+/* XPM */
 static const char * const qt_cleanlooks_radiobutton[] = {
     "13 13 9 1",
     " 	c None",
@@ -201,6 +206,7 @@ static const char * const qt_cleanlooks_radiobutton[] = {
     "  @+#%*%#+@  ",
     "   #@...+#   "};
 
+/* XPM */
 static const char * const qt_cleanlooks_radiobutton_checked[] = {
     "13 13 20 1",
     " 	c None",
@@ -237,6 +243,7 @@ static const char * const qt_cleanlooks_radiobutton_checked[] = {
     "             ",
     "             "};
 
+/* XPM */
 static const char * const qt_cleanlooks_scrollbar_button_arrow_up[] = {
     "7 4 2 1",
     "   c None",
@@ -246,6 +253,7 @@ static const char * const qt_cleanlooks_scrollbar_button_arrow_up[] = {
     " ***** ",
     "*******"};
 
+/* XPM */
 static const char * const qt_cleanlooks_scrollbar_button_arrow_down[] = {
     "7 4 2 1",
     "   c None",
@@ -255,6 +263,7 @@ static const char * const qt_cleanlooks_scrollbar_button_arrow_down[] = {
     "  ***  ",
     "   *   "};
 
+/* XPM */
 static const char * const qt_cleanlooks_spinbox_button_arrow_down[] = {
     "7 4 2 1",
     "   c None",
@@ -264,6 +273,7 @@ static const char * const qt_cleanlooks_spinbox_button_arrow_down[] = {
     "  ***  ",
     "   *   "};
 
+/* XPM */
 static const char * const qt_cleanlooks_spinbox_button_arrow_up[] = {
     "7 4 2 1",
     "   c None",
@@ -273,6 +283,7 @@ static const char * const qt_cleanlooks_spinbox_button_arrow_up[] = {
     " ***** ",
     "*******"};
 
+/* XPM */
 static const char * const qt_cleanlooks_scrollbar_button_left[] = {
     "16 16 6 1",
     "   c None",
@@ -298,6 +309,7 @@ static const char * const qt_cleanlooks_scrollbar_button_left[] = {
     ".+<<<<<<<<<<<<<+",
     " .++++++++++++++"};
 
+/* XPM */
 static const char * const qt_cleanlooks_scrollbar_button_right[] = {
     "16 16 6 1",
     "   c None",
@@ -323,6 +335,7 @@ static const char * const qt_cleanlooks_scrollbar_button_right[] = {
     "+<<<<<<<<<<<<<+.",
     "++++++++++++++. "};
 
+/* XPM */
 static const char * const qt_cleanlooks_scrollbar_button_up[] = {
     "16 16 6 1",
     "   c None",
@@ -348,6 +361,7 @@ static const char * const qt_cleanlooks_scrollbar_button_up[] = {
     "+<<<<<<<<<<<<<<+",
     "++++++++++++++++"};
 
+/* XPM */
 static const char * const qt_cleanlooks_scrollbar_button_down[] = {
     "16 16 6 1",
     "   c None",
@@ -373,6 +387,7 @@ static const char * const qt_cleanlooks_scrollbar_button_down[] = {
     ".+<<<<<<<<<<<<+.",
     " .++++++++++++. "};
 
+/* XPM */
 static const char * const qt_cleanlooks_menuitem_checkbox_checked[] = {
     "8 7 6 1",
     " 	g None",
@@ -389,6 +404,7 @@ static const char * const qt_cleanlooks_menuitem_checkbox_checked[] = {
     "  @#    ",
     "   .    "};
 
+/* XPM */
 static const char * const qt_cleanlooks_checkbox_checked[] = {
     "13 13 3 1",
     " 	c None",
@@ -4280,7 +4296,7 @@ QPixmap QCleanlooksStyle::standardPixmap(StandardPixmap standardPixmap, const QS
 {
     QPixmap pixmap;
 
-#ifndef QT_NO_IMAGEFORMAT_XPM
+#ifndef QT_NO_XPM
     switch (standardPixmap) {
     case SP_TitleBarNormalButton:
         return QPixmap((const char **)qt_cleanlooks_dock_widget_restore_xpm);
@@ -4293,7 +4309,7 @@ QPixmap QCleanlooksStyle::standardPixmap(StandardPixmap standardPixmap, const QS
     default:
         break;
     }
-#endif //QT_NO_IMAGEFORMAT_XPM
+#endif //QT_NO_XPM
 
     return QWindowsStyle::standardPixmap(standardPixmap, opt, widget);
 }

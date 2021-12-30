@@ -25,7 +25,6 @@
 #include "qtextengine_p.h"
 #include "qabstracttextdocumentlayout.h"
 #include "qtextlayout.h"
-#include "qtextboundaryfinder.h"
 #include "qvarlengtharray.h"
 #include "qfont.h"
 #include "qfontengine_p.h"
@@ -54,48 +53,12 @@ public:
     Itemizer(const QString &string, const QScriptAnalysis *analysis, QScriptItemArray &items)
         : m_string(string),
         m_analysis(analysis),
-        m_items(items),
-        m_splitter(0)
+        m_items(items)
     {
-    }
-    ~Itemizer()
-    {
-        delete m_splitter;
     }
 
     /// generate the script items
-    /// The caps parameter is used to choose the algoritm of splitting text and assiging roles to the textitems
-    void generate(int start, int length, QFont::Capitalization caps)
-    {
-        if ((int)caps == (int)QFont::SmallCaps)
-            generateScriptItemsSmallCaps(reinterpret_cast<const ushort *>(m_string.unicode()), start, length);
-        else if(caps == QFont::Capitalize)
-            generateScriptItemsCapitalize(start, length);
-        else if(caps != QFont::MixedCase) {
-            generateScriptItemsAndChangeCase(start, length,
-                caps == QFont::AllLowercase ? QScriptAnalysis::Lowercase : QScriptAnalysis::Uppercase);
-        }
-        else
-            generateScriptItems(start, length);
-    }
-
-private:
-    enum { MaxItemLength = 4096 };
-
-    void generateScriptItemsAndChangeCase(int start, int length, QScriptAnalysis::Flags flags)
-    {
-        generateScriptItems(start, length);
-        if (m_items.isEmpty()) // the next loop won't work in that case
-            return;
-        QScriptItemArray::Iterator iter = m_items.end();
-        do {
-            iter--;
-            if (iter->analysis.flags < QScriptAnalysis::TabOrObject)
-                iter->analysis.flags = flags;
-        } while (iter->position > start);
-    }
-
-    void generateScriptItems(int start, int length)
+    void generate(int start, int length)
     {
         if (!length)
             return;
@@ -124,82 +87,12 @@ private:
         m_items.append(QScriptItem(start, m_analysis[start]));
     }
 
-    void generateScriptItemsCapitalize(int start, int length)
-    {
-        if (!length)
-            return;
-
-        if (!m_splitter)
-            m_splitter = new QTextBoundaryFinder(QTextBoundaryFinder::Word,
-                                                 m_string.constData(), m_string.length());
-
-        m_splitter->setPosition(start);
-        QScriptAnalysis itemAnalysis = m_analysis[start];
-
-        if (m_splitter->boundaryReasons() & QTextBoundaryFinder::StartWord) {
-            itemAnalysis.flags = QScriptAnalysis::Uppercase;
-            m_splitter->toNextBoundary();
-        }
-
-        const int end = start + length;
-        for (int i = start + 1; i < end; ++i) {
-
-            bool atWordBoundary = false;
-
-            if (i == m_splitter->position()) {
-                if (m_splitter->boundaryReasons() & QTextBoundaryFinder::StartWord
-                    && m_analysis[i].flags < QScriptAnalysis::TabOrObject)
-                    atWordBoundary = true;
-
-                m_splitter->toNextBoundary();
-            }
-
-            if (m_analysis[i] == itemAnalysis
-                && m_analysis[i].flags < QScriptAnalysis::TabOrObject
-                && !atWordBoundary
-                && i - start < MaxItemLength)
-                continue;
-
-            m_items.append(QScriptItem(start, itemAnalysis));
-            start = i;
-            itemAnalysis = m_analysis[start];
-
-            if (atWordBoundary)
-                itemAnalysis.flags = QScriptAnalysis::Uppercase;
-        }
-        m_items.append(QScriptItem(start, itemAnalysis));
-    }
-
-    void generateScriptItemsSmallCaps(const ushort *uc, int start, int length)
-    {
-        if (!length)
-            return;
-        bool lower = (QChar::category(uc[start]) == QChar::Letter_Lowercase);
-        const int end = start + length;
-        // split text into parts that are already uppercase and parts that are lowercase, and mark the latter to be uppercased later.
-        for (int i = start + 1; i < end; ++i) {
-            bool l = (QChar::category(uc[i]) == QChar::Letter_Lowercase);
-            if ((m_analysis[i] == m_analysis[start])
-                && m_analysis[i].flags < QScriptAnalysis::TabOrObject
-                && l == lower
-                && i - start < MaxItemLength)
-                continue;
-            m_items.append(QScriptItem(start, m_analysis[start]));
-            if (lower)
-                m_items.last().analysis.flags = QScriptAnalysis::SmallCaps;
-
-            start = i;
-            lower = l;
-        }
-        m_items.append(QScriptItem(start, m_analysis[start]));
-        if (lower)
-            m_items.last().analysis.flags = QScriptAnalysis::SmallCaps;
-    }
+private:
+    enum { MaxItemLength = 4096 };
 
     const QString &m_string;
     const QScriptAnalysis * const m_analysis;
     QScriptItemArray &m_items;
-    QTextBoundaryFinder *m_splitter;
 };
 }
 
@@ -910,13 +803,6 @@ void QTextEngine::shapeText(int item) const
         si.width += glyphs.advances_x[i] * !glyphs.attributes[i].dontPrint;
 }
 
-static inline bool hasCaseChange(const QScriptItem &si)
-{
-    return si.analysis.flags == QScriptAnalysis::SmallCaps ||
-           si.analysis.flags == QScriptAnalysis::Uppercase ||
-           si.analysis.flags == QScriptAnalysis::Lowercase;
-}
-
 static inline void moveGlyphData(const QGlyphLayout &destination, const QGlyphLayout &source, int num)
 {
     if (num > 0 && destination.glyphs != source.glyphs) {
@@ -950,22 +836,6 @@ void QTextEngine::shapeTextWithHarfbuzz(int item) const
     entire_shaper_item.item.length = length(item);
     entire_shaper_item.item.bidiLevel = si.analysis.bidiLevel;
 
-    HB_UChar16 upperCased[256]; // XXX what about making this 4096, so we don't have to extend it ever.
-    if (hasCaseChange(si)) {
-        HB_UChar16 *uc = upperCased;
-        if (entire_shaper_item.item.length > 256)
-            uc = new HB_UChar16[entire_shaper_item.item.length];
-        for (uint i = 0; i < entire_shaper_item.item.length; ++i) {
-            if(si.analysis.flags == QScriptAnalysis::Lowercase)
-                uc[i] = QChar::toLower(entire_shaper_item.string[si.position + i]);
-            else
-                uc[i] = QChar::toUpper(entire_shaper_item.string[si.position + i]);
-        }
-        entire_shaper_item.item.pos = 0;
-        entire_shaper_item.string = uc;
-        entire_shaper_item.stringLength = entire_shaper_item.item.length;
-    }
-
     entire_shaper_item.shaperFlags = 0;
     if (!kerningEnabled)
         entire_shaper_item.shaperFlags |= HB_ShaperFlag_NoKerning;
@@ -974,24 +844,17 @@ void QTextEngine::shapeTextWithHarfbuzz(int item) const
 
     entire_shaper_item.num_glyphs = qMax(layoutData->glyphLayout.numGlyphs - layoutData->used, int(entire_shaper_item.item.length));
     if (! ensureSpace(entire_shaper_item.num_glyphs)) {
-        if (hasCaseChange(si) && entire_shaper_item.string != upperCased)
-            delete [] const_cast<HB_UChar16 *>(entire_shaper_item.string);
         return;
     }
     QGlyphLayout initialGlyphs = availableGlyphs(&si).mid(0, entire_shaper_item.num_glyphs);
 
     if (!stringToGlyphs(&entire_shaper_item, &initialGlyphs, font)) {
         if (! ensureSpace(entire_shaper_item.num_glyphs)) {
-            if (hasCaseChange(si) && entire_shaper_item.string != upperCased)
-                delete [] const_cast<HB_UChar16 *>(entire_shaper_item.string);
             return;
         }
         initialGlyphs = availableGlyphs(&si).mid(0, entire_shaper_item.num_glyphs);
 
         if (!stringToGlyphs(&entire_shaper_item, &initialGlyphs, font)) {
-            // ############ if this happens there's a bug in the fontengine
-            if (hasCaseChange(si) && entire_shaper_item.string != upperCased)
-                delete [] const_cast<HB_UChar16 *>(entire_shaper_item.string);
             return;
         }
     }
@@ -1001,26 +864,6 @@ void QTextEngine::shapeTextWithHarfbuzz(int item) const
     // k * 2 entries, array[k] == index in string, array[k + 1] == index in glyphs
     itemBoundaries[0] = entire_shaper_item.item.pos;
     itemBoundaries[1] = 0;
-
-    if (font->type() == QFontEngine::Multi) {
-        uint lastEngine = 0;
-        int charIdx = entire_shaper_item.item.pos;
-        const int stringEnd = charIdx + entire_shaper_item.item.length;
-        for (quint32 i = 0; i < entire_shaper_item.num_glyphs; ++i, ++charIdx) {
-            uint engineIdx = initialGlyphs.glyphs[i] >> 24;
-            if (engineIdx != lastEngine && i > 0) {
-                itemBoundaries.append(charIdx);
-                itemBoundaries.append(i);
-            }
-            lastEngine = engineIdx;
-            if (HB_IsHighSurrogate(entire_shaper_item.string[charIdx])
-                && charIdx < stringEnd - 1
-                && HB_IsLowSurrogate(entire_shaper_item.string[charIdx + 1]))
-                ++charIdx;
-        }
-    }
-
-
 
     int remaining_glyphs = entire_shaper_item.num_glyphs;
     int glyph_pos = 0;
@@ -1041,20 +884,12 @@ void QTextEngine::shapeTextWithHarfbuzz(int item) const
         if (shaper_item.num_glyphs < shaper_item.item.length)
             shaper_item.num_glyphs = shaper_item.item.length;
 
-        QFontEngine *actualFontEngine = font;
-        uint engineIdx = 0;
-        if (font->type() == QFontEngine::Multi) {
-            engineIdx = uint(availableGlyphs(&si).glyphs[glyph_pos] >> 24);
+        si.ascent = qMax(font->ascent(), si.ascent);
+        si.descent = qMax(font->descent(), si.descent);
+        si.leading = qMax(font->leading(), si.leading);
 
-            actualFontEngine = static_cast<QFontEngineMulti *>(font)->engine(engineIdx);
-        }
-
-        si.ascent = qMax(actualFontEngine->ascent(), si.ascent);
-        si.descent = qMax(actualFontEngine->descent(), si.descent);
-        si.leading = qMax(actualFontEngine->leading(), si.leading);
-
-        shaper_item.font = actualFontEngine->harfbuzzFont();
-        shaper_item.face = actualFontEngine->harfbuzzFace();
+        shaper_item.font = font->harfbuzzFont();
+        shaper_item.face = font->harfbuzzFace();
 
         shaper_item.glyphIndicesPresent = true;
 
@@ -1062,8 +897,6 @@ void QTextEngine::shapeTextWithHarfbuzz(int item) const
 
         do {
             if (! ensureSpace(glyph_pos + shaper_item.num_glyphs + remaining_glyphs)) {
-                if (hasCaseChange(si) && entire_shaper_item.string != upperCased)
-                    delete [] const_cast<HB_UChar16 *>(entire_shaper_item.string);
                 return;
             }
 
@@ -1089,9 +922,6 @@ void QTextEngine::shapeTextWithHarfbuzz(int item) const
         QGlyphLayout g = availableGlyphs(&si).mid(glyph_pos, shaper_item.num_glyphs);
         moveGlyphData(g.mid(shaper_item.num_glyphs), g.mid(shaper_item.initialGlyphCount), remaining_glyphs);
 
-        for (hb_uint32 i = 0; i < shaper_item.num_glyphs; ++i)
-            g.glyphs[i] = g.glyphs[i] | (engineIdx << 24);
-
         for (hb_uint32 i = 0; i < shaper_item.item.length; ++i)
             shaper_item.log_clusters[i] += glyph_pos;
 
@@ -1105,9 +935,6 @@ void QTextEngine::shapeTextWithHarfbuzz(int item) const
     si.num_glyphs = glyph_pos;
 
     layoutData->used += si.num_glyphs;
-
-    if (hasCaseChange(si) && entire_shaper_item.string != upperCased)
-        delete [] const_cast<HB_UChar16 *>(entire_shaper_item.string);
 }
 
 static void init(QTextEngine *e)
@@ -1347,12 +1174,10 @@ void QTextEngine::itemize() const
                     s = 0;
                 }
                 Q_ASSERT(position <= length);
-                itemizer.generate(prevPosition, position - prevPosition,
-                    formats()->charFormat(format).fontCapitalization());
+                itemizer.generate(prevPosition, position - prevPosition);
                 if (it == end) {
                     if (position < length)
-                        itemizer.generate(position, length - position,
-                                          formats()->charFormat(format).fontCapitalization());
+                        itemizer.generate(position, length - position);
                     break;
                 }
                 format = frag->format;
@@ -1362,7 +1187,7 @@ void QTextEngine::itemize() const
             ++it;
         }
     } else {
-        itemizer.generate(0, length, static_cast<QFont::Capitalization> (fnt.d->capital));
+        itemizer.generate(0, length);
     }
 
     addRequiredBoundaries();
@@ -1605,9 +1430,6 @@ QFont QTextEngine::font(const QScriptItem &si) const
         }
     }
 
-    if (si.analysis.flags == QScriptAnalysis::SmallCaps)
-        font = font.d->smallCapsFont();
-
     return font;
 }
 
@@ -1680,11 +1502,6 @@ QFontEngine *QTextEngine::fontEngine(const QScriptItem &si, QFixed *ascent, QFix
             feCache.prevLength = -1;
             feCache.prevScaledFontEngine = 0;
         }
-    }
-
-    if (si.analysis.flags == QScriptAnalysis::SmallCaps) {
-        QFontPrivate *p = font.d->smallCapsFontPrivate();
-        scaledEngine = p->engineForScript(script);
     }
 
     if (ascent) {
@@ -2266,13 +2083,9 @@ QString QTextEngine::elidedText(Qt::TextElideMode mode, const QFixed &width, int
 
         QGlyphLayoutArray<1> ellipsisGlyph;
         {
-            QFontEngine *feForEllipsis = (fe->type() == QFontEngine::Multi)
-                ? static_cast<QFontEngineMulti *>(fe)->engine(0)
-                : fe;
-
-            if (feForEllipsis->canRender(&ellipsisChar, 1)) {
+            if (fe->canRender(&ellipsisChar, 1)) {
                 int nGlyphs = 1;
-                feForEllipsis->stringToCMap(&ellipsisChar, 1, &ellipsisGlyph, &nGlyphs, 0);
+                fe->stringToCMap(&ellipsisChar, 1, &ellipsisGlyph, &nGlyphs, 0);
             }
         }
 
@@ -2836,42 +2649,6 @@ QTextItemInt QTextItemInt::midItem(QFontEngine *fontEngine, int firstGlyphIndex,
             ++ti.num_chars;
     }
     return ti;
-}
-
-
-QTransform qt_true_matrix(qreal w, qreal h, QTransform x)
-{
-    QRectF rect = x.mapRect(QRectF(0, 0, w, h));
-    return x * QTransform::fromTranslate(-rect.x(), -rect.y());
-}
-
-
-glyph_metrics_t glyph_metrics_t::transformed(const QTransform &matrix) const
-{
-    if (matrix.type() < QTransform::TxTranslate)
-        return *this;
-
-    glyph_metrics_t m = *this;
-
-    qreal w = width.toReal();
-    qreal h = height.toReal();
-    QTransform xform = qt_true_matrix(w, h, matrix);
-
-    QRectF rect(0, 0, w, h);
-    rect = xform.mapRect(rect);
-    m.width = QFixed::fromReal(rect.width());
-    m.height = QFixed::fromReal(rect.height());
-
-    QLineF l = xform.map(QLineF(x.toReal(), y.toReal(), xoff.toReal(), yoff.toReal()));
-
-    m.x = QFixed::fromReal(l.x1());
-    m.y = QFixed::fromReal(l.y1());
-
-    // The offset is relative to the baseline which is why we use dx/dy of the line
-    m.xoff = QFixed::fromReal(l.dx());
-    m.yoff = QFixed::fromReal(l.dy());
-
-    return m;
 }
 
 QTextLineItemIterator::QTextLineItemIterator(QTextEngine *_eng, int _lineNum, const QPointF &pos,

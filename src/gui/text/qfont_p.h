@@ -50,7 +50,7 @@ struct QFontDef
 {
     inline QFontDef()
         : pointSize(-1.0), pixelSize(-1),
-          styleStrategy(QFont::PreferDefault), styleHint(QFont::AnyStyle),
+          styleStrategy(QFont::PreferDefault),
           fixedPitch(false), style(QFont::StyleNormal), weight(50), stretch(100),
           ignorePitch(true), hintingPreference(QFont::PreferDefaultHinting)
     {
@@ -63,7 +63,6 @@ struct QFontDef
     qreal pixelSize;
 
     QFont::StyleStrategy styleStrategy;
-    QFont::StyleHint styleHint;
 
     bool fixedPitch;
     QFont::Style style;
@@ -80,7 +79,6 @@ struct QFontDef
                     && weight == other.weight
                     && style == other.style
                     && stretch == other.stretch
-                    && styleHint == other.styleHint
                     && styleStrategy == other.styleStrategy
                     && ignorePitch == other.ignorePitch && fixedPitch == other.fixedPitch
                     && family == other.family
@@ -93,7 +91,6 @@ struct QFontDef
         if (weight != other.weight) return weight < other.weight;
         if (style != other.style) return style < other.style;
         if (stretch != other.stretch) return stretch < other.stretch;
-        if (styleHint != other.styleHint) return styleHint < other.styleHint;
         if (styleStrategy != other.styleStrategy) return styleStrategy < other.styleStrategy;
         if (family != other.family) return family < other.family;
         if (!styleName.isEmpty() && !other.styleName.isEmpty() && styleName != other.styleName)
@@ -104,19 +101,6 @@ struct QFontDef
         return false;
     }
 };
-
-class QFontEngineData
-{
-public:
-    QFontEngineData();
-    ~QFontEngineData();
-
-    QAtomicInt ref;
-    QFontCache *fontCache;
-
-    QFontEngine *engines[QUnicodeTables::ScriptCount];
-};
-
 
 class Q_GUI_EXPORT QFontPrivate
 {
@@ -130,11 +114,10 @@ public:
     ~QFontPrivate();
 
     QFontEngine *engineForScript(QUnicodeTables::Script script) const;
-    void alterCharForCapitalization(QChar &c) const;
 
     QAtomicInt ref;
     QFontDef request;
-    mutable QFontEngineData *engineData;
+    mutable QFontEngine *engine;
     int dpi;
     int screen;
 
@@ -142,15 +125,10 @@ public:
     bool overline;
     bool strikeOut;
     bool kerning;
-    QFont::Capitalization capital;
     bool letterSpacingIsAbsolute;
 
     QFixed letterSpacing;
     QFixed wordSpacing;
-
-    mutable QFontPrivate *scFont;
-    QFont smallCapsFont() const { return QFont(smallCapsFontPrivate()); }
-    QFontPrivate *smallCapsFontPrivate() const;
 
     static QFontPrivate *get(const QFont &font)
     {
@@ -163,9 +141,8 @@ private:
 };
 
 
-class QFontCache : public QObject
+class QFontCache
 {
-    Q_OBJECT
 public:
     // note: these static functions work on a per-thread basis
     static QFontCache *instance();
@@ -175,8 +152,7 @@ public:
     ~QFontCache();
 
     void clear();
-    // universal key structure.  QFontEngineDatas and QFontEngines are cached using
-    // the same keys
+    // QFontEngines are cached using the same keys
     struct Key {
         Key() : script(0), screen(0) { }
         Key(const QFontDef &d, int c, int s = 0)
@@ -196,39 +172,12 @@ public:
         { return def == other.def && script == other.script && screen == other.screen; }
     };
 
-    // QFontEngineData cache
-    typedef QMap<Key,QFontEngineData*> EngineDataCache;
-    EngineDataCache engineDataCache;
-
-    QFontEngineData *findEngineData(const Key &key) const;
-    void insertEngineData(const Key &key, QFontEngineData *engineData);
-
     // QFontEngine cache
-    struct Engine {
-        Engine() : data(0), timestamp(0), hits(0) { }
-        Engine(QFontEngine *d) : data(d), timestamp(0), hits(0) { }
-
-        QFontEngine *data;
-        uint timestamp;
-        uint hits;
-    };
-
-    typedef QMap<Key,Engine> EngineCache;
+    typedef QMap<Key,QFontEngine *> EngineCache;
     EngineCache engineCache;
 
     QFontEngine *findEngine(const Key &key);
     void insertEngine(const Key &key, QFontEngine *engine);
-
-    private:
-    void increaseCost(uint cost);
-    void decreaseCost(uint cost);
-    void timerEvent(QTimerEvent *event);
-
-    static const uint min_cost;
-    uint total_cost, max_cost;
-    uint current_timestamp;
-    bool fast;
-    int timer_id;
 };
 
 QT_END_NAMESPACE
