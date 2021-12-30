@@ -74,7 +74,7 @@ static const char *font_text = QT_TRANSLATE_NOOP("MainWindow",
 "<p>Use this tab to select the default font for your Qt applications. "
 "The selected font is shown (initially as 'Sample Text') in the line "
 "edit below the Family, "
-"Style and Point Size drop down lists.</p>.");
+"Style and Point Size drop down lists.</p>");
 
 static const char *interface_text = QT_TRANSLATE_NOOP("MainWindow",
 "<p><b><font size+=2>Interface</font></b></p>"
