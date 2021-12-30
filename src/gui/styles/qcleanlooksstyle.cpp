@@ -285,13 +285,12 @@ static const char * const qt_cleanlooks_spinbox_button_arrow_up[] = {
 
 /* XPM */
 static const char * const qt_cleanlooks_scrollbar_button_left[] = {
-    "16 16 6 1",
+    "16 16 5 1",
     "   c None",
     ".  c #BFBFBF",
     "+  c #979797",
     "#  c #FAFAFA",
-    "<  c #FAFAFA",
-    "*  c #FAFAFA",
+    "<  c #AFAFAF",
     " .++++++++++++++",
     ".+#############+",
     "+#            <+",
@@ -311,13 +310,12 @@ static const char * const qt_cleanlooks_scrollbar_button_left[] = {
 
 /* XPM */
 static const char * const qt_cleanlooks_scrollbar_button_right[] = {
-    "16 16 6 1",
+    "16 16 5 1",
     "   c None",
     ".  c #BFBFBF",
     "+  c #979797",
     "#  c #FAFAFA",
-    "<  c #FAFAFA",
-    "*  c #FAFAFA",
+    "<  c #AFAFAF",
     "++++++++++++++. ",
     "+#############+.",
     "+#            <+",
@@ -337,13 +335,12 @@ static const char * const qt_cleanlooks_scrollbar_button_right[] = {
 
 /* XPM */
 static const char * const qt_cleanlooks_scrollbar_button_up[] = {
-    "16 16 6 1",
+    "16 16 5 1",
     "   c None",
     ".  c #BFBFBF",
     "+  c #979797",
     "#  c #FAFAFA",
-    "<  c #FAFAFA",
-    "*  c #FAFAFA",
+    "<  c #AFAFAF",
     " .++++++++++++. ",
     ".+############+.",
     "+#            <+",
@@ -363,13 +360,12 @@ static const char * const qt_cleanlooks_scrollbar_button_up[] = {
 
 /* XPM */
 static const char * const qt_cleanlooks_scrollbar_button_down[] = {
-    "16 16 6 1",
+    "16 16 5 1",
     "   c None",
     ".  c #BFBFBF",
     "+  c #979797",
     "#  c #FAFAFA",
-    "<  c #FAFAFA",
-    "*  c #FAFAFA",
+    "<  c #AFAFAF",
     "++++++++++++++++",
     "+##############+",
     "+#            <+",
@@ -390,12 +386,12 @@ static const char * const qt_cleanlooks_scrollbar_button_down[] = {
 /* XPM */
 static const char * const qt_cleanlooks_menuitem_checkbox_checked[] = {
     "8 7 6 1",
-    " 	g None",
-    ".	g #959595",
-    "+	g #676767",
-    "@	g #454545",
-    "#	g #1D1D1D",
-    "0	g #101010",
+    "  c None",
+    ". c #959595",
+    "+ c #676767",
+    "@ c #454545",
+    "# c #1D1D1D",
+    "0 c #101010",
     "      ..",
     "     .+ ",
     "    .+  ",
@@ -407,9 +403,9 @@ static const char * const qt_cleanlooks_menuitem_checkbox_checked[] = {
 /* XPM */
 static const char * const qt_cleanlooks_checkbox_checked[] = {
     "13 13 3 1",
-    " 	c None",
-    ".	c #272D33",
-    "%	c #666666",
+    "  c None",
+    ". c #272D33",
+    "% c #666666",
 
     "             ",
     "          %  ",
@@ -710,7 +706,9 @@ void QCleanlooksStyle::drawPrimitive(PrimitiveElement elem,
             if (!arrow.isNull()) {
                 r.setSize(arrow.size());
                 r.moveCenter(header->rect.center());
-                arrow.setColor(1, header->palette.foreground().color().rgba());
+                QMap<QRgb, QRgb> arrowMap;
+                arrowMap.insert(4278190080, header->palette.foreground().color().rgba());
+                arrow = replaceColors(arrow, arrowMap);
                 painter->drawImage(r, arrow);
             }
         }
@@ -919,11 +917,13 @@ void QCleanlooksStyle::drawPrimitive(PrimitiveElement elem,
             painter->setPen(QPen(dark.lighter(110), 0));
             painter->drawRect(checkRect);
             if (checkbox->state & (State_On | State_Sunken  | State_NoChange)) {
+                QMap<QRgb, QRgb> colormap;
                 QImage image(qt_cleanlooks_checkbox_checked);
                 QColor fillColor = option->palette.text().color();
-                image.setColor(1, fillColor.rgba()); 
+                colormap.insert(4280757555, fillColor.rgba());
                 fillColor.setAlpha(100);
-                image.setColor(2, fillColor.rgba()); 
+                colormap.insert(4284900966, fillColor.rgba());
+                image = replaceColors(image, colormap);
                 painter->drawImage(rect, image);
                 if (checkbox->state & State_NoChange) {
                     QColor bgc = option->palette.background().color();
@@ -1885,19 +1885,21 @@ void QCleanlooksStyle::drawControl(ControlElement element, const QStyleOption *o
                         if (menuItem->icon.isNull()) {
                             if (checked || sunken) {
                                 QImage image(qt_cleanlooks_menuitem_checkbox_checked);
+                                QMap<QRgb, QRgb> imagecolors;
                                 if (enabled && (menuItem->state & State_Selected)) {
-                                    image.setColor(1, 0x55ffffff);
-                                    image.setColor(2, 0xAAffffff);
-                                    image.setColor(3, 0xBBffffff);
-                                    image.setColor(4, 0xFFffffff);
-                                    image.setColor(5, 0x33ffffff);
+                                    imagecolors.insert(4287993237, 0x55ffffff);
+                                    imagecolors.insert(4284966759, 0xAAffffff);
+                                    imagecolors.insert(4282729797, 0xBBffffff);
+                                    imagecolors.insert(4280098077, 0xFFffffff);
+                                    imagecolors.insert(4279242768, 0x33ffffff);
                                 } else {
-                                    image.setColor(1, 0x55000000);
-                                    image.setColor(2, 0xAA000000);
-                                    image.setColor(3, 0xBB000000);
-                                    image.setColor(4, 0xFF000000);
-                                    image.setColor(5, 0x33000000);
+                                    imagecolors.insert(4287993237, 0x55000000);
+                                    imagecolors.insert(4284966759, 0xAA000000);
+                                    imagecolors.insert(4282729797, 0xBB000000);
+                                    imagecolors.insert(4280098077, 0xFF000000);
+                                    imagecolors.insert(4279242768, 0x33000000);
                                 }
+                                image = replaceColors(image, imagecolors);
                                 painter->drawImage(QPoint(checkRect.center().x() - image.width() / 2,
                                                         checkRect.center().y() - image.height() / 2), image);
                             }
@@ -2589,14 +2591,16 @@ void QCleanlooksStyle::drawComplexControl(ComplexControl control, const QStyleOp
                 } else if (spinBox->buttonSymbols == QAbstractSpinBox::UpDownArrows){
                     // arrows
                     QImage upArrow(qt_cleanlooks_spinbox_button_arrow_up);
-                    upArrow.setColor(1, spinBox->palette.foreground().color().rgba());
+                    QMap<QRgb, QRgb> arrowMap;
+                    arrowMap.insert(4290756543, spinBox->palette.foreground().color().rgba());
+                    upArrow = replaceColors(upArrow, arrowMap);
 
                     cachePainter.drawImage(upRect.center().x() - upArrow.width() / 2,
                                             upRect.center().y() - upArrow.height() / 2,
                                             upArrow);
 
                     QImage downArrow(qt_cleanlooks_spinbox_button_arrow_down);
-                    downArrow.setColor(1, spinBox->palette.foreground().color().rgba());
+                    downArrow = replaceColors(downArrow, arrowMap);
 
                     cachePainter.drawImage(downRect.center().x() - downArrow.width() / 2,
                                             downRect.center().y() - downArrow.height() / 2 + 1,
@@ -2833,8 +2837,10 @@ void QCleanlooksStyle::drawComplexControl(ComplexControl control, const QStyleOp
                     QImage image(qt_cleanlooks_titlebar_context_help);
                     QColor alpha = textColor;
                     alpha.setAlpha(128);
-                    image.setColor(1, textColor.rgba());
-                    image.setColor(2, alpha.rgba());
+                    QMap<QRgb, QRgb> imagecolors;
+                    imagecolors.insert(4278190080, textColor.rgba());
+                    imagecolors.insert(4282664004, alpha.rgba());
+                    image = replaceColors(image, imagecolors);
                     painter->drawImage(contextHelpButtonRect.adjusted(4, 4, -4, -4), image);
                 }
             }
@@ -2847,7 +2853,9 @@ void QCleanlooksStyle::drawComplexControl(ComplexControl control, const QStyleOp
                     bool sunken = (titleBar->activeSubControls & SC_TitleBarShadeButton) && (titleBar->state & State_Sunken);
                     qt_cleanlooks_draw_mdibutton(painter, titleBar, shadeButtonRect, hover, sunken);
                     QImage image(qt_cleanlooks_scrollbar_button_arrow_up);
-                    image.setColor(1, textColor.rgba());
+                    QMap<QRgb, QRgb> imagecolors;
+                    imagecolors.insert(4290756543, textColor.rgba());
+                    image = replaceColors(image, imagecolors);
                     painter->drawImage(shadeButtonRect.adjusted(5, 7, -5, -7), image);
                 }
             }
@@ -2860,7 +2868,9 @@ void QCleanlooksStyle::drawComplexControl(ComplexControl control, const QStyleOp
                     bool sunken = (titleBar->activeSubControls & SC_TitleBarUnshadeButton) && (titleBar->state & State_Sunken);
                     qt_cleanlooks_draw_mdibutton(painter, titleBar, unshadeButtonRect, hover, sunken);
                     QImage image(qt_cleanlooks_scrollbar_button_arrow_down);
-                    image.setColor(1, textColor.rgba());
+                    QMap<QRgb, QRgb> imagecolors;
+                    imagecolors.insert(4290756543, textColor.rgba());
+                    image = replaceColors(image, imagecolors);
                     painter->drawImage(unshadeButtonRect.adjusted(5, 7, -5, -7), image);
                 }
             }
@@ -3059,16 +3069,18 @@ void QCleanlooksStyle::drawComplexControl(ComplexControl control, const QStyleOp
                 } else {
                     subButton = QImage(qt_cleanlooks_scrollbar_button_up);
                 }
-                subButton.setColor(1, alphaCornerColor.rgba());
-                subButton.setColor(2, darkOutline.rgba());
+
+                QMap<QRgb, QRgb> subButtonMap;
+                subButtonMap.insert(4290756543, alphaCornerColor.rgba());
+                subButtonMap.insert(4288124823, darkOutline.rgba());
                 if ((scrollBar->activeSubControls & SC_ScrollBarSubLine) && sunken) {
-                    subButton.setColor(3, gradientStopColor.darker(140).rgba());
-                    subButton.setColor(4, gradientStopColor.darker(120).rgba());
+                    subButtonMap.insert(4294638330, gradientStopColor.darker(140).rgba());
+                    subButtonMap.insert(4289703855, gradientStopColor.darker(120).rgba());
                 } else {
-                    subButton.setColor(3, gradientStartColor.lighter(105).rgba());
-                    subButton.setColor(4, gradientStopColor.rgba());
+                    subButtonMap.insert(4294638330, gradientStartColor.lighter(105).rgba());
+                    subButtonMap.insert(4289703855, gradientStopColor.rgba());
                 }
-                subButton.setColor(5, scrollBar->palette.text().color().rgba());
+                subButton = replaceColors(subButton, subButtonMap);
                 painter->drawImage(pixmapRect, subButton);
 
                 // Arrows
@@ -3110,16 +3122,17 @@ void QCleanlooksStyle::drawComplexControl(ComplexControl control, const QStyleOp
                     } else {
                         addButton = QImage(qt_cleanlooks_scrollbar_button_down);
                     }
-                    addButton.setColor(1, alphaCornerColor.rgba());
-                    addButton.setColor(2, darkOutline.rgba());
+                    QMap<QRgb, QRgb> addButtonMap;
+                    addButtonMap.insert(4290756543, alphaCornerColor.rgba());
+                    addButtonMap.insert(4288124823, darkOutline.rgba());
                     if ((scrollBar->activeSubControls & SC_ScrollBarAddLine) && sunken) {
-                        addButton.setColor(3, gradientStopColor.darker(140).rgba());
-                        addButton.setColor(4, gradientStopColor.darker(120).rgba());
+                        addButtonMap.insert(4294638330, gradientStopColor.darker(140).rgba());
+                        addButtonMap.insert(4289703855, gradientStopColor.darker(120).rgba());
                     } else {
-                        addButton.setColor(3, gradientStartColor.lighter(105).rgba());
-                        addButton.setColor(4, gradientStopColor.rgba());
+                        addButtonMap.insert(4294638330, gradientStartColor.lighter(105).rgba());
+                        addButtonMap.insert(4289703855, gradientStopColor.rgba());
                     }
-                    addButton.setColor(5, scrollBar->palette.text().color().rgba());
+                    addButton = replaceColors(addButton, addButtonMap);
                     painter->drawImage(pixmapRect, addButton);
 
                     PrimitiveElement arrow;
@@ -3257,15 +3270,21 @@ void QCleanlooksStyle::drawComplexControl(ComplexControl control, const QStyleOp
                     if (comboBox->editable) {
                         // Draw the down arrow
                         QImage downArrow(qt_cleanlooks_arrow_down_xpm);
-                        downArrow.setColor(1, comboBox->palette.foreground().color().rgba());
+                        QMap<QRgb, QRgb> downArrowMap;
+                        downArrowMap.insert(4278190080, comboBox->palette.foreground().color().rgba());
+                        downArrow = replaceColors(downArrow, downArrowMap);
                         cachePainter.drawImage(downArrowRect.center().x() - downArrow.width() / 2,
                                                downArrowRect.center().y() - downArrow.height() / 2 + 1, downArrow);
                     } else {
                         // Draw the up/down arrow
                         QImage upArrow(qt_cleanlooks_scrollbar_button_arrow_up);
-                        upArrow.setColor(1, comboBox->palette.foreground().color().rgba());
+                        QMap<QRgb, QRgb> upArrowMap;
+                        upArrowMap.insert(4290756543, comboBox->palette.foreground().color().rgba());
+                        upArrow = replaceColors(upArrow, upArrowMap);
                         QImage downArrow(qt_cleanlooks_scrollbar_button_arrow_down);
-                        downArrow.setColor(1, comboBox->palette.foreground().color().rgba());
+                        QMap<QRgb, QRgb> downArrowMap;
+                        downArrowMap.insert(4290756543, comboBox->palette.foreground().color().rgba());
+                        downArrow = replaceColors(downArrow, downArrowMap);
                         cachePainter.drawImage(downArrowRect.center().x() - downArrow.width() / 2,
                                                downArrowRect.center().y() - upArrow.height() - 1 , upArrow);
                         cachePainter.drawImage(downArrowRect.center().x() - downArrow.width() / 2,

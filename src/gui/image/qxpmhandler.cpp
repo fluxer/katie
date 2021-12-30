@@ -44,11 +44,12 @@ static inline QImage::Format qt_xpm_qimage_format(const XpmAttributes *xpmattrib
 static inline QImage qt_ximagemask_to_qimage(XImage *ximage, XImage *ximagemask, const QImage::Format format)
 {
     QImage qimage(ximage->width, ximage->height, format);
-    QX11Data::copyXImageToQImage(ximage, qimage);
     if (ximagemask) {
         QImage qimagemask(ximagemask->width, ximagemask->height, format);
         QX11Data::copyXImageToQImage(ximagemask, qimagemask);
         QX11Data::copyXImageToQImageWithMask(ximage, qimage, qimagemask);
+    } else {
+        QX11Data::copyXImageToQImage(ximage, qimage);
     }
 
     return qimage;

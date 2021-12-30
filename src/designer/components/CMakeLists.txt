@@ -57,7 +57,7 @@ set(DESIGNERCOMPONENTS_HEADERS
     ${CMAKE_CURRENT_SOURCE_DIR}/propertyeditor/designerpropertymanager.h
     ${CMAKE_CURRENT_SOURCE_DIR}/propertyeditor/paletteeditor.h
     ${CMAKE_CURRENT_SOURCE_DIR}/propertyeditor/paletteeditorbutton.h
-    ${CMAKE_CURRENT_SOURCE_DIR}/propertyeditor/qtcolorbutton.h
+    ${CMAKE_CURRENT_SOURCE_DIR}/propertyeditor/qtcolorbutton_p.h
     ${CMAKE_CURRENT_SOURCE_DIR}/propertyeditor/stringlisteditor.h
     ${CMAKE_CURRENT_SOURCE_DIR}/propertyeditor/stringlisteditorbutton.h
     ${CMAKE_CURRENT_SOURCE_DIR}/propertyeditor/previewwidget.h
