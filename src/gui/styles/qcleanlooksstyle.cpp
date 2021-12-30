@@ -386,12 +386,12 @@ static const char * const qt_cleanlooks_scrollbar_button_down[] = {
 /* XPM */
 static const char * const qt_cleanlooks_menuitem_checkbox_checked[] = {
     "8 7 6 1",
-    " 	g None",
-    ".	g #959595",
-    "+	g #676767",
-    "@	g #454545",
-    "#	g #1D1D1D",
-    "0	g #101010",
+    "  c None",
+    ". c #959595",
+    "+ c #676767",
+    "@ c #454545",
+    "# c #1D1D1D",
+    "0 c #101010",
     "      ..",
     "     .+ ",
     "    .+  ",
@@ -403,9 +403,9 @@ static const char * const qt_cleanlooks_menuitem_checkbox_checked[] = {
 /* XPM */
 static const char * const qt_cleanlooks_checkbox_checked[] = {
     "13 13 3 1",
-    " 	c None",
-    ".	c #272D33",
-    "%	c #666666",
+    "  c None",
+    ". c #272D33",
+    "% c #666666",
 
     "             ",
     "          %  ",

@@ -2112,7 +2112,8 @@ static const char * const qt_motif_normalizeup_xpm[] = {
 
 /* XPM */
 static const char * const qt_motif_shade_xpm[] = {
-    "12 12 2 1", "# c #000000",
+    "12 12 2 1",
+    "# c #000000",
     ". c None",
     "............",
     "............",
