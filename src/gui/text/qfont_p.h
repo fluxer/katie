@@ -117,7 +117,6 @@ public:
 
     QAtomicInt ref;
     QFontDef request;
-    mutable QFontEngine *engine;
     int dpi;
     int screen;
 

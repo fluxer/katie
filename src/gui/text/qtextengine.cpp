@@ -971,7 +971,6 @@ QTextEngine::~QTextEngine()
     if (!stackEngine)
         delete layoutData;
     delete specialData;
-    resetFontEngineCache();
 }
 
 const HB_CharAttributes *QTextEngine::attributes() const
@@ -1023,19 +1022,6 @@ void QTextEngine::shape(int item) const
     }
 }
 
-static inline void releaseCachedFontEngine(QFontEngine *fontEngine)
-{
-    if (fontEngine && !fontEngine->ref.deref())
-        delete fontEngine;
-}
-
-void QTextEngine::resetFontEngineCache()
-{
-    releaseCachedFontEngine(feCache.prevFontEngine);
-    releaseCachedFontEngine(feCache.prevScaledFontEngine);
-    feCache.reset();
-}
-
 void QTextEngine::invalidate()
 {
     freeMemory();
@@ -1043,8 +1029,6 @@ void QTextEngine::invalidate()
     maxWidth = 0;
     if (specialData)
         specialData->resolvedFormatIndices.clear();
-
-    resetFontEngineCache();
 }
 
 void QTextEngine::clearLineData()
@@ -1433,75 +1417,36 @@ QFont QTextEngine::font(const QScriptItem &si) const
     return font;
 }
 
-QTextEngine::FontEngineCache::FontEngineCache()
-{
-    reset();
-}
-
-//we cache the previous results of this function, as calling it numerous times with the same effective
-//input is common (and hard to cache at a higher level)
 QFontEngine *QTextEngine::fontEngine(const QScriptItem &si, QFixed *ascent, QFixed *descent, QFixed *leading) const
 {
-    QFontEngine *engine = 0;
-    QFontEngine *scaledEngine = 0;
+    QFontEngine *engine = nullptr;
     QUnicodeTables::Script script = si.analysis.script;
 
     QFont font = fnt;
     if (hasFormats()) {
-        if (feCache.prevFontEngine && feCache.prevPosition == si.position && feCache.prevLength == length(&si) && feCache.prevScript == script) {
-            engine = feCache.prevFontEngine;
-            scaledEngine = feCache.prevScaledFontEngine;
+        QTextCharFormat f = format(&si);
+        font = f.font();
+
+        if (block.docHandle() && block.docHandle()->layout()) {
+            // Make sure we get the right dpi on printers
+            QPaintDevice *pdev = block.docHandle()->layout()->paintDevice();
+            if (pdev)
+                font = QFont(font, pdev);
         } else {
-            QTextCharFormat f = format(&si);
-            font = f.font();
-
-            if (block.docHandle() && block.docHandle()->layout()) {
-                // Make sure we get the right dpi on printers
-                QPaintDevice *pdev = block.docHandle()->layout()->paintDevice();
-                if (pdev)
-                    font = QFont(font, pdev);
-            } else {
-                font = font.resolve(fnt);
-            }
+            font = font.resolve(fnt);
+        }
+        QTextCharFormat::VerticalAlignment valign = f.verticalAlignment();
+        if (valign == QTextCharFormat::AlignSuperScript || valign == QTextCharFormat::AlignSubScript) {
+            if (font.pointSize() != -1)
+                font.setPointSize((font.pointSize() * 2) / 3);
+            else
+                font.setPixelSize((font.pixelSize() * 2) / 3);
             engine = font.d->engineForScript(script);
-            QTextCharFormat::VerticalAlignment valign = f.verticalAlignment();
-            if (valign == QTextCharFormat::AlignSuperScript || valign == QTextCharFormat::AlignSubScript) {
-                if (font.pointSize() != -1)
-                    font.setPointSize((font.pointSize() * 2) / 3);
-                else
-                    font.setPixelSize((font.pixelSize() * 2) / 3);
-                scaledEngine = font.d->engineForScript(script);
-            }
-            if (engine)
-                engine->ref.ref();
-            if (feCache.prevFontEngine)
-                releaseCachedFontEngine(feCache.prevFontEngine);
-            feCache.prevFontEngine = engine;
-
-            if (scaledEngine)
-                scaledEngine->ref.ref();
-            if (feCache.prevScaledFontEngine)
-                releaseCachedFontEngine(feCache.prevScaledFontEngine);
-            feCache.prevScaledFontEngine = scaledEngine;
-            feCache.prevScript = script;
-            feCache.prevPosition = si.position;
-            feCache.prevLength = length(&si);
+        } else {
+            engine = font.d->engineForScript(script);
         }
     } else {
-        if (feCache.prevFontEngine && feCache.prevScript == script && feCache.prevPosition == -1)
-            engine = feCache.prevFontEngine;
-        else {
-            engine = font.d->engineForScript(script);
-            if (engine)
-                engine->ref.ref();
-            if (feCache.prevFontEngine)
-                releaseCachedFontEngine(feCache.prevFontEngine);
-            feCache.prevFontEngine = engine;
-            feCache.prevScript = script;
-            feCache.prevPosition = -1;
-            feCache.prevLength = -1;
-            feCache.prevScaledFontEngine = 0;
-        }
+        engine = font.d->engineForScript(script);
     }
 
     if (ascent) {
@@ -1510,8 +1455,6 @@ QFontEngine *QTextEngine::fontEngine(const QScriptItem &si, QFixed *ascent, QFix
         *leading = engine->leading();
     }
 
-    if (scaledEngine)
-        return scaledEngine;
     return engine;
 }
 

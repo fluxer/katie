@@ -111,29 +111,23 @@ bool QFontDef::exactMatch(const QFontDef &other) const
 }
 
 QFontPrivate::QFontPrivate()
-    : engine(nullptr), dpi(QX11Info::appDpiY()), screen(QX11Info::appScreen()),
+    : dpi(QX11Info::appDpiY()), screen(QX11Info::appScreen()),
       underline(false), overline(false), strikeOut(false), kerning(true),
       letterSpacingIsAbsolute(false)
 {
 }
 
 QFontPrivate::QFontPrivate(const QFontPrivate &other)
-    : request(other.request), engine(other.engine), dpi(other.dpi), screen(other.screen),
+    : request(other.request), dpi(other.dpi), screen(other.screen),
       underline(other.underline), overline(other.overline),
       strikeOut(other.strikeOut), kerning(other.kerning),
       letterSpacingIsAbsolute(other.letterSpacingIsAbsolute),
       letterSpacing(other.letterSpacing), wordSpacing(other.wordSpacing)
 {
-    if (engine) {
-        engine->ref.ref();
-    }
 }
 
 QFontPrivate::~QFontPrivate()
 {
-    if (engine) {
-        engine->ref.deref();
-    }
 }
 
 QFontEngine *QFontPrivate::engineForScript(QUnicodeTables::Script script) const
