@@ -921,7 +921,6 @@ void QTextLayout::setFlags(int flags)
     }
 
     if (flags & (Qt::TextForceLeftToRight|Qt::TextForceRightToLeft)) {
-        d->ignoreBidi = true;
         d->option.setTextDirection((flags & Qt::TextForceLeftToRight) ? Qt::LeftToRight : Qt::RightToLeft);
     }
 }

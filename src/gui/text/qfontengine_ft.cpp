@@ -113,27 +113,6 @@ int QFreetypeFace::fsType() const
     return fsType;
 }
 
-HB_Error QFreetypeFace::getPointInOutline(HB_Glyph glyph, int flags, hb_uint32 point, HB_Fixed *xpos, HB_Fixed *ypos, hb_uint32 *nPoints)
-{
-    if (HB_Error error = (HB_Error)FT_Load_Glyph(face, glyph, flags))
-        return error;
-
-    if (face->glyph->format != FT_GLYPH_FORMAT_OUTLINE)
-        return HB_Err_Invalid_SubTable;
-
-    *nPoints = face->glyph->outline.n_points;
-    if (!(*nPoints))
-        return HB_Err_Ok;
-
-    if (point > *nPoints)
-        return HB_Err_Invalid_SubTable;
-
-    *xpos = face->glyph->outline.points[point].x;
-    *ypos = face->glyph->outline.points[point].y;
-
-    return HB_Err_Ok;
-}
-
 QFontEngine::Properties QFreetypeFace::properties() const
 {
     QFontEngine::Properties p;
@@ -381,11 +360,6 @@ QFontEngineFT::QFontEngineFT(const QFontDef &fd)
     if (line_thickness < 1) {
         line_thickness = 1;
     }
-
-    hbFont.x_ppem  = face->size->metrics.x_ppem;
-    hbFont.y_ppem  = face->size->metrics.y_ppem;
-    hbFont.x_scale = face->size->metrics.x_scale;
-    hbFont.y_scale = face->size->metrics.y_scale;
 
     metrics = face->size->metrics;
 
@@ -815,13 +789,6 @@ void QFontEngineFT::setFace(Scaling scale)
         freetype->xsize = xsize;
         freetype->ysize = ysize;
     }
-}
-
-HB_Error QFontEngineFT::getPointInOutline(HB_Glyph glyph, int flags, hb_uint32 point, HB_Fixed *xpos, HB_Fixed *ypos, hb_uint32 *nPoints)
-{
-    int load_flags = loadFlags(flags);
-    HB_Error result = freetype->getPointInOutline(glyph, load_flags, point, xpos, ypos, nPoints);
-    return result;
 }
 
 QT_END_NAMESPACE

@@ -509,7 +509,6 @@ public:
     QFixed minWidth;
     QFixed maxWidth;
     QPointF position;
-    bool ignoreBidi;
     bool cacheGlyphs;
     bool stackEngine;
     bool forceJustification;

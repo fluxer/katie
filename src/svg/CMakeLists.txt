@@ -18,7 +18,6 @@ include_directories(
     ${CMAKE_BINARY_DIR}/include/QtXml
     ${CMAKE_BINARY_DIR}/include/QtGui
     ${CMAKE_BINARY_DIR}/include/QtSvg
-    ${CMAKE_SOURCE_DIR}/src/3rdparty/harfbuzz/src
     ${ZLIB_INCLUDE_DIRS}
 )
 
