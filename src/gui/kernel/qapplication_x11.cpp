@@ -1287,7 +1287,6 @@ void qt_cleanup()
 {
     QPixmapCache::clear();
     QCursorData::cleanup();
-    QFont::cleanup();
     QColormap::cleanup();
 
 #ifndef QT_NO_XRENDER

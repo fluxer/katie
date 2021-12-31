@@ -198,7 +198,6 @@ public:
     bool fromString(const QString &);
 
     static void initialize();
-    static void cleanup();
 
     QString defaultFamily() const;
     QString lastResortFamily() const;

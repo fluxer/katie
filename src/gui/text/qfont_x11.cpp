@@ -109,11 +109,6 @@ void QFont::initialize()
     QFontPrivate::defaultEncodingID = qt_encoding_id_for_mib(mib);
 }
 
-void QFont::cleanup()
-{
-    QFontCache::cleanup();
-}
-
 /*!
   \internal
   X11 Only: Returns the screen with which this font is associated.

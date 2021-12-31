@@ -30,7 +30,6 @@
 #include "qdatastream.h"
 #include "qapplication.h"
 #include "qstringlist.h"
-
 #include "qthread.h"
 #include "qunicodetables_p.h"
 #include "qfont_p.h"
@@ -38,6 +37,7 @@
 #include "qpainter_p.h"
 #include "qtextengine_p.h"
 #include "qmutex.h"
+#include "qcorecommon_p.h"
 
 #include <limits.h>
 
@@ -1390,13 +1390,6 @@ QFont QFont::resolve(const QFont &other) const
   shared between QFontPrivate and QXFontName.
 */
 
-/*! \fn void QFont::cleanup()
-  \internal
-
-  Internal function that cleans up the font system.
-*/
-
-
 /*  \internal
     Internal function. Converts boolean font settings to an unsigned
     8-bit number. Used for serialization etc.
@@ -1893,21 +1886,14 @@ bool QFontInfo::exactMatch() const
 
 // **********************************************************************
 // QFontCache
-thread_local QFontCache* theFontCache = nullptr;
+QTHREADLOCAL(QFontCache, theFontCache);
 
 QFontCache *QFontCache::instance()
 {
-    if (!theFontCache)
-        theFontCache = new QFontCache;
-    return theFontCache;
-}
-
-void QFontCache::cleanup()
-{
-    if (theFontCache) {
-        delete theFontCache;
-        theFontCache = 0;
+    if (!theFontCache) {
+        theFontCache = new QFontCache();
     }
+    return theFontCache;
 }
 
 QFontCache::QFontCache()
@@ -1916,29 +1902,19 @@ QFontCache::QFontCache()
 
 QFontCache::~QFontCache()
 {
-    clear();
-    {
-        EngineCache::ConstIterator it = engineCache.constBegin(),
-                                 end = engineCache.constEnd();
-        while (it != end) {
-            if (!it.value()->ref.deref())
-                delete it.value();
-            else
-                FC_DEBUG("QFontCache::~QFontCache: engineData %p still has refcount %d",
-                         it.value(), int(it.value()->ref));
-            ++it;
-        }
-    }
 }
 
 void QFontCache::clear()
 {
-    for (EngineCache::Iterator it = engineCache.begin(), end = engineCache.end();
-         it != end; ++it) {
-        QFontEngine *engine = it.value();
-        if (!engine->ref.deref()) {
-            delete engine;
-        }
+    EngineCache::ConstIterator it = engineCache.constBegin(),
+                               end = engineCache.constEnd();
+    while (it != end) {
+        if (!it.value()->ref.deref())
+            delete it.value();
+        else
+            FC_DEBUG("QFontCache::~QFontCache: engineData %p still has refcount %d",
+                        it.value(), int(it.value()->ref));
+        ++it;
     }
 
     engineCache.clear();
