@@ -1896,6 +1896,7 @@ QFontCache::QFontCache()
 
 QFontCache::~QFontCache()
 {
+    clear();
 }
 
 void QFontCache::clear()
