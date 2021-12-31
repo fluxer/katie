@@ -24,10 +24,26 @@
 
 #include "qimage.h"
 #include "qdebug.h"
+#include "qdrawhelper_p.h"
 #include "qcorecommon_p.h"
 #include "qt_x11_p.h"
 
 QT_BEGIN_NAMESPACE
+
+static inline void qt_ximage_to_qimage(XImage *ximage, QImage &image)
+{
+    for (int h = 0; h < ximage->height; h++) {
+        for (int w = 0; w < ximage->width; w++) {
+            const uint xpixel = XGetPixel(ximage, w, h);
+            // the color is either fully transparent or with no alpha channel
+            if (image.format() == QImage::Format_ARGB32 && xpixel != 0) {
+                image.setPixel(w, h, xpixel | 0xff000000);
+            } else {
+                image.setPixel(w, h, xpixel);
+            }
+        }
+    }
+}
 
 static inline QImage::Format qt_xpm_qimage_format(const XpmAttributes *xpmattributes)
 {
@@ -44,12 +60,11 @@ static inline QImage::Format qt_xpm_qimage_format(const XpmAttributes *xpmattrib
 static inline QImage qt_ximagemask_to_qimage(XImage *ximage, XImage *ximagemask, const QImage::Format format)
 {
     QImage qimage(ximage->width, ximage->height, format);
+    qt_ximage_to_qimage(ximage, qimage);
     if (ximagemask) {
         QImage qimagemask(ximagemask->width, ximagemask->height, format);
-        QX11Data::copyXImageToQImage(ximagemask, qimagemask);
-        QX11Data::copyXImageToQImageWithMask(ximage, qimage, qimagemask);
-    } else {
-        QX11Data::copyXImageToQImage(ximage, qimage);
+        qt_ximage_to_qimage(ximagemask, qimagemask);
+        qimage = qt_mask_image(qimage, qimagemask);
     }
 
     return qimage;
