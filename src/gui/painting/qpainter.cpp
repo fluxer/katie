@@ -6139,23 +6139,6 @@ void QPainter::setViewTransformEnabled(bool enable)
     d->updateMatrix();
 }
 
-
-struct QPaintDeviceRedirection
-{
-    QPaintDeviceRedirection() : device(0), replacement(0), internalWidgetRedirectionIndex(-1) {}
-    QPaintDeviceRedirection(const QPaintDevice *device, QPaintDevice *replacement,
-                            const QPoint& offset, int internalWidgetRedirectionIndex)
-        : device(device), replacement(replacement), offset(offset),
-          internalWidgetRedirectionIndex(internalWidgetRedirectionIndex) { }
-
-    const QPaintDevice *device;
-    QPaintDevice *replacement;
-    QPoint offset;
-    int internalWidgetRedirectionIndex;
-
-    bool operator==(const QPaintDevice *pdev) const { return device == pdev; }
-};
-
 void qt_format_text(const QFont &fnt, const QRectF &_r,
                     int tf, const QString& str, QRectF *brect,
                     int tabstops, int *ta, int tabarraylen)
