@@ -58,7 +58,6 @@ static const QPaintEngine::PaintEngineFeatures qt_raster_features =
     QPaintEngine::PerspectiveTransform |
     QPaintEngine::PatternTransform |
     QPaintEngine::ConstantOpacity |
-    QPaintEngine::PorterDuff |
     QPaintEngine::BlendModes |
     QPaintEngine::Antialiasing;
 
@@ -160,6 +159,18 @@ bool QRasterPaintEngine::begin(QPaintDevice *pdev)
         }
         default: {
             Q_ASSERT_X(false, "QRasterPaintEngine::begin", "internal error");
+            break;
+        }
+    }
+
+    switch (image->format()) {
+        case QImage::Format_ARGB32:
+        case QImage::Format_ARGB32_Premultiplied: {
+            gccaps |= QPaintEngine::PorterDuff;
+            break;
+        }
+        default: {
+            gccaps &= ~QPaintEngine::PorterDuff;
             break;
         }
     }
