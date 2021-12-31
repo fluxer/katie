@@ -32,15 +32,51 @@ QT_BEGIN_NAMESPACE
 
 static inline void qt_ximage_to_qimage(XImage *ximage, QImage &image)
 {
-    for (int h = 0; h < ximage->height; h++) {
-        for (int w = 0; w < ximage->width; w++) {
-            const uint xpixel = XGetPixel(ximage, w, h);
-            // the color is either fully transparent or with no alpha channel
-            if (image.format() == QImage::Format_ARGB32 && xpixel != 0) {
-                image.setPixel(w, h, xpixel | 0xff000000);
-            } else {
-                image.setPixel(w, h, xpixel);
+    Q_ASSERT(ximage);
+    Q_ASSERT(ximage->width == image.width());
+    Q_ASSERT(ximage->height == image.height());
+
+    const int bpl = image.bytesPerLine();
+    uchar* imagebits = image.bits();
+    switch (image.format()) {
+        case QImage::Format_ARGB32: {
+            for (int h = 0; h < ximage->height; h++) {
+                uchar* scan = QFAST_SCAN_LINE(imagebits, bpl, h);
+                for (int w = 0; w < ximage->width; w++) {
+                    const uint xpixel = XGetPixel(ximage, w, h);
+                    // the color is either fully transparent or with no alpha channel
+                    if (xpixel != 0) {
+                        ((uint *)scan)[w] = (xpixel | 0xff000000);
+                    } else {
+                        ((uint *)scan)[w] = xpixel;
+                    }
+                }
             }
+            break;
+        }
+        case QImage::Format_RGB32: {
+            for (int h = 0; h < ximage->height; h++) {
+                uchar* scan = QFAST_SCAN_LINE(imagebits, bpl, h);
+                for (int w = 0; w < ximage->width; w++) {
+                    const uint xpixel = XGetPixel(ximage, w, h);
+                    ((uint *)scan)[w] = (xpixel | 0xff000000);
+                }
+            }
+            break;
+        }
+        case QImage::Format_RGB16: {
+            for (int h = 0; h < ximage->height; h++) {
+                uchar* scan = QFAST_SCAN_LINE(imagebits, bpl, h);
+                for (int w = 0; w < ximage->width; w++) {
+                    const uint xpixel = XGetPixel(ximage, w, h);
+                    ((quint16 *)scan)[w] = qt_colorConvert<quint16, quint32>(xpixel, 0);
+                }
+            }
+            break;
+        }
+        default: {
+            Q_ASSERT_X(false, "qt_ximage_to_qimage", "internal error");
+            break;
         }
     }
 }

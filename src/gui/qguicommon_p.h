@@ -7,6 +7,7 @@
 #include "qtabbar.h"
 #include "qtabwidget.h"
 #include "qmap.h"
+#include "qdrawhelper_p.h"
 
 QT_BEGIN_NAMESPACE
 
@@ -49,10 +50,13 @@ inline static QColor mergedColors(const QColor &colorA, const QColor &colorB, in
 inline static QImage replaceColors(const QImage &source, const QMap<QRgb, QRgb> &colormap)
 {
     QImage result(source);
+    const int bpl = result.bytesPerLine();
+    uchar* imagebits = result.bits();
     for (int h = 0; h < source.height(); h++) {
+        uchar* scan = QFAST_SCAN_LINE(imagebits, bpl, h);
         for (int w = 0; w < source.width(); w++) {
             const QRgb pixel = source.pixel(w, h);
-            result.setPixel(w, h, colormap.value(pixel, pixel));
+            ((uint *)scan)[w] = colormap.value(pixel, pixel);
         }
     }
     return result;
