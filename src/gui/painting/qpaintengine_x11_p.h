@@ -67,22 +67,9 @@ public:
     void updateMatrix(const QTransform &matrix);
     void updateClipRegion_dev(const QRegion &region, Qt::ClipOperation op);
 
-    void drawLines(const QLine *lines, int lineCount);
-    void drawLines(const QLineF *lines, int lineCount);
-
-    void drawRects(const QRect *rects, int rectCount);
-    void drawRects(const QRectF *rects, int rectCount);
-
-    void drawPoints(const QPoint *points, int pointCount);
-    void drawPoints(const QPointF *points, int pointCount);
-
-    void drawEllipse(const QRect &r);
-    void drawEllipse(const QRectF &r);
-
     void drawPolygon(const QPointF *points, int pointCount, PolygonDrawMode mode);
 
     void drawPixmap(const QRectF &r, const QPixmap &pm, const QRectF &sr);
-    void drawTiledPixmap(const QRectF &r, const QPixmap &pixmap, const QPointF &s);
     void drawPath(const QPainterPath &path);
     void drawImage(const QRectF &r, const QImage &img, const QRectF &sr,
                    Qt::ImageConversionFlags flags = Qt::AutoColor);
@@ -184,7 +171,6 @@ public:
     bool has_pen;
     bool has_brush;
     bool has_texture;
-    bool has_alpha_texture;
     bool has_pattern;
     bool has_alpha_pen;
     bool has_alpha_brush;
