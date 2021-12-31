@@ -85,7 +85,7 @@ bool qt_read_xpm_array(const char* const *source, QImage &image)
         qWarning("qt_read_xpm_array: %s", XpmGetErrorString(xpmresult));
         XpmFreeAttributes(&xpmattributes);
         return false;
-    } else if (!ximage) {
+    } else if (Q_UNLIKELY(!ximage)) {
         qWarning("qt_read_xpm_array: null XImage");
         XpmFreeAttributes(&xpmattributes);
         return false;
