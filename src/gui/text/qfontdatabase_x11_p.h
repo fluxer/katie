@@ -536,7 +536,7 @@ static void qt_addPatternProps(FcPattern *pattern, int screen, QUnicodeTables::S
 
 static bool preferScalable(const QFontDef &request)
 {
-    return request.styleStrategy & (QFont::PreferOutline|QFont::ForceOutline|QFont::PreferAntialias);
+    return request.styleStrategy & (QFont::PreferOutline|QFont::PreferAntialias);
 }
 
 
@@ -577,6 +577,7 @@ static FcPattern *getFcPattern(const QFontPrivate *fp, QUnicodeTables::Script sc
         FcPatternAddInteger(pattern, FC_SPACING, pitch_value);
     }
     FcPatternAddBool(pattern, FC_OUTLINE, !(request.styleStrategy & QFont::PreferBitmap));
+
     if (preferScalable(request))
         FcPatternAddBool(pattern, FC_SCALABLE, true);
 
@@ -660,40 +661,6 @@ special_char:
     return engine;
 }
 
-FcFontSet *qt_fontSetForPattern(FcPattern *pattern, const QFontDef &request)
-{
-    FcResult result;
-    FcFontSet *fs = FcFontSort(0, pattern, FcTrue, 0, &result);
-#ifdef FONT_MATCH_DEBUG
-    FM_DEBUG("first font in fontset:\n");
-    FcPatternPrint(fs->fonts[0]);
-#endif
-
-    FcBool forceScalable = request.styleStrategy & QFont::ForceOutline;
-
-    // remove fonts if they are not scalable (and should be)
-    if (forceScalable && fs) {
-        for (int i = 0; i < fs->nfont; ++i) {
-            FcPattern *font = fs->fonts[i];
-            FcResult res;
-            FcBool scalable;
-            res = FcPatternGetBool(font, FC_SCALABLE, 0, &scalable);
-            if (res != FcResultMatch || !scalable) {
-                FcFontSetRemove(fs, i);
-#ifdef FONT_MATCH_DEBUG
-                FM_DEBUG("removing pattern:");
-                FcPatternPrint(font);
-#endif
-                --i; // go back one
-            }
-        }
-    }
-
-    FM_DEBUG("final pattern contains %d fonts\n", fs->nfont);
-
-    return fs;
-}
-
 static QFontEngine *loadFc(const QFontPrivate *fp, QUnicodeTables::Script script, const QFontDef &request)
 {
     FM_DEBUG("===================== loadFc: script=%d family='%s'\n", script, request.family.toLatin1().constData());
@@ -708,7 +675,8 @@ static QFontEngine *loadFc(const QFontPrivate *fp, QUnicodeTables::Script script
     FcPattern *match = FcFontMatch(0, pattern, &res);
     QFontEngine *fe = tryPatternLoad(match, fp->screen, request, script);
     if (!fe) {
-        FcFontSet *fs = qt_fontSetForPattern(pattern, request);
+        FcResult unused;
+        FcFontSet *fs = FcFontSort(0, pattern, FcTrue, 0, &unused);
 
         if (match) {
             FcPatternDestroy(match);

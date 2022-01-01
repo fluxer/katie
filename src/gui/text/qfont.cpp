@@ -1054,7 +1054,6 @@ QFont::StyleStrategy QFont::styleStrategy() const
     \value PreferBitmap prefers bitmap fonts (as opposed to outline
            fonts).
     \value PreferOutline prefers outline fonts (as opposed to bitmap fonts).
-    \value ForceOutline forces the use of outline fonts.
     \value NoAntialias don't antialias the fonts.
     \value PreferAntialias antialias if possible.
 

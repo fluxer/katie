@@ -80,8 +80,6 @@ void tst_QFont::getSetCheck()
     QCOMPARE(QFont::StyleStrategy(QFont::PreferBitmap), obj1.styleStrategy());
     obj1.setStyleStrategy(QFont::StyleStrategy(QFont::PreferOutline));
     QCOMPARE(QFont::StyleStrategy(QFont::PreferOutline), obj1.styleStrategy());
-    obj1.setStyleStrategy(QFont::StyleStrategy(QFont::ForceOutline));
-    QCOMPARE(QFont::StyleStrategy(QFont::ForceOutline), obj1.styleStrategy());
     obj1.setStyleStrategy(QFont::StyleStrategy(QFont::PreferAntialias));
     QCOMPARE(QFont::StyleStrategy(QFont::PreferAntialias), obj1.styleStrategy());
     obj1.setStyleStrategy(QFont::StyleStrategy(QFont::NoAntialias));

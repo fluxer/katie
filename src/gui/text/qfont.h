@@ -47,10 +47,9 @@ public:
         PreferDefault       = 0x0001,
         PreferBitmap        = 0x0002,
         PreferOutline       = 0x0004,
-        ForceOutline        = 0x0008,
-        PreferAntialias     = 0x0010,
-        NoAntialias         = 0x0020,
-        ForceIntegerMetrics = 0x0040
+        PreferAntialias     = 0x0008,
+        NoAntialias         = 0x0010,
+        ForceIntegerMetrics = 0x0020
     };
 
     enum HintingPreference {
