@@ -222,7 +222,6 @@ QFontEngineFT::QFontEngineFT(const QFontDef &fd, FcPattern *pattern)
     kerning_pairs_loaded(false)
 {
     fontDef = fd;
-    ::memset(&metrics, 0, sizeof(FT_Size_Metrics));
 
     // FcPatternPrint(pattern);
     FcChar8 *fileName;
@@ -262,7 +261,6 @@ QFontEngineFT::QFontEngineFT(const QFontDef &fd)
     kerning_pairs_loaded(false)
 {
     fontDef = fd;
-    ::memset(&metrics, 0, sizeof(FT_Size_Metrics));
 
     face_id.filename = fd.family.toUtf8();
     face_id.index = 0;
@@ -299,8 +297,6 @@ void QFontEngineFT::init()
     if (line_thickness < 1) {
         line_thickness = 1;
     }
-
-    metrics = face->size->metrics;
 
     fontDef.styleName = QString::fromUtf8(face->style_name);
 
@@ -453,18 +449,18 @@ int QFontEngineFT::synthesized() const
 
 QFixed QFontEngineFT::ascent() const
 {
-    return QFixed::fromFixed(metrics.ascender);
+    return QFixed::fromFixed(freetype->face->size->metrics.ascender);
 }
 
 QFixed QFontEngineFT::descent() const
 {
     // subtract a pixel to work around QFontMetrics's built-in + 1
-    return QFixed::fromFixed(-metrics.descender - 64);
+    return QFixed::fromFixed(-(freetype->face->size->metrics.descender) - 64);
 }
 
 QFixed QFontEngineFT::leading() const
 {
-    return QFixed::fromFixed(metrics.height - metrics.ascender + metrics.descender);
+    return QFixed::fromFixed(freetype->face->size->metrics.height - freetype->face->size->metrics.ascender + freetype->face->size->metrics.descender);
 }
 
 QFixed QFontEngineFT::xHeight() const
@@ -487,7 +483,7 @@ QFixed QFontEngineFT::averageCharWidth() const
 
 qreal QFontEngineFT::maxCharWidth() const
 {
-    return metrics.max_advance >> 6;
+    return freetype->face->size->metrics.max_advance >> 6;
 }
 
 static const ushort char_table[] = {

@@ -177,7 +177,6 @@ private:
     QFixed line_thickness;
     QFixed underline_position;
 
-    FT_Size_Metrics metrics;
     bool kerning_pairs_loaded;
 
     typedef QMap<uint, glyph_t> CharCache;
