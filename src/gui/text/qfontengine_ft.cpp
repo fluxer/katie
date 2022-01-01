@@ -71,16 +71,7 @@ QFreetypeFace::QFreetypeFace(const QFontEngine::FaceId &face_id)
 
     if (!face_id.filename.isEmpty()) {
         QFile file(QString::fromUtf8(face_id.filename));
-        if (face_id.filename.startsWith(":qmemoryfonts/")) {
-            // from qfontdatabase.cpp
-            extern QByteArray qt_fontdata_from_index(int);
-            QByteArray idx = face_id.filename;
-            idx.remove(0, 14); // remove ':qmemoryfonts/'
-            bool ok = false;
-            fontData = qt_fontdata_from_index(idx.toInt(&ok));
-            if (!ok)
-                fontData = QByteArray();
-        } else if (!(file.fileEngine()->fileFlags(QAbstractFileEngine::FlagsMask) & QAbstractFileEngine::LocalDiskFlag)) {
+        if (!(file.fileEngine()->fileFlags(QAbstractFileEngine::FlagsMask) & QAbstractFileEngine::LocalDiskFlag)) {
             if (!file.open(QIODevice::ReadOnly)) {
                 return;
             }
@@ -242,9 +233,6 @@ void QFreetypeFace::addGlyphToPath(FT_Face face, FT_GlyphSlot g, const QFixedPoi
 
 #ifndef QT_NO_FONTCONFIG
 QFontEngineFT::QFontEngineFT(const QFontDef &fd, FcPattern *pattern)
-#else
-QFontEngineFT::QFontEngineFT(const QFontDef &fd)
-#endif
     : default_load_flags(FT_LOAD_IGNORE_GLOBAL_ADVANCE_WIDTH | FT_LOAD_NO_BITMAP),
     default_hint_style(HintNone),
     freetype(nullptr),
@@ -259,7 +247,6 @@ QFontEngineFT::QFontEngineFT(const QFontDef &fd)
     fontDef = fd;
     ::memset(&metrics, 0, sizeof(FT_Size_Metrics));
 
-#ifndef QT_NO_FONTCONFIG
     // FcPatternPrint(pattern);
     FcChar8 *fileName;
 
@@ -328,10 +315,60 @@ QFontEngineFT::QFontEngineFT(const QFontDef &fd)
         }
     }
 #endif
-#else
+
+    freetype = new QFreetypeFace(face_id);
+    if (!freetype->face) {
+        return;
+    } else if (!FT_IS_SCALABLE(freetype->face)) {
+        return;
+    }
+
+    lbearing = rbearing = SHRT_MIN;
+    ysize = qRound(fontDef.pixelSize * 64);
+    xsize = (ysize * fontDef.stretch / 100);
+
+    setFace(QFontEngineFT::Scaled);
+    FT_Face face = getFace();
+    // fake italic/oblique
+    if ((fontDef.style != QFont::StyleNormal) && !(face->style_flags & FT_STYLE_FLAG_ITALIC)) {
+        oblique = true;
+    }
+    // fake bold
+    if ((fontDef.weight == QFont::Bold) && !(face->style_flags & FT_STYLE_FLAG_BOLD) && !FT_IS_FIXED_WIDTH(face)) {
+        embolden = true;
+    }
+    // underline metrics
+    line_thickness = QFixed::fromFixed(FT_MulFix(face->underline_thickness, face->size->metrics.y_scale));
+    underline_position = QFixed::fromFixed(-FT_MulFix(face->underline_position, face->size->metrics.y_scale));
+    if (line_thickness < 1) {
+        line_thickness = 1;
+    }
+
+    metrics = face->size->metrics;
+
+    fontDef.styleName = QString::fromUtf8(face->style_name);
+
+    fsType = freetype->fsType();
+}
+#endif // QT_NO_FONTCONFIG
+
+QFontEngineFT::QFontEngineFT(const QFontDef &fd)
+    : default_load_flags(FT_LOAD_IGNORE_GLOBAL_ADVANCE_WIDTH | FT_LOAD_NO_BITMAP),
+    default_hint_style(HintNone),
+    freetype(nullptr),
+    embolden(false),
+    oblique(false),
+    xsize(0),
+    ysize(0),
+    line_thickness(QFixed::fromFixed(1)),
+    underline_position(QFixed::fromReal(0.8)),
+    kerning_pairs_loaded(false)
+{
+    fontDef = fd;
+    ::memset(&metrics, 0, sizeof(FT_Size_Metrics));
+
     face_id.filename = fd.family.toUtf8();
     face_id.index = 0;
-#endif // QT_NO_FONTCONFIG
 
     freetype = new QFreetypeFace(face_id);
     if (!freetype->face) {

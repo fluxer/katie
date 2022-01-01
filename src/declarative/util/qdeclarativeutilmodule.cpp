@@ -26,7 +26,6 @@
 #include "qdeclarativebind_p.h"
 #include "qdeclarativeconnections_p.h"
 #include "qdeclarativesmoothedanimation_p.h"
-#include "qdeclarativefontloader_p.h"
 #include "qdeclarativelistaccessor_p.h"
 #include "qdeclarativelistmodel_p.h"
 #include "qdeclarativenullablevalue_p_p.h"
@@ -63,7 +62,6 @@ void QDeclarativeUtilModule::defineModule()
         qmlRegisterType<QDeclarativeBehavior>("QtQuick",1,0,"Behavior");
         qmlRegisterType<QDeclarativeColorAnimation>("QtQuick",1,0,"ColorAnimation");
         qmlRegisterType<QDeclarativeSmoothedAnimation>("QtQuick",1,0,"SmoothedAnimation");
-        qmlRegisterType<QDeclarativeFontLoader>("QtQuick",1,0,"FontLoader");
         qmlRegisterType<QDeclarativeNumberAnimation>("QtQuick",1,0,"NumberAnimation");
         qmlRegisterType<QDeclarativePackage>("QtQuick",1,0,"Package");
         qmlRegisterType<QDeclarativeParallelAnimation>("QtQuick",1,0,"ParallelAnimation");

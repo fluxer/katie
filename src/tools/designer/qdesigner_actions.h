@@ -38,8 +38,6 @@ class QAction;
 class QActionGroup;
 class QDesignerFormEditorInterface;
 class QDesignerFormWindowInterface;
-class AppFontDialog;
-
 class QRect;
 class QWidget;
 class QPixmap;
@@ -120,11 +118,9 @@ private slots:
     void backupForms();
     void showNewFormDialog(const QString &fileName);
     void showPreferencesDialog();
-    void showAppFontDialog();
     void savePreviewImage();
     void printPreviewImage();
     void updateCloseAction();
-    void formWindowCountChanged();
     void formWindowSettingsChanged(QDesignerFormWindowInterface *fw);
 
 private:
@@ -188,9 +184,6 @@ private:
     QAction *m_windowListSeparatorAction;
 
     QAction *m_preferencesAction;
-    QAction *m_appFontAction;
-
-    QPointer<AppFontDialog> m_appFontDialog;
 
 #ifndef QT_NO_PRINTER
     QPrinter *m_printer;

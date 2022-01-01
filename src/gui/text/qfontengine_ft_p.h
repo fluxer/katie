@@ -92,9 +92,8 @@ class Q_GUI_EXPORT QFontEngineFT : public QFontEngine
 public:
 #ifndef QT_NO_FONTCONFIG
     QFontEngineFT(const QFontDef &fd, FcPattern *pattern);
-#else
-    QFontEngineFT(const QFontDef &fd);
 #endif
+    QFontEngineFT(const QFontDef &fd);
     virtual ~QFontEngineFT();
 
     virtual QFontEngine::FaceId faceId() const;

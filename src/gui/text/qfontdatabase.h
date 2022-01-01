@@ -63,12 +63,6 @@ public:
 
     bool hasFamily(const QString &family) const;
 
-    static int addApplicationFont(const QString &fileName);
-    static int addApplicationFontFromData(const QByteArray &fontData);
-    static QStringList applicationFontFamilies(int id);
-    static bool removeApplicationFont(int id);
-    static bool removeAllApplicationFonts();
-
     static bool supportsThreadedFontRendering();
 
 private:

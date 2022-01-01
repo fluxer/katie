@@ -29,7 +29,6 @@
 #include "saveformastemplate.h"
 #include "qdesigner_toolwindow.h"
 #include "preferencesdialog.h"
-#include "appfontdialog.h"
 
 #include "pluginmanager_p.h"
 #include "qdesigner_formbuilder_p.h"
@@ -170,8 +169,6 @@ QDesignerActions::QDesignerActions(QDesignerWorkbench *workbench)
       m_bringAllToFrontAction(new QAction(tr("Bring All to Front"), this)),
       m_windowListSeparatorAction(createSeparator(this)),
       m_preferencesAction(new QAction(tr("Preferences..."), this)),
-      m_appFontAction(new QAction(tr("Additional Fonts..."), this)),
-      m_appFontDialog(0),
 #ifndef QT_NO_PRINTER
       m_printer(0),
 #endif
@@ -336,9 +333,6 @@ QDesignerActions::QDesignerActions(QDesignerWorkbench *workbench)
     m_preferencesAction->setMenuRole(QAction::PreferencesRole);
     m_settingsActions->addAction(m_preferencesAction);
 
-    connect(m_appFontAction, SIGNAL(triggered()),  this, SLOT(showAppFontDialog()));
-    m_appFontAction->setMenuRole(QAction::PreferencesRole);
-    m_settingsActions->addAction(m_appFontAction);
 //
 // form actions
 //
@@ -400,11 +394,6 @@ QDesignerActions::QDesignerActions(QDesignerWorkbench *workbench)
 
     m_backupTimer->start(180000); // 3min
     connect(m_backupTimer, SIGNAL(timeout()), this, SLOT(backupForms()));
-
-    // Enable application font action
-    connect(formWindowManager, SIGNAL(formWindowAdded(QDesignerFormWindowInterface*)), this, SLOT(formWindowCountChanged()));
-    connect(formWindowManager, SIGNAL(formWindowRemoved(QDesignerFormWindowInterface*)), this, SLOT(formWindowCountChanged()));
-    formWindowCountChanged();
 }
 
 QActionGroup *QDesignerActions::createHelpActions()
@@ -1196,14 +1185,6 @@ void QDesignerActions::showPreferencesDialog()
     preferencesDialog.exec();
 }
 
-void QDesignerActions::showAppFontDialog()
-{
-    if (!m_appFontDialog) // Might get deleted when switching ui modes
-        m_appFontDialog = new AppFontDialog(core()->topLevel());
-    m_appFontDialog->show();
-    m_appFontDialog->raise();
-}
-
 QPixmap QDesignerActions::createPreviewPixmap(QDesignerFormWindowInterface *fw)
 {
     const QCursor oldCursor = core()->topLevel()->cursor();
@@ -1269,17 +1250,6 @@ void QDesignerActions::savePreviewImage()
         if (box.exec() == QMessageBox::Cancel)
             break;
     } while (true);
-}
-
-void QDesignerActions::formWindowCountChanged()
-{
-    const bool enabled = m_core->formWindowManager()->formWindowCount() == 0;
-    /* Disable the application font action if there are form windows open
-     * as the reordering of the fonts sets font properties to 'changed'
-     * and overloaded fonts are not updated. */
-    static const QString disabledTip = tr("Please close all forms to enable the loading of additional fonts.");
-    m_appFontAction->setEnabled(enabled);
-    m_appFontAction->setStatusTip(enabled ? QString() : disabledTip);
 }
 
 void QDesignerActions::printPreviewImage()

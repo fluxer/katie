@@ -328,7 +328,7 @@ class QFontDatabasePrivate
 {
 public:
     QFontDatabasePrivate()
-        : count(0), families(0), reregisterAppFonts(false)
+        : count(0), families(0)
     { }
 
     ~QFontDatabasePrivate() {
@@ -349,16 +349,6 @@ public:
     QString systemLang;
 #endif
     QtFontFamily **families;
-
-    struct ApplicationFont {
-        QString fileName;
-        QByteArray data;
-        QStringList families;
-    };
-    QVector<ApplicationFont> applicationFonts;
-    int addAppFont(const QByteArray &fontData, const QString &fileName);
-    bool reregisterAppFonts;
-    bool isApplicationFont(const QString &fileName);
 
     void invalidate();
 };
@@ -1337,142 +1327,6 @@ void QFontDatabase::createDatabase()
 {
     initializeFontDb();
 }
-
-// used from qfontengine_ft.cpp
-Q_GUI_EXPORT QByteArray qt_fontdata_from_index(int index)
-{
-    std::lock_guard<std::recursive_mutex> locker(qGlobalFontDatabaseMutex);
-    return privateDb()->applicationFonts.value(index).data;
-}
-
-int QFontDatabasePrivate::addAppFont(const QByteArray &fontData, const QString &fileName)
-{
-    QFontDatabasePrivate::ApplicationFont font;
-    font.data = fontData;
-    font.fileName = fileName;
-
-    int i;
-    for (i = 0; i < applicationFonts.count(); ++i)
-        if (applicationFonts.at(i).families.isEmpty())
-            break;
-    if (i >= applicationFonts.count()) {
-        applicationFonts.append(ApplicationFont());
-        i = applicationFonts.count() - 1;
-    }
-
-    if (font.fileName.isEmpty() && !fontData.isEmpty())
-        font.fileName = QString::fromLatin1(":qmemoryfonts/") + QString::number(i);
-
-    registerFont(&font);
-    if (font.families.isEmpty())
-        return -1;
-
-    applicationFonts[i] = font;
-
-    invalidate();
-    return i;
-}
-
-bool QFontDatabasePrivate::isApplicationFont(const QString &fileName)
-{
-    for (int i = 0; i < applicationFonts.count(); ++i)
-        if (applicationFonts.at(i).fileName == fileName)
-            return true;
-    return false;
-}
-
-/*!
-    \since 4.2
-
-    Loads the font from the file specified by \a fileName and makes it available to
-    the application. An ID is returned that can be used to remove the font again
-    with removeApplicationFont() or to retrieve the list of family names contained
-    in the font.
-
-    The function returns -1 if the font could not be loaded.
-
-    Currently only TrueType fonts, TrueType font collections, and OpenType fonts are
-    supported.
-
-    \note Adding application fonts on Unix/X11 platforms without fontconfig is
-    currently not supported.
-
-    \note On Symbian, the font family names get truncated to a length of 20 characters.
-
-    \sa addApplicationFontFromData(), applicationFontFamilies(), removeApplicationFont()
-*/
-int QFontDatabase::addApplicationFont(const QString &fileName)
-{
-    QFile f(fileName);
-    if (!f.open(QIODevice::ReadOnly))
-        return -1;
-    std::lock_guard<std::recursive_mutex> locker(qGlobalFontDatabaseMutex);
-    return privateDb()->addAppFont(f.readAll(), fileName);
-}
-
-/*!
-    \since 4.2
-
-    Loads the font from binary data specified by \a fontData and makes it available to
-    the application. An ID is returned that can be used to remove the font again
-    with removeApplicationFont() or to retrieve the list of family names contained
-    in the font.
-
-    The function returns -1 if the font could not be loaded.
-
-    Currently only TrueType fonts and TrueType font collections are supported.
-
-    \bold{Note:} Adding application fonts on Unix/X11 platforms without fontconfig is
-    currently not supported.
-
-    \note On Symbian, the font family names get truncated to a length of 20 characters.
-
-    \sa addApplicationFont(), applicationFontFamilies(), removeApplicationFont()
-*/
-int QFontDatabase::addApplicationFontFromData(const QByteArray &fontData)
-{
-    std::lock_guard<std::recursive_mutex> locker(qGlobalFontDatabaseMutex);
-    return privateDb()->addAppFont(fontData, QString() /* fileName */);
-}
-
-/*!
-    \since 4.2
-
-    Returns a list of font families for the given application font identified by
-    \a id.
-
-    \sa addApplicationFont(), addApplicationFontFromData()
-*/
-QStringList QFontDatabase::applicationFontFamilies(int id)
-{
-    std::lock_guard<std::recursive_mutex> locker(qGlobalFontDatabaseMutex);
-    return privateDb()->applicationFonts.value(id).families;
-}
-
-/*!
-    \fn bool QFontDatabase::removeApplicationFont(int id)
-    \since 4.2
-
-    Removes the previously loaded application font identified by \a
-    id. Returns true if unloading of the font succeeded; otherwise
-    returns false.
-
-    \sa removeAllApplicationFonts(), addApplicationFont(),
-        addApplicationFontFromData()
-*/
-
-/*!
-    \fn bool QFontDatabase::removeAllApplicationFonts()
-    \since 4.2
-
-    Removes all application-local fonts previously added using addApplicationFont()
-    and addApplicationFontFromData().
-
-    Returns true if unloading of the fonts succeeded; otherwise
-    returns false.
-
-    \sa removeApplicationFont(), addApplicationFont(), addApplicationFontFromData()
-*/
 
 /*!
     \fn bool QFontDatabase::supportsThreadedFontRendering()

@@ -667,7 +667,6 @@ static void loadFontConfig()
 }
 #endif // QT_NO_FONTCONFIG
 
-static void registerFont(QFontDatabasePrivate::ApplicationFont *fnt);
 static QString styleStringHelper(int weight, QFont::Style style);
 
 static void initializeFontDb()
@@ -681,13 +680,6 @@ static void initializeFontDb()
     QElapsedTimer elapsedtimer;
     elapsedtimer.start();
 #endif
-    if (db->reregisterAppFonts) {
-        db->reregisterAppFonts = false;
-        for (int i = 0; i < db->applicationFonts.count(); ++i)
-            if (!db->applicationFonts.at(i).families.isEmpty()) {
-                registerFont(&db->applicationFonts[i]);
-            }
-    }
 
     loadFontConfig();
 #ifdef QFONTDATABASE_DEBUG
@@ -1104,6 +1096,15 @@ QFontEngine* QFontDatabase::load(const QFontPrivate *d, int script)
             fe = loadFc(d, static_cast<QUnicodeTables::Script>(script), req);
         }
 #endif
+        if (fe) {
+            QFontEngineFT* ftfe = new QFontEngineFT(req);
+            if (ftfe->invalid()) {
+                delete ftfe;
+            } else {
+                fe = ftfe;
+            }
+        }
+
         if (!fe) {
             fe = new QFontEngineBox(req.pixelSize);
             fe->fontDef = QFontDef();
@@ -1111,109 +1112,6 @@ QFontEngine* QFontDatabase::load(const QFontPrivate *d, int script)
     }
     QFontCache::instance()->insertEngine(key, fe);
     return fe;
-}
-
-static void registerFont(QFontDatabasePrivate::ApplicationFont *fnt)
-{
-#if defined(QT_NO_FONTCONFIG)
-    return;
-#else
-    if (!qt_x11Data->has_fontconfig)
-        return;
-
-    FcConfig *config = FcConfigGetCurrent();
-    if (!config)
-        return;
-
-    FcFontSet *set = FcConfigGetFonts(config, FcSetApplication);
-    if (!set) {
-        FcConfigAppFontAddFile(config, (const FcChar8 *)":/non-existent");
-        set = FcConfigGetFonts(config, FcSetApplication); // try again
-        if (!set)
-            return;
-    }
-
-    int id = 0;
-    FcBlanks *blanks = FcConfigGetBlanks(0);
-    int count = 0;
-
-    QStringList families;
-    QFontDatabasePrivate *db = privateDb();
-
-    do {
-        FcPattern *pattern = queryFont((const FcChar8 *)QFile::encodeName(fnt->fileName).constData(),
-                            fnt->data, id, blanks, &count);
-        if (!pattern)
-            return;
-
-        FcPatternDel(pattern, FC_FILE);
-        QByteArray cs = fnt->fileName.toUtf8();
-        FcPatternAddString(pattern, FC_FILE, (const FcChar8 *) cs.constData());
-
-        int n = 0;
-        for (int i = 0; ; i++) {
-            FcChar8 *familylang = nullptr;
-            if (FcPatternGetString(pattern, FC_FAMILYLANG, i, &familylang) != FcResultMatch)
-                break;
-            QString familyLang = QString::fromUtf8((const char *) familylang);
-            if (familyLang.compare(db->systemLang, Qt::CaseInsensitive) == 0) {
-                n = i;
-                break;
-            }
-        }
-
-        FcChar8 *fam = nullptr;
-        if (FcPatternGetString(pattern, FC_FAMILY, n, &fam) == FcResultMatch) {
-            families << QString::fromUtf8(reinterpret_cast<const char *>(fam));
-        }
-
-        if (!FcFontSetAdd(set, pattern))
-            return;
-
-        ++id;
-    } while (id < count);
-
-    fnt->families = families;
-#endif
-}
-
-bool QFontDatabase::removeApplicationFont(int handle)
-{
-#if defined(QT_NO_FONTCONFIG)
-    return false;
-#else
-    std::lock_guard<std::recursive_mutex> locker(qGlobalFontDatabaseMutex);
-
-    QFontDatabasePrivate *db = privateDb();
-    if (handle < 0 || handle >= db->applicationFonts.count())
-        return false;
-
-    FcConfigAppFontClear(0);
-
-    db->applicationFonts[handle] = QFontDatabasePrivate::ApplicationFont();
-
-    db->reregisterAppFonts = true;
-    db->invalidate();
-    return true;
-#endif
-}
-
-bool QFontDatabase::removeAllApplicationFonts()
-{
-#if defined(QT_NO_FONTCONFIG)
-    return false;
-#else
-    std::lock_guard<std::recursive_mutex> locker(qGlobalFontDatabaseMutex);
-
-    QFontDatabasePrivate *db = privateDb();
-    if (db->applicationFonts.isEmpty())
-        return false;
-
-    FcConfigAppFontClear(0);
-    db->applicationFonts.clear();
-    db->invalidate();
-    return true;
-#endif
 }
 
 bool QFontDatabase::supportsThreadedFontRendering()

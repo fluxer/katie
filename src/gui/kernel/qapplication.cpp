@@ -1637,11 +1637,6 @@ void QApplication::aboutQt()
     \fn void QApplication::fontDatabaseChanged()
 
     This signal is emitted when application fonts are loaded or removed.
-
-    \sa QFontDatabase::addApplicationFont(),
-    QFontDatabase::addApplicationFontFromData(),
-    QFontDatabase::removeAllApplicationFonts(),
-    QFontDatabase::removeApplicationFont()
 */
 
 #ifndef QT_NO_TRANSLATION

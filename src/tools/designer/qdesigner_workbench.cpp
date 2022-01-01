@@ -26,7 +26,6 @@
 #include "qdesigner_settings.h"
 #include "qdesigner_toolwindow.h"
 #include "qdesigner_formwindow.h"
-#include "appfontdialog.h"
 #include "abstractformeditor.h"
 #include "abstractformwindow.h"
 #include "abstractformwindowmanager.h"
@@ -59,8 +58,6 @@
 #include <QtGui/QLayout>
 
 QT_BEGIN_NAMESPACE
-
-static const char *appFontPrefixC = "AppFonts";
 
 typedef QList<QAction *> ActionList;
 
@@ -230,7 +227,6 @@ QDesignerWorkbench::QDesignerWorkbench()  :
     }
 
     restoreUISettings();
-    AppFontWidget::restore(m_core->settingsManager(), QLatin1String(appFontPrefixC));
     m_state = StateUp;
 }
 
@@ -601,7 +597,6 @@ void QDesignerWorkbench::saveSettings() const
     QDesignerSettings settings(m_core);
     settings.clearBackup();
     saveGeometries(settings);
-    AppFontWidget::save(m_core->settingsManager(), QLatin1String(appFontPrefixC));
 }
 
 void QDesignerWorkbench::saveGeometries(QDesignerSettings &settings) const
