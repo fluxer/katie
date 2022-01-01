@@ -125,32 +125,9 @@ QFontEngine::Properties QFreetypeFace::properties() const
     return p;
 }
 
-/* Some fonts (such as MingLiu rely on hinting to scale different
-   components to their correct sizes. While this is really broken (it
-   should be done in the component glyph itself, not the hinter) we
-   will have to live with it.
-
-   This means we can not use FT_LOAD_NO_HINTING to get the glyph
-   outline. All we can do is to load the unscaled glyph and scale it
-   down manually when required.
-*/
-static void scaleOutline(FT_Face face, FT_GlyphSlot g, FT_Fixed x_scale, FT_Fixed y_scale)
-{
-    x_scale = FT_MulDiv(x_scale, 1 << 10, face->units_per_EM);
-    y_scale = FT_MulDiv(y_scale, 1 << 10, face->units_per_EM);
-    FT_Vector *p = g->outline.points;
-    const FT_Vector *e = p + g->outline.n_points;
-    while (p < e) {
-        p->x = FT_MulFix(p->x, x_scale);
-        p->y = FT_MulFix(p->y, y_scale);
-        ++p;
-    }
-}
-
-void QFreetypeFace::addGlyphToPath(FT_Face face, FT_GlyphSlot g, const QFixedPoint &point, QPainterPath *path, FT_Fixed x_scale, FT_Fixed y_scale)
+void QFreetypeFace::addGlyphToPath(FT_Face face, FT_GlyphSlot g, const QFixedPoint &point, QPainterPath *path)
 {
     static const qreal factor = (1.0 / 64.0);
-    scaleOutline(face, g, x_scale, y_scale);
 
     QPointF cp = point.toPointF();
 
@@ -258,15 +235,13 @@ QFontEngineFT::QFontEngineFT(const QFontDef &fd, FcPattern *pattern)
     }
 
 #if defined(FC_AUTOHINT) && defined(FT_LOAD_FORCE_AUTOHINT)
-    {
-        bool autohint = false;
-        FcBool b;
-        if (FcPatternGetBool(pattern, FC_AUTOHINT, 0, &b) == FcResultMatch) {
-            autohint = b;
-        }
-        if (autohint) {
-            default_load_flags |= FT_LOAD_FORCE_AUTOHINT;
-        }
+    bool autohint = false;
+    FcBool b;
+    if (FcPatternGetBool(pattern, FC_AUTOHINT, 0, &b) == FcResultMatch) {
+        autohint = b;
+    }
+    if (autohint) {
+        default_load_flags |= FT_LOAD_FORCE_AUTOHINT;
     }
 #endif
 
@@ -611,7 +586,7 @@ void QFontEngineFT::getUnscaledGlyph(glyph_t glyph, QPainterPath *path, glyph_me
     metrics->y = QFixed::fromFixed(-top);
     metrics->xoff = QFixed::fromFixed(face->glyph->advance.x);
 
-    QFreetypeFace::addGlyphToPath(face, face->glyph, p, path, face->units_per_EM << 6, face->units_per_EM << 6);
+    QFreetypeFace::addGlyphToPath(face, face->glyph, p, path);
 
     setFace(QFontEngineFT::Scaled);
 }
@@ -652,7 +627,7 @@ void QFontEngineFT::addGlyphsToPath(glyph_t *glyphs, QFixedPoint *positions, int
     for (int gl = 0; gl < numGlyphs; gl++) {
         loadGlyph(glyphs[gl], load_flags);
 
-        QFreetypeFace::addGlyphToPath(face, face->glyph, positions[gl], path, face->units_per_EM << 6, face->units_per_EM << 6);
+        QFreetypeFace::addGlyphToPath(face, face->glyph, positions[gl], path);
     }
 }
 
