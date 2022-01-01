@@ -517,7 +517,25 @@ QFont QFontDatabase::font(const QString &family, const QString &style,
 */
 QList<int> QFontDatabase::smoothSizes(const QString &family, const QString &style)
 {
-    return pointSizes(family, style);
+    QString parsedfamily, parsedfoundry;
+    parseFontName(family, parsedfoundry, parsedfamily);
+
+    QList<int> result;
+    foreach (const QtFontFamily &fontfamily, d->families) {
+        if (fontfamily.family.compare(parsedfamily, Qt::CaseInsensitive) != 0
+            || fontfamily.foundry.compare(parsedfoundry, Qt::CaseInsensitive) != 0
+            || fontfamily.style.compare(style, Qt::CaseInsensitive) != 0) {
+            continue;
+        }
+        if (fontfamily.scalable) {
+            result = standardSizes();
+        } else {
+            result.append(fontfamily.pointsize);
+        }
+        break;
+    }
+    qSort(result);
+    return result;
 }
 
 
