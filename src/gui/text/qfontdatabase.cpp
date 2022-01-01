@@ -314,6 +314,8 @@ QFontDatabase::QFontDatabase()
         if (FcPatternGetString(fonts->fonts[i], FC_STYLE, 0, &style_value) != FcResultMatch)
             style_value = nullptr;
         FcPatternGetDouble(fonts->fonts[i], FC_PIXEL_SIZE, 0, &pixel_size);
+        if (FcPatternGetInteger (fonts->fonts[i], FC_SLANT, 0, &slant_value) != FcResultMatch)
+            slant_value = FC_SLANT_ROMAN;
 
         QtFontFamily fontfamily;
         fontfamily.family = QString::fromUtf8((const char *)family_value);
