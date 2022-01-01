@@ -479,12 +479,6 @@ static QStringList familyList(const QFontDef &req)
 Q_GLOBAL_STATIC(QFontDatabasePrivate, privateDb)
 static std::recursive_mutex qGlobalFontDatabaseMutex;
 
-// used in qfontengine_x11.cpp
-std::recursive_mutex& qt_fontdatabase_mutex()
-{
-    return qGlobalFontDatabaseMutex;
-}
-
 QT_BEGIN_INCLUDE_NAMESPACE
 #if defined(Q_WS_X11)
 #  include "qfontdatabase_x11_p.h"
