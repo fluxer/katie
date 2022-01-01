@@ -105,10 +105,6 @@ struct QFontDef
 class Q_GUI_EXPORT QFontPrivate
 {
 public:
-#ifdef Q_WS_X11
-    static int defaultEncodingID;
-#endif // Q_WS_X11
-
     QFontPrivate();
     QFontPrivate(const QFontPrivate &other);
     ~QFontPrivate();
