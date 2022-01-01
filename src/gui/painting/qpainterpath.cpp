@@ -37,7 +37,6 @@
 #include "qobject_p.h"
 #include "qpathclipper_p.h"
 #include "qstroker_p.h"
-#include "qtextengine_p.h"
 #include "qguicommon_p.h"
 
 #include <limits.h>

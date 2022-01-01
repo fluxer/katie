@@ -35,7 +35,6 @@
 #include "qfont_p.h"
 #include "qfontengine_p.h"
 #include "qpainter_p.h"
-#include "qtextengine_p.h"
 #include "qmutex.h"
 #include "qcorecommon_p.h"
 

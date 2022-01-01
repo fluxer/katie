@@ -32,14 +32,13 @@
 #include "qtabwidget.h"
 #include "qtooltip.h"
 #include "qwhatsthis.h"
-#include "qtextengine_p.h"
-#ifndef QT_NO_ACCESSIBILITY
-#include "qaccessible.h"
-#endif
-
 #include "qdebug.h"
 #include "qtabbar_p.h"
 #include "qguicommon_p.h"
+
+#ifndef QT_NO_ACCESSIBILITY
+#include "qaccessible.h"
+#endif
 
 #ifndef QT_NO_TABBAR
 

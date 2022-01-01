@@ -37,7 +37,6 @@
 #include "qtextlayout.h"
 #include "qvarlengtharray.h"
 #include "qfont_p.h"
-#include "qtextengine_p.h"
 #include "qwidget_p.h"
 #include "qpainterpath_p.h"
 #include "qpen.h"

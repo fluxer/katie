@@ -27,7 +27,6 @@
 #include "qlabel.h"
 #include "qbitmap.h"
 #include "qmath.h"
-#include "qtextengine_p.h"
 #include "qpixmap_raster_p.h"
 #include "qimage_p.h"
 #include "qstatictext_p.h"

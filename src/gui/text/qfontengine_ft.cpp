@@ -51,7 +51,7 @@
 QT_BEGIN_NAMESPACE
 
 #define FLOOR(x)    ((x) & -64)
-#define CEIL(x)	    (((x)+63) & -64)
+#define CEIL(x)     (((x)+63) & -64)
 #define TRUNC(x)    ((x) >> 6)
 #define ROUND(x)    (((x)+32) & -64)
 

@@ -46,7 +46,6 @@
 #include "qtextlayout.h"
 #include "qobject_p.h"
 #include "qdnd_p.h"
-#include "qtextengine_p.h"
 #include "qlayoutengine_p.h"
 #include "qdebug.h"
 #include "qlocale.h"
