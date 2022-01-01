@@ -1091,12 +1091,7 @@ QFontEngine* QFontDatabase::load(const QFontPrivate *d, int script)
         if (!privateDb()->count)
             initializeFontDb();
 
-#ifndef QT_NO_FONTCONFIG
-        if (qt_x11Data->has_fontconfig) {
-            fe = loadFc(d, static_cast<QUnicodeTables::Script>(script), req);
-        }
-#endif
-        if (fe) {
+        if (QFile::exists(req.family)) {
             QFontEngineFT* ftfe = new QFontEngineFT(req);
             if (ftfe->invalid()) {
                 delete ftfe;
@@ -1104,6 +1099,12 @@ QFontEngine* QFontDatabase::load(const QFontPrivate *d, int script)
                 fe = ftfe;
             }
         }
+
+#ifndef QT_NO_FONTCONFIG
+        if (!fe && qt_x11Data->has_fontconfig) {
+            fe = loadFc(d, static_cast<QUnicodeTables::Script>(script), req);
+        }
+#endif
 
         if (!fe) {
             fe = new QFontEngineBox(req.pixelSize);
