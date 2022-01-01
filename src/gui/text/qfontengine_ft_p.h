@@ -158,6 +158,7 @@ protected:
     HintStyle default_hint_style;
 
 private:
+    void init();
     int loadFlags(int flags) const;
     bool loadGlyph(glyph_t glyph, int load_flags) const;
 

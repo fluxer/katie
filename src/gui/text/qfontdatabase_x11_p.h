@@ -58,6 +58,32 @@ QFontDef qt_FcPatternToQFontDef(FcPattern *pattern, const QFontDef &request)
     fontDef.styleStrategy = request.styleStrategy;
 
     fontDef.hintingPreference = request.hintingPreference;
+#ifdef FC_HINT_STYLE
+    if (fontDef.hintingPreference == QFont::PreferDefaultHinting) {
+        int hint_style = 0;
+        if (FcPatternGetInteger(pattern, FC_HINT_STYLE, 0, &hint_style) == FcResultNoMatch
+            && qt_x11Data->fc_hint_style > -1) {
+            hint_style = qt_x11Data->fc_hint_style;
+        }
+
+        switch (hint_style) {
+            case FC_HINT_NONE: {
+                fontDef.hintingPreference = QFont::PreferNoHinting;
+                break;
+            }
+            case FC_HINT_SLIGHT: {
+                fontDef.hintingPreference = QFont::PreferVerticalHinting;
+                break;
+            }
+            // no enum for FC_HINT_MEDIUM
+            default: {
+                fontDef.hintingPreference = QFont::PreferFullHinting;
+                break;
+            }
+        }
+    }
+#endif
+
     FcChar8 *value = 0;
     if (FcPatternGetString(pattern, FC_FAMILY, 0, &value) == FcResultMatch) {
         fontDef.family = QString::fromUtf8(reinterpret_cast<const char *>(value));

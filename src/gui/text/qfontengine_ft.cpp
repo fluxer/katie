@@ -257,52 +257,6 @@ QFontEngineFT::QFontEngineFT(const QFontDef &fd, FcPattern *pattern)
         face_id.index = 0;
     }
 
-    if (fd.hintingPreference != QFont::PreferDefaultHinting) {
-        switch (fd.hintingPreference) {
-            case QFont::PreferNoHinting: {
-                default_hint_style = HintNone;
-                break;
-            }
-            case QFont::PreferVerticalHinting: {
-                default_hint_style = HintLight;
-                break;
-            }
-            case QFont::PreferFullHinting:
-            default: {
-                default_hint_style = HintFull;
-                break;
-            }
-        }
-    }
-#ifdef FC_HINT_STYLE
-    else {
-        int hint_style = 0;
-        if (FcPatternGetInteger(pattern, FC_HINT_STYLE, 0, &hint_style) == FcResultNoMatch
-            && qt_x11Data->fc_hint_style > -1) {
-            hint_style = qt_x11Data->fc_hint_style;
-        }
-
-        switch (hint_style) {
-            case FC_HINT_NONE: {
-                default_hint_style = HintNone;
-                break;
-            }
-            case FC_HINT_SLIGHT: {
-                default_hint_style = HintLight;
-                break;
-            }
-            case FC_HINT_MEDIUM: {
-                default_hint_style = HintMedium;
-                break;
-            }
-            default: {
-                default_hint_style = HintFull;
-                break;
-            }
-        }
-    }
-#endif
-
 #if defined(FC_AUTOHINT) && defined(FT_LOAD_FORCE_AUTOHINT)
     {
         bool autohint = false;
@@ -316,39 +270,7 @@ QFontEngineFT::QFontEngineFT(const QFontDef &fd, FcPattern *pattern)
     }
 #endif
 
-    freetype = new QFreetypeFace(face_id);
-    if (!freetype->face) {
-        return;
-    } else if (!FT_IS_SCALABLE(freetype->face)) {
-        return;
-    }
-
-    lbearing = rbearing = SHRT_MIN;
-    ysize = qRound(fontDef.pixelSize * 64);
-    xsize = (ysize * fontDef.stretch / 100);
-
-    setFace(QFontEngineFT::Scaled);
-    FT_Face face = getFace();
-    // fake italic/oblique
-    if ((fontDef.style != QFont::StyleNormal) && !(face->style_flags & FT_STYLE_FLAG_ITALIC)) {
-        oblique = true;
-    }
-    // fake bold
-    if ((fontDef.weight == QFont::Bold) && !(face->style_flags & FT_STYLE_FLAG_BOLD) && !FT_IS_FIXED_WIDTH(face)) {
-        embolden = true;
-    }
-    // underline metrics
-    line_thickness = QFixed::fromFixed(FT_MulFix(face->underline_thickness, face->size->metrics.y_scale));
-    underline_position = QFixed::fromFixed(-FT_MulFix(face->underline_position, face->size->metrics.y_scale));
-    if (line_thickness < 1) {
-        line_thickness = 1;
-    }
-
-    metrics = face->size->metrics;
-
-    fontDef.styleName = QString::fromUtf8(face->style_name);
-
-    fsType = freetype->fsType();
+    init();
 }
 #endif // QT_NO_FONTCONFIG
 
@@ -370,6 +292,11 @@ QFontEngineFT::QFontEngineFT(const QFontDef &fd)
     face_id.filename = fd.family.toUtf8();
     face_id.index = 0;
 
+    init();
+}
+
+void QFontEngineFT::init()
+{
     freetype = new QFreetypeFace(face_id);
     if (!freetype->face) {
         return;
@@ -403,6 +330,22 @@ QFontEngineFT::QFontEngineFT(const QFontDef &fd)
     fontDef.styleName = QString::fromUtf8(face->style_name);
 
     fsType = freetype->fsType();
+
+    switch (fontDef.hintingPreference) {
+        case QFont::PreferNoHinting: {
+            default_hint_style = HintNone;
+            break;
+        }
+        case QFont::PreferVerticalHinting: {
+            default_hint_style = HintLight;
+            break;
+        }
+        case QFont::PreferFullHinting:
+        default: {
+            default_hint_style = HintFull;
+            break;
+        }
+    }
 }
 
 QFontEngineFT::~QFontEngineFT()
