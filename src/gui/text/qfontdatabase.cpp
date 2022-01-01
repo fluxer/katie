@@ -493,7 +493,11 @@ QFont QFontDatabase::font(const QString &family, const QString &style,
             || fontfamily.style.compare(style, Qt::CaseInsensitive) != 0) {
             continue;
         }
-        result = QFont(fontfamily.family, -1, fontfamily.weight, fontfamily.italic);
+        if (fontfamily.pointsize != pointSize && !fontfamily.scalable) {
+            continue;
+        }
+
+        result = QFont(fontfamily.family, pointSize, fontfamily.weight, fontfamily.italic);
         result.setStyleName(fontfamily.style);
         result.setBold(fontfamily.bold);
         break;
