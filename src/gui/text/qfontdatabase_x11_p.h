@@ -734,29 +734,6 @@ static QFontEngine *loadFc(const QFontPrivate *fp, QUnicodeTables::Script script
     }
     return fe;
 }
-
-static FcPattern *queryFont(const FcChar8 *file, const QByteArray &data, int id, FcBlanks *blanks, int *count)
-{
-    if (data.isEmpty())
-        return FcFreeTypeQuery(file, id, blanks, count);
-
-    FT_Library lib;
-    FT_Init_FreeType(&lib);
-
-    FcPattern *pattern = nullptr;
-
-    FT_Face face;
-    if (!FT_New_Memory_Face(lib, (const FT_Byte *)data.constData(), data.size(), id, &face)) {
-        *count = face->num_faces;
-
-        pattern = FcFreeTypeQueryFace(face, file, id, blanks);
-
-        FT_Done_Face(face);
-    }
-    FT_Done_FreeType(lib);
-
-    return pattern;
-}
 #endif // QT_NO_FONTCONFIG
 
 

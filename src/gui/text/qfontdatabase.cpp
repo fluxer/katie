@@ -50,48 +50,6 @@
 
 QT_BEGIN_NAMESPACE
 
-#define SMOOTH_SCALABLE 0xffff
-
-static int getFontWeight(const QString &weightString)
-{
-    QString s = weightString.toLower();
-
-    // Test in decreasing order of commonness
-    if (s == QLatin1String("medium") ||
-        s == QLatin1String("normal")
-        || s.compare(QApplication::translate("QFontDatabase", "Normal"), Qt::CaseInsensitive) == 0)
-        return QFont::Normal;
-    if (s == QLatin1String("bold")
-        || s.compare(QApplication::translate("QFontDatabase", "Bold"), Qt::CaseInsensitive) == 0)
-        return QFont::Bold;
-    if (s == QLatin1String("demibold") || s == QLatin1String("demi bold")
-        || s.compare(QApplication::translate("QFontDatabase", "Demi Bold"), Qt::CaseInsensitive) == 0)
-        return QFont::DemiBold;
-    if (s == QLatin1String("black")
-        || s.compare(QApplication::translate("QFontDatabase", "Black"), Qt::CaseInsensitive) == 0)
-        return QFont::Black;
-    if (s == QLatin1String("light"))
-        return QFont::Light;
-
-    if (s.contains(QLatin1String("bold"))
-        || s.contains(QApplication::translate("QFontDatabase", "Bold"), Qt::CaseInsensitive)) {
-        if (s.contains(QLatin1String("demi"))
-            || s.compare(QApplication::translate("QFontDatabase", "Demi"), Qt::CaseInsensitive) == 0)
-            return (int) QFont::DemiBold;
-        return (int) QFont::Bold;
-    }
-
-    if (s.contains(QLatin1String("light"))
-        || s.compare(QApplication::translate("QFontDatabase", "Light"), Qt::CaseInsensitive) == 0)
-        return (int) QFont::Light;
-
-    if (s.contains(QLatin1String("black"))
-        || s.compare(QApplication::translate("QFontDatabase", "Black"), Qt::CaseInsensitive) == 0)
-        return (int) QFont::Black;
-
-    return (int) QFont::Normal;
-}
-
 struct QtFontFamily {
     QString family;
     QString foundry;
