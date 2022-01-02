@@ -653,12 +653,6 @@ special_char:
         }
     }
 
-    // enforce non-antialiasing if requested. the ft font engine looks at this property.
-    if (request.styleStrategy & QFont::NoAntialias) {
-        FcPatternDel(match, FC_ANTIALIAS);
-        FcPatternAddBool(match, FC_ANTIALIAS, false);
-    }
-
     QFontEngineFT *engine = new QFontEngineFT(qt_FcPatternToQFontDef(match, request), match);
     if (engine->invalid()) {
         FM_DEBUG("   --> invalid!\n");
