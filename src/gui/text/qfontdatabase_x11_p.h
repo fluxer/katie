@@ -753,26 +753,28 @@ QFontEngine* QFontDatabase::load(const QFontPrivate *d, int script)
 
     QFontEngine *fe = QFontCache::instance()->findEngine(key);
 
-    if (!fe) {
-        if (QFile::exists(req.family)) {
-            QFontEngineFT* ftfe = new QFontEngineFT(req);
-            if (ftfe->invalid()) {
-                delete ftfe;
-            } else {
-                fe = ftfe;
-            }
+    if (fe) {
+        return fe;
+    }
+
+    if (QFile::exists(req.family)) {
+        QFontEngineFT* ftfe = new QFontEngineFT(req);
+        if (ftfe->invalid()) {
+            delete ftfe;
+        } else {
+            fe = ftfe;
         }
+    }
 
 #ifndef QT_NO_FONTCONFIG
-        if (!fe && qt_x11Data->has_fontconfig) {
-            fe = loadFc(d, static_cast<QUnicodeTables::Script>(script), req);
-        }
+    if (!fe && qt_x11Data->has_fontconfig) {
+        fe = loadFc(d, static_cast<QUnicodeTables::Script>(script), req);
+    }
 #endif
 
-        if (!fe) {
-            fe = new QFontEngineBox(req.pixelSize);
-            fe->fontDef = QFontDef();
-        }
+    if (!fe) {
+        fe = new QFontEngineBox(req.pixelSize);
+        fe->fontDef = QFontDef();
     }
     QFontCache::instance()->insertEngine(key, fe);
     return fe;
