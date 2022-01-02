@@ -4781,13 +4781,40 @@ void QPainter::drawText(const QPointF &p, const QString &str)
     if (!d->engine || str.isEmpty() || pen().style() == Qt::NoPen)
         return;
 
-    QStaticText statictext(str);
-    QTextOption textoption = statictext.textOption();
-    textoption.setTextDirection(d->state->layoutDirection);
-    statictext.setTextOption(textoption);
-    statictext.prepare(d->state->matrix, d->state->font);
+    QStackTextEngine engine(str, d->state->font);
+    engine.option.setTextDirection(d->state->layoutDirection);
+    engine.itemize();
+    QScriptLine line;
+    line.length = str.length();
+    engine.shapeLine(line);
 
-    drawStaticText(p / 2, statictext);
+    int nItems = engine.layoutData->items.size();
+
+    QFixed x = QFixed::fromReal(p.x());
+
+    for (int i = 0; i < nItems; ++i) {
+        const QScriptItem &si = engine.layoutData->items.at(i);
+        if (si.analysis.flags >= QScriptAnalysis::TabOrObject) {
+            x += si.width;
+            continue;
+        }
+        QFont f = engine.font(si);
+        QTextItemInt gf(si, &f);
+        gf.glyphs = engine.shapedGlyphs(&si);
+        gf.chars = engine.layoutData->string.unicode() + si.position;
+        gf.num_chars = engine.length(i);
+        if (engine.forceJustification) {
+            for (int j=0; j<gf.glyphs.numGlyphs; ++j)
+                gf.width += gf.glyphs.effectiveAdvance(j);
+        } else {
+            gf.width = si.width;
+        }
+        gf.logClusters = engine.logClusters(&si);
+
+        drawTextItem(QPointF(x.toReal(), p.y()), gf);
+
+        x += gf.width;
+    }
 }
 
 /*!
