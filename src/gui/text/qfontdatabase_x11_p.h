@@ -560,12 +560,6 @@ static void qt_addPatternProps(FcPattern *pattern, int screen, QUnicodeTables::S
     FcPatternAddInteger(pattern, FC_WIDTH, stretch);
 }
 
-static bool preferScalable(const QFontDef &request)
-{
-    return request.styleStrategy & (QFont::PreferOutline|QFont::PreferAntialias);
-}
-
-
 static FcPattern *getFcPattern(const QFontPrivate *fp, QUnicodeTables::Script script, const QFontDef &request)
 {
     if (!qt_x11Data->has_fontconfig)
@@ -604,8 +598,9 @@ static FcPattern *getFcPattern(const QFontPrivate *fp, QUnicodeTables::Script sc
     }
     FcPatternAddBool(pattern, FC_OUTLINE, !(request.styleStrategy & QFont::PreferBitmap));
 
-    if (preferScalable(request))
+    if (request.styleStrategy & (QFont::PreferOutline|QFont::PreferAntialias)) {
         FcPatternAddBool(pattern, FC_SCALABLE, true);
+    }
 
     qt_addPatternProps(pattern, fp->screen, script, request);
 
@@ -752,7 +747,6 @@ QFontEngine* QFontDatabase::load(const QFontPrivate *d, int script)
     }
 
     QFontEngine *fe = QFontCache::instance()->findEngine(key);
-
     if (fe) {
         return fe;
     }
