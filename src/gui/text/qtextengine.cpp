@@ -31,6 +31,7 @@
 #include "qunicodetables_p.h"
 #include "qtextdocument_p.h"
 #include "qapplication.h"
+#include "qcorecommon_p.h"
 #include "qx11info_x11.h"
 
 #if defined(Q_WS_X11)
@@ -483,10 +484,9 @@ void QTextEngine::itemize() const
     if (!length)
         return;
 
-    QVarLengthArray<QScriptAnalysis> scriptAnalysis(length);
-    QScriptAnalysis *analysis = scriptAnalysis.data();
+    QSTACKARRAY(QScriptAnalysis, scriptAnalysis, length);
+    QScriptAnalysis *analysis = scriptAnalysis;
 
-    ::memset(analysis, 0, length * sizeof(QScriptAnalysis));
     if (option.textDirection() == Qt::RightToLeft) {
         for (int i = 0; i < length; ++i)
             analysis[i].bidiLevel = 1;
@@ -538,7 +538,7 @@ void QTextEngine::itemize() const
         (analysis-1)->flags = QScriptAnalysis::LineOrParagraphSeparator; // to exclude it from width
     }
 
-    Itemizer itemizer(layoutData->string, scriptAnalysis.data(), layoutData->items);
+    Itemizer itemizer(layoutData->string, scriptAnalysis, layoutData->items);
 
     const QTextDocumentPrivate *p = block.docHandle();
     if (p) {
