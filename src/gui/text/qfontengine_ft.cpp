@@ -23,7 +23,6 @@
 #include "qfile.h"
 #include "qabstractfileengine.h"
 #include "qmath.h"
-#include "qharfbuzz_p.h"
 #include "qfontengine_ft_p.h"
 #include "qguicommon_p.h"
 #include "qcorecommon_p.h"
@@ -51,7 +50,7 @@
 QT_BEGIN_NAMESPACE
 
 #define FLOOR(x)    ((x) & -64)
-#define CEIL(x)	    (((x)+63) & -64)
+#define CEIL(x)     (((x)+63) & -64)
 #define TRUNC(x)    ((x) >> 6)
 #define ROUND(x)    (((x)+32) & -64)
 
@@ -71,16 +70,7 @@ QFreetypeFace::QFreetypeFace(const QFontEngine::FaceId &face_id)
 
     if (!face_id.filename.isEmpty()) {
         QFile file(QString::fromUtf8(face_id.filename));
-        if (face_id.filename.startsWith(":qmemoryfonts/")) {
-            // from qfontdatabase.cpp
-            extern QByteArray qt_fontdata_from_index(int);
-            QByteArray idx = face_id.filename;
-            idx.remove(0, 14); // remove ':qmemoryfonts/'
-            bool ok = false;
-            fontData = qt_fontdata_from_index(idx.toInt(&ok));
-            if (!ok)
-                fontData = QByteArray();
-        } else if (!(file.fileEngine()->fileFlags(QAbstractFileEngine::FlagsMask) & QAbstractFileEngine::LocalDiskFlag)) {
+        if (!(file.fileEngine()->fileFlags(QAbstractFileEngine::FlagsMask) & QAbstractFileEngine::LocalDiskFlag)) {
             if (!file.open(QIODevice::ReadOnly)) {
                 return;
             }
@@ -113,27 +103,6 @@ int QFreetypeFace::fsType() const
     return fsType;
 }
 
-HB_Error QFreetypeFace::getPointInOutline(HB_Glyph glyph, int flags, hb_uint32 point, HB_Fixed *xpos, HB_Fixed *ypos, hb_uint32 *nPoints)
-{
-    if (HB_Error error = (HB_Error)FT_Load_Glyph(face, glyph, flags))
-        return error;
-
-    if (face->glyph->format != FT_GLYPH_FORMAT_OUTLINE)
-        return HB_Err_Invalid_SubTable;
-
-    *nPoints = face->glyph->outline.n_points;
-    if (!(*nPoints))
-        return HB_Err_Ok;
-
-    if (point > *nPoints)
-        return HB_Err_Invalid_SubTable;
-
-    *xpos = face->glyph->outline.points[point].x;
-    *ypos = face->glyph->outline.points[point].y;
-
-    return HB_Err_Ok;
-}
-
 QFontEngine::Properties QFreetypeFace::properties() const
 {
     QFontEngine::Properties p;
@@ -155,32 +124,9 @@ QFontEngine::Properties QFreetypeFace::properties() const
     return p;
 }
 
-/* Some fonts (such as MingLiu rely on hinting to scale different
-   components to their correct sizes. While this is really broken (it
-   should be done in the component glyph itself, not the hinter) we
-   will have to live with it.
-
-   This means we can not use FT_LOAD_NO_HINTING to get the glyph
-   outline. All we can do is to load the unscaled glyph and scale it
-   down manually when required.
-*/
-static void scaleOutline(FT_Face face, FT_GlyphSlot g, FT_Fixed x_scale, FT_Fixed y_scale)
-{
-    x_scale = FT_MulDiv(x_scale, 1 << 10, face->units_per_EM);
-    y_scale = FT_MulDiv(y_scale, 1 << 10, face->units_per_EM);
-    FT_Vector *p = g->outline.points;
-    const FT_Vector *e = p + g->outline.n_points;
-    while (p < e) {
-        p->x = FT_MulFix(p->x, x_scale);
-        p->y = FT_MulFix(p->y, y_scale);
-        ++p;
-    }
-}
-
-void QFreetypeFace::addGlyphToPath(FT_Face face, FT_GlyphSlot g, const QFixedPoint &point, QPainterPath *path, FT_Fixed x_scale, FT_Fixed y_scale)
+void QFreetypeFace::addGlyphToPath(FT_Face face, FT_GlyphSlot g, const QFixedPoint &point, QPainterPath *path)
 {
     static const qreal factor = (1.0 / 64.0);
-    scaleOutline(face, g, x_scale, y_scale);
 
     QPointF cp = point.toPointF();
 
@@ -263,9 +209,6 @@ void QFreetypeFace::addGlyphToPath(FT_Face face, FT_GlyphSlot g, const QFixedPoi
 
 #ifndef QT_NO_FONTCONFIG
 QFontEngineFT::QFontEngineFT(const QFontDef &fd, FcPattern *pattern)
-#else
-QFontEngineFT::QFontEngineFT(const QFontDef &fd)
-#endif
     : default_load_flags(FT_LOAD_IGNORE_GLOBAL_ADVANCE_WIDTH | FT_LOAD_NO_BITMAP),
     default_hint_style(HintNone),
     freetype(nullptr),
@@ -278,9 +221,7 @@ QFontEngineFT::QFontEngineFT(const QFontDef &fd)
     kerning_pairs_loaded(false)
 {
     fontDef = fd;
-    ::memset(&metrics, 0, sizeof(FT_Size_Metrics));
 
-#ifndef QT_NO_FONTCONFIG
     // FcPatternPrint(pattern);
     FcChar8 *fileName;
 
@@ -291,69 +232,43 @@ QFontEngineFT::QFontEngineFT(const QFontDef &fd)
         face_id.index = 0;
     }
 
-    if (fd.hintingPreference != QFont::PreferDefaultHinting) {
-        switch (fd.hintingPreference) {
-            case QFont::PreferNoHinting: {
-                default_hint_style = HintNone;
-                break;
-            }
-            case QFont::PreferVerticalHinting: {
-                default_hint_style = HintLight;
-                break;
-            }
-            case QFont::PreferFullHinting:
-            default: {
-                default_hint_style = HintFull;
-                break;
-            }
-        }
-    }
-#ifdef FC_HINT_STYLE
-    else {
-        int hint_style = 0;
-        if (FcPatternGetInteger(pattern, FC_HINT_STYLE, 0, &hint_style) == FcResultNoMatch
-            && qt_x11Data->fc_hint_style > -1) {
-            hint_style = qt_x11Data->fc_hint_style;
-        }
-
-        switch (hint_style) {
-            case FC_HINT_NONE: {
-                default_hint_style = HintNone;
-                break;
-            }
-            case FC_HINT_SLIGHT: {
-                default_hint_style = HintLight;
-                break;
-            }
-            case FC_HINT_MEDIUM: {
-                default_hint_style = HintMedium;
-                break;
-            }
-            default: {
-                default_hint_style = HintFull;
-                break;
-            }
-        }
-    }
-#endif
-
 #if defined(FC_AUTOHINT) && defined(FT_LOAD_FORCE_AUTOHINT)
-    {
-        bool autohint = false;
-        FcBool b;
-        if (FcPatternGetBool(pattern, FC_AUTOHINT, 0, &b) == FcResultMatch) {
-            autohint = b;
-        }
-        if (autohint) {
-            default_load_flags |= FT_LOAD_FORCE_AUTOHINT;
-        }
+    bool autohint = false;
+    FcBool b;
+    if (FcPatternGetBool(pattern, FC_AUTOHINT, 0, &b) == FcResultMatch) {
+        autohint = b;
+    }
+    if (autohint) {
+        default_load_flags |= FT_LOAD_FORCE_AUTOHINT;
     }
 #endif
-#else
-    face_id.filename = fd.family.toUtf8();
-    face_id.index = 0;
+
+    init();
+}
 #endif // QT_NO_FONTCONFIG
 
+QFontEngineFT::QFontEngineFT(const QFontDef &fd)
+    : default_load_flags(FT_LOAD_IGNORE_GLOBAL_ADVANCE_WIDTH | FT_LOAD_NO_BITMAP),
+    default_hint_style(HintNone),
+    freetype(nullptr),
+    embolden(false),
+    oblique(false),
+    xsize(0),
+    ysize(0),
+    line_thickness(QFixed::fromFixed(1)),
+    underline_position(QFixed::fromReal(0.8)),
+    kerning_pairs_loaded(false)
+{
+    fontDef = fd;
+
+    face_id.filename = fd.family.toUtf8();
+    face_id.index = 0;
+
+    init();
+}
+
+void QFontEngineFT::init()
+{
     freetype = new QFreetypeFace(face_id);
     if (!freetype->face) {
         return;
@@ -382,16 +297,25 @@ QFontEngineFT::QFontEngineFT(const QFontDef &fd)
         line_thickness = 1;
     }
 
-    hbFont.x_ppem  = face->size->metrics.x_ppem;
-    hbFont.y_ppem  = face->size->metrics.y_ppem;
-    hbFont.x_scale = face->size->metrics.x_scale;
-    hbFont.y_scale = face->size->metrics.y_scale;
-
-    metrics = face->size->metrics;
-
     fontDef.styleName = QString::fromUtf8(face->style_name);
 
     fsType = freetype->fsType();
+
+    switch (fontDef.hintingPreference) {
+        case QFont::PreferNoHinting: {
+            default_hint_style = HintNone;
+            break;
+        }
+        case QFont::PreferVerticalHinting: {
+            default_hint_style = HintLight;
+            break;
+        }
+        case QFont::PreferFullHinting:
+        default: {
+            default_hint_style = HintFull;
+            break;
+        }
+    }
 }
 
 QFontEngineFT::~QFontEngineFT()
@@ -400,11 +324,11 @@ QFontEngineFT::~QFontEngineFT()
     delete freetype;
 }
 
-int QFontEngineFT::loadFlags(int flags) const
+int QFontEngineFT::loadFlags() const
 {
     int load_flags = default_load_flags;
 
-    if (default_hint_style == HintNone || (flags & HB_ShaperFlag_UseDesignMetrics)) {
+    if (default_hint_style == HintNone) {
         load_flags |= FT_LOAD_NO_HINTING;
     } else if (default_hint_style == HintLight) {
         load_flags |= FT_LOAD_TARGET_LIGHT;
@@ -457,7 +381,7 @@ QFontMetric* QFontEngineFT::getMetrics(glyph_t glyph) const
 
     FT_Face face = getFace();
 
-    int load_flags = loadFlags(0);
+    int load_flags = loadFlags();
     loadGlyph(glyph, load_flags);
 
     metric = new QFontMetric();
@@ -524,18 +448,18 @@ int QFontEngineFT::synthesized() const
 
 QFixed QFontEngineFT::ascent() const
 {
-    return QFixed::fromFixed(metrics.ascender);
+    return QFixed::fromFixed(freetype->face->size->metrics.ascender);
 }
 
 QFixed QFontEngineFT::descent() const
 {
     // subtract a pixel to work around QFontMetrics's built-in + 1
-    return QFixed::fromFixed(-metrics.descender - 64);
+    return QFixed::fromFixed(-(freetype->face->size->metrics.descender) - 64);
 }
 
 QFixed QFontEngineFT::leading() const
 {
-    return QFixed::fromFixed(metrics.height - metrics.ascender + metrics.descender);
+    return QFixed::fromFixed(freetype->face->size->metrics.height - freetype->face->size->metrics.ascender + freetype->face->size->metrics.descender);
 }
 
 QFixed QFontEngineFT::xHeight() const
@@ -558,7 +482,7 @@ QFixed QFontEngineFT::averageCharWidth() const
 
 qreal QFontEngineFT::maxCharWidth() const
 {
-    return metrics.max_advance >> 6;
+    return freetype->face->size->metrics.max_advance >> 6;
 }
 
 static const ushort char_table[] = {
@@ -639,7 +563,7 @@ void QFontEngineFT::getUnscaledGlyph(glyph_t glyph, QPainterPath *path, glyph_me
 
     FT_Face face = getFace();
 
-    int load_flags = loadFlags(0);
+    int load_flags = loadFlags();
     loadGlyph(glyph, load_flags);
 
     int left  = face->glyph->metrics.horiBearingX;
@@ -657,7 +581,7 @@ void QFontEngineFT::getUnscaledGlyph(glyph_t glyph, QPainterPath *path, glyph_me
     metrics->y = QFixed::fromFixed(-top);
     metrics->xoff = QFixed::fromFixed(face->glyph->advance.x);
 
-    QFreetypeFace::addGlyphToPath(face, face->glyph, p, path, face->units_per_EM << 6, face->units_per_EM << 6);
+    QFreetypeFace::addGlyphToPath(face, face->glyph, p, path);
 
     setFace(QFontEngineFT::Scaled);
 }
@@ -694,11 +618,11 @@ void QFontEngineFT::addGlyphsToPath(glyph_t *glyphs, QFixedPoint *positions, int
 {
     FT_Face face = getFace();
 
-    int load_flags = loadFlags(0);
+    int load_flags = loadFlags();
     for (int gl = 0; gl < numGlyphs; gl++) {
         loadGlyph(glyphs[gl], load_flags);
 
-        QFreetypeFace::addGlyphToPath(face, face->glyph, positions[gl], path, face->units_per_EM << 6, face->units_per_EM << 6);
+        QFreetypeFace::addGlyphToPath(face, face->glyph, positions[gl], path);
     }
 }
 
@@ -742,13 +666,13 @@ void QFontEngineFT::recalcAdvances(QGlyphLayout *glyphs, QTextEngine::ShaperFlag
 {
     bool design = (default_hint_style == HintNone ||
                    default_hint_style == HintLight ||
-                   (flags & HB_ShaperFlag_UseDesignMetrics));
+                   (flags & QTextEngine::DesignMetrics));
     for (int i = 0; i < glyphs->numGlyphs; i++) {
         QFontMetric* metric = getMetrics(glyphs->glyphs[i]);
         Q_ASSERT(metric);
 
         glyphs->advances_x[i] = design ? QFixed::fromFixed(metric->linearhoriadvance)
-                                       : QFixed::fromFixed(metric->horiadvance).round();
+                                       : QFixed::fromFixed(metric->horiadvance);
         if (fontDef.styleStrategy & QFont::ForceIntegerMetrics)
             glyphs->advances_x[i] = glyphs->advances_x[i].round();
         glyphs->advances_y[i] = 0;
@@ -815,13 +739,6 @@ void QFontEngineFT::setFace(Scaling scale)
         freetype->xsize = xsize;
         freetype->ysize = ysize;
     }
-}
-
-HB_Error QFontEngineFT::getPointInOutline(HB_Glyph glyph, int flags, hb_uint32 point, HB_Fixed *xpos, HB_Fixed *ypos, hb_uint32 *nPoints)
-{
-    int load_flags = loadFlags(flags);
-    HB_Error result = freetype->getPointInOutline(glyph, load_flags, point, xpos, ypos, nPoints);
-    return result;
 }
 
 QT_END_NAMESPACE

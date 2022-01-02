@@ -85,8 +85,8 @@ static const char * const qt_plastique_slider_verticalhandle[] = {
     "+  c #979797",
     "@  c #C9C9C9",
     "$  c #C1C1C1",
-    "b  c None",
-    "d  c None",
+    "b  c #FAFAFA",
+    "d  c #AFAFAF",
     " $++++++++$    ",
     "$+bbbbbbbb+$   ",
     "+b $$      +$  ",
@@ -106,8 +106,8 @@ static const char * const qt_plastique_slider_verticalhandle_left[] = {
     "+  c #979797",
     "@  c #C9C9C9",
     "$  c #C1C1C1",
-    "b  c None",
-    "d  c None",
+    "b  c #FAFAFA",
+    "d  c #AFAFAF",
     "    $++++++++$ ",
     "   $+bbbbbbbb+$",
     "  $+b     $$ d+",
@@ -127,8 +127,8 @@ static const char * const qt_plastique_slider_horizontalhandle[] = {
     "+  c #979797",
     "@  c #C9C9C9",
     "$  c #C1C1C1",
-    "b  c None",
-    "d  c None",
+    "b  c #FAFAFA",
+    "d  c #AFAFAF",
     " $+++++++$ ",
     "$+bbbbbbb+$",
     "+b       d+",
@@ -152,8 +152,8 @@ static const char * const qt_plastique_slider_horizontalhandle_up[] = {
     "+  c #979797",
     "@  c #C9C9C9",
     "$  c #C1C1C1",
-    "b  c None",
-    "d  c None",
+    "b  c #FAFAFA",
+    "d  c #AFAFAF",
     "    $+$    ",
     "   $+b+$   ",
     "  $+b  +$  ",
@@ -218,13 +218,12 @@ static const char * const qt_plastique_scrollbar_button_arrow_down[] = {
 
 /* XPM */
 static const char * const qt_plastique_scrollbar_button_left[] = {
-    "16 16 6 1",
+    "16 16 5 1",
     "   c None",
     ".  c #BFBFBF",
     "+  c #979797",
     "#  c #FAFAFA",
-    "<  c #FAFAFA",
-    "*  c #FAFAFA",
+    "<  c #AFAFAF",
     " .+++++++++++++.",
     ".+#############+",
     "+#            <+",
@@ -244,13 +243,12 @@ static const char * const qt_plastique_scrollbar_button_left[] = {
 
 /* XPM */
 static const char * const qt_plastique_scrollbar_button_right[] = {
-    "16 16 6 1",
+    "16 16 5 1",
     "   c None",
     ".  c #BFBFBF",
     "+  c #979797",
     "#  c #FAFAFA",
-    "<  c #FAFAFA",
-    "*  c #FAFAFA",
+    "<  c #AFAFAF",
     ".+++++++++++++. ",
     "+#############+.",
     "+#            <+",
@@ -270,13 +268,12 @@ static const char * const qt_plastique_scrollbar_button_right[] = {
 
 /* XPM */
 static const char * const qt_plastique_scrollbar_button_up[] = {
-    "16 16 6 1",
+    "16 16 5 1",
     "   c None",
     ".  c #BFBFBF",
     "+  c #979797",
     "#  c #FAFAFA",
-    "<  c #FAFAFA",
-    "*  c #FAFAFA",
+    "<  c #AFAFAF",
     " .++++++++++++. ",
     ".+############+.",
     "+#            <+",
@@ -296,13 +293,12 @@ static const char * const qt_plastique_scrollbar_button_up[] = {
 
 /* XPM */
 static const char * const qt_plastique_scrollbar_button_down[] = {
-    "16 16 6 1",
+    "16 16 5 1",
     "   c None",
     ".  c #BFBFBF",
     "+  c #979797",
     "#  c #FAFAFA",
-    "<  c #FAFAFA",
-    "*  c #FAFAFA",
+    "<  c #AFAFAF",
     "++++++++++++++++",
     "+##############+",
     "+#            <+",
@@ -927,10 +923,12 @@ static void qt_plastique_draw_handle(QPainter *painter, const QStyleOption *opti
         alphaCornerColor = mergedColors(option->palette.background().color(), borderColor);
     }
     QImage handle(qt_plastique_simple_toolbarhandle);
+    QMap<QRgb,QRgb> handlecolors;
     alphaCornerColor.setAlpha(170);
-    handle.setColor(1, alphaCornerColor.rgba());
-    handle.setColor(2, mergedColors(alphaCornerColor, option->palette.light().color()).rgba());
-    handle.setColor(3, option->palette.light().color().rgba());
+    handlecolors.insert(4291151301, alphaCornerColor.rgba());
+    handlecolors.insert(4293848814, mergedColors(alphaCornerColor, option->palette.light().color()).rgba());
+    handlecolors.insert(4294638330, option->palette.light().color().rgba());
+    handle = replaceColors(handle, handlecolors);
 
     const int spacing = 2;
 
@@ -1423,10 +1421,12 @@ void QPlastiqueStyle::drawPrimitive(PrimitiveElement element, const QStyleOption
                 cachePainter.fillRect(cacheRect, option->palette.background());
 
             QImage handle(qt_plastique_toolbarhandle);
+            QMap<QRgb,QRgb> handlecolors;
             alphaCornerColor.setAlpha(170);
-            handle.setColor(1, alphaCornerColor.rgba());
-            handle.setColor(2, mergedColors(alphaCornerColor, option->palette.light().color()).rgba());
-            handle.setColor(3, option->palette.light().color().rgba());
+            handlecolors.insert(4291151301, alphaCornerColor.rgba());
+            handlecolors.insert(4293848814, mergedColors(alphaCornerColor, option->palette.light().color()).rgba());
+            handlecolors.insert(4294638330, option->palette.light().color().rgba());
+            handle = replaceColors(handle, handlecolors);
 
             if (option->state & State_Horizontal) {
                 int nchunks = cacheRect.height() / handle.height();
@@ -3127,10 +3127,12 @@ void QPlastiqueStyle::drawControl(ControlElement element, const QStyleOption *op
 
             // Draw the toolbar handle pattern to the left and right of the text
             QImage handle(qt_plastique_toolbarhandle);
+            QMap<QRgb,QRgb> handlecolors;
             alphaCornerColor.setAlpha(170);
-            handle.setColor(1, alphaCornerColor.rgba());
-            handle.setColor(2, mergedColors(alphaCornerColor, option->palette.light().color()).rgba());
-            handle.setColor(3, option->palette.light().color().rgba());
+            handlecolors.insert(4291151301, alphaCornerColor.rgba());
+            handlecolors.insert(4293848814, mergedColors(alphaCornerColor, option->palette.light().color()).rgba());
+            handlecolors.insert(4294638330, option->palette.light().color().rgba());
+            handle = replaceColors(handle, handlecolors);
 
             if (title.isEmpty()) {
                 // Joint handle if there's no title
@@ -3324,34 +3326,39 @@ void QPlastiqueStyle::drawControl(ControlElement element, const QStyleOption *op
 
                 // Details
                 QImage addButton;
+                QMap<QRgb,QRgb> addButtonMap;
                 if (horizontal) {
                     addButton = QImage(reverse ? qt_plastique_scrollbar_button_left : qt_plastique_scrollbar_button_right);
                 } else {
                     addButton = QImage(qt_plastique_scrollbar_button_down);
                 }
-                addButton.setColor(1, alphaCornerColor.rgba());
-                addButton.setColor(2, borderColor.rgba());
+                addButtonMap.insert(4290756543, alphaCornerColor.rgba());
+                addButtonMap.insert(4288124823, borderColor.rgba());
                 if ((scrollBar->activeSubControls & SC_ScrollBarAddLine) && sunken) {
-                    addButton.setColor(3, gradientStopColor.rgba());
-                    addButton.setColor(4, gradientStopColor.rgba());
+                    addButtonMap.insert(4294638330, gradientStopColor.rgba());
+                    addButtonMap.insert(4289703855, gradientStopColor.rgba());
                 } else {
-                    addButton.setColor(3, gradientStartColor.lighter(105).rgba());
-                    addButton.setColor(4, gradientStopColor.rgba());
+                    addButtonMap.insert(4294638330, gradientStartColor.lighter(105).rgba());
+                    addButtonMap.insert(4289703855, gradientStopColor.rgba());
                 }
-                addButton.setColor(5, scrollBar->palette.text().color().rgba());
+                addButton = replaceColors(addButton, addButtonMap);
                 addLinePainter.drawImage(pixmapRect, addButton);
 
                 // Arrow
                 if (horizontal) {
                     QImage arrow(reverse ? qt_plastique_scrollbar_button_arrow_left : qt_plastique_scrollbar_button_arrow_right);
-                    arrow.setColor(1, scrollBar->palette.foreground().color().rgba());
+                    QMap<QRgb,QRgb> arrowcolors;
+                    arrowcolors.insert(4290756543, scrollBar->palette.foreground().color().rgba());
+                    arrow = replaceColors(arrow, arrowcolors);
 
                     if ((scrollBar->activeSubControls & SC_ScrollBarAddLine) && sunken)
                         addLinePainter.translate(1, 1);
                     addLinePainter.drawImage(QPoint(pixmapRect.center().x() - 2, pixmapRect.center().y() - 3), arrow);
                 } else {
                     QImage arrow(qt_plastique_scrollbar_button_arrow_down);
-                    arrow.setColor(1, scrollBar->palette.foreground().color().rgba());
+                    QMap<QRgb,QRgb> arrowcolors;
+                    arrowcolors.insert(4290756543, scrollBar->palette.foreground().color().rgba());
+                    arrow = replaceColors(arrow, arrowcolors);
 
                     if ((scrollBar->activeSubControls & SC_ScrollBarAddLine) && sunken)
                         addLinePainter.translate(1, 1);
@@ -3456,34 +3463,39 @@ void QPlastiqueStyle::drawControl(ControlElement element, const QStyleOption *op
 
                 // Details
                 QImage subButton;
+                QMap<QRgb,QRgb> subButtonMap;
                 if (horizontal) {
                     subButton = QImage(reverse ? qt_plastique_scrollbar_button_right : qt_plastique_scrollbar_button_left);
                 } else {
                     subButton = QImage(qt_plastique_scrollbar_button_up);
                 }
-                subButton.setColor(1, alphaCornerColor.rgba());
-                subButton.setColor(2, borderColor.rgba());
+                subButtonMap.insert(4290756543, alphaCornerColor.rgba());
+                subButtonMap.insert(4288124823, borderColor.rgba());
                 if ((scrollBar->activeSubControls & SC_ScrollBarSubLine) && sunken) {
-                    subButton.setColor(3, gradientStopColor.rgba());
-                    subButton.setColor(4, gradientStopColor.rgba());
+                    subButtonMap.insert(4294638330, gradientStopColor.rgba());
+                    subButtonMap.insert(4289703855, gradientStopColor.rgba());
                 } else {
-                    subButton.setColor(3, gradientStartColor.lighter(105).rgba());
-                    subButton.setColor(4, gradientStopColor.rgba());
+                    subButtonMap.insert(4294638330, gradientStartColor.lighter(105).rgba());
+                    subButtonMap.insert(4289703855, gradientStopColor.rgba());
                 }
-                subButton.setColor(5, scrollBar->palette.text().color().rgba());
+                subButton = replaceColors(subButton, subButtonMap);
                 subLinePainter.drawImage(pixmapRect, subButton);
 
                 // Arrows
                 if (horizontal) {
                     QImage arrow(reverse ? qt_plastique_scrollbar_button_arrow_right : qt_plastique_scrollbar_button_arrow_left);
-                    arrow.setColor(1, scrollBar->palette.foreground().color().rgba());
+                    QMap<QRgb,QRgb> arrowcolors;
+                    arrowcolors.insert(4290756543, scrollBar->palette.foreground().color().rgba());
+                    arrow = replaceColors(arrow, arrowcolors);
 
                     if ((scrollBar->activeSubControls & SC_ScrollBarSubLine) && sunken)
                         subLinePainter.translate(1, 1);
                     subLinePainter.drawImage(QPoint(pixmapRect.center().x() - 2, pixmapRect.center().y() - 3), arrow);
                 } else {
                     QImage arrow(qt_plastique_scrollbar_button_arrow_up);
-                    arrow.setColor(1, scrollBar->palette.foreground().color().rgba());
+                    QMap<QRgb,QRgb> arrowcolors;
+                    arrowcolors.insert(4290756543, scrollBar->palette.foreground().color().rgba());
+                    arrow = replaceColors(arrow, arrowcolors);
 
                     if ((scrollBar->activeSubControls & SC_ScrollBarSubLine) && sunken)
                         subLinePainter.translate(1, 1);
@@ -3564,8 +3576,10 @@ void QPlastiqueStyle::drawControl(ControlElement element, const QStyleOption *op
                         || (!horizontal && scrollBar->rect.height() > sliderMinLength)) {
                         QImage pattern(horizontal ? qt_plastique_scrollbar_slider_pattern_horizontal
                                        : qt_plastique_scrollbar_slider_pattern_vertical);
-                        pattern.setColor(1, alphaCornerColor.rgba());
-                        pattern.setColor(2, (sunken ? gradientStartColor.lighter(110) : gradientStartColor.lighter(105)).rgba());
+                        QMap<QRgb,QRgb> patterncolors;
+                        patterncolors.insert(4290756543, alphaCornerColor.rgba());
+                        patterncolors.insert(4288124823, (sunken ? gradientStartColor.lighter(110) : gradientStartColor.lighter(105)).rgba());
+                        pattern = replaceColors(pattern, patterncolors);
 
                         if (horizontal) {
                             sliderPainter.drawImage(pixmapRect.center().x() - pattern.width() / 2 + 1,
@@ -3792,19 +3806,23 @@ void QPlastiqueStyle::drawComplexControl(ComplexControl control, const QStyleOpt
                     }
 
                     QImage image;
+                    QMap<QRgb,QRgb> imagecolors;
                     if (horizontal) {
                         image = QImage((ticksAbove && !ticksBelow) ? qt_plastique_slider_horizontalhandle_up : qt_plastique_slider_horizontalhandle);
                     } else {
                         image = QImage((ticksAbove && !ticksBelow) ? qt_plastique_slider_verticalhandle_left : qt_plastique_slider_verticalhandle);
                     }
-
-                    image.setColor(1, borderColor.rgba());
-                    image.setColor(2, gradientStartColor.rgba());
-                    image.setColor(3, alphaCornerColor.rgba());
+                    imagecolors.insert(4288124823, borderColor.rgba());
+                    imagecolors.insert(4291414473, gradientStartColor.rgba());
+                    imagecolors.insert(4290888129, alphaCornerColor.rgba());
                     if (option->state & State_Enabled) {
-                        image.setColor(4, 0x80ffffff);
-                        image.setColor(5, 0x25000000);
+                        imagecolors.insert(4294638330, 0x80ffffff);
+                        imagecolors.insert(4289703855, 0x25000000);
+                    } else {
+                        imagecolors.insert(4294638330, qt_transparentrgba);
+                        imagecolors.insert(4289703855, qt_transparentrgba);
                     }
+                    image = replaceColors(image, imagecolors);
                     handlePainter.drawImage(pixmapRect, image);
                     handlePainter.end();
                     QPixmapCache::insert(handlePixmapName, cache);
@@ -4714,10 +4732,12 @@ void QPlastiqueStyle::drawComplexControl(ComplexControl control, const QStyleOpt
                                          QColor(hover ? 0xababab : 0x929292));
                 }
                 QImage image(qt_plastique_titlebar_context_help);
-                image.setColor(4, textColor.rgba());
-                image.setColor(3, mergedColors(blend, textColor, 30).rgba());
-                image.setColor(2, mergedColors(blend, textColor, 70).rgba());
-                image.setColor(1, mergedColors(blend, textColor, 90).rgba());
+                QMap<QRgb,QRgb> imagecolors;
+                imagecolors.insert(4282139485, textColor.rgba());
+                imagecolors.insert(4280889668, mergedColors(blend, textColor, 30).rgba());
+                imagecolors.insert(4279967789, mergedColors(blend, textColor, 70).rgba());
+                imagecolors.insert(4278848530, mergedColors(blend, textColor, 90).rgba());
+                image = replaceColors(image, imagecolors);
 
                 painter->drawImage(contextHelpButtonRect, image);
             }

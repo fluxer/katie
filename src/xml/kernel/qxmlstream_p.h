@@ -1099,8 +1099,8 @@ bool QXmlStreamReaderPrivate::parse()
                         return false;
                     }
                 }
-
-            } break;
+                break;
+            }
             case '\n':
                 ++lineNumber;
                 lastLineStart = characterOffset + readBufferPos;

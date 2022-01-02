@@ -37,7 +37,6 @@
 #include "qobject_p.h"
 #include "qpathclipper_p.h"
 #include "qstroker_p.h"
-#include "qtextengine_p.h"
 #include "qguicommon_p.h"
 
 #include <limits.h>
@@ -1105,24 +1104,14 @@ void QPainterPath::addText(const QPointF &point, const QFont &f, const QString &
     qreal x(point.x());
     qreal y(point.y());
 
-    QVarLengthArray<int> visualOrder(nItems);
-    QVarLengthArray<uchar> levels(nItems);
-    for (int i = 0; i < nItems; ++i)
-        levels[i] = eng->layoutData->items[i].analysis.bidiLevel;
-    QTextEngine::bidiReorder(nItems, levels.data(), visualOrder.data());
-
     for (int i = 0; i < nItems; ++i) {
-        int item = visualOrder[i];
-        QScriptItem &si = eng->layoutData->items[item];
+        QScriptItem &si = eng->layoutData->items[i];
 
         if (si.analysis.flags < QScriptAnalysis::TabOrObject) {
             QGlyphLayout glyphs = eng->shapedGlyphs(&si);
             QFontEngine *fe = f.d->engineForScript(si.analysis.script);
             Q_ASSERT(fe);
-            fe->addOutlineToPath(x, y, glyphs, this,
-                                 si.analysis.bidiLevel % 2
-                                 ? QTextItem::RenderFlags(QTextItem::RightToLeft)
-                                 : QTextItem::RenderFlags(0));
+            fe->addOutlineToPath(x, y, glyphs, this, QTextItem::RenderFlags(0));
 
             const qreal lw = fe->lineThickness().toReal();
             if (f.d->underline) {

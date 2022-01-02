@@ -90,10 +90,9 @@ struct Q_AUTOTEST_EXPORT QScriptAnalysis
         Object = 4
     };
     QUnicodeTables::Script script;
-    unsigned short bidiLevel;  // Unicode Bidi algorithm embedding level (0-61)
     Flags flags;
     inline bool operator == (const QScriptAnalysis &other) const {
-        return script == other.script && bidiLevel == other.bidiLevel && flags == other.flags;
+        return script == other.script && flags == other.flags;
     }
 };
 Q_DECLARE_TYPEINFO(QScriptAnalysis, Q_PRIMITIVE_TYPE);
@@ -101,29 +100,18 @@ Q_DECLARE_TYPEINFO(QScriptAnalysis, Q_PRIMITIVE_TYPE);
 struct QGlyphJustification
 {
     inline QGlyphJustification()
-        : type(JustifyNone), nKashidas(0), space_18d6(0)
+        : type(JustifyNone), space_18d6(0)
     {}
 
     enum JustificationType {
         JustifyNone,
-        JustifySpace,
-        JustifyKashida
+        JustifySpace
     };
 
     JustificationType type;
-    uint nKashidas; // more do not make sense...
     uint space_18d6;
 };
 Q_DECLARE_TYPEINFO(QGlyphJustification, Q_PRIMITIVE_TYPE);
-
-struct QGlyphLayoutInstance
-{
-    QFixedPoint offset;
-    QFixedPoint advance;
-    HB_Glyph glyph;
-    QGlyphJustification justification;
-    HB_GlyphAttributes attributes;
-};
 
 struct QGlyphLayout
 {
@@ -178,28 +166,6 @@ struct QGlyphLayout
 
     inline QFixed effectiveAdvance(int item) const
     { return (advances_x[item] + QFixed::fromFixed(justifications[item].space_18d6)) * !attributes[item].dontPrint; }
-
-    inline QGlyphLayoutInstance instance(int position) const {
-        QGlyphLayoutInstance g;
-        g.offset.x = offsets[position].x;
-        g.offset.y = offsets[position].y;
-        g.glyph = glyphs[position];
-        g.advance.x = advances_x[position];
-        g.advance.y = advances_y[position];
-        g.justification = justifications[position];
-        g.attributes = attributes[position];
-        return g;
-    }
-
-    inline void setInstance(int position, const QGlyphLayoutInstance &g) {
-        offsets[position].x = g.offset.x;
-        offsets[position].y = g.offset.y;
-        glyphs[position] = g.glyph;
-        advances_x[position] = g.advance.x;
-        advances_y[position] = g.advance.y;
-        justifications[position] = g.justification;
-        attributes[position] = g.attributes;
-    }
 
     inline void clear(int first = 0, int last = -1) {
         if (last == -1)
@@ -277,7 +243,6 @@ public:
 
     /// copy the structure items, adjusting the glyphs arrays to the right subarrays.
     /// the width of the returned QTextItemInt is not adjusted, for speed reasons
-    QTextItemInt midItem(QFontEngine *fontEngine, int firstGlyphIndex, int numGlyphs) const;
     void initWithScriptItem(const QScriptItem &si);
 
     QFixed descent;
@@ -388,7 +353,6 @@ public:
         unsigned short *logClustersPtr;
         QGlyphLayout glyphLayout;
         mutable int used;
-        bool hasBidi;
         LayoutState layoutState;
         bool memory_on_stack;
         bool haveCharAttributes;
@@ -414,9 +378,6 @@ public:
 
     void validate() const;
     void itemize() const;
-
-    bool isRightToLeft() const;
-    static void bidiReorder(int numRuns, const quint8 *levels, int *visualOrder);
 
     const HB_CharAttributes *attributes() const;
 
@@ -500,23 +461,6 @@ public:
 
     mutable QScriptLineArray lines;
 
-    struct FontEngineCache {
-        FontEngineCache();
-        mutable QFontEngine *prevFontEngine;
-        mutable QFontEngine *prevScaledFontEngine;
-        mutable int prevScript;
-        mutable int prevPosition;
-        mutable int prevLength;
-        inline void reset() {
-            prevFontEngine = 0;
-            prevScaledFontEngine = 0;
-            prevScript = -1;
-            prevPosition = -1;
-            prevLength = -1;
-        }
-    };
-    mutable FontEngineCache feCache;
-
     QString text;
     QFont fnt;
     QTextBlock block;
@@ -526,7 +470,6 @@ public:
     QFixed minWidth;
     QFixed maxWidth;
     QPointF position;
-    bool ignoreBidi;
     bool cacheGlyphs;
     bool stackEngine;
     bool forceJustification;
@@ -559,7 +502,6 @@ public:
     QString elidedText(Qt::TextElideMode mode, const QFixed &width, int flags = 0) const;
 
     void shapeLine(const QScriptLine &line);
-    QFixed leadingSpaceWidth(const QScriptLine &line);
 
     QFixed offsetInLigature(const QScriptItem *si, int pos, int max, int glyph_pos);
     int positionInLigature(const QScriptItem *si, int end, QFixed x, QFixed edge, int glyph_pos, bool cursorOnCharacter);
@@ -568,7 +510,6 @@ public:
     int lineNumberForTextPosition(int pos);
     int positionAfterVisualMovement(int oldPos, QTextCursor::MoveOperation op);
     void insertionPointsForLine(int lineNum, QVector<int> &insertionPoints);
-    void resetFontEngineCache();
 
 private:
     void setBoundary(int strPos) const;
@@ -627,9 +568,6 @@ struct QTextLineItemIterator
     int itemEnd;
 
     QFixed itemWidth;
-
-    QVarLengthArray<int> visualOrder;
-    QVarLengthArray<uchar> levels;
 
     const QTextLayout::FormatRange *selection;
 };

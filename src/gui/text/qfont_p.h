@@ -105,10 +105,6 @@ struct QFontDef
 class Q_GUI_EXPORT QFontPrivate
 {
 public:
-#ifdef Q_WS_X11
-    static int defaultEncodingID;
-#endif // Q_WS_X11
-
     QFontPrivate();
     QFontPrivate(const QFontPrivate &other);
     ~QFontPrivate();
@@ -117,7 +113,6 @@ public:
 
     QAtomicInt ref;
     QFontDef request;
-    mutable QFontEngine *engine;
     int dpi;
     int screen;
 
@@ -146,7 +141,6 @@ class QFontCache
 public:
     // note: these static functions work on a per-thread basis
     static QFontCache *instance();
-    static void cleanup();
 
     QFontCache();
     ~QFontCache();

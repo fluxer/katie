@@ -48,9 +48,6 @@ private slots:
 
     void widthTwoTimes_data();
     void widthTwoTimes();
-
-    void addAppFont_data();
-    void addAppFont();
 };
 
 tst_QFontDatabase::tst_QFontDatabase()
@@ -153,57 +150,6 @@ void tst_QFontDatabase::widthTwoTimes()
     int w2 = fm.charWidth(text, 0);
 
     QCOMPARE(w1, w2);
-}
-
-void tst_QFontDatabase::addAppFont_data()
-{
-    QTest::addColumn<bool>("useMemoryFont");
-    QTest::newRow("font file") << false;
-    QTest::newRow("memory font") << true;
-}
-
-void tst_QFontDatabase::addAppFont()
-{
-    QFETCH(bool, useMemoryFont);
-    QSignalSpy fontDbChangedSpy(QApplication::instance(), SIGNAL(fontDatabaseChanged()));
-
-    QFontDatabase db;
-
-    const QStringList oldFamilies = db.families();
-    QVERIFY(!oldFamilies.isEmpty());
-
-    fontDbChangedSpy.clear();
-
-    int id;
-    if (useMemoryFont) {
-        QFile fontfile("FreeMono.ttf");
-        fontfile.open(QIODevice::ReadOnly);
-        QByteArray fontdata = fontfile.readAll();
-        QVERIFY(!fontdata.isEmpty());
-        id = QFontDatabase::addApplicationFontFromData(fontdata);
-    } else {
-        id = QFontDatabase::addApplicationFont("FreeMono.ttf");
-    }
-    QCOMPARE(fontDbChangedSpy.count(), 1);
-    if (id == -1) {
-        QSKIP("Skip the test since app fonts are not supported on this system", SkipSingle);
-        return;
-    }
-
-    const QStringList addedFamilies = QFontDatabase::applicationFontFamilies(id);
-    QVERIFY(!addedFamilies.isEmpty());
-
-    const QStringList newFamilies = db.families();
-    QVERIFY(!newFamilies.isEmpty());
-    QVERIFY(newFamilies.count() >= oldFamilies.count());
-
-    for (int i = 0; i < addedFamilies.count(); ++i)
-        QVERIFY(newFamilies.contains(addedFamilies.at(i)));
-
-    QVERIFY(QFontDatabase::removeApplicationFont(id));
-    QCOMPARE(fontDbChangedSpy.count(), 2);
-
-    QVERIFY(db.families() == oldFamilies);
 }
 
 QTEST_MAIN(tst_QFontDatabase)

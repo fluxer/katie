@@ -191,7 +191,6 @@ set(DECLARATIVE_HEADERS
     ${CMAKE_CURRENT_SOURCE_DIR}/util/qdeclarativepropertymap.h
     ${CMAKE_CURRENT_SOURCE_DIR}/util/qdeclarativepixmapcache_p.h
     ${CMAKE_CURRENT_SOURCE_DIR}/util/qdeclarativebehavior_p.h
-    ${CMAKE_CURRENT_SOURCE_DIR}/util/qdeclarativefontloader_p.h
     ${CMAKE_CURRENT_SOURCE_DIR}/util/qdeclarativestyledtext_p.h
     ${CMAKE_CURRENT_SOURCE_DIR}/util/qdeclarativelistmodelworkeragent_p.h
     ${CMAKE_CURRENT_SOURCE_DIR}/util/qlistmodelinterface_p.h
@@ -311,7 +310,6 @@ set(DECLARATIVE_SOURCES
     ${CMAKE_CURRENT_SOURCE_DIR}/util/qdeclarativepropertymap.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/util/qdeclarativepixmapcache.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/util/qdeclarativebehavior.cpp
-    ${CMAKE_CURRENT_SOURCE_DIR}/util/qdeclarativefontloader.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/util/qdeclarativestyledtext.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/util/qdeclarativelistmodelworkeragent.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/util/qlistmodelinterface.cpp

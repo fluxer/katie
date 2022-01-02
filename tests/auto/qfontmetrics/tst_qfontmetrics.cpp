@@ -234,10 +234,7 @@ void tst_QFontMetrics::elidedMultiLengthF()
 
 void tst_QFontMetrics::inFontUcs4()
 {
-    int id = QFontDatabase::addApplicationFont(":/fonts/ucs4font.ttf");
-    QVERIFY(id >= 0);
-
-    QFont font("QtTestUcs4");
+    QFont font(":/fonts/ucs4font.ttf");
     {
         QFontMetrics fm(font);
 
@@ -249,8 +246,6 @@ void tst_QFontMetrics::inFontUcs4()
 
         QVERIFY(fm.inFontUcs4(0x1D7FF));
     }
-
-    QFontDatabase::removeApplicationFont(id);
 }
 
 void tst_QFontMetrics::lineWidth()

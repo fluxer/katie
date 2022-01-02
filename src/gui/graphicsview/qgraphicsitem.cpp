@@ -709,10 +709,6 @@
 #include <QtGui/qstyleoption.h>
 #include <QtGui/qevent.h>
 #include <QtGui/qgraphicseffect.h>
-#ifndef QT_NO_ACCESSIBILITY
-# include "qaccessible.h"
-#endif
-
 #include "qgraphicsitem_p.h"
 #include "qgraphicswidget_p.h"
 #include "qtextcontrol_p.h"
@@ -721,9 +717,13 @@
 #include "qwidget_p.h"
 #include "qapplication_p.h"
 
+#ifndef QT_NO_ACCESSIBILITY
+#  include "qaccessible.h"
+#endif
+
 #ifdef Q_WS_X11
-#include "qt_x11_p.h"
-#include "qpixmap_x11_p.h"
+#  include "qt_x11_p.h"
+#  include "qpixmap_x11_p.h"
 #endif
 
 #include <math.h>

@@ -2192,12 +2192,9 @@ QMotifStyle::standardPixmap(StandardPixmap standardPixmap, const QStyleOption *o
         const QPalette &pal = QApplication::palette();
         QImage image((const char **) qt_information_xpm);
         QMap<QRgb,QRgb> imagecolors;
-        imagecolors.insert(4288256409, 0xff000000 |
-                        pal.color(QPalette::Active, QPalette::Dark).rgb());
-        imagecolors.insert(4294967295, 0xff000000 |
-                        pal.color(QPalette::Active, QPalette::Base).rgb());
-        imagecolors.insert(4278190335, 0xff000000 |
-                        pal.color(QPalette::Active, QPalette::Text).rgb());
+        imagecolors.insert(4288256409, pal.color(QPalette::Active, QPalette::Dark).rgba());
+        imagecolors.insert(4294967295, pal.color(QPalette::Active, QPalette::Base).rgba());
+        imagecolors.insert(4278190335, pal.color(QPalette::Active, QPalette::Text).rgba());
         image = replaceColors(image, imagecolors);
         return QPixmap::fromImage(image);
     }
@@ -2205,12 +2202,9 @@ QMotifStyle::standardPixmap(StandardPixmap standardPixmap, const QStyleOption *o
         const QPalette &pal = QApplication::palette();
         QImage image((const char **) qt_warning_xpm);
         QMap<QRgb,QRgb> imagecolors;
-        imagecolors.insert(4294967040, 0xff000000 |
-                        pal.color(QPalette::Active, QPalette::Base).rgb());
-        imagecolors.insert(4278190080, 0xff000000 |
-                        pal.color(QPalette::Active, QPalette::Text).rgb());
-        imagecolors.insert(4288256409, 0xff000000 |
-                        pal.color(QPalette::Active, QPalette::Dark).rgb());
+        imagecolors.insert(4294967040, pal.color(QPalette::Active, QPalette::Base).rgba());
+        imagecolors.insert(4278190080, pal.color(QPalette::Active, QPalette::Text).rgba());
+        imagecolors.insert(4288256409, pal.color(QPalette::Active, QPalette::Dark).rgba());
         image = replaceColors(image, imagecolors);
         return QPixmap::fromImage(image);
     }
@@ -2218,12 +2212,9 @@ QMotifStyle::standardPixmap(StandardPixmap standardPixmap, const QStyleOption *o
         const QPalette &pal = QApplication::palette();
         QImage image((const char **) qt_critical_xpm);
         QMap<QRgb,QRgb> imagecolors;
-        imagecolors.insert(4288256409, 0xff000000 |
-                        pal.color(QPalette::Active, QPalette::Dark).rgb());
-        imagecolors.insert(4294901760, 0xff000000 |
-                        pal.color(QPalette::Active, QPalette::Text).rgb());
-        imagecolors.insert(4294967295, 0xff000000 |
-                        pal.color(QPalette::Active, QPalette::Base).rgb());
+        imagecolors.insert(4288256409, pal.color(QPalette::Active, QPalette::Dark).rgba());
+        imagecolors.insert(4294901760, pal.color(QPalette::Active, QPalette::Text).rgba());
+        imagecolors.insert(4294967295, pal.color(QPalette::Active, QPalette::Base).rgba());
         image = replaceColors(image, imagecolors);
         return QPixmap::fromImage(image);
     }
@@ -2231,12 +2222,9 @@ QMotifStyle::standardPixmap(StandardPixmap standardPixmap, const QStyleOption *o
         const QPalette &pal = QApplication::palette();
         QImage image((const char **) qt_question_xpm);
         QMap<QRgb,QRgb> imagecolors;
-        imagecolors.insert(4288256409, 0xff000000 |
-                        pal.color(QPalette::Active, QPalette::Dark).rgb());
-        imagecolors.insert(4294967295, 0xff000000 |
-                        pal.color(QPalette::Active, QPalette::Base).rgb());
-        imagecolors.insert(4278190335, 0xff000000 |
-                        pal.color(QPalette::Active, QPalette::Text).rgb());
+        imagecolors.insert(4288256409, pal.color(QPalette::Active, QPalette::Dark).rgba());
+        imagecolors.insert(4294967295, pal.color(QPalette::Active, QPalette::Base).rgba());
+        imagecolors.insert(4278190335, pal.color(QPalette::Active, QPalette::Text).rgba());
         image = replaceColors(image, imagecolors);
         return QPixmap::fromImage(image);
     }

@@ -221,7 +221,7 @@ private:
     friend class QTextControl;
 #endif
     friend class QAction;
-    friend class QFontDatabasePrivate;
+    friend class QFontDatabase;
 
 #if defined(Q_WS_X11)
     Q_PRIVATE_SLOT(d_func(), void _q_alertTimeOut())

@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-12-26 15:10+0200\n"
+"POT-Creation-Date: 2022-01-02 19:57+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -1173,11 +1173,11 @@ msgstr ""
 msgid "Cannot open: %1"
 msgstr ""
 
-#: src/declarative/util/qdeclarativeutilmodule.cpp:59
+#: src/declarative/util/qdeclarativeutilmodule.cpp:58
 msgid "Application is an abstract class"
 msgstr ""
 
-#: src/declarative/util/qdeclarativeutilmodule.cpp:87
+#: src/declarative/util/qdeclarativeutilmodule.cpp:85
 msgid "Animation is an abstract class"
 msgstr ""
 
@@ -1860,7 +1860,7 @@ msgctxt "QImageReader"
 msgid "Unknown error"
 msgstr ""
 
-#: src/gui/widgets/qtabbar.cpp:2176
+#: src/gui/widgets/qtabbar.cpp:2175
 msgid "Close Tab"
 msgstr ""
 
@@ -2162,7 +2162,7 @@ msgstr ""
 msgid "*"
 msgstr ""
 
-#: src/gui/kernel/qapplication.cpp:1652
+#: src/gui/kernel/qapplication.cpp:1647
 msgid "QT_LAYOUT_DIRECTION"
 msgstr ""
 
@@ -4514,46 +4514,39 @@ msgstr ""
 msgid "<empty>"
 msgstr ""
 
-#: src/gui/text/qfontdatabase.cpp:62 src/gui/text/qfontdatabase.cpp:816
-msgctxt "QFontDatabase"
-msgid "Normal"
-msgstr ""
-
-#: src/gui/text/qfontdatabase.cpp:65 src/gui/text/qfontdatabase.cpp:77
-#: src/gui/text/qfontdatabase.cpp:804
-msgctxt "QFontDatabase"
-msgid "Bold"
-msgstr ""
-
-#: src/gui/text/qfontdatabase.cpp:68 src/gui/text/qfontdatabase.cpp:806
-msgctxt "QFontDatabase"
-msgid "Demi Bold"
-msgstr ""
-
-#: src/gui/text/qfontdatabase.cpp:71 src/gui/text/qfontdatabase.cpp:89
-#: src/gui/text/qfontdatabase.cpp:802
+#: src/gui/text/qfontdatabase.cpp:169
 msgctxt "QFontDatabase"
 msgid "Black"
 msgstr ""
 
-#: src/gui/text/qfontdatabase.cpp:79
+#: src/gui/text/qfontdatabase.cpp:171
 msgctxt "QFontDatabase"
-msgid "Demi"
+msgid "Bold"
 msgstr ""
 
-#: src/gui/text/qfontdatabase.cpp:85 src/gui/text/qfontdatabase.cpp:808
+#: src/gui/text/qfontdatabase.cpp:173
+msgctxt "QFontDatabase"
+msgid "Demi Bold"
+msgstr ""
+
+#: src/gui/text/qfontdatabase.cpp:175
 msgctxt "QFontDatabase"
 msgid "Light"
 msgstr ""
 
-#: src/gui/text/qfontdatabase.cpp:193 src/gui/text/qfontdatabase.cpp:811
+#: src/gui/text/qfontdatabase.cpp:178
 msgctxt "QFontDatabase"
 msgid "Italic"
 msgstr ""
 
-#: src/gui/text/qfontdatabase.cpp:196 src/gui/text/qfontdatabase.cpp:813
+#: src/gui/text/qfontdatabase.cpp:180
 msgctxt "QFontDatabase"
 msgid "Oblique"
+msgstr ""
+
+#: src/gui/text/qfontdatabase.cpp:183
+msgctxt "QFontDatabase"
+msgid "Normal"
 msgstr ""
 
 #: src/gui/text/qtextcontrol.cpp:1876

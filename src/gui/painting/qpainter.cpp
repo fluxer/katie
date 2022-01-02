@@ -37,10 +37,8 @@
 #include "qthread.h"
 #include "qvarlengtharray.h"
 #include "qstatictext.h"
-#include "qfontengine_p.h"
 #include "qpaintengine_p.h"
 #include "qpainterpath_p.h"
-#include "qtextengine_p.h"
 #include "qwidget_p.h"
 #include "qstatictext_p.h"
 #include "qstylehelper_p.h"
@@ -4426,17 +4424,11 @@ void QPainter::drawText(const QPointF &p, const QString &str)
     engine.shapeLine(line);
 
     int nItems = engine.layoutData->items.size();
-    QVarLengthArray<int> visualOrder(nItems);
-    QVarLengthArray<uchar> levels(nItems);
-    for (int i = 0; i < nItems; ++i)
-        levels[i] = engine.layoutData->items[i].analysis.bidiLevel;
-    QTextEngine::bidiReorder(nItems, levels.data(), visualOrder.data());
 
     QFixed x = QFixed::fromReal(p.x());
 
     for (int i = 0; i < nItems; ++i) {
-        int item = visualOrder[i];
-        const QScriptItem &si = engine.layoutData->items.at(item);
+        const QScriptItem &si = engine.layoutData->items.at(i);
         if (si.analysis.flags >= QScriptAnalysis::TabOrObject) {
             x += si.width;
             continue;
@@ -4445,7 +4437,7 @@ void QPainter::drawText(const QPointF &p, const QString &str)
         QTextItemInt gf(si, &f);
         gf.glyphs = engine.shapedGlyphs(&si);
         gf.chars = engine.layoutData->string.unicode() + si.position;
-        gf.num_chars = engine.length(item);
+        gf.num_chars = engine.length(i);
         if (engine.forceJustification) {
             for (int j=0; j<gf.glyphs.numGlyphs; ++j)
                 gf.width += gf.glyphs.effectiveAdvance(j);
@@ -5598,23 +5590,6 @@ void QPainter::setViewTransformEnabled(bool enable)
     d->updateMatrix();
 }
 
-
-struct QPaintDeviceRedirection
-{
-    QPaintDeviceRedirection() : device(0), replacement(0), internalWidgetRedirectionIndex(-1) {}
-    QPaintDeviceRedirection(const QPaintDevice *device, QPaintDevice *replacement,
-                            const QPoint& offset, int internalWidgetRedirectionIndex)
-        : device(device), replacement(replacement), offset(offset),
-          internalWidgetRedirectionIndex(internalWidgetRedirectionIndex) { }
-
-    const QPaintDevice *device;
-    QPaintDevice *replacement;
-    QPoint offset;
-    int internalWidgetRedirectionIndex;
-
-    bool operator==(const QPaintDevice *pdev) const { return device == pdev; }
-};
-
 void qt_format_text(const QFont &fnt, const QRectF &_r,
                     int tf, const QString& str, QRectF *brect,
                     int tabstops, int *ta, int tabarraylen)
@@ -5781,7 +5756,6 @@ start_lengthVariant:
             lineWidth = qMax<qreal>(0, r.width());
         if(!wordwrap)
             tf |= Qt::TextIncludeTrailingSpaces;
-        textLayout.engine()->ignoreBidi = bool(tf & Qt::TextDontPrint);
         textLayout.beginLayout();
 
         qreal leading = fm.leading();
@@ -5858,9 +5832,7 @@ start_lengthVariant:
             qreal advance = line.horizontalAdvance();
             xoff = 0;
             if (tf & Qt::AlignRight) {
-                QTextEngine *eng = textLayout.engine();
-                xoff = r.width() - advance -
-                    eng->leadingSpaceWidth(eng->lines[line.lineNumber()]).toReal();
+                xoff = r.width() - advance;
             }
             else if (tf & Qt::AlignHCenter)
                 xoff = (r.width() - advance) / 2;

@@ -28,110 +28,11 @@
 #include "qvarlengtharray.h"
 #include "qmath.h"
 #include "qendian.h"
-#include "qharfbuzz_p.h"
 #include "qdrawhelper_p.h"
 #include "qcorecommon_p.h"
 #include "qguicommon_p.h"
 
 QT_BEGIN_NAMESPACE
-
-// Harfbuzz helper functions
-
-static HB_Bool hb_stringToGlyphs(HB_Font font, const HB_UChar16 *string, hb_uint32 length, HB_Glyph *glyphs, hb_uint32 *numGlyphs, HB_Bool rightToLeft)
-{
-    QFontEngine *fe = (QFontEngine *)font->userData;
-
-    QVarLengthGlyphLayoutArray qglyphs(*numGlyphs);
-
-    QTextEngine::ShaperFlags shaperFlags(QTextEngine::GlyphIndicesOnly);
-    if (rightToLeft)
-        shaperFlags |= QTextEngine::RightToLeft;
-
-    int nGlyphs = *numGlyphs;
-    bool result = fe->stringToCMap(reinterpret_cast<const QChar *>(string), length, &qglyphs, &nGlyphs, shaperFlags);
-    *numGlyphs = nGlyphs;
-    if (!result)
-        return false;
-
-    for (hb_uint32 i = 0; i < *numGlyphs; ++i)
-        glyphs[i] = qglyphs.glyphs[i];
-
-    return true;
-}
-
-static void hb_getAdvances(HB_Font font, const HB_Glyph *glyphs, hb_uint32 numGlyphs, HB_Fixed *advances, int flags)
-{
-    QFontEngine *fe = (QFontEngine *)font->userData;
-
-    QVarLengthGlyphLayoutArray qglyphs(numGlyphs);
-
-    for (hb_uint32 i = 0; i < numGlyphs; ++i)
-        qglyphs.glyphs[i] = glyphs[i];
-
-    fe->recalcAdvances(&qglyphs, flags & HB_ShaperFlag_UseDesignMetrics ? QFlags<QTextEngine::ShaperFlag>(QTextEngine::DesignMetrics) : QFlags<QTextEngine::ShaperFlag>(0));
-
-    for (hb_uint32 i = 0; i < numGlyphs; ++i)
-        advances[i] = qglyphs.advances_x[i].value();
-}
-
-static HB_Bool hb_canRender(HB_Font font, const HB_UChar16 *string, hb_uint32 length)
-{
-    QFontEngine *fe = (QFontEngine *)font->userData;
-    return fe->canRender(reinterpret_cast<const QChar *>(string), length);
-}
-
-static void hb_getGlyphMetrics(HB_Font font, HB_Glyph glyph, HB_GlyphMetrics *metrics)
-{
-    QFontEngine *fe = (QFontEngine *)font->userData;
-    glyph_metrics_t m = fe->boundingBox(glyph);
-    metrics->x = m.x.value();
-    metrics->y = m.y.value();
-    metrics->width = m.width.value();
-    metrics->height = m.height.value();
-    metrics->xOffset = m.xoff.value();
-    metrics->yOffset = m.yoff.value();
-}
-
-static HB_Fixed hb_getFontMetric(HB_Font font, HB_FontMetric metric)
-{
-    QFontEngine *fe = (QFontEngine *)font->userData;
-    switch (metric) {
-    case HB_FontAscent:
-        return fe->ascent().value();
-    default:
-        return 0;
-    }
-}
-
-HB_Error QFontEngine::getPointInOutline(HB_Glyph glyph, int flags, hb_uint32 point, HB_Fixed *xpos, HB_Fixed *ypos, hb_uint32 *nPoints)
-{
-    Q_UNUSED(glyph)
-    Q_UNUSED(flags)
-    Q_UNUSED(point)
-    Q_UNUSED(xpos)
-    Q_UNUSED(ypos)
-    Q_UNUSED(nPoints)
-    return HB_Err_Not_Covered;
-}
-
-static HB_Error hb_getPointInOutline(HB_Font font, HB_Glyph glyph, int flags, hb_uint32 point, HB_Fixed *xpos, HB_Fixed *ypos, hb_uint32 *nPoints)
-{
-    QFontEngine *fe = (QFontEngine *)font->userData;
-    return fe->getPointInOutline(glyph, flags, point, xpos, ypos, nPoints);
-}
-
-static const HB_FontClass hb_fontClass = {
-    hb_stringToGlyphs, hb_getAdvances, hb_canRender, hb_getPointInOutline,
-    hb_getGlyphMetrics, hb_getFontMetric
-};
-
-static HB_Error hb_getSFntTable(void *font, HB_Tag tableTag, HB_Byte *buffer, HB_UInt *length)
-{
-    QFontEngine *fe = (QFontEngine *)font;
-    if (!fe->getSfntTableData(tableTag, buffer, length))
-        return HB_Err_Invalid_Argument;
-    return HB_Err_Ok;
-}
 
 // QFontEngine
 
@@ -140,16 +41,10 @@ QFontEngine::QFontEngine()
     ref(1)
 {
     fsType = 0;
-    memset(&hbFont, 0, sizeof(hbFont));
-    hbFont.klass = &hb_fontClass;
-    hbFont.userData = this;
-
-    hbFace = qHBNewFace(this, hb_getSFntTable);
 }
 
 QFontEngine::~QFontEngine()
 {
-    qHBFreeFace(hbFace);
 }
 
 QFixed QFontEngine::lineThickness() const
@@ -168,23 +63,6 @@ QFixed QFontEngine::lineThickness() const
 QFixed QFontEngine::underlinePosition() const
 {
     return ((lineThickness() * 2) + 3) / 6;
-}
-
-HB_Font QFontEngine::harfbuzzFont() const
-{
-    if (!hbFont.x_ppem) {
-        QFixed emSquare = emSquareSize();
-        hbFont.x_ppem = fontDef.pixelSize;
-        hbFont.y_ppem = fontDef.pixelSize * fontDef.stretch / 100;
-        hbFont.x_scale = (QFixed(hbFont.x_ppem * (1 << 16)) / emSquare).value();
-        hbFont.y_scale = (QFixed(hbFont.y_ppem * (1 << 16)) / emSquare).value();
-    }
-    return &hbFont;
-}
-
-HB_Face QFontEngine::harfbuzzFace() const
-{
-    return hbFace;
 }
 
 QFixed QFontEngine::xHeight() const
@@ -228,16 +106,14 @@ void QFontEngine::getGlyphPositions(const QGlyphLayout &glyphs, const QTransform
     int current = 0;
     if (flags & QTextItem::RightToLeft) {
         int i = glyphs.numGlyphs;
-        int totalKashidas = 0;
         while(i--) {
             if (glyphs.attributes[i].dontPrint)
                 continue;
             xpos += glyphs.advances_x[i] + QFixed::fromFixed(glyphs.justifications[i].space_18d6);
             ypos += glyphs.advances_y[i];
-            totalKashidas += glyphs.justifications[i].nKashidas;
         }
-        positions.resize(glyphs.numGlyphs+totalKashidas);
-        glyphs_out.resize(glyphs.numGlyphs+totalKashidas);
+        positions.resize(glyphs.numGlyphs);
+        glyphs_out.resize(glyphs.numGlyphs);
 
         i = 0;
         while(i < glyphs.numGlyphs) {
@@ -260,31 +136,7 @@ void QFontEngine::getGlyphPositions(const QGlyphLayout &glyphs, const QTransform
             positions[current].y = gpos_y;
             glyphs_out[current] = glyphs.glyphs[i];
             ++current;
-            if (glyphs.justifications[i].nKashidas) {
-                QChar ch(0x640); // Kashida character
-                QGlyphLayoutArray<8> g;
-                int nglyphs = 7;
-                stringToCMap(&ch, 1, &g, &nglyphs, 0);
-                for (uint k = 0; k < glyphs.justifications[i].nKashidas; ++k) {
-                    xpos -= g.advances_x[0];
-                    ypos -= g.advances_y[0];
-
-                    QFixed gpos_x = xpos + glyphs.offsets[i].x;
-                    QFixed gpos_y = ypos + glyphs.offsets[i].y;
-                    if (transform) {
-                        QPointF gpos(gpos_x.toReal(), gpos_y.toReal());
-                        gpos = gpos * matrix;
-                        gpos_x = QFixed::fromReal(gpos.x());
-                        gpos_y = QFixed::fromReal(gpos.y());
-                    }
-                    positions[current].x = gpos_x;
-                    positions[current].y = gpos_y;
-                    glyphs_out[current] = g.glyphs[0];
-                    ++current;
-                }
-            } else {
-                xpos -= QFixed::fromFixed(glyphs.justifications[i].space_18d6);
-            }
+            xpos -= QFixed::fromFixed(glyphs.justifications[i].space_18d6);
             ++i;
         }
     } else {

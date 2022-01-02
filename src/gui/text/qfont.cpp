@@ -30,14 +30,13 @@
 #include "qdatastream.h"
 #include "qapplication.h"
 #include "qstringlist.h"
-
 #include "qthread.h"
 #include "qunicodetables_p.h"
 #include "qfont_p.h"
 #include "qfontengine_p.h"
 #include "qpainter_p.h"
-#include "qtextengine_p.h"
 #include "qmutex.h"
+#include "qcorecommon_p.h"
 
 #include <limits.h>
 
@@ -111,29 +110,23 @@ bool QFontDef::exactMatch(const QFontDef &other) const
 }
 
 QFontPrivate::QFontPrivate()
-    : engine(nullptr), dpi(QX11Info::appDpiY()), screen(QX11Info::appScreen()),
+    : dpi(QX11Info::appDpiY()), screen(QX11Info::appScreen()),
       underline(false), overline(false), strikeOut(false), kerning(true),
       letterSpacingIsAbsolute(false)
 {
 }
 
 QFontPrivate::QFontPrivate(const QFontPrivate &other)
-    : request(other.request), engine(other.engine), dpi(other.dpi), screen(other.screen),
+    : request(other.request), dpi(other.dpi), screen(other.screen),
       underline(other.underline), overline(other.overline),
       strikeOut(other.strikeOut), kerning(other.kerning),
       letterSpacingIsAbsolute(other.letterSpacingIsAbsolute),
       letterSpacing(other.letterSpacing), wordSpacing(other.wordSpacing)
 {
-    if (engine) {
-        engine->ref.ref();
-    }
 }
 
 QFontPrivate::~QFontPrivate()
 {
-    if (engine) {
-        engine->ref.deref();
-    }
 }
 
 QFontEngine *QFontPrivate::engineForScript(QUnicodeTables::Script script) const
@@ -1061,7 +1054,6 @@ QFont::StyleStrategy QFont::styleStrategy() const
     \value PreferBitmap prefers bitmap fonts (as opposed to outline
            fonts).
     \value PreferOutline prefers outline fonts (as opposed to bitmap fonts).
-    \value ForceOutline forces the use of outline fonts.
     \value NoAntialias don't antialias the fonts.
     \value PreferAntialias antialias if possible.
 
@@ -1389,13 +1381,6 @@ QFont QFont::resolve(const QFont &other) const
   and font dict do not alloc the keys. The key is a QString which is
   shared between QFontPrivate and QXFontName.
 */
-
-/*! \fn void QFont::cleanup()
-  \internal
-
-  Internal function that cleans up the font system.
-*/
-
 
 /*  \internal
     Internal function. Converts boolean font settings to an unsigned
@@ -1893,21 +1878,14 @@ bool QFontInfo::exactMatch() const
 
 // **********************************************************************
 // QFontCache
-thread_local QFontCache* theFontCache = nullptr;
+QTHREADLOCAL(QFontCache, theFontCache);
 
 QFontCache *QFontCache::instance()
 {
-    if (!theFontCache)
-        theFontCache = new QFontCache;
-    return theFontCache;
-}
-
-void QFontCache::cleanup()
-{
-    if (theFontCache) {
-        delete theFontCache;
-        theFontCache = 0;
+    if (!theFontCache) {
+        theFontCache = new QFontCache();
     }
+    return theFontCache;
 }
 
 QFontCache::QFontCache()
@@ -1917,28 +1895,19 @@ QFontCache::QFontCache()
 QFontCache::~QFontCache()
 {
     clear();
-    {
-        EngineCache::ConstIterator it = engineCache.constBegin(),
-                                 end = engineCache.constEnd();
-        while (it != end) {
-            if (!it.value()->ref.deref())
-                delete it.value();
-            else
-                FC_DEBUG("QFontCache::~QFontCache: engineData %p still has refcount %d",
-                         it.value(), int(it.value()->ref));
-            ++it;
-        }
-    }
 }
 
 void QFontCache::clear()
 {
-    for (EngineCache::Iterator it = engineCache.begin(), end = engineCache.end();
-         it != end; ++it) {
-        QFontEngine *engine = it.value();
-        if (!engine->ref.deref()) {
-            delete engine;
-        }
+    EngineCache::ConstIterator it = engineCache.constBegin(),
+                               end = engineCache.constEnd();
+    while (it != end) {
+        if (!it.value()->ref.deref())
+            delete it.value();
+        else
+            FC_DEBUG("QFontCache::~QFontCache: engineData %p still has refcount %d",
+                        it.value(), int(it.value()->ref));
+        ++it;
     }
 
     engineCache.clear();

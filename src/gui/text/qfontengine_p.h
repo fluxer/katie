@@ -35,7 +35,6 @@
 
 #include "QtCore/qatomic.h"
 #include <QtCore/qvarlengtharray.h>
-#include <QtCore/QLinkedList>
 #include "qtextengine_p.h"
 #include "qfont_p.h"
 
@@ -146,18 +145,11 @@ public:
 
     virtual Type type() const = 0;
 
-    HB_Font harfbuzzFont() const;
-    HB_Face harfbuzzFace() const;
-
-    virtual HB_Error getPointInOutline(HB_Glyph glyph, int flags, hb_uint32 point, HB_Fixed *xpos, HB_Fixed *ypos, hb_uint32 *nPoints);
-
     static QByteArray convertToPostscriptFontFamilyName(const QByteArray &fontFamily);
 
     QAtomicInt ref;
     QFontDef fontDef;
     int fsType;
-    mutable HB_FontRec hbFont;
-    HB_Face hbFace;
 #if defined(Q_WS_X11)
     struct KernPair {
         uint left_right;

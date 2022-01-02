@@ -33,7 +33,6 @@
 #include "qunicodetables_p.h"
 #include "qfontengine_p.h"
 #include "qfontengine_ft_p.h"
-#include "qtextengine_p.h"
 #include "qt_x11_p.h"
 #include "qx11info_x11.h"
 
@@ -61,57 +60,8 @@ double qt_pointSize(double pixelSize, int dpi)
     return pixelSize * 72. / ((double) dpi);
 }
 
-int QFontPrivate::defaultEncodingID = -1;
-
 void QFont::initialize()
 {
-    extern int qt_encoding_id_for_mib(int mib); // from qfontdatabase_x11.cpp
-    // determine the default encoding id using the locale, otherwise
-    int mib = QTextCodec::codecForLocale()->mibEnum();
-
-    // for asian locales, use the mib for the font codec instead of the locale codec
-    switch (mib) {
-    case 38: // eucKR
-        mib = 36;
-        break;
-
-    case 2025: // GB2312
-        mib = 57;
-        break;
-
-    case 113: // GBK
-        mib = -113;
-        break;
-
-    case 114: // GB18030
-        mib = -114;
-        break;
-
-    case 2026: // Big5
-        mib = -2026;
-        break;
-
-    case 2101: // Big5-HKSCS
-        mib = -2101;
-        break;
-
-    case 16: // JIS7
-        mib = 15;
-        break;
-
-    case 17: // SJIS
-    case 18: // eucJP
-        mib = 63;
-        break;
-    }
-
-    // get the default encoding id for the locale encoding...
-    QFontPrivate::defaultEncodingID = qt_encoding_id_for_mib(mib);
-}
-
-void QFont::cleanup()
-{
-    QFontCache::cleanup();
 }
 
 /*!
