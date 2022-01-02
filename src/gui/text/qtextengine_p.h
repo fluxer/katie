@@ -90,10 +90,9 @@ struct Q_AUTOTEST_EXPORT QScriptAnalysis
         Object = 4
     };
     QUnicodeTables::Script script;
-    unsigned short bidiLevel;  // Unicode Bidi algorithm embedding level (0-61)
     Flags flags;
     inline bool operator == (const QScriptAnalysis &other) const {
-        return script == other.script && bidiLevel == other.bidiLevel && flags == other.flags;
+        return script == other.script && flags == other.flags;
     }
 };
 Q_DECLARE_TYPEINFO(QScriptAnalysis, Q_PRIMITIVE_TYPE);
@@ -356,7 +355,6 @@ public:
         unsigned short *logClustersPtr;
         QGlyphLayout glyphLayout;
         mutable int used;
-        bool hasBidi;
         LayoutState layoutState;
         bool memory_on_stack;
         bool haveCharAttributes;
@@ -382,9 +380,6 @@ public:
 
     void validate() const;
     void itemize() const;
-
-    bool isRightToLeft() const;
-    static void bidiReorder(int numRuns, const quint8 *levels, int *visualOrder);
 
     const HB_CharAttributes *attributes() const;
 
@@ -509,7 +504,6 @@ public:
     QString elidedText(Qt::TextElideMode mode, const QFixed &width, int flags = 0) const;
 
     void shapeLine(const QScriptLine &line);
-    QFixed leadingSpaceWidth(const QScriptLine &line);
 
     QFixed offsetInLigature(const QScriptItem *si, int pos, int max, int glyph_pos);
     int positionInLigature(const QScriptItem *si, int end, QFixed x, QFixed edge, int glyph_pos, bool cursorOnCharacter);
@@ -576,9 +570,6 @@ struct QTextLineItemIterator
     int itemEnd;
 
     QFixed itemWidth;
-
-    QVarLengthArray<int> visualOrder;
-    QVarLengthArray<uchar> levels;
 
     const QTextLayout::FormatRange *selection;
 };

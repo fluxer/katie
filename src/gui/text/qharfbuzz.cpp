@@ -113,8 +113,6 @@ static bool qHB_ConvertStringToGlyphIndices(HB_ShaperItem *shaper_item)
     QVarLengthGlyphLayoutArray qglyphs(shaper_item->num_glyphs);
 
     QTextEngine::ShaperFlags shaperFlags(QTextEngine::GlyphIndicesOnly);
-    if (shaper_item->item.bidiLevel % 2)
-        shaperFlags |= QTextEngine::RightToLeft;
 
     int nGlyphs = shaper_item->num_glyphs;
     bool result = fe->stringToCMap(reinterpret_cast<const QChar *>(shaper_item->string + shaper_item->item.pos),
@@ -270,8 +268,6 @@ static inline void positionCluster(HB_ShaperItem *item, int gfrom,  int glast)
     //qreal offsetBase = (size - 4) / 4 + qMin<qreal>(size, 4) + 1;
 //     qDebug("offset = %f", offsetBase);
 
-    bool rightToLeft = item->item.bidiLevel % 2;
-
     int i;
     unsigned char lastCmb = 0;
     HB_GlyphMetrics attachmentRect;
@@ -365,13 +361,8 @@ static inline void positionCluster(HB_ShaperItem *item, int gfrom,  int glast)
         attachmentRect = unitedAttachmentRect;
 
         lastCmb = cmb;
-        if (rightToLeft) {
-            item->offsets[gfrom+i].x = p.x;
-            item->offsets[gfrom+i].y = p.y;
-        } else {
-            item->offsets[gfrom+i].x = p.x - baseMetrics.xOffset;
-            item->offsets[gfrom+i].y = p.y - baseMetrics.yOffset;
-        }
+        item->offsets[gfrom+i].x = p.x - baseMetrics.xOffset;
+        item->offsets[gfrom+i].y = p.y - baseMetrics.yOffset;
         item->advances[gfrom+i] = 0;
     }
 }

@@ -400,7 +400,6 @@ typedef struct {
     uint32_t pos;
     uint32_t length;
     HB_Script script;
-    uint8_t bidiLevel;
 } HB_ScriptItem;
 
 typedef struct {

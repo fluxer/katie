@@ -78,8 +78,7 @@ public:
             // the font and because Japanese and Chinese are also aliases of the script "Common",
             // doing this would break too many things.  So instead we only pass the full stop
             // along, and nothing else.
-            if (m_analysis[i].bidiLevel == m_analysis[start].bidiLevel
-                && m_analysis[i].flags == m_analysis[start].flags
+            if (m_analysis[i].flags == m_analysis[start].flags
                 && (m_analysis[i].script == m_analysis[start].script || m_string[i] == QLatin1Char('.'))
                 && m_analysis[i].flags < QScriptAnalysis::SpaceTabOrObject
                 && i - start < MaxItemLength)
@@ -99,88 +98,12 @@ private:
 };
 }
 
-
-// ----------------------------------------------------------------------------
-//
-// The BiDi algorithm
-//
-// ----------------------------------------------------------------------------
-#if (BIDI_DEBUG >= 1)
-static const char *directions[] = {
-    "DirL", "DirR", "DirEN", "DirES", "DirET", "DirAN", "DirCS", "DirB", "DirS", "DirWS", "DirON",
-    "DirLRE", "DirLRO", "DirAL", "DirRLE", "DirRLO", "DirPDF", "DirNSM", "DirBN", "DirLRI",
-    "DirRLI", "DirFSI", "DirPDI"
-};
-
-#endif
-
-void QTextEngine::bidiReorder(int numItems, const quint8 *levels, int *visualOrder)
-{
-
-    // first find highest and lowest levels
-    quint8 levelLow = 128;
-    quint8 levelHigh = 0;
-    int i = 0;
-    while (i < numItems) {
-        //printf("level = %d\n", r->level);
-        if (levels[i] > levelHigh)
-            levelHigh = levels[i];
-        if (levels[i] < levelLow)
-            levelLow = levels[i];
-        i++;
-    }
-
-    // implements reordering of the line (L2 according to BiDi spec):
-    // L2. From the highest level found in the text to the lowest odd level on each line,
-    // reverse any contiguous sequence of characters that are at that level or higher.
-
-    // reversing is only done up to the lowest odd level
-    if(!(levelLow%2)) levelLow++;
-
-#if (BIDI_DEBUG >= 1)
-//     qDebug() << "reorderLine: lineLow = " << (uint)levelLow << ", lineHigh = " << (uint)levelHigh;
-#endif
-
-    int count = numItems - 1;
-    for (i = 0; i < numItems; i++)
-        visualOrder[i] = i;
-
-    while(levelHigh >= levelLow) {
-        int i = 0;
-        while (i < count) {
-            while(i < count && levels[i] < levelHigh) i++;
-            int start = i;
-            while(i <= count && levels[i] >= levelHigh) i++;
-            int end = i-1;
-
-            if(start != end) {
-                //qDebug() << "reversing from " << start << " to " << end;
-                for(int j = 0; j < (end-start+1)/2; j++) {
-                    int tmp = visualOrder[start+j];
-                    visualOrder[start+j] = visualOrder[end-j];
-                    visualOrder[end-j] = tmp;
-                }
-            }
-            i++;
-        }
-        levelHigh--;
-    }
-
-#if (BIDI_DEBUG >= 1)
-//     qDebug() << "visual order is:";
-//     for (i = 0; i < numItems; i++)
-//         qDebug() << visualOrder[i];
-#endif
-}
-
 // ask the font engine to find out which glyphs (as an index in the specific font) to use for the text in one item.
 static bool stringToGlyphs(HB_ShaperItem *item, QGlyphLayout *glyphs, QFontEngine *fontEngine)
 {
     int nGlyphs = item->num_glyphs;
 
     QTextEngine::ShaperFlags shaperFlags(QTextEngine::GlyphIndicesOnly);
-    if (item->item.bidiLevel % 2)
-        shaperFlags |= QTextEngine::RightToLeft;
 
     bool result = fontEngine->stringToCMap(reinterpret_cast<const QChar *>(item->string + item->item.pos), item->item.length, glyphs, &nGlyphs, shaperFlags);
     item->num_glyphs = nGlyphs;
@@ -298,7 +221,6 @@ void QTextEngine::shapeTextWithHarfbuzz(int item) const
     entire_shaper_item.item.script = (HB_Script)si.analysis.script;
     entire_shaper_item.item.pos = si.position;
     entire_shaper_item.item.length = length(item);
-    entire_shaper_item.item.bidiLevel = si.analysis.bidiLevel;
 
     entire_shaper_item.shaperFlags = 0;
     if (!kerningEnabled)
@@ -487,12 +409,6 @@ void QTextEngine::itemize() const
     QSTACKARRAY(QScriptAnalysis, scriptAnalysis, length);
     QScriptAnalysis *analysis = scriptAnalysis;
 
-    if (option.textDirection() == Qt::RightToLeft) {
-        for (int i = 0; i < length; ++i)
-            analysis[i].bidiLevel = 1;
-        layoutData->hasBidi = true;
-    }
-
     const ushort *uc = reinterpret_cast<const ushort *>(layoutData->string.unicode());
     const ushort *e = uc + length;
     QUnicodeTables::Script lastScript = QUnicodeTables::Common;
@@ -503,8 +419,6 @@ void QTextEngine::itemize() const
             analysis->flags = QScriptAnalysis::Object;
             break;
         case QChar::LineSeparator:
-            if (analysis->bidiLevel % 2)
-                --analysis->bidiLevel;
             analysis->script = QUnicodeTables::Common;
             analysis->flags = QScriptAnalysis::LineOrParagraphSeparator;
             if (option.flags() & QTextOption::ShowLineAndParagraphSeparators)
@@ -513,14 +427,12 @@ void QTextEngine::itemize() const
         case 9: // Tab
             analysis->script = QUnicodeTables::Common;
             analysis->flags = QScriptAnalysis::Tab;
-            analysis->bidiLevel = 0;
             break;
         case 32: // Space
         case QChar::Nbsp:
             if (option.flags() & QTextOption::ShowTabsAndSpaces) {
                 analysis->script = QUnicodeTables::Common;
                 analysis->flags = QScriptAnalysis::Space;
-                analysis->bidiLevel = 0;
                 break;
             }
         // fall through
@@ -577,25 +489,6 @@ void QTextEngine::itemize() const
     addRequiredBoundaries();
     resolveAdditionalFormats();
 }
-
-bool QTextEngine::isRightToLeft() const
-{
-    switch (option.textDirection()) {
-    case Qt::LeftToRight:
-        return false;
-    case Qt::RightToLeft:
-        return true;
-    default:
-        break;
-    }
-    if (!layoutData)
-        itemize();
-    // this places the cursor in the right position depending on the keyboard layout
-    if (layoutData->string.isEmpty())
-        return QApplication::keyboardInputDirection() == Qt::RightToLeft;
-    return layoutData->string.isRightToLeft();
-}
-
 
 int QTextEngine::findItem(int strPos) const
 {
@@ -1015,8 +908,7 @@ void QTextEngine::justify(const QScriptLine &line)
         }
     }
 
-    QFixed leading = leadingSpaceWidth(line);
-    QFixed need = line.width - line.textWidth - leading;
+    QFixed need = line.width - line.textWidth;
     if (need < 0) {
         // line overflows already!
         const_cast<QScriptLine &>(line).justified = true;
@@ -1105,7 +997,6 @@ QTextEngine::LayoutData::LayoutData()
     allocated = 0;
     memory_on_stack = false;
     used = 0;
-    hasBidi = false;
     layoutState = LayoutEmpty;
     haveCharAttributes = false;
     logClustersPtr = 0;
@@ -1139,7 +1030,6 @@ QTextEngine::LayoutData::LayoutData(const QString &str, void **stack_memory, int
         ::memset(memory, 0, space_charAttributes * QT_POINTER_SIZE);
     }
     used = 0;
-    hasBidi = false;
     layoutState = LayoutEmpty;
     haveCharAttributes = false;
 }
@@ -1225,7 +1115,6 @@ void QTextEngine::freeMemory()
         layoutData = 0;
     } else {
         layoutData->used = 0;
-        layoutData->hasBidi = false;
         layoutData->layoutState = LayoutEmpty;
         layoutData->haveCharAttributes = false;
     }
@@ -1566,20 +1455,6 @@ QFixed QTextEngine::calculateTabWidth(int item, QFixed x) const
 
     QList<QTextOption::Tab> tabArray = option.tabs();
     if (!tabArray.isEmpty()) {
-        if (isRightToLeft()) { // rebase the tabArray positions.
-            QList<QTextOption::Tab> newTabs;
-            QList<QTextOption::Tab>::Iterator iter = tabArray.begin();
-            while(iter != tabArray.end()) {
-                QTextOption::Tab tab = *iter;
-                if (tab.type == QTextOption::LeftTab)
-                    tab.type = QTextOption::RightTab;
-                else if (tab.type == QTextOption::RightTab)
-                    tab.type = QTextOption::LeftTab;
-                newTabs << tab;
-                ++iter;
-            }
-            tabArray = newTabs;
-        }
         for (int i = 0; i < tabArray.size(); ++i) {
             QFixed tab = QFixed::fromReal(tabArray[i].position) * dpiScale;
             if (tab > x) {  // this is the tab we need.
@@ -1663,16 +1538,6 @@ void QTextEngine::resolveAdditionalFormats() const
     specialData->resolvedFormatIndices = indices;
 }
 
-QFixed QTextEngine::leadingSpaceWidth(const QScriptLine &line)
-{
-    if (!line.hasTrailingSpaces
-        || (option.flags() & QTextOption::IncludeTrailingSpaces)
-        || !isRightToLeft())
-        return QFixed();
-
-    return width(line.from + line.length, line.trailingSpaces);
-}
-
 QFixed QTextEngine::alignLine(const QScriptLine &line)
 {
     QFixed x = 0;
@@ -1680,8 +1545,6 @@ QFixed QTextEngine::alignLine(const QScriptLine &line)
     // if width is QFIXED_MAX that means we used setNumColumns() and that implicitly makes this line left aligned.
     if (!line.justified && line.width != QFIXED_MAX) {
         int align = option.alignment();
-        if (align & Qt::AlignJustify && isRightToLeft())
-            align = Qt::AlignRight;
         if (align & Qt::AlignRight)
             x = line.width - (line.textAdvance);
         else if (align & Qt::AlignHCenter)
@@ -1838,25 +1701,16 @@ int QTextEngine::lineNumberForTextPosition(int pos)
 void QTextEngine::insertionPointsForLine(int lineNum, QVector<int> &insertionPoints)
 {
     QTextLineItemIterator iterator(this, lineNum);
-    bool rtl = isRightToLeft();
     bool lastLine = lineNum >= lines.size() - 1;
 
     while (!iterator.atEnd()) {
         iterator.next();
         const QScriptItem *si = &layoutData->items[iterator.item];
-        if (si->analysis.bidiLevel % 2) {
-            int i = iterator.itemEnd - 1, min = iterator.itemStart;
-            if (lastLine && (rtl ? iterator.atBeginning() : iterator.atEnd()))
-                i++;
-            for (; i >= min; i--)
-                insertionPoints.push_back(i);
-        } else {
-            int i = iterator.itemStart, max = iterator.itemEnd;
-            if (lastLine && (rtl ? iterator.atBeginning() : iterator.atEnd()))
-                max++;
-            for (; i < max; i++)
-                insertionPoints.push_back(i);
-        }
+        int i = iterator.itemStart, max = iterator.itemEnd;
+        if (lastLine && iterator.atEnd())
+            max++;
+        for (; i < max; i++)
+            insertionPoints.push_back(i);
     }
 }
 
@@ -1886,37 +1740,8 @@ int QTextEngine::positionAfterVisualMovement(int pos, QTextCursor::MoveOperation
         itemize();
 
     bool moveRight = (op == QTextCursor::Right);
-    bool alignRight = isRightToLeft();
-    if (!layoutData->hasBidi)
-        return moveRight ^ alignRight ? nextLogicalPosition(pos) : previousLogicalPosition(pos);
 
-    int lineNum = lineNumberForTextPosition(pos);
-    Q_ASSERT(lineNum >= 0);
-
-    QVector<int> insertionPoints;
-    insertionPointsForLine(lineNum, insertionPoints);
-    int i, max = insertionPoints.size();
-    for (i = 0; i < max; i++)
-        if (pos == insertionPoints[i]) {
-            if (moveRight) {
-                if (i + 1 < max)
-                    return insertionPoints[i + 1];
-            } else {
-                if (i > 0)
-                    return insertionPoints[i - 1];
-            }
-
-            if (moveRight ^ alignRight) {
-                if (lineNum + 1 < lines.size())
-                    return alignRight ? endOfLine(lineNum + 1) : beginningOfLine(lineNum + 1);
-            }
-            else {
-                if (lineNum > 0)
-                    return alignRight ? beginningOfLine(lineNum - 1) : endOfLine(lineNum - 1);
-            }
-        }
-
-    return pos;
+    return (moveRight ? nextLogicalPosition(pos) : previousLogicalPosition(pos));
 }
 
 QStackTextEngine::QStackTextEngine(const QString &string, const QFont &f)
@@ -1950,8 +1775,6 @@ void QTextItemInt::initWithScriptItem(const QScriptItem &si)
     // explicitly initialize flags so that initFontAttributes can be called
     // multiple times on the same TextItem
     flags = 0;
-    if (si.analysis.bidiLevel %2)
-        flags |= QTextItem::RightToLeft;
     ascent = si.ascent;
     descent = si.descent;
 
@@ -1984,8 +1807,6 @@ QTextLineItemIterator::QTextLineItemIterator(QTextEngine *_eng, int _lineNum, co
       nItems((firstItem >= 0 && lastItem >= firstItem)? (lastItem-firstItem+1) : 0),
       logicalItem(-1),
       item(-1),
-      visualOrder(nItems),
-      levels(nItems),
       selection(_selection)
 {
     pos_x = x = QFixed::fromReal(pos.x());
@@ -1993,10 +1814,6 @@ QTextLineItemIterator::QTextLineItemIterator(QTextEngine *_eng, int _lineNum, co
     x += line.x;
 
     x += eng->alignLine(line);
-
-    for (int i = 0; i < nItems; ++i)
-        levels[i] = eng->layoutData->items[i+firstItem].analysis.bidiLevel;
-    QTextEngine::bidiReorder(nItems, levels.data(), visualOrder.data());
 
     eng->shapeLine(line);
 }
@@ -2006,7 +1823,7 @@ QScriptItem &QTextLineItemIterator::next()
     x += itemWidth;
 
     ++logicalItem;
-    item = visualOrder[logicalItem] + firstItem;
+    item = (logicalItem + firstItem);
     itemLength = eng->length(item);
     si = &eng->layoutData->items[item];
     if (!si->num_glyphs)
@@ -2068,17 +1885,10 @@ bool QTextLineItemIterator::getSelectionBounds(QFixed *selectionX, QFixed *selec
         int end_glyph = (to == eng->length(item)) ? si->num_glyphs : logClusters[to];
         QFixed soff;
         QFixed swidth;
-        if (si->analysis.bidiLevel %2) {
-            for (int g = glyphsEnd - 1; g >= end_glyph; --g)
-                soff += glyphs.effectiveAdvance(g);
-            for (int g = end_glyph - 1; g >= start_glyph; --g)
-                swidth += glyphs.effectiveAdvance(g);
-        } else {
-            for (int g = glyphsStart; g < start_glyph; ++g)
-                soff += glyphs.effectiveAdvance(g);
-            for (int g = start_glyph; g < end_glyph; ++g)
-                swidth += glyphs.effectiveAdvance(g);
-        }
+        for (int g = glyphsStart; g < start_glyph; ++g)
+            soff += glyphs.effectiveAdvance(g);
+        for (int g = start_glyph; g < end_glyph; ++g)
+            swidth += glyphs.effectiveAdvance(g);
 
         // If the starting character is in the middle of a ligature,
         // selection should only contain the right part of that ligature
