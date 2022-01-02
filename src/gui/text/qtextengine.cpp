@@ -185,12 +185,10 @@ void QTextEngine::shapeText(int item) const
     }
     if (wordSpacing != 0) {
         for (int i = 0; i < si.num_glyphs; ++i) {
-            if (glyphs.attributes[i].justification == HB_Space
-                || glyphs.attributes[i].justification == HB_Arabic_Space) {
+            if (glyphs.attributes[i].justification == HB_Space) {
                 // word spacing only gets added once to a consecutive run of spaces (see CSS spec)
                 if (i + 1 == si.num_glyphs
-                    ||(glyphs.attributes[i+1].justification != HB_Space
-                       && glyphs.attributes[i+1].justification != HB_Arabic_Space))
+                    || glyphs.attributes[i+1].justification != HB_Space)
                     glyphs.advances_x[i] += wordSpacing;
             }
         }
@@ -753,7 +751,6 @@ QFontEngine *QTextEngine::fontEngine(const QScriptItem &si, QFixed *ascent, QFix
 
 struct QJustificationPoint {
     int type;
-    QFixed kashidaWidth;
     QGlyphLayout glyph;
     QFontEngine *fontEngine;
 };
@@ -765,19 +762,6 @@ static void set(QJustificationPoint *point, int type, const QGlyphLayout &glyph,
     point->type = type;
     point->glyph = glyph;
     point->fontEngine = fe;
-
-    if (type >= HB_Arabic_Normal) {
-        QChar ch(0x640); // Kashida character
-        QGlyphLayoutArray<8> glyphs;
-        int nglyphs = 7;
-        fe->stringToCMap(&ch, 1, &glyphs, &nglyphs, 0);
-        if (glyphs.glyphs[0] && glyphs.advances_x[0] != 0) {
-            point->kashidaWidth = glyphs.advances_x[0];
-        } else {
-            point->type = HB_NoJustification;
-            point->kashidaWidth = 0;
-        }
-    }
 }
 
 
@@ -827,8 +811,7 @@ void QTextEngine::justify(const QScriptLine &line)
 
     QVarLengthArray<QJustificationPoint> justificationPoints;
     int nPoints = 0;
-//     qDebug("justifying from %d len %d, firstItem=%d, nItems=%d (%s)", line.from, line_length, firstItem, nItems, layoutData->string.mid(line.from, line_length).toUtf8().constData());
-    QFixed minKashida = 0x100000;
+    // qDebug("justifying from %d len %d, firstItem=%d, nItems=%d (%s)", line.from, line_length, firstItem, nItems, layoutData->string.mid(line.from, line_length).toUtf8().constData());
 
     // we need to do all shaping before we go into the next loop, as we there
     // store pointers to the glyph data that could get reallocated by the shaping
@@ -842,9 +825,6 @@ void QTextEngine::justify(const QScriptLine &line)
     for (int i = 0; i < nItems; ++i) {
         QScriptItem &si = layoutData->items[firstItem + i];
 
-        int kashida_type = HB_Arabic_Normal;
-        int kashida_pos = -1;
-
         int start = qMax(line.from - si.position, 0);
         int end = qMin(line.from + line_length - (int)si.position, length(firstItem+i));
 
@@ -857,53 +837,21 @@ void QTextEngine::justify(const QScriptLine &line)
 
         for (int i = gs; i < ge; ++i) {
             g.justifications[i].type = QGlyphJustification::JustifyNone;
-            g.justifications[i].nKashidas = 0;
             g.justifications[i].space_18d6 = 0;
 
             justificationPoints.resize(nPoints+3);
             int justification = g.attributes[i].justification;
 
             switch(justification) {
-            case HB_NoJustification:
-                break;
-            case HB_Space          :
-                // fall through
-            case HB_Arabic_Space   :
-                if (kashida_pos >= 0) {
-//                     qDebug("kashida position at %d in word", kashida_pos);
-                    set(&justificationPoints[nPoints], kashida_type, g.mid(kashida_pos), fontEngine(si));
-                    if (justificationPoints[nPoints].kashidaWidth > 0) {
-                        minKashida = qMin(minKashida, justificationPoints[nPoints].kashidaWidth);
-                        maxJustify = qMax(maxJustify, justificationPoints[nPoints].type);
-                        ++nPoints;
-                    }
+                case HB_NoJustification: {
+                    break;
                 }
-                kashida_pos = -1;
-                kashida_type = HB_Arabic_Normal;
-                // fall through
-            case HB_Character      :
-                set(&justificationPoints[nPoints++], justification, g.mid(i), fontEngine(si));
-                maxJustify = qMax(maxJustify, justification);
-                break;
-            case HB_Arabic_Normal  :
-            case HB_Arabic_Waw     :
-            case HB_Arabic_BaRa    :
-            case HB_Arabic_Alef    :
-            case HB_Arabic_HaaDal  :
-            case HB_Arabic_Seen    :
-            case HB_Arabic_Kashida :
-                if (justification >= kashida_type) {
-                    kashida_pos = i;
-                    kashida_type = justification;
+                case HB_Space:
+                case HB_Character: {
+                    set(&justificationPoints[nPoints++], justification, g.mid(i), fontEngine(si));
+                    maxJustify = qMax(maxJustify, justification);
+                    break;
                 }
-            }
-        }
-        if (kashida_pos >= 0) {
-            set(&justificationPoints[nPoints], kashida_type, g.mid(kashida_pos), fontEngine(si));
-            if (justificationPoints[nPoints].kashidaWidth > 0) {
-                minKashida = qMin(minKashida, justificationPoints[nPoints].kashidaWidth);
-                maxJustify = qMax(maxJustify, justificationPoints[nPoints].type);
-                ++nPoints;
             }
         }
     }
@@ -915,25 +863,8 @@ void QTextEngine::justify(const QScriptLine &line)
         return;
     }
 
-//     qDebug("doing justification: textWidth=%x, requested=%x, maxJustify=%d", line.textWidth.value(), line.width.value(), maxJustify);
-//     qDebug("     minKashida=%f, need=%f", minKashida.toReal(), need.toReal());
+    // qDebug("doing justification: textWidth=%x, requested=%x, maxJustify=%d", line.textWidth.value(), line.width.value(), maxJustify);
 
-    // distribute in priority order
-    if (maxJustify >= HB_Arabic_Normal) {
-        while (need >= minKashida) {
-            for (int type = maxJustify; need >= minKashida && type >= HB_Arabic_Normal; --type) {
-                for (int i = 0; need >= minKashida && i < nPoints; ++i) {
-                    if (justificationPoints[i].type == type && justificationPoints[i].kashidaWidth <= need) {
-                        justificationPoints[i].glyph.justifications->nKashidas++;
-                        // ############
-                        justificationPoints[i].glyph.justifications->space_18d6 += justificationPoints[i].kashidaWidth.value();
-                        need -= justificationPoints[i].kashidaWidth;
-//                         qDebug("adding kashida type %d with width %x, neednow %x", type, justificationPoints[i].kashidaWidth, need.value());
-                    }
-                }
-            }
-        }
-    }
     Q_ASSERT(need >= 0);
     if (!need)
         goto end;

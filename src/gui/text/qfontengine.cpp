@@ -106,16 +106,14 @@ void QFontEngine::getGlyphPositions(const QGlyphLayout &glyphs, const QTransform
     int current = 0;
     if (flags & QTextItem::RightToLeft) {
         int i = glyphs.numGlyphs;
-        int totalKashidas = 0;
         while(i--) {
             if (glyphs.attributes[i].dontPrint)
                 continue;
             xpos += glyphs.advances_x[i] + QFixed::fromFixed(glyphs.justifications[i].space_18d6);
             ypos += glyphs.advances_y[i];
-            totalKashidas += glyphs.justifications[i].nKashidas;
         }
-        positions.resize(glyphs.numGlyphs+totalKashidas);
-        glyphs_out.resize(glyphs.numGlyphs+totalKashidas);
+        positions.resize(glyphs.numGlyphs);
+        glyphs_out.resize(glyphs.numGlyphs);
 
         i = 0;
         while(i < glyphs.numGlyphs) {
@@ -138,31 +136,7 @@ void QFontEngine::getGlyphPositions(const QGlyphLayout &glyphs, const QTransform
             positions[current].y = gpos_y;
             glyphs_out[current] = glyphs.glyphs[i];
             ++current;
-            if (glyphs.justifications[i].nKashidas) {
-                QChar ch(0x640); // Kashida character
-                QGlyphLayoutArray<8> g;
-                int nglyphs = 7;
-                stringToCMap(&ch, 1, &g, &nglyphs, 0);
-                for (uint k = 0; k < glyphs.justifications[i].nKashidas; ++k) {
-                    xpos -= g.advances_x[0];
-                    ypos -= g.advances_y[0];
-
-                    QFixed gpos_x = xpos + glyphs.offsets[i].x;
-                    QFixed gpos_y = ypos + glyphs.offsets[i].y;
-                    if (transform) {
-                        QPointF gpos(gpos_x.toReal(), gpos_y.toReal());
-                        gpos = gpos * matrix;
-                        gpos_x = QFixed::fromReal(gpos.x());
-                        gpos_y = QFixed::fromReal(gpos.y());
-                    }
-                    positions[current].x = gpos_x;
-                    positions[current].y = gpos_y;
-                    glyphs_out[current] = g.glyphs[0];
-                    ++current;
-                }
-            } else {
-                xpos -= QFixed::fromFixed(glyphs.justifications[i].space_18d6);
-            }
+            xpos -= QFixed::fromFixed(glyphs.justifications[i].space_18d6);
             ++i;
         }
     } else {

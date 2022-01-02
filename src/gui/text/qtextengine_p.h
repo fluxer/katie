@@ -100,17 +100,15 @@ Q_DECLARE_TYPEINFO(QScriptAnalysis, Q_PRIMITIVE_TYPE);
 struct QGlyphJustification
 {
     inline QGlyphJustification()
-        : type(JustifyNone), nKashidas(0), space_18d6(0)
+        : type(JustifyNone), space_18d6(0)
     {}
 
     enum JustificationType {
         JustifyNone,
-        JustifySpace,
-        JustifyKashida
+        JustifySpace
     };
 
     JustificationType type;
-    uint nKashidas; // more do not make sense...
     uint space_18d6;
 };
 Q_DECLARE_TYPEINFO(QGlyphJustification, Q_PRIMITIVE_TYPE);
