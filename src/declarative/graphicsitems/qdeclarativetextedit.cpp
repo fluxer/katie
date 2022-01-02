@@ -1529,7 +1529,7 @@ void QDeclarativeTextEdit::q_textChanged()
 {
     Q_D(QDeclarativeTextEdit);
     d->text = text();
-    d->rightToLeftText = d->document->begin().layout()->engine()->isRightToLeft();
+    d->rightToLeftText = false; // TODO: d->document->begin().layout()->engine()->isRightToLeft();
     d->determineHorizontalAlignment();
     d->updateDefaultTextOption();
     updateSize();
