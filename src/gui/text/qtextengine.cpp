@@ -1972,28 +1972,6 @@ void QTextItemInt::initWithScriptItem(const QScriptItem &si)
         flags |= QTextItem::StrikeOut;
 }
 
-QTextItemInt QTextItemInt::midItem(QFontEngine *fontEngine, int firstGlyphIndex, int numGlyphs) const
-{
-    QTextItemInt ti = *this;
-    const int end = firstGlyphIndex + numGlyphs;
-    ti.glyphs = glyphs.mid(firstGlyphIndex, numGlyphs);
-    ti.fontEngine = fontEngine;
-
-    if (logClusters && chars) {
-        const int logClusterOffset = logClusters[0];
-        while (logClusters[ti.chars - chars] - logClusterOffset < firstGlyphIndex)
-            ++ti.chars;
-
-        ti.logClusters += (ti.chars - chars);
-
-        ti.num_chars = 0;
-        int char_start = ti.chars - chars;
-        while (char_start + ti.num_chars < num_chars && ti.logClusters[ti.num_chars] - logClusterOffset < end)
-            ++ti.num_chars;
-    }
-    return ti;
-}
-
 QTextLineItemIterator::QTextLineItemIterator(QTextEngine *_eng, int _lineNum, const QPointF &pos,
                                              const QTextLayout::FormatRange *_selection)
     : eng(_eng),

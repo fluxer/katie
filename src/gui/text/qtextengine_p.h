@@ -277,7 +277,6 @@ public:
 
     /// copy the structure items, adjusting the glyphs arrays to the right subarrays.
     /// the width of the returned QTextItemInt is not adjusted, for speed reasons
-    QTextItemInt midItem(QFontEngine *fontEngine, int firstGlyphIndex, int numGlyphs) const;
     void initWithScriptItem(const QScriptItem &si);
 
     QFixed descent;
