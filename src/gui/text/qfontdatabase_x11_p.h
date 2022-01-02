@@ -491,15 +491,11 @@ static const char* PatternPropertiesTbl[] = {
     FC_WIDTH,
 };
 static const qint16 PatternPropertiesTblSize = 11;
-#endif // QT_NO_FONTCONFIG
-
-static QString styleStringHelper(int weight, QFont::Style style);
 
 // --------------------------------------------------------------------------------------
 // font loader
 // --------------------------------------------------------------------------------------
 
-#ifndef QT_NO_FONTCONFIG
 static void qt_addPatternProps(FcPattern *pattern, int screen, QUnicodeTables::Script script, const QFontDef &request)
 {
     double size_value = qMax(qreal(1.), request.pixelSize);
