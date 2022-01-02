@@ -628,16 +628,6 @@ static FcPattern *getFcPattern(const QFontPrivate *fp, QUnicodeTables::Script sc
     return pattern;
 }
 
-
-static void FcFontSetRemove(FcFontSet *fs, int at)
-{
-    Q_ASSERT(at < fs->nfont);
-    FcPatternDestroy(fs->fonts[at]);
-    int len = (--fs->nfont - at) * sizeof(FcPattern *);;
-    if (len > 0)
-        memmove(fs->fonts + at, fs->fonts + at + 1, len);
-}
-
 static QFontEngine *tryPatternLoad(FcPattern *match, int screen,
                                    const QFontDef &request,
                                    QUnicodeTables::Script script)
