@@ -509,7 +509,6 @@ public:
     int nextLogicalPosition(int oldPos) const;
     int lineNumberForTextPosition(int pos);
     int positionAfterVisualMovement(int oldPos, QTextCursor::MoveOperation op);
-    void insertionPointsForLine(int lineNum, QVector<int> &insertionPoints);
 
 private:
     void setBoundary(int strPos) const;
@@ -518,8 +517,6 @@ private:
     void shapeTextWithHarfbuzz(int item) const;
 
     void resolveAdditionalFormats() const;
-    int endOfLine(int lineNum);
-    int beginningOfLine(int lineNum);
     int getClusterLength(unsigned short *logClusters, const HB_CharAttributes *attributes, int from, int to, int glyph_pos, int *start);
 };
 

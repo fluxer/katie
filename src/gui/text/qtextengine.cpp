@@ -1629,42 +1629,6 @@ int QTextEngine::lineNumberForTextPosition(int pos)
     return -1;
 }
 
-void QTextEngine::insertionPointsForLine(int lineNum, QVector<int> &insertionPoints)
-{
-    QTextLineItemIterator iterator(this, lineNum);
-    bool lastLine = lineNum >= lines.size() - 1;
-
-    while (!iterator.atEnd()) {
-        iterator.next();
-        const QScriptItem *si = &layoutData->items[iterator.item];
-        int i = iterator.itemStart, max = iterator.itemEnd;
-        if (lastLine && iterator.atEnd())
-            max++;
-        for (; i < max; i++)
-            insertionPoints.push_back(i);
-    }
-}
-
-int QTextEngine::endOfLine(int lineNum)
-{
-    QVector<int> insertionPoints;
-    insertionPointsForLine(lineNum, insertionPoints);
-
-    if (insertionPoints.size() > 0)
-        return insertionPoints.last();
-    return 0;
-}
-
-int QTextEngine::beginningOfLine(int lineNum)
-{
-    QVector<int> insertionPoints;
-    insertionPointsForLine(lineNum, insertionPoints);
-
-    if (insertionPoints.size() > 0)
-        return insertionPoints.first();
-    return 0;
-}
-
 int QTextEngine::positionAfterVisualMovement(int pos, QTextCursor::MoveOperation op)
 {
     if (!layoutData)
