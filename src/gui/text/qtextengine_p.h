@@ -191,16 +191,6 @@ struct QGlyphLayout
         return g;
     }
 
-    inline void setInstance(int position, const QGlyphLayoutInstance &g) {
-        offsets[position].x = g.offset.x;
-        offsets[position].y = g.offset.y;
-        glyphs[position] = g.glyph;
-        advances_x[position] = g.advance.x;
-        advances_y[position] = g.advance.y;
-        justifications[position] = g.justification;
-        attributes[position] = g.attributes;
-    }
-
     inline void clear(int first = 0, int last = -1) {
         if (last == -1)
             last = numGlyphs;
