@@ -318,7 +318,7 @@ QFontDatabase::QFontDatabase()
 
         if (FcPatternGetString(fonts->fonts[i], FC_FOUNDRY, 0, &foundry_value) != FcResultMatch)
             foundry_value = nullptr;
-        if (FcPatternGetInteger (fonts->fonts[i], FC_WEIGHT, 0, &weight_value) != FcResultMatch)
+        if (FcPatternGetInteger(fonts->fonts[i], FC_WEIGHT, 0, &weight_value) != FcResultMatch)
             weight_value = FC_WEIGHT_MEDIUM;
         if (FcPatternGetInteger (fonts->fonts[i], FC_SPACING, 0, &spacing_value) != FcResultMatch)
             spacing_value = FC_PROPORTIONAL;
@@ -327,7 +327,7 @@ QFontDatabase::QFontDatabase()
         if (FcPatternGetString(fonts->fonts[i], FC_STYLE, 0, &style_value) != FcResultMatch)
             style_value = nullptr;
         FcPatternGetDouble(fonts->fonts[i], FC_PIXEL_SIZE, 0, &pixel_size);
-        if (FcPatternGetInteger (fonts->fonts[i], FC_SLANT, 0, &slant_value) != FcResultMatch)
+        if (FcPatternGetInteger(fonts->fonts[i], FC_SLANT, 0, &slant_value) != FcResultMatch)
             slant_value = FC_SLANT_ROMAN;
 
         QtFontFamily fontfamily;
@@ -412,7 +412,7 @@ bool QFontDatabase::isFixedPitch(const QString &family, const QString &style) co
     QString parsedfamily, parsedfoundry;
     parseFontName(family, parsedfoundry, parsedfamily);
 
-    bool result;
+    bool result = false;
     foreach (const QtFontFamily &fontfamily, d->families) {
         if (fontfamily.family.compare(parsedfamily, Qt::CaseInsensitive) != 0
             || fontfamily.foundry.compare(parsedfoundry, Qt::CaseInsensitive) != 0
@@ -438,7 +438,7 @@ bool QFontDatabase::isSmoothlyScalable(const QString &family, const QString &sty
     QString parsedfamily, parsedfoundry;
     parseFontName(family, parsedfoundry, parsedfamily);
 
-    bool result;
+    bool result = false;
     foreach (const QtFontFamily &fontfamily, d->families) {
         if (fontfamily.family.compare(parsedfamily, Qt::CaseInsensitive) != 0
             || fontfamily.foundry.compare(parsedfoundry, Qt::CaseInsensitive) != 0
@@ -595,7 +595,7 @@ bool QFontDatabase::italic(const QString &family, const QString &style) const
     QString parsedfamily, parsedfoundry;
     parseFontName(family, parsedfoundry, parsedfamily);
 
-    bool result;
+    bool result = false;
     foreach (const QtFontFamily &fontfamily, d->families) {
         if (fontfamily.family.compare(parsedfamily, Qt::CaseInsensitive) != 0
             || fontfamily.foundry.compare(parsedfoundry, Qt::CaseInsensitive) != 0
@@ -620,7 +620,7 @@ bool QFontDatabase::bold(const QString &family, const QString &style) const
     QString parsedfamily, parsedfoundry;
     parseFontName(family, parsedfoundry, parsedfamily);
 
-    bool result;
+    bool result = false;
     foreach (const QtFontFamily &fontfamily, d->families) {
         if (fontfamily.family.compare(parsedfamily, Qt::CaseInsensitive) != 0
             || fontfamily.foundry.compare(parsedfoundry, Qt::CaseInsensitive) != 0
