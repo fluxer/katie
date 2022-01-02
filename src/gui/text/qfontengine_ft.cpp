@@ -23,7 +23,6 @@
 #include "qfile.h"
 #include "qabstractfileengine.h"
 #include "qmath.h"
-#include "qharfbuzz_p.h"
 #include "qfontengine_ft_p.h"
 #include "qguicommon_p.h"
 #include "qcorecommon_p.h"
@@ -325,11 +324,11 @@ QFontEngineFT::~QFontEngineFT()
     delete freetype;
 }
 
-int QFontEngineFT::loadFlags(int flags) const
+int QFontEngineFT::loadFlags() const
 {
     int load_flags = default_load_flags;
 
-    if (default_hint_style == HintNone || (flags & HB_ShaperFlag_UseDesignMetrics)) {
+    if (default_hint_style == HintNone) {
         load_flags |= FT_LOAD_NO_HINTING;
     } else if (default_hint_style == HintLight) {
         load_flags |= FT_LOAD_TARGET_LIGHT;
@@ -382,7 +381,7 @@ QFontMetric* QFontEngineFT::getMetrics(glyph_t glyph) const
 
     FT_Face face = getFace();
 
-    int load_flags = loadFlags(0);
+    int load_flags = loadFlags();
     loadGlyph(glyph, load_flags);
 
     metric = new QFontMetric();
@@ -564,7 +563,7 @@ void QFontEngineFT::getUnscaledGlyph(glyph_t glyph, QPainterPath *path, glyph_me
 
     FT_Face face = getFace();
 
-    int load_flags = loadFlags(0);
+    int load_flags = loadFlags();
     loadGlyph(glyph, load_flags);
 
     int left  = face->glyph->metrics.horiBearingX;
@@ -619,7 +618,7 @@ void QFontEngineFT::addGlyphsToPath(glyph_t *glyphs, QFixedPoint *positions, int
 {
     FT_Face face = getFace();
 
-    int load_flags = loadFlags(0);
+    int load_flags = loadFlags();
     for (int gl = 0; gl < numGlyphs; gl++) {
         loadGlyph(glyphs[gl], load_flags);
 
@@ -667,7 +666,7 @@ void QFontEngineFT::recalcAdvances(QGlyphLayout *glyphs, QTextEngine::ShaperFlag
 {
     bool design = (default_hint_style == HintNone ||
                    default_hint_style == HintLight ||
-                   (flags & HB_ShaperFlag_UseDesignMetrics));
+                   (flags & QTextEngine::DesignMetrics));
     for (int i = 0; i < glyphs->numGlyphs; i++) {
         QFontMetric* metric = getMetrics(glyphs->glyphs[i]);
         Q_ASSERT(metric);

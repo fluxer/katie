@@ -159,7 +159,7 @@ protected:
 
 private:
     void init();
-    int loadFlags(int flags) const;
+    int loadFlags() const;
     bool loadGlyph(glyph_t glyph, int load_flags) const;
 
     QFontMetric* getMetrics(glyph_t glyph) const;

@@ -28,7 +28,6 @@
 #include "qvarlengtharray.h"
 #include "qmath.h"
 #include "qendian.h"
-#include "qharfbuzz_p.h"
 #include "qdrawhelper_p.h"
 #include "qcorecommon_p.h"
 #include "qguicommon_p.h"
