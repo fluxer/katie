@@ -116,15 +116,6 @@ struct QGlyphJustification
 };
 Q_DECLARE_TYPEINFO(QGlyphJustification, Q_PRIMITIVE_TYPE);
 
-struct QGlyphLayoutInstance
-{
-    QFixedPoint offset;
-    QFixedPoint advance;
-    HB_Glyph glyph;
-    QGlyphJustification justification;
-    HB_GlyphAttributes attributes;
-};
-
 struct QGlyphLayout
 {
     // init to 0 not needed, done when shaping
@@ -178,18 +169,6 @@ struct QGlyphLayout
 
     inline QFixed effectiveAdvance(int item) const
     { return (advances_x[item] + QFixed::fromFixed(justifications[item].space_18d6)) * !attributes[item].dontPrint; }
-
-    inline QGlyphLayoutInstance instance(int position) const {
-        QGlyphLayoutInstance g;
-        g.offset.x = offsets[position].x;
-        g.offset.y = offsets[position].y;
-        g.glyph = glyphs[position];
-        g.advance.x = advances_x[position];
-        g.advance.y = advances_y[position];
-        g.justification = justifications[position];
-        g.attributes = attributes[position];
-        return g;
-    }
 
     inline void clear(int first = 0, int last = -1) {
         if (last == -1)
