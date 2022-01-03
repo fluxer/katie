@@ -842,13 +842,6 @@ void QPaintEngineEx::updateState(const QPaintEngineState &)
     // do nothing...
 }
 
-bool QPaintEngineEx::supportsTransformations(const qreal pixelSize, const QTransform &m) const
-{
-    Q_UNUSED(pixelSize);
-
-    return !m.isAffine();
-}
-
 QT_END_NAMESPACE
 
 
