@@ -29,7 +29,6 @@
 #include "qmath.h"
 #include "qpixmap_raster_p.h"
 #include "qimage_p.h"
-#include "qstatictext_p.h"
 #include "qpaintengine_raster_p.h"
 #include "qoutlinemapper_p.h"
 #include "qguicommon_p.h"
@@ -1871,17 +1870,6 @@ QRasterPaintEnginePrivate::getBrushFunc(const QRectF &rect,
                                         const QSpanData *data) const
 {
     return isUnclipped(rect) ? data->unclipped_blend : data->blend;
-}
-
-/*!
-   \reimp
-*/
-void QRasterPaintEngine::drawStaticTextItem(QStaticTextItem *textItem)
-{
-    ensurePen();
-    ensureRasterState();
-
-    QPaintEngineEx::drawStaticTextItem(textItem);
 }
 
 /*!

@@ -47,7 +47,6 @@ QT_BEGIN_NAMESPACE
 
 class QPainterState;
 class QPaintEngineExPrivate;
-class QStaticTextItem;
 struct StrokeHandler;
 
 class QRectVectorPath : public QVectorPath {
@@ -160,8 +159,6 @@ public:
     virtual void drawTiledPixmap(const QRectF &r, const QPixmap &pixmap, const QPointF &s);
 
     virtual void updateState(const QPaintEngineState &state);
-
-    virtual void drawStaticTextItem(QStaticTextItem *);
 
     virtual void setState(QPainterState *s);
     inline QPainterState *state() { return static_cast<QPainterState *>(QPaintEngine::state); }

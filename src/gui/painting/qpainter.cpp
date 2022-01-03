@@ -36,12 +36,10 @@
 #include "qstyle.h"
 #include "qthread.h"
 #include "qvarlengtharray.h"
-#include "qstatictext.h"
 #include "qpaintengine_p.h"
 #include "qpainterpath_p.h"
 #include "qwidget_p.h"
 #include "qpaintengine_raster_p.h"
-#include "qstatictext_p.h"
 #include "qstylehelper_p.h"
 
 QT_BEGIN_NAMESPACE
@@ -4732,28 +4730,6 @@ void QPainter::drawImage(const QRectF &targetRect, const QImage &image, const QR
 }
 
 /*!
-
-    \fn void QPainter::drawStaticText(const QPoint &topLeftPosition, const QStaticText &staticText)
-    \since 4.7
-    \overload
-
-    Draws the \a staticText at the \a topLeftPosition.
-
-    \note The y-position is used as the top of the font.
-
-*/
-
-/*!
-    \fn void QPainter::drawStaticText(int left, int top, const QStaticText &staticText)
-    \since 4.7
-    \overload
-
-    Draws the \a staticText at coordinates \a left and \a top.
-
-    \note The y-position is used as the top of the font.
-*/
-
-/*!
     \fn void QPainter::drawText(const QPointF &position, const QString &text)
 
     Draws the given \a text with the currently defined text direction,
@@ -4781,143 +4757,40 @@ void QPainter::drawText(const QPointF &p, const QString &str)
     if (!d->engine || str.isEmpty() || pen().style() == Qt::NoPen)
         return;
 
-    QStaticText statictext(str);
-    QTextOption textoption = statictext.textOption();
-    textoption.setTextDirection(d->state->layoutDirection);
-    statictext.setTextOption(textoption);
-    statictext.prepare(d->state->matrix, d->state->font);
+    QStackTextEngine engine(str, d->state->font);
+    engine.option.setTextDirection(d->state->layoutDirection);
+    engine.itemize();
+    QScriptLine line;
+    line.length = str.length();
+    engine.shapeLine(line);
 
-    qreal fontheight = d->state->font.pointSizeF();
-    if (fontheight <= 0.0) {
-        fontheight = d->state->font.pixelSize();
-    }
-    // do not ask what the magic 0.8 division is for, it is just visually right for any point size
-    drawStaticText(QPointF(p.x(), p.y() - (fontheight / 0.8)), statictext);
-}
+    int nItems = engine.layoutData->items.size();
 
-/*!
-    \since 4.7
+    QFixed x = QFixed::fromReal(p.x());
 
-    Draws the given \a staticText at the given \a topLeftPosition.
-
-    The text will be drawn using the font and the transformation set on the painter. If the
-    font and/or transformation set on the painter are different from the ones used to initialize
-    the layout of the QStaticText, then the layout will have to be recalculated. Use
-    QStaticText::prepare() to initialize \a staticText with the font and transformation with which
-    it will later be drawn.
-
-    If \a topLeftPosition is not the same as when \a staticText was initialized, or when it was
-    last drawn, then there will be a slight overhead when translating the text to its new position.
-
-    \note If the painter's transformation is not affine, then \a staticText will be drawn using
-    regular calls to drawText(), losing any potential for performance improvement.
-
-    \note The y-position is used as the top of the font.
-
-    \sa QStaticText
-*/
-void QPainter::drawStaticText(const QPointF &topLeftPosition, const QStaticText &staticText)
-{
-    Q_D(QPainter);
-    if (!d->engine || staticText.text().isEmpty() || pen().style() == Qt::NoPen)
-        return;
-
-    QStaticTextPrivate *staticText_d =
-            const_cast<QStaticTextPrivate *>(QStaticTextPrivate::get(&staticText));
-
-    if (font() != staticText_d->font) {
-        staticText_d->font = font();
-        staticText_d->needsRelayout = true;
-    }
-
-    // If we don't have an extended paint engine, or if the painter is projected,
-    // we go through standard code path
-    if (d->extended == nullptr || !d->state->matrix.isAffine()) {
-        staticText_d->paintText(topLeftPosition, this);
-        return;
-    }
-
-    bool supportsTransformations = d->extended->supportsTransformations(staticText_d->font.pixelSize(),
-                                                                        d->state->matrix);
-    if (supportsTransformations && !staticText_d->untransformedCoordinates) {
-        staticText_d->untransformedCoordinates = true;
-        staticText_d->needsRelayout = true;
-    } else if (!supportsTransformations && staticText_d->untransformedCoordinates) {
-        staticText_d->untransformedCoordinates = false;
-        staticText_d->needsRelayout = true;
-    }
-
-    // Don't recalculate entire layout because of translation, rather add the dx and dy
-    // into the position to move each text item the correct distance.
-    QPointF transformedPosition = topLeftPosition;
-    if (!staticText_d->untransformedCoordinates)
-        transformedPosition = transformedPosition * d->state->matrix;
-    QTransform oldMatrix;
-
-    // The translation has been applied to transformedPosition. Remove translation
-    // component from matrix.
-    if (d->state->matrix.isTranslating() && !staticText_d->untransformedCoordinates) {
-        qreal m11 = d->state->matrix.m11();
-        qreal m12 = d->state->matrix.m12();
-        qreal m13 = d->state->matrix.m13();
-        qreal m21 = d->state->matrix.m21();
-        qreal m22 = d->state->matrix.m22();
-        qreal m23 = d->state->matrix.m23();
-        qreal m33 = d->state->matrix.m33();
-
-        oldMatrix = d->state->matrix;
-        d->state->matrix.setMatrix(m11, m12, m13,
-                                   m21, m22, m23,
-                                   0.0, 0.0, m33);
-    }
-
-    // If the transform is not identical to the text transform,
-    // we have to relayout the text (for other transformations than plain translation)
-    bool staticTextNeedsReinit = staticText_d->needsRelayout;
-    if (!staticText_d->untransformedCoordinates && staticText_d->matrix != d->state->matrix) {
-        staticText_d->matrix = d->state->matrix;
-        staticTextNeedsReinit = true;
-    }
-
-    // Recreate the layout of the static text because the matrix or font has changed
-    if (staticTextNeedsReinit)
-        staticText_d->init();
-
-    if (transformedPosition != staticText_d->position) { // Translate to actual position
-        QFixed fx = QFixed::fromReal(transformedPosition.x());
-        QFixed fy = QFixed::fromReal(transformedPosition.y());
-        QFixed oldX = QFixed::fromReal(staticText_d->position.x());
-        QFixed oldY = QFixed::fromReal(staticText_d->position.y());
-        for (int item=0; item<staticText_d->itemCount;++item) {
-            QStaticTextItem *textItem = staticText_d->items + item;
-            for (int i=0; i<textItem->numGlyphs; ++i) {
-                textItem->glyphPositions[i].x += fx - oldX;
-                textItem->glyphPositions[i].y += fy - oldY;
-            }
+    for (int i = 0; i < nItems; ++i) {
+        const QScriptItem &si = engine.layoutData->items.at(i);
+        if (si.analysis.flags >= QScriptAnalysis::TabOrObject) {
+            x += si.width;
+            continue;
         }
-
-        staticText_d->position = transformedPosition;
-    }
-
-    QPen oldPen = d->state->pen;
-    QColor currentColor = oldPen.color();
-    for (int i=0; i<staticText_d->itemCount; ++i) {
-        QStaticTextItem *item = staticText_d->items + i;
-        if (item->color.isValid() && currentColor != item->color) {
-            setPen(item->color);
-            currentColor = item->color;
+        QFont f = engine.font(si);
+        QTextItemInt gf(si, &f);
+        gf.glyphs = engine.shapedGlyphs(&si);
+        gf.chars = engine.layoutData->string.unicode() + si.position;
+        gf.num_chars = engine.length(i);
+        if (engine.forceJustification) {
+            for (int j=0; j<gf.glyphs.numGlyphs; ++j)
+                gf.width += gf.glyphs.effectiveAdvance(j);
+        } else {
+            gf.width = si.width;
         }
-        d->extended->drawStaticTextItem(item);
+        gf.logClusters = engine.logClusters(&si);
 
-        qt_draw_decoration_for_glyphs(this, item->glyphs, item->glyphPositions,
-                                      item->numGlyphs, item->fontEngine(), staticText_d->font,
-                                      QTextCharFormat());
+        drawTextItem(QPointF(x.toReal(), p.y()), gf);
+
+        x += gf.width;
     }
-    if (currentColor != oldPen.color())
-        setPen(oldPen);
-
-    if (!staticText_d->untransformedCoordinates && oldMatrix.isTranslating())
-        d->state->matrix = oldMatrix;
 }
 
 void QPainter::drawText(const QRect &r, int flags, const QString &str, QRect *br)

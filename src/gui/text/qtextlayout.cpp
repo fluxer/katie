@@ -270,8 +270,6 @@ Qt::LayoutDirection QTextInlineObject::textDirection() const
 
     The QTextLayout itself can be positioned with setPosition(); it has a
     boundingRect(), and a minimumWidth() and a maximumWidth().
-
-    \sa QStaticText
 */
 
 /*!
