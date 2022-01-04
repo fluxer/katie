@@ -347,7 +347,6 @@ public:
         ~LayoutData();
         mutable QScriptItemArray items;
         int allocated;
-        int available_glyphs;
         void **memory;
         unsigned short *logClustersPtr;
         QGlyphLayout glyphLayout;

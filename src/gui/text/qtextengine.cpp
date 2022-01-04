@@ -928,7 +928,6 @@ QTextEngine::LayoutData::LayoutData()
     layoutState = LayoutEmpty;
     haveCharAttributes = false;
     logClustersPtr = 0;
-    available_glyphs = 0;
 }
 
 QTextEngine::LayoutData::~LayoutData()
