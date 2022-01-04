@@ -220,8 +220,7 @@ void QFontEngine::addOutlineToPath(qreal x, qreal y, const QGlyphLayout &glyphs,
 
     QVarLengthArray<QFixedPoint> positions;
     QVarLengthArray<glyph_t> positioned_glyphs;
-    QTransform matrix = QTransform::fromTranslate(x, y);
-    getGlyphPositions(glyphs, matrix, flags, positioned_glyphs, positions);
+    getGlyphPositions(glyphs, QTransform::fromTranslate(x, y), flags, positioned_glyphs, positions);
     addGlyphsToPath(positioned_glyphs.data(), positions.data(), positioned_glyphs.size(), path, flags);
 }
 
@@ -437,8 +436,7 @@ void QFontEngineBox::addOutlineToPath(qreal x, qreal y, const QGlyphLayout &glyp
 
     QVarLengthArray<QFixedPoint> positions;
     QVarLengthArray<glyph_t> positioned_glyphs;
-    const QTransform matrix = QTransform::fromTranslate(x, y - _size);
-    getGlyphPositions(glyphs, matrix, flags, positioned_glyphs, positions);
+    getGlyphPositions(glyphs, QTransform::fromTranslate(x, y - _size), flags, positioned_glyphs, positions);
 
     const QSize s(_size - 3, _size - 3);
     for (int k = 0; k < positions.size(); k++) {
