@@ -567,10 +567,11 @@ QFixed QTextEngine::width(int from, int len) const
     return w;
 }
 
-glyph_metrics_t QTextEngine::boundingBox(int from,  int len) const
+glyph_metrics_t QTextEngine::boundingBox() const
 {
     itemize();
 
+    const int len = layoutData->string.length();
     glyph_metrics_t gm;
 
     for (int i = 0; i < layoutData->items.size(); i++) {
@@ -578,9 +579,9 @@ glyph_metrics_t QTextEngine::boundingBox(int from,  int len) const
 
         int pos = si->position;
         int ilen = length(i);
-        if (pos > from + len)
+        if (pos > len)
             break;
-        if (pos + ilen > from) {
+        if (pos + ilen > 0) {
             if (!si->num_glyphs)
                 shape(i);
 
@@ -596,7 +597,7 @@ glyph_metrics_t QTextEngine::boundingBox(int from,  int len) const
             QGlyphLayout glyphs = shapedGlyphs(si);
 
             // do the simple thing for now and give the first glyph in a cluster the full width, all other ones 0.
-            int charFrom = from - pos;
+            int charFrom = pos;
             if (charFrom < 0)
                 charFrom = 0;
             int glyphStart = logClusters[charFrom];
@@ -606,7 +607,7 @@ glyph_metrics_t QTextEngine::boundingBox(int from,  int len) const
             if (charFrom < ilen) {
                 QFontEngine *fe = fontEngine(*si);
                 glyphStart = logClusters[charFrom];
-                int charEnd = from + len - 1 - pos;
+                int charEnd = len - 1 - pos;
                 if (charEnd >= ilen)
                     charEnd = ilen-1;
                 int glyphEnd = logClusters[charEnd];
@@ -628,26 +629,27 @@ glyph_metrics_t QTextEngine::boundingBox(int from,  int len) const
     return gm;
 }
 
-glyph_metrics_t QTextEngine::tightBoundingBox(int from,  int len) const
+glyph_metrics_t QTextEngine::tightBoundingBox() const
 {
     itemize();
 
+    const int len = layoutData->string.length();
     glyph_metrics_t gm;
 
     for (int i = 0; i < layoutData->items.size(); i++) {
         const QScriptItem *si = layoutData->items.constData() + i;
         int pos = si->position;
         int ilen = length(i);
-        if (pos > from + len)
+        if (pos > len)
             break;
-        if (pos + len > from) {
+        if (pos + len > 0) {
             if (!si->num_glyphs)
                 shape(i);
             unsigned short *logClusters = this->logClusters(si);
             QGlyphLayout glyphs = shapedGlyphs(si);
 
             // do the simple thing for now and give the first glyph in a cluster the full width, all other ones 0.
-            int charFrom = from - pos;
+            int charFrom = pos;
             if (charFrom < 0)
                 charFrom = 0;
             int glyphStart = logClusters[charFrom];
@@ -656,7 +658,7 @@ glyph_metrics_t QTextEngine::tightBoundingBox(int from,  int len) const
                     charFrom++;
             if (charFrom < ilen) {
                 glyphStart = logClusters[charFrom];
-                int charEnd = from + len - 1 - pos;
+                int charEnd = len - 1 - pos;
                 if (charEnd >= ilen)
                     charEnd = ilen-1;
                 int glyphEnd = logClusters[charEnd];
