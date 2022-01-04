@@ -343,7 +343,6 @@ public:
         LayoutFailed
     };
     struct LayoutData {
-        LayoutData(const QString &str, void **stack_memory, int mem_size);
         LayoutData();
         ~LayoutData();
         mutable QScriptItemArray items;
@@ -354,7 +353,6 @@ public:
         QGlyphLayout glyphLayout;
         mutable int used;
         LayoutState layoutState;
-        bool memory_on_stack;
         bool haveCharAttributes;
         QString string;
         bool reallocate(int totalGlyphs);
@@ -518,14 +516,6 @@ private:
 
     void resolveAdditionalFormats() const;
     int getClusterLength(unsigned short *logClusters, const HB_CharAttributes *attributes, int from, int to, int glyph_pos, int *start);
-};
-
-class QStackTextEngine : public QTextEngine {
-public:
-    enum { MemSize = 256 * 40 / QT_POINTER_SIZE };
-    QStackTextEngine(const QString &string, const QFont &f);
-    LayoutData _layoutData;
-    void *_memory[MemSize];
 };
 
 struct QTextLineItemIterator

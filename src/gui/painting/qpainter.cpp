@@ -4752,7 +4752,7 @@ void QPainter::drawText(const QPointF &p, const QString &str)
     if (!d->engine || str.isEmpty() || pen().style() == Qt::NoPen)
         return;
 
-    QStackTextEngine engine(str, d->state->font);
+    QTextEngine engine(str, d->state->font);
     engine.option.setTextDirection(d->state->layoutDirection);
     engine.itemize();
     QScriptLine line;
@@ -6059,35 +6059,37 @@ start_lengthVariant:
     qreal width = 0;
 
     QString finalText = text.mid(old_offset, length);
-    QStackTextEngine engine(finalText, fnt);
+
+    QTextLayout textLayout(finalText, fnt);
+    textLayout.setCacheEnabled(true);
+    textLayout.engine()->underlinePositions = underlinePositions.data();
+
+    QTextEngine* engine = textLayout.engine();
     if (option) {
-        engine.option = *option;
+        engine->option = *option;
     }
 
-    if (engine.option.tabStop() < 0 && tabstops > 0)
-        engine.option.setTabStop(tabstops);
+    if (engine->option.tabStop() < 0 && tabstops > 0)
+        engine->option.setTabStop(tabstops);
 
-    if (engine.option.tabs().isEmpty() && ta) {
+    if (engine->option.tabs().isEmpty() && ta) {
         QList<qreal> tabs;
         for (int i = 0; i < tabarraylen; i++)
             tabs.append(qreal(ta[i]));
-        engine.option.setTabArray(tabs);
+        engine->option.setTabArray(tabs);
     }
 
-    engine.option.setTextDirection(layout_direction);
+    engine->option.setTextDirection(layout_direction);
     if (tf & Qt::AlignJustify)
-        engine.option.setAlignment(Qt::AlignJustify);
+        engine->option.setAlignment(Qt::AlignJustify);
     else
-        engine.option.setAlignment(Qt::AlignLeft); // do not do alignment twice
+        engine->option.setAlignment(Qt::AlignLeft); // do not do alignment twice
 
     if (!option && (tf & Qt::TextWrapAnywhere))
-        engine.option.setWrapMode(QTextOption::WrapAnywhere);
+        engine->option.setWrapMode(QTextOption::WrapAnywhere);
 
     if (tf & Qt::TextJustificationForced)
-        engine.forceJustification = true;
-    QTextLayout textLayout(&engine);
-    textLayout.setCacheEnabled(true);
-    textLayout.engine()->underlinePositions = underlinePositions.data();
+        engine->forceJustification = true;
 
     if (finalText.isEmpty()) {
         height = fm.height();

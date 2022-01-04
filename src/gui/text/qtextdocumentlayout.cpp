@@ -24,7 +24,7 @@
 #include "qtextimagehandler_p.h"
 #include "qtexttable.h"
 #include "qtextlist.h"
-#include "qtextengine_p.h"
+#include "qfixed_p.h"
 #include "qcssutil_p.h"
 #include "qabstracttextdocumentlayout_p.h"
 #include "qcssparser_p.h"

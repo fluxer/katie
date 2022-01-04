@@ -257,8 +257,6 @@ void QTextEngine::shapeTextWithHarfbuzz(int item) const
 
     shaper_item.glyphIndicesPresent = true;
 
-    int glyph_pos = 0;
-
     do {
         if (! ensureSpace(shaper_item.num_glyphs)) {
             return;
@@ -926,7 +924,6 @@ QTextEngine::LayoutData::LayoutData()
 {
     memory = 0;
     allocated = 0;
-    memory_on_stack = false;
     used = 0;
     layoutState = LayoutEmpty;
     haveCharAttributes = false;
@@ -934,51 +931,15 @@ QTextEngine::LayoutData::LayoutData()
     available_glyphs = 0;
 }
 
-QTextEngine::LayoutData::LayoutData(const QString &str, void **stack_memory, int _allocated)
-    : string(str)
-{
-    allocated = _allocated;
-
-    int space_charAttributes = sizeof(HB_CharAttributes) * string.length() / QT_POINTER_SIZE + 1;
-    int space_logClusters = sizeof(unsigned short) * string.length() / QT_POINTER_SIZE + 1;
-    available_glyphs = (allocated - space_charAttributes - space_logClusters) * QT_POINTER_SIZE / QGlyphLayout::spaceNeededForGlyphLayout(1);
-
-    if (available_glyphs < str.length()) {
-        // need to allocate on the heap
-        allocated = 0;
-
-        memory_on_stack = false;
-        memory = 0;
-        logClustersPtr = 0;
-    } else {
-        memory_on_stack = true;
-        memory = stack_memory;
-        logClustersPtr = (unsigned short *)(memory + space_charAttributes);
-
-        void *m = memory + space_charAttributes + space_logClusters;
-        glyphLayout = QGlyphLayout(reinterpret_cast<char *>(m), str.length());
-        glyphLayout.clear();
-        ::memset(memory, 0, space_charAttributes * QT_POINTER_SIZE);
-    }
-    used = 0;
-    layoutState = LayoutEmpty;
-    haveCharAttributes = false;
-}
-
 QTextEngine::LayoutData::~LayoutData()
 {
-    if (!memory_on_stack)
-        ::free(memory);
+    ::free(memory);
     memory = 0;
 }
 
 bool QTextEngine::LayoutData::reallocate(int totalGlyphs)
 {
     Q_ASSERT(totalGlyphs >= glyphLayout.numGlyphs);
-    if (memory_on_stack && available_glyphs >= totalGlyphs) {
-        glyphLayout.grow(glyphLayout.data(), totalGlyphs);
-        return true;
-    }
 
     int space_charAttributes = sizeof(HB_CharAttributes) * string.length() / QT_POINTER_SIZE + 1;
     int space_logClusters = sizeof(unsigned short) * string.length() / QT_POINTER_SIZE + 1;
@@ -993,15 +954,12 @@ bool QTextEngine::LayoutData::reallocate(int totalGlyphs)
         return false;
     }
 
-    void **newMem = (void **)::realloc(memory_on_stack ? 0 : memory, newAllocated * QT_POINTER_SIZE);
+    void **newMem = (void **)::realloc(memory, newAllocated * QT_POINTER_SIZE);
     if (!newMem) {
         layoutState = LayoutFailed;
         return false;
     }
-    if (memory_on_stack)
-        memcpy(newMem, memory, allocated * QT_POINTER_SIZE);
     memory = newMem;
-    memory_on_stack = false;
 
     void **m = memory;
     m += space_charAttributes;
@@ -1637,14 +1595,6 @@ int QTextEngine::positionAfterVisualMovement(int pos, QTextCursor::MoveOperation
     bool moveRight = (op == QTextCursor::Right);
 
     return (moveRight ? nextLogicalPosition(pos) : previousLogicalPosition(pos));
-}
-
-QStackTextEngine::QStackTextEngine(const QString &string, const QFont &f)
-    : QTextEngine(string, f),
-      _layoutData(string, _memory, MemSize)
-{
-    stackEngine = true;
-    layoutData = &_layoutData;
 }
 
 QTextItemInt::QTextItemInt(const QScriptItem &si, QFont *font, const QTextCharFormat &format)

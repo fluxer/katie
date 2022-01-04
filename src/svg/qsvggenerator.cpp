@@ -28,13 +28,11 @@
 #include "qpaintengine_p.h"
 #include "qtextengine_p.h"
 #include "qdrawhelper_p.h"
-
 #include "qfile.h"
 #include "qtextcodec.h"
 #include "qtextstream.h"
 #include "qbuffer.h"
 #include "qmath.h"
-
 #include "qdebug.h"
 
 QT_BEGIN_NAMESPACE

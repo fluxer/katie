@@ -90,7 +90,6 @@ public:
 
 private:
     friend class QFontMetricsF;
-    friend class QStackTextEngine;
 
     QExplicitlySharedDataPointer<QFontPrivate> d;
 };

@@ -713,7 +713,6 @@
 #include "qgraphicswidget_p.h"
 #include "qtextcontrol_p.h"
 #include "qtextdocumentlayout_p.h"
-#include "qtextengine_p.h"
 #include "qwidget_p.h"
 #include "qapplication_p.h"
 
@@ -9924,8 +9923,7 @@ void QGraphicsSimpleTextItemPrivate::updateBoundingRect()
     } else {
         QString tmp = text;
         tmp.replace(QLatin1Char('\n'), QChar::LineSeparator);
-        QStackTextEngine engine(tmp, font);
-        QTextLayout layout(&engine);
+        QTextLayout layout(tmp, font);
         br = setupTextLayout(&layout);
     }
     if (br != boundingRect) {
@@ -10088,8 +10086,7 @@ void QGraphicsSimpleTextItem::paint(QPainter *painter, const QStyleOptionGraphic
 
     QString tmp = d->text;
     tmp.replace(QLatin1Char('\n'), QChar::LineSeparator);
-    QStackTextEngine engine(tmp, d->font);
-    QTextLayout layout(&engine);
+    QTextLayout layout(tmp, d->font);
     setupTextLayout(&layout);
 
     QPen p;

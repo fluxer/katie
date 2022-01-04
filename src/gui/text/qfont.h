@@ -229,7 +229,6 @@ private:
     friend class QWidgetPrivate;
     friend class QTextLayout;
     friend class QTextEngine;
-    friend class QStackTextEngine;
     friend class QTextLine;
     friend struct QScriptLine;
     friend class QAlphaPaintEngine;

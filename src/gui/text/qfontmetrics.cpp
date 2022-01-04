@@ -495,7 +495,7 @@ int QFontMetrics::width(const QString &text, int len) const
     if (len == 0)
         return 0;
 
-    QStackTextEngine layout(text, d.data());
+    QTextEngine layout(text, d.data());
     return qRound(layout.width(0, len));
 }
 
@@ -564,7 +564,7 @@ int QFontMetrics::charWidth(const QString &text, int pos) const
         int from = qMax(0, pos - 8);
         int to = qMin(text.length(), pos + 8);
         QString cstr = QString::fromRawData(text.unicode() + from, to - from);
-        QStackTextEngine layout(cstr, d.data());
+        QTextEngine layout(cstr, d.data());
         layout.itemize();
         width = qRound(layout.width(pos-from, 1));
     } else if (QChar::category(ch.unicode()) == QChar::Mark_NonSpacing) {
@@ -606,7 +606,7 @@ QRect QFontMetrics::boundingRect(const QString &text) const
     if (text.length() == 0)
         return QRect();
 
-    QStackTextEngine layout(text, d.data());
+    QTextEngine layout(text, d.data());
     layout.itemize();
     glyph_metrics_t gm = layout.boundingBox(0, text.length());
     return QRect(qRound(gm.x), qRound(gm.y), qRound(gm.width), qRound(gm.height));
@@ -768,7 +768,7 @@ QRect QFontMetrics::tightBoundingRect(const QString &text) const
     if (text.length() == 0)
         return QRect();
 
-    QStackTextEngine layout(text, d.data());
+    QTextEngine layout(text, d.data());
     layout.itemize();
     glyph_metrics_t gm = layout.tightBoundingBox(0, text.length());
     return QRect(qRound(gm.x), qRound(gm.y), qRound(gm.width), qRound(gm.height));
@@ -812,7 +812,7 @@ QString QFontMetrics::elidedText(const QString &text, Qt::TextElideMode mode, in
         }
         _text = _text.mid(posA);
     }
-    QStackTextEngine engine(_text, QFont(d.data()));
+    QTextEngine engine(_text, QFont(d.data()));
     return engine.elidedText(mode, width, flags);
 }
 
@@ -1299,7 +1299,7 @@ qreal QFontMetricsF::width(const QString &text) const
     int pos = text.indexOf(QLatin1Char('\x9c'));
     int len = (pos != -1) ? pos : text.length();
 
-    QStackTextEngine layout(text, d.data());
+    QTextEngine layout(text, d.data());
     layout.itemize();
     return layout.width(0, len).toReal();
 }
@@ -1369,7 +1369,7 @@ QRectF QFontMetricsF::boundingRect(const QString &text) const
     if (len == 0)
         return QRectF();
 
-    QStackTextEngine layout(text, d.data());
+    QTextEngine layout(text, d.data());
     layout.itemize();
     glyph_metrics_t gm = layout.boundingBox(0, len);
     return QRectF(gm.x.toReal(), gm.y.toReal(),
@@ -1535,7 +1535,7 @@ QRectF QFontMetricsF::tightBoundingRect(const QString &text) const
     if (text.length() == 0)
         return QRect();
 
-    QStackTextEngine layout(text, d.data());
+    QTextEngine layout(text, d.data());
     layout.itemize();
     glyph_metrics_t gm = layout.tightBoundingBox(0, text.length());
     return QRectF(gm.x.toReal(), gm.y.toReal(), gm.width.toReal(), gm.height.toReal());
@@ -1572,7 +1572,7 @@ QString QFontMetricsF::elidedText(const QString &text, Qt::TextElideMode mode, q
         }
         _text = _text.mid(posA);
     }
-    QStackTextEngine engine(_text, QFont(d.data()));
+    QTextEngine engine(_text, QFont(d.data()));
     return engine.elidedText(mode, QFixed::fromReal(width), flags);
 }
 
