@@ -54,11 +54,6 @@ static void drawTextItemDecoration(QPainter *painter, const QPointF &pos, const 
                                    QTextCharFormat::UnderlineStyle underlineStyle,
                                    QTextItem::RenderFlags flags, qreal width,
                                    const QTextCharFormat &charFormat);
-// Helper function to calculate left most position, width and flags for decoration drawing
-static void qt_draw_decoration_for_glyphs(QPainter *painter, const glyph_t *glyphArray,
-                                          const QFixedPoint *positions, int glyphCount,
-                                          QFontEngine *fontEngine, const QFont &font,
-                                          const QTextCharFormat &charFormat);
 
 static inline QGradient::CoordinateMode coordinateMode(const QBrush &brush)
 {
@@ -5138,50 +5133,6 @@ static void drawTextItemDecoration(QPainter *painter, const QPointF &pos, const 
 
     painter->setPen(oldPen);
     painter->setBrush(oldBrush);
-}
-
-static void qt_draw_decoration_for_glyphs(QPainter *painter, const glyph_t *glyphArray,
-                                          const QFixedPoint *positions, int glyphCount,
-                                          QFontEngine *fontEngine, const QFont &font,
-                                          const QTextCharFormat &charFormat)
-{
-    if (!(font.underline() || font.strikeOut() || font.overline()))
-        return;
-
-    QFixed leftMost;
-    QFixed rightMost;
-    QFixed baseLine;
-    for (int i=0; i<glyphCount; ++i) {
-        glyph_metrics_t gm = fontEngine->boundingBox(glyphArray[i]);
-        if (i == 0 || leftMost > positions[i].x)
-            leftMost = positions[i].x;
-
-        // We don't support glyphs that do not share a common baseline. If this turns out to
-        // be a relevant use case, then we need to find clusters of glyphs that share a baseline
-        // and do a drawTextItemDecorations call per cluster.
-        if (i == 0 || baseLine < positions[i].y)
-            baseLine = positions[i].y;
-
-        // We use the advance rather than the actual bounds to match the algorithm in drawText()
-        if (i == 0 || rightMost < positions[i].x + gm.xoff)
-            rightMost = positions[i].x + gm.xoff;
-    }
-
-    QFixed width = rightMost - leftMost;
-    QTextItem::RenderFlags flags = 0;
-
-    if (font.underline())
-        flags |= QTextItem::Underline;
-    if (font.overline())
-        flags |= QTextItem::Overline;
-    if (font.strikeOut())
-        flags |= QTextItem::StrikeOut;
-
-    drawTextItemDecoration(painter, QPointF(leftMost.toReal(), baseLine.toReal()),
-                           fontEngine,
-                           font.underline() ? QTextCharFormat::SingleUnderline
-                                            : QTextCharFormat::NoUnderline, flags,
-                           width.toReal(), charFormat);
 }
 
 void QPainter::drawTextItem(const QPointF &p, const QTextItem &_ti)
