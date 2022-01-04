@@ -62,13 +62,11 @@ public:
 
     int leftBearing(QChar) const;
     int rightBearing(QChar) const;
-    int width(const QString &, int len = -1) const;
 
+    int width(const QString &, int len = -1) const;
     int width(QChar) const;
-    int charWidth(const QString &str, int pos) const;
 
     QRect boundingRect(QChar) const;
-
     QRect boundingRect(const QString &text) const;
     QRect boundingRect(const QRect &r, int flags, const QString &text, int tabstops=0, int *tabarray=0) const;
     inline QRect boundingRect(int x, int y, int w, int h, int flags, const QString &text,

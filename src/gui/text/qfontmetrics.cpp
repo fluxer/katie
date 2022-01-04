@@ -538,49 +538,6 @@ int QFontMetrics::width(QChar ch) const
     return qRound(glyphs.advances_x[0]);
 }
 
-/*! \obsolete
-
-    Returns the width of the character at position \a pos in the
-    string \a text.
-
-    The whole string is needed, as the glyph drawn may change
-    depending on the context (the letter before and after the current
-    one) for some languages (e.g. Arabic).
-
-    This function also takes non spacing marks and ligatures into
-    account.
-*/
-int QFontMetrics::charWidth(const QString &text, int pos) const
-{
-    if (pos < 0 || pos > (int)text.length())
-        return 0;
-
-    QChar ch = text.unicode()[pos];
-    const QUnicodeTables::Script script = QUnicodeTables::script(ch.unicode());
-    int width;
-
-    if (script != QUnicodeTables::Common) {
-        // complex script shaping. Have to do some hard work
-        int from = qMax(0, pos - 8);
-        int to = qMin(text.length(), pos + 8);
-        QString cstr = QString::fromRawData(text.unicode() + from, to - from);
-        QTextEngine layout(cstr, d.data());
-        layout.itemize();
-        width = qRound(layout.width(pos-from, 1));
-    } else if (QChar::category(ch.unicode()) == QChar::Mark_NonSpacing) {
-        width = 0;
-    } else {
-        QFontEngine *engine = d->engineForScript(script);
-        Q_ASSERT(engine != 0);
-
-        QGlyphLayoutArray<8> glyphs;
-        int nglyphs = 7;
-        engine->stringToCMap(&ch, 1, &glyphs, &nglyphs, 0);
-        width = qRound(glyphs.advances_x[0]);
-    }
-    return width;
-}
-
 /*!
     Returns the bounding rectangle of the characters in the string
     specified by \a text. The bounding rectangle always covers at least
