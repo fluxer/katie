@@ -4752,40 +4752,23 @@ void QPainter::drawText(const QPointF &p, const QString &str)
     if (!d->engine || str.isEmpty() || pen().style() == Qt::NoPen)
         return;
 
-    QTextEngine engine(str, d->state->font);
-    engine.option.setTextDirection(d->state->layoutDirection);
-    engine.itemize();
-    QScriptLine line;
-    line.length = str.length();
-    engine.shapeLine(line);
-
-    int nItems = engine.layoutData->items.size();
-
-    QFixed x = QFixed::fromReal(p.x());
-
-    for (int i = 0; i < nItems; ++i) {
-        const QScriptItem &si = engine.layoutData->items.at(i);
-        if (si.analysis.flags >= QScriptAnalysis::TabOrObject) {
-            x += si.width;
-            continue;
-        }
-        QFont f = engine.font(si);
-        QTextItemInt gf(si, &f);
-        gf.glyphs = engine.shapedGlyphs(&si);
-        gf.chars = engine.layoutData->string.unicode() + si.position;
-        gf.num_chars = engine.length(i);
-        if (engine.forceJustification) {
-            for (int j=0; j<gf.glyphs.numGlyphs; ++j)
-                gf.width += gf.glyphs.effectiveAdvance(j);
-        } else {
-            gf.width = si.width;
-        }
-        gf.logClusters = engine.logClusters(&si);
-
-        drawTextItem(QPointF(x.toReal(), p.y()), gf);
-
-        x += gf.width;
+    QTextOption textoption;
+    textoption.setTextDirection(d->state->layoutDirection);
+    QTextLayout textlayout(str, d->state->font);
+    textlayout.setTextOption(textoption);
+    textlayout.beginLayout();
+    QTextLine textline = textlayout.createLine();
+    while (textline.isValid()) {
+        textline = textlayout.createLine();
     }
+    textlayout.endLayout();
+
+    qreal fontheight = d->state->font.pointSizeF();
+    if (fontheight <= 0.0) {
+        fontheight = d->state->font.pixelSize();
+    }
+    // do not ask what the magic 0.8 division is for, it is just visually right for any point size
+    textlayout.draw(this, QPointF(p.x(), p.y() - (fontheight / 0.8)));
 }
 
 void QPainter::drawText(const QRect &r, int flags, const QString &str, QRect *br)
