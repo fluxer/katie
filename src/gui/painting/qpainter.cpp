@@ -41,6 +41,7 @@
 #include "qwidget_p.h"
 #include "qpaintengine_raster_p.h"
 #include "qstylehelper_p.h"
+#include "qguicommon_p.h"
 
 QT_BEGIN_NAMESPACE
 
@@ -4757,10 +4758,7 @@ void QPainter::drawText(const QPointF &p, const QString &str)
     QTextLayout textlayout(str, d->state->font);
     textlayout.setTextOption(textoption);
     textlayout.beginLayout();
-    QTextLine textline = textlayout.createLine();
-    while (textline.isValid()) {
-        textline = textlayout.createLine();
-    }
+    QTEXTLAYOUT(textlayout)
     textlayout.endLayout();
 
     qreal fontheight = d->state->font.pointSizeF();

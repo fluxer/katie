@@ -22,10 +22,10 @@
 #include "qfont.h"
 #include "qpaintdevice.h"
 #include "qfontmetrics.h"
-
 #include "qfont_p.h"
 #include "qfontengine_p.h"
 #include "qunicodetables_p.h"
+#include "qguicommon_p.h"
 
 #include <math.h>
 
@@ -565,10 +565,7 @@ QRect QFontMetrics::boundingRect(const QString &text) const
 
     QTextLayout textlayout(text, d.data());
     textlayout.beginLayout();
-    QTextLine textline = textlayout.createLine();
-    while (textline.isValid()) {
-        textline = textlayout.createLine();
-    }
+    QTEXTLAYOUT(textlayout)
     textlayout.endLayout();
     return textlayout.boundingRect().toRect();
 }
@@ -825,9 +822,6 @@ int QFontMetrics::lineWidth() const
     Q_ASSERT(engine != 0);
     return qRound(engine->lineThickness());
 }
-
-
-
 
 /*****************************************************************************
   QFontMetricsF member functions
@@ -1331,10 +1325,7 @@ QRectF QFontMetricsF::boundingRect(const QString &text) const
 
     QTextLayout textlayout(text, d.data());
     textlayout.beginLayout();
-    QTextLine textline = textlayout.createLine();
-    while (textline.isValid()) {
-        textline = textlayout.createLine();
-    }
+    QTEXTLAYOUT(textlayout)
     textlayout.endLayout();
     return textlayout.boundingRect();
 }

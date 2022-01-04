@@ -11,6 +11,16 @@
 
 QT_BEGIN_NAMESPACE
 
+
+#define QTEXTLAYOUT(__textlayout) \
+    QTextLine __textline = __textlayout.createLine(); \
+    qreal __textheight = 0.0; \
+    while (__textline.isValid()) { \
+        __textline.setPosition(QPointF(0.0, __textheight)); \
+        __textheight += __textline.height(); \
+        __textline = __textlayout.createLine(); \
+    }
+
 #ifdef QT_NO_FPU
 static const qreal qt_epsilon = qreal(1e-12);
 #else
