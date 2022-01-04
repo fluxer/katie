@@ -39,6 +39,7 @@
 #include "qpaintengine_p.h"
 #include "qpainterpath_p.h"
 #include "qwidget_p.h"
+#include "qfontengine_p.h"
 #include "qpaintengine_raster_p.h"
 #include "qstylehelper_p.h"
 #include "qguicommon_p.h"
