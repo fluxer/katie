@@ -574,7 +574,6 @@ classlist = [
     "QStandardItemEditorCreator",
     "QStandardItemModel",
     "QStandardPaths",
-    "QStaticText",
     "QStatusBar",
     "QStatusTipEvent",
     "QString",

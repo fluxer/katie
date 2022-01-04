@@ -535,7 +535,6 @@ static const struct ClassTblData {
     { QLatin1String("QStandardItem"), QLatin1String("QtGui/qstandarditemmodel.h") },
     { QLatin1String("QStandardItemModel"), QLatin1String("QtGui/qstandarditemmodel.h") },
     { QLatin1String("QStandardPaths"), QLatin1String("QtCore/qstandardpaths.h") },
-    { QLatin1String("QStaticText"), QLatin1String("QtGui/qstatictext.h") },
     { QLatin1String("QStatusBar"), QLatin1String("QtGui/qstatusbar.h") },
     { QLatin1String("QStatusTipEvent"), QLatin1String("QtGui/qevent.h") },
     { QLatin1String("QString"), QLatin1String("QtCore/qstring.h") },

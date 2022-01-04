@@ -36,12 +36,12 @@
 #include "qstyle.h"
 #include "qthread.h"
 #include "qvarlengtharray.h"
-#include "qstatictext.h"
 #include "qpaintengine_p.h"
 #include "qpainterpath_p.h"
 #include "qwidget_p.h"
-#include "qstatictext_p.h"
+#include "qpaintengine_raster_p.h"
 #include "qstylehelper_p.h"
+#include "qguicommon_p.h"
 
 QT_BEGIN_NAMESPACE
 
@@ -4367,28 +4367,6 @@ void QPainter::drawImage(const QRectF &targetRect, const QImage &image, const QR
 }
 
 /*!
-
-    \fn void QPainter::drawStaticText(const QPoint &topLeftPosition, const QStaticText &staticText)
-    \since 4.7
-    \overload
-
-    Draws the \a staticText at the \a topLeftPosition.
-
-    \note The y-position is used as the top of the font.
-
-*/
-
-/*!
-    \fn void QPainter::drawStaticText(int left, int top, const QStaticText &staticText)
-    \since 4.7
-    \overload
-
-    Draws the \a staticText at coordinates \a left and \a top.
-
-    \note The y-position is used as the top of the font.
-*/
-
-/*!
     \fn void QPainter::drawText(const QPointF &position, const QString &text)
 
     Draws the given \a text with the currently defined text direction,
@@ -4416,78 +4394,20 @@ void QPainter::drawText(const QPointF &p, const QString &str)
     if (!d->engine || str.isEmpty() || pen().style() == Qt::NoPen)
         return;
 
-    QStackTextEngine engine(str, d->state->font);
-    engine.option.setTextDirection(d->state->layoutDirection);
-    engine.itemize();
-    QScriptLine line;
-    line.length = str.length();
-    engine.shapeLine(line);
+    QTextOption textoption;
+    textoption.setTextDirection(d->state->layoutDirection);
+    QTextLayout textlayout(str, d->state->font);
+    textlayout.setTextOption(textoption);
+    textlayout.beginLayout();
+    QTEXTLAYOUT(textlayout)
+    textlayout.endLayout();
 
-    int nItems = engine.layoutData->items.size();
-
-    QFixed x = QFixed::fromReal(p.x());
-
-    for (int i = 0; i < nItems; ++i) {
-        const QScriptItem &si = engine.layoutData->items.at(i);
-        if (si.analysis.flags >= QScriptAnalysis::TabOrObject) {
-            x += si.width;
-            continue;
-        }
-        QFont f = engine.font(si);
-        QTextItemInt gf(si, &f);
-        gf.glyphs = engine.shapedGlyphs(&si);
-        gf.chars = engine.layoutData->string.unicode() + si.position;
-        gf.num_chars = engine.length(i);
-        if (engine.forceJustification) {
-            for (int j=0; j<gf.glyphs.numGlyphs; ++j)
-                gf.width += gf.glyphs.effectiveAdvance(j);
-        } else {
-            gf.width = si.width;
-        }
-        gf.logClusters = engine.logClusters(&si);
-
-        drawTextItem(QPointF(x.toReal(), p.y()), gf);
-
-        x += gf.width;
+    qreal fontheight = d->state->font.pointSizeF();
+    if (fontheight <= 0.0) {
+        fontheight = d->state->font.pixelSize();
     }
-}
-
-/*!
-    \since 4.7
-
-    Draws the given \a staticText at the given \a topLeftPosition.
-
-    The text will be drawn using the font and the transformation set on the painter. If the
-    font and/or transformation set on the painter are different from the ones used to initialize
-    the layout of the QStaticText, then the layout will have to be recalculated. Use
-    QStaticText::prepare() to initialize \a staticText with the font and transformation with which
-    it will later be drawn.
-
-    If \a topLeftPosition is not the same as when \a staticText was initialized, or when it was
-    last drawn, then there will be a slight overhead when translating the text to its new position.
-
-    \note If the painter's transformation is not affine, then \a staticText will be drawn using
-    regular calls to drawText(), losing any potential for performance improvement.
-
-    \note The y-position is used as the top of the font.
-
-    \sa QStaticText
-*/
-void QPainter::drawStaticText(const QPointF &topLeftPosition, const QStaticText &staticText)
-{
-    Q_D(QPainter);
-    if (!d->engine || staticText.text().isEmpty() || pen().style() == Qt::NoPen)
-        return;
-
-    QStaticTextPrivate *staticText_d =
-            const_cast<QStaticTextPrivate *>(QStaticTextPrivate::get(&staticText));
-
-    if (font() != staticText_d->font) {
-        staticText_d->font = font();
-        staticText_d->needsRelayout = true;
-    }
-
-    staticText_d->paintText(topLeftPosition, this);
+    // do not ask what the magic 0.8 division is for, it is just visually right for any point size
+    textlayout.draw(this, QPointF(p.x(), p.y() - (fontheight / 0.8)));
 }
 
 void QPainter::drawText(const QRect &r, int flags, const QString &str, QRect *br)
@@ -5716,35 +5636,37 @@ start_lengthVariant:
     qreal width = 0;
 
     QString finalText = text.mid(old_offset, length);
-    QStackTextEngine engine(finalText, fnt);
+
+    QTextLayout textLayout(finalText, fnt);
+    textLayout.setCacheEnabled(true);
+    textLayout.engine()->underlinePositions = underlinePositions.data();
+
+    QTextEngine* engine = textLayout.engine();
     if (option) {
-        engine.option = *option;
+        engine->option = *option;
     }
 
-    if (engine.option.tabStop() < 0 && tabstops > 0)
-        engine.option.setTabStop(tabstops);
+    if (engine->option.tabStop() < 0 && tabstops > 0)
+        engine->option.setTabStop(tabstops);
 
-    if (engine.option.tabs().isEmpty() && ta) {
+    if (engine->option.tabs().isEmpty() && ta) {
         QList<qreal> tabs;
         for (int i = 0; i < tabarraylen; i++)
             tabs.append(qreal(ta[i]));
-        engine.option.setTabArray(tabs);
+        engine->option.setTabArray(tabs);
     }
 
-    engine.option.setTextDirection(layout_direction);
+    engine->option.setTextDirection(layout_direction);
     if (tf & Qt::AlignJustify)
-        engine.option.setAlignment(Qt::AlignJustify);
+        engine->option.setAlignment(Qt::AlignJustify);
     else
-        engine.option.setAlignment(Qt::AlignLeft); // do not do alignment twice
+        engine->option.setAlignment(Qt::AlignLeft); // do not do alignment twice
 
     if (!option && (tf & Qt::TextWrapAnywhere))
-        engine.option.setWrapMode(QTextOption::WrapAnywhere);
+        engine->option.setWrapMode(QTextOption::WrapAnywhere);
 
     if (tf & Qt::TextJustificationForced)
-        engine.forceJustification = true;
-    QTextLayout textLayout(&engine);
-    textLayout.setCacheEnabled(true);
-    textLayout.engine()->underlinePositions = underlinePositions.data();
+        engine->forceJustification = true;
 
     if (finalText.isEmpty()) {
         height = fm.height();

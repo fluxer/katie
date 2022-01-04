@@ -23,7 +23,6 @@
 #include "qpainter_p.h"
 #include "qstroker_p.h"
 #include "qpainterpath_p.h"
-#include "qstatictext_p.h"
 #include "qvarlengtharray.h"
 #include "qdebug.h"
 #include "qcorecommon_p.h"
@@ -841,45 +840,6 @@ void QPaintEngineEx::setState(QPainterState *s)
 void QPaintEngineEx::updateState(const QPaintEngineState &)
 {
     // do nothing...
-}
-
-void QPaintEngineEx::drawStaticTextItem(QStaticTextItem *staticTextItem)
-{
-    QPainterPath path;
-    path.setFillRule(Qt::WindingFill);
-
-    if (staticTextItem->numGlyphs == 0)
-        return;
-
-    QFontEngine *fontEngine = staticTextItem->fontEngine();
-    fontEngine->addGlyphsToPath(staticTextItem->glyphs, staticTextItem->glyphPositions,
-                                staticTextItem->numGlyphs, &path, 0);
-    if (!path.isEmpty()) {
-        QPainterState *s = state();
-        QPainter::RenderHints oldHints = s->renderHints;
-        bool changedHints = false;
-        if (bool(oldHints & QPainter::TextAntialiasing)
-            && !bool(fontEngine->fontDef.styleStrategy & QFont::NoAntialias)
-            && !bool(oldHints & QPainter::Antialiasing)) {
-            s->renderHints |= QPainter::Antialiasing;
-            renderHintsChanged();
-            changedHints = true;
-        }
-
-        fill(qtVectorPathForPath(path), s->pen.color());
-
-        if (changedHints) {
-            s->renderHints = oldHints;
-            renderHintsChanged();
-        }
-    }
-}
-
-bool QPaintEngineEx::supportsTransformations(const qreal pixelSize, const QTransform &m) const
-{
-    Q_UNUSED(pixelSize);
-
-    return !m.isAffine();
 }
 
 QT_END_NAMESPACE

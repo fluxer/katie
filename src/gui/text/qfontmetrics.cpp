@@ -22,10 +22,10 @@
 #include "qfont.h"
 #include "qpaintdevice.h"
 #include "qfontmetrics.h"
-
 #include "qfont_p.h"
 #include "qfontengine_p.h"
 #include "qunicodetables_p.h"
+#include "qguicommon_p.h"
 
 #include <math.h>
 
@@ -495,7 +495,7 @@ int QFontMetrics::width(const QString &text, int len) const
     if (len == 0)
         return 0;
 
-    QStackTextEngine layout(text, d.data());
+    QTextEngine layout(text, d.data());
     return qRound(layout.width(0, len));
 }
 
@@ -538,49 +538,6 @@ int QFontMetrics::width(QChar ch) const
     return qRound(glyphs.advances_x[0]);
 }
 
-/*! \obsolete
-
-    Returns the width of the character at position \a pos in the
-    string \a text.
-
-    The whole string is needed, as the glyph drawn may change
-    depending on the context (the letter before and after the current
-    one) for some languages (e.g. Arabic).
-
-    This function also takes non spacing marks and ligatures into
-    account.
-*/
-int QFontMetrics::charWidth(const QString &text, int pos) const
-{
-    if (pos < 0 || pos > (int)text.length())
-        return 0;
-
-    QChar ch = text.unicode()[pos];
-    const QUnicodeTables::Script script = QUnicodeTables::script(ch.unicode());
-    int width;
-
-    if (script != QUnicodeTables::Common) {
-        // complex script shaping. Have to do some hard work
-        int from = qMax(0, pos - 8);
-        int to = qMin(text.length(), pos + 8);
-        QString cstr = QString::fromRawData(text.unicode() + from, to - from);
-        QStackTextEngine layout(cstr, d.data());
-        layout.itemize();
-        width = qRound(layout.width(pos-from, 1));
-    } else if (QChar::category(ch.unicode()) == QChar::Mark_NonSpacing) {
-        width = 0;
-    } else {
-        QFontEngine *engine = d->engineForScript(script);
-        Q_ASSERT(engine != 0);
-
-        QGlyphLayoutArray<8> glyphs;
-        int nglyphs = 7;
-        engine->stringToCMap(&ch, 1, &glyphs, &nglyphs, 0);
-        width = qRound(glyphs.advances_x[0]);
-    }
-    return width;
-}
-
 /*!
     Returns the bounding rectangle of the characters in the string
     specified by \a text. The bounding rectangle always covers at least
@@ -603,13 +560,14 @@ int QFontMetrics::charWidth(const QString &text, int pos) const
 */
 QRect QFontMetrics::boundingRect(const QString &text) const
 {
-    if (text.length() == 0)
+    if (text.isEmpty())
         return QRect();
 
-    QStackTextEngine layout(text, d.data());
-    layout.itemize();
-    glyph_metrics_t gm = layout.boundingBox(0, text.length());
-    return QRect(qRound(gm.x), qRound(gm.y), qRound(gm.width), qRound(gm.height));
+    QTextLayout textlayout(text, d.data());
+    textlayout.beginLayout();
+    QTEXTLAYOUT(textlayout)
+    textlayout.endLayout();
+    return textlayout.boundingRect().toRect();
 }
 
 /*!
@@ -765,12 +723,12 @@ QSize QFontMetrics::size(int flags, const QString &text, int tabStops, int *tabA
 */
 QRect QFontMetrics::tightBoundingRect(const QString &text) const
 {
-    if (text.length() == 0)
+    if (text.isEmpty())
         return QRect();
 
-    QStackTextEngine layout(text, d.data());
+    QTextEngine layout(text, d.data());
     layout.itemize();
-    glyph_metrics_t gm = layout.tightBoundingBox(0, text.length());
+    glyph_metrics_t gm = layout.tightBoundingBox();
     return QRect(qRound(gm.x), qRound(gm.y), qRound(gm.width), qRound(gm.height));
 }
 
@@ -812,7 +770,7 @@ QString QFontMetrics::elidedText(const QString &text, Qt::TextElideMode mode, in
         }
         _text = _text.mid(posA);
     }
-    QStackTextEngine engine(_text, QFont(d.data()));
+    QTextEngine engine(_text, QFont(d.data()));
     return engine.elidedText(mode, width, flags);
 }
 
@@ -864,9 +822,6 @@ int QFontMetrics::lineWidth() const
     Q_ASSERT(engine != 0);
     return qRound(engine->lineThickness());
 }
-
-
-
 
 /*****************************************************************************
   QFontMetricsF member functions
@@ -1299,7 +1254,7 @@ qreal QFontMetricsF::width(const QString &text) const
     int pos = text.indexOf(QLatin1Char('\x9c'));
     int len = (pos != -1) ? pos : text.length();
 
-    QStackTextEngine layout(text, d.data());
+    QTextEngine layout(text, d.data());
     layout.itemize();
     return layout.width(0, len).toReal();
 }
@@ -1365,15 +1320,14 @@ qreal QFontMetricsF::width(QChar ch) const
 */
 QRectF QFontMetricsF::boundingRect(const QString &text) const
 {
-    int len = text.length();
-    if (len == 0)
+    if (text.isEmpty())
         return QRectF();
 
-    QStackTextEngine layout(text, d.data());
-    layout.itemize();
-    glyph_metrics_t gm = layout.boundingBox(0, len);
-    return QRectF(gm.x.toReal(), gm.y.toReal(),
-                  gm.width.toReal(), gm.height.toReal());
+    QTextLayout textlayout(text, d.data());
+    textlayout.beginLayout();
+    QTEXTLAYOUT(textlayout)
+    textlayout.endLayout();
+    return textlayout.boundingRect();
 }
 
 /*!
@@ -1532,12 +1486,12 @@ QSizeF QFontMetricsF::size(int flags, const QString &text, int tabStops, int *ta
 */
 QRectF QFontMetricsF::tightBoundingRect(const QString &text) const
 {
-    if (text.length() == 0)
+    if (text.isEmpty())
         return QRect();
 
-    QStackTextEngine layout(text, d.data());
+    QTextEngine layout(text, d.data());
     layout.itemize();
-    glyph_metrics_t gm = layout.tightBoundingBox(0, text.length());
+    glyph_metrics_t gm = layout.tightBoundingBox();
     return QRectF(gm.x.toReal(), gm.y.toReal(), gm.width.toReal(), gm.height.toReal());
 }
 
@@ -1572,7 +1526,7 @@ QString QFontMetricsF::elidedText(const QString &text, Qt::TextElideMode mode, q
         }
         _text = _text.mid(posA);
     }
-    QStackTextEngine engine(_text, QFont(d.data()));
+    QTextEngine engine(_text, QFont(d.data()));
     return engine.elidedText(mode, QFixed::fromReal(width), flags);
 }
 

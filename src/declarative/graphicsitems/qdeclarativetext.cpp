@@ -311,8 +311,6 @@ void QDeclarativeTextPrivate::updateSize()
 */
 QRect QDeclarativeTextPrivate::setupTextLayout()
 {
-    // ### text layout handling should be profiled and optimized as needed
-    // what about QStackTextEngine engine(tmp, d->font.font()); QTextLayout textLayout(&engine);
     Q_Q(QDeclarativeText);
     layout.setCacheEnabled(true);
 

@@ -343,18 +343,15 @@ public:
         LayoutFailed
     };
     struct LayoutData {
-        LayoutData(const QString &str, void **stack_memory, int mem_size);
         LayoutData();
         ~LayoutData();
         mutable QScriptItemArray items;
         int allocated;
-        int available_glyphs;
         void **memory;
         unsigned short *logClustersPtr;
         QGlyphLayout glyphLayout;
         mutable int used;
         LayoutState layoutState;
-        bool memory_on_stack;
         bool haveCharAttributes;
         QString string;
         bool reallocate(int totalGlyphs);
@@ -387,8 +384,8 @@ public:
     QFixed alignLine(const QScriptLine &line);
 
     QFixed width(int charFrom, int numChars) const;
-    glyph_metrics_t boundingBox(int from,  int len) const;
-    glyph_metrics_t tightBoundingBox(int from,  int len) const;
+    glyph_metrics_t boundingBox() const;
+    glyph_metrics_t tightBoundingBox() const;
 
     int length(int item) const {
         int from = layoutData->items[item].position;
@@ -509,7 +506,6 @@ public:
     int nextLogicalPosition(int oldPos) const;
     int lineNumberForTextPosition(int pos);
     int positionAfterVisualMovement(int oldPos, QTextCursor::MoveOperation op);
-    void insertionPointsForLine(int lineNum, QVector<int> &insertionPoints);
 
 private:
     void setBoundary(int strPos) const;
@@ -518,17 +514,7 @@ private:
     void shapeTextWithHarfbuzz(int item) const;
 
     void resolveAdditionalFormats() const;
-    int endOfLine(int lineNum);
-    int beginningOfLine(int lineNum);
     int getClusterLength(unsigned short *logClusters, const HB_CharAttributes *attributes, int from, int to, int glyph_pos, int *start);
-};
-
-class QStackTextEngine : public QTextEngine {
-public:
-    enum { MemSize = 256 * 40 / QT_POINTER_SIZE };
-    QStackTextEngine(const QString &string, const QFont &f);
-    LayoutData _layoutData;
-    void *_memory[MemSize];
 };
 
 struct QTextLineItemIterator

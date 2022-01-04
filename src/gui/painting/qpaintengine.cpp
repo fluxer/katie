@@ -642,13 +642,12 @@ void QPaintEngine::drawTextItem(const QPointF &p, const QTextItem &textItem)
     QPainterPath path;
     path.setFillRule(Qt::WindingFill);
     if (ti.glyphs.numGlyphs)
-        ti.fontEngine->addOutlineToPath(0, 0, ti.glyphs, &path, ti.flags);
+        ti.fontEngine->addOutlineToPath(p.x(), p.y(), ti.glyphs, &path, ti.flags);
     if (!path.isEmpty()) {
         painter()->save();
         painter()->setRenderHint(QPainter::Antialiasing,
                                  bool((painter()->renderHints() & QPainter::TextAntialiasing)
                                       && !(painter()->font().styleStrategy() & QFont::NoAntialias)));
-        painter()->translate(p.x(), p.y());
         painter()->fillPath(path, state->pen().brush());
         painter()->restore();
     }

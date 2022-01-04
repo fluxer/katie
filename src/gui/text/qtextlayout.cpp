@@ -270,8 +270,6 @@ Qt::LayoutDirection QTextInlineObject::textDirection() const
 
     The QTextLayout itself can be positioned with setPosition(); it has a
     boundingRect(), and a minimumWidth() and a maximumWidth().
-
-    \sa QStaticText
 */
 
 /*!
@@ -2257,7 +2255,6 @@ qreal QTextLine::cursorToX(int *cursorPos, Edge edge) const
         eng->itemize();
 
     const QScriptLine &line = eng->lines[i];
-    bool lastLine = i >= eng->lines.size() - 1;
 
     QFixed x = line.x;
     x += eng->alignLine(line);
@@ -2347,7 +2344,6 @@ qreal QTextLine::cursorToX(int *cursorPos, Edge edge) const
         if (pos == l)
             x += si->width;
     } else {
-        bool visual = eng->visualCursorMovement();
         int end = qMin(lineEnd, si->position + l) - si->position;
         int start = qMax(line.from - si->position, 0);
         int glyph_start = logClusters[start];
@@ -2381,8 +2377,6 @@ int QTextLine::xToCursor(qreal _x, CursorPosition cpos) const
 {
     QFixed x = QFixed::fromReal(_x);
     const QScriptLine &line = eng->lines[i];
-    bool lastLine = i >= eng->lines.size() - 1;
-    int lineNum = i;
 
     if (!eng->layoutData)
         eng->itemize();
@@ -2420,7 +2414,6 @@ int QTextLine::xToCursor(qreal _x, CursorPosition cpos) const
         QFixed pos;
 
         eng->shapeLine(line);
-        int nchars = 0;
         for (int i = 0; i < nItems; ++i) {
             int item = (i + firstItem);
             QScriptItem &si = eng->layoutData->items[item];
@@ -2450,7 +2443,6 @@ int QTextLine::xToCursor(qreal _x, CursorPosition cpos) const
 
             if (pos + item_width < x) {
                 pos += item_width;
-                nchars += end;
                 continue;
             }
 //             qDebug("      inside run");
@@ -2493,7 +2485,6 @@ int QTextLine::xToCursor(qreal _x, CursorPosition cpos) const
                 if (qAbs(x-pos) < dist) {
                     if (visual) {
                         if (i < nItems - 1) {
-                            nchars += end;
                             continue;
                         }
                     }

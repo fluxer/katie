@@ -160,7 +160,6 @@ set(GUI_PUBLIC_HEADERS
     QStackedLayout
     QStackedWidget
     QStandardItemModel
-    QStaticText
     QStatusBar
     QStringListModel
     QStyle
@@ -503,8 +502,6 @@ set(GUI_HEADERS
     ${CMAKE_CURRENT_SOURCE_DIR}/text/qtextdocumentwriter.h
     ${CMAKE_CURRENT_SOURCE_DIR}/text/qcssparser_p.h
     ${CMAKE_CURRENT_SOURCE_DIR}/text/qtexttable_p.h
-    ${CMAKE_CURRENT_SOURCE_DIR}/text/qstatictext_p.h
-    ${CMAKE_CURRENT_SOURCE_DIR}/text/qstatictext.h
     ${CMAKE_CURRENT_SOURCE_DIR}/text/qharfbuzz_p.h
     ${CMAKE_CURRENT_SOURCE_DIR}/text/qfontengine_ft_p.h
     ${CMAKE_CURRENT_SOURCE_DIR}/text/qfontdatabase_x11_p.h
@@ -820,7 +817,6 @@ set(GUI_SOURCES
     ${CMAKE_CURRENT_SOURCE_DIR}/text/qtextdocumentwriter.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/text/qsyntaxhighlighter.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/text/qcssparser.cpp
-    ${CMAKE_CURRENT_SOURCE_DIR}/text/qstatictext.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/text/qfont_x11.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/text/qunicodetables.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/util/qsystemtrayicon.cpp

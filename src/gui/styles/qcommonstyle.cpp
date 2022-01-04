@@ -920,7 +920,7 @@ void QCommonStylePrivate::viewItemDrawText(QPainter *p, const QStyleOptionViewIt
             if ((nextLine.y() + nextLine.height()) > textRect.height()) {
                 int start = line.textStart();
                 int length = line.textLength() + nextLine.textLength();
-                const QStackTextEngine engine(textLayout.text().mid(start, length), option->font);
+                const QTextEngine engine(textLayout.text().mid(start, length), option->font);
                 elidedText = engine.elidedText(option->textElideMode, textRect.width());
                 height += line.height();
                 width = textRect.width();
@@ -931,7 +931,7 @@ void QCommonStylePrivate::viewItemDrawText(QPainter *p, const QStyleOptionViewIt
         if (line.naturalTextWidth() > textRect.width()) {
             int start = line.textStart();
             int length = line.textLength();
-            const QStackTextEngine engine(textLayout.text().mid(start, length), option->font);
+            const QTextEngine engine(textLayout.text().mid(start, length), option->font);
             elidedText = engine.elidedText(option->textElideMode, textRect.width());
             height += line.height();
             width = textRect.width();

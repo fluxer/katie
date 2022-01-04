@@ -257,8 +257,6 @@ void QTextEngine::shapeTextWithHarfbuzz(int item) const
 
     shaper_item.glyphIndicesPresent = true;
 
-    int glyph_pos = 0;
-
     do {
         if (! ensureSpace(shaper_item.num_glyphs)) {
             return;
@@ -569,10 +567,11 @@ QFixed QTextEngine::width(int from, int len) const
     return w;
 }
 
-glyph_metrics_t QTextEngine::boundingBox(int from,  int len) const
+glyph_metrics_t QTextEngine::boundingBox() const
 {
     itemize();
 
+    const int len = layoutData->string.length();
     glyph_metrics_t gm;
 
     for (int i = 0; i < layoutData->items.size(); i++) {
@@ -580,9 +579,9 @@ glyph_metrics_t QTextEngine::boundingBox(int from,  int len) const
 
         int pos = si->position;
         int ilen = length(i);
-        if (pos > from + len)
+        if (pos > len)
             break;
-        if (pos + ilen > from) {
+        if (pos + ilen > 0) {
             if (!si->num_glyphs)
                 shape(i);
 
@@ -598,7 +597,7 @@ glyph_metrics_t QTextEngine::boundingBox(int from,  int len) const
             QGlyphLayout glyphs = shapedGlyphs(si);
 
             // do the simple thing for now and give the first glyph in a cluster the full width, all other ones 0.
-            int charFrom = from - pos;
+            int charFrom = pos;
             if (charFrom < 0)
                 charFrom = 0;
             int glyphStart = logClusters[charFrom];
@@ -608,7 +607,7 @@ glyph_metrics_t QTextEngine::boundingBox(int from,  int len) const
             if (charFrom < ilen) {
                 QFontEngine *fe = fontEngine(*si);
                 glyphStart = logClusters[charFrom];
-                int charEnd = from + len - 1 - pos;
+                int charEnd = len - 1 - pos;
                 if (charEnd >= ilen)
                     charEnd = ilen-1;
                 int glyphEnd = logClusters[charEnd];
@@ -630,26 +629,27 @@ glyph_metrics_t QTextEngine::boundingBox(int from,  int len) const
     return gm;
 }
 
-glyph_metrics_t QTextEngine::tightBoundingBox(int from,  int len) const
+glyph_metrics_t QTextEngine::tightBoundingBox() const
 {
     itemize();
 
+    const int len = layoutData->string.length();
     glyph_metrics_t gm;
 
     for (int i = 0; i < layoutData->items.size(); i++) {
         const QScriptItem *si = layoutData->items.constData() + i;
         int pos = si->position;
         int ilen = length(i);
-        if (pos > from + len)
+        if (pos > len)
             break;
-        if (pos + len > from) {
+        if (pos + len > 0) {
             if (!si->num_glyphs)
                 shape(i);
             unsigned short *logClusters = this->logClusters(si);
             QGlyphLayout glyphs = shapedGlyphs(si);
 
             // do the simple thing for now and give the first glyph in a cluster the full width, all other ones 0.
-            int charFrom = from - pos;
+            int charFrom = pos;
             if (charFrom < 0)
                 charFrom = 0;
             int glyphStart = logClusters[charFrom];
@@ -658,7 +658,7 @@ glyph_metrics_t QTextEngine::tightBoundingBox(int from,  int len) const
                     charFrom++;
             if (charFrom < ilen) {
                 glyphStart = logClusters[charFrom];
-                int charEnd = from + len - 1 - pos;
+                int charEnd = len - 1 - pos;
                 if (charEnd >= ilen)
                     charEnd = ilen-1;
                 int glyphEnd = logClusters[charEnd];
@@ -926,59 +926,21 @@ QTextEngine::LayoutData::LayoutData()
 {
     memory = 0;
     allocated = 0;
-    memory_on_stack = false;
     used = 0;
     layoutState = LayoutEmpty;
     haveCharAttributes = false;
     logClustersPtr = 0;
-    available_glyphs = 0;
-}
-
-QTextEngine::LayoutData::LayoutData(const QString &str, void **stack_memory, int _allocated)
-    : string(str)
-{
-    allocated = _allocated;
-
-    int space_charAttributes = sizeof(HB_CharAttributes) * string.length() / QT_POINTER_SIZE + 1;
-    int space_logClusters = sizeof(unsigned short) * string.length() / QT_POINTER_SIZE + 1;
-    available_glyphs = (allocated - space_charAttributes - space_logClusters) * QT_POINTER_SIZE / QGlyphLayout::spaceNeededForGlyphLayout(1);
-
-    if (available_glyphs < str.length()) {
-        // need to allocate on the heap
-        allocated = 0;
-
-        memory_on_stack = false;
-        memory = 0;
-        logClustersPtr = 0;
-    } else {
-        memory_on_stack = true;
-        memory = stack_memory;
-        logClustersPtr = (unsigned short *)(memory + space_charAttributes);
-
-        void *m = memory + space_charAttributes + space_logClusters;
-        glyphLayout = QGlyphLayout(reinterpret_cast<char *>(m), str.length());
-        glyphLayout.clear();
-        ::memset(memory, 0, space_charAttributes * QT_POINTER_SIZE);
-    }
-    used = 0;
-    layoutState = LayoutEmpty;
-    haveCharAttributes = false;
 }
 
 QTextEngine::LayoutData::~LayoutData()
 {
-    if (!memory_on_stack)
-        ::free(memory);
+    ::free(memory);
     memory = 0;
 }
 
 bool QTextEngine::LayoutData::reallocate(int totalGlyphs)
 {
     Q_ASSERT(totalGlyphs >= glyphLayout.numGlyphs);
-    if (memory_on_stack && available_glyphs >= totalGlyphs) {
-        glyphLayout.grow(glyphLayout.data(), totalGlyphs);
-        return true;
-    }
 
     int space_charAttributes = sizeof(HB_CharAttributes) * string.length() / QT_POINTER_SIZE + 1;
     int space_logClusters = sizeof(unsigned short) * string.length() / QT_POINTER_SIZE + 1;
@@ -993,15 +955,12 @@ bool QTextEngine::LayoutData::reallocate(int totalGlyphs)
         return false;
     }
 
-    void **newMem = (void **)::realloc(memory_on_stack ? 0 : memory, newAllocated * QT_POINTER_SIZE);
+    void **newMem = (void **)::realloc(memory, newAllocated * QT_POINTER_SIZE);
     if (!newMem) {
         layoutState = LayoutFailed;
         return false;
     }
-    if (memory_on_stack)
-        memcpy(newMem, memory, allocated * QT_POINTER_SIZE);
     memory = newMem;
-    memory_on_stack = false;
 
     void **m = memory;
     m += space_charAttributes;
@@ -1629,42 +1588,6 @@ int QTextEngine::lineNumberForTextPosition(int pos)
     return -1;
 }
 
-void QTextEngine::insertionPointsForLine(int lineNum, QVector<int> &insertionPoints)
-{
-    QTextLineItemIterator iterator(this, lineNum);
-    bool lastLine = lineNum >= lines.size() - 1;
-
-    while (!iterator.atEnd()) {
-        iterator.next();
-        const QScriptItem *si = &layoutData->items[iterator.item];
-        int i = iterator.itemStart, max = iterator.itemEnd;
-        if (lastLine && iterator.atEnd())
-            max++;
-        for (; i < max; i++)
-            insertionPoints.push_back(i);
-    }
-}
-
-int QTextEngine::endOfLine(int lineNum)
-{
-    QVector<int> insertionPoints;
-    insertionPointsForLine(lineNum, insertionPoints);
-
-    if (insertionPoints.size() > 0)
-        return insertionPoints.last();
-    return 0;
-}
-
-int QTextEngine::beginningOfLine(int lineNum)
-{
-    QVector<int> insertionPoints;
-    insertionPointsForLine(lineNum, insertionPoints);
-
-    if (insertionPoints.size() > 0)
-        return insertionPoints.first();
-    return 0;
-}
-
 int QTextEngine::positionAfterVisualMovement(int pos, QTextCursor::MoveOperation op)
 {
     if (!layoutData)
@@ -1673,14 +1596,6 @@ int QTextEngine::positionAfterVisualMovement(int pos, QTextCursor::MoveOperation
     bool moveRight = (op == QTextCursor::Right);
 
     return (moveRight ? nextLogicalPosition(pos) : previousLogicalPosition(pos));
-}
-
-QStackTextEngine::QStackTextEngine(const QString &string, const QFont &f)
-    : QTextEngine(string, f),
-      _layoutData(string, _memory, MemSize)
-{
-    stackEngine = true;
-    layoutData = &_layoutData;
 }
 
 QTextItemInt::QTextItemInt(const QScriptItem &si, QFont *font, const QTextCharFormat &format)

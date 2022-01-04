@@ -830,7 +830,6 @@ include/katie/QtGui/QStackedWidget
 include/katie/QtGui/QStandardItem
 include/katie/QtGui/QStandardItemEditorCreator
 include/katie/QtGui/QStandardItemModel
-include/katie/QtGui/QStaticText
 include/katie/QtGui/QStatusBar
 include/katie/QtGui/QStatusTipEvent
 include/katie/QtGui/QStringListModel
@@ -1119,7 +1118,6 @@ include/katie/QtGui/qsplitter.h
 include/katie/QtGui/qstackedlayout.h
 include/katie/QtGui/qstackedwidget.h
 include/katie/QtGui/qstandarditemmodel.h
-include/katie/QtGui/qstatictext.h
 include/katie/QtGui/qstatusbar.h
 include/katie/QtGui/qstringlistmodel.h
 include/katie/QtGui/qstyle.h
