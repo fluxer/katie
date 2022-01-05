@@ -758,18 +758,16 @@ QRect QFontMetrics::tightBoundingRect(const QString &text) const
 QString QFontMetrics::elidedText(const QString &text, Qt::TextElideMode mode, int width, int flags) const
 {
     QString _text = text;
-    if (!(flags & Qt::TextLongestVariant)) {
-        int posA = 0;
-        int posB = _text.indexOf(QLatin1Char('\x9c'));
-        while (posB >= 0) {
-            QString portion = _text.mid(posA, posB - posA);
-            if (size(flags, portion).width() <= width)
-                return portion;
-            posA = posB + 1;
-            posB = _text.indexOf(QLatin1Char('\x9c'), posA);
-        }
-        _text = _text.mid(posA);
+    int posA = 0;
+    int posB = _text.indexOf(QLatin1Char('\x9c'));
+    while (posB >= 0) {
+        QString portion = _text.mid(posA, posB - posA);
+        if (size(flags, portion).width() <= width)
+            return portion;
+        posA = posB + 1;
+        posB = _text.indexOf(QLatin1Char('\x9c'), posA);
     }
+    _text = _text.mid(posA);
     QTextEngine engine(_text, QFont(d.data()));
     return engine.elidedText(mode, width, flags);
 }
@@ -1514,18 +1512,16 @@ QRectF QFontMetricsF::tightBoundingRect(const QString &text) const
 QString QFontMetricsF::elidedText(const QString &text, Qt::TextElideMode mode, qreal width, int flags) const
 {
     QString _text = text;
-    if (!(flags & Qt::TextLongestVariant)) {
-        int posA = 0;
-        int posB = _text.indexOf(QLatin1Char('\x9c'));
-        while (posB >= 0) {
-            QString portion = _text.mid(posA, posB - posA);
-            if (size(flags, portion).width() <= width)
-                return portion;
-            posA = posB + 1;
-            posB = _text.indexOf(QLatin1Char('\x9c'), posA);
-        }
-        _text = _text.mid(posA);
+    int posA = 0;
+    int posB = _text.indexOf(QLatin1Char('\x9c'));
+    while (posB >= 0) {
+        QString portion = _text.mid(posA, posB - posA);
+        if (size(flags, portion).width() <= width)
+            return portion;
+        posA = posB + 1;
+        posB = _text.indexOf(QLatin1Char('\x9c'), posA);
     }
+    _text = _text.mid(posA);
     QTextEngine engine(_text, QFont(d.data()));
     return engine.elidedText(mode, QFixed::fromReal(width), flags);
 }
