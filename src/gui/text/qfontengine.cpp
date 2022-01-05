@@ -188,30 +188,6 @@ void QFontEngine::getGlyphBearings(glyph_t glyph, qreal *leftBearing, qreal *rig
         *rightBearing = isValid ? (gi.xoff - gi.x - gi.width).toReal() : qreal(0.0);
 }
 
-glyph_metrics_t QFontEngine::tightBoundingBox(const QGlyphLayout &glyphs)
-{
-    glyph_metrics_t overall;
-
-    QFixed ymax = 0;
-    QFixed xmax = 0;
-    for (int i = 0; i < glyphs.numGlyphs; i++) {
-        glyph_metrics_t bb = boundingBox(glyphs.glyphs[i]);
-        QFixed x = overall.xoff + glyphs.offsets[i].x + bb.x;
-        QFixed y = overall.yoff + glyphs.offsets[i].y + bb.y;
-        overall.x = qMin(overall.x, x);
-        overall.y = qMin(overall.y, y);
-        xmax = qMax(xmax, x + bb.width);
-        ymax = qMax(ymax, y + bb.height);
-        overall.xoff += bb.xoff;
-        overall.yoff += bb.yoff;
-    }
-    overall.height = qMax(overall.height, ymax - overall.y);
-    overall.width = xmax - overall.x;
-
-    return overall;
-}
-
-
 void QFontEngine::addOutlineToPath(qreal x, qreal y, const QGlyphLayout &glyphs, QPainterPath *path,
                                    QTextItem::RenderFlags flags)
 {

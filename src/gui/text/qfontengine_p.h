@@ -122,7 +122,6 @@ public:
 
     virtual glyph_metrics_t boundingBox(const QGlyphLayout &glyphs) const = 0;
     virtual glyph_metrics_t boundingBox(glyph_t glyph) const = 0;
-    glyph_metrics_t tightBoundingBox(const QGlyphLayout &glyphs);
 
     virtual QFixed ascent() const = 0;
     virtual QFixed descent() const = 0;

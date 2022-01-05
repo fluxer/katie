@@ -96,10 +96,9 @@ extern void qt_format_text(const QFont& font, const QRectF &_r,
     These are by necessity slow, and we recommend avoiding them if
     possible.
 
-    For each character, you can get its width(), leftBearing() and
-    rightBearing() and find out whether it is in the font using
-    inFont(). You can also treat the character as a string, and use
-    the string functions on it.
+    For each character, you can get its width() and find out whether
+    it is in the font using inFont(). You can also treat the character
+    as a string, and use the string functions on it.
 
     The string functions include width(), to return the width of a
     string in pixels (or points, for a printer), boundingRect(), to
@@ -312,12 +311,12 @@ int QFontMetrics::lineSpacing() const
 /*!
     Returns the minimum left bearing of the font.
 
-    This is the smallest leftBearing(char) of all characters in the
+    This is the smallest left bearing of all characters in the
     font.
 
     Note that this function can be very slow if the font is large.
 
-    \sa minRightBearing(), leftBearing()
+    \sa minRightBearing()
 */
 int QFontMetrics::minLeftBearing() const
 {
@@ -415,64 +414,6 @@ bool QFontMetrics::inFontUcs4(uint ucs4) const
 }
 
 /*!
-    Returns the left bearing of character \a ch in the font.
-
-    The left bearing is the right-ward distance of the left-most pixel
-    of the character from the logical origin of the character. This
-    value is negative if the pixels of the character extend to the
-    left of the logical origin.
-
-    See width(QChar) for a graphical description of this metric.
-
-    \sa rightBearing(), minLeftBearing(), width()
-*/
-int QFontMetrics::leftBearing(QChar ch) const
-{
-    const QUnicodeTables::Script script = QUnicodeTables::script(ch.unicode());
-    QFontEngine *engine = d->engineForScript(script);
-    Q_ASSERT(engine != 0);
-    if (engine->type() == QFontEngine::Box)
-        return 0;
-
-    QGlyphLayoutArray<10> glyphs;
-    int nglyphs = 9;
-    engine->stringToCMap(&ch, 1, &glyphs, &nglyphs, 0);
-    // ### can nglyphs != 1 happen at all? Not currently I think
-    qreal lb;
-    engine->getGlyphBearings(glyphs.glyphs[0], &lb);
-    return qRound(lb);
-}
-
-/*!
-    Returns the right bearing of character \a ch in the font.
-
-    The right bearing is the left-ward distance of the right-most
-    pixel of the character from the logical origin of a subsequent
-    character. This value is negative if the pixels of the character
-    extend to the right of the width() of the character.
-
-    See width() for a graphical description of this metric.
-
-    \sa leftBearing(), minRightBearing(), width()
-*/
-int QFontMetrics::rightBearing(QChar ch) const
-{
-    const QUnicodeTables::Script script = QUnicodeTables::script(ch.unicode());
-    QFontEngine *engine = d->engineForScript(script);
-    Q_ASSERT(engine != 0);
-    if (engine->type() == QFontEngine::Box)
-        return 0;
-
-    QGlyphLayoutArray<10> glyphs;
-    int nglyphs = 9;
-    engine->stringToCMap(&ch, 1, &glyphs, &nglyphs, 0);
-    // ### can nglyphs != 1 happen at all? Not currently I think
-    qreal rb;
-    engine->getGlyphBearings(glyphs.glyphs[0], 0, &rb);
-    return qRound(rb);
-}
-
-/*!
     Returns the width in pixels of the first \a len characters of \a
     text. If \a len is negative (the default), the entire string is
     used.
@@ -510,10 +451,9 @@ int QFontMetrics::width(const QString &text, int len) const
 
     Some of the metrics are described in the image to the right. The
     central dark rectangles cover the logical width() of each
-    character. The outer pale rectangles cover the leftBearing() and
-    rightBearing() of each character. Notice that the bearings of "f"
-    in this particular font are both negative, while the bearings of
-    "o" are both positive.
+    character. Notice that the bearings of "f" in this particular
+    font are both negative, while the bearings of "o" are both
+    positive.
 
     \warning This function will produce incorrect results for Arabic
     characters or non-spacing marks in the middle of a string, as the
@@ -556,7 +496,7 @@ int QFontMetrics::width(QChar ch) const
     The height of the bounding rectangle is at least as large as the
     value returned by height().
 
-    \sa width(), height(), QPainter::boundingRect(), tightBoundingRect()
+    \sa width(), height(), QPainter::boundingRect()
 */
 QRect QFontMetrics::boundingRect(const QString &text) const
 {
@@ -699,40 +639,6 @@ QSize QFontMetrics::size(int flags, const QString &text, int tabStops, int *tabA
 }
 
 /*!
-  \since 4.3
-
-    Returns a tight bounding rectangle around the characters in the
-    string specified by \a text. The bounding rectangle always covers
-    at least the set of pixels the text would cover if drawn at (0,
-    0).
-
-    Note that the bounding rectangle may extend to the left of (0, 0),
-    e.g. for italicized fonts, and that the width of the returned
-    rectangle might be different than what the width() method returns.
-
-    If you want to know the advance width of the string (to layout
-    a set of strings next to each other), use width() instead.
-
-    Newline characters are processed as normal characters, \e not as
-    linebreaks.
-
-    \warning Calling this method is very slow on Windows.
-
-    \sa width(), height(), boundingRect()
-*/
-QRect QFontMetrics::tightBoundingRect(const QString &text) const
-{
-    if (text.isEmpty())
-        return QRect();
-
-    QTextEngine layout(text, d.data());
-    layout.itemize();
-    glyph_metrics_t gm = layout.tightBoundingBox();
-    return QRect(qRound(gm.x), qRound(gm.y), qRound(gm.width), qRound(gm.height));
-}
-
-
-/*!
     \since 4.2
 
     If the string \a text is wider than \a width, returns an elided
@@ -854,10 +760,9 @@ int QFontMetrics::lineWidth() const
     These are by necessity slow, and we recommend avoiding them if
     possible.
 
-    For each character, you can get its width(), leftBearing() and
-    rightBearing() and find out whether it is in the font using
-    inFont(). You can also treat the character as a string, and use
-    the string functions on it.
+    For each character, you can get its width() and find out whether
+    it is in the font using inFont(). You can also treat the character
+    as a string, and use the string functions on it.
 
     The string functions include width(), to return the width of a
     string in pixels (or points, for a printer), boundingRect(), to
@@ -1075,12 +980,12 @@ qreal QFontMetricsF::lineSpacing() const
 /*!
     Returns the minimum left bearing of the font.
 
-    This is the smallest leftBearing(char) of all characters in the
+    This is the smallest left bearing of all characters in the
     font.
 
     Note that this function can be very slow if the font is large.
 
-    \sa minRightBearing(), leftBearing()
+    \sa minRightBearing()
 */
 qreal QFontMetricsF::minLeftBearing() const
 {
@@ -1178,65 +1083,6 @@ bool QFontMetricsF::inFontUcs4(uint ucs4) const
 }
 
 /*!
-    Returns the left bearing of character \a ch in the font.
-
-    The left bearing is the right-ward distance of the left-most pixel
-    of the character from the logical origin of the character. This
-    value is negative if the pixels of the character extend to the
-    left of the logical origin.
-
-    See width(QChar) for a graphical description of this metric.
-
-    \sa rightBearing(), minLeftBearing(), width()
-*/
-qreal QFontMetricsF::leftBearing(QChar ch) const
-{
-    const QUnicodeTables::Script script = QUnicodeTables::script(ch.unicode());
-    QFontEngine *engine = d->engineForScript(script);
-    Q_ASSERT(engine != 0);
-    if (engine->type() == QFontEngine::Box)
-        return 0;
-
-    QGlyphLayoutArray<10> glyphs;
-    int nglyphs = 9;
-    engine->stringToCMap(&ch, 1, &glyphs, &nglyphs, 0);
-    // ### can nglyphs != 1 happen at all? Not currently I think
-    qreal lb;
-    engine->getGlyphBearings(glyphs.glyphs[0], &lb);
-    return lb;
-}
-
-/*!
-    Returns the right bearing of character \a ch in the font.
-
-    The right bearing is the left-ward distance of the right-most
-    pixel of the character from the logical origin of a subsequent
-    character. This value is negative if the pixels of the character
-    extend to the right of the width() of the character.
-
-    See width() for a graphical description of this metric.
-
-    \sa leftBearing(), minRightBearing(), width()
-*/
-qreal QFontMetricsF::rightBearing(QChar ch) const
-{
-    const QUnicodeTables::Script script = QUnicodeTables::script(ch.unicode());
-    QFontEngine *engine = d->engineForScript(script);
-    Q_ASSERT(engine != 0);
-    if (engine->type() == QFontEngine::Box)
-        return 0;
-
-    QGlyphLayoutArray<10> glyphs;
-    int nglyphs = 9;
-    engine->stringToCMap(&ch, 1, &glyphs, &nglyphs, 0);
-    // ### can nglyphs != 1 happen at all? Not currently I think
-    qreal rb;
-    engine->getGlyphBearings(glyphs.glyphs[0], 0, &rb);
-    return rb;
-
-}
-
-/*!
     Returns the width in pixels of the characters in the given \a text.
 
     Note that this value is \e not equal to the width returned by
@@ -1267,10 +1113,9 @@ qreal QFontMetricsF::width(const QString &text) const
 
     Some of the metrics are described in the image to the right. The
     central dark rectangles cover the logical width() of each
-    character. The outer pale rectangles cover the leftBearing() and
-    rightBearing() of each character. Notice that the bearings of "f"
-    in this particular font are both negative, while the bearings of
-    "o" are both positive.
+    character. Notice that the bearings of "f" in this particular
+    font are both negative, while the bearings of "o" are both
+    positive.
 
     \warning This function will produce incorrect results for Arabic
     characters or non-spacing marks in the middle of a string, as the
@@ -1456,39 +1301,6 @@ QRectF QFontMetricsF::boundingRect(const QRectF &rect, int flags, const QString&
 QSizeF QFontMetricsF::size(int flags, const QString &text, int tabStops, int *tabArray) const
 {
     return boundingRect(QRectF(), flags | Qt::TextLongestVariant, text, tabStops, tabArray).size();
-}
-
-/*!
-  \since 4.3
-
-    Returns a tight bounding rectangle around the characters in the
-    string specified by \a text. The bounding rectangle always covers
-    at least the set of pixels the text would cover if drawn at (0,
-    0).
-
-    Note that the bounding rectangle may extend to the left of (0, 0),
-    e.g. for italicized fonts, and that the width of the returned
-    rectangle might be different than what the width() method returns.
-
-    If you want to know the advance width of the string (to layout
-    a set of strings next to each other), use width() instead.
-
-    Newline characters are processed as normal characters, \e not as
-    linebreaks.
-
-    \warning Calling this method is very slow on Windows.
-
-    \sa width(), height(), boundingRect()
-*/
-QRectF QFontMetricsF::tightBoundingRect(const QString &text) const
-{
-    if (text.isEmpty())
-        return QRect();
-
-    QTextEngine layout(text, d.data());
-    layout.itemize();
-    glyph_metrics_t gm = layout.tightBoundingBox();
-    return QRectF(gm.x.toReal(), gm.y.toReal(), gm.width.toReal(), gm.height.toReal());
 }
 
 /*!

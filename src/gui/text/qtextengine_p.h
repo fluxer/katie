@@ -385,7 +385,6 @@ public:
 
     QFixed width(int charFrom, int numChars) const;
     glyph_metrics_t boundingBox() const;
-    glyph_metrics_t tightBoundingBox() const;
 
     int length(int item) const {
         int from = layoutData->items[item].position;
