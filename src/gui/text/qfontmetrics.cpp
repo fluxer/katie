@@ -563,11 +563,10 @@ QRect QFontMetrics::boundingRect(const QString &text) const
     if (text.isEmpty())
         return QRect();
 
-    QTextLayout textlayout(text, d.data());
-    textlayout.beginLayout();
-    QTEXTLAYOUT(textlayout)
-    textlayout.endLayout();
-    return textlayout.boundingRect().toRect();
+    QTextEngine layout(text, d.data());
+    layout.itemize();
+    glyph_metrics_t gm = layout.boundingBox();
+    return QRect(qRound(gm.x), qRound(gm.y), qRound(gm.width), qRound(gm.height));
 }
 
 /*!
@@ -1321,11 +1320,10 @@ QRectF QFontMetricsF::boundingRect(const QString &text) const
     if (text.isEmpty())
         return QRectF();
 
-    QTextLayout textlayout(text, d.data());
-    textlayout.beginLayout();
-    QTEXTLAYOUT(textlayout)
-    textlayout.endLayout();
-    return textlayout.boundingRect();
+    QTextEngine layout(text, d.data());
+    layout.itemize();
+    glyph_metrics_t gm = layout.boundingBox();
+    return QRectF(gm.x.toReal(), gm.y.toReal(), gm.width.toReal(), gm.height.toReal());
 }
 
 /*!
