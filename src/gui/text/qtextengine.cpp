@@ -303,7 +303,6 @@ static void init(QTextEngine *e)
 
     e->underlinePositions = 0;
     e->specialData = 0;
-    e->stackEngine = false;
 }
 
 QTextEngine::QTextEngine()
@@ -320,8 +319,7 @@ QTextEngine::QTextEngine(const QString &str, const QFont &f)
 
 QTextEngine::~QTextEngine()
 {
-    if (!stackEngine)
-        delete layoutData;
+    delete layoutData;
     delete specialData;
 }
 
@@ -1000,14 +998,8 @@ void QGlyphLayout::grow(char *address, int totalGlyphs)
 
 void QTextEngine::freeMemory()
 {
-    if (!stackEngine) {
-        delete layoutData;
-        layoutData = 0;
-    } else {
-        layoutData->used = 0;
-        layoutData->layoutState = LayoutEmpty;
-        layoutData->haveCharAttributes = false;
-    }
+    delete layoutData;
+    layoutData = 0;
     for (int i = 0; i < lines.size(); ++i) {
         lines[i].justified = 0;
         lines[i].gridfitted = 0;

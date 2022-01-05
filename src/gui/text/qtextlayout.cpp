@@ -334,8 +334,7 @@ QTextLayout::QTextLayout(const QTextBlock &block)
 */
 QTextLayout::~QTextLayout()
 {
-    if (!d->stackEngine)
-        delete d;
+    delete d;
 }
 
 /*!

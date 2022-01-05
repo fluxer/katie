@@ -468,7 +468,6 @@ public:
     QFixed maxWidth;
     QPointF position;
     bool cacheGlyphs;
-    bool stackEngine;
     bool forceJustification;
     bool visualMovement;
 
