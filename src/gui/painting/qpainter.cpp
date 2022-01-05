@@ -5928,8 +5928,7 @@ void qt_format_text(const QFont &fnt, const QRectF &_r,
                     int tabstops, int *ta, int tabarraylen,
                     QPainter *painter)
 {
-
-    Q_ASSERT( !((tf & ~Qt::TextDontPrint)!=0 && option!=0) ); // we either have an option or flags
+    Q_ASSERT(!((tf & ~Qt::TextDontPrint) != 0 && option != 0) ); // we either have an option or flags
 
     if (option) {
         tf |= option->alignment();
@@ -6041,36 +6040,45 @@ start_lengthVariant:
 
     QString finalText = text.mid(old_offset, length);
 
-    QTextLayout textLayout(finalText, fnt);
-    textLayout.setCacheEnabled(true);
-    textLayout.engine()->underlinePositions = underlinePositions.data();
-
-    QTextEngine* engine = textLayout.engine();
+    QTextOption textoption;
     if (option) {
-        engine->option = *option;
+        textoption = *option;
     }
 
-    if (engine->option.tabStop() < 0 && tabstops > 0)
-        engine->option.setTabStop(tabstops);
+    if (textoption.tabStop() < 0 && tabstops > 0)
+        textoption.setTabStop(tabstops);
 
-    if (engine->option.tabs().isEmpty() && ta) {
+    if (textoption.tabs().isEmpty() && ta) {
         QList<qreal> tabs;
         for (int i = 0; i < tabarraylen; i++)
             tabs.append(qreal(ta[i]));
-        engine->option.setTabArray(tabs);
+        textoption.setTabArray(tabs);
     }
 
-    engine->option.setTextDirection(layout_direction);
+    textoption.setTextDirection(layout_direction);
     if (tf & Qt::AlignJustify)
-        engine->option.setAlignment(Qt::AlignJustify);
+        textoption.setAlignment(Qt::AlignJustify);
     else
-        engine->option.setAlignment(Qt::AlignLeft); // do not do alignment twice
+        textoption.setAlignment(Qt::AlignLeft); // do not do alignment twice
 
     if (!option && (tf & Qt::TextWrapAnywhere))
-        engine->option.setWrapMode(QTextOption::WrapAnywhere);
+        textoption.setWrapMode(QTextOption::WrapAnywhere);
 
-    if (tf & Qt::TextJustificationForced)
-        engine->forceJustification = true;
+    QList<QTextLayout::FormatRange> formatoverrides;
+    for (int i = 0; i < underlinePositions.size(); i++) {
+        QTextLayout::FormatRange formatoverride;
+        formatoverride.start = underlinePositions[i];
+        formatoverride.length = 1;
+        formatoverride.format.setFontUnderline(true);
+        formatoverrides.append(formatoverride);
+    }
+
+    QTextLayout textLayout(finalText, fnt);
+    textLayout.setCacheEnabled(true);
+    textLayout.setTextOption(textoption);
+    textLayout.setAdditionalFormats(formatoverrides);
+    // covers Qt::TextJustificationForced
+    textLayout.setFlags(tf);
 
     if (finalText.isEmpty()) {
         height = fm.height();
