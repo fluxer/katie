@@ -47,10 +47,8 @@ QT_BEGIN_NAMESPACE
 
 // #define QT_DEBUG_DRAW
 
-void qt_format_text(const QFont &font,
-                    const QRectF &_r, int tf, const QTextOption *option, const QString& str, QRectF *brect,
-                    int tabstops, int* tabarray, int tabarraylen,
-                    QPainter *painter);
+void qt_format_text(const QFont &font, const QRectF &_r, int tf, const QTextOption *option,
+                    const QString& str, QRectF *brect, QPainter *painter);
 static void drawTextItemDecoration(QPainter *painter, const QPointF &pos, const QFontEngine *fe,
                                    QTextCharFormat::UnderlineStyle underlineStyle,
                                    QTextItem::RenderFlags flags, qreal width,
@@ -4785,7 +4783,7 @@ void QPainter::drawText(const QRect &r, int flags, const QString &str, QRect *br
         d->updateState(d->state);
 
     QRectF bounds;
-    qt_format_text(d->state->font, r, flags, 0, str, br ? &bounds : 0, 0, 0, 0, this);
+    qt_format_text(d->state->font, r, flags, 0, str, br ? &bounds : nullptr, this);
     if (br)
         *br = bounds.toAlignedRect();
 }
@@ -4832,7 +4830,6 @@ void QPainter::drawText(const QRect &r, int flags, const QString &str, QRect *br
     \o Qt::AlignCenter
     \o Qt::TextDontClip
     \o Qt::TextSingleLine
-    \o Qt::TextExpandTabs
     \o Qt::TextShowMnemonic
     \o Qt::TextWordWrap
     \o Qt::TextIncludeTrailingSpaces
@@ -4859,7 +4856,7 @@ void QPainter::drawText(const QRectF &r, int flags, const QString &str, QRectF *
     if (!d->extended)
         d->updateState(d->state);
 
-    qt_format_text(d->state->font, r, flags, 0, str, br, 0, 0, 0, this);
+    qt_format_text(d->state->font, r, flags, 0, str, br, this);
 }
 
 /*!
@@ -4912,7 +4909,6 @@ void QPainter::drawText(const QRectF &r, int flags, const QString &str, QRectF *
     \o Qt::AlignVCenter
     \o Qt::AlignCenter
     \o Qt::TextSingleLine
-    \o Qt::TextExpandTabs
     \o Qt::TextShowMnemonic
     \o Qt::TextWordWrap
     \endlist
@@ -4951,7 +4947,7 @@ void QPainter::drawText(const QRectF &r, const QString &text, const QTextOption 
     if (!d->extended)
         d->updateState(d->state);
 
-    qt_format_text(d->state->font, r, 0, &o, text, 0, 0, 0, 0, this);
+    qt_format_text(d->state->font, r, 0, &o, text, nullptr, this);
 }
 
 /*!
@@ -5223,7 +5219,6 @@ void QPainter::drawTextItem(const QPointF &p, const QTextItem &_ti)
          \o Qt::AlignVCenter
          \o Qt::AlignCenter
          \o Qt::TextSingleLine
-         \o Qt::TextExpandTabs
          \o Qt::TextShowMnemonic
          \o Qt::TextWordWrap
          \o Qt::TextIncludeTrailingSpaces
@@ -5296,7 +5291,7 @@ QRectF QPainter::boundingRect(const QRectF &r, const QString &text, const QTextO
         return QRectF(r.x(),r.y(), 0,0);
 
     QRectF br;
-    qt_format_text(d->state->font, r, Qt::TextDontPrint, &o, text, &br, 0, 0, 0, this);
+    qt_format_text(d->state->font, r, Qt::TextDontPrint, &o, text, &br, this);
     return br;
 }
 
@@ -5915,17 +5910,12 @@ void QPainter::setViewTransformEnabled(bool enable)
 }
 
 void qt_format_text(const QFont &fnt, const QRectF &_r,
-                    int tf, const QString& str, QRectF *brect,
-                    int tabstops, int *ta, int tabarraylen)
+                    int tf, const QString& str, QRectF *brect)
 {
-    qt_format_text(fnt, _r,
-                    tf, 0, str, brect,
-                    tabstops, ta, tabarraylen,
-                    nullptr);
+    qt_format_text(fnt, _r, tf, nullptr, str, brect, nullptr);
 }
 void qt_format_text(const QFont &fnt, const QRectF &_r,
                     int tf, const QTextOption *option, const QString& str, QRectF *brect,
-                    int tabstops, int *ta, int tabarraylen,
                     QPainter *painter)
 {
     Q_ASSERT(!((tf & ~Qt::TextDontPrint) != 0 && option != 0) ); // we either have an option or flags
@@ -5937,9 +5927,6 @@ void qt_format_text(const QFont &fnt, const QRectF &_r,
 
         if (option->flags() & QTextOption::IncludeTrailingSpaces)
             tf |= Qt::TextIncludeTrailingSpaces;
-
-        if (option->tabStop() >= 0 || !option->tabArray().isEmpty())
-            tf |= Qt::TextExpandTabs;
     }
 
     // we need to copy r here to protect against the case (&r == brect).
@@ -5965,10 +5952,7 @@ void qt_format_text(const QFont &fnt, const QRectF &_r,
 
     tf = QStyle::visualAlignment(layout_direction, QFlag(tf));
 
-    bool isRightToLeft = layout_direction == Qt::RightToLeft;
-    bool expandtabs = ((tf & Qt::TextExpandTabs) &&
-                        (((tf & Qt::AlignLeft) && !isRightToLeft) ||
-                          ((tf & Qt::AlignRight) && isRightToLeft)));
+    bool isRightToLeft = (layout_direction == Qt::RightToLeft);
 
     if (!painter)
         tf |= Qt::TextDontPrint;
@@ -5982,23 +5966,16 @@ void qt_format_text(const QFont &fnt, const QRectF &_r,
     int offset = 0;
 start_lengthVariant:
     bool hasMoreLengthVariants = false;
-    // compatible behaviour to the old implementation. Replace
-    // tabs by spaces
     int old_offset = offset;
     for (; offset < text.length(); offset++) {
         QChar chr = text.at(offset);
+        // replace tabs with spaces for compatibility
         if (chr == QLatin1Char('\r') || (singleline && chr == QLatin1Char('\n'))) {
             text[offset] = QLatin1Char(' ');
         } else if (chr == QLatin1Char('\n')) {
             text[offset] = QChar::LineSeparator;
         } else if (chr == QLatin1Char('&')) {
             ++maxUnderlines;
-        } else if (chr == QLatin1Char('\t')) {
-            if (!expandtabs) {
-                text[offset] = QLatin1Char(' ');
-            } else if (!tabarraylen && !tabstops) {
-                tabstops = qRound(fm.width(QLatin1Char('x'))*8);
-            }
         } else if (chr == QChar(ushort(0x9c))) {
             // string with multiple length variants
             hasMoreLengthVariants = true;
@@ -6043,16 +6020,6 @@ start_lengthVariant:
     QTextOption textoption;
     if (option) {
         textoption = *option;
-    }
-
-    if (textoption.tabStop() < 0 && tabstops > 0)
-        textoption.setTabStop(tabstops);
-
-    if (textoption.tabs().isEmpty() && ta) {
-        QList<qreal> tabs;
-        for (int i = 0; i < tabarraylen; i++)
-            tabs.append(qreal(ta[i]));
-        textoption.setTabArray(tabs);
     }
 
     textoption.setTextDirection(layout_direction);

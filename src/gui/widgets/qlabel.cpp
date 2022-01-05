@@ -84,8 +84,8 @@ QT_BEGIN_NAMESPACE
 
     By default, labels display \l{alignment}{left-aligned, vertically-centered}
     text and images, where any tabs in the text to be displayed are
-    \l{Qt::TextExpandTabs}{automatically expanded}. However, the look
-    of a QLabel can be adjusted and fine-tuned in several ways.
+    \l{automatically expanded}. However, the look of a QLabel can be adjusted
+    and fine-tuned in several ways.
 
     The positioning of the content within the QLabel widget area can
     be tuned with setAlignment() and setIndent(). Text content can
@@ -185,7 +185,7 @@ void QLabelPrivate::init()
     pixmap = 0;
     scaledpixmap = 0;
     cachedimage = 0;
-    align = Qt::AlignLeft | Qt::AlignVCenter | Qt::TextExpandTabs;
+    align = Qt::AlignLeft | Qt::AlignVCenter;
     indent = -1;
     scaledcontents = false;
     textLayoutDirty = false;

@@ -154,9 +154,6 @@ private:
     friend class QPSPrinter;
     friend class QGraphicsSimpleTextItemPrivate;
     friend class QGraphicsSimpleTextItem;
-    friend void qt_format_text(const QFont &font, const QRectF &_r, int tf, const QTextOption *, const QString& str,
-                               QRectF *brect, int tabstops, int* tabarray, int tabarraylen,
-                               QPainter *painter);
     QTextEngine *d;
 };
 

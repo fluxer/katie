@@ -65,11 +65,10 @@ public:
 
     QRect boundingRect(QChar) const;
     QRect boundingRect(const QString &text) const;
-    QRect boundingRect(const QRect &r, int flags, const QString &text, int tabstops=0, int *tabarray=0) const;
-    inline QRect boundingRect(int x, int y, int w, int h, int flags, const QString &text,
-                              int tabstops=0, int *tabarray=0) const
-        { return boundingRect(QRect(x, y, w, h), flags, text, tabstops, tabarray); }
-    QSize size(int flags, const QString& str, int tabstops=0, int *tabarray=0) const;
+    QRect boundingRect(const QRect &r, int flags, const QString &text) const;
+    inline QRect boundingRect(int x, int y, int w, int h, int flags, const QString &text) const
+        { return boundingRect(QRect(x, y, w, h), flags, text); }
+    QSize size(int flags, const QString& str) const;
 
     QString elidedText(const QString &text, Qt::TextElideMode mode, int width, int flags = 0) const;
 
@@ -123,8 +122,8 @@ public:
 
     QRectF boundingRect(const QString &string) const;
     QRectF boundingRect(QChar) const;
-    QRectF boundingRect(const QRectF &r, int flags, const QString& string, int tabstops=0, int *tabarray=0) const;
-    QSizeF size(int flags, const QString& str, int tabstops=0, int *tabarray=0) const;
+    QRectF boundingRect(const QRectF &r, int flags, const QString& string) const;
+    QSizeF size(int flags, const QString& str) const;
 
     QString elidedText(const QString &text, Qt::TextElideMode mode, qreal width, int flags = 0) const;
 

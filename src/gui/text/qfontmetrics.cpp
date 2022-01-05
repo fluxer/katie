@@ -40,8 +40,7 @@ extern const QX11Info *qt_x11Info(const QPaintDevice *pd);
 #endif
 
 extern void qt_format_text(const QFont& font, const QRectF &_r,
-                           int tf, const QString &text, QRectF *brect,
-                           int tabStops, int *tabArray, int tabArrayLen);
+                           int tf, const QString &text, QRectF *brect);
 
 /*****************************************************************************
   QFontMetrics member functions
@@ -113,17 +112,12 @@ extern void qt_format_text(const QFont& font, const QRectF &_r,
 
 /*!
     \fn QRect QFontMetrics::boundingRect(int x, int y, int width, int height,
-        int flags, const QString &text, int tabStops, int *tabArray) const
+        int flags, const QString &text) const
     \overload
 
     Returns the bounding rectangle for the given \a text within the
     rectangle specified by the \a x and \a y coordinates, \a width, and
     \a height.
-
-    If Qt::TextExpandTabs is set in \a flags and \a tabArray is
-    non-null, it specifies a 0-terminated sequence of pixel-positions
-    for tabs; otherwise, if \a tabStops is non-zero, it is used as the
-    tab spacing (in pixels).
 */
 
 /*!
@@ -560,7 +554,6 @@ QRect QFontMetrics::boundingRect(QChar ch) const
     \o Qt::AlignVCenter aligns vertically centered
     \o Qt::AlignCenter (== \c{Qt::AlignHCenter | Qt::AlignVCenter})
     \o Qt::TextSingleLine ignores newline characters in the text.
-    \o Qt::TextExpandTabs expands tabs (see below)
     \o Qt::TextShowMnemonic interprets "&x" as \underline{x}; i.e., underlined.
     \o Qt::TextWordWrap breaks the text to fit the rectangle.
     \endlist
@@ -570,11 +563,6 @@ QRect QFontMetrics::boundingRect(QChar ch) const
 
     If several of the horizontal or several of the vertical alignment
     flags are set, the resulting alignment is undefined.
-
-    If Qt::TextExpandTabs is set in \a flags, then: if \a tabArray is
-    non-null, it specifies a 0-terminated sequence of pixel-positions
-    for tabs; otherwise if \a tabStops is non-zero, it is used as the
-    tab spacing (in pixels).
 
     Note that the bounding rectangle may extend to the left of (0, 0),
     e.g. for italicized fonts, and that the text output may cover \e
@@ -595,18 +583,10 @@ QRect QFontMetrics::boundingRect(QChar ch) const
 
     \sa width(), QPainter::boundingRect(), Qt::Alignment
 */
-QRect QFontMetrics::boundingRect(const QRect &rect, int flags, const QString &text, int tabStops,
-                                 int *tabArray) const
+QRect QFontMetrics::boundingRect(const QRect &rect, int flags, const QString &text) const
 {
-    int tabArrayLen = 0;
-    if (tabArray)
-        while (tabArray[tabArrayLen])
-            tabArrayLen++;
-
     QRectF rb;
-    qt_format_text(QFont(d.data()), rect, flags | Qt::TextDontPrint, text, &rb, tabStops, tabArray,
-                   tabArrayLen);
-
+    qt_format_text(QFont(d.data()), rect, flags | Qt::TextDontPrint, text, &rb);
     return rb.toAlignedRect();
 }
 
@@ -616,15 +596,9 @@ QRect QFontMetrics::boundingRect(const QRect &rect, int flags, const QString &te
     The \a flags argument is the bitwise OR of the following flags:
     \list
     \o Qt::TextSingleLine ignores newline characters.
-    \o Qt::TextExpandTabs expands tabs (see below)
     \o Qt::TextShowMnemonic interprets "&x" as \underline{x}; i.e., underlined.
     \o Qt::TextWordBreak breaks the text to fit the rectangle.
     \endlist
-
-    If Qt::TextExpandTabs is set in \a flags, then: if \a tabArray is
-    non-null, it specifies a 0-terminated sequence of pixel-positions
-    for tabs; otherwise if \a tabStops is non-zero, it is used as the
-    tab spacing (in pixels).
 
     Newline characters are processed as linebreaks.
 
@@ -633,9 +607,9 @@ QRect QFontMetrics::boundingRect(const QRect &rect, int flags, const QString &te
 
     \sa boundingRect()
 */
-QSize QFontMetrics::size(int flags, const QString &text, int tabStops, int *tabArray) const
+QSize QFontMetrics::size(int flags, const QString &text) const
 {
-    return boundingRect(QRect(0,0,0,0), flags | Qt::TextLongestVariant, text, tabStops, tabArray).size();
+    return boundingRect(QRect(0,0,0,0), flags | Qt::TextLongestVariant, text).size();
 }
 
 /*!
@@ -1217,7 +1191,6 @@ QRectF QFontMetricsF::boundingRect(QChar ch) const
     \o Qt::AlignVCenter aligns vertically centered
     \o Qt::AlignCenter (== \c{Qt::AlignHCenter | Qt::AlignVCenter})
     \o Qt::TextSingleLine ignores newline characters in the text.
-    \o Qt::TextExpandTabs expands tabs (see below)
     \o Qt::TextShowMnemonic interprets "&x" as \underline{x}; i.e., underlined.
     \o Qt::TextWordWrap breaks the text to fit the rectangle.
     \endlist
@@ -1229,14 +1202,6 @@ QRectF QFontMetricsF::boundingRect(QChar ch) const
     flags are set, the resulting alignment is undefined.
 
     These flags are defined in \l{Qt::AlignmentFlag}.
-
-    If Qt::TextExpandTabs is set in \a flags, the following behavior is
-    used to interpret tab characters in the text:
-    \list
-    \o If \a tabArray is non-null, it specifies a 0-terminated sequence of
-       pixel-positions for tabs in the text.
-    \o If \a tabStops is non-zero, it is used as the tab spacing (in pixels).
-    \endlist
 
     Note that the bounding rectangle may extend to the left of (0, 0),
     e.g. for italicized fonts.
@@ -1256,17 +1221,10 @@ QRectF QFontMetricsF::boundingRect(QChar ch) const
 
     \sa width(), QPainter::boundingRect(), Qt::Alignment
 */
-QRectF QFontMetricsF::boundingRect(const QRectF &rect, int flags, const QString& text,
-                                   int tabStops, int *tabArray) const
+QRectF QFontMetricsF::boundingRect(const QRectF &rect, int flags, const QString& text) const
 {
-    int tabArrayLen = 0;
-    if (tabArray)
-        while (tabArray[tabArrayLen])
-            tabArrayLen++;
-
     QRectF rb;
-    qt_format_text(QFont(d.data()), rect, flags | Qt::TextDontPrint, text, &rb, tabStops, tabArray,
-                   tabArrayLen);
+    qt_format_text(QFont(d.data()), rect, flags | Qt::TextDontPrint, text, &rb);
     return rb;
 }
 
@@ -1276,20 +1234,11 @@ QRectF QFontMetricsF::boundingRect(const QRectF &rect, int flags, const QString&
     The \a flags argument is the bitwise OR of the following flags:
     \list
     \o Qt::TextSingleLine ignores newline characters.
-    \o Qt::TextExpandTabs expands tabs (see below)
     \o Qt::TextShowMnemonic interprets "&x" as \underline{x}; i.e., underlined.
     \o Qt::TextWordBreak breaks the text to fit the rectangle.
     \endlist
 
     These flags are defined in \l{Qt::TextFlags}.
-
-    If Qt::TextExpandTabs is set in \a flags, the following behavior is
-    used to interpret tab characters in the text:
-    \list
-    \o If \a tabArray is non-null, it specifies a 0-terminated sequence of
-       pixel-positions for tabs in the text.
-    \o If \a tabStops is non-zero, it is used as the tab spacing (in pixels).
-    \endlist
 
     Newline characters are processed as line breaks.
 
@@ -1298,9 +1247,9 @@ QRectF QFontMetricsF::boundingRect(const QRectF &rect, int flags, const QString&
 
     \sa boundingRect()
 */
-QSizeF QFontMetricsF::size(int flags, const QString &text, int tabStops, int *tabArray) const
+QSizeF QFontMetricsF::size(int flags, const QString &text) const
 {
-    return boundingRect(QRectF(), flags | Qt::TextLongestVariant, text, tabStops, tabArray).size();
+    return boundingRect(QRectF(), flags | Qt::TextLongestVariant, text).size();
 }
 
 /*!
@@ -1384,55 +1333,4 @@ qreal QFontMetricsF::lineWidth() const
     return engine->lineThickness().toReal();
 }
 
-/*!
-    \fn QSize QFontMetrics::size(int flags, const QString &text, int len,
-                                 int tabStops, int *tabArray) const
-    \compat
-
-    Use the size() function in combination with QString::left()
-    instead.
-
-    \oldcode
-        QSize size = size(flags, str, len, tabstops, tabarray);
-    \newcode
-        QSize size = size(flags, str.left(len), tabstops, tabarray);
-    \endcode
-*/
-
-/*!
-    \fn QRect QFontMetrics::boundingRect(int x, int y, int w, int h, int flags,
-        const QString& text, int len, int tabStops, int *tabArray) const
-    \compat
-
-    Use the boundingRect() function in combination with
-    QString::left() and a QRect constructor instead.
-
-    \oldcode
-        QRect rect = boundingRect(x, y, w, h , flags, text, len,
-                                  tabStops, tabArray);
-    \newcode
-        QRect rect = boundingRect(QRect(x, y, w, h), flags, text.left(len),
-                                  tabstops, tabarray);
-    \endcode
-
-*/
-
-/*!
-    \fn QRect QFontMetrics::boundingRect(const QString &text, int len) const
-    \compat
-
-    Use the boundingRect() function in combination with
-    QString::left() instead.
-
-    \oldcode
-        QRect rect = boundingRect(text, len);
-    \newcode
-        QRect rect = boundingRect(text.left(len));
-    \endcode
-*/
-
 QT_END_NAMESPACE
-
-
-
-
