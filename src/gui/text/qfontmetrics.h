@@ -63,11 +63,8 @@ public:
     int width(const QString &, int len = -1) const;
     int width(QChar) const;
 
-    QRect boundingRect(QChar) const;
     QRect boundingRect(const QString &text) const;
     QRect boundingRect(const QRect &r, int flags, const QString &text) const;
-    inline QRect boundingRect(int x, int y, int w, int h, int flags, const QString &text) const
-        { return boundingRect(QRect(x, y, w, h), flags, text); }
     QSize size(int flags, const QString& str) const;
 
     QString elidedText(const QString &text, Qt::TextElideMode mode, int width, int flags = 0) const;
@@ -121,7 +118,6 @@ public:
     qreal width(QChar) const;
 
     QRectF boundingRect(const QString &string) const;
-    QRectF boundingRect(QChar) const;
     QRectF boundingRect(const QRectF &r, int flags, const QString& string) const;
     QSizeF size(int flags, const QString& str) const;
 

@@ -111,16 +111,6 @@ extern void qt_format_text(const QFont& font, const QRectF &_r,
 */
 
 /*!
-    \fn QRect QFontMetrics::boundingRect(int x, int y, int width, int height,
-        int flags, const QString &text) const
-    \overload
-
-    Returns the bounding rectangle for the given \a text within the
-    rectangle specified by the \a x and \a y coordinates, \a width, and
-    \a height.
-*/
-
-/*!
     Constructs a font metrics object for \a font.
 
     The font metrics will be compatible with the paintdevice used to
@@ -477,9 +467,8 @@ int QFontMetrics::width(QChar ch) const
     specified by \a text. The bounding rectangle always covers at least
     the set of pixels the text would cover if drawn at (0, 0).
 
-    Note that the bounding rectangle may extend to the left of (0, 0),
-    e.g. for italicized fonts, and that the width of the returned
-    rectangle might be different than what the width() method returns.
+    Note that the width of the returned rectangle might be different
+    than what the width() method returns.
 
     If you want to know the advance width of the string (to layout
     a set of strings next to each other), use width() instead.
@@ -497,40 +486,11 @@ QRect QFontMetrics::boundingRect(const QString &text) const
     if (text.isEmpty())
         return QRect();
 
-    QTextEngine layout(text, d.data());
-    layout.itemize();
-    glyph_metrics_t gm = layout.boundingBox();
-    return QRect(qRound(gm.x), qRound(gm.y), qRound(gm.width), qRound(gm.height));
-}
-
-/*!
-    Returns the rectangle that is covered by ink if character \a ch
-    were to be drawn at the origin of the coordinate system.
-
-    Note that the bounding rectangle may extend to the left of (0, 0)
-    (e.g., for italicized fonts), and that the text output may cover \e
-    all pixels in the bounding rectangle. For a space character the rectangle
-    will usually be empty.
-
-    Note that the rectangle usually extends both above and below the
-    base line.
-
-    \warning The width of the returned rectangle is not the advance width
-    of the character. Use boundingRect(const QString &) or width() instead.
-
-    \sa width()
-*/
-QRect QFontMetrics::boundingRect(QChar ch) const
-{
-    const QUnicodeTables::Script script = QUnicodeTables::script(ch.unicode());
-    QFontEngine *engine = d->engineForScript(script);
-    Q_ASSERT(engine != 0);
-
-    QGlyphLayoutArray<10> glyphs;
-    int nglyphs = 9;
-    engine->stringToCMap(&ch, 1, &glyphs, &nglyphs, 0);
-    glyph_metrics_t gm = engine->boundingBox(glyphs.glyphs[0]);
-    return QRect(qRound(gm.x), qRound(gm.y), qRound(gm.width), qRound(gm.height));
+    QTextLayout textlayout(text, d.data());
+    textlayout.beginLayout();
+    QTEXTLAYOUT(textlayout)
+    textlayout.endLayout();
+    return textlayout.boundingRect().toRect();
 }
 
 /*!
@@ -564,9 +524,8 @@ QRect QFontMetrics::boundingRect(QChar ch) const
     If several of the horizontal or several of the vertical alignment
     flags are set, the resulting alignment is undefined.
 
-    Note that the bounding rectangle may extend to the left of (0, 0),
-    e.g. for italicized fonts, and that the text output may cover \e
-    all pixels in the bounding rectangle.
+    Note that the text output may cover \e all pixels in the bounding
+    rectangle.
 
     Newline characters are processed as linebreaks.
 
@@ -1119,9 +1078,8 @@ qreal QFontMetricsF::width(QChar ch) const
     specified by \a text. The bounding rectangle always covers at least
     the set of pixels the text would cover if drawn at (0, 0).
 
-    Note that the bounding rectangle may extend to the left of (0, 0),
-    e.g. for italicized fonts, and that the width of the returned
-    rectangle might be different than what the width() method returns.
+    Note that the width of the returned rectangle might be different
+    than what the width() method returns.
 
     If you want to know the advance width of the string (to layout
     a set of strings next to each other), use width() instead.
@@ -1139,36 +1097,11 @@ QRectF QFontMetricsF::boundingRect(const QString &text) const
     if (text.isEmpty())
         return QRectF();
 
-    QTextEngine layout(text, d.data());
-    layout.itemize();
-    glyph_metrics_t gm = layout.boundingBox();
-    return QRectF(gm.x.toReal(), gm.y.toReal(), gm.width.toReal(), gm.height.toReal());
-}
-
-/*!
-    Returns the bounding rectangle of the character \a ch relative to
-    the left-most point on the base line.
-
-    Note that the bounding rectangle may extend to the left of (0, 0),
-    e.g. for italicized fonts, and that the text output may cover \e
-    all pixels in the bounding rectangle.
-
-    Note that the rectangle usually extends both above and below the
-    base line.
-
-    \sa width()
-*/
-QRectF QFontMetricsF::boundingRect(QChar ch) const
-{
-    const QUnicodeTables::Script script = QUnicodeTables::script(ch.unicode());
-    QFontEngine *engine = d->engineForScript(script);
-    Q_ASSERT(engine != 0);
-
-    QGlyphLayoutArray<10> glyphs;
-    int nglyphs = 9;
-    engine->stringToCMap(&ch, 1, &glyphs, &nglyphs, 0);
-    glyph_metrics_t gm = engine->boundingBox(glyphs.glyphs[0]);
-    return QRectF(gm.x.toReal(), gm.y.toReal(), gm.width.toReal(), gm.height.toReal());
+    QTextLayout textlayout(text, d.data());
+    textlayout.beginLayout();
+    QTEXTLAYOUT(textlayout)
+    textlayout.endLayout();
+    return textlayout.boundingRect();
 }
 
 /*!
@@ -1202,9 +1135,6 @@ QRectF QFontMetricsF::boundingRect(QChar ch) const
     flags are set, the resulting alignment is undefined.
 
     These flags are defined in \l{Qt::AlignmentFlag}.
-
-    Note that the bounding rectangle may extend to the left of (0, 0),
-    e.g. for italicized fonts.
 
     Newline characters are processed as line breaks.
 

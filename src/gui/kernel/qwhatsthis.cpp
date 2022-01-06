@@ -192,7 +192,7 @@ QWhatsThat::QWhatsThat(const QString& txt, QWidget* parent, QWidget *showTextFor
         else if (sw > 300)
             sw = 300;
 
-        r = fontMetrics().boundingRect(0, 0, sw, 1000,
+        r = fontMetrics().boundingRect(QRect(0, 0, sw, 1000),
                                         Qt::AlignLeft + Qt::AlignTop
                                         + Qt::TextWordWrap,
                                         text);
