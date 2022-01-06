@@ -1068,7 +1068,10 @@ void QPainterPath::addEllipse(const QRectF &boundingRect)
     Adds the given \a text to this path as a set of closed subpaths
     created from the \a font supplied. The subpaths are positioned so
     that the left end of the text's baseline lies at the specified \a
-    point.
+    point with the given \a direction.
+
+    If \a direction is automatic the direction is determened via
+    \l{QString::isRightToLeft()}
 
     \table 100%
     \row
@@ -1078,9 +1081,10 @@ void QPainterPath::addEllipse(const QRectF &boundingRect)
     \endtable
 
     \sa QPainter::drawText(), {QPainterPath#Composing a
-    QPainterPath}{Composing a QPainterPath}
+    QPainterPath}{Composing a QPainterPath}, QString::isRightToLeft
 */
-void QPainterPath::addText(const QPointF &point, const QFont &f, const QString &text)
+void QPainterPath::addText(const QPointF &point, const QFont &f, const QString &text,
+                           const Qt::LayoutDirection direction)
 {
     if (text.isEmpty())
         return;
@@ -1088,46 +1092,39 @@ void QPainterPath::addText(const QPointF &point, const QFont &f, const QString &
     ensureData();
     detach();
 
-    QTextLayout layout(text, f);
-    layout.setCacheEnabled(true);
-    QTextEngine *eng = layout.engine();
-    layout.beginLayout();
-    QTextLine line = layout.createLine();
-    Q_UNUSED(line);
-    layout.endLayout();
-    const QScriptLine &sl = eng->lines[0];
-    if (!sl.length || !eng->layoutData)
+    // qDebug() << Q_FUNC_INFO << point << f << text << direction;
+
+    QTextEngine::ShaperFlags shaperflags = 0;
+    QTextItem::RenderFlags renderflags = 0;
+    if (direction == Qt::RightToLeft || (direction == Qt::LayoutDirectionAuto && text.isRightToLeft())) {
+        renderflags = QTextItem::RightToLeft;
+        shaperflags = QTextEngine::RightToLeft;
+    }
+
+    QFontEngine* engine =  f.d->engineForScript(QUnicodeTables::Common);
+    if (Q_UNLIKELY(!engine)) {
+        qWarning("QPainterPath::addText: Invalid font %s", f.family().toLocal8Bit().constData());
         return;
+    }
+    int nglyphs = text.size();
+    QVarLengthGlyphLayoutArray glyphs(nglyphs);
+    engine->stringToCMap(text.unicode(), nglyphs, &glyphs, &nglyphs, shaperflags);
+    engine->addOutlineToPath(point.x(), point.y(), glyphs, this, renderflags);
 
-    int nItems = eng->layoutData->items.size();
-
-    qreal x(point.x());
-    qreal y(point.y());
-
-    for (int i = 0; i < nItems; ++i) {
-        QScriptItem &si = eng->layoutData->items[i];
-
-        if (si.analysis.flags < QScriptAnalysis::TabOrObject) {
-            QGlyphLayout glyphs = eng->shapedGlyphs(&si);
-            QFontEngine *fe = f.d->engineForScript(si.analysis.script);
-            Q_ASSERT(fe);
-            fe->addOutlineToPath(x, y, glyphs, this, QTextItem::RenderFlags(0));
-
-            const qreal lw = fe->lineThickness().toReal();
-            if (f.d->underline) {
-                qreal pos = fe->underlinePosition().toReal();
-                addRect(x, y + pos, si.width.toReal(), lw);
-            }
-            if (f.d->overline) {
-                qreal pos = fe->ascent().toReal() + 1;
-                addRect(x, y - pos, si.width.toReal(), lw);
-            }
-            if (f.d->strikeOut) {
-                qreal pos = fe->ascent().toReal() / 3;
-                addRect(x, y - pos, si.width.toReal(), lw);
-            }
-        }
-        x += si.width.toReal();
+    const QFontMetricsF fm(f);
+    const qreal fontwidth = fm.width('x');
+    const qreal lw = engine->lineThickness().toReal();
+    if (f.underline()) {
+        qreal offs = engine->underlinePosition().toReal();
+        addRect(point.x(), point.y() + offs, fontwidth, lw);
+    }
+    if (f.overline()) {
+        qreal offs = engine->ascent().toReal() + 1;
+        addRect(point.x(), point.y() - offs, fontwidth, lw);
+    }
+    if (f.strikeOut()) {
+        qreal offs = engine->ascent().toReal() / 3;
+        addRect(point.x(), point.y() - offs, fontwidth, lw);
     }
 }
 

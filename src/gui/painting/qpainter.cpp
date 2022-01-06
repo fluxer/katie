@@ -4751,20 +4751,20 @@ void QPainter::drawText(const QPointF &p, const QString &str)
     if (!d->engine || str.isEmpty() || pen().style() == Qt::NoPen)
         return;
 
-    QTextOption textoption;
-    textoption.setTextDirection(d->state->layoutDirection);
-    QTextLayout textlayout(str, d->state->font);
-    textlayout.setTextOption(textoption);
-    textlayout.beginLayout();
-    QTEXTLAYOUT(textlayout)
-    textlayout.endLayout();
-
-    qreal fontheight = d->state->font.pointSizeF();
-    if (fontheight <= 0.0) {
-        fontheight = d->state->font.pixelSize();
+    bool toggleAntialiasing = !(renderHints() & QPainter::Antialiasing)
+                              && (transform().type() > QTransform::TxTranslate);
+    if (toggleAntialiasing) {
+        setRenderHint(QPainter::Antialiasing, true);
     }
-    // do not ask what the magic 0.8 division is for, it is just visually right for any point size
-    textlayout.draw(this, QPointF(p.x(), p.y() - (fontheight / 0.8)));
+
+    QPainterPath textpath;
+    textpath.setFillRule(Qt::WindingFill);
+    textpath.addText(p, d->state->font, str, d->state->layoutDirection);
+    fillPath(textpath, d->state->pen.brush());
+
+    if (toggleAntialiasing) {
+        setRenderHint(QPainter::Antialiasing, false);
+    }
 }
 
 void QPainter::drawText(const QRect &r, int flags, const QString &str, QRect *br)

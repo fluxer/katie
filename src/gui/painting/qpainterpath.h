@@ -106,8 +106,10 @@ public:
     inline void addEllipse(qreal x, qreal y, qreal w, qreal h);
     inline void addEllipse(const QPointF &center, qreal rx, qreal ry);
     void addPolygon(const QPolygonF &polygon);
-    void addText(const QPointF &point, const QFont &f, const QString &text);
-    inline void addText(qreal x, qreal y, const QFont &f, const QString &text);
+    void addText(const QPointF &point, const QFont &f, const QString &text,
+                 const Qt::LayoutDirection direction = Qt::LayoutDirectionAuto);
+    inline void addText(qreal x, qreal y, const QFont &f, const QString &text,
+                        const Qt::LayoutDirection direction = Qt::LayoutDirectionAuto);
     void addPath(const QPainterPath &path);
     void addRegion(const QRegion &region);
 
@@ -354,9 +356,10 @@ inline void QPainterPath::addRoundRect(qreal x, qreal y, qreal w, qreal h,
     addRoundRect(QRectF(x, y, w, h), roundness);
 }
 
-inline void QPainterPath::addText(qreal x, qreal y, const QFont &f, const QString &text)
+inline void QPainterPath::addText(qreal x, qreal y, const QFont &f, const QString &text,
+                                  const Qt::LayoutDirection direction)
 {
-    addText(QPointF(x, y), f, text);
+    addText(QPointF(x, y), f, text, direction);
 }
 
 inline void QPainterPath::translate(const QPointF &offset)
