@@ -4751,9 +4751,8 @@ void QPainter::drawText(const QPointF &p, const QString &str)
     if (!d->engine || str.isEmpty() || pen().style() == Qt::NoPen)
         return;
 
-    bool toggleAntialiasing = !(renderHints() & QPainter::Antialiasing)
-                              && (transform().type() > QTransform::TxTranslate);
-    if (toggleAntialiasing) {
+    bool toggleantialiasing = (!(renderHints() & QPainter::Antialiasing));
+    if (toggleantialiasing) {
         setRenderHint(QPainter::Antialiasing, true);
     }
 
@@ -4762,7 +4761,7 @@ void QPainter::drawText(const QPointF &p, const QString &str)
     textpath.addText(p, d->state->font, str, d->state->layoutDirection);
     fillPath(textpath, d->state->pen.brush());
 
-    if (toggleAntialiasing) {
+    if (toggleantialiasing) {
         setRenderHint(QPainter::Antialiasing, false);
     }
 }
