@@ -648,12 +648,9 @@ void QPaintEngine::drawPath(const QPainterPath &)
 
 void QPaintEngine::drawTextItem(const QPointF &p, const QTextItem &textItem)
 {
-    const QTextItemInt &ti = static_cast<const QTextItemInt &>(textItem);
-
     QPainterPath path;
     path.setFillRule(Qt::WindingFill);
-    if (ti.glyphs.numGlyphs)
-        ti.fontEngine->addOutlineToPath(p.x(), p.y(), ti.glyphs, &path, ti.flags);
+    path.addText(p, textItem.font(), textItem.text(), painter()->layoutDirection());
     if (!path.isEmpty()) {
         painter()->save();
         painter()->setRenderHint(QPainter::Antialiasing,
