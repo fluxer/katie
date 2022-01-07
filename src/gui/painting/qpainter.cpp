@@ -5968,8 +5968,10 @@ start_lengthVariant:
     int old_offset = offset;
     for (; offset < text.length(); offset++) {
         QChar chr = text.at(offset);
-        // replace tabs with spaces for compatibility
-        if (chr == QLatin1Char('\r') || (singleline && chr == QLatin1Char('\n'))) {
+        // replace tabs with space for compatibility
+        if (chr == QLatin1Char('\t')) {
+            text[offset] = QLatin1Char(' ');
+        } else if (chr == QLatin1Char('\r') || (singleline && chr == QLatin1Char('\n'))) {
             text[offset] = QLatin1Char(' ');
         } else if (chr == QLatin1Char('\n')) {
             text[offset] = QChar::LineSeparator;
