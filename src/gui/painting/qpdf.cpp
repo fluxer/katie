@@ -1767,9 +1767,8 @@ void QPdfBaseEnginePrivate::drawTextItem(const QPointF &p, const QTextItemInt &t
     const qreal size = ti.fontEngine->fontDef.pixelSize;
     QVarLengthArray<glyph_t> glyphs;
     QVarLengthArray<QFixedPoint> positions;
-    QTransform m = QTransform::fromTranslate(p.x(), p.y());
-    ti.fontEngine->getGlyphPositions(ti.glyphs, m, ti.flags,
-                                     glyphs, positions);
+    const QTransform m = QTransform::fromTranslate(p.x(), p.y());
+    ti.fontEngine->getGlyphPositions(ti.glyphs, m, glyphs, positions);
     if (glyphs.size() == 0)
         return;
     const int synthesized = ti.fontEngine->synthesized();

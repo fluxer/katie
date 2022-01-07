@@ -650,7 +650,7 @@ void QPaintEngine::drawTextItem(const QPointF &p, const QTextItem &textItem)
 {
     QPainterPath path;
     path.setFillRule(Qt::WindingFill);
-    path.addText(p, textItem.font(), textItem.text(), painter()->layoutDirection());
+    path.addText(p, textItem.font(), textItem.text());
     if (!path.isEmpty()) {
         painter()->save();
         painter()->setRenderHint(QPainter::Antialiasing,

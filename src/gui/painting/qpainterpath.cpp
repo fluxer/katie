@@ -1067,11 +1067,8 @@ void QPainterPath::addEllipse(const QRectF &boundingRect)
 
     Adds the given \a text to this path as a set of closed subpaths
     created from the \a font supplied. The subpaths are positioned so
-    that the left end of the text's baseline lies at the specified \a
-    point with the given \a direction.
-
-    If \a direction is automatic the direction is determened via
-    \l{QString::isRightToLeft()}
+    that the left end of the text's baseline lies at the specified
+    \a point.
 
     \table 100%
     \row
@@ -1081,10 +1078,9 @@ void QPainterPath::addEllipse(const QRectF &boundingRect)
     \endtable
 
     \sa QPainter::drawText(), {QPainterPath#Composing a
-    QPainterPath}{Composing a QPainterPath}, QString::isRightToLeft
+    QPainterPath}{Composing a QPainterPath}
 */
-void QPainterPath::addText(const QPointF &point, const QFont &f, const QString &text,
-                           const Qt::LayoutDirection direction)
+void QPainterPath::addText(const QPointF &point, const QFont &f, const QString &text)
 {
     if (text.isEmpty())
         return;
@@ -1094,12 +1090,7 @@ void QPainterPath::addText(const QPointF &point, const QFont &f, const QString &
 
     // qDebug() << Q_FUNC_INFO << point << f << text << direction;
 
-    QTextEngine::ShaperFlags shaperflags = 0;
-    QTextItem::RenderFlags renderflags = 0;
-    if (direction == Qt::RightToLeft || (direction == Qt::LayoutDirectionAuto && text.isRightToLeft())) {
-        renderflags = QTextItem::RightToLeft;
-        shaperflags = QTextEngine::RightToLeft;
-    }
+    static const QTextEngine::ShaperFlags shaperflags = 0;
 
     // TODO: add QTextOption enum for it to replace script analysis in text layout
     static const bool scriptdetection = true;
@@ -1116,7 +1107,7 @@ void QPainterPath::addText(const QPointF &point, const QFont &f, const QString &
                 textchar = QChar(ucs4);
             }
 
-            QUnicodeTables::Script script = QUnicodeTables::script(ucs4);
+            const QUnicodeTables::Script script = QUnicodeTables::script(ucs4);
             QFontEngine* engine = f.d->engineForScript(script);
             if (Q_UNLIKELY(!engine)) {
                 qWarning("QPainterPath::addText: No font engine for script %d", int(script));
@@ -1131,7 +1122,7 @@ void QPainterPath::addText(const QPointF &point, const QFont &f, const QString &
             int nglyphs = 1;
             QGlyphLayoutArray<2> glyphs;
             engine->stringToCMap(&textchar, nglyphs, &glyphs, &nglyphs, shaperflags);
-            engine->addOutlineToPath(point.x() + xoffset, point.y() + yoffset, glyphs, this, renderflags);
+            engine->addOutlineToPath(point.x() + xoffset, point.y() + yoffset, glyphs, this);
 
             xoffset += glyphs.advances_x[0].toReal();
             yoffset += glyphs.advances_y[0].toReal();
@@ -1141,7 +1132,7 @@ void QPainterPath::addText(const QPointF &point, const QFont &f, const QString &
             }
         }
     } else {
-        QFontEngine* engine =  f.d->engineForScript(QUnicodeTables::Common);
+        QFontEngine* engine = f.d->engineForScript(QUnicodeTables::Common);
         if (Q_UNLIKELY(!engine)) {
             qWarning("QPainterPath::addText: Invalid font %s", f.family().toLocal8Bit().constData());
             return;
@@ -1150,7 +1141,7 @@ void QPainterPath::addText(const QPointF &point, const QFont &f, const QString &
         int nglyphs = text.size();
         QVarLengthGlyphLayoutArray glyphs(nglyphs);
         engine->stringToCMap(text.unicode(), nglyphs, &glyphs, &nglyphs, shaperflags);
-        engine->addOutlineToPath(point.x(), point.y(), glyphs, this, renderflags);
+        engine->addOutlineToPath(point.x(), point.y(), glyphs, this);
     }
 }
 

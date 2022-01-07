@@ -614,7 +614,7 @@ bool QFontEngineFT::canRender(const QChar *string, int len)
 }
 
 void QFontEngineFT::addGlyphsToPath(glyph_t *glyphs, QFixedPoint *positions, int numGlyphs,
-                                    QPainterPath *path, QTextItem::RenderFlags)
+                                    QPainterPath *path)
 {
     FT_Face face = getFace();
 
@@ -635,12 +635,8 @@ bool QFontEngineFT::stringToCMap(const QChar *str, int len, QGlyphLayout *glyphs
     }
 
     int glyph_pos = 0;
-    const bool mirrored = (flags & QTextEngine::RightToLeft);
     for (int i = 0; i < len; ++i) {
         unsigned int uc = getChar(str, i, len);
-        if (mirrored) {
-            uc = QChar::mirroredChar(uc);
-        }
         glyph_t glyph = charcache.value(uc, 0);
         if (glyph == 0) {
             glyph = FT_Get_Char_Index(freetype->face, uc);

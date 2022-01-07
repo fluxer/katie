@@ -4758,7 +4758,7 @@ void QPainter::drawText(const QPointF &p, const QString &str)
 
     QPainterPath textpath;
     textpath.setFillRule(Qt::WindingFill);
-    textpath.addText(p, d->state->font, str, d->state->layoutDirection);
+    textpath.addText(p, d->state->font, str);
     fillPath(textpath, d->state->pen.brush());
 
     if (toggleantialiasing) {
