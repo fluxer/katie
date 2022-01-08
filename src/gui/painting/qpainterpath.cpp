@@ -1100,11 +1100,10 @@ void QPainterPath::addText(const QPointF &point, const QFont &f, const QString &
         for (int i = 0; i < text.size(); i++) {
             QChar textchar = text.at(i);
             uint ucs4 = textchar.unicode();
-            bool issurogate = false;
             if (textchar.isHighSurrogate() && (i + 1) < text.size() && text.at(i + 1).isLowSurrogate()) {
-                issurogate = true;
                 ucs4 = QChar::surrogateToUcs4(ucs4, text.at(i + 1).unicode());
                 textchar = QChar(ucs4);
+                i++;
             }
 
             const QUnicodeTables::Script script = QUnicodeTables::script(ucs4);
@@ -1120,16 +1119,12 @@ void QPainterPath::addText(const QPointF &point, const QFont &f, const QString &
             }
 
             int nglyphs = 1;
-            QGlyphLayoutArray<2> glyphs;
+            QGlyphLayoutArray<1> glyphs;
             engine->stringToCMap(&textchar, nglyphs, &glyphs, &nglyphs, shaperflags);
             engine->addOutlineToPath(point.x() + xoffset, point.y() + yoffset, glyphs, this);
 
             xoffset += glyphs.advances_x[0].toReal();
             yoffset += glyphs.advances_y[0].toReal();
-
-            if (issurogate) {
-                i++;
-            }
         }
     } else {
         QFontEngine* engine = f.d->engineForScript(QUnicodeTables::Common);
