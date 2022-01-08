@@ -1113,9 +1113,14 @@ void QPainterPath::addText(const QPointF &point, const QFont &f, const QString &
                 continue;
             }
 
-            if (!engine->canRender(&textchar, 1)) {
-                // e.g. non-printable character in terminal emulator
-                continue;
+            switch (textchar.category()) {
+                case QChar::Separator_Line:
+                case QChar::Other_Control:
+                case QChar::Other_Format: {
+                    // e.g. non-printable character in terminal emulator
+                    // qDebug() << Q_FUNC_INFO << textchar << textchar.category();
+                    continue;
+                }
             }
 
             int nglyphs = 1;
