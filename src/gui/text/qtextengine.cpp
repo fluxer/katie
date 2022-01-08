@@ -38,14 +38,6 @@
 #   include "qfontengine_ft_p.h"
 #endif
 
-#include <stdlib.h>
-#define BIDI_DEBUG 0
-#if (BIDI_DEBUG >= 1)
-#    include <iostream>
-#endif
-
-#include <cassert>
-
 QT_BEGIN_NAMESPACE
 
 namespace {
@@ -212,38 +204,36 @@ void QTextEngine::shapeTextWithHarfbuzz(int item) const
 
     bool kerningEnabled = this->font(si).d->kerning;
 
-    HB_ShaperItem entire_shaper_item;
-    memset(&entire_shaper_item, 0, sizeof(entire_shaper_item));
-    entire_shaper_item.string = reinterpret_cast<const HB_UChar16 *>(layoutData->string.constData());
-    entire_shaper_item.stringLength = layoutData->string.length();
-    entire_shaper_item.item.script = (HB_Script)si.analysis.script;
-    entire_shaper_item.item.pos = si.position;
-    entire_shaper_item.item.length = length(item);
+    HB_ShaperItem shaper_item;
+    memset(&shaper_item, 0, sizeof(shaper_item));
+    shaper_item.string = reinterpret_cast<const HB_UChar16 *>(layoutData->string.constData());
+    shaper_item.stringLength = layoutData->string.length();
+    shaper_item.item.script = (HB_Script)si.analysis.script;
+    shaper_item.item.pos = si.position;
+    shaper_item.item.length = length(item);
 
-    entire_shaper_item.shaperFlags = 0;
+    shaper_item.shaperFlags = 0;
     if (!kerningEnabled)
-        entire_shaper_item.shaperFlags |= HB_ShaperFlag_NoKerning;
+        shaper_item.shaperFlags |= HB_ShaperFlag_NoKerning;
     if (option.useDesignMetrics())
-        entire_shaper_item.shaperFlags |= HB_ShaperFlag_UseDesignMetrics;
+        shaper_item.shaperFlags |= HB_ShaperFlag_UseDesignMetrics;
 
-    entire_shaper_item.num_glyphs = qMax(layoutData->glyphLayout.numGlyphs - layoutData->used, int(entire_shaper_item.item.length));
-    if (! ensureSpace(entire_shaper_item.num_glyphs)) {
+    shaper_item.num_glyphs = qMax(layoutData->glyphLayout.numGlyphs - layoutData->used, int(shaper_item.item.length));
+    if (! ensureSpace(shaper_item.num_glyphs)) {
         return;
     }
-    QGlyphLayout initialGlyphs = availableGlyphs(&si).mid(0, entire_shaper_item.num_glyphs);
+    QGlyphLayout initialGlyphs = availableGlyphs(&si).mid(0, shaper_item.num_glyphs);
 
-    if (!stringToGlyphs(&entire_shaper_item, &initialGlyphs, font)) {
-        if (! ensureSpace(entire_shaper_item.num_glyphs)) {
+    if (!stringToGlyphs(&shaper_item, &initialGlyphs, font)) {
+        if (! ensureSpace(shaper_item.num_glyphs)) {
             return;
         }
-        initialGlyphs = availableGlyphs(&si).mid(0, entire_shaper_item.num_glyphs);
+        initialGlyphs = availableGlyphs(&si).mid(0, shaper_item.num_glyphs);
 
-        if (!stringToGlyphs(&entire_shaper_item, &initialGlyphs, font)) {
+        if (!stringToGlyphs(&shaper_item, &initialGlyphs, font)) {
             return;
         }
     }
-
-    HB_ShaperItem shaper_item = entire_shaper_item;
 
     shaper_item.initialGlyphCount = shaper_item.num_glyphs;
     if (shaper_item.num_glyphs < shaper_item.item.length)
