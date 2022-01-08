@@ -24,7 +24,6 @@
 #ifndef QT_NO_SVGGENERATOR
 
 #include "qpainterpath.h"
-
 #include "qpaintengine_p.h"
 #include "qtextengine_p.h"
 #include "qdrawhelper_p.h"
@@ -986,9 +985,6 @@ void QSvgPaintEngine::drawTextItem(const QPointF &pt, const QTextItem &textItem)
     if (d->pen.style() == Qt::NoPen)
         return;
 
-    const QTextItemInt &ti = static_cast<const QTextItemInt &>(textItem);
-    QString s = QString::fromRawData(ti.chars, ti.num_chars);
-
     *d->stream << "<text "
                   "fill=\"" << d->attributes.stroke << "\" "
                   "fill-opacity=\"" << d->attributes.strokeOpacity << "\" "
@@ -997,7 +993,7 @@ void QSvgPaintEngine::drawTextItem(const QPointF &pt, const QTextItem &textItem)
                   "x=\"" << pt.x() << "\" y=\"" << pt.y() << "\" ";
     qfontToSvg(textItem.font());
     *d->stream << " >"
-               << Qt::escape(s)
+               << Qt::escape(textItem.text())
                << "</text>"
                << endl;
 }

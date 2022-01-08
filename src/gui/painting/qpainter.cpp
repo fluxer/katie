@@ -48,10 +48,8 @@ QT_BEGIN_NAMESPACE
 
 // #define QT_DEBUG_DRAW
 
-void qt_format_text(const QFont &font,
-                    const QRectF &_r, int tf, const QTextOption *option, const QString& str, QRectF *brect,
-                    int tabstops, int* tabarray, int tabarraylen,
-                    QPainter *painter);
+void qt_format_text(const QFont &font, const QRectF &_r, int tf, const QTextOption *option,
+                    const QString& str, QRectF *brect, QPainter *painter);
 static void drawTextItemDecoration(QPainter *painter, const QPointF &pos, const QFontEngine *fe,
                                    QTextCharFormat::UnderlineStyle underlineStyle,
                                    QTextItem::RenderFlags flags, qreal width,
@@ -4395,20 +4393,19 @@ void QPainter::drawText(const QPointF &p, const QString &str)
     if (!d->engine || str.isEmpty() || pen().style() == Qt::NoPen)
         return;
 
-    QTextOption textoption;
-    textoption.setTextDirection(d->state->layoutDirection);
-    QTextLayout textlayout(str, d->state->font);
-    textlayout.setTextOption(textoption);
-    textlayout.beginLayout();
-    QTEXTLAYOUT(textlayout)
-    textlayout.endLayout();
-
-    qreal fontheight = d->state->font.pointSizeF();
-    if (fontheight <= 0.0) {
-        fontheight = d->state->font.pixelSize();
+    bool toggleantialiasing = (!(renderHints() & QPainter::Antialiasing));
+    if (toggleantialiasing) {
+        setRenderHint(QPainter::Antialiasing, true);
     }
-    // do not ask what the magic 0.8 division is for, it is just visually right for any point size
-    textlayout.draw(this, QPointF(p.x(), p.y() - (fontheight / 0.8)));
+
+    QPainterPath textpath;
+    textpath.setFillRule(Qt::WindingFill);
+    textpath.addText(p, d->state->font, str);
+    fillPath(textpath, d->state->pen.brush());
+
+    if (toggleantialiasing) {
+        setRenderHint(QPainter::Antialiasing, false);
+    }
 }
 
 void QPainter::drawText(const QRect &r, int flags, const QString &str, QRect *br)
@@ -4426,7 +4423,7 @@ void QPainter::drawText(const QRect &r, int flags, const QString &str, QRect *br
     d->updateState(d->state);
 
     QRectF bounds;
-    qt_format_text(d->state->font, r, flags, 0, str, br ? &bounds : 0, 0, 0, 0, this);
+    qt_format_text(d->state->font, r, flags, 0, str, br ? &bounds : nullptr, this);
     if (br)
         *br = bounds.toAlignedRect();
 }
@@ -4473,7 +4470,6 @@ void QPainter::drawText(const QRect &r, int flags, const QString &str, QRect *br
     \o Qt::AlignCenter
     \o Qt::TextDontClip
     \o Qt::TextSingleLine
-    \o Qt::TextExpandTabs
     \o Qt::TextShowMnemonic
     \o Qt::TextWordWrap
     \o Qt::TextIncludeTrailingSpaces
@@ -4499,7 +4495,7 @@ void QPainter::drawText(const QRectF &r, int flags, const QString &str, QRectF *
 
     d->updateState(d->state);
 
-    qt_format_text(d->state->font, r, flags, 0, str, br, 0, 0, 0, this);
+    qt_format_text(d->state->font, r, flags, 0, str, br, this);
 }
 
 /*!
@@ -4552,7 +4548,6 @@ void QPainter::drawText(const QRectF &r, int flags, const QString &str, QRectF *
     \o Qt::AlignVCenter
     \o Qt::AlignCenter
     \o Qt::TextSingleLine
-    \o Qt::TextExpandTabs
     \o Qt::TextShowMnemonic
     \o Qt::TextWordWrap
     \endlist
@@ -4590,7 +4585,7 @@ void QPainter::drawText(const QRectF &r, const QString &text, const QTextOption 
 
     d->updateState(d->state);
 
-    qt_format_text(d->state->font, r, 0, &o, text, 0, 0, 0, 0, this);
+    qt_format_text(d->state->font, r, 0, &o, text, nullptr, this);
 }
 
 /*!
@@ -4855,7 +4850,6 @@ void QPainter::drawTextItem(const QPointF &p, const QTextItem &_ti)
          \o Qt::AlignVCenter
          \o Qt::AlignCenter
          \o Qt::TextSingleLine
-         \o Qt::TextExpandTabs
          \o Qt::TextShowMnemonic
          \o Qt::TextWordWrap
          \o Qt::TextIncludeTrailingSpaces
@@ -4928,7 +4922,7 @@ QRectF QPainter::boundingRect(const QRectF &r, const QString &text, const QTextO
         return QRectF(r.x(),r.y(), 0,0);
 
     QRectF br;
-    qt_format_text(d->state->font, r, Qt::TextDontPrint, &o, text, &br, 0, 0, 0, this);
+    qt_format_text(d->state->font, r, Qt::TextDontPrint, &o, text, &br, this);
     return br;
 }
 
@@ -5512,21 +5506,15 @@ void QPainter::setViewTransformEnabled(bool enable)
 }
 
 void qt_format_text(const QFont &fnt, const QRectF &_r,
-                    int tf, const QString& str, QRectF *brect,
-                    int tabstops, int *ta, int tabarraylen)
+                    int tf, const QString& str, QRectF *brect)
 {
-    qt_format_text(fnt, _r,
-                    tf, 0, str, brect,
-                    tabstops, ta, tabarraylen,
-                    nullptr);
+    qt_format_text(fnt, _r, tf, nullptr, str, brect, nullptr);
 }
 void qt_format_text(const QFont &fnt, const QRectF &_r,
                     int tf, const QTextOption *option, const QString& str, QRectF *brect,
-                    int tabstops, int *ta, int tabarraylen,
                     QPainter *painter)
 {
-
-    Q_ASSERT( !((tf & ~Qt::TextDontPrint)!=0 && option!=0) ); // we either have an option or flags
+    Q_ASSERT(!((tf & ~Qt::TextDontPrint) != 0 && option != 0) ); // we either have an option or flags
 
     if (option) {
         tf |= option->alignment();
@@ -5535,9 +5523,6 @@ void qt_format_text(const QFont &fnt, const QRectF &_r,
 
         if (option->flags() & QTextOption::IncludeTrailingSpaces)
             tf |= Qt::TextIncludeTrailingSpaces;
-
-        if (option->tabStop() >= 0 || !option->tabArray().isEmpty())
-            tf |= Qt::TextExpandTabs;
     }
 
     // we need to copy r here to protect against the case (&r == brect).
@@ -5563,10 +5548,7 @@ void qt_format_text(const QFont &fnt, const QRectF &_r,
 
     tf = QStyle::visualAlignment(layout_direction, QFlag(tf));
 
-    bool isRightToLeft = layout_direction == Qt::RightToLeft;
-    bool expandtabs = ((tf & Qt::TextExpandTabs) &&
-                        (((tf & Qt::AlignLeft) && !isRightToLeft) ||
-                          ((tf & Qt::AlignRight) && isRightToLeft)));
+    bool isRightToLeft = (layout_direction == Qt::RightToLeft);
 
     if (!painter)
         tf |= Qt::TextDontPrint;
@@ -5580,23 +5562,18 @@ void qt_format_text(const QFont &fnt, const QRectF &_r,
     int offset = 0;
 start_lengthVariant:
     bool hasMoreLengthVariants = false;
-    // compatible behaviour to the old implementation. Replace
-    // tabs by spaces
     int old_offset = offset;
     for (; offset < text.length(); offset++) {
         QChar chr = text.at(offset);
-        if (chr == QLatin1Char('\r') || (singleline && chr == QLatin1Char('\n'))) {
+        // replace tabs with space for compatibility
+        if (chr == QLatin1Char('\t')) {
+            text[offset] = QLatin1Char(' ');
+        } else if (chr == QLatin1Char('\r') || (singleline && chr == QLatin1Char('\n'))) {
             text[offset] = QLatin1Char(' ');
         } else if (chr == QLatin1Char('\n')) {
             text[offset] = QChar::LineSeparator;
         } else if (chr == QLatin1Char('&')) {
             ++maxUnderlines;
-        } else if (chr == QLatin1Char('\t')) {
-            if (!expandtabs) {
-                text[offset] = QLatin1Char(' ');
-            } else if (!tabarraylen && !tabstops) {
-                tabstops = qRound(fm.width(QLatin1Char('x'))*8);
-            }
         } else if (chr == QChar(ushort(0x9c))) {
             // string with multiple length variants
             hasMoreLengthVariants = true;
@@ -5638,36 +5615,35 @@ start_lengthVariant:
 
     QString finalText = text.mid(old_offset, length);
 
-    QTextLayout textLayout(finalText, fnt);
-    textLayout.setCacheEnabled(true);
-    textLayout.engine()->underlinePositions = underlinePositions.data();
-
-    QTextEngine* engine = textLayout.engine();
+    QTextOption textoption;
     if (option) {
-        engine->option = *option;
+        textoption = *option;
     }
 
-    if (engine->option.tabStop() < 0 && tabstops > 0)
-        engine->option.setTabStop(tabstops);
-
-    if (engine->option.tabs().isEmpty() && ta) {
-        QList<qreal> tabs;
-        for (int i = 0; i < tabarraylen; i++)
-            tabs.append(qreal(ta[i]));
-        engine->option.setTabArray(tabs);
-    }
-
-    engine->option.setTextDirection(layout_direction);
+    textoption.setTextDirection(layout_direction);
     if (tf & Qt::AlignJustify)
-        engine->option.setAlignment(Qt::AlignJustify);
+        textoption.setAlignment(Qt::AlignJustify);
     else
-        engine->option.setAlignment(Qt::AlignLeft); // do not do alignment twice
+        textoption.setAlignment(Qt::AlignLeft); // do not do alignment twice
 
     if (!option && (tf & Qt::TextWrapAnywhere))
-        engine->option.setWrapMode(QTextOption::WrapAnywhere);
+        textoption.setWrapMode(QTextOption::WrapAnywhere);
 
-    if (tf & Qt::TextJustificationForced)
-        engine->forceJustification = true;
+    QList<QTextLayout::FormatRange> formatoverrides;
+    for (int i = 0; i < underlinePositions.size(); i++) {
+        QTextLayout::FormatRange formatoverride;
+        formatoverride.start = underlinePositions[i];
+        formatoverride.length = 1;
+        formatoverride.format.setFontUnderline(true);
+        formatoverrides.append(formatoverride);
+    }
+
+    QTextLayout textLayout(finalText, fnt);
+    textLayout.setCacheEnabled(true);
+    textLayout.setTextOption(textoption);
+    textLayout.setAdditionalFormats(formatoverrides);
+    // covers Qt::TextJustificationForced
+    textLayout.setFlags(tf);
 
     if (finalText.isEmpty()) {
         height = fm.height();

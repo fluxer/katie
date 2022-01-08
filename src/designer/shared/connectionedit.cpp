@@ -871,7 +871,7 @@ void Connection::updatePixmap(EndPoint::Type type)
 
     QPainter p(pm);
     p.setPen(m_edit->palette().color(QPalette::Normal, QPalette::Text));
-    p.drawText(-fm.leftBearing(text.at(0)) + HLABEL_MARGIN, fm.ascent() + VLABEL_MARGIN, text);
+    p.drawText(-fm.minLeftBearing() + HLABEL_MARGIN, fm.ascent() + VLABEL_MARGIN, text);
     p.end();
 
     const LineDir dir = labelDir(type);

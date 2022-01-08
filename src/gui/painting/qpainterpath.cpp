@@ -1067,8 +1067,8 @@ void QPainterPath::addEllipse(const QRectF &boundingRect)
 
     Adds the given \a text to this path as a set of closed subpaths
     created from the \a font supplied. The subpaths are positioned so
-    that the left end of the text's baseline lies at the specified \a
-    point.
+    that the left end of the text's baseline lies at the specified
+    \a point.
 
     \table 100%
     \row
@@ -1088,46 +1088,66 @@ void QPainterPath::addText(const QPointF &point, const QFont &f, const QString &
     ensureData();
     detach();
 
-    QTextLayout layout(text, f);
-    layout.setCacheEnabled(true);
-    QTextEngine *eng = layout.engine();
-    layout.beginLayout();
-    QTextLine line = layout.createLine();
-    Q_UNUSED(line);
-    layout.endLayout();
-    const QScriptLine &sl = eng->lines[0];
-    if (!sl.length || !eng->layoutData)
-        return;
+    // qDebug() << Q_FUNC_INFO << point << f << text << direction;
 
-    int nItems = eng->layoutData->items.size();
+    static const QTextEngine::ShaperFlags shaperflags = 0;
 
-    qreal x(point.x());
-    qreal y(point.y());
-
-    for (int i = 0; i < nItems; ++i) {
-        QScriptItem &si = eng->layoutData->items[i];
-
-        if (si.analysis.flags < QScriptAnalysis::TabOrObject) {
-            QGlyphLayout glyphs = eng->shapedGlyphs(&si);
-            QFontEngine *fe = f.d->engineForScript(si.analysis.script);
-            Q_ASSERT(fe);
-            fe->addOutlineToPath(x, y, glyphs, this, QTextItem::RenderFlags(0));
-
-            const qreal lw = fe->lineThickness().toReal();
-            if (f.d->underline) {
-                qreal pos = fe->underlinePosition().toReal();
-                addRect(x, y + pos, si.width.toReal(), lw);
+    // TODO: add QTextOption enum for it to replace script analysis in text layout
+    static const bool scriptdetection = true;
+    if (scriptdetection) {
+        qreal xoffset = 0.0;
+        qreal yoffset = 0.0;
+        for (int i = 0; i < text.size(); i++) {
+            int nglyphs = 1;
+            QChar textchars[2] = { text.at(i), 0 };
+            uint ucs4 = textchars[0].unicode();
+            if (textchars[0].isHighSurrogate() && (i + 1) < text.size() && text.at(i + 1).isLowSurrogate()) {
+                textchars[1] = text.at(i + 1);
+                ucs4 = QChar::surrogateToUcs4(textchars[0], textchars[1]);
+                i++;
+                nglyphs = 2;
+                // qDebug() << Q_FUNC_INFO << ucs4;
             }
-            if (f.d->overline) {
-                qreal pos = fe->ascent().toReal() + 1;
-                addRect(x, y - pos, si.width.toReal(), lw);
+
+            const QUnicodeTables::Script script = QUnicodeTables::script(ucs4);
+            QFontEngine* engine = f.d->engineForScript(script);
+            if (Q_UNLIKELY(!engine)) {
+                qWarning("QPainterPath::addText: No font engine for script %d", int(script));
+                continue;
             }
-            if (f.d->strikeOut) {
-                qreal pos = fe->ascent().toReal() / 3;
-                addRect(x, y - pos, si.width.toReal(), lw);
+
+            switch (QChar::category(ucs4)) {
+                case QChar::Separator_Line:
+                case QChar::Other_Control:
+                case QChar::Other_Format: {
+                    // qDebug() << Q_FUNC_INFO << ucs4;
+                    continue;
+                }
             }
+
+            QGlyphLayoutArray<2> glyphs;
+            engine->stringToCMap(textchars, nglyphs, &glyphs, &nglyphs, shaperflags);
+            engine->addOutlineToPath(point.x() + xoffset, point.y() + yoffset, glyphs, this);
+
+            xoffset += glyphs.advances_x[0].toReal();
+            yoffset += glyphs.advances_y[0].toReal();
+            if (nglyphs == 2) {
+                xoffset += glyphs.advances_x[1].toReal();
+                yoffset += glyphs.advances_y[1].toReal();
+            }
+            Q_ASSERT(nglyphs < 3);
         }
-        x += si.width.toReal();
+    } else {
+        QFontEngine* engine = f.d->engineForScript(QUnicodeTables::Common);
+        if (Q_UNLIKELY(!engine)) {
+            qWarning("QPainterPath::addText: Invalid font %s", f.family().toLocal8Bit().constData());
+            return;
+        }
+
+        int nglyphs = text.size();
+        QVarLengthGlyphLayoutArray glyphs(nglyphs);
+        engine->stringToCMap(text.unicode(), nglyphs, &glyphs, &nglyphs, shaperflags);
+        engine->addOutlineToPath(point.x(), point.y(), glyphs, this);
     }
 }
 

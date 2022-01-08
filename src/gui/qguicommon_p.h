@@ -13,9 +13,11 @@ QT_BEGIN_NAMESPACE
 
 
 #define QTEXTLAYOUT(__textlayout) \
+    const qreal __fontleading =  QFontMetricsF(__textlayout.font()).leading(); \
+    qreal __textheight = -__fontleading; \
     QTextLine __textline = __textlayout.createLine(); \
-    qreal __textheight = 0.0; \
     while (__textline.isValid()) { \
+        __textheight += __fontleading; \
         __textline.setPosition(QPointF(0.0, __textheight)); \
         __textheight += __textline.height(); \
         __textline = __textlayout.createLine(); \

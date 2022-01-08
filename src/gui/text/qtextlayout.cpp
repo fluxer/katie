@@ -334,8 +334,7 @@ QTextLayout::QTextLayout(const QTextBlock &block)
 */
 QTextLayout::~QTextLayout()
 {
-    if (!d->stackEngine)
-        delete d;
+    delete d;
 }
 
 /*!
@@ -2182,7 +2181,7 @@ void QTextLine::draw(QPainter *p, const QPointF &pos, const QTextLayout::FormatR
                 path.setFillRule(Qt::WindingFill);
 
                 if (gf.glyphs.numGlyphs)
-                    gf.fontEngine->addOutlineToPath(pos.x(), pos.y(), gf.glyphs, &path, gf.flags);
+                    gf.fontEngine->addOutlineToPath(pos.x(), pos.y(), gf.glyphs, &path);
                 if (gf.flags) {
                     const QFontEngine *fe = gf.fontEngine;
                     const qreal lw = fe->lineThickness().toReal();

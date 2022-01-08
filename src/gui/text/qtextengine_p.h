@@ -364,7 +364,6 @@ public:
 
     // keep in sync with QAbstractFontEngine::TextShapingFlag!!
     enum ShaperFlag {
-        RightToLeft = 0x0001,
         DesignMetrics = 0x0002,
         GlyphIndicesOnly = 0x0004
     };
@@ -385,7 +384,6 @@ public:
 
     QFixed width(int charFrom, int numChars) const;
     glyph_metrics_t boundingBox() const;
-    glyph_metrics_t tightBoundingBox() const;
 
     int length(int item) const {
         int from = layoutData->items[item].position;
@@ -468,7 +466,6 @@ public:
     QFixed maxWidth;
     QPointF position;
     bool cacheGlyphs;
-    bool stackEngine;
     bool forceJustification;
     bool visualMovement;
 

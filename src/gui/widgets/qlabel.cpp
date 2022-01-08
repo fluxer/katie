@@ -84,8 +84,8 @@ QT_BEGIN_NAMESPACE
 
     By default, labels display \l{alignment}{left-aligned, vertically-centered}
     text and images, where any tabs in the text to be displayed are
-    \l{Qt::TextExpandTabs}{automatically expanded}. However, the look
-    of a QLabel can be adjusted and fine-tuned in several ways.
+    \l{automatically expanded}. However, the look of a QLabel can be adjusted
+    and fine-tuned in several ways.
 
     The positioning of the content within the QLabel widget area can
     be tuned with setAlignment() and setIndent(). Text content can
@@ -185,7 +185,7 @@ void QLabelPrivate::init()
     pixmap = 0;
     scaledpixmap = 0;
     cachedimage = 0;
-    align = Qt::AlignLeft | Qt::AlignVCenter | Qt::TextExpandTabs;
+    align = Qt::AlignLeft | Qt::AlignVCenter;
     indent = -1;
     scaledcontents = false;
     textLayoutDirty = false;
@@ -554,11 +554,11 @@ QSize QLabelPrivate::sizeForWidth(int w) const
             else if (w < 0)
                 w = 2000;
             w -= (hextra + contentsMargin.width());
-            br = fm.boundingRect(0, 0, w ,2000, flags, text);
+            br = fm.boundingRect(QRect(0, 0, w , 2000), flags, text);
             if (tryWidth && br.height() < 4*fm.lineSpacing() && br.width() > w/2)
-                br = fm.boundingRect(0, 0, w/2, 2000, flags, text);
+                br = fm.boundingRect(QRect(0, 0, w/2, 2000), flags, text);
             if (tryWidth && br.height() < 2*fm.lineSpacing() && br.width() > w/4)
-                br = fm.boundingRect(0, 0, w/4, 2000, flags, text);
+                br = fm.boundingRect(QRect(0, 0, w/4, 2000), flags, text);
         }
     } else {
         br = QRect(QPoint(0, 0), QSize(fm.averageCharWidth(), fm.lineSpacing()));

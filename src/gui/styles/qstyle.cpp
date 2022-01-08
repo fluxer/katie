@@ -437,7 +437,7 @@ QRect QStyle::itemTextRect(const QFontMetrics &metrics, const QRect &rect, int a
                        const QString &text) const
 {
     if (!text.isEmpty()) {
-        QRect result = metrics.boundingRect(rect.x(), rect.y(), rect.width(), rect.height(), alignment, text);
+        QRect result = metrics.boundingRect(rect, alignment, text);
         if (!enabled && proxy()->styleHint(SH_EtchDisabledText)) {
             result.setWidth(result.width()+1);
             result.setHeight(result.height()+1);
