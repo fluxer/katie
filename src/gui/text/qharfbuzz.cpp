@@ -284,39 +284,6 @@ static inline void positionCluster(HB_ShaperItem *item, int gfrom,  int glast)
         HB_Fixed offset = offsetBase;
         unsigned char cmb = attributes[gfrom+i].combiningClass;
 
-        // ### maybe the whole position determination should move down to heuristicSetGlyphAttributes. Would save some
-        // bits  in the glyphAttributes structure.
-        if (cmb < 200) {
-            // fixed position classes. We approximate by mapping to one of the others.
-            // currently I added only the ones for arabic, hebrew, lao and thai.
-
-            // for Lao and Thai marks with class 0, see below (heuristicSetGlyphAttributes)
-
-            // add a bit more offset to arabic, a bit hacky
-            if (cmb >= 27 && cmb <= 36 && offset < 3)
-                offset +=1;
-            // below
-            if ((cmb >= 10 && cmb <= 18) ||
-                 cmb == 20 || cmb == 22 ||
-                 cmb == 29 || cmb == 32)
-                cmb = HB_Combining_Below;
-            // above
-            else if (cmb == 23 || cmb == 27 || cmb == 28 ||
-                      cmb == 30 || cmb == 31 || (cmb >= 33 && cmb <= 36))
-                cmb = HB_Combining_Above;
-            //below-right
-            else if (cmb == 9 || cmb == 103 || cmb == 118)
-                cmb = HB_Combining_BelowRight;
-            // above-right
-            else if (cmb == 24 || cmb == 107 || cmb == 122)
-                cmb = HB_Combining_AboveRight;
-            else if (cmb == 25)
-                cmb = HB_Combining_AboveLeft;
-            // fixed:
-            //  19 21
-
-        }
-
         // combining marks of different class don't interact. Reset the rectangle.
         if (cmb != lastCmb) {
             //qDebug("resetting rect");
