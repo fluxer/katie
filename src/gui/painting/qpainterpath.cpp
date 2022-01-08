@@ -1098,12 +1098,15 @@ void QPainterPath::addText(const QPointF &point, const QFont &f, const QString &
         qreal xoffset = 0.0;
         qreal yoffset = 0.0;
         for (int i = 0; i < text.size(); i++) {
-            QChar textchar = text.at(i);
-            uint ucs4 = textchar.unicode();
-            if (textchar.isHighSurrogate() && (i + 1) < text.size() && text.at(i + 1).isLowSurrogate()) {
-                ucs4 = QChar::surrogateToUcs4(ucs4, text.at(i + 1).unicode());
-                textchar = QChar(ucs4);
+            int nglyphs = 1;
+            QChar textchars[2] = { text.at(i), 0 };
+            uint ucs4 = textchars[0].unicode();
+            if (textchars[0].isHighSurrogate() && (i + 1) < text.size() && text.at(i + 1).isLowSurrogate()) {
+                textchars[1] = text.at(i + 1);
+                ucs4 = QChar::surrogateToUcs4(textchars[0], textchars[1]);
                 i++;
+                nglyphs = 2;
+                // qDebug() << Q_FUNC_INFO << ucs4;
             }
 
             const QUnicodeTables::Script script = QUnicodeTables::script(ucs4);
@@ -1113,23 +1116,26 @@ void QPainterPath::addText(const QPointF &point, const QFont &f, const QString &
                 continue;
             }
 
-            switch (textchar.category()) {
+            switch (QChar::category(ucs4)) {
                 case QChar::Separator_Line:
                 case QChar::Other_Control:
                 case QChar::Other_Format: {
-                    // e.g. non-printable character in terminal emulator
-                    // qDebug() << Q_FUNC_INFO << textchar << textchar.category();
+                    // qDebug() << Q_FUNC_INFO << ucs4;
                     continue;
                 }
             }
 
-            int nglyphs = 1;
-            QGlyphLayoutArray<1> glyphs;
-            engine->stringToCMap(&textchar, nglyphs, &glyphs, &nglyphs, shaperflags);
+            QGlyphLayoutArray<2> glyphs;
+            engine->stringToCMap(textchars, nglyphs, &glyphs, &nglyphs, shaperflags);
             engine->addOutlineToPath(point.x() + xoffset, point.y() + yoffset, glyphs, this);
 
             xoffset += glyphs.advances_x[0].toReal();
             yoffset += glyphs.advances_y[0].toReal();
+            if (nglyphs == 2) {
+                xoffset += glyphs.advances_x[1].toReal();
+                yoffset += glyphs.advances_y[1].toReal();
+            }
+            Q_ASSERT(nglyphs < 3);
         }
     } else {
         QFontEngine* engine = f.d->engineForScript(QUnicodeTables::Common);
