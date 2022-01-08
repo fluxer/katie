@@ -32,7 +32,6 @@ QT_BEGIN_NAMESPACE
 
 
 template <typename T> class QList;
-struct QTextOptionPrivate;
 
 class Q_GUI_EXPORT QTextOption
 {
