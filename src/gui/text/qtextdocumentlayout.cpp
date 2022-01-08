@@ -2552,7 +2552,6 @@ void QTextDocumentLayoutPrivate::layoutBlock(const QTextBlock &bl, int blockPosi
         LDEBUG << " do layout";
         QTextOption option = docPrivate->defaultTextOption;
         option.setTextDirection(dir);
-        option.setTabs( blockFormat.tabPositions() );
 
         Qt::Alignment align = docPrivate->defaultTextOption.alignment();
         if (blockFormat.hasProperty(QTextFormat::BlockAlignment))

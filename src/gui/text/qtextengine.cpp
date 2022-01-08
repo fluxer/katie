@@ -1283,63 +1283,6 @@ QFixed QTextEngine::calculateTabWidth(int item, QFixed x) const
         dpiScale = QFixed::fromReal(fnt.d->dpi / qreal(QX11Info::appDpiY()));
     }
 
-    QList<QTextOption::Tab> tabArray = option.tabs();
-    if (!tabArray.isEmpty()) {
-        for (int i = 0; i < tabArray.size(); ++i) {
-            QFixed tab = QFixed::fromReal(tabArray[i].position) * dpiScale;
-            if (tab > x) {  // this is the tab we need.
-                QTextOption::Tab tabSpec = tabArray[i];
-                int tabSectionEnd = layoutData->string.count();
-                if (tabSpec.type == QTextOption::RightTab || tabSpec.type == QTextOption::CenterTab) {
-                    // find next tab to calculate the width required.
-                    tab = QFixed::fromReal(tabSpec.position);
-                    for (int i=item + 1; i < layoutData->items.count(); i++) {
-                        const QScriptItem &item = layoutData->items[i];
-                        if (item.analysis.flags == QScriptAnalysis::TabOrObject) { // found it.
-                            tabSectionEnd = item.position;
-                            break;
-                        }
-                    }
-                }
-                else if (tabSpec.type == QTextOption::DelimiterTab)
-                    // find delimitor character to calculate the width required
-                    tabSectionEnd = qMax(si.position, layoutData->string.indexOf(tabSpec.delimiter, si.position) + 1);
-
-                if (tabSectionEnd > si.position) {
-                    QFixed length;
-                    // Calculate the length of text between this tab and the tabSectionEnd
-                    for (int i=item; i < layoutData->items.count(); i++) {
-                        QScriptItem &item = layoutData->items[i];
-                        if (item.position > tabSectionEnd || item.position <= si.position)
-                            continue;
-                        shape(i); // first, lets make sure relevant text is already shaped
-                        QGlyphLayout glyphs = this->shapedGlyphs(&item);
-                        const int end = qMin(item.position + item.num_glyphs, tabSectionEnd) - item.position;
-                        for (int i=0; i < end; i++)
-                            length += glyphs.advances_x[i] * !glyphs.attributes[i].dontPrint;
-                        if (end + item.position == tabSectionEnd && tabSpec.type == QTextOption::DelimiterTab) // remove half of matching char
-                            length -= glyphs.advances_x[end] / 2 * !glyphs.attributes[end].dontPrint;
-                    }
-
-                    switch (tabSpec.type) {
-                    case QTextOption::CenterTab:
-                        length /= 2;
-                        // fall through
-                    case QTextOption::DelimiterTab:
-                        // fall through
-                    case QTextOption::RightTab:
-                        tab = QFixed::fromReal(tabSpec.position) * dpiScale - length;
-                        if (tab < 0) // default to tab taking no space
-                            return QFixed();
-                        break;
-                    case QTextOption::LeftTab:
-                        break;
-                    }
-                }
-                return tab - x;
-            }
-        }
-    }
     QFixed tab = QFixed::fromReal(option.tabStop());
     if (tab <= 0)
         tab = 80; // default

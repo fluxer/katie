@@ -137,7 +137,6 @@ public:
         BlockLeftMargin = 0x1032,
         BlockRightMargin = 0x1033,
         TextIndent = 0x1034,
-        TabPositions = 0x1035,
         BlockIndent = 0x1040,
         LineHeight = 0x1048,
         LineHeightType = 0x1049,
@@ -572,9 +571,6 @@ public:
     { setProperty(PageBreakPolicy, int(flags)); }
     inline PageBreakFlags pageBreakPolicy() const
     { return PageBreakFlags(intProperty(PageBreakPolicy)); }
-
-    void setTabPositions(const QList<QTextOption::Tab> &tabs);
-    QList<QTextOption::Tab> tabPositions() const;
 
 protected:
     explicit QTextBlockFormat(const QTextFormat &fmt);

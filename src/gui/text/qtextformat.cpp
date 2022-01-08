@@ -518,8 +518,6 @@ Q_GUI_EXPORT QDataStream &operator>>(QDataStream &stream, QTextFormat &fmt)
     \value BlockLeftMargin
     \value BlockRightMargin
     \value TextIndent
-    \value TabPositions     Specifies the tab positions.  The tab positions are structs of QTextOption::Tab which are stored in
-                            a QList (internally, in a QList<QVariant>).
     \value BlockIndent
     \value LineHeight
     \value LineHeightType
@@ -1897,47 +1895,6 @@ QTextBlockFormat::QTextBlockFormat() : QTextFormat(BlockFormat) {}
 QTextBlockFormat::QTextBlockFormat(const QTextFormat &fmt)
  : QTextFormat(fmt)
 {
-}
-
-/*!
-    \since 4.4
-    Sets the tab positions for the text block to those specified by
-    \a tabs.
-
-    \sa tabPositions()
-*/
-void QTextBlockFormat::setTabPositions(const QList<QTextOption::Tab> &tabs)
-{
-    QList<QVariant> list;
-    QList<QTextOption::Tab>::ConstIterator iter = tabs.constBegin();
-    while (iter != tabs.constEnd()) {
-        QVariant v;
-        v.setValue<QTextOption::Tab>(*iter);
-        list.append(v);
-        ++iter;
-    }
-    setProperty(TabPositions, list);
-}
-
-/*!
-    \since 4.4
-    Returns a list of tab positions defined for the text block.
-
-    \sa setTabPositions()
-*/
-QList<QTextOption::Tab> QTextBlockFormat::tabPositions() const
-{
-    QVariant variant = property(TabPositions);
-    if(variant.isNull())
-        return QList<QTextOption::Tab>();
-    QList<QTextOption::Tab> answer;
-    QList<QVariant> variantsList = qvariant_cast<QList<QVariant> >(variant);
-    QList<QVariant>::Iterator iter = variantsList.begin();
-    while(iter != variantsList.end()) {
-        answer.append( qvariant_cast<QTextOption::Tab>(*iter));
-        ++iter;
-    }
-    return answer;
 }
 
 /*!
