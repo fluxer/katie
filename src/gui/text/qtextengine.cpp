@@ -939,8 +939,8 @@ void QTextEngine::freeMemory()
     delete layoutData;
     layoutData = 0;
     for (int i = 0; i < lines.size(); ++i) {
-        lines[i].justified = 0;
-        lines[i].gridfitted = 0;
+        lines[i].justified = false;
+        lines[i].gridfitted = false;
     }
 }
 
