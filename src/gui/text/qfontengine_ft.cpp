@@ -345,18 +345,14 @@ bool QFontEngineFT::loadGlyph(glyph_t glyph, int load_flags) const
 {
     FT_Face face = freetype->face;
     FT_Error err = FT_Load_Glyph(face, glyph, load_flags);
-    if (err == FT_Err_Too_Few_Arguments) {
-        // this is an error in the bytecode interpreter, just try to run without it
-        load_flags |= FT_LOAD_FORCE_AUTOHINT;
-        err = FT_Load_Glyph(face, glyph, load_flags);
+    if (Q_UNLIKELY(err != FT_Err_Ok)) {
+        qWarning("load glyph failed err=%x face=%p, glyph=%d", err, face, glyph);
+        return false;
     }
 
     FT_GlyphSlot slot = face->glyph;
     if (Q_UNLIKELY(slot->format != FT_GLYPH_FORMAT_OUTLINE)) {
         qWarning("non-outline format is not supported format=%d face=%p, glyph=%d", slot->format, face, glyph);
-        return false;
-    } else if (Q_UNLIKELY(err != FT_Err_Ok)) {
-        qWarning("load glyph failed err=%x face=%p, glyph=%d", err, face, glyph);
         return false;
     }
 
