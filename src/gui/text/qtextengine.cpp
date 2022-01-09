@@ -1262,8 +1262,6 @@ void QTextEngine::setBoundary(int strPos) const
 
 QFixed QTextEngine::calculateTabWidth(int item, QFixed x) const
 {
-    const QScriptItem &si = layoutData->items[item];
-
     QFixed dpiScale = 1;
     if (block.docHandle() && block.docHandle()->layout()) {
         QPaintDevice *pdev = block.docHandle()->layout()->paintDevice();

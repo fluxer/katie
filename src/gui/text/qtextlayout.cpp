@@ -996,7 +996,6 @@ void QTextLayout::draw(QPainter *p, const QPointF &pos, const QVector<FormatRang
     int firstLine = 0;
     int lastLine = d->lines.size();
     for (int i = 0; i < d->lines.size(); ++i) {
-        QTextLine l(i, d);
         const QScriptLine &sl = d->lines[i];
 
         if (sl.y > clipe) {
@@ -1188,7 +1187,6 @@ void QTextLayout::drawCursor(QPainter *p, const QPointF &pos, int cursorPosition
     qreal x = position.x() + l.cursorToX(cursorPosition);
 
     int itm;
-
     if (d->visualCursorMovement()) {
         if (cursorPosition == sl.from + sl.length)
             cursorPosition--;

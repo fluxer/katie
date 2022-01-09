@@ -5951,8 +5951,6 @@ void qt_format_text(const QFont &fnt, const QRectF &_r,
 
     tf = QStyle::visualAlignment(layout_direction, QFlag(tf));
 
-    bool isRightToLeft = (layout_direction == Qt::RightToLeft);
-
     if (!painter)
         tf |= Qt::TextDontPrint;
 
