@@ -130,7 +130,7 @@ static bool qHB_ConvertStringToGlyphIndices(HB_ShaperItem *shaper_item)
 // set the glyph attributes heuristically. Assumes a 1 to 1 relationship between chars and glyphs
 // and no reordering.
 // also computes logClusters heuristically
-void qHB_HeuristicSetGlyphAttributes(HB_ShaperItem *item)
+static void qHB_HeuristicSetGlyphAttributes(HB_ShaperItem *item)
 {
     const HB_UChar16 *uc = item->string + item->item.pos;
     uint32_t length = item->item.length;
@@ -333,7 +333,7 @@ static inline void positionCluster(HB_ShaperItem *item, int gfrom,  int glast)
     }
 }
 
-void qHB_HeuristicPosition(HB_ShaperItem *item)
+static void qHB_HeuristicPosition(HB_ShaperItem *item)
 {
     qHB_GetGlyphAdvances(item->font, item->glyphs, item->num_glyphs,
                          item->advances, item->shaperFlags);
