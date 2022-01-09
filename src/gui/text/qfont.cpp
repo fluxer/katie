@@ -1374,14 +1374,6 @@ QFont QFont::resolve(const QFont &other) const
     \internal
 */
 
-/*! \fn void QFont::initialize()
-  \internal
-
-  Internal function that initializes the font system.  The font cache
-  and font dict do not alloc the keys. The key is a QString which is
-  shared between QFontPrivate and QXFontName.
-*/
-
 /*  \internal
     Internal function. Converts boolean font settings to an unsigned
     8-bit number. Used for serialization etc.

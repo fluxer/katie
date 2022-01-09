@@ -196,8 +196,6 @@ public:
     QString toString() const;
     bool fromString(const QString &);
 
-    static void initialize();
-
     QString defaultFamily() const;
     QString lastResortFamily() const;
     QString lastResortFont() const;

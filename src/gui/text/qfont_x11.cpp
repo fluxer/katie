@@ -60,10 +60,6 @@ double qt_pointSize(double pixelSize, int dpi)
     return pixelSize * 72. / ((double) dpi);
 }
 
-void QFont::initialize()
-{
-}
-
 /*!
   \internal
   X11 Only: Returns the screen with which this font is associated.

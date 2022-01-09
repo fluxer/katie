@@ -1230,7 +1230,6 @@ void qt_init(QApplicationPrivate *priv, Display *display,
 
     // Misc. initialization
     QCursorData::initialize();
-    QFont::initialize();
 
     qApp->setObjectName(qApp->applicationName());
 
