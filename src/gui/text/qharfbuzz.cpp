@@ -21,7 +21,6 @@
 
 #include "qunicodetables_p.h"
 #include "qfontengine_p.h"
-#include "qtextcodec.h"
 #include "qharfbuzz_p.h"
 
 QT_BEGIN_NAMESPACE
