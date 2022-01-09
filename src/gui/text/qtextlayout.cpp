@@ -292,14 +292,16 @@ Qt::LayoutDirection QTextInlineObject::textDirection() const
     \sa setText()
 */
 QTextLayout::QTextLayout()
-{ d = new QTextEngine(); }
+    : d(new QTextEngine())
+{
+}
 
 /*!
     Constructs a text layout to lay out the given \a text.
 */
 QTextLayout::QTextLayout(const QString& text)
+    : d(new QTextEngine())
 {
-    d = new QTextEngine();
     d->text = text;
 }
 
@@ -324,8 +326,8 @@ QTextLayout::QTextLayout(const QString& text, const QFont &font, QPaintDevice *p
     Constructs a text layout to lay out the given \a block.
 */
 QTextLayout::QTextLayout(const QTextBlock &block)
+    : d(new QTextEngine())
 {
-    d = new QTextEngine();
     d->block = block;
 }
 
@@ -2519,7 +2521,3 @@ int QTextLine::xToCursor(qreal _x, CursorPosition cpos) const
 }
 
 QT_END_NAMESPACE
-
-
-
-
