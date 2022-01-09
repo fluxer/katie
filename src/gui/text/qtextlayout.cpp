@@ -459,7 +459,6 @@ QString QTextLayout::preeditAreaText() const
     return d->specialData ? d->specialData->preeditText : QString();
 }
 
-
 /*!
     Sets the additional formats supported by the text layout to \a formatList.
 
@@ -908,7 +907,6 @@ qreal QTextLayout::maximumWidth() const
     return d->maxWidth.toReal();
 }
 
-
 /*!
     \internal
 */
@@ -930,8 +928,6 @@ static void addSelectedRegionsToPath(QTextEngine *eng, int lineNumber, const QPo
     const QScriptLine &line = eng->lines[lineNumber];
 
     QTextLineItemIterator iterator(eng, lineNumber, pos, selection);
-
-
 
     const qreal selectionY = pos.y() + line.y.toReal();
     const qreal lineHeight = line.height().toReal();
@@ -2179,7 +2175,6 @@ void QTextLine::draw(QPainter *p, const QPointF &pos, const QTextLayout::FormatR
             if (format.penProperty(QTextFormat::TextOutline).style() != Qt::NoPen) {
                 QPainterPath path;
                 path.setFillRule(Qt::WindingFill);
-
                 path.addText(pos, f, gf.text());
 
                 p->save();

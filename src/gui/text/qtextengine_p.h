@@ -256,7 +256,7 @@ public:
     int num_chars;
     const QChar *chars;
     const unsigned short *logClusters;
-    const QFont *f;
+    QFont *f;
 
     QGlyphLayout glyphs;
     QFontEngine *fontEngine;

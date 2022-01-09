@@ -5040,8 +5040,7 @@ static void drawTextItemDecoration(QPainter *painter, const QPointF &pos, const 
                                    QTextItem::RenderFlags flags, qreal width,
                                    const QTextCharFormat &charFormat)
 {
-    if (underlineStyle == QTextCharFormat::NoUnderline
-        && !(flags & (QTextItem::StrikeOut | QTextItem::Overline)))
+    if (underlineStyle == QTextCharFormat::NoUnderline)
         return;
 
     const QPen oldPen = painter->pen();

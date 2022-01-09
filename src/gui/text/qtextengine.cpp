@@ -1506,10 +1506,10 @@ void QTextItemInt::initWithScriptItem(const QScriptItem &si)
     if (underlineStyle == QTextCharFormat::SingleUnderline)
         flags |= QTextItem::Underline;
 
-    if (f->d->overline || charFormat.fontOverline())
-        flags |= QTextItem::Overline;
-    if (f->d->strikeOut || charFormat.fontStrikeOut())
-        flags |= QTextItem::StrikeOut;
+    if (charFormat.fontOverline())
+        f->setOverline(true);
+    if (charFormat.fontStrikeOut())
+        f->setStrikeOut(true);
 }
 
 QTextLineItemIterator::QTextLineItemIterator(QTextEngine *_eng, int _lineNum, const QPointF &pos,
