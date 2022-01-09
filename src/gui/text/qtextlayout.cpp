@@ -2180,24 +2180,7 @@ void QTextLine::draw(QPainter *p, const QPointF &pos, const QTextLayout::FormatR
                 QPainterPath path;
                 path.setFillRule(Qt::WindingFill);
 
-                if (gf.glyphs.numGlyphs)
-                    gf.fontEngine->addOutlineToPath(pos.x(), pos.y(), gf.glyphs, &path);
-                if (gf.flags) {
-                    const QFontEngine *fe = gf.fontEngine;
-                    const qreal lw = fe->lineThickness().toReal();
-                    if (gf.flags & QTextItem::Underline) {
-                        qreal offs = fe->underlinePosition().toReal();
-                        path.addRect(pos.x(), pos.y() + offs, gf.width.toReal(), lw);
-                    }
-                    if (gf.flags & QTextItem::Overline) {
-                        qreal offs = fe->ascent().toReal() + 1;
-                        path.addRect(pos.x(), pos.y() - offs, gf.width.toReal(), lw);
-                    }
-                    if (gf.flags & QTextItem::StrikeOut) {
-                        qreal offs = fe->ascent().toReal() / 3;
-                        path.addRect(pos.x(), pos.y() - offs, gf.width.toReal(), lw);
-                    }
-                }
+                path.addText(pos, f, gf.text());
 
                 p->save();
                 //Currently QPen with a Qt::NoPen style still returns a default

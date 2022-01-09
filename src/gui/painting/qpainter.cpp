@@ -5052,8 +5052,6 @@ static void drawTextItemDecoration(QPainter *painter, const QPointF &pos, const 
     pen.setWidthF(fe->lineThickness().toReal());
     pen.setCapStyle(Qt::FlatCap);
 
-    QLineF line(pos.x(), pos.y(), pos.x() + qFloor(width), pos.y());
-
     const qreal underlineOffset = fe->underlinePosition().toReal();
     // deliberately ceil the offset to avoid the underline coming too close to
     // the text above it.
@@ -5079,7 +5077,7 @@ static void drawTextItemDecoration(QPainter *painter, const QPointF &pos, const 
         painter->fillRect(pos.x(), 0, qCeil(width), qMin(wave.height(), descent), wave);
         painter->restore();
     } else if (underlineStyle != QTextCharFormat::NoUnderline) {
-        QLineF underLine(line.x1(), underlinePos, line.x2(), underlinePos);
+        QLineF underLine(pos.x(), underlinePos, pos.x() + qFloor(width), underlinePos);
 
         QColor uc = charFormat.underlineColor();
         if (uc.isValid())
@@ -5089,26 +5087,6 @@ static void drawTextItemDecoration(QPainter *painter, const QPointF &pos, const 
         painter->setPen(pen);
         painter->drawLine(underLine);
     }
-
-    pen.setStyle(Qt::SolidLine);
-    pen.setColor(oldPen.color());
-
-    if (flags & QTextItem::StrikeOut) {
-        QLineF strikeOutLine = line;
-        strikeOutLine.translate(0., - fe->ascent().toReal() / 3.);
-        painter->setPen(pen);
-        painter->drawLine(strikeOutLine);
-    }
-
-    if (flags & QTextItem::Overline) {
-        QLineF overLine = line;
-        overLine.translate(0., - fe->ascent().toReal());
-        painter->setPen(pen);
-        painter->drawLine(overLine);
-    }
-
-    painter->setPen(oldPen);
-    painter->setBrush(oldBrush);
 }
 
 void QPainter::drawTextItem(const QPointF &p, const QTextItem &_ti)
