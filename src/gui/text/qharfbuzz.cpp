@@ -268,12 +268,11 @@ static inline void positionCluster(HB_ShaperItem *item, int gfrom,  int glast)
     //qreal offsetBase = (size - 4) / 4 + qMin<qreal>(size, 4) + 1;
 //     qDebug("offset = %f", offsetBase);
 
-    int i;
-    unsigned char lastCmb = 0;
+    HB_CombiningClass lastCmb = HB_Combining_NotOrdered;
     HB_GlyphMetrics attachmentRect;
     memset(&attachmentRect, 0, sizeof(attachmentRect));
 
-    for(i = 1; i <= nmarks; i++) {
+    for(int i = 1; i <= nmarks; i++) {
         HB_Glyph mark = glyphs[gfrom+i];
         HB_GlyphMetrics markMetrics;
         qHB_getGlyphMetrics(item->font, mark, &markMetrics);
@@ -282,7 +281,7 @@ static inline void positionCluster(HB_ShaperItem *item, int gfrom,  int glast)
 //          qDebug("markInfo: %f/%f (%f/%f) off=%f/%f", markInfo.x, markInfo.y, markInfo.width, markInfo.height, markInfo.xoff, markInfo.yoff);
 
         HB_Fixed offset = offsetBase;
-        unsigned char cmb = attributes[gfrom+i].combiningClass;
+        HB_CombiningClass cmb = attributes[gfrom+i].combiningClass;
 
         // combining marks of different class don't interact. Reset the rectangle.
         if (cmb != lastCmb) {
