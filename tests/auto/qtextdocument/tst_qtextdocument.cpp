@@ -88,7 +88,6 @@ private slots:
 
     void toHtmlBodyBgColor();
     void toHtmlRootFrameProperties();
-    void wordspacingHtmlExport();
 
     void cursorPositionChanged();
     void cursorPositionChangedOnSetText();
@@ -1703,31 +1702,6 @@ void tst_QTextDocument::toHtmlRootFrameProperties()
     expectedOutput.append(htmlTail);
 
     QCOMPARE(doc.toHtml(), expectedOutput);
-}
-
-void tst_QTextDocument::wordspacingHtmlExport()
-{
-    doc->setPlainText("Test");
-
-    QRegExp re(".*span style=\"(.*)\">Test.*");
-    QVERIFY(re.exactMatch(doc->toHtml()) == false); // no span
-
-    QTextCursor cursor(doc);
-    cursor.setPosition(4, QTextCursor::KeepAnchor);
-    QTextCharFormat cf;
-    cf.setFontWordSpacing(4);
-    cursor.mergeCharFormat(cf);
-
-    QVERIFY(re.exactMatch(doc->toHtml()));
-    QCOMPARE(re.captureCount(), 1);
-    QCOMPARE(re.cap(1).trimmed(), QString("word-spacing:4px;"));
-
-    cf.setFontWordSpacing(-8.5);
-    cursor.mergeCharFormat(cf);
-
-    QVERIFY(re.exactMatch(doc->toHtml()));
-    QCOMPARE(re.captureCount(), 1);
-    QCOMPARE(re.cap(1).trimmed(), QString("word-spacing:-8.5px;"));
 }
 
 class CursorPosSignalSpy : public QObject

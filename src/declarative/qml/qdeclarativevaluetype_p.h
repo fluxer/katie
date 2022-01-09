@@ -464,8 +464,6 @@ class Q_AUTOTEST_EXPORT QDeclarativeFontValueType : public QDeclarativeValueType
     Q_PROPERTY(bool strikeout READ strikeout WRITE setStrikeout)
     Q_PROPERTY(qreal pointSize READ pointSize WRITE setPointSize)
     Q_PROPERTY(int pixelSize READ pixelSize WRITE setPixelSize)
-    Q_PROPERTY(qreal letterSpacing READ letterSpacing WRITE setLetterSpacing)
-    Q_PROPERTY(qreal wordSpacing READ wordSpacing WRITE setWordSpacing)
 
 public:
     enum FontWeight { Light = QFont::Light,
@@ -507,12 +505,6 @@ public:
 
     int pixelSize() const;
     void setPixelSize(int size);
-
-    qreal letterSpacing() const;
-    void setLetterSpacing(qreal spacing);
-
-    qreal wordSpacing() const;
-    void setWordSpacing(qreal spacing);
 
 private:
     QFont font;

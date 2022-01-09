@@ -155,43 +155,6 @@ void QDeclarativeTextInput::setText(const QString &s)
     Use \c pointSize to set the size of the font in a device independent manner.
 */
 
-/*!
-    \qmlproperty real TextInput::font.letterSpacing
-
-    Sets the letter spacing for the font.
-
-    Letter spacing changes the default spacing between individual letters in the font.
-    A positive value increases the letter spacing by the corresponding pixels; a negative value decreases the spacing.
-*/
-
-/*!
-    \qmlproperty real TextInput::font.wordSpacing
-
-    Sets the word spacing for the font.
-
-    Word spacing changes the default spacing between individual words.
-    A positive value increases the word spacing by a corresponding amount of pixels,
-    while a negative value decreases the inter-word spacing accordingly.
-*/
-
-/*!
-    \qmlproperty enumeration TextInput::font.capitalization
-
-    Sets the capitalization for the text.
-
-    \list
-    \o Font.MixedCase - This is the normal text rendering option where no capitalization change is applied.
-    \o Font.AllUppercase - This alters the text to be rendered in all uppercase type.
-    \o Font.AllLowercase	 - This alters the text to be rendered in all lowercase type.
-    \o Font.SmallCaps -	This alters the text to be rendered in small-caps type.
-    \o Font.Capitalize - This alters the text to be rendered with the first character of each word as an uppercase character.
-    \endlist
-
-    \qml
-    TextInput { text: "Hello"; font.capitalization: Font.AllLowercase }
-    \endqml
-*/
-
 QFont QDeclarativeTextInput::font() const
 {
     Q_D(const QDeclarativeTextInput);

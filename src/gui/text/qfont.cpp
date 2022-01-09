@@ -111,17 +111,14 @@ bool QFontDef::exactMatch(const QFontDef &other) const
 
 QFontPrivate::QFontPrivate()
     : dpi(QX11Info::appDpiY()), screen(QX11Info::appScreen()),
-      underline(false), overline(false), strikeOut(false), kerning(true),
-      letterSpacingIsAbsolute(false)
+      underline(false), overline(false), strikeOut(false), kerning(true)
 {
 }
 
 QFontPrivate::QFontPrivate(const QFontPrivate &other)
     : request(other.request), dpi(other.dpi), screen(other.screen),
       underline(other.underline), overline(other.overline),
-      strikeOut(other.strikeOut), kerning(other.kerning),
-      letterSpacingIsAbsolute(other.letterSpacingIsAbsolute),
-      letterSpacing(other.letterSpacing), wordSpacing(other.wordSpacing)
+      strikeOut(other.strikeOut), kerning(other.kerning)
 {
 }
 
@@ -185,13 +182,6 @@ void QFontPrivate::resolve(uint mask, const QFontPrivate *other)
 
     if (! (mask & QFont::KerningResolved))
         kerning = other->kerning;
-
-    if (! (mask & QFont::LetterSpacingResolved)) {
-        letterSpacing = other->letterSpacing;
-        letterSpacingIsAbsolute = other->letterSpacingIsAbsolute;
-    }
-    if (! (mask & QFont::WordSpacingResolved))
-        wordSpacing = other->wordSpacing;
 }
 
 /*!
@@ -356,9 +346,7 @@ void QFontPrivate::resolve(uint mask, const QFontPrivate *other)
     \value FixedPitchResolved
     \value StretchResolved
     \value KerningResolved
-    \value LetterSpacingResolved
-    \value WordSpacingResolved
-    \value CompletelyResolved
+    \value AllPropertiesResolved
 */
 
 /*!
@@ -1140,103 +1128,6 @@ void QFont::setStretch(int factor)
 }
 
 /*!
-    \enum QFont::SpacingType
-    \since 4.4
-
-    \value PercentageSpacing  A value of 100 will keep the spacing unchanged; a value of 200 will enlarge the
-                                                   spacing after a character by the width of the character itself.
-    \value AbsoluteSpacing      A positive value increases the letter spacing by the corresponding pixels; a negative
-                                                   value decreases the spacing.
-*/
-
-/*!
-    \since 4.4
-    Returns the letter spacing for the font.
-
-    \sa setLetterSpacing(), letterSpacingType(), setWordSpacing()
- */
-qreal QFont::letterSpacing() const
-{
-    return d->letterSpacing.toReal();
-}
-
-/*!
-    \since 4.4
-    Sets the letter spacing for the font to \a spacing and the type
-    of spacing to \a type.
-
-    Letter spacing changes the default spacing between individual
-    letters in the font.  The spacing between the letters can be
-    made smaller as well as larger.
-
-    \sa letterSpacing(), letterSpacingType(), setWordSpacing()
-*/
-void QFont::setLetterSpacing(SpacingType type, qreal spacing)
-{
-    const QFixed newSpacing = QFixed::fromReal(spacing);
-    const bool absoluteSpacing = type == AbsoluteSpacing;
-    if ((resolve_mask & QFont::LetterSpacingResolved) &&
-        d->letterSpacingIsAbsolute == absoluteSpacing &&
-        d->letterSpacing == newSpacing)
-        return;
-
-    detach();
-
-    d->letterSpacing = newSpacing;
-    d->letterSpacingIsAbsolute = absoluteSpacing;
-    resolve_mask |= QFont::LetterSpacingResolved;
-}
-
-/*!
-    \since 4.4
-    Returns the spacing type used for letter spacing.
-
-    \sa letterSpacing(), setLetterSpacing(), setWordSpacing()
-*/
-QFont::SpacingType QFont::letterSpacingType() const
-{
-    return d->letterSpacingIsAbsolute ? AbsoluteSpacing : PercentageSpacing;
-}
-
-/*!
-    \since 4.4
-    Returns the word spacing for the font.
-
-    \sa setWordSpacing(), setLetterSpacing()
- */
-qreal QFont::wordSpacing() const
-{
-    return d->wordSpacing.toReal();
-}
-
-/*!
-    \since 4.4
-    Sets the word spacing for the font to \a spacing.
-
-    Word spacing changes the default spacing between individual
-    words. A positive value increases the word spacing
-    by a corresponding amount of pixels, while a negative value
-    decreases the inter-word spacing accordingly.
-
-    Word spacing will not apply to writing systems, where indiviaul
-    words are not separated by white space.
-
-    \sa wordSpacing(), setLetterSpacing()
-*/
-void QFont::setWordSpacing(qreal spacing)
-{
-    const QFixed newSpacing = QFixed::fromReal(spacing);
-    if ((resolve_mask & QFont::WordSpacingResolved) &&
-        d->wordSpacing == newSpacing)
-        return;
-
-    detach();
-
-    d->wordSpacing = newSpacing;
-    resolve_mask |= QFont::WordSpacingResolved;
-}
-
-/*!
     Returns true if a window system font exactly matching the settings
     of this font is available.
 
@@ -1267,9 +1158,6 @@ bool QFont::operator==(const QFont &f) const
                 && f.d->overline  == d->overline
                 && f.d->strikeOut == d->strikeOut
                 && f.d->kerning == d->kerning
-                && f.d->letterSpacingIsAbsolute == d->letterSpacingIsAbsolute
-                && f.d->letterSpacing == d->letterSpacing
-                && f.d->wordSpacing == d->wordSpacing
             ));
 }
 
@@ -1298,10 +1186,6 @@ bool QFont::operator<(const QFont &f) const
     if (r1.stretch != r2.stretch) return r1.stretch < r2.stretch;
     if (r1.styleStrategy != r2.styleStrategy) return r1.styleStrategy < r2.styleStrategy;
     if (r1.family != r2.family) return r1.family < r2.family;
-
-    if (f.d->letterSpacingIsAbsolute != d->letterSpacingIsAbsolute) return f.d->letterSpacingIsAbsolute < d->letterSpacingIsAbsolute;
-    if (f.d->letterSpacing != d->letterSpacing) return f.d->letterSpacing < d->letterSpacing;
-    if (f.d->wordSpacing != d->wordSpacing) return f.d->wordSpacing < d->wordSpacing;
 
     int f1attrs = (f.d->underline << 3) + (f.d->overline << 2) + (f.d->strikeOut<<1) + f.d->kerning;
     int f2attrs = (d->underline << 3) + (d->overline << 2) + (d->strikeOut<<1) + d->kerning;
@@ -1405,8 +1289,6 @@ static inline quint8 get_extended_font_bits(const QFontPrivate *f)
     quint8 bits = 0;
     if (f->request.ignorePitch)
         bits |= 0x01;
-    if (f->letterSpacingIsAbsolute)
-        bits |= 0x02;
     return bits;
 }
 
@@ -1433,7 +1315,6 @@ static void set_extended_font_bits(quint8 bits, QFontPrivate *f)
 {
     Q_ASSERT(f != 0);
     f->request.ignorePitch = (bits & 0x01) != 0;
-    f->letterSpacingIsAbsolute = (bits & 0x02) != 0;
 }
 #endif
 
@@ -1535,8 +1416,6 @@ QDataStream &operator<<(QDataStream &s, const QFont &font)
       << get_font_bits(s.version(), font.d.data());
     s << (qint16)font.d->request.stretch;
     s << get_extended_font_bits(font.d.data());
-    s << font.d->letterSpacing.value();
-    s << font.d->wordSpacing.value();
     return s;
 }
 
@@ -1582,12 +1461,6 @@ QDataStream &operator>>(QDataStream &s, QFont &font)
     quint8 extendedBits;
     s >> extendedBits;
     set_extended_font_bits(extendedBits, font.d.data());
-
-    int value;
-    s >> value;
-    font.d->letterSpacing.setValue(value);
-    s >> value;
-    font.d->wordSpacing.setValue(value);
 
     return s;
 }

@@ -85,11 +85,6 @@ public:
         UltraExpanded  = 200
     };
 
-    enum SpacingType {
-        PercentageSpacing,
-        AbsoluteSpacing
-    };
-
     enum ResolveProperties {
         FamilyResolved              = 0x0001,
         SizeResolved                = 0x0002,
@@ -102,10 +97,8 @@ public:
         FixedPitchResolved          = 0x0100,
         StretchResolved             = 0x0200,
         KerningResolved             = 0x0400,
-        LetterSpacingResolved       = 0x0800,
-        WordSpacingResolved         = 0x1000,
-        HintingPreferenceResolved   = 0x2000,
-        StyleNameResolved           = 0x4000,
+        HintingPreferenceResolved   = 0x0800,
+        StyleNameResolved           = 0x1000,
         AllPropertiesResolved       = 0x1ffff
     };
 
@@ -161,13 +154,6 @@ public:
 
     int stretch() const;
     void setStretch(int);
-
-    qreal letterSpacing() const;
-    SpacingType letterSpacingType() const;
-    void setLetterSpacing(SpacingType type, qreal spacing);
-
-    qreal wordSpacing() const;
-    void setWordSpacing(qreal spacing);
 
     void setHintingPreference(HintingPreference hintingPreference);
     HintingPreference hintingPreference() const;

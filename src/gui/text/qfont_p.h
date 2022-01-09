@@ -120,10 +120,6 @@ public:
     bool overline;
     bool strikeOut;
     bool kerning;
-    bool letterSpacingIsAbsolute;
-
-    QFixed letterSpacing;
-    QFixed wordSpacing;
 
     static QFontPrivate *get(const QFont &font)
     {

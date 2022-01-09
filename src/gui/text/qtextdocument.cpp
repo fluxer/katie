@@ -2111,13 +2111,6 @@ bool QTextHtmlExporter::emitCharFormatStyle(const QTextCharFormat &format)
         attributesEmitted = true;
     }
 
-    if (format.fontWordSpacing() != 0.0) {
-        html += QLatin1String(" word-spacing:");
-        html += QString::number(format.fontWordSpacing());
-        html += QLatin1String("px;");
-        attributesEmitted = true;
-    }
-
     return attributesEmitted;
 }
 

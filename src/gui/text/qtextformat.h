@@ -145,11 +145,9 @@ public:
 
         // character properties
         FirstFontProperty = 0x1FE0,
-        FontLetterSpacing = FirstFontProperty,
-        FontWordSpacing = 0x1FE1,
-        FontStyleStrategy = 0x1FE2,
-        FontKerning = 0x1FE3,
-        FontHintingPreference = 0x1FE4,
+        FontStyleStrategy = FirstFontProperty,
+        FontKerning = 0x1FE1,
+        FontHintingPreference = 0x1FE2,
         FontFamily = 0x2000,
         FontPointSize = 0x2001,
         FontSizeAdjustment = 0x2002,
@@ -388,14 +386,6 @@ public:
     { setProperty(FontItalic, italic); }
     inline bool fontItalic() const
     { return boolProperty(FontItalic); }
-    inline void setFontLetterSpacing(qreal spacing)
-    { setProperty(FontLetterSpacing, spacing); }
-    inline qreal fontLetterSpacing() const
-    { return doubleProperty(FontLetterSpacing); }
-    inline void setFontWordSpacing(qreal spacing)
-    { setProperty(FontWordSpacing, spacing); }
-    inline qreal fontWordSpacing() const
-    { return doubleProperty(FontWordSpacing); }
 
     inline void setFontUnderline(bool underline)
     { setProperty(TextUnderlineStyle, underline ? SingleUnderline : NoUnderline); }

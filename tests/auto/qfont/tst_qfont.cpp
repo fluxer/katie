@@ -55,7 +55,6 @@ private slots:
     void resetFont();
     void isCopyOf();
     void italicOblique();
-    void serializeSpacing();
     void lastResortFont();
 };
 
@@ -330,31 +329,6 @@ static QFont copyFont(const QFont &font1) // copy using a QDataStream
     QFont font2;
     ds >> font2;
     return font2;
-}
-
-void tst_QFont::serializeSpacing()
-{
-    QFont font;
-    QCOMPARE(font.letterSpacing(), 0.);
-    QCOMPARE(font.wordSpacing(), 0.);
-
-    font.setLetterSpacing(QFont::AbsoluteSpacing, 105);
-    QCOMPARE(font.letterSpacing(), 105.);
-    QCOMPARE(font.letterSpacingType(), QFont::AbsoluteSpacing);
-    QCOMPARE(font.wordSpacing(), 0.);
-    QFont font2 = copyFont(font);
-    QCOMPARE(font2.letterSpacing(), 105.);
-    QCOMPARE(font2.letterSpacingType(), QFont::AbsoluteSpacing);
-    QCOMPARE(font2.wordSpacing(), 0.);
-
-    font.setWordSpacing(50.0);
-    QCOMPARE(font.letterSpacing(), 105.);
-    QCOMPARE(font.wordSpacing(), 50.);
-
-    QFont font3 = copyFont(font);
-    QCOMPARE(font3.letterSpacing(), 105.);
-    QCOMPARE(font3.letterSpacingType(), QFont::AbsoluteSpacing);
-    QCOMPARE(font3.wordSpacing(), 50.);
 }
 
 void tst_QFont::lastResortFont()

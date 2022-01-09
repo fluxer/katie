@@ -149,43 +149,6 @@ void QTextEngine::shapeText(int item) const
         return;
     QGlyphLayout glyphs = shapedGlyphs(&si);
 
-    QFont font = this->font(si);
-    bool letterSpacingIsAbsolute = font.d->letterSpacingIsAbsolute;
-    QFixed letterSpacing = font.d->letterSpacing;
-    QFixed wordSpacing = font.d->wordSpacing;
-
-    if (letterSpacingIsAbsolute && letterSpacing.value())
-        letterSpacing *= font.d->dpi / QX11Info::appDpiY();
-
-    if (letterSpacing != 0) {
-        for (int i = 1; i < si.num_glyphs; ++i) {
-            if (glyphs.attributes[i].clusterStart) {
-                if (letterSpacingIsAbsolute)
-                    glyphs.advances_x[i-1] += letterSpacing;
-                else {
-                    QFixed &advance = glyphs.advances_x[i-1];
-                    advance += (letterSpacing - 100) * advance / 100;
-                }
-            }
-        }
-        if (letterSpacingIsAbsolute)
-            glyphs.advances_x[si.num_glyphs-1] += letterSpacing;
-        else {
-            QFixed &advance = glyphs.advances_x[si.num_glyphs-1];
-            advance += (letterSpacing - 100) * advance / 100;
-        }
-    }
-    if (wordSpacing != 0) {
-        for (int i = 0; i < si.num_glyphs; ++i) {
-            if (glyphs.attributes[i].justification == HB_Space) {
-                // word spacing only gets added once to a consecutive run of spaces (see CSS spec)
-                if (i + 1 == si.num_glyphs
-                    || glyphs.attributes[i+1].justification != HB_Space)
-                    glyphs.advances_x[i] += wordSpacing;
-            }
-        }
-    }
-
     for (int i = 0; i < si.num_glyphs; ++i)
         si.width += glyphs.advances_x[i] * !glyphs.attributes[i].dontPrint;
 }
