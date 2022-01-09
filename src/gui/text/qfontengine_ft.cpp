@@ -28,7 +28,6 @@
 #include <ft2build.h>
 #include FT_FREETYPE_H
 #include FT_OUTLINE_H
-#include FT_SYNTHESIS_H
 #include FT_TRUETYPE_TABLES_H
 #include FT_TYPE1_TABLES_H
 #include FT_GLYPH_H
@@ -210,8 +209,6 @@ QFontEngineFT::QFontEngineFT(const QFontDef &fd, FcPattern *pattern)
     : default_load_flags(FT_LOAD_IGNORE_GLOBAL_ADVANCE_WIDTH | FT_LOAD_NO_BITMAP),
     default_hint_style(HintNone),
     freetype(nullptr),
-    embolden(false),
-    oblique(false),
     xsize(0),
     ysize(0),
     line_thickness(QFixed::fromFixed(1)),
@@ -249,8 +246,6 @@ QFontEngineFT::QFontEngineFT(const QFontDef &fd)
     : default_load_flags(FT_LOAD_IGNORE_GLOBAL_ADVANCE_WIDTH | FT_LOAD_NO_BITMAP),
     default_hint_style(HintNone),
     freetype(nullptr),
-    embolden(false),
-    oblique(false),
     xsize(0),
     ysize(0),
     line_thickness(QFixed::fromFixed(1)),
@@ -280,14 +275,6 @@ void QFontEngineFT::init()
 
     setFace(QFontEngineFT::Scaled);
     FT_Face face = getFace();
-    // fake italic/oblique
-    if ((fontDef.style != QFont::StyleNormal) && !(face->style_flags & FT_STYLE_FLAG_ITALIC)) {
-        oblique = true;
-    }
-    // fake bold
-    if ((fontDef.weight == QFont::Bold) && !(face->style_flags & FT_STYLE_FLAG_BOLD) && !FT_IS_FIXED_WIDTH(face)) {
-        embolden = true;
-    }
     // underline metrics
     line_thickness = QFixed::fromFixed(FT_MulFix(face->underline_thickness, face->size->metrics.y_scale));
     underline_position = QFixed::fromFixed(-FT_MulFix(face->underline_position, face->size->metrics.y_scale));
@@ -356,13 +343,6 @@ bool QFontEngineFT::loadGlyph(glyph_t glyph, int load_flags) const
         return false;
     }
 
-    if (embolden) {
-        FT_GlyphSlot_Embolden(slot);
-    }
-    if (oblique) {
-        FT_GlyphSlot_Oblique(slot);
-    }
-
     return true;
 }
 
@@ -428,12 +408,6 @@ bool QFontEngineFT::getSfntTableData(uint tag, uchar *buffer, uint *length) cons
 int QFontEngineFT::synthesized() const
 {
     int result = 0;
-    if (oblique) {
-        result = SynthesizedItalic;
-    }
-    if (embolden) {
-        result |= SynthesizedBold;
-    }
     if (fontDef.stretch != 100) {
         result |= SynthesizedStretch;
     }

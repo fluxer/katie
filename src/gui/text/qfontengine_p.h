@@ -94,9 +94,7 @@ public:
     };
     virtual FaceId faceId() const { return FaceId(); }
     enum SynthesizedFlags {
-        SynthesizedItalic = 0x1,
-        SynthesizedBold = 0x2,
-        SynthesizedStretch = 0x4
+        SynthesizedStretch = 0x1
     };
     virtual int synthesized() const { return 0; }
 

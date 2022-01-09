@@ -165,8 +165,6 @@ private:
     QFontMetric* getMetrics(glyph_t glyph) const;
 
     QFreetypeFace *freetype;
-    bool embolden;
-    bool oblique;
     QFontEngine::FaceId face_id;
 
     int xsize;
