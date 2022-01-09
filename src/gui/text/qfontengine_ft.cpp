@@ -19,12 +19,10 @@
 **
 ****************************************************************************/
 
-#include "qvariant.h"
 #include "qfile.h"
 #include "qabstractfileengine.h"
 #include "qmath.h"
 #include "qfontengine_ft_p.h"
-#include "qguicommon_p.h"
 #include "qcorecommon_p.h"
 
 #include <ft2build.h>
