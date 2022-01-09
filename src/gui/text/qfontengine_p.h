@@ -133,8 +133,8 @@ public:
     virtual QFixed underlinePosition() const;
 
     virtual qreal maxCharWidth() const = 0;
-    virtual qreal minLeftBearing() const { return qreal(); }
-    virtual qreal minRightBearing() const { return qreal(); }
+    virtual qreal minLeftBearing() const = 0;
+    virtual qreal minRightBearing() const = 0;
 
     virtual void getGlyphBearings(glyph_t glyph, qreal *leftBearing = 0, qreal *rightBearing = 0);
 
