@@ -993,8 +993,8 @@ struct QRegionPrivate {
      * Returns true if r is guaranteed to be fully contained in this region.
      * A false return value does not guarantee the opposite.
      */
-    inline bool contains(const QRegionPrivate &r) const {
-        return contains(r.extents);
+    inline bool contains(const QRegionPrivate *r) const {
+        return contains(r->extents);
     }
 
     inline bool contains(const QRect &r2) const {
@@ -2274,8 +2274,8 @@ static void miUnionO(QRegionPrivate &dest, const QRect *r1, const QRect *r1End,
 static void UnionRegion(const QRegionPrivate *reg1, const QRegionPrivate *reg2, QRegionPrivate &dest)
 {
     Q_ASSERT(!isEmptyHelper(reg1) && !isEmptyHelper(reg2));
-    Q_ASSERT(!reg1->contains(*reg2));
-    Q_ASSERT(!reg2->contains(*reg1));
+    Q_ASSERT(!reg1->contains(reg2));
+    Q_ASSERT(!reg2->contains(reg1));
     Q_ASSERT(!EqualRegion(reg1, reg2));
     Q_ASSERT(!reg1->canAppend(reg2));
     Q_ASSERT(!reg2->canAppend(reg1));
@@ -2450,7 +2450,7 @@ static void SubtractRegion(QRegionPrivate *regM, QRegionPrivate *regS,
     Q_ASSERT(!isEmptyHelper(regM));
     Q_ASSERT(!isEmptyHelper(regS));
     Q_ASSERT(EXTENTCHECK(regM->extents, regS->extents));
-    Q_ASSERT(!regS->contains(*regM));
+    Q_ASSERT(!regS->contains(regM));
     Q_ASSERT(!EqualRegion(regM, regS));
 
     miRegionOp(dest, regM, regS, miSubtractO, miSubtractNonO1, 0);
@@ -2473,13 +2473,13 @@ static void XorRegion(QRegionPrivate *sra, QRegionPrivate *srb, QRegionPrivate &
 
     QRegionPrivate tra, trb;
 
-    if (!srb->contains(*sra))
+    if (!srb->contains(sra))
         SubtractRegion(sra, srb, tra);
-    if (!sra->contains(*srb))
+    if (!sra->contains(srb))
         SubtractRegion(srb, sra, trb);
 
-    Q_ASSERT(isEmptyHelper(&trb) || !tra.contains(trb));
-    Q_ASSERT(isEmptyHelper(&tra) || !trb.contains(tra));
+    Q_ASSERT(isEmptyHelper(&trb) || !tra.contains(&trb));
+    Q_ASSERT(isEmptyHelper(&tra) || !trb.contains(&tra));
 
     if (isEmptyHelper(&tra)) {
         dest = trb;
@@ -3794,9 +3794,9 @@ QRegion QRegion::unite(const QRegion &r) const
     if (d == r.d)
         return *this;
 
-    if (d->qt_rgn->contains(*r.d->qt_rgn)) {
+    if (d->qt_rgn->contains(r.d->qt_rgn)) {
         return *this;
-    } else if (r.d->qt_rgn->contains(*d->qt_rgn)) {
+    } else if (r.d->qt_rgn->contains(d->qt_rgn)) {
         return r;
     } else if (d->qt_rgn->canAppend(r.d->qt_rgn)) {
         QRegion result(*this);
@@ -3827,9 +3827,9 @@ QRegion& QRegion::operator+=(const QRegion &r)
     if (d == r.d)
         return *this;
 
-    if (d->qt_rgn->contains(*r.d->qt_rgn)) {
+    if (d->qt_rgn->contains(r.d->qt_rgn)) {
         return *this;
-    } else if (r.d->qt_rgn->contains(*d->qt_rgn)) {
+    } else if (r.d->qt_rgn->contains(d->qt_rgn)) {
         return *this = r;
     } else if (d->qt_rgn->canAppend(r.d->qt_rgn)) {
         detach();
@@ -3916,11 +3916,11 @@ QRegion QRegion::intersect(const QRegion &r) const
         return QRegion();
 
     /* this is fully contained in r */
-    if (r.d->qt_rgn->contains(*d->qt_rgn))
+    if (r.d->qt_rgn->contains(d->qt_rgn))
         return *this;
 
     /* r is fully contained in this */
-    if (d->qt_rgn->contains(*r.d->qt_rgn))
+    if (d->qt_rgn->contains(r.d->qt_rgn))
         return r;
 
     if (r.d->qt_rgn->numRects == 1 && d->qt_rgn->numRects == 1) {
@@ -3984,7 +3984,7 @@ QRegion QRegion::subtract(const QRegion &r) const
 {
     if (isEmptyHelper(d->qt_rgn) || isEmptyHelper(r.d->qt_rgn))
         return *this;
-    if (r.d->qt_rgn->contains(*d->qt_rgn))
+    if (r.d->qt_rgn->contains(d->qt_rgn))
         return QRegion();
     if (!EXTENTCHECK(d->qt_rgn->extents, r.d->qt_rgn->extents))
         return *this;
