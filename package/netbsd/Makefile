@@ -22,6 +22,7 @@ USE_TOOLS = pkg-config msgfmt
 DL_AUTO_VARS = yes
 
 DEPENDS = xdg-utils-[0-9]*:../../misc/xdg-utils
+DEPENDS += freefont-ttf-[0-9]*:../../fonts/freefont-ttf
 BUILD_DEPENDS = unifdef-[0-9]*:../../devel/unifdef
 
 .include "../../sysutils/desktop-file-utils/desktopdb.mk"

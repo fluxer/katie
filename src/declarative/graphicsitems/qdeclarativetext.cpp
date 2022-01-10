@@ -637,7 +637,7 @@ QPixmap QDeclarativeTextPrivate::drawOutline(const QPixmap &source, const QPixma
     \qml
     Text {
         text: "Hello World!"
-        font.family: "Helvetica"
+        font.family: "FreeSans"
         font.pointSize: 24
         color: "red"
     }
@@ -720,7 +720,7 @@ QDeclarativeText::~QDeclarativeText()
 
     Sets the family name of the font.
 
-    The family name is case insensitive and may optionally include a foundry name, e.g. "Helvetica [Cronyx]".
+    The family name is case insensitive and may optionally include a foundry name, e.g. "FreeSans [GNU]".
     If the family is available from more than one foundry and the foundry isn't specified, an arbitrary foundry is chosen.
     If the family isn't available a family will be set using the font matching algorithm.
 */

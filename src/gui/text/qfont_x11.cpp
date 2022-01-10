@@ -88,7 +88,7 @@ FT_Face QFont::freetypeFace() const
 
 QString QFont::lastResortFamily()
 {
-    return QString::fromLatin1("Helvetica");
+    return QString::fromLatin1("FreeSans");
 }
 
 QT_END_NAMESPACE

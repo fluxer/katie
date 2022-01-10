@@ -1521,11 +1521,11 @@ static QByteArray charString(const QPainterPath &path, qreal advance, qreal lsb,
     return charstring;
 }
 
-static const char *helvetica_styles[4] = {
-    "Helvetica",
-    "Helvetica-Bold",
-    "Helvetica-Oblique",
-    "Helvetica-BoldOblique"
+static const char *freefont_styles[4] = {
+    "FreeSans",
+    "FreeSans-Bold",
+    "FreeSans-Oblique",
+    "FreeSans-BoldOblique"
 };
 
 QByteArray QFontSubset::toType1() const
@@ -1548,8 +1548,8 @@ QByteArray QFontSubset::toType1() const
             style += 2;
         if (fontEngine->fontDef.weight >= QFont::Bold)
             style++;
-        if (fontEngine->fontDef.family.contains(QLatin1String("Helvetica"))) {
-            psname = helvetica_styles[style];
+        if (fontEngine->fontDef.family.contains(QLatin1String("FreeSans"))) {
+            psname = freefont_styles[style];
             standard_font = true;
         }
     }

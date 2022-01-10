@@ -51,7 +51,7 @@ QT_BEGIN_NAMESPACE
 TextEdit {
     width: 240
     text: "<b>Hello</b> <i>World!</i>"
-    font.family: "Helvetica"
+    font.family: "FreeSans"
     font.pointSize: 20
     color: "blue"
     focus: true
@@ -112,7 +112,7 @@ QString QDeclarativeTextEdit::text() const
 
     Sets the family name of the font.
 
-    The family name is case insensitive and may optionally include a foundry name, e.g. "Helvetica [Cronyx]".
+    The family name is case insensitive and may optionally include a foundry name, e.g. "FreeSans [GNU]".
     If the family is available from more than one foundry and the foundry isn't specified, an arbitrary foundry is chosen.
     If the family isn't available a family will be set using the font matching algorithm.
 */

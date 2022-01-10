@@ -20,7 +20,7 @@ WRKSRC = ${WRKDIR}/katie-master
 COMPILER = base-clang ports-gcc
 MODULES = devel/cmake
 BUILD_DEPENDS = devel/gettext,-tools
-RUN_DEPENDS = devel/desktop-file-utils devel/xdg-utils
+RUN_DEPENDS = devel/desktop-file-utils devel/xdg-utils fonts/freefont-ttf
 LIB_DEPENDS = archivers/zstd textproc/icu4c devel/jansson devel/pcre \
 	graphics/png x11/dbus print/cups,-libs devel/gettext,-runtime
 WANTLIB = ${COMPILER_LIBCXX} ICE SM X11 Xcursor Xext Xfixes Xinerama Xrandr \

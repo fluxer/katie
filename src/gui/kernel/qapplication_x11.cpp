@@ -1255,7 +1255,7 @@ void qt_init(QApplicationPrivate *priv, Display *display,
 
     QApplicationPrivate::x11_apply_settings();
 
-    // be smart about the size of the default font. most X servers have helvetica
+    // be smart about the size of the default font. most X servers have font
     // 12 point available at 2 resolutions:
     //     75dpi (12 pixels) and 100dpi (17 pixels).
     // At 95 DPI, a 12 point font should be 16 pixels tall - in which case a 17

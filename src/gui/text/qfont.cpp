@@ -75,7 +75,7 @@ bool QFontDef::exactMatch(const QFontDef &other) const
 
       To compare the family members, we need to parse the font names
       and compare the family/foundry strings separately.  This allows
-      us to compare e.g. "Helvetica" and "Helvetica [Adobe]" with
+      us to compare e.g. "FreeSans" and "FreeSans [GNU]" with
       positive results.
     */
     if (pixelSize != -1 && other.pixelSize != -1) {
@@ -304,8 +304,7 @@ void QFontPrivate::resolve(uint mask, const QFontPrivate *other)
     \snippet doc/src/snippets/code/src_gui_text_qfont.cpp 2
 
     You can specify the foundry you want in the family name. The font f
-    in the above example will be set to "Helvetica
-    [Cronyx]".
+    in the above example will be set to "FreeSans [GNU]".
 
     To determine the attributes of the font actually used in the window
     system, use a QFontInfo object, e.g.
@@ -442,11 +441,10 @@ QFont::QFont()
     12 points, except on Symbian where it is 7 points.
 
     The \a family name may optionally also include a foundry name,
-    e.g. "Helvetica [Cronyx]". If the \a family is
-    available from more than one foundry and the foundry isn't
-    specified, an arbitrary foundry is chosen. If the family isn't
-    available a family will be set using the \l{QFont}{font matching}
-    algorithm.
+    e.g. "FreeSans [GNU]". If the \a family is available from more
+    than one foundry and the foundry isn't specified, an arbitrary
+    foundry is chosen. If the family isn't available a family will
+    be set using the \l{QFont}{font matching} algorithm.
 
     \sa Weight, setFamily(), setPointSize(), setWeight(), setItalic(),
     QApplication::font()
@@ -517,11 +515,10 @@ QString QFont::family() const
     may include a foundry name.
 
     The \a family name may optionally also include a foundry name,
-    e.g. "Helvetica [Cronyx]". If the \a family is
-    available from more than one foundry and the foundry isn't
-    specified, an arbitrary foundry is chosen. If the family isn't
-    available a family will be set using the \l{QFont}{font matching}
-    algorithm.
+    e.g. "FreeSans [GNU]". If the \a family is available from more
+    than one foundry and the foundry isn't specified, an arbitrary
+    foundry is chosen. If the family isn't available a family will be
+    set using the \l{QFont}{font matching} algorithm.
 
     \sa family(), QFontInfo
 */
