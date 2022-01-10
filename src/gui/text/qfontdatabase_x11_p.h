@@ -764,37 +764,5 @@ QFontEngine* QFontDatabase::load(const QFontPrivate *d, int script)
     return fe;
 }
 
-bool QFontDatabase::supportsThreadedFontRendering()
-{
-#if defined(QT_NO_FONTCONFIG)
-    return false;
-#else
-    return qt_x11Data->has_fontconfig;
-#endif
-}
-
-QString QFontDatabase::resolveFontFamilyAlias(const QString &family)
-{
-#if defined(QT_NO_FONTCONFIG)
-    return family;
-#else
-    FcPattern *pattern = FcPatternCreate();
-    if (!pattern)
-        return family;
-
-    QByteArray cs = family.toUtf8();
-    FcPatternAddString(pattern, FC_FAMILY, (const FcChar8 *) cs.constData());
-    FcConfigSubstitute(0, pattern, FcMatchPattern);
-    FcDefaultSubstitute(pattern);
-
-    FcChar8 *familyAfterSubstitution;
-    FcPatternGetString(pattern, FC_FAMILY, 0, &familyAfterSubstitution);
-    QString resolved = QString::fromUtf8((const char *) familyAfterSubstitution);
-    FcPatternDestroy(pattern);
-
-    return resolved;
-#endif
-}
-
 QT_END_NAMESPACE
 

@@ -155,12 +155,28 @@ QT_BEGIN_INCLUDE_NAMESPACE
 #endif
 QT_END_INCLUDE_NAMESPACE
 
-#if !defined(Q_WS_X11)
 QString QFontDatabase::resolveFontFamilyAlias(const QString &family)
 {
+#if defined(QT_NO_FONTCONFIG)
     return family;
-}
+#else
+    FcPattern *pattern = FcPatternCreate();
+    if (!pattern)
+        return family;
+
+    QByteArray cs = family.toUtf8();
+    FcPatternAddString(pattern, FC_FAMILY, (const FcChar8 *) cs.constData());
+    FcConfigSubstitute(0, pattern, FcMatchPattern);
+    FcDefaultSubstitute(pattern);
+
+    FcChar8 *familyAfterSubstitution;
+    FcPatternGetString(pattern, FC_FAMILY, 0, &familyAfterSubstitution);
+    QString resolved = QString::fromUtf8((const char *) familyAfterSubstitution);
+    FcPatternDestroy(pattern);
+
+    return resolved;
 #endif
+}
 
 static QString styleStringHelper(int weight, QFont::Style style)
 {
@@ -677,7 +693,6 @@ void QFontDatabase::parseFontName(const QString &name, QString &foundry, QString
 }
 
 /*!
-    \fn bool QFontDatabase::supportsThreadedFontRendering()
     \since 4.4
 
     Returns true if font rendering is supported outside the GUI
@@ -687,7 +702,14 @@ void QFontDatabase::parseFontName(const QString &name, QString &foundry, QString
 
     \sa {Thread-Support in Qt Modules#Painting In Threads}{Painting In Threads}
 */
-
+bool QFontDatabase::supportsThreadedFontRendering()
+{
+#if defined(QT_NO_FONTCONFIG)
+    return false;
+#else
+    return qt_x11Data->has_fontconfig;
+#endif
+}
 
 QT_END_NAMESPACE
 
