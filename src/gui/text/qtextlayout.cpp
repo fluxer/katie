@@ -1505,8 +1505,9 @@ namespace {
     struct LineBreakHelper
     {
         LineBreakHelper()
-            : glyphCount(0), maxGlyphs(0), currentPosition(0), fontEngine(0), logClusters(0),
-              manualWrap(false), whiteSpaceOrObject(true)
+            : glyphCount(0), maxGlyphs(0), currentPosition(0), fontEngine(nullptr),
+            previousFontEngine(nullptr), logClusters(0), manualWrap(false),
+            whiteSpaceOrObject(true)
         {
         }
 
@@ -1551,7 +1552,7 @@ namespace {
         inline void resetPreviousGlyph()
         {
             previousGlyph = 0;
-            previousFontEngine = 0;
+            previousFontEngine = nullptr;
         }
 
         inline void saveCurrentGlyph()
