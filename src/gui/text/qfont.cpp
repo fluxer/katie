@@ -1219,7 +1219,7 @@ QFont QFont::resolve(const QFont &other) const
     Internal function. Converts boolean font settings to an unsigned
     8-bit number. Used for serialization etc.
 */
-static inline quint8 get_font_bits(int version, const QFontPrivate *f)
+static inline quint8 get_font_bits(const QFontPrivate *f)
 {
     Q_ASSERT(f != 0);
     quint8 bits = 0;
@@ -1355,7 +1355,7 @@ QDataStream &operator<<(QDataStream &s, const QFont &font)
 
     s << (qint8) font.d->request.styleStrategy;
     s << (qint8) font.d->request.weight
-      << get_font_bits(s.version(), font.d.data());
+      << get_font_bits(font.d.data());
     s << (qint16)font.d->request.stretch;
     return s;
 }
