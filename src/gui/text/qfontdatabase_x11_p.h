@@ -603,7 +603,7 @@ static FcPattern *getFcPattern(const QFontPrivate *fp, QUnicodeTables::Script sc
     FcConfigSubstitute(0, pattern, FcMatchPattern);
     FcDefaultSubstitute(pattern);
 
-    // add the default family
+    // add the application instance family
     QString defaultFamily = QApplication::font().family();
     QByteArray cs = defaultFamily.toUtf8();
     value.u.s = (const FcChar8 *)cs.data();
