@@ -334,8 +334,6 @@ void QTextEngine::validate() const
     layoutData = new LayoutData();
     if (block.docHandle()) {
         layoutData->string = block.text();
-        if (option.flags() & QTextOption::ShowLineAndParagraphSeparators)
-            layoutData->string += QLatin1Char(block.next().isValid() ? 0xb6 : 0x20);
     } else {
         layoutData->string = text;
     }
@@ -368,21 +366,11 @@ void QTextEngine::itemize() const
         case QChar::LineSeparator:
             analysis->script = QUnicodeTables::Common;
             analysis->flags = QScriptAnalysis::LineOrParagraphSeparator;
-            if (option.flags() & QTextOption::ShowLineAndParagraphSeparators)
-                *const_cast<ushort*>(uc) = 0x21B5; // visual line separator
             break;
         case 9: // Tab
             analysis->script = QUnicodeTables::Common;
             analysis->flags = QScriptAnalysis::Tab;
             break;
-        case 32: // Space
-        case QChar::Nbsp:
-            if (option.flags() & QTextOption::ShowTabsAndSpaces) {
-                analysis->script = QUnicodeTables::Common;
-                analysis->flags = QScriptAnalysis::Space;
-                break;
-            }
-        // fall through
         default:
             QUnicodeTables::Script script = QUnicodeTables::script(*uc);
             analysis->script = script == QUnicodeTables::Inherited ? lastScript : script;
@@ -392,9 +380,6 @@ void QTextEngine::itemize() const
         lastScript = analysis->script;
         ++uc;
         ++analysis;
-    }
-    if (option.flags() & QTextOption::ShowLineAndParagraphSeparators) {
-        (analysis-1)->flags = QScriptAnalysis::LineOrParagraphSeparator; // to exclude it from width
     }
 
     Itemizer itemizer(layoutData->string, scriptAnalysis, layoutData->items);

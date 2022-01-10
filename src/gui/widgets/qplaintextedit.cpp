@@ -336,17 +336,12 @@ void QPlainTextDocumentLayout::layoutBlock(const QTextBlock &block)
     QTextOption option = doc->defaultTextOption();
     tl->setTextOption(option);
 
-    int extraMargin = 0;
-    if (option.flags() & QTextOption::AddSpaceForLineAndParagraphSeparators) {
-        QFontMetrics fm(block.charFormat().font());
-        extraMargin += fm.width(QChar(0x21B5));
-    }
     tl->beginLayout();
     qreal availableWidth = d->width;
     if (availableWidth <= 0) {
         availableWidth = qreal(INT_MAX); // similar to text edit with pageSize.width == 0
     }
-    availableWidth -= 2*margin + extraMargin;
+    availableWidth -= 2*margin;
     while (1) {
         QTextLine line = tl->createLine();
         if (!line.isValid())

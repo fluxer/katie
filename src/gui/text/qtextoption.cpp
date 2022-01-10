@@ -202,10 +202,6 @@ QTextOption &QTextOption::operator=(const QTextOption &o)
   \value IncludeTrailingSpaces When this option is set, QTextLine::naturalTextWidth() and naturalTextRect() will
                                return a value that includes the width of trailing spaces in the text; otherwise
                                this width is excluded.
-  \value ShowTabsAndSpaces Visualize spaces with little dots, and tabs with little arrows.
-  \value ShowLineAndParagraphSeparators Visualize line and paragraph separators with appropriate symbol characters.
-  \value AddSpaceForLineAndParagraphSeparators While determining the line-break positions take into account the
-            space added for drawing a separator character.
   \value SuppressColors Suppress all color changes in the character formats (except the main selection).
 */
 

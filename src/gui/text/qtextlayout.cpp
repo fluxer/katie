@@ -1046,9 +1046,7 @@ void QTextLayout::draw(QPainter *p, const QPointF &pos, const QVector<FormatRang
                     region.addRect(clipIfValid(QRectF(lineRect.topRight(), fullLineRect.bottomRight()), clip));
                 if (!selectionStartInLine)
                     region.addRect(clipIfValid(QRectF(fullLineRect.topLeft(), lineRect.bottomLeft()), clip));
-            } else if (!selectionEndInLine
-                && isLastLineInBlock
-                &&!(d->option.flags() & QTextOption::ShowLineAndParagraphSeparators)) {
+            } else if (!selectionEndInLine && isLastLineInBlock) {
                 region.addRect(clipIfValid(QRectF(lineRect.right(), lineRect.top(),
                                                   lineRect.height()/4, lineRect.height()), clip));
             }
@@ -1734,13 +1732,8 @@ void QTextLine::layout_helper(int maxGlyphs)
             // we have a sane height
             if (!line.length && !lbh.tmpData.length)
                 line.setDefaultHeight(eng);
-            if (eng->option.flags() & QTextOption::ShowLineAndParagraphSeparators) {
-                addNextCluster(lbh.currentPosition, end, lbh.tmpData, lbh.glyphCount,
-                               current, lbh.logClusters, lbh.glyphs);
-            } else {
-                lbh.tmpData.length++;
-                lbh.adjustPreviousRightBearing();
-            }
+            lbh.tmpData.length++;
+            lbh.adjustPreviousRightBearing();
             line += lbh.tmpData;
             goto found;
         } else if (current.analysis.flags == QScriptAnalysis::Object) {
@@ -1928,10 +1921,6 @@ int QTextLine::textStart() const
 */
 int QTextLine::textLength() const
 {
-    if (eng->option.flags() & QTextOption::ShowLineAndParagraphSeparators
-        && eng->block.isValid() && i == eng->lines.count()-1) {
-        return eng->lines[i].length - 1;
-    }
     return eng->lines[i].length + eng->lines[i].trailingSpaces;
 }
 
@@ -2070,8 +2059,7 @@ void QTextLine::draw(QPainter *p, const QPointF &pos, const QTextLayout::FormatR
         if (selection && selection->start >= 0 && iterator.isOutsideSelection())
             continue;
 
-        if (si.analysis.flags == QScriptAnalysis::LineOrParagraphSeparator
-            && !(eng->option.flags() & QTextOption::ShowLineAndParagraphSeparators))
+        if (si.analysis.flags == QScriptAnalysis::LineOrParagraphSeparator)
             continue;
 
         QFixed itemBaseLine = y;
@@ -2133,19 +2121,6 @@ void QTextLine::draw(QPainter *p, const QPointF &pos, const QTextLayout::FormatR
                     gf.num_chars = 0;
                     gf.width = iterator.itemWidth;
                     p->drawTextItem(QPointF(iterator.x.toReal(), y.toReal()), gf);
-                    if (eng->option.flags() & QTextOption::ShowTabsAndSpaces) {
-                        QChar visualTab(0x2192);
-                        int w = QFontMetrics(f).width(visualTab);
-                        qreal x = iterator.itemWidth.toReal() - w; // Right-aligned
-                        if (x < 0)
-                             p->setClipRect(QRectF(iterator.x.toReal(), line.y.toReal(),
-                                                   iterator.itemWidth.toReal(), line.height().toReal()),
-                                            Qt::IntersectClip);
-                        else
-                             x /= 2; // Centered
-                        p->drawText(QPointF(iterator.x.toReal() + x,
-                                            y.toReal()), visualTab);
-                    }
 
                 }
                 p->restore();
@@ -2193,15 +2168,6 @@ void QTextLine::draw(QPainter *p, const QPointF &pos, const QTextLayout::FormatR
                     gf.glyphs.numGlyphs = 0; // slightly less elegant than it should be
                 p->drawTextItem(pos, gf);
             }
-        }
-        if (si.analysis.flags == QScriptAnalysis::Space
-            && (eng->option.flags() & QTextOption::ShowTabsAndSpaces)) {
-            QBrush c = format.foreground();
-            if (c.style() != Qt::NoBrush)
-                p->setPen(c.color());
-            QChar visualSpace((ushort)0xb7);
-            p->drawText(QPointF(iterator.x.toReal(), itemBaseLine.toReal()), visualSpace);
-            p->setPen(pen);
         }
     }
 
