@@ -1505,9 +1505,9 @@ namespace {
     struct LineBreakHelper
     {
         LineBreakHelper()
-            : glyphCount(0), maxGlyphs(0), currentPosition(0), fontEngine(nullptr),
-            previousFontEngine(nullptr), logClusters(0), manualWrap(false),
-            whiteSpaceOrObject(true)
+            : glyphCount(0), maxGlyphs(0), currentPosition(0), previousGlyph(0),
+            fontEngine(nullptr), previousFontEngine(nullptr), logClusters(0),
+            manualWrap(false), whiteSpaceOrObject(true)
         {
         }
 
