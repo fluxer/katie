@@ -175,6 +175,7 @@ static void qHB_HeuristicSetGlyphAttributes(HB_ShaperItem *item)
             ++pos;
         }
         // hide soft-hyphens by default
+        attributes[pos].dontPrint = false;
         if ((!symbolFont && uc[i] == 0x00ad) || HB_IsControlChar(uc[i]))
             attributes[pos].dontPrint = true;
         HB_CharCategory cat;
