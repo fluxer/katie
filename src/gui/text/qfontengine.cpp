@@ -463,7 +463,6 @@ void QFontEngineBox::addGlyphsToPath(glyph_t *glyphs, QFixedPoint *positions, in
         advanceX += offset.x;
         advanceY += offset.y;
 
-        // TODO: draw a box
         path->moveTo((advanceX + metrics.x).toReal(), (advanceY + metrics.y).toReal());
         path->addRect(QRectF(0.0, 0.0, _size, _size));
         path->closeSubpath();
