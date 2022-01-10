@@ -98,7 +98,6 @@ public:
 
     virtual QFontEngine::FaceId faceId() const;
     virtual QFontEngine::Properties properties() const;
-    virtual QFixed emSquareSize() const;
 
     virtual bool getSfntTableData(uint tag, uchar *buffer, uint *length) const;
     virtual int synthesized() const;
