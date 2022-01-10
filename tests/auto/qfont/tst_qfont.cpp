@@ -112,13 +112,10 @@ void tst_QFont::exactMatch()
     QFont font( "BogusFont", 33 );
     QVERIFY(!font.exactMatch() );
 
-#ifdef Q_WS_X11
     QFontDatabase fdb;
-    QVERIFY(!QFont("sans-serif").exactMatch());
-    QVERIFY(!QFont("sans").exactMatch());
-    QVERIFY(!QFont("serif").exactMatch());
-    QVERIFY(!QFont("monospace").exactMatch());
-#endif
+    QVERIFY(!QFont("freesans").exactMatch());
+    QVERIFY(!QFont("freeserif").exactMatch());
+    QVERIFY(!QFont("freemono").exactMatch());
 }
 
 void tst_QFont::italicOblique()
