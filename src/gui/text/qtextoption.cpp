@@ -122,7 +122,6 @@ QTextOption &QTextOption::operator=(const QTextOption &o)
 
     \value NoWrap       Text is not wrapped at all.
     \value WordWrap     Text is wrapped at word boundaries.
-    \value ManualWrap   Same as QTextOption::NoWrap
     \value WrapAnywhere Text can be wrapped at any point on a line, even if
                         it occurs in the middle of a word.
     \value WrapAtWordBoundaryOrAnywhere If possible, wrapping occurs at a word

@@ -1661,7 +1661,7 @@ void QTextLine::layout_helper(int maxGlyphs)
 
     QTextOption::WrapMode wrapMode = eng->option.wrapMode();
     bool breakany = (wrapMode == QTextOption::WrapAnywhere);
-    lbh.manualWrap = (wrapMode == QTextOption::ManualWrap || wrapMode == QTextOption::NoWrap);
+    lbh.manualWrap = (wrapMode == QTextOption::NoWrap);
 
     int item = -1;
     int newItem = eng->findItem(line.from);

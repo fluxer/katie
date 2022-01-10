@@ -898,7 +898,7 @@ void QCommonStylePrivate::viewItemDrawText(QPainter *p, const QStyleOptionViewIt
     QRect textRect = rect.adjusted(textMargin, 0, -textMargin, 0); // remove width padding
     const bool wrapText = option->features & QStyleOptionViewItemV2::WrapText;
     QTextOption textOption;
-    textOption.setWrapMode(wrapText ? QTextOption::WordWrap : QTextOption::ManualWrap);
+    textOption.setWrapMode(wrapText ? QTextOption::WordWrap : QTextOption::NoWrap);
     textOption.setTextDirection(option->direction);
     textOption.setAlignment(QStyle::visualAlignment(option->direction, option->displayAlignment));
     QTextLayout textLayout;
