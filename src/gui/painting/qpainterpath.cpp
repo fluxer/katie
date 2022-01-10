@@ -1123,6 +1123,9 @@ void QPainterPath::addText(const QPointF &point, const QFont &f, const QString &
                     // qDebug() << Q_FUNC_INFO << ucs4;
                     continue;
                 }
+                default: {
+                    break;
+                }
             }
 
             QGlyphLayoutArray<2> glyphs;
