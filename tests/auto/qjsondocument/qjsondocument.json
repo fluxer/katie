@@ -12,8 +12,6 @@
     "Qt/doubleClickInterval": 400,
     "Qt/embedFonts": true,
     "Qt/font": "Sans Serif,9,-1,5,50,0,0,0,0",
-    "Qt/fontPath": [
-    ],
     "Qt/globalStrut/height": 0,
     "Qt/globalStrut/width": 0,
     "Qt/resolveSymlinks": false,

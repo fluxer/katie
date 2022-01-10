@@ -47,11 +47,6 @@ public slots:
     virtual void paletteSelected(int);
     virtual void styleSelected(const QString &);
     virtual void familySelected(const QString &);
-    virtual void removeFontpath();
-    virtual void addFontpath();
-    virtual void downFontpath();
-    virtual void upFontpath();
-    virtual void browseFontpath();
     virtual void fileSave();
     virtual void fileExit();
     virtual void somethingModified();
@@ -75,7 +70,6 @@ private:
     QString desktopThemeName;
     QPalette editPalette, previewPalette;
     QStyle *previewstyle;
-    QStringList fontpaths;
     bool modified;
 };
 
