@@ -111,13 +111,7 @@ void tst_QFontDatabase::fixedPitch()
 
     QFontDatabase fdb;
     // qDebug() << fdb.families();
-    bool fontinstalled = false;
-    foreach (const QString &family, fdb.families()) {
-        if (family.contains(font)) {
-            fontinstalled = true;
-        }
-    }
-    if (!fontinstalled) {
+    if (!fdb.hasFamily(font)) {
         QSKIP( "Font not installed", SkipSingle);
     }
 
