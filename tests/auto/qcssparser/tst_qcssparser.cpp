@@ -23,6 +23,7 @@
 #include <QtXml/QDomDocument>
 #include <QDir>
 #include <QFileInfo>
+#include <QFontDatabase>
 #include <QDebug>
 
 //TESTED_CLASS=QCss
@@ -1497,7 +1498,7 @@ void tst_QCssParser::gradient()
 
 void tst_QCssParser::extractFontFamily_data()
 {
-    if (QFontInfo(QFont("FreeSerif")).family() != "FreeSerif")
+    if (!QFontDatabase().hasFamily("FreeSerif"))
         QSKIP("'FreeSerif' font not found ", SkipAll);
 
     QTest::addColumn<QString>("css");
