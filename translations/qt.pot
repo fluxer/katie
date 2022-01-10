@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-01-02 19:57+0200\n"
+"POT-Creation-Date: 2022-01-10 11:23+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -422,12 +422,12 @@ msgstr ""
 msgid "Cannot anchor a vertical edge to a horizontal edge."
 msgstr ""
 
-#: src/declarative/graphicsitems/qdeclarativetextinput.cpp:909
-#: src/declarative/graphicsitems/qdeclarativetextinput.cpp:917
+#: src/declarative/graphicsitems/qdeclarativetextinput.cpp:872
+#: src/declarative/graphicsitems/qdeclarativetextinput.cpp:880
 msgid "Could not load cursor delegate"
 msgstr ""
 
-#: src/declarative/graphicsitems/qdeclarativetextinput.cpp:928
+#: src/declarative/graphicsitems/qdeclarativetextinput.cpp:891
 msgid "Could not instantiate cursor delegate"
 msgstr ""
 
@@ -4514,37 +4514,37 @@ msgstr ""
 msgid "<empty>"
 msgstr ""
 
-#: src/gui/text/qfontdatabase.cpp:169
+#: src/gui/text/qfontdatabase.cpp:185
 msgctxt "QFontDatabase"
 msgid "Black"
 msgstr ""
 
-#: src/gui/text/qfontdatabase.cpp:171
+#: src/gui/text/qfontdatabase.cpp:187
 msgctxt "QFontDatabase"
 msgid "Bold"
 msgstr ""
 
-#: src/gui/text/qfontdatabase.cpp:173
+#: src/gui/text/qfontdatabase.cpp:189
 msgctxt "QFontDatabase"
 msgid "Demi Bold"
 msgstr ""
 
-#: src/gui/text/qfontdatabase.cpp:175
+#: src/gui/text/qfontdatabase.cpp:191
 msgctxt "QFontDatabase"
 msgid "Light"
 msgstr ""
 
-#: src/gui/text/qfontdatabase.cpp:178
+#: src/gui/text/qfontdatabase.cpp:194
 msgctxt "QFontDatabase"
 msgid "Italic"
 msgstr ""
 
-#: src/gui/text/qfontdatabase.cpp:180
+#: src/gui/text/qfontdatabase.cpp:196
 msgctxt "QFontDatabase"
 msgid "Oblique"
 msgstr ""
 
-#: src/gui/text/qfontdatabase.cpp:183
+#: src/gui/text/qfontdatabase.cpp:199
 msgctxt "QFontDatabase"
 msgid "Normal"
 msgstr ""
