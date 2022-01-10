@@ -1473,7 +1473,7 @@ QTextLineItemIterator::QTextLineItemIterator(QTextEngine *_eng, int _lineNum, co
       item(-1),
       selection(_selection)
 {
-    pos_x = x = QFixed::fromReal(pos.x());
+    x = QFixed::fromReal(pos.x());
 
     x += line.x;
 

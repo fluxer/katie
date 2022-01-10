@@ -530,7 +530,6 @@ struct QTextLineItemIterator
     QTextEngine *eng;
 
     QFixed x;
-    QFixed pos_x;
     const QScriptLine &line;
     QScriptItem *si;
 
