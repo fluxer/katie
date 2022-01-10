@@ -1258,6 +1258,7 @@ QFont QFont::resolve(const QFont &other) const
     \internal
 */
 
+#ifndef QT_NO_DATASTREAM
 /*  \internal
     Internal function. Converts boolean font settings to an unsigned
     8-bit number. Used for serialization etc.
@@ -1276,6 +1277,8 @@ static inline quint8 get_font_bits(int version, const QFontPrivate *f)
         bits |= 0x04;
     if (f->request.fixedPitch)
         bits |= 0x08;
+    if (f->request.ignorePitch)
+        bits |= 0x20;
     if (f->kerning)
         bits |= 0x10;
     if (f->request.style == QFont::StyleOblique)
@@ -1283,22 +1286,11 @@ static inline quint8 get_font_bits(int version, const QFontPrivate *f)
     return bits;
 }
 
-static inline quint8 get_extended_font_bits(const QFontPrivate *f)
-{
-    Q_ASSERT(f != 0);
-    quint8 bits = 0;
-    if (f->request.ignorePitch)
-        bits |= 0x01;
-    return bits;
-}
-
-#ifndef QT_NO_DATASTREAM
-
 /*  \internal
     Internal function. Sets boolean font settings from an unsigned
     8-bit number. Used for serialization etc.
 */
-static void set_font_bits(quint8 bits, QFontPrivate *f)
+static inline void set_font_bits(quint8 bits, QFontPrivate *f)
 {
     Q_ASSERT(f != 0);
     f->request.style         = (bits & 0x01) != 0 ? QFont::StyleItalic : QFont::StyleNormal;
@@ -1306,15 +1298,10 @@ static void set_font_bits(quint8 bits, QFontPrivate *f)
     f->overline              = (bits & 0x40) != 0;
     f->strikeOut             = (bits & 0x04) != 0;
     f->request.fixedPitch    = (bits & 0x08) != 0;
+    f->request.ignorePitch   = (bits & 0x20) != 0;
     f->kerning               = (bits & 0x10) != 0;
     if ((bits & 0x80) != 0)
         f->request.style         = QFont::StyleOblique;
-}
-
-static void set_extended_font_bits(quint8 bits, QFontPrivate *f)
-{
-    Q_ASSERT(f != 0);
-    f->request.ignorePitch = (bits & 0x01) != 0;
 }
 #endif
 
@@ -1393,7 +1380,6 @@ bool QFont::fromString(const QString &descrip)
   QFont stream functions
  *****************************************************************************/
 #ifndef QT_NO_DATASTREAM
-
 /*!
     \relates QFont
 
@@ -1415,10 +1401,8 @@ QDataStream &operator<<(QDataStream &s, const QFont &font)
     s << (qint8) font.d->request.weight
       << get_font_bits(s.version(), font.d.data());
     s << (qint16)font.d->request.stretch;
-    s << get_extended_font_bits(font.d.data());
     return s;
 }
-
 
 /*!
     \relates QFont
@@ -1458,15 +1442,9 @@ QDataStream &operator>>(QDataStream &s, QFont &font)
     s >> stretch;
     font.d->request.stretch = stretch;
 
-    quint8 extendedBits;
-    s >> extendedBits;
-    set_extended_font_bits(extendedBits, font.d.data());
-
     return s;
 }
-
 #endif // QT_NO_DATASTREAM
-
 
 /*****************************************************************************
   QFontInfo member functions

@@ -317,20 +317,6 @@ void tst_QFont::isCopyOf()
     QVERIFY(!font3.isCopyOf(font));
 }
 
-static QFont copyFont(const QFont &font1) // copy using a QDataStream
-{
-    QBuffer buffer;
-    buffer.open(QIODevice::WriteOnly);
-    QDataStream ds(&buffer);
-    ds << font1;
-    buffer.close();
-
-    buffer.open(QIODevice::ReadOnly);
-    QFont font2;
-    ds >> font2;
-    return font2;
-}
-
 void tst_QFont::lastResortFont()
 {
     QFont font;
