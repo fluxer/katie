@@ -233,11 +233,10 @@ void QFontPrivate::resolve(uint mask, const QFontPrivate *other)
 
     If the requested font family is unavailable you can influence the
     \link #fontmatching font matching algorithm\endlink by choosing a
-    particular \l{QFont::StyleStrategy} with setStyleStrategy(). The
-    default family is returned by defaultFamily().
+    particular \l{QFont::StyleStrategy} with setStyleStrategy().
 
-    The font-matching algorithm has a lastResortFamily() and
-    lastResortFont() in cases where a suitable match cannot be found.
+    The font-matching algorithm has a lastResortFamily() and in cases
+    where a suitable match cannot be found.
 
     Every QFont has a key() which you can use, for example, as the key
     in a cache or dictionary. If you want to store a user's font
@@ -261,21 +260,18 @@ void QFontPrivate::resolve(uint mask, const QFontPrivate *other)
     \list 1
     \o The specified font family is searched for.
     \o Each replacement font family is searched for.
-    \o If none of these are found "helvetica" will be searched for.
-    \o If "helvetica" isn't found Katie will try the lastResortFamily().
-    \o If the lastResortFamily() isn't found Katie will try the
-       lastResortFont() which will always return a name of some kind.
+    \o If none of these are found application font will be searched for.
+    \o If none of these are found lastResortFamily() will be searched for.
+    \o If the lastResortFamily() isn't found Katie will not abort but no
+       text will be visible unless a valid font filepath has been set in
+       the global settings file or via QApplication::setFont().
     \endlist
 
-    Note that the actual font matching algorithm varies from platform to platform.
+    Note that the actual font matching algorithm varies from platform to
+    platform.
 
-    In Windows a request for the "Courier" font is automatically changed to
-    "Courier New", an improved version of Courier that allows for smooth scaling.
-    The older "Courier" bitmap font can be selected by setting the PreferBitmap
-    style strategy (see setStyleStrategy()).
-
-    Once a font is found, the remaining attributes are matched in order of
-    priority:
+    Once a font is found, the remaining attributes are matched in order
+    of priority:
     \list 1
     \o fixedPitch()
     \o pointSize() (see below)
@@ -382,46 +378,6 @@ void QFontPrivate::resolve(uint mask, const QFontPrivate *other)
 
     \note This function is only available on platforms that provide the FreeType library;
     i.e., X11 and some Embedded Linux platforms.
-*/
-
-/*!
-    \fn QString QFont::lastResortFamily() const
-
-    Returns the "last resort" font family name.
-
-    The current implementation tries a wide variety of common fonts,
-    returning the first one it finds. Is is possible that no family is
-    found in which case an empty string is returned.
-
-    \sa lastResortFont()
-*/
-
-/*!
-    \fn QString QFont::defaultFamily() const
-
-    Returns the family name that corresponds to the current style.
-*/
-
-/*!
-    \fn QString QFont::lastResortFont() const
-
-    Returns a "last resort" font name for the font matching algorithm.
-    This is used if the last resort family is not available. It will
-    always return a name, if necessary returning something like
-    "fixed" or "system".
-
-    The current implementation tries a wide variety of common fonts,
-    returning the first one it finds. The implementation may change
-    at any time, but this function will always return a string
-    containing something.
-
-    It is theoretically possible that there really isn't a
-    lastResortFont() in which case Qt will abort with an error
-    message. We have not been able to identify a case where this
-    happens. Please \link bughowto.html report it as a bug\endlink if
-    it does, preferably with a list of the fonts you have installed.
-
-    \sa lastResortFamily()
 */
 
 /*!

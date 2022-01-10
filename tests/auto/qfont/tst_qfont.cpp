@@ -55,7 +55,7 @@ private slots:
     void resetFont();
     void isCopyOf();
     void italicOblique();
-    void lastResortFont();
+    void lastResortFamily();
 };
 
 // Testing get/set functions
@@ -317,10 +317,9 @@ void tst_QFont::isCopyOf()
     QVERIFY(!font3.isCopyOf(font));
 }
 
-void tst_QFont::lastResortFont()
+void tst_QFont::lastResortFamily()
 {
-    QFont font;
-    QVERIFY(!font.lastResortFont().isEmpty());
+    QVERIFY(!QFont::lastResortFamily().isEmpty());
 }
 
 QTEST_MAIN(tst_QFont)

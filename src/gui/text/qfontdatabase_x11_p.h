@@ -609,9 +609,9 @@ static FcPattern *getFcPattern(const QFontPrivate *fp, QUnicodeTables::Script sc
     value.u.s = (const FcChar8 *)cs.data();
     FcPatternAddWeak(pattern, FC_FAMILY, value, FcTrue);
 
-    // add QFont::defaultFamily() to the list, for compatibility with
+    // add QFont::lastResortFamily() to the list, for compatibility with
     // previous versions
-    defaultFamily = QApplication::font().defaultFamily();
+    defaultFamily = QFont::lastResortFamily();
     cs = defaultFamily.toUtf8();
     value.u.s = (const FcChar8 *)cs.data();
     FcPatternAddWeak(pattern, FC_FAMILY, value, FcTrue);

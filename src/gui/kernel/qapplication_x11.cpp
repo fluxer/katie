@@ -1267,8 +1267,7 @@ void qt_init(QApplicationPrivate *priv, Display *display,
 
     if (!QApplicationPrivate::sys_font) {
         // no font from settings, provide a fallback
-        QFont f(qt_x11Data->has_fontconfig ? QLatin1String("Sans Serif") : QLatin1String("Helvetica"),
-                ptsz);
+        QFont f(QFont::lastResortFamily(), ptsz);
         QApplicationPrivate::setSystemFont(f);
     }
 

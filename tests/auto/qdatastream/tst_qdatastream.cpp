@@ -1282,87 +1282,72 @@ void tst_QDataStream::readQDateTime(QDataStream *s)
 
 static QFont qFontData(int index)
 {
-    switch (index)
-    {
-	case 0: return QFont("Courier", 20, QFont::Bold, true);
-	case 1: return QFont("Courier", 18, QFont::Bold, false);
-	case 2: return QFont("Courier", 16, QFont::Light, true);
-	case 3: return QFont("Courier", 14, QFont::Normal, false);
-	case 4: return QFont("Courier", 12, QFont::DemiBold, true);
-	case 5: return QFont("Courier", 10, QFont::Black, false);
-	case 6:
-	    {
-		QFont f("Helvetica", 10, QFont::Normal, false);
-		f.setPixelSize(2);
-		f.setUnderline(false);
-		f.setStrikeOut(false);
-		f.setFixedPitch(false);
-		return f;
-	    }
-	case 7:
-	    {
-		QFont f("Helvetica", 10, QFont::Bold, false);
-		f.setPixelSize(4);
-		f.setUnderline(true);
-		f.setStrikeOut(false);
-		f.setFixedPitch(false);
-		return f;
-	    }
-	case 8:
-	    {
-		QFont f("Helvetica", 10, QFont::Light, false);
-		f.setPixelSize(6);
-		f.setUnderline(false);
-		f.setStrikeOut(true);
-		f.setFixedPitch(false);
-		return f;
-	    }
-	case 9:
-	    {
-		QFont f("Helvetica", 10, QFont::DemiBold, false);
-		f.setPixelSize(8);
-		f.setUnderline(false);
-		f.setStrikeOut(false);
-		f.setFixedPitch(true);
-		return f;
-	    }
-	case 10:
-	    {
-		QFont f("Helvetica", 10, QFont::Black, false);
-		f.setPixelSize(10);
-		f.setUnderline(true);
-		f.setStrikeOut(true);
-		f.setFixedPitch(false);
-		return f;
-	    }
-	case 11:
-	    {
-		QFont f("Helvetica", 10, QFont::Normal, true);
-		f.setPixelSize(12);
-		f.setUnderline(false);
-		f.setStrikeOut(true);
-		f.setFixedPitch(true);
-		return f;
-	    }
-	case 12:
-	    {
-		QFont f("Helvetica", 10, QFont::Bold, true);
-		f.setPixelSize(14);
-		f.setUnderline(true);
-		f.setStrikeOut(true);
-		f.setFixedPitch(true);
-		return f;
-	    }
-        case 13:
-            {
-                QFont f("Helvetica", 10, QFont::Bold, true);
-                f.setStretch(200);
-                return f;
-            }
+    switch (index) {
+        case 0: {
+            QFont f(QFont::lastResortFamily(), 10, QFont::Normal, false);
+            f.setPixelSize(2);
+            f.setUnderline(false);
+            f.setStrikeOut(false);
+            f.setFixedPitch(false);
+            return f;
+        }
+        case 1: {
+            QFont f(QFont::lastResortFamily(), 10, QFont::Bold, false);
+            f.setPixelSize(4);
+            f.setUnderline(true);
+            f.setStrikeOut(false);
+            f.setFixedPitch(false);
+            return f;
+        }
+        case 2: {
+            QFont f(QFont::lastResortFamily(), 10, QFont::Light, false);
+            f.setPixelSize(6);
+            f.setUnderline(false);
+            f.setStrikeOut(true);
+            f.setFixedPitch(false);
+            return f;
+        }
+        case 3: {
+            QFont f(QFont::lastResortFamily(), 10, QFont::DemiBold, false);
+            f.setPixelSize(8);
+            f.setUnderline(false);
+            f.setStrikeOut(false);
+            f.setFixedPitch(true);
+            return f;
+        }
+        case 4: {
+            QFont f(QFont::lastResortFamily(), 10, QFont::Black, false);
+            f.setPixelSize(10);
+            f.setUnderline(true);
+            f.setStrikeOut(true);
+            f.setFixedPitch(false);
+            return f;
+        }
+        case 5: {
+            QFont f(QFont::lastResortFamily(), 10, QFont::Normal, true);
+            f.setPixelSize(12);
+            f.setUnderline(false);
+            f.setStrikeOut(true);
+            f.setFixedPitch(true);
+            return f;
+        }
+        case 6: {
+            QFont f(QFont::lastResortFamily(), 10, QFont::Bold, true);
+            f.setPixelSize(14);
+            f.setUnderline(true);
+            f.setStrikeOut(true);
+            f.setFixedPitch(true);
+            return f;
+        }
+        case 7: {
+            QFont f(QFont::lastResortFamily(), 10, QFont::Bold, true);
+            f.setStretch(200);
+            return f;
+        }
     }
-    return QFont("Courier", 18, QFont::Bold, true);
+    Q_UNREACHABLE();
 }
-#define MAX_QFONT_DATA 14
+#define MAX_QFONT_DATA 8
 
 void tst_QDataStream::stream_QFont_data()
 {

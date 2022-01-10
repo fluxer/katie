@@ -182,9 +182,7 @@ public:
     QString toString() const;
     bool fromString(const QString &);
 
-    QString defaultFamily() const;
-    QString lastResortFamily() const;
-    QString lastResortFont() const;
+    static QString lastResortFamily();
 
     QFont resolve(const QFont &) const;
     inline uint resolve() const { return resolve_mask; }

@@ -1527,23 +1527,10 @@ static const char *helvetica_styles[4] = {
     "Helvetica-Oblique",
     "Helvetica-BoldOblique"
 };
-static const char *times_styles[4] = {
-    "Times-Regular",
-    "Times-Bold",
-    "Times-Italic",
-    "Times-BoldItalic"
-};
-static const char *courier_styles[4] = {
-    "Courier",
-    "Courier-Bold",
-    "Courier-Oblique",
-    "Courier-BoldOblique"
-};
 
 QByteArray QFontSubset::toType1() const
 {
     QFontEngine::Properties properties = fontEngine->properties();
-    QVector<int> reverseMap = getReverseMap();
 
     QByteArray font;
     QPdf::ByteStream s(&font);
@@ -1563,12 +1550,6 @@ QByteArray QFontSubset::toType1() const
             style++;
         if (fontEngine->fontDef.family.contains(QLatin1String("Helvetica"))) {
             psname = helvetica_styles[style];
-            standard_font = true;
-        } else if (fontEngine->fontDef.family.contains(QLatin1String("Times"))) {
-            psname = times_styles[style];
-            standard_font = true;
-        } else if (fontEngine->fontDef.family.contains(QLatin1String("Courier"))) {
-            psname = courier_styles[style];
             standard_font = true;
         }
     }
