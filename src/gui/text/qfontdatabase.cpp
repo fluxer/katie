@@ -434,7 +434,7 @@ bool QFontDatabase::isFixedPitch(const QString &family, const QString &style) co
     foreach (const QtFontFamily &fontfamily, d->families) {
         if (fontfamily.family.compare(parsedfamily, Qt::CaseInsensitive) != 0
             || fontfamily.foundry.compare(parsedfoundry, Qt::CaseInsensitive) != 0
-            || !isItalicOrOblique(fontfamily.style, style)) {
+            || (!style.isEmpty() && !isItalicOrOblique(fontfamily.style, style))) {
             continue;
         }
         result = fontfamily.fixedpitch;
@@ -460,7 +460,7 @@ bool QFontDatabase::isSmoothlyScalable(const QString &family, const QString &sty
     foreach (const QtFontFamily &fontfamily, d->families) {
         if (fontfamily.family.compare(parsedfamily, Qt::CaseInsensitive) != 0
             || fontfamily.foundry.compare(parsedfoundry, Qt::CaseInsensitive) != 0
-            || !isItalicOrOblique(fontfamily.style, style)) {
+            || (!style.isEmpty() && !isItalicOrOblique(fontfamily.style, style))) {
             continue;
         }
         result = fontfamily.scalable;
