@@ -100,13 +100,8 @@ void tst_QFontDatabase::fixedPitch_data()
     QTest::addColumn<QString>("font");
     QTest::addColumn<bool>("fixedPitch");
 
-    QTest::newRow( "Times New Roman" ) << QString( "Times New Roman" ) << false;
-    QTest::newRow( "Arial" ) << QString( "Arial" ) << false;
-    QTest::newRow( "Andale Mono" ) << QString( "Andale Mono" ) << true;
-    QTest::newRow( "Courier" ) << QString( "Courier" ) << true;
-    QTest::newRow( "Courier New" ) << QString( "Courier New" ) << true;
-    QTest::newRow( "Script" ) << QString( "Script" ) << false;
-    QTest::newRow( "Lucida Console" ) << QString( "Lucida Console" ) << true;
+    QTest::newRow( "FreeSans" ) << QString( "FreeSans" ) << false;
+    QTest::newRow( "FreeMono" ) << QString( "FreeMono" ) << true;
 }
 
 void tst_QFontDatabase::fixedPitch()
@@ -116,8 +111,15 @@ void tst_QFontDatabase::fixedPitch()
 
     QFontDatabase fdb;
     // qDebug() << fdb.families();
-    if (!fdb.families().contains(font))
+    bool fontinstalled = false;
+    foreach (const QString &family, fdb.families()) {
+        if (family.contains(font)) {
+            fontinstalled = true;
+        }
+    }
+    if (!fontinstalled) {
         QSKIP( "Font not installed", SkipSingle);
+    }
 
     QCOMPARE(fdb.isFixedPitch(font), fixedPitch);
 
