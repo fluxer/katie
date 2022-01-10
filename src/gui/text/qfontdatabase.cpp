@@ -677,13 +677,26 @@ int QFontDatabase::weight(const QString &family, const QString &style) const
 }
 
 
-/*! \internal */
+/*!
+    Returns true if font family is available, false otherwise.
+*/
 bool QFontDatabase::hasFamily(const QString &family) const
 {
-    QString parsedFamily, foundry;
-    parseFontName(family, foundry, parsedFamily);
-    const QString familyAlias = resolveFontFamilyAlias(parsedFamily);
-    return families().contains(familyAlias, Qt::CaseInsensitive);
+    QString parsedfamily, parsedfoundry;
+    parseFontName(family, parsedfoundry, parsedfamily);
+
+    const QString familyalias = resolveFontFamilyAlias(parsedfamily);
+
+    bool result = false;
+    foreach (const QtFontFamily &fontfamily, d->families) {
+        if (fontfamily.family.compare(familyalias, Qt::CaseInsensitive) != 0
+            || (!parsedfoundry.isEmpty() && fontfamily.foundry.compare(parsedfoundry, Qt::CaseInsensitive) != 0)) {
+            continue;
+        }
+        result = true;
+        break;
+    }
+    return result;
 }
 
 void QFontDatabase::parseFontName(const QString &name, QString &foundry, QString &family)
