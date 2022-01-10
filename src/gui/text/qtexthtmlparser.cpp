@@ -1085,7 +1085,7 @@ void QTextHtmlParserNode::initializeProperties(const QTextHtmlParserNode *parent
         case Html_tt:
         case Html_kbd:
         case Html_samp:
-            charFormat.setFontFamily(QString::fromLatin1("Courier New,courier"));
+            charFormat.setFontFamily(QString::fromLatin1("FreeMono"));
             // <tt> uses a fixed font, so set the property
             charFormat.setFontFixedPitch(true);
             break;
@@ -1095,7 +1095,7 @@ void QTextHtmlParserNode::initializeProperties(const QTextHtmlParserNode *parent
             break;
         // ##### sub / sup
         case Html_pre:
-            charFormat.setFontFamily(QString::fromLatin1("Courier New,courier"));
+            charFormat.setFontFamily(QString::fromLatin1("FreeMono"));
             wsm = WhiteSpacePre;
             margin[QTextHtmlParser::MarginTop] = 12;
             margin[QTextHtmlParser::MarginBottom] = 12;

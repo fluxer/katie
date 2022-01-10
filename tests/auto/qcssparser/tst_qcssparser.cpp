@@ -1497,23 +1497,22 @@ void tst_QCssParser::gradient()
 
 void tst_QCssParser::extractFontFamily_data()
 {
-    if (QFontInfo(QFont("Times New Roman")).family() != "Times New Roman")
-        QSKIP("'Times New Roman' font not found ", SkipAll);
+    if (QFontInfo(QFont("FreeSerif")).family() != "FreeSerif")
+        QSKIP("'FreeSerif' font not found ", SkipAll);
 
     QTest::addColumn<QString>("css");
     QTest::addColumn<QString>("expectedFamily");
 
-    QTest::newRow("quoted-family-name") << "font-family: 'Times New Roman'" << QString("Times New Roman");
-    QTest::newRow("unquoted-family-name") << "font-family: Times New Roman" << QString("Times New Roman");
-    QTest::newRow("unquoted-family-name2") << "font-family: Times        New     Roman" << QString("Times New Roman");
-    QTest::newRow("multiple") << "font-family: Times New Roman  , foobar, 'baz'" << QString("Times New Roman");
-    QTest::newRow("multiple2") << "font-family: invalid,  Times New   Roman " << QString("Times New Roman");
+    QTest::newRow("quoted-family-name") << "font-family: 'FreeSerif'" << QString("FreeSerif");
+    QTest::newRow("unquoted-family-name") << "font-family: FreeSerif" << QString("FreeSerif");
+    QTest::newRow("multiple") << "font-family: FreeSerif  , foobar, 'baz'" << QString("FreeSerif");
+    QTest::newRow("multiple2") << "font-family: invalid,  FreeSerif " << QString("FreeSerif");
     QTest::newRow("invalid") << "font-family: invalid" << QFontInfo(QFont("invalid font")).family();
-    QTest::newRow("shorthand") << "font: 12pt Times New Roman" << QString("Times New Roman");
-    QTest::newRow("shorthand multiple quote") << "font: 12pt invalid, \"Times New Roman\" " << QString("Times New Roman");
-    QTest::newRow("shorthand multiple") << "font: 12pt invalid, Times New Roman " << QString("Times New Roman");
-    QTest::newRow("invalid spaces") << "font-family: invalid spaces, Times New Roman " << QString("Times New Roman");
-    QTest::newRow("invalid spaces quotes") << "font-family: 'invalid spaces', 'Times New Roman' " << QString("Times New Roman");
+    QTest::newRow("shorthand") << "font: 12pt FreeSerif" << QString("FreeSerif");
+    QTest::newRow("shorthand multiple quote") << "font: 12pt invalid, \"FreeSerif\" " << QString("FreeSerif");
+    QTest::newRow("shorthand multiple") << "font: 12pt invalid, FreeSerif " << QString("FreeSerif");
+    QTest::newRow("invalid spaces") << "font-family: invalid spaces, FreeSerif " << QString("FreeSerif");
+    QTest::newRow("invalid spaces quotes") << "font-family: 'invalid spaces', 'FreeSerif' " << QString("FreeSerif");
 }
 
 

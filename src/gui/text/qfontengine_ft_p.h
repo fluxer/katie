@@ -58,8 +58,7 @@ struct QFontMetric {
 };
 
 /*
- * This struct represents one font file on disk (like Arial.ttf) and is shared between all the font engines
- * that show this font file (at different pixel sizes).
+ * This struct represents one font file on disk.
  */
 class QFreetypeFace
 {

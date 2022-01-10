@@ -579,7 +579,7 @@ void tst_QTextDocument::stylesheetFont_data()
         font.setPixelSize(64);
 
         QTest::newRow("Shorthand font specification")
-                << "font: normal bold 64px Arial;"
+                << "font: normal bold 64px FreeSans;"
                 << font;
     }
 

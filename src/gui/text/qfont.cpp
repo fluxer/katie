@@ -1418,9 +1418,9 @@ QDataStream &operator>>(QDataStream &s, QFont &font)
     were set, a QFontInfo object returns the values that apply to
     the font that will actually be used to draw the text.
 
-    For example, when the program asks for a 25pt Courier font on a
-    machine that has a non-scalable 24pt Courier font, QFont will
-    (normally) use the 24pt Courier for rendering. In this case,
+    For example, when the program asks for a 25pt FreeMono font on a
+    machine that has a non-scalable 24pt FreeMono font, QFont will
+    (normally) use the 24pt FreeMono for rendering. In this case,
     QFont::pointSize() returns 25 and QFontInfo::pointSize() returns
     24.
 

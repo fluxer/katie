@@ -101,28 +101,28 @@ void Theme::setBlueTheme()
 {
     m_currentTheme = Theme::Blue;
 
-    m_fonts[ContactName].setFamily("Arial");
+    m_fonts[ContactName].setFamily("FreeSans");
     m_fonts[ContactName].setPixelSize(16);
     m_fonts[ContactName].setStyle(QFont::StyleNormal);
     m_fonts[ContactName].setWeight(QFont::Normal);
 
-    m_fonts[ContactNumber].setFamily("Arial");
+    m_fonts[ContactNumber].setFamily("FreeSans");
     m_fonts[ContactNumber].setPixelSize(14);
     m_fonts[ContactNumber].setStyle(QFont::StyleNormal);
 
-    m_fonts[ContactEmail].setFamily("Arial");
+    m_fonts[ContactEmail].setFamily("FreeSans");
     m_fonts[ContactEmail].setPixelSize(14);
     m_fonts[ContactEmail].setStyle(QFont::StyleNormal);
 
-    m_fonts[TitleBar].setFamily("Arial");
+    m_fonts[TitleBar].setFamily("FreeSans");
     m_fonts[TitleBar].setPixelSize(36);
     m_fonts[TitleBar].setStyle(QFont::StyleNormal);
 
-    m_fonts[StatusBar].setFamily("Arial");
+    m_fonts[StatusBar].setFamily("FreeSans");
     m_fonts[StatusBar].setPixelSize(16);
     m_fonts[StatusBar].setStyle(QFont::StyleNormal);
 
-    m_fonts[MenuItem].setFamily("Arial");
+    m_fonts[MenuItem].setFamily("FreeSans");
     m_fonts[MenuItem].setPixelSize(14);
     m_fonts[MenuItem].setStyle(QFont::StyleNormal);
 
@@ -151,28 +151,28 @@ void Theme::setLimeTheme()
 {
     m_currentTheme = Theme::Lime;
 
-    m_fonts[ContactName].setFamily("Arial");
+    m_fonts[ContactName].setFamily("FreeSans");
     m_fonts[ContactName].setPixelSize(16);
     m_fonts[ContactName].setStyle(QFont::StyleItalic);
     m_fonts[ContactName].setWeight(QFont::Bold);
 
-    m_fonts[ContactNumber].setFamily("Arial");
+    m_fonts[ContactNumber].setFamily("FreeSans");
     m_fonts[ContactNumber].setPixelSize(14);
     m_fonts[ContactNumber].setStyle(QFont::StyleItalic);
 
-    m_fonts[ContactEmail].setFamily("Arial");
+    m_fonts[ContactEmail].setFamily("FreeSans");
     m_fonts[ContactEmail].setPixelSize(14);
     m_fonts[ContactEmail].setStyle(QFont::StyleItalic);
 
-    m_fonts[TitleBar].setFamily("Arial");
+    m_fonts[TitleBar].setFamily("FreeSans");
     m_fonts[TitleBar].setPixelSize(36);
     m_fonts[TitleBar].setStyle(QFont::StyleItalic);
 
-    m_fonts[StatusBar].setFamily("Arial");
+    m_fonts[StatusBar].setFamily("FreeSans");
     m_fonts[StatusBar].setPixelSize(16);
     m_fonts[StatusBar].setStyle(QFont::StyleItalic);
 
-    m_fonts[MenuItem].setFamily("Arial");
+    m_fonts[MenuItem].setFamily("FreeSans");
     m_fonts[MenuItem].setPixelSize(14);
     m_fonts[MenuItem].setStyle(QFont::StyleItalic);
 

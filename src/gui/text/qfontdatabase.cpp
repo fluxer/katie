@@ -81,7 +81,7 @@ Q_GLOBAL_STATIC(QMutex, qGlobalFontDatabaseMutex)
 
   if the family name contains a '[' and a ']', then we take the text
   between the square brackets as the foundry, and the text before the
-  square brackets as the family (ie. "Arial [Monotype]")
+  square brackets as the family (ie. "FreeSans [GNU]")
 */
 static void parseFontName(const QString &name, QString &foundry, QString &family)
 {

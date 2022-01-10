@@ -76,7 +76,7 @@ void tst_QFontDatabase::styles_data()
 {
     QTest::addColumn<QString>("font");
 
-    QTest::newRow( "data0" ) << QString( "Times New Roman" );
+    QTest::newRow( "data0" ) << QString( "FreeSerif [GNU]" );
 }
 
 void tst_QFontDatabase::styles()
@@ -134,7 +134,7 @@ void tst_QFontDatabase::widthTwoTimes_data()
     QTest::addColumn<int>("pixelSize");
     QTest::addColumn<QString>("text");
 
-    QTest::newRow("Arial") << QString("Arial") << 1000 << QString("Some text");
+    QTest::newRow("FreeSans") << QString("FreeSans") << 1000 << QString("Some text");
 }
 
 void tst_QFontDatabase::widthTwoTimes()
