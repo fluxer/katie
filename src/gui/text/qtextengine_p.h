@@ -469,8 +469,6 @@ public:
     bool forceJustification;
     bool visualMovement;
 
-    int *underlinePositions;
-
     mutable LayoutData *layoutData;
 
     inline bool hasFormats() const { return (block.docHandle() || specialData); }

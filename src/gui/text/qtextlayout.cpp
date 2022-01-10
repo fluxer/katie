@@ -1924,70 +1924,6 @@ int QTextLine::textLength() const
     return eng->lines[i].length + eng->lines[i].trailingSpaces;
 }
 
-static void drawMenuText(QPainter *p, QFixed x, QFixed y, const QScriptItem &si, QTextItemInt &gf, QTextEngine *eng,
-                         int start, int glyph_start)
-{
-    int ge = glyph_start + gf.glyphs.numGlyphs;
-    int gs = glyph_start;
-    int end = start + gf.num_chars;
-    unsigned short *logClusters = eng->logClusters(&si);
-    QGlyphLayout glyphs = eng->shapedGlyphs(&si);
-    QFixed orig_width = gf.width;
-
-    int *ul = eng->underlinePositions;
-    if (ul)
-        while (*ul != -1 && *ul < start)
-            ++ul;
-
-    do {
-        int gtmp = ge;
-        int stmp = end;
-        if (ul && *ul != -1 && *ul < end) {
-            stmp = *ul;
-            gtmp = logClusters[*ul-si.position];
-        }
-
-        gf.glyphs = glyphs.mid(gs, gtmp - gs);
-        gf.num_chars = stmp - start;
-        gf.chars = eng->layoutData->string.unicode() + start;
-        QFixed w = 0;
-        while (gs < gtmp) {
-            w += glyphs.effectiveAdvance(gs);
-            ++gs;
-        }
-        start = stmp;
-        gf.width = w;
-        if (gf.num_chars)
-            p->drawTextItem(QPointF(x.toReal(), y.toReal()), gf);
-        x += w;
-        if (ul && *ul != -1 && *ul < end) {
-            // draw underline
-            gtmp = (*ul == end-1) ? ge : logClusters[*ul+1-si.position];
-            ++stmp;
-            gf.glyphs = glyphs.mid(gs, gtmp - gs);
-            gf.num_chars = stmp - start;
-            gf.chars = eng->layoutData->string.unicode() + start;
-            gf.logClusters = logClusters + start - si.position;
-            w = 0;
-            while (gs < gtmp) {
-                w += glyphs.effectiveAdvance(gs);
-                ++gs;
-            }
-            ++start;
-            gf.width = w;
-            gf.underlineStyle = QTextCharFormat::SingleUnderline;
-            p->drawTextItem(QPointF(x.toReal(), y.toReal()), gf);
-            x += w;
-            gf.underlineStyle = QTextCharFormat::NoUnderline;
-            ++gf.chars;
-            ++ul;
-        }
-    } while (gs < ge);
-
-    gf.width = orig_width;
-}
-
-
 static void setPenAndDrawBackground(QPainter *p, const QPen &defaultPen, const QTextCharFormat &chf, const QRectF &r)
 {
     QBrush c = chf.foreground();
@@ -2002,21 +1938,6 @@ static void setPenAndDrawBackground(QPainter *p, const QPen &defaultPen, const Q
         p->setPen(QPen(c, 0));
     }
 
-}
-
-namespace {
-    struct GlyphInfo
-    {
-        GlyphInfo(const QGlyphLayout &layout, const QPointF &position,
-                  const QTextItemInt::RenderFlags &renderFlags)
-            : glyphLayout(layout), itemPosition(position), flags(renderFlags)
-        {
-        }
-
-        QGlyphLayout glyphLayout;
-        QPointF itemPosition;
-        QTextItem::RenderFlags flags;
-    };
 }
 
 /*!
@@ -2142,32 +2063,27 @@ void QTextLine::draw(QPainter *p, const QPointF &pos, const QTextLayout::FormatR
 
         Q_ASSERT(gf.fontEngine);
 
-        if (eng->underlinePositions) {
-            // can't have selections in this case
-            drawMenuText(p, iterator.x, itemBaseLine, si, gf, eng, iterator.itemStart, iterator.glyphsStart);
+        QPointF pos(iterator.x.toReal(), itemBaseLine.toReal());
+        if (format.penProperty(QTextFormat::TextOutline).style() != Qt::NoPen) {
+            QPainterPath path;
+            path.setFillRule(Qt::WindingFill);
+            path.addText(pos, f, gf.text());
+
+            p->save();
+            //Currently QPen with a Qt::NoPen style still returns a default
+            //QBrush which != Qt::NoBrush so we need this specialcase to reset it
+            if (p->pen().style() == Qt::NoPen)
+                p->setBrush(Qt::NoBrush);
+            else
+                p->setBrush(p->pen().brush());
+
+            p->setPen(format.textOutline());
+            p->drawPath(path);
+            p->restore();
         } else {
-            QPointF pos(iterator.x.toReal(), itemBaseLine.toReal());
-            if (format.penProperty(QTextFormat::TextOutline).style() != Qt::NoPen) {
-                QPainterPath path;
-                path.setFillRule(Qt::WindingFill);
-                path.addText(pos, f, gf.text());
-
-                p->save();
-                //Currently QPen with a Qt::NoPen style still returns a default
-                //QBrush which != Qt::NoBrush so we need this specialcase to reset it
-                if (p->pen().style() == Qt::NoPen)
-                    p->setBrush(Qt::NoBrush);
-                else
-                    p->setBrush(p->pen().brush());
-
-                p->setPen(format.textOutline());
-                p->drawPath(path);
-                p->restore();
-            } else {
-                if (noText)
-                    gf.glyphs.numGlyphs = 0; // slightly less elegant than it should be
-                p->drawTextItem(pos, gf);
-            }
+            if (noText)
+                gf.glyphs.numGlyphs = 0; // slightly less elegant than it should be
+            p->drawTextItem(pos, gf);
         }
     }
 

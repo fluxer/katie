@@ -254,7 +254,6 @@ static void init(QTextEngine *e)
     e->minWidth = 0;
     e->maxWidth = 0;
 
-    e->underlinePositions = 0;
     e->specialData = 0;
 }
 
