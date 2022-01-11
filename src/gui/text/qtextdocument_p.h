@@ -223,8 +223,6 @@ public:
 
     int nextCursorPosition(int position, QTextLayout::CursorMode mode) const;
     int previousCursorPosition(int position, QTextLayout::CursorMode mode) const;
-    int leftCursorPosition(int position) const;
-    int rightCursorPosition(int position) const;
 
     void changeObjectFormat(QTextObject *group, int format);
 
@@ -320,7 +318,6 @@ private:
 
 public:
     QTextOption defaultTextOption;
-    Qt::CursorMoveStyle defaultCursorMoveStyle;
 #ifndef QT_NO_CSSPARSER
     QCss::StyleSheet parsedDefaultStyleSheet;
 #endif

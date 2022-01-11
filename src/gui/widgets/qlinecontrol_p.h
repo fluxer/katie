@@ -143,9 +143,6 @@ public:
     int cursorWidth() const { return m_cursorWidth; }
     void setCursorWidth(int value) { m_cursorWidth = value; }
 
-    Qt::CursorMoveStyle cursorMoveStyle() const { return m_textLayout.cursorMoveStyle(); }
-    void setCursorMoveStyle(Qt::CursorMoveStyle style) { m_textLayout.setCursorMoveStyle(style); }
-
     void moveCursor(int pos, bool mark = false);
     void cursorForward(bool mark, int steps)
     {

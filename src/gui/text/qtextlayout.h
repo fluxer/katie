@@ -108,9 +108,6 @@ public:
     void setCacheEnabled(bool enable);
     bool cacheEnabled() const;
 
-    void setCursorMoveStyle(Qt::CursorMoveStyle style);
-    Qt::CursorMoveStyle cursorMoveStyle() const;
-
     void beginLayout();
     void endLayout();
     void clearLayout();

@@ -467,16 +467,10 @@ public:
     QPointF position;
     bool cacheGlyphs;
     bool forceJustification;
-    bool visualMovement;
 
     mutable LayoutData *layoutData;
 
     inline bool hasFormats() const { return (block.docHandle() || specialData); }
-    inline bool visualCursorMovement() const
-    {
-        return (visualMovement ||
-                (block.docHandle() ? block.docHandle()->defaultCursorMoveStyle == Qt::VisualMoveStyle : false));
-    }
 
     struct SpecialData {
         int preeditPosition;

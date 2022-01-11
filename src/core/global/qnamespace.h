@@ -1290,11 +1290,6 @@ public:
         LogicalCoordinates
     };
 
-    enum CursorMoveStyle {
-        LogicalMoveStyle,
-        VisualMoveStyle
-    };
-
     enum HitTestAccuracy {
         ExactHit,
         FuzzyHit

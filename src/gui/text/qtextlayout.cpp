@@ -549,34 +549,6 @@ bool QTextLayout::cacheEnabled() const
 }
 
 /*!
-    \since 4.8
-
-    Set the cursor movement style. If the QTextLayout is backed by
-    a document, you can ignore this and use the option in QTextDocument,
-    this option is for widgets like QLineEdit or custom widgets without
-    a QTextDocument. Default value is Qt::LogicalMoveStyle.
-
-    \sa cursorMoveStyle()
-*/
-void QTextLayout::setCursorMoveStyle(Qt::CursorMoveStyle style)
-{
-    d->visualMovement = (style == Qt::VisualMoveStyle);
-}
-
-/*!
-    \since 4.8
-
-    The cursor movement style of this QTextLayout. The default is
-    Qt::LogicalMoveStyle.
-
-    \sa setCursorMoveStyle()
-*/
-Qt::CursorMoveStyle QTextLayout::cursorMoveStyle() const
-{
-    return d->visualMovement ? Qt::VisualMoveStyle : Qt::LogicalMoveStyle;
-}
-
-/*!
     Begins the layout process.
 
     \sa endLayout()
@@ -1150,13 +1122,7 @@ void QTextLayout::drawCursor(QPainter *p, const QPointF &pos, int cursorPosition
 
     qreal x = position.x() + l.cursorToX(cursorPosition);
 
-    int itm;
-    if (d->visualCursorMovement()) {
-        if (cursorPosition == sl.from + sl.length)
-            cursorPosition--;
-        itm = d->findItem(cursorPosition);
-    } else
-        itm = d->findItem(cursorPosition - 1);
+    int itm = d->findItem(cursorPosition - 1);
 
     QFixed base = sl.base();
     QFixed descent = sl.descent;
@@ -2223,9 +2189,8 @@ int QTextLine::xToCursor(qreal _x, CursorPosition cpos) const
 
     x -= line.x;
     x -= eng->alignLine(line);
-//     qDebug("xToCursor: x=%f, cpos=%d", x.toReal(), cpos);
+    // qDebug("xToCursor: x=%f, cpos=%d", x.toReal(), cpos);
 
-    bool visual = eng->visualCursorMovement();
     if (x <= 0) {
         // left of first item
         int item = firstItem;
@@ -2246,7 +2211,7 @@ int QTextLine::xToCursor(qreal _x, CursorPosition cpos) const
             int item = (i + firstItem);
             QScriptItem &si = eng->layoutData->items[item];
             int item_length = eng->length(item);
-//             qDebug("    item %d, visual %d x_remain=%f", i, item, x.toReal());
+            // qDebug("    item %d, visual %d x_remain=%f", i, item, x.toReal());
 
             int start = qMax(line.from - si.position, 0);
             int end = qMin(line.from + line_length - si.position, item_length);
@@ -2267,13 +2232,13 @@ int QTextLine::xToCursor(qreal _x, CursorPosition cpos) const
                     ++g;
                 }
             }
-//             qDebug("      start=%d, end=%d, gs=%d, ge=%d item_width=%f", start, end, gs, ge, item_width.toReal());
+            // qDebug("      start=%d, end=%d, gs=%d, ge=%d item_width=%f", start, end, gs, ge, item_width.toReal());
 
             if (pos + item_width < x) {
                 pos += item_width;
                 continue;
             }
-//             qDebug("      inside run");
+            // qDebug("      inside run");
             if (si.analysis.flags >= QScriptAnalysis::TabOrObject) {
                 if (cpos == QTextLine::CursorOnCharacter)
                     return si.position;
@@ -2311,11 +2276,6 @@ int QTextLine::xToCursor(qreal _x, CursorPosition cpos) const
                     ++gs;
                 }
                 if (qAbs(x-pos) < dist) {
-                    if (visual) {
-                        if (i < nItems - 1) {
-                            continue;
-                        }
-                    }
                     return eng->positionInLigature(&si, end, x, pos, -1,
                                                    cpos == QTextLine::CursorOnCharacter);
                 }

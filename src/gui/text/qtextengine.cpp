@@ -247,7 +247,6 @@ static void init(QTextEngine *e)
 {
     e->cacheGlyphs = false;
     e->forceJustification = false;
-    e->visualMovement = false;
 
     e->layoutData = 0;
 

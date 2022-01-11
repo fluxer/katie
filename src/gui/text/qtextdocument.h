@@ -225,9 +225,6 @@ public:
     QTextOption defaultTextOption() const;
     void setDefaultTextOption(const QTextOption &option);
 
-    Qt::CursorMoveStyle defaultCursorMoveStyle() const;
-    void setDefaultCursorMoveStyle(Qt::CursorMoveStyle style);
-
 Q_SIGNALS:
     void contentsChange(int from, int charsRemoves, int charsAdded);
     void contentsChanged();
