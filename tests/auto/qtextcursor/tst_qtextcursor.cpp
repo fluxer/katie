@@ -398,7 +398,7 @@ void tst_QTextCursor::navigation6()
 void tst_QTextCursor::navigation7()
 {
     QVERIFY(doc->isEmpty());
-    for (int i = QTextCursor::Start; i <= QTextCursor::WordRight; ++i)
+    for (int i = QTextCursor::Start; i <= QTextCursor::NextWord; ++i)
         QVERIFY(!cursor.movePosition(QTextCursor::MoveOperation(i)));
 
     doc->setPlainText("Hello World");
