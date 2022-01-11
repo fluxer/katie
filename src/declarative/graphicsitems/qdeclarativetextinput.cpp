@@ -348,8 +348,6 @@ bool QDeclarativeTextInputPrivate::determineHorizontalAlignment()
     if (hAlignImplicit) {
         // if no explicit alignment has been set, follow the natural layout direction of the text
         QString text = control->text();
-        if (text.isEmpty())
-            text = control->preeditAreaText();
         bool isRightToLeft = text.isEmpty()
                 ? QApplication::keyboardInputDirection() == Qt::RightToLeft
                 : text.isRightToLeft();
@@ -910,8 +908,6 @@ void QDeclarativeTextInput::createCursor()
 QRectF QDeclarativeTextInput::positionToRectangle(int pos) const
 {
     Q_D(const QDeclarativeTextInput);
-    if (pos > d->control->cursorPosition())
-        pos += d->control->preeditAreaText().length();
     return QRectF(d->control->cursorToX(pos)-d->hscroll,
         0.0,
         d->control->cursorWidth(),
@@ -948,10 +944,7 @@ int QDeclarativeTextInput::positionAt(int x, CursorPosition position) const
     int pos = d->control->xToPos(x + d->hscroll, QTextLine::CursorPosition(position));
     const int cursor = d->control->cursor();
     if (pos > cursor) {
-        const int preeditLength = d->control->preeditAreaText().length();
-        pos = pos > cursor + preeditLength
-                ? pos - preeditLength
-                : cursor;
+        pos = pos > cursor ? pos : cursor;
     }
     return pos;
 }
@@ -1128,8 +1121,7 @@ int QDeclarativeTextInputPrivate::calculateTextWidth()
 void QDeclarativeTextInputPrivate::updateHorizontalScroll()
 {
     Q_Q(QDeclarativeTextInput);
-    const int preeditLength = control->preeditAreaText().length();
-    int cix = qRound(control->cursorToX(control->cursor() + preeditLength));
+    int cix = qRound(control->cursorToX(control->cursor()));
     QRect br(q->boundingRect().toRect());
     int widthUsed = calculateTextWidth();
 
@@ -1159,14 +1151,6 @@ void QDeclarativeTextInputPrivate::updateHorizontalScroll()
             // text doesn't fit, text document is to the left of br; align
             // right
             hscroll = widthUsed - br.width() + 1;
-        }
-        if (preeditLength > 0) {
-            // check to ensure long pre-edit text doesn't push the cursor
-            // off to the left
-             cix = qRound(control->cursorToX(
-                     control->cursor() + qMax(0, control->preeditCursor() - 1)));
-             if (cix < hscroll)
-                 hscroll = cix;
         }
     } else {
         switch (effectiveHAlign) {
@@ -1634,25 +1618,6 @@ void QDeclarativeTextInput::focusInEvent(QFocusEvent *event)
         }
     }
     QDeclarativePaintedItem::focusInEvent(event);
-}
-
-/*!
-    \qmlproperty bool TextInput::inputMethodComposing
-
-    \since QtQuick 1.1
-
-    This property holds whether the TextInput has partial text input from an
-    input method.
-
-    While it is composing an input method may rely on mouse or key events from
-    the TextInput to edit or commit the partial text.  This property can be
-    used to determine when to disable events handlers that may interfere with
-    the correct operation of an input method.
-*/
-bool QDeclarativeTextInput::isInputMethodComposing() const
-{
-    Q_D(const QDeclarativeTextInput);
-    return d->control->preeditAreaText().length() > 0;
 }
 
 void QDeclarativeTextInputPrivate::init()

@@ -1290,11 +1290,10 @@ void QTextDocumentLayoutPrivate::drawBlock(const QPointF &offset, QPainter *pain
 
     tl->draw(painter, offset, selections, context.clip.isValid() ? (context.clip & clipRect) : clipRect);
 
-    if ((context.cursorPosition >= blpos && context.cursorPosition < blpos + bllen)
-        || (context.cursorPosition < -1 && !tl->preeditAreaText().isEmpty())) {
+    if (context.cursorPosition >= blpos && context.cursorPosition < blpos + bllen) {
         int cpos = context.cursorPosition;
         if (cpos < -1)
-            cpos = tl->preeditAreaPosition() - (cpos + 2);
+            cpos = (cpos + 2) - 1;
         else
             cpos -= blpos;
         tl->drawCursor(painter, offset, cpos, cursorWidth);
@@ -2941,8 +2940,6 @@ int QTextDocumentLayout::hitTest(const QPointF &point, Qt::HitTestAccuracy accur
 
     // ensure we stay within document bounds
     int lastPos = f->lastPosition();
-    if (l && !l->preeditAreaText().isEmpty())
-        lastPos += l->preeditAreaText().length();
     if (position > lastPos)
         position = lastPos;
     else if (position < 0)

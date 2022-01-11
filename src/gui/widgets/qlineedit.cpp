@@ -1263,8 +1263,7 @@ bool QLineEdit::event(QEvent * e)
             d->control->setCursorBlinkPeriod(QApplication::cursorFlashTime());
             QStyleOptionFrameV2 opt;
             initStyleOption(&opt);
-            if ((!hasSelectedText() && d->control->preeditAreaText().isEmpty())
-                || style()->styleHint(QStyle::SH_BlinkCursorWhenTextSelected, &opt, this))
+            if (!hasSelectedText() || style()->styleHint(QStyle::SH_BlinkCursorWhenTextSelected, &opt, this))
                 d->setCursorVisible(true);
         }
     }
@@ -1429,8 +1428,7 @@ void QLineEdit::focusInEvent(QFocusEvent *e)
     d->control->setCursorBlinkPeriod(QApplication::cursorFlashTime());
     QStyleOptionFrameV2 opt;
     initStyleOption(&opt);
-    if((!hasSelectedText() && d->control->preeditAreaText().isEmpty())
-       || style()->styleHint(QStyle::SH_BlinkCursorWhenTextSelected, &opt, this))
+    if(!hasSelectedText() || style()->styleHint(QStyle::SH_BlinkCursorWhenTextSelected, &opt, this))
         d->setCursorVisible(true);
 #ifndef QT_NO_COMPLETER
     if (d->control->completer()) {

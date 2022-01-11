@@ -335,8 +335,6 @@ void QTextEngine::validate() const
     } else {
         layoutData->string = text;
     }
-    if (specialData && specialData->preeditPosition != -1)
-        layoutData->string.insert(specialData->preeditPosition, specialData->preeditText);
 }
 
 void QTextEngine::itemize() const
@@ -384,8 +382,6 @@ void QTextEngine::itemize() const
 
     const QTextDocumentPrivate *p = block.docHandle();
     if (p) {
-        SpecialData *s = specialData;
-
         QTextDocumentPrivate::FragmentIterator it = p->find(block.position());
         QTextDocumentPrivate::FragmentIterator end = p->find(block.position() + block.length() - 1); // -1 to omit the block separator char
         int format = it.value()->format;
@@ -395,10 +391,6 @@ void QTextEngine::itemize() const
         while (1) {
             const QTextFragmentData * const frag = it.value();
             if (it == end || format != frag->format) {
-                if (s && position >= s->preeditPosition) {
-                    position += s->preeditText.length();
-                    s = 0;
-                }
                 Q_ASSERT(position <= length);
                 itemizer.generate(prevPosition, position - prevPosition);
                 if (it == end) {
@@ -898,14 +890,7 @@ int QTextEngine::formatIndex(const QScriptItem *si) const
     QTextDocumentPrivate *p = block.docHandle();
     if (!p)
         return -1;
-    int pos = si->position;
-    if (specialData && si->position >= specialData->preeditPosition) {
-        if (si->position < specialData->preeditPosition + specialData->preeditText.length())
-            pos = qMax(specialData->preeditPosition - 1, 0);
-        else
-            pos -= specialData->preeditText.length();
-    }
-    QTextDocumentPrivate::FragmentIterator it = p->find(block.position() + pos);
+    QTextDocumentPrivate::FragmentIterator it = p->find(block.position() + si->position);
     return it.value()->format;
 }
 

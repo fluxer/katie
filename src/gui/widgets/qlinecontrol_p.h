@@ -241,8 +241,6 @@ public:
             moveCursor(nextMaskBlank(0));
     }
 
-    QString preeditAreaText() const { return m_textLayout.preeditAreaText(); }
-
     void updatePasswordEchoEditing(bool editing);
     bool passwordEchoEditing() const {
 #ifdef QT_GUI_PASSWORD_ECHO_DELAY

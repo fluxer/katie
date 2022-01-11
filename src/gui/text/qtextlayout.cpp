@@ -409,57 +409,6 @@ QTextOption QTextLayout::textOption() const
 }
 
 /*!
-    Sets the \a position and \a text of the area in the layout that is
-    processed before editing occurs.
-
-    \sa preeditAreaPosition(), preeditAreaText()
-*/
-void QTextLayout::setPreeditArea(int position, const QString &text)
-{
-    if (text.isEmpty()) {
-        if (!d->specialData)
-            return;
-        if (d->specialData->addFormats.isEmpty()) {
-            delete d->specialData;
-            d->specialData = 0;
-        } else {
-            d->specialData->preeditText = QString();
-            d->specialData->preeditPosition = -1;
-        }
-    } else {
-        if (!d->specialData)
-            d->specialData = new QTextEngine::SpecialData;
-        d->specialData->preeditPosition = position;
-        d->specialData->preeditText = text;
-    }
-    d->invalidate();
-    d->clearLineData();
-    if (d->block.docHandle())
-        d->block.docHandle()->documentChange(d->block.position(), d->block.length());
-}
-
-/*!
-    Returns the position of the area in the text layout that will be
-    processed before editing occurs.
-
-    \sa preeditAreaText()
-*/
-int QTextLayout::preeditAreaPosition() const
-{
-    return d->specialData ? d->specialData->preeditPosition : -1;
-}
-
-/*!
-    Returns the text that is inserted in the layout before editing occurs.
-
-    \sa preeditAreaPosition()
-*/
-QString QTextLayout::preeditAreaText() const
-{
-    return d->specialData ? d->specialData->preeditText : QString();
-}
-
-/*!
     Sets the additional formats supported by the text layout to \a formatList.
 
     \sa additionalFormats(), clearAdditionalFormats()
@@ -469,17 +418,11 @@ void QTextLayout::setAdditionalFormats(const QList<FormatRange> &formatList)
     if (formatList.isEmpty()) {
         if (!d->specialData)
             return;
-        if (d->specialData->preeditText.isEmpty()) {
-            delete d->specialData;
-            d->specialData = 0;
-        } else {
-            d->specialData->addFormats = formatList;
-            d->specialData->addFormatIndices.clear();
-        }
+        delete d->specialData;
+        d->specialData = 0;
     } else {
         if (!d->specialData) {
             d->specialData = new QTextEngine::SpecialData;
-            d->specialData->preeditPosition = -1;
         }
         d->specialData->addFormats = formatList;
         d->indexAdditionalFormats();

@@ -92,10 +92,6 @@ public:
     void setTextOption(const QTextOption &option);
     QTextOption textOption() const;
 
-    void setPreeditArea(int position, const QString &text);
-    int preeditAreaPosition() const;
-    QString preeditAreaText() const;
-
     struct FormatRange {
         int start;
         int length;

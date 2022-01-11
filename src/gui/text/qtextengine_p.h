@@ -473,8 +473,6 @@ public:
     inline bool hasFormats() const { return (block.docHandle() || specialData); }
 
     struct SpecialData {
-        int preeditPosition;
-        QString preeditText;
         QList<QTextLayout::FormatRange> addFormats;
         QVector<int> addFormatIndices;
         QVector<int> resolvedFormatIndices;

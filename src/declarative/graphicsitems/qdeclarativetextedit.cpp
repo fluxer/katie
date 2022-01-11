@@ -485,10 +485,7 @@ bool QDeclarativeTextEditPrivate::determineHorizontalAlignment()
     if (hAlignImplicit && q->isComponentComplete()) {
         bool alignToRight;
         if (text.isEmpty() && !control->textCursor().isNull()) {
-            const QString preeditText = control->textCursor().block().layout()->preeditAreaText();
-            alignToRight = preeditText.isEmpty()
-                    ? QApplication::keyboardInputDirection() == Qt::RightToLeft
-                    : preeditText.isRightToLeft();
+            alignToRight = QApplication::keyboardInputDirection() == Qt::RightToLeft;
         } else {
             alignToRight = rightToLeftText;
         }
@@ -621,24 +618,7 @@ QRectF QDeclarativeTextEdit::positionToRectangle(int pos) const
 int QDeclarativeTextEdit::positionAt(int x, int y) const
 {
     Q_D(const QDeclarativeTextEdit);
-    int r = d->document->documentLayout()->hitTest(QPoint(x,y-d->yoff), Qt::FuzzyHit);
-    QTextCursor cursor = d->control->textCursor();
-    if (r > cursor.position()) {
-        // The cursor position includes positions within the preedit text, but only positions in the
-        // same text block are offset so it is possible to get a position that is either part of the
-        // preedit or the next text block.
-        QTextLayout *layout = cursor.block().layout();
-        const int preeditLength = layout
-                ? layout->preeditAreaText().length()
-                : 0;
-        if (preeditLength > 0
-                && d->document->documentLayout()->blockBoundingRect(cursor.block()).contains(x,y-d->yoff)) {
-            r = r > cursor.position() + preeditLength
-                    ? r - preeditLength
-                    : cursor.position();
-        }
-    }
-    return r;
+    return d->document->documentLayout()->hitTest(QPoint(x,y-d->yoff), Qt::FuzzyHit);
 }
 
 void QDeclarativeTextEdit::moveCursorSelection(int pos)
@@ -1417,27 +1397,6 @@ bool QDeclarativeTextEdit::canPaste() const
 {
     Q_D(const QDeclarativeTextEdit);
     return d->canPaste;
-}
-
-/*!
-    \qmlproperty bool TextEdit::inputMethodComposing
-
-    \since QtQuick 1.1
-
-    This property holds whether the TextEdit has partial text input from an
-    input method.
-
-    While it is composing an input method may rely on mouse or key events from
-    the TextEdit to edit or commit the partial text.  This property can be used
-    to determine when to disable events handlers that may interfere with the
-    correct operation of an input method.
-*/
-bool QDeclarativeTextEdit::isInputMethodComposing() const
-{
-    Q_D(const QDeclarativeTextEdit);
-    if (QTextLayout *layout = d->control->textCursor().block().layout())
-        return layout->preeditAreaText().length() > 0;
-    return false;
 }
 
 void QDeclarativeTextEditPrivate::init()

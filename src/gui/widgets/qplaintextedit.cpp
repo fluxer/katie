@@ -1737,12 +1737,10 @@ void QPlainTextEdit::paintEvent(QPaintEvent *e)
 
 
             layout->draw(&painter, offset, selections, er);
-            if ((drawCursor && !drawCursorAsBlock)
-                || (editable && context.cursorPosition < -1
-                    && !layout->preeditAreaText().isEmpty())) {
+            if (drawCursor && !drawCursorAsBlock) {
                 int cpos = context.cursorPosition;
                 if (cpos < -1)
-                    cpos = layout->preeditAreaPosition() - (cpos + 2);
+                    cpos = (cpos + 2) - 1;
                 else
                     cpos -= blpos;
                 layout->drawCursor(&painter, offset, cpos, cursorWidth());
