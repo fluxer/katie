@@ -74,7 +74,6 @@ private slots:
     void unindent();
     void highlightToEndOfDocument();
     void highlightToEndOfDocument2();
-    void preservePreeditArea();
     void task108530();
     void avoidUnnecessaryRehighlight();
     void noContentsChangedDuringHighlight();
@@ -385,58 +384,6 @@ void tst_QSyntaxHighlighter::highlightToEndOfDocument2()
     cursor.endEditBlock();
 
     QCOMPARE(hl->callCount, 3);
-}
-
-void tst_QSyntaxHighlighter::preservePreeditArea()
-{
-    QList<QTextLayout::FormatRange> formats;
-    QTextLayout::FormatRange range;
-    range.start = 0;
-    range.length = 8;
-    range.format.setForeground(Qt::blue);
-    formats << range;
-    range.start = 9;
-    range.length = 1;
-    range.format.setForeground(Qt::red);
-    formats << range;
-    TestHighlighter *hl = new TestHighlighter(formats, doc);
-
-    doc->setPlainText("Hello World");
-    cursor.movePosition(QTextCursor::Start);
-
-    QTextLayout *layout = cursor.block().layout();
-
-    layout->setPreeditArea(5, QString("foo"));
-    range.start = 5;
-    range.length = 3;
-    range.format.setFontUnderline(true);
-    formats.clear();
-    formats << range;
-
-    hl->callCount = 0;
-
-    cursor.beginEditBlock();
-    layout->setAdditionalFormats(formats);
-    cursor.endEditBlock();
-
-    QCOMPARE(hl->callCount, 1);
-
-    formats = layout->additionalFormats();
-    QCOMPARE(formats.count(), 3);
-
-    range = formats.at(0);
-
-    QCOMPARE(range.start, 5);
-    QCOMPARE(range.length, 3);
-    QVERIFY(range.format.fontUnderline());
-
-    range = formats.at(1);
-    QCOMPARE(range.start, 0);
-    QCOMPARE(range.length, 8 + 3);
-
-    range = formats.at(2);
-    QCOMPARE(range.start, 9 + 3);
-    QCOMPARE(range.length, 1);
 }
 
 void tst_QSyntaxHighlighter::task108530()
