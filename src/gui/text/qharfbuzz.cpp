@@ -445,7 +445,6 @@ static inline void calcLineBreaks(const HB_UChar16 *uc, uint32_t len, HB_CharAtt
     int lcls = cls;
     for (uint32_t i = 1; i < len; ++i) {
         charAttributes[i].whiteSpace = false;
-        charAttributes[i].charStop = true;
 
         HB_UChar32 code = uc[i];
         HB_GraphemeClass ngrapheme;
