@@ -1358,14 +1358,14 @@ int QTextDocumentPrivate::leftCursorPosition(int position) const
 {
     QTextBlock it = blocksFind(position);
     int start = it.position();
-    return it.layout()->leftCursorPosition(position-start) + start;
+    return it.layout()->previousCursorPosition(position-start) + start;
 }
 
 int QTextDocumentPrivate::rightCursorPosition(int position) const
 {
     QTextBlock it = blocksFind(position);
     int start = it.position();
-    return it.layout()->rightCursorPosition(position-start) + start;
+    return it.layout()->nextCursorPosition(position-start) + start;
 }
 
 void QTextDocumentPrivate::changeObjectFormat(QTextObject *obj, int format)

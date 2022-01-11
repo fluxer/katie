@@ -698,38 +698,6 @@ int QTextLayout::previousCursorPosition(int oldPos, CursorMode mode) const
     return oldPos;
 }
 
-/*!
-    \since 4.8
-
-    Returns the cursor position to the right of \a oldPos, next to it.
-    The position is dependent on the visual position of characters, after
-    bi-directional reordering.
-
-    \sa leftCursorPosition(), nextCursorPosition()
-*/
-int QTextLayout::rightCursorPosition(int oldPos) const
-{
-    int newPos = d->positionAfterVisualMovement(oldPos, QTextCursor::Right);
-//    qDebug("%d -> %d", oldPos, newPos);
-    return newPos;
-}
-
-/*!
-    \since 4.8
-
-    Returns the cursor position to the left of \a oldPos, next to it.
-    The position is dependent on the visual position of characters, after
-    bi-directional reordering.
-
-    \sa rightCursorPosition(), previousCursorPosition()
-*/
-int QTextLayout::leftCursorPosition(int oldPos) const
-{
-    int newPos = d->positionAfterVisualMovement(oldPos, QTextCursor::Left);
-//    qDebug("%d -> %d", oldPos, newPos);
-    return newPos;
-}
-
 /*!/
     Returns true if position \a pos is a valid cursor position.
 

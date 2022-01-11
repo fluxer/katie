@@ -1364,35 +1364,6 @@ int QTextEngine::positionInLigature(const QScriptItem *si, int end,
     return si->position + end;
 }
 
-int QTextEngine::previousLogicalPosition(int oldPos) const
-{
-    const HB_CharAttributes *attrs = attributes();
-    if (!attrs || oldPos < 0)
-        return oldPos;
-
-    if (oldPos <= 0)
-        return 0;
-    oldPos--;
-    while (oldPos && !attrs[oldPos].charStop)
-        oldPos--;
-    return oldPos;
-}
-
-int QTextEngine::nextLogicalPosition(int oldPos) const
-{
-    const HB_CharAttributes *attrs = attributes();
-    int len = block.isValid() ? block.length() - 1
-                              : layoutData->string.length();
-    Q_ASSERT(len <= layoutData->string.length());
-    if (!attrs || oldPos < 0 || oldPos >= len)
-        return oldPos;
-
-    oldPos++;
-    while (oldPos < len && !attrs[oldPos].charStop)
-        oldPos++;
-    return oldPos;
-}
-
 int QTextEngine::lineNumberForTextPosition(int pos)
 {
     if (!layoutData)
@@ -1405,16 +1376,6 @@ int QTextEngine::lineNumberForTextPosition(int pos)
             return i;
     }
     return -1;
-}
-
-int QTextEngine::positionAfterVisualMovement(int pos, QTextCursor::MoveOperation op)
-{
-    if (!layoutData)
-        itemize();
-
-    bool moveRight = (op == QTextCursor::Right);
-
-    return (moveRight ? nextLogicalPosition(pos) : previousLogicalPosition(pos));
 }
 
 QTextItemInt::QTextItemInt(const QScriptItem &si, QFont *font, const QTextCharFormat &format)

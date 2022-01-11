@@ -152,12 +152,10 @@ public:
         int c = m_cursor;
         if (steps > 0) {
             while (steps--)
-                c = cursorMoveStyle() == Qt::VisualMoveStyle ? m_textLayout.rightCursorPosition(c)
-                                                             : m_textLayout.nextCursorPosition(c);
+                c = m_textLayout.nextCursorPosition(c);
         } else if (steps < 0) {
             while (steps++)
-                c = cursorMoveStyle() == Qt::VisualMoveStyle ? m_textLayout.leftCursorPosition(c)
-                                                             : m_textLayout.previousCursorPosition(c);
+                c = m_textLayout.previousCursorPosition(c);
         }
         moveCursor(c, mark);
     }

@@ -128,8 +128,6 @@ public:
     bool isValidCursorPosition(int pos) const;
     int nextCursorPosition(int oldPos, CursorMode mode = SkipCharacters) const;
     int previousCursorPosition(int oldPos, CursorMode mode = SkipCharacters) const;
-    int leftCursorPosition(int oldPos) const;
-    int rightCursorPosition(int oldPos) const;
 
     void draw(QPainter *p, const QPointF &pos, const QVector<FormatRange> &selections = QVector<FormatRange>(),
               const QRectF &clip = QRectF()) const;
