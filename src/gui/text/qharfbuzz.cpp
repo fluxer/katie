@@ -75,14 +75,9 @@ static void qHB_getGlyphMetrics(QFontEngine* fe, HB_Glyph glyph, HB_GlyphMetrics
     metrics->yOffset = m.yoff.value();
 }
 
-static HB_Fixed qHB_getGlyphMetric(QFontEngine* fe, HB_FontMetric metric)
+static HB_Fixed qHB_getGlyphAscent(QFontEngine* fe)
 {
-    switch (metric) {
-    case HB_FontAscent:
-        return fe->ascent().value();
-    default:
-        return 0;
-    }
+    return fe->ascent().value();
 }
 
 static void qHB_GetGlyphAdvances(QFontEngine* fe, const HB_Glyph *glyphs, uint32_t numGlyphs, HB_Fixed *advances, int flags)
@@ -259,7 +254,7 @@ static inline void positionCluster(HB_ShaperItem *item, int gfrom,  int glast)
 //     qDebug("---> positionCluster: cluster from %d to %d", gfrom, glast);
 //     qDebug("baseInfo: %f/%f (%f/%f) off=%f/%f", baseInfo.x, baseInfo.y, baseInfo.width, baseInfo.height, baseInfo.xoff, baseInfo.yoff);
 
-    HB_Fixed size = qHB_getGlyphMetric(item->font, HB_FontAscent) / 10;
+    HB_Fixed size = qHB_getGlyphAscent(item->font) / 10;
     HB_Fixed offsetBase = HB_FIXED_CONSTANT(1) + (size - HB_FIXED_CONSTANT(4)) / 4;
     if (size > HB_FIXED_CONSTANT(4))
         offsetBase += HB_FIXED_CONSTANT(4);
