@@ -131,7 +131,7 @@ static void qHB_HeuristicSetGlyphAttributes(HB_ShaperItem *item)
 
     assert(item->num_glyphs <= length);
 
-//     qDebug("QScriptEngine::heuristicSetGlyphAttributes, num_glyphs=%d", item->num_glyphs);
+    // qDebug("qHB_HeuristicSetGlyphAttributes: num_glyphs=%d", item->num_glyphs);
     HB_GlyphAttributes *attributes = item->attributes;
     unsigned short *logClusters = item->log_clusters;
 
@@ -251,8 +251,8 @@ static inline void positionCluster(HB_ShaperItem *item, int gfrom,  int glast)
         // we need to attach below the baseline, because of the hebrew iud.
         baseMetrics.height = -baseMetrics.y;
 
-//     qDebug("---> positionCluster: cluster from %d to %d", gfrom, glast);
-//     qDebug("baseInfo: %f/%f (%f/%f) off=%f/%f", baseInfo.x, baseInfo.y, baseInfo.width, baseInfo.height, baseInfo.xoff, baseInfo.yoff);
+    // qDebug("---> positionCluster: cluster from %d to %d", gfrom, glast);
+    // qDebug("baseInfo: %f/%f (%f/%f) off=%f/%f", baseInfo.x, baseInfo.y, baseInfo.width, baseInfo.height, baseInfo.xoff, baseInfo.yoff);
 
     HB_Fixed size = qHB_getGlyphAscent(item->font) / 10;
     HB_Fixed offsetBase = HB_FIXED_CONSTANT(1) + (size - HB_FIXED_CONSTANT(4)) / 4;
@@ -260,8 +260,8 @@ static inline void positionCluster(HB_ShaperItem *item, int gfrom,  int glast)
         offsetBase += HB_FIXED_CONSTANT(4);
     else
         offsetBase += size;
-    //qreal offsetBase = (size - 4) / 4 + qMin<qreal>(size, 4) + 1;
-//     qDebug("offset = %f", offsetBase);
+    // qreal offsetBase = (size - 4) / 4 + qMin<qreal>(size, 4) + 1;
+    // qDebug("offset = %f", offsetBase);
 
     HB_CombiningClass lastCmb = HB_Combining_NotOrdered;
     HB_GlyphMetrics attachmentRect;
@@ -273,14 +273,14 @@ static inline void positionCluster(HB_ShaperItem *item, int gfrom,  int glast)
         qHB_getGlyphMetrics(item->font, mark, &markMetrics);
         HB_FixedPoint p;
         p.x = p.y = 0;
-//          qDebug("markInfo: %f/%f (%f/%f) off=%f/%f", markInfo.x, markInfo.y, markInfo.width, markInfo.height, markInfo.xoff, markInfo.yoff);
+        // qDebug("markInfo: %f/%f (%f/%f) off=%f/%f", markInfo.x, markInfo.y, markInfo.width, markInfo.height, markInfo.xoff, markInfo.yoff);
 
         HB_Fixed offset = offsetBase;
         HB_CombiningClass cmb = attributes[gfrom+i].combiningClass;
 
         // combining marks of different class don't interact. Reset the rectangle.
         if (cmb != lastCmb) {
-            //qDebug("resetting rect");
+            // qDebug("resetting rect");
             attachmentRect = baseMetrics;
         }
 
@@ -310,7 +310,7 @@ static inline void positionCluster(HB_ShaperItem *item, int gfrom,  int glast)
             default:
                 break;
         }
-//          qDebug("char=%x combiningClass = %d offset=%f/%f", mark, cmb, p.x(), p.y());
+        // qDebug("char=%x combiningClass = %d offset=%f/%f", mark, cmb, p.x(), p.y());
         markMetrics.x += p.x;
         markMetrics.y += p.y;
 
