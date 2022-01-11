@@ -446,12 +446,12 @@ QFixed QTextEngine::width(int from, int len) const
 
     QFixed w = 0;
 
-//     qDebug("QTextEngine::width(from = %d, len = %d), numItems=%d, strleng=%d", from,  len, items.size(), string.length());
+    // qDebug("QTextEngine::width(from = %d, len = %d), numItems=%d, strleng=%d", from,  len, layoutData->items.size(), layoutData->string.length());
     for (int i = 0; i < layoutData->items.size(); i++) {
         const QScriptItem *si = layoutData->items.constData() + i;
         int pos = si->position;
         int ilen = length(i);
-//          qDebug("item %d: from %d len %d", i, pos, ilen);
+        // qDebug("item %d: from %d len %d", i, pos, ilen);
         if (pos >= from + len)
             break;
         if (pos + ilen > from) {
@@ -470,10 +470,11 @@ QFixed QTextEngine::width(int from, int len) const
             QGlyphLayout glyphs = shapedGlyphs(si);
             unsigned short *logClusters = this->logClusters(si);
 
-//             fprintf(stderr, "  logclusters:");
-//             for (int k = 0; k < ilen; k++)
-//                 fprintf(stderr, " %d", logClusters[k]);
-//             fprintf(stderr, "\n");
+            // fprintf(stderr, "  logclusters:");
+            // for (int k = 0; k < ilen; k++)
+            //     fprintf(stderr, " %d", logClusters[k]);
+            // fprintf(stderr, "\n");
+
             // do the simple thing for now and give the first glyph in a cluster the full width, all other ones 0.
             int charFrom = from - pos;
             if (charFrom < 0)
@@ -492,13 +493,13 @@ QFixed QTextEngine::width(int from, int len) const
                     charEnd++;
                 glyphEnd = (charEnd == ilen) ? si->num_glyphs : logClusters[charEnd];
 
-//                 qDebug("char: start=%d end=%d / glyph: start = %d, end = %d", charFrom, charEnd, glyphStart, glyphEnd);
+                // qDebug("char: start=%d end=%d / glyph: start = %d, end = %d", charFrom, charEnd, glyphStart, glyphEnd);
                 for (int i = glyphStart; i < glyphEnd; i++)
                     w += glyphs.advances_x[i] * !glyphs.attributes[i].dontPrint;
             }
         }
     }
-//     qDebug("   --> w= %d ", w);
+    // qDebug("   --> w= %d ", w);
     return w;
 }
 
