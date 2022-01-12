@@ -235,7 +235,7 @@ void QFontPrivate::resolve(uint mask, const QFontPrivate *other)
     \link #fontmatching font matching algorithm\endlink by choosing a
     particular \l{QFont::StyleStrategy} with setStyleStrategy().
 
-    The font-matching algorithm has a lastResortFamily() and in cases
+    The font-matching algorithm has a lastResortFamily() in cases
     where a suitable match cannot be found.
 
     Every QFont has a key() which you can use, for example, as the key

@@ -241,7 +241,7 @@ QString QFontDatabase::styleString(const QFontInfo &fontInfo)
     If the font family is available from two or more foundries the
     foundry name is included in the family name; for example:
     "Helvetica [Adobe]" and "Helvetica [Cronyx]". When you specify a
-    family, you can either use "family [foundry]" format; for example:
+    family, you can use "family [foundry]" format; for example:
     "Helvetica [Cronyx]". If the family has a foundry it is always
     returned using the bracketed format, as is the case with the
     value returned by families().
