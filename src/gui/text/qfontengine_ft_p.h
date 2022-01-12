@@ -130,7 +130,6 @@ public:
     virtual bool stringToCMap(const QChar *str, int len, QGlyphLayout *glyphs, int *nglyphs,
                       QTextEngine::ShaperFlags flags) const;
 
-    virtual glyph_metrics_t boundingBox(const QGlyphLayout &glyphs) const;
     virtual glyph_metrics_t boundingBox(glyph_t glyph) const;
 
     virtual void recalcAdvances(QGlyphLayout *glyphs, QTextEngine::ShaperFlags flags) const;

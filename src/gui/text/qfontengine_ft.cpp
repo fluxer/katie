@@ -638,34 +638,6 @@ void QFontEngineFT::recalcAdvances(QGlyphLayout *glyphs, QTextEngine::ShaperFlag
     }
 }
 
-glyph_metrics_t QFontEngineFT::boundingBox(const QGlyphLayout &glyphs) const
-{
-    glyph_metrics_t overall;
-    // initialize with line height, we get the same behaviour on all platforms
-    overall.y = -ascent();
-    overall.height = ascent() + descent() + 1;
-
-    QFixed ymax = 0;
-    QFixed xmax = 0;
-    for (int i = 0; i < glyphs.numGlyphs; i++) {
-        QFontMetric* metric = getMetrics(glyphs.glyphs[i]);
-        Q_ASSERT(metric);
-
-        QFixed x = overall.xoff + glyphs.offsets[i].x - (-TRUNC(metric->left));
-        QFixed y = overall.yoff + glyphs.offsets[i].y - TRUNC(metric->top);
-        overall.x = qMin(overall.x, x);
-        overall.y = qMin(overall.y, y);
-        xmax = qMax(xmax, x + TRUNC(metric->right - metric->left));
-        ymax = qMax(ymax, y + TRUNC(metric->top - metric->bottom));
-        overall.xoff += qRound(TRUNC(metric->advancex));
-
-    }
-    overall.height = qMax(overall.height, ymax - overall.y);
-    overall.width = xmax - overall.x;
-
-    return overall;
-}
-
 glyph_metrics_t QFontEngineFT::boundingBox(glyph_t glyph) const
 {
     glyph_metrics_t overall;

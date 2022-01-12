@@ -494,68 +494,6 @@ QFixed QTextEngine::width(int from, int len) const
     return w;
 }
 
-glyph_metrics_t QTextEngine::boundingBox() const
-{
-    itemize();
-
-    const int len = layoutData->string.length();
-    glyph_metrics_t gm;
-
-    for (int i = 0; i < layoutData->items.size(); i++) {
-        const QScriptItem *si = layoutData->items.constData() + i;
-
-        int pos = si->position;
-        int ilen = length(i);
-        if (pos > len)
-            break;
-        if (pos + ilen > 0) {
-            if (!si->num_glyphs)
-                shape(i);
-
-            if (si->analysis.flags == QScriptAnalysis::Object) {
-                gm.width += si->width;
-                continue;
-            } else if (si->analysis.flags == QScriptAnalysis::Tab) {
-                gm.width += calculateTabWidth(i, gm.width);
-                continue;
-            }
-
-            unsigned short *logClusters = this->logClusters(si);
-            QGlyphLayout glyphs = shapedGlyphs(si);
-
-            // do the simple thing for now and give the first glyph in a cluster the full width, all other ones 0.
-            int charFrom = pos;
-            if (charFrom < 0)
-                charFrom = 0;
-            int glyphStart = logClusters[charFrom];
-            if (charFrom > 0 && logClusters[charFrom-1] == glyphStart)
-                while (charFrom < ilen && logClusters[charFrom] == glyphStart)
-                    charFrom++;
-            if (charFrom < ilen) {
-                QFontEngine *fe = fontEngine(*si);
-                glyphStart = logClusters[charFrom];
-                int charEnd = len - 1 - pos;
-                if (charEnd >= ilen)
-                    charEnd = ilen-1;
-                int glyphEnd = logClusters[charEnd];
-                while (charEnd < ilen && logClusters[charEnd] == glyphEnd)
-                    charEnd++;
-                glyphEnd = (charEnd == ilen) ? si->num_glyphs : logClusters[charEnd];
-                if (glyphStart <= glyphEnd ) {
-                    glyph_metrics_t m = fe->boundingBox(glyphs.mid(glyphStart, glyphEnd - glyphStart));
-                    gm.x = qMin(gm.x, m.x + gm.xoff);
-                    gm.y = qMin(gm.y, m.y + gm.yoff);
-                    gm.width = qMax(gm.width, m.width+gm.xoff);
-                    gm.height = qMax(gm.height, m.height+gm.yoff);
-                    gm.xoff += m.xoff;
-                    gm.yoff += m.yoff;
-                }
-            }
-        }
-    }
-    return gm;
-}
-
 QFont QTextEngine::font(const QScriptItem &si) const
 {
     QFont font = fnt;

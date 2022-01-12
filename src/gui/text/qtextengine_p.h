@@ -59,20 +59,18 @@ struct glyph_metrics_t
 {
     inline glyph_metrics_t()
         : x(100000),  y(100000) {}
-    inline glyph_metrics_t(QFixed _x, QFixed _y, QFixed _width, QFixed _height, QFixed _xoff, QFixed _yoff)
+    inline glyph_metrics_t(QFixed _x, QFixed _y, QFixed _width, QFixed _height, QFixed _xoff)
         : x(_x),
           y(_y),
           width(_width),
           height(_height),
-          xoff(_xoff),
-          yoff(_yoff)
+          xoff(_xoff)
         {}
     QFixed x;
     QFixed y;
     QFixed width;
     QFixed height;
     QFixed xoff;
-    QFixed yoff;
 
     inline bool isValid() const {return x != 100000 && y != 100000;}
 };
@@ -383,7 +381,6 @@ public:
     QFixed alignLine(const QScriptLine &line);
 
     QFixed width(int charFrom, int numChars) const;
-    glyph_metrics_t boundingBox() const;
 
     int length(int item) const {
         int from = layoutData->items[item].position;

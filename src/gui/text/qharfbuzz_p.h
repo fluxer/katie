@@ -381,7 +381,7 @@ typedef struct {
 typedef struct {
     HB_Fixed x, y;
     HB_Fixed width, height;
-    HB_Fixed xOffset, yOffset;
+    HB_Fixed xOffset;
 } HB_GlyphMetrics;
 
 typedef struct {

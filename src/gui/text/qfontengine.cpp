@@ -382,18 +382,9 @@ void QFontEngineBox::addOutlineToPath(qreal x, qreal y, const QGlyphLayout &glyp
     }
 }
 
-glyph_metrics_t QFontEngineBox::boundingBox(const QGlyphLayout &glyphs) const
-{
-    glyph_metrics_t overall;
-    overall.width = _size*glyphs.numGlyphs;
-    overall.height = _size;
-    overall.xoff = overall.width;
-    return overall;
-}
-
 glyph_metrics_t QFontEngineBox::boundingBox(glyph_t) const
 {
-    return glyph_metrics_t(0, -_size, _size, _size, _size, 0);
+    return glyph_metrics_t(0, -_size, _size, _size, _size);
 }
 
 QFixed QFontEngineBox::ascent() const

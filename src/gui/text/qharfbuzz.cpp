@@ -72,7 +72,6 @@ static void qHB_getGlyphMetrics(QFontEngine* fe, HB_Glyph glyph, HB_GlyphMetrics
     metrics->width = m.width.value();
     metrics->height = m.height.value();
     metrics->xOffset = m.xoff.value();
-    metrics->yOffset = m.yoff.value();
 }
 
 static HB_Fixed qHB_getGlyphAscent(QFontEngine* fe)
@@ -323,7 +322,7 @@ static inline void positionCluster(HB_ShaperItem *item, int gfrom,  int glast)
 
         lastCmb = cmb;
         item->offsets[gfrom+i].x = p.x - baseMetrics.xOffset;
-        item->offsets[gfrom+i].y = p.y - baseMetrics.yOffset;
+        item->offsets[gfrom+i].y = p.y;
         item->advances[gfrom+i] = 0;
     }
 }
