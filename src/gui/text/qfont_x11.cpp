@@ -19,26 +19,12 @@
 **
 ****************************************************************************/
 
-#define QT_FATAL_ASSERT
-
-#include "qplatformdefs.h"
-
 #include "qfont.h"
 #include "qapplication.h"
-#include "qfontinfo.h"
 #include "qfontdatabase.h"
-#include "qfontmetrics.h"
-#include "qpaintdevice.h"
-#include "qtextcodec.h"
-#include "qunicodetables_p.h"
 #include "qfontengine_p.h"
 #include "qfontengine_ft_p.h"
-#include "qt_x11_p.h"
 #include "qx11info_x11.h"
-
-#include <time.h>
-#include <stdlib.h>
-#include <ctype.h>
 
 QT_BEGIN_NAMESPACE
 
@@ -48,7 +34,7 @@ double qt_pixelSize(double pointSize, int dpi)
         return -1.;
     if (dpi == 75) // the stupid 75 dpi setting on X11
         dpi = 72;
-    return (pointSize * dpi) /72.;
+    return ((pointSize * dpi) / 72.0);
 }
 
 double qt_pointSize(double pixelSize, int dpi)
@@ -57,11 +43,7 @@ double qt_pointSize(double pixelSize, int dpi)
         return -1.;
     if (dpi == 75) // the stupid 75 dpi setting on X11
         dpi = 72;
-    return pixelSize * 72. / ((double) dpi);
-}
-
-void QFont::initialize()
-{
+    return (pixelSize * 72. / double(dpi));
 }
 
 /*!
@@ -104,70 +86,9 @@ FT_Face QFont::freetypeFace() const
     return 0;
 }
 
-QString QFont::lastResortFamily() const
+QString QFont::lastResortFamily()
 {
-    return QString::fromLatin1("Helvetica");
-}
-
-QString QFont::defaultFamily() const
-{
-    return QString::fromLatin1("Helvetica");
-}
-
-static const char* LastResortFontsTbl[] = {
-    "-*-helvetica-medium-r-*-*-*-120-*-*-*-*-*-*",
-    "-*-courier-medium-r-*-*-*-120-*-*-*-*-*-*",
-    "-*-times-medium-r-*-*-*-120-*-*-*-*-*-*",
-    "-*-lucida-medium-r-*-*-*-120-*-*-*-*-*-*",
-    "-*-helvetica-*-*-*-*-*-120-*-*-*-*-*-*",
-    "-*-courier-*-*-*-*-*-120-*-*-*-*-*-*",
-    "-*-times-*-*-*-*-*-120-*-*-*-*-*-*",
-    "-*-lucida-*-*-*-*-*-120-*-*-*-*-*-*",
-    "-*-helvetica-*-*-*-*-*-*-*-*-*-*-*-*",
-    "-*-courier-*-*-*-*-*-*-*-*-*-*-*-*",
-    "-*-times-*-*-*-*-*-*-*-*-*-*-*-*",
-    "-*-lucida-*-*-*-*-*-*-*-*-*-*-*-*",
-    "-*-fixed-*-*-*-*-*-*-*-*-*-*-*-*",
-    "6x13",
-    "7x13",
-    "8x13",
-    "9x15",
-    "fixed",
-};
-static const qint16 LastResortFontsTblSize = 18;
-
-/*
-  Returns a last resort raw font name for the font matching algorithm.
-  This is used if even the last resort family is not available. It
-  returns \e something, almost no matter what.  The current
-  implementation tries a wide variety of common fonts, returning the
-  first one it finds. The implementation may change at any time.
-*/
-QString QFont::lastResortFont() const
-{
-    static QString last;
-
-    // already found
-    if (!last.isNull())
-        return last;
-
-    for (qint16 i = 0; i < LastResortFontsTblSize; i++) {
-        int count;
-        char **fontNames = XListFonts(QX11Info::display(), LastResortFontsTbl[i], SHRT_MAX, &count);
-        if (fontNames) {
-            XFreeFontNames(fontNames);
-        }
-
-        if (count != 0) {
-            last = QString::fromLatin1(LastResortFontsTbl[i]);
-            return last;
-        }
-    }
-
-#if defined(CHECK_NULL)
-    qFatal("QFontPrivate::lastResortFont: Cannot find any reasonable font");
-#endif
-    return last;
+    return QString::fromLatin1("FreeSans");
 }
 
 QT_END_NAMESPACE

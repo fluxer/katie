@@ -1420,7 +1420,7 @@ void QLabelPrivate::ensureTextLayouted() const
         if (this->align & Qt::TextWordWrap)
             opt.setWrapMode(QTextOption::WordWrap);
         else
-            opt.setWrapMode(QTextOption::ManualWrap);
+            opt.setWrapMode(QTextOption::NoWrap);
 
         doc->setDefaultTextOption(opt);
 

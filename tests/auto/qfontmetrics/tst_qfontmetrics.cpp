@@ -166,8 +166,8 @@ void tst_QFontMetrics::elidedText_data()
     QTest::addColumn<QFont>("font");
     QTest::addColumn<QString>("text");
 
-    QTest::newRow("helvetica hello") << QFont("helvetica",10) << QString("hello") ;
-    QTest::newRow("helvetica hello &Bye") << QFont("helvetica",10) << QString("hello&Bye") ;
+    QTest::newRow("freesans hello") << QFont("freesans",10) << QString("hello") ;
+    QTest::newRow("freesans hello &Bye") << QFont("freesans",10) << QString("hello&Bye") ;
 }
 
 

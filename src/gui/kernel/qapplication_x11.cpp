@@ -1230,7 +1230,6 @@ void qt_init(QApplicationPrivate *priv, Display *display,
 
     // Misc. initialization
     QCursorData::initialize();
-    QFont::initialize();
 
     qApp->setObjectName(qApp->applicationName());
 
@@ -1256,7 +1255,7 @@ void qt_init(QApplicationPrivate *priv, Display *display,
 
     QApplicationPrivate::x11_apply_settings();
 
-    // be smart about the size of the default font. most X servers have helvetica
+    // be smart about the size of the default font. most X servers have font
     // 12 point available at 2 resolutions:
     //     75dpi (12 pixels) and 100dpi (17 pixels).
     // At 95 DPI, a 12 point font should be 16 pixels tall - in which case a 17
@@ -1268,8 +1267,7 @@ void qt_init(QApplicationPrivate *priv, Display *display,
 
     if (!QApplicationPrivate::sys_font) {
         // no font from settings, provide a fallback
-        QFont f(qt_x11Data->has_fontconfig ? QLatin1String("Sans Serif") : QLatin1String("Helvetica"),
-                ptsz);
+        QFont f(QFont::lastResortFamily(), ptsz);
         QApplicationPrivate::setSystemFont(f);
     }
 

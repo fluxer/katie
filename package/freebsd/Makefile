@@ -1,4 +1,4 @@
-# https://www.freebsd.org/doc/en_US.ISO8859-1/books/porters-handbook/
+# https://docs.freebsd.org/en/books/porters-handbook/
 
 PORTNAME = katie
 DISTVERSION = 4.12.0.d20201231
@@ -16,7 +16,8 @@ WRKSRC = ${WRKDIR}/katie-master
 USES = compiler:c++11-lang pkgconfig cmake ssl xorg desktop-file-utils
 USE_XORG = x11 xinerama xrandr xrender xfixes xcursor xext xpm sm ice
 USE_LDCONFIG = yes
-RUN_DEPENDS = xdg-open:devel/xdg-utils
+RUN_DEPENDS = xdg-open:devel/xdg-utils \
+	${LOCALBASE}/share/fonts/freefont-ttf/FreeSans.ttf:x11-fonts/freefont-ttf
 LIB_DEPENDS = libzstd.so:archivers/zstd libicuuc.so:devel/icu \
 	libicui18n.so:devel/icu libjansson.so:devel/jansson \
 	libpcre.so:devel/pcre libpng.so:graphics/png \

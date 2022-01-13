@@ -1123,6 +1123,9 @@ void QPainterPath::addText(const QPointF &point, const QFont &f, const QString &
                     // qDebug() << Q_FUNC_INFO << ucs4;
                     continue;
                 }
+                default: {
+                    break;
+                }
             }
 
             QGlyphLayoutArray<2> glyphs;
@@ -1148,6 +1151,21 @@ void QPainterPath::addText(const QPointF &point, const QFont &f, const QString &
         QVarLengthGlyphLayoutArray glyphs(nglyphs);
         engine->stringToCMap(text.unicode(), nglyphs, &glyphs, &nglyphs, shaperflags);
         engine->addOutlineToPath(point.x(), point.y(), glyphs, this);
+    }
+
+    const QFontMetricsF fontmetrics(f);
+    const qreal linewidth = fontmetrics.lineWidth();
+    const qreal textwidth = (fontmetrics.width('x') * text.size());
+#if 0
+    if (f.underline()) {
+        addRect(point.x(), point.y() + fontmetrics.underlinePos(), textwidth, linewidth);
+    }
+#endif
+    if (f.overline()) {
+        addRect(point.x(), point.y() - fontmetrics.overlinePos(), textwidth, linewidth);
+    }
+    if (f.strikeOut()) {
+        addRect(point.x(), point.y() - fontmetrics.strikeOutPos(), textwidth, linewidth);
     }
 }
 

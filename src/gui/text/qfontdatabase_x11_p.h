@@ -148,166 +148,166 @@ QFontDef qt_FcPatternToQFontDef(FcPattern *pattern, const QFontDef &request)
 // values are from likelySubtags.xml distributed with Unicode CLDR data
 static const char *specialLanguagesTbl[] = {
     "en", // Common
-    "la", // Latin
-    "el", // Greek
-    "ru", // Cyrillic
-    "hy", // Armenian
-    "he", // Hebrew
+    "ff-gn", // Adlam
+    "aho-in", // Ahom
+    "hlu-tr", // AnatolianHieroglyphs
     "ar", // Arabic
-    "syr", // Syriac
-    "div", // Thaana
-    "hi", // Devanagari
+    "hy", // Armenian
+    "ae-ir", // Avestan
+    "ban-id", // Balinese
+    "bax-cm", // Bamum
+    "bsq-lr", // BassaVah
+    "bbc-id", // Batak
     "bn", // Bengali
-    "pa", // Gurmukhi
-    "gu", // Gujarati
-    "or", // Oriya
-    "ta", // Tamil
-    "te", // Telugu
-    "kn", // Kannada
-    "ml", // Malayalam
-    "si", // Sinhala
-    "th", // Thai
-    "lo", // Lao
-    "bo", // Tibetan
-    "my", // Myanmar
-    "ka", // Georgian
-    "ko", // Hangul
-    0, // Ethiopic
-    "chr-us", // Cherokee
-    "en-ca", // CanadianAboriginal
-    "sga-ie", // Ogham
-    "non-se", // Runic
-    "km", // Khmer
-    "mn", // Mongolian
-    "ja-jp", // Hiragana
-    "ja-jp", // Katakana
+    "sa-in", // Bhaiksuki
     "zh-tw", // Bopomofo
-    "zh-tw", // Han
-    "yi", // Yi
-    "ett-it", // OldItalic
-    "got-ua", // Gothic
-    0, // Deseret
-    0, // Inherited
-    "tl-ph", // Tagalog
-    "hnn-ph", // Hanunoo
-    "bku-ph", // Buhid
-    "tbw-ph", // Tagbanwa
-    "lif", // Limbu
-    "tdd-cn", // TaiLe
-    "lab-gr", // LinearB
-    "uga-sy", // Ugaritic
-    "en-gb", // Shavian
-    "so-so", // Osmanya
-    "grc-cy", // Cypriot
+    "pka-in", // Brahmi
     "fr-fr", // Braille
     "bug-id", // Buginese
-    "cop-eg", // Coptic
-    "khb-cn", // NewTaiLue
-    "cu-bg", // Glagolitic
-    0, // Tifinagh
-    "syl-bd", // SylotiNagri
-    "peo-ir", // OldPersian
-    "pra-pk", // Kharoshthi
-    "ban-id", // Balinese
-    "akk-iq", // Cuneiform
-    "phn-lb", // Phoenician
-    "lzh-cn", // PhagsPa
-    "nqo-gn", // Nko
-    "su-id", // Sundanese
-    "lep-in", // Lepcha
-    "sat-in", // OlChiki
-    "vai-lr", // Vai
-    "saz-in", // Saurashtra
-    "eky-mm", // KayahLi
-    "rej-id", // Rejang
-    "xlc-tr", // Lycian
+    "bku-ph", // Buhid
+    "en-ca", // CanadianAboriginal
     "xcr-tr", // Carian
-    "xld-tr", // Lydian
-    "cjm-vn", // Cham
-    0, // TaiTham
-    "blt-vn", // TaiViet
-    "ae-ir", // Avestan
-    "ar-eg", // EgyptianHieroglyphs
-    "smp-il", // Samaritan
-    "lis-cn", // Lisu
-    "bax-cm", // Bamum
-    "jv-id", // Javanese
-    "mni-in", // MeeteiMayek
-    "arc-ir", // ImperialAramaic
-    "ar", // OldSouthArabian
-    "xpr-ir", // InscriptionalParthian
-    "pal-ir", // InscriptionalPahlavi
-    "otk-mn", // OldTurkic
-    "bho-in", // Kaithi
-    "bbc-id", // Batak
-    "pka-in", // Brahmi
-    "myz-ir", // Mandaic
+    "sq", // CaucasianAlbanian
     "ccp-bd", // Chakma
+    "cjm-vn", // Cham
+    "chr-us", // Cherokee
+    "xco-uz", // Chorasmian
+    "cop-eg", // Coptic
+    "akk-iq", // Cuneiform
+    "grc-cy", // Cypriot
+    0, // CyproMinoan
+    "ru", // Cyrillic
+    0, // Deseret
+    "hi", // Devanagari
+    "dv-mv", // DivesAkuru
+    "doi-in", // Dogra
+    "fr-fr", // Duployan
+    "ar-eg", // EgyptianHieroglyphs
+    "sq-al", // Elbasan
+    "arc-ir", // Elymaic
+    0, // Ethiopic
+    "ka", // Georgian
+    "cu-bg", // Glagolitic
+    "got-ua", // Gothic
+    "sa-in", // Grantha
+    "el", // Greek
+    "gu", // Gujarati
+    "wsg-in", // GunjalaGondi
+    "pa", // Gurmukhi
+    "zh-tw", // Han
+    "ko", // Hangul
+    "rhg-mm", // HanifiRohingya
+    "hnn-ph", // Hanunoo
+    "mis-iq", // Hatran
+    "he", // Hebrew
+    "ja-jp", // Hiragana
+    "arc-ir", // ImperialAramaic
+    0, // Inherited
+    "pal-ir", // InscriptionalPahlavi
+    "xpr-ir", // InscriptionalParthian
+    "jv-id", // Javanese
+    "bho-in", // Kaithi
+    "kn", // Kannada
+    "ja-jp", // Katakana
+    "eky-mm", // KayahLi
+    "pra-pk", // Kharoshthi
+    "zkt-cn", // KhitanSmallScript
+    "km", // Khmer
+    "sd-in", // Khojki
+    "sd-in", // Khudawadi
+    "lo", // Lao
+    "la", // Latin
+    "lep-in", // Lepcha
+    "lif", // Limbu
+    "lab-gr", // LinearA
+    "lab-gr", // LinearB
+    "lis-cn", // Lisu
+    "xlc-tr", // Lycian
+    "xld-tr", // Lydian
+    "hi-in", // Mahajani
+    "mak-id", // Makasar
+    "ml", // Malayalam
+    "myz-ir", // Mandaic
+    "xmn-cn", // Manichaean
+    "bo-cn", // Marchen
+    "esg-in", // MasaramGondi
+    "mis-ng", // Medefaidrin
+    "mni-in", // MeeteiMayek
+    0, // MendeKikakui
     "xmr-sd", // MeroiticCursive
     "xmr-sd", // MeroiticHieroglyphs
     "hmd-cn", // Miao
-    "sa-in", // Sharada
-    "srb-in", // SoraSompeng
-    "doi-in", // Takri
-    "sq", // CaucasianAlbanian
-    "bsq-lr", // BassaVah
-    "fr-fr", // Duployan
-    "sq-al", // Elbasan
-    "sa-in", // Grantha
-    "hnj-la", // PahawhHmong
-    "sd-in", // Khojki
-    "lab-gr", // LinearA
-    "hi-in", // Mahajani
-    "xmn-cn", // Manichaean
-    0, // MendeKikakui
     "mr-in", // Modi
+    "mn", // Mongolian
     "mro-bd", // Mro
-    "ar", // OldNorthArabian
+    "skr-pk", // Multani
+    "my", // Myanmar
     "arc-jo", // Nabataean
+    "sa-in", // Nandinagari
+    "new-np", // Newa
+    "khb-cn", // NewTaiLue
+    "nqo-gn", // Nko
+    "zhx-cn", // Nushu
+    "mww-us", // NyiakengPuachueHmong
+    "sga-ie", // Ogham
+    "sat-in", // OlChiki
+    "hu-hu", // OldHungarian
+    "ett-it", // OldItalic
+    "ar", // OldNorthArabian
+    "kv-ru", // OldPermic
+    "peo-ir", // OldPersian
+    "sog-uz", // OldSogdian
+    "ar", // OldSouthArabian
+    "otk-mn", // OldTurkic
+    "ug-cn", // OldUyghur
+    "or", // Oriya
+    "osa-us", // Osage
+    "so-so", // Osmanya
+    "hnj-la", // PahawhHmong
     "arc-sy", // Palmyrene
     "ctd-mm", // PauCinHau
-    "kv-ru", // OldPermic
+    "lzh-cn", // PhagsPa
+    "phn-lb", // Phoenician
     "pal-cn", // PsalterPahlavi
+    "rej-id", // Rejang
+    "non-se", // Runic
+    "smp-il", // Samaritan
+    "saz-in", // Saurashtra
+    "sa-in", // Sharada
+    "en-gb", // Shavian
     "sa-in", // Siddham
-    "sd-in", // Khudawadi
-    "mai-in", // Tirhuta
-    0, // WarangCiti
-    "aho-in", // Ahom
-    "hlu-tr", // AnatolianHieroglyphs
-    "mis-iq", // Hatran
-    "skr-pk", // Multani
-    "hu-hu", // OldHungarian
     "ase-us", // SignWriting
-    "ff-gn", // Adlam
-    "sa-in", // Bhaiksuki
-    "bo-cn", // Marchen
-    "new-np", // Newa
-    "osa-us", // Osage
-    "txg-cn", // Tangut
-    "esg-in", // MasaramGondi
-    "zhx-cn", // Nushu
-    "cmg-mn", // Soyombo
-    "cmg-mn", // ZanabazarSquare
-    "doi-in", // Dogra
-    "wsg-in", // GunjalaGondi
-    "mak-id", // Makasar
-    "mis-ng", // Medefaidrin
-    "rhg-mm", // HanifiRohingya
+    "si", // Sinhala
     "sog-uz", // Sogdian
-    "sog-uz", // OldSogdian
-    "arc-ir", // Elymaic
-    "sa-in", // Nandinagari
-    "mww-us", // NyiakengPuachueHmong
-    "npp-in", // Wancho
-    "xco-uz", // Chorasmian
-    "dv-mv", // DivesAkuru
-    "zkt-cn", // KhitanSmallScript
-    "ku-ge", // Yezidi
-    0, // CyproMinoan
-    "ug-cn", // OldUyghur
+    "srb-in", // SoraSompeng
+    "cmg-mn", // Soyombo
+    "su-id", // Sundanese
+    "syl-bd", // SylotiNagri
+    "syr", // Syriac
+    "tl-ph", // Tagalog
+    "tbw-ph", // Tagbanwa
+    "tdd-cn", // TaiLe
+    0, // TaiTham
+    "blt-vn", // TaiViet
+    "doi-in", // Takri
+    "ta", // Tamil
     "ntm-in", // Tangsa
+    "txg-cn", // Tangut
+    "te", // Telugu
+    "div", // Thaana
+    "th", // Thai
+    "bo", // Tibetan
+    0, // Tifinagh
+    "mai-in", // Tirhuta
     "txo-in", // Toto
+    "uga-sy", // Ugaritic
+    "vai-lr", // Vai
     "sq-al", // Vithkuqi
+    "npp-in", // Wancho
+    0, // WarangCiti
+    "ku-ge", // Yezidi
+    "yi", // Yi
+    "cmg-mn", // ZanabazarSquare
 };
 enum { SpecialLanguageCount = sizeof(specialLanguagesTbl) / sizeof(const char *) };
 
@@ -603,15 +603,15 @@ static FcPattern *getFcPattern(const QFontPrivate *fp, QUnicodeTables::Script sc
     FcConfigSubstitute(0, pattern, FcMatchPattern);
     FcDefaultSubstitute(pattern);
 
-    // add the default family
+    // add the application instance family
     QString defaultFamily = QApplication::font().family();
     QByteArray cs = defaultFamily.toUtf8();
     value.u.s = (const FcChar8 *)cs.data();
     FcPatternAddWeak(pattern, FC_FAMILY, value, FcTrue);
 
-    // add QFont::defaultFamily() to the list, for compatibility with
+    // add QFont::lastResortFamily() to the list, for compatibility with
     // previous versions
-    defaultFamily = QApplication::font().defaultFamily();
+    defaultFamily = QFont::lastResortFamily();
     cs = defaultFamily.toUtf8();
     value.u.s = (const FcChar8 *)cs.data();
     FcPatternAddWeak(pattern, FC_FAMILY, value, FcTrue);
@@ -762,38 +762,6 @@ QFontEngine* QFontDatabase::load(const QFontPrivate *d, int script)
     }
     QFontCache::instance()->insertEngine(key, fe);
     return fe;
-}
-
-bool QFontDatabase::supportsThreadedFontRendering()
-{
-#if defined(QT_NO_FONTCONFIG)
-    return false;
-#else
-    return qt_x11Data->has_fontconfig;
-#endif
-}
-
-QString QFontDatabase::resolveFontFamilyAlias(const QString &family)
-{
-#if defined(QT_NO_FONTCONFIG)
-    return family;
-#else
-    FcPattern *pattern = FcPatternCreate();
-    if (!pattern)
-        return family;
-
-    QByteArray cs = family.toUtf8();
-    FcPatternAddString(pattern, FC_FAMILY, (const FcChar8 *) cs.constData());
-    FcConfigSubstitute(0, pattern, FcMatchPattern);
-    FcDefaultSubstitute(pattern);
-
-    FcChar8 *familyAfterSubstitution;
-    FcPatternGetString(pattern, FC_FAMILY, 0, &familyAfterSubstitution);
-    QString resolved = QString::fromUtf8((const char *) familyAfterSubstitution);
-    FcPatternDestroy(pattern);
-
-    return resolved;
-#endif
 }
 
 QT_END_NAMESPACE

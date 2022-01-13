@@ -25,11 +25,6 @@
 
 QT_BEGIN_NAMESPACE
 
-struct QTextOptionPrivate
-{
-    QList<QTextOption::Tab> tabStops;
-};
-
 /*!
     Constructs a text option with default properties for text.
     The text alignment property is set to Qt::AlignLeft. The
@@ -42,8 +37,7 @@ QTextOption::QTextOption()
     align(Qt::AlignLeft),
     direction(Qt::LayoutDirectionAuto),
     design(false),
-    tab(-1),
-    d(0)
+    tab(-1)
 {
 }
 
@@ -58,8 +52,7 @@ QTextOption::QTextOption(Qt::Alignment alignment)
     align(alignment),
     direction(QApplication::layoutDirection()),
     design(false),
-    tab(-1),
-    d(0)
+    tab(-1)
 {
 }
 
@@ -68,7 +61,6 @@ QTextOption::QTextOption(Qt::Alignment alignment)
 */
 QTextOption::~QTextOption()
 {
-    delete d;
 }
 
 /*!
@@ -82,11 +74,8 @@ QTextOption::QTextOption(const QTextOption &o)
     align(o.align),
     direction(o.direction),
     design(o.design),
-    tab(o.tab),
-    d(0)
+    tab(o.tab)
 {
-    if (o.d)
-        d = new QTextOptionPrivate(*o.d);
 }
 
 /*!
@@ -100,12 +89,6 @@ QTextOption &QTextOption::operator=(const QTextOption &o)
     if (this == &o)
         return *this;
 
-    QTextOptionPrivate* dNew = 0;
-    if (o.d)
-        dNew = new QTextOptionPrivate(*o.d);
-    delete d;
-    d = dNew;
-
     wordwrap = o.wordwrap;
     fflags = o.fflags;
     align = o.align;
@@ -113,64 +96,6 @@ QTextOption &QTextOption::operator=(const QTextOption &o)
     design = o.design;
     tab = o.tab;
     return *this;
-}
-
-/*!
-    Sets the tab positions for the text layout to those specified by
-    \a tabStops.
-
-    \sa tabArray(), setTabStop(), setTabs()
-*/
-void QTextOption::setTabArray(const QList<qreal> &tabStops)
-{
-    if (!d)
-        d = new QTextOptionPrivate;
-    QList<QTextOption::Tab> tabs;
-    QTextOption::Tab tab;
-    foreach (qreal pos, tabStops) {
-        tab.position = pos;
-        tabs.append(tab);
-    }
-    d->tabStops = tabs;
-}
-
-/*!
-    \since 4.4
-    Sets the tab positions for the text layout to those specified by
-    \a tabStops.
-
-    \sa tabStops()
-*/
-void QTextOption::setTabs(const QList<QTextOption::Tab> &tabStops)
-{
-    if (!d)
-        d = new QTextOptionPrivate;
-    d->tabStops = tabStops;
-}
-
-/*!
-    Returns a list of tab positions defined for the text layout.
-
-    \sa setTabArray(), tabStop()
-*/
-QList<qreal> QTextOption::tabArray() const
-{
-    if (!d)
-        return QList<qreal>();
-
-    QList<qreal> answer;
-    foreach(const QTextOption::Tab tab, d->tabStops) {
-        answer.append(tab.position);
-    }
-    return answer;
-}
-
-
-QList<QTextOption::Tab> QTextOption::tabs() const
-{
-    if (!d)
-        return QList<QTextOption::Tab>();
-    return d->tabStops;
 }
 
 /*!
@@ -197,7 +122,6 @@ QList<QTextOption::Tab> QTextOption::tabs() const
 
     \value NoWrap       Text is not wrapped at all.
     \value WordWrap     Text is wrapped at word boundaries.
-    \value ManualWrap   Same as QTextOption::NoWrap
     \value WrapAnywhere Text can be wrapped at any point on a line, even if
                         it occurs in the middle of a word.
     \value WrapAtWordBoundaryOrAnywhere If possible, wrapping occurs at a word
@@ -277,10 +201,6 @@ QList<QTextOption::Tab> QTextOption::tabs() const
   \value IncludeTrailingSpaces When this option is set, QTextLine::naturalTextWidth() and naturalTextRect() will
                                return a value that includes the width of trailing spaces in the text; otherwise
                                this width is excluded.
-  \value ShowTabsAndSpaces Visualize spaces with little dots, and tabs with little arrows.
-  \value ShowLineAndParagraphSeparators Visualize line and paragraph separators with appropriate symbol characters.
-  \value AddSpaceForLineAndParagraphSeparators While determining the line-break positions take into account the
-            space added for drawing a separator character.
   \value SuppressColors Suppress all color changes in the character formats (except the main selection).
 */
 
@@ -306,7 +226,7 @@ QList<QTextOption::Tab> QTextOption::tabs() const
   Returns the distance in device units between tab stops.
   Convenient function for the above method
 
-  \sa setTabStop(), tabArray(), setTabs(), tabs()
+  \sa setTabStop()
 */
 
 /*!
@@ -315,95 +235,8 @@ QList<QTextOption::Tab> QTextOption::tabs() const
   Sets the default distance in device units between tab stops to the value specified
   by \a tabStop.
 
-  \sa tabStop(), setTabArray(), setTabs(), tabs()
+  \sa tabStop()
 */
-
-/*!
-    \enum QTextOption::TabType
-    \since 4.4
-
-    This enum holds the different types of tabulator
-
-    \value LeftTab      A left-tab
-    \value RightTab     A right-tab
-    \value CenterTab    A centered-tab
-    \value DelimiterTab A tab stopping at a certain delimiter-character
-*/
-
-/*!
-    \class QTextOption::Tab
-    \since 4.4
-    Each tab definition is represented by this struct.
-*/
-
-/*!
-    \variable Tab::position
-    Distance from the start of the paragraph.
-    The position of a tab is from the start of the paragraph which implies that when
-    the alignment of the paragraph is set to centered, the tab is interpreted to be
-    moved the same distance as the left ege of the paragraph does.
-    In case the paragraph is set to have a layoutDirection() RightToLeft the position
-    is interpreted to be from the right side of the paragraph with higher numbers moving
-    the tab to the left.
-*/
-
-/*!
-    \variable Tab::type
-    Determine which type is used.
-    In a paragraph that has layoutDirection() RightToLeft the type LeftTab will
-    be interpreted to be a RightTab and vice versa.
-*/
-
-/*!
-    \variable Tab::delimiter
-    If type is DelimitorTab; tab until this char is found in the text.
-*/
-
-/*!
-    \fn Tab::Tab()
-    Creates a default left tab with position 80.
-*/
-
-/*!
-    \fn Tab::Tab(qreal pos, TabType tabType, QChar delim = QChar())
-    
-    Creates a tab with the given position, tab type, and delimiter
-    (\a pos, \a tabType, \a delim).
-
-    \note \a delim is only used when \a tabType is DelimiterTab.
-
-    \since 4.7
-*/
-
-/*!
-    \fn bool Tab::operator==(const Tab &other) const
-
-    Returns true if tab \a other is equal to this tab;
-    otherwise returns false.
-*/
-
-/*!
-    \fn bool Tab::operator!=(const Tab &other) const
-
-    Returns true if tab \a other is not equal to this tab;
-    otherwise returns false.
-*/
-
-/*!
-  \fn void setTabs(QList<Tab> tabStops)
-  Set the Tab properties to \a tabStops.
-
-  \sa tabStop(), tabs()
-*/
-
-/*!
-  \since 4.4
-  \fn QList<QTextOption::Tab> QTextOption::tabs() const
-  Returns a list of tab positions defined for the text layout.
-
-  \sa tabStop(), setTabs(), setTabStop()
-*/
-
 
 QT_END_NAMESPACE
 

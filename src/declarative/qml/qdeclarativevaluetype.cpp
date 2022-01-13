@@ -953,25 +953,6 @@ void QDeclarativeFontValueType::setPixelSize(int size)
     }
 }
 
-qreal QDeclarativeFontValueType::letterSpacing() const
-{
-    return font.letterSpacing();
-}
-
-void QDeclarativeFontValueType::setLetterSpacing(qreal size)
-{
-    font.setLetterSpacing(QFont::AbsoluteSpacing, size);
-}
-
-qreal QDeclarativeFontValueType::wordSpacing() const
-{
-    return font.wordSpacing();
-}
-
-void QDeclarativeFontValueType::setWordSpacing(qreal size)
-{
-    font.setWordSpacing(size);
-}
-
 QT_END_NAMESPACE
+
 #include "moc_qdeclarativevaluetype_p.h"

@@ -19,18 +19,15 @@
 **
 ****************************************************************************/
 
-#include "qvariant.h"
 #include "qfile.h"
 #include "qabstractfileengine.h"
 #include "qmath.h"
 #include "qfontengine_ft_p.h"
-#include "qguicommon_p.h"
 #include "qcorecommon_p.h"
 
 #include <ft2build.h>
 #include FT_FREETYPE_H
 #include FT_OUTLINE_H
-#include FT_SYNTHESIS_H
 #include FT_TRUETYPE_TABLES_H
 #include FT_TYPE1_TABLES_H
 #include FT_GLYPH_H
@@ -212,8 +209,6 @@ QFontEngineFT::QFontEngineFT(const QFontDef &fd, FcPattern *pattern)
     : default_load_flags(FT_LOAD_IGNORE_GLOBAL_ADVANCE_WIDTH | FT_LOAD_NO_BITMAP),
     default_hint_style(HintNone),
     freetype(nullptr),
-    embolden(false),
-    oblique(false),
     xsize(0),
     ysize(0),
     line_thickness(QFixed::fromFixed(1)),
@@ -251,8 +246,6 @@ QFontEngineFT::QFontEngineFT(const QFontDef &fd)
     : default_load_flags(FT_LOAD_IGNORE_GLOBAL_ADVANCE_WIDTH | FT_LOAD_NO_BITMAP),
     default_hint_style(HintNone),
     freetype(nullptr),
-    embolden(false),
-    oblique(false),
     xsize(0),
     ysize(0),
     line_thickness(QFixed::fromFixed(1)),
@@ -282,14 +275,6 @@ void QFontEngineFT::init()
 
     setFace(QFontEngineFT::Scaled);
     FT_Face face = getFace();
-    // fake italic/oblique
-    if ((fontDef.style != QFont::StyleNormal) && !(face->style_flags & FT_STYLE_FLAG_ITALIC)) {
-        oblique = true;
-    }
-    // fake bold
-    if ((fontDef.weight == QFont::Bold) && !(face->style_flags & FT_STYLE_FLAG_BOLD) && !FT_IS_FIXED_WIDTH(face)) {
-        embolden = true;
-    }
     // underline metrics
     line_thickness = QFixed::fromFixed(FT_MulFix(face->underline_thickness, face->size->metrics.y_scale));
     underline_position = QFixed::fromFixed(-FT_MulFix(face->underline_position, face->size->metrics.y_scale));
@@ -347,26 +332,15 @@ bool QFontEngineFT::loadGlyph(glyph_t glyph, int load_flags) const
 {
     FT_Face face = freetype->face;
     FT_Error err = FT_Load_Glyph(face, glyph, load_flags);
-    if (err == FT_Err_Too_Few_Arguments) {
-        // this is an error in the bytecode interpreter, just try to run without it
-        load_flags |= FT_LOAD_FORCE_AUTOHINT;
-        err = FT_Load_Glyph(face, glyph, load_flags);
+    if (Q_UNLIKELY(err != FT_Err_Ok)) {
+        qWarning("load glyph failed err=%x face=%p, glyph=%d", err, face, glyph);
+        return false;
     }
 
     FT_GlyphSlot slot = face->glyph;
     if (Q_UNLIKELY(slot->format != FT_GLYPH_FORMAT_OUTLINE)) {
         qWarning("non-outline format is not supported format=%d face=%p, glyph=%d", slot->format, face, glyph);
         return false;
-    } else if (Q_UNLIKELY(err != FT_Err_Ok)) {
-        qWarning("load glyph failed err=%x face=%p, glyph=%d", err, face, glyph);
-        return false;
-    }
-
-    if (embolden) {
-        FT_GlyphSlot_Embolden(slot);
-    }
-    if (oblique) {
-        FT_GlyphSlot_Oblique(slot);
     }
 
     return true;
@@ -413,11 +387,6 @@ QFontEngine::Properties QFontEngineFT::properties() const
     return freetype->properties();
 }
 
-QFixed QFontEngineFT::emSquareSize() const
-{
-    return freetype->face->units_per_EM;
-}
-
 bool QFontEngineFT::getSfntTableData(uint tag, uchar *buffer, uint *length) const
 {
     bool result = false;
@@ -434,12 +403,6 @@ bool QFontEngineFT::getSfntTableData(uint tag, uchar *buffer, uint *length) cons
 int QFontEngineFT::synthesized() const
 {
     int result = 0;
-    if (oblique) {
-        result = SynthesizedItalic;
-    }
-    if (embolden) {
-        result |= SynthesizedBold;
-    }
     if (fontDef.stretch != 100) {
         result |= SynthesizedStretch;
     }
@@ -673,34 +636,6 @@ void QFontEngineFT::recalcAdvances(QGlyphLayout *glyphs, QTextEngine::ShaperFlag
             glyphs->advances_x[i] = glyphs->advances_x[i].round();
         glyphs->advances_y[i] = 0;
     }
-}
-
-glyph_metrics_t QFontEngineFT::boundingBox(const QGlyphLayout &glyphs) const
-{
-    glyph_metrics_t overall;
-    // initialize with line height, we get the same behaviour on all platforms
-    overall.y = -ascent();
-    overall.height = ascent() + descent() + 1;
-
-    QFixed ymax = 0;
-    QFixed xmax = 0;
-    for (int i = 0; i < glyphs.numGlyphs; i++) {
-        QFontMetric* metric = getMetrics(glyphs.glyphs[i]);
-        Q_ASSERT(metric);
-
-        QFixed x = overall.xoff + glyphs.offsets[i].x - (-TRUNC(metric->left));
-        QFixed y = overall.yoff + glyphs.offsets[i].y - TRUNC(metric->top);
-        overall.x = qMin(overall.x, x);
-        overall.y = qMin(overall.y, y);
-        xmax = qMax(xmax, x + TRUNC(metric->right - metric->left));
-        ymax = qMax(ymax, y + TRUNC(metric->top - metric->bottom));
-        overall.xoff += qRound(TRUNC(metric->advancex));
-
-    }
-    overall.height = qMax(overall.height, ymax - overall.y);
-    overall.width = xmax - overall.x;
-
-    return overall;
 }
 
 glyph_metrics_t QFontEngineFT::boundingBox(glyph_t glyph) const

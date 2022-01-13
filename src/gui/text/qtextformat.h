@@ -137,7 +137,6 @@ public:
         BlockLeftMargin = 0x1032,
         BlockRightMargin = 0x1033,
         TextIndent = 0x1034,
-        TabPositions = 0x1035,
         BlockIndent = 0x1040,
         LineHeight = 0x1048,
         LineHeightType = 0x1049,
@@ -146,11 +145,9 @@ public:
 
         // character properties
         FirstFontProperty = 0x1FE0,
-        FontLetterSpacing = FirstFontProperty,
-        FontWordSpacing = 0x1FE1,
-        FontStyleStrategy = 0x1FE2,
-        FontKerning = 0x1FE3,
-        FontHintingPreference = 0x1FE4,
+        FontStyleStrategy = FirstFontProperty,
+        FontKerning = 0x1FE1,
+        FontHintingPreference = 0x1FE2,
         FontFamily = 0x2000,
         FontPointSize = 0x2001,
         FontSizeAdjustment = 0x2002,
@@ -389,14 +386,6 @@ public:
     { setProperty(FontItalic, italic); }
     inline bool fontItalic() const
     { return boolProperty(FontItalic); }
-    inline void setFontLetterSpacing(qreal spacing)
-    { setProperty(FontLetterSpacing, spacing); }
-    inline qreal fontLetterSpacing() const
-    { return doubleProperty(FontLetterSpacing); }
-    inline void setFontWordSpacing(qreal spacing)
-    { setProperty(FontWordSpacing, spacing); }
-    inline qreal fontWordSpacing() const
-    { return doubleProperty(FontWordSpacing); }
 
     inline void setFontUnderline(bool underline)
     { setProperty(TextUnderlineStyle, underline ? SingleUnderline : NoUnderline); }
@@ -572,9 +561,6 @@ public:
     { setProperty(PageBreakPolicy, int(flags)); }
     inline PageBreakFlags pageBreakPolicy() const
     { return PageBreakFlags(intProperty(PageBreakPolicy)); }
-
-    void setTabPositions(const QList<QTextOption::Tab> &tabs);
-    QList<QTextOption::Tab> tabPositions() const;
 
 protected:
     explicit QTextBlockFormat(const QTextFormat &fmt);

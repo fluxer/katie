@@ -15,7 +15,7 @@ Package: katie-runtime
 Architecture: amd64 arm64 armel armhf i386 mips mips64el mipsel ppc64el s390x hurd-i386
 Section: x11
 Depends: ${shlibs:Depends}, ${misc:Depends}, xdg-utils
-Recommends: xserver-xorg-core
+Recommends: xserver-xorg-core, fonts-freefont-ttf
 Description: C++ toolkit derived from the Qt 4.8 framework
  Katie is continuation of the Qt4 C++ toolkit with the goal to keep it alive,
  clean it up, fix some bugs and backport some features from Qt5. It is based

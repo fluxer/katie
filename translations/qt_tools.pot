@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-01-02 19:57+0200\n"
+"POT-Creation-Date: 2022-01-10 12:09+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -25,98 +25,85 @@ msgstr ""
 msgctxt "MainWindow"
 msgid ""
 "<p><b><font size+=2>Appearance</font></b></p><hr><p>Use this tab to "
-"customize the appearance of your Qt applications.</p><p>You can select the "
-"default GUI Style from the drop down list and customize the colors.</"
+"customize the appearance of your Katie applications.</p><p>You can select "
+"the default GUI Style from the drop down list and customize the colors.</"
 "p><p>Any GUI Style plugins in your plugin path will automatically be added "
-"to the list of built-in Qt styles. (See the Library Paths tab for "
+"to the list of built-in Katie styles. (See the Library Paths tab for "
 "information on adding new plugin paths.)</p><p>When you choose 3-D Effects "
-"and Window Background colors, the Qt Configuration program will "
+"and Window Background colors, the Katie Configuration program will "
 "automatically generate a palette for you. To customize colors further, press "
-"the Tune Palette button to open the advanced palette editor.<p>The Preview "
-"Window shows what the selected Style and colors look like."
+"the Tune Palette button to open the advanced palette editor.</p><p>The "
+"Preview Window shows what the selected Style and colors look like.</p>"
 msgstr ""
 
-#: src/tools/qtconfig/mainwindow.cpp:72
+#: src/tools/qtconfig/mainwindow.cpp:73
 msgctxt "MainWindow"
 msgid ""
 "<p><b><font size+=2>Fonts</font></b></p><hr><p>Use this tab to select the "
-"default font for your Qt applications. The selected font is shown (initially "
-"as 'Sample Text') in the line edit below the Family, Style and Point Size "
-"drop down lists.</p>"
+"default font for your Katie applications. The selected font is shown "
+"(initially as 'Sample Text') in the line edit below the Family, Style and "
+"Point Size drop down lists.</p><p>You can specify if Katie should try to "
+"embed fonts into its generated output when printing. If you enable font "
+"embedding, the resulting postscript will be more portable and will more "
+"accurately reflect the visual output on the screen; however the resulting "
+"postscript file size will be bigger.</p>"
 msgstr ""
 
-#: src/tools/qtconfig/mainwindow.cpp:80
+#: src/tools/qtconfig/mainwindow.cpp:86
 msgctxt "MainWindow"
 msgid ""
 "<p><b><font size+=2>Interface</font></b></p><hr><p>Use this tab to customize "
-"the feel of your Qt applications.</p><p>If the Resolve Symlinks checkbox is "
-"checked Qt will follow symlinks when handling URLs. For example, in the file "
-"dialog, if this setting is turned on and /usr/tmp is a symlink to /var/tmp, "
-"entering the /usr/tmp directory will cause the file dialog to change to /var/"
-"tmp.  With this setting turned off, symlinks are not resolved or followed.</"
-"p><p>The Global Strut setting is useful for people who require a minimum "
-"size for all widgets (e.g. when using a touch panel or for users who are "
-"visually impaired).  Leaving the Global Strut width and height at 0 will "
-"disable the Global Strut feature."
+"the feel of your Katie applications.</p><p>If the Resolve Symlinks checkbox "
+"is checked Katie will follow symlinks when handling URLs. For example, in "
+"the file dialog, if this setting is turned on and /usr/tmp is a symlink to /"
+"var/tmp, entering the /usr/tmp directory will cause the file dialog to "
+"change to /var/tmp.  With this setting turned off, symlinks are not resolved "
+"or followed.</p><p>The Global Strut setting is useful for people who require "
+"a minimum size for all widgets (e.g. when using a touch panel or for users "
+"who are visually impaired).  Leaving the Global Strut width and height at 0 "
+"will disable the Global Strut feature.</p>"
 msgstr ""
 
-#: src/tools/qtconfig/mainwindow.cpp:95
-msgctxt "MainWindow"
-msgid ""
-"<p><b><font size+=2>Printer</font></b></p><hr><p>Use this tab to configure "
-"the way Qt generates output for the printer.You can specify if Qt should try "
-"to embed fonts into its generated output.If you enable font embedding, the "
-"resulting postscript will be more portable and will more accurately reflect "
-"the visual output on the screen; however the resulting postscript file size "
-"will be bigger.<p>When using font embedding you can select additional "
-"directories where Qt should search for embeddable font files.  By default, "
-"the X server font path is used."
-msgstr ""
-
-#: src/tools/qtconfig/mainwindow.cpp:173
+#: src/tools/qtconfig/mainwindow.cpp:161
 msgid "Desktop Settings (Default)"
 msgstr ""
 
-#: src/tools/qtconfig/mainwindow.cpp:179
+#: src/tools/qtconfig/mainwindow.cpp:167
 msgid "Choose style and palette based on your desktop settings."
 msgstr ""
 
-#: src/tools/qtconfig/mainwindow.cpp:194
+#: src/tools/qtconfig/mainwindow.cpp:182
 msgid "Unknown"
 msgstr ""
 
-#: src/tools/qtconfig/mainwindow.cpp:324
+#: src/tools/qtconfig/mainwindow.cpp:310
 msgid "No changes to be saved."
 msgstr ""
 
-#: src/tools/qtconfig/mainwindow.cpp:328
+#: src/tools/qtconfig/mainwindow.cpp:314
 msgid "Saving changes..."
 msgstr ""
 
-#: src/tools/qtconfig/mainwindow.cpp:405
+#: src/tools/qtconfig/mainwindow.cpp:390
 msgid "Saved changes."
 msgstr ""
 
-#: src/tools/qtconfig/mainwindow.cpp:588
-msgid "Select a Directory"
-msgstr ""
-
-#: src/tools/qtconfig/mainwindow.cpp:603
+#: src/tools/qtconfig/mainwindow.cpp:510
 msgid ""
 "<h3>%1</h3><br/>Version %2<br/><br/>Copyright (C) 2015 The Qt Company Ltd."
 "<br/><br/>Copyright (C) 2016 Ivailo Monev"
 msgstr ""
 
-#: src/tools/qtconfig/mainwindow.cpp:608 src/tools/qtconfig/mainwindow.cpp:609
-#: src/tools/qtconfig/mainwindow.cpp:616
+#: src/tools/qtconfig/mainwindow.cpp:515 src/tools/qtconfig/mainwindow.cpp:516
+#: src/tools/qtconfig/mainwindow.cpp:523
 msgid "Katie Configuration"
 msgstr ""
 
-#: src/tools/qtconfig/mainwindow.cpp:635
+#: src/tools/qtconfig/mainwindow.cpp:540
 msgid "Save Changes"
 msgstr ""
 
-#: src/tools/qtconfig/mainwindow.cpp:636
+#: src/tools/qtconfig/mainwindow.cpp:541
 msgid "Save changes to settings?"
 msgstr ""
 

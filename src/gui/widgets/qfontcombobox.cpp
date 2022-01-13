@@ -198,7 +198,7 @@ void QFontComboBoxPrivate::_q_currentChanged(const QString &text)
     \ingroup basicwidgets
 
     The combobox is populated with an alphabetized list of font
-    family names, such as Arial, Helvetica, and Times New Roman.
+    family names, such as FreeMono, FreeSans and FreeSerif.
     Family names are displayed using the actual font when possible.
     For fonts such as Symbol, where the name is not representable in
     the font itself, a sample of the font is displayed next to the

@@ -81,7 +81,7 @@ Q_GLOBAL_STATIC(QMutex, qGlobalFontDatabaseMutex)
 
   if the family name contains a '[' and a ']', then we take the text
   between the square brackets as the foundry, and the text before the
-  square brackets as the family (ie. "Arial [Monotype]")
+  square brackets as the family (ie. "FreeSans [GNU]")
 */
 static void parseFontName(const QString &name, QString &foundry, QString &family)
 {
@@ -155,12 +155,28 @@ QT_BEGIN_INCLUDE_NAMESPACE
 #endif
 QT_END_INCLUDE_NAMESPACE
 
-#if !defined(Q_WS_X11)
 QString QFontDatabase::resolveFontFamilyAlias(const QString &family)
 {
+#if defined(QT_NO_FONTCONFIG)
     return family;
-}
+#else
+    FcPattern *pattern = FcPatternCreate();
+    if (!pattern)
+        return family;
+
+    QByteArray cs = family.toUtf8();
+    FcPatternAddString(pattern, FC_FAMILY, (const FcChar8 *) cs.constData());
+    FcConfigSubstitute(0, pattern, FcMatchPattern);
+    FcDefaultSubstitute(pattern);
+
+    FcChar8 *familyAfterSubstitution;
+    FcPatternGetString(pattern, FC_FAMILY, 0, &familyAfterSubstitution);
+    QString resolved = QString::fromUtf8((const char *) familyAfterSubstitution);
+    FcPatternDestroy(pattern);
+
+    return resolved;
 #endif
+}
 
 static QString styleStringHelper(int weight, QFont::Style style)
 {
@@ -225,11 +241,10 @@ QString QFontDatabase::styleString(const QFontInfo &fontInfo)
     If the font family is available from two or more foundries the
     foundry name is included in the family name; for example:
     "Helvetica [Adobe]" and "Helvetica [Cronyx]". When you specify a
-    family, you can either use the old hyphenated "foundry-family"
-    format or the bracketed "family [foundry]" format; for example:
-    "Cronyx-Helvetica" or "Helvetica [Cronyx]". If the family has a
-    foundry it is always returned using the bracketed format, as is
-    the case with the value returned by families().
+    family, you can use "family [foundry]" format; for example:
+    "Helvetica [Cronyx]". If the family has a foundry it is always
+    returned using the bracketed format, as is the case with the
+    value returned by families().
 
     The font() function returns a QFont given a family, style and
     point size.
@@ -396,7 +411,7 @@ QStringList QFontDatabase::styles(const QString &family) const
     QStringList result;
     foreach (const QtFontFamily &fontfamily, d->families) {
         if (fontfamily.family.compare(parsedfamily, Qt::CaseInsensitive) != 0
-            || fontfamily.foundry.compare(parsedfoundry, Qt::CaseInsensitive) != 0) {
+            || (!parsedfoundry.isEmpty() && fontfamily.foundry.compare(parsedfoundry, Qt::CaseInsensitive) != 0)) {
             continue;
         }
         result.append(fontfamily.style);
@@ -417,8 +432,8 @@ bool QFontDatabase::isFixedPitch(const QString &family, const QString &style) co
     bool result = false;
     foreach (const QtFontFamily &fontfamily, d->families) {
         if (fontfamily.family.compare(parsedfamily, Qt::CaseInsensitive) != 0
-            || fontfamily.foundry.compare(parsedfoundry, Qt::CaseInsensitive) != 0
-            || !isItalicOrOblique(fontfamily.style, style)) {
+            || (!parsedfoundry.isEmpty() && fontfamily.foundry.compare(parsedfoundry, Qt::CaseInsensitive) != 0)
+            || (!style.isEmpty() && !isItalicOrOblique(fontfamily.style, style))) {
             continue;
         }
         result = fontfamily.fixedpitch;
@@ -443,8 +458,8 @@ bool QFontDatabase::isSmoothlyScalable(const QString &family, const QString &sty
     bool result = false;
     foreach (const QtFontFamily &fontfamily, d->families) {
         if (fontfamily.family.compare(parsedfamily, Qt::CaseInsensitive) != 0
-            || fontfamily.foundry.compare(parsedfoundry, Qt::CaseInsensitive) != 0
-            || !isItalicOrOblique(fontfamily.style, style)) {
+            || (!parsedfoundry.isEmpty() && fontfamily.foundry.compare(parsedfoundry, Qt::CaseInsensitive) != 0)
+            || (!style.isEmpty() && !isItalicOrOblique(fontfamily.style, style))) {
             continue;
         }
         result = fontfamily.scalable;
@@ -480,7 +495,7 @@ QList<int> QFontDatabase::pointSizes(const QString &family, const QString &style
     QList<int> result;
     foreach (const QtFontFamily &fontfamily, d->families) {
         if (fontfamily.family.compare(parsedfamily, Qt::CaseInsensitive) != 0
-            || fontfamily.foundry.compare(parsedfoundry, Qt::CaseInsensitive) != 0
+            || (!parsedfoundry.isEmpty() && fontfamily.foundry.compare(parsedfoundry, Qt::CaseInsensitive) != 0)
             || !isItalicOrOblique(fontfamily.style, style)) {
             continue;
         }
@@ -506,7 +521,7 @@ QFont QFontDatabase::font(const QString &family, const QString &style,
     QFont result = QApplication::font();
     foreach (const QtFontFamily &fontfamily, d->families) {
         if (fontfamily.family.compare(parsedfamily, Qt::CaseInsensitive) != 0
-            || fontfamily.foundry.compare(parsedfoundry, Qt::CaseInsensitive) != 0
+            || (!parsedfoundry.isEmpty() && fontfamily.foundry.compare(parsedfoundry, Qt::CaseInsensitive) != 0)
             || !isItalicOrOblique(fontfamily.style, style)) {
             continue;
         }
@@ -540,7 +555,7 @@ QList<int> QFontDatabase::smoothSizes(const QString &family, const QString &styl
     QList<int> result;
     foreach (const QtFontFamily &fontfamily, d->families) {
         if (fontfamily.family.compare(parsedfamily, Qt::CaseInsensitive) != 0
-            || fontfamily.foundry.compare(parsedfoundry, Qt::CaseInsensitive) != 0
+            || (!parsedfoundry.isEmpty() && fontfamily.foundry.compare(parsedfoundry, Qt::CaseInsensitive) != 0)
             || !isItalicOrOblique(fontfamily.style, style)) {
             continue;
         }
@@ -600,7 +615,7 @@ bool QFontDatabase::italic(const QString &family, const QString &style) const
     bool result = false;
     foreach (const QtFontFamily &fontfamily, d->families) {
         if (fontfamily.family.compare(parsedfamily, Qt::CaseInsensitive) != 0
-            || fontfamily.foundry.compare(parsedfoundry, Qt::CaseInsensitive) != 0
+            || (!parsedfoundry.isEmpty() && fontfamily.foundry.compare(parsedfoundry, Qt::CaseInsensitive) != 0)
             || !isItalicOrOblique(fontfamily.style, style)) {
             continue;
         }
@@ -625,7 +640,7 @@ bool QFontDatabase::bold(const QString &family, const QString &style) const
     bool result = false;
     foreach (const QtFontFamily &fontfamily, d->families) {
         if (fontfamily.family.compare(parsedfamily, Qt::CaseInsensitive) != 0
-            || fontfamily.foundry.compare(parsedfoundry, Qt::CaseInsensitive) != 0
+            || (!parsedfoundry.isEmpty() && fontfamily.foundry.compare(parsedfoundry, Qt::CaseInsensitive) != 0)
             || !isItalicOrOblique(fontfamily.style, style)) {
             continue;
         }
@@ -651,7 +666,7 @@ int QFontDatabase::weight(const QString &family, const QString &style) const
     int result = -1;
     foreach (const QtFontFamily &fontfamily, d->families) {
         if (fontfamily.family.compare(parsedfamily, Qt::CaseInsensitive) != 0
-            || fontfamily.foundry.compare(parsedfoundry, Qt::CaseInsensitive) != 0
+            || (!parsedfoundry.isEmpty() && fontfamily.foundry.compare(parsedfoundry, Qt::CaseInsensitive) != 0)
             || !isItalicOrOblique(fontfamily.style, style)) {
             continue;
         }
@@ -662,13 +677,26 @@ int QFontDatabase::weight(const QString &family, const QString &style) const
 }
 
 
-/*! \internal */
+/*!
+    Returns true if font family is available, false otherwise.
+*/
 bool QFontDatabase::hasFamily(const QString &family) const
 {
-    QString parsedFamily, foundry;
-    parseFontName(family, foundry, parsedFamily);
-    const QString familyAlias = resolveFontFamilyAlias(parsedFamily);
-    return families().contains(familyAlias, Qt::CaseInsensitive);
+    QString parsedfamily, parsedfoundry;
+    parseFontName(family, parsedfoundry, parsedfamily);
+
+    const QString familyalias = resolveFontFamilyAlias(parsedfamily);
+
+    bool result = false;
+    foreach (const QtFontFamily &fontfamily, d->families) {
+        if (fontfamily.family.compare(familyalias, Qt::CaseInsensitive) != 0
+            || (!parsedfoundry.isEmpty() && fontfamily.foundry.compare(parsedfoundry, Qt::CaseInsensitive) != 0)) {
+            continue;
+        }
+        result = true;
+        break;
+    }
+    return result;
 }
 
 void QFontDatabase::parseFontName(const QString &name, QString &foundry, QString &family)
@@ -677,7 +705,6 @@ void QFontDatabase::parseFontName(const QString &name, QString &foundry, QString
 }
 
 /*!
-    \fn bool QFontDatabase::supportsThreadedFontRendering()
     \since 4.4
 
     Returns true if font rendering is supported outside the GUI
@@ -687,7 +714,14 @@ void QFontDatabase::parseFontName(const QString &name, QString &foundry, QString
 
     \sa {Thread-Support in Qt Modules#Painting In Threads}{Painting In Threads}
 */
-
+bool QFontDatabase::supportsThreadedFontRendering()
+{
+#if defined(QT_NO_FONTCONFIG)
+    return false;
+#else
+    return qt_x11Data->has_fontconfig;
+#endif
+}
 
 QT_END_NAMESPACE
 

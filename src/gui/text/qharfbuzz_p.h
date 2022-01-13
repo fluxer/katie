@@ -93,10 +93,6 @@ typedef uint32_t HB_UChar32;
 typedef int32_t HB_Fixed; /* 26.6 */
 
 typedef enum {
-    HB_FontAscent
-} HB_FontMetric;
-
-typedef enum {
     HB_Script_Common,
     HB_Script_Adlam,
     HB_Script_Ahom,
@@ -385,7 +381,7 @@ typedef struct {
 typedef struct {
     HB_Fixed x, y;
     HB_Fixed width, height;
-    HB_Fixed xOffset, yOffset;
+    HB_Fixed xOffset;
 } HB_GlyphMetrics;
 
 typedef struct {

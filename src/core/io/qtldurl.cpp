@@ -29,7 +29,7 @@ QT_BEGIN_NAMESPACE
 // file, You can obtain one at https://mozilla.org/MPL/2.0/.
 
 // generated via gentld.py
-static const char* TLDTbl[9204] = {
+static const char* TLDTbl[9203] = {
     "ac",
     "com.ac",
     "edu.ac",
@@ -6791,7 +6791,6 @@ static const char* TLDTbl[9204] = {
     "lipsy",
     "live",
     "living",
-    "lixil",
     "llc",
     "llp",
     "loan",
@@ -9235,7 +9234,7 @@ static const char* TLDTbl[9204] = {
     "virtualserver.io",
     "enterprisecloud.nu",
 };
-static const qint16 TLDTblSize = 9204;
+static const qint16 TLDTblSize = 9203;
 
 static inline bool containsTLDEntry(const QString &entry)
 {

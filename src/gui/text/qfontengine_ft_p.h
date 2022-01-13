@@ -58,8 +58,7 @@ struct QFontMetric {
 };
 
 /*
- * This struct represents one font file on disk (like Arial.ttf) and is shared between all the font engines
- * that show this font file (at different pixel sizes).
+ * This struct represents one font file on disk.
  */
 class QFreetypeFace
 {
@@ -98,7 +97,6 @@ public:
 
     virtual QFontEngine::FaceId faceId() const;
     virtual QFontEngine::Properties properties() const;
-    virtual QFixed emSquareSize() const;
 
     virtual bool getSfntTableData(uint tag, uchar *buffer, uint *length) const;
     virtual int synthesized() const;
@@ -132,7 +130,6 @@ public:
     virtual bool stringToCMap(const QChar *str, int len, QGlyphLayout *glyphs, int *nglyphs,
                       QTextEngine::ShaperFlags flags) const;
 
-    virtual glyph_metrics_t boundingBox(const QGlyphLayout &glyphs) const;
     virtual glyph_metrics_t boundingBox(glyph_t glyph) const;
 
     virtual void recalcAdvances(QGlyphLayout *glyphs, QTextEngine::ShaperFlags flags) const;
@@ -165,8 +162,6 @@ private:
     QFontMetric* getMetrics(glyph_t glyph) const;
 
     QFreetypeFace *freetype;
-    bool embolden;
-    bool oblique;
     QFontEngine::FaceId face_id;
 
     int xsize;

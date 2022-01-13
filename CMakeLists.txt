@@ -238,8 +238,7 @@ set_package_properties(Cairo PROPERTIES
     TYPE REQUIRED
 )
 
-# v2.1.10+ required for FT_GlyphSlot_Embolden()
-find_package(Freetype 2.1.10)
+find_package(Freetype)
 set_package_properties(Freetype PROPERTIES
     PURPOSE "Required for fonts configuration support"
     DESCRIPTION "Freely available software library to render fonts"

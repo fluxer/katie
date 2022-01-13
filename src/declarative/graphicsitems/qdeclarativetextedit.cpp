@@ -51,7 +51,7 @@ QT_BEGIN_NAMESPACE
 TextEdit {
     width: 240
     text: "<b>Hello</b> <i>World!</i>"
-    font.family: "Helvetica"
+    font.family: "FreeSans"
     font.pointSize: 20
     color: "blue"
     focus: true
@@ -112,7 +112,7 @@ QString QDeclarativeTextEdit::text() const
 
     Sets the family name of the font.
 
-    The family name is case insensitive and may optionally include a foundry name, e.g. "Helvetica [Cronyx]".
+    The family name is case insensitive and may optionally include a foundry name, e.g. "FreeSans [GNU]".
     If the family is available from more than one foundry and the foundry isn't specified, an arbitrary foundry is chosen.
     If the family isn't available a family will be set using the font matching algorithm.
 */
@@ -174,43 +174,6 @@ QString QDeclarativeTextEdit::text() const
     Using this function makes the font device dependent.  Use
     \l{TextEdit::font.pointSize} to set the size of the font in a
     device independent manner.
-*/
-
-/*!
-    \qmlproperty real TextEdit::font.letterSpacing
-
-    Sets the letter spacing for the font.
-
-    Letter spacing changes the default spacing between individual letters in the font.
-    A positive value increases the letter spacing by the corresponding pixels; a negative value decreases the spacing.
-*/
-
-/*!
-    \qmlproperty real TextEdit::font.wordSpacing
-
-    Sets the word spacing for the font.
-
-    Word spacing changes the default spacing between individual words.
-    A positive value increases the word spacing by a corresponding amount of pixels,
-    while a negative value decreases the inter-word spacing accordingly.
-*/
-
-/*!
-    \qmlproperty enumeration TextEdit::font.capitalization
-
-    Sets the capitalization for the text.
-
-    \list
-    \o Font.MixedCase - This is the normal text rendering option where no capitalization change is applied.
-    \o Font.AllUppercase - This alters the text to be rendered in all uppercase type.
-    \o Font.AllLowercase	 - This alters the text to be rendered in all lowercase type.
-    \o Font.SmallCaps -	This alters the text to be rendered in small-caps type.
-    \o Font.Capitalize - This alters the text to be rendered with the first character of each word as an uppercase character.
-    \endlist
-
-    \qml
-    TextEdit { text: "Hello"; font.capitalization: Font.AllLowercase }
-    \endqml
 */
 
 /*!
@@ -522,10 +485,7 @@ bool QDeclarativeTextEditPrivate::determineHorizontalAlignment()
     if (hAlignImplicit && q->isComponentComplete()) {
         bool alignToRight;
         if (text.isEmpty() && !control->textCursor().isNull()) {
-            const QString preeditText = control->textCursor().block().layout()->preeditAreaText();
-            alignToRight = preeditText.isEmpty()
-                    ? QApplication::keyboardInputDirection() == Qt::RightToLeft
-                    : preeditText.isRightToLeft();
+            alignToRight = QApplication::keyboardInputDirection() == Qt::RightToLeft;
         } else {
             alignToRight = rightToLeftText;
         }
@@ -658,24 +618,7 @@ QRectF QDeclarativeTextEdit::positionToRectangle(int pos) const
 int QDeclarativeTextEdit::positionAt(int x, int y) const
 {
     Q_D(const QDeclarativeTextEdit);
-    int r = d->document->documentLayout()->hitTest(QPoint(x,y-d->yoff), Qt::FuzzyHit);
-    QTextCursor cursor = d->control->textCursor();
-    if (r > cursor.position()) {
-        // The cursor position includes positions within the preedit text, but only positions in the
-        // same text block are offset so it is possible to get a position that is either part of the
-        // preedit or the next text block.
-        QTextLayout *layout = cursor.block().layout();
-        const int preeditLength = layout
-                ? layout->preeditAreaText().length()
-                : 0;
-        if (preeditLength > 0
-                && d->document->documentLayout()->blockBoundingRect(cursor.block()).contains(x,y-d->yoff)) {
-            r = r > cursor.position() + preeditLength
-                    ? r - preeditLength
-                    : cursor.position();
-        }
-    }
-    return r;
+    return d->document->documentLayout()->hitTest(QPoint(x,y-d->yoff), Qt::FuzzyHit);
 }
 
 void QDeclarativeTextEdit::moveCursorSelection(int pos)
@@ -1454,27 +1397,6 @@ bool QDeclarativeTextEdit::canPaste() const
 {
     Q_D(const QDeclarativeTextEdit);
     return d->canPaste;
-}
-
-/*!
-    \qmlproperty bool TextEdit::inputMethodComposing
-
-    \since QtQuick 1.1
-
-    This property holds whether the TextEdit has partial text input from an
-    input method.
-
-    While it is composing an input method may rely on mouse or key events from
-    the TextEdit to edit or commit the partial text.  This property can be used
-    to determine when to disable events handlers that may interfere with the
-    correct operation of an input method.
-*/
-bool QDeclarativeTextEdit::isInputMethodComposing() const
-{
-    Q_D(const QDeclarativeTextEdit);
-    if (QTextLayout *layout = d->control->textCursor().block().layout())
-        return layout->preeditAreaText().length() > 0;
-    return false;
 }
 
 void QDeclarativeTextEditPrivate::init()

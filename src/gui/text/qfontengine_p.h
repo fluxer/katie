@@ -94,13 +94,9 @@ public:
     };
     virtual FaceId faceId() const { return FaceId(); }
     enum SynthesizedFlags {
-        SynthesizedItalic = 0x1,
-        SynthesizedBold = 0x2,
-        SynthesizedStretch = 0x4
+        SynthesizedStretch = 0x1
     };
     virtual int synthesized() const { return 0; }
-
-    virtual QFixed emSquareSize() const { return ascent(); }
 
     /* returns 0 as glyph index for non existent glyphs */
     virtual bool stringToCMap(const QChar *str, int len, QGlyphLayout *glyphs, int *nglyphs, QTextEngine::ShaperFlags flags) const = 0;
@@ -120,7 +116,6 @@ public:
 
     virtual void addOutlineToPath(qreal, qreal, const QGlyphLayout &, QPainterPath *);
 
-    virtual glyph_metrics_t boundingBox(const QGlyphLayout &glyphs) const = 0;
     virtual glyph_metrics_t boundingBox(glyph_t glyph) const = 0;
 
     virtual QFixed ascent() const = 0;
@@ -133,8 +128,8 @@ public:
     virtual QFixed underlinePosition() const;
 
     virtual qreal maxCharWidth() const = 0;
-    virtual qreal minLeftBearing() const { return qreal(); }
-    virtual qreal minRightBearing() const { return qreal(); }
+    virtual qreal minLeftBearing() const = 0;
+    virtual qreal minRightBearing() const = 0;
 
     virtual void getGlyphBearings(glyph_t glyph, qreal *leftBearing = 0, qreal *rightBearing = 0);
 
@@ -188,7 +183,6 @@ public:
     virtual void addGlyphsToPath(glyph_t *glyphs, QFixedPoint *positions, int nglyphs,
                                  QPainterPath *path);
 
-    virtual glyph_metrics_t boundingBox(const QGlyphLayout &glyphs) const;
     virtual glyph_metrics_t boundingBox(glyph_t glyph) const;
 
     virtual QFixed ascent() const;

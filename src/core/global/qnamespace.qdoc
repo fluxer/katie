@@ -348,11 +348,10 @@
     \value TextHideMnemonic Same as Qt::TextShowMnemonic but doesn't draw
            the underlines.
     \value TextDontPrint Treat this text as "hidden" and don't print it.
-    \value IncludeTrailingSpaces When this option is set,
+    \value TextIncludeTrailingSpaces When this option is set,
            QTextLine::naturalTextWidth() and naturalTextRect() will
            return a value that includes the width of trailing spaces in the
            text; otherwise this width is excluded.
-    \value TextIncludeTrailingSpaces Same as IncludeTrailingSpaces
     \value TextJustificationForced Ensures that text lines are justified.
 
     \omitvalue TextLongestVariant Ensures that the longest variant is always used

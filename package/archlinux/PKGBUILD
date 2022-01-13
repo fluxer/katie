@@ -13,6 +13,7 @@ license=('LGPL' 'BSD')
 depends=('libsm' 'libxcursor' 'libxinerama' 'libxpm' 'libxrandr' 'fontconfig'
          'icu' 'jansson' 'libcups' 'xdg-utils')
 makedepends=('cmake' 'git' 'unifdef')
+optdepends=('gnu-free-fonts: last resort font')
 source=("git+https://github.com/fluxer/katie")
 sha1sums=('SKIP')
 conflicts=('katie')

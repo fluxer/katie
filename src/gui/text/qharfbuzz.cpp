@@ -21,7 +21,6 @@
 
 #include "qunicodetables_p.h"
 #include "qfontengine_p.h"
-#include "qtextcodec.h"
 #include "qharfbuzz_p.h"
 
 QT_BEGIN_NAMESPACE
@@ -73,17 +72,11 @@ static void qHB_getGlyphMetrics(QFontEngine* fe, HB_Glyph glyph, HB_GlyphMetrics
     metrics->width = m.width.value();
     metrics->height = m.height.value();
     metrics->xOffset = m.xoff.value();
-    metrics->yOffset = m.yoff.value();
 }
 
-static HB_Fixed qHB_getGlyphMetric(QFontEngine* fe, HB_FontMetric metric)
+static HB_Fixed qHB_getGlyphAscent(QFontEngine* fe)
 {
-    switch (metric) {
-    case HB_FontAscent:
-        return fe->ascent().value();
-    default:
-        return 0;
-    }
+    return fe->ascent().value();
 }
 
 static void qHB_GetGlyphAdvances(QFontEngine* fe, const HB_Glyph *glyphs, uint32_t numGlyphs, HB_Fixed *advances, int flags)
@@ -130,14 +123,14 @@ static bool qHB_ConvertStringToGlyphIndices(HB_ShaperItem *shaper_item)
 // set the glyph attributes heuristically. Assumes a 1 to 1 relationship between chars and glyphs
 // and no reordering.
 // also computes logClusters heuristically
-void qHB_HeuristicSetGlyphAttributes(HB_ShaperItem *item)
+static void qHB_HeuristicSetGlyphAttributes(HB_ShaperItem *item)
 {
     const HB_UChar16 *uc = item->string + item->item.pos;
     uint32_t length = item->item.length;
 
     assert(item->num_glyphs <= length);
 
-//     qDebug("QScriptEngine::heuristicSetGlyphAttributes, num_glyphs=%d", item->num_glyphs);
+    // qDebug("qHB_HeuristicSetGlyphAttributes: num_glyphs=%d", item->num_glyphs);
     HB_GlyphAttributes *attributes = item->attributes;
     unsigned short *logClusters = item->log_clusters;
 
@@ -176,6 +169,7 @@ void qHB_HeuristicSetGlyphAttributes(HB_ShaperItem *item)
             ++pos;
         }
         // hide soft-hyphens by default
+        attributes[pos].dontPrint = false;
         if ((!symbolFont && uc[i] == 0x00ad) || HB_IsControlChar(uc[i]))
             attributes[pos].dontPrint = true;
         HB_CharCategory cat;
@@ -256,70 +250,36 @@ static inline void positionCluster(HB_ShaperItem *item, int gfrom,  int glast)
         // we need to attach below the baseline, because of the hebrew iud.
         baseMetrics.height = -baseMetrics.y;
 
-//     qDebug("---> positionCluster: cluster from %d to %d", gfrom, glast);
-//     qDebug("baseInfo: %f/%f (%f/%f) off=%f/%f", baseInfo.x, baseInfo.y, baseInfo.width, baseInfo.height, baseInfo.xoff, baseInfo.yoff);
+    // qDebug("---> positionCluster: cluster from %d to %d", gfrom, glast);
+    // qDebug("baseInfo: %f/%f (%f/%f) off=%f/%f", baseInfo.x, baseInfo.y, baseInfo.width, baseInfo.height, baseInfo.xoff, baseInfo.yoff);
 
-    HB_Fixed size = qHB_getGlyphMetric(item->font, HB_FontAscent) / 10;
+    HB_Fixed size = qHB_getGlyphAscent(item->font) / 10;
     HB_Fixed offsetBase = HB_FIXED_CONSTANT(1) + (size - HB_FIXED_CONSTANT(4)) / 4;
     if (size > HB_FIXED_CONSTANT(4))
         offsetBase += HB_FIXED_CONSTANT(4);
     else
         offsetBase += size;
-    //qreal offsetBase = (size - 4) / 4 + qMin<qreal>(size, 4) + 1;
-//     qDebug("offset = %f", offsetBase);
+    // qreal offsetBase = (size - 4) / 4 + qMin<qreal>(size, 4) + 1;
+    // qDebug("offset = %f", offsetBase);
 
-    int i;
-    unsigned char lastCmb = 0;
+    HB_CombiningClass lastCmb = HB_Combining_NotOrdered;
     HB_GlyphMetrics attachmentRect;
     memset(&attachmentRect, 0, sizeof(attachmentRect));
 
-    for(i = 1; i <= nmarks; i++) {
+    for(int i = 1; i <= nmarks; i++) {
         HB_Glyph mark = glyphs[gfrom+i];
         HB_GlyphMetrics markMetrics;
         qHB_getGlyphMetrics(item->font, mark, &markMetrics);
         HB_FixedPoint p;
         p.x = p.y = 0;
-//          qDebug("markInfo: %f/%f (%f/%f) off=%f/%f", markInfo.x, markInfo.y, markInfo.width, markInfo.height, markInfo.xoff, markInfo.yoff);
+        // qDebug("markInfo: %f/%f (%f/%f) off=%f/%f", markInfo.x, markInfo.y, markInfo.width, markInfo.height, markInfo.xoff, markInfo.yoff);
 
         HB_Fixed offset = offsetBase;
-        unsigned char cmb = attributes[gfrom+i].combiningClass;
-
-        // ### maybe the whole position determination should move down to heuristicSetGlyphAttributes. Would save some
-        // bits  in the glyphAttributes structure.
-        if (cmb < 200) {
-            // fixed position classes. We approximate by mapping to one of the others.
-            // currently I added only the ones for arabic, hebrew, lao and thai.
-
-            // for Lao and Thai marks with class 0, see below (heuristicSetGlyphAttributes)
-
-            // add a bit more offset to arabic, a bit hacky
-            if (cmb >= 27 && cmb <= 36 && offset < 3)
-                offset +=1;
-            // below
-            if ((cmb >= 10 && cmb <= 18) ||
-                 cmb == 20 || cmb == 22 ||
-                 cmb == 29 || cmb == 32)
-                cmb = HB_Combining_Below;
-            // above
-            else if (cmb == 23 || cmb == 27 || cmb == 28 ||
-                      cmb == 30 || cmb == 31 || (cmb >= 33 && cmb <= 36))
-                cmb = HB_Combining_Above;
-            //below-right
-            else if (cmb == 9 || cmb == 103 || cmb == 118)
-                cmb = HB_Combining_BelowRight;
-            // above-right
-            else if (cmb == 24 || cmb == 107 || cmb == 122)
-                cmb = HB_Combining_AboveRight;
-            else if (cmb == 25)
-                cmb = HB_Combining_AboveLeft;
-            // fixed:
-            //  19 21
-
-        }
+        HB_CombiningClass cmb = attributes[gfrom+i].combiningClass;
 
         // combining marks of different class don't interact. Reset the rectangle.
         if (cmb != lastCmb) {
-            //qDebug("resetting rect");
+            // qDebug("resetting rect");
             attachmentRect = baseMetrics;
         }
 
@@ -349,7 +309,7 @@ static inline void positionCluster(HB_ShaperItem *item, int gfrom,  int glast)
             default:
                 break;
         }
-//          qDebug("char=%x combiningClass = %d offset=%f/%f", mark, cmb, p.x(), p.y());
+        // qDebug("char=%x combiningClass = %d offset=%f/%f", mark, cmb, p.x(), p.y());
         markMetrics.x += p.x;
         markMetrics.y += p.y;
 
@@ -362,12 +322,12 @@ static inline void positionCluster(HB_ShaperItem *item, int gfrom,  int glast)
 
         lastCmb = cmb;
         item->offsets[gfrom+i].x = p.x - baseMetrics.xOffset;
-        item->offsets[gfrom+i].y = p.y - baseMetrics.yOffset;
+        item->offsets[gfrom+i].y = p.y;
         item->advances[gfrom+i] = 0;
     }
 }
 
-void qHB_HeuristicPosition(HB_ShaperItem *item)
+static void qHB_HeuristicPosition(HB_ShaperItem *item)
 {
     qHB_GetGlyphAdvances(item->font, item->glyphs, item->num_glyphs,
                          item->advances, item->shaperFlags);
@@ -484,7 +444,6 @@ static inline void calcLineBreaks(const HB_UChar16 *uc, uint32_t len, HB_CharAtt
     int lcls = cls;
     for (uint32_t i = 1; i < len; ++i) {
         charAttributes[i].whiteSpace = false;
-        charAttributes[i].charStop = true;
 
         HB_UChar32 code = uc[i];
         HB_GraphemeClass ngrapheme;

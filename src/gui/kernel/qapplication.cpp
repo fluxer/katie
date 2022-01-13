@@ -1254,7 +1254,7 @@ QFont QApplication::font()
 {
     QMutexLocker locker(applicationFontMutex());
     if (!QApplicationPrivate::app_font) {
-        QApplicationPrivate::app_font = new QFont(QLatin1String("Helvetica"));
+        QApplicationPrivate::app_font = new QFont(QFont::lastResortFamily());
     }
     return *QApplicationPrivate::app_font;
 }

@@ -75,7 +75,7 @@ bool QFontDef::exactMatch(const QFontDef &other) const
 
       To compare the family members, we need to parse the font names
       and compare the family/foundry strings separately.  This allows
-      us to compare e.g. "Helvetica" and "Helvetica [Adobe]" with
+      us to compare e.g. "FreeSans" and "FreeSans [GNU]" with
       positive results.
     */
     if (pixelSize != -1 && other.pixelSize != -1) {
@@ -111,17 +111,14 @@ bool QFontDef::exactMatch(const QFontDef &other) const
 
 QFontPrivate::QFontPrivate()
     : dpi(QX11Info::appDpiY()), screen(QX11Info::appScreen()),
-      underline(false), overline(false), strikeOut(false), kerning(true),
-      letterSpacingIsAbsolute(false)
+      underline(false), overline(false), strikeOut(false), kerning(true)
 {
 }
 
 QFontPrivate::QFontPrivate(const QFontPrivate &other)
     : request(other.request), dpi(other.dpi), screen(other.screen),
       underline(other.underline), overline(other.overline),
-      strikeOut(other.strikeOut), kerning(other.kerning),
-      letterSpacingIsAbsolute(other.letterSpacingIsAbsolute),
-      letterSpacing(other.letterSpacing), wordSpacing(other.wordSpacing)
+      strikeOut(other.strikeOut), kerning(other.kerning)
 {
 }
 
@@ -185,13 +182,6 @@ void QFontPrivate::resolve(uint mask, const QFontPrivate *other)
 
     if (! (mask & QFont::KerningResolved))
         kerning = other->kerning;
-
-    if (! (mask & QFont::LetterSpacingResolved)) {
-        letterSpacing = other->letterSpacing;
-        letterSpacingIsAbsolute = other->letterSpacingIsAbsolute;
-    }
-    if (! (mask & QFont::WordSpacingResolved))
-        wordSpacing = other->wordSpacing;
 }
 
 /*!
@@ -243,11 +233,10 @@ void QFontPrivate::resolve(uint mask, const QFontPrivate *other)
 
     If the requested font family is unavailable you can influence the
     \link #fontmatching font matching algorithm\endlink by choosing a
-    particular \l{QFont::StyleStrategy} with setStyleStrategy(). The
-    default family is returned by defaultFamily().
+    particular \l{QFont::StyleStrategy} with setStyleStrategy().
 
-    The font-matching algorithm has a lastResortFamily() and
-    lastResortFont() in cases where a suitable match cannot be found.
+    The font-matching algorithm has a lastResortFamily() in cases
+    where a suitable match cannot be found.
 
     Every QFont has a key() which you can use, for example, as the key
     in a cache or dictionary. If you want to store a user's font
@@ -271,21 +260,18 @@ void QFontPrivate::resolve(uint mask, const QFontPrivate *other)
     \list 1
     \o The specified font family is searched for.
     \o Each replacement font family is searched for.
-    \o If none of these are found "helvetica" will be searched for.
-    \o If "helvetica" isn't found Katie will try the lastResortFamily().
-    \o If the lastResortFamily() isn't found Katie will try the
-       lastResortFont() which will always return a name of some kind.
+    \o If none of these are found application font will be searched for.
+    \o If none of these are found lastResortFamily() will be searched for.
+    \o If the lastResortFamily() isn't found Katie will not abort but no
+       text will be visible unless a valid font filepath has been set in
+       the global settings file or via QApplication::setFont().
     \endlist
 
-    Note that the actual font matching algorithm varies from platform to platform.
+    Note that the actual font matching algorithm varies from platform to
+    platform.
 
-    In Windows a request for the "Courier" font is automatically changed to
-    "Courier New", an improved version of Courier that allows for smooth scaling.
-    The older "Courier" bitmap font can be selected by setting the PreferBitmap
-    style strategy (see setStyleStrategy()).
-
-    Once a font is found, the remaining attributes are matched in order of
-    priority:
+    Once a font is found, the remaining attributes are matched in order
+    of priority:
     \list 1
     \o fixedPitch()
     \o pointSize() (see below)
@@ -318,8 +304,7 @@ void QFontPrivate::resolve(uint mask, const QFontPrivate *other)
     \snippet doc/src/snippets/code/src_gui_text_qfont.cpp 2
 
     You can specify the foundry you want in the family name. The font f
-    in the above example will be set to "Helvetica
-    [Cronyx]".
+    in the above example will be set to "FreeSans [GNU]".
 
     To determine the attributes of the font actually used in the window
     system, use a QFontInfo object, e.g.
@@ -356,9 +341,7 @@ void QFontPrivate::resolve(uint mask, const QFontPrivate *other)
     \value FixedPitchResolved
     \value StretchResolved
     \value KerningResolved
-    \value LetterSpacingResolved
-    \value WordSpacingResolved
-    \value CompletelyResolved
+    \value AllPropertiesResolved
 */
 
 /*!
@@ -394,46 +377,6 @@ void QFontPrivate::resolve(uint mask, const QFontPrivate *other)
 
     \note This function is only available on platforms that provide the FreeType library;
     i.e., X11 and some Embedded Linux platforms.
-*/
-
-/*!
-    \fn QString QFont::lastResortFamily() const
-
-    Returns the "last resort" font family name.
-
-    The current implementation tries a wide variety of common fonts,
-    returning the first one it finds. Is is possible that no family is
-    found in which case an empty string is returned.
-
-    \sa lastResortFont()
-*/
-
-/*!
-    \fn QString QFont::defaultFamily() const
-
-    Returns the family name that corresponds to the current style.
-*/
-
-/*!
-    \fn QString QFont::lastResortFont() const
-
-    Returns a "last resort" font name for the font matching algorithm.
-    This is used if the last resort family is not available. It will
-    always return a name, if necessary returning something like
-    "fixed" or "system".
-
-    The current implementation tries a wide variety of common fonts,
-    returning the first one it finds. The implementation may change
-    at any time, but this function will always return a string
-    containing something.
-
-    It is theoretically possible that there really isn't a
-    lastResortFont() in which case Qt will abort with an error
-    message. We have not been able to identify a case where this
-    happens. Please \link bughowto.html report it as a bug\endlink if
-    it does, preferably with a list of the fonts you have installed.
-
-    \sa lastResortFamily()
 */
 
 /*!
@@ -498,11 +441,10 @@ QFont::QFont()
     12 points, except on Symbian where it is 7 points.
 
     The \a family name may optionally also include a foundry name,
-    e.g. "Helvetica [Cronyx]". If the \a family is
-    available from more than one foundry and the foundry isn't
-    specified, an arbitrary foundry is chosen. If the family isn't
-    available a family will be set using the \l{QFont}{font matching}
-    algorithm.
+    e.g. "FreeSans [GNU]". If the \a family is available from more
+    than one foundry and the foundry isn't specified, an arbitrary
+    foundry is chosen. If the family isn't available a family will
+    be set using the \l{QFont}{font matching} algorithm.
 
     \sa Weight, setFamily(), setPointSize(), setWeight(), setItalic(),
     QApplication::font()
@@ -573,11 +515,10 @@ QString QFont::family() const
     may include a foundry name.
 
     The \a family name may optionally also include a foundry name,
-    e.g. "Helvetica [Cronyx]". If the \a family is
-    available from more than one foundry and the foundry isn't
-    specified, an arbitrary foundry is chosen. If the family isn't
-    available a family will be set using the \l{QFont}{font matching}
-    algorithm.
+    e.g. "FreeSans [GNU]". If the \a family is available from more
+    than one foundry and the foundry isn't specified, an arbitrary
+    foundry is chosen. If the family isn't available a family will be
+    set using the \l{QFont}{font matching} algorithm.
 
     \sa family(), QFontInfo
 */
@@ -1140,103 +1081,6 @@ void QFont::setStretch(int factor)
 }
 
 /*!
-    \enum QFont::SpacingType
-    \since 4.4
-
-    \value PercentageSpacing  A value of 100 will keep the spacing unchanged; a value of 200 will enlarge the
-                                                   spacing after a character by the width of the character itself.
-    \value AbsoluteSpacing      A positive value increases the letter spacing by the corresponding pixels; a negative
-                                                   value decreases the spacing.
-*/
-
-/*!
-    \since 4.4
-    Returns the letter spacing for the font.
-
-    \sa setLetterSpacing(), letterSpacingType(), setWordSpacing()
- */
-qreal QFont::letterSpacing() const
-{
-    return d->letterSpacing.toReal();
-}
-
-/*!
-    \since 4.4
-    Sets the letter spacing for the font to \a spacing and the type
-    of spacing to \a type.
-
-    Letter spacing changes the default spacing between individual
-    letters in the font.  The spacing between the letters can be
-    made smaller as well as larger.
-
-    \sa letterSpacing(), letterSpacingType(), setWordSpacing()
-*/
-void QFont::setLetterSpacing(SpacingType type, qreal spacing)
-{
-    const QFixed newSpacing = QFixed::fromReal(spacing);
-    const bool absoluteSpacing = type == AbsoluteSpacing;
-    if ((resolve_mask & QFont::LetterSpacingResolved) &&
-        d->letterSpacingIsAbsolute == absoluteSpacing &&
-        d->letterSpacing == newSpacing)
-        return;
-
-    detach();
-
-    d->letterSpacing = newSpacing;
-    d->letterSpacingIsAbsolute = absoluteSpacing;
-    resolve_mask |= QFont::LetterSpacingResolved;
-}
-
-/*!
-    \since 4.4
-    Returns the spacing type used for letter spacing.
-
-    \sa letterSpacing(), setLetterSpacing(), setWordSpacing()
-*/
-QFont::SpacingType QFont::letterSpacingType() const
-{
-    return d->letterSpacingIsAbsolute ? AbsoluteSpacing : PercentageSpacing;
-}
-
-/*!
-    \since 4.4
-    Returns the word spacing for the font.
-
-    \sa setWordSpacing(), setLetterSpacing()
- */
-qreal QFont::wordSpacing() const
-{
-    return d->wordSpacing.toReal();
-}
-
-/*!
-    \since 4.4
-    Sets the word spacing for the font to \a spacing.
-
-    Word spacing changes the default spacing between individual
-    words. A positive value increases the word spacing
-    by a corresponding amount of pixels, while a negative value
-    decreases the inter-word spacing accordingly.
-
-    Word spacing will not apply to writing systems, where indiviaul
-    words are not separated by white space.
-
-    \sa wordSpacing(), setLetterSpacing()
-*/
-void QFont::setWordSpacing(qreal spacing)
-{
-    const QFixed newSpacing = QFixed::fromReal(spacing);
-    if ((resolve_mask & QFont::WordSpacingResolved) &&
-        d->wordSpacing == newSpacing)
-        return;
-
-    detach();
-
-    d->wordSpacing = newSpacing;
-    resolve_mask |= QFont::WordSpacingResolved;
-}
-
-/*!
     Returns true if a window system font exactly matching the settings
     of this font is available.
 
@@ -1267,9 +1111,6 @@ bool QFont::operator==(const QFont &f) const
                 && f.d->overline  == d->overline
                 && f.d->strikeOut == d->strikeOut
                 && f.d->kerning == d->kerning
-                && f.d->letterSpacingIsAbsolute == d->letterSpacingIsAbsolute
-                && f.d->letterSpacing == d->letterSpacing
-                && f.d->wordSpacing == d->wordSpacing
             ));
 }
 
@@ -1298,10 +1139,6 @@ bool QFont::operator<(const QFont &f) const
     if (r1.stretch != r2.stretch) return r1.stretch < r2.stretch;
     if (r1.styleStrategy != r2.styleStrategy) return r1.styleStrategy < r2.styleStrategy;
     if (r1.family != r2.family) return r1.family < r2.family;
-
-    if (f.d->letterSpacingIsAbsolute != d->letterSpacingIsAbsolute) return f.d->letterSpacingIsAbsolute < d->letterSpacingIsAbsolute;
-    if (f.d->letterSpacing != d->letterSpacing) return f.d->letterSpacing < d->letterSpacing;
-    if (f.d->wordSpacing != d->wordSpacing) return f.d->wordSpacing < d->wordSpacing;
 
     int f1attrs = (f.d->underline << 3) + (f.d->overline << 2) + (f.d->strikeOut<<1) + f.d->kerning;
     int f2attrs = (d->underline << 3) + (d->overline << 2) + (d->strikeOut<<1) + d->kerning;
@@ -1374,19 +1211,12 @@ QFont QFont::resolve(const QFont &other) const
     \internal
 */
 
-/*! \fn void QFont::initialize()
-  \internal
-
-  Internal function that initializes the font system.  The font cache
-  and font dict do not alloc the keys. The key is a QString which is
-  shared between QFontPrivate and QXFontName.
-*/
-
+#ifndef QT_NO_DATASTREAM
 /*  \internal
     Internal function. Converts boolean font settings to an unsigned
     8-bit number. Used for serialization etc.
 */
-static inline quint8 get_font_bits(int version, const QFontPrivate *f)
+static inline quint8 get_font_bits(const QFontPrivate *f)
 {
     Q_ASSERT(f != 0);
     quint8 bits = 0;
@@ -1400,6 +1230,8 @@ static inline quint8 get_font_bits(int version, const QFontPrivate *f)
         bits |= 0x04;
     if (f->request.fixedPitch)
         bits |= 0x08;
+    if (f->request.ignorePitch)
+        bits |= 0x20;
     if (f->kerning)
         bits |= 0x10;
     if (f->request.style == QFont::StyleOblique)
@@ -1407,24 +1239,11 @@ static inline quint8 get_font_bits(int version, const QFontPrivate *f)
     return bits;
 }
 
-static inline quint8 get_extended_font_bits(const QFontPrivate *f)
-{
-    Q_ASSERT(f != 0);
-    quint8 bits = 0;
-    if (f->request.ignorePitch)
-        bits |= 0x01;
-    if (f->letterSpacingIsAbsolute)
-        bits |= 0x02;
-    return bits;
-}
-
-#ifndef QT_NO_DATASTREAM
-
 /*  \internal
     Internal function. Sets boolean font settings from an unsigned
     8-bit number. Used for serialization etc.
 */
-static void set_font_bits(quint8 bits, QFontPrivate *f)
+static inline void set_font_bits(quint8 bits, QFontPrivate *f)
 {
     Q_ASSERT(f != 0);
     f->request.style         = (bits & 0x01) != 0 ? QFont::StyleItalic : QFont::StyleNormal;
@@ -1432,16 +1251,10 @@ static void set_font_bits(quint8 bits, QFontPrivate *f)
     f->overline              = (bits & 0x40) != 0;
     f->strikeOut             = (bits & 0x04) != 0;
     f->request.fixedPitch    = (bits & 0x08) != 0;
+    f->request.ignorePitch   = (bits & 0x20) != 0;
     f->kerning               = (bits & 0x10) != 0;
     if ((bits & 0x80) != 0)
         f->request.style         = QFont::StyleOblique;
-}
-
-static void set_extended_font_bits(quint8 bits, QFontPrivate *f)
-{
-    Q_ASSERT(f != 0);
-    f->request.ignorePitch = (bits & 0x01) != 0;
-    f->letterSpacingIsAbsolute = (bits & 0x02) != 0;
 }
 #endif
 
@@ -1520,7 +1333,6 @@ bool QFont::fromString(const QString &descrip)
   QFont stream functions
  *****************************************************************************/
 #ifndef QT_NO_DATASTREAM
-
 /*!
     \relates QFont
 
@@ -1540,14 +1352,10 @@ QDataStream &operator<<(QDataStream &s, const QFont &font)
 
     s << (qint8) font.d->request.styleStrategy;
     s << (qint8) font.d->request.weight
-      << get_font_bits(s.version(), font.d.data());
+      << get_font_bits(font.d.data());
     s << (qint16)font.d->request.stretch;
-    s << get_extended_font_bits(font.d.data());
-    s << font.d->letterSpacing.value();
-    s << font.d->wordSpacing.value();
     return s;
 }
-
 
 /*!
     \relates QFont
@@ -1587,21 +1395,9 @@ QDataStream &operator>>(QDataStream &s, QFont &font)
     s >> stretch;
     font.d->request.stretch = stretch;
 
-    quint8 extendedBits;
-    s >> extendedBits;
-    set_extended_font_bits(extendedBits, font.d.data());
-
-    int value;
-    s >> value;
-    font.d->letterSpacing.setValue(value);
-    s >> value;
-    font.d->wordSpacing.setValue(value);
-
     return s;
 }
-
 #endif // QT_NO_DATASTREAM
-
 
 /*****************************************************************************
   QFontInfo member functions
@@ -1622,9 +1418,9 @@ QDataStream &operator>>(QDataStream &s, QFont &font)
     were set, a QFontInfo object returns the values that apply to
     the font that will actually be used to draw the text.
 
-    For example, when the program asks for a 25pt Courier font on a
-    machine that has a non-scalable 24pt Courier font, QFont will
-    (normally) use the 24pt Courier for rendering. In this case,
+    For example, when the program asks for a 25pt FreeMono font on a
+    machine that has a non-scalable 24pt FreeMono font, QFont will
+    (normally) use the 24pt FreeMono for rendering. In this case,
     QFont::pointSize() returns 25 and QFontInfo::pointSize() returns
     24.
 

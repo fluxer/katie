@@ -143,21 +143,16 @@ public:
     int cursorWidth() const { return m_cursorWidth; }
     void setCursorWidth(int value) { m_cursorWidth = value; }
 
-    Qt::CursorMoveStyle cursorMoveStyle() const { return m_textLayout.cursorMoveStyle(); }
-    void setCursorMoveStyle(Qt::CursorMoveStyle style) { m_textLayout.setCursorMoveStyle(style); }
-
     void moveCursor(int pos, bool mark = false);
     void cursorForward(bool mark, int steps)
     {
         int c = m_cursor;
         if (steps > 0) {
             while (steps--)
-                c = cursorMoveStyle() == Qt::VisualMoveStyle ? m_textLayout.rightCursorPosition(c)
-                                                             : m_textLayout.nextCursorPosition(c);
+                c = m_textLayout.nextCursorPosition(c);
         } else if (steps < 0) {
             while (steps++)
-                c = cursorMoveStyle() == Qt::VisualMoveStyle ? m_textLayout.leftCursorPosition(c)
-                                                             : m_textLayout.previousCursorPosition(c);
+                c = m_textLayout.previousCursorPosition(c);
         }
         moveCursor(c, mark);
     }
@@ -245,8 +240,6 @@ public:
         if (m_maskData)
             moveCursor(nextMaskBlank(0));
     }
-
-    QString preeditAreaText() const { return m_textLayout.preeditAreaText(); }
 
     void updatePasswordEchoEditing(bool editing);
     bool passwordEchoEditing() const {

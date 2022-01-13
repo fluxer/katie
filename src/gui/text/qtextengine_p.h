@@ -59,20 +59,18 @@ struct glyph_metrics_t
 {
     inline glyph_metrics_t()
         : x(100000),  y(100000) {}
-    inline glyph_metrics_t(QFixed _x, QFixed _y, QFixed _width, QFixed _height, QFixed _xoff, QFixed _yoff)
+    inline glyph_metrics_t(QFixed _x, QFixed _y, QFixed _width, QFixed _height, QFixed _xoff)
         : x(_x),
           y(_y),
           width(_width),
           height(_height),
-          xoff(_xoff),
-          yoff(_yoff)
+          xoff(_xoff)
         {}
     QFixed x;
     QFixed y;
     QFixed width;
     QFixed height;
     QFixed xoff;
-    QFixed yoff;
 
     inline bool isValid() const {return x != 100000 && y != 100000;}
 };
@@ -256,7 +254,7 @@ public:
     int num_chars;
     const QChar *chars;
     const unsigned short *logClusters;
-    const QFont *f;
+    QFont *f;
 
     QGlyphLayout glyphs;
     QFontEngine *fontEngine;
@@ -383,7 +381,6 @@ public:
     QFixed alignLine(const QScriptLine &line);
 
     QFixed width(int charFrom, int numChars) const;
-    glyph_metrics_t boundingBox() const;
 
     int length(int item) const {
         int from = layoutData->items[item].position;
@@ -467,22 +464,12 @@ public:
     QPointF position;
     bool cacheGlyphs;
     bool forceJustification;
-    bool visualMovement;
-
-    int *underlinePositions;
 
     mutable LayoutData *layoutData;
 
     inline bool hasFormats() const { return (block.docHandle() || specialData); }
-    inline bool visualCursorMovement() const
-    {
-        return (visualMovement ||
-                (block.docHandle() ? block.docHandle()->defaultCursorMoveStyle == Qt::VisualMoveStyle : false));
-    }
 
     struct SpecialData {
-        int preeditPosition;
-        QString preeditText;
         QList<QTextLayout::FormatRange> addFormats;
         QVector<int> addFormatIndices;
         QVector<int> resolvedFormatIndices;
@@ -499,10 +486,7 @@ public:
 
     QFixed offsetInLigature(const QScriptItem *si, int pos, int max, int glyph_pos);
     int positionInLigature(const QScriptItem *si, int end, QFixed x, QFixed edge, int glyph_pos, bool cursorOnCharacter);
-    int previousLogicalPosition(int oldPos) const;
-    int nextLogicalPosition(int oldPos) const;
     int lineNumberForTextPosition(int pos);
-    int positionAfterVisualMovement(int oldPos, QTextCursor::MoveOperation op);
 
 private:
     void setBoundary(int strPos) const;
@@ -532,7 +516,6 @@ struct QTextLineItemIterator
     QTextEngine *eng;
 
     QFixed x;
-    QFixed pos_x;
     const QScriptLine &line;
     QScriptItem *si;
 
