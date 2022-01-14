@@ -156,9 +156,9 @@ void tst_QFontMetrics::boundingRect()
     f.setPointSize(24);
     QFontMetrics fm(f);
     QRect r = fm.boundingRect(QChar('Y'));
-    QVERIFY(r.top() >= 0);
+    QVERIFY(r.top() < 0);
     r = fm.boundingRect(QString("Y"));
-    QVERIFY(r.top() >= 0);
+    QVERIFY(r.top() < 0);
 }
 
 void tst_QFontMetrics::elidedText_data()

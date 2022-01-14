@@ -479,6 +479,8 @@ int QFontMetrics::width(QChar ch) const
     The height of the bounding rectangle is at least as large as the
     value returned by height().
 
+    Note that the bounding rectangle may extend to the left of (0, 0).
+
     \sa width(), height(), QPainter::boundingRect()
 */
 QRect QFontMetrics::boundingRect(const QString &text) const
@@ -486,11 +488,10 @@ QRect QFontMetrics::boundingRect(const QString &text) const
     if (text.isEmpty())
         return QRect();
 
-    QTextLayout textlayout(text, d.data());
-    textlayout.beginLayout();
-    QTEXTLAYOUT(textlayout)
-    textlayout.endLayout();
-    return textlayout.boundingRect().toRect();
+    QPainterPath textpath;
+    textpath.setFillRule(Qt::WindingFill);
+    textpath.addText(QPointF(), QFont(d.data()), text);
+    return textpath.boundingRect().toRect();
 }
 
 /*!
@@ -1090,6 +1091,8 @@ qreal QFontMetricsF::width(QChar ch) const
     The height of the bounding rectangle is at least as large as the
     value returned height().
 
+    Note that the bounding rectangle may extend to the left of (0, 0).
+
     \sa width(), height(), QPainter::boundingRect()
 */
 QRectF QFontMetricsF::boundingRect(const QString &text) const
@@ -1097,11 +1100,10 @@ QRectF QFontMetricsF::boundingRect(const QString &text) const
     if (text.isEmpty())
         return QRectF();
 
-    QTextLayout textlayout(text, d.data());
-    textlayout.beginLayout();
-    QTEXTLAYOUT(textlayout)
-    textlayout.endLayout();
-    return textlayout.boundingRect();
+    QPainterPath textpath;
+    textpath.setFillRule(Qt::WindingFill);
+    textpath.addText(QPointF(), QFont(d.data()), text);
+    return textpath.boundingRect();
 }
 
 /*!
