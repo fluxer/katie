@@ -523,35 +523,8 @@ QFont QTextEngine::font(const QScriptItem &si) const
 
 QFontEngine *QTextEngine::fontEngine(const QScriptItem &si, QFixed *ascent, QFixed *descent, QFixed *leading) const
 {
-    QFontEngine *engine = nullptr;
-    QUnicodeTables::Script script = si.analysis.script;
-
-    QFont font = fnt;
-    if (hasFormats()) {
-        QTextCharFormat f = format(&si);
-        font = f.font();
-
-        if (block.docHandle() && block.docHandle()->layout()) {
-            // Make sure we get the right dpi on printers
-            QPaintDevice *pdev = block.docHandle()->layout()->paintDevice();
-            if (pdev)
-                font = QFont(font, pdev);
-        } else {
-            font = font.resolve(fnt);
-        }
-        QTextCharFormat::VerticalAlignment valign = f.verticalAlignment();
-        if (valign == QTextCharFormat::AlignSuperScript || valign == QTextCharFormat::AlignSubScript) {
-            if (font.pointSize() != -1)
-                font.setPointSize((font.pointSize() * 2) / 3);
-            else
-                font.setPixelSize((font.pixelSize() * 2) / 3);
-            engine = font.d->engineForScript(script);
-        } else {
-            engine = font.d->engineForScript(script);
-        }
-    } else {
-        engine = font.d->engineForScript(script);
-    }
+    QFont font = QTextEngine::font(si);
+    QFontEngine* engine = font.d->engineForScript(si.analysis.script);
 
     if (ascent) {
         *ascent = engine->ascent();
