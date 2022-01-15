@@ -398,30 +398,21 @@ bool QFontMetrics::inFontUcs4(uint ucs4) const
 }
 
 /*!
-    Returns the width in pixels of the first \a len characters of \a
-    text. If \a len is negative (the default), the entire string is
-    used.
+    Returns the width in pixels of the characters in the given \a text.
 
-    Note that this value is \e not equal to boundingRect().width();
-    boundingRect() returns a rectangle describing the pixels this
-    string will cover whereas width() returns the distance to where
-    the next string should be drawn.
+    Note that this value is \e not equal to the width returned by
+    boundingRect().width() because boundingRect() returns a rectangle
+    describing the pixels this string will cover whereas width()
+    returns the distance to where the next string should be drawn.
 
     \sa boundingRect()
 */
-int QFontMetrics::width(const QString &text, int len) const
+int QFontMetrics::width(const QString &text) const
 {
     int pos = text.indexOf(QLatin1Char('\x9c'));
-    if (pos != -1) {
-        len = (len < 0) ? pos : qMin(pos, len);
-    } else if (len < 0) {
-        len = text.length();
-    }
-    if (len == 0)
-        return 0;
+    int len = (pos != -1) ? pos : text.length();
 
-    QTextEngine layout(text, d.data());
-    return qRound(layout.width(0, len));
+    return boundingRect(text.mid(0, len)).width();
 }
 
 /*!
@@ -1031,9 +1022,7 @@ qreal QFontMetricsF::width(const QString &text) const
     int pos = text.indexOf(QLatin1Char('\x9c'));
     int len = (pos != -1) ? pos : text.length();
 
-    QTextEngine layout(text, d.data());
-    layout.itemize();
-    return layout.width(0, len).toReal();
+    return boundingRect(text.mid(0, len)).width();
 }
 
 /*!
