@@ -168,6 +168,9 @@ QString QFontDatabase::resolveFontFamilyAlias(const QString &family)
 #if defined(QT_NO_FONTCONFIG)
     return family;
 #else
+    if (!qt_x11Data->has_fontconfig)
+        return family;
+
     FcPattern *pattern = FcPatternCreate();
     if (!pattern)
         return family;
