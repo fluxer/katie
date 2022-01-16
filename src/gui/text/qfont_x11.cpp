@@ -28,24 +28,6 @@
 
 QT_BEGIN_NAMESPACE
 
-double qt_pixelSize(double pointSize, int dpi)
-{
-    if (pointSize < 0)
-        return -1.;
-    if (dpi == 75) // the stupid 75 dpi setting on X11
-        dpi = 72;
-    return ((pointSize * dpi) / 72.0);
-}
-
-double qt_pointSize(double pixelSize, int dpi)
-{
-    if (pixelSize < 0)
-        return -1.;
-    if (dpi == 75) // the stupid 75 dpi setting on X11
-        dpi = 72;
-    return (pixelSize * 72. / double(dpi));
-}
-
 /*!
   \internal
   X11 Only: Returns the screen with which this font is associated.

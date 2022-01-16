@@ -33,9 +33,23 @@
 
 QT_BEGIN_NAMESPACE
 
-// from qfont_x11.cpp
-extern double qt_pointSize(double pixelSize, int dpi);
-extern double qt_pixelSize(double pointSize, int dpi);
+static double qt_pixelSize(double pointSize, int dpi)
+{
+    if (pointSize < 0)
+        return -1.;
+    if (dpi == 75) // the stupid 75 dpi setting on X11
+        dpi = 72;
+    return ((pointSize * dpi) / 72.0);
+}
+
+static inline double qt_pointSize(double pixelSize, int dpi)
+{
+    if (pixelSize < 0)
+        return -1.;
+    if (dpi == 75) // the stupid 75 dpi setting on X11
+        dpi = 72;
+    return (pixelSize * 72. / double(dpi));
+}
 
 #ifndef QT_NO_FONTCONFIG
 static inline int getFCWeight(int fc_weight)
@@ -717,7 +731,7 @@ QFontEngine* QFontDatabase::load(const QFontPrivate *d, int script)
     // normalize the request to get better caching
     QFontDef req = d->request;
     if (req.pixelSize <= 0) {
-        req.pixelSize = qFloor(qt_pixelSize(req.pointSize, d->dpi) * 100.0 + 0.5) * 0.01;
+        req.pixelSize = qt_pixelSize(req.pointSize, d->dpi);
     }
     if (req.pixelSize < 1) {
         req.pixelSize = 1;
