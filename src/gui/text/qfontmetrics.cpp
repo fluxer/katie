@@ -560,7 +560,7 @@ QSize QFontMetrics::size(int flags, const QString &text) const
     return boundingRect(QRect(0,0,0,0), flags | Qt::TextLongestVariant, text).size();
 }
 
-static inline QString qt_mnemomic_mid(const QString &text, const int pos, const bool showmnemonic)
+static inline QString qt_mnemonic_mid(const QString &text, const int pos, const bool showmnemonic)
 {
     if (showmnemonic && pos > 0 && text.at(pos - 1) == QLatin1Char('&') && text.at(pos) != QLatin1Char('&')) {
         return text.mid(0, pos - 1);
@@ -648,10 +648,10 @@ static inline QString qt_elided_text(const QString &text, Qt::TextElideMode mode
 
     switch (mode) {
         case Qt::ElideLeft: {
-            return (QLatin1String("...") + qt_mnemomic_mid(text, elidedlength - 3, showmnemonic));
+            return (QLatin1String("...") + qt_mnemonic_mid(text, elidedlength - 3, showmnemonic));
         }
         case Qt::ElideRight: {
-            return (qt_mnemomic_mid(text, elidedlength - 3, showmnemonic) + QLatin1String("..."));
+            return (qt_mnemonic_mid(text, elidedlength - 3, showmnemonic) + QLatin1String("..."));
         }
         case Qt::ElideMiddle: {
             if (elidedlength <= 5) {
@@ -662,7 +662,7 @@ static inline QString qt_elided_text(const QString &text, Qt::TextElideMode mode
             return (text.left(midlength - 2) + QLatin1String("...") + text.right(midlength - 1));
         }
         case Qt::ElideNone: {
-            return qt_mnemomic_mid(text, elidedlength, showmnemonic);
+            return qt_mnemonic_mid(text, elidedlength, showmnemonic);
         }
     }
     Q_UNREACHABLE();
