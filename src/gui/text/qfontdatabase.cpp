@@ -147,14 +147,7 @@ static inline bool isStyleMatch(const QString &style, const QString &otherstyle)
     if (lowerstyle.contains(QLatin1String("italic")) && lowerother.contains(QLatin1String("oblique"))) {
         return true;
     }
-    if (lowerstyle.contains(QLatin1String("oblique")) && lowerother.contains(QLatin1String("italic"))) {
-        return true;
-    }
-
-    if (lowerstyle == QLatin1String("normal") && lowerother == QLatin1String("regular")) {
-        return true;
-    }
-    return (lowerstyle == QLatin1String("regular") && lowerother == QLatin1String("normal"));
+    return (lowerstyle.contains(QLatin1String("oblique")) && lowerother.contains(QLatin1String("italic")));
 }
 
 QT_BEGIN_INCLUDE_NAMESPACE
