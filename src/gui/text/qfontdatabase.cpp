@@ -414,7 +414,12 @@ QStringList QFontDatabase::styles(const QString &family) const
             || (!parsedfoundry.isEmpty() && fontfamily.foundry.compare(parsedfoundry, Qt::CaseInsensitive) != 0)) {
             continue;
         }
-        result.append(fontfamily.style);
+        // compatibility
+        if (fontfamily.style.compare(QLatin1String("Regular"), Qt::CaseInsensitive) == 0) {
+            result.append(QLatin1String("Normal"));
+        } else {
+            result.append(fontfamily.style);
+        }
     }
     return result;
 }
