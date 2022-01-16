@@ -372,6 +372,21 @@ QFontDatabase::QFontDatabase()
 #ifdef QFONTDATABASE_DEBUG
         FD_DEBUG("QFontDatabase: loaded FontConfig: %d ms", int(elapsedtimer.elapsed()));
 #endif
+
+        QList<QtFontFamily> regularstyles;
+        QList<QtFontFamily>::iterator iter = d->families.begin();
+        while (iter != d->families.end()) {
+            if (iter->style.compare(QLatin1String("Regular"), Qt::CaseInsensitive) == 0) {
+                regularstyles.append(*iter);
+                regularstyles.last().style = QLatin1String("Normal");
+                iter = d->families.erase(iter);
+            } else {
+                iter++;
+            }
+        }
+        foreach (const QtFontFamily &fontfamily, regularstyles) {
+            d->families.prepend(fontfamily);
+        }
     }
 
     emit qApp->fontDatabaseChanged();
@@ -422,12 +437,12 @@ QStringList QFontDatabase::styles(const QString &family) const
             || (!parsedfoundry.isEmpty() && fontfamily.foundry.compare(parsedfoundry, Qt::CaseInsensitive) != 0)) {
             continue;
         }
-        // compatibility
-        if (fontfamily.style.compare(QLatin1String("Regular"), Qt::CaseInsensitive) == 0) {
-            result.append(QLatin1String("Normal"));
-        } else {
-            result.append(fontfamily.style);
-        }
+        result.append(fontfamily.style);
+    }
+    qSort(result);
+    const int normalstyleindex = result.indexOf(QLatin1String("Normal"));
+    if (normalstyleindex != -1) {
+        result.move(normalstyleindex, 0);
     }
     return result;
 }
