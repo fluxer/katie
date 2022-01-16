@@ -480,8 +480,6 @@ public:
     bool atSpace(int position) const;
     void indexAdditionalFormats();
 
-    QString elidedText(Qt::TextElideMode mode, const QFixed &width, int flags = 0) const;
-
     void shapeLine(const QScriptLine &line);
 
     QFixed offsetInLigature(const QScriptItem *si, int pos, int max, int glyph_pos);
