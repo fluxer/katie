@@ -164,8 +164,10 @@ void tst_QFontMetrics::elidedText_data()
     QTest::addColumn<QFont>("font");
     QTest::addColumn<QString>("text");
 
-    QTest::newRow("freesans hello") << QFont("freesans",10) << QString("hello") ;
-    QTest::newRow("freesans hello &Bye") << QFont("freesans",10) << QString("hello&Bye") ;
+    foreach (const int psize, QFontDatabase::standardSizes()) {
+        QTest::newRow(QString::fromLatin1("freesans hello (%1)").arg(psize).toLatin1()) << QFont("freesans", psize) << QString("hello");
+        QTest::newRow(QString::fromLatin1("freesans hello &Bye (%1)").arg(psize).toLatin1()) << QFont("freesans", psize) << QString("hello&Bye");
+    }
 }
 
 
