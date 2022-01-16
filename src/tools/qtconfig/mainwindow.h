@@ -53,7 +53,7 @@ public slots:
     virtual void helpAbout();
     virtual void helpAboutQt();
     virtual void pageChanged(int);
-
+    virtual void effectsToggled(bool);
 
 private:
     void updateColorButtons();

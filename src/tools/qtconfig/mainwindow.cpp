@@ -150,7 +150,7 @@ MainWindow::MainWindow()
     connect(ui->toolTipEffectCombo, SIGNAL(activated(int)), SLOT(somethingModified()));
     connect(ui->strutWidthSpinBox, SIGNAL(valueChanged(int)), SLOT(somethingModified()));
     connect(ui->strutHeightSpinBox, SIGNAL(valueChanged(int)), SLOT(somethingModified()));
-    connect(ui->effectsCheckBox, SIGNAL(toggled(bool)), SLOT(somethingModified()));
+    connect(ui->effectsCheckBox, SIGNAL(toggled(bool)), SLOT(effectsToggled(bool)));
     connect(ui->resolveLinksCheckBox, SIGNAL(toggled(bool)), SLOT(somethingModified()));
     connect(ui->fontEmbeddingCheckBox, SIGNAL(clicked()), SLOT(somethingModified()));
     connect(ui->rtlExtensionsCheckBox, SIGNAL(toggled(bool)), SLOT(somethingModified()));
@@ -532,6 +532,12 @@ void MainWindow::pageChanged(int pageNumber)
         ui->helpView->setText(tr(appearance_text));
     else if (page == ui->fontsTab)
         ui->helpView->setText(tr(font_text));
+}
+
+void MainWindow::effectsToggled(bool toggled)
+{
+    ui->effectsFrame->setEnabled(toggled);
+    setModified(true);
 }
 
 void MainWindow::closeEvent(QCloseEvent *e)
