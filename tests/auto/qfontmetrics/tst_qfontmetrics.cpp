@@ -167,6 +167,8 @@ void tst_QFontMetrics::elidedText_data()
     foreach (const int psize, QFontDatabase::standardSizes()) {
         QTest::newRow(QString::fromLatin1("freesans hello (%1)").arg(psize).toLatin1()) << QFont("freesans", psize) << QString("hello");
         QTest::newRow(QString::fromLatin1("freesans hello &Bye (%1)").arg(psize).toLatin1()) << QFont("freesans", psize) << QString("hello&Bye");
+        QTest::newRow(QString::fromLatin1("freemono hello (%1)").arg(psize).toLatin1()) << QFont("freemono", psize) << QString("hello");
+        QTest::newRow(QString::fromLatin1("freemono hello &Bye (%1)").arg(psize).toLatin1()) << QFont("freemono", psize) << QString("hello&Bye");
     }
 }
 
