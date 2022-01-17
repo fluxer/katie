@@ -600,7 +600,7 @@ static inline QString qt_elided_text(const QString &text, Qt::TextElideMode mode
 
         QFontEngine* engine = font->engineForScript(script);
         if (Q_UNLIKELY(!engine)) {
-            qWarning("QPainterPath::addText: No font engine for script %d", int(script));
+            qWarning("qt_elided_text: No font engine for script %d", int(script));
             continue;
         }
 
