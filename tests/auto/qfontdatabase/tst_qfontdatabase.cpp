@@ -49,6 +49,8 @@ private slots:
 
     void resolveFamily_data();
     void resolveFamily();
+
+    void styleString();
 };
 
 tst_QFontDatabase::tst_QFontDatabase()
@@ -162,6 +164,19 @@ void tst_QFontDatabase::resolveFamily()
     }
 
     QVERIFY(fdb.hasFamily(alias));
+}
+
+void tst_QFontDatabase::styleString()
+{
+    const QString family("DejaVu Sans Mono");
+
+    QFontDatabase fdb;
+    // qDebug() << fdb.families();
+    if (!fdb.hasFamily(family)) {
+        QSKIP("Font not installed", SkipSingle);
+    }
+
+    QVERIFY(fdb.styleString(family) != QLatin1String("Normal"));
 }
 
 QTEST_MAIN(tst_QFontDatabase)
