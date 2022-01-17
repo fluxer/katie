@@ -409,7 +409,7 @@ bool QFontMetrics::inFontUcs4(uint ucs4) const
 */
 int QFontMetrics::width(const QString &text) const
 {
-    return boundingRect(text).width();
+    return boundingRect(QRect(0,0,0,0), Qt::TextDontPrint, text).width();
 }
 
 /*!
@@ -1106,7 +1106,7 @@ bool QFontMetricsF::inFontUcs4(uint ucs4) const
 */
 qreal QFontMetricsF::width(const QString &text) const
 {
-    return boundingRect(text).width();
+    return boundingRect(QRectF(0,0,0,0), Qt::TextDontPrint, text).width();
 }
 
 /*!
