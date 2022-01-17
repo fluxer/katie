@@ -51,10 +51,8 @@ class QAbstractTextDocumentLayout;
 
 
 // this uses the same coordinate system as Qt, but a different one to freetype.
-// * y is usually negative, and is equal to the ascent.
-// * negative yoff means the following stuff is drawn higher up.
-// the characters bounding rect is given by QRect(x,y,width,height), its advance by
-// xoo and yoff
+// the characters bounding rect is given by QRect(x,y,width,height), its
+// advance by xoff
 struct glyph_metrics_t
 {
     inline glyph_metrics_t()
