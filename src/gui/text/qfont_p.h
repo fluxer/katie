@@ -75,7 +75,8 @@ struct QFontDef
     bool exactMatch(const QFontDef &other) const;
     bool operator==(const QFontDef &other) const
     {
-        return pixelSize == other.pixelSize
+        return pointSize == other.pointSize
+                    && pixelSize == other.pixelSize
                     && weight == other.weight
                     && style == other.style
                     && stretch == other.stretch
@@ -87,6 +88,7 @@ struct QFontDef
     }
     inline bool operator<(const QFontDef &other) const
     {
+        if (pointSize != other.pointSize) return pointSize < other.pointSize;
         if (pixelSize != other.pixelSize) return pixelSize < other.pixelSize;
         if (weight != other.weight) return weight < other.weight;
         if (style != other.style) return style < other.style;
