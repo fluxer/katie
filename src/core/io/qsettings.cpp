@@ -286,13 +286,6 @@ void QSettingsPrivate::write()
     }
 
     QMutexLocker locker(qSettingsMutex());
-    QFile writefile(filename);
-    if (Q_UNLIKELY(!writefile.open(QFile::WriteOnly))) {
-        status = QSettings::AccessError;
-        qWarning("QSettingsPrivate::write: failed to open %s", filename.toLocal8Bit().constData());
-        return;
-    }
-
     QSettings::SettingsMap mergemap;
     QFile readfile(filename);
     if (readfile.open(QFile::ReadOnly)) {
@@ -300,6 +293,13 @@ void QSettingsPrivate::write()
     }
     foreach(const QString &key, map.keys()) {
         mergemap.insert(key, map.value(key));
+    }
+
+    QFile writefile(filename);
+    if (Q_UNLIKELY(!writefile.open(QFile::WriteOnly))) {
+        status = QSettings::AccessError;
+        qWarning("QSettingsPrivate::write: failed to open %s", filename.toLocal8Bit().constData());
+        return;
     }
 
     if (Q_UNLIKELY(!writeFunc(writefile, mergemap))) {
