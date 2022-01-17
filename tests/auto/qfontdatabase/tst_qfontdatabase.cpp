@@ -24,6 +24,7 @@
 
 #include <qfontdatabase.h>
 #include <qdir.h>
+#include <qdebug.h>
 
 //TESTED_CLASS=
 //TESTED_FILES=
@@ -138,16 +139,17 @@ void tst_QFontDatabase::widthTwoTimes()
 void tst_QFontDatabase::resolveFamily_data()
 {
     QTest::addColumn<QString>("alias");
-    QTest::addColumn<QString>("resolved");
+    QTest::addColumn<QString>("font");
 
     QTest::newRow("Sans Serif") << QString("Sans Serif") << QString("FreeSans");
     QTest::newRow("Monospace") << QString("Monospace") << QString("FreeMono");
+    QTest::newRow("FreeSans [GNU ]") << QString("FreeSans [GNU ]") << QString("FreeSans");
 }
 
 void tst_QFontDatabase::resolveFamily()
 {
     QFETCH(QString, alias);
-    QFETCH(QString, resolved);
+    QFETCH(QString, font);
 
     if (!QFontDatabase::supportsThreadedFontRendering()) {
         QSKIP("Font resolution is not supported", SkipSingle);
@@ -155,7 +157,7 @@ void tst_QFontDatabase::resolveFamily()
 
     QFontDatabase fdb;
     // qDebug() << fdb.families();
-    if (!fdb.hasFamily(resolved)) {
+    if (!fdb.hasFamily(font)) {
         QSKIP("Font not installed", SkipSingle);
     }
 
