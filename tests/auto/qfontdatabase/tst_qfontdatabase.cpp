@@ -36,9 +36,6 @@ public:
     tst_QFontDatabase();
     virtual ~tst_QFontDatabase();
 
-public slots:
-    void init();
-    void cleanup();
 private slots:
     void styles_data();
     void styles();
@@ -48,6 +45,9 @@ private slots:
 
     void widthTwoTimes_data();
     void widthTwoTimes();
+
+    void resolveFamily_data();
+    void resolveFamily();
 };
 
 tst_QFontDatabase::tst_QFontDatabase()
@@ -59,24 +59,11 @@ tst_QFontDatabase::~tst_QFontDatabase()
 {
 
 }
-
-void tst_QFontDatabase::init()
-{
-// TODO: Add initialization code here.
-// This will be executed immediately before each test is run.
-}
-
-void tst_QFontDatabase::cleanup()
-{
-// TODO: Add cleanup code here.
-// This will be executed immediately after each test is run.
-}
-
 void tst_QFontDatabase::styles_data()
 {
     QTest::addColumn<QString>("font");
 
-    QTest::newRow( "data0" ) << QString( "FreeSerif [GNU]" );
+    QTest::newRow("data0") << QString("FreeSerif [GNU]");
 }
 
 void tst_QFontDatabase::styles()
@@ -100,8 +87,8 @@ void tst_QFontDatabase::fixedPitch_data()
     QTest::addColumn<QString>("font");
     QTest::addColumn<bool>("fixedPitch");
 
-    QTest::newRow( "FreeSans" ) << QString( "FreeSans" ) << false;
-    QTest::newRow( "FreeMono" ) << QString( "FreeMono" ) << true;
+    QTest::newRow("FreeSans") << QString("FreeSans") << false;
+    QTest::newRow("FreeMono") << QString("FreeMono") << true;
 }
 
 void tst_QFontDatabase::fixedPitch()
@@ -112,7 +99,7 @@ void tst_QFontDatabase::fixedPitch()
     QFontDatabase fdb;
     // qDebug() << fdb.families();
     if (!fdb.hasFamily(font)) {
-        QSKIP( "Font not installed", SkipSingle);
+        QSKIP("Font not installed", SkipSingle);
     }
 
     QCOMPARE(fdb.isFixedPitch(font), fixedPitch);
@@ -146,6 +133,34 @@ void tst_QFontDatabase::widthTwoTimes()
     int w2 = fm.width(text.at(0));
 
     QCOMPARE(w1, w2);
+}
+
+void tst_QFontDatabase::resolveFamily_data()
+{
+    QTest::addColumn<QString>("alias");
+    QTest::addColumn<QString>("resolved");
+
+    QTest::newRow("Sans Serif") << QString("Sans Serif") << QString("FreeSans");
+    QTest::newRow("Monospace") << QString("Monospace") << QString("FreeMono");
+}
+
+void tst_QFontDatabase::resolveFamily()
+{
+    QFETCH(QString, alias);
+    QFETCH(QString, resolved);
+
+    if (!QFontDatabase::supportsThreadedFontRendering()) {
+        QSKIP("Font resolution is not supported", SkipSingle);
+    }
+
+    QFontDatabase fdb;
+    // qDebug() << fdb.families();
+    if (!fdb.hasFamily(resolved)) {
+        QSKIP("Font not installed", SkipSingle);
+    }
+
+    QEXPECT_FAIL("", "May resolve to font that is not installed", Continue);
+    QVERIFY(fdb.hasFamily(alias));
 }
 
 QTEST_MAIN(tst_QFontDatabase)
