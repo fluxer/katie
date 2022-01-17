@@ -686,11 +686,10 @@ static QFontEngine *loadFc(const QFontPrivate *fp, QUnicodeTables::Script script
     FcPatternPrint(pattern);
 #endif
 
-    FcResult res;
-    FcPattern *match = FcFontMatch(0, pattern, &res);
+    FcResult unused;
+    FcPattern *match = FcFontMatch(0, pattern, &unused);
     QFontEngine *fe = tryPatternLoad(match, fp->screen, request, script);
     if (!fe) {
-        FcResult unused;
         FcFontSet *fs = FcFontSort(0, pattern, FcTrue, 0, &unused);
 
         if (match) {

@@ -159,7 +159,6 @@ void tst_QFontDatabase::resolveFamily()
         QSKIP("Font not installed", SkipSingle);
     }
 
-    QEXPECT_FAIL("", "May resolve to font that is not installed", Continue);
     QVERIFY(fdb.hasFamily(alias));
 }
 

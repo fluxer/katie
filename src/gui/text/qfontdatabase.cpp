@@ -173,9 +173,18 @@ QString QFontDatabase::resolveFontFamilyAlias(const QString &family)
     FcConfigSubstitute(0, pattern, FcMatchPattern);
     FcDefaultSubstitute(pattern);
 
-    FcChar8 *familyAfterSubstitution;
-    FcPatternGetString(pattern, FC_FAMILY, 0, &familyAfterSubstitution);
-    QString resolved = QString::fromUtf8((const char *) familyAfterSubstitution);
+    QString resolved;
+    FcChar8 *familyAfterSubstitution = nullptr;
+    FcResult unused;
+    FcPattern *match = FcFontMatch(0, pattern, &unused);
+    if (match) {
+        FcPatternGetString(match, FC_FAMILY, 0, &familyAfterSubstitution);
+        resolved = QString::fromUtf8((const char *) familyAfterSubstitution);
+        FcPatternDestroy(match);
+    } else {
+        FcPatternGetString(pattern, FC_FAMILY, 0, &familyAfterSubstitution);
+        resolved = QString::fromUtf8((const char *) familyAfterSubstitution);
+    }
     FcPatternDestroy(pattern);
 
     return resolved;
