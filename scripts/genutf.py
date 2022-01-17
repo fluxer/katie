@@ -56,52 +56,7 @@ def printifrange(frommap):
 switchmap = {}
 rangemap = {}
 
-if 'combining' in sys.argv:
-    for line in readlines('extracted/DerivedCombiningClass.txt'):
-        tablesplit = line.split(';')
-        codepoint = tablesplit[0].strip()
-        value = tablesplit[1].strip()
-        if value == '0':
-            # not ordered is default
-            continue
-        elif value == '202':
-            value = 'QUnicodeTables::Combining_AttachedBelow'
-        elif value == '214':
-            value = 'QUnicodeTables::Combining_AttachedAbove'
-        elif value == '216':
-            value = 'QUnicodeTables::Combining_AttachedAboveRight'
-        elif value == '218':
-            value = 'QUnicodeTables::Combining_BelowLeft'
-        elif value == '220':
-            value = 'QUnicodeTables::Combining_Below'
-        elif value == '222':
-            value = 'QUnicodeTables::Combining_BelowRight'
-        elif value == '224':
-            value = 'QUnicodeTables::Combining_Left'
-        elif value == '226':
-            value = 'QUnicodeTables::Combining_Right'
-        elif value == '228':
-            value = 'QUnicodeTables::Combining_AboveLeft'
-        elif value == '230':
-            value = 'QUnicodeTables::Combining_Above'
-        elif value == '232':
-            value = 'QUnicodeTables::Combining_AboveRight'
-        elif value == '233':
-            value = 'QUnicodeTables::Combining_DoubleBelow'
-        elif value == '234':
-            value = 'QUnicodeTables::Combining_DoubleAbove'
-        elif value == '240':
-            value = 'QUnicodeTables::Combining_IotaSubscript'
-        elif value in ['200', '204', '208', '210', '212']:
-            print('Unhandled deprecated combining type: %s' % value)
-            sys.exit(2)
-        else:
-            # only some are supported by harfbuzz
-            continue
-        mapdecideinsert(switchmap, rangemap, value, codepoint)
-    printswitch(switchmap)
-    printifrange(rangemap)
-elif 'grapheme' in sys.argv:
+if 'grapheme' in sys.argv:
     # only some are supported by harfbuzz
     supported = [
         'CR',
@@ -250,7 +205,7 @@ elif 'special' in sys.argv:
             continue
         print('    0x%s, // %s' % (scriptsmap[value], value.replace('_', '')))
 else:
-    print('''usage: <combining|grapheme|word|sentence|line|script|special>
+    print('''usage: <grapheme|word|sentence|line|script|special>
 
 Data is from https://unicode.org/Public/14.0.0/ucd/UCD.zip''')
     sys.exit(1)

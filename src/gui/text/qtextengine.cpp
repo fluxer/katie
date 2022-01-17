@@ -170,7 +170,6 @@ void QTextEngine::shapeTextWithHarfbuzz(int item) const
     memset(&shaper_item, 0, sizeof(shaper_item));
     shaper_item.string = reinterpret_cast<const HB_UChar16 *>(layoutData->string.constData());
     shaper_item.stringLength = layoutData->string.length();
-    shaper_item.item.script = (HB_Script)si.analysis.script;
     shaper_item.item.pos = si.position;
     shaper_item.item.length = length(item);
 

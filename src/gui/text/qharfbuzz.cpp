@@ -58,10 +58,9 @@ static void qHB_GetGraphemeAndLineBreakClass(HB_UChar32 ch, HB_GraphemeClass *gr
     *lineBreak = (HB_LineBreakClass) QUnicodeTables::lineBreakClass(ch);
 }
 
-static void qHB_GetUnicodeCharProperties(HB_UChar32 ch, HB_CharCategory *category, int *combiningClass)
+static void qHB_GetUnicodeCharProperties(HB_UChar32 ch, HB_CharCategory *category)
 {
     *category = (HB_CharCategory)QChar::category(ch);
-    *combiningClass = QUnicodeTables::combiningClass(ch);
 }
 
 static void qHB_GetGlyphAdvances(QFontEngine* fe, const HB_Glyph *glyphs, uint32_t numGlyphs, HB_Fixed *advances, int flags)
@@ -142,8 +141,7 @@ static void qHB_HeuristicSetGlyphAttributes(HB_ShaperItem *item)
 
     int pos = 0;
     HB_CharCategory lastCat;
-    int dummy;
-    qHB_GetUnicodeCharProperties(uc[0], &lastCat, &dummy);
+    qHB_GetUnicodeCharProperties(uc[0], &lastCat);
     for (i = 1; i < length; ++i) {
         if (logClusters[i] == pos)
             // same glyph
@@ -158,46 +156,14 @@ static void qHB_HeuristicSetGlyphAttributes(HB_ShaperItem *item)
         if ((!symbolFont && uc[i] == 0x00ad) || HB_IsControlChar(uc[i]))
             attributes[pos].dontPrint = true;
         HB_CharCategory cat;
-        int cmb;
-        qHB_GetUnicodeCharProperties(uc[i], &cat, &cmb);
+        qHB_GetUnicodeCharProperties(uc[i], &cat);
         if (cat != HB_Mark_NonSpacing) {
             attributes[pos].mark = false;
             attributes[pos].clusterStart = true;
-            attributes[pos].combiningClass = HB_Combining_NotOrdered;
             cStart = logClusters[i];
         } else {
-            if (cmb == 0) {
-                // Fix 0 combining classes
-                if ((uc[pos] & 0xff00) == 0x0e00) {
-                    // thai or lao
-                    if (uc[pos] == 0xe31 ||
-                         uc[pos] == 0xe34 ||
-                         uc[pos] == 0xe35 ||
-                         uc[pos] == 0xe36 ||
-                         uc[pos] == 0xe37 ||
-                         uc[pos] == 0xe47 ||
-                         uc[pos] == 0xe4c ||
-                         uc[pos] == 0xe4d ||
-                         uc[pos] == 0xe4e) {
-                        cmb = HB_Combining_AboveRight;
-                    } else if (uc[pos] == 0xeb1 ||
-                                uc[pos] == 0xeb4 ||
-                                uc[pos] == 0xeb5 ||
-                                uc[pos] == 0xeb6 ||
-                                uc[pos] == 0xeb7 ||
-                                uc[pos] == 0xebb ||
-                                uc[pos] == 0xecc ||
-                                uc[pos] == 0xecd) {
-                        cmb = HB_Combining_Above;
-                    } else if (uc[pos] == 0xebc) {
-                        cmb = HB_Combining_Below;
-                    }
-                }
-            }
-
             attributes[pos].mark = true;
             attributes[pos].clusterStart = false;
-            attributes[pos].combiningClass = static_cast<HB_CombiningClass>(cmb);
             logClusters[i] = cStart;
         }
         // one gets an inter character justification point if the current char is not a non spacing mark.
