@@ -115,7 +115,6 @@ struct QGlyphLayout
     QFixedPoint *offsets; // 8 bytes per element
     HB_Glyph *glyphs; // 4 bytes per element
     QFixed *advances_x; // 4 bytes per element
-    QFixed *advances_y; // 4 bytes per element
     QGlyphJustification *justifications; // 4 bytes per element
     HB_GlyphAttributes *attributes; // 2 bytes per element
 
@@ -131,8 +130,6 @@ struct QGlyphLayout
         offset += totalGlyphs * sizeof(HB_Glyph);
         advances_x = reinterpret_cast<QFixed *>(address + offset);
         offset += totalGlyphs * sizeof(QFixed);
-        advances_y = reinterpret_cast<QFixed *>(address + offset);
-        offset += totalGlyphs * sizeof(QFixed);
         justifications = reinterpret_cast<QGlyphJustification *>(address + offset);
         offset += totalGlyphs * sizeof(QGlyphJustification);
         attributes = reinterpret_cast<HB_GlyphAttributes *>(address + offset);
@@ -143,7 +140,6 @@ struct QGlyphLayout
         QGlyphLayout copy = *this;
         copy.glyphs += position;
         copy.advances_x += position;
-        copy.advances_y += position;
         copy.offsets += position;
         copy.justifications += position;
         copy.attributes += position;
@@ -156,7 +152,7 @@ struct QGlyphLayout
 
     static inline int spaceNeededForGlyphLayout(int totalGlyphs) {
         return totalGlyphs * (sizeof(HB_Glyph) + sizeof(HB_GlyphAttributes)
-                + sizeof(QFixed) + sizeof(QFixed) + sizeof(QFixedPoint)
+                + sizeof(QFixed) + sizeof(QFixedPoint)
                 + sizeof(QGlyphJustification));
     }
 
@@ -174,7 +170,6 @@ struct QGlyphLayout
             memset(offsets + first, 0, num * sizeof(QFixedPoint));
             memset(glyphs + first, 0, num * sizeof(HB_Glyph));
             memset(advances_x + first, 0, num * sizeof(QFixed));
-            memset(advances_y + first, 0, num * sizeof(QFixed));
             memset(justifications + first, 0, num * sizeof(QGlyphJustification));
             memset(attributes + first, 0, num * sizeof(HB_GlyphAttributes));
         }
@@ -219,7 +214,7 @@ public:
 
 private:
     void *buffer[(N * (sizeof(HB_Glyph) + sizeof(HB_GlyphAttributes)
-                + sizeof(QFixed) + sizeof(QFixed) + sizeof(QFixedPoint)
+                + sizeof(QFixed) + sizeof(QFixedPoint)
                 + sizeof(QGlyphJustification)))
                     / QT_POINTER_SIZE + 1];
 };

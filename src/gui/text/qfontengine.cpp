@@ -114,7 +114,6 @@ void QFontEngine::getGlyphPositions(const QGlyphLayout &glyphs, const QTransform
                 positions[current].y = ypos + glyphs.offsets[i].y;
                 glyphs_out[current] = glyphs.glyphs[i];
                 xpos += glyphs.advances_x[i] + QFixed::fromFixed(glyphs.justifications[i].space_18d6);
-                ypos += glyphs.advances_y[i];
                 ++current;
             }
             ++i;
@@ -130,7 +129,6 @@ void QFontEngine::getGlyphPositions(const QGlyphLayout &glyphs, const QTransform
                 positions[current].y = QFixed::fromReal(gpos.y());
                 glyphs_out[current] = glyphs.glyphs[i];
                 xpos += glyphs.advances_x[i] + QFixed::fromFixed(glyphs.justifications[i].space_18d6);
-                ypos += glyphs.advances_y[i];
                 ++current;
             }
             ++i;
@@ -351,7 +349,6 @@ bool QFontEngineBox::stringToCMap(const QChar *, int len, QGlyphLayout *glyphs, 
     for (int i = 0; i < len; i++) {
         glyphs->glyphs[i] = 0;
         glyphs->advances_x[i] = _size;
-        glyphs->advances_y[i] = 0;
     }
 
     *nglyphs = len;
@@ -363,7 +360,6 @@ void QFontEngineBox::recalcAdvances(QGlyphLayout *glyphs, QTextEngine::ShaperFla
 {
     for (int i = 0; i < glyphs->numGlyphs; i++) {
         glyphs->advances_x[i] = _size;
-        glyphs->advances_y[i] = 0;
     }
 }
 
@@ -433,10 +429,8 @@ void QFontEngineBox::addGlyphsToPath(glyph_t *glyphs, QFixedPoint *positions, in
         g.glyphs[i] = glyphs[i];
         if (i < nGlyphs - 1) {
             g.advances_x[i] = positions[i+1].x - positions[i].x;
-            g.advances_y[i] = positions[i+1].y - positions[i].y;
         } else {
             g.advances_x[i] = QFixed::fromReal(maxCharWidth());
-            g.advances_y[i] = 0;
         }
     }
 
@@ -446,7 +440,6 @@ void QFontEngineBox::addGlyphsToPath(glyph_t *glyphs, QFixedPoint *positions, in
         glyph_metrics_t metrics = boundingBox(g.glyphs[i]);
         if (metrics.width.value() == 0 || metrics.height.value() == 0) {
             advanceX += g.advances_x[i];
-            advanceY += g.advances_y[i];
             continue;
         }
 
@@ -459,7 +452,6 @@ void QFontEngineBox::addGlyphsToPath(glyph_t *glyphs, QFixedPoint *positions, in
         path->closeSubpath();
 
         advanceX += g.advances_x[i];
-        advanceY += g.advances_y[i];
     }
 }
 

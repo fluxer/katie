@@ -773,7 +773,6 @@ void QGlyphLayout::grow(char *address, int totalGlyphs)
         // move the existing data
         memmove(newLayout.attributes, oldLayout.attributes, numGlyphs * sizeof(HB_GlyphAttributes));
         memmove(newLayout.justifications, oldLayout.justifications, numGlyphs * sizeof(QGlyphJustification));
-        memmove(newLayout.advances_y, oldLayout.advances_y, numGlyphs * sizeof(QFixed));
         memmove(newLayout.advances_x, oldLayout.advances_x, numGlyphs * sizeof(QFixed));
         memmove(newLayout.glyphs, oldLayout.glyphs, numGlyphs * sizeof(HB_Glyph));
     }
