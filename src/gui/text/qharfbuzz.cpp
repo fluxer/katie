@@ -64,21 +64,6 @@ static void qHB_GetUnicodeCharProperties(HB_UChar32 ch, HB_CharCategory *categor
     *combiningClass = QUnicodeTables::combiningClass(ch);
 }
 
-static void qHB_getGlyphMetrics(QFontEngine* fe, HB_Glyph glyph, HB_GlyphMetrics *metrics)
-{
-    glyph_metrics_t m = fe->boundingBox(glyph);
-    metrics->x = m.x.value();
-    metrics->y = m.y.value();
-    metrics->width = m.width.value();
-    metrics->height = m.height.value();
-    metrics->xOffset = m.xoff.value();
-}
-
-static HB_Fixed qHB_getGlyphAscent(QFontEngine* fe)
-{
-    return fe->ascent().value();
-}
-
 static void qHB_GetGlyphAdvances(QFontEngine* fe, const HB_Glyph *glyphs, uint32_t numGlyphs, HB_Fixed *advances, int flags)
 {
     QVarLengthGlyphLayoutArray qglyphs(numGlyphs);
@@ -239,90 +224,10 @@ static inline void positionCluster(HB_ShaperItem *item, int gfrom,  int glast)
     int nmarks = glast - gfrom;
     assert(nmarks > 0);
 
-    HB_Glyph *glyphs = item->glyphs;
-    HB_GlyphAttributes *attributes = item->attributes;
-
-    HB_GlyphMetrics baseMetrics;
-    qHB_getGlyphMetrics(item->font, glyphs[gfrom], &baseMetrics);
-
-    if (item->item.script == HB_Script_Hebrew
-        && (-baseMetrics.y) > baseMetrics.height)
-        // we need to attach below the baseline, because of the hebrew iud.
-        baseMetrics.height = -baseMetrics.y;
-
     // qDebug("---> positionCluster: cluster from %d to %d", gfrom, glast);
     // qDebug("baseInfo: %f/%f (%f/%f) off=%f/%f", baseInfo.x, baseInfo.y, baseInfo.width, baseInfo.height, baseInfo.xoff, baseInfo.yoff);
 
-    HB_Fixed size = qHB_getGlyphAscent(item->font) / 10;
-    HB_Fixed offsetBase = HB_FIXED_CONSTANT(1) + (size - HB_FIXED_CONSTANT(4)) / 4;
-    if (size > HB_FIXED_CONSTANT(4))
-        offsetBase += HB_FIXED_CONSTANT(4);
-    else
-        offsetBase += size;
-    // qreal offsetBase = (size - 4) / 4 + qMin<qreal>(size, 4) + 1;
-    // qDebug("offset = %f", offsetBase);
-
-    HB_CombiningClass lastCmb = HB_Combining_NotOrdered;
-    HB_GlyphMetrics attachmentRect;
-    memset(&attachmentRect, 0, sizeof(attachmentRect));
-
     for(int i = 1; i <= nmarks; i++) {
-        HB_Glyph mark = glyphs[gfrom+i];
-        HB_GlyphMetrics markMetrics;
-        qHB_getGlyphMetrics(item->font, mark, &markMetrics);
-        HB_FixedPoint p;
-        p.x = p.y = 0;
-        // qDebug("markInfo: %f/%f (%f/%f) off=%f/%f", markInfo.x, markInfo.y, markInfo.width, markInfo.height, markInfo.xoff, markInfo.yoff);
-
-        HB_Fixed offset = offsetBase;
-        HB_CombiningClass cmb = attributes[gfrom+i].combiningClass;
-
-        // combining marks of different class don't interact. Reset the rectangle.
-        if (cmb != lastCmb) {
-            // qDebug("resetting rect");
-            attachmentRect = baseMetrics;
-        }
-
-        switch(cmb) {
-        case HB_Combining_DoubleBelow:
-            // ### wrong in rtl context!
-        case HB_Combining_BelowLeft:
-            p.y += offset;
-        case HB_Combining_Below:
-            p.y += offset;
-        case HB_Combining_BelowRight:
-            p.y += offset;
-        case HB_Combining_Left:
-            p.x -= offset;
-        case HB_Combining_Right:
-            p.x += offset;
-        case HB_Combining_DoubleAbove:
-            // ### wrong in RTL context!
-        case HB_Combining_AboveLeft:
-            p.y -= offset;
-        case HB_Combining_Above:
-            p.y -= offset;
-        case HB_Combining_AboveRight:
-            p.y -= offset;
-
-        case HB_Combining_IotaSubscript:
-            default:
-                break;
-        }
-        // qDebug("char=%x combiningClass = %d offset=%f/%f", mark, cmb, p.x(), p.y());
-        markMetrics.x += p.x;
-        markMetrics.y += p.y;
-
-        HB_GlyphMetrics unitedAttachmentRect = attachmentRect;
-        unitedAttachmentRect.x = HB_MIN(attachmentRect.x, markMetrics.x);
-        unitedAttachmentRect.y = HB_MIN(attachmentRect.y, markMetrics.y);
-        unitedAttachmentRect.width = HB_MAX(attachmentRect.x + attachmentRect.width, markMetrics.x + markMetrics.width) - unitedAttachmentRect.x;
-        unitedAttachmentRect.height = HB_MAX(attachmentRect.y + attachmentRect.height, markMetrics.y + markMetrics.height) - unitedAttachmentRect.y;
-        attachmentRect = unitedAttachmentRect;
-
-        lastCmb = cmb;
-        item->offsets[gfrom+i].x = p.x - baseMetrics.xOffset;
-        item->offsets[gfrom+i].y = p.y;
         item->advances[gfrom+i] = 0;
     }
 }

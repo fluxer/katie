@@ -112,7 +112,6 @@ Q_DECLARE_TYPEINFO(QGlyphJustification, Q_PRIMITIVE_TYPE);
 struct QGlyphLayout
 {
     // init to 0 not needed, done when shaping
-    QFixedPoint *offsets; // 8 bytes per element
     HB_Glyph *glyphs; // 4 bytes per element
     QFixed *advances_x; // 4 bytes per element
     QGlyphJustification *justifications; // 4 bytes per element
@@ -124,10 +123,8 @@ struct QGlyphLayout
 
     inline explicit QGlyphLayout(char *address, int totalGlyphs)
     {
-        offsets = reinterpret_cast<QFixedPoint *>(address);
-        int offset = totalGlyphs * sizeof(HB_FixedPoint);
-        glyphs = reinterpret_cast<HB_Glyph *>(address + offset);
-        offset += totalGlyphs * sizeof(HB_Glyph);
+        int offset = totalGlyphs * sizeof(HB_Glyph);
+        glyphs = reinterpret_cast<HB_Glyph *>(address);
         advances_x = reinterpret_cast<QFixed *>(address + offset);
         offset += totalGlyphs * sizeof(QFixed);
         justifications = reinterpret_cast<QGlyphJustification *>(address + offset);
@@ -140,7 +137,6 @@ struct QGlyphLayout
         QGlyphLayout copy = *this;
         copy.glyphs += position;
         copy.advances_x += position;
-        copy.offsets += position;
         copy.justifications += position;
         copy.attributes += position;
         if (n == -1)
@@ -152,8 +148,7 @@ struct QGlyphLayout
 
     static inline int spaceNeededForGlyphLayout(int totalGlyphs) {
         return totalGlyphs * (sizeof(HB_Glyph) + sizeof(HB_GlyphAttributes)
-                + sizeof(QFixed) + sizeof(QFixedPoint)
-                + sizeof(QGlyphJustification));
+                + sizeof(QFixed) + sizeof(QGlyphJustification));
     }
 
     inline QFixed effectiveAdvance(int item) const
@@ -162,12 +157,10 @@ struct QGlyphLayout
     inline void clear(int first = 0, int last = -1) {
         if (last == -1)
             last = numGlyphs;
-        if (first == 0 && last == numGlyphs
-            && reinterpret_cast<char *>(offsets + numGlyphs) == reinterpret_cast<char *>(glyphs)) {
-            memset(offsets, 0, spaceNeededForGlyphLayout(numGlyphs));
+        if (first == 0 && last == numGlyphs) {
+            memset(glyphs, 0, spaceNeededForGlyphLayout(numGlyphs));
         } else {
             const int num = last - first;
-            memset(offsets + first, 0, num * sizeof(QFixedPoint));
             memset(glyphs + first, 0, num * sizeof(HB_Glyph));
             memset(advances_x + first, 0, num * sizeof(QFixed));
             memset(justifications + first, 0, num * sizeof(QGlyphJustification));
@@ -176,7 +169,7 @@ struct QGlyphLayout
     }
 
     inline char *data() {
-        return reinterpret_cast<char *>(offsets);
+        return reinterpret_cast<char *>(glyphs);
     }
 
     void grow(char *address, int totalGlyphs);
@@ -214,8 +207,7 @@ public:
 
 private:
     void *buffer[(N * (sizeof(HB_Glyph) + sizeof(HB_GlyphAttributes)
-                + sizeof(QFixed) + sizeof(QFixedPoint)
-                + sizeof(QGlyphJustification)))
+                + sizeof(QFixed) + sizeof(QGlyphJustification)))
                     / QT_POINTER_SIZE + 1];
 };
 

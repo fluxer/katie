@@ -110,8 +110,8 @@ void QFontEngine::getGlyphPositions(const QGlyphLayout &glyphs, const QTransform
     if (!transform) {
         while (i < glyphs.numGlyphs) {
             if (!glyphs.attributes[i].dontPrint) {
-                positions[current].x = xpos + glyphs.offsets[i].x;
-                positions[current].y = ypos + glyphs.offsets[i].y;
+                positions[current].x = xpos;
+                positions[current].y = ypos;
                 glyphs_out[current] = glyphs.glyphs[i];
                 xpos += glyphs.advances_x[i] + QFixed::fromFixed(glyphs.justifications[i].space_18d6);
                 ++current;
@@ -121,9 +121,7 @@ void QFontEngine::getGlyphPositions(const QGlyphLayout &glyphs, const QTransform
     } else {
         while (i < glyphs.numGlyphs) {
             if (!glyphs.attributes[i].dontPrint) {
-                QFixed gpos_x = xpos + glyphs.offsets[i].x;
-                QFixed gpos_y = ypos + glyphs.offsets[i].y;
-                QPointF gpos(gpos_x.toReal(), gpos_y.toReal());
+                QPointF gpos(xpos.toReal(), ypos.toReal());
                 gpos = gpos * matrix;
                 positions[current].x = QFixed::fromReal(gpos.x());
                 positions[current].y = QFixed::fromReal(gpos.y());
@@ -442,10 +440,6 @@ void QFontEngineBox::addGlyphsToPath(glyph_t *glyphs, QFixedPoint *positions, in
             advanceX += g.advances_x[i];
             continue;
         }
-
-        QFixedPoint offset = g.offsets[i];
-        advanceX += offset.x;
-        advanceY += offset.y;
 
         path->moveTo((advanceX + metrics.x).toReal(), (advanceY + metrics.y).toReal());
         path->addRect(QRectF(0.0, 0.0, _size, _size));

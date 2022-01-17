@@ -157,7 +157,6 @@ void QTextEngine::shapeText(int item) const
 void QTextEngine::shapeTextWithHarfbuzz(int item) const
 {
     Q_ASSERT(sizeof(HB_Fixed) == sizeof(QFixed));
-    Q_ASSERT(sizeof(HB_FixedPoint) == sizeof(QFixedPoint));
 
     QScriptItem &si = layoutData->items[item];
 
@@ -220,7 +219,6 @@ void QTextEngine::shapeTextWithHarfbuzz(int item) const
         shaper_item.glyphs = g.glyphs;
         shaper_item.attributes = g.attributes;
         shaper_item.advances = reinterpret_cast<HB_Fixed *>(g.advances_x);
-        shaper_item.offsets = reinterpret_cast<HB_FixedPoint *>(g.offsets);
 
         if (shaper_item.glyphIndicesPresent) {
             for (uint32_t i = 0; i < shaper_item.initialGlyphCount; ++i)

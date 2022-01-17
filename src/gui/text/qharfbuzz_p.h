@@ -374,17 +374,6 @@ typedef struct {
 } HB_CharAttributes;
 
 typedef struct {
-    HB_Fixed x;
-    HB_Fixed y;
-} HB_FixedPoint;
-
-typedef struct {
-    HB_Fixed x, y;
-    HB_Fixed width, height;
-    HB_Fixed xOffset;
-} HB_GlyphMetrics;
-
-typedef struct {
     uint32_t pos;
     uint32_t length;
     HB_Script script;
@@ -412,7 +401,6 @@ typedef struct {
     HB_Glyph *glyphs;                       /* output: <num_glyphs> indices of shaped glyphs */
     HB_GlyphAttributes *attributes;         /* output: <num_glyphs> glyph attributes */
     HB_Fixed *advances;                     /* output: <num_glyphs> advances */
-    HB_FixedPoint *offsets;                 /* output: <num_glyphs> offsets */
     unsigned short *log_clusters;           /* output: for each output glyph, the index in the input of the start of its logical cluster */
 
     QFontEngine* font;
@@ -424,7 +412,6 @@ void qHB_GetCharAttributes(const HB_UChar16 *string, uint32_t stringLength,
                            HB_CharAttributes *attributes);
 
 Q_DECLARE_TYPEINFO(HB_GlyphAttributes, Q_PRIMITIVE_TYPE);
-Q_DECLARE_TYPEINFO(HB_FixedPoint, Q_PRIMITIVE_TYPE);
 
 QT_END_NAMESPACE
 
