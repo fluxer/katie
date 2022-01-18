@@ -67,7 +67,7 @@ struct QtFontFamily {
 bool QtFontFamily::operator<(const QtFontFamily &other) const
 {
     if (family == other.family) {
-        // qDebug() << Q_FUNC_INFO << family << weight << other.weight;
+        // qDebug() << Q_FUNC_INFO << family << style << weight << other.weight;
         if (style == QLatin1String("Normal") && other.style != QLatin1String("Normal")) {
             return false;
         }
@@ -75,10 +75,12 @@ bool QtFontFamily::operator<(const QtFontFamily &other) const
             return false;
         }
     }
+
     return (family < other.family || foundry < other.foundry
             || style < other.style || fixedpitch < other.fixedpitch
             || scalable < other.scalable || italic < other.italic
-            || bold < other.bold || pointsize < other.pointsize);
+            || bold < other.bold || weight < other.weight
+            || pointsize < other.pointsize);
 }
 
 class QFontDatabasePrivate
@@ -89,8 +91,6 @@ public:
 #endif
     QMap<QtFontFamily, bool> families;
 };
-
-
 
 Q_GLOBAL_STATIC(QFontDatabasePrivate, qGlobalFontDatabase)
 Q_GLOBAL_STATIC(QMutex, qGlobalFontDatabaseMutex)

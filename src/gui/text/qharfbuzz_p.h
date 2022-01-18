@@ -187,7 +187,7 @@ typedef enum {
 typedef struct {
     HB_LineBreakType lineBreakType;
     bool whiteSpace; /* A unicode whitespace character, except NBSP, ZWNBSP */
-    bool charStop; /* Valid cursor position (for left/right arrow) */
+    bool charStop;   /* Valid cursor position (for left/right arrow) */
 } HB_CharAttributes;
 
 typedef struct {
