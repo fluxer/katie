@@ -692,10 +692,9 @@ public:
         TextWrapAnywhere = 0x1000,
         TextDontPrint = 0x2000,
         TextHideMnemonic = 0x4000,
-        TextJustificationForced = 0x8000,
-        TextForceLeftToRight = 0x10000,
-        TextForceRightToLeft = 0x20000,
-        TextLongestVariant = 0x40000,
+        TextForceLeftToRight = 0x8000,
+        TextForceRightToLeft = 0x10000,
+        TextLongestVariant = 0x20000,
         TextIncludeTrailingSpaces = 0x08000000
     };
 

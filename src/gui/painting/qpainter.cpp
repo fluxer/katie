@@ -6020,7 +6020,6 @@ start_lengthVariant:
     textLayout.setCacheEnabled(true);
     textLayout.setTextOption(textoption);
     textLayout.setAdditionalFormats(formatoverrides);
-    // covers Qt::TextJustificationForced
     textLayout.setFlags(tf);
 
     if (finalText.isEmpty()) {
@@ -6029,7 +6028,7 @@ start_lengthVariant:
         tf |= Qt::TextDontPrint;
     } else {
         qreal lineWidth = 0x01000000;
-        if (wordwrap || (tf & Qt::TextJustificationForced))
+        if (wordwrap)
             lineWidth = qMax<qreal>(0, r.width());
         if(!wordwrap)
             tf |= Qt::TextIncludeTrailingSpaces;

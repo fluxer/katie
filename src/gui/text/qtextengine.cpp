@@ -243,7 +243,6 @@ void QTextEngine::shapeTextWithHarfbuzz(int item) const
 static void init(QTextEngine *e)
 {
     e->cacheGlyphs = false;
-    e->forceJustification = false;
 
     e->layoutData = 0;
 
@@ -564,13 +563,11 @@ void QTextEngine::justify(const QScriptLine &line)
 
     itemize();
 
-    if (!forceJustification) {
-        int end = line.from + (int)line.length;
-        if (end == layoutData->string.length())
-            return; // no justification at end of paragraph
-        if (end && layoutData->items[findItem(end-1)].analysis.flags == QScriptAnalysis::LineOrParagraphSeparator)
-            return; // no justification at the end of an explicitly separated line
-    }
+    int lineend = line.from + (int)line.length;
+    if (lineend == layoutData->string.length())
+        return; // no justification at end of paragraph
+    if (lineend && layoutData->items[findItem(lineend-1)].analysis.flags == QScriptAnalysis::LineOrParagraphSeparator)
+        return; // no justification at the end of an explicitly separated line
 
     // justify line
     int maxJustify = 0;

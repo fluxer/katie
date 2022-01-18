@@ -448,7 +448,6 @@ public:
     QFixed maxWidth;
     QPointF position;
     bool cacheGlyphs;
-    bool forceJustification;
 
     mutable LayoutData *layoutData;
 

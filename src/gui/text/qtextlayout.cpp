@@ -795,11 +795,6 @@ qreal QTextLayout::maximumWidth() const
 */
 void QTextLayout::setFlags(int flags)
 {
-    if (flags & Qt::TextJustificationForced) {
-        d->option.setAlignment(Qt::AlignJustify);
-        d->forceJustification = true;
-    }
-
     if (flags & (Qt::TextForceLeftToRight|Qt::TextForceRightToLeft)) {
         d->option.setTextDirection((flags & Qt::TextForceLeftToRight) ? Qt::LeftToRight : Qt::RightToLeft);
     }
