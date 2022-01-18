@@ -499,7 +499,7 @@ bool QTextLayout::cacheEnabled() const
 void QTextLayout::beginLayout()
 {
 #ifndef QT_NO_DEBUG
-    if (d->layoutData && d->layoutData->layoutState == QTextEngine::InLayout) {
+    if (Q_UNLIKELY(d->layoutData && d->layoutData->layoutState == QTextEngine::InLayout)) {
         qWarning("QTextLayout::beginLayout: Called while already doing layout");
         return;
     }
@@ -518,7 +518,7 @@ void QTextLayout::beginLayout()
 void QTextLayout::endLayout()
 {
 #ifndef QT_NO_DEBUG
-    if (!d->layoutData || d->layoutData->layoutState == QTextEngine::LayoutEmpty) {
+    if (Q_UNLIKELY(!d->layoutData || d->layoutData->layoutState == QTextEngine::LayoutEmpty)) {
         qWarning("QTextLayout::endLayout: Called without beginLayout()");
         return;
     }
@@ -655,7 +655,7 @@ bool QTextLayout::isValidCursorPosition(int pos) const
 QTextLine QTextLayout::createLine()
 {
 #ifndef QT_NO_DEBUG
-    if (!d->layoutData || d->layoutData->layoutState == QTextEngine::LayoutEmpty) {
+    if (Q_UNLIKELY(!d->layoutData || d->layoutData->layoutState == QTextEngine::LayoutEmpty)) {
         qWarning("QTextLayout::createLine: Called without layouting");
         return QTextLine();
     }
@@ -1317,7 +1317,7 @@ qreal QTextLine::horizontalAdvance() const
 void QTextLine::setLineWidth(qreal width)
 {
     QScriptLine &line = eng->lines[i];
-    if (!eng->layoutData) {
+    if (Q_UNLIKELY(!eng->layoutData)) {
         qWarning("QTextLine: Can't set a line width while not layouting.");
         return;
     }
