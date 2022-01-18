@@ -295,40 +295,41 @@ static const uint8_t graphemeTable[HB_Grapheme_LVT + 1][HB_Grapheme_LVT + 1] =
     { true , true , true , true , true , false, true , true , true , true  }, // LV, 
     { true , true , true , true , true , false, true , true , true , true  }, // LVT
 };
-    
-static inline void calcLineBreaks(const HB_UChar16 *uc, uint32_t len, HB_CharAttributes *charAttributes)
+
+void qHB_GetCharAttributes(const HB_UChar16 *string, uint32_t stringLength,
+                           HB_CharAttributes *attributes)
 {
-    if (!len)
+    if (!stringLength)
         return;
 
     // ##### can this fail if the first char is a surrogate?
     HB_LineBreakClass cls;
     HB_GraphemeClass grapheme;
-    qHB_GetGraphemeAndLineBreakClass(*uc, &grapheme, &cls);
+    qHB_GetGraphemeAndLineBreakClass(*string, &grapheme, &cls);
     // handle case where input starts with an LF
     if (cls == HB_LineBreak_LF)
         cls = HB_LineBreak_BK;
 
-    charAttributes[0].whiteSpace = (cls == HB_LineBreak_SP || cls == HB_LineBreak_BK);
-    charAttributes[0].charStop = true;
+    attributes[0].whiteSpace = (cls == HB_LineBreak_SP || cls == HB_LineBreak_BK);
+    attributes[0].charStop = true;
 
     int lcls = cls;
-    for (uint32_t i = 1; i < len; ++i) {
-        charAttributes[i].whiteSpace = false;
+    for (uint32_t i = 1; i < stringLength; ++i) {
+        attributes[i].whiteSpace = false;
 
-        HB_UChar32 code = uc[i];
+        HB_UChar32 code = string[i];
         HB_GraphemeClass ngrapheme;
         HB_LineBreakClass ncls;
         qHB_GetGraphemeAndLineBreakClass(code, &ngrapheme, &ncls);
-        charAttributes[i].charStop = graphemeTable[ngrapheme][grapheme];
+        attributes[i].charStop = graphemeTable[ngrapheme][grapheme];
         // handle surrogates
         if (ncls == HB_LineBreak_SG) {
-            if (HB_IsHighSurrogate(uc[i]) && i < len - 1 && HB_IsLowSurrogate(uc[i+1])) {
+            if (HB_IsHighSurrogate(string[i]) && i < stringLength - 1 && HB_IsLowSurrogate(string[i+1])) {
                 continue;
-            } else if (HB_IsLowSurrogate(uc[i]) && HB_IsHighSurrogate(uc[i-1])) {
-                code = HB_SurrogateToUcs4(uc[i-1], uc[i]);
+            } else if (HB_IsLowSurrogate(string[i]) && HB_IsHighSurrogate(string[i-1])) {
+                code = HB_SurrogateToUcs4(string[i-1], string[i]);
                 qHB_GetGraphemeAndLineBreakClass(code, &ngrapheme, &ncls);
-                charAttributes[i].charStop = false;
+                attributes[i].charStop = false;
             } else {
                 ncls = HB_LineBreak_AL;
             }
@@ -336,7 +337,7 @@ static inline void calcLineBreaks(const HB_UChar16 *uc, uint32_t len, HB_CharAtt
 
         // set white space and char stop flag
         if (ncls >= HB_LineBreak_SP)
-            charAttributes[i].whiteSpace = true;
+            attributes[i].whiteSpace = true;
 
         HB_LineBreakType lineBreakType = HB_NoBreak;
         if (cls >= HB_LineBreak_LF) {
@@ -364,7 +365,7 @@ static inline void calcLineBreaks(const HB_UChar16 *uc, uint32_t len, HB_CharAtt
             switch (brk) {
             case DirectBreak:
                 lineBreakType = HB_Break;
-                if (uc[i-1] == 0xad) // soft hyphen
+                if (string[i-1] == 0xad) // soft hyphen
                     lineBreakType = HB_SoftHyphen;
                 break;
             case IndirectBreak:
@@ -374,7 +375,7 @@ static inline void calcLineBreaks(const HB_UChar16 *uc, uint32_t len, HB_CharAtt
                 lineBreakType = HB_NoBreak;
                 if (lcls == HB_LineBreak_SP){
                     if (i > 1)
-                        charAttributes[i-2].lineBreakType = HB_Break;
+                        attributes[i-2].lineBreakType = HB_Break;
                 } else {
                     goto next_no_cls_update;
                 }
@@ -393,15 +394,9 @@ static inline void calcLineBreaks(const HB_UChar16 *uc, uint32_t len, HB_CharAtt
     next_no_cls_update:
         lcls = ncls;
         grapheme = ngrapheme;
-        charAttributes[i-1].lineBreakType = lineBreakType;
+        attributes[i-1].lineBreakType = lineBreakType;
     }
-    charAttributes[len-1].lineBreakType = HB_ForcedBreak;
-}
-
-void qHB_GetCharAttributes(const HB_UChar16 *string, uint32_t stringLength,
-                           HB_CharAttributes *attributes)
-{
-    calcLineBreaks(string, stringLength, attributes);
+    attributes[stringLength-1].lineBreakType = HB_ForcedBreak;
 }
 
 QT_END_NAMESPACE
