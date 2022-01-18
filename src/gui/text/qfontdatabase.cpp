@@ -73,7 +73,7 @@ static const QVector<QLatin1String> preferedfontstyles = {
 
 bool QtFontFamily::operator<(const QtFontFamily &other) const
 {
-    // qDebug() << Q_FUNC_INFO << other.family << style << weight << other.weight;
+    // qDebug() << Q_FUNC_INFO << weight << other.weight;
     if (weight < other.weight) {
         return true;
     }
@@ -85,13 +85,6 @@ bool QtFontFamily::operator<(const QtFontFamily &other) const
     }
     return false;
 }
-
-#if 0
-QDebug operator<<(QDebug stream, const QtFontFamily &fontfamily)
-{
-    return stream << "QtFontFamily(" << fontfamily.family << ',' << fontfamily.style << ',' << fontfamily.weight << ')';
-}
-#endif
 
 class QFontDatabasePrivate
 {
@@ -427,7 +420,6 @@ QFontDatabase::QFontDatabase()
         FcFontSetDestroy(fonts);
 
         qStableSort(d->families);
-        // qDebug() << Q_FUNC_INFO << d->families;
 
 #ifdef QFONTDATABASE_DEBUG
         FD_DEBUG("QFontDatabase: loaded FontConfig: %d ms", int(elapsedtimer.elapsed()));
