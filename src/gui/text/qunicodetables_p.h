@@ -55,31 +55,6 @@ namespace QUnicodeTables {
         GraphemeBreak_LVT
     };
 
-    enum WordBreak {
-        WordBreak_Other,
-        WordBreak_Format,
-        WordBreak_Katakana,
-        WordBreak_ALetter,
-        WordBreak_MidLetter,
-        WordBreak_MidNum,
-        WordBreak_Numeric,
-        WordBreak_ExtendNumLet
-    };
-
-    enum SentenceBreak {
-        SentenceBreak_Other,
-        SentenceBreak_Sep,
-        SentenceBreak_Format,
-        SentenceBreak_Sp,
-        SentenceBreak_Lower,
-        SentenceBreak_Upper,
-        SentenceBreak_OLetter,
-        SentenceBreak_Numeric,
-        SentenceBreak_ATerm,
-        SentenceBreak_STerm,
-        SentenceBreak_Close
-    };
-
     enum LineBreak {
         LineBreak_OP,
         LineBreak_CL,
@@ -116,8 +91,6 @@ namespace QUnicodeTables {
     };
 
     Q_GUI_EXPORT GraphemeBreak QT_FASTCALL graphemeBreak(uint ucs4);
-    Q_GUI_EXPORT WordBreak QT_FASTCALL wordBreak(uint ucs4);
-    Q_GUI_EXPORT SentenceBreak QT_FASTCALL sentenceBreak(uint ucs4);
     Q_GUI_EXPORT LineBreak QT_FASTCALL lineBreakClass(uint ucs4);
 
     // required by text engine and font database

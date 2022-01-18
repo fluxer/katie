@@ -79,51 +79,6 @@ if 'grapheme' in sys.argv:
         mapdecideinsert(switchmap, rangemap, value, codepoint)
     printswitch(switchmap)
     printifrange(rangemap)
-elif 'word' in sys.argv:
-    # only some are supported by harfbuzz
-    supported = [
-        'Format',
-        'Katakana',
-        'ALetter',
-        'MidLetter',
-        'MidNum',
-        'Numeric',
-        'ExtendNumLet',
-    ]
-    for line in readlines('auxiliary/WordBreakProperty.txt'):
-        tablesplit = line.split(';')
-        codepoint = tablesplit[0].strip()
-        value = tablesplit[1].strip()
-        if not value in supported:
-            continue
-        value = 'QUnicodeTables::WordBreak_%s' % value.replace('_', '')
-        mapdecideinsert(switchmap, rangemap, value, codepoint)
-    printswitch(switchmap)
-    printifrange(rangemap)
-elif 'sentence' in sys.argv:
-    # only some are supported by harfbuzz
-    supported = [
-        'Sep',
-        'Format',
-        'Sp',
-        'Lower',
-        'Upper',
-        'OLetter',
-        'Numeric',
-        'ATerm',
-        'STerm',
-        'Close',
-    ]
-    for line in readlines('auxiliary/SentenceBreakProperty.txt'):
-        tablesplit = line.split(';')
-        codepoint = tablesplit[0].strip()
-        value = tablesplit[1].strip()
-        if not value in supported:
-            continue
-        value = 'QUnicodeTables::SentenceBreak_%s' % value.replace('_', '')
-        mapdecideinsert(switchmap, rangemap, value, codepoint)
-    printswitch(switchmap)
-    printifrange(rangemap)
 elif 'line' in sys.argv:
     # only some are supported by harfbuzz
     supported = [
@@ -205,7 +160,7 @@ elif 'special' in sys.argv:
             continue
         print('    0x%s, // %s' % (scriptsmap[value], value.replace('_', '')))
 else:
-    print('''usage: <grapheme|word|sentence|line|script|special>
+    print('''usage: <grapheme|line|script|special>
 
 Data is from https://unicode.org/Public/14.0.0/ucd/UCD.zip''')
     sys.exit(1)
