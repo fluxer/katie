@@ -950,6 +950,7 @@ void qt_init(QApplicationPrivate *priv, Display *display,
 
     // Fontconfig
     qt_x11Data->has_fontconfig = false;
+    qt_x11Data->fc_hint_style = -1;
 #if !defined(QT_NO_FONTCONFIG)
     if (qgetenv("QT_X11_NO_FONTCONFIG").isNull())
         qt_x11Data->has_fontconfig = FcInit();
@@ -1191,14 +1192,7 @@ void qt_init(QApplicationPrivate *priv, Display *display,
         }
     }
 #ifdef FC_HINT_STYLE
-    qt_x11Data->fc_hint_style = -1;
     getXDefault("Xft", FC_HINT_STYLE, &qt_x11Data->fc_hint_style);
-#endif
-#if 0
-    // ###### these are implemented by Xft, not sure we need them
-    getXDefault("Xft", FC_AUTOHINT, &qt_x11Data->fc_autohint);
-    getXDefault("Xft", FC_HINTING, &qt_x11Data->fc_autohint);
-    getXDefault("Xft", FC_MINSPACE, &qt_x11Data->fc_autohint);
 #endif
 #endif // QT_NO_FONTCONFIG
 
