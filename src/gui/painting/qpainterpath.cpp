@@ -3402,9 +3402,3 @@ QDebug operator<<(QDebug s, const QPainterPath &p)
 #endif
 
 QT_END_NAMESPACE
-
-
-
-
-
-

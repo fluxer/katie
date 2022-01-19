@@ -113,7 +113,7 @@ void QFontEngine::getGlyphPositions(const QGlyphLayout &glyphs, const QTransform
                 positions[current].x = xpos;
                 positions[current].y = ypos;
                 glyphs_out[current] = glyphs.glyphs[i];
-                xpos += glyphs.advances_x[i] + QFixed::fromFixed(glyphs.justifications[i].space_18d6);
+                xpos += glyphs.advances_x[i];
                 ++current;
             }
             ++i;
@@ -126,7 +126,7 @@ void QFontEngine::getGlyphPositions(const QGlyphLayout &glyphs, const QTransform
                 positions[current].x = QFixed::fromReal(gpos.x());
                 positions[current].y = QFixed::fromReal(gpos.y());
                 glyphs_out[current] = glyphs.glyphs[i];
-                xpos += glyphs.advances_x[i] + QFixed::fromFixed(glyphs.justifications[i].space_18d6);
+                xpos += glyphs.advances_x[i];
                 ++current;
             }
             ++i;
