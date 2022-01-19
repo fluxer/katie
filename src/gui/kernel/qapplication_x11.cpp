@@ -869,29 +869,6 @@ static void getXDefault(const char *group, const char *key, int *val)
             FcNameConstant((FcChar8 *) str, val);
     }
 }
-
-static void getXDefault(const char *group, const char *key, bool *val)
-{
-    char *str = XGetDefault(qt_x11Data->display, group, key);
-    if (str) {
-        char c = str[0];
-        if (isupper((int)c))
-            c = tolower(c);
-        if (c == 't' || c == 'y' || c == '1')
-            *val = true;
-        else if (c == 'f' || c == 'n' || c == '0')
-            *val = false;
-        if (c == 'o') {
-            c = str[1];
-            if (isupper((int)c))
-                c = tolower(c);
-            if (c == 'n')
-                *val = true;
-            if (c == 'f')
-                *val = false;
-        }
-    }
-}
 #endif // QT_NO_FONTCONFIG
 
 #if !defined(QT_NO_DEBUG) && defined(QT_HAVE_PROC_CMDLINE) && defined(QT_HAVE_PROC_EXE)
