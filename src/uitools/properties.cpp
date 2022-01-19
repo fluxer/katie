@@ -217,7 +217,7 @@ QVariant domPropertyToVariant(const DomProperty *p)
         if (font->hasElementKerning())
             f.setKerning(font->elementKerning());
         if (font->hasElementAntialiasing())
-            f.setStyleStrategy(font->elementAntialiasing() ? QFont::PreferDefault : QFont::NoAntialias);
+            f.setHintingPreference(font->elementAntialiasing() ? QFont::PreferDefaultHinting : QFont::PreferNoHinting);
         if (font->hasElementStyleStrategy()) {
             f.setStyleStrategy(enumKeyOfObjectToValue<QAbstractFormBuilderGadget, QFont::StyleStrategy>("styleStrategy", font->elementStyleStrategy().toLatin1()));
         }

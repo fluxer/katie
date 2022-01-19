@@ -1526,8 +1526,8 @@ QString WriteInitialization::writeFontProperties(const DomFont *f)
             << (f->elementKerning() ? "true" : "false") << ");\n";
     }
     if (f->hasElementAntialiasing()) {
-        m_output << m_indent << fontName << ".setStyleStrategy("
-            << (f->elementAntialiasing() ? "QFont::PreferDefault" : "QFont::NoAntialias") << ");\n";
+        m_output << m_indent << fontName << ".setHintingPreference("
+            << (f->elementAntialiasing() ? "QFont::PreferDefaultHinting" : "QFont::PreferNoHinting") << ");\n";
     }
     if (f->hasElementStyleStrategy()) {
          m_output << m_indent << fontName << ".setStyleStrategy(QFont::"

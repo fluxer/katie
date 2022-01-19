@@ -134,19 +134,8 @@ QFontDef qt_FcPatternToQFontDef(FcPattern *pattern, const QFontDef &request)
                        : QFont::StyleNormal);
 
 
-    FcBool scalable;
-    if (FcPatternGetBool(pattern, FC_SCALABLE, 0, &scalable) != FcResultMatch)
-        scalable = false;
-    if (scalable) {
-        fontDef.stretch = request.stretch;
-        fontDef.style = request.style;
-    } else {
-        int width;
-        if (FcPatternGetInteger(pattern, FC_WIDTH, 0, &width) == FcResultMatch)
-            fontDef.stretch = width;
-        else
-            fontDef.stretch = 100;
-    }
+    fontDef.stretch = request.stretch;
+    fontDef.style = request.style;
 
     int spacing;
     if (FcPatternGetInteger(pattern, FC_SPACING, 0, &spacing) == FcResultMatch) {
@@ -516,16 +505,6 @@ static void qt_addPatternProps(FcPattern *pattern, int screen, QUnicodeTables::S
     FcPatternDel(pattern, FC_PIXEL_SIZE);
     FcPatternAddDouble(pattern, FC_PIXEL_SIZE, size_value);
 
-    if (qt_x11Data->display && QX11Info::appDepth(screen) <= 8) {
-        FcPatternDel(pattern, FC_ANTIALIAS);
-        // can't do antialiasing on 8bpp
-        FcPatternAddBool(pattern, FC_ANTIALIAS, false);
-    } else if (request.styleStrategy & (QFont::PreferAntialias|QFont::NoAntialias)) {
-        FcPatternDel(pattern, FC_ANTIALIAS);
-        FcPatternAddBool(pattern, FC_ANTIALIAS,
-                         !(request.styleStrategy & QFont::NoAntialias));
-    }
-
     if (script != QUnicodeTables::Common && specialLanguagesTbl[script]) {
         Q_ASSERT(script < QUnicodeTables::ScriptCount);
         FcLangSet *ls = FcLangSetCreate();
@@ -606,11 +585,9 @@ static FcPattern *getFcPattern(const QFontPrivate *fp, QUnicodeTables::Script sc
             pitch_value = FC_MONO;
         FcPatternAddInteger(pattern, FC_SPACING, pitch_value);
     }
-    FcPatternAddBool(pattern, FC_OUTLINE, !(request.styleStrategy & QFont::PreferBitmap));
 
-    if (request.styleStrategy & (QFont::PreferOutline|QFont::PreferAntialias)) {
-        FcPatternAddBool(pattern, FC_SCALABLE, true);
-    }
+    FcPatternAddBool(pattern, FC_OUTLINE, true);
+    FcPatternAddBool(pattern, FC_SCALABLE, true);
 
     qt_addPatternProps(pattern, fp->screen, script, request);
 

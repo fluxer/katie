@@ -45,11 +45,7 @@ class Q_GUI_EXPORT QFont
 public:
     enum StyleStrategy {
         PreferDefault       = 0x0001,
-        PreferBitmap        = 0x0002,
-        PreferOutline       = 0x0004,
-        PreferAntialias     = 0x0008,
-        NoAntialias         = 0x0010,
-        ForceIntegerMetrics = 0x0020
+        ForceIntegerMetrics = 0x0002
     };
 
     enum HintingPreference {
@@ -158,7 +154,7 @@ public:
     void setHintingPreference(HintingPreference hintingPreference);
     HintingPreference hintingPreference() const;
 
-    // dupicated from QFontInfo
+    // duplicated from QFontInfo
     bool exactMatch() const;
 
     QFont &operator=(const QFont &);

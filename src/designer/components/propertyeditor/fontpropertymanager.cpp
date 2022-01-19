@@ -106,7 +106,7 @@ namespace qdesigner_internal {
         const QFont font = qvariant_cast<QFont>(vm->variantProperty(property)->value());
 
         antialiasing->setAttribute(QLatin1String("enumNames"), m_aliasingEnumNames);
-        antialiasing->setValue(antialiasingToIndex(font.styleStrategy()));
+        antialiasing->setValue(antialiasingToIndex(font.hintingPreference()));
         property->addSubProperty(antialiasing);
 
         m_propertyToAntialiasing[property] = antialiasing;
@@ -181,25 +181,27 @@ namespace qdesigner_internal {
         return true;
     }
 
-    int FontPropertyManager::antialiasingToIndex(QFont::StyleStrategy antialias)
+    int FontPropertyManager::antialiasingToIndex(QFont::HintingPreference antialias)
     {
         switch (antialias) {
-        case QFont::PreferDefault:   return 0;
-        case QFont::NoAntialias:     return 1;
-        case QFont::PreferAntialias: return 2;
+        case QFont::PreferDefaultHinting:  return 0;
+        case QFont::PreferNoHinting:       return 1;
+        case QFont::PreferVerticalHinting: return 2;
+        case QFont::PreferFullHinting:     return 3;
         default: break;
         }
         return 0;
     }
 
-    QFont::StyleStrategy FontPropertyManager::indexToAntialiasing(int idx)
+    QFont::HintingPreference FontPropertyManager::indexToAntialiasing(int idx)
     {
         switch (idx) {
-        case 0: return QFont::PreferDefault;
-        case 1: return QFont::NoAntialias;
-        case 2: return QFont::PreferAntialias;
+        case 0: return QFont::PreferDefaultHinting;
+        case 1: return QFont::PreferNoHinting;
+        case 2: return QFont::PreferVerticalHinting;
+        case 3: return QFont::PreferFullHinting;
         }
-        return QFont::PreferDefault;
+        return QFont::PreferDefaultHinting;
     }
 
     unsigned FontPropertyManager::fontFlag(int idx)
@@ -228,14 +230,14 @@ namespace qdesigner_internal {
         }
 
         QtVariantProperty *fontProperty = vm->variantProperty(antialiasingProperty);
-        const QFont::StyleStrategy newValue = indexToAntialiasing(value.toInt());
+        const QFont::HintingPreference newValue = indexToAntialiasing(value.toInt());
 
         QFont font = qvariant_cast<QFont>(fontProperty->value());
-        const QFont::StyleStrategy oldValue = font.styleStrategy();
+        const QFont::HintingPreference oldValue = font.hintingPreference();
         if (newValue == oldValue)
             return Unchanged;
 
-        font.setStyleStrategy(newValue);
+        font.setHintingPreference(newValue);
         fontProperty->setValue(QVariant::fromValue(font));
         return Changed;
     }
@@ -266,7 +268,7 @@ namespace qdesigner_internal {
             QtVariantProperty *antialiasing = vm->variantProperty(antialiasingProperty);
             if (antialiasing) {
                 QFont font = qvariant_cast<QFont>(value);
-                antialiasing->setValue(antialiasingToIndex(font.styleStrategy()));
+                antialiasing->setValue(antialiasingToIndex(font.hintingPreference()));
             }
         }
     }

@@ -990,13 +990,7 @@ QFont::StyleStrategy QFont::styleStrategy() const
 
     The following strategies are available:
 
-    \value PreferDefault the default style strategy. It does not prefer
-           any type of font.
-    \value PreferBitmap prefers bitmap fonts (as opposed to outline
-           fonts).
-    \value PreferOutline prefers outline fonts (as opposed to bitmap fonts).
-    \value NoAntialias don't antialias the fonts.
-    \value PreferAntialias antialias if possible.
+    \value PreferDefault the default style strategy with no preferences.
 
     Any of these may be OR-ed with one of these flags:
 

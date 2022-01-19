@@ -80,8 +80,8 @@ private:
 
     void removeAntialiasingProperty(QtProperty *);
     void updateModifiedState(QtProperty *property, const QVariant &value);
-    static int antialiasingToIndex(QFont::StyleStrategy antialias);
-    static QFont::StyleStrategy indexToAntialiasing(int idx);
+    static int antialiasingToIndex(QFont::HintingPreference antialias);
+    static QFont::HintingPreference indexToAntialiasing(int idx);
     static unsigned fontFlag(int idx);
 
     PropertyToPropertyMap m_propertyToAntialiasing;

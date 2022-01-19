@@ -1005,8 +1005,8 @@ void QPainterPrivate::updateState(QPainterState *newState)
 
     \value TextAntialiasing Indicates that the engine should antialias
     text if possible. To forcibly disable antialiasing for text, do not
-    use this hint. Instead, set QFont::NoAntialias on your font's style
-    strategy.
+    use this hint. Instead, set QFont::PreferNoHinting on your font's
+    hint preferences.
 
     \value SmoothPixmapTransform Indicates that the engine should use
     a smooth pixmap transformation algorithm (such as bilinear) rather

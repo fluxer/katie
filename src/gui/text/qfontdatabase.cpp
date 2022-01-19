@@ -55,7 +55,6 @@ struct QtFontFamily {
     QString foundry;
     QString style;
     bool fixedpitch;
-    bool scalable;
     bool italic;
     bool bold;
     int weight;
@@ -378,11 +377,13 @@ QFontDatabase::QFontDatabase()
             int weight_value = FC_WEIGHT_MEDIUM;
             int spacing_value = FC_PROPORTIONAL;
             FcChar8 *style_value = nullptr;
-            FcBool scalable = FcTrue;
+            FcBool scalable = FcFalse;
             double pixel_size = 0;
             int slant_value = FC_SLANT_ROMAN;
 
             if (FcPatternGetString(fonts->fonts[i], FC_FAMILY, 0, &family_value) != FcResultMatch)
+                continue;
+            if (FcPatternGetBool(fonts->fonts[i], FC_SCALABLE, 0, &scalable) != FcResultMatch || scalable != FcTrue)
                 continue;
 
             if (FcPatternGetString(fonts->fonts[i], FC_FOUNDRY, 0, &foundry_value) != FcResultMatch)
@@ -391,8 +392,6 @@ QFontDatabase::QFontDatabase()
                 weight_value = FC_WEIGHT_MEDIUM;
             if (FcPatternGetInteger (fonts->fonts[i], FC_SPACING, 0, &spacing_value) != FcResultMatch)
                 spacing_value = FC_PROPORTIONAL;
-            if (FcPatternGetBool(fonts->fonts[i], FC_SCALABLE, 0, &scalable) != FcResultMatch)
-                scalable = FcTrue;
             if (FcPatternGetString(fonts->fonts[i], FC_STYLE, 0, &style_value) != FcResultMatch)
                 style_value = nullptr;
             FcPatternGetDouble(fonts->fonts[i], FC_PIXEL_SIZE, 0, &pixel_size);
@@ -409,7 +408,6 @@ QFontDatabase::QFontDatabase()
             fontfamily.foundry = QString::fromUtf8((const char *)foundry_value);
             fontfamily.style = fontstyle;
             fontfamily.fixedpitch = (spacing_value >= FC_MONO);
-            fontfamily.scalable = scalable;
             fontfamily.italic = (slant_value >= FC_SLANT_ITALIC);
             fontfamily.bold = (weight_value >= FC_WEIGHT_BOLD); // or FC_WEIGHT_DEMIBOLD?
             fontfamily.weight = weight_value;
@@ -534,7 +532,7 @@ bool QFontDatabase::isSmoothlyScalable(const QString &family, const QString &sty
             || (!style.isEmpty() && !isStyleMatch(fontfamily.style, style))) {
             continue;
         }
-        result = fontfamily.scalable;
+        result = true;
         break;
     }
     return result;
@@ -597,9 +595,6 @@ QFont QFontDatabase::font(const QString &family, const QString &style,
             || !isStyleMatch(fontfamily.style, style)) {
             continue;
         }
-        if (fontfamily.pointsize != pointSize && !fontfamily.scalable) {
-            continue;
-        }
 
         result = QFont(fontfamily.family, pointSize, fontfamily.weight, fontfamily.italic);
         result.setStyleName(fontfamily.style);
@@ -631,11 +626,7 @@ QList<int> QFontDatabase::smoothSizes(const QString &family, const QString &styl
             || !isStyleMatch(fontfamily.style, style)) {
             continue;
         }
-        if (fontfamily.scalable) {
-            result = standardSizes();
-        } else {
-            result.append(fontfamily.pointsize);
-        }
+        result = standardSizes();
         break;
     }
     qSort(result);

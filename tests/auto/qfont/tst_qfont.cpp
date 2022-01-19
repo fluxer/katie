@@ -75,14 +75,8 @@ void tst_QFont::getSetCheck()
     // void QFont::setStyleStrategy(StyleStrategy)
     obj1.setStyleStrategy(QFont::StyleStrategy(QFont::PreferDefault));
     QCOMPARE(QFont::StyleStrategy(QFont::PreferDefault), obj1.styleStrategy());
-    obj1.setStyleStrategy(QFont::StyleStrategy(QFont::PreferBitmap));
-    QCOMPARE(QFont::StyleStrategy(QFont::PreferBitmap), obj1.styleStrategy());
-    obj1.setStyleStrategy(QFont::StyleStrategy(QFont::PreferOutline));
-    QCOMPARE(QFont::StyleStrategy(QFont::PreferOutline), obj1.styleStrategy());
-    obj1.setStyleStrategy(QFont::StyleStrategy(QFont::PreferAntialias));
-    QCOMPARE(QFont::StyleStrategy(QFont::PreferAntialias), obj1.styleStrategy());
-    obj1.setStyleStrategy(QFont::StyleStrategy(QFont::NoAntialias));
-    QCOMPARE(QFont::StyleStrategy(QFont::NoAntialias), obj1.styleStrategy());
+    obj1.setStyleStrategy(QFont::StyleStrategy(QFont::ForceIntegerMetrics));
+    QCOMPARE(QFont::StyleStrategy(QFont::ForceIntegerMetrics), obj1.styleStrategy());
 }
 
 tst_QFont::tst_QFont()
