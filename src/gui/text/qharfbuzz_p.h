@@ -207,8 +207,6 @@ typedef struct {
     uint32_t stringLength;                  /* input: the length of the input in 16-bit words */
     HB_ScriptItem item;                     /* input: the current run to be shaped: a run of text all in the same script that is a substring of <string> */
     int shaperFlags;                        /* input (unused) should be set to 0; intended to support flags defined in HB_ShaperFlag */
-    bool glyphIndicesPresent;               /* input: true if the <glyphs> array contains glyph indices ready to be shaped */
-    uint32_t initialGlyphCount;             /* input: if glyphIndicesPresent is true, the number of glyph indices in the <glyphs> array */
 
     uint32_t num_glyphs;                    /* input: capacity of output arrays <glyphs>, <attributes>, <advances>, <offsets>, and <log_clusters>; */
                                             /* output: required capacity (may be larger than actual capacity) */

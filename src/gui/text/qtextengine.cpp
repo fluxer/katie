@@ -196,19 +196,13 @@ void QTextEngine::shapeTextWithHarfbuzz(int item) const
         }
     }
 
-    shaper_item.initialGlyphCount = shaper_item.num_glyphs;
-    if (shaper_item.num_glyphs < shaper_item.item.length)
-        shaper_item.num_glyphs = shaper_item.item.length;
-
     si.ascent = qMax(font->ascent(), si.ascent);
     si.descent = qMax(font->descent(), si.descent);
     si.leading = qMax(font->leading(), si.leading);
 
     shaper_item.font = font;
 
-    shaper_item.glyphIndicesPresent = true;
-
-    do {
+    {
         if (! ensureSpace(shaper_item.num_glyphs)) {
             return;
         }
@@ -219,15 +213,11 @@ void QTextEngine::shapeTextWithHarfbuzz(int item) const
         shaper_item.attributes = g.attributes;
         shaper_item.advances = reinterpret_cast<HB_Fixed *>(g.advances_x);
 
-        if (shaper_item.glyphIndicesPresent) {
-            for (uint32_t i = 0; i < shaper_item.initialGlyphCount; ++i)
-                shaper_item.glyphs[i] &= 0x00ffffff;
-        }
-
         shaper_item.log_clusters = logClusters(&si);
 
         // qDebug("    .. num_glyphs=%d, used=%d, item.num_glyphs=%d", num_glyphs, used, shaper_item.num_glyphs);
-    } while (!qHB_BasicShape(&shaper_item)); // this does the actual shaping via harfbuzz.
+        qHB_BasicShape(&shaper_item); // this does the actual shaping via harfbuzz.
+    }
 
     QGlyphLayout g = availableGlyphs(&si).mid(0, shaper_item.num_glyphs);
 

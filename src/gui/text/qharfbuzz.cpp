@@ -76,34 +76,6 @@ static void qHB_GetGlyphAdvances(QFontEngine* fe, const HB_Glyph *glyphs, uint32
         advances[i] = qglyphs.advances_x[i].value();
 }
 
-
-static bool qHB_ConvertStringToGlyphIndices(HB_ShaperItem *shaper_item)
-{
-    if (shaper_item->glyphIndicesPresent) {
-        shaper_item->num_glyphs = shaper_item->initialGlyphCount;
-        shaper_item->glyphIndicesPresent = false;
-        return true;
-    }
-
-    QFontEngine *fe = (QFontEngine *)shaper_item->font;
-
-    QVarLengthGlyphLayoutArray qglyphs(shaper_item->num_glyphs);
-
-    QTextEngine::ShaperFlags shaperFlags(QTextEngine::GlyphIndicesOnly);
-
-    int nGlyphs = shaper_item->num_glyphs;
-    bool result = fe->stringToCMap(reinterpret_cast<const QChar *>(shaper_item->string + shaper_item->item.pos),
-                                   shaper_item->item.length, &qglyphs, &nGlyphs, shaperFlags);
-    shaper_item->num_glyphs = nGlyphs;
-    if (!result)
-        return false;
-
-    for (uint32_t i = 0; i < shaper_item->num_glyphs; ++i)
-        shaper_item->glyphs[i] = qglyphs.glyphs[i];
-
-    return true;
-}
-
 // set the glyph attributes heuristically. Assumes a 1 to 1 relationship between chars and glyphs
 // and no reordering.
 // also computes logClusters heuristically
@@ -218,9 +190,6 @@ static void qHB_HeuristicPosition(HB_ShaperItem *item)
 
 bool qHB_BasicShape(HB_ShaperItem *shaper_item)
 {
-    if (!qHB_ConvertStringToGlyphIndices(shaper_item))
-        return false;
-
     qHB_HeuristicSetGlyphAttributes(shaper_item);
 
     qHB_HeuristicPosition(shaper_item);
