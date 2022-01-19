@@ -632,8 +632,6 @@ void QFontEngineFT::recalcAdvances(QGlyphLayout *glyphs, QTextEngine::ShaperFlag
 
         glyphs->advances_x[i] = design ? QFixed::fromFixed(metric->linearhoriadvance)
                                        : QFixed::fromFixed(metric->horiadvance);
-        if (fontDef.styleStrategy & QFont::ForceIntegerMetrics)
-            glyphs->advances_x[i] = glyphs->advances_x[i].round();
     }
 }
 

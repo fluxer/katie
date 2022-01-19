@@ -145,9 +145,8 @@ public:
 
         // character properties
         FirstFontProperty = 0x1FE0,
-        FontStyleStrategy = FirstFontProperty,
-        FontKerning = 0x1FE1,
-        FontHintingPreference = 0x1FE2,
+        FontKerning = FirstFontProperty,
+        FontHintingPreference = 0x1FE1,
         FontFamily = 0x2000,
         FontPointSize = 0x2001,
         FontSizeAdjustment = 0x2002,
@@ -411,20 +410,10 @@ public:
     inline bool fontFixedPitch() const
     { return boolProperty(FontFixedPitch); }
 
-    inline void setFontStyleStrategy(QFont::StyleStrategy strategy)
-    { setProperty(FontStyleStrategy, strategy); }
-    QFont::StyleStrategy fontStyleStrategy() const
-    { return static_cast<QFont::StyleStrategy>(intProperty(FontStyleStrategy)); }
-
     inline void setFontHintingPreference(QFont::HintingPreference hintingPreference)
-    {
-        setProperty(FontHintingPreference, hintingPreference);
-    }
-
+    { setProperty(FontHintingPreference, hintingPreference); }
     inline QFont::HintingPreference fontHintingPreference() const
-    {
-        return static_cast<QFont::HintingPreference>(intProperty(FontHintingPreference));
-    }
+    { return static_cast<QFont::HintingPreference>(intProperty(FontHintingPreference)); }
 
     inline void setFontKerning(bool enable)
     { setProperty(FontKerning, enable); }

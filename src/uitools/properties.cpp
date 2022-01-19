@@ -218,9 +218,6 @@ QVariant domPropertyToVariant(const DomProperty *p)
             f.setKerning(font->elementKerning());
         if (font->hasElementAntialiasing())
             f.setHintingPreference(font->elementAntialiasing() ? QFont::PreferDefaultHinting : QFont::PreferNoHinting);
-        if (font->hasElementStyleStrategy()) {
-            f.setStyleStrategy(enumKeyOfObjectToValue<QAbstractFormBuilderGadget, QFont::StyleStrategy>("styleStrategy", font->elementStyleStrategy().toLatin1()));
-        }
         return QVariant::fromValue(f);
     }
 
@@ -443,10 +440,6 @@ static bool applySimpleProperty(const QVariant &v, bool translateString, DomProp
             fnt->setElementUnderline(font.underline());
         if (mask & QFont::KerningResolved)
             fnt->setElementKerning(font.kerning());
-        if (mask & QFont::StyleStrategyResolved) {
-            const QMetaEnum styleStrategy_enum = metaEnum<QAbstractFormBuilderGadget>("styleStrategy");
-            fnt->setElementStyleStrategy(QLatin1String(styleStrategy_enum.valueToKey(font.styleStrategy())));
-        }
         dom_prop->setElementFont(fnt);
         return true;
     }

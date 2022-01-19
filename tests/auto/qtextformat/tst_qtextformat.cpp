@@ -262,9 +262,9 @@ void tst_QTextFormat::testFontStyleSetters()
     QTextCharFormat format;
 
     // test the setters
-    QCOMPARE(format.font().styleStrategy(), QFont::PreferDefault);
-    format.setFontStyleStrategy(QFont::ForceIntegerMetrics);
-    QCOMPARE(format.font().styleStrategy(), QFont::ForceIntegerMetrics);
+    QCOMPARE(format.font().hintingPreference(), QFont::PreferDefaultHinting);
+    format.setFontHintingPreference(QFont::PreferFullHinting);
+    QCOMPARE(format.font().hintingPreference(), QFont::PreferFullHinting);
 
     // test setting properties through setFont()
     QFont font;

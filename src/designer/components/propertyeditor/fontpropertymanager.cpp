@@ -214,7 +214,7 @@ namespace qdesigner_internal {
         case 4: return QFont::UnderlineResolved;
         case 5: return QFont::StrikeOutResolved;
         case 6: return QFont::KerningResolved;
-        case 7: return QFont::StyleStrategyResolved;
+        case 7: return QFont::HintingPreferenceResolved;
         }
         return 0;
     }

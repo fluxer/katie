@@ -71,8 +71,8 @@ QString fontMask(unsigned m)
         rc += QLatin1String("StrikeOut ");
     if (m & QFont::KerningResolved)
         rc += QLatin1String("Kerning ");
-    if (m & QFont::StyleStrategyResolved)
-        rc += QLatin1String("StyleStrategy");
+    if (m & QFont::HintingPreferenceResolved)
+        rc += QLatin1String("HintingPreference");
     return rc;
 }
 
@@ -94,7 +94,7 @@ QString fontString(const QFont &f)
             str << comma <<  QLatin1String("strikeOut");
         if (f.kerning())
             str << comma << QLatin1String("kerning");
-        str <<  comma << f.styleStrategy() << QLatin1String(" resolve: ")
+        str <<  comma << f.hintingPreference() << QLatin1String(" resolve: ")
             << fontMask(f.resolve()) << QLatin1Char(')');
     }
     return rc;
@@ -238,7 +238,7 @@ unsigned compareSubProperties(const QFont & f1, const QFont & f2)
     compareFontSubProperty(f1, f2, &QFont::underline,     QFont::UnderlineResolved, rc);
     compareFontSubProperty(f1, f2, &QFont::strikeOut,     QFont::StrikeOutResolved, rc);
     compareFontSubProperty(f1, f2, &QFont::kerning,       QFont::KerningResolved, rc);
-    compareFontSubProperty(f1, f2, &QFont::styleStrategy, QFont::StyleStrategyResolved, rc);
+    compareFontSubProperty(f1, f2, &QFont::hintingPreference, QFont::HintingPreferenceResolved, rc);
     if (debugPropertyCommands)
         qDebug() << "compareSubProperties " <<  fontString(f1) << fontString(f2) << "\n\treturns " << fontMask(rc);
     return rc;
@@ -425,7 +425,7 @@ QFont applyFontSubProperty(const QFont &oldValue, const QFont &newValue, unsigne
     setFontSubProperty(mask, newValue, QFont::UnderlineResolved,     &QFont::underline,     &QFont::setUnderline, rc);
     setFontSubProperty(mask, newValue, QFont::StrikeOutResolved,     &QFont::strikeOut,     &QFont::setStrikeOut, rc);
     setFontSubProperty(mask, newValue, QFont::KerningResolved,       &QFont::kerning,       &QFont::setKerning, rc);
-    setFontSubProperty(mask, newValue, QFont::StyleStrategyResolved, &QFont::styleStrategy, &QFont::setStyleStrategy, rc);
+    setFontSubProperty(mask, newValue, QFont::HintingPreferenceResolved, &QFont::hintingPreference, &QFont::setHintingPreference, rc);
     if (debugPropertyCommands)
         qDebug() << "applyFontSubProperty old " <<  fontMask(oldValue.resolve()) << " new " << fontMask(newValue.resolve()) << " return: " << fontMask(rc.resolve());
     return rc;

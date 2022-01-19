@@ -4877,10 +4877,6 @@ void DomFont::read(QXmlStreamReader &reader)
                 setElementAntialiasing((reader.readElementText() == QLatin1String("true")));
                 continue;
             }
-            if (tag == QLatin1String("stylestrategy")) {
-                setElementStyleStrategy(reader.readElementText());
-                continue;
-            }
             if (tag == QLatin1String("kerning")) {
                 setElementKerning((reader.readElementText() == QLatin1String("true")));
                 continue;
@@ -4936,10 +4932,6 @@ void DomFont::write(QXmlStreamWriter &writer, const QString &tagName) const
 
     if (m_children & Antialiasing) {
         writer.writeTextElement(QLatin1String("antialiasing"), (m_antialiasing ? QLatin1String("true") : QLatin1String("false")));
-    }
-
-    if (m_children & StyleStrategy) {
-        writer.writeTextElement(QLatin1String("stylestrategy"), m_styleStrategy);
     }
 
     if (m_children & Kerning) {
@@ -5000,12 +4992,6 @@ void DomFont::setElementAntialiasing(bool a)
     m_antialiasing = a;
 }
 
-void DomFont::setElementStyleStrategy(const QString& a)
-{
-    m_children |= StyleStrategy;
-    m_styleStrategy = a;
-}
-
 void DomFont::setElementKerning(bool a)
 {
     m_children |= Kerning;
@@ -5050,11 +5036,6 @@ void DomFont::clearElementStrikeOut()
 void DomFont::clearElementAntialiasing()
 {
     m_children &= ~Antialiasing;
-}
-
-void DomFont::clearElementStyleStrategy()
-{
-    m_children &= ~StyleStrategy;
 }
 
 void DomFont::clearElementKerning()

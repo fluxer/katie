@@ -69,7 +69,6 @@ static inline int getFCWeight(int fc_weight)
 QFontDef qt_FcPatternToQFontDef(FcPattern *pattern, const QFontDef &request)
 {
     QFontDef fontDef;
-    fontDef.styleStrategy = request.styleStrategy;
 
     fontDef.hintingPreference = request.hintingPreference;
 #ifdef FC_HINT_STYLE

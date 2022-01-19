@@ -40,14 +40,7 @@ class QFontPrivate;
 
 class Q_GUI_EXPORT QFont
 {
-    Q_GADGET
-    Q_ENUMS(StyleStrategy)
 public:
-    enum StyleStrategy {
-        PreferDefault       = 0x0001,
-        ForceIntegerMetrics = 0x0002
-    };
-
     enum HintingPreference {
         PreferDefaultHinting        = 0,
         PreferNoHinting             = 1,
@@ -84,17 +77,16 @@ public:
     enum ResolveProperties {
         FamilyResolved              = 0x0001,
         SizeResolved                = 0x0002,
-        StyleStrategyResolved       = 0x0004,
-        WeightResolved              = 0x0008,
-        StyleResolved               = 0x0010,
-        UnderlineResolved           = 0x0020,
-        OverlineResolved            = 0x0040,
-        StrikeOutResolved           = 0x0080,
-        FixedPitchResolved          = 0x0100,
-        StretchResolved             = 0x0200,
-        KerningResolved             = 0x0400,
-        HintingPreferenceResolved   = 0x0800,
-        StyleNameResolved           = 0x1000,
+        WeightResolved              = 0x0004,
+        StyleResolved               = 0x0008,
+        UnderlineResolved           = 0x0010,
+        OverlineResolved            = 0x0020,
+        StrikeOutResolved           = 0x0040,
+        FixedPitchResolved          = 0x0080,
+        StretchResolved             = 0x0100,
+        KerningResolved             = 0x0200,
+        HintingPreferenceResolved   = 0x0400,
+        StyleNameResolved           = 0x0800,
         AllPropertiesResolved       = 0x1ffff
     };
 
@@ -144,9 +136,6 @@ public:
 
     bool kerning() const;
     void setKerning(bool);
-
-    StyleStrategy styleStrategy() const;
-    void setStyleStrategy(StyleStrategy s);
 
     int stretch() const;
     void setStretch(int);
