@@ -225,12 +225,6 @@ int FontHandle::compare(const FontHandle &rhs) const
     if (const int crc = compareInt(antialiasing, rhsAntialiasing))
         return crc;
 
-    const QString styleStrategy    = m_domFont->hasElementStyleStrategy()     ?     m_domFont->elementStyleStrategy() : QString();
-    const QString rhsStyleStrategy = rhs.m_domFont->hasElementStyleStrategy() ? rhs.m_domFont->elementStyleStrategy() : QString();
-
-    if (const int src = styleStrategy.compare(rhsStyleStrategy))
-        return src;
-
     return 0;
 }
 
@@ -1526,12 +1520,8 @@ QString WriteInitialization::writeFontProperties(const DomFont *f)
             << (f->elementKerning() ? "true" : "false") << ");\n";
     }
     if (f->hasElementAntialiasing()) {
-        m_output << m_indent << fontName << ".setStyleStrategy("
-            << (f->elementAntialiasing() ? "QFont::PreferDefault" : "QFont::NoAntialias") << ");\n";
-    }
-    if (f->hasElementStyleStrategy()) {
-         m_output << m_indent << fontName << ".setStyleStrategy(QFont::"
-            << f->elementStyleStrategy() << ");\n";
+        m_output << m_indent << fontName << ".setHintingPreference("
+            << (f->elementAntialiasing() ? "QFont::PreferDefaultHinting" : "QFont::PreferNoHinting") << ");\n";
     }
     return  fontName;
 }

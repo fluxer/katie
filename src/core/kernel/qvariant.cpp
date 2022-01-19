@@ -659,9 +659,11 @@ static bool convert(const QVariant::Private *d, int t, void *result, bool *ok)
         case QVariant::Bool:
             *str = QLatin1String(d->data.b ? "true" : "false");
             return true;
-        case QVariant::ByteArray:
-            *str = QString::fromAscii(v_cast<QByteArray>(d)->constData());
+        case QVariant::ByteArray: {
+            const QByteArray* vdata = v_cast<QByteArray>(d);
+            *str = QString::fromAscii(vdata->constData(), vdata->size());
             return true;
+        }
         case QVariant::StringList:
             *str = v_cast<QStringList>(d)->join(qStringListDelim);
             return true;

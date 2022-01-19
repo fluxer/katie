@@ -93,189 +93,6 @@ typedef uint32_t HB_UChar32;
 typedef int32_t HB_Fixed; /* 26.6 */
 
 typedef enum {
-    HB_Script_Common,
-    HB_Script_Adlam,
-    HB_Script_Ahom,
-    HB_Script_AnatolianHieroglyphs,
-    HB_Script_Arabic,
-    HB_Script_Armenian,
-    HB_Script_Avestan,
-    HB_Script_Balinese,
-    HB_Script_Bamum,
-    HB_Script_BassaVah,
-    HB_Script_Batak,
-    HB_Script_Bengali,
-    HB_Script_Bhaiksuki,
-    HB_Script_Bopomofo,
-    HB_Script_Brahmi,
-    HB_Script_Braille,
-    HB_Script_Buginese,
-    HB_Script_Buhid,
-    HB_Script_CanadianAboriginal,
-    HB_Script_Carian,
-    HB_Script_CaucasianAlbanian,
-    HB_Script_Chakma,
-    HB_Script_Cham,
-    HB_Script_Cherokee,
-    HB_Script_Chorasmian,
-    HB_Script_Coptic,
-    HB_Script_Cuneiform,
-    HB_Script_Cypriot,
-    HB_Script_CyproMinoan,
-    HB_Script_Cyrillic,
-    HB_Script_Deseret,
-    HB_Script_Devanagari,
-    HB_Script_DivesAkuru,
-    HB_Script_Dogra,
-    HB_Script_Duployan,
-    HB_Script_EgyptianHieroglyphs,
-    HB_Script_Elbasan,
-    HB_Script_Elymaic,
-    HB_Script_Ethiopic,
-    HB_Script_Georgian,
-    HB_Script_Glagolitic,
-    HB_Script_Gothic,
-    HB_Script_Grantha,
-    HB_Script_Greek,
-    HB_Script_Gujarati,
-    HB_Script_GunjalaGondi,
-    HB_Script_Gurmukhi,
-    HB_Script_Han,
-    HB_Script_Hangul,
-    HB_Script_HanifiRohingya,
-    HB_Script_Hanunoo,
-    HB_Script_Hatran,
-    HB_Script_Hebrew,
-    HB_Script_Hiragana,
-    HB_Script_ImperialAramaic,
-    HB_Script_Inherited,
-    HB_Script_InscriptionalPahlavi,
-    HB_Script_InscriptionalParthian,
-    HB_Script_Javanese,
-    HB_Script_Kaithi,
-    HB_Script_Kannada,
-    HB_Script_Katakana,
-    HB_Script_KayahLi,
-    HB_Script_Kharoshthi,
-    HB_Script_KhitanSmallScript,
-    HB_Script_Khmer,
-    HB_Script_Khojki,
-    HB_Script_Khudawadi,
-    HB_Script_Lao,
-    HB_Script_Latin,
-    HB_Script_Lepcha,
-    HB_Script_Limbu,
-    HB_Script_LinearA,
-    HB_Script_LinearB,
-    HB_Script_Lisu,
-    HB_Script_Lycian,
-    HB_Script_Lydian,
-    HB_Script_Mahajani,
-    HB_Script_Makasar,
-    HB_Script_Malayalam,
-    HB_Script_Mandaic,
-    HB_Script_Manichaean,
-    HB_Script_Marchen,
-    HB_Script_MasaramGondi,
-    HB_Script_Medefaidrin,
-    HB_Script_MeeteiMayek,
-    HB_Script_MendeKikakui,
-    HB_Script_MeroiticCursive,
-    HB_Script_MeroiticHieroglyphs,
-    HB_Script_Miao,
-    HB_Script_Modi,
-    HB_Script_Mongolian,
-    HB_Script_Mro,
-    HB_Script_Multani,
-    HB_Script_Myanmar,
-    HB_Script_Nabataean,
-    HB_Script_Nandinagari,
-    HB_Script_Newa,
-    HB_Script_NewTaiLue,
-    HB_Script_Nko,
-    HB_Script_Nushu,
-    HB_Script_NyiakengPuachueHmong,
-    HB_Script_Ogham,
-    HB_Script_OlChiki,
-    HB_Script_OldHungarian,
-    HB_Script_OldItalic,
-    HB_Script_OldNorthArabian,
-    HB_Script_OldPermic,
-    HB_Script_OldPersian,
-    HB_Script_OldSogdian,
-    HB_Script_OldSouthArabian,
-    HB_Script_OldTurkic,
-    HB_Script_OldUyghur,
-    HB_Script_Oriya,
-    HB_Script_Osage,
-    HB_Script_Osmanya,
-    HB_Script_PahawhHmong,
-    HB_Script_Palmyrene,
-    HB_Script_PauCinHau,
-    HB_Script_PhagsPa,
-    HB_Script_Phoenician,
-    HB_Script_PsalterPahlavi,
-    HB_Script_Rejang,
-    HB_Script_Runic,
-    HB_Script_Samaritan,
-    HB_Script_Saurashtra,
-    HB_Script_Sharada,
-    HB_Script_Shavian,
-    HB_Script_Siddham,
-    HB_Script_SignWriting,
-    HB_Script_Sinhala,
-    HB_Script_Sogdian,
-    HB_Script_SoraSompeng,
-    HB_Script_Soyombo,
-    HB_Script_Sundanese,
-    HB_Script_SylotiNagri,
-    HB_Script_Syriac,
-    HB_Script_Tagalog,
-    HB_Script_Tagbanwa,
-    HB_Script_TaiLe,
-    HB_Script_TaiTham,
-    HB_Script_TaiViet,
-    HB_Script_Takri,
-    HB_Script_Tamil,
-    HB_Script_Tangsa,
-    HB_Script_Tangut,
-    HB_Script_Telugu,
-    HB_Script_Thaana,
-    HB_Script_Thai,
-    HB_Script_Tibetan,
-    HB_Script_Tifinagh,
-    HB_Script_Tirhuta,
-    HB_Script_Toto,
-    HB_Script_Ugaritic,
-    HB_Script_Vai,
-    HB_Script_Vithkuqi,
-    HB_Script_Wancho,
-    HB_Script_WarangCiti,
-    HB_Script_Yezidi,
-    HB_Script_Yi,
-    HB_Script_ZanabazarSquare,
-    HB_ScriptCount = HB_Script_ZanabazarSquare
-} HB_Script;
-
-typedef enum {
-    HB_Combining_NotOrdered = 0,
-    HB_Combining_AttachedBelow = 202,
-    HB_Combining_AttachedAbove = 214,
-    HB_Combining_AttachedAboveRight = 216,
-    HB_Combining_BelowLeft = 218,
-    HB_Combining_Below = 220,
-    HB_Combining_BelowRight = 222,
-    HB_Combining_Left = 224,
-    HB_Combining_Right = 226,
-    HB_Combining_AboveLeft = 228,
-    HB_Combining_Above = 230,
-    HB_Combining_AboveRight = 232,
-    HB_Combining_DoubleBelow = 233,
-    HB_Combining_DoubleAbove = 234,
-    HB_Combining_IotaSubscript = 240
-} HB_CombiningClass;
-
-typedef enum {
     HB_NoBreak,
     HB_SoftHyphen,
     HB_Break,
@@ -370,24 +187,12 @@ typedef enum {
 typedef struct {
     HB_LineBreakType lineBreakType;
     bool whiteSpace; /* A unicode whitespace character, except NBSP, ZWNBSP */
-    bool charStop; /* Valid cursor position (for left/right arrow) */
+    bool charStop;   /* Valid cursor position (for left/right arrow) */
 } HB_CharAttributes;
-
-typedef struct {
-    HB_Fixed x;
-    HB_Fixed y;
-} HB_FixedPoint;
-
-typedef struct {
-    HB_Fixed x, y;
-    HB_Fixed width, height;
-    HB_Fixed xOffset;
-} HB_GlyphMetrics;
 
 typedef struct {
     uint32_t pos;
     uint32_t length;
-    HB_Script script;
 } HB_ScriptItem;
 
 typedef struct {
@@ -395,24 +200,20 @@ typedef struct {
     bool clusterStart;   /* First glyph of representation of cluster */
     bool mark;           /* needs to be positioned around base char */
     bool dontPrint;
-    HB_CombiningClass combiningClass;
 } HB_GlyphAttributes;
 
 typedef struct {
     const HB_UChar16 *string;               /* input: the Unicode UTF16 text to be shaped */
-    uint32_t stringLength;                 /* input: the length of the input in 16-bit words */
+    uint32_t stringLength;                  /* input: the length of the input in 16-bit words */
     HB_ScriptItem item;                     /* input: the current run to be shaped: a run of text all in the same script that is a substring of <string> */
     int shaperFlags;                        /* input (unused) should be set to 0; intended to support flags defined in HB_ShaperFlag */
-    bool glyphIndicesPresent;            /* input: true if the <glyphs> array contains glyph indices ready to be shaped */
-    uint32_t initialGlyphCount;            /* input: if glyphIndicesPresent is true, the number of glyph indices in the <glyphs> array */
 
-    uint32_t num_glyphs;                   /* input: capacity of output arrays <glyphs>, <attributes>, <advances>, <offsets>, and <log_clusters>; */
+    uint32_t num_glyphs;                    /* input: capacity of output arrays <glyphs>, <attributes>, <advances>, <offsets>, and <log_clusters>; */
                                             /* output: required capacity (may be larger than actual capacity) */
 
     HB_Glyph *glyphs;                       /* output: <num_glyphs> indices of shaped glyphs */
     HB_GlyphAttributes *attributes;         /* output: <num_glyphs> glyph attributes */
     HB_Fixed *advances;                     /* output: <num_glyphs> advances */
-    HB_FixedPoint *offsets;                 /* output: <num_glyphs> offsets */
     unsigned short *log_clusters;           /* output: for each output glyph, the index in the input of the start of its logical cluster */
 
     QFontEngine* font;
@@ -424,7 +225,6 @@ void qHB_GetCharAttributes(const HB_UChar16 *string, uint32_t stringLength,
                            HB_CharAttributes *attributes);
 
 Q_DECLARE_TYPEINFO(HB_GlyphAttributes, Q_PRIMITIVE_TYPE);
-Q_DECLARE_TYPEINFO(HB_FixedPoint, Q_PRIMITIVE_TYPE);
 
 QT_END_NAMESPACE
 

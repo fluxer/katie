@@ -502,7 +502,7 @@ public:
 
         case PainterQPointMode: {
             QFontMetrics fm(p->font());
-            m_size = QSize(fm.width(m_text, m_text.length()), fm.height());
+            m_size = QSize(fm.width(m_text), fm.height());
             break;
         }
 

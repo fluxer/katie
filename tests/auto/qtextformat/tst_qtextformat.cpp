@@ -262,15 +262,15 @@ void tst_QTextFormat::testFontStyleSetters()
     QTextCharFormat format;
 
     // test the setters
-    QCOMPARE(format.font().styleStrategy(), QFont::PreferDefault);
-    format.setFontStyleStrategy(QFont::PreferOutline);
-    QCOMPARE(format.font().styleStrategy(), QFont::PreferOutline);
+    QCOMPARE(format.font().hintingPreference(), QFont::PreferDefaultHinting);
+    format.setFontHintingPreference(QFont::PreferFullHinting);
+    QCOMPARE(format.font().hintingPreference(), QFont::PreferFullHinting);
 
     // test setting properties through setFont()
     QFont font;
-    font.setStyleStrategy(QFont::PreferAntialias);
+    font.setHintingPreference(QFont::PreferVerticalHinting);
     format.setFont(font);
-    QCOMPARE(format.font().styleStrategy(), QFont::PreferAntialias);
+    QCOMPARE(format.font().hintingPreference(), QFont::PreferVerticalHinting);
 
     // test kerning
     format.setFontKerning(false);

@@ -385,9 +385,6 @@ void QTextFormatPrivate::recalcFont() const
             case QTextFormat::FontHintingPreference:
                 f.setHintingPreference(static_cast<QFont::HintingPreference>(props.at(i).value.toInt()));
                 break;
-            case QTextFormat::FontStyleStrategy:
-                f.setStyleStrategy(static_cast<QFont::StyleStrategy>(props.at(i).value.toInt()));
-                break;
             case QTextFormat::FontKerning:
                 f.setKerning(props.at(i).value.toBool());
                 break;
@@ -1449,16 +1446,6 @@ void QTextCharFormat::setUnderlineStyle(UnderlineStyle style)
     \sa font()
 */
 
-/*!
-    \since 4.5
-    \fn void QTextCharFormat::setFontStyleStrategy(QFont::StyleStrategy strategy)
-
-    Sets the font style \a strategy.
-
-    \sa setFont()
-    \sa QFont::setStyleStrategy()
-*/
-
 
 /*!
     \since 4.5
@@ -1470,27 +1457,6 @@ void QTextCharFormat::setUnderlineStyle(UnderlineStyle style)
     is equal to width("ab") is not neccesairly true.
 
     \sa setFont()
-*/
-
-
-/*!
-    \fn QTextCharFormat::StyleHint QTextCharFormat::fontStyleHint() const
-    \since 4.5
-
-    Returns the font style hint.
-
-    \sa setFontStyleHint(), font()
-*/
-
-
-/*!
-    \since 4.5
-    \fn QTextCharFormat::StyleStrategy QTextCharFormat::fontStyleStrategy() const
-
-    Returns the current font style strategy.
-
-    \sa setFontStyleStrategy()
-    \sa font()
 */
 
 
@@ -1797,7 +1763,7 @@ void QTextCharFormat::setFont(const QFont &font)
     setFontOverline(font.overline());
     setFontStrikeOut(font.strikeOut());
     setFontFixedPitch(font.fixedPitch());
-    setFontStyleStrategy(font.styleStrategy());
+    setFontHintingPreference(font.hintingPreference());
     setFontKerning(font.kerning());
 }
 

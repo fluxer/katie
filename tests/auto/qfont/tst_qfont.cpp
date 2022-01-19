@@ -71,18 +71,12 @@ void tst_QFont::getSetCheck()
     obj1.setStyle(QFont::Style(QFont::StyleOblique));
     QCOMPARE(QFont::Style(QFont::StyleOblique), obj1.style());
 
-    // StyleStrategy QFont::styleStrategy()
-    // void QFont::setStyleStrategy(StyleStrategy)
-    obj1.setStyleStrategy(QFont::StyleStrategy(QFont::PreferDefault));
-    QCOMPARE(QFont::StyleStrategy(QFont::PreferDefault), obj1.styleStrategy());
-    obj1.setStyleStrategy(QFont::StyleStrategy(QFont::PreferBitmap));
-    QCOMPARE(QFont::StyleStrategy(QFont::PreferBitmap), obj1.styleStrategy());
-    obj1.setStyleStrategy(QFont::StyleStrategy(QFont::PreferOutline));
-    QCOMPARE(QFont::StyleStrategy(QFont::PreferOutline), obj1.styleStrategy());
-    obj1.setStyleStrategy(QFont::StyleStrategy(QFont::PreferAntialias));
-    QCOMPARE(QFont::StyleStrategy(QFont::PreferAntialias), obj1.styleStrategy());
-    obj1.setStyleStrategy(QFont::StyleStrategy(QFont::NoAntialias));
-    QCOMPARE(QFont::StyleStrategy(QFont::NoAntialias), obj1.styleStrategy());
+    // HintingPreference QFont::hintingPreference()
+    // void QFont::setHintingPreference(HintingPreference)
+    obj1.setHintingPreference(QFont::HintingPreference(QFont::PreferDefaultHinting));
+    QCOMPARE(QFont::HintingPreference(QFont::PreferDefaultHinting), obj1.hintingPreference());
+    obj1.setHintingPreference(QFont::HintingPreference(QFont::PreferNoHinting));
+    QCOMPARE(QFont::HintingPreference(QFont::PreferNoHinting), obj1.hintingPreference());
 }
 
 tst_QFont::tst_QFont()

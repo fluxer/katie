@@ -1096,7 +1096,7 @@ void QPainterPath::addText(const QPointF &point, const QFont &f, const QString &
     static const bool scriptdetection = true;
     if (scriptdetection) {
         qreal xoffset = 0.0;
-        qreal yoffset = 0.0;
+        QUnicodeTables::Script inheritedscript = QUnicodeTables::Common;
         for (int i = 0; i < text.size(); i++) {
             int nglyphs = 1;
             QChar textchars[2] = { text.at(i), 0 };
@@ -1109,7 +1109,14 @@ void QPainterPath::addText(const QPointF &point, const QFont &f, const QString &
                 // qDebug() << Q_FUNC_INFO << ucs4;
             }
 
-            const QUnicodeTables::Script script = QUnicodeTables::script(ucs4);
+            QUnicodeTables::Script script = QUnicodeTables::script(ucs4);
+            if (script == QUnicodeTables::Inherited) {
+                // qDebug() << Q_FUNC_INFO << "inherited" << ucs4;
+                script = inheritedscript;
+            } else {
+                inheritedscript = script;
+            }
+
             QFontEngine* engine = f.d->engineForScript(script);
             if (Q_UNLIKELY(!engine)) {
                 qWarning("QPainterPath::addText: No font engine for script %d", int(script));
@@ -1130,13 +1137,11 @@ void QPainterPath::addText(const QPointF &point, const QFont &f, const QString &
 
             QGlyphLayoutArray<2> glyphs;
             engine->stringToCMap(textchars, nglyphs, &glyphs, &nglyphs, shaperflags);
-            engine->addOutlineToPath(point.x() + xoffset, point.y() + yoffset, glyphs, this);
+            engine->addOutlineToPath(point.x() + xoffset, point.y(), glyphs, this);
 
             xoffset += glyphs.advances_x[0].toReal();
-            yoffset += glyphs.advances_y[0].toReal();
             if (nglyphs == 2) {
                 xoffset += glyphs.advances_x[1].toReal();
-                yoffset += glyphs.advances_y[1].toReal();
             }
             Q_ASSERT(nglyphs < 3);
         }
@@ -3395,9 +3400,3 @@ QDebug operator<<(QDebug s, const QPainterPath &p)
 #endif
 
 QT_END_NAMESPACE
-
-
-
-
-
-

@@ -60,7 +60,7 @@ public:
     bool inFont(QChar) const;
     bool inFontUcs4(uint ucs4) const;
 
-    int width(const QString &, int len = -1) const;
+    int width(const QString &string) const;
     int width(QChar) const;
 
     QRect boundingRect(const QString &text) const;

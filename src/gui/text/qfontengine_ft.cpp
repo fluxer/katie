@@ -229,7 +229,7 @@ QFontEngineFT::QFontEngineFT(const QFontDef &fd, FcPattern *pattern)
 
 #if defined(FC_AUTOHINT) && defined(FT_LOAD_FORCE_AUTOHINT)
     bool autohint = false;
-    FcBool b;
+    FcBool b = FcFalse;
     if (FcPatternGetBool(pattern, FC_AUTOHINT, 0, &b) == FcResultMatch) {
         autohint = b;
     }
@@ -632,9 +632,6 @@ void QFontEngineFT::recalcAdvances(QGlyphLayout *glyphs, QTextEngine::ShaperFlag
 
         glyphs->advances_x[i] = design ? QFixed::fromFixed(metric->linearhoriadvance)
                                        : QFixed::fromFixed(metric->horiadvance);
-        if (fontDef.styleStrategy & QFont::ForceIntegerMetrics)
-            glyphs->advances_x[i] = glyphs->advances_x[i].round();
-        glyphs->advances_y[i] = 0;
     }
 }
 

@@ -341,7 +341,6 @@
                         <xs:element name="underline" type="xs:boolean" minOccurs="0" />
                         <xs:element name="strikeout" type="xs:boolean" minOccurs="0" />
                         <xs:element name="antialiasing" type="xs:boolean" minOccurs="0" />
-                        <xs:element name="stylestrategy" type="xs:string" minOccurs="0" />
                         <xs:element name="kerning" type="xs:boolean" minOccurs="0" />
                 </xs:all>
         </xs:complexType>

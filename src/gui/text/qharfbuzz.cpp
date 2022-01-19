@@ -58,25 +58,9 @@ static void qHB_GetGraphemeAndLineBreakClass(HB_UChar32 ch, HB_GraphemeClass *gr
     *lineBreak = (HB_LineBreakClass) QUnicodeTables::lineBreakClass(ch);
 }
 
-static void qHB_GetUnicodeCharProperties(HB_UChar32 ch, HB_CharCategory *category, int *combiningClass)
+static void qHB_GetUnicodeCharProperties(HB_UChar32 ch, HB_CharCategory *category)
 {
     *category = (HB_CharCategory)QChar::category(ch);
-    *combiningClass = QUnicodeTables::combiningClass(ch);
-}
-
-static void qHB_getGlyphMetrics(QFontEngine* fe, HB_Glyph glyph, HB_GlyphMetrics *metrics)
-{
-    glyph_metrics_t m = fe->boundingBox(glyph);
-    metrics->x = m.x.value();
-    metrics->y = m.y.value();
-    metrics->width = m.width.value();
-    metrics->height = m.height.value();
-    metrics->xOffset = m.xoff.value();
-}
-
-static HB_Fixed qHB_getGlyphAscent(QFontEngine* fe)
-{
-    return fe->ascent().value();
 }
 
 static void qHB_GetGlyphAdvances(QFontEngine* fe, const HB_Glyph *glyphs, uint32_t numGlyphs, HB_Fixed *advances, int flags)
@@ -90,34 +74,6 @@ static void qHB_GetGlyphAdvances(QFontEngine* fe, const HB_Glyph *glyphs, uint32
 
     for (uint32_t i = 0; i < numGlyphs; ++i)
         advances[i] = qglyphs.advances_x[i].value();
-}
-
-
-static bool qHB_ConvertStringToGlyphIndices(HB_ShaperItem *shaper_item)
-{
-    if (shaper_item->glyphIndicesPresent) {
-        shaper_item->num_glyphs = shaper_item->initialGlyphCount;
-        shaper_item->glyphIndicesPresent = false;
-        return true;
-    }
-
-    QFontEngine *fe = (QFontEngine *)shaper_item->font;
-
-    QVarLengthGlyphLayoutArray qglyphs(shaper_item->num_glyphs);
-
-    QTextEngine::ShaperFlags shaperFlags(QTextEngine::GlyphIndicesOnly);
-
-    int nGlyphs = shaper_item->num_glyphs;
-    bool result = fe->stringToCMap(reinterpret_cast<const QChar *>(shaper_item->string + shaper_item->item.pos),
-                                   shaper_item->item.length, &qglyphs, &nGlyphs, shaperFlags);
-    shaper_item->num_glyphs = nGlyphs;
-    if (!result)
-        return false;
-
-    for (uint32_t i = 0; i < shaper_item->num_glyphs; ++i)
-        shaper_item->glyphs[i] = qglyphs.glyphs[i];
-
-    return true;
 }
 
 // set the glyph attributes heuristically. Assumes a 1 to 1 relationship between chars and glyphs
@@ -157,8 +113,7 @@ static void qHB_HeuristicSetGlyphAttributes(HB_ShaperItem *item)
 
     int pos = 0;
     HB_CharCategory lastCat;
-    int dummy;
-    qHB_GetUnicodeCharProperties(uc[0], &lastCat, &dummy);
+    qHB_GetUnicodeCharProperties(uc[0], &lastCat);
     for (i = 1; i < length; ++i) {
         if (logClusters[i] == pos)
             // same glyph
@@ -173,46 +128,14 @@ static void qHB_HeuristicSetGlyphAttributes(HB_ShaperItem *item)
         if ((!symbolFont && uc[i] == 0x00ad) || HB_IsControlChar(uc[i]))
             attributes[pos].dontPrint = true;
         HB_CharCategory cat;
-        int cmb;
-        qHB_GetUnicodeCharProperties(uc[i], &cat, &cmb);
+        qHB_GetUnicodeCharProperties(uc[i], &cat);
         if (cat != HB_Mark_NonSpacing) {
             attributes[pos].mark = false;
             attributes[pos].clusterStart = true;
-            attributes[pos].combiningClass = HB_Combining_NotOrdered;
             cStart = logClusters[i];
         } else {
-            if (cmb == 0) {
-                // Fix 0 combining classes
-                if ((uc[pos] & 0xff00) == 0x0e00) {
-                    // thai or lao
-                    if (uc[pos] == 0xe31 ||
-                         uc[pos] == 0xe34 ||
-                         uc[pos] == 0xe35 ||
-                         uc[pos] == 0xe36 ||
-                         uc[pos] == 0xe37 ||
-                         uc[pos] == 0xe47 ||
-                         uc[pos] == 0xe4c ||
-                         uc[pos] == 0xe4d ||
-                         uc[pos] == 0xe4e) {
-                        cmb = HB_Combining_AboveRight;
-                    } else if (uc[pos] == 0xeb1 ||
-                                uc[pos] == 0xeb4 ||
-                                uc[pos] == 0xeb5 ||
-                                uc[pos] == 0xeb6 ||
-                                uc[pos] == 0xeb7 ||
-                                uc[pos] == 0xebb ||
-                                uc[pos] == 0xecc ||
-                                uc[pos] == 0xecd) {
-                        cmb = HB_Combining_Above;
-                    } else if (uc[pos] == 0xebc) {
-                        cmb = HB_Combining_Below;
-                    }
-                }
-            }
-
             attributes[pos].mark = true;
             attributes[pos].clusterStart = false;
-            attributes[pos].combiningClass = static_cast<HB_CombiningClass>(cmb);
             logClusters[i] = cStart;
         }
         // one gets an inter character justification point if the current char is not a non spacing mark.
@@ -239,90 +162,10 @@ static inline void positionCluster(HB_ShaperItem *item, int gfrom,  int glast)
     int nmarks = glast - gfrom;
     assert(nmarks > 0);
 
-    HB_Glyph *glyphs = item->glyphs;
-    HB_GlyphAttributes *attributes = item->attributes;
-
-    HB_GlyphMetrics baseMetrics;
-    qHB_getGlyphMetrics(item->font, glyphs[gfrom], &baseMetrics);
-
-    if (item->item.script == HB_Script_Hebrew
-        && (-baseMetrics.y) > baseMetrics.height)
-        // we need to attach below the baseline, because of the hebrew iud.
-        baseMetrics.height = -baseMetrics.y;
-
     // qDebug("---> positionCluster: cluster from %d to %d", gfrom, glast);
     // qDebug("baseInfo: %f/%f (%f/%f) off=%f/%f", baseInfo.x, baseInfo.y, baseInfo.width, baseInfo.height, baseInfo.xoff, baseInfo.yoff);
 
-    HB_Fixed size = qHB_getGlyphAscent(item->font) / 10;
-    HB_Fixed offsetBase = HB_FIXED_CONSTANT(1) + (size - HB_FIXED_CONSTANT(4)) / 4;
-    if (size > HB_FIXED_CONSTANT(4))
-        offsetBase += HB_FIXED_CONSTANT(4);
-    else
-        offsetBase += size;
-    // qreal offsetBase = (size - 4) / 4 + qMin<qreal>(size, 4) + 1;
-    // qDebug("offset = %f", offsetBase);
-
-    HB_CombiningClass lastCmb = HB_Combining_NotOrdered;
-    HB_GlyphMetrics attachmentRect;
-    memset(&attachmentRect, 0, sizeof(attachmentRect));
-
     for(int i = 1; i <= nmarks; i++) {
-        HB_Glyph mark = glyphs[gfrom+i];
-        HB_GlyphMetrics markMetrics;
-        qHB_getGlyphMetrics(item->font, mark, &markMetrics);
-        HB_FixedPoint p;
-        p.x = p.y = 0;
-        // qDebug("markInfo: %f/%f (%f/%f) off=%f/%f", markInfo.x, markInfo.y, markInfo.width, markInfo.height, markInfo.xoff, markInfo.yoff);
-
-        HB_Fixed offset = offsetBase;
-        HB_CombiningClass cmb = attributes[gfrom+i].combiningClass;
-
-        // combining marks of different class don't interact. Reset the rectangle.
-        if (cmb != lastCmb) {
-            // qDebug("resetting rect");
-            attachmentRect = baseMetrics;
-        }
-
-        switch(cmb) {
-        case HB_Combining_DoubleBelow:
-            // ### wrong in rtl context!
-        case HB_Combining_BelowLeft:
-            p.y += offset;
-        case HB_Combining_Below:
-            p.y += offset;
-        case HB_Combining_BelowRight:
-            p.y += offset;
-        case HB_Combining_Left:
-            p.x -= offset;
-        case HB_Combining_Right:
-            p.x += offset;
-        case HB_Combining_DoubleAbove:
-            // ### wrong in RTL context!
-        case HB_Combining_AboveLeft:
-            p.y -= offset;
-        case HB_Combining_Above:
-            p.y -= offset;
-        case HB_Combining_AboveRight:
-            p.y -= offset;
-
-        case HB_Combining_IotaSubscript:
-            default:
-                break;
-        }
-        // qDebug("char=%x combiningClass = %d offset=%f/%f", mark, cmb, p.x(), p.y());
-        markMetrics.x += p.x;
-        markMetrics.y += p.y;
-
-        HB_GlyphMetrics unitedAttachmentRect = attachmentRect;
-        unitedAttachmentRect.x = HB_MIN(attachmentRect.x, markMetrics.x);
-        unitedAttachmentRect.y = HB_MIN(attachmentRect.y, markMetrics.y);
-        unitedAttachmentRect.width = HB_MAX(attachmentRect.x + attachmentRect.width, markMetrics.x + markMetrics.width) - unitedAttachmentRect.x;
-        unitedAttachmentRect.height = HB_MAX(attachmentRect.y + attachmentRect.height, markMetrics.y + markMetrics.height) - unitedAttachmentRect.y;
-        attachmentRect = unitedAttachmentRect;
-
-        lastCmb = cmb;
-        item->offsets[gfrom+i].x = p.x - baseMetrics.xOffset;
-        item->offsets[gfrom+i].y = p.y;
         item->advances[gfrom+i] = 0;
     }
 }
@@ -347,9 +190,6 @@ static void qHB_HeuristicPosition(HB_ShaperItem *item)
 
 bool qHB_BasicShape(HB_ShaperItem *shaper_item)
 {
-    if (!qHB_ConvertStringToGlyphIndices(shaper_item))
-        return false;
-
     qHB_HeuristicSetGlyphAttributes(shaper_item);
 
     qHB_HeuristicPosition(shaper_item);
@@ -424,40 +264,41 @@ static const uint8_t graphemeTable[HB_Grapheme_LVT + 1][HB_Grapheme_LVT + 1] =
     { true , true , true , true , true , false, true , true , true , true  }, // LV, 
     { true , true , true , true , true , false, true , true , true , true  }, // LVT
 };
-    
-static inline void calcLineBreaks(const HB_UChar16 *uc, uint32_t len, HB_CharAttributes *charAttributes)
+
+void qHB_GetCharAttributes(const HB_UChar16 *string, uint32_t stringLength,
+                           HB_CharAttributes *attributes)
 {
-    if (!len)
+    if (!stringLength)
         return;
 
     // ##### can this fail if the first char is a surrogate?
     HB_LineBreakClass cls;
     HB_GraphemeClass grapheme;
-    qHB_GetGraphemeAndLineBreakClass(*uc, &grapheme, &cls);
+    qHB_GetGraphemeAndLineBreakClass(*string, &grapheme, &cls);
     // handle case where input starts with an LF
     if (cls == HB_LineBreak_LF)
         cls = HB_LineBreak_BK;
 
-    charAttributes[0].whiteSpace = (cls == HB_LineBreak_SP || cls == HB_LineBreak_BK);
-    charAttributes[0].charStop = true;
+    attributes[0].whiteSpace = (cls == HB_LineBreak_SP || cls == HB_LineBreak_BK);
+    attributes[0].charStop = true;
 
     int lcls = cls;
-    for (uint32_t i = 1; i < len; ++i) {
-        charAttributes[i].whiteSpace = false;
+    for (uint32_t i = 1; i < stringLength; ++i) {
+        attributes[i].whiteSpace = false;
 
-        HB_UChar32 code = uc[i];
+        HB_UChar32 code = string[i];
         HB_GraphemeClass ngrapheme;
         HB_LineBreakClass ncls;
         qHB_GetGraphemeAndLineBreakClass(code, &ngrapheme, &ncls);
-        charAttributes[i].charStop = graphemeTable[ngrapheme][grapheme];
+        attributes[i].charStop = graphemeTable[ngrapheme][grapheme];
         // handle surrogates
         if (ncls == HB_LineBreak_SG) {
-            if (HB_IsHighSurrogate(uc[i]) && i < len - 1 && HB_IsLowSurrogate(uc[i+1])) {
+            if (HB_IsHighSurrogate(string[i]) && i < stringLength - 1 && HB_IsLowSurrogate(string[i+1])) {
                 continue;
-            } else if (HB_IsLowSurrogate(uc[i]) && HB_IsHighSurrogate(uc[i-1])) {
-                code = HB_SurrogateToUcs4(uc[i-1], uc[i]);
+            } else if (HB_IsLowSurrogate(string[i]) && HB_IsHighSurrogate(string[i-1])) {
+                code = HB_SurrogateToUcs4(string[i-1], string[i]);
                 qHB_GetGraphemeAndLineBreakClass(code, &ngrapheme, &ncls);
-                charAttributes[i].charStop = false;
+                attributes[i].charStop = false;
             } else {
                 ncls = HB_LineBreak_AL;
             }
@@ -465,7 +306,7 @@ static inline void calcLineBreaks(const HB_UChar16 *uc, uint32_t len, HB_CharAtt
 
         // set white space and char stop flag
         if (ncls >= HB_LineBreak_SP)
-            charAttributes[i].whiteSpace = true;
+            attributes[i].whiteSpace = true;
 
         HB_LineBreakType lineBreakType = HB_NoBreak;
         if (cls >= HB_LineBreak_LF) {
@@ -493,7 +334,7 @@ static inline void calcLineBreaks(const HB_UChar16 *uc, uint32_t len, HB_CharAtt
             switch (brk) {
             case DirectBreak:
                 lineBreakType = HB_Break;
-                if (uc[i-1] == 0xad) // soft hyphen
+                if (string[i-1] == 0xad) // soft hyphen
                     lineBreakType = HB_SoftHyphen;
                 break;
             case IndirectBreak:
@@ -503,7 +344,7 @@ static inline void calcLineBreaks(const HB_UChar16 *uc, uint32_t len, HB_CharAtt
                 lineBreakType = HB_NoBreak;
                 if (lcls == HB_LineBreak_SP){
                     if (i > 1)
-                        charAttributes[i-2].lineBreakType = HB_Break;
+                        attributes[i-2].lineBreakType = HB_Break;
                 } else {
                     goto next_no_cls_update;
                 }
@@ -522,15 +363,9 @@ static inline void calcLineBreaks(const HB_UChar16 *uc, uint32_t len, HB_CharAtt
     next_no_cls_update:
         lcls = ncls;
         grapheme = ngrapheme;
-        charAttributes[i-1].lineBreakType = lineBreakType;
+        attributes[i-1].lineBreakType = lineBreakType;
     }
-    charAttributes[len-1].lineBreakType = HB_ForcedBreak;
-}
-
-void qHB_GetCharAttributes(const HB_UChar16 *string, uint32_t stringLength,
-                           HB_CharAttributes *attributes)
-{
-    calcLineBreaks(string, stringLength, attributes);
+    attributes[stringLength-1].lineBreakType = HB_ForcedBreak;
 }
 
 QT_END_NAMESPACE

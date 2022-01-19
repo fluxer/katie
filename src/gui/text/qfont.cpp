@@ -98,7 +98,7 @@ bool QFontDef::exactMatch(const QFontDef &other) const
     QFontDatabase::parseFontName(family, this_foundry, this_family);
     QFontDatabase::parseFontName(other.family, other_foundry, other_family);
 
-    return (styleStrategy == other.styleStrategy
+    return (hintingPreference == other.hintingPreference
             && weight        == other.weight
             && style        == other.style
             && this_family   == other_family
@@ -152,9 +152,6 @@ void QFontPrivate::resolve(uint mask, const QFontPrivate *other)
         request.pointSize = other->request.pointSize;
         request.pixelSize = other->request.pixelSize;
     }
-
-    if (! (mask & QFont::StyleStrategyResolved))
-        request.styleStrategy = other->request.styleStrategy;
 
     if (! (mask & QFont::WeightResolved))
         request.weight = other->request.weight;
@@ -230,10 +227,6 @@ void QFontPrivate::resolve(uint mask, const QFontPrivate *other)
     pointSize(), etc., return the values that were set, even though
     the values used may differ. The actual values are available from a
     QFontInfo object.
-
-    If the requested font family is unavailable you can influence the
-    \link #fontmatching font matching algorithm\endlink by choosing a
-    particular \l{QFont::StyleStrategy} with setStyleStrategy().
 
     The font-matching algorithm has a lastResortFamily() in cases
     where a suitable match cannot be found.
@@ -332,7 +325,6 @@ void QFontPrivate::resolve(uint mask, const QFontPrivate *other)
 
     \value FamilyResolved
     \value SizeResolved
-    \value StyleStrategyResolved
     \value WeightResolved
     \value StyleResolved
     \value UnderlineResolved
@@ -971,57 +963,6 @@ void QFont::setKerning(bool enable)
 }
 
 /*!
-    Returns the StyleStrategy.
-
-    The style strategy affects the \l{QFont}{font matching} algorithm.
-    See \l QFont::StyleStrategy for the list of available strategies.
-*/
-QFont::StyleStrategy QFont::styleStrategy() const
-{
-    return d->request.styleStrategy;
-}
-
-/*!
-    \enum QFont::StyleStrategy
-
-    The style strategy tells the \l{QFont}{font matching} algorithm
-    what type of fonts should be used to find an appropriate default
-    family.
-
-    The following strategies are available:
-
-    \value PreferDefault the default style strategy. It does not prefer
-           any type of font.
-    \value PreferBitmap prefers bitmap fonts (as opposed to outline
-           fonts).
-    \value PreferOutline prefers outline fonts (as opposed to bitmap fonts).
-    \value NoAntialias don't antialias the fonts.
-    \value PreferAntialias antialias if possible.
-
-    Any of these may be OR-ed with one of these flags:
-
-    \value ForceIntegerMetrics forces the use of integer values in font engines that support fractional
-           font metrics.
-*/
-
-/*!
-    Sets the style strategy for the font to \a s.
-
-    \sa QFont::StyleStrategy
-*/
-void QFont::setStyleStrategy(StyleStrategy s)
-{
-    detach();
-
-    if ((resolve_mask & QFont::StyleStrategyResolved) && s == d->request.styleStrategy)
-        return;
-
-    d->request.styleStrategy = s;
-    resolve_mask |= QFont::StyleStrategyResolved;
-}
-
-
-/*!
     \enum QFont::Stretch
 
     Predefined stretch values that follow the CSS naming convention. The higher
@@ -1137,7 +1078,7 @@ bool QFont::operator<(const QFont &f) const
     if (r1.weight != r2.weight) return r1.weight < r2.weight;
     if (r1.style != r2.style) return r1.style < r2.style;
     if (r1.stretch != r2.stretch) return r1.stretch < r2.stretch;
-    if (r1.styleStrategy != r2.styleStrategy) return r1.styleStrategy < r2.styleStrategy;
+    if (r1.hintingPreference != r2.hintingPreference) return r1.hintingPreference < r2.hintingPreference;
     if (r1.family != r2.family) return r1.family < r2.family;
 
     int f1attrs = (f.d->underline << 3) + (f.d->overline << 2) + (f.d->strikeOut<<1) + f.d->kerning;
@@ -1316,7 +1257,7 @@ bool QFont::fromString(const QString &descrip)
         if (l[2].toInt() > 0)
             setPixelSize(l[2].toInt());
         setWeight(qMax(qMin(99, l[3].toInt()), 0));
-        setItalic(l[4].toInt());
+        setStyle(static_cast<QFont::Style>(l[4].toInt()));
         setUnderline(l[5].toInt());
         setStrikeOut(l[6].toInt());
         setFixedPitch(l[7].toInt());
@@ -1350,7 +1291,7 @@ QDataStream &operator<<(QDataStream &s, const QFont &font)
     s << pointSize;
     s << pixelSize;
 
-    s << (qint8) font.d->request.styleStrategy;
+    s << (qint8) font.d->request.hintingPreference;
     s << (qint8) font.d->request.weight
       << get_font_bits(font.d.data());
     s << (qint16)font.d->request.stretch;
@@ -1370,7 +1311,7 @@ QDataStream &operator>>(QDataStream &s, QFont &font)
     font.d = new QFontPrivate;
     font.resolve_mask = QFont::AllPropertiesResolved;
 
-    qint8 styleStrategy = QFont::PreferDefault, bits;
+    qint8 hintingPreference = QFont::PreferDefaultHinting, bits;
     qint8 weight;
 
     s >> font.d->request.family;
@@ -1381,12 +1322,12 @@ QDataStream &operator>>(QDataStream &s, QFont &font)
     s >> pixelSize;
     font.d->request.pointSize = qreal(pointSize);
     font.d->request.pixelSize = qreal(pixelSize);
-    s >> styleStrategy;
+    s >> hintingPreference;
 
     s >> weight;
     s >> bits;
 
-    font.d->request.styleStrategy = QFont::StyleStrategy(styleStrategy);
+    font.d->request.hintingPreference = QFont::HintingPreference(hintingPreference);
     font.d->request.weight = weight;
 
     set_font_bits(bits, font.d.data());
@@ -1739,5 +1680,3 @@ QDebug operator<<(QDebug stream, const QFont &font)
 #endif
 
 QT_END_NAMESPACE
-
-#include "moc_qfont.h"

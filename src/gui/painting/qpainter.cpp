@@ -874,8 +874,8 @@ void QPainterPrivate::updateState(QPainterState *newState)
 
     \value TextAntialiasing Indicates that the engine should antialias
     text if possible. To forcibly disable antialiasing for text, do not
-    use this hint. Instead, set QFont::NoAntialias on your font's style
-    strategy.
+    use this hint. Instead, set QFont::PreferNoHinting on your font's
+    hint preferences.
 
     \value SmoothPixmapTransform Indicates that the engine should use
     a smooth pixmap transformation algorithm (such as bilinear) rather
@@ -5617,7 +5617,6 @@ start_lengthVariant:
     textLayout.setCacheEnabled(true);
     textLayout.setTextOption(textoption);
     textLayout.setAdditionalFormats(formatoverrides);
-    // covers Qt::TextJustificationForced
     textLayout.setFlags(tf);
 
     if (finalText.isEmpty()) {
@@ -5626,7 +5625,7 @@ start_lengthVariant:
         tf |= Qt::TextDontPrint;
     } else {
         qreal lineWidth = 0x01000000;
-        if (wordwrap || (tf & Qt::TextJustificationForced))
+        if (wordwrap)
             lineWidth = qMax<qreal>(0, r.width());
         if(!wordwrap)
             tf |= Qt::TextIncludeTrailingSpaces;

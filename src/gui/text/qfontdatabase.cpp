@@ -55,12 +55,35 @@ struct QtFontFamily {
     QString foundry;
     QString style;
     bool fixedpitch;
-    bool scalable;
     bool italic;
     bool bold;
     int weight;
     int pointsize;
+
+    bool operator<(const QtFontFamily &other) const;
 };
+
+static const QLatin1String normalfontstyle("Normal");
+static const QLatin1String bookfontstyle("Book");
+static const QLatin1String romanfontstyle("Roman");
+static const QVector<QLatin1String> preferedfontstyles = {
+    romanfontstyle, bookfontstyle , normalfontstyle
+};
+
+bool QtFontFamily::operator<(const QtFontFamily &other) const
+{
+    // qDebug() << Q_FUNC_INFO << weight << other.weight;
+    if (weight < other.weight) {
+        return true;
+    }
+    if (style == normalfontstyle && other.style != normalfontstyle) {
+        return true;
+    }
+    if (!italic && other.italic) {
+        return true;
+    }
+    return false;
+}
 
 class QFontDatabasePrivate
 {
@@ -68,7 +91,7 @@ public:
 #if defined(Q_WS_X11) && !defined(QT_NO_FONTCONFIG)
     QString systemLang;
 #endif
-    QList<QtFontFamily> families;
+    QVector<QtFontFamily> families;
 };
 
 Q_GLOBAL_STATIC(QFontDatabasePrivate, qGlobalFontDatabase)
@@ -136,13 +159,14 @@ static QStringList familyList(const QFontDef &req)
     return family_list;
 }
 
-static inline bool isItalicOrOblique(const QString &style, const QString &otherstyle)
+static inline bool isStyleMatch(const QString &style, const QString &otherstyle)
 {
     const QString lowerstyle(style.toLower());
     const QString lowerother(otherstyle.toLower());
     if (lowerstyle == lowerother) {
         return true;
     }
+
     if (lowerstyle.contains(QLatin1String("italic")) && lowerother.contains(QLatin1String("oblique"))) {
         return true;
     }
@@ -160,6 +184,9 @@ QString QFontDatabase::resolveFontFamilyAlias(const QString &family)
 #if defined(QT_NO_FONTCONFIG)
     return family;
 #else
+    if (!qt_x11Data->has_fontconfig)
+        return family;
+
     FcPattern *pattern = FcPatternCreate();
     if (!pattern)
         return family;
@@ -169,34 +196,53 @@ QString QFontDatabase::resolveFontFamilyAlias(const QString &family)
     FcConfigSubstitute(0, pattern, FcMatchPattern);
     FcDefaultSubstitute(pattern);
 
-    FcChar8 *familyAfterSubstitution;
-    FcPatternGetString(pattern, FC_FAMILY, 0, &familyAfterSubstitution);
-    QString resolved = QString::fromUtf8((const char *) familyAfterSubstitution);
+    QString resolved;
+    FcChar8 *familyAfterSubstitution = nullptr;
+    FcResult unused;
+    FcPattern *match = FcFontMatch(0, pattern, &unused);
+    if (match) {
+        FcPatternGetString(match, FC_FAMILY, 0, &familyAfterSubstitution);
+        resolved = QString::fromUtf8((const char *) familyAfterSubstitution);
+        FcPatternDestroy(match);
+    } else {
+        FcPatternGetString(pattern, FC_FAMILY, 0, &familyAfterSubstitution);
+        resolved = QString::fromUtf8((const char *) familyAfterSubstitution);
+    }
     FcPatternDestroy(pattern);
 
     return resolved;
 #endif
 }
 
-static QString styleStringHelper(int weight, QFont::Style style)
+static inline QString styleStringHelper(const QString &family, int weight, QFont::Style style)
 {
     QString result;
-    if (weight >= QFont::Black)
+
+    if (weight >= QFont::Black) {
         result = QApplication::translate("QFontDatabase", "Black");
-    else if (weight >= QFont::Bold)
+    } else if (weight >= QFont::Bold) {
         result = QApplication::translate("QFontDatabase", "Bold");
-    else if (weight >= QFont::DemiBold)
+    } else if (weight >= QFont::DemiBold) {
         result = QApplication::translate("QFontDatabase", "Demi Bold");
-    else if (weight < QFont::Normal)
+    } else if (weight < QFont::Normal) {
         result = QApplication::translate("QFontDatabase", "Light");
+    }
 
-    if (style == QFont::StyleItalic)
+    if (style == QFont::StyleItalic) {
         result += QLatin1Char(' ') + QApplication::translate("QFontDatabase", "Italic");
-    else if (style == QFont::StyleOblique)
+    } else if (style == QFont::StyleOblique) {
         result += QLatin1Char(' ') + QApplication::translate("QFontDatabase", "Oblique");
+    }
 
-    if (result.isEmpty())
-        result = QApplication::translate("QFontDatabase", "Normal");
+    if (result.isEmpty()) {
+        foreach (const QtFontFamily &fontfamily, qGlobalFontDatabase()->families) {
+            if (fontfamily.family.compare(family, Qt::CaseInsensitive) != 0) {
+                continue;
+            }
+            result = fontfamily.style;
+            break;
+        }
+    }
 
     return result.simplified();
 }
@@ -208,8 +254,11 @@ static QString styleStringHelper(int weight, QFont::Style style)
 */
 QString QFontDatabase::styleString(const QFont &font)
 {
-    return font.styleName().isEmpty() ? styleStringHelper(font.weight(), font.style())
-                                      : font.styleName();
+    QString result = font.styleName();
+    if (result.isEmpty()) {
+        result = styleStringHelper(font.family(), font.weight(), font.style());
+    }
+    return result;
 }
 
 /*!
@@ -219,8 +268,11 @@ QString QFontDatabase::styleString(const QFont &font)
 */
 QString QFontDatabase::styleString(const QFontInfo &fontInfo)
 {
-    return fontInfo.styleName().isEmpty() ? styleStringHelper(fontInfo.weight(), fontInfo.style())
-                                          : fontInfo.styleName();
+    QString result = fontInfo.styleName();
+    if (result.isEmpty()) {
+        result = styleStringHelper(fontInfo.family(), fontInfo.weight(), fontInfo.style());
+    }
+    return result;
 }
 
 
@@ -325,11 +377,13 @@ QFontDatabase::QFontDatabase()
             int weight_value = FC_WEIGHT_MEDIUM;
             int spacing_value = FC_PROPORTIONAL;
             FcChar8 *style_value = nullptr;
-            FcBool scalable = FcTrue;
+            FcBool scalable = FcFalse;
             double pixel_size = 0;
             int slant_value = FC_SLANT_ROMAN;
 
             if (FcPatternGetString(fonts->fonts[i], FC_FAMILY, 0, &family_value) != FcResultMatch)
+                continue;
+            if (FcPatternGetBool(fonts->fonts[i], FC_SCALABLE, 0, &scalable) != FcResultMatch || scalable != FcTrue)
                 continue;
 
             if (FcPatternGetString(fonts->fonts[i], FC_FOUNDRY, 0, &foundry_value) != FcResultMatch)
@@ -338,20 +392,22 @@ QFontDatabase::QFontDatabase()
                 weight_value = FC_WEIGHT_MEDIUM;
             if (FcPatternGetInteger (fonts->fonts[i], FC_SPACING, 0, &spacing_value) != FcResultMatch)
                 spacing_value = FC_PROPORTIONAL;
-            if (FcPatternGetBool(fonts->fonts[i], FC_SCALABLE, 0, &scalable) != FcResultMatch)
-                scalable = FcTrue;
             if (FcPatternGetString(fonts->fonts[i], FC_STYLE, 0, &style_value) != FcResultMatch)
                 style_value = nullptr;
             FcPatternGetDouble(fonts->fonts[i], FC_PIXEL_SIZE, 0, &pixel_size);
             if (FcPatternGetInteger(fonts->fonts[i], FC_SLANT, 0, &slant_value) != FcResultMatch)
                 slant_value = FC_SLANT_ROMAN;
 
+            QString fontstyle = QString::fromUtf8((const char *)style_value);
+            if (fontstyle.compare(QLatin1String("Regular"), Qt::CaseInsensitive) == 0) {
+                fontstyle = normalfontstyle;
+            }
+
             QtFontFamily fontfamily;
             fontfamily.family = QString::fromUtf8((const char *)family_value);
             fontfamily.foundry = QString::fromUtf8((const char *)foundry_value);
-            fontfamily.style = QString::fromUtf8((const char *)style_value);
+            fontfamily.style = fontstyle;
             fontfamily.fixedpitch = (spacing_value >= FC_MONO);
-            fontfamily.scalable = scalable;
             fontfamily.italic = (slant_value >= FC_SLANT_ITALIC);
             fontfamily.bold = (weight_value >= FC_WEIGHT_BOLD); // or FC_WEIGHT_DEMIBOLD?
             fontfamily.weight = weight_value;
@@ -360,6 +416,8 @@ QFontDatabase::QFontDatabase()
         }
 
         FcFontSetDestroy(fonts);
+
+        qStableSort(d->families);
 
 #ifdef QFONTDATABASE_DEBUG
         FD_DEBUG("QFontDatabase: loaded FontConfig: %d ms", int(elapsedtimer.elapsed()));
@@ -397,9 +455,13 @@ QStringList QFontDatabase::families() const
 }
 
 /*!
-    Returns a list of the styles available for the font family \a
-    family. Some example styles: "Light", "Light Italic", "Bold",
+    Returns a list of the styles available for the font \a family.
+    Some example styles: "Light", "Light Italic", "Bold",
     "Oblique", "Demi". The list may be empty.
+
+    If the font family styles includes "Normal", "Book" or "Roman"
+    those styles will appear first in the list (in that order).
+    Other styles appear in the list according to their weight.
 
     \sa families()
 */
@@ -416,6 +478,14 @@ QStringList QFontDatabase::styles(const QString &family) const
         }
         result.append(fontfamily.style);
     }
+
+    foreach (const QLatin1String &preferedstyle, preferedfontstyles) {
+        const int indexofstyle = result.indexOf(preferedstyle);
+        if (indexofstyle != -1) {
+            result.move(indexofstyle, 0);
+        }
+    }
+
     return result;
 }
 
@@ -433,7 +503,7 @@ bool QFontDatabase::isFixedPitch(const QString &family, const QString &style) co
     foreach (const QtFontFamily &fontfamily, d->families) {
         if (fontfamily.family.compare(parsedfamily, Qt::CaseInsensitive) != 0
             || (!parsedfoundry.isEmpty() && fontfamily.foundry.compare(parsedfoundry, Qt::CaseInsensitive) != 0)
-            || (!style.isEmpty() && !isItalicOrOblique(fontfamily.style, style))) {
+            || (!style.isEmpty() && !isStyleMatch(fontfamily.style, style))) {
             continue;
         }
         result = fontfamily.fixedpitch;
@@ -459,10 +529,10 @@ bool QFontDatabase::isSmoothlyScalable(const QString &family, const QString &sty
     foreach (const QtFontFamily &fontfamily, d->families) {
         if (fontfamily.family.compare(parsedfamily, Qt::CaseInsensitive) != 0
             || (!parsedfoundry.isEmpty() && fontfamily.foundry.compare(parsedfoundry, Qt::CaseInsensitive) != 0)
-            || (!style.isEmpty() && !isItalicOrOblique(fontfamily.style, style))) {
+            || (!style.isEmpty() && !isStyleMatch(fontfamily.style, style))) {
             continue;
         }
-        result = fontfamily.scalable;
+        result = true;
         break;
     }
     return result;
@@ -496,7 +566,7 @@ QList<int> QFontDatabase::pointSizes(const QString &family, const QString &style
     foreach (const QtFontFamily &fontfamily, d->families) {
         if (fontfamily.family.compare(parsedfamily, Qt::CaseInsensitive) != 0
             || (!parsedfoundry.isEmpty() && fontfamily.foundry.compare(parsedfoundry, Qt::CaseInsensitive) != 0)
-            || !isItalicOrOblique(fontfamily.style, style)) {
+            || !isStyleMatch(fontfamily.style, style)) {
             continue;
         }
         result.append(fontfamily.pointsize);
@@ -522,10 +592,7 @@ QFont QFontDatabase::font(const QString &family, const QString &style,
     foreach (const QtFontFamily &fontfamily, d->families) {
         if (fontfamily.family.compare(parsedfamily, Qt::CaseInsensitive) != 0
             || (!parsedfoundry.isEmpty() && fontfamily.foundry.compare(parsedfoundry, Qt::CaseInsensitive) != 0)
-            || !isItalicOrOblique(fontfamily.style, style)) {
-            continue;
-        }
-        if (fontfamily.pointsize != pointSize && !fontfamily.scalable) {
+            || !isStyleMatch(fontfamily.style, style)) {
             continue;
         }
 
@@ -556,14 +623,10 @@ QList<int> QFontDatabase::smoothSizes(const QString &family, const QString &styl
     foreach (const QtFontFamily &fontfamily, d->families) {
         if (fontfamily.family.compare(parsedfamily, Qt::CaseInsensitive) != 0
             || (!parsedfoundry.isEmpty() && fontfamily.foundry.compare(parsedfoundry, Qt::CaseInsensitive) != 0)
-            || !isItalicOrOblique(fontfamily.style, style)) {
+            || !isStyleMatch(fontfamily.style, style)) {
             continue;
         }
-        if (fontfamily.scalable) {
-            result = standardSizes();
-        } else {
-            result.append(fontfamily.pointsize);
-        }
+        result = standardSizes();
         break;
     }
     qSort(result);
@@ -616,7 +679,7 @@ bool QFontDatabase::italic(const QString &family, const QString &style) const
     foreach (const QtFontFamily &fontfamily, d->families) {
         if (fontfamily.family.compare(parsedfamily, Qt::CaseInsensitive) != 0
             || (!parsedfoundry.isEmpty() && fontfamily.foundry.compare(parsedfoundry, Qt::CaseInsensitive) != 0)
-            || !isItalicOrOblique(fontfamily.style, style)) {
+            || !isStyleMatch(fontfamily.style, style)) {
             continue;
         }
         result = fontfamily.italic;
@@ -641,7 +704,7 @@ bool QFontDatabase::bold(const QString &family, const QString &style) const
     foreach (const QtFontFamily &fontfamily, d->families) {
         if (fontfamily.family.compare(parsedfamily, Qt::CaseInsensitive) != 0
             || (!parsedfoundry.isEmpty() && fontfamily.foundry.compare(parsedfoundry, Qt::CaseInsensitive) != 0)
-            || !isItalicOrOblique(fontfamily.style, style)) {
+            || !isStyleMatch(fontfamily.style, style)) {
             continue;
         }
         result = fontfamily.bold;
@@ -667,7 +730,7 @@ int QFontDatabase::weight(const QString &family, const QString &style) const
     foreach (const QtFontFamily &fontfamily, d->families) {
         if (fontfamily.family.compare(parsedfamily, Qt::CaseInsensitive) != 0
             || (!parsedfoundry.isEmpty() && fontfamily.foundry.compare(parsedfoundry, Qt::CaseInsensitive) != 0)
-            || !isItalicOrOblique(fontfamily.style, style)) {
+            || !isStyleMatch(fontfamily.style, style)) {
             continue;
         }
         result = fontfamily.weight;
@@ -678,7 +741,8 @@ int QFontDatabase::weight(const QString &family, const QString &style) const
 
 
 /*!
-    Returns true if font family is available, false otherwise.
+    Returns true if font \a family is available, false otherwise. Aliases
+    such as "Sans Serif" are resolved.
 */
 bool QFontDatabase::hasFamily(const QString &family) const
 {
