@@ -60,29 +60,18 @@ struct QtFontFamily {
     int weight;
     int pointsize;
 
+    short preference;
     bool operator<(const QtFontFamily &other) const;
 };
 
 static const QLatin1String normalfontstyle("Normal");
 static const QLatin1String bookfontstyle("Book");
 static const QLatin1String romanfontstyle("Roman");
-static const QVector<QLatin1String> preferedfontstyles = {
-    romanfontstyle, bookfontstyle , normalfontstyle
-};
 
 bool QtFontFamily::operator<(const QtFontFamily &other) const
 {
-    // qDebug() << Q_FUNC_INFO << weight << other.weight;
-    if (weight < other.weight) {
-        return true;
-    }
-    if (style == normalfontstyle && other.style != normalfontstyle) {
-        return true;
-    }
-    if (!italic && other.italic) {
-        return true;
-    }
-    return false;
+    // qDebug() << Q_FUNC_INFO << preference << other.preference;
+    return (preference >= other.preference);
 }
 
 class QFontDatabasePrivate
@@ -412,6 +401,16 @@ QFontDatabase::QFontDatabase()
             fontfamily.bold = (weight_value >= FC_WEIGHT_BOLD); // or FC_WEIGHT_DEMIBOLD?
             fontfamily.weight = weight_value;
             fontfamily.pointsize = qRound(pixel_size);
+            fontfamily.preference = -weight_value;
+
+            if (fontstyle == normalfontstyle) {
+                fontfamily.preference += 1000;
+            } else if (fontstyle == bookfontstyle) {
+                fontfamily.preference += 900;
+            } else if (fontstyle == romanfontstyle) {
+                fontfamily.preference += 800;
+            }
+
             d->families.append(fontfamily);
         }
 
@@ -477,13 +476,6 @@ QStringList QFontDatabase::styles(const QString &family) const
             continue;
         }
         result.append(fontfamily.style);
-    }
-
-    foreach (const QLatin1String &preferedstyle, preferedfontstyles) {
-        const int indexofstyle = result.indexOf(preferedstyle);
-        if (indexofstyle != -1) {
-            result.move(indexofstyle, 0);
-        }
     }
 
     return result;
