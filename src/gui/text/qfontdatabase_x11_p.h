@@ -136,7 +136,7 @@ QFontDef qt_FcPatternToQFontDef(FcPattern *pattern, const QFontDef &request)
     fontDef.stretch = request.stretch;
     fontDef.style = request.style;
 
-    int spacing;
+    int spacing = FC_PROPORTIONAL;
     if (FcPatternGetInteger(pattern, FC_SPACING, 0, &spacing) == FcResultMatch) {
         fontDef.fixedPitch = (spacing >= FC_MONO);
         fontDef.ignorePitch = false;
@@ -551,11 +551,11 @@ static void qt_addPatternProps(FcPattern *pattern, int screen, QUnicodeTables::S
 static FcPattern *getFcPattern(const QFontPrivate *fp, QUnicodeTables::Script script, const QFontDef &request)
 {
     if (!qt_x11Data->has_fontconfig)
-        return 0;
+        return nullptr;
 
     FcPattern *pattern = FcPatternCreate();
     if (!pattern)
-        return 0;
+        return nullptr;
 
     FcValue value;
     value.type = FcTypeString;
@@ -569,17 +569,15 @@ static FcPattern *getFcPattern(const QFontPrivate *fp, QUnicodeTables::Script sc
             value.u.s = (const FcChar8 *)cs.data();
             FcPatternAdd(pattern, FC_FAMILY, value, FcTrue);
         }
-        if (i == 0) {
-            if (!foundry.isEmpty()) {
-                QByteArray cs = foundry.toUtf8();
-                value.u.s = (const FcChar8 *)cs.data();
-                FcPatternAddWeak(pattern, FC_FOUNDRY, value, FcTrue);
-            }
+        if (i == 0 && !foundry.isEmpty()) {
+            QByteArray cs = foundry.toUtf8();
+            value.u.s = (const FcChar8 *)cs.data();
+            FcPatternAddWeak(pattern, FC_FOUNDRY, value, FcTrue);
         }
     }
 
     if (!request.ignorePitch) {
-        char pitch_value = FC_PROPORTIONAL;
+        int pitch_value = FC_PROPORTIONAL;
         if (request.fixedPitch)
             pitch_value = FC_MONO;
         FcPatternAddInteger(pattern, FC_SPACING, pitch_value);
