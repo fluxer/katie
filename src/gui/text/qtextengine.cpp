@@ -480,6 +480,66 @@ QFixed QTextEngine::width(int from, int len) const
     return w;
 }
 
+glyph_metrics_t QTextEngine::boundingBox(int from,  int len) const
+{
+    itemize();
+
+    glyph_metrics_t gm;
+
+    for (int i = 0; i < layoutData->items.size(); i++) {
+        const QScriptItem *si = layoutData->items.constData() + i;
+
+        int pos = si->position;
+        int ilen = length(i);
+        if (pos > from + len)
+            break;
+        if (pos + ilen > from) {
+            if (!si->num_glyphs)
+                shape(i);
+
+            if (si->analysis.flags == QScriptAnalysis::Object) {
+                gm.width += si->width;
+                continue;
+            } else if (si->analysis.flags == QScriptAnalysis::Tab) {
+                gm.width += calculateTabWidth(i, gm.width);
+                continue;
+            }
+
+            unsigned short *logClusters = this->logClusters(si);
+            QGlyphLayout glyphs = shapedGlyphs(si);
+
+            // do the simple thing for now and give the first glyph in a cluster the full width, all other ones 0.
+            int charFrom = from - pos;
+            if (charFrom < 0)
+                charFrom = 0;
+            int glyphStart = logClusters[charFrom];
+            if (charFrom > 0 && logClusters[charFrom-1] == glyphStart)
+                while (charFrom < ilen && logClusters[charFrom] == glyphStart)
+                    charFrom++;
+            if (charFrom < ilen) {
+                QFontEngine *fe = fontEngine(*si);
+                glyphStart = logClusters[charFrom];
+                int charEnd = from + len - 1 - pos;
+                if (charEnd >= ilen)
+                    charEnd = ilen-1;
+                int glyphEnd = logClusters[charEnd];
+                while (charEnd < ilen && logClusters[charEnd] == glyphEnd)
+                    charEnd++;
+                glyphEnd = (charEnd == ilen) ? si->num_glyphs : logClusters[charEnd];
+                if (glyphStart <= glyphEnd ) {
+                    glyph_metrics_t m = fe->boundingBox(glyphs.mid(glyphStart, glyphEnd - glyphStart));
+                    gm.x = qMin(gm.x, m.x + gm.xoff);
+                    gm.y = qMin(gm.y, m.y);
+                    gm.width = qMax(gm.width, m.width + gm.xoff);
+                    gm.height = qMax(gm.height, m.height);
+                    gm.xoff += m.xoff;
+                }
+            }
+        }
+    }
+    return gm;
+}
+
 QFont QTextEngine::font(const QScriptItem &si) const
 {
     QFont font = fnt;
@@ -888,6 +948,187 @@ void QTextEngine::indexAdditionalFormats()
         specialData->addFormatIndices[i] = formats->indexForFormat(specialData->addFormats.at(i).format);
         specialData->addFormats[i].format = QTextCharFormat();
     }
+}
+
+/* These two helper functions are used to determine whether we need to insert a ZWJ character
+   between the text that gets truncated and the ellipsis. This is important to get
+   correctly shaped results for arabic text.
+*/
+static inline bool nextCharJoins(const QString &string, int pos)
+{
+    while (pos < string.length() && string.at(pos).category() == QChar::Mark_NonSpacing)
+        ++pos;
+    if (pos == string.length())
+        return false;
+    return string.at(pos).joining() != QChar::OtherJoining;
+}
+
+static inline bool prevCharJoins(const QString &string, int pos)
+{
+    while (pos > 0 && string.at(pos - 1).category() == QChar::Mark_NonSpacing)
+        --pos;
+    if (pos == 0)
+        return false;
+    QChar::Joining joining = string.at(pos - 1).joining();
+    return (joining == QChar::Dual);
+}
+
+QString QTextEngine::elidedText(Qt::TextElideMode mode, const QFixed &width, int flags) const
+{
+    // qDebug() << "elidedText; available width" << width.toReal() << "text width:" << this->width(0, layoutData->string.length()).toReal();
+
+    if (flags & Qt::TextShowMnemonic) {
+        itemize();
+        HB_CharAttributes *attributes = const_cast<HB_CharAttributes *>(this->attributes());
+        if (!attributes)
+            return QString();
+        for (int i = 0; i < layoutData->items.size(); ++i) {
+            QScriptItem &si = layoutData->items[i];
+            if (!si.num_glyphs)
+                shape(i);
+
+            unsigned short *logClusters = this->logClusters(&si);
+            QGlyphLayout glyphs = shapedGlyphs(&si);
+
+            const int end = si.position + length(&si);
+            for (int i = si.position; i < end - 1; ++i) {
+                if (layoutData->string.at(i) == QLatin1Char('&')) {
+                    const int gp = logClusters[i - si.position];
+                    glyphs.attributes[gp].dontPrint = true;
+                    attributes[i + 1].charStop = false;
+                    attributes[i + 1].whiteSpace = false;
+                    attributes[i + 1].lineBreakType = HB_NoBreak;
+                    if (layoutData->string.at(i + 1) == QLatin1Char('&'))
+                        ++i;
+                }
+            }
+        }
+    }
+
+    validate();
+
+    if (mode == Qt::ElideNone
+        || this->width(0, layoutData->string.length()) <= width
+        || layoutData->string.length() <= 1)
+        return layoutData->string;
+
+    QFixed ellipsisWidth;
+    QString ellipsisText;
+    {
+        QChar ellipsisChar(0x2026);
+
+        QFontEngine *fe = fnt.d->engineForScript(QUnicodeTables::Common);
+
+        QGlyphLayoutArray<1> ellipsisGlyph;
+        {
+            if (fe->canRender(&ellipsisChar, 1)) {
+                int nGlyphs = 1;
+                fe->stringToCMap(&ellipsisChar, 1, &ellipsisGlyph, &nGlyphs, 0);
+            }
+        }
+
+        if (ellipsisGlyph.glyphs[0]) {
+            ellipsisWidth = ellipsisGlyph.advances_x[0];
+            ellipsisText = ellipsisChar;
+        } else {
+            QString dotDotDot(QLatin1String("..."));
+
+            QGlyphLayoutArray<3> glyphs;
+            int nGlyphs = 3;
+            if (!fe->stringToCMap(dotDotDot.constData(), 3, &glyphs, &nGlyphs, 0))
+                // should never happen...
+                return layoutData->string;
+            for (int i = 0; i < nGlyphs; ++i)
+                ellipsisWidth += glyphs.advances_x[i];
+            ellipsisText = dotDotDot;
+        }
+    }
+
+    const QFixed availableWidth = width - ellipsisWidth;
+    if (availableWidth < 0)
+        return QString();
+
+    const HB_CharAttributes *attributes = this->attributes();
+    if (!attributes)
+        return QString();
+
+    if (mode == Qt::ElideRight) {
+        QFixed currentWidth;
+        int pos;
+        int nextBreak = 0;
+
+        do {
+            pos = nextBreak;
+
+            ++nextBreak;
+            while (nextBreak < layoutData->string.length() && !attributes[nextBreak].charStop)
+                ++nextBreak;
+
+            currentWidth += this->width(pos, nextBreak - pos);
+        } while (nextBreak < layoutData->string.length()
+                 && currentWidth < availableWidth);
+
+        if (nextCharJoins(layoutData->string, pos))
+            ellipsisText.prepend(QChar(0x200d) /* ZWJ */);
+
+        return layoutData->string.left(pos) + ellipsisText;
+    } else if (mode == Qt::ElideLeft) {
+        QFixed currentWidth;
+        int pos;
+        int nextBreak = layoutData->string.length();
+
+        do {
+            pos = nextBreak;
+
+            --nextBreak;
+            while (nextBreak > 0 && !attributes[nextBreak].charStop)
+                --nextBreak;
+
+            currentWidth += this->width(nextBreak, pos - nextBreak);
+        } while (nextBreak > 0
+                 && currentWidth < availableWidth);
+
+        if (prevCharJoins(layoutData->string, pos))
+            ellipsisText.append(QChar(0x200d) /* ZWJ */);
+
+        return ellipsisText + layoutData->string.mid(pos);
+    } else if (mode == Qt::ElideMiddle) {
+        QFixed leftWidth;
+        QFixed rightWidth;
+
+        int leftPos = 0;
+        int nextLeftBreak = 0;
+
+        int rightPos = layoutData->string.length();
+        int nextRightBreak = layoutData->string.length();
+
+        do {
+            leftPos = nextLeftBreak;
+            rightPos = nextRightBreak;
+
+            ++nextLeftBreak;
+            while (nextLeftBreak < layoutData->string.length() && !attributes[nextLeftBreak].charStop)
+                ++nextLeftBreak;
+
+            --nextRightBreak;
+            while (nextRightBreak > 0 && !attributes[nextRightBreak].charStop)
+                --nextRightBreak;
+
+            leftWidth += this->width(leftPos, nextLeftBreak - leftPos);
+            rightWidth += this->width(nextRightBreak, rightPos - nextRightBreak);
+        } while (nextLeftBreak < layoutData->string.length()
+                 && nextRightBreak > 0
+                 && leftWidth + rightWidth < availableWidth);
+
+        if (nextCharJoins(layoutData->string, leftPos))
+            ellipsisText.prepend(QChar(0x200d) /* ZWJ */);
+        if (prevCharJoins(layoutData->string, rightPos))
+            ellipsisText.append(QChar(0x200d) /* ZWJ */);
+
+        return layoutData->string.left(leftPos) + ellipsisText + layoutData->string.mid(rightPos);
+    }
+
+    return layoutData->string;
 }
 
 void QTextEngine::setBoundary(int strPos) const

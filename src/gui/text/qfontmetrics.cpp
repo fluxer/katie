@@ -409,7 +409,8 @@ bool QFontMetrics::inFontUcs4(uint ucs4) const
 */
 int QFontMetrics::width(const QString &text) const
 {
-    return boundingRect(QRect(0,0,0,0), Qt::TextDontPrint, text).width();
+    QTextEngine engine(text, d.data());
+    return qRound(engine.width(0, text.size()).toReal());
 }
 
 /*!
@@ -476,10 +477,9 @@ QRect QFontMetrics::boundingRect(const QString &text) const
     if (text.isEmpty())
         return QRect();
 
-    QPainterPath textpath;
-    textpath.setFillRule(Qt::WindingFill);
-    textpath.addText(QPointF(), QFont(d.data()), text);
-    return textpath.boundingRect().toRect();
+    QTextEngine engine(text, d.data());
+    glyph_metrics_t gm = engine.boundingBox(0, text.size());
+    return QRect(qRound(gm.x.toReal()), qRound(gm.y.toReal()), qRound(gm.width.toReal()), qRound(gm.height.toReal()));
 }
 
 /*!
@@ -560,114 +560,6 @@ QSize QFontMetrics::size(int flags, const QString &text) const
     return boundingRect(QRect(0,0,0,0), flags | Qt::TextLongestVariant, text).size();
 }
 
-static inline QString qt_mnemonic_mid(const QString &text, const int pos, const bool showmnemonic)
-{
-    if (showmnemonic && pos > 0 && text.at(pos - 1) == QLatin1Char('&') && text.at(pos) != QLatin1Char('&')) {
-        return text.mid(0, pos - 1);
-    }
-    return text.mid(0, pos);
-}
-
-static inline QString qt_elided_text(const QString &text, Qt::TextElideMode mode, qreal width, int flags, const QFontPrivate* font)
-{
-    // qDebug() << Q_FUNC_INFO << text << mode << width << flags;
-
-    static const QTextEngine::ShaperFlags shaperflags = 0;
-
-    const bool showmnemonic = (flags & Qt::TextShowMnemonic);
-    int i = 0;
-    qreal xoffset = 0.0;
-    QUnicodeTables::Script inheritedscript = QUnicodeTables::Common;
-    for (i = 0; i < text.size(); i++) {
-        int nglyphs = 1;
-        QChar textchars[2] = { text.at(i), 0 };
-        uint ucs4 = textchars[0].unicode();
-        if (textchars[0].isHighSurrogate() && (i + 1) < text.size() && text.at(i + 1).isLowSurrogate()) {
-            textchars[1] = text.at(i + 1);
-            ucs4 = QChar::surrogateToUcs4(textchars[0], textchars[1]);
-            i++;
-            nglyphs = 2;
-            // qDebug() << Q_FUNC_INFO << ucs4;
-        }
-
-        QUnicodeTables::Script script = QUnicodeTables::script(ucs4);
-        if (script == QUnicodeTables::Inherited) {
-            // qDebug() << Q_FUNC_INFO << "inherited" << ucs4;
-            script = inheritedscript;
-        } else {
-            inheritedscript = script;
-        }
-
-        QFontEngine* engine = font->engineForScript(script);
-        if (Q_UNLIKELY(!engine)) {
-            qWarning("qt_elided_text: No font engine for script %d", int(script));
-            continue;
-        }
-
-        switch (QChar::category(ucs4)) {
-            case QChar::Separator_Line:
-            case QChar::Other_Control:
-            case QChar::Other_Format: {
-                // qDebug() << Q_FUNC_INFO << ucs4;
-                continue;
-            }
-            default: {
-                break;
-            }
-        }
-
-        if (showmnemonic && char(ucs4) == char('&')
-            && (i + 1) < text.size() && text.at(i + 1) != QLatin1Char('&')) {
-            continue;
-        }
-
-        QGlyphLayoutArray<2> glyphs;
-        engine->stringToCMap(textchars, nglyphs, &glyphs, &nglyphs, shaperflags);
-
-        xoffset += glyphs.advances_x[0].toReal();
-        if (nglyphs == 2) {
-            xoffset += glyphs.advances_x[1].toReal();
-        }
-        Q_ASSERT(nglyphs < 3);
-
-        if (xoffset > width) {
-            break;
-        }
-    }
-
-    int elidedlength = i;
-    // qDebug() << Q_FUNC_INFO << text << width << xoffset << elidedlength;
-
-    if (elidedlength <= 0) {
-        return QString();
-    } else if (elidedlength <= 3 && text.size() > 0) {
-        return (QString(text.at(0)) + QChar(0x2026));
-    } else if (text.size() <= elidedlength) {
-        return text;
-    }
-
-    switch (mode) {
-        case Qt::ElideLeft: {
-            return (QLatin1String("...") + qt_mnemonic_mid(text, elidedlength - 3, showmnemonic));
-        }
-        case Qt::ElideRight: {
-            return (qt_mnemonic_mid(text, elidedlength - 3, showmnemonic) + QLatin1String("..."));
-        }
-        case Qt::ElideMiddle: {
-            if (elidedlength <= 5) {
-                return text;
-            }
-            // TODO: mnemonics chopping on the left and right
-            const int midlength = (elidedlength / 2);
-            return (text.left(midlength - 2) + QLatin1String("...") + text.right(midlength - 1));
-        }
-        case Qt::ElideNone: {
-            return qt_mnemonic_mid(text, elidedlength, showmnemonic);
-        }
-    }
-    Q_UNREACHABLE();
-}
-
 /*!
     \since 4.2
 
@@ -686,7 +578,8 @@ static inline QString qt_elided_text(const QString &text, Qt::TextElideMode mode
 */
 QString QFontMetrics::elidedText(const QString &text, Qt::TextElideMode mode, int width, int flags) const
 {
-    return qt_elided_text(text, mode, qreal(width), flags, d.data());
+    QTextEngine engine(text, d.data());
+    return engine.elidedText(mode, QFixed(width), flags);
 }
 
 /*!
@@ -1106,7 +999,8 @@ bool QFontMetricsF::inFontUcs4(uint ucs4) const
 */
 qreal QFontMetricsF::width(const QString &text) const
 {
-    return boundingRect(QRectF(0,0,0,0), Qt::TextDontPrint, text).width();
+    QTextEngine engine(text, d.data());
+    return engine.width(0, text.size()).toReal();
 }
 
 /*!
@@ -1173,10 +1067,12 @@ QRectF QFontMetricsF::boundingRect(const QString &text) const
     if (text.isEmpty())
         return QRectF();
 
-    QPainterPath textpath;
-    textpath.setFillRule(Qt::WindingFill);
-    textpath.addText(QPointF(), QFont(d.data()), text);
-    return textpath.boundingRect();
+    if (text.isEmpty())
+        return QRect();
+
+    QTextEngine engine(text, d.data());
+    glyph_metrics_t gm = engine.boundingBox(0, text.size());
+    return QRectF(gm.x.toReal(), gm.y.toReal(), gm.width.toReal(), gm.height.toReal());
 }
 
 /*!
@@ -1275,7 +1171,8 @@ QSizeF QFontMetricsF::size(int flags, const QString &text) const
 */
 QString QFontMetricsF::elidedText(const QString &text, Qt::TextElideMode mode, qreal width, int flags) const
 {
-    return qt_elided_text(text, mode, width, flags, d.data());
+    QTextEngine engine(text, d.data());
+    return engine.elidedText(mode, QFixed::fromReal(width), flags);
 }
 
 /*!
