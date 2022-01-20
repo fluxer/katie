@@ -437,17 +437,20 @@ QFontDatabase::QFontDatabase()
 QStringList QFontDatabase::families() const
 {
     QStringList result;
+    QMap<QString,QStringList> familieswithfoundry;
     foreach (const QtFontFamily &fontfamily, d->families) {
-        QString familyandfoundry;
-        if (fontfamily.foundry.isEmpty()) {
-            familyandfoundry = fontfamily.family;
+        familieswithfoundry[fontfamily.family].append(fontfamily.foundry);
+    }
+    foreach (const QString &family, familieswithfoundry.keys()) {
+        QStringList foundries = familieswithfoundry.value(family);
+        foundries.removeDuplicates();
+        if (foundries.size() > 1) {
+            foreach (const QString &foundry, foundries) {
+                result.append(QString::fromLatin1("%1 [%2]").arg(family, foundry));
+            }
         } else {
-            familyandfoundry = QString::fromLatin1("%1 [%2]").arg(fontfamily.family, fontfamily.foundry);
+            result.append(family);
         }
-        if (result.contains(familyandfoundry)) {
-            continue;
-        }
-        result.append(familyandfoundry);
     }
     qSort(result);
     return result;
