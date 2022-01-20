@@ -366,6 +366,7 @@ public:
     QFixed alignLine(const QScriptLine &line);
 
     QFixed width(int charFrom, int numChars) const;
+    glyph_metrics_t boundingBox(int from,  int len) const;
 
     int length(int item) const {
         int from = layoutData->items[item].position;
@@ -463,6 +464,8 @@ public:
     bool atWordSeparator(int position) const;
     bool atSpace(int position) const;
     void indexAdditionalFormats();
+
+    QString elidedText(Qt::TextElideMode mode, const QFixed &width, int flags) const;
 
     void shapeLine(const QScriptLine &line);
 

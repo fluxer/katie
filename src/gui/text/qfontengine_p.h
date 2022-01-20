@@ -116,6 +116,7 @@ public:
 
     virtual void addOutlineToPath(qreal, qreal, const QGlyphLayout &, QPainterPath *);
 
+    virtual glyph_metrics_t boundingBox(const QGlyphLayout &glyphs) const = 0;
     virtual glyph_metrics_t boundingBox(glyph_t glyph) const = 0;
 
     virtual QFixed ascent() const = 0;
@@ -183,6 +184,7 @@ public:
     virtual void addGlyphsToPath(glyph_t *glyphs, QFixedPoint *positions, int nglyphs,
                                  QPainterPath *path);
 
+    virtual glyph_metrics_t boundingBox(const QGlyphLayout &glyphs) const;
     virtual glyph_metrics_t boundingBox(glyph_t glyph) const;
 
     virtual QFixed ascent() const;

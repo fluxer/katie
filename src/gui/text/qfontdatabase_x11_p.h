@@ -136,7 +136,7 @@ QFontDef qt_FcPatternToQFontDef(FcPattern *pattern, const QFontDef &request)
     fontDef.stretch = request.stretch;
     fontDef.style = request.style;
 
-    int spacing;
+    int spacing = FC_PROPORTIONAL;
     if (FcPatternGetInteger(pattern, FC_SPACING, 0, &spacing) == FcResultMatch) {
         fontDef.fixedPitch = (spacing >= FC_MONO);
         fontDef.ignorePitch = false;
@@ -146,172 +146,6 @@ QFontDef qt_FcPatternToQFontDef(FcPattern *pattern, const QFontDef &request)
 
     return fontDef;
 }
-
-// values are from likelySubtags.xml distributed with Unicode CLDR data
-static const char *specialLanguagesTbl[] = {
-    "en", // Common
-    "ff-gn", // Adlam
-    "aho-in", // Ahom
-    "hlu-tr", // AnatolianHieroglyphs
-    "ar", // Arabic
-    "hy", // Armenian
-    "ae-ir", // Avestan
-    "ban-id", // Balinese
-    "bax-cm", // Bamum
-    "bsq-lr", // BassaVah
-    "bbc-id", // Batak
-    "bn", // Bengali
-    "sa-in", // Bhaiksuki
-    "zh-tw", // Bopomofo
-    "pka-in", // Brahmi
-    "fr-fr", // Braille
-    "bug-id", // Buginese
-    "bku-ph", // Buhid
-    "en-ca", // CanadianAboriginal
-    "xcr-tr", // Carian
-    "sq", // CaucasianAlbanian
-    "ccp-bd", // Chakma
-    "cjm-vn", // Cham
-    "chr-us", // Cherokee
-    "xco-uz", // Chorasmian
-    "cop-eg", // Coptic
-    "akk-iq", // Cuneiform
-    "grc-cy", // Cypriot
-    0, // CyproMinoan
-    "ru", // Cyrillic
-    0, // Deseret
-    "hi", // Devanagari
-    "dv-mv", // DivesAkuru
-    "doi-in", // Dogra
-    "fr-fr", // Duployan
-    "ar-eg", // EgyptianHieroglyphs
-    "sq-al", // Elbasan
-    "arc-ir", // Elymaic
-    0, // Ethiopic
-    "ka", // Georgian
-    "cu-bg", // Glagolitic
-    "got-ua", // Gothic
-    "sa-in", // Grantha
-    "el", // Greek
-    "gu", // Gujarati
-    "wsg-in", // GunjalaGondi
-    "pa", // Gurmukhi
-    "zh-tw", // Han
-    "ko", // Hangul
-    "rhg-mm", // HanifiRohingya
-    "hnn-ph", // Hanunoo
-    "mis-iq", // Hatran
-    "he", // Hebrew
-    "ja-jp", // Hiragana
-    "arc-ir", // ImperialAramaic
-    0, // Inherited
-    "pal-ir", // InscriptionalPahlavi
-    "xpr-ir", // InscriptionalParthian
-    "jv-id", // Javanese
-    "bho-in", // Kaithi
-    "kn", // Kannada
-    "ja-jp", // Katakana
-    "eky-mm", // KayahLi
-    "pra-pk", // Kharoshthi
-    "zkt-cn", // KhitanSmallScript
-    "km", // Khmer
-    "sd-in", // Khojki
-    "sd-in", // Khudawadi
-    "lo", // Lao
-    "la", // Latin
-    "lep-in", // Lepcha
-    "lif", // Limbu
-    "lab-gr", // LinearA
-    "lab-gr", // LinearB
-    "lis-cn", // Lisu
-    "xlc-tr", // Lycian
-    "xld-tr", // Lydian
-    "hi-in", // Mahajani
-    "mak-id", // Makasar
-    "ml", // Malayalam
-    "myz-ir", // Mandaic
-    "xmn-cn", // Manichaean
-    "bo-cn", // Marchen
-    "esg-in", // MasaramGondi
-    "mis-ng", // Medefaidrin
-    "mni-in", // MeeteiMayek
-    0, // MendeKikakui
-    "xmr-sd", // MeroiticCursive
-    "xmr-sd", // MeroiticHieroglyphs
-    "hmd-cn", // Miao
-    "mr-in", // Modi
-    "mn", // Mongolian
-    "mro-bd", // Mro
-    "skr-pk", // Multani
-    "my", // Myanmar
-    "arc-jo", // Nabataean
-    "sa-in", // Nandinagari
-    "new-np", // Newa
-    "khb-cn", // NewTaiLue
-    "nqo-gn", // Nko
-    "zhx-cn", // Nushu
-    "mww-us", // NyiakengPuachueHmong
-    "sga-ie", // Ogham
-    "sat-in", // OlChiki
-    "hu-hu", // OldHungarian
-    "ett-it", // OldItalic
-    "ar", // OldNorthArabian
-    "kv-ru", // OldPermic
-    "peo-ir", // OldPersian
-    "sog-uz", // OldSogdian
-    "ar", // OldSouthArabian
-    "otk-mn", // OldTurkic
-    "ug-cn", // OldUyghur
-    "or", // Oriya
-    "osa-us", // Osage
-    "so-so", // Osmanya
-    "hnj-la", // PahawhHmong
-    "arc-sy", // Palmyrene
-    "ctd-mm", // PauCinHau
-    "lzh-cn", // PhagsPa
-    "phn-lb", // Phoenician
-    "pal-cn", // PsalterPahlavi
-    "rej-id", // Rejang
-    "non-se", // Runic
-    "smp-il", // Samaritan
-    "saz-in", // Saurashtra
-    "sa-in", // Sharada
-    "en-gb", // Shavian
-    "sa-in", // Siddham
-    "ase-us", // SignWriting
-    "si", // Sinhala
-    "sog-uz", // Sogdian
-    "srb-in", // SoraSompeng
-    "cmg-mn", // Soyombo
-    "su-id", // Sundanese
-    "syl-bd", // SylotiNagri
-    "syr", // Syriac
-    "tl-ph", // Tagalog
-    "tbw-ph", // Tagbanwa
-    "tdd-cn", // TaiLe
-    0, // TaiTham
-    "blt-vn", // TaiViet
-    "doi-in", // Takri
-    "ta", // Tamil
-    "ntm-in", // Tangsa
-    "txg-cn", // Tangut
-    "te", // Telugu
-    "div", // Thaana
-    "th", // Thai
-    "bo", // Tibetan
-    0, // Tifinagh
-    "mai-in", // Tirhuta
-    "txo-in", // Toto
-    "uga-sy", // Ugaritic
-    "vai-lr", // Vai
-    "sq-al", // Vithkuqi
-    "npp-in", // Wancho
-    0, // WarangCiti
-    "ku-ge", // Yezidi
-    "yi", // Yi
-    "cmg-mn", // ZanabazarSquare
-};
-enum { SpecialLanguageCount = sizeof(specialLanguagesTbl) / sizeof(const char *) };
 
 // values obtained via genutf script
 static const uint specialCharsTbl[] = {
@@ -504,15 +338,6 @@ static void qt_addPatternProps(FcPattern *pattern, int screen, QUnicodeTables::S
     FcPatternDel(pattern, FC_PIXEL_SIZE);
     FcPatternAddDouble(pattern, FC_PIXEL_SIZE, size_value);
 
-    if (script != QUnicodeTables::Common && specialLanguagesTbl[script]) {
-        Q_ASSERT(script < QUnicodeTables::ScriptCount);
-        FcLangSet *ls = FcLangSetCreate();
-        FcLangSetAdd(ls, (const FcChar8*)specialLanguagesTbl[script]);
-        FcPatternDel(pattern, FC_LANG);
-        FcPatternAddLangSet(pattern, FC_LANG, ls);
-        FcLangSetDestroy(ls);
-    }
-
     if (!request.styleName.isEmpty()) {
         QByteArray cs = request.styleName.toUtf8();
         FcPatternAddString(pattern, FC_STYLE, (const FcChar8 *) cs.constData());
@@ -551,11 +376,11 @@ static void qt_addPatternProps(FcPattern *pattern, int screen, QUnicodeTables::S
 static FcPattern *getFcPattern(const QFontPrivate *fp, QUnicodeTables::Script script, const QFontDef &request)
 {
     if (!qt_x11Data->has_fontconfig)
-        return 0;
+        return nullptr;
 
     FcPattern *pattern = FcPatternCreate();
     if (!pattern)
-        return 0;
+        return nullptr;
 
     FcValue value;
     value.type = FcTypeString;
@@ -569,17 +394,15 @@ static FcPattern *getFcPattern(const QFontPrivate *fp, QUnicodeTables::Script sc
             value.u.s = (const FcChar8 *)cs.data();
             FcPatternAdd(pattern, FC_FAMILY, value, FcTrue);
         }
-        if (i == 0) {
-            if (!foundry.isEmpty()) {
-                QByteArray cs = foundry.toUtf8();
-                value.u.s = (const FcChar8 *)cs.data();
-                FcPatternAddWeak(pattern, FC_FOUNDRY, value, FcTrue);
-            }
+        if (i == 0 && !foundry.isEmpty()) {
+            QByteArray cs = foundry.toUtf8();
+            value.u.s = (const FcChar8 *)cs.data();
+            FcPatternAddWeak(pattern, FC_FOUNDRY, value, FcTrue);
         }
     }
 
     if (!request.ignorePitch) {
-        char pitch_value = FC_PROPORTIONAL;
+        int pitch_value = FC_PROPORTIONAL;
         if (request.fixedPitch)
             pitch_value = FC_MONO;
         FcPatternAddInteger(pattern, FC_SPACING, pitch_value);
@@ -624,17 +447,8 @@ static QFontEngine *tryPatternLoad(FcPattern *match, int screen,
         return nullptr;
 
     if (script != QUnicodeTables::Common) {
-        // skip font if it doesn't support the language we want
-        if (specialLanguagesTbl[script]){
-            FcLangSet *langSet = 0;
-            if (FcPatternGetLangSet(match, FC_LANG, 0, &langSet) != FcResultMatch)
-                goto special_char;
-            if (FcLangSetHasLang(langSet, (const FcChar8*)specialLanguagesTbl[script]) != FcLangEqual)
-                goto special_char;
-        }
-special_char:
+        // need to check the charset, as the langset doesn't work for some scripts
         if (specialCharsTbl[script]) {
-            // need to check the charset, as the langset doesn't work for some scripts
             FcCharSet *cs;
             if (FcPatternGetCharSet(match, FC_CHARSET, 0, &cs) != FcResultMatch)
                 return nullptr;

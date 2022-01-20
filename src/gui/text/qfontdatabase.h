@@ -34,8 +34,6 @@ class QStringList;
 template <class T> class QList;
 class QFontEngine;
 
-class QFontDatabasePrivate;
-
 class Q_GUI_EXPORT QFontDatabase
 {
     Q_GADGET
@@ -74,8 +72,6 @@ private:
     friend class QFontPrivate;
     friend class QFontDialog;
     friend class QFontDialogPrivate;
-
-    QFontDatabasePrivate *d;
 };
 
 QT_END_NAMESPACE
