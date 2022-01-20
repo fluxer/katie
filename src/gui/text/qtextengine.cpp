@@ -59,22 +59,6 @@ public:
             return;
         const int end = start + length;
         for (int i = start + 1; i < end; ++i) {
-            // According to the unicode spec we should be treating characters in the Common script
-            // (punctuation, spaces, etc) as being the same script as the surrounding text for the
-            // purpose of splitting up text. This is important because, for example, a fullstop
-            // (0x2E) can be used to indicate an abbreviation and so must be treated as part of a
-            // word.  Thus it must be passed along with the word in languages that have to calculate
-            // word breaks.  For example the thai word "ครม." has no word breaks but the word "ครม"
-            // does.
-            // Unfortuntely because we split up the strings for both wordwrapping and for setting
-            // the font and because Japanese and Chinese are also aliases of the script "Common",
-            // doing this would break too many things.  So instead we only pass the full stop
-            // along, and nothing else.
-            if (m_analysis[i].flags == m_analysis[start].flags
-                && (m_analysis[i].script == m_analysis[start].script || m_string[i] == QLatin1Char('.'))
-                && m_analysis[i].flags < QScriptAnalysis::SpaceTabOrObject
-                && i - start < MaxItemLength)
-                continue;
             m_items.append(QScriptItem(start, m_analysis[start]));
             start = i;
         }
@@ -82,8 +66,6 @@ public:
     }
 
 private:
-    enum { MaxItemLength = 4096 };
-
     const QString &m_string;
     const QScriptAnalysis * const m_analysis;
     QScriptItemArray &m_items;
