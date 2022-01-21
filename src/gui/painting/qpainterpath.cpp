@@ -1088,7 +1088,7 @@ void QPainterPath::addText(const QPointF &point, const QFont &f, const QString &
     ensureData();
     detach();
 
-    // qDebug() << Q_FUNC_INFO << point << f << text << direction;
+    // qDebug() << Q_FUNC_INFO << point << f << text;
 
     static const QTextEngine::ShaperFlags shaperflags = 0;
 
@@ -1097,6 +1097,8 @@ void QPainterPath::addText(const QPointF &point, const QFont &f, const QString &
     if (scriptdetection) {
         qreal xoffset = 0.0;
         QUnicodeTables::Script inheritedscript = QUnicodeTables::Common;
+        QGlyphLayoutArray<2> glyphs;
+
         for (int i = 0; i < text.size(); i++) {
             int nglyphs = 1;
             QChar textchars[2] = { text.at(i), 0 };
@@ -1135,7 +1137,6 @@ void QPainterPath::addText(const QPointF &point, const QFont &f, const QString &
                 }
             }
 
-            QGlyphLayoutArray<2> glyphs;
             engine->stringToCMap(textchars, nglyphs, &glyphs, &nglyphs, shaperflags);
             engine->addOutlineToPath(point.x() + xoffset, point.y(), glyphs, this);
 
@@ -1158,19 +1159,21 @@ void QPainterPath::addText(const QPointF &point, const QFont &f, const QString &
         engine->addOutlineToPath(point.x(), point.y(), glyphs, this);
     }
 
-    const QFontMetricsF fontmetrics(f);
-    const qreal linewidth = fontmetrics.lineWidth();
-    const qreal textwidth = (fontmetrics.width('x') * text.size());
+    if (f.underline() || f.overline() || f.strikeOut()) {
+        const QFontMetricsF fontmetrics(f);
+        const qreal linewidth = fontmetrics.lineWidth();
+        const qreal textwidth = (fontmetrics.width('x') * text.size());
 #if 0
-    if (f.underline()) {
-        addRect(point.x(), point.y() + fontmetrics.underlinePos(), textwidth, linewidth);
-    }
+        if (f.underline()) {
+            addRect(point.x(), point.y() + fontmetrics.underlinePos(), textwidth, linewidth);
+        }
 #endif
-    if (f.overline()) {
-        addRect(point.x(), point.y() - fontmetrics.overlinePos(), textwidth, linewidth);
-    }
-    if (f.strikeOut()) {
-        addRect(point.x(), point.y() - fontmetrics.strikeOutPos(), textwidth, linewidth);
+        if (f.overline()) {
+            addRect(point.x(), point.y() - fontmetrics.overlinePos(), textwidth, linewidth);
+        }
+        if (f.strikeOut()) {
+            addRect(point.x(), point.y() - fontmetrics.strikeOutPos(), textwidth, linewidth);
+        }
     }
 }
 
