@@ -40,54 +40,17 @@
 
 QT_BEGIN_NAMESPACE
 
-namespace {
 // Helper class used in QTextEngine::itemize
-// keep it out here to allow us to keep supporting various compilers.
-class Itemizer {
-public:
-    Itemizer(const QString &string, const QScriptAnalysis *analysis, QScriptItemArray &items)
-        : m_string(string),
-        m_analysis(analysis),
-        m_items(items)
-    {
+static void generateItem(const QScriptAnalysis *analysis, QScriptItemArray &items, int start, int length)
+{
+    if (!length)
+        return;
+    const int end = start + length;
+    for (int i = start + 1; i < end; ++i) {
+        items.append(QScriptItem(start, analysis[start]));
+        start = i;
     }
-
-    /// generate the script items
-    void generate(int start, int length)
-    {
-        if (!length)
-            return;
-        const int end = start + length;
-        for (int i = start + 1; i < end; ++i) {
-            // According to the unicode spec we should be treating characters in the Common script
-            // (punctuation, spaces, etc) as being the same script as the surrounding text for the
-            // purpose of splitting up text. This is important because, for example, a fullstop
-            // (0x2E) can be used to indicate an abbreviation and so must be treated as part of a
-            // word.  Thus it must be passed along with the word in languages that have to calculate
-            // word breaks.  For example the thai word "ครม." has no word breaks but the word "ครม"
-            // does.
-            // Unfortuntely because we split up the strings for both wordwrapping and for setting
-            // the font and because Japanese and Chinese are also aliases of the script "Common",
-            // doing this would break too many things.  So instead we only pass the full stop
-            // along, and nothing else.
-            if (m_analysis[i].flags == m_analysis[start].flags
-                && (m_analysis[i].script == m_analysis[start].script || m_string[i] == QLatin1Char('.'))
-                && m_analysis[i].flags < QScriptAnalysis::SpaceTabOrObject
-                && i - start < MaxItemLength)
-                continue;
-            m_items.append(QScriptItem(start, m_analysis[start]));
-            start = i;
-        }
-        m_items.append(QScriptItem(start, m_analysis[start]));
-    }
-
-private:
-    enum { MaxItemLength = 4096 };
-
-    const QString &m_string;
-    const QScriptAnalysis * const m_analysis;
-    QScriptItemArray &m_items;
-};
+    items.append(QScriptItem(start, analysis[start]));
 }
 
 // ask the font engine to find out which glyphs (as an index in the specific font) to use for the text in one item.
@@ -364,8 +327,6 @@ void QTextEngine::itemize() const
         ++analysis;
     }
 
-    Itemizer itemizer(layoutData->string, scriptAnalysis, layoutData->items);
-
     const QTextDocumentPrivate *p = block.docHandle();
     if (p) {
         QTextDocumentPrivate::FragmentIterator it = p->find(block.position());
@@ -378,10 +339,10 @@ void QTextEngine::itemize() const
             const QTextFragmentData * const frag = it.value();
             if (it == end || format != frag->format) {
                 Q_ASSERT(position <= length);
-                itemizer.generate(prevPosition, position - prevPosition);
+                generateItem(scriptAnalysis, layoutData->items, prevPosition, position - prevPosition);
                 if (it == end) {
                     if (position < length)
-                        itemizer.generate(position, length - position);
+                        generateItem(scriptAnalysis, layoutData->items, position, length - position);
                     break;
                 }
                 format = frag->format;
@@ -391,7 +352,7 @@ void QTextEngine::itemize() const
             ++it;
         }
     } else {
-        itemizer.generate(0, length);
+        generateItem(scriptAnalysis, layoutData->items, 0, length);
     }
 
     addRequiredBoundaries();

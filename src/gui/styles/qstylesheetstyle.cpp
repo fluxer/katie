@@ -38,7 +38,6 @@
 #include "qlineedit.h"
 #include "qwindowsstyle.h"
 #include "qcombobox.h"
-#include "qplastiquestyle.h"
 #include "qabstractscrollarea.h"
 #include "qtooltip.h"
 #include "qshareddata.h"
@@ -1342,8 +1341,8 @@ void QRenderRule::configurePalette(QPalette *p, QPalette::ColorRole fr, QPalette
 void QRenderRule::configurePalette(QPalette *p, QPalette::ColorGroup cg, const QWidget *w, bool embedded)
 {
     if (bg && bg->brush.style() != Qt::NoBrush) {
-        p->setBrush(cg, QPalette::Base, bg->brush); // for windows, windowxp
-        p->setBrush(cg, QPalette::Button, bg->brush); // for plastique
+        p->setBrush(cg, QPalette::Base, bg->brush); // for windows
+        p->setBrush(cg, QPalette::Button, bg->brush);
         p->setBrush(cg, w->backgroundRole(), bg->brush);
         p->setBrush(cg, QPalette::Window, bg->brush);
     }

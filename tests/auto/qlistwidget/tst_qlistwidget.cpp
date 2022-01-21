@@ -1553,7 +1553,7 @@ void tst_QListWidget::task199503_crashWhenCleared()
 
 void tst_QListWidget::task217070_scrollbarsAdjusted()
 {
-    //This task was mailing for style using SH_ScrollView_FrameOnlyAroundContents such as QMotifStyle
+    //This task was mailing for style using SH_ScrollView_FrameOnlyAroundContents
     QListWidget v;
     for (int i = 0; i<200;i++)
         v.addItem(QString::number(i));

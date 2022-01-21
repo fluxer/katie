@@ -109,6 +109,8 @@
 #define QT_NO_STL_WCHAR
 #define QT_NO_BEARERMANAGEMENT
 #define QT_NO_GESTURES
+#define QT_NO_STYLE_MOTIF
+#define QT_NO_STYLE_PLASTIQUE
 
 // Not supported, used to bootstrap
 #cmakedefine QT_NO_QOBJECT
@@ -268,8 +270,6 @@
 #cmakedefine QT_NO_STATUSTIP
 #cmakedefine QT_NO_STRINGLISTMODEL
 #cmakedefine QT_NO_STYLE_CLEANLOOKS
-#cmakedefine QT_NO_STYLE_MOTIF
-#cmakedefine QT_NO_STYLE_PLASTIQUE
 #cmakedefine QT_NO_STYLE_PROXY
 #cmakedefine QT_NO_STYLE_STYLESHEET
 #cmakedefine QT_NO_STYLE_WINDOWS
@@ -475,11 +475,6 @@
 // QCleanLooksStyle
 #if !defined(QT_NO_STYLE_CLEANLOOKS) && (defined(QT_NO_STYLE_WINDOWS) || defined(QT_NO_XPM))
 #  define QT_NO_STYLE_CLEANLOOKS
-#endif
-
-// QPlastiqueStyle
-#if !defined(QT_NO_STYLE_PLASTIQUE) && (defined(QT_NO_STYLE_WINDOWS) || defined(QT_NO_XPM))
-#  define QT_NO_STYLE_PLASTIQUE
 #endif
 
 // QStyleSheetStyle

@@ -704,7 +704,7 @@ void tst_QStyleSheetStyle::focusColors()
     int styleCount = 2;
     QStyle *styles[2];
 
-    styles[0] = new QPlastiqueStyle;
+    styles[0] = new QCleanlooksStyle;
     styles[1] = new QWindowsStyle;
 
     for (int i = 0; i < styleCount; ++i) {
@@ -1554,7 +1554,7 @@ class ChangeEventWidget : public QWidget
             if (!recurse) {
                 recurse = true;
 
-                QStyle *style = new QMotifStyle;
+                QStyle *style = new QWindowsStyle();
                 style->setParent(this);
                 setStyle(style);
                 recurse = false;

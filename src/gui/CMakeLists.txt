@@ -116,7 +116,6 @@ set(GUI_PUBLIC_HEADERS
     QMdiSubWindow
     QMenu
     QMenuBar
-    QMotifStyle
     QMovie
     QPageSetupDialog
     QPaintDevice
@@ -128,7 +127,6 @@ set(GUI_PUBLIC_HEADERS
     QPixmap
     QPixmapCache
     QPlainTextEdit
-    QPlastiqueStyle
     QPolygon
     QPrintDialog
     QPrintEngine
@@ -463,8 +461,6 @@ set(GUI_HEADERS
     ${CMAKE_CURRENT_SOURCE_DIR}/styles/qproxystyle.h
     ${CMAKE_CURRENT_SOURCE_DIR}/styles/qproxystyle_p.h
     ${CMAKE_CURRENT_SOURCE_DIR}/styles/qstylesheetstyle_p.h
-    ${CMAKE_CURRENT_SOURCE_DIR}/styles/qplastiquestyle.h
-    ${CMAKE_CURRENT_SOURCE_DIR}/styles/qmotifstyle.h
     ${CMAKE_CURRENT_SOURCE_DIR}/styles/qwindowsstyle.h
     ${CMAKE_CURRENT_SOURCE_DIR}/styles/qcleanlooksstyle.h
     ${CMAKE_CURRENT_SOURCE_DIR}/styles/qcleanlooksstyle_p.h
@@ -787,8 +783,6 @@ set(GUI_SOURCES
     ${CMAKE_CURRENT_SOURCE_DIR}/styles/qproxystyle.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/styles/qstylesheetstyle.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/styles/qstylesheetstyle_default.cpp
-    ${CMAKE_CURRENT_SOURCE_DIR}/styles/qplastiquestyle.cpp
-    ${CMAKE_CURRENT_SOURCE_DIR}/styles/qmotifstyle.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/styles/qwindowsstyle.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/styles/qcleanlooksstyle.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/styles/qstyle.qrc

@@ -1017,38 +1017,7 @@ QStyle* QFormLayoutPrivate::getStyle() const
     \snippet doc/src/snippets/code/src_gui_kernel_qformlayout.cpp 1
     \endlist
 
-    The table below shows the default appearance in different styles.
-
-    \table
-    \header
-        \o QCommonStyle derived styles (except QPlastiqueStyle)
-        \o QPlastiqueStyle
-        \o Qt Extended styles
-    \row
-        \o \inlineimage qformlayout-win.png
-        \o \inlineimage qformlayout-mac.png
-        \o \inlineimage qformlayout-kde.png
-        \o \inlineimage qformlayout-qpe.png
-    \row
-        \o Traditional style used for Windows, GNOME, and earlier
-           versions of KDE. Labels are left aligned, and expanding
-           fields grow to fill the available space. (This normally
-           corresponds to what we would get using a two-column
-           QGridLayout.)
-        \o Style based on the
-           \l{Mac OS X Aqua} guidelines. Labels are right-aligned,
-           the fields don't grow beyond their size hint, and the
-           form is horizontally centered.
-        \o Recommended style for
-           \l{KDE applications}. Similar to MacStyle, except that the form
-           is left-aligned and all fields grow to fill the available
-           space.
-        \o Default style for Qt Extended styles. Labels are right-aligned,
-           expanding fields grow to fill the available space, and row
-           wrapping is enabled for long lines.
-    \endtable
-
-    The form styles can be also be overridden individually by calling
+    The form styles can be be overridden individually by calling
     setLabelAlignment(), setFormAlignment(), setFieldGrowthPolicy(),
     and setRowWrapPolicy().
 
@@ -1725,9 +1694,8 @@ QFormLayout::RowWrapPolicy QFormLayout::rowWrapPolicy() const
     \brief the horizontal alignment of the labels
 
     The default value depends on the widget or application style. For
-    QCommonStyle derived styles, except for QPlastiqueStyle, the
-    default is Qt::AlignLeft; for the other styles, the default is
-    Qt::AlignRight.
+    QCommonStyle derived styles, the default is Qt::AlignLeft; for
+    the other styles, the default is Qt::AlignRight.
 
     \sa formAlignment
 */

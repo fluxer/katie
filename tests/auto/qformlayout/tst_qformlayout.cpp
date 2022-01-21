@@ -386,15 +386,6 @@ void tst_QFormLayout::setFormStyle()
     QFormLayout layout;
     widget.setLayout(&layout);
 
-#ifndef QT_NO_STYLE_PLASTIQUE
-    widget.setStyle(new QPlastiqueStyle());
-
-    QVERIFY(layout.labelAlignment() == Qt::AlignRight);
-    QVERIFY(layout.formAlignment() == (Qt::AlignLeft | Qt::AlignTop));
-    QVERIFY(layout.fieldGrowthPolicy() == QFormLayout::ExpandingFieldsGrow);
-    QVERIFY(layout.rowWrapPolicy() == QFormLayout::DontWrapRows);
-#endif
-
     widget.setStyle(new QWindowsStyle());
 
     QVERIFY(layout.labelAlignment() == Qt::AlignLeft);
