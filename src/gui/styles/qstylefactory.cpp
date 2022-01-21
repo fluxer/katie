@@ -25,10 +25,6 @@
 
 #include "qapplication.h"
 #include "qwindowsstyle.h"
-#include "qmotifstyle.h"
-#ifndef QT_NO_STYLE_PLASTIQUE
-#include "qplastiquestyle.h"
-#endif
 #ifndef QT_NO_STYLE_CLEANLOOKS
 #include "qcleanlooksstyle.h"
 #endif
@@ -74,20 +70,14 @@ Q_GLOBAL_STATIC_WITH_ARGS(QFactoryLoader, stylesloader,
 QStyle *QStyleFactory::create(const QString& key)
 {
 #ifndef QT_NO_STYLE_WINDOWS
-    if (key.compare(QLatin1String("Windows"), Qt::CaseInsensitive) == 0)
+    if (key.compare(QLatin1String("Windows"), Qt::CaseInsensitive) == 0) {
         return new QWindowsStyle();
-#endif
-#ifndef QT_NO_STYLE_MOTIF
-    if (key.compare(QLatin1String("Motif"), Qt::CaseInsensitive) == 0)
-        return new QMotifStyle();
-#endif
-#ifndef QT_NO_STYLE_PLASTIQUE
-    if (key.compare(QLatin1String("Plastique"), Qt::CaseInsensitive) == 0)
-        return new QPlastiqueStyle();
+    }
 #endif
 #ifndef QT_NO_STYLE_CLEANLOOKS
-    if (key.compare(QLatin1String("Cleanlooks"), Qt::CaseInsensitive) == 0)
+    if (key.compare(QLatin1String("Cleanlooks"), Qt::CaseInsensitive) == 0) {
         return new QCleanlooksStyle();
+    }
 #endif
 #if !defined(QT_NO_LIBRARY)
     if (QStyleFactoryInterface *factory = qobject_cast<QStyleFactoryInterface*>(stylesloader()->instance(key))) {
@@ -120,12 +110,6 @@ QStringList QStyleFactory::keys()
 #ifndef QT_NO_STYLE_WINDOWS
     list << QLatin1String("Windows");
 #endif
-#ifndef QT_NO_STYLE_MOTIF
-    list << QLatin1String("Motif");
-#endif
-#ifndef QT_NO_STYLE_PLASTIQUE
-    list << QLatin1String("Plastique");
-#endif
 #ifndef QT_NO_STYLE_CLEANLOOKS
     list << QLatin1String("Cleanlooks");
 #endif
@@ -133,7 +117,3 @@ QStringList QStyleFactory::keys()
 }
 
 QT_END_NAMESPACE
-
-
-
-

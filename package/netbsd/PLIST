@@ -765,7 +765,6 @@ include/katie/QtGui/QMdiSubWindow
 include/katie/QtGui/QMenu
 include/katie/QtGui/QMenuBar
 include/katie/QtGui/QMessageBox
-include/katie/QtGui/QMotifStyle
 include/katie/QtGui/QMouseEvent
 include/katie/QtGui/QMoveEvent
 include/katie/QtGui/QMovie
@@ -786,7 +785,6 @@ include/katie/QtGui/QPixmap
 include/katie/QtGui/QPixmapCache
 include/katie/QtGui/QPlainTextDocumentLayout
 include/katie/QtGui/QPlainTextEdit
-include/katie/QtGui/QPlastiqueStyle
 include/katie/QtGui/QPolygon
 include/katie/QtGui/QPolygonF
 include/katie/QtGui/QPrintDialog
@@ -1070,7 +1068,6 @@ include/katie/QtGui/qmdisubwindow.h
 include/katie/QtGui/qmenu.h
 include/katie/QtGui/qmenubar.h
 include/katie/QtGui/qmessagebox.h
-include/katie/QtGui/qmotifstyle.h
 include/katie/QtGui/qmovie.h
 include/katie/QtGui/qpagesetupdialog.h
 include/katie/QtGui/qpaintdevice.h
@@ -1084,7 +1081,6 @@ include/katie/QtGui/qpen.h
 include/katie/QtGui/qpixmap.h
 include/katie/QtGui/qpixmapcache.h
 include/katie/QtGui/qplaintextedit.h
-include/katie/QtGui/qplastiquestyle.h
 include/katie/QtGui/qpolygon.h
 include/katie/QtGui/qprintdialog.h
 include/katie/QtGui/qprintengine.h

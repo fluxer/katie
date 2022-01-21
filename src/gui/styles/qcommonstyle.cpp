@@ -195,7 +195,7 @@ static const char * const filedialog_end_xpm[]={
     subElementRect() are documented here.
     \endomit
 
-    \sa QStyle, QMotifStyle, QWindowsStyle
+    \sa QStyle, QWindowsStyle
 */
 
 /*!

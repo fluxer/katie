@@ -702,8 +702,7 @@
     on QWidget::contentsRect(). This is set by the widget's author.
 
     \value WA_LayoutUsesWidgetRect Ignore the layout item rect from the style
-    when laying out this widget with QLayout. This makes a difference in
-    QPlastiqueStyle for some widgets.
+    when laying out this widget with QLayout.
 
     \value WA_Mapped Indicates that the widget is mapped on screen.
     This is set/cleared by the Qt kernel.
