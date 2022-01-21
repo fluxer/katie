@@ -65,14 +65,12 @@ QFreetypeFace::QFreetypeFace(const QFontEngine::FaceId &face_id)
         return;
     }
 
-    if (!face_id.filename.isEmpty()) {
-        QFile file(QString::fromUtf8(face_id.filename));
-        if (!(file.fileEngine()->fileFlags(QAbstractFileEngine::FlagsMask) & QAbstractFileEngine::LocalDiskFlag)) {
-            if (!file.open(QIODevice::ReadOnly)) {
-                return;
-            }
-            fontData = file.readAll();
+    QFile file(QString::fromUtf8(face_id.filename));
+    if (!(file.fileEngine()->fileFlags(QAbstractFileEngine::FlagsMask) & QAbstractFileEngine::LocalDiskFlag)) {
+        if (!file.open(QIODevice::ReadOnly)) {
+            return;
         }
+        fontData = file.readAll();
     }
     if (!fontData.isEmpty()) {
         if (FT_New_Memory_Face(library, (const FT_Byte *)fontData.constData(), fontData.size(), face_id.index, &face)) {
