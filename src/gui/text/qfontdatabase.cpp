@@ -330,8 +330,6 @@ QFontDatabase::QFontDatabase()
         if (!qt_x11Data->has_fontconfig)
             return;
 
-        Q_ASSERT_X(int(QUnicodeTables::ScriptCount) == SpecialLanguageCount,
-                "QFontDatabase", "New scripts have been added.");
         Q_ASSERT_X(int(QUnicodeTables::ScriptCount) == SpecialCharCount,
                 "QFontDatabase", "New scripts have been added.");
 
