@@ -735,7 +735,7 @@ bool QTextEngine::LayoutData::reallocate(int totalGlyphs)
 
     int space_charAttributes = sizeof(HB_CharAttributes) * string.length() / QT_POINTER_SIZE + 1;
     int space_logClusters = sizeof(unsigned short) * string.length() / QT_POINTER_SIZE + 1;
-    int space_glyphs = QGlyphLayout::spaceNeededForGlyphLayout(totalGlyphs) / QT_POINTER_SIZE + 2;
+    int space_glyphs = QSPACEFORGLYPHS(totalGlyphs) / QT_POINTER_SIZE + 2;
 
     int newAllocated = space_charAttributes + space_glyphs + space_logClusters;
     // These values can be negative if the length of string/glyphs causes overflow,
