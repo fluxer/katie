@@ -1431,7 +1431,3 @@ bool QTextLineItemIterator::getSelectionBounds(QFixed *selectionX, QFixed *selec
 }
 
 QT_END_NAMESPACE
-
-
-
-

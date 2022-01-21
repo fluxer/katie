@@ -186,14 +186,6 @@ public:
     {
         memset(Array::data(), 0, Array::size() * QT_POINTER_SIZE);
     }
-
-    void resize(int totalGlyphs)
-    {
-        Array::resize(spaceNeededForGlyphLayout(totalGlyphs) / QT_POINTER_SIZE + 1);
-
-        *((QGlyphLayout *)this) = QGlyphLayout(reinterpret_cast<char *>(Array::data()), totalGlyphs);
-        memset(Array::data(), 0, Array::size() * QT_POINTER_SIZE);
-    }
 };
 
 template <int N> struct QGlyphLayoutArray : public QGlyphLayout
