@@ -317,7 +317,12 @@ void QTextEngine::itemize() const
             analysis->flags = QScriptAnalysis::Tab;
             break;
         default:
-            QUnicodeTables::Script script = QUnicodeTables::script(*uc);
+            uint ucs4 = *uc;
+            if (QChar::isHighSurrogate(*uc) && (uc + 1) < e && QChar::isLowSurrogate(*(uc + 1))) {
+                ucs4 = QChar::surrogateToUcs4(*uc, *(uc + 1));
+                ++uc;
+            }
+            QUnicodeTables::Script script = QUnicodeTables::script(ucs4);
             analysis->script = script == QUnicodeTables::Inherited ? lastScript : script;
             analysis->flags = QScriptAnalysis::None;
             break;
