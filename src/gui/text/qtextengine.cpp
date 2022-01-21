@@ -40,36 +40,17 @@
 
 QT_BEGIN_NAMESPACE
 
-namespace {
 // Helper class used in QTextEngine::itemize
-// keep it out here to allow us to keep supporting various compilers.
-class Itemizer {
-public:
-    Itemizer(const QString &string, const QScriptAnalysis *analysis, QScriptItemArray &items)
-        : m_string(string),
-        m_analysis(analysis),
-        m_items(items)
-    {
+static void generateItem(const QScriptAnalysis *analysis, QScriptItemArray &items, int start, int length)
+{
+    if (!length)
+        return;
+    const int end = start + length;
+    for (int i = start + 1; i < end; ++i) {
+        items.append(QScriptItem(start, analysis[start]));
+        start = i;
     }
-
-    /// generate the script items
-    void generate(int start, int length)
-    {
-        if (!length)
-            return;
-        const int end = start + length;
-        for (int i = start + 1; i < end; ++i) {
-            m_items.append(QScriptItem(start, m_analysis[start]));
-            start = i;
-        }
-        m_items.append(QScriptItem(start, m_analysis[start]));
-    }
-
-private:
-    const QString &m_string;
-    const QScriptAnalysis * const m_analysis;
-    QScriptItemArray &m_items;
-};
+    items.append(QScriptItem(start, analysis[start]));
 }
 
 // ask the font engine to find out which glyphs (as an index in the specific font) to use for the text in one item.
@@ -346,8 +327,6 @@ void QTextEngine::itemize() const
         ++analysis;
     }
 
-    Itemizer itemizer(layoutData->string, scriptAnalysis, layoutData->items);
-
     const QTextDocumentPrivate *p = block.docHandle();
     if (p) {
         QTextDocumentPrivate::FragmentIterator it = p->find(block.position());
@@ -360,10 +339,10 @@ void QTextEngine::itemize() const
             const QTextFragmentData * const frag = it.value();
             if (it == end || format != frag->format) {
                 Q_ASSERT(position <= length);
-                itemizer.generate(prevPosition, position - prevPosition);
+                generateItem(scriptAnalysis, layoutData->items, prevPosition, position - prevPosition);
                 if (it == end) {
                     if (position < length)
-                        itemizer.generate(position, length - position);
+                        generateItem(scriptAnalysis, layoutData->items, position, length - position);
                     break;
                 }
                 format = frag->format;
@@ -373,7 +352,7 @@ void QTextEngine::itemize() const
             ++it;
         }
     } else {
-        itemizer.generate(0, length);
+        generateItem(scriptAnalysis, layoutData->items, 0, length);
     }
 
     addRequiredBoundaries();
