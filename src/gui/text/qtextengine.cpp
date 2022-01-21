@@ -980,7 +980,7 @@ QString QTextEngine::elidedText(Qt::TextElideMode mode, const QFixed &width, int
 
         QFontEngine *fe = fnt.d->engineForScript(QUnicodeTables::Common);
 
-        QGlyphLayoutArray<1> ellipsisGlyph;
+        QGlyphLayoutArray<2> ellipsisGlyph;
         {
             if (fe->canRender(&ellipsisChar, 1)) {
                 int nGlyphs = 1;

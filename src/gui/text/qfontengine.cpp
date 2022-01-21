@@ -67,8 +67,8 @@ QFixed QFontEngine::underlinePosition() const
 
 QFixed QFontEngine::xHeight() const
 {
-    QGlyphLayoutArray<8> glyphs;
-    int nglyphs = 7;
+    QGlyphLayoutArray<2> glyphs;
+    int nglyphs = 1;
     QChar x((ushort)'x');
     stringToCMap(&x, 1, &glyphs, &nglyphs, QTextEngine::GlyphIndicesOnly);
 
@@ -78,8 +78,8 @@ QFixed QFontEngine::xHeight() const
 
 QFixed QFontEngine::averageCharWidth() const
 {
-    QGlyphLayoutArray<8> glyphs;
-    int nglyphs = 7;
+    QGlyphLayoutArray<2> glyphs;
+    int nglyphs = 1;
     QChar x((ushort)'x');
     stringToCMap(&x, 1, &glyphs, &nglyphs, QTextEngine::GlyphIndicesOnly);
 
