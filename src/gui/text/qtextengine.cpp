@@ -40,7 +40,6 @@
 
 QT_BEGIN_NAMESPACE
 
-// Helper class used in QTextEngine::itemize
 static void generateItem(const QScriptAnalysis *analysis, QScriptItemArray &items, int start, int length)
 {
     if (!length)
