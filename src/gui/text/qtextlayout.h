@@ -40,8 +40,8 @@ class QPainter;
 class Q_GUI_EXPORT QTextInlineObject
 {
 public:
-    QTextInlineObject(int i, QTextEngine *e) : itm(i), eng(e) {}
-    inline QTextInlineObject() : itm(0), eng(0) {}
+    QTextInlineObject(int itm, QTextEngine *e) : i(itm), eng(e) {}
+    inline QTextInlineObject() : i(0), eng(nullptr) {}
     inline bool isValid() const { return eng; }
 
     QRectF rect() const;
@@ -63,7 +63,7 @@ public:
 
 private:
     friend class QTextLayout;
-    int itm;
+    int i;
     QTextEngine *eng;
 };
 
@@ -201,7 +201,6 @@ public:
 
 private:
     QTextLine(int line, QTextEngine *e) : i(line), eng(e) {}
-    void layout_helper(int numGlyphs);
 
     friend class QTextLayout;
     friend class QTextFragment;

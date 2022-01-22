@@ -394,7 +394,6 @@ bool QTextCursorPrivate::movePosition(QTextCursor::MoveOperation op, QTextCursor
 
         // skip if already at word start
         QTextEngine *engine = layout->engine();
-        engine->attributes();
         if ((relativePos == blockIt.length() - 1)
             && (engine->atSpace(relativePos - 1) || engine->atWordSeparator(relativePos - 1)))
             return false;
@@ -466,7 +465,6 @@ bool QTextCursorPrivate::movePosition(QTextCursor::MoveOperation op, QTextCursor
     }
     case QTextCursor::EndOfWord: {
         QTextEngine *engine = layout->engine();
-        engine->attributes();
         const int len = blockIt.length() - 1;
         if (relativePos >= len)
             return false;

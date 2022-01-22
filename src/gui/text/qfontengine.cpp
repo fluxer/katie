@@ -109,7 +109,7 @@ void QFontEngine::getGlyphPositions(const QGlyphLayout &glyphs, const QTransform
     int i = 0;
     if (!transform) {
         while (i < glyphs.numGlyphs) {
-            if (!glyphs.attributes[i].dontPrint) {
+            if (!glyphs.dontPrint[i]) {
                 positions[current].x = xpos;
                 positions[current].y = ypos;
                 glyphs_out[current] = glyphs.glyphs[i];
@@ -120,7 +120,7 @@ void QFontEngine::getGlyphPositions(const QGlyphLayout &glyphs, const QTransform
         }
     } else {
         while (i < glyphs.numGlyphs) {
-            if (!glyphs.attributes[i].dontPrint) {
+            if (!glyphs.dontPrint[i]) {
                 QPointF gpos(xpos.toReal(), ypos.toReal());
                 gpos = gpos * matrix;
                 positions[current].x = QFixed::fromReal(gpos.x());
