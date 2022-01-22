@@ -441,22 +441,26 @@ static QFontEngine *tryPatternLoad(FcPattern *match, int screen,
     FcPatternGetString(match, FC_FAMILY, 0, &fam);
     FM_DEBUG("==== trying %s\n", fam);
 #endif
-    FM_DEBUG("passes charset test\n");
 
-    if (!match) // probably no fonts available.
+    if (!match) {
+        // probably no fonts available
         return nullptr;
+    }
 
     if (script != QUnicodeTables::Common) {
         // need to check the charset, as the langset doesn't work for some scripts
         if (specialCharsTbl[script]) {
             FcCharSet *cs;
-            if (FcPatternGetCharSet(match, FC_CHARSET, 0, &cs) != FcResultMatch)
+            if (FcPatternGetCharSet(match, FC_CHARSET, 0, &cs) != FcResultMatch) {
                 return nullptr;
-            if (!FcCharSetHasChar(cs, specialCharsTbl[script]))
+            }
+            if (!FcCharSetHasChar(cs, specialCharsTbl[script])) {
                 return nullptr;
+            }
         }
     }
 
+    FM_DEBUG("passes charset test\n");
     QFontEngineFT *engine = new QFontEngineFT(qt_FcPatternToQFontDef(match, request), match);
     if (engine->invalid()) {
         FM_DEBUG("   --> invalid!\n");
@@ -498,8 +502,8 @@ static QFontEngine *loadFc(const QFontPrivate *fp, QUnicodeTables::Script script
             }
             FcFontSetDestroy(fs);
         }
-        FM_DEBUG("engine for script %d is %s\n", script, fe ? fe->fontDef.family.toLatin1().constData(): "(null)");
     }
+    FM_DEBUG("engine for script %d is %s\n", script, fe ? fe->fontDef.family.toLatin1().constData(): "(null)");
     FcPatternDestroy(pattern);
     if (match) {
         FcPatternDestroy(match);
