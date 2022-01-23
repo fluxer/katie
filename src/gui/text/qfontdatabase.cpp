@@ -530,11 +530,10 @@ bool QFontDatabase::isSmoothlyScalable(const QString &family, const QString &sty
 
     \sa isSmoothlyScalable()
 */
-bool  QFontDatabase::isScalable(const QString &family, const QString &style) const
+bool QFontDatabase::isScalable(const QString &family, const QString &style) const
 {
     return isSmoothlyScalable(family, style);
 }
-
 
 /*!
     \fn QList<int> QFontDatabase::pointSizes(const QString &family, const QString &style)
@@ -554,7 +553,7 @@ QList<int> QFontDatabase::pointSizes(const QString &family, const QString &style
         const QtFontFamily &fontfamily = db->at(i);
         if (fontfamily.family.compare(parsedfamily, Qt::CaseInsensitive) != 0
             || (!parsedfoundry.isEmpty() && fontfamily.foundry.compare(parsedfoundry, Qt::CaseInsensitive) != 0)
-            || !isStyleMatch(fontfamily.style, style)) {
+            || (!style.isEmpty() && !isStyleMatch(fontfamily.style, style))) {
             continue;
         }
         result.append(fontfamily.pointsize);
