@@ -640,23 +640,16 @@ glyph_metrics_t QFontEngineFT::boundingBox(const QGlyphLayout &glyphs) const
     overall.y = -ascent();
     overall.height = ascent() + descent() + 1;
 
-    QFixed ymax = 0;
-    QFixed xmax = 0;
     for (int i = 0; i < glyphs.numGlyphs; i++) {
-        QFontMetric* metric = getMetrics(glyphs.glyphs[i]);
-        Q_ASSERT(metric);
+        glyph_metrics_t gm = boundingBox(glyphs.glyphs[i]);
 
-        QFixed x = overall.xoff - (-TRUNC(metric->left));
-        QFixed y = TRUNC(metric->top);
-        overall.x = qMin(overall.x, x);
-        overall.y = qMin(overall.y, y);
-        xmax = qMax(xmax, x + TRUNC(metric->right - metric->left));
-        ymax = qMax(ymax, y + TRUNC(metric->top - metric->bottom));
-        overall.xoff += qRound(TRUNC(metric->advancex));
 
+        overall.height = qMax(overall.height, gm.height);
+        overall.width = qMax(overall.width, gm.width);
+        overall.x = qMin(overall.x, gm.x);
+        overall.y = qMin(overall.y, gm.y);
+        overall.xoff += gm.xoff;
     }
-    overall.height = qMax(overall.height, ymax - overall.y);
-    overall.width = xmax - overall.x;
 
     return overall;
 }
