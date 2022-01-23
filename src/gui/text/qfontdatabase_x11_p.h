@@ -319,14 +319,13 @@ static const char* PatternPropertiesTbl[] = {
     FC_WEIGHT,
     FC_SLANT,
     FC_SPACING,
-    FC_LANG,
     FC_CHARSET,
     FC_FOUNDRY,
     FC_SCALABLE,
     FC_PIXEL_SIZE,
     FC_WIDTH,
 };
-static const qint16 PatternPropertiesTblSize = 11;
+static const qint16 PatternPropertiesTblSize = 10;
 
 // --------------------------------------------------------------------------------------
 // font loader
