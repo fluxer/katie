@@ -788,5 +788,3 @@ bool QFontDatabase::supportsThreadedFontRendering()
 }
 
 QT_END_NAMESPACE
-
-#include "moc_qfontdatabase.h"
