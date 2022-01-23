@@ -604,7 +604,6 @@ int QFont::pointSize() const
     \o PreferVerticalHinting
     \o PreferFullHinting
     \row
-    \o FreeType
     \o Operating System setting
     \o No hinting
     \o Vertical hinting (light)
