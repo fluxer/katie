@@ -111,7 +111,7 @@ public:
     virtual void addGlyphsToPath(glyph_t *glyphs, QFixedPoint *positions, int nglyphs,
                                  QPainterPath *path) = 0;
 
-    void getGlyphPositions(const QGlyphLayout &glyphs, const QTransform &matrix,
+    void getGlyphPositions(const QGlyphLayout &glyphs, const QPointF &point,
                            QVarLengthArray<glyph_t> &glyphs_out, QVarLengthArray<QFixedPoint> &positions);
 
     virtual void addOutlineToPath(qreal, qreal, const QGlyphLayout &, QPainterPath *);
