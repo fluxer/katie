@@ -58,7 +58,6 @@ struct QtFontFamily {
     bool italic;
     bool bold;
     int weight;
-    int pointsize;
 
     short preference;
     bool operator<(const QtFontFamily &other) const;
@@ -383,7 +382,6 @@ QFontDatabase::QFontDatabase()
             fontfamily.italic = (slant_value >= FC_SLANT_ITALIC);
             fontfamily.bold = (weight_value >= FC_WEIGHT_BOLD); // or FC_WEIGHT_DEMIBOLD?
             fontfamily.weight = weight_value;
-            fontfamily.pointsize = qRound(pixel_size);
             fontfamily.preference = -weight_value;
 
             if (fontstyle == normalfontstyle) {
@@ -556,7 +554,7 @@ QList<int> QFontDatabase::pointSizes(const QString &family, const QString &style
             || (!style.isEmpty() && !isStyleMatch(fontfamily.style, style))) {
             continue;
         }
-        result.append(fontfamily.pointsize);
+        result = standardSizes();
         break;
     }
     qSort(result);
