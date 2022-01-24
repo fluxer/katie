@@ -55,8 +55,6 @@ QT_BEGIN_NAMESPACE
 
 QFreetypeFace::QFreetypeFace(const QFontEngine::FaceId &face_id)
     : face(nullptr),
-    xsize(0),
-    ysize(0),
     library(nullptr)
 {
     FT_Init_FreeType(&library);
@@ -679,12 +677,8 @@ void QFontEngineFT::setFace(Scaling scale)
     FT_Face face = freetype->face;
     if (scale == Unscaled) {
         FT_Set_Char_Size(face, face->units_per_EM << 6, face->units_per_EM << 6, 0, 0);
-        freetype->xsize = face->units_per_EM << 6;
-        freetype->ysize = face->units_per_EM << 6;
     } else {
         FT_Set_Char_Size(face, xsize, ysize, 0, 0);
-        freetype->xsize = xsize;
-        freetype->ysize = ysize;
     }
 }
 

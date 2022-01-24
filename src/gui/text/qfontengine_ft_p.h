@@ -69,8 +69,6 @@ public:
     QFontEngine::Properties properties() const;
 
     FT_Face face;
-    int xsize; // 26.6
-    int ysize; // 26.6
 
     int fsType() const;
 
