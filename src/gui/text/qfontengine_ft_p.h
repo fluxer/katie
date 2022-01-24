@@ -66,21 +66,14 @@ public:
     QFreetypeFace(const QFontEngine::FaceId &face_id);
     ~QFreetypeFace();
 
-    QFontEngine::Properties properties() const;
-
     FT_Face face;
-
-    int fsType() const;
 
     static void addGlyphToPath(FT_Face face, FT_GlyphSlot g, const QFixedPoint &point, QPainterPath *path);
 
 private:
     Q_DISABLE_COPY(QFreetypeFace);
 
-    friend class QFontEngineFT;
-
     FT_Library library;
-
     QByteArray fontData;
 };
 

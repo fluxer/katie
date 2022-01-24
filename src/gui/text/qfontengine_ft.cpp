@@ -87,36 +87,6 @@ QFreetypeFace::~QFreetypeFace()
     FT_Done_FreeType(library);
 }
 
-int QFreetypeFace::fsType() const
-{
-    int fsType = 0;
-    TT_OS2 *os2 = (TT_OS2 *)FT_Get_Sfnt_Table(face, ft_sfnt_os2);
-    if (os2)
-        fsType = os2->fsType;
-    return fsType;
-}
-
-QFontEngine::Properties QFreetypeFace::properties() const
-{
-    QFontEngine::Properties p;
-    p.postscriptName = FT_Get_Postscript_Name(face);
-    PS_FontInfoRec font_info;
-    if (FT_Get_PS_Font_Info(face, &font_info) == 0) {
-        p.copyright = font_info.notice;
-    }
-    p.ascent = face->ascender;
-    p.descent = -face->descender;
-    p.leading = face->height - face->ascender + face->descender;
-    p.emSquare = face->units_per_EM;
-    p.boundingBox = QRectF(face->bbox.xMin, -face->bbox.yMax,
-                           face->bbox.xMax - face->bbox.xMin,
-                           face->bbox.yMax - face->bbox.yMin);
-    p.italicAngle = 0;
-    p.capHeight = p.ascent;
-    p.lineWidth = face->underline_thickness;
-    return p;
-}
-
 void QFreetypeFace::addGlyphToPath(FT_Face face, FT_GlyphSlot g, const QFixedPoint &point, QPainterPath *path)
 {
     static const qreal factor = (1.0 / 64.0);
@@ -271,6 +241,7 @@ void QFontEngineFT::init()
 
     setFace(QFontEngineFT::Scaled);
     FT_Face face = getFace();
+
     // underline metrics
     line_thickness = QFixed::fromFixed(FT_MulFix(face->underline_thickness, face->size->metrics.y_scale));
     underline_position = QFixed::fromFixed(-FT_MulFix(face->underline_position, face->size->metrics.y_scale));
@@ -280,7 +251,9 @@ void QFontEngineFT::init()
 
     fontDef.styleName = QString::fromUtf8(face->style_name);
 
-    fsType = freetype->fsType();
+    TT_OS2 *os2 = (TT_OS2 *)FT_Get_Sfnt_Table(face, ft_sfnt_os2);
+    if (os2)
+        fsType = os2->fsType;
 
     switch (fontDef.hintingPreference) {
         case QFont::PreferNoHinting: {
@@ -375,7 +348,25 @@ QFontEngine::FaceId QFontEngineFT::faceId() const
 
 QFontEngine::Properties QFontEngineFT::properties() const
 {
-    Properties p = freetype->properties();
+    FT_Face face = getFace();
+
+    QFontEngine::Properties p;
+    p.postscriptName = FT_Get_Postscript_Name(face);
+    PS_FontInfoRec font_info;
+    if (FT_Get_PS_Font_Info(face, &font_info) == 0) {
+        p.copyright = font_info.notice;
+    }
+    p.ascent = face->ascender;
+    p.descent = -face->descender;
+    p.leading = face->height - face->ascender + face->descender;
+    p.emSquare = face->units_per_EM;
+    p.boundingBox = QRectF(face->bbox.xMin, -face->bbox.yMax,
+                           face->bbox.xMax - face->bbox.xMin,
+                           face->bbox.yMax - face->bbox.yMin);
+    p.italicAngle = 0;
+    p.capHeight = p.ascent;
+    p.lineWidth = face->underline_thickness;
+
     if (p.postscriptName.isEmpty()) {
         p.postscriptName = QFontEngine::convertToPostscriptFontFamilyName(fontDef.family.toUtf8());
     }
