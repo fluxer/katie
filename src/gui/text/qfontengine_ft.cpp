@@ -380,7 +380,7 @@ QFontEngine::Properties QFontEngineFT::properties() const
         p.postscriptName = QFontEngine::convertToPostscriptFontFamilyName(fontDef.family.toUtf8());
     }
 
-    return freetype->properties();
+    return p;
 }
 
 bool QFontEngineFT::getSfntTableData(uint tag, uchar *buffer, uint *length) const
