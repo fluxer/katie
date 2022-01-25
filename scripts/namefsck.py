@@ -261,8 +261,6 @@ classlist = [
     "QGenericArgument",
     "QGenericMatrix",
     "QGenericReturnArgument",
-    "QGlobalStatic",
-    "QGlobalStaticDeleter",
     "QGradient",
     "QGradientStop",
     "QGradientStops",

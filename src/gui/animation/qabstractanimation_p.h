@@ -115,10 +115,9 @@ public:
 
 class Q_GUI_EXPORT QUnifiedTimer : public QObject
 {
-private:
+public:
     QUnifiedTimer();
 
-public:
     //XXX this is needed by dui
     static QUnifiedTimer *instance();
 

@@ -24,25 +24,6 @@ QT_BEGIN_NAMESPACE
     arraytype arrayname[arraysize]; \
     ::memset(arrayname, 0, arraysize * sizeof(arraytype));
 
-template <typename T>
-class QThreadLocalDeleter
-{
-public:
-    T* threadLocal;
-    QThreadLocalDeleter(T* _threadLocal)
-        : threadLocal(_threadLocal)
-    { }
-
-    inline ~QThreadLocalDeleter()
-    {
-        delete threadLocal;
-    }
-};
-
-#define QTHREADLOCAL(localtype, localname) \
-    thread_local localtype* localname(nullptr); \
-    thread_local QThreadLocalDeleter<localtype> localname## _deleter(localname);
-
 static const qreal q_deg2rad = qreal(0.01745329251994329576923690768489); /* pi/180 */
 static const qreal q_rad2deg = qreal(57.295779513082320876798154814105); /* 180/pi */
 

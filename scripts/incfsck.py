@@ -29,8 +29,6 @@ incmap = {
         'QFutureWatcherBase': 'qfuturewatcher.h',
         'QGenericArgument': 'qobjectdefs.h',
         'QGenericReturnArgument': 'qobjectdefs.h',
-        'QGlobalStatic': 'qglobal.h',
-        'QGlobalStaticDeleter': 'qglobal.h',
         'QHashData': 'qhash.h',
         'QHashIterator': 'qhash.h',
         'QHashNode': 'qhash.h',

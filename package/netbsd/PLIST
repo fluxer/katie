@@ -65,8 +65,6 @@ include/katie/QtCore/QFutureWatcher
 include/katie/QtCore/QFutureWatcherBase
 include/katie/QtCore/QGenericArgument
 include/katie/QtCore/QGenericReturnArgument
-include/katie/QtCore/QGlobalStatic
-include/katie/QtCore/QGlobalStaticDeleter
 include/katie/QtCore/QHash
 include/katie/QtCore/QHashData
 include/katie/QtCore/QHashIterator

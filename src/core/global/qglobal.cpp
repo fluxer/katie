@@ -1728,25 +1728,6 @@ bool QInternal::activateCallbacks(void **parameters)
 */
 
 /*!
-    \macro Q_GLOBAL_STATIC_WITH_INITIALIZER(type, name, initializer)
-    \internal
-
-    Declares a global static variable with the specified \a type and \a name.
-
-    Use this macro to instantiate an object using the \a initializer specified
-    in a thread-safe way, creating a global pointer that can be used to refer
-    to it.
-
-    \warning This macro is subject to a race condition that can cause the object
-    to be constructed twice. However, if this occurs, the second instance will
-    be immediately deleted.
-
-    See also
-    \l{http://www.aristeia.com/publications.html}{"C++ and the perils of Double-Checked Locking"}
-    by Scott Meyers and Andrei Alexandrescu.
-*/
-
-/*!
     \macro QT_NAMESPACE
     \internal
 

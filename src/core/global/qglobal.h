@@ -36,6 +36,7 @@
 
 #include <utility> // std::swap
 #include <cstdint> // std::uintptr_t
+#include <memory> // std::unique_ptr
 
 typedef unsigned char uchar;
 typedef unsigned short ushort;
@@ -393,114 +394,19 @@ Q_CORE_EXPORT void qt_message_output(QtMsgType, const char *buf);
 typedef void (*QtMsgHandler)(QtMsgType, const char *);
 Q_CORE_EXPORT QtMsgHandler qInstallMsgHandler(QtMsgHandler);
 
-
-#if defined(QT_NO_THREAD)
-
-template <typename T>
-class QGlobalStatic
-{
-public:
-    T *pointer;
-    inline QGlobalStatic(T *p) : pointer(p) { }
-    inline ~QGlobalStatic() { pointer = nullptr; }
-};
-
-#define Q_GLOBAL_STATIC(TYPE, NAME)                                  \
-    static TYPE *NAME()                                              \
-    {                                                                \
-        static TYPE thisVariable;                                    \
-        static QGlobalStatic<TYPE > thisGlobalStatic(&thisVariable); \
-        return thisGlobalStatic.pointer;                             \
+#define Q_GLOBAL_STATIC(TYPE, NAME)                              \
+    static TYPE *NAME()                                          \
+    {                                                            \
+        static std::unique_ptr<TYPE> this__StaticVar_(new TYPE); \
+        return this__StaticVar_.get();                           \
     }
 
-#define Q_GLOBAL_STATIC_WITH_ARGS(TYPE, NAME, ARGS)                  \
-    static TYPE *NAME()                                              \
-    {                                                                \
-        static TYPE thisVariable ARGS;                               \
-        static QGlobalStatic<TYPE > thisGlobalStatic(&thisVariable); \
-        return thisGlobalStatic.pointer;                             \
+#define Q_GLOBAL_STATIC_WITH_ARGS(TYPE, NAME, ARGS)                   \
+    static TYPE *NAME()                                               \
+    {                                                                 \
+        static std::unique_ptr<TYPE> this__StaticVar_(new TYPE ARGS); \
+        return this__StaticVar_.get();                                \
     }
-
-#define Q_GLOBAL_STATIC_WITH_INITIALIZER(TYPE, NAME, INITIALIZER)    \
-    static TYPE *NAME()                                              \
-    {                                                                \
-        static TYPE thisVariable;                                    \
-        static QGlobalStatic<TYPE > thisGlobalStatic(nullptr);     \
-        if (!thisGlobalStatic.pointer) {                             \
-            TYPE *x = thisGlobalStatic.pointer = &thisVariable;      \
-            INITIALIZER;                                             \
-        }                                                            \
-        return thisGlobalStatic.pointer;                             \
-    }
-
-#else // QT_NO_THREAD
-
-// Forward declaration, since qatomic.h needs qglobal.h
-template <typename T> class QAtomicPointer;
-
-// POD for Q_GLOBAL_STATIC
-template <typename T>
-class QGlobalStatic
-{
-public:
-    QAtomicPointer<T> pointer;
-    bool destroyed;
-};
-
-// Created as a function-local static to delete a QGlobalStatic<T>
-template <typename T>
-class QGlobalStaticDeleter
-{
-public:
-    QGlobalStatic<T> &globalStatic;
-    QGlobalStaticDeleter(QGlobalStatic<T> &_globalStatic)
-        : globalStatic(_globalStatic)
-    { }
-
-    inline ~QGlobalStaticDeleter()
-    {
-        delete globalStatic.pointer;
-        globalStatic.pointer = nullptr;
-        globalStatic.destroyed = true;
-    }
-};
-
-#define Q_GLOBAL_STATIC(TYPE, NAME)                                           \
-    static TYPE *NAME()                                                       \
-    {                                                                         \
-        static QGlobalStatic<TYPE > this__StaticVar_                          \
-            = { QAtomicPointer<TYPE>(new TYPE), false };                      \
-        static QGlobalStaticDeleter<TYPE > cleanup(this__StaticVar_);         \
-        return this__StaticVar_.pointer;                                      \
-    }
-
-#define Q_GLOBAL_STATIC_WITH_ARGS(TYPE, NAME, ARGS)                           \
-    static TYPE *NAME()                                                       \
-    {                                                                         \
-        static QGlobalStatic<TYPE > this__StaticVar_                          \
-            = { QAtomicPointer<TYPE>(new TYPE ARGS), false };                 \
-        static QGlobalStaticDeleter<TYPE > cleanup(this__StaticVar_);         \
-        return this__StaticVar_.pointer;                                      \
-    }
-
-#define Q_GLOBAL_STATIC_WITH_INITIALIZER(TYPE, NAME, INITIALIZER)                  \
-    static TYPE *NAME()                                                            \
-    {                                                                              \
-        static QGlobalStatic<TYPE > this__StaticVar_                               \
-            = { QAtomicPointer<TYPE>(nullptr), false };                            \
-        if (!this__StaticVar_.pointer && !this__StaticVar_.destroyed) {            \
-            QScopedPointer<TYPE > x(new TYPE);                                     \
-            INITIALIZER;                                                           \
-            if (this__StaticVar_.pointer.testAndSetOrdered(nullptr, x.data())) {   \
-                static QGlobalStaticDeleter<TYPE > cleanup(this__StaticVar_);      \
-                x.take();                                                          \
-            }                                                                      \
-        }                                                                          \
-        return this__StaticVar_.pointer;                                           \
-    }
-
-#endif // QT_NO_THREAD
-
 
 /*
    Utility macros and inline functions

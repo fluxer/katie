@@ -1614,14 +1614,14 @@ bool QFontInfo::exactMatch() const
 
 // **********************************************************************
 // QFontCache
-QTHREADLOCAL(QFontCache, theFontCache);
+thread_local std::unique_ptr<QFontCache> theFontCache(nullptr);
 
 QFontCache *QFontCache::instance()
 {
     if (!theFontCache) {
-        theFontCache = new QFontCache();
+        theFontCache = std::make_unique<QFontCache>();
     }
-    return theFontCache;
+    return theFontCache.get();
 }
 
 QFontCache::QFontCache()
