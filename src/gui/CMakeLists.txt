@@ -503,7 +503,6 @@ set(GUI_HEADERS
     ${CMAKE_CURRENT_SOURCE_DIR}/text/qtexttable_p.h
     ${CMAKE_CURRENT_SOURCE_DIR}/text/qharfbuzz_p.h
     ${CMAKE_CURRENT_SOURCE_DIR}/text/qfontengine_ft_p.h
-    ${CMAKE_CURRENT_SOURCE_DIR}/text/qfontdatabase_x11_p.h
     ${CMAKE_CURRENT_SOURCE_DIR}/text/qunicodetables_p.h
     ${CMAKE_CURRENT_SOURCE_DIR}/util/qsystemtrayicon.h
     ${CMAKE_CURRENT_SOURCE_DIR}/util/qcompleter.h
@@ -977,7 +976,7 @@ katie_unity_exclude(
     ${CMAKE_CURRENT_SOURCE_DIR}/painting/qcolor.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/painting/qcolormap_x11.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/painting/qpaintengine_x11.cpp
-    ${CMAKE_CURRENT_SOURCE_DIR}/painting/qregion_x11.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/painting/qregion.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/painting/qwindowsurface_raster.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/text/qfont.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/text/qfont_x11.cpp

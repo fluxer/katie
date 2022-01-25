@@ -329,6 +329,8 @@
 #include <QtCore/qdatastream.h>
 #endif
 
+#include "../../3rdparty/easing/easing.cpp"
+
 QT_BEGIN_NAMESPACE
 
 static inline bool isConfigFunction(QEasingCurve::Type type)
@@ -371,10 +373,6 @@ bool QEasingCurveFunction::operator==(const QEasingCurveFunction& other) const
            qFuzzyCompare(_a, other._a) &&
            qFuzzyCompare(_o, other._o);
 }
-
-QT_BEGIN_INCLUDE_NAMESPACE
-#include "../../3rdparty/easing/easing.cpp"
-QT_END_INCLUDE_NAMESPACE
 
 class QEasingCurvePrivate
 {

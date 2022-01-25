@@ -632,7 +632,6 @@ glyph_metrics_t QFontEngineFT::boundingBox(const QGlyphLayout &glyphs) const
     for (int i = 0; i < glyphs.numGlyphs; i++) {
         glyph_metrics_t gm = boundingBox(glyphs.glyphs[i]);
 
-
         overall.height = qMax(overall.height, gm.height);
         overall.width = qMax(overall.width, gm.width);
         overall.x = qMin(overall.x, gm.x);

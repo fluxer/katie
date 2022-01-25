@@ -37,6 +37,11 @@
 #include <utility> // std::swap
 #include <cstdint> // std::uintptr_t
 
+typedef unsigned char uchar;
+typedef unsigned short ushort;
+typedef unsigned int uint;
+typedef unsigned long ulong;
+
 #if !defined(QT_NO_USING_NAMESPACE)
 
 # define QT_NAMESPACE Katie
@@ -45,8 +50,6 @@
 
 # define QT_BEGIN_NAMESPACE namespace QT_NAMESPACE {
 # define QT_END_NAMESPACE }
-# define QT_BEGIN_INCLUDE_NAMESPACE }
-# define QT_END_INCLUDE_NAMESPACE namespace QT_NAMESPACE {
 
 namespace QT_NAMESPACE {}
 
@@ -62,8 +65,6 @@ QT_USE_NAMESPACE
 
 # define QT_BEGIN_NAMESPACE
 # define QT_END_NAMESPACE
-# define QT_BEGIN_INCLUDE_NAMESPACE
-# define QT_END_INCLUDE_NAMESPACE
 
 #endif /* QT_NO_USING_NAMESPACE */
 
@@ -174,13 +175,6 @@ typedef quint64 qulonglong;
 */
 typedef std::uintptr_t quintptr;
 typedef std::ptrdiff_t qptrdiff;
-
-QT_BEGIN_INCLUDE_NAMESPACE
-typedef unsigned char uchar;
-typedef unsigned short ushort;
-typedef unsigned int uint;
-typedef unsigned long ulong;
-QT_END_INCLUDE_NAMESPACE
 
 /*
    Warnings and errors when using deprecated methods

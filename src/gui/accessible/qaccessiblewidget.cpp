@@ -35,6 +35,7 @@
 #include <QRubberBand>
 #include <QtGui/QFocusFrame>
 #include <QtGui/QMenu>
+#include "qobject_p.h"
 
 QT_BEGIN_NAMESPACE
 
@@ -255,10 +256,6 @@ QRect QAccessibleWidget::rect(int child) const
 
     return QRect(wpos.x(), wpos.y(), w->width(), w->height());
 }
-
-QT_BEGIN_INCLUDE_NAMESPACE
-#include "qobject_p.h"
-QT_END_INCLUDE_NAMESPACE
 
 class QACConnectionObject : public QObject
 {
@@ -972,7 +969,3 @@ QVariant QAccessibleWidget::invokeMethod(Method method, int child, const QVarian
 QT_END_NAMESPACE
 
 #endif //QT_NO_ACCESSIBILITY
-
-
-
-

@@ -4061,11 +4061,6 @@ bool qScriptDisconnect(QObject *sender, const char *signal,
     \sa qScriptConnect()
 */
 
-QT_BEGIN_INCLUDE_NAMESPACE
-#include "moc_qscriptengine.h"
-QT_END_INCLUDE_NAMESPACE
-
-
 /*!
   \since 4.4
 
@@ -4293,3 +4288,5 @@ QScriptSyntaxCheckResult &QScriptSyntaxCheckResult::operator=(const QScriptSynta
 }
 
 QT_END_NAMESPACE
+
+#include "moc_qscriptengine.h"
