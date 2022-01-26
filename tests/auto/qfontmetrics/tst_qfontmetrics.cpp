@@ -211,7 +211,7 @@ void tst_QFontMetrics::averageCharWidth()
 
 void tst_QFontMetrics::inFontUcs4()
 {
-    QFont font(":/fonts/ucs4font.ttf");
+    QFont font(SRCDIR "/ucs4font.ttf");
     {
         QFontMetrics fm(font);
 
@@ -245,4 +245,3 @@ void tst_QFontMetrics::lineWidth()
 QTEST_MAIN(tst_QFontMetrics)
 
 #include "moc_tst_qfontmetrics.cpp"
-#include "qrc_testfont.cpp"

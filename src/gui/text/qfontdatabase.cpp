@@ -1299,7 +1299,9 @@ QFontEngine* QFontDatabase::load(const QFontPrivate *d, int script)
         return fe;
     }
 
-    if (QFile::exists(req.family)) {
+    const ushort firstchar = (req.family.isEmpty() ? 0 : req.family.at(0).unicode());
+    // relative or absolute path
+    if (firstchar == '.' || firstchar == '/') {
         QFontEngineFT* ftfe = new QFontEngineFT(req);
         if (ftfe->invalid()) {
             delete ftfe;

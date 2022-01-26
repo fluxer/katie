@@ -671,7 +671,7 @@ void QTextEngine::justify(const QScriptLine &line)
             if (justificationPoints[i].type == type)
                 ++n;
         }
-//          qDebug("number of points for justification type %d: %d", type, n);
+        // qDebug("number of points for justification type %d: %d", type, n);
 
 
         if (!n)

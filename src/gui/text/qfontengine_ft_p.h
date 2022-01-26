@@ -74,7 +74,6 @@ private:
     Q_DISABLE_COPY(QFreetypeFace);
 
     FT_Library library;
-    QByteArray fontData;
 };
 
 class Q_GUI_EXPORT QFontEngineFT : public QFontEngine
