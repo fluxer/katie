@@ -68,7 +68,7 @@ public:
 
     FT_Face face;
 
-    static void addGlyphToPath(FT_Face face, FT_GlyphSlot g, const QFixedPoint &point, QPainterPath *path);
+    static void addGlyphToPath(FT_GlyphSlot slot, const QFixedPoint &point, QPainterPath *path);
 
 private:
     Q_DISABLE_COPY(QFreetypeFace);
