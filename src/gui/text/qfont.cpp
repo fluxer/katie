@@ -451,13 +451,14 @@ QFont::QFont(const QString &family, int pointSize, int weight, bool italic)
     }
 
     if (weight < 0) {
-        weight = Normal;
+        weight = QFont::Normal;
     } else {
         resolve_mask |= QFont::WeightResolved | QFont::StyleResolved;
     }
 
-    if (italic)
+    if (italic) {
         resolve_mask |= QFont::StyleResolved;
+    }
 
     d->request.family = family;
     d->request.pointSize = qreal(pointSize);

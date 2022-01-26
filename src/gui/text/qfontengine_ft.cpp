@@ -19,8 +19,6 @@
 **
 ****************************************************************************/
 
-#include "qfile.h"
-#include "qabstractfileengine.h"
 #include "qmath.h"
 #include "qfontengine_ft_p.h"
 #include "qcorecommon_p.h"

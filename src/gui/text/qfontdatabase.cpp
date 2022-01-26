@@ -19,7 +19,6 @@
 **
 ****************************************************************************/
 
-#include "qdir.h"
 #include "qfontdatabase.h"
 #include "qdebug.h"
 #include "qalgorithms.h"
@@ -29,7 +28,6 @@
 #include "qunicodetables_p.h"
 #include "qfontengine_p.h"
 #include "qfontinfo.h"
-#include "qfontmetrics.h"
 #include "qfontengine_ft_p.h"
 #include "qx11info_x11.h"
 
@@ -458,49 +456,7 @@ static const qint16 PatternPropertiesTblSize = 10;
 // --------------------------------------------------------------------------------------
 // font loader
 // --------------------------------------------------------------------------------------
-
-static void qt_addPatternProps(FcPattern *pattern, int screen, QUnicodeTables::Script script, const QFontDef &request)
-{
-    double size_value = qMax(qreal(1.), request.pixelSize);
-    FcPatternDel(pattern, FC_PIXEL_SIZE);
-    FcPatternAddDouble(pattern, FC_PIXEL_SIZE, size_value);
-
-    if (!request.styleName.isEmpty()) {
-        QByteArray cs = request.styleName.toUtf8();
-        FcPatternAddString(pattern, FC_STYLE, (const FcChar8 *) cs.constData());
-        return;
-    }
-
-    int weight_value = FC_WEIGHT_BLACK;
-    if (request.weight == 0)
-        weight_value = FC_WEIGHT_MEDIUM;
-    else if (request.weight < (QFont::Light + QFont::Normal) / 2)
-        weight_value = FC_WEIGHT_LIGHT;
-    else if (request.weight < (QFont::Normal + QFont::DemiBold) / 2)
-        weight_value = FC_WEIGHT_MEDIUM;
-    else if (request.weight < (QFont::DemiBold + QFont::Bold) / 2)
-        weight_value = FC_WEIGHT_DEMIBOLD;
-    else if (request.weight < (QFont::Bold + QFont::Black) / 2)
-        weight_value = FC_WEIGHT_BOLD;
-    FcPatternDel(pattern, FC_WEIGHT);
-    FcPatternAddInteger(pattern, FC_WEIGHT, weight_value);
-
-    int slant_value = FC_SLANT_ROMAN;
-    if (request.style == QFont::StyleItalic)
-        slant_value = FC_SLANT_ITALIC;
-    else if (request.style == QFont::StyleOblique)
-        slant_value = FC_SLANT_OBLIQUE;
-    FcPatternDel(pattern, FC_SLANT);
-    FcPatternAddInteger(pattern, FC_SLANT, slant_value);
-
-    int stretch = request.stretch;
-    if (!stretch)
-        stretch = 100;
-    FcPatternDel(pattern, FC_WIDTH);
-    FcPatternAddInteger(pattern, FC_WIDTH, stretch);
-}
-
-static FcPattern *getFcPattern(const QFontPrivate *fp, QUnicodeTables::Script script, const QFontDef &request)
+static FcPattern *getFcPattern(const QFontPrivate *fp, const QFontDef &request)
 {
     if (!qt_x11Data->has_fontconfig)
         return nullptr;
@@ -538,7 +494,42 @@ static FcPattern *getFcPattern(const QFontPrivate *fp, QUnicodeTables::Script sc
     FcPatternAddBool(pattern, FC_OUTLINE, true);
     FcPatternAddBool(pattern, FC_SCALABLE, true);
 
-    qt_addPatternProps(pattern, fp->screen, script, request);
+    const double size_value = qMax(qreal(1.), request.pixelSize);
+    FcPatternDel(pattern, FC_PIXEL_SIZE);
+    FcPatternAddDouble(pattern, FC_PIXEL_SIZE, size_value);
+
+    if (!request.styleName.isEmpty()) {
+        QByteArray cs = request.styleName.toUtf8();
+        FcPatternAddString(pattern, FC_STYLE, (const FcChar8 *) cs.constData());
+    } else {
+        int weight_value = FC_WEIGHT_BLACK;
+        if (request.weight == 0)
+            weight_value = FC_WEIGHT_MEDIUM;
+        else if (request.weight < (QFont::Light + QFont::Normal) / 2)
+            weight_value = FC_WEIGHT_LIGHT;
+        else if (request.weight < (QFont::Normal + QFont::DemiBold) / 2)
+            weight_value = FC_WEIGHT_MEDIUM;
+        else if (request.weight < (QFont::DemiBold + QFont::Bold) / 2)
+            weight_value = FC_WEIGHT_DEMIBOLD;
+        else if (request.weight < (QFont::Bold + QFont::Black) / 2)
+            weight_value = FC_WEIGHT_BOLD;
+        FcPatternDel(pattern, FC_WEIGHT);
+        FcPatternAddInteger(pattern, FC_WEIGHT, weight_value);
+
+        int slant_value = FC_SLANT_ROMAN;
+        if (request.style == QFont::StyleItalic)
+            slant_value = FC_SLANT_ITALIC;
+        else if (request.style == QFont::StyleOblique)
+            slant_value = FC_SLANT_OBLIQUE;
+        FcPatternDel(pattern, FC_SLANT);
+        FcPatternAddInteger(pattern, FC_SLANT, slant_value);
+
+        int stretch = request.stretch;
+        if (!stretch)
+            stretch = 100;
+        FcPatternDel(pattern, FC_WIDTH);
+        FcPatternAddInteger(pattern, FC_WIDTH, stretch);
+    }
 
     FcConfigSubstitute(0, pattern, FcMatchPattern);
     FcDefaultSubstitute(pattern);
@@ -600,7 +591,7 @@ static QFontEngine *tryPatternLoad(FcPattern *match, int screen,
 static QFontEngine *loadFc(const QFontPrivate *fp, QUnicodeTables::Script script, const QFontDef &request)
 {
     FM_DEBUG("===================== loadFc: script=%d family='%s'\n", script, request.family.toLatin1().constData());
-    FcPattern *pattern = getFcPattern(fp, script, request);
+    FcPattern *pattern = getFcPattern(fp, request);
 
 #ifdef FONT_MATCH_DEBUG
     FM_DEBUG("\n\nfinal FcPattern contains:\n");
@@ -1318,7 +1309,6 @@ QFontEngine* QFontDatabase::load(const QFontPrivate *d, int script)
 
     if (!fe) {
         fe = new QFontEngineBox(req.pixelSize);
-        fe->fontDef = QFontDef();
     }
     QFontCache::instance()->insertEngine(key, fe);
     return fe;
