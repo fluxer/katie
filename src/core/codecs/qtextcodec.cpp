@@ -76,6 +76,7 @@ public:
     ~QTextCodecCleanup();
 };
 
+static bool removecodecs = true;
 /*
     Deletes all the created codecs. This destructor is called just
     before exiting to delete any QTextCodec objects that may be lying
@@ -83,8 +84,9 @@ public:
 */
 QTextCodecCleanup::~QTextCodecCleanup()
 {
-    while (begin() != end()) {
-        delete *begin();
+    removecodecs = false;
+    while (!isEmpty()) {
+        delete takeLast();
     }
     localeMapper = nullptr;
 #ifndef QT_NO_DEBUG
@@ -419,10 +421,12 @@ QTextCodec::QTextCodec()
 */
 QTextCodec::~QTextCodec()
 {
+    if (removecodecs) {
 #ifndef QT_NO_THREAD
-    QMutexLocker locker(textCodecsMutex());
+        QMutexLocker locker(textCodecsMutex());
 #endif
-    qGlobalQTextCodec()->removeAll(this);
+        qGlobalQTextCodec()->removeAll(this);
+    }
 }
 
 /*!
