@@ -550,7 +550,7 @@ static FcPattern *getFcPattern(const QFontPrivate *fp, const QFontDef &request)
     return pattern;
 }
 
-static QFontEngine *tryPatternLoad(FcPattern *match, int screen,
+static QFontEngine *tryPatternLoad(FcPattern *match,
                                    const QFontDef &request,
                                    QUnicodeTables::Script script)
 {
@@ -600,7 +600,7 @@ static QFontEngine *loadFc(const QFontPrivate *fp, QUnicodeTables::Script script
 
     FcResult unused;
     FcPattern *match = FcFontMatch(0, pattern, &unused);
-    QFontEngine *fe = tryPatternLoad(match, fp->screen, request, script);
+    QFontEngine *fe = tryPatternLoad(match, request, script);
     if (!fe) {
         FcFontSet *fs = FcFontSort(0, pattern, FcTrue, 0, &unused);
 
@@ -612,7 +612,7 @@ static QFontEngine *loadFc(const QFontPrivate *fp, QUnicodeTables::Script script
         if (fs) {
             for (int i = 0; !fe && i < fs->nfont; ++i) {
                 match = FcFontRenderPrepare(NULL, pattern, fs->fonts[i]);
-                fe = tryPatternLoad(match, fp->screen, request, script);
+                fe = tryPatternLoad(match, request, script);
                 if (fe)
                     break;
                 FcPatternDestroy(match);
