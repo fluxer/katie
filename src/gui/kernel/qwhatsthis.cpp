@@ -36,9 +36,7 @@
 #include "../text/qtextdocumentlayout_p.h"
 #include "qtoolbutton.h"
 #include "qdebug.h"
-#ifndef QT_NO_ACCESSIBILITY
-#include "qaccessible.h"
-#endif
+
 #if defined(Q_WS_X11)
 #include "qx11info_x11.h"
 #include "qwidget.h"
@@ -374,9 +372,6 @@ QWhatsThisPrivate::QWhatsThisPrivate()
         QApplication::setOverrideCursor(Qt::WhatsThisCursor);
 #endif
     }
-#ifndef QT_NO_ACCESSIBILITY
-    QAccessible::updateAccessibility(this, 0, QAccessible::ContextHelpStart);
-#endif
 }
 
 QWhatsThisPrivate::~QWhatsThisPrivate()
@@ -385,9 +380,6 @@ QWhatsThisPrivate::~QWhatsThisPrivate()
         action->setChecked(false);
 #ifndef QT_NO_CURSOR
     QApplication::restoreOverrideCursor();
-#endif
-#ifndef QT_NO_ACCESSIBILITY
-    QAccessible::updateAccessibility(this, 0, QAccessible::ContextHelpEnd);
 #endif
     instance = 0;
 }

@@ -36,10 +36,6 @@
 #include "qtabbar_p.h"
 #include "qguicommon_p.h"
 
-#ifndef QT_NO_ACCESSIBILITY
-#include "qaccessible.h"
-#endif
-
 #ifndef QT_NO_TABBAR
 
 QT_BEGIN_NAMESPACE
@@ -1100,14 +1096,6 @@ void QTabBar::setCurrentIndex(int index)
         if (oldIndex >= 0 && oldIndex < count())
             d->layoutTab(oldIndex);
         d->layoutTab(index);
-#ifndef QT_NO_ACCESSIBILITY
-        if (QAccessible::isActive()) {
-            QAccessible::updateAccessibility(this, oldIndex + 1, QAccessible::Selection);
-
-            QAccessible::updateAccessibility(this, index + 1, QAccessible::Focus);
-            QAccessible::updateAccessibility(this, index + 1, QAccessible::Selection);
-        }
-#endif
         emit currentChanged(index);
     }
 }

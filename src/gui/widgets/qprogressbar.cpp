@@ -26,9 +26,6 @@
 #include "qstylepainter.h"
 #include "qstyleoption.h"
 #include "qwidget_p.h"
-#ifndef QT_NO_ACCESSIBILITY
-#include "qaccessible.h"
-#endif
 
 #include <limits.h>
 
@@ -291,10 +288,6 @@ void QProgressBar::setValue(int value)
         return;
     d->value = value;
     emit valueChanged(value);
-#ifndef QT_NO_ACCESSIBILITY
-    if (isVisible())
-        QAccessible::updateAccessibility(this, 0, QAccessible::ValueChanged);
-#endif
     if (d->repaintRequired())
         repaint();
 }

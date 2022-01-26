@@ -39,10 +39,6 @@
 #include "qpushbutton_p.h"
 #include "qaction_p.h"
 
-#ifndef QT_NO_ACCESSIBILITY
-# include "qaccessible.h"
-#endif
-
 #ifndef QT_NO_EFFECTS
 # include "qeffects_p.h"
 #endif
@@ -1017,13 +1013,6 @@ void QMenuPrivate::activateAction(QAction *action, QAction::ActionEvent action_e
 
 
     if (action_e == QAction::Hover) {
-#ifndef QT_NO_ACCESSIBILITY
-        if (QAccessible::isActive()) {
-            int actionIndex = indexOf(action) + 1;
-            QAccessible::updateAccessibility(q, actionIndex, QAccessible::Focus);
-            QAccessible::updateAccessibility(q, actionIndex, QAccessible::Selection);
-        }
-#endif
         action->showStatusText(topCausedWidget());
     } else {
         actionAboutToTrigger = 0;
@@ -1886,10 +1875,6 @@ void QMenu::popup(const QPoint &p, QAction *atAction)
     {
         show();
     }
-
-#ifndef QT_NO_ACCESSIBILITY
-    QAccessible::updateAccessibility(this, 0, QAccessible::PopupMenuStart);
-#endif
 }
 
 /*!
@@ -2008,9 +1993,6 @@ void QMenu::hideEvent(QHideEvent *)
     if (d->eventLoop)
         d->eventLoop->exit();
     d->setCurrentAction(0);
-#ifndef QT_NO_ACCESSIBILITY
-    QAccessible::updateAccessibility(this, 0, QAccessible::PopupMenuEnd);
-#endif
 #ifndef QT_NO_MENUBAR
     if (QMenuBar *mb = qobject_cast<QMenuBar*>(d->causedPopup.widget))
         mb->d_func()->setCurrentAction(0);

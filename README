@@ -47,6 +47,7 @@ There are several things you should be aware before considering Katie:
   - dropped network interfaces management support
   - dropped no-op touch devices support
   - dropped bitmap fonts support
+  - dropped accessibility support
 
  - some additions have been made: 
   - JSON document handler

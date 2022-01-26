@@ -44,8 +44,6 @@
 #include "QtGui/qclipboard.h"
 #include "QtCore/qpoint.h"
 #include "QtGui/qcompleter.h"
-#include "qaccessible.h"
-
 #include "qplatformdefs.h"
 
 

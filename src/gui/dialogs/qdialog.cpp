@@ -31,10 +31,6 @@
 #include "qcursor.h"
 #include "qdialog_p.h"
 
-#ifndef QT_NO_ACCESSIBILITY
-#include "qaccessible.h"
-#endif
-
 #if defined(Q_WS_X11)
 #  include "qt_x11_p.h"
 #endif
@@ -608,18 +604,9 @@ void QDialog::setVisible(bool visible)
             QApplication::sendEvent(fw, &e);
         }
 
-#ifndef QT_NO_ACCESSIBILITY
-        QAccessible::updateAccessibility(this, 0, QAccessible::DialogStart);
-#endif
-
     } else {
         if (testAttribute(Qt::WA_WState_ExplicitShowHide) && testAttribute(Qt::WA_WState_Hidden))
             return;
-
-#ifndef QT_NO_ACCESSIBILITY
-        if (isVisible())
-            QAccessible::updateAccessibility(this, 0, QAccessible::DialogEnd);
-#endif
 
         // Reimplemented to exit a modal event loop when the dialog is hidden.
         QWidget::setVisible(visible);

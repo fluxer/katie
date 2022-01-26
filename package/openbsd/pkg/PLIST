@@ -585,30 +585,6 @@ include/katie/QtGui/QAbstractSlider
 include/katie/QtGui/QAbstractSpinBox
 include/katie/QtGui/QAbstractTextDocumentLayout
 include/katie/QtGui/QAbstractUndoItem
-include/katie/QtGui/QAccessible
-include/katie/QtGui/QAccessible2Interface
-include/katie/QtGui/QAccessibleActionInterface
-include/katie/QtGui/QAccessibleApplication
-include/katie/QtGui/QAccessibleBridge
-include/katie/QtGui/QAccessibleBridgeFactoryInterface
-include/katie/QtGui/QAccessibleBridgePlugin
-include/katie/QtGui/QAccessibleEditableTextInterface
-include/katie/QtGui/QAccessibleEvent
-include/katie/QtGui/QAccessibleFactoryInterface
-include/katie/QtGui/QAccessibleImageInterface
-include/katie/QtGui/QAccessibleInterface
-include/katie/QtGui/QAccessibleInterfaceEx
-include/katie/QtGui/QAccessibleObject
-include/katie/QtGui/QAccessibleObjectEx
-include/katie/QtGui/QAccessiblePlugin
-include/katie/QtGui/QAccessibleSimpleEditableTextInterface
-include/katie/QtGui/QAccessibleTable2CellInterface
-include/katie/QtGui/QAccessibleTable2Interface
-include/katie/QtGui/QAccessibleTableInterface
-include/katie/QtGui/QAccessibleTextInterface
-include/katie/QtGui/QAccessibleValueInterface
-include/katie/QtGui/QAccessibleWidget
-include/katie/QtGui/QAccessibleWidgetEx
 include/katie/QtGui/QAction
 include/katie/QtGui/QActionEvent
 include/katie/QtGui/QActionGroup
@@ -973,12 +949,6 @@ include/katie/QtGui/qabstractscrollarea.h
 include/katie/QtGui/qabstractslider.h
 include/katie/QtGui/qabstractspinbox.h
 include/katie/QtGui/qabstracttextdocumentlayout.h
-include/katie/QtGui/qaccessible.h
-include/katie/QtGui/qaccessible2.h
-include/katie/QtGui/qaccessiblebridge.h
-include/katie/QtGui/qaccessibleobject.h
-include/katie/QtGui/qaccessibleplugin.h
-include/katie/QtGui/qaccessiblewidget.h
 include/katie/QtGui/qaction.h
 include/katie/QtGui/qactiongroup.h
 include/katie/QtGui/qanimationgroup.h
@@ -1290,8 +1260,6 @@ include/katie/QtTest/QEventSizeOfChecker
 include/katie/QtTest/QSignalSpy
 include/katie/QtTest/QSpontaneKeyEvent
 include/katie/QtTest/QTest
-include/katie/QtTest/QTestAccessibility
-include/katie/QtTest/QTestAccessibilityEvent
 include/katie/QtTest/QTestBasicStreamer
 include/katie/QtTest/QTestCoreElement
 include/katie/QtTest/QTestCoreList
@@ -1317,7 +1285,6 @@ include/katie/QtTest/qsignalspy.h
 include/katie/QtTest/qtest.h
 include/katie/QtTest/qtest_global.h
 include/katie/QtTest/qtest_gui.h
-include/katie/QtTest/qtestaccessible.h
 include/katie/QtTest/qtestassert.h
 include/katie/QtTest/qtestbasicstreamer.h
 include/katie/QtTest/qtestcase.h
@@ -1407,8 +1374,6 @@ lib/katie/imports/Qt/labs/particles/
 @so lib/katie/imports/Qt/labs/particles/libqmlparticlesplugin.so
 lib/katie/imports/Qt/labs/particles/qmldir
 lib/katie/plugins/
-lib/katie/plugins/accessible/
-@so lib/katie/plugins/accessible/libqtaccessiblewidgets.so
 lib/katie/plugins/designer/
 @so lib/katie/plugins/designer/libqdeclarativeview.so
 lib/katie/plugins/iconengines/

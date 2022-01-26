@@ -1187,18 +1187,15 @@ public:
         BackgroundRole = 8,
         ForegroundRole = 9,
         CheckStateRole = 10,
-        // Accessibility
-        AccessibleTextRole = 11,
-        AccessibleDescriptionRole = 12,
         // More general purpose
-        SizeHintRole = 13,
-        InitialSortOrderRole = 14,
+        SizeHintRole = 11,
+        InitialSortOrderRole = 12,
         // Internal UiLib roles
-        DisplayPropertyRole = 15,
-        DecorationPropertyRole = 16,
-        ToolTipPropertyRole = 17,
-        StatusTipPropertyRole = 18,
-        WhatsThisPropertyRole = 19,
+        DisplayPropertyRole = 13,
+        DecorationPropertyRole = 14,
+        ToolTipPropertyRole = 15,
+        StatusTipPropertyRole = 16,
+        WhatsThisPropertyRole = 17,
         // Reserved
         UserRole = 32
     };

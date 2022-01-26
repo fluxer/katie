@@ -2103,14 +2103,6 @@
                                 of a header view section. (Qt::SortOrder). This
                                 role was introduced in Qt 4.8.
 
-    Accessibility roles (with associated types):
-
-    \value AccessibleTextRole        The text to be used by accessibility
-                                     extensions and plugins, such as screen
-                                     readers. (QString)
-    \value AccessibleDescriptionRole A description of the item for accessibility
-                                     purposes. (QString)
-
     User roles:
 
     \value UserRole       The first role that can be used for application-specific purposes.

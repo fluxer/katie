@@ -538,10 +538,6 @@ public:
 #ifndef QT_NO_WHATSTHIS
     QString whatsThis;
 #endif
-#ifndef QT_NO_ACCESSIBILITY
-    QString accessibleName;
-    QString accessibleDescription;
-#endif
 
     // Other variables.
     uint inheritedFontResolveMask;

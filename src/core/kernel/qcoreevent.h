@@ -96,101 +96,97 @@ public:
         UpdateLater = 52,                       // request update() later
 
         ContextMenu = 53,                       // context popup menu
-        AccessibilityPrepare = 54,              // accessibility information is requested
-        LocaleChange = 55,                      // the system locale changed
-        LanguageChange = 56,                    // the application language changed
-        LayoutDirectionChange = 57,             // the layout direction changed
-        Style = 58,                             // internal style event
+        LocaleChange = 54,                      // the system locale changed
+        LanguageChange = 55,                    // the application language changed
+        LayoutDirectionChange = 56,             // the layout direction changed
+        Style = 57,                             // internal style event
 
-        FontChange = 59,                        // font has changed
-        EnabledChange = 60,                     // enabled state has changed
-        ActivationChange = 61,                  // window activation has changed
-        StyleChange = 62,                       // style has changed
-        IconTextChange = 63,                    // icon text has changed
-        ModifiedChange = 64,                    // modified state has changed
-        MouseTrackingChange = 65,               // mouse tracking state has changed
+        FontChange = 58,                        // font has changed
+        EnabledChange = 59,                     // enabled state has changed
+        ActivationChange = 60,                  // window activation has changed
+        StyleChange = 61,                       // style has changed
+        IconTextChange = 62,                    // icon text has changed
+        ModifiedChange = 63,                    // modified state has changed
+        MouseTrackingChange = 64,               // mouse tracking state has changed
 
-        WindowBlocked = 66,                     // window is about to be blocked modally
-        WindowUnblocked = 67,                   // windows modal blocking has ended
-        WindowStateChange = 68,
+        WindowBlocked = 65,                     // window is about to be blocked modally
+        WindowUnblocked = 66,                   // windows modal blocking has ended
+        WindowStateChange = 67,
 
-        ToolTip = 69,
-        WhatsThis = 70,
-        StatusTip = 71,
+        ToolTip = 68,
+        WhatsThis = 69,
+        StatusTip = 70,
 
-        ActionChanged = 72,
-        ActionAdded = 73,
-        ActionRemoved = 74,
+        ActionChanged = 71,
+        ActionAdded = 72,
+        ActionRemoved = 73,
 
-        Shortcut = 75,                          // shortcut triggered
-        ShortcutOverride = 76,                  // shortcut override request
+        Shortcut = 74,                          // shortcut triggered
+        ShortcutOverride = 75,                  // shortcut override request
 
-        WhatsThisClicked = 77,
+        WhatsThisClicked = 76,
 
-        ApplicationActivate = 78,               // application has been changed to active
-        ApplicationDeactivate = 79,             // application has been changed to inactive
+        ApplicationActivate = 77,               // application has been changed to active
+        ApplicationDeactivate = 78,             // application has been changed to inactive
 
-        QueryWhatsThis = 80,                    // query what's this widget help
-        EnterWhatsThisMode = 81,
-        LeaveWhatsThisMode = 82,
+        QueryWhatsThis = 79,                    // query what's this widget help
+        EnterWhatsThisMode = 80,
+        LeaveWhatsThisMode = 81,
 
-        ZOrderChange = 83,                      // child widget has had its z-order changed
+        ZOrderChange = 82,                      // child widget has had its z-order changed
 
-        HoverEnter = 84,                        // mouse cursor enters a hover widget
-        HoverLeave = 85,                        // mouse cursor leaves a hover widget
-        HoverMove = 86,                         // mouse cursor move inside a hover widget
+        HoverEnter = 83,                        // mouse cursor enters a hover widget
+        HoverLeave = 84,                        // mouse cursor leaves a hover widget
+        HoverMove = 85,                         // mouse cursor move inside a hover widget
 
-        AccessibilityHelp = 87,                 // accessibility help text request
-        AccessibilityDescription = 88,          // accessibility description text request
+        AcceptDropsChange = 86,
 
-        AcceptDropsChange = 89,
+        GraphicsSceneMouseMove = 87,            // GraphicsView
+        GraphicsSceneMousePress = 88,
+        GraphicsSceneMouseRelease = 89,
+        GraphicsSceneMouseDoubleClick = 90,
+        GraphicsSceneContextMenu = 91,
+        GraphicsSceneHoverEnter = 92,
+        GraphicsSceneHoverMove = 93,
+        GraphicsSceneHoverLeave = 94,
+        GraphicsSceneLeave = 95,                // internal
+        GraphicsSceneHelp = 96,
+        GraphicsSceneDragEnter = 97,
+        GraphicsSceneDragMove = 98,
+        GraphicsSceneDragLeave = 99,
+        GraphicsSceneDrop = 100,
+        GraphicsSceneWheel = 101,
 
-        GraphicsSceneMouseMove = 90,            // GraphicsView
-        GraphicsSceneMousePress = 91,
-        GraphicsSceneMouseRelease = 92,
-        GraphicsSceneMouseDoubleClick = 93,
-        GraphicsSceneContextMenu = 94,
-        GraphicsSceneHoverEnter = 95,
-        GraphicsSceneHoverMove = 96,
-        GraphicsSceneHoverLeave = 97,
-        GraphicsSceneLeave = 98,                // internal
-        GraphicsSceneHelp = 99,
-        GraphicsSceneDragEnter = 100,
-        GraphicsSceneDragMove = 101,
-        GraphicsSceneDragLeave = 102,
-        GraphicsSceneDrop = 103,
-        GraphicsSceneWheel = 104,
+        KeyboardLayoutChange = 102,             // keyboard layout changed
 
-        KeyboardLayoutChange = 105,             // keyboard layout changed
+        DynamicPropertyChange = 103,            // A dynamic property was changed through setProperty/property
 
-        DynamicPropertyChange = 106,            // A dynamic property was changed through setProperty/property
+        NonClientAreaMouseMove = 104,
+        NonClientAreaMouseButtonPress = 105,
+        NonClientAreaMouseButtonRelease = 106,
+        NonClientAreaMouseButtonDblClick = 107,
 
-        NonClientAreaMouseMove = 107,
-        NonClientAreaMouseButtonPress = 108,
-        NonClientAreaMouseButtonRelease = 109,
-        NonClientAreaMouseButtonDblClick = 110,
+        ContentsRectChange = 108,               // sent by QWidget::setContentsMargins (internal)
 
-        ContentsRectChange = 111,               // sent by QWidget::setContentsMargins (internal)
+        FutureCallOut = 109,
 
-        FutureCallOut = 112,
+        GraphicsSceneResize  = 110,
+        GraphicsSceneMove  = 111,
 
-        GraphicsSceneResize  = 113,
-        GraphicsSceneMove  = 114,
+        CursorChange = 112,
+        ToolTipChange = 113,
 
-        CursorChange = 115,
-        ToolTipChange = 116,
+        NetworkReplyUpdated = 114,              // Internal for QNetworkReply
 
-        NetworkReplyUpdated = 117,              // Internal for QNetworkReply
+        GrabMouse = 115,
+        UngrabMouse = 116,
+        GrabKeyboard = 117,
+        UngrabKeyboard = 118,
 
-        GrabMouse = 118,
-        UngrabMouse = 119,
-        GrabKeyboard = 120,
-        UngrabKeyboard = 121,
+        RequestSoftwareInputPanel = 119,
+        CloseSoftwareInputPanel = 120,
 
-        RequestSoftwareInputPanel = 122,
-        CloseSoftwareInputPanel = 123,
-
-        WinIdChange = 124,
+        WinIdChange = 121,
 
         User = 1000,                            // first user event id
         MaxUser = 65535                         // last user event id

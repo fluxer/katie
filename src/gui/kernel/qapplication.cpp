@@ -21,7 +21,6 @@
 
 #include "qplatformdefs.h"
 #include "qabstracteventdispatcher.h"
-#include "qaccessible.h"
 #include "qapplication.h"
 #include "qclipboard.h"
 #include "qcursor.h"
@@ -2930,9 +2929,6 @@ void QApplication::changeOverrideCursor(const QCursor &cursor)
 */
 int QApplication::exec()
 {
-#ifndef QT_NO_ACCESSIBILITY
-    QAccessible::setRootObject(qApp);
-#endif
     return QCoreApplication::exec();
 }
 

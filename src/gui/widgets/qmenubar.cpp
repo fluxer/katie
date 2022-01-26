@@ -25,9 +25,6 @@
 #include "qlayout.h"
 #include "qapplication.h"
 #include "qdesktopwidget.h"
-#ifndef QT_NO_ACCESSIBILITY
-# include "qaccessible.h"
-#endif
 #include "qpainter.h"
 #include "qstylepainter.h"
 #include "qevent.h"
@@ -495,14 +492,6 @@ void QMenuBarPrivate::_q_actionHovered()
     Q_Q(QMenuBar);
     if (QAction *action = qobject_cast<QAction *>(q->sender())) {
         emit q->hovered(action);
-#ifndef QT_NO_ACCESSIBILITY
-        if (QAccessible::isActive()) {
-            int actionIndex = actions.indexOf(action);
-            ++actionIndex;
-            QAccessible::updateAccessibility(q, actionIndex, QAccessible::Focus);
-            QAccessible::updateAccessibility(q, actionIndex, QAccessible::Selection);
-        }
-#endif //QT_NO_ACCESSIBILITY
     }
 }
 

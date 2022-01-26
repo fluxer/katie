@@ -120,10 +120,6 @@ public:
     void setThreadData_helper(QThreadData *currentData, QThreadData *targetData);
     void _q_reregisterTimers(void *pointer);
 
-    bool isSender(const QObject *receiver, const char *signal) const;
-    QObjectList receiverList(const char *signal) const;
-    QObjectList senderList() const;
-
     void addConnection(int signal, Connection *c);
     void cleanConnectionLists();
 

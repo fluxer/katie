@@ -33,9 +33,6 @@
 #include "qscrollbar.h"
 #include "qabstractbutton.h"
 #include "qtableview_p.h"
-#ifndef QT_NO_ACCESSIBILITY
-#include "qaccessible.h"
-#endif
 
 QT_BEGIN_NAMESPACE
 
@@ -3073,70 +3070,6 @@ void QTableViewPrivate::selectColumn(int column, bool anchor)
         else
             selectionModel->select(QItemSelection(tl, br), command);
     }
-}
-
-/*!
-  \reimp
- */
-void QTableView::currentChanged(const QModelIndex &current, const QModelIndex &previous)
-{
-#ifndef QT_NO_ACCESSIBILITY
-    if (QAccessible::isActive()) {
-        if (current.isValid()) {
-#ifdef Q_WS_X11
-            Q_D(QTableView);
-            int entry = d->accessibleTable2Index(current);
-            QAccessible::updateAccessibility(this, entry, QAccessible::Focus);
-#else
-            int entry = visualIndex(current) + 1;
-            if (horizontalHeader())
-                ++entry;
-            QAccessible::updateAccessibility(viewport(), entry, QAccessible::Focus);
-#endif
-        }
-    }
-#endif
-    QAbstractItemView::currentChanged(current, previous);
-}
-
-/*!
-  \reimp
- */
-void QTableView::selectionChanged(const QItemSelection &selected,
-                                  const QItemSelection &deselected)
-{
-#ifndef QT_NO_ACCESSIBILITY
-    Q_D(QTableView);
-    Q_UNUSED(d)
-    if (QAccessible::isActive()) {
-        // ### does not work properly for selection ranges.
-        QModelIndex sel = selected.indexes().value(0);
-        if (sel.isValid()) {
-#ifdef Q_WS_X11
-            int entry = d->accessibleTable2Index(sel);
-            QAccessible::updateAccessibility(this, entry, QAccessible::Selection);
-#else
-            int entry = visualIndex(sel);
-            if (horizontalHeader())
-                ++entry;
-            QAccessible::updateAccessibility(viewport(), entry, QAccessible::Selection);
-#endif
-        }
-        QModelIndex desel = deselected.indexes().value(0);
-        if (desel.isValid()) {
-#ifdef Q_WS_X11
-            int entry = d->accessibleTable2Index(desel);
-            QAccessible::updateAccessibility(this, entry, QAccessible::SelectionRemove);
-#else
-            int entry = visualIndex(sel);
-            if (horizontalHeader())
-                ++entry;
-            QAccessible::updateAccessibility(viewport(), entry, QAccessible::SelectionRemove);
-#endif
-        }
-    }
-#endif
-    QAbstractItemView::selectionChanged(selected, deselected);
 }
 
 int QTableView::visualIndex(const QModelIndex &index) const

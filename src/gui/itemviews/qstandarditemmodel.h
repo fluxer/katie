@@ -114,16 +114,6 @@ public:
     }
     inline void setCheckState(Qt::CheckState checkState);
 
-    inline QString accessibleText() const {
-        return qvariant_cast<QString>(data(Qt::AccessibleTextRole));
-    }
-    inline void setAccessibleText(const QString &accessibleText);
-
-    inline QString accessibleDescription() const {
-        return qvariant_cast<QString>(data(Qt::AccessibleDescriptionRole));
-    }
-    inline void setAccessibleDescription(const QString &accessibleDescription);
-
     Qt::ItemFlags flags() const;
     void setFlags(Qt::ItemFlags flags);
 
@@ -266,12 +256,6 @@ inline void QStandardItem::setForeground(const QBrush &abrush)
 
 inline void QStandardItem::setCheckState(Qt::CheckState acheckState)
 { setData(acheckState, Qt::CheckStateRole); }
-
-inline void QStandardItem::setAccessibleText(const QString &aaccessibleText)
-{ setData(aaccessibleText, Qt::AccessibleTextRole); }
-
-inline void QStandardItem::setAccessibleDescription(const QString &aaccessibleDescription)
-{ setData(aaccessibleDescription, Qt::AccessibleDescriptionRole); }
 
 inline void QStandardItem::setChild(int arow, QStandardItem *aitem)
 { setChild(arow, 0, aitem); }
