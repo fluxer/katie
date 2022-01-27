@@ -1163,11 +1163,10 @@ void QPainterPath::addText(const QPointF &point, const QFont &f, const QString &
         const QFontMetricsF fontmetrics(f);
         const qreal linewidth = fontmetrics.lineWidth();
         const qreal textwidth = (fontmetrics.width('x') * text.size());
-#if 0
+        // TODO: implement underline style in QFont
         if (f.underline()) {
             addRect(point.x(), point.y() + fontmetrics.underlinePos(), textwidth, linewidth);
         }
-#endif
         if (f.overline()) {
             addRect(point.x(), point.y() - fontmetrics.overlinePos(), textwidth, linewidth);
         }
