@@ -420,20 +420,6 @@ static const uint specialCharsTbl[] = {
 };
 enum { SpecialCharCount = sizeof(specialCharsTbl) / sizeof(uint) };
 
-static const char* PatternPropertiesTbl[] = {
-    FC_FAMILY,
-    FC_STYLE,
-    FC_WEIGHT,
-    FC_SLANT,
-    FC_SPACING,
-    FC_CHARSET,
-    FC_FOUNDRY,
-    FC_SCALABLE,
-    FC_PIXEL_SIZE,
-    FC_WIDTH,
-};
-static const qint16 PatternPropertiesTblSize = 10;
-
 // --------------------------------------------------------------------------------------
 // font loader
 // --------------------------------------------------------------------------------------
@@ -541,7 +527,7 @@ static QFontEngine *tryPatternLoad(FcPattern *match,
     if (script != QUnicodeTables::Common) {
         // need to check the charset, as the langset doesn't work for some scripts
         if (specialCharsTbl[script]) {
-            FcCharSet *cs;
+            FcCharSet *cs = nullptr;
             if (FcPatternGetCharSet(match, FC_CHARSET, 0, &cs) != FcResultMatch) {
                 return nullptr;
             }
@@ -777,9 +763,13 @@ QFontDatabase::QFontDatabase()
 
         FcObjectSet *os = FcObjectSetCreate();
         FcPattern *pattern = FcPatternCreate();
-        for (qint16 i = 0; i < PatternPropertiesTblSize; i++) {
-            FcObjectSetAdd(os, PatternPropertiesTbl[i]);
-        }
+        FcObjectSetAdd(os, FC_FAMILY);
+        FcObjectSetAdd(os, FC_SCALABLE);
+        FcObjectSetAdd(os, FC_FOUNDRY);
+        FcObjectSetAdd(os, FC_WEIGHT);
+        FcObjectSetAdd(os, FC_SPACING);
+        FcObjectSetAdd(os, FC_STYLE);
+        FcObjectSetAdd(os, FC_SLANT);
         FcFontSet *fonts = FcFontList(0, pattern, os);
         FcObjectSetDestroy(os);
         FcPatternDestroy(pattern);
