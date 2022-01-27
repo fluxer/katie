@@ -1543,49 +1543,6 @@ int QFontInfo::weight() const
 */
 
 /*!
-    Returns the underline value of the matched window system font.
-
-  \sa QFont::underline()
-
-  \internal
-
-  Here we read the underline flag directly from the QFont.
-  This is OK for X11 and for Windows because we always get what we want.
-*/
-bool QFontInfo::underline() const
-{
-    return d->underline;
-}
-
-/*!
-    Returns the overline value of the matched window system font.
-
-    \sa QFont::overline()
-
-    \internal
-
-    Here we read the overline flag directly from the QFont.
-    This is OK for X11 and for Windows because we always get what we want.
-*/
-bool QFontInfo::overline() const
-{
-    return d->overline;
-}
-
-/*!
-    Returns the strikeout value of the matched window system font.
-
-  \sa QFont::strikeOut()
-
-  \internal Here we read the strikeOut flag directly from the QFont.
-  This is OK for X11 and for Windows because we always get what we want.
-*/
-bool QFontInfo::strikeOut() const
-{
-    return d->strikeOut;
-}
-
-/*!
     Returns the fixed pitch value of the matched window system font.
 
     \sa QFont::fixedPitch()
