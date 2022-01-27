@@ -1028,7 +1028,6 @@ QList<int> QFontDatabase::pointSizes(const QString &family, const QString &style
         result = standardSizes();
         break;
     }
-    qSort(result);
     return result;
 }
 
@@ -1089,7 +1088,6 @@ QList<int> QFontDatabase::smoothSizes(const QString &family, const QString &styl
         result = standardSizes();
         break;
     }
-    qSort(result);
     return result;
 }
 
