@@ -803,13 +803,12 @@ QFontDatabase::QFontDatabase()
         Q_ASSERT_X(int(QUnicodeTables::ScriptCount) == SpecialCharCount,
                 "QFontDatabase", "New scripts have been added.");
 
-        FcFontSet *fonts;
         FcObjectSet *os = FcObjectSetCreate();
         FcPattern *pattern = FcPatternCreate();
         for (qint16 i = 0; i < PatternPropertiesTblSize; i++) {
             FcObjectSetAdd(os, PatternPropertiesTbl[i]);
         }
-        fonts = FcFontList(0, pattern, os);
+        FcFontSet *fonts = FcFontList(0, pattern, os);
         FcObjectSetDestroy(os);
         FcPatternDestroy(pattern);
 
@@ -819,13 +818,12 @@ QFontDatabase::QFontDatabase()
             int weight_value = FC_WEIGHT_MEDIUM;
             int spacing_value = FC_PROPORTIONAL;
             FcChar8 *style_value = nullptr;
-            FcBool scalable = FcFalse;
-            double pixel_size = 0;
+            FcBool scalable_value = FcFalse;
             int slant_value = FC_SLANT_ROMAN;
 
             if (FcPatternGetString(fonts->fonts[i], FC_FAMILY, 0, &family_value) != FcResultMatch)
                 continue;
-            if (FcPatternGetBool(fonts->fonts[i], FC_SCALABLE, 0, &scalable) != FcResultMatch || scalable != FcTrue)
+            if (FcPatternGetBool(fonts->fonts[i], FC_SCALABLE, 0, &scalable_value) != FcResultMatch || scalable_value != FcTrue)
                 continue;
 
             if (FcPatternGetString(fonts->fonts[i], FC_FOUNDRY, 0, &foundry_value) != FcResultMatch)
@@ -836,7 +834,6 @@ QFontDatabase::QFontDatabase()
                 spacing_value = FC_PROPORTIONAL;
             if (FcPatternGetString(fonts->fonts[i], FC_STYLE, 0, &style_value) != FcResultMatch)
                 style_value = nullptr;
-            FcPatternGetDouble(fonts->fonts[i], FC_PIXEL_SIZE, 0, &pixel_size);
             if (FcPatternGetInteger(fonts->fonts[i], FC_SLANT, 0, &slant_value) != FcResultMatch)
                 slant_value = FC_SLANT_ROMAN;
 
