@@ -1074,25 +1074,9 @@ static bool setFontWeightFromValue(const QCss::Value &value, QFont *font)
  * and set it the \a font
  * \returns true if a family was extracted.
  */
-static bool setFontFamilyFromValues(const QVector<QCss::Value> &values, QFont *font, int start = 0)
+static bool setFontFamilyFromValues(const QCss::Value &value, QFont *font)
 {
-    QString family;
-    bool shouldAddSpace = false;
-    for (int i = start; i < values.count(); ++i) {
-        const QCss::Value &v = values.at(i);
-        if (v.type == Value::TermOperatorComma) {
-            family += QLatin1Char(',');
-            shouldAddSpace = false;
-            continue;
-        }
-        const QString str = v.variant.toString();
-        if (str.isEmpty())
-            break;
-        if (shouldAddSpace)
-            family += QLatin1Char(' ');
-        family += str;
-        shouldAddSpace = true;
-    }
+    const QString family = value.variant.toString();
     if (family.isEmpty())
         return false;
     font->setFamily(family);
@@ -1139,7 +1123,8 @@ static void parseShorthandFontProperty(const QVector<QCss::Value> &values, QFont
     }
 
     if (i < values.count()) {
-        setFontFamilyFromValues(values, font, i);
+        setFontFamilyFromValues(values.at(i), font);
+        ++i;
     }
 }
 
@@ -1161,7 +1146,7 @@ bool ValueExtractor::extractFont(QFont *font, int *fontSizeAdjustment)
             case FontSize: setFontSizeFromValue(val, font, fontSizeAdjustment); break;
             case FontStyle: setFontStyleFromValue(val, font); break;
             case FontWeight: setFontWeightFromValue(val, font); break;
-            case FontFamily: setFontFamilyFromValues(decl.d->values, font); break;
+            case FontFamily: setFontFamilyFromValues(val, font); break;
             case TextDecoration: setTextDecorationFromValues(decl.d->values, font); break;
             case Font: parseShorthandFontProperty(decl.d->values, font, fontSizeAdjustment); break;
             default: continue;

@@ -125,25 +125,6 @@ static void parseFontName(const QString &name, QString &foundry, QString &family
     }
 }
 
-static QStringList familyList(const QFontDef &req)
-{
-    // list of families to try
-    QStringList family_list;
-    if (req.family.isEmpty())
-        return family_list;
-
-    QStringList list = req.family.split(QLatin1Char(','));
-    for (int i = 0; i < list.size(); ++i) {
-        QString str = list.at(i).trimmed();
-        if ((str.startsWith(QLatin1Char('"')) && str.endsWith(QLatin1Char('"')))
-            || (str.startsWith(QLatin1Char('\'')) && str.endsWith(QLatin1Char('\''))))
-            str = str.mid(1, str.length() - 2);
-        family_list << str;
-    }
-
-    return family_list;
-}
-
 static inline bool isStyleMatch(const QString &style, const QString &otherstyle)
 {
     const QString lowerstyle(style.toLower());
@@ -462,26 +443,20 @@ static FcPattern *getFcPattern(const QFontPrivate *fp, const QFontDef &request)
         return nullptr;
 
     FcPattern *pattern = FcPatternCreate();
-    if (!pattern)
+    if (Q_UNLIKELY(!pattern)) {
         return nullptr;
+    }
 
-    FcValue value;
-    value.type = FcTypeString;
+    QString family, foundry;
+    parseFontName(request.family, foundry, family);
 
-    QStringList families_and_foundries = familyList(request);
-    for (int i = 0; i < families_and_foundries.size(); ++i) {
-        QString family, foundry;
-        parseFontName(families_and_foundries.at(i), foundry, family);
-        if (!family.isEmpty()) {
-            QByteArray cs = family.toUtf8();
-            value.u.s = (const FcChar8 *)cs.data();
-            FcPatternAdd(pattern, FC_FAMILY, value, FcTrue);
-        }
-        if (i == 0 && !foundry.isEmpty()) {
-            QByteArray cs = foundry.toUtf8();
-            value.u.s = (const FcChar8 *)cs.data();
-            FcPatternAddWeak(pattern, FC_FOUNDRY, value, FcTrue);
-        }
+    if (!family.isEmpty()) {
+        QByteArray cs = family.toUtf8();
+        FcPatternAddString(pattern, FC_FAMILY, (const FcChar8 *)cs.constData());
+    }
+    if (!foundry.isEmpty()) {
+        QByteArray cs = foundry.toUtf8();
+        FcPatternAddString(pattern, FC_FOUNDRY, (const FcChar8 *)cs.constData());
     }
 
     if (!request.ignorePitch) {
@@ -500,7 +475,7 @@ static FcPattern *getFcPattern(const QFontPrivate *fp, const QFontDef &request)
 
     if (!request.styleName.isEmpty()) {
         QByteArray cs = request.styleName.toUtf8();
-        FcPatternAddString(pattern, FC_STYLE, (const FcChar8 *) cs.constData());
+        FcPatternAddString(pattern, FC_STYLE, (const FcChar8 *)cs.constData());
     } else {
         int weight_value = FC_WEIGHT_BLACK;
         if (request.weight == 0)
@@ -537,15 +512,13 @@ static FcPattern *getFcPattern(const QFontPrivate *fp, const QFontDef &request)
     // add the application instance family
     QString defaultFamily = QApplication::font().family();
     QByteArray cs = defaultFamily.toUtf8();
-    value.u.s = (const FcChar8 *)cs.data();
-    FcPatternAddWeak(pattern, FC_FAMILY, value, FcTrue);
+    FcPatternAddString(pattern, FC_FAMILY, (const FcChar8 *)cs.constData());
 
     // add QFont::lastResortFamily() to the list, for compatibility with
     // previous versions
     defaultFamily = QFont::lastResortFamily();
     cs = defaultFamily.toUtf8();
-    value.u.s = (const FcChar8 *)cs.data();
-    FcPatternAddWeak(pattern, FC_FAMILY, value, FcTrue);
+    FcPatternAddString(pattern, FC_FAMILY, (const FcChar8 *)cs.constData());
 
     return pattern;
 }
@@ -630,7 +603,6 @@ static QFontEngine *loadFc(const QFontPrivate *fp, QUnicodeTables::Script script
 }
 #endif // QT_NO_FONTCONFIG
 
-
 QString QFontDatabase::resolveFontFamilyAlias(const QString &family)
 {
 #if defined(QT_NO_FONTCONFIG)
@@ -640,8 +612,9 @@ QString QFontDatabase::resolveFontFamilyAlias(const QString &family)
         return family;
 
     FcPattern *pattern = FcPatternCreate();
-    if (!pattern)
+    if (Q_UNLIKELY(!pattern)) {
         return family;
+    }
 
     QByteArray cs = family.toUtf8();
     FcPatternAddString(pattern, FC_FAMILY, (const FcChar8 *) cs.constData());
@@ -728,7 +701,6 @@ QString QFontDatabase::styleString(const QFontInfo &fontInfo)
     }
     return result;
 }
-
 
 /*!
     \class QFontDatabase
@@ -830,7 +802,7 @@ QFontDatabase::QFontDatabase()
                 foundry_value = nullptr;
             if (FcPatternGetInteger(fonts->fonts[i], FC_WEIGHT, 0, &weight_value) != FcResultMatch)
                 weight_value = FC_WEIGHT_MEDIUM;
-            if (FcPatternGetInteger (fonts->fonts[i], FC_SPACING, 0, &spacing_value) != FcResultMatch)
+            if (FcPatternGetInteger(fonts->fonts[i], FC_SPACING, 0, &spacing_value) != FcResultMatch)
                 spacing_value = FC_PROPORTIONAL;
             if (FcPatternGetString(fonts->fonts[i], FC_STYLE, 0, &style_value) != FcResultMatch)
                 style_value = nullptr;
@@ -1057,7 +1029,6 @@ QFont QFontDatabase::font(const QString &family, const QString &style,
     }
     return result;
 }
-
 
 /*!
     \fn QList<int> QFontDatabase::smoothSizes(const QString &family, const QString &style)

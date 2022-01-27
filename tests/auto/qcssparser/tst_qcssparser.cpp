@@ -1504,16 +1504,16 @@ void tst_QCssParser::extractFontFamily_data()
     QTest::addColumn<QString>("css");
     QTest::addColumn<QString>("expectedFamily");
 
-    QTest::newRow("quoted-family-name") << "font-family: 'FreeSerif'" << QString("FreeSerif");
+    const QString invalidfamily = QFontInfo(QFont("invalid font")).family();
     QTest::newRow("unquoted-family-name") << "font-family: FreeSerif" << QString("FreeSerif");
-    QTest::newRow("multiple") << "font-family: FreeSerif  , foobar, 'baz'" << QString("FreeSerif");
-    QTest::newRow("multiple2") << "font-family: invalid,  FreeSerif " << QString("FreeSerif");
-    QTest::newRow("invalid") << "font-family: invalid" << QFontInfo(QFont("invalid font")).family();
+    QTest::newRow("quoted-family-name") << "font-family: 'FreeSerif'" << QString("FreeSerif");
+    QTest::newRow("quoted-family-name2") << "font-family: \"FreeSerif\"" << QString("FreeSerif");
+    QTest::newRow("invalid") << "font-family: invalid" << invalidfamily;
     QTest::newRow("shorthand") << "font: 12pt FreeSerif" << QString("FreeSerif");
-    QTest::newRow("shorthand multiple quote") << "font: 12pt invalid, \"FreeSerif\" " << QString("FreeSerif");
-    QTest::newRow("shorthand multiple") << "font: 12pt invalid, FreeSerif " << QString("FreeSerif");
-    QTest::newRow("invalid spaces") << "font-family: invalid spaces, FreeSerif " << QString("FreeSerif");
-    QTest::newRow("invalid spaces quotes") << "font-family: 'invalid spaces', 'FreeSerif' " << QString("FreeSerif");
+    QTest::newRow("shorthand invalid") << "font: 12pt invalid" << invalidfamily;
+    QTest::newRow("invalid spaces") << "font-family: invalid spaces" << invalidfamily;
+    QTest::newRow("invalid spaces quotes") << "font-family: 'invalid spaces'" << invalidfamily;
+    QTest::newRow("invalid spaces quotes2") << "font-family: \"invalid spaces\"" << invalidfamily;
 }
 
 
