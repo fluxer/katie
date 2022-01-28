@@ -49,6 +49,9 @@ QT_BEGIN_NAMESPACE
 #define TRUNC(x)    ((x) >> 6)
 #define ROUND(x)    (((x)+32) & -64)
 
+// failsafe in case Freetype breaks ABI
+#define QT_MEMCPY_FT_OUTLINE
+
 // -------------------------- Freetype support ------------------------------
 
 QFreetypeFace::QFreetypeFace(const QFontEngine::FaceId &face_id)
@@ -74,7 +77,7 @@ QFreetypeFace::~QFreetypeFace()
     FT_Done_FreeType(library);
 }
 
-void QFreetypeFace::addGlyphToPath(FT_GlyphSlot slot, const QFixedPoint &point, QPainterPath *path)
+void QFreetypeFace::addGlyphToPath(FT_Outline outline, const QFixedPoint &point, QPainterPath *path)
 {
     static const qreal factor = (1.0 / 64.0);
 
@@ -82,14 +85,14 @@ void QFreetypeFace::addGlyphToPath(FT_GlyphSlot slot, const QFixedPoint &point, 
 
     // convert the outline to a painter path
     int i = 0;
-    for (int j = 0; j < slot->outline.n_contours; ++j) {
-        int last_point = slot->outline.contours[j];
-        QPointF start = cp + QPointF(slot->outline.points[i].x*factor, -slot->outline.points[i].y*factor);
-        if(!(slot->outline.tags[i] & 1)) {
-            start += cp + QPointF(slot->outline.points[last_point].x*factor, -slot->outline.points[last_point].y*factor);
+    for (int j = 0; j < outline.n_contours; ++j) {
+        int last_point = outline.contours[j];
+        QPointF start = cp + QPointF(outline.points[i].x*factor, -outline.points[i].y*factor);
+        if(!(outline.tags[i] & 1)) {
+            start += cp + QPointF(outline.points[last_point].x*factor, -outline.points[last_point].y*factor);
             start /= 2;
         }
-        // qDebug("contour: %d -- %d", i, slot->outline.contours[j]);
+        // qDebug("contour: %d -- %d", i, outline.contours[j]);
         // qDebug("first point at %f %f", start.x(), start.y());
         path->moveTo(start);
 
@@ -98,10 +101,10 @@ void QFreetypeFace::addGlyphToPath(FT_GlyphSlot slot, const QFixedPoint &point, 
         int n = 1;
         while (i < last_point) {
             ++i;
-            c[n] = cp + QPointF(slot->outline.points[i].x*factor, -slot->outline.points[i].y*factor);
-            // qDebug() << "    i=" << i << " flag=" << (int)slot->outline.tags[i] << "point=" << c[n];
+            c[n] = cp + QPointF(outline.points[i].x*factor, -outline.points[i].y*factor);
+            // qDebug() << "    i=" << i << " flag=" << (int)outline.tags[i] << "point=" << c[n];
             ++n;
-            switch (slot->outline.tags[i] & 3) {
+            switch (outline.tags[i] & 3) {
                 case 2: {
                     // cubic bezier element
                     if (n < 4)
@@ -261,8 +264,24 @@ void QFontEngineFT::init()
 
 QFontEngineFT::~QFontEngineFT()
 {
-    qDeleteAll(metriccache);
-    delete freetype;
+    if (freetype) {
+        GlyphCache::const_iterator iter = glyphcache.begin();
+        GlyphCache::const_iterator iterend = glyphcache.end();
+        while (iter != iterend) {
+#ifdef QT_MEMCPY_FT_OUTLINE
+            QFontGlyph* gcache = iter.value();
+            ::free(gcache->outline.contours);
+            ::free(gcache->outline.points);
+            ::free(gcache->outline.tags);
+#else
+            FT_Outline_Done(freetype->library, &(iter.value()->outline));
+#endif
+            delete *iter;
+            iter++;
+        }
+
+        delete freetype;
+    }
 }
 
 int QFontEngineFT::loadFlags() const
@@ -302,11 +321,11 @@ bool QFontEngineFT::loadGlyph(glyph_t glyph, int load_flags) const
     return true;
 }
 
-QFontMetric* QFontEngineFT::getMetrics(glyph_t glyph) const
+QFontGlyph* QFontEngineFT::getGlyph(glyph_t glyph) const
 {
-    QFontMetric* metric = metriccache.value(glyph, nullptr);
-    if (metric) {
-        return metric;
+    QFontGlyph* gcache = glyphcache.value(glyph, nullptr);
+    if (gcache) {
+        return gcache;
     }
 
     FT_Face face = getFace();
@@ -314,18 +333,35 @@ QFontMetric* QFontEngineFT::getMetrics(glyph_t glyph) const
     int load_flags = loadFlags();
     loadGlyph(glyph, load_flags);
 
-    metric = new QFontMetric();
-    metric->left = FLOOR(face->glyph->metrics.horiBearingX);
-    metric->right = CEIL(face->glyph->metrics.horiBearingX + face->glyph->metrics.width);
-    metric->top = CEIL(face->glyph->metrics.horiBearingY);
-    metric->bottom = FLOOR(face->glyph->metrics.horiBearingY - face->glyph->metrics.height);
-    metric->linearhoriadvance = (face->glyph->linearHoriAdvance >> 10);
-    metric->horiadvance = face->glyph->metrics.horiAdvance;
-    metric->advancex = ROUND(face->glyph->advance.x);
+    gcache = new QFontGlyph();
+    gcache->left = FLOOR(face->glyph->metrics.horiBearingX);
+    gcache->right = CEIL(face->glyph->metrics.horiBearingX + face->glyph->metrics.width);
+    gcache->top = CEIL(face->glyph->metrics.horiBearingY);
+    gcache->bottom = FLOOR(face->glyph->metrics.horiBearingY - face->glyph->metrics.height);
+    gcache->linearhoriadvance = (face->glyph->linearHoriAdvance >> 10);
+    gcache->horiadvance = face->glyph->metrics.horiAdvance;
+    gcache->advancex = ROUND(face->glyph->advance.x);
 
-    metriccache.insert(glyph, metric);
+#ifdef QT_MEMCPY_FT_OUTLINE
+    short n_contours = face->glyph->outline.n_contours;
+    gcache->outline.n_contours = n_contours;
+    gcache->outline.contours = static_cast<short*>(::malloc(sizeof(short) * n_contours));
+    ::memcpy(gcache->outline.contours, face->glyph->outline.contours, sizeof(short) * n_contours);
+    short n_points = face->glyph->outline.n_points;
+    gcache->outline.points = static_cast<FT_Vector*>(::malloc(sizeof(FT_Vector) * n_points));
+    ::memcpy(gcache->outline.points, face->glyph->outline.points, sizeof(FT_Vector) * n_points);
+    short n_tags = n_points;
+    gcache->outline.tags = static_cast<char*>(::malloc(sizeof(char) * n_tags));
+    ::memcpy(gcache->outline.tags, face->glyph->outline.tags, sizeof(char) * n_tags);
+#else
+    FT_Outline_New(freetype->library, face->glyph->outline.n_points,
+                   face->glyph->outline.n_contours, &gcache->outline);
+    FT_Outline_Copy(&face->glyph->outline, &gcache->outline);
+#endif
 
-    return metric;
+    glyphcache.insert(glyph, gcache);
+
+    return gcache;
 }
 
 QFontEngine::FaceId QFontEngineFT::faceId() const
@@ -518,7 +554,7 @@ void QFontEngineFT::getUnscaledGlyph(glyph_t glyph, QPainterPath *path, glyph_me
     metrics->y = QFixed::fromFixed(-top);
     metrics->xoff = QFixed::fromFixed(face->glyph->advance.x);
 
-    QFreetypeFace::addGlyphToPath(face->glyph, p, path);
+    QFreetypeFace::addGlyphToPath(face->glyph->outline, p, path);
 
     setFace(QFontEngineFT::Scaled);
 }
@@ -553,13 +589,11 @@ bool QFontEngineFT::canRender(const QChar *string, int len)
 void QFontEngineFT::addGlyphsToPath(glyph_t *glyphs, QFixedPoint *positions, int numGlyphs,
                                     QPainterPath *path)
 {
-    FT_Face face = getFace();
-
-    int load_flags = loadFlags();
     for (int gl = 0; gl < numGlyphs; gl++) {
-        loadGlyph(glyphs[gl], load_flags);
+        QFontGlyph* gcache = getGlyph(glyphs[gl]);
+        Q_ASSERT(gcache);
 
-        QFreetypeFace::addGlyphToPath(face->glyph, positions[gl], path);
+        QFreetypeFace::addGlyphToPath(gcache->outline, positions[gl], path);
     }
 }
 
@@ -601,11 +635,11 @@ void QFontEngineFT::recalcAdvances(QGlyphLayout *glyphs, QTextEngine::ShaperFlag
                    default_hint_style == HintLight ||
                    (flags & QTextEngine::DesignMetrics));
     for (int i = 0; i < glyphs->numGlyphs; i++) {
-        QFontMetric* metric = getMetrics(glyphs->glyphs[i]);
-        Q_ASSERT(metric);
+        QFontGlyph* gcache = getGlyph(glyphs->glyphs[i]);
+        Q_ASSERT(gcache);
 
-        glyphs->advances_x[i] = design ? QFixed::fromFixed(metric->linearhoriadvance)
-                                       : QFixed::fromFixed(metric->horiadvance);
+        glyphs->advances_x[i] = design ? QFixed::fromFixed(gcache->linearhoriadvance)
+                                       : QFixed::fromFixed(gcache->horiadvance);
     }
 }
 
@@ -633,14 +667,14 @@ glyph_metrics_t QFontEngineFT::boundingBox(glyph_t glyph) const
 {
     glyph_metrics_t overall;
 
-    QFontMetric* metric = getMetrics(glyph);
-    Q_ASSERT(metric);
+    QFontGlyph* gcache = getGlyph(glyph);
+    Q_ASSERT(gcache);
 
-    overall.width = TRUNC(metric->right - metric->left);
-    overall.height = TRUNC(metric->top - metric->bottom);
-    overall.x = TRUNC(metric->left);
-    overall.y = -TRUNC(metric->top);
-    overall.xoff = TRUNC(metric->advancex);
+    overall.width = TRUNC(gcache->right - gcache->left);
+    overall.height = TRUNC(gcache->top - gcache->bottom);
+    overall.x = TRUNC(gcache->left);
+    overall.y = -TRUNC(gcache->top);
+    overall.xoff = TRUNC(gcache->advancex);
     return overall;
 }
 

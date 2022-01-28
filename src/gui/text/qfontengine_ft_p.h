@@ -47,7 +47,7 @@
 QT_BEGIN_NAMESPACE
 
 
-struct QFontMetric {
+struct QFontGlyph {
     int left;
     int right;
     int top;
@@ -55,6 +55,8 @@ struct QFontMetric {
     FT_Fixed linearhoriadvance;
     FT_Pos horiadvance;
     FT_Pos advancex;
+
+    FT_Outline outline;
 };
 
 /*
@@ -67,13 +69,12 @@ public:
     ~QFreetypeFace();
 
     FT_Face face;
+    FT_Library library;
 
-    static void addGlyphToPath(FT_GlyphSlot slot, const QFixedPoint &point, QPainterPath *path);
+    static void addGlyphToPath(FT_Outline outline, const QFixedPoint &point, QPainterPath *path);
 
 private:
     Q_DISABLE_COPY(QFreetypeFace);
-
-    FT_Library library;
 };
 
 class Q_GUI_EXPORT QFontEngineFT : public QFontEngine
@@ -150,7 +151,7 @@ private:
     int loadFlags() const;
     bool loadGlyph(glyph_t glyph, int load_flags) const;
 
-    QFontMetric* getMetrics(glyph_t glyph) const;
+    QFontGlyph* getGlyph(glyph_t glyph) const;
 
     QFreetypeFace *freetype;
     QFontEngine::FaceId face_id;
@@ -168,8 +169,8 @@ private:
     typedef QMap<uint, glyph_t> CharCache;
     mutable CharCache charcache;
 
-    typedef QMap<glyph_t, QFontMetric*> MetricCache;
-    mutable MetricCache metriccache;
+    typedef QMap<glyph_t, QFontGlyph*> GlyphCache;
+    mutable GlyphCache glyphcache;
 };
 
 
