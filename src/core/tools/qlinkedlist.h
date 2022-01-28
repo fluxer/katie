@@ -60,10 +60,8 @@ public:
     inline QLinkedList(const QLinkedList<T> &l) : d(l.d) { d->ref.ref(); }
     ~QLinkedList();
     QLinkedList<T> &operator=(const QLinkedList<T> &);
-#ifdef Q_COMPILER_RVALUE_REFS
     inline QLinkedList<T> &operator=(QLinkedList<T> &&other)
     { qSwap(d, other.d); return *this; }
-#endif
     inline void swap(QLinkedList<T> &other) { qSwap(d, other.d); }
     bool operator==(const QLinkedList<T> &l) const;
     inline bool operator!=(const QLinkedList<T> &l) const { return !(*this == l); }

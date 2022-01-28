@@ -152,10 +152,8 @@ public:
     bool operator<(const QFont &) const;
     operator QVariant() const;
     bool isCopyOf(const QFont &) const;
-#ifdef Q_COMPILER_RVALUE_REFS
     inline QFont &operator=(QFont &&other)
     { qSwap(d, other.d); qSwap(resolve_mask, other.resolve_mask);  return *this; }
-#endif
 
     Qt::HANDLE handle() const;
 #if defined(Q_WS_X11)

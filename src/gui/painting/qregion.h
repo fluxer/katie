@@ -55,11 +55,10 @@ public:
     QRegion(const QBitmap &bitmap);
     ~QRegion();
     QRegion &operator=(const QRegion &);
-#ifdef Q_COMPILER_RVALUE_REFS
     inline QRegion &operator=(QRegion &&other)
     { qSwap(d, other.d); return *this; }
-#endif
     inline void swap(QRegion &other) { qSwap(d, other.d); }
+
     bool isEmpty() const;
 
     bool contains(const QPoint &p) const;

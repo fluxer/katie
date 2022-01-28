@@ -49,9 +49,7 @@ public:
     QStdVector() : Data() { }
     explicit QStdVector(int size) : Data(size) { }
     QStdVector(int size, const T &t) : Data() { Data::reserve(size); Data::insert(Data::begin(), size, t);}
-#ifdef Q_COMPILER_INITIALIZER_LISTS
     inline QStdVector(std::initializer_list<T> args) : Data(args) { }
-#endif
 
     inline bool isEmpty() const { return Data::empty(); }
     inline void squeeze() { Data::shrink_to_fit(); }

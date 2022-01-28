@@ -77,43 +77,17 @@ QT_USE_NAMESPACE
 
      GNU      - GNU C++
      CLANG    - C++ front-end for the LLVM compiler
-
-   Should be sorted most to least authoritative.
-
-   Paper             Macro                             SD-6 macro
-   N2672             Q_COMPILER_INITIALIZER_LISTS
-   N2118 N2844 N3053 Q_COMPILER_RVALUE_REFS            __cpp_rvalue_references = 200610
-
-  For any future version of the C++ standard, we use only the SD-6 macro.
-  For full listing, see
-   http://isocpp.org/std/standing-documents/sd-6-sg10-feature-test-recommendations
 */
 #if defined(__GNUC__)
 #  define Q_CC_GNU
-#  if __cplusplus >= 201103L || defined(__GXX_EXPERIMENTAL_CXX0X__)
-     /* C++0x features supported in GCC 4.3: */
-#    define Q_COMPILER_RVALUE_REFS
-     /* C++0x features supported in GCC 4.4: */
-#    define Q_COMPILER_INITIALIZER_LISTS
-     /* C++0x features supported in GCC 4.6: */
-#    ifdef __EXCEPTIONS
-#      define Q_COMPILER_EXCEPTIONS
-#    endif
+#  ifdef __EXCEPTIONS
+#    define Q_COMPILER_EXCEPTIONS
 #  endif
 
 #elif defined(__clang__)
 #  define Q_CC_CLANG
-#  if __cplusplus >= 201103L || defined(__GXX_EXPERIMENTAL_CXX0X__)
-    /* Detect C++ features using __has_feature(), see http://clang.llvm.org/docs/LanguageExtensions.html#cxx11 */
-#    if __has_feature(cxx_generalized_initializers)
-#      define Q_COMPILER_INITIALIZER_LISTS
-#    endif
-#    if __has_feature(cxx_rvalue_references)
-#      define Q_COMPILER_RVALUE_REFS
-#    endif
-#    if __has_feature(cxx_exceptions)
-#      define Q_COMPILER_EXCEPTIONS
-#    endif
+#  if __has_feature(cxx_exceptions)
+#    define Q_COMPILER_EXCEPTIONS
 #  endif
 
 #else

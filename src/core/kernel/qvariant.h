@@ -188,11 +188,8 @@ class Q_CORE_EXPORT QVariant
 #endif
 
     QVariant& operator=(const QVariant &other);
-#ifdef Q_COMPILER_RVALUE_REFS
     inline QVariant &operator=(QVariant &&other)
     { qSwap(d, other.d); return *this; }
-#endif
-
     inline void swap(QVariant &other) { qSwap(d, other.d); }
 
     Type type() const;

@@ -171,10 +171,8 @@ public:
     inline ~QHash() { if (!d->ref.deref()) freeData(d); }
 
     QHash<Key, T> &operator=(const QHash<Key, T> &other);
-#ifdef Q_COMPILER_RVALUE_REFS
     inline QHash<Key, T> &operator=(QHash<Key, T> &&other)
     { qSwap(d, other.d); return *this; }
-#endif
     inline void swap(QHash<Key, T> &other) { qSwap(d, other.d); }
 
     bool operator==(const QHash<Key, T> &other) const;
