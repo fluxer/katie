@@ -325,8 +325,7 @@ void QX11PixmapData::fromImage(const QImage &img,
 #endif
 
     if (alphaCheck.hasAlpha()) {
-        QBitmap m = QBitmap::fromImage(image.createAlphaMask(flags));
-        setMask(m);
+        setMask(QBitmap::fromImage(image.createAlphaMask(flags)));
     }
 }
 
