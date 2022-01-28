@@ -227,15 +227,4 @@ void QX11Data::copyXImageToQImage(XImage *ximage, QImage &image)
     }
 }
 
-void QX11Data::copyXImageToQImageWithMask(XImage *ximage, QImage &image, const QImage &mask)
-{
-    Q_ASSERT(ximage);
-
-    QX11Data::copyXImageToQImage(ximage, image);
-
-    const QImage::Format imageformat = image.format();
-    image = qt_mask_image(image, mask);
-    image = image.convertToFormat(imageformat);
-}
-
 QT_END_NAMESPACE

@@ -743,6 +743,7 @@ QImage QX11PixmapData::toImage(const QRect &rect) const
         image.setColorTable(monoColorTable());
     }
 
+    QX11Data::copyXImageToQImage(xi, image);
     if (x11_mask) {
         QImage alpha;
         if (rect.contains(QRect(0, 0, w, h))) {
@@ -750,9 +751,7 @@ QImage QX11PixmapData::toImage(const QRect &rect) const
         } else {
             alpha = mask().toImage().copy(rect);
         }
-        QX11Data::copyXImageToQImageWithMask(xi, image, alpha);
-    } else {
-        QX11Data::copyXImageToQImage(xi, image);
+        image = qt_mask_image(image, alpha);
     }
 
     qSafeXDestroyImage(xi);
