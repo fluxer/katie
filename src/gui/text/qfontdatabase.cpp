@@ -456,7 +456,6 @@ static FcPattern *getFcPattern(const QFontPrivate *fp, const QFontDef &request)
     FcPatternAddBool(pattern, FC_SCALABLE, true);
 
     const double size_value = qMax(qreal(1.), request.pixelSize);
-    FcPatternDel(pattern, FC_PIXEL_SIZE);
     FcPatternAddDouble(pattern, FC_PIXEL_SIZE, size_value);
 
     if (!request.styleName.isEmpty()) {
@@ -474,7 +473,6 @@ static FcPattern *getFcPattern(const QFontPrivate *fp, const QFontDef &request)
             weight_value = FC_WEIGHT_DEMIBOLD;
         else if (request.weight < (QFont::Bold + QFont::Black) / 2)
             weight_value = FC_WEIGHT_BOLD;
-        FcPatternDel(pattern, FC_WEIGHT);
         FcPatternAddInteger(pattern, FC_WEIGHT, weight_value);
 
         int slant_value = FC_SLANT_ROMAN;
@@ -482,13 +480,11 @@ static FcPattern *getFcPattern(const QFontPrivate *fp, const QFontDef &request)
             slant_value = FC_SLANT_ITALIC;
         else if (request.style == QFont::StyleOblique)
             slant_value = FC_SLANT_OBLIQUE;
-        FcPatternDel(pattern, FC_SLANT);
         FcPatternAddInteger(pattern, FC_SLANT, slant_value);
 
         int stretch = request.stretch;
         if (!stretch)
             stretch = 100;
-        FcPatternDel(pattern, FC_WIDTH);
         FcPatternAddInteger(pattern, FC_WIDTH, stretch);
     }
 
