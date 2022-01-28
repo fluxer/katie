@@ -148,9 +148,7 @@ protected:
 
 private:
     void init();
-    int loadFlags() const;
-    bool loadGlyph(glyph_t glyph, int load_flags) const;
-
+    bool loadGlyph(glyph_t glyph) const;
     QFontGlyph* getGlyph(glyph_t glyph) const;
 
     QFreetypeFace *freetype;

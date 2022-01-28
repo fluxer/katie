@@ -284,7 +284,7 @@ QFontEngineFT::~QFontEngineFT()
     }
 }
 
-int QFontEngineFT::loadFlags() const
+bool QFontEngineFT::loadGlyph(glyph_t glyph) const
 {
     int load_flags = default_load_flags;
 
@@ -300,11 +300,6 @@ int QFontEngineFT::loadFlags() const
         load_flags |= FT_LOAD_TARGET_MONO;
     }
 
-    return load_flags;
-}
-
-bool QFontEngineFT::loadGlyph(glyph_t glyph, int load_flags) const
-{
     FT_Face face = freetype->face;
     FT_Error err = FT_Load_Glyph(face, glyph, load_flags);
     if (Q_UNLIKELY(err != FT_Err_Ok)) {
@@ -328,10 +323,8 @@ QFontGlyph* QFontEngineFT::getGlyph(glyph_t glyph) const
         return gcache;
     }
 
+    loadGlyph(glyph);
     FT_Face face = getFace();
-
-    int load_flags = loadFlags();
-    loadGlyph(glyph, load_flags);
 
     gcache = new QFontGlyph();
     gcache->left = FLOOR(face->glyph->metrics.horiBearingX);
@@ -534,10 +527,8 @@ void QFontEngineFT::getUnscaledGlyph(glyph_t glyph, QPainterPath *path, glyph_me
 {
     setFace(QFontEngineFT::Unscaled);
 
+    loadGlyph(glyph);
     FT_Face face = getFace();
-
-    int load_flags = loadFlags();
-    loadGlyph(glyph, load_flags);
 
     int left  = face->glyph->metrics.horiBearingX;
     int right = face->glyph->metrics.horiBearingX + face->glyph->metrics.width;
