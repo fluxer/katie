@@ -27,8 +27,6 @@
 
 QT_BEGIN_NAMESPACE
 
-#define Q_EXTERN_C extern "C"
-
 typedef QObject *(*QtPluginInstanceFunction)();
 
 #define Q_EXPORT_PLUGIN(PLUGIN) \
@@ -47,7 +45,7 @@ typedef QObject *(*QtPluginInstanceFunction)();
 // backwards compatibility as well (no old plugins will be loaded).
 #define Q_EXPORT_PLUGIN2(PLUGIN, PLUGINCLASS) \
   Q_PLUGIN_VERIFICATION_SECTION \
-  Q_EXTERN_C Q_DECL_EXPORT QT_PREPEND_NAMESPACE(QObject) * kt_plugin_instance() \
+  extern "C" Q_DECL_EXPORT QT_PREPEND_NAMESPACE(QObject) * kt_plugin_instance() \
   { \
     static QT_PREPEND_NAMESPACE(QPointer)<QT_PREPEND_NAMESPACE(QObject)> _instance(new PLUGINCLASS); \
     return _instance; \
