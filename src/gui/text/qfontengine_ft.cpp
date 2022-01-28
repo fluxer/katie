@@ -269,14 +269,14 @@ QFontEngineFT::~QFontEngineFT()
         GlyphCache::const_iterator iterend = glyphcache.end();
         while (iter != iterend) {
 #ifdef QT_MEMCPY_FT_OUTLINE
-            QFontGlyph* gcache = iter.value();
+            QFontGlyph* gcache = iter->second;
             ::free(gcache->outline.contours);
             ::free(gcache->outline.points);
             ::free(gcache->outline.tags);
 #else
-            FT_Outline_Done(freetype->library, &(iter.value()->outline));
+            FT_Outline_Done(freetype->library, &(iter->second->outline));
 #endif
-            delete *iter;
+            delete iter->second;
             iter++;
         }
 
@@ -318,15 +318,15 @@ bool QFontEngineFT::loadGlyph(glyph_t glyph) const
 
 QFontGlyph* QFontEngineFT::getGlyph(glyph_t glyph) const
 {
-    QFontGlyph* gcache = glyphcache.value(glyph, nullptr);
-    if (gcache) {
-        return gcache;
+    GlyphCache::const_iterator iter = glyphcache.find(glyph);
+    if (iter != glyphcache.end()) {
+        return iter->second;
     }
 
     loadGlyph(glyph);
     FT_Face face = getFace();
 
-    gcache = new QFontGlyph();
+    QFontGlyph* gcache = new QFontGlyph();
     gcache->left = FLOOR(face->glyph->metrics.horiBearingX);
     gcache->right = CEIL(face->glyph->metrics.horiBearingX + face->glyph->metrics.width);
     gcache->top = CEIL(face->glyph->metrics.horiBearingY);
@@ -352,7 +352,7 @@ QFontGlyph* QFontEngineFT::getGlyph(glyph_t glyph) const
     FT_Outline_Copy(&face->glyph->outline, &gcache->outline);
 #endif
 
-    glyphcache.insert(glyph, gcache);
+    glyphcache.insert({glyph, gcache});
 
     return gcache;
 }
@@ -565,13 +565,13 @@ bool QFontEngineFT::canRender(const QChar *string, int len)
     FT_Face face = freetype->face;
     for (int i = 0; i < len; i++ ) {
         unsigned int uc = getChar(string, i, len);
-        glyph_t glyph = charcache.value(uc, 0);
-        if (glyph == 0) {
-            glyph = FT_Get_Char_Index(face, uc);
-            charcache.insert(uc, glyph);
-        }
-        if (glyph == 0) {
-            return false;
+        const CharCache::const_iterator iter = charcache.find(uc);
+        if (iter == charcache.end()) {
+            glyph_t glyph = FT_Get_Char_Index(face, uc);
+            if (glyph == 0) {
+                return false;
+            }
+            charcache.insert({uc, glyph});
         }
     }
     return true;
@@ -599,10 +599,13 @@ bool QFontEngineFT::stringToCMap(const QChar *str, int len, QGlyphLayout *glyphs
     int glyph_pos = 0;
     for (int i = 0; i < len; ++i) {
         unsigned int uc = getChar(str, i, len);
-        glyph_t glyph = charcache.value(uc, 0);
-        if (glyph == 0) {
+        const CharCache::const_iterator iter = charcache.find(uc);
+        glyph_t glyph = 0;
+        if (iter == charcache.end()) {
             glyph = FT_Get_Char_Index(freetype->face, uc);
-            charcache.insert(uc, glyph);
+            charcache.insert({uc, glyph});
+        } else {
+            glyph = iter->second;
         }
         glyphs->glyphs[glyph_pos] = glyph;
         ++glyph_pos;
