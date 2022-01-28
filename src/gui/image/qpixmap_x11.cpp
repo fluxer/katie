@@ -729,7 +729,7 @@ QImage QX11PixmapData::toImage(const QRect &rect) const
         format = QImage::Format_MonoLSB;
     } else if (d == 1) {
         format = QImage::Format_Mono;
-    } else if (x11_mask) {
+    } else if (x11_mask || qt_x11Data->use_xrender) {
         format = QImage::Format_ARGB32;
     }
 
