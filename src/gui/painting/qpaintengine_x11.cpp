@@ -412,7 +412,6 @@ bool QX11PaintEngine::begin(QPaintDevice *pdev)
 #if !defined(QT_NO_XRENDER)
     d->composition_mode = PictOpOver;
 #endif
-    d->xlibMaxLinePoints = 32762; // a safe number used to avoid, call to XMaxRequestSize(d->dpy) - 3;
     d->opacity = 1;
 
     // Set up the polygon clipper. Note: This will only work in
@@ -1016,6 +1015,9 @@ void QX11PaintEnginePrivate::fillPolygon_dev(const QPointF *polygonPoints, int p
 
 void QX11PaintEnginePrivate::strokePolygon_dev(const QPointF *polygonPoints, int pointCount, bool close)
 {
+    // a safe number used to avoid, call to XMaxRequestSize(d->dpy) - 3;
+    static const int xlibMaxLinePoints = 32762;
+
     int clippedCount = 0;
     QPointF *clippedPoints = nullptr;
     polygonClipper.clipPolygon(polygonPoints, pointCount,

@@ -170,7 +170,6 @@ public:
     qreal xform_scale;
     QPolygonClipper polygonClipper;
 
-    int xlibMaxLinePoints;
 #ifndef QT_NO_XRENDER
     QXRenderTessellator *tessellator;
 #endif
