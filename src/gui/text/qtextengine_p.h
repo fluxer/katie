@@ -469,7 +469,7 @@ private:
     void shapeTextWithHarfbuzz(int item) const;
 
     void resolveAdditionalFormats() const;
-    int getClusterLength(unsigned short *logClusters, const HB_CharAttributes *attributes, int from, int to, int glyph_pos, int *start);
+    int getClusterLength(unsigned short *logClusters, const HB_CharAttributes *attributes, int to, int glyph_pos, int *start);
 };
 
 struct QTextLineItemIterator

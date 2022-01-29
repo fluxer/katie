@@ -1190,13 +1190,13 @@ QFixed QTextEngine::offsetInLigature(const QScriptItem *si, int pos, int max, in
     return 0;
 }
 
-// Scan in logClusters[from..to-1] for glyph_pos
+// Scan in logClusters[0..to-1] for glyph_pos
 int QTextEngine::getClusterLength(unsigned short *logClusters,
                                   const HB_CharAttributes *attributes,
-                                  int from, int to, int glyph_pos, int *start)
+                                  int to, int glyph_pos, int *start)
 {
     int clusterLength = 0;
-    for (int i = from; i < to; i++) {
+    for (int i = 0; i < to; i++) {
         if (logClusters[i] == glyph_pos && attributes[i].charStop) {
             if (*start < 0)
                 *start = i;
@@ -1238,7 +1238,7 @@ int QTextEngine::positionInLigature(const QScriptItem *si, int end,
 
     const HB_CharAttributes *attrs = attributes();
     logClusters = this->logClusters(si);
-    clusterLength = getClusterLength(logClusters, attrs, 0, end, glyph_pos, &clusterStart);
+    clusterLength = getClusterLength(logClusters, attrs, end, glyph_pos, &clusterStart);
 
     if (clusterLength) {
         const QGlyphLayout &glyphs = shapedGlyphs(si);
