@@ -79,10 +79,6 @@ include/katie/QtCore/QLibrary
 include/katie/QtCore/QLibraryInfo
 include/katie/QtCore/QLine
 include/katie/QtCore/QLineF
-include/katie/QtCore/QLinkedList
-include/katie/QtCore/QLinkedListData
-include/katie/QtCore/QLinkedListIterator
-include/katie/QtCore/QLinkedListNode
 include/katie/QtCore/QList
 include/katie/QtCore/QListData
 include/katie/QtCore/QListIterator
@@ -254,7 +250,6 @@ include/katie/QtCore/qjsondocument.h
 include/katie/QtCore/qlibrary.h
 include/katie/QtCore/qlibraryinfo.h
 include/katie/QtCore/qline.h
-include/katie/QtCore/qlinkedlist.h
 include/katie/QtCore/qlist.h
 include/katie/QtCore/qlocale.h
 include/katie/QtCore/qmap.h

@@ -21,7 +21,7 @@
 
 #include <QtGui/qwidget.h>
 #include <QtGui/qapplication.h>
-#include <QtCore/qlinkedlist.h>
+#include <QtCore/qlist.h>
 #include <QtCore/qstack.h>
 #include <QtCore/qqueue.h>
 
@@ -2482,7 +2482,7 @@ QGraphicsAnchorLayoutPrivate::getGraphParts(Orientation orientation)
         edgeL1 = graph[orientation].edgeData(layoutFirstVertex[orientation], layoutLastVertex[orientation]);
     }
 
-    QLinkedList<QSimplexConstraint *> remainingConstraints;
+    QList<QSimplexConstraint *> remainingConstraints;
     for (int i = 0; i < constraints[orientation].count(); ++i) {
         remainingConstraints += constraints[orientation].at(i);
     }
@@ -2501,7 +2501,7 @@ QGraphicsAnchorLayoutPrivate::getGraphParts(Orientation orientation)
     do {
         dirty = false;
 
-        QLinkedList<QSimplexConstraint *>::iterator it = remainingConstraints.begin();
+        QList<QSimplexConstraint *>::iterator it = remainingConstraints.begin();
         while (it != remainingConstraints.end()) {
             QSimplexConstraint *c = *it;
             bool match = false;
@@ -2541,7 +2541,7 @@ QGraphicsAnchorLayoutPrivate::getGraphParts(Orientation orientation)
 
     if (!remainingConstraints.isEmpty()) {
         QList<QSimplexConstraint *> nonTrunkConstraints;
-        QLinkedList<QSimplexConstraint *>::iterator it = remainingConstraints.begin();
+        QList<QSimplexConstraint *>::iterator it = remainingConstraints.begin();
         while (it != remainingConstraints.end()) {
             nonTrunkConstraints += *it;
             ++it;

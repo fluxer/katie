@@ -22,7 +22,7 @@
 
 #include <QtTest/QtTest>
 #include <QtCore/QBuffer>
-#include <QLinkedList>
+#include <QList>
 #include <QtCore/qendian.h>
 #include <QtGui/QtGui>
 #include <QtSvg/QtSvg>
@@ -167,7 +167,7 @@ private slots:
 
     void status_QHash_QMap();
 
-    void status_QLinkedList_QList_QVector();
+    void status_QList_QVector();
 
     void streamToAndFromQByteArray();
 
@@ -2815,17 +2815,6 @@ void tst_QDataStream::status_QHash_QMap()
         QCOMPARE(list, expectedList); \
     } \
     { \
-        LinkedList expectedLinkedList; \
-        for (int i = 0; i < expectedList.count(); ++i) \
-            expectedLinkedList << expectedList.at(i); \
-        QByteArray ba = byteArray; \
-        QDataStream stream(&ba, QIODevice::ReadOnly); \
-        stream >> linkedList; \
-        QCOMPARE((int)stream.status(), (int)expectedStatus); \
-        QCOMPARE(linkedList.size(), expectedLinkedList.size()); \
-        QCOMPARE(linkedList, expectedLinkedList); \
-    } \
-    { \
         Vector expectedVector; \
         for (int i = 0; i < expectedList.count(); ++i) \
             expectedVector << expectedList.at(i); \
@@ -2837,12 +2826,10 @@ void tst_QDataStream::status_QHash_QMap()
         QCOMPARE(vector, expectedVector); \
     }
 
-void tst_QDataStream::status_QLinkedList_QList_QVector()
+void tst_QDataStream::status_QList_QVector()
 {
-    typedef QLinkedList<QString> LinkedList;
     typedef QList<QString> List;
     typedef QVector<QString> Vector;
-    LinkedList linkedList;
     List list;
     Vector vector;
 

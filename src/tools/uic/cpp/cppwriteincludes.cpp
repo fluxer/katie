@@ -358,8 +358,6 @@ static const struct ClassTblData {
     { QLatin1String("QLineEdit"), QLatin1String("QtGui/qlineedit.h") },
     { QLatin1String("QLineF"), QLatin1String("QtCore/qline.h") },
     { QLatin1String("QLinearGradient"), QLatin1String("QtGui/qbrush.h") },
-    { QLatin1String("QLinkedList"), QLatin1String("QtCore/qlinkedlist.h") },
-    { QLatin1String("QLinkedListData"), QLatin1String("QtCore/qlinkedlist.h") },
     { QLatin1String("QList"), QLatin1String("QtCore/qlist.h") },
     { QLatin1String("QListData"), QLatin1String("QtCore/qlist.h") },
     { QLatin1String("QListView"), QLatin1String("QtGui/qlistview.h") },

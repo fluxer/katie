@@ -26,7 +26,7 @@
 #include "qscriptengine.h"
 #include "qscriptengine_p.h"
 #include "qscriptvalue_p.h"
-#include "qlinkedlist.h"
+#include "qlist.h"
 
 
 #include "JSObject.h"
@@ -123,9 +123,9 @@ public:
     }
 
     QScriptValue objectValue;
-    QLinkedList<JSC::Identifier> propertyNames;
-    QLinkedList<JSC::Identifier>::iterator it;
-    QLinkedList<JSC::Identifier>::iterator current;
+    QList<JSC::Identifier> propertyNames;
+    QList<JSC::Identifier>::iterator it;
+    QList<JSC::Identifier>::iterator current;
     bool initialized;
 };
 
