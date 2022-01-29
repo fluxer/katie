@@ -405,12 +405,10 @@ bool QX11PaintEngine::begin(QPaintDevice *pdev)
     d->has_complex_xform = false;
     d->has_scaling_xform = false;
     d->xform_scale = 1;
-    d->has_custom_pen = false;
     d->matrix = QTransform();
     d->pdev_depth = d->pdev->depth();
     d->render_hints = 0;
     d->txop = QTransform::TxNone;
-    d->use_path_fallback = false;
 #if !defined(QT_NO_XRENDER)
     d->composition_mode = PictOpOver;
 #endif
@@ -589,7 +587,6 @@ void QX11PaintEngine::updateState(const QPaintEngineState &state)
         XSetFunction(qt_x11Data->display, d->gc, function);
         XSetFunction(qt_x11Data->display, d->gc_brush, function);
     }
-    d->decidePathFallback();
     d->decideCoordAdjust();
 }
 
@@ -664,8 +661,6 @@ void QX11PaintEngine::updatePen(const QPen &pen)
     int dot = 1 * scale;
     int dash = 4 * scale;
 
-    d->has_custom_pen = false;
-
     switch (ps) {
     case Qt::NoPen:
     case Qt::SolidLine:
@@ -702,7 +697,6 @@ void QX11PaintEngine::updatePen(const QPen &pen)
         xStyle = LineOnOffDash;
         break;
     case Qt::CustomDashLine:
-        d->has_custom_pen = true;
         break;
     }
 
@@ -874,29 +868,6 @@ void QX11PaintEngine::updateBrush(const QBrush &brush, const QPointF &origin)
     }
 }
 
-void QX11PaintEnginePrivate::fillPolygon_translated(const QPointF *polygonPoints, int pointCount,
-                                                    QX11PaintEnginePrivate::GCMode gcMode,
-                                                    QPaintEngine::PolygonDrawMode mode)
-{
-
-    QPointF translated_points[pointCount];
-    QPointF offset(matrix.dx(), matrix.dy());
-
-    if (!qt_x11Data->use_xrender || !(render_hints & QPainter::Antialiasing))
-        offset += QPointF(aliasedCoordinateDelta, aliasedCoordinateDelta);
-
-    for (int i = 0; i < pointCount; ++i) {
-        translated_points[i] = polygonPoints[i] + offset;
-
-        if (adjust_coords) {
-            translated_points[i].rx() = qRound(translated_points[i].x()) + aliasedCoordinateDelta;
-            translated_points[i].ry() = qRound(translated_points[i].y()) + aliasedCoordinateDelta;
-        }
-    }
-
-    fillPolygon_dev(translated_points, pointCount, gcMode, mode);
-}
-
 #ifndef QT_NO_XRENDER
 static void qt_XRenderCompositeTrapezoids(Display *dpy,
                                           int op,
@@ -1043,15 +1014,6 @@ void QX11PaintEnginePrivate::fillPolygon_dev(const QPointF *polygonPoints, int p
         }
 }
 
-void QX11PaintEnginePrivate::strokePolygon_translated(const QPointF *polygonPoints, int pointCount, bool close)
-{
-    QPointF translated_points[pointCount];
-    QPointF offset(matrix.dx(), matrix.dy());
-    for (int i = 0; i < pointCount; ++i)
-        translated_points[i] = polygonPoints[i] + offset;
-    strokePolygon_dev(translated_points, pointCount, close);
-}
-
 void QX11PaintEnginePrivate::strokePolygon_dev(const QPointF *polygonPoints, int pointCount, bool close)
 {
     int clippedCount = 0;
@@ -1082,28 +1044,20 @@ void QX11PaintEnginePrivate::strokePolygon_dev(const QPointF *polygonPoints, int
 void QX11PaintEngine::drawPolygon(const QPointF *polygonPoints, int pointCount, PolygonDrawMode mode)
 {
     Q_D(QX11PaintEngine);
-    if (d->use_path_fallback) {
-        QPainterPath path(polygonPoints[0]);
-        for (int i = 1; i < pointCount; ++i)
-            path.lineTo(polygonPoints[i]);
-        if (mode == PolylineMode) {
-            QBrush oldBrush = d->cbrush;
-            d->cbrush = QBrush(Qt::NoBrush);
-            path.setFillRule(Qt::WindingFill);
-            drawPath(path);
-            d->cbrush = oldBrush;
-        } else {
-            path.setFillRule(mode == OddEvenMode ? Qt::OddEvenFill : Qt::WindingFill);
-            path.closeSubpath();
-            drawPath(path);
-        }
-        return;
+    QPainterPath path(polygonPoints[0]);
+    for (int i = 1; i < pointCount; ++i)
+        path.lineTo(polygonPoints[i]);
+    if (mode == PolylineMode) {
+        QBrush oldBrush = d->cbrush;
+        d->cbrush = QBrush(Qt::NoBrush);
+        path.setFillRule(Qt::WindingFill);
+        drawPath(path);
+        d->cbrush = oldBrush;
+    } else {
+        path.setFillRule(mode == OddEvenMode ? Qt::OddEvenFill : Qt::WindingFill);
+        path.closeSubpath();
+        drawPath(path);
     }
-    if (mode != PolylineMode && d->has_brush)
-        d->fillPolygon_translated(polygonPoints, pointCount, QX11PaintEnginePrivate::BrushGC, mode);
-
-    if (d->has_pen)
-        d->strokePolygon_translated(polygonPoints, pointCount, mode != PolylineMode);
 }
 
 
