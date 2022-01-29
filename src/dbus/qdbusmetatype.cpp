@@ -28,6 +28,7 @@
 #include "qdbusutil_p.h"
 #include "qdbusmetatype_p.h"
 #include "qdbusargument_p.h"
+#include "qstdcontainers_p.h"
 
 #include <dbus/dbus.h>
 #include <string.h>
@@ -109,7 +110,7 @@ static int QDBusMetaTypeIdInit()
 }
 Q_CONSTRUCTOR_FUNCTION(QDBusMetaTypeIdInit);
 
-Q_GLOBAL_STATIC(QVector<QDBusCustomTypeInfo>, customTypes)
+Q_GLOBAL_STATIC(QStdVector<QDBusCustomTypeInfo>, customTypes)
 Q_GLOBAL_STATIC(QReadWriteLock, customTypesLock)
 
 /*!
@@ -180,7 +181,7 @@ void QDBusMetaType::registerMarshallOperators(int id, MarshallFunction mf,
                                               DemarshallFunction df)
 {
     QWriteLocker locker(customTypesLock());
-    QVector<QDBusCustomTypeInfo> *ct = customTypes();
+    QStdVector<QDBusCustomTypeInfo> *ct = customTypes();
     if (id < 0 || !mf || !df || !ct)
         return;                 // error!
 
@@ -202,7 +203,7 @@ bool QDBusMetaType::marshall(QDBusArgument &arg, int id, const void *data)
     MarshallFunction mf;
     {
         QReadLocker locker(customTypesLock());
-        QVector<QDBusCustomTypeInfo> *ct = customTypes();
+        QStdVector<QDBusCustomTypeInfo> *ct = customTypes();
         if (id >= ct->size())
             return false;       // non-existent
 
@@ -229,7 +230,7 @@ bool QDBusMetaType::demarshall(const QDBusArgument &arg, int id, void *data)
     DemarshallFunction df;
     {
         QReadLocker locker(customTypesLock());
-        QVector<QDBusCustomTypeInfo> *ct = customTypes();
+        QStdVector<QDBusCustomTypeInfo> *ct = customTypes();
         if (id >= ct->size())
             return false;       // non-existent
 
@@ -395,7 +396,7 @@ const char *QDBusMetaType::typeToSignature(int type)
     // try the database
     {
         QReadLocker locker(customTypesLock());
-        QVector<QDBusCustomTypeInfo> *ct = customTypes();
+        QStdVector<QDBusCustomTypeInfo> *ct = customTypes();
         if (type >= ct->size())
             return nullptr;           // type not registered with us
 
@@ -415,7 +416,7 @@ const char *QDBusMetaType::typeToSignature(int type)
 
     // re-acquire lock
     QWriteLocker locker(customTypesLock());
-    QVector<QDBusCustomTypeInfo> *ct = customTypes();
+    QStdVector<QDBusCustomTypeInfo> *ct = customTypes();
     QDBusCustomTypeInfo *info = &(*ct)[type];
     info->signature = signature;
 

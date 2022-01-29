@@ -25,6 +25,7 @@
 #include "qapplication.h"
 #include "qthread.h"
 #include "qmutex.h"
+#include "qstdcontainers_p.h"
 #include "qunicodetables_p.h"
 #include "qfontengine_p.h"
 #include "qfontinfo.h"
@@ -77,7 +78,7 @@ bool QtFontFamily::operator<(const QtFontFamily &other) const
     return (preference >= other.preference);
 }
 
-typedef QVector<QtFontFamily> QtFontFamilyList;
+typedef QStdVector<QtFontFamily> QtFontFamilyList;
 
 Q_GLOBAL_STATIC(QtFontFamilyList, qGlobalFontDatabase)
 Q_GLOBAL_STATIC(QMutex, qGlobalFontDatabaseMutex)
