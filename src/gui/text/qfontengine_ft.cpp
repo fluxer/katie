@@ -268,15 +268,15 @@ QFontEngineFT::~QFontEngineFT()
         GlyphCache::const_iterator iter = glyphcache.begin();
         GlyphCache::const_iterator iterend = glyphcache.end();
         while (iter != iterend) {
-#ifdef QT_MEMCPY_FT_OUTLINE
             QFontGlyph* gcache = iter->second;
+#ifdef QT_MEMCPY_FT_OUTLINE
             ::free(gcache->outline.contours);
             ::free(gcache->outline.points);
             ::free(gcache->outline.tags);
 #else
-            FT_Outline_Done(freetype->library, &(iter->second->outline));
+            FT_Outline_Done(freetype->library, &(gcache->outline));
 #endif
-            delete iter->second;
+            delete gcache;
             iter++;
         }
 
