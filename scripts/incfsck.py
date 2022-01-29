@@ -56,7 +56,6 @@ incmap = {
         'QMultiMap': 'qmap.h',
         'QMutableFutureIterator': 'qfuture.h',
         'QMutableHashIterator': 'qhash.h',
-        'QMutableLinkedListIterator': 'qlist.h',
         'QMutableListIterator': 'qlist.h',
         'QMutableMapIterator': 'qmap.h',
         'QMutableSetIterator': 'qset.h',

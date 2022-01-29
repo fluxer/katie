@@ -102,7 +102,6 @@ include/katie/QtCore/QMultiHash
 include/katie/QtCore/QMultiMap
 include/katie/QtCore/QMutableFutureIterator
 include/katie/QtCore/QMutableHashIterator
-include/katie/QtCore/QMutableLinkedListIterator
 include/katie/QtCore/QMutableListIterator
 include/katie/QtCore/QMutableMapIterator
 include/katie/QtCore/QMutableSetIterator

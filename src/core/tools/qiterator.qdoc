@@ -384,7 +384,6 @@
 
 /*!
     \fn QMutableListIterator::~QMutableListIterator()
-    \fn QMutableLinkedListIterator::~QMutableLinkedListIterator()
     \fn QMutableVectorIterator::~QMutableVectorIterator()
     \fn QMutableSetIterator::~QMutableSetIterator()
 
@@ -424,7 +423,6 @@
     \fn void QVectorIterator::toFront()
     \fn void QSetIterator::toFront()
     \fn void QMutableListIterator::toFront()
-    \fn void QMutableLinkedListIterator::toFront()
     \fn void QMutableVectorIterator::toFront()
     \fn void QMutableSetIterator::toFront()
 
@@ -438,7 +436,6 @@
     \fn void QVectorIterator::toBack()
     \fn void QSetIterator::toBack()
     \fn void QMutableListIterator::toBack()
-    \fn void QMutableLinkedListIterator::toBack()
     \fn void QMutableVectorIterator::toBack()
     \fn void QMutableSetIterator::toBack()
 
@@ -452,7 +449,6 @@
     \fn bool QVectorIterator::hasNext() const
     \fn bool QSetIterator::hasNext() const
     \fn bool QMutableListIterator::hasNext() const
-    \fn bool QMutableLinkedListIterator::hasNext() const
     \fn bool QMutableVectorIterator::hasNext() const
     \fn bool QMutableSetIterator::hasNext() const
 
@@ -477,7 +473,6 @@
 */
 
 /*! \fn T &QMutableListIterator::next()
-    \fn T &QMutableLinkedListIterator::next()
     \fn T &QMutableVectorIterator::next()
 
     Returns a reference to the next item, and advances the iterator
@@ -503,7 +498,6 @@
 */
 
 /*! \fn T &QMutableListIterator::peekNext() const
-    \fn T &QMutableLinkedListIterator::peekNext() const
     \fn T &QMutableVectorIterator::peekNext() const
 
     Returns a reference to the next item, without moving the iterator.
@@ -518,7 +512,6 @@
     \fn bool QVectorIterator::hasPrevious() const
     \fn bool QSetIterator::hasPrevious() const
     \fn bool QMutableListIterator::hasPrevious() const
-    \fn bool QMutableLinkedListIterator::hasPrevious() const
     \fn bool QMutableVectorIterator::hasPrevious() const
     \fn bool QMutableSetIterator::hasPrevious() const
 
@@ -544,7 +537,6 @@
 */
 
 /*! \fn T &QMutableListIterator::previous()
-    \fn T &QMutableLinkedListIterator::previous()
     \fn T &QMutableVectorIterator::previous()
 
     Returns a reference to the previous item and moves the iterator
@@ -570,7 +562,6 @@
 */
 
 /*! \fn T &QMutableListIterator::peekPrevious() const
-    \fn T &QMutableLinkedListIterator::peekPrevious() const
     \fn T &QMutableVectorIterator::peekPrevious() const
 
     Returns a reference to the previous item, without moving the iterator.
@@ -585,7 +576,6 @@
     \fn bool QVectorIterator::findNext(const T &value)
     \fn bool QSetIterator::findNext(const T &value)
     \fn bool QMutableListIterator::findNext(const T &value)
-    \fn bool QMutableLinkedListIterator::findNext(const T &value)
     \fn bool QMutableVectorIterator::findNext(const T &value)
     \fn bool QMutableSetIterator::findNext(const T &value)
 
@@ -603,7 +593,6 @@
     \fn bool QVectorIterator::findPrevious(const T &value)
     \fn bool QSetIterator::findPrevious(const T &value)
     \fn bool QMutableListIterator::findPrevious(const T &value)
-    \fn bool QMutableLinkedListIterator::findPrevious(const T &value)
     \fn bool QMutableVectorIterator::findPrevious(const T &value)
     \fn bool QMutableSetIterator::findPrevious(const T &value)
 
@@ -625,17 +614,6 @@
 
     Example:
     \snippet doc/src/snippets/code/doc_src_qiterator.cpp 19
-
-    \sa insert(), setValue()
-*/
-
-/*! \fn void QMutableLinkedListIterator::remove()
-
-    Removes the last item that was jumped over using one of the
-    traversal functions (next(), previous(), findNext(), findPrevious()).
-
-    Example:
-    \snippet doc/src/snippets/code/doc_src_qiterator.cpp 20
 
     \sa insert(), setValue()
 */
@@ -676,20 +654,6 @@
     \sa value(), remove(), insert()
 */
 
-/*! \fn void QMutableLinkedListIterator::setValue(const T &value) const
-
-    Replaces the value of the last item that was jumped over using
-    one of the traversal functions with \a value.
-
-    The traversal functions are next(), previous(), findNext(), and
-    findPrevious().
-
-    Example:
-    \snippet doc/src/snippets/code/doc_src_qiterator.cpp 24
-
-    \sa value(), remove(), insert()
-*/
-
 /*! \fn void QMutableVectorIterator::setValue(const T &value) const
 
     Replaces the value of the last item that was jumped over using
@@ -705,7 +669,6 @@
 */
 
 /*! \fn const T &QMutableListIterator::value() const
-    \fn const T &QMutableLinkedListIterator::value() const
     \fn const T &QMutableVectorIterator::value() const
     \fn const T &QMutableSetIterator::value() const
 
@@ -720,7 +683,6 @@
 
 /*!
     \fn T &QMutableListIterator::value()
-    \fn T &QMutableLinkedListIterator::value()
     \fn T &QMutableVectorIterator::value()
     \overload
 
@@ -729,7 +691,6 @@
 */
 
 /*! \fn void QMutableListIterator::insert(const T &value)
-    \fn void QMutableLinkedListIterator::insert(const T &value)
     \fn void QMutableVectorIterator::insert(const T &value)
 
     Inserts \a value at the current iterator position. After the

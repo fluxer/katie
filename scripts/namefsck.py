@@ -393,7 +393,6 @@ classlist = [
     "QMultiMap",
     "QMutableFutureIterator",
     "QMutableHashIterator",
-    "QMutableLinkedListIterator",
     "QMutableListIterator",
     "QMutableMapIterator",
     "QMutableSetIterator",
