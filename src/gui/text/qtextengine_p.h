@@ -267,7 +267,7 @@ struct Q_AUTOTEST_EXPORT QScriptLine
     QScriptLine()
         : from(0), trailingSpaces(0), length(0),
         justified(false), gridfitted(false),
-        hasTrailingSpaces(false), leadingIncluded(false) {}
+        leadingIncluded(false) {}
     QFixed descent;
     QFixed ascent;
     QFixed leading;
@@ -281,7 +281,6 @@ struct Q_AUTOTEST_EXPORT QScriptLine
     int length;
     mutable bool justified;
     mutable bool gridfitted;
-    bool hasTrailingSpaces;
     bool leadingIncluded;
     QFixed height() const { return (ascent + descent).ceil() + 1
                             + (leadingIncluded?  qMax(QFixed(),leading) : QFixed()); }

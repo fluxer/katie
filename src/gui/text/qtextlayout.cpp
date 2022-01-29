@@ -1519,7 +1519,6 @@ void QTextLine::layout_helper(int maxGlyphs)
     line.length = 0;
     line.trailingSpaces = 0;
     line.textWidth = 0;
-    line.hasTrailingSpaces = false;
 
     if (!eng->layoutData->items.size() || line.from >= eng->layoutData->string.length()) {
         line.setDefaultHeight(eng);
@@ -1735,7 +1734,6 @@ found:
         line.textWidth += lbh.spaceData.textWidth;
     if (lbh.spaceData.length) {
         line.trailingSpaces = lbh.spaceData.length;
-        line.hasTrailingSpaces = true;
     }
 
     line.justified = false;
