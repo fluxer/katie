@@ -336,16 +336,15 @@ QFontGlyph* QFontEngineFT::getGlyph(glyph_t glyph) const
     gcache->advancex = ROUND(face->glyph->advance.x);
 
 #ifdef QT_MEMCPY_FT_OUTLINE
-    short n_contours = face->glyph->outline.n_contours;
+    const short n_contours = face->glyph->outline.n_contours;
     gcache->outline.n_contours = n_contours;
     gcache->outline.contours = static_cast<short*>(::malloc(sizeof(short) * n_contours));
     ::memcpy(gcache->outline.contours, face->glyph->outline.contours, sizeof(short) * n_contours);
-    short n_points = face->glyph->outline.n_points;
+    const short n_points = face->glyph->outline.n_points;
     gcache->outline.points = static_cast<FT_Vector*>(::malloc(sizeof(FT_Vector) * n_points));
     ::memcpy(gcache->outline.points, face->glyph->outline.points, sizeof(FT_Vector) * n_points);
-    short n_tags = n_points;
-    gcache->outline.tags = static_cast<char*>(::malloc(sizeof(char) * n_tags));
-    ::memcpy(gcache->outline.tags, face->glyph->outline.tags, sizeof(char) * n_tags);
+    gcache->outline.tags = static_cast<char*>(::malloc(sizeof(char) * n_points));
+    ::memcpy(gcache->outline.tags, face->glyph->outline.tags, sizeof(char) * n_points);
 #else
     FT_Outline_New(freetype->library, face->glyph->outline.n_points,
                    face->glyph->outline.n_contours, &gcache->outline);
