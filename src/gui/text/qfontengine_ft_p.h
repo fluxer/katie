@@ -32,8 +32,7 @@
 //
 
 #include "qfontengine_p.h"
-
-#include <unordered_map>
+#include "qstdcontainers_p.h"
 
 #include <ft2build.h>
 #include FT_FREETYPE_H
@@ -166,10 +165,10 @@ private:
 
     bool kerning_pairs_loaded;
 
-    typedef std::unordered_map<uint, glyph_t> CharCache;
+    typedef QStdMap<uint, glyph_t> CharCache;
     mutable CharCache charcache;
 
-    typedef std::unordered_map<glyph_t, QFontGlyph*> GlyphCache;
+    typedef QStdMap<glyph_t, QFontGlyph*> GlyphCache;
     mutable GlyphCache glyphcache;
 };
 
