@@ -71,8 +71,6 @@ incmap = {
         'QReadLocker': 'qreadwritelock.h',
         'QRectF': 'qrect.h',
         'QReturnArgument': 'qobjectdefs.h',
-        'QScopedArrayPointer': 'qscopedpointer.h',
-        'QScopedPointerArrayDeleter': 'qscopedpointer.h',
         'QScopedPointerPodDeleter': 'qscopedpointer.h',
         'QSetIterator': 'qset.h',
         'QSharedDataPointer': 'qshareddata.h',

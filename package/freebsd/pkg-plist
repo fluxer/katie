@@ -132,9 +132,7 @@ include/katie/QtCore/QRegExp
 include/katie/QtCore/QResource
 include/katie/QtCore/QReturnArgument
 include/katie/QtCore/QRunnable
-include/katie/QtCore/QScopedArrayPointer
 include/katie/QtCore/QScopedPointer
-include/katie/QtCore/QScopedPointerArrayDeleter
 include/katie/QtCore/QScopedPointerPodDeleter
 include/katie/QtCore/QScopedValueRollback
 include/katie/QtCore/QSemaphore
