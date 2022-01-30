@@ -67,8 +67,6 @@ public:
     virtual void beginPaint(const QRegion &) = 0;
     void endPaint(const QRegion &);
 
-    QImage* buffer(const QWidget *widget);
-
     QPoint offset(const QWidget *widget) const;
     inline QRect rect(const QWidget *widget) const;
 
