@@ -451,13 +451,14 @@ QFont::QFont(const QString &family, int pointSize, int weight, bool italic)
     }
 
     if (weight < 0) {
-        weight = Normal;
+        weight = QFont::Normal;
     } else {
         resolve_mask |= QFont::WeightResolved | QFont::StyleResolved;
     }
 
-    if (italic)
+    if (italic) {
         resolve_mask |= QFont::StyleResolved;
+    }
 
     d->request.family = family;
     d->request.pointSize = qreal(pointSize);
@@ -604,7 +605,6 @@ int QFont::pointSize() const
     \o PreferVerticalHinting
     \o PreferFullHinting
     \row
-    \o FreeType
     \o Operating System setting
     \o No hinting
     \o Vertical hinting (light)
@@ -650,7 +650,7 @@ QFont::HintingPreference QFont::hintingPreference() const
 */
 void QFont::setPointSize(int pointSize)
 {
-    if (pointSize <= 0) {
+    if (Q_UNLIKELY(pointSize <= 0)) {
         qWarning("QFont::setPointSize: Point size <= 0 (%d), must be greater than 0", pointSize);
         return;
     }
@@ -672,7 +672,7 @@ void QFont::setPointSize(int pointSize)
 */
 void QFont::setPointSizeF(qreal pointSize)
 {
-    if (pointSize <= 0) {
+    if (Q_UNLIKELY(pointSize <= 0)) {
         qWarning("QFont::setPointSizeF: Point size <= 0 (%f), must be greater than 0", pointSize);
         return;
     }
@@ -707,7 +707,7 @@ qreal QFont::pointSizeF() const
 */
 void QFont::setPixelSize(int pixelSize)
 {
-    if (pixelSize <= 0) {
+    if (Q_UNLIKELY(pixelSize <= 0)) {
         qWarning("QFont::setPixelSize: Pixel size <= 0 (%d)", pixelSize);
         return;
     }
@@ -1007,7 +1007,7 @@ int QFont::stretch() const
 */
 void QFont::setStretch(int factor)
 {
-    if (factor < 1 || factor > 4000) {
+    if (Q_UNLIKELY(factor < 1 || factor > 4000)) {
         qWarning("QFont::setStretch: Parameter '%d' out of range", factor);
         return;
     }
@@ -1244,7 +1244,7 @@ bool QFont::fromString(const QString &descrip)
     QStringList l(descrip.split(QLatin1Char(',')));
 
     int count = l.count();
-    if (!count || count > 8) {
+    if (Q_UNLIKELY(!count || count > 8)) {
         qWarning("QFont::fromString: Invalid description '%s'",
                  descrip.isEmpty() ? "(empty)" : descrip.toLatin1().data());
         return false;
@@ -1543,49 +1543,6 @@ int QFontInfo::weight() const
 */
 
 /*!
-    Returns the underline value of the matched window system font.
-
-  \sa QFont::underline()
-
-  \internal
-
-  Here we read the underline flag directly from the QFont.
-  This is OK for X11 and for Windows because we always get what we want.
-*/
-bool QFontInfo::underline() const
-{
-    return d->underline;
-}
-
-/*!
-    Returns the overline value of the matched window system font.
-
-    \sa QFont::overline()
-
-    \internal
-
-    Here we read the overline flag directly from the QFont.
-    This is OK for X11 and for Windows because we always get what we want.
-*/
-bool QFontInfo::overline() const
-{
-    return d->overline;
-}
-
-/*!
-    Returns the strikeout value of the matched window system font.
-
-  \sa QFont::strikeOut()
-
-  \internal Here we read the strikeOut flag directly from the QFont.
-  This is OK for X11 and for Windows because we always get what we want.
-*/
-bool QFontInfo::strikeOut() const
-{
-    return d->strikeOut;
-}
-
-/*!
     Returns the fixed pitch value of the matched window system font.
 
     \sa QFont::fixedPitch()
@@ -1615,14 +1572,14 @@ bool QFontInfo::exactMatch() const
 
 // **********************************************************************
 // QFontCache
-QTHREADLOCAL(QFontCache, theFontCache);
+thread_local std::unique_ptr<QFontCache> theFontCache(nullptr);
 
 QFontCache *QFontCache::instance()
 {
     if (!theFontCache) {
-        theFontCache = new QFontCache();
+        theFontCache = std::make_unique<QFontCache>();
     }
-    return theFontCache;
+    return theFontCache.get();
 }
 
 QFontCache::QFontCache()

@@ -28,16 +28,11 @@
 
 #include <iterator>
 #include <list>
-#ifdef Q_COMPILER_INITIALIZER_LISTS
 #include <initializer_list>
-#endif
-
 #include <new>
 #include <string.h>
 
-
 QT_BEGIN_NAMESPACE
-
 
 template <typename T> class QVector;
 template <typename T> class QSet;
@@ -87,15 +82,11 @@ public:
     inline QList(const QList<T> &l) : d(l.d) { d->ref.ref(); }
     ~QList();
     QList<T> &operator=(const QList<T> &l);
-#ifdef Q_COMPILER_RVALUE_REFS
     inline QList &operator=(QList &&other)
     { qSwap(d, other.d); return *this; }
-#endif
     inline void swap(QList<T> &other) { qSwap(d, other.d); }
-#ifdef Q_COMPILER_INITIALIZER_LISTS
     inline QList(std::initializer_list<T> args) : d(&QListData::shared_null)
     { d->ref.ref(); qCopy(args.begin(), args.end(), std::back_inserter(*this)); }
-#endif
     bool operator==(const QList<T> &l) const;
     inline bool operator!=(const QList<T> &l) const { return !(*this == l); }
 
@@ -685,6 +676,5 @@ Q_DECLARE_SEQUENTIAL_ITERATOR(List)
 Q_DECLARE_MUTABLE_SEQUENTIAL_ITERATOR(List)
 
 QT_END_NAMESPACE
-
 
 #endif // QLIST_H

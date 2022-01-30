@@ -27,6 +27,7 @@
 #include <qthread.h>
 #include <qprocess.h>
 #include <qdir.h>
+#include <qvector.h>
 
 //TESTED_CLASS=
 //TESTED_FILES=

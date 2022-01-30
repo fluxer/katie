@@ -716,10 +716,6 @@
 #include "qwidget_p.h"
 #include "qapplication_p.h"
 
-#ifndef QT_NO_ACCESSIBILITY
-#  include "qaccessible.h"
-#endif
-
 #ifdef Q_WS_X11
 #  include "qt_x11_p.h"
 #  include "qpixmap_x11_p.h"

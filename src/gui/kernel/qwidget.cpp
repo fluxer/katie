@@ -57,10 +57,6 @@
 #include "qabstractscrollarea_p.h"
 #include "qevent_p.h"
 
-#ifndef QT_NO_ACCESSIBILITY
-# include "qaccessible.h"
-#endif
-
 #if defined(Q_WS_X11)
 # include "qpaintengine_x11_p.h"
 # include "qx11info_x11.h"
@@ -1163,10 +1159,6 @@ QWidget::~QWidget()
 
     if (!d->children.isEmpty())
         d->deleteChildren();
-
-#ifndef QT_NO_ACCESSIBILITY
-    QAccessible::updateAccessibility(this, 0, QAccessible::ObjectDestroyed);
-#endif
 
     QApplication::removePostedEvents(this);
 
@@ -5358,11 +5350,6 @@ void QWidget::setFocus(Qt::FocusReason reason)
 
     if (f->isActiveWindow()) {
         QApplicationPrivate::setFocusWidget(f, reason);
-#ifndef QT_NO_ACCESSIBILITY
-        // menus update the focus manually and this would create bogus events
-        if (!(f->inherits("QMenuBar") || f->inherits("QMenu")))
-            QAccessible::updateAccessibility(f, 0, QAccessible::Focus);
-#endif
 #ifndef QT_NO_GRAPHICSVIEW
         if (QWExtra *topData = window()->d_func()->extra) {
             if (topData->proxyWidget) {
@@ -5428,9 +5415,6 @@ void QWidget::clearFocus()
     if (hasFocus()) {
         // Update proxy state
         QApplicationPrivate::setFocusWidget(0, Qt::OtherFocusReason);
-#ifndef QT_NO_ACCESSIBILITY
-        QAccessible::updateAccessibility(this, 0, QAccessible::Focus);
-#endif
     }
 }
 
@@ -6366,11 +6350,6 @@ void QWidgetPrivate::show_helper()
     if (!isEmbedded && q->windowType() == Qt::Popup)
         qApp->d_func()->openPopup(q);
 
-#ifndef QT_NO_ACCESSIBILITY
-    if (q->windowType() != Qt::ToolTip)     // Tooltips are read aloud twice in MS narrator.
-        QAccessible::updateAccessibility(q, 0, QAccessible::ObjectShow);
-#endif
-
     if (QApplicationPrivate::hidden_focus_widget == q) {
         QApplicationPrivate::hidden_focus_widget = 0;
         q->setFocus(Qt::OtherFocusReason);
@@ -6453,11 +6432,6 @@ void QWidgetPrivate::hide_helper()
 
     if (QWidgetBackingStore *bs = maybeBackingStore())
         bs->removeDirtyWidget(q);
-
-#ifndef QT_NO_ACCESSIBILITY
-    if (wasVisible)
-        QAccessible::updateAccessibility(q, 0, QAccessible::ObjectHide);
-#endif
 }
 
 /*!
@@ -6664,10 +6638,6 @@ void QWidgetPrivate::hideChildren(bool spontaneous)
         }
 #if defined(Q_WS_X11)
         qApp->d_func()->sendSyntheticEnterLeave(widget);
-#endif
-#ifndef QT_NO_ACCESSIBILITY
-        if (!spontaneous)
-            QAccessible::updateAccessibility(widget, 0, QAccessible::ObjectHide);
 #endif
     }
 }
@@ -7349,29 +7319,6 @@ bool QWidget::event(QEvent *event)
             event->ignore();
         break;
 #endif
-#ifndef QT_NO_ACCESSIBILITY
-    case QEvent::AccessibilityDescription:
-    case QEvent::AccessibilityHelp: {
-        QAccessibleEvent *ev = static_cast<QAccessibleEvent *>(event);
-        if (ev->child())
-            return false;
-        switch (ev->type()) {
-#ifndef QT_NO_TOOLTIP
-        case QEvent::AccessibilityDescription:
-            ev->setValue(d->toolTip);
-            break;
-#endif
-#ifndef QT_NO_WHATSTHIS
-        case QEvent::AccessibilityHelp:
-            ev->setValue(d->whatsThis);
-            break;
-#endif
-        default:
-            return false;
-        }
-        break;
-    }
-#endif
 #ifndef QT_NO_ACTION
     case QEvent::ActionAdded:
     case QEvent::ActionRemoved:
@@ -7434,12 +7381,10 @@ bool QWidget::event(QEvent *event)
 void QWidget::changeEvent(QEvent * event)
 {
     switch(event->type()) {
-    case QEvent::EnabledChange:
+    case QEvent::EnabledChange: {
         update();
-#ifndef QT_NO_ACCESSIBILITY
-        QAccessible::updateAccessibility(this, 0, QAccessible::StateChanged);
-#endif
         break;
+    }
 
     case QEvent::FontChange:
     case QEvent::StyleChange: {
@@ -7451,9 +7396,10 @@ void QWidget::changeEvent(QEvent * event)
         break;
     }
 
-    case QEvent::PaletteChange:
+    case QEvent::PaletteChange: {
         update();
         break;
+    }
 
     default:
         break;
@@ -9226,55 +9172,6 @@ QString QWidget::whatsThis() const
     return d->whatsThis;
 }
 #endif // QT_NO_WHATSTHIS
-
-#ifndef QT_NO_ACCESSIBILITY
-/*!
-  \property QWidget::accessibleName
-
-  \brief the widget's name as seen by assistive technologies
-
-  This property is used by accessible clients to identify, find, or announce
-  the widget for accessible clients.
-
-  By default, this property contains an empty string.
-
-  \sa QAccessibleInterface::text()
-*/
-void QWidget::setAccessibleName(const QString &name)
-{
-    Q_D(QWidget);
-    d->accessibleName = name;
-    QAccessible::updateAccessibility(this, 0, QAccessible::NameChanged);
-}
-
-QString QWidget::accessibleName() const
-{
-    Q_D(const QWidget);
-    return d->accessibleName;
-}
-
-/*!
-  \property QWidget::accessibleDescription
-
-  \brief the widget's description as seen by assistive technologies
-
-  By default, this property contains an empty string.
-
-  \sa QAccessibleInterface::text()
-*/
-void QWidget::setAccessibleDescription(const QString &description)
-{
-    Q_D(QWidget);
-    d->accessibleDescription = description;
-    QAccessible::updateAccessibility(this, 0, QAccessible::DescriptionChanged);
-}
-
-QString QWidget::accessibleDescription() const
-{
-    Q_D(const QWidget);
-    return d->accessibleDescription;
-}
-#endif // QT_NO_ACCESSIBILITY
 
 #ifndef QT_NO_SHORTCUT
 /*!

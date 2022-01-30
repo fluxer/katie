@@ -44,9 +44,6 @@
 #include "qdebug.h"
 #include "qtextedit.h"
 #include "qtextedit_p.h"
-#ifndef QT_NO_ACCESSIBILITY
-#include "qaccessible.h"
-#endif
 #include "qabstractitemview.h"
 #include "qstylesheetstyle_p.h"
 

@@ -335,7 +335,6 @@ private:
     Q_PRIVATE_SLOT(d_func(), void _q_headerDataChanged())
 
     friend class QTreeViewPrivate; // needed to compile with MSVC
-    friend class QAccessibleItemRow;
     friend class QListModeViewBase;
     friend class QListViewPrivate;
 };

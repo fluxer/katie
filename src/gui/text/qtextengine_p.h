@@ -109,6 +109,10 @@ struct QGlyphJustification
 };
 Q_DECLARE_TYPEINFO(QGlyphJustification, Q_PRIMITIVE_TYPE);
 
+#define QSPACEFORGLYPHS(__glyphcount) \
+    (__glyphcount * (sizeof(HB_Glyph) + sizeof(HB_GlyphAttributes) \
+        + sizeof(QFixed) + sizeof(QGlyphJustification)))
+
 struct QGlyphLayout
 {
     // init to 0 not needed, done when shaping
@@ -146,11 +150,6 @@ struct QGlyphLayout
         return copy;
     }
 
-    static inline int spaceNeededForGlyphLayout(int totalGlyphs) {
-        return totalGlyphs * (sizeof(HB_Glyph) + sizeof(HB_GlyphAttributes)
-                + sizeof(QFixed) + sizeof(QGlyphJustification));
-    }
-
     inline QFixed effectiveAdvance(int item) const
     { return (advances_x[item] + QFixed::fromFixed(justifications[item].space_18d6)) * !attributes[item].dontPrint; }
 
@@ -158,7 +157,7 @@ struct QGlyphLayout
         if (last == -1)
             last = numGlyphs;
         if (first == 0 && last == numGlyphs) {
-            memset(glyphs, 0, spaceNeededForGlyphLayout(numGlyphs));
+            memset(glyphs, 0, QSPACEFORGLYPHS(numGlyphs));
         } else {
             const int num = last - first;
             memset(glyphs + first, 0, num * sizeof(HB_Glyph));
@@ -181,17 +180,9 @@ private:
     typedef QVarLengthArray<void *> Array;
 public:
     QVarLengthGlyphLayoutArray(int totalGlyphs)
-        : Array(spaceNeededForGlyphLayout(totalGlyphs) / QT_POINTER_SIZE + 1)
+        : Array(QSPACEFORGLYPHS(totalGlyphs) / QT_POINTER_SIZE + 1)
         , QGlyphLayout(reinterpret_cast<char *>(Array::data()), totalGlyphs)
     {
-        memset(Array::data(), 0, Array::size() * QT_POINTER_SIZE);
-    }
-
-    void resize(int totalGlyphs)
-    {
-        Array::resize(spaceNeededForGlyphLayout(totalGlyphs) / QT_POINTER_SIZE + 1);
-
-        *((QGlyphLayout *)this) = QGlyphLayout(reinterpret_cast<char *>(Array::data()), totalGlyphs);
         memset(Array::data(), 0, Array::size() * QT_POINTER_SIZE);
     }
 };
@@ -206,9 +197,7 @@ public:
     }
 
 private:
-    void *buffer[(N * (sizeof(HB_Glyph) + sizeof(HB_GlyphAttributes)
-                + sizeof(QFixed) + sizeof(QGlyphJustification)))
-                    / QT_POINTER_SIZE + 1];
+    void *buffer[QSPACEFORGLYPHS(N) / QT_POINTER_SIZE + 1];
 };
 
 struct QScriptItem;
@@ -278,7 +267,7 @@ struct Q_AUTOTEST_EXPORT QScriptLine
     QScriptLine()
         : from(0), trailingSpaces(0), length(0),
         justified(false), gridfitted(false),
-        hasTrailingSpaces(false), leadingIncluded(false) {}
+        leadingIncluded(false) {}
     QFixed descent;
     QFixed ascent;
     QFixed leading;
@@ -292,7 +281,6 @@ struct Q_AUTOTEST_EXPORT QScriptLine
     int length;
     mutable bool justified;
     mutable bool gridfitted;
-    bool hasTrailingSpaces;
     bool leadingIncluded;
     QFixed height() const { return (ascent + descent).ceil() + 1
                             + (leadingIncluded?  qMax(QFixed(),leading) : QFixed()); }
@@ -480,7 +468,7 @@ private:
     void shapeTextWithHarfbuzz(int item) const;
 
     void resolveAdditionalFormats() const;
-    int getClusterLength(unsigned short *logClusters, const HB_CharAttributes *attributes, int from, int to, int glyph_pos, int *start);
+    int getClusterLength(unsigned short *logClusters, const HB_CharAttributes *attributes, int to, int glyph_pos, int *start);
 };
 
 struct QTextLineItemIterator

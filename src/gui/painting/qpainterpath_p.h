@@ -50,39 +50,38 @@ public:
     qreal dashOffset;
 };
 
-class QPainterPathData : public QPainterPathPrivate
+class QPainterPathPrivate
 {
 public:
-    QPainterPathData() :
+    QPainterPathPrivate() :
+        ref(1),
         cStart(0),
         fillRule(Qt::OddEvenFill),
+        require_moveTo(false),
         dirtyBounds(false),
-        dirtyControlBounds(false)
+        dirtyControlBounds(false),
+        convex(false)
     {
-        ref = 1;
-        require_moveTo = false;
-        convex = false;
     }
 
-    QPainterPathData(const QPainterPathData &other) :
-        QPainterPathPrivate(), cStart(other.cStart), fillRule(other.fillRule),
+    QPainterPathPrivate(const QPainterPathPrivate &other) :
+        ref(1), elements(other.elements),
+        cStart(other.cStart), fillRule(other.fillRule),
         bounds(other.bounds),
         controlBounds(other.controlBounds),
+        require_moveTo(false),
         dirtyBounds(other.dirtyBounds),
         dirtyControlBounds(other.dirtyControlBounds),
         convex(other.convex)
     {
-        ref = 1;
-        require_moveTo = false;
-        elements = other.elements;
-    }
-
-    ~QPainterPathData() {
     }
 
     inline bool isClosed() const;
     inline void close();
     inline void maybeMoveTo();
+
+    QAtomicInt ref;
+    QVector<QPainterPath::Element> elements;
 
     int cStart;
     Qt::FillRule fillRule;
@@ -99,14 +98,14 @@ public:
 void Q_GUI_EXPORT qt_find_ellipse_coords(const QRectF &r, qreal angle, qreal length,
                                          QPointF* startPoint, QPointF *endPoint);
 
-inline bool QPainterPathData::isClosed() const
+inline bool QPainterPathPrivate::isClosed() const
 {
     const QPainterPath::Element &first = elements.at(cStart);
     const QPainterPath::Element &last = elements.last();
     return first.x == last.x && first.y == last.y;
 }
 
-inline void QPainterPathData::close()
+inline void QPainterPathPrivate::close()
 {
     Q_ASSERT(ref == 1);
     require_moveTo = true;
@@ -123,7 +122,7 @@ inline void QPainterPathData::close()
     }
 }
 
-inline void QPainterPathData::maybeMoveTo()
+inline void QPainterPathPrivate::maybeMoveTo()
 {
     if (require_moveTo) {
         QPainterPath::Element e = elements.last();

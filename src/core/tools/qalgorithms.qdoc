@@ -28,7 +28,7 @@
     <QtAlgorithms> that work on containers and perform well-know
     algorithms. You can use these algorithms with any \l {container
     class} that provides STL-style iterators, including Qt's QList,
-    QLinkedList, QVector, QMap, and QHash classes.
+    QVector, QMap, and QHash classes.
 
     These functions have taken their inspiration from similar
     functions available in the STL \c <algorithm> header. Most of them

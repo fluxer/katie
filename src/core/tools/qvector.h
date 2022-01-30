@@ -62,22 +62,17 @@ class Q_CORE_EXPORT QVector
     };
 
 public:
-    // ### Qt 5: Consider making QVector non-shared to get at least one
-    // "really fast" container. See tests/benchmarks/corelib/tools/qvector/
     inline QVector() : d(&QVectorData::shared_null) { d->ref.ref(); }
     explicit QVector(int size);
     QVector(int size, const T &t);
     inline QVector(const QVector<T> &v) : d(v.d) { d->ref.ref(); }
     inline ~QVector() { if (!d->ref.deref()) freeData(p); }
     QVector<T> &operator=(const QVector<T> &v);
-#ifdef Q_COMPILER_RVALUE_REFS
     inline QVector<T> operator=(QVector<T> &&other)
     { qSwap(p, other.p); return *this; }
-#endif
     inline void swap(QVector<T> &other) { qSwap(d, other.d); }
-#ifdef Q_COMPILER_INITIALIZER_LISTS
     inline QVector(std::initializer_list<T> args);
-#endif
+
     bool operator==(const QVector<T> &v) const;
     inline bool operator!=(const QVector<T> &v) const { return !(*this == v); }
 
@@ -365,7 +360,6 @@ QVector<T>::QVector(int asize, const T &t)
         new (--i) T(t);
 }
 
-#ifdef Q_COMPILER_INITIALIZER_LISTS
 template <typename T>
 QVector<T>::QVector(std::initializer_list<T> args)
 {
@@ -378,7 +372,6 @@ QVector<T>::QVector(std::initializer_list<T> args)
     while (i != p->array)
         new (--i) T(*(--it));
 }
-#endif
 
 template <typename T>
 void QVector<T>::freeData(Data *x)

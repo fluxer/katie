@@ -162,7 +162,6 @@ namespace {
     inline void openIfndef(QTextStream &str, const QString &symbol) { if (!symbol.isEmpty()) str << QLatin1String("#ifndef ") << symbol << endl;  }
     inline void closeIfndef(QTextStream &str, const QString &symbol) { if (!symbol.isEmpty()) str << QLatin1String("#endif // ") << symbol << endl; }
 
-    const char *accessibilityDefineC = "QT_NO_ACCESSIBILITY";
     const char *toolTipDefineC = "QT_NO_TOOLTIP";
     const char *whatsThisDefineC = "QT_NO_WHATSTHIS";
     const char *statusTipDefineC = "QT_NO_STATUSTIP";
@@ -1403,8 +1402,6 @@ void WriteInitialization::writeProperties(const QString &varName,
                 defineC = whatsThisDefineC;
             else if (propertyName == QLatin1String("statusTip"))
                 defineC = statusTipDefineC;
-            else if (propertyName == QLatin1String("accessibleName") || propertyName == QLatin1String("accessibleDescription"))
-                defineC = accessibilityDefineC;
 
             QTextStream &o = autoTrOutput(p->elementString());
 

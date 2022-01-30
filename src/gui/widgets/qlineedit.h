@@ -198,7 +198,6 @@ public:
 
 private:
     friend class QAbstractSpinBox;
-    friend class QAccessibleLineEdit;
     Q_DISABLE_COPY(QLineEdit)
     Q_DECLARE_PRIVATE(QLineEdit)
     Q_PRIVATE_SLOT(d_func(), void _q_handleWindowActivate())

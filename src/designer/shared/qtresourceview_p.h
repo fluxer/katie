@@ -33,6 +33,7 @@
 #ifndef QTRESOURCEVIEW_H
 #define QTRESOURCEVIEW_H
 
+#include <QtCore/QScopedPointer>
 #include <QtGui/QWidget>
 #include <QtGui/QDialog>
 

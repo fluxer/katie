@@ -31,7 +31,6 @@ QT_BEGIN_NAMESPACE
 class QByteArray;
 
 template <typename T> class QList;
-template <typename T> class QLinkedList;
 template <typename T> class QVector;
 template <typename T> class QSet;
 template <class Key, class T> class QHash;
@@ -210,33 +209,6 @@ QDataStream& operator<<(QDataStream& s, const QList<T>& l)
     s << quint32(l.size());
     for (int i = 0; i < l.size(); ++i)
         s << l.at(i);
-    return s;
-}
-
-template <typename T>
-QDataStream& operator>>(QDataStream& s, QLinkedList<T>& l)
-{
-    l.clear();
-    quint32 c;
-    s >> c;
-    for(quint32 i = 0; i < c; ++i)
-    {
-        T t;
-        s >> t;
-        l.append(t);
-        if (s.atEnd())
-            break;
-    }
-    return s;
-}
-
-template <typename T>
-QDataStream& operator<<(QDataStream& s, const QLinkedList<T>& l)
-{
-    s << quint32(l.size());
-    typename QLinkedList<T>::const_iterator it = l.constBegin();
-    for(; it != l.constEnd(); ++it)
-        s << *it;
     return s;
 }
 

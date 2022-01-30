@@ -76,8 +76,6 @@ public:
 
     inline Type type() const { return QPaintEngine::X11; }
 
-    QPainter::RenderHints supportedRenderHints() const;
-
 protected:
     QX11PaintEngine(QX11PaintEnginePrivate &dptr);
 
@@ -114,22 +112,12 @@ public:
     };
 
     void init();
-    void fillPolygon_translated(const QPointF *points, int pointCount, GCMode gcMode,
-                                QPaintEngine::PolygonDrawMode mode);
     void fillPolygon_dev(const QPointF *points, int pointCount, GCMode gcMode,
                          QPaintEngine::PolygonDrawMode mode);
     void fillPath(const QPainterPath &path, GCMode gcmode, bool transform);
     void strokePolygon_dev(const QPointF *points, int pointCount, bool close);
-    void strokePolygon_translated(const QPointF *points, int pointCount, bool close);
     void setupAdaptedOrigin(const QPoint &p);
     void resetAdaptedOrigin();
-    void decidePathFallback() {
-        use_path_fallback = has_alpha_brush
-                            || has_alpha_pen
-                            || has_custom_pen
-                            || has_complex_xform
-                            || (render_hints & QPainter::Antialiasing);
-    }
     void decideCoordAdjust() {
         adjust_coords = !(render_hints & QPainter::Antialiasing)
                         && (has_alpha_pen
@@ -163,8 +151,6 @@ public:
 
     bool has_complex_xform;
     bool has_scaling_xform;
-    bool has_custom_pen;
-    bool use_path_fallback;
     bool adjust_coords;
     bool has_clipping;
     bool adapted_brush_origin;
@@ -182,7 +168,6 @@ public:
     qreal xform_scale;
     QPolygonClipper polygonClipper;
 
-    int xlibMaxLinePoints;
 #ifndef QT_NO_XRENDER
     QXRenderTessellator *tessellator;
 #endif

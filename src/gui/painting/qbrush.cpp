@@ -29,6 +29,7 @@
 #include "qcoreapplication.h"
 #include "qstylehelper_p.h"
 #include "qnumeric.h"
+#include "qscopedpointer.h"
 
 QT_BEGIN_NAMESPACE
 

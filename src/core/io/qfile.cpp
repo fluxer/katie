@@ -807,9 +807,13 @@ bool QFile::open(FILE *fh, OpenMode mode, FileHandleFlags handleFlags)
         if (mode & Append) {
             seek(size());
         } else {
-            qint64 pos = (qint64)QT_FTELL(fh);
-            if (pos != -1)
+            const qint64 pos = (qint64)QT_FTELL(fh);
+            if (pos != -1 && !isSequential()) {
                 seek(pos);
+            } else if (pos != -1) {
+                d->pos = pos;
+                d->devicePos = pos;
+            }
         }
         return true;
     }
@@ -868,8 +872,12 @@ bool QFile::open(int fd, OpenMode mode, FileHandleFlags handleFlags)
             seek(size());
         } else {
             const qint64 pos = (qint64)QT_LSEEK(fd, 0, SEEK_CUR);
-            if (pos != -1)
+            if (pos != -1 && !isSequential()) {
                 seek(pos);
+            } else if (pos != -1) {
+                d->pos = pos;
+                d->devicePos = pos;
+            }
         }
         return true;
     }

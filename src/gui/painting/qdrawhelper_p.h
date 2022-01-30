@@ -215,7 +215,7 @@ static inline int qt_div_255(int x) { return (x + (x>>8) + 0x80) >> 8; }
 
 static inline QImage qt_mask_image(const QImage &image, const QImage &mask)
 {
-    if (mask.size().isEmpty()) {
+    if (mask.isNull()) {
         if (image.depth() != 1) { // hw: ????
             return image.convertToFormat(QImage::Format_RGB32);
         }
@@ -225,9 +225,9 @@ static inline QImage qt_mask_image(const QImage &image, const QImage &mask)
     const int w = image.width();
     const int h = image.height();
 
-    QImage result(image);
-    switch (result.depth()) {
+    switch (image.depth()) {
         case 1: {
+            QImage result(image.size(), image.format());
             const QImage imageMask = mask.convertToFormat(result.format());
             const int bpl = result.bytesPerLine();
             uchar *dest = result.bits();
@@ -237,11 +237,11 @@ static inline QImage qt_mask_image(const QImage &image, const QImage &mask)
                 for (int i = 0; i < bpl; ++i)
                     tscan[i] &= mscan[i];
             }
-            break;
+            return result;
         }
         default: {
             const QImage imageMask = mask.convertToFormat(QImage::Format_MonoLSB);
-            result = result.convertToFormat(QImage::Format_ARGB32_Premultiplied);
+            QImage result = image.convertToFormat(QImage::Format_ARGB32_Premultiplied);
             const int bpl = result.bytesPerLine();
             uchar *dest = result.bits();
             for (int y = 0; y < h; ++y) {
@@ -252,10 +252,10 @@ static inline QImage qt_mask_image(const QImage &image, const QImage &mask)
                         tscan[x] = 0;
                 }
             }
-            break;
+            return result;
         }
     }
-    return result;
+    Q_UNREACHABLE();
 }
 
 QT_END_NAMESPACE

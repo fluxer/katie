@@ -301,13 +301,9 @@ void tst_QStringList::joinEmptiness() const
 
 void tst_QStringList::initializeList() const
 {
-#ifdef Q_COMPILER_INITIALIZER_LISTS
     QStringList v1{QLatin1String("hello"),"world",QString::fromLatin1("plop")};
     QCOMPARE(v1, (QStringList() << "hello" << "world" << "plop"));
     QCOMPARE(v1, (QStringList{"hello","world","plop"}));
-#else
-    QSKIP("Require C++0x support, pass the right flag to the compiler", SkipAll);
-#endif
 }
 
 QTEST_APPLESS_MAIN(tst_QStringList)

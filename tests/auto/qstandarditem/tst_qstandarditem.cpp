@@ -177,15 +177,7 @@ void tst_QStandardItem::getSetData()
             Qt::CheckState checkState((i == 1) ? Qt::PartiallyChecked : Qt::Checked);
             item.setCheckState(checkState);
             QCOMPARE(item.checkState(), checkState);
-            
-            QString accessibleText = QString("accessibleText %0").arg(i);
-            item.setAccessibleText(accessibleText);
-            QCOMPARE(item.accessibleText(), accessibleText);
-            
-            QString accessibleDescription = QString("accessibleDescription %0").arg(i);
-            item.setAccessibleDescription(accessibleDescription);
-            QCOMPARE(item.accessibleDescription(), accessibleDescription);
-            
+
             QCOMPARE(item.text(), text);
             QCOMPARE(item.icon(), icon);
             QCOMPARE(item.toolTip(), toolTip);
@@ -197,8 +189,6 @@ void tst_QStandardItem::getSetData()
             QCOMPARE(item.background().color(), backgroundColor);
             QCOMPARE(item.foreground().color(), textColor);
             QCOMPARE(item.checkState(), checkState);
-            QCOMPARE(item.accessibleText(), accessibleText);
-            QCOMPARE(item.accessibleDescription(), accessibleDescription);
             
             QCOMPARE(qvariant_cast<QString>(item.data(Qt::DisplayRole)), text);
             QCOMPARE(qvariant_cast<QIcon>(item.data(Qt::DecorationRole)), icon);
@@ -211,8 +201,6 @@ void tst_QStandardItem::getSetData()
             QCOMPARE(qvariant_cast<QBrush>(item.data(Qt::BackgroundRole)), QBrush(backgroundColor));
             QCOMPARE(qvariant_cast<QBrush>(item.data(Qt::ForegroundRole)), QBrush(textColor));
             QCOMPARE(qvariant_cast<int>(item.data(Qt::CheckStateRole)), int(checkState));
-            QCOMPARE(qvariant_cast<QString>(item.data(Qt::AccessibleTextRole)), accessibleText);
-            QCOMPARE(qvariant_cast<QString>(item.data(Qt::AccessibleDescriptionRole)), accessibleDescription);
 
             item.setBackground(pixmap);
             QCOMPARE(item.background().texture(), pixmap);
@@ -229,8 +217,6 @@ void tst_QStandardItem::getSetData()
         item.setData(QVariant(), Qt::BackgroundRole);
         item.setData(QVariant(), Qt::ForegroundRole);
         item.setData(QVariant(), Qt::CheckStateRole);
-        item.setData(QVariant(), Qt::AccessibleTextRole);
-        item.setData(QVariant(), Qt::AccessibleDescriptionRole);
         
         QCOMPARE(item.data(Qt::DisplayRole), QVariant());
         QCOMPARE(item.data(Qt::DecorationRole), QVariant());
@@ -243,8 +229,6 @@ void tst_QStandardItem::getSetData()
         QCOMPARE(item.data(Qt::BackgroundRole), QVariant());
         QCOMPARE(item.data(Qt::ForegroundRole), QVariant());
         QCOMPARE(item.data(Qt::CheckStateRole), QVariant());
-        QCOMPARE(item.data(Qt::AccessibleTextRole), QVariant());
-        QCOMPARE(item.data(Qt::AccessibleDescriptionRole), QVariant());
     }
 }
 
@@ -887,8 +871,6 @@ void tst_QStandardItem::streamItem()
     item.setBackground(QColor(Qt::blue));
     item.setForeground(QColor(Qt::green));
     item.setCheckState(Qt::PartiallyChecked);
-    item.setAccessibleText(QLatin1String("accessibleText"));
-    item.setAccessibleDescription(QLatin1String("accessibleDescription"));
 
     QByteArray ba;
     {
@@ -909,8 +891,6 @@ void tst_QStandardItem::streamItem()
         QCOMPARE(streamedItem.background(), item.background());
         QCOMPARE(streamedItem.foreground(), item.foreground());
         QCOMPARE(streamedItem.checkState(), item.checkState());
-        QCOMPARE(streamedItem.accessibleText(), item.accessibleText());
-        QCOMPARE(streamedItem.accessibleDescription(), item.accessibleDescription());
         QCOMPARE(streamedItem.flags(), item.flags());
     }
 }
@@ -948,8 +928,6 @@ void tst_QStandardItem::clone()
     item.setBackground(QColor(Qt::blue));
     item.setForeground(QColor(Qt::green));
     item.setCheckState(Qt::PartiallyChecked);
-    item.setAccessibleText(QLatin1String("accessibleText"));
-    item.setAccessibleDescription(QLatin1String("accessibleDescription"));
     item.setFlags(Qt::ItemIsEnabled | Qt::ItemIsDropEnabled);
 
     QStandardItem *clone = item.clone();
@@ -963,8 +941,6 @@ void tst_QStandardItem::clone()
     QCOMPARE(clone->background(), item.background());
     QCOMPARE(clone->foreground(), item.foreground());
     QCOMPARE(clone->checkState(), item.checkState());
-    QCOMPARE(clone->accessibleText(), item.accessibleText());
-    QCOMPARE(clone->accessibleDescription(), item.accessibleDescription());
     QCOMPARE(clone->flags(), item.flags());
     QVERIFY(!(*clone < item));
     delete clone;

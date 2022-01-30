@@ -25,11 +25,6 @@ set(GUI_PUBLIC_HEADERS
     QAbstractSlider
     QAbstractSpinBox
     QAbstractTextDocumentLayout
-    QAccessible
-    QAccessibleBridge
-    QAccessibleObject
-    QAccessiblePlugin
-    QAccessibleWidget
     QAction
     QActionGroup
     QApplication
@@ -500,7 +495,6 @@ set(GUI_HEADERS
     ${CMAKE_CURRENT_SOURCE_DIR}/text/qtexttable_p.h
     ${CMAKE_CURRENT_SOURCE_DIR}/text/qharfbuzz_p.h
     ${CMAKE_CURRENT_SOURCE_DIR}/text/qfontengine_ft_p.h
-    ${CMAKE_CURRENT_SOURCE_DIR}/text/qfontdatabase_x11_p.h
     ${CMAKE_CURRENT_SOURCE_DIR}/text/qunicodetables_p.h
     ${CMAKE_CURRENT_SOURCE_DIR}/util/qsystemtrayicon.h
     ${CMAKE_CURRENT_SOURCE_DIR}/util/qcompleter.h
@@ -916,29 +910,6 @@ if(WITH_FONTCONFIG AND FONTCONFIG_FOUND)
     add_definitions(${FONTCONFIG_DEFINITIONS})
 endif()
 
-if(WITH_ACCESSIBILITY)
-    set(GUI_HEADERS
-        ${GUI_HEADERS}
-        ${CMAKE_CURRENT_SOURCE_DIR}/accessible/qaccessible.h
-        ${CMAKE_CURRENT_SOURCE_DIR}/accessible/qaccessible2.h
-        ${CMAKE_CURRENT_SOURCE_DIR}/accessible/qaccessibleobject.h
-        ${CMAKE_CURRENT_SOURCE_DIR}/accessible/qaccessiblewidget.h
-        ${CMAKE_CURRENT_SOURCE_DIR}/accessible/qaccessibleplugin.h
-        ${CMAKE_CURRENT_SOURCE_DIR}/accessible/qaccessiblebridge.h
-    )
-
-    set(GUI_SOURCES
-        ${GUI_SOURCES}
-        ${CMAKE_CURRENT_SOURCE_DIR}/accessible/qaccessible.cpp
-        ${CMAKE_CURRENT_SOURCE_DIR}/accessible/qaccessible2.cpp
-        ${CMAKE_CURRENT_SOURCE_DIR}/accessible/qaccessibleobject.cpp
-        ${CMAKE_CURRENT_SOURCE_DIR}/accessible/qaccessiblewidget.cpp
-        ${CMAKE_CURRENT_SOURCE_DIR}/accessible/qaccessibleplugin.cpp
-        ${CMAKE_CURRENT_SOURCE_DIR}/accessible/qaccessible_unix.cpp
-        ${CMAKE_CURRENT_SOURCE_DIR}/accessible/qaccessiblebridge.cpp
-    )
-endif()
-
 # anything that includes qt_x11_p.h is known to break unity build
 katie_unity_exclude(
     ${CMAKE_CURRENT_SOURCE_DIR}/dialogs/qdialog.cpp
@@ -969,7 +940,7 @@ katie_unity_exclude(
     ${CMAKE_CURRENT_SOURCE_DIR}/painting/qcolor.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/painting/qcolormap_x11.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/painting/qpaintengine_x11.cpp
-    ${CMAKE_CURRENT_SOURCE_DIR}/painting/qregion_x11.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/painting/qregion.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/painting/qwindowsurface_raster.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/text/qfont.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/text/qfont_x11.cpp

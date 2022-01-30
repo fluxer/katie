@@ -62,7 +62,6 @@ set(CORE_PUBLIC_HEADERS
     QFutureWatcher
     QVector
     QLibraryInfo
-    QLinkedList
     QSemaphore
     QFutureSynchronizer
     QStack
@@ -246,7 +245,6 @@ set(CORE_HEADERS
     ${CMAKE_CURRENT_SOURCE_DIR}/tools/qhash.h
     ${CMAKE_CURRENT_SOURCE_DIR}/tools/qjsondocument.h
     ${CMAKE_CURRENT_SOURCE_DIR}/tools/qline.h
-    ${CMAKE_CURRENT_SOURCE_DIR}/tools/qlinkedlist.h
     ${CMAKE_CURRENT_SOURCE_DIR}/tools/qlist.h
     ${CMAKE_CURRENT_SOURCE_DIR}/tools/qlocale.h
     ${CMAKE_CURRENT_SOURCE_DIR}/tools/qlocale_p.h
@@ -376,7 +374,6 @@ set(CORE_SOURCES
     ${CMAKE_CURRENT_SOURCE_DIR}/tools/qhash.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/tools/qjsondocument.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/tools/qline.cpp
-    ${CMAKE_CURRENT_SOURCE_DIR}/tools/qlinkedlist.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/tools/qlist.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/tools/qlocale.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/tools/qlocale_tools.cpp

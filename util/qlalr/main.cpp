@@ -104,7 +104,7 @@ int main (int argc, char *argv[])
   if (! p.parse (file_name))
     exit (EXIT_FAILURE);
 
-  if (grammar.rules.isEmpty ())
+  if (grammar.rules.size() == 0)
     {
       qerr << "*** Fatal. No rules!" << endl;
       exit (EXIT_FAILURE);

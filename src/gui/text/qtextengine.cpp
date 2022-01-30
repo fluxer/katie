@@ -40,7 +40,6 @@
 
 QT_BEGIN_NAMESPACE
 
-// Helper class used in QTextEngine::itemize
 static void generateItem(const QScriptAnalysis *analysis, QScriptItemArray &items, int start, int length)
 {
     if (!length)
@@ -667,7 +666,7 @@ void QTextEngine::justify(const QScriptLine &line)
             if (justificationPoints[i].type == type)
                 ++n;
         }
-//          qDebug("number of points for justification type %d: %d", type, n);
+        // qDebug("number of points for justification type %d: %d", type, n);
 
 
         if (!n)
@@ -735,7 +734,7 @@ bool QTextEngine::LayoutData::reallocate(int totalGlyphs)
 
     int space_charAttributes = sizeof(HB_CharAttributes) * string.length() / QT_POINTER_SIZE + 1;
     int space_logClusters = sizeof(unsigned short) * string.length() / QT_POINTER_SIZE + 1;
-    int space_glyphs = QGlyphLayout::spaceNeededForGlyphLayout(totalGlyphs) / QT_POINTER_SIZE + 2;
+    int space_glyphs = QSPACEFORGLYPHS(totalGlyphs) / QT_POINTER_SIZE + 2;
 
     int newAllocated = space_charAttributes + space_glyphs + space_logClusters;
     // These values can be negative if the length of string/glyphs causes overflow,
@@ -980,7 +979,7 @@ QString QTextEngine::elidedText(Qt::TextElideMode mode, const QFixed &width, int
 
         QFontEngine *fe = fnt.d->engineForScript(QUnicodeTables::Common);
 
-        QGlyphLayoutArray<1> ellipsisGlyph;
+        QGlyphLayoutArray<2> ellipsisGlyph;
         {
             if (fe->canRender(&ellipsisChar, 1)) {
                 int nGlyphs = 1;
@@ -1191,13 +1190,13 @@ QFixed QTextEngine::offsetInLigature(const QScriptItem *si, int pos, int max, in
     return 0;
 }
 
-// Scan in logClusters[from..to-1] for glyph_pos
+// Scan in logClusters[0..to-1] for glyph_pos
 int QTextEngine::getClusterLength(unsigned short *logClusters,
                                   const HB_CharAttributes *attributes,
-                                  int from, int to, int glyph_pos, int *start)
+                                  int to, int glyph_pos, int *start)
 {
     int clusterLength = 0;
-    for (int i = from; i < to; i++) {
+    for (int i = 0; i < to; i++) {
         if (logClusters[i] == glyph_pos && attributes[i].charStop) {
             if (*start < 0)
                 *start = i;
@@ -1239,7 +1238,7 @@ int QTextEngine::positionInLigature(const QScriptItem *si, int end,
 
     const HB_CharAttributes *attrs = attributes();
     logClusters = this->logClusters(si);
-    clusterLength = getClusterLength(logClusters, attrs, 0, end, glyph_pos, &clusterStart);
+    clusterLength = getClusterLength(logClusters, attrs, end, glyph_pos, &clusterStart);
 
     if (clusterLength) {
         const QGlyphLayout &glyphs = shapedGlyphs(si);
@@ -1431,7 +1430,3 @@ bool QTextLineItemIterator::getSelectionBounds(QFixed *selectionX, QFixed *selec
 }
 
 QT_END_NAMESPACE
-
-
-
-

@@ -111,6 +111,7 @@
 #define QT_NO_GESTURES
 #define QT_NO_STYLE_MOTIF
 #define QT_NO_STYLE_PLASTIQUE
+#define QT_NO_ACCESSIBILITY
 
 // Not supported, used to bootstrap
 #cmakedefine QT_NO_QOBJECT
@@ -155,7 +156,6 @@
 
 // Misc
 #cmakedefine QT_NO_USING_NAMESPACE
-#cmakedefine QT_NO_ACCESSIBILITY
 #cmakedefine QT_NO_ACTION
 #cmakedefine QT_NO_ANIMATION
 #cmakedefine QT_NO_BACKINGSTORE
@@ -590,11 +590,6 @@
 // QTreeView
 #if !defined(QT_NO_TREEVIEW) && defined(QT_NO_ITEMVIEWS)
 #  define QT_NO_TREEVIEW
-#endif
-
-// Accessibility
-#if !defined(QT_NO_ACCESSIBILITY) && (defined(QT_NO_PROPERTIES) || defined(QT_NO_MENUBAR))
-#  define QT_NO_ACCESSIBILITY
 #endif
 
 // QColumnView

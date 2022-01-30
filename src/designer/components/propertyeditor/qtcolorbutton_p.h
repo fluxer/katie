@@ -33,6 +33,7 @@
 #ifndef QTCOLORBUTTON_P_H
 #define QTCOLORBUTTON_P_H
 
+#include <QtCore/QScopedPointer>
 #include <QtGui/QToolButton>
 
 QT_BEGIN_NAMESPACE

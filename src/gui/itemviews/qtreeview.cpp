@@ -32,11 +32,6 @@
 #include "qevent.h"
 #include "qpen.h"
 #include "qdebug.h"
-#ifndef QT_NO_ACCESSIBILITY
-#include "qaccessible.h"
-#include "qaccessible2.h"
-#endif
-
 #include "qtreeview_p.h"
 
 QT_BEGIN_NAMESPACE
@@ -2835,14 +2830,6 @@ void QTreeViewPrivate::insertViewItems(int pos, int count, const QTreeViewItem &
     for (int i = pos + count; i < viewItems.count(); i++)
         if (items[i].parentItem >= pos)
             items[i].parentItem += count;
-#ifndef QT_NO_ACCESSIBILITY
-#ifdef Q_WS_X11
-    Q_Q(QTreeView);
-    if (QAccessible::isActive()) {
-        QAccessible::updateAccessibility(q, 0, QAccessible::TableModelChanged);
-    }
-#endif
-#endif
 }
 
 void QTreeViewPrivate::removeViewItems(int pos, int count)
@@ -2852,14 +2839,6 @@ void QTreeViewPrivate::removeViewItems(int pos, int count)
     for (int i = pos; i < viewItems.count(); i++)
         if (items[i].parentItem >= pos)
             items[i].parentItem -= count;
-#ifndef QT_NO_ACCESSIBILITY
-#ifdef Q_WS_X11
-    Q_Q(QTreeView);
-    if (QAccessible::isActive()) {
-        QAccessible::updateAccessibility(q, 0, QAccessible::TableModelChanged);
-    }
-#endif
-#endif
 }
 
 #if 0
@@ -3668,59 +3647,6 @@ void QTreeView::currentChanged(const QModelIndex &current, const QModelIndex &pr
             viewport()->update(currentRect);
         }
     }
-#ifndef QT_NO_ACCESSIBILITY
-    if (QAccessible::isActive() && current.isValid()) {
-#ifdef Q_WS_X11
-        int entry = (visualIndex(current) + (header()?1:0))*current.model()->columnCount()+current.column() + 1;
-        QAccessible::updateAccessibility(this, entry, QAccessible::Focus);
-#else
-        int entry = visualIndex(current) + 1;
-        if (header())
-            ++entry;
-        QAccessible::updateAccessibility(viewport(), entry, QAccessible::Focus);
-#endif
-    }
-#endif
-}
-
-/*!
-  \reimp
- */
-void QTreeView::selectionChanged(const QItemSelection &selected,
-                                 const QItemSelection &deselected)
-{
-    QAbstractItemView::selectionChanged(selected, deselected);
-#ifndef QT_NO_ACCESSIBILITY
-    if (QAccessible::isActive()) {
-        // ### does not work properly for selection ranges.
-        QModelIndex sel = selected.indexes().value(0);
-        if (sel.isValid()) {
-#ifdef Q_WS_X11
-            int entry = (visualIndex(sel) + (header()?1:0))*sel.model()->columnCount()+sel.column() + 1;
-            Q_ASSERT(entry > 0);
-            QAccessible::updateAccessibility(this, entry, QAccessible::Selection);
-#else
-            int entry = visualIndex(sel) + 1;
-            if (header())
-                ++entry;
-            QAccessible::updateAccessibility(viewport(), entry, QAccessible::Selection);
-#endif
-        }
-        QModelIndex desel = deselected.indexes().value(0);
-        if (desel.isValid()) {
-#ifdef Q_WS_X11
-            int entry = (visualIndex(desel) + (header()?1:0))*desel.model()->columnCount()+desel.column() + 1;
-            Q_ASSERT(entry > 0);
-            QAccessible::updateAccessibility(this, entry, QAccessible::SelectionRemove);
-#else
-            int entry = visualIndex(desel) + 1;
-            if (header())
-                ++entry;
-            QAccessible::updateAccessibility(viewport(), entry, QAccessible::SelectionRemove);
-#endif
-        }
-    }
-#endif
 }
 
 int QTreeView::visualIndex(const QModelIndex &index) const

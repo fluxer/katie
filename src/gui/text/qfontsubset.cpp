@@ -328,10 +328,10 @@ QVector<int> QFontSubset::getReverseMap() const
     reverseMap.resize(0x10000);
     for (uint i = 0; i < 0x10000; ++i)
         reverseMap[i] = 0;
-    QGlyphLayoutArray<10> glyphs;
+    QGlyphLayoutArray<2> glyphs;
     for (uint uc = 0; uc < 0x10000; ++uc) {
         QChar ch(uc);
-        int nglyphs = 10;
+        int nglyphs = 1;
         fontEngine->stringToCMap(&ch, 1, &glyphs, &nglyphs, QTextEngine::GlyphIndicesOnly);
         int idx = glyph_indices.indexOf(glyphs.glyphs[0]);
         if (idx >= 0 && !reverseMap.at(idx))

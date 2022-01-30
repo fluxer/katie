@@ -223,9 +223,6 @@
 #include <QtGui/qtooltip.h>
 #include <QtGui/qtransform.h>
 #include <QtGui/qgraphicseffect.h>
-#ifndef QT_NO_ACCESSIBILITY
-# include <QtGui/qaccessible.h>
-#endif
 
 #include "qapplication_p.h"
 #include "qobject_p.h"
@@ -768,13 +765,6 @@ void QGraphicsScenePrivate::setFocusItemHelper(QGraphicsItem *item,
     if (item)
         focusItem = item;
 
-#ifndef QT_NO_ACCESSIBILITY
-    if (focusItem) {
-        if (QGraphicsObject *focusObj = focusItem->toGraphicsObject()) {
-            QAccessible::updateAccessibility(focusObj, 0, QAccessible::Focus);
-        }
-    }
-#endif
     if (item) {
         QFocusEvent event(QEvent::FocusIn, focusReason);
         sendEvent(item, &event);

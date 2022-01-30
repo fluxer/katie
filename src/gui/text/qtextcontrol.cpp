@@ -57,7 +57,6 @@
 #include "qtooltip.h"
 #include "qstyleoption.h"
 #include "qlineedit.h"
-#include "qaccessible.h"
 
 #ifndef QT_NO_SHORTCUT
 #include "qapplication_p.h"
@@ -541,10 +540,6 @@ void QTextControlPrivate::selectionChanged(bool forceEmitSelectionChanged /*=fal
     Q_Q(QTextControl);
     if (forceEmitSelectionChanged) {
         emit q->selectionChanged();
-#ifndef QT_NO_ACCESSIBILITY
-        if (q->parent())
-            QAccessible::updateAccessibility(q->parent(), 0, QAccessible::TextSelectionChanged);
-#endif
     }
 
     bool current = cursor.hasSelection();
@@ -555,10 +550,6 @@ void QTextControlPrivate::selectionChanged(bool forceEmitSelectionChanged /*=fal
     emit q->copyAvailable(current);
     if (!forceEmitSelectionChanged) {
         emit q->selectionChanged();
-#ifndef QT_NO_ACCESSIBILITY
-        if (q->parent())
-            QAccessible::updateAccessibility(q->parent(), 0, QAccessible::TextSelectionChanged);
-#endif
     }
 }
 

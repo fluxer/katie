@@ -221,16 +221,18 @@ private:
     QComboBox *mCombo;
 };
 
+static const int comboseparatorrole = (Qt::UserRole - 1);
+
 class QComboBoxDelegate : public QStyledItemDelegate
 { Q_OBJECT
 public:
     QComboBoxDelegate(QObject *parent, QComboBox *cmb) : QStyledItemDelegate(parent), mCombo(cmb) {}
 
     static bool isSeparator(const QModelIndex &index) {
-        return index.data(Qt::AccessibleDescriptionRole).toString() == QLatin1String("separator");
+        return index.data(comboseparatorrole).toInt() == 1;
     }
     static void setSeparator(QAbstractItemModel *model, const QModelIndex &index) {
-        model->setData(index, QString::fromLatin1("separator"), Qt::AccessibleDescriptionRole);
+        model->setData(index, 1, comboseparatorrole);
         if (QStandardItemModel *m = qobject_cast<QStandardItemModel*>(model))
             if (QStandardItem *item = m->itemFromIndex(index))
                 item->setFlags(item->flags() & ~(Qt::ItemIsSelectable|Qt::ItemIsEnabled));

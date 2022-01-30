@@ -21,9 +21,6 @@
 
 #include "qslider.h"
 #ifndef QT_NO_SLIDER
-#ifndef QT_NO_ACCESSIBILITY
-#include "qaccessible.h"
-#endif
 #include "qapplication.h"
 #include "qevent.h"
 #include "qpainter.h"

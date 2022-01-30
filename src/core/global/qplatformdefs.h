@@ -45,7 +45,6 @@
 #define QT_BUFFSIZE             BUFSIZ
 
 // Types
-#define QT_FPOS_T               fpos_t
 #define QT_OFF_T                off_t
 #define QT_SOCKLEN_T            socklen_t
 

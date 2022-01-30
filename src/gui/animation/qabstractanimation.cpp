@@ -138,7 +138,7 @@
 
 QT_BEGIN_NAMESPACE
 
-QTHREADLOCAL(QUnifiedTimer, unifiedTimer);
+thread_local std::unique_ptr<QUnifiedTimer> unifiedTimer(nullptr);
 
 QUnifiedTimer::QUnifiedTimer() :
     QObject(), lastTick(0), currentAnimationIdx(0), insideTick(false),
@@ -152,9 +152,9 @@ QUnifiedTimer::QUnifiedTimer() :
 QUnifiedTimer *QUnifiedTimer::instance()
 {
     if (!unifiedTimer) {
-        unifiedTimer = new QUnifiedTimer;
+        unifiedTimer = std::make_unique<QUnifiedTimer>();
     }
-    return unifiedTimer;
+    return unifiedTimer.get();
 }
 
 void QUnifiedTimer::ensureTimerUpdate()
@@ -273,7 +273,7 @@ void QUnifiedTimer::unregisterAnimation(QAbstractAnimation *animation)
                 --unifiedTimer->currentAnimationIdx;
 
             if (unifiedTimer->animations.isEmpty() && !unifiedTimer->startStopAnimationTimer.isActive())
-                unifiedTimer->startStopAnimationTimer.start(STARTSTOP_TIMER_DELAY, unifiedTimer);
+                unifiedTimer->startStopAnimationTimer.start(STARTSTOP_TIMER_DELAY, unifiedTimer.get());
         } else {
             unifiedTimer->animationsToStart.removeOne(animation);
         }

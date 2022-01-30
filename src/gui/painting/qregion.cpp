@@ -29,11 +29,16 @@
 #include "qdebug.h"
 #include "qimage.h"
 #include "qbitmap.h"
+#include "qscopedpointer.h"
+#include "qt_x11_p.h"
 #include "qcorecommon_p.h"
 
 #include <stdlib.h>
+#include <limits.h>
 
 QT_BEGIN_NAMESPACE
+
+QRegion::QRegionData QRegion::shared_empty = { QAtomicInt(1), 0, 0, 0};
 
 /*!
     \class QRegion
@@ -408,29 +413,6 @@ QRegion& QRegion::operator|=(const QRegion &r)
 }
 
 /*!
-    \fn QRegion& QRegion::operator+=(const QRect &rect)
-
-    Returns a region that is the union of this region with the specified \a rect.
-
-    \sa united()
-*/
-/*!
-    \fn QRegion& QRegion::operator+=(const QRegion &r)
-
-    Applies the united() function to this region and \a r and assigns
-    the result to this region. \c r1+=r2 is equivalent to \c
-    {r1 = r1.united(r2)}.
-
-    \sa intersected()
-*/
-#if !defined (Q_OS_UNIX)
-QRegion& QRegion::operator+=(const QRect &r)
-{
-    return operator+=(QRegion(r));
-}
-#endif
-
-/*!
   \fn QRegion& QRegion::operator&=(const QRegion &r)
 
   Applies the intersected() function to this region and \a r and
@@ -448,17 +430,10 @@ QRegion& QRegion::operator&=(const QRegion &r)
    \overload
    \since 4.4
  */
-#if defined (Q_OS_UNIX)
 QRegion& QRegion::operator&=(const QRect &r)
 {
     return *this = *this & r;
 }
-#else
-QRegion& QRegion::operator&=(const QRect &r)
-{
-    return *this &= (QRegion(r));
-}
-#endif
 
 /*!
   \fn QRegion& QRegion::operator-=(const QRegion &r)
@@ -584,26 +559,6 @@ bool QRegion::intersects(const QRegion &region) const
     }
     return false;
 }
-
-/*!
-    \fn bool QRegion::intersects(const QRect &rect) const
-    \since 4.2
-
-    Returns true if this region intersects with \a rect, otherwise
-    returns false.
-*/
-
-
-#if !defined (Q_OS_UNIX)
-/*!
-    \overload
-    \since 4.4
-*/
-QRegion QRegion::intersect(const QRect &r) const
-{
-    return intersect(QRegion(r));
-}
-#endif
 
 /*!
     \fn int QRegion::rectCount() const
@@ -1479,12 +1434,6 @@ void QRegionPrivate::selfTest() const
 }
 #endif // QT_REGION_DEBUG
 
-#if defined(Q_WS_X11)
-QT_BEGIN_INCLUDE_NAMESPACE
-# include "qregion_x11.cpp"
-QT_END_INCLUDE_NAMESPACE
-#endif
-
 typedef void (*OverlapFunc)(QRegionPrivate &dest, const QRect *r1, const QRect *r1End,
                             const QRect *r2, const QRect *r2End, int y1, int y2);
 typedef void (*NonOverlapFunc)(QRegionPrivate &dest, const QRect *r, const QRect *rEnd,
@@ -1554,10 +1503,6 @@ SOFTWARE.
 #ifndef _XREGION_H
 #define _XREGION_H
 
-QT_BEGIN_INCLUDE_NAMESPACE
-#include <limits.h>
-QT_END_INCLUDE_NAMESPACE
-
 /*  1 if two BOXes overlap.
  *  0 if two BOXes do not overlap.
  *  Remember, x2 and y2 are not in the region
@@ -1595,7 +1540,7 @@ typedef struct _POINTBLOCK {
     struct _POINTBLOCK *next;
 } POINTBLOCK;
 
-#endif
+#endif // _XREGION_H
 // END OF region.h extract
 
 // START OF Region.c extract
@@ -3727,7 +3672,6 @@ QRegion::~QRegion()
         cleanUp(d);
 }
 
-
 QRegion &QRegion::operator=(const QRegion &r)
 {
     if (d == r.d)
@@ -3818,6 +3762,15 @@ QRegion QRegion::unite(const QRegion &r) const
     }
 }
 
+/*!
+    \fn QRegion& QRegion::operator+=(const QRegion &r)
+
+    Applies the united() function to this region and \a r and assigns
+    the result to this region. \c r1+=r2 is equivalent to \c
+    {r1 = r1.united(r2)}.
+
+    \sa intersected()
+*/
 QRegion& QRegion::operator+=(const QRegion &r)
 {
     if (isEmptyHelper(d->qt_rgn))
@@ -3880,6 +3833,13 @@ QRegion QRegion::unite(const QRect &r) const
     }
 }
 
+/*!
+    \fn QRegion& QRegion::operator+=(const QRect &rect)
+
+    Returns a region that is the union of this region with the specified \a rect.
+
+    \sa united()
+*/
 QRegion& QRegion::operator+=(const QRect &r)
 {
     if (isEmptyHelper(d->qt_rgn))
@@ -4114,7 +4074,6 @@ int QRegion::rectCount() const
     return (d->qt_rgn ? d->qt_rgn->numRects : 0);
 }
 
-
 bool QRegion::operator==(const QRegion &r) const
 {
     if (!d->qt_rgn)
@@ -4128,6 +4087,14 @@ bool QRegion::operator==(const QRegion &r) const
         return EqualRegion(d->qt_rgn, r.d->qt_rgn);
 }
 
+/*!
+    \fn bool QRegion::intersects(const QRect &rect) const
+    \overload
+    \since 4.4
+
+    Returns true if this region intersects with \a rect, otherwise
+    returns false.
+*/
 bool QRegion::intersects(const QRect &rect) const
 {
     if (isEmptyHelper(d->qt_rgn) || rect.isNull())
@@ -4145,10 +4112,49 @@ bool QRegion::intersects(const QRect &rect) const
     }
     return false;
 }
-#endif
+
+void QRegion::updateX11Region() const
+{
+    d->rgn = XCreateRegion();
+    if (!d->qt_rgn)
+        return;
+
+    int n = d->qt_rgn->numRects;
+    const QRect *rect = (n == 1 ? &d->qt_rgn->extents : d->qt_rgn->rects.constData());
+    while (n--) {
+        XRectangle r;
+        r.x = qMax(SHRT_MIN, rect->x());
+        r.y = qMax(SHRT_MIN, rect->y());
+        r.width = qMin((int)USHRT_MAX, rect->width());
+        r.height = qMin((int)USHRT_MAX, rect->height());
+        XUnionRectWithRegion(&r, d->rgn, d->rgn);
+        ++rect;
+    }
+}
+
+void *QRegion::clipRectangles(int &num) const
+{
+    if (!d->xrectangles && !(d == &shared_empty || d->qt_rgn->numRects == 0)) {
+        XRectangle *r = static_cast<XRectangle*>(malloc(d->qt_rgn->numRects * sizeof(XRectangle)));
+        d->xrectangles = r;
+        int n = d->qt_rgn->numRects;
+        const QRect *rect = (n == 1 ? &d->qt_rgn->extents : d->qt_rgn->rects.constData());
+        while (n--) {
+            r->x = qMax(SHRT_MIN, rect->x());
+            r->y = qMax(SHRT_MIN, rect->y());
+            r->width = qMin((int)USHRT_MAX, rect->width());
+            r->height = qMin((int)USHRT_MAX, rect->height());
+            ++r;
+            ++rect;
+        }
+    }
+    if (d == &shared_empty || d->qt_rgn->numRects == 0)
+        num = 0;
+    else
+        num = d->qt_rgn->numRects;
+    return d->xrectangles;
+}
+
+#endif // Q_OS_UNIX
 
 QT_END_NAMESPACE
-
-
-
-

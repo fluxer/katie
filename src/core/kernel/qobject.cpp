@@ -207,62 +207,6 @@ public:
     }
 };
 
-// Used by QAccessibleWidget
-bool QObjectPrivate::isSender(const QObject *receiver, const char *signal) const
-{
-    Q_Q(const QObject);
-    int signal_index = signalIndex(signal);
-    if (signal_index < 0)
-        return false;
-    QMutexLocker locker(signalSlotLock(q));
-    if (connectionLists) {
-        if (signal_index < connectionLists->count()) {
-            const QObjectPrivate::Connection *c =
-                connectionLists->at(signal_index).first;
-
-            while (c) {
-                if (c->receiver == receiver)
-                    return true;
-                c = c->nextConnectionList;
-            }
-        }
-    }
-    return false;
-}
-
-// Used by QAccessibleWidget
-QObjectList QObjectPrivate::receiverList(const char *signal) const
-{
-    Q_Q(const QObject);
-    QObjectList returnValue;
-    int signal_index = signalIndex(signal);
-    if (signal_index < 0)
-        return returnValue;
-    QMutexLocker locker(signalSlotLock(q));
-    if (connectionLists) {
-        if (signal_index < connectionLists->count()) {
-            const QObjectPrivate::Connection *c = connectionLists->at(signal_index).first;
-
-            while (c) {
-                if (c->receiver)
-                    returnValue << c->receiver;
-                c = c->nextConnectionList;
-            }
-        }
-    }
-    return returnValue;
-}
-
-// Used by QAccessibleWidget
-QObjectList QObjectPrivate::senderList() const
-{
-    QObjectList returnValue;
-    QMutexLocker locker(signalSlotLock(q_func()));
-    for (Connection *c = senders; c; c = c->next)
-        returnValue << c->sender;
-    return returnValue;
-}
-
 void QObjectPrivate::addConnection(int signal, Connection *c)
 {
     if (!connectionLists)

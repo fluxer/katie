@@ -325,8 +325,7 @@ void QX11PixmapData::fromImage(const QImage &img,
 #endif
 
     if (alphaCheck.hasAlpha()) {
-        QBitmap m = QBitmap::fromImage(image.createAlphaMask(flags));
-        setMask(m);
+        setMask(QBitmap::fromImage(image.createAlphaMask(flags)));
     }
 }
 
@@ -729,7 +728,7 @@ QImage QX11PixmapData::toImage(const QRect &rect) const
         format = QImage::Format_MonoLSB;
     } else if (d == 1) {
         format = QImage::Format_Mono;
-    } else if (x11_mask) {
+    } else if (x11_mask || qt_x11Data->use_xrender) {
         format = QImage::Format_ARGB32;
     }
 
@@ -743,6 +742,7 @@ QImage QX11PixmapData::toImage(const QRect &rect) const
         image.setColorTable(monoColorTable());
     }
 
+    QX11Data::copyXImageToQImage(xi, image);
     if (x11_mask) {
         QImage alpha;
         if (rect.contains(QRect(0, 0, w, h))) {
@@ -750,9 +750,7 @@ QImage QX11PixmapData::toImage(const QRect &rect) const
         } else {
             alpha = mask().toImage().copy(rect);
         }
-        QX11Data::copyXImageToQImageWithMask(xi, image, alpha);
-    } else {
-        QX11Data::copyXImageToQImage(xi, image);
+        image = qt_mask_image(image, alpha);
     }
 
     qSafeXDestroyImage(xi);

@@ -36,7 +36,6 @@ class QFontEngine;
 
 class Q_GUI_EXPORT QFontDatabase
 {
-    Q_GADGET
 public:
     static QList<int> standardSizes();
 
