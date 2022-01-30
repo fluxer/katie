@@ -39,17 +39,12 @@ static inline void qt_ximage_to_qimage(XImage *ximage, QImage &image)
     const int bpl = image.bytesPerLine();
     uchar* imagebits = image.bits();
     switch (image.format()) {
-        case QImage::Format_ARGB32: {
+        case QImage::Format_ARGB32_Premultiplied: {
             for (int h = 0; h < ximage->height; h++) {
                 uchar* scan = QFAST_SCAN_LINE(imagebits, bpl, h);
                 for (int w = 0; w < ximage->width; w++) {
                     const uint xpixel = XGetPixel(ximage, w, h);
-                    // the color is either fully transparent or with no alpha channel
-                    if (xpixel != 0) {
-                        ((uint *)scan)[w] = (xpixel | 0xff000000);
-                    } else {
-                        ((uint *)scan)[w] = xpixel;
-                    }
+                    ((uint *)scan)[w] = PREMUL(xpixel);
                 }
             }
             break;
@@ -86,7 +81,7 @@ static inline QImage::Format qt_xpm_qimage_format(const XpmAttributes *xpmattrib
     QImage::Format format = QImage::systemFormat();
     for (int i = 0; i < xpmattributes->ncolors; i++) {
         if (qstricmp(xpmattributes->colorTable[i].c_color, "None") == 0) {
-            format = QImage::Format_ARGB32;
+            format = QImage::Format_ARGB32_Premultiplied;
             break;
         }
     }
