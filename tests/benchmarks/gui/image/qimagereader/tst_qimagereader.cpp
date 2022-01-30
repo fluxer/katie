@@ -68,6 +68,9 @@ private slots:
     void setScaledClipRect_data();
     void setScaledClipRect();
 
+    void png_vs_xpm_data();
+    void png_vs_xpm();
+
 private:
     QList< QPair<QString, QByteArray> > images; // filename, format
 };
@@ -193,6 +196,28 @@ void tst_QImageReader::setScaledClipRect()
         reader.setScaledClipRect(newRect);
         QImage image = reader.read();
         QCOMPARE(image.rect(), newRect);
+    }
+}
+
+#define BENCH_IMAGE_READ(image1, image2)
+
+void tst_QImageReader::png_vs_xpm_data()
+{
+    QTest::addColumn<QString>("fileName");
+    QTest::addColumn<QByteArray>("format");
+    QTest::newRow("png") << QString::fromLatin1("bench.png") << QByteArray("png");
+    QTest::newRow("xpm") << QString::fromLatin1("bench.xpm") << QByteArray("xpm");
+}
+
+void tst_QImageReader::png_vs_xpm()
+{
+    QFETCH(QString, fileName);
+    QFETCH(QByteArray, format);
+
+    QBENCHMARK {
+        QImageReader reader(QLatin1String(SRCDIR "/images/") + fileName, format);
+        QImage image = reader.read();
+        QVERIFY(!image.isNull());
     }
 }
 
