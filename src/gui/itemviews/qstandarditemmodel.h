@@ -23,6 +23,7 @@
 #define QSTANDARDITEMMODEL_H
 
 #include <QtCore/qabstractitemmodel.h>
+#include <QtCore/qscopedpointer.h>
 #include <QtGui/qbrush.h>
 #include <QtGui/qfont.h>
 #include <QtGui/qicon.h>
@@ -30,9 +31,7 @@
 #include <QtCore/qdatastream.h>
 #endif
 
-
 QT_BEGIN_NAMESPACE
-
 
 #ifndef QT_NO_STANDARDITEMMODEL
 
@@ -412,6 +411,5 @@ Q_GUI_EXPORT QDataStream &operator<<(QDataStream &out, const QStandardItem &item
 #endif // QT_NO_STANDARDITEMMODEL
 
 QT_END_NAMESPACE
-
 
 #endif //QSTANDARDITEMMODEL_H

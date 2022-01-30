@@ -24,6 +24,7 @@
 
 #include <QtGui/QWidget>
 #include <QtCore/QSet>
+#include <QtCore/QScopedPointer>
 
 QT_BEGIN_NAMESPACE
 

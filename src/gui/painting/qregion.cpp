@@ -29,6 +29,7 @@
 #include "qdebug.h"
 #include "qimage.h"
 #include "qbitmap.h"
+#include "qscopedpointer.h"
 #include "qt_x11_p.h"
 #include "qcorecommon_p.h"
 
