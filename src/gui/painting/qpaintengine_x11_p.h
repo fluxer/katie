@@ -76,8 +76,6 @@ public:
 
     inline Type type() const { return QPaintEngine::X11; }
 
-    QPainter::RenderHints supportedRenderHints() const;
-
 protected:
     QX11PaintEngine(QX11PaintEnginePrivate &dptr);
 

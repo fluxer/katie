@@ -517,9 +517,6 @@ void QRasterPaintEngine::brushChanged()
     s->fillFlags |= DirtyBrush;
 }
 
-
-
-
 /*!
     \internal
 */
@@ -556,7 +553,6 @@ void QRasterPaintEngine::updateRasterState()
 
     s->dirty = 0;
 }
-
 
 /*!
     \internal

@@ -481,15 +481,6 @@ bool QX11PaintEngine::end()
     return true;
 }
 
-QPainter::RenderHints QX11PaintEngine::supportedRenderHints() const
-{
-#if !defined(QT_NO_XRENDER)
-    if (qt_x11Data->use_xrender)
-        return QPainter::Antialiasing;
-#endif
-    return QFlag(0);
-}
-
 void QX11PaintEngine::updateState(const QPaintEngineState &state)
 {
     Q_D(QX11PaintEngine);
