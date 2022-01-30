@@ -126,19 +126,18 @@ void QRasterWindowSurface::flush(QWidget *widget, const QRegion &rgn, const QPoi
     QRect br = rgn.boundingRect().translated(offset).intersected(clipRect);
     QPoint wpos = br.topLeft() - widgetOffset;
 
-    int depth = widget->x11Info().depth();
-    const QImage *src = d->image;
-    if (src->format() != QImage::Format_RGB32 || src->depth() != 32 || depth != 32) {
-        Q_ASSERT(src->depth() >= 16);
-        QX11PixmapData data(QPixmapData::PixmapType);
-        data.xinfo = widget->x11Info();
-        data.fromImage(src->copy(br), Qt::NoOpaqueDetection);
-        XCopyArea(qt_x11Data->display, data.handle(), widget->handle(), d_ptr->gc, 0 , 0 , br.width(), br.height(), wpos.x(), wpos.y());
-    } else {
-        // qpaintengine_x11.cpp
-        extern void qt_x11_drawImage(const QRect &rect, const QPoint &pos, const QImage *image, Drawable hd, GC gc, Display *dpy, Visual *visual, int depth);
-        qt_x11_drawImage(br, wpos, src, widget->handle(), d_ptr->gc, qt_x11Data->display, (Visual *)widget->x11Info().visual(), depth);
+    const int depth = widget->x11Info().depth();
+    const int bw = br.width();
+    const int bh = br.height();
+    QImage image = d->image->copy(br);
+    if (image.depth() != 32) {
+        image = image.convertToFormat(QImage::Format_RGB32);
     }
+    XImage *xi = XCreateImage(qt_x11Data->display, (Visual *)widget->x11Info().visual(), depth, ZPixmap, 0, 0, bw, bh, 32, 0);
+    Q_CHECK_PTR(xi);
+    QX11Data::copyQImageToXImage(image, xi);
+    XPutImage(qt_x11Data->display, widget->handle(), d_ptr->gc, xi, 0, 0, wpos.x(), wpos.y(), bw, bh);
+    XDestroyImage(xi);
 
     if (wrgn.rectCount() != 1)
         XSetClipMask(qt_x11Data->display, d_ptr->gc, XNone);
