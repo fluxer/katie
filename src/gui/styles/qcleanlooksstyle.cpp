@@ -65,290 +65,6 @@ static const int cleanlooksWindowsItemHMargin      =  3; // menu item hor text m
 static const int cleanlooksWindowsItemVMargin      =  8; // menu item ver text margin
 static const int cleanlooksWindowsRightBorder      = 15; // right border on windows
 
-/* XPM */
-static const char * const qt_cleanlooks_arrow_down_xpm[] = {
-    "11 7 2 1",
-    "  c None",
-    "x c #000000",
-    "           ",
-    "  x     x  ",
-    " xxx   xxx ",
-    "  xxxxxxx  ",
-    "   xxxxx   ",
-    "    xxx    ",
-    "     x     "};
-
-/* XPM */
-static const char * const qt_cleanlooks_arrow_up_xpm[] = {
-    "11 7 2 1",
-    "  c None",
-    "x c #000000",
-    "     x     ",
-    "    xxx    ",
-    "   xxxxx   ",
-    "  xxxxxxx  ",
-    " xxx   xxx ",
-    "  x     x  ",
-    "           "};
-
-/* XPM */
-static const char * const qt_cleanlooks_titlebar_context_help[] = {
-    "10 10 3 1",
-    "  c None",
-    "# c #000000",
-    "+ c #444444",
-    "  +####+  ",
-    " ###  ### ",
-    " ##    ## ",
-    "     +##+ ",
-    "    +##   ",
-    "    ##    ",
-    "    ##    ",
-    "          ",
-    "    ##    ",
-    "    ##    "};
-
-/* XPM */
-static const char * const qt_cleanlooks_radiobutton[] = {
-    "13 13 9 1",
-    "  c None",
-    ". c #ABA094",
-    "+ c #B7ADA0",
-    "@ c #C4BBB2",
-    "# c #DDD4CD",
-    "$ c #E7E1E0",
-    "% c #F4EFED",
-    "& c #FFFAF9",
-    "* c #FCFEFB",
-    "   #@...@#   ",
-    "  @+@#$$#+@  ",
-    " @+$%%***&@@ ",
-    "#+$%**&&**&+#",
-    "@@$&&******#@",
-    ".#**********.",
-    ".$&******&*&.",
-    ".$*&******&*.",
-    "+#********&#@",
-    "#+*********+#",
-    " @@*******@@ ",
-    "  @+#%*%#+@  ",
-    "   #@...+#   "};
-
-/* XPM */
-static const char * const qt_cleanlooks_radiobutton_checked[] = {
-    "13 13 20 1",
-    "  c None",
-    ". c #A8ABAE",
-    "+ c #596066",
-    "@ c #283138",
-    "# c #A9ACAF",
-    "$ c #A6A9AB",
-    "% c #6B7378",
-    "& c #8C9296",
-    "* c #A2A6AA",
-    "= c #61696F",
-    "- c #596065",
-    "; c #93989C",
-    "> c #777E83",
-    ", c #60686E",
-    "' c #252D33",
-    ") c #535B62",
-    "! c #21292E",
-    "~ c #242B31",
-    "{ c #1F262B",
-    "] c #41484E",
-    "             ",
-    "             ",
-    "             ",
-    "    .+@+#    ",
-    "   $%&*&=#   ",
-    "   -&;>,'+   ",
-    "   @*>,)!@   ",
-    "   +&,)~{+   ",
-    "   #='!{]#   ",
-    "    #+@+#    ",
-    "             ",
-    "             ",
-    "             "};
-
-/* XPM */
-static const char * const qt_cleanlooks_scrollbar_button_arrow_up[] = {
-    "7 4 2 1",
-    "  c None",
-    "* c #BFBFBF",
-    "   *   ",
-    "  ***  ",
-    " ***** ",
-    "*******"};
-
-/* XPM */
-static const char * const qt_cleanlooks_scrollbar_button_arrow_down[] = {
-    "7 4 2 1",
-    "  c None",
-    "* c #BFBFBF",
-    "*******",
-    " ***** ",
-    "  ***  ",
-    "   *   "};
-
-/* XPM */
-static const char * const qt_cleanlooks_spinbox_button_arrow_down[] = {
-    "7 4 2 1",
-    "  c None",
-    "* c #BFBFBF",
-    "*******",
-    " ***** ",
-    "  ***  ",
-    "   *   "};
-
-/* XPM */
-static const char * const qt_cleanlooks_spinbox_button_arrow_up[] = {
-    "7 4 2 1",
-    "  c None",
-    "* c #BFBFBF",
-    "   *   ",
-    "  ***  ",
-    " ***** ",
-    "*******"};
-
-/* XPM */
-static const char * const qt_cleanlooks_scrollbar_button_left[] = {
-    "16 16 5 1",
-    "  c None",
-    ". c #BFBFBF",
-    "+ c #979797",
-    "# c #FAFAFA",
-    "< c #AFAFAF",
-    " .++++++++++++++",
-    ".+#############+",
-    "+#            <+",
-    "+#            <+",
-    "+#            <+",
-    "+#            <+",
-    "+#            <+",
-    "+#            <+",
-    "+#            <+",
-    "+#            <+",
-    "+#            <+",
-    "+#            <+",
-    "+#            <+",
-    "+#            <+",
-    ".+<<<<<<<<<<<<<+",
-    " .++++++++++++++"};
-
-/* XPM */
-static const char * const qt_cleanlooks_scrollbar_button_right[] = {
-    "16 16 5 1",
-    "  c None",
-    ". c #BFBFBF",
-    "+ c #979797",
-    "# c #FAFAFA",
-    "< c #AFAFAF",
-    "++++++++++++++. ",
-    "+#############+.",
-    "+#            <+",
-    "+#            <+",
-    "+#            <+",
-    "+#            <+",
-    "+#            <+",
-    "+#            <+",
-    "+#            <+",
-    "+#            <+",
-    "+#            <+",
-    "+#            <+",
-    "+#            <+",
-    "+#            <+",
-    "+<<<<<<<<<<<<<+.",
-    "++++++++++++++. "};
-
-/* XPM */
-static const char * const qt_cleanlooks_scrollbar_button_up[] = {
-    "16 16 5 1",
-    "  c None",
-    ". c #BFBFBF",
-    "+ c #979797",
-    "# c #FAFAFA",
-    "< c #AFAFAF",
-    " .++++++++++++. ",
-    ".+############+.",
-    "+#            <+",
-    "+#            <+",
-    "+#            <+",
-    "+#            <+",
-    "+#            <+",
-    "+#            <+",
-    "+#            <+",
-    "+#            <+",
-    "+#            <+",
-    "+#            <+",
-    "+#            <+",
-    "+#            <+",
-    "+<<<<<<<<<<<<<<+",
-    "++++++++++++++++"};
-
-/* XPM */
-static const char * const qt_cleanlooks_scrollbar_button_down[] = {
-    "16 16 5 1",
-    "  c None",
-    ". c #BFBFBF",
-    "+ c #979797",
-    "# c #FAFAFA",
-    "< c #AFAFAF",
-    "++++++++++++++++",
-    "+##############+",
-    "+#            <+",
-    "+#            <+",
-    "+#            <+",
-    "+#            <+",
-    "+#            <+",
-    "+#            <+",
-    "+#            <+",
-    "+#            <+",
-    "+#            <+",
-    "+#            <+",
-    "+#            <+",
-    "+#            <+",
-    ".+<<<<<<<<<<<<+.",
-    " .++++++++++++. "};
-
-/* XPM */
-static const char * const qt_cleanlooks_menuitem_checkbox_checked[] = {
-    "8 7 6 1",
-    "  c None",
-    ". c #959595",
-    "+ c #676767",
-    "@ c #454545",
-    "# c #1D1D1D",
-    "0 c #101010",
-    "      ..",
-    "     .+ ",
-    "    .+  ",
-    "0  .@   ",
-    "@#++.   ",
-    "  @#    ",
-    "   .    "};
-
-/* XPM */
-static const char * const qt_cleanlooks_checkbox_checked[] = {
-    "13 13 3 1",
-    "  c None",
-    ". c #272D33",
-    "% c #666666",
-
-    "             ",
-    "          %  ",
-    "         %.  ",
-    "        %.%  ",
-    "       %..   ",
-    "  %.% %..    ",
-    "  %..%..%    ",
-    "   %...%     ",
-    "    %..%     ",
-    "     %.%     ",
-    "      %      ",
-    "             ",
-    "             "};
-
 static void qt_cleanlooks_draw_gradient(QPainter *painter, const QRect &rect, const QColor &gradientStart,
                                         const QColor &gradientStop, Direction direction = TopDown, QBrush bgBrush = QBrush())
 {
@@ -627,9 +343,9 @@ void QCleanlooksStyle::drawPrimitive(PrimitiveElement elem,
             QRect r = header->rect;
             QImage arrow;
             if (header->sortIndicator & QStyleOptionHeader::SortUp)
-                arrow = QImage(qt_cleanlooks_arrow_up_xpm);
+                arrow = QImage(QLatin1String(":/trolltech/styles/cleanlooksstyle/images/cleanlooks/qt_cleanlooks_arrow_up.png"));
             else if (header->sortIndicator & QStyleOptionHeader::SortDown)
-                arrow = QImage(qt_cleanlooks_arrow_down_xpm);
+                arrow = QImage(QLatin1String(":/trolltech/styles/cleanlooksstyle/images/cleanlooks/qt_cleanlooks_arrow_down.png"));
             if (!arrow.isNull()) {
                 r.setSize(arrow.size());
                 r.moveCenter(header->rect.center());
@@ -840,7 +556,7 @@ void QCleanlooksStyle::drawPrimitive(PrimitiveElement elem,
             painter->drawRect(checkRect);
             if (checkbox->state & (State_On | State_Sunken  | State_NoChange)) {
                 QMap<QRgb, QRgb> colormap;
-                QImage image(qt_cleanlooks_checkbox_checked);
+                QImage image(QLatin1String(":/trolltech/styles/cleanlooksstyle/images/cleanlooks/qt_cleanlooks_checkbox_checked.png"));
                 QColor fillColor = option->palette.text().color();
                 colormap.insert(4280757555, fillColor.rgba());
                 fillColor.setAlpha(100);
@@ -861,16 +577,16 @@ void QCleanlooksStyle::drawPrimitive(PrimitiveElement elem,
         painter->save();
         QRect checkRect = rect.adjusted(0, 0, 0, 0);
         if (state & (State_On )) {
-            painter->drawImage(rect, QImage(qt_cleanlooks_radiobutton));
-            painter->drawImage(checkRect, QImage(qt_cleanlooks_radiobutton_checked));
+            painter->drawImage(rect, QImage(QLatin1String(":/trolltech/styles/cleanlooksstyle/images/cleanlooks/qt_cleanlooks_radiobutton.png")));
+            painter->drawImage(checkRect, QImage(QLatin1String(":/trolltech/styles/cleanlooksstyle/images/cleanlooks/qt_cleanlooks_radiobutton_checked.png")));
         }
         else if (state & State_Sunken) {
-            painter->drawImage(rect, QImage(qt_cleanlooks_radiobutton));
+            painter->drawImage(rect, QImage(QLatin1String(":/trolltech/styles/cleanlooksstyle/images/cleanlooks/qt_cleanlooks_radiobutton.png")));
             painter->setBrush(buttonShadow);
             painter->setPen(Qt::NoPen);
             painter->drawEllipse(rect.adjusted(1, 1, -1, -1));                }
         else {
-            painter->drawImage(rect, QImage(qt_cleanlooks_radiobutton));
+            painter->drawImage(rect, QImage(QLatin1String(":/trolltech/styles/cleanlooksstyle/images/cleanlooks/qt_cleanlooks_radiobutton.png")));
         }
         painter->restore();
         break;
@@ -1794,7 +1510,7 @@ void QCleanlooksStyle::drawControl(ControlElement element, const QStyleOption *o
                         // Check box
                         if (menuItem->icon.isNull()) {
                             if (checked || sunken) {
-                                QImage image(qt_cleanlooks_menuitem_checkbox_checked);
+                                QImage image(QLatin1String(":/trolltech/styles/cleanlooksstyle/images/cleanlooks/qt_cleanlooks_menuitem_checkbox_checked.png"));
                                 QMap<QRgb, QRgb> imagecolors;
                                 if (enabled && (menuItem->state & State_Selected)) {
                                     imagecolors.insert(4287993237, 0x55ffffff);
@@ -2500,7 +2216,7 @@ void QCleanlooksStyle::drawComplexControl(ComplexControl control, const QStyleOp
                     }
                 } else if (spinBox->buttonSymbols == QAbstractSpinBox::UpDownArrows){
                     // arrows
-                    QImage upArrow(qt_cleanlooks_spinbox_button_arrow_up);
+                    QImage upArrow(QLatin1String(":/trolltech/styles/cleanlooksstyle/images/cleanlooks/qt_cleanlooks_spinbox_button_arrow_up.png"));
                     QMap<QRgb, QRgb> arrowMap;
                     arrowMap.insert(4290756543, spinBox->palette.foreground().color().rgba());
                     upArrow = replaceColors(upArrow, arrowMap);
@@ -2509,7 +2225,7 @@ void QCleanlooksStyle::drawComplexControl(ComplexControl control, const QStyleOp
                                             upRect.center().y() - upArrow.height() / 2,
                                             upArrow);
 
-                    QImage downArrow(qt_cleanlooks_spinbox_button_arrow_down);
+                    QImage downArrow(QLatin1String(":/trolltech/styles/cleanlooksstyle/images/cleanlooks/qt_cleanlooks_spinbox_button_arrow_down.png"));
                     downArrow = replaceColors(downArrow, arrowMap);
 
                     cachePainter.drawImage(downRect.center().x() - downArrow.width() / 2,
@@ -2744,7 +2460,7 @@ void QCleanlooksStyle::drawComplexControl(ComplexControl control, const QStyleOp
                     qt_cleanlooks_draw_mdibutton(painter, titleBar, contextHelpButtonRect, hover, sunken);
 
                     QColor blend;
-                    QImage image(qt_cleanlooks_titlebar_context_help);
+                    QImage image(QLatin1String(":/trolltech/styles/cleanlooksstyle/images/cleanlooks/qt_cleanlooks_titlebar_context_help.png"));
                     QColor alpha = textColor;
                     alpha.setAlpha(128);
                     QMap<QRgb, QRgb> imagecolors;
@@ -2762,7 +2478,7 @@ void QCleanlooksStyle::drawComplexControl(ComplexControl control, const QStyleOp
                     bool hover = (titleBar->activeSubControls & SC_TitleBarShadeButton) && (titleBar->state & State_MouseOver);
                     bool sunken = (titleBar->activeSubControls & SC_TitleBarShadeButton) && (titleBar->state & State_Sunken);
                     qt_cleanlooks_draw_mdibutton(painter, titleBar, shadeButtonRect, hover, sunken);
-                    QImage image(qt_cleanlooks_scrollbar_button_arrow_up);
+                    QImage image(QLatin1String(":/trolltech/styles/cleanlooksstyle/images/cleanlooks/qt_cleanlooks_scrollbar_button_arrow_up.png"));
                     QMap<QRgb, QRgb> imagecolors;
                     imagecolors.insert(4290756543, textColor.rgba());
                     image = replaceColors(image, imagecolors);
@@ -2777,7 +2493,7 @@ void QCleanlooksStyle::drawComplexControl(ComplexControl control, const QStyleOp
                     bool hover = (titleBar->activeSubControls & SC_TitleBarUnshadeButton) && (titleBar->state & State_MouseOver);
                     bool sunken = (titleBar->activeSubControls & SC_TitleBarUnshadeButton) && (titleBar->state & State_Sunken);
                     qt_cleanlooks_draw_mdibutton(painter, titleBar, unshadeButtonRect, hover, sunken);
-                    QImage image(qt_cleanlooks_scrollbar_button_arrow_down);
+                    QImage image(QLatin1String(":/trolltech/styles/cleanlooksstyle/images/cleanlooks/qt_cleanlooks_scrollbar_button_arrow_down.png"));
                     QMap<QRgb, QRgb> imagecolors;
                     imagecolors.insert(4290756543, textColor.rgba());
                     image = replaceColors(image, imagecolors);
@@ -2975,9 +2691,13 @@ void QCleanlooksStyle::drawComplexControl(ComplexControl control, const QStyleOp
                 // Details
                 QImage subButton;
                 if (horizontal) {
-                    subButton = QImage(reverse ? qt_cleanlooks_scrollbar_button_right : qt_cleanlooks_scrollbar_button_left);
+                    if (reverse) {
+                        subButton = QImage(QLatin1String(":/trolltech/styles/cleanlooksstyle/images/cleanlooks/qt_cleanlooks_scrollbar_button_right.png"));
+                    } else {
+                        subButton = QImage(QLatin1String(":/trolltech/styles/cleanlooksstyle/images/cleanlooks/qt_cleanlooks_scrollbar_button_left.png"));
+                    }
                 } else {
-                    subButton = QImage(qt_cleanlooks_scrollbar_button_up);
+                    subButton = QImage(QLatin1String(":/trolltech/styles/cleanlooksstyle/images/cleanlooks/qt_cleanlooks_scrollbar_button_up.png"));
                 }
 
                 QMap<QRgb, QRgb> subButtonMap;
@@ -3028,9 +2748,13 @@ void QCleanlooksStyle::drawComplexControl(ComplexControl control, const QStyleOp
                     // Details
                     QImage addButton;
                     if (horizontal) {
-                        addButton = QImage(reverse ? qt_cleanlooks_scrollbar_button_left : qt_cleanlooks_scrollbar_button_right);
+                        if (reverse) {
+                            addButton = QImage(QLatin1String(":/trolltech/styles/cleanlooksstyle/images/cleanlooks/qt_cleanlooks_scrollbar_button_left.png"));
+                        } else {
+                            addButton = QImage(QLatin1String(":/trolltech/styles/cleanlooksstyle/images/cleanlooks/qt_cleanlooks_scrollbar_button_right.png"));
+                        }
                     } else {
-                        addButton = QImage(qt_cleanlooks_scrollbar_button_down);
+                        addButton = QImage(QLatin1String(":/trolltech/styles/cleanlooksstyle/images/cleanlooks/qt_cleanlooks_scrollbar_button_down.png"));
                     }
                     QMap<QRgb, QRgb> addButtonMap;
                     addButtonMap.insert(4290756543, alphaCornerColor.rgba());
@@ -3179,7 +2903,7 @@ void QCleanlooksStyle::drawComplexControl(ComplexControl control, const QStyleOp
                 if (comboBox->subControls & SC_ComboBoxArrow) {
                     if (comboBox->editable) {
                         // Draw the down arrow
-                        QImage downArrow(qt_cleanlooks_arrow_down_xpm);
+                        QImage downArrow(QLatin1String(":/trolltech/styles/cleanlooksstyle/images/cleanlooks/qt_cleanlooks_arrow_down.png"));
                         QMap<QRgb, QRgb> downArrowMap;
                         downArrowMap.insert(4278190080, comboBox->palette.foreground().color().rgba());
                         downArrow = replaceColors(downArrow, downArrowMap);
@@ -3187,11 +2911,11 @@ void QCleanlooksStyle::drawComplexControl(ComplexControl control, const QStyleOp
                                                downArrowRect.center().y() - downArrow.height() / 2 + 1, downArrow);
                     } else {
                         // Draw the up/down arrow
-                        QImage upArrow(qt_cleanlooks_scrollbar_button_arrow_up);
+                        QImage upArrow(QLatin1String(":/trolltech/styles/cleanlooksstyle/images/cleanlooks/qt_cleanlooks_scrollbar_button_arrow_up.png"));
                         QMap<QRgb, QRgb> upArrowMap;
                         upArrowMap.insert(4290756543, comboBox->palette.foreground().color().rgba());
                         upArrow = replaceColors(upArrow, upArrowMap);
-                        QImage downArrow(qt_cleanlooks_scrollbar_button_arrow_down);
+                        QImage downArrow(QLatin1String(":/trolltech/styles/cleanlooksstyle/images/cleanlooks/qt_cleanlooks_scrollbar_button_arrow_down.png"));
                         QMap<QRgb, QRgb> downArrowMap;
                         downArrowMap.insert(4290756543, comboBox->palette.foreground().color().rgba());
                         downArrow = replaceColors(downArrow, downArrowMap);
