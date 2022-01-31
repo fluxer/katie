@@ -93,9 +93,9 @@ static const char * const tree_branch_closed_xpm[] = {
 /* XPM */
 static const char * const tb_extension_arrow_v_xpm[] = {
     "5 8 3 1",
-    "            c None",
-    ".            c #000000",
-    "+            c none",
+    "  c None",
+    ". c #000000",
+    "+ c none",
     ".+++.",
     "..+..",
     "+...+",
@@ -109,9 +109,9 @@ static const char * const tb_extension_arrow_v_xpm[] = {
 /* XPM */
 static const char * const tb_extension_arrow_h_xpm[] = {
     "8 5 3 1",
-    "            c None",
-    ".            c #000000",
-    "+            c none",
+    "  c None",
+    ". c #000000",
+    "+ c none",
     "..++..++",
     "+..++..+",
     "++..++..",
