@@ -308,6 +308,7 @@ void QWhatsThat::paintEvent(QPaintEvent*)
     }
 }
 
+#ifndef QT_NO_IMAGEFORMAT_XPM
 /* XPM */
 static const char * const button_image[] = {
 "16 16 3 1",
@@ -330,6 +331,7 @@ static const char * const button_image[] = {
 "    ooo         ",
 "     ooo        ",
 "     ooo        "};
+#endif // QT_NO_IMAGEFORMAT_XPM
 
 class QWhatsThisPrivate : public QObject
 {
@@ -460,7 +462,7 @@ private slots:
 
 QWhatsThisAction::QWhatsThisAction(QObject *parent) : QAction(tr("What's This?"), parent)
 {
-#ifndef QT_NO_XPM
+#ifndef QT_NO_IMAGEFORMAT_XPM
     QPixmap p((const char**)button_image);
     setIcon(p);
 #endif

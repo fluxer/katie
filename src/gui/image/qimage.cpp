@@ -808,7 +808,7 @@ QImage::QImage(const char *fileName, const char *format)
 }
 #endif
 
-#ifndef QT_NO_XPM
+#ifndef QT_NO_IMAGEFORMAT_XPM
 extern bool qt_read_xpm_array(const char* const *source, QImage &image);
 
 /*!
@@ -837,7 +837,7 @@ QImage::QImage(const char * const xpm[])
         // Issue: Warning because the constructor may be ambigious
         qWarning("QImage::QImage(), XPM is not supported");
 }
-#endif // QT_NO_XPM
+#endif // QT_NO_IMAGEFORMAT_XPM
 
 /*!
     \fn QImage::QImage(const QByteArray &data)

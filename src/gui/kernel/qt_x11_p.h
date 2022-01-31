@@ -92,10 +92,6 @@
 #  include <X11/extensions/Xfixes.h>
 #endif // QT_NO_XFIXES
 
-#ifndef QT_NO_XPM
-#  include <X11/xpm.h>
-#endif // QT_NO_XPM
-
 #ifndef QT_NO_SESSIONMANAGER
 #  include <X11/SM/SMlib.h>
 #endif // QT_NO_SESSIONMANAGER

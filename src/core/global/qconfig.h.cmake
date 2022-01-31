@@ -152,7 +152,6 @@
 #cmakedefine QT_NO_XRENDER
 #cmakedefine QT_NO_XSHAPE
 #cmakedefine QT_NO_XSYNC
-#cmakedefine QT_NO_XPM
 
 // Misc
 #cmakedefine QT_NO_USING_NAMESPACE
@@ -443,7 +442,7 @@
 #endif
 
 // Drag and drop
-#if !defined(QT_NO_DRAGANDDROP) && defined(QT_NO_XPM)
+#if !defined(QT_NO_DRAGANDDROP) && defined(QT_NO_IMAGEFORMAT_XPM)
 #  define QT_NO_DRAGANDDROP
 #endif
 
@@ -473,7 +472,7 @@
 #endif
 
 // QCleanLooksStyle
-#if !defined(QT_NO_STYLE_CLEANLOOKS) && (defined(QT_NO_STYLE_WINDOWS) || defined(QT_NO_XPM))
+#if !defined(QT_NO_STYLE_CLEANLOOKS) && defined(QT_NO_STYLE_WINDOWS)
 #  define QT_NO_STYLE_CLEANLOOKS
 #endif
 

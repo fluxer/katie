@@ -10,7 +10,7 @@ pkgdesc='C++ toolkit derived from the Qt 4.8 framework'
 arch=('i486' 'i686' 'pentium4' 'x86_64' 'arm')
 url='https://github.com/fluxer/katie'
 license=('LGPL' 'BSD')
-depends=('libsm' 'libxcursor' 'libxinerama' 'libxpm' 'libxrandr' 'fontconfig'
+depends=('libsm' 'libxcursor' 'libxinerama' 'libxrandr' 'fontconfig'
          'icu' 'jansson' 'libcups' 'xdg-utils')
 makedepends=('cmake' 'git' 'unifdef')
 optdepends=('gnu-free-fonts: last resort font')
