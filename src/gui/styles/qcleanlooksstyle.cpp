@@ -66,34 +66,10 @@ static const int cleanlooksWindowsItemVMargin      =  8; // menu item ver text m
 static const int cleanlooksWindowsRightBorder      = 15; // right border on windows
 
 /* XPM */
-static const char * const qt_cleanlooks_dock_widget_close_xpm[] = {
-    "11 13 7 1",
-    " 	c None",
-    ".	c #D5CFCB",
-    "+	c #8F8B88",
-    "@	c #6C6A67",
-    "#	c #ABA6A3",
-    "$	c #B5B0AC",
-    "%	c #A4A09D",
-    "           ",
-    " +@@@@@@@+ ",
-    "+#       #+",
-    "@ $@   @$ @",
-    "@ @@@ @@@ @",
-    "@  @@@@@  @",
-    "@   @@@   @",
-    "@  @@@@@  @",
-    "@ @@@ @@@ @",
-    "@ $@   @$ @",
-    "+%       #+",
-    " +@@@@@@@+ ",
-    "           "};
-
-/* XPM */
 static const char * const qt_cleanlooks_arrow_down_xpm[] = {
     "11 7 2 1",
-    " 	c None",
-    "x	c #000000",
+    "  c None",
+    "x c #000000",
     "           ",
     "  x     x  ",
     " xxx   xxx ",
@@ -105,62 +81,14 @@ static const char * const qt_cleanlooks_arrow_down_xpm[] = {
 /* XPM */
 static const char * const qt_cleanlooks_arrow_up_xpm[] = {
     "11 7 2 1",
-    " 	c None",
-    "x	c #000000",
+    "  c None",
+    "x c #000000",
     "     x     ",
     "    xxx    ",
     "   xxxxx   ",
     "  xxxxxxx  ",
     " xxx   xxx ",
     "  x     x  ",
-    "           "};
-
-/* XPM */
-static const char * const qt_cleanlooks_dock_widget_restore_xpm[] = {
-    "11 13 7 1",
-    " 	c None",
-    ".	c #D5CFCB",
-    "+	c #8F8B88",
-    "@	c #6C6A67",
-    "#	c #ABA6A3",
-    "$	c #B5B0AC",
-    "%	c #A4A09D",
-    "           ",
-    " +@@@@@@@+ ",
-    "+#       #+",
-    "@   #@@@# @",
-    "@   @   @ @",
-    "@ #@@@# @ @",
-    "@ @   @ @ @",
-    "@ @   @@@ @",
-    "@ @   @   @",
-    "@ #@@@#   @",
-    "+%       #+",
-    " +@@@@@@@+ ",
-    "           "};
-
-/* XPM */
-static const char * const qt_cleanlooks_workspace_minimize[] = {
-    "11 13 7 1",
-    " 	c None",
-    ".	c #D5CFCB",
-    "+	c #8F8B88",
-    "@	c #6C6A67",
-    "#	c #ABA6A3",
-    "$	c #B5B0AC",
-    "%	c #A4A09D",
-    "           ",
-    " +@@@@@@@+ ",
-    "+#       #+",
-    "@         @",
-    "@         @",
-    "@         @",
-    "@ @@@@@@@ @",
-    "@ @@@@@@@ @",
-    "@         @",
-    "@         @",
-    "+%       #+",
-    " +@@@@@@@+ ",
     "           "};
 
 /* XPM */
@@ -183,15 +111,15 @@ static const char * const qt_cleanlooks_titlebar_context_help[] = {
 /* XPM */
 static const char * const qt_cleanlooks_radiobutton[] = {
     "13 13 9 1",
-    " 	c None",
-    ".	c #ABA094",
-    "+	c #B7ADA0",
-    "@	c #C4BBB2",
-    "#	c #DDD4CD",
-    "$	c #E7E1E0",
-    "%	c #F4EFED",
-    "&	c #FFFAF9",
-    "*	c #FCFEFB",
+    "  c None",
+    ". c #ABA094",
+    "+ c #B7ADA0",
+    "@ c #C4BBB2",
+    "# c #DDD4CD",
+    "$ c #E7E1E0",
+    "% c #F4EFED",
+    "& c #FFFAF9",
+    "* c #FCFEFB",
     "   #@...@#   ",
     "  @+@#$$#+@  ",
     " @+$%%***&@@ ",
@@ -209,26 +137,26 @@ static const char * const qt_cleanlooks_radiobutton[] = {
 /* XPM */
 static const char * const qt_cleanlooks_radiobutton_checked[] = {
     "13 13 20 1",
-    " 	c None",
-    ".	c #A8ABAE",
-    "+	c #596066",
-    "@	c #283138",
-    "#	c #A9ACAF",
-    "$	c #A6A9AB",
-    "%	c #6B7378",
-    "&	c #8C9296",
-    "*	c #A2A6AA",
-    "=	c #61696F",
-    "-	c #596065",
-    ";	c #93989C",
-    ">	c #777E83",
-    ",	c #60686E",
-    "'	c #252D33",
-    ")	c #535B62",
-    "!	c #21292E",
-    "~	c #242B31",
-    "{	c #1F262B",
-    "]	c #41484E",
+    "  c None",
+    ". c #A8ABAE",
+    "+ c #596066",
+    "@ c #283138",
+    "# c #A9ACAF",
+    "$ c #A6A9AB",
+    "% c #6B7378",
+    "& c #8C9296",
+    "* c #A2A6AA",
+    "= c #61696F",
+    "- c #596065",
+    "; c #93989C",
+    "> c #777E83",
+    ", c #60686E",
+    "' c #252D33",
+    ") c #535B62",
+    "! c #21292E",
+    "~ c #242B31",
+    "{ c #1F262B",
+    "] c #41484E",
     "             ",
     "             ",
     "             ",
@@ -246,8 +174,8 @@ static const char * const qt_cleanlooks_radiobutton_checked[] = {
 /* XPM */
 static const char * const qt_cleanlooks_scrollbar_button_arrow_up[] = {
     "7 4 2 1",
-    "   c None",
-    "*  c #BFBFBF",
+    "  c None",
+    "* c #BFBFBF",
     "   *   ",
     "  ***  ",
     " ***** ",
@@ -256,8 +184,8 @@ static const char * const qt_cleanlooks_scrollbar_button_arrow_up[] = {
 /* XPM */
 static const char * const qt_cleanlooks_scrollbar_button_arrow_down[] = {
     "7 4 2 1",
-    "   c None",
-    "*  c #BFBFBF",
+    "  c None",
+    "* c #BFBFBF",
     "*******",
     " ***** ",
     "  ***  ",
@@ -266,8 +194,8 @@ static const char * const qt_cleanlooks_scrollbar_button_arrow_down[] = {
 /* XPM */
 static const char * const qt_cleanlooks_spinbox_button_arrow_down[] = {
     "7 4 2 1",
-    "   c None",
-    "*  c #BFBFBF",
+    "  c None",
+    "* c #BFBFBF",
     "*******",
     " ***** ",
     "  ***  ",
@@ -276,8 +204,8 @@ static const char * const qt_cleanlooks_spinbox_button_arrow_down[] = {
 /* XPM */
 static const char * const qt_cleanlooks_spinbox_button_arrow_up[] = {
     "7 4 2 1",
-    "   c None",
-    "*  c #BFBFBF",
+    "  c None",
+    "* c #BFBFBF",
     "   *   ",
     "  ***  ",
     " ***** ",
@@ -286,11 +214,11 @@ static const char * const qt_cleanlooks_spinbox_button_arrow_up[] = {
 /* XPM */
 static const char * const qt_cleanlooks_scrollbar_button_left[] = {
     "16 16 5 1",
-    "   c None",
-    ".  c #BFBFBF",
-    "+  c #979797",
-    "#  c #FAFAFA",
-    "<  c #AFAFAF",
+    "  c None",
+    ". c #BFBFBF",
+    "+ c #979797",
+    "# c #FAFAFA",
+    "< c #AFAFAF",
     " .++++++++++++++",
     ".+#############+",
     "+#            <+",
@@ -311,11 +239,11 @@ static const char * const qt_cleanlooks_scrollbar_button_left[] = {
 /* XPM */
 static const char * const qt_cleanlooks_scrollbar_button_right[] = {
     "16 16 5 1",
-    "   c None",
-    ".  c #BFBFBF",
-    "+  c #979797",
-    "#  c #FAFAFA",
-    "<  c #AFAFAF",
+    "  c None",
+    ". c #BFBFBF",
+    "+ c #979797",
+    "# c #FAFAFA",
+    "< c #AFAFAF",
     "++++++++++++++. ",
     "+#############+.",
     "+#            <+",
@@ -336,11 +264,11 @@ static const char * const qt_cleanlooks_scrollbar_button_right[] = {
 /* XPM */
 static const char * const qt_cleanlooks_scrollbar_button_up[] = {
     "16 16 5 1",
-    "   c None",
-    ".  c #BFBFBF",
-    "+  c #979797",
-    "#  c #FAFAFA",
-    "<  c #AFAFAF",
+    "  c None",
+    ". c #BFBFBF",
+    "+ c #979797",
+    "# c #FAFAFA",
+    "< c #AFAFAF",
     " .++++++++++++. ",
     ".+############+.",
     "+#            <+",
@@ -361,11 +289,11 @@ static const char * const qt_cleanlooks_scrollbar_button_up[] = {
 /* XPM */
 static const char * const qt_cleanlooks_scrollbar_button_down[] = {
     "16 16 5 1",
-    "   c None",
-    ".  c #BFBFBF",
-    "+  c #979797",
-    "#  c #FAFAFA",
-    "<  c #AFAFAF",
+    "  c None",
+    ". c #BFBFBF",
+    "+ c #979797",
+    "# c #FAFAFA",
+    "< c #AFAFAF",
     "++++++++++++++++",
     "+##############+",
     "+#            <+",
@@ -4295,22 +4223,17 @@ QRect QCleanlooksStyle::subElementRect(SubElement sr, const QStyleOption *opt, c
 QPixmap QCleanlooksStyle::standardPixmap(StandardPixmap standardPixmap, const QStyleOption *opt,
                                       const QWidget *widget) const
 {
-    QPixmap pixmap;
-
-#ifndef QT_NO_IMAGEFORMAT_XPM
     switch (standardPixmap) {
     case SP_TitleBarNormalButton:
-        return QPixmap((const char **)qt_cleanlooks_dock_widget_restore_xpm);
+        return QPixmap(QLatin1String(":/trolltech/styles/cleanlooksstyle/images/cleanlooks/qt_cleanlooks_dock_widget_restore.png"));
     case SP_TitleBarMinButton:
-        return QPixmap((const char **)qt_cleanlooks_workspace_minimize);
+        return QPixmap(QLatin1String(":/trolltech/styles/cleanlooksstyle/images/cleanlooks/qt_cleanlooks_workspace_minimize.png"));
     case SP_TitleBarCloseButton:
     case SP_DockWidgetCloseButton:
-        return QPixmap((const char **)qt_cleanlooks_dock_widget_close_xpm);
-
+        return QPixmap(QLatin1String(":/trolltech/styles/cleanlooksstyle/images/cleanlooks/qt_cleanlooks_dock_widget_close.png"));
     default:
         break;
     }
-#endif // QT_NO_IMAGEFORMAT_XPM
 
     return QWindowsStyle::standardPixmap(standardPixmap, opt, widget);
 }
@@ -4319,5 +4242,6 @@ QT_END_NAMESPACE
 
 
 #include "moc_qcleanlooksstyle.h"
+#include "qrc_qcleanlooksstyle.cpp"
 
 #endif // QT_NO_STYLE_CLEANLOOKS

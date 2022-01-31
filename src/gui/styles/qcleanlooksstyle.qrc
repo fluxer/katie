@@ -1,0 +1,7 @@
+<!DOCTYPE RCC><RCC version="1.0">
+<qresource prefix="/trolltech/styles/cleanlooksstyle">
+<file>images/cleanlooks/qt_cleanlooks_dock_widget_restore.png</file>
+<file>images/cleanlooks/qt_cleanlooks_workspace_minimize.png</file>
+<file>images/cleanlooks/qt_cleanlooks_dock_widget_close.png</file>
+</qresource>
+</RCC>
