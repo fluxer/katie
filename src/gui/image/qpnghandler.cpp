@@ -187,7 +187,7 @@ bool QPngHandler::read(QImage *image)
     png_set_bgr(png_ptr);
 #endif
 
-    uchar *data = image->bits();
+    uchar *data = image->d->data;
     const int bpl = image->bytesPerLine();
     png_byte **row_pointers = new png_bytep[height];
     for (uint y = 0; y < height; y++) {
