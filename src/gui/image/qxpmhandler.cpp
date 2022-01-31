@@ -78,14 +78,12 @@ static inline void qt_ximage_to_qimage(XImage *ximage, QImage &image)
 
 static inline QImage::Format qt_xpm_qimage_format(const XpmAttributes *xpmattributes)
 {
-    QImage::Format format = QImage::systemFormat();
     for (int i = 0; i < xpmattributes->ncolors; i++) {
         if (qstricmp(xpmattributes->colorTable[i].c_color, "None") == 0) {
-            format = QImage::Format_ARGB32_Premultiplied;
-            break;
+            return QImage::Format_ARGB32_Premultiplied;
         }
     }
-    return format;
+    return QImage::systemFormat();
 }
 
 static inline QImage qt_ximagemask_to_qimage(XImage *ximage, XImage *ximagemask, const QImage::Format format)
@@ -95,7 +93,7 @@ static inline QImage qt_ximagemask_to_qimage(XImage *ximage, XImage *ximagemask,
     if (ximagemask) {
         QImage qimagemask(ximagemask->width, ximagemask->height, format);
         qt_ximage_to_qimage(ximagemask, qimagemask);
-        qimage = qt_mask_image(qimage, qimagemask);
+        return qt_mask_image(qimage, qimagemask);
     }
 
     return qimage;
