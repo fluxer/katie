@@ -724,9 +724,9 @@ static bool read_xpm_string(QByteArray &buf, QIODevice *d, const char * const *s
     buf = "";
     bool gotQuote = false;
     int offset = 0;
+    QSTACKARRAY(char, readbuf, QT_BUFFSIZE);
     forever {
         if (offset == state.size() || state.isEmpty()) {
-            QSTACKARRAY(char, readbuf, QT_BUFFSIZE);
             qint64 bytesRead = d->read(readbuf, sizeof(readbuf));
             if (bytesRead <= 0)
                 return false;
@@ -779,13 +779,12 @@ static bool read_xpm_body(
     QIODevice *device, const char * const * source, int& index, QByteArray& state,
     int cpp, int ncols, int w, int h, QImage& image)
 {
-    QByteArray buf(200, 0);
-
     if (cpp < 0 || cpp > 15)
         return false;
 
     QMap<quint64, int> colorMap;
     bool hasTransparency = false;
+    QByteArray buf(200, 0);
 
     for(int currentColor=0; currentColor < ncols; ++currentColor) {
         if (Q_UNLIKELY(!read_xpm_string(buf, device, source, index, state))) {
@@ -838,15 +837,13 @@ static bool read_xpm_body(
     }
 
     // Now we can create 32-bit image of appropriate format
-    QImage::Format format = hasTransparency ?
-                            QImage::Format_ARGB32 : QImage::Format_RGB32;
-    if (image.size() != QSize(w, h) || image.format() != format) {
-        image = QImage(w, h, format);
-        if (image.isNull())
-            return false;
+    image = QImage(w, h, hasTransparency ? QImage::Format_ARGB32 : QImage::Format_RGB32);
+    if (Q_UNLIKELY(image.isNull())) {
+        return false;
     }
 
     // Read pixels
+    QSTACKARRAY(char, b, 16);
     for(int y=0; y<h; y++) {
         if (!read_xpm_string(buf, device, source, index, state)) {
             qWarning("QImage: XPM pixels missing on image line %d", y);
@@ -856,7 +853,6 @@ static bool read_xpm_body(
         uchar *d = (uchar *)buf.data();
         uchar *end = d + buf.length();
         int x;
-        QSTACKARRAY(char, b, 16);
         for (x = 0; x < w && d < end; x++) {
             ::memcpy(b, (char *)d, cpp);
             *p++ = (QRgb)colorMap[xpmHash(b)];
