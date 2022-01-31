@@ -52,128 +52,12 @@
 #include "qstylehelper_p.h"
 
 #ifndef QT_NO_ITEMVIEWS
-#   include "qtextengine_p.h"
+#  include "qtextengine_p.h"
 #endif
 
 #include <limits.h>
 
 QT_BEGIN_NAMESPACE
-
-#ifndef QT_NO_XPM
-/* XPM */
-static const char * const tree_branch_open_xpm[] = {
-"9 9 2 1",
-"  c None",
-"# c #000000",
-"#########",
-"#       #",
-"# ##### #",
-"#  ###  #",
-"#  ###  #",
-"#   #   #",
-"#   #   #",
-"#       #",
-"#########"};
-
-/* XPM */
-static const char * const tree_branch_closed_xpm[] = {
-"9 9 2 1",
-"  c None",
-"# c #000000",
-"#########",
-"#       #",
-"# #     #",
-"# ###   #",
-"# ##### #",
-"# ###   #",
-"# #     #",
-"#       #",
-"#########"};
-
-/* XPM */
-static const char * const tb_extension_arrow_v_xpm[] = {
-    "5 8 3 1",
-    "  c None",
-    ". c #000000",
-    "+ c none",
-    ".+++.",
-    "..+..",
-    "+...+",
-    "++.++",
-    ".+++.",
-    "..+..",
-    "+...+",
-    "++.++"
-};
-
-/* XPM */
-static const char * const tb_extension_arrow_h_xpm[] = {
-    "8 5 3 1",
-    "  c None",
-    ". c #000000",
-    "+ c none",
-    "..++..++",
-    "+..++..+",
-    "++..++..",
-    "+..++..+",
-    "..++..++",
-};
-
-/* XPM */
-static const char * const filedialog_start_xpm[]={
-    "16 15 8 1",
-    "a c #cec6bd",
-    "# c #000000",
-    "e c #ffff00",
-    "b c #999999",
-    "f c #cccccc",
-    "d c #dcdcdc",
-    "c c #ffffff",
-    ". c None",
-    ".....######aaaaa",
-    "...bb#cccc##aaaa",
-    "..bcc#cccc#d#aaa",
-    ".bcef#cccc#dd#aa",
-    ".bcfe#cccc#####a",
-    ".bcef#ccccccccc#",
-    "bbbbbbbbbbbbccc#",
-    "bccccccccccbbcc#",
-    "bcefefefefee#bc#",
-    ".bcefefefefef#c#",
-    ".bcfefefefefe#c#",
-    "..bcfefefefeeb##",
-    "..bbbbbbbbbbbbb#",
-    "...#############",
-    "................"};
-
-/* XPM */
-static const char * const filedialog_end_xpm[]={
-    "16 15 9 1",
-    "d c #a0a0a0",
-    "c c #c3c3c3",
-    "# c #cec6bd",
-    ". c #000000",
-    "f c #ffff00",
-    "e c #999999",
-    "g c #cccccc",
-    "b c #ffffff",
-    "a c None",
-    "......####aaaaaa",
-    ".bbbb..###aaaaaa",
-    ".bbbb.c.##aaaaaa",
-    ".bbbb....ddeeeea",
-    ".bbbbbbb.bbbbbe.",
-    ".bbbbbbb.bcfgfe.",
-    "eeeeeeeeeeeeefe.",
-    "ebbbbbbbbbbeege.",
-    "ebfgfgfgfgff.ee.",
-    "aebfgfgfgfgfg.e.",
-    "aebgfgfgfgfgf.e.",
-    "aaebgfgfgfgffe..",
-    "aaeeeeeeeeeeeee.",
-    "aaa.............",
-    "aaaaaaaaaaaaaaaa"};
-#endif // QT_NO_XPM
 
 /*!
     \class QCommonStyle
@@ -366,10 +250,9 @@ void QCommonStyle::drawPrimitive(PrimitiveElement pe, const QStyleOption *opt, Q
         int bef_v = mid_v;
         int aft_h = mid_h;
         int aft_v = mid_v;
-#ifndef QT_NO_XPM
         static const int decoration_size = 9;
-        static QPixmap open(tree_branch_open_xpm);
-        static QPixmap closed(tree_branch_closed_xpm);
+        static QPixmap open(QLatin1String(":/trolltech/styles/commonstyle/images/tree_branch_open.png"));
+        static QPixmap closed(QLatin1String(":/trolltech/styles/commonstyle/images/tree_branch_closed.png"));
         if (opt->state & State_Children) {
             int delta = decoration_size / 2;
             bef_h -= delta;
@@ -378,7 +261,6 @@ void QCommonStyle::drawPrimitive(PrimitiveElement pe, const QStyleOption *opt, Q
             aft_v += delta;
             p->drawPixmap(bef_h, bef_v, opt->state & State_Open ? open : closed);
         }
-#endif // QT_NO_XPM
         if (opt->state & State_Item) {
             if (opt->direction == Qt::RightToLeft)
                 p->drawLine(opt->rect.left(), mid_v, bef_h, mid_v);
@@ -5220,21 +5102,19 @@ QPixmap QCommonStyle::standardPixmap(StandardPixmap sp, const QStyleOption *opti
         return pixmap;
 
     switch (sp) {
-#ifndef QT_NO_XPM
     case SP_ToolBarHorizontalExtensionButton:
         if (rtl) {
-            QImage im(tb_extension_arrow_h_xpm);
-            im = im.convertToFormat(QImage::Format_ARGB32).mirrored(true, false);
+            QImage im(QLatin1String(":/trolltech/styles/commonstyle/images/tb_extension_arrow_h.png"));
+            im = im.mirrored(true, false);
             return QPixmap::fromImage(im);
         }
-        return QPixmap(tb_extension_arrow_h_xpm);
+        return QPixmap(QLatin1String(":/trolltech/styles/commonstyle/images/tb_extension_arrow_h.png"));
     case SP_ToolBarVerticalExtensionButton:
-        return QPixmap(tb_extension_arrow_v_xpm);
+        return QPixmap(QLatin1String(":/trolltech/styles/commonstyle/images/tb_extension_arrow_v.png"));
     case SP_FileDialogStart:
-        return QPixmap(filedialog_start_xpm);
+        return QPixmap(QLatin1String(":/trolltech/styles/commonstyle/images/filedialog_start.png"));
     case SP_FileDialogEnd:
-        return QPixmap(filedialog_end_xpm);
-#endif
+        return QPixmap(QLatin1String(":/trolltech/styles/commonstyle/images/filedialog_end.png"));
 
     case SP_CommandLink:
     case SP_ArrowForward:
