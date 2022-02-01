@@ -33,6 +33,7 @@
 #include "qqueue.h"
 #include "qstack.h"
 #include "qdebug.h"
+#include "qcorecommon_p.h"
 
 #include <zlib.h>
 
@@ -58,14 +59,15 @@ static QByteArray qt_inflateGZipDataFrom(QIODevice *device)
 {
     Q_ASSERT(device);
 
-    if (!device->isOpen())
+    if (!device->isOpen()) {
         device->open(QIODevice::ReadOnly);
+    }
 
     Q_ASSERT(device->isOpen() && device->isReadable());
 
     int zlibResult = Z_OK;
 
-    QByteArray source;
+    QSTACKARRAY(char, source, QT_BUFFSIZE);
     QByteArray destination;
 
     // Initialize zlib stream struct
@@ -88,13 +90,13 @@ static QByteArray qt_inflateGZipDataFrom(QIODevice *device)
     while (stillMoreWorkToDo) {
 
         if (!zlibStream.avail_in) {
-            source = device->read(QT_BUFFSIZE);
+            qint64 readsize = device->read(source, QT_BUFFSIZE);
 
-            if (source.isEmpty())
+            if (readsize <= 0)
                 break;
 
-            zlibStream.avail_in = source.size();
-            zlibStream.next_in = reinterpret_cast<Bytef*>(source.data());
+            zlibStream.avail_in = readsize;
+            zlibStream.next_in = reinterpret_cast<Bytef*>(source);
         }
 
         do {
