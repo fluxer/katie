@@ -63,8 +63,6 @@ public:
     bool hasAlphaChannel() const;
     void setAlphaChannel(const QPixmap &alphaChannel);
     QPixmap alphaChannel() const;
-    QPixmap transformed(const QTransform &transform,
-                        Qt::TransformationMode mode) const;
     QImage toImage() const;
     QImage toImage(const QRect &rect) const;
     QPaintEngine* paintEngine() const;
