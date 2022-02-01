@@ -7236,9 +7236,6 @@ void QGraphicsItem::prepareGeometryChange()
     \internal
 
     Highlights \a item as selected.
-
-    NOTE: This function is a duplicate of qt_graphicsItem_highlightSelected() in
-          qgraphicssvgitem.cpp!
 */
 static void qt_graphicsItem_highlightSelected(
     QGraphicsItem *item, QPainter *painter, const QStyleOptionGraphicsItem *option)

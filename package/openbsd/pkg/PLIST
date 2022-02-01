@@ -1238,15 +1238,9 @@ include/katie/QtScriptTools/QScriptEngineDebugger
 include/katie/QtScriptTools/QtScriptTools
 include/katie/QtScriptTools/qscriptenginedebugger.h
 include/katie/QtSvg/
-include/katie/QtSvg/QGraphicsSvgItem
-include/katie/QtSvg/QSvgGenerator
 include/katie/QtSvg/QSvgRenderer
-include/katie/QtSvg/QSvgWidget
 include/katie/QtSvg/QtSvg
-include/katie/QtSvg/qgraphicssvgitem.h
-include/katie/QtSvg/qsvggenerator.h
 include/katie/QtSvg/qsvgrenderer.h
-include/katie/QtSvg/qsvgwidget.h
 include/katie/QtTest/
 include/katie/QtTest/QEventSizeOfChecker
 include/katie/QtTest/QSignalSpy

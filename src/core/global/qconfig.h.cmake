@@ -112,6 +112,9 @@
 #define QT_NO_STYLE_MOTIF
 #define QT_NO_STYLE_PLASTIQUE
 #define QT_NO_ACCESSIBILITY
+#define QT_NO_SVGGENERATOR
+#define QT_NO_SVGWIDGET
+#define QT_NO_GRAPHICSSVGITEM
 
 // Not supported, used to bootstrap
 #cmakedefine QT_NO_QOBJECT
@@ -202,7 +205,6 @@
 #cmakedefine QT_NO_FSFILEENGINE
 #cmakedefine QT_NO_FTP
 #cmakedefine QT_NO_GRAPHICSEFFECT
-#cmakedefine QT_NO_GRAPHICSSVGITEM
 #cmakedefine QT_NO_GRAPHICSVIEW
 #cmakedefine QT_NO_GROUPBOX
 #cmakedefine QT_NO_HTTP
@@ -273,9 +275,7 @@
 #cmakedefine QT_NO_STYLE_STYLESHEET
 #cmakedefine QT_NO_STYLE_WINDOWS
 #cmakedefine QT_NO_SVG
-#cmakedefine QT_NO_SVGGENERATOR
 #cmakedefine QT_NO_SVGRENDERER
-#cmakedefine QT_NO_SVGWIDGET
 #cmakedefine QT_NO_SYNTAXHIGHLIGHTER
 #cmakedefine QT_NO_SYSTEMSEMAPHORE
 #cmakedefine QT_NO_SYSTEMTRAYICON
@@ -506,11 +506,6 @@
 #  define QT_NO_MENUBAR
 #endif
 
-// QSvgGenerator
-#if !defined(QT_NO_SVGGENERATOR) && defined(QT_NO_SVG)
-#  define QT_NO_SVGGENERATOR
-#endif
-
 // QSvgRenderer
 #if !defined(QT_NO_SVGRENDERER) && defined(QT_NO_SVG)
 #  define QT_NO_SVGRENDERER
@@ -559,11 +554,6 @@
 // QStringListModel
 #if !defined(QT_NO_STRINGLISTMODEL) && defined(QT_NO_ITEMVIEWS)
 #  define QT_NO_STRINGLISTMODEL
-#endif
-
-// QSvgWidget
-#if !defined(QT_NO_SVGWIDGET) && defined(QT_NO_SVGRENDERER)
-#  define QT_NO_SVGWIDGET
 #endif
 
 // QSyntaxHighlighter
@@ -654,11 +644,6 @@
 // QCompleter
 #if !defined(QT_NO_FSCOMPLETER) && (defined(QT_NO_FILESYSTEMMODEL) || defined(QT_NO_COMPLETER))
 #  define QT_NO_FSCOMPLETER
-#endif
-
-// QGraphicsSvgItem
-#if !defined(QT_NO_GRAPHICSSVGITEM) && (defined(QT_NO_SVGRENDERER) || defined(QT_NO_GRAPHICSVIEW))
-#  define QT_NO_GRAPHICSSVGITEM
 #endif
 
 // QComboBox

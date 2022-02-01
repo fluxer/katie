@@ -150,7 +150,6 @@ public:
     enum Type {
         X11,
         PostScript,
-        SVG,
         Raster,
         Pdf,
 
