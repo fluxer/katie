@@ -143,24 +143,10 @@ QSvgTinyDocument * QSvgTinyDocument::load(const QString &fileName)
     if (!file.open(QFile::ReadOnly)) {
         qWarning("Cannot open file '%s', because: %s",
                  qPrintable(fileName), qPrintable(file.errorString()));
-        return 0;
+        return nullptr;
     }
 
-    if (fileName.endsWith(QLatin1String(".svgz"), Qt::CaseInsensitive)
-            || fileName.endsWith(QLatin1String(".svg.gz"), Qt::CaseInsensitive)) {
-        return load(qt_inflateGZipDataFrom(&file));
-    }
-
-    QSvgTinyDocument *doc = 0;
-    QSvgHandler handler(&file);
-    if (handler.ok()) {
-        doc = handler.document();
-        doc->m_animationDuration = handler.animationDuration();
-    } else {
-        qWarning("Cannot read file '%s', because: %s (line %d)",
-                 qPrintable(fileName), qPrintable(handler.errorString()), handler.lineNumber());
-    }
-    return doc;
+    return load(file.readAll());
 }
 
 QSvgTinyDocument * QSvgTinyDocument::load(const QByteArray &contents)
@@ -174,10 +160,13 @@ QSvgTinyDocument * QSvgTinyDocument::load(const QByteArray &contents)
 
     QSvgHandler handler(contents);
 
-    QSvgTinyDocument *doc = 0;
+    QSvgTinyDocument *doc = nullptr;
     if (handler.ok()) {
         doc = handler.document();
         doc->m_animationDuration = handler.animationDuration();
+    } else {
+        qWarning("Cannot read SVG, because: %s (line %d)",
+                 qPrintable(handler.errorString()), handler.lineNumber());
     }
     return doc;
 }
@@ -186,10 +175,13 @@ QSvgTinyDocument * QSvgTinyDocument::load(QXmlStreamReader *contents)
 {
     QSvgHandler handler(contents);
 
-    QSvgTinyDocument *doc = 0;
+    QSvgTinyDocument *doc = nullptr;
     if (handler.ok()) {
         doc = handler.document();
         doc->m_animationDuration = handler.animationDuration();
+    } else {
+        qWarning("Cannot read SVG, because: %s (line %d)",
+                 qPrintable(handler.errorString()), handler.lineNumber());
     }
     return doc;
 }

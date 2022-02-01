@@ -3357,12 +3357,6 @@ static StyleParseMethod findStyleUtilFactoryMethod(const QString &name)
     return nullptr;
 }
 
-QSvgHandler::QSvgHandler(QIODevice *device) : xml(new QXmlStreamReader(device))
-                                             , m_ownsReader(true)
-{
-    init();
-}
-
 QSvgHandler::QSvgHandler(const QByteArray &data) : xml(new QXmlStreamReader(data))
                                                  , m_ownsReader(true)
 {
