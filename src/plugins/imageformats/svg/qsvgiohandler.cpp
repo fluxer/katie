@@ -28,7 +28,6 @@
 #include "qpixmap.h"
 #include "qpainter.h"
 #include "qvariant.h"
-#include "qbuffer.h"
 #include "qdebug.h"
 
 QT_BEGIN_NAMESPACE
@@ -44,7 +43,6 @@ public:
 
     QSvgIOHandler   *q;
     QSvgRenderer     r;
-    QXmlStreamReader xmlReader;
     QSize            defaultSize;
     QRect            clipRect;
     QSize            scaledSize;
@@ -64,19 +62,7 @@ bool QSvgIOHandlerPrivate::load(QIODevice *device)
 
     // # The SVG renderer doesn't handle trailing, unrelated data, so we must
     // assume that all available data in the device is to be read.
-    bool res = false;
-    QBuffer *buf = qobject_cast<QBuffer *>(device);
-    if (buf) {
-        const QByteArray &ba = buf->data();
-        res = r.load(QByteArray::fromRawData(ba.constData() + buf->pos(), ba.size() - buf->pos()));
-        buf->seek(ba.size());
-    } else if (q->format() == "svgz") {
-        res = r.load(device->readAll());
-    } else {
-        xmlReader.setDevice(device);
-        res = r.load(&xmlReader);
-    }
-
+    bool res = r.load(device->readAll());
     if (res) {
         defaultSize = QSize(r.viewBox().width(), r.viewBox().height());
         loaded = true;
