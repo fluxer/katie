@@ -147,7 +147,6 @@ QSvgRenderer::QSvgRenderer(QXmlStreamReader *contents, QObject *parent)
 */
 QSvgRenderer::~QSvgRenderer()
 {
-
 }
 
 /*!
@@ -165,10 +164,10 @@ bool QSvgRenderer::isValid() const
 QSize QSvgRenderer::defaultSize() const
 {
     Q_D(const QSvgRenderer);
-    if (d->render)
+    if (d->render) {
         return d->render->size();
-    else
-        return QSize();
+    }
+    return QSize();
 }
 
 /*!
@@ -179,10 +178,10 @@ QSize QSvgRenderer::defaultSize() const
 QRect QSvgRenderer::viewBox() const
 {
     Q_D(const QSvgRenderer);
-    if (d->render)
+    if (d->render) {
         return d->render->viewBox().toRect();
-    else
-        return QRect();
+    }
+    return QRect();
 }
 
 /*!
@@ -193,8 +192,9 @@ QRect QSvgRenderer::viewBox() const
 void QSvgRenderer::setViewBox(const QRect &viewbox)
 {
     Q_D(QSvgRenderer);
-    if (d->render)
+    if (d->render) {
         d->render->setViewBox(viewbox);
+    }
 }
 
 /*!
@@ -206,10 +206,10 @@ void QSvgRenderer::setViewBox(const QRect &viewbox)
 bool QSvgRenderer::animated() const
 {
     Q_D(const QSvgRenderer);
-    if (d->render)
+    if (d->render) {
         return d->render->animated();
-    else
-        return false;
+    }
+    return false;
 }
 
 /*!
@@ -229,7 +229,7 @@ int QSvgRenderer::framesPerSecond() const
 void QSvgRenderer::setFramesPerSecond(int num)
 {
     Q_D(QSvgRenderer);
-    if (num < 0) {
+    if (Q_UNLIKELY(num < 0)) {
         qWarning("QSvgRenderer::setFramesPerSecond: Cannot set negative value %d", num);
         return;
     }
@@ -398,17 +398,18 @@ void QSvgRenderer::render(QPainter *painter, const QRectF &bounds)
 QRectF QSvgRenderer::viewBoxF() const
 {
     Q_D(const QSvgRenderer);
-    if (d->render)
+    if (d->render) {
         return d->render->viewBox();
-    else
-        return QRect();
+    }
+    return QRect();
 }
 
 void QSvgRenderer::setViewBox(const QRectF &viewbox)
 {
     Q_D(QSvgRenderer);
-    if (d->render)
+    if (d->render) {
         d->render->setViewBox(viewbox);
+    }
 }
 
 /*!
@@ -423,10 +424,10 @@ void QSvgRenderer::setViewBox(const QRectF &viewbox)
 QRectF QSvgRenderer::boundsOnElement(const QString &id) const
 {
     Q_D(const QSvgRenderer);
-    QRectF bounds;
-    if (d->render)
-        bounds = d->render->boundsOnElement(id);
-    return bounds;
+    if (d->render) {
+        return d->render->boundsOnElement(id);
+    }
+    return QRectF();
 }
 
 
@@ -446,10 +447,10 @@ QRectF QSvgRenderer::boundsOnElement(const QString &id) const
 bool QSvgRenderer::elementExists(const QString &id) const
 {
     Q_D(const QSvgRenderer);
-    bool exists = false;
-    if (d->render)
-        exists = d->render->elementExists(id);
-    return exists;
+    if (d->render) {
+        return d->render->elementExists(id);
+    }
+    return false;
 }
 
 /*!
@@ -468,15 +469,13 @@ bool QSvgRenderer::elementExists(const QString &id) const
 QMatrix QSvgRenderer::matrixForElement(const QString &id) const
 {
     Q_D(const QSvgRenderer);
-    QMatrix mat;
-    if (d->render)
-        mat = d->render->matrixForElement(id);
-    return mat;
+    if (d->render) {
+        return d->render->matrixForElement(id);
+    }
+    return QMatrix();
 }
 
 QT_END_NAMESPACE
-
-
 
 #endif // QT_NO_SVGRENDERER
 
