@@ -248,9 +248,8 @@ bool QImageData::checkForAlphaPixels() const
     thread.
 
     The QImage class supports several image formats described by the
-    \l Format enum. These include monochrome, 8-bit, 32-bit and
-    alpha-blended images which are available in all versions of Qt
-    4.x.
+    \l Format enum. These include monochrome, 32-bit and alpha-blended
+    images.
 
     QImage provides a collection of functions that can be used to
     obtain a variety of information about the image. There are also
@@ -389,12 +388,12 @@ bool QImageData::checkForAlphaPixels() const
     \snippet doc/src/snippets/code/src_gui_image_qimage.cpp 0
     \endtable
 
-    In case of a 8-bit and monchrome images, the pixel value is only
-    an index from the image's color table. So the setPixel() function
-    can only be used to alter the color of the pixel at the given
-    coordinates to a predefined color from the image's color table,
-    i.e. it can only change the pixel's index value. To alter or add a
-    color to an image's color table, use the setColor() function.
+    In case of monchrome images, the pixel value is only an index from
+    the image's color table. So the setPixel() function can only be
+    used to alter the color of the pixel at the given coordinates to a
+    predefined color from the image's color table, i.e. it can only
+    change the pixel's index value. To alter or add a color to an
+    image's color table, use the setColor() function.
 
     An entry in the color table is an ARGB quadruplet encoded as an
     QRgb value. Use the qRgb() and qRgba() functions to make a
@@ -2270,9 +2269,9 @@ QRgb QImage::pixel(int x, int y) const
     Sets the pixel index or color at the given \a position to \a
     index_or_rgb.
 
-    If the image's format is either monochrome or 8-bit, the given \a
-    index_or_rgb value must be an index in the image's color table,
-    otherwise the parameter must be a QRgb value.
+    If the image's format is monochrome, the given \a index_or_rgb
+    value must be an index in the image's color table, otherwise the
+    parameter must be a QRgb value.
 
     If \a position is not a valid coordinate pair in the image, or if
     \a index_or_rgb >= 2 in the case of monochrome, the result is
@@ -2380,11 +2379,8 @@ bool QImage::allGray() const
 }
 
 /*!
-    For 32-bit images, this function is equivalent to allGray().
-
-    For 8-bpp images, this function returns true if color(i) is
-    QRgb(i, i, i) for all indexes of the color table; otherwise
-    returns false.
+    For 32-bit images, this function is equivalent to allGray()
+    otherwise returns false.
 
     \sa allGray(), {QImage#Image Formats}{Image Formats}
 */
