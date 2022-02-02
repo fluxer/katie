@@ -47,7 +47,7 @@ static quint64 xpmHash(const char *str)
 #define QRGB(r,g,b) (r*65536 + g*256 + b)
 
 static const struct XPMRGBData {
-    const uint value;
+    const QRgb value;
     const char *name;
 } xpmRgbTbl[] = {
   { QRGB(240,248,255),  "aliceblue" },
@@ -782,7 +782,7 @@ static bool read_xpm_body(
     if (cpp < 0 || cpp > 15)
         return false;
 
-    QMap<quint64, int> colorMap;
+    QMap<quint64, QRgb> colorMap;
     bool hasTransparency = false;
     QByteArray buf(200, 0);
 
