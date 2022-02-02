@@ -1052,7 +1052,7 @@ QImage QImage::copy(const QRect& r) const
         lines_to_copy = d->height - y;
 
     bool byteAligned = true;
-    if (d->format == Format_Mono || d->format == Format_MonoLSB)
+    if (d->format == QImage::Format_Mono || d->format == QImage::Format_MonoLSB)
         byteAligned = !(dx & 7) && !(x & 7) && !(pixels_to_copy & 7);
 
     if (byteAligned) {
@@ -1064,7 +1064,7 @@ QImage QImage::copy(const QRect& r) const
             src += d->bytes_per_line;
             dest += image.d->bytes_per_line;
         }
-    } else if (d->format == Format_Mono) {
+    } else if (d->format == QImage::Format_Mono) {
         const uchar *src = d->data + y * d->bytes_per_line;
         uchar *dest = image.d->data + dy * image.d->bytes_per_line;
         for (int i = 0; i < lines_to_copy; ++i) {
@@ -1077,8 +1077,8 @@ QImage QImage::copy(const QRect& r) const
             src += d->bytes_per_line;
             dest += image.d->bytes_per_line;
         }
-    } else { // Format_MonoLSB
-        Q_ASSERT(d->format == Format_MonoLSB);
+    } else { // QImage::Format_MonoLSB
+        Q_ASSERT(d->format == QImage::Format_MonoLSB);
         const uchar *src = d->data + y * d->bytes_per_line;
         uchar *dest = image.d->data + dy * image.d->bytes_per_line;
         for (int i = 0; i < lines_to_copy; ++i) {
@@ -1483,7 +1483,7 @@ void QImage::fill(uint pixel)
         return;
     }
 
-    if (d->format == Format_RGB32)
+    if (d->format == QImage::Format_RGB32)
         pixel |= 0xff000000;
 
     qt_rectfill<quint32>(
@@ -1599,7 +1599,7 @@ void QImage::invertPixels(InvertMode mode)
 */
 QImage::Format QImage::format() const
 {
-    return d ? d->format : Format_Invalid;
+    return d ? d->format : QImage::Format_Invalid;
 }
 
 QImage::Format QImage::systemFormat()
@@ -2046,13 +2046,13 @@ static void QT_FASTCALL convert_RGB32_to_RGB16(QImageData *dest, const QImageDat
 }
 
 /*
-        Format_Invalid,
-        Format_Mono,
-        Format_MonoLSB,
-        Format_RGB32,
-        Format_ARGB32,
-        Format_ARGB32_Premultiplied,
-        Format_RGB16,
+    QImage::Format_Invalid,
+    QImage::Format_Mono,
+    QImage::Format_MonoLSB,
+    QImage::Format_RGB32,
+    QImage::Format_ARGB32,
+    QImage::Format_ARGB32_Premultiplied,
+    QImage::Format_RGB16,
 */
 
 
@@ -2070,7 +2070,7 @@ static const Image_Converter converter_map[QImage::NImageFormats][QImage::NImage
         convert_Mono_to_X32,
         convert_Mono_to_X32,
         0
-    }, // Format_Mono
+    }, // QImage::Format_Mono
 
     {
         0,
@@ -2080,7 +2080,7 @@ static const Image_Converter converter_map[QImage::NImageFormats][QImage::NImage
         convert_Mono_to_X32,
         convert_Mono_to_X32,
         0
-    }, // Format_MonoLSB
+    }, // QImage::Format_MonoLSB
 
     {
         0,
@@ -2090,7 +2090,7 @@ static const Image_Converter converter_map[QImage::NImageFormats][QImage::NImage
         mask_alpha_converter,
         mask_alpha_converter,
         convert_RGB32_to_RGB16
-    }, // Format_RGB32
+    }, // QImage::Format_RGB32
 
     {
         0,
@@ -2100,7 +2100,7 @@ static const Image_Converter converter_map[QImage::NImageFormats][QImage::NImage
         0,
         convert_ARGB_to_ARGB_PM,
         convert_RGB32_to_RGB16
-    }, // Format_ARGB32
+    }, // QImage::Format_ARGB32
 
     {
         0,
@@ -2110,7 +2110,7 @@ static const Image_Converter converter_map[QImage::NImageFormats][QImage::NImage
         convert_ARGB_PM_to_ARGB,
         0,
         0
-    },  // Format_ARGB32_Premultiplied
+    },  // QImage::Format_ARGB32_Premultiplied
 
     {
         0,
@@ -2120,7 +2120,7 @@ static const Image_Converter converter_map[QImage::NImageFormats][QImage::NImage
         convert_RGB16_to_RGB32,
         convert_RGB16_to_RGB32,
         0
-    }, // Format_RGB16
+    }, // QImage::Format_RGB16
 };
 
 /*!
@@ -2136,7 +2136,7 @@ QImage QImage::convertToFormat(Format format, Qt::ImageConversionFlags flags) co
     if (!d || d->format == format)
         return *this;
 
-    if (format == Format_Invalid || d->format == Format_Invalid)
+    if (format == QImage::Format_Invalid || d->format == QImage::Format_Invalid)
         return QImage();
 
     const Image_Converter converter = converter_map[d->format][format];
@@ -2154,7 +2154,7 @@ QImage QImage::convertToFormat(Format format, Qt::ImageConversionFlags flags) co
     Q_ASSERT(format != QImage::Format_ARGB32);
     Q_ASSERT(d->format != QImage::Format_ARGB32);
 
-    QImage image = convertToFormat(Format_ARGB32, flags);
+    QImage image = convertToFormat(QImage::Format_ARGB32, flags);
     return image.convertToFormat(format, flags);
 }
 
@@ -2204,9 +2204,9 @@ int QImage::pixelIndex(int x, int y) const
     }
     const uchar *s = constScanLine(y);
     switch(d->format) {
-    case Format_Mono:
+    case QImage::Format_Mono:
         return (*(s + (x >> 3)) >> (7- (x & 7))) & 1;
-    case Format_MonoLSB:
+    case QImage::Format_MonoLSB:
         return (*(s + (x >> 3)) >> (x & 7)) & 1;
     default:
         qWarning("QImage::pixelIndex: Not applicable for %d-bpp images (no palette)", d->depth);
@@ -2242,19 +2242,19 @@ QRgb QImage::pixel(int x, int y) const
     }
     const uchar *s = constScanLine(y);
     switch(d->format) {
-        case Format_Mono: {
+        case QImage::Format_Mono: {
             const int index = ((*(s + (x >> 3)) >> (7- (x & 7))) & 1);
             if (index == 0)
                 return d->mono0;
             return d->mono1;
         }
-        case Format_MonoLSB: {
+        case QImage::Format_MonoLSB: {
             const int index = ((*(s + (x >> 3)) >> (x & 7)) & 1);
             if (index == 0)
                 return d->mono0;
             return d->mono1;
         }
-        case Format_RGB16: {
+        case QImage::Format_RGB16: {
             return qt_colorConvert<quint32, quint16>(reinterpret_cast<const quint16*>(s)[x], 0);
         }
         default: {
@@ -2304,8 +2304,8 @@ void QImage::setPixel(int x, int y, uint index_or_rgb)
         return;
     }
     switch(d->format) {
-        case Format_Mono:
-        case Format_MonoLSB: {
+        case QImage::Format_Mono:
+        case QImage::Format_MonoLSB: {
             if (Q_UNLIKELY(index_or_rgb > 1)) {
                 qWarning("QImage::setPixel: Index %d out of range", index_or_rgb);
             } else if (format() == Format_MonoLSB) {
@@ -2321,24 +2321,24 @@ void QImage::setPixel(int x, int y, uint index_or_rgb)
             }
             break;
         }
-        case Format_RGB32: {
+        case QImage::Format_RGB32: {
             //make sure alpha is 255, we depend on it in qdrawhelper for cases
             // when image is set as a texture pattern on a qbrush
             ((uint *)s)[x] = uint(255 << 24) | index_or_rgb;
             break;
         }
-        case Format_ARGB32:
-        case Format_ARGB32_Premultiplied: {
+        case QImage::Format_ARGB32:
+        case QImage::Format_ARGB32_Premultiplied: {
             ((uint *)s)[x] = index_or_rgb;
             break;
         }
-        case Format_RGB16: {
+        case QImage::Format_RGB16: {
             const quint32 p = index_or_rgb;
             ((quint16 *)s)[x] = qt_colorConvert<quint16, quint32>(p, 0);
             break;
         }
-        case Format_Invalid:
-        case NImageFormats: {
+        case QImage::Format_Invalid:
+        case QImage::NImageFormats: {
             Q_ASSERT(false);
         }
     }
@@ -2613,7 +2613,7 @@ QImage QImage::createAlphaMask(Qt::ImageConversionFlags flags) const
         source = source.convertToFormat(QImage::Format_ARGB32);
     }
 
-    QImage mask(d->width, d->height, Format_MonoLSB);
+    QImage mask(d->width, d->height, QImage::Format_MonoLSB);
     if (!mask.isNull()) {
         dither_to_Mono(mask.d, source.d, flags, true);
     }
@@ -2651,7 +2651,7 @@ QImage QImage::createHeuristicMask(bool clipTight) const
         return QImage();
 
     if (d->depth != 32) {
-        QImage img32 = convertToFormat(Format_RGB32);
+        QImage img32 = convertToFormat(QImage::Format_RGB32);
         return img32.createHeuristicMask(clipTight);
     }
 
@@ -2659,7 +2659,7 @@ QImage QImage::createHeuristicMask(bool clipTight) const
 
     int w = width();
     int h = height();
-    QImage m(w, h, Format_MonoLSB);
+    QImage m(w, h, QImage::Format_MonoLSB);
     QIMAGE_SANITYCHECK_MEMORY(m);
     m.setColorTable(monoColorTable());
     m.fill(0xff);
@@ -2841,13 +2841,13 @@ QImage QImage::rgbSwapped() const
         return *this;
     QImage res;
     switch (d->format) {
-        case Format_Invalid:
-        case NImageFormats: {
+        case QImage::Format_Invalid:
+        case QImage::NImageFormats: {
             Q_ASSERT(false);
             break;
         }
-        case Format_Mono:
-        case Format_MonoLSB: {
+        case QImage::Format_Mono:
+        case QImage::Format_MonoLSB: {
             res = copy();
             QIMAGE_SANITYCHECK_MEMORY(res);
             const QRgb c0 = res.d->mono0;
@@ -2856,9 +2856,9 @@ QImage QImage::rgbSwapped() const
             res.d->mono1 = QRgb(((c1 << 16) & 0xff0000) | ((c1 >> 16) & 0xff) | (c1 & 0xff00ff00));
             break;
         }
-        case Format_RGB32:
-        case Format_ARGB32:
-        case Format_ARGB32_Premultiplied: {
+        case QImage::Format_RGB32:
+        case QImage::Format_ARGB32:
+        case QImage::Format_ARGB32_Premultiplied: {
             res = QImage(d->width, d->height, d->format);
             QIMAGE_SANITYCHECK_MEMORY(res);
             for (int i = 0; i < d->height; i++) {
@@ -2873,7 +2873,7 @@ QImage QImage::rgbSwapped() const
             }
             break;
         }
-        case Format_RGB16: {
+        case QImage::Format_RGB16: {
             res = QImage(d->width, d->height, d->format);
             QIMAGE_SANITYCHECK_MEMORY(res);
             for (int i = 0; i < d->height; i++) {
@@ -3493,7 +3493,7 @@ QImage QImage::alphaChannel() const
     int w = d->width;
     int h = d->height;
 
-    QImage image(w, h, Format_ARGB32);
+    QImage image(w, h, QImage::Format_ARGB32);
     QIMAGE_SANITYCHECK_MEMORY(image);
 
     if (!hasAlphaChannel()) {
@@ -3502,7 +3502,7 @@ QImage QImage::alphaChannel() const
     }
 
     QImage alpha32 = *this;
-    if (d->format != Format_ARGB32 && d->format != Format_ARGB32_Premultiplied)
+    if (d->format != QImage::Format_ARGB32 && d->format != QImage::Format_ARGB32_Premultiplied)
         alpha32 = convertToFormat(Format_ARGB32);
     QIMAGE_SANITYCHECK_MEMORY(alpha32);
 
@@ -3531,10 +3531,10 @@ QImage QImage::alphaChannel() const
 */
 bool QImage::hasAlphaChannel() const
 {
-    return d && (d->format == Format_ARGB32_Premultiplied
-                 || d->format == Format_ARGB32
-                 || (d->has_alpha_clut && (d->format == Format_Mono
-                                           || d->format == Format_MonoLSB)));
+    return d && (d->format == QImage::Format_ARGB32_Premultiplied
+                 || d->format == QImage::Format_ARGB32
+                 || (d->has_alpha_clut && (d->format == QImage::Format_Mono
+                                           || d->format == QImage::Format_MonoLSB)));
 }
 
 
@@ -3665,7 +3665,7 @@ QImage QImage::transformed(const QTransform &matrix, Qt::TransformationMode mode
 
     if (complex_xform || mode == Qt::SmoothTransformation) {
         if (d->format < QImage::Format_RGB32 || !hasAlphaChannel()) {
-            target_format = Format_ARGB32_Premultiplied;
+            target_format = QImage::Format_ARGB32_Premultiplied;
         }
     }
 
