@@ -775,7 +775,7 @@ static qreal parseLength(const QString &str, QSvgHandler::LengthType &type,
         //type = QSvgHandler::LT_OTHER;
     }
     qreal len = toDouble(numStr, ok);
-    //qDebug()<<"len is "<<len<<", from '"<<numStr << "'";
+    // qDebug() << "len is" << len << ", from '" << numStr << "'";
     return len;
 }
 
@@ -1033,7 +1033,7 @@ static void parsePen(QSvgNode *node,
                      const QSvgAttributes &attributes,
                      QSvgHandler *handler)
 {
-    //qDebug()<<"Node "<<node->type()<<", attrs are "<<value<<width;
+    // qDebug() << "Node" << node->type() << ", attrs are" << value << width;
 
     if (!attributes.stroke.isEmpty() || !attributes.strokeDashArray.isEmpty() || !attributes.strokeDashOffset.isEmpty() || !attributes.strokeLineCap.isEmpty()
         || !attributes.strokeLineJoin.isEmpty() || !attributes.strokeMiterLimit.isEmpty() || !attributes.strokeOpacity.isEmpty() || !attributes.strokeWidth.isEmpty()
@@ -2562,18 +2562,20 @@ static QSvgNode *createImageNode(QSvgNode *parent,
             QByteArray data = QByteArray::fromBase64(dataStr.toAscii());
             image = QImage::fromData(data);
         } else {
-            qDebug()<<"QSvgHandler::createImageNode: Unrecognized inline image format!";
+            qWarning("QSvgHandler::createImageNode: Unrecognized inline image format");
         }
-    } else
+    } else {
         image = QImage(filename);
-
-    if (image.isNull()) {
-        qDebug()<<"couldn't create image from "<<filename;
-        return 0;
     }
 
-    if (image.format() == QImage::Format_ARGB32)
+    if (Q_UNLIKELY(image.isNull())) {
+        qWarning() << "QSvgHandler::createImageNode: Couldn't create image from" << filename;
+        return nullptr;
+    }
+
+    if (image.format() == QImage::Format_ARGB32) {
         image = image.convertToFormat(QImage::Format_ARGB32_Premultiplied);
+    }
 
     QSvgNode *img = new QSvgImage(parent,
                                   image,
@@ -2622,7 +2624,7 @@ static void parseBaseGradient(QSvgNode *node,
     QGradient *grad = gradProp->qgradient();
     if (!link.isEmpty()) {
         QSvgStyleProperty *prop = node->styleProperty(link);
-        //qDebug()<<"inherited "<<prop<<" ("<<link<<")";
+        // qDebug() << "inherited" << prop << "(" << link << ")";
         if (prop && prop->type() == QSvgStyleProperty::GRADIENT) {
             QSvgGradientStyle *inherited =
                 static_cast<QSvgGradientStyle*>(prop);
@@ -3532,7 +3534,7 @@ bool QSvgHandler::startElement(const QString &localName,
             }
         }
     } else {
-        //qWarning()<<"Skipping unknown element!"<<namespaceURI<<"::"<<localName;
+        // qWarning() << "Skipping unknown element" << namespaceURI << "::" << localName;
         m_skipNodes.push(Unknown);
         return true;
     }
@@ -3541,7 +3543,7 @@ bool QSvgHandler::startElement(const QString &localName,
         m_nodes.push(node);
         m_skipNodes.push(Graphics);
     } else {
-        //qDebug()<<"Skipping "<<localName;
+        // qDebug() << "Skipping" << localName;
         m_skipNodes.push(Style);
     }
     return true;
@@ -3702,7 +3704,7 @@ bool QSvgHandler::processingInstruction(const QString &target, const QString &da
             pos = rx.indexIn(data, pos);
             QString addr = rx.cap(1);
             QFileInfo fi(addr);
-            //qDebug()<<"External CSS file "<<fi.absoluteFilePath()<<fi.exists();
+            // qDebug() << "External CSS file" << fi.absoluteFilePath() << fi.exists();
             if (fi.exists()) {
                 QFile file(fi.absoluteFilePath());
                 if (!file.open(QIODevice::ReadOnly | QIODevice::Text)) {
