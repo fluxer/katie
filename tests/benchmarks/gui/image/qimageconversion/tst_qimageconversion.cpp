@@ -74,12 +74,10 @@ void tst_QImageConversion::convertRgb16ToRGB32()
 QImage tst_QImageConversion::generateImage(int width, int height)
 {
     QImage image(width, height, QImage::Format_RGB16);
-    const int byteWidth = width * 2;
-
     for (int y = 0; y < image.height(); ++y) {
-        uchar *scanline = image.scanLine(y);
-        for (int x = 0; x < byteWidth; ++x)
-            scanline[x] = x ^ y;
+        for (int x = 0; x < image.width(); ++x) {
+            image.setPixel(x, y, x ^ y);
+        }
     }
     return image;
 }
