@@ -1227,6 +1227,7 @@ include/katie/QtScriptTools/QScriptEngineDebugger
 include/katie/QtScriptTools/QtScriptTools
 include/katie/QtScriptTools/qscriptenginedebugger.h
 include/katie/QtSvg/QtSvg
+include/katie/QtSvg/QSvgRenderer
 include/katie/QtSvg/qsvgrenderer.h
 include/katie/QtTest/QEventSizeOfChecker
 include/katie/QtTest/QSignalSpy
