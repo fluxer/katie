@@ -2185,8 +2185,8 @@ bool QImage::valid(int x, int y) const
 
     Returns the pixel index at the given \a position.
 
-    If \a position is not valid, or if the image is not a paletted
-    image (depth() > 8), the results are undefined.
+    If \a position is not valid, or if the image is not a mono
+    image (depth() > 1), the results are undefined.
 
     \sa valid(), depth(), {QImage#Pixel Manipulation}{Pixel Manipulation}
 */
@@ -3438,51 +3438,28 @@ void QImage::setAlphaChannel(const QImage &alphaChannel)
     if (isNull())
         return;
 
-    // Slight optimization since alphachannels are returned as 8-bit grays.
-    if (alphaChannel.d->depth == 8 && alphaChannel.isGrayscale()) {
-        const uchar *src_data = alphaChannel.d->data;
-        const uchar *dest_data = d->data;
-        for (int y=0; y<h; ++y) {
-            const uchar *src = src_data;
-            QRgb *dest = (QRgb *)dest_data;
-            for (int x=0; x<w; ++x) {
-                int alpha = *src;
-                int destAlpha = qt_div_255(alpha * qAlpha(*dest));
-                *dest = ((destAlpha << 24)
-                         | (qt_div_255(qRed(*dest) * alpha) << 16)
-                         | (qt_div_255(qGreen(*dest) * alpha) << 8)
-                         | (qt_div_255(qBlue(*dest) * alpha)));
-                ++dest;
-                ++src;
-            }
-            src_data += alphaChannel.d->bytes_per_line;
-            dest_data += d->bytes_per_line;
+    const QImage sourceImage = alphaChannel.convertToFormat(QImage::Format_RGB32);
+    if (Q_UNLIKELY(sourceImage.isNull())) {
+        qWarning("QImage::setAlphaChannel: out of memory");
+        return;
+    }
+    const uchar *src_data = sourceImage.d->data;
+    const uchar *dest_data = d->data;
+    for (int y=0; y<h; ++y) {
+        const QRgb *src = (const QRgb *) src_data;
+        QRgb *dest = (QRgb *) dest_data;
+        for (int x=0; x<w; ++x) {
+            int alpha = qGray(*src);
+            int destAlpha = qt_div_255(alpha * qAlpha(*dest));
+            *dest = ((destAlpha << 24)
+                        | (qt_div_255(qRed(*dest) * alpha) << 16)
+                        | (qt_div_255(qGreen(*dest) * alpha) << 8)
+                        | (qt_div_255(qBlue(*dest) * alpha)));
+            ++dest;
+            ++src;
         }
-
-    } else {
-        const QImage sourceImage = alphaChannel.convertToFormat(QImage::Format_RGB32);
-        if (Q_UNLIKELY(sourceImage.isNull())) {
-            qWarning("QImage::setAlphaChannel: out of memory");
-            return;
-        }
-        const uchar *src_data = sourceImage.d->data;
-        const uchar *dest_data = d->data;
-        for (int y=0; y<h; ++y) {
-            const QRgb *src = (const QRgb *) src_data;
-            QRgb *dest = (QRgb *) dest_data;
-            for (int x=0; x<w; ++x) {
-                int alpha = qGray(*src);
-                int destAlpha = qt_div_255(alpha * qAlpha(*dest));
-                *dest = ((destAlpha << 24)
-                         | (qt_div_255(qRed(*dest) * alpha) << 16)
-                         | (qt_div_255(qGreen(*dest) * alpha) << 8)
-                         | (qt_div_255(qBlue(*dest) * alpha)));
-                ++dest;
-                ++src;
-            }
-            src_data += sourceImage.d->bytes_per_line;
-            dest_data += d->bytes_per_line;
-        }
+        src_data += sourceImage.d->bytes_per_line;
+        dest_data += d->bytes_per_line;
     }
 }
 
