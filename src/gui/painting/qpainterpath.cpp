@@ -490,8 +490,9 @@ QPainterPath::QPainterPath()
 QPainterPath::QPainterPath(const QPainterPath &other)
     : d_ptr(other.d_ptr)
 {
-    if (d_ptr)
+    if (d_ptr) {
         d_ptr->ref.ref();
+    }
 }
 
 /*!
@@ -511,12 +512,10 @@ QPainterPath::QPainterPath(const QPointF &startPoint)
 */
 void QPainterPath::ensureData_helper()
 {
+    Q_ASSERT(d_ptr == nullptr);
     QPainterPathPrivate *data = new QPainterPathPrivate();
     QPainterPath::Element e = { 0, 0, QPainterPath::MoveToElement };
     data->elements << e;
-    if (d_ptr && !d_ptr->ref.deref()) {
-        delete d_ptr;
-    }
     d_ptr = data;
     Q_ASSERT(d_ptr != nullptr);
 }
