@@ -1793,7 +1793,7 @@ bool QDeclarativeCompiler::buildAttachedProperty(QDeclarativeParser::Property *p
 // Build "grouped" properties. In this example:
 // Text {
 //     font.pointSize: 12
-//     font.family: "Helvetica"
+//     font.family: "FreeSans"
 // }
 // font is a nested property.  pointSize and family are not.
 bool QDeclarativeCompiler::buildGroupedProperty(QDeclarativeParser::Property *prop,

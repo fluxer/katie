@@ -26,7 +26,7 @@
 #include <QtCore/qalgorithms.h>
 
 #include <new>
-
+#include <string.h>
 
 QT_BEGIN_NAMESPACE
 

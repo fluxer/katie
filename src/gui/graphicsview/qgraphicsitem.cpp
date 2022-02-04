@@ -709,21 +709,16 @@
 #include <QtGui/qstyleoption.h>
 #include <QtGui/qevent.h>
 #include <QtGui/qgraphicseffect.h>
-#ifndef QT_NO_ACCESSIBILITY
-# include "qaccessible.h"
-#endif
-
 #include "qgraphicsitem_p.h"
 #include "qgraphicswidget_p.h"
 #include "qtextcontrol_p.h"
 #include "qtextdocumentlayout_p.h"
-#include "qtextengine_p.h"
 #include "qwidget_p.h"
 #include "qapplication_p.h"
 
 #ifdef Q_WS_X11
-#include "qt_x11_p.h"
-#include "qpixmap_x11_p.h"
+#  include "qt_x11_p.h"
+#  include "qpixmap_x11_p.h"
 #endif
 
 #include <math.h>
@@ -7241,9 +7236,6 @@ void QGraphicsItem::prepareGeometryChange()
     \internal
 
     Highlights \a item as selected.
-
-    NOTE: This function is a duplicate of qt_graphicsItem_highlightSelected() in
-          qgraphicssvgitem.cpp!
 */
 static void qt_graphicsItem_highlightSelected(
     QGraphicsItem *item, QPainter *painter, const QStyleOptionGraphicsItem *option)
@@ -9924,8 +9916,7 @@ void QGraphicsSimpleTextItemPrivate::updateBoundingRect()
     } else {
         QString tmp = text;
         tmp.replace(QLatin1Char('\n'), QChar::LineSeparator);
-        QStackTextEngine engine(tmp, font);
-        QTextLayout layout(&engine);
+        QTextLayout layout(tmp, font);
         br = setupTextLayout(&layout);
     }
     if (br != boundingRect) {
@@ -10088,8 +10079,7 @@ void QGraphicsSimpleTextItem::paint(QPainter *painter, const QStyleOptionGraphic
 
     QString tmp = d->text;
     tmp.replace(QLatin1Char('\n'), QChar::LineSeparator);
-    QStackTextEngine engine(tmp, d->font);
-    QTextLayout layout(&engine);
+    QTextLayout layout(tmp, d->font);
     setupTextLayout(&layout);
 
     QPen p;

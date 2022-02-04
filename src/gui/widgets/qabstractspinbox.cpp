@@ -36,13 +36,8 @@
 #include "qpalette.h"
 #include "qstylepainter.h"
 #include "qdebug.h"
-#ifndef QT_NO_ACCESSIBILITY
-# include "qaccessible.h"
-#endif
 
-#if defined(Q_WS_X11)
 #include <limits.h>
-#endif
 
 
 //#define QABSTRACTSPINBOX_QSBDEBUG
@@ -916,9 +911,6 @@ void QAbstractSpinBox::keyPressEvent(QKeyEvent *event)
                 d->updateState(up, true);
             }
         }
-#ifndef QT_NO_ACCESSIBILITY
-        QAccessible::updateAccessibility(this, 0, QAccessible::ValueChanged);
-#endif
         return;
     }
     case Qt::Key_Enter:
@@ -1503,9 +1495,6 @@ void QAbstractSpinBoxPrivate::updateState(bool up, bool fromKeyboard /* = false 
         spinClickThresholdTimerId = q->startTimer(spinClickThresholdTimerInterval);
         buttonState = (up ? Up : Down) | (fromKeyboard ? Keyboard : Mouse);
         q->stepBy(up ? 1 : -1);
-#ifndef QT_NO_ACCESSIBILITY
-        QAccessible::updateAccessibility(q, 0, QAccessible::ValueChanged);
-#endif
     }
 }
 

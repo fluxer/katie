@@ -63,7 +63,7 @@ public:
     QImage(uchar *data, int width, int height, int bytesPerLine, Format format);
     QImage(const uchar *data, int width, int height, int bytesPerLine, Format format);
 
-#ifndef QT_NO_XPM
+#ifndef QT_NO_IMAGEFORMAT_XPM
     explicit QImage(const char * const xpm[]);
 #endif
     explicit QImage(const QString &fileName, const char *format = nullptr);
@@ -75,10 +75,8 @@ public:
     ~QImage();
 
     QImage &operator=(const QImage &);
-#ifdef Q_COMPILER_RVALUE_REFS
     inline QImage &operator=(QImage &&other)
     { qSwap(d, other.d); return *this; }
-#endif
     inline void swap(QImage &other) { qSwap(d, other.d); }
 
     bool isNull() const;

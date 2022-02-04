@@ -140,7 +140,6 @@ public:
         ExtraToolTip,
         ExtraCursor,
         ExtraCacheData,
-        ExtraMaxDeviceCoordCacheSize,
         ExtraBoundingRegionGranularity
     };
 

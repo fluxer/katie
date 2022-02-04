@@ -5,10 +5,7 @@ set(EXTRA_SVG_LIBS
 )
 
 set(SVG_PUBLIC_HEADERS
-    QGraphicsSvgItem
-    QSvgGenerator
     QSvgRenderer
-    QSvgWidget
 )
 
 include_directories(
@@ -18,7 +15,6 @@ include_directories(
     ${CMAKE_BINARY_DIR}/include/QtXml
     ${CMAKE_BINARY_DIR}/include/QtGui
     ${CMAKE_BINARY_DIR}/include/QtSvg
-    ${CMAKE_SOURCE_DIR}/src/3rdparty/harfbuzz/src
     ${ZLIB_INCLUDE_DIRS}
 )
 
@@ -31,9 +27,6 @@ set(SVG_HEADERS
     ${CMAKE_CURRENT_SOURCE_DIR}/qsvgfont_p.h
     ${CMAKE_CURRENT_SOURCE_DIR}/qsvgtinydocument_p.h
     ${CMAKE_CURRENT_SOURCE_DIR}/qsvgrenderer.h
-    ${CMAKE_CURRENT_SOURCE_DIR}/qsvgwidget.h
-    ${CMAKE_CURRENT_SOURCE_DIR}/qgraphicssvgitem.h
-    ${CMAKE_CURRENT_SOURCE_DIR}/qsvggenerator.h
 )
 
 set(SVG_SOURCES
@@ -45,9 +38,6 @@ set(SVG_SOURCES
     ${CMAKE_CURRENT_SOURCE_DIR}/qsvgfont.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/qsvgtinydocument.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/qsvgrenderer.cpp
-    ${CMAKE_CURRENT_SOURCE_DIR}/qsvgwidget.cpp
-    ${CMAKE_CURRENT_SOURCE_DIR}/qgraphicssvgitem.cpp
-    ${CMAKE_CURRENT_SOURCE_DIR}/qsvggenerator.cpp
 )
 
 katie_generate_misc("${SVG_HEADERS}" QtSvg)

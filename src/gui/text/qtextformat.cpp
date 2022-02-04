@@ -376,12 +376,6 @@ void QTextFormatPrivate::recalcFont() const
             case QTextFormat::FontStrikeOut:
                 f.setStrikeOut(props.at(i).value.toBool());
                 break;
-            case QTextFormat::FontLetterSpacing:
-                f.setLetterSpacing(QFont::PercentageSpacing, props.at(i).value.toReal());
-                break;
-            case QTextFormat::FontWordSpacing:
-                f.setWordSpacing(props.at(i).value.toReal());
-                break;
             case QTextFormat::FontFixedPitch: {
                 const bool value = props.at(i).value.toBool();
                 if (f.fixedPitch() != value)
@@ -390,9 +384,6 @@ void QTextFormatPrivate::recalcFont() const
             }
             case QTextFormat::FontHintingPreference:
                 f.setHintingPreference(static_cast<QFont::HintingPreference>(props.at(i).value.toInt()));
-                break;
-            case QTextFormat::FontStyleStrategy:
-                f.setStyleStrategy(static_cast<QFont::StyleStrategy>(props.at(i).value.toInt()));
                 break;
             case QTextFormat::FontKerning:
                 f.setKerning(props.at(i).value.toBool());
@@ -518,8 +509,6 @@ Q_GUI_EXPORT QDataStream &operator>>(QDataStream &stream, QTextFormat &fmt)
     \value BlockLeftMargin
     \value BlockRightMargin
     \value TextIndent
-    \value TabPositions     Specifies the tab positions.  The tab positions are structs of QTextOption::Tab which are stored in
-                            a QList (internally, in a QList<QVariant>).
     \value BlockIndent
     \value LineHeight
     \value LineHeightType
@@ -540,10 +529,6 @@ Q_GUI_EXPORT QDataStream &operator>>(QDataStream &stream, QTextFormat &fmt)
     \value FontUnderline \e{This property has been deprecated.} Use QTextFormat::TextUnderlineStyle instead.
     \value FontOverline
     \value FontStrikeOut
-    \value FontLetterSpacing Changes the default spacing between individual letters in the font. The value is
-                                                specified in percentage, with 100 as the default value.
-    \value FontWordSpacing  Changes the default spacing between individual words. A positive value increases the word spacing
-                                                 by the corresponding pixels; a negative value decreases the spacing.
     \value FontStyleStrategy    Corresponds to the QFont::StyleStrategy property
     \value FontKerning          Specifies whether the font has kerning turned on.
     \value FontHintingPreference Controls the use of hinting according to values
@@ -1461,16 +1446,6 @@ void QTextCharFormat::setUnderlineStyle(UnderlineStyle style)
     \sa font()
 */
 
-/*!
-    \since 4.5
-    \fn void QTextCharFormat::setFontStyleStrategy(QFont::StyleStrategy strategy)
-
-    Sets the font style \a strategy.
-
-    \sa setFont()
-    \sa QFont::setStyleStrategy()
-*/
-
 
 /*!
     \since 4.5
@@ -1482,27 +1457,6 @@ void QTextCharFormat::setUnderlineStyle(UnderlineStyle style)
     is equal to width("ab") is not neccesairly true.
 
     \sa setFont()
-*/
-
-
-/*!
-    \fn QTextCharFormat::StyleHint QTextCharFormat::fontStyleHint() const
-    \since 4.5
-
-    Returns the font style hint.
-
-    \sa setFontStyleHint(), font()
-*/
-
-
-/*!
-    \since 4.5
-    \fn QTextCharFormat::StyleStrategy QTextCharFormat::fontStyleStrategy() const
-
-    Returns the current font style strategy.
-
-    \sa setFontStyleStrategy()
-    \sa font()
 */
 
 
@@ -1809,10 +1763,7 @@ void QTextCharFormat::setFont(const QFont &font)
     setFontOverline(font.overline());
     setFontStrikeOut(font.strikeOut());
     setFontFixedPitch(font.fixedPitch());
-    setFontWordSpacing(font.wordSpacing());
-    if (font.letterSpacingType() == QFont::PercentageSpacing)
-        setFontLetterSpacing(font.letterSpacing());
-    setFontStyleStrategy(font.styleStrategy());
+    setFontHintingPreference(font.hintingPreference());
     setFontKerning(font.kerning());
 }
 
@@ -1897,47 +1848,6 @@ QTextBlockFormat::QTextBlockFormat() : QTextFormat(BlockFormat) {}
 QTextBlockFormat::QTextBlockFormat(const QTextFormat &fmt)
  : QTextFormat(fmt)
 {
-}
-
-/*!
-    \since 4.4
-    Sets the tab positions for the text block to those specified by
-    \a tabs.
-
-    \sa tabPositions()
-*/
-void QTextBlockFormat::setTabPositions(const QList<QTextOption::Tab> &tabs)
-{
-    QList<QVariant> list;
-    QList<QTextOption::Tab>::ConstIterator iter = tabs.constBegin();
-    while (iter != tabs.constEnd()) {
-        QVariant v;
-        v.setValue<QTextOption::Tab>(*iter);
-        list.append(v);
-        ++iter;
-    }
-    setProperty(TabPositions, list);
-}
-
-/*!
-    \since 4.4
-    Returns a list of tab positions defined for the text block.
-
-    \sa setTabPositions()
-*/
-QList<QTextOption::Tab> QTextBlockFormat::tabPositions() const
-{
-    QVariant variant = property(TabPositions);
-    if(variant.isNull())
-        return QList<QTextOption::Tab>();
-    QList<QTextOption::Tab> answer;
-    QList<QVariant> variantsList = qvariant_cast<QList<QVariant> >(variant);
-    QList<QVariant>::Iterator iter = variantsList.begin();
-    while(iter != variantsList.end()) {
-        answer.append( qvariant_cast<QTextOption::Tab>(*iter));
-        ++iter;
-    }
-    return answer;
 }
 
 /*!
@@ -2979,40 +2889,6 @@ QTextImageFormat::QTextImageFormat(const QTextFormat &fmt)
     Returns the height of the rectangle occupied by the image.
 
     \sa width() setHeight()
-*/
-
-/*!
-    \fn void QTextCharFormat::setFontLetterSpacing(qreal spacing)
-    \since 4.4
-
-    Sets the letter spacing of this format to the given \a spacing, in percent.
-    A value of 100 indicates default spacing; a value of 200 doubles the amount
-    of space a letter takes.
-
-    \sa fontLetterSpacing()
-*/
-
-/*!
-    \fn qreal QTextCharFormat::fontLetterSpacing() const
-    \since 4.4
-
-    Returns the current letter spacing percentage.
-*/
-
-/*!
-    \fn void QTextCharFormat::setFontWordSpacing(qreal spacing)
-    \since 4.4
-
-    Sets the word spacing of this format to the given \a spacing, in pixels.
-
-    \sa fontWordSpacing()
-*/
-
-/*!
-    \fn qreal QTextCharFormat::fontWordSpacing() const
-    \since 4.4
-
-    Returns the current word spacing value.
 */
 
 /*!

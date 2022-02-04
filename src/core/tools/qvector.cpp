@@ -89,20 +89,15 @@ int QVectorData::grow(int sizeofTypedData, int size, int sizeofT, bool excessive
     stores its items in adjacent memory locations and provides fast
     index-based access.
 
-    QList\<T\>, QLinkedList\<T\>, and QVarLengthArray\<T\> provide
-    similar functionality. Here's an overview:
+    QList\<T\> and QVarLengthArray\<T\> provide similar functionality.
+    Here's an overview:
 
     \list
     \i For most purposes, QList is the right class to use. Operations
        like prepend() and insert() are usually faster than with
        QVector because of the way QList stores its items in memory
-       (see \l{Algorithmic Complexity} for details),
-       and its index-based API is more convenient than QLinkedList's
-       iterator-based API. It also expands to less code in your
-       executable.
-    \i If you need a real linked list, with guarantees of \l{constant
-       time} insertions in the middle of the list and iterators to
-       items rather than indexes, use QLinkedList.
+       (see \l{Algorithmic Complexity} for details). It also expands
+       to less code in your executable.
     \i If you want the items to occupy adjacent memory positions, or
        if your items are larger than a pointer and you want to avoid
        the overhead of allocating them on the heap individually at
@@ -171,7 +166,7 @@ int QVectorData::grow(int sizeofTypedData, int size, int sizeofT, bool excessive
     (\l{linear time}) for large vectors, because they require moving many
     items in the vector by one position in memory. If you want a container
     class that provides fast insertion/removal in the middle, use
-    QList or QLinkedList instead.
+    QList instead.
 
     Unlike plain C++ arrays, QVectors can be resized at any time by
     calling resize(). If the new size is larger than the old size,
@@ -210,7 +205,7 @@ int QVectorData::grow(int sizeofTypedData, int size, int sizeofT, bool excessive
     with references to its own values. Doing so will cause your application to
     abort with an error message.
 
-    \sa QVectorIterator, QMutableVectorIterator, QList, QLinkedList
+    \sa QVectorIterator, QMutableVectorIterator, QList
 */
 
 /*!
@@ -486,8 +481,7 @@ int QVectorData::grow(int sizeofTypedData, int size, int sizeofT, bool excessive
     For large vectors, this operation can be slow (\l{linear time}),
     because it requires moving all the items in the vector by one
     position further in memory. If you want a container class that
-    provides a fast prepend() function, use QList or QLinkedList
-    instead.
+    provides a fast prepend() function, use QList instead.
 
     \sa append(), insert()
 */
@@ -503,9 +497,7 @@ int QVectorData::grow(int sizeofTypedData, int size, int sizeofT, bool excessive
 
     For large vectors, this operation can be slow (\l{linear time}),
     because it requires moving all the items at indexes \a i and
-    above by one position further in memory. If you want a container
-    class that provides a fast insert() function, use QLinkedList
-    instead.
+    above by one position further in memory.
 
     \sa append(), prepend(), remove()
 */

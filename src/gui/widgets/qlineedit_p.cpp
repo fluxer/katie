@@ -26,9 +26,6 @@
 
 #include "qabstractitemview.h"
 #include "qclipboard.h"
-#ifndef QT_NO_ACCESSIBILITY
-#include "qaccessible.h"
-#endif
 
 QT_BEGIN_NAMESPACE
 
@@ -100,19 +97,14 @@ void QLineEditPrivate::_q_cursorPositionChanged(int from, int to)
 void QLineEditPrivate::_q_selectionChanged()
 {
     Q_Q(QLineEdit);
-    if (control->preeditAreaText().isEmpty()) {
-        QStyleOptionFrameV2 opt;
-        q->initStyleOption(&opt);
-        bool showCursor = control->hasSelectedText() ?
-                          q->style()->styleHint(QStyle::SH_BlinkCursorWhenTextSelected, &opt, q):
-                          q->hasFocus();
-        setCursorVisible(showCursor);
-    }
+    QStyleOptionFrameV2 opt;
+    q->initStyleOption(&opt);
+    bool showCursor = control->hasSelectedText() ?
+                        q->style()->styleHint(QStyle::SH_BlinkCursorWhenTextSelected, &opt, q):
+                        q->hasFocus();
+    setCursorVisible(showCursor);
 
     emit q->selectionChanged();
-#ifndef QT_NO_ACCESSIBILITY
-    QAccessible::updateAccessibility(q, 0, QAccessible::TextSelectionChanged);
-#endif
 }
 
 void QLineEditPrivate::_q_updateNeeded(const QRect &rect)

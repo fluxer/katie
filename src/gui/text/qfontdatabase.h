@@ -34,11 +34,8 @@ class QStringList;
 template <class T> class QList;
 class QFontEngine;
 
-class QFontDatabasePrivate;
-
 class Q_GUI_EXPORT QFontDatabase
 {
-    Q_GADGET
 public:
     static QList<int> standardSizes();
 
@@ -63,16 +60,9 @@ public:
 
     bool hasFamily(const QString &family) const;
 
-    static int addApplicationFont(const QString &fileName);
-    static int addApplicationFontFromData(const QByteArray &fontData);
-    static QStringList applicationFontFamilies(int id);
-    static bool removeApplicationFont(int id);
-    static bool removeAllApplicationFonts();
-
     static bool supportsThreadedFontRendering();
 
 private:
-    static void createDatabase();
     static void parseFontName(const QString &name, QString &foundry, QString &family);
     static QString resolveFontFamilyAlias(const QString &family);
     static QFontEngine* load(const QFontPrivate *d, int script);
@@ -81,8 +71,6 @@ private:
     friend class QFontPrivate;
     friend class QFontDialog;
     friend class QFontDialogPrivate;
-
-    QFontDatabasePrivate *d;
 };
 
 QT_END_NAMESPACE

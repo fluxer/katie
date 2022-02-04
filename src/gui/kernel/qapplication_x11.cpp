@@ -869,29 +869,6 @@ static void getXDefault(const char *group, const char *key, int *val)
             FcNameConstant((FcChar8 *) str, val);
     }
 }
-
-static void getXDefault(const char *group, const char *key, bool *val)
-{
-    char *str = XGetDefault(qt_x11Data->display, group, key);
-    if (str) {
-        char c = str[0];
-        if (isupper((int)c))
-            c = tolower(c);
-        if (c == 't' || c == 'y' || c == '1')
-            *val = true;
-        else if (c == 'f' || c == 'n' || c == '0')
-            *val = false;
-        if (c == 'o') {
-            c = str[1];
-            if (isupper((int)c))
-                c = tolower(c);
-            if (c == 'n')
-                *val = true;
-            if (c == 'f')
-                *val = false;
-        }
-    }
-}
 #endif // QT_NO_FONTCONFIG
 
 #if !defined(QT_NO_DEBUG) && defined(QT_HAVE_PROC_CMDLINE) && defined(QT_HAVE_PROC_EXE)
@@ -973,6 +950,7 @@ void qt_init(QApplicationPrivate *priv, Display *display,
 
     // Fontconfig
     qt_x11Data->has_fontconfig = false;
+    qt_x11Data->fc_hint_style = -1;
 #if !defined(QT_NO_FONTCONFIG)
     if (qgetenv("QT_X11_NO_FONTCONFIG").isNull())
         qt_x11Data->has_fontconfig = FcInit();
@@ -1214,14 +1192,7 @@ void qt_init(QApplicationPrivate *priv, Display *display,
         }
     }
 #ifdef FC_HINT_STYLE
-    qt_x11Data->fc_hint_style = -1;
     getXDefault("Xft", FC_HINT_STYLE, &qt_x11Data->fc_hint_style);
-#endif
-#if 0
-    // ###### these are implemented by Xft, not sure we need them
-    getXDefault("Xft", FC_AUTOHINT, &qt_x11Data->fc_autohint);
-    getXDefault("Xft", FC_HINTING, &qt_x11Data->fc_autohint);
-    getXDefault("Xft", FC_MINSPACE, &qt_x11Data->fc_autohint);
 #endif
 #endif // QT_NO_FONTCONFIG
 
@@ -1230,7 +1201,6 @@ void qt_init(QApplicationPrivate *priv, Display *display,
 
     // Misc. initialization
     QCursorData::initialize();
-    QFont::initialize();
 
     qApp->setObjectName(qApp->applicationName());
 
@@ -1256,7 +1226,7 @@ void qt_init(QApplicationPrivate *priv, Display *display,
 
     QApplicationPrivate::x11_apply_settings();
 
-    // be smart about the size of the default font. most X servers have helvetica
+    // be smart about the size of the default font. most X servers have font
     // 12 point available at 2 resolutions:
     //     75dpi (12 pixels) and 100dpi (17 pixels).
     // At 95 DPI, a 12 point font should be 16 pixels tall - in which case a 17
@@ -1268,8 +1238,7 @@ void qt_init(QApplicationPrivate *priv, Display *display,
 
     if (!QApplicationPrivate::sys_font) {
         // no font from settings, provide a fallback
-        QFont f(qt_x11Data->has_fontconfig ? QLatin1String("Sans Serif") : QLatin1String("Helvetica"),
-                ptsz);
+        QFont f(QFont::lastResortFamily(), ptsz);
         QApplicationPrivate::setSystemFont(f);
     }
 
@@ -1287,7 +1256,6 @@ void qt_cleanup()
 {
     QPixmapCache::clear();
     QCursorData::cleanup();
-    QFont::cleanup();
     QColormap::cleanup();
 
 #ifndef QT_NO_XRENDER

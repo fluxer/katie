@@ -8,7 +8,7 @@ License: BSD and LGPLv2+
 URL: https://github.com/fluxer/katie
 
 BuildRequires: gcc-c++ cmake libicu-devel libzstd-devel jansson-devel zlib-devel libpng-devel freetype-devel pcre-devel openssl-devel libX11-devel libXinerama-devel libXrandr-devel libXrender-devel libXfixes-devel libXcursor-devel libSM-devel libICE-devel dbus-devel fontconfig-devel cups-devel unifdef
-Requires: xdg-utils
+Requires: xdg-utils gnu-free-fonts
 Requires(post): /sbin/ldconfig
 Requires(postun): /sbin/ldconfig
 Requires(post): desktop-file-utils

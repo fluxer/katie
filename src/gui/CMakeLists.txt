@@ -24,11 +24,6 @@ set(GUI_PUBLIC_HEADERS
     QAbstractSlider
     QAbstractSpinBox
     QAbstractTextDocumentLayout
-    QAccessible
-    QAccessibleBridge
-    QAccessibleObject
-    QAccessiblePlugin
-    QAccessibleWidget
     QAction
     QActionGroup
     QApplication
@@ -115,7 +110,6 @@ set(GUI_PUBLIC_HEADERS
     QMdiSubWindow
     QMenu
     QMenuBar
-    QMotifStyle
     QMovie
     QPageSetupDialog
     QPaintDevice
@@ -127,7 +121,6 @@ set(GUI_PUBLIC_HEADERS
     QPixmap
     QPixmapCache
     QPlainTextEdit
-    QPlastiqueStyle
     QPolygon
     QPrintDialog
     QPrintEngine
@@ -159,7 +152,6 @@ set(GUI_PUBLIC_HEADERS
     QStackedLayout
     QStackedWidget
     QStandardItemModel
-    QStaticText
     QStatusBar
     QStringListModel
     QStyle
@@ -217,7 +209,6 @@ include_directories(
     ${CMAKE_BINARY_DIR}/include/QtCore
     ${CMAKE_BINARY_DIR}/include/QtXml
     ${CMAKE_BINARY_DIR}/include/QtGui
-    ${CMAKE_SOURCE_DIR}/src/3rdparty/harfbuzz/src
     ${FREETYPE_INCLUDE_DIRS}
     ${X11_INCLUDE_DIR}
     ${PNG_INCLUDE_DIRS}
@@ -468,8 +459,6 @@ set(GUI_HEADERS
     ${CMAKE_CURRENT_SOURCE_DIR}/styles/qproxystyle.h
     ${CMAKE_CURRENT_SOURCE_DIR}/styles/qproxystyle_p.h
     ${CMAKE_CURRENT_SOURCE_DIR}/styles/qstylesheetstyle_p.h
-    ${CMAKE_CURRENT_SOURCE_DIR}/styles/qplastiquestyle.h
-    ${CMAKE_CURRENT_SOURCE_DIR}/styles/qmotifstyle.h
     ${CMAKE_CURRENT_SOURCE_DIR}/styles/qwindowsstyle.h
     ${CMAKE_CURRENT_SOURCE_DIR}/styles/qcleanlooksstyle.h
     ${CMAKE_CURRENT_SOURCE_DIR}/styles/qcleanlooksstyle_p.h
@@ -507,11 +496,8 @@ set(GUI_HEADERS
     ${CMAKE_CURRENT_SOURCE_DIR}/text/qtextdocumentwriter.h
     ${CMAKE_CURRENT_SOURCE_DIR}/text/qcssparser_p.h
     ${CMAKE_CURRENT_SOURCE_DIR}/text/qtexttable_p.h
-    ${CMAKE_CURRENT_SOURCE_DIR}/text/qstatictext_p.h
-    ${CMAKE_CURRENT_SOURCE_DIR}/text/qstatictext.h
     ${CMAKE_CURRENT_SOURCE_DIR}/text/qharfbuzz_p.h
     ${CMAKE_CURRENT_SOURCE_DIR}/text/qfontengine_ft_p.h
-    ${CMAKE_CURRENT_SOURCE_DIR}/text/qfontdatabase_x11_p.h
     ${CMAKE_CURRENT_SOURCE_DIR}/text/qunicodetables_p.h
     ${CMAKE_CURRENT_SOURCE_DIR}/util/qsystemtrayicon.h
     ${CMAKE_CURRENT_SOURCE_DIR}/util/qcompleter.h
@@ -799,11 +785,11 @@ set(GUI_SOURCES
     ${CMAKE_CURRENT_SOURCE_DIR}/styles/qproxystyle.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/styles/qstylesheetstyle.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/styles/qstylesheetstyle_default.cpp
-    ${CMAKE_CURRENT_SOURCE_DIR}/styles/qplastiquestyle.cpp
-    ${CMAKE_CURRENT_SOURCE_DIR}/styles/qmotifstyle.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/styles/qwindowsstyle.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/styles/qcleanlooksstyle.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/styles/qstyle.qrc
+    ${CMAKE_CURRENT_SOURCE_DIR}/styles/qwindowsstyle.qrc
+    ${CMAKE_CURRENT_SOURCE_DIR}/styles/qcleanlooksstyle.qrc
     ${CMAKE_CURRENT_SOURCE_DIR}/text/qfont.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/text/qfontengine.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/text/qfontengine_ft.cpp
@@ -829,7 +815,6 @@ set(GUI_SOURCES
     ${CMAKE_CURRENT_SOURCE_DIR}/text/qtextdocumentwriter.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/text/qsyntaxhighlighter.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/text/qcssparser.cpp
-    ${CMAKE_CURRENT_SOURCE_DIR}/text/qstatictext.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/text/qfont_x11.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/text/qunicodetables.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/util/qsystemtrayicon.cpp
@@ -897,19 +882,11 @@ set(GUI_SOURCES
     ${CMAKE_CURRENT_SOURCE_DIR}/widgets/qtoolbararealayout.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/widgets/qplaintextedit.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/widgets/qprintpreviewwidget.cpp
-    ${CMAKE_SOURCE_DIR}/src/3rdparty/harfbuzz/src/harfbuzz-buffer.c
-    ${CMAKE_SOURCE_DIR}/src/3rdparty/harfbuzz/src/harfbuzz-gdef.c
-    ${CMAKE_SOURCE_DIR}/src/3rdparty/harfbuzz/src/harfbuzz-gsub.c
-    ${CMAKE_SOURCE_DIR}/src/3rdparty/harfbuzz/src/harfbuzz-gpos.c
-    ${CMAKE_SOURCE_DIR}/src/3rdparty/harfbuzz/src/harfbuzz-impl.c
-    ${CMAKE_SOURCE_DIR}/src/3rdparty/harfbuzz/src/harfbuzz-open.c
-    ${CMAKE_SOURCE_DIR}/src/3rdparty/harfbuzz/src/harfbuzz-stream.c
-    ${CMAKE_SOURCE_DIR}/src/3rdparty/harfbuzz/src/harfbuzz-shaper-all.cpp
     ${CMAKE_SOURCE_DIR}/src/gui/text/qharfbuzz.cpp
 )
 
 # keep in sync with the top-level CMake file, only libraries setup is needed here
-foreach(x11ext Xshape Xinerama Xrandr Xrender Xfixes Xcursor Xpm Xext SM ICE)
+foreach(x11ext Xshape Xinerama Xrandr Xrender Xfixes Xcursor Xext SM ICE)
     if(X11_${x11ext}_FOUND AND X11_${x11ext}_LIB)
         set(EXTRA_GUI_LIBS
             ${EXTRA_GUI_LIBS}
@@ -943,29 +920,6 @@ if(WITH_FONTCONFIG AND FONTCONFIG_FOUND)
     add_definitions(${FONTCONFIG_DEFINITIONS})
 endif()
 
-if(WITH_ACCESSIBILITY)
-    set(GUI_HEADERS
-        ${GUI_HEADERS}
-        ${CMAKE_CURRENT_SOURCE_DIR}/accessible/qaccessible.h
-        ${CMAKE_CURRENT_SOURCE_DIR}/accessible/qaccessible2.h
-        ${CMAKE_CURRENT_SOURCE_DIR}/accessible/qaccessibleobject.h
-        ${CMAKE_CURRENT_SOURCE_DIR}/accessible/qaccessiblewidget.h
-        ${CMAKE_CURRENT_SOURCE_DIR}/accessible/qaccessibleplugin.h
-        ${CMAKE_CURRENT_SOURCE_DIR}/accessible/qaccessiblebridge.h
-    )
-
-    set(GUI_SOURCES
-        ${GUI_SOURCES}
-        ${CMAKE_CURRENT_SOURCE_DIR}/accessible/qaccessible.cpp
-        ${CMAKE_CURRENT_SOURCE_DIR}/accessible/qaccessible2.cpp
-        ${CMAKE_CURRENT_SOURCE_DIR}/accessible/qaccessibleobject.cpp
-        ${CMAKE_CURRENT_SOURCE_DIR}/accessible/qaccessiblewidget.cpp
-        ${CMAKE_CURRENT_SOURCE_DIR}/accessible/qaccessibleplugin.cpp
-        ${CMAKE_CURRENT_SOURCE_DIR}/accessible/qaccessible_unix.cpp
-        ${CMAKE_CURRENT_SOURCE_DIR}/accessible/qaccessiblebridge.cpp
-    )
-endif()
-
 # anything that includes qt_x11_p.h is known to break unity build
 katie_unity_exclude(
     ${CMAKE_CURRENT_SOURCE_DIR}/dialogs/qdialog.cpp
@@ -996,7 +950,7 @@ katie_unity_exclude(
     ${CMAKE_CURRENT_SOURCE_DIR}/painting/qcolor.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/painting/qcolormap_x11.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/painting/qpaintengine_x11.cpp
-    ${CMAKE_CURRENT_SOURCE_DIR}/painting/qregion_x11.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/painting/qregion.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/painting/qwindowsurface_raster.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/text/qfont.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/text/qfont_x11.cpp
@@ -1004,7 +958,6 @@ katie_unity_exclude(
     ${CMAKE_CURRENT_SOURCE_DIR}/util/qsystemtrayicon_x11.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/widgets/qsizegrip.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/widgets/qtextedit.cpp
-    ${CMAKE_SOURCE_DIR}/src/3rdparty/harfbuzz/src/harfbuzz-shaper-all.cpp
 )
 
 katie_generate_misc("${GUI_HEADERS}" QtGui)

@@ -1059,51 +1059,6 @@ Qt::ItemFlags QStandardItem::flags() const
 */
 
 /*!
-    \fn QString QStandardItem::accessibleText() const
-
-    Returns the item's accessible text.
-
-    The accessible text is used by assistive technologies (i.e. for users who
-    cannot use conventional means of interaction).
-
-    \sa setAccessibleText(), accessibleDescription()
-*/
-
-/*!
-    \fn void QStandardItem::setAccessibleText(const QString &accessibleText)
-
-    Sets the item's accessible text to the string specified by \a accessibleText.
-
-    The accessible text is used by assistive technologies (i.e. for users who
-    cannot use conventional means of interaction).
-
-    \sa accessibleText(), setAccessibleDescription()
-*/
-
-/*!
-    \fn QString QStandardItem::accessibleDescription() const
-
-    Returns the item's accessible description.
-
-    The accessible description is used by assistive technologies (i.e. for
-    users who cannot use conventional means of interaction).
-
-    \sa setAccessibleDescription(), accessibleText()
-*/
-
-/*!
-    \fn void QStandardItem::setAccessibleDescription(const QString &accessibleDescription)
-
-    Sets the item's accessible description to the string specified by \a
-    accessibleDescription.
-
-    The accessible description is used by assistive technologies (i.e. for
-    users who cannot use conventional means of interaction).
-
-    \sa accessibleDescription(), setAccessibleText()
-*/
-
-/*!
   Sets whether the item is enabled. If \a enabled is true, the item is enabled,
   meaning that the user can interact with the item; if \a enabled is false, the
   user cannot interact with the item.

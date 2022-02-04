@@ -64,7 +64,6 @@ public:
     {
     public:
         quint32 root; // this relies on being at the same position as parent in the fragment struct
-        quint32 tag;
         quint32 freelist;
         quint32 node_count;
         quint32 allocated;
@@ -211,7 +210,6 @@ void QFragmentMapData<Fragment>::init()
     }
     Q_CHECK_PTR(fragments);
 
-    head->tag = (((quint32)'p') << 24) | (((quint32)'m') << 16) | (((quint32)'a') << 8) | 'p'; //TAG('p', 'm', 'a', 'p');
     head->root = 0;
     head->freelist = 1;
     head->node_count = 0;

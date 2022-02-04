@@ -340,8 +340,6 @@
            one line.
     \value TextDontClip If it's impossible to stay within the given bounds,
            it prints outside.
-    \value TextExpandTabs Makes the U+0009 (ASCII tab) character move to
-           the next tab stop.
     \value TextShowMnemonic Displays the string "\&P" as \underline{P}
            (see QButton for an example). For an ampersand, use "\&\&".
     \value TextWordWrap Breaks lines at appropriate points, e.g. at word
@@ -350,12 +348,10 @@
     \value TextHideMnemonic Same as Qt::TextShowMnemonic but doesn't draw
            the underlines.
     \value TextDontPrint Treat this text as "hidden" and don't print it.
-    \value IncludeTrailingSpaces When this option is set,
+    \value TextIncludeTrailingSpaces When this option is set,
            QTextLine::naturalTextWidth() and naturalTextRect() will
            return a value that includes the width of trailing spaces in the
            text; otherwise this width is excluded.
-    \value TextIncludeTrailingSpaces Same as IncludeTrailingSpaces
-    \value TextJustificationForced Ensures that text lines are justified.
 
     \omitvalue TextLongestVariant Ensures that the longest variant is always used
            when computing the size of a multi-variant string. (Internal)
@@ -706,8 +702,7 @@
     on QWidget::contentsRect(). This is set by the widget's author.
 
     \value WA_LayoutUsesWidgetRect Ignore the layout item rect from the style
-    when laying out this widget with QLayout. This makes a difference in
-    QPlastiqueStyle for some widgets.
+    when laying out this widget with QLayout.
 
     \value WA_Mapped Indicates that the widget is mapped on screen.
     This is set/cleared by the Qt kernel.
@@ -2107,14 +2102,6 @@
     \value InitialSortOrderRole This role is used to obtain the initial sort order
                                 of a header view section. (Qt::SortOrder). This
                                 role was introduced in Qt 4.8.
-
-    Accessibility roles (with associated types):
-
-    \value AccessibleTextRole        The text to be used by accessibility
-                                     extensions and plugins, such as screen
-                                     readers. (QString)
-    \value AccessibleDescriptionRole A description of the item for accessibility
-                                     purposes. (QString)
 
     User roles:
 

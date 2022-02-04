@@ -46,7 +46,6 @@
 #include "qtextlayout.h"
 #include "qobject_p.h"
 #include "qdnd_p.h"
-#include "qtextengine_p.h"
 #include "qlayoutengine_p.h"
 #include "qdebug.h"
 #include "qlocale.h"
@@ -114,10 +113,6 @@ public:
 
     \table
     \header \o Role \o Accepted Types
-    \omit
-    \row    \o \l Qt::AccessibleDescriptionRole \o QString
-    \row    \o \l Qt::AccessibleTextRole \o QString
-    \endomit
     \row    \o \l Qt::BackgroundRole \o QBrush
     \row    \o \l Qt::CheckStateRole \o Qt::CheckState
     \row    \o \l Qt::DecorationRole \o QIcon, QPixmap, QImage and QColor

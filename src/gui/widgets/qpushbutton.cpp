@@ -37,11 +37,6 @@
 #include "qdebug.h"
 #include "qlayoutitem.h"
 #include "qdialogbuttonbox.h"
-
-#ifndef QT_NO_ACCESSIBILITY
-#include "qaccessible.h"
-#endif
-
 #include "qmenu_p.h"
 #include "qpushbutton_p.h"
 
@@ -350,9 +345,6 @@ void QPushButton::setDefault(bool enable)
             dlg->d_func()->setMainDefault(this);
     }
     update();
-#ifndef QT_NO_ACCESSIBILITY
-    QAccessible::updateAccessibility(this, 0, QAccessible::StateChanged);
-#endif
 }
 
 bool QPushButton::isDefault() const

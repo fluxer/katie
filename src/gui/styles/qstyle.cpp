@@ -65,12 +65,11 @@ static int unpackControlTypes(QSizePolicy::ControlTypes controls, QSizePolicy::C
 
     \ingroup appearance
 
-    Qt contains a set of QStyle subclasses that emulate the styles of
-    the different platforms supported by Qt (QWindowsStyle,
-    QMotifStyle, etc.). By default, these styles are built into the
-    QtGui library. Styles can also be made available as plugins.
+    Katie contains a set of QStyle subclasses that emulate the styles of
+    the different platforms supported by Katie (QWindowsStyle, etc.).
+    By default, these styles are built into the QtGui library.
 
-    Qt's built-in widgets use QStyle to perform nearly all of their
+    Katie's built-in widgets use QStyle to perform nearly all of their
     drawing, ensuring that they look exactly like the equivalent
     native widgets. The diagram below shows a QComboBox in eight
     different styles.
@@ -437,7 +436,7 @@ QRect QStyle::itemTextRect(const QFontMetrics &metrics, const QRect &rect, int a
                        const QString &text) const
 {
     if (!text.isEmpty()) {
-        QRect result = metrics.boundingRect(rect.x(), rect.y(), rect.width(), rect.height(), alignment, text);
+        QRect result = metrics.boundingRect(rect, alignment, text);
         if (!enabled && proxy()->styleHint(SH_EtchDisabledText)) {
             result.setWidth(result.width()+1);
             result.setHeight(result.height()+1);

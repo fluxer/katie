@@ -1103,10 +1103,6 @@ void tst_QStandardItemModel::getSetItemData()
     roles.insert(Qt::ForegroundRole, textColor);
     Qt::CheckState checkState(Qt::PartiallyChecked);
     roles.insert(Qt::CheckStateRole, int(checkState));
-    QLatin1String accessibleText("accessibleText");
-    roles.insert(Qt::AccessibleTextRole, accessibleText);
-    QLatin1String accessibleDescription("accessibleDescription");
-    roles.insert(Qt::AccessibleDescriptionRole, accessibleDescription);
 
     QStandardItemModel model;
     model.insertRows(0, 1);

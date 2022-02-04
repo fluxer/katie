@@ -36,7 +36,7 @@
 #include <QtCore/qalgorithms.h>
 
 #include <vector>
-#include <unordered_set>
+#include <unordered_map>
 
 QT_BEGIN_NAMESPACE
 
@@ -49,9 +49,7 @@ public:
     QStdVector() : Data() { }
     explicit QStdVector(int size) : Data(size) { }
     QStdVector(int size, const T &t) : Data() { Data::reserve(size); Data::insert(Data::begin(), size, t);}
-#ifdef Q_COMPILER_INITIALIZER_LISTS
     inline QStdVector(std::initializer_list<T> args) : Data(args) { }
-#endif
 
     inline bool isEmpty() const { return Data::empty(); }
     inline void squeeze() { Data::shrink_to_fit(); }
@@ -320,108 +318,19 @@ bool QStdVector<T>::removeOne(const T &t)
 }
 
 
-template<class T>
-struct SetHasher {
-    inline size_t operator()(const T &t) const { return qHash(t); }
+template<class K>
+struct QStdMapHasher {
+    inline size_t operator()(const K &k) const { return qHash(k); }
 };
 
-template <class T>
-class Q_CORE_EXPORT QStdSet : public std::unordered_set<T, SetHasher<T>>
+template<class K, class V>
+class Q_CORE_EXPORT QStdMap : public std::unordered_map<K, V, QStdMapHasher<K>>
 {
-    typedef std::unordered_set<T, SetHasher<T>> Data;
+    typedef std::unordered_map<K, V, QStdMapHasher<K>> Data;
 
 public:
-    inline QStdSet() : Data() {}
-    inline QStdSet(const QStdSet<T> &other) : Data(other) {}
-
-    inline bool isEmpty() const { return Data::empty(); }
-    inline void squeeze() { Data::rehash(0); }
-    inline bool remove(const T &value) { return Data::erase(value) != 0; }
-    inline int count() const { return Data::size(); }
-    inline bool contains(const T &value) const { return Data::count(value) != 0; }
-    bool contains(const QStdSet<T> &set) const;
-
-    inline typename Data::iterator insert(const T &value)
-        { return static_cast<typename Data::iterator>(Data::emplace(value).first); }
-    inline typename Data::const_iterator constBegin() const { return Data::cbegin(); }
-    inline typename Data::const_iterator constEnd() const { return Data::cend(); }
-    inline typename Data::const_iterator constFind(const T &value) const { return Data::find(value); }
-    typedef typename Data::iterator Iterator;
-    typedef typename Data::const_iterator ConstIterator;
-
-    QStdSet<T> &unite(const QStdSet<T> &other);
-    QStdSet<T> &intersect(const QStdSet<T> &other);
-    QStdSet<T> &subtract(const QStdSet<T> &other);
-
-    // comfort
-    inline QStdSet<T> &operator<<(const T &value) { insert(value); return *this; }
-    inline QStdSet<T> &operator|=(const QStdSet<T> &other) { unite(other); return *this; }
-    inline QStdSet<T> &operator|=(const T &value) { insert(value); return *this; }
-    inline QStdSet<T> &operator&=(const QStdSet<T> &other) { intersect(other); return *this; }
-    inline QStdSet<T> &operator&=(const T &value)
-        { QStdSet<T> result; if (contains(value)) result.insert(value); return (*this = result); }
-    inline QStdSet<T> &operator+=(const QStdSet<T> &other) { unite(other); return *this; }
-    inline QStdSet<T> &operator+=(const T &value) { insert(value); return *this; }
-    inline QStdSet<T> &operator-=(const QStdSet<T> &other) { subtract(other); return *this; }
-    inline QStdSet<T> &operator-=(const T &value) { remove(value); return *this; }
-    inline QStdSet<T> operator|(const QStdSet<T> &other) const
-        { QStdSet<T> result = *this; result |= other; return result; }
-    inline QStdSet<T> operator&(const QStdSet<T> &other) const
-        { QStdSet<T> result = *this; result &= other; return result; }
-    inline QStdSet<T> operator+(const QStdSet<T> &other) const
-        { QStdSet<T> result = *this; result += other; return result; }
-    inline QStdSet<T> operator-(const QStdSet<T> &other) const
-        { QStdSet<T> result = *this; result -= other; return result; }
+    QStdMap() : Data() { }
 };
-
-template <class T>
-inline QStdSet<T> &QStdSet<T>::unite(const QStdSet<T> &other)
-{
-    typename QStdSet<T>::const_iterator i = other.constEnd();
-    while (i != other.constEnd()) {
-        insert(*i);
-        i++;
-    }
-    return *this;
-}
-
-template <class T>
-inline QStdSet<T> &QStdSet<T>::intersect(const QStdSet<T> &other)
-{
-    QStdSet<T> copy(*this);
-    typename QStdSet<T>::const_iterator i = copy.constBegin();
-    while (i != copy.constEnd()) {
-        if (!other.contains(*i))
-            remove(*i);
-        i++;
-    }
-    return *this;
-}
-
-template <class T>
-inline QStdSet<T> &QStdSet<T>::subtract(const QStdSet<T> &other)
-{
-    QStdSet<T> copy(*this);
-    typename QStdSet<T>::const_iterator i = copy.constBegin();
-    while (i != copy.constEnd()) {
-        if (other.contains(*i))
-            remove(*i);
-        i++;
-    }
-    return *this;
-}
-
-template <class T>
-inline bool QStdSet<T>::contains(const QStdSet<T> &other) const
-{
-    typename QStdSet<T>::const_iterator i = other.constBegin();
-    while (i != other.constEnd()) {
-        if (!contains(*i))
-            return false;
-        ++i;
-    }
-    return true;
-}
 
 QT_END_NAMESPACE
 

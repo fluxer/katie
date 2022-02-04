@@ -65,366 +65,6 @@ static const int cleanlooksWindowsItemHMargin      =  3; // menu item hor text m
 static const int cleanlooksWindowsItemVMargin      =  8; // menu item ver text margin
 static const int cleanlooksWindowsRightBorder      = 15; // right border on windows
 
-/* XPM */
-static const char * const qt_cleanlooks_dock_widget_close_xpm[] = {
-    "11 13 7 1",
-    " 	c None",
-    ".	c #D5CFCB",
-    "+	c #8F8B88",
-    "@	c #6C6A67",
-    "#	c #ABA6A3",
-    "$	c #B5B0AC",
-    "%	c #A4A09D",
-    "           ",
-    " +@@@@@@@+ ",
-    "+#       #+",
-    "@ $@   @$ @",
-    "@ @@@ @@@ @",
-    "@  @@@@@  @",
-    "@   @@@   @",
-    "@  @@@@@  @",
-    "@ @@@ @@@ @",
-    "@ $@   @$ @",
-    "+%       #+",
-    " +@@@@@@@+ ",
-    "           "};
-
-/* XPM */
-static const char * const qt_cleanlooks_arrow_down_xpm[] = {
-    "11 7 2 1",
-    " 	c None",
-    "x	c #000000",
-    "           ",
-    "  x     x  ",
-    " xxx   xxx ",
-    "  xxxxxxx  ",
-    "   xxxxx   ",
-    "    xxx    ",
-    "     x     "};
-
-/* XPM */
-static const char * const qt_cleanlooks_arrow_up_xpm[] = {
-    "11 7 2 1",
-    " 	c None",
-    "x	c #000000",
-    "     x     ",
-    "    xxx    ",
-    "   xxxxx   ",
-    "  xxxxxxx  ",
-    " xxx   xxx ",
-    "  x     x  ",
-    "           "};
-
-/* XPM */
-static const char * const qt_cleanlooks_dock_widget_restore_xpm[] = {
-    "11 13 7 1",
-    " 	c None",
-    ".	c #D5CFCB",
-    "+	c #8F8B88",
-    "@	c #6C6A67",
-    "#	c #ABA6A3",
-    "$	c #B5B0AC",
-    "%	c #A4A09D",
-    "           ",
-    " +@@@@@@@+ ",
-    "+#       #+",
-    "@   #@@@# @",
-    "@   @   @ @",
-    "@ #@@@# @ @",
-    "@ @   @ @ @",
-    "@ @   @@@ @",
-    "@ @   @   @",
-    "@ #@@@#   @",
-    "+%       #+",
-    " +@@@@@@@+ ",
-    "           "};
-
-/* XPM */
-static const char * const qt_cleanlooks_workspace_minimize[] = {
-    "11 13 7 1",
-    " 	c None",
-    ".	c #D5CFCB",
-    "+	c #8F8B88",
-    "@	c #6C6A67",
-    "#	c #ABA6A3",
-    "$	c #B5B0AC",
-    "%	c #A4A09D",
-    "           ",
-    " +@@@@@@@+ ",
-    "+#       #+",
-    "@         @",
-    "@         @",
-    "@         @",
-    "@ @@@@@@@ @",
-    "@ @@@@@@@ @",
-    "@         @",
-    "@         @",
-    "+%       #+",
-    " +@@@@@@@+ ",
-    "           "};
-
-/* XPM */
-static const char * const qt_cleanlooks_titlebar_context_help[] = {
-    "10 10 3 1",
-    "  c None",
-    "# c #000000",
-    "+ c #444444",
-    "  +####+  ",
-    " ###  ### ",
-    " ##    ## ",
-    "     +##+ ",
-    "    +##   ",
-    "    ##    ",
-    "    ##    ",
-    "          ",
-    "    ##    ",
-    "    ##    "};
-
-/* XPM */
-static const char * const qt_cleanlooks_radiobutton[] = {
-    "13 13 9 1",
-    " 	c None",
-    ".	c #ABA094",
-    "+	c #B7ADA0",
-    "@	c #C4BBB2",
-    "#	c #DDD4CD",
-    "$	c #E7E1E0",
-    "%	c #F4EFED",
-    "&	c #FFFAF9",
-    "*	c #FCFEFB",
-    "   #@...@#   ",
-    "  @+@#$$#+@  ",
-    " @+$%%***&@@ ",
-    "#+$%**&&**&+#",
-    "@@$&&******#@",
-    ".#**********.",
-    ".$&******&*&.",
-    ".$*&******&*.",
-    "+#********&#@",
-    "#+*********+#",
-    " @@*******@@ ",
-    "  @+#%*%#+@  ",
-    "   #@...+#   "};
-
-/* XPM */
-static const char * const qt_cleanlooks_radiobutton_checked[] = {
-    "13 13 20 1",
-    " 	c None",
-    ".	c #A8ABAE",
-    "+	c #596066",
-    "@	c #283138",
-    "#	c #A9ACAF",
-    "$	c #A6A9AB",
-    "%	c #6B7378",
-    "&	c #8C9296",
-    "*	c #A2A6AA",
-    "=	c #61696F",
-    "-	c #596065",
-    ";	c #93989C",
-    ">	c #777E83",
-    ",	c #60686E",
-    "'	c #252D33",
-    ")	c #535B62",
-    "!	c #21292E",
-    "~	c #242B31",
-    "{	c #1F262B",
-    "]	c #41484E",
-    "             ",
-    "             ",
-    "             ",
-    "    .+@+#    ",
-    "   $%&*&=#   ",
-    "   -&;>,'+   ",
-    "   @*>,)!@   ",
-    "   +&,)~{+   ",
-    "   #='!{]#   ",
-    "    #+@+#    ",
-    "             ",
-    "             ",
-    "             "};
-
-/* XPM */
-static const char * const qt_cleanlooks_scrollbar_button_arrow_up[] = {
-    "7 4 2 1",
-    "   c None",
-    "*  c #BFBFBF",
-    "   *   ",
-    "  ***  ",
-    " ***** ",
-    "*******"};
-
-/* XPM */
-static const char * const qt_cleanlooks_scrollbar_button_arrow_down[] = {
-    "7 4 2 1",
-    "   c None",
-    "*  c #BFBFBF",
-    "*******",
-    " ***** ",
-    "  ***  ",
-    "   *   "};
-
-/* XPM */
-static const char * const qt_cleanlooks_spinbox_button_arrow_down[] = {
-    "7 4 2 1",
-    "   c None",
-    "*  c #BFBFBF",
-    "*******",
-    " ***** ",
-    "  ***  ",
-    "   *   "};
-
-/* XPM */
-static const char * const qt_cleanlooks_spinbox_button_arrow_up[] = {
-    "7 4 2 1",
-    "   c None",
-    "*  c #BFBFBF",
-    "   *   ",
-    "  ***  ",
-    " ***** ",
-    "*******"};
-
-/* XPM */
-static const char * const qt_cleanlooks_scrollbar_button_left[] = {
-    "16 16 6 1",
-    "   c None",
-    ".  c #BFBFBF",
-    "+  c #979797",
-    "#  c #FAFAFA",
-    "<  c #FAFAFA",
-    "*  c #FAFAFA",
-    " .++++++++++++++",
-    ".+#############+",
-    "+#            <+",
-    "+#            <+",
-    "+#            <+",
-    "+#            <+",
-    "+#            <+",
-    "+#            <+",
-    "+#            <+",
-    "+#            <+",
-    "+#            <+",
-    "+#            <+",
-    "+#            <+",
-    "+#            <+",
-    ".+<<<<<<<<<<<<<+",
-    " .++++++++++++++"};
-
-/* XPM */
-static const char * const qt_cleanlooks_scrollbar_button_right[] = {
-    "16 16 6 1",
-    "   c None",
-    ".  c #BFBFBF",
-    "+  c #979797",
-    "#  c #FAFAFA",
-    "<  c #FAFAFA",
-    "*  c #FAFAFA",
-    "++++++++++++++. ",
-    "+#############+.",
-    "+#            <+",
-    "+#            <+",
-    "+#            <+",
-    "+#            <+",
-    "+#            <+",
-    "+#            <+",
-    "+#            <+",
-    "+#            <+",
-    "+#            <+",
-    "+#            <+",
-    "+#            <+",
-    "+#            <+",
-    "+<<<<<<<<<<<<<+.",
-    "++++++++++++++. "};
-
-/* XPM */
-static const char * const qt_cleanlooks_scrollbar_button_up[] = {
-    "16 16 6 1",
-    "   c None",
-    ".  c #BFBFBF",
-    "+  c #979797",
-    "#  c #FAFAFA",
-    "<  c #FAFAFA",
-    "*  c #FAFAFA",
-    " .++++++++++++. ",
-    ".+############+.",
-    "+#            <+",
-    "+#            <+",
-    "+#            <+",
-    "+#            <+",
-    "+#            <+",
-    "+#            <+",
-    "+#            <+",
-    "+#            <+",
-    "+#            <+",
-    "+#            <+",
-    "+#            <+",
-    "+#            <+",
-    "+<<<<<<<<<<<<<<+",
-    "++++++++++++++++"};
-
-/* XPM */
-static const char * const qt_cleanlooks_scrollbar_button_down[] = {
-    "16 16 6 1",
-    "   c None",
-    ".  c #BFBFBF",
-    "+  c #979797",
-    "#  c #FAFAFA",
-    "<  c #FAFAFA",
-    "*  c #FAFAFA",
-    "++++++++++++++++",
-    "+##############+",
-    "+#            <+",
-    "+#            <+",
-    "+#            <+",
-    "+#            <+",
-    "+#            <+",
-    "+#            <+",
-    "+#            <+",
-    "+#            <+",
-    "+#            <+",
-    "+#            <+",
-    "+#            <+",
-    "+#            <+",
-    ".+<<<<<<<<<<<<+.",
-    " .++++++++++++. "};
-
-/* XPM */
-static const char * const qt_cleanlooks_menuitem_checkbox_checked[] = {
-    "8 7 6 1",
-    " 	g None",
-    ".	g #959595",
-    "+	g #676767",
-    "@	g #454545",
-    "#	g #1D1D1D",
-    "0	g #101010",
-    "      ..",
-    "     .+ ",
-    "    .+  ",
-    "0  .@   ",
-    "@#++.   ",
-    "  @#    ",
-    "   .    "};
-
-/* XPM */
-static const char * const qt_cleanlooks_checkbox_checked[] = {
-    "13 13 3 1",
-    " 	c None",
-    ".	c #272D33",
-    "%	c #666666",
-
-    "             ",
-    "          %  ",
-    "         %.  ",
-    "        %.%  ",
-    "       %..   ",
-    "  %.% %..    ",
-    "  %..%..%    ",
-    "   %...%     ",
-    "    %..%     ",
-    "     %.%     ",
-    "      %      ",
-    "             ",
-    "             "};
-
 static void qt_cleanlooks_draw_gradient(QPainter *painter, const QRect &rect, const QColor &gradientStart,
                                         const QColor &gradientStop, Direction direction = TopDown, QBrush bgBrush = QBrush())
 {
@@ -568,8 +208,7 @@ static void qt_cleanlooks_draw_mdibutton(QPainter *painter, const QStyleOptionTi
     that closely resembles the Clearlooks style, introduced by Richard
     Stellingwerff and Daniel Borgmann.
 
-    \sa {Cleanlooks Style Widget Gallery}, QWindowsStyle, QMotifStyle,
-        QPlastiqueStyle
+    \sa {Cleanlooks Style Widget Gallery}, QWindowsStyle
 */
 
 /*!
@@ -653,7 +292,7 @@ void QCleanlooksStyle::drawPrimitive(PrimitiveElement elem,
 
     switch(elem) {
 #ifndef QT_NO_TABBAR
-    case PE_FrameTabBarBase:
+    case PE_FrameTabBarBase: {
         if (const QStyleOptionTabBarBase *tbb
                 = qstyleoption_cast<const QStyleOptionTabBarBase *>(option)) {
             painter->save();
@@ -667,8 +306,8 @@ void QCleanlooksStyle::drawPrimitive(PrimitiveElement elem,
                 painter->setPen(option->palette.light().color());
                 painter->drawLine(tbb->rect.topLeft() + QPoint(0, 1),
                                   tbb->rect.topRight()  + QPoint(0, 1));
-            }
                 break;
+            }
             case QTabBar::RoundedWest:
                 painter->drawLine(tbb->rect.left(), tbb->rect.top(), tbb->rect.left(), tbb->rect.bottom());
                 break;
@@ -690,221 +329,218 @@ void QCleanlooksStyle::drawPrimitive(PrimitiveElement elem,
             painter->restore();
         }
         return;
+    }
 #endif // QT_NO_TABBAR
-    case PE_IndicatorViewItemCheck:
-        {
-            QStyleOptionButton button;
-            button.QStyleOption::operator=(*option);
-            button.state &= ~State_MouseOver;
-            proxy()->drawPrimitive(PE_IndicatorCheckBox, &button, painter, widget);
-        }
+    case PE_IndicatorViewItemCheck: {
+        QStyleOptionButton button;
+        button.QStyleOption::operator=(*option);
+        button.state &= ~State_MouseOver;
+        proxy()->drawPrimitive(PE_IndicatorCheckBox, &button, painter, widget);
         return;
-    case PE_IndicatorHeaderArrow:
+    }
+    case PE_IndicatorHeaderArrow: {
         if (const QStyleOptionHeader *header = qstyleoption_cast<const QStyleOptionHeader *>(option)) {
             QRect r = header->rect;
             QImage arrow;
             if (header->sortIndicator & QStyleOptionHeader::SortUp)
-                arrow = QImage(qt_cleanlooks_arrow_up_xpm);
+                arrow = QImage(QLatin1String(":/trolltech/styles/cleanlooksstyle/images/cleanlooks/qt_cleanlooks_arrow_up.png"));
             else if (header->sortIndicator & QStyleOptionHeader::SortDown)
-                arrow = QImage(qt_cleanlooks_arrow_down_xpm);
+                arrow = QImage(QLatin1String(":/trolltech/styles/cleanlooksstyle/images/cleanlooks/qt_cleanlooks_arrow_down.png"));
             if (!arrow.isNull()) {
                 r.setSize(arrow.size());
                 r.moveCenter(header->rect.center());
-                arrow.setColor(1, header->palette.foreground().color().rgba());
+                QMap<QRgb, QRgb> arrowMap;
+                arrowMap.insert(4278190080, header->palette.foreground().color().rgba());
+                arrow = replaceColors(arrow, arrowMap);
                 painter->drawImage(r, arrow);
             }
         }
         break;
-    case PE_IndicatorButtonDropDown:
+    }
+    case PE_IndicatorButtonDropDown: {
         proxy()->drawPrimitive(PE_PanelButtonCommand, option, painter, widget);
         break;
-    case PE_IndicatorToolBarSeparator:
-        {
-            QRect rect = option->rect;
-            const int margin = 6;
-            if (option->state & State_Horizontal) {
-                const int offset = rect.width()/2;
-                painter->setPen(QPen(option->palette.background().color().darker(110)));
-                painter->drawLine(rect.bottomLeft().x() + offset,
-                            rect.bottomLeft().y() - margin,
-                            rect.topLeft().x() + offset,
-                            rect.topLeft().y() + margin);
-                painter->setPen(QPen(option->palette.background().color().lighter(110)));
-                painter->drawLine(rect.bottomLeft().x() + offset + 1,
-                            rect.bottomLeft().y() - margin,
-                            rect.topLeft().x() + offset + 1,
-                            rect.topLeft().y() + margin);
-            } else { //Draw vertical separator
-                const int offset = rect.height()/2;
-                painter->setPen(QPen(option->palette.background().color().darker(110)));
-                painter->drawLine(rect.topLeft().x() + margin ,
-                            rect.topLeft().y() + offset,
-                            rect.topRight().x() - margin,
-                            rect.topRight().y() + offset);
-                painter->setPen(QPen(option->palette.background().color().lighter(110)));
-                painter->drawLine(rect.topLeft().x() + margin ,
-                            rect.topLeft().y() + offset + 1,
-                            rect.topRight().x() - margin,
-                            rect.topRight().y() + offset + 1);
-            }
+    }
+    case PE_IndicatorToolBarSeparator: {
+        QRect rect = option->rect;
+        const int margin = 6;
+        if (option->state & State_Horizontal) {
+            const int offset = rect.width()/2;
+            painter->setPen(QPen(option->palette.background().color().darker(110)));
+            painter->drawLine(rect.bottomLeft().x() + offset,
+                        rect.bottomLeft().y() - margin,
+                        rect.topLeft().x() + offset,
+                        rect.topLeft().y() + margin);
+            painter->setPen(QPen(option->palette.background().color().lighter(110)));
+            painter->drawLine(rect.bottomLeft().x() + offset + 1,
+                        rect.bottomLeft().y() - margin,
+                        rect.topLeft().x() + offset + 1,
+                        rect.topLeft().y() + margin);
+        } else { //Draw vertical separator
+            const int offset = rect.height()/2;
+            painter->setPen(QPen(option->palette.background().color().darker(110)));
+            painter->drawLine(rect.topLeft().x() + margin ,
+                        rect.topLeft().y() + offset,
+                        rect.topRight().x() - margin,
+                        rect.topRight().y() + offset);
+            painter->setPen(QPen(option->palette.background().color().lighter(110)));
+            painter->drawLine(rect.topLeft().x() + margin ,
+                        rect.topLeft().y() + offset + 1,
+                        rect.topRight().x() - margin,
+                        rect.topRight().y() + offset + 1);
         }
         break;
-    case PE_Frame:
+    }
+    case PE_Frame: {
         painter->save();
         painter->setPen(dark.lighter(108));
         painter->drawRect(option->rect.adjusted(0, 0, -1, -1));
         painter->restore();
         break;
-    case PE_FrameMenu:
+    }
+    case PE_FrameMenu: {
         painter->save();
-        {
-            painter->setPen(QPen(darkOutline, 1));
-            painter->drawRect(option->rect.adjusted(0, 0, -1, -1));
-            QColor frameLight = option->palette.background().color().lighter(160);
-            QColor frameShadow = option->palette.background().color().darker(110);
+        painter->setPen(QPen(darkOutline, 1));
+        painter->drawRect(option->rect.adjusted(0, 0, -1, -1));
+        QColor frameLight = option->palette.background().color().lighter(160);
+        QColor frameShadow = option->palette.background().color().darker(110);
 
-            //paint beveleffect
-            QRect frame = option->rect.adjusted(1, 1, -1, -1);
-            painter->setPen(frameLight);
-            painter->drawLine(frame.topLeft(), frame.bottomLeft());
-            painter->drawLine(frame.topLeft(), frame.topRight());
+        //paint beveleffect
+        QRect frame = option->rect.adjusted(1, 1, -1, -1);
+        painter->setPen(frameLight);
+        painter->drawLine(frame.topLeft(), frame.bottomLeft());
+        painter->drawLine(frame.topLeft(), frame.topRight());
 
-            painter->setPen(frameShadow);
-            painter->drawLine(frame.topRight(), frame.bottomRight());
-            painter->drawLine(frame.bottomLeft(), frame.bottomRight());
-        }
+        painter->setPen(frameShadow);
+        painter->drawLine(frame.topRight(), frame.bottomRight());
+        painter->drawLine(frame.bottomLeft(), frame.bottomRight());
         painter->restore();
         break;
-    case PE_FrameDockWidget:
-
+    }
+    case PE_FrameDockWidget: {
         painter->save();
-        {
-            QColor softshadow = option->palette.background().color().darker(120);
+        QColor softshadow = option->palette.background().color().darker(120);
 
-            QRect rect= option->rect;
-            painter->setPen(softshadow);
-            painter->drawRect(option->rect.adjusted(0, 0, -1, -1));
-            painter->setPen(QPen(option->palette.light(), 0));
-            painter->drawLine(QPoint(rect.left() + 1, rect.top() + 1), QPoint(rect.left() + 1, rect.bottom() - 1));
-            painter->setPen(QPen(option->palette.background().color().darker(120), 0));
-            painter->drawLine(QPoint(rect.left() + 1, rect.bottom() - 1), QPoint(rect.right() - 2, rect.bottom() - 1));
-            painter->drawLine(QPoint(rect.right() - 1, rect.top() + 1), QPoint(rect.right() - 1, rect.bottom() - 1));
+        QRect rect= option->rect;
+        painter->setPen(softshadow);
+        painter->drawRect(option->rect.adjusted(0, 0, -1, -1));
+        painter->setPen(QPen(option->palette.light(), 0));
+        painter->drawLine(QPoint(rect.left() + 1, rect.top() + 1), QPoint(rect.left() + 1, rect.bottom() - 1));
+        painter->setPen(QPen(option->palette.background().color().darker(120), 0));
+        painter->drawLine(QPoint(rect.left() + 1, rect.bottom() - 1), QPoint(rect.right() - 2, rect.bottom() - 1));
+        painter->drawLine(QPoint(rect.right() - 1, rect.top() + 1), QPoint(rect.right() - 1, rect.bottom() - 1));
 
-        }
         painter->restore();
         break;
-    case PE_PanelButtonTool:
+    }
+    case PE_PanelButtonTool: {
         painter->save();
         if ((option->state & State_Enabled || option->state & State_On) || !(option->state & State_AutoRaise)) {
             QPen oldPen = painter->pen();
 
             if (widget && widget->inherits("QDockWidgetTitleButton")) {
-                   if (option->state & State_MouseOver)
-                       proxy()->drawPrimitive(PE_PanelButtonCommand, option, painter, widget);
+                if (option->state & State_MouseOver)
+                    proxy()->drawPrimitive(PE_PanelButtonCommand, option, painter, widget);
             } else {
                 proxy()->drawPrimitive(PE_PanelButtonCommand, option, painter, widget);
             }
         }
         painter->restore();
         break;
-    case PE_IndicatorDockWidgetResizeHandle:
-        {
-            QStyleOption dockWidgetHandle = *option;
-            bool horizontal = option->state & State_Horizontal;
-            if (horizontal)
-                dockWidgetHandle.state &= ~State_Horizontal;
-            else
-                dockWidgetHandle.state |= State_Horizontal;
-            proxy()->drawControl(CE_Splitter, &dockWidgetHandle, painter, widget);
-        }
+    }
+    case PE_IndicatorDockWidgetResizeHandle: {
+        QStyleOption dockWidgetHandle = *option;
+        bool horizontal = option->state & State_Horizontal;
+        if (horizontal)
+            dockWidgetHandle.state &= ~State_Horizontal;
+        else
+            dockWidgetHandle.state |= State_Horizontal;
+        proxy()->drawControl(CE_Splitter, &dockWidgetHandle, painter, widget);
         break;
-    case PE_FrameWindow:
+    }
+    case PE_FrameWindow: {
         painter->save();
-        {
-            QRect rect= option->rect;
-            painter->setPen(QPen(dark.darker(150), 0));
-            painter->drawRect(option->rect.adjusted(0, 0, -1, -1));
-            painter->setPen(QPen(option->palette.light(), 0));
-            painter->drawLine(QPoint(rect.left() + 1, rect.top() + 1),
-                              QPoint(rect.left() + 1, rect.bottom() - 1));
-            painter->setPen(QPen(option->palette.background().color().darker(120), 0));
-            painter->drawLine(QPoint(rect.left() + 1, rect.bottom() - 1),
-                              QPoint(rect.right() - 2, rect.bottom() - 1));
-            painter->drawLine(QPoint(rect.right() - 1, rect.top() + 1),
-                              QPoint(rect.right() - 1, rect.bottom() - 1));
-        }
+        QRect rect= option->rect;
+        painter->setPen(QPen(dark.darker(150), 0));
+        painter->drawRect(option->rect.adjusted(0, 0, -1, -1));
+        painter->setPen(QPen(option->palette.light(), 0));
+        painter->drawLine(QPoint(rect.left() + 1, rect.top() + 1),
+                            QPoint(rect.left() + 1, rect.bottom() - 1));
+        painter->setPen(QPen(option->palette.background().color().darker(120), 0));
+        painter->drawLine(QPoint(rect.left() + 1, rect.bottom() - 1),
+                          QPoint(rect.right() - 2, rect.bottom() - 1));
+        painter->drawLine(QPoint(rect.right() - 1, rect.top() + 1),
+                          QPoint(rect.right() - 1, rect.bottom() - 1));
         painter->restore();
         break;
+    }
 #ifndef QT_NO_LINEEDIT
-    case PE_FrameLineEdit:
-        // fall through
-#endif // QT_NO_LINEEDIT
-        {
-            QPen oldPen = painter->pen();
-            if (option->state & State_Enabled) {
-                painter->setPen(QPen(option->palette.background(), 0));
-                painter->drawRect(rect.adjusted(0, 0, 0, 0));
-                painter->drawRect(rect.adjusted(1, 1, -1, -1));
-            } else {
-                painter->fillRect(rect, option->palette.background());
-            }
-            QRect r = rect.adjusted(0, 1, 0, -1);
-            painter->setPen(buttonShadowAlpha);
-            painter->drawLine(QPoint(r.left() + 2, r.top() - 1), QPoint(r.right() - 2, r.top() - 1));
-            const QPoint points[8] = {
-                QPoint(r.right() - 1, r.top()),
-                QPoint(r.right(), r.top() + 1),
-                QPoint(r.right() - 1, r.bottom()),
-                QPoint(r.right(), r.bottom() - 1),
-                QPoint(r.left() + 1, r.top() ),
-                QPoint(r.left(), r.top() + 1),
-                QPoint(r.left() + 1, r.bottom() ),
-                QPoint(r.left(), r.bottom() - 1)
-            };
-            painter->drawPoints(points, 8);
-            painter->setPen(QPen(option->palette.background().color(), 1));
-            painter->drawLine(QPoint(r.left() + 2, r.top() + 1), QPoint(r.right() - 2, r.top() + 1));
-
-            if (option->state & State_HasFocus) {
-                QColor darkoutline = option->palette.highlight().color().darker(150);
-                QColor innerline = mergedColors(option->palette.highlight().color(), Qt::white);
-                painter->setPen(QPen(innerline, 0));
-                painter->drawRect(rect.adjusted(1, 2, -2, -3));
-                painter->setPen(QPen(darkoutline, 0));
-            }
-            else {
-                QColor highlight = Qt::white;
-                highlight.setAlpha(130);
-                painter->setPen(option->palette.base().color().darker(120));
-                painter->drawLine(QPoint(r.left() + 1, r.top() + 1),
-                                  QPoint(r.right() - 1, r.top() + 1));
-                painter->drawLine(QPoint(r.left() + 1, r.top() + 1),
-                                  QPoint(r.left() + 1, r.bottom() - 1));
-                painter->setPen(option->palette.base().color());
-                painter->drawLine(QPoint(r.right() - 1, r.top() + 1),
-                                  QPoint(r.right() - 1, r.bottom() - 1));
-                painter->setPen(highlight);
-                painter->drawLine(QPoint(r.left() + 1, r.bottom() + 1),
-                                  QPoint(r.right() - 1, r.bottom() + 1));
-                painter->drawPoint(QPoint(r.left(), r.bottom()));
-                painter->drawPoint(QPoint(r.right(), r.bottom() ));
-                painter->setPen(QPen(darkOutline.lighter(115), 1));
-            }
-            painter->drawLine(QPoint(r.left(), r.top() + 2), QPoint(r.left(), r.bottom() - 2));
-            painter->drawLine(QPoint(r.right(), r.top() + 2), QPoint(r.right(), r.bottom() - 2));
-            painter->drawLine(QPoint(r.left() + 2, r.bottom()), QPoint(r.right() - 2, r.bottom()));
-            const QPoint points2[4] = {
-                QPoint(r.right() - 1, r.bottom() - 1),
-                QPoint(r.right() - 1, r.top() + 1),
-                QPoint(r.left() + 1, r.bottom() - 1),
-                QPoint(r.left() + 1, r.top() + 1)
-            };
-            painter->drawPoints(points2, 4);
-            painter->drawLine(QPoint(r.left() + 2, r.top()), QPoint(r.right() - 2, r.top()));
-            painter->setPen(oldPen);
+    case PE_FrameLineEdit: {
+        QPen oldPen = painter->pen();
+        if (option->state & State_Enabled) {
+            painter->setPen(QPen(option->palette.background(), 0));
+            painter->drawRect(rect.adjusted(0, 0, 0, 0));
+            painter->drawRect(rect.adjusted(1, 1, -1, -1));
+        } else {
+            painter->fillRect(rect, option->palette.background());
         }
+        QRect r = rect.adjusted(0, 1, 0, -1);
+        painter->setPen(buttonShadowAlpha);
+        painter->drawLine(QPoint(r.left() + 2, r.top() - 1), QPoint(r.right() - 2, r.top() - 1));
+        const QPoint points[8] = {
+            QPoint(r.right() - 1, r.top()),
+            QPoint(r.right(), r.top() + 1),
+            QPoint(r.right() - 1, r.bottom()),
+            QPoint(r.right(), r.bottom() - 1),
+            QPoint(r.left() + 1, r.top() ),
+            QPoint(r.left(), r.top() + 1),
+            QPoint(r.left() + 1, r.bottom() ),
+            QPoint(r.left(), r.bottom() - 1)
+        };
+        painter->drawPoints(points, 8);
+        painter->setPen(QPen(option->palette.background().color(), 1));
+        painter->drawLine(QPoint(r.left() + 2, r.top() + 1), QPoint(r.right() - 2, r.top() + 1));
+
+        if (option->state & State_HasFocus) {
+            QColor darkoutline = option->palette.highlight().color().darker(150);
+            QColor innerline = mergedColors(option->palette.highlight().color(), Qt::white);
+            painter->setPen(QPen(innerline, 0));
+            painter->drawRect(rect.adjusted(1, 2, -2, -3));
+            painter->setPen(QPen(darkoutline, 0));
+        } else {
+            QColor highlight = Qt::white;
+            highlight.setAlpha(130);
+            painter->setPen(option->palette.base().color().darker(120));
+            painter->drawLine(QPoint(r.left() + 1, r.top() + 1),
+                              QPoint(r.right() - 1, r.top() + 1));
+            painter->drawLine(QPoint(r.left() + 1, r.top() + 1),
+                              QPoint(r.left() + 1, r.bottom() - 1));
+            painter->setPen(option->palette.base().color());
+            painter->drawLine(QPoint(r.right() - 1, r.top() + 1),
+                              QPoint(r.right() - 1, r.bottom() - 1));
+            painter->setPen(highlight);
+            painter->drawLine(QPoint(r.left() + 1, r.bottom() + 1),
+                              QPoint(r.right() - 1, r.bottom() + 1));
+            painter->drawPoint(QPoint(r.left(), r.bottom()));
+            painter->drawPoint(QPoint(r.right(), r.bottom() ));
+            painter->setPen(QPen(darkOutline.lighter(115), 1));
+        }
+        painter->drawLine(QPoint(r.left(), r.top() + 2), QPoint(r.left(), r.bottom() - 2));
+        painter->drawLine(QPoint(r.right(), r.top() + 2), QPoint(r.right(), r.bottom() - 2));
+        painter->drawLine(QPoint(r.left() + 2, r.bottom()), QPoint(r.right() - 2, r.bottom()));
+        const QPoint points2[4] = {
+            QPoint(r.right() - 1, r.bottom() - 1),
+            QPoint(r.right() - 1, r.top() + 1),
+            QPoint(r.left() + 1, r.bottom() - 1),
+            QPoint(r.left() + 1, r.top() + 1)
+        };
+        painter->drawPoints(points2, 4);
+        painter->drawLine(QPoint(r.left() + 2, r.top()), QPoint(r.right() - 2, r.top()));
+        painter->setPen(oldPen);
         break;
-    case PE_IndicatorCheckBox:
+    }
+#endif // QT_NO_LINEEDIT
+    case PE_IndicatorCheckBox: {
         painter->save();
         if (const QStyleOptionButton *checkbox = qstyleoption_cast<const QStyleOptionButton*>(option)) {
             QRect checkRect;
@@ -919,11 +555,13 @@ void QCleanlooksStyle::drawPrimitive(PrimitiveElement elem,
             painter->setPen(QPen(dark.lighter(110), 0));
             painter->drawRect(checkRect);
             if (checkbox->state & (State_On | State_Sunken  | State_NoChange)) {
-                QImage image(qt_cleanlooks_checkbox_checked);
+                QMap<QRgb, QRgb> colormap;
+                QImage image(QLatin1String(":/trolltech/styles/cleanlooksstyle/images/cleanlooks/qt_cleanlooks_checkbox_checked.png"));
                 QColor fillColor = option->palette.text().color();
-                image.setColor(1, fillColor.rgba()); 
+                colormap.insert(4280757555, fillColor.rgba());
                 fillColor.setAlpha(100);
-                image.setColor(2, fillColor.rgba()); 
+                colormap.insert(4284900966, fillColor.rgba());
+                image = replaceColors(image, colormap);
                 painter->drawImage(rect, image);
                 if (checkbox->state & State_NoChange) {
                     QColor bgc = option->palette.background().color();
@@ -934,26 +572,26 @@ void QCleanlooksStyle::drawPrimitive(PrimitiveElement elem,
         }
         painter->restore();
         break;
-    case PE_IndicatorRadioButton:
+    }
+    case PE_IndicatorRadioButton: {
         painter->save();
-        {
-            QRect checkRect = rect.adjusted(0, 0, 0, 0);
-            if (state & (State_On )) {
-                painter->drawImage(rect, QImage(qt_cleanlooks_radiobutton));
-                painter->drawImage(checkRect, QImage(qt_cleanlooks_radiobutton_checked));
-            }
-            else if (state & State_Sunken) {
-                painter->drawImage(rect, QImage(qt_cleanlooks_radiobutton));
-                painter->setBrush(buttonShadow);
-                painter->setPen(Qt::NoPen);
-                painter->drawEllipse(rect.adjusted(1, 1, -1, -1));                }
-            else {
-                painter->drawImage(rect, QImage(qt_cleanlooks_radiobutton));
-            }
+        QRect checkRect = rect.adjusted(0, 0, 0, 0);
+        if (state & (State_On )) {
+            painter->drawImage(rect, QImage(QLatin1String(":/trolltech/styles/cleanlooksstyle/images/cleanlooks/qt_cleanlooks_radiobutton.png")));
+            painter->drawImage(checkRect, QImage(QLatin1String(":/trolltech/styles/cleanlooksstyle/images/cleanlooks/qt_cleanlooks_radiobutton_checked.png")));
+        }
+        else if (state & State_Sunken) {
+            painter->drawImage(rect, QImage(QLatin1String(":/trolltech/styles/cleanlooksstyle/images/cleanlooks/qt_cleanlooks_radiobutton.png")));
+            painter->setBrush(buttonShadow);
+            painter->setPen(Qt::NoPen);
+            painter->drawEllipse(rect.adjusted(1, 1, -1, -1));                }
+        else {
+            painter->drawImage(rect, QImage(QLatin1String(":/trolltech/styles/cleanlooksstyle/images/cleanlooks/qt_cleanlooks_radiobutton.png")));
         }
         painter->restore();
-    break;
-    case PE_IndicatorToolBarHandle:
+        break;
+    }
+    case PE_IndicatorToolBarHandle: {
         painter->save();
         if (option->state & State_Horizontal) {
             for (int i = rect.height()/5; i <= 4*(rect.height()/5) ; ++i) {
@@ -967,8 +605,7 @@ void QCleanlooksStyle::drawPrimitive(PrimitiveElement elem,
                     painter->setPen(QPen(dark.lighter(110), 0));
                 painter->drawLine(x1, y, x2, y);
             }
-        }
-        else { //vertical toolbar
+        } else { //vertical toolbar
             for (int i = rect.width()/5; i <= 4*(rect.width()/5) ; ++i) {
                 int x = rect.topLeft().x() + i + 1;
                 int y1 = rect.topLeft().y() + 3;
@@ -983,8 +620,9 @@ void QCleanlooksStyle::drawPrimitive(PrimitiveElement elem,
         }
         painter->restore();
         break;
+    }
     case PE_FrameDefaultButton:
-        case PE_FrameFocusRect:
+    case PE_FrameFocusRect: {
         if (const QStyleOptionFocusRect *focusFrame = qstyleoption_cast<const QStyleOptionFocusRect *>(option)) {
             if (!(focusFrame->state & State_KeyboardFocusChange))
                 return;
@@ -1004,184 +642,172 @@ void QCleanlooksStyle::drawPrimitive(PrimitiveElement elem,
             painter->restore();
         }
         break;
-    case PE_PanelButtonCommand:
-        {
-            bool isDefault = false;
-            bool isFlat = false;
-            bool isDown = (option->state & State_Sunken) || (option->state & State_On);
-            QPen oldPen = painter->pen();
-            QBrush oldBrush = painter->brush();
-            QRect r;
+    }
+    case PE_PanelButtonCommand: {
+        bool isDefault = false;
+        bool isFlat = false;
+        bool isDown = (option->state & State_Sunken) || (option->state & State_On);
+        QPen oldPen = painter->pen();
+        QBrush oldBrush = painter->brush();
+        QRect r;
 
-            if (const QStyleOptionButton *button = qstyleoption_cast<const QStyleOptionButton*>(option)) {
-                isDefault = (button->features & QStyleOptionButton::DefaultButton) && (button->state & State_Enabled);
-                isFlat = (button->features & QStyleOptionButton::Flat);
-            }
+        if (const QStyleOptionButton *button = qstyleoption_cast<const QStyleOptionButton*>(option)) {
+            isDefault = (button->features & QStyleOptionButton::DefaultButton) && (button->state & State_Enabled);
+            isFlat = (button->features & QStyleOptionButton::Flat);
+        }
 
-            if (isFlat && !isDown) {
-                if (isDefault) {
-                    r = option->rect.adjusted(0, 1, 0, -1);
-                    painter->setPen(QPen(Qt::black, 0));
-                    const QLine lines[4] = {
-                        QLine(QPoint(r.left() + 2, r.top()),
-                              QPoint(r.right() - 2, r.top())),
-                        QLine(QPoint(r.left(), r.top() + 2),
-                              QPoint(r.left(), r.bottom() - 2)),
-                        QLine(QPoint(r.right(), r.top() + 2),
-                              QPoint(r.right(), r.bottom() - 2)),
-                        QLine(QPoint(r.left() + 2, r.bottom()),
-                              QPoint(r.right() - 2, r.bottom()))
-                    };
-                    painter->drawLines(lines, 4);
-                    const QPoint points[4] = {
-                        QPoint(r.right() - 1, r.bottom() - 1),
-                        QPoint(r.right() - 1, r.top() + 1),
-                        QPoint(r.left() + 1, r.bottom() - 1),
-                        QPoint(r.left() + 1, r.top() + 1)
-                    };
-                    painter->drawPoints(points, 4);
-                    painter->setPen(oldPen);
-                }
-                return;
-            }
-
-            BEGIN_STYLE_PIXMAPCACHE(QString::fromLatin1("pushbutton-%1").arg(isDefault))
-            r = rect.adjusted(0, 1, 0, -1);
-
-            bool isEnabled = (option->state & State_Enabled);
-
-            QColor highlightedGradientStartColor = option->palette.button().color().lighter(107);
-            QColor highlightedGradientMidColor = option->palette.button().color().lighter(105);
-            QColor highlightedGradientStopColor = buttonShadow.lighter(107);
-            QColor gradientStartColor = option->palette.button().color().lighter(108);
-
-            QColor buttonColor = option->palette.button().color();
-            QColor gradientMidColor = option->palette.button().color();
-            QColor gradientStopColor;
-            gradientStopColor.setHsv(buttonColor.hue(),
-                                     qMin(255, (int)(buttonColor.saturation()*1.9)),
-                                     qMin(255, (int)(buttonColor.value()*0.96)));
-
-            QRect gradRect = rect.adjusted(1, 2, -1, -2);
-            // gradient fill
-            QRect innerBorder = r.adjusted(1, 1, -1, 0);
-
-            if (isDown) {
-                QBrush fillColor = gradientStopColor.darker(110);
-                if (option->palette.button().gradient())
-                    fillColor = option->palette.button();
-                p->fillRect(gradRect, fillColor);
-                p->setPen(gradientStopColor.darker(125));
-                p->drawLine(innerBorder.topLeft(), innerBorder.topRight());
-                p->drawLine(innerBorder.topLeft(), innerBorder.bottomLeft());
-            } else {
-                if (isEnabled && option->state & State_MouseOver ) {
-                    qt_cleanlooks_draw_buttongradient(p, gradRect,
-                                                highlightedGradientStartColor,
-                                                highlightedGradientMidColor,
-                                                highlightedGradientStopColor, TopDown, option->palette.button());
-                } else {
-                    qt_cleanlooks_draw_buttongradient(p, gradRect,
-                                                gradientStartColor,
-                                                gradientMidColor,
-                                                gradientStopColor, TopDown, option->palette.button());
-                }
-            }
-
-            bool hasFocus = option->state & State_HasFocus;
-
-            if (!isEnabled)
-                p->setPen(QPen(dark.lighter(115)));
-            else if (isDefault)
-                p->setPen(QPen(Qt::black, 1));
-            else
-                p->setPen(QPen(darkOutline, 1));
-
-            p->drawLine(QPoint(r.left(), r.top() + 2),
-                              QPoint(r.left(), r.bottom() - 2));
-            p->drawLine(QPoint(r.right(), r.top() + 2),
-                              QPoint(r.right(), r.bottom() - 2));
-            p->drawLine(QPoint(r.left() + 2, r.bottom()),
-                              QPoint(r.right() - 2, r.bottom()));
-            const QPoint points[4] = {
-                QPoint(r.right() - 1, r.bottom() - 1),
-                QPoint(r.right() - 1, r.top() + 1),
-                QPoint(r.left() + 1, r.bottom() - 1),
-                QPoint(r.left() + 1, r.top() + 1)
-            };
-            p->drawPoints(points, 4);
-
-            if (!isDefault && !hasFocus && isEnabled)
-                p->setPen(QPen(darkOutline.darker(110), 0));
-
-            p->drawLine(QPoint(r.left() + 2, r.top()),
-                              QPoint(r.right() - 2, r.top()));
-
-            QColor highlight = Qt::white;
-            highlight.setAlpha(110);
-            p->setPen(highlight);
-            p->drawLine(QPoint(r.left() + 1, r.top() + 2),
-                              QPoint(r.left() + 1, r.bottom() - 2));
-            p->drawLine(QPoint(r.left() + 3, r.bottom() + 1),
-                              QPoint(r.right() - 3, r.bottom() + 1));
-
-            QColor topShadow = darkOutline;
-            topShadow.setAlpha(60);
-
-            p->setPen(topShadow);
-            const QPoint points2[8] = {
-                QPoint(r.right(), r.top() + 1),
-                QPoint(r.right() - 1, r.top() ),
-                QPoint(r.right(), r.bottom() - 1),
-                QPoint(r.right() - 1, r.bottom() ),
-                QPoint(r.left() + 1, r.bottom()),
-                QPoint(r.left(), r.bottom() - 1),
-                QPoint(r.left() + 1, r.top()),
-                QPoint(r.left(), r.top() + 1)
-            };
-            p->drawPoints(points2, 8);
-
-            topShadow.setAlpha(30);
-            p->setPen(topShadow);
-
-            p->drawLine(QPoint(r.right() - 1, r.top() + 2),
-                              QPoint(r.right() - 1, r.bottom() - 2));
-            p->drawLine(QPoint(r.left() + 2, r.top() - 1),
-                              QPoint(r.right() - 2, r.top() - 1));
-
+        if (isFlat && !isDown) {
             if (isDefault) {
-                r.adjust(-1, -1, 1, 1);
-                p->setPen(buttonShadowAlpha.darker(120));
+                r = option->rect.adjusted(0, 1, 0, -1);
+                painter->setPen(QPen(Qt::black, 0));
                 const QLine lines[4] = {
-                    QLine(r.topLeft() + QPoint(3, 0), r.topRight() - QPoint(3, 0)),
-                    QLine(r.bottomLeft() + QPoint(3, 0), r.bottomRight() - QPoint(3, 0)),
-                    QLine(r.topLeft() + QPoint(0, 3), r.bottomLeft() - QPoint(0, 3)),
-                    QLine(r.topRight() + QPoint(0, 3), r.bottomRight() - QPoint(0, 3))
+                    QLine(QPoint(r.left() + 2, r.top()), QPoint(r.right() - 2, r.top())),
+                    QLine(QPoint(r.left(), r.top() + 2), QPoint(r.left(), r.bottom() - 2)),
+                    QLine(QPoint(r.right(), r.top() + 2), QPoint(r.right(), r.bottom() - 2)),
+                    QLine(QPoint(r.left() + 2, r.bottom()), QPoint(r.right() - 2, r.bottom()))
                 };
-                p->drawLines(lines, 4);
-                const QPoint points3[8] = {
-                    r.topRight() + QPoint(-2, 1),
-                    r.topRight() + QPoint(-1, 2),
-                    r.bottomRight() + QPoint(-1, -2),
-                    r.bottomRight() + QPoint(-2, -1),
-                    r.topLeft() + QPoint(1, 2),
-                    r.topLeft() + QPoint(2, 1),
-                    r.bottomLeft() + QPoint(1, -2),
-                    r.bottomLeft() + QPoint(2, -1)
+                painter->drawLines(lines, 4);
+                const QPoint points[4] = {
+                    QPoint(r.right() - 1, r.bottom() - 1),
+                    QPoint(r.right() - 1, r.top() + 1),
+                    QPoint(r.left() + 1, r.bottom() - 1),
+                    QPoint(r.left() + 1, r.top() + 1)
                 };
-                p->drawPoints(points3, 8);
+                painter->drawPoints(points, 4);
+                painter->setPen(oldPen);
             }
-            painter->setPen(oldPen);
-            painter->setBrush(oldBrush);
-            END_STYLE_PIXMAPCACHE
+            return;
         }
+
+        BEGIN_STYLE_PIXMAPCACHE(QString::fromLatin1("pushbutton-%1").arg(isDefault))
+        r = rect.adjusted(0, 1, 0, -1);
+
+        bool isEnabled = (option->state & State_Enabled);
+
+        QColor highlightedGradientStartColor = option->palette.button().color().lighter(107);
+        QColor highlightedGradientMidColor = option->palette.button().color().lighter(105);
+        QColor highlightedGradientStopColor = buttonShadow.lighter(107);
+        QColor gradientStartColor = option->palette.button().color().lighter(108);
+
+        QColor buttonColor = option->palette.button().color();
+        QColor gradientMidColor = option->palette.button().color();
+        QColor gradientStopColor;
+        gradientStopColor.setHsv(buttonColor.hue(),
+                                 qMin(255, (int)(buttonColor.saturation()*1.9)),
+                                 qMin(255, (int)(buttonColor.value()*0.96)));
+
+        QRect gradRect = rect.adjusted(1, 2, -1, -2);
+        // gradient fill
+        QRect innerBorder = r.adjusted(1, 1, -1, 0);
+
+        if (isDown) {
+            QBrush fillColor = gradientStopColor.darker(110);
+            if (option->palette.button().gradient())
+                fillColor = option->palette.button();
+            p->fillRect(gradRect, fillColor);
+            p->setPen(gradientStopColor.darker(125));
+            p->drawLine(innerBorder.topLeft(), innerBorder.topRight());
+            p->drawLine(innerBorder.topLeft(), innerBorder.bottomLeft());
+        } else {
+            if (isEnabled && option->state & State_MouseOver ) {
+                qt_cleanlooks_draw_buttongradient(p, gradRect,
+                                                  highlightedGradientStartColor,
+                                                  highlightedGradientMidColor,
+                                                  highlightedGradientStopColor, TopDown, option->palette.button());
+            } else {
+                qt_cleanlooks_draw_buttongradient(p, gradRect,
+                                                  gradientStartColor,
+                                                  gradientMidColor,
+                                                  gradientStopColor, TopDown, option->palette.button());
+            }
+        }
+
+        bool hasFocus = option->state & State_HasFocus;
+
+        if (!isEnabled)
+            p->setPen(QPen(dark.lighter(115)));
+        else if (isDefault)
+            p->setPen(QPen(Qt::black, 1));
+        else
+            p->setPen(QPen(darkOutline, 1));
+
+        p->drawLine(QPoint(r.left(), r.top() + 2), QPoint(r.left(), r.bottom() - 2));
+        p->drawLine(QPoint(r.right(), r.top() + 2), QPoint(r.right(), r.bottom() - 2));
+        p->drawLine(QPoint(r.left() + 2, r.bottom()), QPoint(r.right() - 2, r.bottom()));
+        const QPoint points[4] = {
+            QPoint(r.right() - 1, r.bottom() - 1),
+            QPoint(r.right() - 1, r.top() + 1),
+            QPoint(r.left() + 1, r.bottom() - 1),
+            QPoint(r.left() + 1, r.top() + 1)
+        };
+        p->drawPoints(points, 4);
+
+        if (!isDefault && !hasFocus && isEnabled)
+            p->setPen(QPen(darkOutline.darker(110), 0));
+
+        p->drawLine(QPoint(r.left() + 2, r.top()), QPoint(r.right() - 2, r.top()));
+
+        QColor highlight = Qt::white;
+        highlight.setAlpha(110);
+        p->setPen(highlight);
+        p->drawLine(QPoint(r.left() + 1, r.top() + 2), QPoint(r.left() + 1, r.bottom() - 2));
+        p->drawLine(QPoint(r.left() + 3, r.bottom() + 1), QPoint(r.right() - 3, r.bottom() + 1));
+
+        QColor topShadow = darkOutline;
+        topShadow.setAlpha(60);
+
+        p->setPen(topShadow);
+        const QPoint points2[8] = {
+            QPoint(r.right(), r.top() + 1),
+            QPoint(r.right() - 1, r.top() ),
+            QPoint(r.right(), r.bottom() - 1),
+            QPoint(r.right() - 1, r.bottom() ),
+            QPoint(r.left() + 1, r.bottom()),
+            QPoint(r.left(), r.bottom() - 1),
+            QPoint(r.left() + 1, r.top()),
+            QPoint(r.left(), r.top() + 1)
+        };
+        p->drawPoints(points2, 8);
+
+        topShadow.setAlpha(30);
+        p->setPen(topShadow);
+
+        p->drawLine(QPoint(r.right() - 1, r.top() + 2),
+                           QPoint(r.right() - 1, r.bottom() - 2));
+        p->drawLine(QPoint(r.left() + 2, r.top() - 1),
+                           QPoint(r.right() - 2, r.top() - 1));
+
+        if (isDefault) {
+            r.adjust(-1, -1, 1, 1);
+            p->setPen(buttonShadowAlpha.darker(120));
+            const QLine lines[4] = {
+                QLine(r.topLeft() + QPoint(3, 0), r.topRight() - QPoint(3, 0)),
+                QLine(r.bottomLeft() + QPoint(3, 0), r.bottomRight() - QPoint(3, 0)),
+                QLine(r.topLeft() + QPoint(0, 3), r.bottomLeft() - QPoint(0, 3)),
+                QLine(r.topRight() + QPoint(0, 3), r.bottomRight() - QPoint(0, 3))
+            };
+            p->drawLines(lines, 4);
+            const QPoint points3[8] = {
+                r.topRight() + QPoint(-2, 1),
+                r.topRight() + QPoint(-1, 2),
+                r.bottomRight() + QPoint(-1, -2),
+                r.bottomRight() + QPoint(-2, -1),
+                r.topLeft() + QPoint(1, 2),
+                r.topLeft() + QPoint(2, 1),
+                r.bottomLeft() + QPoint(1, -2),
+                r.bottomLeft() + QPoint(2, -1)
+            };
+            p->drawPoints(points3, 8);
+        }
+        painter->setPen(oldPen);
+        painter->setBrush(oldBrush);
+        END_STYLE_PIXMAPCACHE
         break;
+    }
 #ifndef QT_NO_TABBAR
-        case PE_FrameTabWidget:
-            painter->save();
-        {
-            painter->fillRect(option->rect, tabFrameColor);
-        }
+    case PE_FrameTabWidget: {
+        painter->save();
+        painter->fillRect(option->rect, tabFrameColor);
 #ifndef QT_NO_TABWIDGET
         if (const QStyleOptionTabWidgetFrame *twf = qstyleoption_cast<const QStyleOptionTabWidgetFrame *>(option)) {
             QColor borderColor = darkOutline.lighter(110);
@@ -1203,20 +829,20 @@ void QCleanlooksStyle::drawPrimitive(PrimitiveElement elem,
                                        twf->rect.top(),
                                        twf->tabBarSize.width(), borderThickness);
                 }
-                break ;
+                break;
             case QTabBar::RoundedWest:
                 tabBarRect = QRect(twf->rect.left(),
                                    twf->rect.top() + twf->leftCornerWidgetSize.height(),
                                    borderThickness,
                                    twf->tabBarSize.height());
                 tabBarRect = tabBarRect; //adjust
-                break ;
+                break;
             case QTabBar::RoundedEast:
                 tabBarRect = QRect(twf->rect.right() - borderThickness + 1,
                                    twf->rect.top()  + twf->leftCornerWidgetSize.height(),
                                    0,
                                    twf->tabBarSize.height());
-                break ;
+                break;
             case QTabBar::RoundedSouth:
                 if (reverse) {
                     tabBarRect = QRect(twf->rect.right() - twf->leftCornerWidgetSize.width() - twf->tabBarSize.width() + 1,
@@ -1292,22 +918,22 @@ void QCleanlooksStyle::drawPrimitive(PrimitiveElement elem,
             painter->drawPoints(points, 6);
         }
 #endif // QT_NO_TABWIDGET
-    painter->restore();
-    break ;
+        painter->restore();
+        break;
+    }
 
     case PE_FrameStatusBarItem:
         break;
-    case PE_IndicatorTabClose:
-        {
-            Q_D(const QCleanlooksStyle);
-            if (d->tabBarcloseButtonIcon.isNull())
-                d->tabBarcloseButtonIcon = standardIcon(SP_DialogCloseButton, option, widget);
-            if ((option->state & State_Enabled) && (option->state & State_MouseOver))
-                proxy()->drawPrimitive(PE_PanelButtonCommand, option, painter, widget);
-            QPixmap pixmap = d->tabBarcloseButtonIcon.pixmap(QSize(16, 16), QIcon::Normal, QIcon::On);
-            proxy()->drawItemPixmap(painter, option->rect, Qt::AlignCenter, pixmap);
-        }
+    case PE_IndicatorTabClose: {
+        Q_D(const QCleanlooksStyle);
+        if (d->tabBarcloseButtonIcon.isNull())
+            d->tabBarcloseButtonIcon = standardIcon(SP_DialogCloseButton, option, widget);
+        if ((option->state & State_Enabled) && (option->state & State_MouseOver))
+            proxy()->drawPrimitive(PE_PanelButtonCommand, option, painter, widget);
+        QPixmap pixmap = d->tabBarcloseButtonIcon.pixmap(QSize(16, 16), QIcon::Normal, QIcon::On);
+        proxy()->drawItemPixmap(painter, option->rect, Qt::AlignCenter, pixmap);
         break;
+    }
 
 #endif // QT_NO_TABBAR
     default:
@@ -1884,20 +1510,22 @@ void QCleanlooksStyle::drawControl(ControlElement element, const QStyleOption *o
                         // Check box
                         if (menuItem->icon.isNull()) {
                             if (checked || sunken) {
-                                QImage image(qt_cleanlooks_menuitem_checkbox_checked);
+                                QImage image(QLatin1String(":/trolltech/styles/cleanlooksstyle/images/cleanlooks/qt_cleanlooks_menuitem_checkbox_checked.png"));
+                                QMap<QRgb, QRgb> imagecolors;
                                 if (enabled && (menuItem->state & State_Selected)) {
-                                    image.setColor(1, 0x55ffffff);
-                                    image.setColor(2, 0xAAffffff);
-                                    image.setColor(3, 0xBBffffff);
-                                    image.setColor(4, 0xFFffffff);
-                                    image.setColor(5, 0x33ffffff);
+                                    imagecolors.insert(4287993237, 0x55ffffff);
+                                    imagecolors.insert(4284966759, 0xAAffffff);
+                                    imagecolors.insert(4282729797, 0xBBffffff);
+                                    imagecolors.insert(4280098077, 0xFFffffff);
+                                    imagecolors.insert(4279242768, 0x33ffffff);
                                 } else {
-                                    image.setColor(1, 0x55000000);
-                                    image.setColor(2, 0xAA000000);
-                                    image.setColor(3, 0xBB000000);
-                                    image.setColor(4, 0xFF000000);
-                                    image.setColor(5, 0x33000000);
+                                    imagecolors.insert(4287993237, 0x55000000);
+                                    imagecolors.insert(4284966759, 0xAA000000);
+                                    imagecolors.insert(4282729797, 0xBB000000);
+                                    imagecolors.insert(4280098077, 0xFF000000);
+                                    imagecolors.insert(4279242768, 0x33000000);
                                 }
+                                image = replaceColors(image, imagecolors);
                                 painter->drawImage(QPoint(checkRect.center().x() - image.width() / 2,
                                                         checkRect.center().y() - image.height() / 2), image);
                             }
@@ -2588,15 +2216,17 @@ void QCleanlooksStyle::drawComplexControl(ComplexControl control, const QStyleOp
                     }
                 } else if (spinBox->buttonSymbols == QAbstractSpinBox::UpDownArrows){
                     // arrows
-                    QImage upArrow(qt_cleanlooks_spinbox_button_arrow_up);
-                    upArrow.setColor(1, spinBox->palette.foreground().color().rgba());
+                    QImage upArrow(QLatin1String(":/trolltech/styles/cleanlooksstyle/images/cleanlooks/qt_cleanlooks_spinbox_button_arrow_up.png"));
+                    QMap<QRgb, QRgb> arrowMap;
+                    arrowMap.insert(4290756543, spinBox->palette.foreground().color().rgba());
+                    upArrow = replaceColors(upArrow, arrowMap);
 
                     cachePainter.drawImage(upRect.center().x() - upArrow.width() / 2,
                                             upRect.center().y() - upArrow.height() / 2,
                                             upArrow);
 
-                    QImage downArrow(qt_cleanlooks_spinbox_button_arrow_down);
-                    downArrow.setColor(1, spinBox->palette.foreground().color().rgba());
+                    QImage downArrow(QLatin1String(":/trolltech/styles/cleanlooksstyle/images/cleanlooks/qt_cleanlooks_spinbox_button_arrow_down.png"));
+                    downArrow = replaceColors(downArrow, arrowMap);
 
                     cachePainter.drawImage(downRect.center().x() - downArrow.width() / 2,
                                             downRect.center().y() - downArrow.height() / 2 + 1,
@@ -2830,11 +2460,13 @@ void QCleanlooksStyle::drawComplexControl(ComplexControl control, const QStyleOp
                     qt_cleanlooks_draw_mdibutton(painter, titleBar, contextHelpButtonRect, hover, sunken);
 
                     QColor blend;
-                    QImage image(qt_cleanlooks_titlebar_context_help);
+                    QImage image(QLatin1String(":/trolltech/styles/cleanlooksstyle/images/cleanlooks/qt_cleanlooks_titlebar_context_help.png"));
                     QColor alpha = textColor;
                     alpha.setAlpha(128);
-                    image.setColor(1, textColor.rgba());
-                    image.setColor(2, alpha.rgba());
+                    QMap<QRgb, QRgb> imagecolors;
+                    imagecolors.insert(4278190080, textColor.rgba());
+                    imagecolors.insert(4282664004, alpha.rgba());
+                    image = replaceColors(image, imagecolors);
                     painter->drawImage(contextHelpButtonRect.adjusted(4, 4, -4, -4), image);
                 }
             }
@@ -2846,8 +2478,10 @@ void QCleanlooksStyle::drawComplexControl(ComplexControl control, const QStyleOp
                     bool hover = (titleBar->activeSubControls & SC_TitleBarShadeButton) && (titleBar->state & State_MouseOver);
                     bool sunken = (titleBar->activeSubControls & SC_TitleBarShadeButton) && (titleBar->state & State_Sunken);
                     qt_cleanlooks_draw_mdibutton(painter, titleBar, shadeButtonRect, hover, sunken);
-                    QImage image(qt_cleanlooks_scrollbar_button_arrow_up);
-                    image.setColor(1, textColor.rgba());
+                    QImage image(QLatin1String(":/trolltech/styles/cleanlooksstyle/images/cleanlooks/qt_cleanlooks_scrollbar_button_arrow_up.png"));
+                    QMap<QRgb, QRgb> imagecolors;
+                    imagecolors.insert(4290756543, textColor.rgba());
+                    image = replaceColors(image, imagecolors);
                     painter->drawImage(shadeButtonRect.adjusted(5, 7, -5, -7), image);
                 }
             }
@@ -2859,8 +2493,10 @@ void QCleanlooksStyle::drawComplexControl(ComplexControl control, const QStyleOp
                     bool hover = (titleBar->activeSubControls & SC_TitleBarUnshadeButton) && (titleBar->state & State_MouseOver);
                     bool sunken = (titleBar->activeSubControls & SC_TitleBarUnshadeButton) && (titleBar->state & State_Sunken);
                     qt_cleanlooks_draw_mdibutton(painter, titleBar, unshadeButtonRect, hover, sunken);
-                    QImage image(qt_cleanlooks_scrollbar_button_arrow_down);
-                    image.setColor(1, textColor.rgba());
+                    QImage image(QLatin1String(":/trolltech/styles/cleanlooksstyle/images/cleanlooks/qt_cleanlooks_scrollbar_button_arrow_down.png"));
+                    QMap<QRgb, QRgb> imagecolors;
+                    imagecolors.insert(4290756543, textColor.rgba());
+                    image = replaceColors(image, imagecolors);
                     painter->drawImage(unshadeButtonRect.adjusted(5, 7, -5, -7), image);
                 }
             }
@@ -3055,20 +2691,26 @@ void QCleanlooksStyle::drawComplexControl(ComplexControl control, const QStyleOp
                 // Details
                 QImage subButton;
                 if (horizontal) {
-                    subButton = QImage(reverse ? qt_cleanlooks_scrollbar_button_right : qt_cleanlooks_scrollbar_button_left);
+                    if (reverse) {
+                        subButton = QImage(QLatin1String(":/trolltech/styles/cleanlooksstyle/images/cleanlooks/qt_cleanlooks_scrollbar_button_right.png"));
+                    } else {
+                        subButton = QImage(QLatin1String(":/trolltech/styles/cleanlooksstyle/images/cleanlooks/qt_cleanlooks_scrollbar_button_left.png"));
+                    }
                 } else {
-                    subButton = QImage(qt_cleanlooks_scrollbar_button_up);
+                    subButton = QImage(QLatin1String(":/trolltech/styles/cleanlooksstyle/images/cleanlooks/qt_cleanlooks_scrollbar_button_up.png"));
                 }
-                subButton.setColor(1, alphaCornerColor.rgba());
-                subButton.setColor(2, darkOutline.rgba());
+
+                QMap<QRgb, QRgb> subButtonMap;
+                subButtonMap.insert(4290756543, alphaCornerColor.rgba());
+                subButtonMap.insert(4288124823, darkOutline.rgba());
                 if ((scrollBar->activeSubControls & SC_ScrollBarSubLine) && sunken) {
-                    subButton.setColor(3, gradientStopColor.darker(140).rgba());
-                    subButton.setColor(4, gradientStopColor.darker(120).rgba());
+                    subButtonMap.insert(4294638330, gradientStopColor.darker(140).rgba());
+                    subButtonMap.insert(4289703855, gradientStopColor.darker(120).rgba());
                 } else {
-                    subButton.setColor(3, gradientStartColor.lighter(105).rgba());
-                    subButton.setColor(4, gradientStopColor.rgba());
+                    subButtonMap.insert(4294638330, gradientStartColor.lighter(105).rgba());
+                    subButtonMap.insert(4289703855, gradientStopColor.rgba());
                 }
-                subButton.setColor(5, scrollBar->palette.text().color().rgba());
+                subButton = replaceColors(subButton, subButtonMap);
                 painter->drawImage(pixmapRect, subButton);
 
                 // Arrows
@@ -3106,20 +2748,25 @@ void QCleanlooksStyle::drawComplexControl(ComplexControl control, const QStyleOp
                     // Details
                     QImage addButton;
                     if (horizontal) {
-                        addButton = QImage(reverse ? qt_cleanlooks_scrollbar_button_left : qt_cleanlooks_scrollbar_button_right);
+                        if (reverse) {
+                            addButton = QImage(QLatin1String(":/trolltech/styles/cleanlooksstyle/images/cleanlooks/qt_cleanlooks_scrollbar_button_left.png"));
+                        } else {
+                            addButton = QImage(QLatin1String(":/trolltech/styles/cleanlooksstyle/images/cleanlooks/qt_cleanlooks_scrollbar_button_right.png"));
+                        }
                     } else {
-                        addButton = QImage(qt_cleanlooks_scrollbar_button_down);
+                        addButton = QImage(QLatin1String(":/trolltech/styles/cleanlooksstyle/images/cleanlooks/qt_cleanlooks_scrollbar_button_down.png"));
                     }
-                    addButton.setColor(1, alphaCornerColor.rgba());
-                    addButton.setColor(2, darkOutline.rgba());
+                    QMap<QRgb, QRgb> addButtonMap;
+                    addButtonMap.insert(4290756543, alphaCornerColor.rgba());
+                    addButtonMap.insert(4288124823, darkOutline.rgba());
                     if ((scrollBar->activeSubControls & SC_ScrollBarAddLine) && sunken) {
-                        addButton.setColor(3, gradientStopColor.darker(140).rgba());
-                        addButton.setColor(4, gradientStopColor.darker(120).rgba());
+                        addButtonMap.insert(4294638330, gradientStopColor.darker(140).rgba());
+                        addButtonMap.insert(4289703855, gradientStopColor.darker(120).rgba());
                     } else {
-                        addButton.setColor(3, gradientStartColor.lighter(105).rgba());
-                        addButton.setColor(4, gradientStopColor.rgba());
+                        addButtonMap.insert(4294638330, gradientStartColor.lighter(105).rgba());
+                        addButtonMap.insert(4289703855, gradientStopColor.rgba());
                     }
-                    addButton.setColor(5, scrollBar->palette.text().color().rgba());
+                    addButton = replaceColors(addButton, addButtonMap);
                     painter->drawImage(pixmapRect, addButton);
 
                     PrimitiveElement arrow;
@@ -3256,16 +2903,22 @@ void QCleanlooksStyle::drawComplexControl(ComplexControl control, const QStyleOp
                 if (comboBox->subControls & SC_ComboBoxArrow) {
                     if (comboBox->editable) {
                         // Draw the down arrow
-                        QImage downArrow(qt_cleanlooks_arrow_down_xpm);
-                        downArrow.setColor(1, comboBox->palette.foreground().color().rgba());
+                        QImage downArrow(QLatin1String(":/trolltech/styles/cleanlooksstyle/images/cleanlooks/qt_cleanlooks_arrow_down.png"));
+                        QMap<QRgb, QRgb> downArrowMap;
+                        downArrowMap.insert(4278190080, comboBox->palette.foreground().color().rgba());
+                        downArrow = replaceColors(downArrow, downArrowMap);
                         cachePainter.drawImage(downArrowRect.center().x() - downArrow.width() / 2,
                                                downArrowRect.center().y() - downArrow.height() / 2 + 1, downArrow);
                     } else {
                         // Draw the up/down arrow
-                        QImage upArrow(qt_cleanlooks_scrollbar_button_arrow_up);
-                        upArrow.setColor(1, comboBox->palette.foreground().color().rgba());
-                        QImage downArrow(qt_cleanlooks_scrollbar_button_arrow_down);
-                        downArrow.setColor(1, comboBox->palette.foreground().color().rgba());
+                        QImage upArrow(QLatin1String(":/trolltech/styles/cleanlooksstyle/images/cleanlooks/qt_cleanlooks_scrollbar_button_arrow_up.png"));
+                        QMap<QRgb, QRgb> upArrowMap;
+                        upArrowMap.insert(4290756543, comboBox->palette.foreground().color().rgba());
+                        upArrow = replaceColors(upArrow, upArrowMap);
+                        QImage downArrow(QLatin1String(":/trolltech/styles/cleanlooksstyle/images/cleanlooks/qt_cleanlooks_scrollbar_button_arrow_down.png"));
+                        QMap<QRgb, QRgb> downArrowMap;
+                        downArrowMap.insert(4290756543, comboBox->palette.foreground().color().rgba());
+                        downArrow = replaceColors(downArrow, downArrowMap);
                         cachePainter.drawImage(downArrowRect.center().x() - downArrow.width() / 2,
                                                downArrowRect.center().y() - upArrow.height() - 1 , upArrow);
                         cachePainter.drawImage(downArrowRect.center().x() - downArrow.width() / 2,
@@ -4294,22 +3947,17 @@ QRect QCleanlooksStyle::subElementRect(SubElement sr, const QStyleOption *opt, c
 QPixmap QCleanlooksStyle::standardPixmap(StandardPixmap standardPixmap, const QStyleOption *opt,
                                       const QWidget *widget) const
 {
-    QPixmap pixmap;
-
-#ifndef QT_NO_XPM
     switch (standardPixmap) {
     case SP_TitleBarNormalButton:
-        return QPixmap((const char **)qt_cleanlooks_dock_widget_restore_xpm);
+        return QPixmap(QLatin1String(":/trolltech/styles/cleanlooksstyle/images/cleanlooks/qt_cleanlooks_dock_widget_restore.png"));
     case SP_TitleBarMinButton:
-        return QPixmap((const char **)qt_cleanlooks_workspace_minimize);
+        return QPixmap(QLatin1String(":/trolltech/styles/cleanlooksstyle/images/cleanlooks/qt_cleanlooks_workspace_minimize.png"));
     case SP_TitleBarCloseButton:
     case SP_DockWidgetCloseButton:
-        return QPixmap((const char **)qt_cleanlooks_dock_widget_close_xpm);
-
+        return QPixmap(QLatin1String(":/trolltech/styles/cleanlooksstyle/images/cleanlooks/qt_cleanlooks_dock_widget_close.png"));
     default:
         break;
     }
-#endif //QT_NO_XPM
 
     return QWindowsStyle::standardPixmap(standardPixmap, opt, widget);
 }
@@ -4318,5 +3966,6 @@ QT_END_NAMESPACE
 
 
 #include "moc_qcleanlooksstyle.h"
+#include "qrc_qcleanlooksstyle.cpp"
 
 #endif // QT_NO_STYLE_CLEANLOOKS

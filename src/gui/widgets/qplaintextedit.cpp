@@ -36,7 +36,6 @@
 #include "qtextdocument_p.h"
 #include "qtextlist.h"
 #include "qtextcontrol_p.h"
-#include "qaccessible.h"
 #include "qtextformat.h"
 #include "qdatetime.h"
 #include "qapplication.h"
@@ -336,17 +335,12 @@ void QPlainTextDocumentLayout::layoutBlock(const QTextBlock &block)
     QTextOption option = doc->defaultTextOption();
     tl->setTextOption(option);
 
-    int extraMargin = 0;
-    if (option.flags() & QTextOption::AddSpaceForLineAndParagraphSeparators) {
-        QFontMetrics fm(block.charFormat().font());
-        extraMargin += fm.width(QChar(0x21B5));
-    }
     tl->beginLayout();
     qreal availableWidth = d->width;
     if (availableWidth <= 0) {
         availableWidth = qreal(INT_MAX); // similar to text edit with pageSize.width == 0
     }
-    availableWidth -= 2*margin + extraMargin;
+    availableWidth -= 2*margin;
     while (1) {
         QTextLine line = tl->createLine();
         if (!line.isValid())
@@ -415,10 +409,6 @@ QPlainTextEditControl::QPlainTextEditControl(QPlainTextEdit *parent)
 void QPlainTextEditPrivate::_q_cursorPositionChanged()
 {
     pageUpDownLastCursorYIsValid = false;
-#ifndef QT_NO_ACCESSIBILITY
-    Q_Q(QPlainTextEdit);
-    QAccessible::updateAccessibility(q, 0, QAccessible::TextCaretMoved);
-#endif
 }
 
 void QPlainTextEditPrivate::_q_verticalScrollbarActionTriggered(int action) {
@@ -1742,12 +1732,10 @@ void QPlainTextEdit::paintEvent(QPaintEvent *e)
 
 
             layout->draw(&painter, offset, selections, er);
-            if ((drawCursor && !drawCursorAsBlock)
-                || (editable && context.cursorPosition < -1
-                    && !layout->preeditAreaText().isEmpty())) {
+            if (drawCursor && !drawCursorAsBlock) {
                 int cpos = context.cursorPosition;
                 if (cpos < -1)
-                    cpos = layout->preeditAreaPosition() - (cpos + 2);
+                    cpos = (cpos + 2) - 1;
                 else
                     cpos -= blpos;
                 layout->drawCursor(&painter, offset, cpos, cursorWidth());

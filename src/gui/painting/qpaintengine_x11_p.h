@@ -67,29 +67,14 @@ public:
     void updateMatrix(const QTransform &matrix);
     void updateClipRegion_dev(const QRegion &region, Qt::ClipOperation op);
 
-    void drawLines(const QLine *lines, int lineCount);
-    void drawLines(const QLineF *lines, int lineCount);
-
-    void drawRects(const QRect *rects, int rectCount);
-    void drawRects(const QRectF *rects, int rectCount);
-
-    void drawPoints(const QPoint *points, int pointCount);
-    void drawPoints(const QPointF *points, int pointCount);
-
-    void drawEllipse(const QRect &r);
-    void drawEllipse(const QRectF &r);
-
     void drawPolygon(const QPointF *points, int pointCount, PolygonDrawMode mode);
 
     void drawPixmap(const QRectF &r, const QPixmap &pm, const QRectF &sr);
-    void drawTiledPixmap(const QRectF &r, const QPixmap &pixmap, const QPointF &s);
     void drawPath(const QPainterPath &path);
     void drawImage(const QRectF &r, const QImage &img, const QRectF &sr,
                    Qt::ImageConversionFlags flags = Qt::AutoColor);
 
     inline Type type() const { return QPaintEngine::X11; }
-
-    QPainter::RenderHints supportedRenderHints() const;
 
 protected:
     QX11PaintEngine(QX11PaintEnginePrivate &dptr);
@@ -127,22 +112,12 @@ public:
     };
 
     void init();
-    void fillPolygon_translated(const QPointF *points, int pointCount, GCMode gcMode,
-                                QPaintEngine::PolygonDrawMode mode);
     void fillPolygon_dev(const QPointF *points, int pointCount, GCMode gcMode,
                          QPaintEngine::PolygonDrawMode mode);
     void fillPath(const QPainterPath &path, GCMode gcmode, bool transform);
     void strokePolygon_dev(const QPointF *points, int pointCount, bool close);
-    void strokePolygon_translated(const QPointF *points, int pointCount, bool close);
     void setupAdaptedOrigin(const QPoint &p);
     void resetAdaptedOrigin();
-    void decidePathFallback() {
-        use_path_fallback = has_alpha_brush
-                            || has_alpha_pen
-                            || has_custom_pen
-                            || has_complex_xform
-                            || (render_hints & QPainter::Antialiasing);
-    }
     void decideCoordAdjust() {
         adjust_coords = !(render_hints & QPainter::Antialiasing)
                         && (has_alpha_pen
@@ -176,15 +151,12 @@ public:
 
     bool has_complex_xform;
     bool has_scaling_xform;
-    bool has_custom_pen;
-    bool use_path_fallback;
     bool adjust_coords;
     bool has_clipping;
     bool adapted_brush_origin;
     bool has_pen;
     bool has_brush;
     bool has_texture;
-    bool has_alpha_texture;
     bool has_pattern;
     bool has_alpha_pen;
     bool has_alpha_brush;
@@ -196,7 +168,6 @@ public:
     qreal xform_scale;
     QPolygonClipper polygonClipper;
 
-    int xlibMaxLinePoints;
 #ifndef QT_NO_XRENDER
     QXRenderTessellator *tessellator;
 #endif

@@ -142,9 +142,6 @@ bool FormWindowManager::eventFilter(QObject *o, QEvent *e)
     switch (eventType) { // Uninteresting events
     case QEvent::Create:
     case QEvent::Destroy:
-    case QEvent::AccessibilityDescription:
-    case QEvent::AccessibilityHelp:
-    case QEvent::AccessibilityPrepare:
     case QEvent::ActionAdded:
     case QEvent::ActionChanged:
     case QEvent::ActionRemoved:

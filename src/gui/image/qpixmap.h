@@ -50,17 +50,15 @@ public:
     QPixmap(int w, int h);
     QPixmap(const QSize &);
     QPixmap(const QString& fileName, const char *format = nullptr, Qt::ImageConversionFlags flags = Qt::AutoColor);
-#ifndef QT_NO_XPM
+#ifndef QT_NO_IMAGEFORMAT_XPM
     QPixmap(const char * const xpm[]);
 #endif
     QPixmap(const QPixmap &);
     ~QPixmap();
 
     QPixmap &operator=(const QPixmap &);
-#ifdef Q_COMPILER_RVALUE_REFS
     inline QPixmap &operator=(QPixmap &&other)
     { qSwap(data, other.data); return *this; }
-#endif
     inline void swap(QPixmap &other) { qSwap(data, other.data); }
 
     operator QVariant() const;

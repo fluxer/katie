@@ -223,9 +223,6 @@
 #include <QtGui/qtooltip.h>
 #include <QtGui/qtransform.h>
 #include <QtGui/qgraphicseffect.h>
-#ifndef QT_NO_ACCESSIBILITY
-# include <QtGui/qaccessible.h>
-#endif
 
 #include "qapplication_p.h"
 #include "qobject_p.h"
@@ -768,13 +765,6 @@ void QGraphicsScenePrivate::setFocusItemHelper(QGraphicsItem *item,
     if (item)
         focusItem = item;
 
-#ifndef QT_NO_ACCESSIBILITY
-    if (focusItem) {
-        if (QGraphicsObject *focusObj = focusItem->toGraphicsObject()) {
-            QAccessible::updateAccessibility(focusObj, 0, QAccessible::Focus);
-        }
-    }
-#endif
     if (item) {
         QFocusEvent event(QEvent::FocusIn, focusReason);
         sendEvent(item, &event);
@@ -4351,18 +4341,6 @@ void QGraphicsScenePrivate::drawItemHelper(QGraphicsItem *item, QPainter *painte
         QRect viewRect = widget ? widget->rect() : QRect();
         if (widget && !viewRect.intersects(deviceRect))
             return;
-
-        // Resort to direct rendering if the device rect exceeds the
-        // (optional) maximum bounds. (QGraphicsSvgItem uses this).
-        QSize maximumCacheSize =
-            itemd->extra(QGraphicsItemPrivate::ExtraMaxDeviceCoordCacheSize).toSize();
-        if (!maximumCacheSize.isEmpty()
-            && (deviceRect.width() > maximumCacheSize.width()
-                || deviceRect.height() > maximumCacheSize.height())) {
-            _q_paintItem(static_cast<QGraphicsWidget *>(item), painter, option, widget,
-                         oldPainterOpacity != newPainterOpacity, painterStateProtection);
-            return;
-        }
 
         // Create or reuse offscreen pixmap, possibly scroll/blit from the old one.
         // If the world transform is rotated we always recreate the cache to avoid

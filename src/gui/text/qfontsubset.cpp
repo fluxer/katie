@@ -328,10 +328,10 @@ QVector<int> QFontSubset::getReverseMap() const
     reverseMap.resize(0x10000);
     for (uint i = 0; i < 0x10000; ++i)
         reverseMap[i] = 0;
-    QGlyphLayoutArray<10> glyphs;
+    QGlyphLayoutArray<2> glyphs;
     for (uint uc = 0; uc < 0x10000; ++uc) {
         QChar ch(uc);
-        int nglyphs = 10;
+        int nglyphs = 1;
         fontEngine->stringToCMap(&ch, 1, &glyphs, &nglyphs, QTextEngine::GlyphIndicesOnly);
         int idx = glyph_indices.indexOf(glyphs.glyphs[0]);
         if (idx >= 0 && !reverseMap.at(idx))
@@ -1521,29 +1521,32 @@ static QByteArray charString(const QPainterPath &path, qreal advance, qreal lsb,
     return charstring;
 }
 
-static const char *helvetica_styles[4] = {
-    "Helvetica",
-    "Helvetica-Bold",
-    "Helvetica-Oblique",
-    "Helvetica-BoldOblique"
+// for reference:
+// https://www.adobe.com/content/dam/acom/en/devnet/actionscript/articles/PLRM.pdf
+static const char *freesans_styles[4] = {
+    "FreeSans",
+    "FreeSans-Bold",
+    "FreeSans-Oblique",
+    "FreeSans-BoldOblique"
 };
-static const char *times_styles[4] = {
-    "Times-Regular",
-    "Times-Bold",
-    "Times-Italic",
-    "Times-BoldItalic"
+
+static const char *freeserif_styles[4] = {
+    "FreeSerif",
+    "FreeSerif-Bold",
+    "FreeSerif-Oblique",
+    "FreeSerif-BoldOblique"
 };
-static const char *courier_styles[4] = {
-    "Courier",
-    "Courier-Bold",
-    "Courier-Oblique",
-    "Courier-BoldOblique"
+
+static const char *freemono_styles[4] = {
+    "FreeMono",
+    "FreeMono-Bold",
+    "FreeMono-Oblique",
+    "FreeMono-BoldOblique"
 };
 
 QByteArray QFontSubset::toType1() const
 {
     QFontEngine::Properties properties = fontEngine->properties();
-    QVector<int> reverseMap = getReverseMap();
 
     QByteArray font;
     QPdf::ByteStream s(&font);
@@ -1561,14 +1564,14 @@ QByteArray QFontSubset::toType1() const
             style += 2;
         if (fontEngine->fontDef.weight >= QFont::Bold)
             style++;
-        if (fontEngine->fontDef.family.contains(QLatin1String("Helvetica"))) {
-            psname = helvetica_styles[style];
+        if (fontEngine->fontDef.family.contains(QLatin1String("FreeSans"), Qt::CaseInsensitive)) {
+            psname = freesans_styles[style];
             standard_font = true;
-        } else if (fontEngine->fontDef.family.contains(QLatin1String("Times"))) {
-            psname = times_styles[style];
+        } else if (fontEngine->fontDef.family.contains(QLatin1String("FreeSerif"), Qt::CaseInsensitive)) {
+            psname = freeserif_styles[style];
             standard_font = true;
-        } else if (fontEngine->fontDef.family.contains(QLatin1String("Courier"))) {
-            psname = courier_styles[style];
+        } else if (fontEngine->fontDef.family.contains(QLatin1String("FreeMono"), Qt::CaseInsensitive)) {
+            psname = freemono_styles[style];
             standard_font = true;
         }
     }

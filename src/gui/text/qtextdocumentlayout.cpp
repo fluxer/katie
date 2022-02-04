@@ -24,7 +24,7 @@
 #include "qtextimagehandler_p.h"
 #include "qtexttable.h"
 #include "qtextlist.h"
-#include "qtextengine_p.h"
+#include "qfixed_p.h"
 #include "qcssutil_p.h"
 #include "qabstracttextdocumentlayout_p.h"
 #include "qcssparser_p.h"
@@ -1290,11 +1290,10 @@ void QTextDocumentLayoutPrivate::drawBlock(const QPointF &offset, QPainter *pain
 
     tl->draw(painter, offset, selections, context.clip.isValid() ? (context.clip & clipRect) : clipRect);
 
-    if ((context.cursorPosition >= blpos && context.cursorPosition < blpos + bllen)
-        || (context.cursorPosition < -1 && !tl->preeditAreaText().isEmpty())) {
+    if (context.cursorPosition >= blpos && context.cursorPosition < blpos + bllen) {
         int cpos = context.cursorPosition;
         if (cpos < -1)
-            cpos = tl->preeditAreaPosition() - (cpos + 2);
+            cpos = (cpos + 2) - 1;
         else
             cpos -= blpos;
         tl->drawCursor(painter, offset, cpos, cursorWidth);
@@ -2531,15 +2530,9 @@ void QTextDocumentLayoutPrivate::layoutBlock(const QTextBlock &bl, int blockPosi
 
     Qt::LayoutDirection dir = bl.textDirection();
 
-    QFixed extraMargin;
-    if (docPrivate->defaultTextOption.flags() & QTextOption::AddSpaceForLineAndParagraphSeparators) {
-        QFontMetricsF fm(bl.charFormat().font());
-        extraMargin = QFixed::fromReal(fm.width(QChar(QChar(0x21B5))));
-    }
-
     const QFixed indent = this->blockIndent(blockFormat);
-    const QFixed totalLeftMargin = QFixed::fromReal(blockFormat.leftMargin()) + (dir == Qt::RightToLeft ? extraMargin : indent);
-    const QFixed totalRightMargin = QFixed::fromReal(blockFormat.rightMargin()) + (dir == Qt::RightToLeft ? indent : extraMargin);
+    const QFixed totalLeftMargin = QFixed::fromReal(blockFormat.leftMargin()) + (dir == Qt::RightToLeft ? QFixed() : indent);
+    const QFixed totalRightMargin = QFixed::fromReal(blockFormat.rightMargin()) + (dir == Qt::RightToLeft ? indent : QFixed());
 
     const QPointF oldPosition = tl->position();
     tl->setPosition(QPointF(layoutStruct->x_left.toReal(), layoutStruct->y.toReal()));
@@ -2552,7 +2545,6 @@ void QTextDocumentLayoutPrivate::layoutBlock(const QTextBlock &bl, int blockPosi
         LDEBUG << " do layout";
         QTextOption option = docPrivate->defaultTextOption;
         option.setTextDirection(dir);
-        option.setTabs( blockFormat.tabPositions() );
 
         Qt::Alignment align = docPrivate->defaultTextOption.alignment();
         if (blockFormat.hasProperty(QTextFormat::BlockAlignment))
@@ -2560,7 +2552,7 @@ void QTextDocumentLayoutPrivate::layoutBlock(const QTextBlock &bl, int blockPosi
         option.setAlignment(QStyle::visualAlignment(dir, align)); // for paragraph that are RTL, alignment is auto-reversed;
 
         if (blockFormat.nonBreakableLines() || document->pageSize().width() < 0) {
-            option.setWrapMode(QTextOption::ManualWrap);
+            option.setWrapMode(QTextOption::NoWrap);
         }
 
         tl->setTextOption(option);
@@ -2948,8 +2940,6 @@ int QTextDocumentLayout::hitTest(const QPointF &point, Qt::HitTestAccuracy accur
 
     // ensure we stay within document bounds
     int lastPos = f->lastPosition();
-    if (l && !l->preeditAreaText().isEmpty())
-        lastPos += l->preeditAreaText().length();
     if (position > lastPos)
         position = lastPos;
     else if (position < 0)

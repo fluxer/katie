@@ -247,7 +247,7 @@ QPixmap::QPixmap(const QPixmap &pixmap)
     slightly more efficient (for example, when the code is in a shared
     library) and ROMable when the application is to be stored in ROM.
 */
-#ifndef QT_NO_XPM
+#ifndef QT_NO_IMAGEFORMAT_XPM
 QPixmap::QPixmap(const char * const xpm[])
     : QPaintDevice()
 {
@@ -1304,13 +1304,6 @@ QPixmap QPixmap::transformed(const QMatrix &matrix, Qt::TransformationMode mode)
     return transformed(QTransform(matrix), mode);
 }
 
-
-
-
-
-
-
-
 /*!
     \class QPixmap
 
@@ -1387,7 +1380,6 @@ QPixmap QPixmap::transformed(const QMatrix &matrix, Qt::TransformationMode mode)
     \header \o Format \o Description                      \o Qt's support
     \row    \o PNG    \o Portable Network Graphics        \o Read/write
     \row    \o PBM    \o Portable Bitmap                  \o Read
-    \row    \o PGM    \o Portable Graymap                 \o Read
     \row    \o PPM    \o Portable Pixmap                  \o Read/write
     \row    \o XPM    \o X11 Pixmap                       \o Read/write
     \endtable

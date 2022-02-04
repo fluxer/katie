@@ -36,9 +36,7 @@
 #include "../text/qtextdocumentlayout_p.h"
 #include "qtoolbutton.h"
 #include "qdebug.h"
-#ifndef QT_NO_ACCESSIBILITY
-#include "qaccessible.h"
-#endif
+
 #if defined(Q_WS_X11)
 #include "qx11info_x11.h"
 #include "qwidget.h"
@@ -192,9 +190,9 @@ QWhatsThat::QWhatsThat(const QString& txt, QWidget* parent, QWidget *showTextFor
         else if (sw > 300)
             sw = 300;
 
-        r = fontMetrics().boundingRect(0, 0, sw, 1000,
+        r = fontMetrics().boundingRect(QRect(0, 0, sw, 1000),
                                         Qt::AlignLeft + Qt::AlignTop
-                                        + Qt::TextWordWrap + Qt::TextExpandTabs,
+                                        + Qt::TextWordWrap,
                                         text);
     }
     resize(r.width() + 2*hMargin + shadowWidth, r.height() + 2*vMargin + shadowWidth);
@@ -306,10 +304,11 @@ void QWhatsThat::paintEvent(QPaintEvent*)
     }
     else
     {
-        p.drawText(r, Qt::AlignLeft + Qt::AlignTop + Qt::TextWordWrap + Qt::TextExpandTabs, text);
+        p.drawText(r, Qt::AlignLeft + Qt::AlignTop + Qt::TextWordWrap, text);
     }
 }
 
+#ifndef QT_NO_IMAGEFORMAT_XPM
 /* XPM */
 static const char * const button_image[] = {
 "16 16 3 1",
@@ -332,6 +331,7 @@ static const char * const button_image[] = {
 "    ooo         ",
 "     ooo        ",
 "     ooo        "};
+#endif // QT_NO_IMAGEFORMAT_XPM
 
 class QWhatsThisPrivate : public QObject
 {
@@ -374,9 +374,6 @@ QWhatsThisPrivate::QWhatsThisPrivate()
         QApplication::setOverrideCursor(Qt::WhatsThisCursor);
 #endif
     }
-#ifndef QT_NO_ACCESSIBILITY
-    QAccessible::updateAccessibility(this, 0, QAccessible::ContextHelpStart);
-#endif
 }
 
 QWhatsThisPrivate::~QWhatsThisPrivate()
@@ -385,9 +382,6 @@ QWhatsThisPrivate::~QWhatsThisPrivate()
         action->setChecked(false);
 #ifndef QT_NO_CURSOR
     QApplication::restoreOverrideCursor();
-#endif
-#ifndef QT_NO_ACCESSIBILITY
-    QAccessible::updateAccessibility(this, 0, QAccessible::ContextHelpEnd);
 #endif
     instance = 0;
 }
@@ -468,7 +462,7 @@ private slots:
 
 QWhatsThisAction::QWhatsThisAction(QObject *parent) : QAction(tr("What's This?"), parent)
 {
-#ifndef QT_NO_XPM
+#ifndef QT_NO_IMAGEFORMAT_XPM
     QPixmap p((const char**)button_image);
     setIcon(p);
 #endif

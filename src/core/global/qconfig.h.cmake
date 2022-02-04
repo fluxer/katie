@@ -109,6 +109,12 @@
 #define QT_NO_STL_WCHAR
 #define QT_NO_BEARERMANAGEMENT
 #define QT_NO_GESTURES
+#define QT_NO_STYLE_MOTIF
+#define QT_NO_STYLE_PLASTIQUE
+#define QT_NO_ACCESSIBILITY
+#define QT_NO_SVGGENERATOR
+#define QT_NO_SVGWIDGET
+#define QT_NO_GRAPHICSSVGITEM
 
 // Not supported, used to bootstrap
 #cmakedefine QT_NO_QOBJECT
@@ -149,11 +155,9 @@
 #cmakedefine QT_NO_XRENDER
 #cmakedefine QT_NO_XSHAPE
 #cmakedefine QT_NO_XSYNC
-#cmakedefine QT_NO_XPM
 
 // Misc
 #cmakedefine QT_NO_USING_NAMESPACE
-#cmakedefine QT_NO_ACCESSIBILITY
 #cmakedefine QT_NO_ACTION
 #cmakedefine QT_NO_ANIMATION
 #cmakedefine QT_NO_BACKINGSTORE
@@ -201,7 +205,6 @@
 #cmakedefine QT_NO_FSFILEENGINE
 #cmakedefine QT_NO_FTP
 #cmakedefine QT_NO_GRAPHICSEFFECT
-#cmakedefine QT_NO_GRAPHICSSVGITEM
 #cmakedefine QT_NO_GRAPHICSVIEW
 #cmakedefine QT_NO_GROUPBOX
 #cmakedefine QT_NO_HTTP
@@ -268,15 +271,11 @@
 #cmakedefine QT_NO_STATUSTIP
 #cmakedefine QT_NO_STRINGLISTMODEL
 #cmakedefine QT_NO_STYLE_CLEANLOOKS
-#cmakedefine QT_NO_STYLE_MOTIF
-#cmakedefine QT_NO_STYLE_PLASTIQUE
 #cmakedefine QT_NO_STYLE_PROXY
 #cmakedefine QT_NO_STYLE_STYLESHEET
 #cmakedefine QT_NO_STYLE_WINDOWS
 #cmakedefine QT_NO_SVG
-#cmakedefine QT_NO_SVGGENERATOR
 #cmakedefine QT_NO_SVGRENDERER
-#cmakedefine QT_NO_SVGWIDGET
 #cmakedefine QT_NO_SYNTAXHIGHLIGHTER
 #cmakedefine QT_NO_SYSTEMSEMAPHORE
 #cmakedefine QT_NO_SYSTEMTRAYICON
@@ -443,7 +442,7 @@
 #endif
 
 // Drag and drop
-#if !defined(QT_NO_DRAGANDDROP) && defined(QT_NO_XPM)
+#if !defined(QT_NO_DRAGANDDROP) && defined(QT_NO_IMAGEFORMAT_XPM)
 #  define QT_NO_DRAGANDDROP
 #endif
 
@@ -473,13 +472,8 @@
 #endif
 
 // QCleanLooksStyle
-#if !defined(QT_NO_STYLE_CLEANLOOKS) && (defined(QT_NO_STYLE_WINDOWS) || defined(QT_NO_XPM))
+#if !defined(QT_NO_STYLE_CLEANLOOKS) && defined(QT_NO_STYLE_WINDOWS)
 #  define QT_NO_STYLE_CLEANLOOKS
-#endif
-
-// QPlastiqueStyle
-#if !defined(QT_NO_STYLE_PLASTIQUE) && (defined(QT_NO_STYLE_WINDOWS) || defined(QT_NO_XPM))
-#  define QT_NO_STYLE_PLASTIQUE
 #endif
 
 // QStyleSheetStyle
@@ -510,11 +504,6 @@
 // QMenuBar
 #if !defined(QT_NO_MENUBAR) && (defined(QT_NO_MENU) || defined(QT_NO_TOOLBUTTON))
 #  define QT_NO_MENUBAR
-#endif
-
-// QSvgGenerator
-#if !defined(QT_NO_SVGGENERATOR) && defined(QT_NO_SVG)
-#  define QT_NO_SVGGENERATOR
 #endif
 
 // QSvgRenderer
@@ -567,11 +556,6 @@
 #  define QT_NO_STRINGLISTMODEL
 #endif
 
-// QSvgWidget
-#if !defined(QT_NO_SVGWIDGET) && defined(QT_NO_SVGRENDERER)
-#  define QT_NO_SVGWIDGET
-#endif
-
 // QSyntaxHighlighter
 #if !defined(QT_NO_SYNTAXHIGHLIGHTER) && defined(QT_NO_TEXTEDIT)
 #  define QT_NO_SYNTAXHIGHLIGHTER
@@ -595,11 +579,6 @@
 // QTreeView
 #if !defined(QT_NO_TREEVIEW) && defined(QT_NO_ITEMVIEWS)
 #  define QT_NO_TREEVIEW
-#endif
-
-// Accessibility
-#if !defined(QT_NO_ACCESSIBILITY) && (defined(QT_NO_PROPERTIES) || defined(QT_NO_MENUBAR))
-#  define QT_NO_ACCESSIBILITY
 #endif
 
 // QColumnView
@@ -665,11 +644,6 @@
 // QCompleter
 #if !defined(QT_NO_FSCOMPLETER) && (defined(QT_NO_FILESYSTEMMODEL) || defined(QT_NO_COMPLETER))
 #  define QT_NO_FSCOMPLETER
-#endif
-
-// QGraphicsSvgItem
-#if !defined(QT_NO_GRAPHICSSVGITEM) && (defined(QT_NO_SVGRENDERER) || defined(QT_NO_GRAPHICSVIEW))
-#  define QT_NO_GRAPHICSSVGITEM
 #endif
 
 // QComboBox

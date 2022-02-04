@@ -32,39 +32,11 @@ QT_BEGIN_NAMESPACE
 
 
 template <typename T> class QList;
-struct QTextOptionPrivate;
 
 class Q_GUI_EXPORT QTextOption
 {
     Q_GADGET
 public:
-    enum TabType {
-        LeftTab,
-        RightTab,
-        CenterTab,
-        DelimiterTab
-    };
-
-    struct Q_GUI_EXPORT Tab {
-        inline Tab() : position(80), type(QTextOption::LeftTab) { }
-        inline Tab(qreal pos, TabType tabType, QChar delim = QChar())
-            : position(pos), type(tabType), delimiter(delim) {}
-
-        inline bool operator==(const Tab &other) const {
-            return type == other.type
-                   && qFuzzyCompare(position, other.position)
-                   && delimiter == other.delimiter;
-        }
-
-        inline bool operator!=(const Tab &other) const {
-            return !operator==(other);
-        }
-
-        qreal position;
-        TabType type;
-        QChar delimiter;
-    };
-
     QTextOption();
     QTextOption(Qt::Alignment alignment);
     ~QTextOption();
@@ -81,7 +53,6 @@ public:
     enum WrapMode {
         NoWrap,
         WordWrap,
-        ManualWrap,
         WrapAnywhere,
         WrapAtWordBoundaryOrAnywhere
     };
@@ -90,10 +61,7 @@ public:
     inline WrapMode wrapMode() const { return wordwrap; }
 
     enum Flag {
-        ShowTabsAndSpaces = 0x1,
-        ShowLineAndParagraphSeparators = 0x2,
-        AddSpaceForLineAndParagraphSeparators = 0x4,
-        SuppressColors = 0x8,
+        SuppressColors = 0x1,
         IncludeTrailingSpaces = 0x80000000
     };
     Q_DECLARE_FLAGS(Flags, Flag)
@@ -102,12 +70,6 @@ public:
 
     inline void setTabStop(qreal tabStop);
     inline qreal tabStop() const { return tab; }
-
-    void setTabArray(const QList<qreal> &tabStops);
-    QList<qreal> tabArray() const;
-
-    void setTabs(const QList<Tab> &tabStops);
-    QList<Tab> tabs() const;
 
     void setUseDesignMetrics(bool b) { design = b; }
     bool useDesignMetrics() const { return design; }
@@ -119,7 +81,6 @@ private:
     Qt::LayoutDirection direction;
     bool design;
     qreal tab;
-    QTextOptionPrivate *d;
 };
 
 Q_DECLARE_OPERATORS_FOR_FLAGS(QTextOption::Flags)
@@ -134,8 +95,5 @@ inline void QTextOption::setTabStop(qreal atabStop)
 { tab = atabStop; }
 
 QT_END_NAMESPACE
-
-Q_DECLARE_METATYPE( QTextOption::Tab )
-
 
 #endif // QTEXTOPTION_H

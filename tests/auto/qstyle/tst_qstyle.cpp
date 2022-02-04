@@ -33,9 +33,7 @@
 #include <qprogressbar.h>
 #include <qtoolbutton.h>
 #include <qtoolbar.h>
-#include <qplastiquestyle.h>
 #include <qwindowsstyle.h>
-#include <qmotifstyle.h>
 #include <qcommonstyle.h>
 #include <qproxystyle.h>
 #include <qstylefactory.h>
@@ -53,7 +51,7 @@
 #include <qcleanlooksstyle.h>
 
 //TESTED_CLASS=
-//TESTED_FILES=gui/styles/qstyle.h gui/styles/qstyle.cpp gui/styles/qplastiquestyle.cpp gui/styles/qwindowsstyle.cpp gui/styles/qwindowsxpstyle.cpp gui/styles/qwindowsvistastyle.cpp gui/styles/qmotifstyle.cpp gui/styles/qs60style.cpp
+//TESTED_FILES=gui/styles/qstyle.h gui/styles/qstyle.cpp gui/styles/qwindowsstyle.cpp
 
 // Make a widget frameless to prevent size constraints of title bars
 // from interfering (Windows).
@@ -80,14 +78,11 @@ private slots:
     void cleanupTestCase();
     void init();
     void cleanup();
-    void testMotifStyle();
-    void testPlastiqueStyle();
     void testWindowsStyle();
     void testCleanlooksStyle();
     void testStyleFactory();
     void testProxyStyle();
     void pixelMetric();
-    void progressBarChangeStyle();
     void defaultFont();
     void testDrawingShortcuts();
 private:
@@ -135,14 +130,8 @@ void tst_QStyle::cleanupTestCase()
 void tst_QStyle::testStyleFactory()
 {
     QStringList keys = QStyleFactory::keys();
-#ifndef QT_NO_STYLE_MOTIF
-    QVERIFY(keys.contains("Motif"));
-#endif
 #ifndef QT_NO_STYLE_CLEANLOOKS
     QVERIFY(keys.contains("Cleanlooks"));
-#endif
-#ifndef QT_NO_STYLE_PLASTIQUE
-    QVERIFY(keys.contains("Plastique"));
 #endif
 #ifndef QT_NO_STYLE_WINDOWS
     QVERIFY(keys.contains("Windows"));
@@ -299,17 +288,6 @@ void tst_QStyle::testScrollBarSubControls(QStyle* style)
     }
 }
 
-void tst_QStyle::testPlastiqueStyle()
-{
-#if !defined(QT_NO_STYLE_PLASTIQUE)
-    QPlastiqueStyle pstyle;
-    testAllFunctions(&pstyle);
-    lineUpLayoutTest(&pstyle);
-#else
-    QSKIP("No Plastique style", SkipAll);
-#endif
-}
-
 void tst_QStyle::testCleanlooksStyle()
 {
 #if !defined(QT_NO_STYLE_CLEANLOOKS)
@@ -356,16 +334,6 @@ void comparePixmap(const QString &filename, const QPixmap &pixmap)
         QCOMPARE(pixmap, oldPixmap);
     else
         writeImage(filename, pixmap.toImage());
-}
-
-void tst_QStyle::testMotifStyle()
-{
-#if !defined(QT_NO_STYLE_MOTIF)
-    QMotifStyle mstyle;
-    testAllFunctions(&mstyle);
-#else
-    QSKIP("No Motif style", SkipAll);
-#endif
 }
 
 // Helper class...
@@ -447,53 +415,6 @@ void tst_QStyle::pixelMetric()
     QCOMPARE(style->pixelMetric(QStyle::PM_DefaultLayoutSpacing), -1);
 
     delete style;
-}
-
-void tst_QStyle::progressBarChangeStyle()
-{
-#if !defined(QT_NO_STYLE_PLASTIQUE) && !defined(QT_NO_STYLE_WINDOWS)
-    //test a crashing situation (task 143530)
-    //where changing the styles and deleting a progressbar would crash
-
-    QWindowsStyle style1;
-    QPlastiqueStyle style2;
-
-    QProgressBar *progress=new QProgressBar;
-    progress->setStyle(&style1);
-
-    progress->show();
-
-    progress->setStyle(&style2);
-
-    QTest::qWait(100);
-    delete progress;
-
-    QTest::qWait(100);
-
-    //before the correction, there would be a crash here
-#elif !defined(QT_NO_STYLE_S60) && !defined(QT_NO_STYLE_WINDOWS)
-    //test a crashing situation (task 143530)
-    //where changing the styles and deleting a progressbar would crash
-
-    QWindowsStyle style1;
-    QS60Style style2;
-
-    QProgressBar *progress=new QProgressBar;
-    progress->setStyle(&style1);
-
-    progress->show();
-
-    progress->setStyle(&style2);
-
-    QTest::qWait(100);
-    delete progress;
-
-    QTest::qWait(100);
-
-    //before the correction, there would be a crash here
-#else
-    QSKIP("Either style Plastique or Windows or S60 missing", SkipAll);
-#endif
 }
 
 void tst_QStyle::lineUpLayoutTest(QStyle *style)

@@ -42,24 +42,6 @@ QT_BEGIN_NAMESPACE
 namespace QUnicodeTables {
 
     // required by Harfbuzz
-    enum CombiningClass {
-        Combining_NotOrdered = 0,
-        Combining_AttachedBelow = 202,
-        Combining_AttachedAbove = 214,
-        Combining_AttachedAboveRight = 216,
-        Combining_BelowLeft = 218,
-        Combining_Below = 220,
-        Combining_BelowRight = 222,
-        Combining_Left = 224,
-        Combining_Right = 226,
-        Combining_AboveLeft = 228,
-        Combining_Above = 230,
-        Combining_AboveRight = 232,
-        Combining_DoubleBelow = 233,
-        Combining_DoubleAbove = 234,
-        Combining_IotaSubscript = 240
-    };
-
     enum GraphemeBreak {
         GraphemeBreak_Other,
         GraphemeBreak_CR,
@@ -71,31 +53,6 @@ namespace QUnicodeTables {
         GraphemeBreak_T,
         GraphemeBreak_LV,
         GraphemeBreak_LVT
-    };
-
-    enum WordBreak {
-        WordBreak_Other,
-        WordBreak_Format,
-        WordBreak_Katakana,
-        WordBreak_ALetter,
-        WordBreak_MidLetter,
-        WordBreak_MidNum,
-        WordBreak_Numeric,
-        WordBreak_ExtendNumLet
-    };
-
-    enum SentenceBreak {
-        SentenceBreak_Other,
-        SentenceBreak_Sep,
-        SentenceBreak_Format,
-        SentenceBreak_Sp,
-        SentenceBreak_Lower,
-        SentenceBreak_Upper,
-        SentenceBreak_OLetter,
-        SentenceBreak_Numeric,
-        SentenceBreak_ATerm,
-        SentenceBreak_STerm,
-        SentenceBreak_Close
     };
 
     enum LineBreak {
@@ -133,10 +90,7 @@ namespace QUnicodeTables {
         LineBreak_BK
     };
 
-    Q_GUI_EXPORT CombiningClass QT_FASTCALL combiningClass(uint ucs4);
     Q_GUI_EXPORT GraphemeBreak QT_FASTCALL graphemeBreak(uint ucs4);
-    Q_GUI_EXPORT WordBreak QT_FASTCALL wordBreak(uint ucs4);
-    Q_GUI_EXPORT SentenceBreak QT_FASTCALL sentenceBreak(uint ucs4);
     Q_GUI_EXPORT LineBreak QT_FASTCALL lineBreakClass(uint ucs4);
 
     // required by text engine and font database

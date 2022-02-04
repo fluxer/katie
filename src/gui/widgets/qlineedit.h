@@ -63,7 +63,6 @@ class Q_GUI_EXPORT QLineEdit : public QWidget
     Q_PROPERTY(bool redoAvailable READ isRedoAvailable)
     Q_PROPERTY(bool acceptableInput READ hasAcceptableInput)
     Q_PROPERTY(QString placeholderText READ placeholderText WRITE setPlaceholderText)
-    Q_PROPERTY(Qt::CursorMoveStyle cursorMoveStyle READ cursorMoveStyle WRITE setCursorMoveStyle)
 
 public:
     explicit QLineEdit(QWidget* parent = nullptr);
@@ -133,9 +132,6 @@ public:
     void setDragEnabled(bool b);
     bool dragEnabled() const;
 
-    void setCursorMoveStyle(Qt::CursorMoveStyle style);
-    Qt::CursorMoveStyle cursorMoveStyle() const;
-
     QString inputMask() const;
     void setInputMask(const QString &inputMask);
     bool hasAcceptableInput() const;
@@ -202,7 +198,6 @@ public:
 
 private:
     friend class QAbstractSpinBox;
-    friend class QAccessibleLineEdit;
     Q_DISABLE_COPY(QLineEdit)
     Q_DECLARE_PRIVATE(QLineEdit)
     Q_PRIVATE_SLOT(d_func(), void _q_handleWindowActivate())

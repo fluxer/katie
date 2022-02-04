@@ -1728,25 +1728,6 @@ bool QInternal::activateCallbacks(void **parameters)
 */
 
 /*!
-    \macro Q_GLOBAL_STATIC_WITH_INITIALIZER(type, name, initializer)
-    \internal
-
-    Declares a global static variable with the specified \a type and \a name.
-
-    Use this macro to instantiate an object using the \a initializer specified
-    in a thread-safe way, creating a global pointer that can be used to refer
-    to it.
-
-    \warning This macro is subject to a race condition that can cause the object
-    to be constructed twice. However, if this occurs, the second instance will
-    be immediately deleted.
-
-    See also
-    \l{http://www.aristeia.com/publications.html}{"C++ and the perils of Double-Checked Locking"}
-    by Scott Meyers and Andrei Alexandrescu.
-*/
-
-/*!
     \macro QT_NAMESPACE
     \internal
 
@@ -1754,8 +1735,7 @@ bool QInternal::activateCallbacks(void **parameters)
     called \c ns. Also, moc will output code putting metaobjects etc.
     into namespace \c ns.
 
-    \sa QT_BEGIN_NAMESPACE, QT_END_NAMESPACE,
-    QT_PREPEND_NAMESPACE, QT_BEGIN_INCLUDE_NAMESPACE, QT_END_INCLUDE_NAMESPACE
+    \sa QT_BEGIN_NAMESPACE, QT_END_NAMESPACE, QT_PREPEND_NAMESPACE
 */
 
 /*!
@@ -1797,9 +1777,8 @@ bool QInternal::activateCallbacks(void **parameters)
     declaration.
 
     If that rule can't be followed because, e.g., \c{#include} lines and
-    declarations are wildly mixed, place \c QT_BEGIN_NAMESPACE before
-    the first declaration and wrap the \c{#include} lines in
-    \c QT_BEGIN_INCLUDE_NAMESPACE and \c QT_END_INCLUDE_NAMESPACE.
+    declarations are wildly mixed, wrap the \c{#include} lines in
+    \c QT_END_NAMESPACE and \c QT_BEGIN_NAMESPACE.
 
     When using the \c QT_NAMESPACE feature in user code
     (e.g., when building plugins statically linked to Qt) where
@@ -1825,30 +1804,6 @@ bool QInternal::activateCallbacks(void **parameters)
 
     If a source file ends with a \c{#include} directive that includes a moc file,
     \c QT_END_NAMESPACE should be placed before that \c{#include}.
-
-    \sa QT_NAMESPACE
-*/
-
-/*!
-    \macro QT_BEGIN_INCLUDE_NAMESPACE
-    \internal
-
-    This macro is equivalent to \c QT_END_NAMESPACE.
-    It only serves as syntactic sugar and is intended
-    to be used before #include lines within a
-    \c QT_BEGIN_NAMESPACE ... \c QT_END_NAMESPACE block.
-
-    \sa QT_NAMESPACE
-*/
-
-/*!
-    \macro QT_END_INCLUDE_NAMESPACE
-    \internal
-
-    This macro is equivalent to \c QT_BEGIN_NAMESPACE.
-    It only serves as syntactic sugar and is intended
-    to be used after #include lines within a
-    \c QT_BEGIN_NAMESPACE ... \c QT_END_NAMESPACE block.
 
     \sa QT_NAMESPACE
 */

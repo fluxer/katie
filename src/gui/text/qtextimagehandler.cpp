@@ -26,7 +26,6 @@
 #include "qtextformat.h"
 #include "qpainter.h"
 #include "qdebug.h"
-#include "qtextengine_p.h"
 #include "qpalette.h"
 #include "qtextbrowser.h"
 #include "qthread.h"

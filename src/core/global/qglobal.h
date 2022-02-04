@@ -36,6 +36,12 @@
 
 #include <utility> // std::swap
 #include <cstdint> // std::uintptr_t
+#include <memory> // std::unique_ptr
+
+typedef unsigned char uchar;
+typedef unsigned short ushort;
+typedef unsigned int uint;
+typedef unsigned long ulong;
 
 #if !defined(QT_NO_USING_NAMESPACE)
 
@@ -45,8 +51,6 @@
 
 # define QT_BEGIN_NAMESPACE namespace QT_NAMESPACE {
 # define QT_END_NAMESPACE }
-# define QT_BEGIN_INCLUDE_NAMESPACE }
-# define QT_END_INCLUDE_NAMESPACE namespace QT_NAMESPACE {
 
 namespace QT_NAMESPACE {}
 
@@ -62,8 +66,6 @@ QT_USE_NAMESPACE
 
 # define QT_BEGIN_NAMESPACE
 # define QT_END_NAMESPACE
-# define QT_BEGIN_INCLUDE_NAMESPACE
-# define QT_END_INCLUDE_NAMESPACE
 
 #endif /* QT_NO_USING_NAMESPACE */
 
@@ -75,43 +77,17 @@ QT_USE_NAMESPACE
 
      GNU      - GNU C++
      CLANG    - C++ front-end for the LLVM compiler
-
-   Should be sorted most to least authoritative.
-
-   Paper             Macro                             SD-6 macro
-   N2672             Q_COMPILER_INITIALIZER_LISTS
-   N2118 N2844 N3053 Q_COMPILER_RVALUE_REFS            __cpp_rvalue_references = 200610
-
-  For any future version of the C++ standard, we use only the SD-6 macro.
-  For full listing, see
-   http://isocpp.org/std/standing-documents/sd-6-sg10-feature-test-recommendations
 */
 #if defined(__GNUC__)
 #  define Q_CC_GNU
-#  if __cplusplus >= 201103L || defined(__GXX_EXPERIMENTAL_CXX0X__)
-     /* C++0x features supported in GCC 4.3: */
-#    define Q_COMPILER_RVALUE_REFS
-     /* C++0x features supported in GCC 4.4: */
-#    define Q_COMPILER_INITIALIZER_LISTS
-     /* C++0x features supported in GCC 4.6: */
-#    ifdef __EXCEPTIONS
-#      define Q_COMPILER_EXCEPTIONS
-#    endif
+#  ifdef __EXCEPTIONS
+#    define Q_COMPILER_EXCEPTIONS
 #  endif
 
 #elif defined(__clang__)
 #  define Q_CC_CLANG
-#  if __cplusplus >= 201103L || defined(__GXX_EXPERIMENTAL_CXX0X__)
-    /* Detect C++ features using __has_feature(), see http://clang.llvm.org/docs/LanguageExtensions.html#cxx11 */
-#    if __has_feature(cxx_generalized_initializers)
-#      define Q_COMPILER_INITIALIZER_LISTS
-#    endif
-#    if __has_feature(cxx_rvalue_references)
-#      define Q_COMPILER_RVALUE_REFS
-#    endif
-#    if __has_feature(cxx_exceptions)
-#      define Q_COMPILER_EXCEPTIONS
-#    endif
+#  if __has_feature(cxx_exceptions)
+#    define Q_COMPILER_EXCEPTIONS
 #  endif
 
 #else
@@ -174,13 +150,6 @@ typedef quint64 qulonglong;
 */
 typedef std::uintptr_t quintptr;
 typedef std::ptrdiff_t qptrdiff;
-
-QT_BEGIN_INCLUDE_NAMESPACE
-typedef unsigned char uchar;
-typedef unsigned short ushort;
-typedef unsigned int uint;
-typedef unsigned long ulong;
-QT_END_INCLUDE_NAMESPACE
 
 /*
    Warnings and errors when using deprecated methods
@@ -399,114 +368,19 @@ Q_CORE_EXPORT void qt_message_output(QtMsgType, const char *buf);
 typedef void (*QtMsgHandler)(QtMsgType, const char *);
 Q_CORE_EXPORT QtMsgHandler qInstallMsgHandler(QtMsgHandler);
 
-
-#if defined(QT_NO_THREAD)
-
-template <typename T>
-class QGlobalStatic
-{
-public:
-    T *pointer;
-    inline QGlobalStatic(T *p) : pointer(p) { }
-    inline ~QGlobalStatic() { pointer = nullptr; }
-};
-
-#define Q_GLOBAL_STATIC(TYPE, NAME)                                  \
-    static TYPE *NAME()                                              \
-    {                                                                \
-        static TYPE thisVariable;                                    \
-        static QGlobalStatic<TYPE > thisGlobalStatic(&thisVariable); \
-        return thisGlobalStatic.pointer;                             \
+#define Q_GLOBAL_STATIC(TYPE, NAME)                              \
+    static TYPE *NAME()                                          \
+    {                                                            \
+        static std::unique_ptr<TYPE> this__StaticVar_(new TYPE); \
+        return this__StaticVar_.get();                           \
     }
 
-#define Q_GLOBAL_STATIC_WITH_ARGS(TYPE, NAME, ARGS)                  \
-    static TYPE *NAME()                                              \
-    {                                                                \
-        static TYPE thisVariable ARGS;                               \
-        static QGlobalStatic<TYPE > thisGlobalStatic(&thisVariable); \
-        return thisGlobalStatic.pointer;                             \
+#define Q_GLOBAL_STATIC_WITH_ARGS(TYPE, NAME, ARGS)                   \
+    static TYPE *NAME()                                               \
+    {                                                                 \
+        static std::unique_ptr<TYPE> this__StaticVar_(new TYPE ARGS); \
+        return this__StaticVar_.get();                                \
     }
-
-#define Q_GLOBAL_STATIC_WITH_INITIALIZER(TYPE, NAME, INITIALIZER)    \
-    static TYPE *NAME()                                              \
-    {                                                                \
-        static TYPE thisVariable;                                    \
-        static QGlobalStatic<TYPE > thisGlobalStatic(nullptr);     \
-        if (!thisGlobalStatic.pointer) {                             \
-            TYPE *x = thisGlobalStatic.pointer = &thisVariable;      \
-            INITIALIZER;                                             \
-        }                                                            \
-        return thisGlobalStatic.pointer;                             \
-    }
-
-#else // QT_NO_THREAD
-
-// Forward declaration, since qatomic.h needs qglobal.h
-template <typename T> class QAtomicPointer;
-
-// POD for Q_GLOBAL_STATIC
-template <typename T>
-class QGlobalStatic
-{
-public:
-    QAtomicPointer<T> pointer;
-    bool destroyed;
-};
-
-// Created as a function-local static to delete a QGlobalStatic<T>
-template <typename T>
-class QGlobalStaticDeleter
-{
-public:
-    QGlobalStatic<T> &globalStatic;
-    QGlobalStaticDeleter(QGlobalStatic<T> &_globalStatic)
-        : globalStatic(_globalStatic)
-    { }
-
-    inline ~QGlobalStaticDeleter()
-    {
-        delete globalStatic.pointer;
-        globalStatic.pointer = nullptr;
-        globalStatic.destroyed = true;
-    }
-};
-
-#define Q_GLOBAL_STATIC(TYPE, NAME)                                           \
-    static TYPE *NAME()                                                       \
-    {                                                                         \
-        static QGlobalStatic<TYPE > this__StaticVar_                          \
-            = { QAtomicPointer<TYPE>(new TYPE), false };                      \
-        static QGlobalStaticDeleter<TYPE > cleanup(this__StaticVar_);         \
-        return this__StaticVar_.pointer;                                      \
-    }
-
-#define Q_GLOBAL_STATIC_WITH_ARGS(TYPE, NAME, ARGS)                           \
-    static TYPE *NAME()                                                       \
-    {                                                                         \
-        static QGlobalStatic<TYPE > this__StaticVar_                          \
-            = { QAtomicPointer<TYPE>(new TYPE ARGS), false };                 \
-        static QGlobalStaticDeleter<TYPE > cleanup(this__StaticVar_);         \
-        return this__StaticVar_.pointer;                                      \
-    }
-
-#define Q_GLOBAL_STATIC_WITH_INITIALIZER(TYPE, NAME, INITIALIZER)                  \
-    static TYPE *NAME()                                                            \
-    {                                                                              \
-        static QGlobalStatic<TYPE > this__StaticVar_                               \
-            = { QAtomicPointer<TYPE>(nullptr), false };                            \
-        if (!this__StaticVar_.pointer && !this__StaticVar_.destroyed) {            \
-            QScopedPointer<TYPE > x(new TYPE);                                     \
-            INITIALIZER;                                                           \
-            if (this__StaticVar_.pointer.testAndSetOrdered(nullptr, x.data())) {   \
-                static QGlobalStaticDeleter<TYPE > cleanup(this__StaticVar_);      \
-                x.take();                                                          \
-            }                                                                      \
-        }                                                                          \
-        return this__StaticVar_.pointer;                                           \
-    }
-
-#endif // QT_NO_THREAD
-
 
 /*
    Utility macros and inline functions

@@ -26,11 +26,7 @@
 #include <QtCore/qshareddata.h>
 #include <QtCore/qmetatype.h>
 
-
-#ifdef Q_COMPILER_RVALUE_REFS
-# include <utility>
-#endif
-
+#include <utility>
 
 QT_BEGIN_NAMESPACE
 
@@ -55,12 +51,10 @@ public:
     void giveFileDescriptor(int fileDescriptor);
     int takeFileDescriptor();
 
-#if defined(Q_COMPILER_RVALUE_REFS)
     QDBusUnixFileDescriptor(QDBusUnixFileDescriptor &&other) : d(static_cast<Data &&>(other.d))
     { }
     inline QDBusUnixFileDescriptor &operator=(QDBusUnixFileDescriptor &&other)
     { d.swap(other.d); return *this; }
-#endif
 
 protected:
     typedef QExplicitlySharedDataPointer<QDBusUnixFileDescriptorPrivate>  Data;

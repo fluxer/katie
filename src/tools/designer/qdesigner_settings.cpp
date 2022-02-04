@@ -134,26 +134,26 @@ bool QDesignerSettings::showNewFormOnStartup() const
 
 QByteArray QDesignerSettings::mainWindowState(UIMode mode) const
 {
-    return settings()->value(QLatin1String(mainWindowStateKey) + modeChar(mode)).toByteArray();
+    return QByteArray::fromHex(settings()->value(QLatin1String(mainWindowStateKey) + modeChar(mode)).toByteArray());
 }
 
 void QDesignerSettings::setMainWindowState(UIMode mode, const QByteArray &mainWindowState)
 {
-    settings()->setValue(QLatin1String(mainWindowStateKey) + modeChar(mode), mainWindowState);
+    settings()->setValue(QLatin1String(mainWindowStateKey) + modeChar(mode), mainWindowState.toHex());
 }
 
 QByteArray QDesignerSettings::toolBarsState(UIMode mode) const
 {
     QString key = QLatin1String(toolBarsStateKey);
     key += modeChar(mode);
-    return settings()->value(key).toByteArray();
+    return QByteArray::fromHex(settings()->value(key).toByteArray());
 }
 
 void QDesignerSettings::setToolBarsState(UIMode mode, const QByteArray &toolBarsState)
 {
     QString key = QLatin1String(toolBarsStateKey);
     key += modeChar(mode);
-    settings()->setValue(key, toolBarsState);
+    settings()->setValue(key, toolBarsState.toHex());
 }
 
 void QDesignerSettings::clearBackup()

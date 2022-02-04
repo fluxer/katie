@@ -93,17 +93,7 @@ void QFontFamilyDelegate::paint(QPainter *painter,
     QFont old = painter->font();
     painter->setFont(font);
 
-    // If the ascent of the font is larger than the height of the rect,
-    // we will clip the text, so it's better to align the tight bounding rect in this case
-    // This is specifically for fonts where the ascent is very large compared to
-    // the descent, like certain of the Stix family.
-    QFontMetricsF fontMetrics(font);
-    if (fontMetrics.ascent() > r.height()) {
-        QRectF tbr = fontMetrics.tightBoundingRect(text);
-        painter->drawText(r.x(), r.y() + (r.height() + tbr.height()) / 2.0, text);
-    } else {
-        painter->drawText(r, Qt::AlignVCenter|Qt::AlignLeft|Qt::TextSingleLine, text);
-    }
+    painter->drawText(r, Qt::AlignVCenter|Qt::AlignLeft|Qt::TextSingleLine, text);
 
     painter->setFont(old);
 
@@ -208,7 +198,7 @@ void QFontComboBoxPrivate::_q_currentChanged(const QString &text)
     \ingroup basicwidgets
 
     The combobox is populated with an alphabetized list of font
-    family names, such as Arial, Helvetica, and Times New Roman.
+    family names, such as FreeMono, FreeSans and FreeSerif.
     Family names are displayed using the actual font when possible.
     For fonts such as Symbol, where the name is not representable in
     the font itself, a sample of the font is displayed next to the

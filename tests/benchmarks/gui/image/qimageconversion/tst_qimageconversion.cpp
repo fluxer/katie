@@ -22,66 +22,87 @@
 #include <qtest.h>
 #include <QImage>
 
-Q_DECLARE_METATYPE(QImage)
+Q_DECLARE_METATYPE(QImage::Format)
+
+/*
+ Fill a image with "random" pixel values.
+ */
+static QImage generateImage(const QSize &size, const QImage::Format format)
+{
+    QImage image(size.width(), size.height(), format);
+    bool oddnumber = true;
+    for (int y = 0; y < image.height(); ++y) {
+        for (int x = 0; x < image.width(); ++x) {
+            if (image.depth() == 1) {
+                image.setPixel(x, y, uint(oddnumber));
+                oddnumber = !oddnumber;
+            } else {
+                image.setPixel(x, y, x ^ y);
+            }
+        }
+    }
+    return image;
+}
+
 
 class tst_QImageConversion : public QObject
 {
     Q_OBJECT
 private slots:
-    void convertRgb16ToRGB32_data();
-    void convertRgb16ToRGB32();
-
-private:
-    QImage generateImage(int width, int height);
+    void convertToFormat_data();
+    void convertToFormat();
 };
 
-void tst_QImageConversion::convertRgb16ToRGB32_data()
+void tst_QImageConversion::convertToFormat_data()
 {
-    QTest::addColumn<QImage>("inputImage");
-    // height = 5000 to get interesting timing.
+    QTest::addColumn<QImage::Format>("sourceFormat");
+    QTest::addColumn<QImage::Format>("targetFormat");
+    QTest::addColumn<QSize>("size");
 
-    // 3 pixels wide -> smaller than regular vector of 128bits
-    QTest::newRow("width: 3px; height: 5000px;") << generateImage(3, 5000);
+    QList<QSize> sizes;
+    sizes << QSize(1, 1)
+          << QSize(10, 10)
+          << QSize(100, 100)
+          << QSize(1000, 1000);
 
-    // 8 pixels wide -> potential for 2 vectors
-    QTest::newRow("width: 8px; height: 5000px;") << generateImage(3, 5000);
+    const char *formatNames[] = {
+        "Invalid",
+        "Mono",
+        "MonoLSB",
+        "RGB32",
+        "ARGB32",
+        "ARGB32_pm",
+        "RGB16",
+    };
 
-    // 16 pixels, minimum for the SSSE3 implementation
-    QTest::newRow("width: 16px; height: 5000px;") << generateImage(16, 5000);
+    for (int tar=1; tar<QImage::NImageFormats; ++tar) {
+        for (int src=1; src<QImage::NImageFormats; ++src) {
 
-    // 50 pixels, more realistic use case
-    QTest::newRow("width: 50px; height: 5000px;") << generateImage(50, 5000);
-
-    // 2000 pixels -> typical values for pictures
-    QTest::newRow("width: 2000px; height: 5000px;") << generateImage(2000, 5000);
+            foreach (const QSize &s, sizes) {
+                QString name = QString::fromLatin1("%1 to %2, (%3x%4)")
+                               .arg(formatNames[src])
+                               .arg(formatNames[tar])
+                               .arg(s.width()).arg(s.height());
+                QTest::newRow(name.toLatin1()) << (QImage::Format) src
+                                               << (QImage::Format) tar
+                                               << s;
+            }
+        }
+    }
 }
 
-void tst_QImageConversion::convertRgb16ToRGB32()
+void tst_QImageConversion::convertToFormat()
 {
-    QFETCH(QImage, inputImage);
+    QFETCH(QImage::Format, sourceFormat);
+    QFETCH(QImage::Format, targetFormat);
+    QFETCH(QSize, size);
+
+    QImage sourceImage = generateImage(size, sourceFormat);
 
     QBENCHMARK {
-        volatile QImage output = inputImage.convertToFormat(QImage::Format_RGB32);
-        // we need the volatile and the following to make sure the compiler does not do
-        // anything stupid :)
-        (void)output;
+        QImage result = sourceImage.convertToFormat(targetFormat);
+        QVERIFY(!result.isNull());
     }
-}
-
-/*
- Fill a RGB16 image with "random" pixel values.
- */
-QImage tst_QImageConversion::generateImage(int width, int height)
-{
-    QImage image(width, height, QImage::Format_RGB16);
-    const int byteWidth = width * 2;
-
-    for (int y = 0; y < image.height(); ++y) {
-        uchar *scanline = image.scanLine(y);
-        for (int x = 0; x < byteWidth; ++x)
-            scanline[x] = x ^ y;
-    }
-    return image;
 }
 
 QTEST_MAIN(tst_QImageConversion)

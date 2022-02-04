@@ -32,11 +32,6 @@
 #include "qtabwidget.h"
 #include "qtooltip.h"
 #include "qwhatsthis.h"
-#include "qtextengine_p.h"
-#ifndef QT_NO_ACCESSIBILITY
-#include "qaccessible.h"
-#endif
-
 #include "qdebug.h"
 #include "qtabbar_p.h"
 #include "qguicommon_p.h"
@@ -1101,14 +1096,6 @@ void QTabBar::setCurrentIndex(int index)
         if (oldIndex >= 0 && oldIndex < count())
             d->layoutTab(oldIndex);
         d->layoutTab(index);
-#ifndef QT_NO_ACCESSIBILITY
-        if (QAccessible::isActive()) {
-            QAccessible::updateAccessibility(this, oldIndex + 1, QAccessible::Selection);
-
-            QAccessible::updateAccessibility(this, index + 1, QAccessible::Focus);
-            QAccessible::updateAccessibility(this, index + 1, QAccessible::Selection);
-        }
-#endif
         emit currentChanged(index);
     }
 }

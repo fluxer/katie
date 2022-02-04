@@ -150,10 +150,6 @@ class Q_GUI_EXPORT QWidget : public QObject, public QPaintDevice
 #ifndef QT_NO_WHATSTHIS
     Q_PROPERTY(QString whatsThis READ whatsThis WRITE setWhatsThis)
 #endif
-#ifndef QT_NO_ACCESSIBILITY
-    Q_PROPERTY(QString accessibleName READ accessibleName WRITE setAccessibleName)
-    Q_PROPERTY(QString accessibleDescription READ accessibleDescription WRITE setAccessibleDescription)
-#endif
     Q_PROPERTY(Qt::LayoutDirection layoutDirection READ layoutDirection WRITE setLayoutDirection RESET unsetLayoutDirection)
     Q_PROPERTY(Qt::WindowFlags windowFlags READ windowFlags WRITE setWindowFlags)
     Q_PROPERTY(bool autoFillBackground READ autoFillBackground WRITE setAutoFillBackground)
@@ -330,12 +326,6 @@ public:
 #ifndef QT_NO_WHATSTHIS
     void setWhatsThis(const QString &);
     QString whatsThis() const;
-#endif
-#ifndef QT_NO_ACCESSIBILITY
-    QString accessibleName() const;
-    void setAccessibleName(const QString &name);
-    QString accessibleDescription() const;
-    void setAccessibleDescription(const QString &description);
 #endif
 
     void setLayoutDirection(Qt::LayoutDirection direction);

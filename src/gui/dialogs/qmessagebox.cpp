@@ -33,9 +33,6 @@
 #include <QtGui/qgridlayout.h>
 #include <QtGui/qdesktopwidget.h>
 #include <QtGui/qpushbutton.h>
-#ifndef QT_NO_ACCESSIBILITY
-# include <QtGui/qaccessible.h>
-#endif
 #include <QtGui/qicon.h>
 #include <QtGui/qtextdocument.h>
 #include <QtGui/qapplication.h>
@@ -1238,9 +1235,6 @@ void QMessageBox::showEvent(QShowEvent *e)
     d->detectEscapeButton();
     d->updateSize();
 
-#ifndef QT_NO_ACCESSIBILITY
-    QAccessible::updateAccessibility(this, 0, QAccessible::Alert);
-#endif
     QDialog::showEvent(e);
 }
 

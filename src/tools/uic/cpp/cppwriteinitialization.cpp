@@ -162,7 +162,6 @@ namespace {
     inline void openIfndef(QTextStream &str, const QString &symbol) { if (!symbol.isEmpty()) str << QLatin1String("#ifndef ") << symbol << endl;  }
     inline void closeIfndef(QTextStream &str, const QString &symbol) { if (!symbol.isEmpty()) str << QLatin1String("#endif // ") << symbol << endl; }
 
-    const char *accessibilityDefineC = "QT_NO_ACCESSIBILITY";
     const char *toolTipDefineC = "QT_NO_TOOLTIP";
     const char *whatsThisDefineC = "QT_NO_WHATSTHIS";
     const char *statusTipDefineC = "QT_NO_STATUSTIP";
@@ -224,12 +223,6 @@ int FontHandle::compare(const FontHandle &rhs) const
     const int rhsAntialiasing = rhs.m_domFont->hasElementAntialiasing() ? (rhs.m_domFont->elementAntialiasing() ? 1 : 0) : -1;
     if (const int crc = compareInt(antialiasing, rhsAntialiasing))
         return crc;
-
-    const QString styleStrategy    = m_domFont->hasElementStyleStrategy()     ?     m_domFont->elementStyleStrategy() : QString();
-    const QString rhsStyleStrategy = rhs.m_domFont->hasElementStyleStrategy() ? rhs.m_domFont->elementStyleStrategy() : QString();
-
-    if (const int src = styleStrategy.compare(rhsStyleStrategy))
-        return src;
 
     return 0;
 }
@@ -1409,8 +1402,6 @@ void WriteInitialization::writeProperties(const QString &varName,
                 defineC = whatsThisDefineC;
             else if (propertyName == QLatin1String("statusTip"))
                 defineC = statusTipDefineC;
-            else if (propertyName == QLatin1String("accessibleName") || propertyName == QLatin1String("accessibleDescription"))
-                defineC = accessibilityDefineC;
 
             QTextStream &o = autoTrOutput(p->elementString());
 
@@ -1526,12 +1517,8 @@ QString WriteInitialization::writeFontProperties(const DomFont *f)
             << (f->elementKerning() ? "true" : "false") << ");\n";
     }
     if (f->hasElementAntialiasing()) {
-        m_output << m_indent << fontName << ".setStyleStrategy("
-            << (f->elementAntialiasing() ? "QFont::PreferDefault" : "QFont::NoAntialias") << ");\n";
-    }
-    if (f->hasElementStyleStrategy()) {
-         m_output << m_indent << fontName << ".setStyleStrategy(QFont::"
-            << f->elementStyleStrategy() << ");\n";
+        m_output << m_indent << fontName << ".setHintingPreference("
+            << (f->elementAntialiasing() ? "QFont::PreferDefaultHinting" : "QFont::PreferNoHinting") << ");\n";
     }
     return  fontName;
 }

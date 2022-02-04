@@ -45,22 +45,6 @@ public:
     }
 };
 
-template <typename T>
-class QScopedPointerArrayDeleter
-{
-public:
-    static inline void cleanup(T *pointer)
-    {
-        // Enforce a complete type.
-        // If you get a compile error here, read the section on forward declared
-        // classes in the QScopedPointer documentation.
-        typedef char IsIncompleteType[ sizeof(T) ? 1 : -1 ];
-        (void) sizeof(IsIncompleteType);
-
-        delete [] pointer;
-    }
-};
-
 struct QScopedPointerPodDeleter
 {
     static inline void cleanup(void *pointer) { if (pointer) free(pointer); }
@@ -167,50 +151,6 @@ namespace std {
     { p1.swap(p2); }
 }
 QT_BEGIN_NAMESPACE
-
-
-namespace QtPrivate {
-    template <typename X, typename Y> struct QScopedArrayEnsureSameType;
-    template <typename X> struct QScopedArrayEnsureSameType<X,X> { typedef X* Type; };
-    template <typename X> struct QScopedArrayEnsureSameType<const X, X> { typedef X* Type; };
-}
-
-template <typename T, typename Cleanup = QScopedPointerArrayDeleter<T> >
-class QScopedArrayPointer : public QScopedPointer<T, Cleanup>
-{
-public:
-    inline QScopedArrayPointer() : QScopedPointer<T, Cleanup>(0) {}
-
-    template <typename D>
-    explicit inline QScopedArrayPointer(D *p, typename QtPrivate::QScopedArrayEnsureSameType<T,D>::Type = 0)
-        : QScopedPointer<T, Cleanup>(p)
-    {
-    }
-
-    inline T &operator[](int i)
-    {
-        return this->d[i];
-    }
-
-    inline const T &operator[](int i) const
-    {
-        return this->d[i];
-    }
-
-private:
-    explicit inline QScopedArrayPointer(void *) {
-        // Enforce the same type.
-
-        // If you get a compile error here, make sure you declare
-        // QScopedArrayPointer with the same template type as you pass to the
-        // constructor. See also the QScopedPointer documentation.
-
-        // Storing a scalar array as a pointer to a different type is not
-        // allowed and results in undefined behavior.
-    }
-
-    Q_DISABLE_COPY(QScopedArrayPointer)
-};
 
 QT_END_NAMESPACE
 

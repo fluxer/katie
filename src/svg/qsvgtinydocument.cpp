@@ -33,6 +33,7 @@
 #include "qqueue.h"
 #include "qstack.h"
 #include "qdebug.h"
+#include "qcorecommon_p.h"
 
 #include <zlib.h>
 
@@ -51,21 +52,13 @@ QSvgTinyDocument::~QSvgTinyDocument()
 }
 
 #ifdef QT_BUILD_INTERNAL
-Q_AUTOTEST_EXPORT QByteArray qt_inflateGZipDataFrom(QIODevice *device)
+Q_AUTOTEST_EXPORT QByteArray qt_inflateGZipDataFrom(const QByteArray &contents)
 #else
-static QByteArray qt_inflateGZipDataFrom(QIODevice *device)
+static QByteArray qt_inflateGZipDataFrom(const QByteArray &contents)
 #endif
 {
-    Q_ASSERT(device);
-
-    if (!device->isOpen())
-        device->open(QIODevice::ReadOnly);
-
-    Q_ASSERT(device->isOpen() && device->isReadable());
-
-    int zlibResult = Z_OK;
-
-    QByteArray source;
+    QSTACKARRAY(char, source, contents.size());
+    ::memcpy(source, contents.constData(), contents.size() * sizeof(char));
     QByteArray destination;
 
     // Initialize zlib stream struct
@@ -84,51 +77,34 @@ static QByteArray qt_inflateGZipDataFrom(QIODevice *device)
         return QByteArray();
     }
 
-    bool stillMoreWorkToDo = true;
-    while (stillMoreWorkToDo) {
+    zlibStream.avail_in = contents.size();
+    zlibStream.next_in = reinterpret_cast<Bytef*>(source);
 
-        if (!zlibStream.avail_in) {
-            source = device->read(QT_BUFFSIZE);
+    do {
+        // Prepare the destination buffer
+        int oldSize = destination.size();
+        destination.resize(oldSize + QT_BUFFSIZE);
+        zlibStream.next_out = reinterpret_cast<Bytef*>(
+                destination.data() + oldSize - zlibStream.avail_out);
+        zlibStream.avail_out += QT_BUFFSIZE;
 
-            if (source.isEmpty())
-                break;
-
-            zlibStream.avail_in = source.size();
-            zlibStream.next_in = reinterpret_cast<Bytef*>(source.data());
-        }
-
-        do {
-            // Prepare the destination buffer
-            int oldSize = destination.size();
-            destination.resize(oldSize + QT_BUFFSIZE);
-            zlibStream.next_out = reinterpret_cast<Bytef*>(
-                    destination.data() + oldSize - zlibStream.avail_out);
-            zlibStream.avail_out += QT_BUFFSIZE;
-
-            zlibResult = inflate(&zlibStream, Z_NO_FLUSH);
-            switch (zlibResult) {
-                case Z_NEED_DICT:
-                case Z_DATA_ERROR:
-                case Z_STREAM_ERROR:
-                case Z_MEM_ERROR: {
-                    inflateEnd(&zlibStream);
-                    qWarning("Error while inflating gzip file: %s",
-                            (zlibStream.msg != NULL ? zlibStream.msg : "Unknown error"));
-                    destination.chop(zlibStream.avail_out);
-                    return destination;
-                }
+        int zlibResult = inflate(&zlibStream, Z_NO_FLUSH);
+        switch (zlibResult) {
+            case Z_NEED_DICT:
+            case Z_DATA_ERROR:
+            case Z_STREAM_ERROR:
+            case Z_MEM_ERROR: {
+                inflateEnd(&zlibStream);
+                qWarning("Error while inflating gzip file: %s",
+                        (zlibStream.msg != NULL ? zlibStream.msg : "Unknown error"));
+                destination.chop(zlibStream.avail_out);
+                return destination;
             }
-
-        // If the output buffer still has more room after calling inflate
-        // it means we have to provide more data, so exit the loop here
-        } while (!zlibStream.avail_out);
-
-        if (zlibResult == Z_STREAM_END) {
-            // Make sure there are no more members to process before exiting
-            if (!(zlibStream.avail_in && inflateReset(&zlibStream) == Z_OK))
-                stillMoreWorkToDo = false;
         }
-    }
+
+    // If the output buffer still has more room after calling inflate
+    // it means we have to provide more data, so exit the loop here
+    } while (!zlibStream.avail_out);
 
     // Chop off trailing space in the buffer
     destination.chop(zlibStream.avail_out);
@@ -140,42 +116,29 @@ static QByteArray qt_inflateGZipDataFrom(QIODevice *device)
 QSvgTinyDocument * QSvgTinyDocument::load(const QString &fileName)
 {
     QFile file(fileName);
-    if (!file.open(QFile::ReadOnly)) {
+    if (Q_UNLIKELY(!file.open(QFile::ReadOnly))) {
         qWarning("Cannot open file '%s', because: %s",
                  qPrintable(fileName), qPrintable(file.errorString()));
-        return 0;
+        return nullptr;
     }
 
-    if (fileName.endsWith(QLatin1String(".svgz"), Qt::CaseInsensitive)
-            || fileName.endsWith(QLatin1String(".svg.gz"), Qt::CaseInsensitive)) {
-        return load(qt_inflateGZipDataFrom(&file));
-    }
-
-    QSvgTinyDocument *doc = 0;
-    QSvgHandler handler(&file);
-    if (handler.ok()) {
-        doc = handler.document();
-        doc->m_animationDuration = handler.animationDuration();
-    } else {
-        qWarning("Cannot read file '%s', because: %s (line %d)",
-                 qPrintable(fileName), qPrintable(handler.errorString()), handler.lineNumber());
-    }
-    return doc;
+    return load(file.readAll());
 }
 
 QSvgTinyDocument * QSvgTinyDocument::load(const QByteArray &contents)
 {
     // Check for gzip magic number and inflate if appropriate
     if (contents.startsWith("\x1f\x8b")) {
-        QBuffer buffer;
-        buffer.setData(contents.constData(), contents.size());
-        return load(qt_inflateGZipDataFrom(&buffer));
+        return load(qt_inflateGZipDataFrom(contents));
     }
 
     QSvgHandler handler(contents);
 
-    QSvgTinyDocument *doc = 0;
-    if (handler.ok()) {
+    QSvgTinyDocument *doc = nullptr;
+    if (Q_UNLIKELY(!handler.ok())) {
+        qWarning("Cannot read SVG, because: %s (line %d)",
+                 qPrintable(handler.errorString()), handler.lineNumber());
+    } else {
         doc = handler.document();
         doc->m_animationDuration = handler.animationDuration();
     }
@@ -186,8 +149,11 @@ QSvgTinyDocument * QSvgTinyDocument::load(QXmlStreamReader *contents)
 {
     QSvgHandler handler(contents);
 
-    QSvgTinyDocument *doc = 0;
-    if (handler.ok()) {
+    QSvgTinyDocument *doc = nullptr;
+    if (Q_UNLIKELY(!handler.ok())) {
+        qWarning("Cannot read SVG, because: %s (line %d)",
+                 qPrintable(handler.errorString()), handler.lineNumber());
+    } else {
         doc = handler.document();
         doc->m_animationDuration = handler.animationDuration();
     }

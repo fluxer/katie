@@ -36,33 +36,23 @@
 #include "qstyle.h"
 #include "qthread.h"
 #include "qvarlengtharray.h"
-#include "qstatictext.h"
-#include "qfontengine_p.h"
 #include "qpaintengine_p.h"
 #include "qpainterpath_p.h"
-#include "qtextengine_p.h"
 #include "qwidget_p.h"
 #include "qpaintengine_raster_p.h"
-#include "qstatictext_p.h"
 #include "qstylehelper_p.h"
+#include "qguicommon_p.h"
 
 QT_BEGIN_NAMESPACE
 
 // #define QT_DEBUG_DRAW
 
-void qt_format_text(const QFont &font,
-                    const QRectF &_r, int tf, const QTextOption *option, const QString& str, QRectF *brect,
-                    int tabstops, int* tabarray, int tabarraylen,
-                    QPainter *painter);
+void qt_format_text(const QFont &font, const QRectF &_r, int tf, const QTextOption *option,
+                    const QString& str, QRectF *brect, QPainter *painter);
 static void drawTextItemDecoration(QPainter *painter, const QPointF &pos, const QFontEngine *fe,
                                    QTextCharFormat::UnderlineStyle underlineStyle,
                                    QTextItem::RenderFlags flags, qreal width,
                                    const QTextCharFormat &charFormat);
-// Helper function to calculate left most position, width and flags for decoration drawing
-static void qt_draw_decoration_for_glyphs(QPainter *painter, const glyph_t *glyphArray,
-                                          const QFixedPoint *positions, int glyphCount,
-                                          QFontEngine *fontEngine, const QFont &font,
-                                          const QTextCharFormat &charFormat);
 
 static inline QGradient::CoordinateMode coordinateMode(const QBrush &brush)
 {
@@ -1015,8 +1005,8 @@ void QPainterPrivate::updateState(QPainterState *newState)
 
     \value TextAntialiasing Indicates that the engine should antialias
     text if possible. To forcibly disable antialiasing for text, do not
-    use this hint. Instead, set QFont::NoAntialias on your font's style
-    strategy.
+    use this hint. Instead, set QFont::PreferNoHinting on your font's
+    hint preferences.
 
     \value SmoothPixmapTransform Indicates that the engine should use
     a smooth pixmap transformation algorithm (such as bilinear) rather
@@ -4734,28 +4724,6 @@ void QPainter::drawImage(const QRectF &targetRect, const QImage &image, const QR
 }
 
 /*!
-
-    \fn void QPainter::drawStaticText(const QPoint &topLeftPosition, const QStaticText &staticText)
-    \since 4.7
-    \overload
-
-    Draws the \a staticText at the \a topLeftPosition.
-
-    \note The y-position is used as the top of the font.
-
-*/
-
-/*!
-    \fn void QPainter::drawStaticText(int left, int top, const QStaticText &staticText)
-    \since 4.7
-    \overload
-
-    Draws the \a staticText at coordinates \a left and \a top.
-
-    \note The y-position is used as the top of the font.
-*/
-
-/*!
     \fn void QPainter::drawText(const QPointF &position, const QString &text)
 
     Draws the given \a text with the currently defined text direction,
@@ -4783,171 +4751,19 @@ void QPainter::drawText(const QPointF &p, const QString &str)
     if (!d->engine || str.isEmpty() || pen().style() == Qt::NoPen)
         return;
 
-    QStackTextEngine engine(str, d->state->font);
-    engine.option.setTextDirection(d->state->layoutDirection);
-    engine.itemize();
-    QScriptLine line;
-    line.length = str.length();
-    engine.shapeLine(line);
-
-    int nItems = engine.layoutData->items.size();
-    QVarLengthArray<int> visualOrder(nItems);
-    QVarLengthArray<uchar> levels(nItems);
-    for (int i = 0; i < nItems; ++i)
-        levels[i] = engine.layoutData->items[i].analysis.bidiLevel;
-    QTextEngine::bidiReorder(nItems, levels.data(), visualOrder.data());
-
-    QFixed x = QFixed::fromReal(p.x());
-
-    for (int i = 0; i < nItems; ++i) {
-        int item = visualOrder[i];
-        const QScriptItem &si = engine.layoutData->items.at(item);
-        if (si.analysis.flags >= QScriptAnalysis::TabOrObject) {
-            x += si.width;
-            continue;
-        }
-        QFont f = engine.font(si);
-        QTextItemInt gf(si, &f);
-        gf.glyphs = engine.shapedGlyphs(&si);
-        gf.chars = engine.layoutData->string.unicode() + si.position;
-        gf.num_chars = engine.length(item);
-        if (engine.forceJustification) {
-            for (int j=0; j<gf.glyphs.numGlyphs; ++j)
-                gf.width += gf.glyphs.effectiveAdvance(j);
-        } else {
-            gf.width = si.width;
-        }
-        gf.logClusters = engine.logClusters(&si);
-
-        drawTextItem(QPointF(x.toReal(), p.y()), gf);
-
-        x += gf.width;
-    }
-}
-
-/*!
-    \since 4.7
-
-    Draws the given \a staticText at the given \a topLeftPosition.
-
-    The text will be drawn using the font and the transformation set on the painter. If the
-    font and/or transformation set on the painter are different from the ones used to initialize
-    the layout of the QStaticText, then the layout will have to be recalculated. Use
-    QStaticText::prepare() to initialize \a staticText with the font and transformation with which
-    it will later be drawn.
-
-    If \a topLeftPosition is not the same as when \a staticText was initialized, or when it was
-    last drawn, then there will be a slight overhead when translating the text to its new position.
-
-    \note If the painter's transformation is not affine, then \a staticText will be drawn using
-    regular calls to drawText(), losing any potential for performance improvement.
-
-    \note The y-position is used as the top of the font.
-
-    \sa QStaticText
-*/
-void QPainter::drawStaticText(const QPointF &topLeftPosition, const QStaticText &staticText)
-{
-    Q_D(QPainter);
-    if (!d->engine || staticText.text().isEmpty() || pen().style() == Qt::NoPen)
-        return;
-
-    QStaticTextPrivate *staticText_d =
-            const_cast<QStaticTextPrivate *>(QStaticTextPrivate::get(&staticText));
-
-    if (font() != staticText_d->font) {
-        staticText_d->font = font();
-        staticText_d->needsRelayout = true;
+    bool toggleantialiasing = (!(renderHints() & QPainter::Antialiasing));
+    if (toggleantialiasing) {
+        setRenderHint(QPainter::Antialiasing, true);
     }
 
-    // If we don't have an extended paint engine, or if the painter is projected,
-    // we go through standard code path
-    if (d->extended == nullptr || !d->state->matrix.isAffine()) {
-        staticText_d->paintText(topLeftPosition, this);
-        return;
+    QPainterPath textpath;
+    textpath.setFillRule(Qt::WindingFill);
+    textpath.addText(p, d->state->font, str);
+    fillPath(textpath, d->state->pen.brush());
+
+    if (toggleantialiasing) {
+        setRenderHint(QPainter::Antialiasing, false);
     }
-
-    bool supportsTransformations = d->extended->supportsTransformations(staticText_d->font.pixelSize(),
-                                                                        d->state->matrix);
-    if (supportsTransformations && !staticText_d->untransformedCoordinates) {
-        staticText_d->untransformedCoordinates = true;
-        staticText_d->needsRelayout = true;
-    } else if (!supportsTransformations && staticText_d->untransformedCoordinates) {
-        staticText_d->untransformedCoordinates = false;
-        staticText_d->needsRelayout = true;
-    }
-
-    // Don't recalculate entire layout because of translation, rather add the dx and dy
-    // into the position to move each text item the correct distance.
-    QPointF transformedPosition = topLeftPosition;
-    if (!staticText_d->untransformedCoordinates)
-        transformedPosition = transformedPosition * d->state->matrix;
-    QTransform oldMatrix;
-
-    // The translation has been applied to transformedPosition. Remove translation
-    // component from matrix.
-    if (d->state->matrix.isTranslating() && !staticText_d->untransformedCoordinates) {
-        qreal m11 = d->state->matrix.m11();
-        qreal m12 = d->state->matrix.m12();
-        qreal m13 = d->state->matrix.m13();
-        qreal m21 = d->state->matrix.m21();
-        qreal m22 = d->state->matrix.m22();
-        qreal m23 = d->state->matrix.m23();
-        qreal m33 = d->state->matrix.m33();
-
-        oldMatrix = d->state->matrix;
-        d->state->matrix.setMatrix(m11, m12, m13,
-                                   m21, m22, m23,
-                                   0.0, 0.0, m33);
-    }
-
-    // If the transform is not identical to the text transform,
-    // we have to relayout the text (for other transformations than plain translation)
-    bool staticTextNeedsReinit = staticText_d->needsRelayout;
-    if (!staticText_d->untransformedCoordinates && staticText_d->matrix != d->state->matrix) {
-        staticText_d->matrix = d->state->matrix;
-        staticTextNeedsReinit = true;
-    }
-
-    // Recreate the layout of the static text because the matrix or font has changed
-    if (staticTextNeedsReinit)
-        staticText_d->init();
-
-    if (transformedPosition != staticText_d->position) { // Translate to actual position
-        QFixed fx = QFixed::fromReal(transformedPosition.x());
-        QFixed fy = QFixed::fromReal(transformedPosition.y());
-        QFixed oldX = QFixed::fromReal(staticText_d->position.x());
-        QFixed oldY = QFixed::fromReal(staticText_d->position.y());
-        for (int item=0; item<staticText_d->itemCount;++item) {
-            QStaticTextItem *textItem = staticText_d->items + item;
-            for (int i=0; i<textItem->numGlyphs; ++i) {
-                textItem->glyphPositions[i].x += fx - oldX;
-                textItem->glyphPositions[i].y += fy - oldY;
-            }
-        }
-
-        staticText_d->position = transformedPosition;
-    }
-
-    QPen oldPen = d->state->pen;
-    QColor currentColor = oldPen.color();
-    for (int i=0; i<staticText_d->itemCount; ++i) {
-        QStaticTextItem *item = staticText_d->items + i;
-        if (item->color.isValid() && currentColor != item->color) {
-            setPen(item->color);
-            currentColor = item->color;
-        }
-        d->extended->drawStaticTextItem(item);
-
-        qt_draw_decoration_for_glyphs(this, item->glyphs, item->glyphPositions,
-                                      item->numGlyphs, item->fontEngine(), staticText_d->font,
-                                      QTextCharFormat());
-    }
-    if (currentColor != oldPen.color())
-        setPen(oldPen);
-
-    if (!staticText_d->untransformedCoordinates && oldMatrix.isTranslating())
-        d->state->matrix = oldMatrix;
 }
 
 void QPainter::drawText(const QRect &r, int flags, const QString &str, QRect *br)
@@ -4966,7 +4782,7 @@ void QPainter::drawText(const QRect &r, int flags, const QString &str, QRect *br
         d->updateState(d->state);
 
     QRectF bounds;
-    qt_format_text(d->state->font, r, flags, 0, str, br ? &bounds : 0, 0, 0, 0, this);
+    qt_format_text(d->state->font, r, flags, 0, str, br ? &bounds : nullptr, this);
     if (br)
         *br = bounds.toAlignedRect();
 }
@@ -5013,7 +4829,6 @@ void QPainter::drawText(const QRect &r, int flags, const QString &str, QRect *br
     \o Qt::AlignCenter
     \o Qt::TextDontClip
     \o Qt::TextSingleLine
-    \o Qt::TextExpandTabs
     \o Qt::TextShowMnemonic
     \o Qt::TextWordWrap
     \o Qt::TextIncludeTrailingSpaces
@@ -5040,7 +4855,7 @@ void QPainter::drawText(const QRectF &r, int flags, const QString &str, QRectF *
     if (!d->extended)
         d->updateState(d->state);
 
-    qt_format_text(d->state->font, r, flags, 0, str, br, 0, 0, 0, this);
+    qt_format_text(d->state->font, r, flags, 0, str, br, this);
 }
 
 /*!
@@ -5093,7 +4908,6 @@ void QPainter::drawText(const QRectF &r, int flags, const QString &str, QRectF *
     \o Qt::AlignVCenter
     \o Qt::AlignCenter
     \o Qt::TextSingleLine
-    \o Qt::TextExpandTabs
     \o Qt::TextShowMnemonic
     \o Qt::TextWordWrap
     \endlist
@@ -5132,7 +4946,7 @@ void QPainter::drawText(const QRectF &r, const QString &text, const QTextOption 
     if (!d->extended)
         d->updateState(d->state);
 
-    qt_format_text(d->state->font, r, 0, &o, text, 0, 0, 0, 0, this);
+    qt_format_text(d->state->font, r, 0, &o, text, nullptr, this);
 }
 
 /*!
@@ -5226,8 +5040,7 @@ static void drawTextItemDecoration(QPainter *painter, const QPointF &pos, const 
                                    QTextItem::RenderFlags flags, qreal width,
                                    const QTextCharFormat &charFormat)
 {
-    if (underlineStyle == QTextCharFormat::NoUnderline
-        && !(flags & (QTextItem::StrikeOut | QTextItem::Overline)))
+    if (underlineStyle == QTextCharFormat::NoUnderline)
         return;
 
     const QPen oldPen = painter->pen();
@@ -5237,8 +5050,6 @@ static void drawTextItemDecoration(QPainter *painter, const QPointF &pos, const 
     pen.setStyle(Qt::SolidLine);
     pen.setWidthF(fe->lineThickness().toReal());
     pen.setCapStyle(Qt::FlatCap);
-
-    QLineF line(pos.x(), pos.y(), pos.x() + qFloor(width), pos.y());
 
     const qreal underlineOffset = fe->underlinePosition().toReal();
     // deliberately ceil the offset to avoid the underline coming too close to
@@ -5265,7 +5076,7 @@ static void drawTextItemDecoration(QPainter *painter, const QPointF &pos, const 
         painter->fillRect(pos.x(), 0, qCeil(width), qMin(wave.height(), descent), wave);
         painter->restore();
     } else if (underlineStyle != QTextCharFormat::NoUnderline) {
-        QLineF underLine(line.x1(), underlinePos, line.x2(), underlinePos);
+        QLineF underLine(pos.x(), underlinePos, pos.x() + qFloor(width), underlinePos);
 
         QColor uc = charFormat.underlineColor();
         if (uc.isValid())
@@ -5275,70 +5086,6 @@ static void drawTextItemDecoration(QPainter *painter, const QPointF &pos, const 
         painter->setPen(pen);
         painter->drawLine(underLine);
     }
-
-    pen.setStyle(Qt::SolidLine);
-    pen.setColor(oldPen.color());
-
-    if (flags & QTextItem::StrikeOut) {
-        QLineF strikeOutLine = line;
-        strikeOutLine.translate(0., - fe->ascent().toReal() / 3.);
-        painter->setPen(pen);
-        painter->drawLine(strikeOutLine);
-    }
-
-    if (flags & QTextItem::Overline) {
-        QLineF overLine = line;
-        overLine.translate(0., - fe->ascent().toReal());
-        painter->setPen(pen);
-        painter->drawLine(overLine);
-    }
-
-    painter->setPen(oldPen);
-    painter->setBrush(oldBrush);
-}
-
-static void qt_draw_decoration_for_glyphs(QPainter *painter, const glyph_t *glyphArray,
-                                          const QFixedPoint *positions, int glyphCount,
-                                          QFontEngine *fontEngine, const QFont &font,
-                                          const QTextCharFormat &charFormat)
-{
-    if (!(font.underline() || font.strikeOut() || font.overline()))
-        return;
-
-    QFixed leftMost;
-    QFixed rightMost;
-    QFixed baseLine;
-    for (int i=0; i<glyphCount; ++i) {
-        glyph_metrics_t gm = fontEngine->boundingBox(glyphArray[i]);
-        if (i == 0 || leftMost > positions[i].x)
-            leftMost = positions[i].x;
-
-        // We don't support glyphs that do not share a common baseline. If this turns out to
-        // be a relevant use case, then we need to find clusters of glyphs that share a baseline
-        // and do a drawTextItemDecorations call per cluster.
-        if (i == 0 || baseLine < positions[i].y)
-            baseLine = positions[i].y;
-
-        // We use the advance rather than the actual bounds to match the algorithm in drawText()
-        if (i == 0 || rightMost < positions[i].x + gm.xoff)
-            rightMost = positions[i].x + gm.xoff;
-    }
-
-    QFixed width = rightMost - leftMost;
-    QTextItem::RenderFlags flags = 0;
-
-    if (font.underline())
-        flags |= QTextItem::Underline;
-    if (font.overline())
-        flags |= QTextItem::Overline;
-    if (font.strikeOut())
-        flags |= QTextItem::StrikeOut;
-
-    drawTextItemDecoration(painter, QPointF(leftMost.toReal(), baseLine.toReal()),
-                           fontEngine,
-                           font.underline() ? QTextCharFormat::SingleUnderline
-                                            : QTextCharFormat::NoUnderline, flags,
-                           width.toReal(), charFormat);
 }
 
 void QPainter::drawTextItem(const QPointF &p, const QTextItem &_ti)
@@ -5448,7 +5195,6 @@ void QPainter::drawTextItem(const QPointF &p, const QTextItem &_ti)
          \o Qt::AlignVCenter
          \o Qt::AlignCenter
          \o Qt::TextSingleLine
-         \o Qt::TextExpandTabs
          \o Qt::TextShowMnemonic
          \o Qt::TextWordWrap
          \o Qt::TextIncludeTrailingSpaces
@@ -5521,7 +5267,7 @@ QRectF QPainter::boundingRect(const QRectF &r, const QString &text, const QTextO
         return QRectF(r.x(),r.y(), 0,0);
 
     QRectF br;
-    qt_format_text(d->state->font, r, Qt::TextDontPrint, &o, text, &br, 0, 0, 0, this);
+    qt_format_text(d->state->font, r, Qt::TextDontPrint, &o, text, &br, this);
     return br;
 }
 
@@ -6139,39 +5885,16 @@ void QPainter::setViewTransformEnabled(bool enable)
     d->updateMatrix();
 }
 
-
-struct QPaintDeviceRedirection
-{
-    QPaintDeviceRedirection() : device(0), replacement(0), internalWidgetRedirectionIndex(-1) {}
-    QPaintDeviceRedirection(const QPaintDevice *device, QPaintDevice *replacement,
-                            const QPoint& offset, int internalWidgetRedirectionIndex)
-        : device(device), replacement(replacement), offset(offset),
-          internalWidgetRedirectionIndex(internalWidgetRedirectionIndex) { }
-
-    const QPaintDevice *device;
-    QPaintDevice *replacement;
-    QPoint offset;
-    int internalWidgetRedirectionIndex;
-
-    bool operator==(const QPaintDevice *pdev) const { return device == pdev; }
-};
-
 void qt_format_text(const QFont &fnt, const QRectF &_r,
-                    int tf, const QString& str, QRectF *brect,
-                    int tabstops, int *ta, int tabarraylen)
+                    int tf, const QString& str, QRectF *brect)
 {
-    qt_format_text(fnt, _r,
-                    tf, 0, str, brect,
-                    tabstops, ta, tabarraylen,
-                    nullptr);
+    qt_format_text(fnt, _r, tf, nullptr, str, brect, nullptr);
 }
 void qt_format_text(const QFont &fnt, const QRectF &_r,
                     int tf, const QTextOption *option, const QString& str, QRectF *brect,
-                    int tabstops, int *ta, int tabarraylen,
                     QPainter *painter)
 {
-
-    Q_ASSERT( !((tf & ~Qt::TextDontPrint)!=0 && option!=0) ); // we either have an option or flags
+    Q_ASSERT(!((tf & ~Qt::TextDontPrint) != 0 && option != 0) ); // we either have an option or flags
 
     if (option) {
         tf |= option->alignment();
@@ -6180,9 +5903,6 @@ void qt_format_text(const QFont &fnt, const QRectF &_r,
 
         if (option->flags() & QTextOption::IncludeTrailingSpaces)
             tf |= Qt::TextIncludeTrailingSpaces;
-
-        if (option->tabStop() >= 0 || !option->tabArray().isEmpty())
-            tf |= Qt::TextExpandTabs;
     }
 
     // we need to copy r here to protect against the case (&r == brect).
@@ -6208,11 +5928,6 @@ void qt_format_text(const QFont &fnt, const QRectF &_r,
 
     tf = QStyle::visualAlignment(layout_direction, QFlag(tf));
 
-    bool isRightToLeft = layout_direction == Qt::RightToLeft;
-    bool expandtabs = ((tf & Qt::TextExpandTabs) &&
-                        (((tf & Qt::AlignLeft) && !isRightToLeft) ||
-                          ((tf & Qt::AlignRight) && isRightToLeft)));
-
     if (!painter)
         tf |= Qt::TextDontPrint;
 
@@ -6225,23 +5940,18 @@ void qt_format_text(const QFont &fnt, const QRectF &_r,
     int offset = 0;
 start_lengthVariant:
     bool hasMoreLengthVariants = false;
-    // compatible behaviour to the old implementation. Replace
-    // tabs by spaces
     int old_offset = offset;
     for (; offset < text.length(); offset++) {
         QChar chr = text.at(offset);
-        if (chr == QLatin1Char('\r') || (singleline && chr == QLatin1Char('\n'))) {
+        // replace tabs with space for compatibility
+        if (chr == QLatin1Char('\t')) {
+            text[offset] = QLatin1Char(' ');
+        } else if (chr == QLatin1Char('\r') || (singleline && chr == QLatin1Char('\n'))) {
             text[offset] = QLatin1Char(' ');
         } else if (chr == QLatin1Char('\n')) {
             text[offset] = QChar::LineSeparator;
         } else if (chr == QLatin1Char('&')) {
             ++maxUnderlines;
-        } else if (chr == QLatin1Char('\t')) {
-            if (!expandtabs) {
-                text[offset] = QLatin1Char(' ');
-            } else if (!tabarraylen && !tabstops) {
-                tabstops = qRound(fm.width(QLatin1Char('x'))*8);
-            }
         } else if (chr == QChar(ushort(0x9c))) {
             // string with multiple length variants
             hasMoreLengthVariants = true;
@@ -6282,35 +5992,35 @@ start_lengthVariant:
     qreal width = 0;
 
     QString finalText = text.mid(old_offset, length);
-    QStackTextEngine engine(finalText, fnt);
+
+    QTextOption textoption;
     if (option) {
-        engine.option = *option;
+        textoption = *option;
     }
 
-    if (engine.option.tabStop() < 0 && tabstops > 0)
-        engine.option.setTabStop(tabstops);
-
-    if (engine.option.tabs().isEmpty() && ta) {
-        QList<qreal> tabs;
-        for (int i = 0; i < tabarraylen; i++)
-            tabs.append(qreal(ta[i]));
-        engine.option.setTabArray(tabs);
-    }
-
-    engine.option.setTextDirection(layout_direction);
+    textoption.setTextDirection(layout_direction);
     if (tf & Qt::AlignJustify)
-        engine.option.setAlignment(Qt::AlignJustify);
+        textoption.setAlignment(Qt::AlignJustify);
     else
-        engine.option.setAlignment(Qt::AlignLeft); // do not do alignment twice
+        textoption.setAlignment(Qt::AlignLeft); // do not do alignment twice
 
     if (!option && (tf & Qt::TextWrapAnywhere))
-        engine.option.setWrapMode(QTextOption::WrapAnywhere);
+        textoption.setWrapMode(QTextOption::WrapAnywhere);
 
-    if (tf & Qt::TextJustificationForced)
-        engine.forceJustification = true;
-    QTextLayout textLayout(&engine);
+    QList<QTextLayout::FormatRange> formatoverrides;
+    for (int i = 0; i < underlinePositions.size(); i++) {
+        QTextLayout::FormatRange formatoverride;
+        formatoverride.start = underlinePositions[i];
+        formatoverride.length = 1;
+        formatoverride.format.setFontUnderline(true);
+        formatoverrides.append(formatoverride);
+    }
+
+    QTextLayout textLayout(finalText, fnt);
     textLayout.setCacheEnabled(true);
-    textLayout.engine()->underlinePositions = underlinePositions.data();
+    textLayout.setTextOption(textoption);
+    textLayout.setAdditionalFormats(formatoverrides);
+    textLayout.setFlags(tf);
 
     if (finalText.isEmpty()) {
         height = fm.height();
@@ -6318,11 +6028,10 @@ start_lengthVariant:
         tf |= Qt::TextDontPrint;
     } else {
         qreal lineWidth = 0x01000000;
-        if (wordwrap || (tf & Qt::TextJustificationForced))
+        if (wordwrap)
             lineWidth = qMax<qreal>(0, r.width());
         if(!wordwrap)
             tf |= Qt::TextIncludeTrailingSpaces;
-        textLayout.engine()->ignoreBidi = bool(tf & Qt::TextDontPrint);
         textLayout.beginLayout();
 
         qreal leading = fm.leading();
@@ -6399,9 +6108,7 @@ start_lengthVariant:
             qreal advance = line.horizontalAdvance();
             xoff = 0;
             if (tf & Qt::AlignRight) {
-                QTextEngine *eng = textLayout.engine();
-                xoff = r.width() - advance -
-                    eng->leadingSpaceWidth(eng->lines[line.lineNumber()]).toReal();
+                xoff = r.width() - advance;
             }
             else if (tf & Qt::AlignHCenter)
                 xoff = (r.width() - advance) / 2;

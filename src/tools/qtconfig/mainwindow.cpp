@@ -55,32 +55,38 @@ QT_BEGIN_NAMESPACE
 static const char *appearance_text = QT_TRANSLATE_NOOP("MainWindow",
 "<p><b><font size+=2>Appearance</font></b></p>"
 "<hr>"
-"<p>Use this tab to customize the appearance of your Qt applications.</p>"
+"<p>Use this tab to customize the appearance of your Katie applications.</p>"
 "<p>You can select the default GUI Style from the drop down list and "
 "customize the colors.</p>"
 "<p>Any GUI Style plugins in your plugin path will automatically be added "
-"to the list of built-in Qt styles. (See the Library Paths tab for "
+"to the list of built-in Katie styles. (See the Library Paths tab for "
 "information on adding new plugin paths.)</p>"
-"<p>When you choose 3-D Effects and Window Background colors, the Qt "
+"<p>When you choose 3-D Effects and Window Background colors, the Katie "
 "Configuration program will automatically generate a palette for you. "
 "To customize colors further, press the Tune Palette button to open "
-"the advanced palette editor."
+"the advanced palette editor.</p>"
 "<p>The Preview Window shows what the selected Style and colors look "
-"like.");
+"like.</p>"
+);
 
 static const char *font_text = QT_TRANSLATE_NOOP("MainWindow",
 "<p><b><font size+=2>Fonts</font></b></p>"
 "<hr>"
-"<p>Use this tab to select the default font for your Qt applications. "
+"<p>Use this tab to select the default font for your Katie applications. "
 "The selected font is shown (initially as 'Sample Text') in the line "
-"edit below the Family, "
-"Style and Point Size drop down lists.</p>.");
+"edit below the Family, Style and Point Size drop down lists.</p>"
+"<p>You can specify if Katie should try to embed fonts into its generated output "
+"when printing. If you enable font embedding, the resulting postscript will be "
+"more portable and will more accurately reflect the "
+"visual output on the screen; however the resulting postscript file "
+"size will be bigger.</p>"
+);
 
 static const char *interface_text = QT_TRANSLATE_NOOP("MainWindow",
 "<p><b><font size+=2>Interface</font></b></p>"
 "<hr>"
-"<p>Use this tab to customize the feel of your Qt applications.</p>"
-"<p>If the Resolve Symlinks checkbox is checked Qt will follow symlinks "
+"<p>Use this tab to customize the feel of your Katie applications.</p>"
+"<p>If the Resolve Symlinks checkbox is checked Katie will follow symlinks "
 "when handling URLs. For example, in the file dialog, if this setting is turned "
 "on and /usr/tmp is a symlink to /var/tmp, entering the /usr/tmp directory "
 "will cause the file dialog to change to /var/tmp.  With this setting turned "
@@ -88,21 +94,9 @@ static const char *interface_text = QT_TRANSLATE_NOOP("MainWindow",
 "<p>The Global Strut setting is useful for people who require a "
 "minimum size for all widgets (e.g. when using a touch panel or for users "
 "who are visually impaired).  Leaving the Global Strut width and height "
-"at 0 will disable the Global Strut feature.");
+"at 0 will disable the Global Strut feature.</p>"
+);
 // ### What does the 'Enhanced support for languages written R2L do?
-
-static const char *printer_text = QT_TRANSLATE_NOOP("MainWindow",
-"<p><b><font size+=2>Printer</font></b></p>"
-"<hr>"
-"<p>Use this tab to configure the way Qt generates output for the printer."
-"You can specify if Qt should try to embed fonts into its generated output."
-"If you enable font embedding, the resulting postscript will be more "
-"portable and will more accurately reflect the "
-"visual output on the screen; however the resulting postscript file "
-"size will be bigger."
-"<p>When using font embedding you can select additional directories where "
-"Qt should search for embeddable font files.  By default, the X "
-"server font path is used.");
 
 QPalette::ColorGroup MainWindow::groupFromIndex(int item)
 {
@@ -138,12 +132,8 @@ MainWindow::MainWindow()
     statusBar();
 
     // signals and slots connections
-    connect(ui->fontPathLineEdit, SIGNAL(returnPressed()), SLOT(addFontpath()));
-    connect(ui->addFontPathButton, SIGNAL(clicked()), SLOT(addFontpath()));
-    connect(ui->browseFontPathButton, SIGNAL(clicked()), SLOT(browseFontpath()));
     connect(ui->fontStyleCombo, SIGNAL(activated(int)), SLOT(buildFont()));
     connect(ui->pointSizeCombo, SIGNAL(activated(int)), SLOT(buildFont()));
-    connect(ui->downFontpathButton, SIGNAL(clicked()), SLOT(downFontpath()));
     connect(ui->fontFamilyCombo, SIGNAL(activated(QString)), SLOT(familySelected(QString)));
     connect(ui->fileExitAction, SIGNAL(triggered()), SLOT(fileExit()));
     connect(ui->fileSaveAction, SIGNAL(triggered()), SLOT(fileSave()));
@@ -151,7 +141,6 @@ MainWindow::MainWindow()
     connect(ui->helpAboutQtAction, SIGNAL(triggered()), SLOT(helpAboutQt()));
     connect(ui->mainTabWidget, SIGNAL(currentChanged(int)), SLOT(pageChanged(int)));
     connect(ui->paletteCombo, SIGNAL(activated(int)), SLOT(paletteSelected(int)));
-    connect(ui->removeFontpathButton, SIGNAL(clicked()), SLOT(removeFontpath()));
     connect(ui->toolBoxEffectCombo, SIGNAL(activated(int)), SLOT(somethingModified()));
     connect(ui->doubleClickIntervalSpinBox, SIGNAL(valueChanged(int)), SLOT(somethingModified()));
     connect(ui->cursorFlashTimeSpinBox, SIGNAL(valueChanged(int)), SLOT(somethingModified()));
@@ -161,13 +150,12 @@ MainWindow::MainWindow()
     connect(ui->toolTipEffectCombo, SIGNAL(activated(int)), SLOT(somethingModified()));
     connect(ui->strutWidthSpinBox, SIGNAL(valueChanged(int)), SLOT(somethingModified()));
     connect(ui->strutHeightSpinBox, SIGNAL(valueChanged(int)), SLOT(somethingModified()));
-    connect(ui->effectsCheckBox, SIGNAL(toggled(bool)), SLOT(somethingModified()));
+    connect(ui->effectsCheckBox, SIGNAL(toggled(bool)), SLOT(effectsToggled(bool)));
     connect(ui->resolveLinksCheckBox, SIGNAL(toggled(bool)), SLOT(somethingModified()));
     connect(ui->fontEmbeddingCheckBox, SIGNAL(clicked()), SLOT(somethingModified()));
     connect(ui->rtlExtensionsCheckBox, SIGNAL(toggled(bool)), SLOT(somethingModified()));
     connect(ui->guiStyleCombo, SIGNAL(activated(QString)), SLOT(styleSelected(QString)));
     connect(ui->tunePaletteButton, SIGNAL(clicked()), SLOT(tunePalette()));
-    connect(ui->upFontpathButton, SIGNAL(clicked()), SLOT(upFontpath()));
 
     modified = true;
     desktopThemeName = tr("Desktop Settings (Default)");
@@ -300,8 +288,6 @@ MainWindow::MainWindow()
 
     ui->fontEmbeddingCheckBox->setChecked(settings.value(QLatin1String("Qt/embedFonts"), true)
                                           .toBool());
-    fontpaths = settings.value(QLatin1String("Qt/fontPath")).toStringList();
-    ui->fontpathListBox->insertItems(0, fontpaths);
 
     ui->helpView->setText(tr(appearance_text));
 
@@ -354,7 +340,6 @@ void MainWindow::fileSave()
         settings.setValue(QLatin1String("Qt/Palette/inactive"), inactcg);
         settings.setValue(QLatin1String("Qt/Palette/disabled"), discg);
 
-        settings.setValue(QLatin1String("Qt/fontPath"), fontpaths);
         settings.setValue(QLatin1String("Qt/embedFonts"), ui->fontEmbeddingCheckBox->isChecked());
         settings.setValue(QLatin1String("Qt/style"),
                           overrideDesktopSettings ? ui->guiStyleCombo->currentText() : QString());
@@ -514,84 +499,6 @@ void MainWindow::buildFont()
     setModified(true);
 }
 
-void MainWindow::removeFontpath()
-{
-    if (!ui->fontpathListBox->currentItem())
-        return;
-
-    int row = ui->fontpathListBox->currentRow();
-    fontpaths.removeAt(row);
-    ui->fontpathListBox->clear();
-    ui->fontpathListBox->insertItems(0, fontpaths);
-    if (row > ui->fontpathListBox->count())
-        row = ui->fontpathListBox->count() - 1;
-    ui->fontpathListBox->setCurrentRow(row);
-    setModified(true);
-}
-
-void MainWindow::addFontpath()
-{
-    if (ui->fontPathLineEdit->text().isEmpty())
-        return;
-
-    if (!ui->fontpathListBox->currentItem()) {
-        fontpaths.append(ui->fontPathLineEdit->text());
-        ui->fontpathListBox->clear();
-        ui->fontpathListBox->insertItems(0, fontpaths);
-        setModified(true);
-
-        return;
-    }
-
-    int row = ui->fontpathListBox->currentRow();
-    fontpaths.insert(row + 1, ui->fontPathLineEdit->text());
-    ui->fontpathListBox->clear();
-    ui->fontpathListBox->insertItems(0, fontpaths);
-    ui->fontpathListBox->setCurrentRow(row);
-    setModified(true);
-}
-
-void MainWindow::downFontpath()
-{
-    if (!ui->fontpathListBox->currentItem()
-        || ui->fontpathListBox->currentRow() >= (ui->fontpathListBox->count() - 1)) {
-        return;
-    }
-
-    int row = ui->fontpathListBox->currentRow();
-    QString fam = fontpaths.at(row);
-    fontpaths.removeAt(row);
-    fontpaths.insert(row + 1, fam);
-    ui->fontpathListBox->clear();
-    ui->fontpathListBox->insertItems(0, fontpaths);
-    ui->fontpathListBox->setCurrentRow(row + 1);
-    setModified(true);
-}
-
-void MainWindow::upFontpath()
-{
-    if (!ui->fontpathListBox->currentItem() || ui->fontpathListBox->currentRow() < 1)
-        return;
-
-    int row = ui->fontpathListBox->currentRow();
-    QString fam = fontpaths.at(row);
-    fontpaths.removeAt(row);
-    fontpaths.insert(row - 1, fam);
-    ui->fontpathListBox->clear();
-    ui->fontpathListBox->insertItems(0, fontpaths);
-    ui->fontpathListBox->setCurrentRow(row - 1);
-    setModified(true);
-}
-
-void MainWindow::browseFontpath()
-{
-    QString dirname = QFileDialog::getExistingDirectory(this, tr("Select a Directory"));
-    if (dirname.isNull())
-        return;
-
-   ui->fontPathLineEdit->setText(dirname);
-}
-
 void MainWindow::somethingModified()
 {
     setModified(true);
@@ -625,8 +532,12 @@ void MainWindow::pageChanged(int pageNumber)
         ui->helpView->setText(tr(appearance_text));
     else if (page == ui->fontsTab)
         ui->helpView->setText(tr(font_text));
-    else if (page == ui->printerTab)
-        ui->helpView->setText(tr(printer_text));
+}
+
+void MainWindow::effectsToggled(bool toggled)
+{
+    ui->effectsFrame->setEnabled(toggled);
+    setModified(true);
 }
 
 void MainWindow::closeEvent(QCloseEvent *e)

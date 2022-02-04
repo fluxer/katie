@@ -19,100 +19,14 @@
 **
 ****************************************************************************/
 
-#define QT_FATAL_ASSERT
-
-#include "qplatformdefs.h"
-
 #include "qfont.h"
 #include "qapplication.h"
-#include "qfontinfo.h"
 #include "qfontdatabase.h"
-#include "qfontmetrics.h"
-#include "qpaintdevice.h"
-#include "qtextcodec.h"
-#include "qunicodetables_p.h"
 #include "qfontengine_p.h"
 #include "qfontengine_ft_p.h"
-#include "qtextengine_p.h"
-#include "qt_x11_p.h"
 #include "qx11info_x11.h"
 
-#include <time.h>
-#include <stdlib.h>
-#include <ctype.h>
-
 QT_BEGIN_NAMESPACE
-
-double qt_pixelSize(double pointSize, int dpi)
-{
-    if (pointSize < 0)
-        return -1.;
-    if (dpi == 75) // the stupid 75 dpi setting on X11
-        dpi = 72;
-    return (pointSize * dpi) /72.;
-}
-
-double qt_pointSize(double pixelSize, int dpi)
-{
-    if (pixelSize < 0)
-        return -1.;
-    if (dpi == 75) // the stupid 75 dpi setting on X11
-        dpi = 72;
-    return pixelSize * 72. / ((double) dpi);
-}
-
-int QFontPrivate::defaultEncodingID = -1;
-
-void QFont::initialize()
-{
-    extern int qt_encoding_id_for_mib(int mib); // from qfontdatabase_x11.cpp
-    // determine the default encoding id using the locale, otherwise
-    int mib = QTextCodec::codecForLocale()->mibEnum();
-
-    // for asian locales, use the mib for the font codec instead of the locale codec
-    switch (mib) {
-    case 38: // eucKR
-        mib = 36;
-        break;
-
-    case 2025: // GB2312
-        mib = 57;
-        break;
-
-    case 113: // GBK
-        mib = -113;
-        break;
-
-    case 114: // GB18030
-        mib = -114;
-        break;
-
-    case 2026: // Big5
-        mib = -2026;
-        break;
-
-    case 2101: // Big5-HKSCS
-        mib = -2101;
-        break;
-
-    case 16: // JIS7
-        mib = 15;
-        break;
-
-    case 17: // SJIS
-    case 18: // eucJP
-        mib = 63;
-        break;
-    }
-
-    // get the default encoding id for the locale encoding...
-    QFontPrivate::defaultEncodingID = qt_encoding_id_for_mib(mib);
-}
-
-void QFont::cleanup()
-{
-    QFontCache::cleanup();
-}
 
 /*!
   \internal
@@ -154,70 +68,9 @@ FT_Face QFont::freetypeFace() const
     return 0;
 }
 
-QString QFont::lastResortFamily() const
+QString QFont::lastResortFamily()
 {
-    return QString::fromLatin1("Helvetica");
-}
-
-QString QFont::defaultFamily() const
-{
-    return QString::fromLatin1("Helvetica");
-}
-
-static const char* LastResortFontsTbl[] = {
-    "-*-helvetica-medium-r-*-*-*-120-*-*-*-*-*-*",
-    "-*-courier-medium-r-*-*-*-120-*-*-*-*-*-*",
-    "-*-times-medium-r-*-*-*-120-*-*-*-*-*-*",
-    "-*-lucida-medium-r-*-*-*-120-*-*-*-*-*-*",
-    "-*-helvetica-*-*-*-*-*-120-*-*-*-*-*-*",
-    "-*-courier-*-*-*-*-*-120-*-*-*-*-*-*",
-    "-*-times-*-*-*-*-*-120-*-*-*-*-*-*",
-    "-*-lucida-*-*-*-*-*-120-*-*-*-*-*-*",
-    "-*-helvetica-*-*-*-*-*-*-*-*-*-*-*-*",
-    "-*-courier-*-*-*-*-*-*-*-*-*-*-*-*",
-    "-*-times-*-*-*-*-*-*-*-*-*-*-*-*",
-    "-*-lucida-*-*-*-*-*-*-*-*-*-*-*-*",
-    "-*-fixed-*-*-*-*-*-*-*-*-*-*-*-*",
-    "6x13",
-    "7x13",
-    "8x13",
-    "9x15",
-    "fixed",
-};
-static const qint16 LastResortFontsTblSize = 18;
-
-/*
-  Returns a last resort raw font name for the font matching algorithm.
-  This is used if even the last resort family is not available. It
-  returns \e something, almost no matter what.  The current
-  implementation tries a wide variety of common fonts, returning the
-  first one it finds. The implementation may change at any time.
-*/
-QString QFont::lastResortFont() const
-{
-    static QString last;
-
-    // already found
-    if (!last.isNull())
-        return last;
-
-    for (qint16 i = 0; i < LastResortFontsTblSize; i++) {
-        int count;
-        char **fontNames = XListFonts(QX11Info::display(), LastResortFontsTbl[i], SHRT_MAX, &count);
-        if (fontNames) {
-            XFreeFontNames(fontNames);
-        }
-
-        if (count != 0) {
-            last = QString::fromLatin1(LastResortFontsTbl[i]);
-            return last;
-        }
-    }
-
-#if defined(CHECK_NULL)
-    qFatal("QFontPrivate::lastResortFont: Cannot find any reasonable font");
-#endif
-    return last;
+    return QString::fromLatin1("FreeSans");
 }
 
 QT_END_NAMESPACE

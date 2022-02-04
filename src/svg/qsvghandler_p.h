@@ -71,7 +71,6 @@ public:
         LT_OTHER
     };
 
-    QSvgHandler(QIODevice *device);
     QSvgHandler(const QByteArray &data);
     QSvgHandler(QXmlStreamReader *const data);
     ~QSvgHandler();

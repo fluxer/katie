@@ -59,10 +59,8 @@ public:
     QCursor(const QCursor &cursor);
     ~QCursor();
     QCursor &operator=(const QCursor &other);
-#ifdef Q_COMPILER_RVALUE_REFS
     inline QCursor &operator=(QCursor &&other)
     { qSwap(d, other.d); return *this; }
-#endif
     operator QVariant() const;
 
     Qt::CursorShape shape() const;

@@ -112,36 +112,35 @@ private:
     Q_DISABLE_COPY(QVectorPathConverter)
 };
 
-class QPainterPathData : public QPainterPathPrivate
+class QPainterPathPrivate
 {
 public:
-    QPainterPathData() :
+    QPainterPathPrivate() :
+        ref(1),
         cStart(0),
         fillRule(Qt::OddEvenFill),
+        require_moveTo(false),
         dirtyBounds(false),
         dirtyControlBounds(false),
+        convex(false),
         pathConverter(0)
     {
-        ref = 1;
-        require_moveTo = false;
-        convex = false;
     }
 
-    QPainterPathData(const QPainterPathData &other) :
-        QPainterPathPrivate(), cStart(other.cStart), fillRule(other.fillRule),
+    QPainterPathPrivate(const QPainterPathPrivate &other) :
+        ref(1), elements(other.elements),
+        cStart(other.cStart), fillRule(other.fillRule),
         bounds(other.bounds),
         controlBounds(other.controlBounds),
+        require_moveTo(false),
         dirtyBounds(other.dirtyBounds),
         dirtyControlBounds(other.dirtyControlBounds),
         convex(other.convex),
         pathConverter(0)
     {
-        ref = 1;
-        require_moveTo = false;
-        elements = other.elements;
     }
 
-    ~QPainterPathData() {
+    ~QPainterPathPrivate() {
         delete pathConverter;
     }
 
@@ -154,6 +153,9 @@ public:
             pathConverter = new QVectorPathConverter(elements, fillRule, convex);
         return pathConverter->path;
     }
+
+    QAtomicInt ref;
+    QVector<QPainterPath::Element> elements;
 
     int cStart;
     Qt::FillRule fillRule;
@@ -174,7 +176,7 @@ inline const QPainterPath QVectorPath::convertToPainterPath() const
 {
         QPainterPath path;
         path.ensureData();
-        QPainterPathData *data = path.d_func();
+        QPainterPathPrivate *data = path.d_func();
         data->elements.reserve(m_count);
         int index = 0;
         data->elements[0].x = m_points[index++];
@@ -210,14 +212,14 @@ inline const QPainterPath QVectorPath::convertToPainterPath() const
 void Q_GUI_EXPORT qt_find_ellipse_coords(const QRectF &r, qreal angle, qreal length,
                                          QPointF* startPoint, QPointF *endPoint);
 
-inline bool QPainterPathData::isClosed() const
+inline bool QPainterPathPrivate::isClosed() const
 {
     const QPainterPath::Element &first = elements.at(cStart);
     const QPainterPath::Element &last = elements.last();
     return first.x == last.x && first.y == last.y;
 }
 
-inline void QPainterPathData::close()
+inline void QPainterPathPrivate::close()
 {
     Q_ASSERT(ref == 1);
     require_moveTo = true;
@@ -234,7 +236,7 @@ inline void QPainterPathData::close()
     }
 }
 
-inline void QPainterPathData::maybeMoveTo()
+inline void QPainterPathPrivate::maybeMoveTo()
 {
     if (require_moveTo) {
         QPainterPath::Element e = elements.last();

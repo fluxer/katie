@@ -32,7 +32,6 @@ include_directories(
 set(TEST_HEADERS
     ${CMAKE_CURRENT_SOURCE_DIR}/qbenchmark.h
     ${CMAKE_CURRENT_SOURCE_DIR}/qsignalspy.h
-    ${CMAKE_CURRENT_SOURCE_DIR}/qtestaccessible.h
     ${CMAKE_CURRENT_SOURCE_DIR}/qtestassert.h
     ${CMAKE_CURRENT_SOURCE_DIR}/qtestbasicstreamer.h
     ${CMAKE_CURRENT_SOURCE_DIR}/qtestcase.h

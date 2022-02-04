@@ -311,8 +311,6 @@ void QDeclarativeTextPrivate::updateSize()
 */
 QRect QDeclarativeTextPrivate::setupTextLayout()
 {
-    // ### text layout handling should be profiled and optimized as needed
-    // what about QStackTextEngine engine(tmp, d->font.font()); QTextLayout textLayout(&engine);
     Q_Q(QDeclarativeText);
     layout.setCacheEnabled(true);
 
@@ -639,7 +637,7 @@ QPixmap QDeclarativeTextPrivate::drawOutline(const QPixmap &source, const QPixma
     \qml
     Text {
         text: "Hello World!"
-        font.family: "Helvetica"
+        font.family: "FreeSans"
         font.pointSize: 24
         color: "red"
     }
@@ -722,7 +720,7 @@ QDeclarativeText::~QDeclarativeText()
 
     Sets the family name of the font.
 
-    The family name is case insensitive and may optionally include a foundry name, e.g. "Helvetica [Cronyx]".
+    The family name is case insensitive and may optionally include a foundry name, e.g. "FreeSans [GNU]".
     If the family is available from more than one foundry and the foundry isn't specified, an arbitrary foundry is chosen.
     If the family isn't available a family will be set using the font matching algorithm.
 */
@@ -785,42 +783,6 @@ QDeclarativeText::~QDeclarativeText()
     Use \c pointSize to set the size of the font in a device independent manner.
 */
 
-/*!
-    \qmlproperty real Text::font.letterSpacing
-
-    Sets the letter spacing for the font.
-
-    Letter spacing changes the default spacing between individual letters in the font.
-    A positive value increases the letter spacing by the corresponding pixels; a negative value decreases the spacing.
-*/
-
-/*!
-    \qmlproperty real Text::font.wordSpacing
-
-    Sets the word spacing for the font.
-
-    Word spacing changes the default spacing between individual words.
-    A positive value increases the word spacing by a corresponding amount of pixels,
-    while a negative value decreases the inter-word spacing accordingly.
-*/
-
-/*!
-    \qmlproperty enumeration Text::font.capitalization
-
-    Sets the capitalization for the text.
-
-    \list
-    \o Font.MixedCase - This is the normal text rendering option where no capitalization change is applied.
-    \o Font.AllUppercase - This alters the text to be rendered in all uppercase type.
-    \o Font.AllLowercase	 - This alters the text to be rendered in all lowercase type.
-    \o Font.SmallCaps -	This alters the text to be rendered in small-caps type.
-    \o Font.Capitalize - This alters the text to be rendered with the first character of each word as an uppercase character.
-    \endlist
-
-    \qml
-    Text { text: "Hello"; font.capitalization: Font.AllLowercase }
-    \endqml
-*/
 QFont QDeclarativeText::font() const
 {
     Q_D(const QDeclarativeText);

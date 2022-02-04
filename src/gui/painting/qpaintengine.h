@@ -42,9 +42,7 @@ class Q_GUI_EXPORT QTextItem {
 public:
     enum RenderFlag {
         RightToLeft = 0x1,
-        Overline = 0x10,
-        Underline = 0x20,
-        StrikeOut = 0x40,
+        Underline = 0x2,
 
         Dummy = 0xffffffff
     };
@@ -152,7 +150,6 @@ public:
     enum Type {
         X11,
         PostScript,
-        SVG,
         Raster,
         Pdf,
 

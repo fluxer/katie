@@ -145,7 +145,7 @@ bool QWindowsStyle::eventFilter(QObject *o, QEvent *e)
     \ingroup appearance
 
     \img qwindowsstyle.png
-    \sa QPlastiqueStyle, QMotifStyle
+    \sa QCleanlooksStyle
 */
 
 /*!
@@ -336,265 +336,42 @@ int QWindowsStyle::pixelMetric(PixelMetric pm, const QStyleOption *opt, const QW
     return ret;
 }
 
-#ifndef QT_NO_XPM
-
-/* XPM */
-static const char * const qt_windows_menu_xpm[] = {
-"16 16 72 1",
-"  c None",
-". c #65AF36",
-"+ c #66B036",
-"@ c #77B94C",
-"# c #A7D28C",
-"$ c #BADBA4",
-"% c #A4D088",
-"& c #72B646",
-"* c #9ACB7A",
-"= c #7FBD56",
-"- c #85C05F",
-"; c #F4F9F0",
-"> c #FFFFFF",
-", c #E5F1DC",
-"' c #ECF5E7",
-") c #7ABA50",
-"! c #83BF5C",
-"~ c #AED595",
-"{ c #D7EACA",
-"] c #A9D28D",
-"^ c #BCDDA8",
-"/ c #C4E0B1",
-"( c #81BE59",
-"_ c #D0E7C2",
-": c #D4E9C6",
-"< c #6FB542",
-"[ c #6EB440",
-"} c #88C162",
-"| c #98CA78",
-"1 c #F4F9F1",
-"2 c #8FC56C",
-"3 c #F1F8EC",
-"4 c #E8F3E1",
-"5 c #D4E9C7",
-"6 c #74B748",
-"7 c #80BE59",
-"8 c #73B747",
-"9 c #6DB43F",
-"0 c #CBE4BA",
-"a c #80BD58",
-"b c #6DB33F",
-"c c #FEFFFE",
-"d c #68B138",
-"e c #F9FCF7",
-"f c #91C66F",
-"g c #E8F3E0",
-"h c #DCEDD0",
-"i c #91C66E",
-"j c #A3CF86",
-"k c #C9E3B8",
-"l c #B0D697",
-"m c #E3F0DA",
-"n c #95C873",
-"o c #E6F2DE",
-"p c #9ECD80",
-"q c #BEDEAA",
-"r c #C7E2B6",
-"s c #79BA4F",
-"t c #6EB441",
-"u c #BCDCA7",
-"v c #FAFCF8",
-"w c #F6FAF3",
-"x c #84BF5D",
-"y c #EDF6E7",
-"z c #FAFDF9",
-"A c #88C263",
-"B c #98CA77",
-"C c #CDE5BE",
-"D c #67B037",
-"E c #D9EBCD",
-"F c #6AB23C",
-"G c #77B94D",
-" .++++++++++++++",
-".+++++++++++++++",
-"+++@#$%&+++*=+++",
-"++-;>,>')+!>~+++",
-"++{>]+^>/(_>:~<+",
-"+[>>}+|>123>456+",
-"+7>>8+->>90>~+++",
-"+a>>b+a>c[0>~+++",
-"+de>=+f>g+0>~+++",
-"++h>i+j>k+0>~+++",
-"++l>mno>p+q>rst+",
-"++duv>wl++xy>zA+",
-"++++B>Cb++++&D++",
-"+++++0zE++++++++",
-"++++++FG+++++++.",
-"++++++++++++++. "};
-
-/* XPM */
-static const char * const qt_windows_close_xpm[] = {
-"10 10 2 1",
-"# c #000000",
-". c None",
-"..........",
-".##....##.",
-"..##..##..",
-"...####...",
-"....##....",
-"...####...",
-"..##..##..",
-".##....##.",
-"..........",
-".........."};
-
-/* XPM */
-static const char * const qt_windows_maximize_xpm[]={
-"10 10 2 1",
-"# c #000000",
-". c None",
-"#########.",
-"#########.",
-"#.......#.",
-"#.......#.",
-"#.......#.",
-"#.......#.",
-"#.......#.",
-"#.......#.",
-"#########.",
-".........."};
-
-/* XPM */
-static const char * const qt_windows_minimize_xpm[] = {
-"10 10 2 1",
-"# c #000000",
-". c None",
-"..........",
-"..........",
-"..........",
-"..........",
-"..........",
-"..........",
-"..........",
-".#######..",
-".#######..",
-".........."};
-
-/* XPM */
-static const char * const qt_windows_normalizeup_xpm[] = {
-"10 10 2 1",
-"# c #000000",
-". c None",
-"...######.",
-"...######.",
-"...#....#.",
-".######.#.",
-".######.#.",
-".#....###.",
-".#....#...",
-".#....#...",
-".######...",
-".........."};
-
-/* XPM */
-static const char * const qt_windows_help_xpm[] = {
-"10 10 2 1",
-". c None",
-"# c #000000",
-"..........",
-"..######..",
-".##....##.",
-"......##..",
-".....##...",
-"....##....",
-"....##....",
-"..........",
-"....##....",
-".........."};
-
-/* XPM */
-static const char * const qt_windows_shade_xpm[] = {
-"10 10 2 1",
-"# c #000000",
-". c None",
-"..........",
-"..........",
-"..........",
-"..........",
-"....#.....",
-"...###....",
-"..#####...",
-".#######..",
-"..........",
-".........."};
-
-/* XPM */
-static const char * const qt_windows_unshade_xpm[] = {
-"10 10 2 1",
-"# c #000000",
-". c None",
-"..........",
-"..........",
-"..........",
-".#######..",
-"..#####...",
-"...###....",
-"....#.....",
-"..........",
-"..........",
-".........."};
-
-/* XPM */
-static const char * qt_windows_dock_widget_close_xpm[] = {
-"8 8 2 1",
-"# c #000000",
-". c None",
-"........",
-".##..##.",
-"..####..",
-"...##...",
-"..####..",
-".##..##.",
-"........",
-"........"};
-#endif //QT_NO_XPM
-
 /*!
  \reimp
  */
 QPixmap QWindowsStyle::standardPixmap(StandardPixmap standardpixmap, const QStyleOption *opt,
                                       const QWidget *widget) const
 {
-#ifndef QT_NO_XPM
     switch (standardpixmap) {
     case SP_TitleBarMenuButton:
-        return QPixmap(qt_windows_menu_xpm);
+        return QPixmap(QLatin1String(":/trolltech/styles/windowsstyle/images/windows/qt_windows_menu.png"));
     case SP_TitleBarShadeButton:
-        return QPixmap(qt_windows_shade_xpm);
+        return QPixmap(QLatin1String(":/trolltech/styles/windowsstyle/images/windows/qt_windows_shade.png"));
     case SP_TitleBarUnshadeButton:
-        return QPixmap(qt_windows_unshade_xpm);
+        return QPixmap(QLatin1String(":/trolltech/styles/windowsstyle/images/windows/qt_windows_unshade.png"));
     case SP_TitleBarNormalButton:
-        return QPixmap(qt_windows_normalizeup_xpm);
+        return QPixmap(QLatin1String(":/trolltech/styles/windowsstyle/images/windows/qt_windows_normalizeup.png"));
     case SP_TitleBarMinButton:
-        return QPixmap(qt_windows_minimize_xpm);
+        return QPixmap(QLatin1String(":/trolltech/styles/windowsstyle/images/windows/qt_windows_minimize.png"));
     case SP_TitleBarMaxButton:
-        return QPixmap(qt_windows_maximize_xpm);
+        return QPixmap(QLatin1String(":/trolltech/styles/windowsstyle/images/windows/qt_windows_maximize.png"));
     case SP_TitleBarCloseButton:
-        return QPixmap(qt_windows_close_xpm);
+        return QPixmap(QLatin1String(":/trolltech/styles/windowsstyle/images/windows/qt_windows_close.png"));
     case SP_TitleBarContextHelpButton:
-        return QPixmap(qt_windows_help_xpm);
+        return QPixmap(QLatin1String(":/trolltech/styles/windowsstyle/images/windows/qt_windows_help.png"));
     case SP_DockWidgetCloseButton:
-        return QPixmap(qt_windows_dock_widget_close_xpm);
+        return QPixmap(QLatin1String(":/trolltech/styles/windowsstyle/images/windows/qt_windows_dock_widget_close.png"));
     case SP_MessageBoxInformation:
-        return QPixmap(qt_information_xpm);
+        return QPixmap(QLatin1String(":/trolltech/styles/windowsstyle/images/windows/qt_information.png"));
     case SP_MessageBoxWarning:
-        return QPixmap(qt_warning_xpm);
+        return QPixmap(QLatin1String(":/trolltech/styles/windowsstyle/images/windows/qt_warning.png"));
     case SP_MessageBoxCritical:
-        return QPixmap(qt_critical_xpm);
+        return QPixmap(QLatin1String(":/trolltech/styles/windowsstyle/images/windows/qt_critical.png"));
     case SP_MessageBoxQuestion:
-        return QPixmap(qt_question_xpm);
+        return QPixmap(QLatin1String(":/trolltech/styles/windowsstyle/images/windows/qt_question.png"));
     default:
         break;
     }
-#endif //QT_NO_XPM
     return QCommonStyle::standardPixmap(standardpixmap, opt, widget);
 }
 
@@ -2547,5 +2324,6 @@ QSize QWindowsStyle::sizeFromContents(ContentsType ct, const QStyleOption *opt,
 QT_END_NAMESPACE
 
 #include "moc_qwindowsstyle.h"
+#include "qrc_qwindowsstyle.cpp"
 
 #endif // QT_NO_STYLE_WINDOWS

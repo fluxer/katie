@@ -29,11 +29,7 @@
 #include "qstyle.h"
 #include "qstyleoption.h"
 #include "qstylepainter.h"
-#ifndef QT_NO_ACCESSIBILITY
-#include "qaccessible.h"
-#endif
 #include "qwidget_p.h"
-
 #include "qdebug.h"
 
 QT_BEGIN_NAMESPACE
@@ -226,9 +222,6 @@ void QGroupBox::setTitle(const QString &title)
 
     update();
     updateGeometry();
-#ifndef QT_NO_ACCESSIBILITY
-    QAccessible::updateAccessibility(this, 0, QAccessible::NameChanged);
-#endif
 }
 
 /*!
@@ -613,9 +606,6 @@ void QGroupBox::setChecked(bool b)
         update();
         d->checked = b;
         d->_q_setChildrenEnabled(b);
-#ifndef QT_NO_ACCESSIBILITY
-        QAccessible::updateAccessibility(this, 0, QAccessible::StateChanged);
-#endif
         emit toggled(b);
     }
 }

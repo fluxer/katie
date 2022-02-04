@@ -21,7 +21,6 @@
 
 #include "qplatformdefs.h"
 #include "qabstracteventdispatcher.h"
-#include "qaccessible.h"
 #include "qapplication.h"
 #include "qclipboard.h"
 #include "qcursor.h"
@@ -76,6 +75,12 @@ static void initResources()
     Q_INIT_RESOURCE(qmessagebox);
 #if !defined(QT_NO_PRINTDIALOG)
     Q_INIT_RESOURCE(qprintdialog);
+#endif
+#if !defined(QT_NO_STYLE_WINDOWS)
+    Q_INIT_RESOURCE(qwindowsstyle);
+#endif
+#if !defined(QT_NO_STYLE_CLEANLOOKS)
+    Q_INIT_RESOURCE(qcleanlooksstyle);
 #endif
 }
 
@@ -1254,7 +1259,7 @@ QFont QApplication::font()
 {
     QMutexLocker locker(applicationFontMutex());
     if (!QApplicationPrivate::app_font) {
-        QApplicationPrivate::app_font = new QFont(QLatin1String("Helvetica"));
+        QApplicationPrivate::app_font = new QFont(QFont::lastResortFamily());
     }
     return *QApplicationPrivate::app_font;
 }
@@ -1637,11 +1642,6 @@ void QApplication::aboutQt()
     \fn void QApplication::fontDatabaseChanged()
 
     This signal is emitted when application fonts are loaded or removed.
-
-    \sa QFontDatabase::addApplicationFont(),
-    QFontDatabase::addApplicationFontFromData(),
-    QFontDatabase::removeAllApplicationFonts(),
-    QFontDatabase::removeApplicationFont()
 */
 
 #ifndef QT_NO_TRANSLATION
@@ -2935,9 +2935,6 @@ void QApplication::changeOverrideCursor(const QCursor &cursor)
 */
 int QApplication::exec()
 {
-#ifndef QT_NO_ACCESSIBILITY
-    QAccessible::setRootObject(qApp);
-#endif
     return QCoreApplication::exec();
 }
 

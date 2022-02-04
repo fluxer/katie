@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-12-26 15:10+0200\n"
+"POT-Creation-Date: 2022-01-26 19:24+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -422,12 +422,12 @@ msgstr ""
 msgid "Cannot anchor a vertical edge to a horizontal edge."
 msgstr ""
 
-#: src/declarative/graphicsitems/qdeclarativetextinput.cpp:909
-#: src/declarative/graphicsitems/qdeclarativetextinput.cpp:917
+#: src/declarative/graphicsitems/qdeclarativetextinput.cpp:870
+#: src/declarative/graphicsitems/qdeclarativetextinput.cpp:878
 msgid "Could not load cursor delegate"
 msgstr ""
 
-#: src/declarative/graphicsitems/qdeclarativetextinput.cpp:928
+#: src/declarative/graphicsitems/qdeclarativetextinput.cpp:889
 msgid "Could not instantiate cursor delegate"
 msgstr ""
 
@@ -1173,21 +1173,12 @@ msgstr ""
 msgid "Cannot open: %1"
 msgstr ""
 
-#: src/declarative/util/qdeclarativeutilmodule.cpp:59
+#: src/declarative/util/qdeclarativeutilmodule.cpp:58
 msgid "Application is an abstract class"
 msgstr ""
 
-#: src/declarative/util/qdeclarativeutilmodule.cpp:87
+#: src/declarative/util/qdeclarativeutilmodule.cpp:85
 msgid "Animation is an abstract class"
-msgstr ""
-
-#: src/gui/accessible/qaccessibleobject.cpp:322
-#: src/plugins/accessible/widgets/complexwidgets.cpp:1597
-msgid "Activate"
-msgstr ""
-
-#: src/gui/accessible/qaccessibleobject.cpp:324
-msgid "Activates the program's main window"
 msgstr ""
 
 #: src/gui/dialogs/qwizard.cpp:578
@@ -1323,19 +1314,19 @@ msgstr ""
 msgid "Computer"
 msgstr ""
 
-#: src/gui/dialogs/qmessagebox.cpp:105
+#: src/gui/dialogs/qmessagebox.cpp:102
 msgid "Show Details..."
 msgstr ""
 
-#: src/gui/dialogs/qmessagebox.cpp:105
+#: src/gui/dialogs/qmessagebox.cpp:102
 msgid "Hide Details..."
 msgstr ""
 
-#: src/gui/dialogs/qmessagebox.cpp:1454
+#: src/gui/dialogs/qmessagebox.cpp:1448
 msgid "<h3>About Katie</h3><p>This program uses Katie version %1.</p>"
 msgstr ""
 
-#: src/gui/dialogs/qmessagebox.cpp:1458
+#: src/gui/dialogs/qmessagebox.cpp:1452
 msgid ""
 "<p>Katie is a C++ toolkit derived from the Qt 4.8 framework.</p><p>Katie is "
 "licensed under the GNU LGPL version 2.1</p><p>Copyright (C) 2015 The Qt "
@@ -1344,7 +1335,7 @@ msgid ""
 "katie</a> for more information.</p>"
 msgstr ""
 
-#: src/gui/dialogs/qmessagebox.cpp:1466
+#: src/gui/dialogs/qmessagebox.cpp:1460
 msgid "About Katie"
 msgstr ""
 
@@ -1358,7 +1349,7 @@ msgctxt "QPrintPreviewDialog"
 msgid "Page Setup"
 msgstr ""
 
-#: src/gui/dialogs/qdialog.cpp:491 src/gui/kernel/qwhatsthis.cpp:469
+#: src/gui/dialogs/qdialog.cpp:487 src/gui/kernel/qwhatsthis.cpp:461
 msgid "What's This?"
 msgstr ""
 
@@ -1659,14 +1650,6 @@ msgid "Find Directory"
 msgstr ""
 
 #: src/gui/dialogs/qfiledialog.cpp:495
-#: src/plugins/accessible/widgets/simplewidgets.cpp:96
-#: src/plugins/accessible/widgets/simplewidgets.cpp:411
-#: src/plugins/accessible/widgets/simplewidgets.cpp:419
-#: src/plugins/accessible/widgets/qaccessiblemenu.cpp:138
-#: src/plugins/accessible/widgets/qaccessiblemenu.cpp:363
-#: src/plugins/accessible/widgets/qaccessiblemenu.cpp:417
-#: src/plugins/accessible/widgets/complexwidgets.cpp:1829
-#: src/plugins/accessible/widgets/complexwidgets.cpp:1895
 msgid "Open"
 msgstr ""
 
@@ -1860,94 +1843,88 @@ msgctxt "QImageReader"
 msgid "Unknown error"
 msgstr ""
 
-#: src/gui/widgets/qtabbar.cpp:2176
+#: src/gui/widgets/qtabbar.cpp:2163
 msgid "Close Tab"
 msgstr ""
 
-#: src/gui/widgets/qlineedit.cpp:1755 src/gui/text/qtextcontrol.cpp:1858
+#: src/gui/widgets/qlineedit.cpp:1710 src/gui/text/qtextcontrol.cpp:1849
 msgid "&Undo"
 msgstr ""
 
-#: src/gui/widgets/qlineedit.cpp:1759 src/gui/text/qtextcontrol.cpp:1860
+#: src/gui/widgets/qlineedit.cpp:1714 src/gui/text/qtextcontrol.cpp:1851
 msgid "&Redo"
 msgstr ""
 
-#: src/gui/widgets/qlineedit.cpp:1768 src/gui/text/qtextcontrol.cpp:1864
+#: src/gui/widgets/qlineedit.cpp:1723 src/gui/text/qtextcontrol.cpp:1855
 msgid "Cu&t"
 msgstr ""
 
-#: src/gui/widgets/qlineedit.cpp:1774 src/gui/text/qtextcontrol.cpp:1869
+#: src/gui/widgets/qlineedit.cpp:1729 src/gui/text/qtextcontrol.cpp:1860
 msgid "&Copy"
 msgstr ""
 
-#: src/gui/widgets/qlineedit.cpp:1780 src/gui/text/qtextcontrol.cpp:1882
+#: src/gui/widgets/qlineedit.cpp:1735 src/gui/text/qtextcontrol.cpp:1873
 msgid "&Paste"
 msgstr ""
 
-#: src/gui/widgets/qlineedit.cpp:1787 src/gui/text/qtextcontrol.cpp:1885
+#: src/gui/widgets/qlineedit.cpp:1742 src/gui/text/qtextcontrol.cpp:1876
 #: src/scripttools/debugging/qscriptbreakpointswidget.cpp:279
 msgid "Delete"
 msgstr ""
 
-#: src/gui/widgets/qlineedit.cpp:1795 src/gui/text/qtextcontrol.cpp:1892
+#: src/gui/widgets/qlineedit.cpp:1750 src/gui/text/qtextcontrol.cpp:1883
 msgid "Select All"
 msgstr ""
 
-#: src/gui/widgets/qscrollbar.cpp:382
+#: src/gui/widgets/qscrollbar.cpp:380
 msgid "Scroll here"
 msgstr ""
 
-#: src/gui/widgets/qscrollbar.cpp:384
+#: src/gui/widgets/qscrollbar.cpp:382
 msgid "Left edge"
 msgstr ""
 
-#: src/gui/widgets/qscrollbar.cpp:384
+#: src/gui/widgets/qscrollbar.cpp:382
 msgid "Top"
 msgstr ""
 
-#: src/gui/widgets/qscrollbar.cpp:385
+#: src/gui/widgets/qscrollbar.cpp:383
 msgid "Right edge"
 msgstr ""
 
-#: src/gui/widgets/qscrollbar.cpp:385
+#: src/gui/widgets/qscrollbar.cpp:383
 msgid "Bottom"
 msgstr ""
 
-#: src/gui/widgets/qscrollbar.cpp:387
-#: src/plugins/accessible/widgets/rangecontrols.cpp:685
+#: src/gui/widgets/qscrollbar.cpp:385
 msgid "Page left"
 msgstr ""
 
-#: src/gui/widgets/qscrollbar.cpp:387
-#: src/plugins/accessible/widgets/rangecontrols.cpp:532
-#: src/plugins/accessible/widgets/rangecontrols.cpp:685
+#: src/gui/widgets/qscrollbar.cpp:385
 msgid "Page up"
 msgstr ""
 
-#: src/gui/widgets/qscrollbar.cpp:388
-#: src/plugins/accessible/widgets/rangecontrols.cpp:690
+#: src/gui/widgets/qscrollbar.cpp:386
 msgid "Page right"
 msgstr ""
 
-#: src/gui/widgets/qscrollbar.cpp:388
-#: src/plugins/accessible/widgets/rangecontrols.cpp:536
-#: src/plugins/accessible/widgets/rangecontrols.cpp:690
+#: src/gui/widgets/qscrollbar.cpp:386
 msgid "Page down"
 msgstr ""
 
-#: src/gui/widgets/qscrollbar.cpp:390
+#: src/gui/widgets/qscrollbar.cpp:388
 msgid "Scroll left"
 msgstr ""
 
-#: src/gui/widgets/qscrollbar.cpp:390
+#: src/gui/widgets/qscrollbar.cpp:388
 msgid "Scroll up"
 msgstr ""
 
-#: src/gui/widgets/qscrollbar.cpp:391
+#: src/gui/widgets/qscrollbar.cpp:389
 msgid "Scroll right"
 msgstr ""
 
-#: src/gui/widgets/qscrollbar.cpp:391
+#: src/gui/widgets/qscrollbar.cpp:389
 msgid "Scroll down"
 msgstr ""
 
@@ -2091,11 +2068,6 @@ msgid "Restore"
 msgstr ""
 
 #: src/gui/widgets/qmdisubwindow.cpp:309 src/gui/widgets/qworkspace.cpp:93
-#: src/plugins/accessible/widgets/qaccessiblemenu.cpp:137
-#: src/plugins/accessible/widgets/qaccessiblemenu.cpp:362
-#: src/plugins/accessible/widgets/qaccessiblewidgets.cpp:1309
-#: src/plugins/accessible/widgets/complexwidgets.cpp:1594
-#: src/plugins/accessible/widgets/complexwidgets.cpp:1895
 #: src/scripttools/debugging/qscriptbreakpointswidget.cpp:56
 #: src/scripttools/debugging/qscriptdebuggercodefinderwidget.cpp:116
 msgid "Close"
@@ -2141,28 +2113,28 @@ msgstr ""
 msgid "&Unshade"
 msgstr ""
 
-#: src/gui/widgets/qmenubar.cpp:1599
+#: src/gui/widgets/qmenubar.cpp:1500
 msgctxt "QMenuBar"
 msgid "Corner Toolbar"
 msgstr ""
 
-#: src/gui/widgets/qabstractspinbox.cpp:1152
+#: src/gui/widgets/qabstractspinbox.cpp:1144
 msgid "&Select All"
 msgstr ""
 
-#: src/gui/widgets/qabstractspinbox.cpp:1158
+#: src/gui/widgets/qabstractspinbox.cpp:1150
 msgid "&Step up"
 msgstr ""
 
-#: src/gui/widgets/qabstractspinbox.cpp:1160
+#: src/gui/widgets/qabstractspinbox.cpp:1152
 msgid "Step &down"
 msgstr ""
 
-#: src/gui/kernel/qwidget.cpp:5039
+#: src/gui/kernel/qwidget.cpp:5031
 msgid "*"
 msgstr ""
 
-#: src/gui/kernel/qapplication.cpp:1652
+#: src/gui/kernel/qapplication.cpp:1646
 msgid "QT_LAYOUT_DIRECTION"
 msgstr ""
 
@@ -4514,103 +4486,91 @@ msgstr ""
 msgid "<empty>"
 msgstr ""
 
-#: src/gui/text/qfontdatabase.cpp:62 src/gui/text/qfontdatabase.cpp:816
-msgctxt "QFontDatabase"
-msgid "Normal"
-msgstr ""
-
-#: src/gui/text/qfontdatabase.cpp:65 src/gui/text/qfontdatabase.cpp:77
-#: src/gui/text/qfontdatabase.cpp:804
-msgctxt "QFontDatabase"
-msgid "Bold"
-msgstr ""
-
-#: src/gui/text/qfontdatabase.cpp:68 src/gui/text/qfontdatabase.cpp:806
-msgctxt "QFontDatabase"
-msgid "Demi Bold"
-msgstr ""
-
-#: src/gui/text/qfontdatabase.cpp:71 src/gui/text/qfontdatabase.cpp:89
-#: src/gui/text/qfontdatabase.cpp:802
+#: src/gui/text/qfontdatabase.cpp:683
 msgctxt "QFontDatabase"
 msgid "Black"
 msgstr ""
 
-#: src/gui/text/qfontdatabase.cpp:79
+#: src/gui/text/qfontdatabase.cpp:685
 msgctxt "QFontDatabase"
-msgid "Demi"
+msgid "Bold"
 msgstr ""
 
-#: src/gui/text/qfontdatabase.cpp:85 src/gui/text/qfontdatabase.cpp:808
+#: src/gui/text/qfontdatabase.cpp:687
+msgctxt "QFontDatabase"
+msgid "Demi Bold"
+msgstr ""
+
+#: src/gui/text/qfontdatabase.cpp:689
 msgctxt "QFontDatabase"
 msgid "Light"
 msgstr ""
 
-#: src/gui/text/qfontdatabase.cpp:193 src/gui/text/qfontdatabase.cpp:811
+#: src/gui/text/qfontdatabase.cpp:693
 msgctxt "QFontDatabase"
 msgid "Italic"
 msgstr ""
 
-#: src/gui/text/qfontdatabase.cpp:196 src/gui/text/qfontdatabase.cpp:813
+#: src/gui/text/qfontdatabase.cpp:695
 msgctxt "QFontDatabase"
 msgid "Oblique"
 msgstr ""
 
-#: src/gui/text/qtextcontrol.cpp:1876
+#: src/gui/text/qtextcontrol.cpp:1867
 msgid "Copy &Link Location"
 msgstr ""
 
-#: src/gui/text/qtextcontrol.cpp:2790
+#: src/gui/text/qtextcontrol.cpp:2781
 msgctxt "QUnicodeControlCharacterMenu"
 msgid "LRM Left-to-right mark"
 msgstr ""
 
-#: src/gui/text/qtextcontrol.cpp:2791
+#: src/gui/text/qtextcontrol.cpp:2782
 msgctxt "QUnicodeControlCharacterMenu"
 msgid "RLM Right-to-left mark"
 msgstr ""
 
-#: src/gui/text/qtextcontrol.cpp:2792
+#: src/gui/text/qtextcontrol.cpp:2783
 msgctxt "QUnicodeControlCharacterMenu"
 msgid "ZWJ Zero width joiner"
 msgstr ""
 
-#: src/gui/text/qtextcontrol.cpp:2793
+#: src/gui/text/qtextcontrol.cpp:2784
 msgctxt "QUnicodeControlCharacterMenu"
 msgid "ZWNJ Zero width non-joiner"
 msgstr ""
 
-#: src/gui/text/qtextcontrol.cpp:2794
+#: src/gui/text/qtextcontrol.cpp:2785
 msgctxt "QUnicodeControlCharacterMenu"
 msgid "ZWSP Zero width space"
 msgstr ""
 
-#: src/gui/text/qtextcontrol.cpp:2795
+#: src/gui/text/qtextcontrol.cpp:2786
 msgctxt "QUnicodeControlCharacterMenu"
 msgid "LRE Start of left-to-right embedding"
 msgstr ""
 
-#: src/gui/text/qtextcontrol.cpp:2796
+#: src/gui/text/qtextcontrol.cpp:2787
 msgctxt "QUnicodeControlCharacterMenu"
 msgid "RLE Start of right-to-left embedding"
 msgstr ""
 
-#: src/gui/text/qtextcontrol.cpp:2797
+#: src/gui/text/qtextcontrol.cpp:2788
 msgctxt "QUnicodeControlCharacterMenu"
 msgid "LRO Start of left-to-right override"
 msgstr ""
 
-#: src/gui/text/qtextcontrol.cpp:2798
+#: src/gui/text/qtextcontrol.cpp:2789
 msgctxt "QUnicodeControlCharacterMenu"
 msgid "RLO Start of right-to-left override"
 msgstr ""
 
-#: src/gui/text/qtextcontrol.cpp:2799
+#: src/gui/text/qtextcontrol.cpp:2790
 msgctxt "QUnicodeControlCharacterMenu"
 msgid "PDF Pop directional formatting"
 msgstr ""
 
-#: src/gui/text/qtextcontrol.cpp:2805
+#: src/gui/text/qtextcontrol.cpp:2796
 msgid "Insert Unicode control character"
 msgstr ""
 
@@ -5363,94 +5323,6 @@ msgctxt "QNetworkAccessFileBackend"
 msgid "Read error reading from %1: %2"
 msgstr ""
 
-#: src/plugins/accessible/widgets/simplewidgets.cpp:100
-#: src/plugins/accessible/widgets/simplewidgets.cpp:245
-msgid "Uncheck"
-msgstr ""
-
-#: src/plugins/accessible/widgets/simplewidgets.cpp:103
-#: src/plugins/accessible/widgets/simplewidgets.cpp:108
-#: src/plugins/accessible/widgets/simplewidgets.cpp:247
-msgid "Check"
-msgstr ""
-
-#: src/plugins/accessible/widgets/simplewidgets.cpp:104
-#: src/plugins/accessible/widgets/simplewidgets.cpp:714
-msgid "Toggle"
-msgstr ""
-
-#: src/plugins/accessible/widgets/simplewidgets.cpp:250
-#: src/plugins/accessible/widgets/simplewidgets.cpp:409
-#: src/plugins/accessible/widgets/simplewidgets.cpp:415
-#: src/plugins/accessible/widgets/complexwidgets.cpp:1599
-msgid "Press"
-msgstr ""
-
-#: src/plugins/accessible/widgets/qaccessiblemenu.cpp:140
-#: src/plugins/accessible/widgets/qaccessiblemenu.cpp:365
-#: src/plugins/accessible/widgets/qaccessiblemenu.cpp:418
-msgid "Execute"
-msgstr ""
-
-#: src/plugins/accessible/widgets/rangecontrols.cpp:128
-#: src/plugins/accessible/widgets/rangecontrols.cpp:391
-msgid "More"
-msgstr ""
-
-#: src/plugins/accessible/widgets/rangecontrols.cpp:130
-#: src/plugins/accessible/widgets/rangecontrols.cpp:393
-msgid "Less"
-msgstr ""
-
-#: src/plugins/accessible/widgets/rangecontrols.cpp:530
-msgid "Line up"
-msgstr ""
-
-#: src/plugins/accessible/widgets/rangecontrols.cpp:534
-#: src/plugins/accessible/widgets/rangecontrols.cpp:687
-msgid "Position"
-msgstr ""
-
-#: src/plugins/accessible/widgets/rangecontrols.cpp:538
-msgid "Line down"
-msgstr ""
-
-#: src/plugins/accessible/widgets/rangecontrols.cpp:912
-msgid "QDial"
-msgstr ""
-
-#: src/plugins/accessible/widgets/rangecontrols.cpp:914
-msgid "SpeedoMeter"
-msgstr ""
-
-#: src/plugins/accessible/widgets/rangecontrols.cpp:916
-msgid "SliderHandle"
-msgstr ""
-
-#: src/plugins/accessible/widgets/qaccessiblewidgets.cpp:1311
-msgid "Dock"
-msgstr ""
-
-#: src/plugins/accessible/widgets/qaccessiblewidgets.cpp:1312
-msgid "Float"
-msgstr ""
-
-#: src/plugins/accessible/widgets/complexwidgets.cpp:1495
-msgid "Scroll Left"
-msgstr ""
-
-#: src/plugins/accessible/widgets/complexwidgets.cpp:1495
-msgid "Scroll Right"
-msgstr ""
-
-#: src/plugins/accessible/widgets/complexwidgets.cpp:1604
-msgid "Close the tab"
-msgstr ""
-
-#: src/plugins/accessible/widgets/complexwidgets.cpp:1607
-msgid "Activate the tab"
-msgstr ""
-
 #: src/scripttools/debugging/qscriptedit.cpp:391
 #: src/scripttools/debugging/qscriptdebugger.cpp:1767
 msgid "Toggle Breakpoint"
@@ -5713,12 +5585,12 @@ msgctxt "QFormBuilder"
 msgid "The enumeration-type property %1 could not be read."
 msgstr ""
 
-#: src/uitools/properties.cpp:292
+#: src/uitools/properties.cpp:289
 msgctxt "QFormBuilder"
 msgid "Reading properties of the type %1 is not supported yet."
 msgstr ""
 
-#: src/uitools/properties.cpp:565
+#: src/uitools/properties.cpp:558
 msgctxt "QFormBuilder"
 msgid "The property %1 could not be written. The type %2 is not supported yet."
 msgstr ""
@@ -5814,14 +5686,14 @@ msgctxt "QAbstractFormBuilder"
 msgid "This version of the uitools library is linked without script support."
 msgstr ""
 
-#: src/uitools/properties_p.h:109
+#: src/uitools/properties_p.h:107
 msgctxt "QFormBuilder"
 msgid ""
 "The enumeration-value '%1' is invalid. The default value '%2' will be used "
 "instead."
 msgstr ""
 
-#: src/uitools/properties_p.h:123
+#: src/uitools/properties_p.h:121
 msgctxt "QFormBuilder"
 msgid "The flag-value '%1' is invalid. Zero will be used instead."
 msgstr ""

@@ -45,10 +45,8 @@ public:
     ~QPen();
 
     QPen &operator=(const QPen &pen);
-#ifdef Q_COMPILER_RVALUE_REFS
     inline QPen &operator=(QPen &&other)
     { qSwap(d, other.d); return *this; }
-#endif
     inline void swap(QPen &other) { qSwap(d, other.d); }
 
     Qt::PenStyle style() const;

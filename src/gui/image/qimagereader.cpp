@@ -133,7 +133,7 @@ static QImageIOHandler *createReadHandlerHelper(QIODevice *device,
     // check if we have built-in support for the format first
     if (form == "png") {
         handler = new QPngHandler;
-#ifndef QT_NO_XPM
+#ifndef QT_NO_IMAGEFORMAT_XPM
     } else if (form == "xpm") {
         handler = new QXpmHandler;
 #endif
@@ -161,7 +161,7 @@ static QImageIOHandler *createReadHandlerHelper(QIODevice *device,
         if (QPngHandler::canRead(device)) {
             handler = new QPngHandler;
         }
-#ifndef QT_NO_XPM
+#ifndef QT_NO_IMAGEFORMAT_XPM
         if (!handler && QXpmHandler::canRead(device)) {
             handler = new QXpmHandler;
         }
@@ -1076,7 +1076,7 @@ QList<QByteArray> QImageReader::supportedImageFormats()
 #ifndef QT_NO_IMAGEFORMAT_PPM
         << "ppm" << "pbm"
 #endif
-#ifndef QT_NO_XPM
+#ifndef QT_NO_IMAGEFORMAT_XPM
         << "xpm"
 #endif
         ;

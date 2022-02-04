@@ -91,7 +91,7 @@ void Chip::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWid
     // Draw text
     if (option->levelOfDetail >= 2) {
         QFont font("Times", 10);
-        font.setStyleStrategy(QFont::ForceOutline);
+        font.setHintingPreference(QFont::PreferFullHinting);
         painter->setFont(font);
         painter->save();
         painter->scale(0.1, 0.1);

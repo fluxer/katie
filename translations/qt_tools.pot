@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-12-26 15:10+0200\n"
+"POT-Creation-Date: 2022-01-26 19:24+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -25,98 +25,85 @@ msgstr ""
 msgctxt "MainWindow"
 msgid ""
 "<p><b><font size+=2>Appearance</font></b></p><hr><p>Use this tab to "
-"customize the appearance of your Qt applications.</p><p>You can select the "
-"default GUI Style from the drop down list and customize the colors.</"
+"customize the appearance of your Katie applications.</p><p>You can select "
+"the default GUI Style from the drop down list and customize the colors.</"
 "p><p>Any GUI Style plugins in your plugin path will automatically be added "
-"to the list of built-in Qt styles. (See the Library Paths tab for "
+"to the list of built-in Katie styles. (See the Library Paths tab for "
 "information on adding new plugin paths.)</p><p>When you choose 3-D Effects "
-"and Window Background colors, the Qt Configuration program will "
+"and Window Background colors, the Katie Configuration program will "
 "automatically generate a palette for you. To customize colors further, press "
-"the Tune Palette button to open the advanced palette editor.<p>The Preview "
-"Window shows what the selected Style and colors look like."
+"the Tune Palette button to open the advanced palette editor.</p><p>The "
+"Preview Window shows what the selected Style and colors look like.</p>"
 msgstr ""
 
-#: src/tools/qtconfig/mainwindow.cpp:72
+#: src/tools/qtconfig/mainwindow.cpp:73
 msgctxt "MainWindow"
 msgid ""
 "<p><b><font size+=2>Fonts</font></b></p><hr><p>Use this tab to select the "
-"default font for your Qt applications. The selected font is shown (initially "
-"as 'Sample Text') in the line edit below the Family, Style and Point Size "
-"drop down lists.</p>."
+"default font for your Katie applications. The selected font is shown "
+"(initially as 'Sample Text') in the line edit below the Family, Style and "
+"Point Size drop down lists.</p><p>You can specify if Katie should try to "
+"embed fonts into its generated output when printing. If you enable font "
+"embedding, the resulting postscript will be more portable and will more "
+"accurately reflect the visual output on the screen; however the resulting "
+"postscript file size will be bigger.</p>"
 msgstr ""
 
-#: src/tools/qtconfig/mainwindow.cpp:80
+#: src/tools/qtconfig/mainwindow.cpp:86
 msgctxt "MainWindow"
 msgid ""
 "<p><b><font size+=2>Interface</font></b></p><hr><p>Use this tab to customize "
-"the feel of your Qt applications.</p><p>If the Resolve Symlinks checkbox is "
-"checked Qt will follow symlinks when handling URLs. For example, in the file "
-"dialog, if this setting is turned on and /usr/tmp is a symlink to /var/tmp, "
-"entering the /usr/tmp directory will cause the file dialog to change to /var/"
-"tmp.  With this setting turned off, symlinks are not resolved or followed.</"
-"p><p>The Global Strut setting is useful for people who require a minimum "
-"size for all widgets (e.g. when using a touch panel or for users who are "
-"visually impaired).  Leaving the Global Strut width and height at 0 will "
-"disable the Global Strut feature."
+"the feel of your Katie applications.</p><p>If the Resolve Symlinks checkbox "
+"is checked Katie will follow symlinks when handling URLs. For example, in "
+"the file dialog, if this setting is turned on and /usr/tmp is a symlink to /"
+"var/tmp, entering the /usr/tmp directory will cause the file dialog to "
+"change to /var/tmp.  With this setting turned off, symlinks are not resolved "
+"or followed.</p><p>The Global Strut setting is useful for people who require "
+"a minimum size for all widgets (e.g. when using a touch panel or for users "
+"who are visually impaired).  Leaving the Global Strut width and height at 0 "
+"will disable the Global Strut feature.</p>"
 msgstr ""
 
-#: src/tools/qtconfig/mainwindow.cpp:95
-msgctxt "MainWindow"
-msgid ""
-"<p><b><font size+=2>Printer</font></b></p><hr><p>Use this tab to configure "
-"the way Qt generates output for the printer.You can specify if Qt should try "
-"to embed fonts into its generated output.If you enable font embedding, the "
-"resulting postscript will be more portable and will more accurately reflect "
-"the visual output on the screen; however the resulting postscript file size "
-"will be bigger.<p>When using font embedding you can select additional "
-"directories where Qt should search for embeddable font files.  By default, "
-"the X server font path is used."
-msgstr ""
-
-#: src/tools/qtconfig/mainwindow.cpp:173
+#: src/tools/qtconfig/mainwindow.cpp:161
 msgid "Desktop Settings (Default)"
 msgstr ""
 
-#: src/tools/qtconfig/mainwindow.cpp:179
+#: src/tools/qtconfig/mainwindow.cpp:167
 msgid "Choose style and palette based on your desktop settings."
 msgstr ""
 
-#: src/tools/qtconfig/mainwindow.cpp:194
+#: src/tools/qtconfig/mainwindow.cpp:182
 msgid "Unknown"
 msgstr ""
 
-#: src/tools/qtconfig/mainwindow.cpp:324
+#: src/tools/qtconfig/mainwindow.cpp:310
 msgid "No changes to be saved."
 msgstr ""
 
-#: src/tools/qtconfig/mainwindow.cpp:328
+#: src/tools/qtconfig/mainwindow.cpp:314
 msgid "Saving changes..."
 msgstr ""
 
-#: src/tools/qtconfig/mainwindow.cpp:405
+#: src/tools/qtconfig/mainwindow.cpp:390
 msgid "Saved changes."
 msgstr ""
 
-#: src/tools/qtconfig/mainwindow.cpp:588
-msgid "Select a Directory"
-msgstr ""
-
-#: src/tools/qtconfig/mainwindow.cpp:603
+#: src/tools/qtconfig/mainwindow.cpp:510
 msgid ""
 "<h3>%1</h3><br/>Version %2<br/><br/>Copyright (C) 2015 The Qt Company Ltd."
 "<br/><br/>Copyright (C) 2016 Ivailo Monev"
 msgstr ""
 
-#: src/tools/qtconfig/mainwindow.cpp:608 src/tools/qtconfig/mainwindow.cpp:609
-#: src/tools/qtconfig/mainwindow.cpp:616
+#: src/tools/qtconfig/mainwindow.cpp:515 src/tools/qtconfig/mainwindow.cpp:516
+#: src/tools/qtconfig/mainwindow.cpp:523
 msgid "Katie Configuration"
 msgstr ""
 
-#: src/tools/qtconfig/mainwindow.cpp:635
+#: src/tools/qtconfig/mainwindow.cpp:546
 msgid "Save Changes"
 msgstr ""
 
-#: src/tools/qtconfig/mainwindow.cpp:636
+#: src/tools/qtconfig/mainwindow.cpp:547
 msgid "Save changes to settings?"
 msgstr ""
 
@@ -147,17 +134,17 @@ msgid "System Bus"
 msgstr ""
 
 #: src/tools/qdbusviewer/qdbusviewermain.cpp:61
-#: src/tools/designer/qdesigner_workbench.cpp:176
+#: src/tools/designer/qdesigner_workbench.cpp:173
 msgid "&File"
 msgstr ""
 
 #: src/tools/qdbusviewer/qdbusviewermain.cpp:62
-#: src/tools/designer/qdesigner_actions.cpp:165
+#: src/tools/designer/qdesigner_actions.cpp:164
 msgid "&Quit"
 msgstr ""
 
 #: src/tools/qdbusviewer/qdbusviewermain.cpp:65
-#: src/tools/designer/qdesigner_workbench.cpp:193
+#: src/tools/designer/qdesigner_workbench.cpp:190
 msgid "&Help"
 msgstr ""
 
@@ -251,92 +238,13 @@ msgid ""
 "Monev"
 msgstr ""
 
-#: src/tools/designer/appfontdialog.cpp:131
-msgctxt "AppFontManager"
-msgid "'%1' is not a file."
-msgstr ""
-
-#: src/tools/designer/appfontdialog.cpp:135
-msgctxt "AppFontManager"
-msgid "The font file '%1' does not have read permissions."
-msgstr ""
-
-#: src/tools/designer/appfontdialog.cpp:143
-msgctxt "AppFontManager"
-msgid "The font file '%1' is already loaded."
-msgstr ""
-
-#: src/tools/designer/appfontdialog.cpp:150
-msgctxt "AppFontManager"
-msgid "The font file '%1' could not be loaded."
-msgstr ""
-
-#: src/tools/designer/appfontdialog.cpp:167
-msgctxt "AppFontManager"
-msgid "'%1' is not a valid font id."
-msgstr ""
-
-#: src/tools/designer/appfontdialog.cpp:178
-msgctxt "AppFontManager"
-msgid "There is no loaded font matching the id '%1'."
-msgstr ""
-
-#: src/tools/designer/appfontdialog.cpp:193
-msgctxt "AppFontManager"
-msgid "The font '%1' (%2) could not be unloaded."
-msgstr ""
-
-#: src/tools/designer/appfontdialog.cpp:219
-msgid "Fonts"
-msgstr ""
-
-#: src/tools/designer/appfontdialog.cpp:277
-msgid "Add font files"
-msgstr ""
-
-#: src/tools/designer/appfontdialog.cpp:282
-msgid "Remove current font file"
-msgstr ""
-
-#: src/tools/designer/appfontdialog.cpp:286
-msgid "Remove all font files"
-msgstr ""
-
-#: src/tools/designer/appfontdialog.cpp:305
-msgid "Add Font Files"
-msgstr ""
-
-#: src/tools/designer/appfontdialog.cpp:306
-msgid "Font files (*.ttf)"
-msgstr ""
-
-#: src/tools/designer/appfontdialog.cpp:319
-msgid "Error Adding Fonts"
-msgstr ""
-
-#: src/tools/designer/appfontdialog.cpp:343
-msgid "Error Removing Fonts"
-msgstr ""
-
-#: src/tools/designer/appfontdialog.cpp:365
-msgid "Remove Fonts"
-msgstr ""
-
-#: src/tools/designer/appfontdialog.cpp:365
-msgid "Would you like to remove all fonts?"
-msgstr ""
-
-#: src/tools/designer/appfontdialog.cpp:398
-msgid "Additional Fonts"
-msgstr ""
-
 #: src/tools/designer/qdesigner_formwindow.cpp:197
 msgid "%1 - %2[*]"
 msgstr ""
 
 #: src/tools/designer/qdesigner_formwindow.cpp:207
-#: src/tools/designer/qdesigner_actions.cpp:812
-#: src/tools/designer/qdesigner_actions.cpp:852
+#: src/tools/designer/qdesigner_actions.cpp:801
+#: src/tools/designer/qdesigner_actions.cpp:841
 msgid "Save Form?"
 msgstr ""
 
@@ -377,12 +285,12 @@ msgid "&Open..."
 msgstr ""
 
 #: src/tools/designer/newform.cpp:94
-#: src/tools/designer/qdesigner_actions.cpp:469
+#: src/tools/designer/qdesigner_actions.cpp:458
 msgid "&Recent Forms"
 msgstr ""
 
 #: src/tools/designer/newform.cpp:158
-#: src/tools/designer/qdesigner_actions.cpp:730
+#: src/tools/designer/qdesigner_actions.cpp:719
 msgid "Read error"
 msgstr ""
 
@@ -394,217 +302,209 @@ msgstr ""
 msgid "The temporary form file %1 could not be written."
 msgstr ""
 
-#: src/tools/designer/qdesigner_actions.cpp:105
+#: src/tools/designer/qdesigner_actions.cpp:104
 msgid "Saved %1."
 msgstr ""
 
-#: src/tools/designer/qdesigner_actions.cpp:131
+#: src/tools/designer/qdesigner_actions.cpp:130
 msgid ""
 "%1 already exists.\n"
 "Do you want to replace it?"
 msgstr ""
 
-#: src/tools/designer/qdesigner_actions.cpp:155
+#: src/tools/designer/qdesigner_actions.cpp:154
 msgid "Edit Widgets"
 msgstr ""
 
-#: src/tools/designer/qdesigner_actions.cpp:156
+#: src/tools/designer/qdesigner_actions.cpp:155
 msgid "&New..."
 msgstr ""
 
-#: src/tools/designer/qdesigner_actions.cpp:157
+#: src/tools/designer/qdesigner_actions.cpp:156
 msgid "&Open..."
 msgstr ""
 
-#: src/tools/designer/qdesigner_actions.cpp:158
+#: src/tools/designer/qdesigner_actions.cpp:157
 msgid "&Save"
 msgstr ""
 
-#: src/tools/designer/qdesigner_actions.cpp:159
+#: src/tools/designer/qdesigner_actions.cpp:158
 msgid "Save &As..."
 msgstr ""
 
-#: src/tools/designer/qdesigner_actions.cpp:160
+#: src/tools/designer/qdesigner_actions.cpp:159
 msgid "Save A&ll"
 msgstr ""
 
-#: src/tools/designer/qdesigner_actions.cpp:161
+#: src/tools/designer/qdesigner_actions.cpp:160
 msgid "Save As &Template..."
 msgstr ""
 
-#: src/tools/designer/qdesigner_actions.cpp:162
-#: src/tools/designer/qdesigner_actions.cpp:1011
+#: src/tools/designer/qdesigner_actions.cpp:161
+#: src/tools/designer/qdesigner_actions.cpp:1000
 msgid "&Close"
 msgstr ""
 
-#: src/tools/designer/qdesigner_actions.cpp:163
+#: src/tools/designer/qdesigner_actions.cpp:162
 msgid "Save &Image..."
 msgstr ""
 
-#: src/tools/designer/qdesigner_actions.cpp:164
+#: src/tools/designer/qdesigner_actions.cpp:163
 msgid "&Print..."
 msgstr ""
 
-#: src/tools/designer/qdesigner_actions.cpp:167
+#: src/tools/designer/qdesigner_actions.cpp:166
 msgid "View &Code..."
 msgstr ""
 
-#: src/tools/designer/qdesigner_actions.cpp:168
+#: src/tools/designer/qdesigner_actions.cpp:167
 msgid "&Minimize"
 msgstr ""
 
-#: src/tools/designer/qdesigner_actions.cpp:170
+#: src/tools/designer/qdesigner_actions.cpp:169
 msgid "Bring All to Front"
 msgstr ""
 
-#: src/tools/designer/qdesigner_actions.cpp:172
+#: src/tools/designer/qdesigner_actions.cpp:171
 msgid "Preferences..."
 msgstr ""
 
-#: src/tools/designer/qdesigner_actions.cpp:173
-msgid "Additional Fonts..."
-msgstr ""
-
-#: src/tools/designer/qdesigner_actions.cpp:245
+#: src/tools/designer/qdesigner_actions.cpp:242
 msgid "CTRL+SHIFT+S"
 msgstr ""
 
-#: src/tools/designer/qdesigner_actions.cpp:366
+#: src/tools/designer/qdesigner_actions.cpp:360
 msgid "CTRL+R"
 msgstr ""
 
-#: src/tools/designer/qdesigner_actions.cpp:384
+#: src/tools/designer/qdesigner_actions.cpp:378
 msgid "CTRL+M"
 msgstr ""
 
-#: src/tools/designer/qdesigner_actions.cpp:415
+#: src/tools/designer/qdesigner_actions.cpp:404
 msgid "About Plugins"
 msgstr ""
 
-#: src/tools/designer/qdesigner_actions.cpp:421
-#: src/tools/designer/qdesigner_actions.cpp:992
+#: src/tools/designer/qdesigner_actions.cpp:410
+#: src/tools/designer/qdesigner_actions.cpp:981
 msgid "About Katie Designer"
 msgstr ""
 
-#: src/tools/designer/qdesigner_actions.cpp:427
+#: src/tools/designer/qdesigner_actions.cpp:416
 msgid "About Katie"
 msgstr ""
 
-#: src/tools/designer/qdesigner_actions.cpp:463
+#: src/tools/designer/qdesigner_actions.cpp:452
 msgid "Clear &Menu"
 msgstr ""
 
-#: src/tools/designer/qdesigner_actions.cpp:546
-#: src/tools/designer/qdesigner_actions.cpp:743
+#: src/tools/designer/qdesigner_actions.cpp:535
+#: src/tools/designer/qdesigner_actions.cpp:732
 msgid "Open Form"
 msgstr ""
 
-#: src/tools/designer/qdesigner_actions.cpp:547
-#: src/tools/designer/qdesigner_actions.cpp:584
-#: src/tools/designer/qdesigner_actions.cpp:744
+#: src/tools/designer/qdesigner_actions.cpp:536
+#: src/tools/designer/qdesigner_actions.cpp:573
+#: src/tools/designer/qdesigner_actions.cpp:733
 msgid "Designer UI files (*.%1);;All Files (*)"
 msgstr ""
 
-#: src/tools/designer/qdesigner_actions.cpp:584
-#: src/tools/designer/qdesigner_actions.cpp:832
+#: src/tools/designer/qdesigner_actions.cpp:573
+#: src/tools/designer/qdesigner_actions.cpp:821
 msgid "Save Form As"
 msgstr ""
 
-#: src/tools/designer/qdesigner_actions.cpp:671
+#: src/tools/designer/qdesigner_actions.cpp:660
 msgid "Designer"
 msgstr ""
 
-#: src/tools/designer/qdesigner_actions.cpp:671
+#: src/tools/designer/qdesigner_actions.cpp:660
 msgid "Feature not implemented yet!"
 msgstr ""
 
-#: src/tools/designer/qdesigner_actions.cpp:686
+#: src/tools/designer/qdesigner_actions.cpp:675
 msgid "Code generation failed"
 msgstr ""
 
-#: src/tools/designer/qdesigner_actions.cpp:731
+#: src/tools/designer/qdesigner_actions.cpp:720
 msgid ""
 "%1\n"
 "Do you want to update the file location or generate a new form?"
 msgstr ""
 
-#: src/tools/designer/qdesigner_actions.cpp:734
+#: src/tools/designer/qdesigner_actions.cpp:723
 msgid "&Update"
 msgstr ""
 
-#: src/tools/designer/qdesigner_actions.cpp:735
+#: src/tools/designer/qdesigner_actions.cpp:724
 msgid "&New Form"
 msgstr ""
 
-#: src/tools/designer/qdesigner_actions.cpp:813
+#: src/tools/designer/qdesigner_actions.cpp:802
 msgid "Could not open file"
 msgstr ""
 
-#: src/tools/designer/qdesigner_actions.cpp:817
+#: src/tools/designer/qdesigner_actions.cpp:806
 msgid ""
 "The file %1 could not be opened.\n"
 "Reason: %2\n"
 "Would you like to retry or select a different file?"
 msgstr ""
 
-#: src/tools/designer/qdesigner_actions.cpp:823
+#: src/tools/designer/qdesigner_actions.cpp:812
 msgid "Select New File"
 msgstr ""
 
-#: src/tools/designer/qdesigner_actions.cpp:853
+#: src/tools/designer/qdesigner_actions.cpp:842
 msgid "Could not write file"
 msgstr ""
 
-#: src/tools/designer/qdesigner_actions.cpp:856
+#: src/tools/designer/qdesigner_actions.cpp:845
 msgid ""
 "It was not possible to write the entire file %1 to disk.\n"
 "Reason:%2\n"
 "Would you like to retry?"
 msgstr ""
 
-#: src/tools/designer/qdesigner_actions.cpp:1009
+#: src/tools/designer/qdesigner_actions.cpp:998
 msgid "&Close Preview"
 msgstr ""
 
-#: src/tools/designer/qdesigner_actions.cpp:1050
-#: src/tools/designer/qdesigner_actions.cpp:1073
+#: src/tools/designer/qdesigner_actions.cpp:1039
+#: src/tools/designer/qdesigner_actions.cpp:1062
 msgid "The backup file %1 could not be written."
 msgstr ""
 
-#: src/tools/designer/qdesigner_actions.cpp:1180
+#: src/tools/designer/qdesigner_actions.cpp:1169
 msgid "The backup directory %1 could not be created."
 msgstr ""
 
-#: src/tools/designer/qdesigner_actions.cpp:1186
+#: src/tools/designer/qdesigner_actions.cpp:1175
 msgid "The temporary backup directory %1 could not be created."
 msgstr ""
 
-#: src/tools/designer/qdesigner_actions.cpp:1216
+#: src/tools/designer/qdesigner_actions.cpp:1197
 msgid "Preview failed"
 msgstr ""
 
-#: src/tools/designer/qdesigner_actions.cpp:1240
+#: src/tools/designer/qdesigner_actions.cpp:1221
 msgid "Image files (*.%1)"
 msgstr ""
 
-#: src/tools/designer/qdesigner_actions.cpp:1249
-#: src/tools/designer/qdesigner_actions.cpp:1266
+#: src/tools/designer/qdesigner_actions.cpp:1230
+#: src/tools/designer/qdesigner_actions.cpp:1247
 msgid "Save Image"
 msgstr ""
 
-#: src/tools/designer/qdesigner_actions.cpp:1262
+#: src/tools/designer/qdesigner_actions.cpp:1243
 msgid "Saved image %1."
 msgstr ""
 
-#: src/tools/designer/qdesigner_actions.cpp:1267
+#: src/tools/designer/qdesigner_actions.cpp:1248
 msgid "The file %1 could not be written."
 msgstr ""
 
-#: src/tools/designer/qdesigner_actions.cpp:1280
-msgid "Please close all forms to enable the loading of additional fonts."
-msgstr ""
-
-#: src/tools/designer/qdesigner_actions.cpp:1331
+#: src/tools/designer/qdesigner_actions.cpp:1301
 msgid "Printed %1."
 msgstr ""
 
@@ -687,7 +587,7 @@ msgid "Dock views"
 msgstr ""
 
 #: src/tools/designer/mainwindow.cpp:249
-#: src/tools/designer/qdesigner_workbench.cpp:216
+#: src/tools/designer/qdesigner_workbench.cpp:213
 msgid "Toolbars"
 msgstr ""
 
@@ -708,71 +608,71 @@ msgid "Resource Browser"
 msgstr ""
 
 #: src/tools/designer/qdesigner_toolwindow.cpp:339
-#: src/tools/designer/qdesigner_workbench.cpp:382
+#: src/tools/designer/qdesigner_workbench.cpp:378
 msgid "Widget Box"
 msgstr ""
 
-#: src/tools/designer/qdesigner_workbench.cpp:178
+#: src/tools/designer/qdesigner_workbench.cpp:175
 msgid "&Edit"
 msgstr ""
 
-#: src/tools/designer/qdesigner_workbench.cpp:182
+#: src/tools/designer/qdesigner_workbench.cpp:179
 msgid "F&orm"
 msgstr ""
 
-#: src/tools/designer/qdesigner_workbench.cpp:183
+#: src/tools/designer/qdesigner_workbench.cpp:180
 msgid "Preview in"
 msgstr ""
 
-#: src/tools/designer/qdesigner_workbench.cpp:187
+#: src/tools/designer/qdesigner_workbench.cpp:184
 msgid "&View"
 msgstr ""
 
-#: src/tools/designer/qdesigner_workbench.cpp:189
+#: src/tools/designer/qdesigner_workbench.cpp:186
 msgid "&Settings"
 msgstr ""
 
-#: src/tools/designer/qdesigner_workbench.cpp:191
+#: src/tools/designer/qdesigner_workbench.cpp:188
 msgid "&Window"
 msgstr ""
 
-#: src/tools/designer/qdesigner_workbench.cpp:671
+#: src/tools/designer/qdesigner_workbench.cpp:666
 msgid "Save Forms?"
 msgstr ""
 
-#: src/tools/designer/qdesigner_workbench.cpp:672
+#: src/tools/designer/qdesigner_workbench.cpp:667
 msgid ""
 "There are %1 forms with unsaved changes. Do you want to review these changes "
 "before quitting?"
 msgstr ""
 
-#: src/tools/designer/qdesigner_workbench.cpp:675
+#: src/tools/designer/qdesigner_workbench.cpp:670
 msgid "If you do not review your documents, all your changes will be lost."
 msgstr ""
 
-#: src/tools/designer/qdesigner_workbench.cpp:676
+#: src/tools/designer/qdesigner_workbench.cpp:671
 msgid "Discard Changes"
 msgstr ""
 
-#: src/tools/designer/qdesigner_workbench.cpp:678
+#: src/tools/designer/qdesigner_workbench.cpp:673
 msgid "Review Changes"
 msgstr ""
 
-#: src/tools/designer/qdesigner_workbench.cpp:773
+#: src/tools/designer/qdesigner_workbench.cpp:768
 msgid "Backup Information"
 msgstr ""
 
-#: src/tools/designer/qdesigner_workbench.cpp:774
+#: src/tools/designer/qdesigner_workbench.cpp:769
 msgid ""
 "The last session of Designer was not terminated correctly. Backup files were "
 "left behind. Do you want to load them?"
 msgstr ""
 
-#: src/tools/designer/qdesigner_workbench.cpp:884
+#: src/tools/designer/qdesigner_workbench.cpp:879
 msgid "The file <b>%1</b> could not be opened."
 msgstr ""
 
-#: src/tools/designer/qdesigner_workbench.cpp:930
+#: src/tools/designer/qdesigner_workbench.cpp:925
 msgid "The file <b>%1</b> is not a valid Designer UI file."
 msgstr ""
 

@@ -75,8 +75,8 @@ public:
     virtual QBitmap mask() const;
     virtual void setMask(const QBitmap &mask) = 0;
     virtual bool hasAlphaChannel() const = 0;
-    virtual QPixmap transformed(const QTransform &matrix,
-                                Qt::TransformationMode mode) const;
+    QPixmap transformed(const QTransform &matrix,
+                        Qt::TransformationMode mode) const;
     virtual void setAlphaChannel(const QPixmap &alphaChannel);
     virtual QPixmap alphaChannel() const;
     virtual QImage toImage() const = 0;

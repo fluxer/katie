@@ -1,0 +1,17 @@
+<!DOCTYPE RCC><RCC version="1.0">
+<qresource prefix="/trolltech/styles/windowsstyle">
+<file>images/windows/qt_critical.png</file>
+<file>images/windows/qt_information.png</file>
+<file>images/windows/qt_question.png</file>
+<file>images/windows/qt_warning.png</file>
+<file>images/windows/qt_windows_close.png</file>
+<file>images/windows/qt_windows_dock_widget_close.png</file>
+<file>images/windows/qt_windows_help.png</file>
+<file>images/windows/qt_windows_maximize.png</file>
+<file>images/windows/qt_windows_menu.png</file>
+<file>images/windows/qt_windows_minimize.png</file>
+<file>images/windows/qt_windows_normalizeup.png</file>
+<file>images/windows/qt_windows_shade.png</file>
+<file>images/windows/qt_windows_unshade.png</file>
+</qresource>
+</RCC>

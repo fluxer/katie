@@ -40,19 +40,7 @@ class QFontPrivate;
 
 class Q_GUI_EXPORT QFont
 {
-    Q_GADGET
-    Q_ENUMS(StyleStrategy)
 public:
-    enum StyleStrategy {
-        PreferDefault       = 0x0001,
-        PreferBitmap        = 0x0002,
-        PreferOutline       = 0x0004,
-        ForceOutline        = 0x0008,
-        PreferAntialias     = 0x0010,
-        NoAntialias         = 0x0020,
-        ForceIntegerMetrics = 0x0040
-    };
-
     enum HintingPreference {
         PreferDefaultHinting        = 0,
         PreferNoHinting             = 1,
@@ -86,27 +74,19 @@ public:
         UltraExpanded  = 200
     };
 
-    enum SpacingType {
-        PercentageSpacing,
-        AbsoluteSpacing
-    };
-
     enum ResolveProperties {
         FamilyResolved              = 0x0001,
         SizeResolved                = 0x0002,
-        StyleStrategyResolved       = 0x0004,
-        WeightResolved              = 0x0008,
-        StyleResolved               = 0x0010,
-        UnderlineResolved           = 0x0020,
-        OverlineResolved            = 0x0040,
-        StrikeOutResolved           = 0x0080,
-        FixedPitchResolved          = 0x0100,
-        StretchResolved             = 0x0200,
-        KerningResolved             = 0x0400,
-        LetterSpacingResolved       = 0x0800,
-        WordSpacingResolved         = 0x1000,
-        HintingPreferenceResolved   = 0x2000,
-        StyleNameResolved           = 0x4000,
+        WeightResolved              = 0x0004,
+        StyleResolved               = 0x0008,
+        UnderlineResolved           = 0x0010,
+        OverlineResolved            = 0x0020,
+        StrikeOutResolved           = 0x0040,
+        FixedPitchResolved          = 0x0080,
+        StretchResolved             = 0x0100,
+        KerningResolved             = 0x0200,
+        HintingPreferenceResolved   = 0x0400,
+        StyleNameResolved           = 0x0800,
         AllPropertiesResolved       = 0x1ffff
     };
 
@@ -157,23 +137,13 @@ public:
     bool kerning() const;
     void setKerning(bool);
 
-    StyleStrategy styleStrategy() const;
-    void setStyleStrategy(StyleStrategy s);
-
     int stretch() const;
     void setStretch(int);
-
-    qreal letterSpacing() const;
-    SpacingType letterSpacingType() const;
-    void setLetterSpacing(SpacingType type, qreal spacing);
-
-    qreal wordSpacing() const;
-    void setWordSpacing(qreal spacing);
 
     void setHintingPreference(HintingPreference hintingPreference);
     HintingPreference hintingPreference() const;
 
-    // dupicated from QFontInfo
+    // duplicated from QFontInfo
     bool exactMatch() const;
 
     QFont &operator=(const QFont &);
@@ -182,10 +152,8 @@ public:
     bool operator<(const QFont &) const;
     operator QVariant() const;
     bool isCopyOf(const QFont &) const;
-#ifdef Q_COMPILER_RVALUE_REFS
     inline QFont &operator=(QFont &&other)
     { qSwap(d, other.d); qSwap(resolve_mask, other.resolve_mask);  return *this; }
-#endif
 
     Qt::HANDLE handle() const;
 #if defined(Q_WS_X11)
@@ -197,12 +165,7 @@ public:
     QString toString() const;
     bool fromString(const QString &);
 
-    static void initialize();
-    static void cleanup();
-
-    QString defaultFamily() const;
-    QString lastResortFamily() const;
-    QString lastResortFont() const;
+    static QString lastResortFamily();
 
     QFont resolve(const QFont &) const;
     inline uint resolve() const { return resolve_mask; }
@@ -231,7 +194,6 @@ private:
     friend class QWidgetPrivate;
     friend class QTextLayout;
     friend class QTextEngine;
-    friend class QStackTextEngine;
     friend class QTextLine;
     friend struct QScriptLine;
     friend class QAlphaPaintEngine;

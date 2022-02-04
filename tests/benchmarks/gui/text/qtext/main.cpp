@@ -247,20 +247,6 @@ void tst_QText::layout()
     }
 }
 
-//### requires tst_QText to be a friend of QTextLayout
-/*void tst_QText::stackTextLayout()
-{
-    QStackTextEngine engine(m_shortLorem, qApp->font());
-    QTextLayout layout(&engine);
-    setupTextLayout(&layout);
-
-    QBENCHMARK {
-        QStackTextEngine engine(m_shortLorem, qApp->font());
-        QTextLayout layout(&engine);
-        setupTextLayout(&layout);
-    }
-}*/
-
 void tst_QText::formattedLayout()
 {
     //set up formatting

@@ -32,6 +32,7 @@
 //
 
 #include "qfontengine_p.h"
+#include "qstdcontainers_p.h"
 
 #include <ft2build.h>
 #include FT_FREETYPE_H
@@ -44,12 +45,10 @@
 #include <fontconfig/fontconfig.h>
 #endif
 
-#include <harfbuzz-shaper.h>
-
 QT_BEGIN_NAMESPACE
 
 
-struct QFontMetric {
+struct QFontGlyph {
     int left;
     int right;
     int top;
@@ -57,11 +56,12 @@ struct QFontMetric {
     FT_Fixed linearhoriadvance;
     FT_Pos horiadvance;
     FT_Pos advancex;
+
+    FT_Outline outline;
 };
 
 /*
- * This struct represents one font file on disk (like Arial.ttf) and is shared between all the font engines
- * that show this font file (at different pixel sizes).
+ * This struct represents one font file on disk.
  */
 class QFreetypeFace
 {
@@ -69,26 +69,13 @@ public:
     QFreetypeFace(const QFontEngine::FaceId &face_id);
     ~QFreetypeFace();
 
-    QFontEngine::Properties properties() const;
-
     FT_Face face;
-    int xsize; // 26.6
-    int ysize; // 26.6
+    FT_Library library;
 
-    int fsType() const;
-
-    HB_Error getPointInOutline(HB_Glyph glyph, int flags, hb_uint32 point, HB_Fixed *xpos, HB_Fixed *ypos, hb_uint32 *nPoints);
-
-    static void addGlyphToPath(FT_Face face, FT_GlyphSlot g, const QFixedPoint &point, QPainterPath *path, FT_Fixed x_scale, FT_Fixed y_scale);
+    static void addGlyphToPath(FT_Outline outline, const QFixedPoint &point, QPainterPath *path);
 
 private:
     Q_DISABLE_COPY(QFreetypeFace);
-
-    friend class QFontEngineFT;
-
-    FT_Library library;
-
-    QByteArray fontData;
 };
 
 class Q_GUI_EXPORT QFontEngineFT : public QFontEngine
@@ -96,14 +83,12 @@ class Q_GUI_EXPORT QFontEngineFT : public QFontEngine
 public:
 #ifndef QT_NO_FONTCONFIG
     QFontEngineFT(const QFontDef &fd, FcPattern *pattern);
-#else
-    QFontEngineFT(const QFontDef &fd);
 #endif
+    QFontEngineFT(const QFontDef &fd);
     virtual ~QFontEngineFT();
 
     virtual QFontEngine::FaceId faceId() const;
     virtual QFontEngine::Properties properties() const;
-    virtual QFixed emSquareSize() const;
 
     virtual bool getSfntTableData(uint tag, uchar *buffer, uint *length) const;
     virtual int synthesized() const;
@@ -132,7 +117,7 @@ public:
     virtual bool canRender(const QChar *string, int len);
 
     virtual void addGlyphsToPath(glyph_t *glyphs, QFixedPoint *positions, int nglyphs,
-                         QPainterPath *path, QTextItem::RenderFlags flags);
+                         QPainterPath *path);
 
     virtual bool stringToCMap(const QChar *str, int len, QGlyphLayout *glyphs, int *nglyphs,
                       QTextEngine::ShaperFlags flags) const;
@@ -151,8 +136,6 @@ public:
 
     inline bool invalid() const { return xsize == 0 && ysize == 0; }
 
-    virtual HB_Error getPointInOutline(HB_Glyph glyph, int flags, hb_uint32 point, HB_Fixed *xpos, HB_Fixed *ypos, hb_uint32 *nPoints);
-
     enum HintStyle {
         HintNone,
         HintLight,
@@ -165,14 +148,11 @@ protected:
     HintStyle default_hint_style;
 
 private:
-    int loadFlags(int flags) const;
-    bool loadGlyph(glyph_t glyph, int load_flags) const;
-
-    QFontMetric* getMetrics(glyph_t glyph) const;
+    void init();
+    bool loadGlyph(glyph_t glyph) const;
+    QFontGlyph* getGlyph(glyph_t glyph) const;
 
     QFreetypeFace *freetype;
-    bool embolden;
-    bool oblique;
     QFontEngine::FaceId face_id;
 
     int xsize;
@@ -183,14 +163,13 @@ private:
     QFixed line_thickness;
     QFixed underline_position;
 
-    FT_Size_Metrics metrics;
     bool kerning_pairs_loaded;
 
-    typedef QMap<uint, glyph_t> CharCache;
+    typedef QStdMap<uint, glyph_t> CharCache;
     mutable CharCache charcache;
 
-    typedef QMap<glyph_t, QFontMetric*> MetricCache;
-    mutable MetricCache metriccache;
+    typedef QStdMap<glyph_t, QFontGlyph*> GlyphCache;
+    mutable GlyphCache glyphcache;
 };
 
 

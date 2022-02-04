@@ -92,10 +92,6 @@ public:
     void setTextOption(const QTextOption &option);
     QTextOption textOption() const;
 
-    void setPreeditArea(int position, const QString &text);
-    int preeditAreaPosition() const;
-    QString preeditAreaText() const;
-
     struct FormatRange {
         int start;
         int length;
@@ -107,9 +103,6 @@ public:
 
     void setCacheEnabled(bool enable);
     bool cacheEnabled() const;
-
-    void setCursorMoveStyle(Qt::CursorMoveStyle style);
-    Qt::CursorMoveStyle cursorMoveStyle() const;
 
     void beginLayout();
     void endLayout();
@@ -128,8 +121,6 @@ public:
     bool isValidCursorPosition(int pos) const;
     int nextCursorPosition(int oldPos, CursorMode mode = SkipCharacters) const;
     int previousCursorPosition(int oldPos, CursorMode mode = SkipCharacters) const;
-    int leftCursorPosition(int oldPos) const;
-    int rightCursorPosition(int oldPos) const;
 
     void draw(QPainter *p, const QPointF &pos, const QVector<FormatRange> &selections = QVector<FormatRange>(),
               const QRectF &clip = QRectF()) const;
@@ -154,9 +145,6 @@ private:
     friend class QPSPrinter;
     friend class QGraphicsSimpleTextItemPrivate;
     friend class QGraphicsSimpleTextItem;
-    friend void qt_format_text(const QFont &font, const QRectF &_r, int tf, const QTextOption *, const QString& str,
-                               QRectF *brect, int tabstops, int* tabarray, int tabarraylen,
-                               QPainter *painter);
     QTextEngine *d;
 };
 

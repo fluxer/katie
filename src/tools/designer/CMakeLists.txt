@@ -32,7 +32,6 @@ set(DESIGNERBIN_HEADERS
     ${CMAKE_CURRENT_SOURCE_DIR}/newform.h
     ${CMAKE_CURRENT_SOURCE_DIR}/versiondialog.h
     ${CMAKE_CURRENT_SOURCE_DIR}/designer_enums.h
-    ${CMAKE_CURRENT_SOURCE_DIR}/appfontdialog.h
     ${CMAKE_CURRENT_SOURCE_DIR}/preferencesdialog.h
     ${CMAKE_CURRENT_SOURCE_DIR}/mainwindow.h
 )
@@ -53,7 +52,6 @@ set(DESIGNERBIN_SOURCES
     ${CMAKE_CURRENT_SOURCE_DIR}/saveformastemplate.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/newform.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/versiondialog.cpp
-    ${CMAKE_CURRENT_SOURCE_DIR}/appfontdialog.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/preferencesdialog.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/mainwindow.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/saveformastemplate.ui

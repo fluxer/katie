@@ -38,7 +38,6 @@ public:
     QWidget *window;
     QRect geometry;
     QRegion staticContents;
-    QList<QImage*> bufferImages;
 };
 
 /*!
@@ -119,8 +118,6 @@ QWidget* QWindowSurface::window() const
 void QWindowSurface::endPaint(const QRegion &)
 {
 //     QApplication::syncX();
-    qDeleteAll(d_ptr->bufferImages);
-    d_ptr->bufferImages.clear();
 }
 
 /*!
@@ -152,37 +149,6 @@ QRect QWindowSurface::geometry() const
 
     Returns true if the area was scrolled successfully; false otherwise.
 */
-
-/*!
-    Returns a QImage pointer which represents the actual buffer the \a widget
-    is drawn into or null if this is unavailable.
-
-    You must call beginPaint() before you call this function and the returned
-    pointer is only valid until endPaint() is called.
-*/
-QImage* QWindowSurface::buffer(const QWidget *widget)
-{
-    if (widget->window() != window())
-        return nullptr;
-
-    QPaintDevice *pdev = paintDevice();
-    if (!pdev || pdev->devType() != QInternal::Image)
-        return nullptr;
-
-    const QPoint off = offset(widget);
-    QImage *img = static_cast<QImage*>(pdev);
-
-    QRect rect(off, widget->size());
-    rect &= QRect(QPoint(), img->size());
-
-    if (rect.isEmpty())
-        return nullptr;
-
-    img = new QImage(img->copy(rect));
-    d_ptr->bufferImages.append(img);
-
-    return img;
-}
 
 /*!
   Returns the offset of \a widget in the coordinates of this

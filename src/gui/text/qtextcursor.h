@@ -85,8 +85,6 @@ public:
         PreviousBlock,
         PreviousCharacter,
         PreviousWord,
-        Left,
-        WordLeft,
 
         End,
         Down,
@@ -96,8 +94,6 @@ public:
         NextBlock,
         NextCharacter,
         NextWord,
-        Right,
-        WordRight,
 
         NextCell,
         PreviousCell,

@@ -28,9 +28,6 @@
 #include "qapplication.h"
 #include "qstyle.h"
 #include "qaction.h"
-#ifndef QT_NO_ACCESSIBILITY
-#include "qaccessible.h"
-#endif
 
 QT_BEGIN_NAMESPACE
 
@@ -470,9 +467,6 @@ void QAbstractButtonPrivate::refresh()
     if (blockRefresh)
         return;
     q->update();
-#ifndef QT_NO_ACCESSIBILITY
-    QAccessible::updateAccessibility(q, 0, QAccessible::StateChanged);
-#endif
 }
 
 void QAbstractButtonPrivate::click()
@@ -612,9 +606,6 @@ void QAbstractButton::setText(const QString &text)
     d->sizeHint = QSize();
     update();
     updateGeometry();
-#ifndef QT_NO_ACCESSIBILITY
-    QAccessible::updateAccessibility(this, 0, QAccessible::NameChanged);
-#endif
 }
 
 QString QAbstractButton::text() const

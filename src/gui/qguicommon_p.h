@@ -6,6 +6,8 @@
 #include "qimageiohandler.h"
 #include "qtabbar.h"
 #include "qtabwidget.h"
+#include "qmap.h"
+#include "qdrawhelper_p.h"
 
 QT_BEGIN_NAMESPACE
 
@@ -43,6 +45,42 @@ inline static QColor mergedColors(const QColor &colorA, const QColor &colorB, in
     tmp.setGreen((tmp.green() * factor) / maxFactor + (colorB.green() * (maxFactor - factor)) / maxFactor);
     tmp.setBlue((tmp.blue() * factor) / maxFactor + (colorB.blue() * (maxFactor - factor)) / maxFactor);
     return tmp;
+}
+
+inline static QImage replaceColors(const QImage &source, const QMap<QRgb, QRgb> &colormap)
+{
+    QImage result(source);
+    const int bpl = result.bytesPerLine();
+    uchar* imagebits = result.bits();
+    switch (result.format()) {
+        case QImage::Format_RGB32:
+        case QImage::Format_ARGB32:
+        case QImage::Format_ARGB32_Premultiplied: {
+            for (int h = 0; h < source.height(); h++) {
+                uchar* scan = QFAST_SCAN_LINE(imagebits, bpl, h);
+                for (int w = 0; w < source.width(); w++) {
+                    const QRgb pixel = source.pixel(w, h);
+                    ((uint *)scan)[w] = colormap.value(pixel, pixel);
+                }
+            }
+            break;
+        }
+        case QImage::Format_RGB16: {
+            for (int h = 0; h < source.height(); h++) {
+                uchar* scan = QFAST_SCAN_LINE(imagebits, bpl, h);
+                for (int w = 0; w < source.width(); w++) {
+                    const QRgb pixel = source.pixel(w, h);
+                    ((quint16 *)scan)[w] = qt_colorConvert<quint16, quint32>(colormap.value(pixel, pixel), 0);
+                }
+            }
+            break;
+        }
+        default: {
+            Q_ASSERT_X(false, "replaceColors", "internal error");
+            break;
+        }
+    }
+    return result;
 }
 
 Q_GLOBAL_STATIC(QWidget, globalStyleInfoWidget)
@@ -107,176 +145,6 @@ inline static int lowest_bit(uint v)
 }
 
 static const qreal inv_dist_to_plane = 1. / 1024.;
-
-#ifndef QT_NO_XPM
-// Message box icons, from page 210 of the Windows style guide.
-
-// Hand-drawn to resemble Microsoft's icons, but in the Mac/Netscape palette.
-// Thanks to TrueColor displays, it is slightly more efficient to have
-// them duplicated.
-/* XPM */
-static const char * const qt_information_xpm[]={
-    "32 32 5 1",
-    ". c None",
-    "c c #000000",
-    "* c #999999",
-    "a c #ffffff",
-    "b c #0000ff",
-    "...........********.............",
-    "........***aaaaaaaa***..........",
-    "......**aaaaaaaaaaaaaa**........",
-    ".....*aaaaaaaaaaaaaaaaaa*.......",
-    "....*aaaaaaaabbbbaaaaaaaac......",
-    "...*aaaaaaaabbbbbbaaaaaaaac.....",
-    "..*aaaaaaaaabbbbbbaaaaaaaaac....",
-    ".*aaaaaaaaaaabbbbaaaaaaaaaaac...",
-    ".*aaaaaaaaaaaaaaaaaaaaaaaaaac*..",
-    "*aaaaaaaaaaaaaaaaaaaaaaaaaaaac*.",
-    "*aaaaaaaaaabbbbbbbaaaaaaaaaaac*.",
-    "*aaaaaaaaaaaabbbbbaaaaaaaaaaac**",
-    "*aaaaaaaaaaaabbbbbaaaaaaaaaaac**",
-    "*aaaaaaaaaaaabbbbbaaaaaaaaaaac**",
-    "*aaaaaaaaaaaabbbbbaaaaaaaaaaac**",
-    "*aaaaaaaaaaaabbbbbaaaaaaaaaaac**",
-    ".*aaaaaaaaaaabbbbbaaaaaaaaaac***",
-    ".*aaaaaaaaaaabbbbbaaaaaaaaaac***",
-    "..*aaaaaaaaaabbbbbaaaaaaaaac***.",
-    "...caaaaaaabbbbbbbbbaaaaaac****.",
-    "....caaaaaaaaaaaaaaaaaaaac****..",
-    ".....caaaaaaaaaaaaaaaaaac****...",
-    "......ccaaaaaaaaaaaaaacc****....",
-    ".......*cccaaaaaaaaccc*****.....",
-    "........***cccaaaac*******......",
-    "..........****caaac*****........",
-    ".............*caaac**...........",
-    "...............caac**...........",
-    "................cac**...........",
-    ".................cc**...........",
-    "..................***...........",
-    "...................**..........."};
-
-/* XPM */
-static const char* const qt_warning_xpm[]={
-    "32 32 4 1",
-    ". c None",
-    "a c #ffff00",
-    "* c #000000",
-    "b c #999999",
-    ".............***................",
-    "............*aaa*...............",
-    "...........*aaaaa*b.............",
-    "...........*aaaaa*bb............",
-    "..........*aaaaaaa*bb...........",
-    "..........*aaaaaaa*bb...........",
-    ".........*aaaaaaaaa*bb..........",
-    ".........*aaaaaaaaa*bb..........",
-    "........*aaaaaaaaaaa*bb.........",
-    "........*aaaa***aaaa*bb.........",
-    ".......*aaaa*****aaaa*bb........",
-    ".......*aaaa*****aaaa*bb........",
-    "......*aaaaa*****aaaaa*bb.......",
-    "......*aaaaa*****aaaaa*bb.......",
-    ".....*aaaaaa*****aaaaaa*bb......",
-    ".....*aaaaaa*****aaaaaa*bb......",
-    "....*aaaaaaaa***aaaaaaaa*bb.....",
-    "....*aaaaaaaa***aaaaaaaa*bb.....",
-    "...*aaaaaaaaa***aaaaaaaaa*bb....",
-    "...*aaaaaaaaaa*aaaaaaaaaa*bb....",
-    "..*aaaaaaaaaaa*aaaaaaaaaaa*bb...",
-    "..*aaaaaaaaaaaaaaaaaaaaaaa*bb...",
-    ".*aaaaaaaaaaaa**aaaaaaaaaaa*bb..",
-    ".*aaaaaaaaaaa****aaaaaaaaaa*bb..",
-    "*aaaaaaaaaaaa****aaaaaaaaaaa*bb.",
-    "*aaaaaaaaaaaaa**aaaaaaaaaaaa*bb.",
-    "*aaaaaaaaaaaaaaaaaaaaaaaaaaa*bbb",
-    "*aaaaaaaaaaaaaaaaaaaaaaaaaaa*bbb",
-    ".*aaaaaaaaaaaaaaaaaaaaaaaaa*bbbb",
-    "..*************************bbbbb",
-    "....bbbbbbbbbbbbbbbbbbbbbbbbbbb.",
-    ".....bbbbbbbbbbbbbbbbbbbbbbbbb.."};
-
-/* XPM */
-static const char* const qt_critical_xpm[]={
-    "32 32 4 1",
-    ". c None",
-    "a c #999999",
-    "* c #ff0000",
-    "b c #ffffff",
-    "...........********.............",
-    ".........************...........",
-    ".......****************.........",
-    "......******************........",
-    ".....********************a......",
-    "....**********************a.....",
-    "...************************a....",
-    "..*******b**********b*******a...",
-    "..******bbb********bbb******a...",
-    ".******bbbbb******bbbbb******a..",
-    ".*******bbbbb****bbbbb*******a..",
-    "*********bbbbb**bbbbb*********a.",
-    "**********bbbbbbbbbb**********a.",
-    "***********bbbbbbbb***********aa",
-    "************bbbbbb************aa",
-    "************bbbbbb************aa",
-    "***********bbbbbbbb***********aa",
-    "**********bbbbbbbbbb**********aa",
-    "*********bbbbb**bbbbb*********aa",
-    ".*******bbbbb****bbbbb*******aa.",
-    ".******bbbbb******bbbbb******aa.",
-    "..******bbb********bbb******aaa.",
-    "..*******b**********b*******aa..",
-    "...************************aaa..",
-    "....**********************aaa...",
-    "....a********************aaa....",
-    ".....a******************aaa.....",
-    "......a****************aaa......",
-    ".......aa************aaaa.......",
-    ".........aa********aaaaa........",
-    "...........aaaaaaaaaaa..........",
-    ".............aaaaaaa............"};
-
-/* XPM */
-static const char *const qt_question_xpm[] = {
-    "32 32 5 1",
-    ". c None",
-    "c c #000000",
-    "* c #999999",
-    "a c #ffffff",
-    "b c #0000ff",
-    "...........********.............",
-    "........***aaaaaaaa***..........",
-    "......**aaaaaaaaaaaaaa**........",
-    ".....*aaaaaaaaaaaaaaaaaa*.......",
-    "....*aaaaaaaaaaaaaaaaaaaac......",
-    "...*aaaaaaaabbbbbbaaaaaaaac.....",
-    "..*aaaaaaaabaaabbbbaaaaaaaac....",
-    ".*aaaaaaaabbaaaabbbbaaaaaaaac...",
-    ".*aaaaaaaabbbbaabbbbaaaaaaaac*..",
-    "*aaaaaaaaabbbbaabbbbaaaaaaaaac*.",
-    "*aaaaaaaaaabbaabbbbaaaaaaaaaac*.",
-    "*aaaaaaaaaaaaabbbbaaaaaaaaaaac**",
-    "*aaaaaaaaaaaaabbbaaaaaaaaaaaac**",
-    "*aaaaaaaaaaaaabbaaaaaaaaaaaaac**",
-    "*aaaaaaaaaaaaabbaaaaaaaaaaaaac**",
-    "*aaaaaaaaaaaaaaaaaaaaaaaaaaaac**",
-    ".*aaaaaaaaaaaabbaaaaaaaaaaaac***",
-    ".*aaaaaaaaaaabbbbaaaaaaaaaaac***",
-    "..*aaaaaaaaaabbbbaaaaaaaaaac***.",
-    "...caaaaaaaaaabbaaaaaaaaaac****.",
-    "....caaaaaaaaaaaaaaaaaaaac****..",
-    ".....caaaaaaaaaaaaaaaaaac****...",
-    "......ccaaaaaaaaaaaaaacc****....",
-    ".......*cccaaaaaaaaccc*****.....",
-    "........***cccaaaac*******......",
-    "..........****caaac*****........",
-    ".............*caaac**...........",
-    "...............caac**...........",
-    "................cac**...........",
-    ".................cc**...........",
-    "..................***...........",
-    "...................**...........",
-};
-#endif
 
 // use the same rounding as in qrasterizer.cpp (6 bit fixed point)
 static const qreal aliasedCoordinateDelta = 0.5 - 0.015625;

@@ -687,17 +687,15 @@ public:
     enum TextFlag {
         TextSingleLine = 0x0100,
         TextDontClip = 0x0200,
-        TextExpandTabs = 0x0400,
-        TextShowMnemonic = 0x0800,
-        TextWordWrap = 0x1000,
-        TextWrapAnywhere = 0x2000,
-        TextDontPrint = 0x4000,
-        TextIncludeTrailingSpaces = 0x08000000,
-        TextHideMnemonic = 0x8000,
-        TextJustificationForced = 0x10000,
-        TextForceLeftToRight = 0x20000,
-        TextForceRightToLeft = 0x40000,
-        TextLongestVariant = 0x80000
+        TextShowMnemonic = 0x0400,
+        TextWordWrap = 0x0800,
+        TextWrapAnywhere = 0x1000,
+        TextDontPrint = 0x2000,
+        TextHideMnemonic = 0x4000,
+        TextForceLeftToRight = 0x8000,
+        TextForceRightToLeft = 0x10000,
+        TextLongestVariant = 0x20000,
+        TextIncludeTrailingSpaces = 0x08000000
     };
 
     enum TextElideMode {
@@ -1189,18 +1187,15 @@ public:
         BackgroundRole = 8,
         ForegroundRole = 9,
         CheckStateRole = 10,
-        // Accessibility
-        AccessibleTextRole = 11,
-        AccessibleDescriptionRole = 12,
         // More general purpose
-        SizeHintRole = 13,
-        InitialSortOrderRole = 14,
+        SizeHintRole = 11,
+        InitialSortOrderRole = 12,
         // Internal UiLib roles
-        DisplayPropertyRole = 15,
-        DecorationPropertyRole = 16,
-        ToolTipPropertyRole = 17,
-        StatusTipPropertyRole = 18,
-        WhatsThisPropertyRole = 19,
+        DisplayPropertyRole = 13,
+        DecorationPropertyRole = 14,
+        ToolTipPropertyRole = 15,
+        StatusTipPropertyRole = 16,
+        WhatsThisPropertyRole = 17,
         // Reserved
         UserRole = 32
     };
@@ -1289,11 +1284,6 @@ public:
     enum CoordinateSystem {
         DeviceCoordinates,
         LogicalCoordinates
-    };
-
-    enum CursorMoveStyle {
-        LogicalMoveStyle,
-        VisualMoveStyle
     };
 
     enum HitTestAccuracy {

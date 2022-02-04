@@ -163,8 +163,6 @@ public:
     void clip(const QRect &rect, Qt::ClipOperation op);
     void clip(const QRegion &region, Qt::ClipOperation op);
 
-    void drawStaticTextItem(QStaticTextItem *textItem);
-
 #ifdef Q_NO_USING_KEYWORD
     inline void drawEllipse(const QRect &rect) { QPaintEngineEx::drawEllipse(rect); }
 #else

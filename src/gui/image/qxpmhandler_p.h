@@ -34,7 +34,7 @@
 
 #include "QtGui/qimageiohandler.h"
 
-#ifndef QT_NO_XPM
+#ifndef QT_NO_IMAGEFORMAT_XPM
 
 QT_BEGIN_NAMESPACE
 
@@ -48,10 +48,26 @@ public:
     static bool canRead(QIODevice *device);
 
     QByteArray name() const;
+
+private:
+    bool readHeader();
+    enum State {
+        Ready,
+        ReadHeader,
+        Error
+    };
+    State state;
+    int width;
+    int height;
+    int ncols;
+    int cpp;
+    QByteArray buffer;
+    int index;
+    QString fileName;
 };
 
 QT_END_NAMESPACE
 
-#endif // QT_NO_XPM
+#endif // QT_NO_IMAGEFORMAT_XPM
 
 #endif // QXPMHANDLER_P_H

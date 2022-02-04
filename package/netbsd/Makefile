@@ -22,6 +22,7 @@ USE_TOOLS = pkg-config msgfmt
 DL_AUTO_VARS = yes
 
 DEPENDS = xdg-utils-[0-9]*:../../misc/xdg-utils
+DEPENDS += freefont-ttf-[0-9]*:../../fonts/freefont-ttf
 BUILD_DEPENDS = unifdef-[0-9]*:../../devel/unifdef
 
 .include "../../sysutils/desktop-file-utils/desktopdb.mk"
@@ -38,7 +39,6 @@ BUILD_DEPENDS = unifdef-[0-9]*:../../devel/unifdef
 .include "../../x11/libXrandr/buildlink3.mk"
 .include "../../x11/libXrender/buildlink3.mk"
 .include "../../x11/libX11/buildlink3.mk"
-.include "../../x11/libXpm/buildlink3.mk"
 .include "../../x11/libICE/buildlink3.mk"
 .include "../../x11/libSM/buildlink3.mk"
 .include "../../fonts/fontconfig/buildlink3.mk"

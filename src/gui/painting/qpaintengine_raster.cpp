@@ -27,10 +27,8 @@
 #include "qlabel.h"
 #include "qbitmap.h"
 #include "qmath.h"
-#include "qtextengine_p.h"
 #include "qpixmap_raster_p.h"
 #include "qimage_p.h"
-#include "qstatictext_p.h"
 #include "qpaintengine_raster_p.h"
 #include "qoutlinemapper_p.h"
 #include "qguicommon_p.h"
@@ -519,9 +517,6 @@ void QRasterPaintEngine::brushChanged()
     s->fillFlags |= DirtyBrush;
 }
 
-
-
-
 /*!
     \internal
 */
@@ -558,7 +553,6 @@ void QRasterPaintEngine::updateRasterState()
 
     s->dirty = 0;
 }
-
 
 /*!
     \internal
@@ -1872,17 +1866,6 @@ QRasterPaintEnginePrivate::getBrushFunc(const QRectF &rect,
                                         const QSpanData *data) const
 {
     return isUnclipped(rect) ? data->unclipped_blend : data->blend;
-}
-
-/*!
-   \reimp
-*/
-void QRasterPaintEngine::drawStaticTextItem(QStaticTextItem *textItem)
-{
-    ensurePen();
-    ensureRasterState();
-
-    QPaintEngineEx::drawStaticTextItem(textItem);
 }
 
 /*!

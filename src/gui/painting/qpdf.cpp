@@ -1767,9 +1767,7 @@ void QPdfBaseEnginePrivate::drawTextItem(const QPointF &p, const QTextItemInt &t
     const qreal size = ti.fontEngine->fontDef.pixelSize;
     QVarLengthArray<glyph_t> glyphs;
     QVarLengthArray<QFixedPoint> positions;
-    QTransform m = QTransform::fromTranslate(p.x(), p.y());
-    ti.fontEngine->getGlyphPositions(ti.glyphs, m, ti.flags,
-                                     glyphs, positions);
+    ti.fontEngine->getGlyphPositions(ti.glyphs, p, glyphs, positions);
     if (glyphs.size() == 0)
         return;
     const int synthesized = ti.fontEngine->synthesized();
@@ -1777,9 +1775,7 @@ void QPdfBaseEnginePrivate::drawTextItem(const QPointF &p, const QTextItemInt &t
 
     *currentPage << "BT\n"
                  << "/F" << font->object_id << size << "Tf "
-                 << stretch << (synthesized & QFontEngine::SynthesizedItalic
-                                ? "0 .3 -1 0 0 Tm\n"
-                                : "0 0 -1 0 0 Tm\n");
+                 << stretch << "0 0 -1 0 0 Tm\n";
 
 
 #if 0
@@ -1810,8 +1806,6 @@ void QPdfBaseEnginePrivate::drawTextItem(const QPointF &p, const QTextItemInt &t
     for (int i = 0; i < glyphs.size(); ++i) {
         qreal x = positions[i].x.toReal();
         qreal y = positions[i].y.toReal();
-        if (synthesized & QFontEngine::SynthesizedItalic)
-            x += .3*y;
         x /= stretch;
         QSTACKARRAY(char, buf, 5);
         int g = font->addGlyph(glyphs[i]);
@@ -1819,28 +1813,6 @@ void QPdfBaseEnginePrivate::drawTextItem(const QPointF &p, const QTextItemInt &t
                      << QPdf::toHex((ushort)g, buf) << "> Tj\n";
         last_x = x;
         last_y = y;
-    }
-    if (synthesized & QFontEngine::SynthesizedBold) {
-        *currentPage << stretch << (synthesized & QFontEngine::SynthesizedItalic
-                            ? "0 .3 -1 0 0 Tm\n"
-                            : "0 0 -1 0 0 Tm\n");
-        *currentPage << "/Span << /ActualText <> >> BDC\n";
-        last_x = 0.5*fe->lineThickness().toReal();
-        last_y = 0.;
-        for (int i = 0; i < glyphs.size(); ++i) {
-            qreal x = positions[i].x.toReal();
-            qreal y = positions[i].y.toReal();
-            if (synthesized & QFontEngine::SynthesizedItalic)
-                x += .3*y;
-            x /= stretch;
-            QSTACKARRAY(char, buf, 5);
-            int g = font->addGlyph(glyphs[i]);
-            *currentPage << x - last_x << last_y - y << "Td <"
-                        << QPdf::toHex((ushort)g, buf) << "> Tj\n";
-            last_x = x;
-            last_y = y;
-        }
-        *currentPage << "EMC\n";
     }
 #endif
 

@@ -57,7 +57,6 @@
 #include "qtooltip.h"
 #include "qstyleoption.h"
 #include "qlineedit.h"
-#include "qaccessible.h"
 
 #ifndef QT_NO_SHORTCUT
 #include "qapplication_p.h"
@@ -130,25 +129,25 @@ bool QTextControlPrivate::cursorMoveKeyEvent(QKeyEvent *e)
     }
 #ifndef QT_NO_SHORTCUT
     if (e == QKeySequence::MoveToNextChar) {
-            op = QTextCursor::Right;
+            op = QTextCursor::NextCharacter;
     }
     else if (e == QKeySequence::MoveToPreviousChar) {
-            op = QTextCursor::Left;
+            op = QTextCursor::PreviousCharacter;
     }
     else if (e == QKeySequence::SelectNextChar) {
-           op = QTextCursor::Right;
+           op = QTextCursor::NextCharacter;
            mode = QTextCursor::KeepAnchor;
     }
     else if (e == QKeySequence::SelectPreviousChar) {
-            op = QTextCursor::Left;
+            op = QTextCursor::PreviousCharacter;
             mode = QTextCursor::KeepAnchor;
     }
     else if (e == QKeySequence::SelectNextWord) {
-            op = QTextCursor::WordRight;
+            op = QTextCursor::NextWord;
             mode = QTextCursor::KeepAnchor;
     }
     else if (e == QKeySequence::SelectPreviousWord) {
-            op = QTextCursor::WordLeft;
+            op = QTextCursor::PreviousWord;
             mode = QTextCursor::KeepAnchor;
     }
     else if (e == QKeySequence::SelectStartOfLine) {
@@ -192,10 +191,10 @@ bool QTextControlPrivate::cursorMoveKeyEvent(QKeyEvent *e)
             }
     }
     else if (e == QKeySequence::MoveToNextWord) {
-            op = QTextCursor::WordRight;
+            op = QTextCursor::NextWord;
     }
     else if (e == QKeySequence::MoveToPreviousWord) {
-            op = QTextCursor::WordLeft;
+            op = QTextCursor::PreviousWord;
     }
     else if (e == QKeySequence::MoveToEndOfBlock) {
             op = QTextCursor::EndOfBlock;
@@ -541,10 +540,6 @@ void QTextControlPrivate::selectionChanged(bool forceEmitSelectionChanged /*=fal
     Q_Q(QTextControl);
     if (forceEmitSelectionChanged) {
         emit q->selectionChanged();
-#ifndef QT_NO_ACCESSIBILITY
-        if (q->parent())
-            QAccessible::updateAccessibility(q->parent(), 0, QAccessible::TextSelectionChanged);
-#endif
     }
 
     bool current = cursor.hasSelection();
@@ -555,10 +550,6 @@ void QTextControlPrivate::selectionChanged(bool forceEmitSelectionChanged /*=fal
     emit q->copyAvailable(current);
     if (!forceEmitSelectionChanged) {
         emit q->selectionChanged();
-#ifndef QT_NO_ACCESSIBILITY
-        if (q->parent())
-            QAccessible::updateAccessibility(q->parent(), 0, QAccessible::TextSelectionChanged);
-#endif
     }
 }
 
@@ -1227,7 +1218,7 @@ void QTextControlPrivate::keyPressEvent(QKeyEvent *e)
     else if (e == QKeySequence::DeleteEndOfLine) {
         QTextBlock block = cursor.block();
         if (cursor.position() == block.position() + block.length() - 2)
-            cursor.movePosition(QTextCursor::Right, QTextCursor::KeepAnchor);
+            cursor.movePosition(QTextCursor::NextCharacter, QTextCursor::KeepAnchor);
         else
             cursor.movePosition(QTextCursor::EndOfBlock, QTextCursor::KeepAnchor);
         cursor.removeSelectedText();

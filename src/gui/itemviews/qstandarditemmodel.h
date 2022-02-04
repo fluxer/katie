@@ -23,6 +23,7 @@
 #define QSTANDARDITEMMODEL_H
 
 #include <QtCore/qabstractitemmodel.h>
+#include <QtCore/qscopedpointer.h>
 #include <QtGui/qbrush.h>
 #include <QtGui/qfont.h>
 #include <QtGui/qicon.h>
@@ -30,9 +31,7 @@
 #include <QtCore/qdatastream.h>
 #endif
 
-
 QT_BEGIN_NAMESPACE
-
 
 #ifndef QT_NO_STANDARDITEMMODEL
 
@@ -113,16 +112,6 @@ public:
         return Qt::CheckState(qvariant_cast<int>(data(Qt::CheckStateRole)));
     }
     inline void setCheckState(Qt::CheckState checkState);
-
-    inline QString accessibleText() const {
-        return qvariant_cast<QString>(data(Qt::AccessibleTextRole));
-    }
-    inline void setAccessibleText(const QString &accessibleText);
-
-    inline QString accessibleDescription() const {
-        return qvariant_cast<QString>(data(Qt::AccessibleDescriptionRole));
-    }
-    inline void setAccessibleDescription(const QString &accessibleDescription);
 
     Qt::ItemFlags flags() const;
     void setFlags(Qt::ItemFlags flags);
@@ -266,12 +255,6 @@ inline void QStandardItem::setForeground(const QBrush &abrush)
 
 inline void QStandardItem::setCheckState(Qt::CheckState acheckState)
 { setData(acheckState, Qt::CheckStateRole); }
-
-inline void QStandardItem::setAccessibleText(const QString &aaccessibleText)
-{ setData(aaccessibleText, Qt::AccessibleTextRole); }
-
-inline void QStandardItem::setAccessibleDescription(const QString &aaccessibleDescription)
-{ setData(aaccessibleDescription, Qt::AccessibleDescriptionRole); }
 
 inline void QStandardItem::setChild(int arow, QStandardItem *aitem)
 { setChild(arow, 0, aitem); }
@@ -428,6 +411,5 @@ Q_GUI_EXPORT QDataStream &operator<<(QDataStream &out, const QStandardItem &item
 #endif // QT_NO_STANDARDITEMMODEL
 
 QT_END_NAMESPACE
-
 
 #endif //QSTANDARDITEMMODEL_H

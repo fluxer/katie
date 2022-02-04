@@ -50,7 +50,6 @@ struct QFontDef
 {
     inline QFontDef()
         : pointSize(-1.0), pixelSize(-1),
-          styleStrategy(QFont::PreferDefault),
           fixedPitch(false), style(QFont::StyleNormal), weight(50), stretch(100),
           ignorePitch(true), hintingPreference(QFont::PreferDefaultHinting)
     {
@@ -61,8 +60,6 @@ struct QFontDef
 
     qreal pointSize;
     qreal pixelSize;
-
-    QFont::StyleStrategy styleStrategy;
 
     bool fixedPitch;
     QFont::Style style;
@@ -75,11 +72,11 @@ struct QFontDef
     bool exactMatch(const QFontDef &other) const;
     bool operator==(const QFontDef &other) const
     {
-        return pixelSize == other.pixelSize
+        return pointSize == other.pointSize
+                    && pixelSize == other.pixelSize
                     && weight == other.weight
                     && style == other.style
                     && stretch == other.stretch
-                    && styleStrategy == other.styleStrategy
                     && ignorePitch == other.ignorePitch && fixedPitch == other.fixedPitch
                     && family == other.family
                     && (styleName.isEmpty() || other.styleName.isEmpty() || styleName == other.styleName)
@@ -87,11 +84,11 @@ struct QFontDef
     }
     inline bool operator<(const QFontDef &other) const
     {
+        if (pointSize != other.pointSize) return pointSize < other.pointSize;
         if (pixelSize != other.pixelSize) return pixelSize < other.pixelSize;
         if (weight != other.weight) return weight < other.weight;
         if (style != other.style) return style < other.style;
         if (stretch != other.stretch) return stretch < other.stretch;
-        if (styleStrategy != other.styleStrategy) return styleStrategy < other.styleStrategy;
         if (family != other.family) return family < other.family;
         if (!styleName.isEmpty() && !other.styleName.isEmpty() && styleName != other.styleName)
             return styleName < other.styleName;
@@ -105,10 +102,6 @@ struct QFontDef
 class Q_GUI_EXPORT QFontPrivate
 {
 public:
-#ifdef Q_WS_X11
-    static int defaultEncodingID;
-#endif // Q_WS_X11
-
     QFontPrivate();
     QFontPrivate(const QFontPrivate &other);
     ~QFontPrivate();
@@ -117,7 +110,6 @@ public:
 
     QAtomicInt ref;
     QFontDef request;
-    mutable QFontEngine *engine;
     int dpi;
     int screen;
 
@@ -125,10 +117,6 @@ public:
     bool overline;
     bool strikeOut;
     bool kerning;
-    bool letterSpacingIsAbsolute;
-
-    QFixed letterSpacing;
-    QFixed wordSpacing;
 
     static QFontPrivate *get(const QFont &font)
     {
@@ -146,7 +134,6 @@ class QFontCache
 public:
     // note: these static functions work on a per-thread basis
     static QFontCache *instance();
-    static void cleanup();
 
     QFontCache();
     ~QFontCache();

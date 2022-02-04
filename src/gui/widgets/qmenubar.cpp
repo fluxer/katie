@@ -25,9 +25,6 @@
 #include "qlayout.h"
 #include "qapplication.h"
 #include "qdesktopwidget.h"
-#ifndef QT_NO_ACCESSIBILITY
-# include "qaccessible.h"
-#endif
 #include "qpainter.h"
 #include "qstylepainter.h"
 #include "qevent.h"
@@ -495,14 +492,6 @@ void QMenuBarPrivate::_q_actionHovered()
     Q_Q(QMenuBar);
     if (QAction *action = qobject_cast<QAction *>(q->sender())) {
         emit q->hovered(action);
-#ifndef QT_NO_ACCESSIBILITY
-        if (QAccessible::isActive()) {
-            int actionIndex = actions.indexOf(action);
-            ++actionIndex;
-            QAccessible::updateAccessibility(q, actionIndex, QAccessible::Focus);
-            QAccessible::updateAccessibility(q, actionIndex, QAccessible::Selection);
-        }
-#endif //QT_NO_ACCESSIBILITY
     }
 }
 
@@ -575,94 +564,6 @@ void QMenuBar::initStyleOption(QStyleOptionMenuItem *option, const QAction *acti
     Widgets can be added to menus by using instances of the QWidgetAction
     class to hold them. These actions can then be inserted into menus
     in the usual way; see the QMenu documentation for more details.
-
-    \section1 Platform Dependent Look and Feel
-
-    Different platforms have different requirements for the appearance
-    of menu bars and their behavior when the user interacts with them.
-    For example, Windows systems are often configured so that the
-    underlined character mnemonics that indicate keyboard shortcuts
-    for items in the menu bar are only shown when the \gui{Alt} key is
-    pressed.
-
-    \table
-
-    \row \o \inlineimage plastique-menubar.png A menu bar shown in the
-    Plastique widget style.
-
-    \o The \l{QPlastiqueStyle}{Plastique widget style}, like most
-    other styles, handles the \gui{Help} menu in the same way as it
-    handles any other menu.
-
-    \row \o \inlineimage motif-menubar.png A menu bar shown in the
-    Motif widget style.
-
-    \o The \l{QMotifStyle}{Motif widget style} treats \gui{Help} menus
-    in a special way, placing them at right-hand end of the menu bar.
-
-    \endtable
-
-    \section1 QMenuBar on Mac OS X
-
-    QMenuBar on Mac OS X is a wrapper for using the system-wide menu bar.
-    If you have multiple menu bars in one dialog the outermost menu bar
-    (normally inside a widget with widget flag Qt::Window) will
-    be used for the system-wide menu bar.
-
-    Qt for Mac OS X also provides a menu bar merging feature to make
-    QMenuBar conform more closely to accepted Mac OS X menu bar layout.
-    The merging functionality is based on string matching the title of
-    a QMenu entry. These strings are translated (using QObject::tr())
-    in the "QMenuBar" context. If an entry is moved its slots will still
-    fire as if it was in the original place. The table below outlines
-    the strings looked for and where the entry is placed if matched:
-
-    \table
-    \header \i String matches \i Placement \i Notes
-    \row \i about.*
-         \i Application Menu | About <application name>
-         \i The application name is fetched from the \c {Info.plist} file
-            (see note below). If this entry is not found no About item
-            will appear in the Application Menu.
-    \row \i config, options, setup, settings or preferences
-         \i Application Menu | Preferences
-         \i If this entry is not found the Settings item will be disabled
-    \row \i quit or exit
-         \i Application Menu | Quit <application name>
-         \i If this entry is not found a default Quit item will be
-            created to call QApplication::quit()
-    \endtable
-
-    You can override this behavior by using the QAction::menuRole()
-    property.
-
-    If you want all windows in a Mac application to share one menu
-    bar, you must create a menu bar that does not have a parent.
-    Create a parent-less menu bar this way:
-
-    \snippet doc/src/snippets/code/src_gui_widgets_qmenubar.cpp 1
-
-    \bold{Note:} Do \e{not} call QMainWindow::menuBar() to create the
-    shared menu bar, because that menu bar will have the QMainWindow
-    as its parent. That menu bar would only be displayed for the
-    parent QMainWindow.
-
-    \bold{Note:} The text used for the application name in the menu
-    bar is obtained from the value set in the \c{Info.plist} file in
-    the application's bundle. See \l{Deploying an Application on
-    Mac OS X} for more information.
-
-    \section1 QMenuBar on Windows CE
-
-    QMenuBar on Windows CE is a wrapper for using the system-wide menu bar,
-    similar to the Mac.  This feature is activated for Windows Mobile
-    and integrates QMenuBar with the native soft keys. The left soft
-    key can be controlled with QMenuBar::setDefaultAction() and the
-    right soft key can be used to access the menu bar.
-
-    The hovered() signal is not supported for the native menu
-    integration. Also, it is not possible to display an icon in a
-    native menu on Windows Mobile.
 
     \section1 Examples
 
