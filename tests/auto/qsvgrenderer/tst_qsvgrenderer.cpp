@@ -36,7 +36,6 @@
 #include <qapplication.h>
 #include <qdebug.h>
 #include <qsvgrenderer.h>
-#include <qsvggenerator.h>
 #include <QPainter>
 #include <QPen>
 #include <QBuffer>
@@ -58,7 +57,6 @@ private slots:
     void getSetCheck();
     void inexistentUrl();
     void emptyUrl();
-    void testStrokeWidth();
     void testMapViewBoxToTarget();
     void testRenderElement();
     void constructorQXmlStreamReader() const;
@@ -134,50 +132,6 @@ void tst_QSvgRenderer::emptyUrl()
     QSvgRenderer renderer(data);
 
     QVERIFY(renderer.isValid());
-}
-
-void tst_QSvgRenderer::testStrokeWidth()
-{
-    qreal squareSize = 30.0;
-    qreal strokeWidth = 1.0;
-    qreal topLeft = 100.0;
-
-    QSvgGenerator generator;
-
-    QBuffer buffer;
-    QByteArray byteArray;
-    buffer.setBuffer(&byteArray);
-    generator.setOutputDevice(&buffer);
-
-    QPainter painter(&generator);
-    painter.setBrush(Qt::blue);
-
-    // Draw a rect with stroke
-    painter.setPen(QPen(Qt::black, strokeWidth));
-    painter.drawRect(topLeft, topLeft, squareSize, squareSize);
-
-    // Draw a rect without stroke
-    painter.setPen(Qt::NoPen);
-    painter.drawRect(topLeft, topLeft, squareSize, squareSize);
-    painter.end();
-
-    // Insert ID tags into the document
-    byteArray.insert(byteArray.indexOf("stroke=\"#000000\""), "id=\"SquareStroke\" ");
-    byteArray.insert(byteArray.indexOf("stroke=\"none\""), "id=\"SquareNoStroke\" ");
-
-    QSvgRenderer renderer(byteArray);
-
-    QRectF noStrokeRect = renderer.boundsOnElement("SquareNoStroke");
-    QCOMPARE(noStrokeRect.width(), squareSize);
-    QCOMPARE(noStrokeRect.height(), squareSize);
-    QCOMPARE(noStrokeRect.x(), topLeft);
-    QCOMPARE(noStrokeRect.y(), topLeft);
-
-    QRectF strokeRect = renderer.boundsOnElement("SquareStroke");
-    QCOMPARE(strokeRect.width(), squareSize + strokeWidth);
-    QCOMPARE(strokeRect.height(), squareSize + strokeWidth);
-    QCOMPARE(strokeRect.x(), topLeft - (strokeWidth / 2));
-    QCOMPARE(strokeRect.y(), topLeft - (strokeWidth / 2));
 }
 
 void tst_QSvgRenderer::testMapViewBoxToTarget()
@@ -657,7 +611,7 @@ void tst_QSvgRenderer::testGzLoading()
 
 #ifdef QT_BUILD_INTERNAL
 QT_BEGIN_NAMESPACE
-Q_AUTOTEST_EXPORT QByteArray qt_inflateGZipDataFrom(QIODevice *device);
+Q_AUTOTEST_EXPORT QByteArray qt_inflateGZipDataFrom(const QByteArray &contents);
 QT_END_NAMESPACE
 #endif
 
@@ -696,10 +650,7 @@ void tst_QSvgRenderer::testGzHelper()
     QFETCH(QByteArray, in);
     QFETCH(QByteArray, out);
 
-    QBuffer buffer(&in);
-    buffer.open(QIODevice::ReadOnly);
-    QVERIFY(buffer.isReadable());
-    QByteArray result = qt_inflateGZipDataFrom(&buffer);
+    QByteArray result = qt_inflateGZipDataFrom(in);
     QCOMPARE(result, out);
 #endif
 }
