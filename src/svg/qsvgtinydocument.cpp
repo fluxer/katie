@@ -49,19 +49,6 @@ QSvgTinyDocument::~QSvgTinyDocument()
 {
 }
 
-#ifdef QT_BUILD_INTERNAL
-Q_AUTOTEST_EXPORT QByteArray qt_inflateGZipDataFrom(const QByteArray &contents)
-#else
-static QByteArray qt_inflateGZipDataFrom(const QByteArray &contents)
-#endif
-{
-    if (contents.isEmpty()) {
-        return QByteArray();
-    }
-
-    return qUncompress(contents.constData(), contents.size());
-}
-
 QSvgTinyDocument * QSvgTinyDocument::load(const QString &fileName)
 {
     QFile file(fileName);
@@ -78,7 +65,7 @@ QSvgTinyDocument * QSvgTinyDocument::load(const QByteArray &contents)
 {
     // Check for gzip magic number and inflate if appropriate
     if (contents.startsWith("\x1f\x8b")) {
-        return load(qt_inflateGZipDataFrom(contents));
+        return load(qUncompress(contents.constData(), contents.size()));
     }
 
     QSvgHandler handler(contents);
