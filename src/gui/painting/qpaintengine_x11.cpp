@@ -1057,13 +1057,12 @@ void QX11PaintEnginePrivate::fillPath(const QPainterPath &path, QX11PaintEngineP
     else
         clippedPath = path.intersected(clipPath);
 
-    QList<QPolygonF> polys = clippedPath.toFillPolygons();
-    for (int i = 0; i < polys.size(); ++i) {
-        const int translated_size = polys.at(i).size();
+    foreach (const QPolygonF &poly, clippedPath.toFillPolygons()) {
+        const int translated_size = poly.size();
         QPointF translated_points[translated_size];
 
         for (int j = 0; j < translated_size; ++j) {
-            translated_points[j] = polys.at(i).at(j);
+            translated_points[j] = poly.at(j);
 
             if (!qt_x11Data->use_xrender || adjust_coords) {
                 translated_points[j].rx() = qRound(translated_points[j].rx() + aliasedCoordinateDelta) + aliasedCoordinateDelta;
