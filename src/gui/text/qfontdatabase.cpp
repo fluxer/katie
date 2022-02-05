@@ -782,7 +782,8 @@ QFontDatabase::QFontDatabase()
 
             if (FcPatternGetString(fonts->fonts[i], FC_FAMILY, 0, &family_value) != FcResultMatch)
                 continue;
-            if (FcPatternGetBool(fonts->fonts[i], FC_SCALABLE, 0, &scalable_value) != FcResultMatch || scalable_value != FcTrue)
+            FcPatternGetBool(fonts->fonts[i], FC_SCALABLE, 0, &scalable_value);
+            if (scalable_value != FcTrue)
                 continue;
 
             if (FcPatternGetString(fonts->fonts[i], FC_FOUNDRY, 0, &foundry_value) != FcResultMatch)
