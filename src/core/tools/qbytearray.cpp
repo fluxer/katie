@@ -339,12 +339,12 @@ QByteArray qCompress(const char* data, int nbytes, int compressionLevel)
     const size_t boundresult = libdeflate_gzip_compress_bound(comp, nbytes);
     if (Q_UNLIKELY(boundresult <= 0)) {
         qWarning("qCompress: Compression boundary is negative or zero");
+        libdeflate_free_compressor(comp);
         return QByteArray();
     }
 
     QSTACKARRAY(char, compbuffer, boundresult);
     const size_t compresult = libdeflate_gzip_compress(comp, data, nbytes, compbuffer, boundresult);
-
     libdeflate_free_compressor(comp);
 
     if (compresult <= 0) {
