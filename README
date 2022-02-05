@@ -12,8 +12,8 @@ There are several things you should be aware before considering Katie:
 
  - some things have changed:
   - QMake build system replaced with CMake
-  - libdeflate, Jansson, OpenSSL, PCRE, Freetype, ICU, X11 and libpng are
-    required for building
+  - Jansson, OpenSSL, PCRE, Freetype, ICU, X11 and libpng are required for
+    building
   - OpenSSL, D-Bus and CUPS must be linked to during build
   - QtUiTools is build as shared library by default
   - moc, uic, rcc, etc. are linked to components
