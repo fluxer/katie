@@ -35,8 +35,8 @@
 #include <qplatformdefs.h>
 #ifndef QT_NO_HTTP
 
-#include <libdeflate.h>
 static const unsigned char gz_magic[2] = {0x1f, 0x8b}; // gzip magic header
+static const unsigned char gz_deflate = 8; // gzip deflate method, same as Z_DEFLATED
 // gzip flag byte
 #define HEAD_CRC     0x02 // bit 1 set: header CRC present
 #define EXTRA_FIELD  0x04 // bit 2 set: extra field present

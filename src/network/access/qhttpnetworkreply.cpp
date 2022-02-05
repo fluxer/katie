@@ -376,7 +376,7 @@ bool QHttpNetworkReplyPrivate::gzipCheckHeader(QByteArray &content, int &pos)
         method = body[pos];
     if (pos++ <= maxPos)
         flags = body[pos];
-    if (method != 8 || (flags & RESERVED) != 0) {
+    if (method != gz_deflate || (flags & RESERVED) != 0) {
         return ret;
     }
 

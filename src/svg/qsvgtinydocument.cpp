@@ -35,8 +35,6 @@
 #include "qdebug.h"
 #include "qcorecommon_p.h"
 
-#include <libdeflate.h>
-
 QT_BEGIN_NAMESPACE
 
 QSvgTinyDocument::QSvgTinyDocument()

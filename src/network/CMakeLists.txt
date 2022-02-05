@@ -2,7 +2,6 @@
 set(EXTRA_NETWORK_LIBS
     KtCore
     ${OPENSSL_LIBRARIES}
-    ${DEFLATE_LIBRARIES}
 )
 
 set(NETWORK_PUBLIC_HEADERS
@@ -44,7 +43,6 @@ include_directories(
     ${CMAKE_BINARY_DIR}/include/QtCore
     ${CMAKE_BINARY_DIR}/include/QtNetwork
     ${OPENSSL_INCLUDE_DIR}
-    ${DEFLATE_INCLUDES}
 )
 
 set(NETWORK_HEADERS
