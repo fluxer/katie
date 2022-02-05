@@ -253,7 +253,7 @@ void QX11PixmapData::fromImage(const QImage &img,
 
 #ifndef QT_NO_XRENDER
     if (alphaCheck.hasXRenderAndAlpha()) {
-        if (d == 16) {
+        if (d != 32) {
             image = image.convertToFormat(QImage::Format_RGB32, flags);
         }
 

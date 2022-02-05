@@ -78,7 +78,7 @@ static QImage rotated90(const QImage &image) {
     default:
         for (int y=0; y<h; ++y) {
             for (int x=0; x<w; ++x)
-                out.setPixel(h-y-1, x, image.pixelIndex(x, y));
+                out.setPixel(h-y-1, x, image.pixel(x, y));
         }
         break;
     }
@@ -113,7 +113,7 @@ static QImage rotated270(const QImage &image) {
     default:
         for (int y=0; y<h; ++y) {
             for (int x=0; x<w; ++x)
-                out.setPixel(y, w-x-1, image.pixelIndex(x, y));
+                out.setPixel(y, w-x-1, image.pixel(x, y));
         }
         break;
     }
@@ -324,9 +324,7 @@ bool QImageData::checkForAlphaPixels() const
     In case of monochrome the colorTable() functions provide
     information about the color components used to store the image
     data: The colorTable() function returns the image's entire color
-    table. To obtain a single entry, use the pixelIndex() function
-    to retrieve the pixel index for a given pair of coordinates,
-    then use the color() function to retrieve the color.
+    table.
 
     The hasAlphaChannel() function tells if the image's format
     respects the alpha channel, or not. The allGray() and
@@ -1256,7 +1254,7 @@ int QImage::bytesPerLine() const
     quadruplets (QRgb). Use the qAlpha(), qRed(), qGreen(), and
     qBlue() functions to get the color value components.
 
-    \sa setColor(), pixelIndex(), {QImage#Pixel Manipulation}{Pixel
+    \sa setColor(), {QImage#Pixel Manipulation}{Pixel
     Manipulation}
 */
 QRgb QImage::color(int i) const
@@ -2179,41 +2177,6 @@ bool QImage::valid(int x, int y) const
 }
 
 /*!
-    \fn int QImage::pixelIndex(const QPoint &position) const
-
-    Returns the pixel index at the given \a position.
-
-    If \a position is not valid, or if the image is not a mono
-    image (depth() > 1), the results are undefined.
-
-    \sa valid(), depth(), {QImage#Pixel Manipulation}{Pixel Manipulation}
-*/
-
-/*!
-    \overload
-
-    Returns the pixel index at (\a x, \a y).
-*/
-int QImage::pixelIndex(int x, int y) const
-{
-    if (Q_UNLIKELY(!d || x < 0 || x >= d->width || y < 0 || y >= d->height)) {
-        qWarning("QImage::pixelIndex: coordinate (%d,%d) out of range", x, y);
-        return -12345;
-    }
-    const uchar *s = constScanLine(y);
-    switch(d->format) {
-    case QImage::Format_Mono:
-        return (*(s + (x >> 3)) >> (7- (x & 7))) & 1;
-    case QImage::Format_MonoLSB:
-        return (*(s + (x >> 3)) >> (x & 7)) & 1;
-    default:
-        qWarning("QImage::pixelIndex: Not applicable for %d-bpp images (no palette)", d->depth);
-    }
-    return 0;
-}
-
-
-/*!
     \fn QRgb QImage::pixel(const QPoint &position) const
 
     Returns the color of the pixel at the given \a position.
@@ -2263,18 +2226,15 @@ QRgb QImage::pixel(int x, int y) const
 
 
 /*!
-    \fn void QImage::setPixel(const QPoint &position, uint index_or_rgb)
+    \fn void QImage::setPixel(const QPoint &position, QRgb rgb)
 
-    Sets the pixel index or color at the given \a position to \a
-    index_or_rgb.
+    Sets the pixel index or color at the given \a position to \a rgb.
 
-    If the image's format is monochrome, the given \a index_or_rgb
-    value must be an index in the image's color table, otherwise the
-    parameter must be a QRgb value.
+    If \a position is not a valid coordinate pair in the image, the
+    result is undefined.
 
-    If \a position is not a valid coordinate pair in the image, or if
-    \a index_or_rgb >= 2 in the case of monochrome, the result is
-    undefined.
+    If the image's format is monochrome, the given \a rgb value must
+    be one of the colors in the image's color table.
 
     \warning This function is expensive due to the call of the internal
     \c{detach()} function called within; if performance is a concern, we
@@ -2287,9 +2247,9 @@ QRgb QImage::pixel(int x, int y) const
 /*!
     \overload
 
-    Sets the pixel index or color at (\a x, \a y) to \a index_or_rgb.
+    Sets the pixel index or color at (\a x, \a y) to \a rgb.
 */
-void QImage::setPixel(int x, int y, uint index_or_rgb)
+void QImage::setPixel(int x, int y, QRgb rgb)
 {
     if (Q_UNLIKELY(!d || x < 0 || x >= width() || y < 0 || y >= height())) {
         qWarning("QImage::setPixel: coordinate (%d,%d) out of range", x, y);
@@ -2304,15 +2264,15 @@ void QImage::setPixel(int x, int y, uint index_or_rgb)
     switch(d->format) {
         case QImage::Format_Mono:
         case QImage::Format_MonoLSB: {
-            if (Q_UNLIKELY(index_or_rgb > 1)) {
-                qWarning("QImage::setPixel: Index %d out of range", index_or_rgb);
+            if (Q_UNLIKELY(rgb != d->mono0 && rgb != d->mono1)) {
+                qWarning("QImage::setPixel: Invalid color %d", rgb);
             } else if (format() == Format_MonoLSB) {
-                if (index_or_rgb == 0)
+                if (rgb == d->mono0)
                     *(s + (x >> 3)) &= ~(1 << (x & 7));
                 else
                     *(s + (x >> 3)) |= (1 << (x & 7));
             } else {
-                if (index_or_rgb == 0)
+                if (rgb == d->mono0)
                     *(s + (x >> 3)) &= ~(1 << (7-(x & 7)));
                 else
                     *(s + (x >> 3)) |= (1 << (7-(x & 7)));
@@ -2322,17 +2282,16 @@ void QImage::setPixel(int x, int y, uint index_or_rgb)
         case QImage::Format_RGB32: {
             //make sure alpha is 255, we depend on it in qdrawhelper for cases
             // when image is set as a texture pattern on a qbrush
-            ((uint *)s)[x] = uint(255 << 24) | index_or_rgb;
+            ((uint *)s)[x] = (rgb | 0xff000000);
             break;
         }
         case QImage::Format_ARGB32:
         case QImage::Format_ARGB32_Premultiplied: {
-            ((uint *)s)[x] = index_or_rgb;
+            ((uint *)s)[x] = rgb;
             break;
         }
         case QImage::Format_RGB16: {
-            const quint32 p = index_or_rgb;
-            ((quint16 *)s)[x] = qt_colorConvert<quint16, quint32>(p, 0);
+            ((quint16 *)s)[x] = qt_colorConvert<quint16, quint32>(quint32(rgb), 0);
             break;
         }
         case QImage::Format_Invalid:

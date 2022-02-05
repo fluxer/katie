@@ -124,17 +124,13 @@ public:
     inline bool valid(const QPoint &pt) const
         { return valid(pt.x(), pt.y()); }
 
-    int pixelIndex(int x, int y) const;
-    inline int pixelIndex(const QPoint &pt) const
-        { return pixelIndex(pt.x(), pt.y());}
-
     QRgb pixel(int x, int y) const;
     inline QRgb pixel(const QPoint &pt) const
         { return pixel(pt.x(), pt.y()); }
 
-    void setPixel(int x, int y, uint index_or_rgb);
-    inline void setPixel(const QPoint &pt, uint index_or_rgb)
-        { setPixel(pt.x(), pt.y(), index_or_rgb); }
+    void setPixel(int x, int y, QRgb rgb);
+    inline void setPixel(const QPoint &pt, QRgb rgb)
+        { setPixel(pt.x(), pt.y(), rgb); }
 
     QVector<QRgb> colorTable() const;
     void setColorTable(const QVector<QRgb> &colors);
