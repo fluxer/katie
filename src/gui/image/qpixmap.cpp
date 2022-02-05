@@ -257,10 +257,7 @@ QPixmap::QPixmap(const char * const xpm[])
 
     QImage image(xpm);
     if (!image.isNull()) {
-        if (data && data->pixelType() == QPixmapData::BitmapType)
-            *this = QBitmap::fromImage(image);
-        else
-            *this = fromImage(image);
+        *this = fromImage(image);
     }
 }
 #endif
