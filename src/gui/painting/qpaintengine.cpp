@@ -168,8 +168,6 @@ QFont QTextItem::font() const
   \value ConstantOpacity    The engine supports the feature provided by
                             QPainter::setOpacity().
   \value PainterPaths       The engine has path support.
-  \value PaintOutsidePaintEvent The engine is capable of painting outside of
-                                paint events.
   \value PatternTransform   The engine has support for transforming brush
                             patterns.
   \value PerspectiveTransform The engine has support for performing perspective

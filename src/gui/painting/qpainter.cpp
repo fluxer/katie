@@ -144,10 +144,7 @@ bool QPainterPrivate::attachPainterPrivate(QPainter *q, QPaintDevice *pdev)
         return false;
 
     // Check if we're attempting to paint outside a paint event.
-    if (Q_UNLIKELY(!sp->d_ptr->engine->hasFeature(QPaintEngine::PaintOutsidePaintEvent)
-        && !widget->testAttribute(Qt::WA_PaintOutsidePaintEvent)
-        && !widget->testAttribute(Qt::WA_WState_InPaintEvent))) {
-
+    if (Q_UNLIKELY(!widget->testAttribute(Qt::WA_WState_InPaintEvent))) {
         qWarning("QPainter::begin: Widget painting can only begin as a result of a paintEvent");
         return false;
     }
@@ -591,10 +588,7 @@ void QPainterPrivate::updateState(QPainterState *newState)
 
     \warning When the paintdevice is a widget, QPainter can only be
     used inside a paintEvent() function or in a function called by
-    paintEvent(); that is unless the Qt::WA_PaintOutsidePaintEvent
-    widget attribute is set. On Mac OS X and Windows, you can only
-    paint in a paintEvent() function regardless of this attribute's
-    setting.
+    paintEvent().
 
     \tableofcontents
 
@@ -1359,21 +1353,12 @@ bool QPainter::begin(QPaintDevice *pd)
             const QWidget *widget = static_cast<const QWidget *>(pd);
             Q_ASSERT(widget);
 
-            const bool paintOutsidePaintEvent = widget->testAttribute(Qt::WA_PaintOutsidePaintEvent);
             const bool inPaintEvent = widget->testAttribute(Qt::WA_WState_InPaintEvent);
-            if(Q_UNLIKELY(!d->engine->hasFeature(QPaintEngine::PaintOutsidePaintEvent)
-                && !paintOutsidePaintEvent && !inPaintEvent)) {
+            if(Q_UNLIKELY(!inPaintEvent)) {
                 qWarning("QPainter::begin: Widget painting can only begin as a "
                          "result of a paintEvent");
                 qt_cleanup_painter_state(d);
                 return false;
-            }
-
-            // Adjust offset for alien widgets painting outside the paint event.
-            if (!inPaintEvent && paintOutsidePaintEvent && !widget->internalWinId()
-                && widget->testAttribute(Qt::WA_WState_Created)) {
-                const QPoint offset = widget->mapTo(widget->nativeParentWidget(), QPoint());
-                d->state->redirectionMatrix.translate(offset.x(), offset.y());
             }
             break;
         }
