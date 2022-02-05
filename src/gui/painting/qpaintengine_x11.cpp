@@ -1102,7 +1102,6 @@ void QX11PaintEngine::drawPath(const QPainterPath &path)
         stroker.setJoinStyle(d->cpen.joinStyle());
         QPainterPath stroke;
         qreal width = d->cpen.widthF();
-        QPolygonF poly;
         QRectF deviceRect(0, 0, d->pdev->width(), d->pdev->height());
         // necessary to get aliased alphablended primitives to be drawn correctly
         if (d->cpen.isCosmetic() || d->has_scaling_xform) {
