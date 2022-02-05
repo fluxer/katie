@@ -138,7 +138,11 @@ set(KATIE_PIXMAPS_PATH "${CMAKE_INSTALL_FULL_DATADIR}/pixmaps" CACHE PATH "Deskt
 set(KATIE_PKGCONFIG_PATH "${KATIE_LIBRARIES_PATH}/pkgconfig" CACHE PATH "pkg-config installation path")
 set(KATIE_TOOLS_SUFFIX "" CACHE STRING "Tools (moc, uic, rcc, etc.) suffix")
 
-# optional package
+# bundled packages
+option(WITH_DEFLATE "Build with external libdeflate" ON)
+add_feature_info(deflate WITH_DEFLATE "build with external libdeflate")
+
+# optional packages
 option(WITH_CUPS "Build CUPS support" ON)
 add_feature_info(cups WITH_CUPS "build CUPS support")
 
@@ -163,15 +167,6 @@ add_feature_info(benchmarks KATIE_BENCHMARKS "build automatic benchmarks")
 
 option(KATIE_UTILS "Build maintainance utilities" OFF)
 add_feature_info(utils KATIE_UTILS "build maintainance utilities")
-
-# v0.4+ required for inflateInit2() but that is pre-release
-find_package(Deflate)
-set_package_properties(Deflate PROPERTIES
-    PURPOSE "Required for compression and decompression support"
-    DESCRIPTION "Heavily optimized library for DEFLATE/zlib/gzip compression and decompression"
-    URL "https://github.com/ebiggers/libdeflate"
-    TYPE REQUIRED
-)
 
 # v4.6+ required for unorm2_getDecomposition()
 find_package(ICU 4.6)
@@ -241,6 +236,14 @@ set_package_properties(PNG PROPERTIES
     DESCRIPTION "A collection of routines used to create PNG format graphics files"
     URL "http://www.libpng.org/pub/png/libpng.html"
     TYPE REQUIRED
+)
+
+find_package(Deflate)
+set_package_properties(Deflate PROPERTIES
+    PURPOSE "Required for compression and decompression support"
+    DESCRIPTION "Heavily optimized library for DEFLATE/zlib/gzip compression and decompression"
+    URL "https://github.com/ebiggers/libdeflate"
+    TYPE RECOMMENDED
 )
 
 find_package(Cups)
