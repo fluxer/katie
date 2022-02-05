@@ -35,7 +35,7 @@
 #include "qdebug.h"
 #include "qcorecommon_p.h"
 
-#include <zlib.h>
+#include <libdeflate.h>
 
 QT_BEGIN_NAMESPACE
 
@@ -57,60 +57,11 @@ Q_AUTOTEST_EXPORT QByteArray qt_inflateGZipDataFrom(const QByteArray &contents)
 static QByteArray qt_inflateGZipDataFrom(const QByteArray &contents)
 #endif
 {
-    QSTACKARRAY(char, source, contents.size());
-    ::memcpy(source, contents.constData(), contents.size() * sizeof(char));
-    QByteArray destination;
-
-    // Initialize zlib stream struct
-    z_stream zlibStream;
-    zlibStream.next_in = Z_NULL;
-    zlibStream.avail_in = 0;
-    zlibStream.avail_out = 0;
-    zlibStream.zalloc = Z_NULL;
-    zlibStream.zfree = Z_NULL;
-    zlibStream.opaque = Z_NULL;
-
-    // Adding 16 to the window size gives us gzip decoding
-    if (inflateInit2(&zlibStream, MAX_WBITS + 16) != Z_OK) {
-        qWarning("Cannot initialize zlib, because: %s",
-                (zlibStream.msg != NULL ? zlibStream.msg : "Unknown error"));
+    if (contents.isEmpty()) {
         return QByteArray();
     }
 
-    zlibStream.avail_in = contents.size();
-    zlibStream.next_in = reinterpret_cast<Bytef*>(source);
-
-    do {
-        // Prepare the destination buffer
-        int oldSize = destination.size();
-        destination.resize(oldSize + QT_BUFFSIZE);
-        zlibStream.next_out = reinterpret_cast<Bytef*>(
-                destination.data() + oldSize - zlibStream.avail_out);
-        zlibStream.avail_out += QT_BUFFSIZE;
-
-        int zlibResult = inflate(&zlibStream, Z_NO_FLUSH);
-        switch (zlibResult) {
-            case Z_NEED_DICT:
-            case Z_DATA_ERROR:
-            case Z_STREAM_ERROR:
-            case Z_MEM_ERROR: {
-                inflateEnd(&zlibStream);
-                qWarning("Error while inflating gzip file: %s",
-                        (zlibStream.msg != NULL ? zlibStream.msg : "Unknown error"));
-                destination.chop(zlibStream.avail_out);
-                return destination;
-            }
-        }
-
-    // If the output buffer still has more room after calling inflate
-    // it means we have to provide more data, so exit the loop here
-    } while (!zlibStream.avail_out);
-
-    // Chop off trailing space in the buffer
-    destination.chop(zlibStream.avail_out);
-
-    inflateEnd(&zlibStream);
-    return destination;
+    return qUncompress(contents.constData(), contents.size());
 }
 
 QSvgTinyDocument * QSvgTinyDocument::load(const QString &fileName)

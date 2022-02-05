@@ -28,6 +28,7 @@
 #include "qlocale_tools_p.h"
 #include "qscopedpointer.h"
 #include "qdatastream.h"
+#include "qplatformdefs.h"
 #include "qcorecommon_p.h"
 
 #include <ctype.h>
@@ -36,8 +37,7 @@
 #include <stdlib.h>
 
 #ifndef QT_NO_COMPRESS
-#include <zstd.h>
-#include <zstd_errors.h>
+#include <libdeflate.h>
 #endif // QT_NO_COMPRESS
 
 #define IS_RAW_DATA(d) ((d)->data != (d)->array)
@@ -330,20 +330,29 @@ QByteArray qCompress(const char* data, int nbytes, int compressionLevel)
         return QByteArray();
     }
 
-    const size_t bndresult = ZSTD_compressBound(nbytes);
-    if (Q_UNLIKELY(bndresult <= 0)) {
+    struct libdeflate_compressor* comp = libdeflate_alloc_compressor(compressionLevel);
+    if (Q_UNLIKELY(!comp)) {
+        qWarning("qCompress: Could not allocate compressor");
+        return QByteArray();
+    }
+
+    const size_t boundresult = libdeflate_gzip_compress_bound(comp, nbytes);
+    if (Q_UNLIKELY(boundresult <= 0)) {
         qWarning("qCompress: Compression boundary is negative or zero");
         return QByteArray();
     }
 
-    QSTACKARRAY(char, cmpbuffer, bndresult);
-    const size_t cmpresult = ZSTD_compress(cmpbuffer, bndresult, data, nbytes, compressionLevel);
-    if (Q_UNLIKELY(ZSTD_isError(cmpresult))) {
-        qWarning("qCompress: Could not compress data (%s)", ZSTD_getErrorString(ZSTD_getErrorCode(cmpresult)));
+    QSTACKARRAY(char, compbuffer, boundresult);
+    const size_t compresult = libdeflate_gzip_compress(comp, data, nbytes, compbuffer, boundresult);
+
+    libdeflate_free_compressor(comp);
+
+    if (compresult <= 0) {
+        qWarning("qUncompress: Could not compress data");
         return QByteArray();
     }
 
-    return QByteArray(cmpbuffer, cmpresult);
+    return QByteArray(compbuffer, compresult);
 }
 
 /*!
@@ -378,20 +387,47 @@ QByteArray qUncompress(const char* data, int nbytes)
         return QByteArray();
     }
 
-    const unsigned long long uncompressedsize = ZSTD_getDecompressedSize(data, nbytes);
-    if (Q_UNLIKELY(uncompressedsize <= 0)) {
-        qWarning("qUncompress: Uncompressed size is negative or zero");
+    struct libdeflate_decompressor* decomp = libdeflate_alloc_decompressor();
+    if (Q_UNLIKELY(!decomp)) {
+        qWarning("qUncompress: Could not allocate decompressor");
         return QByteArray();
     }
 
-    QSTACKARRAY(char, decbuffer, uncompressedsize);
-    const size_t decresult = ZSTD_decompress(decbuffer, uncompressedsize, data, nbytes);
-    if (Q_UNLIKELY(ZSTD_isError(decresult))) {
-        qWarning("qUncompress: Could not uncompress data (%s)", ZSTD_getErrorString(ZSTD_getErrorCode(decresult)));
-        return QByteArray();
+    size_t speculativesize = (nbytes * 2);
+    QByteArray result(speculativesize, Qt::Uninitialized);
+    libdeflate_result decompresult = LIBDEFLATE_INSUFFICIENT_SPACE;
+    while (decompresult == LIBDEFLATE_INSUFFICIENT_SPACE) {
+        decompresult = libdeflate_gzip_decompress(
+            decomp,
+            data, nbytes,
+            result.data(), result.size(),
+            &speculativesize
+        );
+
+        if (decompresult == LIBDEFLATE_INSUFFICIENT_SPACE) {
+            speculativesize = (speculativesize + QT_BUFFSIZE);
+            result.resize(speculativesize);
+        }
+
+        if (speculativesize >= QBYTEARRAY_MAX) {
+            break;
+        }
     }
 
-    return QByteArray(decbuffer, uncompressedsize);
+    switch (decompresult) {
+        case LIBDEFLATE_SUCCESS: {
+            result.resize(speculativesize);
+            break;
+        }
+        default: {
+            qWarning("qUncompress: Could not decompress data");
+            result.clear();
+            break;
+        }
+    }
+    libdeflate_free_decompressor(decomp);
+
+    return result;
 }
 #endif // QT_NO_COMPRESS
 

@@ -35,7 +35,7 @@
 #include <qplatformdefs.h>
 #ifndef QT_NO_HTTP
 
-#include <zlib.h>
+#include <libdeflate.h>
 static const unsigned char gz_magic[2] = {0x1f, 0x8b}; // gzip magic header
 // gzip flag byte
 #define HEAD_CRC     0x02 // bit 1 set: header CRC present
@@ -182,8 +182,7 @@ public:
     bool isConnectionCloseEnabled();
     bool isGzipped();
     bool gzipCheckHeader(QByteArray &content, int &pos);
-    int gunzipBodyPartially(QByteArray &compressed, QByteArray &inflated);
-    void gunzipBodyPartiallyEnd();
+    bool gunzipBody(QByteArray &compressed, QByteArray &inflated);
     void removeAutoDecompressHeader();
 
     enum ReplyState {
@@ -214,9 +213,6 @@ public:
     qint64 readBufferMaxSize;
     QPointer<QHttpNetworkConnection> connection;
     QPointer<QHttpNetworkConnectionChannel> connectionChannel;
-    bool initInflate;
-    bool streamEnd;
-    z_stream inflateStrm;
     bool autoDecompress;
 
     QByteDataBuffer responseData; // uncompressed body

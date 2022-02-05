@@ -26,11 +26,10 @@ DEPENDS += freefont-ttf-[0-9]*:../../fonts/freefont-ttf
 BUILD_DEPENDS = unifdef-[0-9]*:../../devel/unifdef
 
 .include "../../sysutils/desktop-file-utils/desktopdb.mk"
-.include "../../archivers/zstd/buildlink3.mk"
+.include "../../archivers/libdeflate_is_not_available/buildlink3.mk"
 .include "../../textproc/jansson/buildlink3.mk"
 .include "../../textproc/icu/buildlink3.mk"
 .include "../../devel/pcre/buildlink3.mk"
-.include "../../devel/zlib/buildlink3.mk"
 .include "../../security/openssl/buildlink3.mk"
 .include "../../x11/libXinerama/buildlink3.mk"
 .include "../../x11/libXcursor/buildlink3.mk"

@@ -12,7 +12,7 @@ There are several things you should be aware before considering Katie:
 
  - some things have changed:
   - QMake build system replaced with CMake
-  - zlib, zstd, Jansson, OpenSSL, PCRE, Freetype, ICU, X11 and libpng are
+  - libdeflate, Jansson, OpenSSL, PCRE, Freetype, ICU, X11 and libpng are
     required for building
   - OpenSSL, D-Bus and CUPS must be linked to during build
   - QtUiTools is build as shared library by default
@@ -61,7 +61,7 @@ There are several things you should be aware before considering Katie:
   - support for locale aliases
   - support for generating SHA-256 and SHA-512 hash sums (SHA-2)
   - verification section for plugins build with Clang
-  - qCompress() and qUncompress() use ZSTD which is much faster
+  - qCompress() and qUncompress() use libdeflate which is much faster
   - stack backtrace on assert, crash or warning via execinfo
   - brief manual pages for all command-line tools
   - desktop files, Shell profile and dynamic linker/loader config
