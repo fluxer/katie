@@ -55,7 +55,7 @@ public:
     void resize(int width, int height);
     void fromImage(const QImage &image, Qt::ImageConversionFlags flags);
     void copy(const QPixmapData *data, const QRect &rect);
-    bool scroll(int dx, int dy, const QRect &rect);
+    void scroll(int dx, int dy, const QRect &rect);
 
     void fill(const QColor &color);
     QBitmap mask() const;

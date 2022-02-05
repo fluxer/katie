@@ -1018,14 +1018,13 @@ void QX11PixmapData::copy(const QPixmapData *data, const QRect &rect)
     }
 }
 
-bool QX11PixmapData::scroll(int dx, int dy, const QRect &rect)
+void QX11PixmapData::scroll(int dx, int dy, const QRect &rect)
 {
     GC gc = XCreateGC(qt_x11Data->display, hd, 0, 0);
     XCopyArea(qt_x11Data->display, hd, hd, gc,
               rect.left(), rect.top(), rect.width(), rect.height(),
               rect.left() + dx, rect.top() + dy);
     XFreeGC(qt_x11Data->display, gc);
-    return true;
 }
 
 #if !defined(QT_NO_XRENDER)

@@ -351,15 +351,7 @@ void QPixmap::scroll(int dx, int dy, const QRect &rect, QRegion *exposed)
 
     detach();
 
-    if (!data->scroll(dx, dy, src)) {
-        // Fallback
-        QPixmap pix = *this;
-        QPainter painter(&pix);
-        painter.setCompositionMode(QPainter::CompositionMode_Source);
-        painter.drawPixmap(src.translated(dx, dy), *this, src);
-        painter.end();
-        *this = pix;
-    }
+    data->scroll(dx, dy, src);
 
     if (exposed) {
         *exposed += dest;
