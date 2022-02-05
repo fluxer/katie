@@ -1595,6 +1595,7 @@ QList<QPolygonF> QPainterPath::toFillPolygons(const QTransform &matrix) const
         return polys;
 
     QList<QRectF> bounds;
+    bounds.reserve(count);
     for (int i=0; i<count; ++i)
         bounds += subpaths.at(i).boundingRect();
 
