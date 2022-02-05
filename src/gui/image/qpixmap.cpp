@@ -189,7 +189,7 @@ QPixmap::QPixmap(QPixmapData *d)
     executable.
 
     If the image needs to be modified to fit in a lower-resolution
-    result (e.g. converting from 32-bit to monochromet), use the \a
+    result (e.g. converting from 32-bit to monochrome), use the \a
     flags to control the conversion.
 
     The \a fileName, \a format and \a flags parameters are
