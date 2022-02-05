@@ -822,9 +822,7 @@ void QX11PaintEngine::updateBrush(const QBrush &brush, const QPointF &origin)
                 brushData->convertToARGB32();
             }
 #endif
-            vals.tile = (d->brush_pm.depth() == d->pdev_depth
-                         ? d->brush_pm.handle()
-                         : static_cast<QX11PixmapData*>(d->brush_pm.data.data())->x11ConvertToDefaultDepth());
+            vals.tile = d->brush_pm.handle();
             s = FillTiled;
 #if !defined(QT_NO_XRENDER)
             d->current_brush = d->cbrush.texture().x11PictureHandle();

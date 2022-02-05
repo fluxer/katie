@@ -68,7 +68,6 @@ public:
     QPaintEngine* paintEngine() const;
 
     Qt::HANDLE handle() const { return hd; }
-    Qt::HANDLE x11ConvertToDefaultDepth();
 
     static Qt::HANDLE createBitmapFromImage(const QImage &image);
 
@@ -106,7 +105,6 @@ private:
     Qt::HANDLE x11_mask;
     Qt::HANDLE picture;
     Qt::HANDLE mask_picture;
-    Qt::HANDLE hd2; // sorted in the default display depth
     QPixmap::ShareMode share_mode;
 
     QX11PaintEngine *pengine;

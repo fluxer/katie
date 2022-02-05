@@ -1636,18 +1636,6 @@ void QPixmap::detach()
         *this = copy();
     }
     ++data->detach_no;
-
-#if defined(Q_WS_X11)
-    if (pd->classId() == QPixmapData::X11Class) {
-        QX11PixmapData *d = static_cast<QX11PixmapData*>(pd);
-
-        // reset the cache data
-        if (d->hd2) {
-            XFreePixmap(qt_x11Data->display, d->hd2);
-            d->hd2 = 0;
-        }
-    }
-#endif
 }
 
 /*!
