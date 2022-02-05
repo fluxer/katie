@@ -347,8 +347,8 @@ QByteArray qCompress(const char* data, int nbytes, int compressionLevel)
     const size_t compresult = libdeflate_gzip_compress(comp, data, nbytes, compbuffer, boundresult);
     libdeflate_free_compressor(comp);
 
-    if (compresult <= 0) {
-        qWarning("qUncompress: Could not compress data");
+    if (Q_UNLIKELY(compresult <= 0)) {
+        qWarning("qCompress: Could not compress data");
         return QByteArray();
     }
 
