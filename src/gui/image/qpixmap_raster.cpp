@@ -170,14 +170,8 @@ bool QRasterPixmapData::hasAlphaChannel() const
 
 QImage QRasterPixmapData::toImage() const
 {
-    if (!image.isNull()) {
-        const QImageData *data = image.d;
-        if (data->paintEngine && data->paintEngine->isActive()
-            && data->paintEngine->paintDevice() == &image)
-        {
-            return image.copy();
-        }
-    }
+    if (image.paintingActive())
+        return image.copy();
 
     return image;
 }
