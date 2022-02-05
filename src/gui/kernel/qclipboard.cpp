@@ -360,7 +360,7 @@ void QClipboard::setImage(const QImage &image, Mode mode)
     QClipboard::Selection, the pixmap is retrieved from the global
     mouse selection.
 
-    \sa setPixmap() image() mimeData() QPixmap::convertFromImage()
+    \sa setPixmap() image() mimeData() QPixmap::fromImage()
 */
 QPixmap QClipboard::pixmap(Mode mode) const
 {

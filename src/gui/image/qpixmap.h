@@ -121,8 +121,6 @@ public:
     bool save(const QString& fileName, const char* format = nullptr, int quality = -1) const;
     bool save(QIODevice* device, const char* format = nullptr, int quality = -1) const;
 
-    bool convertFromImage(const QImage &img, Qt::ImageConversionFlags flags = Qt::AutoColor);
-
     inline QPixmap copy(int x, int y, int width, int height) const;
     QPixmap copy(const QRect &rect = QRect()) const;
 
