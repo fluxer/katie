@@ -872,17 +872,7 @@ void QPixmap::fill(const QColor &color)
         return;
     }
 
-    if (data->ref == 1) {
-        // detach() will also remove this pixmap from caches, so
-        // it has to be called even when ref == 1.
-        detach();
-    } else {
-        // Don't bother to make a copy of the data object, since
-        // it will be filled with new pixel data anyway.
-        QPixmapData *d = data->createCompatiblePixmapData();
-        d->resize(data->width(), data->height());
-        data = d;
-    }
+    detach();
     data->fill(color);
 }
 
