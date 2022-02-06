@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-01-26 19:24+0200\n"
+"POT-Creation-Date: 2022-02-06 12:17+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -139,7 +139,7 @@ msgstr ""
 msgid "Destination file exists"
 msgstr ""
 
-#: src/core/io/qfile.cpp:947
+#: src/core/io/qfile.cpp:955
 msgid "No file engine available or engine does not support UnMapExtension"
 msgstr ""
 
@@ -1349,7 +1349,7 @@ msgctxt "QPrintPreviewDialog"
 msgid "Page Setup"
 msgstr ""
 
-#: src/gui/dialogs/qdialog.cpp:487 src/gui/kernel/qwhatsthis.cpp:461
+#: src/gui/dialogs/qdialog.cpp:487 src/gui/kernel/qwhatsthis.cpp:463
 msgid "What's This?"
 msgstr ""
 
@@ -2134,7 +2134,7 @@ msgstr ""
 msgid "*"
 msgstr ""
 
-#: src/gui/kernel/qapplication.cpp:1646
+#: src/gui/kernel/qapplication.cpp:1652
 msgid "QT_LAYOUT_DIRECTION"
 msgstr ""
 
@@ -4486,32 +4486,32 @@ msgstr ""
 msgid "<empty>"
 msgstr ""
 
-#: src/gui/text/qfontdatabase.cpp:683
+#: src/gui/text/qfontdatabase.cpp:630
 msgctxt "QFontDatabase"
 msgid "Black"
 msgstr ""
 
-#: src/gui/text/qfontdatabase.cpp:685
+#: src/gui/text/qfontdatabase.cpp:632
 msgctxt "QFontDatabase"
 msgid "Bold"
 msgstr ""
 
-#: src/gui/text/qfontdatabase.cpp:687
+#: src/gui/text/qfontdatabase.cpp:634
 msgctxt "QFontDatabase"
 msgid "Demi Bold"
 msgstr ""
 
-#: src/gui/text/qfontdatabase.cpp:689
+#: src/gui/text/qfontdatabase.cpp:636
 msgctxt "QFontDatabase"
 msgid "Light"
 msgstr ""
 
-#: src/gui/text/qfontdatabase.cpp:693
+#: src/gui/text/qfontdatabase.cpp:640
 msgctxt "QFontDatabase"
 msgid "Italic"
 msgstr ""
 
-#: src/gui/text/qfontdatabase.cpp:695
+#: src/gui/text/qfontdatabase.cpp:642
 msgctxt "QFontDatabase"
 msgid "Oblique"
 msgstr ""
