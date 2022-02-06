@@ -779,33 +779,6 @@ void QPaintEngineEx::drawPoints(const QPoint *points, int pointCount)
     }
 }
 
-
-void QPaintEngineEx::drawPolygon(const QPointF *points, int pointCount, PolygonDrawMode mode)
-{
-    QVectorPath path((qreal *) points, pointCount, 0, QVectorPath::polygonFlags(mode));
-
-    if (mode == PolylineMode)
-        stroke(path, state()->pen);
-    else
-        draw(path);
-}
-
-void QPaintEngineEx::drawPolygon(const QPoint *points, int pointCount, PolygonDrawMode mode)
-{
-    const int count = pointCount<<1;
-    QVarLengthArray<qreal> pts(count);
-    for (int i=0; i<count; ++i)
-        pts[i] = ((int *) points)[i];
-
-    QVectorPath path(pts.data(), pointCount, 0, QVectorPath::polygonFlags(mode));
-
-    if (mode == PolylineMode)
-        stroke(path, state()->pen);
-    else
-        draw(path);
-
-}
-
 void QPaintEngineEx::setState(QPainterState *s)
 {
     QPaintEngine::state = s;
