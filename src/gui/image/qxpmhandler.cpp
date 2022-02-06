@@ -818,7 +818,7 @@ static bool read_xpm_body(
             hasTransparency = true;
             colorMap.insert(xpmHash(index.constData()), 0);
         } else {
-            QRgb c_rgb;
+            QRgb c_rgb = 0;
             if (buf[0] == '#') {
                 if ((buf.length()-1) % 3) {
                     buf.truncate(((buf.length()-1) / 4 * 3) + 1); // remove alpha channel left by imagemagick
@@ -894,38 +894,6 @@ bool qt_read_xpm_array(const char * const * source, QImage &image)
         return false;
 
     return read_xpm_body(nullptr, source, index, state, cpp, ncols, w, h, image);
-}
-
-static const QByteArray xpm_color_name(int cpp, int index)
-{
-    QSTACKARRAY(char, returnable, 4);
-    static const char code[] = ".#abcdefghijklmnopqrstuvwxyzABCD"
-                               "EFGHIJKLMNOPQRSTUVWXYZ0123456789";
-    // cpp is limited to 4 and index is limited to 64^cpp
-    int cppcount = 1;
-    if (cpp > 1) {
-        cppcount++;
-        if (cpp > 2) {
-            cppcount++;
-            if (cpp > 3) {
-                cppcount++;
-                returnable[3] = code[index % 64];
-                index /= 64;
-            }
-            returnable[2] = code[index % 64];
-            index /= 64;
-        }
-        // the following 4 lines are a joke!
-        if (index == 0)
-            index = 64*44+21;
-        else if (index == 64*44+21)
-            index = 0;
-        returnable[1] = code[index % 64];
-        index /= 64;
-    }
-    returnable[0] = code[index];
-
-    return QByteArray(returnable, cppcount);
 }
 
 QXpmHandler::QXpmHandler()
