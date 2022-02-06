@@ -127,15 +127,12 @@ public:
 
     void updateBrush(const QBrush &brush);
     void updatePen(const QPen &pen);
-
     void updateMatrix(const QTransform &matrix);
 
     void drawPolygon(const QPointF *points, int pointCount, PolygonDrawMode mode);
     void drawPolygon(const QPoint *points, int pointCount, PolygonDrawMode mode);
     void fillPath(const QPainterPath &path, QSpanData *fillData);
     void fillPolygon(const QPointF *points, int pointCount, PolygonDrawMode mode);
-
-    void drawEllipse(const QRectF &rect);
 
     void fillRect(const QRectF &rect, const QBrush &brush);
     void fillRect(const QRectF &rect, const QColor &color);
@@ -162,12 +159,6 @@ public:
     void clip(const QVectorPath &path, Qt::ClipOperation op);
     void clip(const QRect &rect, Qt::ClipOperation op);
     void clip(const QRegion &region, Qt::ClipOperation op);
-
-#ifdef Q_NO_USING_KEYWORD
-    inline void drawEllipse(const QRect &rect) { QPaintEngineEx::drawEllipse(rect); }
-#else
-    using QPaintEngineEx::drawEllipse;
-#endif
 
 #ifndef QT_NO_DEBUG
     void saveBuffer(const QString &s) const;

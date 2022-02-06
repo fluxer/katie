@@ -1992,17 +1992,6 @@ void QRasterPaintEngine::drawLines(const QLineF *lines, int lineCount)
     QPaintEngineEx::drawLines(lines, lineCount);
 }
 
-
-/*!
-    \reimp
-*/
-void QRasterPaintEngine::drawEllipse(const QRectF &rect)
-{
-    ensurePen();
-
-    QPaintEngineEx::drawEllipse(rect);
-}
-
 void QRasterPaintEngine::drawBitmap(const QPointF &pos, const QImage &image, QSpanData *fg)
 {
     Q_ASSERT(fg);
