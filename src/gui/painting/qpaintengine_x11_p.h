@@ -145,7 +145,6 @@ public:
     QTransform matrix;
     qreal opacity;
 
-    bool has_complex_xform;
     bool has_scaling_xform;
     bool adjust_coords;
     bool has_clipping;

@@ -396,7 +396,6 @@ bool QX11PaintEngine::begin(QPaintDevice *pdev)
     d->has_alpha_brush = false;
     d->has_alpha_pen = false;
     d->has_clipping = false;
-    d->has_complex_xform = false;
     d->has_scaling_xform = false;
     d->xform_scale = 1;
     d->matrix = QTransform();
@@ -885,7 +884,7 @@ void QX11PaintEnginePrivate::fillPolygon_dev(const QPointF *polygonPoints, int p
     QPointF *clippedPoints = nullptr;
 
 #ifndef QT_NO_XRENDER
-    //can change if we switch to pen if gcMode != BrushGC
+    // can change if we switch to pen if gcMode != BrushGC
     bool has_fill_texture = has_texture;
     bool has_fill_pattern = has_pattern;
     ::Picture src;
@@ -1264,8 +1263,6 @@ void QX11PaintEngine::updateMatrix(const QTransform &mtx)
     Q_D(QX11PaintEngine);
     d->txop = mtx.type();
     d->matrix = mtx;
-
-    d->has_complex_xform = (d->txop > QTransform::TxTranslate);
 
     extern bool qt_scaleForTransform(const QTransform &transform, qreal *scale);
     bool scaling = qt_scaleForTransform(d->matrix, &d->xform_scale);
