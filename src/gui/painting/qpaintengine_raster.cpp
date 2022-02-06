@@ -1477,47 +1477,6 @@ void QRasterPaintEngine::drawPolygon(const QPoint *points, int pointCount, Polyg
 }
 
 /*!
-    \internal
-*/
-void QRasterPaintEngine::drawPixmap(const QPointF &pos, const QPixmap &pixmap)
-{
-#ifdef QT_DEBUG_DRAW
-    qDebug() << " - QRasterPaintEngine::drawPixmap(), pos=" << pos << " pixmap=" << pixmap.size() << "depth=" << pixmap.depth();
-#endif
-
-    QPixmapData *pd = pixmap.pixmapData();
-    if (pd->classId() == QPixmapData::RasterClass) {
-        const QImage &image = static_cast<QRasterPixmapData *>(pd)->image;
-        if (image.depth() == 1) {
-            Q_D(QRasterPaintEngine);
-            QRasterPaintEngineState *s = state();
-            if (s->matrix.type() <= QTransform::TxTranslate) {
-                ensurePen();
-                drawBitmap(pos + QPointF(s->matrix.dx(), s->matrix.dy()), image, &s->penData);
-            } else {
-                drawImage(pos, d->rasterBuffer->colorizeBitmap(image, s->pen.color()));
-            }
-        } else {
-            QRasterPaintEngine::drawImage(pos, image);
-        }
-    } else {
-        const QImage image = pixmap.toImage();
-        if (pixmap.depth() == 1) {
-            Q_D(QRasterPaintEngine);
-            QRasterPaintEngineState *s = state();
-            if (s->matrix.type() <= QTransform::TxTranslate) {
-                ensurePen();
-                drawBitmap(pos + QPointF(s->matrix.dx(), s->matrix.dy()), image, &s->penData);
-            } else {
-                drawImage(pos, d->rasterBuffer->colorizeBitmap(image, s->pen.color()));
-            }
-        } else {
-            QRasterPaintEngine::drawImage(pos, image);
-        }
-    }
-}
-
-/*!
     \reimp
 */
 void QRasterPaintEngine::drawPixmap(const QRectF &r, const QPixmap &pixmap, const QRectF &sr)
@@ -1582,40 +1541,6 @@ static inline const QRect toAlignedRect_positive(const QRectF &rect)
     const int ymin = int(rect.y());
     const int ymax = int(fast_ceil_positive(rect.bottom()));
     return QRect(xmin, ymin, xmax - xmin, ymax - ymin);
-}
-
-/*!
-    \internal
-*/
-void QRasterPaintEngine::drawImage(const QPointF &p, const QImage &img)
-{
-#ifdef QT_DEBUG_DRAW
-    qDebug() << " - QRasterPaintEngine::drawImage(), p=" <<  p << " image=" << img.size() << "depth=" << img.depth();
-#endif
-
-    Q_D(QRasterPaintEngine);
-    QRasterPaintEngineState *s = state();
-
-    if (s->matrix.type() > QTransform::TxTranslate) {
-        drawImage(QRectF(p.x(), p.y(), img.width(), img.height()),
-                  img,
-                  QRectF(0, 0, img.width(), img.height()));
-    } else {
-
-        const QClipData *clip = d->clip();
-        QPointF pt(p.x() + s->matrix.dx(), p.y() + s->matrix.dy());
-
-        d->image_filler.clip = clip;
-        d->image_filler.initTexture(&img, s->intOpacity, QTextureData::Plain, img.rect());
-        if (!d->image_filler.blend)
-            return;
-        d->image_filler.dx = -pt.x();
-        d->image_filler.dy = -pt.y();
-        QRect rr = img.rect().translated(qRound(pt.x()), qRound(pt.y()));
-
-        fillRect_normalized(rr, &d->image_filler, d);
-    }
-
 }
 
 /*!

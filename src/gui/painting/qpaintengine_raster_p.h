@@ -139,9 +139,7 @@ public:
 
     void drawRects(const QRect  *rects, int rectCount);
 
-    void drawPixmap(const QPointF &p, const QPixmap &pm);
     void drawPixmap(const QRectF &r, const QPixmap &pm, const QRectF &sr);
-    void drawImage(const QPointF &p, const QImage &img);
     void drawImage(const QRectF &r, const QImage &pm, const QRectF &sr,
                    Qt::ImageConversionFlags flags = Qt::AutoColor);
     void drawTiledPixmap(const QRectF &r, const QPixmap &pm, const QPointF &sr);

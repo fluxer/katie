@@ -806,31 +806,6 @@ void QPaintEngineEx::drawPolygon(const QPoint *points, int pointCount, PolygonDr
 
 }
 
-void QPaintEngineEx::drawPixmap(const QPointF &pos, const QPixmap &pm)
-{
-    drawPixmap(QRectF(pos, pm.size()), pm, pm.rect());
-}
-
-void QPaintEngineEx::drawImage(const QPointF &pos, const QImage &image)
-{
-    drawImage(QRectF(pos, image.size()), image, image.rect());
-}
-
-void QPaintEngineEx::drawTiledPixmap(const QRectF &r, const QPixmap &pixmap, const QPointF &s)
-{
-    QBrush brush(state()->pen.color(), pixmap);
-    QTransform xform = QTransform::fromTranslate(r.x() - s.x(), r.y() - s.y());
-    brush.setTransform(xform);
-
-    qreal pts[] = { r.x(), r.y(),
-                    r.x() + r.width(), r.y(),
-                    r.x() + r.width(), r.y() + r.height(),
-                    r.x(), r.y() + r.height() };
-
-    QVectorPath path(pts, 4, 0, QVectorPath::RectangleHint);
-    fill(path, brush);
-}
-
 void QPaintEngineEx::setState(QPainterState *s)
 {
     QPaintEngine::state = s;
