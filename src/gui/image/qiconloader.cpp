@@ -107,7 +107,7 @@ QStringList QIconLoader::themeSearchPaths() const
 }
 
 QIconTheme::QIconTheme(const QString &themeName)
-        : m_valid(false)
+    : m_valid(false)
 {
     foreach (const QString &it, QIcon::themeSearchPaths()) {
         QString themeDir = it + QLatin1Char('/') + themeName;
