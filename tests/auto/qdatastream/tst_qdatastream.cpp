@@ -25,7 +25,6 @@
 #include <QList>
 #include <QtCore/qendian.h>
 #include <QtGui/QtGui>
-#include <QtSvg/QtSvg>
 
 #define SVGFILE "tests2.svg"
 
@@ -2853,14 +2852,6 @@ void tst_QDataStream::streamToAndFromQByteArray()
 
 void tst_QDataStream::streamRealDataTypes()
 {
-    // Generate QPicture from SVG.
-    QSvgRenderer renderer(svgFile);
-    QVERIFY(renderer.isValid());
-    QImage picture(renderer.defaultSize(), QImage::Format_ARGB32);
-    QPainter painter(&picture);
-    renderer.render(&painter);
-    painter.end();
-
     // Generate path
     QPainterPath path;
     path.lineTo(10, 0);
@@ -2883,7 +2874,6 @@ void tst_QDataStream::streamRealDataTypes()
         stream << QPointF(3, 5) << QRectF(-1, -2, 3, 4) << (QPolygonF() << QPointF(0, 0) << QPointF(1, 2));
         stream << QMatrix().rotate(90).scale(2, 2);
         stream << path;
-        stream << picture;
         stream << QTextLength(QTextLength::VariableLength, 1.5);
         stream << color;
         stream << radialBrush;
@@ -2897,7 +2887,6 @@ void tst_QDataStream::streamRealDataTypes()
     QPolygonF polygon;
     QMatrix matrix;
     QPainterPath p;
-    QImage pict;
     QTextLength textLength;
     QColor col;
     QBrush rGrad;
@@ -2929,18 +2918,6 @@ void tst_QDataStream::streamRealDataTypes()
     QCOMPARE(matrix, QMatrix().rotate(90).scale(2, 2));
     stream >> p;
     QCOMPARE(p, path);
-
-    stream >> pict;
-
-    QByteArray pictA, pictB;
-    QBuffer bufA, bufB;
-    QVERIFY(bufA.open(QIODevice::ReadWrite));
-    QVERIFY(bufB.open(QIODevice::ReadWrite));
-
-    picture.save(&bufA);
-    pict.save(&bufB);
-
-    QCOMPARE(pictA, pictB);
 
     stream >> textLength;
     QCOMPARE(textLength, QTextLength(QTextLength::VariableLength, 1.5));

@@ -23,9 +23,6 @@
 #include "chip.h"
 
 #include <QtGui>
-#ifndef QT_NO_OPENGL
-#include <QtOpenGL>
-#endif
 
 ChipTester::ChipTester(QWidget *parent)
     : QGraphicsView(parent),
@@ -50,9 +47,6 @@ void ChipTester::setAntialias(bool enabled)
 
 void ChipTester::setOpenGL(bool enabled)
 {
-#ifndef QT_NO_OPENGL
-    setViewport(enabled ? new QGLWidget(QGLFormat(QGL::SampleBuffers)) : 0);
-#endif
 }
 
 void ChipTester::setOperation(Operation operation)

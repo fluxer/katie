@@ -1,2 +1,0 @@
-add_subdirectory(findwidget)
-add_subdirectory(qtpropertybrowser)

@@ -272,41 +272,6 @@ function(KATIE_SETUP_TARGET FORTARGET)
     set(${FORTARGET}_SOURCES ${ARGN} PARENT_SCOPE)
 endfunction()
 
-# a function to make a meta target depend on all plugins, the meta target itself is used in the
-# tests setup macros to build all plugins before any test so that plugins from the host are not
-# used.
-# TODO: this is cheap and sub-optimal way of forcing tests depend on all plugins, perhaps with
-# plugin and test targets dependencies introspection it can be optimized, e.g. make tests that
-# depend on KtNetwork depend on plugins that depend on it too
-add_custom_target(plugins_dependant_tests)
-function(KATIE_SETUP_PLUGIN FORPLUGIN)
-    add_dependencies(plugins_dependant_tests ${FORPLUGIN})
-endfunction()
-
-# a macro to ensure that object targets are build with PIC if the target they
-# are going to be used in (like $<TARGET_OBJECTS:foo>) is build with PIC or
-# PIC has been enabled for all module/library/executable targets. in addition
-# the macro will add the object include directories and definitions to the
-# target properties
-macro(KATIE_SETUP_OBJECT FORTARGET)
-    get_target_property(target_pic ${FORTARGET} POSITION_INDEPENDENT_CODE)
-
-    foreach(objtarget ${ARGN})
-        if(CMAKE_POSITION_INDEPENDENT_CODE OR target_pic)
-            set_target_properties(${objtarget} PROPERTIES
-                POSITION_INDEPENDENT_CODE TRUE
-            )
-        endif()
-
-        get_target_property(object_definitions ${objtarget} COMPILE_DEFINITIONS)
-        get_target_property(object_includes ${objtarget} INCLUDE_DIRECTORIES)
-        if(object_definitions)
-            target_compile_definitions(${FORTARGET} PRIVATE ${object_definitions})
-        endif()
-        target_include_directories(${FORTARGET} PRIVATE ${object_includes})
-    endforeach()
-endmacro()
-
 # a macro to remove conditional code from headers which is only relevant to the
 # process of building Katie itself
 macro(KATIE_OPTIMIZE_HEADERS DIR)
@@ -324,7 +289,6 @@ macro(KATIE_TEST TESTNAME TESTSOURCES)
     katie_setup_target(${TESTNAME} ${TESTSOURCES} ${ARGN})
 
     add_executable(${TESTNAME} ${${TESTNAME}_SOURCES})
-    add_dependencies(${TESTNAME} plugins_dependant_tests)
 
     target_link_libraries(${TESTNAME} KtCore KtTest)
     target_compile_definitions(
@@ -347,7 +311,6 @@ macro(KATIE_DBUS_TEST TESTNAME TESTSOURCES)
     katie_setup_target(${TESTNAME} ${TESTSOURCES} ${ARGN})
 
     add_executable(${TESTNAME} ${${TESTNAME}_SOURCES})
-    add_dependencies(${TESTNAME} plugins_dependant_tests)
 
     target_link_libraries(${TESTNAME} KtCore KtDBus KtTest)
     target_compile_definitions(
@@ -370,7 +333,6 @@ macro(KATIE_GUI_TEST TESTNAME TESTSOURCES)
     katie_setup_target(${TESTNAME} ${TESTSOURCES} ${ARGN})
 
     add_executable(${TESTNAME} ${${TESTNAME}_SOURCES})
-    add_dependencies(${TESTNAME} plugins_dependant_tests)
 
     target_link_libraries(${TESTNAME} KtCore KtGui KtTest)
     target_compile_definitions(

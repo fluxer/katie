@@ -5,9 +5,9 @@ Homepage: https://github.com/fluxer/katie
 Vcs-Git: git://github.com/fluxer/katie.git
 Vcs-browser: https://github.com/fluxer/katie
 Standards-Version: 4.12.0
-Build-Depends: debhelper (>= 9~), libssl-dev, libdeflate-dev,
+Build-Depends: debhelper (>= 9~), libdeflate-dev,
  libc6-dev, libjansson-dev, libpng-dev, libcups2-dev, libfreetype6-dev,
- libfontconfig1-dev, libpcre3-dev, libdbus-1-dev, libicu-dev, cmake,
+ libfontconfig1-dev, libdbus-1-dev, libicu-dev, cmake,
  git, xserver-xorg-dev, libxinerama-dev, libxrandr-dev, libxrender-dev,
  libxcursor-dev, libsm-dev, unifdef | dpkg
 

@@ -44,78 +44,6 @@
 #define Q_LITTLE_ENDIAN 1234
 #define Q_BYTE_ORDER ${KATIE_BYTE_ORDER}
 
-// No longer supported
-#define QT_NO_OPENVG
-#define QT_NO_PHONON
-#define QT_NO_WIN_ACTIVEQT
-#define QT_NO_DIRECTPAINTER
-#define QT_NO_COP
-#define QT_NO_BLITTABLE
-#define QT_NO_PICTURE
-#define QT_NO_PICTUREIO
-#define QT_NO_SOFTKEYMANAGER
-#define QT_NO_SXE
-#define QT_NO_QWS_QPF2
-#define QT_NO_QWS_INPUTMETHODS
-#define QT_NO_QWSEMBEDWIDGET
-#define QT_NO_QWS_CURSOR
-#define QT_NO_QWS_DECORATION_DEFAULT
-#define QT_NO_QWS_DECORATION_STYLED
-#define QT_NO_QWS_DECORATION_WINDOWS
-#define QT_NO_QWS_MANAGER
-#define QT_NO_QWS_KEYBOARD
-#define QT_NO_QWS_MOUSE
-#define QT_NO_QWS_MOUSE_AUTO
-#define QT_NO_QWS_MOUSE_MANUAL
-#define QT_NO_QWS_MULTIPROCESS
-#define QT_NO_QWS_SOUNDSERVER
-#define QT_NO_QWS_PROPERTIES
-#define QT_NO_QWS_PROXYSCREEN
-#define QT_NO_QWS_DYNAMICSCREENTRANSFORMATION
-#define QT_NO_QWS_TRANSFORMED
-#define QT_NO_QWS_VNC
-#define QT_NO_AUDIO_BACKEND
-#define QT_NO_DIRECTWRITE
-#define QT_NO_STYLE_WINDOWSCE
-#define QT_NO_STYLE_WINDOWSMOBILE
-#define QT_NO_STYLE_WINDOWSXP
-#define QT_NO_STYLE_WINDOWSVISTA
-#define QT_NO_STYLE_MAC
-#define QT_NO_STYLE_S60
-#define QT_NO_STYLE_GTK
-#define QT_NO_STYLE_QGTK
-#define QT_NO_STYLE_CDE
-#define QT_NO_STATEMACHINE
-#define QT_NO_XIM
-#define QT_NO_IM
-#define QT_NO_INPUTMETHOD
-#define QT_NO_SOUND
-#define QT_NO_EGL
-#define QT_NO_OPENGL
-#define QT_NO_TABLET
-#define QT_NO_TABLETEVENT
-#define QT_NO_RAWFONT
-#define QT_NO_IMAGE_TEXT
-#define QT_NO_IMAGEFORMAT_BMP
-#define QT_NO_IMAGEFORMAT_MNG
-#define QT_NO_IMAGEFORMAT_XBM
-#define QT_NO_IMAGEFORMAT_TGA
-#define QT_NO_IMAGEFORMAT_TIFF
-#define QT_NO_IMAGEFORMAT_ICO
-#define QT_NO_IMAGEFORMAT_JPEG
-#define QT_NO_TEXTODFWRITER
-#define QT_NO_TEXTCODECPLUGIN
-#define QT_NO_SYSTEMLOCALE
-#define QT_NO_STL_WCHAR
-#define QT_NO_BEARERMANAGEMENT
-#define QT_NO_GESTURES
-#define QT_NO_STYLE_MOTIF
-#define QT_NO_STYLE_PLASTIQUE
-#define QT_NO_ACCESSIBILITY
-#define QT_NO_SVGGENERATOR
-#define QT_NO_SVGWIDGET
-#define QT_NO_GRAPHICSSVGITEM
-
 // Not supported, used to bootstrap
 #cmakedefine QT_NO_QOBJECT
 #cmakedefine QT_NO_COMPRESS
@@ -203,11 +131,9 @@
 #cmakedefine QT_NO_FRAME
 #cmakedefine QT_NO_FSCOMPLETER
 #cmakedefine QT_NO_FSFILEENGINE
-#cmakedefine QT_NO_FTP
 #cmakedefine QT_NO_GRAPHICSEFFECT
 #cmakedefine QT_NO_GRAPHICSVIEW
 #cmakedefine QT_NO_GROUPBOX
-#cmakedefine QT_NO_HTTP
 #cmakedefine QT_NO_ICON
 #cmakedefine QT_NO_IDENTITYPROXYMODEL
 #cmakedefine QT_NO_IMAGEFORMAT_PPM
@@ -223,7 +149,6 @@
 #cmakedefine QT_NO_LINEEDIT
 #cmakedefine QT_NO_LISTVIEW
 #cmakedefine QT_NO_LISTWIDGET
-#cmakedefine QT_NO_LOCALFILE_OPTIMIZED_QML
 #cmakedefine QT_NO_LOCALSERVER
 #cmakedefine QT_NO_LOCALSOCKET
 #cmakedefine QT_NO_MAINWINDOW
@@ -233,9 +158,6 @@
 #cmakedefine QT_NO_MENUBAR
 #cmakedefine QT_NO_MESSAGEBOX
 #cmakedefine QT_NO_MOVIE
-#cmakedefine QT_NO_NETWORKDISKCACHE
-#cmakedefine QT_NO_NETWORKINTERFACE
-#cmakedefine QT_NO_NETWORKPROXY
 #cmakedefine QT_NO_PDF
 #cmakedefine QT_NO_PLUGIN_CHECK
 #cmakedefine QT_NO_PRINTDIALOG
@@ -260,7 +182,6 @@
 #cmakedefine QT_NO_SIGNALMAPPER
 #cmakedefine QT_NO_SIZEGRIP
 #cmakedefine QT_NO_SLIDER
-#cmakedefine QT_NO_SOCKS5
 #cmakedefine QT_NO_SORTFILTERPROXYMODEL
 #cmakedefine QT_NO_SPINBOX
 #cmakedefine QT_NO_SPLASHSCREEN
@@ -274,8 +195,6 @@
 #cmakedefine QT_NO_STYLE_PROXY
 #cmakedefine QT_NO_STYLE_STYLESHEET
 #cmakedefine QT_NO_STYLE_WINDOWS
-#cmakedefine QT_NO_SVG
-#cmakedefine QT_NO_SVGRENDERER
 #cmakedefine QT_NO_SYNTAXHIGHLIGHTER
 #cmakedefine QT_NO_SYSTEMSEMAPHORE
 #cmakedefine QT_NO_SYSTEMTRAYICON
@@ -356,11 +275,6 @@
 #  define QT_NO_MENU
 #endif
 
-// QNetworkDiskCache
-#if !defined(QT_NO_NETWORKDISKCACHE) && defined(QT_NO_TEMPORARYFILE)
-#  define QT_NO_NETWORKDISKCACHE
-#endif
-
 // QProgressDialog
 #if !defined(QT_NO_PROGRESSDIALOG) && defined(QT_NO_PROGRESSBAR)
 #  define QT_NO_PROGRESSDIALOG
@@ -369,11 +283,6 @@
 // QScrollBar
 #if !defined(QT_NO_SCROLLBAR) && defined(QT_NO_SLIDER)
 #  define QT_NO_SCROLLBAR
-#endif
-
-// SOCKS5
-#if !defined(QT_NO_SOCKS5) && defined(QT_NO_NETWORKPROXY)
-#  define QT_NO_SOCKS5
 #endif
 
 // QSplitter
@@ -416,11 +325,6 @@
 #  define QT_NO_DBUS
 #endif
 
-// File Transfer Protocol
-#if !defined(QT_NO_FTP) && (defined(QT_NO_URLINFO) || defined(QT_NO_TEXTDATE))
-#  define QT_NO_FTP
-#endif
-
 // QScrollArea
 #if !defined(QT_NO_SCROLLAREA) && defined(QT_NO_SCROLLBAR)
 #  define QT_NO_SCROLLAREA
@@ -451,11 +355,6 @@
 #  define QT_NO_GRAPHICSVIEW
 #endif
 
-// Hyper Text Transfer Protocol
-#if !defined(QT_NO_HTTP) && defined(QT_NO_HOSTINFO)
-#  define QT_NO_HTTP
-#endif
-
 // QMdiArea
 #if !defined(QT_NO_MDIAREA) && defined(QT_NO_SCROLLAREA)
 #  define QT_NO_MDIAREA
@@ -481,11 +380,6 @@
 #  define QT_NO_STYLE_STYLESHEET
 #endif
 
-// QtSvg module
-#if !defined(QT_NO_SVG) && (defined(QT_NO_XMLSTREAMREADER) || defined(QT_NO_CSSPARSER))
-#  define QT_NO_SVG
-#endif
-
 // QColorDialog
 #if !defined(QT_NO_COLORDIALOG) && defined(QT_NO_SPINBOX)
 #  define QT_NO_COLORDIALOG
@@ -504,11 +398,6 @@
 // QMenuBar
 #if !defined(QT_NO_MENUBAR) && (defined(QT_NO_MENU) || defined(QT_NO_TOOLBUTTON))
 #  define QT_NO_MENUBAR
-#endif
-
-// QSvgRenderer
-#if !defined(QT_NO_SVGRENDERER) && defined(QT_NO_SVG)
-#  define QT_NO_SVGRENDERER
 #endif
 
 // QTabWidget

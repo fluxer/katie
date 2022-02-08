@@ -100,6 +100,15 @@ set(CORE_PUBLIC_HEADERS
     QThread
     QSocketNotifier
     QJsonDocument
+    QAbstractSocket
+    QLocalServer
+    QLocalSocket
+    QTcpServer
+    QTcpSocket
+    QUdpSocket
+    QHostAddress
+    QHostInfo
+    QIPv6Address
 )
 
 include_directories(
@@ -275,6 +284,23 @@ set(CORE_HEADERS
     ${CMAKE_CURRENT_SOURCE_DIR}/tools/qiterator.h
     ${CMAKE_CURRENT_SOURCE_DIR}/tools/qpair.h
     ${CMAKE_CURRENT_SOURCE_DIR}/tools/qstdcontainers_p.h
+    ${CMAKE_CURRENT_SOURCE_DIR}/socket/qabstractsocket.h
+    ${CMAKE_CURRENT_SOURCE_DIR}/socket/qabstractsocket_p.h
+    ${CMAKE_CURRENT_SOURCE_DIR}/socket/qabstractsocketengine_p.h
+    ${CMAKE_CURRENT_SOURCE_DIR}/socket/qlocalserver.h
+    ${CMAKE_CURRENT_SOURCE_DIR}/socket/qlocalserver_p.h
+    ${CMAKE_CURRENT_SOURCE_DIR}/socket/qlocalsocket.h
+    ${CMAKE_CURRENT_SOURCE_DIR}/socket/qlocalsocket_p.h
+    ${CMAKE_CURRENT_SOURCE_DIR}/socket/qnativesocketengine_p.h
+    ${CMAKE_CURRENT_SOURCE_DIR}/socket/qnet_unix_p.h
+    ${CMAKE_CURRENT_SOURCE_DIR}/socket/qtcpserver.h
+    ${CMAKE_CURRENT_SOURCE_DIR}/socket/qtcpsocket.h
+    ${CMAKE_CURRENT_SOURCE_DIR}/socket/qtcpsocket_p.h
+    ${CMAKE_CURRENT_SOURCE_DIR}/socket/qudpsocket.h
+    ${CMAKE_CURRENT_SOURCE_DIR}/socket/qhostaddress.h
+    ${CMAKE_CURRENT_SOURCE_DIR}/socket/qhostaddress_p.h
+    ${CMAKE_CURRENT_SOURCE_DIR}/socket/qhostinfo.h
+    ${CMAKE_CURRENT_SOURCE_DIR}/socket/qhostinfo_p.h
     ${CMAKE_CURRENT_SOURCE_DIR}/qcorecommon_p.h
 )
 
@@ -391,6 +417,20 @@ set(CORE_SOURCES
     ${CMAKE_CURRENT_SOURCE_DIR}/tools/qtimeline.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/tools/qvector.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/tools/qelapsedtimer_unix.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/socket/qabstractsocket.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/socket/qabstractsocketengine.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/socket/qlocalserver.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/socket/qlocalserver_unix.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/socket/qlocalsocket.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/socket/qlocalsocket_unix.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/socket/qnativesocketengine.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/socket/qnativesocketengine_unix.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/socket/qtcpserver.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/socket/qtcpsocket.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/socket/qudpsocket.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/socket/qhostaddress.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/socket/qhostinfo.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/socket/qhostinfo_unix.cpp
 )
 
 # on some platforms these are not needed as the functionality may be part of

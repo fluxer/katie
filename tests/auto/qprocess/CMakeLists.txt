@@ -2,8 +2,6 @@ katie_test(tst_qprocess
     ${CMAKE_CURRENT_SOURCE_DIR}/tst_qprocess.cpp
 )
 
-target_link_libraries(tst_qprocess KtNetwork)
-
 set(QPROCESS_TEST_EXECUTABLES
     fileWriterProcess
     testDetached

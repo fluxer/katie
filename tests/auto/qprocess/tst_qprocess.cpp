@@ -29,7 +29,7 @@
 #include <QtCore/QDebug>
 #include <QtCore/QMetaType>
 // Network test unnecessary?
-#include <QtNetwork/QHostInfo>
+#include <QtCore/QHostInfo>
 #include <stdlib.h>
 
 #ifdef QT_NO_PROCESS

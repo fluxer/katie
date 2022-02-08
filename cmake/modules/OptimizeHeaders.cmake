@@ -33,16 +33,9 @@ set(unifdef_arguments
     # exports
     -UKtCore_EXPORTS
     -UKtGui_EXPORTS
-    -UKtNetwork_EXPORTS
-    -UKtSvg_EXPORTS
     -UKtTest_EXPORTS
-    -UKtDeclarative_EXPORTS
     -UKtXml_EXPORTS
-    -UKtScript_EXPORTS
-    -UKtScriptTools_EXPORTS
     -UKtDBus_EXPORTS
-    -UKtUiTools_EXPORTS
-    -UKtDesigner_EXPORTS
 )
 
 message(STATUS "Optimizing header in: ${headers_directory}")

@@ -216,28 +216,10 @@ typedef double qreal;
 #  define Q_GUI_EXPORT Q_DECL_IMPORT
 #endif
 
-#ifdef KtNetwork_EXPORTS
-#  define Q_NETWORK_EXPORT Q_DECL_EXPORT
-#else
-#  define Q_NETWORK_EXPORT Q_DECL_IMPORT
-#endif
-
-#ifdef KtSvg_EXPORTS
-#  define Q_SVG_EXPORT Q_DECL_EXPORT
-#else
-#  define Q_SVG_EXPORT Q_DECL_IMPORT
-#endif
-
 #ifdef KtTest_EXPORTS
 #  define Q_TEST_EXPORT Q_DECL_EXPORT
 #else
 #  define Q_TEST_EXPORT Q_DECL_IMPORT
-#endif
-
-#ifdef KtDeclarative_EXPORTS
-#  define Q_DECLARATIVE_EXPORT Q_DECL_EXPORT
-#else
-#  define Q_DECLARATIVE_EXPORT Q_DECL_IMPORT
 #endif
 
 #ifdef KtXml_EXPORTS
@@ -246,34 +228,10 @@ typedef double qreal;
 #  define Q_XML_EXPORT Q_DECL_IMPORT
 #endif
 
-#ifdef KtScript_EXPORTS
-#  define Q_SCRIPT_EXPORT Q_DECL_EXPORT
-#else
-#  define Q_SCRIPT_EXPORT Q_DECL_IMPORT
-#endif
-
-#ifdef KtScriptTools_EXPORTS
-#  define Q_SCRIPTTOOLS_EXPORT Q_DECL_EXPORT
-#else
-#  define Q_SCRIPTTOOLS_EXPORT Q_DECL_IMPORT
-#endif
-
 #ifdef KtDBus_EXPORTS
 #  define Q_DBUS_EXPORT Q_DECL_EXPORT
 #else
 #  define Q_DBUS_EXPORT Q_DECL_IMPORT
-#endif
-
-#ifdef KtUiTools_EXPORTS
-#  define Q_UITOOLS_EXPORT Q_DECL_EXPORT
-#else
-#  define Q_UITOOLS_EXPORT Q_DECL_IMPORT
-#endif
-
-#ifdef KtDesigner_EXPORTS
-#  define Q_DESIGNER_EXPORT Q_DECL_EXPORT
-#else
-#  define Q_DESIGNER_EXPORT Q_DECL_IMPORT
 #endif
 
 #define Q_CORE_EXPORT_INLINE Q_CORE_EXPORT inline

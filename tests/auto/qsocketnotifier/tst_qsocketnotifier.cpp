@@ -25,8 +25,8 @@
 #include <QtCore/QCoreApplication>
 #include <QtCore/QSocketNotifier>
 #include <QtCore/QTimer>
-#include <QtNetwork/QTcpServer>
-#include <QtNetwork/QTcpSocket>
+#include <QtCore/QTcpServer>
+#include <QtCore/QTcpSocket>
 #include "qnativesocketengine_p.h"
 #include "qnet_unix_p.h"
 

@@ -6,7 +6,3 @@ Certain files and subdirectories of the original library packages that
 are irrelevant to Katie may not be included here. Typically, those are
 the standalone library configuration and make files, tools, test
 files, contribs, documentation, and similar.
-
-No patches have been applied to the sources with the exceptions being
-harfbuzz and javascriptcore which are maintained as part of Katie now
-with a lot of changes specific to it.

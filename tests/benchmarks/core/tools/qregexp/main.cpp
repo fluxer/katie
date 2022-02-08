@@ -24,7 +24,6 @@
 #include <QString>
 #include <QFile>
 #include <qtest.h>
-#include <QtScript>
 
 #define ZLIB_VERSION "1.2.3.4"
 
@@ -46,10 +45,7 @@ private slots:
     void escape_new3_data() { escape_data(); }
     void escape_new4();
     void escape_new4_data() { escape_data(); }
-/*
-   JSC outperforms everything.
-   Boost is less impressive then expected.
- */
+
     void simpleFind1();
     void rangeReplace1();
     void matchReplace1();
@@ -58,20 +54,14 @@ private slots:
     void rangeReplace2();
     void matchReplace2();
 
-    void simpleFindJSC();
-    void rangeReplaceJSC();
-    void matchReplaceJSC();
-
-/* those apply an (incorrect) regexp on entire source
-   (this main.cpp). JSC appears to handle this
-   (ab)use case best. QRegExp performs extremly bad.
- */
+/*
+    those apply an (incorrect) regexp on entire source
+    (this main.cpp). QRegExp performs extremly bad.
+*/
     void horribleWrongReplace1();
     void horribleReplace1();
     void horribleReplace2();
     void horribleWrongReplace2();
-    void horribleWrongReplaceJSC();
-    void horribleReplaceJSC();
 private:
     QString str1;
     QString str2;
@@ -419,73 +409,6 @@ void tst_qregexp::horribleReplace2()
         r = QString(str2).replace(rx, "\\1.\\2.\\3");
     }
     QCOMPARE(r, QString("1.2.3"));
-}
-
-
-void tst_qregexp::simpleFindJSC()
-{
-    QScriptValue r;
-    QScriptEngine engine;
-    engine.globalObject().setProperty("s", "happy");
-    QScriptValue findFunc = engine.evaluate("(function() { return s.search('pp')  } )");
-    QVERIFY(findFunc.isFunction());
-    QBENCHMARK{
-        r = findFunc.call(QScriptValue());
-    }
-    QCOMPARE(r.toInt32(), 2);
-}
-
-void tst_qregexp::rangeReplaceJSC()
-{
-    QScriptValue r;
-    QScriptEngine engine;
-    engine.globalObject().setProperty("s", str1);
-    QScriptValue replaceFunc = engine.evaluate("(function() { return s.replace(/[a-f]/g, '-')  } )");
-    QVERIFY(replaceFunc.isFunction());
-    QBENCHMARK{
-        r = replaceFunc.call(QScriptValue());
-    }
-    QCOMPARE(r.toString(), QString("W- -r- -ll h-ppy monk-ys"));
-}
-
-void tst_qregexp::matchReplaceJSC()
-{
-    QScriptValue r;
-    QScriptEngine engine;
-    engine.globalObject().setProperty("s", str1);
-    QScriptValue replaceFunc = engine.evaluate("(function() { return s.replace(/[^a-f]*([a-f]+)[^a-f]*/g, '$1')  } )");
-    QVERIFY(replaceFunc.isFunction());
-    QBENCHMARK{
-        r = replaceFunc.call(QScriptValue());
-    }
-    QCOMPARE(r.toString(), QString("eaeaae"));
-}
-
-void tst_qregexp::horribleWrongReplaceJSC()
-{
-    QScriptValue r;
-    QScriptEngine engine;
-    engine.globalObject().setProperty("s", str2);
-    QScriptValue replaceFunc = engine.evaluate("(function() { return s.replace(/.*#""define ZLIB_VERSION \"([0-9]+)\\.([0-9]+)\\.([0-9]+)\".*/gm, '$1.$2.$3')  } )");
-    QVERIFY(replaceFunc.isFunction());
-    QBENCHMARK{
-        r = replaceFunc.call(QScriptValue());
-    }
-    QCOMPARE(r.toString(), str2);
-}
-
-void tst_qregexp::horribleReplaceJSC()
-{
-    QScriptValue r;
-    QScriptEngine engine;
-    // the m flag doesnt actually work here; dunno
-    engine.globalObject().setProperty("s", str2.replace('\n', ' '));
-    QScriptValue replaceFunc = engine.evaluate("(function() { return s.replace(/.*#""define ZLIB_VERSION \"([0-9]+)\\.([0-9]+)\\.([0-9]+).*/gm, '$1.$2.$3')  } )");
-    QVERIFY(replaceFunc.isFunction());
-    QBENCHMARK{
-        r = replaceFunc.call(QScriptValue());
-    }
-    QCOMPARE(r.toString(), QString("1.2.3"));
 }
 
 QTEST_MAIN(tst_qregexp)

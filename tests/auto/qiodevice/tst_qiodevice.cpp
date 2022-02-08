@@ -21,7 +21,6 @@
 
 
 #include <QtCore/QtCore>
-#include <QtNetwork/QtNetwork>
 #include <QtTest/QtTest>
 
 #include "../network-settings.h"

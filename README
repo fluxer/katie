@@ -6,16 +6,15 @@ There are several things you should be aware before considering Katie:
 
  - some components and tools have been removed:
   - QMake, Linguist, Assistant, checksdk, macdeployqt, pixeltool, qconfig,
-    qdoc, qev, qvfb, runonphone and other non-essential
+    qdoc, qev, qvfb, runonphone, designer and other non-essential
   - Qt3Support, QtWebKit, QtHelp, QtXmlPatterns, QtOpenGL, ActiveQt, Phonon,
-    QtMultimedia and QtSql
+    QtMultimedia, QtSql, QtNetwork, QtSvg, QtDesigner, QtUiTools, QtScript
+    and QtScriptTools
 
  - some things have changed:
   - QMake build system replaced with CMake
-  - Jansson, OpenSSL, PCRE, Freetype, ICU, X11 and libpng are required for
-    building
-  - OpenSSL, D-Bus and CUPS must be linked to during build
-  - QtUiTools is build as shared library by default
+  - Jansson, Freetype, ICU, X11 and libpng are required for building
+  - D-Bus and CUPS must be linked to during build
   - moc, uic, rcc, etc. are linked to components
   - updated bundled Harfbuzz from upstream (not Harfbuzz-NG)
   - versioned and extended classes have been merged into the base class,
@@ -71,7 +70,6 @@ There are several things you should be aware before considering Katie:
   - improved namespaces support and introduced QT_NAMESPACE_COMPAT
   - improved cross-compilation support
   - improved POSIX, XSI, SUSv2, etc. requirements build checks
-  - script component relies on PCRE instead of internal copy
   - tests and benchmarks can be run without prior installation
 
 Bugs fixed in Katie, some of which in Qt5 too:
