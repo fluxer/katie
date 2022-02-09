@@ -20,7 +20,7 @@
 
 
 #include <QtTest/QtTest>
-#include <QtXml/QtXml>
+#include <QtCore/QtCore>
 
 //TESTED_CLASS=QXmlDocument
 //TESTED_FILES=qxmldocument.cpp,qxmldocument.h
@@ -32,6 +32,7 @@ static QByteArray testxmldata = "<?xml version=\"1.0\" encoding=\"UTF-8\" ?>\n<r
 class TestXmlDocument : public QXmlDocument
 {
     bool beginElement(const QByteArray &element, const QList<QXmlAttribute> &attributes) final;
+    bool cData(const QByteArray &cdata) final;
     bool endElement(const QByteArray &element) final;
 };
 
@@ -41,6 +42,11 @@ bool TestXmlDocument::beginElement(const QByteArray &element, const QList<QXmlAt
     foreach (const QXmlAttribute& attribute, attributes) {
         // qDebug() << Q_FUNC_INFO << attribute.name << attribute.value;
     }
+    return true;
+}
+bool TestXmlDocument::cData(const QByteArray &cdata)
+{
+    // qDebug() << Q_FUNC_INFO << cdata;
     return true;
 }
 

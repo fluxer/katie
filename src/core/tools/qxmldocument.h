@@ -45,6 +45,7 @@ public:
     QXmlDocument &operator=(const QXmlDocument &other);
 
     virtual bool beginElement(const QByteArray &element, const QList<QXmlAttribute> &attributes);
+    virtual bool cData(const QByteArray &cdata);
     virtual bool endElement(const QByteArray &element);
 
     void parse(const QByteArray &xml);

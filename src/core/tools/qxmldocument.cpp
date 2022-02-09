@@ -38,6 +38,7 @@ public:
     XML_Parser xmlparser;
 
     static void beginElement(void *xmldata, const XML_Char *xmlelement, const XML_Char **xmlattributes);
+    static void cData(void *xmldata, const XML_Char *xmlcdata, int xmllen);
     static void endElement(void *xmldata, const XML_Char *xmlelement);
 
 private:
@@ -61,6 +62,18 @@ void QXmlDocumentPrivate::beginElement(void *xmldata, const XML_Char *xmlelement
     }
 
     if (xd->q->beginElement(byteelement, listattributes) == false) {
+        XML_StopParser(xd->xmlparser, false);
+    }
+}
+
+void QXmlDocumentPrivate::cData(void *xmldata, const XML_Char *xmlcdata, int xmllen)
+{
+    QXmlDocumentPrivate* xd = reinterpret_cast<QXmlDocumentPrivate*>(xmldata);
+
+    const QByteArray bytecdata(xmlcdata, xmllen);
+    // qDebug() << Q_FUNC_INFO << byteelement;
+
+    if (xd->q->cData(bytecdata) == false) {
         XML_StopParser(xd->xmlparser, false);
     }
 }
@@ -122,6 +135,15 @@ bool QXmlDocument::beginElement(const QByteArray &element, const QList<QXmlAttri
     Reimplement this method in sub-class. If false is returned from
     the method parsing will stop.
  */
+bool QXmlDocument::cData(const QByteArray &cdata)
+{
+    return true;
+}
+
+/*!
+    Reimplement this method in sub-class. If false is returned from
+    the method parsing will stop.
+ */
 bool QXmlDocument::endElement(const QByteArray &element)
 {
     return true;
@@ -147,6 +169,7 @@ void QXmlDocument::parse(const QByteArray &xml)
 
         XML_SetUserData(xmlparser, xd.data());
         XML_SetElementHandler(xmlparser, QXmlDocumentPrivate::beginElement, QXmlDocumentPrivate::endElement);
+        XML_SetCharacterDataHandler(xmlparser, QXmlDocumentPrivate::cData);
 
         if (XML_Parse(xmlparser, xml.constData(), xml.size(), true) == XML_STATUS_ERROR) {
             // qDebug() << Q_FUNC_INFO << XML_GetCurrentLineNumber(xmlparser) << XML_ErrorString(XML_GetErrorCode(xmlparser));
