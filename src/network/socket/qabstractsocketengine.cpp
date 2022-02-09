@@ -28,28 +28,19 @@
 
 QT_BEGIN_NAMESPACE
 
-class QSocketEngineHandlerList : public QList<QSocketEngineHandler*>
-{
-public:
-    QMutex mutex;
-};
-
-Q_GLOBAL_STATIC(QSocketEngineHandlerList, socketHandlers)
+Q_GLOBAL_STATIC(QMutex, qGlobalSocketMutex)
+Q_GLOBAL_STATIC(QList<QSocketEngineHandler*>, qGlobalSocketHandlers)
 
 QSocketEngineHandler::QSocketEngineHandler()
 {
-    if (!socketHandlers())
-        return;
-    QMutexLocker locker(&socketHandlers()->mutex);
-    socketHandlers()->prepend(this);
+    QMutexLocker locker(qGlobalSocketMutex());
+    qGlobalSocketHandlers()->prepend(this);
 }
 
 QSocketEngineHandler::~QSocketEngineHandler()
 {
-    if (!socketHandlers())
-        return;
-    QMutexLocker locker(&socketHandlers()->mutex);
-    socketHandlers()->removeAll(this);
+    QMutexLocker locker(qGlobalSocketMutex());
+    qGlobalSocketHandlers()->removeAll(this);
 }
 
 QAbstractSocketEnginePrivate::QAbstractSocketEnginePrivate()
@@ -83,9 +74,9 @@ QAbstractSocketEngine *QAbstractSocketEngine::createSocketEngine(QAbstractSocket
         return 0;
 #endif
 
-    QMutexLocker locker(&socketHandlers()->mutex);
-    for (int i = 0; i < socketHandlers()->size(); i++) {
-        if (QAbstractSocketEngine *ret = socketHandlers()->at(i)->createSocketEngine(socketType, proxy, parent))
+    QMutexLocker locker(qGlobalSocketMutex());
+    for (int i = 0; i < qGlobalSocketHandlers()->size(); i++) {
+        if (QAbstractSocketEngine *ret = qGlobalSocketHandlers()->at(i)->createSocketEngine(socketType, proxy, parent))
             return ret;
     }
 
@@ -100,9 +91,9 @@ QAbstractSocketEngine *QAbstractSocketEngine::createSocketEngine(QAbstractSocket
 
 QAbstractSocketEngine *QAbstractSocketEngine::createSocketEngine(int socketDescripter, QObject *parent)
 {
-    QMutexLocker locker(&socketHandlers()->mutex);
-    for (int i = 0; i < socketHandlers()->size(); i++) {
-        if (QAbstractSocketEngine *ret = socketHandlers()->at(i)->createSocketEngine(socketDescripter, parent))
+    QMutexLocker locker(qGlobalSocketMutex());
+    for (int i = 0; i < qGlobalSocketHandlers()->size(); i++) {
+        if (QAbstractSocketEngine *ret = qGlobalSocketHandlers()->at(i)->createSocketEngine(socketDescripter, parent))
             return ret;
     }
     return new QNativeSocketEngine(parent);
