@@ -31,6 +31,7 @@ incmap = {
         'QHashNode': 'qhash.h',
         'QIncompatibleFlag': 'qglobal.h',
         'QInternal': 'qnamespace.h',
+        'QXmlAttribute': 'qxmldocument.h',
         'QLatin1Char': 'qchar.h',
         'QLatin1String': 'qstring.h',
         'QLineF': 'qline.h',

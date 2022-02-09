@@ -2,6 +2,7 @@
 set(EXTRA_CORE_LIBS
     ${ICU_LIBRARIES}
     ${JANSSON_LIBRARIES}
+    ${EXPAT_LIBRARIES}
     ${CMAKE_THREAD_LIBS_INIT}
     # libm should be present by default becaue this is C++
     m
@@ -92,6 +93,8 @@ set(CORE_PUBLIC_HEADERS
     QThread
     QSocketNotifier
     QJsonDocument
+    QXmlAttribute
+    QXmlDocument
     QAbstractSocket
     QLocalServer
     QLocalSocket
@@ -109,6 +112,7 @@ include_directories(
     ${CMAKE_BINARY_DIR}/include/QtCore
     ${ICU_INCLUDES}
     ${JANSSON_INCLUDES}
+    ${EXPAT_INCLUDES}
 )
 
 set(CORE_HEADERS
@@ -219,6 +223,7 @@ set(CORE_HEADERS
     ${CMAKE_CURRENT_SOURCE_DIR}/tools/qeasingcurve.h
     ${CMAKE_CURRENT_SOURCE_DIR}/tools/qhash.h
     ${CMAKE_CURRENT_SOURCE_DIR}/tools/qjsondocument.h
+    ${CMAKE_CURRENT_SOURCE_DIR}/tools/qxmldocument.h
     ${CMAKE_CURRENT_SOURCE_DIR}/tools/qline.h
     ${CMAKE_CURRENT_SOURCE_DIR}/tools/qlist.h
     ${CMAKE_CURRENT_SOURCE_DIR}/tools/qlocale.h
@@ -352,6 +357,7 @@ set(CORE_SOURCES
     ${CMAKE_CURRENT_SOURCE_DIR}/tools/qelapsedtimer.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/tools/qhash.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/tools/qjsondocument.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/tools/qxmldocument.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/tools/qline.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/tools/qlist.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/tools/qlocale.cpp

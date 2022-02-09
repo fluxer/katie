@@ -182,6 +182,14 @@ set_package_properties(Jansson PROPERTIES
     TYPE REQUIRED
 )
 
+find_package(Expat)
+set_package_properties(Expat PROPERTIES
+    PURPOSE "Required for XML support"
+    DESCRIPTION "Stream-oriented XML parser library written in C"
+    URL "https://libexpat.github.io/"
+    TYPE REQUIRED
+)
+
 find_package(X11)
 set_package_properties(X11 PROPERTIES
     PURPOSE "Required for X11/X.Org integration support"
@@ -517,6 +525,7 @@ katie_generate_obsolete(QHashIterator QtCore qhash.h)
 katie_generate_obsolete(QHashNode QtCore qhash.h)
 katie_generate_obsolete(QIncompatibleFlag QtCore qglobal.h)
 katie_generate_obsolete(QInternal QtCore qnamespace.h)
+katie_generate_obsolete(QXmlAttribute QtCore qxmldocument.h)
 katie_generate_obsolete(QLatin1Char QtCore qchar.h)
 katie_generate_obsolete(QLatin1String QtCore qstring.h)
 katie_generate_obsolete(QLineF QtCore qline.h)
