@@ -933,6 +933,7 @@ include/katie/QtCore/QLocalSocket
 include/katie/QtCore/QTcpServer
 include/katie/QtCore/QTcpSocket
 include/katie/QtCore/QUdpSocket
+include/katie/QtCore/QIPv6Address
 include/katie/QtCore/qabstractnetworkcache.h
 include/katie/QtCore/qabstractsocket.h
 include/katie/QtCore/qhostaddress.h
