@@ -1392,10 +1392,6 @@ QGraphicsItem::~QGraphicsItem()
         QGraphicsObject *o = static_cast<QGraphicsObject *>(this);
         QObjectPrivate *p = QObjectPrivate::get(o);
         p->wasDeleted = true;
-        if (p->declarativeData) {
-            QAbstractDeclarativeData::destroyed(p->declarativeData, o);
-            p->declarativeData = 0;
-        }
     }
 
     d_ptr->inDestructor = true;

@@ -103,10 +103,6 @@ static inline QMutex *signalSlotLock(const QObject *o)
 #endif
 }
 
-void (*QAbstractDeclarativeData::destroyed)(QAbstractDeclarativeData *, QObject *) = 0;
-void (*QAbstractDeclarativeData::parentChanged)(QAbstractDeclarativeData *, QObject *, QObject *) = 0;
-void (*QAbstractDeclarativeData::objectNameChanged)(QAbstractDeclarativeData *, QObject *) = 0;
-
 QObjectData::QObjectData()
     : q_ptr(nullptr),
     parent(nullptr),                         // no parent yet. It is set by setParent()
@@ -578,9 +574,6 @@ QObject::~QObject()
         emit destroyed(this);
     }
 
-    if (d->declarativeData)
-        QAbstractDeclarativeData::destroyed(d->declarativeData, this);
-
     // set ref to zero to indicate that this object has been deleted
     if (d->currentSender)
         d->currentSender->ref = 0;
@@ -798,12 +791,7 @@ QString QObject::objectName() const
 void QObject::setObjectName(const QString &name)
 {
     Q_D(QObject);
-    bool objectNameChanged = d->declarativeData && d->objectName != name;
-
     d->objectName = name;
-
-    if (objectNameChanged) 
-        d->declarativeData->objectNameChanged(d->declarativeData, this);
 }
 
 
@@ -1446,8 +1434,6 @@ void QObjectPrivate::setParent_helper(QObject *o)
             }
         }
     }
-    if (!wasDeleted && declarativeData)
-        QAbstractDeclarativeData::parentChanged(declarativeData, q, o);
 }
 
 /*!

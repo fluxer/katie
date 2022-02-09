@@ -1633,28 +1633,6 @@ int qrand()
     with meaningful parameter names in their signatures.
 */
 
-Q_GLOBAL_STATIC(QList<qInternalCallback>, qGlobalCallbacks)
-
-void QInternal::registerCallback(qInternalCallback callback)
-{
-    qGlobalCallbacks()->append(callback);
-}
-
-void QInternal::unregisterCallback(qInternalCallback callback)
-{
-    qGlobalCallbacks()->removeAll(callback);
-}
-
-bool QInternal::activateCallbacks(void **parameters)
-{
-    QList<qInternalCallback> *callbacks = qGlobalCallbacks();
-    bool ret = false;
-    for (int i = 0; i < callbacks->size(); i++) {
-        ret |= (callbacks->at(i))(parameters);
-    }
-    return ret;
-}
-
 /*!
     \macro Q_BYTE_ORDER
     \relates <QtGlobal>

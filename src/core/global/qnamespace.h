@@ -1338,11 +1338,6 @@ public:
         BottomDock,
         DockCount
     };
-
-    static void registerCallback(qInternalCallback);
-    static void unregisterCallback(qInternalCallback);
-
-    static bool activateCallbacks(void **);
 };
 
 QT_END_NAMESPACE
