@@ -42,10 +42,7 @@ static const struct ClassTblData {
     const QLatin1String klass;
     const QLatin1String header;
 } ClassTbl[] = {
-    { QLatin1String("BlockSizeManager"), QLatin1String("QtCore/qtconcurrentiteratekernel.h") },
     { QLatin1String("ConverterState"), QLatin1String("QtCore/qtextcodec.h") },
-    { QLatin1String("Exception"), QLatin1String("QtCore/qtconcurrentexception.h") },
-    { QLatin1String("ExceptionStore"), QLatin1String("QtCore/qtconcurrentexception.h") },
     { QLatin1String("QAbstractAnimation"), QLatin1String("QtGui/qabstractanimation.h") },
     { QLatin1String("QAbstractButton"), QLatin1String("QtGui/qabstractbutton.h") },
     { QLatin1String("QAbstractEventDispatcher"), QLatin1String("QtCore/qabstracteventdispatcher.h") },
@@ -194,8 +191,6 @@ static const struct ClassTblData {
     { QLatin1String("QFontMetricsF"), QLatin1String("QtGui/qfontmetrics.h") },
     { QLatin1String("QFormLayout"), QLatin1String("QtGui/qformlayout.h") },
     { QLatin1String("QFrame"), QLatin1String("QtGui/qframe.h") },
-    { QLatin1String("QFutureInterfaceBase"), QLatin1String("QtCore/qfutureinterface.h") },
-    { QLatin1String("QFutureWatcherBase"), QLatin1String("QtCore/qfuturewatcher.h") },
     { QLatin1String("QGenericArgument"), QLatin1String("QtCore/qobjectdefs.h") },
     { QLatin1String("QGenericReturnArgument"), QLatin1String("QtCore/qobjectdefs.h") },
     { QLatin1String("QGradient"), QLatin1String("QtGui/qbrush.h") },
@@ -499,7 +494,6 @@ static const struct ClassTblData {
     { QLatin1String("QTextTableCellFormat"), QLatin1String("QtGui/qtextformat.h") },
     { QLatin1String("QTextTableFormat"), QLatin1String("QtGui/qtextformat.h") },
     { QLatin1String("QThread"), QLatin1String("QtCore/qthread.h") },
-    { QLatin1String("QThreadPool"), QLatin1String("QtCore/qthreadpool.h") },
     { QLatin1String("QTime"), QLatin1String("QtCore/qdatetime.h") },
     { QLatin1String("QTimeEdit"), QLatin1String("QtGui/qdatetimeedit.h") },
     { QLatin1String("QTimeLine"), QLatin1String("QtCore/qtimeline.h") },
@@ -572,10 +566,6 @@ static const struct ClassTblData {
     { QLatin1String("QXmlStreamNotationDeclaration"), QLatin1String("QtXml/qxmlstream.h") },
     { QLatin1String("QXmlStreamReader"), QLatin1String("QtXml/qxmlstream.h") },
     { QLatin1String("QXmlStreamWriter"), QLatin1String("QtXml/qxmlstream.h") },
-    { QLatin1String("ResultIteratorBase"), QLatin1String("QtCore/qtconcurrentresultstore.h") },
-    { QLatin1String("ResultStoreBase"), QLatin1String("QtCore/qtconcurrentresultstore.h") },
-    { QLatin1String("ThreadEngineBase"), QLatin1String("QtCore/qtconcurrentthreadengine.h") },
-    { QLatin1String("UnhandledException"), QLatin1String("QtCore/qtconcurrentexception.h") },
 };
 static const qint16 ClassTblSize = sizeof(ClassTbl) / sizeof(ClassTblData);
 

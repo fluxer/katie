@@ -84,7 +84,6 @@ private:
 };
 
 typedef QMutexPoolBase<QMutex> QMutexPool;
-typedef QMutexPoolBase<std::recursive_mutex> QRecursiveMutexPool;
 
 QT_END_NAMESPACE
 

@@ -101,7 +101,6 @@
 #cmakedefine QT_NO_COLUMNVIEW
 #cmakedefine QT_NO_COMBOBOX
 #cmakedefine QT_NO_COMPLETER
-#cmakedefine QT_NO_CONCURRENT
 #cmakedefine QT_NO_CONTEXTMENU
 #cmakedefine QT_NO_CSSPARSER
 #cmakedefine QT_NO_CURSOR
@@ -169,7 +168,6 @@
 #cmakedefine QT_NO_PROPERTIES
 #cmakedefine QT_NO_PROXYMODEL
 #cmakedefine QT_NO_QCOLUMNVIEW
-#cmakedefine QT_NO_QFUTURE
 #cmakedefine QT_NO_QOBJECT_CHECK
 #cmakedefine QT_NO_QUATERNION
 #cmakedefine QT_NO_QUUID_STRING
@@ -238,11 +236,6 @@
 // Debugging
 #if defined(QT_NO_TEXTSTREAM) && !defined(QT_NO_DEBUG_STREAM)
 #  define QT_NO_DEBUG_STREAM
-#endif
-
-// Future
-#if !defined(QT_NO_QFUTURE) && defined(QT_NO_CONCURRENT)
-#  define QT_NO_QFUTURE
 #endif
 
 // Animation
