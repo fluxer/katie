@@ -35,6 +35,7 @@
 
 #include "qframe_p.h"
 #include "qabstractscrollarea.h"
+#include "qscopedpointer.h"
 
 QT_BEGIN_NAMESPACE
 

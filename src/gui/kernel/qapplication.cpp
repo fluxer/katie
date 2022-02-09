@@ -28,7 +28,6 @@
 #include "qdir.h"
 #include "qevent.h"
 #include "qfile.h"
-#include "qgraphicsscene.h"
 #include "qhash.h"
 #include "qset.h"
 #include "qlayout.h"
@@ -45,7 +44,6 @@
 #include "qstylesheetstyle_p.h"
 #include "qstyle_p.h"
 #include "qmessagebox.h"
-#include "qgraphicsproxywidget.h"
 #include "qkeymapper_p.h"
 #include "qguiplatformplugin.h"
 #include "qthread.h"
@@ -1175,15 +1173,6 @@ void QApplicationPrivate::setPalette_helper(const QPalette &palette, const char*
             if (all || (!className && w->isWindow()) || w->inherits(className)) // matching class
                 QApplication::sendEvent(w, &e);
         }
-
-        // Send to all scenes as well.
-#ifndef QT_NO_GRAPHICSVIEW
-        QList<QGraphicsScene *> &scenes = qApp->d_func()->scene_list;
-        for (QList<QGraphicsScene *>::ConstIterator it = scenes.constBegin();
-             it != scenes.constEnd(); ++it) {
-            QApplication::sendEvent(*it, &e);
-        }
-#endif //QT_NO_GRAPHICSVIEW
     }
     if (!className && (!QApplicationPrivate::sys_pal || !palette.isCopyOf(*QApplicationPrivate::sys_pal))) {
         if (!QApplicationPrivate::set_pal)
@@ -1352,15 +1341,6 @@ void QApplication::setFont(const QFont &font, const char *className)
             if (all || (!className && w->isWindow()) || w->inherits(className)) // matching class
                 sendEvent(w, &e);
         }
-
-#ifndef QT_NO_GRAPHICSVIEW
-        // Send to all scenes as well.
-        QList<QGraphicsScene *> &scenes = qApp->d_func()->scene_list;
-        for (QList<QGraphicsScene *>::ConstIterator it = scenes.constBegin();
-             it != scenes.constEnd(); ++it) {
-            QApplication::sendEvent(*it, &e);
-        }
-#endif //QT_NO_GRAPHICSVIEW
     }
     if (!className && (!QApplicationPrivate::sys_font || !font.isCopyOf(*QApplicationPrivate::sys_font))) {
         if (!QApplicationPrivate::set_font)
@@ -1472,11 +1452,6 @@ QWidget *QApplication::focusWidget()
 
 void QApplicationPrivate::setFocusWidget(QWidget *focus, Qt::FocusReason reason)
 {
-#ifndef QT_NO_GRAPHICSVIEW
-    if (focus && focus->window()->graphicsProxyWidget())
-        return;
-#endif
-
     hidden_focus_widget = 0;
 
     if (focus != focus_widget) {
@@ -1760,13 +1735,6 @@ void QApplication::setActiveWindow(QWidget* act)
     if (QApplicationPrivate::active_window == window)
         return;
 
-#ifndef QT_NO_GRAPHICSVIEW
-    if (window && window->graphicsProxyWidget()) {
-        // Activate the proxy's view->viewport() ?
-        return;
-    }
-#endif
-
     QWidgetList toBeActivated;
     QWidgetList toBeDeactivated;
 
@@ -2020,14 +1988,9 @@ void QApplicationPrivate::dispatchEnterLeave(QWidget* enter, QWidget* leave) {
     //check that we will not call qt_x11_enforce_cursor twice with the same native widget
     if (parentOfLeavingCursor && (!enterOnAlien
         || parentOfLeavingCursor->effectiveWinId() != enter->effectiveWinId())) {
-#ifndef QT_NO_GRAPHICSVIEW
-        if (!parentOfLeavingCursor->window()->graphicsProxyWidget())
-#endif
-        {
 #if defined(Q_WS_X11)
-            qt_x11_enforce_cursor(parentOfLeavingCursor, true);
+        qt_x11_enforce_cursor(parentOfLeavingCursor, true);
 #endif
-        }
     }
 #endif
     if (enterOnAlien) {
@@ -2038,16 +2001,9 @@ void QApplicationPrivate::dispatchEnterLeave(QWidget* enter, QWidget* leave) {
         if (!cursorWidget)
             return;
 
-#ifndef QT_NO_GRAPHICSVIEW
-        if (cursorWidget->window()->graphicsProxyWidget()) {
-            QWidgetPrivate::nearestGraphicsProxyWidget(cursorWidget)->setCursor(cursorWidget->cursor());
-        } else
-#endif
-        {
 #if defined(Q_WS_X11)
-            qt_x11_enforce_cursor(cursorWidget, true);
+        qt_x11_enforce_cursor(cursorWidget, true);
 #endif
-        }
     }
 #endif
 }
@@ -3007,11 +2963,7 @@ bool QApplication::notify(QObject *receiver, QEvent *e)
     case QEvent::KeyRelease:
         {
             bool isWidget = receiver->isWidgetType();
-            bool isGraphicsWidget = false;
-#ifndef QT_NO_GRAPHICSVIEW
-            isGraphicsWidget = !isWidget && qobject_cast<QGraphicsWidget *>(receiver);
-#endif
-            if (!isWidget && !isGraphicsWidget) {
+            if (!isWidget) {
                 res = d->notify_helper(receiver, e);
                 break;
             }
@@ -3039,9 +2991,6 @@ bool QApplication::notify(QObject *receiver, QEvent *e)
                     key->ignore();
                 res = d->notify_helper(receiver, e);
                 QWidget *w = isWidget ? static_cast<QWidget *>(receiver) : 0;
-#ifndef QT_NO_GRAPHICSVIEW
-                QGraphicsWidget *gw = isGraphicsWidget ? static_cast<QGraphicsWidget *>(receiver) : 0;
-#endif
 
                 if ((res && key->isAccepted())
                     /*
@@ -3058,18 +3007,11 @@ bool QApplication::notify(QObject *receiver, QEvent *e)
                     */
                     || !pr
                     || (isWidget && (w->isWindow() || !w->parentWidget()))
-#ifndef QT_NO_GRAPHICSVIEW
-                    || (isGraphicsWidget && (gw->isWindow() || !gw->parentWidget()))
-#endif
                     ) {
                     break;
                 }
 
-#ifndef QT_NO_GRAPHICSVIEW
-                receiver = w ? (QObject *)w->parentWidget() : (QObject *)gw->parentWidget();
-#else
                 receiver = w->parentWidget();
-#endif
             }
             qt_in_tab_key_event = false;
         }
@@ -3270,15 +3212,6 @@ bool QApplication::notify(QObject *receiver, QEvent *e)
     case QEvent::DragEnter: {
             QWidget* w = static_cast<QWidget *>(receiver);
             QDragEnterEvent *dragEvent = static_cast<QDragEnterEvent *>(e);
-#ifndef QT_NO_GRAPHICSVIEW
-            // QGraphicsProxyWidget handles its own propagation,
-            // and we must not change QDragManagers currentTarget.
-            QWExtra *extra = w->window()->d_func()->extra;
-            if (extra && extra->proxyWidget) {
-                res = d->notify_helper(w, dragEvent);
-                break;
-            }
-#endif
             while (w) {
                 if (w->isEnabled() && w->acceptDrops()) {
                     res = d->notify_helper(w, dragEvent);
@@ -3297,16 +3230,7 @@ bool QApplication::notify(QObject *receiver, QEvent *e)
     case QEvent::DragMove:
     case QEvent::Drop:
     case QEvent::DragLeave: {
-            QWidget* w = static_cast<QWidget *>(receiver);
-#ifndef QT_NO_GRAPHICSVIEW
-            // QGraphicsProxyWidget handles its own propagation,
-            // and we must not change QDragManagers currentTarget.
-            QWExtra *extra = w->window()->d_func()->extra;
-            const bool isProxyWidget = extra && extra->proxyWidget;
-            if (!isProxyWidget)
-#endif
-                w = QDragManager::self()->currentTarget();
-
+            QWidget* w = QDragManager::self()->currentTarget();
             if (!w) {
                 break;
             }
@@ -3319,11 +3243,7 @@ bool QApplication::notify(QObject *receiver, QEvent *e)
                 }
             }
             res = d->notify_helper(w, e);
-            if (e->type() != QEvent::DragMove
-#ifndef QT_NO_GRAPHICSVIEW
-                && !isProxyWidget
-#endif
-                )
+            if (e->type() != QEvent::DragMove)
                 QDragManager::self()->setCurrentTarget(0, e->type() == QEvent::Drop);
         }
         break;

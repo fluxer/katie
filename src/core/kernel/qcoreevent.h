@@ -141,52 +141,29 @@ public:
 
         AcceptDropsChange = 86,
 
-        GraphicsSceneMouseMove = 87,            // GraphicsView
-        GraphicsSceneMousePress = 88,
-        GraphicsSceneMouseRelease = 89,
-        GraphicsSceneMouseDoubleClick = 90,
-        GraphicsSceneContextMenu = 91,
-        GraphicsSceneHoverEnter = 92,
-        GraphicsSceneHoverMove = 93,
-        GraphicsSceneHoverLeave = 94,
-        GraphicsSceneLeave = 95,                // internal
-        GraphicsSceneHelp = 96,
-        GraphicsSceneDragEnter = 97,
-        GraphicsSceneDragMove = 98,
-        GraphicsSceneDragLeave = 99,
-        GraphicsSceneDrop = 100,
-        GraphicsSceneWheel = 101,
+        KeyboardLayoutChange = 87,              // keyboard layout changed
 
-        KeyboardLayoutChange = 102,             // keyboard layout changed
+        DynamicPropertyChange = 88,             // A dynamic property was changed through setProperty/property
 
-        DynamicPropertyChange = 103,            // A dynamic property was changed through setProperty/property
+        NonClientAreaMouseMove = 89,
+        NonClientAreaMouseButtonPress = 90,
+        NonClientAreaMouseButtonRelease = 91,
+        NonClientAreaMouseButtonDblClick = 92,
 
-        NonClientAreaMouseMove = 104,
-        NonClientAreaMouseButtonPress = 105,
-        NonClientAreaMouseButtonRelease = 106,
-        NonClientAreaMouseButtonDblClick = 107,
+        ContentsRectChange = 93,                // sent by QWidget::setContentsMargins (internal)
 
-        ContentsRectChange = 108,               // sent by QWidget::setContentsMargins (internal)
+        CursorChange = 94,
+        ToolTipChange = 95,
 
-        FutureCallOut = 109,
+        GrabMouse = 96,
+        UngrabMouse = 97,
+        GrabKeyboard = 98,
+        UngrabKeyboard = 99,
 
-        GraphicsSceneResize  = 110,
-        GraphicsSceneMove  = 111,
+        RequestSoftwareInputPanel = 100,
+        CloseSoftwareInputPanel = 101,
 
-        CursorChange = 112,
-        ToolTipChange = 113,
-
-        NetworkReplyUpdated = 114,              // Internal for QNetworkReply
-
-        GrabMouse = 115,
-        UngrabMouse = 116,
-        GrabKeyboard = 117,
-        UngrabKeyboard = 118,
-
-        RequestSoftwareInputPanel = 119,
-        CloseSoftwareInputPanel = 120,
-
-        WinIdChange = 121,
+        WinIdChange = 102,
 
         User = 1000,                            // first user event id
         MaxUser = 65535                         // last user event id

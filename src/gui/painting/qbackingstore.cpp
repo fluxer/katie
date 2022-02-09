@@ -27,13 +27,11 @@
 #include "qevent.h"
 #include "qapplication.h"
 #include "qpaintengine.h"
-#include "qgraphicsproxywidget.h"
 #include "qthread.h"
 #include "qwidget_p.h"
 #include "qwindowsurface_raster_p.h"
 #include "qapplication_p.h"
 #include "qpaintengine_raster_p.h"
-#include "qgraphicseffect_p.h"
 
 QT_BEGIN_NAMESPACE
 
@@ -322,10 +320,6 @@ void QWidgetBackingStore::markDirty(const QRegion &rgn, QWidget *widget, bool up
     Q_ASSERT(widget->window() == tlw);
     Q_ASSERT(!rgn.isEmpty());
 
-#ifndef QT_NO_GRAPHICSEFFECT
-    widget->d_func()->invalidateGraphicsEffectsRecursively();
-#endif //QT_NO_GRAPHICSEFFECT
-
     if (widget->d_func()->paintOnScreen()) {
         if (widget->d_func()->dirty.isEmpty()) {
             widget->d_func()->dirty = rgn;
@@ -354,12 +348,7 @@ void QWidgetBackingStore::markDirty(const QRegion &rgn, QWidget *widget, bool up
 
     if (invalidateBuffer) {
         const bool eventAlreadyPosted = !dirty.isEmpty();
-#ifndef QT_NO_GRAPHICSEFFECT
-        if (widget->d_func()->graphicsEffect)
-            dirty += widget->d_func()->effectiveRectFor(rgn.boundingRect()).translated(offset);
-        else
-#endif //QT_NO_GRAPHICSEFFECT
-            dirty += rgn.translated(offset);
+        dirty += rgn.translated(offset);
         if (!eventAlreadyPosted || updateImmediately)
             sendUpdateRequest(tlw, updateImmediately);
         return;
@@ -373,12 +362,7 @@ void QWidgetBackingStore::markDirty(const QRegion &rgn, QWidget *widget, bool up
 
     if (widget->d_func()->inDirtyList) {
         if (!qt_region_strictContains(widget->d_func()->dirty, widgetRect)) {
-#ifndef QT_NO_GRAPHICSEFFECT
-            if (widget->d_func()->graphicsEffect)
-                widget->d_func()->dirty += widget->d_func()->effectiveRectFor(rgn.boundingRect());
-            else
-#endif //QT_NO_GRAPHICSEFFECT
-                widget->d_func()->dirty += rgn;
+            widget->d_func()->dirty += rgn;
         }
     } else {
         addDirtyWidget(widget, rgn);
@@ -404,10 +388,6 @@ void QWidgetBackingStore::markDirty(const QRect &rect, QWidget *widget, bool upd
     Q_ASSERT(widget->isVisible() && widget->updatesEnabled());
     Q_ASSERT(widget->window() == tlw);
     Q_ASSERT(!rect.isEmpty());
-
-#ifndef QT_NO_GRAPHICSEFFECT
-    widget->d_func()->invalidateGraphicsEffectsRecursively();
-#endif //QT_NO_GRAPHICSEFFECT
 
     if (widget->d_func()->paintOnScreen()) {
         if (widget->d_func()->dirty.isEmpty()) {
@@ -589,10 +569,6 @@ void QWidgetPrivate::moveRect(const QRect &rect, int dx, int dy)
     const QRect parentRect(rect & clipR);
 
     bool accelerateMove = accelEnv && isOpaque
-#ifndef QT_NO_GRAPHICSVIEW
-                          // No accelerate move for proxy widgets.
-                          && !tlw->d_func()->extra->proxyWidget
-#endif
                           && !isOverlapped(sourceRect) && !isOverlapped(destRect);
 
     if (!accelerateMove) {
@@ -856,13 +832,6 @@ void QWidgetBackingStore::sync()
                                            : wd->dirty);
         toClean += widgetDirty;
 
-#ifndef QT_NO_GRAPHICSVIEW
-        if (tlw->d_func()->extra->proxyWidget) {
-            resetWidget(w);
-            continue;
-        }
-#endif
-
         if (!hasDirtySiblingsAbove && wd->isOpaque && !dirty.intersects(widgetDirty.boundingRect())) {
             opaqueNonOverlappedWidgets.append(w);
         } else {
@@ -879,17 +848,6 @@ void QWidgetBackingStore::sync()
         flush();
         return;
     }
-
-#ifndef QT_NO_GRAPHICSVIEW
-    if (tlw->d_func()->extra->proxyWidget) {
-        updateStaticContentsSize();
-        dirty = QRegion();
-        const QVector<QRect> rects(toClean.rects());
-        for (int i = 0; i < rects.size(); ++i)
-            tlw->d_func()->extra->proxyWidget->update(rects.at(i));
-        return;
-    }
-#endif
 
     BeginPaintInfo beginPaintInfo;
     beginPaint(toClean, windowSurface, &beginPaintInfo);
@@ -987,7 +945,7 @@ void QWidgetPrivate::invalidateBuffer_resizeHelper(const QPoint &oldPos, const Q
     const QRect newWidgetRect(q->rect());
     const QRect oldWidgetRect(0, 0, oldSize.width(), oldSize.height());
 
-    if (!staticContents || graphicsEffect) {
+    if (!staticContents) {
         QRegion staticChildren;
         QWidgetBackingStore *bs = 0;
         if (offset.isNull() && (bs = maybeBackingStore()))
@@ -1007,14 +965,14 @@ void QWidgetPrivate::invalidateBuffer_resizeHelper(const QPoint &oldPos, const Q
             return;
 
         // Invalidate newly exposed area of the parent.
-        if (!graphicsEffect && extra && extra->hasMask) {
+        if (extra && extra->hasMask) {
             QRegion parentExpose(extra->mask.translated(oldPos));
             parentExpose &= QRect(oldPos, oldSize);
             if (hasStaticChildren)
                 parentExpose -= data.crect; // Offset is unchanged, safe to do this.
             q->parentWidget()->d_func()->invalidateBuffer(parentExpose);
         } else {
-            if (hasStaticChildren && !graphicsEffect) {
+            if (hasStaticChildren) {
                 QRegion parentExpose(QRect(oldPos, oldSize));
                 parentExpose -= data.crect; // Offset is unchanged, safe to do this.
                 q->parentWidget()->d_func()->invalidateBuffer(parentExpose);
@@ -1077,7 +1035,7 @@ void QWidgetPrivate::invalidateBuffer(const QRegion &rgn)
 
     QRegion wrgn(rgn);
     wrgn &= clipRect();
-    if (!graphicsEffect && extra && extra->hasMask)
+    if (extra && extra->hasMask)
         wrgn &= extra->mask;
     if (wrgn.isEmpty())
         return;
@@ -1105,7 +1063,7 @@ void QWidgetPrivate::invalidateBuffer(const QRect &rect)
     if (wRect.isEmpty())
         return;
 
-    if (graphicsEffect || !extra || !extra->hasMask) {
+    if (!extra || !extra->hasMask) {
         tlwExtra->backingStore->markDirty(wRect, q, false, true);
         return;
     }

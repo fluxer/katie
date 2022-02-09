@@ -32,6 +32,7 @@
 #include "qbitarray.h"
 #include "qscrollbar.h"
 #include "qabstractbutton.h"
+#include "qpen.h"
 #include "qtableview_p.h"
 
 QT_BEGIN_NAMESPACE

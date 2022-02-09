@@ -67,19 +67,6 @@ set(GUI_PUBLIC_HEADERS
     QFormLayout
     QFrame
     QGenericMatrix
-    QGraphicsAnchorLayout
-    QGraphicsEffect
-    QGraphicsGridLayout
-    QGraphicsItem
-    QGraphicsItemAnimation
-    QGraphicsLayout
-    QGraphicsLayoutItem
-    QGraphicsLinearLayout
-    QGraphicsProxyWidget
-    QGraphicsScene
-    QGraphicsSceneEvent
-    QGraphicsView
-    QGraphicsWidget
     QGridLayout
     QGroupBox
     QHeaderView
@@ -126,8 +113,6 @@ set(GUI_PUBLIC_HEADERS
     QPrintEngine
     QPrinter
     QPrinterInfo
-    QPrintPreviewDialog
-    QPrintPreviewWidget
     QProgressBar
     QProgressDialog
     QProxyModel
@@ -255,38 +240,6 @@ set(GUI_HEADERS
     ${CMAKE_CURRENT_SOURCE_DIR}/dialogs/qfilesystemmodel_p.h
     ${CMAKE_CURRENT_SOURCE_DIR}/dialogs/qfileinfogatherer_p.h
     ${CMAKE_CURRENT_SOURCE_DIR}/dialogs/qwizard.h
-    ${CMAKE_CURRENT_SOURCE_DIR}/dialogs/qprintpreviewdialog.h
-    ${CMAKE_CURRENT_SOURCE_DIR}/effects/qgraphicseffect.h
-    ${CMAKE_CURRENT_SOURCE_DIR}/effects/qgraphicseffect_p.h
-    ${CMAKE_CURRENT_SOURCE_DIR}/graphicsview/qgraphicsgridlayout.h
-    ${CMAKE_CURRENT_SOURCE_DIR}/graphicsview/qgraphicsitem.h
-    ${CMAKE_CURRENT_SOURCE_DIR}/graphicsview/qgraphicsitem_p.h
-    ${CMAKE_CURRENT_SOURCE_DIR}/graphicsview/qgraphicsitemanimation.h
-    ${CMAKE_CURRENT_SOURCE_DIR}/graphicsview/qgraphicslayout.h
-    ${CMAKE_CURRENT_SOURCE_DIR}/graphicsview/qgraphicslayout_p.h
-    ${CMAKE_CURRENT_SOURCE_DIR}/graphicsview/qgraphicslayoutitem.h
-    ${CMAKE_CURRENT_SOURCE_DIR}/graphicsview/qgraphicslayoutitem_p.h
-    ${CMAKE_CURRENT_SOURCE_DIR}/graphicsview/qgraphicslinearlayout.h
-    ${CMAKE_CURRENT_SOURCE_DIR}/graphicsview/qgraphicsproxywidget.h
-    ${CMAKE_CURRENT_SOURCE_DIR}/graphicsview/qgraphicsproxywidget_p.h
-    ${CMAKE_CURRENT_SOURCE_DIR}/graphicsview/qgraphicsscene.h
-    ${CMAKE_CURRENT_SOURCE_DIR}/graphicsview/qgraphicsscene_bsp_p.h
-    ${CMAKE_CURRENT_SOURCE_DIR}/graphicsview/qgraphicsscene_p.h
-    ${CMAKE_CURRENT_SOURCE_DIR}/graphicsview/qgraphicsscenebsptreeindex_p.h
-    ${CMAKE_CURRENT_SOURCE_DIR}/graphicsview/qgraphicssceneevent.h
-    ${CMAKE_CURRENT_SOURCE_DIR}/graphicsview/qgraphicssceneindex_p.h
-    ${CMAKE_CURRENT_SOURCE_DIR}/graphicsview/qgraphicsscenelinearindex_p.h
-    ${CMAKE_CURRENT_SOURCE_DIR}/graphicsview/qgraphicstransform.h
-    ${CMAKE_CURRENT_SOURCE_DIR}/graphicsview/qgraphicstransform_p.h
-    ${CMAKE_CURRENT_SOURCE_DIR}/graphicsview/qgraphicsview.h
-    ${CMAKE_CURRENT_SOURCE_DIR}/graphicsview/qgraphicsview_p.h
-    ${CMAKE_CURRENT_SOURCE_DIR}/graphicsview/qgraphicswidget.h
-    ${CMAKE_CURRENT_SOURCE_DIR}/graphicsview/qgraphicswidget_p.h
-    ${CMAKE_CURRENT_SOURCE_DIR}/graphicsview/qgridlayoutengine_p.h
-    ${CMAKE_CURRENT_SOURCE_DIR}/graphicsview/qgraph_p.h
-    ${CMAKE_CURRENT_SOURCE_DIR}/graphicsview/qsimplex_p.h
-    ${CMAKE_CURRENT_SOURCE_DIR}/graphicsview/qgraphicsanchorlayout_p.h
-    ${CMAKE_CURRENT_SOURCE_DIR}/graphicsview/qgraphicsanchorlayout.h
     ${CMAKE_CURRENT_SOURCE_DIR}/image/qbitmap.h
     ${CMAKE_CURRENT_SOURCE_DIR}/image/qicon.h
     ${CMAKE_CURRENT_SOURCE_DIR}/image/qicon_p.h
@@ -304,7 +257,6 @@ set(GUI_HEADERS
     ${CMAKE_CURRENT_SOURCE_DIR}/image/qpixmap_x11_p.h
     ${CMAKE_CURRENT_SOURCE_DIR}/image/qpixmapcache.h
     ${CMAKE_CURRENT_SOURCE_DIR}/image/qpixmapdata_p.h
-    ${CMAKE_CURRENT_SOURCE_DIR}/image/qpixmapfilter_p.h
     ${CMAKE_CURRENT_SOURCE_DIR}/image/qppmhandler_p.h
     ${CMAKE_CURRENT_SOURCE_DIR}/image/qxpmhandler_p.h
     ${CMAKE_CURRENT_SOURCE_DIR}/image/qpnghandler_p.h
@@ -411,7 +363,6 @@ set(GUI_HEADERS
     ${CMAKE_CURRENT_SOURCE_DIR}/painting/qpaintengine.h
     ${CMAKE_CURRENT_SOURCE_DIR}/painting/qpaintengine_p.h
     ${CMAKE_CURRENT_SOURCE_DIR}/painting/qpaintengine_alpha_p.h
-    ${CMAKE_CURRENT_SOURCE_DIR}/painting/qpaintengine_preview_p.h
     ${CMAKE_CURRENT_SOURCE_DIR}/painting/qpaintengineex_p.h
     ${CMAKE_CURRENT_SOURCE_DIR}/painting/qpainter.h
     ${CMAKE_CURRENT_SOURCE_DIR}/painting/qpainter_p.h
@@ -587,7 +538,6 @@ set(GUI_HEADERS
     ${CMAKE_CURRENT_SOURCE_DIR}/widgets/qtoolbararealayout_p.h
     ${CMAKE_CURRENT_SOURCE_DIR}/widgets/qplaintextedit.h
     ${CMAKE_CURRENT_SOURCE_DIR}/widgets/qplaintextedit_p.h
-    ${CMAKE_CURRENT_SOURCE_DIR}/widgets/qprintpreviewwidget.h
     ${CMAKE_CURRENT_SOURCE_DIR}/qguicommon_p.h
 )
 
@@ -615,7 +565,6 @@ set(GUI_SOURCES
     ${CMAKE_CURRENT_SOURCE_DIR}/dialogs/qfileinfogatherer.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/dialogs/qpagesetupdialog.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/dialogs/qwizard.cpp
-    ${CMAKE_CURRENT_SOURCE_DIR}/dialogs/qprintpreviewdialog.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/dialogs/qfiledialog.ui
     ${CMAKE_CURRENT_SOURCE_DIR}/dialogs/qpagesetupwidget.ui
     ${CMAKE_CURRENT_SOURCE_DIR}/dialogs/qprintdialog_unix.cpp
@@ -625,29 +574,6 @@ set(GUI_SOURCES
     ${CMAKE_CURRENT_SOURCE_DIR}/dialogs/qprintpropertieswidget.ui
     ${CMAKE_CURRENT_SOURCE_DIR}/dialogs/qprintdialog.qrc
     ${CMAKE_CURRENT_SOURCE_DIR}/dialogs/qmessagebox.qrc
-    ${CMAKE_CURRENT_SOURCE_DIR}/effects/qgraphicseffect.cpp
-    ${CMAKE_CURRENT_SOURCE_DIR}/graphicsview/qgraphicsgridlayout.cpp
-    ${CMAKE_CURRENT_SOURCE_DIR}/graphicsview/qgraphicsitem.cpp
-    ${CMAKE_CURRENT_SOURCE_DIR}/graphicsview/qgraphicsitemanimation.cpp
-    ${CMAKE_CURRENT_SOURCE_DIR}/graphicsview/qgraphicslayout.cpp
-    ${CMAKE_CURRENT_SOURCE_DIR}/graphicsview/qgraphicslayout_p.cpp
-    ${CMAKE_CURRENT_SOURCE_DIR}/graphicsview/qgraphicslayoutitem.cpp
-    ${CMAKE_CURRENT_SOURCE_DIR}/graphicsview/qgraphicslinearlayout.cpp
-    ${CMAKE_CURRENT_SOURCE_DIR}/graphicsview/qgraphicsproxywidget.cpp
-    ${CMAKE_CURRENT_SOURCE_DIR}/graphicsview/qgraphicsscene.cpp
-    ${CMAKE_CURRENT_SOURCE_DIR}/graphicsview/qgraphicsscene_bsp.cpp
-    ${CMAKE_CURRENT_SOURCE_DIR}/graphicsview/qgraphicsscenebsptreeindex.cpp
-    ${CMAKE_CURRENT_SOURCE_DIR}/graphicsview/qgraphicssceneevent.cpp
-    ${CMAKE_CURRENT_SOURCE_DIR}/graphicsview/qgraphicssceneindex.cpp
-    ${CMAKE_CURRENT_SOURCE_DIR}/graphicsview/qgraphicsscenelinearindex.cpp
-    ${CMAKE_CURRENT_SOURCE_DIR}/graphicsview/qgraphicstransform.cpp
-    ${CMAKE_CURRENT_SOURCE_DIR}/graphicsview/qgraphicsview.cpp
-    ${CMAKE_CURRENT_SOURCE_DIR}/graphicsview/qgraphicswidget.cpp
-    ${CMAKE_CURRENT_SOURCE_DIR}/graphicsview/qgraphicswidget_p.cpp
-    ${CMAKE_CURRENT_SOURCE_DIR}/graphicsview/qgridlayoutengine.cpp
-    ${CMAKE_CURRENT_SOURCE_DIR}/graphicsview/qsimplex_p.cpp
-    ${CMAKE_CURRENT_SOURCE_DIR}/graphicsview/qgraphicsanchorlayout_p.cpp
-    ${CMAKE_CURRENT_SOURCE_DIR}/graphicsview/qgraphicsanchorlayout.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/image/qbitmap.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/image/qicon.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/image/qiconloader.cpp
@@ -658,7 +584,6 @@ set(GUI_SOURCES
     ${CMAKE_CURRENT_SOURCE_DIR}/image/qpixmap.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/image/qpixmapcache.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/image/qpixmapdata.cpp
-    ${CMAKE_CURRENT_SOURCE_DIR}/image/qpixmapfilter.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/image/qiconengine.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/image/qiconengineplugin.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/image/qmovie.cpp
@@ -749,7 +674,6 @@ set(GUI_SOURCES
     ${CMAKE_CURRENT_SOURCE_DIR}/painting/qpaintdevice.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/painting/qpaintengine.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/painting/qpaintengine_alpha.cpp
-    ${CMAKE_CURRENT_SOURCE_DIR}/painting/qpaintengine_preview.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/painting/qpaintengineex.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/painting/qpainter.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/painting/qpainterpath.cpp
@@ -881,7 +805,6 @@ set(GUI_SOURCES
     ${CMAKE_CURRENT_SOURCE_DIR}/widgets/qwidgetanimator.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/widgets/qtoolbararealayout.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/widgets/qplaintextedit.cpp
-    ${CMAKE_CURRENT_SOURCE_DIR}/widgets/qprintpreviewwidget.cpp
     ${CMAKE_SOURCE_DIR}/src/gui/text/qharfbuzz.cpp
 )
 
@@ -925,13 +848,9 @@ katie_unity_exclude(
     ${CMAKE_CURRENT_SOURCE_DIR}/dialogs/qdialog.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/dialogs/qpagesetupdialog_unix.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/dialogs/qprintdialog_unix.cpp
-    ${CMAKE_CURRENT_SOURCE_DIR}/graphicsview/qgraphicsitem.cpp
-    ${CMAKE_CURRENT_SOURCE_DIR}/graphicsview/qgraphicsscene.cpp
-    ${CMAKE_CURRENT_SOURCE_DIR}/graphicsview/qgraphicsview.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/image/qbitmap.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/image/qpixmap.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/image/qpixmap_x11.cpp
-    ${CMAKE_CURRENT_SOURCE_DIR}/image/qpixmapfilter.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/itemviews/qitemeditorfactory.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/kernel/qapplication.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/kernel/qapplication_x11.cpp

@@ -60,7 +60,7 @@ void tst_qanimation::data()
 void tst_qanimation::itemPropertyAnimation()
 {
     QFETCH(bool, started);
-    QGraphicsWidget item;
+    QWidget item;
 
     //then the property animation
     {

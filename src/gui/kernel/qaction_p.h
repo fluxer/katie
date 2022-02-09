@@ -35,7 +35,6 @@
 
 #include "QtGui/qaction.h"
 #include "QtGui/qmenu.h"
-#include "qgraphicswidget_p.h"
 #include "qobject_p.h"
 
 QT_BEGIN_NAMESPACE
@@ -84,9 +83,6 @@ public:
     QAction::Priority priority;
 
     QList<QWidget *> widgets;
-#ifndef QT_NO_GRAPHICSVIEW
-    QList<QGraphicsWidget *> graphicsWidgets;
-#endif
 #ifndef QT_NO_SHORTCUT
     void redoGrab(QShortcutMap &map);
     void redoGrabAlternate(QShortcutMap &map);

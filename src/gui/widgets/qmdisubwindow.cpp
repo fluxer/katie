@@ -131,10 +131,10 @@
 
 #ifndef QT_NO_MDIAREA
 
+#include <qevent.h>
 #include <QApplication>
 #include <QStylePainter>
 #include <QVBoxLayout>
-#include <QEvent>
 #include <QWhatsThis>
 #include <QToolTip>
 #include <QMainWindow>

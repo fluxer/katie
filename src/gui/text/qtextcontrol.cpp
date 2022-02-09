@@ -41,7 +41,6 @@
 #include "qtextdocument.h"
 #include "qtextdocument_p.h"
 #include "qtextlist.h"
-#include "qgraphicssceneevent.h"
 #include "qprinter.h"
 #include "qtextdocumentwriter.h"
 #include "qtextcursor_p.h"
@@ -868,31 +867,6 @@ void QTextControl::processEvent(QEvent *e, const QMatrix &matrix, QWidget *conte
 
     d->contextWidget = contextWidget;
 
-    if (!d->contextWidget) {
-        switch (e->type()) {
-#ifndef QT_NO_GRAPHICSVIEW
-            case QEvent::GraphicsSceneMouseMove:
-            case QEvent::GraphicsSceneMousePress:
-            case QEvent::GraphicsSceneMouseRelease:
-            case QEvent::GraphicsSceneMouseDoubleClick:
-            case QEvent::GraphicsSceneContextMenu:
-            case QEvent::GraphicsSceneHoverEnter:
-            case QEvent::GraphicsSceneHoverMove:
-            case QEvent::GraphicsSceneHoverLeave:
-            case QEvent::GraphicsSceneHelp:
-            case QEvent::GraphicsSceneDragEnter:
-            case QEvent::GraphicsSceneDragMove:
-            case QEvent::GraphicsSceneDragLeave:
-            case QEvent::GraphicsSceneDrop: {
-                QGraphicsSceneEvent *ev = static_cast<QGraphicsSceneEvent *>(e);
-                d->contextWidget = ev->widget();
-                break;
-            }
-#endif // QT_NO_GRAPHICSVIEW
-            default: break;
-        };
-    }
-
     switch (e->type()) {
         case QEvent::KeyPress:
             d->keyPressEvent(static_cast<QKeyEvent *>(e));
@@ -964,57 +938,6 @@ void QTextControl::processEvent(QEvent *e, const QMatrix &matrix, QWidget *conte
         }
 #endif
 
-#ifndef QT_NO_GRAPHICSVIEW
-        case QEvent::GraphicsSceneMousePress: {
-            QGraphicsSceneMouseEvent *ev = static_cast<QGraphicsSceneMouseEvent *>(e);
-            d->mousePressEvent(ev, ev->button(), matrix.map(ev->pos()), ev->modifiers(), ev->buttons(),
-                               ev->screenPos());
-            break; }
-        case QEvent::GraphicsSceneMouseMove: {
-            QGraphicsSceneMouseEvent *ev = static_cast<QGraphicsSceneMouseEvent *>(e);
-            d->mouseMoveEvent(ev, ev->button(), matrix.map(ev->pos()), ev->modifiers(), ev->buttons(),
-                              ev->screenPos());
-            break; }
-        case QEvent::GraphicsSceneMouseRelease: {
-            QGraphicsSceneMouseEvent *ev = static_cast<QGraphicsSceneMouseEvent *>(e);
-            d->mouseReleaseEvent(ev, ev->button(), matrix.map(ev->pos()), ev->modifiers(), ev->buttons(),
-                                 ev->screenPos());
-            break; }
-        case QEvent::GraphicsSceneMouseDoubleClick: {
-            QGraphicsSceneMouseEvent *ev = static_cast<QGraphicsSceneMouseEvent *>(e);
-            d->mouseDoubleClickEvent(ev, ev->button(), matrix.map(ev->pos()), ev->modifiers(), ev->buttons(),
-                                     ev->screenPos());
-            break; }
-        case QEvent::GraphicsSceneContextMenu: {
-            QGraphicsSceneContextMenuEvent *ev = static_cast<QGraphicsSceneContextMenuEvent *>(e);
-            d->contextMenuEvent(ev->screenPos(), matrix.map(ev->pos()), contextWidget);
-            break; }
-
-        case QEvent::GraphicsSceneHoverMove: {
-            QGraphicsSceneHoverEvent *ev = static_cast<QGraphicsSceneHoverEvent *>(e);
-            d->mouseMoveEvent(ev, Qt::NoButton, matrix.map(ev->pos()), ev->modifiers(),Qt::NoButton,
-                              ev->screenPos());
-            break; }
-
-        case QEvent::GraphicsSceneDragEnter: {
-            QGraphicsSceneDragDropEvent *ev = static_cast<QGraphicsSceneDragDropEvent *>(e);
-            if (d->dragEnterEvent(e, ev->mimeData()))
-                ev->acceptProposedAction();
-            break; }
-        case QEvent::GraphicsSceneDragLeave:
-            d->dragLeaveEvent();
-            break;
-        case QEvent::GraphicsSceneDragMove: {
-            QGraphicsSceneDragDropEvent *ev = static_cast<QGraphicsSceneDragDropEvent *>(e);
-            if (d->dragMoveEvent(e, ev->mimeData(), matrix.map(ev->pos())))
-                ev->acceptProposedAction();
-            break; }
-        case QEvent::GraphicsSceneDrop: {
-            QGraphicsSceneDragDropEvent *ev = static_cast<QGraphicsSceneDragDropEvent *>(e);
-            if (d->dropEvent(ev->mimeData(), matrix.map(ev->pos()), ev->dropAction(), ev->source()))
-                ev->accept();
-            break; }
-#endif // QT_NO_GRAPHICSVIEW
         case QEvent::ShortcutOverride:
             if (d->interactionFlags & Qt::TextEditable) {
                 QKeyEvent* ke = static_cast<QKeyEvent *>(e);

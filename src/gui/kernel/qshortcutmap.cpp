@@ -22,8 +22,6 @@
 #include "qshortcutmap_p.h"
 #include "qobject_p.h"
 #include "qkeysequence.h"
-#include "qgraphicsscene.h"
-#include "qgraphicsview.h"
 #include "qdebug.h"
 #include "qevent.h"
 #include "qwidget.h"
@@ -609,10 +607,6 @@ bool QShortcutMap::correctContext(const QShortcutEntry &item) const {
     if (QAction *a = qobject_cast<QAction *>(item.owner))
         return correctContext(item.context, a, active_window);
 #endif
-#ifndef QT_NO_GRAPHICSVIEW
-    if (QGraphicsWidget *gw = qobject_cast<QGraphicsWidget *>(item.owner))
-        return correctGraphicsWidgetContext(item.context, gw, active_window);
-#endif
     QWidget *w = qobject_cast<QWidget *>(item.owner);
     if (!w) {
         QShortcut *s = qobject_cast<QShortcut *>(item.owner);
@@ -641,14 +635,6 @@ bool QShortcutMap::correctWidgetContext(Qt::ShortcutContext context, QWidget *w,
 
     // Below is Qt::WindowShortcut context
     QWidget *tlw = w->window();
-#ifndef QT_NO_GRAPHICSVIEW
-    if (QWExtra *topData = tlw->d_func()->extra) {
-        if (topData->proxyWidget) {
-            bool res = correctGraphicsWidgetContext(context, (QGraphicsWidget *)topData->proxyWidget, active_window);
-            return res;
-        }
-    }
-#endif
 
     /* if a floating tool window is active, keep shortcuts on the
      * parent working */
@@ -677,60 +663,6 @@ bool QShortcutMap::correctWidgetContext(Qt::ShortcutContext context, QWidget *w,
     return true;
 }
 
-#ifndef QT_NO_GRAPHICSVIEW
-bool QShortcutMap::correctGraphicsWidgetContext(Qt::ShortcutContext context, QGraphicsWidget *w, QWidget *active_window) const
-{
-    if (!w->isVisible() || !w->isEnabled() || !w->scene())
-        return false;
-
-    if (context == Qt::ApplicationShortcut) {
-        // Applicationwide shortcuts are always reachable unless their owner
-        // is shadowed by modality. In QGV there's no modality concept, but we
-        // must still check if all views are shadowed.
-        QList<QGraphicsView *> views = w->scene()->views();
-        for (int i = 0; i < views.size(); ++i) {
-            if (QApplicationPrivate::tryModalHelper(views.at(i)))
-                return true;
-        }
-        return false;
-    }
-
-    if (context == Qt::WidgetShortcut)
-        return static_cast<QGraphicsItem *>(w) == w->scene()->focusItem();
-
-    if (context == Qt::WidgetWithChildrenShortcut) {
-        const QGraphicsItem *ti = w->scene()->focusItem();
-        if (ti && ti->isWidget()) {
-            const QGraphicsWidget *tw = static_cast<const QGraphicsWidget *>(ti);
-            while (tw && tw != w && (tw->windowType() == Qt::Widget || tw->windowType() == Qt::Popup))
-                tw = tw->parentWidget();
-            return tw == w;
-        }
-        return false;
-    }
-
-    // Below is Qt::WindowShortcut context
-
-    // Find the active view (if any).
-    QList<QGraphicsView *> views = w->scene()->views();
-    QGraphicsView *activeView = 0;
-    for (int i = 0; i < views.size(); ++i) {
-        QGraphicsView *view = views.at(i);
-        if (view->window() == active_window) {
-            activeView = view;
-            break;
-        }
-    }
-    if (!activeView)
-        return false;
-
-    // The shortcut is reachable if owned by a windowless widget, or if the
-    // widget's window is the same as the focus item's window.
-    QGraphicsWidget *a = w->scene()->activeWindow();
-    return !w->window() || a == w->window();
-}
-#endif
-
 #ifndef QT_NO_ACTION
 bool QShortcutMap::correctContext(Qt::ShortcutContext context, QAction *a, QWidget *active_window) const
 {
@@ -752,18 +684,6 @@ bool QShortcutMap::correctContext(Qt::ShortcutContext context, QAction *a, QWidg
                 return true;
     }
 
-#ifndef QT_NO_GRAPHICSVIEW
-    const QList<QGraphicsWidget *> &graphicsWidgets = a->d_func()->graphicsWidgets;
-#if defined(DEBUG_QSHORTCUTMAP)
-    if (graphicsWidgets.isEmpty())
-        qDebug() << a << "not connected to any widgets; won't trigger";
-#endif
-    for (int i = 0; i < graphicsWidgets.size(); ++i) {
-        QGraphicsWidget *w = graphicsWidgets.at(i);
-        if (correctGraphicsWidgetContext(context, w, active_window))
-            return true;
-    }
-#endif
     return false;
 }
 #endif // QT_NO_ACTION

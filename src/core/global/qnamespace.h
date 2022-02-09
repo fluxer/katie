@@ -731,8 +731,7 @@ public:
         WindowStaysOnTopHint = 0x00010000,
         CustomizeWindowHint = 0x00020000,
         WindowStaysOnBottomHint = 0x00040000,
-        WindowCloseButtonHint = 0x00080000,
-        BypassGraphicsProxyWidget = 0x00100000
+        WindowCloseButtonHint = 0x00080000
     };
     Q_DECLARE_FLAGS(WindowFlags, WindowType)
 

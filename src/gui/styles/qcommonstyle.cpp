@@ -5614,8 +5614,43 @@ QIcon QCommonStyle::standardIcon(StandardPixmap standardicon, const QStyleOption
     return icon;
 }
 
-// in qpixmapfilter.cpp
-extern Q_GUI_EXPORT void qt_grayscale(const QImage &image, QImage &dest);
+// grayscales the image to dest (could be same). If rect isn't defined
+// destination image size is used to determine the dimension of grayscaling
+// process.
+Q_GUI_EXPORT void qt_grayscale(const QImage &image, QImage &dest)
+{
+    QRect srcRect =  image.rect();
+    if (srcRect.isNull()) {
+        srcRect = dest.rect();
+    }
+    QRect destRect = srcRect;
+    if (&image != &dest) {
+        destRect.moveTo(QPoint(0, 0));
+    }
+
+    unsigned int *outData = (unsigned int *)dest.bits();
+
+    if (dest.size() == image.size() && image.rect() == srcRect) {
+        const unsigned int *data = (const unsigned int *)image.constBits();
+        // a bit faster loop for grayscaling everything
+        int pixels = dest.width() * dest.height();
+        for (int i = 0; i < pixels; ++i) {
+            int val = qGray(data[i]);
+            outData[i] = qRgba(val, val, val, qAlpha(data[i]));
+        }
+    } else {
+        int yd = destRect.top();
+        for (int y = srcRect.top(); y <= srcRect.bottom() && y < image.height(); y++) {
+            const unsigned int *data = (const unsigned int*)image.constScanLine(y);
+            outData = (unsigned int*)dest.scanLine(yd++);
+            int xd = destRect.left();
+            for (int x = srcRect.left(); x <= srcRect.right() && x < image.width(); x++) {
+                int val = qGray(data[x]);
+                outData[xd++] = qRgba(val, val, val, qAlpha(data[x]));
+            }
+        }
+    }
+}
 
 /*! \reimp */
 QPixmap QCommonStyle::generatedIconPixmap(QIcon::Mode iconMode, const QPixmap &pixmap,

@@ -140,9 +140,9 @@
 
 #ifndef QT_NO_MDIAREA
 
+#include <qevent.h>
 #include <QApplication>
 #include <QStyle>
-#include <QEvent>
 #include <QScrollBar>
 #include "qalgorithms.h"
 #include <QList>

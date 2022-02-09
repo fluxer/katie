@@ -26,9 +26,6 @@
 #include "qabstractitemview.h"
 #include "qclipboard.h"
 #include "qapplication.h"
-#ifndef QT_NO_GRAPHICSVIEW
-#include "qgraphicssceneevent.h"
-#endif
 
 QT_BEGIN_NAMESPACE
 
@@ -1282,17 +1279,6 @@ void QLineControl::timerEvent(QTimerEvent *event)
 bool QLineControl::processEvent(QEvent* ev)
 {
     switch(ev->type()){
-#ifndef QT_NO_GRAPHICSVIEW
-        case QEvent::GraphicsSceneMouseDoubleClick:
-        case QEvent::GraphicsSceneMouseMove:
-        case QEvent::GraphicsSceneMouseRelease:
-        case QEvent::GraphicsSceneMousePress:{
-               QGraphicsSceneMouseEvent *gvEv = static_cast<QGraphicsSceneMouseEvent*>(ev);
-               QMouseEvent mouse(ev->type(),
-                    gvEv->pos().toPoint(), gvEv->button(), gvEv->buttons(), gvEv->modifiers());
-               processMouseEvent(&mouse); break;
-        }
-#endif
         case QEvent::MouseButtonPress:
         case QEvent::MouseButtonRelease:
         case QEvent::MouseButtonDblClick:
@@ -1355,7 +1341,6 @@ void QLineControl::processMouseEvent(QMouseEvent* ev)
 {
 
     switch (ev->type()) {
-        case QEvent::GraphicsSceneMousePress:
         case QEvent::MouseButtonPress:{
             if (m_tripleClickTimer
                 && (ev->pos() - m_tripleClick).manhattanLength()
@@ -1371,7 +1356,6 @@ void QLineControl::processMouseEvent(QMouseEvent* ev)
             moveCursor(cursor, mark);
             break;
         }
-        case QEvent::GraphicsSceneMouseDoubleClick:
         case QEvent::MouseButtonDblClick:
             if (ev->button() == Qt::LeftButton) {
                 selectWordAtPos(xToPos(ev->pos().x()));
@@ -1381,7 +1365,6 @@ void QLineControl::processMouseEvent(QMouseEvent* ev)
                 m_tripleClick = ev->pos();
             }
             break;
-        case QEvent::GraphicsSceneMouseRelease:
         case QEvent::MouseButtonRelease:
 #ifndef QT_NO_CLIPBOARD
             if (ev->button() == Qt::LeftButton) {
@@ -1392,7 +1375,6 @@ void QLineControl::processMouseEvent(QMouseEvent* ev)
             }
 #endif
             break;
-        case QEvent::GraphicsSceneMouseMove:
         case QEvent::MouseMove:
             if (ev->buttons() & Qt::LeftButton) {
                 moveCursor(xToPos(ev->pos().x()), true);

@@ -130,8 +130,6 @@
 #cmakedefine QT_NO_FRAME
 #cmakedefine QT_NO_FSCOMPLETER
 #cmakedefine QT_NO_FSFILEENGINE
-#cmakedefine QT_NO_GRAPHICSEFFECT
-#cmakedefine QT_NO_GRAPHICSVIEW
 #cmakedefine QT_NO_GROUPBOX
 #cmakedefine QT_NO_ICON
 #cmakedefine QT_NO_IDENTITYPROXYMODEL
@@ -161,8 +159,6 @@
 #cmakedefine QT_NO_PLUGIN_CHECK
 #cmakedefine QT_NO_PRINTDIALOG
 #cmakedefine QT_NO_PRINTER
-#cmakedefine QT_NO_PRINTPREVIEWDIALOG
-#cmakedefine QT_NO_PRINTPREVIEWWIDGET
 #cmakedefine QT_NO_PROGRESSBAR
 #cmakedefine QT_NO_PROGRESSDIALOG
 #cmakedefine QT_NO_PROPERTIES
@@ -343,11 +339,6 @@
 #  define QT_NO_DRAGANDDROP
 #endif
 
-// QGraphicsView
-#if !defined(QT_NO_GRAPHICSVIEW) && defined(QT_NO_SCROLLAREA)
-#  define QT_NO_GRAPHICSVIEW
-#endif
-
 // QMdiArea
 #if !defined(QT_NO_MDIAREA) && defined(QT_NO_SCROLLAREA)
 #  define QT_NO_MDIAREA
@@ -376,11 +367,6 @@
 // QColorDialog
 #if !defined(QT_NO_COLORDIALOG) && defined(QT_NO_SPINBOX)
 #  define QT_NO_COLORDIALOG
-#endif
-
-// QGraphicsEffect
-#if !defined(QT_NO_GRAPHICSEFFECT) && defined(QT_NO_GRAPHICSVIEW)
-#  define QT_NO_GRAPHICSEFFECT
 #endif
 
 // The Model/View Framework
@@ -538,11 +524,6 @@
 #  define QT_NO_WORKSPACE
 #endif
 
-// QPrintPreviewWidget
-#if !defined(QT_NO_PRINTPREVIEWWIDGET) && (defined(QT_NO_GRAPHICSVIEW) || defined(QT_NO_PRINTER) || defined(QT_NO_MAINWINDOW))
-#  define QT_NO_PRINTPREVIEWWIDGET
-#endif
-
 // QCalendarWidget
 #if !defined(QT_NO_CALENDARWIDGET) && (defined(QT_NO_TABLEVIEW) || defined(QT_NO_MENU) || defined(QT_NO_TEXTDATE) || defined(QT_NO_SPINBOX) || defined(QT_NO_TOOLBUTTON))
 #  define QT_NO_CALENDARWIDGET
@@ -576,11 +557,6 @@
 // QFileDialog
 #if !defined(QT_NO_FILEDIALOG) && (defined(QT_NO_DIRMODEL) || defined(QT_NO_TREEVIEW) || defined(QT_NO_COMBOBOX) || defined(QT_NO_TOOLBUTTON) || defined(QT_NO_BUTTONGROUP) || defined(QT_NO_TOOLTIP) || defined(QT_NO_SPLITTER) || defined(QT_NO_STACKEDWIDGET) || defined(QT_NO_PROXYMODEL))
 #  define QT_NO_FILEDIALOG
-#endif
-
-// QPrintPreviewDialog
-#if !defined(QT_NO_PRINTPREVIEWDIALOG) && (defined(QT_NO_PRINTPREVIEWWIDGET) || defined(QT_NO_PRINTDIALOG) || defined(QT_NO_TOOLBAR))
-#  define QT_NO_PRINTPREVIEWDIALOG
 #endif
 
 #endif

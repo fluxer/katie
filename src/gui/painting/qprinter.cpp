@@ -27,6 +27,8 @@
 #include "qpagesetupdialog.h"
 #include "qapplication.h"
 #include "qfileinfo.h"
+#include "qimage.h"
+
 #if !defined(QT_NO_CUPS)
 #include "qcups_p.h"
 #endif
@@ -39,8 +41,6 @@
 #include "qprintengine_pdf_p.h"
 #endif
 
-#include "qimage.h"
-#include "qpaintengine_preview_p.h"
 
 
 QT_BEGIN_NAMESPACE
@@ -147,33 +147,6 @@ void QPrinterPrivate::createDefaultEngines()
     use_default_engine = true;
     had_default_engines = true;
 }
-
-#ifndef QT_NO_PRINTPREVIEWWIDGET
-QList<const QImage *> QPrinterPrivate::previewPages() const
-{
-    if (previewEngine)
-        return previewEngine->pages();
-    return QList<const QImage *>();
-}
-
-void QPrinterPrivate::setPreviewMode(bool enable)
-{
-    Q_Q(QPrinter);
-    if (enable) {
-        if (!previewEngine)
-            previewEngine = new QPreviewPaintEngine;
-        had_default_engines = use_default_engine;
-        use_default_engine = false;
-        realPrintEngine = printEngine;
-        realPaintEngine = paintEngine;
-        q->setEngines(previewEngine, previewEngine);
-        previewEngine->setProxyEngines(realPrintEngine, realPaintEngine);
-    } else {
-        q->setEngines(realPrintEngine, realPaintEngine);
-        use_default_engine = had_default_engines;
-    }
-}
-#endif // QT_NO_PRINTPREVIEWWIDGET
 
 void QPrinterPrivate::addToManualSetList(QPrintEngine::PrintEnginePropertyKey key)
 {
@@ -574,9 +547,6 @@ void QPrinter::init(PrinterMode mode)
     d->outputFormat = QPrinter::NativeFormat;
     d->createDefaultEngines();
 
-#ifndef QT_NO_PRINTPREVIEWWIDGET
-    d->previewEngine = 0;
-#endif
     d->realPrintEngine = 0;
     d->realPaintEngine = 0;
 
@@ -625,9 +595,6 @@ QPrinter::~QPrinter()
     Q_D(QPrinter);
     if (d->use_default_engine)
         delete d->printEngine;
-#ifndef QT_NO_PRINTPREVIEWWIDGET
-    delete d->previewEngine;
-#endif
 }
 
 /*!

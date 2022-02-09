@@ -25,7 +25,6 @@
 #include "qapplication_p.h"
 #include "qkeysequence_p.h"
 #include "qwidget.h"
-#include "qgraphicsview.h"
 #include "qdebug.h"
 #include "qmimedata.h"
 #include "qdnd_p.h"
@@ -2066,23 +2065,6 @@ static const char *eventClassName(QEvent::Type t)
         return "QWheelEvent";
     case QEvent::Shortcut:
         return "QShortcutEvent";
-    case QEvent::GraphicsSceneMouseMove:
-    case QEvent::GraphicsSceneMousePress:
-    case QEvent::GraphicsSceneMouseRelease:
-    case QEvent::GraphicsSceneMouseDoubleClick:
-        return "QGraphicsSceneMouseEvent";
-    case QEvent::GraphicsSceneContextMenu:
-    case QEvent::GraphicsSceneHoverEnter:
-    case QEvent::GraphicsSceneHoverMove:
-    case QEvent::GraphicsSceneHoverLeave:
-    case QEvent::GraphicsSceneLeave:
-    case QEvent::GraphicsSceneHelp:
-    case QEvent::GraphicsSceneDragEnter:
-    case QEvent::GraphicsSceneDragMove:
-    case QEvent::GraphicsSceneDragLeave:
-    case QEvent::GraphicsSceneDrop:
-    case QEvent::GraphicsSceneWheel:
-        return "QGraphicsSceneEvent";
     case QEvent::Timer:
         return "QTimerEvent";
     default:

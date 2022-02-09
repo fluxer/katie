@@ -60,8 +60,6 @@ class QHideEvent;
 class QIcon;
 class QWindowSurface;
 class QLocale;
-class QGraphicsProxyWidget;
-class QGraphicsEffect;
 #if defined(Q_WS_X11)
 class QX11Info;
 #endif
@@ -289,11 +287,6 @@ public:
                 const QRegion &sourceRegion = QRegion(),
                 RenderFlags renderFlags = RenderFlags(DrawWindowBackground | DrawChildren));
 
-#ifndef QT_NO_GRAPHICSEFFECT
-    QGraphicsEffect *graphicsEffect() const;
-    void setGraphicsEffect(QGraphicsEffect *effect);
-#endif //QT_NO_GRAPHICSEFFECT
-
 public Q_SLOTS:
     void setWindowTitle(const QString &);
 #ifndef QT_NO_STYLE_STYLESHEET
@@ -377,10 +370,6 @@ public:
     // Update/refresh functions
     inline bool updatesEnabled() const;
     void setUpdatesEnabled(bool enable);
-
-#ifndef QT_NO_GRAPHICSVIEW
-    QGraphicsProxyWidget *graphicsProxyWidget() const;
-#endif
 
 public Q_SLOTS:
     void update();

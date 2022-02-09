@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-02-09 18:40+0200\n"
+"POT-Creation-Date: 2022-02-09 19:47+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -585,90 +585,6 @@ msgstr ""
 msgid "&Help"
 msgstr ""
 
-#: src/gui/dialogs/qprintpreviewdialog.cpp:226
-msgid "%1%"
-msgstr ""
-
-#: src/gui/dialogs/qprintpreviewdialog.cpp:295
-msgctxt "QPrintPreviewDialog"
-msgid "Print Preview"
-msgstr ""
-
-#: src/gui/dialogs/qprintpreviewdialog.cpp:321
-msgctxt "QPrintPreviewDialog"
-msgid "Next page"
-msgstr ""
-
-#: src/gui/dialogs/qprintpreviewdialog.cpp:322
-msgctxt "QPrintPreviewDialog"
-msgid "Previous page"
-msgstr ""
-
-#: src/gui/dialogs/qprintpreviewdialog.cpp:323
-msgctxt "QPrintPreviewDialog"
-msgid "First page"
-msgstr ""
-
-#: src/gui/dialogs/qprintpreviewdialog.cpp:324
-msgctxt "QPrintPreviewDialog"
-msgid "Last page"
-msgstr ""
-
-#: src/gui/dialogs/qprintpreviewdialog.cpp:333
-msgctxt "QPrintPreviewDialog"
-msgid "Fit width"
-msgstr ""
-
-#: src/gui/dialogs/qprintpreviewdialog.cpp:334
-msgctxt "QPrintPreviewDialog"
-msgid "Fit page"
-msgstr ""
-
-#: src/gui/dialogs/qprintpreviewdialog.cpp:345
-msgctxt "QPrintPreviewDialog"
-msgid "Zoom in"
-msgstr ""
-
-#: src/gui/dialogs/qprintpreviewdialog.cpp:346
-msgctxt "QPrintPreviewDialog"
-msgid "Zoom out"
-msgstr ""
-
-#: src/gui/dialogs/qprintpreviewdialog.cpp:352
-msgctxt "QPrintPreviewDialog"
-msgid "Portrait"
-msgstr ""
-
-#: src/gui/dialogs/qprintpreviewdialog.cpp:353
-msgctxt "QPrintPreviewDialog"
-msgid "Landscape"
-msgstr ""
-
-#: src/gui/dialogs/qprintpreviewdialog.cpp:363
-msgctxt "QPrintPreviewDialog"
-msgid "Show single page"
-msgstr ""
-
-#: src/gui/dialogs/qprintpreviewdialog.cpp:364
-msgctxt "QPrintPreviewDialog"
-msgid "Show facing pages"
-msgstr ""
-
-#: src/gui/dialogs/qprintpreviewdialog.cpp:365
-msgctxt "QPrintPreviewDialog"
-msgid "Show overview of all pages"
-msgstr ""
-
-#: src/gui/dialogs/qprintpreviewdialog.cpp:380
-msgctxt "QPrintPreviewDialog"
-msgid "Print"
-msgstr ""
-
-#: src/gui/dialogs/qprintpreviewdialog.cpp:381
-msgctxt "QPrintPreviewDialog"
-msgid "Page setup"
-msgstr ""
-
 #: src/gui/dialogs/qinputdialog.cpp:197
 msgid "Enter a value:"
 msgstr ""
@@ -1210,31 +1126,31 @@ msgstr ""
 msgid "Close Tab"
 msgstr ""
 
-#: src/gui/widgets/qlineedit.cpp:1710 src/gui/text/qtextcontrol.cpp:1849
+#: src/gui/widgets/qlineedit.cpp:1710 src/gui/text/qtextcontrol.cpp:1772
 msgid "&Undo"
 msgstr ""
 
-#: src/gui/widgets/qlineedit.cpp:1714 src/gui/text/qtextcontrol.cpp:1851
+#: src/gui/widgets/qlineedit.cpp:1714 src/gui/text/qtextcontrol.cpp:1774
 msgid "&Redo"
 msgstr ""
 
-#: src/gui/widgets/qlineedit.cpp:1723 src/gui/text/qtextcontrol.cpp:1855
+#: src/gui/widgets/qlineedit.cpp:1723 src/gui/text/qtextcontrol.cpp:1778
 msgid "Cu&t"
 msgstr ""
 
-#: src/gui/widgets/qlineedit.cpp:1729 src/gui/text/qtextcontrol.cpp:1860
+#: src/gui/widgets/qlineedit.cpp:1729 src/gui/text/qtextcontrol.cpp:1783
 msgid "&Copy"
 msgstr ""
 
-#: src/gui/widgets/qlineedit.cpp:1735 src/gui/text/qtextcontrol.cpp:1873
+#: src/gui/widgets/qlineedit.cpp:1735 src/gui/text/qtextcontrol.cpp:1796
 msgid "&Paste"
 msgstr ""
 
-#: src/gui/widgets/qlineedit.cpp:1742 src/gui/text/qtextcontrol.cpp:1876
+#: src/gui/widgets/qlineedit.cpp:1742 src/gui/text/qtextcontrol.cpp:1799
 msgid "Delete"
 msgstr ""
 
-#: src/gui/widgets/qlineedit.cpp:1750 src/gui/text/qtextcontrol.cpp:1883
+#: src/gui/widgets/qlineedit.cpp:1750 src/gui/text/qtextcontrol.cpp:1806
 msgid "Select All"
 msgstr ""
 
@@ -1490,11 +1406,11 @@ msgstr ""
 msgid "Step &down"
 msgstr ""
 
-#: src/gui/kernel/qwidget.cpp:5026
+#: src/gui/kernel/qwidget.cpp:4732
 msgid "*"
 msgstr ""
 
-#: src/gui/kernel/qapplication.cpp:1652
+#: src/gui/kernel/qapplication.cpp:1627
 msgid "QT_LAYOUT_DIRECTION"
 msgstr ""
 
@@ -3876,61 +3792,61 @@ msgctxt "QFontDatabase"
 msgid "Oblique"
 msgstr ""
 
-#: src/gui/text/qtextcontrol.cpp:1867
+#: src/gui/text/qtextcontrol.cpp:1790
 msgid "Copy &Link Location"
 msgstr ""
 
-#: src/gui/text/qtextcontrol.cpp:2781
+#: src/gui/text/qtextcontrol.cpp:2704
 msgctxt "QUnicodeControlCharacterMenu"
 msgid "LRM Left-to-right mark"
 msgstr ""
 
-#: src/gui/text/qtextcontrol.cpp:2782
+#: src/gui/text/qtextcontrol.cpp:2705
 msgctxt "QUnicodeControlCharacterMenu"
 msgid "RLM Right-to-left mark"
 msgstr ""
 
-#: src/gui/text/qtextcontrol.cpp:2783
+#: src/gui/text/qtextcontrol.cpp:2706
 msgctxt "QUnicodeControlCharacterMenu"
 msgid "ZWJ Zero width joiner"
 msgstr ""
 
-#: src/gui/text/qtextcontrol.cpp:2784
+#: src/gui/text/qtextcontrol.cpp:2707
 msgctxt "QUnicodeControlCharacterMenu"
 msgid "ZWNJ Zero width non-joiner"
 msgstr ""
 
-#: src/gui/text/qtextcontrol.cpp:2785
+#: src/gui/text/qtextcontrol.cpp:2708
 msgctxt "QUnicodeControlCharacterMenu"
 msgid "ZWSP Zero width space"
 msgstr ""
 
-#: src/gui/text/qtextcontrol.cpp:2786
+#: src/gui/text/qtextcontrol.cpp:2709
 msgctxt "QUnicodeControlCharacterMenu"
 msgid "LRE Start of left-to-right embedding"
 msgstr ""
 
-#: src/gui/text/qtextcontrol.cpp:2787
+#: src/gui/text/qtextcontrol.cpp:2710
 msgctxt "QUnicodeControlCharacterMenu"
 msgid "RLE Start of right-to-left embedding"
 msgstr ""
 
-#: src/gui/text/qtextcontrol.cpp:2788
+#: src/gui/text/qtextcontrol.cpp:2711
 msgctxt "QUnicodeControlCharacterMenu"
 msgid "LRO Start of left-to-right override"
 msgstr ""
 
-#: src/gui/text/qtextcontrol.cpp:2789
+#: src/gui/text/qtextcontrol.cpp:2712
 msgctxt "QUnicodeControlCharacterMenu"
 msgid "RLO Start of right-to-left override"
 msgstr ""
 
-#: src/gui/text/qtextcontrol.cpp:2790
+#: src/gui/text/qtextcontrol.cpp:2713
 msgctxt "QUnicodeControlCharacterMenu"
 msgid "PDF Pop directional formatting"
 msgstr ""
 
-#: src/gui/text/qtextcontrol.cpp:2796
+#: src/gui/text/qtextcontrol.cpp:2719
 msgid "Insert Unicode control character"
 msgstr ""
 

@@ -78,9 +78,6 @@ public:
 
 private:
     bool correctWidgetContext(Qt::ShortcutContext context, QWidget *w, QWidget *active_window) const;
-#ifndef QT_NO_GRAPHICSVIEW
-    bool correctGraphicsWidgetContext(Qt::ShortcutContext context, QGraphicsWidget *w, QWidget *active_window) const;
-#endif
 #ifndef QT_NO_ACTION
     bool correctContext(Qt::ShortcutContext context,QAction *a, QWidget *active_window) const;
 #endif

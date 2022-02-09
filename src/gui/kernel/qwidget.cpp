@@ -43,7 +43,6 @@
 #include "qdebug.h"
 #include "qstylesheetstyle_p.h"
 #include "qstyle_p.h"
-#include "qgraphicseffect_p.h"
 #include "qwindowsurface_p.h"
 #include "qbackingstore_p.h"
 #include "qpaintengine_raster_p.h"
@@ -51,10 +50,7 @@
 #include "qwidget_p.h"
 #include "qaction_p.h"
 #include "qlayout_p.h"
-#include "QtGui/qgraphicsproxywidget.h"
-#include "QtGui/qgraphicsscene.h"
-#include "qgraphicsproxywidget_p.h"
-#include "QtGui/qabstractscrollarea.h"
+#include "qabstractscrollarea.h"
 #include "qabstractscrollarea_p.h"
 #include "qevent_p.h"
 
@@ -175,7 +171,6 @@ QWidgetPrivate::QWidgetPrivate()
       , widgetItem(0)
       , extraPaintEngine(0)
       , polished(0)
-      , graphicsEffect(0)
       , inheritedFontResolveMask(0)
       , inheritedPaletteResolveMask(0)
       , leftmargin(0)
@@ -222,10 +217,6 @@ QWidgetPrivate::~QWidgetPrivate()
 
     if (extra)
         deleteExtra();
-
-#ifndef QT_NO_GRAPHICSEFFECT
-    delete graphicsEffect;
-#endif //QT_NO_GRAPHICSEFFECT
 }
 
 QWindowSurface *QWidgetPrivate::createDefaultWindowSurface()
@@ -1236,9 +1227,6 @@ void QWidgetPrivate::createExtra()
     if (!extra) {                                // if not exists
         extra = new QWExtra;
         extra->topextra = 0;
-#ifndef QT_NO_GRAPHICSVIEW
-        extra->proxyWidget = 0;
-#endif
 #ifndef QT_NO_CURSOR
         extra->curs = 0;
 #endif
@@ -1321,7 +1309,7 @@ bool QWidgetPrivate::isOverlapped(const QRect &rect) const
 
             if (qRectIntersects(sibling->d_func()->effectiveRectFor(sibling->data->crect), r)) {
                 const QWExtra *siblingExtra = sibling->d_func()->extra;
-                if (siblingExtra && siblingExtra->hasMask && !sibling->d_func()->graphicsEffect
+                if (siblingExtra && siblingExtra->hasMask
                     && !siblingExtra->mask.translated(sibling->data->crect.topLeft()).intersects(r)) {
                     continue;
                 }
@@ -1386,13 +1374,7 @@ void QWidgetPrivate::propagatePaletteChange()
 {
     Q_Q(QWidget);
     // Propagate a new inherited mask to all children.
-#ifndef QT_NO_GRAPHICSVIEW
-    if (!q->parentWidget() && extra && extra->proxyWidget) {
-        QGraphicsProxyWidget *p = extra->proxyWidget;
-        inheritedPaletteResolveMask = p->d_func()->inheritedPaletteResolveMask | p->palette().resolve();
-    } else
-#endif //QT_NO_GRAPHICSVIEW
-        if (q->isWindow() && !q->testAttribute(Qt::WA_WindowPropagation)) {
+    if (q->isWindow() && !q->testAttribute(Qt::WA_WindowPropagation)) {
         inheritedPaletteResolveMask = 0;
     }
     int mask = data.pal.resolve() | inheritedPaletteResolveMask;
@@ -1474,32 +1456,11 @@ QRegion QWidgetPrivate::clipRegion() const
     return r;
 }
 
-#ifndef QT_NO_GRAPHICSEFFECT
-void QWidgetPrivate::invalidateGraphicsEffectsRecursively()
-{
-    Q_Q(QWidget);
-    QWidget *w = q;
-    do {
-        if (w->graphicsEffect()) {
-            QWidgetEffectSourcePrivate *sourced =
-                static_cast<QWidgetEffectSourcePrivate *>(w->graphicsEffect()->source()->d_func());
-            if (!sourced->updateDueToGraphicsEffect)
-                w->graphicsEffect()->source()->d_func()->invalidateCache();
-        }
-        w = w->parentWidget();
-    } while (w);
-}
-#endif //QT_NO_GRAPHICSEFFECT
-
 void QWidgetPrivate::setDirtyOpaqueRegion()
 {
     Q_Q(QWidget);
 
     dirtyOpaqueChildren = true;
-
-#ifndef QT_NO_GRAPHICSEFFECT
-    invalidateGraphicsEffectsRecursively();
-#endif //QT_NO_GRAPHICSEFFECT
 
     if (q->isWindow())
         return;
@@ -1605,8 +1566,7 @@ void QWidgetPrivate::subtractOpaqueSiblings(QRegion &sourceRegion, bool *hasDirt
             const QRect siblingClipRect(sibling->d_func()->clipRect());
             QRegion siblingDirty(parentClip);
             siblingDirty &= (siblingClipRect.translated(siblingPos));
-            const bool hasMask = sibling->d_func()->extra && sibling->d_func()->extra->hasMask
-                                 && !sibling->d_func()->graphicsEffect;
+            const bool hasMask = sibling->d_func()->extra && sibling->d_func()->extra->hasMask;
             if (hasMask)
                 siblingDirty &= sibling->d_func()->extra->mask.translated(siblingPos);
             if (siblingDirty.isEmpty())
@@ -1648,13 +1608,6 @@ void QWidgetPrivate::clipToEffectiveMask(QRegion &region) const
     const QWidget *w = q;
     QPoint offset;
 
-#ifndef QT_NO_GRAPHICSEFFECT
-    if (graphicsEffect) {
-        w = q->parentWidget();
-        offset -= data.crect.topLeft();
-    }
-#endif //QT_NO_GRAPHICSEFFECT
-
     while (w) {
         const QWidgetPrivate *wd = w->d_func();
         if (wd->extra && wd->extra->hasMask)
@@ -1686,16 +1639,7 @@ void QWidgetPrivate::updateIsOpaque()
     // hw: todo: only needed if opacity actually changed
     setDirtyOpaqueRegion();
 
-#ifndef QT_NO_GRAPHICSEFFECT
-    if (graphicsEffect) {
-        // ### We should probably add QGraphicsEffect::isOpaque at some point.
-        setOpaque(false);
-        return;
-    }
-#endif //QT_NO_GRAPHICSEFFECT
-
     Q_Q(QWidget);
-
 
     if (q->testAttribute(Qt::WA_OpaquePaintEvent) || q->testAttribute(Qt::WA_PaintOnScreen)) {
         setOpaque(true);
@@ -3243,12 +3187,6 @@ void QWidget::setMinimumSize(int minw, int minh)
         if (maximized)
             data->window_state |= Qt::WindowMaximized;
     }
-#ifndef QT_NO_GRAPHICSVIEW
-    if (d->extra) {
-        if (d->extra->proxyWidget)
-            d->extra->proxyWidget->setMinimumSize(minw, minh);
-    }
-#endif
     d->updateGeometry_helper(d->extra->minw == d->extra->maxw && d->extra->minh == d->extra->maxh);
 }
 
@@ -3303,13 +3241,6 @@ void QWidget::setMaximumSize(int maxw, int maxh)
         resize(qMin(maxw,width()), qMin(maxh,height()));
         setAttribute(Qt::WA_Resized, resized); //not a user resize
     }
-
-#ifndef QT_NO_GRAPHICSVIEW
-    if (d->extra) {
-        if (d->extra->proxyWidget)
-            d->extra->proxyWidget->setMaximumSize(maxw, maxh);
-    }
-#endif
 
     d->updateGeometry_helper(d->extra->minw == d->extra->maxw && d->extra->minh == d->extra->maxh);
 }
@@ -3807,11 +3738,7 @@ QPalette QWidgetPrivate::naturalWidgetPalette(uint inheritedMask) const
     Q_Q(const QWidget);
     QPalette naturalPalette = QApplication::palette(q);
     if (!q->testAttribute(Qt::WA_StyleSheet)
-        && (!q->isWindow() || q->testAttribute(Qt::WA_WindowPropagation)
-#ifndef QT_NO_GRAPHICSVIEW
-            || (extra && extra->proxyWidget)
-#endif //QT_NO_GRAPHICSVIEW
-            )) {
+        && (!q->isWindow() || q->testAttribute(Qt::WA_WindowPropagation))) {
         if (QWidget *p = q->parentWidget()) {
             if (!p->testAttribute(Qt::WA_StyleSheet)) {
                 if (!naturalPalette.isCopyOf(QApplication::palette())) {
@@ -3823,13 +3750,6 @@ QPalette QWidgetPrivate::naturalWidgetPalette(uint inheritedMask) const
                 }
             }
         }
-#ifndef QT_NO_GRAPHICSVIEW
-        else if (extra && extra->proxyWidget) {
-            QPalette inheritedPalette = extra->proxyWidget->palette();
-            inheritedPalette.resolve(inheritedMask);
-            naturalPalette = inheritedPalette.resolve(naturalPalette);
-        }
-#endif //QT_NO_GRAPHICSVIEW
     }
     naturalPalette.resolve(0);
     return naturalPalette;
@@ -3947,11 +3867,7 @@ QFont QWidgetPrivate::naturalWidgetFont(uint inheritedMask) const
     Q_Q(const QWidget);
     QFont naturalFont = QApplication::font(q);
     if (!q->testAttribute(Qt::WA_StyleSheet)
-        && (!q->isWindow() || q->testAttribute(Qt::WA_WindowPropagation)
-#ifndef QT_NO_GRAPHICSVIEW
-            || (extra && extra->proxyWidget)
-#endif //QT_NO_GRAPHICSVIEW
-            )) {
+        && (!q->isWindow() || q->testAttribute(Qt::WA_WindowPropagation))) {
         if (QWidget *p = q->parentWidget()) {
             if (!p->testAttribute(Qt::WA_StyleSheet)) {
                 if (!naturalFont.isCopyOf(QApplication::font())) {
@@ -3963,13 +3879,6 @@ QFont QWidgetPrivate::naturalWidgetFont(uint inheritedMask) const
                 }
             }
         }
-#ifndef QT_NO_GRAPHICSVIEW
-        else if (extra && extra->proxyWidget) {
-            QFont inheritedFont = extra->proxyWidget->font();
-            inheritedFont.resolve(inheritedMask);
-            naturalFont = inheritedFont.resolve(naturalFont);
-        }
-#endif //QT_NO_GRAPHICSVIEW
     }
     naturalFont.resolve(0);
     return naturalFont;
@@ -4013,12 +3922,6 @@ void QWidgetPrivate::updateFont(const QFont &font)
     data.fnt.x11SetScreen(xinfo.screen());
 #endif
     // Combine new mask with natural mask and propagate to children.
-#ifndef QT_NO_GRAPHICSVIEW
-    if (!q->parentWidget() && extra && extra->proxyWidget) {
-        QGraphicsProxyWidget *p = extra->proxyWidget;
-        inheritedFontResolveMask = p->d_func()->inheritedFontResolveMask | p->font().resolve();
-    } else
-#endif //QT_NO_GRAPHICSVIEW
     if (q->isWindow() && !q->testAttribute(Qt::WA_WindowPropagation)) {
         inheritedFontResolveMask = 0;
     }
@@ -4335,72 +4238,6 @@ void QWidget::render(QPainter *painter, const QPoint &targetOffset,
     d->extra->inRenderWithPainter = false;
 }
 
-/*!
-    \brief The graphicsEffect function returns a pointer to the
-    widget's graphics effect.
-
-    If the widget has no graphics effect, 0 is returned.
-
-    \since 4.6
-
-    \sa setGraphicsEffect()
-*/
-#ifndef QT_NO_GRAPHICSEFFECT
-QGraphicsEffect *QWidget::graphicsEffect() const
-{
-    Q_D(const QWidget);
-    return d->graphicsEffect;
-}
-#endif //QT_NO_GRAPHICSEFFECT
-
-/*!
-
-  \brief The setGraphicsEffect function is for setting the widget's graphics effect.
-
-    Sets \a effect as the widget's effect. If there already is an effect installed
-    on this widget, QWidget will delete the existing effect before installing
-    the new \a effect.
-
-    If \a effect is the installed on a different widget, setGraphicsEffect() will remove
-    the effect from the widget and install it on this widget.
-
-    QWidget takes ownership of \a effect.
-
-    \note This function will apply the effect on itself and all its children.
-
-    \note Graphics effects are not supported on Mac, so they will not cause any difference
-    to the rendering of the widget.
-
-    \since 4.6
-
-    \sa graphicsEffect()
-*/
-#ifndef QT_NO_GRAPHICSEFFECT
-void QWidget::setGraphicsEffect(QGraphicsEffect *effect)
-{
-    Q_D(QWidget);
-    if (d->graphicsEffect == effect)
-        return;
-
-    if (d->graphicsEffect) {
-        d->invalidateBuffer(rect());
-        delete d->graphicsEffect;
-        d->graphicsEffect = 0;
-    }
-
-    if (effect) {
-        // Set new effect.
-        QGraphicsEffectSourcePrivate *sourced = new QWidgetEffectSourcePrivate(this);
-        QGraphicsEffectSource *source = new QGraphicsEffectSource(*sourced);
-        d->graphicsEffect = effect;
-        effect->d_func()->setGraphicsEffectSource(source);
-        update();
-    }
-
-    d->updateIsOpaque();
-}
-#endif //QT_NO_GRAPHICSEFFECT
-
 bool QWidgetPrivate::isAboutToShow() const
 {
     if (data.in_show)
@@ -4534,38 +4371,6 @@ void QWidgetPrivate::drawWidget(QPaintDevice *pdev, const QRegion &rgn, const QP
         return;
 
     Q_Q(QWidget);
-#if !defined(QT_NO_GRAPHICSEFFECT)
-    if (graphicsEffect && graphicsEffect->isEnabled()) {
-        QGraphicsEffectSource *source = graphicsEffect->d_func()->source;
-        QWidgetEffectSourcePrivate *sourced = static_cast<QWidgetEffectSourcePrivate *>
-                                                         (source->d_func());
-        if (!sourced->context) {
-            QWidgetPaintContext context(pdev, rgn, offset, flags, sharedPainter, backingStore);
-            sourced->context = &context;
-            if (!sharedPainter) {
-                QPaintEngine *paintEngine = pdev->paintEngine();
-                paintEngine->d_func()->systemClip = rgn.translated(offset);
-                QPainter p(pdev);
-                p.translate(offset);
-                context.painter = &p;
-                graphicsEffect->draw(&p);
-                paintEngine->d_func()->systemClip = QRegion();
-            } else {
-                context.painter = sharedPainter;
-                if (sharedPainter->worldTransform() != sourced->lastEffectTransform) {
-                    sourced->invalidateCache();
-                    sourced->lastEffectTransform = sharedPainter->worldTransform();
-                }
-                sharedPainter->save();
-                sharedPainter->translate(offset);
-                graphicsEffect->draw(sharedPainter);
-                sharedPainter->restore();
-            }
-            sourced->context = 0;
-            return;
-        }
-    }
-#endif //QT_NO_GRAFFICSEFFECT
 
     const bool asRoot = flags & DrawAsRoot;
     const bool alsoOnScreen = flags & DrawPaintOnScreen;
@@ -4768,7 +4573,7 @@ void QWidgetPrivate::paintSiblingsRecursive(QPaintDevice *pdev, const QObjectLis
 
     QWidgetPrivate *wd = w->d_func();
     const QPoint widgetPos(w->data->crect.topLeft());
-    const bool hasMask = wd->extra && wd->extra->hasMask && !wd->graphicsEffect;
+    const bool hasMask = wd->extra && wd->extra->hasMask;
     if (index > 0) {
         QRegion wr(rgn);
         if (wd->isOpaque)
@@ -4777,11 +4582,7 @@ void QWidgetPrivate::paintSiblingsRecursive(QPaintDevice *pdev, const QObjectLis
                                sharedPainter, backingStore);
     }
 
-    if (w->updatesEnabled()
-#ifndef QT_NO_GRAPHICSVIEW
-            && (!w->d_func()->extra || !w->d_func()->extra->proxyWidget)
-#endif //QT_NO_GRAPHICSVIEW
-       ) {
+    if (w->updatesEnabled()) {
         QRegion wRegion(rgn);
         wRegion &= wd->effectiveRectFor(w->data->crect);
         wRegion.translate(-widgetPos);
@@ -4790,101 +4591,6 @@ void QWidgetPrivate::paintSiblingsRecursive(QPaintDevice *pdev, const QObjectLis
         wd->drawWidget(pdev, wRegion, offset + widgetPos, flags, sharedPainter, backingStore);
     }
 }
-
-#ifndef QT_NO_GRAPHICSEFFECT
-QRectF QWidgetEffectSourcePrivate::boundingRect(Qt::CoordinateSystem system) const
-{
-    if (system != Qt::DeviceCoordinates)
-        return m_widget->rect();
-
-    if (Q_UNLIKELY(!context)) {
-        // Device coordinates without context not yet supported.
-        qWarning("QGraphicsEffectSource::boundingRect: Not yet implemented, lacking device context");
-        return QRectF();
-    }
-
-    return context->painter->worldTransform().mapRect(m_widget->rect());
-}
-
-void QWidgetEffectSourcePrivate::draw(QPainter *painter)
-{
-    if (!context || context->painter != painter) {
-        m_widget->render(painter);
-        return;
-    }
-
-    // The region saved in the context is neither clipped to the rect
-    // nor the mask, so we have to clip it here before calling drawWidget.
-    QRegion toBePainted = context->rgn;
-    toBePainted &= m_widget->rect();
-    QWidgetPrivate *wd = qt_widget_private(m_widget);
-    if (wd->extra && wd->extra->hasMask)
-        toBePainted &= wd->extra->mask;
-
-    wd->drawWidget(context->pdev, toBePainted, context->offset, context->flags,
-                   context->sharedPainter, context->backingStore);
-}
-
-QPixmap QWidgetEffectSourcePrivate::pixmap(Qt::CoordinateSystem system, QPoint *offset,
-                                           QGraphicsEffect::PixmapPadMode mode) const
-{
-    const bool deviceCoordinates = (system == Qt::DeviceCoordinates);
-    if (Q_UNLIKELY(!context && deviceCoordinates)) {
-        // Device coordinates without context not yet supported.
-        qWarning("QGraphicsEffectSource::pixmap: Not yet implemented, lacking device context");
-        return QPixmap();
-    }
-
-    QPoint pixmapOffset;
-    QRectF sourceRect = m_widget->rect();
-
-    if (deviceCoordinates) {
-        const QTransform &painterTransform = context->painter->worldTransform();
-        sourceRect = painterTransform.mapRect(sourceRect);
-        pixmapOffset = painterTransform.map(pixmapOffset);
-    }
-
-    QRect effectRect;
-
-    if (mode == QGraphicsEffect::PadToEffectiveBoundingRect)
-        effectRect = m_widget->graphicsEffect()->boundingRectFor(sourceRect).toAlignedRect();
-    else if (mode == QGraphicsEffect::PadToTransparentBorder)
-        effectRect = sourceRect.adjusted(-1, -1, 1, 1).toAlignedRect();
-    else
-        effectRect = sourceRect.toAlignedRect();
-
-    if (offset)
-        *offset = effectRect.topLeft();
-
-    pixmapOffset -= effectRect.topLeft();
-
-    QPixmap pixmap(effectRect.size());
-    pixmap.fill(Qt::transparent);
-    m_widget->render(&pixmap, pixmapOffset, QRegion(), QWidget::DrawChildren);
-    return pixmap;
-}
-#endif //QT_NO_GRAPHICSEFFECT
-
-#ifndef QT_NO_GRAPHICSVIEW
-/*!
-    \internal
-
-    Finds the nearest widget embedded in a graphics proxy widget along the chain formed by this
-    widget and its ancestors. The search starts at \a origin (inclusive).
-    If successful, the function returns the proxy that embeds the widget, or 0 if no embedded
-    widget was found.
-*/
-QGraphicsProxyWidget * QWidgetPrivate::nearestGraphicsProxyWidget(const QWidget *origin)
-{
-    if (origin) {
-        QWExtra *extra = origin->d_func()->extra;
-        if (extra && extra->proxyWidget)
-            return extra->proxyWidget;
-        return nearestGraphicsProxyWidget(origin->parentWidget());
-    }
-    return 0;
-}
-#endif
 
 /*!
     \property QWidget::locale
@@ -5250,13 +4956,6 @@ bool QWidget::hasFocus() const
     const QWidget* w = this;
     while (w->d_func()->extra && w->d_func()->extra->focus_proxy)
         w = w->d_func()->extra->focus_proxy;
-    if (QWidget *window = w->window()) {
-#ifndef QT_NO_GRAPHICSVIEW
-        QWExtra *e = window->d_func()->extra;
-        if (e && e->proxyWidget && e->proxyWidget->hasFocus() && window->focusWidget() == w)
-            return true;
-#endif
-    }
     return (QApplication::focusWidget() == w);
 }
 
@@ -5307,19 +5006,6 @@ void QWidget::setFocus(Qt::FocusReason reason)
     if (QApplication::focusWidget() == f)
         return;
 
-#ifndef QT_NO_GRAPHICSVIEW
-    QWidget *previousProxyFocus = 0;
-    if (QWExtra *topData = window()->d_func()->extra) {
-        if (topData->proxyWidget && topData->proxyWidget->hasFocus()) {
-            previousProxyFocus = topData->proxyWidget->widget()->focusWidget();
-            if (previousProxyFocus && previousProxyFocus->focusProxy())
-                previousProxyFocus = previousProxyFocus->focusProxy();
-            if (previousProxyFocus == this && !topData->proxyWidget->d_func()->proxyIsGivingFocus)
-                return;
-        }
-    }
-#endif
-
     QWidget *w = f;
     if (isHidden()) {
         while (w && w->isHidden()) {
@@ -5333,41 +5019,8 @@ void QWidget::setFocus(Qt::FocusReason reason)
         }
     }
 
-#ifndef QT_NO_GRAPHICSVIEW
-    // Update proxy state
-    if (QWExtra *topData = window()->d_func()->extra) {
-        if (topData->proxyWidget && !topData->proxyWidget->hasFocus()) {
-            topData->proxyWidget->d_func()->focusFromWidgetToProxy = true;
-            topData->proxyWidget->setFocus(reason);
-            topData->proxyWidget->d_func()->focusFromWidgetToProxy = false;
-        }
-    }
-#endif
-
     if (f->isActiveWindow()) {
         QApplicationPrivate::setFocusWidget(f, reason);
-#ifndef QT_NO_GRAPHICSVIEW
-        if (QWExtra *topData = window()->d_func()->extra) {
-            if (topData->proxyWidget) {
-                if (previousProxyFocus && previousProxyFocus != f) {
-                    // Send event to self
-                    QFocusEvent event(QEvent::FocusOut, reason);
-                    QPointer<QWidget> that = previousProxyFocus;
-                    QApplication::sendEvent(previousProxyFocus, &event);
-                    if (that)
-                        QApplication::sendEvent(that->style(), &event);
-                }
-                if (!isHidden()) {
-                    // Send event to self
-                    QFocusEvent event(QEvent::FocusIn, reason);
-                    QPointer<QWidget> that = f;
-                    QApplication::sendEvent(f, &event);
-                    if (that)
-                        QApplication::sendEvent(that->style(), &event);
-                }
-            }
-        }
-#endif
     }
 }
 
@@ -5402,11 +5055,6 @@ void QWidget::clearFocus()
             w->d_func()->focus_child = 0;
         w = w->parentWidget();
     }
-#ifndef QT_NO_GRAPHICSVIEW
-    QWExtra *topData = d_func()->extra;
-    if (topData && topData->proxyWidget)
-        topData->proxyWidget->clearFocus();
-#endif
 
     if (hasFocus()) {
         // Update proxy state
@@ -5464,10 +5112,6 @@ bool QWidget::focusNextPrevChild(bool next)
     bool isSubWindow = (windowType() == Qt::SubWindow);
     if (!isWindow() && !isSubWindow && p)
         return p->focusNextPrevChild(next);
-#ifndef QT_NO_GRAPHICSVIEW
-    if (d->extra && d->extra->proxyWidget)
-        return d->extra->proxyWidget->focusNextPrevChild(next);
-#endif
     QWidget *w = QApplicationPrivate::focusNextPrevChild_helper(this, next);
     if (!w) return false;
 
@@ -5532,13 +5176,6 @@ bool QWidget::isActiveWindow() const
     QWidget *tlw = window();
     if(tlw == QApplication::activeWindow() || (isVisible() && (tlw->windowType() == Qt::Popup)))
         return true;
-
-#ifndef QT_NO_GRAPHICSVIEW
-    if (QWExtra *tlwExtra = tlw->d_func()->extra) {
-        if (isVisible() && tlwExtra->proxyWidget)
-            return tlwExtra->proxyWidget->isActiveWindow();
-    }
-#endif
 
     if(style()->styleHint(QStyle::SH_Widget_ShareActivation, 0, this)) {
         if(tlw->windowType() == Qt::Tool &&
@@ -6313,29 +5950,11 @@ void QWidgetPrivate::show_helper()
         }
     }
 
-    // Automatic embedding of child windows of widgets already embedded into
-    // QGraphicsProxyWidget when they are shown the first time.
-    bool isEmbedded = false;
-#ifndef QT_NO_GRAPHICSVIEW
-    if (q->isWindow()) {
-        isEmbedded = (q->graphicsProxyWidget() != nullptr);
-        if (!isEmbedded && !bypassGraphicsProxyWidget(q)) {
-            QGraphicsProxyWidget *ancestorProxy = nearestGraphicsProxyWidget(q->parentWidget());
-            if (ancestorProxy) {
-                isEmbedded = true;
-                ancestorProxy->d_func()->embedSubWindow(q);
-            }
-        }
-    }
-#else
-    Q_UNUSED(isEmbedded);
-#endif
-
     // send the show event before showing the window
     QShowEvent showEvent;
     QApplication::sendEvent(q, &showEvent);
 
-    if (!isEmbedded && q->isModal() && q->isWindow())
+    if (q->isModal() && q->isWindow())
         // QApplicationPrivate::enterModal *before* show, otherwise the initial
         // stacking might be wrong
         QApplicationPrivate::enterModal(q);
@@ -6343,7 +5962,7 @@ void QWidgetPrivate::show_helper()
 
     show_sys();
 
-    if (!isEmbedded && q->windowType() == Qt::Popup)
+    if (q->windowType() == Qt::Popup)
         qApp->d_func()->openPopup(q);
 
     if (QApplicationPrivate::hidden_focus_widget == q) {
@@ -6379,20 +5998,13 @@ void QWidgetPrivate::hide_helper()
 {
     Q_Q(QWidget);
 
-    bool isEmbedded = false;
-#if !defined QT_NO_GRAPHICSVIEW
-    isEmbedded = q->isWindow() && !bypassGraphicsProxyWidget(q) && nearestGraphicsProxyWidget(q->parentWidget()) != 0;
-#else
-    Q_UNUSED(isEmbedded);
-#endif
-
-    if (!isEmbedded && (q->windowType() == Qt::Popup))
+    if (q->windowType() == Qt::Popup)
         qApp->d_func()->closePopup(q);
 
     // Move test modal here.  Otherwise, a modal dialog could get
     // destroyed and we lose all access to its parent because we haven't
     // left modality.  (Eg. modal Progress Dialog)
-    if (!isEmbedded && q->isModal() && q->isWindow())
+    if (q->isModal() && q->isWindow())
         QApplicationPrivate::leaveModal(q);
 
     q->setAttribute(Qt::WA_Mapped, false);
@@ -8178,13 +7790,6 @@ void QWidget::setSizePolicy(QSizePolicy policy)
         return;
     d->size_policy = policy;
 
-#ifndef QT_NO_GRAPHICSVIEW
-    if (QWExtra *extra = d->extra) {
-        if (extra->proxyWidget)
-            extra->proxyWidget->setSizePolicy(policy);
-    }
-#endif
-
     updateGeometry();
 
     if (isWindow() && d->maybeTopData())
@@ -8536,19 +8141,6 @@ void QWidget::setParent(QWidget *parent, Qt::WindowFlags f)
 
     d->updateIsOpaque();
 
-#ifndef QT_NO_GRAPHICSVIEW
-    // Embed the widget into a proxy if the parent is embedded.
-    // ### Doesn't handle reparenting out of an embedded widget.
-    if (oldtlw->graphicsProxyWidget()) {
-        if (QGraphicsProxyWidget *ancestorProxy = d->nearestGraphicsProxyWidget(oldtlw))
-            ancestorProxy->d_func()->unembedSubWindow(this);
-    }
-    if (isWindow() && parent && !graphicsProxyWidget() && !bypassGraphicsProxyWidget(this)) {
-        if (QGraphicsProxyWidget *ancestorProxy = d->nearestGraphicsProxyWidget(parent))
-            ancestorProxy->d_func()->embedSubWindow(this);
-    }
-#endif
-
     d->inSetParent = false;
 }
 
@@ -8580,19 +8172,6 @@ void QWidget::scroll(int dx, int dy)
     if (dx == 0 && dy == 0)
         return;
     Q_D(QWidget);
-#ifndef QT_NO_GRAPHICSVIEW
-    if (QGraphicsProxyWidget *proxy = QWidgetPrivate::nearestGraphicsProxyWidget(this)) {
-        // Graphics View maintains its own dirty region as a list of rects;
-        // until we can connect item updates directly to the view, we must
-        // separately add a translated dirty region.
-        if (!d->dirty.isEmpty()) {
-            foreach (const QRect &rect, (d->dirty.translated(dx, dy)).rects())
-                proxy->update(rect);
-        }
-        proxy->scroll(dx, dy, proxy->subWidgetRect(this));
-        return;
-    }
-#endif
     d->setDirtyOpaqueRegion();
     d->scroll_sys(dx, dy);
 }
@@ -8615,19 +8194,6 @@ void QWidget::scroll(int dx, int dy, const QRect &r)
     if (dx == 0 && dy == 0)
         return;
     Q_D(QWidget);
-#ifndef QT_NO_GRAPHICSVIEW
-    if (QGraphicsProxyWidget *proxy = QWidgetPrivate::nearestGraphicsProxyWidget(this)) {
-        // Graphics View maintains its own dirty region as a list of rects;
-        // until we can connect item updates directly to the view, we must
-        // separately add a translated dirty region.
-        if (!d->dirty.isEmpty()) {
-            foreach (const QRect &rect, (d->dirty.translated(dx, dy) & r).rects())
-                proxy->update(rect);
-        }
-        proxy->scroll(dx, dy, r.translated(proxy->subWidgetRect(this).topLeft().toPoint()));
-        return;
-    }
-#endif
     d->scroll_sys(dx, dy, r);
 }
 
@@ -9029,17 +8595,6 @@ void QWidget::setWindowOpacity(qreal opacity)
 
     if (!testAttribute(Qt::WA_WState_Created))
         return;
-
-#ifndef QT_NO_GRAPHICSVIEW
-    if (QGraphicsProxyWidget *proxy = graphicsProxyWidget()) {
-        // Avoid invalidating the cache if set.
-        if (proxy->cacheMode() == QGraphicsItem::NoCache)
-            proxy->update();
-        else if (QGraphicsScene *scene = proxy->scene())
-            scene->update(proxy->sceneBoundingRect());
-        return;
-    }
-#endif
 
     d->setWindowOpacity_sys(opacity);
 }
@@ -9939,28 +9494,6 @@ Q_GUI_EXPORT QWidgetPrivate *qt_widget_private(QWidget *widget)
 {
     return widget->d_func();
 }
-
-
-#ifndef QT_NO_GRAPHICSVIEW
-/*!
-   \since 4.5
-
-   Returns the proxy widget for the corresponding embedded widget in a graphics
-   view; otherwise returns 0.
-
-   \sa QGraphicsProxyWidget::createProxyForChildWidget(),
-       QGraphicsScene::addWidget()
- */
-QGraphicsProxyWidget *QWidget::graphicsProxyWidget() const
-{
-    Q_D(const QWidget);
-    if (d->extra) {
-        return d->extra->proxyWidget;
-    }
-    return 0;
-}
-#endif
-
 
 /*!
     \typedef QWidgetList

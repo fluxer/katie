@@ -105,22 +105,6 @@ QT_BEGIN_NAMESPACE
     \value FontChange                       Widget's font has changed.
     \value GrabKeyboard                     Item gains keyboard grab (QGraphicsItem only).
     \value GrabMouse                        Item gains mouse grab (QGraphicsItem only).
-    \value GraphicsSceneContextMenu         Context popup menu over a graphics scene (QGraphicsSceneContextMenuEvent).
-    \value GraphicsSceneDragEnter           The cursor enters a graphics scene during a drag and drop operation (QGraphicsSceneDragDropEvent).
-    \value GraphicsSceneDragLeave           The cursor leaves a graphics scene during a drag and drop operation (QGraphicsSceneDragDropEvent).
-    \value GraphicsSceneDragMove            A drag and drop operation is in progress over a scene (QGraphicsSceneDragDropEvent).
-    \value GraphicsSceneDrop                A drag and drop operation is completed over a scene (QGraphicsSceneDragDropEvent).
-    \value GraphicsSceneHelp                The user requests help for a graphics scene (QHelpEvent).
-    \value GraphicsSceneHoverEnter          The mouse cursor enters a hover item in a graphics scene (QGraphicsSceneHoverEvent).
-    \value GraphicsSceneHoverLeave          The mouse cursor leaves a hover item in a graphics scene (QGraphicsSceneHoverEvent).
-    \value GraphicsSceneHoverMove           The mouse cursor moves inside a hover item in a graphics scene (QGraphicsSceneHoverEvent).
-    \value GraphicsSceneMouseDoubleClick    Mouse press again (double click) in a graphics scene (QGraphicsSceneMouseEvent).
-    \value GraphicsSceneMouseMove           Move mouse in a graphics scene (QGraphicsSceneMouseEvent).
-    \value GraphicsSceneMousePress          Mouse press in a graphics scene (QGraphicsSceneMouseEvent).
-    \value GraphicsSceneMouseRelease        Mouse release in a graphics scene (QGraphicsSceneMouseEvent).
-    \value GraphicsSceneMove                Graphics scene was moved (QGraphicsSceneMoveEvent).
-    \value GraphicsSceneResize              Graphics scene was resized (QGraphicsSceneResizeEvent).
-    \value GraphicsSceneWheel               Mouse wheel rolled in a graphics scene (QGraphicsSceneWheelEvent).
     \value Hide                             Widget was hidden (QHideEvent).
     \value HideToParent                     A child widget has been hidden.
     \value HoverEnter                       The mouse cursor enters a hover widget (QHoverEvent).
@@ -196,7 +180,6 @@ QT_BEGIN_NAMESPACE
     re-using a custom event type already in use elsewhere in your
     application.
 
-    \omitvalue GraphicsSceneLeave
     \omitvalue AcceptDropsChange
     \omitvalue Create
     \omitvalue Destroy
@@ -204,8 +187,6 @@ QT_BEGIN_NAMESPACE
     \omitvalue ShowWindowRequest
     \omitvalue Style
     \omitvalue ThreadChange
-    \omitvalue NetworkReplyUpdated
-    \omitvalue FutureCallOut
 */
 
 /*!

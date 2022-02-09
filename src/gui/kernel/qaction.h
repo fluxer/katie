@@ -150,9 +150,6 @@ public:
     QWidget *parentWidget() const;
 
     QList<QWidget *> associatedWidgets() const;
-#ifndef QT_NO_GRAPHICSVIEW
-    QList<QGraphicsWidget *> associatedGraphicsWidgets() const; // ### suboptimal
-#endif
 
 protected:
     bool event(QEvent *);

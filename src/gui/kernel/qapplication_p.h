@@ -116,11 +116,6 @@ public:
 #ifndef QT_NO_CURSOR
     QList<QCursor> cursor_list;
 #endif
-#ifndef QT_NO_GRAPHICSVIEW
-    // Maintain a list of all scenes to ensure font and palette propagation to
-    // all scenes.
-    QList<QGraphicsScene *> scene_list;
-#endif
 
     QBasicTimer toolTipWakeUp, toolTipFallAsleep;
     QPoint toolTipPos, toolTipGlobalPos, hoverGlobalPos;

@@ -257,8 +257,7 @@ public:
     QShapedPixmapWidget(QWidget* w) :
         QWidget(w,
                 Qt::Tool | Qt::FramelessWindowHint
-                | Qt::X11BypassWindowManagerHint
-                | Qt::BypassGraphicsProxyWidget)
+                | Qt::X11BypassWindowManagerHint)
     {
         setAttribute(Qt::WA_X11NetWmWindowTypeDND);
     }

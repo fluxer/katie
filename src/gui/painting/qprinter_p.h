@@ -78,10 +78,6 @@ public:
     }
 
     void createDefaultEngines();
-#ifndef QT_NO_PRINTPREVIEWWIDGET
-    QList<const QImage *> previewPages() const;
-    void setPreviewMode(bool);
-#endif
 
     void addToManualSetList(QPrintEngine::PrintEnginePropertyKey key);
 
@@ -92,9 +88,6 @@ public:
 
     QPrintEngine *realPrintEngine;
     QPaintEngine *realPaintEngine;
-#ifndef QT_NO_PRINTPREVIEWWIDGET
-    QPreviewPaintEngine *previewEngine;
-#endif
 
     QPrinter *q_ptr;
 

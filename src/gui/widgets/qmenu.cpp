@@ -1694,14 +1694,7 @@ void QMenu::popup(const QPoint &p, QAction *atAction)
         pos = QPushButtonPrivate::get(causedButton)->adjustedMenuPosition();
 
     QSize size = sizeHint();
-    QRect screen;
-#ifndef QT_NO_GRAPHICSVIEW
-    bool isEmbedded = !bypassGraphicsProxyWidget(this) && d->nearestGraphicsProxyWidget(this);
-    if (isEmbedded)
-        screen = d->popupGeometry(this);
-    else
-#endif
-    screen = d->popupGeometry(QApplication::desktop()->screenNumber(p));
+    QRect screen = d->popupGeometry(QApplication::desktop()->screenNumber(p));
     const int desktopFrame = style()->pixelMetric(QStyle::PM_MenuDesktopFrameWidth, 0, this);
     bool adjustToDesktop = !window()->testAttribute(Qt::WA_DontShowOnScreen);
     if (!d->scroll) {
