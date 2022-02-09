@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-02-06 12:17+0200\n"
+"POT-Creation-Date: 2022-02-09 18:21+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -43,9 +43,7 @@ msgid "The plugin uses incompatible Katie library: %1 (%2, %3)"
 msgstr ""
 
 #: src/core/plugin/qlibrary.cpp:799 src/core/plugin/qpluginloader.cpp:278
-#: src/core/io/qiodevice.cpp:1517 src/network/ssl/qsslerror.cpp:249
-#: src/network/socket/qnativesocketengine.cpp:249
-#: src/network/access/qftp.cpp:1413 src/uitools/formscriptrunner.cpp:104
+#: src/core/io/qiodevice.cpp:1517 src/core/socket/qnativesocketengine.cpp:242
 msgid "Unknown error"
 msgstr ""
 
@@ -346,839 +344,205 @@ msgctxt "QJsonDocument"
 msgid "Maximum depth reached"
 msgstr ""
 
-#: src/declarative/graphicsitems/qdeclarativeitemsmodule.cpp:82
-msgctxt "QDeclarativeAnimatedImage"
-msgid "Katie was built without support for QMovie"
+#: src/core/socket/qhostinfo_p.h:74
+msgctxt "QHostInfo"
+msgid "Unknown error"
 msgstr ""
 
-#: src/declarative/graphicsitems/qdeclarativeitemsmodule.cpp:154
-msgid "KeyNavigation is only available via attached properties"
+#: src/core/socket/qtcpserver.cpp:217 src/core/socket/qtcpserver.cpp:332
+#: src/core/socket/qabstractsocket.cpp:462
+#: src/core/socket/qabstractsocket.cpp:1350
+msgid "Operation on socket is not supported"
 msgstr ""
 
-#: src/declarative/graphicsitems/qdeclarativeitemsmodule.cpp:155
-msgid "Keys is only available via attached properties"
+#: src/core/socket/qhostinfo.cpp:134
+msgctxt "QHostInfo"
+msgid "No host name given"
 msgstr ""
 
-#: src/declarative/graphicsitems/qdeclarativeitemsmodule.cpp:177
-msgid "LayoutMirroring is only available via attached properties"
+#: src/core/socket/qlocalserver_unix.cpp:187
+msgid "%1: Permission denied"
 msgstr ""
 
-#: src/declarative/graphicsitems/qdeclarativeloader.cpp:387
-msgid "Loader does not support loading non-visual elements."
+#: src/core/socket/qlocalserver_unix.cpp:195
+#: src/core/socket/qlocalserver.cpp:202
+msgid "%1: Name error"
 msgstr ""
 
-#: src/declarative/graphicsitems/qdeclarativeanchors.cpp:177
-msgid "Possible anchor loop detected on fill."
+#: src/core/socket/qlocalserver_unix.cpp:199
+msgid "%1: Address in use"
 msgstr ""
 
-#: src/declarative/graphicsitems/qdeclarativeanchors.cpp:206
-msgid "Possible anchor loop detected on centerIn."
+#: src/core/socket/qlocalserver_unix.cpp:204
+#: src/core/socket/qlocalsocket_unix.cpp:141
+msgid "%1: Unknown error %2"
 msgstr ""
 
-#: src/declarative/graphicsitems/qdeclarativeanchors.cpp:414
-#: src/declarative/graphicsitems/qdeclarativeanchors.cpp:448
-#: src/declarative/graphicsitems/qdeclarativeanchors.cpp:1094
-#: src/declarative/graphicsitems/qdeclarativeanchors.cpp:1131
-msgid "Cannot anchor to an item that isn't a parent or sibling."
+#: src/core/socket/qhostinfo_unix.cpp:87 src/core/socket/qhostinfo_unix.cpp:171
+#: src/core/socket/qabstractsocket.cpp:723
+msgid "Host not found"
 msgstr ""
 
-#: src/declarative/graphicsitems/qdeclarativeanchors.cpp:561
-msgid "Possible anchor loop detected on vertical anchor."
+#: src/core/socket/qhostinfo_unix.cpp:105
+msgid "No host name given"
 msgstr ""
 
-#: src/declarative/graphicsitems/qdeclarativeanchors.cpp:656
-msgid "Possible anchor loop detected on horizontal anchor."
+#: src/core/socket/qhostinfo_unix.cpp:107
+msgid "Invalid hostname"
 msgstr ""
 
-#: src/declarative/graphicsitems/qdeclarativeanchors.cpp:1078
-msgid "Cannot specify left, right, and hcenter anchors."
+#: src/core/socket/qhostinfo_unix.cpp:159
+msgid "Unknown address type"
 msgstr ""
 
-#: src/declarative/graphicsitems/qdeclarativeanchors.cpp:1088
-#: src/declarative/graphicsitems/qdeclarativeanchors.cpp:1125
-msgid "Cannot anchor to a null item."
+#: src/core/socket/qabstractsocket.cpp:765
+#: src/core/socket/qnativesocketengine.cpp:206
+msgid "Connection refused"
 msgstr ""
 
-#: src/declarative/graphicsitems/qdeclarativeanchors.cpp:1091
-msgid "Cannot anchor a horizontal edge to a vertical edge."
+#: src/core/socket/qabstractsocket.cpp:907
+#: src/core/socket/qnativesocketengine.cpp:203
+msgid "Connection timed out"
 msgstr ""
 
-#: src/declarative/graphicsitems/qdeclarativeanchors.cpp:1097
-#: src/declarative/graphicsitems/qdeclarativeanchors.cpp:1134
-msgid "Cannot anchor item to self."
+#: src/core/socket/qabstractsocket.cpp:1518
+msgid "Socket operation timed out"
 msgstr ""
 
-#: src/declarative/graphicsitems/qdeclarativeanchors.cpp:1109
-msgid "Cannot specify top, bottom, and vcenter anchors."
+#: src/core/socket/qabstractsocket.cpp:1929
+msgid "Socket is not connected"
 msgstr ""
 
-#: src/declarative/graphicsitems/qdeclarativeanchors.cpp:1115
-msgid ""
-"Baseline anchor cannot be used in conjunction with top, bottom, or vcenter "
-"anchors."
+#: src/core/socket/qnativesocketengine.cpp:167
+msgid "Unable to initialize non-blocking socket"
 msgstr ""
 
-#: src/declarative/graphicsitems/qdeclarativeanchors.cpp:1128
-msgid "Cannot anchor a vertical edge to a horizontal edge."
+#: src/core/socket/qnativesocketengine.cpp:170
+msgid "Unable to initialize broadcast socket"
 msgstr ""
 
-#: src/declarative/graphicsitems/qdeclarativetextinput.cpp:870
-#: src/declarative/graphicsitems/qdeclarativetextinput.cpp:878
-msgid "Could not load cursor delegate"
+#: src/core/socket/qnativesocketengine.cpp:173
+msgid "Attempt to use IPv6 socket on a platform with no IPv6 support"
 msgstr ""
 
-#: src/declarative/graphicsitems/qdeclarativetextinput.cpp:889
-msgid "Could not instantiate cursor delegate"
+#: src/core/socket/qnativesocketengine.cpp:176
+msgid "The remote host closed the connection"
 msgstr ""
 
-#: src/declarative/graphicsitems/qdeclarativeflipable.cpp:118
-msgid "front is a write-once property"
+#: src/core/socket/qnativesocketengine.cpp:179
+msgid "Network operation timed out"
 msgstr ""
 
-#: src/declarative/graphicsitems/qdeclarativeflipable.cpp:138
-msgid "back is a write-once property"
+#: src/core/socket/qnativesocketengine.cpp:182
+msgid "Out of resources"
 msgstr ""
 
-#: src/declarative/graphicsitems/qdeclarativeitem.cpp:783
-msgid "LayoutDirection attached property only works with Items"
+#: src/core/socket/qnativesocketengine.cpp:185
+msgid "Unsupported socket operation"
 msgstr ""
 
-#: src/declarative/graphicsitems/qdeclarativevisualitemmodel.cpp:1081
-msgid "Delegate component must be Item type."
+#: src/core/socket/qnativesocketengine.cpp:188
+msgid "Protocol type not supported"
 msgstr ""
 
-#: src/declarative/qml/qdeclarativecompiler.cpp:164
-#: src/declarative/qml/qdeclarativecompiler.cpp:1818
-#: src/declarative/qml/qdeclarativecompiler.cpp:2023
-#: src/declarative/qml/qdeclarativecompiler.cpp:2104
-#: src/declarative/qml/qdeclarativecompiler.cpp:2179
-#: src/declarative/qml/qdeclarativecompiler.cpp:2773
-msgid "Invalid property assignment: \"%1\" is a read-only property"
+#: src/core/socket/qnativesocketengine.cpp:191
+msgid "Invalid socket descriptor"
 msgstr ""
 
-#: src/declarative/qml/qdeclarativecompiler.cpp:173
-msgid "Invalid property assignment: unknown enumeration"
+#: src/core/socket/qnativesocketengine.cpp:194
+msgid "Host unreachable"
 msgstr ""
 
-#: src/declarative/qml/qdeclarativecompiler.cpp:181
-msgid "Invalid property assignment: string expected"
+#: src/core/socket/qnativesocketengine.cpp:197
+msgid "Network unreachable"
 msgstr ""
 
-#: src/declarative/qml/qdeclarativecompiler.cpp:184
-msgid "Invalid property assignment: url expected"
+#: src/core/socket/qnativesocketengine.cpp:200
+msgid "Permission denied"
 msgstr ""
 
-#: src/declarative/qml/qdeclarativecompiler.cpp:194
-msgid "Invalid property assignment: unsigned int expected"
+#: src/core/socket/qnativesocketengine.cpp:209
+msgid "The bound address is already in use"
 msgstr ""
 
-#: src/declarative/qml/qdeclarativecompiler.cpp:205
-msgid "Invalid property assignment: int expected"
+#: src/core/socket/qnativesocketengine.cpp:212
+msgid "The address is not available"
 msgstr ""
 
-#: src/declarative/qml/qdeclarativecompiler.cpp:209
-#: src/declarative/qml/qdeclarativecompiler.cpp:212
-msgid "Invalid property assignment: number expected"
+#: src/core/socket/qnativesocketengine.cpp:215
+msgid "The address is protected"
 msgstr ""
 
-#: src/declarative/qml/qdeclarativecompiler.cpp:218
-msgid "Invalid property assignment: color expected"
+#: src/core/socket/qnativesocketengine.cpp:218
+msgid "Datagram was too large to send"
 msgstr ""
 
-#: src/declarative/qml/qdeclarativecompiler.cpp:226
-msgid "Invalid property assignment: date expected"
+#: src/core/socket/qnativesocketengine.cpp:221
+msgid "Unable to send a message"
 msgstr ""
 
-#: src/declarative/qml/qdeclarativecompiler.cpp:233
-msgid "Invalid property assignment: time expected"
+#: src/core/socket/qnativesocketengine.cpp:224
+msgid "Unable to receive a message"
 msgstr ""
 
-#: src/declarative/qml/qdeclarativecompiler.cpp:240
-msgid "Invalid property assignment: datetime expected"
+#: src/core/socket/qnativesocketengine.cpp:227
+msgid "Unable to write"
 msgstr ""
 
-#: src/declarative/qml/qdeclarativecompiler.cpp:249
-msgid "Invalid property assignment: point expected"
+#: src/core/socket/qnativesocketengine.cpp:230
+msgid "Network error"
 msgstr ""
 
-#: src/declarative/qml/qdeclarativecompiler.cpp:257
-msgid "Invalid property assignment: size expected"
+#: src/core/socket/qnativesocketengine.cpp:233
+msgid "Another socket is already listening on the same port"
 msgstr ""
 
-#: src/declarative/qml/qdeclarativecompiler.cpp:265
-msgid "Invalid property assignment: rect expected"
+#: src/core/socket/qnativesocketengine.cpp:236
+msgid "Operation on non-socket"
 msgstr ""
 
-#: src/declarative/qml/qdeclarativecompiler.cpp:270
-msgid "Invalid property assignment: boolean expected"
+#: src/core/socket/qnativesocketengine.cpp:239
+msgid "The proxy type is invalid for this operation"
 msgstr ""
 
-#: src/declarative/qml/qdeclarativecompiler.cpp:277
-msgid "Invalid property assignment: 3D vector expected"
+#: src/core/socket/qlocalsocket_unix.cpp:113
+msgid "%1: Connection refused"
 msgstr ""
 
-#: src/declarative/qml/qdeclarativecompiler.cpp:282
-msgid "Invalid property assignment: unsupported type \"%1\""
+#: src/core/socket/qlocalsocket_unix.cpp:116
+msgid "%1: Remote closed"
 msgstr ""
 
-#: src/declarative/qml/qdeclarativecompiler.cpp:554
-msgid "Element is not creatable."
+#: src/core/socket/qlocalsocket_unix.cpp:119
+msgid "%1: Invalid name"
 msgstr ""
 
-#: src/declarative/qml/qdeclarativecompiler.cpp:1204
-msgid "Component elements may not contain properties other than id"
+#: src/core/socket/qlocalsocket_unix.cpp:122
+msgid "%1: Socket access error"
 msgstr ""
 
-#: src/declarative/qml/qdeclarativecompiler.cpp:1211
-msgid "Invalid component id specification"
+#: src/core/socket/qlocalsocket_unix.cpp:125
+msgid "%1: Socket resource error"
 msgstr ""
 
-#: src/declarative/qml/qdeclarativecompiler.cpp:1217
-#: src/declarative/qml/qdeclarativecompiler.cpp:1732
-msgid "id is not unique"
+#: src/core/socket/qlocalsocket_unix.cpp:128
+msgid "%1: Socket operation timed out"
 msgstr ""
 
-#: src/declarative/qml/qdeclarativecompiler.cpp:1227
-msgid "Invalid component body specification"
+#: src/core/socket/qlocalsocket_unix.cpp:131
+msgid "%1: Datagram too large"
 msgstr ""
 
-#: src/declarative/qml/qdeclarativecompiler.cpp:1230
-msgid "Component objects cannot declare new properties."
+#: src/core/socket/qlocalsocket_unix.cpp:134
+msgid "%1: Connection error"
 msgstr ""
 
-#: src/declarative/qml/qdeclarativecompiler.cpp:1232
-msgid "Component objects cannot declare new signals."
+#: src/core/socket/qlocalsocket_unix.cpp:137
+msgid "%1: The socket operation is not supported"
 msgstr ""
 
-#: src/declarative/qml/qdeclarativecompiler.cpp:1234
-msgid "Component objects cannot declare new functions."
-msgstr ""
-
-#: src/declarative/qml/qdeclarativecompiler.cpp:1241
-msgid "Cannot create empty component specification"
-msgstr ""
-
-#: src/declarative/qml/qdeclarativecompiler.cpp:1329
-#: src/declarative/qml/qdeclarativecompiler.cpp:1450
-msgid "\"%1.%2\" is not available in %3 %4.%5."
-msgstr ""
-
-#: src/declarative/qml/qdeclarativecompiler.cpp:1331
-#: src/declarative/qml/qdeclarativecompiler.cpp:1452
-msgid "\"%1.%2\" is not available due to component versioning."
-msgstr ""
-
-#: src/declarative/qml/qdeclarativecompiler.cpp:1342
-msgid "Incorrectly specified signal assignment"
-msgstr ""
-
-#: src/declarative/qml/qdeclarativecompiler.cpp:1354
-msgid "Cannot assign a value to a signal (expecting a script to be run)"
-msgstr ""
-
-#: src/declarative/qml/qdeclarativecompiler.cpp:1358
-msgid "Empty signal assignment"
-msgstr ""
-
-#: src/declarative/qml/qdeclarativecompiler.cpp:1396
-msgid "Empty property assignment"
-msgstr ""
-
-#: src/declarative/qml/qdeclarativecompiler.cpp:1408
-msgid "Attached properties cannot be used here"
-msgstr ""
-
-#: src/declarative/qml/qdeclarativecompiler.cpp:1422
-#: src/declarative/qml/qdeclarativecompiler.cpp:1550
-msgid "Non-existent attached object"
-msgstr ""
-
-#: src/declarative/qml/qdeclarativecompiler.cpp:1426
-#: src/declarative/qml/qdeclarativecompiler.cpp:1553
-msgid "Invalid attached object assignment"
-msgstr ""
-
-#: src/declarative/qml/qdeclarativecompiler.cpp:1505
-msgid "Cannot assign to non-existent default property"
-msgstr ""
-
-#: src/declarative/qml/qdeclarativecompiler.cpp:1507
-#: src/declarative/qml/qdeclarativecompiler.cpp:1863
-#: src/declarative/qml/qdeclarativecompiler.cpp:1866
-#: src/declarative/util/qdeclarativeconnections.cpp:187
-#: src/declarative/util/qdeclarativeconnections.cpp:251
-#: src/declarative/util/qdeclarativepropertychanges.cpp:404
-msgid "Cannot assign to non-existent property \"%1\""
-msgstr ""
-
-#: src/declarative/qml/qdeclarativecompiler.cpp:1537
-msgid "Invalid use of namespace"
-msgstr ""
-
-#: src/declarative/qml/qdeclarativecompiler.cpp:1542
-msgid "Not an attached property name"
-msgstr ""
-
-#: src/declarative/qml/qdeclarativecompiler.cpp:1724
-msgid "Invalid use of id property"
-msgstr ""
-
-#: src/declarative/qml/qdeclarativecompiler.cpp:1811
-#: src/declarative/qml/qdeclarativecompiler.cpp:1813
-msgid "Property has already been assigned a value"
-msgstr ""
-
-#: src/declarative/qml/qdeclarativecompiler.cpp:1831
-#: src/declarative/qml/qdeclarativecompiler.cpp:1838
-msgid "Invalid grouped property access"
-msgstr ""
-
-#: src/declarative/qml/qdeclarativecompiler.cpp:1841
-msgid "Cannot assign a value directly to a grouped property"
-msgstr ""
-
-#: src/declarative/qml/qdeclarativecompiler.cpp:1857
-msgid "Invalid property use"
-msgstr ""
-
-#: src/declarative/qml/qdeclarativecompiler.cpp:1872
-msgid "Property assignment expected"
-msgstr ""
-
-#: src/declarative/qml/qdeclarativecompiler.cpp:1875
-msgid "Single property assignment expected"
-msgstr ""
-
-#: src/declarative/qml/qdeclarativecompiler.cpp:1880
-msgid "Unexpected object assignment"
-msgstr ""
-
-#: src/declarative/qml/qdeclarativecompiler.cpp:1945
-msgid "Cannot assign object to list"
-msgstr ""
-
-#: src/declarative/qml/qdeclarativecompiler.cpp:1951
-msgid "Can only assign one binding to lists"
-msgstr ""
-
-#: src/declarative/qml/qdeclarativecompiler.cpp:1957
-msgid "Cannot assign primitives to lists"
-msgstr ""
-
-#: src/declarative/qml/qdeclarativecompiler.cpp:1970
-msgid "Cannot assign multiple values to a script property"
-msgstr ""
-
-#: src/declarative/qml/qdeclarativecompiler.cpp:1973
-msgid "Invalid property assignment: script expected"
-msgstr ""
-
-#: src/declarative/qml/qdeclarativecompiler.cpp:1988
-msgid "Cannot assign multiple values to a singular property"
-msgstr ""
-
-#: src/declarative/qml/qdeclarativecompiler.cpp:2081
-msgid "Cannot assign object to property"
-msgstr ""
-
-#: src/declarative/qml/qdeclarativecompiler.cpp:2131
-msgid "\"%1\" cannot operate on \"%2\""
-msgstr ""
-
-#: src/declarative/qml/qdeclarativecompiler.cpp:2307
-msgid "Duplicate default property"
-msgstr ""
-
-#: src/declarative/qml/qdeclarativecompiler.cpp:2312
-msgid "Duplicate property name"
-msgstr ""
-
-#: src/declarative/qml/qdeclarativecompiler.cpp:2316
-msgid "Property names cannot begin with an upper case letter"
-msgstr ""
-
-#: src/declarative/qml/qdeclarativecompiler.cpp:2319
-msgid "Illegal property name"
-msgstr ""
-
-#: src/declarative/qml/qdeclarativecompiler.cpp:2327
-msgid "Duplicate signal name"
-msgstr ""
-
-#: src/declarative/qml/qdeclarativecompiler.cpp:2330
-msgid "Signal names cannot begin with an upper case letter"
-msgstr ""
-
-#: src/declarative/qml/qdeclarativecompiler.cpp:2332
-msgid "Illegal signal name"
-msgstr ""
-
-#: src/declarative/qml/qdeclarativecompiler.cpp:2338
-msgid "Duplicate method name"
-msgstr ""
-
-#: src/declarative/qml/qdeclarativecompiler.cpp:2341
-msgid "Method names cannot begin with an upper case letter"
-msgstr ""
-
-#: src/declarative/qml/qdeclarativecompiler.cpp:2343
-msgid "Illegal method name"
-msgstr ""
-
-#: src/declarative/qml/qdeclarativecompiler.cpp:2364
-msgid "Property value set multiple times"
-msgstr ""
-
-#: src/declarative/qml/qdeclarativecompiler.cpp:2368
-msgid "Invalid property nesting"
-msgstr ""
-
-#: src/declarative/qml/qdeclarativecompiler.cpp:2420
-msgid "Cannot override FINAL property"
-msgstr ""
-
-#: src/declarative/qml/qdeclarativecompiler.cpp:2443
-msgid "Invalid property type"
-msgstr ""
-
-#: src/declarative/qml/qdeclarativecompiler.cpp:2620
-msgid "Invalid empty ID"
-msgstr ""
-
-#: src/declarative/qml/qdeclarativecompiler.cpp:2623
-msgid "IDs cannot start with an uppercase letter"
-msgstr ""
-
-#: src/declarative/qml/qdeclarativecompiler.cpp:2629
-msgid "IDs must start with a letter or underscore"
-msgstr ""
-
-#: src/declarative/qml/qdeclarativecompiler.cpp:2631
-msgid "IDs must contain only letters, numbers, and underscores"
-msgstr ""
-
-#: src/declarative/qml/qdeclarativecompiler.cpp:2637
-msgid "ID illegally masks global JavaScript property"
-msgstr ""
-
-#: src/declarative/qml/qdeclarativecompiler.cpp:2668
-#: src/declarative/qml/qdeclarativecompiler.cpp:2677
-msgid "No property alias location"
-msgstr ""
-
-#: src/declarative/qml/qdeclarativecompiler.cpp:2673
-#: src/declarative/qml/qdeclarativecompiler.cpp:2698
-#: src/declarative/qml/qdeclarativecompiler.cpp:2705
-#: src/declarative/qml/qdeclarativecompiler.cpp:2712
-#: src/declarative/qml/qdeclarativecompiler.cpp:2718
-msgid "Invalid alias location"
-msgstr ""
-
-#: src/declarative/qml/qdeclarativecompiler.cpp:2682
-msgid ""
-"Invalid alias reference. An alias reference must be specified as <id>, <id>."
-"<property> or <id>.<value property>.<property>"
-msgstr ""
-
-#: src/declarative/qml/qdeclarativecompiler.cpp:2685
-msgid "Invalid alias reference. Unable to find id \"%1\""
-msgstr ""
-
-#: src/declarative/qml/qdeclarativecompiler.cpp:2700
-msgid "Alias property exceeds alias bounds"
-msgstr ""
-
-#: src/declarative/qml/qdeclarativeimport.cpp:356
-msgid "plugin cannot be loaded for module \"%1\": %2"
-msgstr ""
-
-#: src/declarative/qml/qdeclarativeimport.cpp:361
-msgid "module \"%1\" plugin \"%2\" not found"
-msgstr ""
-
-#: src/declarative/qml/qdeclarativeimport.cpp:505
-#: src/declarative/qml/qdeclarativeimport.cpp:573
-msgid "module \"%1\" version %2.%3 is not installed"
-msgstr ""
-
-#: src/declarative/qml/qdeclarativeimport.cpp:507
-msgid "module \"%1\" is not installed"
-msgstr ""
-
-#: src/declarative/qml/qdeclarativeimport.cpp:521
-#: src/declarative/qml/qdeclarativeimport.cpp:541
-msgid "\"%1\": no such directory"
-msgstr ""
-
-#: src/declarative/qml/qdeclarativeimport.cpp:539
-msgid "import \"%1\" has no qmldir and no namespace"
-msgstr ""
-
-#: src/declarative/qml/qdeclarativeimport.cpp:607
-msgid "- %1 is not a namespace"
-msgstr ""
-
-#: src/declarative/qml/qdeclarativeimport.cpp:613
-msgid "- nested namespaces not allowed"
-msgstr ""
-
-#: src/declarative/qml/qdeclarativeimport.cpp:660
-#: src/declarative/qml/qdeclarativeimport.cpp:664
-msgid "local directory"
-msgstr ""
-
-#: src/declarative/qml/qdeclarativeimport.cpp:670
-msgid "is ambiguous. Found in %1 and in %2"
-msgstr ""
-
-#: src/declarative/qml/qdeclarativeimport.cpp:674
-msgid "is ambiguous. Found in %1 in version %2.%3 and %4.%5"
-msgstr ""
-
-#: src/declarative/qml/qdeclarativeimport.cpp:688
-msgid "is instantiated recursively"
-msgstr ""
-
-#: src/declarative/qml/qdeclarativeimport.cpp:690
-msgid "is not a type"
-msgstr ""
-
-#: src/declarative/qml/qdeclarativebinding.cpp:407
-msgid "Binding loop detected for property \"%1\""
-msgstr ""
-
-#: src/declarative/qml/qdeclarativecomponent.cpp:477
-msgid "Invalid empty URL"
-msgstr ""
-
-#: src/declarative/qml/qdeclarativecomponent.cpp:625
-msgid "createObject: value is not an object"
-msgstr ""
-
-#: src/declarative/qml/qdeclarativevme.cpp:199
-msgctxt "QDeclarativeVME"
-msgid "Unable to create object of type %1"
-msgstr ""
-
-#: src/declarative/qml/qdeclarativevme.cpp:639
-msgctxt "QDeclarativeVME"
-msgid "Cannot assign object type %1 with no default method"
-msgstr ""
-
-#: src/declarative/qml/qdeclarativevme.cpp:642
-msgctxt "QDeclarativeVME"
-msgid "Cannot connect mismatched signal/slot %1 %vs. %2"
-msgstr ""
-
-#: src/declarative/qml/qdeclarativevme.cpp:647
-msgctxt "QDeclarativeVME"
-msgid "Cannot assign an object to signal property %1"
-msgstr ""
-
-#: src/declarative/qml/qdeclarativevme.cpp:796
-msgctxt "QDeclarativeVME"
-msgid "Cannot assign object to list"
-msgstr ""
-
-#: src/declarative/qml/qdeclarativevme.cpp:839
-msgctxt "QDeclarativeVME"
-msgid "Cannot assign object to interface property"
-msgstr ""
-
-#: src/declarative/qml/qdeclarativevme.cpp:850
-msgctxt "QDeclarativeVME"
-msgid "Unable to create attached object"
-msgstr ""
-
-#: src/declarative/qml/qdeclarativevme.cpp:882
-msgctxt "QDeclarativeVME"
-msgid "Cannot set properties on %1 as it is null"
-msgstr ""
-
-#: src/declarative/qml/qdeclarativescriptparser.cpp:234
-#: src/declarative/qml/qdeclarativescriptparser.cpp:663
-#: src/declarative/qml/qdeclarativescriptparser.cpp:722
-msgctxt "QDeclarativeParser"
-msgid "Property value set multiple times"
-msgstr ""
-
-#: src/declarative/qml/qdeclarativescriptparser.cpp:245
-msgctxt "QDeclarativeParser"
-msgid "Expected type name"
-msgstr ""
-
-#: src/declarative/qml/qdeclarativescriptparser.cpp:379
-msgctxt "QDeclarativeParser"
-msgid "Invalid import qualifier ID"
-msgstr ""
-
-#: src/declarative/qml/qdeclarativescriptparser.cpp:387
-msgctxt "QDeclarativeParser"
-msgid "Reserved name \"Qt\" cannot be used as an qualifier"
-msgstr ""
-
-#: src/declarative/qml/qdeclarativescriptparser.cpp:402
-msgctxt "QDeclarativeParser"
-msgid "Script import qualifiers must be unique."
-msgstr ""
-
-#: src/declarative/qml/qdeclarativescriptparser.cpp:412
-msgctxt "QDeclarativeParser"
-msgid "Script import requires a qualifier"
-msgstr ""
-
-#: src/declarative/qml/qdeclarativescriptparser.cpp:423
-msgctxt "QDeclarativeParser"
-msgid "Library import requires a version"
-msgstr ""
-
-#: src/declarative/qml/qdeclarativescriptparser.cpp:482
-msgctxt "QDeclarativeParser"
-msgid "Expected parameter type"
-msgstr ""
-
-#: src/declarative/qml/qdeclarativescriptparser.cpp:524
-msgctxt "QDeclarativeParser"
-msgid "Invalid property type modifier"
-msgstr ""
-
-#: src/declarative/qml/qdeclarativescriptparser.cpp:533
-msgctxt "QDeclarativeParser"
-msgid "Unexpected property type modifier"
-msgstr ""
-
-#: src/declarative/qml/qdeclarativescriptparser.cpp:542
-msgctxt "QDeclarativeParser"
-msgid "Expected property type"
-msgstr ""
-
-#: src/declarative/qml/qdeclarativescriptparser.cpp:551
-msgctxt "QDeclarativeParser"
-msgid "Readonly not yet supported"
-msgstr ""
-
-#: src/declarative/qml/qdeclarativescriptparser.cpp:769
-msgctxt "QDeclarativeParser"
-msgid "JavaScript declaration outside Script element"
-msgstr ""
-
-#: src/declarative/qml/qdeclarativecompiledbindings.cpp:315
-msgctxt "QDeclarativeCompiledBindings"
-msgid "Binding loop detected for property \"%1\""
-msgstr ""
-
-#: src/declarative/qml/qdeclarativetypeloader.cpp:898
-msgid "Script %1 unavailable"
-msgstr ""
-
-#: src/declarative/qml/qdeclarativetypeloader.cpp:916
-msgid "Type %1 unavailable"
-msgstr ""
-
-#: src/declarative/qml/qdeclarativetypeloader.cpp:1102
-msgid "Namespace %1 cannot be used as a type"
-msgstr ""
-
-#: src/declarative/qml/qdeclarativetypeloader.cpp:1104
-msgid "%1 %2"
-msgstr ""
-
-#: src/declarative/qml/parser/qdeclarativejsparser.cpp:1805
-#: src/declarative/qml/parser/qdeclarativejsparser.cpp:1873
-msgctxt "QDeclarativeParser"
-msgid "Syntax error"
-msgstr ""
-
-#: src/declarative/qml/parser/qdeclarativejsparser.cpp:1807
-msgctxt "QDeclarativeParser"
-msgid "Unexpected token `%1'"
-msgstr ""
-
-#: src/declarative/qml/parser/qdeclarativejsparser.cpp:1836
-#: src/declarative/qml/parser/qdeclarativejsparser.cpp:1860
-msgctxt "QDeclarativeParser"
-msgid "Expected token `%1'"
-msgstr ""
-
-#: src/declarative/qml/parser/qdeclarativejslexer.cpp:516
-#: src/declarative/qml/parser/qdeclarativejslexer.cpp:639
-#: src/declarative/qml/parser/qdeclarativejslexer.cpp:693
-msgctxt "QDeclarativeParser"
-msgid "Illegal unicode escape sequence"
-msgstr ""
-
-#: src/declarative/qml/parser/qdeclarativejslexer.cpp:553
-msgctxt "QDeclarativeParser"
-msgid "Illegal character"
-msgstr ""
-
-#: src/declarative/qml/parser/qdeclarativejslexer.cpp:567
-msgctxt "QDeclarativeParser"
-msgid "Unclosed string at end of line"
-msgstr ""
-
-#: src/declarative/qml/parser/qdeclarativejslexer.cpp:593
-msgctxt "QDeclarativeParser"
-msgid "Illegal escape sequence"
-msgstr ""
-
-#: src/declarative/qml/parser/qdeclarativejslexer.cpp:665
-msgctxt "QDeclarativeParser"
-msgid "Unclosed comment at end of file"
-msgstr ""
-
-#: src/declarative/qml/parser/qdeclarativejslexer.cpp:767
-msgctxt "QDeclarativeParser"
-msgid "Illegal syntax for exponential number"
-msgstr ""
-
-#: src/declarative/qml/parser/qdeclarativejslexer.cpp:793
-msgctxt "QDeclarativeParser"
-msgid "Identifier cannot start with numeric literal"
-msgstr ""
-
-#: src/declarative/qml/parser/qdeclarativejslexer.cpp:1131
-msgctxt "QDeclarativeParser"
-msgid "Unterminated regular expression literal"
-msgstr ""
-
-#: src/declarative/qml/parser/qdeclarativejslexer.cpp:1146
-msgctxt "QDeclarativeParser"
-msgid "Invalid regular expression flag '%0'"
-msgstr ""
-
-#: src/declarative/qml/parser/qdeclarativejslexer.cpp:1162
-#: src/declarative/qml/parser/qdeclarativejslexer.cpp:1184
-msgctxt "QDeclarativeParser"
-msgid "Unterminated regular expression backslash sequence"
-msgstr ""
-
-#: src/declarative/qml/parser/qdeclarativejslexer.cpp:1197
-msgctxt "QDeclarativeParser"
-msgid "Unterminated regular expression class"
-msgstr ""
-
-#: src/declarative/util/qdeclarativeconnections.cpp:197
-msgid "Connections: nested objects not allowed"
-msgstr ""
-
-#: src/declarative/util/qdeclarativeconnections.cpp:200
-msgid "Connections: syntax error"
-msgstr ""
-
-#: src/declarative/util/qdeclarativeconnections.cpp:208
-msgid "Connections: script expected"
-msgstr ""
-
-#: src/declarative/util/qdeclarativeanimation.cpp:152
-msgid "Cannot animate non-existent property \"%1\""
-msgstr ""
-
-#: src/declarative/util/qdeclarativeanimation.cpp:155
-msgid "Cannot animate read-only property \"%1\""
-msgstr ""
-
-#: src/declarative/util/qdeclarativeanimation.cpp:589
-#: src/declarative/util/qdeclarativeanimation.cpp:1823
-#: src/declarative/util/qdeclarativeanimation.cpp:2843
-msgid "Cannot set a duration of < 0"
-msgstr ""
-
-#: src/declarative/util/qdeclarativeanimation.cpp:2675
-#: src/declarative/util/qdeclarativestateoperations.cpp:83
-msgid "Unable to preserve appearance under complex transform"
-msgstr ""
-
-#: src/declarative/util/qdeclarativeanimation.cpp:2686
-#: src/declarative/util/qdeclarativeanimation.cpp:2693
-#: src/declarative/util/qdeclarativestateoperations.cpp:94
-#: src/declarative/util/qdeclarativestateoperations.cpp:101
-msgid "Unable to preserve appearance under non-uniform scale"
-msgstr ""
-
-#: src/declarative/util/qdeclarativeanimation.cpp:2700
-#: src/declarative/util/qdeclarativestateoperations.cpp:108
-msgid "Unable to preserve appearance under scale of 0"
-msgstr ""
-
-#: src/declarative/util/qdeclarativepropertychanges.cpp:236
-msgid "PropertyChanges does not support creating state-specific objects."
-msgstr ""
-
-#: src/declarative/util/qdeclarativepropertychanges.cpp:407
-msgid "Cannot assign to read-only property \"%1\""
-msgstr ""
-
-#: src/declarative/util/qdeclarativebehavior.cpp:107
-msgid "Cannot change the animation assigned to a Behavior."
-msgstr ""
-
-#: src/declarative/util/qdeclarativelistmodel.cpp:370
-msgid "remove: index %1 out of range"
-msgstr ""
-
-#: src/declarative/util/qdeclarativelistmodel.cpp:403
-msgid "insert: value is not an object"
-msgstr ""
-
-#: src/declarative/util/qdeclarativelistmodel.cpp:408
-msgid "insert: index %1 out of range"
-msgstr ""
-
-#: src/declarative/util/qdeclarativelistmodel.cpp:438
-msgid "move: out of range"
-msgstr ""
-
-#: src/declarative/util/qdeclarativelistmodel.cpp:478
-msgid "append: value is not an object"
-msgstr ""
-
-#: src/declarative/util/qdeclarativelistmodel.cpp:549
-msgid "set: value is not an object"
-msgstr ""
-
-#: src/declarative/util/qdeclarativelistmodel.cpp:553
-#: src/declarative/util/qdeclarativelistmodel.cpp:591
-msgid "set: index %1 out of range"
-msgstr ""
-
-#: src/declarative/util/qdeclarativelistmodel.cpp:628
-#: src/declarative/util/qdeclarativelistmodel.cpp:645
-msgid "ListElement: cannot contain nested elements"
-msgstr ""
-
-#: src/declarative/util/qdeclarativelistmodel.cpp:649
-msgid "ListElement: cannot use reserved \"id\" property"
-msgstr ""
-
-#: src/declarative/util/qdeclarativelistmodel.cpp:703
-msgid "ListElement: cannot use script for property value"
-msgstr ""
-
-#: src/declarative/util/qdeclarativelistmodel.cpp:735
-msgid "ListModel: undefined property '%1'"
-msgstr ""
-
-#: src/declarative/util/qdeclarativepixmapcache.cpp:286
-msgid "Error decoding: %1: %2"
-msgstr ""
-
-#: src/declarative/util/qdeclarativepixmapcache.cpp:459
-#: src/declarative/util/qdeclarativepixmapcache.cpp:820
-msgid "Failed to get image from provider: %1"
-msgstr ""
-
-#: src/declarative/util/qdeclarativepixmapcache.cpp:477
-#: src/declarative/util/qdeclarativepixmapcache.cpp:838
-msgid "Cannot open: %1"
-msgstr ""
-
-#: src/declarative/util/qdeclarativeutilmodule.cpp:58
-msgid "Application is an abstract class"
-msgstr ""
-
-#: src/declarative/util/qdeclarativeutilmodule.cpp:85
-msgid "Animation is an abstract class"
+#: src/core/socket/qudpsocket.cpp:180
+msgid "This platform does not support IPv6"
 msgstr ""
 
 #: src/gui/dialogs/qwizard.cpp:578
@@ -1190,7 +554,6 @@ msgid "< &Back"
 msgstr ""
 
 #: src/gui/dialogs/qwizard.cpp:581
-#: src/scripttools/debugging/qscriptdebugger.cpp:1666
 msgid "Continue"
 msgstr ""
 
@@ -1868,7 +1231,6 @@ msgid "&Paste"
 msgstr ""
 
 #: src/gui/widgets/qlineedit.cpp:1742 src/gui/text/qtextcontrol.cpp:1876
-#: src/scripttools/debugging/qscriptbreakpointswidget.cpp:279
 msgid "Delete"
 msgstr ""
 
@@ -2068,8 +1430,6 @@ msgid "Restore"
 msgstr ""
 
 #: src/gui/widgets/qmdisubwindow.cpp:309 src/gui/widgets/qworkspace.cpp:93
-#: src/scripttools/debugging/qscriptbreakpointswidget.cpp:56
-#: src/scripttools/debugging/qscriptdebuggercodefinderwidget.cpp:116
 msgid "Close"
 msgstr ""
 
@@ -2130,7 +1490,7 @@ msgstr ""
 msgid "Step &down"
 msgstr ""
 
-#: src/gui/kernel/qwidget.cpp:5031
+#: src/gui/kernel/qwidget.cpp:5026
 msgid "*"
 msgstr ""
 
@@ -4572,1130 +3932,6 @@ msgstr ""
 
 #: src/gui/text/qtextcontrol.cpp:2796
 msgid "Insert Unicode control character"
-msgstr ""
-
-#: src/network/ssl/qsslerror.cpp:197
-msgid "No error"
-msgstr ""
-
-#: src/network/ssl/qsslerror.cpp:199
-msgid "The issuer certificate could not be found"
-msgstr ""
-
-#: src/network/ssl/qsslerror.cpp:201
-msgid "The certificate signature could not be decrypted"
-msgstr ""
-
-#: src/network/ssl/qsslerror.cpp:203
-msgid "The public key in the certificate could not be read"
-msgstr ""
-
-#: src/network/ssl/qsslerror.cpp:205
-msgid "The signature of the certificate is invalid"
-msgstr ""
-
-#: src/network/ssl/qsslerror.cpp:207
-msgid "The certificate is not yet valid"
-msgstr ""
-
-#: src/network/ssl/qsslerror.cpp:209
-msgid "The certificate has expired"
-msgstr ""
-
-#: src/network/ssl/qsslerror.cpp:211
-msgid "The certificate's notBefore field contains an invalid time"
-msgstr ""
-
-#: src/network/ssl/qsslerror.cpp:213
-msgid "The certificate's notAfter field contains an invalid time"
-msgstr ""
-
-#: src/network/ssl/qsslerror.cpp:215
-msgid "The certificate is self-signed, and untrusted"
-msgstr ""
-
-#: src/network/ssl/qsslerror.cpp:217
-msgid ""
-"The root certificate of the certificate chain is self-signed, and untrusted"
-msgstr ""
-
-#: src/network/ssl/qsslerror.cpp:219
-msgid ""
-"The issuer certificate of a locally looked up certificate could not be found"
-msgstr ""
-
-#: src/network/ssl/qsslerror.cpp:221
-msgid "No certificates could be verified"
-msgstr ""
-
-#: src/network/ssl/qsslerror.cpp:223
-msgid "One of the CA certificates is invalid"
-msgstr ""
-
-#: src/network/ssl/qsslerror.cpp:225
-msgid "The basicConstraints path length parameter has been exceeded"
-msgstr ""
-
-#: src/network/ssl/qsslerror.cpp:227
-msgid "The supplied certificate is unsuitable for this purpose"
-msgstr ""
-
-#: src/network/ssl/qsslerror.cpp:229
-msgid "The root CA certificate is not trusted for this purpose"
-msgstr ""
-
-#: src/network/ssl/qsslerror.cpp:231
-msgid "The root CA certificate is marked to reject the specified purpose"
-msgstr ""
-
-#: src/network/ssl/qsslerror.cpp:233
-msgid ""
-"The current candidate issuer certificate was rejected because its subject "
-"name did not match the issuer name of the current certificate"
-msgstr ""
-
-#: src/network/ssl/qsslerror.cpp:236
-msgid ""
-"The current candidate issuer certificate was rejected because its issuer "
-"name and serial number was present and did not match the authority key "
-"identifier of the current certificate"
-msgstr ""
-
-#: src/network/ssl/qsslerror.cpp:240
-msgid "The peer did not present any certificate"
-msgstr ""
-
-#: src/network/ssl/qsslerror.cpp:242
-msgid "The host name did not match any of the valid hosts for this certificate"
-msgstr ""
-
-#: src/network/ssl/qsslerror.cpp:245
-msgid "The peer certificate is blacklisted"
-msgstr ""
-
-#: src/network/ssl/qsslsocket_openssl.cpp:154
-msgid "Error creating SSL context (%1)"
-msgstr ""
-
-#: src/network/ssl/qsslsocket_openssl.cpp:204
-msgid "Invalid or empty cipher list (%1)"
-msgstr ""
-
-#: src/network/ssl/qsslsocket_openssl.cpp:236
-msgid "Cannot provide a certificate with no key, %1"
-msgstr ""
-
-#: src/network/ssl/qsslsocket_openssl.cpp:243
-msgid "Error loading local certificate, %1"
-msgstr ""
-
-#: src/network/ssl/qsslsocket_openssl.cpp:268
-msgid "Error loading private key, %1"
-msgstr ""
-
-#: src/network/ssl/qsslsocket_openssl.cpp:275
-msgid "Private key does not certify public key, %1"
-msgstr ""
-
-#: src/network/ssl/qsslsocket_openssl.cpp:295
-msgid "Error creating SSL session, %1"
-msgstr ""
-
-#: src/network/ssl/qsslsocket_openssl.cpp:329
-msgid "Error creating SSL session: %1"
-msgstr ""
-
-#: src/network/ssl/qsslsocket_openssl.cpp:550
-msgid "Unable to write data: %1"
-msgstr ""
-
-#: src/network/ssl/qsslsocket_openssl.cpp:620
-msgid "Unable to decrypt data: %1"
-msgstr ""
-
-#: src/network/ssl/qsslsocket_openssl.cpp:693
-msgid "The TLS/SSL connection has been closed"
-msgstr ""
-
-#: src/network/ssl/qsslsocket_openssl.cpp:701
-#: src/network/ssl/qsslsocket_openssl.cpp:711
-msgid "Error while reading: %1"
-msgstr ""
-
-#: src/network/ssl/qsslsocket_openssl.cpp:805
-msgid "Error during SSL handshake: %1"
-msgstr ""
-
-#: src/network/kernel/qhostinfo_p.h:74
-msgctxt "QHostInfo"
-msgid "Unknown error"
-msgstr ""
-
-#: src/network/kernel/qhostinfo.cpp:134
-msgctxt "QHostInfo"
-msgid "No host name given"
-msgstr ""
-
-#: src/network/kernel/qhostinfo_unix.cpp:87
-#: src/network/kernel/qhostinfo_unix.cpp:171
-#: src/network/socket/qabstractsocket.cpp:830
-#: src/network/socket/qhttpsocketengine.cpp:648
-#: src/network/socket/qsocks5socketengine.cpp:620
-#: src/network/socket/qsocks5socketengine.cpp:646
-msgid "Host not found"
-msgstr ""
-
-#: src/network/kernel/qhostinfo_unix.cpp:105
-msgid "No host name given"
-msgstr ""
-
-#: src/network/kernel/qhostinfo_unix.cpp:107
-msgid "Invalid hostname"
-msgstr ""
-
-#: src/network/kernel/qhostinfo_unix.cpp:159
-msgid "Unknown address type"
-msgstr ""
-
-#: src/network/socket/qtcpserver.cpp:266 src/network/socket/qtcpserver.cpp:384
-#: src/network/socket/qabstractsocket.cpp:485
-#: src/network/socket/qabstractsocket.cpp:1268
-#: src/network/socket/qabstractsocket.cpp:1478
-msgid "Operation on socket is not supported"
-msgstr ""
-
-#: src/network/socket/qlocalserver_unix.cpp:187
-msgid "%1: Permission denied"
-msgstr ""
-
-#: src/network/socket/qlocalserver_unix.cpp:195
-#: src/network/socket/qlocalserver.cpp:202
-msgid "%1: Name error"
-msgstr ""
-
-#: src/network/socket/qlocalserver_unix.cpp:199
-msgid "%1: Address in use"
-msgstr ""
-
-#: src/network/socket/qlocalserver_unix.cpp:204
-#: src/network/socket/qlocalsocket_unix.cpp:141
-msgid "%1: Unknown error %2"
-msgstr ""
-
-#: src/network/socket/qabstractsocket.cpp:872
-#: src/network/socket/qhttpsocketengine.cpp:651
-#: src/network/socket/qnativesocketengine.cpp:213
-#: src/network/socket/qsocks5socketengine.cpp:650
-msgid "Connection refused"
-msgstr ""
-
-#: src/network/socket/qabstractsocket.cpp:1014
-#: src/network/socket/qnativesocketengine.cpp:210
-msgid "Connection timed out"
-msgstr ""
-
-#: src/network/socket/qabstractsocket.cpp:1646
-msgid "Socket operation timed out"
-msgstr ""
-
-#: src/network/socket/qabstractsocket.cpp:2057
-msgid "Socket is not connected"
-msgstr ""
-
-#: src/network/socket/qhttpsocketengine.cpp:548
-msgid "Did not receive HTTP response from proxy"
-msgstr ""
-
-#: src/network/socket/qhttpsocketengine.cpp:584
-msgid "Error parsing authentication request from proxy"
-msgstr ""
-
-#: src/network/socket/qhttpsocketengine.cpp:618
-msgid "Authentication required"
-msgstr ""
-
-#: src/network/socket/qhttpsocketengine.cpp:645
-msgid "Proxy denied connection"
-msgstr ""
-
-#: src/network/socket/qhttpsocketengine.cpp:655
-msgid "Error communicating with HTTP proxy"
-msgstr ""
-
-#: src/network/socket/qhttpsocketengine.cpp:678
-msgid "Proxy server not found"
-msgstr ""
-
-#: src/network/socket/qhttpsocketengine.cpp:680
-msgid "Proxy connection refused"
-msgstr ""
-
-#: src/network/socket/qhttpsocketengine.cpp:682
-msgid "Proxy server connection timed out"
-msgstr ""
-
-#: src/network/socket/qhttpsocketengine.cpp:684
-msgid "Proxy connection closed prematurely"
-msgstr ""
-
-#: src/network/socket/qnativesocketengine.cpp:174
-msgid "Unable to initialize non-blocking socket"
-msgstr ""
-
-#: src/network/socket/qnativesocketengine.cpp:177
-msgid "Unable to initialize broadcast socket"
-msgstr ""
-
-#: src/network/socket/qnativesocketengine.cpp:180
-msgid "Attempt to use IPv6 socket on a platform with no IPv6 support"
-msgstr ""
-
-#: src/network/socket/qnativesocketengine.cpp:183
-msgid "The remote host closed the connection"
-msgstr ""
-
-#: src/network/socket/qnativesocketengine.cpp:186
-msgid "Network operation timed out"
-msgstr ""
-
-#: src/network/socket/qnativesocketengine.cpp:189
-msgid "Out of resources"
-msgstr ""
-
-#: src/network/socket/qnativesocketengine.cpp:192
-msgid "Unsupported socket operation"
-msgstr ""
-
-#: src/network/socket/qnativesocketengine.cpp:195
-msgid "Protocol type not supported"
-msgstr ""
-
-#: src/network/socket/qnativesocketengine.cpp:198
-msgid "Invalid socket descriptor"
-msgstr ""
-
-#: src/network/socket/qnativesocketengine.cpp:201
-msgid "Host unreachable"
-msgstr ""
-
-#: src/network/socket/qnativesocketengine.cpp:204
-#: src/network/socket/qsocks5socketengine.cpp:642
-msgid "Network unreachable"
-msgstr ""
-
-#: src/network/socket/qnativesocketengine.cpp:207
-msgid "Permission denied"
-msgstr ""
-
-#: src/network/socket/qnativesocketengine.cpp:216
-msgid "The bound address is already in use"
-msgstr ""
-
-#: src/network/socket/qnativesocketengine.cpp:219
-msgid "The address is not available"
-msgstr ""
-
-#: src/network/socket/qnativesocketengine.cpp:222
-msgid "The address is protected"
-msgstr ""
-
-#: src/network/socket/qnativesocketengine.cpp:225
-msgid "Datagram was too large to send"
-msgstr ""
-
-#: src/network/socket/qnativesocketengine.cpp:228
-msgid "Unable to send a message"
-msgstr ""
-
-#: src/network/socket/qnativesocketengine.cpp:231
-msgid "Unable to receive a message"
-msgstr ""
-
-#: src/network/socket/qnativesocketengine.cpp:234
-msgid "Unable to write"
-msgstr ""
-
-#: src/network/socket/qnativesocketengine.cpp:237
-msgid "Network error"
-msgstr ""
-
-#: src/network/socket/qnativesocketengine.cpp:240
-msgid "Another socket is already listening on the same port"
-msgstr ""
-
-#: src/network/socket/qnativesocketengine.cpp:243
-msgid "Operation on non-socket"
-msgstr ""
-
-#: src/network/socket/qnativesocketengine.cpp:246
-msgid "The proxy type is invalid for this operation"
-msgstr ""
-
-#: src/network/socket/qlocalsocket_unix.cpp:113
-msgid "%1: Connection refused"
-msgstr ""
-
-#: src/network/socket/qlocalsocket_unix.cpp:116
-msgid "%1: Remote closed"
-msgstr ""
-
-#: src/network/socket/qlocalsocket_unix.cpp:119
-msgid "%1: Invalid name"
-msgstr ""
-
-#: src/network/socket/qlocalsocket_unix.cpp:122
-msgid "%1: Socket access error"
-msgstr ""
-
-#: src/network/socket/qlocalsocket_unix.cpp:125
-msgid "%1: Socket resource error"
-msgstr ""
-
-#: src/network/socket/qlocalsocket_unix.cpp:128
-msgid "%1: Socket operation timed out"
-msgstr ""
-
-#: src/network/socket/qlocalsocket_unix.cpp:131
-msgid "%1: Datagram too large"
-msgstr ""
-
-#: src/network/socket/qlocalsocket_unix.cpp:134
-msgid "%1: Connection error"
-msgstr ""
-
-#: src/network/socket/qlocalsocket_unix.cpp:137
-msgid "%1: The socket operation is not supported"
-msgstr ""
-
-#: src/network/socket/qudpsocket.cpp:181
-msgid "This platform does not support IPv6"
-msgstr ""
-
-#: src/network/socket/qsocks5socketengine.cpp:575
-msgid "Connection to proxy refused"
-msgstr ""
-
-#: src/network/socket/qsocks5socketengine.cpp:579
-msgid "Connection to proxy closed prematurely"
-msgstr ""
-
-#: src/network/socket/qsocks5socketengine.cpp:583
-msgid "Proxy host not found"
-msgstr ""
-
-#: src/network/socket/qsocks5socketengine.cpp:588
-msgid "Connection to proxy timed out"
-msgstr ""
-
-#: src/network/socket/qsocks5socketengine.cpp:605
-msgid "Proxy authentication failed"
-msgstr ""
-
-#: src/network/socket/qsocks5socketengine.cpp:606
-msgid "Proxy authentication failed: %1"
-msgstr ""
-
-#: src/network/socket/qsocks5socketengine.cpp:615
-msgid "SOCKS version 5 protocol error"
-msgstr ""
-
-#: src/network/socket/qsocks5socketengine.cpp:634
-msgid "General SOCKSv5 server failure"
-msgstr ""
-
-#: src/network/socket/qsocks5socketengine.cpp:638
-msgid "Connection not allowed by SOCKSv5 server"
-msgstr ""
-
-#: src/network/socket/qsocks5socketengine.cpp:654
-msgid "TTL expired"
-msgstr ""
-
-#: src/network/socket/qsocks5socketengine.cpp:658
-msgid "SOCKSv5 command not supported"
-msgstr ""
-
-#: src/network/socket/qsocks5socketengine.cpp:662
-msgid "Address type not supported"
-msgstr ""
-
-#: src/network/socket/qsocks5socketengine.cpp:667
-msgid "Unknown SOCKSv5 proxy error code 0x%1"
-msgstr ""
-
-#: src/network/socket/qsocks5socketengine.cpp:1356
-msgctxt "QSocks5SocketEngine"
-msgid "Network operation timed out"
-msgstr ""
-
-#: src/network/access/qhttpnetworkconnection.cpp:652
-#: src/network/access/qhttp.cpp:2591
-msgctxt "QHttp"
-msgid "Host %1 not found"
-msgstr ""
-
-#: src/network/access/qhttpnetworkconnection.cpp:655
-msgctxt "QHttp"
-msgid "Connection refused"
-msgstr ""
-
-#: src/network/access/qhttpnetworkconnection.cpp:658
-msgctxt "QHttp"
-msgid "Connection closed"
-msgstr ""
-
-#: src/network/access/qhttpnetworkconnection.cpp:661
-msgctxt "QAbstractSocket"
-msgid "Socket operation timed out"
-msgstr ""
-
-#: src/network/access/qhttpnetworkconnection.cpp:664
-msgctxt "QHttp"
-msgid "Proxy requires authentication"
-msgstr ""
-
-#: src/network/access/qhttpnetworkconnection.cpp:667
-msgctxt "QHttp"
-msgid "Host requires authentication"
-msgstr ""
-
-#: src/network/access/qhttpnetworkconnection.cpp:670
-msgctxt "QHttp"
-msgid "Data corrupted"
-msgstr ""
-
-#: src/network/access/qhttpnetworkconnection.cpp:673
-msgctxt "QHttp"
-msgid "Unknown protocol specified"
-msgstr ""
-
-#: src/network/access/qhttpnetworkconnection.cpp:676
-msgctxt "QHttp"
-msgid "SSL handshake failed"
-msgstr ""
-
-#: src/network/access/qnetworkaccessdebugpipebackend.cpp:170
-msgctxt "QNetworkAccessDebugPipeBackend"
-msgid "Write error writing to %1: %2"
-msgstr ""
-
-#: src/network/access/qnetworkaccessdebugpipebackend.cpp:230
-msgid "Socket error on %1: %2"
-msgstr ""
-
-#: src/network/access/qnetworkaccessdebugpipebackend.cpp:245
-msgid "Remote host closed the connection prematurely on %1"
-msgstr ""
-
-#: src/network/access/qnetworkaccessftpbackend.cpp:114
-#: src/network/access/qnetworkaccesshttpbackend.cpp:403
-msgid "No suitable proxy found"
-msgstr ""
-
-#: src/network/access/qnetworkaccessftpbackend.cpp:128
-msgid "Cannot open %1: is a directory"
-msgstr ""
-
-#: src/network/access/qnetworkaccessftpbackend.cpp:224
-msgid "Logging in to %1 failed: authentication required"
-msgstr ""
-
-#: src/network/access/qnetworkaccessftpbackend.cpp:256
-msgid "Error while downloading %1: %2"
-msgstr ""
-
-#: src/network/access/qnetworkaccessftpbackend.cpp:258
-msgid "Error while uploading %1: %2"
-msgstr ""
-
-#: src/network/access/qnetworkreplydataimpl.cpp:62
-msgctxt "QNetworkAccessDataBackend"
-msgid "Invalid URI: %1"
-msgstr ""
-
-#: src/network/access/qnetworkaccesscachebackend.cpp:45
-msgctxt "QNetworkAccessCacheBackend"
-msgid "Error opening %1"
-msgstr ""
-
-#: src/network/access/qhttp.cpp:1543 src/network/access/qhttp.cpp:2362
-msgctxt "QHttp"
-msgid "Unknown error"
-msgstr ""
-
-#: src/network/access/qhttp.cpp:1795
-msgid "Request aborted"
-msgstr ""
-
-#: src/network/access/qhttp.cpp:2373
-msgctxt "QHttp"
-msgid "No server set to connect to"
-msgstr ""
-
-#: src/network/access/qhttp.cpp:2529
-msgctxt "QHttp"
-msgid "Wrong content length"
-msgstr ""
-
-#: src/network/access/qhttp.cpp:2533
-msgctxt "QHttp"
-msgid "Server closed connection unexpectedly"
-msgstr ""
-
-#: src/network/access/qhttp.cpp:2588
-msgctxt "QHttp"
-msgid "Connection refused (or timed out)"
-msgstr ""
-
-#: src/network/access/qhttp.cpp:2611
-msgctxt "QHttp"
-msgid "HTTP request failed"
-msgstr ""
-
-#: src/network/access/qhttp.cpp:2698
-msgctxt "QHttp"
-msgid "Invalid HTTP response header"
-msgstr ""
-
-#: src/network/access/qhttp.cpp:2726
-msgctxt "QHttp"
-msgid "Unknown authentication method"
-msgstr ""
-
-#: src/network/access/qhttp.cpp:2736
-msgctxt "QHttp"
-msgid "Proxy authentication required"
-msgstr ""
-
-#: src/network/access/qhttp.cpp:2740
-msgctxt "QHttp"
-msgid "Authentication required"
-msgstr ""
-
-#: src/network/access/qhttp.cpp:2823 src/network/access/qhttp.cpp:2871
-msgctxt "QHttp"
-msgid "Invalid HTTP chunked body"
-msgstr ""
-
-#: src/network/access/qhttp.cpp:2909
-msgctxt "QHttp"
-msgid "Error writing response to device"
-msgstr ""
-
-#: src/network/access/qhttpthreaddelegate.cpp:401
-#: src/network/access/qhttpthreaddelegate.cpp:424
-msgctxt "QNetworkReply"
-msgid "Error downloading %1 - server replied: %2"
-msgstr ""
-
-#: src/network/access/qnetworkreplyimpl.cpp:67
-msgctxt "QNetworkReply"
-msgid "Protocol \"%1\" is unknown"
-msgstr ""
-
-#: src/network/access/qnetworkreplyimpl.cpp:76
-msgctxt "QNetworkReply"
-msgid "backend start error."
-msgstr ""
-
-#: src/network/access/qnetworkreplyimpl.cpp:766
-#: src/network/access/qnetworkreplyimpl.cpp:796
-msgid "Operation canceled"
-msgstr ""
-
-#: src/network/access/qftp.cpp:841
-msgid "Not connected"
-msgstr ""
-
-#: src/network/access/qftp.cpp:920
-msgid "Host %1 not found"
-msgstr ""
-
-#: src/network/access/qftp.cpp:924
-msgid "Connection refused to host %1"
-msgstr ""
-
-#: src/network/access/qftp.cpp:928
-msgid "Connection timed out to host %1"
-msgstr ""
-
-#: src/network/access/qftp.cpp:1032
-msgid "Connected to host %1"
-msgstr ""
-
-#: src/network/access/qftp.cpp:1240
-msgid "Connection refused for data connection"
-msgstr ""
-
-#: src/network/access/qftp.cpp:2310
-msgctxt "QFtp"
-msgid ""
-"Connecting to host failed:\n"
-"%1"
-msgstr ""
-
-#: src/network/access/qftp.cpp:2314
-msgctxt "QFtp"
-msgid ""
-"Login failed:\n"
-"%1"
-msgstr ""
-
-#: src/network/access/qftp.cpp:2318
-msgctxt "QFtp"
-msgid ""
-"Listing directory failed:\n"
-"%1"
-msgstr ""
-
-#: src/network/access/qftp.cpp:2322
-msgctxt "QFtp"
-msgid ""
-"Changing directory failed:\n"
-"%1"
-msgstr ""
-
-#: src/network/access/qftp.cpp:2326
-msgctxt "QFtp"
-msgid ""
-"Downloading file failed:\n"
-"%1"
-msgstr ""
-
-#: src/network/access/qftp.cpp:2330
-msgctxt "QFtp"
-msgid ""
-"Uploading file failed:\n"
-"%1"
-msgstr ""
-
-#: src/network/access/qftp.cpp:2334
-msgctxt "QFtp"
-msgid ""
-"Removing file failed:\n"
-"%1"
-msgstr ""
-
-#: src/network/access/qftp.cpp:2338
-msgctxt "QFtp"
-msgid ""
-"Creating directory failed:\n"
-"%1"
-msgstr ""
-
-#: src/network/access/qftp.cpp:2342
-msgctxt "QFtp"
-msgid ""
-"Removing directory failed:\n"
-"%1"
-msgstr ""
-
-#: src/network/access/qftp.cpp:2370
-msgctxt "QFtp"
-msgid "Connection closed"
-msgstr ""
-
-#: src/network/access/qnetworkaccessfilebackend.cpp:87
-#: src/network/access/qnetworkreplyfileimpl.cpp:53
-msgctxt "QNetworkAccessFileBackend"
-msgid "Request for opening non-local file %1"
-msgstr ""
-
-#: src/network/access/qnetworkaccessfilebackend.cpp:128
-#: src/network/access/qnetworkreplyfileimpl.cpp:85
-msgctxt "QNetworkAccessFileBackend"
-msgid "Error opening %1: %2"
-msgstr ""
-
-#: src/network/access/qnetworkaccessfilebackend.cpp:166
-msgctxt "QNetworkAccessFileBackend"
-msgid "Write error writing to %1: %2"
-msgstr ""
-
-#: src/network/access/qnetworkaccessfilebackend.cpp:208
-#: src/network/access/qnetworkreplyfileimpl.cpp:72
-msgctxt "QNetworkAccessFileBackend"
-msgid "Cannot open %1: Path is a directory"
-msgstr ""
-
-#: src/network/access/qnetworkaccessfilebackend.cpp:228
-msgctxt "QNetworkAccessFileBackend"
-msgid "Read error reading from %1: %2"
-msgstr ""
-
-#: src/scripttools/debugging/qscriptedit.cpp:391
-#: src/scripttools/debugging/qscriptdebugger.cpp:1767
-msgid "Toggle Breakpoint"
-msgstr ""
-
-#: src/scripttools/debugging/qscriptedit.cpp:393
-msgid "Disable Breakpoint"
-msgstr ""
-
-#: src/scripttools/debugging/qscriptedit.cpp:394
-msgid "Enable Breakpoint"
-msgstr ""
-
-#: src/scripttools/debugging/qscriptedit.cpp:398
-msgid "Breakpoint Condition:"
-msgstr ""
-
-#: src/scripttools/debugging/qscriptbreakpointswidget.cpp:273
-msgid "New"
-msgstr ""
-
-#: src/scripttools/debugging/qscriptdebuggerstackmodel.cpp:141
-msgctxt "QScriptDebuggerStackModel"
-msgid "Level"
-msgstr ""
-
-#: src/scripttools/debugging/qscriptdebuggerstackmodel.cpp:143
-msgctxt "QScriptDebuggerStackModel"
-msgid "Name"
-msgstr ""
-
-#: src/scripttools/debugging/qscriptdebuggerstackmodel.cpp:145
-msgctxt "QScriptDebuggerStackModel"
-msgid "Location"
-msgstr ""
-
-#: src/scripttools/debugging/qscriptdebuggerlocalsmodel.cpp:876
-msgctxt "QScriptDebuggerLocalsModel"
-msgid "Name"
-msgstr ""
-
-#: src/scripttools/debugging/qscriptdebuggerlocalsmodel.cpp:878
-msgctxt "QScriptDebuggerLocalsModel"
-msgid "Value"
-msgstr ""
-
-#: src/scripttools/debugging/qscriptbreakpointsmodel.cpp:435
-msgctxt "QScriptBreakpointsModel"
-msgid "ID"
-msgstr ""
-
-#: src/scripttools/debugging/qscriptbreakpointsmodel.cpp:437
-msgctxt "QScriptBreakpointsModel"
-msgid "Location"
-msgstr ""
-
-#: src/scripttools/debugging/qscriptbreakpointsmodel.cpp:439
-msgctxt "QScriptBreakpointsModel"
-msgid "Condition"
-msgstr ""
-
-#: src/scripttools/debugging/qscriptbreakpointsmodel.cpp:441
-msgctxt "QScriptBreakpointsModel"
-msgid "Ignore-count"
-msgstr ""
-
-#: src/scripttools/debugging/qscriptbreakpointsmodel.cpp:443
-msgctxt "QScriptBreakpointsModel"
-msgid "Single-shot"
-msgstr ""
-
-#: src/scripttools/debugging/qscriptbreakpointsmodel.cpp:445
-msgctxt "QScriptBreakpointsModel"
-msgid "Hit-count"
-msgstr ""
-
-#: src/scripttools/debugging/qscriptdebugger.cpp:859
-#: src/scripttools/debugging/qscriptdebugger.cpp:1870
-msgid "Go to Line"
-msgstr ""
-
-#: src/scripttools/debugging/qscriptdebugger.cpp:860
-msgid "Line:"
-msgstr ""
-
-#: src/scripttools/debugging/qscriptdebugger.cpp:1649
-msgid "Interrupt"
-msgstr ""
-
-#: src/scripttools/debugging/qscriptdebugger.cpp:1651
-msgid "Shift+F5"
-msgstr ""
-
-#: src/scripttools/debugging/qscriptdebugger.cpp:1668
-msgid "F5"
-msgstr ""
-
-#: src/scripttools/debugging/qscriptdebugger.cpp:1683
-msgid "Step Into"
-msgstr ""
-
-#: src/scripttools/debugging/qscriptdebugger.cpp:1685
-msgid "F11"
-msgstr ""
-
-#: src/scripttools/debugging/qscriptdebugger.cpp:1700
-msgid "Step Over"
-msgstr ""
-
-#: src/scripttools/debugging/qscriptdebugger.cpp:1702
-msgid "F10"
-msgstr ""
-
-#: src/scripttools/debugging/qscriptdebugger.cpp:1717
-msgid "Step Out"
-msgstr ""
-
-#: src/scripttools/debugging/qscriptdebugger.cpp:1719
-msgid "Shift+F11"
-msgstr ""
-
-#: src/scripttools/debugging/qscriptdebugger.cpp:1734
-msgid "Run to Cursor"
-msgstr ""
-
-#: src/scripttools/debugging/qscriptdebugger.cpp:1736
-msgid "Ctrl+F10"
-msgstr ""
-
-#: src/scripttools/debugging/qscriptdebugger.cpp:1752
-msgid "Run to New Script"
-msgstr ""
-
-#: src/scripttools/debugging/qscriptdebugger.cpp:1768
-msgid "F9"
-msgstr ""
-
-#: src/scripttools/debugging/qscriptdebugger.cpp:1782
-msgid "Clear Debug Output"
-msgstr ""
-
-#: src/scripttools/debugging/qscriptdebugger.cpp:1795
-msgid "Clear Error Log"
-msgstr ""
-
-#: src/scripttools/debugging/qscriptdebugger.cpp:1808
-msgid "Clear Console"
-msgstr ""
-
-#: src/scripttools/debugging/qscriptdebugger.cpp:1822
-msgid "&Find in Script..."
-msgstr ""
-
-#: src/scripttools/debugging/qscriptdebugger.cpp:1823
-msgid "Ctrl+F"
-msgstr ""
-
-#: src/scripttools/debugging/qscriptdebugger.cpp:1840
-msgid "Find &Next"
-msgstr ""
-
-#: src/scripttools/debugging/qscriptdebugger.cpp:1842
-msgid "F3"
-msgstr ""
-
-#: src/scripttools/debugging/qscriptdebugger.cpp:1855
-msgid "Find &Previous"
-msgstr ""
-
-#: src/scripttools/debugging/qscriptdebugger.cpp:1857
-msgid "Shift+F3"
-msgstr ""
-
-#: src/scripttools/debugging/qscriptdebugger.cpp:1871
-msgid "Ctrl+G"
-msgstr ""
-
-#: src/scripttools/debugging/qscriptdebugger.cpp:1882
-msgid "Debug"
-msgstr ""
-
-#: src/scripttools/debugging/qscriptenginedebugger.cpp:485
-msgid "Loaded Scripts"
-msgstr ""
-
-#: src/scripttools/debugging/qscriptenginedebugger.cpp:491
-msgid "Breakpoints"
-msgstr ""
-
-#: src/scripttools/debugging/qscriptenginedebugger.cpp:497
-msgid "Stack"
-msgstr ""
-
-#: src/scripttools/debugging/qscriptenginedebugger.cpp:503
-msgid "Locals"
-msgstr ""
-
-#: src/scripttools/debugging/qscriptenginedebugger.cpp:509
-msgid "Console"
-msgstr ""
-
-#: src/scripttools/debugging/qscriptenginedebugger.cpp:515
-msgid "Debug Output"
-msgstr ""
-
-#: src/scripttools/debugging/qscriptenginedebugger.cpp:521
-msgid "Error Log"
-msgstr ""
-
-#: src/scripttools/debugging/qscriptenginedebugger.cpp:533
-msgid "Search"
-msgstr ""
-
-#: src/scripttools/debugging/qscriptenginedebugger.cpp:540
-msgid "View"
-msgstr ""
-
-#: src/scripttools/debugging/qscriptenginedebugger.cpp:558
-msgid "Katie Script Debugger"
-msgstr ""
-
-#: src/scripttools/debugging/qscriptdebuggercodefinderwidget.cpp:129
-msgid "Previous"
-msgstr ""
-
-#: src/scripttools/debugging/qscriptdebuggercodefinderwidget.cpp:136
-msgid "Next"
-msgstr ""
-
-#: src/scripttools/debugging/qscriptdebuggercodefinderwidget.cpp:141
-msgid "Case Sensitive"
-msgstr ""
-
-#: src/scripttools/debugging/qscriptdebuggercodefinderwidget.cpp:144
-msgid "Whole words"
-msgstr ""
-
-#: src/scripttools/debugging/qscriptdebuggercodefinderwidget.cpp:153
-msgid ""
-"<img src=\":/qt/scripttools/debugging/images/wrap.png\">&nbsp;Search wrapped"
-msgstr ""
-
-#: src/uitools/formbuilderextra.cpp:349
-msgctxt "FormBuilder"
-msgid "Invalid stretch value for '%1': '%2'"
-msgstr ""
-
-#: src/uitools/formbuilderextra.cpp:411
-msgctxt "FormBuilder"
-msgid "Invalid minimum size for '%1': '%2'"
-msgstr ""
-
-#: src/uitools/properties.cpp:86
-msgctxt "QFormBuilder"
-msgid "The set-type property %1 could not be read."
-msgstr ""
-
-#: src/uitools/properties.cpp:104
-msgctxt "QFormBuilder"
-msgid "The enumeration-type property %1 could not be read."
-msgstr ""
-
-#: src/uitools/properties.cpp:289
-msgctxt "QFormBuilder"
-msgid "Reading properties of the type %1 is not supported yet."
-msgstr ""
-
-#: src/uitools/properties.cpp:558
-msgctxt "QFormBuilder"
-msgid "The property %1 could not be written. The type %2 is not supported yet."
-msgstr ""
-
-#: src/uitools/formbuilder.cpp:150
-msgctxt "QFormBuilder"
-msgid "An empty class name was passed on to %1 (object name: '%2')."
-msgstr ""
-
-#: src/uitools/formbuilder.cpp:204
-msgctxt "QFormBuilder"
-msgid ""
-"QFormBuilder was unable to create a custom widget of the class '%1'; "
-"defaulting to base class '%2'."
-msgstr ""
-
-#: src/uitools/formbuilder.cpp:210
-msgctxt "QFormBuilder"
-msgid "QFormBuilder was unable to create a widget of the class '%1'."
-msgstr ""
-
-#: src/uitools/formbuilder.cpp:251
-msgctxt "QFormBuilder"
-msgid "The layout type `%1' is not supported."
-msgstr ""
-
-#: src/uitools/formscriptrunner.cpp:68
-msgid "Exception at line %1: %2"
-msgstr ""
-
-#: src/uitools/formscriptrunner.cpp:154
-msgid ""
-"An error occurred while running the script for %1: %2\n"
-"Script: %3"
-msgstr ""
-
-#: src/uitools/abstractformbuilder.cpp:182
-msgctxt "QAbstractFormBuilder"
-msgid "Unexpected element <%1>"
-msgstr ""
-
-#: src/uitools/abstractformbuilder.cpp:187
-msgctxt "QAbstractFormBuilder"
-msgid ""
-"An error has occurred while reading the UI file at line %1, column %2: %3"
-msgstr ""
-
-#: src/uitools/abstractformbuilder.cpp:193
-msgctxt "QAbstractFormBuilder"
-msgid "Invalid UI file: The root element <ui> is missing."
-msgstr ""
-
-#: src/uitools/abstractformbuilder.cpp:297
-msgctxt "QAbstractFormBuilder"
-msgid "The creation of a widget of the class '%1' failed."
-msgstr ""
-
-#: src/uitools/abstractformbuilder.cpp:593
-msgctxt "QAbstractFormBuilder"
-msgid "Attempt to add child that is not of class QWizardPage to QWizard."
-msgstr ""
-
-#: src/uitools/abstractformbuilder.cpp:655
-msgctxt "QAbstractFormBuilder"
-msgid ""
-"Attempt to add a layout to a widget '%1' (%2) which already has a layout of "
-"non-box type %3.\n"
-"This indicates an inconsistency in the ui-file."
-msgstr ""
-
-#: src/uitools/abstractformbuilder.cpp:865
-msgctxt "QAbstractFormBuilder"
-msgid "Empty widget item in %1 '%2'."
-msgstr ""
-
-#: src/uitools/abstractformbuilder.cpp:1599
-msgctxt "QAbstractFormBuilder"
-msgid "Flags property are not supported yet."
-msgstr ""
-
-#: src/uitools/abstractformbuilder.cpp:1680
-msgctxt "QAbstractFormBuilder"
-msgid "While applying tab stops: The widget '%1' could not be found."
-msgstr ""
-
-#: src/uitools/abstractformbuilder.cpp:2426
-msgctxt "QAbstractFormBuilder"
-msgid "Invalid QButtonGroup reference '%1' referenced by '%2'."
-msgstr ""
-
-#: src/uitools/abstractformbuilder.cpp:2937
-msgctxt "QAbstractFormBuilder"
-msgid "This version of the uitools library is linked without script support."
-msgstr ""
-
-#: src/uitools/properties_p.h:107
-msgctxt "QFormBuilder"
-msgid ""
-"The enumeration-value '%1' is invalid. The default value '%2' will be used "
-"instead."
-msgstr ""
-
-#: src/uitools/properties_p.h:121
-msgctxt "QFormBuilder"
-msgid "The flag-value '%1' is invalid. Zero will be used instead."
 msgstr ""
 
 #: src/xml/sax/qxml.cpp:37
