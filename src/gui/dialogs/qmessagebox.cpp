@@ -1750,6 +1750,5 @@ QPixmap QMessageBox::standardIcon(Icon icon)
 QT_END_NAMESPACE
 
 #include "moc_qmessagebox.h"
-#include "qrc_qmessagebox.cpp"
 
 #endif // QT_NO_MESSAGEBOX
