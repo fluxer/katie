@@ -22,7 +22,6 @@ set(QTCONFIG_SOURCES
     ${CMAKE_CURRENT_SOURCE_DIR}/mainwindow.ui
     ${CMAKE_CURRENT_SOURCE_DIR}/paletteeditoradvanced.ui
     ${CMAKE_CURRENT_SOURCE_DIR}/previewwidget.ui
-    ${CMAKE_CURRENT_SOURCE_DIR}/qtconfig.qrc
 )
 
 set(QTCONFIG_HEADERS

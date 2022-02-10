@@ -25,6 +25,15 @@ katie_setup_target(rcc ${RCC_SOURCES} ${RCC_HEADERS})
 add_executable(rcc ${rcc_SOURCES})
 target_link_libraries(rcc ${EXTRA_RCC_LIBS})
 
+set(RCC_NG_SOURCES
+    ${CMAKE_CURRENT_SOURCE_DIR}/rccng.cpp
+)
+
+katie_setup_target(rcc_ng ${RCC_NG_SOURCES})
+
+add_executable(rcc-ng ${rcc_ng_SOURCES})
+target_link_libraries(rcc-ng ${EXTRA_RCC_LIBS})
+
 set_target_properties(rcc PROPERTIES
     EXPORT_NAME rcc
     OUTPUT_NAME rcc${KATIE_TOOLS_SUFFIX}
