@@ -139,7 +139,6 @@ private slots:
     void rename_data();
     void rename();
     void renameWithAtEndSpecialFile() const;
-    void resourceCopyRename();
     void renameMultiple();
     void appendAndRead();
     void standarderror();
@@ -151,8 +150,6 @@ private slots:
 
     void map_data();
     void map();
-    void mapResource_data();
-    void mapResource();
     void mapOpenMode_data();
     void mapOpenMode();
 
@@ -278,8 +275,6 @@ tst_QFile::tst_QFile()
     : m_srcDir(QLatin1String(SRCDIR))
     , m_stdinProcess(findStdinProcess())
 {
-    Q_INIT_RESOURCE(copy_rename);
-    Q_INIT_RESOURCE(qfile);
 }
 
 tst_QFile::~tst_QFile()
@@ -368,7 +363,6 @@ void tst_QFile::cleanupTestCase()
     QFile::remove("tst_qfile_copy.cpp");
     QFile::remove("nullinline.txt");
     QFile::remove("myLink2.lnk");
-    QFile::remove("resources");
     QFile::remove("qfile_map_testfile");
     QFile::remove("readAllBuffer.txt");
     QFile::remove("qt_file.tmp");
@@ -1063,9 +1057,9 @@ void tst_QFile::permissions_data()
     QTest::newRow("data0") << QCoreApplication::instance()->applicationFilePath() << uint(QFile::ExeUser) << true;
     QTest::newRow("data1") << SRCDIR "tst_qfile.cpp" << uint(QFile::ReadUser) << true;
 //    QTest::newRow("data2") << "tst_qfile.cpp" << int(QFile::WriteUser) << false;
-    QTest::newRow("resource1") << ":/tst_qfileinfo/resources/file1.ext1" << uint(QFile::ReadUser) << true;
-    QTest::newRow("resource2") << ":/tst_qfileinfo/resources/file1.ext1" << uint(QFile::WriteUser) << false;
-    QTest::newRow("resource3") << ":/tst_qfileinfo/resources/file1.ext1" << uint(QFile::ExeUser) << false;
+    QTest::newRow("data3") << SRCDIR "testdata/file1.ext1" << uint(QFile::ReadUser) << true;
+    QTest::newRow("data4") << SRCDIR "testdata/file1.ext1" << uint(QFile::WriteUser) << true;
+    QTest::newRow("data5") << SRCDIR "testdatas/file1.ext1" << uint(QFile::ExeUser) << false;
 }
 
 void tst_QFile::permissions()
@@ -2101,22 +2095,6 @@ void tst_QFile::renameWithAtEndSpecialFile() const
     QVERIFY(QFile::rename(newName, originalName));
 }
 
-void tst_QFile::resourceCopyRename()
-{
-    // Using a resource file as a *read-only* source whose move and copy should fail.
-    QFile file(":/copy-rename.qrc");
-    QVERIFY(file.exists());
-    QFile::remove("file-rename-destination.txt");
-
-    QVERIFY(!file.copy("file-copy-destination.txt"));
-    QVERIFY(!QFile::exists("file-copy-destination.txt"));
-    QVERIFY(!file.isOpen());
-
-    QVERIFY(!file.rename("file-rename-destination.txt"));
-    QVERIFY(!QFile::exists("file-rename-destination.txt"));
-    QVERIFY(!file.isOpen());
-}
-
 void tst_QFile::renameMultiple()
 {
     // create the file if it doesn't exist
@@ -2510,43 +2488,6 @@ void tst_QFile::map()
     QVERIFY(file.remove());
 }
 
-void tst_QFile::mapResource_data()
-{
-    QTest::addColumn<int>("offset");
-    QTest::addColumn<int>("size");
-    QTest::addColumn<QFile::FileError>("error");
-    QTest::addColumn<QString>("fileName");
-
-    QString validFile = ":/tst_qfileinfo/resources/file1.ext1";
-    QString invalidFile = ":/tst_qfileinfo/resources/filefoo.ext1";
-
-    for (int i = 0; i < 2; ++i) {
-        QString file = (i == 0) ? validFile : invalidFile;
-        QTest::newRow("0, 0") << 0 << 0 << QFile::UnspecifiedError << file;
-        QTest::newRow("0, BIG") << 0 << 4096 << QFile::UnspecifiedError << file;
-        QTest::newRow("-1, 0") << -1 << 0 << QFile::UnspecifiedError << file;
-        QTest::newRow("0, -1") << 0 << -1 << QFile::UnspecifiedError << file;
-    }
-
-    QTest::newRow("0, 1") << 0 << 1 << QFile::NoError << validFile;
-}
-
-void tst_QFile::mapResource()
-{
-    QFETCH(QString, fileName);
-    QFETCH(int, offset);
-    QFETCH(int, size);
-    QFETCH(QFile::FileError, error);
-
-    QFile file(fileName);
-    uchar *memory = file.map(offset, size);
-    QCOMPARE(file.error(), error);
-    QVERIFY((error == QFile::NoError) ? (memory != 0) : (memory == 0));
-    if (error == QFile::NoError)
-        QCOMPARE(QString(memory[0]), QString::number(offset + 1));
-    QVERIFY(file.unmap(memory));
-}
-
 void tst_QFile::mapOpenMode_data()
 {
     QTest::addColumn<int>("openMode");
@@ -2603,7 +2544,7 @@ void tst_QFile::mapOpenMode()
 
 void tst_QFile::openDirectory()
 {
-    QFile f1(SRCDIR "resources");
+    QFile f1(SRCDIR "testdata");
     // it's a directory, it must not exist
     QVERIFY(!f1.exists());
 
@@ -2829,6 +2770,4 @@ void tst_QFile::autocloseHandle()
 
 QTEST_MAIN(tst_QFile)
 
-#include "qrc_copy-rename.cpp"
-#include "qrc_qfile.cpp"
 #include "moc_tst_qfile.cpp"

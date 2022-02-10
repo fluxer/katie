@@ -59,7 +59,7 @@ private:
 private slots:
     void initTestCase()
     {
-        QFile list(QLatin1String(":/4.6.0-list.txt"));
+        QFile list(QLatin1String(SRCDIR "/tree/4.6.0-list.txt"));
         QVERIFY(list.open(QIODevice::ReadOnly | QIODevice::Text));
 
         QVERIFY(fs.createDirectory(prefix));
@@ -221,4 +221,3 @@ private:
 QTEST_MAIN(bench_QDir_tree)
 
 #include "moc_bench_qdir_tree.cpp"
-#include "qrc_bench_qdir_tree.cpp"

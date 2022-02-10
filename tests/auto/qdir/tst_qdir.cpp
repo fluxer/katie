@@ -297,11 +297,6 @@ void tst_QDir::exists_data()
     QTest::newRow("data0") << QDir::currentPath() << true;
     QTest::newRow("data0.1") << QDir::currentPath() + "/" << true;
     QTest::newRow("data1") << QString("/I/Do_not_expect_this_path_to_exist/") << false;
-    QTest::newRow("resource0") << QString(":/tst_qdir/") << true;
-    QTest::newRow("resource1") << QString(":/I/Do_not_expect_this_resource_to_exist/") << false;
-
-    QTest::newRow("simple dir") << SRCDIR "resources" << true;
-    QTest::newRow("simple dir with slash") << SRCDIR "resources/" << true;
 }
 
 void tst_QDir::exists()
@@ -321,9 +316,6 @@ void tst_QDir::isRelativePath_data()
     QTest::newRow("data0") << "../somedir" << true;
     QTest::newRow("data2") << "somedir" << true;
     QTest::newRow("data3") << "/somedir" << false;
-
-    QTest::newRow("resource0") << ":/prefix" << false;
-    QTest::newRow("resource1") << ":/prefix/foo.bar" << false;
 }
 
 void tst_QDir::isRelativePath()
@@ -402,13 +394,6 @@ void tst_QDir::entryList_data()
 //    QTest::newRow("unprintablenames")  << SRCDIR "unprintablenames" << QStringList("*")
 //              << (int)(QDir::NoFilter) << (int)(QDir::NoSort)
 //              << QString(".,..").split(",");
-    QTest::newRow("resources1") << QString(":/tst_qdir/resources/entryList") << QStringList("*.data")
-                             << (int)(QDir::NoFilter) << (int)(QDir::NoSort)
-                             << QString("file1.data,file2.data,file3.data").split(',');
-    QTest::newRow("resources2") << QString(":/tst_qdir/resources/entryList") << QStringList("*.data")
-                             << (int)(QDir::Files) << (int)(QDir::NoSort)
-                             << QString("file1.data,file2.data,file3.data").split(',');
-
     QTest::newRow("nofilter") << SRCDIR "entrylist/" << QStringList("*")
                               << int(QDir::NoFilter) << int(QDir::Name)
                               << filterLinks(QString(".,..,directory,file,linktodirectory.lnk,linktofile.lnk,writable").split(','));
@@ -579,8 +564,8 @@ void tst_QDir::entryListSimple_data()
     QTest::addColumn<int>("countMin");
 
     QTest::newRow("data2") << "do_not_expect_this_path_to_exist/" << 0;
-    QTest::newRow("simple dir") << SRCDIR "resources" << 2;
-    QTest::newRow("simple dir with slash") << SRCDIR "resources/" << 2;
+    QTest::newRow("simple dir") << SRCDIR "testdir" << 2;
+    QTest::newRow("simple dir with slash") << SRCDIR "testdir/" << 2;
 }
 
 void tst_QDir::entryListSimple()
@@ -659,8 +644,6 @@ void tst_QDir::canonicalPath_data()
     QTest::newRow("rootPath + ./") << QDir::rootPath().append("./") << QDir::rootPath();
 
     QTest::newRow("rootPath + ../.. ") << QDir::rootPath().append("../..") << QDir::rootPath();
-
-    QTest::newRow("resource") << ":/tst_qdir/resources/entryList" << ":/tst_qdir/resources/entryList";
 }
 
 void tst_QDir::canonicalPath()
@@ -781,8 +764,6 @@ void tst_QDir::setNameFilters_data()
                             << QString("foo. bar,foo.bar").split(",");
     QTest::newRow("files1")  << appPath + "testdir/dir" << QString("*r.cpp *.pro").split(" ")
                           << QString("qdir.pro,qrc_qdir.cpp,tst_qdir.cpp").split(",");
-    QTest::newRow("resources1") << QString(":/tst_qdir/resources/entryList") << QStringList("*.data")
-                             << QString("file1.data,file2.data,file3.data").split(',');
 }
 
 void tst_QDir::setNameFilters()
@@ -820,9 +801,6 @@ tst_QDir::cleanPath_data()
     QTest::newRow("data8") << "/foo/bar/..//file1.txt" << "/foo/file1.txt";
     QTest::newRow("data9") << "//" << "/";
     QTest::newRow("data10") << "/:/" << "/:";
-
-    QTest::newRow("resource0") << ":/prefix/foo.bar" << ":/prefix/foo.bar";
-    QTest::newRow("resource1") << "://prefix/..//prefix/foo.bar" << ":/prefix/foo.bar";
 }
 
 
@@ -989,8 +967,6 @@ void tst_QDir::exists2_data()
     QTest::newRow("4") << "/testData" << false;
     QTest::newRow("5") << "tst_qdir.cpp" << true;
     QTest::newRow("6") << "/resources.cpp" << false;
-    QTest::newRow("resource0") << ":/prefix/foo.bar" << false;
-    QTest::newRow("resource1") << ":/tst_qdir/resources/entryList/file1.data" << true;
 }
 
 void tst_QDir::exists2()
@@ -1351,9 +1327,6 @@ void tst_QDir::isRoot_data()
 
     test = QDir(QDir::rootPath().append("./")).canonicalPath();
     QTest::newRow(QString("canonicalPath " + test).toLatin1()) << test << true;
-
-    QTest::newRow("resources root") << ":/" << true;
-    QTest::newRow("resources nonroot") << ":/entrylist" << false;
 }
 
 void tst_QDir::isRoot()
@@ -1522,4 +1495,3 @@ void tst_QDir::isReadable()
 QTEST_MAIN(tst_QDir)
 
 #include "moc_tst_qdir.cpp"
-#include "qrc_qdir.cpp"

@@ -27,43 +27,42 @@ QT_BEGIN_NAMESPACE
 static QByteArray createResourceData(const QByteArray &content, const QString &filename,
                                      const bool compressed, const qint64 uncompressedsize)
 {
-    const QString sanitizedfilename = filename.toLower().simplified().replace(" ", "_");
+    const QString cppfilename = filename.toLower().simplified().replace(" ", "_");
 
-    QByteArray sanitizedcontent;
+    QByteArray cppcontent;
     static const char * const digits = "0123456789abcdef";
     int wrapcount = 0;
     int chopcount = 2;
     for (int i = 0; i < content.size(); i++) {
-        sanitizedcontent += "0x";
-        uchar c = content.at(i);
+        cppcontent += "0x";
+        const uchar c = content.at(i);
         if (c < 16) {
-            sanitizedcontent += digits[c];
+            cppcontent += digits[c];
         } else {
-            sanitizedcontent += digits[c >> 4];
-            sanitizedcontent += digits[c & 0xf];
+            cppcontent += digits[c >> 4];
+            cppcontent += digits[c & 0xf];
         }
 
         wrapcount++;
         if (wrapcount == 20) {
-            sanitizedcontent += ",\n        ";
+            cppcontent += ",\n        ";
             chopcount = 10;
             wrapcount = 0;
         } else {
             chopcount = 2;
-            sanitizedcontent += ", ";
+            cppcontent += ", ";
         }
     }
-    sanitizedcontent.chop(chopcount);
+    cppcontent.chop(chopcount);
 
-    QByteArray compressedstring("static_qrc_data");
-    const QByteArray compressedstringsize = QByteArray::number(content.size());
+    QByteArray compressedbytes("static_qrc_data");
     if (compressed) {
-        compressedstring = "qUncompress(reinterpret_cast<const char*>(static_qrc_data, ";
-        compressedstring += compressedstringsize;
-        compressedstring += "))";
+        compressedbytes = "qUncompress(reinterpret_cast<const char*>(static_qrc_data, ";
+        compressedbytes += QByteArray::number(content.size());
+        compressedbytes += "))";
     }
 
-    const QByteArray uncompressedstringsize = QByteArray::number(content.size());
+    const QByteArray uncompressedbytessize = QByteArray::number(uncompressedsize);
 
     QString result = QString::fromLatin1(
 "static const uchar* qrc_%1()\n"
@@ -74,7 +73,7 @@ static QByteArray createResourceData(const QByteArray &content, const QString &f
 "    return %3;\n"
 "};\n"
 "static const qint64 qrc_%1_size = %4;\n"
-    ).arg(sanitizedfilename, sanitizedcontent.constData(), compressedstring.constData(), uncompressedstringsize.constData());
+    ).arg(cppfilename, cppcontent.constData(), compressedbytes.constData(), uncompressedbytessize.constData());
 
     return result.toLocal8Bit();
 }

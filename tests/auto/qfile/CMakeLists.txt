@@ -1,7 +1,5 @@
 katie_test(tst_qfile
     ${CMAKE_CURRENT_SOURCE_DIR}/tst_qfile.cpp
-    ${CMAKE_CURRENT_SOURCE_DIR}/copy-rename.qrc
-    ${CMAKE_CURRENT_SOURCE_DIR}/qfile.qrc
 )
 
 set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR})

@@ -69,12 +69,12 @@ private:
 };
 
 tst_qregexp::tst_qregexp()
-    :QObject()
-    ,str1("We are all happy monkeys")
+    : QObject()
+    , str1("We are all happy monkeys")
 {
-        QFile f(":/main.cpp");
-        f.open(QFile::ReadOnly);
-        str2=f.readAll();
+        QFile f(SRCDIR "/main.cpp");
+        QVERIFY(f.open(QFile::ReadOnly));
+        str2 = f.readAll();
 }
 
 static void verify(const QString &quoted, const QString &expected)
@@ -414,4 +414,3 @@ void tst_qregexp::horribleReplace2()
 QTEST_MAIN(tst_qregexp)
 
 #include "moc_main.cpp"
-#include "qrc_qregexp.cpp"

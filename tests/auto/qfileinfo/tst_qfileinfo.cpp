@@ -217,9 +217,9 @@ void tst_QFileInfo::isFile_data()
 
     QTest::newRow("data0") << QDir::currentPath() << false;
     QTest::newRow("data1") << SRCDIR "tst_qfileinfo.cpp" << true;
-    QTest::newRow("data2") << ":/tst_qfileinfo/resources/" << false;
-    QTest::newRow("data3") << ":/tst_qfileinfo/resources/file1" << true;
-    QTest::newRow("data4") << ":/tst_qfileinfo/resources/afilethatshouldnotexist" << false;
+    QTest::newRow("data2") << SRCDIR "/testdata/" << false;
+    QTest::newRow("data3") << SRCDIR "/testdata/file1" << true;
+    QTest::newRow("data4") << SRCDIR "/testdata/afilethatshouldnotexist" << false;
 }
 
 void tst_QFileInfo::isFile()
@@ -250,12 +250,12 @@ void tst_QFileInfo::isDir_data()
 
     QTest::newRow("data0") << QDir::currentPath() << true;
     QTest::newRow("data1") << SRCDIR "tst_qfileinfo.cpp" << false;
-    QTest::newRow("data2") << ":/tst_qfileinfo/resources/" << true;
-    QTest::newRow("data3") << ":/tst_qfileinfo/resources/file1" << false;
-    QTest::newRow("data4") << ":/tst_qfileinfo/resources/afilethatshouldnotexist" << false;
+    QTest::newRow("data2") << SRCDIR "/testdata/" << true;
+    QTest::newRow("data3") << SRCDIR "/testdata/file1" << false;
+    QTest::newRow("data4") << SRCDIR "/testdata/afilethatshouldnotexist" << false;
 
-    QTest::newRow("simple dir") << SRCDIR "resources" << true;
-    QTest::newRow("simple dir with slash") << SRCDIR "resources/" << true;
+    QTest::newRow("simple dir") << SRCDIR "testdata" << true;
+    QTest::newRow("simple dir with slash") << SRCDIR "testdata/" << true;
 
     QTest::newRow("broken link") << "brokenlink.lnk" << false;
 }
@@ -277,11 +277,9 @@ void tst_QFileInfo::isRoot_data()
     QTest::newRow("data1") << "/" << true;
     QTest::newRow("data2") << "*" << false;
     QTest::newRow("data3") << "/*" << false;
-    QTest::newRow("data4") << ":/tst_qfileinfo/resources/" << false;
-    QTest::newRow("data5") << ":/" << true;
 
-    QTest::newRow("simple dir") << SRCDIR "resources" << false;
-    QTest::newRow("simple dir with slash") << SRCDIR "resources/" << false;
+    QTest::newRow("simple dir") << SRCDIR "testdata" << false;
+    QTest::newRow("simple dir with slash") << SRCDIR "testdata/" << false;
 }
 
 void tst_QFileInfo::isRoot()
@@ -301,19 +299,16 @@ void tst_QFileInfo::exists_data()
     QTest::newRow("data0") << QDir::currentPath() << true;
     QTest::newRow("data1") << SRCDIR "tst_qfileinfo.cpp" << true;
     QTest::newRow("data2") << "/I/do_not_expect_this_path_to_exist/" << false;
-    QTest::newRow("data3") << ":/tst_qfileinfo/resources/" << true;
-    QTest::newRow("data4") << ":/tst_qfileinfo/resources/file1" << true;
-    QTest::newRow("data5") << ":/I/do_not_expect_this_path_to_exist/" << false;
-    QTest::newRow("data6") << SRCDIR "resources/*" << false;
-    QTest::newRow("data7") << SRCDIR "resources/*.foo" << false;
-    QTest::newRow("data8") << SRCDIR "resources/*.ext1" << false;
-    QTest::newRow("data9") << SRCDIR "resources/file?.ext1" << false;
+    QTest::newRow("data6") << SRCDIR "testdata/*" << false;
+    QTest::newRow("data7") << SRCDIR "testdata/*.foo" << false;
+    QTest::newRow("data8") << SRCDIR "testdata/*.ext1" << false;
+    QTest::newRow("data9") << SRCDIR "testdata/file?.ext1" << false;
     QTest::newRow("data10") << "." << true;
     QTest::newRow("data11") << ". " << false;
     QTest::newRow("empty") << "" << false;
 
-    QTest::newRow("simple dir") << SRCDIR "resources" << true;
-    QTest::newRow("simple dir with slash") << SRCDIR "resources/" << true;
+    QTest::newRow("simple dir") << SRCDIR "testdata" << true;
+    QTest::newRow("simple dir with slash") << SRCDIR "testdata/" << true;
 }
 
 void tst_QFileInfo::exists()
@@ -464,8 +459,8 @@ void tst_QFileInfo::fileName_data()
     QTest::newRow("relativeFile") << "tmp.txt" << "tmp.txt";
     QTest::newRow("relativeFileInSubDir") << "temp/tmp.txt" << "tmp.txt";
     QTest::newRow("absFilePath") << "/home/andy/tmp.txt" << "tmp.txt";
-    QTest::newRow("resource1") << ":/tst_qfileinfo/resources/file1.ext1" << "file1.ext1";
-    QTest::newRow("resource2") << ":/tst_qfileinfo/resources/file1.ext1.ext2" << "file1.ext1.ext2";
+    QTest::newRow("file1.ext1") << SRCDIR "/testdata/file1.ext1" << "file1.ext1";
+    QTest::newRow("file1.ext1.ext2") << SRCDIR "/testdata/file1.ext1.ext2" << "file1.ext1.ext2";
 
     QTest::newRow("ending slash [small]") << QString::fromLatin1("/a/") << QString::fromLatin1("");
     QTest::newRow("no ending slash [small]") << QString::fromLatin1("/a") << QString::fromLatin1("a");
@@ -495,7 +490,7 @@ void tst_QFileInfo::dir_data()
     QTest::newRow("relativeFileInSubDirAbsPath") << "temp/tmp.txt" << true << QDir::currentPath() + "/temp";
     QTest::newRow("absFilePath") << QDir::currentPath() + "/tmp.txt" << false << QDir::currentPath();
     QTest::newRow("absFilePathAbsPath") << QDir::currentPath() + "/tmp.txt" << true << QDir::currentPath();
-    QTest::newRow("resource1") << ":/tst_qfileinfo/resources/file1.ext1" << true << ":/tst_qfileinfo/resources";
+    QTest::newRow("file1.ext1") << SRCDIR "/testdata/file1.ext1" << true << SRCDIR "testdata";
 }
 
 void tst_QFileInfo::dir()
@@ -526,8 +521,6 @@ void tst_QFileInfo::suffix_data()
     QTest::newRow("data1") << "file.tar.gz" << "gz";
     QTest::newRow("data2") << "/path/file/file.tar.gz" << "gz";
     QTest::newRow("data3") << "/path/file.tar" << "tar";
-    QTest::newRow("resource1") << ":/tst_qfileinfo/resources/file1.ext1" << "ext1";
-    QTest::newRow("resource2") << ":/tst_qfileinfo/resources/file1.ext1.ext2" << "ext2";
     QTest::newRow("hidden1") << ".ext1" << "ext1";
     QTest::newRow("hidden1") << ".ext" << "ext";
     QTest::newRow("hidden1") << ".ex" << "ex";
@@ -560,8 +553,6 @@ void tst_QFileInfo::completeSuffix_data()
     QTest::newRow("data1") << "file.tar.gz" << "tar.gz";
     QTest::newRow("data2") << "/path/file/file.tar.gz" << "tar.gz";
     QTest::newRow("data3") << "/path/file.tar" << "tar";
-    QTest::newRow("resource1") << ":/tst_qfileinfo/resources/file1.ext1" << "ext1";
-    QTest::newRow("resource2") << ":/tst_qfileinfo/resources/file1.ext1.ext2" << "ext1.ext2";
 }
 
 void tst_QFileInfo::completeSuffix()
@@ -583,8 +574,6 @@ void tst_QFileInfo::baseName_data()
     QTest::newRow("data2") << "/path/file/file.tar.gz" << "file";
     QTest::newRow("data3") << "/path/file.tar" << "file";
     QTest::newRow("data4") << "/path/file" << "file";
-    QTest::newRow("resource1") << ":/tst_qfileinfo/resources/file1.ext1" << "file1";
-    QTest::newRow("resource2") << ":/tst_qfileinfo/resources/file1.ext1.ext2" << "file1";
 }
 
 void tst_QFileInfo::baseName()
@@ -606,8 +595,6 @@ void tst_QFileInfo::completeBaseName_data()
     QTest::newRow("data2") << "/path/file/file.tar.gz" << "file.tar";
     QTest::newRow("data3") << "/path/file.tar" << "file";
     QTest::newRow("data4") << "/path/file" << "file";
-    QTest::newRow("resource1") << ":/tst_qfileinfo/resources/file1.ext1" << "file1";
-    QTest::newRow("resource2") << ":/tst_qfileinfo/resources/file1.ext1.ext2" << "file1.ext1";
 }
 
 void tst_QFileInfo::completeBaseName()
@@ -628,9 +615,9 @@ void tst_QFileInfo::permission_data()
     QTest::newRow("data0") << QCoreApplication::instance()->applicationFilePath() << int(QFile::ExeUser) << true;
     QTest::newRow("data1") << SRCDIR "tst_qfileinfo.cpp" << int(QFile::ReadUser) << true;
 //    QTest::newRow("data2") << "tst_qfileinfo.cpp" << int(QFile::WriteUser) << false;
-    QTest::newRow("resource1") << ":/tst_qfileinfo/resources/file1.ext1" << int(QFile::ReadUser) << true;
-    QTest::newRow("resource2") << ":/tst_qfileinfo/resources/file1.ext1" << int(QFile::WriteUser) << false;
-    QTest::newRow("resource3") << ":/tst_qfileinfo/resources/file1.ext1" << int(QFile::ExeUser) << false;
+    QTest::newRow("data3") << SRCDIR "/testdata/file1.ext1" << int(QFile::ReadUser) << true;
+    QTest::newRow("data4") << SRCDIR "/testdata/file1.ext1" << int(QFile::WriteUser) << true;
+    QTest::newRow("data5") << SRCDIR "/testdata/file1.ext1" << int(QFile::ExeUser) << false;
 }
 
 void tst_QFileInfo::permission()
@@ -647,14 +634,14 @@ void tst_QFileInfo::size_data()
     QTest::addColumn<QString>("file");
     QTest::addColumn<int>("size");
 
-    QTest::newRow("resource1") << ":/tst_qfileinfo/resources/file1.ext1" << 0;
+    QTest::newRow("data1") << SRCDIR "/testdata/file1.ext1" << 0;
     QFile::remove("file1");
     QFile file("file1");
     QVERIFY(file.open(QFile::WriteOnly));
     QCOMPARE(file.write("JAJAJAA"), qint64(7));
     QTest::newRow("created-file") << "file1" << 7;
 
-    QTest::newRow("resource2") << ":/tst_qfileinfo/resources/file1.ext1.ext2" << 0;
+    QTest::newRow("data2") << SRCDIR "/testdata/file1.ext1.ext2" << 0;
 }
 
 void tst_QFileInfo::size()
@@ -848,8 +835,6 @@ void tst_QFileInfo::isLocalFs_data()
 
     QTest::newRow("local root") << QString::fromLatin1("/") << true;
     QTest::newRow("local non-existent file") << QString::fromLatin1("/abrakadabra.boo") << true;
-
-    QTest::newRow("qresource root") << QString::fromLatin1(":/") << false;
 }
 
 void tst_QFileInfo::isLocalFs()
@@ -1115,4 +1100,3 @@ void tst_QFileInfo::invalidState()
 QTEST_MAIN(tst_QFileInfo)
 
 #include "moc_tst_qfileinfo.cpp"
-#include "qrc_qfileinfo.cpp"
