@@ -2,7 +2,7 @@
 **
 ** Copyright (C) 2022 Ivailo Monev
 **
-** This file is part of the tools applications of the Katie Toolkit.
+** This file is part of the utils of the Katie Toolkit.
 **
 ** $QT_BEGIN_LICENSE:LGPL$
 **
@@ -119,20 +119,20 @@ int runRcc(int argc, char *argv[])
         if (arg == QLatin1String("-threshold")) {
             if ((i + 1) >= args.count()) {
                 ::fprintf(stderr, "rcc: missing threshold value argument");
-                ::exit(3);
+                ::exit(2);
             }
             threshold = args.at(i + 1).toDouble();
             i++;
         } else if (arg == QLatin1String("-compress")) {
             if ((i + 1) >= args.count()) {
                 ::fprintf(stderr, "rcc: missing compress value argument");
-                ::exit(4);
+                ::exit(3);
             }
             compresslevel = args.at(i + 1).toInt();
             i++;
         } else if (arg == QLatin1String("-version")) {
             ::fprintf(stderr, "Katie Resource Compiler version %s\n", QT_VERSION_STR);
-            ::exit(5);
+            ::exit(4);
         } else if (QFile::exists(arg)) {
             input.append(arg);
         } else {
@@ -144,18 +144,18 @@ int runRcc(int argc, char *argv[])
         QFile filehandle(filepath);
         if (!filehandle.open(QFile::ReadOnly)) {
             ::fprintf(stderr, "rcc: could not open %s\n", filepath.toLocal8Bit().constData());
-            return 6;
+            return 5;
         }
         QByteArray filecontent = filehandle.readAll();
         if (filecontent.isEmpty()) {
             ::fprintf(stderr, "rcc: file is empty %s\n", filepath.toLocal8Bit().constData());
-            return 7;
+            return 6;
         }
 
         const QString filename = QFileInfo(filepath).baseName();
         if (filename.isEmpty()) {
             ::fprintf(stderr, "rcc: could not determine file base name %s\n", filepath.toLocal8Bit().constData());
-            return 8;
+            return 7;
         }
 
         const qint64 uncompressedsize = filecontent.size();

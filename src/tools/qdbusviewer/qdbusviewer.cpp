@@ -469,12 +469,12 @@ void QDBusViewer::about()
 {
     QMessageBox box(this);
 
-    box.setText(QString::fromLatin1("<center><img src=\":/trolltech/qdbusviewer/qdbusviewer.png\">"
-                "<h3>%1</h3>"
-                "<p>Version %2</p></center>"
-                "<p>Copyright (C) 2015 The Qt Company Ltd.</p>"
-                "<p>Copyright (C) 2016 Ivailo Monev</p>")
-            .arg(tr("D-Bus Viewer")).arg(QLatin1String(QT_VERSION_STR)));
+    box.setText(tr("<h3>%1</h3>"
+                   "<br/>Version %2"
+                   "<br/><br/>Copyright (C) 2015 The Qt Company Ltd."
+                   "<br/><br/>Copyright (C) 2016 Ivailo Monev"
+                    )
+                   .arg(tr("D-Bus Viewer")).arg(QLatin1String(QT_VERSION_STR)));
     box.setWindowTitle(tr("D-Bus Viewer"));
     box.exec();
 }

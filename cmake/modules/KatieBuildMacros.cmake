@@ -213,7 +213,7 @@ macro(KATIE_UNITY_EXCLUDE ARG1)
 endmacro()
 
 # a function to create an array of source files for a target setting up proper
-# dependency for the moc/uic/rcc generated resources
+# dependency for the moc/uic generated resources
 function(KATIE_SETUP_TARGET FORTARGET)
     get_directory_property(dirdefs COMPILE_DEFINITIONS)
     get_directory_property(dirincs INCLUDE_DIRECTORIES)
@@ -238,16 +238,6 @@ function(KATIE_SETUP_TARGET FORTARGET)
             add_custom_command(
                 COMMAND "${CMAKE_BINARY_DIR}/exec.sh" "${CMAKE_BINARY_DIR}/bin/uic${KATIE_TOOLS_SUFFIX}" "${fileabs}" -o "${rscout}"
                 DEPENDS "uic"
-                OUTPUT "${rscout}"
-            )
-            set_property(SOURCE "${fileabs}" APPEND PROPERTY OBJECT_DEPENDS "${rscout}")
-        elseif("${fileext}" STREQUAL ".qrc")
-            set(rscout "${rscpath}/qrc_${filename}.cpp")
-            make_directory("${rscpath}")
-            include_directories("${rscpath}")
-            add_custom_command(
-                COMMAND "${CMAKE_BINARY_DIR}/exec.sh" "${CMAKE_BINARY_DIR}/bin/rcc${KATIE_TOOLS_SUFFIX}" "${fileabs}" -o "${rscout}" -name "${filename}"
-                DEPENDS "rcc"
                 OUTPUT "${rscout}"
             )
             set_property(SOURCE "${fileabs}" APPEND PROPERTY OBJECT_DEPENDS "${rscout}")

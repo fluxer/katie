@@ -30,6 +30,7 @@
 #include "qtextbrowser.h"
 #include "qthread.h"
 #include "qx11info_x11.h"
+#include "qguiimages_p.h"
 
 QT_BEGIN_NAMESPACE
 
@@ -56,7 +57,8 @@ static QPixmap getPixmap(QTextDocument *doc, const QTextImageFormat &format)
         QImage img;
         // try direct loading
         if (name.isEmpty() || !img.load(name)) {
-            return QPixmap(QLatin1String(":/trolltech/styles/commonstyle/images/file-16.png"));
+            pm.loadFromData(qrc_file_16(), qrc_file_16_size, "PNG");
+            return pm;
         }
         pm = QPixmap::fromImage(img);
         doc->addResource(QTextDocument::ImageResource, url, pm);
@@ -127,7 +129,8 @@ static QImage getImage(QTextDocument *doc, const QTextImageFormat &format)
 
         // try direct loading
         if (name.isEmpty() || !image.load(name)) {
-            return QImage(QLatin1String(":/trolltech/styles/commonstyle/images/file-16.png"));
+            image.loadFromData(reinterpret_cast<const char*>(qrc_file_16()), qrc_file_16_size, "PNG");
+            return image;
         }
         doc->addResource(QTextDocument::ImageResource, url, image);
     }

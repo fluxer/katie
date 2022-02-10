@@ -31,6 +31,7 @@
 #include "qapplication.h"
 #include "qcombobox_p.h"
 #include "qdebug.h"
+#include "qguiimages_p.h"
 
 QT_BEGIN_NAMESPACE
 
@@ -55,8 +56,11 @@ public:
 QFontFamilyDelegate::QFontFamilyDelegate(QObject *parent)
     : QAbstractItemDelegate(parent)
 {
-    truetype = QIcon(QLatin1String(":/trolltech/styles/commonstyle/images/fonttruetype-16.png"));
-    bitmap = QIcon(QLatin1String(":/trolltech/styles/commonstyle/images/fontbitmap-16.png"));
+    QPixmap tmp;
+    tmp.loadFromData(qrc_fonttruetype_16(), qrc_fonttruetype_16_size, "PNG");
+    truetype = QIcon(tmp);
+    tmp.loadFromData(qrc_fontbitmap_16(), qrc_fontbitmap_16_size, "PNG");
+    bitmap = QIcon(tmp);
 }
 
 void QFontFamilyDelegate::paint(QPainter *painter,

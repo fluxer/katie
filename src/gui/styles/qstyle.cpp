@@ -2285,4 +2285,3 @@ void QStyle::setProxy(QStyle *style)
 QT_END_NAMESPACE
 
 #include "moc_qstyle.h"
-#include "qrc_qstyle.cpp"

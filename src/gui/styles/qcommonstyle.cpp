@@ -50,6 +50,7 @@
 #include "qpixmapcache.h"
 #include "qguiplatformplugin.h"
 #include "qstylehelper_p.h"
+#include "qguiimages_p.h"
 
 #ifndef QT_NO_ITEMVIEWS
 #  include "qtextengine_p.h"
@@ -342,15 +343,13 @@ void QCommonStyle::drawPrimitive(PrimitiveElement pe, const QStyleOption *opt, Q
     }
     case PE_IndicatorTabClose: {
         if (d->tabBarcloseButtonIcon.isNull()) {
-            d->tabBarcloseButtonIcon.addPixmap(QPixmap(
-                        QLatin1String(":/trolltech/styles/commonstyle/images/standardbutton-closetab-16.png")),
-                        QIcon::Normal, QIcon::Off);
-            d->tabBarcloseButtonIcon.addPixmap(QPixmap(
-                        QLatin1String(":/trolltech/styles/commonstyle/images/standardbutton-closetab-down-16.png")),
-                        QIcon::Normal, QIcon::On);
-            d->tabBarcloseButtonIcon.addPixmap(QPixmap(
-                        QLatin1String(":/trolltech/styles/commonstyle/images/standardbutton-closetab-hover-16.png")),
-                        QIcon::Active, QIcon::Off);
+            QPixmap tmp;
+            tmp.loadFromData(qrc_standardbutton_closetab_16(), qrc_standardbutton_closetab_16_size, "PNG");
+            d->tabBarcloseButtonIcon.addPixmap(tmp, QIcon::Normal, QIcon::Off);
+            tmp.loadFromData(qrc_standardbutton_closetab_down_16(), qrc_standardbutton_closetab_down_16_size, "PNG");
+            d->tabBarcloseButtonIcon.addPixmap(tmp, QIcon::Normal, QIcon::On);
+            tmp.loadFromData(qrc_standardbutton_closetab_hover_16(), qrc_standardbutton_closetab_hover_16_size, "PNG");
+            d->tabBarcloseButtonIcon.addPixmap(tmp, QIcon::Active, QIcon::Off);
         }
 
         int size = proxy()->pixelMetric(QStyle::PM_SmallIconSize);
@@ -5700,6 +5699,4 @@ void QCommonStyle::unpolish(QApplication *application)
 
 QT_END_NAMESPACE
 
-
 #include "moc_qcommonstyle.h"
-
