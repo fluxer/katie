@@ -71,9 +71,6 @@ static void initResources()
 {
     Q_INIT_RESOURCE(qstyle);
     Q_INIT_RESOURCE(qmessagebox);
-#if !defined(QT_NO_STYLE_WINDOWS)
-    Q_INIT_RESOURCE(qwindowsstyle);
-#endif
 }
 
 QT_BEGIN_NAMESPACE
