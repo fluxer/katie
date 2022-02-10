@@ -167,9 +167,7 @@ int runRcc(int argc, char *argv[])
         }
 
         const QByteArray resourcedata = createResourceData(filecontent, filename, compressed, uncompressedsize);
-        ::fprintf(stdout, resourcedata.constData());
-
-        ::fprintf(stdout, "\n");
+        ::fprintf(stdout, "%s\n", resourcedata.constData());
     }
 
     return 0;
