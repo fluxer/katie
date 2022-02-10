@@ -70,7 +70,6 @@
 static void initResources()
 {
     Q_INIT_RESOURCE(qstyle);
-    Q_INIT_RESOURCE(qmessagebox);
 }
 
 QT_BEGIN_NAMESPACE
