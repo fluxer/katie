@@ -572,7 +572,6 @@ set(GUI_SOURCES
     ${CMAKE_CURRENT_SOURCE_DIR}/dialogs/qprintsettingsoutput.ui
     ${CMAKE_CURRENT_SOURCE_DIR}/dialogs/qprintwidget.ui
     ${CMAKE_CURRENT_SOURCE_DIR}/dialogs/qprintpropertieswidget.ui
-    ${CMAKE_CURRENT_SOURCE_DIR}/dialogs/qprintdialog.qrc
     ${CMAKE_CURRENT_SOURCE_DIR}/dialogs/qmessagebox.qrc
     ${CMAKE_CURRENT_SOURCE_DIR}/image/qbitmap.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/image/qicon.cpp

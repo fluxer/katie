@@ -19,15 +19,16 @@
 ****************************************************************************/
 
 #include <QDebug>
-#include <QDir>
 #include <QFile>
+#include <QFileInfo>
+#include <QStringList>
 
 QT_BEGIN_NAMESPACE
 
 static QByteArray createResourceData(const QByteArray &content, const QString &filename,
                                      const bool compressed, const qint64 uncompressedsize)
 {
-    const QString cppfilename = filename.toLower().simplified().replace(" ", "_");
+    const QString cppfilename = filename.toLower().simplified().replace(" ", "_").replace("-", "_");
 
     QByteArray cppcontent;
     static const char * const digits = "0123456789abcdef";
@@ -167,6 +168,8 @@ int runRcc(int argc, char *argv[])
 
         const QByteArray resourcedata = createResourceData(filecontent, filename, compressed, uncompressedsize);
         ::fprintf(stdout, resourcedata.constData());
+
+        ::fprintf(stdout, "\n");
     }
 
     return 0;
