@@ -74,9 +74,6 @@ static void initResources()
 #if !defined(QT_NO_STYLE_WINDOWS)
     Q_INIT_RESOURCE(qwindowsstyle);
 #endif
-#if !defined(QT_NO_STYLE_CLEANLOOKS)
-    Q_INIT_RESOURCE(qcleanlooksstyle);
-#endif
 }
 
 QT_BEGIN_NAMESPACE
