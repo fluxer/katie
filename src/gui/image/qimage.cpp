@@ -144,9 +144,23 @@ QImageData::QImageData()
 */
 QImageData * QImageData::create(const QSize &size, QImage::Format format)
 {
-    if (!size.isValid() || format == QImage::Format_Invalid) {
+    if (!size.isValid()) {
         // invalid parameter(s)
-        return 0;
+        return nullptr;
+    }
+
+    switch (format) {
+        case QImage::Format_Mono:
+        case QImage::Format_MonoLSB:
+        case QImage::Format_RGB32:
+        case QImage::Format_ARGB32:
+        case QImage::Format_ARGB32_Premultiplied:
+        case QImage::Format_RGB16: {
+            break;
+        }
+        default: {
+            return nullptr;
+        }
     }
 
     uint width = size.width();
@@ -161,7 +175,7 @@ QImageData * QImageData::create(const QSize &size, QImage::Format format)
         || height <= 0
         || INT_MAX/uint(bytes_per_line) < height
         || INT_MAX/sizeof(uchar *) < uint(height)) {
-        return 0;
+        return nullptr;
     }
 
     QScopedPointer<QImageData> d(new QImageData);
@@ -180,7 +194,7 @@ QImageData * QImageData::create(const QSize &size, QImage::Format format)
     d->data = static_cast<uchar*>(::malloc(d->nbytes));
 
     if (!d->data) {
-        return 0;
+        return nullptr;
     }
 
     return d.take();
@@ -631,8 +645,19 @@ QImage::QImage(const QSize &size, Format format)
 
 QImageData *QImageData::create(uchar *data, int width, int height,  int bpl, QImage::Format format, bool readOnly)
 {
-    if (Q_UNLIKELY(format == QImage::Format_Invalid))
-        return nullptr;
+    switch (format) {
+        case QImage::Format_Mono:
+        case QImage::Format_MonoLSB:
+        case QImage::Format_RGB32:
+        case QImage::Format_ARGB32:
+        case QImage::Format_ARGB32_Premultiplied:
+        case QImage::Format_RGB16: {
+            break;
+        }
+        default: {
+            return nullptr;
+        }
+    }
 
     const int depth = qt_depthForFormat(format);
     const int min_bytes_per_line = (width * depth + 7)/8;
