@@ -35,15 +35,6 @@
 #include <qplatformdefs.h>
 #ifndef QT_NO_HTTP
 
-static const unsigned char gz_magic[2] = {0x1f, 0x8b}; // gzip magic header
-static const unsigned char gz_deflate = 8; // gzip deflate method, same as Z_DEFLATED
-// gzip flag byte
-#define HEAD_CRC     0x02 // bit 1 set: header CRC present
-#define EXTRA_FIELD  0x04 // bit 2 set: extra field present
-#define ORIG_NAME    0x08 // bit 3 set: original file name present
-#define COMMENT      0x10 // bit 4 set: file comment present
-#define RESERVED     0xE0 // bits 5..7: reserved
-
 #include <QtNetwork/qtcpsocket.h>
 // it's safe to include these even if SSL support is not enabled
 #include <QtNetwork/qsslsocket.h>
@@ -181,7 +172,6 @@ public:
     bool isChunked();
     bool isConnectionCloseEnabled();
     bool isGzipped();
-    bool gzipCheckHeader(QByteArray &content, int &pos);
     bool gunzipBody(QByteArray &compressed, QByteArray &inflated);
     void removeAutoDecompressHeader();
 

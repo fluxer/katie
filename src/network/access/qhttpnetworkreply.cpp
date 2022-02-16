@@ -349,75 +349,20 @@ QAuthenticatorPrivate::Method QHttpNetworkReplyPrivate::authenticationMethod(boo
     return method;
 }
 
-bool QHttpNetworkReplyPrivate::gzipCheckHeader(QByteArray &content, int &pos)
-{
-    int method = 0; // method byte
-    int flags = 0;  // flags byte
-    bool ret = false;
-
-    // Assure two bytes in the buffer so we can peek ahead -- handle case
-    // where first byte of header is at the end of the buffer after the last
-    // gzip segment
-    pos = -1;
-    QByteArray &body = content;
-    int maxPos = body.size()-1;
-    if (maxPos < 1) {
-        return ret;
-    }
-
-    // Peek ahead to check the gzip magic header
-    if (body[0] != char(gz_magic[0]) ||
-        body[1] != char(gz_magic[1])) {
-        return ret;
-    }
-    pos += 2;
-    // Check the rest of the gzip header
-    if (++pos <= maxPos)
-        method = body[pos];
-    if (pos++ <= maxPos)
-        flags = body[pos];
-    if (method != gz_deflate || (flags & RESERVED) != 0) {
-        return ret;
-    }
-
-    // Discard time, xflags and OS code:
-    pos += 6;
-    if (pos > maxPos)
-        return ret;
-    if ((flags & EXTRA_FIELD) && ((pos+2) <= maxPos)) { // skip the extra field
-        unsigned len =  (unsigned)body[++pos];
-        len += ((unsigned)body[++pos])<<8;
-        pos += len;
-        if (pos > maxPos)
-            return ret;
-    }
-    if ((flags & ORIG_NAME) != 0) { // skip the original file name
-        while(++pos <= maxPos && body[pos]) {}
-    }
-    if ((flags & COMMENT) != 0) {   // skip the .gz file comment
-        while(++pos <= maxPos && body[pos]) {}
-    }
-    if ((flags & HEAD_CRC) != 0) {  // skip the header crc
-        pos += 2;
-        if (pos > maxPos)
-            return ret;
-    }
-    ret = (pos < maxPos); // return failed, if no more bytes left
-    return ret;
-}
-
 bool QHttpNetworkReplyPrivate::gunzipBody(QByteArray &compressed, QByteArray &inflated)
 {
-    int pos = -1;
     // check the header
-    if (!gzipCheckHeader(compressed, pos)) {
+    if (compressed.size() < 3) {
         return false;
     }
 
-    //remove the header.
-    compressed.remove(0, pos+1);
+    static const unsigned char gz_magic[2] = { 0x1f, 0x8b }; // gzip magic header
+    if (compressed.at(0) != char(gz_magic[0]) ||
+        compressed.at(1) != char(gz_magic[1])) {
+        return false;
+    }
 
-    // expand until deflate stream ends
+    // expand until end
     inflated = qUncompress(compressed.constData(), compressed.size());
     return !inflated.isEmpty();
 }
