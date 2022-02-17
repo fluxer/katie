@@ -433,7 +433,7 @@ void QNetworkDiskCache::updateMetaData(const QNetworkCacheMetaData &metaData)
 #endif
         return;
     }
-    QSTACKARRAY(char, data, 1024);
+    QSTACKARRAY(char, data, QT_BUFFSIZE);
     while (!oldDevice->atEnd()) {
         qint64 s = oldDevice->read(data, sizeof(data));
         newDevice->write(data, s);
