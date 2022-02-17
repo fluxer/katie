@@ -301,6 +301,8 @@ void QNetworkDiskCache::insert(QIODevice *device)
     d->currentCacheSize = expire();
     if (file->error() == QFile::NoError) {
         d->currentCacheSize += file->size();
+    } else {
+        file->remove();
     }
 
 #if defined(QNETWORKDISKCACHE_DEBUG)
