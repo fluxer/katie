@@ -53,7 +53,6 @@ inline static QImage replaceColors(const QImage &source, const QMap<QRgb, QRgb> 
     const int bpl = result.bytesPerLine();
     uchar* imagebits = result.bits();
     switch (result.format()) {
-        case QImage::Format_RGB32:
         case QImage::Format_ARGB32:
         case QImage::Format_ARGB32_Premultiplied: {
             for (int h = 0; h < source.height(); h++) {
@@ -61,16 +60,6 @@ inline static QImage replaceColors(const QImage &source, const QMap<QRgb, QRgb> 
                 for (int w = 0; w < source.width(); w++) {
                     const QRgb pixel = source.pixel(w, h);
                     ((uint *)scan)[w] = colormap.value(pixel, pixel);
-                }
-            }
-            break;
-        }
-        case QImage::Format_RGB16: {
-            for (int h = 0; h < source.height(); h++) {
-                uchar* scan = QFAST_SCAN_LINE(imagebits, bpl, h);
-                for (int w = 0; w < source.width(); w++) {
-                    const QRgb pixel = source.pixel(w, h);
-                    ((quint16 *)scan)[w] = qt_colorConvert<quint16, quint32>(colormap.value(pixel, pixel), 0);
                 }
             }
             break;

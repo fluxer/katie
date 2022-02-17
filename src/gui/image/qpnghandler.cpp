@@ -26,7 +26,6 @@
 #include "qdrawhelper_p.h"
 #include "qguicommon_p.h"
 
-#include <zlib.h>
 #include <png.h>
 #include <pngconf.h>
 

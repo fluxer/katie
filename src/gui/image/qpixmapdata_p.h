@@ -68,7 +68,7 @@ public:
                           Qt::ImageConversionFlags flags);
 
     virtual void copy(const QPixmapData *data, const QRect &rect) = 0;
-    virtual bool scroll(int dx, int dy, const QRect &rect) = 0;
+    virtual void scroll(int dx, int dy, const QRect &rect) = 0;
 
     virtual int metric(QPaintDevice::PaintDeviceMetric metric) const = 0;
     virtual void fill(const QColor &color) = 0;

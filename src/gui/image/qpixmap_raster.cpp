@@ -134,19 +134,18 @@ void QRasterPixmapData::fromImageReader(QImageReader *imageReader,
     fromImage(image, flags);
 }
 
-// from qwindowsurface.cpp
-extern void qt_scrollRectInImage(QImage *img, const QRect &rect, const QPoint &offset);
-
 void QRasterPixmapData::copy(const QPixmapData *data, const QRect &rect)
 {
     fromImage(data->toImage(rect), Qt::NoOpaqueDetection);
 }
 
-bool QRasterPixmapData::scroll(int dx, int dy, const QRect &rect)
+// from qwindowsurface.cpp
+extern void qt_scrollRectInImage(QImage *img, const QRect &rect, const QPoint &offset);
+
+void QRasterPixmapData::scroll(int dx, int dy, const QRect &rect)
 {
     if (!image.isNull())
         qt_scrollRectInImage(&image, rect, QPoint(dx, dy));
-    return true;
 }
 
 void QRasterPixmapData::fill(const QColor &color)
@@ -170,14 +169,8 @@ bool QRasterPixmapData::hasAlphaChannel() const
 
 QImage QRasterPixmapData::toImage() const
 {
-    if (!image.isNull()) {
-        const QImageData *data = image.d;
-        if (data->paintEngine && data->paintEngine->isActive()
-            && data->paintEngine->paintDevice() == &image)
-        {
-            return image.copy();
-        }
-    }
+    if (image.paintingActive())
+        return image.copy();
 
     return image;
 }

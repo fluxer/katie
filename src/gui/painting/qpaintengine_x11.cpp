@@ -396,7 +396,6 @@ bool QX11PaintEngine::begin(QPaintDevice *pdev)
     d->has_alpha_brush = false;
     d->has_alpha_pen = false;
     d->has_clipping = false;
-    d->has_complex_xform = false;
     d->has_scaling_xform = false;
     d->xform_scale = 1;
     d->matrix = QTransform();
@@ -822,9 +821,7 @@ void QX11PaintEngine::updateBrush(const QBrush &brush, const QPointF &origin)
                 brushData->convertToARGB32();
             }
 #endif
-            vals.tile = (d->brush_pm.depth() == d->pdev_depth
-                         ? d->brush_pm.handle()
-                         : static_cast<QX11PixmapData*>(d->brush_pm.data.data())->x11ConvertToDefaultDepth());
+            vals.tile = d->brush_pm.handle();
             s = FillTiled;
 #if !defined(QT_NO_XRENDER)
             d->current_brush = d->cbrush.texture().x11PictureHandle();
@@ -887,7 +884,7 @@ void QX11PaintEnginePrivate::fillPolygon_dev(const QPointF *polygonPoints, int p
     QPointF *clippedPoints = nullptr;
 
 #ifndef QT_NO_XRENDER
-    //can change if we switch to pen if gcMode != BrushGC
+    // can change if we switch to pen if gcMode != BrushGC
     bool has_fill_texture = has_texture;
     bool has_fill_pattern = has_pattern;
     ::Picture src;
@@ -1059,13 +1056,12 @@ void QX11PaintEnginePrivate::fillPath(const QPainterPath &path, QX11PaintEngineP
     else
         clippedPath = path.intersected(clipPath);
 
-    QList<QPolygonF> polys = clippedPath.toFillPolygons();
-    for (int i = 0; i < polys.size(); ++i) {
-        const int translated_size = polys.at(i).size();
+    foreach (const QPolygonF &poly, clippedPath.toFillPolygons()) {
+        const int translated_size = poly.size();
         QPointF translated_points[translated_size];
 
         for (int j = 0; j < translated_size; ++j) {
-            translated_points[j] = polys.at(i).at(j);
+            translated_points[j] = poly.at(j);
 
             if (!qt_x11Data->use_xrender || adjust_coords) {
                 translated_points[j].rx() = qRound(translated_points[j].rx() + aliasedCoordinateDelta) + aliasedCoordinateDelta;
@@ -1102,7 +1098,6 @@ void QX11PaintEngine::drawPath(const QPainterPath &path)
         stroker.setJoinStyle(d->cpen.joinStyle());
         QPainterPath stroke;
         qreal width = d->cpen.widthF();
-        QPolygonF poly;
         QRectF deviceRect(0, 0, d->pdev->width(), d->pdev->height());
         // necessary to get aliased alphablended primitives to be drawn correctly
         if (d->cpen.isCosmetic() || d->has_scaling_xform) {
@@ -1130,87 +1125,6 @@ void QX11PaintEngine::drawPath(const QPainterPath &path)
         QList<QPolygonF> polys = path.toSubpathPolygons(d->matrix);
         for (int i = 0; i < polys.size(); ++i)
             d->strokePolygon_dev(polys.at(i).data(), polys.at(i).size(), false);
-    }
-}
-
-Q_GUI_EXPORT void qt_x11_drawImage(const QRect &rect, const QPoint &pos, const QImage *image,
-                                   Drawable hd, GC gc, Display *dpy, Visual *visual, int depth)
-{
-    Q_ASSERT(image->format() == QImage::Format_RGB32);
-    Q_ASSERT(image->depth() == 32);
-
-    XImage *xi;
-    // Note: this code assumes either RGB or BGR, 8 bpc server layouts
-    const uint red_mask = (uint) visual->red_mask;
-    bool bgr_layout = (red_mask == 0xff);
-
-    const int w = rect.width();
-    const int h = rect.height();
-
-    int image_byte_order = ImageByteOrder(qt_x11Data->display);
-    if ((Q_BYTE_ORDER == Q_BIG_ENDIAN && ((image_byte_order == LSBFirst) || bgr_layout))
-        || (image_byte_order == MSBFirst && Q_BYTE_ORDER == Q_LITTLE_ENDIAN)
-        || (image_byte_order == LSBFirst && bgr_layout))
-    {
-        QImage im = image->copy(rect);
-        const int iw = im.bytesPerLine() / 4;
-        uint *data = (uint *)im.bits();
-        for (int i=0; i < h; i++) {
-            uint *p = data;
-            uint *end = p + w;
-            if (bgr_layout && image_byte_order == MSBFirst && Q_BYTE_ORDER == Q_LITTLE_ENDIAN) {
-                while (p < end) {
-                    *p = ((*p << 8) & 0xffffff00) | ((*p >> 24) & 0x000000ff);
-                    p++;
-                }
-            } else if ((image_byte_order == LSBFirst && Q_BYTE_ORDER == Q_BIG_ENDIAN)
-                    || (image_byte_order == MSBFirst && Q_BYTE_ORDER == Q_LITTLE_ENDIAN)) {
-                while (p < end) {
-                    *p = ((*p << 24) & 0xff000000) | ((*p << 8) & 0x00ff0000)
-                        | ((*p >> 8) & 0x0000ff00) | ((*p >> 24) & 0x000000ff);
-                    p++;
-                }
-            } else if ((image_byte_order == MSBFirst && Q_BYTE_ORDER == Q_BIG_ENDIAN)
-                       || (image_byte_order == LSBFirst && bgr_layout))
-            {
-                while (p < end) {
-                    *p = ((*p << 16) & 0x00ff0000) | ((*p >> 16) & 0x000000ff)
-                        | ((*p ) & 0xff00ff00);
-                    p++;
-                }
-            }
-            data += iw;
-        }
-        xi = XCreateImage(dpy, visual, depth, ZPixmap,
-                          0, (char *) im.bits(), w, h, 32, im.bytesPerLine());
-    } else {
-        xi = XCreateImage(dpy, visual, depth, ZPixmap,
-                          0, (char *) image->scanLine(rect.y())+rect.x()*sizeof(uint), w, h, 32, image->bytesPerLine());
-    }
-    XPutImage(dpy, hd, gc, xi, 0, 0, pos.x(), pos.y(), w, h);
-    xi->data = 0; // QImage owns these bits
-    XDestroyImage(xi);
-}
-
-void QX11PaintEngine::drawImage(const QRectF &r, const QImage &image, const QRectF &sr, Qt::ImageConversionFlags flags)
-{
-    Q_D(QX11PaintEngine);
-
-    if (image.format() == QImage::Format_RGB32
-        && d->pdev_depth >= 24 && image.depth() == 32
-        && r.size() == sr.size())
-    {
-        int sx = qRound(sr.x());
-        int sy = qRound(sr.y());
-        int x = qRound(r.x());
-        int y = qRound(r.y());
-        int w = qRound(r.width());
-        int h = qRound(r.height());
-
-        qt_x11_drawImage(QRect(sx, sy, w, h), QPoint(x, y), &image, d->hd, d->gc, d->dpy,
-                         (Visual *)d->xinfo->visual(), d->pdev_depth);
-    } else {
-        QPaintEngine::drawImage(r, image, sr, flags);
     }
 }
 
@@ -1349,8 +1263,6 @@ void QX11PaintEngine::updateMatrix(const QTransform &mtx)
     Q_D(QX11PaintEngine);
     d->txop = mtx.type();
     d->matrix = mtx;
-
-    d->has_complex_xform = (d->txop > QTransform::TxTranslate);
 
     extern bool qt_scaleForTransform(const QTransform &transform, qreal *scale);
     bool scaling = qt_scaleForTransform(d->matrix, &d->xform_scale);

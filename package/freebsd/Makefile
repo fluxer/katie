@@ -18,7 +18,7 @@ USE_XORG = x11 xinerama xrandr xrender xfixes xcursor xext sm ice
 USE_LDCONFIG = yes
 RUN_DEPENDS = xdg-open:devel/xdg-utils \
 	${LOCALBASE}/share/fonts/freefont-ttf/FreeSans.ttf:x11-fonts/freefont-ttf
-LIB_DEPENDS = libzstd.so:archivers/zstd libicuuc.so:devel/icu \
+LIB_DEPENDS = libdeflate.so:archivers/libdeflate libicuuc.so:devel/icu \
 	libicui18n.so:devel/icu libjansson.so:devel/jansson \
 	libpcre.so:devel/pcre libpng.so:graphics/png \
 	libfreetype.so:print/freetype2 libfontconfig.so:x11-fonts/fontconfig \

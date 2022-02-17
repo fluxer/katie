@@ -614,20 +614,16 @@ bool QHttpNetworkConnectionChannel::expand(bool dataComplete)
     Q_ASSERT(reply);
 
     qint64 total = reply->d_func()->compressedData.size();
-    if (total >= QT_BUFFSIZE || dataComplete) {
+    if (total >= 0 && dataComplete) {
          // uncompress the data
-        QByteArray content, inflated;
-        content = reply->d_func()->compressedData;
+        QByteArray inflated;
+        QByteArray content = reply->d_func()->compressedData;
         reply->d_func()->compressedData.clear();
 
-        int ret = Z_OK;
+        bool ret = true;
         if (content.size())
-            ret = reply->d_func()->gunzipBodyPartially(content, inflated);
-        if (ret >= Z_OK) {
-            if (dataComplete && ret == Z_OK && !reply->d_func()->streamEnd) {
-                reply->d_func()->gunzipBodyPartiallyEnd();
-                reply->d_func()->streamEnd = true;
-            }
+            ret = reply->d_func()->gunzipBody(content, inflated);
+        if (ret) {
             if (inflated.size()) {
                 reply->d_func()->totalProgress += inflated.size();
                 reply->d_func()->appendUncompressedReplyData(inflated);
@@ -651,7 +647,7 @@ void QHttpNetworkConnectionChannel::allDone()
 {
     Q_ASSERT(reply);
     // expand the whole data.
-    if (reply->d_func()->expectContent() && reply->d_func()->autoDecompress && !reply->d_func()->streamEnd) {
+    if (reply->d_func()->expectContent() && reply->d_func()->autoDecompress) {
         bool expandResult = expand(true);
         // If expand() failed we can just return, it had already called connection->emitReplyError()
         if (!expandResult)

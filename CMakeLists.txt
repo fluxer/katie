@@ -138,7 +138,11 @@ set(KATIE_PIXMAPS_PATH "${CMAKE_INSTALL_FULL_DATADIR}/pixmaps" CACHE PATH "Deskt
 set(KATIE_PKGCONFIG_PATH "${KATIE_LIBRARIES_PATH}/pkgconfig" CACHE PATH "pkg-config installation path")
 set(KATIE_TOOLS_SUFFIX "" CACHE STRING "Tools (moc, uic, rcc, etc.) suffix")
 
-# optional package
+# bundled packages
+option(WITH_DEFLATE "Build with external libdeflate" ON)
+add_feature_info(deflate WITH_DEFLATE "build with external libdeflate")
+
+# optional packages
 option(WITH_CUPS "Build CUPS support" ON)
 add_feature_info(cups WITH_CUPS "build CUPS support")
 
@@ -164,30 +168,12 @@ add_feature_info(benchmarks KATIE_BENCHMARKS "build automatic benchmarks")
 option(KATIE_UTILS "Build maintainance utilities" OFF)
 add_feature_info(utils KATIE_UTILS "build maintainance utilities")
 
-# v0.4+ required for inflateInit2() but that is pre-release
-find_package(ZLIB)
-set_package_properties(ZLIB PROPERTIES
-    PURPOSE "Required for compression support"
-    DESCRIPTION "A Massively Spiffy Yet Delicately Unobtrusive Compression Library"
-    URL "https://zlib.net"
-    TYPE REQUIRED
-)
-
 # v4.6+ required for unorm2_getDecomposition()
 find_package(ICU 4.6)
 set_package_properties(ICU PROPERTIES
     PURPOSE "Required for locales support"
     DESCRIPTION "Mature, widely used libraries providing Unicode and Globalization support"
     URL "http://site.icu-project.org/"
-    TYPE REQUIRED
-)
-
-# v1.1.3+ required for exported ZSTD_getErrorString() and ZSTD_getErrorCode()
-find_package(ZSTD 1.1.3)
-set_package_properties(ZSTD PROPERTIES
-    PURPOSE "Required for compression support"
-    DESCRIPTION "Fast real-time compression algorithm"
-    URL "https://github.com/facebook/zstd"
     TYPE REQUIRED
 )
 
@@ -250,6 +236,14 @@ set_package_properties(PNG PROPERTIES
     DESCRIPTION "A collection of routines used to create PNG format graphics files"
     URL "http://www.libpng.org/pub/png/libpng.html"
     TYPE REQUIRED
+)
+
+find_package(Deflate)
+set_package_properties(Deflate PROPERTIES
+    PURPOSE "Required for compression and decompression support"
+    DESCRIPTION "Heavily optimized library for DEFLATE/zlib/gzip compression and decompression"
+    URL "https://github.com/ebiggers/libdeflate"
+    TYPE RECOMMENDED
 )
 
 find_package(Cups)

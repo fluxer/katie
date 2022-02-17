@@ -189,7 +189,7 @@ QPixmap::QPixmap(QPixmapData *d)
     executable.
 
     If the image needs to be modified to fit in a lower-resolution
-    result (e.g. converting from 32-bit to 8-bit), use the \a
+    result (e.g. converting from 32-bit to monochrome), use the \a
     flags to control the conversion.
 
     The \a fileName, \a format and \a flags parameters are
@@ -257,10 +257,7 @@ QPixmap::QPixmap(const char * const xpm[])
 
     QImage image(xpm);
     if (!image.isNull()) {
-        if (data && data->pixelType() == QPixmapData::BitmapType)
-            *this = QBitmap::fromImage(image);
-        else
-            *this = fromImage(image);
+        *this = fromImage(image);
     }
 }
 #endif
@@ -354,15 +351,7 @@ void QPixmap::scroll(int dx, int dy, const QRect &rect, QRegion *exposed)
 
     detach();
 
-    if (!data->scroll(dx, dy, src)) {
-        // Fallback
-        QPixmap pix = *this;
-        QPainter painter(&pix);
-        painter.setCompositionMode(QPainter::CompositionMode_Source);
-        painter.drawPixmap(src.translated(dx, dy), *this, src);
-        painter.end();
-        *this = pix;
-    }
+    data->scroll(dx, dy, src);
 
     if (exposed) {
         *exposed += dest;
@@ -705,8 +694,8 @@ QBitmap QPixmap::createMaskFromColor(const QColor &maskColor, Qt::MaskMode mode)
     executable.
 
     If the data needs to be modified to fit in a lower-resolution
-    result (e.g. converting from 32-bit to 8-bit), use the \a flags to
-    control the conversion.
+    result (e.g. converting from 32-bit to monochrome), use the
+    \a flags to control the conversion.
 
     Note that QPixmaps are automatically added to the QPixmapCache
     when loaded from a file; the key used is internal and can not
@@ -758,8 +747,8 @@ bool QPixmap::load(const QString &fileName, const char *format, Qt::ImageConvers
     the loader probes the file for a header to guess the file format.
 
     If the data needs to be modified to fit in a lower-resolution
-    result (e.g. converting from 32-bit to 8-bit), use the \a flags to
-    control the conversion.
+    result (e.g. converting from 32-bit to monochrome), use the
+    \a flags to control the conversion.
 
     \sa load(), {QPixmap#Reading and Writing Image Files}{Reading and
     Writing Image Files}
@@ -875,17 +864,7 @@ void QPixmap::fill(const QColor &color)
         return;
     }
 
-    if (data->ref == 1) {
-        // detach() will also remove this pixmap from caches, so
-        // it has to be called even when ref == 1.
-        detach();
-    } else {
-        // Don't bother to make a copy of the data object, since
-        // it will be filled with new pixel data anyway.
-        QPixmapData *d = data->createCompatiblePixmapData();
-        d->resize(data->width(), data->height());
-        data = d;
-    }
+    detach();
     data->fill(color);
 }
 
@@ -1112,29 +1091,6 @@ QDataStream &operator>>(QDataStream &stream, QPixmap &pixmap)
 
     Use the toImage() function instead.
 */
-
-/*!
-    Replaces this pixmap's data with the given \a image using the
-    specified \a flags to control the conversion.  The \a flags
-    argument is a bitwise-OR of the \l{Qt::ImageConversionFlags}.
-    Passing 0 for \a flags sets all the default options. Returns true
-    if the result is that this pixmap is not null.
-
-    Note: this function was part of Qt 3 support in Qt 4.6 and earlier.
-    It has been promoted to official API status in 4.7 to support updating
-    the pixmap's image without creating a new QPixmap as fromImage() would.
-
-    \sa fromImage()
-    \since 4.7
-*/
-bool QPixmap::convertFromImage(const QImage &image, Qt::ImageConversionFlags flags)
-{
-    if (image.isNull() || !data)
-        *this = QPixmap::fromImage(image, flags);
-    else
-        data->fromImage(image, flags);
-    return !isNull();
-}
 
 /*!
     \fn QPixmap QPixmap::xForm(const QMatrix &matrix) const
@@ -1561,7 +1517,7 @@ void QPixmap::setAlphaChannel(const QPixmap &alphaChannel)
     Returns the alpha channel of the pixmap as a new grayscale QPixmap in which
     each pixel's red, green, and blue values are given the alpha value of the
     original pixmap. The color depth of the returned pixmap is the system depth
-    on X11 and 8-bit.
+    on X11.
 
     You can use this function while debugging
     to get a visible image of the alpha channel. If the pixmap doesn't have an
@@ -1662,18 +1618,6 @@ void QPixmap::detach()
         *this = copy();
     }
     ++data->detach_no;
-
-#if defined(Q_WS_X11)
-    if (pd->classId() == QPixmapData::X11Class) {
-        QX11PixmapData *d = static_cast<QX11PixmapData*>(pd);
-
-        // reset the cache data
-        if (d->hd2) {
-            XFreePixmap(qt_x11Data->display, d->hd2);
-            d->hd2 = 0;
-        }
-    }
-#endif
 }
 
 /*!
@@ -1684,9 +1628,9 @@ void QPixmap::detach()
     bitwise-OR of the \l{Qt::ImageConversionFlags}. Passing 0 for \a
     flags sets all the default options.
 
-    In case of monochrome and 8-bit images, the image is first
-    converted to a 32-bit pixmap and then filled with the colors in
-    the color table. If this is too expensive an operation, you can
+    In case of monochrome images, the image is first converted to a
+    32-bit pixmap and then filled with the colors in the color table.
+    If this is too expensive an operation, you can
     use QBitmap::fromImage() instead.
 
     \sa fromImageReader(), toImage(), {QPixmap#Pixmap Conversion}{Pixmap Conversion}

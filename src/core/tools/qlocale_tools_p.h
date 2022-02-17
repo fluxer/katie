@@ -97,7 +97,7 @@ bool qt_ucol_strcoll(const QChar *source, int sourceLength, const QChar *target,
 bool qt_u_strToUpper(const QString &str, QString *out, const QLocale &locale);
 bool qt_u_strToLower(const QString &str, QString *out, const QLocale &locale);
 
-#define QECVT_BUFFSIZE 16
+#define QECVT_BUFFSIZE 17
 char *qfcvt(double x, int n, int *dp, int *sign, char* buf);
 char *qecvt(double x, int n, int *dp, int *sign, char* buf);
 

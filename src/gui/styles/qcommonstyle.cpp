@@ -5029,7 +5029,8 @@ QPixmap QCommonStyle::standardPixmap(StandardPixmap sp, const QStyleOption *opti
             pixmap = QIcon::fromTheme(QLatin1String("view_icon")).pixmap(16);
             break;
         case SP_BrowserReload:
-            pixmap = QIcon::fromTheme(QLatin1String("reload")).pixmap(16);
+            pixmap = QIcon::fromTheme(QLatin1String("reload"),
+                                      QIcon::fromTheme(QLatin1String("view-refresh"))).pixmap(16);
             break;
         case SP_BrowserStop:
             pixmap = QIcon::fromTheme(QLatin1String("process-stop")).pixmap(16);

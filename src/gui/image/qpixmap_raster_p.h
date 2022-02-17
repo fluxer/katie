@@ -51,7 +51,7 @@ public:
     void fromImageReader(QImageReader *imageReader, Qt::ImageConversionFlags flags);
 
     void copy(const QPixmapData *data, const QRect &rect);
-    bool scroll(int dx, int dy, const QRect &rect);
+    void scroll(int dx, int dy, const QRect &rect);
     void fill(const QColor &color);
     void setMask(const QBitmap &mask);
     bool hasAlphaChannel() const;

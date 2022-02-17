@@ -122,7 +122,27 @@ QPalette QGuiPlatformPlugin::palette()
 */
 QString QGuiPlatformPlugin::systemIconThemeName()
 {
-    return QString::fromLatin1("hicolor");
+    static QString themename;
+
+    if (themename.isEmpty()) {
+        foreach (const QString &path, iconThemeSearchPaths()) {
+            const QDir pathdir(path);
+            const QStringList pathsubdirs = pathdir.entryList(QDir::Dirs | QDir::NoDotAndDotDot, QDir::Name);
+            foreach (const QString &subpath, pathsubdirs) {
+                if (subpath == QLatin1String("hicolor")) {
+                    continue;
+                }
+                if (QFile::exists(path + QLatin1Char('/') + subpath + QLatin1String("/index.theme"))) {
+                    themename = subpath;
+                    return themename;
+                }
+            }
+        }
+
+        themename = QLatin1String("hicolor");
+    }
+
+    return themename;
 }
 
 /*!

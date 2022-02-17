@@ -183,7 +183,7 @@ void QX11Data::copyXImageToQImage(XImage *ximage, QImage &image)
                         const uint xpixel = XGetPixel(ximage, w, h);
                         //make sure alpha is 255, we depend on it in qdrawhelper for cases
                         // when image is set as a texture pattern on a qbrush
-                        ((uint *)imageline)[w] = uint(255 << 24) | xpixel;
+                        ((uint *)imageline)[w] = (xpixel | 0xff000000);
                     }
                 }
                 return;
@@ -219,10 +219,19 @@ void QX11Data::copyXImageToQImage(XImage *ximage, QImage &image)
         }
     }
 
-    for (int h = 0; h < ximage->height; h++) {
-        for (int w = 0; w < ximage->width; w++) {
-            const uint xpixel = XGetPixel(ximage, w, h);
-            image.setPixel(w, h, xpixel);
+    if (image.depth() == 1) {
+        for (int h = 0; h < ximage->height; h++) {
+            for (int w = 0; w < ximage->width; w++) {
+                const uint xpixel = XGetPixel(ximage, w, h);
+                image.setPixel(w, h, image.color(xpixel));
+            }
+        }
+    } else {
+        for (int h = 0; h < ximage->height; h++) {
+            for (int w = 0; w < ximage->width; w++) {
+                const uint xpixel = XGetPixel(ximage, w, h);
+                image.setPixel(w, h, xpixel);
+            }
         }
     }
 }

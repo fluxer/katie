@@ -60,7 +60,6 @@ public:
     bool end();
 
     void updateState(const QPaintEngineState &state);
-
     void updatePen(const QPen &pen);
     void updateBrush(const QBrush &brush, const QPointF &pt);
     void updateRenderHints(QPainter::RenderHints hints);
@@ -68,11 +67,8 @@ public:
     void updateClipRegion_dev(const QRegion &region, Qt::ClipOperation op);
 
     void drawPolygon(const QPointF *points, int pointCount, PolygonDrawMode mode);
-
     void drawPixmap(const QRectF &r, const QPixmap &pm, const QRectF &sr);
     void drawPath(const QPainterPath &path);
-    void drawImage(const QRectF &r, const QImage &img, const QRectF &sr,
-                   Qt::ImageConversionFlags flags = Qt::AutoColor);
 
     inline Type type() const { return QPaintEngine::X11; }
 
@@ -149,7 +145,6 @@ public:
     QTransform matrix;
     qreal opacity;
 
-    bool has_complex_xform;
     bool has_scaling_xform;
     bool adjust_coords;
     bool has_clipping;

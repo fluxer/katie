@@ -146,17 +146,7 @@ public:
     virtual void drawPoints(const QPointF *points, int pointCount);
     virtual void drawPoints(const QPoint *points, int pointCount);
 
-    virtual void drawPolygon(const QPointF *points, int pointCount, PolygonDrawMode mode);
-    virtual void drawPolygon(const QPoint *points, int pointCount, PolygonDrawMode mode);
-
     virtual void drawPixmap(const QRectF &r, const QPixmap &pm, const QRectF &sr) = 0;
-    virtual void drawPixmap(const QPointF &pos, const QPixmap &pm);
-
-    virtual void drawImage(const QRectF &r, const QImage &pm, const QRectF &sr,
-                           Qt::ImageConversionFlags flags = Qt::AutoColor) = 0;
-    virtual void drawImage(const QPointF &pos, const QImage &image);
-
-    virtual void drawTiledPixmap(const QRectF &r, const QPixmap &pixmap, const QPointF &s);
 
     virtual void updateState(const QPaintEngineState &state);
 

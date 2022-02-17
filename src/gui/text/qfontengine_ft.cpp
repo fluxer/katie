@@ -184,12 +184,9 @@ QFontEngineFT::QFontEngineFT(const QFontDef &fd, FcPattern *pattern)
     }
 
 #if defined(FC_AUTOHINT) && defined(FT_LOAD_FORCE_AUTOHINT)
-    bool autohint = false;
-    FcBool b = FcFalse;
-    if (FcPatternGetBool(pattern, FC_AUTOHINT, 0, &b) == FcResultMatch) {
-        autohint = b;
-    }
-    if (autohint) {
+    FcBool autohint = FcFalse;
+    FcPatternGetBool(pattern, FC_AUTOHINT, 0, &autohint);
+    if (autohint == FcTrue) {
         default_load_flags |= FT_LOAD_FORCE_AUTOHINT;
     }
 #endif

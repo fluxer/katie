@@ -779,58 +779,6 @@ void QPaintEngineEx::drawPoints(const QPoint *points, int pointCount)
     }
 }
 
-
-void QPaintEngineEx::drawPolygon(const QPointF *points, int pointCount, PolygonDrawMode mode)
-{
-    QVectorPath path((qreal *) points, pointCount, 0, QVectorPath::polygonFlags(mode));
-
-    if (mode == PolylineMode)
-        stroke(path, state()->pen);
-    else
-        draw(path);
-}
-
-void QPaintEngineEx::drawPolygon(const QPoint *points, int pointCount, PolygonDrawMode mode)
-{
-    const int count = pointCount<<1;
-    QVarLengthArray<qreal> pts(count);
-    for (int i=0; i<count; ++i)
-        pts[i] = ((int *) points)[i];
-
-    QVectorPath path(pts.data(), pointCount, 0, QVectorPath::polygonFlags(mode));
-
-    if (mode == PolylineMode)
-        stroke(path, state()->pen);
-    else
-        draw(path);
-
-}
-
-void QPaintEngineEx::drawPixmap(const QPointF &pos, const QPixmap &pm)
-{
-    drawPixmap(QRectF(pos, pm.size()), pm, pm.rect());
-}
-
-void QPaintEngineEx::drawImage(const QPointF &pos, const QImage &image)
-{
-    drawImage(QRectF(pos, image.size()), image, image.rect());
-}
-
-void QPaintEngineEx::drawTiledPixmap(const QRectF &r, const QPixmap &pixmap, const QPointF &s)
-{
-    QBrush brush(state()->pen.color(), pixmap);
-    QTransform xform = QTransform::fromTranslate(r.x() - s.x(), r.y() - s.y());
-    brush.setTransform(xform);
-
-    qreal pts[] = { r.x(), r.y(),
-                    r.x() + r.width(), r.y(),
-                    r.x() + r.width(), r.y() + r.height(),
-                    r.x(), r.y() + r.height() };
-
-    QVectorPath path(pts, 4, 0, QVectorPath::RectangleHint);
-    fill(path, brush);
-}
-
 void QPaintEngineEx::setState(QPainterState *s)
 {
     QPaintEngine::state = s;

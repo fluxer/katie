@@ -114,7 +114,7 @@ QAtomicInt qt_pixmap_serial(0);
 
 QX11PixmapData::QX11PixmapData(PixelType type)
     : QPixmapData(type, X11Class), hd(0),
-      flags(NoFlags), x11_mask(0), picture(0), mask_picture(0), hd2(0),
+      flags(NoFlags), x11_mask(0), picture(0), mask_picture(0),
       share_mode(QPixmap::ImplicitlyShared), pengine(0)
 {
 }
@@ -253,7 +253,7 @@ void QX11PixmapData::fromImage(const QImage &img,
 
 #ifndef QT_NO_XRENDER
     if (alphaCheck.hasXRenderAndAlpha()) {
-        if (d == 16) {
+        if (d != 32) {
             image = image.convertToFormat(QImage::Format_RGB32, flags);
         }
 
@@ -449,10 +449,6 @@ void QX11PixmapData::release()
         }
 #endif // QT_NO_XRENDER
 
-        if (hd2) {
-            XFreePixmap(xinfo.display(), hd2);
-            hd2 = 0;
-        }
         if (!(flags & Readonly))
             XFreePixmap(xinfo.display(), hd);
         hd = 0;
@@ -541,7 +537,6 @@ void QX11PixmapData::setMask(const QBitmap &newmask)
             newData.x11_mask = 0;
             newData.picture = 0;
             newData.mask_picture = 0;
-            newData.hd2 = 0;
         } else
 #endif
             if (x11_mask) {
@@ -962,26 +957,6 @@ Qt::HANDLE QPixmap::x11PictureHandle() const
 #endif // QT_NO_XRENDER
 }
 
-Qt::HANDLE QX11PixmapData::x11ConvertToDefaultDepth()
-{
-#ifndef QT_NO_XRENDER
-    if (d == QX11Info::appDepth() || !qt_x11Data->use_xrender)
-        return hd;
-    if (!hd2) {
-        hd2 = XCreatePixmap(xinfo.display(), hd, w, h, QX11Info::appDepth());
-        XRenderPictFormat *format = XRenderFindVisualFormat(xinfo.display(),
-                                                            (Visual*) xinfo.visual());
-        Picture pic = XRenderCreatePicture(xinfo.display(), hd2, format, 0, 0);
-        XRenderComposite(xinfo.display(), PictOpSrc, picture,
-                         XNone, pic, 0, 0, 0, 0, 0, 0, w, h);
-        XRenderFreePicture(xinfo.display(), pic);
-    }
-    return hd2;
-#else
-    return hd;
-#endif
-}
-
 void QX11PixmapData::copy(const QPixmapData *data, const QRect &rect)
 {
     if (data->pixelType() == BitmapType) {
@@ -1043,14 +1018,13 @@ void QX11PixmapData::copy(const QPixmapData *data, const QRect &rect)
     }
 }
 
-bool QX11PixmapData::scroll(int dx, int dy, const QRect &rect)
+void QX11PixmapData::scroll(int dx, int dy, const QRect &rect)
 {
     GC gc = XCreateGC(qt_x11Data->display, hd, 0, 0);
     XCopyArea(qt_x11Data->display, hd, hd, gc,
               rect.left(), rect.top(), rect.width(), rect.height(),
               rect.left() + dx, rect.top() + dy);
     XFreeGC(qt_x11Data->display, gc);
-    return true;
 }
 
 #if !defined(QT_NO_XRENDER)
