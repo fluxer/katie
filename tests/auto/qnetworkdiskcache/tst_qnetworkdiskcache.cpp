@@ -29,8 +29,6 @@
 #include "../../shared/util.h"
 
 #define EXAMPLE_URL "http://user:pass@www.example.com/#foo"
-//cached objects are organized into these many subdirs
-#define NUM_SUBDIRECTORIES 16
 
 class tst_QNetworkDiskCache : public QObject
 {
@@ -268,16 +266,16 @@ void tst_QNetworkDiskCache::clear()
     QVERIFY(cache.cacheSize() > qint64(0));
 
     QString cacheDirectory = cache.cacheDirectory();
-    QCOMPARE(countFiles(cacheDirectory).count(), NUM_SUBDIRECTORIES + 3);
+    QCOMPARE(countFiles(cacheDirectory).count(), 1);
     cache.clear();
-    QCOMPARE(countFiles(cacheDirectory).count(), NUM_SUBDIRECTORIES + 2);
+    QCOMPARE(countFiles(cacheDirectory).count(), 0);
 
     // don't delete files that it didn't create
     QTemporaryFile file(cacheDirectory + "/XXXXXXXXXX");
     if (file.open()) {
-        QCOMPARE(countFiles(cacheDirectory).count(), NUM_SUBDIRECTORIES + 3);
+        QCOMPARE(countFiles(cacheDirectory).count(), 1);
         cache.clear();
-        QCOMPARE(countFiles(cacheDirectory).count(), NUM_SUBDIRECTORIES + 3);
+        QCOMPARE(countFiles(cacheDirectory).count(), 1);
     }
 }
 
@@ -344,9 +342,9 @@ void tst_QNetworkDiskCache::remove()
     QUrl url(EXAMPLE_URL);
     cache.setupWithOne(url);
     QString cacheDirectory = cache.cacheDirectory();
-    QCOMPARE(countFiles(cacheDirectory).count(), NUM_SUBDIRECTORIES + 3);
+    QCOMPARE(countFiles(cacheDirectory).count(), 1);
     cache.remove(url);
-    QCOMPARE(countFiles(cacheDirectory).count(), NUM_SUBDIRECTORIES + 2);
+    QCOMPARE(countFiles(cacheDirectory).count(), 0);
 }
 
 void tst_QNetworkDiskCache::accessAfterRemove() // QTBUG-17400
@@ -427,7 +425,7 @@ void tst_QNetworkDiskCache::fileMetaData()
 
     QString cacheDirectory = cache.cacheDirectory();
     QStringList list = countFiles(cacheDirectory);
-    QCOMPARE(list.count(), NUM_SUBDIRECTORIES + 3);
+    QCOMPARE(list.count(), 1);
     foreach(QString fileName, list) {
         QFileInfo info(fileName);
         if (info.isFile()) {
@@ -504,14 +502,14 @@ void tst_QNetworkDiskCache::oldCacheVersionFile()
     if (pass == 0) {
         QString name;
         {
-        QTemporaryFile file(cache.cacheDirectory() + "/XXXXXXXXXX.d");
-        file.setAutoRemove(false);
-        QVERIFY(file.open());
-        QDataStream out(&file);
-        out << qint32(0xe8);
-        out << qint32(2);
-        name = file.fileName();
-        file.close();
+            QTemporaryFile file(cache.cacheDirectory() + "/XXXXXXXXXX.cache");
+            file.setAutoRemove(false);
+            QVERIFY(file.open());
+            QDataStream out(&file);
+            out << qint32(0xe8);
+            out << qint32(2);
+            name = file.fileName();
+            file.close();
         }
 
         QVERIFY(QFile::exists(name));
@@ -520,7 +518,7 @@ void tst_QNetworkDiskCache::oldCacheVersionFile()
         QVERIFY(!QFile::exists(name));
     } else {
         QStringList files = countFiles(cache.cacheDirectory());
-        QCOMPARE(files.count(), NUM_SUBDIRECTORIES + 3);
+        QCOMPARE(files.count(), 1);
         // find the file
         QString cacheFile;
         foreach (QString file, files) {
@@ -673,7 +671,7 @@ void tst_QNetworkDiskCache::crashWhenParentingCache()
 
 void tst_QNetworkDiskCache::sync()
 {
-    // This tests would be a nice to have, but is currently not supported.
+    // This tests would be a nice to have but is currently not supported.
     return;
 
     QTime midnight(0, 0, 0);

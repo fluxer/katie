@@ -35,44 +35,19 @@
 
 #include "qabstractnetworkcache_p.h"
 
-#include "qbuffer.h"
-#include "qhash.h"
-#include "qtemporaryfile.h"
+#include "qfile.h"
 
 #ifndef QT_NO_NETWORKDISKCACHE
 
 QT_BEGIN_NAMESPACE
 
-class QFile;
-
 class QCacheItem
 {
 public:
-    QCacheItem() : file(0)
-    {
-    }
-    ~QCacheItem()
-    {
-        reset();
-    }
-
     QNetworkCacheMetaData metaData;
-    QBuffer data;
-    QTemporaryFile *file;
-    inline qint64 size() const
-        { return file ? file->size() : data.size(); }
 
-    inline void reset() {
-        metaData = QNetworkCacheMetaData();
-        data.close();
-        delete file;
-        file = 0;
-    }
-    void writeHeader(QFile *device) const;
-    void writeCompressedData(QFile *device) const;
-    bool read(QFile *device, bool readData);
-
-    bool canCompress() const;
+    void write(QFile *device) const;
+    bool read(QFile *device);
 };
 
 class QNetworkDiskCachePrivate : public QAbstractNetworkCachePrivate
@@ -81,23 +56,16 @@ public:
     QNetworkDiskCachePrivate()
         : QAbstractNetworkCachePrivate()
         , maximumCacheSize(1024 * 1024 * 50)
-        , currentCacheSize(-1)
+        , currentCacheSize(0)
         {}
 
-    static QString uniqueFileName(const QUrl &url);
     QString cacheFileName(const QUrl &url) const;
-    QString tmpCacheFileName() const;
-    bool removeFile(const QString &file);
-    void storeItem(QCacheItem *item);
-    void prepareLayout();
+    qint64 cacheSize() const;
 
-    mutable QCacheItem lastItem;
     QString cacheDirectory;
-    QString dataDirectory;
     qint64 maximumCacheSize;
     qint64 currentCacheSize;
 
-    QHash<QIODevice*, QCacheItem*> inserting;
     Q_DECLARE_PUBLIC(QNetworkDiskCache)
 };
 
