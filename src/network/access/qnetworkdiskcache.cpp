@@ -365,6 +365,7 @@ QNetworkCacheMetaData QNetworkDiskCache::fileMetaData(const QString &fileName) c
     }
     QCacheItem cacheitem;
     if (!cacheitem.read(&file)) {
+        // ### this will not update cache size
         QFile::remove(fileName);
         return QNetworkCacheMetaData();
     }
@@ -397,7 +398,7 @@ QIODevice *QNetworkDiskCache::data(const QUrl &url)
 #if defined(QNETWORKDISKCACHE_DEBUG)
         qDebug() << "QNetworkDiskCache::data: could not read cache" << fileName;
 #endif
-        file.remove();
+        remove(url);
         return nullptr;
     }
 
