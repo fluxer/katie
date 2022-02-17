@@ -42,7 +42,7 @@ QT_BEGIN_NAMESPACE
 #define CACHE_POSTFIX QLatin1String(".cache")
 
 /*!
-    Given a URL, generates a unique enough filename (and subdirectory)
+    Given a URL, generates a unique enough filename with suffix
  */
 static QString uniqueFileName(const QUrl &url)
 {
@@ -122,8 +122,8 @@ qint64 QNetworkDiskCachePrivate::cacheSize() const
     qint64 total = 0;
     while (it.hasNext()) {
         it.next();
-        QFileInfo info = it.fileInfo();
-        QString fileName = info.fileName();
+        const QFileInfo info = it.fileInfo();
+        const QString fileName = info.fileName();
         if (fileName.endsWith(CACHE_POSTFIX)) {
             total += info.size();
         }
@@ -354,6 +354,9 @@ QNetworkCacheMetaData QNetworkDiskCache::fileMetaData(const QString &fileName) c
     qDebug() << "QNetworkDiskCache::fileMetaData()" << fileName;
 #endif
 
+    if (fileName.isEmpty()) {
+        return QNetworkCacheMetaData();
+    }
     QFile file(fileName);
     if (!file.open(QFile::ReadOnly)) {
 #if defined(QNETWORKDISKCACHE_DEBUG)
