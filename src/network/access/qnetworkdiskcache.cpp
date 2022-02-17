@@ -166,8 +166,8 @@ qint64 QNetworkDiskCachePrivate::cacheSize() const
     \snippet doc/src/snippets/code/src_network_access_qnetworkdiskcache.cpp 2
 
     \warning No attempt is made to lock the cache files, if two applications
-    attempt to cache the same URL with the same cache directory the result is
-    undefined.
+    or even threads attempt to cache the same URL with the same cache
+    directory at the same time the result is undefined.
 */
 
 /*!
