@@ -258,7 +258,7 @@ QIODevice *QNetworkDiskCache::prepare(const QNetworkCacheMetaData &metaData)
         return nullptr;
     }
     if (Q_UNLIKELY(d->cacheDirectory.isEmpty())) {
-        qWarning() << "QNetworkDiskCache::prepare() The cache directory is not set";
+        qWarning("QNetworkDiskCache::prepare: the cache directory is not set");
         return nullptr;
     }
 
@@ -273,7 +273,7 @@ QIODevice *QNetworkDiskCache::prepare(const QNetworkCacheMetaData &metaData)
 
     QFile *file = new QFile(d->cacheFileName(metaData.url()), this);
     if (Q_UNLIKELY(!file->open(QFile::ReadWrite))) {
-        qWarning() << "QNetworkDiskCache::prepare() unable to open cache file";
+        qWarning("QNetworkDiskCache::prepare: unable to open cache file");
         delete file;
         return nullptr;
     }
@@ -295,7 +295,7 @@ void QNetworkDiskCache::insert(QIODevice *device)
 
     QFile *file = qobject_cast<QFile*>(device);
     if (Q_UNLIKELY(!file || file->fileName().isEmpty())) {
-        qWarning() << "QNetworkDiskCache: device is not file or filename is empty";
+        qWarning("QNetworkDiskCache::insert: device is not file or filename is empty");
         delete file;
         return;
     }
@@ -492,7 +492,7 @@ qint64 QNetworkDiskCache::expire()
     }
 
     if (Q_UNLIKELY(cacheDirectory().isEmpty())) {
-        qWarning() << "QNetworkDiskCache::expire() The cache directory is not set";
+        qWarning("QNetworkDiskCache::expire: the cache directory is not set");
         return 0;
     }
 
