@@ -273,7 +273,7 @@ void tst_QNetworkDiskCache::clear()
     QCOMPARE(countFiles(cacheDirectory).count(), NUM_SUBDIRECTORIES + 2);
 
     // don't delete files that it didn't create
-    QTemporaryFile file(cacheDirectory + "/XXXXXX");
+    QTemporaryFile file(cacheDirectory + "/XXXXXXXXXX");
     if (file.open()) {
         QCOMPARE(countFiles(cacheDirectory).count(), NUM_SUBDIRECTORIES + 3);
         cache.clear();
@@ -436,7 +436,7 @@ void tst_QNetworkDiskCache::fileMetaData()
         }
     }
 
-    QTemporaryFile file(cacheDirectory + "/qt_temp.XXXXXX");
+    QTemporaryFile file(cacheDirectory + "/qt_temp.XXXXXXXXXX");
     if (file.open()) {
         QNetworkCacheMetaData metaData = cache.call_fileMetaData(file.fileName());
         QVERIFY(!metaData.isValid());
@@ -504,7 +504,7 @@ void tst_QNetworkDiskCache::oldCacheVersionFile()
     if (pass == 0) {
         QString name;
         {
-        QTemporaryFile file(cache.cacheDirectory() + "/XXXXXX.d");
+        QTemporaryFile file(cache.cacheDirectory() + "/XXXXXXXXXX.d");
         file.setAutoRemove(false);
         QVERIFY(file.open());
         QDataStream out(&file);
