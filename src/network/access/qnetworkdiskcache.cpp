@@ -40,7 +40,6 @@
 QT_BEGIN_NAMESPACE
 
 #define CACHE_POSTFIX QLatin1String(".cache")
-#define MAX_COMPRESSION_SIZE (1024 * 1024 * 3)
 
 /*!
     Given a URL, generates a unique enough filename (and subdirectory)
@@ -122,7 +121,7 @@ qint64 QNetworkDiskCachePrivate::cacheSize() const
 
     qint64 total = 0;
     while (it.hasNext()) {
-        QString path = it.next();
+        it.next();
         QFileInfo info = it.fileInfo();
         QString fileName = info.fileName();
         if (fileName.endsWith(CACHE_POSTFIX)) {
@@ -140,10 +139,9 @@ qint64 QNetworkDiskCachePrivate::cacheSize() const
     \brief The QNetworkDiskCache class provides a very basic disk cache.
 
     QNetworkDiskCache stores each url in its own file inside of the
-    cacheDirectory using QDataStream.  Files with a text MimeType
-    are compressed using qCompress.  Each cache file starts with "cache_"
-    and ends in ".cache".  Data is written to disk only in insert()
-    and updateMetaData().
+    cacheDirectory using QDataStream. Each cache file ends with
+    ".cache". Data is written to disk only in insert() and
+    updateMetaData().
 
     Currently you can not share the same cache files with more then
     one disk cache.
