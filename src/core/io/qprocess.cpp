@@ -333,11 +333,7 @@ void QProcessPrivate::Channel::clear()
     write to the process's standard input by calling write(), and
     read the standard output by calling read(), readLine(), and
     getChar(). Because it inherits QIODevice, QProcess can also be
-    used as an input source for QXmlReader, or for generating data to
-    be uploaded using QFtp.
-
-    \note On Windows CE and Symbian, reading and writing to a process
-    is not supported.
+    used as an input source for QXmlReader.
 
     When the process exits, QProcess reenters the \l NotRunning state
     (the initial state), and emits finished().

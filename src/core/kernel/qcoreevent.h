@@ -176,17 +176,15 @@ public:
         CursorChange = 112,
         ToolTipChange = 113,
 
-        NetworkReplyUpdated = 114,              // Internal for QNetworkReply
+        GrabMouse = 114,
+        UngrabMouse = 115,
+        GrabKeyboard = 116,
+        UngrabKeyboard = 117,
 
-        GrabMouse = 115,
-        UngrabMouse = 116,
-        GrabKeyboard = 117,
-        UngrabKeyboard = 118,
+        RequestSoftwareInputPanel = 118,
+        CloseSoftwareInputPanel = 119,
 
-        RequestSoftwareInputPanel = 119,
-        CloseSoftwareInputPanel = 120,
-
-        WinIdChange = 121,
+        WinIdChange = 120,
 
         User = 1000,                            // first user event id
         MaxUser = 65535                         // last user event id

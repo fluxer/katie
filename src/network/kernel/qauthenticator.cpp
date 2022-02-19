@@ -25,7 +25,6 @@
 #include "qhash.h"
 #include "qbytearray.h"
 #include "qcryptographichash.h"
-#include "qhttp.h"
 #include "qiodevice.h"
 #include "qdatastream.h"
 #include "qendian.h"
@@ -46,12 +45,10 @@ static QByteArray qNtlmPhase3(QAuthenticatorPrivate *ctx, const QByteArray& phas
   \ingroup network
   \inmodule QtNetwork
 
-  The QAuthenticator class is usually used in the
-  \l{QNetworkAccessManager::}{authenticationRequired()} and
-  \l{QNetworkAccessManager::}{proxyAuthenticationRequired()} signals of QNetworkAccessManager and
-  QAbstractSocket. The class provides a way to pass back the required
-  authentication information to the socket when accessing services that
-  require authentication.
+  The QAuthenticator class is usually used in QAbstractSocket. The
+  class provides a way to pass back the required authentication
+  information to the socket when accessing services that require
+  authentication.
 
   QAuthenticator supports the following authentication methods:
   \list
@@ -295,21 +292,6 @@ QAuthenticatorPrivate::QAuthenticatorPrivate()
                                       QCryptographicHash::Md5).toHex();
     nonceCount = 0;
 }
-
-#ifndef QT_NO_HTTP
-void QAuthenticatorPrivate::parseHttpResponse(const QHttpResponseHeader &header, bool isProxy)
-{
-    const QList<QPair<QString, QString> > values = header.values();
-    QList<QPair<QByteArray, QByteArray> > rawValues;
-
-    QList<QPair<QString, QString> >::const_iterator it, end;
-    for (it = values.constBegin(), end = values.constEnd(); it != end; ++it)
-        rawValues.append(qMakePair(it->first.toLatin1(), it->second.toUtf8()));
-
-    // continue in byte array form
-    parseHttpResponse(rawValues, isProxy);
-}
-#endif
 
 QAuthenticatorPrivate::~QAuthenticatorPrivate()
 {

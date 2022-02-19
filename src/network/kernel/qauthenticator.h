@@ -63,10 +63,6 @@ private:
     QAuthenticatorPrivate *d;
 
     friend class QAuthenticatorPrivate;
-    friend class QHttpPrivate;
-    friend class QHttpNetworkConnectionPrivate;
-    friend class QHttpSocketEngine;
-    friend class QHttpNetworkConnectionChannel;
 };
 
 QT_END_NAMESPACE

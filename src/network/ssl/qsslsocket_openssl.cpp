@@ -347,8 +347,8 @@ void QSslSocketBackendPrivate::destroySslContext()
 {
     if (ssl) {
         // We do not send a shutdown alert here. Just mark the session as
-        // resumable for qhttpnetworkconnection's "optimization", otherwise
-        // OpenSSL won't start a session resumption.
+        // resumable for "optimization", otherwise OpenSSL won't start a
+        // session resumption.
         SSL_shutdown(ssl);
         SSL_free(ssl);
         ssl = 0;

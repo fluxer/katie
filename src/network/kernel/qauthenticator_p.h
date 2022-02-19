@@ -41,8 +41,6 @@
 
 QT_BEGIN_NAMESPACE
 
-class QHttpResponseHeader;
-
 class Q_AUTOTEST_EXPORT QAuthenticatorPrivate
 {
 public:
@@ -83,9 +81,6 @@ public:
     QByteArray digestMd5Response(const QByteArray &challenge, const QByteArray &method, const QByteArray &path);
     static QHash<QByteArray, QByteArray> parseDigestAuthenticationChallenge(const QByteArray &challenge);
 
-#ifndef QT_NO_HTTP
-    void parseHttpResponse(const QHttpResponseHeader &, bool isProxy);
-#endif
     void parseHttpResponse(const QList<QPair<QByteArray, QByteArray> >&, bool isProxy);
     void updateCredentials();
 };

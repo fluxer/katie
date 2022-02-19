@@ -2727,10 +2727,6 @@ void QXmlSimpleReaderPrivate::initIncrementalParsing()
     parse() to work incrementally, and making subsequent calls to the
     parseContinue() function, until all the data has been processed.
 
-    A common way to perform incremental parsing is to connect the \c
-    readyRead() signal of a \l{QNetworkReply} {network reply} a slot,
-    and handle the incoming data there. See QNetworkAccessManager.
-    
     Aspects of the parsing behavior can be adapted using setFeature()
     and setProperty().
     

@@ -115,6 +115,9 @@
 #define QT_NO_SVGGENERATOR
 #define QT_NO_SVGWIDGET
 #define QT_NO_GRAPHICSSVGITEM
+#define QT_NO_FTP
+#define QT_NO_HTTP
+#define QT_NO_NETWORKDISKCACHE
 
 // Not supported, used to bootstrap
 #cmakedefine QT_NO_QOBJECT
@@ -203,11 +206,9 @@
 #cmakedefine QT_NO_FRAME
 #cmakedefine QT_NO_FSCOMPLETER
 #cmakedefine QT_NO_FSFILEENGINE
-#cmakedefine QT_NO_FTP
 #cmakedefine QT_NO_GRAPHICSEFFECT
 #cmakedefine QT_NO_GRAPHICSVIEW
 #cmakedefine QT_NO_GROUPBOX
-#cmakedefine QT_NO_HTTP
 #cmakedefine QT_NO_ICON
 #cmakedefine QT_NO_IDENTITYPROXYMODEL
 #cmakedefine QT_NO_IMAGEFORMAT_PPM
@@ -233,7 +234,6 @@
 #cmakedefine QT_NO_MENUBAR
 #cmakedefine QT_NO_MESSAGEBOX
 #cmakedefine QT_NO_MOVIE
-#cmakedefine QT_NO_NETWORKDISKCACHE
 #cmakedefine QT_NO_NETWORKINTERFACE
 #cmakedefine QT_NO_NETWORKPROXY
 #cmakedefine QT_NO_PDF
@@ -356,11 +356,6 @@
 #  define QT_NO_MENU
 #endif
 
-// QNetworkDiskCache
-#if !defined(QT_NO_NETWORKDISKCACHE) && defined(QT_NO_TEMPORARYFILE)
-#  define QT_NO_NETWORKDISKCACHE
-#endif
-
 // QProgressDialog
 #if !defined(QT_NO_PROGRESSDIALOG) && defined(QT_NO_PROGRESSBAR)
 #  define QT_NO_PROGRESSDIALOG
@@ -416,11 +411,6 @@
 #  define QT_NO_DBUS
 #endif
 
-// File Transfer Protocol
-#if !defined(QT_NO_FTP) && (defined(QT_NO_URLINFO) || defined(QT_NO_TEXTDATE))
-#  define QT_NO_FTP
-#endif
-
 // QScrollArea
 #if !defined(QT_NO_SCROLLAREA) && defined(QT_NO_SCROLLBAR)
 #  define QT_NO_SCROLLAREA
@@ -449,11 +439,6 @@
 // QGraphicsView
 #if !defined(QT_NO_GRAPHICSVIEW) && defined(QT_NO_SCROLLAREA)
 #  define QT_NO_GRAPHICSVIEW
-#endif
-
-// Hyper Text Transfer Protocol
-#if !defined(QT_NO_HTTP) && defined(QT_NO_HOSTINFO)
-#  define QT_NO_HTTP
 #endif
 
 // QMdiArea

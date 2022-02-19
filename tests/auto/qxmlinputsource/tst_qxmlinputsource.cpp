@@ -21,9 +21,6 @@
 
 
 #include <QDomDocument>
-#include <QHttp>
-#include <QTcpServer>
-#include <QTcpSocket>
 #include <QTimer>
 #include <QtDebug>
 #include <QtTest/QtTest>
@@ -41,7 +38,6 @@ class tst_QXmlInputSource : public QObject
 private slots:
     void reset() const;
     void resetSimplified() const;
-    void waitForReadyIODevice() const;
 };
 
 /*!
@@ -90,100 +86,6 @@ void tst_QXmlInputSource::resetSimplified() const
     QVERIFY(reader.parse(source));
     source.reset();
     QCOMPARE(source.data(), input);
-}
-
-class ServerAndClient : public QObject
-{
-    Q_OBJECT
-
-public:
-    ServerAndClient(QEventLoop &ev) : success(false)
-                                    , eventLoop(ev)
-    {
-        setObjectName("serverAndClient");
-        tcpServer = new QTcpServer(this);
-        connect(tcpServer, SIGNAL(newConnection()), this, SLOT(newConnection()));
-        tcpServer->listen(QHostAddress::LocalHost, 1088);
-        httpClient = new QHttp(this);
-        connect(httpClient, SIGNAL(requestFinished(int, bool)), SLOT(requestFinished(int, bool)));
-    }
-
-    bool success;
-    QEventLoop &eventLoop;
-
-public slots:
-    void doIt()
-    {
-        QUrl url("http://127.0.0.1:1088");
-        httpClient->setHost( url.host(), 1088);
-        QHttpRequestHeader req_head("POST", url.path());
-        req_head.setValue("host", url.host());
-        req_head.setValue("user-agent", "xml-test");
-        req_head.setValue("keep-alive", "false");
-
-        QByteArray xmlrpc("<methodCall>\r\n\
-                <methodName>SFD.GetVersion</methodName>\r\n\
-                <params/>\r\n\
-                </methodCall>");
-        req_head.setContentLength(xmlrpc.size());
-        req_head.setContentType("text/xml");
-
-        httpClient->request(req_head, xmlrpc);
-    }
-
-    void requestFinished(int, bool isError)
-    {
-        QVERIFY(!isError);
-    }
-
-private slots:
-    void newConnection()
-    {
-        QTcpSocket *const s = tcpServer->nextPendingConnection();
-
-        if(s)
-            connect(s, SIGNAL(readyRead()), this, SLOT(readyRead()));
-    }
-
-    void readyRead()
-    {
-        QTcpSocket *const s = static_cast<QTcpSocket *>(sender());
-        int bodyLength = -1;
-
-        while(s->canReadLine())
-        {
-            const QString line(s->readLine());
-
-            if(line.startsWith("content-length:"))
-                bodyLength = line.mid(15).toInt();
-
-            if(line == "\r\n")
-            {
-                if(bodyLength == -1)
-                {
-                    qFatal("No length was specified in the header.");
-                }
-
-                QDomDocument domDoc;
-                success = domDoc.setContent(s->read(bodyLength));
-                eventLoop.exit();
-            }
-        }
-    }
-
-private:
-    QTcpServer *tcpServer;
-    QHttp* httpClient;
-};
-
-void tst_QXmlInputSource::waitForReadyIODevice() const
-{
-    QEventLoop el;
-    ServerAndClient sv(el);
-    QTimer::singleShot(1, &sv, SLOT(doIt()));
-
-    el.exec();
-    QVERIFY(sv.success);
 }
 
 QTEST_MAIN(tst_QXmlInputSource)
