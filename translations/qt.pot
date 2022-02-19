@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-02-06 12:17+0200\n"
+"POT-Creation-Date: 2022-02-19 20:09+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -45,7 +45,7 @@ msgstr ""
 #: src/core/plugin/qlibrary.cpp:799 src/core/plugin/qpluginloader.cpp:278
 #: src/core/io/qiodevice.cpp:1517 src/network/ssl/qsslerror.cpp:249
 #: src/network/socket/qnativesocketengine.cpp:249
-#: src/network/access/qftp.cpp:1413 src/uitools/formscriptrunner.cpp:104
+#: src/uitools/formscriptrunner.cpp:104
 msgid "Unknown error"
 msgstr ""
 
@@ -143,19 +143,19 @@ msgstr ""
 msgid "No file engine available or engine does not support UnMapExtension"
 msgstr ""
 
-#: src/core/io/qprocess.cpp:667 src/core/io/qprocess.cpp:719
+#: src/core/io/qprocess.cpp:663 src/core/io/qprocess.cpp:715
 msgid "Error reading from process"
 msgstr ""
 
-#: src/core/io/qprocess.cpp:766
+#: src/core/io/qprocess.cpp:762
 msgid "Error writing to process"
 msgstr ""
 
-#: src/core/io/qprocess.cpp:829
+#: src/core/io/qprocess.cpp:825
 msgid "Process crashed"
 msgstr ""
 
-#: src/core/io/qprocess.cpp:1730
+#: src/core/io/qprocess.cpp:1726
 msgid "No program defined"
 msgstr ""
 
@@ -967,19 +967,19 @@ msgctxt "QDeclarativeCompiledBindings"
 msgid "Binding loop detected for property \"%1\""
 msgstr ""
 
-#: src/declarative/qml/qdeclarativetypeloader.cpp:898
+#: src/declarative/qml/qdeclarativetypeloader.cpp:774
 msgid "Script %1 unavailable"
 msgstr ""
 
-#: src/declarative/qml/qdeclarativetypeloader.cpp:916
+#: src/declarative/qml/qdeclarativetypeloader.cpp:792
 msgid "Type %1 unavailable"
 msgstr ""
 
-#: src/declarative/qml/qdeclarativetypeloader.cpp:1102
+#: src/declarative/qml/qdeclarativetypeloader.cpp:978
 msgid "Namespace %1 cannot be used as a type"
 msgstr ""
 
-#: src/declarative/qml/qdeclarativetypeloader.cpp:1104
+#: src/declarative/qml/qdeclarativetypeloader.cpp:980
 msgid "%1 %2"
 msgstr ""
 
@@ -1159,17 +1159,17 @@ msgstr ""
 msgid "ListModel: undefined property '%1'"
 msgstr ""
 
-#: src/declarative/util/qdeclarativepixmapcache.cpp:286
+#: src/declarative/util/qdeclarativepixmapcache.cpp:257
 msgid "Error decoding: %1: %2"
 msgstr ""
 
-#: src/declarative/util/qdeclarativepixmapcache.cpp:459
-#: src/declarative/util/qdeclarativepixmapcache.cpp:820
+#: src/declarative/util/qdeclarativepixmapcache.cpp:360
+#: src/declarative/util/qdeclarativepixmapcache.cpp:700
 msgid "Failed to get image from provider: %1"
 msgstr ""
 
-#: src/declarative/util/qdeclarativepixmapcache.cpp:477
-#: src/declarative/util/qdeclarativepixmapcache.cpp:838
+#: src/declarative/util/qdeclarativepixmapcache.cpp:376
+#: src/declarative/util/qdeclarativepixmapcache.cpp:718
 msgid "Cannot open: %1"
 msgstr ""
 
@@ -4739,9 +4739,6 @@ msgstr ""
 #: src/network/kernel/qhostinfo_unix.cpp:87
 #: src/network/kernel/qhostinfo_unix.cpp:171
 #: src/network/socket/qabstractsocket.cpp:830
-#: src/network/socket/qhttpsocketengine.cpp:648
-#: src/network/socket/qsocks5socketengine.cpp:620
-#: src/network/socket/qsocks5socketengine.cpp:646
 msgid "Host not found"
 msgstr ""
 
@@ -4783,9 +4780,7 @@ msgid "%1: Unknown error %2"
 msgstr ""
 
 #: src/network/socket/qabstractsocket.cpp:872
-#: src/network/socket/qhttpsocketengine.cpp:651
 #: src/network/socket/qnativesocketengine.cpp:213
-#: src/network/socket/qsocks5socketengine.cpp:650
 msgid "Connection refused"
 msgstr ""
 
@@ -4800,42 +4795,6 @@ msgstr ""
 
 #: src/network/socket/qabstractsocket.cpp:2057
 msgid "Socket is not connected"
-msgstr ""
-
-#: src/network/socket/qhttpsocketengine.cpp:548
-msgid "Did not receive HTTP response from proxy"
-msgstr ""
-
-#: src/network/socket/qhttpsocketengine.cpp:584
-msgid "Error parsing authentication request from proxy"
-msgstr ""
-
-#: src/network/socket/qhttpsocketengine.cpp:618
-msgid "Authentication required"
-msgstr ""
-
-#: src/network/socket/qhttpsocketengine.cpp:645
-msgid "Proxy denied connection"
-msgstr ""
-
-#: src/network/socket/qhttpsocketengine.cpp:655
-msgid "Error communicating with HTTP proxy"
-msgstr ""
-
-#: src/network/socket/qhttpsocketengine.cpp:678
-msgid "Proxy server not found"
-msgstr ""
-
-#: src/network/socket/qhttpsocketengine.cpp:680
-msgid "Proxy connection refused"
-msgstr ""
-
-#: src/network/socket/qhttpsocketengine.cpp:682
-msgid "Proxy server connection timed out"
-msgstr ""
-
-#: src/network/socket/qhttpsocketengine.cpp:684
-msgid "Proxy connection closed prematurely"
 msgstr ""
 
 #: src/network/socket/qnativesocketengine.cpp:174
@@ -4879,7 +4838,6 @@ msgid "Host unreachable"
 msgstr ""
 
 #: src/network/socket/qnativesocketengine.cpp:204
-#: src/network/socket/qsocks5socketengine.cpp:642
 msgid "Network unreachable"
 msgstr ""
 
@@ -4969,358 +4927,6 @@ msgstr ""
 
 #: src/network/socket/qudpsocket.cpp:181
 msgid "This platform does not support IPv6"
-msgstr ""
-
-#: src/network/socket/qsocks5socketengine.cpp:575
-msgid "Connection to proxy refused"
-msgstr ""
-
-#: src/network/socket/qsocks5socketengine.cpp:579
-msgid "Connection to proxy closed prematurely"
-msgstr ""
-
-#: src/network/socket/qsocks5socketengine.cpp:583
-msgid "Proxy host not found"
-msgstr ""
-
-#: src/network/socket/qsocks5socketengine.cpp:588
-msgid "Connection to proxy timed out"
-msgstr ""
-
-#: src/network/socket/qsocks5socketengine.cpp:605
-msgid "Proxy authentication failed"
-msgstr ""
-
-#: src/network/socket/qsocks5socketengine.cpp:606
-msgid "Proxy authentication failed: %1"
-msgstr ""
-
-#: src/network/socket/qsocks5socketengine.cpp:615
-msgid "SOCKS version 5 protocol error"
-msgstr ""
-
-#: src/network/socket/qsocks5socketengine.cpp:634
-msgid "General SOCKSv5 server failure"
-msgstr ""
-
-#: src/network/socket/qsocks5socketengine.cpp:638
-msgid "Connection not allowed by SOCKSv5 server"
-msgstr ""
-
-#: src/network/socket/qsocks5socketengine.cpp:654
-msgid "TTL expired"
-msgstr ""
-
-#: src/network/socket/qsocks5socketengine.cpp:658
-msgid "SOCKSv5 command not supported"
-msgstr ""
-
-#: src/network/socket/qsocks5socketengine.cpp:662
-msgid "Address type not supported"
-msgstr ""
-
-#: src/network/socket/qsocks5socketengine.cpp:667
-msgid "Unknown SOCKSv5 proxy error code 0x%1"
-msgstr ""
-
-#: src/network/socket/qsocks5socketengine.cpp:1356
-msgctxt "QSocks5SocketEngine"
-msgid "Network operation timed out"
-msgstr ""
-
-#: src/network/access/qhttpnetworkconnection.cpp:652
-#: src/network/access/qhttp.cpp:2591
-msgctxt "QHttp"
-msgid "Host %1 not found"
-msgstr ""
-
-#: src/network/access/qhttpnetworkconnection.cpp:655
-msgctxt "QHttp"
-msgid "Connection refused"
-msgstr ""
-
-#: src/network/access/qhttpnetworkconnection.cpp:658
-msgctxt "QHttp"
-msgid "Connection closed"
-msgstr ""
-
-#: src/network/access/qhttpnetworkconnection.cpp:661
-msgctxt "QAbstractSocket"
-msgid "Socket operation timed out"
-msgstr ""
-
-#: src/network/access/qhttpnetworkconnection.cpp:664
-msgctxt "QHttp"
-msgid "Proxy requires authentication"
-msgstr ""
-
-#: src/network/access/qhttpnetworkconnection.cpp:667
-msgctxt "QHttp"
-msgid "Host requires authentication"
-msgstr ""
-
-#: src/network/access/qhttpnetworkconnection.cpp:670
-msgctxt "QHttp"
-msgid "Data corrupted"
-msgstr ""
-
-#: src/network/access/qhttpnetworkconnection.cpp:673
-msgctxt "QHttp"
-msgid "Unknown protocol specified"
-msgstr ""
-
-#: src/network/access/qhttpnetworkconnection.cpp:676
-msgctxt "QHttp"
-msgid "SSL handshake failed"
-msgstr ""
-
-#: src/network/access/qnetworkaccessdebugpipebackend.cpp:170
-msgctxt "QNetworkAccessDebugPipeBackend"
-msgid "Write error writing to %1: %2"
-msgstr ""
-
-#: src/network/access/qnetworkaccessdebugpipebackend.cpp:230
-msgid "Socket error on %1: %2"
-msgstr ""
-
-#: src/network/access/qnetworkaccessdebugpipebackend.cpp:245
-msgid "Remote host closed the connection prematurely on %1"
-msgstr ""
-
-#: src/network/access/qnetworkaccessftpbackend.cpp:114
-#: src/network/access/qnetworkaccesshttpbackend.cpp:403
-msgid "No suitable proxy found"
-msgstr ""
-
-#: src/network/access/qnetworkaccessftpbackend.cpp:128
-msgid "Cannot open %1: is a directory"
-msgstr ""
-
-#: src/network/access/qnetworkaccessftpbackend.cpp:224
-msgid "Logging in to %1 failed: authentication required"
-msgstr ""
-
-#: src/network/access/qnetworkaccessftpbackend.cpp:256
-msgid "Error while downloading %1: %2"
-msgstr ""
-
-#: src/network/access/qnetworkaccessftpbackend.cpp:258
-msgid "Error while uploading %1: %2"
-msgstr ""
-
-#: src/network/access/qnetworkreplydataimpl.cpp:62
-msgctxt "QNetworkAccessDataBackend"
-msgid "Invalid URI: %1"
-msgstr ""
-
-#: src/network/access/qnetworkaccesscachebackend.cpp:45
-msgctxt "QNetworkAccessCacheBackend"
-msgid "Error opening %1"
-msgstr ""
-
-#: src/network/access/qhttp.cpp:1543 src/network/access/qhttp.cpp:2362
-msgctxt "QHttp"
-msgid "Unknown error"
-msgstr ""
-
-#: src/network/access/qhttp.cpp:1795
-msgid "Request aborted"
-msgstr ""
-
-#: src/network/access/qhttp.cpp:2373
-msgctxt "QHttp"
-msgid "No server set to connect to"
-msgstr ""
-
-#: src/network/access/qhttp.cpp:2529
-msgctxt "QHttp"
-msgid "Wrong content length"
-msgstr ""
-
-#: src/network/access/qhttp.cpp:2533
-msgctxt "QHttp"
-msgid "Server closed connection unexpectedly"
-msgstr ""
-
-#: src/network/access/qhttp.cpp:2588
-msgctxt "QHttp"
-msgid "Connection refused (or timed out)"
-msgstr ""
-
-#: src/network/access/qhttp.cpp:2611
-msgctxt "QHttp"
-msgid "HTTP request failed"
-msgstr ""
-
-#: src/network/access/qhttp.cpp:2698
-msgctxt "QHttp"
-msgid "Invalid HTTP response header"
-msgstr ""
-
-#: src/network/access/qhttp.cpp:2726
-msgctxt "QHttp"
-msgid "Unknown authentication method"
-msgstr ""
-
-#: src/network/access/qhttp.cpp:2736
-msgctxt "QHttp"
-msgid "Proxy authentication required"
-msgstr ""
-
-#: src/network/access/qhttp.cpp:2740
-msgctxt "QHttp"
-msgid "Authentication required"
-msgstr ""
-
-#: src/network/access/qhttp.cpp:2823 src/network/access/qhttp.cpp:2871
-msgctxt "QHttp"
-msgid "Invalid HTTP chunked body"
-msgstr ""
-
-#: src/network/access/qhttp.cpp:2909
-msgctxt "QHttp"
-msgid "Error writing response to device"
-msgstr ""
-
-#: src/network/access/qhttpthreaddelegate.cpp:401
-#: src/network/access/qhttpthreaddelegate.cpp:424
-msgctxt "QNetworkReply"
-msgid "Error downloading %1 - server replied: %2"
-msgstr ""
-
-#: src/network/access/qnetworkreplyimpl.cpp:67
-msgctxt "QNetworkReply"
-msgid "Protocol \"%1\" is unknown"
-msgstr ""
-
-#: src/network/access/qnetworkreplyimpl.cpp:76
-msgctxt "QNetworkReply"
-msgid "backend start error."
-msgstr ""
-
-#: src/network/access/qnetworkreplyimpl.cpp:766
-#: src/network/access/qnetworkreplyimpl.cpp:796
-msgid "Operation canceled"
-msgstr ""
-
-#: src/network/access/qftp.cpp:841
-msgid "Not connected"
-msgstr ""
-
-#: src/network/access/qftp.cpp:920
-msgid "Host %1 not found"
-msgstr ""
-
-#: src/network/access/qftp.cpp:924
-msgid "Connection refused to host %1"
-msgstr ""
-
-#: src/network/access/qftp.cpp:928
-msgid "Connection timed out to host %1"
-msgstr ""
-
-#: src/network/access/qftp.cpp:1032
-msgid "Connected to host %1"
-msgstr ""
-
-#: src/network/access/qftp.cpp:1240
-msgid "Connection refused for data connection"
-msgstr ""
-
-#: src/network/access/qftp.cpp:2310
-msgctxt "QFtp"
-msgid ""
-"Connecting to host failed:\n"
-"%1"
-msgstr ""
-
-#: src/network/access/qftp.cpp:2314
-msgctxt "QFtp"
-msgid ""
-"Login failed:\n"
-"%1"
-msgstr ""
-
-#: src/network/access/qftp.cpp:2318
-msgctxt "QFtp"
-msgid ""
-"Listing directory failed:\n"
-"%1"
-msgstr ""
-
-#: src/network/access/qftp.cpp:2322
-msgctxt "QFtp"
-msgid ""
-"Changing directory failed:\n"
-"%1"
-msgstr ""
-
-#: src/network/access/qftp.cpp:2326
-msgctxt "QFtp"
-msgid ""
-"Downloading file failed:\n"
-"%1"
-msgstr ""
-
-#: src/network/access/qftp.cpp:2330
-msgctxt "QFtp"
-msgid ""
-"Uploading file failed:\n"
-"%1"
-msgstr ""
-
-#: src/network/access/qftp.cpp:2334
-msgctxt "QFtp"
-msgid ""
-"Removing file failed:\n"
-"%1"
-msgstr ""
-
-#: src/network/access/qftp.cpp:2338
-msgctxt "QFtp"
-msgid ""
-"Creating directory failed:\n"
-"%1"
-msgstr ""
-
-#: src/network/access/qftp.cpp:2342
-msgctxt "QFtp"
-msgid ""
-"Removing directory failed:\n"
-"%1"
-msgstr ""
-
-#: src/network/access/qftp.cpp:2370
-msgctxt "QFtp"
-msgid "Connection closed"
-msgstr ""
-
-#: src/network/access/qnetworkaccessfilebackend.cpp:87
-#: src/network/access/qnetworkreplyfileimpl.cpp:53
-msgctxt "QNetworkAccessFileBackend"
-msgid "Request for opening non-local file %1"
-msgstr ""
-
-#: src/network/access/qnetworkaccessfilebackend.cpp:128
-#: src/network/access/qnetworkreplyfileimpl.cpp:85
-msgctxt "QNetworkAccessFileBackend"
-msgid "Error opening %1: %2"
-msgstr ""
-
-#: src/network/access/qnetworkaccessfilebackend.cpp:166
-msgctxt "QNetworkAccessFileBackend"
-msgid "Write error writing to %1: %2"
-msgstr ""
-
-#: src/network/access/qnetworkaccessfilebackend.cpp:208
-#: src/network/access/qnetworkreplyfileimpl.cpp:72
-msgctxt "QNetworkAccessFileBackend"
-msgid "Cannot open %1: Path is a directory"
-msgstr ""
-
-#: src/network/access/qnetworkaccessfilebackend.cpp:228
-msgctxt "QNetworkAccessFileBackend"
-msgid "Read error reading from %1: %2"
 msgstr ""
 
 #: src/scripttools/debugging/qscriptedit.cpp:391
@@ -5819,7 +5425,7 @@ msgstr ""
 msgid "Recursive entity detected."
 msgstr ""
 
-#: src/xml/kernel/qxmlstream_p.h:1043 src/xml/kernel/qxmlstream.cpp:1379
+#: src/xml/kernel/qxmlstream_p.h:1043 src/xml/kernel/qxmlstream.cpp:1367
 msgid "Encountered incorrectly encoded content."
 msgstr ""
 
@@ -5848,7 +5454,7 @@ msgid "%1 is an invalid PUBLIC identifier."
 msgstr ""
 
 #: src/xml/kernel/qxmlstream_p.h:1704 src/xml/kernel/qxmlstream_p.h:1757
-#: src/xml/kernel/qxmlstream.cpp:1442 src/xml/kernel/qxmlstream.cpp:1454
+#: src/xml/kernel/qxmlstream.cpp:1430 src/xml/kernel/qxmlstream.cpp:1442
 msgid "Illegal namespace declaration."
 msgstr ""
 
@@ -5856,7 +5462,7 @@ msgstr ""
 msgid "Invalid XML name."
 msgstr ""
 
-#: src/xml/kernel/qxmlstream_p.h:1786 src/xml/kernel/qxmlstream.cpp:570
+#: src/xml/kernel/qxmlstream_p.h:1786 src/xml/kernel/qxmlstream.cpp:558
 msgid "Extra content at end of document."
 msgstr ""
 
@@ -5881,78 +5487,78 @@ msgstr ""
 msgid "Invalid character reference."
 msgstr ""
 
-#: src/xml/kernel/qxmlstream.cpp:803
+#: src/xml/kernel/qxmlstream.cpp:791
 msgid "Invalid entity value."
 msgstr ""
 
-#: src/xml/kernel/qxmlstream.cpp:911
+#: src/xml/kernel/qxmlstream.cpp:899
 msgid "Invalid XML character."
 msgstr ""
 
-#: src/xml/kernel/qxmlstream.cpp:1170
+#: src/xml/kernel/qxmlstream.cpp:1158
 msgid "Sequence ']]>' not allowed in content."
 msgstr ""
 
-#: src/xml/kernel/qxmlstream.cpp:1409
+#: src/xml/kernel/qxmlstream.cpp:1397
 msgid "Namespace prefix '%1' not declared"
 msgstr ""
 
-#: src/xml/kernel/qxmlstream.cpp:1486
+#: src/xml/kernel/qxmlstream.cpp:1474
 msgid "Attribute redefined."
 msgstr ""
 
-#: src/xml/kernel/qxmlstream.cpp:1600
+#: src/xml/kernel/qxmlstream.cpp:1588
 msgid "Unexpected character '%1' in public id literal."
 msgstr ""
 
-#: src/xml/kernel/qxmlstream.cpp:1628
+#: src/xml/kernel/qxmlstream.cpp:1616
 msgid "Invalid XML version string."
 msgstr ""
 
-#: src/xml/kernel/qxmlstream.cpp:1630
+#: src/xml/kernel/qxmlstream.cpp:1618
 msgid "Unsupported XML version."
 msgstr ""
 
-#: src/xml/kernel/qxmlstream.cpp:1651
+#: src/xml/kernel/qxmlstream.cpp:1639
 msgid "The standalone pseudo attribute must appear after the encoding."
 msgstr ""
 
-#: src/xml/kernel/qxmlstream.cpp:1653
+#: src/xml/kernel/qxmlstream.cpp:1641
 msgid "%1 is an invalid encoding name."
 msgstr ""
 
-#: src/xml/kernel/qxmlstream.cpp:1660
+#: src/xml/kernel/qxmlstream.cpp:1648
 msgid "Encoding %1 is unsupported"
 msgstr ""
 
-#: src/xml/kernel/qxmlstream.cpp:1676
+#: src/xml/kernel/qxmlstream.cpp:1664
 msgid "Standalone accepts only yes or no."
 msgstr ""
 
-#: src/xml/kernel/qxmlstream.cpp:1678
+#: src/xml/kernel/qxmlstream.cpp:1666
 msgid "Invalid attribute in XML declaration."
 msgstr ""
 
-#: src/xml/kernel/qxmlstream.cpp:1694
+#: src/xml/kernel/qxmlstream.cpp:1682
 msgid "Premature end of document."
 msgstr ""
 
-#: src/xml/kernel/qxmlstream.cpp:1696
+#: src/xml/kernel/qxmlstream.cpp:1684
 msgid "Invalid document."
 msgstr ""
 
-#: src/xml/kernel/qxmlstream.cpp:1736
+#: src/xml/kernel/qxmlstream.cpp:1724
 msgid "Expected "
 msgstr ""
 
-#: src/xml/kernel/qxmlstream.cpp:1747
+#: src/xml/kernel/qxmlstream.cpp:1735
 msgid ", but got '"
 msgstr ""
 
-#: src/xml/kernel/qxmlstream.cpp:1751
+#: src/xml/kernel/qxmlstream.cpp:1739
 msgid "Unexpected '"
 msgstr ""
 
-#: src/xml/kernel/qxmlstream.cpp:1976
+#: src/xml/kernel/qxmlstream.cpp:1964
 msgid "Expected character data."
 msgstr ""

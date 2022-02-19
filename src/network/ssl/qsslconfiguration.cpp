@@ -81,7 +81,7 @@ QT_BEGIN_NAMESPACE
     \snippet doc/src/snippets/code/src_network_ssl_qsslconfiguration.cpp 0
 
     \sa QSsl::SslProtocol, QSslCertificate, QSslCipher, QSslKey
-        QSslSocket, QNetworkAccessManager,
+        QSslSocket,
         QSslSocket::sslConfiguration(), QSslSocket::setSslConfiguration()
 */
 
@@ -326,8 +326,8 @@ void QSslConfiguration::setLocalCertificate(const QSslCertificate &certificate)
 
     Because the peer certificate is set during the handshake phase, it
     is safe to access the peer certificate from a slot connected to
-    the QSslSocket::sslErrors() signal, QNetworkReply::sslErrors()
-    signal, or the QSslSocket::encrypted() signal.
+    the QSslSocket::sslErrors() signal, or the QSslSocket::encrypted()
+    signal.
 
     If a null certificate is returned, it can mean the SSL handshake
     failed, or it can mean the host you are connected to doesn't have
@@ -337,8 +337,7 @@ void QSslConfiguration::setLocalCertificate(const QSslCertificate &certificate)
     use peerCertificateChain() to get them all at once.
 
     \sa peerCertificateChain(),
-        QSslSocket::sslErrors(), QSslSocket::ignoreSslErrors(),
-        QNetworkReply::sslErrors(), QNetworkReply::ignoreSslErrors()
+        QSslSocket::sslErrors(), QSslSocket::ignoreSslErrors(
 */
 QSslCertificate QSslConfiguration::peerCertificate() const
 {
@@ -358,8 +357,8 @@ QSslCertificate QSslConfiguration::peerCertificate() const
 
     Because the peer certificate is set during the handshake phase, it
     is safe to access the peer certificate from a slot connected to
-    the QSslSocket::sslErrors() signal, QNetworkReply::sslErrors()
-    signal, or the QSslSocket::encrypted() signal.
+    the QSslSocket::sslErrors() signal, or the QSslSocket::encrypted()
+    signal.
 
     If an empty list is returned, it can mean the SSL handshake
     failed, or it can mean the host you are connected to doesn't have
@@ -369,8 +368,7 @@ QSslCertificate QSslConfiguration::peerCertificate() const
     peerCertificate().
 
     \sa peerCertificate(),
-        QSslSocket::sslErrors(), QSslSocket::ignoreSslErrors(),
-        QNetworkReply::sslErrors(), QNetworkReply::ignoreSslErrors()
+        QSslSocket::sslErrors(), QSslSocket::ignoreSslErrors()
 */
 QList<QSslCertificate> QSslConfiguration::peerCertificateChain() const
 {

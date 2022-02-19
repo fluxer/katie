@@ -1,9 +1,8 @@
 #ifndef QNETWORKCOMMON_H
 #define QNETWORKCOMMON_H
 
-#include "qnetworkaccesscache_p.h"
+#include "qsharedpointer.h"
 
-Q_DECLARE_METATYPE(QNetworkAccessCache::CacheableObject*)
 Q_DECLARE_METATYPE(QSharedPointer<char>)
 
 QT_BEGIN_NAMESPACE

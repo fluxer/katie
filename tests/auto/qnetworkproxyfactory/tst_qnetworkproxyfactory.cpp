@@ -26,9 +26,6 @@
 #include <qcoreapplication.h>
 #include <qdebug.h>
 #include <qnetworkproxy.h>
-#include <QNetworkAccessManager>
-#include <QNetworkReply>
-#include <QNetworkRequest>
 #include <QNetworkInterface>
 #include <QList>
 #include <QThread>

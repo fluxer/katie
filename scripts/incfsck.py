@@ -332,13 +332,8 @@ incmap = {
         'QtEvents': 'qevent.h',
     },
     'QtNetwork': {
-        'QHttpHeader': 'qhttp.h',
-        'QHttpPart': 'qhttpmultipart.h',
-        'QHttpRequestHeader': 'qhttp.h',
-        'QHttpResponseHeader': 'qhttp.h',
         'QIPv6Address': 'qhostaddress.h',
         'QNetworkAddressEntry': 'qnetworkinterface.h',
-        'QNetworkCacheMetaData': 'qabstractnetworkcache.h',
         'QNetworkProxyFactory': 'qnetworkproxy.h',
         'QNetworkProxyQuery': 'qnetworkproxy.h',
         'Q_IPV6ADDR': 'qhostaddress.h',

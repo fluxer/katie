@@ -5,23 +5,14 @@ set(EXTRA_NETWORK_LIBS
 )
 
 set(NETWORK_PUBLIC_HEADERS
-    QAbstractNetworkCache
     QAbstractSocket
     QAuthenticator
-    QFtp
     QHostAddress
     QHostInfo
-    QHttp
     QLocalServer
     QLocalSocket
-    QNetworkAccessManager
-    QNetworkCookie
-    QNetworkCookieJar
-    QNetworkDiskCache
     QNetworkInterface
     QNetworkProxy
-    QNetworkReply
-    QNetworkRequest
     QSsl
     QSslCertificate
     QSslCipher
@@ -33,7 +24,6 @@ set(NETWORK_PUBLIC_HEADERS
     QTcpSocket
     QUdpSocket
     QUrlInfo
-    QHttpMultiPart
     QCryptographicHash
 )
 
@@ -46,41 +36,6 @@ include_directories(
 )
 
 set(NETWORK_HEADERS
-    ${CMAKE_CURRENT_SOURCE_DIR}/access/qftp.h
-    ${CMAKE_CURRENT_SOURCE_DIR}/access/qhttp.h
-    ${CMAKE_CURRENT_SOURCE_DIR}/access/qhttpnetworkheader_p.h
-    ${CMAKE_CURRENT_SOURCE_DIR}/access/qhttpnetworkrequest_p.h
-    ${CMAKE_CURRENT_SOURCE_DIR}/access/qhttpnetworkreply_p.h
-    ${CMAKE_CURRENT_SOURCE_DIR}/access/qhttpnetworkconnection_p.h
-    ${CMAKE_CURRENT_SOURCE_DIR}/access/qhttpnetworkconnectionchannel_p.h
-    ${CMAKE_CURRENT_SOURCE_DIR}/access/qnetworkaccessauthenticationmanager_p.h
-    ${CMAKE_CURRENT_SOURCE_DIR}/access/qnetworkaccessmanager.h
-    ${CMAKE_CURRENT_SOURCE_DIR}/access/qnetworkaccessmanager_p.h
-    ${CMAKE_CURRENT_SOURCE_DIR}/access/qnetworkaccesscache_p.h
-    ${CMAKE_CURRENT_SOURCE_DIR}/access/qnetworkaccessbackend_p.h
-    ${CMAKE_CURRENT_SOURCE_DIR}/access/qnetworkaccessdebugpipebackend_p.h
-    ${CMAKE_CURRENT_SOURCE_DIR}/access/qnetworkaccesshttpbackend_p.h
-    ${CMAKE_CURRENT_SOURCE_DIR}/access/qnetworkaccessfilebackend_p.h
-    ${CMAKE_CURRENT_SOURCE_DIR}/access/qnetworkaccesscachebackend_p.h
-    ${CMAKE_CURRENT_SOURCE_DIR}/access/qnetworkaccessftpbackend_p.h
-    ${CMAKE_CURRENT_SOURCE_DIR}/access/qnetworkcookie.h
-    ${CMAKE_CURRENT_SOURCE_DIR}/access/qnetworkcookie_p.h
-    ${CMAKE_CURRENT_SOURCE_DIR}/access/qnetworkcookiejar.h
-    ${CMAKE_CURRENT_SOURCE_DIR}/access/qnetworkcookiejar_p.h
-    ${CMAKE_CURRENT_SOURCE_DIR}/access/qnetworkrequest.h
-    ${CMAKE_CURRENT_SOURCE_DIR}/access/qnetworkrequest_p.h
-    ${CMAKE_CURRENT_SOURCE_DIR}/access/qnetworkreply.h
-    ${CMAKE_CURRENT_SOURCE_DIR}/access/qnetworkreply_p.h
-    ${CMAKE_CURRENT_SOURCE_DIR}/access/qnetworkreplyimpl_p.h
-    ${CMAKE_CURRENT_SOURCE_DIR}/access/qnetworkreplydataimpl_p.h
-    ${CMAKE_CURRENT_SOURCE_DIR}/access/qnetworkreplyfileimpl_p.h
-    ${CMAKE_CURRENT_SOURCE_DIR}/access/qabstractnetworkcache_p.h
-    ${CMAKE_CURRENT_SOURCE_DIR}/access/qabstractnetworkcache.h
-    ${CMAKE_CURRENT_SOURCE_DIR}/access/qnetworkdiskcache_p.h
-    ${CMAKE_CURRENT_SOURCE_DIR}/access/qnetworkdiskcache.h
-    ${CMAKE_CURRENT_SOURCE_DIR}/access/qhttpthreaddelegate_p.h
-    ${CMAKE_CURRENT_SOURCE_DIR}/access/qhttpmultipart.h
-    ${CMAKE_CURRENT_SOURCE_DIR}/access/qhttpmultipart_p.h
     ${CMAKE_CURRENT_SOURCE_DIR}/kernel/qauthenticator.h
     ${CMAKE_CURRENT_SOURCE_DIR}/kernel/qauthenticator_p.h
     ${CMAKE_CURRENT_SOURCE_DIR}/kernel/qcryptographichash.h
@@ -93,8 +48,6 @@ set(NETWORK_HEADERS
     ${CMAKE_CURRENT_SOURCE_DIR}/kernel/qnetworkinterface.h
     ${CMAKE_CURRENT_SOURCE_DIR}/kernel/qnetworkinterface_p.h
     ${CMAKE_CURRENT_SOURCE_DIR}/socket/qabstractsocketengine_p.h
-    ${CMAKE_CURRENT_SOURCE_DIR}/socket/qhttpsocketengine_p.h
-    ${CMAKE_CURRENT_SOURCE_DIR}/socket/qsocks5socketengine_p.h
     ${CMAKE_CURRENT_SOURCE_DIR}/socket/qabstractsocket.h
     ${CMAKE_CURRENT_SOURCE_DIR}/socket/qabstractsocket_p.h
     ${CMAKE_CURRENT_SOURCE_DIR}/socket/qtcpsocket.h
@@ -123,33 +76,6 @@ set(NETWORK_HEADERS
 )
 
 set(NETWORK_SOURCES
-    ${CMAKE_CURRENT_SOURCE_DIR}/access/qftp.cpp
-    ${CMAKE_CURRENT_SOURCE_DIR}/access/qhttp.cpp
-    ${CMAKE_CURRENT_SOURCE_DIR}/access/qhttpnetworkheader.cpp
-    ${CMAKE_CURRENT_SOURCE_DIR}/access/qhttpnetworkrequest.cpp
-    ${CMAKE_CURRENT_SOURCE_DIR}/access/qhttpnetworkreply.cpp
-    ${CMAKE_CURRENT_SOURCE_DIR}/access/qhttpnetworkconnection.cpp
-    ${CMAKE_CURRENT_SOURCE_DIR}/access/qhttpnetworkconnectionchannel.cpp
-    ${CMAKE_CURRENT_SOURCE_DIR}/access/qnetworkaccessauthenticationmanager.cpp
-    ${CMAKE_CURRENT_SOURCE_DIR}/access/qnetworkaccessmanager.cpp
-    ${CMAKE_CURRENT_SOURCE_DIR}/access/qnetworkaccesscache.cpp
-    ${CMAKE_CURRENT_SOURCE_DIR}/access/qnetworkaccessbackend.cpp
-    ${CMAKE_CURRENT_SOURCE_DIR}/access/qnetworkaccessdebugpipebackend.cpp
-    ${CMAKE_CURRENT_SOURCE_DIR}/access/qnetworkaccessfilebackend.cpp
-    ${CMAKE_CURRENT_SOURCE_DIR}/access/qnetworkaccesscachebackend.cpp
-    ${CMAKE_CURRENT_SOURCE_DIR}/access/qnetworkaccessftpbackend.cpp
-    ${CMAKE_CURRENT_SOURCE_DIR}/access/qnetworkaccesshttpbackend.cpp
-    ${CMAKE_CURRENT_SOURCE_DIR}/access/qnetworkcookie.cpp
-    ${CMAKE_CURRENT_SOURCE_DIR}/access/qnetworkcookiejar.cpp
-    ${CMAKE_CURRENT_SOURCE_DIR}/access/qnetworkrequest.cpp
-    ${CMAKE_CURRENT_SOURCE_DIR}/access/qnetworkreply.cpp
-    ${CMAKE_CURRENT_SOURCE_DIR}/access/qnetworkreplyimpl.cpp
-    ${CMAKE_CURRENT_SOURCE_DIR}/access/qnetworkreplydataimpl.cpp
-    ${CMAKE_CURRENT_SOURCE_DIR}/access/qnetworkreplyfileimpl.cpp
-    ${CMAKE_CURRENT_SOURCE_DIR}/access/qabstractnetworkcache.cpp
-    ${CMAKE_CURRENT_SOURCE_DIR}/access/qnetworkdiskcache.cpp
-    ${CMAKE_CURRENT_SOURCE_DIR}/access/qhttpthreaddelegate.cpp
-    ${CMAKE_CURRENT_SOURCE_DIR}/access/qhttpmultipart.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/kernel/qauthenticator.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/kernel/qcryptographichash.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/kernel/qhostaddress.cpp
@@ -160,8 +86,6 @@ set(NETWORK_SOURCES
     ${CMAKE_CURRENT_SOURCE_DIR}/kernel/qhostinfo_unix.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/kernel/qnetworkinterface_unix.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/socket/qabstractsocketengine.cpp
-    ${CMAKE_CURRENT_SOURCE_DIR}/socket/qhttpsocketengine.cpp
-    ${CMAKE_CURRENT_SOURCE_DIR}/socket/qsocks5socketengine.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/socket/qabstractsocket.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/socket/qtcpsocket.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/socket/qudpsocket.cpp

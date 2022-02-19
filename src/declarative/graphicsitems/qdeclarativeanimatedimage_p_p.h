@@ -40,7 +40,6 @@
 QT_BEGIN_NAMESPACE
 
 class QMovie;
-class QNetworkReply;
 
 class QDeclarativeAnimatedImagePrivate : public QDeclarativeImagePrivate
 {
@@ -48,7 +47,7 @@ class QDeclarativeAnimatedImagePrivate : public QDeclarativeImagePrivate
 
 public:
     QDeclarativeAnimatedImagePrivate()
-      : playing(true), paused(false), preset_currentframe(0), _movie(0), reply(0), redirectCount(0)
+      : playing(true), paused(false), preset_currentframe(0), _movie(0)
     {
     }
 
@@ -56,8 +55,6 @@ public:
     bool paused;
     int preset_currentframe;
     QMovie *_movie;
-    QNetworkReply *reply;
-    int redirectCount;
 };
 
 QT_END_NAMESPACE

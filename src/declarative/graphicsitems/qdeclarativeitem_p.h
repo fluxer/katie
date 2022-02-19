@@ -52,7 +52,6 @@
 
 QT_BEGIN_NAMESPACE
 
-class QNetworkReply;
 class QDeclarativeItemKeyFilter;
 class QDeclarativeLayoutMirroringAttached;
 

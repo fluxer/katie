@@ -372,9 +372,6 @@ bool QNativeSocketEngine::initialize(QAbstractSocket::SocketType socketType, QAb
     // If it introduces any performance regressions for Qt 4.6.x (x > 0) then
     // it will be put back in.
     //
-    // You can use tests/manual/qhttpnetworkconnection to test HTTP download speed
-    // with this.
-    //
     // pre-4.6:
     // setReceiveBufferSize(49152);
     // setSendBufferSize(49152);

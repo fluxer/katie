@@ -33,11 +33,11 @@
 
     QNetworkProxy provides the method for configuring network layer
     proxy support to the Qt network classes. The currently supported
-    classes are QAbstractSocket, QTcpSocket, QUdpSocket, QTcpServer,
-    QNetworkAccessManager and QFtp. The proxy support is designed to
-    be as transparent as possible. This means that existing
-    network-enabled applications that you have written should
-    automatically support network proxy using the following code.
+    classes are QAbstractSocket, QTcpSocket, QUdpSocket and
+    QTcpServer. The proxy support is designed to be as transparent
+    as possible. This means that existing network-enabled
+    applications that you have written should automatically support
+    network proxy using the following code.
 
     \snippet doc/src/snippets/code/src_network_kernel_qnetworkproxy.cpp 0
 
@@ -131,25 +131,6 @@
         \o TunnelingCapability, ListeningCapability,
            UdpTunnelingCapability, HostNameLookupCapability
 
-    \row
-        \o HTTP
-        \o Implemented using the "CONNECT" command, supports only
-           outgoing TCP connections; supports authentication.
-        \o TunnelingCapability, CachingCapability, HostNameLookupCapability
-
-    \row
-        \o Caching-only HTTP
-        \o Implemented using normal HTTP commands, it is useful only
-           in the context of HTTP requests (see QNetworkAccessManager)
-        \o CachingCapability, HostNameLookupCapability
-
-    \row
-        \o Caching FTP
-        \o Implemented using an FTP proxy, it is useful only in the
-           context of FTP requests (see QFtp,
-           QNetworkAccessManager)
-        \o CachingCapability, HostNameLookupCapability
-
     \endtable
 
     Also note that you shouldn't set the application default proxy
@@ -207,9 +188,6 @@
 #include "qurl.h"
 
 QT_BEGIN_NAMESPACE
-
-class QSocks5SocketEngineHandler;
-class QHttpSocketEngineHandler;
 
 class QGlobalNetworkProxy
 {
@@ -727,8 +705,7 @@ template<> void QSharedDataPointer<QNetworkProxyQueryPrivate>::detach()
 
     The destination host name is the host in the connection in the
     case of outgoing connection sockets. It is the \c hostName
-    parameter passed to QTcpSocket::connectToHost() or the host
-    component of a URL requested with QNetworkRequest.
+    parameter passed to QTcpSocket::connectToHost().
 
     The destination port number is the requested port to connect to in
     the case of outgoing sockets, while the local port number is the
@@ -777,14 +754,6 @@ template<> void QSharedDataPointer<QNetworkProxyQueryPrivate>::detach()
          specific circumstances, for example to indicate which remote
          host a connection is expected from. The URL component is not used.
 
-    \row
-      \o UrlRequest
-      \o A more high-level request, such as those coming from
-         QNetworkAccessManager. These requests will inevitably use an
-         outgoing TCP socket, but the this query type is provided to
-         indicate that more detailed information is present in the URL
-         component. For ease of implementation, the URL's host and
-         port are set as the destination address.
     \endtable
 
     It should be noted that any of the criteria may be missing or
@@ -793,8 +762,7 @@ template<> void QSharedDataPointer<QNetworkProxyQueryPrivate>::detach()
     the query should make their best guess or apply some
     implementation-defined default values.
 
-    \sa QNetworkProxy, QNetworkProxyFactory, QNetworkAccessManager,
-        QAbstractSocket::setProxy()
+    \sa QNetworkProxy, QNetworkProxyFactory, QAbstractSocket::setProxy()
 */
 
 /*!
@@ -1104,11 +1072,6 @@ void QNetworkProxyQuery::setUrl(const QUrl &url)
     created with Qt will query the factory to determine the proxy to
     be used.
 
-    A factory can also be set in certain frameworks that support
-    multiple connections, such as QNetworkAccessManager. When set on
-    such object, the factory will be queried for sockets created by
-    that framework only.
-
     \section1 System Proxies
 
     You can configure a factory to use the system proxy's settings.
@@ -1204,9 +1167,7 @@ void QNetworkProxyFactory::setApplicationProxyFactory(QNetworkProxyFactory *fact
 
     If you cannot determine a better proxy alternative, use
     QNetworkProxy::DefaultProxy, which tells the code querying for a
-    proxy to use a higher alternative. For example, if this factory is
-    set to a QNetworkAccessManager object, DefaultProxy will tell it
-    to query the application-level proxy settings.
+    proxy to use a higher alternative.
 
     If this factory is set as the application proxy factory,
     DefaultProxy and NoProxy will have the same meaning.

@@ -20,7 +20,6 @@
 ****************************************************************************/
 
 #include "qdeclarativepixmapcache_p.h"
-#include "qdeclarativenetworkaccessmanagerfactory.h"
 #include "qdeclarativeimageprovider.h"
 
 #include "qdeclarativeengine.h"
@@ -30,7 +29,6 @@
 #include <QCoreApplication>
 #include <QImageReader>
 #include <QHash>
-#include <QNetworkReply>
 #include <QPixmapCache>
 #include <QFile>
 #include <QThread>
@@ -104,8 +102,6 @@ public:
     QDeclarativePixmapReaderThreadObject(QDeclarativePixmapReader *);
     void processJobs();
     virtual bool event(QEvent *e);
-private slots:
-    void networkRequestDone();
 private:
     QDeclarativePixmapReader *reader;
 };
@@ -131,7 +127,6 @@ private:
     friend class QDeclarativePixmapReaderThreadObject;
     void processJobs();
     void processJob(QDeclarativePixmapReply *, const QUrl &, const QSize &);
-    void networkRequestDone(QNetworkReply *);
 
     QList<QDeclarativePixmapReply*> jobs;
     QList<QDeclarativePixmapReply*> cancelled;
@@ -142,16 +137,6 @@ private:
     QDeclarativePixmapReaderThreadObject *threadObject;
     QWaitCondition waitCondition;
 
-    QNetworkAccessManager *networkAccessManager();
-    QNetworkAccessManager *accessManager;
-
-    QHash<QNetworkReply*,QDeclarativePixmapReply*> replies;
-
-
-    static int replyDownloadProgress;
-    static int replyFinished;
-    static int downloadProgress;
-    static int threadNetworkRequestDone;
     static QHash<QDeclarativeEngine *,QDeclarativePixmapReader*> readers;
 public:
     static QMutex readerMutex;
@@ -220,11 +205,6 @@ int QDeclarativePixmapReply::downloadProgressIndex = -1;
 QHash<QDeclarativeEngine *,QDeclarativePixmapReader*> QDeclarativePixmapReader::readers;
 QMutex QDeclarativePixmapReader::readerMutex;
 
-int QDeclarativePixmapReader::replyDownloadProgress = -1;
-int QDeclarativePixmapReader::replyFinished = -1;
-int QDeclarativePixmapReader::downloadProgress = -1;
-int QDeclarativePixmapReader::threadNetworkRequestDone = -1;
-
 
 void QDeclarativePixmapReply::postReply(ReadError error, const QString &errorString, 
                                         const QSize &implicitSize, const QImage &image)
@@ -236,15 +216,6 @@ void QDeclarativePixmapReply::postReply(ReadError error, const QString &errorStr
 QDeclarativePixmapReply::Event::Event(ReadError e, const QString &s, const QSize &iSize, const QImage &i)
 : QEvent(QEvent::User), error(e), errorString(s), implicitSize(iSize), image(i)
 {
-}
-
-QNetworkAccessManager *QDeclarativePixmapReader::networkAccessManager()
-{
-    if (!accessManager) {
-        Q_ASSERT(threadObject);
-        accessManager = QDeclarativeEnginePrivate::get(engine)->createNetworkAccessManager(threadObject);
-    }
-    return accessManager;
 }
 
 static bool readImage(const QUrl& url, QIODevice *dev, QImage *image, QString *errorString, QSize *impsize, 
@@ -292,8 +263,7 @@ static bool readImage(const QUrl& url, QIODevice *dev, QImage *image, QString *e
 QDeclarativePixmapReader::QDeclarativePixmapReader(QDeclarativeEngine *eng)
     : QThread(eng),
     engine(eng),
-    threadObject(0),
-    accessManager(0)
+    threadObject(0)
 {
     eventLoopQuitHack = new QObject;
     eventLoopQuitHack->moveToThread(this);
@@ -314,13 +284,6 @@ QDeclarativePixmapReader::~QDeclarativePixmapReader()
         delete reply;
     }
     jobs.clear();
-    QList<QDeclarativePixmapReply*> activeJobs = replies.values();
-    foreach (QDeclarativePixmapReply *reply, activeJobs) {
-        if (reply->loading) {
-            cancelled.append(reply);
-            reply->data = 0;
-        }
-    }
     if (threadObject) {
         threadObject->processJobs();
     }
@@ -328,56 +291,6 @@ QDeclarativePixmapReader::~QDeclarativePixmapReader()
 
     eventLoopQuitHack->deleteLater();
     wait();
-}
-
-void QDeclarativePixmapReader::networkRequestDone(QNetworkReply *reply)
-{
-    QDeclarativePixmapReply *job = replies.take(reply);
-
-    if (job) {
-        job->redirectCount++;
-        if (job->redirectCount < IMAGEREQUEST_MAX_REDIRECT_RECURSION) {
-            QVariant redirect = reply->attribute(QNetworkRequest::RedirectionTargetAttribute);
-            if (redirect.isValid()) {
-                QUrl url = reply->url().resolved(redirect.toUrl());
-                QNetworkRequest req(url);
-                req.setAttribute(QNetworkRequest::HttpPipeliningAllowedAttribute, true);
-
-                reply->deleteLater();
-                reply = networkAccessManager()->get(req);
-
-                QMetaObject::connect(reply, replyDownloadProgress, job, downloadProgress);
-                QMetaObject::connect(reply, replyFinished, threadObject, threadNetworkRequestDone);
-
-                replies.insert(reply, job);
-                return;
-            }
-        }
-
-        QImage image;
-        QDeclarativePixmapReply::ReadError error = QDeclarativePixmapReply::NoError;
-        QString errorString;
-        QSize readSize;
-        if (reply->error()) {
-            error = QDeclarativePixmapReply::Loading;
-            errorString = reply->errorString();
-        } else {
-            QByteArray all = reply->readAll();
-            QBuffer buff(&all);
-            buff.open(QIODevice::ReadOnly);
-            if (!readImage(reply->url(), &buff, &image, &errorString, &readSize, job->requestSize)) {
-                error = QDeclarativePixmapReply::Decoding;
-            }
-        }
-        // send completion event to the QDeclarativePixmapReply
-        mutex.lock();
-        if (!cancelled.contains(job)) job->postReply(error, errorString, readSize, image);
-        mutex.unlock();
-    }
-    reply->deleteLater();
-
-    // kick off event loop again incase we have dropped below max request count
-    threadObject->processJobs();
 }
 
 QDeclarativePixmapReaderThreadObject::QDeclarativePixmapReaderThreadObject(QDeclarativePixmapReader *i)
@@ -400,37 +313,25 @@ bool QDeclarativePixmapReaderThreadObject::event(QEvent *e)
     }
 }
 
-void QDeclarativePixmapReaderThreadObject::networkRequestDone()
-{
-    QNetworkReply *reply = static_cast<QNetworkReply *>(sender());
-    reader->networkRequestDone(reply);
-}
-
 void QDeclarativePixmapReader::processJobs()
 {
     QMutexLocker locker(&mutex);
 
     while (true) {
-        if (cancelled.isEmpty() && (jobs.isEmpty() || replies.count() >= IMAGEREQUEST_MAX_REQUEST_COUNT)) 
+        if (cancelled.isEmpty() && jobs.isEmpty())
             return; // Nothing else to do
 
         // Clean cancelled jobs
         if (cancelled.count()) {
             for (int i = 0; i < cancelled.count(); ++i) {
                 QDeclarativePixmapReply *job = cancelled.at(i);
-                QNetworkReply *reply = replies.key(job, 0);
-                if (reply && reply->isRunning()) {
-                    // cancel any jobs already started
-                    replies.remove(reply);
-                    reply->close();
-                }
                 // deleteLater, since not owned by this thread
                 job->deleteLater();
             }
             cancelled.clear();
         }
 
-        if (!jobs.isEmpty() && replies.count() < IMAGEREQUEST_MAX_REQUEST_COUNT) {
+        if (!jobs.isEmpty()) {
             QDeclarativePixmapReply *runningJob = jobs.takeLast();
             runningJob->loading = true;
             QUrl url = runningJob->url;
@@ -462,33 +363,22 @@ void QDeclarativePixmapReader::processJob(QDeclarativePixmapReply *runningJob, c
         if (!cancelled.contains(runningJob)) runningJob->postReply(errorCode, errorStr, readSize, image);
         mutex.unlock();
     } else {
-        QString lf = QDeclarativeEnginePrivate::urlToLocalFile(url);
-        if (!lf.isEmpty()) {
-            // Image is local - load/decode immediately
-            QImage image;
-            QDeclarativePixmapReply::ReadError errorCode = QDeclarativePixmapReply::NoError;
-            QString errorStr;
-            QFile f(lf);
-            QSize readSize;
-            if (f.open(QIODevice::ReadOnly)) {
-                if (!readImage(url, &f, &image, &errorStr, &readSize, requestSize))
-                    errorCode = QDeclarativePixmapReply::Loading;
-            } else {
-                errorStr = QDeclarativePixmap::tr("Cannot open: %1").arg(url.toString());
+        // Image is local - load/decode immediately
+        QImage image;
+        QDeclarativePixmapReply::ReadError errorCode = QDeclarativePixmapReply::NoError;
+        QString errorStr;
+        QFile f(QDeclarativeEnginePrivate::urlToLocalFile(url));
+        QSize readSize;
+        if (f.open(QIODevice::ReadOnly)) {
+            if (!readImage(url, &f, &image, &errorStr, &readSize, requestSize))
                 errorCode = QDeclarativePixmapReply::Loading;
-            }
-            mutex.lock();
-            if (!cancelled.contains(runningJob)) runningJob->postReply(errorCode, errorStr, readSize, image);
-            mutex.unlock();
         } else {
-            // Network resource
-            QNetworkRequest req(url);
-            req.setAttribute(QNetworkRequest::HttpPipeliningAllowedAttribute, true);
-            QNetworkReply *reply = networkAccessManager()->get(req);
-            QMetaObject::connect(reply, replyDownloadProgress, runningJob, downloadProgress);
-            QMetaObject::connect(reply, replyFinished, threadObject, threadNetworkRequestDone);
-            replies.insert(reply, runningJob);
+            errorStr = QDeclarativePixmap::tr("Cannot open: %1").arg(url.toString());
+            errorCode = QDeclarativePixmapReply::Loading;
         }
+        mutex.lock();
+        if (!cancelled.contains(runningJob)) runningJob->postReply(errorCode, errorStr, readSize, image);
+        mutex.unlock();
     }
 }
 
@@ -539,16 +429,6 @@ void QDeclarativePixmapReader::cancel(QDeclarativePixmapReply *reply)
 
 void QDeclarativePixmapReader::run()
 {
-    if (replyDownloadProgress == -1) {
-        const QMetaObject *nr = &QNetworkReply::staticMetaObject;
-        const QMetaObject *pr = &QDeclarativePixmapReply::staticMetaObject;
-        const QMetaObject *ir = &QDeclarativePixmapReaderThreadObject::staticMetaObject;
-        replyDownloadProgress = nr->indexOfSignal("downloadProgress(qint64,qint64)");
-        replyFinished = nr->indexOfSignal("finished()");
-        downloadProgress = pr->indexOfSignal("downloadProgress(qint64,qint64)");
-        threadNetworkRequestDone = ir->indexOfSlot("networkRequestDone()");
-    }
-
     mutex.lock();
     threadObject = new QDeclarativePixmapReaderThreadObject(this);
     mutex.unlock();
