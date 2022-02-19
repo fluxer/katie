@@ -48,7 +48,6 @@ set(NETWORK_HEADERS
     ${CMAKE_CURRENT_SOURCE_DIR}/kernel/qnetworkinterface.h
     ${CMAKE_CURRENT_SOURCE_DIR}/kernel/qnetworkinterface_p.h
     ${CMAKE_CURRENT_SOURCE_DIR}/socket/qabstractsocketengine_p.h
-    ${CMAKE_CURRENT_SOURCE_DIR}/socket/qsocks5socketengine_p.h
     ${CMAKE_CURRENT_SOURCE_DIR}/socket/qabstractsocket.h
     ${CMAKE_CURRENT_SOURCE_DIR}/socket/qabstractsocket_p.h
     ${CMAKE_CURRENT_SOURCE_DIR}/socket/qtcpsocket.h
@@ -87,7 +86,6 @@ set(NETWORK_SOURCES
     ${CMAKE_CURRENT_SOURCE_DIR}/kernel/qhostinfo_unix.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/kernel/qnetworkinterface_unix.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/socket/qabstractsocketengine.cpp
-    ${CMAKE_CURRENT_SOURCE_DIR}/socket/qsocks5socketengine.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/socket/qabstractsocket.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/socket/qtcpsocket.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/socket/qudpsocket.cpp

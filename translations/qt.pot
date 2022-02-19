@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-02-19 17:37+0200\n"
+"POT-Creation-Date: 2022-02-19 20:09+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -4739,8 +4739,6 @@ msgstr ""
 #: src/network/kernel/qhostinfo_unix.cpp:87
 #: src/network/kernel/qhostinfo_unix.cpp:171
 #: src/network/socket/qabstractsocket.cpp:830
-#: src/network/socket/qsocks5socketengine.cpp:620
-#: src/network/socket/qsocks5socketengine.cpp:646
 msgid "Host not found"
 msgstr ""
 
@@ -4783,7 +4781,6 @@ msgstr ""
 
 #: src/network/socket/qabstractsocket.cpp:872
 #: src/network/socket/qnativesocketengine.cpp:213
-#: src/network/socket/qsocks5socketengine.cpp:650
 msgid "Connection refused"
 msgstr ""
 
@@ -4841,7 +4838,6 @@ msgid "Host unreachable"
 msgstr ""
 
 #: src/network/socket/qnativesocketengine.cpp:204
-#: src/network/socket/qsocks5socketengine.cpp:642
 msgid "Network unreachable"
 msgstr ""
 
@@ -4931,63 +4927,6 @@ msgstr ""
 
 #: src/network/socket/qudpsocket.cpp:181
 msgid "This platform does not support IPv6"
-msgstr ""
-
-#: src/network/socket/qsocks5socketengine.cpp:575
-msgid "Connection to proxy refused"
-msgstr ""
-
-#: src/network/socket/qsocks5socketengine.cpp:579
-msgid "Connection to proxy closed prematurely"
-msgstr ""
-
-#: src/network/socket/qsocks5socketengine.cpp:583
-msgid "Proxy host not found"
-msgstr ""
-
-#: src/network/socket/qsocks5socketengine.cpp:588
-msgid "Connection to proxy timed out"
-msgstr ""
-
-#: src/network/socket/qsocks5socketengine.cpp:605
-msgid "Proxy authentication failed"
-msgstr ""
-
-#: src/network/socket/qsocks5socketengine.cpp:606
-msgid "Proxy authentication failed: %1"
-msgstr ""
-
-#: src/network/socket/qsocks5socketengine.cpp:615
-msgid "SOCKS version 5 protocol error"
-msgstr ""
-
-#: src/network/socket/qsocks5socketengine.cpp:634
-msgid "General SOCKSv5 server failure"
-msgstr ""
-
-#: src/network/socket/qsocks5socketengine.cpp:638
-msgid "Connection not allowed by SOCKSv5 server"
-msgstr ""
-
-#: src/network/socket/qsocks5socketengine.cpp:654
-msgid "TTL expired"
-msgstr ""
-
-#: src/network/socket/qsocks5socketengine.cpp:658
-msgid "SOCKSv5 command not supported"
-msgstr ""
-
-#: src/network/socket/qsocks5socketengine.cpp:662
-msgid "Address type not supported"
-msgstr ""
-
-#: src/network/socket/qsocks5socketengine.cpp:667
-msgid "Unknown SOCKSv5 proxy error code 0x%1"
-msgstr ""
-
-#: src/network/socket/qsocks5socketengine.cpp:1356
-msgctxt "QSocks5SocketEngine"
-msgid "Network operation timed out"
 msgstr ""
 
 #: src/scripttools/debugging/qscriptedit.cpp:391

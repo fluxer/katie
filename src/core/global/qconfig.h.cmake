@@ -118,6 +118,7 @@
 #define QT_NO_FTP
 #define QT_NO_HTTP
 #define QT_NO_NETWORKDISKCACHE
+#define QT_NO_SOCKS5
 
 // Not supported, used to bootstrap
 #cmakedefine QT_NO_QOBJECT
@@ -260,7 +261,6 @@
 #cmakedefine QT_NO_SIGNALMAPPER
 #cmakedefine QT_NO_SIZEGRIP
 #cmakedefine QT_NO_SLIDER
-#cmakedefine QT_NO_SOCKS5
 #cmakedefine QT_NO_SORTFILTERPROXYMODEL
 #cmakedefine QT_NO_SPINBOX
 #cmakedefine QT_NO_SPLASHSCREEN
@@ -364,11 +364,6 @@
 // QScrollBar
 #if !defined(QT_NO_SCROLLBAR) && defined(QT_NO_SLIDER)
 #  define QT_NO_SCROLLBAR
-#endif
-
-// SOCKS5
-#if !defined(QT_NO_SOCKS5) && defined(QT_NO_NETWORKPROXY)
-#  define QT_NO_SOCKS5
 #endif
 
 // QSplitter

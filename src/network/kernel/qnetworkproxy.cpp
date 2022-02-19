@@ -189,8 +189,6 @@
 
 QT_BEGIN_NAMESPACE
 
-class QSocks5SocketEngineHandler;
-
 class QGlobalNetworkProxy
 {
 public:
