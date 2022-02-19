@@ -34,7 +34,6 @@
 //
 
 #include <QtCore/qobject.h>
-#include <QtNetwork/qnetworkreply.h>
 #include <QtDeclarative/qdeclarativeerror.h>
 #include <QtDeclarative/qdeclarativeengine.h>
 #include "qdeclarativescriptparser_p.h"
@@ -97,7 +96,7 @@ protected:
     virtual void dataReceived(const QByteArray &) = 0;
 
     virtual void done();
-    virtual void networkError(QNetworkReply::NetworkError);
+    virtual void networkError();
 
     virtual void dependencyError(QDeclarativeDataBlob *);
     virtual void dependencyComplete(QDeclarativeDataBlob *);
@@ -146,18 +145,10 @@ public:
 
     QDeclarativeEngine *engine() const;
 
-private slots:
-    void networkReplyFinished();
-    void networkReplyProgress(qint64,qint64);
-
 private:
     void setData(QDeclarativeDataBlob *, const QByteArray &);
-    void networkReplyFinished(QNetworkReply *);
-    void networkReplyProgress(QNetworkReply *, qint64, qint64);
 
     QDeclarativeEngine *m_engine;
-    typedef QHash<QNetworkReply *, QDeclarativeDataBlob *> NetworkReplies;
-    NetworkReplies m_networkReplies;
 };
 
 

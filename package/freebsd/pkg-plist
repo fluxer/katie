@@ -371,7 +371,6 @@ include/katie/QtDeclarative/QDeclarativeInfo
 include/katie/QtDeclarative/QDeclarativeItem
 include/katie/QtDeclarative/QDeclarativeListProperty
 include/katie/QtDeclarative/QDeclarativeListReference
-include/katie/QtDeclarative/QDeclarativeNetworkAccessManagerFactory
 include/katie/QtDeclarative/QDeclarativeParserStatus
 include/katie/QtDeclarative/QDeclarativeProperties
 include/katie/QtDeclarative/QDeclarativeProperty
@@ -394,7 +393,6 @@ include/katie/QtDeclarative/qdeclarativeimageprovider.h
 include/katie/QtDeclarative/qdeclarativeinfo.h
 include/katie/QtDeclarative/qdeclarativeitem.h
 include/katie/QtDeclarative/qdeclarativelist.h
-include/katie/QtDeclarative/qdeclarativenetworkaccessmanagerfactory.h
 include/katie/QtDeclarative/qdeclarativeparserstatus.h
 include/katie/QtDeclarative/qdeclarativeprivate.h
 include/katie/QtDeclarative/qdeclarativeproperty.h

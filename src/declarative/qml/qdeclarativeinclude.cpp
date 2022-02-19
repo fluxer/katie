@@ -22,8 +22,6 @@
 #include "qdeclarativeinclude_p.h"
 
 #include <QtScript/qscriptengine.h>
-#include <QtNetwork/qnetworkrequest.h>
-#include <QtNetwork/qnetworkreply.h>
 #include <QtCore/qfile.h>
 
 #include "qdeclarativeengine_p.h"
@@ -32,9 +30,9 @@
 QT_BEGIN_NAMESPACE
 
 QDeclarativeInclude::QDeclarativeInclude(const QUrl &url, 
-                                                       QDeclarativeEngine *engine, 
-                                                       QScriptContext *ctxt)
-: QObject(engine), m_engine(engine), m_network(0), m_reply(0), m_url(url), m_redirectCount(0)
+                                         QDeclarativeEngine *engine, 
+                                         QScriptContext *ctxt)
+    : QObject(engine), m_engine(engine), m_url(url)
 {
     QDeclarativeEnginePrivate *ep = QDeclarativeEnginePrivate::get(engine);
     m_context = ep->contextClass->contextFromValue(QScriptDeclarativeClass::scopeChainValue(ctxt, -3));
@@ -43,20 +41,14 @@ QDeclarativeInclude::QDeclarativeInclude(const QUrl &url,
     m_scope[1] = QScriptDeclarativeClass::scopeChainValue(ctxt, -5);
 
     m_scriptEngine = QDeclarativeEnginePrivate::getScriptEngine(engine);
-    m_network = QDeclarativeScriptEngine::get(m_scriptEngine)->networkAccessManager();
 
     m_result = resultValue(m_scriptEngine);
 
-    QNetworkRequest request;
-    request.setUrl(url);
-
-    m_reply = m_network->get(request);
-    QObject::connect(m_reply, SIGNAL(finished()), this, SLOT(finished()));
+    include(ctxt, m_scriptEngine);
 }
 
 QDeclarativeInclude::~QDeclarativeInclude()
 {
-    delete m_reply;
 }
 
 QScriptValue QDeclarativeInclude::resultValue(QScriptEngine *engine, Status status)
@@ -84,63 +76,6 @@ void QDeclarativeInclude::setCallback(const QScriptValue &c)
 QScriptValue QDeclarativeInclude::callback() const
 {
     return m_callback;
-}
-
-#define INCLUDE_MAXIMUM_REDIRECT_RECURSION 15
-void QDeclarativeInclude::finished()
-{
-    m_redirectCount++;
-
-    if (m_redirectCount < INCLUDE_MAXIMUM_REDIRECT_RECURSION) {
-        QVariant redirect = m_reply->attribute(QNetworkRequest::RedirectionTargetAttribute);
-        if (redirect.isValid()) {
-            m_url = m_url.resolved(redirect.toUrl());
-            delete m_reply; 
-            
-            QNetworkRequest request;
-            request.setUrl(m_url);
-
-            m_reply = m_network->get(request);
-            QObject::connect(m_reply, SIGNAL(finished()), this, SLOT(finished()));
-            return;
-        }
-    }
-
-    if (m_reply->error() == QNetworkReply::NoError) {
-        QDeclarativeEnginePrivate *ep = QDeclarativeEnginePrivate::get(m_engine);
-
-        QByteArray data = m_reply->readAll();
-
-        QString code = QString::fromUtf8(data);
-
-        QString urlString = m_url.toString();
-        QScriptContext *scriptContext = QScriptDeclarativeClass::pushCleanContext(m_scriptEngine);
-        scriptContext->pushScope(ep->contextClass->newUrlContext(m_context, 0, urlString));
-        scriptContext->pushScope(m_scope[0]);
-
-        scriptContext->pushScope(m_scope[1]);
-        scriptContext->setActivationObject(m_scope[1]);
-        QDeclarativeScriptParser::extractPragmas(code);
-
-        m_scriptEngine->evaluate(code, urlString, 1);
-
-        m_scriptEngine->popContext();
-
-        if (m_scriptEngine->hasUncaughtException()) {
-            m_result.setProperty(QLatin1String("status"), QScriptValue(m_scriptEngine, Exception));
-            m_result.setProperty(QLatin1String("exception"), m_scriptEngine->uncaughtException());
-            m_scriptEngine->clearExceptions();
-        } else {
-            m_result.setProperty(QLatin1String("status"), QScriptValue(m_scriptEngine, Ok));
-        }
-    } else {
-        m_result.setProperty(QLatin1String("status"), QScriptValue(m_scriptEngine, NetworkError));
-    }
-
-    callback(m_scriptEngine, m_callback, m_result);
-
-    disconnect();
-    deleteLater();
 }
 
 void QDeclarativeInclude::callback(QScriptEngine *engine, QScriptValue &callback, QScriptValue &status)

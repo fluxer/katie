@@ -34,10 +34,7 @@
 #include <QtScript/qscriptvalueiterator.h>
 #include <QtCore/qfile.h>
 #include <QtCore/qdatetime.h>
-#include <QtNetwork/qnetworkaccessmanager.h>
 #include <QtDeclarative/qdeclarativeinfo.h>
-#include "qdeclarativenetworkaccessmanagerfactory.h"
-
 
 QT_BEGIN_NAMESPACE
 
@@ -110,21 +107,9 @@ public:
 
     struct ScriptEngine : public QDeclarativeScriptEngine
     {
-        ScriptEngine(QDeclarativeWorkerScriptEnginePrivate *parent) : QDeclarativeScriptEngine(0), p(parent), accessManager(0) {}
-        ~ScriptEngine() { delete accessManager; }
+        ScriptEngine(QDeclarativeWorkerScriptEnginePrivate *parent) : QDeclarativeScriptEngine(0), p(parent) {}
+        ~ScriptEngine() { }
         QDeclarativeWorkerScriptEnginePrivate *p;
-        QNetworkAccessManager *accessManager;
-
-        virtual QNetworkAccessManager *networkAccessManager() {
-            if (!accessManager) {
-                if (p->qmlengine && p->qmlengine->networkAccessManagerFactory()) {
-                    accessManager = p->qmlengine->networkAccessManagerFactory()->create(this);
-                } else {
-                    accessManager = new QNetworkAccessManager(this);
-                }
-            }
-            return accessManager;
-        }
     };
     ScriptEngine *workerEngine;
     static QDeclarativeWorkerScriptEnginePrivate *get(QScriptEngine *e) {

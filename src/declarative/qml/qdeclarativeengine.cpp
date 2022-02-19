@@ -39,7 +39,6 @@
 #include "qdeclarativeglobal_p.h"
 #include "qdeclarativeworkerscript_p.h"
 #include "qdeclarativecomponent_p.h"
-#include "qdeclarativenetworkaccessmanagerfactory.h"
 #include "qdeclarativeimageprovider.h"
 #include "qdeclarativedirparser_p.h"
 #include "qdeclarativeextensioninterface.h"
@@ -52,9 +51,6 @@
 
 #include <QtCore/qmetaobject.h>
 #include <QScriptClass>
-#include <QNetworkReply>
-#include <QNetworkRequest>
-#include <QNetworkAccessManager>
 #include <QStandardPaths>
 #include <QTimer>
 #include <QList>
@@ -300,8 +296,7 @@ QDeclarativeEnginePrivate::QDeclarativeEnginePrivate(QDeclarativeEngine *e)
   outputWarningsToStdErr(true), contextClass(0), sharedContext(0), sharedScope(0),
   objectClass(0), valueTypeClass(0), globalClass(0), cleanup(0), erroredBindings(0),
   inProgressCreations(0), scriptEngine(this), workerScriptEngine(0), componentAttached(0),
-  inBeginCreate(false), networkAccessManager(0), networkAccessManagerFactory(0),
-  typeLoader(e), importDatabase(e)
+  inBeginCreate(false), typeLoader(e), importDatabase(e)
 {
     if (!qt_QmlQtModule_registered) {
         qt_QmlQtModule_registered = true;
@@ -405,11 +400,6 @@ QScriptValue QDeclarativeScriptEngine::resolvedUrl(QScriptContext *ctxt, QScript
     QString arg = ctxt->argument(0).toString();
     QUrl r = QDeclarativeScriptEngine::get(engine)->resolvedUrl(ctxt,QUrl(arg));
     return QScriptValue(r.toString());
-}
-
-QNetworkAccessManager *QDeclarativeScriptEngine::networkAccessManager()
-{
-    return p->getNetworkAccessManager();
 }
 
 QDeclarativeEnginePrivate::~QDeclarativeEnginePrivate()
@@ -615,69 +605,6 @@ QDeclarativeContext *QDeclarativeEngine::rootContext() const
 {
     Q_D(const QDeclarativeEngine);
     return d->rootContext;
-}
-
-/*!
-  Sets the \a factory to use for creating QNetworkAccessManager(s).
-
-  QNetworkAccessManager is used for all network access by QML.  By
-  implementing a factory it is possible to create custom
-  QNetworkAccessManager with specialized caching, proxy and cookie
-  support.
-
-  The factory must be set before executing the engine.
-*/
-void QDeclarativeEngine::setNetworkAccessManagerFactory(QDeclarativeNetworkAccessManagerFactory *factory)
-{
-    Q_D(QDeclarativeEngine);
-    QMutexLocker locker(&d->mutex);
-    d->networkAccessManagerFactory = factory;
-}
-
-/*!
-  Returns the current QDeclarativeNetworkAccessManagerFactory.
-
-  \sa setNetworkAccessManagerFactory()
-*/
-QDeclarativeNetworkAccessManagerFactory *QDeclarativeEngine::networkAccessManagerFactory() const
-{
-    Q_D(const QDeclarativeEngine);
-    return d->networkAccessManagerFactory;
-}
-
-QNetworkAccessManager *QDeclarativeEnginePrivate::createNetworkAccessManager(QObject *parent) const
-{
-    if (networkAccessManagerFactory) {
-        return networkAccessManagerFactory->create(parent);
-    }
-
-    return new QNetworkAccessManager(parent);
-}
-
-QNetworkAccessManager *QDeclarativeEnginePrivate::getNetworkAccessManager() const
-{
-    Q_Q(const QDeclarativeEngine);
-    if (!networkAccessManager)
-        networkAccessManager = createNetworkAccessManager(const_cast<QDeclarativeEngine*>(q));
-    return networkAccessManager;
-}
-
-/*!
-  Returns a common QNetworkAccessManager which can be used by any QML
-  element instantiated by this engine.
-
-  If a QDeclarativeNetworkAccessManagerFactory has been set and a
-  QNetworkAccessManager has not yet been created, the
-  QDeclarativeNetworkAccessManagerFactory will be used to create the
-  QNetworkAccessManager; otherwise the returned QNetworkAccessManager
-  will have no proxy or cache set.
-
-  \sa setNetworkAccessManagerFactory()
-*/
-QNetworkAccessManager *QDeclarativeEngine::networkAccessManager() const
-{
-    Q_D(const QDeclarativeEngine);
-    return d->getNetworkAccessManager();
 }
 
 /*!

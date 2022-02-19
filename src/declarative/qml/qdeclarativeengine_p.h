@@ -75,9 +75,6 @@ class QDeclarativeImportDatabase;
 class QDeclarativeObjectScriptClass;
 class QDeclarativeTypeNameScriptClass;
 class QDeclarativeValueTypeScriptClass;
-class QNetworkReply;
-class QNetworkAccessManager;
-class QDeclarativeNetworkAccessManagerFactory;
 class QDeclarativeAbstractBinding;
 class QScriptDeclarativeClass;
 class QDeclarativeTypeNameScriptClass;
@@ -104,8 +101,6 @@ public:
     QDeclarativeEnginePrivate *p;
 
     QUrl baseUrl;
-
-    virtual QNetworkAccessManager *networkAccessManager();
 };
 
 class Q_AUTOTEST_EXPORT QDeclarativeEnginePrivate : public QObjectPrivate
@@ -195,11 +190,6 @@ public:
     }
 
     bool inBeginCreate;
-
-    QNetworkAccessManager *createNetworkAccessManager(QObject *parent) const;
-    QNetworkAccessManager *getNetworkAccessManager() const;
-    mutable QNetworkAccessManager *networkAccessManager;
-    QDeclarativeNetworkAccessManagerFactory *networkAccessManagerFactory;
 
     QHash<QString,QSharedPointer<QDeclarativeImageProvider> > imageProviders;
     QDeclarativeImageProvider::ImageType getImageProviderType(const QUrl &url) const;

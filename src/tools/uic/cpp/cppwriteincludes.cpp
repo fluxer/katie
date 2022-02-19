@@ -165,7 +165,6 @@ static const struct ClassTblData {
     { QLatin1String("QDeclarativeInfo"), QLatin1String("QtDeclarative/qdeclarativeinfo.h") },
     { QLatin1String("QDeclarativeItem"), QLatin1String("QtDeclarative/qdeclarativeitem.h") },
     { QLatin1String("QDeclarativeListReference"), QLatin1String("QtDeclarative/qdeclarativelist.h") },
-    { QLatin1String("QDeclarativeNetworkAccessManagerFactory"), QLatin1String("QtDeclarative/qdeclarativenetworkaccessmanagerfactory.h") },
     { QLatin1String("QDeclarativeParserStatus"), QLatin1String("QtDeclarative/qdeclarativeparserstatus.h") },
     { QLatin1String("QDeclarativeProperty"), QLatin1String("QtDeclarative/qdeclarativeproperty.h") },
     { QLatin1String("QDeclarativePropertyMap"), QLatin1String("QtDeclarative/qdeclarativepropertymap.h") },

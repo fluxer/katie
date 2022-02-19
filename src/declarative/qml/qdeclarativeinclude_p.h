@@ -45,8 +45,6 @@ QT_BEGIN_NAMESPACE
 class QDeclarativeEngine;
 class QScriptContext;
 class QScriptEngine;
-class QNetworkAccessManager;
-class QNetworkReply;
 class QDeclarativeInclude : public QObject
 {
     Q_OBJECT
@@ -72,17 +70,11 @@ public:
     static QScriptValue include(QScriptContext *ctxt, QScriptEngine *engine);
     static QScriptValue worker_include(QScriptContext *ctxt, QScriptEngine *engine);
 
-public slots:
-    void finished();
-
 private:
     QDeclarativeEngine *m_engine;
     QScriptEngine *m_scriptEngine;
-    QNetworkAccessManager *m_network;
-    QDeclarativeGuard<QNetworkReply> m_reply;
 
     QUrl m_url;
-    int m_redirectCount;
     QScriptValue m_callback;
     QScriptValue m_result;
     QDeclarativeGuardedContextData m_context;

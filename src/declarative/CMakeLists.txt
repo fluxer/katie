@@ -16,7 +16,6 @@ set(DECLARATIVE_PUBLIC_HEADERS
     QDeclarativeImageProvider
     QDeclarativeInfo
     QDeclarativeItem
-    QDeclarativeNetworkAccessManagerFactory
     QDeclarativeParserStatus
     QDeclarativeProperty
     QDeclarativePropertyMap
@@ -147,7 +146,6 @@ set(DECLARATIVE_HEADERS
     ${CMAKE_CURRENT_SOURCE_DIR}/qml/qdeclarativeworkerscript_p.h
     ${CMAKE_CURRENT_SOURCE_DIR}/qml/qdeclarativeguard_p.h
     ${CMAKE_CURRENT_SOURCE_DIR}/qml/qdeclarativeimageprovider.h
-    ${CMAKE_CURRENT_SOURCE_DIR}/qml/qdeclarativenetworkaccessmanagerfactory.h
     ${CMAKE_CURRENT_SOURCE_DIR}/qml/qdeclarativedirparser_p.h
     ${CMAKE_CURRENT_SOURCE_DIR}/qml/qdeclarativeextensioninterface.h
     ${CMAKE_CURRENT_SOURCE_DIR}/qml/qdeclarativeimport_p.h
@@ -274,7 +272,6 @@ set(DECLARATIVE_SOURCES
     ${CMAKE_CURRENT_SOURCE_DIR}/qml/qdeclarativelistscriptclass.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/qml/qdeclarativeworkerscript.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/qml/qdeclarativeimageprovider.cpp
-    ${CMAKE_CURRENT_SOURCE_DIR}/qml/qdeclarativenetworkaccessmanagerfactory.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/qml/qdeclarativedirparser.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/qml/qdeclarativeextensionplugin.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/qml/qdeclarativeimport.cpp

@@ -28,8 +28,6 @@
 #include "qdeclarativeengine_p.h"
 
 #include <QMovie>
-#include <QNetworkRequest>
-#include <QNetworkReply>
 
 QT_BEGIN_NAMESPACE
 
@@ -221,11 +219,6 @@ void QDeclarativeAnimatedImage::setSource(const QUrl &url)
     delete d->_movie;
     d->_movie = 0;
 
-    if (d->reply) {
-        d->reply->deleteLater();
-        d->reply = 0;
-    }
-
     d->url = url;
     emit sourceChanged(d->url);
 
@@ -250,101 +243,35 @@ void QDeclarativeAnimatedImage::load()
         if (d->progress != oldProgress)
             emit progressChanged(d->progress);
     } else {
-#ifndef QT_NO_LOCALFILE_OPTIMIZED_QML
-        QString lf = QDeclarativeEnginePrivate::urlToLocalFile(d->url);
-        if (!lf.isEmpty()) {
-            //### should be unified with movieRequestFinished
-            d->_movie = new QMovie(lf);
-            if (!d->_movie->isValid()){
-                qmlInfo(this) << "Error Reading Animated Image File " << d->url.toString();
-                delete d->_movie;
-                d->_movie = 0;
-                d->status = Error;
-                if (d->status != oldStatus)
-                    emit statusChanged(d->status);
-                return;
-            }
-            connect(d->_movie, SIGNAL(stateChanged(QMovie::MovieState)),
-                    this, SLOT(playingStatusChanged()));
-            connect(d->_movie, SIGNAL(frameChanged(int)),
-                    this, SLOT(movieUpdate()));
-            d->_movie->setCacheMode(QMovie::CacheAll);
-            if(d->playing)
-                d->_movie->start();
-            else
-                d->_movie->jumpToFrame(0);
-            if(d->paused)
-                d->_movie->setPaused(true);
-            d->setPixmap(d->_movie->currentPixmap());
-            d->status = Ready;
-            d->progress = 1.0;
+        d->_movie = new QMovie(QDeclarativeEnginePrivate::urlToLocalFile(d->url));
+        if (!d->_movie->isValid()){
+            qmlInfo(this) << "Error Reading Animated Image File " << d->url.toString();
+            delete d->_movie;
+            d->_movie = 0;
+            d->status = Error;
             if (d->status != oldStatus)
                 emit statusChanged(d->status);
-            if (d->progress != oldProgress)
-                emit progressChanged(d->progress);
             return;
         }
-#endif
-        d->status = Loading;
-        d->progress = 0;
-        emit statusChanged(d->status);
-        emit progressChanged(d->progress);
-        QNetworkRequest req(d->url);
-        req.setAttribute(QNetworkRequest::HttpPipeliningAllowedAttribute, true);
-        d->reply = qmlEngine(this)->networkAccessManager()->get(req);
-        QObject::connect(d->reply, SIGNAL(finished()),
-                         this, SLOT(movieRequestFinished()));
-        QObject::connect(d->reply, SIGNAL(downloadProgress(qint64,qint64)),
-                         this, SLOT(requestProgress(qint64,qint64)));
+        connect(d->_movie, SIGNAL(stateChanged(QMovie::MovieState)),
+                this, SLOT(playingStatusChanged()));
+        connect(d->_movie, SIGNAL(frameChanged(int)),
+                this, SLOT(movieUpdate()));
+        d->_movie->setCacheMode(QMovie::CacheAll);
+        if(d->playing)
+            d->_movie->start();
+        else
+            d->_movie->jumpToFrame(0);
+        if(d->paused)
+            d->_movie->setPaused(true);
+        d->setPixmap(d->_movie->currentPixmap());
+        d->status = Ready;
+        d->progress = 1.0;
+        if (d->status != oldStatus)
+            emit statusChanged(d->status);
+        if (d->progress != oldProgress)
+            emit progressChanged(d->progress);
     }
-}
-
-#define ANIMATEDIMAGE_MAXIMUM_REDIRECT_RECURSION 16
-
-void QDeclarativeAnimatedImage::movieRequestFinished()
-{
-    Q_D(QDeclarativeAnimatedImage);
-
-    d->redirectCount++;
-    if (d->redirectCount < ANIMATEDIMAGE_MAXIMUM_REDIRECT_RECURSION) {
-        QVariant redirect = d->reply->attribute(QNetworkRequest::RedirectionTargetAttribute);
-        if (redirect.isValid()) {
-            QUrl url = d->reply->url().resolved(redirect.toUrl());
-            d->reply->deleteLater();
-            d->reply = 0;
-            setSource(url);
-            return;
-        }
-    }
-    d->redirectCount=0;
-
-    d->_movie = new QMovie(d->reply);
-    if (!d->_movie->isValid()){
-#ifndef QT_NO_DEBUG_STREAM
-        qmlInfo(this) << "Error Reading Animated Image File " << d->url;
-#endif
-        delete d->_movie;
-        d->_movie = 0;
-        d->status = Error;
-        emit statusChanged(d->status);
-        return;
-    }
-    connect(d->_movie, SIGNAL(stateChanged(QMovie::MovieState)),
-            this, SLOT(playingStatusChanged()));
-    connect(d->_movie, SIGNAL(frameChanged(int)),
-            this, SLOT(movieUpdate()));
-    d->_movie->setCacheMode(QMovie::CacheAll);
-    if(d->playing)
-        d->_movie->start();
-    if (d->paused || !d->playing) {
-        d->_movie->jumpToFrame(d->preset_currentframe);
-        d->preset_currentframe = 0;
-    }
-    if(d->paused)
-        d->_movie->setPaused(true);
-    d->setPixmap(d->_movie->currentPixmap());
-    d->status = Ready;
-    emit statusChanged(d->status);
 }
 
 void QDeclarativeAnimatedImage::movieUpdate()
@@ -373,10 +300,8 @@ void QDeclarativeAnimatedImage::componentComplete()
     QDeclarativeItem::componentComplete(); // NOT QDeclarativeImage
     if (d->url.isValid())
         load();
-    if (!d->reply) {
-        setCurrentFrame(d->preset_currentframe);
-        d->preset_currentframe = 0;
-    }
+    setCurrentFrame(d->preset_currentframe);
+    d->preset_currentframe = 0;
 }
 
 QT_END_NAMESPACE

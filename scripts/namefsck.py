@@ -120,7 +120,6 @@ classlist = [
     "QDeclarativeItem",
     "QDeclarativeListProperty",
     "QDeclarativeListReference",
-    "QDeclarativeNetworkAccessManagerFactory",
     "QDeclarativeParserStatus",
     "QDeclarativeProperties",
     "QDeclarativeProperty",
