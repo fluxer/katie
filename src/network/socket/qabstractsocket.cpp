@@ -2545,8 +2545,8 @@ Q_NETWORK_EXPORT QDebug operator<<(QDebug debug, QAbstractSocket::SocketError er
     case QAbstractSocket::ProxyAuthenticationRequiredError:
         debug << "QAbstractSocket::ProxyAuthenticationRequiredError";
         break;
-    case QAbstractSocket::UnknownSocketError:
-        debug << "QAbstractSocket::UnknownSocketError";
+    case QAbstractSocket::SslHandshakeFailedError:
+        debug << "QAbstractSocket::SslHandshakeFailedError";
         break;
     case QAbstractSocket::ProxyConnectionRefusedError:
         debug << "QAbstractSocket::ProxyConnectionRefusedError";
@@ -2562,6 +2562,9 @@ Q_NETWORK_EXPORT QDebug operator<<(QDebug debug, QAbstractSocket::SocketError er
         break;
     case QAbstractSocket::ProxyProtocolError:
         debug << "QAbstractSocket::ProxyProtocolError";
+        break;
+    case QAbstractSocket::UnknownSocketError:
+        debug << "QAbstractSocket::UnknownSocketError";
         break;
     default:
         debug << "QAbstractSocket::SocketError(" << int(error) << ')';
