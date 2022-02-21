@@ -280,8 +280,6 @@
            IPv6 support).
     \value ProxyAuthenticationRequiredError The socket is using a proxy, and
            the proxy requires authentication.
-    \value SslHandshakeFailedError The SSL/TLS handshake failed, so
-           the connection was closed (only used in QSslSocket) (This value was introduced in 4.4.)
     \value UnfinishedSocketOperationError Used by QAbstractSocketEngine only,
            The last operation attempted has not finished yet (still in progress in
             the background). (This value was introduced in 4.4.)
@@ -357,7 +355,6 @@
 #include "qtimer.h"
 #include "qelapsedtimer.h"
 #include "qscopedvaluerollback.h"
-#include "qsslsocket.h"
 #include "qdebug.h"
 #include "qthread_p.h"
 #include "qcore_unix_p.h"
@@ -1915,7 +1912,6 @@ bool QAbstractSocket::atEnd() const
 
     \sa write(), waitForBytesWritten()
 */
-// Note! docs copied to QSslSocket::flush()
 bool QAbstractSocket::flush()
 {
     Q_D(QAbstractSocket);
@@ -2544,9 +2540,6 @@ Q_NETWORK_EXPORT QDebug operator<<(QDebug debug, QAbstractSocket::SocketError er
         break;
     case QAbstractSocket::ProxyAuthenticationRequiredError:
         debug << "QAbstractSocket::ProxyAuthenticationRequiredError";
-        break;
-    case QAbstractSocket::SslHandshakeFailedError:
-        debug << "QAbstractSocket::SslHandshakeFailedError";
         break;
     case QAbstractSocket::ProxyConnectionRefusedError:
         debug << "QAbstractSocket::ProxyConnectionRefusedError";

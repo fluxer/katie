@@ -68,10 +68,9 @@ public:
         UnsupportedSocketOperationError,        /* 10 */
         UnfinishedSocketOperationError,
         ProxyAuthenticationRequiredError,
-        SslHandshakeFailedError,
         ProxyConnectionRefusedError,
-        ProxyConnectionClosedError,             /* 15 */
-        ProxyConnectionTimeoutError,
+        ProxyConnectionClosedError,
+        ProxyConnectionTimeoutError,            /* 15 */
         ProxyNotFoundError,
         ProxyProtocolError,
 

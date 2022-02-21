@@ -95,7 +95,7 @@ static QByteArray qNtlmPhase3(QAuthenticatorPrivate *ctx, const QByteArray& phas
 
   The Digest-MD5 authentication mechanism supports no outgoing options.
 
-  \sa QSslSocket
+  \sa QTcpSocket
 */
 
 

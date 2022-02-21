@@ -13,13 +13,6 @@ set(NETWORK_PUBLIC_HEADERS
     QLocalSocket
     QNetworkInterface
     QNetworkProxy
-    QSsl
-    QSslCertificate
-    QSslCipher
-    QSslConfiguration
-    QSslError
-    QSslKey
-    QSslSocket
     QTcpServer
     QTcpSocket
     QUdpSocket
@@ -60,18 +53,6 @@ set(NETWORK_HEADERS
     ${CMAKE_CURRENT_SOURCE_DIR}/socket/qlocalsocket_p.h
     ${CMAKE_CURRENT_SOURCE_DIR}/socket/qnativesocketengine_p.h
     ${CMAKE_CURRENT_SOURCE_DIR}/socket/qnet_unix_p.h
-    ${CMAKE_CURRENT_SOURCE_DIR}/ssl/qssl.h
-    ${CMAKE_CURRENT_SOURCE_DIR}/ssl/qsslcertificate.h
-    ${CMAKE_CURRENT_SOURCE_DIR}/ssl/qsslcertificate_p.h
-    ${CMAKE_CURRENT_SOURCE_DIR}/ssl/qsslconfiguration.h
-    ${CMAKE_CURRENT_SOURCE_DIR}/ssl/qsslconfiguration_p.h
-    ${CMAKE_CURRENT_SOURCE_DIR}/ssl/qsslcipher.h
-    ${CMAKE_CURRENT_SOURCE_DIR}/ssl/qsslcipher_p.h
-    ${CMAKE_CURRENT_SOURCE_DIR}/ssl/qsslerror.h
-    ${CMAKE_CURRENT_SOURCE_DIR}/ssl/qsslkey.h
-    ${CMAKE_CURRENT_SOURCE_DIR}/ssl/qsslsocket.h
-    ${CMAKE_CURRENT_SOURCE_DIR}/ssl/qsslsocket_openssl_p.h
-    ${CMAKE_CURRENT_SOURCE_DIR}/ssl/qsslsocket_p.h
     ${CMAKE_CURRENT_SOURCE_DIR}/qnetworkcommon_p.h
 )
 
@@ -96,14 +77,6 @@ set(NETWORK_SOURCES
     ${CMAKE_CURRENT_SOURCE_DIR}/socket/qnativesocketengine_unix.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/socket/qlocalsocket_unix.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/socket/qlocalserver_unix.cpp
-    ${CMAKE_CURRENT_SOURCE_DIR}/ssl/qssl.cpp
-    ${CMAKE_CURRENT_SOURCE_DIR}/ssl/qsslcertificate.cpp
-    ${CMAKE_CURRENT_SOURCE_DIR}/ssl/qsslconfiguration.cpp
-    ${CMAKE_CURRENT_SOURCE_DIR}/ssl/qsslcipher.cpp
-    ${CMAKE_CURRENT_SOURCE_DIR}/ssl/qsslerror.cpp
-    ${CMAKE_CURRENT_SOURCE_DIR}/ssl/qsslkey.cpp
-    ${CMAKE_CURRENT_SOURCE_DIR}/ssl/qsslsocket.cpp
-    ${CMAKE_CURRENT_SOURCE_DIR}/ssl/qsslsocket_openssl.cpp
 )
 
 katie_generate_misc("${NETWORK_HEADERS}" QtNetwork)

@@ -1136,13 +1136,6 @@ include/katie/QtNetwork/QNetworkInterface
 include/katie/QtNetwork/QNetworkProxy
 include/katie/QtNetwork/QNetworkProxyFactory
 include/katie/QtNetwork/QNetworkProxyQuery
-include/katie/QtNetwork/QSsl
-include/katie/QtNetwork/QSslCertificate
-include/katie/QtNetwork/QSslCipher
-include/katie/QtNetwork/QSslConfiguration
-include/katie/QtNetwork/QSslError
-include/katie/QtNetwork/QSslKey
-include/katie/QtNetwork/QSslSocket
 include/katie/QtNetwork/QTcpServer
 include/katie/QtNetwork/QTcpSocket
 include/katie/QtNetwork/QUdpSocket
@@ -1158,13 +1151,6 @@ include/katie/QtNetwork/qlocalserver.h
 include/katie/QtNetwork/qlocalsocket.h
 include/katie/QtNetwork/qnetworkinterface.h
 include/katie/QtNetwork/qnetworkproxy.h
-include/katie/QtNetwork/qssl.h
-include/katie/QtNetwork/qsslcertificate.h
-include/katie/QtNetwork/qsslcipher.h
-include/katie/QtNetwork/qsslconfiguration.h
-include/katie/QtNetwork/qsslerror.h
-include/katie/QtNetwork/qsslkey.h
-include/katie/QtNetwork/qsslsocket.h
 include/katie/QtNetwork/qtcpserver.h
 include/katie/QtNetwork/qtcpsocket.h
 include/katie/QtNetwork/qudpsocket.h

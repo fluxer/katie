@@ -37,7 +37,6 @@
 #include <QBuffer>
 #include <QDebug>
 #include "qobject_p.h"
-#include <QSslError>
 
 #define IMAGEREQUEST_MAX_REQUEST_COUNT       8
 #define IMAGEREQUEST_MAX_REDIRECT_RECURSION 16
