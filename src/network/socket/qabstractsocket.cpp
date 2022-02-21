@@ -358,7 +358,6 @@
 #include "qdebug.h"
 #include "qthread_p.h"
 #include "qcore_unix_p.h"
-#include "qnetworkcommon_p.h"
 #include "qcorecommon_p.h"
 
 #include <time.h>
