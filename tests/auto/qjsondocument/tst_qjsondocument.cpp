@@ -145,7 +145,7 @@ void tst_QJsonDocument::error()
     QVERIFY(jsondoc.isNull());
 
     jsondoc = QJsonDocument::fromVariant(QVariantMap());
-    QCOMPARE(jsondoc.errorString(), QLatin1String("Data map is empty"));
+    QCOMPARE(jsondoc.errorString(), QLatin1String("Data variant is null"));
     QVERIFY(jsondoc.isNull());
 
     // TODO: indermediate error test, e.g. maximum depth reached

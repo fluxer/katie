@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-02-19 20:09+0200\n"
+"POT-Creation-Date: 2022-02-21 08:48+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -321,29 +321,39 @@ msgctxt "QJsonDocument"
 msgid "Data is empty"
 msgstr ""
 
-#: src/core/tools/qjsondocument.cpp:112
+#: src/core/tools/qjsondocument.cpp:113 src/core/tools/qjsondocument.cpp:190
 msgctxt "QJsonDocument"
 msgid "Unknown JSON type in array"
 msgstr ""
 
-#: src/core/tools/qjsondocument.cpp:145 src/core/tools/qjsondocument.cpp:228
+#: src/core/tools/qjsondocument.cpp:146
 msgctxt "QJsonDocument"
 msgid "Unknown JSON type"
 msgstr ""
 
-#: src/core/tools/qjsondocument.cpp:153
+#: src/core/tools/qjsondocument.cpp:199 src/core/tools/qjsondocument.cpp:299
 msgctxt "QJsonDocument"
-msgid "Rootless array/values are not supported"
+msgid "Rootless values are not supported"
 msgstr ""
 
-#: src/core/tools/qjsondocument.cpp:168
+#: src/core/tools/qjsondocument.cpp:214 src/core/tools/qjsondocument.cpp:226
 msgctxt "QJsonDocument"
-msgid "Data map is empty"
+msgid "Data variant is null"
 msgstr ""
 
-#: src/core/tools/qjsondocument.cpp:171
+#: src/core/tools/qjsondocument.cpp:217
 msgctxt "QJsonDocument"
 msgid "Maximum depth reached"
+msgstr ""
+
+#: src/core/tools/qjsondocument.cpp:282 src/core/tools/qjsondocument.cpp:308
+msgctxt "QJsonDocument"
+msgid "Unknown variant type"
+msgstr ""
+
+#: src/core/tools/qjsondocument.cpp:304
+msgctxt "QJsonDocument"
+msgid "Rootless arrays are not supported"
 msgstr ""
 
 #: src/declarative/graphicsitems/qdeclarativeitemsmodule.cpp:82
