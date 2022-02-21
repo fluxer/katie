@@ -365,17 +365,6 @@ bool QNativeSocketEngine::initialize(QAbstractSocket::SocketType socketType, QAb
         qWarning("QNativeSocketEngine::initialize unable to inline out-of-band data");
     }
 
-    // Before Qt 4.6, we always set the send and receive buffer size to 49152 as
-    // this was found to be an optimal value. However, modern OS
-    // all have some kind of auto tuning for this and we therefore don't set
-    // this explictly anymore.
-    // If it introduces any performance regressions for Qt 4.6.x (x > 0) then
-    // it will be put back in.
-    //
-    // pre-4.6:
-    // setReceiveBufferSize(49152);
-    // setSendBufferSize(49152);
-
     d->socketType = socketType;
     d->socketProtocol = protocol;
     return true;
@@ -948,66 +937,6 @@ bool QNativeSocketEngine::waitForReadOrWrite(bool *readyToRead, bool *readyToWri
 
     return ret > 0;
 }
-
-/*!
-    Returns the size of the operating system's socket receive
-    buffer. Depending on the operating system, this size may be
-    different from what has been set earlier with
-    setReceiveBufferSize().
-*/
-qint64 QNativeSocketEngine::receiveBufferSize() const
-{
-    Q_CHECK_VALID_SOCKETLAYER(QNativeSocketEngine::receiveBufferSize(), -1);
-    return option(ReceiveBufferSocketOption);
-}
-
-/*!
-    Sets the size of the operating system receive buffer to \a size.
-
-    For clients, this should be set before connectToHost() is called;
-    otherwise it will have no effect. For servers, it should be called
-    before listen().
-
-    The operating system receive buffer size effectively limits two
-    things: how much data can be in transit at any one moment, and how
-    much data can be received in one iteration of the main event loop.
-    Setting the size of the receive buffer may have an impact on the
-    socket's performance.
-
-    The default value is operating system-dependent.
-*/
-void QNativeSocketEngine::setReceiveBufferSize(qint64 size)
-{
-    Q_CHECK_VALID_SOCKETLAYER(QNativeSocketEngine::setReceiveBufferSize(), Q_VOID);
-    setOption(ReceiveBufferSocketOption, size);
-}
-
-/*!
-    Returns the size of the operating system send buffer. Depending on
-    the operating system, this size may be different from what has
-    been set earlier with setSendBufferSize().
-*/
-qint64 QNativeSocketEngine::sendBufferSize() const
-{
-    Q_CHECK_VALID_SOCKETLAYER(QNativeSocketEngine::setSendBufferSize(), -1);
-    return option(SendBufferSocketOption);
-}
-
-/*!
-    Sets the size of the operating system send buffer to \a size.
-
-    The operating system send buffer size effectively limits how much
-    data can be in transit at any one moment. Setting the size of the
-    send buffer may have an impact on the socket's performance.
-
-    The default value is operating system-dependent.
-*/
-void QNativeSocketEngine::setSendBufferSize(qint64 size)
-{
-    Q_CHECK_VALID_SOCKETLAYER(QNativeSocketEngine::setSendBufferSize(), Q_VOID);
-    setOption(SendBufferSocketOption, size);
-}
-
 
 /*!
     Sets the option \a option to the value \a value.

@@ -89,12 +89,6 @@ public:
 
     qint64 bytesToWrite() const;
 
-    qint64 receiveBufferSize() const;
-    void setReceiveBufferSize(qint64 bufferSize);
-
-    qint64 sendBufferSize() const;
-    void setSendBufferSize(qint64 bufferSize);
-
     int option(SocketOption option) const;
     bool setOption(SocketOption option, int value);
 

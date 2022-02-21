@@ -71,8 +71,6 @@ public:
     enum SocketOption {
         NonBlockingSocketOption,
         BroadcastSocketOption,
-        ReceiveBufferSocketOption,
-        SendBufferSocketOption,
         AddressReusable,
         ReceiveOutOfBandData,
         LowDelayOption,

@@ -138,12 +138,6 @@ int QNativeSocketEnginePrivate::option(QNativeSocketEngine::SocketOption opt) co
     int level = SOL_SOCKET; // default
 
     switch (opt) {
-    case QNativeSocketEngine::ReceiveBufferSocketOption:
-        n = SO_RCVBUF;
-        break;
-    case QNativeSocketEngine::SendBufferSocketOption:
-        n = SO_SNDBUF;
-        break;
     case QNativeSocketEngine::NonBlockingSocketOption:
         break;
     case QNativeSocketEngine::BroadcastSocketOption:
@@ -208,12 +202,6 @@ bool QNativeSocketEnginePrivate::setOption(QNativeSocketEngine::SocketOption opt
     int level = SOL_SOCKET; // default
 
     switch (opt) {
-    case QNativeSocketEngine::ReceiveBufferSocketOption:
-        n = SO_RCVBUF;
-        break;
-    case QNativeSocketEngine::SendBufferSocketOption:
-        n = SO_SNDBUF;
-        break;
     case QNativeSocketEngine::BroadcastSocketOption:
         n = SO_BROADCAST;
         break;
