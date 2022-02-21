@@ -65,7 +65,7 @@ set(KATIE_NO_WARNINGS
     -Wno-class-memaccess
     # hot attribute used in function prototypes
     -Wno-attributes
-    # deprecated X11, CUPS and OpenSSL API used
+    # deprecated X11 and CUPS API used
     -Wno-deprecated -Wno-deprecated-declarations
 )
 foreach(nowarning ${KATIE_NO_WARNINGS})
@@ -183,15 +183,6 @@ set_package_properties(Jansson PROPERTIES
     PURPOSE "Required for JSON support"
     DESCRIPTION "C library for encoding, decoding and manipulating JSON data"
     URL "https://github.com/akheron/jansson"
-    TYPE REQUIRED
-)
-
-# v1.1.0+ required for thread-safety without use of locking callbacks
-find_package(OpenSSL 1.1.0)
-set_package_properties(OpenSSL PROPERTIES
-    PURPOSE "Required for HTTPS support"
-    DESCRIPTION "Robust, commercial-grade, and full-featured toolkit for SSL and TLS"
-    URL "https://openssl.org"
     TYPE REQUIRED
 )
 

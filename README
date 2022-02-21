@@ -12,9 +12,8 @@ There are several things you should be aware before considering Katie:
 
  - some things have changed:
   - QMake build system replaced with CMake
-  - Jansson, OpenSSL, PCRE, Freetype, ICU, X11 and libpng are required for
-    building
-  - OpenSSL, D-Bus and CUPS must be linked to during build
+  - Jansson, PCRE, Freetype, ICU, X11 and libpng are required for building
+  - D-Bus and CUPS must be linked to during build
   - QtUiTools is build as shared library by default
   - moc, uic, rcc, etc. are linked to components
   - updated bundled Harfbuzz from upstream (not Harfbuzz-NG)
@@ -52,7 +51,6 @@ There are several things you should be aware before considering Katie:
  - some additions have been made: 
   - JSON document handler
   - standard directories handler
-  - building with OpenSSL v1.1+ is possible
   - building with LTO is possible and supported, if the toolchain can handle it
   - alternative libc implementations support
   - additional text codecs via ICU converter
@@ -67,7 +65,6 @@ There are several things you should be aware before considering Katie:
   - desktop files, Shell profile and dynamic linker/loader config
   - more reliable qrand(), seeded per thread
   - improved signal/slot template arguments handling
-  - improved OpenSSL default certificate and certificates directory detection
   - improved namespaces support and introduced QT_NAMESPACE_COMPAT
   - improved cross-compilation support
   - improved POSIX, XSI, SUSv2, etc. requirements build checks

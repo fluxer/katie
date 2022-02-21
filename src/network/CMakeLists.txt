@@ -1,8 +1,5 @@
 # add_definitions()
-set(EXTRA_NETWORK_LIBS
-    KtCore
-    ${OPENSSL_LIBRARIES}
-)
+set(EXTRA_NETWORK_LIBS KtCore)
 
 set(NETWORK_PUBLIC_HEADERS
     QAbstractSocket
@@ -25,7 +22,7 @@ include_directories(
     ${CMAKE_BINARY_DIR}/privateinclude
     ${CMAKE_BINARY_DIR}/include/QtCore
     ${CMAKE_BINARY_DIR}/include/QtNetwork
-    ${OPENSSL_INCLUDE_DIR}
+    ${CMAKE_SOURCE_DIR}/src/3rdparty/digest
 )
 
 set(NETWORK_HEADERS
@@ -54,6 +51,10 @@ set(NETWORK_HEADERS
     ${CMAKE_CURRENT_SOURCE_DIR}/socket/qnativesocketengine_p.h
     ${CMAKE_CURRENT_SOURCE_DIR}/socket/qnet_unix_p.h
     ${CMAKE_CURRENT_SOURCE_DIR}/qnetworkcommon_p.h
+    ${CMAKE_SOURCE_DIR}/src/3rdparty/md4/md4.h
+    ${CMAKE_SOURCE_DIR}/src/3rdparty/digest/md5.h
+    ${CMAKE_SOURCE_DIR}/src/3rdparty/digest/sha1.h
+    ${CMAKE_SOURCE_DIR}/src/3rdparty/digest/sha2.h
 )
 
 set(NETWORK_SOURCES
@@ -77,6 +78,10 @@ set(NETWORK_SOURCES
     ${CMAKE_CURRENT_SOURCE_DIR}/socket/qnativesocketengine_unix.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/socket/qlocalsocket_unix.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/socket/qlocalserver_unix.cpp
+    ${CMAKE_SOURCE_DIR}/src/3rdparty/md4/md4.c
+    ${CMAKE_SOURCE_DIR}/src/3rdparty/digest/md5c.c
+    ${CMAKE_SOURCE_DIR}/src/3rdparty/digest/sha1.c
+    ${CMAKE_SOURCE_DIR}/src/3rdparty/digest/sha2.c
 )
 
 katie_generate_misc("${NETWORK_HEADERS}" QtNetwork)

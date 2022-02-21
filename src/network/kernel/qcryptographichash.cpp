@@ -24,9 +24,10 @@
 #include "qiodevice.h"
 #include "qcorecommon_p.h"
 
-#include <openssl/md5.h>
-#include <openssl/md4.h>
-#include <openssl/sha.h>
+#include "md5.h"
+#include "md4.h"
+#include "sha1.h"
+#include "sha2.h"
 
 QT_BEGIN_NAMESPACE
 
@@ -35,7 +36,7 @@ class QCryptographicHashPrivate
 public:
     MD4_CTX md4Context;
     MD5_CTX md5Context;
-    SHA_CTX sha1Context;
+    SHA1_CTX sha1Context;
     SHA256_CTX sha256Context;
     SHA512_CTX sha512Context;
     QCryptographicHash::Algorithm method;
@@ -97,11 +98,11 @@ void QCryptographicHash::reset()
             break;
         }
         case QCryptographicHash::Md5: {
-            MD5_Init(&d->md5Context);
+            MD5Init(&d->md5Context);
             break;
         }
         case QCryptographicHash::Sha1: {
-            SHA1_Init(&d->sha1Context);
+            SHA1Init(&d->sha1Context);
             break;
         }
         case QCryptographicHash::Sha256: {
@@ -128,19 +129,19 @@ void QCryptographicHash::addData(const char *data, int length)
             break;
         }
         case QCryptographicHash::Md5: {
-            MD5_Update(&d->md5Context, data, length);
+            MD5Update(&d->md5Context, reinterpret_cast<const uchar*>(data), length);
             break;
         }
         case QCryptographicHash::Sha1: {
-            SHA1_Update(&d->sha1Context, data, length);
+            SHA1Update(&d->sha1Context, reinterpret_cast<const uchar*>(data), length);
             break;
         }
         case QCryptographicHash::Sha256: {
-            SHA256_Update(&d->sha256Context, data, length);
+            SHA256_Update(&d->sha256Context, reinterpret_cast<const uchar*>(data), length);
             break;
         }
         case QCryptographicHash::Sha512: {
-            SHA512_Update(&d->sha512Context, data, length);
+            SHA512_Update(&d->sha512Context, reinterpret_cast<const uchar*>(data), length);
             break;
         }
     }
@@ -190,13 +191,13 @@ QByteArray QCryptographicHash::result() const
         case QCryptographicHash::Md5: {
             MD5_CTX copy = d->md5Context;
             d->result.resize(MD5_DIGEST_LENGTH);
-            MD5_Final(reinterpret_cast<unsigned char *>(d->result.data()), &copy);
+            MD5Final(reinterpret_cast<unsigned char *>(d->result.data()), &copy);
             break;
         }
         case QCryptographicHash::Sha1: {
-            SHA_CTX copy = d->sha1Context;
+            SHA1_CTX copy = d->sha1Context;
             d->result.resize(SHA_DIGEST_LENGTH);
-            SHA1_Final(reinterpret_cast<unsigned char *>(d->result.data()), &copy);
+            SHA1Final(reinterpret_cast<unsigned char *>(d->result.data()), &copy);
             break;
         }
         case QCryptographicHash::Sha256:{
@@ -232,24 +233,24 @@ QByteArray QCryptographicHash::hash(const QByteArray &data, QCryptographicHash::
         case QCryptographicHash::Md5: {
             QSTACKARRAY(unsigned char, result, MD5_DIGEST_LENGTH);
             MD5_CTX md5Context;
-            MD5_Init(&md5Context);
-            MD5_Update(&md5Context, data.constData(), data.length());
-            MD5_Final(result, &md5Context);
+            MD5Init(&md5Context);
+            MD5Update(&md5Context, reinterpret_cast<const uchar*>(data.constData()), data.length());
+            MD5Final(result, &md5Context);
             return QByteArray(reinterpret_cast<char *>(result), MD5_DIGEST_LENGTH);
         }
         case QCryptographicHash::Sha1: {
             QSTACKARRAY(unsigned char, result, SHA_DIGEST_LENGTH);
-            SHA_CTX sha1Context;
-            SHA1_Init(&sha1Context);
-            SHA1_Update(&sha1Context, data.constData(), data.length());
-            SHA1_Final(result, &sha1Context);
+            SHA1_CTX sha1Context;
+            SHA1Init(&sha1Context);
+            SHA1Update(&sha1Context, reinterpret_cast<const uchar*>(data.constData()), data.length());
+            SHA1Final(result, &sha1Context);
             return QByteArray(reinterpret_cast<char *>(result), SHA_DIGEST_LENGTH);
         }
         case QCryptographicHash::Sha256: {
             QSTACKARRAY(unsigned char, result, SHA256_DIGEST_LENGTH);
             SHA256_CTX sha256Context;
             SHA256_Init(&sha256Context);
-            SHA256_Update(&sha256Context, data.constData(), data.length());
+            SHA256_Update(&sha256Context, reinterpret_cast<const uchar*>(data.constData()), data.length());
             SHA256_Final(result, &sha256Context);
             return QByteArray(reinterpret_cast<char *>(result), SHA256_DIGEST_LENGTH);
         }
@@ -257,7 +258,7 @@ QByteArray QCryptographicHash::hash(const QByteArray &data, QCryptographicHash::
             QSTACKARRAY(unsigned char, result, SHA512_DIGEST_LENGTH);
             SHA512_CTX sha512Context;
             SHA512_Init(&sha512Context);
-            SHA512_Update(&sha512Context, data.constData(), data.length());
+            SHA512_Update(&sha512Context, reinterpret_cast<const uchar*>(data.constData()), data.length());
             SHA512_Final(result, &sha512Context);
             return QByteArray(reinterpret_cast<char *>(result), SHA512_DIGEST_LENGTH);
         }
