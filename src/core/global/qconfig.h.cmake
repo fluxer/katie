@@ -119,6 +119,7 @@
 #define QT_NO_HTTP
 #define QT_NO_NETWORKDISKCACHE
 #define QT_NO_SOCKS5
+#define QT_NO_URLINFO
 
 // Not supported, used to bootstrap
 #cmakedefine QT_NO_QOBJECT
@@ -301,7 +302,6 @@
 #cmakedefine QT_NO_UNDOGROUP
 #cmakedefine QT_NO_UNDOSTACK
 #cmakedefine QT_NO_UNDOVIEW
-#cmakedefine QT_NO_URLINFO
 #cmakedefine QT_NO_URL_CAST_FROM_STRING
 #cmakedefine QT_NO_VALIDATOR
 #cmakedefine QT_NO_VECTOR2D
