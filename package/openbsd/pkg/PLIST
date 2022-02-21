@@ -1145,7 +1145,6 @@ include/katie/QtNetwork/QNetworkProxyQuery
 include/katie/QtNetwork/QTcpServer
 include/katie/QtNetwork/QTcpSocket
 include/katie/QtNetwork/QUdpSocket
-include/katie/QtNetwork/QUrlInfo
 include/katie/QtNetwork/Q_IPV6ADDR
 include/katie/QtNetwork/QtNetwork
 include/katie/QtNetwork/qabstractsocket.h
@@ -1160,7 +1159,6 @@ include/katie/QtNetwork/qnetworkproxy.h
 include/katie/QtNetwork/qtcpserver.h
 include/katie/QtNetwork/qtcpsocket.h
 include/katie/QtNetwork/qudpsocket.h
-include/katie/QtNetwork/qurlinfo.h
 include/katie/QtScript/
 include/katie/QtScript/QScriptClass
 include/katie/QtScript/QScriptClassPropertyIterator

@@ -694,7 +694,6 @@ classlist = [
     "QUnixPrintWidget",
     "QUpdateLaterEvent",
     "QUrl",
-    "QUrlInfo",
     "QUuid",
     "QValidator",
     "QVariant",

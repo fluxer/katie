@@ -13,7 +13,6 @@ set(NETWORK_PUBLIC_HEADERS
     QTcpServer
     QTcpSocket
     QUdpSocket
-    QUrlInfo
     QCryptographicHash
 )
 
@@ -34,7 +33,6 @@ set(NETWORK_HEADERS
     ${CMAKE_CURRENT_SOURCE_DIR}/kernel/qhostaddress_p.h
     ${CMAKE_CURRENT_SOURCE_DIR}/kernel/qhostinfo.h
     ${CMAKE_CURRENT_SOURCE_DIR}/kernel/qhostinfo_p.h
-    ${CMAKE_CURRENT_SOURCE_DIR}/kernel/qurlinfo.h
     ${CMAKE_CURRENT_SOURCE_DIR}/kernel/qnetworkproxy.h
     ${CMAKE_CURRENT_SOURCE_DIR}/kernel/qnetworkinterface.h
     ${CMAKE_CURRENT_SOURCE_DIR}/kernel/qnetworkinterface_p.h
@@ -62,7 +60,6 @@ set(NETWORK_SOURCES
     ${CMAKE_CURRENT_SOURCE_DIR}/kernel/qcryptographichash.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/kernel/qhostaddress.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/kernel/qhostinfo.cpp
-    ${CMAKE_CURRENT_SOURCE_DIR}/kernel/qurlinfo.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/kernel/qnetworkproxy.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/kernel/qnetworkinterface.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/kernel/qhostinfo_unix.cpp

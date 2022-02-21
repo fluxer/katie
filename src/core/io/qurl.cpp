@@ -99,8 +99,6 @@
        QUrl(string) and QUrl::toString() when converting a QUrl to or from
        a string.
     \endlist
-
-    \sa QUrlInfo
 */
 
 /*!
