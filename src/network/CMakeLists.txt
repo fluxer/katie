@@ -23,6 +23,7 @@ include_directories(
     ${CMAKE_BINARY_DIR}/include/QtCore
     ${CMAKE_BINARY_DIR}/include/QtNetwork
     ${CMAKE_SOURCE_DIR}/src/3rdparty/digest
+    ${CMAKE_SOURCE_DIR}/src/3rdparty/md4
 )
 
 set(NETWORK_HEADERS
