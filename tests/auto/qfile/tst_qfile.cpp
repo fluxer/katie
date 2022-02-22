@@ -30,17 +30,12 @@
 #include <QDir>
 #include <QFile>
 #include <QFileInfo>
-#include <QHostInfo>
 #include <QProcess>
 
 #include <sys/types.h>
 #include <unistd.h>
 #include <stdio.h>
 #include <errno.h>
-
-#ifndef NO_NETWORK_TEST
-#  include "../network-settings.h"
-#endif
 
 // #define TEST_LFS
 
