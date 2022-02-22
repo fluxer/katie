@@ -233,7 +233,6 @@ set(CORE_HEADERS
     ${CMAKE_CURRENT_SOURCE_DIR}/tools/qbitarray.h
     ${CMAKE_CURRENT_SOURCE_DIR}/tools/qbytearray.h
     ${CMAKE_CURRENT_SOURCE_DIR}/tools/qbytearraymatcher.h
-    ${CMAKE_CURRENT_SOURCE_DIR}/tools/qbytedata_p.h
     ${CMAKE_CURRENT_SOURCE_DIR}/tools/qcache.h
     ${CMAKE_CURRENT_SOURCE_DIR}/tools/qchar.h
     ${CMAKE_CURRENT_SOURCE_DIR}/tools/qcontainerfwd.h
