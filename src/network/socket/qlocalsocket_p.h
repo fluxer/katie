@@ -59,9 +59,6 @@ public:
     void _q_error(QAbstractSocket::SocketError newError);
     void _q_connectToSocket();
     void _q_abortConnectionAttempt();
-    void cancelDelayedConnect();
-    QSocketNotifier *delayConnect;
-    QTimer *connectTimer;
     int connectingSocket;
     QString connectingName;
     QIODevice::OpenMode connectingOpenMode;

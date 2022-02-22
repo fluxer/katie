@@ -40,12 +40,11 @@
 
 QT_BEGIN_NAMESPACE
 
-QLocalSocketPrivate::QLocalSocketPrivate() : QIODevicePrivate(),
-        delayConnect(0),
-        connectTimer(0),
-        connectingSocket(-1),
-        connectingOpenMode(0),
-        state(QLocalSocket::UnconnectedState)
+QLocalSocketPrivate::QLocalSocketPrivate()
+    : QIODevicePrivate(),
+    connectingSocket(-1),
+    connectingOpenMode(0),
+    state(QLocalSocket::UnconnectedState)
 {
 }
 
@@ -288,19 +287,7 @@ void QLocalSocketPrivate::_q_connectToSocket()
             errorOccurred(QLocalSocket::SocketTimeoutError, function);
             break;
         case EAGAIN:
-            // Try again later, all of the sockets listening are full
-            if (!delayConnect) {
-                delayConnect = new QSocketNotifier(connectingSocket, QSocketNotifier::Write, q);
-                q->connect(delayConnect, SIGNAL(activated(int)), q, SLOT(_q_connectToSocket()));
-            }
-            if (!connectTimer) {
-                connectTimer = new QTimer(q);
-                q->connect(connectTimer, SIGNAL(timeout()),
-                                 q, SLOT(_q_abortConnectionAttempt()),
-                                 Qt::DirectConnection);
-                connectTimer->start(QT_CONNECT_TIMEOUT);
-            }
-            delayConnect->setEnabled(true);
+            errorOccurred(QLocalSocket::UnfinishedSocketOperationError, function);
             break;
         default:
             errorOccurred(QLocalSocket::UnknownSocketError, function);
@@ -310,8 +297,6 @@ void QLocalSocketPrivate::_q_connectToSocket()
     }
 
     // connected!
-    cancelDelayedConnect();
-
     serverName = connectingName;
     fullServerName = connectingPathName;
     if (unixSocket.setSocketDescriptor(connectingSocket,
@@ -356,18 +341,6 @@ void QLocalSocketPrivate::_q_abortConnectionAttempt()
 {
     Q_Q(QLocalSocket);
     q->close();
-}
-
-void QLocalSocketPrivate::cancelDelayedConnect()
-{
-    if (delayConnect) {
-        delayConnect->setEnabled(false);
-        delete delayConnect;
-        delayConnect = 0;
-        connectTimer->stop();
-        delete connectTimer;
-        connectTimer = 0;
-    }
 }
 
 quintptr QLocalSocket::socketDescriptor() const
@@ -416,7 +389,6 @@ void QLocalSocket::close()
 {
     Q_D(QLocalSocket);
     d->unixSocket.close();
-    d->cancelDelayedConnect();
     if (d->connectingSocket != -1)
         qt_safe_close(d->connectingSocket);
     d->connectingSocket = -1;
