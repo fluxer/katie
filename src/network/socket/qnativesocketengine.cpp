@@ -563,7 +563,7 @@ bool QNativeSocketEngine::listen()
     Q_CHECK_STATE(QNativeSocketEngine::listen(), QAbstractSocket::BoundState, false);
     Q_CHECK_TYPE(QNativeSocketEngine::listen(), QAbstractSocket::TcpSocket, false);
 
-    return d->nativeListen(SOMAXCONN);
+    return d->nativeListen();
 }
 
 /*!

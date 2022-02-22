@@ -166,7 +166,7 @@ public:
 
     bool nativeConnect(const QHostAddress &address, quint16 port);
     bool nativeBind(const QHostAddress &address, quint16 port);
-    bool nativeListen(int backlog);
+    bool nativeListen();
     int nativeAccept();
 #ifndef QT_NO_NETWORKINTERFACE
     bool nativeJoinMulticastGroup(const QHostAddress &groupAddress,

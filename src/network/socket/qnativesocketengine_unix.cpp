@@ -440,9 +440,9 @@ bool QNativeSocketEnginePrivate::nativeBind(const QHostAddress &address, quint16
     return true;
 }
 
-bool QNativeSocketEnginePrivate::nativeListen(int backlog)
+bool QNativeSocketEnginePrivate::nativeListen()
 {
-    if (::listen(socketDescriptor, backlog) < 0) {
+    if (::listen(socketDescriptor, SOMAXCONN) < 0) {
         switch (errno) {
         case EADDRINUSE:
             setError(QAbstractSocket::AddressInUseError,
@@ -458,13 +458,13 @@ bool QNativeSocketEnginePrivate::nativeListen(int backlog)
 
 #if defined (QNATIVESOCKETENGINE_DEBUG)
         qDebug("QNativeSocketEnginePrivate::nativeListen(%i) == false (%s)",
-               backlog, socketErrorString.toLatin1().constData());
+               SOMAXCONN, socketErrorString.toLatin1().constData());
 #endif
         return false;
     }
 
 #if defined (QNATIVESOCKETENGINE_DEBUG)
-    qDebug("QNativeSocketEnginePrivate::nativeListen(%i) == true", backlog);
+    qDebug("QNativeSocketEnginePrivate::nativeListen(%i) == true", SOMAXCONN);
 #endif
 
     socketState = QAbstractSocket::ListeningState;
