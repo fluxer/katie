@@ -60,7 +60,6 @@ public:
     bool isValid() const;
 
     bool connectToHost(const QHostAddress &address, quint16 port);
-    bool connectToHostByName(const QString &name, quint16 port);
     bool bind(const QHostAddress &address, quint16 port);
     bool listen();
     int accept();

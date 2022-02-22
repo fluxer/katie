@@ -764,8 +764,7 @@ void QAbstractSocketPrivate::startConnectingByName(const QString &host)
     emit q->stateChanged(state);
 
     if (initSocketLayer(QAbstractSocket::UnknownNetworkLayerProtocol)) {
-        if (socketEngine->connectToHostByName(host, port) ||
-            socketEngine->state() == QAbstractSocket::ConnectingState) {
+        if (socketEngine->state() == QAbstractSocket::ConnectingState) {
             cachedSocketDescriptor = socketEngine->socketDescriptor();
 
             return;
