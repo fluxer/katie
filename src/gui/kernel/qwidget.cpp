@@ -7043,16 +7043,6 @@ bool QWidget::event(QEvent *event)
         mouseDoubleClickEvent((QMouseEvent*)event);
         break;
 
-     case QEvent::NonClientAreaMouseButtonPress: {
-        QWidget* w;
-        while ((w = QApplication::activePopupWidget()) && w != this) {
-            w->close();
-            if (QApplication::activePopupWidget() == w) // widget does not want to disappear
-                w->hide(); // hide at least
-            }
-        break;
-        }
-
 #ifndef QT_NO_WHEELEVENT
     case QEvent::Wheel:
         wheelEvent((QWheelEvent*)event);
