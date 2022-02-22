@@ -161,6 +161,8 @@ private slots:
 
     void autocloseHandle();
 
+    void hijack();
+
     // --- Task related tests below this line
     void task167217();
 
@@ -2820,6 +2822,28 @@ void tst_QFile::autocloseHandle()
         ::fclose(stream_);
         stream_ = 0;
     }
+}
+
+void tst_QFile::hijack()
+{
+    QFile hijackme("hijackme.txt");
+
+    QVERIFY(hijackme.open(QFile::ReadWrite));
+    QVERIFY(hijackme.write("not yet\n"));
+    QVERIFY(hijackme.flush());
+    QVERIFY(QFile::rename("hijackme.txt", "hijacked.txt"));
+    QVERIFY(hijackme.write("now"));
+
+    QVERIFY(hijackme.seek(0));
+    QCOMPARE(hijackme.readAll(), QByteArray("not yet\nnow"));
+
+    hijackme.close();
+    hijackme.setFileName("hijacked.txt");
+    QVERIFY(hijackme.open(QFile::ReadOnly));
+    QCOMPARE(hijackme.readAll(), QByteArray("not yet\nnow"));
+
+    QFile::remove("hijackme.txt");
+    QFile::remove("hijacked.txt");
 }
 
 QTEST_MAIN(tst_QFile)
