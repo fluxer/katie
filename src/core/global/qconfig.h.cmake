@@ -226,7 +226,6 @@
 #cmakedefine QT_NO_LINEEDIT
 #cmakedefine QT_NO_LISTVIEW
 #cmakedefine QT_NO_LISTWIDGET
-#cmakedefine QT_NO_LOCALFILE_OPTIMIZED_QML
 #cmakedefine QT_NO_LOCALSERVER
 #cmakedefine QT_NO_LOCALSOCKET
 #cmakedefine QT_NO_MAINWINDOW
