@@ -49,10 +49,6 @@ set(NETWORK_HEADERS
     ${CMAKE_CURRENT_SOURCE_DIR}/socket/qlocalsocket_p.h
     ${CMAKE_CURRENT_SOURCE_DIR}/socket/qnativesocketengine_p.h
     ${CMAKE_CURRENT_SOURCE_DIR}/socket/qnet_unix_p.h
-    ${CMAKE_SOURCE_DIR}/src/3rdparty/md4/md4.h
-    ${CMAKE_SOURCE_DIR}/src/3rdparty/digest/md5.h
-    ${CMAKE_SOURCE_DIR}/src/3rdparty/digest/sha1.h
-    ${CMAKE_SOURCE_DIR}/src/3rdparty/digest/sha2.h
 )
 
 set(NETWORK_SOURCES
