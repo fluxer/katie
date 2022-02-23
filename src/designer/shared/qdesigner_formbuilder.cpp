@@ -389,6 +389,7 @@ QWidget *QDesignerFormBuilder::createPreview(const QDesignerFormWindowInterface 
         return  0;
     }
 #endif
+#ifndef QT_NO_STYLE_STYLESHEET
     // Fake application style sheet by prepending. (If this doesn't work, fake by nesting
     // into parent widget).
     if (!appStyleSheet.isEmpty()) {
@@ -397,6 +398,7 @@ QWidget *QDesignerFormBuilder::createPreview(const QDesignerFormWindowInterface 
         styleSheet +=  widget->styleSheet();
         widget->setStyleSheet(styleSheet);
     }
+#endif
     return widget;
 }
 

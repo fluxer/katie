@@ -327,10 +327,14 @@ void StyleSheetEditorDialog::validateStyleSheet()
     setOkButtonEnabled(valid);
     if (valid) {
         m_validityLabel->setText(tr("Valid Style Sheet"));
+#ifndef QT_NO_STYLE_STYLESHEET
         m_validityLabel->setStyleSheet(QLatin1String("color: green"));
+#endif
     } else {
         m_validityLabel->setText(tr("Invalid Style Sheet"));
+#ifndef QT_NO_STYLE_STYLESHEET
         m_validityLabel->setStyleSheet(QLatin1String("color: red"));
+#endif
     }
 }
 

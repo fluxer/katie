@@ -1094,10 +1094,12 @@ void QDesignerPropertySheet::setProperty(int index, const QVariant &value)
             if (d->isKeySequenceProperty(index))
                 d->setKeySequenceProperty(index, qvariant_cast<qdesigner_internal::PropertySheetKeySequenceValue>(value));
             d->m_object->setProperty(propertyName(index).toUtf8(), resolvePropertyValue(index, value));
+#ifndef QT_NO_STYLE_STYLESHEET
             if (d->m_object->isWidgetType()) {
                 QWidget *w = qobject_cast<QWidget *>(d->m_object);
                 w->setStyleSheet(w->styleSheet());
             }
+#endif
         }
         d->m_addProperties[index] = value;
     } else if (isFakeProperty(index)) {
