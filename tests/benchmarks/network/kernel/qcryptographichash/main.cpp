@@ -89,7 +89,6 @@ void tst_qcryptographichash::statichash() {
 void tst_qcryptographichash::algorithms_data()
 {
     QTest::addColumn<QCryptographicHash::Algorithm>("algorithm");
-    QTest::newRow("Md4")  << QCryptographicHash::Md4;
     QTest::newRow("Md5")  << QCryptographicHash::Md5;
     QTest::newRow("Sha1")  << QCryptographicHash::Sha1;
     QTest::newRow("Sha256")  << QCryptographicHash::Sha256;

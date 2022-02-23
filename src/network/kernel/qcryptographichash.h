@@ -35,7 +35,6 @@ class Q_NETWORK_EXPORT QCryptographicHash
 {
 public:
     enum Algorithm {
-        Md4,
         Md5,
         Sha1,
         Sha256,

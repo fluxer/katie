@@ -25,7 +25,6 @@
 #include "qcorecommon_p.h"
 
 #include "md5.h"
-#include "md4.h"
 #include "sha1.h"
 #include "sha2.h"
 
@@ -34,7 +33,6 @@ QT_BEGIN_NAMESPACE
 class QCryptographicHashPrivate
 {
 public:
-    MD4_CTX md4Context;
     MD5_CTX md5Context;
     SHA1_CTX sha1Context;
     SHA256_CTX sha256Context;
@@ -56,13 +54,12 @@ public:
 
   QCryptographicHash can be used to generate cryptographic hashes of binary or text data.
 
-  Currently MD4, MD5, SHA-1, SHA-256 and SHA-512 are supported.
+  Currently MD5, SHA-1, SHA-256 and SHA-512 are supported.
 */
 
 /*!
   \enum QCryptographicHash::Algorithm
 
-  \value Md4 Generate an MD4 hash sum
   \value Md5 Generate an MD5 hash sum
   \value Sha1 Generate an SHA-1 hash sum
   \value Sha256 Generate an SHA-256 hash sum (SHA-2). Introduced in Katie 4.9
@@ -93,10 +90,6 @@ QCryptographicHash::~QCryptographicHash()
 void QCryptographicHash::reset()
 {
     switch (d->method) {
-        case QCryptographicHash::Md4: {
-            MD4_Init(&d->md4Context);
-            break;
-        }
         case QCryptographicHash::Md5: {
             MD5Init(&d->md5Context);
             break;
@@ -124,10 +117,6 @@ void QCryptographicHash::reset()
 void QCryptographicHash::addData(const char *data, int length)
 {
     switch (d->method) {
-        case QCryptographicHash::Md4: {
-            MD4_Update(&d->md4Context, data, length);
-            break;
-        }
         case QCryptographicHash::Md5: {
             MD5Update(&d->md5Context, reinterpret_cast<const uchar*>(data), length);
             break;
@@ -182,12 +171,6 @@ QByteArray QCryptographicHash::result() const
         return d->result;
 
     switch (d->method) {
-        case QCryptographicHash::Md4: {
-            MD4_CTX copy = d->md4Context;
-            d->result.resize(MD4_DIGEST_LENGTH);
-            MD4_Final(reinterpret_cast<unsigned char *>(d->result.data()), &copy);
-            break;
-        }
         case QCryptographicHash::Md5: {
             MD5_CTX copy = d->md5Context;
             d->result.resize(MD5_DIGEST_LENGTH);
@@ -222,14 +205,6 @@ QByteArray QCryptographicHash::result() const
 QByteArray QCryptographicHash::hash(const QByteArray &data, QCryptographicHash::Algorithm method)
 {
     switch (method) {
-        case QCryptographicHash::Md4: {
-            QSTACKARRAY(unsigned char, result, MD4_DIGEST_LENGTH);
-            MD4_CTX md4Context;
-            MD4_Init(&md4Context);
-            MD4_Update(&md4Context, data.constData(), data.length());
-            MD4_Final(result, &md4Context);
-            return QByteArray(reinterpret_cast<char *>(result), MD4_DIGEST_LENGTH);
-        }
         case QCryptographicHash::Md5: {
             QSTACKARRAY(unsigned char, result, MD5_DIGEST_LENGTH);
             MD5_CTX md5Context;
