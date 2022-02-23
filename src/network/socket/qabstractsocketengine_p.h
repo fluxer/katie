@@ -192,20 +192,6 @@ public:
     QAbstractSocketEngineReceiver *receiver;
 };
 
-
-class Q_AUTOTEST_EXPORT QSocketEngineHandler
-{
-protected:
-    QSocketEngineHandler();
-    virtual ~QSocketEngineHandler();
-    virtual QAbstractSocketEngine *createSocketEngine(QAbstractSocket::SocketType socketType,
-                                                      const QNetworkProxy &, QObject *parent) = 0;
-    virtual QAbstractSocketEngine *createSocketEngine(int socketDescripter, QObject *parent) = 0;
-
-private:
-    friend class QAbstractSocketEngine;
-};
-
 QT_END_NAMESPACE
 
 #endif // QABSTRACTSOCKETENGINE_P_H

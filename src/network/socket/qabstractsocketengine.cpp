@@ -28,21 +28,6 @@
 
 QT_BEGIN_NAMESPACE
 
-Q_GLOBAL_STATIC(QMutex, qGlobalSocketMutex)
-Q_GLOBAL_STATIC(QList<QSocketEngineHandler*>, qGlobalSocketHandlers)
-
-QSocketEngineHandler::QSocketEngineHandler()
-{
-    QMutexLocker locker(qGlobalSocketMutex());
-    qGlobalSocketHandlers()->prepend(this);
-}
-
-QSocketEngineHandler::~QSocketEngineHandler()
-{
-    QMutexLocker locker(qGlobalSocketMutex());
-    qGlobalSocketHandlers()->removeAll(this);
-}
-
 QAbstractSocketEnginePrivate::QAbstractSocketEnginePrivate()
     : socketError(QAbstractSocket::UnknownSocketError)
     , hasSetSocketError(false)
@@ -72,16 +57,7 @@ QAbstractSocketEngine *QAbstractSocketEngine::createSocketEngine(QAbstractSocket
     // proxy type must have been resolved by now
     if (proxy.type() == QNetworkProxy::DefaultProxy)
         return 0;
-#endif
 
-    QMutexLocker locker(qGlobalSocketMutex());
-    for (int i = 0; i < qGlobalSocketHandlers()->size(); i++) {
-        if (QAbstractSocketEngine *ret = qGlobalSocketHandlers()->at(i)->createSocketEngine(socketType, proxy, parent))
-            return ret;
-    }
-
-#ifndef QT_NO_NETWORKPROXY
-    // only NoProxy can have reached here
     if (proxy.type() != QNetworkProxy::NoProxy)
         return 0;
 #endif
@@ -91,11 +67,6 @@ QAbstractSocketEngine *QAbstractSocketEngine::createSocketEngine(QAbstractSocket
 
 QAbstractSocketEngine *QAbstractSocketEngine::createSocketEngine(int socketDescripter, QObject *parent)
 {
-    QMutexLocker locker(qGlobalSocketMutex());
-    for (int i = 0; i < qGlobalSocketHandlers()->size(); i++) {
-        if (QAbstractSocketEngine *ret = qGlobalSocketHandlers()->at(i)->createSocketEngine(socketDescripter, parent))
-            return ret;
-    }
     return new QNativeSocketEngine(parent);
 }
 
