@@ -31,6 +31,7 @@
 #include "qnet_unix_p.h"
 
 #include <sys/select.h>
+#include <netinet/in.h>
 #include <limits>
 
 class tst_QSocketNotifier : public QObject
