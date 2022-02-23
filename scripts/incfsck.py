@@ -334,8 +334,6 @@ incmap = {
     'QtNetwork': {
         'QIPv6Address': 'qhostaddress.h',
         'QNetworkAddressEntry': 'qnetworkinterface.h',
-        'QNetworkProxyFactory': 'qnetworkproxy.h',
-        'QNetworkProxyQuery': 'qnetworkproxy.h',
         'Q_IPV6ADDR': 'qhostaddress.h',
     },
     'QtTest': {

@@ -40,7 +40,6 @@
 #include "qringbuffer_p.h"
 #include "qiodevice_p.h"
 #include "qabstractsocketengine_p.h"
-#include "qnetworkproxy.h"
 
 QT_BEGIN_NAMESPACE
 
@@ -58,12 +57,6 @@ public:
     inline void writeNotification() { canWriteNotification(); }
     inline void exceptionNotification() {}
     void connectionNotification();
-#ifndef QT_NO_NETWORKPROXY
-    inline void proxyAuthenticationRequired(const QNetworkProxy &proxy, QAuthenticator *authenticator) {
-        Q_Q(QAbstractSocket);
-        q->proxyAuthenticationRequired(proxy, authenticator);
-    }
-#endif
 
     bool canReadNotification();
     bool canWriteNotification();
@@ -100,20 +93,10 @@ public:
     QAbstractSocketEngine *socketEngine;
     int cachedSocketDescriptor;
 
-#ifndef QT_NO_NETWORKPROXY
-    QNetworkProxy proxy;
-    QNetworkProxy proxyInUse;
-    void resolveProxy(const QString &hostName, quint16 port);
-#else
-    inline void resolveProxy(const QString &, quint16) { }
-#endif
-    inline void resolveProxy(quint16 port) { resolveProxy(QString(), port); }
-
     void resetSocketLayer();
     bool flush();
 
     bool initSocketLayer(QAbstractSocket::NetworkLayerProtocol protocol);
-    void startConnectingByName(const QString &host);
     void fetchConnectionParameters();
     void setupSocketNotifiers();
     bool readFromSocket();

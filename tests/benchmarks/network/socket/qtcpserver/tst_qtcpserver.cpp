@@ -28,10 +28,6 @@
 #include <qstringlist.h>
 #include <qplatformdefs.h>
 #include <qhostinfo.h>
-#include <QNetworkProxy>
-
-Q_DECLARE_METATYPE(QNetworkProxy)
-Q_DECLARE_METATYPE(QList<QNetworkProxy>)
 
 #include "../../../../auto/network-settings.h"
 
@@ -69,37 +65,19 @@ tst_QTcpServer::~tst_QTcpServer()
 
 void tst_QTcpServer::initTestCase_data()
 {
-    QTest::addColumn<bool>("setProxy");
-    QTest::addColumn<int>("proxyType");
-
-    QTest::newRow("WithoutProxy") << false << 0;
-    QTest::newRow("WithSocks5Proxy") << true << int(QNetworkProxy::Socks5Proxy);
-    QTest::newRow("WithHttpProxy") << true << int(QNetworkProxy::HttpProxy);
 }
 
 void tst_QTcpServer::init()
 {
-    QFETCH_GLOBAL(bool, setProxy);
-    if (setProxy) {
-        QFETCH_GLOBAL(int, proxyType);
-        if (proxyType == QNetworkProxy::Socks5Proxy) {
-            QNetworkProxy::setApplicationProxy(QNetworkProxy(QNetworkProxy::Socks5Proxy, QtNetworkSettings::serverName(), 1080));
-        }
-    }
 }
 
 void tst_QTcpServer::cleanup()
 {
-    QNetworkProxy::setApplicationProxy(QNetworkProxy::DefaultProxy);
 }
 
 //----------------------------------------------------------------------------------
 void tst_QTcpServer::ipv4LoopbackPerformanceTest()
 {
-    QFETCH_GLOBAL(bool, setProxy);
-    if (setProxy)
-        return;
-
     QTcpServer server;
     QVERIFY(server.listen(QHostAddress::LocalHost));
 
@@ -149,10 +127,6 @@ void tst_QTcpServer::ipv4LoopbackPerformanceTest()
 //----------------------------------------------------------------------------------
 void tst_QTcpServer::ipv6LoopbackPerformanceTest()
 {
-    QFETCH_GLOBAL(bool, setProxy);
-    if (setProxy)
-        return;
-
     QTcpServer server;
     if (!server.listen(QHostAddress::LocalHostIPv6, 0)) {
         QVERIFY(server.serverError() == QAbstractSocket::UnsupportedSocketOperationError);
@@ -206,11 +180,6 @@ void tst_QTcpServer::ipv4PerformanceTest()
 
     QTcpServer server;
     QVERIFY(server.listen(probeSocket.localAddress(), 0));
-
-    QFETCH_GLOBAL(int, proxyType);
-    //For http proxy, only the active connection can be proxied and not the server socket
-    if (proxyType == QNetworkProxy::HttpProxy)
-        QNetworkProxy::setApplicationProxy(QNetworkProxy(QNetworkProxy::HttpProxy, QtNetworkSettings::serverName(), 3128));
 
     QTcpSocket clientA;
     clientA.connectToHost(server.serverAddress(), server.serverPort());

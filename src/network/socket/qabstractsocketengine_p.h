@@ -39,12 +39,11 @@
 
 QT_BEGIN_NAMESPACE
 
-class QAuthenticator;
 class QAbstractSocketEnginePrivate;
 #ifndef QT_NO_NETWORKINTERFACE
 class QNetworkInterface;
 #endif
-class QNetworkProxy;
+class QSocketNotifier;
 
 class QAbstractSocketEngineReceiver {
 public:
@@ -53,9 +52,6 @@ public:
     virtual void writeNotification()= 0;
     virtual void exceptionNotification()= 0;
     virtual void connectionNotification()= 0;
-#ifndef QT_NO_NETWORKPROXY
-    virtual void proxyAuthenticationRequired(const QNetworkProxy &proxy, QAuthenticator *authenticator)= 0;
-#endif
 };
 
 class Q_AUTOTEST_EXPORT QAbstractSocketEngine : public QObject
@@ -63,10 +59,8 @@ class Q_AUTOTEST_EXPORT QAbstractSocketEngine : public QObject
     Q_OBJECT
 public:
 
-    static QAbstractSocketEngine *createSocketEngine(QAbstractSocket::SocketType socketType, const QNetworkProxy &, QObject *parent);
-    static QAbstractSocketEngine *createSocketEngine(int socketDescripter, QObject *parent);
-
     QAbstractSocketEngine(QObject *parent = nullptr);
+    ~QAbstractSocketEngine();
 
     enum SocketOption {
         NonBlockingSocketOption,
@@ -79,53 +73,53 @@ public:
         MulticastLoopbackOption
     };
 
-    virtual bool initialize(QAbstractSocket::SocketType type, QAbstractSocket::NetworkLayerProtocol protocol = QAbstractSocket::IPv4Protocol) = 0;
+    bool initialize(QAbstractSocket::SocketType type, QAbstractSocket::NetworkLayerProtocol protocol = QAbstractSocket::IPv4Protocol);
 
-    virtual bool initialize(int socketDescriptor, QAbstractSocket::SocketState socketState = QAbstractSocket::ConnectedState) = 0;
+    bool initialize(int socketDescriptor, QAbstractSocket::SocketState socketState = QAbstractSocket::ConnectedState);
 
-    virtual int socketDescriptor() const = 0;
+    int socketDescriptor() const;
 
-    virtual bool isValid() const = 0;
+    bool isValid() const;
 
-    virtual bool connectToHost(const QHostAddress &address, quint16 port) = 0;
-    virtual bool bind(const QHostAddress &address, quint16 port) = 0;
-    virtual bool listen() = 0;
-    virtual int accept() = 0;
-    virtual void close() = 0;
+    bool connectToHost(const QHostAddress &address, quint16 port);
+    bool bind(const QHostAddress &address, quint16 port);
+    bool listen();
+    int accept();
+    void close();
 
-    virtual qint64 bytesAvailable() const = 0;
+    qint64 bytesAvailable() const;
 
-    virtual qint64 read(char *data, qint64 maxlen) = 0;
-    virtual qint64 write(const char *data, qint64 len) = 0;
+    qint64 read(char *data, qint64 maxlen);
+    qint64 write(const char *data, qint64 len);
 
 #ifndef QT_NO_UDPSOCKET
 #ifndef QT_NO_NETWORKINTERFACE
-    virtual bool joinMulticastGroup(const QHostAddress &groupAddress,
-                                    const QNetworkInterface &iface) = 0;
-    virtual bool leaveMulticastGroup(const QHostAddress &groupAddress,
-                                     const QNetworkInterface &iface) = 0;
-    virtual QNetworkInterface multicastInterface() const = 0;
-    virtual bool setMulticastInterface(const QNetworkInterface &iface) = 0;
+    bool joinMulticastGroup(const QHostAddress &groupAddress,
+                            const QNetworkInterface &iface);
+    bool leaveMulticastGroup(const QHostAddress &groupAddress,
+                             const QNetworkInterface &iface);
+    QNetworkInterface multicastInterface() const;
+    bool setMulticastInterface(const QNetworkInterface &iface);
 #endif // QT_NO_NETWORKINTERFACE
 
-    virtual qint64 readDatagram(char *data, qint64 maxlen, QHostAddress *addr = 0,
-                                quint16 *port = 0) = 0;
-    virtual qint64 writeDatagram(const char *data, qint64 len, const QHostAddress &addr,
-                                 quint16 port) = 0;
-    virtual bool hasPendingDatagrams() const = 0;
-    virtual qint64 pendingDatagramSize() const = 0;
+    qint64 readDatagram(char *data, qint64 maxlen, QHostAddress *addr = 0,
+                        quint16 *port = 0);
+    qint64 writeDatagram(const char *data, qint64 len, const QHostAddress &addr,
+                         quint16 port);
+    bool hasPendingDatagrams() const;
+    qint64 pendingDatagramSize() const;
 #endif // QT_NO_UDPSOCKET
 
-    virtual qint64 bytesToWrite() const = 0;
+    qint64 bytesToWrite() const ;
 
-    virtual int option(SocketOption option) const = 0;
-    virtual bool setOption(SocketOption option, int value) = 0;
+    int option(SocketOption option) const;
+    bool setOption(SocketOption option, int value);
 
-    virtual bool waitForRead(int msecs = 30000, bool *timedOut = 0) = 0;
-    virtual bool waitForWrite(int msecs = 30000, bool *timedOut = 0) = 0;
-    virtual bool waitForReadOrWrite(bool *readyToRead, bool *readyToWrite,
-                                    bool checkRead, bool checkWrite,
-                                    int msecs = 30000, bool *timedOut = 0) = 0;
+    bool waitForRead(int msecs = 30000, bool *timedOut = 0);
+    bool waitForWrite(int msecs = 30000, bool *timedOut = 0);
+    bool waitForReadOrWrite(bool *readyToRead, bool *readyToWrite,
+                            bool checkRead, bool checkWrite,
+                            int msecs = 30000, bool *timedOut = 0);
 
     QAbstractSocket::SocketError error() const;
     QString errorString() const;
@@ -138,21 +132,18 @@ public:
     QHostAddress peerAddress() const;
     quint16 peerPort() const;
 
-    virtual bool isReadNotificationEnabled() const = 0;
-    virtual void setReadNotificationEnabled(bool enable) = 0;
-    virtual bool isWriteNotificationEnabled() const = 0;
-    virtual void setWriteNotificationEnabled(bool enable) = 0;
-    virtual bool isExceptionNotificationEnabled() const = 0;
-    virtual void setExceptionNotificationEnabled(bool enable) = 0;
+    bool isReadNotificationEnabled() const;
+    void setReadNotificationEnabled(bool enable);
+    bool isWriteNotificationEnabled() const;
+    void setWriteNotificationEnabled(bool enable);
+    bool isExceptionNotificationEnabled() const;
+    void setExceptionNotificationEnabled(bool enable);
 
 public Q_SLOTS:
     void readNotification();
     void writeNotification();
     void exceptionNotification();
     void connectionNotification();
-#ifndef QT_NO_NETWORKPROXY
-    void proxyAuthenticationRequired(const QNetworkProxy &proxy, QAuthenticator *authenticator);
-#endif
 
 public:
     void setReceiver(QAbstractSocketEngineReceiver *receiver);
@@ -178,7 +169,77 @@ class QAbstractSocketEnginePrivate : public QObjectPrivate
     Q_DECLARE_PUBLIC(QAbstractSocketEngine)
 public:
     QAbstractSocketEnginePrivate();
+    ~QAbstractSocketEnginePrivate();
 
+    enum ErrorString {
+        NonBlockingInitFailedErrorString,
+        BroadcastingInitFailedErrorString,
+        NoIpV6ErrorString,
+        RemoteHostClosedErrorString,
+        TimeOutErrorString,
+        ResourceErrorString,
+        OperationUnsupportedErrorString,
+        ProtocolUnsupportedErrorString,
+        InvalidSocketErrorString,
+        HostUnreachableErrorString,
+        NetworkUnreachableErrorString,
+        AccessErrorString,
+        ConnectionTimeOutErrorString,
+        ConnectionRefusedErrorString,
+        AddressInuseErrorString,
+        AddressNotAvailableErrorString,
+        AddressProtectedErrorString,
+        DatagramTooLargeErrorString,
+        SendDatagramErrorString,
+        ReceiveDatagramErrorString,
+        WriteErrorString,
+        ReadErrorString,
+        PortInuseErrorString,
+        NotSocketErrorString,
+
+        UnknownSocketErrorString = -1
+    };
+
+    void setError(QAbstractSocket::SocketError error, ErrorString errorString);
+
+    // native functions
+    int option(QAbstractSocketEngine::SocketOption option) const;
+    bool setOption(QAbstractSocketEngine::SocketOption option, int value);
+
+    bool createNewSocket(QAbstractSocket::SocketType type, QAbstractSocket::NetworkLayerProtocol protocol);
+
+    bool nativeConnect(const QHostAddress &address, quint16 port);
+    bool nativeBind(const QHostAddress &address, quint16 port);
+    bool nativeListen();
+    int nativeAccept();
+#ifndef QT_NO_NETWORKINTERFACE
+    bool nativeJoinMulticastGroup(const QHostAddress &groupAddress,
+                                  const QNetworkInterface &iface);
+    bool nativeLeaveMulticastGroup(const QHostAddress &groupAddress,
+                                   const QNetworkInterface &iface);
+    QNetworkInterface nativeMulticastInterface() const;
+    bool nativeSetMulticastInterface(const QNetworkInterface &iface);
+#endif
+    qint64 nativeBytesAvailable() const;
+
+    bool nativeHasPendingDatagrams() const;
+    qint64 nativePendingDatagramSize() const;
+    qint64 nativeReceiveDatagram(char *data, qint64 maxLength,
+                                     QHostAddress *address, quint16 *port);
+    qint64 nativeSendDatagram(const char *data, qint64 length,
+                                  const QHostAddress &host, quint16 port);
+    qint64 nativeRead(char *data, qint64 maxLength);
+    qint64 nativeWrite(const char *data, qint64 length);
+    int nativeSelect(int timeout, bool selectForRead) const;
+    int nativeSelect(int timeout, bool checkRead, bool checkWrite,
+                     bool *selectForRead, bool *selectForWrite) const;
+
+    void nativeClose();
+
+    bool fetchConnectionParameters();
+
+    int socketDescriptor;
+    QSocketNotifier *readNotifier, *writeNotifier, *exceptNotifier;
     QAbstractSocket::SocketError socketError;
     bool hasSetSocketError;
     QString socketErrorString;

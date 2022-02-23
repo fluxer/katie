@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-02-21 15:18+0200\n"
+"POT-Creation-Date: 2022-02-23 23:10+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -44,7 +44,7 @@ msgstr ""
 
 #: src/core/plugin/qlibrary.cpp:799 src/core/plugin/qpluginloader.cpp:278
 #: src/core/io/qiodevice.cpp:1517
-#: src/network/socket/qnativesocketengine.cpp:249
+#: src/network/socket/qabstractsocketengine.cpp:439
 #: src/uitools/formscriptrunner.cpp:104
 msgid "Unknown error"
 msgstr ""
@@ -4594,28 +4594,26 @@ msgctxt "QHostInfo"
 msgid "No host name given"
 msgstr ""
 
-#: src/network/kernel/qhostinfo_unix.cpp:87
-#: src/network/kernel/qhostinfo_unix.cpp:171
-#: src/network/socket/qabstractsocket.cpp:827
+#: src/network/kernel/qhostinfo_unix.cpp:86
+#: src/network/kernel/qhostinfo_unix.cpp:170
+#: src/network/socket/qabstractsocket.cpp:691
 msgid "Host not found"
 msgstr ""
 
-#: src/network/kernel/qhostinfo_unix.cpp:105
+#: src/network/kernel/qhostinfo_unix.cpp:104
 msgid "No host name given"
 msgstr ""
 
-#: src/network/kernel/qhostinfo_unix.cpp:107
+#: src/network/kernel/qhostinfo_unix.cpp:106
 msgid "Invalid hostname"
 msgstr ""
 
-#: src/network/kernel/qhostinfo_unix.cpp:159
+#: src/network/kernel/qhostinfo_unix.cpp:158
 msgid "Unknown address type"
 msgstr ""
 
-#: src/network/socket/qtcpserver.cpp:266 src/network/socket/qtcpserver.cpp:384
-#: src/network/socket/qabstractsocket.cpp:482
-#: src/network/socket/qabstractsocket.cpp:1265
-#: src/network/socket/qabstractsocket.cpp:1475
+#: src/network/socket/qtcpserver.cpp:216
+#: src/network/socket/qabstractsocket.cpp:430
 msgid "Operation on socket is not supported"
 msgstr ""
 
@@ -4633,157 +4631,153 @@ msgid "%1: Address in use"
 msgstr ""
 
 #: src/network/socket/qlocalserver_unix.cpp:204
-#: src/network/socket/qlocalsocket_unix.cpp:141
+#: src/network/socket/qlocalsocket_unix.cpp:140
 msgid "%1: Unknown error %2"
 msgstr ""
 
-#: src/network/socket/qabstractsocket.cpp:869
-#: src/network/socket/qnativesocketengine.cpp:213
+#: src/network/socket/qabstractsocket.cpp:733
+#: src/network/socket/qabstractsocketengine.cpp:406
 msgid "Connection refused"
 msgstr ""
 
-#: src/network/socket/qabstractsocket.cpp:1011
-#: src/network/socket/qnativesocketengine.cpp:210
+#: src/network/socket/qabstractsocket.cpp:871
+#: src/network/socket/qabstractsocketengine.cpp:403
 msgid "Connection timed out"
 msgstr ""
 
-#: src/network/socket/qabstractsocket.cpp:1643
+#: src/network/socket/qabstractsocket.cpp:1477
 msgid "Socket operation timed out"
 msgstr ""
 
-#: src/network/socket/qabstractsocket.cpp:2053
+#: src/network/socket/qabstractsocket.cpp:1887
 msgid "Socket is not connected"
 msgstr ""
 
-#: src/network/socket/qnativesocketengine.cpp:174
+#: src/network/socket/qabstractsocketengine.cpp:367
 msgid "Unable to initialize non-blocking socket"
 msgstr ""
 
-#: src/network/socket/qnativesocketengine.cpp:177
+#: src/network/socket/qabstractsocketengine.cpp:370
 msgid "Unable to initialize broadcast socket"
 msgstr ""
 
-#: src/network/socket/qnativesocketengine.cpp:180
+#: src/network/socket/qabstractsocketengine.cpp:373
 msgid "Attempt to use IPv6 socket on a platform with no IPv6 support"
 msgstr ""
 
-#: src/network/socket/qnativesocketengine.cpp:183
+#: src/network/socket/qabstractsocketengine.cpp:376
 msgid "The remote host closed the connection"
 msgstr ""
 
-#: src/network/socket/qnativesocketengine.cpp:186
+#: src/network/socket/qabstractsocketengine.cpp:379
 msgid "Network operation timed out"
 msgstr ""
 
-#: src/network/socket/qnativesocketengine.cpp:189
+#: src/network/socket/qabstractsocketengine.cpp:382
 msgid "Out of resources"
 msgstr ""
 
-#: src/network/socket/qnativesocketengine.cpp:192
+#: src/network/socket/qabstractsocketengine.cpp:385
 msgid "Unsupported socket operation"
 msgstr ""
 
-#: src/network/socket/qnativesocketengine.cpp:195
+#: src/network/socket/qabstractsocketengine.cpp:388
 msgid "Protocol type not supported"
 msgstr ""
 
-#: src/network/socket/qnativesocketengine.cpp:198
+#: src/network/socket/qabstractsocketengine.cpp:391
 msgid "Invalid socket descriptor"
 msgstr ""
 
-#: src/network/socket/qnativesocketengine.cpp:201
+#: src/network/socket/qabstractsocketengine.cpp:394
 msgid "Host unreachable"
 msgstr ""
 
-#: src/network/socket/qnativesocketengine.cpp:204
+#: src/network/socket/qabstractsocketengine.cpp:397
 msgid "Network unreachable"
 msgstr ""
 
-#: src/network/socket/qnativesocketengine.cpp:207
+#: src/network/socket/qabstractsocketengine.cpp:400
 msgid "Permission denied"
 msgstr ""
 
-#: src/network/socket/qnativesocketengine.cpp:216
+#: src/network/socket/qabstractsocketengine.cpp:409
 msgid "The bound address is already in use"
 msgstr ""
 
-#: src/network/socket/qnativesocketengine.cpp:219
+#: src/network/socket/qabstractsocketengine.cpp:412
 msgid "The address is not available"
 msgstr ""
 
-#: src/network/socket/qnativesocketengine.cpp:222
+#: src/network/socket/qabstractsocketengine.cpp:415
 msgid "The address is protected"
 msgstr ""
 
-#: src/network/socket/qnativesocketengine.cpp:225
+#: src/network/socket/qabstractsocketengine.cpp:418
 msgid "Datagram was too large to send"
 msgstr ""
 
-#: src/network/socket/qnativesocketengine.cpp:228
+#: src/network/socket/qabstractsocketengine.cpp:421
 msgid "Unable to send a message"
 msgstr ""
 
-#: src/network/socket/qnativesocketengine.cpp:231
+#: src/network/socket/qabstractsocketengine.cpp:424
 msgid "Unable to receive a message"
 msgstr ""
 
-#: src/network/socket/qnativesocketengine.cpp:234
+#: src/network/socket/qabstractsocketengine.cpp:427
 msgid "Unable to write"
 msgstr ""
 
-#: src/network/socket/qnativesocketengine.cpp:237
+#: src/network/socket/qabstractsocketengine.cpp:430
 msgid "Network error"
 msgstr ""
 
-#: src/network/socket/qnativesocketengine.cpp:240
+#: src/network/socket/qabstractsocketengine.cpp:433
 msgid "Another socket is already listening on the same port"
 msgstr ""
 
-#: src/network/socket/qnativesocketengine.cpp:243
+#: src/network/socket/qabstractsocketengine.cpp:436
 msgid "Operation on non-socket"
 msgstr ""
 
-#: src/network/socket/qnativesocketengine.cpp:246
-msgid "The proxy type is invalid for this operation"
-msgstr ""
-
-#: src/network/socket/qlocalsocket_unix.cpp:113
+#: src/network/socket/qlocalsocket_unix.cpp:112
 msgid "%1: Connection refused"
 msgstr ""
 
-#: src/network/socket/qlocalsocket_unix.cpp:116
+#: src/network/socket/qlocalsocket_unix.cpp:115
 msgid "%1: Remote closed"
 msgstr ""
 
-#: src/network/socket/qlocalsocket_unix.cpp:119
+#: src/network/socket/qlocalsocket_unix.cpp:118
 msgid "%1: Invalid name"
 msgstr ""
 
-#: src/network/socket/qlocalsocket_unix.cpp:122
+#: src/network/socket/qlocalsocket_unix.cpp:121
 msgid "%1: Socket access error"
 msgstr ""
 
-#: src/network/socket/qlocalsocket_unix.cpp:125
+#: src/network/socket/qlocalsocket_unix.cpp:124
 msgid "%1: Socket resource error"
 msgstr ""
 
-#: src/network/socket/qlocalsocket_unix.cpp:128
+#: src/network/socket/qlocalsocket_unix.cpp:127
 msgid "%1: Socket operation timed out"
 msgstr ""
 
-#: src/network/socket/qlocalsocket_unix.cpp:131
+#: src/network/socket/qlocalsocket_unix.cpp:130
 msgid "%1: Datagram too large"
 msgstr ""
 
-#: src/network/socket/qlocalsocket_unix.cpp:134
+#: src/network/socket/qlocalsocket_unix.cpp:133
 msgid "%1: Connection error"
 msgstr ""
 
-#: src/network/socket/qlocalsocket_unix.cpp:137
+#: src/network/socket/qlocalsocket_unix.cpp:136
 msgid "%1: The socket operation is not supported"
 msgstr ""
 
-#: src/network/socket/qudpsocket.cpp:181
+#: src/network/socket/qudpsocket.cpp:174
 msgid "This platform does not support IPv6"
 msgstr ""
 

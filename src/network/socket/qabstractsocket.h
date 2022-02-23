@@ -33,11 +33,7 @@ QT_BEGIN_NAMESPACE
 
 
 class QHostAddress;
-#ifndef QT_NO_NETWORKPROXY
-class QNetworkProxy;
-#endif
 class QAbstractSocketPrivate;
-class QAuthenticator;
 
 class Q_NETWORK_EXPORT QAbstractSocket : public QIODevice
 {
@@ -67,12 +63,6 @@ public:
         SocketAddressNotAvailableError,
         UnsupportedSocketOperationError,        /* 10 */
         UnfinishedSocketOperationError,
-        ProxyAuthenticationRequiredError,
-        ProxyConnectionRefusedError,
-        ProxyConnectionClosedError,
-        ProxyConnectionTimeoutError,            /* 15 */
-        ProxyNotFoundError,
-        ProxyProtocolError,
 
         UnknownSocketError = -1
     };
@@ -140,20 +130,12 @@ public:
     bool waitForBytesWritten(int msecs = 30000);
     virtual bool waitForDisconnected(int msecs = 30000);
 
-#ifndef QT_NO_NETWORKPROXY
-    void setProxy(const QNetworkProxy &networkProxy);
-    QNetworkProxy proxy() const;
-#endif
-
 Q_SIGNALS:
     void hostFound();
     void connected();
     void disconnected();
     void stateChanged(QAbstractSocket::SocketState);
     void error(QAbstractSocket::SocketError);
-#ifndef QT_NO_NETWORKPROXY
-    void proxyAuthenticationRequired(const QNetworkProxy &proxy, QAuthenticator *authenticator);
-#endif
 
 protected:
     qint64 readData(char *data, qint64 maxlen);

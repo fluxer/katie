@@ -120,6 +120,7 @@
 #define QT_NO_NETWORKDISKCACHE
 #define QT_NO_SOCKS5
 #define QT_NO_URLINFO
+#define QT_NO_NETWORKPROXY
 
 // Not supported, used to bootstrap
 #cmakedefine QT_NO_QOBJECT
@@ -236,7 +237,6 @@
 #cmakedefine QT_NO_MESSAGEBOX
 #cmakedefine QT_NO_MOVIE
 #cmakedefine QT_NO_NETWORKINTERFACE
-#cmakedefine QT_NO_NETWORKPROXY
 #cmakedefine QT_NO_PDF
 #cmakedefine QT_NO_PLUGIN_CHECK
 #cmakedefine QT_NO_PRINTDIALOG

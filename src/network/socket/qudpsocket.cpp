@@ -178,7 +178,6 @@ bool QUdpSocketPrivate::doEnsureInitialized(const QHostAddress &bindAddress, qui
 
     // now check if the socket engine is initialized and to the right type
     if (!socketEngine || !socketEngine->isValid()) {
-        resolveProxy(remoteAddress.toString(), bindPort);
         if (!initSocketLayer(address->protocol()))
             return false;
     }
