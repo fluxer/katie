@@ -106,7 +106,6 @@ public:
     QRingBuffer writeBuffer;
 
     bool isBuffered;
-    int blockingTimeout;
 
     QTimer *connectTimer;
     QTimer *disconnectTimer;

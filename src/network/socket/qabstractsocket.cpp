@@ -360,7 +360,6 @@ QAbstractSocketPrivate::QAbstractSocketPrivate()
       cachedSocketDescriptor(-1),
       readBufferMaxSize(0),
       isBuffered(false),
-      blockingTimeout(30000),
       connectTimer(0),
       disconnectTimer(0),
       hostLookupId(-1),
