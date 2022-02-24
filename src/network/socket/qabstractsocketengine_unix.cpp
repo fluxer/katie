@@ -98,6 +98,10 @@ bool QAbstractSocketEnginePrivate::createNewSocket(QAbstractSocket::SocketType s
     int protocol = AF_INET;
 #endif
     int type = (socketType == QAbstractSocket::UdpSocket) ? SOCK_DGRAM : SOCK_STREAM;
+#ifdef SOCK_NONBLOCK
+    // Linux specific
+    type |= SOCK_NONBLOCK;
+#endif
 
     int socket = qt_safe_socket(protocol, type, 0);
 
@@ -123,6 +127,15 @@ bool QAbstractSocketEnginePrivate::createNewSocket(QAbstractSocket::SocketType s
 
         return false;
     }
+
+#ifndef SOCK_NONBLOCK
+    // Make the socket nonblocking.
+    int flags = ::fcntl(socket, F_GETFL, 0);
+    if (flags == -1 || ::fcntl(socket, F_SETFL, flags | O_NONBLOCK) == -1) {
+        d->errorOccurred(QAbstractSocket::UnsupportedSocketOperationError, ProtocolUnsupportedErrorString);
+        return;
+    }
+#endif
 
     socketDescriptor = socket;
     return true;

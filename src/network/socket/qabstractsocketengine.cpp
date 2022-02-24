@@ -481,14 +481,6 @@ bool QAbstractSocketEngine::initialize(QAbstractSocket::SocketType socketType, Q
         return false;
     }
 
-    // Make the socket nonblocking.
-    if (!setOption(NonBlockingSocketOption, 1)) {
-        d->setError(QAbstractSocket::UnsupportedSocketOperationError,
-                    QAbstractSocketEnginePrivate::NonBlockingInitFailedErrorString);
-        close();
-        return false;
-    }
-
     // Set the broadcasting flag if it's a UDP socket.
     if (socketType == QAbstractSocket::UdpSocket
         && !setOption(BroadcastSocketOption, 1)) {
