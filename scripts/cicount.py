@@ -2,7 +2,8 @@
 
 import os, sys
 
-cicountfile = "/home/appveyor/.ccache/cicount"
+cicountdir = "/home/appveyor/.ccache"
+cicountfile = cicountdir + "/cicount"
 
 cicount = 0
 try:
@@ -16,6 +17,8 @@ if cicount >= 10:
     import randconfig
     cicount = 0
 
+if not os.path.isdir(cicountdir):
+    os.makedirs(cicountdir)
 cicount += 1
 with open(cicountfile, 'w') as f:
     f.write(str(cicount))
