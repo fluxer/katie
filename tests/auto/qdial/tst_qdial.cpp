@@ -24,6 +24,8 @@
 
 #include <QDial>
 
+#ifndef QT_NO_DIAL
+
 class tst_QDial : public QObject
 {
     Q_OBJECT
@@ -190,3 +192,9 @@ void tst_QDial::wrappingCheck()
 QTEST_MAIN(tst_QDial)
 
 #include "moc_tst_qdial.cpp"
+
+#else
+
+QTEST_NOOP_MAIN
+
+#endif // QT_NO_DIAL

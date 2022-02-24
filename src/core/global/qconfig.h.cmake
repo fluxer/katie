@@ -96,6 +96,9 @@
 // #cmakedefine QT_NO_COMPLETER
 // #cmakedefine QT_NO_CONTEXTMENU
 // #cmakedefine QT_NO_CSSPARSER
+// #cmakedefine QT_NO_DATESTRING
+// #cmakedefine QT_NO_DATETIMEEDIT
+// #cmakedefine QT_NO_DEBUG_STREAM
 
 // Misc
 #cmakedefine QT_NO_USING_NAMESPACE
@@ -106,11 +109,7 @@
 #cmakedefine QT_NO_CONCURRENT
 #cmakedefine QT_NO_CURSOR
 #cmakedefine QT_NO_DATAWIDGETMAPPER
-#cmakedefine QT_NO_DATESTRING
-#cmakedefine QT_NO_DATETIMEEDIT
 #cmakedefine QT_NO_DEBUG
-#cmakedefine QT_NO_DEBUG_PLUGIN_CHECK
-#cmakedefine QT_NO_DEBUG_STREAM
 #cmakedefine QT_NO_DIAL
 #cmakedefine QT_NO_DIALOGBUTTONBOX
 #cmakedefine QT_NO_DIRMODEL

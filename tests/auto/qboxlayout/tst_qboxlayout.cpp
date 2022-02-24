@@ -198,6 +198,9 @@ void tst_QBoxLayout::sizeConstraints()
 
 void tst_QBoxLayout::setGeometry()
 {
+#ifdef QT_NO_DIAL
+    QSKIP("Katie compiled without dial support (QT_NO_DIAL)", SkipAll);
+#else
     QWidget toplevel;
     QWidget w(&toplevel);
     QVBoxLayout *lay = new QVBoxLayout;
@@ -215,6 +218,7 @@ void tst_QBoxLayout::setGeometry()
     QRect newGeom(0, 0, 70, 70);
     lay2->setGeometry(newGeom);
     QVERIFY2(newGeom.contains(dial->geometry()), "dial->geometry() should be smaller and within newGeom");
+#endif // QT_NO_DIAL
 }
 
 void tst_QBoxLayout::setStyleShouldChangeSpacing()
