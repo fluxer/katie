@@ -189,8 +189,7 @@ typedef std::ptrdiff_t qptrdiff;
 #  define QT_FASTCALL __attribute__((hot))
 #endif
 
-// This logic must match the one in qmetatype.h
-#if !defined(QT_NO_FPU) && defined(QT_ARCH_ARM) || defined(QT_ARCH_AVR32) || defined(QT_ARCH_SH)
+#if !defined(QT_NO_FPU) && defined(QT_ARCH_ARM)
 #  define QT_NO_FPU
 #endif
 

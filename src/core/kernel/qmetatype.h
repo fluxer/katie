@@ -64,7 +64,6 @@ public:
         QVariant = 137,
         LastCoreExtType = QVariant,
 
-// This logic must match the one in qglobal.h
 #if defined(QT_NO_FPU)
         QReal = Float,
 #else
