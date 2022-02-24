@@ -133,7 +133,7 @@ bool QAbstractSocketEnginePrivate::createNewSocket(QAbstractSocket::SocketType s
     int flags = ::fcntl(socket, F_GETFL, 0);
     if (flags == -1 || ::fcntl(socket, F_SETFL, flags | O_NONBLOCK) == -1) {
         setError(QAbstractSocket::UnsupportedSocketOperationError, ProtocolUnsupportedErrorString);
-        return;
+        return false;
     }
 #endif
 
