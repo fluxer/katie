@@ -19,7 +19,7 @@
 **
 ****************************************************************************/
 
-#ifndef QT_NO_QCOLUMNVIEW
+#ifndef QT_NO_COLUMNVIEW
 
 #include "qcolumnviewgrip_p.h"
 #include "qstyleoption.h"
@@ -173,4 +173,4 @@ QT_END_NAMESPACE
 
 #include "moc_qcolumnviewgrip_p.h"
 
-#endif // QT_NO_QCOLUMNVIEW
+#endif // QT_NO_COLUMNVIEW

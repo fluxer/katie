@@ -315,7 +315,6 @@ else()
     message(FATAL_ERROR "Unknown platform '${CMAKE_SYSTEM_NAME}'")
 endif()
 
-
 try_run(
     KATIE_ARCH_RUN_RESULT KATIE_ARCH_COMPILE_RESULT
     "${CMAKE_BINARY_DIR}" "${CMAKE_SOURCE_DIR}/cmake/arch.cpp"

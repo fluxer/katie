@@ -39,6 +39,8 @@
 
 #define ANIMATION_DELAY 300
 
+#ifndef QT_NO_COLUMNVIEW
+
 class tst_QColumnView : public QObject {
   Q_OBJECT
 
@@ -1011,3 +1013,9 @@ void tst_QColumnView::dynamicModelChanges()
 QTEST_MAIN(tst_QColumnView)
 
 #include "moc_tst_qcolumnview.cpp"
+
+#else // QT_NO_COLUMNVIEW
+
+QTEST_NOOP_MAIN
+
+#endif // QT_NO_COLUMNVIEW

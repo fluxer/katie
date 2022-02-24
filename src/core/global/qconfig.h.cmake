@@ -164,7 +164,6 @@
 #cmakedefine QT_NO_PROGRESSDIALOG
 #cmakedefine QT_NO_PROPERTIES
 #cmakedefine QT_NO_PROXYMODEL
-#cmakedefine QT_NO_QCOLUMNVIEW
 #cmakedefine QT_NO_QFUTURE
 #cmakedefine QT_NO_QUATERNION
 #cmakedefine QT_NO_QUUID_STRING
