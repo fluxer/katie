@@ -611,7 +611,7 @@ void QTextHtmlParser::parseTag()
             parser.parse(&sheet, Qt::CaseInsensitive);
             inlineStyleSheets.append(sheet);
             resolveStyleSheetImports(sheet);
-#endif
+#endif // QT_NO_CSSPARSER
         }
         parseCloseTag();
         return;
@@ -1343,7 +1343,6 @@ void QTextHtmlParserNode::applyCssDeclarations(const QVector<QCss::Declaration> 
         }
     }
 }
-
 #endif // QT_NO_CSSPARSER
 
 void QTextHtmlParserNode::applyBackgroundImage(const QString &url, const QTextDocument *resourceProvider)
@@ -1434,7 +1433,7 @@ void QTextHtmlParserNode::parseStyleAttribute(const QString &value, const QTextD
     if (sheet.styleRules.count() != 1) return;
     applyCssDeclarations(sheet.styleRules.at(0).declarations, resourceProvider);
 }
-#endif
+#endif // QT_NO_CSSPARSER
 
 QStringList QTextHtmlParser::parseAttributes()
 {
@@ -1697,8 +1696,6 @@ QStringList QTextHtmlStyleSelector::nodeNames(NodePtr node) const
     return QStringList(parser->at(node.id).tag.toLower());
 }
 
-#endif // QT_NO_CSSPARSER
-
 static inline int findAttribute(const QStringList &attributes, const QString &name)
 {
     int idx = -1;
@@ -1707,8 +1704,6 @@ static inline int findAttribute(const QStringList &attributes, const QString &na
     } while (idx != -1 && (idx % 2 == 1));
     return idx;
 }
-
-#ifndef QT_NO_CSSPARSER
 
 QString QTextHtmlStyleSelector::attribute(NodePtr node, const QString &name) const
 {
@@ -1836,9 +1831,9 @@ bool QTextHtmlParser::nodeIsChildOf(int i, QTextHTMLElements id) const
     }
     return false;
 }
+#endif // QT_NO_CSSPARSER
 
 QT_END_NAMESPACE
-#endif // QT_NO_CSSPARSER
 
 #endif // QT_NO_TEXTHTMLPARSER
 
