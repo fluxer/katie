@@ -26,9 +26,7 @@
 
 #ifndef QT_NO_DATAWIDGETMAPPER
 
-
 QT_BEGIN_NAMESPACE
-
 
 class QAbstractItemDelegate;
 class QAbstractItemModel;
@@ -99,7 +97,7 @@ private:
 
 QT_END_NAMESPACE
 
-
 #endif // QT_NO_DATAWIDGETMAPPER
-#endif
+
+#endif // QDATAWIDGETMAPPER_H
 
