@@ -99,9 +99,6 @@ public:
 
 };
 
-// ### remove, only Symbian needed that
-#define Q_SET_DEFAULT_IAP
-
 class QtNetworkSettingsInitializerCode {
 public:
     QtNetworkSettingsInitializerCode() {
