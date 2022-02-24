@@ -315,41 +315,13 @@ else()
     message(FATAL_ERROR "Unknown platform '${CMAKE_SYSTEM_NAME}'")
 endif()
 
-# https://en.wikipedia.org/wiki/Uname
-if(KATIE_PROCESSOR MATCHES "^alpha")
-    set(KATIE_ARCH "ALPHA")
-elseif(KATIE_PROCESSOR MATCHES "^arm64")
-    set(KATIE_ARCH "ARM64")
-elseif(KATIE_PROCESSOR MATCHES "^arm")
-    set(KATIE_ARCH "ARM")
-elseif(KATIE_PROCESSOR MATCHES "^avr")
-    set(KATIE_ARCH "AVR32")
-elseif(KATIE_PROCESSOR MATCHES "^blackfin")
-    set(KATIE_ARCH "BFIN")
-elseif(KATIE_PROCESSOR MATCHES "^ia64")
-    set(KATIE_ARCH "IA64")
-elseif(KATIE_PROCESSOR MATCHES "^m68k")
-    set(KATIE_ARCH "M68K")
-elseif(KATIE_PROCESSOR MATCHES "^mips")
-    set(KATIE_ARCH "MIPS")
-elseif(KATIE_PROCESSOR MATCHES "^hppa")
-    set(KATIE_ARCH "PARISC")
-elseif(KATIE_PROCESSOR MATCHES "^ppc64")
-    set(KATIE_ARCH "POWERPC64")
-elseif(KATIE_PROCESSOR MATCHES "^ppc")
-    set(KATIE_ARCH "POWERPC")
-elseif(KATIE_PROCESSOR MATCHES "^s390")
-    set(KATIE_ARCH "S390")
-elseif(KATIE_PROCESSOR MATCHES "^sparc")
-    set(KATIE_ARCH "SPARC")
-elseif(KATIE_PROCESSOR MATCHES "^sh")
-    # TODO: SH4A
-    set(KATIE_ARCH "SH")
-elseif(KATIE_PROCESSOR MATCHES "(x86_64|amd64)")
-    set(KATIE_ARCH "X86_64")
-elseif(KATIE_PROCESSOR MATCHES "(x86|i[3-6]86|i86pc)")
-    set(KATIE_ARCH "I386")
-else()
+
+try_run(
+    KATIE_ARCH_RUN_RESULT KATIE_ARCH_COMPILE_RESULT
+    "${CMAKE_BINARY_DIR}" "${CMAKE_SOURCE_DIR}/cmake/arch.cpp"
+    RUN_OUTPUT_VARIABLE KATIE_ARCH
+)
+if(NOT KATIE_ARCH_RUN_RESULT EQUAL 0 OR NOT KATIE_ARCH_COMPILE_RESULT)
     message(FATAL_ERROR "Unknown CPU '${KATIE_PROCESSOR}'")
 endif()
 
