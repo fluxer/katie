@@ -18,6 +18,7 @@
 ** $QT_END_LICENSE$
 **
 ****************************************************************************/
+
 #ifndef QPAGESETUPWIDGET_H
 #define QPAGESETUPWIDGET_H
 
@@ -82,4 +83,5 @@ private:
 QT_END_NAMESPACE
 
 #endif // QT_NO_PRINTDIALOG
-#endif
+
+#endif // QT_NO_PRINTDIALOG
