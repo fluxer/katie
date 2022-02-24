@@ -19,6 +19,8 @@ build_script:
 
     export PATH="/usr/lib/ccache/:$PATH"
 
+    python ./scripts/cicount.py
+
     cmake . -Wno-dev -DKATIE_TESTS=ON -DKATIE_BENCHMARKS=ON -DKATIE_UTILS=ON
 
     make -j $(nproc || echo 1)
