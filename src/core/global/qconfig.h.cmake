@@ -99,6 +99,8 @@
 // #cmakedefine QT_NO_DATESTRING
 // #cmakedefine QT_NO_DATETIMEEDIT
 // #cmakedefine QT_NO_DEBUG_STREAM
+// #cmakedefine QT_NO_DIRMODEL
+// #cmakedefine QT_NO_DOCKWIDGET
 
 // Misc
 #cmakedefine QT_NO_USING_NAMESPACE
@@ -112,8 +114,6 @@
 #cmakedefine QT_NO_DEBUG
 #cmakedefine QT_NO_DIAL
 #cmakedefine QT_NO_DIALOGBUTTONBOX
-#cmakedefine QT_NO_DIRMODEL
-#cmakedefine QT_NO_DOCKWIDGET
 #cmakedefine QT_NO_DOM
 #cmakedefine QT_NO_EFFECTS
 #cmakedefine QT_NO_ERRORMESSAGE

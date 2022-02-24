@@ -23,6 +23,7 @@
 #include "qdockarealayout_p.h"
 
 #ifndef QT_NO_MAINWINDOW
+
 #include "qdockwidget.h"
 #include "qdockwidget_p.h"
 #include "qtoolbar_p.h"
@@ -44,15 +45,15 @@
 #include "qlayoutengine_p.h"
 #include "qguicommon_p.h"
 
-#ifdef QT_NO_DOCKWIDGET
-extern QMainWindowLayout *qt_mainwindow_layout(const QMainWindow *window);
-#endif
-
 #ifdef Q_DEBUG_MAINWINDOW_LAYOUT
 #   include <QTextStream>
 #endif
 
 QT_BEGIN_NAMESPACE
+
+#ifdef QT_NO_DOCKWIDGET
+extern QMainWindowLayout *qt_mainwindow_layout(const QMainWindow *window);
+#endif
 
 /******************************************************************************
 ** debug
