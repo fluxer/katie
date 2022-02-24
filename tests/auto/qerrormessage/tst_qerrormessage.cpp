@@ -24,6 +24,8 @@
 #include <QDebug>
 #include <QCheckBox>
 
+#ifndef QT_NO_ERRORMESSAGE
+
 class tst_QErrorMessage : public QObject
 {
     Q_OBJECT
@@ -138,3 +140,9 @@ void tst_QErrorMessage::dontShowCategoryAgain()
 QTEST_MAIN(tst_QErrorMessage)
 
 #include "moc_tst_qerrormessage.cpp"
+
+#else // QT_NO_ERRORMESSAGE
+
+QTEST_NOOP_MAIN
+
+#endif // QT_NO_ERRORMESSAGE
