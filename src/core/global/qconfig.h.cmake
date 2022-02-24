@@ -169,9 +169,6 @@
 #cmakedefine QT_NO_BACKINGSTORE
 #cmakedefine QT_NO_BUTTONGROUP
 #cmakedefine QT_NO_CALENDARWIDGET
-#cmakedefine QT_NO_CAST_FROM_ASCII
-#cmakedefine QT_NO_CAST_FROM_BYTEARRAY
-#cmakedefine QT_NO_CAST_TO_ASCII
 #cmakedefine QT_NO_CLIPBOARD
 #cmakedefine QT_NO_CODEC_FOR_C_STRINGS
 #cmakedefine QT_NO_COLORDIALOG
@@ -195,7 +192,6 @@
 #cmakedefine QT_NO_DOCKWIDGET
 #cmakedefine QT_NO_DOM
 #cmakedefine QT_NO_DRAGANDDROP
-#cmakedefine QT_NO_DYNAMIC_CAST
 #cmakedefine QT_NO_EFFECTS
 #cmakedefine QT_NO_ERRORMESSAGE
 #cmakedefine QT_NO_FILEDIALOG
@@ -221,7 +217,6 @@
 #cmakedefine QT_NO_IPV6
 #cmakedefine QT_NO_IPV6IFNAME
 #cmakedefine QT_NO_ITEMVIEWS
-#cmakedefine QT_NO_KEYWORDS
 #cmakedefine QT_NO_LCDNUMBER
 #cmakedefine QT_NO_LIBRARY
 #cmakedefine QT_NO_LINEEDIT
@@ -301,7 +296,6 @@
 #cmakedefine QT_NO_UNDOGROUP
 #cmakedefine QT_NO_UNDOSTACK
 #cmakedefine QT_NO_UNDOVIEW
-#cmakedefine QT_NO_URL_CAST_FROM_STRING
 #cmakedefine QT_NO_VALIDATOR
 #cmakedefine QT_NO_VECTOR2D
 #cmakedefine QT_NO_VECTOR3D
@@ -679,5 +673,13 @@
 #if !defined(QT_NO_PRINTPREVIEWDIALOG) && (defined(QT_NO_PRINTPREVIEWWIDGET) || defined(QT_NO_PRINTDIALOG) || defined(QT_NO_TOOLBAR))
 #  define QT_NO_PRINTPREVIEWDIALOG
 #endif
+
+// Always off when building Katie, may be defined by application
+// QT_NO_DYNAMIC_CAST
+// QT_NO_URL_CAST_FROM_STRING
+// QT_NO_CAST_FROM_ASCII
+// QT_NO_CAST_FROM_BYTEARRAY
+// QT_NO_CAST_TO_ASCII
+// QT_NO_KEYWORDS
 
 #endif
