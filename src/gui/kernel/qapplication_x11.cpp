@@ -1208,7 +1208,9 @@ void qt_init(QApplicationPrivate *priv, Display *display,
     QKeyMapper::changeKeyboard();
 
     // Misc. initialization
+#ifndef QT_NO_CURSOR
     QCursorData::initialize();
+#endif // QT_NO_CURSOR
 
     qApp->setObjectName(qApp->applicationName());
 
@@ -1263,7 +1265,9 @@ void qt_init(QApplicationPrivate *priv, Display *display,
 void qt_cleanup()
 {
     QPixmapCache::clear();
+#ifndef QT_NO_CURSOR
     QCursorData::cleanup();
+#endif // QT_NO_CURSOR
     QColormap::cleanup();
 
 #ifndef QT_NO_XRENDER

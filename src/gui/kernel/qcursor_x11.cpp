@@ -28,6 +28,7 @@
 
 QT_BEGIN_NAMESPACE
 
+#ifndef QT_NO_CURSOR
 extern QPixmap qt_toX11Pixmap(const QPixmap &pixmap); // qpixmap_x11.cpp
 
 /*****************************************************************************
@@ -54,7 +55,6 @@ QCursorData::~QCursorData()
     delete bmm;
 }
 
-#ifndef QT_NO_CURSOR
 QCursor::QCursor(Qt::HANDLE cursor)
 {
     if (!QCursorData::initialized)
@@ -62,8 +62,6 @@ QCursor::QCursor(Qt::HANDLE cursor)
     d = new QCursorData(Qt::CustomCursor);
     d->hcurs = cursor;
 }
-
-#endif
 
 QCursorData *QCursorData::setBitmap(const QBitmap &bitmap, const QBitmap &mask, int hotX, int hotY)
 {
@@ -90,9 +88,6 @@ QCursorData *QCursorData::setBitmap(const QBitmap &bitmap, const QBitmap &mask, 
     return d;
 }
 
-
-
-#ifndef QT_NO_CURSOR
 Qt::HANDLE QCursor::handle() const
 {
     if (!QCursorData::initialized)
@@ -101,7 +96,7 @@ Qt::HANDLE QCursor::handle() const
         d->update();
     return d->hcurs;
 }
-#endif
+#endif // QT_NO_CURSOR
 
 QPoint QCursor::pos()
 {
@@ -118,25 +113,6 @@ QPoint QCursor::pos()
     }
     return QPoint();
 }
-
-/*! \internal
-*/
-#ifndef QT_NO_CURSOR
-int QCursor::x11Screen()
-{
-    Window root;
-    Window child;
-    int root_x, root_y, win_x, win_y;
-    uint buttons;
-    Display* dpy = qt_x11Data->display;
-    for (int i = 0; i < ScreenCount(dpy); ++i) {
-        if (XQueryPointer(dpy, QX11Info::appRootWindow(i), &root, &child, &root_x, &root_y,
-                          &win_x, &win_y, &buttons))
-            return i;
-    }
-    return -1;
-}
-#endif
 
 void QCursor::setPos(int x, int y)
 {
@@ -168,6 +144,25 @@ void QCursor::setPos(int x, int y)
         return;
 
     XWarpPointer(qt_x11Data->display, XNone, QX11Info::appRootWindow(screen), 0, 0, 0, 0, x, y);
+}
+
+
+/*! \internal
+*/
+#ifndef QT_NO_CURSOR
+int QCursor::x11Screen()
+{
+    Window root;
+    Window child;
+    int root_x, root_y, win_x, win_y;
+    uint buttons;
+    Display* dpy = qt_x11Data->display;
+    for (int i = 0; i < ScreenCount(dpy); ++i) {
+        if (XQueryPointer(dpy, QX11Info::appRootWindow(i), &root, &child, &root_x, &root_y,
+                          &win_x, &win_y, &buttons))
+            return i;
+    }
+    return -1;
 }
 
 // values are from:
@@ -269,7 +264,7 @@ void QCursorData::update()
         }
     }
 }
+#endif // QT_NO_CURSOR
 
 QT_END_NAMESPACE
-
 
