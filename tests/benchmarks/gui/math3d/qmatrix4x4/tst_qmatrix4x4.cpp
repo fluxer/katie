@@ -3,7 +3,7 @@
 ** Copyright (C) 2015 The Qt Company Ltd.
 ** Copyright (C) 2016 Ivailo Monev
 **
-** This file is part of the QtOpenGL module of the Katie Toolkit.
+** This file is part of the test suite of the Katie Toolkit.
 **
 ** $QT_BEGIN_LICENSE:LGPL$
 **

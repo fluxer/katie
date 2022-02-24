@@ -39,7 +39,6 @@ public:
     ChipTester(QWidget *parent = nullptr);
 
     void setAntialias(bool enabled);
-    void setOpenGL(bool enabled);
     void runBenchmark();
     void setOperation(Operation operation);
 
