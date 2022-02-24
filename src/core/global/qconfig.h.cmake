@@ -84,23 +84,26 @@
 #cmakedefine QT_NO_XSHAPE
 #cmakedefine QT_NO_XSYNC
 
+// Broken, do not set until further notice
+// #cmakedefine QT_NO_ACTION
+// #cmakedefine QT_NO_ANIMATION
+// #cmakedefine QT_NO_BUTTONGROUP
+// #cmakedefine QT_NO_CALENDARWIDGET
+// #cmakedefine QT_NO_CLIPBOARD
+// #cmakedefine QT_NO_DRAGANDDROP
+// #cmakedefine QT_NO_COLORDIALOG
+// #cmakedefine QT_NO_COMBOBOX
+// #cmakedefine QT_NO_COMPLETER
+// #cmakedefine QT_NO_CONTEXTMENU
+// #cmakedefine QT_NO_CSSPARSER
+
 // Misc
 #cmakedefine QT_NO_USING_NAMESPACE
-#cmakedefine QT_NO_ACTION
-#cmakedefine QT_NO_ANIMATION
 #cmakedefine QT_NO_BACKINGSTORE
-#cmakedefine QT_NO_BUTTONGROUP
-#cmakedefine QT_NO_CALENDARWIDGET
-#cmakedefine QT_NO_CLIPBOARD
 #cmakedefine QT_NO_CODEC_FOR_C_STRINGS
-#cmakedefine QT_NO_COLORDIALOG
 #cmakedefine QT_NO_COLORNAMES
 #cmakedefine QT_NO_COLUMNVIEW
-#cmakedefine QT_NO_COMBOBOX
-#cmakedefine QT_NO_COMPLETER
 #cmakedefine QT_NO_CONCURRENT
-#cmakedefine QT_NO_CONTEXTMENU
-#cmakedefine QT_NO_CSSPARSER
 #cmakedefine QT_NO_CURSOR
 #cmakedefine QT_NO_DATAWIDGETMAPPER
 #cmakedefine QT_NO_DATESTRING
@@ -113,7 +116,6 @@
 #cmakedefine QT_NO_DIRMODEL
 #cmakedefine QT_NO_DOCKWIDGET
 #cmakedefine QT_NO_DOM
-#cmakedefine QT_NO_DRAGANDDROP
 #cmakedefine QT_NO_EFFECTS
 #cmakedefine QT_NO_ERRORMESSAGE
 #cmakedefine QT_NO_FILEDIALOG
