@@ -22,6 +22,7 @@
 #include <QString>
 #include <QHostInfo>
 #include <QLocalServer>
+#include <QTcpServer>
 
 class QtNetworkSettings
 {
@@ -93,7 +94,13 @@ public:
     }
 
     static bool supportsIPv6() {
+        // QLocalServer can poke the address regardless if it is protected as it does not bind to
+        // the address
+#ifndef QT_NO_LOCALSERVER
         QLocalServer server;
+#else
+        QTcpServer server;
+#endif
         return server.listen("::1");
     }
 
