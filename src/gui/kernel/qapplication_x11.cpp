@@ -1886,6 +1886,7 @@ int QApplication::x11ProcessEvent(XEvent* event)
                 break;
         }
 
+#ifndef QT_NO_CLIPBOARD
         if (req->selection == ATOM(CLIPBOARD)) {
             if (qt_xfixes_clipboard_changed(req->owner, req->selection_timestamp)) {
                 emit clipboard()->changed(QClipboard::Clipboard);
@@ -1897,6 +1898,7 @@ int QApplication::x11ProcessEvent(XEvent* event)
                 emit clipboard()->selectionChanged();
             }
         }
+#endif // QT_NO_CLIPBOARD
     }
 #endif // QT_NO_XFIXES
 
@@ -2243,10 +2245,11 @@ int QApplication::x11ProcessEvent(XEvent* event)
 
         if (ATOM(XdndSelection) && req->selection == ATOM(XdndSelection)) {
             qt_x11Data->xdndHandleSelectionRequest(req);
-
+#ifndef QT_NO_CLIPBOARD
         } else if (qt_clipboard) {
             QClipboardEvent e(event);
             QApplication::sendSpontaneousEvent(qt_clipboard, &e);
+#endif // QT_NO_CLIPBOARD
         }
         break;
     }
@@ -2256,10 +2259,12 @@ int QApplication::x11ProcessEvent(XEvent* event)
         if (! req || (ATOM(XdndSelection) && req->selection == ATOM(XdndSelection)))
             break;
 
+#ifndef QT_NO_CLIPBOARD
         if (qt_clipboard && !qt_x11Data->use_xfixes) {
             QClipboardEvent e(event);
             QApplication::sendSpontaneousEvent(qt_clipboard, &e);
         }
+#endif // QT_NO_CLIPBOARD
         break;
     }
 
@@ -2269,16 +2274,19 @@ int QApplication::x11ProcessEvent(XEvent* event)
         if (! req || (ATOM(XdndSelection) && req->selection == ATOM(XdndSelection)))
             break;
 
+#ifndef QT_NO_CLIPBOARD
         if (qt_clipboard) {
             QClipboardEvent e(event);
             QApplication::sendSpontaneousEvent(qt_clipboard, &e);
         }
+#endif // QT_NO_CLIPBOARD
         break;
     }
     case PropertyNotify:
         // some properties changed
         if (event->xproperty.window == QX11Info::appRootWindow(0)) {
             // root properties for the first screen
+#ifndef QT_NO_CLIPBOARD
             if (!qt_x11Data->use_xfixes && event->xproperty.atom == ATOM(_QT_CLIPBOARD_SENTINEL)) {
                 if (qt_check_clipboard_sentinel()) {
                     emit clipboard()->changed(QClipboard::Clipboard);
@@ -2289,7 +2297,9 @@ int QApplication::x11ProcessEvent(XEvent* event)
                     emit clipboard()->changed(QClipboard::Selection);
                     emit clipboard()->selectionChanged();
                 }
-            } else if (QApplicationPrivate::obey_desktop_settings &&event->xproperty.atom == ATOM(_QT_SETTINGS_TIMESTAMP)) {
+            }
+#endif // QT_NO_CLIPBOARD
+            if (QApplicationPrivate::obey_desktop_settings &&event->xproperty.atom == ATOM(_QT_SETTINGS_TIMESTAMP)) {
                 QApplicationPrivate::x11_apply_settings();
             }
         }
