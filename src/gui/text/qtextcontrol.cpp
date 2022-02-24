@@ -30,7 +30,6 @@
 #include "qdebug.h"
 #include "qmimedata.h"
 #include "qdrag.h"
-#include "qconfig.h"
 #include "qclipboard.h"
 #include "qmenu.h"
 #include "qstyle.h"
@@ -49,7 +48,6 @@
 #include "qdatetime.h"
 #include "qbuffer.h"
 #include "qapplication.h"
-#include <limits.h>
 #include "qtexttable.h"
 #include "qvariant.h"
 #include "qurl.h"
@@ -66,6 +64,8 @@
 #else
 #define ACCEL_KEY(k) QString()
 #endif
+
+#include <limits.h>
 
 QT_BEGIN_NAMESPACE
 

@@ -20,7 +20,6 @@
 **
 ****************************************************************************/
 
-#include "qconfig.h"
 #include "qplatformdefs.h"
 #include "qlibrary.h"
 
