@@ -46,8 +46,6 @@
 
 QT_BEGIN_NAMESPACE
 
-#ifndef QT_NO_DRAGANDDROP
-
 //#define QDND_DEBUG
 
 #ifdef QDND_DEBUG
@@ -93,7 +91,7 @@ static QString KeyboardModifiersToString(Qt::KeyboardModifiers moderfies)
     }
     return str;
 }
-#endif
+#endif // QDND_DEBUG
 
 
 // the universe's only drag manager
@@ -202,7 +200,6 @@ QWidget *QDragManager::currentTarget()
 {
     return currentDropTarget;
 }
-#endif
 
 QDropData::QDropData()
     : QInternalMimeData()
@@ -212,7 +209,6 @@ QDropData::QDropData()
 QDropData::~QDropData()
 {
 }
-#endif // QT_NO_DRAGANDDROP
 
 #if !(defined(QT_NO_DRAGANDDROP) && defined(QT_NO_CLIPBOARD))
 static QStringList imageReadMimeFormats()
@@ -405,6 +401,7 @@ QByteArray QInternalMimeData::renderDataHelper(const QString &mimeType, const QM
 
 QT_END_NAMESPACE
 
+#endif // QT_NO_DRAGANDDROP
 
 #include "moc_qdnd_p.h"
 

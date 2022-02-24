@@ -263,7 +263,11 @@ QWidget *qt_button_down = 0; // last widget to be pressed with the mouse
 QPointer<QWidget> qt_last_mouse_receiver = 0;
 static QWidget *qt_popup_down = 0;  // popup that contains the pressed widget
 
+#ifndef QT_NO_DRAGANDDROP
 extern bool qt_xdnd_dragging;
+#else
+static bool qt_xdnd_dragging = false;
+#endif
 
 #ifndef QT_NO_XFIXES
 
@@ -411,10 +415,12 @@ static int qt_x_errhandler(Display *dpy, XErrorEvent *err)
                     return 0;
                 }
             }
+#ifndef QT_NO_DRAGANDDROP
             if (qt_x11Data->xdndHandleBadwindow()) {
                 qDebug("xdndHandleBadwindow returned true");
                 return 0;
             }
+#endif // QT_NO_DRAGANDDROP
         }
         if (qt_x11Data->ignore_badwindow)
             return 0;
@@ -1113,7 +1119,9 @@ void qt_init(QApplicationPrivate *priv, Display *display,
     QColormap::initialize();
 
     // Support protocols
+#ifndef QT_NO_DRAGANDDROP
     qt_x11Data->xdndSetup();
+#endif // QT_NO_DRAGANDDROP
 
     // Finally create all atoms
     qt_x11_create_intern_atoms();
@@ -1660,6 +1668,7 @@ int QApplication::x11ClientMessage(QWidget* w, XEvent* event, bool passive_only)
             }
         } else if (event->xclient.message_type == ATOM(_QT_SCROLL_DONE)) {
             widget->translateScrollDoneEvent(event);
+#ifndef QT_NO_DRAGANDDROP
         } else if (event->xclient.message_type == ATOM(XdndPosition)) {
             qt_x11Data->xdndHandlePosition(widget, event, passive_only);
         } else if (event->xclient.message_type == ATOM(XdndEnter)) {
@@ -1672,6 +1681,7 @@ int QApplication::x11ClientMessage(QWidget* w, XEvent* event, bool passive_only)
             qt_x11Data->xdndHandleDrop(event, passive_only);
         } else if (event->xclient.message_type == ATOM(XdndFinished)) {
             qt_x11Data->xdndHandleFinished(event, passive_only);
+#endif // QT_NO_DRAGANDDROP
         }
         // All other are interactions
     }
@@ -2244,7 +2254,9 @@ int QApplication::x11ProcessEvent(XEvent* event)
             break;
 
         if (ATOM(XdndSelection) && req->selection == ATOM(XdndSelection)) {
+#ifndef QT_NO_DRAGANDDROP
             qt_x11Data->xdndHandleSelectionRequest(req);
+#endif // QT_NO_DRAGANDDROP
 #ifndef QT_NO_CLIPBOARD
         } else if (qt_clipboard) {
             QClipboardEvent e(event);
