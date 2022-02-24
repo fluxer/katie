@@ -132,7 +132,7 @@ bool QAbstractSocketEnginePrivate::createNewSocket(QAbstractSocket::SocketType s
     // Make the socket nonblocking.
     int flags = ::fcntl(socket, F_GETFL, 0);
     if (flags == -1 || ::fcntl(socket, F_SETFL, flags | O_NONBLOCK) == -1) {
-        d->errorOccurred(QAbstractSocket::UnsupportedSocketOperationError, ProtocolUnsupportedErrorString);
+        setError(QAbstractSocket::UnsupportedSocketOperationError, ProtocolUnsupportedErrorString);
         return;
     }
 #endif
