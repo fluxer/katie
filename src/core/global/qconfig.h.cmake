@@ -340,7 +340,7 @@
 #endif
 
 // Drag and drop
-#if !defined(QT_NO_DRAGANDDROP) && defined(QT_NO_IMAGEFORMAT_XPM)
+#if !defined(QT_NO_DRAGANDDROP) && (defined(QT_NO_CLIPBOARD) || defined(QT_NO_IMAGEFORMAT_XPM))
 #  define QT_NO_DRAGANDDROP
 #endif
 
