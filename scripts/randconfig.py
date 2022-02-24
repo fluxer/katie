@@ -20,6 +20,8 @@ for sline in configcontent.splitlines():
 
 toreplace = configlines[random.randrange(0, len(configlines))]
 replacement = toreplace.replace('#cmakedefine', '#define')
+configdefinition = replacement.replace('#define ', '')
+print('defining %s' % configdefinition)
 configcontent = configcontent.replace(toreplace, replacement)
 
 with open(configfile, 'w') as f:
