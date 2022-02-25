@@ -125,6 +125,8 @@
 // #cmakedefine QT_NO_MENU
 // #cmakedefine QT_NO_MENUBAR
 // #cmakedefine QT_NO_MESSAGEBOX
+// #cmakedefine QT_NO_PROGRESSBAR
+// #cmakedefine QT_NO_PROPERTIES
 
 // Misc
 #cmakedefine QT_NO_USING_NAMESPACE
@@ -162,9 +164,7 @@
 #cmakedefine QT_NO_PRINTER
 #cmakedefine QT_NO_PRINTPREVIEWDIALOG
 #cmakedefine QT_NO_PRINTPREVIEWWIDGET
-#cmakedefine QT_NO_PROGRESSBAR
 #cmakedefine QT_NO_PROGRESSDIALOG
-#cmakedefine QT_NO_PROPERTIES
 #cmakedefine QT_NO_PROXYMODEL
 #cmakedefine QT_NO_QFUTURE
 #cmakedefine QT_NO_QUATERNION
