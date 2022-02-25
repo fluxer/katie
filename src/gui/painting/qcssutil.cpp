@@ -383,8 +383,6 @@ void qDrawBorder(QPainter *p, const QRect &br, const QCss::BorderStyle *styles,
     }
 }
 
-#endif //QT_NO_CSSPARSER
-
 QT_END_NAMESPACE
 
-
+#endif // QT_NO_CSSPARSER

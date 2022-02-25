@@ -161,30 +161,25 @@ public:
 
         DynamicPropertyChange = 103,            // A dynamic property was changed through setProperty/property
 
-        NonClientAreaMouseMove = 104,
-        NonClientAreaMouseButtonPress = 105,
-        NonClientAreaMouseButtonRelease = 106,
-        NonClientAreaMouseButtonDblClick = 107,
+        ContentsRectChange = 104,               // sent by QWidget::setContentsMargins (internal)
 
-        ContentsRectChange = 108,               // sent by QWidget::setContentsMargins (internal)
+        FutureCallOut = 105,
 
-        FutureCallOut = 109,
+        GraphicsSceneResize  = 106,
+        GraphicsSceneMove  = 107,
 
-        GraphicsSceneResize  = 110,
-        GraphicsSceneMove  = 111,
+        CursorChange = 108,
+        ToolTipChange = 109,
 
-        CursorChange = 112,
-        ToolTipChange = 113,
+        GrabMouse = 110,
+        UngrabMouse = 111,
+        GrabKeyboard = 112,
+        UngrabKeyboard = 113,
 
-        GrabMouse = 114,
-        UngrabMouse = 115,
-        GrabKeyboard = 116,
-        UngrabKeyboard = 117,
+        RequestSoftwareInputPanel = 114,
+        CloseSoftwareInputPanel = 115,
 
-        RequestSoftwareInputPanel = 118,
-        CloseSoftwareInputPanel = 119,
-
-        WinIdChange = 120,
+        WinIdChange = 116,
 
         User = 1000,                            // first user event id
         MaxUser = 65535                         // last user event id

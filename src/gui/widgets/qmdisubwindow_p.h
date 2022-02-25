@@ -321,8 +321,8 @@ public:
     }
 };
 
-#endif // QT_NO_MDIAREA
-
 QT_END_NAMESPACE
+
+#endif // QT_NO_MDIAREA
 
 #endif // QMDISUBWINDOW_P_H

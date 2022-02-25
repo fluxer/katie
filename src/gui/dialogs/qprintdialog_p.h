@@ -31,6 +31,8 @@ QT_BEGIN_NAMESPACE
 class QUnixPrintWidget;
 class QCUPSSupport;
 
+#ifndef QT_NO_PRINTDIALOG
+
 class QPrintDialogPrivate : public QAbstractPrintDialogPrivate
 {
     Q_DECLARE_PUBLIC(QPrintDialog)
@@ -64,6 +66,8 @@ public:
     QDialogButtonBox *buttons;
     QPushButton *collapseButton;
 };
+
+#endif // QT_NO_PRINTDIALOG
 
 QT_END_NAMESPACE
 

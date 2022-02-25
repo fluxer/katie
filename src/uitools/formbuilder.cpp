@@ -454,6 +454,7 @@ void QFormBuilder::updateCustomWidgets()
 {
     m_customWidgets.clear();
 
+#ifndef QT_NO_LIBRARY
     foreach (const QString &path, m_pluginPaths) {
         const QDir dir(path);
         const QStringList candidates = dir.entryList(QDir::Files);
@@ -471,6 +472,7 @@ void QFormBuilder::updateCustomWidgets()
                 insertPlugins(loader.instance(), &m_customWidgets);
         }
     }
+#endif // QT_NO_LIBRARY
 }
 
 /*!

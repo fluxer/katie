@@ -44,82 +44,6 @@
 #define Q_LITTLE_ENDIAN 1234
 #define Q_BYTE_ORDER ${KATIE_BYTE_ORDER}
 
-// No longer supported
-#define QT_NO_OPENVG
-#define QT_NO_PHONON
-#define QT_NO_WIN_ACTIVEQT
-#define QT_NO_DIRECTPAINTER
-#define QT_NO_COP
-#define QT_NO_BLITTABLE
-#define QT_NO_PICTURE
-#define QT_NO_PICTUREIO
-#define QT_NO_SOFTKEYMANAGER
-#define QT_NO_SXE
-#define QT_NO_QWS_QPF2
-#define QT_NO_QWS_INPUTMETHODS
-#define QT_NO_QWSEMBEDWIDGET
-#define QT_NO_QWS_CURSOR
-#define QT_NO_QWS_DECORATION_DEFAULT
-#define QT_NO_QWS_DECORATION_STYLED
-#define QT_NO_QWS_DECORATION_WINDOWS
-#define QT_NO_QWS_MANAGER
-#define QT_NO_QWS_KEYBOARD
-#define QT_NO_QWS_MOUSE
-#define QT_NO_QWS_MOUSE_AUTO
-#define QT_NO_QWS_MOUSE_MANUAL
-#define QT_NO_QWS_MULTIPROCESS
-#define QT_NO_QWS_SOUNDSERVER
-#define QT_NO_QWS_PROPERTIES
-#define QT_NO_QWS_PROXYSCREEN
-#define QT_NO_QWS_DYNAMICSCREENTRANSFORMATION
-#define QT_NO_QWS_TRANSFORMED
-#define QT_NO_QWS_VNC
-#define QT_NO_AUDIO_BACKEND
-#define QT_NO_DIRECTWRITE
-#define QT_NO_STYLE_WINDOWSCE
-#define QT_NO_STYLE_WINDOWSMOBILE
-#define QT_NO_STYLE_WINDOWSXP
-#define QT_NO_STYLE_WINDOWSVISTA
-#define QT_NO_STYLE_MAC
-#define QT_NO_STYLE_S60
-#define QT_NO_STYLE_GTK
-#define QT_NO_STYLE_QGTK
-#define QT_NO_STYLE_CDE
-#define QT_NO_STATEMACHINE
-#define QT_NO_XIM
-#define QT_NO_IM
-#define QT_NO_INPUTMETHOD
-#define QT_NO_SOUND
-#define QT_NO_EGL
-#define QT_NO_OPENGL
-#define QT_NO_TABLET
-#define QT_NO_TABLETEVENT
-#define QT_NO_RAWFONT
-#define QT_NO_IMAGE_TEXT
-#define QT_NO_IMAGEFORMAT_BMP
-#define QT_NO_IMAGEFORMAT_MNG
-#define QT_NO_IMAGEFORMAT_XBM
-#define QT_NO_IMAGEFORMAT_TGA
-#define QT_NO_IMAGEFORMAT_TIFF
-#define QT_NO_IMAGEFORMAT_ICO
-#define QT_NO_IMAGEFORMAT_JPEG
-#define QT_NO_TEXTODFWRITER
-#define QT_NO_TEXTCODECPLUGIN
-#define QT_NO_SYSTEMLOCALE
-#define QT_NO_STL_WCHAR
-#define QT_NO_BEARERMANAGEMENT
-#define QT_NO_GESTURES
-#define QT_NO_STYLE_MOTIF
-#define QT_NO_STYLE_PLASTIQUE
-#define QT_NO_ACCESSIBILITY
-#define QT_NO_SVGGENERATOR
-#define QT_NO_SVGWIDGET
-#define QT_NO_GRAPHICSSVGITEM
-#define QT_NO_FTP
-#define QT_NO_HTTP
-#define QT_NO_NETWORKDISKCACHE
-#define QT_NO_SOCKS5
-
 // Not supported, used to bootstrap
 #cmakedefine QT_NO_QOBJECT
 #cmakedefine QT_NO_COMPRESS
@@ -160,83 +84,78 @@
 #cmakedefine QT_NO_XSHAPE
 #cmakedefine QT_NO_XSYNC
 
+// Broken, do not set until further notice
+// #cmakedefine QT_NO_ACTION
+// #cmakedefine QT_NO_ANIMATION
+// #cmakedefine QT_NO_BUTTONGROUP
+// #cmakedefine QT_NO_CALENDARWIDGET
+// #cmakedefine QT_NO_CLIPBOARD
+// #cmakedefine QT_NO_DRAGANDDROP
+// #cmakedefine QT_NO_COLORDIALOG
+// #cmakedefine QT_NO_COMBOBOX
+// #cmakedefine QT_NO_COMPLETER
+// #cmakedefine QT_NO_CONTEXTMENU
+// #cmakedefine QT_NO_CSSPARSER
+// #cmakedefine QT_NO_DATESTRING
+// #cmakedefine QT_NO_DATETIMEEDIT
+// #cmakedefine QT_NO_DEBUG_STREAM
+// #cmakedefine QT_NO_DIRMODEL
+// #cmakedefine QT_NO_DOCKWIDGET
+// #cmakedefine QT_NO_DOM
+// #cmakedefine QT_NO_ERRORMESSAGE
+// #cmakedefine QT_NO_FILEDIALOG
+// #cmakedefine QT_NO_FILEICONPROVIDER
+// #cmakedefine QT_NO_FILESYSTEMMODEL
+// #cmakedefine QT_NO_FONTCOMBOBOX
+// #cmakedefine QT_NO_FONTDIALOG
+// #cmakedefine QT_NO_FSFILEENGINE
+// #cmakedefine QT_NO_GRAPHICSVIEW
+// #cmakedefine QT_NO_GROUPBOX
+// #cmakedefine QT_NO_ICON
+// #cmakedefine QT_NO_IMAGEFORMAT_XPM
+// #cmakedefine QT_NO_INPUTDIALOG
+// #cmakedefine QT_NO_ITEMVIEWS
+// #cmakedefine QT_NO_LINEEDIT
+// #cmakedefine QT_NO_LISTVIEW
+// #cmakedefine QT_NO_LISTWIDGET
+// #cmakedefine QT_NO_MAINWINDOW
+// #cmakedefine QT_NO_MATRIX4X4
+// #cmakedefine QT_NO_VECTOR3D
+
 // Misc
 #cmakedefine QT_NO_USING_NAMESPACE
-#cmakedefine QT_NO_ACTION
-#cmakedefine QT_NO_ANIMATION
 #cmakedefine QT_NO_BACKINGSTORE
-#cmakedefine QT_NO_BUTTONGROUP
-#cmakedefine QT_NO_CALENDARWIDGET
-#cmakedefine QT_NO_CAST_FROM_ASCII
-#cmakedefine QT_NO_CAST_FROM_BYTEARRAY
-#cmakedefine QT_NO_CAST_TO_ASCII
-#cmakedefine QT_NO_CLIPBOARD
 #cmakedefine QT_NO_CODEC_FOR_C_STRINGS
-#cmakedefine QT_NO_COLORDIALOG
 #cmakedefine QT_NO_COLORNAMES
 #cmakedefine QT_NO_COLUMNVIEW
-#cmakedefine QT_NO_COMBOBOX
-#cmakedefine QT_NO_COMPLETER
 #cmakedefine QT_NO_CONCURRENT
-#cmakedefine QT_NO_CONTEXTMENU
-#cmakedefine QT_NO_CSSPARSER
 #cmakedefine QT_NO_CURSOR
 #cmakedefine QT_NO_DATAWIDGETMAPPER
-#cmakedefine QT_NO_DATESTRING
-#cmakedefine QT_NO_DATETIMEEDIT
 #cmakedefine QT_NO_DEBUG
-#cmakedefine QT_NO_DEBUG_PLUGIN_CHECK
-#cmakedefine QT_NO_DEBUG_STREAM
 #cmakedefine QT_NO_DIAL
 #cmakedefine QT_NO_DIALOGBUTTONBOX
-#cmakedefine QT_NO_DIRMODEL
-#cmakedefine QT_NO_DOCKWIDGET
-#cmakedefine QT_NO_DOM
-#cmakedefine QT_NO_DRAGANDDROP
-#cmakedefine QT_NO_DYNAMIC_CAST
 #cmakedefine QT_NO_EFFECTS
-#cmakedefine QT_NO_ERRORMESSAGE
-#cmakedefine QT_NO_FILEDIALOG
-#cmakedefine QT_NO_FILEICONPROVIDER
 #cmakedefine QT_NO_FILESYSTEMITERATOR
-#cmakedefine QT_NO_FILESYSTEMMODEL
 #cmakedefine QT_NO_FILESYSTEMWATCHER
-#cmakedefine QT_NO_FONTCOMBOBOX
-#cmakedefine QT_NO_FONTDIALOG
 #cmakedefine QT_NO_FORMLAYOUT
 #cmakedefine QT_NO_FRAME
 #cmakedefine QT_NO_FSCOMPLETER
-#cmakedefine QT_NO_FSFILEENGINE
 #cmakedefine QT_NO_GRAPHICSEFFECT
-#cmakedefine QT_NO_GRAPHICSVIEW
-#cmakedefine QT_NO_GROUPBOX
-#cmakedefine QT_NO_ICON
 #cmakedefine QT_NO_IDENTITYPROXYMODEL
 #cmakedefine QT_NO_IMAGEFORMAT_PPM
-#cmakedefine QT_NO_IMAGEFORMAT_XPM
 #cmakedefine QT_NO_IMAGE_HEURISTIC_MASK
-#cmakedefine QT_NO_INPUTDIALOG
 #cmakedefine QT_NO_IPV6
 #cmakedefine QT_NO_IPV6IFNAME
-#cmakedefine QT_NO_ITEMVIEWS
-#cmakedefine QT_NO_KEYWORDS
 #cmakedefine QT_NO_LCDNUMBER
 #cmakedefine QT_NO_LIBRARY
-#cmakedefine QT_NO_LINEEDIT
-#cmakedefine QT_NO_LISTVIEW
-#cmakedefine QT_NO_LISTWIDGET
-#cmakedefine QT_NO_LOCALFILE_OPTIMIZED_QML
 #cmakedefine QT_NO_LOCALSERVER
 #cmakedefine QT_NO_LOCALSOCKET
-#cmakedefine QT_NO_MAINWINDOW
-#cmakedefine QT_NO_MATRIX4X4
 #cmakedefine QT_NO_MDIAREA
 #cmakedefine QT_NO_MENU
 #cmakedefine QT_NO_MENUBAR
 #cmakedefine QT_NO_MESSAGEBOX
 #cmakedefine QT_NO_MOVIE
 #cmakedefine QT_NO_NETWORKINTERFACE
-#cmakedefine QT_NO_NETWORKPROXY
 #cmakedefine QT_NO_PDF
 #cmakedefine QT_NO_PLUGIN_CHECK
 #cmakedefine QT_NO_PRINTDIALOG
@@ -247,9 +166,7 @@
 #cmakedefine QT_NO_PROGRESSDIALOG
 #cmakedefine QT_NO_PROPERTIES
 #cmakedefine QT_NO_PROXYMODEL
-#cmakedefine QT_NO_QCOLUMNVIEW
 #cmakedefine QT_NO_QFUTURE
-#cmakedefine QT_NO_QOBJECT_CHECK
 #cmakedefine QT_NO_QUATERNION
 #cmakedefine QT_NO_QUUID_STRING
 #cmakedefine QT_NO_RESIZEHANDLER
@@ -283,7 +200,6 @@
 #cmakedefine QT_NO_TABLEVIEW
 #cmakedefine QT_NO_TABLEWIDGET
 #cmakedefine QT_NO_TABWIDGET
-#cmakedefine QT_NO_TEMPLATE_TEMPLATE_PARAMETERS
 #cmakedefine QT_NO_TEMPORARYFILE
 #cmakedefine QT_NO_TEXTBROWSER
 #cmakedefine QT_NO_TEXTCONTROL
@@ -301,11 +217,8 @@
 #cmakedefine QT_NO_UNDOGROUP
 #cmakedefine QT_NO_UNDOSTACK
 #cmakedefine QT_NO_UNDOVIEW
-#cmakedefine QT_NO_URLINFO
-#cmakedefine QT_NO_URL_CAST_FROM_STRING
 #cmakedefine QT_NO_VALIDATOR
 #cmakedefine QT_NO_VECTOR2D
-#cmakedefine QT_NO_VECTOR3D
 #cmakedefine QT_NO_VECTOR4D
 #cmakedefine QT_NO_WARNING_OUTPUT
 #cmakedefine QT_NO_WHATSTHIS
@@ -344,11 +257,6 @@
 // QDial
 #if !defined(QT_NO_DIAL) && defined(QT_NO_SLIDER)
 #  define QT_NO_DIAL
-#endif
-
-// QFileSystemModel
-#if !defined(QT_NO_FILESYSTEMMODEL) && defined(QT_NO_FILESYSTEMWATCHER)
-#  define QT_NO_FILESYSTEMMODEL
 #endif
 
 // QMenu
@@ -427,12 +335,12 @@
 #endif
 
 // Drag and drop
-#if !defined(QT_NO_DRAGANDDROP) && defined(QT_NO_IMAGEFORMAT_XPM)
+#if !defined(QT_NO_DRAGANDDROP) && (defined(QT_NO_CLIPBOARD) || defined(QT_NO_IMAGEFORMAT_XPM))
 #  define QT_NO_DRAGANDDROP
 #endif
 
 // QGraphicsView
-#if !defined(QT_NO_GRAPHICSVIEW) && defined(QT_NO_SCROLLAREA)
+#if !defined(QT_NO_GRAPHICSVIEW) && (defined(QT_NO_SCROLLAREA) || defined(QT_NO_MATRIX4X4) || defined(QT_NO_VECTOR3D))
 #  define QT_NO_GRAPHICSVIEW
 #endif
 
@@ -680,5 +588,25 @@
 #if !defined(QT_NO_PRINTPREVIEWDIALOG) && (defined(QT_NO_PRINTPREVIEWWIDGET) || defined(QT_NO_PRINTDIALOG) || defined(QT_NO_TOOLBAR))
 #  define QT_NO_PRINTPREVIEWDIALOG
 #endif
+
+// QTemporaryFile
+#if !defined(QT_NO_TEMPORARYFILE) && defined(QT_NO_FSFILEENGINE)
+#  define QT_NO_TEMPORARYFILE
+#endif
+
+// QLocalServer
+#if !defined(QT_NO_LOCALSERVER) && defined(QT_NO_LOCALSOCKET)
+#  define QT_NO_LOCALSERVER
+#endif
+
+// Always off when building Katie, may be defined by application
+// QT_NO_DYNAMIC_CAST
+// QT_NO_URL_CAST_FROM_STRING
+// QT_NO_CAST_FROM_ASCII
+// QT_NO_CAST_FROM_BYTEARRAY
+// QT_NO_CAST_TO_ASCII
+// QT_NO_KEYWORDS
+// QT_NO_TEMPLATE_TEMPLATE_PARAMETERS
+// QT_NO_QOBJECT_CHECK
 
 #endif

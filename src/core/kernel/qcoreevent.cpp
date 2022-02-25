@@ -135,10 +135,6 @@ QT_BEGIN_NAMESPACE
     \value Leave                            Mouse leaves widget's boundaries.
     \value LeaveWhatsThisMode               Send to toplevel widgets when the application leaves "What's This?" mode.
     \value LocaleChange                     The system locale has changed.
-    \value NonClientAreaMouseButtonDblClick A mouse double click occurred outside the client area.
-    \value NonClientAreaMouseButtonPress    A mouse button press occurred outside the client area.
-    \value NonClientAreaMouseButtonRelease  A mouse button release occurred outside the client area.
-    \value NonClientAreaMouseMove           A mouse move occurred outside the client area.
     \value MetaCall                         An asynchronous method invocation via QMetaObject::invokeMethod().
     \value ModifiedChange                   Widgets modification state has been changed.
     \value MouseButtonDblClick              Mouse press again (QMouseEvent).

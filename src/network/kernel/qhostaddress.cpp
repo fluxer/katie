@@ -25,7 +25,6 @@
 #include "qplatformdefs.h"
 #include "qstringlist.h"
 #include "qendian.h"
-#include "qnativesocketengine_p.h"
 #include "qcorecommon_p.h"
 
 #ifndef QT_NO_DATASTREAM

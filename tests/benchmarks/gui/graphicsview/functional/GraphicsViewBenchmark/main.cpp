@@ -295,8 +295,7 @@ void tst_GraphicsViewBenchmark::insertListData()
 
 void tst_GraphicsViewBenchmark::initTestCase()
 {
-    mMainView = new MainView(mSettings->options() & Settings::UseOpenGL,
-                             mSettings->options() & Settings::OutputFps);
+    mMainView = new MainView(Settings::OutputFps);
 
     if (mSettings->size().width() > 0 && mSettings->size().height() > 0) {
         mMainView->resize(mSettings->size().width(), mSettings->size().height());
@@ -735,7 +734,7 @@ int main(int argc, char *argv[])
 
     int returnValue = 0;
     if (settings.options() & Settings::ManualTest) {
-        MainView view(settings.options() & Settings::UseOpenGL, settings.options() & Settings::OutputFps);
+        MainView view(settings.options() & Settings::OutputFps);
 
         DummyDataGenerator dataGenerator;
         dataGenerator.Reset();
@@ -760,16 +759,12 @@ int main(int argc, char *argv[])
             view.resize(settings.size().width(), settings.size().height());
             view.show();
         } else {
-#if defined(Q_WS_MAEMO_5)
-            view.showFullScreen();
-#else
             if (QApplication::desktop()->width() < 360 || QApplication::desktop()->height() < 640) {
                 view.showFullScreen();
             } else {
                 view.resize(360, 640);
                 view.show();
             }
-#endif
         }
         returnValue = app.exec();
     } else {

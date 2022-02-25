@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-02-19 20:09+0200\n"
+"POT-Creation-Date: 2022-02-23 23:10+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -43,8 +43,8 @@ msgid "The plugin uses incompatible Katie library: %1 (%2, %3)"
 msgstr ""
 
 #: src/core/plugin/qlibrary.cpp:799 src/core/plugin/qpluginloader.cpp:278
-#: src/core/io/qiodevice.cpp:1517 src/network/ssl/qsslerror.cpp:249
-#: src/network/socket/qnativesocketengine.cpp:249
+#: src/core/io/qiodevice.cpp:1517
+#: src/network/socket/qabstractsocketengine.cpp:439
 #: src/uitools/formscriptrunner.cpp:104
 msgid "Unknown error"
 msgstr ""
@@ -321,29 +321,39 @@ msgctxt "QJsonDocument"
 msgid "Data is empty"
 msgstr ""
 
-#: src/core/tools/qjsondocument.cpp:112
+#: src/core/tools/qjsondocument.cpp:113 src/core/tools/qjsondocument.cpp:190
 msgctxt "QJsonDocument"
 msgid "Unknown JSON type in array"
 msgstr ""
 
-#: src/core/tools/qjsondocument.cpp:145 src/core/tools/qjsondocument.cpp:228
+#: src/core/tools/qjsondocument.cpp:146
 msgctxt "QJsonDocument"
 msgid "Unknown JSON type"
 msgstr ""
 
-#: src/core/tools/qjsondocument.cpp:153
+#: src/core/tools/qjsondocument.cpp:199 src/core/tools/qjsondocument.cpp:299
 msgctxt "QJsonDocument"
-msgid "Rootless array/values are not supported"
+msgid "Rootless values are not supported"
 msgstr ""
 
-#: src/core/tools/qjsondocument.cpp:168
+#: src/core/tools/qjsondocument.cpp:214 src/core/tools/qjsondocument.cpp:226
 msgctxt "QJsonDocument"
-msgid "Data map is empty"
+msgid "Data variant is null"
 msgstr ""
 
-#: src/core/tools/qjsondocument.cpp:171
+#: src/core/tools/qjsondocument.cpp:217
 msgctxt "QJsonDocument"
 msgid "Maximum depth reached"
+msgstr ""
+
+#: src/core/tools/qjsondocument.cpp:282 src/core/tools/qjsondocument.cpp:308
+msgctxt "QJsonDocument"
+msgid "Unknown variant type"
+msgstr ""
+
+#: src/core/tools/qjsondocument.cpp:304
+msgctxt "QJsonDocument"
+msgid "Rootless arrays are not supported"
 msgstr ""
 
 #: src/declarative/graphicsitems/qdeclarativeitemsmodule.cpp:82
@@ -1159,17 +1169,17 @@ msgstr ""
 msgid "ListModel: undefined property '%1'"
 msgstr ""
 
-#: src/declarative/util/qdeclarativepixmapcache.cpp:257
+#: src/declarative/util/qdeclarativepixmapcache.cpp:256
 msgid "Error decoding: %1: %2"
 msgstr ""
 
-#: src/declarative/util/qdeclarativepixmapcache.cpp:360
-#: src/declarative/util/qdeclarativepixmapcache.cpp:700
+#: src/declarative/util/qdeclarativepixmapcache.cpp:359
+#: src/declarative/util/qdeclarativepixmapcache.cpp:699
 msgid "Failed to get image from provider: %1"
 msgstr ""
 
-#: src/declarative/util/qdeclarativepixmapcache.cpp:376
-#: src/declarative/util/qdeclarativepixmapcache.cpp:718
+#: src/declarative/util/qdeclarativepixmapcache.cpp:375
+#: src/declarative/util/qdeclarativepixmapcache.cpp:717
 msgid "Cannot open: %1"
 msgstr ""
 
@@ -4574,158 +4584,6 @@ msgstr ""
 msgid "Insert Unicode control character"
 msgstr ""
 
-#: src/network/ssl/qsslerror.cpp:197
-msgid "No error"
-msgstr ""
-
-#: src/network/ssl/qsslerror.cpp:199
-msgid "The issuer certificate could not be found"
-msgstr ""
-
-#: src/network/ssl/qsslerror.cpp:201
-msgid "The certificate signature could not be decrypted"
-msgstr ""
-
-#: src/network/ssl/qsslerror.cpp:203
-msgid "The public key in the certificate could not be read"
-msgstr ""
-
-#: src/network/ssl/qsslerror.cpp:205
-msgid "The signature of the certificate is invalid"
-msgstr ""
-
-#: src/network/ssl/qsslerror.cpp:207
-msgid "The certificate is not yet valid"
-msgstr ""
-
-#: src/network/ssl/qsslerror.cpp:209
-msgid "The certificate has expired"
-msgstr ""
-
-#: src/network/ssl/qsslerror.cpp:211
-msgid "The certificate's notBefore field contains an invalid time"
-msgstr ""
-
-#: src/network/ssl/qsslerror.cpp:213
-msgid "The certificate's notAfter field contains an invalid time"
-msgstr ""
-
-#: src/network/ssl/qsslerror.cpp:215
-msgid "The certificate is self-signed, and untrusted"
-msgstr ""
-
-#: src/network/ssl/qsslerror.cpp:217
-msgid ""
-"The root certificate of the certificate chain is self-signed, and untrusted"
-msgstr ""
-
-#: src/network/ssl/qsslerror.cpp:219
-msgid ""
-"The issuer certificate of a locally looked up certificate could not be found"
-msgstr ""
-
-#: src/network/ssl/qsslerror.cpp:221
-msgid "No certificates could be verified"
-msgstr ""
-
-#: src/network/ssl/qsslerror.cpp:223
-msgid "One of the CA certificates is invalid"
-msgstr ""
-
-#: src/network/ssl/qsslerror.cpp:225
-msgid "The basicConstraints path length parameter has been exceeded"
-msgstr ""
-
-#: src/network/ssl/qsslerror.cpp:227
-msgid "The supplied certificate is unsuitable for this purpose"
-msgstr ""
-
-#: src/network/ssl/qsslerror.cpp:229
-msgid "The root CA certificate is not trusted for this purpose"
-msgstr ""
-
-#: src/network/ssl/qsslerror.cpp:231
-msgid "The root CA certificate is marked to reject the specified purpose"
-msgstr ""
-
-#: src/network/ssl/qsslerror.cpp:233
-msgid ""
-"The current candidate issuer certificate was rejected because its subject "
-"name did not match the issuer name of the current certificate"
-msgstr ""
-
-#: src/network/ssl/qsslerror.cpp:236
-msgid ""
-"The current candidate issuer certificate was rejected because its issuer "
-"name and serial number was present and did not match the authority key "
-"identifier of the current certificate"
-msgstr ""
-
-#: src/network/ssl/qsslerror.cpp:240
-msgid "The peer did not present any certificate"
-msgstr ""
-
-#: src/network/ssl/qsslerror.cpp:242
-msgid "The host name did not match any of the valid hosts for this certificate"
-msgstr ""
-
-#: src/network/ssl/qsslerror.cpp:245
-msgid "The peer certificate is blacklisted"
-msgstr ""
-
-#: src/network/ssl/qsslsocket_openssl.cpp:154
-msgid "Error creating SSL context (%1)"
-msgstr ""
-
-#: src/network/ssl/qsslsocket_openssl.cpp:204
-msgid "Invalid or empty cipher list (%1)"
-msgstr ""
-
-#: src/network/ssl/qsslsocket_openssl.cpp:236
-msgid "Cannot provide a certificate with no key, %1"
-msgstr ""
-
-#: src/network/ssl/qsslsocket_openssl.cpp:243
-msgid "Error loading local certificate, %1"
-msgstr ""
-
-#: src/network/ssl/qsslsocket_openssl.cpp:268
-msgid "Error loading private key, %1"
-msgstr ""
-
-#: src/network/ssl/qsslsocket_openssl.cpp:275
-msgid "Private key does not certify public key, %1"
-msgstr ""
-
-#: src/network/ssl/qsslsocket_openssl.cpp:295
-msgid "Error creating SSL session, %1"
-msgstr ""
-
-#: src/network/ssl/qsslsocket_openssl.cpp:329
-msgid "Error creating SSL session: %1"
-msgstr ""
-
-#: src/network/ssl/qsslsocket_openssl.cpp:550
-msgid "Unable to write data: %1"
-msgstr ""
-
-#: src/network/ssl/qsslsocket_openssl.cpp:620
-msgid "Unable to decrypt data: %1"
-msgstr ""
-
-#: src/network/ssl/qsslsocket_openssl.cpp:693
-msgid "The TLS/SSL connection has been closed"
-msgstr ""
-
-#: src/network/ssl/qsslsocket_openssl.cpp:701
-#: src/network/ssl/qsslsocket_openssl.cpp:711
-msgid "Error while reading: %1"
-msgstr ""
-
-#: src/network/ssl/qsslsocket_openssl.cpp:805
-msgid "Error during SSL handshake: %1"
-msgstr ""
-
 #: src/network/kernel/qhostinfo_p.h:74
 msgctxt "QHostInfo"
 msgid "Unknown error"
@@ -4736,28 +4594,26 @@ msgctxt "QHostInfo"
 msgid "No host name given"
 msgstr ""
 
-#: src/network/kernel/qhostinfo_unix.cpp:87
-#: src/network/kernel/qhostinfo_unix.cpp:171
-#: src/network/socket/qabstractsocket.cpp:830
+#: src/network/kernel/qhostinfo_unix.cpp:86
+#: src/network/kernel/qhostinfo_unix.cpp:170
+#: src/network/socket/qabstractsocket.cpp:691
 msgid "Host not found"
 msgstr ""
 
-#: src/network/kernel/qhostinfo_unix.cpp:105
+#: src/network/kernel/qhostinfo_unix.cpp:104
 msgid "No host name given"
 msgstr ""
 
-#: src/network/kernel/qhostinfo_unix.cpp:107
+#: src/network/kernel/qhostinfo_unix.cpp:106
 msgid "Invalid hostname"
 msgstr ""
 
-#: src/network/kernel/qhostinfo_unix.cpp:159
+#: src/network/kernel/qhostinfo_unix.cpp:158
 msgid "Unknown address type"
 msgstr ""
 
-#: src/network/socket/qtcpserver.cpp:266 src/network/socket/qtcpserver.cpp:384
-#: src/network/socket/qabstractsocket.cpp:485
-#: src/network/socket/qabstractsocket.cpp:1268
-#: src/network/socket/qabstractsocket.cpp:1478
+#: src/network/socket/qtcpserver.cpp:216
+#: src/network/socket/qabstractsocket.cpp:430
 msgid "Operation on socket is not supported"
 msgstr ""
 
@@ -4775,157 +4631,153 @@ msgid "%1: Address in use"
 msgstr ""
 
 #: src/network/socket/qlocalserver_unix.cpp:204
-#: src/network/socket/qlocalsocket_unix.cpp:141
+#: src/network/socket/qlocalsocket_unix.cpp:140
 msgid "%1: Unknown error %2"
 msgstr ""
 
-#: src/network/socket/qabstractsocket.cpp:872
-#: src/network/socket/qnativesocketengine.cpp:213
+#: src/network/socket/qabstractsocket.cpp:733
+#: src/network/socket/qabstractsocketengine.cpp:406
 msgid "Connection refused"
 msgstr ""
 
-#: src/network/socket/qabstractsocket.cpp:1014
-#: src/network/socket/qnativesocketengine.cpp:210
+#: src/network/socket/qabstractsocket.cpp:871
+#: src/network/socket/qabstractsocketengine.cpp:403
 msgid "Connection timed out"
 msgstr ""
 
-#: src/network/socket/qabstractsocket.cpp:1646
+#: src/network/socket/qabstractsocket.cpp:1477
 msgid "Socket operation timed out"
 msgstr ""
 
-#: src/network/socket/qabstractsocket.cpp:2057
+#: src/network/socket/qabstractsocket.cpp:1887
 msgid "Socket is not connected"
 msgstr ""
 
-#: src/network/socket/qnativesocketengine.cpp:174
+#: src/network/socket/qabstractsocketengine.cpp:367
 msgid "Unable to initialize non-blocking socket"
 msgstr ""
 
-#: src/network/socket/qnativesocketengine.cpp:177
+#: src/network/socket/qabstractsocketengine.cpp:370
 msgid "Unable to initialize broadcast socket"
 msgstr ""
 
-#: src/network/socket/qnativesocketengine.cpp:180
+#: src/network/socket/qabstractsocketengine.cpp:373
 msgid "Attempt to use IPv6 socket on a platform with no IPv6 support"
 msgstr ""
 
-#: src/network/socket/qnativesocketengine.cpp:183
+#: src/network/socket/qabstractsocketengine.cpp:376
 msgid "The remote host closed the connection"
 msgstr ""
 
-#: src/network/socket/qnativesocketengine.cpp:186
+#: src/network/socket/qabstractsocketengine.cpp:379
 msgid "Network operation timed out"
 msgstr ""
 
-#: src/network/socket/qnativesocketengine.cpp:189
+#: src/network/socket/qabstractsocketengine.cpp:382
 msgid "Out of resources"
 msgstr ""
 
-#: src/network/socket/qnativesocketengine.cpp:192
+#: src/network/socket/qabstractsocketengine.cpp:385
 msgid "Unsupported socket operation"
 msgstr ""
 
-#: src/network/socket/qnativesocketengine.cpp:195
+#: src/network/socket/qabstractsocketengine.cpp:388
 msgid "Protocol type not supported"
 msgstr ""
 
-#: src/network/socket/qnativesocketengine.cpp:198
+#: src/network/socket/qabstractsocketengine.cpp:391
 msgid "Invalid socket descriptor"
 msgstr ""
 
-#: src/network/socket/qnativesocketengine.cpp:201
+#: src/network/socket/qabstractsocketengine.cpp:394
 msgid "Host unreachable"
 msgstr ""
 
-#: src/network/socket/qnativesocketengine.cpp:204
+#: src/network/socket/qabstractsocketengine.cpp:397
 msgid "Network unreachable"
 msgstr ""
 
-#: src/network/socket/qnativesocketengine.cpp:207
+#: src/network/socket/qabstractsocketengine.cpp:400
 msgid "Permission denied"
 msgstr ""
 
-#: src/network/socket/qnativesocketengine.cpp:216
+#: src/network/socket/qabstractsocketengine.cpp:409
 msgid "The bound address is already in use"
 msgstr ""
 
-#: src/network/socket/qnativesocketengine.cpp:219
+#: src/network/socket/qabstractsocketengine.cpp:412
 msgid "The address is not available"
 msgstr ""
 
-#: src/network/socket/qnativesocketengine.cpp:222
+#: src/network/socket/qabstractsocketengine.cpp:415
 msgid "The address is protected"
 msgstr ""
 
-#: src/network/socket/qnativesocketengine.cpp:225
+#: src/network/socket/qabstractsocketengine.cpp:418
 msgid "Datagram was too large to send"
 msgstr ""
 
-#: src/network/socket/qnativesocketengine.cpp:228
+#: src/network/socket/qabstractsocketengine.cpp:421
 msgid "Unable to send a message"
 msgstr ""
 
-#: src/network/socket/qnativesocketengine.cpp:231
+#: src/network/socket/qabstractsocketengine.cpp:424
 msgid "Unable to receive a message"
 msgstr ""
 
-#: src/network/socket/qnativesocketengine.cpp:234
+#: src/network/socket/qabstractsocketengine.cpp:427
 msgid "Unable to write"
 msgstr ""
 
-#: src/network/socket/qnativesocketengine.cpp:237
+#: src/network/socket/qabstractsocketengine.cpp:430
 msgid "Network error"
 msgstr ""
 
-#: src/network/socket/qnativesocketengine.cpp:240
+#: src/network/socket/qabstractsocketengine.cpp:433
 msgid "Another socket is already listening on the same port"
 msgstr ""
 
-#: src/network/socket/qnativesocketengine.cpp:243
+#: src/network/socket/qabstractsocketengine.cpp:436
 msgid "Operation on non-socket"
 msgstr ""
 
-#: src/network/socket/qnativesocketengine.cpp:246
-msgid "The proxy type is invalid for this operation"
-msgstr ""
-
-#: src/network/socket/qlocalsocket_unix.cpp:113
+#: src/network/socket/qlocalsocket_unix.cpp:112
 msgid "%1: Connection refused"
 msgstr ""
 
-#: src/network/socket/qlocalsocket_unix.cpp:116
+#: src/network/socket/qlocalsocket_unix.cpp:115
 msgid "%1: Remote closed"
 msgstr ""
 
-#: src/network/socket/qlocalsocket_unix.cpp:119
+#: src/network/socket/qlocalsocket_unix.cpp:118
 msgid "%1: Invalid name"
 msgstr ""
 
-#: src/network/socket/qlocalsocket_unix.cpp:122
+#: src/network/socket/qlocalsocket_unix.cpp:121
 msgid "%1: Socket access error"
 msgstr ""
 
-#: src/network/socket/qlocalsocket_unix.cpp:125
+#: src/network/socket/qlocalsocket_unix.cpp:124
 msgid "%1: Socket resource error"
 msgstr ""
 
-#: src/network/socket/qlocalsocket_unix.cpp:128
+#: src/network/socket/qlocalsocket_unix.cpp:127
 msgid "%1: Socket operation timed out"
 msgstr ""
 
-#: src/network/socket/qlocalsocket_unix.cpp:131
+#: src/network/socket/qlocalsocket_unix.cpp:130
 msgid "%1: Datagram too large"
 msgstr ""
 
-#: src/network/socket/qlocalsocket_unix.cpp:134
+#: src/network/socket/qlocalsocket_unix.cpp:133
 msgid "%1: Connection error"
 msgstr ""
 
-#: src/network/socket/qlocalsocket_unix.cpp:137
+#: src/network/socket/qlocalsocket_unix.cpp:136
 msgid "%1: The socket operation is not supported"
 msgstr ""
 
-#: src/network/socket/qudpsocket.cpp:181
+#: src/network/socket/qudpsocket.cpp:174
 msgid "This platform does not support IPv6"
 msgstr ""
 

@@ -12,12 +12,14 @@ build_script:
 
     sudo apt-get update -qq
 
-    sudo apt-get install -qq libpcre3-dev libssl-dev libdeflate-dev \
-        libc6-dev libpng-dev libcups2-dev libfreetype6-dev libfontconfig1-dev \
+    sudo apt-get install -qq libpcre3-dev libdeflate-dev libc6-dev \
+        libpng-dev libcups2-dev libfreetype6-dev libfontconfig1-dev \
         libdbus-1-dev libicu-dev xorg-dev dbus-x11 libjansson-dev ccache \
         fonts-freefont-ttf
 
     export PATH="/usr/lib/ccache/:$PATH"
+
+    python ./scripts/cicount.py
 
     cmake . -Wno-dev -DKATIE_TESTS=ON -DKATIE_BENCHMARKS=ON -DKATIE_UTILS=ON
 

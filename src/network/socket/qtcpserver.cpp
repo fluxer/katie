@@ -82,7 +82,6 @@
 #include "qabstractsocketengine_p.h"
 #include "qtcpserver.h"
 #include "qtcpsocket.h"
-#include "qnetworkproxy.h"
 
 QT_BEGIN_NAMESPACE
 
@@ -111,20 +110,11 @@ public:
 
     int maxConnections;
 
-#ifndef QT_NO_NETWORKPROXY
-    QNetworkProxy proxy;
-    QNetworkProxy resolveProxy(const QHostAddress &address, quint16 port);
-#endif
-
     // from QAbstractSocketEngineReceiver
     void readNotification();
     inline void writeNotification() {}
     inline void exceptionNotification() {}
     inline void connectionNotification() {}
-#ifndef QT_NO_NETWORKPROXY
-    inline void proxyAuthenticationRequired(const QNetworkProxy &, QAuthenticator *) {}
-#endif
-
 };
 
 /*! \internal
@@ -143,39 +133,6 @@ QTcpServerPrivate::QTcpServerPrivate()
 QTcpServerPrivate::~QTcpServerPrivate()
 {
 }
-
-#ifndef QT_NO_NETWORKPROXY
-/*! \internal
-
-    Resolve the proxy to its final value.
-*/
-QNetworkProxy QTcpServerPrivate::resolveProxy(const QHostAddress &address, quint16 port)
-{
-    if (address == QHostAddress::LocalHost ||
-        address == QHostAddress::LocalHostIPv6)
-        return QNetworkProxy::NoProxy;
-
-    QList<QNetworkProxy> proxies;
-    if (proxy.type() != QNetworkProxy::DefaultProxy) {
-        // a non-default proxy was set with setProxy
-        proxies << proxy;
-    } else {
-        // try the application settings instead
-        QNetworkProxyQuery query(port, QString(), QNetworkProxyQuery::TcpServer);
-        proxies = QNetworkProxyFactory::proxyForQuery(query);
-    }
-
-    // return the first that we can use
-    foreach (const QNetworkProxy &p, proxies) {
-        if (p.capabilities() & QNetworkProxy::ListeningCapability)
-            return p;
-    }
-
-    // no proxy found
-    // DefaultProxy will raise an error
-    return QNetworkProxy(QNetworkProxy::DefaultProxy);
-}
-#endif
 
 /*! \internal
 */
@@ -251,22 +208,15 @@ bool QTcpServer::listen(const QHostAddress &address, quint16 port)
         return false;
     }
 
-    QAbstractSocket::NetworkLayerProtocol proto = address.protocol();
-
-#ifdef QT_NO_NETWORKPROXY
-    static const QNetworkProxy &proxy = *(QNetworkProxy *)0;
-#else
-    QNetworkProxy proxy = d->resolveProxy(address, port);
-#endif
-
     delete d->socketEngine;
-    d->socketEngine = QAbstractSocketEngine::createSocketEngine(QAbstractSocket::TcpSocket, proxy, this);
+    d->socketEngine = nullptr;
+    d->socketEngine = new QAbstractSocketEngine(this);
     if (!d->socketEngine) {
         d->serverSocketError = QAbstractSocket::UnsupportedSocketOperationError;
         d->serverSocketErrorString = tr("Operation on socket is not supported");
         return false;
     }
-    if (!d->socketEngine->initialize(QAbstractSocket::TcpSocket, proto)) {
+    if (!d->socketEngine->initialize(QAbstractSocket::TcpSocket, address.protocol())) {
         d->serverSocketError = d->socketEngine->error();
         d->serverSocketErrorString = d->socketEngine->errorString();
         return false;
@@ -347,9 +297,6 @@ void QTcpServer::close()
     Returns the native socket descriptor the server uses to listen
     for incoming instructions, or -1 if the server is not listening.
 
-    If the server is using QNetworkProxy, the returned descriptor may
-    not be usable with native socket functions.
-
     \sa setSocketDescriptor(), isListening()
 */
 int QTcpServer::socketDescriptor() const
@@ -378,12 +325,7 @@ bool QTcpServer::setSocketDescriptor(int socketDescriptor)
 
     if (d->socketEngine)
         delete d->socketEngine;
-    d->socketEngine = QAbstractSocketEngine::createSocketEngine(socketDescriptor, this);
-    if (!d->socketEngine) {
-        d->serverSocketError = QAbstractSocket::UnsupportedSocketOperationError;
-        d->serverSocketErrorString = tr("Operation on socket is not supported");
-        return false;
-    }
+    d->socketEngine = new QAbstractSocketEngine(this);
     if (!d->socketEngine->initialize(socketDescriptor, QAbstractSocket::ListeningState)) {
         d->serverSocketError = d->socketEngine->error();
         d->serverSocketErrorString = d->socketEngine->errorString();
@@ -525,10 +467,6 @@ QTcpSocket *QTcpServer::nextPendingConnection()
     Reimplement this function to alter the server's behavior when a
     connection is available.
 
-    If this server is using QNetworkProxy then the \a socketDescriptor
-    may not be usable with native socket functions, and should only be
-    used with QTcpSocket::setSocketDescriptor().
-
     \note If you want to handle an incoming connection as a new QTcpSocket
     object in another thread you have to pass the socketDescriptor
     to the other thread and create the QTcpSocket object there and
@@ -615,43 +553,6 @@ QString QTcpServer::errorString() const
     return d_func()->serverSocketErrorString;
 }
 
-#ifndef QT_NO_NETWORKPROXY
-/*!
-    \since 4.1
-
-    Sets the explicit network proxy for this socket to \a networkProxy.
-
-    To disable the use of a proxy for this socket, use the
-    QNetworkProxy::NoProxy proxy type:
-
-    \snippet doc/src/snippets/code/src_network_socket_qtcpserver.cpp 0
-
-    \sa proxy(), QNetworkProxy
-*/
-void QTcpServer::setProxy(const QNetworkProxy &networkProxy)
-{
-    Q_D(QTcpServer);
-    d->proxy = networkProxy;
-}
-
-/*!
-    \since 4.1
-
-    Returns the network proxy for this socket.
-    By default QNetworkProxy::DefaultProxy is used.
-
-    \sa setProxy(), QNetworkProxy
-*/
-QNetworkProxy QTcpServer::proxy() const
-{
-    Q_D(const QTcpServer);
-    return d->proxy;
-}
-#endif // QT_NO_NETWORKPROXY
-
 QT_END_NAMESPACE
-
-
-
 
 #include "moc_qtcpserver.h"

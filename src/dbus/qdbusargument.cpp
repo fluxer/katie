@@ -1101,7 +1101,9 @@ const QDBusArgument &operator>>(const QDBusArgument &a, QVariant &v)
 #ifndef QDBUS_NO_SPECIALTYPES
 const QDBusArgument &operator>>(const QDBusArgument &a, QDate &date)
 {
-    int y, m, d;
+    int y = 0;
+    int m = 0;
+    int d = 0;
     a.beginStructure();
     a >> y >> m >> d;
     a.endStructure();
@@ -1126,7 +1128,10 @@ QDBusArgument &operator<<(QDBusArgument &a, const QDate &date)
 
 const QDBusArgument &operator>>(const QDBusArgument &a, QTime &time)
 {
-    int h, m, s, ms;
+    int h = 0;
+    int m = 0;
+    int s = 0;
+    int ms = 0;
     a.beginStructure();
     a >> h >> m >> s >> ms;
     a.endStructure();
@@ -1153,7 +1158,7 @@ const QDBusArgument &operator>>(const QDBusArgument &a, QDateTime &dt)
 {
     QDate date;
     QTime time;
-    int timespec;
+    int timespec = int(Qt::LocalTime);
 
     a.beginStructure();
     a >> date >> time >> timespec;
@@ -1173,7 +1178,10 @@ QDBusArgument &operator<<(QDBusArgument &a, const QDateTime &dt)
 
 const QDBusArgument &operator>>(const QDBusArgument &a, QRect &rect)
 {
-    int x, y, width, height;
+    int x = 0;
+    int y = 0;
+    int width = 0;
+    int height = 0;
     a.beginStructure();
     a >> x >> y >> width >> height;
     a.endStructure();
@@ -1193,7 +1201,10 @@ QDBusArgument &operator<<(QDBusArgument &a, const QRect &rect)
 
 const QDBusArgument &operator>>(const QDBusArgument &a, QRectF &rect)
 {
-    double x, y, width, height;
+    double x = 0.0;
+    double y = 0.0;
+    double width = 0.0;
+    double height = 0.0;
     a.beginStructure();
     a >> x >> y >> width >> height;
     a.endStructure();
@@ -1231,7 +1242,8 @@ QDBusArgument &operator<<(QDBusArgument &a, const QSize &size)
 
 const QDBusArgument &operator>>(const QDBusArgument &a, QSizeF &size)
 {
-    double width, height;
+    double width = 0.0;
+    double height = 0.0;
     a.beginStructure();
     a >> width >> height;
     a.endStructure();
@@ -1270,7 +1282,8 @@ QDBusArgument &operator<<(QDBusArgument &a, const QPoint &pt)
 
 const QDBusArgument &operator>>(const QDBusArgument &a, QPointF &pt)
 {
-    double x, y;
+    double x = 0.0;
+    double y = 0.0;
     a.beginStructure();
     a >> x >> y;
     a.endStructure();

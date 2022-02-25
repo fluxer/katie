@@ -34,10 +34,9 @@ public:
     enum Option {
         NoOptions = 0x1,
         UseListItemCache = 0x2,
-        UseOpenGL = 0x4,
-        OutputFps = 0x8,
-        NoResourceUsage = 0x10,
-        ManualTest = 0x20
+        OutputFps = 0x4,
+        NoResourceUsage = 0x8,
+        ManualTest = 0x10
     };
     Q_DECLARE_FLAGS(Options, Option)
 

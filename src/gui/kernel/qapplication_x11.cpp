@@ -263,7 +263,11 @@ QWidget *qt_button_down = 0; // last widget to be pressed with the mouse
 QPointer<QWidget> qt_last_mouse_receiver = 0;
 static QWidget *qt_popup_down = 0;  // popup that contains the pressed widget
 
+#ifndef QT_NO_DRAGANDDROP
 extern bool qt_xdnd_dragging;
+#else
+static bool qt_xdnd_dragging = false;
+#endif
 
 #ifndef QT_NO_XFIXES
 
@@ -411,10 +415,12 @@ static int qt_x_errhandler(Display *dpy, XErrorEvent *err)
                     return 0;
                 }
             }
+#ifndef QT_NO_DRAGANDDROP
             if (qt_x11Data->xdndHandleBadwindow()) {
                 qDebug("xdndHandleBadwindow returned true");
                 return 0;
             }
+#endif // QT_NO_DRAGANDDROP
         }
         if (qt_x11Data->ignore_badwindow)
             return 0;
@@ -611,6 +617,7 @@ bool QApplicationPrivate::x11_apply_settings()
         QApplicationPrivate::setSystemFont(font);
     }
 
+#ifndef QT_NO_LIBRARY
     // read library (ie. plugin) path list
     QStringList pathlist = settings->value(QLatin1String("Qt/libraryPath")).toString().split(QLatin1Char(':'));
     if (! pathlist.isEmpty()) {
@@ -618,6 +625,7 @@ bool QApplicationPrivate::x11_apply_settings()
         while (it != pathlist.constEnd())
             QApplication::addLibraryPath(*it++);
     }
+#endif // QT_NO_LIBRARY
 
     // read new QStyle
     QString stylename = settings->value(QLatin1String("Qt/style")).toString();
@@ -681,7 +689,9 @@ bool QApplicationPrivate::x11_apply_settings()
 
     qt_use_rtl_extensions = settings->value(QLatin1String("Qt/useRtlExtensions"), false).toBool();
 
+#ifndef QT_NO_ICON
     QIconLoader::instance()->updateSystemTheme();
+#endif
 
     return true;
 }
@@ -1113,7 +1123,9 @@ void qt_init(QApplicationPrivate *priv, Display *display,
     QColormap::initialize();
 
     // Support protocols
+#ifndef QT_NO_DRAGANDDROP
     qt_x11Data->xdndSetup();
+#endif // QT_NO_DRAGANDDROP
 
     // Finally create all atoms
     qt_x11_create_intern_atoms();
@@ -1200,7 +1212,9 @@ void qt_init(QApplicationPrivate *priv, Display *display,
     QKeyMapper::changeKeyboard();
 
     // Misc. initialization
+#ifndef QT_NO_CURSOR
     QCursorData::initialize();
+#endif // QT_NO_CURSOR
 
     qApp->setObjectName(qApp->applicationName());
 
@@ -1255,7 +1269,9 @@ void qt_init(QApplicationPrivate *priv, Display *display,
 void qt_cleanup()
 {
     QPixmapCache::clear();
+#ifndef QT_NO_CURSOR
     QCursorData::cleanup();
+#endif // QT_NO_CURSOR
     QColormap::cleanup();
 
 #ifndef QT_NO_XRENDER
@@ -1660,6 +1676,7 @@ int QApplication::x11ClientMessage(QWidget* w, XEvent* event, bool passive_only)
             }
         } else if (event->xclient.message_type == ATOM(_QT_SCROLL_DONE)) {
             widget->translateScrollDoneEvent(event);
+#ifndef QT_NO_DRAGANDDROP
         } else if (event->xclient.message_type == ATOM(XdndPosition)) {
             qt_x11Data->xdndHandlePosition(widget, event, passive_only);
         } else if (event->xclient.message_type == ATOM(XdndEnter)) {
@@ -1672,6 +1689,7 @@ int QApplication::x11ClientMessage(QWidget* w, XEvent* event, bool passive_only)
             qt_x11Data->xdndHandleDrop(event, passive_only);
         } else if (event->xclient.message_type == ATOM(XdndFinished)) {
             qt_x11Data->xdndHandleFinished(event, passive_only);
+#endif // QT_NO_DRAGANDDROP
         }
         // All other are interactions
     }
@@ -1886,6 +1904,7 @@ int QApplication::x11ProcessEvent(XEvent* event)
                 break;
         }
 
+#ifndef QT_NO_CLIPBOARD
         if (req->selection == ATOM(CLIPBOARD)) {
             if (qt_xfixes_clipboard_changed(req->owner, req->selection_timestamp)) {
                 emit clipboard()->changed(QClipboard::Clipboard);
@@ -1897,6 +1916,7 @@ int QApplication::x11ProcessEvent(XEvent* event)
                 emit clipboard()->selectionChanged();
             }
         }
+#endif // QT_NO_CLIPBOARD
     }
 #endif // QT_NO_XFIXES
 
@@ -2242,11 +2262,14 @@ int QApplication::x11ProcessEvent(XEvent* event)
             break;
 
         if (ATOM(XdndSelection) && req->selection == ATOM(XdndSelection)) {
+#ifndef QT_NO_DRAGANDDROP
             qt_x11Data->xdndHandleSelectionRequest(req);
-
+#endif // QT_NO_DRAGANDDROP
+#ifndef QT_NO_CLIPBOARD
         } else if (qt_clipboard) {
             QClipboardEvent e(event);
             QApplication::sendSpontaneousEvent(qt_clipboard, &e);
+#endif // QT_NO_CLIPBOARD
         }
         break;
     }
@@ -2256,10 +2279,12 @@ int QApplication::x11ProcessEvent(XEvent* event)
         if (! req || (ATOM(XdndSelection) && req->selection == ATOM(XdndSelection)))
             break;
 
+#ifndef QT_NO_CLIPBOARD
         if (qt_clipboard && !qt_x11Data->use_xfixes) {
             QClipboardEvent e(event);
             QApplication::sendSpontaneousEvent(qt_clipboard, &e);
         }
+#endif // QT_NO_CLIPBOARD
         break;
     }
 
@@ -2269,16 +2294,19 @@ int QApplication::x11ProcessEvent(XEvent* event)
         if (! req || (ATOM(XdndSelection) && req->selection == ATOM(XdndSelection)))
             break;
 
+#ifndef QT_NO_CLIPBOARD
         if (qt_clipboard) {
             QClipboardEvent e(event);
             QApplication::sendSpontaneousEvent(qt_clipboard, &e);
         }
+#endif // QT_NO_CLIPBOARD
         break;
     }
     case PropertyNotify:
         // some properties changed
         if (event->xproperty.window == QX11Info::appRootWindow(0)) {
             // root properties for the first screen
+#ifndef QT_NO_CLIPBOARD
             if (!qt_x11Data->use_xfixes && event->xproperty.atom == ATOM(_QT_CLIPBOARD_SENTINEL)) {
                 if (qt_check_clipboard_sentinel()) {
                     emit clipboard()->changed(QClipboard::Clipboard);
@@ -2289,7 +2317,9 @@ int QApplication::x11ProcessEvent(XEvent* event)
                     emit clipboard()->changed(QClipboard::Selection);
                     emit clipboard()->selectionChanged();
                 }
-            } else if (QApplicationPrivate::obey_desktop_settings &&event->xproperty.atom == ATOM(_QT_SETTINGS_TIMESTAMP)) {
+            }
+#endif // QT_NO_CLIPBOARD
+            if (QApplicationPrivate::obey_desktop_settings &&event->xproperty.atom == ATOM(_QT_SETTINGS_TIMESTAMP)) {
                 QApplicationPrivate::x11_apply_settings();
             }
         }

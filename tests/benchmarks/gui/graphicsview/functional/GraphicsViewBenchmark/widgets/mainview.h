@@ -41,7 +41,7 @@ class MainView : public QGraphicsView {
 Q_OBJECT
 	
 public:
-    MainView(const bool enableOpenGL, const bool outputFps, const bool imageBasedRendering = false, QWidget *parent = 0);
+    MainView(const bool outputFps, const bool imageBasedRendering = false, QWidget *parent = 0);
     ~MainView();
 
     void setTestWidget(QGraphicsWidget *testWidget);
@@ -97,7 +97,6 @@ private:
     QList<qreal> m_Fpss;
 
     int m_angle;
-    bool m_enableOpenGL;
 };
 
 #endif //__MAINWINDOW_H__

@@ -258,8 +258,8 @@ public:
 #endif // QT_NO_RUBBERBAND
 };
 
-#endif // QT_NO_MDIAREA
-
 QT_END_NAMESPACE
+
+#endif // QT_NO_MDIAREA
 
 #endif // QMDIAREA_P_H

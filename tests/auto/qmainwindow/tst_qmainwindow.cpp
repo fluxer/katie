@@ -1824,7 +1824,7 @@ class MainWindow : public QMainWindow {
 void tst_QMainWindow::setCursor()
 {
 #ifdef QT_NO_CURSOR
-    QSKIP("Qt compiled without cursor support(QT_NO_CURSOR)", SkipAll);
+    QSKIP("Katie compiled without cursor support (QT_NO_CURSOR)", SkipAll);
 #else
     MainWindow mw;
     QCursor cur = Qt::WaitCursor;

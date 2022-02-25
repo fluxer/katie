@@ -44,47 +44,37 @@
 
 QT_BEGIN_NAMESPACE
 
-template <class T>
-class Q_CORE_EXPORT QMutexPoolBase
+class QMutexPool
 {
 public:
-    QMutexPoolBase() {
+    QMutexPool() {
         mutexes.fill(nullptr);
     }
 
-    ~QMutexPoolBase() {
+    ~QMutexPool() {
         for (int index = 0; index < QMUTEXPOOL_SIZE; ++index) {
             delete mutexes[index];
             mutexes[index] = nullptr;
         }
     }
 
-    inline T *get(const void *address) {
+    inline QMutex *get(const void *address) {
         int index = std::intptr_t(address) % mutexes.size();
-        T *m = mutexes[index];
+        QMutex *m = mutexes[index];
         if (m)
             return m;
-        return createMutex(index);
-    }
-
-    static T *globalInstanceGet(const void *address);
-
-private:
-    T *createMutex(int index) {
         // mutex not created, create one
-        T *newMutex = new T();
+        QMutex *newMutex = new QMutex();
         if (!mutexes[index].testAndSetOrdered(nullptr, newMutex))
             delete newMutex;
         return mutexes[index];
     }
 
-    std::array<QAtomicPointer<T>, QMUTEXPOOL_SIZE> mutexes;
+private:
+    std::array<QAtomicPointer<QMutex>, QMUTEXPOOL_SIZE> mutexes;
 
-    Q_DISABLE_COPY(QMutexPoolBase)
+    Q_DISABLE_COPY(QMutexPool)
 };
-
-typedef QMutexPoolBase<QMutex> QMutexPool;
-typedef QMutexPoolBase<std::recursive_mutex> QRecursiveMutexPool;
 
 QT_END_NAMESPACE
 

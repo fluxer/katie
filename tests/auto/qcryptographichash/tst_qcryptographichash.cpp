@@ -66,10 +66,6 @@ void tst_QCryptographicHash::intermediary_result_data()
     QTest::addColumn<QByteArray>("hash_first");
     QTest::addColumn<QByteArray>("hash_firstsecond");
 
-    QTest::newRow("md4") << int(QCryptographicHash::Md4)
-                         << QByteArray("abc") << QByteArray("abc")
-                         << QByteArray::fromHex("A448017AAF21D8525FC10AE87AA6729D")
-                         << QByteArray::fromHex("03E5E436DAFAF3B9B3589DB83C417C6B");
     QTest::newRow("md5") << int(QCryptographicHash::Md5)
                          << QByteArray("abc") << QByteArray("abc")
                          << QByteArray::fromHex("900150983CD24FB0D6963F7D28E17F72")

@@ -258,8 +258,7 @@ static Symbols tokenize(const QByteArray &input, int lineNum = 1, TokenizeMode m
                 case NEWLINE:
                     ++lineNum;
                     continue;
-                case BACKSLASH:
-                {
+                case BACKSLASH: {
                     const char *rewind = data;
                     while (*data && (*data == ' ' || *data == '\t'))
                         ++data;
@@ -268,7 +267,8 @@ static Symbols tokenize(const QByteArray &input, int lineNum = 1, TokenizeMode m
                         continue;
                     }
                     data = rewind;
-                } break;
+                    break;
+                }
                 case CHARACTER:
                     while (is_ident_char(*data))
                         ++data;
@@ -442,8 +442,7 @@ static Symbols tokenize(const QByteArray &input, int lineNum = 1, TokenizeMode m
                 ++lineNum;
                 mode = TokenizeCpp;
                 break;
-            case PP_BACKSLASH:
-            {
+            case PP_BACKSLASH: {
                 const char *rewind = data;
                 while (*data && (*data == ' ' || *data == '\t'))
                     ++data;
@@ -452,7 +451,8 @@ static Symbols tokenize(const QByteArray &input, int lineNum = 1, TokenizeMode m
                     continue;
                 }
                 data = rewind;
-            } break;
+                break;
+            }
             case PP_LANGLE:
                 if (mode != TokenizeInclude)
                     break;
@@ -656,13 +656,11 @@ int PP_Expression::multiplicative_expression()
     switch (next()) {
     case PP_STAR:
         return value * multiplicative_expression();
-    case PP_PERCENT:
-    {
+    case PP_PERCENT: {
         int remainder = multiplicative_expression();
         return remainder ? value % remainder : 0;
     }
-    case PP_SLASH:
-    {
+    case PP_SLASH: {
         int div = multiplicative_expression();
         return div ? value / div : 0;
     }
@@ -746,8 +744,7 @@ void Preprocessor::preprocess(const QByteArray &filename, Symbols &preprocessed)
         Token token = next();
 
         switch (token) {
-        case PP_INCLUDE:
-        {
+        case PP_INCLUDE: {
             int lineNum = symbol().lineNum;
             QByteArray include;
             bool local = false;
@@ -811,8 +808,7 @@ void Preprocessor::preprocess(const QByteArray &filename, Symbols &preprocessed)
             index = saveIndex;
             continue;
         }
-        case PP_DEFINE:
-        {
+        case PP_DEFINE: {
             next(IDENTIFIER);
             QByteArray name = lexem();
             int start = index;
@@ -831,20 +827,19 @@ void Preprocessor::preprocess(const QByteArray &filename, Symbols &preprocessed)
             macros.remove(name);
             continue;
         }
-        case PP_IDENTIFIER:
-        {
-//             if (macros.contains(symbol()))
-//                 ;
-        }
+        case PP_IDENTIFIER: {
+            /*
+            if (macros.contains(symbol()))
+                ;
             // we _could_ easily substitute macros by the following
             // four lines, but we choose not to.
-            /*
             if (macros.contains(sym.lexem())) {
                 preprocessed += substitute(macros, symbols, i);
                 continue;
             }
             */
             break;
+        }
         case PP_HASH:
             until(PP_NEWLINE);
             continue; // skip unknown preprocessor statement
@@ -876,7 +871,8 @@ void Preprocessor::preprocess(const QByteArray &filename, Symbols &preprocessed)
             else
                 sym.token = (token == SIGNALS ? Q_SIGNALS_TOKEN : Q_SLOTS_TOKEN);
             preprocessed += sym;
-        } continue;
+            continue;
+        }
         default:
             break;
         }

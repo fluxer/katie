@@ -110,7 +110,6 @@ void tst_QHostInfo::staticInformation()
 
 tst_QHostInfo::tst_QHostInfo()
 {
-    Q_SET_DEFAULT_IAP
 }
 
 tst_QHostInfo::~tst_QHostInfo()

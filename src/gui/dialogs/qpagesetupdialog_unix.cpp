@@ -580,8 +580,6 @@ int QPageSetupDialog::exec()
 
 QT_END_NAMESPACE
 
-
-
 #endif // QT_NO_PRINTDIALOG
 
 #include "moc_qpagesetupdialog_unix_p.h"

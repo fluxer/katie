@@ -35,6 +35,8 @@
 //TESTED_CLASS=
 //TESTED_FILES=
 
+#ifndef QT_NO_GRAPHICSEFFECT
+
 class tst_QGraphicsEffect : public QObject
 {
     Q_OBJECT
@@ -824,3 +826,9 @@ void tst_QGraphicsEffect::itemHasNoContents()
 QTEST_MAIN(tst_QGraphicsEffect)
 
 #include "moc_tst_qgraphicseffect.cpp"
+
+#else // QT_NO_GRAPHICSEFFECT
+
+QTEST_NOOP_MAIN
+
+#endif // QT_NO_GRAPHICSEFFECT

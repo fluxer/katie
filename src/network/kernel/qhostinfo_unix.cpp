@@ -24,7 +24,6 @@
 #include "qplatformdefs.h"
 
 #include "qhostinfo_p.h"
-#include "qnativesocketengine_p.h"
 #include "qiodevice.h"
 #include "qbytearray.h"
 #include "qurl.h"

@@ -22,7 +22,6 @@
 #ifndef QWIDGET_H
 #define QWIDGET_H
 
-#include <QtCore/qconfig.h>
 #include <QtCore/qmargins.h>
 #include <QtGui/qpalette.h>
 #include <QtGui/qfontmetrics.h>

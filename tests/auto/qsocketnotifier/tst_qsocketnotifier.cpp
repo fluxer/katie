@@ -27,10 +27,11 @@
 #include <QtCore/QTimer>
 #include <QtNetwork/QTcpServer>
 #include <QtNetwork/QTcpSocket>
-#include "qnativesocketengine_p.h"
+#include "qabstractsocketengine_p.h"
 #include "qnet_unix_p.h"
 
 #include <sys/select.h>
+#include <netinet/in.h>
 #include <limits>
 
 class tst_QSocketNotifier : public QObject
@@ -58,10 +59,10 @@ class UnexpectedDisconnectTester : public QObject
 {
     Q_OBJECT
 public:
-    QNativeSocketEngine *readEnd1, *readEnd2;
+    QAbstractSocketEngine *readEnd1, *readEnd2;
     int sequence;
 
-    UnexpectedDisconnectTester(QNativeSocketEngine *s1, QNativeSocketEngine *s2)
+    UnexpectedDisconnectTester(QAbstractSocketEngine *s1, QAbstractSocketEngine *s2)
         : readEnd1(s1), readEnd2(s2), sequence(0)
     {
         QSocketNotifier *notifier1 =
@@ -111,7 +112,7 @@ void tst_QSocketNotifier::unexpectedDisconnection()
     QTcpServer server;
     QVERIFY(server.listen(QHostAddress::LocalHost, 0));
 
-    QNativeSocketEngine readEnd1;
+    QAbstractSocketEngine readEnd1;
     readEnd1.initialize(QAbstractSocket::TcpSocket);
     bool b = readEnd1.connectToHost(server.serverAddress(), server.serverPort());
     QVERIFY(readEnd1.waitForWrite());
@@ -122,7 +123,7 @@ void tst_QSocketNotifier::unexpectedDisconnection()
     QTcpSocket *writeEnd1 = server.nextPendingConnection();
     QVERIFY(writeEnd1 != 0);
 
-    QNativeSocketEngine readEnd2;
+    QAbstractSocketEngine readEnd2;
     readEnd2.initialize(QAbstractSocket::TcpSocket);
     b = readEnd2.connectToHost(server.serverAddress(), server.serverPort());
     QVERIFY(readEnd2.waitForWrite());

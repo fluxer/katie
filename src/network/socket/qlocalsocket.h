@@ -47,6 +47,7 @@ public:
         SocketAccessError = QAbstractSocket::SocketAccessError,
         SocketResourceError = QAbstractSocket::SocketResourceError,
         SocketTimeoutError = QAbstractSocket::SocketTimeoutError,
+        UnfinishedSocketOperationError = QAbstractSocket::UnfinishedSocketOperationError,
         DatagramTooLargeError = QAbstractSocket::DatagramTooLargeError,
         ConnectionError = QAbstractSocket::NetworkError,
         UnsupportedSocketOperationError = QAbstractSocket::UnsupportedSocketOperationError,

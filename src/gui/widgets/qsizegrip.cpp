@@ -415,8 +415,7 @@ bool QSizeGrip::eventFilter(QObject *o, QEvent *e)
 {
     Q_D(QSizeGrip);
     if ((isHidden() && testAttribute(Qt::WA_WState_ExplicitShowHide))
-        || e->type() != QEvent::WindowStateChange
-		|| o != d->tlw) {
+        || e->type() != QEvent::WindowStateChange || o != d->tlw) {
         return QWidget::eventFilter(o, e);
     }
     const Qt::WindowStates sizeGripNotVisibleState = Qt::WindowFullScreen | Qt::WindowMaximized;
@@ -431,6 +430,7 @@ QT_END_NAMESPACE
 
 
 #include "moc_qsizegrip.h"
-#include "moc_qsizepolicy.h"
 
-#endif //QT_NO_SIZEGRIP
+#endif // QT_NO_SIZEGRIP
+
+#include "moc_qsizepolicy.h"

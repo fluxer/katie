@@ -130,12 +130,15 @@ struct QX11Data
     Window findClientWindow(Window, Atom);
 
     // from qclipboard_x11.cpp
+#ifndef QT_NO_CLIPBOARD
     bool clipboardWaitForEvent(Window win, int type, XEvent *event, int timeout, bool checkManager = false);
     bool clipboardReadProperty(Window win, Atom property, bool deleteProperty,
                             QByteArray *buffer, int *size, Atom *type, int *format);
     QByteArray clipboardReadIncrementalProperty(Window win, Atom property, int nbytes);
+#endif // QT_NO_CLIPBOARD
 
     // from qdnd_x11.cpp
+#ifndef QT_NO_DRAGANDDROP
     bool dndEnable(QWidget* w, bool on);
     static void xdndSetup();
     void xdndHandleEnter(const XEvent *);
@@ -157,6 +160,7 @@ struct QX11Data
     Atom xdndMimeAtomForFormat(const QString &format, QVariant::Type requestedType, const QList<Atom> &atoms, QByteArray *requestedEncoding);
 
     QList<QXdndDropTransaction> dndDropTransactions;
+#endif // QT_NO_DRAGANDDROP
 
     Display *display;
     char *displayName;

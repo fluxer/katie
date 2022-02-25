@@ -601,12 +601,14 @@ QUiLoader::QUiLoader(QObject *parent)
     d->builder.loader = this;
 
     QStringList paths;
+#ifndef QT_NO_LIBRARY
     foreach (const QString &path, QApplication::libraryPaths()) {
         QString libPath = path;
         libPath  += QDir::separator();
         libPath  += QLatin1String("designer");
         paths.append(libPath);
     }
+#endif // QT_NO_LIBRARY
 
     d->builder.setPluginPath(paths);
 }

@@ -22,10 +22,10 @@
 #ifndef QABSTRACTITEMVIEW_H
 #define QABSTRACTITEMVIEW_H
 
-#include <QtGui/qabstractscrollarea.h>
-#include <QtCore/qabstractitemmodel.h>
-#include <QtGui/qitemselectionmodel.h>
-#include <QtGui/qabstractitemdelegate.h>
+#include <qabstractscrollarea.h>
+#include <qabstractitemmodel.h>
+#include <qitemselectionmodel.h>
+#include <qabstractitemdelegate.h>
 
 
 QT_BEGIN_NAMESPACE

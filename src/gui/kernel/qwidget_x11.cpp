@@ -524,8 +524,10 @@ void QWidgetPrivate::create_sys(WId window, bool initializeWindow, bool destroyO
 
     if (window) {                                // override the old window
         if (destroyOldWindow) {
+#ifndef QT_NO_DRAGANDDROP
             if (topLevel)
                 qt_x11Data->dndEnable(q, false);
+#endif // QT_NO_DRAGANDDROP
             destroyw = data.winid;
         }
         id = window;
@@ -823,9 +825,11 @@ void QWidgetPrivate::create_sys(WId window, bool initializeWindow, bool destroyO
                 if (!topData->caption.isEmpty())
                     setWindowTitle_helper(topData->caption);
 
+#ifndef QT_NO_DRAGANDDROP
             //always enable dnd: it's not worth the effort to maintain the state
             // NOTE: this always creates topData()
             qt_x11Data->dndEnable(q, true);
+#endif // QT_NO_DRAGANDDROP
 
             if (maybeTopData() && maybeTopData()->opacity != 255)
                 q->setWindowOpacity(maybeTopData()->opacity/255.);
@@ -997,11 +1001,15 @@ void QWidget::destroy(bool destroyWindow, bool destroySubWindows)
         qt_net_remove_user_time(this);
 
         if ((windowType() == Qt::Desktop)) {
+#ifndef QT_NO_DRAGANDDROP
             if (acceptDrops())
                 qt_x11Data->dndEnable(this, false);
+#endif // QT_NO_DRAGANDDROP
         } else {
+#ifndef QT_NO_DRAGANDDROP
             if (isWindow())
                 qt_x11Data->dndEnable(this, false);
+#endif // QT_NO_DRAGANDDROP
             if (destroyWindow && data && data->winid)
                 XDestroyWindow(qt_x11Data->display, data->winid);
         }
@@ -1038,10 +1046,12 @@ void QWidgetPrivate::setParent_sys(QWidget *parent, Qt::WindowFlags f)
     if (q->testAttribute(Qt::WA_DropSiteRegistered))
         q->setAttribute(Qt::WA_DropSiteRegistered, false);
 
+#ifndef QT_NO_DRAGANDDROP
     // if we are a top then remove our dnd prop for now
     // it will get rest later
     if (q->isWindow() && wasCreated)
         qt_x11Data->dndEnable(q, false);
+#endif // QT_NO_DRAGANDDROP
 
     if (topData)
         qt_net_remove_user_time(q);

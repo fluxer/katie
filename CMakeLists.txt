@@ -65,7 +65,7 @@ set(KATIE_NO_WARNINGS
     -Wno-class-memaccess
     # hot attribute used in function prototypes
     -Wno-attributes
-    # deprecated X11, CUPS and OpenSSL API used
+    # deprecated X11 and CUPS API used
     -Wno-deprecated -Wno-deprecated-declarations
 )
 foreach(nowarning ${KATIE_NO_WARNINGS})
@@ -183,15 +183,6 @@ set_package_properties(Jansson PROPERTIES
     PURPOSE "Required for JSON support"
     DESCRIPTION "C library for encoding, decoding and manipulating JSON data"
     URL "https://github.com/akheron/jansson"
-    TYPE REQUIRED
-)
-
-# v1.1.0+ required for thread-safety without use of locking callbacks
-find_package(OpenSSL 1.1.0)
-set_package_properties(OpenSSL PROPERTIES
-    PURPOSE "Required for HTTPS support"
-    DESCRIPTION "Robust, commercial-grade, and full-featured toolkit for SSL and TLS"
-    URL "https://openssl.org"
     TYPE REQUIRED
 )
 
@@ -324,41 +315,12 @@ else()
     message(FATAL_ERROR "Unknown platform '${CMAKE_SYSTEM_NAME}'")
 endif()
 
-# https://en.wikipedia.org/wiki/Uname
-if(KATIE_PROCESSOR MATCHES "^alpha")
-    set(KATIE_ARCH "ALPHA")
-elseif(KATIE_PROCESSOR MATCHES "^arm64")
-    set(KATIE_ARCH "ARM64")
-elseif(KATIE_PROCESSOR MATCHES "^arm")
-    set(KATIE_ARCH "ARM")
-elseif(KATIE_PROCESSOR MATCHES "^avr")
-    set(KATIE_ARCH "AVR32")
-elseif(KATIE_PROCESSOR MATCHES "^blackfin")
-    set(KATIE_ARCH "BFIN")
-elseif(KATIE_PROCESSOR MATCHES "^ia64")
-    set(KATIE_ARCH "IA64")
-elseif(KATIE_PROCESSOR MATCHES "^m68k")
-    set(KATIE_ARCH "M68K")
-elseif(KATIE_PROCESSOR MATCHES "^mips")
-    set(KATIE_ARCH "MIPS")
-elseif(KATIE_PROCESSOR MATCHES "^hppa")
-    set(KATIE_ARCH "PARISC")
-elseif(KATIE_PROCESSOR MATCHES "^ppc64")
-    set(KATIE_ARCH "POWERPC64")
-elseif(KATIE_PROCESSOR MATCHES "^ppc")
-    set(KATIE_ARCH "POWERPC")
-elseif(KATIE_PROCESSOR MATCHES "^s390")
-    set(KATIE_ARCH "S390")
-elseif(KATIE_PROCESSOR MATCHES "^sparc")
-    set(KATIE_ARCH "SPARC")
-elseif(KATIE_PROCESSOR MATCHES "^sh")
-    # TODO: SH4A
-    set(KATIE_ARCH "SH")
-elseif(KATIE_PROCESSOR MATCHES "(x86_64|amd64)")
-    set(KATIE_ARCH "X86_64")
-elseif(KATIE_PROCESSOR MATCHES "(x86|i[3-6]86|i86pc)")
-    set(KATIE_ARCH "I386")
-else()
+try_run(
+    KATIE_ARCH_RUN_RESULT KATIE_ARCH_COMPILE_RESULT
+    "${CMAKE_BINARY_DIR}" "${CMAKE_SOURCE_DIR}/cmake/arch.cpp"
+    RUN_OUTPUT_VARIABLE KATIE_ARCH
+)
+if(NOT KATIE_ARCH_RUN_RESULT EQUAL 0 OR NOT KATIE_ARCH_COMPILE_RESULT)
     message(FATAL_ERROR "Unknown CPU '${KATIE_PROCESSOR}'")
 endif()
 
@@ -726,8 +688,6 @@ katie_generate_obsolete(QMutableStringListIterator QtCore qstringlist.h)
 katie_generate_obsolete(QMutableVectorIterator QtCore qvector.h)
 katie_generate_obsolete(QMutexLocker QtCore qmutex.h)
 katie_generate_obsolete(QNetworkAddressEntry QtNetwork qnetworkinterface.h)
-katie_generate_obsolete(QNetworkProxyFactory QtNetwork qnetworkproxy.h)
-katie_generate_obsolete(QNetworkProxyQuery QtNetwork qnetworkproxy.h)
 katie_generate_obsolete(QNoDebug QtCore qdebug.h)
 katie_generate_obsolete(QObjectData QtCore qobject.h)
 katie_generate_obsolete(QObjectList QtCore qobject.h)

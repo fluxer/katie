@@ -472,8 +472,6 @@ StyleSheet QStyleSheetStyle::getDefaultStyleSheet() const
     return sheet;
 }
 
-#endif // #ifndef QT_NO_STYLE_STYLESHEET
-
 QT_END_NAMESPACE
 
-
+#endif // #ifndef QT_NO_STYLE_STYLESHEET

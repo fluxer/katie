@@ -29,11 +29,7 @@
 
 QT_BEGIN_NAMESPACE
 
-
 class QTcpServerPrivate;
-#ifndef QT_NO_NETWORKPROXY
-class QNetworkProxy;
-#endif
 class QTcpSocket;
 
 class Q_NETWORK_EXPORT QTcpServer : public QObject
@@ -63,11 +59,6 @@ public:
 
     QAbstractSocket::SocketError serverError() const;
     QString errorString() const;
-
-#ifndef QT_NO_NETWORKPROXY
-    void setProxy(const QNetworkProxy &networkProxy);
-    QNetworkProxy proxy() const;
-#endif
 
 protected:
     virtual void incomingConnection(int handle);

@@ -41,6 +41,8 @@
 #  include "qt_x11_p.h"
 #endif
 
+#ifndef QT_NO_CURSOR
+
 QT_BEGIN_NAMESPACE
 
 class QBitmap;
@@ -70,5 +72,7 @@ public:
 extern QCursorData *qt_cursorTable[Qt::LastCursor + 1]; // qcursor.cpp
 
 QT_END_NAMESPACE
+
+#endif // QT_NO_CURSOR
 
 #endif // QCURSOR_P_H

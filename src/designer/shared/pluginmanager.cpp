@@ -85,6 +85,7 @@ QStringList QDesignerPluginManager::defaultPluginPaths()
 {
     QStringList result;
 
+#ifndef QT_NO_LIBRARY
     const QStringList path_list = QCoreApplication::libraryPaths();
 
     const QString designer = QLatin1String("designer");
@@ -102,6 +103,8 @@ QStringList QDesignerPluginManager::defaultPluginPaths()
     homeLibPath += QLatin1String("plugins");
 
     result.append(homeLibPath);
+#endif // QT_NO_LIBRARY
+
     return result;
 }
 
@@ -552,6 +555,7 @@ QDesignerFormEditorInterface *QDesignerPluginManager::core() const
 
 QStringList QDesignerPluginManager::findPlugins(const QString &path)
 {
+#ifndef QT_NO_LIBRARY
     if (debugPluginManager)
         qDebug() << Q_FUNC_INFO << path;
     const QDir dir(path);
@@ -579,6 +583,9 @@ QStringList QDesignerPluginManager::findPlugins(const QString &path)
             result += fileName;
     }
     return result;
+#else // QT_NO_LIBRARY
+    return QStringList();
+#endif // QT_NO_LIBRARY
 }
 
 void QDesignerPluginManager::setDisabledPlugins(const QStringList &disabled_plugins)
@@ -620,11 +627,15 @@ QStringList QDesignerPluginManager::pluginPaths() const
 
 QObject *QDesignerPluginManager::instance(const QString &plugin) const
 {
+#ifndef QT_NO_LIBRARY
     if (m_d->m_disabledPlugins.contains(plugin))
-        return 0;
+        return nullptr;
 
     QPluginLoader loader(plugin);
     return loader.instance();
+#else // QT_NO_LIBRARY
+    return nullptr;
+#endif // QT_NO_LIBRARY
 }
 
 void QDesignerPluginManager::updateRegisteredPlugins()
@@ -665,6 +676,7 @@ void QDesignerPluginManager::registerPath(const QString &path)
 
 void QDesignerPluginManager::registerPlugin(const QString &plugin)
 {
+#ifndef QT_NO_LIBRARY
     if (debugPluginManager)
         qDebug() << Q_FUNC_INFO << plugin;
     if (m_d->m_disabledPlugins.contains(plugin))
@@ -683,6 +695,7 @@ void QDesignerPluginManager::registerPlugin(const QString &plugin)
 
     const QString errorMessage = loader.errorString();
     m_d->m_failedPlugins.insert(plugin, errorMessage);
+#endif // QT_NO_LIBRARY
 }
 
 

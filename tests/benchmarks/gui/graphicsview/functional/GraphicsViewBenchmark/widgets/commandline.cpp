@@ -30,7 +30,6 @@ static void usage(const char *appname)
     printf(" GraphicsViewBenchmark related options:\n");
     printf(" -h,-help,--help: This help\n");
     printf(" -resolution    : UI resolution in format WxH where width and height are positive values\n");
-    printf(" -opengl        : Enables OpenGL usage. Building PRECONDITIONS: QT_NO_OPENGL is off.\n");
     printf(" -manual        : Run test manually \n");
     printf("\n The following options are available in manual mode:\n");
     printf(" -rotation      : UI rotation in degrees\n");
@@ -51,12 +50,8 @@ static inline bool argumentOnlyAvailableInManualMode(const char *arg)
 bool readSettingsFromCommandLine(int argc, char *argv[],
                   Settings& config)
 {
-    bool builtWithOpenGL = false;
     Settings::Options options;
 
-#ifndef QT_NO_OPENGL
-    builtWithOpenGL = true;
-#endif
     for (int i = 1; i < argc; ++i) {
         if (strcmp(argv[i], "-manual") == 0) {
             options |= Settings::ManualTest;
@@ -72,16 +67,7 @@ bool readSettingsFromCommandLine(int argc, char *argv[],
             usage(argv[0]);
             return true;
         }
-        if (strcmp(argv[i], "-opengl") == 0) {
-            if (builtWithOpenGL) {
-                options |= Settings::UseOpenGL;
-                argv[i] = 0;
-            } else {
-                printf("-opengl parameter can be used only with building PRECONDITIONS: QT_NO_OPENGL is off.\n");
-                usage(argv[0]);
-                return false;
-            }
-        } else if (strcmp(argv[i], "-resolution") == 0) {
+        if (strcmp(argv[i], "-resolution") == 0) {
             if (i + 1 >= argc) {
                 printf("-resolution needs an extra parameter specifying the application UI resolution\n");
                 usage(argv[0]);

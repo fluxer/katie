@@ -78,7 +78,6 @@ void tst_QIODevice::getSetCheck()
 
 tst_QIODevice::tst_QIODevice()
 {
-    Q_SET_DEFAULT_IAP
 }
 
 tst_QIODevice::~tst_QIODevice()

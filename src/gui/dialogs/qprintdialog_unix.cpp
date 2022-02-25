@@ -19,10 +19,11 @@
 **
 ****************************************************************************/
 
-#include "qplatformdefs.h"
+#include "qglobal.h"
 
 #ifndef QT_NO_PRINTDIALOG
 
+#include "qplatformdefs.h"
 #include "qabstractprintdialog_p.h"
 #include "qprintdialog.h"
 #include "qprintdialog_p.h"

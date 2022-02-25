@@ -25,7 +25,7 @@ LIB_DEPENDS = textproc/icu4c devel/jansson devel/pcre \
 	graphics/png x11/dbus print/cups,-libs devel/gettext,-runtime
 WANTLIB = ${COMPILER_LIBCXX} ICE SM X11 Xcursor Xext Xfixes Xinerama Xrandr \
 	Xrender fontconfig freetype icui18n icuuc pcre png \
-	dbus-1 cups intl ssl z c crypto m
+	dbus-1 cups intl z c m
 SEPARATE_BUILD = Yes
 CONFIGURE_ARGS = -DKATIE_TOOLS_SUFFIX="-katie" -Wno-dev
 

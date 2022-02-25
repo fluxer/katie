@@ -22,9 +22,6 @@
 #include <QDebug>
 #include <QApplication>
 #include <QGraphicsLinearLayout>
-#ifndef QT_NO_OPENGL
-#include <QGLWidget>
-#endif
 #include <QObject>
 
 #include "button.h"
@@ -36,7 +33,7 @@
 #include "mainview.h"
 #include "gvbwidget.h"
 
-MainView::MainView(const bool enableOpenGL, const bool outputFps, const bool imageRendering, QWidget *parent)
+MainView::MainView(const bool outputFps, const bool imageRendering, QWidget *parent)
     : QGraphicsView(parent)
     , m_scene(0)
     , m_mainLayout(0)
@@ -48,7 +45,6 @@ MainView::MainView(const bool enableOpenGL, const bool outputFps, const bool ima
     , m_fpsUpdated()
     , m_Fpss()
     , m_angle(0)
-    , m_enableOpenGL(enableOpenGL)
 {
     construct();
 }
@@ -242,17 +238,7 @@ void MainView::construct()
 {
     m_scene = new QGraphicsScene;
 
-#ifndef QT_NO_OPENGL
-    if (m_enableOpenGL) {
-        qDebug() << "OpenGL enabled";
-        setViewport(new QGLWidget);
-
-        // Qt doc says: This is the preferred update mode for
-        // viewports that do not support partial updates, such as QGLWidget...
-        setViewportUpdateMode(QGraphicsView::FullViewportUpdate);
-    } else
-#endif
-        setViewportUpdateMode(QGraphicsView::BoundingRectViewportUpdate);
+    setViewportUpdateMode(QGraphicsView::BoundingRectViewportUpdate);
 
     setScene(m_scene);
     m_scene->setItemIndexMethod(QGraphicsScene::NoIndex);
