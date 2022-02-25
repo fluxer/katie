@@ -20,26 +20,11 @@
 ****************************************************************************/
 
 #include <qtest.h>
-#include <QBuffer>
 #include <QDebug>
 #include <QFile>
 #include <QImage>
 #include <QImageReader>
 #include <QImageWriter>
-#include <QLabel>
-#include <QPixmap>
-#include <QSet>
-#include <QTimer>
-
-typedef QMap<QString, QString> QStringMap;
-typedef QList<int> QIntList;
-Q_DECLARE_METATYPE(QImage)
-Q_DECLARE_METATYPE(QRect)
-Q_DECLARE_METATYPE(QSize)
-Q_DECLARE_METATYPE(QColor)
-Q_DECLARE_METATYPE(QStringMap)
-Q_DECLARE_METATYPE(QIntList)
-Q_DECLARE_METATYPE(QIODevice *)
 
 //TESTED_FILES=
 
@@ -50,10 +35,6 @@ class tst_QImageReader : public QObject
 public:
     tst_QImageReader();
     virtual ~tst_QImageReader();
-
-public slots:
-    void init();
-    void cleanup();
 
 private slots:
     void readImage_data();
@@ -84,14 +65,6 @@ tst_QImageReader::tst_QImageReader()
 }
 
 tst_QImageReader::~tst_QImageReader()
-{
-}
-
-void tst_QImageReader::init()
-{
-}
-
-void tst_QImageReader::cleanup()
 {
 }
 
@@ -128,12 +101,7 @@ void tst_QImageReader::setScaledSize_data()
     for (int i = 0; i < images.size(); ++i) {
         const QString file = images[i].first;
         const QByteArray format = images[i].second;
-        QSize size(200, 200);
-        if (file == QLatin1String("teapot"))
-            size = QSize(400, 400);
-        else if (file == QLatin1String("test.ppm"))
-            size = QSize(10, 10);
-        QTest::newRow(qPrintable(file)) << file << format << size;
+        QTest::newRow(qPrintable(file)) << file << format << QSize(200, 200);
     }
 }
 
