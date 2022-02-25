@@ -121,6 +121,8 @@
 // #cmakedefine QT_NO_MAINWINDOW
 // #cmakedefine QT_NO_MATRIX4X4
 // #cmakedefine QT_NO_VECTOR3D
+// #cmakedefine QT_NO_MDIAREA
+// #cmakedefine QT_NO_MENU
 
 // Misc
 #cmakedefine QT_NO_USING_NAMESPACE
@@ -150,8 +152,6 @@
 #cmakedefine QT_NO_LIBRARY
 #cmakedefine QT_NO_LOCALSERVER
 #cmakedefine QT_NO_LOCALSOCKET
-#cmakedefine QT_NO_MDIAREA
-#cmakedefine QT_NO_MENU
 #cmakedefine QT_NO_MENUBAR
 #cmakedefine QT_NO_MESSAGEBOX
 #cmakedefine QT_NO_MOVIE
