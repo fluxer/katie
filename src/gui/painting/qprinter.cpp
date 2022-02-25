@@ -131,9 +131,13 @@ void QPrinterPrivate::createDefaultEngines()
 {
     switch (outputFormat) {
         case QPrinter::PdfFormat: {
+#ifndef QT_NO_PDF
             QPdfEngine *pdfEngine = new QPdfEngine(printerMode);
             paintEngine = pdfEngine;
             printEngine = pdfEngine;
+#else
+            qWarning("QPrinter: PDF output format is disabled");
+#endif // QT_NO_PDF
             break;
         }
         case QPrinter::NativeFormat: // falltrough
@@ -545,7 +549,11 @@ QPrinter::QPrinter(PrinterMode mode)
     if (!defPrn.isNull()) {
         setPrinterName(defPrn.printerName());
     } else if (QPrinterInfo::availablePrinters().isEmpty()) {
+#ifndef QT_NO_PDF
         setOutputFormat(QPrinter::PdfFormat);
+#else
+        setOutputFormat(QPrinter::NativeFormat);
+#endif
     }
 }
 
@@ -657,7 +665,11 @@ QPrinter::~QPrinter()
 void QPrinter::setOutputFormat(OutputFormat format)
 {
 
-#ifndef QT_NO_PDF
+#ifdef QT_NO_PDF
+    if (format == QPrinter::PdfFormat) {
+        return;
+    }
+#endif // QT_NO_PDF
     Q_D(QPrinter);
     if (d->validPrinter && d->outputFormat == format)
         return;
@@ -689,9 +701,6 @@ void QPrinter::setOutputFormat(OutputFormat format)
 
     if (d->outputFormat == QPrinter::PdfFormat || d->outputFormat == QPrinter::PostScriptFormat)
         d->validPrinter = true;
-#else
-    Q_UNUSED(format);
-#endif
 }
 
 /*!
@@ -1878,7 +1887,7 @@ void QPrinter::setFromTo(int from, int to)
 {
     Q_D(QPrinter);
     if (from > to) {
-        qWarning() << "QPrinter::setFromTo: 'from' must be less than or equal to 'to'";
+        qWarning("QPrinter::setFromTo: 'from' must be less than or equal to 'to'");
         from = to;
     }
     d->fromPage = from;

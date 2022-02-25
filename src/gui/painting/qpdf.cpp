@@ -244,6 +244,18 @@ namespace QPdf {
     }
 }
 
+QPdfPage::QPdfPage()
+    : QPdf::ByteStream(true) // Enable file backing
+{
+}
+
+void QPdfPage::streamImage(int w, int h, int object)
+{
+    *this << w << "0 0 " << -h << "0 " << h << "cm /Im" << object << " Do\n";
+    if (!images.contains(object))
+        images.append(object);
+}
+
 QByteArray QPdf::generatePath(const QPainterPath &path, const QTransform &matrix, PathFlags flags)
 {
     QByteArray result;

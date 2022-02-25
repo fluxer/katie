@@ -36,7 +36,7 @@
 #include "qcorecommon_p.h"
 #include "qguicommon_p.h"
 
-#ifndef QT_NO_PRINTER
+#ifndef QT_NO_PDF
 
 #include <limits.h>
 #include <math.h>
@@ -48,19 +48,6 @@ QT_BEGIN_NAMESPACE
 // might be helpful for smooth transforms of images
 // Can't use it though, as gs generates completely wrong images if this is true.
 static const bool interpolateImages = false;
-
-QPdfPage::QPdfPage()
-    : QPdf::ByteStream(true) // Enable file backing
-{
-}
-
-void QPdfPage::streamImage(int w, int h, int object)
-{
-    *this << w << "0 0 " << -h << "0 " << h << "cm /Im" << object << " Do\n";
-    if (!images.contains(object))
-        images.append(object);
-}
-
 
 inline QPaintEngine::PaintEngineFeatures qt_pdf_decide_features()
 {
@@ -1090,8 +1077,4 @@ void QPdfEnginePrivate::printString(const QString &string) {
 
 QT_END_NAMESPACE
 
-#endif // QT_NO_PRINTER
-
-
-
-
+#endif // QT_NO_PDF
