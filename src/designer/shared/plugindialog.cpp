@@ -77,6 +77,7 @@ void PluginDialog::populateTreeWidget()
     QDesignerPluginManager *pluginManager = m_core->pluginManager();
     const QStringList fileNames = pluginManager->registeredPlugins();
 
+#ifndef QT_NO_LIBRARY
     if (!fileNames.isEmpty()) {
         QTreeWidgetItem *topLevelItem = setTopLevelItem(tr("Loaded Plugins"));
         QFont boldFont = topLevelItem->font(0);
@@ -98,6 +99,7 @@ void PluginDialog::populateTreeWidget()
             }
         }
     }
+#endif // QT_NO_LIBRARY
 
     const QStringList notLoadedPlugins = pluginManager->failedPlugins();
     if (!notLoadedPlugins.isEmpty()) {

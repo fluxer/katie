@@ -617,6 +617,7 @@ bool QApplicationPrivate::x11_apply_settings()
         QApplicationPrivate::setSystemFont(font);
     }
 
+#ifndef QT_NO_LIBRARY
     // read library (ie. plugin) path list
     QStringList pathlist = settings->value(QLatin1String("Qt/libraryPath")).toString().split(QLatin1Char(':'));
     if (! pathlist.isEmpty()) {
@@ -624,6 +625,7 @@ bool QApplicationPrivate::x11_apply_settings()
         while (it != pathlist.constEnd())
             QApplication::addLibraryPath(*it++);
     }
+#endif // QT_NO_LIBRARY
 
     // read new QStyle
     QString stylename = settings->value(QLatin1String("Qt/style")).toString();
