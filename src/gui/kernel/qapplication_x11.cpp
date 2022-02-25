@@ -687,7 +687,9 @@ bool QApplicationPrivate::x11_apply_settings()
 
     qt_use_rtl_extensions = settings->value(QLatin1String("Qt/useRtlExtensions"), false).toBool();
 
+#ifndef QT_NO_ICON
     QIconLoader::instance()->updateSystemTheme();
+#endif
 
     return true;
 }

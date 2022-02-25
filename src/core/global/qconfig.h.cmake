@@ -109,6 +109,11 @@
 // #cmakedefine QT_NO_FONTCOMBOBOX
 // #cmakedefine QT_NO_FONTDIALOG
 // #cmakedefine QT_NO_FSFILEENGINE
+// #cmakedefine QT_NO_GRAPHICSVIEW
+// #cmakedefine QT_NO_GROUPBOX
+// #cmakedefine QT_NO_ICON
+// #cmakedefine QT_NO_IMAGEFORMAT_XPM
+// #cmakedefine QT_NO_INPUTDIALOG
 
 // Misc
 #cmakedefine QT_NO_USING_NAMESPACE
@@ -129,14 +134,9 @@
 #cmakedefine QT_NO_FRAME
 #cmakedefine QT_NO_FSCOMPLETER
 #cmakedefine QT_NO_GRAPHICSEFFECT
-#cmakedefine QT_NO_GRAPHICSVIEW
-#cmakedefine QT_NO_GROUPBOX
-#cmakedefine QT_NO_ICON
 #cmakedefine QT_NO_IDENTITYPROXYMODEL
 #cmakedefine QT_NO_IMAGEFORMAT_PPM
-#cmakedefine QT_NO_IMAGEFORMAT_XPM
 #cmakedefine QT_NO_IMAGE_HEURISTIC_MASK
-#cmakedefine QT_NO_INPUTDIALOG
 #cmakedefine QT_NO_IPV6
 #cmakedefine QT_NO_IPV6IFNAME
 #cmakedefine QT_NO_ITEMVIEWS
