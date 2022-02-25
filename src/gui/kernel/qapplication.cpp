@@ -72,7 +72,9 @@
 static void initResources()
 {
     Q_INIT_RESOURCE(qstyle);
+#ifndef QT_NO_MESSAGEBOX
     Q_INIT_RESOURCE(qmessagebox);
+#endif
 #if !defined(QT_NO_PRINTDIALOG)
     Q_INIT_RESOURCE(qprintdialog);
 #endif
