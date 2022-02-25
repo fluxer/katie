@@ -56,6 +56,7 @@ void tst_QImageWriter::writeImage()
         QImageWriter writer(destination, format);
         QVERIFY(writer.write(source));
     }
+    QFile::remove(destination);
 }
 
 QTEST_MAIN(tst_QImageWriter)
