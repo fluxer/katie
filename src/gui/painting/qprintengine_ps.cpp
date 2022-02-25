@@ -851,7 +851,3 @@ QPrinter::PrinterState QPSPrintEngine::printerState() const
 QT_END_NAMESPACE
 
 #endif // QT_NO_PRINTER
-
-
-
-

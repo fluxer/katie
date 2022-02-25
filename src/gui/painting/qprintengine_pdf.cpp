@@ -36,7 +36,7 @@
 #include "qcorecommon_p.h"
 #include "qguicommon_p.h"
 
-#ifndef QT_NO_PDF
+#if !defined(QT_NO_PRINTER) && !defined(QT_NO_PDF)
 
 #include <limits.h>
 #include <math.h>
@@ -1077,4 +1077,4 @@ void QPdfEnginePrivate::printString(const QString &string) {
 
 QT_END_NAMESPACE
 
-#endif // QT_NO_PDF
+#endif // QT_NO_PRINTER && QT_NO_PDF

@@ -35,7 +35,7 @@
 
 #include "QtGui/qprintengine.h"
 
-#ifndef QT_NO_PDF
+#if !defined(QT_NO_PRINTER) && !defined(QT_NO_PDF)
 
 #include "QtCore/qmap.h"
 #include "QtGui/qmatrix.h"
@@ -171,6 +171,6 @@ private:
 
 QT_END_NAMESPACE
 
-#endif // QT_NO_PDF
+#endif // QT_NO_PRINTER && QT_NO_PDF
 
 #endif // QPRINTENGINE_PDF_P_H
