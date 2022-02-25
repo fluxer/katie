@@ -594,6 +594,11 @@
 #  define QT_NO_TEMPORARYFILE
 #endif
 
+// QLocalServer
+#if !defined(QT_NO_LOCALSERVER) && defined(QT_NO_LOCALSOCKET)
+#  define QT_NO_LOCALSERVER
+#endif
+
 // Always off when building Katie, may be defined by application
 // QT_NO_DYNAMIC_CAST
 // QT_NO_URL_CAST_FROM_STRING
