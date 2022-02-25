@@ -118,6 +118,9 @@
 // #cmakedefine QT_NO_LINEEDIT
 // #cmakedefine QT_NO_LISTVIEW
 // #cmakedefine QT_NO_LISTWIDGET
+// #cmakedefine QT_NO_MAINWINDOW
+// #cmakedefine QT_NO_MATRIX4X4
+// #cmakedefine QT_NO_VECTOR3D
 
 // Misc
 #cmakedefine QT_NO_USING_NAMESPACE
@@ -147,8 +150,6 @@
 #cmakedefine QT_NO_LIBRARY
 #cmakedefine QT_NO_LOCALSERVER
 #cmakedefine QT_NO_LOCALSOCKET
-#cmakedefine QT_NO_MAINWINDOW
-#cmakedefine QT_NO_MATRIX4X4
 #cmakedefine QT_NO_MDIAREA
 #cmakedefine QT_NO_MENU
 #cmakedefine QT_NO_MENUBAR
@@ -218,7 +219,6 @@
 #cmakedefine QT_NO_UNDOVIEW
 #cmakedefine QT_NO_VALIDATOR
 #cmakedefine QT_NO_VECTOR2D
-#cmakedefine QT_NO_VECTOR3D
 #cmakedefine QT_NO_VECTOR4D
 #cmakedefine QT_NO_WARNING_OUTPUT
 #cmakedefine QT_NO_WHATSTHIS
@@ -340,7 +340,7 @@
 #endif
 
 // QGraphicsView
-#if !defined(QT_NO_GRAPHICSVIEW) && defined(QT_NO_SCROLLAREA)
+#if !defined(QT_NO_GRAPHICSVIEW) && (defined(QT_NO_SCROLLAREA) || defined(QT_NO_MATRIX4X4) || defined(QT_NO_VECTOR3D))
 #  define QT_NO_GRAPHICSVIEW
 #endif
 
