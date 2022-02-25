@@ -115,6 +115,9 @@
 // #cmakedefine QT_NO_IMAGEFORMAT_XPM
 // #cmakedefine QT_NO_INPUTDIALOG
 // #cmakedefine QT_NO_ITEMVIEWS
+// #cmakedefine QT_NO_LINEEDIT
+// #cmakedefine QT_NO_LISTVIEW
+// #cmakedefine QT_NO_LISTWIDGET
 
 // Misc
 #cmakedefine QT_NO_USING_NAMESPACE
@@ -142,9 +145,6 @@
 #cmakedefine QT_NO_IPV6IFNAME
 #cmakedefine QT_NO_LCDNUMBER
 #cmakedefine QT_NO_LIBRARY
-#cmakedefine QT_NO_LINEEDIT
-#cmakedefine QT_NO_LISTVIEW
-#cmakedefine QT_NO_LISTWIDGET
 #cmakedefine QT_NO_LOCALSERVER
 #cmakedefine QT_NO_LOCALSOCKET
 #cmakedefine QT_NO_MAINWINDOW

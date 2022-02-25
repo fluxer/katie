@@ -98,10 +98,11 @@ public:
         // the address
 #ifndef QT_NO_LOCALSERVER
         QLocalServer server;
+        return server.listen("::1");
 #else
         QTcpServer server;
+        return server.listen(QHostAddress(QHostAddress::LocalHostIPv6));
 #endif
-        return server.listen("::1");
     }
 
 };
