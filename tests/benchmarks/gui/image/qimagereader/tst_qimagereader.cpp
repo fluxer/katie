@@ -68,20 +68,19 @@ private slots:
     void setScaledClipRect_data();
     void setScaledClipRect();
 
-    void png_vs_xpm_data();
-    void png_vs_xpm();
-
 private:
     QList< QPair<QString, QByteArray> > images; // filename, format
 };
 
 tst_QImageReader::tst_QImageReader()
 {
-    images << QPair<QString, QByteArray>(QLatin1String("marble.xpm"), QByteArray("xpm"));
-    images << QPair<QString, QByteArray>(QLatin1String("kollada.png"), QByteArray("png"));
-    images << QPair<QString, QByteArray>(QLatin1String("teapot.ppm"), QByteArray("ppm"));
-    images << QPair<QString, QByteArray>(QLatin1String("runners.ppm"), QByteArray("ppm"));
-    images << QPair<QString, QByteArray>(QLatin1String("test.ppm"), QByteArray("ppm"));
+    foreach (const QByteArray &format, QImageReader::supportedImageFormats()) {
+        if (format == "svgz") {
+            // TODO: svgz image
+            continue;
+        }
+        images << QPair<QString, QByteArray>(QLatin1String("bench.") + format, format);
+    }
 }
 
 tst_QImageReader::~tst_QImageReader()
@@ -196,28 +195,6 @@ void tst_QImageReader::setScaledClipRect()
         reader.setScaledClipRect(newRect);
         QImage image = reader.read();
         QCOMPARE(image.rect(), newRect);
-    }
-}
-
-#define BENCH_IMAGE_READ(image1, image2)
-
-void tst_QImageReader::png_vs_xpm_data()
-{
-    QTest::addColumn<QString>("fileName");
-    QTest::addColumn<QByteArray>("format");
-    QTest::newRow("png") << QString::fromLatin1("bench.png") << QByteArray("png");
-    QTest::newRow("xpm") << QString::fromLatin1("bench.xpm") << QByteArray("xpm");
-}
-
-void tst_QImageReader::png_vs_xpm()
-{
-    QFETCH(QString, fileName);
-    QFETCH(QByteArray, format);
-
-    QBENCHMARK {
-        QImageReader reader(QLatin1String(SRCDIR "/images/") + fileName, format);
-        QImage image = reader.read();
-        QVERIFY(!image.isNull());
     }
 }
 
