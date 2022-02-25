@@ -24,11 +24,9 @@
 
 #include <QtGui/qwidget.h>
 
+#ifndef QT_NO_MDIAREA
 
 QT_BEGIN_NAMESPACE
-
-
-#ifndef QT_NO_MDIAREA
 
 class QMenu;
 class QMdiArea;

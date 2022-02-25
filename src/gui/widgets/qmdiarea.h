@@ -25,11 +25,9 @@
 #include <QtGui/qabstractscrollarea.h>
 #include <QtGui/qtabwidget.h>
 
+#ifndef QT_NO_MDIAREA
 
 QT_BEGIN_NAMESPACE
-
-
-#ifndef QT_NO_MDIAREA
 
 class QMdiSubWindow;
 
@@ -151,6 +149,6 @@ Q_DECLARE_OPERATORS_FOR_FLAGS(QMdiArea::AreaOptions)
 
 QT_END_NAMESPACE
 
-
 #endif // QT_NO_MDIAREA
+
 #endif // QMDIAREA_H
