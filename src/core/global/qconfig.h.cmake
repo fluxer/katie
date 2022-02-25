@@ -259,11 +259,6 @@
 #  define QT_NO_DIAL
 #endif
 
-// QFileSystemModel
-#if !defined(QT_NO_FILESYSTEMMODEL) && defined(QT_NO_FILESYSTEMWATCHER)
-#  define QT_NO_FILESYSTEMMODEL
-#endif
-
 // QMenu
 #if !defined(QT_NO_MENU) && defined(QT_NO_ACTION)
 #  define QT_NO_MENU

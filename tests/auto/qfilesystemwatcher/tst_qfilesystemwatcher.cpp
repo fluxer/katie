@@ -30,6 +30,8 @@
 //TESTED_CLASS=
 //TESTED_FILES=
 
+#ifndef QT_NO_FILESYSTEMWATCHER
+
 class tst_QFileSystemWatcher : public QObject
 {
     Q_OBJECT
@@ -543,3 +545,9 @@ void tst_QFileSystemWatcher::QTBUG15255_deadlock()
 QTEST_MAIN(tst_QFileSystemWatcher)
 
 #include "moc_tst_qfilesystemwatcher.cpp"
+
+#else // QT_NO_FILESYSTEMWATCHER
+
+QTEST_NOOP_MAIN
+
+#endif // QT_NO_FILESYSTEMWATCHER

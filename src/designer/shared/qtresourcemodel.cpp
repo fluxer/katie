@@ -82,7 +82,9 @@ public:
     QMap<QString, QString>     m_fileToQrc; // this map contains the content of active resource set only.
                                             // Activating different resource set changes the contents.
 
+#ifndef QT_NO_FILESYSTEMWATCHER
     QFileSystemWatcher *m_fileWatcher;
+#endif
     bool m_fileWatcherEnabled;
     QMap<QString, bool> m_fileWatchedMap;
 private:
@@ -101,8 +103,12 @@ private:
 QtResourceModelPrivate::QtResourceModelPrivate() :
     q_ptr(0),
     m_currentResourceSet(0),
+#ifndef QT_NO_FILESYSTEMWATCHER
     m_fileWatcher(0),
     m_fileWatcherEnabled(true)
+#else
+    m_fileWatcherEnabled(false)
+#endif // QT_NO_FILESYSTEMWATCHER
 {
 }
 
@@ -405,6 +411,7 @@ void QtResourceModelPrivate::removeOldPaths(QtResourceSet *resourceSet, const QS
 
 void QtResourceModelPrivate::setWatcherEnabled(const QString &path, bool enable)
 {
+#ifndef QT_NO_FILESYSTEMWATCHER
     if (!enable) {
         m_fileWatcher->removePath(path);
         return;
@@ -413,6 +420,10 @@ void QtResourceModelPrivate::setWatcherEnabled(const QString &path, bool enable)
     QFileInfo fi(path);
     if (fi.exists())
         m_fileWatcher->addPath(path);
+#else
+    Q_UNUSED(path);
+    Q_UNUSED(enable);
+#endif // QT_NO_FILESYSTEMWATCHER
 }
 
 void QtResourceModelPrivate::addWatcher(const QString &path)
@@ -451,10 +462,11 @@ QtResourceModel::QtResourceModel(QObject *parent) :
     d_ptr(new QtResourceModelPrivate)
 {
     d_ptr->q_ptr = this;
-
+#ifndef QT_NO_FILESYSTEMWATCHER
     d_ptr->m_fileWatcher = new QFileSystemWatcher(this);
     connect(d_ptr->m_fileWatcher, SIGNAL(fileChanged(QString)),
             this, SLOT(slotFileChanged(QString)));
+#endif // QT_NO_FILESYSTEMWATCHER
 }
 
 QtResourceModel::~QtResourceModel()

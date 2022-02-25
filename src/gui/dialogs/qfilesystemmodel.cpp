@@ -332,9 +332,7 @@ QFileSystemModelPrivate::QFileSystemNode *QFileSystemModelPrivate::node(const QS
                 return const_cast<QFileSystemModelPrivate::QFileSystemNode*>(&root);
             QFileSystemModelPrivate *p = const_cast<QFileSystemModelPrivate*>(this);
             node = p->addNode(parent, element,info);
-#ifndef QT_NO_FILESYSTEMWATCHER
             node->populate(fileInfoGatherer.getInfo(info));
-#endif
         } else {
             node = parent->children.value(element);
         }
@@ -374,7 +372,6 @@ void QFileSystemModel::timerEvent(QTimerEvent *event)
     Q_D(QFileSystemModel);
     if (event->timerId() == d->fetchingTimer.timerId()) {
         d->fetchingTimer.stop();
-#ifndef QT_NO_FILESYSTEMWATCHER
         for (int i = 0; i < d->toFetch.count(); ++i) {
             const QFileSystemModelPrivate::QFileSystemNode *node = d->toFetch.at(i).node;
             if (!node->hasInformation()) {
@@ -384,7 +381,6 @@ void QFileSystemModel::timerEvent(QTimerEvent *event)
                 // qDebug() << "yah!, you saved a little gerbil soul";
             }
         }
-#endif
         d->toFetch.clear();
     }
 }
@@ -1494,9 +1490,7 @@ QFileSystemModelPrivate::QFileSystemNode* QFileSystemModelPrivate::addNode(QFile
 {
     // In the common case, itemLocation == count() so check there first
     QFileSystemModelPrivate::QFileSystemNode *node = new QFileSystemModelPrivate::QFileSystemNode(fileName, parentNode);
-#ifndef QT_NO_FILESYSTEMWATCHER
     node->populate(info);
-#endif
     parentNode->children.insert(fileName, node);
     return node;
 }
