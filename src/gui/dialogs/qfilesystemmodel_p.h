@@ -50,7 +50,7 @@
 
 QT_BEGIN_NAMESPACE
 
-class ExtendedInformation;
+class QExtendedInformation;
 class QFileSystemModelPrivate;
 class QFileIconProvider;
 
@@ -291,9 +291,9 @@ public:
     QList<Fetching> toFetch;
 
 };
-#endif // QT_NO_FILESYSTEMMODEL
 
 QT_END_NAMESPACE
 
-#endif
+#endif // QT_NO_FILESYSTEMMODEL
 
+#endif // QFILESYSTEMMODEL_P_H

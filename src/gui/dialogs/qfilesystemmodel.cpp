@@ -29,9 +29,9 @@
 #include "qapplication.h"
 #include "qcore_unix_p.h"
 
-QT_BEGIN_NAMESPACE
-
 #ifndef QT_NO_FILESYSTEMMODEL
+
+QT_BEGIN_NAMESPACE
 
 /*!
     \enum QFileSystemModel::Roles
@@ -1801,9 +1801,6 @@ bool QFileSystemModelPrivate::passNameFilters(const QFileSystemNode *node) const
 
 QT_END_NAMESPACE
 
-
 #include "moc_qfilesystemmodel.h"
 
 #endif // QT_NO_FILESYSTEMMODEL
-
-
