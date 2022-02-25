@@ -24,7 +24,7 @@
 
 #include <QtCore/qglobal.h>
 
-#ifndef QT_NO_QFUTURE
+#ifndef QT_NO_CONCURRENT
 
 #include <QtCore/qatomic.h>
 
@@ -102,4 +102,4 @@ QT_END_NAMESPACE
 
 #endif // QT_NO_CONCURRENT
 
-#endif
+#endif // QTCONCURRENT_EXCEPTION_H

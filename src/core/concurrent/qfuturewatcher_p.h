@@ -36,7 +36,7 @@
 #include "qfutureinterface_p.h"
 #include "qlist.h"
 
-#ifndef QT_NO_QFUTURE
+#ifndef QT_NO_CONCURRENT
 
 #include "qobject_p.h"
 
@@ -66,5 +66,6 @@ public:
 
 QT_END_NAMESPACE
 
-#endif // QT_NO_QFUTURE
-#endif
+#endif // QT_NO_CONCURRENT
+
+#endif // QFUTUREWATCHER_P_H

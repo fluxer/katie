@@ -22,7 +22,7 @@
 // qfutureinterface.h included from qfuture.h
 #include "qfuture.h"
 
-#ifndef QT_NO_QFUTURE
+#ifndef QT_NO_CONCURRENT
 
 #include <QtCore/qatomic.h>
 #include <QtCore/qthread.h>

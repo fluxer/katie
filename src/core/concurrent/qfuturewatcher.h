@@ -25,16 +25,13 @@
 #include <QtCore/qfuture.h>
 #include <QtCore/qobject.h>
 
+#ifndef QT_NO_CONCURRENT
+
 QT_BEGIN_NAMESPACE
 
-
 class QEvent;
-
 class QFutureWatcherBasePrivate;
-
-#ifdef QT_NO_QFUTURE
 class QFutureInterfaceBase;
-#endif
 
 class Q_CORE_EXPORT QFutureWatcherBase : public QObject
 {
@@ -93,8 +90,6 @@ private:
     virtual const QFutureInterfaceBase &futureInterface() const = 0;
     virtual QFutureInterfaceBase &futureInterface() = 0;
 };
-
-#ifndef QT_NO_QFUTURE
 
 template <typename T>
 class QFutureWatcher : public QFutureWatcherBase
@@ -161,8 +156,8 @@ Q_INLINE_TEMPLATE void QFutureWatcher<void>::setFuture(const QFuture<void> &_fut
     connectOutputInterface();
 }
 
-#endif // QT_NO_QFUTURE
-
 QT_END_NAMESPACE
+
+#endif // QT_NO_CONCURRENT
 
 #endif // QFUTUREWATCHER_H

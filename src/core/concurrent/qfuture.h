@@ -24,7 +24,7 @@
 
 #include <QtCore/qglobal.h>
 
-#ifndef QT_NO_QFUTURE
+#ifndef QT_NO_CONCURRENT
 
 #include <QtCore/qfutureinterface.h>
 #include <QtCore/qstring.h>

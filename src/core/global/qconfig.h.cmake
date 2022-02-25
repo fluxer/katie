@@ -127,6 +127,7 @@
 // #cmakedefine QT_NO_MESSAGEBOX
 // #cmakedefine QT_NO_PROGRESSBAR
 // #cmakedefine QT_NO_PROPERTIES
+// #cmakedefine QT_NO_PROXYMODEL
 
 // Misc
 #cmakedefine QT_NO_USING_NAMESPACE
@@ -165,7 +166,6 @@
 #cmakedefine QT_NO_PRINTPREVIEWDIALOG
 #cmakedefine QT_NO_PRINTPREVIEWWIDGET
 #cmakedefine QT_NO_PROGRESSDIALOG
-#cmakedefine QT_NO_PROXYMODEL
 #cmakedefine QT_NO_QFUTURE
 #cmakedefine QT_NO_QUATERNION
 #cmakedefine QT_NO_QUUID_STRING
@@ -232,11 +232,6 @@
 // Debugging
 #if defined(QT_NO_TEXTSTREAM) && !defined(QT_NO_DEBUG_STREAM)
 #  define QT_NO_DEBUG_STREAM
-#endif
-
-// Future
-#if !defined(QT_NO_QFUTURE) && defined(QT_NO_CONCURRENT)
-#  define QT_NO_QFUTURE
 #endif
 
 // Animation

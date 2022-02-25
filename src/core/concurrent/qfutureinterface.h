@@ -24,7 +24,7 @@
 
 #include <QtCore/qrunnable.h>
 
-#ifndef QT_NO_QFUTURE
+#ifndef QT_NO_CONCURRENT
 
 #include <QtCore/qmutex.h>
 #include <QtCore/qtconcurrentexception.h>

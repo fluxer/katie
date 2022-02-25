@@ -21,7 +21,7 @@
 
 #include "qtconcurrentresultstore.h"
 
-#ifndef QT_NO_QFUTURE
+#ifndef QT_NO_CONCURRENT
 
 QT_BEGIN_NAMESPACE
 
