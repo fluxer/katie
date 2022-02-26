@@ -38,9 +38,9 @@
 #include "qwidget_p.h"
 #include <QtCore/qbasictimer.h>
 
-QT_BEGIN_NAMESPACE
-
 #ifndef QT_NO_TOOLBAR
+
+QT_BEGIN_NAMESPACE
 
 class QToolBarLayout;
 class QTimer;
@@ -100,8 +100,8 @@ public:
     QBasicTimer waitForPopupTimer;
 };
 
-#endif // QT_NO_TOOLBAR
-
 QT_END_NAMESPACE
+
+#endif // QT_NO_TOOLBAR
 
 #endif // QDYNAMICTOOLBAR_P_H

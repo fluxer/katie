@@ -222,7 +222,8 @@ public:
     bool isEmpty() const;
 };
 
+#endif // QT_NO_TOOLBAR
 
 QT_END_NAMESPACE
-#endif // QT_NO_TOOLBAR
+
 #endif // QTOOLBARAREALAYOUT_P_H

@@ -149,6 +149,8 @@
 // #cmakedefine QT_NO_TEXTCONTROL
 // #cmakedefine QT_NO_TEXTEDIT
 // #cmakedefine QT_NO_TEXTHTMLPARSER
+// #cmakedefine QT_NO_TEXTDATE
+// #cmakedefine QT_NO_TOOLBAR
 
 // Misc
 #cmakedefine QT_NO_USING_NAMESPACE
@@ -201,8 +203,6 @@
 #cmakedefine QT_NO_SYSTEMSEMAPHORE
 #cmakedefine QT_NO_SYSTEMTRAYICON
 #cmakedefine QT_NO_TEXTBROWSER
-#cmakedefine QT_NO_TEXTDATE
-#cmakedefine QT_NO_TOOLBAR
 #cmakedefine QT_NO_TOOLBOX
 #cmakedefine QT_NO_TOOLBUTTON
 #cmakedefine QT_NO_TOOLTIP
