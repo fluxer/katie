@@ -32,9 +32,9 @@ int main(int argc, char **argv)
     qrand();
 
     // Now print a few uuids.
-    printf("%s", qPrintable(QUuid::createUuid().toString()));
-    printf("%s", qPrintable(QUuid::createUuid().toString()));
-    printf("%s", qPrintable(QUuid::createUuid().toString()));
+    printf("%s", qPrintable(QUuid::createUuid().toRfc4122().toHex()));
+    printf("%s", qPrintable(QUuid::createUuid().toRfc4122().toHex()));
+    printf("%s", qPrintable(QUuid::createUuid().toRfc4122().toHex()));
 
     // Done
     return 0;
