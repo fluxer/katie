@@ -36,14 +36,20 @@
 #include "qsharedmemory.h"
 
 #ifdef QT_NO_SHAREDMEMORY
+
+QT_BEGIN_NAMESPACE
+
 # ifndef QT_NO_SYSTEMSEMAPHORE
 namespace QSharedMemoryPrivate
 {
-    QString makePlatformSafeKey(const QString &key, ,
+    QString makePlatformSafeKey(const QString &key,
             const QString &prefix = QLatin1String("/qipc_sharedmemory_"));
 }
-#endif
-#else
+#endif // QT_NO_SYSTEMSEMAPHORE
+
+QT_END_NAMESPACE
+
+#else // QT_NO_SHAREDMEMORY
 
 #include "qsystemsemaphore.h"
 #include "qobject_p.h"

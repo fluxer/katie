@@ -129,6 +129,9 @@
 // #cmakedefine QT_NO_PROPERTIES
 // #cmakedefine QT_NO_PROXYMODEL
 // #cmakedefine QT_NO_RESIZEHANDLER
+// #cmakedefine QT_NO_RUBBERBAND
+// #cmakedefine QT_NO_SCROLLAREA
+// #cmakedefine QT_NO_SCROLLBAR
 
 // Misc
 #cmakedefine QT_NO_USING_NAMESPACE
@@ -169,9 +172,6 @@
 #cmakedefine QT_NO_PROGRESSDIALOG
 #cmakedefine QT_NO_QUATERNION
 #cmakedefine QT_NO_QUUID_STRING
-#cmakedefine QT_NO_RUBBERBAND
-#cmakedefine QT_NO_SCROLLAREA
-#cmakedefine QT_NO_SCROLLBAR
 #cmakedefine QT_NO_SHAREDMEMORY
 #cmakedefine QT_NO_SHORTCUT
 #cmakedefine QT_NO_SIGNALMAPPER
