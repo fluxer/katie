@@ -869,7 +869,7 @@ QTEST_APPLESS_MAIN(tst_QQuaternion)
 
 #include "moc_tst_qquaternion.cpp"
 
-#else QT_NO_QUATERNION
+#else // QT_NO_QUATERNION
 
 QTEST_NOOP_MAIN
 
