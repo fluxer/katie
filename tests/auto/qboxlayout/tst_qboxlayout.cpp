@@ -55,6 +55,7 @@ private slots:
     void taskQTBUG_27420_takeAtShouldUnparentLayout();
 };
 
+#ifndef QT_NO_STYLE_WINDOWS
 class CustomLayoutStyle : public QWindowsStyle
 {
     Q_OBJECT
@@ -93,7 +94,7 @@ int CustomLayoutStyle::pixelMetric(PixelMetric metric, const QStyleOption * opti
     }
     return QWindowsStyle::pixelMetric(metric, option, widget);
 }
-
+#endif // QT_NO_STYLE_WINDOWS
 
 tst_QBoxLayout::tst_QBoxLayout()
 {
@@ -223,7 +224,7 @@ void tst_QBoxLayout::setGeometry()
 
 void tst_QBoxLayout::setStyleShouldChangeSpacing()
 {
-
+#ifndef QT_NO_STYLE_WINDOWS
     QWidget *window = new QWidget;
     QHBoxLayout *hbox = new QHBoxLayout(window);
     QPushButton *pb1 = new QPushButton(tr("The spacing between this"));
@@ -251,11 +252,15 @@ void tst_QBoxLayout::setStyleShouldChangeSpacing()
     delete window;
     delete style1;
     delete style2;
+    delete style;
+#else // QT_NO_STYLE_WINDOWS
+    QSKIP("Katie compiled without windows style support (QT_NO_STYLE_WINDOWS)", SkipAll);
+#endif // QT_NO_STYLE_WINDOWS
 }
 
 void tst_QBoxLayout::taskQTBUG_7103_minMaxWidthNotRespected()
 {
-    QLabel *label = new QLabel("Qt uses standard C++, but makes extensive use of the C pre-processor to enrich the language. Qt can also be used in several other programming languages via language bindings. It runs on all major platforms, and has extensive internationalization support. Non-GUI features include SQL database access, XML parsing, thread management, network support and a unified cross-platform API for file handling.");
+    QLabel *label = new QLabel("Katie uses standard C++, but makes extensive use of the C pre-processor to enrich the language. Qt can also be used in several other programming languages via language bindings. It runs on all major platforms, and has extensive internationalization support. Non-GUI features include SQL database access, XML parsing, thread management, network support and a unified cross-platform API for file handling.");
     label->setWordWrap(true);
     label->setFixedWidth(200);
 

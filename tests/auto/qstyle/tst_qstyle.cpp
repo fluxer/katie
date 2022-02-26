@@ -159,7 +159,7 @@ class CustomProxy : public QProxyStyle
 
 void tst_QStyle::testProxyStyle()
 {
-#ifndef QT_NO_STYLE_PROXY
+#if !defined(QT_NO_STYLE_PROXY) && !defined(QT_NO_STYLE_WINDOWS)
     QProxyStyle *proxyStyle = new QProxyStyle();
     QVERIFY(proxyStyle->baseStyle());
     QStyle *style = new QWindowsStyle;
@@ -184,7 +184,7 @@ void tst_QStyle::testProxyStyle()
     QVERIFY(!customStyle.parent());
     QVERIFY(edit.style()->pixelMetric(QStyle::PM_ButtonIconSize) == 13);
 #else // QT_NO_STYLE_PROXY
-    QSKIP("Katie compiled without style proxy support (QT_NO_STYLE_PROXY)", SkipAll);
+    QSKIP("Katie compiled without style proxy or windows style support (QT_NO_STYLE_PROXY or QT_NO_STYLE_WINDOWS)", SkipAll);
 #endif // QT_NO_STYLE_PROXY
 }
 
@@ -309,6 +309,7 @@ void tst_QStyle::testCleanlooksStyle()
 
 void tst_QStyle::testWindowsStyle()
 {
+#ifndef QT_NO_STYLE_WINDOWS
     QWindowsStyle wstyle;
     testAllFunctions(&wstyle);
     lineUpLayoutTest(&wstyle);
@@ -319,6 +320,9 @@ void tst_QStyle::testWindowsStyle()
     QPixmap surface(QSize(200, 200));
     QPainter painter(&surface);
     wstyle.drawControl(QStyle::CE_ProgressBar, &pb, &painter, 0);
+#else // QT_NO_STYLE_WINDOWS
+    QSKIP("Katie compiled without windows style support (QT_NO_STYLE_WINDOWS)", SkipAll);
+#endif // QT_NO_STYLE_WINDOWS
 }
 
 void writeImage(const QString &fileName, QImage image)
@@ -360,7 +364,7 @@ void MyWidget::paintEvent( QPaintEvent* )
     style()->drawItemPixmap(&p, rect(), Qt::AlignCenter, big);
 }
 
-
+#ifndef QT_NO_STYLE_WINDOWS
 class Qt42Style : public QWindowsStyle
 {
     Q_OBJECT
@@ -399,10 +403,11 @@ int Qt42Style::pixelMetric(PixelMetric metric, const QStyleOption * option /*= 0
     }
     return QWindowsStyle::pixelMetric(metric, option, widget);
 }
-
+#endif // QT_NO_STYLE_WINDOWS
 
 void tst_QStyle::pixelMetric()
 {
+#ifndef QT_NO_STYLE_WINDOWS
     Qt42Style *style = new Qt42Style();
     QCOMPARE(style->pixelMetric(QStyle::PM_DefaultTopLevelMargin), 10);
     QCOMPARE(style->pixelMetric(QStyle::PM_DefaultChildMargin), 5);
@@ -423,6 +428,9 @@ void tst_QStyle::pixelMetric()
     QCOMPARE(style->pixelMetric(QStyle::PM_DefaultLayoutSpacing), -1);
 
     delete style;
+#else // QT_NO_STYLE_WINDOWS
+    QSKIP("Katie compiled without windows style support (QT_NO_STYLE_WINDOWS)", SkipAll);
+#endif // QT_NO_STYLE_WINDOWS
 }
 
 void tst_QStyle::lineUpLayoutTest(QStyle *style)
