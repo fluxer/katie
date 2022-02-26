@@ -46,7 +46,11 @@ int main(int argc, char *argv[])
 
     const QString outputpath(args.at(1));
     const QFileInfo outputinfo(outputpath);
-    const QByteArray outputformat(outputinfo.completeSuffix().toLocal8Bit());
+    QByteArray outputformat(outputinfo.suffix().toLocal8Bit());
+    if (outputpath.endsWith(".svg.gz")) {
+        // the only exception I am aware of
+        outputformat = "svgz";
+    }
     if (outputformat.isEmpty()) {
         qWarning() << "Could not determine format for" << outputpath;
         return 3;
