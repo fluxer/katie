@@ -504,8 +504,7 @@ int QAbstractSocketEnginePrivate::nativeAccept()
     return acceptedDescriptor;
 }
 
-#ifndef QT_NO_NETWORKINTERFACE
-
+#if !defined(QT_NO_UDPSOCKET) && !defined(QT_NO_NETWORKINTERFACE)
 static bool multicastMembershipHelper(QAbstractSocketEnginePrivate *d,
                                       int how6,
                                       int how4,
@@ -669,8 +668,7 @@ bool QAbstractSocketEnginePrivate::nativeSetMulticastInterface(const QNetworkInt
     v.s_addr = INADDR_ANY;
     return (::setsockopt(socketDescriptor, IPPROTO_IP, IP_MULTICAST_IF, &v, sizeof(v)) != -1);
 }
-
-#endif // QT_NO_NETWORKINTERFACE
+#endif // QT_NO_UDPSOCKET && QT_NO_NETWORKINTERFACE
 
 qint64 QAbstractSocketEnginePrivate::nativeBytesAvailable() const
 {

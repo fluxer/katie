@@ -151,6 +151,11 @@
 // #cmakedefine QT_NO_TEXTHTMLPARSER
 // #cmakedefine QT_NO_TEXTDATE
 // #cmakedefine QT_NO_TOOLBAR
+// #cmakedefine QT_NO_TOOLBOX
+// #cmakedefine QT_NO_TOOLBUTTON
+// #cmakedefine QT_NO_TOOLTIP
+// #cmakedefine QT_NO_TREEVIEW
+// #cmakedefine QT_NO_TREEWIDGET
 
 // Misc
 #cmakedefine QT_NO_USING_NAMESPACE
@@ -203,11 +208,6 @@
 #cmakedefine QT_NO_SYSTEMSEMAPHORE
 #cmakedefine QT_NO_SYSTEMTRAYICON
 #cmakedefine QT_NO_TEXTBROWSER
-#cmakedefine QT_NO_TOOLBOX
-#cmakedefine QT_NO_TOOLBUTTON
-#cmakedefine QT_NO_TOOLTIP
-#cmakedefine QT_NO_TREEVIEW
-#cmakedefine QT_NO_TREEWIDGET
 #cmakedefine QT_NO_UDPSOCKET
 #cmakedefine QT_NO_UNDOCOMMAND
 #cmakedefine QT_NO_UNDOGROUP
