@@ -313,7 +313,7 @@ void QScriptEdit::extraAreaPaintEvent(QPaintEvent *e)
                 int radius = fm.lineSpacing() - 1;
                 QRect r(rect.x(), (int)top, radius, radius);
                 QIcon icon(m_breakpoints[lineNumber].enabled
-                           ? QString::fromLatin1("%1/breakpoint.png").arg(imagesPath))
+                           ? QString::fromLatin1("%1/breakpoint.png").arg(imagesPath)
                            : QString::fromLatin1("%1/d_breakpoint.png").arg(imagesPath));
                 icon.paint(&painter, r, Qt::AlignCenter);
             }

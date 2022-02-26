@@ -141,6 +141,11 @@
 // #cmakedefine QT_NO_STANDARDITEMMODEL
 // #cmakedefine QT_NO_STATUSBAR
 // #cmakedefine QT_NO_STATUSTIP
+// #cmakedefine QT_NO_TABBAR
+// #cmakedefine QT_NO_TABWIDGET
+// #cmakedefine QT_NO_TABLEVIEW
+// #cmakedefine QT_NO_TABLEWIDGET
+// #cmakedefine QT_NO_TEMPORARYFILE
 
 // Misc
 #cmakedefine QT_NO_USING_NAMESPACE
@@ -192,11 +197,6 @@
 #cmakedefine QT_NO_SYNTAXHIGHLIGHTER
 #cmakedefine QT_NO_SYSTEMSEMAPHORE
 #cmakedefine QT_NO_SYSTEMTRAYICON
-#cmakedefine QT_NO_TABBAR
-#cmakedefine QT_NO_TABLEVIEW
-#cmakedefine QT_NO_TABLEWIDGET
-#cmakedefine QT_NO_TABWIDGET
-#cmakedefine QT_NO_TEMPORARYFILE
 #cmakedefine QT_NO_TEXTBROWSER
 #cmakedefine QT_NO_TEXTCONTROL
 #cmakedefine QT_NO_TEXTDATE
