@@ -343,8 +343,8 @@ QByteArray qCompress(const char* data, int nbytes, int compressionLevel)
         return QByteArray();
     }
 
-    QSTACKARRAY(char, compbuffer, boundresult);
-    const size_t compresult = libdeflate_gzip_compress(comp, data, nbytes, compbuffer, boundresult);
+    QByteArray result(boundresult, Qt::Uninitialized);
+    const size_t compresult = libdeflate_gzip_compress(comp, data, nbytes, result.data(), result.size());
     libdeflate_free_compressor(comp);
 
     if (Q_UNLIKELY(compresult <= 0)) {
@@ -352,7 +352,8 @@ QByteArray qCompress(const char* data, int nbytes, int compressionLevel)
         return QByteArray();
     }
 
-    return QByteArray(compbuffer, compresult);
+    result.resize(compresult);
+    return result;
 }
 
 /*!
