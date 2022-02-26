@@ -134,6 +134,13 @@
 // #cmakedefine QT_NO_SCROLLBAR
 // #cmakedefine QT_NO_SHORTCUT
 // #cmakedefine QT_NO_SIGNALMAPPER
+// #cmakedefine QT_NO_SLIDER
+// #cmakedefine QT_NO_SORTFILTERPROXYMODEL
+// #cmakedefine QT_NO_SPINBOX
+// #cmakedefine QT_NO_SPLITTER
+// #cmakedefine QT_NO_STACKEDWIDGET
+// #cmakedefine QT_NO_STANDARDITEMMODEL
+// #cmakedefine QT_NO_STATUSBAR
 
 // Misc
 #cmakedefine QT_NO_USING_NAMESPACE
@@ -176,14 +183,7 @@
 #cmakedefine QT_NO_QUUID_STRING
 #cmakedefine QT_NO_SHAREDMEMORY
 #cmakedefine QT_NO_SIZEGRIP
-#cmakedefine QT_NO_SLIDER
-#cmakedefine QT_NO_SORTFILTERPROXYMODEL
-#cmakedefine QT_NO_SPINBOX
 #cmakedefine QT_NO_SPLASHSCREEN
-#cmakedefine QT_NO_SPLITTER
-#cmakedefine QT_NO_STACKEDWIDGET
-#cmakedefine QT_NO_STANDARDITEMMODEL
-#cmakedefine QT_NO_STATUSBAR
 #cmakedefine QT_NO_STATUSTIP
 #cmakedefine QT_NO_STRINGLISTMODEL
 #cmakedefine QT_NO_STYLE_CLEANLOOKS

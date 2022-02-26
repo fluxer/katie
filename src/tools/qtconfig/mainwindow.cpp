@@ -129,7 +129,6 @@ MainWindow::MainWindow()
       previewstyle(0)
 {
     ui->setupUi(this);
-    statusBar();
 
     // signals and slots connections
     connect(ui->fontStyleCombo, SIGNAL(activated(int)), SLOT(buildFont()));
@@ -307,11 +306,15 @@ extern void qt_x11_apply_settings_in_all_apps();
 void MainWindow::fileSave()
 {
     if (! modified) {
+#ifndef QT_NO_STATUSBAR
         statusBar()->showMessage(tr("No changes to be saved."), 2000);
+#endif // QT_NO_STATUSBAR
         return;
     }
 
+#ifndef QT_NO_STATUSBAR
     statusBar()->showMessage(tr("Saving changes..."));
+#endif // QT_NO_STATUSBAR
 
     {
         QSettings settings(QLatin1String("Katie"), QSettings::NativeFormat);
@@ -387,7 +390,9 @@ void MainWindow::fileSave()
 #endif // Q_WS_X11
 
     setModified(false);
+#ifndef QT_NO_STATUSBAR
     statusBar()->showMessage(tr("Saved changes."));
+#endif // QT_NO_STATUSBAR
 }
 
 void MainWindow::fileExit()

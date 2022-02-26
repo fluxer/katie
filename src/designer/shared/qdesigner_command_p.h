@@ -667,6 +667,7 @@ private:
     QPointer<QMenuBar> m_menuBar;
 };
 
+#ifndef QT_NO_STATUSBAR
 class Q_DESIGNER_EXPORT CreateStatusBarCommand: public QDesignerFormWindowCommand
 {
 
@@ -698,6 +699,7 @@ private:
     QPointer<QMainWindow> m_mainWindow;
     QPointer<QStatusBar> m_statusBar;
 };
+#endif // QT_NO_STATUSBAR
 
 class Q_DESIGNER_EXPORT AddToolBarCommand: public QDesignerFormWindowCommand
 {

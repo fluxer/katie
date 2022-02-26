@@ -289,6 +289,7 @@ void tst_QMainWindow::getSetCheck()
     QVERIFY(!var1);
     // delete var1; // No delete, since QMainWindow takes ownership
 
+#ifndef QT_NO_STATUSBAR
     // QStatusBar * QMainWindow::statusBar()
     // void QMainWindow::setStatusBar(QStatusBar *)
     QPointer<QStatusBar> var2 = new QStatusBar;
@@ -300,6 +301,7 @@ void tst_QMainWindow::getSetCheck()
     QCoreApplication::sendPostedEvents(0, QEvent::DeferredDelete);
     QVERIFY(!var2);
     // delete var2; // No delete, since QMainWindow takes ownership
+#endif // QT_NO_STATUSBAR
 
     // QWidget * QMainWindow::centralWidget()
     // void QMainWindow::setCentralWidget(QWidget *)
@@ -498,7 +500,8 @@ void tst_QMainWindow::iconSize()
 }
 
 void tst_QMainWindow::setIconSize()
-{ DEPENDS_ON("iconSize()");
+{
+    DEPENDS_ON("iconSize()");
 }
 
 void tst_QMainWindow::toolButtonStyle()
@@ -698,7 +701,9 @@ void tst_QMainWindow::toolButtonStyle()
 }
 
 void tst_QMainWindow::setToolButtonStyle()
-{ DEPENDS_ON("toolButtonStyle()"); }
+{
+    DEPENDS_ON("toolButtonStyle()");
+}
 
 void tst_QMainWindow::menuBar()
 {
@@ -785,10 +790,13 @@ void tst_QMainWindow::menuBar()
 }
 
 void tst_QMainWindow::setMenuBar()
-{ DEPENDS_ON("menuBar()"); }
+{
+    DEPENDS_ON("menuBar()");
+}
 
 void tst_QMainWindow::statusBar()
 {
+#ifndef QT_NO_STATUSBAR
     {
         QMainWindow mw;
         QVERIFY(mw.statusBar() != 0);
@@ -867,10 +875,15 @@ void tst_QMainWindow::statusBar()
         indexOfSb = l->indexOf(sb);
         QVERIFY(indexOfSb == -1);
     }
+#else // QT_NO_STATUSBAR
+    QSKIP("Katie compiled without statusbar support (QT_NO_STATUSBAR)", SkipAll);
+#endif // QT_NO_STATUSBAR
 }
 
 void tst_QMainWindow::setStatusBar()
-{ DEPENDS_ON("statusBar()"); }
+{
+    DEPENDS_ON("statusBar()");
+}
 
 void tst_QMainWindow::centralWidget()
 {
@@ -939,7 +952,9 @@ void tst_QMainWindow::centralWidget()
 }
 
 void tst_QMainWindow::setCentralWidget()
-{ DEPENDS_ON("centralwidget()"); }
+{
+    DEPENDS_ON("centralwidget()");
+}
 
 void tst_QMainWindow::corner()
 {
@@ -978,7 +993,9 @@ void tst_QMainWindow::corner()
 }
 
 void tst_QMainWindow::setCorner()
-{ DEPENDS_ON("corner()"); }
+{
+    DEPENDS_ON("corner()");
+}
 
 void tst_QMainWindow::addToolBarBreak()
 {
@@ -1379,7 +1396,9 @@ void tst_QMainWindow::dockWidgetArea()
 }
 
 void tst_QMainWindow::saveState()
-{ DEPENDS_ON("restoreState()"); }
+{
+    DEPENDS_ON("restoreState()");
+}
 
 void tst_QMainWindow::restoreState()
 {
@@ -1792,10 +1811,14 @@ void tst_QMainWindow::saveRestore()
 }
 
 void tst_QMainWindow::iconSizeChanged()
-{ DEPENDS_ON("iconSize()"); }
+{
+    DEPENDS_ON("iconSize()");
+}
 
 void tst_QMainWindow::toolButtonStyleChanged()
-{ DEPENDS_ON("toolButtonStyle()"); }
+{
+    DEPENDS_ON("toolButtonStyle()");
+}
 
 void tst_QMainWindow::isSeparator()
 {

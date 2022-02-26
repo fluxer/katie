@@ -54,6 +54,7 @@ namespace qdesigner_internal {
         return QList<QAction*>();
     }
 
+#ifndef QT_NO_STATUSBAR
     // ------------ StatusBarTaskMenu
     StatusBarTaskMenu::StatusBarTaskMenu(QStatusBar *sb, QObject *parent) :
         QObject(parent),
@@ -85,6 +86,7 @@ namespace qdesigner_internal {
             fw->commandHistory()->push(cmd);
         }
     }
+#endif // QT_NO_STATUSBAR
 }
 
 QT_END_NAMESPACE

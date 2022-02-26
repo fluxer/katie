@@ -30,8 +30,10 @@
 
 #include "../../shared/util.h"
 
-//TESTED_CLASS=
-//TESTED_FILES=
+// TESTED_CLASS=
+// TESTED_FILES=
+
+#ifndef QT_NO_STATUSBAR
 
 class tst_QStatusBar: public QObject
 {
@@ -311,3 +313,9 @@ void tst_QStatusBar::QTBUG25492_msgtimeout()
 QTEST_MAIN(tst_QStatusBar)
 
 #include "moc_tst_qstatusbar.cpp"
+
+#else // QT_NO_STATUSBAR
+
+QTEST_NOOP_MAIN
+
+#endif // QT_NO_STATUSBAR

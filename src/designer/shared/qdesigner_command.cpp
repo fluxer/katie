@@ -1529,6 +1529,7 @@ void DeleteMenuBarCommand::undo()
     }
 }
 
+#ifndef QT_NO_STATUSBAR
 // ---- CreateStatusBarCommand ----
 CreateStatusBarCommand::CreateStatusBarCommand(QDesignerFormWindowInterface *formWindow)
     : QDesignerFormWindowCommand(QApplication::translate("Command", "Create Status Bar"), formWindow)
@@ -1615,6 +1616,7 @@ void DeleteStatusBarCommand::undo()
         formWindow()->emitSelectionChanged();
     }
 }
+#endif // QT_NO_STATUSBAR
 
 // ---- AddToolBarCommand ----
 AddToolBarCommand::AddToolBarCommand(QDesignerFormWindowInterface *formWindow)
