@@ -252,7 +252,6 @@ void tst_QBoxLayout::setStyleShouldChangeSpacing()
     delete window;
     delete style1;
     delete style2;
-    delete style;
 #else // QT_NO_STYLE_WINDOWS
     QSKIP("Katie compiled without windows style support (QT_NO_STYLE_WINDOWS)", SkipAll);
 #endif // QT_NO_STYLE_WINDOWS
