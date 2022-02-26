@@ -161,7 +161,7 @@ QImageWriterPrivate::QImageWriterPrivate()
     deleteDevice(false),
     handler(nullptr),
     quality(-1),
-    compression(0),
+    compression(1),
     gamma(0.0),
     imageWriterError(QImageWriter::UnknownError),
     errorString(QT_TRANSLATE_NOOP(QImageWriter, QLatin1String("Unknown error")))
@@ -347,7 +347,7 @@ void QImageWriter::setCompression(int compression)
 }
 
 /*!
-    Returns the compression of the image.
+    Returns the compression of the image. Default value is 1.
 
     \sa setCompression()
 */
