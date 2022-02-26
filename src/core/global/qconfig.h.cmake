@@ -71,7 +71,6 @@
 
 // External packages dependant
 #cmakedefine QT_NO_CUPS
-#cmakedefine QT_NO_DBUS
 #cmakedefine QT_NO_EXECINFO
 #cmakedefine QT_NO_FONTCONFIG
 #cmakedefine QT_NO_SESSIONMANAGER
@@ -190,8 +189,6 @@
 #cmakedefine QT_NO_STYLE_PROXY
 #cmakedefine QT_NO_STYLE_STYLESHEET
 #cmakedefine QT_NO_STYLE_WINDOWS
-#cmakedefine QT_NO_SVG
-#cmakedefine QT_NO_SVGRENDERER
 #cmakedefine QT_NO_SYNTAXHIGHLIGHTER
 #cmakedefine QT_NO_SYSTEMSEMAPHORE
 #cmakedefine QT_NO_SYSTEMTRAYICON
@@ -303,11 +300,6 @@
 #  define QT_NO_CONTEXTMENU
 #endif
 
-// QtDBus module
-#if !defined(QT_NO_DBUS) && (defined(QT_NO_PROPERTIES) || defined(QT_NO_DOM))
-#  define QT_NO_DBUS
-#endif
-
 // QScrollArea
 #if !defined(QT_NO_SCROLLAREA) && defined(QT_NO_SCROLLBAR)
 #  define QT_NO_SCROLLAREA
@@ -363,11 +355,6 @@
 #  define QT_NO_STYLE_STYLESHEET
 #endif
 
-// QtSvg module
-#if !defined(QT_NO_SVG) && (defined(QT_NO_XMLSTREAMREADER) || defined(QT_NO_CSSPARSER))
-#  define QT_NO_SVG
-#endif
-
 // QColorDialog
 #if !defined(QT_NO_COLORDIALOG) && defined(QT_NO_SPINBOX)
 #  define QT_NO_COLORDIALOG
@@ -386,11 +373,6 @@
 // QMenuBar
 #if !defined(QT_NO_MENUBAR) && (defined(QT_NO_MENU) || defined(QT_NO_TOOLBUTTON))
 #  define QT_NO_MENUBAR
-#endif
-
-// QSvgRenderer
-#if !defined(QT_NO_SVGRENDERER) && defined(QT_NO_SVG)
-#  define QT_NO_SVGRENDERER
 #endif
 
 // QTabWidget

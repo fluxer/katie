@@ -20,8 +20,6 @@
 ****************************************************************************/
 #include "qsvgiconengine.h"
 
-#ifndef QT_NO_SVGRENDERER
-
 #include "qpainter.h"
 #include "qpixmap.h"
 #include "qsvgrenderer.h"
@@ -264,5 +262,3 @@ bool QSvgIconEngine::write(QDataStream &out) const
 }
 
 QT_END_NAMESPACE
-
-#endif // QT_NO_SVGRENDERER

@@ -21,9 +21,6 @@
 
 #include "qimageiohandler.h"
 #include "qstringlist.h"
-
-#if !defined(QT_NO_SVGRENDERER)
-
 #include "qsvgiohandler.h"
 #include "qiodevice.h"
 #include "qbytearray.h"
@@ -71,5 +68,3 @@ QImageIOHandler *QSvgPlugin::create(QIODevice *device, const QByteArray &format)
 Q_EXPORT_PLUGIN2(qsvg, QSvgPlugin)
 
 QT_END_NAMESPACE
-
-#endif // !QT_NO_SVGRENDERER

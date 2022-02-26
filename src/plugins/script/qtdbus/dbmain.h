@@ -31,8 +31,6 @@
 #include <QtScript/qscriptable.h>
 #include <QtScript/qscriptengine.h>
 
-#ifndef QT_NO_DBUS
-
 QT_USE_NAMESPACE
 
 class QDBusConnectionConstructor : public QObject,
@@ -162,5 +160,4 @@ private:
     QScriptValue proto;
 };
 
-#endif // QT_NO_DBUS
 #endif // QDBUSBINDING_H

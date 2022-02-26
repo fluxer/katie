@@ -25,8 +25,6 @@
 #include <QtGui/qiconengine.h>
 #include <QtCore/qshareddata.h>
 
-#ifndef QT_NO_SVG
-
 QT_BEGIN_NAMESPACE
 
 class QSvgIconEnginePrivate;
@@ -60,5 +58,4 @@ private:
 
 QT_END_NAMESPACE
 
-#endif // QT_NO_SVG
-#endif
+#endif // QSVGICONENGINE_H

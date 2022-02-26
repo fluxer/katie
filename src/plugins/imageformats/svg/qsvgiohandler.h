@@ -24,8 +24,6 @@
 
 #include <QtGui/qimageiohandler.h>
 
-#ifndef QT_NO_SVGRENDERER
-
 QT_BEGIN_NAMESPACE
 
 class QImage;
@@ -53,5 +51,4 @@ private:
 
 QT_END_NAMESPACE
 
-#endif // QT_NO_SVGRENDERER
 #endif // QSVGIOHANDLER_H

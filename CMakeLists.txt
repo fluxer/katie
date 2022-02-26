@@ -393,15 +393,13 @@ foreach(script exec dbus xvfb dbg)
 endforeach()
 
 # optional packages
-if(NOT WITH_FONTCONFIG OR NOT FONTCONFIG_FOUND)
-    katie_config(QT_NO_FONTCONFIG)
-endif()
-
-if(NOT WITH_DBUS OR NOT DBUS_FOUND)
-    katie_config(QT_NO_DBUS)
-else()
+if(WITH_DBUS AND DBUS_FOUND)
     set(KATIE_COMPONENTS "${KATIE_COMPONENTS} DBus")
     set(KATIE_TOOLS "${KATIE_TOOLS} qdbus qdbusxml2cpp qdbuscpp2xml qdbusviewer")
+endif()
+
+if(NOT WITH_FONTCONFIG OR NOT FONTCONFIG_FOUND)
+    katie_config(QT_NO_FONTCONFIG)
 endif()
 
 if(NOT WITH_CUPS OR NOT CUPS_FOUND)

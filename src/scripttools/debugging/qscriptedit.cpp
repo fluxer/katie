@@ -303,15 +303,7 @@ void QScriptEdit::extraAreaPaintEvent(QPaintEvent *e)
     qreal top = blockBoundingGeometry(block).translated(contentOffset()).top();
     qreal bottom = top + blockBoundingRect(block).height();
 
-    QString imagesPath = QString::fromLatin1(":/qt/scripttools/debugging/images");
-    QString imageExt;
-// SVGs don't work on all platforms, even when QT_NO_SVG is not defined, so disable SVG usage for now.
-// #ifndef QT_NO_SVG
-#if 0
-    imageExt = QString::fromLatin1("svg");
-#else
-    imageExt = QString::fromLatin1("png");
-#endif
+    static QString imagesPath = QString::fromLatin1(":/qt/scripttools/debugging/images");
 
     while (block.isValid() && top <= rect.bottom()) {
         if (block.isVisible() && bottom >= rect.top()) {
@@ -321,14 +313,14 @@ void QScriptEdit::extraAreaPaintEvent(QPaintEvent *e)
                 int radius = fm.lineSpacing() - 1;
                 QRect r(rect.x(), (int)top, radius, radius);
                 QIcon icon(m_breakpoints[lineNumber].enabled
-                           ? QString::fromLatin1("%0/breakpoint.%1").arg(imagesPath).arg(imageExt)
-                           : QString::fromLatin1("%0/d_breakpoint.%1").arg(imagesPath).arg(imageExt));
+                           ? QString::fromLatin1("%1/breakpoint.png").arg(imagesPath))
+                           : QString::fromLatin1("%1/d_breakpoint.png").arg(imagesPath));
                 icon.paint(&painter, r, Qt::AlignCenter);
             }
             if (m_executionLineNumber == lineNumber) {
                 int radius = fm.lineSpacing() - 1;
                 QRect r(rect.x(), (int)top, radius, radius);
-                QIcon icon(QString::fromLatin1("%0/location.%1").arg(imagesPath).arg(imageExt));
+                QIcon icon(QString::fromLatin1("%1/location.png").arg(imagesPath));
                 icon.paint(&painter, r, Qt::AlignCenter);
             }
 

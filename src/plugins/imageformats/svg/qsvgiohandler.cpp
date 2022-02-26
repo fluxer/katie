@@ -20,9 +20,6 @@
 ****************************************************************************/
 
 #include "qsvgiohandler.h"
-
-#ifndef QT_NO_SVGRENDERER
-
 #include "qsvgrenderer.h"
 #include "qimage.h"
 #include "qpixmap.h"
@@ -228,5 +225,3 @@ bool QSvgIOHandler::canRead(QIODevice *device)
 }
 
 QT_END_NAMESPACE
-
-#endif // QT_NO_SVGRENDERER
