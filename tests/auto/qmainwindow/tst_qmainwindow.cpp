@@ -1429,7 +1429,7 @@ void tst_QMainWindow::restoreStateDockWidgetBug()
 {
     QByteArray state;
 
-    //save state
+    // save state
     {
         QMainWindow mw1;
         QDockWidget *dw1 = new  QDockWidget();
@@ -1444,14 +1444,16 @@ void tst_QMainWindow::restoreStateDockWidgetBug()
         state = mw1.saveState();
     }
 
-    //restore state
+    // restore state
     QMainWindow mw2;
     QDockWidget *dw2 = new  QDockWidget();
     dw2->setObjectName("Left DockWidget");
     mw2.addDockWidget(Qt::LeftDockWidgetArea, dw2);
     mw2.setCentralWidget(new QTextEdit());
     mw2.restoreState(state);
+#ifndef QT_NO_STYLE_STYLESHEET
     mw2.setStyleSheet("color:red");
+#endif // QT_NO_STYLE_STYLESHEET
     mw2.show();
     QApplication::processEvents();
 
@@ -1936,7 +1938,7 @@ void tst_QMainWindow::QTBUG2774_stylechange()
     QVERIFY( mw.isSeparator(QPoint(4, dockw->pos().y() + dockw->size().height())));
     QVERIFY(!mw.isSeparator(QPoint(4, dockw->pos().y() + dockw->size().height() + 30)));
 
-
+#ifndef QT_NO_STYLE_STYLESHEET
     {
         QTest::qWait(1000);
         mw.setStyleSheet("QMainWindow::separator {  width: 50px; height:50px; }");
@@ -1954,6 +1956,7 @@ void tst_QMainWindow::QTBUG2774_stylechange()
         QVERIFY(!mw.isSeparator(QPoint(4, dockw->pos().y() + dockw->size().height())));
         QVERIFY(!mw.isSeparator(QPoint(4, dockw->pos().y() + dockw->size().height() + 1)));
     }
+#endif // QT_NO_STYLE_STYLESHEET
 }
 
 void tst_QMainWindow::QTBUG21378_animationFinished()

@@ -23,6 +23,8 @@
 #include <QtGui>
 #include <qtest.h>
 
+#ifndef QT_NO_STYLE_STYLESHEET
+
 class tst_qstylesheetstyle : public QObject
 {
     Q_OBJECT
@@ -172,3 +174,9 @@ void tst_qstylesheetstyle::grid()
 QTEST_MAIN(tst_qstylesheetstyle)
 
 #include "moc_main.cpp"
+
+#else // QT_NO_STYLE_STYLESHEET
+
+QTEST_NOOP_MAIN
+
+#endif // QT_NO_STYLE_STYLESHEET
