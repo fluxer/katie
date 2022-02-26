@@ -114,9 +114,11 @@ QDeclarativeValueType *QDeclarativeValueTypeFactory::valueType(int t)
     case QVariant::Vector4D:
         rv = new QDeclarativeVector4DValueType;
         break;
+#ifndef QT_NO_QUATERNION
     case QVariant::Quaternion:
         rv = new QDeclarativeQuaternionValueType;
         break;
+#endif // QT_NO_QUATERNION
     case QVariant::Matrix4x4:
         rv = new QDeclarativeMatrix4x4ValueType;
         break;
@@ -641,6 +643,7 @@ void QDeclarativeVector4DValueType::setW(qreal w)
     vector.setW(w);
 }
 
+#ifndef QT_NO_QUATERNION
 QDeclarativeQuaternionValueType::QDeclarativeQuaternionValueType(QObject *parent)
 : QDeclarativeValueType(parent)
 {
@@ -708,6 +711,7 @@ void QDeclarativeQuaternionValueType::setZ(qreal z)
 {
     quaternion.setZ(z);
 }
+#endif // QT_NO_QUATERNION
 
 QDeclarativeMatrix4x4ValueType::QDeclarativeMatrix4x4ValueType(QObject *parent)
 : QDeclarativeValueType(parent)

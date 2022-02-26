@@ -301,6 +301,7 @@ private:
     QVector4D vector;
 };
 
+#ifndef QT_NO_QUATERNION
 class Q_AUTOTEST_EXPORT QDeclarativeQuaternionValueType : public QDeclarativeValueType
 {
     Q_PROPERTY(qreal scalar READ scalar WRITE setScalar)
@@ -328,6 +329,7 @@ public:
 private:
     QQuaternion quaternion;
 };
+#endif // QT_NO_QUATERNION
 
 class Q_AUTOTEST_EXPORT QDeclarativeMatrix4x4ValueType : public QDeclarativeValueType
 {

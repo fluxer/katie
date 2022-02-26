@@ -1095,7 +1095,9 @@ bool QDeclarativeMetaType::canCopy(int type)
     case QMetaType::QMatrix4x4:
     case QMetaType::QVector2D:
     case QMetaType::QVector4D:
+#ifndef QT_NO_QUATERNION
     case QMetaType::QQuaternion:
+#endif
         return true;
 
     default:
@@ -1304,9 +1306,11 @@ bool QDeclarativeMetaType::copy(int type, void *data, const void *copy)
         case QMetaType::QVector4D:
             *static_cast<NS(QVector4D) *>(data) = *static_cast<const NS(QVector4D)*>(copy);
             return true;
+#ifndef QT_NO_QUATERNION
         case QMetaType::QQuaternion:
             *static_cast<NS(QQuaternion) *>(data) = *static_cast<const NS(QQuaternion)*>(copy);
             return true;
+#endif // QT_NO_QUATERNION
 
         default:
             if (type == qMetaTypeId<QVariant>()) {
@@ -1505,9 +1509,11 @@ bool QDeclarativeMetaType::copy(int type, void *data, const void *copy)
         case QMetaType::QVector4D:
             *static_cast<NS(QVector4D) *>(data) = NS(QVector4D)();
             return true;
+#ifndef QT_NO_QUATERNION
         case QMetaType::QQuaternion:
             *static_cast<NS(QQuaternion) *>(data) = NS(QQuaternion)();
             return true;
+#endif // QT_NO_QUATERNION
         default:
             if (type == qMetaTypeId<QVariant>()) {
                 *static_cast<NS(QVariant) *>(data) = NS(QVariant)();

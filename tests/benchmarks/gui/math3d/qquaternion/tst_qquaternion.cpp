@@ -22,7 +22,9 @@
 #include <qtest.h>
 #include <QQuaternion>
 
-//TESTED_FILES=
+#ifndef QT_NO_QUATERNION
+
+// TESTED_FILES=
 
 class tst_QQuaternion : public QObject
 {
@@ -104,3 +106,9 @@ void tst_QQuaternion::multiply()
 QTEST_MAIN(tst_QQuaternion)
 
 #include "moc_tst_qquaternion.cpp"
+
+#else // QT_NO_QUATERNION
+
+QTEST_NOOP_MAIN
+
+#endif // QT_NO_QUATERNION

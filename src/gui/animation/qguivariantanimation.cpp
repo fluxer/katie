@@ -39,10 +39,12 @@ template<> Q_INLINE_TEMPLATE QColor _q_interpolate(const QColor &f,const QColor 
                   qBound(0,_q_interpolate(f.alpha(), t.alpha(), progress),255));
 }
 
+#ifndef QT_NO_QUATERNION
 template<> Q_INLINE_TEMPLATE QQuaternion _q_interpolate(const QQuaternion &f,const QQuaternion &t, qreal progress)
 {
     return QQuaternion::slerp(f, t, progress);
 }
+#endif // QT_NO_QUATERNION
 
 static int qRegisterGuiGetInterpolator()
 {
@@ -50,7 +52,9 @@ static int qRegisterGuiGetInterpolator()
     qRegisterAnimationInterpolator<QVector2D>(_q_interpolateVariant<QVector2D>);
     qRegisterAnimationInterpolator<QVector3D>(_q_interpolateVariant<QVector3D>);
     qRegisterAnimationInterpolator<QVector4D>(_q_interpolateVariant<QVector4D>);
+#ifndef QT_NO_QUATERNION
     qRegisterAnimationInterpolator<QQuaternion>(_q_interpolateVariant<QQuaternion>);
+#endif // QT_NO_QUATERNION
     return 1;
 }
 Q_CONSTRUCTOR_FUNCTION(qRegisterGuiGetInterpolator)
@@ -66,8 +70,10 @@ static int qUnregisterGuiGetInterpolator()
         (QVariant (*)(const QVector3D &, const QVector3D &, qreal))0);
     qRegisterAnimationInterpolator<QVector4D>(
         (QVariant (*)(const QVector4D &, const QVector4D &, qreal))0);
+#ifndef QT_NO_QUATERNION
     qRegisterAnimationInterpolator<QQuaternion>(
         (QVariant (*)(const QQuaternion &, const QQuaternion &, qreal))0);
+#endif // QT_NO_QUATERNION
 
     return 1;
 }

@@ -23,6 +23,8 @@
 #include <QtCore/qmath.h>
 #include <QtGui/qquaternion.h>
 
+#ifndef QT_NO_QUATERNION
+
 class tst_QQuaternion : public QObject
 {
     Q_OBJECT
@@ -866,3 +868,9 @@ void tst_QQuaternion::metaTypes()
 QTEST_APPLESS_MAIN(tst_QQuaternion)
 
 #include "moc_tst_qquaternion.cpp"
+
+#else QT_NO_QUATERNION
+
+QTEST_NOOP_MAIN
+
+#endif // QT_NO_QUATERNION

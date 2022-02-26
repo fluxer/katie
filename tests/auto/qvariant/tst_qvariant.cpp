@@ -1353,6 +1353,7 @@ void tst_QVariant::vector4D()
 
 void tst_QVariant::quaternion()
 {
+#ifndef QT_NO_QUATERNION
     QVariant variant;
     QQuaternion quaternion = qvariant_cast<QQuaternion>(variant);
     QVERIFY(quaternion.isIdentity());
@@ -1362,6 +1363,9 @@ void tst_QVariant::quaternion()
     void *pquaternion = QMetaType::construct(QVariant::Quaternion, 0);
     QVERIFY(pquaternion);
     QMetaType::destroy(QVariant::Quaternion, pquaternion);
+#else // QT_NO_QUATERNION
+    QSKIP("Katie compiled without quaternion support (QT_NO_QUATERNION)", SkipAll);
+#endif // QT_NO_QUATERNION
 }
 
 void tst_QVariant::writeToReadFromDataStream_data()
