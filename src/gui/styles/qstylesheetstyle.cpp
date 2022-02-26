@@ -3826,6 +3826,7 @@ void QStyleSheetStyle::drawControl(ControlElement ce, const QStyleOption *opt, Q
         }
         break;
 
+#ifndef QT_NO_SIZEGRIP
     case CE_SizeGrip:
         if (const QStyleOptionSizeGrip *sgOpt = qstyleoption_cast<const QStyleOptionSizeGrip *>(opt)) {
             if (rule.hasDrawable()) {
@@ -3848,6 +3849,7 @@ void QStyleSheetStyle::drawControl(ControlElement ce, const QStyleOption *opt, Q
             return;
         }
         break;
+#endif // QT_NO_SIZEGRIP
 
     case CE_ToolBoxTab:
         QWindowsStyle::drawControl(ce, opt, p, w);

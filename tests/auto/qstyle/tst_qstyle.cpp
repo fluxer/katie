@@ -229,8 +229,10 @@ void tst_QStyle::testAllFunctions(QStyle *style)
 
         QStyleOptionGroupBox copt2;
         copt2.init(testWidget);
+#ifndef QT_NO_SIZEGRIP
         QStyleOptionSizeGrip copt3;
         copt3.init(testWidget);
+#endif // QT_NO_SIZEGRIP
         QStyleOptionSlider copt4;
         copt4.init(testWidget);
         copt4.minimum = 0;
