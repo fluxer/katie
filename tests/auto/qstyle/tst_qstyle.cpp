@@ -144,6 +144,7 @@ void tst_QStyle::testStyleFactory()
     }
 }
 
+#ifndef QT_NO_STYLE_PROXY
 class CustomProxy : public QProxyStyle
 {
     virtual int pixelMetric(PixelMetric metric, const QStyleOption *option = 0,
@@ -154,9 +155,11 @@ class CustomProxy : public QProxyStyle
         return QProxyStyle::pixelMetric(metric, option, widget);
     }
 };
+#endif // QT_NO_STYLE_PROXY
 
 void tst_QStyle::testProxyStyle()
 {
+#ifndef QT_NO_STYLE_PROXY
     QProxyStyle *proxyStyle = new QProxyStyle();
     QVERIFY(proxyStyle->baseStyle());
     QStyle *style = new QWindowsStyle;
@@ -180,6 +183,9 @@ void tst_QStyle::testProxyStyle()
     edit.setStyle(&customStyle);
     QVERIFY(!customStyle.parent());
     QVERIFY(edit.style()->pixelMetric(QStyle::PM_ButtonIconSize) == 13);
+#else // QT_NO_STYLE_PROXY
+    QSKIP("Katie compiled without style proxy support (QT_NO_STYLE_PROXY)", SkipAll);
+#endif // QT_NO_STYLE_PROXY
 }
 
 void tst_QStyle::drawItemPixmap()
@@ -466,6 +472,7 @@ void tst_QStyle::defaultFont()
     qApp->setFont(defaultFont);
 }
 
+#ifndef QT_NO_STYLE_PROXY
 class DrawTextStyle : public QProxyStyle
 {
     Q_OBJECT
@@ -481,9 +488,11 @@ public:
     }
     int alignment;
 };
+#endif // QT_NO_STYLE_PROXY
 
 void tst_QStyle::testDrawingShortcuts()
 {
+#ifndef QT_NO_STYLE_PROXY
     {   
         QWidget w;
         setFrameless(&w);
@@ -514,7 +523,10 @@ void tst_QStyle::testDrawingShortcuts()
         bool showMnemonic = dts->styleHint(QStyle::SH_UnderlineShortcut, &sotb, tb);
         QVERIFY(dts->alignment & (showMnemonic ? Qt::TextShowMnemonic : Qt::TextHideMnemonic));
         delete dts;
-     }   
+    }
+#else // QT_NO_STYLE_PROXY
+    QSKIP("Katie compiled without style proxy support (QT_NO_STYLE_PROXY)", SkipAll);
+#endif // QT_NO_STYLE_PROXY
 }
 
 QTEST_MAIN(tst_QStyle)

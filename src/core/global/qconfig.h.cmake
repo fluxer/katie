@@ -141,6 +141,7 @@
 // #cmakedefine QT_NO_STACKEDWIDGET
 // #cmakedefine QT_NO_STANDARDITEMMODEL
 // #cmakedefine QT_NO_STATUSBAR
+// #cmakedefine QT_NO_STATUSTIP
 
 // Misc
 #cmakedefine QT_NO_USING_NAMESPACE
@@ -184,7 +185,6 @@
 #cmakedefine QT_NO_SHAREDMEMORY
 #cmakedefine QT_NO_SIZEGRIP
 #cmakedefine QT_NO_SPLASHSCREEN
-#cmakedefine QT_NO_STATUSTIP
 #cmakedefine QT_NO_STRINGLISTMODEL
 #cmakedefine QT_NO_STYLE_CLEANLOOKS
 #cmakedefine QT_NO_STYLE_PROXY
