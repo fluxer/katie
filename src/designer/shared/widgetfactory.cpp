@@ -648,10 +648,12 @@ void WidgetFactory::initialize(QObject *object) const
         cb->installEventFilter(new ComboEventFilter(cb));
         return;
     }
+#ifndef QT_NO_WIZARD
     if (QWizard *wz = qobject_cast<QWizard *>(widget)) {
         WizardPageChangeWatcher *pw = new WizardPageChangeWatcher(wz);
         Q_UNUSED(pw);
     }
+#endif // QT_NO_WIZARD
 }
 
 static inline QString classNameOfStyle(const QStyle *s)

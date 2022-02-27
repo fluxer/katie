@@ -161,6 +161,7 @@
 // #cmakedefine QT_NO_VALIDATOR
 // #cmakedefine QT_NO_VECTOR4D
 // #cmakedefine QT_NO_WARNING_OUTPUT
+// #cmakedefine QT_NO_WIZARD
 
 // Misc
 #cmakedefine QT_NO_USING_NAMESPACE
@@ -219,7 +220,6 @@
 #cmakedefine QT_NO_VECTOR2D
 #cmakedefine QT_NO_WHATSTHIS
 #cmakedefine QT_NO_WHEELEVENT
-#cmakedefine QT_NO_WIZARD
 #cmakedefine QT_NO_WORKSPACE
 #cmakedefine QT_NO_XMLSTREAM
 #cmakedefine QT_NO_XMLSTREAMREADER
