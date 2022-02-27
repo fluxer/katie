@@ -186,6 +186,7 @@
 #cmakedefine QT_NO_FSCOMPLETER
 #cmakedefine QT_NO_GRAPHICSEFFECT
 #cmakedefine QT_NO_IDENTITYPROXYMODEL
+#cmakedefine QT_NO_IMAGEFORMAT_KAT
 #cmakedefine QT_NO_IMAGEFORMAT_PPM
 #cmakedefine QT_NO_IMAGE_HEURISTIC_MASK
 #cmakedefine QT_NO_IPV6

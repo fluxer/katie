@@ -308,6 +308,7 @@ set(GUI_HEADERS
     ${CMAKE_CURRENT_SOURCE_DIR}/image/qppmhandler_p.h
     ${CMAKE_CURRENT_SOURCE_DIR}/image/qxpmhandler_p.h
     ${CMAKE_CURRENT_SOURCE_DIR}/image/qpnghandler_p.h
+    ${CMAKE_CURRENT_SOURCE_DIR}/image/qkathandler_p.h
     ${CMAKE_CURRENT_SOURCE_DIR}/itemviews/qabstractitemview.h
     ${CMAKE_CURRENT_SOURCE_DIR}/itemviews/qabstractitemview_p.h
     ${CMAKE_CURRENT_SOURCE_DIR}/itemviews/qheaderview.h
@@ -668,6 +669,7 @@ set(GUI_SOURCES
     ${CMAKE_CURRENT_SOURCE_DIR}/image/qppmhandler.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/image/qxpmhandler.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/image/qpnghandler.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/image/qkathandler.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/itemviews/qabstractitemview.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/itemviews/qheaderview.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/itemviews/qidentityproxymodel.cpp
@@ -918,6 +920,33 @@ if(WITH_FONTCONFIG AND FONTCONFIG_FOUND)
     )
     include_directories(${FONTCONFIG_INCLUDES})
     add_definitions(${FONTCONFIG_DEFINITIONS})
+endif()
+
+if(WITH_DEFLATE AND DEFLATE_FOUND)
+    set(EXTRA_GUI_LIBS
+        ${EXTRA_GUI_LIBS}
+        ${DEFLATE_LIBRARIES}
+    )
+    include_directories(${DEFLATE_INCLUDES})
+else()
+    set(GUI_SOURCES
+        ${GUI_SOURCES}
+        # common files
+        ${CMAKE_SOURCE_DIR}/src/3rdparty/libdeflate/lib/deflate_decompress.c
+        ${CMAKE_SOURCE_DIR}/src/3rdparty/libdeflate/lib/deflate_compress.c
+        ${CMAKE_SOURCE_DIR}/src/3rdparty/libdeflate/lib/utils.c
+        ${CMAKE_SOURCE_DIR}/src/3rdparty/libdeflate/lib/arm/cpu_features.c
+        ${CMAKE_SOURCE_DIR}/src/3rdparty/libdeflate/lib/x86/cpu_features.c
+        # zlib wrapper files
+        ${CMAKE_SOURCE_DIR}/src/3rdparty/libdeflate/lib/adler32.c
+        ${CMAKE_SOURCE_DIR}/src/3rdparty/libdeflate/lib/zlib_decompress.c
+        ${CMAKE_SOURCE_DIR}/src/3rdparty/libdeflate/lib/zlib_compress.c
+        # gzip wrapper files
+        ${CMAKE_SOURCE_DIR}/src/3rdparty/libdeflate/lib/crc32.c
+        ${CMAKE_SOURCE_DIR}/src/3rdparty/libdeflate/lib/gzip_decompress.c
+        ${CMAKE_SOURCE_DIR}/src/3rdparty/libdeflate/lib/gzip_compress.c
+    )
+    include_directories(${CMAKE_SOURCE_DIR}/src/3rdparty/libdeflate)
 endif()
 
 # anything that includes qt_x11_p.h is known to break unity build

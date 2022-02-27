@@ -88,6 +88,7 @@
 
 // image handlers
 #include "qppmhandler_p.h"
+#include "qkathandler_p.h"
 #include "qpnghandler_p.h"
 
 QT_BEGIN_NAMESPACE
@@ -100,10 +101,14 @@ static QImageIOHandler *createWriteHandlerHelper(QIODevice *device,
 
     // check if any built-in handlers can write the image
     if (form == "png") {
-        handler = new QPngHandler;
+        handler = new QPngHandler();
+#ifndef QT_NO_IMAGEFORMAT_KAT
+    } else if (form == "kat") {
+        handler = new QKatHandler();
+#endif
 #ifndef QT_NO_IMAGEFORMAT_PPM
     } else if (form == "pbm" || form == "pbmraw" || form == "ppm" || form == "ppmraw") {
-        handler = new QPpmHandler;
+        handler = new QPpmHandler();
         handler->setOption(QImageIOHandler::SubType, form);
 #endif
     }
@@ -491,6 +496,7 @@ bool QImageWriter::supportsOption(QImageIOHandler::ImageOption option) const
     \table
     \header \o Format \o Description
     \row    \o PNG    \o Portable Network Graphics
+    \row    \o KAT    \o Katie Image
     \row    \o PPM    \o Portable Pixmap
     \endtable
 
@@ -506,6 +512,9 @@ QList<QByteArray> QImageWriter::supportedImageFormats()
 {
     QList<QByteArray> formats;
     formats << "png";
+#ifndef QT_NO_IMAGEFORMAT_KAT
+    formats << "kat";
+#endif
 #ifndef QT_NO_IMAGEFORMAT_PPM
     formats << "ppm";
 #endif

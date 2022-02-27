@@ -1333,8 +1333,9 @@ QPixmap QPixmap::transformed(const QMatrix &matrix, Qt::TransformationMode mode)
     formats:
 
     \table
-    \header \o Format \o Description                      \o Qt's support
+    \header \o Format \o Description                      \o Katie's support
     \row    \o PNG    \o Portable Network Graphics        \o Read/write
+    \row    \o KAT    \o Katie Image                      \o Read/write
     \row    \o PBM    \o Portable Bitmap                  \o Read
     \row    \o PPM    \o Portable Pixmap                  \o Read/write
     \row    \o XPM    \o X11 Pixmap                       \o Read/write

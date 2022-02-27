@@ -113,6 +113,7 @@
 // image handlers
 #include "qppmhandler_p.h"
 #include "qxpmhandler_p.h"
+#include "qkathandler_p.h"
 #include "qpnghandler_p.h"
 
 QT_BEGIN_NAMESPACE
@@ -129,14 +130,18 @@ static QImageIOHandler *createReadHandlerHelper(QIODevice *device,
 
     // check if we have built-in support for the format first
     if (form == "png") {
-        handler = new QPngHandler;
+        handler = new QPngHandler();
+#ifndef QT_NO_IMAGEFORMAT_KAT
+    } else if (form == "kat") {
+        handler = new QKatHandler();
+#endif
 #ifndef QT_NO_IMAGEFORMAT_XPM
     } else if (form == "xpm") {
-        handler = new QXpmHandler;
+        handler = new QXpmHandler();
 #endif
 #ifndef QT_NO_IMAGEFORMAT_PPM
     } else if (form == "pbm" || form == "pbmraw" || form == "ppm" || form == "ppmraw") {
-        handler = new QPpmHandler;
+        handler = new QPpmHandler();
         handler->setOption(QImageIOHandler::SubType, form);
 #endif
     }
@@ -156,17 +161,22 @@ static QImageIOHandler *createReadHandlerHelper(QIODevice *device,
 #endif
     if (device && autoDetectImageFormat) {
         if (QPngHandler::canRead(device)) {
-            handler = new QPngHandler;
+            handler = new QPngHandler();
         }
+#ifndef QT_NO_IMAGEFORMAT_KAT
+        if (!handler && QKatHandler::canRead(device)) {
+            handler = new QKatHandler();
+        }
+#endif
 #ifndef QT_NO_IMAGEFORMAT_XPM
         if (!handler && QXpmHandler::canRead(device)) {
-            handler = new QXpmHandler;
+            handler = new QXpmHandler();
         }
 #endif
 #ifndef QT_NO_IMAGEFORMAT_PPM
         QByteArray subType;
         if (!handler && QPpmHandler::canRead(device, &subType)) {
-            handler = new QPpmHandler;
+            handler = new QPpmHandler();
             handler->setOption(QImageIOHandler::SubType, subType);
         }
 #endif
@@ -870,6 +880,7 @@ QByteArray QImageReader::imageFormat(QIODevice *device)
     \table
     \header \o Format \o Description
     \row    \o PNG    \o Portable Network Graphics
+    \row    \o KAT    \o Katie Image
     \row    \o PBM    \o Portable Bitmap
     \row    \o PPM    \o Portable Pixmap
     \row    \o XPM    \o X11 Pixmap
@@ -888,6 +899,9 @@ QList<QByteArray> QImageReader::supportedImageFormats()
 {
     QList<QByteArray> formats = QList<QByteArray>()
         << "png"
+#ifndef QT_NO_IMAGEFORMAT_KAT
+        << "kat"
+#endif
 #ifndef QT_NO_IMAGEFORMAT_PPM
         << "ppm" << "pbm"
 #endif

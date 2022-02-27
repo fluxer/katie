@@ -48,7 +48,8 @@ There are several things you should be aware before considering Katie:
   - dropped bitmap fonts support
   - dropped accessibility support
 
- - some additions have been made: 
+ - some additions have been made:
+  - custom image format
   - JSON document handler
   - standard directories handler
   - building with LTO is possible and supported, if the toolchain can handle it
