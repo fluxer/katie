@@ -300,15 +300,13 @@ QVariant QInternalMimeData::retrieveData(const QString &mimeType, QVariant::Type
             data = QImage::fromData(data.toByteArray());
 
     } else if (mimeType == QLatin1String("application/x-color") && data.type() == QVariant::ByteArray) {
-        QColor c;
         QByteArray ba = data.toByteArray();
         if (ba.size() == 8) {
             ushort * colBuf = (ushort *)ba.data();
-            c.setRgbF(qreal(colBuf[0]) / qreal(0xFFFF),
-                      qreal(colBuf[1]) / qreal(0xFFFF),
-                      qreal(colBuf[2]) / qreal(0xFFFF),
-                      qreal(colBuf[3]) / qreal(0xFFFF));
-            data = c;
+            data = QColor::fromRgbF(qreal(colBuf[0]) / qreal(0xFFFF),
+                                    qreal(colBuf[1]) / qreal(0xFFFF),
+                                    qreal(colBuf[2]) / qreal(0xFFFF),
+                                    qreal(colBuf[3]) / qreal(0xFFFF));
         } else {
             qWarning("Qt: Invalid color format");
         }
