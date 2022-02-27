@@ -21,6 +21,7 @@
 
 #include "qpnghandler_p.h"
 #include "qiodevice.h"
+#include "qvariant.h"
 #include "qimage.h"
 #include "qimage_p.h"
 #include "qdrawhelper_p.h"
@@ -82,6 +83,7 @@ static void qt_png_flush(png_structp /* png_ptr */)
 #endif
 
 QPngHandler::QPngHandler()
+    : m_compression(1)
 {
 }
 
@@ -238,6 +240,7 @@ bool QPngHandler::write(const QImage &image)
     sig_bit.blue = 8;
     sig_bit.alpha = copy.hasAlphaChannel() ? 8 : 0;
     png_set_sBIT(png_ptr, info_ptr, &sig_bit);
+    png_set_compression_level(png_ptr, m_compression);
 
 #if Q_BYTE_ORDER == Q_BIG_ENDIAN
     // Swap ARGB to RGBA (normal PNG format) before saving on
@@ -275,6 +278,24 @@ bool QPngHandler::write(const QImage &image)
     delete [] row_pointers;
 
     return true;
+}
+
+bool QPngHandler::supportsOption(QImageIOHandler::ImageOption option) const
+{
+    return (option == QImageIOHandler::CompressionLevel);
+}
+
+void QPngHandler::setOption(QImageIOHandler::ImageOption option, const QVariant &value)
+{
+    if (option == QImageIOHandler::CompressionLevel) {
+        const int newlevel = value.toInt();
+        if (Q_UNLIKELY(newlevel < 0 || newlevel > 9)) {
+            qWarning("QPngHandler::setOption() invalid compression level value");
+            m_compression = 1;
+        } else {
+            m_compression = newlevel;
+        }
+    }
 }
 
 QByteArray QPngHandler::name() const
