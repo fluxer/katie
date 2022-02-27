@@ -923,20 +923,6 @@ bool QXpmHandler::canRead() const
     return false;
 }
 
-bool QXpmHandler::canRead(QIODevice *device)
-{
-    if (Q_UNLIKELY(!device)) {
-        qWarning("QXpmHandler::canRead() called with no device");
-        return false;
-    }
-
-    QSTACKARRAY(char, head, 6);
-    if (device->peek(head, sizeof(head)) != sizeof(head))
-        return false;
-
-    return qstrncmp(head, "/* XPM", 6) == 0;
-}
-
 bool QXpmHandler::read(QImage *image)
 {
     if (!canRead())
@@ -959,9 +945,40 @@ bool QXpmHandler::read(QImage *image)
     return true;
 }
 
+bool QXpmHandler::supportsOption(QImageIOHandler::ImageOption option) const
+{
+    return (option == QImageIOHandler::Size);
+}
+
+QVariant QXpmHandler::option(QImageIOHandler::ImageOption option) const
+{
+    if (option == QImageIOHandler::Size) {
+        if (state == Error)
+            return QVariant();
+        if (state == Ready && !const_cast<QXpmHandler*>(this)->readHeader())
+            return QVariant();
+        return QSize(width, height);
+    }
+    return QVariant();
+}
+
 QByteArray QXpmHandler::name() const
 {
     return "xpm";
+}
+
+bool QXpmHandler::canRead(QIODevice *device)
+{
+    if (Q_UNLIKELY(!device)) {
+        qWarning("QXpmHandler::canRead() called with no device");
+        return false;
+    }
+
+    QSTACKARRAY(char, head, 6);
+    if (device->peek(head, sizeof(head)) != sizeof(head))
+        return false;
+
+    return qstrncmp(head, "/* XPM", 6) == 0;
 }
 
 QT_END_NAMESPACE

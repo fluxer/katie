@@ -43,11 +43,11 @@ public:
     QPngHandler();
     ~QPngHandler();
 
-    bool canRead() const;
-    bool read(QImage *image);
-    bool write(const QImage &image);
+    bool canRead() const final;
+    bool read(QImage *image) final;
+    bool write(const QImage &image) final;
 
-    QByteArray name() const;
+    QByteArray name() const final;
 
     static bool canRead(QIODevice *device);
 };

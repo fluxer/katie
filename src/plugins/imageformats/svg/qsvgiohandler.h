@@ -37,13 +37,17 @@ class QSvgIOHandler : public QImageIOHandler
 public:
     QSvgIOHandler();
     ~QSvgIOHandler();
-    virtual bool canRead() const;
-    virtual QByteArray name() const;
-    virtual bool read(QImage *image);
+
+    bool canRead() const final;
+    bool read(QImage *image) final;
+
+    QVariant option(QImageIOHandler::ImageOption option) const final;
+    void setOption(QImageIOHandler::ImageOption option, const QVariant & value) final;
+    bool supportsOption(QImageIOHandler::ImageOption option) const final;
+
+    QByteArray name() const final;
+
     static bool canRead(QIODevice *device);
-    virtual QVariant option(QImageIOHandler::ImageOption option) const;
-    virtual void setOption(QImageIOHandler::ImageOption option, const QVariant & value);
-    virtual bool supportsOption(QImageIOHandler::ImageOption option) const;
 
 private:
     QSvgIOHandlerPrivate *d;

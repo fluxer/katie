@@ -319,32 +319,6 @@ bool QPpmHandler::canRead() const
     return false;
 }
 
-bool QPpmHandler::canRead(QIODevice *device, QByteArray *subType)
-{
-    if (Q_UNLIKELY(!device)) {
-        qWarning("QPpmHandler::canRead() called with no device");
-        return false;
-    }
-
-    QSTACKARRAY(char, head, 2);
-    if (device->peek(head, sizeof(head)) != sizeof(head))
-        return false;
-
-    if (head[0] != 'P')
-        return false;
-
-    if (head[1] == '1' || head[1] == '4') {
-        if (subType)
-            *subType = "pbm";
-    } else if (head[1] == '3' || head[1] == '6') {
-        if (subType)
-            *subType = "ppm";
-    } else {
-        return false;
-    }
-    return true;
-}
-
 bool QPpmHandler::read(QImage *image)
 {
     if (state == Error)
@@ -397,6 +371,32 @@ void QPpmHandler::setOption(QImageIOHandler::ImageOption option, const QVariant 
 QByteArray QPpmHandler::name() const
 {
     return subType.isEmpty() ? QByteArray("ppm") : subType;
+}
+
+bool QPpmHandler::canRead(QIODevice *device, QByteArray *subType)
+{
+    if (Q_UNLIKELY(!device)) {
+        qWarning("QPpmHandler::canRead() called with no device");
+        return false;
+    }
+
+    QSTACKARRAY(char, head, 2);
+    if (device->peek(head, sizeof(head)) != sizeof(head))
+        return false;
+
+    if (head[0] != 'P')
+        return false;
+
+    if (head[1] == '1' || head[1] == '4') {
+        if (subType)
+            *subType = "pbm";
+    } else if (head[1] == '3' || head[1] == '6') {
+        if (subType)
+            *subType = "ppm";
+    } else {
+        return false;
+    }
+    return true;
 }
 
 QT_END_NAMESPACE

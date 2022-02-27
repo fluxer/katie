@@ -42,12 +42,16 @@ class QXpmHandler : public QImageIOHandler
 {
 public:
     QXpmHandler();
-    bool canRead() const;
-    bool read(QImage *image);
+
+    bool canRead() const final;
+    bool read(QImage *image) final;
+
+    bool supportsOption(QImageIOHandler::ImageOption option) const final;
+    QVariant option(QImageIOHandler::ImageOption option) const final;
+
+    QByteArray name() const final;
 
     static bool canRead(QIODevice *device);
-
-    QByteArray name() const;
 
 private:
     bool readHeader();

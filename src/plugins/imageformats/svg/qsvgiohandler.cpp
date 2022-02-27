@@ -47,7 +47,6 @@ public:
     QColor           backColor;
 };
 
-
 bool QSvgIOHandlerPrivate::load(QIODevice *device)
 {
     if (loaded)
@@ -66,19 +65,16 @@ bool QSvgIOHandlerPrivate::load(QIODevice *device)
     return loaded;
 }
 
-
 QSvgIOHandler::QSvgIOHandler()
     : d(new QSvgIOHandlerPrivate(this))
 {
 
 }
 
-
 QSvgIOHandler::~QSvgIOHandler()
 {
     delete d;
 }
-
 
 bool QSvgIOHandler::canRead() const
 {
@@ -96,12 +92,6 @@ bool QSvgIOHandler::canRead() const
         return true;
     }
     return false;
-}
-
-
-QByteArray QSvgIOHandler::name() const
-{
-    return "svg";
 }
 
 bool QSvgIOHandler::read(QImage *image)
@@ -151,7 +141,6 @@ QVariant QSvgIOHandler::option(QImageIOHandler::ImageOption option) const
     return QVariant();
 }
 
-
 void QSvgIOHandler::setOption(QImageIOHandler::ImageOption option, const QVariant & value)
 {
     switch(option) {
@@ -179,6 +168,10 @@ bool QSvgIOHandler::supportsOption(QImageIOHandler::ImageOption option) const
     return false;
 }
 
+QByteArray QSvgIOHandler::name() const
+{
+    return "svg";
+}
 
 bool QSvgIOHandler::canRead(QIODevice *device)
 {
