@@ -80,6 +80,7 @@
 #include "qimageiohandler.h"
 #include "qset.h"
 #include "qvariant.h"
+#include "qfileinfo.h"
 
 // factory loader
 #include "qcoreapplication.h"
@@ -214,6 +215,10 @@ QImageWriter::QImageWriter(const QString &fileName, const QByteArray &format)
     d->device = file;
     d->deleteDevice = true;
     d->format = format;
+    if (d->format.isEmpty()) {
+        const QFileInfo formatinfo(fileName);
+        d->format = formatinfo.suffix().toLocal8Bit();
+    }
 }
 
 /*!
