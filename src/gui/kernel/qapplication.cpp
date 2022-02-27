@@ -337,8 +337,6 @@ int QApplicationPrivate::mouse_double_click_time = 400;        // mouse dbl clic
 int QApplicationPrivate::keyboard_input_time = 400; // keyboard input interval
 #ifndef QT_NO_WHEELEVENT
 int QApplicationPrivate::wheel_scroll_lines = 3;         // number of lines to scroll
-#else
-int QApplicationPrivate::wheel_scroll_lines = 0;
 #endif
 bool qt_in_tab_key_event = false;
 static int drag_time = 500;

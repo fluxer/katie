@@ -201,7 +201,12 @@ MainWindow::MainWindow()
 
     ui->doubleClickIntervalSpinBox->setValue(QApplication::doubleClickInterval());
     ui->cursorFlashTimeSpinBox->setValue(QApplication::cursorFlashTime());
+#ifndef QT_NO_WHEELEVENT
     ui->wheelScrollLinesSpinBox->setValue(QApplication::wheelScrollLines());
+#else // QT_NO_WHEELEVENT
+    ui->wheelScrollLinesLabel->hide();
+    ui->wheelScrollLinesSpinBox->hide();
+#endif // QT_NO_WHEELEVENT
     // #############
     // resolveLinksCheckBox->setChecked(qt_resolve_symlinks);
 
