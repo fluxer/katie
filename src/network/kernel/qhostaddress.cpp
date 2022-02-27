@@ -32,6 +32,7 @@
 #endif
 
 #include <arpa/inet.h>
+#include <netinet/in.h>
 
 QT_BEGIN_NAMESPACE
 
