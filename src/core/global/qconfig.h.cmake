@@ -157,6 +157,8 @@
 // #cmakedefine QT_NO_TREEVIEW
 // #cmakedefine QT_NO_TREEWIDGET
 // #cmakedefine QT_NO_UNDOCOMMAND
+// #cmakedefine QT_NO_UNDOSTACK
+// #cmakedefine QT_NO_VALIDATOR
 
 // Misc
 #cmakedefine QT_NO_USING_NAMESPACE
@@ -211,9 +213,7 @@
 #cmakedefine QT_NO_TEXTBROWSER
 #cmakedefine QT_NO_UDPSOCKET
 #cmakedefine QT_NO_UNDOGROUP
-#cmakedefine QT_NO_UNDOSTACK
 #cmakedefine QT_NO_UNDOVIEW
-#cmakedefine QT_NO_VALIDATOR
 #cmakedefine QT_NO_VECTOR2D
 #cmakedefine QT_NO_VECTOR4D
 #cmakedefine QT_NO_WARNING_OUTPUT

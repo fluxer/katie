@@ -49,9 +49,15 @@ template<> Q_INLINE_TEMPLATE QQuaternion _q_interpolate(const QQuaternion &f,con
 static int qRegisterGuiGetInterpolator()
 {
     qRegisterAnimationInterpolator<QColor>(_q_interpolateVariant<QColor>);
+#ifndef QT_NO_VECTOR2D
     qRegisterAnimationInterpolator<QVector2D>(_q_interpolateVariant<QVector2D>);
+#endif // QT_NO_VECTOR2D
+#ifndef QT_NO_VECTOR3D
     qRegisterAnimationInterpolator<QVector3D>(_q_interpolateVariant<QVector3D>);
+#endif // QT_NO_VECTOR3D
+#ifndef QT_NO_VECTOR4D
     qRegisterAnimationInterpolator<QVector4D>(_q_interpolateVariant<QVector4D>);
+#endif // QT_NO_VECTOR4D
 #ifndef QT_NO_QUATERNION
     qRegisterAnimationInterpolator<QQuaternion>(_q_interpolateVariant<QQuaternion>);
 #endif // QT_NO_QUATERNION
@@ -64,12 +70,18 @@ static int qUnregisterGuiGetInterpolator()
     // casts required by Sun CC 5.5
     qRegisterAnimationInterpolator<QColor>(
         (QVariant (*)(const QColor &, const QColor &, qreal))0);
+#ifndef QT_NO_VECTOR2D
     qRegisterAnimationInterpolator<QVector2D>(
         (QVariant (*)(const QVector2D &, const QVector2D &, qreal))0);
+#endif // QT_NO_VECTOR2D
+#ifndef QT_NO_VECTOR3D
     qRegisterAnimationInterpolator<QVector3D>(
         (QVariant (*)(const QVector3D &, const QVector3D &, qreal))0);
+#endif // QT_NO_VECTOR3D
+#ifndef QT_NO_VECTOR4D
     qRegisterAnimationInterpolator<QVector4D>(
         (QVariant (*)(const QVector4D &, const QVector4D &, qreal))0);
+#endif // QT_NO_VECTOR4D
 #ifndef QT_NO_QUATERNION
     qRegisterAnimationInterpolator<QQuaternion>(
         (QVariant (*)(const QQuaternion &, const QQuaternion &, qreal))0);

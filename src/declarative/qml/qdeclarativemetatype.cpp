@@ -1069,7 +1069,6 @@ bool QDeclarativeMetaType::canCopy(int type)
     case QMetaType::QLineF:
     case QMetaType::QPoint:
     case QMetaType::QPointF:
-    case QMetaType::QVector3D:
     case QMetaType::QRegExp:
     case QMetaType::Void:
     case QMetaType::QFont:
@@ -1093,8 +1092,15 @@ bool QDeclarativeMetaType::canCopy(int type)
     case QMetaType::QMatrix:
     case QMetaType::QTransform:
     case QMetaType::QMatrix4x4:
+#ifndef QT_NO_VECTOR2D
     case QMetaType::QVector2D:
+#endif // QT_NO_VECTOR2D
+#ifndef QT_NO_VECTOR3D
+    case QMetaType::QVector3D:
+#endif // QT_NO_VECTOR3D
+#ifndef QT_NO_VECTOR4D
     case QMetaType::QVector4D:
+#endif // QT_NO_VECTOR4D
 #ifndef QT_NO_QUATERNION
     case QMetaType::QQuaternion:
 #endif
@@ -1231,9 +1237,6 @@ bool QDeclarativeMetaType::copy(int type, void *data, const void *copy)
         case QMetaType::QPointF:
             *static_cast<NS(QPointF) *>(data) = *static_cast<const NS(QPointF)*>(copy);
             return true;
-        case QMetaType::QVector3D:
-            *static_cast<NS(QVector3D) *>(data) = *static_cast<const NS(QVector3D)*>(copy);
-            return true;
         case QMetaType::QRegExp:
             *static_cast<NS(QRegExp) *>(data) = *static_cast<const NS(QRegExp)*>(copy);
             return true;
@@ -1300,12 +1303,21 @@ bool QDeclarativeMetaType::copy(int type, void *data, const void *copy)
         case QMetaType::QMatrix4x4:
             *static_cast<NS(QMatrix4x4) *>(data) = *static_cast<const NS(QMatrix4x4)*>(copy);
             return true;
+#ifndef QT_NO_VECTOR2D
         case QMetaType::QVector2D:
             *static_cast<NS(QVector2D) *>(data) = *static_cast<const NS(QVector2D)*>(copy);
             return true;
+#endif // QT_NO_VECTOR2D
+#ifndef QT_NO_VECTOR3D
+        case QMetaType::QVector3D:
+            *static_cast<NS(QVector3D) *>(data) = *static_cast<const NS(QVector3D)*>(copy);
+            return true;
+#endif // QT_NO_VECTOR3D
+#ifndef QT_NO_VECTOR4D
         case QMetaType::QVector4D:
             *static_cast<NS(QVector4D) *>(data) = *static_cast<const NS(QVector4D)*>(copy);
             return true;
+#endif // QT_NO_VECTOR4D
 #ifndef QT_NO_QUATERNION
         case QMetaType::QQuaternion:
             *static_cast<NS(QQuaternion) *>(data) = *static_cast<const NS(QQuaternion)*>(copy);
@@ -1434,9 +1446,6 @@ bool QDeclarativeMetaType::copy(int type, void *data, const void *copy)
         case QMetaType::QPointF:
             *static_cast<NS(QPointF) *>(data) = NS(QPointF)();
             return true;
-        case QMetaType::QVector3D:
-            *static_cast<NS(QVector3D) *>(data) = NS(QVector3D)();
-            return true;
         case QMetaType::QRegExp:
             *static_cast<NS(QRegExp) *>(data) = NS(QRegExp)();
             return true;
@@ -1503,12 +1512,21 @@ bool QDeclarativeMetaType::copy(int type, void *data, const void *copy)
         case QMetaType::QMatrix4x4:
             *static_cast<NS(QMatrix4x4) *>(data) = NS(QMatrix4x4)();
             return true;
+#ifndef QT_NO_VECTOR2D
         case QMetaType::QVector2D:
             *static_cast<NS(QVector2D) *>(data) = NS(QVector2D)();
             return true;
+#endif // QT_NO_VECTOR2D
+#ifndef QT_NO_VECTOR3D
+        case QMetaType::QVector3D:
+            *static_cast<NS(QVector3D) *>(data) = NS(QVector3D)();
+            return true;
+#endif // QT_NO_VECTOR3D
+#ifndef QT_NO_VECTOR4D
         case QMetaType::QVector4D:
             *static_cast<NS(QVector4D) *>(data) = NS(QVector4D)();
             return true;
+#endif // QT_NO_VECTOR4D
 #ifndef QT_NO_QUATERNION
         case QMetaType::QQuaternion:
             *static_cast<NS(QQuaternion) *>(data) = NS(QQuaternion)();

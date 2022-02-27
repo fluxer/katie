@@ -226,6 +226,7 @@ private:
     QRect rect;
 };
 
+#ifndef QT_NO_VECTOR2D
 class Q_AUTOTEST_EXPORT QDeclarativeVector2DValueType : public QDeclarativeValueType
 {
     Q_PROPERTY(qreal x READ x WRITE setX)
@@ -247,7 +248,9 @@ public:
 private:
     QVector2D vector;
 };
+#endif // QT_NO_VECTOR2D
 
+#ifndef QT_NO_VECTOR3D
 class Q_AUTOTEST_EXPORT QDeclarativeVector3DValueType : public QDeclarativeValueType
 {
     Q_PROPERTY(qreal x READ x WRITE setX)
@@ -272,7 +275,9 @@ public:
 private:
     QVector3D vector;
 };
+#endif // QT_NO_VECTOR3D
 
+#ifndef QT_NO_VECTOR4D
 class Q_AUTOTEST_EXPORT QDeclarativeVector4DValueType : public QDeclarativeValueType
 {
     Q_PROPERTY(qreal x READ x WRITE setX)
@@ -300,6 +305,7 @@ public:
 private:
     QVector4D vector;
 };
+#endif // QT_NO_VECTOR4D
 
 #ifndef QT_NO_QUATERNION
 class Q_AUTOTEST_EXPORT QDeclarativeQuaternionValueType : public QDeclarativeValueType

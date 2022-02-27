@@ -105,15 +105,21 @@ QDeclarativeValueType *QDeclarativeValueTypeFactory::valueType(int t)
     case QVariant::RectF:
         rv = new QDeclarativeRectFValueType;
         break;
+#ifndef QT_NO_VECTOR2D
     case QVariant::Vector2D:
         rv = new QDeclarativeVector2DValueType;
         break;
+#endif // QT_NO_VECTOR2D
+#ifndef QT_NO_VECTOR3D
     case QVariant::Vector3D:
         rv = new QDeclarativeVector3DValueType;
         break;
+#endif // QT_NO_VECTOR3D
+#ifndef QT_NO_VECTOR4D
     case QVariant::Vector4D:
         rv = new QDeclarativeVector4DValueType;
         break;
+#endif // QT_NO_VECTOR4D
 #ifndef QT_NO_QUATERNION
     case QVariant::Quaternion:
         rv = new QDeclarativeQuaternionValueType;
@@ -469,6 +475,7 @@ void QDeclarativeRectValueType::setHeight(int h)
     rect.setHeight(h);
 }
 
+#ifndef QT_NO_VECTOR2D
 QDeclarativeVector2DValueType::QDeclarativeVector2DValueType(QObject *parent)
 : QDeclarativeValueType(parent)
 {
@@ -516,7 +523,9 @@ void QDeclarativeVector2DValueType::setY(qreal y)
 {
     vector.setY(y);
 }
+#endif // QT_NO_VECTOR2D
 
+#ifndef QT_NO_VECTOR3D
 QDeclarativeVector3DValueType::QDeclarativeVector3DValueType(QObject *parent)
 : QDeclarativeValueType(parent)
 {
@@ -574,7 +583,9 @@ void QDeclarativeVector3DValueType::setZ(qreal z)
 {
     vector.setZ(z);
 }
+#endif // QT_NO_VECTOR3D
 
+#ifndef QT_NO_VECTOR4D
 QDeclarativeVector4DValueType::QDeclarativeVector4DValueType(QObject *parent)
 : QDeclarativeValueType(parent)
 {
@@ -642,6 +653,7 @@ void QDeclarativeVector4DValueType::setW(qreal w)
 {
     vector.setW(w);
 }
+#endif // QT_NO_VECTOR4D
 
 #ifndef QT_NO_QUATERNION
 QDeclarativeQuaternionValueType::QDeclarativeQuaternionValueType(QObject *parent)

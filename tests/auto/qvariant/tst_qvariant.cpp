@@ -1314,6 +1314,7 @@ void tst_QVariant::transform()
 
 void tst_QVariant::vector2D()
 {
+#ifndef QT_NO_VECTOR2D
     QVariant variant;
     QVector2D vector = qvariant_cast<QVector2D>(variant);
     QVERIFY(vector.isNull());
@@ -1323,10 +1324,14 @@ void tst_QVariant::vector2D()
     void *pvector = QMetaType::construct(QVariant::Vector2D, 0);
     QVERIFY(pvector);
     QMetaType::destroy(QVariant::Vector2D, pvector);
+#else // QT_NO_VECTOR2D
+    QSKIP("Katie compiled without 2D vector support (QT_NO_VECTOR2D)", SkipAll);
+#endif // QT_NO_VECTOR2D
 }
 
 void tst_QVariant::vector3D()
 {
+#ifndef QT_NO_VECTOR3D
     QVariant variant;
     QVector3D vector = qvariant_cast<QVector3D>(variant);
     QVERIFY(vector.isNull());
@@ -1336,10 +1341,14 @@ void tst_QVariant::vector3D()
     void *pvector = QMetaType::construct(QVariant::Vector3D, 0);
     QVERIFY(pvector);
     QMetaType::destroy(QVariant::Vector3D, pvector);
+#else // QT_NO_VECTOR3D
+    QSKIP("Katie compiled without 3D vector support (QT_NO_VECTOR3D)", SkipAll);
+#endif // QT_NO_VECTOR3D
 }
 
 void tst_QVariant::vector4D()
 {
+#ifndef QT_NO_VECTOR4D
     QVariant variant;
     QVector4D vector = qvariant_cast<QVector4D>(variant);
     QVERIFY(vector.isNull());
@@ -1349,6 +1358,9 @@ void tst_QVariant::vector4D()
     void *pvector = QMetaType::construct(QVariant::Vector4D, 0);
     QVERIFY(pvector);
     QMetaType::destroy(QVariant::Vector4D, pvector);
+#else // QT_NO_VECTOR4D
+    QSKIP("Katie compiled without 4D vector support (QT_NO_VECTOR4D)", SkipAll);
+#endif // QT_NO_VECTOR4D
 }
 
 void tst_QVariant::quaternion()
