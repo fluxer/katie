@@ -43,12 +43,6 @@ private slots:
     void setScaledSize_data();
     void setScaledSize();
 
-    void setClipRect_data();
-    void setClipRect();
-
-    void setScaledClipRect_data();
-    void setScaledClipRect();
-
 private:
     QList< QPair<QString, QByteArray> > images; // filename, format
 };
@@ -116,53 +110,6 @@ void tst_QImageReader::setScaledSize()
         reader.setScaledSize(newSize);
         QImage image = reader.read();
         QCOMPARE(image.size(), newSize);
-    }
-}
-
-void tst_QImageReader::setClipRect_data()
-{
-    QTest::addColumn<QString>("fileName");
-    QTest::addColumn<QByteArray>("format");
-    QTest::addColumn<QRect>("newRect");
-
-    for (int i = 0; i < images.size(); ++i) {
-        const QString file = images[i].first;
-        const QByteArray format = images[i].second;
-        QTest::newRow(qPrintable(file)) << file << format << QRect(0, 0, 50, 50);
-    }
-}
-
-void tst_QImageReader::setClipRect()
-{
-    QFETCH(QString, fileName);
-    QFETCH(QRect, newRect);
-    QFETCH(QByteArray, format);
-
-    QBENCHMARK {
-        QImageReader reader(QLatin1String(SRCDIR "/images/") + fileName, format);
-        reader.setClipRect(newRect);
-        QImage image = reader.read();
-        QCOMPARE(image.rect(), newRect);
-    }
-}
-
-void tst_QImageReader::setScaledClipRect_data()
-{
-    setClipRect_data();
-}
-
-void tst_QImageReader::setScaledClipRect()
-{
-    QFETCH(QString, fileName);
-    QFETCH(QRect, newRect);
-    QFETCH(QByteArray, format);
-
-    QBENCHMARK {
-        QImageReader reader(QLatin1String(SRCDIR "/images/") + fileName, format);
-        reader.setScaledSize(QSize(300, 300));
-        reader.setScaledClipRect(newRect);
-        QImage image = reader.read();
-        QCOMPARE(image.rect(), newRect);
     }
 }
 

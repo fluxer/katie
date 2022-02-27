@@ -160,7 +160,7 @@ QImageWriterPrivate::QImageWriterPrivate()
     : device(nullptr),
     deleteDevice(false),
     handler(nullptr),
-    quality(-1),
+    quality(100),
     compression(1),
     gamma(0.0),
     imageWriterError(QImageWriter::UnknownError),
@@ -311,9 +311,7 @@ QString QImageWriter::fileName() const
     level of the image to \a quality. For image formats that do not
     support setting the quality, this value is ignored.
 
-    The value range of \a quality depends on the image format. For
-    example, the "png" format supports a quality range from 0 (low
-    quality, high compression) to 100 (high quality, low compression).
+    The value range of \a quality should be between 0 and 100.
 
     \sa quality()
 */
@@ -323,7 +321,7 @@ void QImageWriter::setQuality(int quality)
 }
 
 /*!
-    Returns the quality level of the image.
+    Returns the quality level of the image. Default value is 100.
 
     \sa setQuality()
 */
@@ -391,16 +389,14 @@ bool QImageWriter::canWrite() const
 {
     if (d->device && !d->handler && (d->handler = createWriteHandlerHelper(d->device, d->format)) == 0) {
         d->imageWriterError = QImageWriter::UnsupportedFormatError;
-        d->errorString = QT_TRANSLATE_NOOP(QImageWriter,
-                                           QLatin1String("Unsupported image format"));
+        d->errorString = QT_TRANSLATE_NOOP(QImageWriter, QLatin1String("Unsupported image format"));
         return false;
     }
     if (d->device && !d->device->isOpen())
         d->device->open(QIODevice::WriteOnly);
     if (!d->device || !d->device->isWritable()) {
         d->imageWriterError = QImageWriter::DeviceError;
-        d->errorString = QT_TRANSLATE_NOOP(QImageWriter,
-                                           QLatin1String("Device not writable"));
+        d->errorString = QT_TRANSLATE_NOOP(QImageWriter, QLatin1String("Device not writable"));
         return false;
     }
     return true;
@@ -422,8 +418,8 @@ bool QImageWriter::write(const QImage &image)
 
     if (d->handler->supportsOption(QImageIOHandler::Quality))
         d->handler->setOption(QImageIOHandler::Quality, d->quality);
-    if (d->handler->supportsOption(QImageIOHandler::CompressionRatio))
-        d->handler->setOption(QImageIOHandler::CompressionRatio, d->compression);
+    if (d->handler->supportsOption(QImageIOHandler::CompressionLevel))
+        d->handler->setOption(QImageIOHandler::CompressionLevel, d->compression);
     if (d->handler->supportsOption(QImageIOHandler::Gamma))
         d->handler->setOption(QImageIOHandler::Gamma, d->gamma);
 
@@ -475,8 +471,7 @@ bool QImageWriter::supportsOption(QImageIOHandler::ImageOption option) const
 {
     if (!d->handler && (d->handler = createWriteHandlerHelper(d->device, d->format)) == 0) {
         d->imageWriterError = QImageWriter::UnsupportedFormatError;
-        d->errorString = QT_TRANSLATE_NOOP(QImageWriter,
-                                           QLatin1String("Unsupported image format"));
+        d->errorString = QT_TRANSLATE_NOOP(QImageWriter, QLatin1String("Unsupported image format"));
         return false;
     }
 

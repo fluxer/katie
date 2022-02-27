@@ -52,9 +52,9 @@ public:
 
     static bool canRead(QIODevice *device, QByteArray *subType = 0);
 
-    QVariant option(ImageOption option) const;
-    void setOption(ImageOption option, const QVariant &value);
-    bool supportsOption(ImageOption option) const;
+    QVariant option(QImageIOHandler::ImageOption option) const;
+    void setOption(QImageIOHandler::ImageOption option, const QVariant &value);
+    bool supportsOption(QImageIOHandler::ImageOption option) const;
 
 private:
     bool readHeader();

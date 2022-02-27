@@ -41,9 +41,7 @@ public:
     QSvgIOHandler   *q;
     QSvgRenderer     r;
     QSize            defaultSize;
-    QRect            clipRect;
     QSize            scaledSize;
-    QRect            scaledClipRect;
     bool             loaded;
     bool             readDone;
     QColor           backColor;
@@ -106,34 +104,21 @@ QByteArray QSvgIOHandler::name() const
     return "svg";
 }
 
-
 bool QSvgIOHandler::read(QImage *image)
 {
     if (!d->readDone && d->load(device())) {
-        bool xform = (d->clipRect.isValid() || d->scaledSize.isValid() || d->scaledClipRect.isValid());
         QSize finalSize = d->defaultSize;
         QRectF bounds;
-        if (xform && !d->defaultSize.isEmpty()) {
+        if (d->scaledSize.isValid() && !d->defaultSize.isEmpty()) {
             bounds = QRectF(QPointF(0,0), QSizeF(d->defaultSize));
-            QPoint tr1, tr2;
             QSizeF sc(1, 1);
-            if (d->clipRect.isValid()) {
-                tr1 = -d->clipRect.topLeft();
-                finalSize = d->clipRect.size();
-            }
             if (d->scaledSize.isValid()) {
                 sc = QSizeF(qreal(d->scaledSize.width()) / finalSize.width(),
                             qreal(d->scaledSize.height()) / finalSize.height());
                 finalSize = d->scaledSize;
             }
-            if (d->scaledClipRect.isValid()) {
-                tr2 = -d->scaledClipRect.topLeft();
-                finalSize = d->scaledClipRect.size();
-            }
             QTransform t;
-            t.translate(tr2.x(), tr2.y());
             t.scale(sc.width(), sc.height());
-            t.translate(tr1.x(), tr1.y());
             bounds = t.mapRect(bounds);
         }
         *image = QImage(finalSize, QImage::Format_ARGB32_Premultiplied);
@@ -150,64 +135,46 @@ bool QSvgIOHandler::read(QImage *image)
     return false;
 }
 
-
-QVariant QSvgIOHandler::option(ImageOption option) const
+QVariant QSvgIOHandler::option(QImageIOHandler::ImageOption option) const
 {
     switch(option) {
-    case ImageFormat:
-        return QImage::Format_ARGB32_Premultiplied;
-    case Size:
-        d->load(device());
-        return d->defaultSize;
-    case ClipRect:
-        return d->clipRect;
-    case ScaledSize:
-        return d->scaledSize;
-    case ScaledClipRect:
-        return d->scaledClipRect;
-    case BackgroundColor:
-        return d->backColor;
-    default:
-        break;
+        case QImageIOHandler::Size:
+            d->load(device());
+            return d->defaultSize;
+        case QImageIOHandler::ScaledSize:
+            return d->scaledSize;
+        case QImageIOHandler::BackgroundColor:
+            return d->backColor;
+        default:
+            break;
     }
     return QVariant();
 }
 
 
-void QSvgIOHandler::setOption(ImageOption option, const QVariant & value)
+void QSvgIOHandler::setOption(QImageIOHandler::ImageOption option, const QVariant & value)
 {
     switch(option) {
-    case ClipRect:
-        d->clipRect = value.toRect();
-        break;
-    case ScaledSize:
-        d->scaledSize = value.toSize();
-        break;
-    case ScaledClipRect:
-        d->scaledClipRect = value.toRect();
-        break;
-    case BackgroundColor:
-        d->backColor = value.value<QColor>();
-        break;
-    default:
-        break;
+        case QImageIOHandler::ScaledSize:
+            d->scaledSize = value.toSize();
+            break;
+        case QImageIOHandler::BackgroundColor:
+            d->backColor = value.value<QColor>();
+            break;
+        default:
+            break;
     }
 }
 
-
-bool QSvgIOHandler::supportsOption(ImageOption option) const
+bool QSvgIOHandler::supportsOption(QImageIOHandler::ImageOption option) const
 {
-    switch(option)
-    {
-    case ImageFormat:
-    case Size:
-    case ClipRect:
-    case ScaledSize:
-    case ScaledClipRect:
-    case BackgroundColor:
-        return true;
-    default:
-        break;
+    switch(option) {
+        case QImageIOHandler::Size:
+        case QImageIOHandler::ScaledSize:
+        case QImageIOHandler::BackgroundColor:
+            return true;
+        default:
+            break;
     }
     return false;
 }

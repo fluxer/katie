@@ -34,19 +34,17 @@
     constructors, or by calling QImage::load() and
     QPixmap::load(). QImageReader is a specialized class which gives
     you more control when reading images. For example, you can read an
-    image into a specific size by calling setScaledSize(), and you can
-    select a clip rect, effectively loading only parts of an image, by
-    calling setClipRect(). Depending on the underlying support in the
-    image format, this can save memory and speed up loading of images.
+    image into a specific size by calling setScaledSize(). Depending
+    on the underlying support in the image format, this can save
+    memory and speed up loading of images.
 
     To read an image, you start by constructing a QImageReader object.
     Pass either a file name or a device pointer, and the image format
     to QImageReader's constructor. You can then set several options,
-    such as the clip rect (by calling setClipRect()) and scaled size
-    (by calling setScaledSize()). canRead() returns the image if the
-    QImageReader can read the image (i.e., the image format is
-    supported and the device is open for reading). Call read() to read
-    the image.
+    such as the scaled size (by calling setScaledSize()). canRead()
+    returns the image if the QImageReader can read the image (i.e.,
+    the image format is supported and the device is open for reading).
+    Call read() to read the image.
 
     If any error occurs when reading the image, read() will return a
     null QImage. You can then call error() to find the type of error
@@ -102,7 +100,6 @@
 #include "qimage.h"
 #include "qimageiohandler.h"
 #include "qlist.h"
-#include "qrect.h"
 #include "qset.h"
 #include "qsize.h"
 #include "qcolor.h"
@@ -127,7 +124,7 @@ static QImageIOHandler *createReadHandlerHelper(QIODevice *device,
     if (!autoDetectImageFormat && format.isEmpty())
         return nullptr;
 
-    QByteArray form = format.toLower();
+    const QByteArray form = format.toLower();
     QImageIOHandler *handler = nullptr;
 
     // check if we have built-in support for the format first
@@ -255,10 +252,7 @@ public:
     bool initHandler();
 
     // image options
-    QRect clipRect;
     QSize scaledSize;
-    QRect scaledClipRect;
-    int quality;
 
     // error
     QImageReader::ImageReaderError imageReaderError;
@@ -273,7 +267,6 @@ QImageReaderPrivate::QImageReaderPrivate()
     device(nullptr),
     deleteDevice(false),
     handler(nullptr),
-    quality(-1),
     imageReaderError(QImageReader::UnknownError)
 {
 }
@@ -519,37 +512,45 @@ QString QImageReader::fileName() const
     level of the image to \a quality. For image formats that do not
     support setting the quality, this value is ignored.
 
-    The value range of \a quality depends on the image format. For
-    example, the "png" format supports a quality range from 0 (low
-    quality, high compression) to 100 (high quality, low compression).
+    The value range of \a quality should be between 0 and 100.
 
     \sa quality()
 */
 void QImageReader::setQuality(int quality)
 {
-    d->quality = quality;
+    if (!d->initHandler())
+        return;
+    if (Q_UNLIKELY(quality < 0 || quality > 100)) {
+        qWarning("QImageReader::setQuality: invalid quality value %d", quality);
+        quality = 100;
+    }
+    if (d->handler->supportsOption(QImageIOHandler::Quality))
+        d->handler->setOption(QImageIOHandler::Quality, quality);
 }
 
 /*!
     \since 4.2
 
-    Returns the quality level of the image.
+    Returns the quality level of the image. Default value is 100.
 
     \sa setQuality()
 */
 int QImageReader::quality() const
 {
-    return d->quality;
+    if (!d->initHandler())
+        return 100;
+    if (d->handler->supportsOption(QImageIOHandler::Quality))
+        return d->handler->option(QImageIOHandler::Quality).toInt();
+    return 100;
 }
-
 
 /*!
     Returns the size of the image, without actually reading the image
     contents.
 
     If the image format does not support this feature, this function returns
-    an invalid size. Qt's built-in image handlers all support this feature,
-    but custom image format plugins are not required to do so.
+    an invalid size. Some of Katie's built-in image handlers all support
+    this feature, but custom image format plugins are not required to do so.
 
     \sa QImageIOHandler::ImageOption, QImageIOHandler::option(), QImageIOHandler::supportsOption()
 */
@@ -557,69 +558,18 @@ QSize QImageReader::size() const
 {
     if (!d->initHandler())
         return QSize();
-
     if (d->handler->supportsOption(QImageIOHandler::Size))
         return d->handler->option(QImageIOHandler::Size).toSize();
-
     return QSize();
 }
 
 /*!
-    \since 4.5
+    Sets the scaled size of the image to \a size. The algorithm
+    used for scaling depends on the image format. By default
+    (i.e., if the image format does not support scaling),
+    QImageReader will use QImage::scale() with Qt::SmoothScaling.
 
-    Returns the format of the image, without actually reading the image
-    contents. The format describes the image format \l QImageReader::read()
-    returns, not the format of the actual image.
-
-    If the image format does not support this feature, this function returns
-    an invalid format.
-
-    \sa QImageIOHandler::ImageOption, QImageIOHandler::option(), QImageIOHandler::supportsOption()
-*/
-QImage::Format QImageReader::imageFormat() const
-{
-    if (!d->initHandler())
-        return QImage::Format_Invalid;
-
-    if (d->handler->supportsOption(QImageIOHandler::ImageFormat))
-        return (QImage::Format)d->handler->option(QImageIOHandler::ImageFormat).toInt();
-
-    return QImage::Format_Invalid;
-}
-
-/*!
-    Sets the image clip rect (also known as the ROI, or Region Of
-    Interest) to \a rect. The coordinates of \a rect are relative to
-    the untransformed image size, as returned by size().
-
-    \sa clipRect(), setScaledSize(), setScaledClipRect()
-*/
-void QImageReader::setClipRect(const QRect &rect)
-{
-    d->clipRect = rect;
-}
-
-/*!
-    Returns the clip rect (also known as the ROI, or Region Of
-    Interest) of the image. If no clip rect has been set, an invalid
-    QRect is returned.
-
-    \sa setClipRect()
-*/
-QRect QImageReader::clipRect() const
-{
-    return d->clipRect;
-}
-
-/*!
-    Sets the scaled size of the image to \a size. The scaling is
-    performed after the initial clip rect, but before the scaled clip
-    rect is applied. The algorithm used for scaling depends on the
-    image format. By default (i.e., if the image format does not
-    support scaling), QImageReader will use QImage::scale() with
-    Qt::SmoothScaling.
-
-    \sa scaledSize(), setClipRect(), setScaledClipRect()
+    \sa scaledSize()
 */
 void QImageReader::setScaledSize(const QSize &size)
 {
@@ -634,28 +584,6 @@ void QImageReader::setScaledSize(const QSize &size)
 QSize QImageReader::scaledSize() const
 {
     return d->scaledSize;
-}
-
-/*!
-    Sets the scaled clip rect to \a rect. The scaled clip rect is the
-    clip rect (also known as ROI, or Region Of Interest) that is
-    applied after the image has been scaled.
-
-    \sa scaledClipRect(), setScaledSize()
-*/
-void QImageReader::setScaledClipRect(const QRect &rect)
-{
-    d->scaledClipRect = rect;
-}
-
-/*!
-    Returns the scaled clip rect of the image.
-
-    \sa setScaledClipRect()
-*/
-QRect QImageReader::scaledClipRect() const
-{
-    return d->scaledClipRect;
 }
 
 /*!
@@ -784,19 +712,8 @@ bool QImageReader::read(QImage *image)
 
     // set the handler specific options.
     if (d->handler->supportsOption(QImageIOHandler::ScaledSize) && d->scaledSize.isValid()) {
-        if ((d->handler->supportsOption(QImageIOHandler::ClipRect) && !d->clipRect.isNull())
-            || d->clipRect.isNull()) {
-            // Only enable the ScaledSize option if there is no clip rect, or
-            // if the handler also supports ClipRect.
-            d->handler->setOption(QImageIOHandler::ScaledSize, d->scaledSize);
-        }
+        d->handler->setOption(QImageIOHandler::ScaledSize, d->scaledSize);
     }
-    if (d->handler->supportsOption(QImageIOHandler::ClipRect) && !d->clipRect.isNull())
-        d->handler->setOption(QImageIOHandler::ClipRect, d->clipRect);
-    if (d->handler->supportsOption(QImageIOHandler::ScaledClipRect) && !d->scaledClipRect.isNull())
-        d->handler->setOption(QImageIOHandler::ScaledClipRect, d->scaledClipRect);
-    if (d->handler->supportsOption(QImageIOHandler::Quality))
-        d->handler->setOption(QImageIOHandler::Quality, d->quality);
 
     // read the image
     if (!d->handler->read(image)) {
@@ -805,59 +722,9 @@ bool QImageReader::read(QImage *image)
         return false;
     }
 
-    // provide default implementations for any unsupported image
-    // options
-    if (d->handler->supportsOption(QImageIOHandler::ClipRect) && !d->clipRect.isNull()) {
-        if (d->handler->supportsOption(QImageIOHandler::ScaledSize) && d->scaledSize.isValid()) {
-            if (d->handler->supportsOption(QImageIOHandler::ScaledClipRect) && !d->scaledClipRect.isNull()) {
-                // all features are supported by the handler; nothing to do.
-            } else {
-                // the image is already scaled, so apply scaled clipping.
-                if (!d->scaledClipRect.isNull())
-                    *image = image->copy(d->scaledClipRect);
-            }
-        } else {
-            if (d->handler->supportsOption(QImageIOHandler::ScaledClipRect) && !d->scaledClipRect.isNull()) {
-                // supports scaled clipping but not scaling, most
-                // likely a broken handler.
-            } else {
-                if (d->scaledSize.isValid()) {
-                    *image = image->scaled(d->scaledSize, Qt::IgnoreAspectRatio, Qt::SmoothTransformation);
-                }
-                if (d->scaledClipRect.isValid()) {
-                    *image = image->copy(d->scaledClipRect);
-                }
-            }
-        }
-    } else {
-        if (d->handler->supportsOption(QImageIOHandler::ScaledSize) && d->scaledSize.isValid()) {
-            // in this case, there's nothing we can do. if the
-            // plugin supports scaled size but not ClipRect, then
-            // we have to ignore ClipRect."
-
-            if (d->handler->supportsOption(QImageIOHandler::ScaledClipRect) && !d->scaledClipRect.isNull()) {
-                // nothing to do (ClipRect is ignored!)
-            } else {
-                // provide all workarounds.
-                if (d->scaledClipRect.isValid()) {
-                    *image = image->copy(d->scaledClipRect);
-                }
-            }
-        } else {
-            if (d->handler->supportsOption(QImageIOHandler::ScaledClipRect) && !d->scaledClipRect.isNull()) {
-                // this makes no sense; a handler that supports
-                // ScaledClipRect but not ScaledSize is broken, and we
-                // can't work around it.
-            } else {
-                // provide all workarounds.
-                if (d->clipRect.isValid())
-                    *image = image->copy(d->clipRect);
-                if (d->scaledSize.isValid())
-                    *image = image->scaled(d->scaledSize, Qt::IgnoreAspectRatio, Qt::SmoothTransformation);
-                if (d->scaledClipRect.isValid())
-                    *image = image->copy(d->scaledClipRect);
-            }
-        }
+    // provide default implementations for any unsupported image options
+    if (!d->handler->supportsOption(QImageIOHandler::ScaledSize) && d->scaledSize.isValid()) {
+        *image = image->scaled(d->scaledSize, Qt::IgnoreAspectRatio, Qt::SmoothTransformation);
     }
 
     return true;
@@ -958,19 +825,6 @@ int QImageReader::currentImageNumber() const
     if (!d->initHandler())
         return -1;
     return d->handler->currentImageNumber();
-}
-
-/*!
-    For image formats that support animation, this function returns
-    the rect for the current frame. Otherwise, a null rect is returned.
-
-    \sa supportsAnimation(), QImageIOHandler::currentImageRect()
-*/
-QRect QImageReader::currentImageRect() const
-{
-    if (!d->initHandler())
-        return QRect();
-    return d->handler->currentImageRect();
 }
 
 /*!

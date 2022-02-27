@@ -41,9 +41,9 @@ public:
     virtual QByteArray name() const;
     virtual bool read(QImage *image);
     static bool canRead(QIODevice *device);
-    virtual QVariant option(ImageOption option) const;
-    virtual void setOption(ImageOption option, const QVariant & value);
-    virtual bool supportsOption(ImageOption option) const;
+    virtual QVariant option(QImageIOHandler::ImageOption option) const;
+    virtual void setOption(QImageIOHandler::ImageOption option, const QVariant & value);
+    virtual bool supportsOption(QImageIOHandler::ImageOption option) const;
 
 private:
     QSvgIOHandlerPrivate *d;

@@ -57,19 +57,13 @@ public:
 
     enum ImageOption {
         Size,
-        ClipRect,
-        ScaledClipRect,
         ScaledSize,
-        CompressionRatio,
+        CompressionLevel,
         Gamma,
         Quality,
-        Name,
         SubType,
-        IncrementalReading,
-        Endianness,
         Animation,
-        BackgroundColor,
-        ImageFormat
+        BackgroundColor
     };
     virtual QVariant option(ImageOption option) const;
     virtual void setOption(ImageOption option, const QVariant &value);
@@ -82,7 +76,6 @@ public:
     virtual int imageCount() const;
     virtual int nextImageDelay() const;
     virtual int currentImageNumber() const;
-    virtual QRect currentImageRect() const;
 
 private:
     Q_DISABLE_COPY(QImageIOHandler)
@@ -112,8 +105,7 @@ public:
 
     enum Capability {
         CanRead = 0x1,
-        CanWrite = 0x2,
-        CanReadIncremental = 0x4
+        CanWrite = 0x2
     };
     Q_DECLARE_FLAGS(Capabilities, Capability)
 

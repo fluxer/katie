@@ -369,49 +369,28 @@ bool QPpmHandler::write(const QImage &image)
     return write_pbm_image(device(), image, subType);
 }
 
-bool QPpmHandler::supportsOption(ImageOption option) const
+bool QPpmHandler::supportsOption(QImageIOHandler::ImageOption option) const
 {
-    return option == SubType
-        || option == Size
-        || option == ImageFormat;
+    return (option == QImageIOHandler::SubType || option == QImageIOHandler::Size);
 }
 
-QVariant QPpmHandler::option(ImageOption option) const
+QVariant QPpmHandler::option(QImageIOHandler::ImageOption option) const
 {
-    if (option == SubType) {
+    if (option == QImageIOHandler::SubType) {
         return subType;
-    } else if (option == Size) {
+    } else if (option == QImageIOHandler::Size) {
         if (state == Error)
             return QVariant();
         if (state == Ready && !const_cast<QPpmHandler*>(this)->readHeader())
             return QVariant();
         return QSize(width, height);
-    } else if (option == ImageFormat) {
-        if (state == Error)
-            return QVariant();
-        if (state == Ready && !const_cast<QPpmHandler*>(this)->readHeader())
-            return QVariant();
-        QImage::Format format = QImage::Format_Invalid;
-        switch (type) {
-            case '1':                                // ascii PBM
-            case '4':                                // raw PBM
-                format = QImage::Format_Mono;
-                break;
-            case '3':                                // ascii PPM
-            case '6':                                // raw PPM
-                format = QImage::Format_RGB32;
-                break;
-            default:
-                break;
-        }
-        return format;
     }
     return QVariant();
 }
 
-void QPpmHandler::setOption(ImageOption option, const QVariant &value)
+void QPpmHandler::setOption(QImageIOHandler::ImageOption option, const QVariant &value)
 {
-    if (option == SubType)
+    if (option == QImageIOHandler::SubType)
         subType = value.toByteArray().toLower();
 }
 
