@@ -506,45 +506,6 @@ QString QImageReader::fileName() const
 }
 
 /*!
-    \since 4.2
-
-    This is an image format specific function that sets the quality
-    level of the image to \a quality. For image formats that do not
-    support setting the quality, this value is ignored.
-
-    The value range of \a quality should be between 0 and 100.
-
-    \sa quality()
-*/
-void QImageReader::setQuality(int quality)
-{
-    if (!d->initHandler())
-        return;
-    if (Q_UNLIKELY(quality < 0 || quality > 100)) {
-        qWarning("QImageReader::setQuality: invalid quality value %d", quality);
-        quality = 100;
-    }
-    if (d->handler->supportsOption(QImageIOHandler::Quality))
-        d->handler->setOption(QImageIOHandler::Quality, quality);
-}
-
-/*!
-    \since 4.2
-
-    Returns the quality level of the image. Default value is 100.
-
-    \sa setQuality()
-*/
-int QImageReader::quality() const
-{
-    if (!d->initHandler())
-        return 100;
-    if (d->handler->supportsOption(QImageIOHandler::Quality))
-        return d->handler->option(QImageIOHandler::Quality).toInt();
-    return 100;
-}
-
-/*!
     Returns the size of the image, without actually reading the image
     contents.
 

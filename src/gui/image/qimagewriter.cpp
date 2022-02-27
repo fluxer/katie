@@ -317,7 +317,12 @@ QString QImageWriter::fileName() const
 */
 void QImageWriter::setQuality(int quality)
 {
-    d->quality = quality;
+    if (Q_UNLIKELY(quality < 0 || quality > 100)) {
+        qWarning("QImageWriter::setQuality: invalid quality value %d", quality);
+        quality = 100;
+    } else {
+        d->quality = quality;
+    }
 }
 
 /*!

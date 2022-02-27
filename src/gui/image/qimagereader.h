@@ -69,9 +69,6 @@ public:
     void setScaledSize(const QSize &size);
     QSize scaledSize() const;
 
-    void setQuality(int quality);
-    int quality() const;
-
     void setBackgroundColor(const QColor &color);
     QColor backgroundColor() const;
 
