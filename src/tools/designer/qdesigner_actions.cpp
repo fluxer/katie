@@ -80,6 +80,7 @@
 #include <QtGui/QStatusBar>
 #include <QtGui/QDesktopWidget>
 #include <QtXml/QDomDocument>
+#include "qguicommon_p.h"
 
 QT_BEGIN_NAMESPACE
 
@@ -1210,14 +1211,12 @@ qdesigner_internal::PreviewConfiguration QDesignerActions::previewConfiguration(
 
 void QDesignerActions::savePreviewImage()
 {
-    const char *format = "png";
-
     QDesignerFormWindowInterface *fw = core()->formWindowManager()->activeFormWindow();
     if (!fw)
         return;
 
     QImage image;
-    const QString extension = QString::fromAscii(format);
+    const QString extension = QString::fromAscii(qt_imageformat);
     const QString filter = tr("Image files (*.%1)").arg(extension);
 
     QString suggestion = fw->fileName();
@@ -1239,7 +1238,7 @@ void QDesignerActions::savePreviewImage()
             image = pixmap.toImage();
         }
 
-        if (image.save(fileName, format)) {
+        if (image.save(fileName, qt_imageformat)) {
             showStatusBarMessage(tr("Saved image %1.").arg(QFileInfo(fileName).fileName()));
             break;
         }

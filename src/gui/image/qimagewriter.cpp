@@ -236,7 +236,8 @@ QImageWriter::~QImageWriter()
     \snippet doc/src/snippets/code/src_gui_image_qimagewriter.cpp 0
 
     You can call supportedImageFormats() for the full list of formats
-    QImageWriter supports.
+    QImageWriter supports and defaultImageFormat() for the prefered
+    format.
 
     \sa format()
 */
@@ -494,9 +495,19 @@ bool QImageWriter::supportsOption(QImageIOHandler::ImageOption option) const
 }
 
 /*!
+    Returns the default image format to use with QImageWriter.
+
+    \sa supportedImageFormats()
+*/
+QByteArray QImageWriter::defaultImageFormat()
+{
+    return QByteArray(qt_imageformat);
+}
+
+/*!
     Returns the list of image formats supported by QImageWriter.
 
-    By default, Qt can write the following formats:
+    By default, Katie can write the following formats:
 
     \table
     \header \o Format \o Description
@@ -505,13 +516,14 @@ bool QImageWriter::supportsOption(QImageIOHandler::ImageOption option) const
     \row    \o PPM    \o Portable Pixmap
     \endtable
 
-    Reading and writing SVG files is supported through Qt's
+    Reading and writing SVG files is supported through Katie's
     \l{QtSvg Module}{SVG Module}.
 
     Note that the QApplication instance must be created before this function is
     called.
 
-    \sa setFormat(), QImageReader::supportedImageFormats(), QImageIOPlugin
+    \sa setFormat(), QImageReader::supportedImageFormats(), QImageIOPlugin,
+    defaultImageFormat()
 */
 QList<QByteArray> QImageWriter::supportedImageFormats()
 {
@@ -538,7 +550,3 @@ QList<QByteArray> QImageWriter::supportedImageFormats()
 }
 
 QT_END_NAMESPACE
-
-
-
-

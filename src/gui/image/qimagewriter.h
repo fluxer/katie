@@ -73,6 +73,7 @@ public:
 
     bool supportsOption(QImageIOHandler::ImageOption option) const;
 
+    static QByteArray defaultImageFormat();
     static QList<QByteArray> supportedImageFormats();
 
 private:

@@ -295,7 +295,7 @@ bool QImageData::checkForAlphaPixels() const
     The complete list of supported file formats are available through
     the QImageReader::supportedImageFormats() and
     QImageWriter::supportedImageFormats() functions. New file formats
-    can be added as plugins. By default, Qt supports the following
+    can be added as plugins. By default, Katie supports the following
     formats:
 
     \table
@@ -2992,8 +2992,8 @@ QImage QImage::fromData(const char *data, int size, const char *format)
     suffix.
 
     The \a quality factor must be in the range 0 to 100 or -1. Specify
-    0 to obtain small compressed files, 100 for large uncompressed
-    files, and -1 (the default) to use the default settings.
+    0 to obtain small files, 100 for large and -1 (the default) to use
+    the default settings.
 
     Returns true if the image was successfully saved; otherwise
     returns false.

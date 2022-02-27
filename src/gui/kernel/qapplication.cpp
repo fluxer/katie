@@ -3878,7 +3878,7 @@ void QApplicationPrivate::emitLastWindowClosed()
 
     Returns true if \a effect is enabled; otherwise returns false.
 
-    By default, Qt will try to use the desktop settings. To prevent this, call
+    By default, Katie will try to use the desktop settings. To prevent this, call
     setDesktopSettingsAware(false).
 
     \note All effects are disabled on screens running at less than 16-bit color

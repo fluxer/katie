@@ -1329,7 +1329,7 @@ QPixmap QPixmap::transformed(const QMatrix &matrix, Qt::TransformationMode mode)
     The complete list of supported file formats are available through
     the QImageReader::supportedImageFormats() and
     QImageWriter::supportedImageFormats() functions. New file formats
-    can be added as plugins. By default, Qt supports the following
+    can be added as plugins. By default, Katie supports the following
     formats:
 
     \table

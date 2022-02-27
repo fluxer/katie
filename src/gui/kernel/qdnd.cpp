@@ -38,9 +38,10 @@
 #include "qimagereader.h"
 #include "qimagewriter.h"
 #include "qdebug.h"
-#include <ctype.h>
-
 #include "qapplication_p.h"
+#include "qguicommon_p.h"
+
+#include <ctype.h>
 
 #ifndef QT_NO_DRAGANDDROP
 
@@ -220,10 +221,10 @@ static QStringList imageReadMimeFormats()
         formats.append(format);
     }
 
-    //put png at the front because it is best
-    int pngIndex = formats.indexOf(QLatin1String("image/png"));
-    if (pngIndex != -1 && pngIndex != 0)
-        formats.move(pngIndex, 0);
+    // put the best in front
+    int bestIndex = formats.indexOf(QLatin1String(qt_imagemime));
+    if (bestIndex > 0)
+        formats.move(bestIndex, 0);
 
     return formats;
 }
@@ -238,10 +239,10 @@ static QStringList imageWriteMimeFormats()
         formats.append(format);
     }
 
-    //put png at the front because it is best
-    int pngIndex = formats.indexOf(QLatin1String("image/png"));
-    if (pngIndex != -1 && pngIndex != 0)
-        formats.move(pngIndex, 0);
+    // put the best in front
+    int bestIndex = formats.indexOf(QLatin1String(qt_imagemime));
+    if (bestIndex > 0)
+        formats.move(bestIndex, 0);
 
     return formats;
 }
@@ -382,8 +383,7 @@ QByteArray QInternalMimeData::renderDataHelper(const QString &mimeType, const QM
                 QImage image = qvariant_cast<QImage>(data->imageData());
                 QBuffer buf(&ba);
                 buf.open(QBuffer::WriteOnly);
-                // would there not be PNG ??
-                image.save(&buf, "PNG");
+                image.save(&buf, qt_imageformat);
             } else if (mimeType.startsWith(QLatin1String("image/")) && data->hasImage()) {
                 QImage image = qvariant_cast<QImage>(data->imageData());
                 QBuffer buf(&ba);
