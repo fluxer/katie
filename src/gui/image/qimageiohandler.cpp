@@ -86,7 +86,8 @@
     \value CompressionRatio The compression ratio of the image data. A
     handler that supports this option is expected to set its
     compression rate depending on the value of this option (an int)
-    when writing.
+    when writing. Note that this option is usually taken as
+    compression level not ratio despite its name.
 
     \value Gamma The gamma level of the image. A handler that supports
     this option is expected to set the image gamma level depending on
