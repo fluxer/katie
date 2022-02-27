@@ -243,6 +243,7 @@ MdiContainerWidgetTaskMenu::MdiContainerWidgetTaskMenu(QMdiArea *m, QObject *par
     connect(m_cascadeAction, SIGNAL(triggered()), m, SLOT(cascadeSubWindows()));
 }
 
+#ifndef QT_NO_WORKSPACE
 MdiContainerWidgetTaskMenu::MdiContainerWidgetTaskMenu(QWorkspace *m, QObject *parent) :
     ContainerWidgetTaskMenu(m, MdiContainer, parent)
 {
@@ -252,6 +253,7 @@ MdiContainerWidgetTaskMenu::MdiContainerWidgetTaskMenu(QWorkspace *m, QObject *p
     connect(m_tileAction, SIGNAL(triggered()),m , SLOT(tile()));
     connect(m_cascadeAction, SIGNAL(triggered()), m, SLOT(cascade()));
 }
+#endif // QT_NO_WORKSPACE
 
 void MdiContainerWidgetTaskMenu::initializeActions()
 {
@@ -317,8 +319,10 @@ QObject *ContainerWidgetTaskMenuFactory::createExtension(QObject *object, const 
 
     if (QMdiArea* ma = qobject_cast<QMdiArea*>(widget))
         return new MdiContainerWidgetTaskMenu(ma, parent);
+#ifndef QT_NO_WORKSPACE
     if (QWorkspace *ws = qobject_cast<QWorkspace*>(widget))
         return new MdiContainerWidgetTaskMenu(ws, parent);
+#endif // QT_NO_WORKSPACE
     if (QWizard *wz = qobject_cast<QWizard *>(widget))
         return new WizardContainerWidgetTaskMenu(wz, parent);
     return new ContainerWidgetTaskMenu(widget, PageContainer, parent);

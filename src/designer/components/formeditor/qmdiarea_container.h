@@ -91,7 +91,9 @@ private:
 
 typedef ExtensionFactory<QDesignerContainerExtension,  QMdiArea,  QMdiAreaContainer> QMdiAreaContainerFactory;
 typedef QDesignerPropertySheetFactory<QMdiArea, QMdiAreaPropertySheet> QMdiAreaPropertySheetFactory;
+#ifndef QT_NO_WORKSPACE
 typedef QDesignerPropertySheetFactory<QWorkspace, QMdiAreaPropertySheet> QWorkspacePropertySheetFactory;
+#endif // QT_NO_WORKSPACE
 }  // namespace qdesigner_internal
 
 QT_END_NAMESPACE

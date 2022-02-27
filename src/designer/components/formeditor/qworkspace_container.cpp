@@ -24,6 +24,8 @@
 
 #include <QtGui/QWorkspace>
 
+#ifndef QT_NO_WORKSPACE
+
 QT_BEGIN_NAMESPACE
 
 namespace qdesigner_internal {
@@ -78,4 +80,7 @@ void QWorkspaceContainer::remove(int /* index */)
 }
 
 QT_END_NAMESPACE
+
 #include "moc_qworkspace_container.h"
+
+#endif // QT_NO_WORKSPACE

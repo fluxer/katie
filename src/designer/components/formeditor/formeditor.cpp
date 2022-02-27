@@ -93,7 +93,9 @@ FormEditor::FormEditor(QObject *parent)
     QMainWindowContainerFactory::registerExtension(mgr, containerExtensionId);
     QDockWidgetContainerFactory::registerExtension(mgr, containerExtensionId);
     QScrollAreaContainerFactory::registerExtension(mgr, containerExtensionId);
+#ifndef QT_NO_WORKSPACE
     QWorkspaceContainerFactory::registerExtension(mgr, containerExtensionId);
+#endif // QT_NO_WORKSPACE
     QMdiAreaContainerFactory::registerExtension(mgr, containerExtensionId);
     QWizardContainerFactory::registerExtension(mgr, containerExtensionId);
 
@@ -114,7 +116,9 @@ FormEditor::FormEditor(QObject *parent)
     QToolBoxWidgetPropertySheetFactory::registerExtension(mgr);
     QTabWidgetPropertySheetFactory::registerExtension(mgr);
     QMdiAreaPropertySheetFactory::registerExtension(mgr);
+#ifndef QT_NO_WORKSPACE
     QWorkspacePropertySheetFactory::registerExtension(mgr);
+#endif // QT_NO_WORKSPACE
     QWizardPagePropertySheetFactory::registerExtension(mgr);
     QWizardPropertySheetFactory::registerExtension(mgr);
 

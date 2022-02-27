@@ -1693,8 +1693,12 @@ static inline bool checkContainerProperty(const QWidget *w, const QString &prope
         return QTabWidgetPropertySheet::checkProperty(propertyName);
     if (qobject_cast<const QStackedWidget *>(w))
         return QStackedWidgetPropertySheet::checkProperty(propertyName);
-    if (qobject_cast<const QMdiArea *>(w) || qobject_cast<const QWorkspace *>(w))
+    if (qobject_cast<const QMdiArea *>(w))
         return QMdiAreaPropertySheet::checkProperty(propertyName);
+#ifndef QT_NO_WORKSPACE
+    if (qobject_cast<const QWorkspace *>(w))
+        return QMdiAreaPropertySheet::checkProperty(propertyName);
+#endif // QT_NO_WORKSPACE
     return true;
 }
 

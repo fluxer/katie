@@ -28,6 +28,8 @@
 #include <extensionfactory_p.h>
 #include <QtGui/QWorkspace>
 
+#ifndef QT_NO_WORKSPACE
+
 QT_BEGIN_NAMESPACE
 
 namespace qdesigner_internal {
@@ -55,5 +57,7 @@ typedef ExtensionFactory<QDesignerContainerExtension, QWorkspace, QWorkspaceCont
 }  // namespace qdesigner_internal
 
 QT_END_NAMESPACE
+
+#endif // QT_NO_WORKSPACE
 
 #endif // QWORKSPACE_CONTAINER_H
