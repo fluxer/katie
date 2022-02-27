@@ -159,6 +159,8 @@
 // #cmakedefine QT_NO_UNDOCOMMAND
 // #cmakedefine QT_NO_UNDOSTACK
 // #cmakedefine QT_NO_VALIDATOR
+// #cmakedefine QT_NO_VECTOR4D
+// #cmakedefine QT_NO_WARNING_OUTPUT
 
 // Misc
 #cmakedefine QT_NO_USING_NAMESPACE
@@ -215,8 +217,6 @@
 #cmakedefine QT_NO_UNDOGROUP
 #cmakedefine QT_NO_UNDOVIEW
 #cmakedefine QT_NO_VECTOR2D
-#cmakedefine QT_NO_VECTOR4D
-#cmakedefine QT_NO_WARNING_OUTPUT
 #cmakedefine QT_NO_WHATSTHIS
 #cmakedefine QT_NO_WHEELEVENT
 #cmakedefine QT_NO_WIZARD

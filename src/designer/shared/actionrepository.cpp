@@ -179,7 +179,9 @@ void  ActionModel::setItems(QDesignerFormEditorInterface *core, QAction *action,
         icon = defaultIcon;
     item->setIcon(icon);
     item->setToolTip(firstTooltip);
+#ifndef QT_NO_WHATSTHIS
     item->setWhatsThis(firstTooltip);
+#endif // QT_NO_WHATSTHIS
     // Used
     const QWidgetList associatedDesignerWidgets = associatedWidgets(action);
     const bool used = !associatedDesignerWidgets.empty();

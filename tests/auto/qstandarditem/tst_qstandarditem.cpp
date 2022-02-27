@@ -147,10 +147,12 @@ void tst_QStandardItem::getSetData()
             QString statusTip = QString("statusTip %0").arg(i);
             item.setStatusTip(statusTip);
             QCOMPARE(item.statusTip(), statusTip);
-        
+
+#ifndef QT_NO_WHATSTHIS
             QString whatsThis = QString("whatsThis %0").arg(i);
             item.setWhatsThis(whatsThis);
             QCOMPARE(item.whatsThis(), whatsThis);
+#endif // QT_NO_WHATSTHIS
             
             QSize sizeHint(64*i, 48*i);
             item.setSizeHint(sizeHint);
@@ -182,7 +184,9 @@ void tst_QStandardItem::getSetData()
             QCOMPARE(item.icon(), icon);
             QCOMPARE(item.toolTip(), toolTip);
             QCOMPARE(item.statusTip(), statusTip);
+#ifndef QT_NO_WHATSTHIS
             QCOMPARE(item.whatsThis(), whatsThis);
+#endif // QT_NO_WHATSTHIS
             QCOMPARE(item.sizeHint(), sizeHint);
             QCOMPARE(item.font(), font);
             QCOMPARE(item.textAlignment(), textAlignment);
@@ -194,7 +198,9 @@ void tst_QStandardItem::getSetData()
             QCOMPARE(qvariant_cast<QIcon>(item.data(Qt::DecorationRole)), icon);
             QCOMPARE(qvariant_cast<QString>(item.data(Qt::ToolTipRole)), toolTip);
             QCOMPARE(qvariant_cast<QString>(item.data(Qt::StatusTipRole)), statusTip);
+#ifndef QT_NO_WHATSTHIS
             QCOMPARE(qvariant_cast<QString>(item.data(Qt::WhatsThisRole)), whatsThis);
+#endif // QT_NO_WHATSTHIS
             QCOMPARE(qvariant_cast<QSize>(item.data(Qt::SizeHintRole)), sizeHint);
             QCOMPARE(qvariant_cast<QFont>(item.data(Qt::FontRole)), font);
             QCOMPARE(qvariant_cast<int>(item.data(Qt::TextAlignmentRole)), int(textAlignment));
@@ -864,7 +870,9 @@ void tst_QStandardItem::streamItem()
     item.setText(QLatin1String("text"));
     item.setToolTip(QLatin1String("toolTip"));
     item.setStatusTip(QLatin1String("statusTip"));
+#ifndef QT_NO_WHATSTHIS
     item.setWhatsThis(QLatin1String("whatsThis"));
+#endif // QT_NO_WHATSTHIS
     item.setSizeHint(QSize(64, 48));
     item.setFont(QFont());
     item.setTextAlignment(Qt::AlignLeft|Qt::AlignVCenter);
@@ -884,7 +892,9 @@ void tst_QStandardItem::streamItem()
         QCOMPARE(streamedItem.text(), item.text());
         QCOMPARE(streamedItem.toolTip(), item.toolTip());
         QCOMPARE(streamedItem.statusTip(), item.statusTip());
+#ifndef QT_NO_WHATSTHIS
         QCOMPARE(streamedItem.whatsThis(), item.whatsThis());
+#endif // QT_NO_WHATSTHIS
         QCOMPARE(streamedItem.sizeHint(), item.sizeHint());
         QCOMPARE(streamedItem.font(), item.font());
         QCOMPARE(streamedItem.textAlignment(), item.textAlignment());
@@ -921,7 +931,9 @@ void tst_QStandardItem::clone()
     item.setText(QLatin1String("text"));
     item.setToolTip(QLatin1String("toolTip"));
     item.setStatusTip(QLatin1String("statusTip"));
+#ifndef QT_NO_WHATSTHIS
     item.setWhatsThis(QLatin1String("whatsThis"));
+#endif // QT_NO_WHATSTHIS
     item.setSizeHint(QSize(64, 48));
     item.setFont(QFont());
     item.setTextAlignment(Qt::AlignLeft|Qt::AlignVCenter);
@@ -934,7 +946,9 @@ void tst_QStandardItem::clone()
     QCOMPARE(clone->text(), item.text());
     QCOMPARE(clone->toolTip(), item.toolTip());
     QCOMPARE(clone->statusTip(), item.statusTip());
+#ifndef QT_NO_WHATSTHIS
     QCOMPARE(clone->whatsThis(), item.whatsThis());
+#endif // QT_NO_WHATSTHIS
     QCOMPARE(clone->sizeHint(), item.sizeHint());
     QCOMPARE(clone->font(), item.font());
     QCOMPARE(clone->textAlignment(), item.textAlignment());

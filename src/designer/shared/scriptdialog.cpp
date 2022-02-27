@@ -51,7 +51,9 @@ namespace qdesigner_internal {
 The widget and its children are accessible via the \
 variables <i>widget</i> and <i>childWidgets</i>, respectively.");
         m_textEdit->setToolTip(textHelp);
+#ifndef QT_NO_WHATSTHIS
         m_textEdit->setWhatsThis(textHelp);
+#endif // QT_NO_WHATSTHIS
         m_textEdit->setMinimumSize(QSize(600, 400));
         vboxLayout->addWidget(m_textEdit);
         new QScriptHighlighter(m_textEdit->document());

@@ -2190,9 +2190,11 @@ static void copyRolesToItem(const ItemData *id, T *item, DesignerIconCache *icon
                 case Qt::StatusTipPropertyRole:
                     item->setStatusTip(qvariant_cast<PropertySheetStringValue>(it.value()).value());
                     break;
+#ifndef QT_NO_WHATSTHIS
                 case Qt::WhatsThisPropertyRole:
                     item->setWhatsThis(qvariant_cast<PropertySheetStringValue>(it.value()).value());
                     break;
+#endif // QT_NO_WHATSTHIS
                 }
             }
         }
@@ -2262,9 +2264,11 @@ void ItemData::fillTreeItemColumn(QTreeWidgetItem *item, int column, DesignerIco
             case Qt::StatusTipPropertyRole:
                 item->setStatusTip(column, qvariant_cast<PropertySheetStringValue>(it.value()).value());
                 break;
+#ifndef QT_NO_WHATSTHIS
             case Qt::WhatsThisPropertyRole:
                 item->setWhatsThis(column, qvariant_cast<PropertySheetStringValue>(it.value()).value());
                 break;
+#endif // QT_NO_WHATSTHIS
             }
         }
 }
