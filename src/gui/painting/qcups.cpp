@@ -259,7 +259,7 @@ QString QCUPSSupport::unicodeString(const char *s)
 #ifndef QT_NO_TEXTCODEC
     return codec->toUnicode(s);
 #else
-    return QLatin1String(s);
+    return QString::fromLatin1(s);
 #endif
 }
 
