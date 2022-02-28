@@ -128,7 +128,7 @@ int RegExp::match(const UString& s, int startOffset, Vector<int, 32>* ovector)
 
     if (isValid()) {
         // Set up the offset vector for the result.
-        // First 2/3 used for result, the last third unsed but there for compatibility.
+        // First 2/3 used for result, the last third unused but there for compatibility.
         int* offsetVector;
         int offsetVectorSize;
         int fixedSizeOffsetVector[3];
