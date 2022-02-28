@@ -116,13 +116,6 @@ public:
     QAbstractSocket::SocketState state;
 
     QAbstractSocket::SocketError socketError;
-
-    bool prePauseReadSocketNotifierState;
-    bool prePauseWriteSocketNotifierState;
-    bool prePauseExceptionSocketNotifierState;
-    static void pauseSocketNotifiers(QAbstractSocket*);
-    static void resumeSocketNotifiers(QAbstractSocket*);
-    static QAbstractSocketEngine* getSocketEngine(QAbstractSocket*);
 };
 
 QT_END_NAMESPACE
