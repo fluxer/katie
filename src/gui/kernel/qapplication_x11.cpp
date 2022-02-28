@@ -166,8 +166,6 @@ static const char* X11AtomsTbl[QX11Data::NPredefinedAtoms] = {
 
     "_NET_SUPPORTING_WM_CHECK\0",
 
-    "_NET_WM_CM_S0\0",
-
     "_NET_SYSTEM_TRAY_VISUAL\0",
     "_NET_SYSTEM_TRAY_OPCODE\0",
     "MANAGER\0",
@@ -541,6 +539,10 @@ static void qt_x11_create_intern_atoms()
         qt_x11Data->atoms[i] = XInternAtom(qt_x11Data->display, const_cast<char*>(X11AtomsTbl[i]), False);
     }
 #endif
+
+    QSTACKARRAY(char, snprintfbuf, 32);
+    ::snprintf(snprintfbuf, sizeof(snprintfbuf), "_NET_WM_CM_S%i", qt_x11Data->defaultScreen);
+    qt_x11Data->compositorAtom = XInternAtom(qt_x11Data->display, snprintfbuf, False);
 }
 
 Q_GUI_EXPORT void qt_x11_apply_settings_in_all_apps()
@@ -1228,15 +1230,14 @@ void qt_init(QApplicationPrivate *priv, Display *display,
 #endif // QT_NO_XRANDR
     }
 
-        // Attempt to determine if compositor is active
+    // Attempt to determine if compositor is active
 #ifndef QT_NO_XFIXES
-    XFixesSelectSelectionInput(qt_x11Data->display, QX11Info::appRootWindow(), ATOM(_NET_WM_CM_S0),
+    XFixesSelectSelectionInput(qt_x11Data->display, QX11Info::appRootWindow(), qt_x11Data->compositorAtom,
                                XFixesSetSelectionOwnerNotifyMask
                                | XFixesSelectionWindowDestroyNotifyMask
                                | XFixesSelectionClientCloseNotifyMask);
 #endif // QT_NO_XFIXES
-    qt_x11Data->compositingManagerRunning = XGetSelectionOwner(qt_x11Data->display,
-                                                               ATOM(_NET_WM_CM_S0));
+    qt_x11Data->compositingManagerRunning = XGetSelectionOwner(qt_x11Data->display, qt_x11Data->compositorAtom);
 
     QApplicationPrivate::x11_apply_settings();
 
@@ -1783,7 +1784,7 @@ int QApplication::x11ProcessEvent(XEvent* event)
         XFixesSelectionNotifyEvent *req =
             reinterpret_cast<XFixesSelectionNotifyEvent *>(event);
         qt_x11Data->time = req->selection_timestamp;
-        if (req->selection == ATOM(_NET_WM_CM_S0))
+        if (req->selection == qt_x11Data->compositorAtom)
             qt_x11Data->compositingManagerRunning = req->owner;
     }
 #endif

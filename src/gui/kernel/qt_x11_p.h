@@ -355,8 +355,6 @@ struct QX11Data
 
         _NET_SUPPORTING_WM_CHECK,
 
-        _NET_WM_CM_S0,
-
         _NET_SYSTEM_TRAY_VISUAL,
         _NET_SYSTEM_TRAY_OPCODE,
         MANAGER,
@@ -394,6 +392,7 @@ struct QX11Data
         NPredefinedAtoms
     };
     Atom atoms[NPredefinedAtoms];
+    Atom compositorAtom;
 
     bool isSupportedByWM(Atom atom);
 
