@@ -12,7 +12,7 @@ There are several things you should be aware before considering Katie:
 
  - some things have changed:
   - QMake build system replaced with CMake
-  - Jansson, PCRE, Freetype, ICU, X11 and libpng are required for building
+  - Jansson, Freetype, ICU, X11 and libpng are required for building
   - D-Bus and CUPS must be linked to during build
   - QtUiTools is build as shared library by default
   - moc, uic, rcc, etc. are linked to components
@@ -69,7 +69,7 @@ There are several things you should be aware before considering Katie:
   - improved namespaces support and introduced QT_NAMESPACE_COMPAT
   - improved cross-compilation support
   - improved POSIX, XSI, SUSv2, etc. requirements build checks
-  - script component relies on PCRE instead of internal copy
+  - script component uses std::regex instead of internal PCRE copy
   - tests and benchmarks can be run without prior installation
 
 Bugs fixed in Katie, some of which in Qt5 too:

@@ -20,9 +20,9 @@ RUN_DEPENDS = xdg-open:devel/xdg-utils \
 	${LOCALBASE}/share/fonts/freefont-ttf/FreeSans.ttf:x11-fonts/freefont-ttf
 LIB_DEPENDS = libdeflate.so:archivers/libdeflate libicuuc.so:devel/icu \
 	libicui18n.so:devel/icu libjansson.so:devel/jansson \
-	libpcre.so:devel/pcre libpng.so:graphics/png \
-	libfreetype.so:print/freetype2 libfontconfig.so:x11-fonts/fontconfig \
-	libdbus-1.so:devel/dbus libcups.so:print/cups
+	libpng.so:graphics/png libfreetype.so:print/freetype2 \
+	libfontconfig.so:x11-fonts/fontconfig libdbus-1.so:devel/dbus \
+	libcups.so:print/cups
 CMAKE_ARGS = -DKATIE_TOOLS_SUFFIX="-katie" -Wno-dev
 
 OPTIONS_DEFINE = NLS

@@ -8,7 +8,6 @@ add_definitions(
 )
 set(EXTRA_SCRIPT_LIBS
     KtCore
-    ${PCRE_LIBRARIES}
     ${CMAKE_THREAD_LIBS_INIT}
 )
 
@@ -47,7 +46,6 @@ include_directories(
     ${CMAKE_SOURCE_DIR}/src/3rdparty/javascriptcore/API
     ${CMAKE_SOURCE_DIR}/src/3rdparty/javascriptcore/bytecode
     ${CMAKE_SOURCE_DIR}/src/3rdparty/javascriptcore/generated
-    ${PCRE_INCLUDES}
 )
 
 set(SCRIPT_HEADERS

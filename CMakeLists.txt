@@ -186,15 +186,6 @@ set_package_properties(Jansson PROPERTIES
     TYPE REQUIRED
 )
 
-# v7.7+ required for JavaScript compatibility
-find_package(PCRE 7.7)
-set_package_properties(PCRE PROPERTIES
-    PURPOSE "Required for regexp support in script component"
-    DESCRIPTION "Perl Compatible Regular Expressions"
-    URL "https://www.pcre.org/"
-    TYPE REQUIRED
-)
-
 find_package(X11)
 set_package_properties(X11 PROPERTIES
     PURPOSE "Required for X11/X.Org integration support"
