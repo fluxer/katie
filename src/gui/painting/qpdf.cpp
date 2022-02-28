@@ -275,7 +275,7 @@ QByteArray QPdf::generatePath(const QPainterPath &path, const QTransform &matrix
                 s << "h\n";
             s << matrix.map(QPointF(elm.x, elm.y)) << "m\n";
             start = i;
-                break;
+            break;
         case QPainterPath::LineToElement:
             s << matrix.map(QPointF(elm.x, elm.y)) << "l\n";
             break;

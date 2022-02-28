@@ -502,8 +502,7 @@ int QPdfEnginePrivate::addImage(const QImage &img, bool *bitmap, qint64 serial_n
 
     if (format == QImage::Format_Mono) {
         int bytesPerLine = (w + 7) >> 3;
-        QByteArray data;
-        data.resize(bytesPerLine * h);
+        QByteArray data(bytesPerLine * h, Qt::Uninitialized);
         char *rawdata = data.data();
         for (int y = 0; y < h; ++y) {
             memcpy(rawdata, image.constScanLine(y), bytesPerLine);
@@ -511,15 +510,13 @@ int QPdfEnginePrivate::addImage(const QImage &img, bool *bitmap, qint64 serial_n
         }
         object = writeImage(data, w, h, d, 0, 0);
     } else {
-        QByteArray softMaskData;
         bool dct = false;
-        QByteArray imageData;
         bool hasAlpha = false;
         bool hasMask = false;
+        QByteArray softMaskData(w * h, Qt::Uninitialized);
+        QByteArray imageData(colorMode == QPrinter::GrayScale ? w * h : 3 * w * h, Qt::Uninitialized);
 
-        imageData.resize(colorMode == QPrinter::GrayScale ? w * h : 3 * w * h);
         uchar *data = (uchar *)imageData.data();
-        softMaskData.resize(w * h);
         uchar *sdata = (uchar *)softMaskData.data();
         for (int y = 0; y < h; ++y) {
             const QRgb *rgb = (const QRgb *)image.constScanLine(y);
