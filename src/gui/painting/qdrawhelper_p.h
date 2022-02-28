@@ -372,8 +372,19 @@ inline quint16 qt_colorConvert(const quint32 color, const quint16 dummy)
 template <class T>
 inline void qt_memfill(T *dest, const T color, int count)
 {
-    while (count--)
-        *dest++ = color;
+    int n = (count + 7) / 8;
+    switch (count & 0x07)
+    {
+    case 0: do { *dest++ = color;
+        case 7:      *dest++ = color;
+        case 6:      *dest++ = color;
+        case 5:      *dest++ = color;
+        case 4:      *dest++ = color;
+        case 3:      *dest++ = color;
+        case 2:      *dest++ = color;
+        case 1:      *dest++ = color;
+        } while (--n > 0);
+    }
 }
 
 template <class T>
@@ -399,7 +410,6 @@ inline void qt_memconvert(DST *dest, const SRC *src, int count)
     Q_ASSERT(sizeof(DST) != sizeof(SRC));
     Q_ASSERT(sizeof(DST) == sizeof(quint16) || sizeof(DST) == sizeof(quint32));
     Q_ASSERT(sizeof(SRC) == sizeof(quint16) || sizeof(SRC) == sizeof(quint32));
-    /* Duff's device */
     int n = (count + 7) / 8;
     switch (count & 0x07)
     {
