@@ -32,24 +32,27 @@
 #include "qtimer.h"
 #include "qsystemtrayicon_p.h"
 #include "qpaintengine.h"
+#include "qcorecommon_p.h"
 
 #ifndef QT_NO_SYSTEMTRAYICON
+
 QT_BEGIN_NAMESPACE
 
 Window QSystemTrayIconSys::sysTrayWindow = XNone;
 QList<QSystemTrayIconSys *> QSystemTrayIconSys::trayIcons;
 QCoreApplication::EventFilter QSystemTrayIconSys::oldEventFilter = 0;
 Atom QSystemTrayIconSys::sysTraySelection = XNone;
-XVisualInfo QSystemTrayIconSys::sysTrayVisual = {0, 0, 0, 0, 0, 0, 0, 0, 0, 0};
+XVisualInfo QSystemTrayIconSys::sysTrayVisual = { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 };
 
 // Locate the system tray
 Window QSystemTrayIconSys::locateSystemTray()
 {
     Display *display = QX11Info::display();
     if (sysTraySelection == XNone) {
-        int screen = QX11Info::appScreen();
-        QString net_sys_tray = QString::fromLatin1("_NET_SYSTEM_TRAY_S%1").arg(screen);
-        sysTraySelection = XInternAtom(display, net_sys_tray.toLatin1(), False);
+        const int screen = QX11Info::appScreen();
+        QSTACKARRAY(char, snprintfbuf, 32);
+        ::snprintf(snprintfbuf, sizeof(snprintfbuf), "_NET_SYSTEM_TRAY_S%i", screen);
+        sysTraySelection = XInternAtom(display, snprintfbuf, False);
     }
 
     return XGetSelectionOwner(QX11Info::display(), sysTraySelection);
@@ -366,6 +369,5 @@ void QSystemTrayIconPrivate::showMessage_sys(const QString &message, const QStri
 }
 
 QT_END_NAMESPACE
+
 #endif //QT_NO_SYSTEMTRAYICON
-
-
