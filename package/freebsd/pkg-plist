@@ -760,7 +760,6 @@ include/katie/QtGui/QPropertyAnimation
 include/katie/QtGui/QProxyModel
 include/katie/QtGui/QProxyStyle
 include/katie/QtGui/QPushButton
-include/katie/QtGui/QQuaternion
 include/katie/QtGui/QRadialGradient
 include/katie/QtGui/QRadioButton
 include/katie/QtGui/QRegExpValidator
@@ -1049,7 +1048,6 @@ include/katie/QtGui/qpropertyanimation.h
 include/katie/QtGui/qproxymodel.h
 include/katie/QtGui/qproxystyle.h
 include/katie/QtGui/qpushbutton.h
-include/katie/QtGui/qquaternion.h
 include/katie/QtGui/qradiobutton.h
 include/katie/QtGui/qregion.h
 include/katie/QtGui/qrgb.h

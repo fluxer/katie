@@ -44,7 +44,7 @@ QT_BEGIN_NAMESPACE
     functions are represented by \c double values, it is possible to
     lose precision.
 
-    \sa QQuaternion, QVector2D, QVector3D
+    \sa QVector2D, QVector3D
 */
 
 /*!

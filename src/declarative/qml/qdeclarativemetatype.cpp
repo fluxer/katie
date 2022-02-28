@@ -1025,7 +1025,6 @@ QT_END_NAMESPACE
 #include <QtGui/qvector2d.h>
 #include <QtGui/qvector3d.h>
 #include <QtGui/qvector4d.h>
-#include <QtGui/qquaternion.h>
 
 QT_BEGIN_NAMESPACE
 
@@ -1101,9 +1100,6 @@ bool QDeclarativeMetaType::canCopy(int type)
 #ifndef QT_NO_VECTOR4D
     case QMetaType::QVector4D:
 #endif // QT_NO_VECTOR4D
-#ifndef QT_NO_QUATERNION
-    case QMetaType::QQuaternion:
-#endif
         return true;
 
     default:
@@ -1318,11 +1314,6 @@ bool QDeclarativeMetaType::copy(int type, void *data, const void *copy)
             *static_cast<NS(QVector4D) *>(data) = *static_cast<const NS(QVector4D)*>(copy);
             return true;
 #endif // QT_NO_VECTOR4D
-#ifndef QT_NO_QUATERNION
-        case QMetaType::QQuaternion:
-            *static_cast<NS(QQuaternion) *>(data) = *static_cast<const NS(QQuaternion)*>(copy);
-            return true;
-#endif // QT_NO_QUATERNION
 
         default:
             if (type == qMetaTypeId<QVariant>()) {
@@ -1527,11 +1518,6 @@ bool QDeclarativeMetaType::copy(int type, void *data, const void *copy)
             *static_cast<NS(QVector4D) *>(data) = NS(QVector4D)();
             return true;
 #endif // QT_NO_VECTOR4D
-#ifndef QT_NO_QUATERNION
-        case QMetaType::QQuaternion:
-            *static_cast<NS(QQuaternion) *>(data) = NS(QQuaternion)();
-            return true;
-#endif // QT_NO_QUATERNION
         default:
             if (type == qMetaTypeId<QVariant>()) {
                 *static_cast<NS(QVariant) *>(data) = NS(QVariant)();

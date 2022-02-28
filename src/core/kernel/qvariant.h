@@ -127,7 +127,6 @@ class Q_CORE_EXPORT QVariant
         Vector2D = QMetaType::QVector2D,
         Vector3D = QMetaType::QVector3D,
         Vector4D = QMetaType::QVector4D,
-        Quaternion = QMetaType::QQuaternion,
         LastGuiType = QMetaType::LastGuiType,
 
         UserType = 127,

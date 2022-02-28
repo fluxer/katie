@@ -133,7 +133,6 @@ set(GUI_PUBLIC_HEADERS
     QProxyModel
     QProxyStyle
     QPushButton
-    QQuaternion
     QRadioButton
     QRegion
     QRgb
@@ -394,7 +393,6 @@ set(GUI_HEADERS
     ${CMAKE_CURRENT_SOURCE_DIR}/kernel/qeventdispatcher_x11_p.h
     ${CMAKE_CURRENT_SOURCE_DIR}/math3d/qgenericmatrix.h
     ${CMAKE_CURRENT_SOURCE_DIR}/math3d/qmatrix4x4.h
-    ${CMAKE_CURRENT_SOURCE_DIR}/math3d/qquaternion.h
     ${CMAKE_CURRENT_SOURCE_DIR}/math3d/qvector2d.h
     ${CMAKE_CURRENT_SOURCE_DIR}/math3d/qvector3d.h
     ${CMAKE_CURRENT_SOURCE_DIR}/math3d/qvector4d.h
@@ -736,7 +734,6 @@ set(GUI_SOURCES
     ${CMAKE_CURRENT_SOURCE_DIR}/kernel/qt_x11.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/math3d/qgenericmatrix.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/math3d/qmatrix4x4.cpp
-    ${CMAKE_CURRENT_SOURCE_DIR}/math3d/qquaternion.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/math3d/qvector2d.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/math3d/qvector3d.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/math3d/qvector4d.cpp

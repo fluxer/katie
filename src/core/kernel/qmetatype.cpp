@@ -142,7 +142,6 @@ QT_BEGIN_NAMESPACE
     \value QVector2D QVector2D
     \value QVector3D QVector3D
     \value QVector4D QVector4D
-    \value QQuaternion QQuaternion
 
     \value VoidStar \c{void *}
     \value Long \c{long}
@@ -267,7 +266,6 @@ static const struct MetaTypeTblData {
     QT_ADD_STATIC_METATYPE("QVector2D", QMetaType::QVector2D),
     QT_ADD_STATIC_METATYPE("QVector3D", QMetaType::QVector3D),
     QT_ADD_STATIC_METATYPE("QVector4D", QMetaType::QVector4D),
-    QT_ADD_STATIC_METATYPE("QQuaternion", QMetaType::QQuaternion),
 
     /* All Metatype builtins */
     QT_ADD_STATIC_METATYPE("void*", QMetaType::VoidStar),
@@ -761,7 +759,6 @@ bool QMetaType::save(QDataStream &stream, int type, const void *data)
     case QMetaType::QVector2D:
     case QMetaType::QVector3D:
     case QMetaType::QVector4D:
-    case QMetaType::QQuaternion:
         if (!qMetaTypeGuiHelper)
             return false;
         qMetaTypeGuiHelper[type - FirstGuiType].saveOp(stream, data);
@@ -777,7 +774,8 @@ bool QMetaType::save(QDataStream &stream, int type, const void *data)
         if (!saveOp)
             return false;
         saveOp(stream, data);
-        break; }
+        break;
+    }
     }
 
     return true;
@@ -959,7 +957,6 @@ bool QMetaType::load(QDataStream &stream, int type, void *data)
     case QMetaType::QVector2D:
     case QMetaType::QVector3D:
     case QMetaType::QVector4D:
-    case QMetaType::QQuaternion:
         if (!qMetaTypeGuiHelper)
             return false;
         qMetaTypeGuiHelper[type - FirstGuiType].loadOp(stream, data);
@@ -975,7 +972,8 @@ bool QMetaType::load(QDataStream &stream, int type, void *data)
         if (!loadOp)
             return false;
         loadOp(stream, data);
-        break; }
+        break;
+    }
     }
     return true;
 }

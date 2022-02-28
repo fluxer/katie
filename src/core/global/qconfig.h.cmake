@@ -204,7 +204,6 @@
 #cmakedefine QT_NO_PRINTPREVIEWDIALOG
 #cmakedefine QT_NO_PRINTPREVIEWWIDGET
 #cmakedefine QT_NO_PROGRESSDIALOG
-#cmakedefine QT_NO_QUATERNION
 #cmakedefine QT_NO_QUUID_STRING
 #cmakedefine QT_NO_SHAREDMEMORY
 #cmakedefine QT_NO_SIZEGRIP

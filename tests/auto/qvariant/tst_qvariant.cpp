@@ -43,7 +43,6 @@
 #include <qvector2d.h>
 #include <qvector3d.h>
 #include <qvector4d.h>
-#include <qquaternion.h>
 #include <qnumeric.h>
 
 #include <limits.h>
@@ -176,7 +175,6 @@ private slots:
     void vector2D();
     void vector3D();
     void vector4D();
-    void quaternion();
 
     void url();
 
@@ -1363,23 +1361,6 @@ void tst_QVariant::vector4D()
 #endif // QT_NO_VECTOR4D
 }
 
-void tst_QVariant::quaternion()
-{
-#ifndef QT_NO_QUATERNION
-    QVariant variant;
-    QQuaternion quaternion = qvariant_cast<QQuaternion>(variant);
-    QVERIFY(quaternion.isIdentity());
-    qVariantSetValue(variant, QQuaternion(0.1, 0.2, 0.3, 0.4));
-    QCOMPARE(QQuaternion(0.1, 0.2, 0.3, 0.4), qvariant_cast<QQuaternion>(variant));
-
-    void *pquaternion = QMetaType::construct(QVariant::Quaternion, 0);
-    QVERIFY(pquaternion);
-    QMetaType::destroy(QVariant::Quaternion, pquaternion);
-#else // QT_NO_QUATERNION
-    QSKIP("Katie compiled without quaternion support (QT_NO_QUATERNION)", SkipAll);
-#endif // QT_NO_QUATERNION
-}
-
 void tst_QVariant::writeToReadFromDataStream_data()
 {
 
@@ -1872,7 +1853,6 @@ void tst_QVariant::typeName_data()
     QTest::newRow("49") << int(QVariant::Vector2D) << QByteArray("QVector2D");
     QTest::newRow("50") << int(QVariant::Vector3D) << QByteArray("QVector3D");
     QTest::newRow("51") << int(QVariant::Vector4D) << QByteArray("QVector4D");
-    QTest::newRow("52") << int(QVariant::Quaternion) << QByteArray("QQuaternion");
 }
 
 void tst_QVariant::typeName()

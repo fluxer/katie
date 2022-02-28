@@ -45,7 +45,6 @@
 #include <QtGui/qvector3d.h>
 #include <QtGui/qvector4d.h>
 #include <QtGui/qmatrix4x4.h>
-#include <QtGui/qquaternion.h>
 #include <QtGui/qfont.h>
 
 QT_BEGIN_NAMESPACE
@@ -306,36 +305,6 @@ private:
     QVector4D vector;
 };
 #endif // QT_NO_VECTOR4D
-
-#ifndef QT_NO_QUATERNION
-class Q_AUTOTEST_EXPORT QDeclarativeQuaternionValueType : public QDeclarativeValueType
-{
-    Q_PROPERTY(qreal scalar READ scalar WRITE setScalar)
-    Q_PROPERTY(qreal x READ x WRITE setX)
-    Q_PROPERTY(qreal y READ y WRITE setY)
-    Q_PROPERTY(qreal z READ z WRITE setZ)
-    Q_OBJECT
-public:
-    QDeclarativeQuaternionValueType(QObject *parent = nullptr);
-
-    virtual void read(QObject *, int);
-    virtual void write(QObject *, int, QDeclarativePropertyPrivate::WriteFlags);
-    virtual QVariant value();
-    virtual void setValue(QVariant value);
-
-    qreal scalar() const;
-    qreal x() const;
-    qreal y() const;
-    qreal z() const;
-    void setScalar(qreal);
-    void setX(qreal);
-    void setY(qreal);
-    void setZ(qreal);
-
-private:
-    QQuaternion quaternion;
-};
-#endif // QT_NO_QUATERNION
 
 class Q_AUTOTEST_EXPORT QDeclarativeMatrix4x4ValueType : public QDeclarativeValueType
 {

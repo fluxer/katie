@@ -437,7 +437,6 @@ classlist = [
     "QProxyModel",
     "QProxyStyle",
     "QPushButton",
-    "QQuaternion",
     "QQueue",
     "QRadialGradient",
     "QRadioButton",

@@ -24,7 +24,6 @@
 
 #include <QtGui/qvector3d.h>
 #include <QtGui/qvector4d.h>
-#include <QtGui/qquaternion.h>
 #include <QtGui/qgenericmatrix.h>
 #include <QtCore/qrect.h>
 
@@ -115,9 +114,6 @@ public:
     void translate(qreal x, qreal y);
     void translate(qreal x, qreal y, qreal z);
     void rotate(qreal angle, qreal x, qreal y, qreal z = 0.0f);
-#ifndef QT_NO_QUATERNION
-    void rotate(const QQuaternion& quaternion);
-#endif
 
     void ortho(const QRect& rect);
     void ortho(const QRectF& rect);

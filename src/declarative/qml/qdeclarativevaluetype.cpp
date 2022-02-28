@@ -120,11 +120,6 @@ QDeclarativeValueType *QDeclarativeValueTypeFactory::valueType(int t)
         rv = new QDeclarativeVector4DValueType;
         break;
 #endif // QT_NO_VECTOR4D
-#ifndef QT_NO_QUATERNION
-    case QVariant::Quaternion:
-        rv = new QDeclarativeQuaternionValueType;
-        break;
-#endif // QT_NO_QUATERNION
     case QVariant::Matrix4x4:
         rv = new QDeclarativeMatrix4x4ValueType;
         break;
@@ -654,76 +649,6 @@ void QDeclarativeVector4DValueType::setW(qreal w)
     vector.setW(w);
 }
 #endif // QT_NO_VECTOR4D
-
-#ifndef QT_NO_QUATERNION
-QDeclarativeQuaternionValueType::QDeclarativeQuaternionValueType(QObject *parent)
-: QDeclarativeValueType(parent)
-{
-}
-
-void QDeclarativeQuaternionValueType::read(QObject *obj, int idx)
-{
-    void *a[] = { &quaternion, 0 };
-    QMetaObject::metacall(obj, QMetaObject::ReadProperty, idx, a);
-}
-
-void QDeclarativeQuaternionValueType::write(QObject *obj, int idx, QDeclarativePropertyPrivate::WriteFlags flags)
-{
-    int status = -1;
-    void *a[] = { &quaternion, 0, &status, &flags };
-    QMetaObject::metacall(obj, QMetaObject::WriteProperty, idx, a);
-}
-
-QVariant  QDeclarativeQuaternionValueType::value()
-{
-    return QVariant(quaternion);
-}
-
-void QDeclarativeQuaternionValueType::setValue(QVariant value)
-{
-    quaternion = qvariant_cast<QQuaternion>(value);
-}
-
-qreal QDeclarativeQuaternionValueType::scalar() const
-{
-    return quaternion.scalar();
-}
-
-qreal QDeclarativeQuaternionValueType::x() const
-{
-    return quaternion.x();
-}
-
-qreal QDeclarativeQuaternionValueType::y() const
-{
-    return quaternion.y();
-}
-
-qreal QDeclarativeQuaternionValueType::z() const
-{
-    return quaternion.z();
-}
-
-void QDeclarativeQuaternionValueType::setScalar(qreal scalar)
-{
-    quaternion.setScalar(scalar);
-}
-
-void QDeclarativeQuaternionValueType::setX(qreal x)
-{
-    quaternion.setX(x);
-}
-
-void QDeclarativeQuaternionValueType::setY(qreal y)
-{
-    quaternion.setY(y);
-}
-
-void QDeclarativeQuaternionValueType::setZ(qreal z)
-{
-    quaternion.setZ(z);
-}
-#endif // QT_NO_QUATERNION
 
 QDeclarativeMatrix4x4ValueType::QDeclarativeMatrix4x4ValueType(QObject *parent)
 : QDeclarativeValueType(parent)

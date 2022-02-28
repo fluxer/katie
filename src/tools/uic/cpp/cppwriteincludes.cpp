@@ -423,7 +423,6 @@ static const struct ClassTblData {
     { QLatin1String("QProxyModel"), QLatin1String("QtGui/qproxymodel.h") },
     { QLatin1String("QProxyStyle"), QLatin1String("QtGui/qproxystyle.h") },
     { QLatin1String("QPushButton"), QLatin1String("QtGui/qpushbutton.h") },
-    { QLatin1String("QQuaternion"), QLatin1String("QtGui/qquaternion.h") },
     { QLatin1String("QRadialGradient"), QLatin1String("QtGui/qbrush.h") },
     { QLatin1String("QRadioButton"), QLatin1String("QtGui/qradiobutton.h") },
     { QLatin1String("QReadLocker"), QLatin1String("QtCore/qreadwritelock.h") },
