@@ -37,6 +37,7 @@
 #include "QtGui/qprinter.h"
 
 #ifndef QT_NO_CUPS
+
 #include <cups/cups.h>
 #include <cups/ppd.h>
 
