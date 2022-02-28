@@ -86,28 +86,11 @@ bool QRasterPixmapData::fromData(const uchar *buffer, uint len, const char *form
 void QRasterPixmapData::fromImage(const QImage &sourceImage,
                                   Qt::ImageConversionFlags flags)
 {
-    QImage::Format format;
+    QImage::Format format = QImage::Format_ARGB32_Premultiplied;
     if (pixelType() == BitmapType) {
         format = QImage::Format_MonoLSB;
-    } else {
-        if (sourceImage.depth() == 1) {
-            format = sourceImage.hasAlphaChannel()
-                    ? QImage::Format_ARGB32_Premultiplied
-                    : QImage::Format_RGB32;
-        } else {
-            QImage::Format opaqueFormat = QImage::systemFormat();
-            QImage::Format alphaFormat = QImage::Format_ARGB32_Premultiplied;
-
-            if (!sourceImage.hasAlphaChannel()) {
-                format = opaqueFormat;
-            } else if ((flags & Qt::NoOpaqueDetection) == 0
-                       && !sourceImage.d->checkForAlphaPixels())
-            {
-                format = opaqueFormat;
-            } else {
-                format = alphaFormat;
-            }
-        }
+    } else if ((flags & Qt::NoOpaqueDetection) == 0 && !sourceImage.d->checkForAlphaPixels()) {
+        format = QImage::systemFormat();
     }
 
     image = sourceImage.convertToFormat(format);

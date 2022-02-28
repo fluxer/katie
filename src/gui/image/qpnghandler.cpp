@@ -108,7 +108,7 @@ bool QPngHandler::read(QImage *image)
         return false;
     }
 
-    png_struct *png_ptr = png_create_read_struct(PNG_LIBPNG_VER_STRING,0,0,0);
+    png_struct *png_ptr = png_create_read_struct(PNG_LIBPNG_VER_STRING, 0, 0, 0);
     if (!png_ptr) {
         return false;
     }
@@ -204,7 +204,7 @@ bool QPngHandler::write(const QImage &image)
     QImage copy = image.convertToFormat(image.hasAlphaChannel() ? QImage::Format_ARGB32 : QImage::Format_RGB32);
     const int height = copy.height();
 
-    png_structp png_ptr = png_create_write_struct(PNG_LIBPNG_VER_STRING,0,0,0);
+    png_structp png_ptr = png_create_write_struct(PNG_LIBPNG_VER_STRING, 0, 0, 0);
     if (!png_ptr) {
         return false;
     }
