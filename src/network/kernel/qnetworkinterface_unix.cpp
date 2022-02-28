@@ -66,7 +66,7 @@ static QHostAddress addressFromSockaddr(sockaddr *sa)
         if (scope) {
 #ifndef QT_NO_IPV6IFNAME
             QSTACKARRAY(char, scopeid, IFNAMSIZ);
-            if (::if_indextoname(scope, scopeid)) {
+            if (::if_indextoname(scope, scopeid) != 0) {
                 address.setScopeId(QString::fromLatin1(scopeid));
             } else
 #endif
