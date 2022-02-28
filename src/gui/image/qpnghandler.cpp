@@ -25,6 +25,7 @@
 #include "qimage.h"
 #include "qimage_p.h"
 #include "qdrawhelper_p.h"
+#include "qcorecommon_p.h"
 #include "qguicommon_p.h"
 
 #include <png.h>
@@ -310,7 +311,13 @@ bool QPngHandler::canRead(QIODevice *device)
         return false;
     }
 
-    return device->peek(8) == "\x89\x50\x4E\x47\x0D\x0A\x1A\x0A";
+    QSTACKARRAY(char, head, 8);
+    if (device->peek(head, sizeof(head)) != sizeof(head))
+        return false;
+
+    static const uchar pngheader[]
+        = { 0x89, 0x50, 0x4e, 0x47, 0x0d, 0x0a, 0x1a, 0x0a };
+    return (qstrncmp(head, reinterpret_cast<const char*>(pngheader), 8) == 0);
 }
 
 QT_END_NAMESPACE
