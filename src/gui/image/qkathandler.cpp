@@ -72,7 +72,7 @@ bool QKatHandler::read(QImage *image)
         return false;
     }
 
-    qint64 format = 0;
+    qint8 format = 0;
     qint64 width = 0;
     qint64 height = 0;
     qint64 uncompressedsize = 0;
@@ -103,7 +103,7 @@ bool QKatHandler::read(QImage *image)
         return false;
     }
     size_t decompsize = uncompressedsize;
-    const libdeflate_result decompresult = libdeflate_gzip_decompress(
+    const libdeflate_result decompresult = libdeflate_zlib_decompress(
         decomp,
         imagedata.constData(), imagedata.size(),
         image->d->data, image->byteCount(),
@@ -126,20 +126,46 @@ bool QKatHandler::write(const QImage &image)
     if (image.isNull()) {
         return false;
     } else if (Q_UNLIKELY(image.height() >= INT_MAX || image.width() >= INT_MAX)) {
+        // the limit is actually lower but QImage::width() and QImage::height() return int and
+        // QImage can be fixed at some point, notably QImage::byteCount() return type change
         qWarning("QKatHandler::write() Limitation in Katie");
         return false;
     }
 
     const QImage image32 = image.convertToFormat(image.d->checkForAlphaPixels() ? QImage::Format_ARGB32 : QImage::Format_RGB16);
+
+    struct libdeflate_compressor* comp = libdeflate_alloc_compressor(m_complevel);
+    if (Q_UNLIKELY(!comp)) {
+        qWarning("QKatHandler::write() Could not allocate compressor");
+        return false;
+    }
+    const size_t boundresult = libdeflate_zlib_compress_bound(comp, image32.byteCount());
+    if (Q_UNLIKELY(boundresult <= 0)) {
+        qWarning("QKatHandler::write() Compression boundary is negative or zero");
+        libdeflate_free_compressor(comp);
+        return false;
+    }
+    QByteArray compressedimage(boundresult, Qt::Uninitialized);
+    const size_t compresult = libdeflate_zlib_compress(
+        comp,
+        reinterpret_cast<const char*>(image32.constBits()), image32.byteCount(),
+        compressedimage.data(), compressedimage.size()
+    );
+    libdeflate_free_compressor(comp);
+    if (Q_UNLIKELY(compresult <= 0)) {
+        qWarning("QKatHandler::write() Could not compress data");
+        return false;
+    }
+
     QBuffer imagebuffer;
     imagebuffer.open(QBuffer::ReadWrite);
     QDataStream imagestream(&imagebuffer);
     imagestream.writeRawData("KATIE", 5);
-    imagestream << (qint64) image32.format();
+    imagestream << (qint8) image32.format();
     imagestream << (qint64) image32.width();
     imagestream << (qint64) image32.height();
     imagestream << (qint64) image32.byteCount();
-    imagestream << (QByteArray) qCompress(reinterpret_cast<const char*>(image32.constBits()), image32.byteCount(), m_complevel);
+    imagestream << (QByteArray) QByteArray::fromRawData(compressedimage.constData(), compresult);
 
     if (Q_UNLIKELY(device()->write(imagebuffer.data(), imagebuffer.size()) != imagebuffer.size())) {
         qWarning("QKatHandler::write() Could not write image");
@@ -163,7 +189,7 @@ QVariant QKatHandler::option(QImageIOHandler::ImageOption option) const
             return QVariant();
         }
 
-        qint64 format = 0;
+        qint8 format = 0;
         qint64 width = 0;
         qint64 height = 0;
         imagestream >> format;
