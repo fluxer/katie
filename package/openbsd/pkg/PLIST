@@ -144,7 +144,6 @@ include/katie/QtCore/QSetIterator
 include/katie/QtCore/QSettings
 include/katie/QtCore/QSharedData
 include/katie/QtCore/QSharedDataPointer
-include/katie/QtCore/QSharedMemory
 include/katie/QtCore/QSharedPointer
 include/katie/QtCore/QSignalMapper
 include/katie/QtCore/QSize
@@ -157,7 +156,6 @@ include/katie/QtCore/QStringList
 include/katie/QtCore/QStringListIterator
 include/katie/QtCore/QStringMatcher
 include/katie/QtCore/QStringRef
-include/katie/QtCore/QSystemSemaphore
 include/katie/QtCore/QTemporaryFile
 include/katie/QtCore/QTextBoundaryFinder
 include/katie/QtCore/QTextCodec
@@ -280,7 +278,6 @@ include/katie/QtCore/qsemaphore.h
 include/katie/QtCore/qset.h
 include/katie/QtCore/qsettings.h
 include/katie/QtCore/qshareddata.h
-include/katie/QtCore/qsharedmemory.h
 include/katie/QtCore/qsharedpointer.h
 include/katie/QtCore/qsignalmapper.h
 include/katie/QtCore/qsize.h
@@ -290,7 +287,6 @@ include/katie/QtCore/qstandardpaths.h
 include/katie/QtCore/qstring.h
 include/katie/QtCore/qstringlist.h
 include/katie/QtCore/qstringmatcher.h
-include/katie/QtCore/qsystemsemaphore.h
 include/katie/QtCore/qtconcurrentcompilertest.h
 include/katie/QtCore/qtconcurrentexception.h
 include/katie/QtCore/qtconcurrentfilter.h

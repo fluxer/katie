@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-02-23 23:10+0200\n"
+"POT-Creation-Date: 2022-02-28 17:03+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -64,59 +64,59 @@ msgid ""
 "will disable the Global Strut feature.</p>"
 msgstr ""
 
-#: src/tools/qtconfig/mainwindow.cpp:161
+#: src/tools/qtconfig/mainwindow.cpp:160
 msgid "Desktop Settings (Default)"
 msgstr ""
 
-#: src/tools/qtconfig/mainwindow.cpp:167
+#: src/tools/qtconfig/mainwindow.cpp:166
 msgid "Choose style and palette based on your desktop settings."
 msgstr ""
 
-#: src/tools/qtconfig/mainwindow.cpp:182
+#: src/tools/qtconfig/mainwindow.cpp:181
 msgid "Unknown"
 msgstr ""
 
-#: src/tools/qtconfig/mainwindow.cpp:310
+#: src/tools/qtconfig/mainwindow.cpp:315
 msgid "No changes to be saved."
 msgstr ""
 
-#: src/tools/qtconfig/mainwindow.cpp:314
+#: src/tools/qtconfig/mainwindow.cpp:321
 msgid "Saving changes..."
 msgstr ""
 
-#: src/tools/qtconfig/mainwindow.cpp:390
+#: src/tools/qtconfig/mainwindow.cpp:399
 msgid "Saved changes."
 msgstr ""
 
-#: src/tools/qtconfig/mainwindow.cpp:510
+#: src/tools/qtconfig/mainwindow.cpp:520
 msgid ""
 "<h3>%1</h3><br/>Version %2<br/><br/>Copyright (C) 2015 The Qt Company Ltd."
 "<br/><br/>Copyright (C) 2016 Ivailo Monev"
 msgstr ""
 
-#: src/tools/qtconfig/mainwindow.cpp:515 src/tools/qtconfig/mainwindow.cpp:516
-#: src/tools/qtconfig/mainwindow.cpp:523
+#: src/tools/qtconfig/mainwindow.cpp:525 src/tools/qtconfig/mainwindow.cpp:526
+#: src/tools/qtconfig/mainwindow.cpp:533
 msgid "Katie Configuration"
 msgstr ""
 
-#: src/tools/qtconfig/mainwindow.cpp:546
+#: src/tools/qtconfig/mainwindow.cpp:556
 msgid "Save Changes"
 msgstr ""
 
-#: src/tools/qtconfig/mainwindow.cpp:547
+#: src/tools/qtconfig/mainwindow.cpp:557
 msgid "Save changes to settings?"
 msgstr ""
 
 #: src/tools/qtconfig/paletteeditoradvanced.cpp:34
-#: src/tools/qtconfig/paletteeditoradvanced.cpp:40
+#: src/tools/qtconfig/paletteeditoradvanced.cpp:42
 msgid "Choose a color"
 msgstr ""
 
-#: src/tools/qtconfig/paletteeditoradvanced.cpp:35
+#: src/tools/qtconfig/paletteeditoradvanced.cpp:36
 msgid "Choose a color for the selected central color role."
 msgstr ""
 
-#: src/tools/qtconfig/paletteeditoradvanced.cpp:41
+#: src/tools/qtconfig/paletteeditoradvanced.cpp:44
 msgid "Choose a color for the selected effect color role."
 msgstr ""
 
@@ -139,7 +139,7 @@ msgid "&File"
 msgstr ""
 
 #: src/tools/qdbusviewer/qdbusviewermain.cpp:62
-#: src/tools/designer/qdesigner_actions.cpp:164
+#: src/tools/designer/qdesigner_actions.cpp:165
 msgid "&Quit"
 msgstr ""
 
@@ -164,56 +164,56 @@ msgstr ""
 msgid "&Refresh"
 msgstr ""
 
-#: src/tools/qdbusviewer/qdbusviewer.cpp:190
+#: src/tools/qdbusviewer/qdbusviewer.cpp:194
 msgid "Arguments"
 msgstr ""
 
-#: src/tools/qdbusviewer/qdbusviewer.cpp:191
+#: src/tools/qdbusviewer/qdbusviewer.cpp:195
 msgid "Please enter the value of the property %1 (type %2)"
 msgstr ""
 
-#: src/tools/qdbusviewer/qdbusviewer.cpp:199
+#: src/tools/qdbusviewer/qdbusviewer.cpp:203
 msgid "Unable to marshall"
 msgstr ""
 
-#: src/tools/qdbusviewer/qdbusviewer.cpp:200
+#: src/tools/qdbusviewer/qdbusviewer.cpp:204
 msgid "Value conversion failed, unable to set property"
 msgstr ""
 
-#: src/tools/qdbusviewer/qdbusviewer.cpp:237
+#: src/tools/qdbusviewer/qdbusviewer.cpp:241
 msgid "Unable to find method"
 msgstr ""
 
-#: src/tools/qdbusviewer/qdbusviewer.cpp:238
+#: src/tools/qdbusviewer/qdbusviewer.cpp:242
 msgid "Unable to find method %1 on path %2 in interface %3"
 msgstr ""
 
-#: src/tools/qdbusviewer/qdbusviewer.cpp:260
+#: src/tools/qdbusviewer/qdbusviewer.cpp:264
 msgid "Please enter parameters for the method \"%1\""
 msgstr ""
 
-#: src/tools/qdbusviewer/qdbusviewer.cpp:310
+#: src/tools/qdbusviewer/qdbusviewer.cpp:314
 msgid "&Connect"
 msgstr ""
 
-#: src/tools/qdbusviewer/qdbusviewer.cpp:315
+#: src/tools/qdbusviewer/qdbusviewer.cpp:319
 msgid "&Call"
 msgstr ""
 
-#: src/tools/qdbusviewer/qdbusviewer.cpp:320
+#: src/tools/qdbusviewer/qdbusviewer.cpp:324
 msgid "&Set value"
 msgstr ""
 
-#: src/tools/qdbusviewer/qdbusviewer.cpp:322
+#: src/tools/qdbusviewer/qdbusviewer.cpp:326
 msgid "&Get value"
 msgstr ""
 
-#: src/tools/qdbusviewer/qdbusviewer.cpp:355
+#: src/tools/qdbusviewer/qdbusviewer.cpp:359
 msgid "Unable to connect to service %1, path %2, interface %3, signal %4"
 msgstr ""
 
-#: src/tools/qdbusviewer/qdbusviewer.cpp:477
-#: src/tools/qdbusviewer/qdbusviewer.cpp:478
+#: src/tools/qdbusviewer/qdbusviewer.cpp:481
+#: src/tools/qdbusviewer/qdbusviewer.cpp:482
 msgid "D-Bus Viewer"
 msgstr ""
 
@@ -243,8 +243,8 @@ msgid "%1 - %2[*]"
 msgstr ""
 
 #: src/tools/designer/qdesigner_formwindow.cpp:207
-#: src/tools/designer/qdesigner_actions.cpp:801
-#: src/tools/designer/qdesigner_actions.cpp:841
+#: src/tools/designer/qdesigner_actions.cpp:802
+#: src/tools/designer/qdesigner_actions.cpp:842
 msgid "Save Form?"
 msgstr ""
 
@@ -285,226 +285,226 @@ msgid "&Open..."
 msgstr ""
 
 #: src/tools/designer/newform.cpp:94
-#: src/tools/designer/qdesigner_actions.cpp:458
+#: src/tools/designer/qdesigner_actions.cpp:459
 msgid "&Recent Forms"
 msgstr ""
 
 #: src/tools/designer/newform.cpp:158
-#: src/tools/designer/qdesigner_actions.cpp:719
+#: src/tools/designer/qdesigner_actions.cpp:720
 msgid "Read error"
 msgstr ""
 
-#: src/tools/designer/newform.cpp:181
+#: src/tools/designer/newform.cpp:182
 msgid "A temporary form file could not be created in %1."
 msgstr ""
 
-#: src/tools/designer/newform.cpp:187
+#: src/tools/designer/newform.cpp:188
 msgid "The temporary form file %1 could not be written."
 msgstr ""
 
-#: src/tools/designer/qdesigner_actions.cpp:104
+#: src/tools/designer/qdesigner_actions.cpp:105
 msgid "Saved %1."
 msgstr ""
 
-#: src/tools/designer/qdesigner_actions.cpp:130
+#: src/tools/designer/qdesigner_actions.cpp:131
 msgid ""
 "%1 already exists.\n"
 "Do you want to replace it?"
 msgstr ""
 
-#: src/tools/designer/qdesigner_actions.cpp:154
+#: src/tools/designer/qdesigner_actions.cpp:155
 msgid "Edit Widgets"
 msgstr ""
 
-#: src/tools/designer/qdesigner_actions.cpp:155
+#: src/tools/designer/qdesigner_actions.cpp:156
 msgid "&New..."
 msgstr ""
 
-#: src/tools/designer/qdesigner_actions.cpp:156
+#: src/tools/designer/qdesigner_actions.cpp:157
 msgid "&Open..."
 msgstr ""
 
-#: src/tools/designer/qdesigner_actions.cpp:157
+#: src/tools/designer/qdesigner_actions.cpp:158
 msgid "&Save"
 msgstr ""
 
-#: src/tools/designer/qdesigner_actions.cpp:158
+#: src/tools/designer/qdesigner_actions.cpp:159
 msgid "Save &As..."
 msgstr ""
 
-#: src/tools/designer/qdesigner_actions.cpp:159
+#: src/tools/designer/qdesigner_actions.cpp:160
 msgid "Save A&ll"
 msgstr ""
 
-#: src/tools/designer/qdesigner_actions.cpp:160
+#: src/tools/designer/qdesigner_actions.cpp:161
 msgid "Save As &Template..."
 msgstr ""
 
-#: src/tools/designer/qdesigner_actions.cpp:161
-#: src/tools/designer/qdesigner_actions.cpp:1000
+#: src/tools/designer/qdesigner_actions.cpp:162
+#: src/tools/designer/qdesigner_actions.cpp:1001
 msgid "&Close"
 msgstr ""
 
-#: src/tools/designer/qdesigner_actions.cpp:162
+#: src/tools/designer/qdesigner_actions.cpp:163
 msgid "Save &Image..."
 msgstr ""
 
-#: src/tools/designer/qdesigner_actions.cpp:163
+#: src/tools/designer/qdesigner_actions.cpp:164
 msgid "&Print..."
 msgstr ""
 
-#: src/tools/designer/qdesigner_actions.cpp:166
+#: src/tools/designer/qdesigner_actions.cpp:167
 msgid "View &Code..."
 msgstr ""
 
-#: src/tools/designer/qdesigner_actions.cpp:167
+#: src/tools/designer/qdesigner_actions.cpp:168
 msgid "&Minimize"
 msgstr ""
 
-#: src/tools/designer/qdesigner_actions.cpp:169
+#: src/tools/designer/qdesigner_actions.cpp:170
 msgid "Bring All to Front"
 msgstr ""
 
-#: src/tools/designer/qdesigner_actions.cpp:171
+#: src/tools/designer/qdesigner_actions.cpp:172
 msgid "Preferences..."
 msgstr ""
 
-#: src/tools/designer/qdesigner_actions.cpp:242
+#: src/tools/designer/qdesigner_actions.cpp:243
 msgid "CTRL+SHIFT+S"
 msgstr ""
 
-#: src/tools/designer/qdesigner_actions.cpp:360
+#: src/tools/designer/qdesigner_actions.cpp:361
 msgid "CTRL+R"
 msgstr ""
 
-#: src/tools/designer/qdesigner_actions.cpp:378
+#: src/tools/designer/qdesigner_actions.cpp:379
 msgid "CTRL+M"
 msgstr ""
 
-#: src/tools/designer/qdesigner_actions.cpp:404
+#: src/tools/designer/qdesigner_actions.cpp:405
 msgid "About Plugins"
 msgstr ""
 
-#: src/tools/designer/qdesigner_actions.cpp:410
-#: src/tools/designer/qdesigner_actions.cpp:981
+#: src/tools/designer/qdesigner_actions.cpp:411
+#: src/tools/designer/qdesigner_actions.cpp:982
 msgid "About Katie Designer"
 msgstr ""
 
-#: src/tools/designer/qdesigner_actions.cpp:416
+#: src/tools/designer/qdesigner_actions.cpp:417
 msgid "About Katie"
 msgstr ""
 
-#: src/tools/designer/qdesigner_actions.cpp:452
+#: src/tools/designer/qdesigner_actions.cpp:453
 msgid "Clear &Menu"
 msgstr ""
 
-#: src/tools/designer/qdesigner_actions.cpp:535
-#: src/tools/designer/qdesigner_actions.cpp:732
+#: src/tools/designer/qdesigner_actions.cpp:536
+#: src/tools/designer/qdesigner_actions.cpp:733
 msgid "Open Form"
 msgstr ""
 
-#: src/tools/designer/qdesigner_actions.cpp:536
-#: src/tools/designer/qdesigner_actions.cpp:573
-#: src/tools/designer/qdesigner_actions.cpp:733
+#: src/tools/designer/qdesigner_actions.cpp:537
+#: src/tools/designer/qdesigner_actions.cpp:574
+#: src/tools/designer/qdesigner_actions.cpp:734
 msgid "Designer UI files (*.%1);;All Files (*)"
 msgstr ""
 
-#: src/tools/designer/qdesigner_actions.cpp:573
-#: src/tools/designer/qdesigner_actions.cpp:821
+#: src/tools/designer/qdesigner_actions.cpp:574
+#: src/tools/designer/qdesigner_actions.cpp:822
 msgid "Save Form As"
 msgstr ""
 
-#: src/tools/designer/qdesigner_actions.cpp:660
+#: src/tools/designer/qdesigner_actions.cpp:661
 msgid "Designer"
 msgstr ""
 
-#: src/tools/designer/qdesigner_actions.cpp:660
+#: src/tools/designer/qdesigner_actions.cpp:661
 msgid "Feature not implemented yet!"
 msgstr ""
 
-#: src/tools/designer/qdesigner_actions.cpp:675
+#: src/tools/designer/qdesigner_actions.cpp:676
 msgid "Code generation failed"
 msgstr ""
 
-#: src/tools/designer/qdesigner_actions.cpp:720
+#: src/tools/designer/qdesigner_actions.cpp:721
 msgid ""
 "%1\n"
 "Do you want to update the file location or generate a new form?"
 msgstr ""
 
-#: src/tools/designer/qdesigner_actions.cpp:723
+#: src/tools/designer/qdesigner_actions.cpp:724
 msgid "&Update"
 msgstr ""
 
-#: src/tools/designer/qdesigner_actions.cpp:724
+#: src/tools/designer/qdesigner_actions.cpp:725
 msgid "&New Form"
 msgstr ""
 
-#: src/tools/designer/qdesigner_actions.cpp:802
+#: src/tools/designer/qdesigner_actions.cpp:803
 msgid "Could not open file"
 msgstr ""
 
-#: src/tools/designer/qdesigner_actions.cpp:806
+#: src/tools/designer/qdesigner_actions.cpp:807
 msgid ""
 "The file %1 could not be opened.\n"
 "Reason: %2\n"
 "Would you like to retry or select a different file?"
 msgstr ""
 
-#: src/tools/designer/qdesigner_actions.cpp:812
+#: src/tools/designer/qdesigner_actions.cpp:813
 msgid "Select New File"
 msgstr ""
 
-#: src/tools/designer/qdesigner_actions.cpp:842
+#: src/tools/designer/qdesigner_actions.cpp:843
 msgid "Could not write file"
 msgstr ""
 
-#: src/tools/designer/qdesigner_actions.cpp:845
+#: src/tools/designer/qdesigner_actions.cpp:846
 msgid ""
 "It was not possible to write the entire file %1 to disk.\n"
 "Reason:%2\n"
 "Would you like to retry?"
 msgstr ""
 
-#: src/tools/designer/qdesigner_actions.cpp:998
+#: src/tools/designer/qdesigner_actions.cpp:999
 msgid "&Close Preview"
 msgstr ""
 
-#: src/tools/designer/qdesigner_actions.cpp:1039
-#: src/tools/designer/qdesigner_actions.cpp:1062
+#: src/tools/designer/qdesigner_actions.cpp:1040
+#: src/tools/designer/qdesigner_actions.cpp:1063
 msgid "The backup file %1 could not be written."
 msgstr ""
 
-#: src/tools/designer/qdesigner_actions.cpp:1169
+#: src/tools/designer/qdesigner_actions.cpp:1170
 msgid "The backup directory %1 could not be created."
 msgstr ""
 
-#: src/tools/designer/qdesigner_actions.cpp:1175
+#: src/tools/designer/qdesigner_actions.cpp:1176
 msgid "The temporary backup directory %1 could not be created."
 msgstr ""
 
-#: src/tools/designer/qdesigner_actions.cpp:1197
+#: src/tools/designer/qdesigner_actions.cpp:1198
 msgid "Preview failed"
 msgstr ""
 
-#: src/tools/designer/qdesigner_actions.cpp:1221
+#: src/tools/designer/qdesigner_actions.cpp:1220
 msgid "Image files (*.%1)"
 msgstr ""
 
-#: src/tools/designer/qdesigner_actions.cpp:1230
-#: src/tools/designer/qdesigner_actions.cpp:1247
+#: src/tools/designer/qdesigner_actions.cpp:1229
+#: src/tools/designer/qdesigner_actions.cpp:1246
 msgid "Save Image"
 msgstr ""
 
-#: src/tools/designer/qdesigner_actions.cpp:1243
+#: src/tools/designer/qdesigner_actions.cpp:1242
 msgid "Saved image %1."
 msgstr ""
 
-#: src/tools/designer/qdesigner_actions.cpp:1248
+#: src/tools/designer/qdesigner_actions.cpp:1247
 msgid "The file %1 could not be written."
 msgstr ""
 
-#: src/tools/designer/qdesigner_actions.cpp:1301
+#: src/tools/designer/qdesigner_actions.cpp:1300
 msgid "Printed %1."
 msgstr ""
 

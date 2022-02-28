@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-02-23 23:10+0200\n"
+"POT-Creation-Date: 2022-02-28 17:03+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -17,32 +17,32 @@ msgstr ""
 "Content-Type: text/plain; charset=CHARSET\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: src/core/plugin/qlibrary.cpp:176
+#: src/core/plugin/qlibrary.cpp:175
 msgid "'%1' is not ELF file"
 msgstr ""
 
-#: src/core/plugin/qlibrary.cpp:179
+#: src/core/plugin/qlibrary.cpp:178
 msgid "ELF class mismatch in '%1'"
 msgstr ""
 
-#: src/core/plugin/qlibrary.cpp:203
+#: src/core/plugin/qlibrary.cpp:202
 msgid "Plugin verification data mismatch in '%1'"
 msgstr ""
 
-#: src/core/plugin/qlibrary.cpp:418 src/core/plugin/qlibrary.cpp:453
+#: src/core/plugin/qlibrary.cpp:417 src/core/plugin/qlibrary.cpp:452
 #: src/core/plugin/qpluginloader.cpp:261
 msgid "The shared library was not found."
 msgstr ""
 
-#: src/core/plugin/qlibrary.cpp:455
+#: src/core/plugin/qlibrary.cpp:454
 msgid "The file '%1' is not a valid Katie plugin."
 msgstr ""
 
-#: src/core/plugin/qlibrary.cpp:467
+#: src/core/plugin/qlibrary.cpp:466
 msgid "The plugin uses incompatible Katie library: %1 (%2, %3)"
 msgstr ""
 
-#: src/core/plugin/qlibrary.cpp:799 src/core/plugin/qpluginloader.cpp:278
+#: src/core/plugin/qlibrary.cpp:798 src/core/plugin/qpluginloader.cpp:278
 #: src/core/io/qiodevice.cpp:1517
 #: src/network/socket/qabstractsocketengine.cpp:439
 #: src/uitools/formscriptrunner.cpp:104
@@ -174,86 +174,6 @@ msgstr ""
 #: src/core/io/qprocess_unix.cpp:788 src/core/io/qprocess_unix.cpp:836
 #: src/core/io/qprocess_unix.cpp:906 src/core/io/qprocess_unix.cpp:968
 msgid "Process operation timed out"
-msgstr ""
-
-#: src/core/kernel/qsharedmemory.cpp:208
-msgid "%1: unable to set key on lock"
-msgstr ""
-
-#: src/core/kernel/qsharedmemory.cpp:292
-msgid "%1: create size is less then 0"
-msgstr ""
-
-#: src/core/kernel/qsharedmemory.cpp:465 src/core/kernel/qsharedmemory_p.h:119
-msgid "%1: unable to lock"
-msgstr ""
-
-#: src/core/kernel/qsharedmemory.cpp:486
-msgid "%1: unable to unlock"
-msgstr ""
-
-#: src/core/kernel/qsharedmemory_unix.cpp:63
-msgid "%1: permission denied"
-msgstr ""
-
-#: src/core/kernel/qsharedmemory_unix.cpp:67
-msgid "%1: already exists"
-msgstr ""
-
-#: src/core/kernel/qsharedmemory_unix.cpp:71
-msgid "%1: doesn't exist"
-msgstr ""
-
-#: src/core/kernel/qsharedmemory_unix.cpp:79
-msgid "%1: out of resources"
-msgstr ""
-
-#: src/core/kernel/qsharedmemory_unix.cpp:83
-msgid "%1: invalid size"
-msgstr ""
-
-#: src/core/kernel/qsharedmemory_unix.cpp:87
-msgid "%1: unknown error %2"
-msgstr ""
-
-#: src/core/kernel/qsharedmemory_unix.cpp:106
-#: src/core/kernel/qsystemsemaphore_unix.cpp:115
-msgid "%1: key is empty"
-msgstr ""
-
-#: src/core/kernel/qsharedmemory_unix.cpp:134
-#: src/core/kernel/qsharedmemory_unix.cpp:170
-msgid "%1: bad name"
-msgstr ""
-
-#: src/core/kernel/qsystemsemaphore_unix.cpp:70
-msgctxt "QSystemSemaphore"
-msgid "%1: permission denied"
-msgstr ""
-
-#: src/core/kernel/qsystemsemaphore_unix.cpp:74
-msgctxt "QSystemSemaphore"
-msgid "%1: already exists"
-msgstr ""
-
-#: src/core/kernel/qsystemsemaphore_unix.cpp:78
-msgctxt "QSystemSemaphore"
-msgid "%1: does not exist"
-msgstr ""
-
-#: src/core/kernel/qsystemsemaphore_unix.cpp:87
-msgctxt "QSystemSemaphore"
-msgid "%1: out of resources"
-msgstr ""
-
-#: src/core/kernel/qsystemsemaphore_unix.cpp:91
-msgctxt "QSystemSemaphore"
-msgid "%1: name error"
-msgstr ""
-
-#: src/core/kernel/qsystemsemaphore_unix.cpp:95
-msgctxt "QSystemSemaphore"
-msgid "%1: unknown error %2"
 msgstr ""
 
 #: src/core/tools/qregexp.cpp:45
@@ -1448,143 +1368,143 @@ msgstr ""
 msgid "Incompatible Katie Library Error"
 msgstr ""
 
-#: src/gui/dialogs/qpagesetupdialog_unix.cpp:52
+#: src/gui/dialogs/qpagesetupdialog_unix.cpp:51
 msgid "A0"
 msgstr ""
 
-#: src/gui/dialogs/qpagesetupdialog_unix.cpp:53
+#: src/gui/dialogs/qpagesetupdialog_unix.cpp:52
 msgid "A1"
 msgstr ""
 
-#: src/gui/dialogs/qpagesetupdialog_unix.cpp:54
+#: src/gui/dialogs/qpagesetupdialog_unix.cpp:53
 msgid "A2"
 msgstr ""
 
-#: src/gui/dialogs/qpagesetupdialog_unix.cpp:55
+#: src/gui/dialogs/qpagesetupdialog_unix.cpp:54
 msgid "A3"
 msgstr ""
 
-#: src/gui/dialogs/qpagesetupdialog_unix.cpp:56
+#: src/gui/dialogs/qpagesetupdialog_unix.cpp:55
 msgid "A4"
 msgstr ""
 
-#: src/gui/dialogs/qpagesetupdialog_unix.cpp:57
+#: src/gui/dialogs/qpagesetupdialog_unix.cpp:56
 msgid "A5"
 msgstr ""
 
-#: src/gui/dialogs/qpagesetupdialog_unix.cpp:58
+#: src/gui/dialogs/qpagesetupdialog_unix.cpp:57
 msgid "A6"
 msgstr ""
 
-#: src/gui/dialogs/qpagesetupdialog_unix.cpp:59
+#: src/gui/dialogs/qpagesetupdialog_unix.cpp:58
 msgid "A7"
 msgstr ""
 
-#: src/gui/dialogs/qpagesetupdialog_unix.cpp:60
+#: src/gui/dialogs/qpagesetupdialog_unix.cpp:59
 msgid "A8"
 msgstr ""
 
-#: src/gui/dialogs/qpagesetupdialog_unix.cpp:61
+#: src/gui/dialogs/qpagesetupdialog_unix.cpp:60
 msgid "A9"
 msgstr ""
 
-#: src/gui/dialogs/qpagesetupdialog_unix.cpp:62
+#: src/gui/dialogs/qpagesetupdialog_unix.cpp:61
 msgid "B0"
 msgstr ""
 
-#: src/gui/dialogs/qpagesetupdialog_unix.cpp:63
+#: src/gui/dialogs/qpagesetupdialog_unix.cpp:62
 msgid "B1"
 msgstr ""
 
-#: src/gui/dialogs/qpagesetupdialog_unix.cpp:64
+#: src/gui/dialogs/qpagesetupdialog_unix.cpp:63
 msgid "B2"
 msgstr ""
 
-#: src/gui/dialogs/qpagesetupdialog_unix.cpp:65
+#: src/gui/dialogs/qpagesetupdialog_unix.cpp:64
 msgid "B3"
 msgstr ""
 
-#: src/gui/dialogs/qpagesetupdialog_unix.cpp:66
+#: src/gui/dialogs/qpagesetupdialog_unix.cpp:65
 msgid "B4"
 msgstr ""
 
-#: src/gui/dialogs/qpagesetupdialog_unix.cpp:67
+#: src/gui/dialogs/qpagesetupdialog_unix.cpp:66
 msgid "B5"
 msgstr ""
 
-#: src/gui/dialogs/qpagesetupdialog_unix.cpp:68
+#: src/gui/dialogs/qpagesetupdialog_unix.cpp:67
 msgid "B6"
 msgstr ""
 
-#: src/gui/dialogs/qpagesetupdialog_unix.cpp:69
+#: src/gui/dialogs/qpagesetupdialog_unix.cpp:68
 msgid "B7"
 msgstr ""
 
-#: src/gui/dialogs/qpagesetupdialog_unix.cpp:70
+#: src/gui/dialogs/qpagesetupdialog_unix.cpp:69
 msgid "B8"
 msgstr ""
 
-#: src/gui/dialogs/qpagesetupdialog_unix.cpp:71
+#: src/gui/dialogs/qpagesetupdialog_unix.cpp:70
 msgid "B9"
 msgstr ""
 
-#: src/gui/dialogs/qpagesetupdialog_unix.cpp:72
+#: src/gui/dialogs/qpagesetupdialog_unix.cpp:71
 msgid "B10"
 msgstr ""
 
-#: src/gui/dialogs/qpagesetupdialog_unix.cpp:73
+#: src/gui/dialogs/qpagesetupdialog_unix.cpp:72
 msgid "C5E"
 msgstr ""
 
-#: src/gui/dialogs/qpagesetupdialog_unix.cpp:74
+#: src/gui/dialogs/qpagesetupdialog_unix.cpp:73
 msgid "DLE"
 msgstr ""
 
-#: src/gui/dialogs/qpagesetupdialog_unix.cpp:75
+#: src/gui/dialogs/qpagesetupdialog_unix.cpp:74
 msgid "Executive"
 msgstr ""
 
-#: src/gui/dialogs/qpagesetupdialog_unix.cpp:76
+#: src/gui/dialogs/qpagesetupdialog_unix.cpp:75
 msgid "Folio"
 msgstr ""
 
-#: src/gui/dialogs/qpagesetupdialog_unix.cpp:77
+#: src/gui/dialogs/qpagesetupdialog_unix.cpp:76
 msgid "Ledger"
 msgstr ""
 
-#: src/gui/dialogs/qpagesetupdialog_unix.cpp:78
+#: src/gui/dialogs/qpagesetupdialog_unix.cpp:77
 msgid "Legal"
 msgstr ""
 
-#: src/gui/dialogs/qpagesetupdialog_unix.cpp:79
+#: src/gui/dialogs/qpagesetupdialog_unix.cpp:78
 msgid "Letter"
 msgstr ""
 
-#: src/gui/dialogs/qpagesetupdialog_unix.cpp:80
+#: src/gui/dialogs/qpagesetupdialog_unix.cpp:79
 msgid "Tabloid"
 msgstr ""
 
-#: src/gui/dialogs/qpagesetupdialog_unix.cpp:81
+#: src/gui/dialogs/qpagesetupdialog_unix.cpp:80
 msgid "US Common #10 Envelope"
 msgstr ""
 
-#: src/gui/dialogs/qpagesetupdialog_unix.cpp:82
+#: src/gui/dialogs/qpagesetupdialog_unix.cpp:81
 msgid "Custom"
 msgstr ""
 
-#: src/gui/dialogs/qpagesetupdialog_unix.cpp:269
+#: src/gui/dialogs/qpagesetupdialog_unix.cpp:268
 msgid "Centimeters (cm)"
 msgstr ""
 
-#: src/gui/dialogs/qpagesetupdialog_unix.cpp:269
+#: src/gui/dialogs/qpagesetupdialog_unix.cpp:268
 msgid "Millimeters (mm)"
 msgstr ""
 
-#: src/gui/dialogs/qpagesetupdialog_unix.cpp:269
+#: src/gui/dialogs/qpagesetupdialog_unix.cpp:268
 msgid "Inches (in)"
 msgstr ""
 
-#: src/gui/dialogs/qpagesetupdialog_unix.cpp:269
+#: src/gui/dialogs/qpagesetupdialog_unix.cpp:268
 msgid "Points (pt)"
 msgstr ""
 
@@ -1758,53 +1678,53 @@ msgstr ""
 msgid "Recent Places"
 msgstr ""
 
-#: src/gui/dialogs/qfilesystemmodel.cpp:644
+#: src/gui/dialogs/qfilesystemmodel.cpp:640
 #: src/gui/itemviews/qdirmodel.cpp:1204
 msgid "%1 TB"
 msgstr ""
 
-#: src/gui/dialogs/qfilesystemmodel.cpp:646
+#: src/gui/dialogs/qfilesystemmodel.cpp:642
 #: src/gui/itemviews/qdirmodel.cpp:1206
 msgid "%1 GB"
 msgstr ""
 
-#: src/gui/dialogs/qfilesystemmodel.cpp:648
+#: src/gui/dialogs/qfilesystemmodel.cpp:644
 #: src/gui/itemviews/qdirmodel.cpp:1208
 msgid "%1 MB"
 msgstr ""
 
-#: src/gui/dialogs/qfilesystemmodel.cpp:650
+#: src/gui/dialogs/qfilesystemmodel.cpp:646
 #: src/gui/itemviews/qdirmodel.cpp:1210
 msgid "%1 KB"
 msgstr ""
 
-#: src/gui/dialogs/qfilesystemmodel.cpp:651
+#: src/gui/dialogs/qfilesystemmodel.cpp:647
 msgid "%1 bytes"
 msgstr ""
 
-#: src/gui/dialogs/qfilesystemmodel.cpp:721
+#: src/gui/dialogs/qfilesystemmodel.cpp:717
 msgid "Invalid filename"
 msgstr ""
 
-#: src/gui/dialogs/qfilesystemmodel.cpp:722
+#: src/gui/dialogs/qfilesystemmodel.cpp:718
 msgid ""
 "<b>The name \"%1\" can not be used.</b><p>Try using another name, with fewer "
 "characters or no punctuations marks."
 msgstr ""
 
-#: src/gui/dialogs/qfilesystemmodel.cpp:790 src/gui/itemviews/qdirmodel.cpp:395
+#: src/gui/dialogs/qfilesystemmodel.cpp:786 src/gui/itemviews/qdirmodel.cpp:395
 msgid "Name"
 msgstr ""
 
-#: src/gui/dialogs/qfilesystemmodel.cpp:794 src/gui/itemviews/qdirmodel.cpp:396
+#: src/gui/dialogs/qfilesystemmodel.cpp:790 src/gui/itemviews/qdirmodel.cpp:396
 msgid "Size"
 msgstr ""
 
-#: src/gui/dialogs/qfilesystemmodel.cpp:798 src/gui/itemviews/qdirmodel.cpp:397
+#: src/gui/dialogs/qfilesystemmodel.cpp:794 src/gui/itemviews/qdirmodel.cpp:397
 msgid "Type"
 msgstr ""
 
-#: src/gui/dialogs/qfilesystemmodel.cpp:804 src/gui/itemviews/qdirmodel.cpp:400
+#: src/gui/dialogs/qfilesystemmodel.cpp:800 src/gui/itemviews/qdirmodel.cpp:400
 msgid "Date Modified"
 msgstr ""
 
@@ -1828,27 +1748,27 @@ msgstr ""
 msgid "&OK"
 msgstr ""
 
-#: src/gui/image/qimagereader.cpp:299
+#: src/gui/image/qimagereader.cpp:302
 msgctxt "QImageReader"
 msgid "Invalid device"
 msgstr ""
 
-#: src/gui/image/qimagereader.cpp:305
+#: src/gui/image/qimagereader.cpp:308
 msgctxt "QImageReader"
 msgid "File not found"
 msgstr ""
 
-#: src/gui/image/qimagereader.cpp:312
+#: src/gui/image/qimagereader.cpp:315
 msgctxt "QImageReader"
 msgid "Unsupported image format"
 msgstr ""
 
-#: src/gui/image/qimagereader.cpp:804
+#: src/gui/image/qimagereader.cpp:692
 msgctxt "QImageReader"
 msgid "Unable to read image data"
 msgstr ""
 
-#: src/gui/image/qimagereader.cpp:995
+#: src/gui/image/qimagereader.cpp:820
 msgctxt "QImageReader"
 msgid "Unknown error"
 msgstr ""
@@ -4594,26 +4514,26 @@ msgctxt "QHostInfo"
 msgid "No host name given"
 msgstr ""
 
-#: src/network/kernel/qhostinfo_unix.cpp:86
-#: src/network/kernel/qhostinfo_unix.cpp:170
-#: src/network/socket/qabstractsocket.cpp:691
+#: src/network/kernel/qhostinfo_unix.cpp:87
+#: src/network/kernel/qhostinfo_unix.cpp:171
+#: src/network/socket/qabstractsocket.cpp:690
 msgid "Host not found"
 msgstr ""
 
-#: src/network/kernel/qhostinfo_unix.cpp:104
+#: src/network/kernel/qhostinfo_unix.cpp:105
 msgid "No host name given"
 msgstr ""
 
-#: src/network/kernel/qhostinfo_unix.cpp:106
+#: src/network/kernel/qhostinfo_unix.cpp:107
 msgid "Invalid hostname"
 msgstr ""
 
-#: src/network/kernel/qhostinfo_unix.cpp:158
+#: src/network/kernel/qhostinfo_unix.cpp:159
 msgid "Unknown address type"
 msgstr ""
 
 #: src/network/socket/qtcpserver.cpp:216
-#: src/network/socket/qabstractsocket.cpp:430
+#: src/network/socket/qabstractsocket.cpp:429
 msgid "Operation on socket is not supported"
 msgstr ""
 
@@ -4635,21 +4555,21 @@ msgstr ""
 msgid "%1: Unknown error %2"
 msgstr ""
 
-#: src/network/socket/qabstractsocket.cpp:733
+#: src/network/socket/qabstractsocket.cpp:732
 #: src/network/socket/qabstractsocketengine.cpp:406
 msgid "Connection refused"
 msgstr ""
 
-#: src/network/socket/qabstractsocket.cpp:871
+#: src/network/socket/qabstractsocket.cpp:870
 #: src/network/socket/qabstractsocketengine.cpp:403
 msgid "Connection timed out"
 msgstr ""
 
-#: src/network/socket/qabstractsocket.cpp:1477
+#: src/network/socket/qabstractsocket.cpp:1476
 msgid "Socket operation timed out"
 msgstr ""
 
-#: src/network/socket/qabstractsocket.cpp:1887
+#: src/network/socket/qabstractsocket.cpp:1886
 msgid "Socket is not connected"
 msgstr ""
 
@@ -4781,20 +4701,20 @@ msgstr ""
 msgid "This platform does not support IPv6"
 msgstr ""
 
-#: src/scripttools/debugging/qscriptedit.cpp:391
+#: src/scripttools/debugging/qscriptedit.cpp:383
 #: src/scripttools/debugging/qscriptdebugger.cpp:1767
 msgid "Toggle Breakpoint"
 msgstr ""
 
-#: src/scripttools/debugging/qscriptedit.cpp:393
+#: src/scripttools/debugging/qscriptedit.cpp:385
 msgid "Disable Breakpoint"
 msgstr ""
 
-#: src/scripttools/debugging/qscriptedit.cpp:394
+#: src/scripttools/debugging/qscriptedit.cpp:386
 msgid "Enable Breakpoint"
 msgstr ""
 
-#: src/scripttools/debugging/qscriptedit.cpp:398
+#: src/scripttools/debugging/qscriptedit.cpp:390
 msgid "Breakpoint Condition:"
 msgstr ""
 

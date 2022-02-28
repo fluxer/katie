@@ -205,7 +205,6 @@
 #cmakedefine QT_NO_PRINTPREVIEWWIDGET
 #cmakedefine QT_NO_PROGRESSDIALOG
 #cmakedefine QT_NO_QUUID_STRING
-#cmakedefine QT_NO_SHAREDMEMORY
 #cmakedefine QT_NO_SIZEGRIP
 #cmakedefine QT_NO_SPLASHSCREEN
 #cmakedefine QT_NO_STRINGLISTMODEL
@@ -214,7 +213,6 @@
 #cmakedefine QT_NO_STYLE_STYLESHEET
 #cmakedefine QT_NO_STYLE_WINDOWS
 #cmakedefine QT_NO_SYNTAXHIGHLIGHTER
-#cmakedefine QT_NO_SYSTEMSEMAPHORE
 #cmakedefine QT_NO_SYSTEMTRAYICON
 #cmakedefine QT_NO_TEXTBROWSER
 #cmakedefine QT_NO_UDPSOCKET
