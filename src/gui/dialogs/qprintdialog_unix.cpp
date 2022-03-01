@@ -346,6 +346,11 @@ void QPrintDialogPrivate::init()
     QPushButton *printButton = buttons->button(QDialogButtonBox::Ok);
     printButton->setText(QPrintDialog::tr("&Print"));
     printButton->setDefault(true);
+#ifndef QT_NO_CUPS
+    printButton->setEnabled(QCUPSSupport::isAvailable());
+#else // QT_NO_CUPS
+    printButton->setEnabled(false);
+#endif // QT_NO_CUPS
 
     QVBoxLayout *lay = new QVBoxLayout(q);
     q->setLayout(lay);
