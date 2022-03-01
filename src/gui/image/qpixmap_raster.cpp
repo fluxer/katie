@@ -50,11 +50,10 @@ QPixmapData *QRasterPixmapData::createCompatiblePixmapData() const
 
 void QRasterPixmapData::resize(int width, int height)
 {
-    QImage::Format format;
-    if (pixelType() == BitmapType)
+    QImage::Format format = QImage::Format_ARGB32_Premultiplied;
+    if (pixelType() == BitmapType) {
         format = QImage::Format_MonoLSB;
-    else
-        format = QImage::systemFormat();
+    }
 
     image = QImage(width, height, format);
     w = width;
@@ -89,8 +88,6 @@ void QRasterPixmapData::fromImage(const QImage &sourceImage,
     QImage::Format format = QImage::Format_ARGB32_Premultiplied;
     if (pixelType() == BitmapType) {
         format = QImage::Format_MonoLSB;
-    } else if ((flags & Qt::NoOpaqueDetection) == 0 && !sourceImage.d->checkForAlphaPixels()) {
-        format = QImage::systemFormat();
     }
 
     image = sourceImage.convertToFormat(format);
