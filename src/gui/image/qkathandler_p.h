@@ -34,6 +34,8 @@
 
 #include "QtGui/qimageiohandler.h"
 
+#ifndef QT_NO_IMAGEFORMAT_KAT
+
 QT_BEGIN_NAMESPACE
 
 class QKatHandler : public QImageIOHandler
@@ -58,5 +60,7 @@ private:
 };
 
 QT_END_NAMESPACE
+
+#endif // QT_NO_IMAGEFORMAT_KAT
 
 #endif // QKATHANDLER_P_H
