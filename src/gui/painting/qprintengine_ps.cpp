@@ -437,8 +437,7 @@ void QPSPrintEnginePrivate::emitHeader(bool finished)
     int mright = paperRect.right() - pageRect.right();
     int width = pageRect.width();
     int height = pageRect.height();
-    if (finished && pageCount == 1 && copies == 1 &&
-        ((fullPage && qt_gen_epsf) || (outputFileName.endsWith(QLatin1String(".eps")))))
+    if (finished && pageCount == 1 && copies == 1 && fullPage && qt_gen_epsf)
     {
         // According to the EPSF 3.0 spec it is required that the PS
         // version is PS-Adobe-3.0

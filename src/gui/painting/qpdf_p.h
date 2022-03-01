@@ -240,7 +240,6 @@ public:
     int fd;
 
     // printer options
-    QString outputFileName;
     QString printerName;
     QString selectionOption;
     QString title;

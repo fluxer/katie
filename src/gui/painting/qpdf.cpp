@@ -1398,9 +1398,6 @@ void QPdfBaseEngine::setProperty(PrintEnginePropertyKey key, const QVariant &val
     case PPK_Orientation:
         d->orientation = QPrinter::Orientation(value.toInt());
         break;
-    case PPK_OutputFileName:
-        d->outputFileName = value.toString();
-        break;
     case PPK_PageOrder:
         d->pageOrder = QPrinter::PageOrder(value.toInt());
         break;
@@ -1499,9 +1496,6 @@ QVariant QPdfBaseEngine::property(PrintEnginePropertyKey key) const
         break;
     case PPK_Orientation:
         ret = d->orientation;
-        break;
-    case PPK_OutputFileName:
-        ret = d->outputFileName;
         break;
     case PPK_PageOrder:
         ret = d->pageOrder;
@@ -1625,15 +1619,8 @@ bool QPdfBaseEnginePrivate::openPrintDevice()
     if(outDevice)
         return false;
 
-    if (!outputFileName.isEmpty()) {
-        QFile *file = new QFile(outputFileName);
-        if (! file->open(QFile::WriteOnly|QFile::Truncate)) {
-            delete file;
-            return false;
-        }
-        outDevice = file;
 #if !defined(QT_NO_CUPS)
-    } else if (QCUPSSupport::isAvailable()) {
+    if (QCUPSSupport::isAvailable()) {
         QCUPSSupport cups;
         QPair<int, QString> ret = cups.tempFd();
         if (ret.first < 0) {

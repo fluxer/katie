@@ -50,9 +50,6 @@ public:
 #endif
 
     void _q_chbPrintLastFirstToggled(bool);
-#ifndef QT_NO_MESSAGEBOX
-    void _q_checkFields();
-#endif
     void _q_collapseOrExpandDialog();
 
     void setupPrinter();

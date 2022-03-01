@@ -423,7 +423,6 @@ set(GUI_HEADERS
     ${CMAKE_CURRENT_SOURCE_DIR}/painting/qpolygon.h
     ${CMAKE_CURRENT_SOURCE_DIR}/painting/qpolygonclipper_p.h
     ${CMAKE_CURRENT_SOURCE_DIR}/painting/qprintengine.h
-    ${CMAKE_CURRENT_SOURCE_DIR}/painting/qprintengine_pdf_p.h
     ${CMAKE_CURRENT_SOURCE_DIR}/painting/qprintengine_ps_p.h
     ${CMAKE_CURRENT_SOURCE_DIR}/painting/qprinter.h
     ${CMAKE_CURRENT_SOURCE_DIR}/painting/qprinter_p.h
@@ -756,7 +755,6 @@ set(GUI_SOURCES
     ${CMAKE_CURRENT_SOURCE_DIR}/painting/qpdf.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/painting/qpen.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/painting/qpolygon.cpp
-    ${CMAKE_CURRENT_SOURCE_DIR}/painting/qprintengine_pdf.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/painting/qprintengine_ps.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/painting/qprinter.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/painting/qprinterinfo.cpp

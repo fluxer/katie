@@ -43,7 +43,6 @@ public:
         PPK_FullPage,
         PPK_NumberOfCopies,
         PPK_Orientation,
-        PPK_OutputFileName,
         PPK_PageOrder,
         PPK_PageRect,
         PPK_PageSize,

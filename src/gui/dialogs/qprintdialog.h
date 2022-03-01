@@ -76,9 +76,6 @@ Q_SIGNALS:
 private:
     Q_PRIVATE_SLOT(d_func(), void _q_chbPrintLastFirstToggled(bool))
     Q_PRIVATE_SLOT(d_func(), void _q_collapseOrExpandDialog())
-#if !defined(QT_NO_MESSAGEBOX)
-    Q_PRIVATE_SLOT(d_func(), void _q_checkFields())
-#endif
     friend class QUnixPrintWidget;
 };
 

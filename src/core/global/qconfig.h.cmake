@@ -197,7 +197,6 @@
 #cmakedefine QT_NO_LOCALSOCKET
 #cmakedefine QT_NO_MOVIE
 #cmakedefine QT_NO_NETWORKINTERFACE
-#cmakedefine QT_NO_PDF
 #cmakedefine QT_NO_PLUGIN_CHECK
 #cmakedefine QT_NO_PRINTDIALOG
 #cmakedefine QT_NO_PRINTER
