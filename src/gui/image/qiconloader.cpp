@@ -201,7 +201,7 @@ QThemeIconEntries QIconLoader::findIconHelper(const QString &themeName,
             entries.prepend(iconEntry);
         } else if (m_supportsSvg) {
             const QString svgPath = subDir + iconName + QLatin1String(".svg");
-            const QStatInfo svginfo(pngPath);
+            const QStatInfo svginfo(svgPath);
             if (svginfo.isFile()) {
                 ScalableEntry *iconEntry = new ScalableEntry;
                 iconEntry->dir = dirInfo;
