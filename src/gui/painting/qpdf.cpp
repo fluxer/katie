@@ -1616,7 +1616,7 @@ bool QPdfBaseEngine::end()
 
 bool QPdfBaseEnginePrivate::openPrintDevice()
 {
-    if(outDevice)
+    if (outDevice)
         return false;
 
 #if !defined(QT_NO_CUPS)
@@ -1652,7 +1652,6 @@ void QPdfBaseEnginePrivate::closePrintDevice()
     if (!cupsTempFile.isEmpty()) {
         QString tempFile = cupsTempFile;
         cupsTempFile.clear();
-        QCUPSSupport cups;
 
         // Set up print options.
         QByteArray prnName;
@@ -1719,6 +1718,7 @@ void QPdfBaseEnginePrivate::closePrintDevice()
         }
 
         // Print the file.
+        QCUPSSupport cups;
         cups_option_t* optPtr = cupsOptStruct.size() ? &cupsOptStruct.first() : 0;
         cups.printFile(prnName.constData(), tempFile.toLocal8Bit().constData(),
                 title.toLocal8Bit().constData(), cupsOptStruct.size(), optPtr);
