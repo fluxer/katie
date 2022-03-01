@@ -452,11 +452,6 @@
 #  define QT_NO_COMPLETER
 #endif
 
-// Common UNIX Printing System
-#if !defined(QT_NO_CUPS) && defined(QT_NO_PRINTER)
-#  define QT_NO_CUPS
-#endif
-
 // QDataWidgetMapper
 #if !defined(QT_NO_DATAWIDGETMAPPER) && (defined(QT_NO_ITEMVIEWS) || defined(QT_NO_PROPERTIES))
 #  define QT_NO_DATAWIDGETMAPPER
