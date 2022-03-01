@@ -87,11 +87,11 @@ const ppd_file_t* QCUPSSupport::currentPPD() const
     return currPPD;
 }
 
-const ppd_file_t* QCUPSSupport::setCurrentPrinter(int index)
+void QCUPSSupport::setCurrentPrinter(int index)
 {
     Q_ASSERT(index >= 0 && index <= prnCount);
     if (index == prnCount)
-        return 0;
+        return;
 
     currPrinterIndex = index;
 
@@ -103,10 +103,10 @@ const ppd_file_t* QCUPSSupport::setCurrentPrinter(int index)
     const char *ppdFile = cupsGetPPD(printers[index].name);
 
     if (!ppdFile)
-      return 0;
+      return;
 
     currPPD = ppdOpenFile(ppdFile);
-    unlink(ppdFile);
+    ::unlink(ppdFile);
 
     // marking default options
     ppdMarkDefaults(currPPD);
@@ -116,8 +116,6 @@ const ppd_file_t* QCUPSSupport::setCurrentPrinter(int index)
 
     // getting pointer to page sizes
     page_sizes = ppdOption("PageSize");
-
-    return currPPD;
 }
 
 int QCUPSSupport::currentPrinterIndex() const
