@@ -307,6 +307,18 @@ bool QImageData::checkForAlphaPixels() const
     \row    \o XPM    \o X11 Pixmap                       \o Read/write
     \endtable
 
+    \section1 Katie Image Format
+
+    The Katie image format is faster and in most cases smaller
+    substitute for the PNG format. Its usage should be primarily
+    in caching and short-lived transfers such as sending QImage
+    trough socket.
+
+    Your code should be prepared to discard any image in that
+    format and generate a new image in case loading fails as the
+    format (its header and the way image data is stored) may change
+    from release to release.
+
     \section1 Image Information
 
     QImage provides a collection of functions that can be used to
