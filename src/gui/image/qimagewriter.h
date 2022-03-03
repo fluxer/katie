@@ -75,6 +75,7 @@ public:
 
     static QByteArray defaultImageFormat();
     static QList<QByteArray> supportedImageFormats();
+    static QByteArray formatForMimeType(const QByteArray &mime);
     static QList<QByteArray> supportedMimeTypes();
 
 private:

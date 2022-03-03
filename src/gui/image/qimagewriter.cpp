@@ -554,9 +554,47 @@ QList<QByteArray> QImageWriter::supportedImageFormats()
 /*!
     \since 4.12
 
+    Returns the format string for image MIME specified by \a mime.
+
+    \sa supportedMimeTypes()
+*/
+QByteArray QImageWriter::formatForMimeType(const QByteArray &mime)
+{
+    if (mime == "image/png") {
+        return QByteArray("png");
+    }
+#ifndef QT_NO_IMAGEFORMAT_KAT
+    if (mime == "image/katie") {
+        return QByteArray("kat");
+    }
+#endif
+#ifndef QT_NO_IMAGEFORMAT_PPM
+    if (mime == "image/x-portable-pixmap") {
+        return QByteArray("ppm");
+    }
+#endif
+
+#ifndef QT_NO_LIBRARY
+    QFactoryLoader *l = imageloader();
+    foreach (const QString &key, l->keys()) {
+        QImageIOPlugin *plugin = qobject_cast<QImageIOPlugin *>(l->instance(key));
+        if (plugin && plugin->capabilities(0, key.toLatin1()) & QImageIOPlugin::CanWrite) {
+            if (plugin->mimeTypes().contains(mime)) {
+                return key.toLatin1();
+            }
+        }
+    }
+#endif // QT_NO_LIBRARY
+
+    return QByteArray();
+}
+
+/*!
+    \since 4.12
+
     Returns the list of image MIME types supported by QImageWriter.
 
-    \sa supportedImageFormats(), QImageReader::supportedImageFormats(),
+    \sa supportedImageFormats(), QImageReader::supportedImageFormats()
 */
 QList<QByteArray> QImageWriter::supportedMimeTypes()
 {

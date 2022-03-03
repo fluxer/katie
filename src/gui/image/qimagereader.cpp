@@ -902,11 +902,11 @@ QList<QByteArray> QImageReader::supportedImageFormats()
 #ifndef QT_NO_IMAGEFORMAT_KAT
         << "kat"
 #endif
-#ifndef QT_NO_IMAGEFORMAT_PPM
-        << "ppm" << "pbm"
-#endif
 #ifndef QT_NO_IMAGEFORMAT_XPM
         << "xpm"
+#endif
+#ifndef QT_NO_IMAGEFORMAT_PPM
+        << "ppm" << "pbm"
 #endif
         ;
 
@@ -926,9 +926,54 @@ QList<QByteArray> QImageReader::supportedImageFormats()
 /*!
     \since 4.12
 
+    Returns the format string for image MIME specified by \a mime.
+
+    \sa supportedMimeTypes()
+*/
+QByteArray QImageReader::formatForMimeType(const QByteArray &mime)
+{
+    if (mime == "image/png") {
+        return QByteArray("png");
+    }
+#ifndef QT_NO_IMAGEFORMAT_KAT
+    if (mime == "image/katie") {
+        return QByteArray("kat");
+    }
+#endif
+#ifndef QT_NO_IMAGEFORMAT_XPM
+    if (mime == "image/x-xpixmap") {
+        return QByteArray("xpm");
+    }
+#endif
+#ifndef QT_NO_IMAGEFORMAT_PPM
+    if (mime == "image/x-portable-pixmap") {
+        return QByteArray("ppm");
+    } else if (mime == "image/x-portable-bitmap") {
+        return QByteArray("pbm");
+    }
+#endif
+
+#ifndef QT_NO_LIBRARY
+    QFactoryLoader *l = imageloader();
+    foreach (const QString &key, l->keys()) {
+        QImageIOPlugin *plugin = qobject_cast<QImageIOPlugin *>(l->instance(key));
+        if (plugin && plugin->capabilities(0, key.toLatin1()) & QImageIOPlugin::CanRead) {
+            if (plugin->mimeTypes().contains(mime)) {
+                return key.toLatin1();
+            }
+        }
+    }
+#endif // QT_NO_LIBRARY
+
+    return QByteArray();
+}
+
+/*!
+    \since 4.12
+
     Returns the list of image MIME types supported by QImageReader.
 
-    \sa supportedImageFormats(), QImageWriter::supportedImageFormats(),
+    \sa supportedImageFormats(), QImageWriter::supportedImageFormats()
 */
 QList<QByteArray> QImageReader::supportedMimeTypes()
 {
@@ -937,11 +982,11 @@ QList<QByteArray> QImageReader::supportedMimeTypes()
 #ifndef QT_NO_IMAGEFORMAT_KAT
         << "image/katie"
 #endif
-#ifndef QT_NO_IMAGEFORMAT_PPM
-        << "image/x-portable-pixmap" << "image/x-portable-bitmap"
-#endif
 #ifndef QT_NO_IMAGEFORMAT_XPM
         << "image/x-xpixmap"
+#endif
+#ifndef QT_NO_IMAGEFORMAT_PPM
+        << "image/x-portable-pixmap" << "image/x-portable-bitmap"
 #endif
         ;
 
