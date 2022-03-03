@@ -75,6 +75,7 @@ public:
 
     static QByteArray defaultImageFormat();
     static QList<QByteArray> supportedImageFormats();
+    static QList<QByteArray> supportedMimeTypes();
 
 private:
     Q_DISABLE_COPY(QImageWriter)

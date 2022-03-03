@@ -215,10 +215,8 @@ QDropData::~QDropData()
 static QStringList imageReadMimeFormats()
 {
     QStringList formats;
-    foreach (const QByteArray &it, QImageReader::supportedImageFormats()) {
-        QString format = QLatin1String("image/");
-        format += QString::fromLatin1(it.toLower());
-        formats.append(format);
+    foreach (const QByteArray &it, QImageReader::supportedMimeTypes()) {
+        formats.append(QString::fromLatin1(it.toLower()));
     }
 
     // put the best in front
@@ -233,10 +231,8 @@ static QStringList imageReadMimeFormats()
 static QStringList imageWriteMimeFormats()
 {
     QStringList formats;
-    foreach (const QByteArray &it, QImageWriter::supportedImageFormats()) {
-        QString format = QLatin1String("image/");
-        format += QString::fromLatin1(it.toLower());
-        formats.append(format);
+    foreach (const QByteArray &it, QImageWriter::supportedMimeTypes()) {
+        formats.append(QString::fromLatin1(it.toLower()));
     }
 
     // put the best in front

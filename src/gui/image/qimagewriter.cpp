@@ -549,4 +549,34 @@ QList<QByteArray> QImageWriter::supportedImageFormats()
     return formats;
 }
 
+/*!
+    Returns the list of image MIME types supported by QImageWriter.
+
+    \sa supportedImageFormats(), QImageReader::supportedImageFormats(),
+*/
+QList<QByteArray> QImageWriter::supportedMimeTypes()
+{
+    QList<QByteArray> mimes = QList<QByteArray>()
+        << "image/png"
+#ifndef QT_NO_IMAGEFORMAT_KAT
+        << "image/katie"
+#endif
+#ifndef QT_NO_IMAGEFORMAT_PPM
+        << "image/x-portable-pixmap"
+#endif
+        ;
+
+#ifndef QT_NO_LIBRARY
+    QFactoryLoader *l = imageloader();
+    foreach (const QString &key, l->keys()) {
+        QImageIOPlugin *plugin = qobject_cast<QImageIOPlugin *>(l->instance(key));
+        if (plugin && plugin->capabilities(0, key.toLatin1()) & QImageIOPlugin::CanWrite)
+            mimes << plugin->mimeTypes();
+    }
+#endif // QT_NO_LIBRARY
+
+    qSort(mimes);
+    return mimes;
+}
+
 QT_END_NAMESPACE

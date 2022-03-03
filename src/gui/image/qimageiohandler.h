@@ -111,6 +111,7 @@ public:
 
     virtual Capabilities capabilities(QIODevice *device, const QByteArray &format) const = 0;
     virtual QStringList keys() const = 0;
+    virtual QList<QByteArray> mimeTypes() const = 0;
     virtual QImageIOHandler *create(QIODevice *device, const QByteArray &format = QByteArray()) const = 0;
 };
 

@@ -458,7 +458,18 @@ QImageIOPlugin::~QImageIOPlugin()
     Returns the list of image keys this plugin supports.
 
     These keys are usually the names of the image formats that are implemented
-    in the plugin (e.g., "svg").
+    in the plugin (e.g., "png").
+
+    \sa capabilities()
+*/
+
+/*!
+    \fn QImageIOPlugin::mimeTypes() const
+
+    Returns the list of image MIME types this plugin supports.
+
+    These MIME types are usually the names of the image formats that are implemented
+    in the plugin prefixed with "image/" (e.g., "image/png").
 
     \sa capabilities()
 */
