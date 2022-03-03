@@ -81,6 +81,7 @@
 #include "qset.h"
 #include "qvariant.h"
 #include "qfileinfo.h"
+#include "qapplication.h"
 
 // factory loader
 #include "qcoreapplication.h"
@@ -156,7 +157,6 @@ public:
 
     // error
     QImageWriter::ImageWriterError imageWriterError;
-    QString errorString;
 };
 
 /*!
@@ -169,8 +169,7 @@ QImageWriterPrivate::QImageWriterPrivate()
     quality(100),
     compression(1),
     gamma(0.0),
-    imageWriterError(QImageWriter::UnknownError),
-    errorString(QT_TRANSLATE_NOOP(QImageWriter, QLatin1String("Unknown error")))
+    imageWriterError(QImageWriter::UnknownError)
 {
 }
 
@@ -405,14 +404,12 @@ bool QImageWriter::canWrite() const
 {
     if (d->device && !d->handler && (d->handler = createWriteHandlerHelper(d->device, d->format)) == 0) {
         d->imageWriterError = QImageWriter::UnsupportedFormatError;
-        d->errorString = QT_TRANSLATE_NOOP(QImageWriter, QLatin1String("Unsupported image format"));
         return false;
     }
     if (d->device && !d->device->isOpen())
         d->device->open(QIODevice::WriteOnly);
     if (!d->device || !d->device->isWritable()) {
         d->imageWriterError = QImageWriter::DeviceError;
-        d->errorString = QT_TRANSLATE_NOOP(QImageWriter, QLatin1String("Device not writable"));
         return false;
     }
     return true;
@@ -463,7 +460,19 @@ QImageWriter::ImageWriterError QImageWriter::error() const
 */
 QString QImageWriter::errorString() const
 {
-    return d->errorString;
+    switch (d->imageWriterError) {
+        case QImageWriter::UnknownError: {
+            return QApplication::translate("QImageWriter", "Unknown error");
+        }
+        case QImageWriter::DeviceError: {
+            return QApplication::translate("QImageWriter", "Device not writable");
+        }
+        case QImageWriter::UnsupportedFormatError: {
+            return QApplication::translate("QImageWriter", "Unsupported image format");
+        }
+    }
+    Q_UNREACHABLE();
+    return QString();
 }
 
 /*!
@@ -487,7 +496,6 @@ bool QImageWriter::supportsOption(QImageIOHandler::ImageOption option) const
 {
     if (!d->handler && (d->handler = createWriteHandlerHelper(d->device, d->format)) == 0) {
         d->imageWriterError = QImageWriter::UnsupportedFormatError;
-        d->errorString = QT_TRANSLATE_NOOP(QImageWriter, QLatin1String("Unsupported image format"));
         return false;
     }
 

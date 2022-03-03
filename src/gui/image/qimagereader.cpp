@@ -93,9 +93,6 @@
 #include "qimagereader.h"
 
 #include "qbytearray.h"
-#ifdef QIMAGEREADER_DEBUG
-#include "qdebug.h"
-#endif
 #include "qfile.h"
 #include "qimage.h"
 #include "qimageiohandler.h"
@@ -104,6 +101,7 @@
 #include "qsize.h"
 #include "qcolor.h"
 #include "qvariant.h"
+#include "qapplication.h"
 
 // factory loader
 #include "qcoreapplication.h"
@@ -115,6 +113,10 @@
 #include "qxpmhandler_p.h"
 #include "qkathandler_p.h"
 #include "qpnghandler_p.h"
+
+#ifdef QIMAGEREADER_DEBUG
+#  include "qdebug.h"
+#endif
 
 QT_BEGIN_NAMESPACE
 
@@ -266,7 +268,6 @@ public:
 
     // error
     QImageReader::ImageReaderError imageReaderError;
-    QString errorString;
 };
 
 /*!
@@ -299,20 +300,17 @@ bool QImageReaderPrivate::initHandler()
     // check some preconditions
     if (!device) {
         imageReaderError = QImageReader::DeviceError;
-        errorString = QCoreApplication::translate("QImageReader", "Invalid device");
         return false;
     }
 
     if (!device->isOpen() && !device->open(QIODevice::ReadOnly)) {
         imageReaderError = QImageReader::FileNotFoundError;
-        errorString = QCoreApplication::translate("QImageReader", "File not found");
         return false;
     }
 
     // assign a handler
     if (!handler && (handler = createReadHandlerHelper(device, format, autoDetectImageFormat)) == 0) {
         imageReaderError = QImageReader::UnsupportedFormatError;
-        errorString = QCoreApplication::translate("QImageReader", "Unsupported image format");
         return false;
     }
     return true;
@@ -688,8 +686,7 @@ bool QImageReader::read(QImage *image)
 
     // read the image
     if (!d->handler->read(image)) {
-        d->imageReaderError = InvalidDataError;
-        d->errorString = QCoreApplication::translate("QImageReader", "Unable to read image data");
+        d->imageReaderError = QImageReader::InvalidDataError;
         return false;
     }
 
@@ -816,9 +813,25 @@ QImageReader::ImageReaderError QImageReader::error() const
 */
 QString QImageReader::errorString() const
 {
-    if (d->errorString.isEmpty())
-        return QCoreApplication::translate("QImageReader", "Unknown error");
-    return d->errorString;
+    switch (d->imageReaderError) {
+        case QImageReader::UnknownError: {
+            return QApplication::translate("QImageReader", "Unknown error");
+        }
+        case QImageReader::FileNotFoundError: {
+            return QApplication::translate("QImageReader", "File not found");
+        }
+        case QImageReader::DeviceError: {
+            return QApplication::translate("QImageReader", "Device not readable");
+        }
+        case QImageReader::UnsupportedFormatError: {
+            return QApplication::translate("QImageReader", "Unsupported image format");
+        }
+        case QImageReader::InvalidDataError: {
+            return QApplication::translate("QImageReader", "Unable to read image data");
+        }
+    }
+    Q_UNREACHABLE();
+    return QString();
 }
 
 /*!
