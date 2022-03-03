@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-02-28 17:03+0200\n"
+"POT-Creation-Date: 2022-03-03 16:54+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -1508,69 +1508,31 @@ msgstr ""
 msgid "Points (pt)"
 msgstr ""
 
-#: src/gui/dialogs/qprintdialog_unix.cpp:354
-#: src/gui/dialogs/qprintdialog_unix.cpp:422
+#: src/gui/dialogs/qprintdialog_unix.cpp:342
+#: src/gui/dialogs/qprintdialog_unix.cpp:411
 msgid "&Options >>"
 msgstr ""
 
-#: src/gui/dialogs/qprintdialog_unix.cpp:359
+#: src/gui/dialogs/qprintdialog_unix.cpp:347
 msgid "&Print"
 msgstr ""
 
-#: src/gui/dialogs/qprintdialog_unix.cpp:426
+#: src/gui/dialogs/qprintdialog_unix.cpp:415
 msgid "&Options <<"
 msgstr ""
 
-#: src/gui/dialogs/qprintdialog_unix.cpp:651
-msgid "Print to File (PDF)"
-msgstr ""
-
-#: src/gui/dialogs/qprintdialog_unix.cpp:652
-msgid "Print to File (Postscript)"
-msgstr ""
-
-#: src/gui/dialogs/qprintdialog_unix.cpp:700
-msgid "Local file"
-msgstr ""
-
-#: src/gui/dialogs/qprintdialog_unix.cpp:701
-msgid "Write %1 file"
-msgstr ""
-
-#: src/gui/dialogs/qprintdialog_unix.cpp:762
-msgid "Print To File ..."
-msgstr ""
-
-#: src/gui/dialogs/qprintdialog_unix.cpp:840
-msgid ""
-"%1 is a directory.\n"
-"Please choose a different file name."
-msgstr ""
-
-#: src/gui/dialogs/qprintdialog_unix.cpp:844
-msgid ""
-"File %1 is not writable.\n"
-"Please choose a different file name."
-msgstr ""
-
-#: src/gui/dialogs/qprintdialog_unix.cpp:848
-msgid ""
-"%1 already exists.\n"
-"Do you want to overwrite it?"
-msgstr ""
-
-#: src/gui/dialogs/qprintdialog_unix.cpp:1137
+#: src/gui/dialogs/qprintdialog_unix.cpp:941
 msgctxt "QPPDOptionsModel"
 msgid "Name"
 msgstr ""
 
-#: src/gui/dialogs/qprintdialog_unix.cpp:1139
+#: src/gui/dialogs/qprintdialog_unix.cpp:943
 msgctxt "QPPDOptionsModel"
 msgid "Value"
 msgstr ""
 
-#: src/gui/dialogs/qabstractprintdialog.cpp:92
-#: src/gui/dialogs/qabstractprintdialog.cpp:105
+#: src/gui/dialogs/qabstractprintdialog.cpp:91
+#: src/gui/dialogs/qabstractprintdialog.cpp:104
 msgctxt "QPrintDialog"
 msgid "Print"
 msgstr ""
@@ -1748,29 +1710,44 @@ msgstr ""
 msgid "&OK"
 msgstr ""
 
-#: src/gui/image/qimagereader.cpp:302
-msgctxt "QImageReader"
-msgid "Invalid device"
+#: src/gui/image/qimagewriter.cpp:465
+msgctxt "QImageWriter"
+msgid "Unknown error"
 msgstr ""
 
-#: src/gui/image/qimagereader.cpp:308
+#: src/gui/image/qimagewriter.cpp:468
+msgctxt "QImageWriter"
+msgid "Device not writable"
+msgstr ""
+
+#: src/gui/image/qimagewriter.cpp:471
+msgctxt "QImageWriter"
+msgid "Unsupported image format"
+msgstr ""
+
+#: src/gui/image/qimagereader.cpp:818
+msgctxt "QImageReader"
+msgid "Unknown error"
+msgstr ""
+
+#: src/gui/image/qimagereader.cpp:821
 msgctxt "QImageReader"
 msgid "File not found"
 msgstr ""
 
-#: src/gui/image/qimagereader.cpp:315
+#: src/gui/image/qimagereader.cpp:824
+msgctxt "QImageReader"
+msgid "Device not readable"
+msgstr ""
+
+#: src/gui/image/qimagereader.cpp:827
 msgctxt "QImageReader"
 msgid "Unsupported image format"
 msgstr ""
 
-#: src/gui/image/qimagereader.cpp:692
+#: src/gui/image/qimagereader.cpp:830
 msgctxt "QImageReader"
 msgid "Unable to read image data"
-msgstr ""
-
-#: src/gui/image/qimagereader.cpp:820
-msgctxt "QImageReader"
-msgid "Unknown error"
 msgstr ""
 
 #: src/gui/widgets/qtabbar.cpp:2163
@@ -4565,11 +4542,11 @@ msgstr ""
 msgid "Connection timed out"
 msgstr ""
 
-#: src/network/socket/qabstractsocket.cpp:1476
+#: src/network/socket/qabstractsocket.cpp:1446
 msgid "Socket operation timed out"
 msgstr ""
 
-#: src/network/socket/qabstractsocket.cpp:1886
+#: src/network/socket/qabstractsocket.cpp:1856
 msgid "Socket is not connected"
 msgstr ""
 
