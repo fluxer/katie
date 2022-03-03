@@ -495,6 +495,8 @@ bool QImageWriter::supportsOption(QImageIOHandler::ImageOption option) const
 }
 
 /*!
+    \since 4.12
+
     Returns the default image format to use with QImageWriter.
 
     \sa supportedImageFormats()
@@ -550,6 +552,8 @@ QList<QByteArray> QImageWriter::supportedImageFormats()
 }
 
 /*!
+    \since 4.12
+
     Returns the list of image MIME types supported by QImageWriter.
 
     \sa supportedImageFormats(), QImageReader::supportedImageFormats(),

@@ -924,6 +924,8 @@ QList<QByteArray> QImageReader::supportedImageFormats()
 }
 
 /*!
+    \since 4.12
+
     Returns the list of image MIME types supported by QImageReader.
 
     \sa supportedImageFormats(), QImageWriter::supportedImageFormats(),
