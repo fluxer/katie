@@ -3758,8 +3758,7 @@ QSessionManager::QSessionManager(QApplication * app, QString &id, QString& key)
     resetSmState();
     QSTACKARRAY(char, cerror, 256);
     char* myId = 0;
-    QByteArray b_id = id.toLatin1();
-    char* prevId = b_id.data();
+    const QByteArray b_id = id.toLatin1();
 
     SmcCallbacks cb;
     cb.save_yourself.callback = sm_saveYourselfCallback;
@@ -3781,7 +3780,7 @@ QSessionManager::QSessionManager(QApplication * app, QString &id, QString& key)
                                        SmcSaveCompleteProcMask |
                                        SmcShutdownCancelledProcMask,
                                        &cb,
-                                       prevId,
+                                       b_id.constData(),
                                        &myId,
                                        256, cerror);
 
