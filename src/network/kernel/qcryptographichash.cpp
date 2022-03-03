@@ -96,6 +96,7 @@ QCryptographicHash::~QCryptographicHash()
 */
 void QCryptographicHash::reset()
 {
+    d->rehash = false;
     switch (d->method) {
         case QCryptographicHash::Md5: {
             MD5Init(&d->md5Context);
