@@ -994,10 +994,16 @@ QList<QByteArray> QImageReader::supportedMimeTypes()
     QFactoryLoader *l = imageloader();
     foreach (const QString &key, l->keys()) {
         QImageIOPlugin *plugin = qobject_cast<QImageIOPlugin *>(l->instance(key));
-        if (plugin && plugin->capabilities(0, key.toLatin1()) & QImageIOPlugin::CanRead)
-            mimes << plugin->mimeTypes();
+        if (plugin && plugin->capabilities(0, key.toLatin1()) & QImageIOPlugin::CanRead) {
+            foreach (const QByteArray &mime, plugin->mimeTypes()) {
+                if (!mimes.contains(mime)) {
+                    mimes << mime;
+                }
+            }
+        }
     }
 #endif // QT_NO_LIBRARY
+
 
     qSort(mimes);
     return mimes;

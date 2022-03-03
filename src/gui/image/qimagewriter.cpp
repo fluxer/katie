@@ -613,7 +613,11 @@ QList<QByteArray> QImageWriter::supportedMimeTypes()
     foreach (const QString &key, l->keys()) {
         QImageIOPlugin *plugin = qobject_cast<QImageIOPlugin *>(l->instance(key));
         if (plugin && plugin->capabilities(0, key.toLatin1()) & QImageIOPlugin::CanWrite)
-            mimes << plugin->mimeTypes();
+            foreach (const QByteArray &mime, plugin->mimeTypes()) {
+                if (!mimes.contains(mime)) {
+                    mimes << mime;
+                }
+            }
     }
 #endif // QT_NO_LIBRARY
 
