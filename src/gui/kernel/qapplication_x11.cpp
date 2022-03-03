@@ -2749,7 +2749,7 @@ bool QETWidget::translateMouseEvent(const XEvent *event)
                 pos = popup->mapFromGlobal(globalPos);
         }
         bool releaseAfter = false;
-        QWidget *popupChild  = popup->childAt(pos);
+        QWidget *popupChild = popup->childAt(pos);
 
         if (popup != qt_popup_down){
             qt_button_down = 0;
@@ -3532,10 +3532,9 @@ static bool sm_in_phase2 = false;
 static QSmSocketReceiver* sm_receiver = 0;
 
 static void resetSmState();
-static void sm_setProperty(const char* name, const char* type,
-                            int num_vals, SmPropValue* vals);
+static void sm_setProperty(const char* name, const char* type, SmPropValue* vals);
 static void sm_saveYourselfCallback(SmcConn smcConn, SmPointer clientData,
-                                  int saveType, Bool shutdown , int interactStyle, Bool fast);
+                                    int saveType, Bool shutdown , int interactStyle, Bool fast);
 static void sm_saveYourselfPhase2Callback(SmcConn smcConn, SmPointer clientData) ;
 static void sm_dieCallback(SmcConn smcConn, SmPointer clientData) ;
 static void sm_shutdownCancelledCallback(SmcConn smcConn, SmPointer clientData);
@@ -3558,25 +3557,17 @@ static void resetSmState()
 
 // theoretically it's possible to set several properties at once. For
 // simplicity, however, we do just one property at a time
-static void sm_setProperty(const char* name, const char* type,
-                            int num_vals, SmPropValue* vals)
+static void sm_setProperty(const char* name, const char* type, SmPropValue* vals)
 {
-    if (num_vals) {
-      SmProp prop;
-      prop.name = (char*)name;
-      prop.type = (char*)type;
-      prop.num_vals = num_vals;
-      prop.vals = vals;
+    SmProp prop;
+    prop.name = (char*)name;
+    prop.type = (char*)type;
+    prop.num_vals = 1;
+    prop.vals = vals;
 
-      SmProp* props[1];
-      props[0] = &prop;
-      SmcSetProperties(smcConnection, 1, props);
-    }
-    else {
-      char* names[1];
-      names[0] = (char*) name;
-      SmcDeleteProperties(smcConnection, 1, names);
-    }
+    SmProp* props[1];
+    props[0] = &prop;
+    SmcSetProperties(smcConnection, 1, props);
 }
 
 static void sm_setProperty(const QString& name, const QString& value)
@@ -3585,11 +3576,20 @@ static void sm_setProperty(const QString& name, const QString& value)
     SmPropValue prop;
     prop.length = v.length();
     prop.value = (SmPointer) v.constData();
-    sm_setProperty(name.toLatin1().data(), SmARRAY8, 1, &prop);
+    sm_setProperty(name.toLatin1().data(), SmARRAY8, &prop);
 }
 
 static void sm_setProperty(const QString& name, const QStringList& value)
 {
+    QByteArray ln = name.toLatin1();
+
+    if (value.isEmpty()) {
+        char* names[1];
+        names[0] = (char*) ln.data();
+        SmcDeleteProperties(smcConnection, 1, names);
+        return;
+    }
+
     SmPropValue *prop = new SmPropValue[value.count()];
     int count = 0;
     QList<QByteArray> vl;
@@ -3599,7 +3599,17 @@ static void sm_setProperty(const QString& name, const QStringList& value)
       prop[count].value = (char*)vl.last().data();
       ++count;
     }
-    sm_setProperty(name.toLatin1().data(), SmLISTofARRAY8, count, prop);
+
+    SmProp prop2;
+    prop2.name = (char*)ln.data();
+    prop2.type = (char*)SmLISTofARRAY8;
+    prop2.num_vals = count;
+    prop2.vals = prop;
+
+    SmProp* props[1];
+    props[0] = &prop2;
+    SmcSetProperties(smcConnection, 1, props);
+
     delete [] prop;
 }
 
@@ -3695,7 +3705,7 @@ static void sm_performSaveYourself(QSessionManagerPrivate* smd)
         prop.length = sizeof(int);
         int value = sm->restartHint();
         prop.value = (SmPointer) &value;
-        sm_setProperty(SmRestartStyleHint, SmCARD8, 1, &prop);
+        sm_setProperty(SmRestartStyleHint, SmCARD8, &prop);
 
         // we are done
         SmcSaveYourselfDone(smcConnection, !sm_cancel);
