@@ -166,7 +166,7 @@ QImageWriterPrivate::QImageWriterPrivate()
     : device(nullptr),
     deleteDevice(false),
     handler(nullptr),
-    quality(100),
+    quality(-1),
     compression(1),
     gamma(0.0),
     imageWriterError(QImageWriter::UnknownError)
@@ -336,7 +336,7 @@ void QImageWriter::setQuality(int quality)
 }
 
 /*!
-    Returns the quality level of the image. Default value is 100.
+    Returns the quality level of the image. Default value is -1.
 
     \sa setQuality()
 */

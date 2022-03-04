@@ -34,7 +34,8 @@
 QT_BEGIN_NAMESPACE
 
 QKatHandler::QKatHandler()
-    : m_complevel(1)
+    : m_complevel(1),
+    m_quality(75)
 {
 }
 
@@ -134,7 +135,11 @@ bool QKatHandler::write(const QImage &image)
         return false;
     }
 
-    const QImage image32 = image.convertToFormat(image.d->checkForAlphaPixels() ? QImage::Format_ARGB32 : QImage::Format_RGB16);
+    QImage::Format imageformat = QImage::Format_ARGB32;
+    if (Q_LIKELY(m_quality <= 75)) {
+        imageformat = (image.d->checkForAlphaPixels() ? QImage::Format_ARGB32 : QImage::Format_RGB16);
+    }
+    const QImage image32 = image.convertToFormat(imageformat);
 
     struct libdeflate_compressor* comp = libdeflate_alloc_compressor(m_complevel);
     if (Q_UNLIKELY(!comp)) {
@@ -179,9 +184,7 @@ bool QKatHandler::write(const QImage &image)
 
 QVariant QKatHandler::option(QImageIOHandler::ImageOption option) const
 {
-    if (option == QImageIOHandler::CompressionLevel) {
-        return QVariant(m_complevel);
-    } else if (option == QImageIOHandler::Size) {
+    if (option == QImageIOHandler::Size) {
         QDataStream imagestream(device());
 
         QSTACKARRAY(char, header, 5);
@@ -198,6 +201,10 @@ QVariant QKatHandler::option(QImageIOHandler::ImageOption option) const
         imagestream >> width;
         imagestream >> height;
         return QSize(width, height);
+    } else if (option == QImageIOHandler::CompressionLevel) {
+        return QVariant(m_complevel);
+    } else if (option == QImageIOHandler::Quality) {
+        return QVariant(m_quality);
     }
     return QVariant();
 }
@@ -212,12 +219,33 @@ void QKatHandler::setOption(QImageIOHandler::ImageOption option, const QVariant 
         } else {
             m_complevel = newcomplevel;
         }
+    } else if (option == QImageIOHandler::Quality) {
+        const int newquality = value.toInt();
+        if (newquality == -1) {
+            m_quality = 75;
+        } else if (Q_UNLIKELY(newquality < 0 || newquality > 100)) {
+            qWarning("QKatHandler::setOption() Invalid quality (%d)", newquality);
+            m_quality = 75;
+        } else {
+            m_quality = newquality;
+        }
     }
 }
 
 bool QKatHandler::supportsOption(QImageIOHandler::ImageOption option) const
 {
-    return (option == QImageIOHandler::CompressionLevel || option == QImageIOHandler::Size);
+    switch (option) {
+        case QImageIOHandler::Size:
+        case QImageIOHandler::CompressionLevel:
+        case QImageIOHandler::Quality: {
+            return true;
+        }
+        default: {
+            return false;
+        }
+    }
+    Q_UNREACHABLE();
+    return false;
 }
 
 QByteArray QKatHandler::name() const

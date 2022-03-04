@@ -314,6 +314,11 @@ bool QImageData::checkForAlphaPixels() const
     in caching and short-lived transfers such as sending QImage
     trough socket.
 
+    The image format is lossy for fully opaque and lossless for
+    images with alpha pixels by default. If guaranteed lossless
+    quality is required use QImageWriter::setQuality() to set the
+    quality to best (100).
+
     Your code should be prepared to discard any image in that
     format and generate a new image in case loading fails as the
     format (its header and the way image data is stored) may change
