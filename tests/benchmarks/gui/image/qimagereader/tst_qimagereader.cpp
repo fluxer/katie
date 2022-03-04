@@ -50,11 +50,19 @@ private:
 tst_QImageReader::tst_QImageReader()
 {
     foreach (const QByteArray &format, QImageReader::supportedImageFormats()) {
-        if (format == "svgz") {
-            // TODO: svgz image
-            continue;
+        const QString benchfilepath = QLatin1String(SRCDIR "/images/bench.") + format;
+        const QString benchlargefilepath = QLatin1String(SRCDIR "/images/bench-large.") + format;
+        const QString benchtransparentfilepath = QLatin1String(SRCDIR "/images/bench-transparent.") + format;
+
+        if (QFile::exists(benchfilepath)) {
+            images << QPair<QString, QByteArray>(benchfilepath, format);
         }
-        images << QPair<QString, QByteArray>(QLatin1String("bench.") + format, format);
+        if (QFile::exists(benchlargefilepath)) {
+            images << QPair<QString, QByteArray>(benchlargefilepath, format);
+        }
+        if (QFile::exists(benchtransparentfilepath)) {
+            images << QPair<QString, QByteArray>(benchtransparentfilepath, format);
+        }
     }
 }
 
@@ -80,7 +88,7 @@ void tst_QImageReader::readImage()
     QFETCH(QByteArray, format);
 
     QBENCHMARK {
-        QImageReader io(QLatin1String(SRCDIR "/images/") + fileName, format);
+        QImageReader io(fileName, format);
         QImage image = io.read();
         QVERIFY(!image.isNull());
     }
@@ -102,11 +110,11 @@ void tst_QImageReader::setScaledSize_data()
 void tst_QImageReader::setScaledSize()
 {
     QFETCH(QString, fileName);
-    QFETCH(QSize, newSize);
     QFETCH(QByteArray, format);
+    QFETCH(QSize, newSize);
 
     QBENCHMARK {
-        QImageReader reader(QLatin1String(SRCDIR "/images/") + fileName, format);
+        QImageReader reader(fileName, format);
         reader.setScaledSize(newSize);
         QImage image = reader.read();
         QCOMPARE(image.size(), newSize);
