@@ -27,6 +27,9 @@
 #include <string.h>
 #include <wtf/Assertions.h>
 
+// for reference:
+// https://en.cppreference.com/w/cpp/regex/basic_regex
+
 namespace JSC {
 
 inline RegExp::RegExp(const UString& pattern)
@@ -89,9 +92,11 @@ void RegExp::compile()
     int regexOptions = std::regex_constants::ECMAScript;
     if (ignoreCase())
         regexOptions |= std::regex_constants::icase;
+#if 0
     if (multiline())
 #if __cplusplus >= 201703L
         regexOptions |= std::regex_constants::multiline;
+#endif
 #endif
 
 #ifndef QT_NO_EXCEPTIONS
