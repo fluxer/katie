@@ -220,7 +220,6 @@
 #cmakedefine QT_NO_VECTOR2D
 #cmakedefine QT_NO_WHATSTHIS
 #cmakedefine QT_NO_WHEELEVENT
-#cmakedefine QT_NO_WORKSPACE
 
 // Debugging
 #if defined(QT_NO_TEXTSTREAM) && !defined(QT_NO_DEBUG_STREAM)
@@ -505,11 +504,6 @@
 // QComboBox
 #if !defined(QT_NO_COMBOBOX) && (defined(QT_NO_LINEEDIT) || defined(QT_NO_STANDARDITEMMODEL) || defined(QT_NO_LISTVIEW))
 #  define QT_NO_COMBOBOX
-#endif
-
-// QWorkSpace
-#if !defined(QT_NO_WORKSPACE) && (defined(QT_NO_SCROLLBAR) || defined(QT_NO_MAINWINDOW) || defined(QT_NO_MENUBAR))
-#  define QT_NO_WORKSPACE
 #endif
 
 // QPrintPreviewWidget

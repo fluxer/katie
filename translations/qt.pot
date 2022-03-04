@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-03-03 16:54+0200\n"
+"POT-Creation-Date: 2022-03-04 19:36+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -1296,7 +1296,6 @@ msgid "Font st&yle"
 msgstr ""
 
 #: src/gui/dialogs/qfontdialog.cpp:681 src/gui/widgets/qmdisubwindow.cpp:1016
-#: src/gui/widgets/qworkspace.cpp:1016
 msgid "&Size"
 msgstr ""
 
@@ -1945,12 +1944,11 @@ msgstr ""
 msgid "- [%1]"
 msgstr ""
 
-#: src/gui/widgets/qmdisubwindow.cpp:250 src/gui/widgets/qworkspace.cpp:1792
-#: src/gui/widgets/qworkspace.cpp:1852
+#: src/gui/widgets/qmdisubwindow.cpp:250
 msgid "%1 - [%2]"
 msgstr ""
 
-#: src/gui/widgets/qmdisubwindow.cpp:291 src/gui/widgets/qworkspace.cpp:95
+#: src/gui/widgets/qmdisubwindow.cpp:291
 msgid "Minimize"
 msgstr ""
 
@@ -1966,7 +1964,7 @@ msgstr ""
 msgid "Shade"
 msgstr ""
 
-#: src/gui/widgets/qmdisubwindow.cpp:304 src/gui/widgets/qworkspace.cpp:97
+#: src/gui/widgets/qmdisubwindow.cpp:304
 msgid "Restore Down"
 msgstr ""
 
@@ -1974,7 +1972,7 @@ msgstr ""
 msgid "Restore"
 msgstr ""
 
-#: src/gui/widgets/qmdisubwindow.cpp:309 src/gui/widgets/qworkspace.cpp:93
+#: src/gui/widgets/qmdisubwindow.cpp:309
 #: src/scripttools/debugging/qscriptbreakpointswidget.cpp:56
 #: src/scripttools/debugging/qscriptdebuggercodefinderwidget.cpp:116
 msgid "Close"
@@ -1984,40 +1982,32 @@ msgstr ""
 msgid "Menu"
 msgstr ""
 
-#: src/gui/widgets/qmdisubwindow.cpp:1012 src/gui/widgets/qworkspace.cpp:1014
+#: src/gui/widgets/qmdisubwindow.cpp:1012
 msgid "&Restore"
 msgstr ""
 
-#: src/gui/widgets/qmdisubwindow.cpp:1015 src/gui/widgets/qworkspace.cpp:1015
+#: src/gui/widgets/qmdisubwindow.cpp:1015
 msgid "&Move"
 msgstr ""
 
-#: src/gui/widgets/qmdisubwindow.cpp:1017 src/gui/widgets/qworkspace.cpp:1018
+#: src/gui/widgets/qmdisubwindow.cpp:1017
 msgid "Mi&nimize"
 msgstr ""
 
-#: src/gui/widgets/qmdisubwindow.cpp:1019 src/gui/widgets/qworkspace.cpp:1020
+#: src/gui/widgets/qmdisubwindow.cpp:1019
 msgid "Ma&ximize"
 msgstr ""
 
-#: src/gui/widgets/qmdisubwindow.cpp:1021 src/gui/widgets/qworkspace.cpp:1028
+#: src/gui/widgets/qmdisubwindow.cpp:1021
 msgid "Stay on &Top"
 msgstr ""
 
-#: src/gui/widgets/qmdisubwindow.cpp:1024 src/gui/widgets/qworkspace.cpp:1022
+#: src/gui/widgets/qmdisubwindow.cpp:1024
 msgid "&Close"
 msgstr ""
 
 #: src/gui/widgets/qmdiarea.cpp:251
 msgid "(Untitled)"
-msgstr ""
-
-#: src/gui/widgets/qworkspace.cpp:1031 src/gui/widgets/qworkspace.cpp:2070
-msgid "Sh&ade"
-msgstr ""
-
-#: src/gui/widgets/qworkspace.cpp:2066
-msgid "&Unshade"
 msgstr ""
 
 #: src/gui/widgets/qmenubar.cpp:1500
@@ -4982,33 +4972,33 @@ msgid ""
 "Script: %3"
 msgstr ""
 
-#: src/uitools/abstractformbuilder.cpp:182
+#: src/uitools/abstractformbuilder.cpp:181
 msgctxt "QAbstractFormBuilder"
 msgid "Unexpected element <%1>"
 msgstr ""
 
-#: src/uitools/abstractformbuilder.cpp:187
+#: src/uitools/abstractformbuilder.cpp:186
 msgctxt "QAbstractFormBuilder"
 msgid ""
 "An error has occurred while reading the UI file at line %1, column %2: %3"
 msgstr ""
 
-#: src/uitools/abstractformbuilder.cpp:193
+#: src/uitools/abstractformbuilder.cpp:192
 msgctxt "QAbstractFormBuilder"
 msgid "Invalid UI file: The root element <ui> is missing."
 msgstr ""
 
-#: src/uitools/abstractformbuilder.cpp:297
+#: src/uitools/abstractformbuilder.cpp:296
 msgctxt "QAbstractFormBuilder"
 msgid "The creation of a widget of the class '%1' failed."
 msgstr ""
 
-#: src/uitools/abstractformbuilder.cpp:593
+#: src/uitools/abstractformbuilder.cpp:585
 msgctxt "QAbstractFormBuilder"
 msgid "Attempt to add child that is not of class QWizardPage to QWizard."
 msgstr ""
 
-#: src/uitools/abstractformbuilder.cpp:655
+#: src/uitools/abstractformbuilder.cpp:647
 msgctxt "QAbstractFormBuilder"
 msgid ""
 "Attempt to add a layout to a widget '%1' (%2) which already has a layout of "
@@ -5016,27 +5006,27 @@ msgid ""
 "This indicates an inconsistency in the ui-file."
 msgstr ""
 
-#: src/uitools/abstractformbuilder.cpp:865
+#: src/uitools/abstractformbuilder.cpp:857
 msgctxt "QAbstractFormBuilder"
 msgid "Empty widget item in %1 '%2'."
 msgstr ""
 
-#: src/uitools/abstractformbuilder.cpp:1599
+#: src/uitools/abstractformbuilder.cpp:1591
 msgctxt "QAbstractFormBuilder"
 msgid "Flags property are not supported yet."
 msgstr ""
 
-#: src/uitools/abstractformbuilder.cpp:1680
+#: src/uitools/abstractformbuilder.cpp:1672
 msgctxt "QAbstractFormBuilder"
 msgid "While applying tab stops: The widget '%1' could not be found."
 msgstr ""
 
-#: src/uitools/abstractformbuilder.cpp:2426
+#: src/uitools/abstractformbuilder.cpp:2418
 msgctxt "QAbstractFormBuilder"
 msgid "Invalid QButtonGroup reference '%1' referenced by '%2'."
 msgstr ""
 
-#: src/uitools/abstractformbuilder.cpp:2937
+#: src/uitools/abstractformbuilder.cpp:2929
 msgctxt "QAbstractFormBuilder"
 msgid "This version of the uitools library is linked without script support."
 msgstr ""

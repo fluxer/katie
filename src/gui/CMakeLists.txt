@@ -198,7 +198,6 @@ set(GUI_PUBLIC_HEADERS
     QWidgetAction
     QWindowsStyle
     QWizard
-    QWorkspace
     QGuiPlatformPlugin
 )
 
@@ -580,7 +579,6 @@ set(GUI_HEADERS
     ${CMAKE_CURRENT_SOURCE_DIR}/widgets/qwidgetresizehandler_p.h
     ${CMAKE_CURRENT_SOURCE_DIR}/widgets/qfocusframe.h
     ${CMAKE_CURRENT_SOURCE_DIR}/widgets/qscrollarea.h
-    ${CMAKE_CURRENT_SOURCE_DIR}/widgets/qworkspace.h
     ${CMAKE_CURRENT_SOURCE_DIR}/widgets/qwidgetanimator_p.h
     ${CMAKE_CURRENT_SOURCE_DIR}/widgets/qtoolbararealayout_p.h
     ${CMAKE_CURRENT_SOURCE_DIR}/widgets/qplaintextedit.h
@@ -874,7 +872,6 @@ set(GUI_SOURCES
     ${CMAKE_CURRENT_SOURCE_DIR}/widgets/qwidgetresizehandler.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/widgets/qfocusframe.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/widgets/qscrollarea.cpp
-    ${CMAKE_CURRENT_SOURCE_DIR}/widgets/qworkspace.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/widgets/qwidgetanimator.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/widgets/qtoolbararealayout.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/widgets/qplaintextedit.cpp

@@ -720,7 +720,6 @@ classlist = [
     "QWindowStateChangeEvent",
     "QWizard",
     "QWizardPage",
-    "QWorkspace",
     "QWriteLocker",
     "QX11EmbedContainer",
     "QX11EmbedWidget",

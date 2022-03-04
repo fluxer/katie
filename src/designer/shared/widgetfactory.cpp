@@ -795,10 +795,10 @@ bool WidgetFactory::isPassiveInteractor(QWidget *widget)
                 return m_lastWasAPassiveInteractor;
             }
         }
-    } else if (qstrcmp(widget->metaObject()->className(), "QDockWidgetTitle") == 0)
-        return (m_lastWasAPassiveInteractor = true);
-    else if (qstrcmp(widget->metaObject()->className(), "QWorkspaceTitleBar") == 0)
-        return (m_lastWasAPassiveInteractor = true);
+    } else if (qstrcmp(widget->metaObject()->className(), "QDockWidgetTitle") == 0) {
+        m_lastWasAPassiveInteractor = true;
+        return m_lastWasAPassiveInteractor;
+    }
     const QString name = widget->objectName();
     if (name.startsWith(qtPassive) || name == qtMainWindowSplitter) {
         m_lastWasAPassiveInteractor = true;

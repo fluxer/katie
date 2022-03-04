@@ -840,7 +840,7 @@ int QWidget::devType() const
 }
 
 
-//### w is a "this" ptr, passed as a param because QWorkspace needs special logic
+//### w is a "this" ptr
 void QWidgetPrivate::adjustFlags(Qt::WindowFlags &flags, QWidget *w)
 {
     bool customize =  (flags & (Qt::CustomizeWindowHint

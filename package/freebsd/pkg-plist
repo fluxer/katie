@@ -527,7 +527,6 @@ include/katie/QtDesignerComponents/qlonglongvalidator.h
 include/katie/QtDesignerComponents/qmainwindow_container.h
 include/katie/QtDesignerComponents/qmdiarea_container.h
 include/katie/QtDesignerComponents/qwizard_container.h
-include/katie/QtDesignerComponents/qworkspace_container.h
 include/katie/QtDesignerComponents/spacer_propertysheet.h
 include/katie/QtDesignerComponents/stringlisteditor.h
 include/katie/QtDesignerComponents/stringlisteditorbutton.h
@@ -909,7 +908,6 @@ include/katie/QtGui/QWindowStateChangeEvent
 include/katie/QtGui/QWindowsStyle
 include/katie/QtGui/QWizard
 include/katie/QtGui/QWizardPage
-include/katie/QtGui/QWorkspace
 include/katie/QtGui/QX11EmbedContainer
 include/katie/QtGui/QX11EmbedWidget
 include/katie/QtGui/QX11Info
@@ -1111,7 +1109,6 @@ include/katie/QtGui/qwidgetaction.h
 include/katie/QtGui/qwindowdefs.h
 include/katie/QtGui/qwindowsstyle.h
 include/katie/QtGui/qwizard.h
-include/katie/QtGui/qworkspace.h
 include/katie/QtGui/qx11embed_x11.h
 include/katie/QtGui/qx11info_x11.h
 include/katie/QtNetwork/QAbstractSocket

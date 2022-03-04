@@ -286,7 +286,6 @@ WidgetDataBase::WidgetDataBase(QDesignerFormEditorInterface *core, QObject *pare
     item(indexOfClassName(QLatin1String("QDockWidget")))->setContainer(true);
     item(indexOfClassName(QLatin1String("QDesignerDockWidget")))->setContainer(true);
     item(indexOfClassName(QLatin1String("QMdiArea")))->setContainer(true);
-    item(indexOfClassName(QLatin1String("QWorkspace")))->setContainer(true);
     item(indexOfClassName(QLatin1String("QWizard")))->setContainer(true);
     item(indexOfClassName(QLatin1String("QWizardPage")))->setContainer(true);
 
@@ -481,8 +480,6 @@ static inline bool suitableForNewForm(const QString &className)
 {
     if (className.isEmpty()) // Missing custom widget information
         return false;
-    if (className == QLatin1String("QWorkspace"))
-         return false;
     if (className == QLatin1String("QSplitter"))
          return false;
     if (className.startsWith(QLatin1String("QDesigner")) || className.startsWith(QLatin1String("QLayout")))
