@@ -280,7 +280,7 @@ static QNetworkInterfacePrivate *findInterface(int socket, QList<QNetworkInterfa
     // Get the HW address
     if (::ioctl(socket, SIOCGIFHWADDR, &req) >= 0) {
         uchar *addr = (uchar *)req.ifr_addr.sa_data;
-        iface->hardwareAddress = iface->makeHwAddress(6, addr);
+        iface->hardwareAddress = iface->makeHwAddress(addr);
     }
 
     return iface;
