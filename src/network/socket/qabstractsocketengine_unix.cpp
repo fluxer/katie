@@ -57,10 +57,8 @@ static inline void qt_socket_getPortAndAddress(const struct sockaddr_storage *ss
 #if !defined(QT_NO_IPV6)
     if (ss->ss_family == AF_INET6) {
         struct sockaddr_in6 *si6 = (struct sockaddr_in6 *)ss;
-        Q_IPV6ADDR tmp;
-        memcpy(&tmp, &si6->sin6_addr, sizeof(tmp));
         if (addr) {
-            addr->setAddress(tmp);
+            addr->setAddress(si6->sin6_addr.s6_addr);
 #ifndef QT_NO_IPV6IFNAME
             QSTACKARRAY(char, scopeid, IFNAMSIZ);
             if (::if_indextoname(si6->sin6_scope_id, scopeid)) {
