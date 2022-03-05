@@ -41,9 +41,8 @@
 
 #ifdef QT_HAVE_GETIFADDRS
 #  include <ifaddrs.h>
-#else
-#  include <sys/ioctl.h>
 #endif
+#include <sys/ioctl.h>
 
 #ifndef SIOCGIFBRDADDR
 #  define SIOCGIFBRDADDR 0x8919
@@ -164,6 +163,15 @@ static QList<QNetworkInterfacePrivate *> interfaceListing()
             entry.setBroadcast(addressFromSockaddr(ptr->ifa_broadaddr));
 
         iface->addressEntries << entry;
+
+        struct ifreq req;
+        ::memset(&req, 0, sizeof(ifreq));
+        ::memcpy(req.ifr_name, ptr->ifa_name, sizeof(req.ifr_name) - 1);
+        // Get the HW address
+        if (::ioctl(socket, SIOCGIFHWADDR, &req) >= 0) {
+            uchar *addr = (uchar *)req.ifr_addr.sa_data;
+            iface->hardwareAddress = iface->makeHwAddress(addr);
+        }
     }
 
     ::freeifaddrs(interfaceListing);
