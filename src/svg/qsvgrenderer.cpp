@@ -20,11 +20,7 @@
 ****************************************************************************/
 
 #include "qsvgrenderer.h"
-
-#ifndef QT_NO_SVGRENDERER
-
 #include "qsvgtinydocument_p.h"
-
 #include "qbytearray.h"
 #include "qtimer.h"
 #include "qdebug.h"
@@ -476,7 +472,5 @@ QMatrix QSvgRenderer::matrixForElement(const QString &id) const
 }
 
 QT_END_NAMESPACE
-
-#endif // QT_NO_SVGRENDERER
 
 #include "moc_qsvgrenderer.h"

@@ -161,6 +161,7 @@ void tst_QDialog::defaultButtons()
 
 void tst_QDialog::showMaximized()
 {
+#ifndef QT_NO_SIZEGRIP
     QDialog dialog(0);
     dialog.setSizeGripEnabled(true);
     QSizeGrip *sizeGrip = dialog.findChild<QSizeGrip *>();
@@ -195,6 +196,9 @@ void tst_QDialog::showMaximized()
     dialog.showMaximized();
     QVERIFY(dialog.isMaximized());
     QVERIFY(dialog.isVisible());
+#else // QT_NO_SIZEGRIP
+    QSKIP("Katie compiled without sizegrip support (QT_NO_SIZEGRIP)", SkipAll);
+#endif // QT_NO_SIZEGRIP
 }
 
 void tst_QDialog::showMinimized()
@@ -232,6 +236,7 @@ void tst_QDialog::showMinimized()
 
 void tst_QDialog::showFullScreen()
 {
+#ifndef QT_NO_SIZEGRIP
     QDialog dialog(0, Qt::X11BypassWindowManagerHint);
     dialog.setSizeGripEnabled(true);
     QSizeGrip *sizeGrip = dialog.findChild<QSizeGrip *>();
@@ -278,12 +283,15 @@ void tst_QDialog::showFullScreen()
     dialog.hide();
     QVERIFY(dialog.isFullScreen());
     QVERIFY(!dialog.isVisible());
+#else // QT_NO_SIZEGRIP
+    QSKIP("Katie compiled without sizegrip support (QT_NO_SIZEGRIP)", SkipAll);
+#endif // QT_NO_SIZEGRIP
 }
 
 void tst_QDialog::showAsTool()
 {
 #if defined(Q_WS_X11)
-    QSKIP("Qt/X11: Skipped since activeWindow() is not respected by all window managers", SkipAll);
+    QSKIP("Katie/X11: Skipped since activeWindow() is not respected by all window managers", SkipAll);
 #endif
     ToolDialog dialog(testWidget);
     testWidget->activateWindow();
@@ -395,7 +403,9 @@ void tst_QDialog::showSizeGrip()
     dialog.hide();
     dialog.show();
     QVERIFY(!sizeGrip->isVisible());
-#endif
+#else // QT_NO_SIZEGRIP
+    QSKIP("Katie compiled without sizegrip support (QT_NO_SIZEGRIP)", SkipAll);
+#endif // QT_NO_SIZEGRIP
 }
 
 void tst_QDialog::setVisible()

@@ -176,7 +176,8 @@ bool NewForm::openTemplate(QString *ptrToErrorMessage)
     tempPattern += QLatin1String("XXXXXX.ui");
     QTemporaryFile tempFormFile(tempPattern);
 
-    tempFormFile.setAutoRemove(true);
+    // TODO: leaking file?
+    tempFormFile.setAutoRemove(false);
     if (!tempFormFile.open()) {
         *ptrToErrorMessage = tr("A temporary form file could not be created in %1.").arg(QDir::tempPath());
         return false;

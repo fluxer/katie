@@ -1145,8 +1145,6 @@ void QTextHtmlImporter::appendBlock(const QTextBlockFormat &format, QTextCharFor
         compressNextWhitespace = RemoveWhiteSpace;
 }
 
-#endif // QT_NO_TEXTHTMLPARSER
-
 /*!
     \fn QTextDocumentFragment QTextDocumentFragment::fromHtml(const QString &text)
 
@@ -1155,8 +1153,6 @@ void QTextHtmlImporter::appendBlock(const QTextBlockFormat &format, QTextCharFor
     possible; for example, "<b>bold</b>" will become a document
     fragment with the text "bold" with a bold character format.
 */
-
-#ifndef QT_NO_TEXTHTMLPARSER
 
 QTextDocumentFragment QTextDocumentFragment::fromHtml(const QString &html)
 {
@@ -1186,11 +1182,7 @@ QTextDocumentFragment QTextDocumentFragment::fromHtml(const QString &html, const
     return res;
 }
 
-QT_END_NAMESPACE
 #endif // QT_NO_TEXTHTMLPARSER
 
-
-
-
-
+QT_END_NAMESPACE
 

@@ -802,6 +802,7 @@ void tst_QAbstractSlider::wheelEvent_data()
 
 void tst_QAbstractSlider::wheelEvent()
 {
+#ifndef QT_NO_WHEELEVENT
     QFETCH(int,initialSliderPosition);
     QFETCH(int,minimum);
     QFETCH(int,maximum);
@@ -848,6 +849,9 @@ void tst_QAbstractSlider::wheelEvent()
     QCOMPARE(spy2.count(), expectedSignalCount);
     if (expectedSignalCount)
         QVERIFY(actionTriggeredTimeStamp < valueChangedTimeStamp);
+#else // QT_NO_WHEELEVENT
+    QSKIP("Katie compiled without wheel event support (QT_NO_WHEELEVENT)", SkipAll);
+#endif // QT_NO_WHEELEVENT
 }
 
 void tst_QAbstractSlider::sliderPressedReleased_data()

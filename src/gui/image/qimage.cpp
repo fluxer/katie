@@ -295,16 +295,34 @@ bool QImageData::checkForAlphaPixels() const
     The complete list of supported file formats are available through
     the QImageReader::supportedImageFormats() and
     QImageWriter::supportedImageFormats() functions. New file formats
-    can be added as plugins. By default, Qt supports the following
+    can be added as plugins. By default, Katie supports the following
     formats:
 
     \table
     \header \o Format \o Description                      \o Katie's support
     \row    \o PNG    \o Portable Network Graphics        \o Read/write
+    \row    \o KAT    \o Katie Image                      \o Read/write
     \row    \o PBM    \o Portable Bitmap                  \o Read
     \row    \o PPM    \o Portable Pixmap                  \o Read/write
     \row    \o XPM    \o X11 Pixmap                       \o Read/write
     \endtable
+
+    \section1 Katie Image Format
+
+    The Katie image format is faster and in most cases smaller
+    substitute for the PNG format. Its usage should be primarily
+    in caching and short-lived transfers such as sending QImage
+    trough socket.
+
+    The image format is lossy for fully opaque and lossless for
+    images with alpha pixels by default. If guaranteed lossless
+    quality is required use QImageWriter::setQuality() to set the
+    quality to best (100).
+
+    Your code should be prepared to discard any image in that
+    format and generate a new image in case loading fails as the
+    format (its header and the way image data is stored) may change
+    from release to release.
 
     \section1 Image Information
 
@@ -2991,8 +3009,8 @@ QImage QImage::fromData(const char *data, int size, const char *format)
     suffix.
 
     The \a quality factor must be in the range 0 to 100 or -1. Specify
-    0 to obtain small compressed files, 100 for large uncompressed
-    files, and -1 (the default) to use the default settings.
+    0 to obtain small files, 100 for large and -1 (the default) to use
+    the default settings.
 
     Returns true if the image was successfully saved; otherwise
     returns false.

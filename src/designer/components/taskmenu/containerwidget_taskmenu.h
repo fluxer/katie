@@ -36,7 +36,6 @@ class QDesignerFormEditorInterface;
 class QDesignerContainerExtension;
 class QAction;
 class QMdiArea;
-class QWorkspace;
 class QMenu;
 class QWizard;
 
@@ -105,7 +104,6 @@ class MdiContainerWidgetTaskMenu : public ContainerWidgetTaskMenu {
     Q_OBJECT
 public:
     explicit MdiContainerWidgetTaskMenu(QMdiArea *m, QObject *parent = nullptr);
-    explicit MdiContainerWidgetTaskMenu(QWorkspace *m, QObject *parent = nullptr);
 
     virtual QList<QAction*> taskActions() const;
 private:

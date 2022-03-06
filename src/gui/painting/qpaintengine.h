@@ -150,7 +150,6 @@ public:
         X11,
         PostScript,
         Raster,
-        Pdf,
 
         User = 50,    // first user type id
         MaxUser = 100 // last user type id

@@ -72,7 +72,9 @@
 static void initResources()
 {
     Q_INIT_RESOURCE(qstyle);
+#ifndef QT_NO_MESSAGEBOX
     Q_INIT_RESOURCE(qmessagebox);
+#endif
 #if !defined(QT_NO_PRINTDIALOG)
     Q_INIT_RESOURCE(qprintdialog);
 #endif
@@ -335,8 +337,6 @@ int QApplicationPrivate::mouse_double_click_time = 400;        // mouse dbl clic
 int QApplicationPrivate::keyboard_input_time = 400; // keyboard input interval
 #ifndef QT_NO_WHEELEVENT
 int QApplicationPrivate::wheel_scroll_lines = 3;         // number of lines to scroll
-#else
-int QApplicationPrivate::wheel_scroll_lines = 0;
 #endif
 bool qt_in_tab_key_event = false;
 static int drag_time = 500;
@@ -3878,7 +3878,7 @@ void QApplicationPrivate::emitLastWindowClosed()
 
     Returns true if \a effect is enabled; otherwise returns false.
 
-    By default, Qt will try to use the desktop settings. To prevent this, call
+    By default, Katie will try to use the desktop settings. To prevent this, call
     setDesktopSettingsAware(false).
 
     \note All effects are disabled on screens running at less than 16-bit color

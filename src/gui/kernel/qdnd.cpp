@@ -38,9 +38,10 @@
 #include "qimagereader.h"
 #include "qimagewriter.h"
 #include "qdebug.h"
-#include <ctype.h>
-
 #include "qapplication_p.h"
+#include "qguicommon_p.h"
+
+#include <ctype.h>
 
 #ifndef QT_NO_DRAGANDDROP
 
@@ -214,16 +215,14 @@ QDropData::~QDropData()
 static QStringList imageReadMimeFormats()
 {
     QStringList formats;
-    foreach (const QByteArray &it, QImageReader::supportedImageFormats()) {
-        QString format = QLatin1String("image/");
-        format += QString::fromLatin1(it.toLower());
-        formats.append(format);
+    foreach (const QByteArray &it, QImageReader::supportedMimeTypes()) {
+        formats.append(QString::fromLatin1(it.toLower()));
     }
 
-    //put png at the front because it is best
-    int pngIndex = formats.indexOf(QLatin1String("image/png"));
-    if (pngIndex != -1 && pngIndex != 0)
-        formats.move(pngIndex, 0);
+    // put the best in front
+    int bestIndex = formats.indexOf(QLatin1String(qt_imagemime));
+    if (bestIndex > 0)
+        formats.move(bestIndex, 0);
 
     return formats;
 }
@@ -232,16 +231,14 @@ static QStringList imageReadMimeFormats()
 static QStringList imageWriteMimeFormats()
 {
     QStringList formats;
-    foreach (const QByteArray &it, QImageWriter::supportedImageFormats()) {
-        QString format = QLatin1String("image/");
-        format += QString::fromLatin1(it.toLower());
-        formats.append(format);
+    foreach (const QByteArray &it, QImageWriter::supportedMimeTypes()) {
+        formats.append(QString::fromLatin1(it.toLower()));
     }
 
-    //put png at the front because it is best
-    int pngIndex = formats.indexOf(QLatin1String("image/png"));
-    if (pngIndex != -1 && pngIndex != 0)
-        formats.move(pngIndex, 0);
+    // put the best in front
+    int bestIndex = formats.indexOf(QLatin1String(qt_imagemime));
+    if (bestIndex > 0)
+        formats.move(bestIndex, 0);
 
     return formats;
 }
@@ -300,15 +297,13 @@ QVariant QInternalMimeData::retrieveData(const QString &mimeType, QVariant::Type
             data = QImage::fromData(data.toByteArray());
 
     } else if (mimeType == QLatin1String("application/x-color") && data.type() == QVariant::ByteArray) {
-        QColor c;
         QByteArray ba = data.toByteArray();
         if (ba.size() == 8) {
             ushort * colBuf = (ushort *)ba.data();
-            c.setRgbF(qreal(colBuf[0]) / qreal(0xFFFF),
-                      qreal(colBuf[1]) / qreal(0xFFFF),
-                      qreal(colBuf[2]) / qreal(0xFFFF),
-                      qreal(colBuf[3]) / qreal(0xFFFF));
-            data = c;
+            data = QColor::fromRgbF(qreal(colBuf[0]) / qreal(0xFFFF),
+                                    qreal(colBuf[1]) / qreal(0xFFFF),
+                                    qreal(colBuf[2]) / qreal(0xFFFF),
+                                    qreal(colBuf[3]) / qreal(0xFFFF));
         } else {
             qWarning("Qt: Invalid color format");
         }
@@ -384,13 +379,12 @@ QByteArray QInternalMimeData::renderDataHelper(const QString &mimeType, const QM
                 QImage image = qvariant_cast<QImage>(data->imageData());
                 QBuffer buf(&ba);
                 buf.open(QBuffer::WriteOnly);
-                // would there not be PNG ??
-                image.save(&buf, "PNG");
+                image.save(&buf, qt_imageformat);
             } else if (mimeType.startsWith(QLatin1String("image/")) && data->hasImage()) {
                 QImage image = qvariant_cast<QImage>(data->imageData());
                 QBuffer buf(&ba);
                 buf.open(QBuffer::WriteOnly);
-                image.save(&buf, mimeType.mid(mimeType.indexOf(QLatin1Char('/')) + 1).toLatin1().toUpper());
+                image.save(&buf, QImageWriter::formatForMimeType(mimeType.toLatin1()));
             }
         }
     }

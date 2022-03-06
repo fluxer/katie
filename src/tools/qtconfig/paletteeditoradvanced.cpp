@@ -32,13 +32,17 @@ PaletteEditorAdvanced::PaletteEditorAdvanced(QWidget *parent)
     // create a ColorButton's
     buttonCentral = new ColorButton(ui->groupCentral);
     buttonCentral->setToolTip(tr("Choose a color"));
+#ifndef QT_NO_WHATSTHIS
     buttonCentral->setWhatsThis(tr("Choose a color for the selected central color role."));
+#endif // QT_NO_WHATSTHIS
     ui->layoutCentral->addWidget(buttonCentral);
     ui->labelCentral->setBuddy(buttonCentral);
 
     buttonEffect = new ColorButton(ui->groupEffect);
     buttonEffect->setToolTip(tr("Choose a color"));
+#ifndef QT_NO_WHATSTHIS
     buttonEffect->setWhatsThis(tr("Choose a color for the selected effect color role."));
+#endif // QT_NO_WHATSTHIS
     buttonEffect->setEnabled(false);
     ui->layoutEffect->addWidget(buttonEffect);
     ui->labelEffect->setBuddy(buttonEffect);

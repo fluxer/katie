@@ -32,7 +32,6 @@ QT_BEGIN_NAMESPACE
 
 class QColor;
 class QIODevice;
-class QRect;
 class QSize;
 class QStringList;
 
@@ -67,19 +66,8 @@ public:
 
     QSize size() const;
 
-    QImage::Format imageFormat() const;
-
-    void setClipRect(const QRect &rect);
-    QRect clipRect() const;
-
     void setScaledSize(const QSize &size);
     QSize scaledSize() const;
-
-    void setQuality(int quality);
-    int quality() const;
-
-    void setScaledClipRect(const QRect &rect);
-    QRect scaledClipRect() const;
 
     void setBackgroundColor(const QColor &color);
     QColor backgroundColor() const;
@@ -96,7 +84,6 @@ public:
     int imageCount() const;
     int nextImageDelay() const;
     int currentImageNumber() const;
-    QRect currentImageRect() const;
 
     ImageReaderError error() const;
     QString errorString() const;
@@ -106,6 +93,8 @@ public:
     static QByteArray imageFormat(const QString &fileName);
     static QByteArray imageFormat(QIODevice *device);
     static QList<QByteArray> supportedImageFormats();
+    static QByteArray formatForMimeType(const QByteArray &mime);
+    static QList<QByteArray> supportedMimeTypes();
 
 private:
     Q_DISABLE_COPY(QImageReader)

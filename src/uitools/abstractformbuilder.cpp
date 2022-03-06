@@ -72,7 +72,6 @@
 #include <QtGui/QMenuBar>
 #include <QtGui/QDockWidget>
 #include <QtGui/QMdiArea>
-#include <QtGui/QWorkspace>
 #include <QtGui/QWizard>
 
 #include <limits.h>
@@ -561,13 +560,6 @@ bool QAbstractFormBuilder::addItem(DomWidget *ui_widget, QWidget *widget, QWidge
 #ifndef QT_NO_MDIAREA
     else if (QMdiArea *mdiArea = qobject_cast<QMdiArea*>(parentWidget)) {
         mdiArea->addSubWindow(widget);
-        return true;
-    }
-#endif
-
-#ifndef QT_NO_WORKSPACE
-    else if (QWorkspace *ws = qobject_cast<QWorkspace*>(parentWidget)) {
-        ws->addWindow(widget);
         return true;
     }
 #endif

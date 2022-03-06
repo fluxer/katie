@@ -379,9 +379,11 @@ void FormWindow::setCursorToAll(const QCursor &c, QWidget *start)
 
 void FormWindow::init()
 {
+#ifndef QT_NO_UNDOGROUP
     if (FormWindowManager *manager = qobject_cast<FormWindowManager*> (core()->formWindowManager())) {
         manager->undoGroup()->addStack(m_undoStack.qundoStack());
     }
+#endif // QT_NO_UNDOGROUP
 
     m_blockSelectionChanged = false;
 

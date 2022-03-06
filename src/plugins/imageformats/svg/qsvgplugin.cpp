@@ -21,9 +21,6 @@
 
 #include "qimageiohandler.h"
 #include "qstringlist.h"
-
-#if !defined(QT_NO_SVGRENDERER)
-
 #include "qsvgiohandler.h"
 #include "qiodevice.h"
 #include "qbytearray.h"
@@ -35,6 +32,7 @@ class QSvgPlugin : public QImageIOPlugin
 {
 public:
     QStringList keys() const;
+    QList<QByteArray> mimeTypes() const;
     Capabilities capabilities(QIODevice *device, const QByteArray &format) const;
     QImageIOHandler *create(QIODevice *device, const QByteArray &format = QByteArray()) const;
 };
@@ -44,6 +42,14 @@ QStringList QSvgPlugin::keys() const
     static const QStringList list = QStringList()
         << QLatin1String("svg")
         << QLatin1String("svgz");
+    return list;
+}
+
+QList<QByteArray> QSvgPlugin::mimeTypes() const
+{
+    static const QList<QByteArray> list = QList<QByteArray>()
+        << "image/svg+xml"
+        << "image/svg+xml-compressed";
     return list;
 }
 
@@ -71,5 +77,3 @@ QImageIOHandler *QSvgPlugin::create(QIODevice *device, const QByteArray &format)
 Q_EXPORT_PLUGIN2(qsvg, QSvgPlugin)
 
 QT_END_NAMESPACE
-
-#endif // !QT_NO_SVGRENDERER

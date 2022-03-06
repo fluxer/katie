@@ -133,7 +133,6 @@ set(GUI_PUBLIC_HEADERS
     QProxyModel
     QProxyStyle
     QPushButton
-    QQuaternion
     QRadioButton
     QRegion
     QRgb
@@ -199,7 +198,6 @@ set(GUI_PUBLIC_HEADERS
     QWidgetAction
     QWindowsStyle
     QWizard
-    QWorkspace
     QGuiPlatformPlugin
 )
 
@@ -308,6 +306,7 @@ set(GUI_HEADERS
     ${CMAKE_CURRENT_SOURCE_DIR}/image/qppmhandler_p.h
     ${CMAKE_CURRENT_SOURCE_DIR}/image/qxpmhandler_p.h
     ${CMAKE_CURRENT_SOURCE_DIR}/image/qpnghandler_p.h
+    ${CMAKE_CURRENT_SOURCE_DIR}/image/qkathandler_p.h
     ${CMAKE_CURRENT_SOURCE_DIR}/itemviews/qabstractitemview.h
     ${CMAKE_CURRENT_SOURCE_DIR}/itemviews/qabstractitemview_p.h
     ${CMAKE_CURRENT_SOURCE_DIR}/itemviews/qheaderview.h
@@ -393,7 +392,6 @@ set(GUI_HEADERS
     ${CMAKE_CURRENT_SOURCE_DIR}/kernel/qeventdispatcher_x11_p.h
     ${CMAKE_CURRENT_SOURCE_DIR}/math3d/qgenericmatrix.h
     ${CMAKE_CURRENT_SOURCE_DIR}/math3d/qmatrix4x4.h
-    ${CMAKE_CURRENT_SOURCE_DIR}/math3d/qquaternion.h
     ${CMAKE_CURRENT_SOURCE_DIR}/math3d/qvector2d.h
     ${CMAKE_CURRENT_SOURCE_DIR}/math3d/qvector3d.h
     ${CMAKE_CURRENT_SOURCE_DIR}/math3d/qvector4d.h
@@ -424,7 +422,6 @@ set(GUI_HEADERS
     ${CMAKE_CURRENT_SOURCE_DIR}/painting/qpolygon.h
     ${CMAKE_CURRENT_SOURCE_DIR}/painting/qpolygonclipper_p.h
     ${CMAKE_CURRENT_SOURCE_DIR}/painting/qprintengine.h
-    ${CMAKE_CURRENT_SOURCE_DIR}/painting/qprintengine_pdf_p.h
     ${CMAKE_CURRENT_SOURCE_DIR}/painting/qprintengine_ps_p.h
     ${CMAKE_CURRENT_SOURCE_DIR}/painting/qprinter.h
     ${CMAKE_CURRENT_SOURCE_DIR}/painting/qprinter_p.h
@@ -582,7 +579,6 @@ set(GUI_HEADERS
     ${CMAKE_CURRENT_SOURCE_DIR}/widgets/qwidgetresizehandler_p.h
     ${CMAKE_CURRENT_SOURCE_DIR}/widgets/qfocusframe.h
     ${CMAKE_CURRENT_SOURCE_DIR}/widgets/qscrollarea.h
-    ${CMAKE_CURRENT_SOURCE_DIR}/widgets/qworkspace.h
     ${CMAKE_CURRENT_SOURCE_DIR}/widgets/qwidgetanimator_p.h
     ${CMAKE_CURRENT_SOURCE_DIR}/widgets/qtoolbararealayout_p.h
     ${CMAKE_CURRENT_SOURCE_DIR}/widgets/qplaintextedit.h
@@ -668,6 +664,7 @@ set(GUI_SOURCES
     ${CMAKE_CURRENT_SOURCE_DIR}/image/qppmhandler.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/image/qxpmhandler.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/image/qpnghandler.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/image/qkathandler.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/itemviews/qabstractitemview.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/itemviews/qheaderview.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/itemviews/qidentityproxymodel.cpp
@@ -734,7 +731,6 @@ set(GUI_SOURCES
     ${CMAKE_CURRENT_SOURCE_DIR}/kernel/qt_x11.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/math3d/qgenericmatrix.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/math3d/qmatrix4x4.cpp
-    ${CMAKE_CURRENT_SOURCE_DIR}/math3d/qquaternion.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/math3d/qvector2d.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/math3d/qvector3d.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/math3d/qvector4d.cpp
@@ -757,7 +753,6 @@ set(GUI_SOURCES
     ${CMAKE_CURRENT_SOURCE_DIR}/painting/qpdf.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/painting/qpen.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/painting/qpolygon.cpp
-    ${CMAKE_CURRENT_SOURCE_DIR}/painting/qprintengine_pdf.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/painting/qprintengine_ps.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/painting/qprinter.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/painting/qprinterinfo.cpp
@@ -877,7 +872,6 @@ set(GUI_SOURCES
     ${CMAKE_CURRENT_SOURCE_DIR}/widgets/qwidgetresizehandler.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/widgets/qfocusframe.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/widgets/qscrollarea.cpp
-    ${CMAKE_CURRENT_SOURCE_DIR}/widgets/qworkspace.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/widgets/qwidgetanimator.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/widgets/qtoolbararealayout.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/widgets/qplaintextedit.cpp
@@ -918,6 +912,33 @@ if(WITH_FONTCONFIG AND FONTCONFIG_FOUND)
     )
     include_directories(${FONTCONFIG_INCLUDES})
     add_definitions(${FONTCONFIG_DEFINITIONS})
+endif()
+
+if(WITH_DEFLATE AND DEFLATE_FOUND)
+    set(EXTRA_GUI_LIBS
+        ${EXTRA_GUI_LIBS}
+        ${DEFLATE_LIBRARIES}
+    )
+    include_directories(${DEFLATE_INCLUDES})
+else()
+    set(GUI_SOURCES
+        ${GUI_SOURCES}
+        # common files
+        ${CMAKE_SOURCE_DIR}/src/3rdparty/libdeflate/lib/deflate_decompress.c
+        ${CMAKE_SOURCE_DIR}/src/3rdparty/libdeflate/lib/deflate_compress.c
+        ${CMAKE_SOURCE_DIR}/src/3rdparty/libdeflate/lib/utils.c
+        ${CMAKE_SOURCE_DIR}/src/3rdparty/libdeflate/lib/arm/cpu_features.c
+        ${CMAKE_SOURCE_DIR}/src/3rdparty/libdeflate/lib/x86/cpu_features.c
+        # zlib wrapper files
+        ${CMAKE_SOURCE_DIR}/src/3rdparty/libdeflate/lib/adler32.c
+        ${CMAKE_SOURCE_DIR}/src/3rdparty/libdeflate/lib/zlib_decompress.c
+        ${CMAKE_SOURCE_DIR}/src/3rdparty/libdeflate/lib/zlib_compress.c
+        # gzip wrapper files
+        ${CMAKE_SOURCE_DIR}/src/3rdparty/libdeflate/lib/crc32.c
+        ${CMAKE_SOURCE_DIR}/src/3rdparty/libdeflate/lib/gzip_decompress.c
+        ${CMAKE_SOURCE_DIR}/src/3rdparty/libdeflate/lib/gzip_compress.c
+    )
+    include_directories(${CMAKE_SOURCE_DIR}/src/3rdparty/libdeflate)
 endif()
 
 # anything that includes qt_x11_p.h is known to break unity build

@@ -21,9 +21,11 @@
 
 #include "qpnghandler_p.h"
 #include "qiodevice.h"
+#include "qvariant.h"
 #include "qimage.h"
 #include "qimage_p.h"
 #include "qdrawhelper_p.h"
+#include "qcorecommon_p.h"
 #include "qguicommon_p.h"
 
 #include <png.h>
@@ -82,6 +84,7 @@ static void qt_png_flush(png_structp /* png_ptr */)
 #endif
 
 QPngHandler::QPngHandler()
+    : m_compression(1)
 {
 }
 
@@ -99,23 +102,13 @@ bool QPngHandler::canRead() const
     return false;
 }
 
-bool QPngHandler::canRead(QIODevice *device)
-{
-    if (Q_UNLIKELY(!device)) {
-        qWarning("QPngHandler::canRead() called with no device");
-        return false;
-    }
-
-    return device->peek(8) == "\x89\x50\x4E\x47\x0D\x0A\x1A\x0A";
-}
-
 bool QPngHandler::read(QImage *image)
 {
     if (!canRead()) {
         return false;
     }
 
-    png_struct *png_ptr = png_create_read_struct(PNG_LIBPNG_VER_STRING,0,0,0);
+    png_struct *png_ptr = png_create_read_struct(PNG_LIBPNG_VER_STRING, 0, 0, 0);
     if (!png_ptr) {
         return false;
     }
@@ -195,8 +188,8 @@ bool QPngHandler::read(QImage *image)
 
     png_read_image(png_ptr, row_pointers);
 
-    image->d->dpmx = png_get_x_pixels_per_meter(png_ptr,info_ptr);
-    image->d->dpmy = png_get_y_pixels_per_meter(png_ptr,info_ptr);
+    image->d->dpmx = png_get_x_pixels_per_meter(png_ptr, info_ptr);
+    image->d->dpmy = png_get_y_pixels_per_meter(png_ptr, info_ptr);
 
     png_read_end(png_ptr, end_info);
 
@@ -211,7 +204,7 @@ bool QPngHandler::write(const QImage &image)
     QImage copy = image.convertToFormat(image.hasAlphaChannel() ? QImage::Format_ARGB32 : QImage::Format_RGB32);
     const int height = copy.height();
 
-    png_structp png_ptr = png_create_write_struct(PNG_LIBPNG_VER_STRING,0,0,0);
+    png_structp png_ptr = png_create_write_struct(PNG_LIBPNG_VER_STRING, 0, 0, 0);
     if (!png_ptr) {
         return false;
     }
@@ -248,6 +241,7 @@ bool QPngHandler::write(const QImage &image)
     sig_bit.blue = 8;
     sig_bit.alpha = copy.hasAlphaChannel() ? 8 : 0;
     png_set_sBIT(png_ptr, info_ptr, &sig_bit);
+    png_set_compression_level(png_ptr, m_compression);
 
 #if Q_BYTE_ORDER == Q_BIG_ENDIAN
     // Swap ARGB to RGBA (normal PNG format) before saving on
@@ -287,9 +281,43 @@ bool QPngHandler::write(const QImage &image)
     return true;
 }
 
+bool QPngHandler::supportsOption(QImageIOHandler::ImageOption option) const
+{
+    return (option == QImageIOHandler::CompressionLevel);
+}
+
+void QPngHandler::setOption(QImageIOHandler::ImageOption option, const QVariant &value)
+{
+    if (option == QImageIOHandler::CompressionLevel) {
+        const int newlevel = value.toInt();
+        if (Q_UNLIKELY(newlevel < 0 || newlevel > 9)) {
+            qWarning("QPngHandler::setOption() invalid compression level value");
+            m_compression = 1;
+        } else {
+            m_compression = newlevel;
+        }
+    }
+}
+
 QByteArray QPngHandler::name() const
 {
     return "png";
+}
+
+bool QPngHandler::canRead(QIODevice *device)
+{
+    if (Q_UNLIKELY(!device)) {
+        qWarning("QPngHandler::canRead() called with no device");
+        return false;
+    }
+
+    QSTACKARRAY(char, head, 8);
+    if (device->peek(head, sizeof(head)) != sizeof(head))
+        return false;
+
+    static const uchar pngheader[]
+        = { 0x89, 0x50, 0x4e, 0x47, 0x0d, 0x0a, 0x1a, 0x0a };
+    return (qstrncmp(head, reinterpret_cast<const char*>(pngheader), 8) == 0);
 }
 
 QT_END_NAMESPACE

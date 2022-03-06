@@ -50,17 +50,11 @@ QT_BEGIN_NAMESPACE
     called the \e{system tray} or \e{notification area}, where long-running
     applications can display icons and short messages.
 
-    \image system-tray.png The system tray on Windows XP.
-
     The QSystemTrayIcon class can be used on the following platforms:
 
     \list
-    \o All supported versions of Windows.
     \o All window managers for X11 that implement the \l{freedesktop.org} system
        tray specification, including recent versions of KDE and GNOME.
-    \o All supported versions of Mac OS X. Note that the Growl
-       notification system must be installed for
-       QSystemTrayIcon::showMessage() to display messages.
     \endlist
 
     To check whether a system tray is present on the user's desktop,
@@ -167,8 +161,8 @@ QMenu* QSystemTrayIcon::contextMenu() const
     \property QSystemTrayIcon::icon
     \brief the system tray icon
 
-    On Windows, the system tray icon size is 16x16; on X11, the preferred size is
-    22x22. The icon will be scaled to the appropriate size as necessary.
+    On X11, the preferred size is 22x22. The icon will be scaled to the
+    appropriate size as necessary.
 */
 void QSystemTrayIcon::setIcon(const QIcon &icon)
 {
@@ -306,10 +300,6 @@ bool QSystemTrayIcon::event(QEvent *e)
 
     Currently this signal is not sent on Mac OS X.
 
-    \note We follow Microsoft Windows XP/Vista behavior, so the
-    signal is also emitted when the user clicks on a tray icon with
-    a balloon message displayed.
-
     \sa activated()
 */
 
@@ -352,12 +342,6 @@ bool QSystemTrayIcon::supportsMessages()
     preferences, and that messages may not appear at all. Hence, it should not be
     relied upon as the sole means for providing critical information.
 
-    On Windows, the \a millisecondsTimeoutHint is usually ignored by the system
-    when the application has focus.
-
-    On Mac OS X, the Growl notification system must be installed for this function to
-    display messages.
- 
     \sa show() supportsMessages()
   */
 void QSystemTrayIcon::showMessage(const QString& title, const QString& msg,
@@ -453,10 +437,10 @@ QBalloonTip::QBalloonTip(QSystemTrayIcon::MessageIcon icon, const QString& title
         si = style()->standardIcon(QStyle::SP_MessageBoxWarning);
         break;
     case QSystemTrayIcon::Critical:
-	si = style()->standardIcon(QStyle::SP_MessageBoxCritical);
+        si = style()->standardIcon(QStyle::SP_MessageBoxCritical);
         break;
     case QSystemTrayIcon::Information:
-	si = style()->standardIcon(QStyle::SP_MessageBoxInformation);
+        si = style()->standardIcon(QStyle::SP_MessageBoxInformation);
         break;
     case QSystemTrayIcon::NoIcon:
     default:

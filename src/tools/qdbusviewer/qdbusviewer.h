@@ -76,7 +76,11 @@ private:
     QSortFilterProxyModel *servicesFilterModel;
     QLineEdit *serviceFilterLine;
     QListView *servicesView;
+#ifndef QT_NO_TEXTBROWSER
     QTextBrowser *log;
+#else
+    QTextEdit *log;
+#endif // QT_NO_TEXTBROWSER
     QRegExp objectPathRegExp;
 };
 

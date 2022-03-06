@@ -141,7 +141,6 @@ include/katie/QtCore/QSetIterator
 include/katie/QtCore/QSettings
 include/katie/QtCore/QSharedData
 include/katie/QtCore/QSharedDataPointer
-include/katie/QtCore/QSharedMemory
 include/katie/QtCore/QSharedPointer
 include/katie/QtCore/QSignalMapper
 include/katie/QtCore/QSize
@@ -154,7 +153,6 @@ include/katie/QtCore/QStringList
 include/katie/QtCore/QStringListIterator
 include/katie/QtCore/QStringMatcher
 include/katie/QtCore/QStringRef
-include/katie/QtCore/QSystemSemaphore
 include/katie/QtCore/QTemporaryFile
 include/katie/QtCore/QTextBoundaryFinder
 include/katie/QtCore/QTextCodec
@@ -277,7 +275,6 @@ include/katie/QtCore/qsemaphore.h
 include/katie/QtCore/qset.h
 include/katie/QtCore/qsettings.h
 include/katie/QtCore/qshareddata.h
-include/katie/QtCore/qsharedmemory.h
 include/katie/QtCore/qsharedpointer.h
 include/katie/QtCore/qsignalmapper.h
 include/katie/QtCore/qsize.h
@@ -287,7 +284,6 @@ include/katie/QtCore/qstandardpaths.h
 include/katie/QtCore/qstring.h
 include/katie/QtCore/qstringlist.h
 include/katie/QtCore/qstringmatcher.h
-include/katie/QtCore/qsystemsemaphore.h
 include/katie/QtCore/qtconcurrentcompilertest.h
 include/katie/QtCore/qtconcurrentexception.h
 include/katie/QtCore/qtconcurrentfilter.h
@@ -531,7 +527,6 @@ include/katie/QtDesignerComponents/qlonglongvalidator.h
 include/katie/QtDesignerComponents/qmainwindow_container.h
 include/katie/QtDesignerComponents/qmdiarea_container.h
 include/katie/QtDesignerComponents/qwizard_container.h
-include/katie/QtDesignerComponents/qworkspace_container.h
 include/katie/QtDesignerComponents/spacer_propertysheet.h
 include/katie/QtDesignerComponents/stringlisteditor.h
 include/katie/QtDesignerComponents/stringlisteditorbutton.h
@@ -760,7 +755,6 @@ include/katie/QtGui/QPropertyAnimation
 include/katie/QtGui/QProxyModel
 include/katie/QtGui/QProxyStyle
 include/katie/QtGui/QPushButton
-include/katie/QtGui/QQuaternion
 include/katie/QtGui/QRadialGradient
 include/katie/QtGui/QRadioButton
 include/katie/QtGui/QRegExpValidator
@@ -914,7 +908,6 @@ include/katie/QtGui/QWindowStateChangeEvent
 include/katie/QtGui/QWindowsStyle
 include/katie/QtGui/QWizard
 include/katie/QtGui/QWizardPage
-include/katie/QtGui/QWorkspace
 include/katie/QtGui/QX11EmbedContainer
 include/katie/QtGui/QX11EmbedWidget
 include/katie/QtGui/QX11Info
@@ -1049,7 +1042,6 @@ include/katie/QtGui/qpropertyanimation.h
 include/katie/QtGui/qproxymodel.h
 include/katie/QtGui/qproxystyle.h
 include/katie/QtGui/qpushbutton.h
-include/katie/QtGui/qquaternion.h
 include/katie/QtGui/qradiobutton.h
 include/katie/QtGui/qregion.h
 include/katie/QtGui/qrgb.h
@@ -1117,7 +1109,6 @@ include/katie/QtGui/qwidgetaction.h
 include/katie/QtGui/qwindowdefs.h
 include/katie/QtGui/qwindowsstyle.h
 include/katie/QtGui/qwizard.h
-include/katie/QtGui/qworkspace.h
 include/katie/QtGui/qx11embed_x11.h
 include/katie/QtGui/qx11info_x11.h
 include/katie/QtNetwork/QAbstractSocket

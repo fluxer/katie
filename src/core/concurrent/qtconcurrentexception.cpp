@@ -21,7 +21,8 @@
 
 #include "qtconcurrentexception.h"
 
-#ifndef QT_NO_QFUTURE
+#ifndef QT_NO_CONCURRENT
+
 #ifndef QT_NO_EXCEPTIONS
 
 QT_BEGIN_NAMESPACE
@@ -191,4 +192,5 @@ bool ExceptionStore::hasThrown() const { return exceptionHolder.base->hasThrown;
 QT_END_NAMESPACE
 
 #endif // QT_NO_EXCEPTIONS
+
 #endif // QT_NO_CONCURRENT

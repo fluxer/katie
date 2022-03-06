@@ -43,7 +43,6 @@
 #include <qvector2d.h>
 #include <qvector3d.h>
 #include <qvector4d.h>
-#include <qquaternion.h>
 #include <qnumeric.h>
 
 #include <limits.h>
@@ -176,7 +175,6 @@ private slots:
     void vector2D();
     void vector3D();
     void vector4D();
-    void quaternion();
 
     void url();
 
@@ -1314,6 +1312,7 @@ void tst_QVariant::transform()
 
 void tst_QVariant::vector2D()
 {
+#ifndef QT_NO_VECTOR2D
     QVariant variant;
     QVector2D vector = qvariant_cast<QVector2D>(variant);
     QVERIFY(vector.isNull());
@@ -1323,10 +1322,14 @@ void tst_QVariant::vector2D()
     void *pvector = QMetaType::construct(QVariant::Vector2D, 0);
     QVERIFY(pvector);
     QMetaType::destroy(QVariant::Vector2D, pvector);
+#else // QT_NO_VECTOR2D
+    QSKIP("Katie compiled without 2D vector support (QT_NO_VECTOR2D)", SkipAll);
+#endif // QT_NO_VECTOR2D
 }
 
 void tst_QVariant::vector3D()
 {
+#ifndef QT_NO_VECTOR3D
     QVariant variant;
     QVector3D vector = qvariant_cast<QVector3D>(variant);
     QVERIFY(vector.isNull());
@@ -1336,10 +1339,14 @@ void tst_QVariant::vector3D()
     void *pvector = QMetaType::construct(QVariant::Vector3D, 0);
     QVERIFY(pvector);
     QMetaType::destroy(QVariant::Vector3D, pvector);
+#else // QT_NO_VECTOR3D
+    QSKIP("Katie compiled without 3D vector support (QT_NO_VECTOR3D)", SkipAll);
+#endif // QT_NO_VECTOR3D
 }
 
 void tst_QVariant::vector4D()
 {
+#ifndef QT_NO_VECTOR4D
     QVariant variant;
     QVector4D vector = qvariant_cast<QVector4D>(variant);
     QVERIFY(vector.isNull());
@@ -1349,19 +1356,9 @@ void tst_QVariant::vector4D()
     void *pvector = QMetaType::construct(QVariant::Vector4D, 0);
     QVERIFY(pvector);
     QMetaType::destroy(QVariant::Vector4D, pvector);
-}
-
-void tst_QVariant::quaternion()
-{
-    QVariant variant;
-    QQuaternion quaternion = qvariant_cast<QQuaternion>(variant);
-    QVERIFY(quaternion.isIdentity());
-    qVariantSetValue(variant, QQuaternion(0.1, 0.2, 0.3, 0.4));
-    QCOMPARE(QQuaternion(0.1, 0.2, 0.3, 0.4), qvariant_cast<QQuaternion>(variant));
-
-    void *pquaternion = QMetaType::construct(QVariant::Quaternion, 0);
-    QVERIFY(pquaternion);
-    QMetaType::destroy(QVariant::Quaternion, pquaternion);
+#else // QT_NO_VECTOR4D
+    QSKIP("Katie compiled without 4D vector support (QT_NO_VECTOR4D)", SkipAll);
+#endif // QT_NO_VECTOR4D
 }
 
 void tst_QVariant::writeToReadFromDataStream_data()
@@ -1856,7 +1853,6 @@ void tst_QVariant::typeName_data()
     QTest::newRow("49") << int(QVariant::Vector2D) << QByteArray("QVector2D");
     QTest::newRow("50") << int(QVariant::Vector3D) << QByteArray("QVector3D");
     QTest::newRow("51") << int(QVariant::Vector4D) << QByteArray("QVector4D");
-    QTest::newRow("52") << int(QVariant::Quaternion) << QByteArray("QQuaternion");
 }
 
 void tst_QVariant::typeName()
@@ -1874,7 +1870,7 @@ void tst_QVariant::typeToName()
     QCOMPARE( QVariant::typeToName( v.type() ), (const char*)0 ); // Invalid
     // assumes that QVariant::Type contains consecutive values
 
-    int max = QVariant::Quaternion;
+    int max = QVariant::LastGuiType;
     for ( int t = 1; t <= max; t++ ) {
         const char *n = QVariant::typeToName( (QVariant::Type)t );
         if (n)

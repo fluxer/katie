@@ -48,7 +48,9 @@ public:
 private:
     QToolBar *m_toolBar;
 };
+typedef ExtensionFactory<QDesignerTaskMenuExtension, QToolBar, ToolBarTaskMenu> ToolBarTaskMenuFactory;
 
+#ifndef QT_NO_STATUSBAR
 // StatusBarTaskMenu provides promotion and deletion
 class StatusBarTaskMenu : public QObject, public QDesignerTaskMenuExtension
 {
@@ -69,8 +71,8 @@ private:
     PromotionTaskMenu *m_promotionTaskMenu;
 };
 
-typedef ExtensionFactory<QDesignerTaskMenuExtension, QToolBar, ToolBarTaskMenu> ToolBarTaskMenuFactory;
 typedef ExtensionFactory<QDesignerTaskMenuExtension, QStatusBar, StatusBarTaskMenu> StatusBarTaskMenuFactory;
+#endif // QT_NO_STATUSBAR
 
 }  // namespace qdesigner_internal
 

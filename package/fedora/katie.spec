@@ -7,7 +7,7 @@ Summary: C++ toolkit derived from the Qt 4.8 framework
 License: BSD and LGPLv2+
 URL: https://github.com/fluxer/katie
 
-BuildRequires: gcc-c++ cmake libicu-devel libdeflate-devel jansson-devel libpng-devel freetype-devel pcre-devel libX11-devel libXinerama-devel libXrandr-devel libXrender-devel libXfixes-devel libXcursor-devel libSM-devel libICE-devel dbus-devel fontconfig-devel cups-devel unifdef
+BuildRequires: gcc-c++ cmake libicu-devel libdeflate-devel jansson-devel libpng-devel freetype-devel libX11-devel libXinerama-devel libXrandr-devel libXrender-devel libXfixes-devel libXcursor-devel libSM-devel libICE-devel dbus-devel fontconfig-devel cups-devel unifdef
 Requires: xdg-utils gnu-free-fonts
 Requires(post): /sbin/ldconfig
 Requires(postun): /sbin/ldconfig

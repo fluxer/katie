@@ -43,13 +43,19 @@ public:
     QPngHandler();
     ~QPngHandler();
 
-    bool canRead() const;
-    bool read(QImage *image);
-    bool write(const QImage &image);
+    bool canRead() const final;
+    bool read(QImage *image) final;
+    bool write(const QImage &image) final;
 
-    QByteArray name() const;
+    bool supportsOption(QImageIOHandler::ImageOption option) const final;
+    void setOption(QImageIOHandler::ImageOption option, const QVariant &value) final;
+
+    QByteArray name() const final;
 
     static bool canRead(QIODevice *device);
+
+private:
+    int m_compression;
 };
 
 QT_END_NAMESPACE

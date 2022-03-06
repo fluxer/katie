@@ -33,13 +33,21 @@ QT_BEGIN_NAMESPACE
 class QCryptographicHashPrivate
 {
 public:
+    QCryptographicHashPrivate(const QCryptographicHash::Algorithm amethod);
+
     MD5_CTX md5Context;
     SHA1_CTX sha1Context;
     SHA256_CTX sha256Context;
     SHA512_CTX sha512Context;
-    QCryptographicHash::Algorithm method;
-    QByteArray result;
+    bool rehash;
+    const QCryptographicHash::Algorithm method;
 };
+
+QCryptographicHashPrivate::QCryptographicHashPrivate(const QCryptographicHash::Algorithm amethod)
+    : rehash(false),
+    method(amethod)
+{
+}
 
 /*!
   \class QCryptographicHash
@@ -70,9 +78,8 @@ public:
   Constructs an object that can be used to create a cryptographic hash from data using \a method.
 */
 QCryptographicHash::QCryptographicHash(QCryptographicHash::Algorithm method)
-    : d(new QCryptographicHashPrivate)
+    : d(new QCryptographicHashPrivate(method))
 {
-    d->method = method;
     reset();
 }
 
@@ -89,6 +96,7 @@ QCryptographicHash::~QCryptographicHash()
 */
 void QCryptographicHash::reset()
 {
+    d->rehash = false;
     switch (d->method) {
         case QCryptographicHash::Md5: {
             MD5Init(&d->md5Context);
@@ -107,7 +115,6 @@ void QCryptographicHash::reset()
             break;
         }
     }
-    d->result.clear();
 }
 
 /*!
@@ -116,6 +123,7 @@ void QCryptographicHash::reset()
 */
 void QCryptographicHash::addData(const char *data, int length)
 {
+    d->rehash = true;
     switch (d->method) {
         case QCryptographicHash::Md5: {
             MD5Update(&d->md5Context, reinterpret_cast<const uchar*>(data), length);
@@ -134,7 +142,6 @@ void QCryptographicHash::addData(const char *data, int length)
             break;
         }
     }
-    d->result.clear();
 }
 
 /*!
@@ -167,36 +174,39 @@ bool QCryptographicHash::addData(QIODevice* device)
 */
 QByteArray QCryptographicHash::result() const
 {
-    if (!d->result.isEmpty())
-        return d->result;
+    if (!d->rehash) {
+        return QByteArray();
+    }
 
     switch (d->method) {
         case QCryptographicHash::Md5: {
+            QSTACKARRAY(unsigned char, result, MD5_DIGEST_LENGTH);
             MD5_CTX copy = d->md5Context;
-            d->result.resize(MD5_DIGEST_LENGTH);
-            MD5Final(reinterpret_cast<unsigned char *>(d->result.data()), &copy);
-            break;
+            MD5Final(result, &copy);
+            return QByteArray(reinterpret_cast<char *>(result), MD5_DIGEST_LENGTH);
         }
         case QCryptographicHash::Sha1: {
+            QSTACKARRAY(unsigned char, result, SHA_DIGEST_LENGTH);
             SHA1_CTX copy = d->sha1Context;
-            d->result.resize(SHA_DIGEST_LENGTH);
-            SHA1Final(reinterpret_cast<unsigned char *>(d->result.data()), &copy);
-            break;
+            SHA1Final(result, &copy);
+            return QByteArray(reinterpret_cast<char *>(result), SHA_DIGEST_LENGTH);
         }
         case QCryptographicHash::Sha256:{
+            QSTACKARRAY(unsigned char, result, SHA256_DIGEST_LENGTH);
             SHA256_CTX copy = d->sha256Context;
-            d->result.resize(SHA256_DIGEST_LENGTH);
-            SHA256_Final(reinterpret_cast<unsigned char *>(d->result.data()), &copy);
-            break;
+            SHA256_Final(result, &copy);
+            return QByteArray(reinterpret_cast<char *>(result), SHA256_DIGEST_LENGTH);
         }
         case QCryptographicHash::Sha512:{
+            QSTACKARRAY(unsigned char, result, SHA512_DIGEST_LENGTH);
             SHA512_CTX copy = d->sha512Context;
-            d->result.resize(SHA512_DIGEST_LENGTH);
-            SHA512_Final(reinterpret_cast<unsigned char *>(d->result.data()), &copy);
-            break;
+            SHA512_Final(result, &copy);
+            return QByteArray(reinterpret_cast<char *>(result), SHA512_DIGEST_LENGTH);
         }
     }
-    return d->result;
+
+    Q_UNREACHABLE();
+    return QByteArray();
 }
 
 /*!

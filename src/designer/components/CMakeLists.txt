@@ -36,7 +36,6 @@ set(DESIGNERCOMPONENTS_HEADERS
     ${CMAKE_CURRENT_SOURCE_DIR}/formeditor/default_container.h
     ${CMAKE_CURRENT_SOURCE_DIR}/formeditor/default_actionprovider.h
     ${CMAKE_CURRENT_SOURCE_DIR}/formeditor/qmainwindow_container.h
-    ${CMAKE_CURRENT_SOURCE_DIR}/formeditor/qworkspace_container.h
     ${CMAKE_CURRENT_SOURCE_DIR}/formeditor/qmdiarea_container.h
     ${CMAKE_CURRENT_SOURCE_DIR}/formeditor/qwizard_container.h
     ${CMAKE_CURRENT_SOURCE_DIR}/formeditor/default_layoutdecoration.h
@@ -120,7 +119,6 @@ set(DESIGNERCOMPONENTS_SOURCES
     ${CMAKE_CURRENT_SOURCE_DIR}/formeditor/spacer_propertysheet.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/formeditor/line_propertysheet.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/formeditor/qmainwindow_container.cpp
-    ${CMAKE_CURRENT_SOURCE_DIR}/formeditor/qworkspace_container.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/formeditor/qmdiarea_container.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/formeditor/qwizard_container.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/formeditor/default_container.cpp

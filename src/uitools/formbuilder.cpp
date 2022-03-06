@@ -119,7 +119,7 @@ QWidget *QFormBuilder::create(DomWidget *ui_widget, QWidget *parentWidget)
 #ifndef QT_NO_STACKEDWIDGET
             && !qobject_cast<QStackedWidget *>(parentWidget)
 #endif
-#ifndef QT_NO_STACKEDWIDGET
+#ifndef QT_NO_TABWIDGET
             && !qobject_cast<QTabWidget *>(parentWidget)
 #endif
 #ifndef QT_NO_SCROLLAREA

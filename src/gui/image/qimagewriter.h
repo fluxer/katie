@@ -73,7 +73,10 @@ public:
 
     bool supportsOption(QImageIOHandler::ImageOption option) const;
 
+    static QByteArray defaultImageFormat();
     static QList<QByteArray> supportedImageFormats();
+    static QByteArray formatForMimeType(const QByteArray &mime);
+    static QList<QByteArray> supportedMimeTypes();
 
 private:
     Q_DISABLE_COPY(QImageWriter)

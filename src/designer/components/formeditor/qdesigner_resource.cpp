@@ -81,7 +81,6 @@
 #include <QtGui/QMainWindow>
 #include <QtGui/QSplitter>
 #include <QtGui/QMdiArea>
-#include <QtGui/QWorkspace>
 #include <QtGui/QMenuBar>
 #include <QtGui/QFileDialog>
 #include <QtGui/QHeaderView>
@@ -1693,7 +1692,7 @@ static inline bool checkContainerProperty(const QWidget *w, const QString &prope
         return QTabWidgetPropertySheet::checkProperty(propertyName);
     if (qobject_cast<const QStackedWidget *>(w))
         return QStackedWidgetPropertySheet::checkProperty(propertyName);
-    if (qobject_cast<const QMdiArea *>(w) || qobject_cast<const QWorkspace *>(w))
+    if (qobject_cast<const QMdiArea *>(w))
         return QMdiAreaPropertySheet::checkProperty(propertyName);
     return true;
 }

@@ -27,6 +27,8 @@
 #include "qpagesetupdialog.h"
 #include "qapplication.h"
 #include "qfileinfo.h"
+#include "qimage.h"
+
 #if !defined(QT_NO_CUPS)
 #include "qcups_p.h"
 #endif
@@ -34,12 +36,6 @@
 #ifndef QT_NO_PRINTER
 
 #include "qprintengine_ps_p.h"
-
-#ifndef QT_NO_PDF
-#include "qprintengine_pdf_p.h"
-#endif
-
-#include "qimage.h"
 #include "qpaintengine_preview_p.h"
 
 
@@ -129,21 +125,9 @@ QSizeF qt_printerPaperSize(QPrinter::Orientation orientation,
 
 void QPrinterPrivate::createDefaultEngines()
 {
-    switch (outputFormat) {
-        case QPrinter::PdfFormat: {
-            QPdfEngine *pdfEngine = new QPdfEngine(printerMode);
-            paintEngine = pdfEngine;
-            printEngine = pdfEngine;
-            break;
-        }
-        case QPrinter::NativeFormat: // falltrough
-        case QPrinter::PostScriptFormat: {
-            QPSPrintEngine *psEngine = new QPSPrintEngine(printerMode);
-            paintEngine = psEngine;
-            printEngine = psEngine;
-            break;
-        }
-    }
+    QPSPrintEngine *psEngine = new QPSPrintEngine(printerMode);
+    paintEngine = psEngine;
+    printEngine = psEngine;
     use_default_engine = true;
     had_default_engines = true;
 }
@@ -328,17 +312,6 @@ void QPrinterPrivate::addToManualSetList(QPrintEngine::PrintEnginePropertyKey ke
 */
 
 /*!
-    \enum QPrinter::PrinterOption
-    \compat
-
-    Use QAbstractPrintDialog::PrintDialogOption instead.
-
-    \value PrintToFile
-    \value PrintSelection
-    \value PrintPageRange
-*/
-
-/*!
   \enum QPrinter::PageSize
 
   \obsolete
@@ -517,22 +490,6 @@ void QPrinterPrivate::addToManualSetList(QPrintEngine::PrintEnginePropertyKey ke
   \sa setPrintRange(), printRange()
 */
 
-/*
-  \enum QPrinter::PrinterOption
-
-  This enum describes various printer options that appear in the
-  printer setup dialog. It is used to enable and disable these
-  options in the setup dialog.
-
-  \value PrintToFile Describes if print to file should be enabled.
-  \value PrintSelection Describes if printing selections should be enabled.
-  \value PrintPageRange Describes if printing page ranges (from, to) should
-  be enabled
-  \value PrintCurrentPage if Print Current Page option should be enabled
-
-  \sa setOptionEnabled(), isOptionEnabled()
-*/
-
 /*!
     Creates a new printer object with the given \a mode.
 */
@@ -544,8 +501,6 @@ QPrinter::QPrinter(PrinterMode mode)
     QPrinterInfo defPrn(QPrinterInfo::defaultPrinter());
     if (!defPrn.isNull()) {
         setPrinterName(defPrn.printerName());
-    } else if (QPrinterInfo::availablePrinters().isEmpty()) {
-        setOutputFormat(QPrinter::PdfFormat);
     }
 }
 
@@ -571,7 +526,6 @@ void QPrinter::init(PrinterMode mode)
     Q_D(QPrinter);
 
     d->printerMode = mode;
-    d->outputFormat = QPrinter::NativeFormat;
     d->createDefaultEngines();
 
 #ifndef QT_NO_PRINTPREVIEWWIDGET
@@ -579,13 +533,6 @@ void QPrinter::init(PrinterMode mode)
 #endif
     d->realPrintEngine = 0;
     d->realPaintEngine = 0;
-
-#if !defined(QT_NO_CUPS)
-    if (QCUPSSupport::cupsVersion() >= 10200 && QCUPSSupport().currentPPD()) {
-        setOutputFormat(QPrinter::PdfFormat);
-        d->outputFormat = QPrinter::NativeFormat;
-    }
-#endif
 }
 
 /*!
@@ -599,7 +546,7 @@ void QPrinter::init(PrinterMode mode)
     Note that changing the engines will reset the printer state and
     all its properties.
 
-    \sa printEngine() paintEngine() setOutputFormat()
+    \sa printEngine() paintEngine()
 
     \since 4.1
 */
@@ -630,83 +577,6 @@ QPrinter::~QPrinter()
 #endif
 }
 
-/*!
-    \enum QPrinter::OutputFormat
-
-    The OutputFormat enum is used to describe the format QPrinter should
-    use for printing.
-
-    \value NativeFormat QPrinter will print output using a method defined
-    by the platform it is running on. This mode is the default when printing
-    directly to a printer.
-
-    \value PdfFormat QPrinter will generate its output as a searchable PDF file.
-    This mode is the default when printing to a file.
-
-    \value PostScriptFormat QPrinter will generate its output as in the PostScript format.
-    (This feature was introduced in Qt 4.2.)
-
-    \sa outputFormat(), setOutputFormat(), setOutputFileName()
-*/
-
-/*!
-    \since 4.1
-
-    Sets the output format for this printer to \a format.
-*/
-void QPrinter::setOutputFormat(OutputFormat format)
-{
-
-#ifndef QT_NO_PDF
-    Q_D(QPrinter);
-    if (d->validPrinter && d->outputFormat == format)
-        return;
-    d->outputFormat = format;
-
-    QPrintEngine *oldPrintEngine = d->printEngine;
-    const bool def_engine = d->use_default_engine;
-    d->printEngine = 0;
-
-    d->createDefaultEngines();
-
-    if (oldPrintEngine) {
-        for (int i = 0; i < d->manualSetList.size(); ++i) {
-            QPrintEngine::PrintEnginePropertyKey key = d->manualSetList[i];
-            QVariant prop;
-            // PPK_NumberOfCopies need special treatmeant since it in most cases
-            // will return 1, disregarding the actual value that was set
-            if (key == QPrintEngine::PPK_NumberOfCopies)
-                prop = QVariant(copyCount());
-            else
-                prop = oldPrintEngine->property(key);
-            if (prop.isValid())
-                d->printEngine->setProperty(key, prop);
-        }
-    }
-
-    if (def_engine)
-        delete oldPrintEngine;
-
-    if (d->outputFormat == QPrinter::PdfFormat || d->outputFormat == QPrinter::PostScriptFormat)
-        d->validPrinter = true;
-#else
-    Q_UNUSED(format);
-#endif
-}
-
-/*!
-    \since 4.1
-
-    Returns the output format for this printer.
-*/
-QPrinter::OutputFormat QPrinter::outputFormat() const
-{
-    Q_D(const QPrinter);
-    return d->outputFormat;
-}
-
-
-
 /*! \internal
 */
 int QPrinter::devType() const
@@ -736,28 +606,12 @@ void QPrinter::setPrinterName(const QString &name)
     Q_D(QPrinter);
     ABORT_IF_ACTIVE("QPrinter::setPrinterName");
 
-#if !defined(QT_NO_CUPS)
-    if(d->use_default_engine
-        && d->outputFormat == QPrinter::NativeFormat) {
-        if (QCUPSSupport::cupsVersion() >= 10200
-            && QCUPSSupport::printerHasPPD(name.toLocal8Bit().constData()))
-            setOutputFormat(QPrinter::PdfFormat);
-        else
-            setOutputFormat(QPrinter::PostScriptFormat);
-        d->outputFormat = QPrinter::NativeFormat;
-    }
-#endif
-
     QList<QPrinterInfo> prnList = QPrinterInfo::availablePrinters();
-    if (name.isEmpty()) {
-        d->validPrinter = d->outputFormat == QPrinter::PdfFormat || d->outputFormat == QPrinter::PostScriptFormat;
-    } else {
-        d->validPrinter = false;
-        for (int i = 0; i < prnList.size(); ++i) {
-            if (prnList[i].printerName() == name) {
-                d->validPrinter = true;
-                break;
-            }
+    d->validPrinter = false;
+    for (int i = 0; i < prnList.size(); ++i) {
+        if (prnList[i].printerName() == name) {
+            d->validPrinter = true;
+            break;
         }
     }
 
@@ -787,85 +641,6 @@ bool QPrinter::isValid() const
     return d->validPrinter;
 }
 
-
-/*!
-  \fn bool QPrinter::outputToFile() const
-
-  Returns true if the output should be written to a file, or false
-  if the output should be sent directly to the printer. The default
-  setting is false.
-
-  \sa setOutputToFile(), setOutputFileName()
-*/
-
-
-/*!
-  \fn void QPrinter::setOutputToFile(bool enable)
-
-  Specifies whether the output should be written to a file or sent
-  directly to the printer.
-
-  Will output to a file if \a enable is true, or will output
-  directly to the printer if \a enable is false.
-
-  \sa outputToFile(), setOutputFileName()
-*/
-
-
-/*!
-  \fn QString QPrinter::outputFileName() const
-
-  Returns the name of the output file. By default, this is an empty string
-  (indicating that the printer shouldn't print to file).
-
-  \sa QPrintEngine::PrintEnginePropertyKey
-
-*/
-
-QString QPrinter::outputFileName() const
-{
-    Q_D(const QPrinter);
-    return d->printEngine->property(QPrintEngine::PPK_OutputFileName).toString();
-}
-
-/*!
-    Sets the name of the output file to \a fileName.
-
-    Setting a null or empty name (0 or "") disables printing to a file.
-    Setting a non-empty name enables printing to a file.
-
-    This can change the value of outputFormat().  If the file name has the
-    suffix ".ps" then PostScript is automatically selected as output format.
-    If the file name has the ".pdf" suffix PDF is generated. If the file name
-    has a suffix other than ".ps" and ".pdf", the output format used is the
-    one set with setOutputFormat().
-
-    QPrinter uses Qt's cross-platform PostScript or PDF print engines
-    respectively. If you can produce this format natively, for example
-    Mac OS X can generate PDF's from its print engine, set the output format
-    back to NativeFormat.
-
-    \sa outputFileName() setOutputToFile() setOutputFormat()
-*/
-
-void QPrinter::setOutputFileName(const QString &fileName)
-{
-    Q_D(QPrinter);
-    ABORT_IF_ACTIVE("QPrinter::setOutputFileName");
-
-    QFileInfo fi(fileName);
-    if (!fi.suffix().compare(QLatin1String("ps"), Qt::CaseInsensitive))
-        setOutputFormat(QPrinter::PostScriptFormat);
-    else if (!fi.suffix().compare(QLatin1String("pdf"), Qt::CaseInsensitive))
-        setOutputFormat(QPrinter::PdfFormat);
-    else if (fileName.isEmpty())
-        setOutputFormat(QPrinter::NativeFormat);
-
-    d->printEngine->setProperty(QPrintEngine::PPK_OutputFileName, fileName);
-    d->addToManualSetList(QPrintEngine::PPK_OutputFileName);
-}
-
-
 /*!
   Returns the document name.
 
@@ -877,14 +652,8 @@ QString QPrinter::docName() const
     return d->printEngine->property(QPrintEngine::PPK_DocumentName).toString();
 }
 
-
 /*!
   Sets the document name to \a name.
-
-  On X11, the document name is for example used as the default
-  output filename in QPrintDialog. Note that the document name does
-  not affect the file name if the printer is printing to a file.
-  Use the setOutputFile() function for this.
 
   \sa docName(), QPrintEngine::PrintEnginePropertyKey
 */
@@ -996,8 +765,7 @@ QPrinter::PaperSize QPrinter::paperSize() const
 void QPrinter::setPaperSize(PaperSize newPaperSize)
 {
     Q_D(QPrinter);
-    if (d->paintEngine->type() != QPaintEngine::Pdf)
-        ABORT_IF_ACTIVE("QPrinter::setPaperSize");
+    ABORT_IF_ACTIVE("QPrinter::setPaperSize");
     if (newPaperSize < 0 || newPaperSize >= NPaperSize) {
         qWarning("QPrinter::setPaperSize: Illegal paper size %d", newPaperSize);
         return;
@@ -1044,8 +812,7 @@ void QPrinter::setPageSize(PageSize newPageSize)
 void QPrinter::setPaperSize(const QSizeF &paperSize, QPrinter::Unit unit)
 {
     Q_D(QPrinter);
-    if (d->paintEngine->type() != QPaintEngine::Pdf)
-        ABORT_IF_ACTIVE("QPrinter::setPaperSize");
+    ABORT_IF_ACTIVE("QPrinter::setPaperSize");
     const qreal multiplier = qt_multiplierForUnit(unit, resolution());
     QSizeF size(paperSize.width() * multiplier, paperSize.height() * multiplier);
     d->printEngine->setProperty(QPrintEngine::PPK_CustomPaperSize, size);
@@ -1878,7 +1645,7 @@ void QPrinter::setFromTo(int from, int to)
 {
     Q_D(QPrinter);
     if (from > to) {
-        qWarning() << "QPrinter::setFromTo: 'from' must be less than or equal to 'to'";
+        qWarning("QPrinter::setFromTo: 'from' must be less than or equal to 'to'");
         from = to;
     }
     d->fromPage = from;
@@ -1966,9 +1733,6 @@ QPrinter::PrintRange QPrinter::printRange() const
     copies. Use PPK_CopyCount instead.
 
     \value PPK_Orientation Specifies a QPrinter::Orientation value.
-
-    \value PPK_OutputFileName The output file name as a string. An
-    empty file name indicates that the printer should not print to a file.
 
     \value PPK_PageOrder Specifies a QPrinter::PageOrder value.
 

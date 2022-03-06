@@ -71,7 +71,6 @@
 
 // External packages dependant
 #cmakedefine QT_NO_CUPS
-#cmakedefine QT_NO_DBUS
 #cmakedefine QT_NO_EXECINFO
 #cmakedefine QT_NO_FONTCONFIG
 #cmakedefine QT_NO_SESSIONMANAGER
@@ -121,6 +120,51 @@
 // #cmakedefine QT_NO_MAINWINDOW
 // #cmakedefine QT_NO_MATRIX4X4
 // #cmakedefine QT_NO_VECTOR3D
+// #cmakedefine QT_NO_MDIAREA
+// #cmakedefine QT_NO_MENU
+// #cmakedefine QT_NO_MENUBAR
+// #cmakedefine QT_NO_MESSAGEBOX
+// #cmakedefine QT_NO_PROGRESSBAR
+// #cmakedefine QT_NO_PROPERTIES
+// #cmakedefine QT_NO_PROXYMODEL
+// #cmakedefine QT_NO_RESIZEHANDLER
+// #cmakedefine QT_NO_RUBBERBAND
+// #cmakedefine QT_NO_SCROLLAREA
+// #cmakedefine QT_NO_SCROLLBAR
+// #cmakedefine QT_NO_SHORTCUT
+// #cmakedefine QT_NO_SIGNALMAPPER
+// #cmakedefine QT_NO_SLIDER
+// #cmakedefine QT_NO_SORTFILTERPROXYMODEL
+// #cmakedefine QT_NO_SPINBOX
+// #cmakedefine QT_NO_SPLITTER
+// #cmakedefine QT_NO_STACKEDWIDGET
+// #cmakedefine QT_NO_STANDARDITEMMODEL
+// #cmakedefine QT_NO_STATUSBAR
+// #cmakedefine QT_NO_STATUSTIP
+// #cmakedefine QT_NO_TABBAR
+// #cmakedefine QT_NO_TABWIDGET
+// #cmakedefine QT_NO_TABLEVIEW
+// #cmakedefine QT_NO_TABLEWIDGET
+// #cmakedefine QT_NO_TEMPORARYFILE
+// #cmakedefine QT_NO_TEXTCONTROL
+// #cmakedefine QT_NO_TEXTEDIT
+// #cmakedefine QT_NO_TEXTHTMLPARSER
+// #cmakedefine QT_NO_TEXTDATE
+// #cmakedefine QT_NO_TOOLBAR
+// #cmakedefine QT_NO_TOOLBOX
+// #cmakedefine QT_NO_TOOLBUTTON
+// #cmakedefine QT_NO_TOOLTIP
+// #cmakedefine QT_NO_TREEVIEW
+// #cmakedefine QT_NO_TREEWIDGET
+// #cmakedefine QT_NO_UNDOCOMMAND
+// #cmakedefine QT_NO_UNDOSTACK
+// #cmakedefine QT_NO_VALIDATOR
+// #cmakedefine QT_NO_VECTOR4D
+// #cmakedefine QT_NO_WARNING_OUTPUT
+// #cmakedefine QT_NO_WIZARD
+// #cmakedefine QT_NO_XMLSTREAM
+// #cmakedefine QT_NO_XMLSTREAMREADER
+// #cmakedefine QT_NO_XMLSTREAMWRITER
 
 // Misc
 #cmakedefine QT_NO_USING_NAMESPACE
@@ -142,6 +186,7 @@
 #cmakedefine QT_NO_FSCOMPLETER
 #cmakedefine QT_NO_GRAPHICSEFFECT
 #cmakedefine QT_NO_IDENTITYPROXYMODEL
+#cmakedefine QT_NO_IMAGEFORMAT_KAT
 #cmakedefine QT_NO_IMAGEFORMAT_PPM
 #cmakedefine QT_NO_IMAGE_HEURISTIC_MASK
 #cmakedefine QT_NO_IPV6
@@ -150,93 +195,35 @@
 #cmakedefine QT_NO_LIBRARY
 #cmakedefine QT_NO_LOCALSERVER
 #cmakedefine QT_NO_LOCALSOCKET
-#cmakedefine QT_NO_MDIAREA
-#cmakedefine QT_NO_MENU
-#cmakedefine QT_NO_MENUBAR
-#cmakedefine QT_NO_MESSAGEBOX
 #cmakedefine QT_NO_MOVIE
 #cmakedefine QT_NO_NETWORKINTERFACE
-#cmakedefine QT_NO_PDF
 #cmakedefine QT_NO_PLUGIN_CHECK
 #cmakedefine QT_NO_PRINTDIALOG
 #cmakedefine QT_NO_PRINTER
 #cmakedefine QT_NO_PRINTPREVIEWDIALOG
 #cmakedefine QT_NO_PRINTPREVIEWWIDGET
-#cmakedefine QT_NO_PROGRESSBAR
 #cmakedefine QT_NO_PROGRESSDIALOG
-#cmakedefine QT_NO_PROPERTIES
-#cmakedefine QT_NO_PROXYMODEL
-#cmakedefine QT_NO_QFUTURE
-#cmakedefine QT_NO_QUATERNION
 #cmakedefine QT_NO_QUUID_STRING
-#cmakedefine QT_NO_RESIZEHANDLER
-#cmakedefine QT_NO_RUBBERBAND
-#cmakedefine QT_NO_SCROLLAREA
-#cmakedefine QT_NO_SCROLLBAR
-#cmakedefine QT_NO_SHAREDMEMORY
-#cmakedefine QT_NO_SHORTCUT
-#cmakedefine QT_NO_SIGNALMAPPER
 #cmakedefine QT_NO_SIZEGRIP
-#cmakedefine QT_NO_SLIDER
-#cmakedefine QT_NO_SORTFILTERPROXYMODEL
-#cmakedefine QT_NO_SPINBOX
 #cmakedefine QT_NO_SPLASHSCREEN
-#cmakedefine QT_NO_SPLITTER
-#cmakedefine QT_NO_STACKEDWIDGET
-#cmakedefine QT_NO_STANDARDITEMMODEL
-#cmakedefine QT_NO_STATUSBAR
-#cmakedefine QT_NO_STATUSTIP
 #cmakedefine QT_NO_STRINGLISTMODEL
 #cmakedefine QT_NO_STYLE_CLEANLOOKS
 #cmakedefine QT_NO_STYLE_PROXY
 #cmakedefine QT_NO_STYLE_STYLESHEET
 #cmakedefine QT_NO_STYLE_WINDOWS
-#cmakedefine QT_NO_SVG
-#cmakedefine QT_NO_SVGRENDERER
 #cmakedefine QT_NO_SYNTAXHIGHLIGHTER
-#cmakedefine QT_NO_SYSTEMSEMAPHORE
 #cmakedefine QT_NO_SYSTEMTRAYICON
-#cmakedefine QT_NO_TABBAR
-#cmakedefine QT_NO_TABLEVIEW
-#cmakedefine QT_NO_TABLEWIDGET
-#cmakedefine QT_NO_TABWIDGET
-#cmakedefine QT_NO_TEMPORARYFILE
 #cmakedefine QT_NO_TEXTBROWSER
-#cmakedefine QT_NO_TEXTCONTROL
-#cmakedefine QT_NO_TEXTDATE
-#cmakedefine QT_NO_TEXTEDIT
-#cmakedefine QT_NO_TEXTHTMLPARSER
-#cmakedefine QT_NO_TOOLBAR
-#cmakedefine QT_NO_TOOLBOX
-#cmakedefine QT_NO_TOOLBUTTON
-#cmakedefine QT_NO_TOOLTIP
-#cmakedefine QT_NO_TREEVIEW
-#cmakedefine QT_NO_TREEWIDGET
 #cmakedefine QT_NO_UDPSOCKET
-#cmakedefine QT_NO_UNDOCOMMAND
 #cmakedefine QT_NO_UNDOGROUP
-#cmakedefine QT_NO_UNDOSTACK
 #cmakedefine QT_NO_UNDOVIEW
-#cmakedefine QT_NO_VALIDATOR
 #cmakedefine QT_NO_VECTOR2D
-#cmakedefine QT_NO_VECTOR4D
-#cmakedefine QT_NO_WARNING_OUTPUT
 #cmakedefine QT_NO_WHATSTHIS
 #cmakedefine QT_NO_WHEELEVENT
-#cmakedefine QT_NO_WIZARD
-#cmakedefine QT_NO_WORKSPACE
-#cmakedefine QT_NO_XMLSTREAM
-#cmakedefine QT_NO_XMLSTREAMREADER
-#cmakedefine QT_NO_XMLSTREAMWRITER
 
 // Debugging
 #if defined(QT_NO_TEXTSTREAM) && !defined(QT_NO_DEBUG_STREAM)
 #  define QT_NO_DEBUG_STREAM
-#endif
-
-// Future
-#if !defined(QT_NO_QFUTURE) && defined(QT_NO_CONCURRENT)
-#  define QT_NO_QFUTURE
 #endif
 
 // Animation
@@ -309,11 +296,6 @@
 #  define QT_NO_CONTEXTMENU
 #endif
 
-// QtDBus module
-#if !defined(QT_NO_DBUS) && (defined(QT_NO_PROPERTIES) || defined(QT_NO_DOM))
-#  define QT_NO_DBUS
-#endif
-
 // QScrollArea
 #if !defined(QT_NO_SCROLLAREA) && defined(QT_NO_SCROLLBAR)
 #  define QT_NO_SCROLLAREA
@@ -369,11 +351,6 @@
 #  define QT_NO_STYLE_STYLESHEET
 #endif
 
-// QtSvg module
-#if !defined(QT_NO_SVG) && (defined(QT_NO_XMLSTREAMREADER) || defined(QT_NO_CSSPARSER))
-#  define QT_NO_SVG
-#endif
-
 // QColorDialog
 #if !defined(QT_NO_COLORDIALOG) && defined(QT_NO_SPINBOX)
 #  define QT_NO_COLORDIALOG
@@ -392,11 +369,6 @@
 // QMenuBar
 #if !defined(QT_NO_MENUBAR) && (defined(QT_NO_MENU) || defined(QT_NO_TOOLBUTTON))
 #  define QT_NO_MENUBAR
-#endif
-
-// QSvgRenderer
-#if !defined(QT_NO_SVGRENDERER) && defined(QT_NO_SVG)
-#  define QT_NO_SVGRENDERER
 #endif
 
 // QTabWidget
@@ -479,11 +451,6 @@
 #  define QT_NO_COMPLETER
 #endif
 
-// Common UNIX Printing System
-#if !defined(QT_NO_CUPS) && defined(QT_NO_PRINTER)
-#  define QT_NO_CUPS
-#endif
-
 // QDataWidgetMapper
 #if !defined(QT_NO_DATAWIDGETMAPPER) && (defined(QT_NO_ITEMVIEWS) || defined(QT_NO_PROPERTIES))
 #  define QT_NO_DATAWIDGETMAPPER
@@ -537,11 +504,6 @@
 // QComboBox
 #if !defined(QT_NO_COMBOBOX) && (defined(QT_NO_LINEEDIT) || defined(QT_NO_STANDARDITEMMODEL) || defined(QT_NO_LISTVIEW))
 #  define QT_NO_COMBOBOX
-#endif
-
-// QWorkSpace
-#if !defined(QT_NO_WORKSPACE) && (defined(QT_NO_SCROLLBAR) || defined(QT_NO_MAINWINDOW) || defined(QT_NO_MENUBAR))
-#  define QT_NO_WORKSPACE
 #endif
 
 // QPrintPreviewWidget

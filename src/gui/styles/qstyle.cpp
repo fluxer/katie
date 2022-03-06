@@ -1879,7 +1879,6 @@ void QStyle::drawItemPixmap(QPainter *painter, const QRect &rect, int alignment,
     \value SP_ArrowBack Equivalent to SP_ArrowLeft when the current layout direction is Qt::LeftToRight, otherwise SP_ArrowRight.
     \value SP_ArrowForward Equivalent to SP_ArrowRight when the current layout direction is Qt::LeftToRight, otherwise SP_ArrowLeft.
     \value SP_CommandLink Icon used to indicate a Vista style command link glyph.
-    \value SP_VistaShield Icon used to indicate UAC prompts on Windows Vista. This will return a null pixmap or icon on all other platforms.
     \value SP_BrowserReload  Icon indicating that the current page should be reloaded.
     \value SP_BrowserStop  Icon indicating that the page loading should stop.
     \value SP_MediaPlay   Icon indicating that media should begin playback.
@@ -2104,10 +2103,7 @@ int QStyle::sliderValueFromPosition(int min, int max, int pos, int span, bool up
      Returns the style's standard palette.
 
     Note that on systems that support system colors, the style's
-    standard palette is not used. In particular, the Windows XP,
-    Vista, and Mac styles do not use the standard palette, but make
-    use of native theme engines. With these styles, you should not set
-    the palette with QApplication::setStandardPalette().
+    standard palette is not used.
 
  */
 QPalette QStyle::standardPalette() const

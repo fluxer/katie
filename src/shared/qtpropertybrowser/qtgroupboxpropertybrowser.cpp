@@ -388,7 +388,9 @@ void QtGroupBoxPropertyBrowserPrivate::updateItem(WidgetItem *item)
         item->groupBox->setTitle(property->propertyName());
         item->groupBox->setToolTip(property->toolTip());
         item->groupBox->setStatusTip(property->statusTip());
+#ifndef QT_NO_WHATSTHIS
         item->groupBox->setWhatsThis(property->whatsThis());
+#endif // QT_NO_WHATSTHIS
         item->groupBox->setEnabled(property->isEnabled());
     }
     if (item->label) {
@@ -398,7 +400,9 @@ void QtGroupBoxPropertyBrowserPrivate::updateItem(WidgetItem *item)
         item->label->setText(property->propertyName());
         item->label->setToolTip(property->toolTip());
         item->label->setStatusTip(property->statusTip());
+#ifndef QT_NO_WHATSTHIS
         item->label->setWhatsThis(property->whatsThis());
+#endif // QT_NO_WHATSTHIS
         item->label->setEnabled(property->isEnabled());
     }
     if (item->widgetLabel) {

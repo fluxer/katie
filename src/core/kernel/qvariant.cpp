@@ -1280,7 +1280,6 @@ const QVariant::Handler *QVariant::handler = &qt_kernel_variant_handler;
     \value PointArray  a QPointArray
     \value PointF  a QPointF
     \value Polygon a QPolygon
-    \value Quaternion  a QQuaternion
     \value Rect  a QRect
     \value RectF  a QRectF
     \value RegExp  a QRegExp
@@ -1696,7 +1695,7 @@ QVariant::QVariant(const QRegExp &regExp) { d.is_null = false; d.type = RegExp; 
     Note that return values in the ranges QVariant::Char through
     QVariant::RegExp and QVariant::Font through QVariant::Transform
     correspond to the values in the ranges QMetaType::QChar through
-    QMetaType::QRegExp and QMetaType::QFont through QMetaType::QQuaternion.
+    QMetaType::QRegExp and QMetaType::QFont through QMetaType::QVector4D.
 
     Pay particular attention when working with char and QChar
     variants.  Note that there is no QVariant constructor specifically

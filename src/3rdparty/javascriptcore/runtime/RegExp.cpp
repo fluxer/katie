@@ -27,14 +27,14 @@
 #include <string.h>
 #include <wtf/Assertions.h>
 
-#include <pcre.h>
+// for reference:
+// https://en.cppreference.com/w/cpp/regex/basic_regex
 
 namespace JSC {
 
 inline RegExp::RegExp(const UString& pattern)
     : m_pattern(pattern)
     , m_flagBits(0)
-    , m_constructionError(0)
     , m_numSubpatterns(0)
 {
     compile();
@@ -43,7 +43,6 @@ inline RegExp::RegExp(const UString& pattern)
 inline RegExp::RegExp(const UString& pattern, const UString& flags)
     : m_pattern(pattern)
     , m_flagBits(0)
-    , m_constructionError(0)
     , m_numSubpatterns(0)
 {
     // NOTE: The global flag is handled on a case-by-case basis by functions like
@@ -63,7 +62,6 @@ inline RegExp::RegExp(const UString& pattern, const UString& flags)
             break;
         default:
             m_constructionError = flagError;
-            m_regExp = 0;
             return;
         }
     }
@@ -73,7 +71,6 @@ inline RegExp::RegExp(const UString& pattern, const UString& flags)
 
 RegExp::~RegExp()
 {
-    pcre_free(m_regExp);
 }
 
 PassRefPtr<RegExp> RegExp::create(const UString& pattern)
@@ -88,17 +85,40 @@ PassRefPtr<RegExp> RegExp::create(const UString& pattern, const UString& flags)
 
 void RegExp::compile()
 {
-    m_regExp = nullptr;
+    m_constructionError = std::string();
+    m_regExp = std::regex();
+    m_numSubpatterns = 0;
 
-    int regexOptions = PCRE_JAVASCRIPT_COMPAT | PCRE_NO_UTF8_CHECK;
+    int regexOptions = std::regex_constants::ECMAScript;
     if (ignoreCase())
-        regexOptions |= PCRE_CASELESS;
+        regexOptions |= std::regex_constants::icase;
+#if 0
     if (multiline())
-        regexOptions |= PCRE_MULTILINE;
-    int errorOffset;
-    m_regExp = pcre_compile(m_pattern.ascii(), regexOptions, &m_constructionError, &errorOffset, nullptr);
+#if __cplusplus >= 201703L
+        regexOptions |= std::regex_constants::multiline;
+#endif
+#endif
 
-    pcre_fullinfo(m_regExp, nullptr, PCRE_INFO_CAPTURECOUNT, &m_numSubpatterns);
+#ifndef QT_NO_EXCEPTIONS
+    try {
+        const std::string regexpattern = m_pattern.ascii();
+        m_regExp = std::regex(regexpattern.c_str(), regexOptions);
+        std::sregex_iterator matchbegin = std::sregex_iterator(regexpattern.begin(), regexpattern.end(), m_regExp);
+        std::sregex_iterator matchend = std::sregex_iterator();
+        m_numSubpatterns = std::distance(matchbegin, matchend);
+    } catch (const std::regex_error &err) {
+        m_constructionError = err.what();
+    } catch (...) {
+        m_constructionError = "Exception caught during regex compilation";
+    }
+#else
+    // no exceptions, no way to find out if error occured
+    const std::string regexpattern = m_pattern.ascii();
+    m_regExp = std::regex(regexpattern.c_str(), regexOptions);
+    std::sregex_iterator matchbegin = std::sregex_iterator(regexpattern.begin(), regexpattern.end(), m_regExp);
+    std::sregex_iterator matchend = std::sregex_iterator();
+    m_numSubpatterns = std::distance(matchbegin, matchend);
+#endif
 }
 
 int RegExp::match(const UString& s, int startOffset, Vector<int, 32>* ovector)
@@ -111,9 +131,9 @@ int RegExp::match(const UString& s, int startOffset, Vector<int, 32>* ovector)
     if (startOffset > s.size() || s.isNull())
         return -1;
 
-    if (m_regExp) {
+    if (isValid()) {
         // Set up the offset vector for the result.
-        // First 2/3 used for result, the last third used by PCRE.
+        // First 2/3 used for result, the last third unused but there for compatibility.
         int* offsetVector;
         int offsetVectorSize;
         int fixedSizeOffsetVector[3];
@@ -126,16 +146,38 @@ int RegExp::match(const UString& s, int startOffset, Vector<int, 32>* ovector)
             offsetVector = ovector->data();
         }
 
-        const int numMatches = pcre_exec(m_regExp, nullptr, s.ascii(), s.size(), startOffset, 0, offsetVector, offsetVectorSize);
+#ifndef QT_NO_EXCEPTIONS
+        bool didmatch = false;
+        try {
+            didmatch = std::regex_match(s.ascii() + startOffset, m_regExp);
+        } catch (const std::regex_error &err) {
+            m_constructionError = err.what();
+        } catch (...) {
+            m_constructionError = "Exception caught during regex matching";
+        }
+#else
+        const bool didmatch = std::regex_match(s.ascii() + startOffset, m_regExp);
+#endif
 
-        if (numMatches < 0) {
+        if (!didmatch) {
 #ifndef QT_NO_DEBUG
-            if (numMatches != PCRE_ERROR_NOMATCH)
-                fprintf(stderr, "jsRegExpExecute failed with result %d\n", numMatches);
+            fprintf(stderr, "jsRegExpExecute failed with result\n");
 #endif
             if (ovector)
                 ovector->clear();
             return -1;
+        }
+
+        const std::string regexpattern = m_pattern.ascii();
+        std::sregex_iterator matchbegin = std::sregex_iterator(regexpattern.begin(), regexpattern.end(), m_regExp);
+        std::sregex_iterator matchend = std::sregex_iterator();
+        size_t nummatches = 0;
+        for (std::sregex_iterator iter = matchbegin; iter != matchend; iter++) {
+            const std::smatch itermatch = *iter;
+            offsetVector[nummatches] = itermatch.position();
+            offsetVector[nummatches + 1] = itermatch.length();
+            offsetVector[nummatches + 2] = 0;
+            nummatches++;
         }
 
         return offsetVector[0];

@@ -26,11 +26,13 @@
 #include <qwidget.h>
 #include <qwindowsstyle.h>
 #include <qsizepolicy.h>
-#include <QtGui>
-#include <QtGui/QWindowsStyle>
 #include <QStyleFactory>
 #include <QSharedPointer>
 #include <qformlayout.h>
+#include <QLineEdit>
+#include <QLabel>
+#include <QBitArray>
+#include <QPushButton>
 
 //TESTED_CLASS=
 //TESTED_FILES=
@@ -250,6 +252,7 @@ void tst_QFormLayout::wrapping()
     delete w;
 }
 
+#ifndef QT_NO_STYLE_WINDOWS
 class CustomLayoutStyle : public QWindowsStyle
 {
     Q_OBJECT
@@ -281,9 +284,11 @@ int CustomLayoutStyle::pixelMetric(PixelMetric metric, const QStyleOption * opti
     }
     return QWindowsStyle::pixelMetric(metric, option, widget);
 }
+#endif // QT_NO_STYLE_WINDOWS
 
 void tst_QFormLayout::spacing()
 {
+#ifndef QT_NO_STYLE_WINDOWS
     //TODO: confirm spacing behavior
     QWidget *w = new QWidget;
     CustomLayoutStyle *style = new CustomLayoutStyle;
@@ -320,6 +325,9 @@ void tst_QFormLayout::spacing()
 
     delete w;
     delete style;
+#else // QT_NO_STYLE_WINDOWS
+    QSKIP("Katie compiled without windows style support (QT_NO_STYLE_WINDOWS)", SkipAll);
+#endif // QT_NO_STYLE_WINDOWS
 }
 
 void tst_QFormLayout::contentsRect()
@@ -382,6 +390,7 @@ public:
 
 void tst_QFormLayout::setFormStyle()
 {
+#ifndef QT_NO_STYLE_WINDOWS
     QWidget widget;
     QFormLayout layout;
     widget.setLayout(&layout);
@@ -410,6 +419,9 @@ void tst_QFormLayout::setFormStyle()
     QVERIFY(layout.formAlignment() == (Qt::AlignLeft | Qt::AlignTop));
     QVERIFY(layout.fieldGrowthPolicy() == QFormLayout::AllNonFixedFieldsGrow);
     QVERIFY(layout.rowWrapPolicy() == QFormLayout::WrapLongRows);
+#else // QT_NO_STYLE_WINDOWS
+    QSKIP("Katie compiled without windows style support (QT_NO_STYLE_WINDOWS)", SkipAll);
+#endif // QT_NO_STYLE_WINDOWS
 }
 
 void tst_QFormLayout::setFieldGrowthPolicy()

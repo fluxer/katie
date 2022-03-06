@@ -21,16 +21,14 @@
 
 #include "qfuturewatcher.h"
 
-#ifndef QT_NO_QFUTURE
-#  include <QtCore/qcoreevent.h>
-#  include <QtCore/qcoreapplication.h>
-#  include <QtCore/qthread.h>
-#  include "qfuturewatcher_p.h"
-#endif
+#ifndef QT_NO_CONCURRENT
+
+#include <QtCore/qcoreevent.h>
+#include <QtCore/qcoreapplication.h>
+#include <QtCore/qthread.h>
+#include "qfuturewatcher_p.h"
 
 QT_BEGIN_NAMESPACE
-
-#ifndef QT_NO_QFUTURE
 
 /*! \class QFutureWatcher
     \reentrant
@@ -576,11 +574,16 @@ void QFutureWatcherBasePrivate::sendCallOutEvent(QFutureCallOutEvent *event)
 
 */
 
-#else
+QT_END_NAMESPACE
 
-// On Symbian winscw target QT_NO_QFUTURE and QT_NO_CONCURRENT are both defined.
-// However moc will be run without having them set, so provide a dummy stub at
-// least for the slots to prevent linker errors.
+#include "moc_qfuturewatcher.h"
+
+#else // QT_NO_CONCURRENT
+
+// moc will be run without having QT_NO_CONCURRENT set, so provide a dummy stub
+// for the slots to prevent linker errors.
+
+QT_BEGIN_NAMESPACE
 
 void QFutureWatcherBase::cancel() { }
 void QFutureWatcherBase::setPaused(bool) { }
@@ -591,8 +594,6 @@ bool QFutureWatcherBase::event(QEvent *) { return false; }
 void QFutureWatcherBase::connectNotify(const char *) { }
 void QFutureWatcherBase::disconnectNotify(const char *) { }
 
-#endif // QT_NO_QFUTURE
-
 QT_END_NAMESPACE
 
-#include "moc_qfuturewatcher.h"
+#endif // QT_NO_CONCURRENT

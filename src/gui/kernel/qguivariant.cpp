@@ -44,8 +44,6 @@
 #include "qvector2d.h"
 #include "qvector3d.h"
 #include "qvector4d.h"
-#include "qquaternion.h"
-
 #include "qvariant_p.h"
 
 QT_BEGIN_NAMESPACE
@@ -136,11 +134,6 @@ static void construct(QVariant::Private *x, const void *copy)
         v_construct<QVector4D>(x, copy);
         break;
 #endif
-#ifndef QT_NO_QUATERNION
-    case QVariant::Quaternion:
-        v_construct<QQuaternion>(x, copy);
-        break;
-#endif
     default:
         qcoreVariantHandler()->construct(x, copy);
         return;
@@ -229,11 +222,6 @@ static void clear(QVariant::Private *d)
         v_clear<QVector4D>(d);
         break;
 #endif
-#ifndef QT_NO_QUATERNION
-    case QVariant::Quaternion:
-        v_clear<QVector4D>(d);
-        break;
-#endif
     default:
         qcoreVariantHandler()->clear(d);
         return;
@@ -290,10 +278,6 @@ static bool isNull(const QVariant::Private *d)
 #ifndef QT_NO_VECTOR4D
     case QVariant::Vector4D:
         return v_cast<QVector4D>(d)->isNull();
-#endif
-#ifndef QT_NO_QUATERNION
-    case QVariant::Quaternion:
-        return v_cast<QQuaternion>(d)->isNull();
 #endif
     default:
         return qcoreVariantHandler()->isNull(d);
@@ -363,10 +347,6 @@ static bool compare(const QVariant::Private *a, const QVariant::Private *b)
 #ifndef QT_NO_VECTOR4D
     case QVariant::Vector4D:
         return *v_cast<QVector4D>(a) == *v_cast<QVector4D>(b);
-#endif
-#ifndef QT_NO_QUATERNION
-    case QVariant::Quaternion:
-        return *v_cast<QQuaternion>(a) == *v_cast<QQuaternion>(b);
 #endif
     default:
         break;
@@ -579,11 +559,6 @@ static void streamDebug(QDebug dbg, const QVariant &v)
         dbg.nospace() << qvariant_cast<QVector4D>(v);
         break;
 #endif
-#ifndef QT_NO_QUATERNION
-    case QVariant::Quaternion:
-        dbg.nospace() << qvariant_cast<QQuaternion>(v);
-        break;
-#endif
     default:
         qcoreVariantHandler()->debugStream(dbg, v);
         break;
@@ -675,9 +650,6 @@ Q_DECL_METATYPE_HELPER(QVector3D)
 #ifndef QT_NO_VECTOR4D
 Q_DECL_METATYPE_HELPER(QVector4D)
 #endif
-#ifndef QT_NO_QUATERNION
-Q_DECL_METATYPE_HELPER(QQuaternion)
-#endif
 
 #ifdef QT_NO_DATASTREAM
 #  define Q_IMPL_METATYPE_HELPER(TYPE) \
@@ -742,11 +714,6 @@ static const QMetaTypeGuiHelper qVariantGuiHelper[] = {
     Q_IMPL_METATYPE_HELPER(QVector4D),
 #else
     {0, 0, 0, 0},
-#endif
-#ifndef QT_NO_QUATERNION
-    Q_IMPL_METATYPE_HELPER(QQuaternion)
-#else
-    {0, 0, 0, 0}
 #endif
 };
 

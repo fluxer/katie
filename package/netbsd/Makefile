@@ -28,7 +28,6 @@ BUILD_DEPENDS = unifdef-[0-9]*:../../devel/unifdef
 .include "../../sysutils/desktop-file-utils/desktopdb.mk"
 .include "../../textproc/jansson/buildlink3.mk"
 .include "../../textproc/icu/buildlink3.mk"
-.include "../../devel/pcre/buildlink3.mk"
 .include "../../x11/libXinerama/buildlink3.mk"
 .include "../../x11/libXcursor/buildlink3.mk"
 .include "../../x11/libXext/buildlink3.mk"

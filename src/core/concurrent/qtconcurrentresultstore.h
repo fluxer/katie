@@ -24,7 +24,7 @@
 
 #include <QtCore/qglobal.h>
 
-#ifndef QT_NO_QFUTURE
+#ifndef QT_NO_CONCURRENT
 
 #include <QtCore/qmap.h>
 #include <QtCore/qvector.h>
@@ -213,4 +213,4 @@ QT_END_NAMESPACE
 
 #endif // QT_NO_CONCURRENT
 
-#endif
+#endif // QTCONCURRENT_RESULTSTORE_H

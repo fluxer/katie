@@ -65,7 +65,9 @@ PluginDialog::PluginDialog(QDesignerFormEditorInterface *core, QWidget *parent)
         QPushButton *updateButton = new QPushButton(tr("Refresh"));
         const QString tooltip = tr("Scan for newly installed custom widget plugins.");
         updateButton->setToolTip(tooltip);
+#ifndef QT_NO_WHATSTHIS
         updateButton->setWhatsThis(tooltip);
+#endif // QT_NO_WHATSTHIS
         connect(updateButton, SIGNAL(clicked()), this, SLOT(updateCustomWidgetPlugins()));
         ui.buttonBox->addButton(updateButton, QDialogButtonBox::ActionRole);
     }
@@ -160,7 +162,9 @@ void PluginDialog::setItem(QTreeWidgetItem *pluginItem, const QString &name,
     QTreeWidgetItem *item = new QTreeWidgetItem(pluginItem);
     item->setText(0, name);
     item->setToolTip(0, toolTip);
+#ifndef QT_NO_WHATSTHIS
     item->setWhatsThis(0, whatsThis);
+#endif // QT_NO_WHATSTHIS
     item->setIcon(0, pluginIcon(icon));
 }
 

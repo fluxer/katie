@@ -30,8 +30,10 @@
 
 #include "../../shared/util.h"
 
-//TESTED_CLASS=
-//TESTED_FILES=
+// TESTED_CLASS=
+// TESTED_FILES=
+
+#ifndef QT_NO_STATUSBAR
 
 class tst_QStatusBar: public QObject
 {
@@ -153,6 +155,7 @@ void tst_QStatusBar::insertPermanentWidget()
 
 void tst_QStatusBar::setSizeGripEnabled()
 {
+#ifndef QT_NO_SIZEGRIP
     QMainWindow mainWindow;
     QPointer<QStatusBar> statusBar = mainWindow.statusBar();
     QVERIFY(statusBar);
@@ -209,6 +212,9 @@ void tst_QStatusBar::setSizeGripEnabled()
     mainWindow.showNormal();
     qApp->processEvents();
     QTRY_VERIFY(sizeGrip->isVisible());
+#else // QT_NO_SIZEGRIP
+    QSKIP("Katie compiled without sizegrip support (QT_NO_SIZEGRIP)", SkipAll);
+#endif // QT_NO_SIZEGRIP
 }
 
 void tst_QStatusBar::task194017_hiddenWidget()
@@ -241,6 +247,7 @@ void tst_QStatusBar::task194017_hiddenWidget()
 
 void tst_QStatusBar::QTBUG4334_hiddenOnMaximizedWindow()
 {
+#ifndef QT_NO_SIZEGRIP
     QMainWindow main;
     QStatusBar statusbar;
     statusbar.setSizeGripEnabled(true);
@@ -254,6 +261,9 @@ void tst_QStatusBar::QTBUG4334_hiddenOnMaximizedWindow()
     main.showFullScreen();
     QTest::qWaitForWindowShown(&main);
     QVERIFY(!statusbar.findChild<QSizeGrip*>()->isVisible());
+#else // QT_NO_SIZEGRIP
+    QSKIP("Katie compiled without sizegrip support (QT_NO_SIZEGRIP)", SkipAll);
+#endif // QT_NO_SIZEGRIP
 }
 
 void tst_QStatusBar::QTBUG25492_msgtimeout()
@@ -303,3 +313,9 @@ void tst_QStatusBar::QTBUG25492_msgtimeout()
 QTEST_MAIN(tst_QStatusBar)
 
 #include "moc_tst_qstatusbar.cpp"
+
+#else // QT_NO_STATUSBAR
+
+QTEST_NOOP_MAIN
+
+#endif // QT_NO_STATUSBAR

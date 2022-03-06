@@ -1175,55 +1175,6 @@ void QMatrix4x4::projectedRotate(qreal angle, qreal x, qreal y, qreal z)
         flagBits = Rotation;
 }
 
-#ifndef QT_NO_QUATERNION
-
-/*!
-    Multiples this matrix by another that rotates coordinates according
-    to a specified \a quaternion.  The \a quaternion is assumed to have
-    been normalized.
-
-    \sa scale(), translate(), QQuaternion
-*/
-void QMatrix4x4::rotate(const QQuaternion& quaternion)
-{
-    // Algorithm from:
-    // http://www.j3d.org/matrix_faq/matrfaq_latest.html#Q54
-    QMatrix4x4 m(1);
-    qreal xx = quaternion.x() * quaternion.x();
-    qreal xy = quaternion.x() * quaternion.y();
-    qreal xz = quaternion.x() * quaternion.z();
-    qreal xw = quaternion.x() * quaternion.scalar();
-    qreal yy = quaternion.y() * quaternion.y();
-    qreal yz = quaternion.y() * quaternion.z();
-    qreal yw = quaternion.y() * quaternion.scalar();
-    qreal zz = quaternion.z() * quaternion.z();
-    qreal zw = quaternion.z() * quaternion.scalar();
-    m.m[0][0] = 1.0f - 2 * (yy + zz);
-    m.m[1][0] =        2 * (xy - zw);
-    m.m[2][0] =        2 * (xz + yw);
-    m.m[3][0] = 0.0f;
-    m.m[0][1] =        2 * (xy + zw);
-    m.m[1][1] = 1.0f - 2 * (xx + zz);
-    m.m[2][1] =        2 * (yz - xw);
-    m.m[3][1] = 0.0f;
-    m.m[0][2] =        2 * (xz - yw);
-    m.m[1][2] =        2 * (yz + xw);
-    m.m[2][2] = 1.0f - 2 * (xx + yy);
-    m.m[3][2] = 0.0f;
-    m.m[0][3] = 0.0f;
-    m.m[1][3] = 0.0f;
-    m.m[2][3] = 0.0f;
-    m.m[3][3] = 1.0f;
-    int flags = flagBits;
-    *this *= m;
-    if (flags != Identity)
-        flagBits = flags | Rotation;
-    else
-        flagBits = Rotation;
-}
-
-#endif
-
 /*!
     \overload
 

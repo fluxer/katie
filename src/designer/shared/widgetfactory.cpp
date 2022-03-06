@@ -648,10 +648,12 @@ void WidgetFactory::initialize(QObject *object) const
         cb->installEventFilter(new ComboEventFilter(cb));
         return;
     }
+#ifndef QT_NO_WIZARD
     if (QWizard *wz = qobject_cast<QWizard *>(widget)) {
         WizardPageChangeWatcher *pw = new WizardPageChangeWatcher(wz);
         Q_UNUSED(pw);
     }
+#endif // QT_NO_WIZARD
 }
 
 static inline QString classNameOfStyle(const QStyle *s)
@@ -793,10 +795,10 @@ bool WidgetFactory::isPassiveInteractor(QWidget *widget)
                 return m_lastWasAPassiveInteractor;
             }
         }
-    } else if (qstrcmp(widget->metaObject()->className(), "QDockWidgetTitle") == 0)
-        return (m_lastWasAPassiveInteractor = true);
-    else if (qstrcmp(widget->metaObject()->className(), "QWorkspaceTitleBar") == 0)
-        return (m_lastWasAPassiveInteractor = true);
+    } else if (qstrcmp(widget->metaObject()->className(), "QDockWidgetTitle") == 0) {
+        m_lastWasAPassiveInteractor = true;
+        return m_lastWasAPassiveInteractor;
+    }
     const QString name = widget->objectName();
     if (name.startsWith(qtPassive) || name == qtMainWindowSplitter) {
         m_lastWasAPassiveInteractor = true;

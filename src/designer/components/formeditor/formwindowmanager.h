@@ -61,8 +61,10 @@ public:
     inline QAction *actionSelectAll() const { return m_actionSelectAll; }
     inline QAction *actionLower() const { return m_actionLower; }
     inline QAction *actionRaise() const { return m_actionRaise; }
+#ifndef QT_NO_UNDOGROUP
     QAction *actionUndo() const;
     QAction *actionRedo() const;
+#endif // QT_NO_UNDOGROUP
 
     inline QAction *actionHorizontalLayout() const { return m_actionHorizontalLayout; }
     inline QAction *actionVerticalLayout() const { return m_actionVerticalLayout; }
@@ -89,7 +91,9 @@ public:
 
     void dragItems(const QList<QDesignerDnDItemInterface*> &item_list);
 
+#ifndef QT_NO_UNDOGROUP
     QUndoGroup *undoGroup() const;
+#endif // QT_NO_UNDOGROUP
 
     virtual PreviewManager *previewManager() const { return m_previewManager; }
 
@@ -122,8 +126,6 @@ private:
     void setupActions();
     FormWindow *findFormWindow(QWidget *w);
     QWidget *findManagedWidget(FormWindow *fw, QWidget *w);
-
-    void setCurrentUndoStack(QUndoStack *stack);
 
 private:
     enum CreateLayoutContext { LayoutContainer, LayoutSelection, MorphLayout };
@@ -160,16 +162,17 @@ private:
     mutable PreviewActionGroup *m_actionGroupPreviewInStyle;
     QAction *m_actionShowFormWindowSettingsDialog;
 
-    QAction *m_actionUndo;
-    QAction *m_actionRedo;
-
     QMap<QWidget *,bool> getUnsortedLayoutsToBeBroken(bool firstOnly) const;
     bool hasLayoutsToBeBroken() const;
     QWidgetList layoutsToBeBroken(QWidget *w) const;
     QWidgetList layoutsToBeBroken() const;
 
-    QUndoGroup *m_undoGroup;
+#ifndef QT_NO_UNDOGROUP
+    QAction *m_actionUndo;
+    QAction *m_actionRedo;
 
+    QUndoGroup *m_undoGroup;
+#endif // QT_NO_UNDOGROUP
 };
 
 }  // namespace qdesigner_internal

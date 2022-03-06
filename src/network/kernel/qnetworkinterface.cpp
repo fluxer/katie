@@ -103,18 +103,14 @@ QList<QSharedDataPointer<QNetworkInterfacePrivate> > QNetworkInterfaceManager::a
     return result;
 }
 
-QString QNetworkInterfacePrivate::makeHwAddress(int len, uchar *data)
+QString QNetworkInterfacePrivate::makeHwAddress(uchar *data)
 {
-    QString result;
-    for (int i = 0; i < len; ++i) {
-        if (i)
-            result += QLatin1Char(':');
-
-        QSTACKARRAY(char, snprintfbuf, 3);
-        ::snprintf(snprintfbuf, sizeof(snprintfbuf), "%02hX", ushort(data[i]));
-        result += QString::fromLatin1(snprintfbuf, sizeof(snprintfbuf) - 1);
-    }
-    return result;
+    QSTACKARRAY(char, snprintfbuf, 18);
+    ::snprintf(snprintfbuf, sizeof(snprintfbuf),
+        "%02hX:%02hX:%02hX:%02hX:%02hX:%02hX",
+        ushort(data[0]), ushort(data[1]), ushort(data[2]), ushort(data[3]), ushort(data[4]), ushort(data[5])
+    );
+    return QString::fromLatin1(snprintfbuf, sizeof(snprintfbuf) - 1);
 }
 
 /*!

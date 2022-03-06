@@ -89,8 +89,6 @@ public:
                         Aborted,
                         Error };
 
-    enum OutputFormat { NativeFormat, PdfFormat, PostScriptFormat };
-
     // ### Qt 5: Merge with QAbstractPrintDialog::PrintRange
     enum PrintRange { AllPages, Selection, PageRange, CurrentPage };
 
@@ -111,17 +109,10 @@ public:
         DuplexShortSide
     };
 
-
-    void setOutputFormat(OutputFormat format);
-    OutputFormat outputFormat() const;
-
     void setPrinterName(const QString &);
     QString printerName() const;
 
     bool isValid() const;
-
-    void setOutputFileName(const QString &);
-    QString outputFileName()const;
 
     void setDocName(const QString &);
     QString docName() const;
@@ -172,7 +163,6 @@ public:
     DuplexMode duplex() const;
 
     QList<int> supportedResolutions() const;
-
 
     void setFontEmbeddingEnabled(bool enable);
     bool fontEmbeddingEnabled() const;

@@ -26,8 +26,10 @@
 #include <qsignalmapper.h>
 #include <qspinbox.h>
 
-//TESTED_CLASS=
-//TESTED_FILES=
+// TESTED_CLASS=
+// TESTED_FILES=
+
+#ifndef QT_NO_SIGNALMAPPER
 
 class tst_QSignalMapper : public QObject
 {
@@ -131,3 +133,9 @@ void tst_QSignalMapper::mapped()
 QTEST_MAIN(tst_QSignalMapper)
 
 #include "moc_tst_qsignalmapper.cpp"
+
+#else // QT_NO_SIGNALMAPPER
+
+QTEST_NOOP_MAIN
+
+#endif // QT_NO_SIGNALMAPPER

@@ -451,6 +451,7 @@ void QDesignerTaskMenu::addToolBar()
 
 void QDesignerTaskMenu::createStatusBar()
 {
+#ifndef QT_NO_STATUSBAR
     if (QDesignerFormWindowInterface *fw = formWindow()) {
         QMainWindow *mw = qobject_cast<QMainWindow*>(fw->mainContainer());
         if (!mw) {
@@ -462,10 +463,12 @@ void QDesignerTaskMenu::createStatusBar()
         cmd->init(mw);
         fw->commandHistory()->push(cmd);
     }
+#endif // QT_NO_STATUSBAR
 }
 
 void QDesignerTaskMenu::removeStatusBar()
 {
+#ifndef QT_NO_STATUSBAR
     if (QDesignerFormWindowInterface *fw = formWindow()) {
         QMainWindow *mw = qobject_cast<QMainWindow*>(fw->mainContainer());
         if (!mw) {
@@ -477,6 +480,7 @@ void QDesignerTaskMenu::removeStatusBar()
         cmd->init(findStatusBar(mw));
         fw->commandHistory()->push(cmd);
     }
+#endif // QT_NO_STATUSBAR
 }
 
 QList<QAction*> QDesignerTaskMenu::taskActions() const

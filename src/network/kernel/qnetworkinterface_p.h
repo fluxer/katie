@@ -70,7 +70,7 @@ public:
 
     QList<QNetworkAddressEntry> addressEntries;
 
-    static QString makeHwAddress(int len, uchar *data);
+    static QString makeHwAddress(uchar *data);
 
 private:
     Q_DISABLE_COPY(QNetworkInterfacePrivate);

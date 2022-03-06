@@ -740,7 +740,7 @@ inline QWidget *QWidget::parentWidget() const
 inline void QWidget::setSizePolicy(QSizePolicy::Policy hor, QSizePolicy::Policy ver)
 { setSizePolicy(QSizePolicy(hor, ver)); }
 
-#define QWIDGETSIZE_MAX ((1<<24)-1)
+#define QWIDGETSIZE_MAX 16777215
 
 QT_END_NAMESPACE
 

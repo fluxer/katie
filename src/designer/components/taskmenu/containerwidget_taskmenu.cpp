@@ -38,7 +38,6 @@
 #include <QtGui/QTabWidget>
 #include <QtGui/QScrollArea>
 #include <QtGui/QMdiArea>
-#include <QtGui/QWorkspace>
 #include <QtGui/QWizard>
 #include <QtGui/QMenu>
 
@@ -243,16 +242,6 @@ MdiContainerWidgetTaskMenu::MdiContainerWidgetTaskMenu(QMdiArea *m, QObject *par
     connect(m_cascadeAction, SIGNAL(triggered()), m, SLOT(cascadeSubWindows()));
 }
 
-MdiContainerWidgetTaskMenu::MdiContainerWidgetTaskMenu(QWorkspace *m, QObject *parent) :
-    ContainerWidgetTaskMenu(m, MdiContainer, parent)
-{
-    initializeActions();
-    connect(m_nextAction, SIGNAL(triggered()), m, SLOT(activateNextWindow()));
-    connect(m_previousAction, SIGNAL(triggered()), m, SLOT(activatePreviousWindow()));
-    connect(m_tileAction, SIGNAL(triggered()),m , SLOT(tile()));
-    connect(m_cascadeAction, SIGNAL(triggered()), m, SLOT(cascade()));
-}
-
 void MdiContainerWidgetTaskMenu::initializeActions()
 {
     m_nextAction =new QAction(tr("Next Subwindow"), this);
@@ -317,8 +306,6 @@ QObject *ContainerWidgetTaskMenuFactory::createExtension(QObject *object, const 
 
     if (QMdiArea* ma = qobject_cast<QMdiArea*>(widget))
         return new MdiContainerWidgetTaskMenu(ma, parent);
-    if (QWorkspace *ws = qobject_cast<QWorkspace*>(widget))
-        return new MdiContainerWidgetTaskMenu(ws, parent);
     if (QWizard *wz = qobject_cast<QWizard *>(widget))
         return new WizardContainerWidgetTaskMenu(wz, parent);
     return new ContainerWidgetTaskMenu(widget, PageContainer, parent);

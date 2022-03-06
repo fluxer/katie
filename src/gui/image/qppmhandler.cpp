@@ -319,32 +319,6 @@ bool QPpmHandler::canRead() const
     return false;
 }
 
-bool QPpmHandler::canRead(QIODevice *device, QByteArray *subType)
-{
-    if (Q_UNLIKELY(!device)) {
-        qWarning("QPpmHandler::canRead() called with no device");
-        return false;
-    }
-
-    QSTACKARRAY(char, head, 2);
-    if (device->peek(head, sizeof(head)) != sizeof(head))
-        return false;
-
-    if (head[0] != 'P')
-        return false;
-
-    if (head[1] == '1' || head[1] == '4') {
-        if (subType)
-            *subType = "pbm";
-    } else if (head[1] == '3' || head[1] == '6') {
-        if (subType)
-            *subType = "ppm";
-    } else {
-        return false;
-    }
-    return true;
-}
-
 bool QPpmHandler::read(QImage *image)
 {
     if (state == Error)
@@ -369,55 +343,60 @@ bool QPpmHandler::write(const QImage &image)
     return write_pbm_image(device(), image, subType);
 }
 
-bool QPpmHandler::supportsOption(ImageOption option) const
+bool QPpmHandler::supportsOption(QImageIOHandler::ImageOption option) const
 {
-    return option == SubType
-        || option == Size
-        || option == ImageFormat;
+    return (option == QImageIOHandler::SubType || option == QImageIOHandler::Size);
 }
 
-QVariant QPpmHandler::option(ImageOption option) const
+QVariant QPpmHandler::option(QImageIOHandler::ImageOption option) const
 {
-    if (option == SubType) {
+    if (option == QImageIOHandler::SubType) {
         return subType;
-    } else if (option == Size) {
+    } else if (option == QImageIOHandler::Size) {
         if (state == Error)
             return QVariant();
         if (state == Ready && !const_cast<QPpmHandler*>(this)->readHeader())
             return QVariant();
         return QSize(width, height);
-    } else if (option == ImageFormat) {
-        if (state == Error)
-            return QVariant();
-        if (state == Ready && !const_cast<QPpmHandler*>(this)->readHeader())
-            return QVariant();
-        QImage::Format format = QImage::Format_Invalid;
-        switch (type) {
-            case '1':                                // ascii PBM
-            case '4':                                // raw PBM
-                format = QImage::Format_Mono;
-                break;
-            case '3':                                // ascii PPM
-            case '6':                                // raw PPM
-                format = QImage::Format_RGB32;
-                break;
-            default:
-                break;
-        }
-        return format;
     }
     return QVariant();
 }
 
-void QPpmHandler::setOption(ImageOption option, const QVariant &value)
+void QPpmHandler::setOption(QImageIOHandler::ImageOption option, const QVariant &value)
 {
-    if (option == SubType)
+    if (option == QImageIOHandler::SubType)
         subType = value.toByteArray().toLower();
 }
 
 QByteArray QPpmHandler::name() const
 {
     return subType.isEmpty() ? QByteArray("ppm") : subType;
+}
+
+bool QPpmHandler::canRead(QIODevice *device, QByteArray *subType)
+{
+    if (Q_UNLIKELY(!device)) {
+        qWarning("QPpmHandler::canRead() called with no device");
+        return false;
+    }
+
+    QSTACKARRAY(char, head, 2);
+    if (device->peek(head, sizeof(head)) != sizeof(head))
+        return false;
+
+    if (head[0] != 'P')
+        return false;
+
+    if (head[1] == '1' || head[1] == '4') {
+        if (subType)
+            *subType = "pbm";
+    } else if (head[1] == '3' || head[1] == '6') {
+        if (subType)
+            *subType = "ppm";
+    } else {
+        return false;
+    }
+    return true;
 }
 
 QT_END_NAMESPACE

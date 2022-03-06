@@ -65,7 +65,9 @@ TaskMenuComponent::TaskMenuComponent(QDesignerFormEditorInterface *core, QObject
     MenuTaskMenuFactory::registerExtension(mgr, taskMenuId);
     MenuBarTaskMenuFactory::registerExtension(mgr, taskMenuId);
     ToolBarTaskMenuFactory::registerExtension(mgr, taskMenuId);
+#ifndef QT_NO_STATUSBAR
     StatusBarTaskMenuFactory::registerExtension(mgr, taskMenuId);
+#endif // QT_NO_STATUSBAR
     LayoutWidgetTaskMenuFactory::registerExtension(mgr, taskMenuId);
     SpacerTaskMenuFactory::registerExtension(mgr, taskMenuId);
 

@@ -34,6 +34,8 @@
 // We mean it.
 //
 
+#include "qglobal.h"
+
 #ifndef QT_NO_PRINTER
 
 #include "qpdf_p.h"

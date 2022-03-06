@@ -43,12 +43,6 @@ private slots:
     void setScaledSize_data();
     void setScaledSize();
 
-    void setClipRect_data();
-    void setClipRect();
-
-    void setScaledClipRect_data();
-    void setScaledClipRect();
-
 private:
     QList< QPair<QString, QByteArray> > images; // filename, format
 };
@@ -56,11 +50,19 @@ private:
 tst_QImageReader::tst_QImageReader()
 {
     foreach (const QByteArray &format, QImageReader::supportedImageFormats()) {
-        if (format == "svgz") {
-            // TODO: svgz image
-            continue;
+        const QString benchfilepath = QLatin1String(SRCDIR "/images/bench.") + format;
+        const QString benchlargefilepath = QLatin1String(SRCDIR "/images/bench-large.") + format;
+        const QString benchtransparentfilepath = QLatin1String(SRCDIR "/images/bench-transparent.") + format;
+
+        if (QFile::exists(benchfilepath)) {
+            images << QPair<QString, QByteArray>(benchfilepath, format);
         }
-        images << QPair<QString, QByteArray>(QLatin1String("bench.") + format, format);
+        if (QFile::exists(benchlargefilepath)) {
+            images << QPair<QString, QByteArray>(benchlargefilepath, format);
+        }
+        if (QFile::exists(benchtransparentfilepath)) {
+            images << QPair<QString, QByteArray>(benchtransparentfilepath, format);
+        }
     }
 }
 
@@ -86,7 +88,7 @@ void tst_QImageReader::readImage()
     QFETCH(QByteArray, format);
 
     QBENCHMARK {
-        QImageReader io(QLatin1String(SRCDIR "/images/") + fileName, format);
+        QImageReader io(fileName, format);
         QImage image = io.read();
         QVERIFY(!image.isNull());
     }
@@ -108,61 +110,14 @@ void tst_QImageReader::setScaledSize_data()
 void tst_QImageReader::setScaledSize()
 {
     QFETCH(QString, fileName);
-    QFETCH(QSize, newSize);
     QFETCH(QByteArray, format);
+    QFETCH(QSize, newSize);
 
     QBENCHMARK {
-        QImageReader reader(QLatin1String(SRCDIR "/images/") + fileName, format);
+        QImageReader reader(fileName, format);
         reader.setScaledSize(newSize);
         QImage image = reader.read();
         QCOMPARE(image.size(), newSize);
-    }
-}
-
-void tst_QImageReader::setClipRect_data()
-{
-    QTest::addColumn<QString>("fileName");
-    QTest::addColumn<QByteArray>("format");
-    QTest::addColumn<QRect>("newRect");
-
-    for (int i = 0; i < images.size(); ++i) {
-        const QString file = images[i].first;
-        const QByteArray format = images[i].second;
-        QTest::newRow(qPrintable(file)) << file << format << QRect(0, 0, 50, 50);
-    }
-}
-
-void tst_QImageReader::setClipRect()
-{
-    QFETCH(QString, fileName);
-    QFETCH(QRect, newRect);
-    QFETCH(QByteArray, format);
-
-    QBENCHMARK {
-        QImageReader reader(QLatin1String(SRCDIR "/images/") + fileName, format);
-        reader.setClipRect(newRect);
-        QImage image = reader.read();
-        QCOMPARE(image.rect(), newRect);
-    }
-}
-
-void tst_QImageReader::setScaledClipRect_data()
-{
-    setClipRect_data();
-}
-
-void tst_QImageReader::setScaledClipRect()
-{
-    QFETCH(QString, fileName);
-    QFETCH(QRect, newRect);
-    QFETCH(QByteArray, format);
-
-    QBENCHMARK {
-        QImageReader reader(QLatin1String(SRCDIR "/images/") + fileName, format);
-        reader.setScaledSize(QSize(300, 300));
-        reader.setScaledClipRect(newRect);
-        QImage image = reader.read();
-        QCOMPARE(image.rect(), newRect);
     }
 }
 

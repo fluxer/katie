@@ -735,7 +735,6 @@ public:
         SP_ArrowForward,
         SP_DirHomeIcon,
         SP_CommandLink,
-        SP_VistaShield,
         SP_BrowserReload,
         SP_BrowserStop,
         SP_MediaPlay,

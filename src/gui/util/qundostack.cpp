@@ -24,9 +24,9 @@
 #include "qundogroup.h"
 #include "qundostack_p.h"
 
-#ifndef QT_NO_UNDOCOMMAND
-
 QT_BEGIN_NAMESPACE
+
+#ifndef QT_NO_UNDOCOMMAND
 
 /*!
     \class QUndoCommand
@@ -1150,11 +1150,10 @@ bool QUndoStack::isActive() const
     \a canRedo specifies the new value.
 */
 
+#endif // QT_NO_UNDOSTACK
+
 QT_END_NAMESPACE
 
 #include "moc_qundostack.h"
-
-
-#endif // QT_NO_UNDOSTACK
 
 #include "moc_qundostack_p.h"

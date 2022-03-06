@@ -311,7 +311,7 @@ bool QRasterPaintEngine::end()
 void QRasterPaintEngine::saveBuffer(const QString &s) const
 {
     Q_D(const QRasterPaintEngine);
-    d->rasterBuffer->bufferImage().save(s, "PNG");
+    d->rasterBuffer->bufferImage().save(s, qt_imageformat);
 }
 #endif
 
@@ -2888,7 +2888,7 @@ void dumpClip(int width, int height, const QClipData *clip)
     Q_ASSERT(x1 >= 0);
 
     fprintf(stderr,"clip %d: %d %d - %d %d\n", counter, x0, y0, x1, y1);
-    clipImg.save(QString::fromLatin1("clip-%0.png").arg(counter++));
+    clipImg.save(QString::fromLatin1("clip-%1.%2").arg(counter++).arg(qt_imageformat);
 }
 #endif
 

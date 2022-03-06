@@ -441,7 +441,9 @@ void QtButtonPropertyBrowserPrivate::updateItem(WidgetItem *item)
         item->button->setText(property->propertyName());
         item->button->setToolTip(property->toolTip());
         item->button->setStatusTip(property->statusTip());
+#ifndef QT_NO_WHATSTHIS
         item->button->setWhatsThis(property->whatsThis());
+#endif // QT_NO_WHATSTHIS
         item->button->setEnabled(property->isEnabled());
     }
     if (item->label) {
@@ -451,7 +453,9 @@ void QtButtonPropertyBrowserPrivate::updateItem(WidgetItem *item)
         item->label->setText(property->propertyName());
         item->label->setToolTip(property->toolTip());
         item->label->setStatusTip(property->statusTip());
+#ifndef QT_NO_WHATSTHIS
         item->label->setWhatsThis(property->whatsThis());
+#endif // QT_NO_WHATSTHIS
         item->label->setEnabled(property->isEnabled());
     }
     if (item->widgetLabel) {

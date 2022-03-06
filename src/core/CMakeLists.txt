@@ -10,7 +10,6 @@ set(EXTRA_CORE_LIBS
 set(CORE_PUBLIC_HEADERS
     QVarLengthArray
     QList
-    QSystemSemaphore
     QProcess
     QBuffer
     QStringMatcher
@@ -70,7 +69,6 @@ set(CORE_PUBLIC_HEADERS
     QMargins
     QByteArrayMatcher
     QDirIterator
-    QSharedMemory
     QReadWriteLock
     QFileSystemWatcher
     QSharedPointer
@@ -205,10 +203,6 @@ set(CORE_HEADERS
     ${CMAKE_CURRENT_SOURCE_DIR}/kernel/qvariant_p.h
     ${CMAKE_CURRENT_SOURCE_DIR}/kernel/qmetaobject_p.h
     ${CMAKE_CURRENT_SOURCE_DIR}/kernel/qobject_p.h
-    ${CMAKE_CURRENT_SOURCE_DIR}/kernel/qsharedmemory.h
-    ${CMAKE_CURRENT_SOURCE_DIR}/kernel/qsharedmemory_p.h
-    ${CMAKE_CURRENT_SOURCE_DIR}/kernel/qsystemsemaphore.h
-    ${CMAKE_CURRENT_SOURCE_DIR}/kernel/qsystemsemaphore_p.h
     ${CMAKE_CURRENT_SOURCE_DIR}/kernel/qmath.h
     ${CMAKE_CURRENT_SOURCE_DIR}/kernel/qcore_unix_p.h
     ${CMAKE_CURRENT_SOURCE_DIR}/kernel/qeventdispatcher_unix_p.h
@@ -341,12 +335,8 @@ set(CORE_SOURCES
     ${CMAKE_CURRENT_SOURCE_DIR}/kernel/qtimer.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/kernel/qtranslator.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/kernel/qvariant.cpp
-    ${CMAKE_CURRENT_SOURCE_DIR}/kernel/qsharedmemory.cpp
-    ${CMAKE_CURRENT_SOURCE_DIR}/kernel/qsystemsemaphore.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/kernel/qpointer.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/kernel/qcore_unix.cpp
-    ${CMAKE_CURRENT_SOURCE_DIR}/kernel/qsharedmemory_unix.cpp
-    ${CMAKE_CURRENT_SOURCE_DIR}/kernel/qsystemsemaphore_unix.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/kernel/qeventdispatcher_unix.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/plugin/qpluginloader.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/plugin/qfactoryloader.cpp

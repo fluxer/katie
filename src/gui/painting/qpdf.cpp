@@ -244,6 +244,18 @@ namespace QPdf {
     }
 }
 
+QPdfPage::QPdfPage()
+    : QPdf::ByteStream(true) // Enable file backing
+{
+}
+
+void QPdfPage::streamImage(int w, int h, int object)
+{
+    *this << w << "0 0 " << -h << "0 " << h << "cm /Im" << object << " Do\n";
+    if (!images.contains(object))
+        images.append(object);
+}
+
 QByteArray QPdf::generatePath(const QPainterPath &path, const QTransform &matrix, PathFlags flags)
 {
     QByteArray result;
@@ -263,7 +275,7 @@ QByteArray QPdf::generatePath(const QPainterPath &path, const QTransform &matrix
                 s << "h\n";
             s << matrix.map(QPointF(elm.x, elm.y)) << "m\n";
             start = i;
-                break;
+            break;
         case QPainterPath::LineToElement:
             s << matrix.map(QPointF(elm.x, elm.y)) << "l\n";
             break;
@@ -1386,9 +1398,6 @@ void QPdfBaseEngine::setProperty(PrintEnginePropertyKey key, const QVariant &val
     case PPK_Orientation:
         d->orientation = QPrinter::Orientation(value.toInt());
         break;
-    case PPK_OutputFileName:
-        d->outputFileName = value.toString();
-        break;
     case PPK_PageOrder:
         d->pageOrder = QPrinter::PageOrder(value.toInt());
         break;
@@ -1487,9 +1496,6 @@ QVariant QPdfBaseEngine::property(PrintEnginePropertyKey key) const
         break;
     case PPK_Orientation:
         ret = d->orientation;
-        break;
-    case PPK_OutputFileName:
-        ret = d->outputFileName;
         break;
     case PPK_PageOrder:
         ret = d->pageOrder;
@@ -1610,18 +1616,11 @@ bool QPdfBaseEngine::end()
 
 bool QPdfBaseEnginePrivate::openPrintDevice()
 {
-    if(outDevice)
+    if (outDevice)
         return false;
 
-    if (!outputFileName.isEmpty()) {
-        QFile *file = new QFile(outputFileName);
-        if (! file->open(QFile::WriteOnly|QFile::Truncate)) {
-            delete file;
-            return false;
-        }
-        outDevice = file;
 #if !defined(QT_NO_CUPS)
-    } else if (QCUPSSupport::isAvailable()) {
+    if (QCUPSSupport::isAvailable()) {
         QCUPSSupport cups;
         QPair<int, QString> ret = cups.tempFd();
         if (ret.first < 0) {
@@ -1653,7 +1652,6 @@ void QPdfBaseEnginePrivate::closePrintDevice()
     if (!cupsTempFile.isEmpty()) {
         QString tempFile = cupsTempFile;
         cupsTempFile.clear();
-        QCUPSSupport cups;
 
         // Set up print options.
         QByteArray prnName;
@@ -1720,6 +1718,7 @@ void QPdfBaseEnginePrivate::closePrintDevice()
         }
 
         // Print the file.
+        QCUPSSupport cups;
         cups_option_t* optPtr = cupsOptStruct.size() ? &cupsOptStruct.first() : 0;
         cups.printFile(prnName.constData(), tempFile.toLocal8Bit().constData(),
                 title.toLocal8Bit().constData(), cupsOptStruct.size(), optPtr);

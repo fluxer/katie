@@ -58,41 +58,61 @@ void tst_bench_QUuid::createUuid()
 
 void tst_bench_QUuid::fromChar()
 {
+#ifndef QT_NO_QUUID_STRING
     QBENCHMARK {
         QUuid uuid("{67C8770B-44F1-410A-AB9A-F9B5446F13EE}");
     }
+#else // QT_NO_QUUID_STRING
+    QSKIP("Katie compiled without uuid from/to string support (QT_NO_QUUID_STRING)", SkipAll);
+#endif // QT_NO_QUUID_STRING
 }
 
 void tst_bench_QUuid::toString()
 {
+#ifndef QT_NO_QUUID_STRING
     QUuid uuid = QUuid::createUuid();
     QBENCHMARK {
         uuid.toString();
     }
+#else // QT_NO_QUUID_STRING
+    QSKIP("Katie compiled without uuid from/to string support (QT_NO_QUUID_STRING)", SkipAll);
+#endif // QT_NO_QUUID_STRING
 }
 
 void tst_bench_QUuid::fromString()
 {
+#ifndef QT_NO_QUUID_STRING
     QString string = QLatin1String("{67C8770B-44F1-410A-AB9A-F9B5446F13EE}");
     QBENCHMARK {
         QUuid uuid(string);
     }
+#else // QT_NO_QUUID_STRING
+    QSKIP("Katie compiled without uuid from/to string support (QT_NO_QUUID_STRING)", SkipAll);
+#endif // QT_NO_QUUID_STRING
 }
 
 void tst_bench_QUuid::toByteArray()
 {
+#ifndef QT_NO_QUUID_STRING
     QUuid uuid = QUuid::createUuid();
     QBENCHMARK {
         uuid.toByteArray();
     }
+#else // QT_NO_QUUID_STRING
+    QSKIP("Katie compiled without uuid from/to string support (QT_NO_QUUID_STRING)", SkipAll);
+#endif // QT_NO_QUUID_STRING
 }
 
 void tst_bench_QUuid::fromByteArray()
 {
+#ifndef QT_NO_QUUID_STRING
     QByteArray string = "{67C8770B-44F1-410A-AB9A-F9B5446F13EE}";
     QBENCHMARK {
         QUuid uuid(string);
     }
+#else // QT_NO_QUUID_STRING
+    QSKIP("Katie compiled without uuid from/to string support (QT_NO_QUUID_STRING)", SkipAll);
+#endif // QT_NO_QUUID_STRING
 }
 
 void tst_bench_QUuid::toRfc4122()

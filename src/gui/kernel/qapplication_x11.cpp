@@ -166,8 +166,6 @@ static const char* X11AtomsTbl[QX11Data::NPredefinedAtoms] = {
 
     "_NET_SUPPORTING_WM_CHECK\0",
 
-    "_NET_WM_CM_S0\0",
-
     "_NET_SYSTEM_TRAY_VISUAL\0",
     "_NET_SYSTEM_TRAY_OPCODE\0",
     "MANAGER\0",
@@ -541,6 +539,10 @@ static void qt_x11_create_intern_atoms()
         qt_x11Data->atoms[i] = XInternAtom(qt_x11Data->display, const_cast<char*>(X11AtomsTbl[i]), False);
     }
 #endif
+
+    QSTACKARRAY(char, snprintfbuf, 32);
+    ::snprintf(snprintfbuf, sizeof(snprintfbuf), "_NET_WM_CM_S%i", qt_x11Data->defaultScreen);
+    qt_x11Data->compositorAtom = XInternAtom(qt_x11Data->display, snprintfbuf, False);
 }
 
 Q_GUI_EXPORT void qt_x11_apply_settings_in_all_apps()
@@ -1228,15 +1230,14 @@ void qt_init(QApplicationPrivate *priv, Display *display,
 #endif // QT_NO_XRANDR
     }
 
-        // Attempt to determine if compositor is active
+    // Attempt to determine if compositor is active
 #ifndef QT_NO_XFIXES
-    XFixesSelectSelectionInput(qt_x11Data->display, QX11Info::appRootWindow(), ATOM(_NET_WM_CM_S0),
+    XFixesSelectSelectionInput(qt_x11Data->display, QX11Info::appRootWindow(), qt_x11Data->compositorAtom,
                                XFixesSetSelectionOwnerNotifyMask
                                | XFixesSelectionWindowDestroyNotifyMask
                                | XFixesSelectionClientCloseNotifyMask);
 #endif // QT_NO_XFIXES
-    qt_x11Data->compositingManagerRunning = XGetSelectionOwner(qt_x11Data->display,
-                                                               ATOM(_NET_WM_CM_S0));
+    qt_x11Data->compositingManagerRunning = XGetSelectionOwner(qt_x11Data->display, qt_x11Data->compositorAtom);
 
     QApplicationPrivate::x11_apply_settings();
 
@@ -1783,7 +1784,7 @@ int QApplication::x11ProcessEvent(XEvent* event)
         XFixesSelectionNotifyEvent *req =
             reinterpret_cast<XFixesSelectionNotifyEvent *>(event);
         qt_x11Data->time = req->selection_timestamp;
-        if (req->selection == ATOM(_NET_WM_CM_S0))
+        if (req->selection == qt_x11Data->compositorAtom)
             qt_x11Data->compositingManagerRunning = req->owner;
     }
 #endif
@@ -2748,7 +2749,7 @@ bool QETWidget::translateMouseEvent(const XEvent *event)
                 pos = popup->mapFromGlobal(globalPos);
         }
         bool releaseAfter = false;
-        QWidget *popupChild  = popup->childAt(pos);
+        QWidget *popupChild = popup->childAt(pos);
 
         if (popup != qt_popup_down){
             qt_button_down = 0;
@@ -3531,10 +3532,9 @@ static bool sm_in_phase2 = false;
 static QSmSocketReceiver* sm_receiver = 0;
 
 static void resetSmState();
-static void sm_setProperty(const char* name, const char* type,
-                            int num_vals, SmPropValue* vals);
+static void sm_setProperty(const char* name, const char* type, SmPropValue* vals);
 static void sm_saveYourselfCallback(SmcConn smcConn, SmPointer clientData,
-                                  int saveType, Bool shutdown , int interactStyle, Bool fast);
+                                    int saveType, Bool shutdown , int interactStyle, Bool fast);
 static void sm_saveYourselfPhase2Callback(SmcConn smcConn, SmPointer clientData) ;
 static void sm_dieCallback(SmcConn smcConn, SmPointer clientData) ;
 static void sm_shutdownCancelledCallback(SmcConn smcConn, SmPointer clientData);
@@ -3557,25 +3557,17 @@ static void resetSmState()
 
 // theoretically it's possible to set several properties at once. For
 // simplicity, however, we do just one property at a time
-static void sm_setProperty(const char* name, const char* type,
-                            int num_vals, SmPropValue* vals)
+static void sm_setProperty(const char* name, const char* type, SmPropValue* vals)
 {
-    if (num_vals) {
-      SmProp prop;
-      prop.name = (char*)name;
-      prop.type = (char*)type;
-      prop.num_vals = num_vals;
-      prop.vals = vals;
+    SmProp prop;
+    prop.name = (char*)name;
+    prop.type = (char*)type;
+    prop.num_vals = 1;
+    prop.vals = vals;
 
-      SmProp* props[1];
-      props[0] = &prop;
-      SmcSetProperties(smcConnection, 1, props);
-    }
-    else {
-      char* names[1];
-      names[0] = (char*) name;
-      SmcDeleteProperties(smcConnection, 1, names);
-    }
+    SmProp* props[1];
+    props[0] = &prop;
+    SmcSetProperties(smcConnection, 1, props);
 }
 
 static void sm_setProperty(const QString& name, const QString& value)
@@ -3584,11 +3576,20 @@ static void sm_setProperty(const QString& name, const QString& value)
     SmPropValue prop;
     prop.length = v.length();
     prop.value = (SmPointer) v.constData();
-    sm_setProperty(name.toLatin1().data(), SmARRAY8, 1, &prop);
+    sm_setProperty(name.toLatin1().data(), SmARRAY8, &prop);
 }
 
 static void sm_setProperty(const QString& name, const QStringList& value)
 {
+    QByteArray ln = name.toLatin1();
+
+    if (value.isEmpty()) {
+        char* names[1];
+        names[0] = (char*) ln.data();
+        SmcDeleteProperties(smcConnection, 1, names);
+        return;
+    }
+
     SmPropValue *prop = new SmPropValue[value.count()];
     int count = 0;
     QList<QByteArray> vl;
@@ -3598,7 +3599,17 @@ static void sm_setProperty(const QString& name, const QStringList& value)
       prop[count].value = (char*)vl.last().data();
       ++count;
     }
-    sm_setProperty(name.toLatin1().data(), SmLISTofARRAY8, count, prop);
+
+    SmProp prop2;
+    prop2.name = (char*)ln.data();
+    prop2.type = (char*)SmLISTofARRAY8;
+    prop2.num_vals = count;
+    prop2.vals = prop;
+
+    SmProp* props[1];
+    props[0] = &prop2;
+    SmcSetProperties(smcConnection, 1, props);
+
     delete [] prop;
 }
 
@@ -3694,7 +3705,7 @@ static void sm_performSaveYourself(QSessionManagerPrivate* smd)
         prop.length = sizeof(int);
         int value = sm->restartHint();
         prop.value = (SmPointer) &value;
-        sm_setProperty(SmRestartStyleHint, SmCARD8, 1, &prop);
+        sm_setProperty(SmRestartStyleHint, SmCARD8, &prop);
 
         // we are done
         SmcSaveYourselfDone(smcConnection, !sm_cancel);
@@ -3757,8 +3768,7 @@ QSessionManager::QSessionManager(QApplication * app, QString &id, QString& key)
     resetSmState();
     QSTACKARRAY(char, cerror, 256);
     char* myId = 0;
-    QByteArray b_id = id.toLatin1();
-    char* prevId = b_id.data();
+    const QByteArray b_id = id.toLatin1();
 
     SmcCallbacks cb;
     cb.save_yourself.callback = sm_saveYourselfCallback;
@@ -3780,7 +3790,7 @@ QSessionManager::QSessionManager(QApplication * app, QString &id, QString& key)
                                        SmcSaveCompleteProcMask |
                                        SmcShutdownCancelledProcMask,
                                        &cb,
-                                       prevId,
+                                       b_id.constData(),
                                        &myId,
                                        256, cerror);
 

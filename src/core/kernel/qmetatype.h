@@ -55,8 +55,7 @@ public:
         QCursor = 74, QSizePolicy = 75, QKeySequence = 76, QPen = 77,
         QTextLength = 78, QTextFormat = 79, QMatrix = 80, QTransform = 81,
         QMatrix4x4 = 82, QVector2D = 83, QVector3D = 84, QVector4D = 85,
-        QQuaternion = 86,
-        LastGuiType = QQuaternion,
+        LastGuiType = QVector4D,
 
         FirstCoreExtType = 128 /* VoidStar */,
         VoidStar = 128, Long = 129, Short = 130, Char = 131, ULong = 132,
@@ -286,7 +285,6 @@ class QMatrix4x4;
 class QVector2D;
 class QVector3D;
 class QVector4D;
-class QQuaternion;
 class QVariant;
 
 QT_END_NAMESPACE
@@ -348,7 +346,6 @@ Q_DECLARE_BUILTIN_METATYPE(QMatrix4x4, QMatrix4x4)
 Q_DECLARE_BUILTIN_METATYPE(QVector2D, QVector2D)
 Q_DECLARE_BUILTIN_METATYPE(QVector3D, QVector3D)
 Q_DECLARE_BUILTIN_METATYPE(QVector4D, QVector4D)
-Q_DECLARE_BUILTIN_METATYPE(QQuaternion, QQuaternion)
 
 Q_DECLARE_BUILTIN_METATYPE(void *, VoidStar)
 Q_DECLARE_BUILTIN_METATYPE(long, Long)

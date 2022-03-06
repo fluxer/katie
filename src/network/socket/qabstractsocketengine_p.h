@@ -212,14 +212,14 @@ public:
     bool nativeBind(const QHostAddress &address, quint16 port);
     bool nativeListen();
     int nativeAccept();
-#ifndef QT_NO_NETWORKINTERFACE
+#if !defined(QT_NO_UDPSOCKET) && !defined(QT_NO_NETWORKINTERFACE)
     bool nativeJoinMulticastGroup(const QHostAddress &groupAddress,
                                   const QNetworkInterface &iface);
     bool nativeLeaveMulticastGroup(const QHostAddress &groupAddress,
                                    const QNetworkInterface &iface);
     QNetworkInterface nativeMulticastInterface() const;
     bool nativeSetMulticastInterface(const QNetworkInterface &iface);
-#endif
+#endif // QT_NO_UDPSOCKET && QT_NO_NETWORKINTERFACE
     qint64 nativeBytesAvailable() const;
 
     bool nativeHasPendingDatagrams() const;

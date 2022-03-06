@@ -371,7 +371,9 @@ int QX11Info::appDepth(int screen)
 */
 
 int QX11Info::appCells(int screen)
-{ return qt_x11Data ? qt_x11Data->screens[screen == -1 ? qt_x11Data->defaultScreen : screen].cells : 0; }
+{
+    return qt_x11Data ? qt_x11Data->screens[screen == -1 ? qt_x11Data->defaultScreen : screen].cells : 0;
+}
 
 /*!
     Returns true if the application has a default color map on the given
@@ -383,7 +385,9 @@ int QX11Info::appCells(int screen)
     query for information about Xinerama screens.
 */
 bool QX11Info::appDefaultColormap(int screen)
-{ return qt_x11Data ? qt_x11Data->screens[screen == -1 ? qt_x11Data->defaultScreen : screen].defaultColormap : true; }
+{
+    return qt_x11Data ? qt_x11Data->screens[screen == -1 ? qt_x11Data->defaultScreen : screen].defaultColormap : true;
+}
 
 /*!
     Returns true if the application has a default visual on the given \a screen;
@@ -395,7 +399,9 @@ bool QX11Info::appDefaultColormap(int screen)
     query for information about Xinerama screens.
 */
 bool QX11Info::appDefaultVisual(int screen)
-{ return qt_x11Data ? qt_x11Data->screens[screen == -1 ? qt_x11Data->defaultScreen : screen].defaultVisual : true; }
+{
+    return qt_x11Data ? qt_x11Data->screens[screen == -1 ? qt_x11Data->defaultScreen : screen].defaultVisual : true;
+}
 
 /*!
     Returns the number of the screen currently in use.
@@ -408,7 +414,9 @@ bool QX11Info::appDefaultVisual(int screen)
     \sa appScreen()
 */
 int QX11Info::screen() const
-{ return x11data ? x11data->screen : QX11Info::appScreen(); }
+{
+    return x11data ? x11data->screen : QX11Info::appScreen();
+}
 
 /*!
     Returns the color depth (bits per pixel) of the X display.
@@ -417,7 +425,9 @@ int QX11Info::screen() const
 */
 
 int QX11Info::depth() const
-{ return x11data ? x11data->depth : QX11Info::appDepth(); }
+{
+    return x11data ? x11data->depth : QX11Info::appDepth();
+}
 
 /*!
     Returns the number of cells.
@@ -426,7 +436,9 @@ int QX11Info::depth() const
 */
 
 int QX11Info::cells() const
-{ return x11data ? x11data->cells : QX11Info::appCells(); }
+{
+    return x11data ? x11data->cells : QX11Info::appCells();
+}
 
 /*!
     Returns a handle for the color map.
@@ -435,7 +447,9 @@ int QX11Info::cells() const
 */
 
 Qt::HANDLE QX11Info::colormap() const
-{ return x11data ? x11data->colormap : QX11Info::appColormap(); }
+{
+    return x11data ? x11data->colormap : QX11Info::appColormap();
+}
 
 /*!
     Returns true if there is a default color map; otherwise returns false.
@@ -444,7 +458,9 @@ Qt::HANDLE QX11Info::colormap() const
 */
 
 bool QX11Info::defaultColormap() const
-{ return x11data ? x11data->defaultColormap : QX11Info::appDefaultColormap(); }
+{
+    return x11data ? x11data->defaultColormap : QX11Info::appDefaultColormap();
+}
 
 /*!
     Returns the current visual.
@@ -453,7 +469,9 @@ bool QX11Info::defaultColormap() const
 */
 
 void *QX11Info::visual() const
-{ return x11data ? x11data->visual : QX11Info::appVisual(); }
+{
+    return x11data ? x11data->visual : QX11Info::appVisual();
+}
 
 /*!
     Returns true if there is a default visual; otherwise returns false.
@@ -462,8 +480,9 @@ void *QX11Info::visual() const
 */
 
 bool QX11Info::defaultVisual() const
-{ return x11data ? x11data->defaultVisual : QX11Info::appDefaultVisual(); }
-
+{
+    return x11data ? x11data->defaultVisual : QX11Info::appDefaultVisual();
+}
 
 /*!
     \since 4.4
@@ -476,7 +495,3 @@ bool QX11Info::isCompositingManagerRunning()
 }
 
 QT_END_NAMESPACE
-
-
-
-

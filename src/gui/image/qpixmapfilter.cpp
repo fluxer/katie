@@ -659,13 +659,13 @@ void QPixmapColorizeFilter::draw(QPainter *painter, const QPointF &dest, const Q
 
     if (srcRect.isNull()) {
         srcImage = src.toImage();
-        srcImage = srcImage.convertToFormat(srcImage.hasAlphaChannel() ? QImage::Format_ARGB32_Premultiplied : QImage::Format_RGB32);
+        srcImage = srcImage.convertToFormat(srcImage.hasAlphaChannel() ? QImage::Format_ARGB32_Premultiplied : QImage::systemFormat());
         destImage = QImage(srcImage.size(), srcImage.format());
     } else {
         QRect rect = srcRect.toAlignedRect().intersected(src.rect());
 
         srcImage = src.copy(rect).toImage();
-        srcImage = srcImage.convertToFormat(srcImage.hasAlphaChannel() ? QImage::Format_ARGB32_Premultiplied : QImage::Format_RGB32);
+        srcImage = srcImage.convertToFormat(srcImage.hasAlphaChannel() ? QImage::Format_ARGB32_Premultiplied : QImage::systemFormat());
         destImage = QImage(rect.size(), srcImage.format());
     }
 

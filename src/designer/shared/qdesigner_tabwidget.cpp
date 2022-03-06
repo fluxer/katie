@@ -441,7 +441,9 @@ void QTabWidgetPropertySheet::setProperty(int index, const QVariant &value)
         m_pageToData[currentWidget].tooltip = qvariant_cast<qdesigner_internal::PropertySheetStringValue>(value);
         break;
     case PropertyCurrentTabWhatsThis:
+#ifndef QT_NO_WHATSTHIS
         m_tabWidget->setTabWhatsThis(currentIndex, qvariant_cast<QString>(resolvePropertyValue(index, value)));
+#endif // QT_NO_WHATSTHIS
         m_pageToData[currentWidget].whatsthis = qvariant_cast<qdesigner_internal::PropertySheetStringValue>(value);
         break;
     case PropertyTabWidgetNone:

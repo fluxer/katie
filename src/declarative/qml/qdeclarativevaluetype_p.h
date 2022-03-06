@@ -45,7 +45,6 @@
 #include <QtGui/qvector3d.h>
 #include <QtGui/qvector4d.h>
 #include <QtGui/qmatrix4x4.h>
-#include <QtGui/qquaternion.h>
 #include <QtGui/qfont.h>
 
 QT_BEGIN_NAMESPACE
@@ -226,6 +225,7 @@ private:
     QRect rect;
 };
 
+#ifndef QT_NO_VECTOR2D
 class Q_AUTOTEST_EXPORT QDeclarativeVector2DValueType : public QDeclarativeValueType
 {
     Q_PROPERTY(qreal x READ x WRITE setX)
@@ -247,7 +247,9 @@ public:
 private:
     QVector2D vector;
 };
+#endif // QT_NO_VECTOR2D
 
+#ifndef QT_NO_VECTOR3D
 class Q_AUTOTEST_EXPORT QDeclarativeVector3DValueType : public QDeclarativeValueType
 {
     Q_PROPERTY(qreal x READ x WRITE setX)
@@ -272,7 +274,9 @@ public:
 private:
     QVector3D vector;
 };
+#endif // QT_NO_VECTOR3D
 
+#ifndef QT_NO_VECTOR4D
 class Q_AUTOTEST_EXPORT QDeclarativeVector4DValueType : public QDeclarativeValueType
 {
     Q_PROPERTY(qreal x READ x WRITE setX)
@@ -300,34 +304,7 @@ public:
 private:
     QVector4D vector;
 };
-
-class Q_AUTOTEST_EXPORT QDeclarativeQuaternionValueType : public QDeclarativeValueType
-{
-    Q_PROPERTY(qreal scalar READ scalar WRITE setScalar)
-    Q_PROPERTY(qreal x READ x WRITE setX)
-    Q_PROPERTY(qreal y READ y WRITE setY)
-    Q_PROPERTY(qreal z READ z WRITE setZ)
-    Q_OBJECT
-public:
-    QDeclarativeQuaternionValueType(QObject *parent = nullptr);
-
-    virtual void read(QObject *, int);
-    virtual void write(QObject *, int, QDeclarativePropertyPrivate::WriteFlags);
-    virtual QVariant value();
-    virtual void setValue(QVariant value);
-
-    qreal scalar() const;
-    qreal x() const;
-    qreal y() const;
-    qreal z() const;
-    void setScalar(qreal);
-    void setX(qreal);
-    void setY(qreal);
-    void setZ(qreal);
-
-private:
-    QQuaternion quaternion;
-};
+#endif // QT_NO_VECTOR4D
 
 class Q_AUTOTEST_EXPORT QDeclarativeMatrix4x4ValueType : public QDeclarativeValueType
 {

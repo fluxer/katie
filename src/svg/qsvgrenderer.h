@@ -23,9 +23,6 @@
 #define QSVGRENDERER_H
 
 #include <QtGui/qmatrix.h>
-
-#ifndef QT_NO_SVGRENDERER
-
 #include <QtCore/qobject.h>
 #include <QtCore/qsize.h>
 #include <QtCore/qrect.h>
@@ -92,6 +89,4 @@ private:
 
 QT_END_NAMESPACE
 
-
-#endif // QT_NO_SVGRENDERER
 #endif // QSVGRENDERER_H

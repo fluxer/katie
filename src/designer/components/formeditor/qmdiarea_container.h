@@ -29,7 +29,6 @@
 #include <extensionfactory_p.h>
 
 #include <QtGui/QMdiArea>
-#include <QtGui/QWorkspace>
 
 QT_BEGIN_NAMESPACE
 
@@ -59,7 +58,6 @@ private:
 };
 
 // PropertySheet for QMdiArea: Fakes window title and name.
-// Also works for a QWorkspace as it relies on the container extension.
 
 class QMdiAreaPropertySheet: public QDesignerPropertySheet
 {
@@ -91,7 +89,6 @@ private:
 
 typedef ExtensionFactory<QDesignerContainerExtension,  QMdiArea,  QMdiAreaContainer> QMdiAreaContainerFactory;
 typedef QDesignerPropertySheetFactory<QMdiArea, QMdiAreaPropertySheet> QMdiAreaPropertySheetFactory;
-typedef QDesignerPropertySheetFactory<QWorkspace, QMdiAreaPropertySheet> QWorkspacePropertySheetFactory;
 }  // namespace qdesigner_internal
 
 QT_END_NAMESPACE

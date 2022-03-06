@@ -190,7 +190,7 @@ bool FormWindowManager::eventFilter(QObject *o, QEvent *e)
     }
 
     if (QWidget *managedWidget = findManagedWidget(fw, widget)) {
-        // Prevent MDI and QWorkspace subwindows from being closed by clicking at the title bar
+        // Prevent MDI subwindows from being closed by clicking at the title bar
         if (managedWidget != widget && eventType == QEvent::Close) {
             e->ignore();
             return true;
@@ -483,6 +483,7 @@ void FormWindowManager::setupActions()
     connect(m_actionDefaultPreview, SIGNAL(triggered()),
             this, SLOT(slotActionDefaultPreviewActivated()));
 
+#ifndef QT_NO_UNDOGROUP
     m_undoGroup = new QUndoGroup(this);
 
     m_actionUndo = m_undoGroup->createUndoAction(this);
@@ -492,6 +493,7 @@ void FormWindowManager::setupActions()
     m_actionRedo = m_undoGroup->createRedoAction(this);
     m_actionRedo->setEnabled(false);
     m_actionRedo->setIcon(QIcon::fromTheme(QLatin1String("edit-redo"), createIconSet(QLatin1String("redo.png"))));
+#endif // QT_NO_UNDOGROUP
 
     m_actionShowFormWindowSettingsDialog = new QAction(tr("Form &Settings..."), this);
     m_actionShowFormWindowSettingsDialog->setObjectName(QLatin1String("__qt_form_settings_action"));
@@ -930,6 +932,7 @@ QPixmap FormWindowManager::createPreviewPixmap(QString *errorMessage)
     return pixmap;
 }
 
+#ifndef QT_NO_UNDOGROUP
 QAction *FormWindowManager::actionUndo() const
 {
     return m_actionUndo;
@@ -939,6 +942,7 @@ QAction *FormWindowManager::actionRedo() const
 {
     return m_actionRedo;
 }
+#endif // QT_NO_UNDOGROUP
 
 QActionGroup *FormWindowManager::actionGroupPreviewInStyle() const
 {
@@ -965,10 +969,12 @@ void FormWindowManager::dragItems(const QList<QDesignerDnDItemInterface*> &item_
     QDesignerMimeData::execDrag(item_list, m_core->topLevel());
 }
 
+#ifndef QT_NO_UNDOGROUP
 QUndoGroup *FormWindowManager::undoGroup() const
 {
     return m_undoGroup;
 }
+#endif // QT_NO_UNDOGROUP
 
 QAction *FormWindowManager::actionShowFormWindowSettingsDialog() const
 {

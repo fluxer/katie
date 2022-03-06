@@ -21,9 +21,6 @@
 
 #include "qiconengineplugin.h"
 #include "qstringlist.h"
-
-#if !defined(QT_NO_SVG)
-
 #include "qsvgiconengine.h"
 #include "qiodevice.h"
 #include "qbytearray.h"
@@ -58,5 +55,3 @@ QIconEngine *QSvgIconPlugin::create(const QString &file)
 Q_EXPORT_PLUGIN2(qsvgicon, QSvgIconPlugin)
 
 QT_END_NAMESPACE
-
-#endif // !QT_NO_SVG

@@ -27,8 +27,10 @@
 
 #include <qstylesheetstyle_p.h>
 
-//TESTED_CLASS=
-//TESTED_FILES=
+// TESTED_CLASS=
+// TESTED_FILES=
+
+#ifndef QT_NO_STYLE_STYLESHEET
 
 class tst_QStyleSheetStyle : public QObject
 {
@@ -1625,3 +1627,9 @@ void tst_QStyleSheetStyle::QTBUG15910_crashNullWidget()
 QTEST_MAIN(tst_QStyleSheetStyle)
 
 #include "moc_tst_qstylesheetstyle.cpp"
+
+#else // QT_NO_STYLE_STYLESHEET
+
+QTEST_NOOP_MAIN
+
+#endif // QT_NO_STYLE_STYLESHEET
