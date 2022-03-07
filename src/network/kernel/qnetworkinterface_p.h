@@ -65,7 +65,6 @@ public:
     QNetworkInterface::InterfaceFlags flags;
 
     QString name;
-    QString friendlyName;
     QString hardwareAddress;
 
     QList<QNetworkAddressEntry> addressEntries;

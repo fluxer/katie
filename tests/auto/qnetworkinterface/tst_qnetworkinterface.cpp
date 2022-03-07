@@ -56,14 +56,7 @@ void tst_QNetworkInterface::dump()
         if (i.flags() & QNetworkInterface::CanMulticast) flags += "Multicast,";
         flags.chop(1);          // drop last comma
 
-        QString friendlyName = i.humanReadableName();
-        if (friendlyName != i.name()) {
-            friendlyName.prepend('(');
-            friendlyName.append(')');
-        } else {
-            friendlyName.clear();
-        }
-        qDebug() << "Interface:     " << i.name() << qPrintable(friendlyName);
+        qDebug() << "Interface:     " << i.name();
         QVERIFY(i.isValid());
 
         qDebug() << "    index:     " << i.index();
@@ -166,7 +159,6 @@ void tst_QNetworkInterface::copyInvalidInterface()
 
     QCOMPARE(i.index(), 0);
     QVERIFY(i.name().isEmpty());
-    QVERIFY(i.humanReadableName().isEmpty());
     QVERIFY(i.hardwareAddress().isEmpty());
     QCOMPARE(int(i.flags()), 0);
     QVERIFY(i.addressEntries().isEmpty());
