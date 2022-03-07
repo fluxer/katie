@@ -22,9 +22,8 @@
 #include "qcoreevent.h"
 #include "qcoreapplication.h"
 #include "qcoreapplication_p.h"
-
 #include "qmutex.h"
-#include "qset.h"
+#include "qstdcontainers_p.h"
 
 QT_BEGIN_NAMESPACE
 
@@ -279,13 +278,9 @@ QEvent::~QEvent()
     The return value of this function is not defined for paint events.
 */
 
-class QEventUserEventRegistration
-{
-public:
-    QMutex mutex;
-    QSet<int> set;
-};
-Q_GLOBAL_STATIC(QEventUserEventRegistration, userEventRegistrationHelper)
+typedef QStdVector<int> QEventUserEventList;
+Q_GLOBAL_STATIC(QMutex, qGlobalUserEventsMutex)
+Q_GLOBAL_STATIC(QEventUserEventList, qGlobalUserEvents)
 
 /*!
     \since 4.4
@@ -299,25 +294,23 @@ Q_GLOBAL_STATIC(QEventUserEventRegistration, userEventRegistrationHelper)
 */
 int QEvent::registerEventType(int hint)
 {
-    QEventUserEventRegistration *userEventRegistration
-        = userEventRegistrationHelper();
+    QMutexLocker locker(qGlobalUserEventsMutex());
+    QEventUserEventList *userEventRegistration = qGlobalUserEvents();
     if (!userEventRegistration)
         return -1;
 
-    QMutexLocker locker(&userEventRegistration->mutex);
-
     // if the type hint hasn't been registered yet, take it
-    if (hint >= QEvent::User && hint <= QEvent::MaxUser && !userEventRegistration->set.contains(hint)) {
-        userEventRegistration->set.insert(hint);
+    if (hint >= QEvent::User && hint <= QEvent::MaxUser && !userEventRegistration->contains(hint)) {
+        userEventRegistration->append(hint);
         return hint;
     }
 
     // find a free event type, starting at MaxUser and decreasing
     int id = QEvent::MaxUser;
-    while (userEventRegistration->set.contains(id) && id >= QEvent::User)
+    while (userEventRegistration->contains(id) && id >= QEvent::User)
         --id;
     if (id >= QEvent::User) {
-        userEventRegistration->set.insert(id);
+        userEventRegistration->append(id);
         return id;
     }
     return -1;
