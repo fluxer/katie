@@ -69,30 +69,13 @@ public:
 
     QList<QNetworkAddressEntry> addressEntries;
 
+    static QList<QNetworkInterfacePrivate *> scan();
 private:
     Q_DISABLE_COPY(QNetworkInterfacePrivate);
 };
-
-class QNetworkInterfaceManager
-{
-public:
-    QNetworkInterfaceManager();
-    ~QNetworkInterfaceManager();
-
-    QSharedDataPointer<QNetworkInterfacePrivate> interfaceFromName(const QString &name);
-    QSharedDataPointer<QNetworkInterfacePrivate> interfaceFromIndex(int index);
-    QList<QSharedDataPointer<QNetworkInterfacePrivate> > allInterfaces();
-
-    // convenience:
-    QSharedDataPointer<QNetworkInterfacePrivate> empty;
-
-private:
-    QList<QNetworkInterfacePrivate *> scan();
-};
-
 
 QT_END_NAMESPACE
 
 #endif // QT_NO_NETWORKINTERFACE
 
-#endif
+#endif // QNETWORKINTERFACEPRIVATE_H

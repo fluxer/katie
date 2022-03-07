@@ -96,7 +96,7 @@ static QNetworkInterface::InterfaceFlags convertFlags(uint rawFlags)
     return flags;
 }
 
-QList<QNetworkInterfacePrivate *> QNetworkInterfaceManager::scan()
+QList<QNetworkInterfacePrivate *> QNetworkInterfacePrivate::scan()
 {
     QList<QNetworkInterfacePrivate *> interfaces;
 
