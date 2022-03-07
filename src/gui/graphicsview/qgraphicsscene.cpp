@@ -1027,7 +1027,7 @@ QList<QGraphicsItem *> QGraphicsScenePrivate::itemsAtPosition(const QPoint &scre
 */
 void QGraphicsScenePrivate::storeMouseButtonsForMouseGrabber(QGraphicsSceneMouseEvent *event)
 {
-    for (int i = 0x1; i <= 0x10; i <<= 1) {
+    for (int i = Qt::LeftButton; i <= Qt::MiddleButton; i <<= 1) {
         if (event->buttons() & i) {
             mouseGrabberButtonDownPos.insert(Qt::MouseButton(i),
                                              mouseGrabberItems.last()->d_ptr->genericMapFromScene(event->scenePos(),
@@ -1190,7 +1190,7 @@ void QGraphicsScenePrivate::sendMouseEvent(QGraphicsSceneMouseEvent *mouseEvent)
     if (item->isBlockedByModalPanel())
         return;
 
-    for (int i = 0x1; i <= 0x10; i <<= 1) {
+    for (int i = Qt::LeftButton; i <= Qt::MiddleButton; i <<= 1) {
         Qt::MouseButton button = Qt::MouseButton(i);
         mouseEvent->setButtonDownPos(button, mouseGrabberButtonDownPos.value(button, item->d_ptr->genericMapFromScene(mouseEvent->scenePos(), mouseEvent->widget())));
         mouseEvent->setButtonDownScenePos(button, mouseGrabberButtonDownScenePos.value(button, mouseEvent->scenePos()));

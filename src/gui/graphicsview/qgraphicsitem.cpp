@@ -893,7 +893,7 @@ void QGraphicsItemPrivate::remapItemPos(QEvent *event, QGraphicsItem *item)
         QGraphicsSceneMouseEvent *mouseEvent = static_cast<QGraphicsSceneMouseEvent *>(event);
         mouseEvent->setPos(item->mapFromItem(q, mouseEvent->pos()));
         mouseEvent->setLastPos(item->mapFromItem(q, mouseEvent->pos()));
-        for (int i = 0x1; i <= 0x10; i <<= 1) {
+        for (int i = Qt::LeftButton; i <= Qt::MiddleButton; i <<= 1) {
             if (mouseEvent->buttons() & i) {
                 Qt::MouseButton button = Qt::MouseButton(i);
                 mouseEvent->setButtonDownPos(button, item->mapFromItem(q, mouseEvent->buttonDownPos(button)));

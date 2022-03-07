@@ -1227,7 +1227,7 @@ bool QDeclarativePathView::sendMouseEvent(QGraphicsSceneMouseEvent *event)
     bool stealThisEvent = d->stealMouse;
     if ((stealThisEvent || myRect.contains(event->scenePos().toPoint())) && (!grabber || !grabber->keepMouseGrab())) {
         mouseEvent.setAccepted(false);
-        for (int i = 0x1; i <= 0x10; i <<= 1) {
+        for (int i = Qt::LeftButton; i <= Qt::MiddleButton; i <<= 1) {
             if (event->buttons() & i) {
                 Qt::MouseButton button = Qt::MouseButton(i);
                 mouseEvent.setButtonDownPos(button, mapFromScene(event->buttonDownPos(button)));
