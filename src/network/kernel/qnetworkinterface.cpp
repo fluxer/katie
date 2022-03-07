@@ -103,16 +103,6 @@ QList<QSharedDataPointer<QNetworkInterfacePrivate> > QNetworkInterfaceManager::a
     return result;
 }
 
-QString QNetworkInterfacePrivate::makeHwAddress(uchar *data)
-{
-    QSTACKARRAY(char, snprintfbuf, 18);
-    ::snprintf(snprintfbuf, sizeof(snprintfbuf),
-        "%02hX:%02hX:%02hX:%02hX:%02hX:%02hX",
-        ushort(data[0]), ushort(data[1]), ushort(data[2]), ushort(data[3]), ushort(data[4]), ushort(data[5])
-    );
-    return QString::fromLatin1(snprintfbuf, sizeof(snprintfbuf) - 1);
-}
-
 /*!
     \class QNetworkAddressEntry
     \brief The QNetworkAddressEntry class stores one IP address

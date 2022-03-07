@@ -69,8 +69,6 @@ public:
 
     QList<QNetworkAddressEntry> addressEntries;
 
-    static QString makeHwAddress(uchar *data);
-
 private:
     Q_DISABLE_COPY(QNetworkInterfacePrivate);
 };
