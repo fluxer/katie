@@ -164,6 +164,7 @@ static QList<QNetworkInterfacePrivate *> interfaceListing()
 
         iface->addressEntries << entry;
 
+#ifdef SIOCGIFHWADDR // not defined on FreeBSD
         struct ifreq req;
         ::memset(&req, 0, sizeof(ifreq));
         ::memcpy(req.ifr_name, ptr->ifa_name, sizeof(req.ifr_name) - 1);
@@ -172,6 +173,7 @@ static QList<QNetworkInterfacePrivate *> interfaceListing()
             uchar *addr = (uchar *)req.ifr_addr.sa_data;
             iface->hardwareAddress = iface->makeHwAddress(addr);
         }
+#endif // SIOCGIFHWADDR
     }
 
     ::freeifaddrs(interfaceListing);
@@ -274,7 +276,7 @@ static QNetworkInterfacePrivate *findInterface(int socket, QList<QNetworkInterfa
         // reset the name:
         ::memcpy(req.ifr_name, oldName.constData(), qMin<int>(oldName.length() + 1, sizeof(req.ifr_name) - 1));
     } else
-#endif
+#endif // SIOCGIFNAME
     {
         // use this name anyways
         iface->name = QString::fromLatin1(req.ifr_name);
@@ -285,11 +287,13 @@ static QNetworkInterfacePrivate *findInterface(int socket, QList<QNetworkInterfa
         iface->flags = convertFlags(req.ifr_flags);
     }
 
+#ifdef SIOCGIFHWADDR // not defined on FreeBSD
     // Get the HW address
     if (::ioctl(socket, SIOCGIFHWADDR, &req) >= 0) {
         uchar *addr = (uchar *)req.ifr_addr.sa_data;
         iface->hardwareAddress = iface->makeHwAddress(addr);
     }
+#endif // SIOCGIFHWADDR
 
     return iface;
 }
