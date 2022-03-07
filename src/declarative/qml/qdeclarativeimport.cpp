@@ -44,6 +44,7 @@ static bool greaterThan(const QString &s1, const QString &s2)
 }
 
 typedef QMap<QString, QString> StringStringMap;
+Q_GLOBAL_STATIC(QMutex, qmlEnginePluginsWithRegisteredTypesMutex)
 Q_GLOBAL_STATIC(StringStringMap, qmlEnginePluginsWithRegisteredTypes) // stores the uri
 
 class QDeclarativeImportedNamespace 
@@ -897,6 +898,7 @@ bool QDeclarativeImportDatabase::importPlugin(const QString &filePath, const QSt
     QFileInfo fileInfo(filePath);
     const QString absoluteFilePath = fileInfo.absoluteFilePath();
 
+    QMutexLocker locker(qmlEnginePluginsWithRegisteredTypesMutex());
     bool engineInitialized = initializedPlugins.contains(absoluteFilePath);
     bool typesRegistered = qmlEnginePluginsWithRegisteredTypes()->contains(absoluteFilePath);
 
@@ -917,20 +919,17 @@ bool QDeclarativeImportDatabase::importPlugin(const QString &filePath, const QSt
 
         if (QDeclarativeExtensionInterface *iface = qobject_cast<QDeclarativeExtensionInterface *>(loader.instance())) {
 
-            const QByteArray bytes = uri.toUtf8();
-            const char *moduleId = bytes.constData();
+            const QByteArray moduleId = uri.toUtf8();
             if (!typesRegistered) {
-
-                // ### this code should probably be protected with a mutex.
                 qmlEnginePluginsWithRegisteredTypes()->insert(absoluteFilePath, uri);
-                iface->registerTypes(moduleId);
+                iface->registerTypes(moduleId.constData());
             }
             if (!engineInitialized) {
                 // things on the engine (eg. adding new global objects) have to be done for every engine.
 
                 // protect against double initialization
                 initializedPlugins.insert(absoluteFilePath);
-                iface->initializeEngine(engine, moduleId);
+                iface->initializeEngine(engine, moduleId.constData());
             }
         } else {
             if (errorString)
