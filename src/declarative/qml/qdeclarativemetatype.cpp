@@ -89,12 +89,8 @@ struct QDeclarativeMetaTypeData
 Q_GLOBAL_STATIC(QDeclarativeMetaTypeData, metaTypeData)
 Q_GLOBAL_STATIC(QReadWriteLock, metaTypeDataLock)
 
-struct QDeclarativeRegisteredComponentData
-{
-    QMap<QByteArray, QDeclarativeDirComponents*> registeredComponents;
-};
-
-Q_GLOBAL_STATIC(QDeclarativeRegisteredComponentData, registeredComponentData)
+typedef QMap<QByteArray, QDeclarativeDirComponents*> QDeclarativeRegisteredComponentMap;
+Q_GLOBAL_STATIC(QDeclarativeRegisteredComponentMap, registeredComponentData)
 Q_GLOBAL_STATIC(QReadWriteLock, registeredComponentDataLock)
 
 QDeclarativeMetaTypeData::~QDeclarativeMetaTypeData()
@@ -663,7 +659,7 @@ int registerComponent(const QDeclarativePrivate::RegisterComponent& data)
         path = QUrl::fromLocalFile(QDir::currentPath()+QLatin1String("/")).resolved(data.url).toString();
     else
         path = data.url.toString();
-    QDeclarativeRegisteredComponentData *d = registeredComponentData();
+    QDeclarativeRegisteredComponentMap *datamap = registeredComponentData();
     QDeclarativeDirParser::Component comp(
         QString::fromUtf8(data.typeName),
         path,
@@ -671,9 +667,9 @@ int registerComponent(const QDeclarativePrivate::RegisterComponent& data)
         data.minorVersion
     );
 
-    QDeclarativeDirComponents* comps = d->registeredComponents.value(QByteArray(data.uri), 0);
+    QDeclarativeDirComponents* comps = datamap->value(QByteArray(data.uri), nullptr);
     if (!comps)
-        d->registeredComponents.insert(QByteArray(data.uri), comps = new QDeclarativeDirComponents);
+        datamap->insert(QByteArray(data.uri), comps = new QDeclarativeDirComponents);
 
     // Types added later should take precedence, like registerType
     comps->prepend(comp);
@@ -962,9 +958,7 @@ QDeclarativeType *QDeclarativeMetaType::qmlType(int userType)
 QDeclarativeDirComponents QDeclarativeMetaType::qmlComponents(const QByteArray &module, int version_major, int version_minor)
 {
     QReadLocker lock(registeredComponentDataLock());
-    QDeclarativeRegisteredComponentData *data = registeredComponentData();
-
-    QDeclarativeDirComponents* comps = data->registeredComponents.value(module, 0);
+    QDeclarativeDirComponents* comps = registeredComponentData()->value(module, nullptr);
     if (!comps)
         return QDeclarativeDirComponents();
     QDeclarativeDirComponents ret = *comps;
