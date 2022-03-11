@@ -59,7 +59,7 @@ There are several things you should be aware before considering Katie:
   - support for AArch64 architecture
   - support for locale aliases
   - support for generating SHA-256 and SHA-512 hash sums (SHA-2)
-  - support for generating BLAKE2b and BLAKE2s hash sums
+  - support for generating BLAKE3 hash sums
   - verification section for plugins build with Clang
   - qCompress() and qUncompress() use libdeflate which is much faster
   - stack backtrace on assert, crash or warning via execinfo
