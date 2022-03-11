@@ -32,7 +32,7 @@ int main(int argc, char *argv[])
 
     const QStringList args = app.arguments().mid(1);
     if (args.size() != 2) {
-        qWarning() << "Usage: imgconv <md5|sha1|sha256|sha512|blake3> <filepath>";
+        qWarning() << "Usage: filehash <md5|sha1|sha256|sha512|blake3> <filepath>";
         return 1;
     }
 
@@ -58,7 +58,9 @@ int main(int argc, char *argv[])
         return 3;
     }
 
-    const QByteArray hash = QCryptographicHash::hash(file.readAll(), algorithm).toHex();
+    QCryptographicHash cryptohash(algorithm);
+    cryptohash.addData(&file);
+    const QByteArray hash = cryptohash.result().toHex();
     if (hash.isEmpty()) {
         qWarning() << "Could not hash" << args.at(1);
         return 4;
