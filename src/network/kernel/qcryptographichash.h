@@ -38,7 +38,9 @@ public:
         Md5,
         Sha1,
         Sha256,
-        Sha512
+        Sha512,
+        BLAKE2b,
+        BLAKE2s
     };
 
     explicit QCryptographicHash(Algorithm method);

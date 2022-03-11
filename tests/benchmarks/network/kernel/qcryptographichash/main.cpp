@@ -43,6 +43,12 @@ static QString algorithmToString(const QCryptographicHash::Algorithm algorithm)
         case QCryptographicHash::Sha512: {
             return QString::fromLatin1("Sha512");
         }
+        case QCryptographicHash::BLAKE2b: {
+            return QString::fromLatin1("BLAKE2b");
+        }
+        case QCryptographicHash::BLAKE2s: {
+            return QString::fromLatin1("BLAKE2s");
+        }
     }
     Q_ASSERT(false);
     return QString();
@@ -66,7 +72,7 @@ void tst_qcryptographichash::append_data()
 {
     QTest::addColumn<int>("size");
     QTest::addColumn<QCryptographicHash::Algorithm>("algorithm");
-    for (int i = QCryptographicHash::Md5; i < QCryptographicHash::Sha512; i++) {
+    for (int i = QCryptographicHash::Md5; i < (QCryptographicHash::BLAKE2s + 1); i++) {
         const QCryptographicHash::Algorithm algorithm = static_cast<QCryptographicHash::Algorithm>(i);
         QTest::newRow(QString::fromLatin1("10 (%1)").arg(algorithmToString(algorithm)).toAscii())  << int(10) << algorithm;
         QTest::newRow(QString::fromLatin1("100 (%1)").arg(algorithmToString(algorithm)).toAscii()) << int(100) << algorithm;
@@ -105,6 +111,8 @@ void tst_qcryptographichash::append_once_data()
     QTest::newRow("Sha1")   << QCryptographicHash::Sha1;
     QTest::newRow("Sha256") << QCryptographicHash::Sha256;
     QTest::newRow("Sha512") << QCryptographicHash::Sha512;
+    QTest::newRow("BLAKE2b") << QCryptographicHash::BLAKE2b;
+    QTest::newRow("BLAKE2s") << QCryptographicHash::BLAKE2s;
 }
 
 void tst_qcryptographichash::append_once()

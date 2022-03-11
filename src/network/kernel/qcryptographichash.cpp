@@ -27,6 +27,8 @@
 #include "md5.h"
 #include "sha1.h"
 #include "sha2.h"
+#include "blake2b.h"
+#include "blake2s.h"
 
 QT_BEGIN_NAMESPACE
 
@@ -39,6 +41,8 @@ public:
     SHA1_CTX sha1Context;
     SHA256_CTX sha256Context;
     SHA512_CTX sha512Context;
+    struct blake2b blake2bContext;
+    struct blake2s blake2sContext;
     bool rehash;
     const QCryptographicHash::Algorithm method;
 };
@@ -74,6 +78,8 @@ QCryptographicHashPrivate::QCryptographicHashPrivate(const QCryptographicHash::A
     \value Sha1 Generate an SHA-1 hash sum
     \value Sha256 Generate an SHA-256 hash sum (SHA-2). Introduced in Katie 4.9
     \value Sha512 Generate an SHA-512 hash sum (SHA-2). Introduced in Katie 4.9
+    \value BLAKE2b Generate an BLAKE2b hash sum. Introduced in Katie 4.12
+    \value BLAKE2s Generate an BLAKE2s hash sum. Introduced in Katie 4.12
 */
 
 /*!
@@ -117,6 +123,14 @@ void QCryptographicHash::reset()
             SHA512_Init(&d->sha512Context);
             break;
         }
+        case QCryptographicHash::BLAKE2b: {
+            blake2b_init(&d->blake2bContext, BLAKE2B_MAX_DIGEST, NULL, 0);
+            break;
+        }
+        case QCryptographicHash::BLAKE2s: {
+            blake2s_init(&d->blake2sContext, BLAKE2S_MAX_DIGEST, NULL, 0);
+            break;
+        }
     }
 }
 
@@ -141,6 +155,14 @@ void QCryptographicHash::addData(const char *data, int length)
         }
         case QCryptographicHash::Sha512: {
             SHA512_Update(&d->sha512Context, reinterpret_cast<const uchar*>(data), length);
+            break;
+        }
+        case QCryptographicHash::BLAKE2b: {
+            blake2b_update(&d->blake2bContext, reinterpret_cast<const uchar*>(data), length);
+            break;
+        }
+        case QCryptographicHash::BLAKE2s: {
+            blake2s_update(&d->blake2sContext, reinterpret_cast<const uchar*>(data), length);
             break;
         }
     }
@@ -206,6 +228,18 @@ QByteArray QCryptographicHash::result() const
             SHA512_Final(result, &copy);
             return QByteArray(reinterpret_cast<char *>(result), SHA512_DIGEST_LENGTH);
         }
+        case QCryptographicHash::BLAKE2b: {
+            QSTACKARRAY(char, result, BLAKE2B_MAX_DIGEST);
+            struct blake2b copy = d->blake2bContext;
+            blake2b_final(&copy, result);
+            return QByteArray(result, BLAKE2B_MAX_DIGEST);
+        }
+        case QCryptographicHash::BLAKE2s: {
+            QSTACKARRAY(char, result, BLAKE2S_MAX_DIGEST);
+            struct blake2s copy = d->blake2sContext;
+            blake2s_final(&copy, result);
+            return QByteArray(result, BLAKE2S_MAX_DIGEST);
+        }
     }
 
     return QByteArray();
@@ -248,6 +282,22 @@ QByteArray QCryptographicHash::hash(const QByteArray &data, QCryptographicHash::
             SHA512_Update(&sha512Context, reinterpret_cast<const uchar*>(data.constData()), data.length());
             SHA512_Final(result, &sha512Context);
             return QByteArray(reinterpret_cast<char *>(result), SHA512_DIGEST_LENGTH);
+        }
+        case QCryptographicHash::BLAKE2b: {
+            QSTACKARRAY(char, result, BLAKE2B_MAX_DIGEST);
+            struct blake2b blake2bContext;
+            blake2b_init(&blake2bContext, BLAKE2B_MAX_DIGEST, NULL, 0);
+            blake2b_update(&blake2bContext, reinterpret_cast<const uchar*>(data.constData()), data.length());
+            blake2b_final(&blake2bContext, result);
+            return QByteArray(result, BLAKE2B_MAX_DIGEST);
+        }
+        case QCryptographicHash::BLAKE2s: {
+            QSTACKARRAY(char, result, BLAKE2S_MAX_DIGEST);
+            struct blake2s blake2sContext;
+            blake2s_init(&blake2sContext, BLAKE2S_MAX_DIGEST, NULL, 0);
+            blake2s_update(&blake2sContext, reinterpret_cast<const uchar*>(data.constData()), data.length());
+            blake2s_final(&blake2sContext, result);
+            return QByteArray(result, BLAKE2S_MAX_DIGEST);
         }
     }
 

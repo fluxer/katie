@@ -64,6 +64,8 @@ set(NETWORK_SOURCES
     ${CMAKE_SOURCE_DIR}/src/3rdparty/digest/md5c.c
     ${CMAKE_SOURCE_DIR}/src/3rdparty/digest/sha1.c
     ${CMAKE_SOURCE_DIR}/src/3rdparty/digest/sha2.c
+    ${CMAKE_SOURCE_DIR}/src/3rdparty/digest/blake2b.c
+    ${CMAKE_SOURCE_DIR}/src/3rdparty/digest/blake2s.c
 )
 
 katie_generate_misc("${NETWORK_HEADERS}" QtNetwork)
