@@ -28,32 +28,6 @@ static const QByteArray lorem = QByteArray("Lorem ipsum dolor sit amet, consecte
 
 Q_DECLARE_METATYPE(QCryptographicHash::Algorithm)
 
-static QString algorithmToString(const QCryptographicHash::Algorithm algorithm)
-{
-    switch (algorithm) {
-        case QCryptographicHash::Md5: {
-            return QString::fromLatin1("Md5");
-        }
-        case QCryptographicHash::Sha1: {
-            return QString::fromLatin1("Sha1");
-        }
-        case QCryptographicHash::Sha256: {
-            return QString::fromLatin1("Sha256");
-        }
-        case QCryptographicHash::Sha512: {
-            return QString::fromLatin1("Sha512");
-        }
-        case QCryptographicHash::BLAKE2b: {
-            return QString::fromLatin1("BLAKE2b");
-        }
-        case QCryptographicHash::BLAKE2s: {
-            return QString::fromLatin1("BLAKE2s");
-        }
-    }
-    Q_ASSERT(false);
-    return QString();
-}
-
 class tst_qcryptographichash : public QObject
 {
     Q_OBJECT
@@ -64,21 +38,40 @@ private slots:
     void append_once();
     void statichash_data();
     void statichash();
-    void algorithms_data();
-    void algorithms();
 };
 
 void tst_qcryptographichash::append_data()
 {
     QTest::addColumn<int>("size");
     QTest::addColumn<QCryptographicHash::Algorithm>("algorithm");
-    for (int i = QCryptographicHash::Md5; i < (QCryptographicHash::BLAKE2s + 1); i++) {
-        const QCryptographicHash::Algorithm algorithm = static_cast<QCryptographicHash::Algorithm>(i);
-        QTest::newRow(QString::fromLatin1("10 (%1)").arg(algorithmToString(algorithm)).toAscii())  << int(10) << algorithm;
-        QTest::newRow(QString::fromLatin1("100 (%1)").arg(algorithmToString(algorithm)).toAscii()) << int(100) << algorithm;
-        QTest::newRow(QString::fromLatin1("250 (%1)").arg(algorithmToString(algorithm)).toAscii()) << int(250) << algorithm;
-        QTest::newRow(QString::fromLatin1("500 (%1)").arg(algorithmToString(algorithm)).toAscii()) << int(500) << algorithm;
-    }
+
+    QTest::newRow("10 (Md5)")      << int(10)   << QCryptographicHash::Md5;
+    QTest::newRow("10 (Sha1)")     << int(10)   << QCryptographicHash::Sha1;
+    QTest::newRow("10 (Sha256)")   << int(10)   << QCryptographicHash::Sha256;
+    QTest::newRow("10 (Sha512)")   << int(10)   << QCryptographicHash::Sha512;
+    QTest::newRow("10 (BLAKE2b)")  << int(10)   << QCryptographicHash::BLAKE2b;
+    QTest::newRow("10 (BLAKE2s)")  << int(10)   << QCryptographicHash::BLAKE2s;
+
+    QTest::newRow("100 (Md5)")     << int(100)  << QCryptographicHash::Md5;
+    QTest::newRow("100 (Sha1)")    << int(100)  << QCryptographicHash::Sha1;
+    QTest::newRow("100 (Sha256)")  << int(100)  << QCryptographicHash::Sha256;
+    QTest::newRow("100 (Sha512)")  << int(100)  << QCryptographicHash::Sha512;
+    QTest::newRow("100 (BLAKE2b)") << int(100)  << QCryptographicHash::BLAKE2b;
+    QTest::newRow("100 (BLAKE2s)") << int(100)  << QCryptographicHash::BLAKE2s;
+
+    QTest::newRow("250 (Md5)")     << int(250)  << QCryptographicHash::Md5;
+    QTest::newRow("250 (Sha1)")    << int(250)  << QCryptographicHash::Sha1;
+    QTest::newRow("250 (Sha256)")  << int(250)  << QCryptographicHash::Sha256;
+    QTest::newRow("250 (Sha512)")  << int(250)  << QCryptographicHash::Sha512;
+    QTest::newRow("250 (BLAKE2b)") << int(250)  << QCryptographicHash::BLAKE2b;
+    QTest::newRow("250 (BLAKE2s)") << int(250)  << QCryptographicHash::BLAKE2s;
+
+    QTest::newRow("500 (Md5)")     << int(500)  << QCryptographicHash::Md5;
+    QTest::newRow("500 (Sha1)")    << int(500)  << QCryptographicHash::Sha1;
+    QTest::newRow("500 (Sha256)")  << int(500)  << QCryptographicHash::Sha256;
+    QTest::newRow("500 (Sha512)")  << int(500)  << QCryptographicHash::Sha512;
+    QTest::newRow("500 (BLAKE2b)") << int(500)  << QCryptographicHash::BLAKE2b;
+    QTest::newRow("500 (BLAKE2s)") << int(500)  << QCryptographicHash::BLAKE2s;
 }
 
 void tst_qcryptographichash::append()
@@ -107,6 +100,7 @@ void tst_qcryptographichash::append()
 void tst_qcryptographichash::append_once_data()
 {
     QTest::addColumn<QCryptographicHash::Algorithm>("algorithm");
+
     QTest::newRow("Md5")    << QCryptographicHash::Md5;
     QTest::newRow("Sha1")   << QCryptographicHash::Sha1;
     QTest::newRow("Sha256") << QCryptographicHash::Sha256;
@@ -132,21 +126,6 @@ void tst_qcryptographichash::statichash_data()
 }
 
 void tst_qcryptographichash::statichash()
-{
-    QFETCH(QCryptographicHash::Algorithm, algorithm);
-
-    QBENCHMARK {
-        QByteArray hash = QCryptographicHash::hash(lorem, algorithm);
-        QVERIFY(!hash.isEmpty());
-    }
-}
-
-void tst_qcryptographichash::algorithms_data()
-{
-    statichash_data();
-}
-
-void tst_qcryptographichash::algorithms()
 {
     QFETCH(QCryptographicHash::Algorithm, algorithm);
 
