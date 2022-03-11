@@ -165,11 +165,9 @@ void QCryptographicHash::addData(const char *data, int length)
  */
 bool QCryptographicHash::addData(QIODevice* device)
 {
-    if (!device->isReadable())
+    if (!device || !device->isReadable() || !device->isOpen()) {
         return false;
-
-    if (!device->isOpen())
-        return false;
+    }
 
     QSTACKARRAY(char, buffer, QT_BUFFSIZE);
     int length;
