@@ -45,10 +45,9 @@ struct blake2b {
 #define	BLAKE2B_MAX_DIGEST	64
 #define	BLAKE2B_MAX_KEY		64
 
-void	blake2b_init(struct blake2b *, size_t, const void *, size_t);
+void	blake2b_init(struct blake2b *, size_t);
 void	blake2b_update(struct blake2b *, const void *, size_t);
 void	blake2b_final(struct blake2b *, void *);
-void	blake2b(void *, size_t, const void *, size_t, const void *, size_t);
 
 #ifdef __cplusplus
 }

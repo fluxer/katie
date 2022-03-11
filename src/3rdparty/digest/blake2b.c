@@ -171,14 +171,13 @@ blake2b_compress(uint64_t h[8], uint64_t c, uint64_t last,
 }
 
 void
-blake2b_init(struct blake2b *B, size_t dlen, const void *key, size_t keylen)
+blake2b_init(struct blake2b *B, size_t dlen)
 {
 	uint64_t param0;
 	unsigned i;
 
 	assert(0 < dlen);
 	assert(dlen <= 64);
-	assert(keylen <= 64);
 
 	/* Record the digest length.  */
 	B->dlen = dlen;
@@ -197,18 +196,9 @@ blake2b_init(struct blake2b *B, size_t dlen, const void *key, size_t keylen)
 	 */
 	param0 = 0;
 	param0 |= (uint64_t)dlen << 0;
-	param0 |= (uint64_t)keylen << 8;
 	param0 |= (uint64_t)1 << 16; /* tree fanout = 1 */
 	param0 |= (uint64_t)1 << 24; /* tree depth = 1 */
 	B->h[0] ^= param0;
-
-	/* If there's a key, compress it as the first message block.  */
-	if (keylen) {
-		static const uint8_t zero_block[128];
-
-		blake2b_update(B, key, keylen);
-		blake2b_update(B, zero_block, 128 - keylen);
-	}
 }
 
 void
@@ -280,15 +270,4 @@ blake2b_final(struct blake2b *B, void *digest)
 
 	/* Erase the state.  */
 	(void)blake2b_explicit_memset(B, 0, sizeof B);
-}
-
-void
-blake2b(void *digest, size_t dlen, const void *key, size_t keylen,
-    const void *in, size_t inlen)
-{
-	struct blake2b ctx;
-
-	blake2b_init(&ctx, dlen, key, keylen);
-	blake2b_update(&ctx, in, inlen);
-	blake2b_final(&ctx, digest);
 }

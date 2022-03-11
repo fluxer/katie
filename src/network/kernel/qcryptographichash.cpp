@@ -124,11 +124,11 @@ void QCryptographicHash::reset()
             break;
         }
         case QCryptographicHash::BLAKE2b: {
-            blake2b_init(&d->blake2bContext, BLAKE2B_MAX_DIGEST, NULL, 0);
+            blake2b_init(&d->blake2bContext, BLAKE2B_MAX_DIGEST);
             break;
         }
         case QCryptographicHash::BLAKE2s: {
-            blake2s_init(&d->blake2sContext, BLAKE2S_MAX_DIGEST, NULL, 0);
+            blake2s_init(&d->blake2sContext, BLAKE2S_MAX_DIGEST);
             break;
         }
     }
@@ -286,7 +286,7 @@ QByteArray QCryptographicHash::hash(const QByteArray &data, QCryptographicHash::
         case QCryptographicHash::BLAKE2b: {
             QSTACKARRAY(char, result, BLAKE2B_MAX_DIGEST);
             struct blake2b blake2bContext;
-            blake2b_init(&blake2bContext, BLAKE2B_MAX_DIGEST, NULL, 0);
+            blake2b_init(&blake2bContext, BLAKE2B_MAX_DIGEST);
             blake2b_update(&blake2bContext, reinterpret_cast<const uchar*>(data.constData()), data.length());
             blake2b_final(&blake2bContext, result);
             return QByteArray(result, BLAKE2B_MAX_DIGEST);
@@ -294,7 +294,7 @@ QByteArray QCryptographicHash::hash(const QByteArray &data, QCryptographicHash::
         case QCryptographicHash::BLAKE2s: {
             QSTACKARRAY(char, result, BLAKE2S_MAX_DIGEST);
             struct blake2s blake2sContext;
-            blake2s_init(&blake2sContext, BLAKE2S_MAX_DIGEST, NULL, 0);
+            blake2s_init(&blake2sContext, BLAKE2S_MAX_DIGEST);
             blake2s_update(&blake2sContext, reinterpret_cast<const uchar*>(data.constData()), data.length());
             blake2s_final(&blake2sContext, result);
             return QByteArray(result, BLAKE2S_MAX_DIGEST);
