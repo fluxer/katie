@@ -50,32 +50,35 @@ QCryptographicHashPrivate::QCryptographicHashPrivate(const QCryptographicHash::A
 }
 
 /*!
-  \class QCryptographicHash
-  \inmodule QtCore
+    \class QCryptographicHash
+    \inmodule QtCore
 
-  \brief The QCryptographicHash class provides a way to generate cryptographic hashes.
+    \brief The QCryptographicHash class provides a way to generate
+    cryptographic hashes.
 
-  \since 4.3
+    \since 4.3
 
-  \ingroup tools
-  \reentrant
+    \ingroup tools
+    \reentrant
 
-  QCryptographicHash can be used to generate cryptographic hashes of binary or text data.
+    QCryptographicHash can be used to generate cryptographic hashes of binary
+    or text data.
 
-  Currently MD5, SHA-1, SHA-256 and SHA-512 are supported.
+    Currently MD5, SHA-1, SHA-256 and SHA-512 are supported.
 */
 
 /*!
-  \enum QCryptographicHash::Algorithm
+    \enum QCryptographicHash::Algorithm
 
-  \value Md5 Generate an MD5 hash sum
-  \value Sha1 Generate an SHA-1 hash sum
-  \value Sha256 Generate an SHA-256 hash sum (SHA-2). Introduced in Katie 4.9
-  \value Sha512 Generate an SHA-512 hash sum (SHA-2). Introduced in Katie 4.9
+    \value Md5 Generate an MD5 hash sum
+    \value Sha1 Generate an SHA-1 hash sum
+    \value Sha256 Generate an SHA-256 hash sum (SHA-2). Introduced in Katie 4.9
+    \value Sha512 Generate an SHA-512 hash sum (SHA-2). Introduced in Katie 4.9
 */
 
 /*!
-  Constructs an object that can be used to create a cryptographic hash from data using \a method.
+    Constructs an object that can be used to create a cryptographic hash from
+    data using \a method.
 */
 QCryptographicHash::QCryptographicHash(QCryptographicHash::Algorithm method)
     : d(new QCryptographicHashPrivate(method))
@@ -84,7 +87,7 @@ QCryptographicHash::QCryptographicHash(QCryptographicHash::Algorithm method)
 }
 
 /*!
-  Destroys the object.
+    Destroys the object.
 */
 QCryptographicHash::~QCryptographicHash()
 {
@@ -92,7 +95,7 @@ QCryptographicHash::~QCryptographicHash()
 }
 
 /*!
-  Resets the object.
+    Resets the object.
 */
 void QCryptographicHash::reset()
 {
@@ -118,8 +121,7 @@ void QCryptographicHash::reset()
 }
 
 /*!
-    Adds the first \a length chars of \a data to the cryptographic
-    hash.
+    Adds the first \a length chars of \a data to the cryptographic hash.
 */
 void QCryptographicHash::addData(const char *data, int length)
 {
@@ -145,9 +147,10 @@ void QCryptographicHash::addData(const char *data, int length)
 }
 
 /*!
-  Reads the data from the open QIODevice \a device until it ends
-  and hashes it. Returns \c true if reading was successful.
-  \since 4.9
+    Reads the data from the open QIODevice \a device until it ends and hashes
+    it. Returns \c true if reading was successful.
+
+    \since 4.9
  */
 bool QCryptographicHash::addData(QIODevice* device)
 {
@@ -168,9 +171,9 @@ bool QCryptographicHash::addData(QIODevice* device)
 
 
 /*!
-  Returns the final hash value.
+    Returns the final hash value.
 
-  \sa QByteArray::toHex()
+    \sa QByteArray::toHex()
 */
 QByteArray QCryptographicHash::result() const
 {
@@ -205,12 +208,11 @@ QByteArray QCryptographicHash::result() const
         }
     }
 
-    Q_UNREACHABLE();
     return QByteArray();
 }
 
 /*!
-  Returns the hash of \a data using \a method.
+    Returns the hash of \a data using \a method.
 */
 QByteArray QCryptographicHash::hash(const QByteArray &data, QCryptographicHash::Algorithm method)
 {
@@ -249,7 +251,6 @@ QByteArray QCryptographicHash::hash(const QByteArray &data, QCryptographicHash::
         }
     }
 
-    Q_UNREACHABLE();
     return QByteArray();
 }
 
