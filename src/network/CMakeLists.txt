@@ -20,7 +20,7 @@ include_directories(
     ${CMAKE_BINARY_DIR}/include/QtCore
     ${CMAKE_BINARY_DIR}/include/QtNetwork
     ${CMAKE_SOURCE_DIR}/src/3rdparty/digest
-    ${CMAKE_SOURCE_DIR}/src/3rdparty/BLAKE3
+    ${CMAKE_SOURCE_DIR}/src/3rdparty/xxHash
 )
 
 set(NETWORK_HEADERS
@@ -65,9 +65,6 @@ set(NETWORK_SOURCES
     ${CMAKE_SOURCE_DIR}/src/3rdparty/digest/md5c.c
     ${CMAKE_SOURCE_DIR}/src/3rdparty/digest/sha1.c
     ${CMAKE_SOURCE_DIR}/src/3rdparty/digest/sha2.c
-    ${CMAKE_SOURCE_DIR}/src/3rdparty/BLAKE3/blake3.c
-    ${CMAKE_SOURCE_DIR}/src/3rdparty/BLAKE3/blake3_dispatch.c
-    ${CMAKE_SOURCE_DIR}/src/3rdparty/BLAKE3/blake3_portable.c
 )
 
 katie_generate_misc("${NETWORK_HEADERS}" QtNetwork)

@@ -27,7 +27,8 @@
 #include "md5.h"
 #include "sha1.h"
 #include "sha2.h"
-#include "blake3.h"
+#define XXH_INLINE_ALL
+#include "xxhash.h"
 
 QT_BEGIN_NAMESPACE
 
@@ -35,20 +36,30 @@ class QCryptographicHashPrivate
 {
 public:
     QCryptographicHashPrivate(const QCryptographicHash::Algorithm amethod);
+    ~QCryptographicHashPrivate();
 
     MD5_CTX md5Context;
     SHA1_CTX sha1Context;
     SHA256_CTX sha256Context;
     SHA512_CTX sha512Context;
-    blake3_hasher blake3Context;
+    XXH3_state_t* xxh3Context;
+    XXH3_state_t* xxh3Context2;
     bool rehash;
     const QCryptographicHash::Algorithm method;
 };
 
 QCryptographicHashPrivate::QCryptographicHashPrivate(const QCryptographicHash::Algorithm amethod)
-    : rehash(false),
+    : xxh3Context(nullptr),
+    xxh3Context2(nullptr),
+    rehash(false),
     method(amethod)
 {
+}
+
+QCryptographicHashPrivate::~QCryptographicHashPrivate()
+{
+    XXH3_freeState(xxh3Context);
+    XXH3_freeState(xxh3Context2);
 }
 
 /*!
@@ -66,7 +77,7 @@ QCryptographicHashPrivate::QCryptographicHashPrivate(const QCryptographicHash::A
     QCryptographicHash can be used to generate cryptographic hashes of binary
     or text data.
 
-    Currently MD5, SHA-1, SHA-256, SHA-512 and BLAKE3 are supported.
+    Currently MD5, SHA-1, SHA-256, SHA-512 and custom one are supported.
 */
 
 /*!
@@ -76,7 +87,7 @@ QCryptographicHashPrivate::QCryptographicHashPrivate(const QCryptographicHash::A
     \value Sha1 Generate an SHA-1 hash sum
     \value Sha256 Generate an SHA-256 hash sum (SHA-2). Introduced in Katie 4.9
     \value Sha512 Generate an SHA-512 hash sum (SHA-2). Introduced in Katie 4.9
-    \value BLAKE3 Generate an BLAKE3 hash sum. Introduced in Katie 4.12
+    \value KAT Generate an custom 256-bit hash sum. Introduced in Katie 4.12
 */
 
 /*!
@@ -120,8 +131,15 @@ void QCryptographicHash::reset()
             SHA512_Init(&d->sha512Context);
             break;
         }
-        case QCryptographicHash::BLAKE3: {
-            blake3_hasher_init(&d->blake3Context);
+        case QCryptographicHash::KAT: {
+            if (!d->xxh3Context) {
+                d->xxh3Context = XXH3_createState();
+            }
+            if (!d->xxh3Context2) {
+                d->xxh3Context2 = XXH3_createState();
+            }
+            XXH3_128bits_reset(d->xxh3Context);
+            XXH3_128bits_reset(d->xxh3Context2);
             break;
         }
     }
@@ -150,8 +168,11 @@ void QCryptographicHash::addData(const char *data, int length)
             SHA512_Update(&d->sha512Context, reinterpret_cast<const uchar*>(data), length);
             break;
         }
-        case QCryptographicHash::BLAKE3: {
-            blake3_hasher_update(&d->blake3Context, reinterpret_cast<const uchar*>(data), length);
+        case QCryptographicHash::KAT: {
+            XXH3_128bits_update(d->xxh3Context, data, length);
+            if (Q_LIKELY(length > 1)) {
+                XXH3_128bits_update(d->xxh3Context2, data, length / 2);
+            }
             break;
         }
     }
@@ -215,10 +236,14 @@ QByteArray QCryptographicHash::result() const
             SHA512_Final(result, &copy);
             return QByteArray(reinterpret_cast<char *>(result), SHA512_DIGEST_LENGTH);
         }
-        case QCryptographicHash::BLAKE3: {
-            QSTACKARRAY(uint8_t, result, BLAKE3_OUT_LEN);
-            blake3_hasher_finalize(&d->blake3Context, result, BLAKE3_OUT_LEN);
-            return QByteArray(reinterpret_cast<char *>(result), BLAKE3_OUT_LEN);
+        case QCryptographicHash::KAT: {
+            const XXH128_hash_t xxresult = XXH3_128bits_digest(d->xxh3Context);
+            XXH128_canonical_t xxcanonical;
+            XXH128_canonicalFromHash(&xxcanonical, xxresult);
+            const XXH128_hash_t xxresult2 = XXH3_128bits_digest(d->xxh3Context2);
+            XXH128_canonical_t xxcanonical2;
+            XXH128_canonicalFromHash(&xxcanonical2, xxresult2);
+            return (QByteArray(reinterpret_cast<char *>(xxcanonical.digest), sizeof(XXH128_hash_t)) + QByteArray(reinterpret_cast<char *>(xxcanonical2.digest), sizeof(XXH128_hash_t)));
         }
     }
 
@@ -263,13 +288,19 @@ QByteArray QCryptographicHash::hash(const QByteArray &data, QCryptographicHash::
             SHA512_Final(result, &sha512Context);
             return QByteArray(reinterpret_cast<char *>(result), SHA512_DIGEST_LENGTH);
         }
-        case QCryptographicHash::BLAKE3: {
-            QSTACKARRAY(uint8_t, result, BLAKE3_OUT_LEN);
-            blake3_hasher blake3Context;
-            blake3_hasher_init(&blake3Context);
-            blake3_hasher_update(&blake3Context, reinterpret_cast<const uchar*>(data.constData()), data.length());
-            blake3_hasher_finalize(&blake3Context, result, BLAKE3_OUT_LEN);
-            return QByteArray(reinterpret_cast<char *>(result), BLAKE3_OUT_LEN);
+        case QCryptographicHash::KAT: {
+            const XXH128_hash_t xxresult = XXH3_128bits(data.constData(), data.length());
+            XXH128_canonical_t xxcanonical;
+            XXH128_canonicalFromHash(&xxcanonical, xxresult);
+            XXH128_hash_t xxresult2;
+            if (Q_LIKELY(data.length() > 1)) {
+                xxresult2 = XXH3_128bits(data.constData(), data.length() / 2);
+            } else {
+                xxresult2 = XXH3_128bits("KATIE", 5);
+            }
+            XXH128_canonical_t xxcanonical2;
+            XXH128_canonicalFromHash(&xxcanonical2, xxresult2);
+            return (QByteArray(reinterpret_cast<char *>(xxcanonical.digest), sizeof(XXH128_hash_t)) + QByteArray(reinterpret_cast<char *>(xxcanonical2.digest), sizeof(XXH128_hash_t)));
         }
     }
 

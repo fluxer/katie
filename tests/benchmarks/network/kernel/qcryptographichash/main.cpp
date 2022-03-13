@@ -49,25 +49,25 @@ void tst_qcryptographichash::append_data()
     QTest::newRow("10 (Sha1)")     << int(10)   << QCryptographicHash::Sha1;
     QTest::newRow("10 (Sha256)")   << int(10)   << QCryptographicHash::Sha256;
     QTest::newRow("10 (Sha512)")   << int(10)   << QCryptographicHash::Sha512;
-    QTest::newRow("10 (BLAKE3)")  << int(10)   << QCryptographicHash::BLAKE3;
+    QTest::newRow("10 (KAT)")      << int(10)   << QCryptographicHash::KAT;
 
     QTest::newRow("100 (Md5)")     << int(100)  << QCryptographicHash::Md5;
     QTest::newRow("100 (Sha1)")    << int(100)  << QCryptographicHash::Sha1;
     QTest::newRow("100 (Sha256)")  << int(100)  << QCryptographicHash::Sha256;
     QTest::newRow("100 (Sha512)")  << int(100)  << QCryptographicHash::Sha512;
-    QTest::newRow("100 (BLAKE3)") << int(100)  << QCryptographicHash::BLAKE3;
+    QTest::newRow("100 (KAT)")     << int(100)  << QCryptographicHash::KAT;
 
     QTest::newRow("250 (Md5)")     << int(250)  << QCryptographicHash::Md5;
     QTest::newRow("250 (Sha1)")    << int(250)  << QCryptographicHash::Sha1;
     QTest::newRow("250 (Sha256)")  << int(250)  << QCryptographicHash::Sha256;
     QTest::newRow("250 (Sha512)")  << int(250)  << QCryptographicHash::Sha512;
-    QTest::newRow("250 (BLAKE3)") << int(250)  << QCryptographicHash::BLAKE3;
+    QTest::newRow("250 (KAT)")     << int(250)  << QCryptographicHash::KAT;
 
     QTest::newRow("500 (Md5)")     << int(500)  << QCryptographicHash::Md5;
     QTest::newRow("500 (Sha1)")    << int(500)  << QCryptographicHash::Sha1;
     QTest::newRow("500 (Sha256)")  << int(500)  << QCryptographicHash::Sha256;
     QTest::newRow("500 (Sha512)")  << int(500)  << QCryptographicHash::Sha512;
-    QTest::newRow("500 (BLAKE3)") << int(500)  << QCryptographicHash::BLAKE3;
+    QTest::newRow("500 (KAT)")     << int(500)  << QCryptographicHash::KAT;
 }
 
 void tst_qcryptographichash::append()
@@ -101,7 +101,7 @@ void tst_qcryptographichash::append_once_data()
     QTest::newRow("Sha1")   << QCryptographicHash::Sha1;
     QTest::newRow("Sha256") << QCryptographicHash::Sha256;
     QTest::newRow("Sha512") << QCryptographicHash::Sha512;
-    QTest::newRow("BLAKE3") << QCryptographicHash::BLAKE3;
+    QTest::newRow("KAT")    << QCryptographicHash::KAT;
 }
 
 void tst_qcryptographichash::append_once()

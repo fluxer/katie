@@ -39,7 +39,7 @@ public:
         Sha1,
         Sha256,
         Sha512,
-        BLAKE3
+        KAT
     };
 
     explicit QCryptographicHash(Algorithm method);

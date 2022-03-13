@@ -32,7 +32,7 @@ int main(int argc, char *argv[])
 
     const QStringList args = app.arguments().mid(1);
     if (args.size() != 2) {
-        qWarning() << "Usage: filehash <md5|sha1|sha256|sha512|blake3> <filepath>";
+        qWarning() << "Usage: filehash <md5|sha1|sha256|sha512|kat> <filepath>";
         return 1;
     }
 
@@ -45,8 +45,8 @@ int main(int argc, char *argv[])
         algorithm = QCryptographicHash::Sha256;
     } else if (args.at(0) == "sha512") {
         algorithm = QCryptographicHash::Sha512;
-    } else if (args.at(0) == "blake3") {
-        algorithm = QCryptographicHash::BLAKE3;
+    } else if (args.at(0) == "kat") {
+        algorithm = QCryptographicHash::KAT;
     } else {
         qWarning() << "Invalid algorithm" << args.at(0);
         return 2;
