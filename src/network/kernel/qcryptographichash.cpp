@@ -78,6 +78,10 @@ QCryptographicHashPrivate::~QCryptographicHashPrivate()
     or text data.
 
     Currently MD5, SHA-1, SHA-256, SHA-512 and custom one are supported.
+
+    \warning The custom algorithm will not produce same result from the static
+    and the incremental methods. Use either to compute hash sums with this
+    algorithm.
 */
 
 /*!
