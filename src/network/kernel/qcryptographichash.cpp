@@ -32,6 +32,66 @@
 
 QT_BEGIN_NAMESPACE
 
+static const int xxh3len = sizeof(XXH128_hash_t);
+
+class QKatHash
+{
+public:
+    QKatHash();
+    ~QKatHash();
+
+    void reset();
+    void update(const char *data, const int length);
+    QByteArray result() const;
+
+private:
+    XXH3_state_t* m_xxh3;
+    XXH3_state_t* m_xxh32;
+};
+
+QKatHash::QKatHash()
+    : m_xxh3(nullptr),
+    m_xxh32(nullptr)
+{
+    m_xxh3 = XXH3_createState();
+    m_xxh32 = XXH3_createState();
+}
+
+QKatHash::~QKatHash()
+{
+    XXH3_freeState(m_xxh3);
+    XXH3_freeState(m_xxh32);
+}
+
+void QKatHash::reset()
+{
+    XXH3_128bits_reset(m_xxh3);
+    XXH3_128bits_reset(m_xxh32);
+}
+
+void QKatHash::update(const char *data, const int length)
+{
+    if (Q_UNLIKELY(length == 1)) {
+        XXH3_128bits_update(m_xxh3, data, length);
+        XXH3_128bits_update(m_xxh32, "K", 1);
+    } else if (Q_LIKELY(length > 1)) {
+        const size_t halflenght = (length / 2);
+        XXH3_128bits_update(m_xxh3, data, halflenght);
+        XXH3_128bits_update(m_xxh32, data + halflenght, halflenght);
+    }
+}
+
+QByteArray QKatHash::result() const
+{
+    XXH128_canonical_t xxh3canonical;
+    XXH128_canonicalFromHash(&xxh3canonical, XXH3_128bits_digest(m_xxh3));
+
+    XXH128_canonical_t xxh3canonical2;
+    XXH128_canonicalFromHash(&xxh3canonical2, XXH3_128bits_digest(m_xxh32));
+
+    return (QByteArray(reinterpret_cast<char *>(xxh3canonical.digest), xxh3len) + QByteArray(reinterpret_cast<char *>(xxh3canonical2.digest), xxh3len));
+}
+
 class QCryptographicHashPrivate
 {
 public:
@@ -42,24 +102,19 @@ public:
     SHA1_CTX sha1Context;
     SHA256_CTX sha256Context;
     SHA512_CTX sha512Context;
-    XXH3_state_t* xxh3Context;
-    XXH3_state_t* xxh3Context2;
+    QKatHash katContext;
     bool rehash;
     const QCryptographicHash::Algorithm method;
 };
 
 QCryptographicHashPrivate::QCryptographicHashPrivate(const QCryptographicHash::Algorithm amethod)
-    : xxh3Context(nullptr),
-    xxh3Context2(nullptr),
-    rehash(false),
+    : rehash(false),
     method(amethod)
 {
 }
 
 QCryptographicHashPrivate::~QCryptographicHashPrivate()
 {
-    XXH3_freeState(xxh3Context);
-    XXH3_freeState(xxh3Context2);
 }
 
 /*!
@@ -81,7 +136,8 @@ QCryptographicHashPrivate::~QCryptographicHashPrivate()
 
     \warning The custom algorithm will not produce same result from the static
     and the incremental methods. Use either to compute hash sums with this
-    algorithm.
+    algorithm. Do not feed QCryptographicHash with chunks of data that have
+    different sizes either - the chunks size must be fixed, i.e. BUFFSIZE.
 */
 
 /*!
@@ -136,14 +192,7 @@ void QCryptographicHash::reset()
             break;
         }
         case QCryptographicHash::KAT: {
-            if (!d->xxh3Context) {
-                d->xxh3Context = XXH3_createState();
-            }
-            if (!d->xxh3Context2) {
-                d->xxh3Context2 = XXH3_createState();
-            }
-            XXH3_128bits_reset(d->xxh3Context);
-            XXH3_128bits_reset(d->xxh3Context2);
+            d->katContext.reset();
             break;
         }
     }
@@ -173,10 +222,7 @@ void QCryptographicHash::addData(const char *data, int length)
             break;
         }
         case QCryptographicHash::KAT: {
-            XXH3_128bits_update(d->xxh3Context, data, length);
-            if (Q_LIKELY(length > 1)) {
-                XXH3_128bits_update(d->xxh3Context2, data, length / 2);
-            }
+            d->katContext.update(data, length);
             break;
         }
     }
@@ -241,13 +287,7 @@ QByteArray QCryptographicHash::result() const
             return QByteArray(reinterpret_cast<char *>(result), SHA512_DIGEST_LENGTH);
         }
         case QCryptographicHash::KAT: {
-            const XXH128_hash_t xxresult = XXH3_128bits_digest(d->xxh3Context);
-            XXH128_canonical_t xxcanonical;
-            XXH128_canonicalFromHash(&xxcanonical, xxresult);
-            const XXH128_hash_t xxresult2 = XXH3_128bits_digest(d->xxh3Context2);
-            XXH128_canonical_t xxcanonical2;
-            XXH128_canonicalFromHash(&xxcanonical2, xxresult2);
-            return (QByteArray(reinterpret_cast<char *>(xxcanonical.digest), sizeof(XXH128_hash_t)) + QByteArray(reinterpret_cast<char *>(xxcanonical2.digest), sizeof(XXH128_hash_t)));
+            return d->katContext.result();
         }
     }
 
@@ -293,18 +333,9 @@ QByteArray QCryptographicHash::hash(const QByteArray &data, QCryptographicHash::
             return QByteArray(reinterpret_cast<char *>(result), SHA512_DIGEST_LENGTH);
         }
         case QCryptographicHash::KAT: {
-            const XXH128_hash_t xxresult = XXH3_128bits(data.constData(), data.length());
-            XXH128_canonical_t xxcanonical;
-            XXH128_canonicalFromHash(&xxcanonical, xxresult);
-            XXH128_hash_t xxresult2;
-            if (Q_LIKELY(data.length() > 1)) {
-                xxresult2 = XXH3_128bits(data.constData(), data.length() / 2);
-            } else {
-                xxresult2 = XXH3_128bits("KATIE", 5);
-            }
-            XXH128_canonical_t xxcanonical2;
-            XXH128_canonicalFromHash(&xxcanonical2, xxresult2);
-            return (QByteArray(reinterpret_cast<char *>(xxcanonical.digest), sizeof(XXH128_hash_t)) + QByteArray(reinterpret_cast<char *>(xxcanonical2.digest), sizeof(XXH128_hash_t)));
+            QKatHash kathash;
+            kathash.update(data.constData(), data.length());
+            return kathash.result();
         }
     }
 
