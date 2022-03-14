@@ -75,9 +75,9 @@ void QKatHash::update(const char *data, const int length)
         XXH3_128bits_update(m_xxh3, data, length);
         XXH3_128bits_update(m_xxh32, "K", 1);
     } else if (Q_LIKELY(length > 1)) {
-        const size_t halflenght = (length / 2);
-        XXH3_128bits_update(m_xxh3, data, halflenght);
-        XXH3_128bits_update(m_xxh32, data + halflenght, halflenght);
+        const size_t halflength = (length / 2);
+        XXH3_128bits_update(m_xxh3, data, halflength);
+        XXH3_128bits_update(m_xxh32, data + halflength, halflength);
     }
 }
 
