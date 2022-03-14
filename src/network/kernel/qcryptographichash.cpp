@@ -137,7 +137,7 @@ QCryptographicHashPrivate::~QCryptographicHashPrivate()
     \warning The custom algorithm will not produce same result from the static
     and the incremental methods. Use either to compute hash sums with this
     algorithm. Do not feed QCryptographicHash with chunks of data that have
-    different sizes either - the chunks size must be fixed, i.e. BUFFSIZE.
+    different sizes either - the chunks size must be fixed, i.e. QT_BUFFSIZE.
 */
 
 /*!
