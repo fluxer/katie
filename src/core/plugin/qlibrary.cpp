@@ -626,15 +626,7 @@ QLibrary::~QLibrary()
 
 void QLibrary::setFileName(const QString &fileName)
 {
-    QLibrary::LoadHints lh;
-    if (d) {
-        lh = d->loadHints;
-        d->release();
-        d = 0;
-    }
-    d = QLibraryPrivate::findOrCreate(fileName);
-    d->loadHints = lh;
-    d->did_load = false;
+    setFileNameAndVersion(fileName, QString());
 }
 
 QString QLibrary::fileName() const
@@ -649,21 +641,12 @@ QString QLibrary::fileName() const
 
     Sets the fileName property and major version number to \a fileName
     and \a versionNumber respectively.
-    The \a versionNumber is ignored on Windows.
 
     \sa setFileName()
 */
 void QLibrary::setFileNameAndVersion(const QString &fileName, int verNum)
 {
-    QLibrary::LoadHints lh;
-    if (d) {
-        lh = d->loadHints;
-        d->release();
-        d = 0;
-    }
-    d = QLibraryPrivate::findOrCreate(fileName, verNum >= 0 ? QString::number(verNum) : QString());
-    d->loadHints = lh;
-    d->did_load = false;
+    setFileNameAndVersion(fileName, verNum >= 0 ? QString::number(verNum) : QString());
 }
 
 /*!
