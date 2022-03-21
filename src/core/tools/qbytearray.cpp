@@ -2533,11 +2533,12 @@ QDataStream &operator<<(QDataStream &out, const QByteArray &ba)
 
 QDataStream &operator>>(QDataStream &in, QByteArray &ba)
 {
-    ba.clear();
     quint32 len;
     in >> len;
-    if (len == 0xffffffff)
+    if (len == 0xffffffff) {
+        ba.clear();
         return in;
+    }
 
     ba.resize(len);
     const quint32 readlen = in.readRawData(ba.data(), len);
