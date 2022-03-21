@@ -45,6 +45,8 @@ public:
     QByteArray result() const;
 
 private:
+    Q_DISABLE_COPY(QKatHash);
+
     XXH3_state_t* m_xxh3;
     XXH3_state_t* m_xxh32;
 };
