@@ -336,6 +336,7 @@ QByteArray QCryptographicHash::hash(const QByteArray &data, QCryptographicHash::
         }
         case QCryptographicHash::KAT: {
             QKatHash kathash;
+            kathash.reset();
             kathash.update(data.constData(), data.length());
             return kathash.result();
         }
