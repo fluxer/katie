@@ -222,7 +222,7 @@ bool _q_uuidFromHex(const Char *&src, uint &d1, ushort &d2, ushort &d3, uchar (&
     \endtable
 
     The field layouts for the DCE versions listed in the table above
-    are specified in the \l{http://www.ietf.org/rfc/rfc4122.txt}
+    are specified in the \l{https://www.ietf.org/rfc/rfc4122.txt}
     {Network Working Group UUID Specification}.
     
     Most platforms provide a tool for generating new UUIDs, e.g. \c
