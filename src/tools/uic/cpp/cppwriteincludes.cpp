@@ -598,7 +598,6 @@ static const struct ClassTblData {
     { QLatin1String("QUndoStack"), QLatin1String("QtGui/qundostack.h") },
     { QLatin1String("QUndoView"), QLatin1String("QtGui/qundoview.h") },
     { QLatin1String("QUrl"), QLatin1String("QtCore/qurl.h") },
-    { QLatin1String("QUuid"), QLatin1String("QtCore/quuid.h") },
     { QLatin1String("QVBoxLayout"), QLatin1String("QtGui/qboxlayout.h") },
     { QLatin1String("QValidator"), QLatin1String("QtGui/qvalidator.h") },
     { QLatin1String("QVarLengthArray"), QLatin1String("QtCore/qvarlengtharray.h") },
