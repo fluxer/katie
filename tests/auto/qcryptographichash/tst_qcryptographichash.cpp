@@ -93,8 +93,8 @@ void tst_QCryptographicHash::intermediary_result_data()
                          << QByteArray::fromHex("F3C41E7B63EE869596FC28BAD64120612C520F65928AB4D126C72C6998B551B8FF1CEDDFED4373E6717554DC89D1EEE6F0AB22FD3675E561ABA9AE26A3EEC53B");
     QTest::newRow("KAT") << QCryptographicHash::KAT
                          << QByteArray("abc") << QByteArray("abc")
-                         << QByteArray::fromHex("a96faf705af16834e6c632b61e964e1f4b2212e31ac97fd4575a0b1c44d8843f")
-                         << QByteArray::fromHex("b9fe94d346d39b20369242a646a19333db1de4b3da6c7871b776d5cb968aa5a4");
+                         << QByteArray::fromHex("A96FAF705AF16834E6C632B61E964E1F8C19F5792EBF862E22775E3BD96F68BF")
+                         << QByteArray::fromHex("B9FE94D346D39B20369242A646A19333757D229E18328270F7B354793BCE8D36");
 }
 
 void tst_QCryptographicHash::intermediary_result()
@@ -108,7 +108,7 @@ void tst_QCryptographicHash::intermediary_result()
 
     QFETCH(QByteArray, hash_first);
     QByteArray result = hash.result();
-    // qDebug() << result.toHex();
+    // qDebug() << result.toHex().toUpper();
     QCOMPARE(result, hash_first);
 
     // don't reset
@@ -117,7 +117,7 @@ void tst_QCryptographicHash::intermediary_result()
     hash.addData(second);
 
     result = hash.result();
-    // qDebug() << result.toHex();
+    // qDebug() << result.toHex().toUpper();
     QCOMPARE(result, hash_firstsecond);
 }
 
