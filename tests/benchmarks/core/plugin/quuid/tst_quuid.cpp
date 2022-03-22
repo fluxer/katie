@@ -34,6 +34,8 @@ public:
     { }
 
 private slots:
+    void qRandomUuid_vs_createUuid_data();
+    void qRandomUuid_vs_createUuid();
     void createUuid();
     void fromChar();
     void toString();
@@ -48,6 +50,29 @@ private slots:
     void operatorLess();
     void operatorMore();
 };
+
+void tst_bench_QUuid::qRandomUuid_vs_createUuid_data()
+{
+    QTest::addColumn<bool>("qrandomuuid");
+
+    QTest::newRow("qRandomUuid()") << true;
+    QTest::newRow("QUuid::createUuid") << false;
+}
+
+void tst_bench_QUuid::qRandomUuid_vs_createUuid()
+{
+    QFETCH(bool, qrandomuuid);
+
+    if (qrandomuuid) {
+        QBENCHMARK {
+            (void)qRandomUuid();
+        }
+    } else {
+        QBENCHMARK {
+            (void)QUuid::createUuid().toByteArray();
+        }
+    }
+}
 
 void tst_bench_QUuid::createUuid()
 {

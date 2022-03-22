@@ -292,6 +292,56 @@ quint16 qChecksum(const char *data, uint len)
     return ~crc & 0xffff;
 }
 
+/*!
+    \relates QByteArray
+
+    Returns pseudo-randomly generated UUID in DCE variant as
+    described in \l{https://www.ietf.org/rfc/rfc4122.txt}.
+*/
+QByteArray qRandomUuid()
+{
+    static const ushort randiterratio = (sizeof(int) / sizeof(uchar));
+    Q_ASSERT(randiterratio > 1);
+    QSTACKARRAY(uchar, randombuf, 16);
+    uchar *randombufiter = randombuf;
+    for (ushort i = 0; i < (16 / randiterratio); i++) {
+        *randombufiter = qrand();
+        randombufiter += randiterratio;
+    }
+    randombuf[6] = (randombuf[6] & 0x0FFF) | 0x4000; // random version
+    randombuf[8] = (randombuf[8] & 0x3F) | 0x80; // DCE variant
+
+#define UUID_TOHEX(bufi, randi) \
+    uuidbuf[bufi] = tohex[(randombuf[randi] >> 4) & 0xf]; \
+    uuidbuf[bufi + 1] = tohex[randombuf[randi] & 0xf];
+
+    static const char tohex[] = "0123456789abcdef";
+    QSTACKARRAY(char, uuidbuf, 37);
+    UUID_TOHEX(0, 0);
+    UUID_TOHEX(2, 1);
+    UUID_TOHEX(4, 2);
+    UUID_TOHEX(6, 3);
+    uuidbuf[8] = '-';
+    UUID_TOHEX(9, 4);
+    UUID_TOHEX(11, 5);
+    uuidbuf[13] = '-';
+    UUID_TOHEX(14, 6);
+    UUID_TOHEX(16, 7);
+    uuidbuf[18] = '-';
+    UUID_TOHEX(19, 8);
+    UUID_TOHEX(21, 9);
+    uuidbuf[23] = '-';
+    UUID_TOHEX(24, 10);
+    UUID_TOHEX(26, 11);
+    UUID_TOHEX(28, 12);
+    UUID_TOHEX(30, 13);
+    UUID_TOHEX(32, 14);
+    UUID_TOHEX(34, 15);
+
+#undef UUID_TOHEX
+
+    return QByteArray(reinterpret_cast<char*>(uuidbuf), sizeof(uuidbuf));
+}
 #ifndef QT_NO_COMPRESS
 /*!
     \fn QByteArray qCompress(const QByteArray& data, int compressionLevel)
