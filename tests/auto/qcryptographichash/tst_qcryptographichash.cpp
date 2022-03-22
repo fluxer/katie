@@ -35,6 +35,8 @@ private slots:
     void intermediary_result();
     void static_vs_incremental_result_data();
     void static_vs_incremental_result();
+    void collision_data();
+    void collision();
 };
 
 void tst_QCryptographicHash::repeated_result_data()
@@ -172,6 +174,75 @@ void tst_QCryptographicHash::static_vs_incremental_result()
         QEXPECT_FAIL("", "This is expected behaviour currently", Continue);
     }
     QCOMPARE(incrementalresult, staticresult);
+}
+
+void tst_QCryptographicHash::collision_data()
+{
+    QTest::addColumn<QCryptographicHash::Algorithm>("algo");
+    QTest::addColumn<QByteArray>("data");
+    QTest::addColumn<QByteArray>("data2");
+    QTest::addColumn<bool>("incremental");
+
+    QTest::newRow("1vs2 (Md5)")        << QCryptographicHash::Md5 << QByteArray("1") << QByteArray("2") << false;
+    QTest::newRow("1vs2 (Md5)")        << QCryptographicHash::Md5 << QByteArray("1") << QByteArray("2") << true;
+    QTest::newRow("122vs222 (Md5)")    << QCryptographicHash::Md5 << QByteArray("122") << QByteArray("222") << true;
+    QTest::newRow("122vs222 (Md5)")    << QCryptographicHash::Md5 << QByteArray("122") << QByteArray("222") << false;
+    QTest::newRow("221vs222 (Md5)")    << QCryptographicHash::Md5 << QByteArray("221") << QByteArray("222") << true;
+    QTest::newRow("221vs222 (Md5)")    << QCryptographicHash::Md5 << QByteArray("221") << QByteArray("222") << false;
+
+    QTest::newRow("1vs2 (Sha1)")       << QCryptographicHash::Sha1 << QByteArray("1") << QByteArray("2") << false;
+    QTest::newRow("1vs2 (Sha1)")       << QCryptographicHash::Sha1 << QByteArray("1") << QByteArray("2") << true;
+    QTest::newRow("122vs222 (Sha1)")   << QCryptographicHash::Sha1 << QByteArray("122") << QByteArray("222") << true;
+    QTest::newRow("122vs222 (Sha1)")   << QCryptographicHash::Sha1 << QByteArray("122") << QByteArray("222") << false;
+    QTest::newRow("221vs222 (Sha1)")   << QCryptographicHash::Sha1 << QByteArray("221") << QByteArray("222") << true;
+    QTest::newRow("221vs222 (Sha1)")   << QCryptographicHash::Sha1 << QByteArray("221") << QByteArray("222") << false;
+
+    QTest::newRow("1vs2 (Sha256)")     << QCryptographicHash::Sha256 << QByteArray("1") << QByteArray("2") << false;
+    QTest::newRow("1vs2 (Sha256)")     << QCryptographicHash::Sha256 << QByteArray("1") << QByteArray("2") << true;
+    QTest::newRow("122vs222 (Sha256)") << QCryptographicHash::Sha256 << QByteArray("122") << QByteArray("222") << true;
+    QTest::newRow("122vs222 (Sha256)") << QCryptographicHash::Sha256 << QByteArray("122") << QByteArray("222") << false;
+    QTest::newRow("221vs222 (Sha256)") << QCryptographicHash::Sha256 << QByteArray("221") << QByteArray("222") << true;
+    QTest::newRow("221vs222 (Sha256)") << QCryptographicHash::Sha256 << QByteArray("221") << QByteArray("222") << false;
+
+    QTest::newRow("1vs2 (Sha512)")     << QCryptographicHash::Sha512 << QByteArray("1") << QByteArray("2") << false;
+    QTest::newRow("1vs2 (Sha512)")     << QCryptographicHash::Sha512 << QByteArray("1") << QByteArray("2") << true;
+    QTest::newRow("122vs222 (Sha512)") << QCryptographicHash::Sha512 << QByteArray("122") << QByteArray("222") << true;
+    QTest::newRow("122vs222 (Sha512)") << QCryptographicHash::Sha512 << QByteArray("122") << QByteArray("222") << false;
+    QTest::newRow("221vs222 (Sha512)") << QCryptographicHash::Sha512 << QByteArray("221") << QByteArray("222") << true;
+    QTest::newRow("221vs222 (Sha512)") << QCryptographicHash::Sha512 << QByteArray("221") << QByteArray("222") << false;
+
+    QTest::newRow("1vs2 (KAT)")        << QCryptographicHash::KAT << QByteArray("1") << QByteArray("2") << false;
+    QTest::newRow("1vs2 (KAT)")        << QCryptographicHash::KAT << QByteArray("1") << QByteArray("2") << true;
+    QTest::newRow("122vs222 (KAT)")    << QCryptographicHash::KAT << QByteArray("122") << QByteArray("222") << true;
+    QTest::newRow("122vs222 (KAT)")    << QCryptographicHash::KAT << QByteArray("122") << QByteArray("222") << false;
+    QTest::newRow("221vs222 (KAT)")    << QCryptographicHash::KAT << QByteArray("221") << QByteArray("222") << true;
+    QTest::newRow("221vs222 (KAT)")    << QCryptographicHash::KAT << QByteArray("221") << QByteArray("222") << false;
+}
+
+void tst_QCryptographicHash::collision()
+{
+    QFETCH(QCryptographicHash::Algorithm, algo);
+    QFETCH(QByteArray, data);
+    QFETCH(QByteArray, data2);
+    QFETCH(bool, incremental);
+
+    if (incremental) {
+        QCryptographicHash incrementalhash(algo);
+        incrementalhash.addData(data);
+        const QByteArray incrementalresult = incrementalhash.result();
+
+        QCryptographicHash incrementalhash2(algo);
+        incrementalhash2.addData(data2);
+        const QByteArray incrementalresult2 = incrementalhash2.result();
+
+        QVERIFY(incrementalresult != incrementalresult2);
+    } else {
+        const QByteArray staticresult = QCryptographicHash::hash(data, algo);
+
+        const QByteArray staticresult2 = QCryptographicHash::hash(data2, algo);
+
+        QVERIFY(staticresult != staticresult2);
+    }
 }
 
 QTEST_MAIN(tst_QCryptographicHash)
