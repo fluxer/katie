@@ -72,6 +72,7 @@ private slots:
     void setSize();
     void setSizeSeek();
     void seekToSamePosition();
+    void atEnd_data();
     void atEnd();
     void readLine();
     void readLine2();
@@ -696,17 +697,43 @@ void tst_QFile::seekToSamePosition()
     }
 }
 
+void tst_QFile::atEnd_data()
+{
+    QTest::addColumn<QString>("filename");
+    QTest::addColumn<int>("lines");
+
+    QTest::newRow( "testfile.txt" ) << QString(SRCDIR "testfile.txt") << (int)6;
+    QTest::newRow( "testlink.txt" ) << QString(SRCDIR "testlink.txt") << (int)6;
+}
+
 void tst_QFile::atEnd()
 {
-    QFile f( SRCDIR "testfile.txt" );
-    QVERIFY(f.open( QIODevice::ReadOnly ));
+    QFETCH( QString, filename );
+    QFETCH( int, lines );
 
-    int size = f.size();
-    f.seek( size );
+    {
+        QFile f( filename );
+        QVERIFY(f.open( QIODevice::ReadOnly ));
 
-    bool end = f.atEnd();
-    f.close();
-    QCOMPARE( end, true );
+        int size = f.size();
+        f.seek( size );
+
+        bool end = f.atEnd();
+        f.close();
+        QCOMPARE( end, true );
+    }
+
+    {
+        QFile f( filename );
+        QVERIFY(f.open( QIODevice::ReadOnly ));
+
+        int linecount = 0;
+        while (!f.atEnd()) {
+            (void)f.readLine();
+            linecount++;
+        }
+        QCOMPARE( lines, linecount );
+    }
 }
 
 void tst_QFile::readLine()
