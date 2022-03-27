@@ -525,6 +525,8 @@ void QFileSystemMetaData::fillFromStatBuf(const QT_STATBUF &statBuffer)
         entryFlags |= QFileSystemMetaData::FileType;
     else if (S_ISDIR(statBuffer.st_mode))
         entryFlags |= QFileSystemMetaData::DirectoryType;
+    else if (S_ISLNK(statBuffer.st_mode))
+        entryFlags |= QFileSystemMetaData::LinkType;
     else
         entryFlags |= QFileSystemMetaData::SequentialType;
 

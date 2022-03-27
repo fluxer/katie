@@ -1402,6 +1402,21 @@ void tst_QFile::isSequential()
     QFile zero("/dev/null");
     QVERIFY(zero.open(QFile::ReadOnly));
     QVERIFY(zero.isSequential());
+
+    {
+        QFile not_sequential("not_sequential.txt");
+        QVERIFY(not_sequential.open(QFile::WriteOnly));
+        not_sequential.write(QByteArray(200, '@'));
+        not_sequential.close();
+        QVERIFY(QFile::link("not_sequential.txt", "not_sequential.lnk"));
+    }
+
+    QFile not_sequential("not_sequential.lnk");
+    QVERIFY(not_sequential.open(QFile::ReadOnly));
+    QVERIFY(!not_sequential.isSequential());
+
+    QFile::remove("not_sequential.txt");
+    QFile::remove("not_sequential.lnk");
 }
 
 void tst_QFile::encodeName()
