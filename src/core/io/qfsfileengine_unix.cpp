@@ -42,11 +42,11 @@ QT_BEGIN_NAMESPACE
 bool QFSFileEnginePrivate::doStat(QFileSystemMetaData::MetaDataFlags flags) const
 {
     if (!metaData.hasFlags(flags)) {
-        if (fd != -1)
-            QFileSystemEngine::fillMetaData(fd, metaData);
-
-        if (metaData.missingFlags(flags) && !fileEntry.isEmpty())
+        if (!fileEntry.isEmpty())
             QFileSystemEngine::fillMetaData(fileEntry, metaData, metaData.missingFlags(flags));
+
+        if (metaData.missingFlags(flags) && fd != -1)
+            QFileSystemEngine::fillMetaData(fd, metaData);
     }
 
     return metaData.exists();

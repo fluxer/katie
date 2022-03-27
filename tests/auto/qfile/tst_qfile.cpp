@@ -513,6 +513,7 @@ void tst_QFile::size_data()
     QTest::addColumn<qint64>("size");
 
     QTest::newRow( "exist01" ) << QString(SRCDIR "testfile.txt") << (qint64)245;
+    QTest::newRow( "link01" )  << QString(SRCDIR "testlink.txt") << (qint64)245;
 }
 
 void tst_QFile::size()
