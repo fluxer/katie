@@ -142,6 +142,9 @@ set(KATIE_TOOLS_SUFFIX "" CACHE STRING "Tools (moc, uic, rcc, etc.) suffix")
 option(WITH_DEFLATE "Build with external libdeflate" ON)
 add_feature_info(deflate WITH_DEFLATE "build with external libdeflate")
 
+option(WITH_XXHASH "Build with external xxHash" OFF)
+add_feature_info(xxhash WITH_XXHASH "build with external xxHash")
+
 # optional packages
 option(WITH_CUPS "Build CUPS support" ON)
 add_feature_info(cups WITH_CUPS "build CUPS support")
@@ -225,6 +228,14 @@ set_package_properties(Deflate PROPERTIES
     PURPOSE "Required for compression and decompression support"
     DESCRIPTION "Heavily optimized library for DEFLATE/zlib/gzip compression and decompression"
     URL "https://github.com/ebiggers/libdeflate"
+    TYPE RECOMMENDED
+)
+
+find_package(xxHash)
+set_package_properties(xxHash PROPERTIES
+    PURPOSE "Required for the custom hash algorithm"
+    DESCRIPTION "Extremely fast non-cryptographic hash algorithm"
+    URL "https://cyan4973.github.io/xxHash/"
     TYPE RECOMMENDED
 )
 

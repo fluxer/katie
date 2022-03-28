@@ -27,7 +27,6 @@
 #include "md5.h"
 #include "sha1.h"
 #include "sha2.h"
-#define XXH_INLINE_ALL
 #include "xxhash.h"
 
 QT_BEGIN_NAMESPACE
