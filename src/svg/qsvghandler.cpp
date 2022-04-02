@@ -678,47 +678,32 @@ static bool resolveColor(const QStringRef &colorStr, QColor &color, QSvgHandler 
     if (colorStrTr.isEmpty())
         return false;
 
-    switch(colorStrTr.at(0).unicode()) {
+    // starts with "rgb(", ends with ")" and consists of at least 7 characters "rgb(,,)"
+    if (colorStrTr.length() >= 7 && colorStrTr.at(colorStrTr.length() - 1) == QLatin1Char(')')
+        && colorStrTr.startsWith(QLatin1String("rgb("))) {
+        const QChar *s = colorStrTr.constData() + 4;
+        QVector<qreal> compo = parseNumbersList(s);
+        //1 means that it failed after reaching non-parsable
+        //character which is going to be "%"
+        if (compo.size() == 1) {
+            s = colorStrTr.constData() + 4;
+            compo = parsePercentageList(s);
+            for (int i = 0; i < compo.size(); ++i)
+                compo[i] *= (qreal)2.55;
+        }
 
-        case 'r':
-            {
-                // starts with "rgb(", ends with ")" and consists of at least 7 characters "rgb(,,)"
-                if (colorStrTr.length() >= 7 && colorStrTr.at(colorStrTr.length() - 1) == QLatin1Char(')')
-                    && QStringRef(colorStrTr.string(), colorStrTr.position(), 4) == QLatin1String("rgb(")) {
-                    const QChar *s = colorStrTr.constData() + 4;
-                    QVector<qreal> compo = parseNumbersList(s);
-                    //1 means that it failed after reaching non-parsable
-                    //character which is going to be "%"
-                    if (compo.size() == 1) {
-                        s = colorStrTr.constData() + 4;
-                        compo = parsePercentageList(s);
-                        for (int i = 0; i < compo.size(); ++i)
-                            compo[i] *= (qreal)2.55;
-                    }
-
-                    if (compo.size() == 3) {
-                        color = QColor(int(compo[0]),
-                                       int(compo[1]),
-                                       int(compo[2]));
-                        return true;
-                    }
-                    return false;
-                }
-            }
-            break;
-
-        case 'c':
-            if (colorStrTr == QLatin1String("currentColor")) {
-                color = handler->currentColor();
-                return true;
-            }
-            break;
-        case 'i':
-            if (colorStrTr == QT_INHERIT)
-                return false;
-            break;
-        default:
-            break;
+        if (compo.size() == 3) {
+            color = QColor(int(compo[0]),
+                            int(compo[1]),
+                            int(compo[2]));
+            return true;
+        }
+        return false;
+    } else if (colorStrTr == QLatin1String("currentColor")) {
+        color = handler->currentColor();
+        return true;
+    } else if (colorStrTr == QT_INHERIT) {
+        return false;
     }
 
     color = QColor(colorStrTr.toString());
