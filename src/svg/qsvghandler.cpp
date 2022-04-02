@@ -296,7 +296,6 @@ static const char * QSvgStyleSelector_nodeString[] = {
     "g",
     "defs",
     "switch",
-    "animation",
     "arc",
     "circle",
     "ellipse",
@@ -309,8 +308,7 @@ static const char * QSvgStyleSelector_nodeString[] = {
     "text",
     "textarea",
     "tspan",
-    "use",
-    "video"
+    "use"
 };
 
 class QSvgStyleSelector : public QCss::StyleSelector
@@ -2105,216 +2103,12 @@ static bool parseAnchorNode(QSvgNode *parent,
     return true;
 }
 
-static bool parseAnimateNode(QSvgNode *parent,
-                             const QXmlStreamAttributes &attributes,
-                             QSvgHandler *)
-{
-    Q_UNUSED(parent); Q_UNUSED(attributes);
-    return true;
-}
-
-static bool parseAnimateColorNode(QSvgNode *parent,
-                                  const QXmlStreamAttributes &attributes,
-                                  QSvgHandler *handler)
-{
-    QString typeStr    = attributes.value(QLatin1String("type")).toString();
-    QStringRef fromStr    = attributes.value(QLatin1String("from"));
-    QStringRef toStr      = attributes.value(QLatin1String("to"));
-    QString valuesStr  = attributes.value(QLatin1String("values")).toString();
-    QString beginStr   = attributes.value(QLatin1String("begin")).toString();
-    QString durStr     = attributes.value(QLatin1String("dur")).toString();
-    QString targetStr  = attributes.value(QLatin1String("attributeName")).toString();
-    QString repeatStr  = attributes.value(QLatin1String("repeatCount")).toString();
-    QString fillStr    = attributes.value(QLatin1String("fill")).toString();
-
-    QList<QColor> colors;
-    if (valuesStr.isEmpty()) {
-        QColor startColor, endColor;
-        resolveColor(fromStr, startColor, handler);
-        resolveColor(toStr, endColor, handler);
-        colors.reserve(2);
-        colors.append(startColor);
-        colors.append(endColor);
-    } else {
-        QStringList str = valuesStr.split(QLatin1Char(';'));
-        colors.reserve(str.count());
-        QStringList::const_iterator itr;
-        for (itr = str.constBegin(); itr != str.constEnd(); ++itr) {
-            QColor color;
-            QString str = *itr;
-            resolveColor(QStringRef(&str), color, handler);
-            colors.append(color);
-        }
-    }
-
-    int ms = 1000;
-    beginStr = beginStr.trimmed();
-    if (beginStr.endsWith(QLatin1String("ms"))) {
-        beginStr.chop(2);
-        ms = 1;
-    } else if (beginStr.endsWith(QLatin1String("s"))) {
-        beginStr.chop(1);
-    }
-    durStr = durStr.trimmed();
-    if (durStr.endsWith(QLatin1String("ms"))) {
-        durStr.chop(2);
-        ms = 1;
-    } else if (durStr.endsWith(QLatin1String("s"))) {
-        durStr.chop(1);
-    }
-    int begin = static_cast<int>(toDouble(beginStr) * ms);
-    int end   = static_cast<int>((toDouble(durStr) + begin) * ms);
-
-    QSvgAnimateColor *anim = new QSvgAnimateColor(begin, end, 0);
-    anim->setArgs((targetStr == QLatin1String("fill")), colors);
-    anim->setFreeze(fillStr == QLatin1String("freeze"));
-    anim->setRepeatCount(
-        (repeatStr == QLatin1String("indefinite")) ? -1 :
-            (repeatStr == QLatin1String("")) ? 1 : toDouble(repeatStr));
-
-    parent->appendStyleProperty(anim, someId(attributes));
-    parent->document()->setAnimated(true);
-    handler->setAnimPeriod(begin, end);
-    return true;
-}
-
-static bool parseAimateMotionNode(QSvgNode *parent,
-                                  const QXmlStreamAttributes &attributes,
-                                  QSvgHandler *)
-{
-    Q_UNUSED(parent); Q_UNUSED(attributes);
-    return true;
-}
-
 static void parseNumberTriplet(QVector<qreal> &values, const QChar *&s)
 {
     QVector<qreal> list = parseNumbersList(s);
     values << list;
     for (int i = 3 - list.size(); i > 0; --i)
         values.append(0.0);
-}
-
-static bool parseAnimateTransformNode(QSvgNode *parent,
-                                      const QXmlStreamAttributes &attributes,
-                                      QSvgHandler *handler)
-{
-    QString typeStr    = attributes.value(QLatin1String("type")).toString();
-    QString values     = attributes.value(QLatin1String("values")).toString();
-    QString beginStr   = attributes.value(QLatin1String("begin")).toString();
-    QString durStr     = attributes.value(QLatin1String("dur")).toString();
-    QString targetStr  = attributes.value(QLatin1String("attributeName")).toString();
-    QString repeatStr  = attributes.value(QLatin1String("repeatCount")).toString();
-    QString fillStr    = attributes.value(QLatin1String("fill")).toString();
-    QString fromStr    = attributes.value(QLatin1String("from")).toString();
-    QString toStr      = attributes.value(QLatin1String("to")).toString();
-    QString byStr      = attributes.value(QLatin1String("by")).toString();
-    QString addtv      = attributes.value(QLatin1String("additive")).toString();
-
-    QSvgAnimateTransform::Additive additive = QSvgAnimateTransform::Replace;
-    if (addtv == QLatin1String("sum"))
-        additive = QSvgAnimateTransform::Sum;
-
-    QVector<qreal> vals;
-    if (values.isEmpty()) {
-        const QChar *s;
-        if (fromStr.isEmpty()) {
-            if (!byStr.isEmpty()) {
-                // By-animation.
-                additive = QSvgAnimateTransform::Sum;
-                vals.append(0.0);
-                vals.append(0.0);
-                vals.append(0.0);
-                parseNumberTriplet(vals, s = byStr.constData());
-            } else {
-                // To-animation not defined.
-                return false;
-            }
-        } else {
-            if (!toStr.isEmpty()) {
-                // From-to-animation.
-                parseNumberTriplet(vals, s = fromStr.constData());
-                parseNumberTriplet(vals, s = toStr.constData());
-            } else if (!byStr.isEmpty()) {
-                // From-by-animation.
-                parseNumberTriplet(vals, s = fromStr.constData());
-                parseNumberTriplet(vals, s = byStr.constData());
-                for (int i = vals.size() - 3; i < vals.size(); ++i)
-                    vals[i] += vals[i - 3];
-            } else {
-                return false;
-            }
-        }
-    } else {
-        const QChar *s = values.constData();
-        while (s && *s != QLatin1Char(0)) {
-            parseNumberTriplet(vals, s);
-            if (*s == QLatin1Char(0))
-                break;
-            ++s;
-        }
-    }
-
-    int ms = 1000;
-    beginStr = beginStr.trimmed();
-    if (beginStr.endsWith(QLatin1String("ms"))) {
-        beginStr.chop(2);
-        ms = 1;
-    } else if (beginStr.endsWith(QLatin1String("s"))) {
-        beginStr.chop(1);
-    }
-    int begin = static_cast<int>(toDouble(beginStr) * ms);
-    durStr = durStr.trimmed();
-    if (durStr.endsWith(QLatin1String("ms"))) {
-        durStr.chop(2);
-        ms = 1;
-    } else if (durStr.endsWith(QLatin1String("s"))) {
-        durStr.chop(1);
-        ms = 1000;
-    }
-    int end = static_cast<int>(toDouble(durStr)*ms) + begin;
-
-    QSvgAnimateTransform::TransformType type = QSvgAnimateTransform::Empty;
-    if (typeStr == QLatin1String("translate")) {
-        type = QSvgAnimateTransform::Translate;
-    } else if (typeStr == QLatin1String("scale")) {
-        type = QSvgAnimateTransform::Scale;
-    } else if (typeStr == QLatin1String("rotate")) {
-        type = QSvgAnimateTransform::Rotate;
-    } else if (typeStr == QLatin1String("skewX")) {
-        type = QSvgAnimateTransform::SkewX;
-    } else if (typeStr == QLatin1String("skewY")) {
-        type = QSvgAnimateTransform::SkewY;
-    } else {
-        return false;
-    }
-
-    QSvgAnimateTransform *anim = new QSvgAnimateTransform(begin, end, 0);
-    anim->setArgs(type, additive, vals);
-    anim->setFreeze(fillStr == QLatin1String("freeze"));
-    anim->setRepeatCount(
-            (repeatStr == QLatin1String("indefinite"))? -1 :
-            (repeatStr == QLatin1String(""))? 1 : toDouble(repeatStr));
-
-    parent->appendStyleProperty(anim, someId(attributes));
-    parent->document()->setAnimated(true);
-    handler->setAnimPeriod(begin, end);
-    return true;
-}
-
-static QSvgNode * createAnimationNode(QSvgNode *parent,
-                                      const QXmlStreamAttributes &attributes,
-                                      QSvgHandler *)
-{
-    Q_UNUSED(parent); Q_UNUSED(attributes);
-    return 0;
-}
-
-static bool parseAudioNode(QSvgNode *parent,
-                           const QXmlStreamAttributes &attributes,
-                           QSvgHandler *)
-{
-    Q_UNUSED(parent); Q_UNUSED(attributes);
-    return true;
 }
 
 static QSvgNode *createCircleNode(QSvgNode *parent,
@@ -2890,7 +2684,7 @@ static bool parseStopNode(QSvgStyleProperty *parent,
     //    we force a dummy node with the same id and class into a rendering
     //    tree to figure out whether the selector has a style for it
     //    QSvgStyleSelector should be coded in a way that could avoid it
-    QSvgAnimation anim;
+    QSvgTspan anim(nullptr);
     anim.setNodeId(nodeIdStr);
     anim.setXmlClass(xmlClassStr);
 
@@ -3149,14 +2943,6 @@ static QSvgNode *createUseNode(QSvgNode *parent,
     return nullptr;
 }
 
-static QSvgNode *createVideoNode(QSvgNode *parent,
-                                 const QXmlStreamAttributes &attributes,
-                                 QSvgHandler *)
-{
-    Q_UNUSED(parent); Q_UNUSED(attributes);
-    return nullptr;
-}
-
 typedef QSvgNode *(*FactoryMethod)(QSvgNode *, const QXmlStreamAttributes &, QSvgHandler *);
 
 static FactoryMethod findGroupFactory(const QString &name)
@@ -3189,9 +2975,6 @@ static FactoryMethod findGraphicsFactory(const QString &name)
 
     QStringRef ref(&name, 1, name.length() - 1);
     switch (name.at(0).unicode()) {
-    case 'a':
-        if (ref == QLatin1String("nimation")) return createAnimationNode;
-        break;
     case 'c':
         if (ref == QLatin1String("ircle")) return createCircleNode;
         break;
@@ -3220,9 +3003,6 @@ static FactoryMethod findGraphicsFactory(const QString &name)
     case 'u':
         if (ref == QLatin1String("se")) return createUseNode;
         break;
-    case 'v':
-        if (ref == QLatin1String("ideo")) return createVideoNode;
-        break;
     default:
         break;
     }
@@ -3240,11 +3020,6 @@ static ParseMethod findUtilFactory(const QString &name)
     switch (name.at(0).unicode()) {
     case 'a':
         if (ref.isEmpty()) return parseAnchorNode;
-        if (ref == QLatin1String("nimate")) return parseAnimateNode;
-        if (ref == QLatin1String("nimateColor")) return parseAnimateColorNode;
-        if (ref == QLatin1String("nimateMotion")) return parseAimateMotionNode;
-        if (ref == QLatin1String("nimateTransform")) return parseAnimateTransformNode;
-        if (ref == QLatin1String("udio")) return parseAudioNode;
         break;
     case 'd':
         if (ref == QLatin1String("esc")) return parseDescNode;
@@ -3356,7 +3131,6 @@ void QSvgHandler::init()
 {
     m_doc = 0;
     m_style = 0;
-    m_animEnd = 0;
 
     xml->setNamespaceProcessing(false);
     m_selector = new QSvgStyleSelector;
@@ -3703,17 +3477,6 @@ bool QSvgHandler::processingInstruction(const QString &target, const QString &da
     }
 
     return true;
-}
-
-void QSvgHandler::setAnimPeriod(int start, int end)
-{
-    Q_UNUSED(start);
-    m_animEnd   = qMax(end, m_animEnd);
-}
-
-int QSvgHandler::animationDuration() const
-{
-    return m_animEnd;
 }
 
 QSvgHandler::~QSvgHandler()

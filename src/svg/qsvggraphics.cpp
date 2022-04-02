@@ -48,12 +48,6 @@ QT_BEGIN_NAMESPACE
     }                                                       \
     p->setOpacity(oldOpacity);
 
-
-void QSvgAnimation::draw(QPainter *, QSvgExtraStates &)
-{
-    qWarning("<animation> no implemented");
-}
-
 static inline QRectF boundsOnStroke(QPainter *p, const QPainterPath &path, qreal width)
 {
     QPainterPathStroker stroker;
@@ -459,18 +453,6 @@ void QSvgUse::draw(QPainter *p, QSvgExtraStates &states)
     revertStyle(p, states);
 }
 
-void QSvgVideo::draw(QPainter *p, QSvgExtraStates &states)
-{
-    applyStyle(p, states);
-
-    revertStyle(p, states);
-}
-
-QSvgNode::Type QSvgAnimation::type() const
-{
-    return ANIMATION;
-}
-
 QSvgNode::Type QSvgArc::type() const
 {
     return ARC;
@@ -524,11 +506,6 @@ QSvgNode::Type QSvgText::type() const
 QSvgNode::Type QSvgUse::type() const
 {
     return USE;
-}
-
-QSvgNode::Type QSvgVideo::type() const
-{
-    return VIDEO;
 }
 
 QRectF QSvgUse::bounds(QPainter *p, QSvgExtraStates &states) const

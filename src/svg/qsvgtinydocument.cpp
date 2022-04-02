@@ -36,9 +36,6 @@ QT_BEGIN_NAMESPACE
 
 QSvgTinyDocument::QSvgTinyDocument()
     : QSvgStructureNode(0)
-    , m_animated(false)
-    , m_animationDuration(0)
-    , m_fps(30)
 {
 }
 
@@ -73,7 +70,6 @@ QSvgTinyDocument * QSvgTinyDocument::load(const QByteArray &contents)
                  qPrintable(handler.errorString()), handler.lineNumber());
     } else {
         doc = handler.document();
-        doc->m_animationDuration = handler.animationDuration();
     }
     return doc;
 }
@@ -88,17 +84,12 @@ QSvgTinyDocument * QSvgTinyDocument::load(QXmlStreamReader *contents)
                  qPrintable(handler.errorString()), handler.lineNumber());
     } else {
         doc = handler.document();
-        doc->m_animationDuration = handler.animationDuration();
     }
     return doc;
 }
 
 void QSvgTinyDocument::draw(QPainter *p, const QRectF &bounds)
 {
-    if (m_time.isNull()) {
-        m_time.start();
-    }
-
     if (displayMode() == QSvgNode::NoneMode)
         return;
 
@@ -131,9 +122,6 @@ void QSvgTinyDocument::draw(QPainter *p, const QString &id,
     if (Q_UNLIKELY(!node)) {
         qDebug("Couldn't find node %s. Skipping rendering.", qPrintable(id));
         return;
-    }
-    if (m_time.isNull()) {
-        m_time.start();
     }
 
     if (node->displayMode() == QSvgNode::NoneMode)
@@ -228,21 +216,6 @@ QSvgFillStyleProperty *QSvgTinyDocument::namedStyle(const QString &id) const
     return m_namedStyles.value(id);
 }
 
-void QSvgTinyDocument::restartAnimation()
-{
-    m_time.restart();
-}
-
-bool QSvgTinyDocument::animated() const
-{
-    return m_animated;
-}
-
-void QSvgTinyDocument::setAnimated(bool a)
-{
-    m_animated = a;
-}
-
 void QSvgTinyDocument::draw(QPainter *p, QSvgExtraStates &)
 {
     draw(p, QRectF());
@@ -314,29 +287,6 @@ QMatrix QSvgTinyDocument::matrixForElement(const QString &id) const
     }
     
     return t.toAffine();
-}
-
-int QSvgTinyDocument::currentFrame() const
-{
-    double runningPercentage = qMin(m_time.elapsed()/double(m_animationDuration), 1.);
-
-    int totalFrames = m_fps * m_animationDuration;
-
-    return int(runningPercentage * totalFrames);
-}
-
-void QSvgTinyDocument::setCurrentFrame(int frame)
-{
-    const int totalFrames = m_fps * m_animationDuration;
-    const int framePercentage = frame / totalFrames;
-    const int timeForFrame = m_animationDuration * framePercentage * 1000; //in ms
-    const int timeToAdd = timeForFrame - m_time.elapsed();
-    m_time = m_time.addMSecs(timeToAdd);
-}
-
-void QSvgTinyDocument::setFramesPerSecond(int num)
-{
-    m_fps = num;
 }
 
 QT_END_NAMESPACE

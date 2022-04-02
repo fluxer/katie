@@ -142,8 +142,6 @@ public:
         SOLID_COLOR,
         GRADIENT,
         TRANSFORM,
-        ANIMATE_TRANSFORM,
-        ANIMATE_COLOR,
         OPACITY,
         COMP_OP
     };
@@ -602,102 +600,6 @@ private:
 };
 
 
-class QSvgAnimateTransform : public QSvgStyleProperty
-{
-public:
-    enum TransformType
-    {
-        Empty,
-        Translate,
-        Scale,
-        Rotate,
-        SkewX,
-        SkewY
-    };
-    enum Additive
-    {
-        Sum,
-        Replace
-    };
-public:
-    QSvgAnimateTransform(int startMs, int endMs, int by = 0);
-    void setArgs(TransformType type, Additive additive, const QVector<qreal> &args);
-    void setFreeze(bool freeze);
-    void setRepeatCount(qreal repeatCount);
-    virtual void apply(QPainter *p, const QSvgNode *node, QSvgExtraStates &states);
-    virtual void revert(QPainter *p, QSvgExtraStates &states);
-    virtual Type type() const;
-    QSvgAnimateTransform::Additive additiveType() const
-    {
-        return m_additive;
-    }
-
-    bool animActive(qreal totalTimeElapsed)
-    {
-        if (totalTimeElapsed < m_from)
-            return false;
-        if (m_freeze || m_repeatCount < 0) // fill="freeze" or repeat="indefinite"
-            return true;
-        if (m_totalRunningTime == 0)
-            return false;
-        qreal animationFrame = (totalTimeElapsed - m_from) / m_totalRunningTime;
-        if (animationFrame > m_repeatCount)
-            return false;
-        return true;
-    }
-
-    bool transformApplied() const
-    {
-        return m_transformApplied;
-    }
-
-    // Call this instead of revert if you know that revert is unnecessary.
-    void clearTransformApplied()
-    {
-        m_transformApplied = false;
-    }
-
-protected:
-    void resolveMatrix(const QSvgNode *node);
-private:
-    qreal m_from, m_to;
-    qreal m_totalRunningTime;
-    TransformType m_type;
-    Additive m_additive;
-    QVector<qreal> m_args;
-    int m_count;
-    QTransform m_transform;
-    QTransform m_oldWorldTransform;
-    bool m_finished;
-    bool m_freeze;
-    qreal m_repeatCount;
-    bool m_transformApplied;
-};
-
-
-class QSvgAnimateColor : public QSvgStyleProperty
-{
-public:
-    QSvgAnimateColor(int startMs, int endMs, int by = 0);
-    void setArgs(bool fill, const QList<QColor> &colors);
-    void setFreeze(bool freeze);
-    void setRepeatCount(qreal repeatCount);
-    virtual void apply(QPainter *p, const QSvgNode *node, QSvgExtraStates &states);
-    virtual void revert(QPainter *p, QSvgExtraStates &states);
-    virtual Type type() const;
-private:
-    qreal m_from, m_to;
-    qreal m_totalRunningTime;
-    QList<QColor> m_colors;
-    QBrush m_oldBrush;
-    QPen   m_oldPen;
-    bool m_fill;
-    bool m_finished;
-    bool m_freeze;
-    qreal m_repeatCount;
-};
-
-
 class QSvgCompOpStyle : public QSvgStyleProperty
 {
 public:
@@ -730,7 +632,6 @@ public:
           solidColor(0),
           gradient(0),
           transform(0),
-          animateColor(0),
           opacity(0),
           compop(0)
     {}
@@ -746,8 +647,6 @@ public:
     QSvgRefCounter<QSvgSolidColorStyle>   solidColor;
     QSvgRefCounter<QSvgGradientStyle>     gradient;
     QSvgRefCounter<QSvgTransformStyle>    transform;
-    QSvgRefCounter<QSvgAnimateColor>      animateColor;
-    QList<QSvgRefCounter<QSvgAnimateTransform> >   animateTransforms;
     QSvgRefCounter<QSvgOpacityStyle>      opacity;
     QSvgRefCounter<QSvgCompOpStyle>       compop;
 };

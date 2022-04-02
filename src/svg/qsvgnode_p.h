@@ -51,7 +51,6 @@ public:
         G,
         DEFS,
         SWITCH,
-        ANIMATION,
         ARC,
         CIRCLE,
         ELLIPSE,
@@ -64,8 +63,7 @@ public:
         TEXT,
         TEXTAREA,
         TSPAN,
-        USE,
-        VIDEO
+        USE
     };
     enum DisplayMode {
         InlineMode,

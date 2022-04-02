@@ -91,9 +91,6 @@ public:
 
     QSvgStyleSelector *selector() const;
 
-    void setAnimPeriod(int start, int end);
-    int animationDuration() const;
-
     void parseCSStoXMLAttrs(const QString &css, QVector<QSvgCssAttribute> *attributes);
 
     bool startElement(const QString &localName, const QXmlStreamAttributes &attributes);
@@ -129,8 +126,6 @@ private:
     bool m_inStyle;
 
     QSvgStyleSelector *m_selector;
-
-    int m_animEnd;
 
     QXmlStreamReader *const xml;
     QCss::Parser m_cssParser;

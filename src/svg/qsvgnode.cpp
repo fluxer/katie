@@ -80,15 +80,6 @@ void QSvgNode::appendStyleProperty(QSvgStyleProperty *prop, const QString &id)
             m_style.transform = static_cast<QSvgTransformStyle*>(prop);
             break;
         }
-        case QSvgStyleProperty::ANIMATE_COLOR: {
-            m_style.animateColor = static_cast<QSvgAnimateColor*>(prop);
-            break;
-        }
-        case QSvgStyleProperty::ANIMATE_TRANSFORM: {
-            m_style.animateTransforms.append(
-                static_cast<QSvgAnimateTransform*>(prop));
-            break;
-        }
         case QSvgStyleProperty::OPACITY: {
             m_style.opacity = static_cast<QSvgOpacityStyle*>(prop);
             break;
@@ -150,14 +141,6 @@ QSvgStyleProperty * QSvgNode::styleProperty(QSvgStyleProperty::Type type) const
         case QSvgStyleProperty::TRANSFORM:
             if (node->m_style.transform)
                 return node->m_style.transform;
-            break;
-        case QSvgStyleProperty::ANIMATE_COLOR:
-            if (node->m_style.animateColor)
-                return node->m_style.animateColor;
-            break;
-        case QSvgStyleProperty::ANIMATE_TRANSFORM:
-            if (!node->m_style.animateTransforms.isEmpty())
-                return node->m_style.animateTransforms.first();
             break;
         case QSvgStyleProperty::OPACITY:
             if (node->m_style.opacity)
