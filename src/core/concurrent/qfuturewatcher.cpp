@@ -578,22 +578,4 @@ QT_END_NAMESPACE
 
 #include "moc_qfuturewatcher.h"
 
-#else // QT_NO_CONCURRENT
-
-// moc will be run without having QT_NO_CONCURRENT set, so provide a dummy stub
-// for the slots to prevent linker errors.
-
-QT_BEGIN_NAMESPACE
-
-void QFutureWatcherBase::cancel() { }
-void QFutureWatcherBase::setPaused(bool) { }
-void QFutureWatcherBase::pause() { }
-void QFutureWatcherBase::resume() { }
-void QFutureWatcherBase::togglePaused() { }
-bool QFutureWatcherBase::event(QEvent *) { return false; }
-void QFutureWatcherBase::connectNotify(const char *) { }
-void QFutureWatcherBase::disconnectNotify(const char *) { }
-
-QT_END_NAMESPACE
-
 #endif // QT_NO_CONCURRENT
