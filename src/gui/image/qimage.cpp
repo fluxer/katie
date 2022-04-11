@@ -57,7 +57,9 @@ QT_BEGIN_NAMESPACE
 static QImage rotated90(const QImage &image) {
     QImage out(image.height(), image.width(), image.format());
     QIMAGE_SANITYCHECK_MEMORY(out);
-    out.setColorTable(image.colorTable());
+    if (out.depth() == 1) {
+        out.setColorTable(image.colorTable());
+    }
     int w = image.width();
     int h = image.height();
     switch (image.format()) {
@@ -92,7 +94,9 @@ static QImage rotated180(const QImage &image) {
 static QImage rotated270(const QImage &image) {
     QImage out(image.height(), image.width(), image.format());
     QIMAGE_SANITYCHECK_MEMORY(out);
-    out.setColorTable(image.colorTable());
+    if (out.depth() == 1) {
+        out.setColorTable(image.colorTable());
+    }
     int w = image.width();
     int h = image.height();
     switch (image.format()) {
@@ -1232,7 +1236,7 @@ int QImage::depth() const
 */
 void QImage::setColorTable(const QVector<QRgb> &colors)
 {
-    if (colors.size() != 2) {
+    if (Q_UNLIKELY(colors.size() != 2)) {
         qWarning("QImage::setColorTable: Color table should have two colors");
         return;
     }
