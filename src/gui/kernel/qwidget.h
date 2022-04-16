@@ -616,11 +616,7 @@ private:
 
 protected:
     virtual void styleChange(QStyle&); // compat
-    virtual void enabledChange(bool);  // compat
-    virtual void paletteChange(const QPalette &);  // compat
     virtual void fontChange(const QFont &); // compat
-    virtual void windowActivationChange(bool);  // compat
-    virtual void languageChange();  // compat
 };
 
 Q_DECLARE_OPERATORS_FOR_FLAGS(QWidget::RenderFlags)
