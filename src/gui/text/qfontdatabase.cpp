@@ -252,11 +252,6 @@ QFontDef qt_FcPatternToQFontDef(FcPattern *pattern, const QFontDef &request)
         fontDef.ignorePitch = true;
     }
 
-    // hint monospaced fonts horizontally and vertically
-    if (fontDef.fixedPitch && fontDef.hintingPreference == QFont::PreferVerticalHinting) {
-        fontDef.hintingPreference = QFont::PreferFullHinting;
-    }
-
     return fontDef;
 }
 

@@ -138,8 +138,6 @@ void QTextEngine::shapeTextWithHarfbuzz(int item) const
     shaper_item.shaperFlags = 0;
     if (!kerningEnabled)
         shaper_item.shaperFlags |= HB_ShaperFlag_NoKerning;
-    if (option.useDesignMetrics())
-        shaper_item.shaperFlags |= HB_ShaperFlag_UseDesignMetrics;
 
     shaper_item.num_glyphs = qMax(layoutData->glyphLayout.numGlyphs - layoutData->used, int(shaper_item.item.length));
     if (! ensureSpace(shaper_item.num_glyphs)) {
@@ -184,7 +182,7 @@ void QTextEngine::shapeTextWithHarfbuzz(int item) const
     QGlyphLayout g = availableGlyphs(&si).mid(0, shaper_item.num_glyphs);
 
     if (kerningEnabled)
-        font->doKerning(&g, option.useDesignMetrics() ? QFlag(QTextEngine::DesignMetrics) : QFlag(0));
+        font->doKerning(&g);
 
     // qDebug("    -> item: script=%d num_glyphs=%d", shaper_item.script, shaper_item.num_glyphs);
     si.num_glyphs = shaper_item.num_glyphs;

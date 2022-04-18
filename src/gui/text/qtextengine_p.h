@@ -335,7 +335,6 @@ public:
 
     // keep in sync with QAbstractFontEngine::TextShapingFlag!!
     enum ShaperFlag {
-        DesignMetrics = 0x0002,
         GlyphIndicesOnly = 0x0004
     };
     Q_DECLARE_FLAGS(ShaperFlags, ShaperFlag)

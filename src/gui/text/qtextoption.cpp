@@ -130,25 +130,6 @@ QTextOption &QTextOption::operator=(const QTextOption &o)
 */
 
 /*!
-  \fn void QTextOption::setUseDesignMetrics(bool enable)
-
-    If \a enable is true then the layout will use design metrics;
-    otherwise it will use the metrics of the paint device (which is
-    the default behavior).
-
-    \sa useDesignMetrics()
-*/
-
-/*!
-  \fn bool QTextOption::useDesignMetrics() const
-
-    Returns true if the layout uses design rather than device metrics;
-    otherwise returns false.
-
-    \sa setUseDesignMetrics()
-*/
-
-/*!
   \fn Qt::Alignment QTextOption::alignment() const
 
   Returns the text alignment defined by the option.

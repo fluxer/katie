@@ -289,10 +289,8 @@ bool QFontEngineFT::loadGlyph(glyph_t glyph) const
         load_flags |= FT_LOAD_NO_HINTING;
     } else if (default_hint_style == HintLight) {
         load_flags |= FT_LOAD_TARGET_LIGHT;
-    } else if (default_hint_style == HintMedium) {
-        load_flags |= FT_LOAD_TARGET_LCD;
     } else if (default_hint_style == HintFull) {
-        load_flags |= FT_LOAD_TARGET_LCD_V;
+        load_flags |= FT_LOAD_TARGET_LCD;
     } else {
         load_flags |= FT_LOAD_TARGET_MONO;
     }
@@ -328,7 +326,6 @@ QFontGlyph* QFontEngineFT::getGlyph(glyph_t glyph) const
     gcache->right = CEIL(face->glyph->metrics.horiBearingX + face->glyph->metrics.width);
     gcache->top = CEIL(face->glyph->metrics.horiBearingY);
     gcache->bottom = FLOOR(face->glyph->metrics.horiBearingY - face->glyph->metrics.height);
-    gcache->linearhoriadvance = (face->glyph->linearHoriAdvance >> 10);
     gcache->horiadvance = face->glyph->metrics.horiAdvance;
     gcache->advancex = ROUND(face->glyph->advance.x);
 
@@ -507,7 +504,7 @@ QFixed QFontEngineFT::underlinePosition() const
     return underline_position;
 }
 
-void QFontEngineFT::doKerning(QGlyphLayout *g, QTextEngine::ShaperFlags flags)
+void QFontEngineFT::doKerning(QGlyphLayout *g)
 {
     if (!kerning_pairs_loaded) {
         kerning_pairs_loaded = true;
@@ -516,7 +513,7 @@ void QFontEngineFT::doKerning(QGlyphLayout *g, QTextEngine::ShaperFlags flags)
             loadKerningPairs(scalingFactor);
         }
     }
-    QFontEngine::doKerning(g, flags);
+    QFontEngine::doKerning(g);
 }
 
 void QFontEngineFT::getUnscaledGlyph(glyph_t glyph, QPainterPath *path, glyph_metrics_t *metrics)
@@ -614,22 +611,18 @@ bool QFontEngineFT::stringToCMap(const QChar *str, int len, QGlyphLayout *glyphs
         return true;
     }
 
-    recalcAdvances(glyphs, flags);
+    recalcAdvances(glyphs);
 
     return true;
 }
 
-void QFontEngineFT::recalcAdvances(QGlyphLayout *glyphs, QTextEngine::ShaperFlags flags) const
+void QFontEngineFT::recalcAdvances(QGlyphLayout *glyphs) const
 {
-    bool design = (default_hint_style == HintNone ||
-                   default_hint_style == HintLight ||
-                   (flags & QTextEngine::DesignMetrics));
     for (int i = 0; i < glyphs->numGlyphs; i++) {
         QFontGlyph* gcache = getGlyph(glyphs->glyphs[i]);
         Q_ASSERT(gcache);
 
-        glyphs->advances_x[i] = design ? QFixed::fromFixed(gcache->linearhoriadvance)
-                                       : QFixed::fromFixed(gcache->horiadvance);
+        glyphs->advances_x[i] = QFixed::fromFixed(gcache->horiadvance);
     }
 }
 
