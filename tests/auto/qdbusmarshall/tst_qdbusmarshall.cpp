@@ -34,6 +34,13 @@ static const char serviceName[] = "com.trolltech.autotests.qpong";
 static const char objectPath[] = "/com/trolltech/qpong";
 static const char *interfaceName = serviceName;
 
+static inline QDBusUnixFileDescriptor qDBusFD(const int fd)
+{
+    QDBusUnixFileDescriptor qdbusfd;
+    qdbusfd.setFileDescriptor(fd);
+    return qdbusfd;
+}
+
 class tst_QDBusMarshall: public QObject
 {
     Q_OBJECT
@@ -160,7 +167,6 @@ void addBasicTypesColumns()
 void basicNumericTypes_data()
 {
     QTest::newRow("bool") << QVariant(false) << "b" << "false";
-#if 1
     QTest::newRow("bool2") << QVariant(true) << "b" << "true";
     QTest::newRow("byte") << qVariantFromValue(uchar(1)) << "y" << "1";
     QTest::newRow("int16") << qVariantFromValue(short(2)) << "n" << "2";
@@ -190,8 +196,7 @@ void tst_QDBusMarshall::sendBasic_data()
     basicStringTypes_data();
 
     if (fileDescriptorPassing)
-        QTest::newRow("file-descriptor") << qVariantFromValue(QDBusUnixFileDescriptor(fileDescriptorForTest())) << "h" << "[Unix FD: valid]";
-#endif
+        QTest::newRow("file-descriptor") << qVariantFromValue(qDBusFD(fileDescriptorForTest())) << "h" << "[Unix FD: valid]";
 }
 
 void tst_QDBusMarshall::sendVariant_data()
@@ -287,7 +292,7 @@ void tst_QDBusMarshall::sendArrays_data()
     if (fileDescriptorPassing) {
         QList<QDBusUnixFileDescriptor> fileDescriptors;
         QTest::newRow("emptyfiledescriptorlist") << qVariantFromValue(fileDescriptors) << "ah" << "[Argument: ah {}]";
-        fileDescriptors << QDBusUnixFileDescriptor(fileDescriptorForTest()) << QDBusUnixFileDescriptor(1);
+        fileDescriptors << qDBusFD(fileDescriptorForTest()) << qDBusFD(1);
         QTest::newRow("filedescriptorlist") << qVariantFromValue(fileDescriptors) << "ah" << "[Argument: ah {[Unix FD: valid], [Unix FD: valid]}]";
     }
 
@@ -493,7 +498,7 @@ void tst_QDBusMarshall::sendMaps_data()
             << "[Argument: a{gs} {[Signature: a{gs}] = \"array of dict_entry of (signature, string)\", [Signature: i] = \"int32\", [Signature: s] = \"string\"}]";
 
     if (fileDescriptorPassing) {
-        svmap["zzfiledescriptor"] = qVariantFromValue(QDBusUnixFileDescriptor(fileDescriptorForTest()));
+        svmap["zzfiledescriptor"] = qVariantFromValue(qDBusFD(fileDescriptorForTest()));
         QTest::newRow("sv-map1-fd") << qVariantFromValue(svmap) << "a{sv}"
                                     << "[Argument: a{sv} {\"a\" = [Variant(int): 1], \"b\" = [Variant(QByteArray): {99}], \"c\" = [Variant(QString): \"b\"], \"d\" = [Variant(uint): 42], \"e\" = [Variant(short): -47], \"f\" = [Variant: [Variant(int): 0]], \"zzfiledescriptor\" = [Variant(QDBusUnixFileDescriptor): [Unix FD: valid]]}]";
     }
@@ -554,7 +559,7 @@ void tst_QDBusMarshall::sendStructs_data()
 
     if (fileDescriptorPassing) {
         MyFileDescriptorStruct fds;
-        fds.fd = QDBusUnixFileDescriptor(fileDescriptorForTest());
+        fds.fd = qDBusFD(fileDescriptorForTest());
         QTest::newRow("fdstruct") << qVariantFromValue(fds) << "(h)" << "[Argument: (h) [Unix FD: valid]]";
 
         QList<MyFileDescriptorStruct> fdlist;
@@ -698,7 +703,7 @@ void tst_QDBusMarshall::sendArgument_data()
 
     if (fileDescriptorPassing) {
         arg = QDBusArgument();
-        arg << QDBusUnixFileDescriptor(fileDescriptorForTest());
+        arg << qDBusFD(fileDescriptorForTest());
         QTest::newRow("filedescriptor") << qVariantFromValue(arg) << "h" << int(QDBusArgument::BasicType);
     }
 
@@ -978,7 +983,7 @@ void tst_QDBusMarshall::sendCallErrors_data()
     // invalid file descriptor
     if (fileDescriptorPassing) {
         QTest::newRow("invalid-file-descriptor") << serviceName << objectPath << interfaceName << "ping"
-                << (QVariantList() << qVariantFromValue(QDBusUnixFileDescriptor(-1)))
+                << (QVariantList() << qVariantFromValue(qDBusFD(-1)))
                 << "org.freedesktop.DBus.Error.Failed"
                 << "Marshalling failed: Invalid file descriptor passed in arguments"
                 << "";
