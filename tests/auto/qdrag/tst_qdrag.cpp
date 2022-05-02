@@ -205,10 +205,11 @@ void tst_QDrag::testDragEnterSelf()
     QTest::qWaitForWindowShown(&dw);
 
     // Press mouse to create a drag in dw
-    QTest::qWait(100);
+    QTest::qWait(200);
     QTest::mouseMove(&dw);
     DoMouseReleaseHelper aux(&dw);
     QTest::mousePress(&dw, Qt::LeftButton);
+    QTest::qWait(200);
 
     // Verify that without a window in the middle the drag goes to dw itself
     QCOMPARE(dw.startedDrags, 1);
@@ -228,10 +229,11 @@ void tst_QDrag::testDragEnterNoShaping()
     QTest::qWaitForWindowShown(&widgetOnTop);
 
     // Press mouse to create a drag in dw
-    QTest::qWait(100);
+    QTest::qWait(200);
     QTest::mouseMove(&dw);
     DoMouseReleaseHelper aux(&dw);
     QTest::mousePress(&dw, Qt::LeftButton);
+    QTest::qWait(200);
 
     // Verify that with widgetOnTop in the middle the drag, the drag event does not go to dw
     // and goes to widgetOnTop
@@ -262,10 +264,11 @@ void tst_QDrag::testDragEnterSomeShaping()
     XShapeCombineRegion(QX11Info::display(), widgetOnTop.effectiveWinId(), ShapeInput, 0, 0, QRegion(inputShape).handle(), ShapeSet);
 
     // Press mouse to create a drag in dw
-    QTest::qWait(100);
+    QTest::qWait(200);
     QTest::mouseMove(&dw);
     DoMouseReleaseHelper aux(&dw);
     QTest::mousePress(&dw, Qt::LeftButton);
+    QTest::qWait(200);
 
     // Verify that with a input shaped widgetOnTop in the middle the drag, the drag event goes to dw
     // and does not go to widgetOnTop
@@ -302,10 +305,11 @@ void tst_QDrag::testDragEnterAllShaping()
     XShapeCombineRegion(QX11Info::display(), widgetOnTop.effectiveWinId(), ShapeInput, 0, 0, QRegion(inputShape).handle(), ShapeSet);
 
     // Press mouse to create a drag in dw
-    QTest::qWait(100);
+    QTest::qWait(200);
     QTest::mouseMove(&dw);
     DoMouseReleaseHelper aux(&dw);
     QTest::mousePress(&dw, Qt::LeftButton);
+    QTest::qWait(200);
 
     // Verify that with a input shaped widgetOnTop in the middle the drag, the drag event goes to dw
     // and does not go to widgetOnTop
