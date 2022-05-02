@@ -22,10 +22,10 @@ MODULES = devel/cmake
 BUILD_DEPENDS = devel/gettext,-tools
 RUN_DEPENDS = devel/desktop-file-utils devel/xdg-utils fonts/freefont-ttf
 LIB_DEPENDS = textproc/icu4c devel/jansson graphics/png x11/dbus \
-	print/cups,-libs devel/gettext,-runtime
+	print/cups,-libs archivers/libdeflate devel/gettext,-runtime
 WANTLIB = ${COMPILER_LIBCXX} ICE SM X11 Xcursor Xext Xfixes Xinerama Xrandr \
-	Xrender fontconfig freetype icui18n icuuc png \
-	dbus-1 cups intl z c m
+	Xrender fontconfig freetype icui18n icuuc png dbus-1 cups deflate \
+	intl z c m
 SEPARATE_BUILD = Yes
 CONFIGURE_ARGS = -DKATIE_TOOLS_SUFFIX="-katie" -Wno-dev
 
