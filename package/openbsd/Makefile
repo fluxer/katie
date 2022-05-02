@@ -25,7 +25,7 @@ LIB_DEPENDS = textproc/icu4c devel/jansson graphics/png x11/dbus \
 	print/cups,-libs archivers/libdeflate devel/gettext,-runtime
 WANTLIB = ${COMPILER_LIBCXX} ICE SM X11 Xcursor Xext Xfixes Xinerama Xrandr \
 	Xrender fontconfig freetype icui18n icuuc png dbus-1 cups deflate \
-	intl z c m
+	intl c m
 SEPARATE_BUILD = Yes
 CONFIGURE_ARGS = -DKATIE_TOOLS_SUFFIX="-katie" -Wno-dev
 
