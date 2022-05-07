@@ -60,7 +60,7 @@ public:
     bool waitForNewConnection(int msec = 0, bool *timedOut = 0);
 
 protected:
-    virtual void incomingConnection(quintptr socketDescriptor);
+    virtual void incomingConnection(int socketDescriptor);
 
 private:
     Q_DISABLE_COPY(QLocalServer)

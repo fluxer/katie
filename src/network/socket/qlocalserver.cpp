@@ -146,7 +146,7 @@ bool QLocalServer::hasPendingConnections() const
     \sa newConnection(), nextPendingConnection(),
     QLocalSocket::setSocketDescriptor()
  */
-void QLocalServer::incomingConnection(quintptr socketDescriptor)
+void QLocalServer::incomingConnection(int socketDescriptor)
 {
     Q_D(QLocalServer);
     QLocalSocket *socket = new QLocalSocket(this);

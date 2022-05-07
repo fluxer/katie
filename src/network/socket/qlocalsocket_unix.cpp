@@ -312,7 +312,7 @@ void QLocalSocketPrivate::_q_connectToSocket()
     connectingOpenMode = 0;
 }
 
-bool QLocalSocket::setSocketDescriptor(quintptr socketDescriptor,
+bool QLocalSocket::setSocketDescriptor(int socketDescriptor,
         LocalSocketState socketState, OpenMode openMode)
 {
     Q_D(QLocalSocket);
@@ -343,7 +343,7 @@ void QLocalSocketPrivate::_q_abortConnectionAttempt()
     q->close();
 }
 
-quintptr QLocalSocket::socketDescriptor() const
+int QLocalSocket::socketDescriptor() const
 {
     Q_D(const QLocalSocket);
     return d->unixSocket.socketDescriptor();

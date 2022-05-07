@@ -74,7 +74,7 @@ QT_BEGIN_NAMESPACE
 */
 
 /*!
-    \fn bool QLocalSocket::setSocketDescriptor(quintptr socketDescriptor,
+    \fn bool QLocalSocket::setSocketDescriptor(int socketDescriptor,
         LocalSocketState socketState, OpenMode openMode)
 
     Initializes QLocalSocket with the native socket descriptor
@@ -90,7 +90,7 @@ QT_BEGIN_NAMESPACE
 */
 
 /*!
-    \fn quintptr QLocalSocket::socketDescriptor() const
+    \fn int QLocalSocket::socketDescriptor() const
 
     Returns the native socket descriptor of the QLocalSocket object if
     this is available; otherwise returns -1.
