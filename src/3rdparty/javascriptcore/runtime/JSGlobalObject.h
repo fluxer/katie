@@ -71,6 +71,7 @@ namespace JSC {
                 , prev(0)
                 , debugger(0)
                 , globalScopeChain(NoScopeChain())
+                , recursion(0)
                 , regExpConstructor(0)
                 , errorConstructor(0)
                 , evalErrorConstructor(0)
