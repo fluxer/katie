@@ -54,6 +54,7 @@ JSFunction::JSFunction(NonNullPassRefPtr<Structure> structure)
     : Base(structure)
     , m_executable(adoptRef(new VPtrHackExecutable()))
 {
+    ::memset(m_data, 0, QT_POINTER_SIZE * sizeof(unsigned char));
 }
 
 JSFunction::JSFunction(ExecState* exec, NonNullPassRefPtr<FunctionExecutable> executable, ScopeChainNode* scopeChainNode)
