@@ -301,6 +301,7 @@ namespace JSC {
         enum VPtrStealingHackType { VPtrStealingHack };
         JSString(VPtrStealingHackType) 
             : JSCell(0)
+            , m_stringLength(0)
             , m_ropeLength(0)
         {
         }
