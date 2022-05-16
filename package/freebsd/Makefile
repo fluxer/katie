@@ -32,11 +32,4 @@ NLS_USES = gettext
 NLS_CMAKE_ON = -DWITH_INTL=TRUE
 NLS_CMAKE_OFF = -DWITH_INTL=FALSE
 
-# workaround for Plasma desktop crashes, possible miss-optimization since it
-# does not crash when build for debugging
-.include <bsd.port.options.mk>
-.if ${OPSYS} == FreeBSD && ${OSVERSION} > 1300000
-USE_GCC = yes
-.endif
-
 .include <bsd.port.mk>
