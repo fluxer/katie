@@ -22,7 +22,6 @@
 #include "qabstractfileengine.h"
 #include "qabstractfileengine_p.h"
 #include "qdatetime.h"
-#include "qreadwritelock.h"
 #include "qvariant.h"
 // built-in handlers
 #include "qfsfileengine.h"

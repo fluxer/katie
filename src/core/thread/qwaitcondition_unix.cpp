@@ -21,8 +21,6 @@
 
 #include "qwaitcondition.h"
 #include "qmutex.h"
-#include "qreadwritelock.h"
-#include "qreadwritelock_p.h"
 
 #include <condition_variable>
 #include <chrono>
@@ -80,36 +78,6 @@ bool QWaitCondition::wait(QMutex *mutex, unsigned long time)
     lock.unlock();
 
     mutex->lock();
-
-    return returnValue == std::cv_status::no_timeout;
-}
-
-bool QWaitCondition::wait(QReadWriteLock *readWriteLock, unsigned long time)
-{
-    if (!readWriteLock || readWriteLock->d->accessCount == 0)
-        return false;
-    if (Q_UNLIKELY(readWriteLock->d->accessCount < -1)) {
-        qWarning("QWaitCondition: cannot wait on QReadWriteLocks with recursive lockForWrite()");
-        return false;
-    }
-
-    std::unique_lock<std::mutex> lock(d->mutex);
-    int previousAccessCount = readWriteLock->d->accessCount;
-    readWriteLock->unlock();
-
-    std::cv_status returnValue;
-    if (time != ULONG_MAX) {
-        returnValue = d->cond.wait_for(lock, std::chrono::milliseconds(time));
-    } else {
-        returnValue = std::cv_status::no_timeout;
-        d->cond.wait(lock);
-    }
-    lock.unlock();
-
-    if (previousAccessCount < 0)
-        readWriteLock->lockForWrite();
-    else
-        readWriteLock->lockForRead();
 
     return returnValue == std::cv_status::no_timeout;
 }

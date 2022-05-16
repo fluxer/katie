@@ -127,8 +127,6 @@ include/katie/QtCore/QPointer
 include/katie/QtCore/QProcess
 include/katie/QtCore/QProcessEnvironment
 include/katie/QtCore/QQueue
-include/katie/QtCore/QReadLocker
-include/katie/QtCore/QReadWriteLock
 include/katie/QtCore/QRect
 include/katie/QtCore/QRectF
 include/katie/QtCore/QRegExp
@@ -184,7 +182,6 @@ include/katie/QtCore/QVectorIterator
 include/katie/QtCore/QVectorTypedData
 include/katie/QtCore/QWaitCondition
 include/katie/QtCore/QWeakPointer
-include/katie/QtCore/QWriteLocker
 include/katie/QtCore/Q_PID
 include/katie/QtCore/Qt
 include/katie/QtCore/QtAlgorithms
@@ -266,7 +263,6 @@ include/katie/QtCore/qpoint.h
 include/katie/QtCore/qpointer.h
 include/katie/QtCore/qprocess.h
 include/katie/QtCore/qqueue.h
-include/katie/QtCore/qreadwritelock.h
 include/katie/QtCore/qrect.h
 include/katie/QtCore/qregexp.h
 include/katie/QtCore/qresource.h

@@ -135,31 +135,3 @@
 
     \sa wakeOne(), wakeAll()
 */
-
-/*!
-    \fn bool QWaitCondition::wait(QReadWriteLock *readWriteLock, unsigned long time)
-    \since 4.4
-
-    Releases the locked \a readWriteLock and waits on the wait
-    condition.  The \a readWriteLock must be initially locked by the
-    calling thread. If \a readWriteLock is not in a locked state, this
-    function returns immediately. The \a readWriteLock must not be
-    locked recursively, otherwise this function will not release the
-    lock properly. The \a readWriteLock will be unlocked, and the
-    calling thread will block until either of these conditions is met:
-
-    \list
-    \o Another thread signals it using wakeOne() or wakeAll(). This
-       function will return true in this case.
-    \o \a time milliseconds has elapsed. If \a time is \c ULONG_MAX
-       (the default), then the wait will never timeout (the event
-       must be signalled). This function will return false if the
-       wait timed out.
-    \endlist
-
-    The \a readWriteLock will be returned to the same locked
-    state. This function is provided to allow the atomic transition
-    from the locked state to the wait state.
-
-    \sa wakeOne(), wakeAll()
-*/

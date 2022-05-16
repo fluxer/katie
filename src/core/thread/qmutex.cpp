@@ -68,7 +68,7 @@ QT_BEGIN_NAMESPACE
     lock calls unlock(). A non-blocking alternative to lock() is
     tryLock().
 
-    \sa QMutexLocker, QReadWriteLock, QSemaphore, QWaitCondition
+    \sa QMutexLocker, QSemaphore, QWaitCondition
 */
 
 /*!
@@ -217,7 +217,7 @@ QT_BEGIN_NAMESPACE
 
     \snippet doc/src/snippets/code/src_corelib_thread_qmutex.cpp 6
 
-    \sa QReadLocker, QWriteLocker, QMutex
+    \sa QMutex
 */
 
 /*!

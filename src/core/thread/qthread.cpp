@@ -22,7 +22,6 @@
 #include "qthread.h"
 #include "qmutex.h"
 #include "qmutexpool_p.h"
-#include "qreadwritelock.h"
 #include "qabstracteventdispatcher.h"
 #include "qeventloop.h"
 #include "qhash.h"
