@@ -672,7 +672,7 @@ bool QDBusConnection::connect(const QString &service, const QString &path, const
         return false;
     }
 
-    QDBusWriteLocker locker(ConnectAction, d);
+    QDBusLocker locker(ConnectAction, d);
     return d->connectSignal(service, path, interface, name, argumentMatch, signature, receiver, slot);
 }
 
@@ -728,7 +728,7 @@ bool QDBusConnection::disconnect(const QString &service, const QString &path, co
     if (interface.isEmpty() && name.isEmpty())
         return false;
 
-    QDBusWriteLocker locker(DisconnectAction, d);
+    QDBusLocker locker(DisconnectAction, d);
     return d->disconnectSignal(service, path, interface, name, argumentMatch, signature, receiver, slot);
 }
 
@@ -754,7 +754,7 @@ bool QDBusConnection::registerObject(const QString &path, QObject *object, Regis
     QStringList pathComponents = path.split(QLatin1Char('/'));
     if (pathComponents.last().isEmpty())
         pathComponents.removeLast();
-    QDBusWriteLocker locker(RegisterObjectAction, d);
+    QDBusLocker locker(RegisterObjectAction, d);
 
     // lower-bound search for where this object should enter in the tree
     QDBusConnectionPrivate::ObjectTreeNode *node = &d->rootNode;
@@ -817,7 +817,7 @@ void QDBusConnection::unregisterObject(const QString &path, UnregisterMode mode)
         return;
 
     QStringList pathComponents = path.split(QLatin1Char('/'));
-    QDBusWriteLocker locker(UnregisterObjectAction, d);
+    QDBusLocker locker(UnregisterObjectAction, d);
     QDBusConnectionPrivate::ObjectTreeNode *node = &d->rootNode;
     int i = 1;
 
@@ -863,7 +863,7 @@ QObject *QDBusConnection::objectRegisteredAt(const QString &path) const
         pathComponents.removeLast();
 
     // lower-bound search for where this object should enter in the tree
-    QDBusReadLocker lock(ObjectRegisteredAtAction, d);
+    QDBusLocker lock(ObjectRegisteredAtAction, d);
     const QDBusConnectionPrivate::ObjectTreeNode *node = &d->rootNode;
 
     int i = 1;

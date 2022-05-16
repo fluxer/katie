@@ -998,7 +998,7 @@ QDBusConnectionPrivate::~QDBusConnectionPrivate()
 
 void QDBusConnectionPrivate::closeConnection()
 {
-    QDBusWriteLocker locker(CloseConnectionAction, this);
+    QDBusLocker locker(CloseConnectionAction, this);
     ConnectionMode oldMode = mode;
     mode = InvalidMode; // prevent reentrancy
     baseService.clear();
@@ -1125,7 +1125,7 @@ void QDBusConnectionPrivate::socketWrite(int fd)
 
 void QDBusConnectionPrivate::objectDestroyed(QObject *obj)
 {
-    QDBusWriteLocker locker(ObjectDestroyedAction, this);
+    QDBusLocker locker(ObjectDestroyedAction, this);
     huntAndDestroy(obj, rootNode);
 
     SignalHookHash::iterator sit = signalHooks.begin();
@@ -1157,7 +1157,7 @@ void QDBusConnectionPrivate::relaySignal(QObject *obj, const QMetaObject *mo, in
             break;
         }
 
-    QDBusReadLocker locker(RelaySignalAction, this);
+    QDBusLocker locker(RelaySignalAction, this);
     QDBusMessage message = QDBusMessage::createSignal(QLatin1String("/"), interface,
                                                       QLatin1String(memberName.constData()));
     QDBusMessagePrivate::setParametersValidated(message, true);
@@ -1184,7 +1184,7 @@ void QDBusConnectionPrivate::relaySignal(QObject *obj, const QMetaObject *mo, in
 void QDBusConnectionPrivate::serviceOwnerChangedNoLock(const QString &name,
                                                        const QString &oldOwner, const QString &newOwner)
 {
-//    QDBusWriteLocker locker(UpdateSignalHookOwnerAction, this);
+//    QDBusLocker locker(UpdateSignalHookOwnerAction, this);
     WatchedServicesHash::Iterator it = watchedServices.find(name);
     if (it == watchedServices.end())
         return;
@@ -1415,7 +1415,7 @@ void QDBusConnectionPrivate::handleObjectCall(const QDBusMessage &msg)
     bool semWait;
 
     {
-        QDBusReadLocker locker(HandleObjectCallAction, this);
+        QDBusLocker locker(HandleObjectCallAction, this);
         if (!findObject(&rootNode, msg.path(), usedLength, result)) {
             // qDebug("Call failed: no object found at %s", qPrintable(msg.path()));
             sendError(msg, QDBusError::UnknownObject);
@@ -1547,7 +1547,7 @@ void QDBusConnectionPrivate::handleSignal(const QDBusMessage& msg)
     key += QLatin1Char(':');
     key += msg.interface();
 
-    QDBusReadLocker locker(HandleSignalAction, this);
+    QDBusLocker locker(HandleSignalAction, this);
     handleSignal(key, msg);                  // one try
 
     key.truncate(msg.member().length() + 1); // keep the ':'
@@ -2209,7 +2209,7 @@ void QDBusConnectionPrivate::connectRelay(const QString &service,
         return;                 // don't connect
 
     // add it to our list:
-    QDBusWriteLocker locker(ConnectRelayAction, this);
+    QDBusLocker locker(ConnectRelayAction, this);
     SignalHookHash::ConstIterator it = signalHooks.constFind(key);
     SignalHookHash::ConstIterator end = signalHooks.constEnd();
     for ( ; it != end && it.key() == key; ++it) {
@@ -2240,7 +2240,7 @@ void QDBusConnectionPrivate::disconnectRelay(const QString &service,
         return;                 // don't connect
 
     // remove it from our list:
-    QDBusWriteLocker locker(DisconnectRelayAction, this);
+    QDBusLocker locker(DisconnectRelayAction, this);
     SignalHookHash::Iterator it = signalHooks.find(key);
     SignalHookHash::Iterator end = signalHooks.end();
     for ( ; it != end && it.key() == key; ++it) {
@@ -2268,7 +2268,7 @@ QString QDBusConnectionPrivate::getNameOwner(const QString& serviceName)
 
     {
         // acquire a read lock for the cache
-        QReadLocker locker(&lock);
+        QMutexLocker locker(&lock);
         WatchedServicesHash::ConstIterator it = watchedServices.constFind(serviceName);
         if (it != watchedServices.constEnd())
             return it->owner;
@@ -2297,7 +2297,7 @@ QDBusConnectionPrivate::findMetaObject(const QString &service, const QString &pa
 {
     // service must be a unique connection name
     if (!interface.isEmpty()) {
-        QDBusReadLocker locker(FindMetaObject1Action, this);
+        QDBusLocker locker(FindMetaObject1Action, this);
         QDBusMetaObject *mo = cachedMetaObjects.value(interface, 0);
         if (mo)
             return mo;
@@ -2312,7 +2312,7 @@ QDBusConnectionPrivate::findMetaObject(const QString &service, const QString &pa
     QDBusMessage reply = sendWithReply(msg, QDBus::Block);
 
     // it doesn't exist yet, we have to create it
-    QDBusWriteLocker locker(FindMetaObject2Action, this);
+    QDBusLocker locker(FindMetaObject2Action, this);
     QDBusMetaObject *mo = 0;
     if (!interface.isEmpty())
         mo = cachedMetaObjects.value(interface, 0);
@@ -2341,7 +2341,7 @@ QDBusConnectionPrivate::findMetaObject(const QString &service, const QString &pa
 
 void QDBusConnectionPrivate::registerService(const QString &serviceName)
 {
-    QDBusWriteLocker locker(RegisterServiceAction, this);
+    QDBusLocker locker(RegisterServiceAction, this);
     registerServiceNoLock(serviceName);
 }
 
@@ -2352,7 +2352,7 @@ void QDBusConnectionPrivate::registerServiceNoLock(const QString &serviceName)
 
 void QDBusConnectionPrivate::unregisterService(const QString &serviceName)
 {
-    QDBusWriteLocker locker(UnregisterServiceAction, this);
+    QDBusLocker locker(UnregisterServiceAction, this);
     unregisterServiceNoLock(serviceName);
 }
 
@@ -2368,7 +2368,7 @@ bool QDBusConnectionPrivate::isServiceRegisteredByThread(const QString &serviceN
     if (serviceName == dbusServiceString())
         return false;
 
-    QDBusReadLocker locker(ServiceRegisteredAction, this);
+    QDBusLocker locker(ServiceRegisteredAction, this);
     return serviceNames.contains(serviceName);
 }
 
