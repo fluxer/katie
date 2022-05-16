@@ -23,7 +23,7 @@
 #include "qobjectdefs.h"
 #include "qdatetime.h"
 #include "qbytearray.h"
-#include "qreadwritelock.h"
+#include "qmutex.h"
 #include "qstring.h"
 #include "qstringlist.h"
 #include "qvector.h"
@@ -335,7 +335,7 @@ public:
 
 Q_DECLARE_TYPEINFO(QCustomTypeInfo, Q_MOVABLE_TYPE);
 Q_GLOBAL_STATIC(QStdVector<QCustomTypeInfo>, customTypes)
-Q_GLOBAL_STATIC(QReadWriteLock, customTypesLock)
+Q_GLOBAL_STATIC(QMutex, customTypesLock)
 
 #ifndef QT_NO_DATASTREAM
 /*! \internal
@@ -356,7 +356,7 @@ void QMetaType::registerStreamOperators(int idx, SaveOperator saveOp,
 {
     if (idx < User)
         return; //builtin types should not be registered;
-    QWriteLocker locker(customTypesLock());
+    QMutexLocker locker(customTypesLock());
     QStdVector<QCustomTypeInfo> *ct = customTypes();
     if (!ct)
         return;
@@ -383,7 +383,6 @@ const char *QMetaType::typeName(int type)
     } else if (type >= FirstCoreExtType && type <= LastCoreExtType) {
         return MetaTypeTbl[type - FirstCoreExtType + GuiTypeCount + LastCoreType + 2].typeName;
     } else if (type >= User) {
-        QReadLocker locker(customTypesLock());
         const QStdVector<QCustomTypeInfo> * const ct = customTypes();
         return ct && ct->count() > type - User && !ct->at(type - User).typeName.isEmpty()
                 ? ct->at(type - User).typeName.constData() : nullptr;
@@ -449,7 +448,7 @@ int QMetaType::registerType(const char *typeName, Destructor destructor,
                                   normalizedTypeName.size());
 
     if (!idx) {
-        QWriteLocker locker(customTypesLock());
+        QMutexLocker locker(customTypesLock());
         QStdVector<QCustomTypeInfo> *ct = customTypes();
         idx = qMetaTypeCustomType_unlocked(normalizedTypeName.constData(),
                                            normalizedTypeName.size());
@@ -490,7 +489,7 @@ int QMetaType::registerTypedef(const char* typeName, int aliasId)
         return idx;
     }
 
-    QWriteLocker locker(customTypesLock());
+    QMutexLocker locker(customTypesLock());
     QStdVector<QCustomTypeInfo> *ct = customTypes();
     idx = qMetaTypeCustomType_unlocked(normalizedTypeName.constData(),
                                            normalizedTypeName.size());
@@ -524,7 +523,7 @@ void QMetaType::unregisterType(const char *typeName)
 #else
     NS(QByteArray) normalizedTypeName = QMetaObject::normalizedType(typeName);
 #endif
-    QWriteLocker locker(customTypesLock());
+    QMutexLocker locker(customTypesLock());
     QStdVector<QCustomTypeInfo> *ct = customTypes();
     for (int v = 0; v < ct->count(); ++v) {
         if (ct->at(v).typeName == typeName) {
@@ -551,7 +550,6 @@ bool QMetaType::isRegistered(int type)
     } else if (type < 0) {
         return false;
     }
-    QReadLocker locker(customTypesLock());
     const QStdVector<QCustomTypeInfo> * const ct = customTypes();
     return (ct && (ct->count() > type - User) && !ct->at(type - User).typeName.isEmpty());
 }
@@ -569,7 +567,6 @@ int QMetaType::type(const char *typeName)
         return 0;
     int type = qMetaTypeStaticType(typeName, length);
     if (!type) {
-        QReadLocker locker(customTypesLock());
         type = qMetaTypeCustomType_unlocked(typeName, length);
 #ifndef QT_NO_QOBJECT
         if (!type) {
@@ -764,7 +761,6 @@ bool QMetaType::save(QDataStream &stream, int type, const void *data)
         qMetaTypeGuiHelper[type - FirstGuiType].saveOp(stream, data);
         break;
     default: {
-        QReadLocker locker(customTypesLock());
         const QStdVector<QCustomTypeInfo> * const ct = customTypes();
         if (!ct)
             return false;
@@ -962,7 +958,6 @@ bool QMetaType::load(QDataStream &stream, int type, void *data)
         qMetaTypeGuiHelper[type - FirstGuiType].loadOp(stream, data);
         break;
     default: {
-        QReadLocker locker(customTypesLock());
         const QStdVector<QCustomTypeInfo> * const ct = customTypes();
         if (!ct)
             return false;
@@ -1191,7 +1186,6 @@ void *QMetaType::construct(int type, const void *copy)
             return 0;
         constr = qMetaTypeGuiHelper[type - FirstGuiType].constr;
     } else {
-        QReadLocker locker(customTypesLock());
         const QStdVector<QCustomTypeInfo> * const ct = customTypes();
         if (type < User || !ct || ct->count() <= type - User)
             return 0;
@@ -1355,7 +1349,6 @@ void QMetaType::destroy(int type, void *data)
                 return;
             destr = qMetaTypeGuiHelper[type - FirstGuiType].destr;
         } else {
-            QReadLocker locker(customTypesLock());
             const QStdVector<QCustomTypeInfo> * const ct = customTypes();
             if (type < User || !ct || ct->count() <= type - User)
                 break;
