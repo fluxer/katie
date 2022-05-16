@@ -27,6 +27,7 @@
 #include "VectorTraits.h"
 #include <limits>
 #include <utility>
+#include <array>
 
 namespace WTF {
 
