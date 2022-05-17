@@ -33,7 +33,7 @@ Q_GLOBAL_STATIC(QHostInfoCache, globalHostInfoCache)
 
 /*!
     \class QHostInfo
-    \brief The QHostInfo class provides static functions for host name lookups.
+    \brief The QHostInfo class provides static methods for host name lookups.
 
     \reentrant
     \inmodule QtNetwork
@@ -41,39 +41,24 @@ Q_GLOBAL_STATIC(QHostInfoCache, globalHostInfoCache)
 
     QHostInfo uses the lookup mechanisms provided by the operating
     system to find the IP address(es) associated with a host name,
-    or the host name associated with an IP address.
-    The class provides two static convenience functions: one that
-    works asynchronously and emits a signal once the host is found,
-    and one that blocks and returns a QHostInfo object.
+    or the host name associated with an IP address. The class
+    provides static method that blocks and returns a QHostInfo object.
 
-    To look up a host's IP addresses asynchronously, call lookupHost(),
-    which takes the host name or IP address, a receiver object, and a slot
-    signature as arguments and returns an ID. You can abort the
-    lookup by calling abortHostLookup() with the lookup ID.
-
-    Example:
-
-    \snippet doc/src/snippets/code/src_network_kernel_qhostinfo.cpp 0
-
-
-    The slot is invoked when the results are ready. The results are
-    stored in a QHostInfo object. Call
-    addresses() to get the list of IP addresses for the host, and
+    Call addresses() to get the list of IP addresses for the host, and
     hostName() to get the host name that was looked up.
 
     If the lookup failed, error() returns the type of error that
     occurred. errorString() gives a human-readable description of the
     lookup error.
 
-    If you want a blocking lookup, use the QHostInfo::fromName() function:
-
-    \snippet doc/src/snippets/code/src_network_kernel_qhostinfo.cpp 1
+    If you want a non-blocking lookup, use the QHostInfo::fromName()
+    in a thread.
 
     QHostInfo supports Internationalized Domain Names (IDNs) through the
     IDNA and Punycode standards.
 
     To retrieve the name of the local host, use the static
-    QHostInfo::localHostName() function.
+    QHostInfo::localHostName() method.
 
     \note Since 4.6.3 QHostInfo is using a small internal 60 second DNS cache
     for performance improvements.
@@ -84,7 +69,7 @@ Q_GLOBAL_STATIC(QHostInfoCache, globalHostInfoCache)
 
 /*!
     Looks up the IP address(es) for the given host \a name. The
-    function blocks during the lookup which means that execution of
+    method blocks during the lookup which means that execution of
     the program is suspended until the results of the lookup are
     ready. Returns the result of the lookup in a QHostInfo object.
 
@@ -210,7 +195,7 @@ QHostInfo::HostInfoError QHostInfo::error() const
 }
 
 /*!
-    If the lookup failed, this function returns a human readable
+    If the lookup failed, this method returns a human readable
     description of the error; otherwise "Unknown error" is returned.
 
     \sa error()
@@ -269,7 +254,7 @@ bool QHostInfoCache::isEnabled() const
     return enabled;
 }
 
-// this function is currently only used for the auto tests
+// this method is currently only used for the auto tests
 // and not usable by public API
 void QHostInfoCache::setEnabled(bool e)
 {
