@@ -42,6 +42,7 @@ QHostInfo QHostInfoPrivate::fromName(const QString &hostName)
 {
     QHostInfo results;
     results.d->err = QHostInfo::NoError;
+    results.d->errorStr = QCoreApplication::translate("QHostInfo", "Unknown error");
 
 #if defined(QHOSTINFO_DEBUG)
     qDebug("QHostInfoPrivate::fromName(%s) looking up...",
