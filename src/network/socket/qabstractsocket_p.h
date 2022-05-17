@@ -110,8 +110,6 @@ public:
     QTimer *connectTimer;
     QTimer *disconnectTimer;
 
-    int hostLookupId;
-
     QAbstractSocket::SocketType socketType;
     QAbstractSocket::SocketState state;
 

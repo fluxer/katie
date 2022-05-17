@@ -82,82 +82,6 @@ Q_GLOBAL_STATIC(QHostInfoCache, globalHostInfoCache)
     \sa QAbstractSocket, {http://www.rfc-editor.org/rfc/rfc3492.txt}{RFC 3492}
 */
 
-static QAtomicInt theIdCounter(1);
-
-/*!
-    Looks up the IP address(es) associated with host name \a name, and
-    returns an ID for the lookup. When the result of the lookup is
-    ready, the slot or signal \a member in \a receiver is called with
-    a QHostInfo argument. The QHostInfo object can then be inspected
-    to get the results of the lookup.
-
-    The lookup is performed by a single function call, for example:
-
-    \snippet doc/src/snippets/code/src_network_kernel_qhostinfo.cpp 2
-
-    The implementation of the slot prints basic information about the
-    addresses returned by the lookup, or reports an error if it failed:
-
-    \snippet doc/src/snippets/code/src_network_kernel_qhostinfo.cpp 3
-
-    If you pass a literal IP address to \a name instead of a host name,
-    QHostInfo will search for the domain name for the IP (i.e., QHostInfo will
-    perform a \e reverse lookup). On success, the resulting QHostInfo will
-    contain both the resolved domain name and IP addresses for the host
-    name. Example:
-
-    \snippet doc/src/snippets/code/src_network_kernel_qhostinfo.cpp 4
-
-    \note There is no guarantee on the order the signals will be emitted
-    if you start multiple requests with lookupHost().
-
-    \sa abortHostLookup(), addresses(), error(), fromName()
-*/
-int QHostInfo::lookupHost(const QString &name, QObject *receiver,
-                          const char *member)
-{
-#ifdef QHOSTINFO_DEBUG
-    qDebug("QHostInfo::lookupHost(\"%s\", %p, %s)",
-           name.toLatin1().constData(), receiver, member ? member + 1 : 0);
-#endif
-
-    qRegisterMetaType<QHostInfo>("QHostInfo");
-
-    if (!receiver)
-        return -1;
-
-    int id = theIdCounter.fetchAndAddRelaxed(1); // generate unique ID
-
-    if (name.isEmpty()) {
-        QHostInfo info(id);
-        info.setError(QHostInfo::HostNotFound);
-        info.setErrorString(QCoreApplication::translate("QHostInfo", "No host name given"));
-        QHostInfoResult result;
-        QObject::connect(&result, SIGNAL(resultsReady(QHostInfo)), receiver, member);
-        result.emitResultsReady(info);
-        return id;
-    }
-
-    QHostInfo info = QHostInfo::fromName(name);
-    info.setLookupId(id);
-    QHostInfoResult result;
-    QObject::connect(&result, SIGNAL(resultsReady(QHostInfo)), receiver, member);
-    result.emitResultsReady(info);
-
-    return id;
-}
-
-/*!
-    Aborts the host lookup with the ID \a id, as returned by lookupHost().
-
-    \sa lookupHost(), lookupId()
-*/
-void QHostInfo::abortHostLookup(int id)
-{
-    // nothing to do
-    Q_UNUSED(id);
-}
-
 /*!
     Looks up the IP address(es) for the given host \a name. The
     function blocks during the lookup which means that execution of
@@ -186,7 +110,7 @@ QHostInfo QHostInfo::fromName(const QString &name)
         }
     }
 
-    QHostInfo info = QHostInfoAgent::fromName(name);
+    QHostInfo info = QHostInfoPrivate::fromName(name);
     if (cache && cache->isEnabled()) {
         cache->put(name, info);
     }
@@ -203,26 +127,29 @@ QHostInfo QHostInfo::fromName(const QString &name)
     \value HostNotFound No IP addresses were found for the host.
     \value UnknownError An unknown error occurred.
 
-    \sa error(), setError()
+    \sa error(), errorString()
 */
 
 /*!
-    Constructs an empty host info object with lookup ID \a id.
+    Constructs an empty host info object.
 
     \sa lookupId()
 */
-QHostInfo::QHostInfo(int id)
-    : d(new QHostInfoPrivate)
+QHostInfo::QHostInfo()
+    : d(new QHostInfoPrivate())
 {
-    d->lookupId = id;
 }
 
 /*!
     Constructs a copy of \a other.
 */
 QHostInfo::QHostInfo(const QHostInfo &other)
-    : d(new QHostInfoPrivate(*other.d.data()))
+    : d(new QHostInfoPrivate())
 {
+    d->err = other.d->err;
+    d->errorStr = other.d->errorStr;
+    d->addrs = other.d->addrs;
+    d->hostName = other.d->hostName;
 }
 
 /*!
@@ -231,7 +158,10 @@ QHostInfo::QHostInfo(const QHostInfo &other)
 */
 QHostInfo &QHostInfo::operator=(const QHostInfo &other)
 {
-    *d.data() = *other.d.data();
+    d->err = other.d->err;
+    d->errorStr = other.d->errorStr;
+    d->addrs = other.d->addrs;
+    d->hostName = other.d->hostName;
     return *this;
 }
 
@@ -240,6 +170,7 @@ QHostInfo &QHostInfo::operator=(const QHostInfo &other)
 */
 QHostInfo::~QHostInfo()
 {
+    delete d;
 }
 
 /*!
@@ -258,16 +189,6 @@ QList<QHostAddress> QHostInfo::addresses() const
 }
 
 /*!
-    Sets the list of addresses in this QHostInfo to \a addresses.
-
-    \sa addresses()
-*/
-void QHostInfo::setAddresses(const QList<QHostAddress> &addresses)
-{
-    d->addrs = addresses;
-}
-
-/*!
     Returns the name of the host whose IP addresses were looked up.
 
     \sa localHostName()
@@ -278,20 +199,10 @@ QString QHostInfo::hostName() const
 }
 
 /*!
-    Sets the host name of this QHostInfo to \a hostName.
-
-    \sa hostName()
-*/
-void QHostInfo::setHostName(const QString &hostName)
-{
-    d->hostName = hostName;
-}
-
-/*!
     Returns the type of error that occurred if the host name lookup
     failed; otherwise returns NoError.
 
-    \sa setError(), errorString()
+    \sa errorString()
 */
 QHostInfo::HostInfoError QHostInfo::error() const
 {
@@ -299,55 +210,14 @@ QHostInfo::HostInfoError QHostInfo::error() const
 }
 
 /*!
-    Sets the error type of this QHostInfo to \a error.
-
-    \sa error(), errorString()
-*/
-void QHostInfo::setError(HostInfoError error)
-{
-    d->err = error;
-}
-
-/*!
-    Returns the ID of this lookup.
-
-    \sa setLookupId(), abortHostLookup(), hostName()
-*/
-int QHostInfo::lookupId() const
-{
-    return d->lookupId;
-}
-
-/*!
-    Sets the ID of this lookup to \a id.
-
-    \sa lookupId(), lookupHost()
-*/
-void QHostInfo::setLookupId(int id)
-{
-    d->lookupId = id;
-}
-
-/*!
     If the lookup failed, this function returns a human readable
     description of the error; otherwise "Unknown error" is returned.
 
-    \sa setErrorString(), error()
+    \sa error()
 */
 QString QHostInfo::errorString() const
 {
     return d->errorStr;
-}
-
-/*!
-    Sets the human readable description of the error that occurred to \a str
-    if the lookup failed.
-
-    \sa errorString(), setError()
-*/
-void QHostInfo::setErrorString(const QString &str)
-{
-    d->errorStr = str;
 }
 
 /*!
@@ -440,6 +310,3 @@ void QHostInfoCache::clear()
 }
 
 QT_END_NAMESPACE
-
-
-#include "moc_qhostinfo_p.h"

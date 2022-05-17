@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-03-23 07:35+0200\n"
+"POT-Creation-Date: 2022-05-17 05:45+0300\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -2027,7 +2027,7 @@ msgstr ""
 msgid "Step &down"
 msgstr ""
 
-#: src/gui/kernel/qwidget.cpp:5031
+#: src/gui/kernel/qwidget.cpp:5006
 msgid "*"
 msgstr ""
 
@@ -4417,90 +4417,88 @@ msgstr ""
 msgid "Copy &Link Location"
 msgstr ""
 
-#: src/gui/text/qtextcontrol.cpp:2781
+#: src/gui/text/qtextcontrol.cpp:2780
 msgctxt "QUnicodeControlCharacterMenu"
 msgid "LRM Left-to-right mark"
 msgstr ""
 
-#: src/gui/text/qtextcontrol.cpp:2782
+#: src/gui/text/qtextcontrol.cpp:2781
 msgctxt "QUnicodeControlCharacterMenu"
 msgid "RLM Right-to-left mark"
 msgstr ""
 
-#: src/gui/text/qtextcontrol.cpp:2783
+#: src/gui/text/qtextcontrol.cpp:2782
 msgctxt "QUnicodeControlCharacterMenu"
 msgid "ZWJ Zero width joiner"
 msgstr ""
 
-#: src/gui/text/qtextcontrol.cpp:2784
+#: src/gui/text/qtextcontrol.cpp:2783
 msgctxt "QUnicodeControlCharacterMenu"
 msgid "ZWNJ Zero width non-joiner"
 msgstr ""
 
-#: src/gui/text/qtextcontrol.cpp:2785
+#: src/gui/text/qtextcontrol.cpp:2784
 msgctxt "QUnicodeControlCharacterMenu"
 msgid "ZWSP Zero width space"
 msgstr ""
 
-#: src/gui/text/qtextcontrol.cpp:2786
+#: src/gui/text/qtextcontrol.cpp:2785
 msgctxt "QUnicodeControlCharacterMenu"
 msgid "LRE Start of left-to-right embedding"
 msgstr ""
 
-#: src/gui/text/qtextcontrol.cpp:2787
+#: src/gui/text/qtextcontrol.cpp:2786
 msgctxt "QUnicodeControlCharacterMenu"
 msgid "RLE Start of right-to-left embedding"
 msgstr ""
 
-#: src/gui/text/qtextcontrol.cpp:2788
+#: src/gui/text/qtextcontrol.cpp:2787
 msgctxt "QUnicodeControlCharacterMenu"
 msgid "LRO Start of left-to-right override"
 msgstr ""
 
-#: src/gui/text/qtextcontrol.cpp:2789
+#: src/gui/text/qtextcontrol.cpp:2788
 msgctxt "QUnicodeControlCharacterMenu"
 msgid "RLO Start of right-to-left override"
 msgstr ""
 
-#: src/gui/text/qtextcontrol.cpp:2790
+#: src/gui/text/qtextcontrol.cpp:2789
 msgctxt "QUnicodeControlCharacterMenu"
 msgid "PDF Pop directional formatting"
 msgstr ""
 
-#: src/gui/text/qtextcontrol.cpp:2796
+#: src/gui/text/qtextcontrol.cpp:2795
 msgid "Insert Unicode control character"
 msgstr ""
 
-#: src/network/kernel/qhostinfo_p.h:74
+#: src/network/kernel/qhostinfo_p.h:53
 msgctxt "QHostInfo"
 msgid "Unknown error"
 msgstr ""
 
-#: src/network/kernel/qhostinfo.cpp:134
-msgctxt "QHostInfo"
-msgid "No host name given"
-msgstr ""
-
 #: src/network/kernel/qhostinfo_unix.cpp:87
 #: src/network/kernel/qhostinfo_unix.cpp:171
-#: src/network/socket/qabstractsocket.cpp:690
+msgctxt "QHostInfo"
 msgid "Host not found"
 msgstr ""
 
 #: src/network/kernel/qhostinfo_unix.cpp:105
+msgctxt "QHostInfo"
 msgid "No host name given"
 msgstr ""
 
 #: src/network/kernel/qhostinfo_unix.cpp:107
+msgctxt "QHostInfo"
 msgid "Invalid hostname"
 msgstr ""
 
 #: src/network/kernel/qhostinfo_unix.cpp:159
+msgctxt "QHostInfo"
 msgid "Unknown address type"
 msgstr ""
 
 #: src/network/socket/qtcpserver.cpp:216
-#: src/network/socket/qabstractsocket.cpp:429
+#: src/network/socket/qabstractsocket.cpp:428
 msgid "Operation on socket is not supported"
 msgstr ""
 
@@ -4509,7 +4507,7 @@ msgid "%1: Permission denied"
 msgstr ""
 
 #: src/network/socket/qlocalserver_unix.cpp:195
-#: src/network/socket/qlocalserver.cpp:202
+#: src/network/socket/qlocalserver.cpp:199
 msgid "%1: Name error"
 msgstr ""
 
@@ -4522,21 +4520,25 @@ msgstr ""
 msgid "%1: Unknown error %2"
 msgstr ""
 
-#: src/network/socket/qabstractsocket.cpp:732
+#: src/network/socket/qabstractsocket.cpp:686
+msgid "Host not found"
+msgstr ""
+
+#: src/network/socket/qabstractsocket.cpp:728
 #: src/network/socket/qabstractsocketengine.cpp:406
 msgid "Connection refused"
 msgstr ""
 
-#: src/network/socket/qabstractsocket.cpp:870
+#: src/network/socket/qabstractsocket.cpp:866
 #: src/network/socket/qabstractsocketengine.cpp:403
 msgid "Connection timed out"
 msgstr ""
 
-#: src/network/socket/qabstractsocket.cpp:1446
+#: src/network/socket/qabstractsocket.cpp:1435
 msgid "Socket operation timed out"
 msgstr ""
 
-#: src/network/socket/qabstractsocket.cpp:1856
+#: src/network/socket/qabstractsocket.cpp:1845
 msgid "Socket is not connected"
 msgstr ""
 

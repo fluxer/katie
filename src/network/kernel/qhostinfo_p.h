@@ -45,41 +45,21 @@
 
 QT_BEGIN_NAMESPACE
 
-
-class QHostInfoResult : public QObject
-{
-    Q_OBJECT
-public Q_SLOTS:
-    inline void emitResultsReady(const QHostInfo &info)
-    {
-        emit resultsReady(info);
-    }
-
-Q_SIGNALS:
-    void resultsReady(const QHostInfo &info);
-};
-
-class QHostInfoAgent
-{
-    Q_DECLARE_TR_FUNCTIONS(QHostInfoAgent)
-public:
-    static QHostInfo fromName(const QString &hostName);
-};
-
 class QHostInfoPrivate
 {
 public:
     inline QHostInfoPrivate()
         : err(QHostInfo::NoError),
-          errorStr(QLatin1String(QT_TRANSLATE_NOOP("QHostInfo", "Unknown error"))),
-          lookupId(0)
+          errorStr(QLatin1String(QT_TRANSLATE_NOOP("QHostInfo", "Unknown error")))
     {
     }
+
+    static QHostInfo fromName(const QString &hostName);
+
     QHostInfo::HostInfoError err;
     QString errorStr;
     QList<QHostAddress> addrs;
     QString hostName;
-    int lookupId;
 };
 
 // These functions are outside of the QHostInfo class and strictly internal.

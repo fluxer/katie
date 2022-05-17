@@ -362,7 +362,6 @@ QAbstractSocketPrivate::QAbstractSocketPrivate()
       isBuffered(false),
       connectTimer(0),
       disconnectTimer(0),
-      hostLookupId(-1),
       socketType(QAbstractSocket::UnknownSocketType),
       state(QAbstractSocket::UnconnectedState),
       socketError(QAbstractSocket::UnknownSocketError)
@@ -657,11 +656,8 @@ bool QAbstractSocketPrivate::flush()
 void QAbstractSocketPrivate::_q_startConnecting(const QHostInfo &hostInfo)
 {
     Q_Q(QAbstractSocket);
-    if (state != QAbstractSocket::HostLookupState)
+    if (state != QAbstractSocket::HostLookupState) {
         return;
-
-    if (hostLookupId != -1 && hostLookupId != hostInfo.lookupId()) {
-        qWarning("QAbstractSocketPrivate::_q_startConnecting() received hostInfo for wrong lookup ID %d expected %d", hostInfo.lookupId(), hostLookupId);
     }
 
     addresses = hostInfo.addresses();
@@ -1080,10 +1076,6 @@ void QAbstractSocket::connectToHost(const QString &hostName, quint16 port,
     d->localAddress.clear();
     d->peerAddress.clear();
     d->peerName = hostName;
-    if (d->hostLookupId != -1) {
-        QHostInfo::abortHostLookup(d->hostLookupId);
-        d->hostLookupId = -1;
-    }
 
     if (openMode & QIODevice::Unbuffered)
         d->isBuffered = false; // Unbuffered QTcpSocket
@@ -1097,11 +1089,10 @@ void QAbstractSocket::connectToHost(const QString &hostName, quint16 port,
     QHostAddress temp;
     if (temp.setAddress(hostName)) {
         QHostInfo info;
-        info.setAddresses(QList<QHostAddress>() << temp);
+        info.d->addrs.append(temp);
         d->_q_startConnecting(info);
     } else {
         if (d->threadData->eventDispatcher) {
-            d->hostLookupId = -1;
             d->_q_startConnecting(QHostInfo::fromName(hostName));
         }
     }
@@ -1410,8 +1401,6 @@ bool QAbstractSocket::waitForConnected(int msecs)
 #if defined (QABSTRACTSOCKET_DEBUG)
         qDebug("QAbstractSocket::waitForConnected(%i) doing host name lookup", msecs);
 #endif
-        QHostInfo::abortHostLookup(d->hostLookupId);
-        d->hostLookupId = -1;
         d->_q_startConnecting(QHostInfo::fromName(d->hostName));
     }
     if (state() == UnconnectedState)
@@ -2079,10 +2068,6 @@ void QAbstractSocket::disconnectFromHost()
 #if defined(QABSTRACTSOCKET_DEBUG)
         qDebug("QAbstractSocket::disconnectFromHost() aborting immediately");
 #endif
-        if (d->state == HostLookupState) {
-            QHostInfo::abortHostLookup(d->hostLookupId);
-            d->hostLookupId = -1;
-        }
     } else {
         // Perhaps emit closing()
         if (d->state != ClosingState) {
