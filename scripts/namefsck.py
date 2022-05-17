@@ -572,7 +572,6 @@ classlist = [
     "QTabWidget",
     "QtAlgorithms",
     "QtCleanUpFunction",
-    "QtConcurrentFilter",
     "QtConcurrentMap",
     "QtConcurrentRun",
     "QtConfig",

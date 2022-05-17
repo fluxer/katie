@@ -183,7 +183,6 @@ include/katie/QtCore/Q_PID
 include/katie/QtCore/Qt
 include/katie/QtCore/QtAlgorithms
 include/katie/QtCore/QtCleanUpFunction
-include/katie/QtCore/QtConcurrentFilter
 include/katie/QtCore/QtConcurrentMap
 include/katie/QtCore/QtConcurrentRun
 include/katie/QtCore/QtConfig
@@ -280,9 +279,7 @@ include/katie/QtCore/qstring.h
 include/katie/QtCore/qstringlist.h
 include/katie/QtCore/qstringmatcher.h
 include/katie/QtCore/qtconcurrentcompilertest.h
-include/katie/QtCore/qtconcurrentexception.h
-include/katie/QtCore/qtconcurrentfilter.h
-include/katie/QtCore/qtconcurrentfilterkernel.h
+include/katie/QtCore/qtconcurrentexception.
 include/katie/QtCore/qtconcurrentfunctionwrappers.h
 include/katie/QtCore/qtconcurrentiteratekernel.h
 include/katie/QtCore/qtconcurrentmap.h

@@ -83,7 +83,6 @@ set(CORE_PUBLIC_HEADERS
     QMetaType
     QVariant
     QFile
-    QtConcurrentFilter
     QCache
     QAbstractEventDispatcher
     QResource
@@ -117,8 +116,6 @@ set(CORE_HEADERS
     ${CMAKE_CURRENT_SOURCE_DIR}/concurrent/qrunnable.h
     ${CMAKE_CURRENT_SOURCE_DIR}/concurrent/qtconcurrentcompilertest.h
     ${CMAKE_CURRENT_SOURCE_DIR}/concurrent/qtconcurrentexception.h
-    ${CMAKE_CURRENT_SOURCE_DIR}/concurrent/qtconcurrentfilter.h
-    ${CMAKE_CURRENT_SOURCE_DIR}/concurrent/qtconcurrentfilterkernel.h
     ${CMAKE_CURRENT_SOURCE_DIR}/concurrent/qtconcurrentfunctionwrappers.h
     ${CMAKE_CURRENT_SOURCE_DIR}/concurrent/qtconcurrentiteratekernel.h
     ${CMAKE_CURRENT_SOURCE_DIR}/concurrent/qtconcurrentmap.h
@@ -274,7 +271,6 @@ set(CORE_SOURCES
     ${CMAKE_CURRENT_SOURCE_DIR}/concurrent/qfuturesynchronizer.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/concurrent/qfuturewatcher.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/concurrent/qrunnable.cpp
-    ${CMAKE_CURRENT_SOURCE_DIR}/concurrent/qtconcurrentfilter.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/concurrent/qtconcurrentmap.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/concurrent/qtconcurrentresultstore.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/concurrent/qtconcurrentthreadengine.cpp
