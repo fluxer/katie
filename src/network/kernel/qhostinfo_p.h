@@ -49,7 +49,7 @@ class QHostInfoPrivate
 {
 public:
     inline QHostInfoPrivate()
-        : err(QHostInfo::NoError),
+        : err(QHostInfo::HostNotFound),
           errorStr(QLatin1String(QT_TRANSLATE_NOOP("QHostInfo", "Unknown error")))
     {
     }

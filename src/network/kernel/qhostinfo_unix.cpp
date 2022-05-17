@@ -41,6 +41,7 @@ QT_BEGIN_NAMESPACE
 QHostInfo QHostInfoPrivate::fromName(const QString &hostName)
 {
     QHostInfo results;
+    results.d->err = QHostInfo::NoError;
 
 #if defined(QHOSTINFO_DEBUG)
     qDebug("QHostInfoPrivate::fromName(%s) looking up...",

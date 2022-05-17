@@ -1089,6 +1089,7 @@ void QAbstractSocket::connectToHost(const QString &hostName, quint16 port,
     QHostAddress temp;
     if (temp.setAddress(hostName)) {
         QHostInfo info;
+        info.d->err = QHostInfo::NoError;
         info.d->addrs.append(temp);
         d->_q_startConnecting(info);
     } else {
