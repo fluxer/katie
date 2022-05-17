@@ -17,7 +17,7 @@ DISTFILES = master.tar.gz
 DIST_SUBDIR = ${DISTNAME}
 WRKSRC = ${WRKDIR}/katie-master
 
-COMPILER = base-gcc ports-gcc
+COMPILER = base-clang ports-gcc
 MODULES = devel/cmake
 BUILD_DEPENDS = devel/gettext,-tools
 RUN_DEPENDS = devel/desktop-file-utils devel/xdg-utils fonts/freefont-ttf
