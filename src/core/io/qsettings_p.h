@@ -39,6 +39,9 @@
 
 QT_BEGIN_NAMESPACE
 
+typedef bool (*QSettingsReadFunc)(QIODevice &device, QSettings::SettingsMap &map);
+typedef bool (*QSettingsWriteFunc)(QIODevice &device, const QSettings::SettingsMap &map);
+
 class QSettingsPrivate
     : public QObjectPrivate
 {
@@ -65,8 +68,8 @@ public:
     QSettings::SettingsMap map;
     QString group;
 
-    QSettings::ReadFunc readFunc;
-    QSettings::WriteFunc writeFunc;
+    QSettingsReadFunc readFunc;
+    QSettingsWriteFunc writeFunc;
     bool shouldwrite;
 };
 

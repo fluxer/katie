@@ -40,18 +40,16 @@
 
 QT_BEGIN_NAMESPACE
 
-struct QSettingsCustomFormat
+struct QSettingsFormat
 {
     QSettings::Format format;
     QString extension;
-    QSettings::ReadFunc readFunc;
-    QSettings::WriteFunc writeFunc;
+    QSettingsReadFunc readFunc;
+    QSettingsWriteFunc writeFunc;
 };
 
-typedef QVector<QSettingsCustomFormat> CustomFormatVector;
 typedef QVector<QSettings*> QSettingsVector;
 Q_GLOBAL_STATIC(QSettingsVector, qGlobalSettings)
-Q_GLOBAL_STATIC(CustomFormatVector, customFormatVectorFunc)
 Q_GLOBAL_STATIC(QMutex, qSettingsMutex)
 
 // ************************************************************************
@@ -169,9 +167,9 @@ static bool ini_settings_write(QIODevice &device, const QSettings::SettingsMap &
 
 // ************************************************************************
 // QSettingsPrivate
-static QSettingsCustomFormat getSettingsFormat(QSettings::Format format)
+static QSettingsFormat getSettingsFormat(QSettings::Format format)
 {
-    QSettingsCustomFormat result;
+    QSettingsFormat result;
 
     if (format == QSettings::NativeFormat) {
         result.extension = QLatin1String(".json");
@@ -183,18 +181,6 @@ static QSettingsCustomFormat getSettingsFormat(QSettings::Format format)
         result.readFunc = ini_settings_read;
         result.writeFunc = ini_settings_write;
         return result;
-    }
-
-    QMutexLocker locker(qSettingsMutex());
-    const CustomFormatVector *customFormatVector = customFormatVectorFunc();
-    for (int i = 0; i < customFormatVector->size(); i++) {
-        const QSettingsCustomFormat &custom = customFormatVector->at(i);
-        if (custom.format == format) {
-            result.extension = custom.extension;
-            result.readFunc = custom.readFunc;
-            result.writeFunc = custom.writeFunc;
-            return result;
-        }
     }
 
     qWarning("QSettingsPrivate::getSettingsFormat: format not found %d", format);
@@ -237,7 +223,7 @@ static QString getSettingsPath(const QString &filename, const QString &extension
 QSettingsPrivate::QSettingsPrivate(QSettings::Format format)
     : format(format), status(QSettings::NoError), shouldwrite(false)
 {
-    QSettingsCustomFormat handler = getSettingsFormat(format);
+    QSettingsFormat handler = getSettingsFormat(format);
     filename = getSettingsPath(QCoreApplication::applicationName(), handler.extension);
     readFunc = handler.readFunc;
     writeFunc = handler.writeFunc;
@@ -246,7 +232,7 @@ QSettingsPrivate::QSettingsPrivate(QSettings::Format format)
 QSettingsPrivate::QSettingsPrivate(const QString &fileName, QSettings::Format format)
     : format(format), status(QSettings::NoError), shouldwrite(false)
 {
-    QSettingsCustomFormat handler = getSettingsFormat(format);
+    QSettingsFormat handler = getSettingsFormat(format);
     filename = getSettingsPath(fileName, handler.extension);
     readFunc = handler.readFunc;
     writeFunc = handler.writeFunc;
@@ -492,8 +478,7 @@ QStringList QSettingsPrivate::splitArgs(const QString &s, int idx)
 
     QSettings is an abstraction around these technologies, enabling
     you to save and restore application settings in a portable
-    manner. It also supports \l{registerFormat()}{custom storage
-    formats}.
+    manner.
 
     QSettings's API is based on QVariant, allowing you to save
     most value-based types, such as QString, QRect, and QImage,
@@ -661,23 +646,6 @@ QStringList QSettingsPrivate::splitArgs(const QString &s, int idx)
 
     \value NativeFormat  Store the settings in JSON files.
     \value IniFormat  Store the settings in INI files.
-    \value InvalidFormat Special value returned by registerFormat().
-    \omitvalue CustomFormat1
-    \omitvalue CustomFormat2
-    \omitvalue CustomFormat3
-    \omitvalue CustomFormat4
-    \omitvalue CustomFormat5
-    \omitvalue CustomFormat6
-    \omitvalue CustomFormat7
-    \omitvalue CustomFormat8
-    \omitvalue CustomFormat9
-    \omitvalue CustomFormat10
-    \omitvalue CustomFormat11
-    \omitvalue CustomFormat12
-    \omitvalue CustomFormat13
-    \omitvalue CustomFormat14
-    \omitvalue CustomFormat15
-    \omitvalue CustomFormat16
 
     The INI file format is a Windows file format that Qt supports on
     all platforms. In the absence of an INI standard, we try to
@@ -712,8 +680,6 @@ QStringList QSettingsPrivate::splitArgs(const QString &s, int idx)
     \o  The codec used to read and write the settings files is the
         same codec used for C-strings, UTF-8 by default.
     \endlist
-
-    \sa registerFormat()
 */
 
 /*!
@@ -1067,74 +1033,7 @@ QVariant QSettings::value(const QString &key, const QVariant &defaultValue) cons
     \typedef QSettings::SettingsMap
 
     Typedef for QMap<QString, QVariant>.
-
-    \sa registerFormat()
 */
-
-/*!
-    \typedef QSettings::ReadFunc
-
-    Typedef for a pointer to a function with the following signature:
-
-    \snippet doc/src/snippets/code/src_corelib_io_qsettings.cpp 27
-
-    \c ReadFunc is used in \c registerFormat() as a pointer to a function
-    that reads a set of key/value pairs. \c ReadFunc should read all the 
-    options in one pass, and return all the settings in the \c SettingsMap 
-    container, which is initially empty.
-
-    \sa WriteFunc, registerFormat()
-*/
-
-/*!
-    \typedef QSettings::WriteFunc
-
-    Typedef for a pointer to a function with the following signature:
-
-    \snippet doc/src/snippets/code/src_corelib_io_qsettings.cpp 28
-
-    \c WriteFunc is used in \c registerFormat() as a pointer to a function 
-    that writes a set of key/value pairs. \c WriteFunc is only called once,
-    so you need to output the settings in one go.
-
-    \sa ReadFunc, registerFormat()
-*/
-
-/*!
-    \since 4.1
-    \threadsafe
-
-    Registers a custom storage format. On success, returns a special
-    Format value that can then be passed to the QSettings constructor.
-    On failure, returns InvalidFormat.
-
-    The \a extension is the file
-    extension associated to the format (without the '.').
-
-    The \a readFunc and \a writeFunc parameters are pointers to
-    functions that read and write a set of key/value pairs. The
-    QIODevice parameter to the read and write functions is always
-    opened in binary mode (i.e., without the QIODevice::Text flag).
-*/
-QSettings::Format QSettings::registerFormat(const QString &extension, ReadFunc readFunc,
-                                            WriteFunc writeFunc)
-{
-    QMutexLocker locker(qSettingsMutex());
-    CustomFormatVector *customFormatVector = customFormatVectorFunc();
-    int index = customFormatVector->size();
-    if (index == 16) // the QSettings::Format enum has room for 16 custom formats
-        return QSettings::InvalidFormat;
-
-    QSettingsCustomFormat info;
-    info.format = static_cast<QSettings::Format>(QSettings::CustomFormat1 + index);
-    info.extension = QLatin1Char('.');
-    info.extension += extension;
-    info.readFunc = readFunc;
-    info.writeFunc = writeFunc;
-    customFormatVector->append(info);
-
-    return info.format;
-}
 
 #include "moc_qsettings.h"
 

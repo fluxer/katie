@@ -29,7 +29,6 @@
 
 QT_BEGIN_NAMESPACE
 
-class QIODevice;
 class QSettingsPrivate;
 
 class Q_CORE_EXPORT QSettings : public QObject
@@ -45,26 +44,8 @@ public:
     };
 
     enum Format {
-        NativeFormat,
-        IniFormat,
-
-        InvalidFormat = 16,
-        CustomFormat1,
-        CustomFormat2,
-        CustomFormat3,
-        CustomFormat4,
-        CustomFormat5,
-        CustomFormat6,
-        CustomFormat7,
-        CustomFormat8,
-        CustomFormat9,
-        CustomFormat10,
-        CustomFormat11,
-        CustomFormat12,
-        CustomFormat13,
-        CustomFormat14,
-        CustomFormat15,
-        CustomFormat16
+        NativeFormat = 0,
+        IniFormat
     };
 
     typedef QMap<QString, QVariant> SettingsMap;
@@ -95,11 +76,6 @@ public:
 
     QString fileName() const;
     Format format() const;
-
-    typedef bool (*ReadFunc)(QIODevice &device, SettingsMap &map);
-    typedef bool (*WriteFunc)(QIODevice &device, const SettingsMap &map);
-
-    static Format registerFormat(const QString &extension, ReadFunc readFunc, WriteFunc writeFunc);
 
 private:
     Q_DISABLE_COPY(QSettings)
