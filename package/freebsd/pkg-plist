@@ -279,7 +279,7 @@ include/katie/QtCore/qstring.h
 include/katie/QtCore/qstringlist.h
 include/katie/QtCore/qstringmatcher.h
 include/katie/QtCore/qtconcurrentcompilertest.h
-include/katie/QtCore/qtconcurrentexception.
+include/katie/QtCore/qtconcurrentexception.h
 include/katie/QtCore/qtconcurrentfunctionwrappers.h
 include/katie/QtCore/qtconcurrentiteratekernel.h
 include/katie/QtCore/qtconcurrentmap.h
