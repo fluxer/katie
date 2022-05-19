@@ -37,7 +37,6 @@ class Q_CORE_EXPORT QThreadPool : public QObject
     Q_PROPERTY(int expiryTimeout READ expiryTimeout WRITE setExpiryTimeout)
     Q_PROPERTY(int maxThreadCount READ maxThreadCount WRITE setMaxThreadCount)
     Q_PROPERTY(int activeThreadCount READ activeThreadCount)
-    friend class QFutureInterfaceBase;
 
 public:
     QThreadPool(QObject *parent = nullptr);

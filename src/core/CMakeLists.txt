@@ -20,10 +20,8 @@ set(CORE_PUBLIC_HEADERS
     QObjectCleanupHandler
     QAbstractFileEngine
     QTranslator
-    QFuture
     QWaitCondition
     QMimeData
-    QtConcurrentMap
     QBitArray
     QChar
     QMap
@@ -31,7 +29,6 @@ set(CORE_PUBLIC_HEADERS
     QDebug
     QContiguousCache
     QFileInfo
-    QFutureInterface
     QDateTime
     QThreadPool
     QSettings
@@ -46,7 +43,6 @@ set(CORE_PUBLIC_HEADERS
     QByteArray
     QSharedData
     QPointer
-    QtConcurrentRun
     QSignalMapper
     QEventLoop
     QDataStream
@@ -56,11 +52,9 @@ set(CORE_PUBLIC_HEADERS
     QTimer
     QElapsedTimer
     QUrl
-    QFutureWatcher
     QVector
     QLibraryInfo
     QSemaphore
-    QFutureSynchronizer
     QStack
     QTemporaryFile
     QQueue
@@ -109,28 +103,6 @@ set(CORE_HEADERS
     ${CMAKE_CURRENT_SOURCE_DIR}/codecs/qtextcodec_p.h
     ${CMAKE_CURRENT_SOURCE_DIR}/codecs/qtextcodec.h
     ${CMAKE_CURRENT_SOURCE_DIR}/codecs/qicucodec_p.h
-    ${CMAKE_CURRENT_SOURCE_DIR}/concurrent/qfuture.h
-    ${CMAKE_CURRENT_SOURCE_DIR}/concurrent/qfutureinterface.h
-    ${CMAKE_CURRENT_SOURCE_DIR}/concurrent/qfuturesynchronizer.h
-    ${CMAKE_CURRENT_SOURCE_DIR}/concurrent/qfuturewatcher.h
-    ${CMAKE_CURRENT_SOURCE_DIR}/concurrent/qrunnable.h
-    ${CMAKE_CURRENT_SOURCE_DIR}/concurrent/qtconcurrentcompilertest.h
-    ${CMAKE_CURRENT_SOURCE_DIR}/concurrent/qtconcurrentexception.h
-    ${CMAKE_CURRENT_SOURCE_DIR}/concurrent/qtconcurrentfunctionwrappers.h
-    ${CMAKE_CURRENT_SOURCE_DIR}/concurrent/qtconcurrentiteratekernel.h
-    ${CMAKE_CURRENT_SOURCE_DIR}/concurrent/qtconcurrentmap.h
-    ${CMAKE_CURRENT_SOURCE_DIR}/concurrent/qtconcurrentmapkernel.h
-    ${CMAKE_CURRENT_SOURCE_DIR}/concurrent/qtconcurrentmedian.h
-    ${CMAKE_CURRENT_SOURCE_DIR}/concurrent/qtconcurrentreducekernel.h
-    ${CMAKE_CURRENT_SOURCE_DIR}/concurrent/qtconcurrentresultstore.h
-    ${CMAKE_CURRENT_SOURCE_DIR}/concurrent/qtconcurrentrun.h
-    ${CMAKE_CURRENT_SOURCE_DIR}/concurrent/qtconcurrentrunbase.h
-    ${CMAKE_CURRENT_SOURCE_DIR}/concurrent/qtconcurrentstoredfunctioncall.h
-    ${CMAKE_CURRENT_SOURCE_DIR}/concurrent/qtconcurrentthreadengine.h
-    ${CMAKE_CURRENT_SOURCE_DIR}/concurrent/qthreadpool.h
-    ${CMAKE_CURRENT_SOURCE_DIR}/concurrent/qfutureinterface_p.h
-    ${CMAKE_CURRENT_SOURCE_DIR}/concurrent/qfuturewatcher_p.h
-    ${CMAKE_CURRENT_SOURCE_DIR}/concurrent/qthreadpool_p.h
     ${CMAKE_CURRENT_SOURCE_DIR}/global/qendian.h
     ${CMAKE_CURRENT_SOURCE_DIR}/global/qglobal.h
     ${CMAKE_CURRENT_SOURCE_DIR}/global/qlibraryinfo.h
@@ -215,6 +187,9 @@ set(CORE_HEADERS
     ${CMAKE_CURRENT_SOURCE_DIR}/thread/qmutexpool_p.h
     ${CMAKE_CURRENT_SOURCE_DIR}/thread/qorderedmutexlocker_p.h
     ${CMAKE_CURRENT_SOURCE_DIR}/thread/qthread_p.h
+    ${CMAKE_CURRENT_SOURCE_DIR}/thread/qrunnable.h
+    ${CMAKE_CURRENT_SOURCE_DIR}/thread/qthreadpool.h
+    ${CMAKE_CURRENT_SOURCE_DIR}/thread/qthreadpool_p.h
     ${CMAKE_CURRENT_SOURCE_DIR}/tools/qalgorithms.h
     ${CMAKE_CURRENT_SOURCE_DIR}/tools/qbitarray.h
     ${CMAKE_CURRENT_SOURCE_DIR}/tools/qbytearray.h
@@ -266,17 +241,6 @@ set(CORE_HEADERS
 set(CORE_SOURCES
     ${CMAKE_CURRENT_SOURCE_DIR}/codecs/qtextcodec.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/codecs/qicucodec.cpp
-    ${CMAKE_CURRENT_SOURCE_DIR}/concurrent/qfuture.cpp
-    ${CMAKE_CURRENT_SOURCE_DIR}/concurrent/qfutureinterface.cpp
-    ${CMAKE_CURRENT_SOURCE_DIR}/concurrent/qfuturesynchronizer.cpp
-    ${CMAKE_CURRENT_SOURCE_DIR}/concurrent/qfuturewatcher.cpp
-    ${CMAKE_CURRENT_SOURCE_DIR}/concurrent/qrunnable.cpp
-    ${CMAKE_CURRENT_SOURCE_DIR}/concurrent/qtconcurrentmap.cpp
-    ${CMAKE_CURRENT_SOURCE_DIR}/concurrent/qtconcurrentresultstore.cpp
-    ${CMAKE_CURRENT_SOURCE_DIR}/concurrent/qtconcurrentthreadengine.cpp
-    ${CMAKE_CURRENT_SOURCE_DIR}/concurrent/qtconcurrentiteratekernel.cpp
-    ${CMAKE_CURRENT_SOURCE_DIR}/concurrent/qtconcurrentexception.cpp
-    ${CMAKE_CURRENT_SOURCE_DIR}/concurrent/qthreadpool.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/global/qglobal.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/global/qlibraryinfo.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/global/qt_error_string.cpp
@@ -335,8 +299,10 @@ set(CORE_SOURCES
     ${CMAKE_CURRENT_SOURCE_DIR}/plugin/qlibrary_unix.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/thread/qatomic.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/thread/qmutex.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/thread/qrunnable.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/thread/qsemaphore.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/thread/qthread.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/thread/qthreadpool.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/thread/qthread_unix.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/thread/qwaitcondition_unix.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/tools/qbitarray.cpp

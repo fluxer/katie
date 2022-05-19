@@ -370,7 +370,7 @@ QCoreApplication::~QCoreApplication()
     QCoreApplicationPrivate::is_app_closing = true;
     QCoreApplicationPrivate::is_app_running = false;
 
-#if !defined(QT_NO_THREAD) && !defined(QT_NO_CONCURRENT)
+#if !defined(QT_NO_THREAD)
     // Synchronize and stop the global thread pool threads.
     QThreadPool *globalThreadPool = QThreadPool::globalInstance();
     if (globalThreadPool)
