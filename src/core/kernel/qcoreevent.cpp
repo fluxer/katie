@@ -199,7 +199,6 @@ QT_BEGIN_NAMESPACE
     \omitvalue ShowWindowRequest
     \omitvalue Style
     \omitvalue ThreadChange
-    \omitvalue FutureCallOut
 */
 
 /*!

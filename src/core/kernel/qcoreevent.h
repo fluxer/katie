@@ -163,23 +163,21 @@ public:
 
         ContentsRectChange = 104,               // sent by QWidget::setContentsMargins (internal)
 
-        FutureCallOut = 105,
+        GraphicsSceneResize  = 105,
+        GraphicsSceneMove  = 106,
 
-        GraphicsSceneResize  = 106,
-        GraphicsSceneMove  = 107,
+        CursorChange = 107,
+        ToolTipChange = 108,
 
-        CursorChange = 108,
-        ToolTipChange = 109,
+        GrabMouse = 109,
+        UngrabMouse = 110,
+        GrabKeyboard = 111,
+        UngrabKeyboard = 112,
 
-        GrabMouse = 110,
-        UngrabMouse = 111,
-        GrabKeyboard = 112,
-        UngrabKeyboard = 113,
+        RequestSoftwareInputPanel = 113,
+        CloseSoftwareInputPanel = 114,
 
-        RequestSoftwareInputPanel = 114,
-        CloseSoftwareInputPanel = 115,
-
-        WinIdChange = 116,
+        WinIdChange = 115,
 
         User = 1000,                            // first user event id
         MaxUser = 65535                         // last user event id
