@@ -518,8 +518,8 @@ QString QImageReader::fileName() const
     contents.
 
     If the image format does not support this feature, this function returns
-    an invalid size. Some of Katie's built-in image handlers all support
-    this feature, but custom image format plugins are not required to do so.
+    an invalid size. Some of Katie's built-in image handlers support this
+    feature, but custom image format plugins are not required to do so.
 
     \sa QImageIOHandler::ImageOption, QImageIOHandler::option(), QImageIOHandler::supportsOption()
 */
