@@ -392,13 +392,9 @@ void QImageReader::setFormat(const QByteArray &format)
 */
 QByteArray QImageReader::format() const
 {
-    if (d->format.isEmpty()) {
-        if (!d->initHandler())
-            return QByteArray();
-        return d->handler->canRead() ? d->handler->format() : QByteArray();
-    }
-
-    return d->format;
+    if (!d->initHandler())
+        return QByteArray();
+    return d->handler->canRead() ? d->handler->format() : QByteArray();
 }
 
 /*!
