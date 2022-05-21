@@ -107,7 +107,6 @@ static QImageIOHandler *createWriteHandlerHelper(QIODevice *device,
 #ifndef QT_NO_IMAGEFORMAT_PPM
     } else if (form == "pbm" || form == "pbmraw" || form == "ppm" || form == "ppmraw") {
         handler = new QPpmHandler();
-        handler->setOption(QImageIOHandler::SubType, form);
 #endif
     }
 

@@ -61,7 +61,6 @@ public:
         CompressionLevel,
         Gamma,
         Quality,
-        SubType,
         Animation,
         BackgroundColor
     };

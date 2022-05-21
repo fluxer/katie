@@ -83,11 +83,6 @@
     supports this option is expected to set the image quality level
     depending on the value of this option (an int) when writing.
 
-    \value SubType The subtype of the image. A handler that supports
-    this option can use the subtype value to help when reading and
-    writing images. For example, a PPM handler may have a subtype
-    value of "ppm" or "ppmraw".
-
     \value Animation Image formats that support animation return
     true for this value in supportsOption(); otherwise, false is returned.
 

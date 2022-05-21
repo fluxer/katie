@@ -345,14 +345,12 @@ bool QPpmHandler::write(const QImage &image)
 
 bool QPpmHandler::supportsOption(QImageIOHandler::ImageOption option) const
 {
-    return (option == QImageIOHandler::SubType || option == QImageIOHandler::Size);
+    return (option == QImageIOHandler::Size);
 }
 
 QVariant QPpmHandler::option(QImageIOHandler::ImageOption option) const
 {
-    if (option == QImageIOHandler::SubType) {
-        return subType;
-    } else if (option == QImageIOHandler::Size) {
+    if (option == QImageIOHandler::Size) {
         if (state == Error)
             return QVariant();
         if (state == Ready && !const_cast<QPpmHandler*>(this)->readHeader())
@@ -360,12 +358,6 @@ QVariant QPpmHandler::option(QImageIOHandler::ImageOption option) const
         return QSize(width, height);
     }
     return QVariant();
-}
-
-void QPpmHandler::setOption(QImageIOHandler::ImageOption option, const QVariant &value)
-{
-    if (option == QImageIOHandler::SubType)
-        subType = value.toByteArray().toLower();
 }
 
 QByteArray QPpmHandler::name() const
@@ -381,22 +373,24 @@ bool QPpmHandler::canRead(QIODevice *device, QByteArray *subType)
     }
 
     QSTACKARRAY(char, head, 2);
-    if (device->peek(head, sizeof(head)) != sizeof(head))
-        return false;
-
-    if (head[0] != 'P')
-        return false;
-
-    if (head[1] == '1' || head[1] == '4') {
-        if (subType)
-            *subType = "pbm";
-    } else if (head[1] == '3' || head[1] == '6') {
-        if (subType)
-            *subType = "ppm";
-    } else {
+    if (device->peek(head, sizeof(head)) != sizeof(head)) {
         return false;
     }
-    return true;
+
+    if (head[0] != 'P') {
+        return false;
+    }
+
+    if (head[1] == '1' || head[1] == '4') {
+        Q_ASSERT(subType);
+        *subType = "pbm";
+        return true;
+    } else if (head[1] == '3' || head[1] == '6') {
+        Q_ASSERT(subType);
+        *subType = "ppm";
+        return true;
+    }
+    return false;
 }
 
 QT_END_NAMESPACE
