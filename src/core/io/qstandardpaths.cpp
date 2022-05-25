@@ -19,11 +19,6 @@
 ****************************************************************************/
 
 #include "qstandardpaths.h"
-
-#include "qdir.h"
-#include "qfileinfo.h"
-#include "qhash.h"
-#include "qobject.h"
 #include "qcoreapplication.h"
 #include "qcore_unix_p.h"
 
