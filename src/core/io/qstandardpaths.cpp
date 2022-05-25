@@ -132,7 +132,7 @@ QT_BEGIN_NAMESPACE
 
 static inline bool existsAsSpecified(const QString &path, QStandardPaths::LocateOption options)
 {
-    QStatInfo info(path);
+    const QStatInfo info(path);
     if (options == QStandardPaths::LocateDirectory) {
         return info.isDir();
     }
