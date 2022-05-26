@@ -439,7 +439,7 @@ QString QFileSystemEngine::homePath()
 
 QString QFileSystemEngine::rootPath()
 {
-    return QLatin1String("/");
+    return QString::fromLatin1("/");
 }
 
 QString QFileSystemEngine::tempPath()
@@ -447,7 +447,7 @@ QString QFileSystemEngine::tempPath()
     const QString temp = QFile::decodeName(qgetenv("TMPDIR"));
     if (!temp.isEmpty())
         return QDir::cleanPath(temp);
-    return QLatin1String("/tmp");
+    return QString::fromLatin1("/tmp");
 }
 
 bool QFileSystemEngine::setCurrentPath(const QFileSystemEntry &entry)
