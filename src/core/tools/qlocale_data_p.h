@@ -89,6 +89,7 @@ static const struct languageTblData {
     { QLocale::Language::Assamese, "Assamese\0", "as\0" },
     { QLocale::Language::Asturian, "Asturian\0", "ast\0" },
     { QLocale::Language::Asu, "Asu\0", "asa\0" },
+    { QLocale::Language::Atikamekw, "Atikamekw\0", "atj\0" },
     { QLocale::Language::Atsam, "Atsam\0", "cch\0" },
     { QLocale::Language::AustralianEnglish, "Australian English\0", "en_AU\0" },
     { QLocale::Language::AustrianGerman, "Austrian German\0", "de_AT\0" },
@@ -143,12 +144,14 @@ static const struct languageTblData {
     { QLocale::Language::Cantonese, "Cantonese\0", "yue\0" },
     { QLocale::Language::Capiznon, "Capiznon\0", "cps\0" },
     { QLocale::Language::Carib, "Carib\0", "car\0" },
+    { QLocale::Language::CarolinaAlgonquian, "Carolina Algonquian\0", "crr\0" },
     { QLocale::Language::Catalan, "Catalan\0", "ca\0" },
     { QLocale::Language::Cayuga, "Cayuga\0", "cay\0" },
     { QLocale::Language::Cebuano, "Cebuano\0", "ceb\0" },
     { QLocale::Language::CentralAtlasTamazight, "Central Atlas Tamazight\0", "tzm\0" },
     { QLocale::Language::CentralDusun, "Central Dusun\0", "dtp\0" },
     { QLocale::Language::CentralKurdish, "Central Kurdish\0", "ckb\0" },
+    { QLocale::Language::CentralOjibwa, "Central Ojibwa\0", "ojc\0" },
     { QLocale::Language::CentralYupik, "Central Yupik\0", "esu\0" },
     { QLocale::Language::ChadianArabic, "Chadian Arabic\0", "shu\0" },
     { QLocale::Language::Chagatai, "Chagatai\0", "chg\0" },
@@ -160,6 +163,7 @@ static const struct languageTblData {
     { QLocale::Language::Chibcha, "Chibcha\0", "chb\0" },
     { QLocale::Language::Chickasaw, "Chickasaw\0", "cic\0" },
     { QLocale::Language::Chiga, "Chiga\0", "cgg\0" },
+    { QLocale::Language::Chilcotin, "Chilcotin\0", "clc\0" },
     { QLocale::Language::ChimborazoHighlandQuichua, "Chimborazo Highland Quichua\0", "qug\0" },
     { QLocale::Language::Chinese, "Chinese\0", "zh\0" },
     { QLocale::Language::ChinookJargon, "Chinook Jargon\0", "chn\0" },
@@ -177,7 +181,7 @@ static const struct languageTblData {
     { QLocale::Language::Cornish, "Cornish\0", "kw\0" },
     { QLocale::Language::Corsican, "Corsican\0", "co\0" },
     { QLocale::Language::Cree, "Cree\0", "cr\0" },
-    { QLocale::Language::CrimeanTurkish, "Crimean Turkish\0", "crh\0" },
+    { QLocale::Language::CrimeanTatar, "Crimean Tatar\0", "crh\0" },
     { QLocale::Language::Croatian, "Croatian\0", "hr\0" },
     { QLocale::Language::Czech, "Czech\0", "cs\0" },
     { QLocale::Language::Dakota, "Dakota\0", "dak\0" },
@@ -194,7 +198,9 @@ static const struct languageTblData {
     { QLocale::Language::Dutch, "Dutch\0", "nl\0" },
     { QLocale::Language::Dyula, "Dyula\0", "dyu\0" },
     { QLocale::Language::Dzongkha, "Dzongkha\0", "dz\0" },
+    { QLocale::Language::EasternCanadianInuktitut, "Eastern Canadian Inuktitut\0", "ike\0" },
     { QLocale::Language::EasternFrisian, "Eastern Frisian\0", "frs\0" },
+    { QLocale::Language::EasternOjibwa, "Eastern Ojibwa\0", "ojg\0" },
     { QLocale::Language::Efik, "Efik\0", "efi\0" },
     { QLocale::Language::EgyptianArabic, "Egyptian Arabic\0", "arz\0" },
     { QLocale::Language::Ekajuk, "Ekajuk\0", "eka\0" },
@@ -250,6 +256,7 @@ static const struct languageTblData {
     { QLocale::Language::Haida, "Haida\0", "hai\0" },
     { QLocale::Language::HaitianCreole, "Haitian Creole\0", "ht\0" },
     { QLocale::Language::HakkaChinese, "Hakka Chinese\0", "hak\0" },
+    { QLocale::Language::Halkomelem, "Halkomelem\0", "hur\0" },
     { QLocale::Language::Hausa, "Hausa\0", "ha\0" },
     { QLocale::Language::Hawaiian, "Hawaiian\0", "haw\0" },
     { QLocale::Language::Hebrew, "Hebrew\0", "he\0" },
@@ -259,6 +266,7 @@ static const struct languageTblData {
     { QLocale::Language::HiriMotu, "Hiri Motu\0", "ho\0" },
     { QLocale::Language::Hittite, "Hittite\0", "hit\0" },
     { QLocale::Language::Hmong, "Hmong\0", "hmn\0" },
+    { QLocale::Language::HmongNjua, "Hmong Njua\0", "hnj\0" },
     { QLocale::Language::Hungarian, "Hungarian\0", "hu\0" },
     { QLocale::Language::Hupa, "Hupa\0", "hup\0" },
     { QLocale::Language::Iban, "Iban\0", "iba\0" },
@@ -271,6 +279,7 @@ static const struct languageTblData {
     { QLocale::Language::Indonesian, "Indonesian\0", "id\0" },
     { QLocale::Language::Ingrian, "Ingrian\0", "izh\0" },
     { QLocale::Language::Ingush, "Ingush\0", "inh\0" },
+    { QLocale::Language::Innuaimun, "Innu-aimun\0", "moe\0" },
     { QLocale::Language::Interlingua, "Interlingua\0", "ia\0" },
     { QLocale::Language::Interlingue, "Interlingue\0", "ie\0" },
     { QLocale::Language::Inuktitut, "Inuktitut\0", "iu\0" },
@@ -336,6 +345,7 @@ static const struct languageTblData {
     { QLocale::Language::Kurdish, "Kurdish\0", "ku\0" },
     { QLocale::Language::Kurukh, "Kurukh\0", "kru\0" },
     { QLocale::Language::Kutenai, "Kutenai\0", "kut\0" },
+    { QLocale::Language::Kwakwala, "Kwakʼwala\0", "kwk\0" },
     { QLocale::Language::Kwasio, "Kwasio\0", "nmg\0" },
     { QLocale::Language::Ladino, "Ladino\0", "lad\0" },
     { QLocale::Language::Lahnda, "Lahnda\0", "lah\0" },
@@ -350,6 +360,7 @@ static const struct languageTblData {
     { QLocale::Language::Laz, "Laz\0", "lzz\0" },
     { QLocale::Language::Lezghian, "Lezghian\0", "lez\0" },
     { QLocale::Language::Ligurian, "Ligurian\0", "lij\0" },
+    { QLocale::Language::Lillooet, "Lillooet\0", "lil\0" },
     { QLocale::Language::Limburgish, "Limburgish\0", "li\0" },
     { QLocale::Language::Lingala, "Lingala\0", "ln\0" },
     { QLocale::Language::LinguaFrancaNova, "Lingua Franca Nova\0", "lfn\0" },
@@ -386,6 +397,7 @@ static const struct languageTblData {
     { QLocale::Language::Malagasy, "Malagasy\0", "mg\0" },
     { QLocale::Language::Malay, "Malay\0", "ms\0" },
     { QLocale::Language::Malayalam, "Malayalam\0", "ml\0" },
+    { QLocale::Language::Malecite, "Malecite\0", "pqm\0" },
     { QLocale::Language::Maltese, "Maltese\0", "mt\0" },
     { QLocale::Language::Manchu, "Manchu\0", "mnc\0" },
     { QLocale::Language::Mandar, "Mandar\0", "mdr\0" },
@@ -406,6 +418,7 @@ static const struct languageTblData {
     { QLocale::Language::Meru, "Meru\0", "mer\0" },
     { QLocale::Language::Meta, "Metaʼ\0", "mgo\0" },
     { QLocale::Language::MexicanSpanish, "Mexican Spanish\0", "es_MX\0" },
+    { QLocale::Language::Michif, "Michif\0", "crg\0" },
     { QLocale::Language::MiddleDutch, "Middle Dutch\0", "dum\0" },
     { QLocale::Language::MiddleEnglish, "Middle English\0", "enm\0" },
     { QLocale::Language::MiddleFrench, "Middle French\0", "frm\0" },
@@ -424,6 +437,7 @@ static const struct languageTblData {
     { QLocale::Language::Mongo, "Mongo\0", "lol\0" },
     { QLocale::Language::Mongolian, "Mongolian\0", "mn\0" },
     { QLocale::Language::Montenegrin, "Montenegrin\0", "sr_ME\0" },
+    { QLocale::Language::MooseCree, "Moose Cree\0", "crm\0" },
     { QLocale::Language::Morisyen, "Morisyen\0", "mfe\0" },
     { QLocale::Language::MoroccanArabic, "Moroccan Arabic\0", "ary\0" },
     { QLocale::Language::Mossi, "Mossi\0", "mos\0" },
@@ -450,10 +464,14 @@ static const struct languageTblData {
     { QLocale::Language::Nogai, "Nogai\0", "nog\0" },
     { QLocale::Language::Nolinguisticcontent, "No linguistic content\0", "zxx\0" },
     { QLocale::Language::NorthNdebele, "North Ndebele\0", "nd\0" },
+    { QLocale::Language::NorthernEastCree, "Northern East Cree\0", "crl\0" },
     { QLocale::Language::NorthernFrisian, "Northern Frisian\0", "frr\0" },
+    { QLocale::Language::NorthernHaida, "Northern Haida\0", "hdn\0" },
     { QLocale::Language::NorthernLuri, "Northern Luri\0", "lrc\0" },
     { QLocale::Language::NorthernSami, "Northern Sami\0", "se\0" },
     { QLocale::Language::NorthernSotho, "Northern Sotho\0", "nso\0" },
+    { QLocale::Language::NorthernTutchone, "Northern Tutchone\0", "ttm\0" },
+    { QLocale::Language::NorthwesternOjibwa, "Northwestern Ojibwa\0", "ojb\0" },
     { QLocale::Language::Norwegian, "Norwegian\0", "no\0" },
     { QLocale::Language::NorwegianBokmal, "Norwegian Bokmål\0", "nb\0" },
     { QLocale::Language::NorwegianNynorsk, "Norwegian Nynorsk\0", "nn\0" },
@@ -467,7 +485,9 @@ static const struct languageTblData {
     { QLocale::Language::Nzima, "Nzima\0", "nzi\0" },
     { QLocale::Language::Occitan, "Occitan\0", "oc\0" },
     { QLocale::Language::Odia, "Odia\0", "or\0" },
+    { QLocale::Language::OjiCree, "Oji-Cree\0", "ojs\0" },
     { QLocale::Language::Ojibwa, "Ojibwa\0", "oj\0" },
+    { QLocale::Language::Okanagan, "Okanagan\0", "oka\0" },
     { QLocale::Language::OldEnglish, "Old English\0", "ang\0" },
     { QLocale::Language::OldFrench, "Old French\0", "fro\0" },
     { QLocale::Language::OldHighGerman, "Old High German\0", "goh\0" },
@@ -492,6 +512,7 @@ static const struct languageTblData {
     { QLocale::Language::Phoenician, "Phoenician\0", "phn\0" },
     { QLocale::Language::Picard, "Picard\0", "pcd\0" },
     { QLocale::Language::Piedmontese, "Piedmontese\0", "pms\0" },
+    { QLocale::Language::PlainsCree, "Plains Cree\0", "crk\0" },
     { QLocale::Language::Plautdietsch, "Plautdietsch\0", "pdt\0" },
     { QLocale::Language::Pohnpeian, "Pohnpeian\0", "pon\0" },
     { QLocale::Language::Polish, "Polish\0", "pl\0" },
@@ -565,16 +586,22 @@ static const struct languageTblData {
     { QLocale::Language::Soninke, "Soninke\0", "snk\0" },
     { QLocale::Language::SouthNdebele, "South Ndebele\0", "nr\0" },
     { QLocale::Language::SouthernAltai, "Southern Altai\0", "alt\0" },
+    { QLocale::Language::SouthernEastCree, "Southern East Cree\0", "crj\0" },
+    { QLocale::Language::SouthernHaida, "Southern Haida\0", "hax\0" },
     { QLocale::Language::SouthernKurdish, "Southern Kurdish\0", "sdh\0" },
+    { QLocale::Language::SouthernLushootseed, "Southern Lushootseed\0", "slh\0" },
     { QLocale::Language::SouthernSotho, "Southern Sotho\0", "st\0" },
+    { QLocale::Language::SouthernTutchone, "Southern Tutchone\0", "tce\0" },
     { QLocale::Language::Spanish, "Spanish\0", "es\0" },
     { QLocale::Language::SrananTongo, "Sranan Tongo\0", "srn\0" },
     { QLocale::Language::StandardMoroccanTamazight, "Standard Moroccan Tamazight\0", "zgh\0" },
+    { QLocale::Language::StraitsSalish, "Straits Salish\0", "str\0" },
     { QLocale::Language::Sukuma, "Sukuma\0", "suk\0" },
     { QLocale::Language::Sumerian, "Sumerian\0", "sux\0" },
     { QLocale::Language::Sundanese, "Sundanese\0", "su\0" },
     { QLocale::Language::Susu, "Susu\0", "sus\0" },
     { QLocale::Language::Swahili, "Swahili\0", "sw\0" },
+    { QLocale::Language::SwampyCree, "Swampy Cree\0", "csw\0" },
     { QLocale::Language::Swati, "Swati\0", "ss\0" },
     { QLocale::Language::Swedish, "Swedish\0", "sv\0" },
     { QLocale::Language::SwissFrench, "Swiss French\0", "fr_CH\0" },
@@ -583,7 +610,10 @@ static const struct languageTblData {
     { QLocale::Language::Syriac, "Syriac\0", "syr\0" },
     { QLocale::Language::Tachelhit, "Tachelhit\0", "shi\0" },
     { QLocale::Language::Tagalog, "Tagalog\0", "tl\0" },
+    { QLocale::Language::Tagish, "Tagish\0", "tgx\0" },
     { QLocale::Language::Tahitian, "Tahitian\0", "ty\0" },
+    { QLocale::Language::Tahltan, "Tahltan\0", "tht\0" },
+    { QLocale::Language::TaiDam, "Tai Dam\0", "blt\0" },
     { QLocale::Language::Taita, "Taita\0", "dav\0" },
     { QLocale::Language::Tajik, "Tajik\0", "tg\0" },
     { QLocale::Language::Talysh, "Talysh\0", "tly\0" },
@@ -607,6 +637,7 @@ static const struct languageTblData {
     { QLocale::Language::TokelauLanguage, "Tokelau\0", "tkl\0" },
     { QLocale::Language::Tongan, "Tongan\0", "to\0" },
     { QLocale::Language::TornedalenFinnish, "Tornedalen Finnish\0", "fit\0" },
+    { QLocale::Language::Torwali, "Torwali\0", "trw\0" },
     { QLocale::Language::TraditionalChinese, "Traditional Chinese\0", "zh_Hant\0" },
     { QLocale::Language::Tsakhur, "Tsakhur\0", "tkr\0" },
     { QLocale::Language::Tsakonian, "Tsakonian\0", "tsd\0" },
@@ -650,10 +681,13 @@ static const struct languageTblData {
     { QLocale::Language::Welsh, "Welsh\0", "cy\0" },
     { QLocale::Language::WestFlemish, "West Flemish\0", "vls\0" },
     { QLocale::Language::WesternBalochi, "Western Balochi\0", "bgn\0" },
+    { QLocale::Language::WesternCanadianInuktitut, "Western Canadian Inuktitut\0", "ikt\0" },
     { QLocale::Language::WesternFrisian, "Western Frisian\0", "fy\0" },
     { QLocale::Language::WesternMari, "Western Mari\0", "mrj\0" },
+    { QLocale::Language::WesternOjibwa, "Western Ojibwa\0", "ojw\0" },
     { QLocale::Language::Wolaytta, "Wolaytta\0", "wal\0" },
     { QLocale::Language::Wolof, "Wolof\0", "wo\0" },
+    { QLocale::Language::WoodsCree, "Woods Cree\0", "cwd\0" },
     { QLocale::Language::WuChinese, "Wu Chinese\0", "wuu\0" },
     { QLocale::Language::Xhosa, "Xhosa\0", "xh\0" },
     { QLocale::Language::XiangChinese, "Xiang Chinese\0", "hsn\0" },
@@ -1062,6 +1096,7 @@ static const struct scriptTblData {
     { QLocale::Script::KaithiScript, "Kaithi\0", "Kthi\0" },
     { QLocale::Script::KannadaScript, "Kannada\0", "Knda\0" },
     { QLocale::Script::KatakanaScript, "Katakana\0", "Kana\0" },
+    { QLocale::Script::KawiScript, "Kawi\0", "Kawi\0" },
     { QLocale::Script::KayahLiScript, "Kayah Li\0", "Kali\0" },
     { QLocale::Script::KharoshthiScript, "Kharoshthi\0", "Khar\0" },
     { QLocale::Script::KhitansmallscriptScript, "Khitan small script\0", "Kits\0" },
@@ -1102,6 +1137,7 @@ static const struct scriptTblData {
     { QLocale::Script::MyanmarScript, "Myanmar\0", "Mymr\0" },
     { QLocale::Script::NKoScript, "N’Ko\0", "Nkoo\0" },
     { QLocale::Script::NabataeanScript, "Nabataean\0", "Nbat\0" },
+    { QLocale::Script::NagMundariScript, "Nag Mundari\0", "Nagm\0" },
     { QLocale::Script::NandinagariScript, "Nandinagari\0", "Nand\0" },
     { QLocale::Script::NastaliqScript, "Nastaliq\0", "Aran\0" },
     { QLocale::Script::NaxiGebaScript, "Naxi Geba\0", "Nkgb\0" },
@@ -1314,7 +1350,7 @@ static const QLocalePrivate localeTbl[] = {
         { "ጃንዩ\0", "ፌብሩ\0", "ማርች\0", "ኤፕሪ\0", "ሜይ\0", "ጁን\0", "ጁላይ\0", "ኦገስ\0", "ሴፕቴ\0", "ኦክቶ\0", "ኖቬም\0", "ዲሴም\0" },
         { "ጃንዩወሪ\0", "ፌብሩወሪ\0", "ማርች\0", "ኤፕሪል\0", "ሜይ\0", "ጁን\0", "ጁላይ\0", "ኦገስት\0", "ሴፕቴምበር\0", "ኦክቶበር\0", "ኖቬምበር\0", "ዲሴምበር\0" },
         { "ጃ\0", "ፌ\0", "ማ\0", "ኤ\0", "ሜ\0", "ጁ\0", "ጁ\0", "ኦ\0", "ሴ\0", "ኦ\0", "ኖ\0", "ዲ\0" },
-        { "ጃንዩ\0", "ፌብሩ\0", "ማርች\0", "ኤፕሪ\0", "ሜይ\0", "ጁን\0", "ጁላይ\0", "ኦገስ\0", "ሴፕቴ\0", "ኦክቶ\0", "ኖቬም\0", "ዲሴም\0" },
+        { "ጃንዩ\0", "ፌብሩ\0", "ማርች\0", "ኤፕሪ\0", "ሜይ\0", "ጁን\0", "ጁላይ\0", "ኦገስ\0", "ሴፕቴ\0", "ኦክ\0", "ኖቬም\0", "ዲሴም\0" },
         { "ጃንዩወሪ\0", "ፌብሩወሪ\0", "ማርች\0", "ኤፕሪል\0", "ሜይ\0", "ጁን\0", "ጁላይ\0", "ኦገስት\0", "ሴፕቴምበር\0", "ኦክቶበር\0", "ኖቬምበር\0", "ዲሴምበር\0" },
         { "ጃ\0", "ፌ\0", "ማ\0", "ኤ\0", "ሜ\0", "ጁ\0", "ጁ\0", "ኦ\0", "ሴ\0", "ኦ\0", "ኖ\0", "ዲ\0" },
         { "ሰኞ\0", "ማክሰ\0", "ረቡዕ\0", "ሐሙስ\0", "ዓርብ\0", "ቅዳሜ\0", "እሑድ\0" },
@@ -1349,7 +1385,7 @@ static const QLocalePrivate localeTbl[] = {
     }, // ar_001
     {
         QLocale::Language::Arabic, QLocale::Script::ArabicScript, QLocale::Country::UnitedArabEmirates,
-        Qt::Saturday, Qt::Friday, Qt::Saturday,
+        Qt::Saturday, Qt::Saturday, Qt::Sunday,
         46, 44, 1563, 37, 45, 43, 69, 2, 48,
         8221, 8220, 8217, 8216,
         "العربية\0", "الإمارات العربية المتحدة\0",
@@ -1721,7 +1757,7 @@ static const QLocalePrivate localeTbl[] = {
         1643, 1644, 1563, 37, 45, 43, 69, 3, 1632,
         8221, 8220, 8217, 8216,
         "العربية\0", "عُمان\0",
-        "%1 و%2\0", "%1 و%2\0", "%1 و%2\0", "%1 و%2\0",
+        "%1 %2\0", "%1 و%2\0", "%1 و%2\0", "%1 و%2\0",
         "d‏/M‏/yyyy\0", "d MMMM yyyy\0", "h:mm AP\0", "h:mm:ss AP Z\0",
         "صباحًا\0", "مساءً\0",
         "ر.ع.‏\0", "%1 %2\0", nullptr, "OMR\0", "ريال عماني\0",
@@ -2341,22 +2377,22 @@ static const QLocalePrivate localeTbl[] = {
         Qt::Monday, Qt::Sunday, Qt::Sunday,
         46, 44, 59, 37, 45, 43, 69, 2, 48,
         8220, 8221, 8216, 8217,
-        "बड़ो\0", "भारत\0",
-        "%1, %2\0", "%1, %2\0", "%1, %2\0", "%1, %2\0",
-        "M/d/yyyy\0", "MMMM d, yyyy\0", "h:mm AP\0", "h:mm:ss AP Z\0",
+        "बर’\0", "भारत\0",
+        "%1, %2\0", "%1, %2\0", "%1, आरो %2\0", "%1 आरो %2\0",
+        "yyyy-MM-dd\0", "MMMM d, yyyy\0", "AP नि h:mm\0", "AP h:mm:ss Z\0",
         "फुं\0", "बेलासे\0",
-        nullptr, "%2 %1\0", nullptr, "INR\0", "रां\0",
-        { "Jan\0", "Feb\0", "Mar\0", "Apr\0", "May\0", "Jun\0", "Jul\0", "Aug\0", "Sep\0", "Oct\0", "Nov\0", "Dec\0" },
-        { "January\0", "February\0", "March\0", "April\0", "May\0", "June\0", "July\0", "August\0", "September\0", "October\0", "November\0", "December\0" },
-        { "ज\0", "फे\0", "मा\0", "ए\0", "मे\0", "जु\0", "जु\0", "आ\0", "से\0", "अ\0", "न\0", "दि\0" },
-        { "Jan\0", "Feb\0", "Mar\0", "Apr\0", "May\0", "Jun\0", "Jul\0", "Aug\0", "Sep\0", "Oct\0", "Nov\0", "Dec\0" },
-        { "जानुवारी\0", "फेब्रुवारी\0", "मार्स\0", "एफ्रिल\0", "मे\0", "जुन\0", "जुलाइ\0", "आगस्थ\0", "सेबथेज्ब़र\0", "अखथबर\0", "नबेज्ब़र\0", "दिसेज्ब़र\0" },
-        { "1\0", "2\0", "3\0", "4\0", "5\0", "6\0", "7\0", "8\0", "9\0", "10\0", "11\0", "12\0" },
-        { "Mon\0", "Tue\0", "Wed\0", "Thu\0", "Fri\0", "Sat\0", "Sun\0" },
-        { "Monday\0", "Tuesday\0", "Wednesday\0", "Thursday\0", "Friday\0", "Saturday\0", "Sunday\0" },
+        nullptr, "%2 %1\0", nullptr, "INR\0", "भारतनि रुपी\0",
+        { "जान\0", "फेब\0", "मार्च\0", "एप्रि\0", "मे\0", "जुन\0", "जुल\0", "आग\0", "सेप\0", "अक्ट’\0", "नवे\0", "डिसे\0" },
+        { "जानुवारी\0", "फेब्रूवारी\0", "मार्च\0", "एप्रिल\0", "मे\0", "जुन\0", "जुलाई\0", "आगष्ट\0", "सेप्थेम्बर\0", "अक्ट’बर\0", "नवेम्बर\0", "डिसेम्बर\0" },
+        { "ज\0", "फ\0", "म\0", "ए\0", "म\0", "ज\0", "ज\0", "आ\0", "स\0", "अ\0", "न\0", "ड\0" },
+        { "जान\0", "फेब\0", "मार्च\0", "एप्रि\0", "मे\0", "जुन\0", "जुल\0", "आग\0", "सेप\0", "अक्ट’\0", "नवे\0", "डिसे\0" },
+        { "जानुवारी\0", "फेब्रूवारी\0", "मार्च\0", "एप्रिल\0", "मे\0", "जुन\0", "जुलाई\0", "आगष्ट\0", "सेप्थेम्बर\0", "अक्ट’बर\0", "नवेम्बर\0", "डिसेम्बर\0" },
+        { "ज\0", "फ\0", "म\0", "ए\0", "म\0", "ज\0", "ज\0", "आ\0", "स\0", "अ\0", "न\0", "ड\0" },
+        { "सम\0", "मंगल\0", "बुध\0", "बिस्थि\0", "सुखुर\0", "सुनि\0", "रबि\0" },
+        { "समबार\0", "मंगलबार\0", "बुधबार\0", "बिस्थिबार\0", "सुखुरबार\0", "सुनिबार\0", "रबिबार\0" },
         { "स\0", "मं\0", "बु\0", "बि\0", "सु\0", "सु\0", "र\0" },
-        { "सम\0", "मंगल\0", "बुद\0", "बिसथि\0", "सुखुर\0", "सुनि\0", "रबि\0" },
-        { "समबार\0", "मंगलबार\0", "बुदबार\0", "बिसथिबार\0", "सुखुरबार\0", "सुनिबार\0", "रबिबार\0" },
+        { "सम\0", "मंगल\0", "बुध\0", "बिस्थि\0", "सुखुर\0", "सुनि\0", "रबि\0" },
+        { "समबार\0", "मंगलबार\0", "बुधबार\0", "बिस्थिबार\0", "सुखुरबार\0", "सुनिबार\0", "रबिबार\0" },
         { "1\0", "2\0", "3\0", "4\0", "5\0", "6\0", "7\0" }
     }, // brx_IN
     {
@@ -2539,7 +2575,7 @@ static const QLocalePrivate localeTbl[] = {
         { "𑄥𑄧𑄟𑄴\0", "𑄟𑄧𑄁𑄉𑄧𑄣𑄴\0", "𑄝𑄪𑄖𑄴\0", "𑄝𑄳𑄢𑄨𑄥𑄪𑄛𑄴\0", "𑄥𑄪𑄇𑄴𑄇𑄮𑄢𑄴\0", "𑄥𑄧𑄚𑄨\0", "𑄢𑄧𑄝𑄨\0" },
         { "𑄥𑄧𑄟𑄴𑄝𑄢𑄴\0", "𑄟𑄧𑄁𑄉𑄧𑄣𑄴𑄝𑄢𑄴\0", "𑄝𑄪𑄖𑄴𑄝𑄢𑄴\0", "𑄝𑄳𑄢𑄨𑄥𑄪𑄛𑄴𑄝𑄢𑄴\0", "𑄥𑄪𑄇𑄴𑄇𑄮𑄢𑄴𑄝𑄢𑄴\0", "𑄥𑄧𑄚𑄨𑄝𑄢𑄴\0", "𑄢𑄧𑄝𑄨𑄝𑄢𑄴\0" },
         { "𑄥𑄧\0", "𑄟𑄧\0", "𑄝𑄪\0", "𑄝𑄳𑄢𑄨\0", "𑄥𑄪\0", "𑄥𑄧\0", "𑄢𑄧\0" },
-        { "𑄥𑄧𑄟𑄴\0", "𑄟𑄧𑄁𑄉𑄧𑄣𑄴\0", "𑄝𑄪𑄖𑄴\0", "𑄝𑄳𑄢𑄨𑄥𑄪𑄛𑄴\0", "𑄥𑄪𑄇𑄴𑄇𑄮𑄢𑄴\0", "𑄥𑄧𑄚𑄨\0", "𑄢𑄧𑄝𑄨\0" },
+        { "𑄥𑄧𑄟𑄴\0", "𑄟𑄧𑄁𑄉𑄧𑄣𑄴\0", "𑄪𑄖𑄴\0", "𑄝𑄳𑄢𑄨𑄥𑄪𑄛𑄴\0", "𑄥𑄪𑄇𑄴𑄇𑄮𑄢𑄴\0", "𑄥𑄧𑄚𑄨\0", "𑄢𑄧𑄝𑄨\0" },
         { "𑄥𑄧𑄟𑄴𑄝𑄢𑄴\0", "𑄟𑄧𑄁𑄉𑄧𑄣𑄴𑄝𑄢𑄴\0", "𑄝𑄪𑄖𑄴𑄝𑄢𑄴\0", "𑄝𑄳𑄢𑄨𑄥𑄪𑄛𑄴𑄝𑄢𑄴\0", "𑄥𑄪𑄇𑄴𑄇𑄮𑄢𑄴𑄝𑄢𑄴\0", "𑄥𑄧𑄚𑄨𑄝𑄢𑄴\0", "𑄢𑄧𑄝𑄨𑄝𑄢𑄴\0" },
         { "𑄥𑄧\0", "𑄟𑄧\0", "𑄝𑄪\0", "𑄝𑄳𑄢𑄨\0", "𑄥𑄪\0", "𑄥𑄧\0", "𑄢𑄧\0" }
     }, // ccp_IN
@@ -3207,7 +3243,7 @@ static const QLocalePrivate localeTbl[] = {
         { "Δευτέρα\0", "Τρίτη\0", "Τετάρτη\0", "Πέμπτη\0", "Παρασκευή\0", "Σάββατο\0", "Κυριακή\0" },
         { "Δ\0", "Τ\0", "Τ\0", "Π\0", "Π\0", "Σ\0", "Κ\0" },
         { "Δευ\0", "Τρί\0", "Τετ\0", "Πέμ\0", "Παρ\0", "Σάβ\0", "Κυρ\0" },
-        { "Δευτέρα\0", "Τρίτη\0", "Τετάρτη\0", "Πέμπτη\0", "Παρασκευή\0", "Σάββατο\0", "Κυριακή\0" },
+        { "Δευτέρα\0", "Τρίτη\0", "Τετάρτη\0", "Πέμπτη\0", "αρασκευή\0", "Σάββατο\0", "Κυριακή\0" },
         { "Δ\0", "Τ\0", "Τ\0", "Π\0", "Π\0", "Σ\0", "Κ\0" }
     }, // el_GR
     {
@@ -3258,7 +3294,7 @@ static const QLocalePrivate localeTbl[] = {
     }, // en_150
     {
         QLocale::Language::English, QLocale::Script::AnyScript, QLocale::Country::UnitedArabEmirates,
-        Qt::Saturday, Qt::Friday, Qt::Saturday,
+        Qt::Saturday, Qt::Saturday, Qt::Sunday,
         46, 44, 59, 37, 45, 43, 69, 2, 48,
         8220, 8221, 8216, 8217,
         "English\0", "United Arab Emirates\0",
@@ -4614,6 +4650,29 @@ static const QLocalePrivate localeTbl[] = {
         { "1\0", "2\0", "3\0", "4\0", "5\0", "6\0", "7\0" }
     }, // en_MU
     {
+        QLocale::Language::English, QLocale::Script::AnyScript, QLocale::Country::Maldives,
+        Qt::Friday, Qt::Saturday, Qt::Sunday,
+        46, 44, 59, 37, 45, 43, 69, 2, 48,
+        8220, 8221, 8216, 8217,
+        "English\0", "Maldives\0",
+        "%1, %2\0", "%1, %2\0", "%1, and %2\0", "%1 and %2\0",
+        "d-M-yyyy\0", "d MMMM yyyy\0", "HH:mm\0", "HH:mm:ss Z\0",
+        "am\0", "pm\0",
+        "Rf\0", "%2 %1\0", nullptr, "MVR\0", nullptr,
+        { "Jan\0", "Feb\0", "Mar\0", "Apr\0", "May\0", "Jun\0", "Jul\0", "Aug\0", "Sept\0", "Oct\0", "Nov\0", "Dec\0" },
+        { "January\0", "February\0", "March\0", "April\0", "May\0", "June\0", "July\0", "August\0", "September\0", "October\0", "November\0", "December\0" },
+        { "J\0", "F\0", "M\0", "A\0", "M\0", "J\0", "J\0", "A\0", "S\0", "O\0", "N\0", "D\0" },
+        { "Jan\0", "Feb\0", "Mar\0", "Apr\0", "May\0", "Jun\0", "Jul\0", "Aug\0", "Sept\0", "Oct\0", "Nov\0", "Dec\0" },
+        { "January\0", "February\0", "March\0", "April\0", "May\0", "June\0", "July\0", "August\0", "September\0", "October\0", "November\0", "December\0" },
+        { "1\0", "2\0", "3\0", "4\0", "5\0", "6\0", "7\0", "8\0", "9\0", "10\0", "11\0", "12\0" },
+        { "Mon\0", "Tue\0", "Wed\0", "Thu\0", "Fri\0", "Sat\0", "Sun\0" },
+        { "Monday\0", "Tuesday\0", "Wednesday\0", "Thursday\0", "Friday\0", "Saturday\0", "Sunday\0" },
+        { "M\0", "T\0", "W\0", "T\0", "F\0", "S\0", "S\0" },
+        { "Mon\0", "Tue\0", "Wed\0", "Thu\0", "Fri\0", "Sat\0", "Sun\0" },
+        { "Monday\0", "Tuesday\0", "Wednesday\0", "Thursday\0", "Friday\0", "Saturday\0", "Sunday\0" },
+        { "1\0", "2\0", "3\0", "4\0", "5\0", "6\0", "7\0" }
+    }, // en_MV
+    {
         QLocale::Language::English, QLocale::Script::LatinScript, QLocale::Country::Malawi,
         Qt::Monday, Qt::Saturday, Qt::Sunday,
         46, 44, 59, 37, 45, 43, 69, 2, 48,
@@ -5145,13 +5204,13 @@ static const QLocalePrivate localeTbl[] = {
     {
         QLocale::Language::English, QLocale::Script::LatinScript, QLocale::Country::SierraLeone,
         Qt::Monday, Qt::Saturday, Qt::Sunday,
-        46, 44, 59, 37, 45, 43, 69, 0, 48,
+        46, 44, 59, 37, 45, 43, 69, 2, 48,
         8220, 8221, 8216, 8217,
         "English\0", "Sierra Leone\0",
         "%1, %2\0", "%1, %2\0", "%1, and %2\0", "%1 and %2\0",
         "M/d/yyyy\0", "MMMM d, yyyy\0", "h:mm AP\0", "h:mm:ss AP Z\0",
         "AM\0", "PM\0",
-        "Le\0", "%2%1\0", nullptr, "SLL\0", nullptr,
+        nullptr, "%2%1\0", nullptr, "SLE\0", "Sierra Leonean New Leone\0",
         { "Jan\0", "Feb\0", "Mar\0", "Apr\0", "May\0", "Jun\0", "Jul\0", "Aug\0", "Sept\0", "Oct\0", "Nov\0", "Dec\0" },
         { "January\0", "February\0", "March\0", "April\0", "May\0", "June\0", "July\0", "August\0", "September\0", "October\0", "November\0", "December\0" },
         { "J\0", "F\0", "M\0", "A\0", "M\0", "J\0", "J\0", "A\0", "S\0", "O\0", "N\0", "D\0" },
@@ -6640,13 +6699,13 @@ static const QLocalePrivate localeTbl[] = {
     {
         QLocale::Language::Fulah, QLocale::Script::AdlamScript, QLocale::Country::SierraLeone,
         Qt::Monday, Qt::Saturday, Qt::Sunday,
-        44, 160, 59, 37, 45, 43, 69, 0, 48,
+        44, 160, 59, 37, 45, 43, 69, 2, 48,
         8222, 8221, 8218, 8217,
         "Pulaar\0", "Seraa liyon\0",
         "%1, %2\0", "%1, %2\0", "%1, %2\0", "%1, %2\0",
         "d/M/yyyy\0", "yyyy MMMM d\0", "h:mm AP\0", "h:mm:ss AP Z\0",
         "subaka\0", "kikiiɗe\0",
-        "Le\0", "%1 %2\0", nullptr, "SLL\0", nullptr,
+        nullptr, "%1 %2\0", nullptr, "SLE\0", nullptr,
         { "Jan\0", "Feb\0", "Mar\0", "Apr\0", "May\0", "Jun\0", "Jul\0", "Aug\0", "Sep\0", "Oct\0", "Nov\0", "Dec\0" },
         { "January\0", "February\0", "March\0", "April\0", "May\0", "June\0", "July\0", "August\0", "September\0", "October\0", "November\0", "December\0" },
         { "s\0", "c\0", "m\0", "s\0", "d\0", "k\0", "m\0", "j\0", "s\0", "y\0", "j\0", "b\0" },
@@ -6916,13 +6975,13 @@ static const QLocalePrivate localeTbl[] = {
     {
         QLocale::Language::Fulah, QLocale::Script::LatinScript, QLocale::Country::SierraLeone,
         Qt::Monday, Qt::Saturday, Qt::Sunday,
-        44, 160, 59, 37, 45, 43, 69, 0, 48,
+        44, 160, 59, 37, 45, 43, 69, 2, 48,
         8222, 8221, 8218, 8217,
         "Pulaar\0", "Seraa liyon\0",
         "%1, %2\0", "%1, %2\0", "%1, %2\0", "%1, %2\0",
         "d/M/yyyy\0", "yyyy MMMM d\0", "h:mm AP\0", "h:mm:ss AP Z\0",
         "subaka\0", "kikiiɗe\0",
-        "Le\0", "%1 %2\0", nullptr, "SLL\0", nullptr,
+        nullptr, "%1 %2\0", nullptr, "SLE\0", nullptr,
         { "Jan\0", "Feb\0", "Mar\0", "Apr\0", "May\0", "Jun\0", "Jul\0", "Aug\0", "Sep\0", "Oct\0", "Nov\0", "Dec\0" },
         { "January\0", "February\0", "March\0", "April\0", "May\0", "June\0", "July\0", "August\0", "September\0", "October\0", "November\0", "December\0" },
         { "s\0", "c\0", "m\0", "s\0", "d\0", "k\0", "m\0", "j\0", "s\0", "y\0", "j\0", "b\0" },
@@ -8524,6 +8583,29 @@ static const QLocalePrivate localeTbl[] = {
         { "सो\0", "मं\0", "बु\0", "गु\0", "शु\0", "श\0", "र\0" }
     }, // hi_IN
     {
+        QLocale::Language::Hindi, QLocale::Script::LatinScript, QLocale::Country::India,
+        Qt::Monday, Qt::Sunday, Qt::Sunday,
+        46, 44, 59, 37, 45, 43, 69, 2, 48,
+        8220, 8221, 8216, 8217,
+        "हिन्दी\0", "भारत\0",
+        "%1, %2\0", "%1, %2\0", "%1, और %2\0", "%1 और %2\0",
+        "d/M/yyyy\0", "d MMMM yyyy\0", "h:mm AP\0", "h:mm:ss AP Z\0",
+        "am\0", "pm\0",
+        "₹\0", "%2%1\0", nullptr, "INR\0", "भारतीय रुपया\0",
+        { "जन॰\0", "फ़र॰\0", "मार्च\0", "अप्रैल\0", "मई\0", "जून\0", "जुल॰\0", "अग॰\0", "सित॰\0", "अक्तू॰\0", "नव॰\0", "दिस॰\0" },
+        { "जनवरी\0", "फ़रवरी\0", "मार्च\0", "अप्रैल\0", "मई\0", "जून\0", "जुलाई\0", "अगस्त\0", "सितंबर\0", "अक्तूबर\0", "नवंबर\0", "दिसंबर\0" },
+        { "ज\0", "फ़\0", "मा\0", "अ\0", "म\0", "जू\0", "जु\0", "अ\0", "सि\0", "अ\0", "न\0", "दि\0" },
+        { "जन॰\0", "फ़र॰\0", "मार्च\0", "अप्रैल\0", "मई\0", "जून\0", "जुल॰\0", "अग॰\0", "सित॰\0", "अक्तू॰\0", "नव॰\0", "दिस॰\0" },
+        { "जनवरी\0", "फ़रवरी\0", "मार्च\0", "अप्रैल\0", "मई\0", "जून\0", "जुलाई\0", "अगस्त\0", "सितंबर\0", "अक्तूबर\0", "नवंबर\0", "दिसंबर\0" },
+        { "ज\0", "फ़\0", "मा\0", "अ\0", "म\0", "जू\0", "जु\0", "अ\0", "सि\0", "अ\0", "न\0", "दि\0" },
+        { "सोम\0", "मंगल\0", "बुध\0", "गुरु\0", "शुक्र\0", "शनि\0", "रवि\0" },
+        { "सोमवार\0", "मंगलवार\0", "बुधवार\0", "गुरुवार\0", "शुक्रवार\0", "शनिवार\0", "रविवार\0" },
+        { "सो\0", "मं\0", "बु\0", "गु\0", "शु\0", "श\0", "र\0" },
+        { "सोम\0", "मंगल\0", "बुध\0", "गुरु\0", "शुक्र\0", "शनि\0", "रवि\0" },
+        { "सोमवार\0", "मंगलवार\0", "बुधवार\0", "गुरुवार\0", "शुक्रवार\0", "शनिवार\0", "रविवार\0" },
+        { "सो\0", "मं\0", "बु\0", "गु\0", "शु\0", "श\0", "र\0" }
+    }, // hi_Latn_IN
+    {
         QLocale::Language::Croatian, QLocale::Script::LatinScript, QLocale::Country::BosniaAndHerzegovina,
         Qt::Monday, Qt::Saturday, Qt::Sunday,
         44, 46, 59, 37, 8722, 43, 69, 2, 48,
@@ -8632,7 +8714,7 @@ static const QLocalePrivate localeTbl[] = {
         { "հունվարի\0", "փետրվարի\0", "մարտի\0", "ապրիլի\0", "մայիսի\0", "հունիսի\0", "հուլիսի\0", "օգոստոսի\0", "սեպտեմբերի\0", "հոկտեմբերի\0", "նոյեմբերի\0", "դեկտեմբերի\0" },
         { "Հ\0", "Փ\0", "Մ\0", "Ա\0", "Մ\0", "Հ\0", "Հ\0", "Օ\0", "Ս\0", "Հ\0", "Ն\0", "Դ\0" },
         { "երկ\0", "երք\0", "չրք\0", "հնգ\0", "ուր\0", "շբթ\0", "կիր\0" },
-        { "երկուշաբթի\0", "երեքշաբթի\0", "չորեքշաբթի\0", "հինգշաբթի\0", "ուրբաթ\0", "շաբաթ\0", "կիրակի\0" },
+        { "երկուշաբթի\0", "երքշաբթի\0", "չորեքշաբթի\0", "հինգշաբթի\0", "ուրբաթ\0", "շաբաթ\0", "կիրակի\0" },
         { "Ե\0", "Ե\0", "Չ\0", "Հ\0", "Ո\0", "Շ\0", "Կ\0" },
         { "երկ\0", "երք\0", "չրք\0", "հնգ\0", "ուր\0", "շբթ\0", "կիր\0" },
         { "երկուշաբթի\0", "երեքշաբթի\0", "չորեքշաբթի\0", "հինգշաբթի\0", "ուրբաթ\0", "շաբաթ\0", "կիրակի\0" },
@@ -9134,7 +9216,7 @@ static const QLocalePrivate localeTbl[] = {
         { "қаң.\0", "ақп.\0", "нау.\0", "сәу.\0", "мам.\0", "мау.\0", "шіл.\0", "там.\0", "қыр.\0", "қаз.\0", "қар.\0", "жел.\0" },
         { "Қаңтар\0", "Ақпан\0", "Наурыз\0", "Сәуір\0", "Мамыр\0", "Маусым\0", "Шілде\0", "Тамыз\0", "Қыркүйек\0", "Қазан\0", "Қараша\0", "Желтоқсан\0" },
         { "Қ\0", "А\0", "Н\0", "С\0", "М\0", "М\0", "Ш\0", "Т\0", "Қ\0", "Қ\0", "Қ\0", "Ж\0" },
-        { "қаң.\0", "ақп.\0", "нау.\0", "сәу.\0", "мам.\0", "мау.\0", "шіл.\0", "там.\0", "қыр.\0", "қаз.\0", "қар.\0", "жел.\0" },
+        { "аң.\0", "ақп.\0", "нау.\0", "сәу.\0", "мам.\0", "мау.\0", "шіл.\0", "там.\0", "қыр.\0", "қаз.\0", "қар.\0", "жел.\0" },
         { "қаңтар\0", "ақпан\0", "наурыз\0", "сәуір\0", "мамыр\0", "маусым\0", "шілде\0", "тамыз\0", "қыркүйек\0", "қазан\0", "қараша\0", "желтоқсан\0" },
         { "Қ\0", "А\0", "Н\0", "С\0", "М\0", "М\0", "Ш\0", "Т\0", "Қ\0", "Қ\0", "Қ\0", "Ж\0" },
         { "дс\0", "сс\0", "ср\0", "бс\0", "жм\0", "сб\0", "жс\0" },
@@ -9331,18 +9413,18 @@ static const QLocalePrivate localeTbl[] = {
     {
         QLocale::Language::Kashmiri, QLocale::Script::ArabicScript, QLocale::Country::India,
         Qt::Monday, Qt::Sunday, Qt::Sunday,
-        46, 44, 59, 37, 45, 43, 69, 2, 1776,
+        1643, 1644, 59, 37, 45, 43, 69, 2, 1776,
         8220, 8221, 8216, 8217,
         "کٲشُر\0", "ہِندوستان\0",
-        "%1, %2\0", "%1, %2\0", "%1, %2\0", "%1, %2\0",
+        "%1، %2\0", "%1، %2\0", "%1، تٕہ %2\0", "%1 تٕہ %2\0",
         "M/d/yyyy\0", "MMMM d, yyyy\0", "h:mm AP\0", "h:mm:ss AP Z\0",
         "AM\0", "PM\0",
-        nullptr, "%1%2\0", nullptr, "INR\0", "ہِندُستٲنۍ رۄپَے\0",
-        { "Jan\0", "Feb\0", "Mar\0", "Apr\0", "May\0", "Jun\0", "Jul\0", "Aug\0", "Sep\0", "Oct\0", "Nov\0", "Dec\0" },
-        { "January\0", "February\0", "March\0", "April\0", "May\0", "June\0", "July\0", "August\0", "September\0", "October\0", "November\0", "December\0" },
+        nullptr, "%2%1\0", nullptr, "INR\0", "ہِندُستٲنۍ رۄپَے\0",
+        { "جنؤری\0", "فرؤری\0", "مارٕچ\0", "اپریل\0", "مئی\0", "جوٗن\0", "جوٗلایی\0", "اگست\0", "ستمبر\0", "اکتوٗبر\0", "نومبر\0", "دسمبر\0" },
+        { "جنؤری\0", "فرؤری\0", "مارٕچ\0", "اپریل\0", "مئی\0", "جوٗن\0", "جوٗلایی\0", "اگست\0", "ستمبر\0", "اکتوٗبر\0", "نومبر\0", "دسمبر\0" },
         { "ج\0", "ف\0", "م\0", "ا\0", "م\0", "ج\0", "ج\0", "ا\0", "س\0", "س\0", "ا\0", "ن\0" },
-        { "Jan\0", "Feb\0", "Mar\0", "Apr\0", "May\0", "Jun\0", "Jul\0", "Aug\0", "Sep\0", "Oct\0", "Nov\0", "Dec\0" },
-        { "جنؤری\0", "فرؤری\0", "مارٕچ\0", "اپریل\0", "میٔ\0", "جوٗن\0", "جوٗلایی\0", "اگست\0", "ستمبر\0", "اکتوٗبر\0", "نومبر\0", "دسمبر\0" },
+        { "جنؤری\0", "فرؤری\0", "مارٕچ\0", "اپریل\0", "مئی\0", "جوٗن\0", "جوٗلایی\0", "اگست\0", "ستمبر\0", "اکتوٗبر\0", "نومبر\0", "دسمبر\0" },
+        { "جنؤری\0", "فرؤری\0", "مارٕچ\0", "اپریل\0", "مئی\0", "جوٗن\0", "جوٗلایی\0", "اگست\0", "ستمبر\0", "اکتوٗبر\0", "نومبر\0", "دسمبر\0" },
         { "1\0", "2\0", "3\0", "4\0", "5\0", "6\0", "7\0", "8\0", "9\0", "10\0", "11\0", "12\0" },
         { "Mon\0", "Tue\0", "Wed\0", "Thu\0", "Fri\0", "Sat\0", "Sun\0" },
         { "Monday\0", "Tuesday\0", "Wednesday\0", "Thursday\0", "Friday\0", "Saturday\0", "Sunday\0" },
@@ -9351,6 +9433,29 @@ static const QLocalePrivate localeTbl[] = {
         { "ژٔندرٕروار\0", "بۆموار\0", "بودوار\0", "برؠسوار\0", "جُمہ\0", "بٹوار\0", "اَتھوار\0" },
         { "1\0", "2\0", "3\0", "4\0", "5\0", "6\0", "7\0" }
     }, // ks_Arab_IN
+    {
+        QLocale::Language::Kashmiri, QLocale::Script::DevanagariScript, QLocale::Country::India,
+        Qt::Monday, Qt::Sunday, Qt::Sunday,
+        1643, 1644, 59, 37, 45, 43, 69, 2, 1776,
+        8220, 8221, 8216, 8217,
+        "کٲشُر\0", "ہِندوستان\0",
+        "%1، %2\0", "%1، %2\0", "%1، تٕہ %2\0", "%1 تٕہ %2\0",
+        "M/d/yyyy\0", "MMMM d, yyyy\0", "h:mm AP\0", "h:mm:ss AP Z\0",
+        "AM\0", "PM\0",
+        nullptr, "%2%1\0", nullptr, "INR\0", "ہِندُستٲنۍ رۄپَے\0",
+        { "جنؤری\0", "فرؤری\0", "مارٕچ\0", "اپریل\0", "مئی\0", "جوٗن\0", "جوٗلایی\0", "اگست\0", "ستمبر\0", "اکتوٗبر\0", "نومبر\0", "دسمبر\0" },
+        { "جنؤری\0", "فرؤری\0", "مارٕچ\0", "اپریل\0", "مئی\0", "جوٗن\0", "جوٗلایی\0", "اگست\0", "ستمبر\0", "اکتوٗبر\0", "نومبر\0", "دسمبر\0" },
+        { "ج\0", "ف\0", "م\0", "ا\0", "م\0", "ج\0", "ج\0", "ا\0", "س\0", "س\0", "ا\0", "ن\0" },
+        { "جنؤری\0", "فرؤری\0", "مارٕچ\0", "اپریل\0", "مئی\0", "جوٗن\0", "جوٗلایی\0", "اگست\0", "ستمبر\0", "اکتوٗبر\0", "نومبر\0", "دسمبر\0" },
+        { "جنؤری\0", "فرؤری\0", "مارٕچ\0", "اپریل\0", "مئی\0", "جوٗن\0", "جوٗلایی\0", "اگست\0", "ستمبر\0", "اکتوٗبر\0", "نومبر\0", "دسمبر\0" },
+        { "1\0", "2\0", "3\0", "4\0", "5\0", "6\0", "7\0", "8\0", "9\0", "10\0", "11\0", "12\0" },
+        { "Mon\0", "Tue\0", "Wed\0", "Thu\0", "Fri\0", "Sat\0", "Sun\0" },
+        { "Monday\0", "Tuesday\0", "Wednesday\0", "Thursday\0", "Friday\0", "Saturday\0", "Sunday\0" },
+        { "ژ\0", "ب\0", "ب\0", "ب\0", "ج\0", "ب\0", "ا\0" },
+        { "ژٔندٕروار\0", "بۆموار\0", "بودوار\0", "برؠسوار\0", "جُمہ\0", "بٹوار\0", "آتھوار\0" },
+        { "ژٔندرٕروار\0", "بۆموار\0", "بودوار\0", "برؠسوار\0", "جُمہ\0", "بٹوار\0", "اَتھوار\0" },
+        { "1\0", "2\0", "3\0", "4\0", "5\0", "6\0", "7\0" }
+    }, // ks_Deva_IN
     {
         QLocale::Language::Shambala, QLocale::Script::LatinScript, QLocale::Country::Tanzania,
         Qt::Monday, Qt::Saturday, Qt::Sunday,
@@ -9866,7 +9971,7 @@ static const QLocalePrivate localeTbl[] = {
         "%1, %2\0", "%1, %2\0", "%1, और %2\0", "%1 और %2\0",
         "d/M/yyyy\0", "d MMMM yyyy\0", "h:mm AP\0", "h:mm:ss AP Z\0",
         "भोर\0", "सांझ\0",
-        "₹\0", "%1%2\0", nullptr, "INR\0", "भारतीय रुपया\0",
+        "₹\0", "%1%2\0", nullptr, "INR\0", "भरतीय रुपया\0",
         { "जन॰\0", "फर॰\0", "मार्च\0", "अप्रैल\0", "मई\0", "जून\0", "जुल॰\0", "अग॰\0", "सित॰\0", "अक्तू॰\0", "नव॰\0", "दिस॰\0" },
         { "जनवरी\0", "फरवरी\0", "मार्च\0", "अप्रैल\0", "मई\0", "जून\0", "जुलाई\0", "अगस्त\0", "सितंबर\0", "अक्टूबर\0", "नवंबर\0", "दिसंबर\0" },
         { "ज\0", "फ\0", "मा\0", "अ\0", "म\0", "जू\0", "जु\0", "अ\0", "सि\0", "अ\0", "न\0", "दि\0" },
@@ -10970,7 +11075,7 @@ static const QLocalePrivate localeTbl[] = {
         "%1, %2\0", "%1, %2\0", "%1 ਅਤੇ %2\0", "%1 ਅਤੇ %2\0",
         "d/M/yyyy\0", "d MMMM yyyy\0", "h:mm AP\0", "h:mm:ss AP Z\0",
         "ਪੂ.ਦੁ.\0", "ਬਾ.ਦੁ.\0",
-        "₹\0", "%2 %1\0", nullptr, "INR\0", "ਭਾਰਤੀ ਰੁਪਇਆ\0",
+        "₹\0", "%2 %1\0", nullptr, "INR\0", "ਭਰਤੀ ਰੁਪਇਆ\0",
         { "ਜਨ\0", "ਫ਼ਰ\0", "ਮਾਰਚ\0", "ਅਪ੍ਰੈ\0", "ਮਈ\0", "ਜੂਨ\0", "ਜੁਲਾ\0", "ਅਗ\0", "ਸਤੰ\0", "ਅਕਤੂ\0", "ਨਵੰ\0", "ਦਸੰ\0" },
         { "ਜਨਵਰੀ\0", "ਫ਼ਰਵਰੀ\0", "ਮਾਰਚ\0", "ਅਪ੍ਰੈਲ\0", "ਮਈ\0", "ਜੂਨ\0", "ਜੁਲਾਈ\0", "ਅਗਸਤ\0", "ਸਤੰਬਰ\0", "ਅਕਤੂਬਰ\0", "ਨਵੰਬਰ\0", "ਦਸੰਬਰ\0" },
         { "ਜ\0", "ਫ਼\0", "ਮਾ\0", "ਅ\0", "ਮ\0", "ਜੂ\0", "ਜੁ\0", "ਅ\0", "ਸ\0", "ਅ\0", "ਨ\0", "ਦ\0" },
@@ -11740,7 +11845,7 @@ static const QLocalePrivate localeTbl[] = {
         { "सोमवासरः\0", "मंगलवासरः\0", "बुधवासरः\0", "गुरुवासर:\0", "शुक्रवासरः\0", "शनिवासरः\0", "रविवासरः\0" },
         { "सो\0", "मं\0", "बु\0", "गु\0", "शु\0", "श\0", "र\0" },
         { "सोम\0", "मंगल\0", "बुध\0", "गुरु\0", "शुक्र\0", "शनि\0", "रवि\0" },
-        { "सोमवासरः\0", "मंगलवासरः\0", "बुधवासरः\0", "गुरुवासर:\0", "शुक्रवासरः\0", "शनिवासरः\0", "रविवासरः\0" },
+        { "सोमवसरः\0", "मंगलवासरः\0", "बुधवासरः\0", "गुरुवासर:\0", "शुक्रवासरः\0", "शनिवासरः\0", "रविवासरः\0" },
         { "सो\0", "मं\0", "बु\0", "गु\0", "शु\0", "श\0", "र\0" }
     }, // sa_IN
     {
@@ -11795,7 +11900,7 @@ static const QLocalePrivate localeTbl[] = {
         46, 44, 59, 37, 45, 43, 69, 2, 48,
         8220, 8221, 8216, 8217,
         "ᱥᱟᱱᱛᱟᱲᱤ\0", "ᱤᱱᱰᱤᱭᱟ\0",
-        "%1, %2\0", "%1, %2\0", "%1, %2\0", "%1, %2\0",
+        "%1, %2\0", "%1, %2\0", "%1 ᱟᱨ ᱵᱟᱝ %2\0", "%1 ᱟᱨ ᱵᱟᱝ %2\0",
         "d/M/yyyy\0", "d MMMM yyyy\0", "h:mm AP\0", "h:mm:ss AP Z\0",
         "ᱥᱮᱛᱟᱜ\0", "ᱧᱤᱫᱟᱹ\0",
         nullptr, "%1%2\0", nullptr, "INR\0", "ᱥᱤᱧᱚᱛ ᱨᱮᱱᱟᱜ ᱴᱟᱠᱟ\0",
@@ -12137,7 +12242,7 @@ static const QLocalePrivate localeTbl[] = {
     {
         QLocale::Language::Slovenian, QLocale::Script::LatinScript, QLocale::Country::Slovenia,
         Qt::Monday, Qt::Saturday, Qt::Sunday,
-        44, 46, 59, 37, 8722, 43, 101, 0, 48,
+        44, 46, 59, 37, 8722, 43, 101, 2, 48,
         8222, 8220, 8218, 8216,
         "slovenščina\0", "Slovenija\0",
         "%1, %2\0", "%1, %2\0", "%1 in %2\0", "%1 in %2\0",
@@ -12959,7 +13064,7 @@ static const QLocalePrivate localeTbl[] = {
         { "ሰኑይ\0", "ሰሉስ\0", "ረቡዕ\0", "ሓሙስ\0", "ዓርቢ\0", "ቀዳም\0", "ሰንበት\0" },
         { "ሰ\0", "ሰ\0", "ረ\0", "ሓ\0", "ዓ\0", "ቀ\0", "ሰ\0" },
         { "ሰኑ\0", "ሰሉ\0", "ረቡ\0", "ሓሙ\0", "ዓር\0", "ቀዳ\0", "ሰን\0" },
-        { "ሰኑይ\0", "ሰሉስ\0", "ረቡዕ\0", "ሓሙ\0", "ዓርቢ\0", "ቀዳም\0", "ሰንበት\0" },
+        { "ሰኑይ\0", "ሰሉስ\0", "ረቡዕ\0", "ሓሙስ\0", "ዓርቢ\0", "ቀዳም\0", "ሰንበት\0" },
         { "ሰ\0", "ሰ\0", "ረ\0", "ሓ\0", "ዓ\0", "ቀ\0", "ሰ\0" }
     }, // ti_ER
     {
@@ -13198,7 +13303,7 @@ static const QLocalePrivate localeTbl[] = {
         1643, 1644, 59, 37, 45, 43, 69, 2, 1776,
         8221, 8220, 8217, 8216,
         "اردو\0", "بھارت\0",
-        "%1، %2\0", "%1، %2\0", "%2، %1\0", "%2، %1\0",
+        "%1، %2\0", "%1، %2\0", "%1، اور %2\0", "%1 اور %2\0",
         "d/M/yyyy\0", "d MMMM، yyyy\0", "h:mm AP\0", "h:mm:ss AP Z\0",
         "AM\0", "PM\0",
         "₹\0", "%2 %1\0", nullptr, "INR\0", "بھارتی روپیہ\0",
@@ -13340,7 +13445,7 @@ static const QLocalePrivate localeTbl[] = {
         "dd/MM/yyyy\0", "d MMMM yyyy\0", "h:mm AP\0", "h:mm:ss AP Z\0",
         "AM\0", "PM\0",
         "$\0", "%2%1\0", nullptr, "LRD\0", "ꕞꔤꔫꕩ ꕜꕞꕌ\0",
-        { "ꖨꖕꔞ\0", "ꕒꕡ\0", "ꕾꖺ\0", "ꖢꖕ\0", "ꖑꕱ\0", "ꖱꘋ\0", "ꖱꕞ\0", "ꗛꔕ\0", "ꕢꕌ\0", "ꕭꖃ\0", "ꔞꘋ\0", "ꖨꖕꗏ\0" },
+        { "ꖨꖕꔞ\0", "ꕒꕡ\0", "ꕾꖺ\0", "ꖢꖕ\0", "ꖑꕱ\0", "ꖱꘋ\0", "ꖱꕞ\0", "ꗛꔕ\0", "ꕢ\0", "ꕭꖃ\0", "ꔞꘋ\0", "ꖨꖕꗏ\0" },
         { "ꖨꖕ ꕪꕴ ꔞꔀꕮꕊ\0", "ꕒꕡꖝꖕ\0", "ꕾꖺ\0", "ꖢꖕ\0", "ꖑꕱ\0", "ꖱꘋ\0", "ꖱꕞꔤ\0", "ꗛꔕ\0", "ꕢꕌ\0", "ꕭꖃ\0", "ꔞꘋꕔꕿ ꕸꖃꗏ\0", "ꖨꖕ ꕪꕴ ꗏꖺꕮꕊ\0" },
         { "1\0", "2\0", "3\0", "4\0", "5\0", "6\0", "7\0", "8\0", "9\0", "10\0", "11\0", "12\0" },
         { "ꖨꖕꔞ\0", "ꕒꕡ\0", "ꕾꖺ\0", "ꖢꖕ\0", "ꖑꕱ\0", "ꖱꘋ\0", "ꖱꕞ\0", "ꗛꔕ\0", "ꕢꕌ\0", "ꕭꖃ\0", "ꔞꘋ\0", "ꖨꖕꗏ\0" },
@@ -14029,6 +14134,10 @@ static const struct subtagAliasTblData {
         QLocale::Language::Asturian, QLocale::Script::LatinScript, QLocale::Country::Spain
     },
     {
+        QLocale::Language::Atikamekw, QLocale::Script::AnyScript, QLocale::Country::AnyCountry,
+        QLocale::Language::Atikamekw, QLocale::Script::LatinScript, QLocale::Country::Canada
+    },
+    {
         QLocale::Language::Avaric, QLocale::Script::AnyScript, QLocale::Country::AnyCountry,
         QLocale::Language::Avaric, QLocale::Script::CyrillicScript, QLocale::Country::Russia
     },
@@ -14147,6 +14256,14 @@ static const struct subtagAliasTblData {
     {
         QLocale::Language::Kom, QLocale::Script::AnyScript, QLocale::Country::AnyCountry,
         QLocale::Language::Kom, QLocale::Script::LatinScript, QLocale::Country::Cameroon
+    },
+    {
+        QLocale::Language::Siksika, QLocale::Script::AnyScript, QLocale::Country::AnyCountry,
+        QLocale::Language::Siksika, QLocale::Script::LatinScript, QLocale::Country::Canada
+    },
+    {
+        QLocale::Language::TaiDam, QLocale::Script::AnyScript, QLocale::Country::AnyCountry,
+        QLocale::Language::TaiDam, QLocale::Script::TaiVietScript, QLocale::Country::Vietnam
     },
     {
         QLocale::Language::Bambara, QLocale::Script::AnyScript, QLocale::Country::AnyCountry,
@@ -14273,6 +14390,10 @@ static const struct subtagAliasTblData {
         QLocale::Language::CentralKurdish, QLocale::Script::ArabicScript, QLocale::Country::Iraq
     },
     {
+        QLocale::Language::Chilcotin, QLocale::Script::AnyScript, QLocale::Country::AnyCountry,
+        QLocale::Language::Chilcotin, QLocale::Script::LatinScript, QLocale::Country::Canada
+    },
+    {
         QLocale::Language::Corsican, QLocale::Script::AnyScript, QLocale::Country::AnyCountry,
         QLocale::Language::Corsican, QLocale::Script::LatinScript, QLocale::Country::France
     },
@@ -14289,8 +14410,20 @@ static const struct subtagAliasTblData {
         QLocale::Language::Cree, QLocale::Script::UnifiedCanadianAboriginalSyllabicsScript, QLocale::Country::Canada
     },
     {
-        QLocale::Language::CrimeanTurkish, QLocale::Script::AnyScript, QLocale::Country::AnyCountry,
-        QLocale::Language::CrimeanTurkish, QLocale::Script::CyrillicScript, QLocale::Country::Ukraine
+        QLocale::Language::Michif, QLocale::Script::AnyScript, QLocale::Country::AnyCountry,
+        QLocale::Language::Michif, QLocale::Script::LatinScript, QLocale::Country::Canada
+    },
+    {
+        QLocale::Language::CrimeanTatar, QLocale::Script::AnyScript, QLocale::Country::AnyCountry,
+        QLocale::Language::CrimeanTatar, QLocale::Script::CyrillicScript, QLocale::Country::Ukraine
+    },
+    {
+        QLocale::Language::PlainsCree, QLocale::Script::AnyScript, QLocale::Country::AnyCountry,
+        QLocale::Language::PlainsCree, QLocale::Script::UnifiedCanadianAboriginalSyllabicsScript, QLocale::Country::Canada
+    },
+    {
+        QLocale::Language::NorthernEastCree, QLocale::Script::AnyScript, QLocale::Country::AnyCountry,
+        QLocale::Language::NorthernEastCree, QLocale::Script::UnifiedCanadianAboriginalSyllabicsScript, QLocale::Country::Canada
     },
     {
         QLocale::Language::SeselwaCreoleFrench, QLocale::Script::AnyScript, QLocale::Country::AnyCountry,
@@ -14303,6 +14436,10 @@ static const struct subtagAliasTblData {
     {
         QLocale::Language::Kashubian, QLocale::Script::AnyScript, QLocale::Country::AnyCountry,
         QLocale::Language::Kashubian, QLocale::Script::LatinScript, QLocale::Country::Poland
+    },
+    {
+        QLocale::Language::SwampyCree, QLocale::Script::AnyScript, QLocale::Country::AnyCountry,
+        QLocale::Language::SwampyCree, QLocale::Script::UnifiedCanadianAboriginalSyllabicsScript, QLocale::Country::Canada
     },
     {
         QLocale::Language::ChurchSlavic, QLocale::Script::AnyScript, QLocale::Country::AnyCountry,
@@ -14649,6 +14786,10 @@ static const struct subtagAliasTblData {
         QLocale::Language::Hiligaynon, QLocale::Script::LatinScript, QLocale::Country::Philippines
     },
     {
+        QLocale::Language::HmongNjua, QLocale::Script::AnyScript, QLocale::Country::AnyCountry,
+        QLocale::Language::HmongNjua, QLocale::Script::NyiakengPuachueHmongScript, QLocale::Country::UnitedStates
+    },
+    {
         QLocale::Language::HiriMotu, QLocale::Script::AnyScript, QLocale::Country::AnyCountry,
         QLocale::Language::HiriMotu, QLocale::Script::LatinScript, QLocale::Country::PapuaNewGuinea
     },
@@ -14671,6 +14812,10 @@ static const struct subtagAliasTblData {
     {
         QLocale::Language::Hungarian, QLocale::Script::AnyScript, QLocale::Country::AnyCountry,
         QLocale::Language::Hungarian, QLocale::Script::LatinScript, QLocale::Country::Hungary
+    },
+    {
+        QLocale::Language::Halkomelem, QLocale::Script::AnyScript, QLocale::Country::AnyCountry,
+        QLocale::Language::Halkomelem, QLocale::Script::LatinScript, QLocale::Country::Canada
     },
     {
         QLocale::Language::Armenian, QLocale::Script::AnyScript, QLocale::Country::AnyCountry,
@@ -14787,6 +14932,10 @@ static const struct subtagAliasTblData {
     {
         QLocale::Language::Kamba, QLocale::Script::AnyScript, QLocale::Country::AnyCountry,
         QLocale::Language::Kamba, QLocale::Script::LatinScript, QLocale::Country::Kenya
+    },
+    {
+        QLocale::Language::Kawi, QLocale::Script::AnyScript, QLocale::Country::AnyCountry,
+        QLocale::Language::Kawi, QLocale::Script::KawiScript, QLocale::Country::Indonesia
     },
     {
         QLocale::Language::Kabardian, QLocale::Script::AnyScript, QLocale::Country::AnyCountry,
@@ -14969,6 +15118,10 @@ static const struct subtagAliasTblData {
         QLocale::Language::Cornish, QLocale::Script::LatinScript, QLocale::Country::UnitedKingdom
     },
     {
+        QLocale::Language::Kwakwala, QLocale::Script::AnyScript, QLocale::Country::AnyCountry,
+        QLocale::Language::Kwakwala, QLocale::Script::LatinScript, QLocale::Country::Canada
+    },
+    {
         QLocale::Language::Kyrgyz, QLocale::Script::AnyScript, QLocale::Country::AnyCountry,
         QLocale::Language::Kyrgyz, QLocale::Script::CyrillicScript, QLocale::Country::Kyrgyzstan
     },
@@ -15015,6 +15168,10 @@ static const struct subtagAliasTblData {
     {
         QLocale::Language::Ligurian, QLocale::Script::AnyScript, QLocale::Country::AnyCountry,
         QLocale::Language::Ligurian, QLocale::Script::LatinScript, QLocale::Country::Italy
+    },
+    {
+        QLocale::Language::Lillooet, QLocale::Script::AnyScript, QLocale::Country::AnyCountry,
+        QLocale::Language::Lillooet, QLocale::Script::LatinScript, QLocale::Country::Canada
     },
     {
         QLocale::Language::Lakota, QLocale::Script::AnyScript, QLocale::Country::AnyCountry,
@@ -15157,6 +15314,10 @@ static const struct subtagAliasTblData {
         QLocale::Language::Maori, QLocale::Script::LatinScript, QLocale::Country::NewZealand
     },
     {
+        QLocale::Language::Mikmaq, QLocale::Script::AnyScript, QLocale::Country::AnyCountry,
+        QLocale::Language::Mikmaq, QLocale::Script::LatinScript, QLocale::Country::Canada
+    },
+    {
         QLocale::Language::Minangkabau, QLocale::Script::AnyScript, QLocale::Country::AnyCountry,
         QLocale::Language::Minangkabau, QLocale::Script::LatinScript, QLocale::Country::Indonesia
     },
@@ -15179,6 +15340,10 @@ static const struct subtagAliasTblData {
     {
         QLocale::Language::Manipuri, QLocale::Script::AnyScript, QLocale::Country::AnyCountry,
         QLocale::Language::Manipuri, QLocale::Script::BanglaScript, QLocale::Country::India
+    },
+    {
+        QLocale::Language::Innuaimun, QLocale::Script::AnyScript, QLocale::Country::AnyCountry,
+        QLocale::Language::Innuaimun, QLocale::Script::LatinScript, QLocale::Country::Canada
     },
     {
         QLocale::Language::Mohawk, QLocale::Script::AnyScript, QLocale::Country::AnyCountry,
@@ -15349,6 +15514,18 @@ static const struct subtagAliasTblData {
         QLocale::Language::Occitan, QLocale::Script::LatinScript, QLocale::Country::France
     },
     {
+        QLocale::Language::Ojibwa, QLocale::Script::AnyScript, QLocale::Country::AnyCountry,
+        QLocale::Language::Ojibwa, QLocale::Script::UnifiedCanadianAboriginalSyllabicsScript, QLocale::Country::Canada
+    },
+    {
+        QLocale::Language::OjiCree, QLocale::Script::AnyScript, QLocale::Country::AnyCountry,
+        QLocale::Language::OjiCree, QLocale::Script::UnifiedCanadianAboriginalSyllabicsScript, QLocale::Country::Canada
+    },
+    {
+        QLocale::Language::Okanagan, QLocale::Script::AnyScript, QLocale::Country::AnyCountry,
+        QLocale::Language::Okanagan, QLocale::Script::LatinScript, QLocale::Country::Canada
+    },
+    {
         QLocale::Language::Oromo, QLocale::Script::AnyScript, QLocale::Country::AnyCountry,
         QLocale::Language::Oromo, QLocale::Script::LatinScript, QLocale::Country::Ethiopia
     },
@@ -15439,6 +15616,10 @@ static const struct subtagAliasTblData {
     {
         QLocale::Language::Pohnpeian, QLocale::Script::AnyScript, QLocale::Country::AnyCountry,
         QLocale::Language::Pohnpeian, QLocale::Script::LatinScript, QLocale::Country::Micronesia
+    },
+    {
+        QLocale::Language::Malecite, QLocale::Script::AnyScript, QLocale::Country::AnyCountry,
+        QLocale::Language::Malecite, QLocale::Script::LatinScript, QLocale::Country::Canada
     },
     {
         QLocale::Language::Prussian, QLocale::Script::AnyScript, QLocale::Country::AnyCountry,
@@ -15571,6 +15752,10 @@ static const struct subtagAliasTblData {
     {
         QLocale::Language::Sindhi, QLocale::Script::AnyScript, QLocale::Country::AnyCountry,
         QLocale::Language::Sindhi, QLocale::Script::ArabicScript, QLocale::Country::Pakistan
+    },
+    {
+        QLocale::Language::Sindhi, QLocale::Script::AnyScript, QLocale::Country::India,
+        QLocale::Language::Sindhi, QLocale::Script::DevanagariScript, QLocale::Country::India
     },
     {
         QLocale::Language::SassareseSardinian, QLocale::Script::AnyScript, QLocale::Country::AnyCountry,
@@ -15861,6 +16046,10 @@ static const struct subtagAliasTblData {
         QLocale::Language::Taroko, QLocale::Script::LatinScript, QLocale::Country::Taiwan
     },
     {
+        QLocale::Language::Torwali, QLocale::Script::AnyScript, QLocale::Country::AnyCountry,
+        QLocale::Language::Torwali, QLocale::Script::ArabicScript, QLocale::Country::Pakistan
+    },
+    {
         QLocale::Language::Tsonga, QLocale::Script::AnyScript, QLocale::Country::AnyCountry,
         QLocale::Language::Tsonga, QLocale::Script::LatinScript, QLocale::Country::SouthAfrica
     },
@@ -16114,7 +16303,7 @@ static const struct subtagAliasTblData {
     },
     {
         QLocale::Language::Unknownlanguage, QLocale::Script::ArabicScript, QLocale::Country::UnitedKingdom,
-        QLocale::Language::Kashmiri, QLocale::Script::ArabicScript, QLocale::Country::UnitedKingdom
+        QLocale::Language::Urdu, QLocale::Script::ArabicScript, QLocale::Country::UnitedKingdom
     },
     {
         QLocale::Language::Unknownlanguage, QLocale::Script::ArabicScript, QLocale::Country::Indonesia,
@@ -16298,7 +16487,7 @@ static const struct subtagAliasTblData {
     },
     {
         QLocale::Language::Unknownlanguage, QLocale::Script::CyrillicScript, QLocale::Country::Georgia,
-        QLocale::Language::Ossetic, QLocale::Script::CyrillicScript, QLocale::Country::Georgia
+        QLocale::Language::Abkhazian, QLocale::Script::CyrillicScript, QLocale::Country::Georgia
     },
     {
         QLocale::Language::Unknownlanguage, QLocale::Script::CyrillicScript, QLocale::Country::Greece,
@@ -16481,12 +16670,8 @@ static const struct subtagAliasTblData {
         QLocale::Language::Hungarian, QLocale::Script::LatinScript, QLocale::Country::Hungary
     },
     {
-        QLocale::Language::Unknownlanguage, QLocale::Script::HebrewScript, QLocale::Country::Canada,
-        QLocale::Language::Yiddish, QLocale::Script::HebrewScript, QLocale::Country::Canada
-    },
-    {
-        QLocale::Language::Unknownlanguage, QLocale::Script::HebrewScript, QLocale::Country::UnitedKingdom,
-        QLocale::Language::Yiddish, QLocale::Script::HebrewScript, QLocale::Country::UnitedKingdom
+        QLocale::Language::Unknownlanguage, QLocale::Script::TraditionalScript, QLocale::Country::Canada,
+        QLocale::Language::Cantonese, QLocale::Script::TraditionalScript, QLocale::Country::Canada
     },
     {
         QLocale::Language::Unknownlanguage, QLocale::Script::HebrewScript, QLocale::Country::Sweden,
