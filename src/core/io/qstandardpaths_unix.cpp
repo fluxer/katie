@@ -113,9 +113,7 @@ QString QStandardPaths::writableLocation(StandardLocation type)
         if (info.isDir()) {
             return location;
         } else {
-            QDir locationdir(location);
-            const QString locationdirname(locationdir.dirName());
-            if (locationdir.cdUp() && locationdir.mkdir(locationdirname)) {
+            if (QDir().mkpath(location)) {
                 QFile locationfile(location);
                 if (locationfile.setPermissions(QFile::ReadUser | QFile::WriteUser | QFile::ExeUser)) {
                     return location;
