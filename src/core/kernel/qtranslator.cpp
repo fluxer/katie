@@ -156,8 +156,15 @@ bool QTranslator::load(const QString &domain)
 */
 QString QTranslator::translate(const char *context, const char *sourceText) const
 {
-    Q_UNUSED(context);
     Q_D(const QTranslator);
+    if (context) {
+        // for reference:
+        // https://github.com/autotools-mirror/gettext/blob/master/gnulib-local/lib/gettext.h
+        QByteArray msgwithctx(context);
+        msgwithctx.append('\004');
+        msgwithctx.append(sourceText);
+        return QString::fromUtf8(dgettext(d->domain.constData(), msgwithctx.constData()));
+    }
     return QString::fromUtf8(dgettext(d->domain.constData(), sourceText));
 }
 
