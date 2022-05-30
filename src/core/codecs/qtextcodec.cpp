@@ -771,13 +771,13 @@ QTextEncoder::~QTextEncoder()
 
 /*! \internal
     \since 4.5
-    Determines whether the eecoder encountered a failure while decoding the input. If
+    Determines whether the encoder encountered a failure while decoding the input. If
     an error was encountered, the produced result is undefined, and gets converted as according
     to the conversion flags.
  */
 bool QTextEncoder::hasFailure() const
 {
-    return state.invalidChars != 0;
+    return (state.invalidChars != 0);
 }
 
 /*!
@@ -1023,7 +1023,6 @@ QTextCodec *QTextCodec::codecForUtfText(const QByteArray &ba)
     return codecForUtfText(ba, QTextCodec::codecForMib(/*Latin 1*/ 4));
 }
 
-
 /*!
     \since 4.9
 
@@ -1037,7 +1036,20 @@ QTextCodec *QTextCodec::codecForUtfText(const QByteArray &ba)
 */
 QTextCodec *QTextCodec::codecForText(const QByteArray &ba, QTextCodec *defaultCodec)
 {
-    return QIcuCodec::codecForData(ba, defaultCodec);
+    QTextCodec *textcodec = QIcuCodec::codecForData(ba, 0);
+    if (textcodec) {
+        return textcodec;
+    }
+
+    foreach (const QByteArray &name, availableCodecs()) {
+        textcodec = codecForName(name);
+        QTextDecoder textdecoder(textcodec);
+        textdecoder.toUnicode(ba);
+        if (!textdecoder.hasFailure()) {
+            return textcodec;
+        }
+    }
+    return defaultCodec;
 }
 
 /*!
@@ -1064,7 +1076,7 @@ QTextCodec *QTextCodec::codecForText(const QByteArray &ba)
  */
 bool QTextDecoder::hasFailure() const
 {
-    return state.invalidChars != 0;
+    return (state.invalidChars != 0);
 }
 
 /*!
