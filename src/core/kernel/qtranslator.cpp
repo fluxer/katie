@@ -163,7 +163,11 @@ QString QTranslator::translate(const char *context, const char *sourceText) cons
         QByteArray msgwithctx(context);
         msgwithctx.append('\004');
         msgwithctx.append(sourceText);
-        return QString::fromUtf8(dgettext(d->domain.constData(), msgwithctx.constData()));
+        const char* result = dgettext(d->domain.constData(), msgwithctx.constData());
+        if (result == msgwithctx.constData()) {
+            return QString::fromUtf8(sourceText);
+        }
+        return QString::fromUtf8(result);
     }
     return QString::fromUtf8(dgettext(d->domain.constData(), sourceText));
 }
