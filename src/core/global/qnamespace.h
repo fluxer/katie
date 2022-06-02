@@ -551,10 +551,10 @@ public:
         Key_LogGrabInfo                   = 0x1008FE25,
 
         // pseudo
-        Key_Shift                         = 0xffffff8,
-        Key_Control                       = 0xffffff9,
-        Key_Meta                          = 0xffffffa,
-        Key_Alt                           = 0xffffffb,
+        Key_Shift                         = 0x1008FE30,
+        Key_Control                       = 0x1008FE31,
+        Key_Meta                          = 0x1008FE32,
+        Key_Alt                           = 0x1008FE33,
 
         // compatibility
         Key_PageUp = Key_Page_Up,
