@@ -1450,9 +1450,6 @@
     \value Key_Meta
     \value Key_Alt
     \value Key_Backtab
-    \value Key_Direction_L
-    \value Key_Direction_R
-
 
     \sa QKeyEvent::key()
 */

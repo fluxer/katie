@@ -555,8 +555,6 @@ public:
         Key_Control                       = 0xffffff9,
         Key_Meta                          = 0xffffffa,
         Key_Alt                           = 0xffffffb,
-        Key_Direction_L                   = 0xffffffc,
-        Key_Direction_R                   = 0xffffffd,
 
         // compatibility
         Key_PageUp = Key_Page_Up,

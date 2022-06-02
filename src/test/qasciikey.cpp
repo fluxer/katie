@@ -360,8 +360,6 @@ char QTest::keyToAscii(Qt::Key key)
     case Qt::Key_Hyper_L: return 0; // = 0x1056,
     case Qt::Key_Hyper_R: return 0; // = 0x1057,
     case Qt::Key_Help: return 0; // = 0x1058,
-    case Qt::Key_Direction_L: return 0; // = 0x1059,
-    case Qt::Key_Direction_R: return 0; // = 0x1060,
 
     // Latin 1 codes adapted from X: keysymdef.h,v 1.21 94/08/28 16:17:06
     case Qt::Key_nobreakspace: return char(0xa0);

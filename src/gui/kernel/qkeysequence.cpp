@@ -653,10 +653,6 @@ static const struct KeyNameTblData {
     { Qt::Key_Alt,                      QT_TRANSLATE_NOOP("QShortcut", "Alt") },
 */
     { Qt::Key_Backtab,                  QT_TRANSLATE_NOOP("QShortcut", "Backtab") },
-/*
-    { Qt::Key_Direction_L,              QT_TRANSLATE_NOOP("QShortcut", "Direction_L") },
-    { Qt::Key_Direction_R,              QT_TRANSLATE_NOOP("QShortcut", "Direction_R") },
-*/
     { Qt::Key_Enter,                    QT_TRANSLATE_NOOP("QShortcut", "Enter") },
 /*
     { Qt::Key_AltGr,                    QT_TRANSLATE_NOOP("QShortcut", "AltGr") }

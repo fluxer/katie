@@ -1141,13 +1141,6 @@ void QTextControlPrivate::keyPressEvent(QKeyEvent *e)
         return;
     }
 
-    if (e->key() == Qt::Key_Direction_L || e->key() == Qt::Key_Direction_R) {
-        QTextBlockFormat fmt;
-        fmt.setLayoutDirection((e->key() == Qt::Key_Direction_L) ? Qt::LeftToRight : Qt::RightToLeft);
-        cursor.mergeBlockFormat(fmt);
-        goto accept;
-    }
-
     // schedule a repaint of the region of the cursor, as when we move it we
     // want to make sure the old cursor disappears (not noticeable when moving
     // only a few pixels but noticeable when jumping between cells in tables for
