@@ -2894,9 +2894,8 @@ bool QFileDialogPrivate::itemViewKeyboardEvent(QKeyEvent *event) {
     case Qt::Key_Backspace:
         _q_navigateToParent();
         return true;
-    case Qt::Key_Back:
     case Qt::Key_Left:
-        if (event->key() == Qt::Key_Back || event->modifiers() == Qt::AltModifier) {
+        if (event->modifiers() == Qt::AltModifier) {
             _q_navigateBackward();
             return true;
         }

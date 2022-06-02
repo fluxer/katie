@@ -429,48 +429,6 @@ char QTest::keyToAscii(Qt::Key key)
     case Qt::Key_division: return char(0xf7);
     case Qt::Key_ydiaeresis: return char(0xff);
 
-    // multimedia/internet keys - ignored by default - see QKeyEvent c'tor
-
-    case Qt::Key_Back : return 0; // = 0x1061,
-    case Qt::Key_Forward : return 0; // = 0x1062,
-    case Qt::Key_Stop : return 0; // = 0x1063,
-    case Qt::Key_Refresh : return 0; // = 0x1064,
-
-    case Qt::Key_VolumeDown: return 0; // = 0x1070,
-    case Qt::Key_VolumeMute : return 0; // = 0x1071,
-    case Qt::Key_VolumeUp: return 0; // = 0x1072,
-
-    case Qt::Key_MediaPlay : return 0; // = 0x1080,
-    case Qt::Key_MediaStop : return 0; // = 0x1081,
-    case Qt::Key_MediaPrevious : return 0; // = 0x1082,
-    case Qt::Key_MediaNext : return 0; // = 0x1083,
-    case Qt::Key_MediaRecord: return 0; // = 0x1084,
-
-    case Qt::Key_HomePage : return 0; // = 0x1090,
-    case Qt::Key_Favorites : return 0; // = 0x1091,
-    case Qt::Key_Search : return 0; // = 0x1092,
-    case Qt::Key_Standby: return 0; // = 0x1093,
-    case Qt::Key_OpenUrl: return 0; // = 0x1094,
-
-    case Qt::Key_LaunchMail : return 0; // = 0x10a0,
-    case Qt::Key_LaunchMedia: return 0; // = 0x10a1,
-    case Qt::Key_Launch0 : return 0; // = 0x10a2,
-    case Qt::Key_Launch1 : return 0; // = 0x10a3,
-    case Qt::Key_Launch2 : return 0; // = 0x10a4,
-    case Qt::Key_Launch3 : return 0; // = 0x10a5,
-    case Qt::Key_Launch4 : return 0; // = 0x10a6,
-    case Qt::Key_Launch5 : return 0; // = 0x10a7,
-    case Qt::Key_Launch6 : return 0; // = 0x10a8,
-    case Qt::Key_Launch7 : return 0; // = 0x10a9,
-    case Qt::Key_Launch8 : return 0; // = 0x10aa,
-    case Qt::Key_Launch9 : return 0; // = 0x10ab,
-    case Qt::Key_LaunchA : return 0; // = 0x10ac,
-    case Qt::Key_LaunchB : return 0; // = 0x10ad,
-    case Qt::Key_LaunchC : return 0; // = 0x10ae,
-    case Qt::Key_LaunchD : return 0; // = 0x10af,
-    case Qt::Key_LaunchE : return 0; // = 0x10b0,
-    case Qt::Key_LaunchF : return 0; // = 0x10b1,
-
     default: QTEST_ASSERT(false); return 0;
     }
 }

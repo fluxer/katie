@@ -1158,13 +1158,6 @@ void QDeclarativeItemPrivate::setLayoutMirror(bool mirror)
 */
 
 /*!
-    \qmlsignal Keys::onBackPressed(KeyEvent event)
-
-    This handler is called when the Back key has been pressed. The \a event
-    parameter provides information about the event.
-*/
-
-/*!
     \qmlsignal Keys::onCancelPressed(KeyEvent event)
 
     This handler is called when the Cancel key has been pressed. The \a event
@@ -1221,30 +1214,9 @@ void QDeclarativeItemPrivate::setLayoutMirror(bool mirror)
 */
 
 /*!
-    \qmlsignal Keys::onCallPressed(KeyEvent event)
-
-    This handler is called when the Call key has been pressed. The \a event
-    parameter provides information about the event.
-*/
-
-/*!
     \qmlsignal Keys::onMenuPressed(KeyEvent event)
 
     This handler is called when the Menu key has been pressed. The \a event
-    parameter provides information about the event.
-*/
-
-/*!
-    \qmlsignal Keys::onVolumeUpPressed(KeyEvent event)
-
-    This handler is called when the VolumeUp key has been pressed. The \a event
-    parameter provides information about the event.
-*/
-
-/*!
-    \qmlsignal Keys::onVolumeDownPressed(KeyEvent event)
-
-    This handler is called when the VolumeDown key has been pressed. The \a event
     parameter provides information about the event.
 */
 
@@ -1302,13 +1274,9 @@ static const struct KeySignalTblData {
     { Qt::Key_Enter, "enterPressed(QDeclarativeKeyEvent*)" },
     { Qt::Key_Delete, "deletePressed(QDeclarativeKeyEvent*)" },
     { Qt::Key_Space, "spacePressed(QDeclarativeKeyEvent*)" },
-    { Qt::Key_Back, "backPressed(QDeclarativeKeyEvent*)" },
     { Qt::Key_Cancel, "cancelPressed(QDeclarativeKeyEvent*)" },
     { Qt::Key_Select, "selectPressed(QDeclarativeKeyEvent*)" },
-    { Qt::Key_Call, "callPressed(QDeclarativeKeyEvent*)" },
     { Qt::Key_Menu, "menuPressed(QDeclarativeKeyEvent*)" },
-    { Qt::Key_VolumeUp, "volumeUpPressed(QDeclarativeKeyEvent*)" },
-    { Qt::Key_VolumeDown, "volumeDownPressed(QDeclarativeKeyEvent*)" }
 };
 static const qint16 KeySignalTblSize = sizeof(KeySignalTbl) / sizeof(KeySignalTblData);
 

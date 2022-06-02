@@ -123,7 +123,7 @@ QCalendarDateSectionValidator::Section QCalendarDayValidator::handleKey(int key)
         if (m_day < 1)
             m_day = 31;
         return QCalendarDateSectionValidator::ThisSection;
-    } else if (key == Qt::Key_Back || key == Qt::Key_Backspace) {
+    } else if (key == Qt::Key_Backspace) {
         --m_pos;
         if (m_pos < 0)
             m_pos = 1;
@@ -239,7 +239,7 @@ QCalendarDateSectionValidator::Section QCalendarMonthValidator::handleKey(int ke
         if (m_month < 1)
             m_month = 12;
         return QCalendarDateSectionValidator::ThisSection;
-    } else if (key == Qt::Key_Back || key == Qt::Key_Backspace) {
+    } else if (key == Qt::Key_Backspace) {
         --m_pos;
         if (m_pos < 0)
             m_pos = 1;
@@ -361,7 +361,7 @@ QCalendarDateSectionValidator::Section QCalendarYearValidator::handleKey(int key
         m_pos = 0;
         --m_year;
         return QCalendarDateSectionValidator::ThisSection;
-    } else if (key == Qt::Key_Back || key == Qt::Key_Backspace) {
+    } else if (key == Qt::Key_Backspace) {
         --m_pos;
         if (m_pos < 0)
             m_pos = 3;
@@ -632,7 +632,7 @@ void QCalendarDateValidator::handleKeyEvent(QKeyEvent *keyEvent)
 
     int key = keyEvent->key();
     if (m_lastSectionMove == QCalendarDateSectionValidator::NextSection) {
-        if (key == Qt::Key_Back || key == Qt::Key_Backspace)
+        if (key == Qt::Key_Backspace)
             toPreviousToken();
     }
     if (key == Qt::Key_Right)
