@@ -855,6 +855,9 @@ Q_AUTOTEST_EXPORT QPainterPath qt_regionToPath(const QRegion &region)
     }
 
     const QVector<QRect> rects = region.rects();
+    if (rects.size() <= 0) {
+        return result;
+    }
 
     QSTACKARRAY(Segment, segments, 4 * rects.size());
 
