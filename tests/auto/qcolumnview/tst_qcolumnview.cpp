@@ -151,7 +151,7 @@ public:
         QColumnView::setSelection(rect, command);
     }
 
-    QRegion visualRegionForSelection(QItemSelection selection){
+    QRegion visualRegionForSelection(const QItemSelection &selection) const {
         return QColumnView::visualRegionForSelection(selection);
     }
 protected:

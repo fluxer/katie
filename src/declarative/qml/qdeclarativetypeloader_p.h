@@ -126,9 +126,8 @@ private:
 
     // Manager that is currently fetching data for me
     QDeclarativeDataLoader *m_manager;
-    int m_redirectCount:30;
-    bool m_inCallback:1;
-    bool m_isDone:1;
+    bool m_inCallback;
+    bool m_isDone;
 
     QList<QDeclarativeError> m_errors;
 };

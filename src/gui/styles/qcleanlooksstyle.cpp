@@ -100,7 +100,6 @@ static void qt_cleanlooks_draw_buttongradient(QPainter *painter, const QRect &re
                                                 const QColor &gradientMid, const QColor &gradientStop, QBrush bgBrush)
 {
         int x = rect.center().x();
-        int y = rect.center().y();
         QLinearGradient *gradient = new QLinearGradient(x, rect.top(), x, rect.bottom());
         if (bgBrush.gradient())
             gradient->setStops(bgBrush.gradient()->stops());

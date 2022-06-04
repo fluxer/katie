@@ -106,7 +106,7 @@ Create a new QDeclarativeDataBlob for \a url and of the provided \a type.
 */
 QDeclarativeDataBlob::QDeclarativeDataBlob(const QUrl &url, Type type)
 : m_type(type), m_status(Null), m_progress(0), m_url(url), m_finalUrl(url), m_manager(0),
-  m_redirectCount(0), m_inCallback(false), m_isDone(false)
+  m_inCallback(false), m_isDone(false)
 {
 }
 

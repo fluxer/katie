@@ -71,7 +71,6 @@ public:
     static QScriptValue worker_include(QScriptContext *ctxt, QScriptEngine *engine);
 
 private:
-    QDeclarativeEngine *m_engine;
     QScriptEngine *m_scriptEngine;
 
     QUrl m_url;
