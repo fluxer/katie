@@ -139,6 +139,8 @@ QCryptographicHashPrivate::~QCryptographicHashPrivate()
     and the incremental methods. Use either to compute hash sums with this
     algorithm. Do not feed QCryptographicHash with chunks of data that have
     different sizes either - the chunks size must be fixed, i.e. QT_BUFFSIZE.
+    In other words, if you cannot tell what the optimal buffer size or when to
+    use it then use one of the generic algorithms.
 */
 
 /*!
