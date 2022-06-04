@@ -99,11 +99,11 @@ void RegExp::compile()
 #endif
 #endif
 
+    m_regexPattern = std::string(m_pattern.ascii());
 #ifndef QT_NO_EXCEPTIONS
     try {
-        const std::string regexpattern = m_pattern.ascii();
-        m_regExp = std::regex(regexpattern.c_str(), regexOptions);
-        std::sregex_iterator matchbegin = std::sregex_iterator(regexpattern.begin(), regexpattern.end(), m_regExp);
+        m_regExp = std::regex(m_regexPattern.c_str(), regexOptions);
+        std::sregex_iterator matchbegin = std::sregex_iterator(m_regexPattern.begin(), m_regexPattern.end(), m_regExp);
         std::sregex_iterator matchend = std::sregex_iterator();
         m_numSubpatterns = std::distance(matchbegin, matchend);
     } catch (const std::regex_error &err) {
@@ -113,9 +113,8 @@ void RegExp::compile()
     }
 #else
     // no exceptions, no way to find out if error occured
-    const std::string regexpattern = m_pattern.ascii();
-    m_regExp = std::regex(regexpattern.c_str(), regexOptions);
-    std::sregex_iterator matchbegin = std::sregex_iterator(regexpattern.begin(), regexpattern.end(), m_regExp);
+    m_regExp = std::regex(m_regexPattern.c_str(), regexOptions);
+    std::sregex_iterator matchbegin = std::sregex_iterator(m_regexPattern.begin(), m_regexPattern.end(), m_regExp);
     std::sregex_iterator matchend = std::sregex_iterator();
     m_numSubpatterns = std::distance(matchbegin, matchend);
 #endif
@@ -146,17 +145,18 @@ int RegExp::match(const UString& s, int startOffset, Vector<int, 32>* ovector)
             offsetVector = ovector->data();
         }
 
+        const std::string sstring = std::string(s.ascii());
 #ifndef QT_NO_EXCEPTIONS
         bool didmatch = false;
         try {
-            didmatch = std::regex_match(s.ascii() + startOffset, m_regExp);
+            didmatch = std::regex_match(sstring.data() + startOffset, m_regExp);
         } catch (const std::regex_error &err) {
             m_constructionError = err.what();
         } catch (...) {
             m_constructionError = "Exception caught during regex matching";
         }
 #else
-        const bool didmatch = std::regex_match(s.ascii() + startOffset, m_regExp);
+        const bool didmatch = std::regex_match(sstring.data() + startOffset, m_regExp);
 #endif
 
         if (!didmatch) {
@@ -168,8 +168,7 @@ int RegExp::match(const UString& s, int startOffset, Vector<int, 32>* ovector)
             return -1;
         }
 
-        const std::string regexpattern = m_pattern.ascii();
-        std::sregex_iterator matchbegin = std::sregex_iterator(regexpattern.begin(), regexpattern.end(), m_regExp);
+        std::sregex_iterator matchbegin = std::sregex_iterator(m_regexPattern.begin(), m_regexPattern.end(), m_regExp);
         std::sregex_iterator matchend = std::sregex_iterator();
         size_t nummatches = 0;
         for (std::sregex_iterator iter = matchbegin; iter != matchend; iter++) {
