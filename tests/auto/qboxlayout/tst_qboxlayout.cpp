@@ -122,7 +122,7 @@ void tst_QBoxLayout::cleanup()
 
 void tst_QBoxLayout::insertSpacerItem()
 {
-    QWidget *window = new QWidget;
+    QWidget window;
 
     QSpacerItem *spacer1 = new QSpacerItem(20, 10, QSizePolicy::Expanding, QSizePolicy::Expanding);
     QSpacerItem *spacer2 = new QSpacerItem(40, 20, QSizePolicy::Expanding, QSizePolicy::Expanding);
@@ -132,18 +132,18 @@ void tst_QBoxLayout::insertSpacerItem()
     layout->addSpacerItem(spacer1);
     layout->addWidget(new QLineEdit("Baaaaaaaaaaaaaaaaaaaaaaaaar"));
     layout->insertSpacerItem(0, spacer2);
-    window->setLayout(layout);
+    window.setLayout(layout);
 
     QVERIFY(layout->itemAt(0) == spacer2);
     QVERIFY(layout->itemAt(2) == spacer1);
 
-    window->show();
+    window.show();
 }
 
 void tst_QBoxLayout::insertLayout()
 {
-    QWidget *window = new QWidget;
-    QVBoxLayout *vbox = new QVBoxLayout(window);
+    QWidget window;
+    QVBoxLayout *vbox = new QVBoxLayout(&window);
     QVBoxLayout *dummyParentLayout = new QVBoxLayout;
     QHBoxLayout *subLayout = new QHBoxLayout;
     dummyParentLayout->addLayout(subLayout);
@@ -156,20 +156,19 @@ void tst_QBoxLayout::insertLayout()
     QCOMPARE((subLayout->parent() == vbox), (vbox->count() == 1));
 
     delete dummyParentLayout;
-    delete window;
 }
 
 
 void tst_QBoxLayout::sizeHint()
 {
-    QWidget *window = new QWidget;
+    QWidget window;
     QHBoxLayout *lay1 = new QHBoxLayout;
     QHBoxLayout *lay2 = new QHBoxLayout;
     QLabel *label = new QLabel("widget twooooooooooooooooooooooooooooooooooooooooooooooooooooooo");
     lay2->addWidget(label);
     lay1->addLayout(lay2);
-    window->setLayout(lay1);
-    window->show();
+    window.setLayout(lay1);
+    window.show();
     label->setText("foooooooo baaaaaaar");
     QSize sh = lay1->sizeHint();
     QApplication::processEvents();
@@ -182,18 +181,18 @@ void tst_QBoxLayout::sizeHint()
 
 void tst_QBoxLayout::sizeConstraints()
 {
-    QWidget *window = new QWidget;
+    QWidget window;
     QHBoxLayout *lay = new QHBoxLayout;
     lay->addWidget(new QLabel("foooooooooooooooooooooooooooooooooooo"));
     lay->addWidget(new QLabel("baaaaaaaaaaaaaaaaaaaaaaaaaaaaaar"));
     lay->setSizeConstraint(QLayout::SetFixedSize);
-    window->setLayout(lay);
-    window->show();
+    window.setLayout(lay);
+    window.show();
     QApplication::processEvents();
-    QSize sh = window->sizeHint();
+    QSize sh = window.sizeHint();
     lay->takeAt(1);
-    QVERIFY(sh.width() >= window->sizeHint().width() &&
-            sh.height() >= window->sizeHint().height());
+    QVERIFY(sh.width() >= window.sizeHint().width() &&
+            sh.height() >= window.sizeHint().height());
 
 }
 
@@ -225,33 +224,30 @@ void tst_QBoxLayout::setGeometry()
 void tst_QBoxLayout::setStyleShouldChangeSpacing()
 {
 #ifndef QT_NO_STYLE_WINDOWS
-    QWidget *window = new QWidget;
-    QHBoxLayout *hbox = new QHBoxLayout(window);
+    QWidget window;
+    QHBoxLayout *hbox = new QHBoxLayout(&window);
     QPushButton *pb1 = new QPushButton(tr("The spacing between this"));
     QPushButton *pb2 = new QPushButton(tr("and this button should depend on the style of the parent widget"));;
     pb1->setAttribute(Qt::WA_LayoutUsesWidgetRect);
     pb2->setAttribute(Qt::WA_LayoutUsesWidgetRect);
     hbox->addWidget(pb1);
     hbox->addWidget(pb2);
-    CustomLayoutStyle *style1 = new CustomLayoutStyle;
+    QScopedPointer<CustomLayoutStyle> style1(new CustomLayoutStyle());
     style1->hspacing = 6;
-    window->setStyle(style1);
-    window->show();
+    window.setStyle(style1.data());
+    window.show();
 
     QTest::qWait(100);
     int spacing = pb2->geometry().left() - pb1->geometry().right() - 1;
     QCOMPARE(spacing, 6);
 
-    CustomLayoutStyle *style2 = new CustomLayoutStyle();
+    QScopedPointer<CustomLayoutStyle> style2(new CustomLayoutStyle());
     style2->hspacing = 10;
-    window->setStyle(style2);
+    window.setStyle(style2.data());
     QTest::qWait(100);
     spacing = pb2->geometry().left() - pb1->geometry().right() - 1;
     QCOMPARE(spacing, 10);
 
-    delete window;
-    delete style1;
-    delete style2;
 #else // QT_NO_STYLE_WINDOWS
     QSKIP("Katie compiled without windows style support (QT_NO_STYLE_WINDOWS)", SkipAll);
 #endif // QT_NO_STYLE_WINDOWS
