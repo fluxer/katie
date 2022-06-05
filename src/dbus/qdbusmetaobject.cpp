@@ -493,7 +493,6 @@ void QDBusMetaObjectGenerator::writeWithoutXml(const QString &interface)
     d.extradata = 0;
     d.stringdata = stringdata;
     d.superdata = &QDBusAbstractInterface::staticMetaObject;
-    cached = false;
 }
 #endif
 
@@ -517,7 +516,7 @@ QDBusMetaObject *QDBusMetaObject::createMetaObject(const QString &interface, con
         QDBusMetaObject *obj = cache.value(it.key(), 0);
         if ( !obj && ( us || !interface.startsWith( QLatin1String("local.") ) ) ) {
             // not in cache; create
-            obj = new QDBusMetaObject;
+            obj = new QDBusMetaObject();
             QDBusMetaObjectGenerator generator(it.key(), it.value().constData());
             generator.write(obj);
 
@@ -540,10 +539,9 @@ QDBusMetaObject *QDBusMetaObject::createMetaObject(const QString &interface, con
     
     if (parsed.isEmpty()) {
         // object didn't return introspection
-        we = new QDBusMetaObject;
+        we = new QDBusMetaObject();
         QDBusMetaObjectGenerator generator(interface, 0);
         generator.write(we);
-        we->cached = false;
         return we;
     } else if (interface.isEmpty()) {
         // merge all interfaces
@@ -560,10 +558,9 @@ QDBusMetaObject *QDBusMetaObject::createMetaObject(const QString &interface, con
         merged.name = QLatin1String("local.Merged");
         merged.introspection.clear();
 
-        we = new QDBusMetaObject;
+        we = new QDBusMetaObject();
         QDBusMetaObjectGenerator generator(merged.name, &merged);
         generator.write(we);
-        we->cached = false;
         return we;
     }
 
@@ -575,6 +572,7 @@ QDBusMetaObject *QDBusMetaObject::createMetaObject(const QString &interface, con
 }
 
 QDBusMetaObject::QDBusMetaObject()
+    : cached(false)
 {
 }
 
