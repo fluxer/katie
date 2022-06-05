@@ -708,14 +708,170 @@ qreal QEasingCurve::valueForProgress(qreal progress) const
 }
 
 #ifndef QT_NO_DEBUG_STREAM
-QDebug operator<<(QDebug debug, const QEasingCurve &item)
+static const char* const easingTypeName(const QEasingCurve::Type type)
 {
-    debug << "type:" << item.d_ptr->type
-          << "func:" << item.d_ptr->func;
-    debug << QString::fromAscii("period:%1").arg(item.d_ptr->per, 0, 'f', 20)
-            << QString::fromAscii("amp:%1").arg(item.d_ptr->amp, 0, 'f', 20)
-            << QString::fromAscii("overshoot:%1").arg(item.d_ptr->over, 0, 'f', 20);
+    switch (type) {
+        case QEasingCurve::Linear: {
+            return "Linear";
+        }
+        case QEasingCurve::InQuad: {
+            return "InQuad";
+        }
+        case QEasingCurve::OutQuad: {
+            return "OutQuad";
+        }
+        case QEasingCurve::InOutQuad: {
+            return "InOutQuad";
+        }
+        case QEasingCurve::OutInQuad: {
+            return "OutInQuad";
+        }
+        case QEasingCurve::InCubic: {
+            return "InCubic";
+        }
+        case QEasingCurve::OutCubic: {
+            return "OutCubic";
+        }
+        case QEasingCurve::InOutCubic: {
+            return "InOutCubic";
+        }
+        case QEasingCurve::OutInCubic: {
+            return "OutInCubic";
+        }
+        case QEasingCurve::InQuart: {
+            return "InQuart";
+        }
+        case QEasingCurve::OutQuart: {
+            return "OutQuart";
+        }
+        case QEasingCurve::InOutQuart: {
+            return "InOutQuart";
+        }
+        case QEasingCurve::OutInQuart: {
+            return "OutInQuart";
+        }
+        case QEasingCurve::InQuint: {
+            return "InQuint";
+        }
+        case QEasingCurve::OutQuint: {
+            return "OutQuint";
+        }
+        case QEasingCurve::InOutQuint: {
+            return "InOutQuint";
+        }
+        case QEasingCurve::OutInQuint: {
+            return "OutInQuint";
+        }
+        case QEasingCurve::InSine: {
+            return "InSine";
+        }
+        case QEasingCurve::OutSine: {
+            return "OutSine";
+        }
+        case QEasingCurve::InOutSine: {
+            return "InOutSine";
+        }
+        case QEasingCurve::OutInSine: {
+            return "OutInSine";
+        }
+        case QEasingCurve::InExpo: {
+            return "InExpo";
+        }
+        case QEasingCurve::OutExpo: {
+            return "OutExpo";
+        }
+        case QEasingCurve::InOutExpo: {
+            return "InOutExpo";
+        }
+        case QEasingCurve::OutInExpo: {
+            return "OutInExpo";
+        }
+        case QEasingCurve::InCirc: {
+            return "InCirc";
+        }
+        case QEasingCurve::OutCirc: {
+            return "OutCirc";
+        }
+        case QEasingCurve::InOutCirc: {
+            return "InOutCirc";
+        }
+        case QEasingCurve::OutInCirc: {
+            return "OutInCirc";
+        }
+        case QEasingCurve::InCurve: {
+            return "InCurve";
+        }
+        case QEasingCurve::OutCurve: {
+            return "OutCurve";
+        }
+        case QEasingCurve::SineCurve: {
+            return "SineCurve";
+        }
+        case QEasingCurve::CosineCurve: {
+            return "CosineCurve";
+        }
+        case QEasingCurve::InElastic: {
+            return "InElastic";
+        }
+        case QEasingCurve::OutElastic: {
+            return "OutElastic";
+        }
+        case QEasingCurve::InOutElastic: {
+            return "InOutElastic";
+        }
+        case QEasingCurve::OutInElastic: {
+            return "OutInElastic";
+        }
+        case QEasingCurve::InBounce: {
+            return "InBounce";
+        }
+        case QEasingCurve::OutBounce: {
+            return "OutBounce";
+        }
+        case QEasingCurve::InOutBounce: {
+            return "InOutBounce";
+        }
+        case QEasingCurve::OutInBounce: {
+            return "OutInBounce";
+        }
+        case QEasingCurve::InBack: {
+            return "InBack";
+        }
+        case QEasingCurve::OutBack: {
+            return "OutBack";
+        }
+        case QEasingCurve::InOutBack: {
+            return "InOutBack";
+        }
+        case QEasingCurve::OutInBack: {
+            return "OutInBack";
+        }
+        case QEasingCurve::Custom: {
+            return "Custom";
+        }
+        default: {
+            Q_ASSERT(false);
+            return "";
+        }
+    }
+    Q_UNREACHABLE();
+}
+
+QDebug operator<<(QDebug debug, const QEasingCurve &easing)
+{
+#ifndef Q_BROKEN_DEBUG_STREAM
+    debug.nospace() << "QEasingCurve("
+        << easingTypeName(easing.type()) << ", "
+        << easing.period() << ", "
+        << easing.amplitude() << ", "
+        << easing.overshoot();
+    debug.nospace() << ')';
+    return debug.space();
+#else
+    qWarning("This compiler doesn't support streaming QEasingCurve to QDebug");
     return debug;
+    Q_UNUSED(v);
+#endif
 }
 #endif // QT_NO_DEBUG_STREAM
 
