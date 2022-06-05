@@ -281,7 +281,7 @@ QDeclarativeComponent::~QDeclarativeComponent()
 {
     Q_D(QDeclarativeComponent);
 
-    if (d->state.completePending) {
+    if (Q_UNLIKELY(d->state.completePending)) {
         qWarning("QDeclarativeComponent: Component destroyed while completion pending");
         d->completeCreate();
     }
@@ -658,7 +658,7 @@ QScriptValue QDeclarativeComponentPrivate::createObject(QObject *publicParent, c
             }
         }
 
-        if (needParent)
+        if (Q_UNLIKELY(needParent))
             qWarning("QDeclarativeComponent: Created graphical object was not placed in the graphics scene.");
     }
 
@@ -753,27 +753,27 @@ QObject *QDeclarativeComponent::beginCreate(QDeclarativeContext *context)
 QObject * QDeclarativeComponentPrivate::beginCreate(QDeclarativeContextData *context)
 {
     Q_Q(QDeclarativeComponent);
-    if (!context) {
+    if (Q_UNLIKELY(!context)) {
         qWarning("QDeclarativeComponent: Cannot create a component in a null context");
         return 0;
     }
 
-    if (!context->isValid()) {
+    if (Q_UNLIKELY(!context->isValid())) {
         qWarning("QDeclarativeComponent: Cannot create a component in an invalid context");
         return 0;
     }
 
-    if (context->engine != engine) {
+    if (Q_UNLIKELY(context->engine != engine)) {
         qWarning("QDeclarativeComponent: Must create component in context from the same QDeclarativeEngine");
         return 0;
     }
 
-    if (state.completePending) {
+    if (Q_UNLIKELY(state.completePending)) {
         qWarning("QDeclarativeComponent: Cannot create new component instance before completing the previous");
         return 0;
     }
 
-    if (!q->isReady()) {
+    if (Q_UNLIKELY(!q->isReady())) {
         qWarning("QDeclarativeComponent: Component is not ready");
         return 0;
     }

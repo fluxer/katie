@@ -493,12 +493,12 @@ void QDeclarativeView::setRootObject(QObject *obj)
     } else if (QGraphicsObject *graphicsObject = qobject_cast<QGraphicsObject *>(obj)) {
         scene()->addItem(graphicsObject);
         d->root = graphicsObject;
-        if (graphicsObject->isWidget()) {
+        if (Q_LIKELY(graphicsObject->isWidget())) {
             d->graphicsWidgetRoot = static_cast<QGraphicsWidget*>(graphicsObject);
         } else {
             qWarning() << "QDeclarativeView::resizeMode is not honored for components of type QGraphicsObject";
         }
-    } else if (obj) {
+    } else if (Q_UNLIKELY(obj)) {
         qWarning() << "QDeclarativeView only supports loading of root objects that derive from QGraphicsObject";
         if (QWidget* widget  = qobject_cast<QWidget *>(obj)) {
             window()->setAttribute(Qt::WA_OpaquePaintEvent, false);

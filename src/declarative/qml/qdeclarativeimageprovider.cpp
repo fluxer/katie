@@ -204,8 +204,9 @@ QImage QDeclarativeImageProvider::requestImage(const QString &id, QSize *size, c
     Q_UNUSED(id);
     Q_UNUSED(size);
     Q_UNUSED(requestedSize);
-    if (d->type == Image)
+    if (Q_UNLIKELY(d->type == Image)) {
         qWarning("ImageProvider supports Image type but has not implemented requestImage()");
+    }
     return QImage();
 }
 
@@ -230,8 +231,9 @@ QPixmap QDeclarativeImageProvider::requestPixmap(const QString &id, QSize *size,
     Q_UNUSED(id);
     Q_UNUSED(size);
     Q_UNUSED(requestedSize);
-    if (d->type == Pixmap)
+    if (Q_UNLIKELY(d->type == Pixmap)) {
         qWarning("ImageProvider supports Pixmap type but has not implemented requestPixmap()");
+    }
     return QPixmap();
 }
 

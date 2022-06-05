@@ -932,7 +932,7 @@ void QDeclarativePixmap::clear(QObject *obj)
 
 bool QDeclarativePixmap::connectFinished(QObject *object, const char *method)
 {
-    if (!d || !d->reply) {
+    if (Q_UNLIKELY(!d || !d->reply)) {
         qWarning("QDeclarativePixmap: connectFinished() called when not loading.");
         return false;
     }
@@ -942,7 +942,7 @@ bool QDeclarativePixmap::connectFinished(QObject *object, const char *method)
 
 bool QDeclarativePixmap::connectFinished(QObject *object, int method)
 {
-    if (!d || !d->reply) {
+    if (Q_UNLIKELY(!d || !d->reply)) {
         qWarning("QDeclarativePixmap: connectFinished() called when not loading.");
         return false;
     }
@@ -952,7 +952,7 @@ bool QDeclarativePixmap::connectFinished(QObject *object, int method)
 
 bool QDeclarativePixmap::connectDownloadProgress(QObject *object, const char *method)
 {
-    if (!d || !d->reply) {
+    if (Q_UNLIKELY(!d || !d->reply)) {
         qWarning("QDeclarativePixmap: connectDownloadProgress() called when not loading.");
         return false;
     }
@@ -962,7 +962,7 @@ bool QDeclarativePixmap::connectDownloadProgress(QObject *object, const char *me
 
 bool QDeclarativePixmap::connectDownloadProgress(QObject *object, int method)
 {
-    if (!d || !d->reply) {
+    if (Q_UNLIKELY(!d || !d->reply)) {
         qWarning("QDeclarativePixmap: connectDownloadProgress() called when not loading.");
         return false;
     }

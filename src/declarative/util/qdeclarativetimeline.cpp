@@ -116,7 +116,7 @@ QDeclarativeTimeLinePrivate::QDeclarativeTimeLinePrivate(QDeclarativeTimeLine *p
 
 void QDeclarativeTimeLinePrivate::add(QDeclarativeTimeLineObject &g, const Op &o)
 {
-    if (g._t && g._t != q) {
+    if (Q_UNLIKELY(g._t && g._t != q)) {
         qWarning() << "QDeclarativeTimeLine: Cannot modify a QDeclarativeTimeLineValue owned by"
                    << "another timeline.";
         return;
@@ -456,7 +456,7 @@ void QDeclarativeTimeLine::reset(QDeclarativeTimeLineValue &timeLineValue)
 {
     if (!timeLineValue._t)
         return;
-    if (timeLineValue._t != this) {
+    if (Q_UNLIKELY(timeLineValue._t != this)) {
         qWarning() << "QDeclarativeTimeLine: Cannot reset a QDeclarativeTimeLineValue owned by another timeline.";
         return;
     }

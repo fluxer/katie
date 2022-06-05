@@ -95,21 +95,21 @@ void QScriptDebuggerConsoleCommandManager::addCommand(QScriptDebuggerConsoleComm
 {
     Q_D(QScriptDebuggerConsoleCommandManager);
     Q_ASSERT(command != 0);
-    if (command->name().isEmpty()) {
+    if (Q_UNLIKELY(command->name().isEmpty())) {
         qWarning("addCommand(): nameless command ignored");
         return;
     }
-    if (command->group().isEmpty()) {
+    if (Q_UNLIKELY(command->group().isEmpty())) {
         qWarning("addCommand(): groupless command '%s' ignored",
                  qPrintable(command->name()));
         return;
     }
-    if (findCommand(command->name()) != 0) {
+    if (Q_UNLIKELY(findCommand(command->name()) != 0)) {
         qWarning("addCommand(): duplicate command '%s' (group '%s') ignored",
                  qPrintable(command->name()), qPrintable(command->group()));
         return;
     }
-    if (!d->groups.contains(command->group())) {
+    if (Q_UNLIKELY(!d->groups.contains(command->group()))) {
         qWarning("addCommand(): group '%s' for command '%s' is unknown!",
                  qPrintable(command->group()), qPrintable(command->name()));
     }
@@ -123,11 +123,11 @@ void QScriptDebuggerConsoleCommandManager::addCommandGroup(
     const QString &name, const QScriptDebuggerConsoleCommandGroupData &data)
 {
     Q_D(QScriptDebuggerConsoleCommandManager);
-    if (name.isEmpty()) {
+    if (Q_UNLIKELY(name.isEmpty())) {
         qWarning("addCommandGroup(): nameless group ignored");
         return;
     }
-    if (d->groups.contains(name)) {
+    if (Q_UNLIKELY(d->groups.contains(name))) {
         qWarning("addCommandGroup(): group '%s' already defined",
                  qPrintable(name));
         return;

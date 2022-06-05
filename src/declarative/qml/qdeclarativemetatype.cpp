@@ -590,7 +590,7 @@ int registerType(const QDeclarativePrivate::RegisterType &type)
 {
     if (type.elementName) {
         for (int ii = 0; type.elementName[ii]; ++ii) {
-            if (!isalnum(type.elementName[ii])) {
+            if (Q_UNLIKELY(!isalnum(type.elementName[ii]))) {
                 qWarning("qmlRegisterType(): Invalid QML element name \"%s\"", type.elementName);
                 return -1;
             }
@@ -639,9 +639,9 @@ int registerType(const QDeclarativePrivate::RegisterType &type)
 
 int registerComponent(const QDeclarativePrivate::RegisterComponent& data)
 {
-    if (data.typeName) {
+    if (Q_LIKELY(data.typeName)) {
         for (int ii = 0; data.typeName[ii]; ++ii) {
-            if (!isalnum(data.typeName[ii])) {
+            if (Q_UNLIKELY(!isalnum(data.typeName[ii]))) {
                 qWarning("qmlRegisterType(): Invalid QML type name \"%s\"", data.typeName);
                 return 0;
             }

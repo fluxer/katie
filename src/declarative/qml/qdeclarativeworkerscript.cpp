@@ -270,7 +270,7 @@ void QDeclarativeWorkerScriptEnginePrivate::processLoad(int id, const QUrl &url)
     QString fileName = QDeclarativeEnginePrivate::urlToLocalFile(url);
 
     QFile f(fileName);
-    if (f.open(QIODevice::ReadOnly)) {
+    if (Q_LIKELY(f.open(QIODevice::ReadOnly))) {
         QByteArray data = f.readAll();
         QString sourceCode = QString::fromUtf8(data);
 

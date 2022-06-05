@@ -859,7 +859,7 @@ qreal QDeclarativeFontValueType::pointSize() const
 
 void QDeclarativeFontValueType::setPointSize(qreal size)
 {
-    if (pixelSizeSet) {
+    if (Q_UNLIKELY(pixelSizeSet)) {
         qWarning() << "Both point size and pixel size set. Using pixel size.";
         return;
     }
@@ -884,8 +884,8 @@ int QDeclarativeFontValueType::pixelSize() const
 
 void QDeclarativeFontValueType::setPixelSize(int size)
 {
-    if (size >0) {
-        if (pointSizeSet)
+    if (size > 0) {
+        if (Q_UNLIKELY(pointSizeSet))
             qWarning() << "Both point size and pixel size set. Using pixel size.";
         font.setPixelSize(size);
         pixelSizeSet = true;
