@@ -126,7 +126,7 @@ bool QDBusPendingCallPrivate::setReplyCallback(QObject *target, const char *memb
     if (!target)
         return true;;           // unsetting
 
-    if (!member || !*member) {
+    if (Q_UNLIKELY(!member || !*member)) {
         // would not be able to deliver a reply
         qWarning("QDBusPendingCall::setReplyCallback: error: cannot deliver a reply to %s::%s (%s)",
                  target ? target->metaObject()->className() : "(null)",
@@ -140,7 +140,7 @@ bool QDBusPendingCallPrivate::setReplyCallback(QObject *target, const char *memb
         QByteArray normalizedName = QMetaObject::normalizedSignature(member + 1);
         methodIdx = QDBusConnectionPrivate::findSlot(target, normalizedName, metaTypes);
     }
-    if (methodIdx == -1) {
+    if (Q_UNLIKELY(methodIdx == -1)) {
         // would not be able to deliver a reply
         qWarning("QDBusPendingCall::setReplyCallback: error: cannot deliver a reply to %s::%s (%s)",
                  target->metaObject()->className(),

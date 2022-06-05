@@ -594,7 +594,7 @@ void QSvgGradientStyle::resolveStops()
 {
     if (!m_link.isEmpty() && m_doc) {
         QSvgStyleProperty *prop = m_doc->styleProperty(m_link);
-        if (prop && prop != this) {
+        if (Q_LIKELY(prop && prop != this)) {
             if (prop->type() == QSvgStyleProperty::GRADIENT) {
                 QSvgGradientStyle *st = static_cast<QSvgGradientStyle*>(prop);
                 st->resolveStops();

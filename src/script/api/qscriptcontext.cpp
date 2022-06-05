@@ -494,9 +494,9 @@ QScriptValue QScriptContext::activationObject() const
 */
 void QScriptContext::setActivationObject(const QScriptValue &activation)
 {
-    if (!activation.isObject())
+    if (!activation.isObject()) {
         return;
-    else if (activation.engine() != engine()) {
+    } else if (Q_UNLIKELY(activation.engine() != engine())) {
         qWarning("QScriptContext::setActivationObject() failed: "
                  "cannot set an object created in "
                  "a different engine");
@@ -566,9 +566,9 @@ void QScriptContext::setThisObject(const QScriptValue &thisObject)
 {
     JSC::CallFrame *frame = QScriptEnginePrivate::frameForContext(this);
     QScript::APIShim shim(QScript::scriptEngineFromExec(frame));
-    if (!thisObject.isObject())
+    if (!thisObject.isObject()) {
         return;
-    if (thisObject.engine() != engine()) {
+    } else if (Q_UNLIKELY(thisObject.engine() != engine())) {
         qWarning("QScriptContext::setThisObject() failed: "
                  "cannot set an object created in "
                  "a different engine");
@@ -721,9 +721,9 @@ QScriptValueList QScriptContext::scopeChain() const
 void QScriptContext::pushScope(const QScriptValue &object)
 {
     activationObject(); //ensure the creation of the normal scope for native context
-    if (!object.isObject())
+    if (!object.isObject()) {
         return;
-    else if (object.engine() != engine()) {
+    } else if (Q_UNLIKELY(object.engine() != engine())) {
         qWarning("QScriptContext::pushScope() failed: "
                  "cannot push an object created in "
                  "a different engine");
@@ -739,7 +739,7 @@ void QScriptContext::pushScope(const QScriptValue &object)
     Q_ASSERT(scope != 0);
     if (!scope->object) {
         // pushing to an "empty" chain
-        if (!jscObject->isGlobalObject()) {
+        if (Q_UNLIKELY(!jscObject->isGlobalObject())) {
             qWarning("QScriptContext::pushScope() failed: initial object in scope chain has to be the Global Object");
             return;
         }

@@ -2775,7 +2775,7 @@ static QSvgNode *createSvgNode(QSvgNode *parent,
 
     QString baseProfile = attributes.value(QLatin1String("baseProfile")).toString();
 #if 0
-    if (baseProfile.isEmpty() && baseProfile != QLatin1String("tiny")) {
+    if (Q_UNLIKELY(baseProfile.isEmpty() && baseProfile != QLatin1String("tiny"))) {
         qWarning("Profile is %s while we only support tiny!",
                  qPrintable(baseProfile));
     }
@@ -3271,12 +3271,12 @@ bool QSvgHandler::startElement(const QString &localName,
         }
     } else if (ParseMethod method = findUtilFactory(localName)) {
         Q_ASSERT(!m_nodes.isEmpty());
-        if (!method(m_nodes.top(), attributes, this)) {
+        if (Q_UNLIKELY(!method(m_nodes.top(), attributes, this))) {
             qWarning("Problem parsing %s", qPrintable(localName));
         }
     } else if (StyleFactoryMethod method = findStyleFactoryMethod(localName)) {
         QSvgStyleProperty *prop = method(m_nodes.top(), attributes, this);
-        if (prop) {
+        if (Q_LIKELY(prop)) {
             m_style = prop;
             m_nodes.top()->appendStyleProperty(prop, someId(attributes));
         } else {
@@ -3284,7 +3284,7 @@ bool QSvgHandler::startElement(const QString &localName,
         }
     } else if (StyleParseMethod method = findStyleUtilFactoryMethod(localName)) {
         if (m_style) {
-            if (!method(m_style, attributes, this)) {
+            if (Q_UNLIKELY(!method(m_style, attributes, this))) {
                 qWarning("Problem parsing %s", qPrintable(localName));
             }
         }
@@ -3341,7 +3341,7 @@ void QSvgHandler::resolveGradients(QSvgNode *node) const
         if (fill && !fill->isGradientResolved()) {
             QString id = fill->gradientId();
             QSvgFillStyleProperty *style = structureNode->styleProperty(id);
-            if (style) {
+            if (Q_LIKELY(style)) {
                 fill->setFillStyle(style);
             } else {
                 qWarning("Could not resolve property : %s", qPrintable(id));
@@ -3353,7 +3353,7 @@ void QSvgHandler::resolveGradients(QSvgNode *node) const
         if (stroke && !stroke->isGradientResolved()) {
             QString id = stroke->gradientId();
             QSvgFillStyleProperty *style = structureNode->styleProperty(id);
-            if (style) {
+            if (Q_LIKELY(style)) {
                 stroke->setStyle(style);
             } else {
                 qWarning("Could not resolve property : %s", qPrintable(id));

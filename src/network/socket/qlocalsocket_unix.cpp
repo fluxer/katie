@@ -499,7 +499,7 @@ bool QLocalSocket::waitForConnected(int msec)
 bool QLocalSocket::waitForDisconnected(int msecs)
 {
     Q_D(QLocalSocket);
-    if (state() == UnconnectedState) {
+    if (Q_UNLIKELY(state() == UnconnectedState)) {
         qWarning() << "QLocalSocket::waitForDisconnected() is not allowed in UnconnectedState";
         return false;
     }

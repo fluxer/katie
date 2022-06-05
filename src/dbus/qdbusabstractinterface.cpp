@@ -106,7 +106,7 @@ void QDBusAbstractInterfacePrivate::property(const QMetaProperty &mp, QVariant &
     const char *expectedSignature = "";
     if (mp.type() != 0xff) {
         expectedSignature = QDBusMetaType::typeToSignature(where.userType());
-        if (expectedSignature == 0) {
+        if (Q_UNLIKELY(expectedSignature == 0)) {
             qWarning("QDBusAbstractInterface: type %s must be registered with QtDBus before it can be "
                      "used to read property %s.%s",
                      mp.typeName(), qPrintable(interface), mp.name());

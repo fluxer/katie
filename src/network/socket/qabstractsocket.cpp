@@ -1057,8 +1057,8 @@ void QAbstractSocket::connectToHost(const QString &hostName, quint16 port,
            (int) openMode);
 #endif
 
-    if (d->state == ConnectedState || d->state == ConnectingState
-        || d->state == ClosingState || d->state == HostLookupState) {
+    if (Q_UNLIKELY(d->state == ConnectedState || d->state == ConnectingState
+        || d->state == ClosingState || d->state == HostLookupState)) {
         qWarning("QAbstractSocket::connectToHost() called when already looking up or connecting/connected to \"%s\"", qPrintable(hostName));
         return;
     }
@@ -1526,7 +1526,7 @@ bool QAbstractSocket::waitForBytesWritten(int msecs)
 #endif
 
     // require calling connectToHost() before waitForBytesWritten()
-    if (state() == UnconnectedState) {
+    if (Q_UNLIKELY(state() == UnconnectedState)) {
         qWarning("QAbstractSocket::waitForBytesWritten() is not allowed in UnconnectedState");
         return false;
     }
@@ -1601,7 +1601,7 @@ bool QAbstractSocket::waitForDisconnected(int msecs)
 {
     Q_D(QAbstractSocket);
     // require calling connectToHost() before waitForDisconnected()
-    if (state() == UnconnectedState) {
+    if (Q_UNLIKELY(state() == UnconnectedState)) {
         qWarning("QAbstractSocket::waitForDisconnected() is not allowed in UnconnectedState");
         return false;
     }

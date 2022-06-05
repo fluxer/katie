@@ -931,7 +931,7 @@ void QDBusConnectionPrivate::deliverCall(QObject *object, const QDBusMessage &ms
     // do we create a reply? Only if the caller is waiting for a reply and one hasn't been sent
     // yet.
     if (msg.isReplyRequired() && !msg.isDelayedReply()) {
-        if (!fail) {
+        if (Q_LIKELY(!fail)) {
             // normal reply
             qDBusDebug() << this << "Automatically sending reply:" << outputArgs;
             send(msg.createReply(outputArgs));
@@ -969,7 +969,7 @@ QDBusConnectionPrivate::QDBusConnectionPrivate(QObject *p)
 
 QDBusConnectionPrivate::~QDBusConnectionPrivate()
 {
-    if (thread() && thread() != QThread::currentThread())
+    if (Q_UNLIKELY(thread() && thread() != QThread::currentThread()))
         qWarning("QDBusConnection(name=\"%s\")'s last reference in not in its creation thread! "
                  "Timer and socket errors will follow and the program will probably crash",
                  qPrintable(name));
@@ -1021,7 +1021,7 @@ void QDBusConnectionPrivate::closeConnection()
 void QDBusConnectionPrivate::checkThread()
 {
     if (!thread()) {
-        if (QCoreApplication::instance())
+        if (Q_LIKELY(QCoreApplication::instance()))
             moveToThread(QCoreApplication::instance()->thread());
         else
             qWarning("The thread that had QDBusConnection('%s') has died and there is no main thread",
@@ -1164,7 +1164,7 @@ void QDBusConnectionPrivate::relaySignal(QObject *obj, const QMetaObject *mo, in
     message.setArguments(args);
     QDBusError error;
     DBusMessage *msg = QDBusMessagePrivate::toDBusMessage(message, capabilities, &error);
-    if (!msg) {
+    if (Q_UNLIKELY(!msg)) {
         qWarning("QDBusConnection: Could not emit signal %s.%s: %s", qPrintable(interface), memberName.constData(),
                  qPrintable(error.message()));
         lastError = error;
@@ -1780,7 +1780,7 @@ bool QDBusConnectionPrivate::send(const QDBusMessage& message)
 
     QDBusError error;
     DBusMessage *msg = QDBusMessagePrivate::toDBusMessage(message, capabilities, &error);
-    if (!msg) {
+    if (Q_UNLIKELY(!msg)) {
         if (message.type() == QDBusMessage::MethodCallMessage)
             qWarning("QDBusConnection: error: could not send message to service \"%s\" path \"%s\" interface \"%s\" member \"%s\": %s",
                      qPrintable(message.service()), qPrintable(message.path()),
@@ -1824,7 +1824,7 @@ QDBusMessage QDBusConnectionPrivate::sendWithReply(const QDBusMessage &message,
     if (!QCoreApplication::instance() || sendMode == QDBus::Block) {
         QDBusError err;
         DBusMessage *msg = QDBusMessagePrivate::toDBusMessage(message, capabilities, &err);
-        if (!msg) {
+        if (Q_UNLIKELY(!msg)) {
             qWarning("QDBusConnection: error: could not send message to service \"%s\" path \"%s\" interface \"%s\" member \"%s\": %s",
                      qPrintable(message.service()), qPrintable(message.path()),
                      qPrintable(message.interface()), qPrintable(message.member()),
@@ -1898,7 +1898,7 @@ QDBusMessage QDBusConnectionPrivate::sendWithReplyLocal(const QDBusMessage &mess
 
     // if the message was handled, there might be a reply
     QDBusMessage localReplyMsg = QDBusMessagePrivate::makeLocalReply(*this, localCallMsg);
-    if (localReplyMsg.type() == QDBusMessage::InvalidMessage) {
+    if (Q_UNLIKELY(localReplyMsg.type() == QDBusMessage::InvalidMessage)) {
         qWarning("QDBusConnection: cannot call local method '%s' at object %s (with signature '%s') "
                  "on blocking mode", qPrintable(message.member()), qPrintable(message.path()),
                  qPrintable(message.signature()));

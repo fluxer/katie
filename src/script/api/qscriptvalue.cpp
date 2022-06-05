@@ -535,8 +535,8 @@ void QScriptValue::setPrototype(const QScriptValue &prototype)
     if (!other || !(other.isObject() || other.isNull()))
         return;
 
-    if (QScriptValuePrivate::getEngine(prototype)
-        && (QScriptValuePrivate::getEngine(prototype) != d->engine)) {
+    if (Q_UNLIKELY(QScriptValuePrivate::getEngine(prototype)
+        && (QScriptValuePrivate::getEngine(prototype) != d->engine))) {
         qWarning("QScriptValue::setPrototype() failed: "
                  "cannot set a prototype created in "
                  "a different engine");
@@ -548,7 +548,7 @@ void QScriptValue::setPrototype(const QScriptValue &prototype)
     JSC::JSValue nextPrototypeValue = other;
     while (nextPrototypeValue && nextPrototypeValue.isObject()) {
         JSC::JSObject *nextPrototype = JSC::asObject(nextPrototypeValue);
-        if (nextPrototype == thisObject) {
+        if (Q_UNLIKELY(nextPrototype == thisObject)) {
             qWarning("QScriptValue::setPrototype() failed: cyclic prototype value");
             return;
         }
@@ -579,7 +579,7 @@ bool QScriptValue::instanceOf(const QScriptValue &other) const
     Q_D(const QScriptValue);
     if (!d || !d->isObject() || !other.isObject())
         return false;
-    if (QScriptValuePrivate::getEngine(other) != d->engine) {
+    if (Q_UNLIKELY(QScriptValuePrivate::getEngine(other) != d->engine)) {
         qWarning("QScriptValue::instanceof: "
                  "cannot perform operation on a value created in "
                  "a different engine");
@@ -759,8 +759,8 @@ bool QScriptValue::lessThan(const QScriptValue &other) const
     // no equivalent function in JSC? There's a jsLess() in VM/Machine.cpp
     if (!isValid() || !other.isValid())
         return false;
-    if (QScriptValuePrivate::getEngine(other) && d->engine
-        && (QScriptValuePrivate::getEngine(other) != d->engine)) {
+    if (Q_UNLIKELY(QScriptValuePrivate::getEngine(other) && d->engine
+        && (QScriptValuePrivate::getEngine(other) != d->engine))) {
         qWarning("QScriptValue::lessThan: "
                  "cannot compare to a value created in "
                  "a different engine");
@@ -798,8 +798,8 @@ bool QScriptValue::equals(const QScriptValue &other) const
     Q_D(const QScriptValue);
     if (!d || !other.d_ptr)
         return (d_ptr == other.d_ptr);
-    if (QScriptValuePrivate::getEngine(other) && d->engine
-        && (QScriptValuePrivate::getEngine(other) != d->engine)) {
+    if (Q_UNLIKELY(QScriptValuePrivate::getEngine(other) && d->engine
+        && (QScriptValuePrivate::getEngine(other) != d->engine))) {
         qWarning("QScriptValue::equals: "
                  "cannot compare to a value created in "
                  "a different engine");
@@ -849,8 +849,8 @@ bool QScriptValue::strictlyEquals(const QScriptValue &other) const
     Q_D(const QScriptValue);
     if (!d || !other.d_ptr)
         return (d_ptr == other.d_ptr);
-    if (QScriptValuePrivate::getEngine(other) && d->engine
-        && (QScriptValuePrivate::getEngine(other) != d->engine)) {
+    if (Q_UNLIKELY(QScriptValuePrivate::getEngine(other) && d->engine
+        && (QScriptValuePrivate::getEngine(other) != d->engine))) {
         qWarning("QScriptValue::strictlyEquals: "
                  "cannot compare to a value created in "
                  "a different engine");
@@ -1306,7 +1306,7 @@ void QScriptValue::setProperty(const QString &name, const QScriptValue &value,
         return;
     QScript::APIShim shim(d->engine);
     QScriptEnginePrivate *valueEngine = QScriptValuePrivate::getEngine(value);
-    if (valueEngine && (valueEngine != d->engine)) {
+    if (Q_UNLIKELY(valueEngine && (valueEngine != d->engine))) {
         qWarning("QScriptValue::setProperty(%s) failed: "
                  "cannot set value created in a different engine",
                  qPrintable(name));
@@ -1382,8 +1382,8 @@ void QScriptValue::setProperty(quint32 arrayIndex, const QScriptValue &value,
     Q_D(QScriptValue);
     if (!d || !d->isObject())
         return;
-    if (QScriptValuePrivate::getEngine(value)
-        && (QScriptValuePrivate::getEngine(value) != d->engine)) {
+    if (Q_UNLIKELY(QScriptValuePrivate::getEngine(value)
+        && (QScriptValuePrivate::getEngine(value) != d->engine))) {
         qWarning("QScriptValue::setProperty() failed: "
                  "cannot set value created in a different engine");
         return;
@@ -1436,7 +1436,7 @@ void QScriptValue::setProperty(const QScriptString &name,
     if (!d || !d->isObject() || !QScriptStringPrivate::isValid(name))
         return;
     QScriptEnginePrivate *valueEngine = QScriptValuePrivate::getEngine(value);
-    if (valueEngine && (valueEngine != d->engine)) {
+    if (Q_UNLIKELY(valueEngine && (valueEngine != d->engine))) {
         qWarning("QScriptValue::setProperty(%s) failed: "
                  "cannot set value created in a different engine",
                  qPrintable(name.toString()));
@@ -1518,8 +1518,8 @@ QScriptValue QScriptValue::call(const QScriptValue &thisObject,
     if (callType == JSC::CallTypeNone)
         return QScriptValue();
 
-    if (QScriptValuePrivate::getEngine(thisObject)
-        && (QScriptValuePrivate::getEngine(thisObject) != d->engine)) {
+    if (Q_UNLIKELY(QScriptValuePrivate::getEngine(thisObject)
+        && (QScriptValuePrivate::getEngine(thisObject) != d->engine))) {
         qWarning("QScriptValue::call() failed: "
                  "cannot call function with thisObject created in "
                  "a different engine");
@@ -1537,8 +1537,8 @@ QScriptValue QScriptValue::call(const QScriptValue &thisObject,
         const QScriptValue &arg = args.at(i);
         if (!arg.isValid()) {
             argsVector[i] = JSC::jsUndefined();
-        } else if (QScriptValuePrivate::getEngine(arg)
-                   && (QScriptValuePrivate::getEngine(arg) != d->engine)) {
+        } else if (Q_UNLIKELY(QScriptValuePrivate::getEngine(arg)
+                   && (QScriptValuePrivate::getEngine(arg) != d->engine))) {
             qWarning("QScriptValue::call() failed: "
                      "cannot call function with argument created in "
                      "a different engine");
@@ -1596,8 +1596,8 @@ QScriptValue QScriptValue::call(const QScriptValue &thisObject,
     if (callType == JSC::CallTypeNone)
         return QScriptValue();
 
-    if (QScriptValuePrivate::getEngine(thisObject)
-        && (QScriptValuePrivate::getEngine(thisObject) != d->engine)) {
+    if (Q_UNLIKELY(QScriptValuePrivate::getEngine(thisObject)
+        && (QScriptValuePrivate::getEngine(thisObject) != d->engine))) {
         qWarning("QScriptValue::call() failed: "
                  "cannot call function with thisObject created in "
                  "a different engine");
@@ -1676,7 +1676,7 @@ QScriptValue QScriptValue::construct(const QScriptValueList &args)
     QVarLengthArray<JSC::JSValue, 8> argsVector(args.size());
     for (int i = 0; i < args.size(); ++i) {
         QScriptValue arg = args.at(i);
-        if (QScriptValuePrivate::getEngine(arg) != d->engine && QScriptValuePrivate::getEngine(arg)) {
+        if (Q_UNLIKELY(QScriptValuePrivate::getEngine(arg) != d->engine && QScriptValuePrivate::getEngine(arg))) {
             qWarning("QScriptValue::construct() failed: "
                      "cannot construct function with argument created in "
                      "a different engine");
@@ -1732,7 +1732,7 @@ QScriptValue QScriptValue::construct(const QScriptValue &arguments)
 
     JSC::ExecState *exec = d->engine->currentFrame;
 
-    if (QScriptValuePrivate::getEngine(arguments) != d->engine && QScriptValuePrivate::getEngine(arguments)) {
+    if (Q_UNLIKELY(QScriptValuePrivate::getEngine(arguments) != d->engine && QScriptValuePrivate::getEngine(arguments))) {
         qWarning("QScriptValue::construct() failed: "
                  "cannot construct function with argument created in "
                  "a different engine");
@@ -2053,7 +2053,7 @@ void QScriptValue::setScriptClass(QScriptClass *scriptClass)
     Q_D(QScriptValue);
     if (!d || !d->isObject())
         return;
-    if (!d->jscValue.inherits(&QScriptObject::info)) {
+    if (Q_UNLIKELY(!d->jscValue.inherits(&QScriptObject::info))) {
         qWarning("QScriptValue::setScriptClass() failed: "
                  "cannot change class of non-QScriptObject");
         return;
