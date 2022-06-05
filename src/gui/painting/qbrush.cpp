@@ -479,8 +479,23 @@ void QBrush::detach(Qt::BrushStyle newStyle)
     x->color = d->color;
     x->transform = d->transform;
 
-    if (!d->ref.deref())
-        delete d;
+    if (!d->ref.deref()) {
+        switch (d->style) {
+            case Qt::TexturePattern: {
+                delete static_cast<QTexturedBrushData*>(d);
+                break;
+            }
+            case Qt::LinearGradientPattern:
+            case Qt::RadialGradientPattern: {
+                delete static_cast<QGradientBrushData*>(d);
+                break;
+            }
+            default: {
+                delete d;
+                break;
+            }
+        }
+    }
     d = x.take();
 }
 
