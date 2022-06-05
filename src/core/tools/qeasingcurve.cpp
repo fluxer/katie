@@ -338,7 +338,7 @@ class QEasingCurvePrivate
 public:
     QEasingCurvePrivate()
         : type(QEasingCurve::Linear),
-          func(&easeNone),
+          func(nullptr),
           per(0.3), amp(1.0), over(1.70158)
     { }
     QEasingCurvePrivate(const QEasingCurvePrivate &other)
