@@ -204,8 +204,6 @@ class Q_CORE_EXPORT QVariant
 
     void clear();
 
-    void detach();
-
     int toInt(bool *ok = nullptr) const;
     uint toUInt(bool *ok = nullptr) const;
     qlonglong toLongLong(bool *ok = nullptr) const;
@@ -274,39 +272,18 @@ class Q_CORE_EXPORT QVariant
     { return canConvert(Type(qMetaTypeId<T>())); }
 
  public:
-    struct PrivateShared
-    {
-        inline PrivateShared(void *v) : ptr(v), ref(1) { }
-        void *ptr;
-        QAtomicInt ref;
-    };
     struct Private
     {
-        inline Private(): type(Invalid), is_shared(false), is_null(true) { data.ptr = nullptr; }
+        inline Private(): type(Invalid), is_null(true), ptr(nullptr), serial(0) { }
         inline Private(const Private &other)
-            : data(other.data), type(other.type),
-              is_shared(other.is_shared), is_null(other.is_null)
-        {}
-        union Data
-        {
-            int i;
-            uint u;
-            bool b;
-            double d;
-            float f;
-            qlonglong ll;
-            qulonglong ull;
-            QObject *o;
-            void *ptr;
-            PrivateShared *shared;
-        } data;
+            : type(other.type), is_null(other.is_null), ptr(other.ptr), serial(other.serial)
+        { }
         int type;
-        bool is_shared;
         bool is_null;
+        void *ptr;
+        qlonglong serial;
     };
  public:
-    typedef void (*f_construct)(Private *, const void *);
-    typedef void (*f_clear)(Private *);
     typedef bool (*f_null)(const Private *);
 #ifndef QT_NO_DATASTREAM
     typedef void (*f_load)(Private *, QDataStream &);
@@ -316,8 +293,6 @@ class Q_CORE_EXPORT QVariant
     typedef bool (*f_convert)(const QVariant::Private *d, int t, void *, bool *);
     typedef void (*f_debugStream)(QDebug, const QVariant &);
     struct Handler {
-        f_construct construct;
-        f_clear clear;
         f_null isNull;
 #ifndef QT_NO_DATASTREAM
         f_load load;

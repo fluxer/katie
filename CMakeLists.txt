@@ -59,8 +59,6 @@ include(KatieBuildMacros)
 
 # disable some compiler warnings
 set(KATIE_NO_WARNINGS
-    # placement new used in private QVariant functions
-    -Wno-placement-new
     # QVector does not always use new/delete
     -Wno-class-memaccess
     # hot attribute used in function prototypes

@@ -1779,7 +1779,6 @@ void tst_QVariant::operator_eq_eq()
     QFETCH( QVariant, left );
     QFETCH( QVariant, right );
     QFETCH( bool, equal );
-    QEXPECT_FAIL("nullint", "See task 118496", Continue);
     QCOMPARE( left == right, equal );
 }
 
@@ -2016,7 +2015,7 @@ void tst_QVariant::userType()
 
             QVariant userVar3;
             qVariantSetValue(userVar3, data2);
-            QVERIFY(userVar2 != userVar3);
+            QVERIFY(userVar2 == userVar3);
             userVar3 = userVar2;
             QVERIFY(userVar2 == userVar3);
         }
@@ -2058,8 +2057,8 @@ void tst_QVariant::userType()
 
         {
             QVariant second = myCarrier;
-            QCOMPARE(instanceCount, 3);
-            second.detach();
+            QCOMPARE(instanceCount, 4);
+            (void)second.data();
             QCOMPARE(instanceCount, 4);
         }
         QCOMPARE(instanceCount, 3);
