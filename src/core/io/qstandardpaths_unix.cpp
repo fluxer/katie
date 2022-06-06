@@ -137,9 +137,12 @@ QString QStandardPaths::writableLocation(StandardLocation type)
 QStringList QStandardPaths::standardLocations(StandardLocation type)
 {
     QStringList result;
-    static XDGDirsMap xdguserdirs = getUserDirs();
+    static XDGDirsMap xdguserdirs;
     switch (type) {
         case StandardLocation::DesktopLocation: {
+            if (xdguserdirs.isEmpty()) {
+                xdguserdirs = getUserDirs();
+            }
             const QString location(xdguserdirs.value("XDG_DESKTOP_DIR"));
             if (!location.isEmpty()) {
                 result.append(location);
@@ -148,6 +151,9 @@ QStringList QStandardPaths::standardLocations(StandardLocation type)
             break;
         }
         case StandardLocation::DocumentsLocation: {
+            if (xdguserdirs.isEmpty()) {
+                xdguserdirs = getUserDirs();
+            }
             const QString location(xdguserdirs.value("XDG_DOCUMENTS_DIR"));
             if (!location.isEmpty()) {
                 result.append(location);
@@ -156,6 +162,9 @@ QStringList QStandardPaths::standardLocations(StandardLocation type)
             break;
         }
         case StandardLocation::DownloadsLocation: {
+            if (xdguserdirs.isEmpty()) {
+                xdguserdirs = getUserDirs();
+            }
             const QString location(xdguserdirs.value("XDG_DOWNLOAD_DIR"));
             if (!location.isEmpty()) {
                 result.append(location);
@@ -164,6 +173,9 @@ QStringList QStandardPaths::standardLocations(StandardLocation type)
             break;
         }
         case StandardLocation::VideosLocation: {
+            if (xdguserdirs.isEmpty()) {
+                xdguserdirs = getUserDirs();
+            }
             const QString location(xdguserdirs.value("XDG_VIDEOS_DIR"));
             if (!location.isEmpty()) {
                 result.append(location);
@@ -172,6 +184,9 @@ QStringList QStandardPaths::standardLocations(StandardLocation type)
             break;
         }
         case StandardLocation::MusicLocation: {
+            if (xdguserdirs.isEmpty()) {
+                xdguserdirs = getUserDirs();
+            }
             const QString location(xdguserdirs.value("XDG_MUSIC_DIR"));
             if (!location.isEmpty()) {
                 result.append(location);
@@ -180,6 +195,9 @@ QStringList QStandardPaths::standardLocations(StandardLocation type)
             break;
         }
         case StandardLocation::PicturesLocation: {
+            if (xdguserdirs.isEmpty()) {
+                xdguserdirs = getUserDirs();
+            }
             const QString location(xdguserdirs.value("XDG_PICTURES_DIR"));
             if (!location.isEmpty()) {
                 result.append(location);
@@ -188,6 +206,9 @@ QStringList QStandardPaths::standardLocations(StandardLocation type)
             break;
         }
         case StandardLocation::PublicLocation: {
+            if (xdguserdirs.isEmpty()) {
+                xdguserdirs = getUserDirs();
+            }
             const QString location(xdguserdirs.value("XDG_PUBLICSHARE_DIR"));
             if (!location.isEmpty()) {
                 result.append(location);
@@ -196,6 +217,9 @@ QStringList QStandardPaths::standardLocations(StandardLocation type)
             break;
         }
         case StandardLocation::TemplatesLocation: {
+            if (xdguserdirs.isEmpty()) {
+                xdguserdirs = getUserDirs();
+            }
             const QString location(xdguserdirs.value("XDG_TEMPLATES_DIR"));
             if (!location.isEmpty()) {
                 result.append(location);
