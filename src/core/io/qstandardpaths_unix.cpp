@@ -19,16 +19,20 @@
 ****************************************************************************/
 
 #include "qstandardpaths.h"
+#include "qmap.h"
 #include "qdir.h"
 #include "qfile.h"
 #include "qprocess.h"
 #include "qcore_unix_p.h"
+#include "qdebug.h"
 
 QT_BEGIN_NAMESPACE
 
 // for reference:
 // https://cgit.freedesktop.org/xdg/xdg-user-dirs/tree/xdg-user-dir-lookup.c
 // https://specifications.freedesktop.org/basedir-spec/latest
+
+typedef QMap<QByteArray,QString> XDGDirsMap;
 
 static inline QString getEnvName(const char* const name)
 {
@@ -46,42 +50,6 @@ static QStringList getEnvListName(const char* const name)
         result.append(QFile::decodeName(path));
     }
     return result;
-}
-
-static QString getUserDirName(const char* const name, const int namesize)
-{
-    QString xdgconfig;
-    const QByteArray xdgconfighome(qgetenv("XDG_CONFIG_HOME"));
-    if (!xdgconfighome.isEmpty()) {
-        xdgconfig = QFile::decodeName(xdgconfighome) + QLatin1String("/user-dirs.dirs");
-    } else {
-        xdgconfig = QDir::homePath() + QLatin1String("/.config/user-dirs.dirs");
-    }
-
-    QFile xdgconfigfile(xdgconfig);
-    if (!xdgconfigfile.open(QFile::ReadOnly)) {
-        return QString();
-    }
-
-    while (!xdgconfigfile.atEnd()) {
-        const QByteArray xdgline(xdgconfigfile.readLine());
-        if (xdgline.startsWith(name)) {
-            QByteArray xdglocation(xdgline.mid(namesize, xdgline.size() - namesize));
-            xdglocation = xdglocation.trimmed();
-            if (xdglocation.contains("$HOME")) {
-                xdglocation.replace("$HOME", QFile::encodeName(QDir::homePath()));
-            }
-            if (xdglocation.startsWith('"')) {
-                xdglocation = xdglocation.mid(1, xdglocation.size() - 1);
-            }
-            if (xdglocation.endsWith('"')) {
-                xdglocation.chop(1);
-            }
-            return QFile::decodeName(xdglocation);
-        }
-    }
-
-    return QString();
 }
 
 static inline QString checkExecutable(const QString &path)
@@ -106,6 +74,48 @@ static QString searchExecutable(const QStringList &searchPaths, const QString &e
     return QString();
 }
 
+static XDGDirsMap getUserDirs()
+{
+    XDGDirsMap result;
+
+    QString xdgconfig;
+    const QString xdgconfighome = getEnvName("XDG_CONFIG_HOME");
+    if (!xdgconfighome.isEmpty()) {
+        xdgconfig = xdgconfighome + QLatin1String("/user-dirs.dirs");
+    } else {
+        xdgconfig = QDir::homePath() + QLatin1String("/.config/user-dirs.dirs");
+    }
+    // qDebug() << Q_FUNC_INFO << xdgconfig;
+
+    QFile xdgconfigfile(xdgconfig);
+    if (!xdgconfigfile.open(QFile::ReadOnly)) {
+        return result;
+    }
+
+    while (!xdgconfigfile.atEnd()) {
+        const QByteArray xdgline(xdgconfigfile.readLine());
+        const int equalsignindex = xdgline.indexOf('=');
+        if (xdgline.startsWith("XDG_") && equalsignindex > 0) {
+            QByteArray xdglocation(xdgline.mid(equalsignindex + 1, xdgline.size() - equalsignindex - 1));
+            xdglocation = xdglocation.trimmed();
+            if (xdglocation.contains("$HOME")) {
+                xdglocation.replace("$HOME", QFile::encodeName(QDir::homePath()));
+            }
+            if (xdglocation.startsWith('"')) {
+                xdglocation = xdglocation.mid(1, xdglocation.size() - 1);
+            }
+            if (xdglocation.endsWith('"')) {
+                xdglocation.chop(1);
+            }
+            const QByteArray xdgdirvar = xdgline.left(equalsignindex);
+            // qDebug() << Q_FUNC_INFO << xdgdirvar << xdglocation;
+            result.insert(xdgdirvar, QFile::decodeName(xdglocation));
+        }
+    }
+
+    return result;
+}
+
 QString QStandardPaths::writableLocation(StandardLocation type)
 {
     foreach (const QString &location, standardLocations(type)) {
@@ -127,9 +137,10 @@ QString QStandardPaths::writableLocation(StandardLocation type)
 QStringList QStandardPaths::standardLocations(StandardLocation type)
 {
     QStringList result;
+    static XDGDirsMap xdguserdirs = getUserDirs();
     switch (type) {
         case StandardLocation::DesktopLocation: {
-            const QString location(getUserDirName("XDG_DESKTOP_DIR=", 16));
+            const QString location(xdguserdirs.value("XDG_DESKTOP_DIR"));
             if (!location.isEmpty()) {
                 result.append(location);
             }
@@ -137,7 +148,7 @@ QStringList QStandardPaths::standardLocations(StandardLocation type)
             break;
         }
         case StandardLocation::DocumentsLocation: {
-            const QString location(getUserDirName("XDG_DOCUMENTS_DIR=", 18));
+            const QString location(xdguserdirs.value("XDG_DOCUMENTS_DIR"));
             if (!location.isEmpty()) {
                 result.append(location);
             }
@@ -145,7 +156,7 @@ QStringList QStandardPaths::standardLocations(StandardLocation type)
             break;
         }
         case StandardLocation::DownloadsLocation: {
-            const QString location(getUserDirName("XDG_DOWNLOAD_DIR=", 17));
+            const QString location(xdguserdirs.value("XDG_DOWNLOAD_DIR"));
             if (!location.isEmpty()) {
                 result.append(location);
             }
@@ -153,7 +164,7 @@ QStringList QStandardPaths::standardLocations(StandardLocation type)
             break;
         }
         case StandardLocation::VideosLocation: {
-            const QString location(getUserDirName("XDG_VIDEOS_DIR=", 15));
+            const QString location(xdguserdirs.value("XDG_VIDEOS_DIR"));
             if (!location.isEmpty()) {
                 result.append(location);
             }
@@ -161,7 +172,7 @@ QStringList QStandardPaths::standardLocations(StandardLocation type)
             break;
         }
         case StandardLocation::MusicLocation: {
-            const QString location(getUserDirName("XDG_MUSIC_DIR=", 14));
+            const QString location(xdguserdirs.value("XDG_MUSIC_DIR"));
             if (!location.isEmpty()) {
                 result.append(location);
             }
@@ -169,7 +180,7 @@ QStringList QStandardPaths::standardLocations(StandardLocation type)
             break;
         }
         case StandardLocation::PicturesLocation: {
-            const QString location(getUserDirName("XDG_PICTURES_DIR=", 17));
+            const QString location(xdguserdirs.value("XDG_PICTURES_DIR"));
             if (!location.isEmpty()) {
                 result.append(location);
             }
@@ -177,7 +188,7 @@ QStringList QStandardPaths::standardLocations(StandardLocation type)
             break;
         }
         case StandardLocation::PublicLocation: {
-            const QString location(getUserDirName("XDG_PUBLICSHARE_DIR=", 20));
+            const QString location(xdguserdirs.value("XDG_PUBLICSHARE_DIR"));
             if (!location.isEmpty()) {
                 result.append(location);
             }
@@ -185,7 +196,7 @@ QStringList QStandardPaths::standardLocations(StandardLocation type)
             break;
         }
         case StandardLocation::TemplatesLocation: {
-            const QString location(getUserDirName("XDG_TEMPLATES_DIR=", 18));
+            const QString location(xdguserdirs.value("XDG_TEMPLATES_DIR"));
             if (!location.isEmpty()) {
                 result.append(location);
             }
