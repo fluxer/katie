@@ -2103,14 +2103,6 @@ static bool parseAnchorNode(QSvgNode *parent,
     return true;
 }
 
-static void parseNumberTriplet(QVector<qreal> &values, const QChar *&s)
-{
-    QVector<qreal> list = parseNumbersList(s);
-    values << list;
-    for (int i = 3 - list.size(); i > 0; --i)
-        values.append(0.0);
-}
-
 static QSvgNode *createCircleNode(QSvgNode *parent,
                                   const QXmlStreamAttributes &attributes,
                                   QSvgHandler *)
