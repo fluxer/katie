@@ -34,12 +34,12 @@ QT_BEGIN_NAMESPACE
 
 typedef QMap<QByteArray,QString> XDGDirsMap;
 
-static inline QString getEnvName(const char* const name)
+static inline QString getEnv(const char* const name)
 {
     return QFile::decodeName(qgetenv(name));
 }
 
-static QStringList getEnvListName(const char* const name)
+static QStringList getEnvList(const char* const name)
 {
     QStringList result;
     const QByteArray location(qgetenv(name));
@@ -79,7 +79,7 @@ static XDGDirsMap getUserDirs()
     XDGDirsMap result;
 
     QString xdgconfig;
-    const QString xdgconfighome = getEnvName("XDG_CONFIG_HOME");
+    const QString xdgconfighome = getEnv("XDG_CONFIG_HOME");
     if (!xdgconfighome.isEmpty()) {
         xdgconfig = xdgconfighome + QLatin1String("/user-dirs.dirs");
     } else {
@@ -229,14 +229,14 @@ QStringList QStandardPaths::standardLocations(StandardLocation type)
         }
 
         case StandardLocation::DataLocation: {
-            const QString location(getEnvName("XDG_DATA_HOME"));
+            const QString location(getEnv("XDG_DATA_HOME"));
             if (!location.isEmpty()) {
                 result.append(location);
             } else {
                 result.append(QDir::homePath() + QLatin1String("/.local/share"));
             }
 
-            const QStringList locations(getEnvListName("XDG_DATA_DIRS"));
+            const QStringList locations(getEnvList("XDG_DATA_DIRS"));
             if (!locations.isEmpty()) {
                 result.append(locations);
             } else {
@@ -246,7 +246,7 @@ QStringList QStandardPaths::standardLocations(StandardLocation type)
             break;
         }
         case StandardLocation::CacheLocation: {
-            const QString location(getEnvName("XDG_CACHE_HOME"));
+            const QString location(getEnv("XDG_CACHE_HOME"));
             if (!location.isEmpty()) {
                 result.append(location);
             }
@@ -254,14 +254,14 @@ QStringList QStandardPaths::standardLocations(StandardLocation type)
             break;
         }
         case StandardLocation::ConfigLocation: {
-            const QString location(getEnvName("XDG_CONFIG_HOME"));
+            const QString location(getEnv("XDG_CONFIG_HOME"));
             if (!location.isEmpty()) {
                 result.append(location);
             } else {
                 result.append(QDir::homePath() + QLatin1String("/.config"));
             }
 
-            const QStringList locations(getEnvListName("XDG_CONFIG_DIRS"));
+            const QStringList locations(getEnvList("XDG_CONFIG_DIRS"));
             if (!locations.isEmpty()) {
                 result.append(locations);
             } else {
@@ -270,7 +270,7 @@ QStringList QStandardPaths::standardLocations(StandardLocation type)
             break;
         }
         case StandardLocation::RuntimeLocation: {
-            const QString location(getEnvName("XDG_RUNTIME_DIR"));
+            const QString location(getEnv("XDG_RUNTIME_DIR"));
             if (Q_UNLIKELY(!location.isEmpty())) {
                 result.append(location);
             } else {
@@ -280,7 +280,7 @@ QStringList QStandardPaths::standardLocations(StandardLocation type)
             break;
         }
         case StandardLocation::StateLocation: {
-            const QString location(getEnvName("XDG_STATE_HOME"));
+            const QString location(getEnv("XDG_STATE_HOME"));
             if (!location.isEmpty()) {
                 result.append(location);
             } else {
@@ -304,7 +304,7 @@ QString QStandardPaths::findExecutable(const QString &executableName, const QStr
     }
 
     if (paths.isEmpty()) {
-        const QStringList envPaths = getEnvListName("PATH");
+        const QStringList envPaths = getEnvList("PATH");
         return searchExecutable(envPaths, executableName);
     }
 
