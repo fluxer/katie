@@ -30,35 +30,23 @@
 QT_BEGIN_NAMESPACE
 
 // The maximum number of pixels a flick can overshoot
-#ifndef QML_FLICK_OVERSHOOT
 #define QML_FLICK_OVERSHOOT 200
-#endif
 
 // The number of samples to use in calculating the velocity of a flick
-#ifndef QML_FLICK_SAMPLEBUFFER
 #define QML_FLICK_SAMPLEBUFFER 3
-#endif
 
 // The number of samples to discard when calculating the flick velocity.
 // Touch panels often produce inaccurate results as the finger is lifted.
-#ifndef QML_FLICK_DISCARDSAMPLES
 #define QML_FLICK_DISCARDSAMPLES 1
-#endif
 
 // The default maximum velocity of a flick.
-#ifndef QML_FLICK_DEFAULTMAXVELOCITY
 #define QML_FLICK_DEFAULTMAXVELOCITY 2500
-#endif
 
 // The default deceleration of a flick.
-#ifndef QML_FLICK_DEFAULTDECELERATION
 #define QML_FLICK_DEFAULTDECELERATION 1750
-#endif
 
 // How much faster to decelerate when overshooting
-#ifndef QML_FLICK_OVERSHOOTFRICTION
 #define QML_FLICK_OVERSHOOTFRICTION 8
-#endif
 
 // FlickThreshold determines how far the "mouse" must have moved
 // before we perform a flick.
