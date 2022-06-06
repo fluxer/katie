@@ -7,6 +7,8 @@
 #include "qlistmodelinterface_p.h"
 #include "qscriptvalue.h"
 
+#define QML_FLICK_SNAPONETHRESHOLD 30
+
 Q_DECLARE_METATYPE(QScriptValue)
 QML_DECLARE_TYPE(QListModelInterface)
 

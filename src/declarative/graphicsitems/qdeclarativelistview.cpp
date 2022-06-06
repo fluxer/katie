@@ -20,26 +20,20 @@
 ****************************************************************************/
 
 #include "qdeclarativelistview_p.h"
-
 #include "qdeclarativeflickable_p_p.h"
 #include "qdeclarativevisualitemmodel_p.h"
-
 #include "qdeclarativesmoothedanimation_p_p.h"
 #include "qdeclarativeexpression.h"
 #include "qdeclarativeengine.h"
 #include "qdeclarativeguard_p.h"
 #include "qdeclarativeinfo.h"
-
 #include "qlistmodelinterface_p.h"
 #include "qmath.h"
-#include <QEvent>
+#include "qevent.h"
 #include "qplatformdefs.h"
+#include "qdeclarativecommon_p.h"
 
 QT_BEGIN_NAMESPACE
-
-#ifndef QML_FLICK_SNAPONETHRESHOLD
-#define QML_FLICK_SNAPONETHRESHOLD 30
-#endif
 
 void QDeclarativeViewSection::setProperty(const QString &property)
 {

@@ -20,24 +20,17 @@
 ****************************************************************************/
 
 #include "qdeclarativegridview_p.h"
-
 #include "qdeclarativevisualitemmodel_p.h"
 #include "qdeclarativeflickable_p_p.h"
-
 #include "qdeclarativesmoothedanimation_p_p.h"
 #include "qdeclarativeguard_p.h"
-
 #include "qlistmodelinterface_p.h"
-#include <QEvent>
-
+#include "qevent.h"
 #include "qmath.h"
 #include "qplatformdefs.h"
+#include "qdeclarativecommon_p.h"
 
 QT_BEGIN_NAMESPACE
-
-#ifndef QML_FLICK_SNAPONETHRESHOLD
-#define QML_FLICK_SNAPONETHRESHOLD 30
-#endif
 
 //----------------------------------------------------------------------------
 
