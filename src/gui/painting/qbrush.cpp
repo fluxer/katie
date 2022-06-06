@@ -334,9 +334,9 @@ QBrush::QBrush(Qt::BrushStyle style)
 
 QBrush::QBrush(const QColor &color, Qt::BrushStyle style)
 {
-    if (qbrush_check_type(style))
+    if (qbrush_check_type(style)) {
         init(color, style);
-    else {
+    } else {
         d = new QBrushData();
     }
 }
@@ -348,9 +348,9 @@ QBrush::QBrush(const QColor &color, Qt::BrushStyle style)
 */
 QBrush::QBrush(Qt::GlobalColor color, Qt::BrushStyle style)
 {
-    if (qbrush_check_type(style))
+    if (qbrush_check_type(style)) {
         init(color, style);
-    else {
+    } else {
         d = new QBrushData();
     }
 }
@@ -446,8 +446,9 @@ QBrush::~QBrush()
 
 void QBrush::detach(Qt::BrushStyle newStyle)
 {
-    if (newStyle == d->style && d->ref == 1)
+    if (newStyle == d->style && d->ref == 1) {
         return;
+    }
 
     QScopedPointer<QBrushData> x;
     switch(newStyle) {
@@ -507,7 +508,29 @@ void QBrush::detach(Qt::BrushStyle newStyle)
 
 QBrush &QBrush::operator=(const QBrush &other)
 {
-    qAtomicAssign(d, other.d);
+    if (d != other.d) {
+        other.d->ref.ref();
+
+        if (!d->ref.deref()) {
+            switch (d->style) {
+                case Qt::TexturePattern: {
+                    delete static_cast<QTexturedBrushData*>(d);
+                    break;
+                }
+                case Qt::LinearGradientPattern:
+                case Qt::RadialGradientPattern: {
+                    delete static_cast<QGradientBrushData*>(d);
+                    break;
+                }
+                default: {
+                    delete d;
+                    break;
+                }
+            }
+        }
+
+        d = other.d;
+    }
     return *this;
 }
 
