@@ -386,8 +386,11 @@ QEasingCurve::~QEasingCurve()
 QEasingCurve &QEasingCurve::operator=(const QEasingCurve &other)
 {
     if (*this != other) {
-        delete d_ptr;
-        d_ptr = new QEasingCurvePrivate(*other.d_ptr);
+        d_ptr->type = other.d_ptr->type;
+        d_ptr->func = other.d_ptr->func;
+        d_ptr->per = other.d_ptr->per;
+        d_ptr->amp = other.d_ptr->amp;
+        d_ptr->over = other.d_ptr->over;
     }
     return *this;
 }
@@ -398,11 +401,11 @@ QEasingCurve &QEasingCurve::operator=(const QEasingCurve &other)
  */
 bool QEasingCurve::operator==(const QEasingCurve &other) const
 {
-    bool res = d_ptr->func == other.d_ptr->func
-            && d_ptr->type == other.d_ptr->type;
+    bool res = d_ptr->type == other.d_ptr->type
+            && d_ptr->func == other.d_ptr->func;
     if (res) {
-        res = qFuzzyCompare(amplitude(), other.amplitude()) &&
-              qFuzzyCompare(period(), other.period()) &&
+        res = qFuzzyCompare(period(), other.period()) &&
+              qFuzzyCompare(amplitude(), other.amplitude()) &&
               qFuzzyCompare(overshoot(), other.overshoot());
     }
     return res;
