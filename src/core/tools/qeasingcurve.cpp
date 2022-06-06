@@ -522,7 +522,7 @@ void QEasingCurve::setType(Type type)
 void QEasingCurve::setCustomType(EasingFunction func)
 {
     if (Q_UNLIKELY(!func)) {
-        qWarning("Function pointer must not be null");
+        qWarning("QEasingCurve: Function pointer must not be null");
         return;
     }
     d_ptr->type = Custom;
