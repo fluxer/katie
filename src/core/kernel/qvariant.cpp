@@ -49,6 +49,17 @@ QT_BEGIN_NAMESPACE
 
 static const QLatin1String qStringListDelim = QLatin1String(",");
 
+static inline bool qIsNumericType(int tp)
+{
+    return (tp >= QVariant::Bool && tp <= QVariant::Float)
+           || (tp >= QMetaType::Long && tp <= QMetaType::UChar);
+}
+
+static inline bool qIsFloatingPoint(int tp)
+{
+    return tp == QVariant::Double || tp == QVariant::Float;
+}
+
 static bool isNull(const QVariant::Private *d)
 {
     switch(d->type) {
@@ -2690,59 +2701,13 @@ bool QVariant::convert(Type t)
 }
 
 /*!
-    \fn bool operator==(const QVariant &v1, const QVariant &v2)
-
-    \relates QVariant
-
-    Returns true if \a v1 and \a v2 are equal; otherwise returns false.
-
-    \warning This function doesn't support custom types registered
-    with qRegisterMetaType().
-*/
-/*!
-    \fn bool operator!=(const QVariant &v1, const QVariant &v2)
-
-    \relates QVariant
-
-    Returns false if \a v1 and \a v2 are equal; otherwise returns true.
-
-    \warning This function doesn't support custom types registered
-    with qRegisterMetaType().
-*/
-
-/*! \fn bool QVariant::operator==(const QVariant &v) const
-
     Compares this QVariant with \a v and returns true if they are
     equal; otherwise returns false.
 
     In the case of custom types, their equalness operators are not called.
     Instead the values' addresses are compared.
 */
-
-/*!
-    \fn bool QVariant::operator!=(const QVariant &v) const
-
-    Compares this QVariant with \a v and returns true if they are not
-    equal; otherwise returns false.
-
-    \warning This function doesn't support custom types registered
-    with qRegisterMetaType().
-*/
-
-static inline bool qIsNumericType(int tp)
-{
-    return (tp >= QVariant::Bool && tp <= QVariant::Float)
-           || (tp >= QMetaType::Long && tp <= QMetaType::UChar);
-}
-
-static inline bool qIsFloatingPoint(int tp)
-{
-    return tp == QVariant::Double || tp == QVariant::Float;
-}
-
-/*! \internal
- */
-bool QVariant::cmp(const QVariant &v) const
+bool QVariant::operator==(const QVariant &v) const
 {
     if (d.type != v.d.type) {
         if (qIsNumericType(d.type) && qIsNumericType(v.d.type)) {
@@ -2758,9 +2723,19 @@ bool QVariant::cmp(const QVariant &v) const
     return handler->compare(&d, &v.d);
 }
 
-/*! \internal
- */
+/*!
+    \fn bool QVariant::operator!=(const QVariant &v) const
 
+    Compares this QVariant with \a v and returns true if they are not
+    equal; otherwise returns false.
+
+    \warning This function doesn't support custom types registered
+    with qRegisterMetaType().
+*/
+
+/*!
+    \internal
+ */
 const void *QVariant::constData() const
 {
     return d.ptr;
@@ -2772,7 +2747,9 @@ const void *QVariant::constData() const
     \internal
 */
 
-/*! \internal */
+/*!
+    \internal
+*/
 void* QVariant::data()
 {
     return d.ptr;

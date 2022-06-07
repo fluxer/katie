@@ -303,10 +303,9 @@ class Q_CORE_EXPORT QVariant
         f_debugStream debugStream;
     };
 
-    inline bool operator==(const QVariant &v) const
-    { return cmp(v); }
+    bool operator==(const QVariant &v) const;
     inline bool operator!=(const QVariant &v) const
-    { return !cmp(v); }
+    { return !operator==(v); }
 
 protected:
     friend inline bool qvariant_cast_helper(const QVariant &, QVariant::Type, void *);
@@ -320,7 +319,6 @@ protected:
     static const Handler *handler;
 
     void create(int type, const void *copy);
-    bool cmp(const QVariant &other) const;
 
 private:
     // force compile error, prevent QVariant(bool) to be called
@@ -338,7 +336,9 @@ typedef QMap<QString, QVariant> QVariantMap;
 typedef QHash<QString, QVariant> QVariantHash;
 
 inline bool qvariant_cast_helper(const QVariant &v, QVariant::Type tp, void *ptr)
-{ return QVariant::handler->convert(&v.d, tp, ptr, nullptr); }
+{
+    return QVariant::handler->convert(&v.d, tp, ptr, nullptr);
+}
 
 template <typename T>
 inline QVariant qVariantFromValue(const T &t)
