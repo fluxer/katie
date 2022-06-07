@@ -1269,6 +1269,12 @@ void qt_init(QApplicationPrivate *priv, Display *display,
 
 void qt_cleanup()
 {
+#if !defined(QT_NO_FONTCONFIG) && FC_MAJOR >= 2 && FC_MINOR >= 8
+    if (qt_x11Data->has_fontconfig) {
+        FcFini();
+    }
+#endif
+
     QPixmapCache::clear();
 #ifndef QT_NO_CURSOR
     QCursorData::cleanup();
