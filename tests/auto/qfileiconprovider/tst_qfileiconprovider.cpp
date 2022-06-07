@@ -25,19 +25,13 @@
 #include <qdir.h>
 
 Q_DECLARE_METATYPE(QFileIconProvider::IconType)
+Q_DECLARE_METATYPE(QFileInfo)
 
 class tst_QFileIconProvider : public QObject
 {
     Q_OBJECT
 
-public slots:
-    void initTestCase();
-    void cleanupTestCase();
-    void init();
-    void cleanup();
-
 private slots:
-    void qfileiconprovider_data();
     void qfileiconprovider();
 
     void iconType_data();
@@ -56,33 +50,6 @@ class SubQFileIconProvider : public QFileIconProvider
 public:
 
 };
-
-// This will be called before the first test function is executed.
-// It is only called once.
-void tst_QFileIconProvider::initTestCase()
-{
-}
-
-// This will be called after the last test function is executed.
-// It is only called once.
-void tst_QFileIconProvider::cleanupTestCase()
-{
-}
-
-// This will be called before each test function is executed.
-void tst_QFileIconProvider::init()
-{
-}
-
-// This will be called after every test function.
-void tst_QFileIconProvider::cleanup()
-{
-}
-
-
-void tst_QFileIconProvider::qfileiconprovider_data()
-{
-}
 
 void tst_QFileIconProvider::qfileiconprovider()
 {
@@ -111,7 +78,6 @@ void tst_QFileIconProvider::iconType()
     QVERIFY(!provider.icon(type).isNull());
 }
 
-Q_DECLARE_METATYPE(QFileInfo)
 void tst_QFileIconProvider::iconInfo_data()
 {
     QTest::addColumn<QFileInfo>("info");
@@ -129,8 +95,14 @@ void tst_QFileIconProvider::iconInfo()
     QFETCH(QFileInfo, info);
     QFETCH(bool, setPath);
 
-    if (setPath)
+    const QString icontheme = QIcon::themeName();
+    if (icontheme.isEmpty() || icontheme == QLatin1String("hicolor")) {
+        QSKIP("This test requires system icon theme", SkipAll);
+    }
+
+    if (setPath) {
         QVERIFY(info.exists());
+    }
     SubQFileIconProvider provider;
     // we should always get an icon
     QVERIFY(!provider.icon(info).isNull());
