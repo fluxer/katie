@@ -120,20 +120,6 @@ static bool isNull(const QVariant::Private *d)
     return d->is_null;
 }
 
-/*
-  \internal
-  \since 4.4
-
-  We cannot use v_cast() for QMetaType's numeric types because they're smaller than QVariant::Private::Data,
-  which in turns makes v_cast() believe the value is stored in d->data.ptr. But
-  it's not, since we're a QMetaType type.
- */
-template<typename T>
-inline bool compareNumericMetaType(const QVariant::Private *const a, const QVariant::Private *const b)
-{
-    return *static_cast<const T *>(a->ptr) == *static_cast<const T *>(b->ptr);
-}
-
 /*!
   \internal
 
@@ -227,17 +213,17 @@ static bool compare(const QVariant::Private *a, const QVariant::Private *b)
     case QVariant::Invalid:
         return true;
     case QMetaType::Long:
-        return compareNumericMetaType<long>(a, b);
+        return *v_cast<long>(a) == *v_cast<long>(b);
     case QMetaType::ULong:
-        return compareNumericMetaType<ulong>(a, b);
+        return *v_cast<ulong>(a) == *v_cast<ulong>(b);
     case QMetaType::Short:
-        return compareNumericMetaType<short>(a, b);
+        return *v_cast<short>(a) == *v_cast<short>(b);
     case QMetaType::UShort:
-        return compareNumericMetaType<ushort>(a, b);
+        return *v_cast<ushort>(a) == *v_cast<ushort>(b);
     case QMetaType::UChar:
-        return compareNumericMetaType<uchar>(a, b);
+        return *v_cast<uchar>(a) == *v_cast<uchar>(b);
     case QMetaType::Char:
-        return compareNumericMetaType<char>(a, b);
+        return *v_cast<char>(a) == *v_cast<char>(b);
     default:
         break;
     }
