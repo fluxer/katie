@@ -2669,19 +2669,22 @@ bool QVariant::convert(Type t)
     if (d.type == int(t))
         return true;
 
+    if (!canConvert(t)) {
+        clear();
+        return false;
+    }
+
     QVariant oldValue = *this;
-
     clear();
-    if (!oldValue.canConvert(t))
-        return false;
-
     create(t, nullptr);
-    if (oldValue.isNull())
+    if (oldValue.isNull()) {
         return false;
+    }
 
     bool isOk = true;
-    if (!handler->convert(&oldValue.d, t, data(), &isOk))
+    if (!handler->convert(&oldValue.d, t, data(), &isOk)) {
         isOk = false;
+    }
     d.is_null = !isOk;
     return isOk;
 }
