@@ -1419,7 +1419,6 @@ QVariant::QVariant(double val)
 { create(QVariant::Double, &val); }
 QVariant::QVariant(float val)
 { create(QVariant::Float, &val); }
-
 QVariant::QVariant(const QByteArray &val)
 { create(QVariant::ByteArray, &val); }
 QVariant::QVariant(const QBitArray &val)
@@ -1432,7 +1431,6 @@ QVariant::QVariant(const QLatin1String &val)
 { QString str(val); create(QVariant::String, &str); }
 QVariant::QVariant(const QStringList &val)
 { create(QVariant::StringList, &val); }
-
 QVariant::QVariant(const QDate &val)
 { create(QVariant::Date, &val); }
 QVariant::QVariant(const QTime &val)

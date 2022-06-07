@@ -86,7 +86,7 @@ QStringList QDesignerPluginManager::defaultPluginPaths()
     QStringList result;
 
 #ifndef QT_NO_LIBRARY
-    const QStringList path_list = QCoreApplication::libraryPaths();
+    const QStringList path_list = QCoreApplication::pluginPaths();
 
     const QString designer = QLatin1String("designer");
     foreach (const QString &path, path_list) {

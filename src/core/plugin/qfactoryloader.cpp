@@ -172,7 +172,7 @@ void QFactoryLoader::update()
 {
     Q_D(QFactoryLoader);
     QMutexLocker locker(&d->mutex);
-    foreach (const QString &pluginDir, QCoreApplication::libraryPaths()) {
+    foreach (const QString &pluginDir, QCoreApplication::pluginPaths()) {
         // Already loaded, skip it...
         if (d->loadedPaths.contains(pluginDir))
             continue;
