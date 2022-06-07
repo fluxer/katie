@@ -9,7 +9,5 @@
 <file>images/tree_branch_closed.png</file>
 <file>images/tb_extension_arrow_v.png</file>
 <file>images/tb_extension_arrow_h.png</file>
-<file>images/filedialog_start.png</file>
-<file>images/filedialog_end.png</file>
 </qresource>
 </RCC>
