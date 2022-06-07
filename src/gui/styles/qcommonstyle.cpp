@@ -4998,6 +4998,9 @@ QPixmap QCommonStyle::standardPixmap(StandardPixmap sp, const QStyleOption *opti
             pixmap = QIcon::fromTheme(QLatin1String("drive-harddisk"),
                                       QIcon::fromTheme(QLatin1String("hdd_unmount"))).pixmap(16);
             break;
+        case SP_DriveNetIcon:
+            pixmap = QIcon::fromTheme(QLatin1String("folder-remote")).pixmap(16);
+            break;
         case SP_FileDialogToParent:
             pixmap = QIcon::fromTheme(QLatin1String("go-up"),
                                       QIcon::fromTheme(QLatin1String("up"))).pixmap(16);
