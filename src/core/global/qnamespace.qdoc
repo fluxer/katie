@@ -577,11 +577,8 @@
     This enum describes the available UI effects.
 
     By default, Qt will try to use the platform specific desktop
-    settings for each effect. Use the
-    QApplication::setDesktopSettingsAware() function (passing \c false
-    as argument) to prevent this, and the
-    QApplication::setEffectEnabled() to enable or disable a particular
-    effect.
+    settings for each effect. Use QApplication::setEffectEnabled()
+    to enable or disable a particular effect.
 
     Note that all effects are disabled on screens running at less than
     16-bit color depth.
@@ -595,7 +592,7 @@
     \value UI_FadeTooltip Show tooltip fading effects.
     \value UI_AnimateToolBox Reserved
 
-    \sa QApplication::setEffectEnabled(), QApplication::setDesktopSettingsAware()
+    \sa QApplication::setEffectEnabled()
 */
 
 /*! \enum Qt::AspectRatioMode

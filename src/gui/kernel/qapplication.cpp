@@ -192,9 +192,7 @@ QApplicationPrivate::~QApplicationPrivate()
 
         \row
         \o  System settings
-        \o  desktopSettingsAware(),
-            setDesktopSettingsAware(),
-            cursorFlashTime(),
+        \o  cursorFlashTime(),
             setCursorFlashTime(),
             doubleClickInterval(),
             setDoubleClickInterval(),
@@ -331,7 +329,6 @@ QIcon *QApplicationPrivate::app_icon = 0;
 QWidget *QApplicationPrivate::focus_widget = 0;        // has keyboard input focus
 QWidget *QApplicationPrivate::hidden_focus_widget = 0; // will get keyboard input focus after show()
 QWidget *QApplicationPrivate::active_window = 0;        // toplevel with keyboard focus
-bool QApplicationPrivate::obey_desktop_settings = true;        // use winsys resources
 int QApplicationPrivate::cursor_flash_time = 1000;        // text caret flash time
 int QApplicationPrivate::mouse_double_click_time = 400;        // mouse dbl click limit
 int QApplicationPrivate::keyboard_input_time = 400; // keyboard input interval
@@ -733,7 +730,6 @@ QApplication::~QApplication()
     d->session_manager = 0;
 #endif //QT_NO_SESSIONMANAGER
 
-    QApplicationPrivate::obey_desktop_settings = true;
     QApplicationPrivate::cursor_flash_time = 1000;
     QApplicationPrivate::mouse_double_click_time = 400;
     QApplicationPrivate::keyboard_input_time = 400;
@@ -943,7 +939,7 @@ QStyle *QApplication::style()
     \warning Qt style sheets are currently not supported for custom QStyle
     subclasses. We plan to address this in some future release.
 
-    \sa style(), QStyle, setPalette(), desktopSettingsAware()
+    \sa style(), QStyle, setPalette()
 */
 void QApplication::setStyle(QStyle *style)
 {
@@ -2424,33 +2420,6 @@ QClipboard *QApplication::clipboard()
 #endif // QT_NO_CLIPBOARD
 
 /*!
-    Sets whether Qt should use the system's standard colors, fonts, etc., to
-    \a on. By default, this is true.
-
-    This function must be called before creating the QApplication object, like
-    this:
-
-    \snippet doc/src/snippets/code/src_gui_kernel_qapplication.cpp 6
-
-    \sa desktopSettingsAware()
-*/
-void QApplication::setDesktopSettingsAware(bool on)
-{
-    QApplicationPrivate::obey_desktop_settings = on;
-}
-
-/*!
-    Returns true if Qt is set to use the system's standard colors, fonts, etc.;
-    otherwise returns false. The default is true.
-
-    \sa setDesktopSettingsAware()
-*/
-bool QApplication::desktopSettingsAware()
-{
-    return QApplicationPrivate::obey_desktop_settings;
-}
-
-/*!
     Returns the current state of the modifier keys on the keyboard. The current
     state is updated sychronously as the event queue is emptied of events that
     will spontaneously change the keyboard state (QEvent::KeyPress and
@@ -3870,7 +3839,7 @@ void QApplicationPrivate::emitLastWindowClosed()
     \note All effects are disabled on screens running at less than 16-bit color
     depth.
 
-    \sa isEffectEnabled(), Qt::UIEffect, setDesktopSettingsAware()
+    \sa isEffectEnabled(), Qt::UIEffect
 */
 
 /*!
@@ -3878,8 +3847,7 @@ void QApplicationPrivate::emitLastWindowClosed()
 
     Returns true if \a effect is enabled; otherwise returns false.
 
-    By default, Katie will try to use the desktop settings. To prevent this, call
-    setDesktopSettingsAware(false).
+    By default, Katie will try to use the desktop settings.
 
     \note All effects are disabled on screens running at less than 16-bit color
     depth.

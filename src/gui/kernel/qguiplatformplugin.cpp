@@ -51,13 +51,13 @@ QGuiPlatformPlugin *qt_guiPlatformPlugin()
             key = QString::fromLocal8Bit(qgetenv("DESKTOP_SESSION"));
         }
 
-        if (!key.isEmpty() && QApplication::desktopSettingsAware()) {
+        if (!key.isEmpty()) {
             QFactoryLoader loader(QGuiPlatformPluginInterface_iid, QLatin1String("/gui_platform"));
             plugin = qobject_cast<QGuiPlatformPlugin *>(loader.instance(key));
         }
 #endif // QT_NO_LIBRARY
 
-        if(!plugin) {
+        if (!plugin) {
             static QGuiPlatformPlugin def;
             plugin = &def;
         }

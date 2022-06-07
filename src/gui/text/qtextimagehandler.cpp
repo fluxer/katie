@@ -27,6 +27,7 @@
 #include "qpainter.h"
 #include "qdebug.h"
 #include "qpalette.h"
+#include "qstyle.h"
 #include "qtextbrowser.h"
 #include "qthread.h"
 #include "qx11info_x11.h"
@@ -56,7 +57,7 @@ static QPixmap getPixmap(QTextDocument *doc, const QTextImageFormat &format)
         QImage img;
         // try direct loading
         if (name.isEmpty() || !img.load(name)) {
-            return QPixmap(QLatin1String(":/trolltech/styles/commonstyle/images/file-16.png"));
+            return QApplication::style()->standardPixmap(QStyle::SP_FileIcon);
         }
         pm = QPixmap::fromImage(img);
         doc->addResource(QTextDocument::ImageResource, url, pm);
@@ -127,7 +128,7 @@ static QImage getImage(QTextDocument *doc, const QTextImageFormat &format)
 
         // try direct loading
         if (name.isEmpty() || !image.load(name)) {
-            return QImage(QLatin1String(":/trolltech/styles/commonstyle/images/file-16.png"));
+            return QApplication::style()->standardPixmap(QStyle::SP_FileIcon).toImage();
         }
         doc->addResource(QTextDocument::ImageResource, url, image);
     }

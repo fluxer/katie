@@ -564,10 +564,6 @@ Q_GUI_EXPORT void qt_x11_apply_settings_in_all_apps()
 */
 bool QApplicationPrivate::x11_apply_settings()
 {
-    if (!QApplication::desktopSettingsAware()) {
-        return true;
-    }
-
     QSettings *settings = QCoreApplicationPrivate::staticConf();
 
     /*
@@ -2324,7 +2320,7 @@ int QApplication::x11ProcessEvent(XEvent* event)
                 }
             }
 #endif // QT_NO_CLIPBOARD
-            if (QApplicationPrivate::obey_desktop_settings &&event->xproperty.atom == ATOM(_QT_SETTINGS_TIMESTAMP)) {
+            if (event->xproperty.atom == ATOM(_QT_SETTINGS_TIMESTAMP)) {
                 QApplicationPrivate::x11_apply_settings();
             }
         }
