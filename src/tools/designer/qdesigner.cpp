@@ -152,12 +152,12 @@ void QDesigner::initialize()
     parseCommandLineArgs(files);
 
 #ifndef QT_NO_TRANSLATION
-    QTranslator *translator = new QTranslator(this);
-    QTranslator *qtTranslator = new QTranslator(this);
-    translator->load(QLatin1String("qt_tools"));
-    qtTranslator->load(QLatin1String("qt"));
-    installTranslator(translator);
-    installTranslator(qtTranslator);
+    m_translator.reset(new QTranslator());
+    m_qtTranslator.reset(new QTranslator());
+    m_translator->load(QLatin1String("qt_tools"));
+    m_qtTranslator->load(QLatin1String("qt"));
+    installTranslator(m_translator.data());
+    installTranslator(m_qtTranslator.data());
 #endif
 
     m_workbench = new QDesignerWorkbench();

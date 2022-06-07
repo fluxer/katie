@@ -23,6 +23,7 @@
 #define QDESIGNER_H
 
 #include <QtCore/QPointer>
+#include <QtCore/QScopedPointer>
 #include <QtGui/QApplication>
 
 QT_BEGIN_NAMESPACE
@@ -66,6 +67,8 @@ private:
     QDesignerWorkbench *m_workbench;
     QPointer<MainWindowBase> m_mainWindow;
     QPointer<QErrorMessage> m_errorMessageDialog;
+    QScopedPointer<QTranslator> m_translator;
+    QScopedPointer<QTranslator> m_qtTranslator;
 
     QString m_initializationErrors;
     QString m_lastErrorMessage;

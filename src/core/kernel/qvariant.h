@@ -198,7 +198,6 @@ class Q_CORE_EXPORT QVariant
     bool canConvert(Type t) const;
     bool convert(Type t);
 
-
     inline bool isValid() const { return d.type != Invalid; }
     bool isNull() const;
 
@@ -243,7 +242,6 @@ class Q_CORE_EXPORT QVariant
     QEasingCurve toEasingCurve() const;
     QJsonDocument toJsonDocument() const;
 #endif
-
 
 #ifndef QT_NO_DATASTREAM
     void load(QDataStream &ds);
