@@ -28,6 +28,10 @@
 Q_DECLARE_METATYPE(QFileIconProvider::IconType)
 Q_DECLARE_METATYPE(QFileInfo)
 
+static const QStringList s_blacklist = QStringList()
+    << QString::fromLatin1("hicolor")
+    << QString::fromLatin1("adwaita");
+
 class tst_QFileIconProvider : public QObject
 {
     Q_OBJECT
@@ -76,9 +80,8 @@ void tst_QFileIconProvider::iconType()
 {
     QFETCH(QFileIconProvider::IconType, type);
 
-    const QString icontheme = QIcon::themeName();
-    qDebug() << Q_FUNC_INFO << icontheme;
-    if (icontheme.isEmpty() || icontheme == QLatin1String("hicolor")) {
+    const QString icontheme = QIcon::themeName().toLower();
+    if (icontheme.isEmpty() || s_blacklist.contains(icontheme)) {
         QSKIP("This test requires system icon theme", SkipAll);
     }
 
@@ -103,9 +106,8 @@ void tst_QFileIconProvider::iconInfo()
     QFETCH(QFileInfo, info);
     QFETCH(bool, setPath);
 
-    const QString icontheme = QIcon::themeName();
-    qDebug() << Q_FUNC_INFO << icontheme;
-    if (icontheme.isEmpty() || icontheme == QLatin1String("hicolor")) {
+    const QString icontheme = QIcon::themeName().toLower();
+    if (icontheme.isEmpty() || s_blacklist.contains(icontheme)) {
         QSKIP("This test requires system icon theme", SkipAll);
     }
 
