@@ -23,6 +23,7 @@
 #include <qfileiconprovider.h>
 #include <qfileinfo.h>
 #include <qdir.h>
+#include <qdebug.h>
 
 Q_DECLARE_METATYPE(QFileIconProvider::IconType)
 Q_DECLARE_METATYPE(QFileInfo)
@@ -76,6 +77,7 @@ void tst_QFileIconProvider::iconType()
     QFETCH(QFileIconProvider::IconType, type);
 
     const QString icontheme = QIcon::themeName();
+    qDebug() << Q_FUNC_INFO << icontheme;
     if (icontheme.isEmpty() || icontheme == QLatin1String("hicolor")) {
         QSKIP("This test requires system icon theme", SkipAll);
     }
@@ -102,6 +104,7 @@ void tst_QFileIconProvider::iconInfo()
     QFETCH(bool, setPath);
 
     const QString icontheme = QIcon::themeName();
+    qDebug() << Q_FUNC_INFO << icontheme;
     if (icontheme.isEmpty() || icontheme == QLatin1String("hicolor")) {
         QSKIP("This test requires system icon theme", SkipAll);
     }
