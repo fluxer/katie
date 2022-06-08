@@ -255,9 +255,7 @@ struct Q_AUTOTEST_EXPORT QScriptItem
     int glyph_data_offset;
     QFixed height() const { return ascent + descent + 1; }
 };
-
-
-Q_DECLARE_TYPEINFO(QScriptItem, Q_MOVABLE_TYPE);
+Q_DECLARE_TYPEINFO(QScriptItem, Q_PRIMITIVE_TYPE);
 
 typedef QVector<QScriptItem> QScriptItemArray;
 
