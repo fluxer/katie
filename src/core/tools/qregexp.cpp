@@ -4116,11 +4116,10 @@ QDataStream &operator>>(QDataStream &in, QRegExp &regExp)
 
     in >> pattern >> cs >> patternSyntax >> isMinimal;
 
-    QRegExp newRegExp(pattern, Qt::CaseSensitivity(cs),
+    regExp = QRegExp(pattern, Qt::CaseSensitivity(cs),
                       QRegExp::PatternSyntax(patternSyntax));
+    regExp.setMinimal(isMinimal);
 
-    newRegExp.setMinimal(isMinimal);
-    regExp = newRegExp;
     return in;
 }
 #endif // QT_NO_DATASTREAM
