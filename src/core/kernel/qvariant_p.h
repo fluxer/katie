@@ -43,12 +43,14 @@ QT_BEGIN_NAMESPACE
 template <typename T>
 inline const T *v_cast(const QVariant::Private *d)
 {
+    Q_ASSERT(d->type != QVariant::Invalid);
     return static_cast<const T *>(static_cast<const void *>(d->ptr));
 }
 
 template <typename T>
 inline T *v_cast(QVariant::Private *d)
 {
+    Q_ASSERT(d->type != QVariant::Invalid);
     return static_cast<T *>(static_cast<void *>(d->ptr));
 }
 
