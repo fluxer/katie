@@ -202,6 +202,7 @@ bool QDBusMetaType::marshall(QDBusArgument &arg, int id, const void *data)
 {
     MarshallFunction mf;
     {
+        QMutexLocker locker(customTypesLock());
         const QStdVector<QDBusCustomTypeInfo> *ct = customTypes();
         if (id >= ct->size())
             return false;       // non-existent
@@ -228,6 +229,7 @@ bool QDBusMetaType::demarshall(const QDBusArgument &arg, int id, void *data)
 {
     DemarshallFunction df;
     {
+        QMutexLocker locker(customTypesLock());
         const QStdVector<QDBusCustomTypeInfo> *ct = customTypes();
         if (id >= ct->size())
             return false;       // non-existent
@@ -394,6 +396,7 @@ const char *QDBusMetaType::typeToSignature(int type)
 
     // try the database
     {
+        QMutexLocker locker(customTypesLock());
         const QStdVector<QDBusCustomTypeInfo> *ct = customTypes();
         if (type >= ct->size())
             return nullptr;           // type not registered with us

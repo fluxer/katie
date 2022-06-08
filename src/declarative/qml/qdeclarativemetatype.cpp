@@ -705,6 +705,7 @@ int QDeclarativePrivate::qmlregister(RegistrationType type, void *data)
 */
 bool QDeclarativeMetaType::isModule(const QByteArray &module, int versionMajor, int versionMinor)
 {
+    QMutexLocker lock(metaTypeDataLock());
     const QDeclarativeMetaTypeData *data = metaTypeData();
     const QDeclarativeMetaTypeData::ModuleInfoHash::const_iterator it = data->modules.constFind(module);
     return it != data->modules.constEnd()
@@ -717,6 +718,7 @@ bool QDeclarativeMetaType::isModule(const QByteArray &module, int versionMajor, 
 
 QList<QDeclarativePrivate::AutoParentFunction> QDeclarativeMetaType::parentFunctions()
 {
+    QMutexLocker lock(metaTypeDataLock());
     const QDeclarativeMetaTypeData *data = metaTypeData();
     return data->parentFunctions;
 }
@@ -738,6 +740,7 @@ bool QDeclarativeMetaType::isQObject(int userType)
     if (userType == QMetaType::QObjectStar)
         return true;
 
+    QMutexLocker lock(metaTypeDataLock());
     const QDeclarativeMetaTypeData *data = metaTypeData();
     return userType >= 0 && userType < data->objects.size() && data->objects.testBit(userType);
 }
@@ -747,6 +750,7 @@ bool QDeclarativeMetaType::isQObject(int userType)
  */
 int QDeclarativeMetaType::listType(int id)
 {
+    QMutexLocker lock(metaTypeDataLock());
     const QDeclarativeMetaTypeData *data = metaTypeData();
     const QDeclarativeType *type = data->idToType.value(id);
     if (type && type->qListTypeId() == id) {
@@ -757,6 +761,7 @@ int QDeclarativeMetaType::listType(int id)
 
 int QDeclarativeMetaType::attachedPropertiesFuncId(const QMetaObject *mo)
 {
+    QMutexLocker lock(metaTypeDataLock());
     const QDeclarativeMetaTypeData *data = metaTypeData();
     const QDeclarativeType *type = data->metaObjectToType.value(mo);
     if (type && type->attachedPropertiesFunction()) {
@@ -769,6 +774,7 @@ QDeclarativeAttachedPropertiesFunc QDeclarativeMetaType::attachedPropertiesFuncB
 {
     if (id < 0)
         return 0;
+    QMutexLocker lock(metaTypeDataLock());
     const QDeclarativeMetaTypeData *data = metaTypeData();
     return data->types.at(id)->attachedPropertiesFunction();
 }
@@ -832,6 +838,7 @@ QDeclarativeMetaType::TypeCategory QDeclarativeMetaType::typeCategory(int userTy
     if (userType == QMetaType::QObjectStar)
         return Object;
 
+    QMutexLocker lock(metaTypeDataLock());
     const QDeclarativeMetaTypeData *data = metaTypeData();
     if (userType < data->objects.size() && data->objects.testBit(userType)) {
         return Object;
@@ -843,12 +850,14 @@ QDeclarativeMetaType::TypeCategory QDeclarativeMetaType::typeCategory(int userTy
 
 bool QDeclarativeMetaType::isInterface(int userType)
 {
+    QMutexLocker lock(metaTypeDataLock());
     const QDeclarativeMetaTypeData *data = metaTypeData();
     return userType >= 0 && userType < data->interfaces.size() && data->interfaces.testBit(userType);
 }
 
 const char *QDeclarativeMetaType::interfaceIId(int userType)
 {
+    QMutexLocker lock(metaTypeDataLock());
     const QDeclarativeMetaTypeData *data = metaTypeData();
     const QDeclarativeType *type = data->idToType.value(userType);
     if (type && type->isInterface() && type->typeId() == userType) {
@@ -859,6 +868,7 @@ const char *QDeclarativeMetaType::interfaceIId(int userType)
 
 bool QDeclarativeMetaType::isList(int userType)
 {
+    QMutexLocker lock(metaTypeDataLock());
     const QDeclarativeMetaTypeData *data = metaTypeData();
     return userType >= 0 && userType < data->lists.size() && data->lists.testBit(userType);
 }
@@ -869,6 +879,7 @@ bool QDeclarativeMetaType::isList(int userType)
 */
 QDeclarativeType *QDeclarativeMetaType::qmlType(const QByteArray &name, int version_major, int version_minor)
 {
+    QMutexLocker lock(metaTypeDataLock());
     const QDeclarativeMetaTypeData *data = metaTypeData();
     const QList<QDeclarativeType*> types = data->nameToType.values(name);
     foreach (QDeclarativeType *t, types) {
@@ -886,6 +897,7 @@ QDeclarativeType *QDeclarativeMetaType::qmlType(const QByteArray &name, int vers
 */
 QDeclarativeType *QDeclarativeMetaType::qmlType(const QMetaObject *metaObject)
 {
+    QMutexLocker lock(metaTypeDataLock());
     const QDeclarativeMetaTypeData *data = metaTypeData();
     return data->metaObjectToType.value(metaObject);
 }
@@ -897,6 +909,7 @@ QDeclarativeType *QDeclarativeMetaType::qmlType(const QMetaObject *metaObject)
 */
 QDeclarativeType *QDeclarativeMetaType::qmlType(const QMetaObject *metaObject, const QByteArray &module, int version_major, int version_minor)
 {
+    QMutexLocker lock(metaTypeDataLock());
     const QDeclarativeMetaTypeData *data = metaTypeData();
     QDeclarativeMetaTypeData::MetaObjects::const_iterator it = data->metaObjectToType.constFind(metaObject);
     while (it != data->metaObjectToType.constEnd() && it.key() == metaObject) {
@@ -915,6 +928,7 @@ QDeclarativeType *QDeclarativeMetaType::qmlType(const QMetaObject *metaObject, c
 */
 QDeclarativeType *QDeclarativeMetaType::qmlType(int userType)
 {
+    QMutexLocker lock(metaTypeDataLock());
     const QDeclarativeMetaTypeData *data = metaTypeData();
     QDeclarativeType *type = data->idToType.value(userType);
     if (type && type->typeId() == userType) {
@@ -929,6 +943,7 @@ QDeclarativeType *QDeclarativeMetaType::qmlType(int userType)
 */
 QDeclarativeDirComponents QDeclarativeMetaType::qmlComponents(const QByteArray &module, int version_major, int version_minor)
 {
+    QMutexLocker lock(registeredComponentDataLock());
     const QDeclarativeDirComponents* comps = registeredComponentData()->value(module, nullptr);
     if (!comps) {
         return QDeclarativeDirComponents();
@@ -949,6 +964,7 @@ QDeclarativeDirComponents QDeclarativeMetaType::qmlComponents(const QByteArray &
 */
 QList<QByteArray> QDeclarativeMetaType::qmlTypeNames()
 {
+    QMutexLocker lock(metaTypeDataLock());
     const QDeclarativeMetaTypeData *data = metaTypeData();
     return data->nameToType.keys();
 }
@@ -958,6 +974,7 @@ QList<QByteArray> QDeclarativeMetaType::qmlTypeNames()
 */
 QList<QDeclarativeType*> QDeclarativeMetaType::qmlTypes()
 {
+    QMutexLocker lock(metaTypeDataLock());
     const QDeclarativeMetaTypeData *data = metaTypeData();
     return data->nameToType.values();
 }

@@ -383,6 +383,7 @@ const char *QMetaType::typeName(int type)
     } else if (type >= FirstCoreExtType && type <= LastCoreExtType) {
         return MetaTypeTbl[type - FirstCoreExtType + GuiTypeCount + LastCoreType + 2].typeName;
     } else if (type >= User) {
+        QMutexLocker locker(customTypesLock());
         const QStdVector<QCustomTypeInfo> * const ct = customTypes();
         return ct && ct->count() > type - User && !ct->at(type - User).typeName.isEmpty()
                 ? ct->at(type - User).typeName.constData() : nullptr;
@@ -550,6 +551,7 @@ bool QMetaType::isRegistered(int type)
     } else if (type < 0) {
         return false;
     }
+    QMutexLocker locker(customTypesLock());
     const QStdVector<QCustomTypeInfo> * const ct = customTypes();
     return (ct && (ct->count() > type - User) && !ct->at(type - User).typeName.isEmpty());
 }
@@ -761,6 +763,7 @@ bool QMetaType::save(QDataStream &stream, int type, const void *data)
         qMetaTypeGuiHelper[type - FirstGuiType].saveOp(stream, data);
         break;
     default: {
+        QMutexLocker locker(customTypesLock());
         const QStdVector<QCustomTypeInfo> * const ct = customTypes();
         if (!ct)
             return false;
@@ -958,6 +961,7 @@ bool QMetaType::load(QDataStream &stream, int type, void *data)
         qMetaTypeGuiHelper[type - FirstGuiType].loadOp(stream, data);
         break;
     default: {
+        QMutexLocker locker(customTypesLock());
         const QStdVector<QCustomTypeInfo> * const ct = customTypes();
         if (!ct)
             return false;
@@ -1186,6 +1190,7 @@ void *QMetaType::construct(int type, const void *copy)
             return 0;
         constr = qMetaTypeGuiHelper[type - FirstGuiType].constr;
     } else {
+        QMutexLocker locker(customTypesLock());
         const QStdVector<QCustomTypeInfo> * const ct = customTypes();
         if (type < User || !ct || ct->count() <= type - User)
             return 0;
@@ -1349,6 +1354,7 @@ void QMetaType::destroy(int type, void *data)
                 return;
             destr = qMetaTypeGuiHelper[type - FirstGuiType].destr;
         } else {
+            QMutexLocker locker(customTypesLock());
             const QStdVector<QCustomTypeInfo> * const ct = customTypes();
             if (type < User || !ct || ct->count() <= type - User)
                 break;
