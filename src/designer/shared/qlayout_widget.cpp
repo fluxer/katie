@@ -703,9 +703,10 @@ QRect LayoutHelper::itemInfo(QLayout *lt, const QWidget *widget) const
             if (!LayoutInfo::isEmptyItem(item)) {
                 QWidget *itemWidget = item->widget();
                 const WidgetItemMap::const_iterator it = widgetItemMap.constFind(itemWidget);
-                if (it == widgetItemMap.constEnd())
+                if (Q_UNLIKELY(it == widgetItemMap.constEnd())) {
                     qFatal("GridLayoutState::applyToLayout: Attempt to apply to a layout that has a widget '%s'/'%s' added after saving the state.",
                            itemWidget->metaObject()->className(), itemWidget->objectName().toUtf8().constData());
+                }
                 itemMap.insert(item, it.value());
             } else {
                 delete item;

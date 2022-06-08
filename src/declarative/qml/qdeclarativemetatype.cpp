@@ -559,8 +559,9 @@ int registerAutoParentFunction(QDeclarativePrivate::RegisterAutoParent &autopare
 
 int registerInterface(const QDeclarativePrivate::RegisterInterface &interface)
 {
-    if (interface.version > 0) 
+    if (Q_UNLIKELY(interface.version > 0)) {
         qFatal("qmlRegisterType(): Cannot mix incompatible QML versions.");
+    }
 
     QMutexLocker lock(metaTypeDataLock());
     QDeclarativeMetaTypeData *data = metaTypeData();

@@ -519,7 +519,7 @@ QPrinter::QPrinter(const QPrinterInfo& printer, PrinterMode mode)
 
 void QPrinter::init(PrinterMode mode)
 {
-    if (!qApp || QApplication::type() != QApplication::Gui) {
+    if (Q_UNLIKELY(!qApp || QApplication::type() != QApplication::Gui)) {
         qFatal("QPrinter: Must construct a QApplication before a QPaintDevice");
         return;
     }

@@ -279,8 +279,10 @@ static bool compare(const QVariantPrivate *a, const QVariantPrivate *b)
     default:
         break;
     }
-    if (!QMetaType::isRegistered(a->type))
+
+    if (Q_UNLIKELY(!QMetaType::isRegistered(a->type))) {
         qFatal("QVariant::compare: type %d unknown to QVariant.", a->type);
+    }
 
     const void *a_ptr = a->ptr;
     const void *b_ptr = b->ptr;

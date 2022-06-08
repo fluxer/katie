@@ -877,9 +877,10 @@ void QDBusConnectionPrivate::deliverCall(QObject *object, const QDBusMessage &ms
                 *reinterpret_cast<const QDBusArgument *>(arg.constData());
             QVariant &out = auxParameters[auxParameters.count() - 1];
 
-            if (!QDBusMetaType::demarshall(in, out.userType(), out.data()))
+            if (Q_UNLIKELY(!QDBusMetaType::demarshall(in, out.userType(), out.data()))) {
                 qFatal("Internal error: demarshalling function for type '%s' (%d) failed!",
                        out.typeName(), out.userType());
+            }
 
             params.append(const_cast<void *>(out.constData()));
         } else {

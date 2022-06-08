@@ -867,7 +867,7 @@ QScriptEnginePrivate::QScriptEnginePrivate()
     qMetaTypeId<QList<int> >();
     qMetaTypeId<QObjectList>();
 
-    if (!QCoreApplication::instance()) {
+    if (Q_UNLIKELY(!QCoreApplication::instance())) {
         qFatal("QScriptEngine: Must construct a Q(Core)Application before a QScriptEngine");
         return;
     }

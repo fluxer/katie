@@ -1179,8 +1179,9 @@ void QtSharedPointer::ExternalRefCountData::setQObjectShared(const QObject *obj)
     Q_ASSERT(obj);
     QObjectPrivate *d = QObjectPrivate::get(const_cast<QObject *>(obj));
 
-    if (d->sharedRefcount)
+    if (Q_UNLIKELY(d->sharedRefcount)) {
         qFatal("QSharedPointer: pointer %p already has reference counting", obj);
+    }
     d->sharedRefcount = this;
 
     // QObject decreases the refcount too, so increase it up

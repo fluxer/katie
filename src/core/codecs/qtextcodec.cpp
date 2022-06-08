@@ -137,7 +137,7 @@ static void setupLocaleMapper()
 
     // nl_langinfo() is documented to return empty string only if its argument
     // is not valid
-    if (!localeMapper) {
+    if (Q_UNLIKELY(!localeMapper)) {
         qFatal("Could not detect codec for locale");
     }
 }
