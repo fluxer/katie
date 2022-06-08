@@ -51,7 +51,7 @@ QT_BEGIN_NAMESPACE
 
 Q_CORE_EXPORT const QVariant::Handler *qcoreVariantHandler();
 
-static bool isNull(const QVariant::Private *d)
+static bool isNull(const QVariantPrivate *d)
 {
     switch(d->type) {
     case QVariant::Bitmap:
@@ -104,7 +104,7 @@ static bool isNull(const QVariant::Private *d)
     return d->is_null;
 }
 
-static bool compare(const QVariant::Private *a, const QVariant::Private *b)
+static bool compare(const QVariantPrivate *a, const QVariantPrivate *b)
 {
     Q_ASSERT(a->type == b->type);
     switch(a->type) {
@@ -173,9 +173,16 @@ static bool compare(const QVariant::Private *a, const QVariant::Private *b)
     return qcoreVariantHandler()->compare(a, b);
 }
 
-static bool convert(const QVariant::Private *d, int t,
+static bool convert(const QVariantPrivate *d, int t,
                  void *result, bool *ok)
 {
+    if (!d) {
+        if (ok) {
+            *ok = false;
+        }
+        return false;
+    }
+
     switch (t) {
     case QVariant::ByteArray: {
         if (d->type == QVariant::Color) {

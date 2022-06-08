@@ -40,15 +40,29 @@
 
 QT_BEGIN_NAMESPACE
 
+class QVariantPrivate
+{
+public:
+    QVariantPrivate();
+    QVariantPrivate(const int vtype, const void* copy);
+    QVariantPrivate(const QVariantPrivate &other);
+    ~QVariantPrivate();
+
+    int type;
+    bool is_null;
+    void *ptr;
+    QAtomicInt ref;
+};
+
 template <typename T>
-inline const T *v_cast(const QVariant::Private *d)
+inline const T *v_cast(const QVariantPrivate *d)
 {
     Q_ASSERT(d->type != QVariant::Invalid);
     return static_cast<const T *>(static_cast<const void *>(d->ptr));
 }
 
 template <typename T>
-inline T *v_cast(QVariant::Private *d)
+inline T *v_cast(QVariantPrivate *d)
 {
     Q_ASSERT(d->type != QVariant::Invalid);
     return static_cast<T *>(static_cast<void *>(d->ptr));

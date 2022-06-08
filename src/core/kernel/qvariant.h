@@ -60,6 +60,8 @@ class QUrl;
 class QVariant;
 class QDebug;
 
+class QVariantPrivate;
+
 template <typename T>
 inline QVariant qVariantFromValue(const T &);
 
@@ -133,7 +135,7 @@ class Q_CORE_EXPORT QVariant
         LastType = 0xffffffff // need this so that gcc >= 3.4 allocates 32 bits for Type
     };
 
-    inline QVariant() {}
+    QVariant();
     ~QVariant();
     QVariant(Type type);
     QVariant(int typeOrUserType, const void *copy);
@@ -187,9 +189,6 @@ class Q_CORE_EXPORT QVariant
 #endif
 
     QVariant& operator=(const QVariant &other);
-    inline QVariant &operator=(QVariant &&other)
-    { qSwap(d, other.d); return *this; }
-    inline void swap(QVariant &other) { qSwap(d, other.d); }
 
     Type type() const;
     int userType() const;
@@ -198,7 +197,7 @@ class Q_CORE_EXPORT QVariant
     bool canConvert(Type t) const;
     bool convert(Type t);
 
-    inline bool isValid() const { return d.type != Invalid; }
+    bool isValid() const;
     bool isNull() const;
 
     void clear();
@@ -270,25 +269,13 @@ class Q_CORE_EXPORT QVariant
     { return canConvert(Type(qMetaTypeId<T>())); }
 
  public:
-    struct Private
-    {
-        inline Private(): type(Invalid), is_null(true), ptr(nullptr), serial(0) { }
-        inline Private(const Private &other)
-            : type(other.type), is_null(other.is_null), ptr(other.ptr), serial(other.serial)
-        { }
-        int type;
-        bool is_null;
-        void *ptr;
-        qlonglong serial;
-    };
- public:
-    typedef bool (*f_null)(const Private *);
+    typedef bool (*f_null)(const QVariantPrivate *);
 #ifndef QT_NO_DATASTREAM
-    typedef void (*f_load)(Private *, QDataStream &);
-    typedef void (*f_save)(const Private *, QDataStream &);
+    typedef void (*f_load)(QVariantPrivate *, QDataStream &);
+    typedef void (*f_save)(const QVariantPrivate *, QDataStream &);
 #endif
-    typedef bool (*f_compare)(const Private *, const Private *);
-    typedef bool (*f_convert)(const QVariant::Private *d, int t, void *, bool *);
+    typedef bool (*f_compare)(const QVariantPrivate *, const QVariantPrivate *);
+    typedef bool (*f_convert)(const QVariantPrivate *d, int t, void *, bool *);
     typedef void (*f_debugStream)(QDebug, const QVariant &);
     struct Handler {
         f_null isNull;
@@ -312,7 +299,7 @@ protected:
 #ifndef QT_NO_DEBUG_STREAM
     friend Q_CORE_EXPORT QDebug operator<<(QDebug, const QVariant &);
 #endif
-    Private d;
+    QVariantPrivate *d_ptr;
 
     static const Handler *handler;
 
@@ -335,7 +322,7 @@ typedef QHash<QString, QVariant> QVariantHash;
 
 inline bool qvariant_cast_helper(const QVariant &v, QVariant::Type tp, void *ptr)
 {
-    return QVariant::handler->convert(&v.d, tp, ptr, nullptr);
+    return QVariant::handler->convert(v.d_ptr, tp, ptr, nullptr);
 }
 
 template <typename T>
@@ -392,8 +379,6 @@ template<> inline QVariant qvariant_cast<QVariant>(const QVariant &v)
     return v;
 }
 #endif // QT_MOC
-
-Q_DECLARE_TYPEINFO(QVariant, Q_MOVABLE_TYPE);
 
 #ifndef QT_NO_DEBUG_STREAM
 Q_CORE_EXPORT QDebug operator<<(QDebug, const QVariant &);
