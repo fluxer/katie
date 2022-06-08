@@ -258,7 +258,7 @@ struct Q_AUTOTEST_EXPORT QScriptItem
 };
 Q_DECLARE_TYPEINFO(QScriptItem, Q_PRIMITIVE_TYPE);
 
-typedef QVarLengthArray<QScriptItem> QScriptItemArray;
+typedef QVarLengthArray<QScriptItem, 1> QScriptItemArray;
 
 struct Q_AUTOTEST_EXPORT QScriptLine
 {
