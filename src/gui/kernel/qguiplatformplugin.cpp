@@ -30,7 +30,6 @@
 #include "qplatformdefs.h"
 #include "qicon.h"
 #include "qstandardpaths.h"
-#include "qcore_unix_p.h"
 
 QT_BEGIN_NAMESPACE
 
@@ -133,13 +132,11 @@ QString QGuiPlatformPlugin::systemIconThemeName()
                 if (subpath == QLatin1String("hicolor")) {
                     continue;
                 }
-                const QStatInfo indexinfo(path + QLatin1Char('/') + subpath + QLatin1String("/index.theme"));
-                if (indexinfo.isFile()) {
-                    const QStatInfo cursorsinfo(path + QLatin1Char('/') + subpath + QLatin1String("/cursors"));
-                    if (!cursorsinfo.isDir()) {
-                        themename = subpath;
-                        return themename;
-                    }
+                QSettings indextheme(path + QLatin1Char('/') + subpath + QLatin1String("/index.theme"), QSettings::IniFormat);
+                const QStringList themedirectories = indextheme.value(QString::fromLatin1("Icon Theme/Directories")).toStringList();
+                if (!themedirectories.isEmpty()) {
+                    themename = subpath;
+                    return themename;
                 }
             }
         }
