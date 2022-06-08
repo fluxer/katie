@@ -955,10 +955,6 @@ static void streamDebug(QDebug dbg, const QVariant &v)
 
 const QVariant::Handler qt_kernel_variant_handler = {
     isNull,
-#ifndef QT_NO_DATASTREAM
-    0,
-    0,
-#endif
     compare,
     convert,
 #if !defined(QT_NO_DEBUG_STREAM) && !defined(Q_BROKEN_DEBUG_STREAM)
