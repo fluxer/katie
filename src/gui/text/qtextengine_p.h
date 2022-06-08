@@ -33,9 +33,9 @@
 // We mean it.
 //
 
-#include "QtCore/qvarlengtharray.h"
+#include "qvarlengtharray.h"
 #include "qfont_p.h"
-#include "QtGui/qpaintengine.h"
+#include "qpaintengine.h"
 #include "qtextdocument_p.h"
 #include "qharfbuzz_p.h"
 
@@ -73,6 +73,7 @@ struct glyph_metrics_t
     inline bool isValid() const {return x != 100000 && y != 100000;}
 };
 Q_DECLARE_TYPEINFO(glyph_metrics_t, Q_PRIMITIVE_TYPE);
+
 
 struct Q_AUTOTEST_EXPORT QScriptAnalysis
 {
@@ -257,7 +258,7 @@ struct Q_AUTOTEST_EXPORT QScriptItem
 };
 Q_DECLARE_TYPEINFO(QScriptItem, Q_PRIMITIVE_TYPE);
 
-typedef QVector<QScriptItem> QScriptItemArray;
+typedef QVarLengthArray<QScriptItem> QScriptItemArray;
 
 struct Q_AUTOTEST_EXPORT QScriptLine
 {
@@ -299,7 +300,7 @@ inline void QScriptLine::operator+=(const QScriptLine &other)
     length += other.length;
 }
 
-typedef QVector<QScriptLine> QScriptLineArray;
+typedef QVarLengthArray<QScriptLine> QScriptLineArray;
 
 class QFontPrivate;
 class QTextFormatCollection;
@@ -441,8 +442,8 @@ public:
 
     struct SpecialData {
         QList<QTextLayout::FormatRange> addFormats;
-        QVector<int> addFormatIndices;
-        QVector<int> resolvedFormatIndices;
+        QVarLengthArray<int> addFormatIndices;
+        QVarLengthArray<int> resolvedFormatIndices;
     };
     SpecialData *specialData;
 
