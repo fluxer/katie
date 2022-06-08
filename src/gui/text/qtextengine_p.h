@@ -72,7 +72,6 @@ struct glyph_metrics_t
 
     inline bool isValid() const {return x != 100000 && y != 100000;}
 };
-Q_DECLARE_TYPEINFO(glyph_metrics_t, Q_PRIMITIVE_TYPE);
 
 
 struct Q_AUTOTEST_EXPORT QScriptAnalysis
@@ -108,7 +107,6 @@ struct QGlyphJustification
     JustificationType type;
     uint space_18d6;
 };
-Q_DECLARE_TYPEINFO(QGlyphJustification, Q_PRIMITIVE_TYPE);
 
 #define QSPACEFORGLYPHS(__glyphcount) \
     (__glyphcount * (sizeof(HB_Glyph) + sizeof(HB_GlyphAttributes) \
@@ -256,7 +254,6 @@ struct Q_AUTOTEST_EXPORT QScriptItem
     int glyph_data_offset;
     QFixed height() const { return ascent + descent + 1; }
 };
-Q_DECLARE_TYPEINFO(QScriptItem, Q_PRIMITIVE_TYPE);
 
 typedef QVarLengthArray<QScriptItem, 1> QScriptItemArray;
 
@@ -288,7 +285,6 @@ struct Q_AUTOTEST_EXPORT QScriptLine
     void setDefaultHeight(QTextEngine *eng);
     void operator+=(const QScriptLine &other);
 };
-Q_DECLARE_TYPEINFO(QScriptLine, Q_PRIMITIVE_TYPE);
 
 
 inline void QScriptLine::operator+=(const QScriptLine &other)
