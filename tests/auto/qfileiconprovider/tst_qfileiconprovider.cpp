@@ -74,6 +74,12 @@ void tst_QFileIconProvider::iconType_data()
 void tst_QFileIconProvider::iconType()
 {
     QFETCH(QFileIconProvider::IconType, type);
+
+    const QString icontheme = QIcon::themeName();
+    if (icontheme.isEmpty() || icontheme == QLatin1String("hicolor")) {
+        QSKIP("This test requires system icon theme", SkipAll);
+    }
+
     SubQFileIconProvider provider;
     QVERIFY(!provider.icon(type).isNull());
 }
@@ -104,7 +110,6 @@ void tst_QFileIconProvider::iconInfo()
         QVERIFY(info.exists());
     }
     SubQFileIconProvider provider;
-    // we should always get an icon
     QVERIFY(!provider.icon(info).isNull());
 }
 
