@@ -436,8 +436,9 @@ static int qMetaTypeCustomType_unlocked(const char *typeName, int length)
 int QMetaType::registerType(const char *typeName, Destructor destructor,
                             Constructor constructor)
 {
-    if (!typeName || !destructor || !constructor)
+    if (Q_UNLIKELY(!typeName || !destructor || !constructor)) {
         return -1;
+    }
 
 #ifdef QT_NO_QOBJECT
     NS(QByteArray) normalizedTypeName = typeName;
@@ -473,8 +474,9 @@ int QMetaType::registerType(const char *typeName, Destructor destructor,
 */
 int QMetaType::registerTypedef(const char* typeName, int aliasId)
 {
-    if (!typeName)
+    if (Q_UNLIKELY(!typeName)) {
         return -1;
+    }
 
 #ifdef QT_NO_QOBJECT
     NS(QByteArray) normalizedTypeName = typeName;
