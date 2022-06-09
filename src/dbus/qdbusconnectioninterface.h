@@ -97,9 +97,8 @@ protected:
     void disconnectNotify(const char *);
 };
 
-QT_END_NAMESPACE
-
 Q_DECLARE_BUILTIN_METATYPE(QDBusConnectionInterface::RegisterServiceReply, UInt)
 
+QT_END_NAMESPACE
 
 #endif

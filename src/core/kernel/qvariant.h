@@ -377,11 +377,10 @@ Q_CORE_EXPORT QDebug operator<<(QDebug, const QVariant &);
 Q_CORE_EXPORT QDebug operator<<(QDebug, const QVariant::Type);
 #endif
 
-QT_END_NAMESPACE
-
 Q_DECLARE_BUILTIN_METATYPE(QVariantList, QVariantList)
 Q_DECLARE_BUILTIN_METATYPE(QVariantMap, QVariantMap)
 Q_DECLARE_BUILTIN_METATYPE(QVariantHash, QVariantHash)
 
+QT_END_NAMESPACE
 
 #endif // QVARIANT_H
