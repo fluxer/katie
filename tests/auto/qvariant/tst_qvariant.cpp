@@ -1547,7 +1547,7 @@ void tst_QVariant::operator_eq_eq_data()
     // Int
     QTest::newRow( "int1int1" ) << i1 << i1 << true;
     QTest::newRow( "int1int0" ) << i1 << i0 << false;
-    QTest::newRow( "nullint" ) << i0 << QVariant(QVariant::Int) << false;
+    QTest::newRow( "nullint" ) << i0 << QVariant(QVariant::Int) << true;
 
     // LongLong and ULongLong
     QVariant ll1( (qlonglong)1 );

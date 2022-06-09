@@ -1084,7 +1084,7 @@ void *QMetaType::construct(int type, const void *copy)
             return new NS(QJsonDocument)(*static_cast<const NS(QJsonDocument)*>(copy));
 #endif
         case QMetaType::Void:
-            return 0;
+            return nullptr;
         default:
             ;
         }
@@ -1093,95 +1093,95 @@ void *QMetaType::construct(int type, const void *copy)
         case QMetaType::VoidStar:
         case QMetaType::QObjectStar:
         case QMetaType::QWidgetStar:
-            return new void *;
+            return new void *(nullptr);
         case QMetaType::Long:
-            return new long;
+            return new long(0);
         case QMetaType::Int:
-            return new int;
+            return new int(0);
         case QMetaType::Short:
-            return new short;
+            return new short(0);
         case QMetaType::Char:
-            return new char;
+            return new char(0);
         case QMetaType::ULong:
-            return new ulong;
+            return new ulong(0);
         case QMetaType::UInt:
-            return new uint;
+            return new uint(0);
         case QMetaType::LongLong:
-            return new qlonglong;
+            return new qlonglong(0);
         case QMetaType::ULongLong:
-            return new qulonglong;
+            return new qulonglong(0);
         case QMetaType::UShort:
-            return new ushort;
+            return new ushort(0);
         case QMetaType::UChar:
-            return new uchar;
+            return new uchar(0);
         case QMetaType::Bool:
-            return new bool;
+            return new bool(false);
         case QMetaType::Float:
-            return new float;
+            return new float(0.0);
         case QMetaType::Double:
-            return new double;
+            return new double(0.0);
         case QMetaType::QChar:
-            return new NS(QChar);
+            return new NS(QChar)();
 #ifndef QT_BOOTSTRAPPED
         case QMetaType::QVariantMap:
-            return new NS(QVariantMap);
+            return new NS(QVariantMap)();
         case QMetaType::QVariantHash:
-            return new NS(QVariantHash);
+            return new NS(QVariantHash)();
         case QMetaType::QVariantList:
-            return new NS(QVariantList);
+            return new NS(QVariantList)();
         case QMetaType::QVariant:
-            return new NS(QVariant);
+            return new NS(QVariant)();
 #endif
         case QMetaType::QByteArray:
-            return new NS(QByteArray);
+            return new NS(QByteArray)();
         case QMetaType::QString:
-            return new NS(QString);
+            return new NS(QString)();
         case QMetaType::QStringList:
-            return new NS(QStringList);
+            return new NS(QStringList)();
 #ifndef QT_BOOTSTRAPPED
         case QMetaType::QBitArray:
-            return new NS(QBitArray);
+            return new NS(QBitArray)();
 #endif
         case QMetaType::QDate:
-            return new NS(QDate);
+            return new NS(QDate)();
         case QMetaType::QTime:
-            return new NS(QTime);
+            return new NS(QTime)();
         case QMetaType::QDateTime:
-            return new NS(QDateTime);
+            return new NS(QDateTime)();
 #ifndef QT_BOOTSTRAPPED
         case QMetaType::QUrl:
-            return new NS(QUrl);
+            return new NS(QUrl)();
 #endif
         case QMetaType::QLocale:
-            return new NS(QLocale);
+            return new NS(QLocale)();
 #ifndef QT_BOOTSTRAPPED
         case QMetaType::QRect:
-            return new NS(QRect);
+            return new NS(QRect)();
         case QMetaType::QRectF:
-            return new NS(QRectF);
+            return new NS(QRectF)();
         case QMetaType::QSize:
-            return new NS(QSize);
+            return new NS(QSize)();
         case QMetaType::QSizeF:
-            return new NS(QSizeF);
+            return new NS(QSizeF)();
         case QMetaType::QLine:
-            return new NS(QLine);
+            return new NS(QLine)();
         case QMetaType::QLineF:
-            return new NS(QLineF);
+            return new NS(QLineF)();
         case QMetaType::QPoint:
-            return new NS(QPoint);
+            return new NS(QPoint)();
         case QMetaType::QPointF:
-            return new NS(QPointF);
+            return new NS(QPointF)();
 #endif
 #ifndef QT_NO_REGEXP
         case QMetaType::QRegExp:
-            return new NS(QRegExp);
+            return new NS(QRegExp)();
 #endif
 #ifndef QT_BOOTSTRAPPED
         case QMetaType::QEasingCurve:
-            return new NS(QEasingCurve);
+            return new NS(QEasingCurve)();
 #endif
         case QMetaType::Void:
-            return 0;
+            return nullptr;
         default:
             ;
         }
@@ -1190,15 +1190,15 @@ void *QMetaType::construct(int type, const void *copy)
     Constructor constr = 0;
     if (type >= FirstGuiType && type <= LastGuiType) {
         if (!qMetaTypeGuiHelper)
-            return 0;
+            return nullptr;
         constr = qMetaTypeGuiHelper[type - FirstGuiType].constr;
     } else {
         QMutexLocker locker(customTypesLock());
         const QStdVector<QCustomTypeInfo> * const ct = customTypes();
         if (type < User || !ct || ct->count() <= type - User)
-            return 0;
+            return nullptr;
         if (ct->at(type - User).typeName.isEmpty())
-            return 0;
+            return nullptr;
         constr = ct->at(type - User).constr;
     }
 
