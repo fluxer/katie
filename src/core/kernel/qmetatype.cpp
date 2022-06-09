@@ -518,8 +518,9 @@ int QMetaType::registerTypedef(const char* typeName, int aliasId)
  */
 void QMetaType::unregisterType(const char *typeName)
 {
-    if (!typeName)
+    if (Q_UNLIKELY(!typeName)) {
         return;
+    }
 
 #ifdef QT_NO_QOBJECT
     NS(QByteArray) normalizedTypeName = typeName;
