@@ -427,8 +427,8 @@ bool QLibraryPrivate::isPlugin()
                      .arg(fileName);
 
 #ifndef QT_NO_SETTINGS
-    QSettings *settings = QCoreApplicationPrivate::staticConf();
-    QStringList reg = settings->value(regkey).toStringList();
+    QSettings settings(QString::fromLatin1("Katie"), QSettings::NativeFormat);
+    QStringList reg = settings.value(regkey).toStringList();
     if (reg.count() == 2 && lastModified == reg.at(1)) {
         qt_version = reg.at(0).toUInt();
         success = qt_version != 0;
@@ -440,7 +440,7 @@ bool QLibraryPrivate::isPlugin()
 #ifndef QT_NO_SETTINGS
         QStringList queried;
         queried << QString::number(qt_version) << lastModified;
-        settings->setValue(regkey, queried);
+        settings.setValue(regkey, queried);
     }
 #endif
 

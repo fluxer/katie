@@ -35,7 +35,6 @@
 
 #include "QtCore/qcoreapplication.h"
 #include "QtCore/qtranslator.h"
-#include "QtCore/qsettings.h"
 #include "qobject_p.h"
 
 #include <bitset>
@@ -85,9 +84,6 @@ public:
 
     static std::bitset<Qt::AA_AttributeCount> attribs;
     static QCoreApplication::Type app_type;
-#ifndef QT_NO_SETTINGS
-    static QSettings *staticConf();
-#endif
 };
 
 QT_END_NAMESPACE

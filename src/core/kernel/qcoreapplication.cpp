@@ -105,19 +105,6 @@ bool QCoreApplicationPrivate::is_app_running = false;
  // app closing down if true
 bool QCoreApplicationPrivate::is_app_closing = false;
 
-/*
-  Create an instance of Katie.conf. This ensures that the settings will not
-  be thrown out of QSetting's cache for unused settings.
-  */
-#ifndef QT_NO_SETTINGS
-Q_GLOBAL_STATIC_WITH_ARGS(QSettings, staticKatieConf, (QLatin1String("Katie"), QSettings::NativeFormat))
-
-QSettings *QCoreApplicationPrivate::staticConf()
-{
-    return staticKatieConf();
-}
-#endif
-
 QCoreApplication *QCoreApplication::self = 0;
 std::bitset<Qt::AA_AttributeCount> QCoreApplicationPrivate::attribs;
 QCoreApplication::Type QCoreApplicationPrivate::app_type = QCoreApplication::Tty;

@@ -86,7 +86,7 @@ void QFactoryLoader::updateDir(const QString &pluginDir)
     if (!pathdir.exists())
         return;
 
-    QSettings *settings = QCoreApplicationPrivate::staticConf();
+    QSettings settings(QString::fromLatin1("Katie"), QSettings::NativeFormat);
     foreach (const QString &plugin, pathdir.entryList(QDir::Files)) {
         QString fileName = QDir::cleanPath(path + QLatin1Char('/') + plugin);
 
@@ -107,7 +107,7 @@ void QFactoryLoader::updateDir(const QString &pluginDir)
                          .arg(QString::fromLatin1(d->iid.constData()))
                          .arg(fileName);
         QStringList keys;
-        QStringList reg = settings->value(regkey).toStringList();
+        QStringList reg = settings.value(regkey).toStringList();
         if (reg.count() && library->lastModified == reg[0]) {
             keys = reg;
             keys.removeFirst();
@@ -134,7 +134,7 @@ void QFactoryLoader::updateDir(const QString &pluginDir)
             reg.clear();
             reg << library->lastModified;
             reg += keys;
-            settings->setValue(regkey, reg);
+            settings.setValue(regkey, reg);
         }
         if (qt_debug_component()) {
             qDebug() << "keys" << keys;
