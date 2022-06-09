@@ -220,7 +220,6 @@ void tst_QTimeLine::value()
     QVERIFY(timeLine.currentValue() == 0.0);
 
     // Default speed
-    qRegisterMetaType<qreal>("qreal");
     QSignalSpy spy(&timeLine, SIGNAL(valueChanged(qreal)));
     timeLine.start();
     QTest::qWait(timeLine.duration()/3);
@@ -328,9 +327,9 @@ void tst_QTimeLine::loopCount()
 
     QCOMPARE(finishedSpy.count(), 2);
     QCOMPARE(frameChangedSpy.count(), 22);
-	for (int i = 11; i < 22; ++i) {
+    for (int i = 11; i < 22; ++i) {
         QCOMPARE(frameChangedSpy.at(i).at(0).toInt(), 2 - (i+2) % 3);
-	}
+    }
 }
 
 void tst_QTimeLine::interpolation()
