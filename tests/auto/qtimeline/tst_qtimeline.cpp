@@ -128,7 +128,6 @@ void tst_QTimeLine::currentTime()
 {
     QTimeLine timeLine(2000);
     timeLine.setUpdateInterval((timeLine.duration()/2) / 33);
-    qRegisterMetaType<qreal>("qreal");
     QSignalSpy spy(&timeLine, SIGNAL(valueChanged(qreal)));
     timeLine.setFrameRange(10, 20);
     QCOMPARE(timeLine.currentTime(), 0);
