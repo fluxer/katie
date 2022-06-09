@@ -156,7 +156,7 @@ void QTimeLinePrivate::setCurrentTime(int msecs)
     QProgressBar). When you proceed to calling start(), QTimeLine will enter
     Running state, and start emitting frameChanged() at regular intervals,
     causing your widget's connected property's value to grow from the lower
-    end to the upper and of your frame range, at a steady rate. You can
+    end to the upper end of your frame range, at a steady rate. You can
     specify the update interval by calling setUpdateInterval(). When done,
     QTimeLine enters NotRunning state, and emits finished().
 
