@@ -342,7 +342,7 @@ QVector<T>::QVector(int asize)
         T* b = p->array;
         T* i = p->array + d->size;
         while (i != b)
-            new (--i) T;
+            new (--i) T();
     } else {
         memset(p->array, 0, asize * sizeof(T));
     }
@@ -506,7 +506,7 @@ typename QVector<T>::iterator QVector<T>::insert(iterator before, size_type n, c
             T *b = p->array + d->size;
             T *i = p->array + d->size + n;
             while (i != b)
-                new (--i) T;
+                new (--i) T();
             i = p->array + d->size;
             T *j = i + n;
             b = p->array + offset;
