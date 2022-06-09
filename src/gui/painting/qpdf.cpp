@@ -922,13 +922,13 @@ QPdfBaseEngine::QPdfBaseEngine(QPdfBaseEnginePrivate &dd, PaintEngineFeatures f)
     } else
 #endif
     {
-        d->printerName = QString::fromLocal8Bit(qgetenv("PRINTER"));
+        d->printerName = qGetEnv("PRINTER");
         if (d->printerName.isEmpty())
-            d->printerName = QString::fromLocal8Bit(qgetenv("LPDEST"));
+            d->printerName = qGetEnv("LPDEST");
         if (d->printerName.isEmpty())
-            d->printerName = QString::fromLocal8Bit(qgetenv("NPRINTER"));
+            d->printerName = qGetEnv("NPRINTER");
         if (d->printerName.isEmpty())
-            d->printerName = QString::fromLocal8Bit(qgetenv("NGPRINTER"));
+            d->printerName = qGetEnv("NGPRINTER");
     }
 }
 

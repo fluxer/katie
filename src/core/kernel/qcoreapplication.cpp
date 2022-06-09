@@ -44,6 +44,7 @@
 #include "qfactoryloader_p.h"
 #include "qlocale_p.h"
 #include "qeventdispatcher_unix_p.h"
+#include "qcorecommon_p.h"
 
 #include <stdlib.h>
 
@@ -1638,14 +1639,10 @@ QStringList QCoreApplication::libraryPaths()
         }
     }
 
-    const QByteArray libPathEnv = qgetenv("LD_LIBRARY_PATH");
-    if (!libPathEnv.isEmpty()) {
-        const QStringList paths = QString::fromLocal8Bit(libPathEnv.constData()).split(QLatin1Char(':'), QString::SkipEmptyParts);
-        foreach (const QString &it, paths) {
-            QString canonicalPath = QDir(it).canonicalPath();
-            if (!coreappdata()->app_pluginpaths.contains(canonicalPath)) {
-                coreappdata()->app_pluginpaths.append(canonicalPath);
-            }
+    foreach (const QString &it, qGetEnvList("LD_LIBRARY_PATH")) {
+        QString canonicalPath = QDir(it).canonicalPath();
+        if (!coreappdata()->app_pluginpaths.contains(canonicalPath)) {
+            coreappdata()->app_pluginpaths.append(canonicalPath);
         }
     }
 
@@ -1732,14 +1729,10 @@ QStringList QCoreApplication::pluginPaths()
         }
     }
 
-    const QByteArray libPathEnv = qgetenv("QT_PLUGIN_PATH");
-    if (!libPathEnv.isEmpty()) {
-        const QStringList paths = QString::fromLocal8Bit(libPathEnv.constData()).split(QLatin1Char(':'), QString::SkipEmptyParts);
-        foreach (const QString &it, paths) {
-            QString canonicalPath = QDir(it).canonicalPath();
-            if (!coreappdata()->app_pluginpaths.contains(canonicalPath)) {
-                coreappdata()->app_pluginpaths.append(canonicalPath);
-            }
+    foreach (const QString &it, qGetEnvList("QT_PLUGIN_PATH")) {
+        QString canonicalPath = QDir(it).canonicalPath();
+        if (!coreappdata()->app_pluginpaths.contains(canonicalPath)) {
+            coreappdata()->app_pluginpaths.append(canonicalPath);
         }
     }
 

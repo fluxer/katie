@@ -32,6 +32,7 @@
 #include "qdeclarativetypenamecache_p.h"
 #include "qdeclarativeengine_p.h"
 #include "qcore_unix_p.h"
+#include "qcorecommon_p.h"
 
 QT_BEGIN_NAMESPACE
 
@@ -711,11 +712,8 @@ QDeclarativeImportDatabase::QDeclarativeImportDatabase(QDeclarativeEngine *e)
 
 
     // env import paths
-    QByteArray envImportPath = qgetenv("QML_IMPORT_PATH");
-    if (!envImportPath.isEmpty()) {
-        QStringList paths = QString::fromLatin1(envImportPath).split(QLatin1Char(':'), QString::SkipEmptyParts);
-        for (int ii = paths.count() - 1; ii >= 0; --ii)
-            addImportPath(paths.at(ii));
+    foreach (const QString &it, qGetEnvList("QML_IMPORT_PATH")) {
+        addImportPath(it);
     }
 
     addImportPath(QCoreApplication::applicationDirPath());

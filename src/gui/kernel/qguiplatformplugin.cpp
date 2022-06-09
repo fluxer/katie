@@ -30,6 +30,7 @@
 #include "qplatformdefs.h"
 #include "qicon.h"
 #include "qstandardpaths.h"
+#include "qcorecommon_p.h"
 
 QT_BEGIN_NAMESPACE
 
@@ -46,9 +47,9 @@ QGuiPlatformPlugin *qt_guiPlatformPlugin()
     {
 #ifndef QT_NO_LIBRARY
 
-        static QString key = QString::fromLocal8Bit(qgetenv("QT_PLATFORM_PLUGIN"));
+        static QString key = qGetEnv("QT_PLATFORM_PLUGIN");
         if (key.isEmpty()) {
-            key = QString::fromLocal8Bit(qgetenv("DESKTOP_SESSION"));
+            key = qGetEnv("DESKTOP_SESSION");
         }
 
         if (!key.isEmpty()) {
