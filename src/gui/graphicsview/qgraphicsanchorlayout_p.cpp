@@ -2023,14 +2023,14 @@ void QGraphicsAnchorLayoutPrivate::calculateGraphs()
 // for trunk...
 QList<AnchorData *> getVariables(const QList<QSimplexConstraint *> &constraints)
 {
-    QSet<AnchorData *> variableSet;
+    QList<AnchorData *> variableList;
     for (int i = 0; i < constraints.count(); ++i) {
         const QSimplexConstraint *c = constraints.at(i);
         foreach (QSimplexVariable *var, c->variables.keys()) {
-            variableSet += static_cast<AnchorData *>(var);
+            variableList.append(static_cast<AnchorData *>(var));
         }
     }
-    return variableSet.toList();
+    return variableList;
 }
 
 /*!
@@ -2491,7 +2491,7 @@ QGraphicsAnchorLayoutPrivate::getGraphParts(Orientation orientation)
     }
 
     QList<QSimplexConstraint *> trunkConstraints;
-    QSet<QSimplexVariable *> trunkVariables;
+    QList<QSimplexVariable *> trunkVariables;
 
     trunkVariables += edgeL1;
     if (edgeL2)
@@ -2519,7 +2519,7 @@ QGraphicsAnchorLayoutPrivate::getGraphParts(Orientation orientation)
             // remaining constraints.
             if (match) {
                 trunkConstraints += c;
-                trunkVariables += QSet<QSimplexVariable *>::fromList(c->variables.keys());
+                trunkVariables += c->variables.keys();
                 it = remainingConstraints.erase(it);
                 dirty = true;
             } else {

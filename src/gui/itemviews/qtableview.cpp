@@ -146,7 +146,7 @@ void QSpanCollection::clear()
  */
 QList<QSpanCollection::Span *> QSpanCollection::spansInRect(int x, int y, int w, int h) const
 {
-    QSet<Span *> list;
+    QList<Span *> list;
     Index::const_iterator it_y = index.lowerBound(-y);
     if(it_y == index.end())
         --it_y;
@@ -166,7 +166,7 @@ QList<QSpanCollection::Span *> QSpanCollection::spansInRect(int x, int y, int w,
             break;
         --it_y;
     }
-    return list.toList();
+    return list;
 }
 
 #undef DEBUG_SPAN_UPDATE
@@ -746,12 +746,13 @@ void QTableViewPrivate::drawAndClipSpans(const QRegion &area, QPainter *painter,
         visibleSpans = spans.spansInRect(logicalColumn(firstVisualColumn), logicalRow(firstVisualRow),
                                          lastVisualColumn - firstVisualColumn + 1, lastVisualRow - firstVisualRow + 1);
     } else {
-        QSet<QSpanCollection::Span *> set;
-        for(int x = firstVisualColumn; x <= lastVisualColumn; x++)
+        QList<QSpanCollection::Span *> list;
+        for(int x = firstVisualColumn; x <= lastVisualColumn; x++) {
             for(int y = firstVisualRow; y <= lastVisualRow; y++)
-                set.insert(spans.spanAt(x,y));
-        set.remove(0);
-        visibleSpans = set.toList();
+                list.append(spans.spanAt(x,y));
+        }
+        list.removeFirst();
+        visibleSpans = list;
     }
 
     foreach (QSpanCollection::Span *span, visibleSpans) {
