@@ -85,24 +85,27 @@ struct Q_AUTOTEST_EXPORT QScriptAnalysis
         TabOrObject = Tab,
         Object = 4
     };
+
+    inline QScriptAnalysis()
+        : script(QUnicodeTables::Common),  flags(None) {}
+
     QUnicodeTables::Script script;
     Flags flags;
     inline bool operator == (const QScriptAnalysis &other) const {
         return script == other.script && flags == other.flags;
     }
 };
-Q_DECLARE_TYPEINFO(QScriptAnalysis, Q_PRIMITIVE_TYPE);
 
 struct QGlyphJustification
 {
-    inline QGlyphJustification()
-        : type(JustifyNone), space_18d6(0)
-    {}
-
     enum JustificationType {
         JustifyNone,
         JustifySpace
     };
+
+    inline QGlyphJustification()
+        : type(JustifyNone), space_18d6(0)
+    {}
 
     JustificationType type;
     uint space_18d6;
