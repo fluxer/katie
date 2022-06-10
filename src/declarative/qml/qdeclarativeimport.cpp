@@ -178,8 +178,8 @@ void QDeclarativeImports::populateCache(QDeclarativeTypeNameCache *cache, QDecla
 {
     const QDeclarativeImportedNamespace &set = d->unqualifiedset;
 
-    for (QHash<QString,QDeclarativeImportedNamespace* >::ConstIterator iter = d->set.begin();
-         iter != d->set.end(); ++iter) {
+    for (QHash<QString,QDeclarativeImportedNamespace* >::ConstIterator iter = d->set.constBegin();
+         iter != d->set.constEnd(); ++iter) {
 
         QDeclarativeTypeNameCache::Data *d = cache->data(iter.key());
         if (d) {
@@ -554,12 +554,12 @@ bool QDeclarativeImportsPrivate::add(const QDeclarativeDirComponents &qmldircomp
     }
 
     if (!versionFound && vmaj > -1 && vmin > -1 && !qmldircomponents.isEmpty()) {
-        QList<QDeclarativeDirParser::Component>::ConstIterator it = qmldircomponents.begin();
+        QList<QDeclarativeDirParser::Component>::ConstIterator it = qmldircomponents.constBegin();
         int lowest_maj = INT_MAX;
         int lowest_min = INT_MAX;
         int highest_maj = INT_MIN;
         int highest_min = INT_MIN;
-        for (; it != qmldircomponents.end(); ++it) {
+        for (; it != qmldircomponents.constEnd(); ++it) {
             if (it->majorVersion > highest_maj || (it->majorVersion == highest_maj && it->minorVersion > highest_min)) {
                 highest_maj = it->majorVersion;
                 highest_min = it->minorVersion;

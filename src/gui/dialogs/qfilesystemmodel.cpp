@@ -1470,7 +1470,7 @@ void QFileSystemModelPrivate::_q_directoryChanged(const QString &directory, cons
     QHash<QString, QFileSystemNode*>::const_iterator i = parentNode->children.constBegin();
     while (i != parentNode->children.constEnd()) {
         QStringList::const_iterator iter = qBinaryFind(newFiles.constBegin(), newFiles.constEnd(), i.value()->fileName);
-        if (iter == newFiles.end()) {
+        if (iter == newFiles.constEnd()) {
             toRemove.append(i.value()->fileName);
         }
         ++i;

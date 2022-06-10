@@ -612,7 +612,7 @@ void QDeclarativeTimeLine::complete()
 */
 void QDeclarativeTimeLine::clear()
 {
-    for (QDeclarativeTimeLinePrivate::Ops::ConstIterator iter = d->ops.begin(); iter != d->ops.end(); ++iter)
+    for (QDeclarativeTimeLinePrivate::Ops::ConstIterator iter = d->ops.constBegin(); iter != d->ops.constEnd(); ++iter)
         iter.key()->_t = 0;
     d->ops.clear();
     d->length = 0;

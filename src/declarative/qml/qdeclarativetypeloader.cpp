@@ -631,8 +631,8 @@ QString QDeclarativeTypeLoader::absoluteFilePath(const QString &path)
     QString dirPath = path.left(lastSlash);
 
     StringSet *fileSet = 0;
-    QHash<QString,StringSet*>::const_iterator it = m_importDirCache.find(dirPath);
-    if (it == m_importDirCache.end()) {
+    QHash<QString,StringSet*>::const_iterator it = m_importDirCache.constFind(dirPath);
+    if (it == m_importDirCache.constEnd()) {
         StringSet *files = qmlFilesInDirectory(path.left(lastSlash));
         m_importDirCache.insert(dirPath, files);
         fileSet = files;
@@ -655,8 +655,8 @@ Return a QDeclarativeDirParser for absoluteFilePath.  The QDeclarativeDirParser 
 const QDeclarativeDirParser *QDeclarativeTypeLoader::qmlDirParser(const QString &absoluteFilePath)
 {
     QDeclarativeDirParser *qmldirParser;
-    QHash<QString,QDeclarativeDirParser*>::const_iterator it = m_importQmlDirCache.find(absoluteFilePath);
-    if (it == m_importQmlDirCache.end()) {
+    QHash<QString,QDeclarativeDirParser*>::const_iterator it = m_importQmlDirCache.constFind(absoluteFilePath);
+    if (it == m_importQmlDirCache.constEnd()) {
         qmldirParser = new QDeclarativeDirParser;
         qmldirParser->setFileSource(absoluteFilePath);
         qmldirParser->setUrl(QUrl::fromLocalFile(absoluteFilePath));

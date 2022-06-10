@@ -773,7 +773,7 @@ void QDeclarativeGridViewPrivate::updateUnrequestedIndexes()
 void QDeclarativeGridViewPrivate::updateUnrequestedPositions()
 {
     QHash<QDeclarativeItem*,int>::const_iterator it;
-    for (it = unrequestedItems.begin(); it != unrequestedItems.end(); ++it) {
+    for (it = unrequestedItems.constBegin(); it != unrequestedItems.constEnd(); ++it) {
         QDeclarativeItem *item = it.key();
         if (flow == QDeclarativeGridView::LeftToRight) {
             item->setPos(QPointF(colPosAt(*it), rowPosAt(*it)));

@@ -893,7 +893,7 @@ void QDeclarativeListViewPrivate::updateUnrequestedPositions()
     if (unrequestedItems.count()) {
         qreal pos = position();
         QHash<QDeclarativeItem*,int>::const_iterator it;
-        for (it = unrequestedItems.begin(); it != unrequestedItems.end(); ++it) {
+        for (it = unrequestedItems.constBegin(); it != unrequestedItems.constEnd(); ++it) {
             QDeclarativeItem *item = it.key();
             if (orient == QDeclarativeListView::Vertical) {
                 if (item->y() + item->height() > pos && item->y() < pos + q->height())

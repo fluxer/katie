@@ -201,9 +201,9 @@ QScriptValue QDeclarativeWorkerScriptEnginePrivate::sendMessage(QScriptContext *
 
 QScriptValue QDeclarativeWorkerScriptEnginePrivate::getWorker(int id)
 {
-    QHash<int, WorkerScript *>::ConstIterator iter = workers.find(id);
+    QHash<int, WorkerScript *>::ConstIterator iter = workers.constFind(id);
 
-    if (iter == workers.end())
+    if (iter == workers.constEnd())
         return workerEngine->nullValue();
 
     WorkerScript *script = *iter;
@@ -407,7 +407,7 @@ QScriptValue QDeclarativeWorkerScriptEnginePrivate::variantToScriptValue(const Q
 
         QScriptValue rv = engine->newObject();
 
-        for (QVariantHash::ConstIterator iter = hash.begin(); iter != hash.end(); ++iter)
+        for (QVariantHash::ConstIterator iter = hash.constBegin(); iter != hash.constEnd(); ++iter)
             rv.setProperty(iter.key(), variantToScriptValue(iter.value(), engine));
 
         return rv;

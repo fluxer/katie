@@ -2222,7 +2222,7 @@ int QDeclarativeBindingCompilerPrivate::registerString(const QString &string)
 {
     Q_ASSERT(!string.isEmpty());
 
-    QHash<QString, QPair<int, int> >::ConstIterator iter = registeredStrings.find(string);
+    QHash<QString, QPair<int, int> >::Iterator iter = registeredStrings.find(string);
 
     if (iter == registeredStrings.end()) {
         quint32 len = string.length();
@@ -2259,7 +2259,7 @@ bool QDeclarativeBindingCompilerPrivate::subscription(const QStringList &sub, Re
 int QDeclarativeBindingCompilerPrivate::subscriptionIndex(const QStringList &sub)
 {
     QString str = sub.join(QLatin1String("."));
-    QHash<QString, int>::ConstIterator iter = subscriptionIds.find(str);
+    QHash<QString, int>::Iterator iter = subscriptionIds.find(str);
     if (iter == subscriptionIds.end()) 
         iter = subscriptionIds.insert(str, subscriptionIds.count());
     usedSubscriptionIds.insert(*iter);
