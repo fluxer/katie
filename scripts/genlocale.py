@@ -109,22 +109,6 @@ def tolistformat(fromformat):
     result = result.replace('{2}', '%3')
     return result
 
-def tocurrencyformat(fromformat, frommap):
-    result = []
-    # currency format can optionally have negative form separated by ';'
-    for fmt in fromformat.split(';'):
-        fmt = fmt.replace('0', '#')
-        fmt = fmt.replace(',', '#')
-        fmt = fmt.replace('.', '#')
-        for r in range(10):
-            fmt = fmt.replace('##', "#")
-        fmt = fmt.replace('#', "%1")
-        fmt = fmt.replace(u'\xa4', "%2")
-        fmt = fmt.replace('-', frommap['minus'])
-        fmt = fmt.replace('+', frommap['plus'])
-        result.append(fmt)
-    return result
-
 def todatetimeformat(fromformat):
     # valid are y, m, M, d, h, H, s, a, A, z and t
     unsupportedtags = [
@@ -366,13 +350,12 @@ def printlocaledata(frommap, key):
     print('''    {
         %s, %s, %s,
         %s, %s, %s,
-        %s, %s, %s, %s, %s, %s, %s, %s, %s,
+        %s, %s, %s, %s, %s, %s, %s, %s,
         %s, %s, %s, %s,
         %s, %s,
         %s, %s, %s, %s,
         %s, %s, %s, %s,
         %s, %s,
-        %s, %s, %s, %s, %s,
         %s,
         %s,
         %s,
@@ -399,7 +382,6 @@ def printlocaledata(frommap, key):
             touint(value['minus']),
             touint(value['plus']),
             touint(value['exponential']),
-            value['currency_digits'],
             touint(value['zero']),
             touint(value['quotation_start']),
             touint(value['quotation_end']),
@@ -417,11 +399,6 @@ def printlocaledata(frommap, key):
             tochar(value['long_time_format']),
             tochar(value['am']),
             tochar(value['pm']),
-            tochar(value['currency_symbol']),
-            tochar(value['currency_format']),
-            tochar(value['currency_negative_format']),
-            tochar(value['currency_iso_code']),
-            tochar(value['currency_display_name']),
             tochararray(value['standalone_short_month_names']),
             tochararray(value['standalone_long_month_names']),
             tochararray(value['standalone_narrow_month_names']),
@@ -469,8 +446,6 @@ localescriptmap = {}
 localefirstdaymap = {}
 localeweekendstartmap = {}
 localeweekendendmap = {}
-localeiso4217map = {}
-localecurrencymap = {}
 localenumberingmap = {}
 # regular expressions
 localeregex = re.compile('([^_|\-|\.|@]+)+')
@@ -544,20 +519,6 @@ for weekend in root.findall('./weekData/weekendEnd'):
     weekendday = weekend.get('day')
     weekendterritories = weekend.get('territories')
     localeweekendendmap[todayenum(weekendday)] = stripxmltext(weekendterritories).split(' ')
-
-# locale to iso4217 parsing
-for region in root.findall('./currencyData/region'):
-    regioniso3166 = region.get('iso3166')
-    # data includes past currencies too, pick the current currency which is first
-    currency = region.find('currency')
-    currencyiso4217 = currency.get('iso4217')
-    localeiso4217map[regioniso3166] = currencyiso4217
-
-# locale to currency parsing
-for info in root.findall('./currencyData/fractions/info'):
-    infoiso4217 = info.get('iso4217')
-    infodigits = info.get('digits')
-    localecurrencymap[infoiso4217] = infodigits
 
 # locale to numbering system parsing
 tree = ET.parse('common/supplemental/numberingSystems.xml')
@@ -649,7 +610,6 @@ localedefaults = {
     'minus': '-',
     'plus': '+',
     'exponential': 'e', # default in CLDR is E
-    'currency_digits': '2',
     'quotation_start': '"', # default in CLDR is “
     'quotation_end': '"', # default in CLDR is ”
     'alternate_quotation_start': "'", # default in CLDR is ‘
@@ -667,11 +627,6 @@ localedefaults = {
     'long_time_format': 'HH:mm:ss z',
     'am': 'AM',
     'pm': 'PM',
-    'currency_symbol': '',
-    'currency_format': '%1%2',
-    'currency_negative_format': '',
-    'currency_iso_code': '',
-    'currency_display_name': '',
     # arrays
     'standalone_short_month_names': ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'],
     'standalone_long_month_names': ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'],
@@ -717,7 +672,6 @@ def readlocale(fromxml, tomap, isparent):
     langtype = language.get('type')
     country = root.find('./identity/territory')
     countrytype = None
-    currencytype = None
     scripttype = None
     numbertype = 'latn' # CLDR default
 
@@ -757,10 +711,6 @@ def readlocale(fromxml, tomap, isparent):
             if 'AnyTerritory' in scriptterritories \
                 or countrytype in scriptterritories:
                 scripttype = localescriptmap[langtype]['script']
-
-    # store for later
-    if countrytype in localeiso4217map.keys():
-        currencytype = localeiso4217map[countrytype]
 
     defaultnumbersystem = root.find('./numbers/defaultNumberingSystem')
     if defaultnumbersystem is not None:
@@ -829,10 +779,6 @@ def readlocale(fromxml, tomap, isparent):
 
         # locale numeric system was found, break
         break
-
-    # digits/rounding data is specific so check if it is mapped
-    if currencytype and currencytype in localecurrencymap.keys():
-        tomap[locale]['currency_digits'] = localecurrencymap[currencytype]
 
     quotationstart = root.find('./delimiters/quotationStart')
     if quotationstart is not None:
@@ -968,44 +914,6 @@ def readlocale(fromxml, tomap, isparent):
 
         # gregorian calendar was found, break
         break
-
-
-    if currencytype:
-        for elemcurrency in root.findall('./numbers/currencies/currency'):
-            elemcurrencytype = elemcurrency.get('type')
-            if elemcurrencytype == currencytype:
-                symbol = elemcurrency.find('./symbol')
-                if symbol is not None:
-                    tomap[locale]['currency_symbol'] = symbol.text
-
-                for displayname in elemcurrency.findall('./displayName'):
-                    displaynamecount = displayname.get('count')
-                    if not displaynamecount:
-                        # only interested in default display name
-                        tomap[locale]['currency_display_name'] = displayname.text
-                        break
-
-                # currency type was found, break
-                break
-
-        for currencyformat in root.findall('./numbers/currencyFormats'):
-            currencyformatnumbersystem = currencyformat.get('numberSystem')
-            if not currencyformatnumbersystem  == numbertype:
-                # should be the locale numeric system
-                continue
-            nativecurrencyformat = currencyformat.find('currencyFormatLength/currencyFormat/pattern')
-            if nativecurrencyformat is not None:
-                formats = tocurrencyformat(nativecurrencyformat.text, tomap[locale])
-                tomap[locale]['currency_format'] = formats[0]
-
-                # negative format is optional
-                if len(formats) > 1:
-                    tomap[locale]['currency_negative_format'] = formats[1]
-
-            # currency format was found, break
-            break
-
-        tomap[locale]['currency_iso_code'] = currencytype
 
     # month/day names are set during calendar parsing
 

@@ -1276,12 +1276,6 @@ public:
     };
     Q_DECLARE_FLAGS(NumberOptions, NumberOption)
 
-    enum CurrencySymbolFormat {
-        CurrencyIsoCode,
-        CurrencySymbol,
-        CurrencyDisplayName
-    };
-
     QLocale();
     QLocale(const QString &name);
     QLocale(Language language, Country country = AnyCountry);
@@ -1363,16 +1357,6 @@ public:
     QString toUpper(const QString &str) const;
     QString toLower(const QString &str) const;
 
-    QString currencySymbol(CurrencySymbolFormat = CurrencySymbol) const;
-    QString toCurrencyString(qlonglong, const QString &symbol = QString()) const;
-    QString toCurrencyString(qulonglong, const QString &symbol = QString()) const;
-    inline QString toCurrencyString(short, const QString &symbol = QString()) const;
-    inline QString toCurrencyString(ushort, const QString &symbol = QString()) const;
-    inline QString toCurrencyString(int, const QString &symbol = QString()) const;
-    inline QString toCurrencyString(uint, const QString &symbol = QString()) const;
-    QString toCurrencyString(double, const QString &symbol = QString()) const;
-    inline QString toCurrencyString(float, const QString &symbol = QString()) const;
-
     QStringList uiLanguages() const;
 
     inline bool operator==(const QLocale &other) const;
@@ -1426,17 +1410,6 @@ inline bool QLocale::operator==(const QLocale &other) const
     { return d() == other.d() && numberOptions() == other.numberOptions(); }
 inline bool QLocale::operator!=(const QLocale &other) const
     { return d() != other.d() || numberOptions() != other.numberOptions(); }
-
-inline QString QLocale::toCurrencyString(short i, const QString &symbol) const
-    { return toCurrencyString(qlonglong(i), symbol); }
-inline QString QLocale::toCurrencyString(ushort i, const QString &symbol) const
-    { return toCurrencyString(qulonglong(i), symbol); }
-inline QString QLocale::toCurrencyString(int i, const QString &symbol) const
-{ return toCurrencyString(qlonglong(i), symbol); }
-inline QString QLocale::toCurrencyString(uint i, const QString &symbol) const
-{ return toCurrencyString(qulonglong(i), symbol); }
-inline QString QLocale::toCurrencyString(float i, const QString &symbol) const
-{ return toCurrencyString(double(i), symbol); }
 
 #ifndef QT_NO_DATASTREAM
 Q_CORE_EXPORT QDataStream &operator<<(QDataStream &, const QLocale &);

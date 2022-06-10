@@ -101,7 +101,6 @@ private slots:
     void defaultNumeringSystem();
 
     void ampm();
-    void currency();
     void quoteString();
     void uiLanguages();
     void weekendDays();
@@ -1580,39 +1579,6 @@ void tst_QLocale::standaloneMonthName()
     QCOMPARE(ru.standaloneMonthName(1, QLocale::LongFormat), QString::fromUtf8("январь"));
     QCOMPARE(ru.standaloneMonthName(1, QLocale::ShortFormat), QString::fromUtf8("янв."));
     QCOMPARE(ru.standaloneMonthName(1, QLocale::NarrowFormat), QString::fromUtf8("Я"));
-}
-
-void tst_QLocale::currency()
-{
-    const QLocale c(QLocale::C);
-    QCOMPARE(c.toCurrencyString(qulonglong(1234)), QString("1,234"));
-    QCOMPARE(c.toCurrencyString(qlonglong(-1234)), QString("-1,234"));
-    QCOMPARE(c.toCurrencyString(double(1234.56)), QString("1,234.56"));
-    QCOMPARE(c.toCurrencyString(double(-1234.56)), QString("-1,234.56"));
-
-    const QLocale en_US("en_US");
-    QCOMPARE(en_US.toCurrencyString(qulonglong(1234)), QString("$1,234"));
-    QCOMPARE(en_US.toCurrencyString(qlonglong(-1234)), QString("$-1,234"));
-    QCOMPARE(en_US.toCurrencyString(double(1234.56)), QString("$1,234.56"));
-    QCOMPARE(en_US.toCurrencyString(double(-1234.56)), QString("$-1,234.56"));
-
-    const QLocale ru_RU("ru_RU");
-    QCOMPARE(ru_RU.toCurrencyString(qulonglong(1234)), QString::fromUtf8("1 234 ₽"));
-    QCOMPARE(ru_RU.toCurrencyString(qlonglong(-1234)), QString::fromUtf8("-1 234 ₽"));
-    QCOMPARE(ru_RU.toCurrencyString(double(1234.56)), QString::fromUtf8("1 234,56 ₽"));
-    QCOMPARE(ru_RU.toCurrencyString(double(-1234.56)), QString::fromUtf8("-1 234,56 ₽"));
-
-    const QLocale de_DE("de_DE");
-    QCOMPARE(de_DE.toCurrencyString(qulonglong(1234)), QString::fromUtf8("1.234 €"));
-    QCOMPARE(de_DE.toCurrencyString(qulonglong(1234), QLatin1String("BAZ")), QString::fromUtf8("1.234\xc2\xa0" "BAZ"));
-    QCOMPARE(de_DE.toCurrencyString(qlonglong(-1234)), QString::fromUtf8("-1.234 €"));
-    QCOMPARE(de_DE.toCurrencyString(qlonglong(-1234), QLatin1String("BAZ")), QString::fromUtf8("-1.234\xc2\xa0" "BAZ"));
-    QCOMPARE(de_DE.toCurrencyString(double(1234.56)), QString::fromUtf8("1.234,56 €"));
-    QCOMPARE(de_DE.toCurrencyString(double(-1234.56)), QString::fromUtf8("-1.234,56 €"));
-    QCOMPARE(de_DE.toCurrencyString(double(-1234.56), QLatin1String("BAZ")), QString::fromUtf8("-1.234,56\xc2\xa0" "BAZ"));
-
-    const QLocale system = QLocale::system();
-    QVERIFY(system.toCurrencyString(1, QLatin1String("FOO")).contains(QLatin1String("FOO")));
 }
 
 void tst_QLocale::quoteString()
