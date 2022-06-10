@@ -30,6 +30,7 @@
 #include "qchar.h"
 #include "qdatastream.h"
 #include "qtextcodec.h"
+#include "qlocale_tools_p.h"
 
 #include <unicode/uchar.h>
 #include <unicode/unorm2.h>
@@ -50,74 +51,6 @@ static inline bool is_ascii_char(uint ucs4)
 static inline bool is_ascii_number(uint ucs4)
 {
     return (ucs4 >= '0' && ucs4 <= '9');
-}
-
-static inline uint to_ascii_lower(uint ucs4)
-{
-    switch (ucs4) {
-        case 'A':
-        case 'B':
-        case 'C':
-        case 'D':
-        case 'E':
-        case 'F':
-        case 'G':
-        case 'H':
-        case 'I':
-        case 'J':
-        case 'K':
-        case 'L':
-        case 'M':
-        case 'N':
-        case 'O':
-        case 'P':
-        case 'Q':
-        case 'R':
-        case 'S':
-        case 'T':
-        case 'U':
-        case 'V':
-        case 'W':
-        case 'X':
-        case 'Y':
-        case 'Z':
-            return ucs4 + 32;
-    }
-    return ucs4;
-}
-
-static inline uint to_ascii_upper(uint ucs4)
-{
-    switch (ucs4) {
-        case 'a':
-        case 'b':
-        case 'c':
-        case 'd':
-        case 'e':
-        case 'f':
-        case 'g':
-        case 'h':
-        case 'i':
-        case 'j':
-        case 'k':
-        case 'l':
-        case 'm':
-        case 'n':
-        case 'o':
-        case 'p':
-        case 'q':
-        case 'r':
-        case 's':
-        case 't':
-        case 'u':
-        case 'v':
-        case 'w':
-        case 'x':
-        case 'y':
-        case 'z':
-            return ucs4 - 32;
-    }
-    return ucs4;
 }
 
 /*!
@@ -1349,7 +1282,7 @@ ushort QChar::toLower(const ushort ucs2)
 uint QChar::toLower(const uint ucs4)
 {
     if (is_ascii_char(ucs4)) {
-        return to_ascii_lower(ucs4);
+        return qToLower(ucs4);
     }
     return u_tolower(ucs4);
 }
@@ -1383,7 +1316,7 @@ ushort QChar::toUpper(const ushort ucs2)
 uint QChar::toUpper(const uint ucs4)
 {
     if (is_ascii_char(ucs4)) {
-        return to_ascii_upper(ucs4);
+        return qToUpper(ucs4);
     }
     return u_toupper(ucs4);
 }
@@ -1417,7 +1350,7 @@ ushort QChar::toTitleCase(const ushort ucs2)
 uint QChar::toTitleCase(const uint ucs4)
 {
     if (is_ascii_char(ucs4)) {
-        return to_ascii_upper(ucs4);
+        return qToUpper(ucs4);
     }
     return u_totitle(ucs4);
 }
@@ -1449,7 +1382,7 @@ ushort QChar::toCaseFolded(const ushort ucs2)
 uint QChar::toCaseFolded(const uint ucs4)
 {
     if (is_ascii_char(ucs4)) {
-        return to_ascii_lower(ucs4);
+        return qToLower(ucs4);
     }
     return u_foldCase(ucs4, U_FOLD_CASE_DEFAULT);
 }
