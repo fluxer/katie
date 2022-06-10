@@ -165,7 +165,11 @@ bool QScriptValueIterator::hasNext() const
         return false;
 
     const_cast<QScriptValueIteratorPrivate*>(d)->ensureInitialized();
+#ifdef QT_STRICT_ITERATORS
     return d->it.i != d->propertyNames.end().i;
+#else
+    return d->it != d->propertyNames.end();
+#endif
 }
 
 /*!
@@ -201,7 +205,11 @@ bool QScriptValueIterator::hasPrevious() const
         return false;
 
     const_cast<QScriptValueIteratorPrivate*>(d)->ensureInitialized();
+#ifdef QT_STRICT_ITERATORS
     return d->it.i != d->propertyNames.begin().i;
+#else
+    return d->it != d->propertyNames.begin();
+#endif
 }
 
 /*!
