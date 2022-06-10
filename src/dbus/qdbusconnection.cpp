@@ -784,7 +784,7 @@ bool QDBusConnection::registerObject(const QString &path, QObject *object, Regis
             qLowerBound(node->children.begin(), node->children.end(), pathComponents.at(i));
         if (it != node->children.end() && it->name == pathComponents.at(i)) {
             // match: this node exists
-            node = it;
+            node = it.i;
 
             // are we allowed to go deeper?
             if (node->flags & ExportChildObjects) {
@@ -795,7 +795,7 @@ bool QDBusConnection::registerObject(const QString &path, QObject *object, Regis
             }
         } else {
             // add entry
-            node = node->children.insert(it, pathComponents.at(i));
+            node = node->children.insert(it, pathComponents.at(i)).i;
         }
 
         // iterate
@@ -842,7 +842,7 @@ void QDBusConnection::unregisterObject(const QString &path, UnregisterMode mode)
         if (it == node->children.end() || it->name != pathComponents.at(i))
             break;              // node not found
 
-        node = it;
+        node = it.i;
         ++i;
     }
 }
@@ -876,7 +876,7 @@ QObject *QDBusConnection::objectRegisteredAt(const QString &path) const
         if (it == node->children.constEnd() || it->name != pathComponents.at(i))
             break;              // node not found
 
-        node = it;
+        node = it.i;
         ++i;
     }
     return 0;

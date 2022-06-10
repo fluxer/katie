@@ -440,7 +440,7 @@ static bool findObject(const QDBusConnectionPrivate::ObjectTreeNode *root,
             qLowerBound(node->children.constBegin(), node->children.constEnd(), pathComponent);
         if (it != node->children.constEnd() && it->name == pathComponent)
             // match
-            node = it;
+            node = it.i;
         else
             node = 0;
 
