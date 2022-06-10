@@ -24,7 +24,6 @@
 
 #include <qbytearray.h>
 #include <qfile.h>
-#include <qtools_p.h>
 
 #include <limits.h>
 
@@ -98,7 +97,6 @@ private slots:
     void number();
     void toInt_data();
     void toInt();
-    void qAllocMore();
 
     void resizeAfterFromRawData();
     void appendAfterFromRawData();
@@ -234,7 +232,7 @@ void tst_QByteArray::constByteArray()
     QVERIFY(cba.constData() == ptr);
     cba.squeeze();
     QVERIFY(cba.constData() == ptr);
-    cba.detach();
+    (void)cba.data();
     QVERIFY(cba.size() == 3);
     QVERIFY(cba.capacity() == 3);
     QVERIFY(cba.constData() != ptr);
@@ -1025,22 +1023,6 @@ void tst_QByteArray::toULongLong()
     QCOMPARE(str.toULongLong(0, base), result);
     QCOMPARE(str.toULongLong(&b, base), result);
     QCOMPARE(b, ok);
-}
-
-// global function defined in qbytearray.cpp
-void tst_QByteArray::qAllocMore()
-{
-    static const int t[] = {
-        0, +1, +3, +1025, +66000, +1234567, INT_MAX/4
-    };
-    static const int N = sizeof(t)/sizeof(t[0]);
-
-    // make sure qAllocMore() doesn't loop infinitely on any input
-    for (int i = 0; i < N; ++i) {
-        for (int j = 0; j < N; ++j) {
-            ::qAllocMore(t[i], t[j]);
-        }
-    }
 }
 
 void tst_QByteArray::resizeAfterFromRawData()
