@@ -1480,32 +1480,3 @@
 
 \sa toDouble()
 */
-
-/*!
-    \fn QString QLocale::toCurrencyString(short value, const QString &symbol) const
-    \since 4.8
-    \overload
-*/
-
-/*!
-    \fn QString QLocale::toCurrencyString(ushort value, const QString &symbol) const
-    \since 4.8
-    \overload
-*/
-
-/*!
-    \fn QString QLocale::toCurrencyString(int value, const QString &symbol) const
-    \since 4.8
-    \overload
-*/
-
-/*!
-    \fn QString QLocale::toCurrencyString(uint value, const QString &symbol) const
-    \since 4.8
-    \overload
-*/
-/*!
-    \fn QString QLocale::toCurrencyString(float value, const QString &symbol) const
-    \since 4.8
-    \overload
-*/
