@@ -54,7 +54,7 @@ public:
     QChar minus() const { return QChar(m_minus); }
     QChar exponential() const { return QChar(m_exponential); }
 
-    QString bcp47Name() const;
+    QByteArray bcp47Name() const;
 
     static QLocale::Language codeToLanguage(const QByteArray &code);
     static QLocale::Script codeToScript(const QByteArray &code);

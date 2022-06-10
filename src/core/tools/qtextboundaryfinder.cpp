@@ -41,8 +41,9 @@ static inline UBreakIteratorType getBreakType(const QTextBoundaryFinder::Boundar
     Q_UNREACHABLE();
 }
 
-static const char* getBreakLocale() {
-    QByteArray bcp = QLocale::system().bcp47Name().toLatin1();
+static const char* getBreakLocale()
+{
+    const QByteArray bcp = QLocale::system().bcp47Name();
     for(int i = 0; i < ubrk_countAvailable(); i++) {
         const char* locale = ubrk_getAvailable(i);
         if (qstrcmp(locale, bcp.constData()) == 0) {

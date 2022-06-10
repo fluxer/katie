@@ -92,7 +92,7 @@ static inline char qToUpper(char ch)
 // Removes thousand-group separators in "C" locale.
 bool removeGroupSeparators(QLocalePrivate::CharBuff *num);
 
-bool qt_initLocale(const QString &locale);
+bool qt_initLocale(const QByteArray &locale);
 bool qt_ucol_strcoll(const QChar *source, int sourceLength, const QChar *target, int targetLength, int *result);
 bool qt_u_strToUpper(const QString &str, QString *out, const QLocale &locale);
 bool qt_u_strToLower(const QString &str, QString *out, const QLocale &locale);

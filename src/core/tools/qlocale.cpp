@@ -238,12 +238,14 @@ QLocale::Country QLocalePrivate::codeToCountry(const QByteArray &code)
     return QLocale::AnyCountry;
 }
 
-QString QLocalePrivate::bcp47Name() const
+QByteArray QLocalePrivate::bcp47Name() const
 {
-    if (m_language == QLocale::AnyLanguage)
-        return QString();
-    if (m_language == QLocale::C)
-        return QLatin1String("C");
+    if (m_language == QLocale::AnyLanguage) {
+        return QByteArray();
+    }
+    if (m_language == QLocale::C) {
+        return QByteArray("C");
+    }
 
     const char *lang = languageTbl[m_language].code;
     const char *script = scriptTbl[m_script].code;
@@ -274,7 +276,7 @@ QString QLocalePrivate::bcp47Name() const
         }
     }
 
-    return QString::fromLatin1(bcp, totallen);
+    return QByteArray(bcp, totallen);
 }
 
 const QLocalePrivate *QLocalePrivate::findLocale(QLocale::Language language, QLocale::Script script, QLocale::Country country)
@@ -663,7 +665,7 @@ QString QLocale::name() const
 
     \sa language(), country(), script(), uiLanguages()
 */
-QString QLocale::bcp47Name() const
+QByteArray QLocale::bcp47Name() const
 {
     return d()->bcp47Name();
 }
@@ -1567,12 +1569,12 @@ Qt::DayOfWeek QLocale::firstDayOfWeek() const
 
 QLocale::MeasurementSystem QLocalePrivate::measurementSystem() const
 {
-    QByteArray latinbcp47 = bcp47Name().toLatin1();
+    QByteArray asciibcp47 = bcp47Name();
     UErrorCode error = U_ZERO_ERROR;
-    UMeasurementSystem measurement = ulocdata_getMeasurementSystem(latinbcp47.constData(), &error);
+    UMeasurementSystem measurement = ulocdata_getMeasurementSystem(asciibcp47.constData(), &error);
     if (Q_UNLIKELY(U_FAILURE(error))) {
         qWarning("QLocale::measurementSystem: ulocdata_getMeasurementSystem(%s) failed %s",
-            latinbcp47.constData(), u_errorName(error));
+            asciibcp47.constData(), u_errorName(error));
         return QLocale::MetricSystem;
     }
     switch (measurement) {
@@ -1626,9 +1628,10 @@ QLocale::MeasurementSystem QLocale::measurementSystem() const
 */
 Qt::LayoutDirection QLocale::textDirection() const
 {
-    QByteArray latinbcp47 = bcp47Name().toLatin1();
-    if (uloc_isRightToLeft(latinbcp47.constData()))
+    const QByteArray asciibcp47 = bcp47Name();
+    if (uloc_isRightToLeft(asciibcp47.constData())) {
         return Qt::RightToLeft;
+    }
     return Qt::LeftToRight;
 }
 
@@ -2570,7 +2573,10 @@ qulonglong QLocalePrivate::bytearrayToUnsLongLong(const char *num, int base, boo
 */
 QStringList QLocale::uiLanguages() const
 {
-    return QStringList(bcp47Name());
+    QStringList result;
+    const QByteArray asciibcp47 = bcp47Name();
+    result.append(QString::fromLatin1(asciibcp47.constData(), asciibcp47.size()));
+    return result;
 }
 
 /*!

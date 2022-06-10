@@ -1289,7 +1289,7 @@ public:
     Country country() const;
     QString name() const;
 
-    QString bcp47Name() const;
+    QByteArray bcp47Name() const;
     QString nativeLanguageName() const;
     QString nativeCountryName() const;
 
