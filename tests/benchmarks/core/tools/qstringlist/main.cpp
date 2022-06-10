@@ -25,6 +25,7 @@
 #include <sstream>
 #include <string>
 #include <vector>
+#include <list>
 
 class tst_QStringList: public QObject
 {
