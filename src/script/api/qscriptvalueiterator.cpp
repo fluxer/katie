@@ -26,7 +26,7 @@
 #include "qscriptengine.h"
 #include "qscriptengine_p.h"
 #include "qscriptvalue_p.h"
-#include "qlist.h"
+#include "qstdcontainers_p.h"
 
 
 #include "JSObject.h"
@@ -123,9 +123,9 @@ public:
     }
 
     QScriptValue objectValue;
-    QList<JSC::Identifier> propertyNames;
-    QList<JSC::Identifier>::iterator it;
-    QList<JSC::Identifier>::iterator current;
+    QStdVector<JSC::Identifier> propertyNames;
+    QStdVector<JSC::Identifier>::iterator it;
+    QStdVector<JSC::Identifier>::iterator current;
     bool initialized;
 };
 
@@ -165,11 +165,7 @@ bool QScriptValueIterator::hasNext() const
         return false;
 
     const_cast<QScriptValueIteratorPrivate*>(d)->ensureInitialized();
-#ifdef QT_STRICT_ITERATORS
-    return d->it.i != d->propertyNames.end().i;
-#else
     return d->it != d->propertyNames.end();
-#endif
 }
 
 /*!
@@ -205,11 +201,7 @@ bool QScriptValueIterator::hasPrevious() const
         return false;
 
     const_cast<QScriptValueIteratorPrivate*>(d)->ensureInitialized();
-#ifdef QT_STRICT_ITERATORS
-    return d->it.i != d->propertyNames.begin().i;
-#else
     return d->it != d->propertyNames.begin();
-#endif
 }
 
 /*!
@@ -348,7 +340,7 @@ void QScriptValueIterator::remove()
         return;
     QScript::APIShim shim(d->engine());
     d->object()->setProperty(*d->current, JSC::JSValue());
-    d->propertyNames.erase(d->current);
+    d->it = d->propertyNames.erase(d->current);
 }
 
 /*!
