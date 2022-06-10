@@ -75,14 +75,16 @@ static inline bool qIsDigit(char ch)
     return (ch >= '0' && ch <= '9');
 }
 
-static inline char qToLower(char ch)
+template <class T>
+inline T qToLower(const T ch)
 {
     if (ch >= 'A' && ch <= 'Z')
         return (ch + 32);
     return ch;
 }
 
-static inline char qToUpper(char ch)
+template <class T>
+inline T qToUpper(const T ch)
 {
     if (ch >= 'a' && ch <= 'z')
         return (ch - 32);

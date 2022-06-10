@@ -2510,9 +2510,9 @@ QByteArray QByteArray::mid(int pos, int len) const
 QByteArray QByteArray::toLower() const
 {
     QByteArray s(*this);
-    uchar *p = reinterpret_cast<uchar *>(s.data());
+    char *p = s.data();
     while (*p) {
-        *p = QChar::toLower((ushort)*p);
+        *p = qToLower(*p);
         p++;
     }
     return s;
@@ -2531,9 +2531,9 @@ QByteArray QByteArray::toLower() const
 QByteArray QByteArray::toUpper() const
 {
     QByteArray s(*this);
-    uchar *p = reinterpret_cast<uchar *>(s.data());
+    char *p = s.data();
     while (*p) {
-        *p = QChar::toUpper((ushort)*p);
+        *p = qToUpper(*p);
         p++;
     }
     return s;
