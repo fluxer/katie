@@ -59,8 +59,6 @@ include(KatieBuildMacros)
 
 # disable some compiler warnings
 set(KATIE_NO_WARNINGS
-    # QVector does not always use new/delete
-    -Wno-class-memaccess
     # hot attribute used in function prototypes
     -Wno-attributes
     # deprecated X11 and CUPS API used
