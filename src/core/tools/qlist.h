@@ -27,7 +27,6 @@
 #include <QtCore/qalgorithms.h>
 
 #include <iterator>
-#include <list>
 #include <initializer_list>
 #include <new>
 #include <string.h>
@@ -269,11 +268,6 @@ public:
 
     static QList<T> fromVector(const QVector<T> &vector);
     static QList<T> fromSet(const QSet<T> &set);
-
-    static inline QList<T> fromStdList(const std::list<T> &list)
-    { QList<T> tmp; qCopy(list.begin(), list.end(), std::back_inserter(tmp)); return tmp; }
-    inline std::list<T> toStdList() const
-    { std::list<T> tmp; qCopy(constBegin(), constEnd(), std::back_inserter(tmp)); return tmp; }
 
 private:
     inline void detach() { if (d->ref != 1) detach_helper(d->alloc); }

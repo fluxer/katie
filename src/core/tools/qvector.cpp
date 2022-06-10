@@ -936,28 +936,6 @@ int QVectorData::grow(int sizeofTypedData, int size, int sizeofT, bool excessive
     \sa toList(), QList::toVector()
 */
 
-/*! \fn QVector<T> QVector<T>::fromStdVector(const std::vector<T> &vector)
-
-    Returns a QVector object with the data contained in \a vector. The
-    order of the elements in the QVector is the same as in \a vector.
-
-    Example:
-
-    \snippet doc/src/snippets/code/src_corelib_tools_qvector.cpp 16
-
-    \sa toStdVector(), QList::fromStdList()
-*/
-
-/*! \fn std::vector<T> QVector<T>::toStdVector() const
-
-    Returns a std::vector object with the data contained in this QVector.
-    Example:
-
-    \snippet doc/src/snippets/code/src_corelib_tools_qvector.cpp 17
-
-    \sa fromStdVector(), QList::toStdList()
-*/
-
 /*! \fn QDataStream &operator<<(QDataStream &out, const QVector<T> &vector)
     \relates QVector
 

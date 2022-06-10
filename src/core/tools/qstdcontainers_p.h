@@ -90,10 +90,6 @@ public:
     inline QStdVector<T> &operator<<(const T &t) { append(t); return *this; }
     inline QStdVector<T> &operator<<(const QStdVector<T> &l) { *this += l; return *this; }
 
-    static inline QStdVector<T> fromStdVector(const std::vector<T> &vector)
-    { QStdVector<T> tmp; tmp.reserve(vector.size()); qCopy(vector.cbegin(), vector.cend(), std::back_inserter(tmp)); return tmp; }
-    inline std::vector<T> toStdVector() const { return std::vector<T>(*this); }
-
     typedef typename Data::iterator Iterator;
     typedef typename Data::const_iterator ConstIterator;
     // type deduction for e.g. qMin()/qMax()

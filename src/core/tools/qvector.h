@@ -24,9 +24,6 @@
 
 #include <QtCore/qlist.h>
 
-#include <vector>
-
-
 QT_BEGIN_NAMESPACE
 
 struct Q_CORE_EXPORT QVectorData
@@ -240,11 +237,6 @@ public:
     QList<T> toList() const;
 
     static QVector<T> fromList(const QList<T> &list);
-
-    static inline QVector<T> fromStdVector(const std::vector<T> &vector)
-    { QVector<T> tmp; tmp.reserve(int(vector.size())); qCopy(vector.begin(), vector.end(), std::back_inserter(tmp)); return tmp; }
-    inline std::vector<T> toStdVector() const
-    { std::vector<T> tmp; tmp.reserve(size()); qCopy(constBegin(), constEnd(), std::back_inserter(tmp)); return tmp; }
 
 private:
     inline void detach() { if (d->ref != 1) detach_helper(); }

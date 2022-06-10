@@ -64,7 +64,6 @@ private slots:
     void takeFirst() const;
     void takeLast() const;
     void toSet() const;
-    void toStdList() const;
     void toVector() const;
     void value() const;
 
@@ -541,21 +540,6 @@ void tst_QList::toSet() const
     list << "foo" << "bar" << "baz";
     QCOMPARE(list.toSet(), QSet<QString>() << "foo" << "bar" << "baz");
     QCOMPARE(list, QList<QString>() << "foo" << "bar" << "baz" << "foo" << "bar" << "baz");
-}
-
-void tst_QList::toStdList() const
-{
-    QList<QString> list;
-    list << "foo" << "bar" << "baz";
-
-    // yuck.
-    std::list<QString> slist;
-    slist.push_back(QLatin1String("foo"));
-    slist.push_back(QLatin1String("bar"));
-    slist.push_back(QLatin1String("baz"));
-
-    QCOMPARE(list.toStdList(), slist);
-    QCOMPARE(list, QList<QString>() << "foo" << "bar" << "baz");
 }
 
 void tst_QList::toVector() const
