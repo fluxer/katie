@@ -262,8 +262,6 @@ void QTextEngine::invalidate()
     freeMemory();
     minWidth = 0;
     maxWidth = 0;
-    if (specialData)
-        specialData->resolvedFormatIndices.clear();
 }
 
 void QTextEngine::clearLineData()
