@@ -35,7 +35,6 @@
 #include <QtCore/QMetaObject>
 #include <QtCore/QFile>
 #include <QtCore/QTimer>
-#include <QtCore/QTranslator>
 #include <QtCore/QFileInfo>
 #include <QtCore/qdebug.h>
 
