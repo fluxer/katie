@@ -77,11 +77,11 @@
 #include "qobject_p.h"
 #include "qalgorithms.h"
 #include "qhostaddress.h"
-#include "qlist.h"
 #include "qpointer.h"
 #include "qabstractsocketengine_p.h"
 #include "qtcpserver.h"
 #include "qtcpsocket.h"
+#include "qstdcontainers_p.h"
 
 QT_BEGIN_NAMESPACE
 
@@ -97,7 +97,7 @@ public:
     QTcpServerPrivate();
     ~QTcpServerPrivate();
 
-    QList<QTcpSocket *> pendingConnections;
+    QStdVector<QTcpSocket *> pendingConnections;
 
     quint16 port;
     QHostAddress address;
