@@ -86,7 +86,7 @@ QStringList QDesignerPluginManager::defaultPluginPaths()
     QStringList result;
 
 #ifndef QT_NO_LIBRARY
-    const QStringList path_list = QCoreApplication::libraryPaths();
+    const QStringList path_list = QCoreApplication::pluginPaths();
 
     const QString designer = QLatin1String("designer");
     foreach (const QString &path, path_list) {
@@ -234,8 +234,8 @@ static int findElement(const QStringList &desiredElts, QXmlStreamReader &sr)
             const int index = desiredElts.indexOf(sr.name().toString().toLower());
             if (index >= 0)
                 return index;
-        }
             break;
+        }
         default:
             break;
         }
@@ -312,8 +312,8 @@ static  bool parsePropertySpecs(QXmlStreamReader &sr,
                 return false;
             }
             rc->insert(name, v);
-        }
             break;
+        }
         case QXmlStreamReader::EndElement: // Outer </stringproperties>
             if (sr.name() == propertySpecs)
                 return true;
@@ -355,8 +355,8 @@ QDesignerCustomWidgetData::ParseResult
             data.xmlLanguage = attributes.value(QLatin1String(languageAttributeC)).toString();
             data.xmlDisplayName = attributes.value(QLatin1String(displayNameAttributeC)).toString();
             foundUI = true;
-        }
             break;
+        }
         case 1: // <widget>: Do some sanity checks
             data.xmlClassName = sr.attributes().value(QLatin1String(classAttributeC)).toString();
             if (data.xmlClassName.isEmpty()) {
@@ -489,13 +489,13 @@ bool QDesignerPluginManagerPrivate::addCustomWidget(QDesignerCustomWidgetInterfa
         const QDesignerCustomWidgetData::ParseResult pr = data.parseXml(domXml, c->name(), &errorMessage);
         switch (pr) {
             case QDesignerCustomWidgetData::ParseOk:
-            break;
+                break;
             case QDesignerCustomWidgetData::ParseWarning:
-            qdesigner_internal::designerWarning(errorMessage);
-            break;
+                qdesigner_internal::designerWarning(errorMessage);
+                break;
             case QDesignerCustomWidgetData::ParseError:
-            qdesigner_internal::designerWarning(errorMessage);
-            return false;
+                qdesigner_internal::designerWarning(errorMessage);
+                return false;
         }
         // Does the language match?
         const QString pluginLanguage = data.xmlLanguage();

@@ -61,6 +61,7 @@ namespace JSC {
         std::string m_constructionError;
         unsigned m_numSubpatterns;
 
+        std::string m_regexPattern;
         std::regex m_regExp;
     };
 

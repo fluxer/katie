@@ -104,7 +104,7 @@ QString RewriteBinding::operator()(QDeclarativeJS::AST::Node *node, const QStrin
     _writer->replace(startOfStatement, 0, startString);
     _writer->replace(endOfStatement, 0, QLatin1String(" })"));
 
-    if (rewriteDump()) {
+    if (Q_UNLIKELY(rewriteDump())) {
         qWarning() << "=============================================================";
         qWarning() << "Rewrote:";
         qWarning() << qPrintable(code);
@@ -113,7 +113,7 @@ QString RewriteBinding::operator()(QDeclarativeJS::AST::Node *node, const QStrin
     QString codeCopy = code;
     w.write(&codeCopy);
 
-    if (rewriteDump()) {
+    if (Q_UNLIKELY(rewriteDump())) {
         qWarning() << "To:";
         qWarning() << qPrintable(code);
         qWarning() << "=============================================================";
@@ -143,7 +143,7 @@ QString RewriteBinding::rewrite(QString code, unsigned position,
     _writer->replace(startOfStatement, 0, QLatin1String("(function ") + QString::fromUtf8(_name) + QLatin1String("() { "));
     _writer->replace(endOfStatement, 0, QLatin1String(" })"));
 
-    if (rewriteDump()) {
+    if (Q_UNLIKELY(rewriteDump())) {
         qWarning() << "=============================================================";
         qWarning() << "Rewrote:";
         qWarning() << qPrintable(code);
@@ -151,7 +151,7 @@ QString RewriteBinding::rewrite(QString code, unsigned position,
 
     w.write(&code);
 
-    if (rewriteDump()) {
+    if (Q_UNLIKELY(rewriteDump())) {
         qWarning() << "To:";
         qWarning() << qPrintable(code);
         qWarning() << "=============================================================";

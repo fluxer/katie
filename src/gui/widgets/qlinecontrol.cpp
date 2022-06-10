@@ -1647,11 +1647,6 @@ void QLineControl::processKeyEvent(QKeyEvent* event)
         }
     }
 
-    if (event->key() == Qt::Key_Direction_L || event->key() == Qt::Key_Direction_R) {
-        setLayoutDirection((event->key() == Qt::Key_Direction_L) ? Qt::LeftToRight : Qt::RightToLeft);
-        unknown = false;
-    }
-
     if (unknown && !isReadOnly()) {
         QString t = event->text();
         if (!t.isEmpty() && t.at(0).isPrint()) {

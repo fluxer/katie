@@ -42,13 +42,6 @@
 
 QT_BEGIN_NAMESPACE
 
-class QSvgAnimation : public QSvgNode
-{
-public:
-    virtual void draw(QPainter *p, QSvgExtraStates &states);
-    virtual Type type() const;
-};
-
 class QSvgArc : public QSvgNode
 {
 public:
@@ -218,13 +211,6 @@ public:
 private:
     QSvgNode *m_link;
     const QPointF   m_start;
-};
-
-class QSvgVideo : public QSvgNode
-{
-public:
-    virtual void draw(QPainter *p, QSvgExtraStates &states);
-    virtual Type type() const;
 };
 
 QT_END_NAMESPACE

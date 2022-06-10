@@ -172,7 +172,6 @@
 #cmakedefine QT_NO_CODEC_FOR_C_STRINGS
 #cmakedefine QT_NO_COLORNAMES
 #cmakedefine QT_NO_COLUMNVIEW
-#cmakedefine QT_NO_CONCURRENT
 #cmakedefine QT_NO_CURSOR
 #cmakedefine QT_NO_DATAWIDGETMAPPER
 #cmakedefine QT_NO_DEBUG
@@ -203,7 +202,6 @@
 #cmakedefine QT_NO_PRINTPREVIEWDIALOG
 #cmakedefine QT_NO_PRINTPREVIEWWIDGET
 #cmakedefine QT_NO_PROGRESSDIALOG
-#cmakedefine QT_NO_QUUID_STRING
 #cmakedefine QT_NO_SIZEGRIP
 #cmakedefine QT_NO_SPLASHSCREEN
 #cmakedefine QT_NO_STRINGLISTMODEL

@@ -44,14 +44,14 @@ void qdeclarativelistmodel_move(int from, int to, int n, T *items)
     } else {
         T replaced;
         int i=0;
-        typename T::ConstIterator it=items->begin(); it += from+n;
+        typename T::ConstIterator it=items->constBegin(); it += from+n;
         for (; i<to-from; ++i,++it)
             replaced.append(*it);
         i=0;
-        it=items->begin(); it += from;
+        it=items->constBegin(); it += from;
         for (; i<n; ++i,++it)
             replaced.append(*it);
-        typename T::ConstIterator f=replaced.begin();
+        typename T::Iterator f=replaced.begin();
         typename T::Iterator t=items->begin(); t += from;
         for (; f != replaced.end(); ++f, ++t)
             *t = *f;
@@ -1241,8 +1241,8 @@ QHash<int,QVariant> NestedListModel::data(int index, const QList<int> &roles, bo
     for (int ii = 0; ii < roles.count(); ++ii) {
         const QString &roleString = roleStrings.at(roles.at(ii));
 
-        QHash<QString, ModelNode *>::ConstIterator iter = node->properties.find(roleString);
-        if (iter != node->properties.end()) {
+        QHash<QString, ModelNode *>::ConstIterator iter = node->properties.constFind(roleString);
+        if (iter != node->properties.constEnd()) {
             ModelNode *row = *iter;
             rv.insert(roles.at(ii), valueForNode(row, hasNested));
         }
@@ -1265,8 +1265,8 @@ QVariant NestedListModel::data(int index, int role) const
 
     const QString &roleString = roleStrings.at(role);
 
-    QHash<QString, ModelNode *>::ConstIterator iter = node->properties.find(roleString);
-    if (iter != node->properties.end()) {
+    QHash<QString, ModelNode *>::ConstIterator iter = node->properties.constFind(roleString);
+    if (iter != node->properties.constEnd()) {
         ModelNode *row = *iter;
         rv = valueForNode(row);
     }
@@ -1491,9 +1491,9 @@ void ModelNode::setListValue(const QScriptValue& valuelist) {
 }
 
 bool ModelNode::setProperty(const QString& prop, const QVariant& val) {
-    QHash<QString, ModelNode *>::const_iterator it = properties.find(prop);
+    QHash<QString, ModelNode *>::const_iterator it = properties.constFind(prop);
     bool emitItemsChanged = false;
-    if (it != properties.end()) {
+    if (it != properties.constEnd()) {
         if (val != (*it)->values[0])
             emitItemsChanged = true;
         (*it)->values[0] = val;
@@ -1509,7 +1509,7 @@ bool ModelNode::setProperty(const QString& prop, const QVariant& val) {
 
 void ModelNode::updateListIndexes()
 {
-    for (QHash<QString, ModelNode *>::ConstIterator iter = properties.begin(); iter != properties.end(); ++iter) {
+    for (QHash<QString, ModelNode *>::ConstIterator iter = properties.constBegin(); iter != properties.constEnd(); ++iter) {
         ModelNode *node = iter.value();
         if (node->isArray) {
             for (int i=0; i<node->values.count(); ++i) {
@@ -1556,7 +1556,7 @@ void ModelNode::dump(ModelNode *node, int ind)
         }
     }
 
-    for (QHash<QString, ModelNode *>::ConstIterator iter = node->properties.begin(); iter != node->properties.end(); ++iter) {
+    for (QHash<QString, ModelNode *>::ConstIterator iter = node->properties.constBegin(); iter != node->properties.constEnd(); ++iter) {
         qWarning().nospace() << indent << "Property " << iter.key() << ':';
         dump(iter.value(), ind + 1);
     }

@@ -1717,26 +1717,4 @@ void **QListData::erase(void **xi)
     \sa toVector(), fromSet(), QSet::fromList()
 */
 
-/*! \fn QList<T> QList<T>::fromStdList(const std::list<T> &list)
-
-    Returns a QList object with the data contained in \a list. The
-    order of the elements in the QList is the same as in \a list.
-
-    Example:
-
-    \snippet doc/src/snippets/code/src_corelib_tools_qlistdata.cpp 25
-
-    \sa toStdList(), QVector::fromStdVector()
-*/
-
-/*! \fn std::list<T> QList<T>::toStdList() const
-
-    Returns a std::list object with the data contained in this QList.
-    Example:
-
-    \snippet doc/src/snippets/code/src_corelib_tools_qlistdata.cpp 26
-
-    \sa fromStdList(), QVector::toStdVector()
-*/
-
 QT_END_NAMESPACE

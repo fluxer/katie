@@ -1404,12 +1404,12 @@ void *fetchData(QTestData *data, const char *tagName, int typeId)
 
     int idx = data->parent()->indexOf(tagName);
 
-    if (idx == -1 || idx >= data->dataCount()) {
+    if (Q_UNLIKELY(idx == -1 || idx >= data->dataCount())) {
         qFatal("QFETCH: Requested testdata '%s' not available, check your _data function.",
                 tagName);
     }
 
-    if (typeId != data->parent()->elementTypeId(idx)) {
+    if (Q_UNLIKELY(typeId != data->parent()->elementTypeId(idx))) {
         qFatal("Requested type '%s' does not match available type '%s'.",
                QMetaType::typeName(typeId),
                QMetaType::typeName(data->parent()->elementTypeId(idx)));

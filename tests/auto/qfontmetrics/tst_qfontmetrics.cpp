@@ -108,13 +108,13 @@ void tst_QFontMetrics::metrics()
     if (families.isEmpty())
         return;
 
-    QStringList::ConstIterator f_it, f_end = families.end();
-    for (f_it = families.begin(); f_it != f_end; ++f_it) {
+    QStringList::ConstIterator f_it, f_end = families.constEnd();
+    for (f_it = families.constBegin(); f_it != f_end; ++f_it) {
         const QString &family = *f_it;
 
         QStringList styles = fdb.styles(family);
-        QStringList::ConstIterator s_it, s_end = styles.end();
-        for (s_it = styles.begin(); s_it != s_end; ++s_it) {
+        QStringList::ConstIterator s_it, s_end = styles.constEnd();
+        for (s_it = styles.constBegin(); s_it != s_end; ++s_it) {
             const QString &style = *s_it;
 
             if (fdb.isSmoothlyScalable(family, style)) {
@@ -130,8 +130,8 @@ void tst_QFontMetrics::metrics()
             } else {
                 QList<int> sizes = fdb.pointSizes(family, style);
                 QVERIFY(!sizes.isEmpty());
-                QList<int>::ConstIterator z_it, z_end = sizes.end();
-                for (z_it = sizes.begin(); z_it != z_end; ++z_it) {
+                QList<int>::ConstIterator z_it, z_end = sizes.constEnd();
+                for (z_it = sizes.constBegin(); z_it != z_end; ++z_it) {
                     const int size = *z_it;
 
                     // Initialize the font, and check if it is an exact match

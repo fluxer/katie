@@ -33,32 +33,32 @@ QT_BEGIN_NAMESPACE
 
 // Common checks
 #define Q_CHECK_VALID_SOCKETLAYER(function, returnValue) do { \
-    if (!isValid()) { \
+    if (Q_UNLIKELY(!isValid())) { \
         qWarning(""#function" was called on an uninitialized socket device"); \
         return returnValue; \
     } } while (0)
 
 #define Q_CHECK_STATE(function, checkState, returnValue) do { \
-    if (d->socketState != (checkState)) { \
+    if (Q_UNLIKELY(d->socketState != (checkState))) { \
         qWarning(""#function" was not called in "#checkState); \
         return (returnValue); \
     } } while (0)
 
 #define Q_CHECK_NOT_STATE(function, checkState, returnValue) do { \
-    if (d->socketState == (checkState)) { \
+    if (Q_UNLIKELY(d->socketState == (checkState))) { \
         qWarning(""#function" was called in "#checkState); \
         return (returnValue); \
     } } while (0)
 
 #define Q_CHECK_STATES(function, state1, state2, returnValue) do { \
-    if (d->socketState != (state1) && d->socketState != (state2)) { \
+    if (Q_UNLIKELY(d->socketState != (state1) && d->socketState != (state2))) { \
         qWarning(""#function" was called" \
                  " not in "#state1" or "#state2); \
         return (returnValue); \
     } } while (0)
 
 #define Q_CHECK_TYPE(function, type, returnValue) do { \
-    if (d->socketType != (type)) { \
+    if (Q_UNLIKELY(d->socketType != (type))) { \
         qWarning(#function" was called by a" \
                  " socket other than "#type""); \
         return (returnValue); \
@@ -492,8 +492,8 @@ bool QAbstractSocketEngine::initialize(QAbstractSocket::SocketType socketType, Q
 
 
     // Make sure we receive out-of-band data
-    if (socketType == QAbstractSocket::TcpSocket
-        && !setOption(ReceiveOutOfBandData, 1)) {
+    if (Q_UNLIKELY(socketType == QAbstractSocket::TcpSocket
+        && !setOption(ReceiveOutOfBandData, 1))) {
         qWarning("QAbstractSocketEngine::initialize unable to inline out-of-band data");
     }
 

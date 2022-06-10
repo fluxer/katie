@@ -24,9 +24,6 @@
 
 #include <QtCore/qlist.h>
 
-#include <vector>
-
-
 QT_BEGIN_NAMESPACE
 
 struct Q_CORE_EXPORT QVectorData
@@ -241,11 +238,6 @@ public:
 
     static QVector<T> fromList(const QList<T> &list);
 
-    static inline QVector<T> fromStdVector(const std::vector<T> &vector)
-    { QVector<T> tmp; tmp.reserve(int(vector.size())); qCopy(vector.begin(), vector.end(), std::back_inserter(tmp)); return tmp; }
-    inline std::vector<T> toStdVector() const
-    { std::vector<T> tmp; tmp.reserve(size()); qCopy(constBegin(), constEnd(), std::back_inserter(tmp)); return tmp; }
-
 private:
     inline void detach() { if (d->ref != 1) detach_helper(); }
     void detach_helper();
@@ -342,7 +334,7 @@ QVector<T>::QVector(int asize)
         T* b = p->array;
         T* i = p->array + d->size;
         while (i != b)
-            new (--i) T;
+            new (--i) T();
     } else {
         memset(p->array, 0, asize * sizeof(T));
     }
@@ -506,7 +498,7 @@ typename QVector<T>::iterator QVector<T>::insert(iterator before, size_type n, c
             T *b = p->array + d->size;
             T *i = p->array + d->size + n;
             while (i != b)
-                new (--i) T;
+                new (--i) T();
             i = p->array + d->size;
             T *j = i + n;
             b = p->array + offset;

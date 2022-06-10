@@ -1141,13 +1141,6 @@ void QTextControlPrivate::keyPressEvent(QKeyEvent *e)
         return;
     }
 
-    if (e->key() == Qt::Key_Direction_L || e->key() == Qt::Key_Direction_R) {
-        QTextBlockFormat fmt;
-        fmt.setLayoutDirection((e->key() == Qt::Key_Direction_L) ? Qt::LeftToRight : Qt::RightToLeft);
-        cursor.mergeBlockFormat(fmt);
-        goto accept;
-    }
-
     // schedule a repaint of the region of the cursor, as when we move it we
     // want to make sure the old cursor disappears (not noticeable when moving
     // only a few pixels but noticeable when jumping between cells in tables for
@@ -2176,7 +2169,6 @@ void QTextControl::print(QPrinter *printer) const
         tempDoc->setMetaInformation(QTextDocument::DocumentTitle, doc->metaInformation(QTextDocument::DocumentTitle));
         tempDoc->setPageSize(doc->pageSize());
         tempDoc->setDefaultFont(doc->defaultFont());
-        tempDoc->setUseDesignMetrics(doc->useDesignMetrics());
         QTextCursor(tempDoc).insertFragment(d->cursor.selection());
         doc = tempDoc;
 

@@ -161,7 +161,7 @@ Q_INLINE_TEMPLATE QVarLengthArray<T, Prealloc>::QVarLengthArray(int asize)
     if (QTypeInfo<T>::isComplex) {
         T *i = ptr + s;
         while (i != ptr)
-            new (--i) T;
+            new (--i) T();
     }
 }
 

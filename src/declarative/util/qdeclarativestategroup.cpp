@@ -314,9 +314,10 @@ bool QDeclarativeStateGroupPrivate::updateAutoState()
         if (state->isWhenKnown()) {
             if (state->isNamed()) {
                 if (state->when() && state->when()->evaluate().toBool()) {
-                    if (stateChangeDebug()) 
+                    if (Q_UNLIKELY(stateChangeDebug())) {
                         qWarning() << "Setting auto state due to:" 
                                    << state->when()->expression();
+                    }
                     if (currentState != state->name()) {
                         q->setState(state->name());
                         return true;
@@ -414,7 +415,7 @@ void QDeclarativeStateGroupPrivate::setCurrentStateInternal(const QString &state
     applyingState = true;
 
     QDeclarativeTransition *transition = ignoreTrans ? 0 : findTransition(currentState, state);
-    if (stateChangeDebug()) {
+    if (Q_UNLIKELY(stateChangeDebug())) {
         qWarning() << this << "Changing state.  From" << currentState << ". To" << state;
         if (transition)
             qWarning() << "   using transition" << transition->fromState() 

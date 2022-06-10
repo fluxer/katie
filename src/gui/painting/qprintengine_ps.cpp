@@ -159,8 +159,8 @@ QPSPrintEnginePrivate::QPSPrintEnginePrivate(QPrinter::PrinterMode m)
 
     firstPage = true;
 
-    QSettings *settings = QCoreApplicationPrivate::staticConf();
-    embedFonts = settings->value(QLatin1String("Qt/embedFonts"), true).toBool();
+    QSettings settings(QString::fromLatin1("Katie"), QSettings::NativeFormat);
+    embedFonts = settings.value(QLatin1String("Qt/embedFonts"), true).toBool();
 }
 
 QPSPrintEnginePrivate::~QPSPrintEnginePrivate()

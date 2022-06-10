@@ -312,8 +312,8 @@ QFileDialog::QFileDialog(const QFileDialogArgs &args)
 QFileDialog::~QFileDialog()
 {
     Q_D(QFileDialog);
-    QSettings *settings = QCoreApplicationPrivate::staticConf();
-    settings->setValue(QLatin1String("Qt/filedialog"), saveState());
+    QSettings settings(QString::fromLatin1("Katie"), QSettings::NativeFormat);
+    settings.setValue(QLatin1String("Qt/filedialog"), saveState());
     d->deleteNativeDialog_sys();
 }
 
@@ -1997,10 +1997,10 @@ void QFileDialogPrivate::init(const QString &directory, const QString &nameFilte
     retranslateStrings();
     q->setFileMode(fileMode);
 
-    QSettings *settings = QCoreApplicationPrivate::staticConf();
+    QSettings settings(QString::fromLatin1("Katie"), QSettings::NativeFormat);
     if (!directory.isEmpty())
         setLastVisitedDirectory(workingDirectory(directory));
-    q->restoreState(settings->value(QLatin1String("Qt/filedialog")).toByteArray());
+    q->restoreState(settings.value(QLatin1String("Qt/filedialog")).toByteArray());
 
     // Default case
     if (!nameFilter.isEmpty())
@@ -2894,9 +2894,8 @@ bool QFileDialogPrivate::itemViewKeyboardEvent(QKeyEvent *event) {
     case Qt::Key_Backspace:
         _q_navigateToParent();
         return true;
-    case Qt::Key_Back:
     case Qt::Key_Left:
-        if (event->key() == Qt::Key_Back || event->modifiers() == Qt::AltModifier) {
+        if (event->modifiers() == Qt::AltModifier) {
             _q_navigateBackward();
             return true;
         }

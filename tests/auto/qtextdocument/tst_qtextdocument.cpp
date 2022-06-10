@@ -193,13 +193,6 @@ void tst_QTextDocument::getSetCheck()
     obj1.setDocumentLayout((QAbstractTextDocumentLayout *)0);
     QVERIFY(var1.isNull());
     QVERIFY(obj1.documentLayout());
-
-    // bool QTextDocument::useDesignMetrics()
-    // void QTextDocument::setUseDesignMetrics(bool)
-    obj1.setUseDesignMetrics(false);
-    QCOMPARE(false, obj1.useDesignMetrics());
-    obj1.setUseDesignMetrics(true);
-    QCOMPARE(true, obj1.useDesignMetrics());
 }
 
 tst_QTextDocument::tst_QTextDocument()

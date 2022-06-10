@@ -350,11 +350,11 @@ void emitSignalPeer(const QString &interface, const QString &name, const QVarian
     QTest::qWait(1000);
 }
 
-const char* slotSpyPeer()
+QByteArray slotSpyPeer()
 {
     QDBusMessage req = QDBusMessage::createMethodCall(serviceName, objectPath, interfaceName, "slotSpyServer");
     QDBusMessage reply = QDBusConnection::sessionBus().call(req);
-    return reply.arguments().at(0).toString().toLatin1().data();
+    return reply.arguments().at(0).toString().toLatin1();
 }
 
 QString valueSpyPeer()
@@ -1090,7 +1090,7 @@ void tst_QDBusAbstractAdaptor::methodCallsPeer()
 
     // simple call: one such method exists
     QCOMPARE(if2.call(QDBus::BlockWithGui, "method").type(), QDBusMessage::ReplyMessage);
-    QCOMPARE(slotSpyPeer(), "void Interface2::method()");
+    QCOMPARE(slotSpyPeer(), QByteArray("void Interface2::method()"));
     if (!nInterfaces--)
         return;
 
@@ -1103,24 +1103,24 @@ void tst_QDBusAbstractAdaptor::methodCallsPeer()
     QCOMPARE(if2.call(QDBus::BlockWithGui, "methodString").type(), QDBusMessage::ErrorMessage);
 
     QCOMPARE(if3.call(QDBus::BlockWithGui, "methodVoid").type(), QDBusMessage::ReplyMessage);
-    QCOMPARE(slotSpyPeer(), "void Interface3::methodVoid()");
+    QCOMPARE(slotSpyPeer(), QByteArray("void Interface3::methodVoid()"));
     QCOMPARE(if3.call(QDBus::BlockWithGui, "methodInt", 42).type(), QDBusMessage::ReplyMessage);
-    QCOMPARE(slotSpyPeer(), "void Interface3::methodInt(int)");
+    QCOMPARE(slotSpyPeer(), QByteArray("void Interface3::methodInt(int)"));
     QCOMPARE(if3.call(QDBus::BlockWithGui, "methodString", QString("")).type(), QDBusMessage::ReplyMessage);
-    QCOMPARE(slotSpyPeer(), "void Interface3::methodString(QString)");
+    QCOMPARE(slotSpyPeer(), QByteArray("void Interface3::methodString(QString)"));
 
     if (!nInterfaces--)
         return;
 
     // method overloading: different interfaces
     QCOMPARE(if4.call(QDBus::BlockWithGui, "method").type(), QDBusMessage::ReplyMessage);
-    QCOMPARE(slotSpyPeer(), "void Interface4::method()");
+    QCOMPARE(slotSpyPeer(), QByteArray("void Interface4::method()"));
 
     // method overloading: different parameters
     QCOMPARE(if4.call(QDBus::BlockWithGui, "method.i", 42).type(), QDBusMessage::ReplyMessage);
-    QCOMPARE(slotSpyPeer(), "void Interface4::method(int)");
+    QCOMPARE(slotSpyPeer(), QByteArray("void Interface4::method(int)"));
     QCOMPARE(if4.call(QDBus::BlockWithGui, "method.s", QString()).type(), QDBusMessage::ReplyMessage);
-    QCOMPARE(slotSpyPeer(), "void Interface4::method(QString)");
+    QCOMPARE(slotSpyPeer(), QByteArray("void Interface4::method(QString)"));
 }
 
 void tst_QDBusAbstractAdaptor::methodCallScriptablePeer()
@@ -1134,7 +1134,7 @@ void tst_QDBusAbstractAdaptor::methodCallScriptablePeer()
     QDBusInterface if2(QString(), "/", "local.Interface2", con);
 
     QCOMPARE(if2.call(QDBus::BlockWithGui,"scriptableMethod").type(), QDBusMessage::ReplyMessage);
-    QCOMPARE(slotSpyPeer(), "void Interface2::scriptableMethod()");
+    QCOMPARE(slotSpyPeer(), QByteArray("void Interface2::scriptableMethod()"));
 }
 
 void tst_QDBusAbstractAdaptor::signalEmissionsPeer_data()

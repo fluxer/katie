@@ -19,7 +19,7 @@
 **
 ****************************************************************************/
 
-import Qt.test 4.6
+import Qt.test 2.0
 
 MyQmlObject {
     result: value

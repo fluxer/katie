@@ -890,8 +890,9 @@ void QWidgetPrivate::adjustFlags(Qt::WindowFlags &flags, QWidget *w)
 void QWidgetPrivate::init(QWidget *parentWidget, Qt::WindowFlags f)
 {
     Q_Q(QWidget);
-    if (QApplication::type() == QApplication::Tty)
+    if (Q_UNLIKELY(QApplication::type() == QApplication::Tty)) {
         qFatal("QWidget: Cannot create a QWidget when no GUI is being used");
+    }
 
     Q_ASSERT(allWidgets);
     if (allWidgets)
@@ -2707,36 +2708,9 @@ void QWidget::setAcceptDrops(bool on)
 }
 
 /*!
-    \fn void QWidget::enabledChange(bool)
-
-    \internal
-    \obsolete
-*/
-
-/*!
-    \fn void QWidget::paletteChange(const QPalette &)
-
-    \internal
-    \obsolete
-*/
-
-/*!
     \fn void QWidget::fontChange(const QFont &)
 
     \internal
-    \obsolete
-*/
-
-/*!
-    \fn void QWidget::windowActivationChange(bool)
-
-    \internal
-    \obsolete
-*/
-
-/*!
-    \fn void QWidget::languageChange()
-
     \obsolete
 */
 
@@ -4012,6 +3986,7 @@ void QWidgetPrivate::updateFont(const QFont &font)
     cssStyle = extra ? qobject_cast<const QStyleSheetStyle*>(extra->style) : 0;
 #endif
 
+    QFont old = data.fnt;
     data.fnt = QFont(font, q);
 #if defined(Q_WS_X11)
     // make sure the font set on this widget is associated with the correct screen
@@ -4056,6 +4031,7 @@ void QWidgetPrivate::updateFont(const QFont &font)
 
     QEvent e(QEvent::FontChange);
     QApplication::sendEvent(q, &e);
+    q->fontChange(old);
 }
 
 void QWidgetPrivate::setLayoutDirection_helper(Qt::LayoutDirection direction)
@@ -9382,11 +9358,7 @@ void QWidget::stackUnder(QWidget* w)
 }
 
 void QWidget::styleChange(QStyle&) { }
-void QWidget::enabledChange(bool) { }  // compat
-void QWidget::paletteChange(const QPalette &) { }  // compat
 void QWidget::fontChange(const QFont &) { }  // compat
-void QWidget::windowActivationChange(bool) { }  // compat
-void QWidget::languageChange() { }  // compat
 
 /*!
     \fn bool QWidget::isVisibleToTLW() const

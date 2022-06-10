@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-03-04 19:36+0200\n"
+"POT-Creation-Date: 2022-05-17 05:45+0300\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -17,32 +17,32 @@ msgstr ""
 "Content-Type: text/plain; charset=CHARSET\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: src/core/plugin/qlibrary.cpp:175
+#: src/core/plugin/qlibrary.cpp:173
 msgid "'%1' is not ELF file"
 msgstr ""
 
-#: src/core/plugin/qlibrary.cpp:178
+#: src/core/plugin/qlibrary.cpp:176
 msgid "ELF class mismatch in '%1'"
 msgstr ""
 
-#: src/core/plugin/qlibrary.cpp:202
+#: src/core/plugin/qlibrary.cpp:200
 msgid "Plugin verification data mismatch in '%1'"
 msgstr ""
 
-#: src/core/plugin/qlibrary.cpp:417 src/core/plugin/qlibrary.cpp:452
-#: src/core/plugin/qpluginloader.cpp:261
+#: src/core/plugin/qlibrary.cpp:415 src/core/plugin/qlibrary.cpp:450
+#: src/core/plugin/qpluginloader.cpp:257
 msgid "The shared library was not found."
 msgstr ""
 
-#: src/core/plugin/qlibrary.cpp:454
+#: src/core/plugin/qlibrary.cpp:452
 msgid "The file '%1' is not a valid Katie plugin."
 msgstr ""
 
-#: src/core/plugin/qlibrary.cpp:466
+#: src/core/plugin/qlibrary.cpp:464
 msgid "The plugin uses incompatible Katie library: %1 (%2, %3)"
 msgstr ""
 
-#: src/core/plugin/qlibrary.cpp:798 src/core/plugin/qpluginloader.cpp:278
+#: src/core/plugin/qlibrary.cpp:770 src/core/plugin/qpluginloader.cpp:274
 #: src/core/io/qiodevice.cpp:1517
 #: src/network/socket/qabstractsocketengine.cpp:439
 #: src/uitools/formscriptrunner.cpp:104
@@ -61,7 +61,7 @@ msgstr ""
 msgid "Cannot resolve symbol \"%1\" in %2: %3"
 msgstr ""
 
-#: src/core/plugin/qpluginloader.cpp:216
+#: src/core/plugin/qpluginloader.cpp:215
 msgid "The plugin was not loaded."
 msgstr ""
 
@@ -718,58 +718,58 @@ msgstr ""
 msgid "Alias property exceeds alias bounds"
 msgstr ""
 
-#: src/declarative/qml/qdeclarativeimport.cpp:356
+#: src/declarative/qml/qdeclarativeimport.cpp:357
 msgid "plugin cannot be loaded for module \"%1\": %2"
 msgstr ""
 
-#: src/declarative/qml/qdeclarativeimport.cpp:361
+#: src/declarative/qml/qdeclarativeimport.cpp:362
 msgid "module \"%1\" plugin \"%2\" not found"
 msgstr ""
 
-#: src/declarative/qml/qdeclarativeimport.cpp:505
-#: src/declarative/qml/qdeclarativeimport.cpp:573
+#: src/declarative/qml/qdeclarativeimport.cpp:506
+#: src/declarative/qml/qdeclarativeimport.cpp:574
 msgid "module \"%1\" version %2.%3 is not installed"
 msgstr ""
 
-#: src/declarative/qml/qdeclarativeimport.cpp:507
+#: src/declarative/qml/qdeclarativeimport.cpp:508
 msgid "module \"%1\" is not installed"
 msgstr ""
 
-#: src/declarative/qml/qdeclarativeimport.cpp:521
-#: src/declarative/qml/qdeclarativeimport.cpp:541
+#: src/declarative/qml/qdeclarativeimport.cpp:522
+#: src/declarative/qml/qdeclarativeimport.cpp:542
 msgid "\"%1\": no such directory"
 msgstr ""
 
-#: src/declarative/qml/qdeclarativeimport.cpp:539
+#: src/declarative/qml/qdeclarativeimport.cpp:540
 msgid "import \"%1\" has no qmldir and no namespace"
 msgstr ""
 
-#: src/declarative/qml/qdeclarativeimport.cpp:607
+#: src/declarative/qml/qdeclarativeimport.cpp:608
 msgid "- %1 is not a namespace"
 msgstr ""
 
-#: src/declarative/qml/qdeclarativeimport.cpp:613
+#: src/declarative/qml/qdeclarativeimport.cpp:614
 msgid "- nested namespaces not allowed"
 msgstr ""
 
-#: src/declarative/qml/qdeclarativeimport.cpp:660
-#: src/declarative/qml/qdeclarativeimport.cpp:664
+#: src/declarative/qml/qdeclarativeimport.cpp:661
+#: src/declarative/qml/qdeclarativeimport.cpp:665
 msgid "local directory"
 msgstr ""
 
-#: src/declarative/qml/qdeclarativeimport.cpp:670
+#: src/declarative/qml/qdeclarativeimport.cpp:671
 msgid "is ambiguous. Found in %1 and in %2"
 msgstr ""
 
-#: src/declarative/qml/qdeclarativeimport.cpp:674
+#: src/declarative/qml/qdeclarativeimport.cpp:675
 msgid "is ambiguous. Found in %1 in version %2.%3 and %4.%5"
 msgstr ""
 
-#: src/declarative/qml/qdeclarativeimport.cpp:688
+#: src/declarative/qml/qdeclarativeimport.cpp:689
 msgid "is instantiated recursively"
 msgstr ""
 
-#: src/declarative/qml/qdeclarativeimport.cpp:690
+#: src/declarative/qml/qdeclarativeimport.cpp:691
 msgid "is not a type"
 msgstr ""
 
@@ -1709,17 +1709,17 @@ msgstr ""
 msgid "&OK"
 msgstr ""
 
-#: src/gui/image/qimagewriter.cpp:465
+#: src/gui/image/qimagewriter.cpp:461
 msgctxt "QImageWriter"
 msgid "Unknown error"
 msgstr ""
 
-#: src/gui/image/qimagewriter.cpp:468
+#: src/gui/image/qimagewriter.cpp:464
 msgctxt "QImageWriter"
 msgid "Device not writable"
 msgstr ""
 
-#: src/gui/image/qimagewriter.cpp:471
+#: src/gui/image/qimagewriter.cpp:467
 msgctxt "QImageWriter"
 msgid "Unsupported image format"
 msgstr ""
@@ -2027,7 +2027,7 @@ msgstr ""
 msgid "Step &down"
 msgstr ""
 
-#: src/gui/kernel/qwidget.cpp:5031
+#: src/gui/kernel/qwidget.cpp:5006
 msgid "*"
 msgstr ""
 
@@ -4417,90 +4417,88 @@ msgstr ""
 msgid "Copy &Link Location"
 msgstr ""
 
-#: src/gui/text/qtextcontrol.cpp:2781
+#: src/gui/text/qtextcontrol.cpp:2780
 msgctxt "QUnicodeControlCharacterMenu"
 msgid "LRM Left-to-right mark"
 msgstr ""
 
-#: src/gui/text/qtextcontrol.cpp:2782
+#: src/gui/text/qtextcontrol.cpp:2781
 msgctxt "QUnicodeControlCharacterMenu"
 msgid "RLM Right-to-left mark"
 msgstr ""
 
-#: src/gui/text/qtextcontrol.cpp:2783
+#: src/gui/text/qtextcontrol.cpp:2782
 msgctxt "QUnicodeControlCharacterMenu"
 msgid "ZWJ Zero width joiner"
 msgstr ""
 
-#: src/gui/text/qtextcontrol.cpp:2784
+#: src/gui/text/qtextcontrol.cpp:2783
 msgctxt "QUnicodeControlCharacterMenu"
 msgid "ZWNJ Zero width non-joiner"
 msgstr ""
 
-#: src/gui/text/qtextcontrol.cpp:2785
+#: src/gui/text/qtextcontrol.cpp:2784
 msgctxt "QUnicodeControlCharacterMenu"
 msgid "ZWSP Zero width space"
 msgstr ""
 
-#: src/gui/text/qtextcontrol.cpp:2786
+#: src/gui/text/qtextcontrol.cpp:2785
 msgctxt "QUnicodeControlCharacterMenu"
 msgid "LRE Start of left-to-right embedding"
 msgstr ""
 
-#: src/gui/text/qtextcontrol.cpp:2787
+#: src/gui/text/qtextcontrol.cpp:2786
 msgctxt "QUnicodeControlCharacterMenu"
 msgid "RLE Start of right-to-left embedding"
 msgstr ""
 
-#: src/gui/text/qtextcontrol.cpp:2788
+#: src/gui/text/qtextcontrol.cpp:2787
 msgctxt "QUnicodeControlCharacterMenu"
 msgid "LRO Start of left-to-right override"
 msgstr ""
 
-#: src/gui/text/qtextcontrol.cpp:2789
+#: src/gui/text/qtextcontrol.cpp:2788
 msgctxt "QUnicodeControlCharacterMenu"
 msgid "RLO Start of right-to-left override"
 msgstr ""
 
-#: src/gui/text/qtextcontrol.cpp:2790
+#: src/gui/text/qtextcontrol.cpp:2789
 msgctxt "QUnicodeControlCharacterMenu"
 msgid "PDF Pop directional formatting"
 msgstr ""
 
-#: src/gui/text/qtextcontrol.cpp:2796
+#: src/gui/text/qtextcontrol.cpp:2795
 msgid "Insert Unicode control character"
 msgstr ""
 
-#: src/network/kernel/qhostinfo_p.h:74
+#: src/network/kernel/qhostinfo_p.h:53
 msgctxt "QHostInfo"
 msgid "Unknown error"
 msgstr ""
 
-#: src/network/kernel/qhostinfo.cpp:134
-msgctxt "QHostInfo"
-msgid "No host name given"
-msgstr ""
-
 #: src/network/kernel/qhostinfo_unix.cpp:87
 #: src/network/kernel/qhostinfo_unix.cpp:171
-#: src/network/socket/qabstractsocket.cpp:690
+msgctxt "QHostInfo"
 msgid "Host not found"
 msgstr ""
 
 #: src/network/kernel/qhostinfo_unix.cpp:105
+msgctxt "QHostInfo"
 msgid "No host name given"
 msgstr ""
 
 #: src/network/kernel/qhostinfo_unix.cpp:107
+msgctxt "QHostInfo"
 msgid "Invalid hostname"
 msgstr ""
 
 #: src/network/kernel/qhostinfo_unix.cpp:159
+msgctxt "QHostInfo"
 msgid "Unknown address type"
 msgstr ""
 
 #: src/network/socket/qtcpserver.cpp:216
-#: src/network/socket/qabstractsocket.cpp:429
+#: src/network/socket/qabstractsocket.cpp:428
 msgid "Operation on socket is not supported"
 msgstr ""
 
@@ -4509,7 +4507,7 @@ msgid "%1: Permission denied"
 msgstr ""
 
 #: src/network/socket/qlocalserver_unix.cpp:195
-#: src/network/socket/qlocalserver.cpp:202
+#: src/network/socket/qlocalserver.cpp:199
 msgid "%1: Name error"
 msgstr ""
 
@@ -4522,21 +4520,25 @@ msgstr ""
 msgid "%1: Unknown error %2"
 msgstr ""
 
-#: src/network/socket/qabstractsocket.cpp:732
+#: src/network/socket/qabstractsocket.cpp:686
+msgid "Host not found"
+msgstr ""
+
+#: src/network/socket/qabstractsocket.cpp:728
 #: src/network/socket/qabstractsocketengine.cpp:406
 msgid "Connection refused"
 msgstr ""
 
-#: src/network/socket/qabstractsocket.cpp:870
+#: src/network/socket/qabstractsocket.cpp:866
 #: src/network/socket/qabstractsocketengine.cpp:403
 msgid "Connection timed out"
 msgstr ""
 
-#: src/network/socket/qabstractsocket.cpp:1446
+#: src/network/socket/qabstractsocket.cpp:1435
 msgid "Socket operation timed out"
 msgstr ""
 
-#: src/network/socket/qabstractsocket.cpp:1856
+#: src/network/socket/qabstractsocket.cpp:1845
 msgid "Socket is not connected"
 msgstr ""
 

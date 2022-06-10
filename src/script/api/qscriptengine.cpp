@@ -867,7 +867,7 @@ QScriptEnginePrivate::QScriptEnginePrivate()
     qMetaTypeId<QList<int> >();
     qMetaTypeId<QObjectList>();
 
-    if (!QCoreApplication::instance()) {
+    if (Q_UNLIKELY(!QCoreApplication::instance())) {
         qFatal("QScriptEngine: Must construct a Q(Core)Application before a QScriptEngine");
         return;
     }
@@ -1671,7 +1671,7 @@ JSC::JSValue QScriptEnginePrivate::newVariant(JSC::JSValue objectValue,
     if (!isObject(objectValue))
         return newVariant(value);
     JSC::JSObject *jscObject = JSC::asObject(objectValue);
-    if (!jscObject->inherits(&QScriptObject::info)) {
+    if (Q_UNLIKELY(!jscObject->inherits(&QScriptObject::info))) {
         qWarning("QScriptEngine::newVariant(): changing class of non-QScriptObject not supported");
         return JSC::JSValue();
     }
@@ -1781,7 +1781,7 @@ void QScriptEnginePrivate::setProperty(JSC::ExecState *exec, JSC::JSValue object
         } else {
             if (value.isObject()) { // ### should check if it has callData()
                 // defining getter/setter
-                if (id == exec->propertyNames().underscoreProto) {
+                if (Q_UNLIKELY(id == exec->propertyNames().underscoreProto)) {
                     qWarning("QScriptValue::setProperty() failed: "
                              "cannot set getter or setter of native property `__proto__'");
                 } else {
@@ -1796,7 +1796,7 @@ void QScriptEnginePrivate::setProperty(JSC::ExecState *exec, JSC::JSValue object
         }
     } else {
         // setting the value
-        if (getter && getter.isObject() && !(setter && setter.isObject())) {
+        if (Q_UNLIKELY(getter && getter.isObject() && !(setter && setter.isObject()))) {
             qWarning("QScriptValue::setProperty() failed: "
                      "property '%s' has a getter but no setter",
                      qPrintable(QString(id.ustring())));
@@ -2164,7 +2164,7 @@ QScriptValue QScriptEngine::newQObject(const QScriptValue &scriptObject,
         return newQObject(qtObject, ownership, options);
     QScript::APIShim shim(d);
     JSC::JSObject *jscObject = JSC::asObject(QScriptValuePrivate::get(scriptObject)->jscValue);
-    if (!jscObject->inherits(&QScriptObject::info)) {
+    if (Q_UNLIKELY(!jscObject->inherits(&QScriptObject::info))) {
         qWarning("QScriptEngine::newQObject(): changing class of non-QScriptObject not supported");
         return QScriptValue();
     }
@@ -2692,8 +2692,8 @@ void QScriptEngine::popContext()
         agent()->contextPop();
     Q_D(QScriptEngine);
     QScript::APIShim shim(d);
-    if (d->currentFrame->returnPC() != 0 || d->currentFrame->codeBlock() != 0
-        || !currentContext()->parentContext()) {
+    if (Q_UNLIKELY(d->currentFrame->returnPC() != 0 || d->currentFrame->codeBlock() != 0
+        || !currentContext()->parentContext())) {
         qWarning("QScriptEngine::popContext() doesn't match with pushContext()");
         return;
     }
@@ -3160,7 +3160,7 @@ bool QScriptEnginePrivate::convertValue(JSC::ExecState *exec, JSC::JSValue value
     }
 
 #if 0
-    if (!name.isEmpty()) {
+    if (Q_UNLIKELY(!name.isEmpty())) {
         qWarning("QScriptEngine::convert: unable to convert value to type `%s'",
                  name.constData());
     }
@@ -4079,7 +4079,7 @@ bool qScriptDisconnect(QObject *sender, const char *signal,
 void QScriptEngine::setAgent(QScriptEngineAgent *agent)
 {
     Q_D(QScriptEngine);
-    if (agent && (agent->engine() != this)) {
+    if (Q_UNLIKELY(agent && (agent->engine() != this))) {
         qWarning("QScriptEngine::setAgent(): "
                  "cannot set agent belonging to different engine");
         return;

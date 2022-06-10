@@ -307,7 +307,7 @@ static int writeProperty(QObject *obj, const QByteArray &property_name, QVariant
     if (id == QVariant::UserType) {
         // dynamic type
         id = QMetaType::type(mp.typeName());
-        if (id == -1) {
+        if (Q_UNLIKELY(id == -1)) {
             // type not registered?
             qWarning("QDBusConnection: Unable to handle unregistered datatype '%s' for property '%s::%s'",
                      mp.typeName(), mo->className(), property_name.constData());
@@ -319,7 +319,7 @@ static int writeProperty(QObject *obj, const QByteArray &property_name, QVariant
         // we have to demarshall before writing
         void *null = 0;
         QVariant other(id, null);
-        if (!QDBusMetaType::demarshall(qvariant_cast<QDBusArgument>(value), id, other.data())) {
+        if (Q_UNLIKELY(!QDBusMetaType::demarshall(qvariant_cast<QDBusArgument>(value), id, other.data()))) {
             qWarning("QDBusConnection: type `%s' (%d) is not registered with QtDBus. "
                      "Use qDBusRegisterMetaType to register it",
                      mp.typeName(), id);

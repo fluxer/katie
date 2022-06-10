@@ -229,13 +229,11 @@ inline int qRegisterMetaTypeStreamOperators()
     QT_END_NAMESPACE
 
 #define Q_DECLARE_BUILTIN_METATYPE(TYPE, NAME) \
-    QT_BEGIN_NAMESPACE \
     template<> struct QMetaTypeId2<TYPE> \
     { \
         enum { Defined = 1 }; \
         static inline int qt_metatype_id() { return QMetaType::NAME; } \
-    }; \
-    QT_END_NAMESPACE
+    };
 
 class QString;
 class QByteArray;
@@ -286,8 +284,6 @@ class QVector2D;
 class QVector3D;
 class QVector4D;
 class QVariant;
-
-QT_END_NAMESPACE
 
 // Void
 Q_DECLARE_BUILTIN_METATYPE(bool, Bool)
@@ -359,6 +355,6 @@ Q_DECLARE_BUILTIN_METATYPE(QObject *, QObjectStar)
 Q_DECLARE_BUILTIN_METATYPE(QWidget *, QWidgetStar)
 Q_DECLARE_BUILTIN_METATYPE(QVariant, QVariant)
 
-
+QT_END_NAMESPACE
 
 #endif // QMETATYPE_H

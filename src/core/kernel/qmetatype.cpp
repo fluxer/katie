@@ -23,7 +23,7 @@
 #include "qobjectdefs.h"
 #include "qdatetime.h"
 #include "qbytearray.h"
-#include "qreadwritelock.h"
+#include "qmutex.h"
 #include "qstring.h"
 #include "qstringlist.h"
 #include "qvector.h"
@@ -335,7 +335,7 @@ public:
 
 Q_DECLARE_TYPEINFO(QCustomTypeInfo, Q_MOVABLE_TYPE);
 Q_GLOBAL_STATIC(QStdVector<QCustomTypeInfo>, customTypes)
-Q_GLOBAL_STATIC(QReadWriteLock, customTypesLock)
+Q_GLOBAL_STATIC(QMutex, customTypesLock)
 
 #ifndef QT_NO_DATASTREAM
 /*! \internal
@@ -356,7 +356,7 @@ void QMetaType::registerStreamOperators(int idx, SaveOperator saveOp,
 {
     if (idx < User)
         return; //builtin types should not be registered;
-    QWriteLocker locker(customTypesLock());
+    QMutexLocker locker(customTypesLock());
     QStdVector<QCustomTypeInfo> *ct = customTypes();
     if (!ct)
         return;
@@ -383,7 +383,7 @@ const char *QMetaType::typeName(int type)
     } else if (type >= FirstCoreExtType && type <= LastCoreExtType) {
         return MetaTypeTbl[type - FirstCoreExtType + GuiTypeCount + LastCoreType + 2].typeName;
     } else if (type >= User) {
-        QReadLocker locker(customTypesLock());
+        QMutexLocker locker(customTypesLock());
         const QStdVector<QCustomTypeInfo> * const ct = customTypes();
         return ct && ct->count() > type - User && !ct->at(type - User).typeName.isEmpty()
                 ? ct->at(type - User).typeName.constData() : nullptr;
@@ -436,8 +436,9 @@ static int qMetaTypeCustomType_unlocked(const char *typeName, int length)
 int QMetaType::registerType(const char *typeName, Destructor destructor,
                             Constructor constructor)
 {
-    if (!typeName || !destructor || !constructor)
+    if (Q_UNLIKELY(!typeName || !destructor || !constructor)) {
         return -1;
+    }
 
 #ifdef QT_NO_QOBJECT
     NS(QByteArray) normalizedTypeName = typeName;
@@ -449,7 +450,7 @@ int QMetaType::registerType(const char *typeName, Destructor destructor,
                                   normalizedTypeName.size());
 
     if (!idx) {
-        QWriteLocker locker(customTypesLock());
+        QMutexLocker locker(customTypesLock());
         QStdVector<QCustomTypeInfo> *ct = customTypes();
         idx = qMetaTypeCustomType_unlocked(normalizedTypeName.constData(),
                                            normalizedTypeName.size());
@@ -473,8 +474,9 @@ int QMetaType::registerType(const char *typeName, Destructor destructor,
 */
 int QMetaType::registerTypedef(const char* typeName, int aliasId)
 {
-    if (!typeName)
+    if (Q_UNLIKELY(!typeName)) {
         return -1;
+    }
 
 #ifdef QT_NO_QOBJECT
     NS(QByteArray) normalizedTypeName = typeName;
@@ -490,7 +492,7 @@ int QMetaType::registerTypedef(const char* typeName, int aliasId)
         return idx;
     }
 
-    QWriteLocker locker(customTypesLock());
+    QMutexLocker locker(customTypesLock());
     QStdVector<QCustomTypeInfo> *ct = customTypes();
     idx = qMetaTypeCustomType_unlocked(normalizedTypeName.constData(),
                                            normalizedTypeName.size());
@@ -516,15 +518,16 @@ int QMetaType::registerTypedef(const char* typeName, int aliasId)
  */
 void QMetaType::unregisterType(const char *typeName)
 {
-    if (!typeName)
+    if (Q_UNLIKELY(!typeName)) {
         return;
+    }
 
 #ifdef QT_NO_QOBJECT
     NS(QByteArray) normalizedTypeName = typeName;
 #else
     NS(QByteArray) normalizedTypeName = QMetaObject::normalizedType(typeName);
 #endif
-    QWriteLocker locker(customTypesLock());
+    QMutexLocker locker(customTypesLock());
     QStdVector<QCustomTypeInfo> *ct = customTypes();
     for (int v = 0; v < ct->count(); ++v) {
         if (ct->at(v).typeName == typeName) {
@@ -551,7 +554,7 @@ bool QMetaType::isRegistered(int type)
     } else if (type < 0) {
         return false;
     }
-    QReadLocker locker(customTypesLock());
+    QMutexLocker locker(customTypesLock());
     const QStdVector<QCustomTypeInfo> * const ct = customTypes();
     return (ct && (ct->count() > type - User) && !ct->at(type - User).typeName.isEmpty());
 }
@@ -569,7 +572,6 @@ int QMetaType::type(const char *typeName)
         return 0;
     int type = qMetaTypeStaticType(typeName, length);
     if (!type) {
-        QReadLocker locker(customTypesLock());
         type = qMetaTypeCustomType_unlocked(typeName, length);
 #ifndef QT_NO_QOBJECT
         if (!type) {
@@ -764,7 +766,7 @@ bool QMetaType::save(QDataStream &stream, int type, const void *data)
         qMetaTypeGuiHelper[type - FirstGuiType].saveOp(stream, data);
         break;
     default: {
-        QReadLocker locker(customTypesLock());
+        QMutexLocker locker(customTypesLock());
         const QStdVector<QCustomTypeInfo> * const ct = customTypes();
         if (!ct)
             return false;
@@ -962,7 +964,7 @@ bool QMetaType::load(QDataStream &stream, int type, void *data)
         qMetaTypeGuiHelper[type - FirstGuiType].loadOp(stream, data);
         break;
     default: {
-        QReadLocker locker(customTypesLock());
+        QMutexLocker locker(customTypesLock());
         const QStdVector<QCustomTypeInfo> * const ct = customTypes();
         if (!ct)
             return false;
@@ -1082,7 +1084,7 @@ void *QMetaType::construct(int type, const void *copy)
             return new NS(QJsonDocument)(*static_cast<const NS(QJsonDocument)*>(copy));
 #endif
         case QMetaType::Void:
-            return 0;
+            return nullptr;
         default:
             ;
         }
@@ -1091,95 +1093,95 @@ void *QMetaType::construct(int type, const void *copy)
         case QMetaType::VoidStar:
         case QMetaType::QObjectStar:
         case QMetaType::QWidgetStar:
-            return new void *;
+            return new void *(nullptr);
         case QMetaType::Long:
-            return new long;
+            return new long(0);
         case QMetaType::Int:
-            return new int;
+            return new int(0);
         case QMetaType::Short:
-            return new short;
+            return new short(0);
         case QMetaType::Char:
-            return new char;
+            return new char(0);
         case QMetaType::ULong:
-            return new ulong;
+            return new ulong(0);
         case QMetaType::UInt:
-            return new uint;
+            return new uint(0);
         case QMetaType::LongLong:
-            return new qlonglong;
+            return new qlonglong(0);
         case QMetaType::ULongLong:
-            return new qulonglong;
+            return new qulonglong(0);
         case QMetaType::UShort:
-            return new ushort;
+            return new ushort(0);
         case QMetaType::UChar:
-            return new uchar;
+            return new uchar(0);
         case QMetaType::Bool:
-            return new bool;
+            return new bool(false);
         case QMetaType::Float:
-            return new float;
+            return new float(0.0);
         case QMetaType::Double:
-            return new double;
+            return new double(0.0);
         case QMetaType::QChar:
-            return new NS(QChar);
+            return new NS(QChar)();
 #ifndef QT_BOOTSTRAPPED
         case QMetaType::QVariantMap:
-            return new NS(QVariantMap);
+            return new NS(QVariantMap)();
         case QMetaType::QVariantHash:
-            return new NS(QVariantHash);
+            return new NS(QVariantHash)();
         case QMetaType::QVariantList:
-            return new NS(QVariantList);
+            return new NS(QVariantList)();
         case QMetaType::QVariant:
-            return new NS(QVariant);
+            return new NS(QVariant)();
 #endif
         case QMetaType::QByteArray:
-            return new NS(QByteArray);
+            return new NS(QByteArray)();
         case QMetaType::QString:
-            return new NS(QString);
+            return new NS(QString)();
         case QMetaType::QStringList:
-            return new NS(QStringList);
+            return new NS(QStringList)();
 #ifndef QT_BOOTSTRAPPED
         case QMetaType::QBitArray:
-            return new NS(QBitArray);
+            return new NS(QBitArray)();
 #endif
         case QMetaType::QDate:
-            return new NS(QDate);
+            return new NS(QDate)();
         case QMetaType::QTime:
-            return new NS(QTime);
+            return new NS(QTime)();
         case QMetaType::QDateTime:
-            return new NS(QDateTime);
+            return new NS(QDateTime)();
 #ifndef QT_BOOTSTRAPPED
         case QMetaType::QUrl:
-            return new NS(QUrl);
+            return new NS(QUrl)();
 #endif
         case QMetaType::QLocale:
-            return new NS(QLocale);
+            return new NS(QLocale)();
 #ifndef QT_BOOTSTRAPPED
         case QMetaType::QRect:
-            return new NS(QRect);
+            return new NS(QRect)();
         case QMetaType::QRectF:
-            return new NS(QRectF);
+            return new NS(QRectF)();
         case QMetaType::QSize:
-            return new NS(QSize);
+            return new NS(QSize)();
         case QMetaType::QSizeF:
-            return new NS(QSizeF);
+            return new NS(QSizeF)();
         case QMetaType::QLine:
-            return new NS(QLine);
+            return new NS(QLine)();
         case QMetaType::QLineF:
-            return new NS(QLineF);
+            return new NS(QLineF)();
         case QMetaType::QPoint:
-            return new NS(QPoint);
+            return new NS(QPoint)();
         case QMetaType::QPointF:
-            return new NS(QPointF);
+            return new NS(QPointF)();
 #endif
 #ifndef QT_NO_REGEXP
         case QMetaType::QRegExp:
-            return new NS(QRegExp);
+            return new NS(QRegExp)();
 #endif
 #ifndef QT_BOOTSTRAPPED
         case QMetaType::QEasingCurve:
-            return new NS(QEasingCurve);
+            return new NS(QEasingCurve)();
 #endif
         case QMetaType::Void:
-            return 0;
+            return nullptr;
         default:
             ;
         }
@@ -1188,15 +1190,15 @@ void *QMetaType::construct(int type, const void *copy)
     Constructor constr = 0;
     if (type >= FirstGuiType && type <= LastGuiType) {
         if (!qMetaTypeGuiHelper)
-            return 0;
+            return nullptr;
         constr = qMetaTypeGuiHelper[type - FirstGuiType].constr;
     } else {
-        QReadLocker locker(customTypesLock());
+        QMutexLocker locker(customTypesLock());
         const QStdVector<QCustomTypeInfo> * const ct = customTypes();
         if (type < User || !ct || ct->count() <= type - User)
-            return 0;
+            return nullptr;
         if (ct->at(type - User).typeName.isEmpty())
-            return 0;
+            return nullptr;
         constr = ct->at(type - User).constr;
     }
 
@@ -1355,7 +1357,7 @@ void QMetaType::destroy(int type, void *data)
                 return;
             destr = qMetaTypeGuiHelper[type - FirstGuiType].destr;
         } else {
-            QReadLocker locker(customTypesLock());
+            QMutexLocker locker(customTypesLock());
             const QStdVector<QCustomTypeInfo> * const ct = customTypes();
             if (type < User || !ct || ct->count() <= type - User)
                 break;

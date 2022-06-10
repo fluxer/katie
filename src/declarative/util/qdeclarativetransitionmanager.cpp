@@ -211,7 +211,7 @@ void QDeclarativeTransitionManager::transition(const QList<QDeclarativeAction> &
         }
     }
 #ifndef QT_NO_DEBUG_STREAM
-    if (stateChangeDebug()) {
+    if (Q_UNLIKELY(stateChangeDebug())) {
         foreach(const QDeclarativeAction &action, applyList) {
             if (action.event)
                 qWarning() << "    No transition for event:" << action.event->typeName();

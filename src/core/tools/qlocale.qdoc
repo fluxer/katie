@@ -83,7 +83,7 @@
     \note For the current keyboard input locale take a look at
     QApplication::keyboardInputLocale().
 
-    QLocale's data is based on Common Locale Data Repository v40.
+    QLocale's data is based on Common Locale Data Repository v41.
 
     The double-to-string and string-to-double conversion functions are
     covered by the following licenses:
@@ -158,6 +158,7 @@
     \value Assamese
     \value Asturian
     \value Asu
+    \value Atikamekw
     \value Atsam
     \value AustralianEnglish
     \value AustrianGerman
@@ -213,12 +214,14 @@
     \value Cantonese
     \value Capiznon
     \value Carib
+    \value CarolinaAlgonquian
     \value Catalan
     \value Cayuga
     \value Cebuano
     \value CentralAtlasTamazight
     \value CentralDusun
     \value CentralKurdish
+    \value CentralOjibwa
     \value CentralYupik
     \value ChadianArabic
     \value Chagatai
@@ -230,6 +233,7 @@
     \value Chibcha
     \value Chickasaw
     \value Chiga
+    \value Chilcotin
     \value ChimborazoHighlandQuichua
     \value Chinese
     \value ChineseCantonese
@@ -249,7 +253,7 @@
     \value Cornish
     \value Corsican
     \value Cree
-    \value CrimeanTurkish
+    \value CrimeanTatar
     \value Croatian
     \value Czech
     \value Dakota
@@ -266,7 +270,9 @@
     \value Dutch
     \value Dyula
     \value Dzongkha
+    \value EasternCanadianInuktitut
     \value EasternFrisian
+    \value EasternOjibwa
     \value Efik
     \value EgyptianArabic
     \value Ekajuk
@@ -322,6 +328,7 @@
     \value Haida
     \value HaitianCreole
     \value HakkaChinese
+    \value Halkomelem
     \value Hausa
     \value Hawaiian
     \value Hebrew
@@ -331,6 +338,7 @@
     \value HiriMotu
     \value Hittite
     \value Hmong
+    \value HmongNjua
     \value Hungarian
     \value Hupa
     \value Iban
@@ -343,6 +351,7 @@
     \value Indonesian
     \value Ingrian
     \value Ingush
+    \value Innuaimun
     \value Interlingua
     \value Interlingue
     \value Inuktitut
@@ -410,6 +419,7 @@
     \value KurdishSorani
     \value Kurukh
     \value Kutenai
+    \value Kwakwala
     \value Kwasio
     \value Kyrgyz
     \value Ladino
@@ -425,6 +435,7 @@
     \value Laz
     \value Lezghian
     \value Ligurian
+    \value Lillooet
     \value Limburgish
     \value Lingala
     \value LinguaFrancaNova
@@ -461,6 +472,7 @@
     \value Malagasy
     \value Malay
     \value Malayalam
+    \value Malecite
     \value Maltese
     \value Manchu
     \value Mandar
@@ -482,6 +494,7 @@
     \value Meru
     \value Meta
     \value MexicanSpanish
+    \value Michif
     \value MiddleDutch
     \value MiddleEnglish
     \value MiddleFrench
@@ -500,6 +513,7 @@
     \value Mongo
     \value Mongolian
     \value Montenegrin
+    \value MooseCree
     \value Morisyen
     \value MoroccanArabic
     \value Mossi
@@ -528,10 +542,14 @@
     \value Nogai
     \value Nolinguisticcontent
     \value NorthNdebele
+    \value NorthernEastCree
     \value NorthernFrisian
+    \value NorthernHaida
     \value NorthernLuri
     \value NorthernSami
     \value NorthernSotho
+    \value NorthernTutchone
+    \value NorthwesternOjibwa
     \value Norwegian
     \value NorwegianBokmal
     \value NorwegianNynorsk
@@ -545,7 +563,9 @@
     \value Nzima
     \value Occitan
     \value Odia
+    \value OjiCree
     \value Ojibwa
+    \value Okanagan
     \value OldEnglish
     \value OldFrench
     \value OldHighGerman
@@ -570,6 +590,7 @@
     \value Phoenician
     \value Picard
     \value Piedmontese
+    \value PlainsCree
     \value Plautdietsch
     \value Pohnpeian
     \value Polish
@@ -649,17 +670,23 @@
     \value Soninke
     \value SouthNdebele
     \value SouthernAltai
+    \value SouthernEastCree
+    \value SouthernHaida
     \value SouthernKurdish
+    \value SouthernLushootseed
     \value SouthernSami
     \value SouthernSotho
+    \value SouthernTutchone
     \value Spanish
     \value SrananTongo
     \value StandardMoroccanTamazight
+    \value StraitsSalish
     \value Sukuma
     \value Sumerian
     \value Sundanese
     \value Susu
     \value Swahili
+    \value SwampyCree
     \value Swati
     \value Swedish
     \value SwissFrench
@@ -668,7 +695,10 @@
     \value Syriac
     \value Tachelhit
     \value Tagalog
+    \value Tagish
     \value Tahitian
+    \value Tahltan
+    \value TaiDam
     \value Taita
     \value Tajik
     \value Talysh
@@ -692,6 +722,7 @@
     \value TokelauLanguage
     \value Tongan
     \value TornedalenFinnish
+    \value Torwali
     \value TraditionalChinese
     \value TraditionalMandarinChinese
     \value Tsakhur
@@ -739,10 +770,13 @@
     \value Welsh
     \value WestFlemish
     \value WesternBalochi
+    \value WesternCanadianInuktitut
     \value WesternFrisian
     \value WesternMari
+    \value WesternOjibwa
     \value Wolaytta
     \value Wolof
+    \value WoodsCree
     \value WuChinese
     \value Xhosa
     \value XiangChinese
@@ -1173,6 +1207,7 @@
     \value KaithiScript
     \value KannadaScript
     \value KatakanaScript
+    \value KawiScript
     \value KayahLiScript
     \value KharoshthiScript
     \value KhitansmallscriptScript
@@ -1213,6 +1248,7 @@
     \value MyanmarScript
     \value NKoScript
     \value NabataeanScript
+    \value NagMundariScript
     \value NandinagariScript
     \value NastaliqScript
     \value NaxiGebaScript

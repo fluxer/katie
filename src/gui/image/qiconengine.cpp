@@ -178,7 +178,3 @@ QString QIconEngine::iconName() const
 }
 
 QT_END_NAMESPACE
-
-
-
-

@@ -77,7 +77,6 @@ private slots:
     void constructor();
     void copy_constructor();
     void isNull();
-    void swap();
 
     void canConvert_data();
     void canConvert();
@@ -329,16 +328,6 @@ void tst_QVariant::isNull()
     QVERIFY( var5.isNull() );
     QVariant varLL( (qlonglong)0 );
     QVERIFY( !varLL.isNull() );
-}
-
-void tst_QVariant::swap()
-{
-    QVariant v1 = 1, v2 = 2.0;
-    v1.swap(v2);
-    QCOMPARE(v1.type(),QVariant::Double);
-    QCOMPARE(v1.toDouble(),2.0);
-    QCOMPARE(v2.type(),QVariant::Int);
-    QCOMPARE(v2.toInt(),1);
 }
 
 void tst_QVariant::canConvert_data()
@@ -1558,7 +1547,7 @@ void tst_QVariant::operator_eq_eq_data()
     // Int
     QTest::newRow( "int1int1" ) << i1 << i1 << true;
     QTest::newRow( "int1int0" ) << i1 << i0 << false;
-    QTest::newRow( "nullint" ) << i0 << QVariant(QVariant::Int) << false;
+    QTest::newRow( "nullint" ) << i0 << QVariant(QVariant::Int) << true;
 
     // LongLong and ULongLong
     QVariant ll1( (qlonglong)1 );
@@ -1779,7 +1768,6 @@ void tst_QVariant::operator_eq_eq()
     QFETCH( QVariant, left );
     QFETCH( QVariant, right );
     QFETCH( bool, equal );
-    QEXPECT_FAIL("nullint", "See task 118496", Continue);
     QCOMPARE( left == right, equal );
 }
 
@@ -2059,7 +2047,7 @@ void tst_QVariant::userType()
         {
             QVariant second = myCarrier;
             QCOMPARE(instanceCount, 3);
-            second.detach();
+            (void)second.data();
             QCOMPARE(instanceCount, 4);
         }
         QCOMPARE(instanceCount, 3);

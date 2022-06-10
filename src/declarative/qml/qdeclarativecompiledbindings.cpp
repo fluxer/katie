@@ -688,83 +688,6 @@ void QDeclarativeCompiledBindingsPrivate::disconnectOne(
 }
 
 // Conversion functions - these MUST match the QtScript expression path
-inline static qreal toReal(Register *reg, int type, bool *ok = 0)
-{
-    if (ok) *ok = true;
-
-    if (type == QMetaType::QReal) {
-        return reg->getqreal();
-    } else if (type == qMetaTypeId<QVariant>()) {
-        return reg->getvariantptr()->toReal();
-    } else {
-        if (ok) *ok = false;
-        return 0;
-    }
-}
-
-inline static QString toString(Register *reg, int type, bool *ok = 0)
-{
-    if (ok) *ok = true;
-
-    if (type == QMetaType::QReal) {
-        return QString::number(reg->getqreal());
-    } else if (type == QMetaType::Int) {
-        return QString::number(reg->getint());
-    } else if (type == qMetaTypeId<QVariant>()) {
-        return reg->getvariantptr()->toString();
-    } else if (type == QMetaType::QString) {
-        return *reg->getstringptr();
-    } else {
-        if (ok) *ok = false;
-        return QString();
-    }
-}
-
-inline static bool toBool(Register *reg, int type, bool *ok = 0)
-{
-    if (ok) *ok = true;
-
-    if (type == QMetaType::Bool) {
-        return reg->getbool();
-    } else if (type == qMetaTypeId<QVariant>()) {
-        return reg->getvariantptr()->toBool();
-    } else {
-        if (ok) *ok = false;
-        return false;
-    }
-}
-
-inline static QUrl toUrl(Register *reg, int type, QDeclarativeContextData *context, bool *ok = 0)
-{
-    if (ok) *ok = true;
-
-    QUrl base;
-    if (type == qMetaTypeId<QVariant>()) {
-        QVariant *var = reg->getvariantptr();
-        int vt = var->type();
-        if (vt == QVariant::Url) {
-            base = var->toUrl();
-        } else if (vt == QVariant::ByteArray) {
-            base = QUrl(QString::fromUtf8(var->toByteArray()));
-        } else if (vt == QVariant::String) {
-            base = QUrl(var->toString());
-        } else {
-            if (ok) *ok = false;
-            return QUrl();
-        }
-    } else if (type == QMetaType::QString) {
-        base = QUrl(*reg->getstringptr());
-    } else {
-        if (ok) *ok = false;
-        return QUrl();
-    }
-
-    if (!base.isEmpty() && base.isRelative())
-        return context->url.resolved(base);
-    else
-        return base;
-}
-
 static QObject *variantToQObject(const QVariant &value, bool *ok)
 {
     if (ok) *ok = true;
@@ -1010,8 +933,6 @@ void QDeclarativeCompiledBindingsPrivate::run(int instrIndex,
                                               QDeclarativeContextData *context, QDeclarativeDelayedError *error,
                                               QObject *scope, QObject *output, QDeclarativePropertyPrivate::WriteFlags storeFlags)
 {
-    Q_Q(QDeclarativeCompiledBindings);
-
     error->removeError();
 
     Register registers[32];
@@ -2301,7 +2222,7 @@ int QDeclarativeBindingCompilerPrivate::registerString(const QString &string)
 {
     Q_ASSERT(!string.isEmpty());
 
-    QHash<QString, QPair<int, int> >::ConstIterator iter = registeredStrings.find(string);
+    QHash<QString, QPair<int, int> >::Iterator iter = registeredStrings.find(string);
 
     if (iter == registeredStrings.end()) {
         quint32 len = string.length();
@@ -2338,7 +2259,7 @@ bool QDeclarativeBindingCompilerPrivate::subscription(const QStringList &sub, Re
 int QDeclarativeBindingCompilerPrivate::subscriptionIndex(const QStringList &sub)
 {
     QString str = sub.join(QLatin1String("."));
-    QHash<QString, int>::ConstIterator iter = subscriptionIds.find(str);
+    QHash<QString, int>::Iterator iter = subscriptionIds.find(str);
     if (iter == subscriptionIds.end()) 
         iter = subscriptionIds.insert(str, subscriptionIds.count());
     usedSubscriptionIds.insert(*iter);

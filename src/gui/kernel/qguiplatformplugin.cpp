@@ -30,6 +30,7 @@
 #include "qplatformdefs.h"
 #include "qicon.h"
 #include "qstandardpaths.h"
+#include "qcorecommon_p.h"
 
 QT_BEGIN_NAMESPACE
 
@@ -46,18 +47,18 @@ QGuiPlatformPlugin *qt_guiPlatformPlugin()
     {
 #ifndef QT_NO_LIBRARY
 
-        static QString key = QString::fromLocal8Bit(qgetenv("QT_PLATFORM_PLUGIN"));
+        static QString key = qGetEnv("QT_PLATFORM_PLUGIN");
         if (key.isEmpty()) {
-            key = QString::fromLocal8Bit(qgetenv("DESKTOP_SESSION"));
+            key = qGetEnv("DESKTOP_SESSION");
         }
 
-        if (!key.isEmpty() && QApplication::desktopSettingsAware()) {
+        if (!key.isEmpty()) {
             QFactoryLoader loader(QGuiPlatformPluginInterface_iid, QLatin1String("/gui_platform"));
             plugin = qobject_cast<QGuiPlatformPlugin *>(loader.instance(key));
         }
 #endif // QT_NO_LIBRARY
 
-        if(!plugin) {
+        if (!plugin) {
             static QGuiPlatformPlugin def;
             plugin = &def;
         }
@@ -132,7 +133,9 @@ QString QGuiPlatformPlugin::systemIconThemeName()
                 if (subpath == QLatin1String("hicolor")) {
                     continue;
                 }
-                if (QFile::exists(path + QLatin1Char('/') + subpath + QLatin1String("/index.theme"))) {
+                QSettings indextheme(path + QLatin1Char('/') + subpath + QLatin1String("/index.theme"), QSettings::IniFormat);
+                const QStringList themedirectories = indextheme.value(QString::fromLatin1("Icon Theme/Directories")).toStringList();
+                if (!themedirectories.isEmpty()) {
                     themename = subpath;
                     return themename;
                 }

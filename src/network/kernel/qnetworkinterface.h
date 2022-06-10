@@ -84,7 +84,6 @@ public:
 
     int index() const;
     QString name() const;
-    QString humanReadableName() const;
     InterfaceFlags flags() const;
     QString hardwareAddress() const;
     QList<QNetworkAddressEntry> addressEntries() const;

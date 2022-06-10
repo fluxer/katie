@@ -186,23 +186,23 @@ private slots:
     void qvector_separator() { qWarning() << "QVector results: "; }
     void qvector_const_read_access();
     void qvector_mutable_read_access();
-    #ifdef TEST_RETURN
+#ifdef TEST_RETURN
     void qvector_fill_and_return();
-    #endif
+#endif
 
     // Purre Standard solution
     void stdvector() { qWarning() << "std::vector results: "; }
     void stdvector_const_read_access();
     void stdvector_mutable_read_access();
-    #ifdef TEST_RETURN
+#ifdef TEST_RETURN
     void stdvector_fill_and_return();
-    #endif
+#endif
 
     // Build using std, pass as QVector
     void mixedvector() { qWarning() << "mixed results: "; }
-    #ifdef TEST_RETURN
+#ifdef TEST_RETURN
     void mixedvector_fill_and_return();
-    #endif
+#endif
 
     // Alternative implementation
     void qrawvector_separator() { qWarning() << "QRawVector results: "; }
@@ -263,7 +263,6 @@ void tst_QVector::qvector_fill_and_return()
         s += v[1];
     }
 }
-
 #endif
 
 
@@ -304,7 +303,6 @@ void tst_QVector::qrawvector_fill_and_return()
         s += v[1];
     }
 }
-
 #endif
 
 
@@ -345,7 +343,6 @@ void tst_QVector::stdvector_fill_and_return()
         s += v[1];
     }
 }
-
 #endif
 
 ///////////////////// mixed vector /////////////////////
@@ -361,7 +358,6 @@ void tst_QVector::mixedvector_fill_and_return()
         s += v[1];
     }
 }
-
 #endif
 
 QTEST_MAIN(tst_QVector)

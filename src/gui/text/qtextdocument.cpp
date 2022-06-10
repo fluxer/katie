@@ -436,38 +436,6 @@ void QTextDocument::markContentsDirty(int from, int length)
 }
 
 /*!
-    \property QTextDocument::useDesignMetrics
-    \since 4.1
-    \brief whether the document uses design metrics of fonts to improve the accuracy of text layout
-
-    If this property is set to true, the layout will use design metrics.
-    Otherwise, the metrics of the paint device as set on
-    QAbstractTextDocumentLayout::setPaintDevice() will be used.
-
-    Using design metrics makes a layout have a width that is no longer dependent on hinting
-    and pixel-rounding. This means that WYSIWYG text layout becomes possible because the width
-    scales much more linearly based on paintdevice metrics than it would otherwise.
-
-    By default, this property is false.
-*/
-
-void QTextDocument::setUseDesignMetrics(bool b)
-{
-    Q_D(QTextDocument);
-    if (b == d->defaultTextOption.useDesignMetrics())
-        return;
-    d->defaultTextOption.setUseDesignMetrics(b);
-    if (d->lout)
-        d->lout->documentChanged(0, 0, d->length());
-}
-
-bool QTextDocument::useDesignMetrics() const
-{
-    Q_D(const QTextDocument);
-    return d->defaultTextOption.useDesignMetrics();
-}
-
-/*!
     \since 4.2
 
     Draws the content of the document with painter \a p, clipped to \a rect.

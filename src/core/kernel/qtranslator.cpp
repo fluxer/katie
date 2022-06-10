@@ -24,20 +24,20 @@
 #ifndef QT_NO_TRANSLATION
 
 #include "qcoreapplication.h"
-#include "qobject_p.h"
 
 #include <libintl.h>
 
 QT_BEGIN_NAMESPACE
 
-class QTranslatorPrivate : public QObjectPrivate
+class QTranslatorPrivate
 {
-    Q_DECLARE_PUBLIC(QTranslator)
 public:
-
-    QTranslatorPrivate() {}
+    QTranslatorPrivate() { }
 
     QByteArray domain;
+
+private:
+    Q_DISABLE_COPY(QTranslatorPrivate);
 };
 
 /*!
@@ -106,12 +106,10 @@ public:
 */
 
 /*!
-    Constructs an empty message file object with parent \a parent that
-    is not connected to any file.
+    Constructs an empty message file object that is not connected to any file.
 */
-
-QTranslator::QTranslator(QObject * parent)
-    : QObject(*new QTranslatorPrivate, parent)
+QTranslator::QTranslator()
+    : d_ptr(new QTranslatorPrivate())
 {
 }
 
@@ -119,11 +117,12 @@ QTranslator::QTranslator(QObject * parent)
 /*!
     Destroys the object and frees any allocated resources.
 */
-
 QTranslator::~QTranslator()
 {
-    if (QCoreApplication::instance())
+    if (QCoreApplication::instance()) {
         QCoreApplication::removeTranslator(this);
+    }
+    delete d_ptr;
 }
 
 /*!
@@ -136,7 +135,6 @@ QTranslator::~QTranslator()
 
     \sa QLibraryInfo
 */
-
 bool QTranslator::load(const QString &domain)
 {
     if (domain.isEmpty()) {
@@ -156,8 +154,19 @@ bool QTranslator::load(const QString &domain)
 */
 QString QTranslator::translate(const char *context, const char *sourceText) const
 {
-    Q_UNUSED(context);
     Q_D(const QTranslator);
+    if (context) {
+        // for reference:
+        // https://github.com/autotools-mirror/gettext/blob/master/gnulib-local/lib/gettext.h
+        QByteArray msgwithctx(context);
+        msgwithctx.append('\004');
+        msgwithctx.append(sourceText);
+        const char* result = dgettext(d->domain.constData(), msgwithctx.constData());
+        if (result == msgwithctx.constData()) {
+            return QString::fromUtf8(sourceText);
+        }
+        return QString::fromUtf8(result);
+    }
     return QString::fromUtf8(dgettext(d->domain.constData(), sourceText));
 }
 
@@ -170,8 +179,6 @@ bool QTranslator::isEmpty() const
     Q_D(const QTranslator);
     return d->domain.isEmpty();
 }
-
-#include "moc_qtranslator.h"
 
 QT_END_NAMESPACE
 

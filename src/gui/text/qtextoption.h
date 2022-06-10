@@ -71,9 +71,6 @@ public:
     inline void setTabStop(qreal tabStop);
     inline qreal tabStop() const { return tab; }
 
-    void setUseDesignMetrics(bool b) { design = b; }
-    bool useDesignMetrics() const { return design; }
-
 private:
     WrapMode wordwrap;
     Flags fflags;

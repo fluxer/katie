@@ -71,6 +71,8 @@ inline int qstrnicmp(const char *str1, const char *str2, uint len)
 // qChecksum: Internet checksum
 Q_CORE_EXPORT quint16 qChecksum(const char *s, uint len);
 
+Q_CORE_EXPORT QByteArray qRandomUuid();
+
 class QByteRef;
 class QString;
 class QDataStream;

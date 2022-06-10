@@ -29,12 +29,7 @@ static const int minResolution = 50; // the minimum resolution for the tests
 
 QDebug operator<<(QDebug s, const QElapsedTimer &t)
 {
-    union {
-        QElapsedTimer t;
-        struct { qint64 t1, t2; } i;
-    } copy;
-    copy.t = t;
-    s.nospace() << "(" <<  copy.i.t1 << ", " << copy.i.t2 << ")";
+    s.nospace() << "(" <<  t.msecsSinceReference() << ")";
     return s.space();
 }
 
@@ -62,7 +57,6 @@ void tst_QElapsedTimer::validity()
 {
     QElapsedTimer t;
 
-    t.invalidate();
     QVERIFY(!t.isValid());
 
     t.start();

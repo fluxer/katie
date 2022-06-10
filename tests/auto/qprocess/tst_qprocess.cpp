@@ -28,8 +28,6 @@
 #include <QtCore/QRegExp>
 #include <QtCore/QDebug>
 #include <QtCore/QMetaType>
-// Network test unnecessary?
-#include <QtNetwork/QHostInfo>
 #include <stdlib.h>
 
 #ifdef QT_NO_PROCESS
@@ -1587,7 +1585,6 @@ void tst_QProcess::lockupsInStartDetached()
     // doesn't exist. Before Qt 4.2, this used to lock up on Unix due
     // to calling ::exit instead of ::_exit if execve failed.
 
-    QHostInfo::lookupHost(QString("something.invalid"), 0, 0);
     QProcess::execute("yjhbrty");
     QProcess::startDetached("yjhbrty");
 }

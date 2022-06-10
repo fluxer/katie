@@ -2571,7 +2571,7 @@ QDomNode QDomNode::removeChild(const QDomNode& oldChild)
 */
 QDomNode QDomNode::appendChild(const QDomNode& newChild)
 {
-    if (!impl) {
+    if (Q_UNLIKELY(!impl)) {
         qWarning("Calling appendChild() on a null node does nothing.");
         return QDomNode();
     }

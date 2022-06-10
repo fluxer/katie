@@ -136,7 +136,7 @@ QT_BEGIN_NAMESPACE
 #ifndef QT_NO_UDPSOCKET
 
 #define QT_CHECK_BOUND(function, a) do { \
-    if (!isValid()) { \
+    if (Q_UNLIKELY(!isValid())) { \
         qWarning(function" called on a QUdpSocket when not in QUdpSocket::BoundState"); \
         return (a); \
     } } while (0)
@@ -333,7 +333,7 @@ QNetworkInterface QUdpSocket::multicastInterface() const
 void QUdpSocket::setMulticastInterface(const QNetworkInterface &iface)
 {
     Q_D(QUdpSocket);
-    if (!isValid()) {
+    if (Q_UNLIKELY(!isValid())) {
         qWarning("QUdpSocket::setMulticastInterface() called on a QUdpSocket when not in QUdpSocket::BoundState");
         return;
     }

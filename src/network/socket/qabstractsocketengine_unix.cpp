@@ -941,7 +941,7 @@ qint64 QAbstractSocketEnginePrivate::nativeWrite(const char *data, qint64 len)
 qint64 QAbstractSocketEnginePrivate::nativeRead(char *data, qint64 maxSize)
 {
     Q_Q(QAbstractSocketEngine);
-    if (!q->isValid()) {
+    if (Q_UNLIKELY(!q->isValid())) {
         qWarning("QAbstractSocketEngine::nativeRead: Invalid socket");
         return -1;
     }

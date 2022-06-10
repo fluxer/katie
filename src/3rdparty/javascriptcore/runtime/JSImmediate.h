@@ -253,7 +253,7 @@ namespace JSC {
 
         static ALWAYS_INLINE bool areBothImmediate(JSValue v1, JSValue v2)
         {
-            return isImmediate(v1) & isImmediate(v2);
+            return isImmediate(v1) && isImmediate(v2);
         }
 
         static ALWAYS_INLINE bool areBothImmediateIntegerNumbers(JSValue v1, JSValue v2)

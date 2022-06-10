@@ -32,7 +32,7 @@ QT_BEGIN_NAMESPACE
 
     \brief The QLocalSocket class provides a local socket.
 
-    On Windows this is a named pipe and on Unix this is a local domain socket.
+    On Unix this is a local domain socket.
 
     If an error occurs, socketError() returns the type of error, and
     errorString() can be called to get a human readable description
@@ -42,9 +42,6 @@ QT_BEGIN_NAMESPACE
     to use it without one. In that case, you must use waitForConnected(),
     waitForReadyRead(), waitForBytesWritten(), and waitForDisconnected()
     which blocks until the operation is complete or the timeout expires.
-
-    Note that this feature is not supported on versions of Windows earlier than
-    Windows XP.
 
     \sa QLocalServer
 */
@@ -74,7 +71,7 @@ QT_BEGIN_NAMESPACE
 */
 
 /*!
-    \fn bool QLocalSocket::setSocketDescriptor(quintptr socketDescriptor,
+    \fn bool QLocalSocket::setSocketDescriptor(int socketDescriptor,
         LocalSocketState socketState, OpenMode openMode)
 
     Initializes QLocalSocket with the native socket descriptor
@@ -90,7 +87,7 @@ QT_BEGIN_NAMESPACE
 */
 
 /*!
-    \fn quintptr QLocalSocket::socketDescriptor() const
+    \fn int QLocalSocket::socketDescriptor() const
 
     Returns the native socket descriptor of the QLocalSocket object if
     this is available; otherwise returns -1.

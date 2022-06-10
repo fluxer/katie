@@ -2156,7 +2156,7 @@ void QObjectConnectionManager::execute(int slotIndex, void **argv)
     }
     Q_ASSERT(slot.isObject());
 
-    if (engine->isCollecting()) {
+    if (Q_UNLIKELY(engine->isCollecting())) {
         qWarning("QtScript: can't execute signal handler during GC");
         // we can't do a script function call during GC,
         // so we're forced to ignore this signal
@@ -2187,7 +2187,7 @@ void QObjectConnectionManager::execute(int slotIndex, void **argv)
         void *arg = argv[i + 1];
         QByteArray typeName = parameterTypes.at(i);
         int argType = QMetaType::type(parameterTypes.at(i));
-        if (!argType) {
+        if (Q_UNLIKELY(!argType)) {
             qWarning("QScriptEngine: Unable to handle unregistered datatype '%s' "
                         "when invoking handler of signal %s::%s",
                         typeName.constData(), meta->className(), method.signature());

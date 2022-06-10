@@ -60,6 +60,8 @@ class QUrl;
 class QVariant;
 class QDebug;
 
+class QVariantPrivate;
+
 template <typename T>
 inline QVariant qVariantFromValue(const T &);
 
@@ -133,7 +135,7 @@ class Q_CORE_EXPORT QVariant
         LastType = 0xffffffff // need this so that gcc >= 3.4 allocates 32 bits for Type
     };
 
-    inline QVariant() {}
+    QVariant();
     ~QVariant();
     QVariant(Type type);
     QVariant(int typeOrUserType, const void *copy);
@@ -187,9 +189,6 @@ class Q_CORE_EXPORT QVariant
 #endif
 
     QVariant& operator=(const QVariant &other);
-    inline QVariant &operator=(QVariant &&other)
-    { qSwap(d, other.d); return *this; }
-    inline void swap(QVariant &other) { qSwap(d, other.d); }
 
     Type type() const;
     int userType() const;
@@ -198,13 +197,10 @@ class Q_CORE_EXPORT QVariant
     bool canConvert(Type t) const;
     bool convert(Type t);
 
-
-    inline bool isValid() const { return d.type != Invalid; }
+    bool isValid() const;
     bool isNull() const;
 
     void clear();
-
-    void detach();
 
     int toInt(bool *ok = nullptr) const;
     uint toUInt(bool *ok = nullptr) const;
@@ -246,7 +242,6 @@ class Q_CORE_EXPORT QVariant
     QJsonDocument toJsonDocument() const;
 #endif
 
-
 #ifndef QT_NO_DATASTREAM
     void load(QDataStream &ds);
     void save(QDataStream &ds) const;
@@ -274,64 +269,20 @@ class Q_CORE_EXPORT QVariant
     { return canConvert(Type(qMetaTypeId<T>())); }
 
  public:
-    struct PrivateShared
-    {
-        inline PrivateShared(void *v) : ptr(v), ref(1) { }
-        void *ptr;
-        QAtomicInt ref;
-    };
-    struct Private
-    {
-        inline Private(): type(Invalid), is_shared(false), is_null(true) { data.ptr = nullptr; }
-        inline Private(const Private &other)
-            : data(other.data), type(other.type),
-              is_shared(other.is_shared), is_null(other.is_null)
-        {}
-        union Data
-        {
-            int i;
-            uint u;
-            bool b;
-            double d;
-            float f;
-            qlonglong ll;
-            qulonglong ull;
-            QObject *o;
-            void *ptr;
-            PrivateShared *shared;
-        } data;
-        int type;
-        bool is_shared;
-        bool is_null;
-    };
- public:
-    typedef void (*f_construct)(Private *, const void *);
-    typedef void (*f_clear)(Private *);
-    typedef bool (*f_null)(const Private *);
-#ifndef QT_NO_DATASTREAM
-    typedef void (*f_load)(Private *, QDataStream &);
-    typedef void (*f_save)(const Private *, QDataStream &);
-#endif
-    typedef bool (*f_compare)(const Private *, const Private *);
-    typedef bool (*f_convert)(const QVariant::Private *d, int t, void *, bool *);
+    typedef bool (*f_null)(const QVariantPrivate *);
+    typedef bool (*f_compare)(const QVariantPrivate *, const QVariantPrivate *);
+    typedef bool (*f_convert)(const QVariantPrivate *d, int t, void *, bool *);
     typedef void (*f_debugStream)(QDebug, const QVariant &);
     struct Handler {
-        f_construct construct;
-        f_clear clear;
         f_null isNull;
-#ifndef QT_NO_DATASTREAM
-        f_load load;
-        f_save save;
-#endif
         f_compare compare;
         f_convert convert;
         f_debugStream debugStream;
     };
 
-    inline bool operator==(const QVariant &v) const
-    { return cmp(v); }
+    bool operator==(const QVariant &v) const;
     inline bool operator!=(const QVariant &v) const
-    { return !cmp(v); }
+    { return !operator==(v); }
 
 protected:
     friend inline bool qvariant_cast_helper(const QVariant &, QVariant::Type, void *);
@@ -340,12 +291,11 @@ protected:
 #ifndef QT_NO_DEBUG_STREAM
     friend Q_CORE_EXPORT QDebug operator<<(QDebug, const QVariant &);
 #endif
-    Private d;
+    QVariantPrivate *d_ptr;
 
     static const Handler *handler;
 
     void create(int type, const void *copy);
-    bool cmp(const QVariant &other) const;
 
 private:
     // force compile error, prevent QVariant(bool) to be called
@@ -363,7 +313,9 @@ typedef QMap<QString, QVariant> QVariantMap;
 typedef QHash<QString, QVariant> QVariantHash;
 
 inline bool qvariant_cast_helper(const QVariant &v, QVariant::Type tp, void *ptr)
-{ return QVariant::handler->convert(&v.d, tp, ptr, nullptr); }
+{
+    return QVariant::handler->convert(v.d_ptr, tp, ptr, nullptr);
+}
 
 template <typename T>
 inline QVariant qVariantFromValue(const T &t)
@@ -420,18 +372,15 @@ template<> inline QVariant qvariant_cast<QVariant>(const QVariant &v)
 }
 #endif // QT_MOC
 
-Q_DECLARE_TYPEINFO(QVariant, Q_MOVABLE_TYPE);
-
 #ifndef QT_NO_DEBUG_STREAM
 Q_CORE_EXPORT QDebug operator<<(QDebug, const QVariant &);
 Q_CORE_EXPORT QDebug operator<<(QDebug, const QVariant::Type);
 #endif
 
-QT_END_NAMESPACE
-
 Q_DECLARE_BUILTIN_METATYPE(QVariantList, QVariantList)
 Q_DECLARE_BUILTIN_METATYPE(QVariantMap, QVariantMap)
 Q_DECLARE_BUILTIN_METATYPE(QVariantHash, QVariantHash)
 
+QT_END_NAMESPACE
 
 #endif // QVARIANT_H

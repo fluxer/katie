@@ -66,6 +66,17 @@ set(NETWORK_SOURCES
     ${CMAKE_SOURCE_DIR}/src/3rdparty/digest/sha2.c
 )
 
+if(WITH_XXHASH AND XXHASH_FOUND)
+    set(EXTRA_NETWORK_LIBS
+        ${EXTRA_NETWORK_LIBS}
+        ${XXHASH_LIBRARIES}
+    )
+    include_directories(${XXHASH_INCLUDES})
+else()
+    add_definitions(-DXXH_INLINE_ALL)
+    include_directories(${CMAKE_SOURCE_DIR}/src/3rdparty/xxHash)
+endif()
+
 katie_generate_misc("${NETWORK_HEADERS}" QtNetwork)
 katie_generate_public("${NETWORK_PUBLIC_HEADERS}" QtNetwork)
 katie_generate_package(KtNetwork "KtCore")

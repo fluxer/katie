@@ -32,7 +32,7 @@ QT_BEGIN_NAMESPACE
 QDeclarativeInclude::QDeclarativeInclude(const QUrl &url, 
                                          QDeclarativeEngine *engine, 
                                          QScriptContext *ctxt)
-    : QObject(engine), m_engine(engine), m_url(url)
+    : QObject(engine), m_url(url)
 {
     QDeclarativeEnginePrivate *ep = QDeclarativeEnginePrivate::get(engine);
     m_context = ep->contextClass->contextFromValue(QScriptDeclarativeClass::scopeChainValue(ctxt, -3));

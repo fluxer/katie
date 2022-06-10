@@ -23,7 +23,6 @@
 #include "qicon_p.h"
 #include "qiconengine.h"
 #include "qiconengineplugin.h"
-#include "qfactoryloader_p.h"
 #include "qiconloader_p.h"
 #include "qapplication.h"
 #include "qstyleoption.h"
@@ -873,13 +872,12 @@ QIcon QIcon::fromTheme(const QString &name, const QIcon &fallback)
         return icon;
     }
 
-    if (qtIconCache()->contains(name)) {
-        icon = *qtIconCache()->object(name);
-    } else {
-        QIcon *cachedIcon  = new QIcon(new QIconLoaderEngine(name));
+    QIcon *cachedIcon = qtIconCache()->object(name);
+    if (!cachedIcon) {
+        cachedIcon = new QIcon(new QIconLoaderEngine(name));
         qtIconCache()->insert(name, cachedIcon);
-        icon = *cachedIcon;
     }
+    icon = *cachedIcon;
 
     // Note the qapp check is to allow lazy loading of static icons
     // Supporting fallbacks will not work for this case.

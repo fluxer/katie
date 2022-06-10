@@ -168,8 +168,7 @@ typedef enum {
 
 typedef enum {
     HB_ShaperFlag_Default = 0,
-    HB_ShaperFlag_NoKerning = 1,
-    HB_ShaperFlag_UseDesignMetrics = 2
+    HB_ShaperFlag_NoKerning = 1
 } HB_ShaperFlag;
 
 /* 

@@ -32,6 +32,7 @@
 #include "qdeclarativetypenamecache_p.h"
 #include "qdeclarativeengine_p.h"
 #include "qcore_unix_p.h"
+#include "qcorecommon_p.h"
 
 QT_BEGIN_NAMESPACE
 
@@ -44,6 +45,7 @@ static bool greaterThan(const QString &s1, const QString &s2)
 }
 
 typedef QMap<QString, QString> StringStringMap;
+Q_GLOBAL_STATIC(QMutex, qmlEnginePluginsWithRegisteredTypesMutex)
 Q_GLOBAL_STATIC(StringStringMap, qmlEnginePluginsWithRegisteredTypes) // stores the uri
 
 class QDeclarativeImportedNamespace 
@@ -176,8 +178,8 @@ void QDeclarativeImports::populateCache(QDeclarativeTypeNameCache *cache, QDecla
 {
     const QDeclarativeImportedNamespace &set = d->unqualifiedset;
 
-    for (QHash<QString,QDeclarativeImportedNamespace* >::ConstIterator iter = d->set.begin();
-         iter != d->set.end(); ++iter) {
+    for (QHash<QString,QDeclarativeImportedNamespace* >::ConstIterator iter = d->set.constBegin();
+         iter != d->set.constEnd(); ++iter) {
 
         QDeclarativeTypeNameCache::Data *d = cache->data(iter.key());
         if (d) {
@@ -552,12 +554,12 @@ bool QDeclarativeImportsPrivate::add(const QDeclarativeDirComponents &qmldircomp
     }
 
     if (!versionFound && vmaj > -1 && vmin > -1 && !qmldircomponents.isEmpty()) {
-        QList<QDeclarativeDirParser::Component>::ConstIterator it = qmldircomponents.begin();
+        QList<QDeclarativeDirParser::Component>::ConstIterator it = qmldircomponents.constBegin();
         int lowest_maj = INT_MAX;
         int lowest_min = INT_MAX;
         int highest_maj = INT_MIN;
         int highest_min = INT_MIN;
-        for (; it != qmldircomponents.end(); ++it) {
+        for (; it != qmldircomponents.constEnd(); ++it) {
             if (it->majorVersion > highest_maj || (it->majorVersion == highest_maj && it->minorVersion > highest_min)) {
                 highest_maj = it->majorVersion;
                 highest_min = it->minorVersion;
@@ -710,11 +712,8 @@ QDeclarativeImportDatabase::QDeclarativeImportDatabase(QDeclarativeEngine *e)
 
 
     // env import paths
-    QByteArray envImportPath = qgetenv("QML_IMPORT_PATH");
-    if (!envImportPath.isEmpty()) {
-        QStringList paths = QString::fromLatin1(envImportPath).split(QLatin1Char(':'), QString::SkipEmptyParts);
-        for (int ii = paths.count() - 1; ii >= 0; --ii)
-            addImportPath(paths.at(ii));
+    foreach (const QString &it, qGetEnvList("QML_IMPORT_PATH")) {
+        addImportPath(it);
     }
 
     addImportPath(QCoreApplication::applicationDirPath());
@@ -897,6 +896,7 @@ bool QDeclarativeImportDatabase::importPlugin(const QString &filePath, const QSt
     QFileInfo fileInfo(filePath);
     const QString absoluteFilePath = fileInfo.absoluteFilePath();
 
+    QMutexLocker locker(qmlEnginePluginsWithRegisteredTypesMutex());
     bool engineInitialized = initializedPlugins.contains(absoluteFilePath);
     bool typesRegistered = qmlEnginePluginsWithRegisteredTypes()->contains(absoluteFilePath);
 
@@ -917,20 +917,17 @@ bool QDeclarativeImportDatabase::importPlugin(const QString &filePath, const QSt
 
         if (QDeclarativeExtensionInterface *iface = qobject_cast<QDeclarativeExtensionInterface *>(loader.instance())) {
 
-            const QByteArray bytes = uri.toUtf8();
-            const char *moduleId = bytes.constData();
+            const QByteArray moduleId = uri.toUtf8();
             if (!typesRegistered) {
-
-                // ### this code should probably be protected with a mutex.
                 qmlEnginePluginsWithRegisteredTypes()->insert(absoluteFilePath, uri);
-                iface->registerTypes(moduleId);
+                iface->registerTypes(moduleId.constData());
             }
             if (!engineInitialized) {
                 // things on the engine (eg. adding new global objects) have to be done for every engine.
 
                 // protect against double initialization
                 initializedPlugins.insert(absoluteFilePath);
-                iface->initializeEngine(engine, moduleId);
+                iface->initializeEngine(engine, moduleId.constData());
             }
         } else {
             if (errorString)

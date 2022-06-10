@@ -97,34 +97,14 @@ static void qt_cleanlooks_draw_gradient(QPainter *painter, const QRect &rect, co
 }
 
 static void qt_cleanlooks_draw_buttongradient(QPainter *painter, const QRect &rect, const QColor &gradientStart,
-                                                const QColor &gradientMid, const QColor &gradientStop, Direction direction = TopDown,
-                                                QBrush bgBrush = QBrush())
+                                                const QColor &gradientMid, const QColor &gradientStop, QBrush bgBrush)
 {
         int x = rect.center().x();
-        int y = rect.center().y();
-        QLinearGradient *gradient;
-        bool horizontal = false;
-        switch(direction) {
-            case FromLeft:
-                horizontal = true;
-                gradient = new QLinearGradient(rect.left(), y, rect.right(), y);
-                break;
-            case FromRight:
-                horizontal = true;
-                gradient = new QLinearGradient(rect.right(), y, rect.left(), y);
-                break;
-            case BottomUp:
-                gradient = new QLinearGradient(x, rect.bottom(), x, rect.top());
-                break;
-            case TopDown:
-            default:
-                gradient = new QLinearGradient(x, rect.top(), x, rect.bottom());
-                break;
-        }
+        QLinearGradient *gradient = new QLinearGradient(x, rect.top(), x, rect.bottom());
         if (bgBrush.gradient())
             gradient->setStops(bgBrush.gradient()->stops());
         else {
-            int size = horizontal ? rect.width() : rect.height() ;
+            int size = rect.height();
             if (size > 4) {
                 float edge = 4.0/(float)size;
                 gradient->setColorAt(0, gradientStart);
@@ -713,12 +693,12 @@ void QCleanlooksStyle::drawPrimitive(PrimitiveElement elem,
                 qt_cleanlooks_draw_buttongradient(p, gradRect,
                                                   highlightedGradientStartColor,
                                                   highlightedGradientMidColor,
-                                                  highlightedGradientStopColor, TopDown, option->palette.button());
+                                                  highlightedGradientStopColor, option->palette.button());
             } else {
                 qt_cleanlooks_draw_buttongradient(p, gradRect,
                                                   gradientStartColor,
                                                   gradientMidColor,
-                                                  gradientStopColor, TopDown, option->palette.button());
+                                                  gradientStopColor, option->palette.button());
             }
         }
 

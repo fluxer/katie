@@ -133,7 +133,6 @@ private:
     inline QFixed operator*(qreal d) const { QFixed f = *this; return (f *= d); }
     int val;
 };
-Q_DECLARE_TYPEINFO(QFixed, Q_PRIMITIVE_TYPE);
 
 #define QFIXED_MAX (INT_MAX/256)
 

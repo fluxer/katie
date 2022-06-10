@@ -59,10 +59,6 @@ include(KatieBuildMacros)
 
 # disable some compiler warnings
 set(KATIE_NO_WARNINGS
-    # placement new used in private QVariant functions
-    -Wno-placement-new
-    # QVector does not always use new/delete
-    -Wno-class-memaccess
     # hot attribute used in function prototypes
     -Wno-attributes
     # deprecated X11 and CUPS API used
@@ -141,6 +137,9 @@ set(KATIE_TOOLS_SUFFIX "" CACHE STRING "Tools (moc, uic, rcc, etc.) suffix")
 # bundled packages
 option(WITH_DEFLATE "Build with external libdeflate" ON)
 add_feature_info(deflate WITH_DEFLATE "build with external libdeflate")
+
+option(WITH_XXHASH "Build with external xxHash" OFF)
+add_feature_info(xxhash WITH_XXHASH "build with external xxHash")
 
 # optional packages
 option(WITH_CUPS "Build CUPS support" ON)
@@ -225,6 +224,14 @@ set_package_properties(Deflate PROPERTIES
     PURPOSE "Required for compression and decompression support"
     DESCRIPTION "Heavily optimized library for DEFLATE/zlib/gzip compression and decompression"
     URL "https://github.com/ebiggers/libdeflate"
+    TYPE RECOMMENDED
+)
+
+find_package(xxHash)
+set_package_properties(xxHash PROPERTIES
+    PURPOSE "Required for the custom hash algorithm"
+    DESCRIPTION "Extremely fast non-cryptographic hash algorithm"
+    URL "https://cyan4973.github.io/xxHash/"
     TYPE RECOMMENDED
 )
 
@@ -579,9 +586,6 @@ katie_generate_obsolete(QFlags QtCore qglobal.h)
 katie_generate_obsolete(QFocusEvent QtGui qevent.h)
 katie_generate_obsolete(QFontMetricsF QtGui qfontmetrics.h)
 katie_generate_obsolete(QFormBuilder QtDesigner formbuilder.h)
-katie_generate_obsolete(QFutureInterfaceBase QtCore qfutureinterface.h)
-katie_generate_obsolete(QFutureIterator QtCore qfuture.h)
-katie_generate_obsolete(QFutureWatcherBase QtCore qfuturewatcher.h)
 katie_generate_obsolete(QGenericArgument QtCore qobjectdefs.h)
 katie_generate_obsolete(QGenericReturnArgument QtCore qobjectdefs.h)
 katie_generate_obsolete(QGradient QtGui qbrush.h)
@@ -668,7 +672,6 @@ katie_generate_obsolete(QMouseEvent QtGui qevent.h)
 katie_generate_obsolete(QMoveEvent QtGui qevent.h)
 katie_generate_obsolete(QMultiHash QtCore qhash.h)
 katie_generate_obsolete(QMultiMap QtCore qmap.h)
-katie_generate_obsolete(QMutableFutureIterator QtCore qfuture.h)
 katie_generate_obsolete(QMutableHashIterator QtCore qhash.h)
 katie_generate_obsolete(QMutableListIterator QtCore qlist.h)
 katie_generate_obsolete(QMutableMapIterator QtCore qmap.h)
@@ -691,7 +694,6 @@ katie_generate_obsolete(QPointF QtCore qpoint.h)
 katie_generate_obsolete(QPolygonF QtGui qpolygon.h)
 katie_generate_obsolete(QProcessEnvironment QtCore qprocess.h)
 katie_generate_obsolete(QRadialGradient QtGui qbrush.h)
-katie_generate_obsolete(QReadLocker QtCore qreadwritelock.h)
 katie_generate_obsolete(QRectF QtCore qrect.h)
 katie_generate_obsolete(QRegExpValidator QtGui qvalidator.h)
 katie_generate_obsolete(QResizeEvent QtGui qevent.h)
@@ -819,7 +821,6 @@ katie_generate_obsolete(QWidgetMapper QtGui qwindowdefs.h)
 katie_generate_obsolete(QWidgetSet QtGui qwindowdefs.h)
 katie_generate_obsolete(QWindowStateChangeEvent QtGui qevent.h)
 katie_generate_obsolete(QWizardPage QtGui qwizard.h)
-katie_generate_obsolete(QWriteLocker QtCore qreadwritelock.h)
 katie_generate_obsolete(QX11EmbedContainer QtGui qx11embed_x11.h)
 katie_generate_obsolete(QX11EmbedWidget QtGui qx11embed_x11.h)
 katie_generate_obsolete(QX11Info QtGui qx11info_x11.h)

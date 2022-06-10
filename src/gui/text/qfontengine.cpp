@@ -198,20 +198,16 @@ static inline QFixed kerning(int left, int right, const QFontEngine::KernPair *p
     return 0;
 }
 
-void QFontEngine::doKerning(QGlyphLayout *glyphs, QTextEngine::ShaperFlags flags)
+void QFontEngine::doKerning(QGlyphLayout *glyphs)
 {
     int numPairs = kerning_pairs.size();
-    if(!numPairs)
+    if (!numPairs)
         return;
 
     const KernPair *pairs = kerning_pairs.constData();
 
-    if(flags & QTextEngine::DesignMetrics) {
-        for(int i = 0; i < glyphs->numGlyphs - 1; ++i)
-            glyphs->advances_x[i] += kerning(glyphs->glyphs[i], glyphs->glyphs[i+1] , pairs, numPairs);
-    } else {
-        for(int i = 0; i < glyphs->numGlyphs - 1; ++i)
-            glyphs->advances_x[i] += qRound(kerning(glyphs->glyphs[i], glyphs->glyphs[i+1] , pairs, numPairs));
+    for (int i = 0; i < glyphs->numGlyphs - 1; ++i) {
+        glyphs->advances_x[i] += qRound(kerning(glyphs->glyphs[i], glyphs->glyphs[i+1] , pairs, numPairs));
     }
 }
 
@@ -278,7 +274,7 @@ end:
 }
 
 #else
-void QFontEngine::doKerning(QGlyphLayout *, QTextEngine::ShaperFlags)
+void QFontEngine::doKerning(QGlyphLayout *)
 {
 }
 #endif
@@ -330,7 +326,7 @@ bool QFontEngineBox::stringToCMap(const QChar *, int len, QGlyphLayout *glyphs, 
     return true;
 }
 
-void QFontEngineBox::recalcAdvances(QGlyphLayout *glyphs, QTextEngine::ShaperFlags) const
+void QFontEngineBox::recalcAdvances(QGlyphLayout *glyphs) const
 {
     for (int i = 0; i < glyphs->numGlyphs; i++) {
         glyphs->advances_x[i] = _size;

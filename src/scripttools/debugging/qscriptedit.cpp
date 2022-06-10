@@ -30,6 +30,7 @@
 #include <QtGui/qmenu.h>
 #include <QtGui/qaction.h>
 #include <QtGui/qwidgetaction.h>
+#include <QtGui/qtextobject.h>
 #include <QtCore/qdebug.h>
 
 QT_BEGIN_NAMESPACE

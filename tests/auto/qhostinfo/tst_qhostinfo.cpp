@@ -53,7 +53,6 @@ public slots:
     void initTestCase();
 
 private slots:
-    void getSetCheck();
     void staticInformation();
     void lookupIPv4_data();
     void lookupIPv4();
@@ -67,40 +66,10 @@ private slots:
 
     void raceCondition();
 
-    void multipleSameLookups();
-    void multipleDifferentLookups_data();
-    void multipleDifferentLookups();
-
-protected slots:
-    void resultsReady(const QHostInfo &);
-
 private:
     bool ipv6Available;
-    bool lookupDone;
-    int lookupsDoneCounter;
     QHostInfo lookupResults;
 };
-
-// Testing get/set functions
-void tst_QHostInfo::getSetCheck()
-{
-    QHostInfo obj1;
-    // HostInfoError QHostInfo::error()
-    // void QHostInfo::setError(HostInfoError)
-    obj1.setError(QHostInfo::HostInfoError(0));
-    QCOMPARE(QHostInfo::HostInfoError(0), obj1.error());
-    obj1.setError(QHostInfo::HostInfoError(1));
-    QCOMPARE(QHostInfo::HostInfoError(1), obj1.error());
-
-    // int QHostInfo::lookupId()
-    // void QHostInfo::setLookupId(int)
-    obj1.setLookupId(0);
-    QCOMPARE(0, obj1.lookupId());
-    obj1.setLookupId(INT_MIN);
-    QCOMPARE(INT_MIN, obj1.lookupId());
-    obj1.setLookupId(INT_MAX);
-    QCOMPARE(INT_MAX, obj1.lookupId());
-}
 
 void tst_QHostInfo::staticInformation()
 {
@@ -165,12 +134,8 @@ void tst_QHostInfo::lookupIPv4()
     QFETCH(int, err);
     QFETCH(QString, addresses);
 
-    lookupDone = false;
-    QHostInfo::lookupHost(hostname, this, SLOT(resultsReady(const QHostInfo&)));
-
-    QTestEventLoop::instance().enterLoop(10);
-    QVERIFY(!QTestEventLoop::instance().timeout());
-    QVERIFY(lookupDone);
+    QHostInfo lookupResults = QHostInfo::fromName(hostname);
+    QTestEventLoop::instance().enterLoop(1);
 
     if ((int)lookupResults.error() != (int)err) {
         qWarning() << hostname << "=>" << lookupResults.errorString();
@@ -213,12 +178,8 @@ void tst_QHostInfo::lookupIPv6()
     if (!ipv6Available)
         QSKIP("This platform does not support IPv6 lookups", SkipAll);
 
-    lookupDone = false;
-    QHostInfo::lookupHost(hostname, this, SLOT(resultsReady(const QHostInfo&)));
-
-    QTestEventLoop::instance().enterLoop(10);
-    QVERIFY(!QTestEventLoop::instance().timeout());
-    QVERIFY(lookupDone);
+    QHostInfo lookupResults = QHostInfo::fromName(hostname);
+    QTestEventLoop::instance().enterLoop(1);
 
     QCOMPARE((int)lookupResults.error(), (int)err);
 
@@ -302,73 +263,6 @@ void tst_QHostInfo::raceCondition()
         QTcpSocket socket;
         socket.connectToHost("invalid" TEST_DOMAIN, 80);
     }
-}
-
-// this test is for the multi-threaded QHostInfo rewrite. It is about getting results at all,
-// not about getting correct IPs
-void tst_QHostInfo::multipleSameLookups()
-{
-    const int COUNT = 10;
-    lookupsDoneCounter = 0;
-
-    for (int i = 0; i < COUNT; i++)
-        QHostInfo::lookupHost("localhost", this, SLOT(resultsReady(const QHostInfo)));
-
-    QElapsedTimer timer;
-    timer.start();
-    while (timer.elapsed() < 10000 && lookupsDoneCounter < COUNT) {
-        QTestEventLoop::instance().enterLoop(2);
-    }
-    QCOMPARE(lookupsDoneCounter, COUNT);
-}
-
-// this test is for the multi-threaded QHostInfo rewrite. It is about getting results at all,
-// not about getting correct IPs
-void tst_QHostInfo::multipleDifferentLookups_data()
-{
-    QTest::addColumn<int>("repeats");
-    QTest::newRow("1") << 1;
-    QTest::newRow("2") << 2;
-    QTest::newRow("5") << 5;
-    QTest::newRow("10") << 10;
-}
-
-void tst_QHostInfo::multipleDifferentLookups()
-{
-    QStringList hostnameList;
-    hostnameList << "a-single" TEST_DOMAIN
-                 << "a-multi" TEST_DOMAIN
-                 << "aaaa-single" TEST_DOMAIN
-                 << "aaaa-multi" TEST_DOMAIN
-                 << "a-plus-aaaa" TEST_DOMAIN
-                 << "multi" TEST_DOMAIN
-                 << "localhost" TEST_DOMAIN
-                 << "cname" TEST_DOMAIN
-                 << "127.0.0.1" << "----";
-
-    QFETCH(int, repeats);
-    const int COUNT = hostnameList.size();
-    lookupsDoneCounter = 0;
-
-    for (int i = 0; i < hostnameList.size(); i++)
-        for (int j = 0; j < repeats; ++j)
-            QHostInfo::lookupHost(hostnameList.at(i), this, SLOT(resultsReady(const QHostInfo)));
-
-    QElapsedTimer timer;
-    timer.start();
-    while (timer.elapsed() < 60000 && lookupsDoneCounter < repeats*COUNT) {
-        QTestEventLoop::instance().enterLoop(2);
-        //qDebug() << "t:" << timer.elapsed();
-    }
-    QCOMPARE(lookupsDoneCounter, repeats*COUNT);
-}
-
-void tst_QHostInfo::resultsReady(const QHostInfo &hi)
-{
-    lookupDone = true;
-    lookupResults = hi;
-    lookupsDoneCounter++;
-    QMetaObject::invokeMethod(&QTestEventLoop::instance(), "exitLoop", Qt::QueuedConnection);
 }
 
 QTEST_MAIN(tst_QHostInfo)

@@ -30,35 +30,23 @@
 QT_BEGIN_NAMESPACE
 
 // The maximum number of pixels a flick can overshoot
-#ifndef QML_FLICK_OVERSHOOT
 #define QML_FLICK_OVERSHOOT 200
-#endif
 
 // The number of samples to use in calculating the velocity of a flick
-#ifndef QML_FLICK_SAMPLEBUFFER
 #define QML_FLICK_SAMPLEBUFFER 3
-#endif
 
 // The number of samples to discard when calculating the flick velocity.
 // Touch panels often produce inaccurate results as the finger is lifted.
-#ifndef QML_FLICK_DISCARDSAMPLES
 #define QML_FLICK_DISCARDSAMPLES 1
-#endif
 
 // The default maximum velocity of a flick.
-#ifndef QML_FLICK_DEFAULTMAXVELOCITY
 #define QML_FLICK_DEFAULTMAXVELOCITY 2500
-#endif
 
 // The default deceleration of a flick.
-#ifndef QML_FLICK_DEFAULTDECELERATION
 #define QML_FLICK_DEFAULTDECELERATION 1750
-#endif
 
 // How much faster to decelerate when overshooting
-#ifndef QML_FLICK_OVERSHOOTFRICTION
 #define QML_FLICK_OVERSHOOTFRICTION 8
-#endif
 
 // FlickThreshold determines how far the "mouse" must have moved
 // before we perform a flick.
@@ -1007,7 +995,7 @@ void QDeclarativeFlickablePrivate::captureDelayedPress(QGraphicsSceneMouseEvent 
     delayedPressTarget = q->scene()->mouseGrabberItem();
     delayedPressEvent = new QGraphicsSceneMouseEvent(event->type());
     delayedPressEvent->setAccepted(false);
-    for (int i = 0x1; i <= 0x10; i <<= 1) {
+    for (int i = Qt::LeftButton; i <= Qt::MiddleButton; i <<= 1) {
         if (event->buttons() & i) {
             Qt::MouseButton button = Qt::MouseButton(i);
             delayedPressEvent->setButtonDownPos(button, event->buttonDownPos(button));
@@ -1490,7 +1478,7 @@ bool QDeclarativeFlickable::sendMouseEvent(QGraphicsSceneMouseEvent *event)
     bool stealThisEvent = d->stealMouse;
     if ((stealThisEvent || myRect.contains(event->scenePos().toPoint())) && (!grabber || !grabber->keepMouseGrab() || disabledItem)) {
         mouseEvent.setAccepted(false);
-        for (int i = 0x1; i <= 0x10; i <<= 1) {
+        for (int i = Qt::LeftButton; i <= Qt::MiddleButton; i <<= 1) {
             if (event->buttons() & i) {
                 Qt::MouseButton button = Qt::MouseButton(i);
                 mouseEvent.setButtonDownPos(button, mapFromScene(event->buttonDownPos(button)));

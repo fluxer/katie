@@ -56,34 +56,25 @@ class OscillateThread : public QThread
 {
 public:
     bool m_done;
-    bool m_useMutex;
     unsigned long m_timeout;
     bool m_wakeOne;
     int count;
 
-    OscillateThread(bool useMutex, unsigned long timeout, bool wakeOne)
-    : m_done(false), m_useMutex(useMutex), m_timeout(timeout), m_wakeOne(wakeOne)
+    OscillateThread(unsigned long timeout, bool wakeOne)
+    : m_done(false), m_timeout(timeout), m_wakeOne(wakeOne)
         {}
     void run()
     {
         QMutex mtx;
-        QReadWriteLock rwl;
         count = 0;
 
         forever {
             if (m_done)
                 break;
-            if (m_useMutex) {
-                mtx.lock();
-                while (tst_QWaitCondition::turn == tst_QWaitCondition::LocalTurn)
-                    tst_QWaitCondition::remote.wait(&mtx, m_timeout);
-                mtx.unlock();
-            } else {
-                rwl.lockForWrite();
-                while (tst_QWaitCondition::turn == tst_QWaitCondition::LocalTurn)
-                    tst_QWaitCondition::remote.wait(&rwl, m_timeout);
-                rwl.unlock();
-            }
+            mtx.lock();
+            while (tst_QWaitCondition::turn == tst_QWaitCondition::LocalTurn)
+                tst_QWaitCondition::remote.wait(&mtx, m_timeout);
+            mtx.unlock();
             tst_QWaitCondition::turn = tst_QWaitCondition::LocalTurn;
             if (m_wakeOne)
                 tst_QWaitCondition::local.wakeOne();
@@ -96,52 +87,36 @@ public:
 
 void tst_QWaitCondition::oscillate_data()
 {
-    QTest::addColumn<bool>("useMutex");
     QTest::addColumn<unsigned long>("timeout");
     QTest::addColumn<bool>("wakeOne");
 
-    QTest::newRow("mutex, timeout, one") << true << 1000ul << true;
-    QTest::newRow("readWriteLock, timeout, one") << false << 1000ul << true;
-    QTest::newRow("mutex, timeout, all") << true << 1000ul << false;
-    QTest::newRow("readWriteLock, timeout, all") << false << 1000ul << false;
-    QTest::newRow("mutex, forever, one") << true << ULONG_MAX << true;
-    QTest::newRow("readWriteLock, forever, one") << false << ULONG_MAX << true;
-    QTest::newRow("mutex, forever, all") << true << ULONG_MAX << false;
-    QTest::newRow("readWriteLock, forever, all") << false << ULONG_MAX << false;
+    QTest::newRow("mutex, timeout, one") << 1000ul << true;
+    QTest::newRow("mutex, timeout, all") << 1000ul << false;
+    QTest::newRow("mutex, forever, one") << ULONG_MAX << true;
+    QTest::newRow("mutex, forever, all") << ULONG_MAX << false;
 }
 
 void tst_QWaitCondition::oscillate()
 {
     QMutex mtx;
-    QReadWriteLock rwl;
 
-    QFETCH(bool, useMutex);
     QFETCH(unsigned long, timeout);
     QFETCH(bool, wakeOne);
 
     turn = LocalTurn;
-    OscillateThread thrd(useMutex, timeout, wakeOne);
+    OscillateThread thrd(timeout, wakeOne);
     thrd.start();
 
     QBENCHMARK {
-        if (useMutex)
-            mtx.lock();
-        else
-            rwl.lockForWrite();
+        mtx.lock();
         turn = RemoteTurn;
         if (wakeOne)
             remote.wakeOne();
         else
             remote.wakeAll();
-        if (useMutex) {
-            while (turn == RemoteTurn)
-                local.wait(&mtx, timeout);
-            mtx.unlock();
-        } else {
-            while (turn == RemoteTurn)
-                local.wait(&rwl, timeout);
-            rwl.unlock();
-        }
+        while (turn == RemoteTurn)
+            local.wait(&mtx, timeout);
+        mtx.unlock();
     }
 
     thrd.m_done = true;
@@ -161,12 +136,11 @@ void tst_QWaitCondition::thrash()
     QMutex mtx;
     mtx.lock();
 
-    QFETCH(bool, useMutex);
     QFETCH(unsigned long, timeout);
     QFETCH(bool, wakeOne);
 
     turn = LocalTurn;
-    OscillateThread thrd(useMutex, timeout, wakeOne);
+    OscillateThread thrd(timeout, wakeOne);
     thrd.start();
     local.wait(&mtx, 1000ul);
     mtx.unlock();

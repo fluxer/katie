@@ -80,7 +80,7 @@ public:
 private:
     QEasingCurvePrivate *d_ptr;
 #ifndef QT_NO_DEBUG_STREAM
-    friend Q_CORE_EXPORT QDebug operator<<(QDebug debug, const QEasingCurve &item);
+    friend Q_CORE_EXPORT QDebug operator<<(QDebug, const QEasingCurve &);
 #endif
 #ifndef QT_NO_DATASTREAM
     friend Q_CORE_EXPORT QDataStream &operator<<(QDataStream &, const QEasingCurve&);
@@ -89,7 +89,7 @@ private:
 };
 
 #ifndef QT_NO_DEBUG_STREAM
-Q_CORE_EXPORT QDebug operator<<(QDebug debug, const QEasingCurve &item);
+Q_CORE_EXPORT QDebug operator<<(QDebug, const QEasingCurve &);
 #endif
 
 #ifndef QT_NO_DATASTREAM

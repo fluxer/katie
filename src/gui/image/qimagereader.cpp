@@ -144,7 +144,6 @@ static QImageIOHandler *createReadHandlerHelper(QIODevice *device,
 #ifndef QT_NO_IMAGEFORMAT_PPM
     } else if (form == "pbm" || form == "pbmraw" || form == "ppm" || form == "ppmraw") {
         handler = new QPpmHandler();
-        handler->setOption(QImageIOHandler::SubType, form);
 #endif
     }
 
@@ -179,7 +178,6 @@ static QImageIOHandler *createReadHandlerHelper(QIODevice *device,
         QByteArray subType;
         if (!handler && QPpmHandler::canRead(device, &subType)) {
             handler = new QPpmHandler();
-            handler->setOption(QImageIOHandler::SubType, subType);
         }
 #endif
     }
@@ -392,13 +390,9 @@ void QImageReader::setFormat(const QByteArray &format)
 */
 QByteArray QImageReader::format() const
 {
-    if (d->format.isEmpty()) {
-        if (!d->initHandler())
-            return QByteArray();
-        return d->handler->canRead() ? d->handler->format() : QByteArray();
-    }
-
-    return d->format;
+    if (!d->initHandler())
+        return QByteArray();
+    return d->handler->canRead() ? d->handler->format() : QByteArray();
 }
 
 /*!
@@ -518,8 +512,8 @@ QString QImageReader::fileName() const
     contents.
 
     If the image format does not support this feature, this function returns
-    an invalid size. Some of Katie's built-in image handlers all support
-    this feature, but custom image format plugins are not required to do so.
+    an invalid size. Some of Katie's built-in image handlers support this
+    feature, but custom image format plugins are not required to do so.
 
     \sa QImageIOHandler::ImageOption, QImageIOHandler::option(), QImageIOHandler::supportsOption()
 */

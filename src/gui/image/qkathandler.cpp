@@ -112,15 +112,14 @@ bool QKatHandler::read(QImage *image)
         image->d->data, image->byteCount(),
         &decompsize
     );
+    libdeflate_free_decompressor(decomp);
 
     if (Q_UNLIKELY(decompresult != LIBDEFLATE_SUCCESS)) {
         qWarning("QKatHandler::read() Could not decompress image (%d)", decompresult);
         *image = QImage();
-        libdeflate_free_decompressor(decomp);
         return false;
     }
 
-    libdeflate_free_decompressor(decomp);
     return true;
 }
 

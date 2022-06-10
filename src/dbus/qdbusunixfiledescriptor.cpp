@@ -118,9 +118,6 @@ QDBusUnixFileDescriptor::QDBusUnixFileDescriptor()
     fileDescriptor parameter. The original file descriptor is not touched and
     must be closed by the user.
 
-    Note that the value returned by fileDescriptor() will be different from
-    the \a fileDescriptor parameter passed.
-
     If the \a fileDescriptor parameter is not valid, isValid() will return
     false and fileDescriptor() will return -1.
 
@@ -130,7 +127,7 @@ QDBusUnixFileDescriptor::QDBusUnixFileDescriptor(int fileDescriptor)
     : d(0)
 {
     if (fileDescriptor != -1)
-        setFileDescriptor(fileDescriptor);
+        giveFileDescriptor(fileDescriptor);
 }
 
 /*!
@@ -186,7 +183,7 @@ bool QDBusUnixFileDescriptor::isValid() const
 */
 int QDBusUnixFileDescriptor::fileDescriptor() const
 {
-    return d ? d->fd.operator int() : -1;
+    return d ? d->fd.load() : -1;
 }
 
 /*!

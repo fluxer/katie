@@ -734,16 +734,6 @@ static inline void _q_adjustRect(QRect *rect)
         rect->adjust(0, 0, 0, 1);
 }
 
-/*
-    ### Move this into QGraphicsItemPrivate
- */
-class QGraphicsItemCustomDataStore
-{
-public:
-    QMap<const QGraphicsItem *, QMap<int, QVariant> > data;
-};
-Q_GLOBAL_STATIC(QGraphicsItemCustomDataStore, qt_dataStore)
-
 /*!
     \internal
 
@@ -903,7 +893,7 @@ void QGraphicsItemPrivate::remapItemPos(QEvent *event, QGraphicsItem *item)
         QGraphicsSceneMouseEvent *mouseEvent = static_cast<QGraphicsSceneMouseEvent *>(event);
         mouseEvent->setPos(item->mapFromItem(q, mouseEvent->pos()));
         mouseEvent->setLastPos(item->mapFromItem(q, mouseEvent->pos()));
-        for (int i = 0x1; i <= 0x10; i <<= 1) {
+        for (int i = Qt::LeftButton; i <= Qt::MiddleButton; i <<= 1) {
             if (mouseEvent->buttons() & i) {
                 Qt::MouseButton button = Qt::MouseButton(i);
                 mouseEvent->setButtonDownPos(button, item->mapFromItem(q, mouseEvent->buttonDownPos(button)));
@@ -1439,9 +1429,6 @@ QGraphicsItem::~QGraphicsItem()
         }
     }
     delete d_ptr->transformData;
-
-    if (QGraphicsItemCustomDataStore *dataStore = qt_dataStore())
-        dataStore->data.remove(this);
 }
 
 /*!
@@ -6343,10 +6330,8 @@ bool QGraphicsItem::isUnderMouse() const
 */
 QVariant QGraphicsItem::data(int key) const
 {
-    QGraphicsItemCustomDataStore *store = qt_dataStore();
-    if (!store->data.contains(this))
-        return QVariant();
-    return store->data.value(this).value(key);
+    Q_D(const QGraphicsItem);
+    return d->datastore.value(key);
 }
 
 /*!
@@ -6360,7 +6345,8 @@ QVariant QGraphicsItem::data(int key) const
 */
 void QGraphicsItem::setData(int key, const QVariant &value)
 {
-    qt_dataStore()->data[this][key] = value;
+    Q_D(QGraphicsItem);
+    d->datastore[key] = value;
 }
 
 /*!

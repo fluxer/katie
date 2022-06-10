@@ -120,14 +120,14 @@ void tst_QFont::italicOblique()
     if (families.isEmpty())
         return;
 
-    QStringList::ConstIterator f_it, f_end = families.end();
-    for (f_it = families.begin(); f_it != f_end; ++f_it) {
+    QStringList::ConstIterator f_it, f_end = families.constEnd();
+    for (f_it = families.constBegin(); f_it != f_end; ++f_it) {
 
         QString family = *f_it;
         QStringList styles = fdb.styles(family);
         QVERIFY(!styles.isEmpty());
-        QStringList::ConstIterator s_it, s_end = styles.end();
-        for (s_it = styles.begin(); s_it != s_end; ++s_it) {
+        QStringList::ConstIterator s_it, s_end = styles.constEnd();
+        for (s_it = styles.constBegin(); s_it != s_end; ++s_it) {
             QString style = *s_it;
 
             if (fdb.isSmoothlyScalable(family, style)) {

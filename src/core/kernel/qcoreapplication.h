@@ -99,6 +99,11 @@ public:
     static QStringList libraryPaths();
     static void addLibraryPath(const QString &);
     static void removeLibraryPath(const QString &);
+
+    static void setPluginPaths(const QStringList &);
+    static QStringList pluginPaths();
+    static void addPluginPath(const QString &);
+    static void removePluginPath(const QString &);
 #endif // QT_NO_LIBRARY
 
 #ifndef QT_NO_TRANSLATION

@@ -20,26 +20,20 @@
 ****************************************************************************/
 
 #include "qdeclarativelistview_p.h"
-
 #include "qdeclarativeflickable_p_p.h"
 #include "qdeclarativevisualitemmodel_p.h"
-
 #include "qdeclarativesmoothedanimation_p_p.h"
 #include "qdeclarativeexpression.h"
 #include "qdeclarativeengine.h"
 #include "qdeclarativeguard_p.h"
 #include "qdeclarativeinfo.h"
-
 #include "qlistmodelinterface_p.h"
 #include "qmath.h"
-#include <QEvent>
+#include "qevent.h"
 #include "qplatformdefs.h"
+#include "qdeclarativecommon_p.h"
 
 QT_BEGIN_NAMESPACE
-
-#ifndef QML_FLICK_SNAPONETHRESHOLD
-#define QML_FLICK_SNAPONETHRESHOLD 30
-#endif
 
 void QDeclarativeViewSection::setProperty(const QString &property)
 {
@@ -899,7 +893,7 @@ void QDeclarativeListViewPrivate::updateUnrequestedPositions()
     if (unrequestedItems.count()) {
         qreal pos = position();
         QHash<QDeclarativeItem*,int>::const_iterator it;
-        for (it = unrequestedItems.begin(); it != unrequestedItems.end(); ++it) {
+        for (it = unrequestedItems.constBegin(); it != unrequestedItems.constEnd(); ++it) {
             QDeclarativeItem *item = it.key();
             if (orient == QDeclarativeListView::Vertical) {
                 if (item->y() + item->height() > pos && item->y() < pos + q->height())

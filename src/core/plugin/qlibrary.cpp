@@ -109,11 +109,9 @@ Q_GLOBAL_STATIC(QMutex, qt_library_mutex)
     The symbol must be exported as a C function from the library for
     resolve() to work. This means that the function must be wrapped in
     an \c{extern "C"} block if the library is compiled with a C++
-    compiler. On Windows, this also requires the use of a \c dllexport
-    macro; see resolve() for the details of how this is done. For
-    convenience, there is a static resolve() function which you can
-    use if you just want to call a function in a library without
-    explicitly loading the library first:
+    compiler. For convenience, there is a static resolve() function
+    which you can use if you just want to call a function in a library
+    without explicitly loading the library first:
 
     \snippet doc/src/snippets/code/src_corelib_plugin_qlibrary.cpp 1
 
@@ -429,8 +427,8 @@ bool QLibraryPrivate::isPlugin()
                      .arg(fileName);
 
 #ifndef QT_NO_SETTINGS
-    QSettings *settings = QCoreApplicationPrivate::staticConf();
-    QStringList reg = settings->value(regkey).toStringList();
+    QSettings settings(QString::fromLatin1("Katie"), QSettings::NativeFormat);
+    QStringList reg = settings.value(regkey).toStringList();
     if (reg.count() == 2 && lastModified == reg.at(1)) {
         qt_version = reg.at(0).toUInt();
         success = qt_version != 0;
@@ -442,7 +440,7 @@ bool QLibraryPrivate::isPlugin()
 #ifndef QT_NO_SETTINGS
         QStringList queried;
         queried << QString::number(qt_version) << lastModified;
-        settings->setValue(regkey, queried);
+        settings.setValue(regkey, queried);
     }
 #endif
 
@@ -545,9 +543,9 @@ QLibrary::QLibrary(QObject *parent)
 
     We recommend omitting the file's suffix in \a fileName, since
     QLibrary will automatically look for the file with the appropriate
-    suffix in accordance with the platform, e.g. ".so" on Unix,
-    ".dylib" on Mac OS X, and ".dll" on Windows. (See \l{fileName}.)
+    suffix in accordance with the platform, e.g. ".so" on Unix.
 
+    \sa fileName()
  */
 QLibrary::QLibrary(const QString& fileName, QObject *parent)
     :QObject(parent), d(0)
@@ -558,13 +556,14 @@ QLibrary::QLibrary(const QString& fileName, QObject *parent)
 
 /*!
     Constructs a library object with the given \a parent that will
-    load the library specified by \a fileName and major version number \a verNum.
-    Currently, the version number is ignored on Windows.
+    load the library specified by \a fileName and major version
+    number \a verNum.
 
     We recommend omitting the file's suffix in \a fileName, since
     QLibrary will automatically look for the file with the appropriate
-    suffix in accordance with the platform, e.g. ".so" on Unix,
-    ".dylib" on Mac OS X, and ".dll" on Windows. (See \l{fileName}.)
+    suffix in accordance with the platform, e.g. ".so" on Unix.
+
+    \sa fileName()
 */
 QLibrary::QLibrary(const QString& fileName, int verNum, QObject *parent)
     :QObject(parent), d(0)
@@ -574,13 +573,14 @@ QLibrary::QLibrary(const QString& fileName, int verNum, QObject *parent)
 
 /*!
     Constructs a library object with the given \a parent that will
-    load the library specified by \a fileName and full version number \a version.
-    Currently, the version number is ignored on Windows and Symbian.
+    load the library specified by \a fileName and full version
+    number \a version.
 
     We recommend omitting the file's suffix in \a fileName, since
     QLibrary will automatically look for the file with the appropriate
-    suffix in accordance with the platform, e.g. ".so" on Unix,
-    ".dylib" on Mac OS X, and ".dll" on Windows. (See \l{fileName}.)
+    suffix in accordance with the platform, e.g. ".so" on Unix.
+
+    \sa fileName()
  */
 QLibrary::QLibrary(const QString& fileName, const QString &version, QObject *parent)
     :QObject(parent), d(0)
@@ -626,15 +626,7 @@ QLibrary::~QLibrary()
 
 void QLibrary::setFileName(const QString &fileName)
 {
-    QLibrary::LoadHints lh;
-    if (d) {
-        lh = d->loadHints;
-        d->release();
-        d = 0;
-    }
-    d = QLibraryPrivate::findOrCreate(fileName);
-    d->loadHints = lh;
-    d->did_load = false;
+    setFileNameAndVersion(fileName, QString());
 }
 
 QString QLibrary::fileName() const
@@ -649,21 +641,12 @@ QString QLibrary::fileName() const
 
     Sets the fileName property and major version number to \a fileName
     and \a versionNumber respectively.
-    The \a versionNumber is ignored on Windows.
 
     \sa setFileName()
 */
 void QLibrary::setFileNameAndVersion(const QString &fileName, int verNum)
 {
-    QLibrary::LoadHints lh;
-    if (d) {
-        lh = d->loadHints;
-        d->release();
-        d = 0;
-    }
-    d = QLibraryPrivate::findOrCreate(fileName, verNum >= 0 ? QString::number(verNum) : QString());
-    d->loadHints = lh;
-    d->did_load = false;
+    setFileNameAndVersion(fileName, verNum >= 0 ? QString::number(verNum) : QString());
 }
 
 /*!
@@ -671,7 +654,6 @@ void QLibrary::setFileNameAndVersion(const QString &fileName, int verNum)
 
     Sets the fileName property and full version number to \a fileName
     and \a version respectively.
-    The \a version parameter is ignored on Windows.
 
     \sa setFileName()
 */
@@ -698,15 +680,7 @@ void QLibrary::setFileNameAndVersion(const QString &fileName, const QString &ver
 
     The symbol must be exported as a C function from the library. This
     means that the function must be wrapped in an \c{extern "C"} if
-    the library is compiled with a C++ compiler. On Windows you must
-    also explicitly export the function from the DLL using the
-    \c{__declspec(dllexport)} compiler directive, for example:
-
-    \snippet doc/src/snippets/code/src_corelib_plugin_qlibrary.cpp 3
-
-    with \c MY_EXPORT defined as
-
-    \snippet doc/src/snippets/code/src_corelib_plugin_qlibrary.cpp 4
+    the library is compiled with a C++ compiler.
 */
 void *QLibrary::resolve(const char *symbol)
 {
@@ -741,7 +715,6 @@ void *QLibrary::resolve(const QString &fileName, const char *symbol)
     returns the address of the exported symbol \a symbol.
     Note that \a fileName should not include the platform-specific file suffix;
     (see \l{fileName}). The library remains loaded until the application exits.
-    \a verNum is ignored on Windows.
 
     The function returns 0 if the symbol could not be resolved or if
     the library could not be loaded.
@@ -762,7 +735,6 @@ void *QLibrary::resolve(const QString &fileName, int verNum, const char *symbol)
     returns the address of the exported symbol \a symbol.
     Note that \a fileName should not include the platform-specific file suffix;
     (see \l{fileName}). The library remains loaded until the application exits.
-    \a version is ignored on Windows.
 
     The function returns 0 if the symbol could not be resolved or if
     the library could not be loaded.

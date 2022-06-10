@@ -33,9 +33,9 @@
 // We mean it.
 //
 
-#include "QtCore/qvarlengtharray.h"
+#include "qvarlengtharray.h"
 #include "qfont_p.h"
-#include "QtGui/qpaintengine.h"
+#include "qpaintengine.h"
 #include "qtextdocument_p.h"
 #include "qharfbuzz_p.h"
 
@@ -72,7 +72,7 @@ struct glyph_metrics_t
 
     inline bool isValid() const {return x != 100000 && y != 100000;}
 };
-Q_DECLARE_TYPEINFO(glyph_metrics_t, Q_PRIMITIVE_TYPE);
+
 
 struct Q_AUTOTEST_EXPORT QScriptAnalysis
 {
@@ -85,29 +85,31 @@ struct Q_AUTOTEST_EXPORT QScriptAnalysis
         TabOrObject = Tab,
         Object = 4
     };
+
+    inline QScriptAnalysis()
+        : script(QUnicodeTables::Common),  flags(None) {}
+
     QUnicodeTables::Script script;
     Flags flags;
     inline bool operator == (const QScriptAnalysis &other) const {
         return script == other.script && flags == other.flags;
     }
 };
-Q_DECLARE_TYPEINFO(QScriptAnalysis, Q_PRIMITIVE_TYPE);
 
 struct QGlyphJustification
 {
-    inline QGlyphJustification()
-        : type(JustifyNone), space_18d6(0)
-    {}
-
     enum JustificationType {
         JustifyNone,
         JustifySpace
     };
 
+    inline QGlyphJustification()
+        : type(JustifyNone), space_18d6(0)
+    {}
+
     JustificationType type;
     uint space_18d6;
 };
-Q_DECLARE_TYPEINFO(QGlyphJustification, Q_PRIMITIVE_TYPE);
 
 #define QSPACEFORGLYPHS(__glyphcount) \
     (__glyphcount * (sizeof(HB_Glyph) + sizeof(HB_GlyphAttributes) \
@@ -256,10 +258,7 @@ struct Q_AUTOTEST_EXPORT QScriptItem
     QFixed height() const { return ascent + descent + 1; }
 };
 
-
-Q_DECLARE_TYPEINFO(QScriptItem, Q_MOVABLE_TYPE);
-
-typedef QVector<QScriptItem> QScriptItemArray;
+typedef QVarLengthArray<QScriptItem, 1> QScriptItemArray;
 
 struct Q_AUTOTEST_EXPORT QScriptLine
 {
@@ -289,7 +288,6 @@ struct Q_AUTOTEST_EXPORT QScriptLine
     void setDefaultHeight(QTextEngine *eng);
     void operator+=(const QScriptLine &other);
 };
-Q_DECLARE_TYPEINFO(QScriptLine, Q_PRIMITIVE_TYPE);
 
 
 inline void QScriptLine::operator+=(const QScriptLine &other)
@@ -301,7 +299,7 @@ inline void QScriptLine::operator+=(const QScriptLine &other)
     length += other.length;
 }
 
-typedef QVector<QScriptLine> QScriptLineArray;
+typedef QVarLengthArray<QScriptLine> QScriptLineArray;
 
 class QFontPrivate;
 class QTextFormatCollection;
@@ -335,7 +333,6 @@ public:
 
     // keep in sync with QAbstractFontEngine::TextShapingFlag!!
     enum ShaperFlag {
-        DesignMetrics = 0x0002,
         GlyphIndicesOnly = 0x0004
     };
     Q_DECLARE_FLAGS(ShaperFlags, ShaperFlag)
@@ -444,8 +441,8 @@ public:
 
     struct SpecialData {
         QList<QTextLayout::FormatRange> addFormats;
-        QVector<int> addFormatIndices;
-        QVector<int> resolvedFormatIndices;
+        QVarLengthArray<int> addFormatIndices;
+        QVarLengthArray<int> resolvedFormatIndices;
     };
     SpecialData *specialData;
 

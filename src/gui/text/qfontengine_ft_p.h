@@ -53,7 +53,6 @@ struct QFontGlyph {
     int right;
     int top;
     int bottom;
-    FT_Fixed linearhoriadvance;
     FT_Pos horiadvance;
     FT_Pos advancex;
 
@@ -105,7 +104,7 @@ public:
     virtual QFixed lineThickness() const;
     virtual QFixed underlinePosition() const;
 
-    void doKerning(QGlyphLayout *, QTextEngine::ShaperFlags);
+    void doKerning(QGlyphLayout *);
 
     inline virtual Type type() const
     { return QFontEngine::Freetype; }
@@ -125,7 +124,7 @@ public:
     virtual glyph_metrics_t boundingBox(const QGlyphLayout &glyphs) const;
     virtual glyph_metrics_t boundingBox(glyph_t glyph) const;
 
-    virtual void recalcAdvances(QGlyphLayout *glyphs, QTextEngine::ShaperFlags flags) const;
+    virtual void recalcAdvances(QGlyphLayout *glyphs) const;
 
     enum Scaling {
         Scaled,
@@ -139,7 +138,6 @@ public:
     enum HintStyle {
         HintNone,
         HintLight,
-        HintMedium,
         HintFull
     };
 

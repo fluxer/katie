@@ -541,6 +541,8 @@ public:
     QGraphicsItem::GraphicsItemFlags flags;
     uint ancestorFlags;
 
+    QMap<int, QVariant> datastore;
+
     // Optional stacking order
     int globalStackingOrder;
     QGraphicsItem *q_ptr;

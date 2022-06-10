@@ -2836,8 +2836,8 @@ int QDeclarativeCompiler::genContextCache()
 
     QDeclarativeIntegerCache *cache = new QDeclarativeIntegerCache(engine);
 
-    for (QHash<QString, QDeclarativeParser::Object *>::ConstIterator iter = compileState.ids.begin();
-         iter != compileState.ids.end();
+    for (QHash<QString, QDeclarativeParser::Object *>::ConstIterator iter = compileState.ids.constBegin();
+         iter != compileState.ids.constEnd();
          ++iter) 
         cache->add(iter.key(), (*iter)->idIndex);
 

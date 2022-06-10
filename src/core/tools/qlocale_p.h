@@ -54,7 +54,7 @@ public:
     QChar minus() const { return QChar(m_minus); }
     QChar exponential() const { return QChar(m_exponential); }
 
-    QString bcp47Name() const;
+    QByteArray bcp47Name() const;
 
     static QLocale::Language codeToLanguage(const QByteArray &code);
     static QLocale::Script codeToScript(const QByteArray &code);
@@ -157,7 +157,6 @@ public:
     const ushort m_minus;
     const ushort m_plus;
     const ushort m_exponential;
-    const ushort m_currency_digits;
     const uint m_zero;
     const uint m_quotation_start;
     const uint m_quotation_end;
@@ -175,11 +174,6 @@ public:
     const char* m_long_time_format;
     const char* m_am;
     const char* m_pm;
-    const char* m_currency_symbol;
-    const char* m_currency_format;
-    const char* m_currency_negative_format;
-    const char* m_currency_iso_code;
-    const char* m_currency_display_name;
     const char* m_standalone_short_month_names[12];
     const char* m_standalone_long_month_names[12];
     const char* m_standalone_narrow_month_names[12];

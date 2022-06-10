@@ -41,13 +41,13 @@ QT_BEGIN_NAMESPACE
     \ingroup plugins
 
     QPluginLoader provides access to a \l{How to Create Qt
-    Plugins}{Qt plugin}. A Qt plugin is stored in a shared library (a
-    DLL) and offers these benefits over shared libraries accessed
+    Plugins}{Qt plugin}. A Katie plugin is stored in a shared library
+    and offers these benefits over shared libraries accessed
     using QLibrary:
 
     \list
     \o QPluginLoader checks that a plugin is linked against the same
-       version of Qt as the application.
+       version of Katie as the application.
     \o QPluginLoader provides direct access to a root component object
        (instance()), instead of forcing you to resolve a C function manually.
     \endlist
@@ -113,8 +113,7 @@ QPluginLoader::QPluginLoader(QObject *parent)
 
     To be loadable, the file's suffix must be a valid suffix for a
     loadable library in accordance with the platform, e.g. \c .so on
-    Unix, - \c .dylib on Mac OS X, and \c .dll on Windows. The suffix
-    can be verified with QLibrary::isLibrary().
+    Unix. The suffix can be verified with QLibrary::isLibrary().
 
     \sa setFileName()
 */
@@ -233,15 +232,12 @@ bool QPluginLoader::isLoaded() const
 
     To be loadable, the file's suffix must be a valid suffix for a
     loadable library in accordance with the platform, e.g. \c .so on
-    Unix, \c .dylib on Mac OS X, and \c .dll on Windows. The suffix
-    can be verified with QLibrary::isLibrary().
+    Unix. The suffix can be verified with QLibrary::isLibrary().
 
     If the file name does not exist, it will not be set. This property
     will then contain an empty string.
 
     By default, this property contains an empty string.
-
-    Note: In Symbian the \a fileName must point to plugin stub file.
 
     \sa load()
 */
@@ -304,9 +300,7 @@ void QPluginLoader::setLoadHints(QLibrary::LoadHints loadHints)
 QLibrary::LoadHints QPluginLoader::loadHints() const
 {
     if (!d) {
-        QPluginLoader *that = const_cast<QPluginLoader *>(this);
-        that->d = QLibraryPrivate::findOrCreate(QString());   // ugly, but we need a d-ptr
-        that->d->errorString.clear();
+        return (QLibrary::LoadHints)0;
     }
     return d->loadHints;
 }

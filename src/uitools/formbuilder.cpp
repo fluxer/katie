@@ -145,7 +145,7 @@ QWidget *QFormBuilder::create(DomWidget *ui_widget, QWidget *parentWidget)
 */
 QWidget *QFormBuilder::createWidget(const QString &widgetName, QWidget *parentWidget, const QString &name)
 {
-    if (widgetName.isEmpty()) {
+    if (Q_UNLIKELY(widgetName.isEmpty())) {
         //: Empty class name passed to widget factory method
         qWarning() << QCoreApplication::translate("QFormBuilder", "An empty class name was passed on to %1 (object name: '%2').").arg(QString::fromUtf8(Q_FUNC_INFO), name);
         return 0;
@@ -200,13 +200,13 @@ QWidget *QFormBuilder::createWidget(const QString &widgetName, QWidget *parentWi
     QFormBuilderExtra *fb = QFormBuilderExtra::instance(this);
     if (w == 0) { // Attempt to instantiate base class of promoted/custom widgets
         const QString baseClassName = fb->customWidgetBaseClass(widgetName);
-        if (!baseClassName.isEmpty()) {
+        if (Q_UNLIKELY(!baseClassName.isEmpty())) {
             qWarning() << QCoreApplication::translate("QFormBuilder", "QFormBuilder was unable to create a custom widget of the class '%1'; defaulting to base class '%2'.").arg(widgetName, baseClassName);
             return createWidget(baseClassName, parentWidget, name);
         }
     }
 
-    if (w == 0) { // nothing to do
+    if (Q_UNLIKELY(w == 0)) { // nothing to do
         qWarning() << QCoreApplication::translate("QFormBuilder", "QFormBuilder was unable to create a widget of the class '%1'.").arg(widgetName);
         return 0;
     }

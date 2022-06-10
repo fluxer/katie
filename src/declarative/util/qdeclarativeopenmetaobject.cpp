@@ -243,8 +243,8 @@ void QDeclarativeOpenMetaObject::setValue(int id, const QVariant &value)
 
 QVariant QDeclarativeOpenMetaObject::value(const QByteArray &name) const
 {
-    QHash<QByteArray, int>::ConstIterator iter = d->type->d->names.find(name);
-    if (iter == d->type->d->names.end())
+    QHash<QByteArray, int>::ConstIterator iter = d->type->d->names.constFind(name);
+    if (iter == d->type->d->names.constEnd())
         return QVariant();
 
     return d->getData(*iter);
@@ -252,8 +252,8 @@ QVariant QDeclarativeOpenMetaObject::value(const QByteArray &name) const
 
 QVariant &QDeclarativeOpenMetaObject::operator[](const QByteArray &name)
 {
-    QHash<QByteArray, int>::ConstIterator iter = d->type->d->names.find(name);
-    Q_ASSERT(iter != d->type->d->names.end());
+    QHash<QByteArray, int>::ConstIterator iter = d->type->d->names.constFind(name);
+    Q_ASSERT(iter != d->type->d->names.constEnd());
 
     return d->getData(*iter);
 }
@@ -265,10 +265,10 @@ QVariant &QDeclarativeOpenMetaObject::operator[](int id)
 
 void QDeclarativeOpenMetaObject::setValue(const QByteArray &name, const QVariant &val)
 {
-    QHash<QByteArray, int>::ConstIterator iter = d->type->d->names.find(name);
+    QHash<QByteArray, int>::ConstIterator iter = d->type->d->names.constFind(name);
 
     int id = -1;
-    if (iter == d->type->d->names.end()) {
+    if (iter == d->type->d->names.constEnd()) {
         id = createProperty(name.constData(), "") - d->type->d->propertyOffset;
     } else {
         id = *iter;

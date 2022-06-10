@@ -70,7 +70,7 @@ static void qHB_GetGlyphAdvances(QFontEngine* fe, const HB_Glyph *glyphs, uint32
     for (uint32_t i = 0; i < numGlyphs; ++i)
         qglyphs.glyphs[i] = glyphs[i];
 
-    fe->recalcAdvances(&qglyphs, flags & HB_ShaperFlag_UseDesignMetrics ? QFlags<QTextEngine::ShaperFlag>(QTextEngine::DesignMetrics) : QFlags<QTextEngine::ShaperFlag>(0));
+    fe->recalcAdvances(&qglyphs);
 
     for (uint32_t i = 0; i < numGlyphs; ++i)
         advances[i] = qglyphs.advances_x[i].value();

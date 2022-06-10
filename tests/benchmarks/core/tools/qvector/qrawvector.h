@@ -234,11 +234,6 @@ public:
 
     //static QRawVector<T> fromList(const QList<T> &list);
 
-    static inline QRawVector<T> fromStdVector(const std::vector<T> &vector)
-    { QRawVector<T> tmp; qCopy(vector.begin(), vector.end(), std::back_inserter(tmp)); return tmp; }
-    inline std::vector<T> toStdVector() const
-    { std::vector<T> tmp; qCopy(constBegin(), constEnd(), std::back_inserter(tmp)); return tmp; }
-
 private:
     T *allocate(int alloc);
     void realloc(int size, int alloc, bool ref);

@@ -577,11 +577,8 @@
     This enum describes the available UI effects.
 
     By default, Qt will try to use the platform specific desktop
-    settings for each effect. Use the
-    QApplication::setDesktopSettingsAware() function (passing \c false
-    as argument) to prevent this, and the
-    QApplication::setEffectEnabled() to enable or disable a particular
-    effect.
+    settings for each effect. Use QApplication::setEffectEnabled()
+    to enable or disable a particular effect.
 
     Note that all effects are disabled on screens running at less than
     16-bit color depth.
@@ -595,7 +592,7 @@
     \value UI_FadeTooltip Show tooltip fading effects.
     \value UI_AnimateToolBox Reserved
 
-    \sa QApplication::setEffectEnabled(), QApplication::setDesktopSettingsAware()
+    \sa QApplication::setEffectEnabled()
 */
 
 /*! \enum Qt::AspectRatioMode
@@ -1263,196 +1260,11 @@
     \value Key_thorn
     \value Key_ydiaeresis
 
-    \value Key_ModeLock
-    \value Key_MonBrightnessUp
-    \value Key_MonBrightnessDown
-    \value Key_KbdLightOnOff
-    \value Key_KbdBrightnessUp
-    \value Key_KbdBrightnessDown
-    \value Key_MonBrightnessCycle
-    \value Key_Standby
-    \value Key_AudioLowerVolume
-    \value Key_AudioMute
-    \value Key_AudioRaiseVolume
-    \value Key_AudioPlay
-    \value Key_AudioStop
-    \value Key_AudioPrev
-    \value Key_AudioNext
-    \value Key_HomePage
-    \value Key_Mail
-    \value Key_Start
-    \value Key_Search
-    \value Key_AudioRecord
-    \value Key_Calculator On X11 this key is not mapped for legacy reasons. Use Qt::Key_Launch1 instead.
-    \value Key_Memo
-    \value Key_ToDoList
-    \value Key_Calendar
-    \value Key_PowerDown
-    \value Key_ContrastAdjust
-    \value Key_RockerUp
-    \value Key_RockerDown
-    \value Key_RockerEnter
-    \value Key_Back
-    \value Key_Forward
-    \value Key_Stop
-    \value Key_Refresh
-    \value Key_PowerOff
-    \value Key_WakeUp
-    \value Key_Eject
-    \value Key_ScreenSaver
-    \value Key_WWW
-    \value Key_Sleep
-    \value Key_Favorites
-    \value Key_AudioPause
-    \value Key_AudioMedia
-    \value Key_MyComputer
-    \value Key_VendorHome
-    \value Key_LightBulb
-    \value Key_Shop
-    \value Key_History
-    \value Key_OpenURL
-    \value Key_AddFavorite
-    \value Key_HotLinks
-    \value Key_BrightnessAdjust
-    \value Key_Finance
-    \value Key_Community
-    \value Key_AudioRewind
-    \value Key_BackForward
-    \value Key_Launch0    On X11 this key is mapped to "My Computer" (XF86XK_MyComputer) key for legacy reasons.
-    \value Key_Launch1    On X11 this key is mapped to "Calculator" (XF86XK_Calculator) key for legacy reasons.
-    \value Key_Launch2    On X11 this key is mapped to XF86XK_Launch0 key for legacy reasons.
-    \value Key_Launch3    On X11 this key is mapped to XF86XK_Launch1 key for legacy reasons.
-    \value Key_Launch4    On X11 this key is mapped to XF86XK_Launch2 key for legacy reasons.
-    \value Key_Launch5    On X11 this key is mapped to XF86XK_Launch3 key for legacy reasons.
-    \value Key_Launch6    On X11 this key is mapped to XF86XK_Launch4 key for legacy reasons.
-    \value Key_Launch7    On X11 this key is mapped to XF86XK_Launch5 key for legacy reasons.
-    \value Key_Launch8    On X11 this key is mapped to XF86XK_Launch6 key for legacy reasons.
-    \value Key_Launch9    On X11 this key is mapped to XF86XK_Launch7 key for legacy reasons.
-    \value Key_LaunchA    On X11 this key is mapped to XF86XK_Launch8 key for legacy reasons.
-    \value Key_LaunchB    On X11 this key is mapped to XF86XK_Launch9 key for legacy reasons.
-    \value Key_LaunchC    On X11 this key is mapped to XF86XK_LaunchA key for legacy reasons.
-    \value Key_LaunchD    On X11 this key is mapped to XF86XK_LaunchB key for legacy reasons.
-    \value Key_LaunchE    On X11 this key is mapped to XF86XK_LaunchC key for legacy reasons.
-    \value Key_LaunchF    On X11 this key is mapped to XF86XK_LaunchD key for legacy reasons.
-    \value Key_ApplicationLeft
-    \value Key_ApplicationRight
-    \value Key_Book
-    \value Key_CD
-    \value Key_Calculater
-    \value Key_Close
-    \value Key_Copy
-    \value Key_Cut
-    \value Key_Display
-    \value Key_DOS
-    \value Key_Documents
-    \value Key_Excel
-    \value Key_Explorer
-    \value Key_Game
-    \value Key_Go
-    \value Key_iTouch
-    \value Key_LogOff
-    \value Key_Market
-    \value Key_Meeting
-    \value Key_MenuKB
-    \value Key_MenuPB
-    \value Key_MySites
-    \value Key_New
-    \value Key_News
-    \value Key_OfficeHome
-    \value Key_Open
-    \value Key_Option
-    \value Key_Paste
-    \value Key_Phone
-    \value Key_Reply
-    \value Key_Reload
-    \value Key_RotateWindows
-    \value Key_RotationPB
-    \value Key_RotationKB
-    \value Key_Save
-    \value Key_ScrollUp
-    \value Key_ScrollDown
-    \value Key_ScrollClick
-    \value Key_Send
-    \value Key_Spell
-    \value Key_SplitScreen
-    \value Key_Support
-    \value Key_TaskPane
-    \value Key_Terminal
-    \value Key_Tools
-    \value Key_Travel
-    \value Key_UserPB
-    \value Key_User1KB
-    \value Key_User2KB
-    \value Key_Video
-    \value Key_WheelButton
-    \value Key_Word
-    \value Key_Xfer
-    \value Key_ZoomIn
-    \value Key_ZoomOut
-    \value Key_Away
-    \value Key_Messenger
-    \value Key_WebCam
-    \value Key_MailForward
-    \value Key_Pictures
-    \value Key_Music
-    \value Key_Battery
-    \value Key_Bluetooth
-    \value Key_WLAN
-    \value Key_UWB
-    \value Key_AudioForward
-    \value Key_AudioRepeat
-    \value Key_AudioRandomPlay
-    \value Key_Subtitle
-    \value Key_AudioCycleTrack
-    \value Key_CycleAngle
-    \value Key_FrameBack
-    \value Key_FrameForward
-    \value Key_Time
-    \value Key_View
-    \value Key_TopMenu
-    \value Key_Red
-    \value Key_Green
-    \value Key_Yellow
-    \value Key_Blue
-    \value Key_Suspend
-    \value Key_Hibernate
-    \value Key_TouchpadToggle
-    \value Key_TouchpadOn
-    \value Key_TouchpadOff
-    \value Key_AudioMicMute
-    \value Key_Keyboard
-    \value Key_WWAN
-    \value Key_RFKill
-    \value Key_AudioPreset
-    \value Key_RotationLockToggle
-    \value Key_FullScreen
-    \value Key_Switch_VT_1
-    \value Key_Switch_VT_2
-    \value Key_Switch_VT_3
-    \value Key_Switch_VT_4
-    \value Key_Switch_VT_5
-    \value Key_Switch_VT_6
-    \value Key_Switch_VT_7
-    \value Key_Switch_VT_8
-    \value Key_Switch_VT_9
-    \value Key_Switch_VT_10
-    \value Key_Switch_VT_11
-    \value Key_Switch_VT_12
-    \value Key_Ungrab
-    \value Key_ClearGrab
-    \value Key_Next_VMode
-    \value Key_Prev_VMode
-    \value Key_LogWindowTree
-    \value Key_LogGrabInfo
-
     \value Key_Shift
     \value Key_Control
     \value Key_Meta
     \value Key_Alt
     \value Key_Backtab
-    \value Key_Direction_L
-    \value Key_Direction_R
-
 
     \sa QKeyEvent::key()
 */

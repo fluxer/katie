@@ -390,7 +390,7 @@ QTransform &QTransform::translate(qreal dx, qreal dy)
     if (dx == 0 && dy == 0)
         return *this;
 #ifndef QT_NO_DEBUG
-    if (qIsNaN(dx) | qIsNaN(dy)) {
+    if (qIsNaN(dx) || qIsNaN(dy)) {
         qWarning() << "QTransform::translate with NaN called";
         return *this;
     }
@@ -433,7 +433,7 @@ QTransform &QTransform::translate(qreal dx, qreal dy)
 QTransform QTransform::fromTranslate(qreal dx, qreal dy)
 {
 #ifndef QT_NO_DEBUG
-    if (qIsNaN(dx) | qIsNaN(dy)) {
+    if (qIsNaN(dx) || qIsNaN(dy)) {
         qWarning() << "QTransform::fromTranslate with NaN called";
         return QTransform();
 }
@@ -458,7 +458,7 @@ QTransform & QTransform::scale(qreal sx, qreal sy)
     if (sx == 1 && sy == 1)
         return *this;
 #ifndef QT_NO_DEBUG
-    if (qIsNaN(sx) | qIsNaN(sy)) {
+    if (qIsNaN(sx) || qIsNaN(sy)) {
         qWarning() << "QTransform::scale with NaN called";
         return *this;
     }
@@ -499,7 +499,7 @@ QTransform & QTransform::scale(qreal sx, qreal sy)
 QTransform QTransform::fromScale(qreal sx, qreal sy)
 {
 #ifndef QT_NO_DEBUG
-    if (qIsNaN(sx) | qIsNaN(sy)) {
+    if (qIsNaN(sx) || qIsNaN(sy)) {
         qWarning() << "QTransform::fromScale with NaN called";
         return QTransform();
 }
@@ -524,7 +524,7 @@ QTransform & QTransform::shear(qreal sh, qreal sv)
     if (sh == 0 && sv == 0)
         return *this;
 #ifndef QT_NO_DEBUG
-    if (qIsNaN(sh) | qIsNaN(sv)) {
+    if (qIsNaN(sh) || qIsNaN(sv)) {
         qWarning() << "QTransform::shear with NaN called";
         return *this;
     }

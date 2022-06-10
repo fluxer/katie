@@ -74,7 +74,6 @@
 */
 
 #include "qimagewriter.h"
-
 #include "qbytearray.h"
 #include "qfile.h"
 #include "qimageiohandler.h"
@@ -82,10 +81,7 @@
 #include "qvariant.h"
 #include "qfileinfo.h"
 #include "qapplication.h"
-
-// factory loader
 #include "qcoreapplication.h"
-#include "qfactoryloader_p.h"
 #include "qguicommon_p.h"
 
 // image handlers
@@ -111,7 +107,6 @@ static QImageIOHandler *createWriteHandlerHelper(QIODevice *device,
 #ifndef QT_NO_IMAGEFORMAT_PPM
     } else if (form == "pbm" || form == "pbmraw" || form == "ppm" || form == "ppmraw") {
         handler = new QPpmHandler();
-        handler->setOption(QImageIOHandler::SubType, form);
 #endif
     }
 

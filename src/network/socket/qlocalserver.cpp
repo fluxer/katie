@@ -146,7 +146,7 @@ bool QLocalServer::hasPendingConnections() const
     \sa newConnection(), nextPendingConnection(),
     QLocalSocket::setSocketDescriptor()
  */
-void QLocalServer::incomingConnection(quintptr socketDescriptor)
+void QLocalServer::incomingConnection(int socketDescriptor)
 {
     Q_D(QLocalServer);
     QLocalSocket *socket = new QLocalSocket(this);
@@ -173,18 +173,15 @@ bool QLocalServer::isListening() const
     Return true on success otherwise false.
 
     \a name can be a single name and QLocalServer will determine
-    the correct platform specific path.  serverName() will return
+    the correct platform specific path. serverName() will return
     the name that is passed into listen.
 
     Usually you would just pass in a name like "foo", but on Unix this
-    could also be a path such as "/tmp/foo" and on Windows this could
-    be a pipe path such as "\\\\.\\pipe\\foo"
+    could also be a path such as "/tmp/foo".
 
     Note:
     On Unix if the server crashes without closing listen will fail
-    with AddressInUseError.  To create a new server the file should be removed.
-    On Windows two local servers can listen to the same pipe at the same
-    time, but any connections will go to one of the server.
+    with AddressInUseError.
 
     \sa serverName(), isListening(), close()
  */
@@ -265,8 +262,7 @@ QLocalSocket *QLocalServer::nextPendingConnection()
     This function is meant to recover from a crash, when the previous server
     instance has not been cleaned up.
 
-    On Windows, this function does nothing; on Unix, it removes the socket file
-    given by \a name.
+    On Unix, this function removes the socket file given by \a name.
 
     \warning Be careful to avoid removing sockets of running instances.
 */

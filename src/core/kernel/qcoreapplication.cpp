@@ -44,6 +44,7 @@
 #include "qfactoryloader_p.h"
 #include "qlocale_p.h"
 #include "qeventdispatcher_unix_p.h"
+#include "qcorecommon_p.h"
 
 #include <stdlib.h>
 
@@ -105,40 +106,18 @@ bool QCoreApplicationPrivate::is_app_running = false;
  // app closing down if true
 bool QCoreApplicationPrivate::is_app_closing = false;
 
-/*
-  Create an instance of Katie.conf. This ensures that the settings will not
-  be thrown out of QSetting's cache for unused settings.
-  */
-#ifndef QT_NO_SETTINGS
-Q_GLOBAL_STATIC_WITH_ARGS(QSettings, staticKatieConf, (QLatin1String("Katie"), QSettings::NativeFormat))
-
-QSettings *QCoreApplicationPrivate::staticConf()
-{
-    return staticKatieConf();
-}
-#endif
-
 QCoreApplication *QCoreApplication::self = 0;
 std::bitset<Qt::AA_AttributeCount> QCoreApplicationPrivate::attribs;
 QCoreApplication::Type QCoreApplicationPrivate::app_type = QCoreApplication::Tty;
 
-struct QCoreApplicationData {
-    QCoreApplicationData() {
-#ifndef QT_NO_LIBRARY
-        app_libpaths = 0;
-#endif
-    }
-    ~QCoreApplicationData() {
-#ifndef QT_NO_LIBRARY
-        delete app_libpaths;
-#endif
-    }
-
+struct QCoreApplicationData
+{
     QString orgName, orgDomain, application;
     QString applicationVersion;
 
 #ifndef QT_NO_LIBRARY
-    QStringList *app_libpaths;
+    QStringList app_librarypaths;
+    QStringList app_pluginpaths;
 #endif
 
 };
@@ -345,9 +324,12 @@ void QCoreApplication::init()
         d->threadData->eventDispatcher->moveToThread(d->threadData->thread);
 
 #if !defined(QT_NO_LIBRARY) && !defined(QT_NO_SETTINGS)
-    if (!coreappdata()->app_libpaths) {
-        // make sure that library paths is initialized
+    // make sure that library and plugin paths are initialized
+    if (coreappdata()->app_librarypaths.isEmpty()) {
         libraryPaths();
+    }
+    if (coreappdata()->app_pluginpaths.isEmpty()) {
+        pluginPaths();
     }
 #endif
 
@@ -370,7 +352,7 @@ QCoreApplication::~QCoreApplication()
     QCoreApplicationPrivate::is_app_closing = true;
     QCoreApplicationPrivate::is_app_running = false;
 
-#if !defined(QT_NO_THREAD) && !defined(QT_NO_CONCURRENT)
+#if !defined(QT_NO_THREAD)
     // Synchronize and stop the global thread pool threads.
     QThreadPool *globalThreadPool = QThreadPool::globalInstance();
     if (globalThreadPool)
@@ -378,8 +360,8 @@ QCoreApplication::~QCoreApplication()
 #endif
 
 #ifndef QT_NO_LIBRARY
-    delete coreappdata()->app_libpaths;
-    coreappdata()->app_libpaths = 0;
+    coreappdata()->app_librarypaths.clear();
+    coreappdata()->app_pluginpaths.clear();
 #endif
 }
 
@@ -1627,64 +1609,45 @@ QString QCoreApplication::applicationVersion()
 }
 
 #ifndef QT_NO_LIBRARY
-Q_GLOBAL_STATIC(QMutex, qGlobalLibraryPathMutex);
+Q_GLOBAL_STATIC(QMutex, qGlobalAppPathsMutex);
 
 /*!
     Returns a list of paths that the application will search when
     dynamically loading libraries.
 
-    Qt provides default library paths, but they can also be set using
-    a \l{Using qt.conf}{qt.conf} file. Paths specified in this file
+    Katie provides default library paths, but they can also be set using
+    a \l{Using Katie.json}{Katie.json} file. Paths specified in this file
     will override default values.
 
-    This list will include the installation directory for plugins if
-    it exists (the default installation directory for plugins is \c
-    INSTALL/plugins, where \c INSTALL is the directory where Qt was
-    installed).  The directory of the application executable (NOT the
-    working directory) is always added, as well as the colon separated
-    entries of the QT_PLUGIN_PATH environment variable.
+    This list will include the installation directory for libraries if
+    it exists (the default installation directory for libraries is \c
+    INSTALL/lib, where \c INSTALL is the directory where Katie was
+    installed). The colon separated entries of the LD_LIBRARY_PATH
+    environment variable are also added.
 
-    If you want to iterate over the list, you can use the \l foreach
-    pseudo-keyword:
-
-    \snippet doc/src/snippets/code/src_corelib_kernel_qcoreapplication.cpp 2
-
-    \sa setLibraryPaths(), addLibraryPath(), removeLibraryPath(), QLibrary,
-        {How to Create Qt Plugins}
+    \sa setLibraryPaths(), addLibraryPath(), removeLibraryPath(), QLibrary
 */
 QStringList QCoreApplication::libraryPaths()
 {
-    QMutexLocker locker(qGlobalLibraryPathMutex());
-    if (!coreappdata()->app_libpaths) {
-        QStringList *app_libpaths = coreappdata()->app_libpaths = new QStringList;
+    QMutexLocker locker(qGlobalAppPathsMutex());
 
-        QString installPathPlugins = QLibraryInfo::location(QLibraryInfo::PluginsPath);
+    if (coreappdata()->app_librarypaths.isEmpty()) {
+        const QString installPathPlugins = QLibraryInfo::location(QLibraryInfo::LibrariesPath);
         if (QDir(installPathPlugins).exists()
-            && !app_libpaths->contains(installPathPlugins)) {
-            app_libpaths->append(installPathPlugins);
-        }
-
-        installPathPlugins = QLibraryInfo::location(QLibraryInfo::LibrariesPath);
-        if (QDir(installPathPlugins).exists()
-            && !app_libpaths->contains(installPathPlugins)) {
-                app_libpaths->append(installPathPlugins);
-        }
-
-        const QByteArray libPathEnv = qgetenv("QT_PLUGIN_PATH");
-        if (!libPathEnv.isEmpty()) {
-            const QStringList paths = QString::fromLatin1(libPathEnv.constData()).split(QLatin1Char(':'), QString::SkipEmptyParts);
-            foreach (const QString &it, paths) {
-                QString canonicalPath = QDir(it).canonicalPath();
-                if (!app_libpaths->contains(canonicalPath)) {
-                    app_libpaths->append(canonicalPath);
-                }
-            }
+            && !coreappdata()->app_librarypaths.contains(installPathPlugins)) {
+            coreappdata()->app_librarypaths.append(installPathPlugins);
         }
     }
-    return *(coreappdata()->app_libpaths);
+
+    foreach (const QString &it, qGetEnvList("LD_LIBRARY_PATH")) {
+        QString canonicalPath = QDir(it).canonicalPath();
+        if (!coreappdata()->app_pluginpaths.contains(canonicalPath)) {
+            coreappdata()->app_pluginpaths.append(canonicalPath);
+        }
+    }
+
+    return coreappdata()->app_librarypaths;
 }
-
-
 
 /*!
 
@@ -1692,31 +1655,18 @@ QStringList QCoreApplication::libraryPaths()
     \a paths. All existing paths will be deleted and the path list
     will consist of the paths given in \a paths.
 
-    In Symbian this function is only useful for setting paths for
-    finding Qt extension plugin stubs, since the OS can only
-    load libraries from the \c{/sys/bin} directory.
-
     \sa libraryPaths(), addLibraryPath(), removeLibraryPath(), QLibrary
  */
 void QCoreApplication::setLibraryPaths(const QStringList &paths)
 {
-    QMutexLocker locker(qGlobalLibraryPathMutex());
-    if (!coreappdata()->app_libpaths)
-        coreappdata()->app_libpaths = new QStringList;
-    *(coreappdata()->app_libpaths) = paths;
-    locker.unlock();
-    QFactoryLoader::refreshAll();
+    QMutexLocker locker(qGlobalAppPathsMutex());
+    coreappdata()->app_librarypaths = paths;
 }
 
 /*!
   Prepends \a path to the beginning of the library path list, ensuring that
   it is searched for libraries first. If \a path is empty or already in the
   path list, the path list is not changed.
-
-  The default path list consists of a single entry, the installation
-  directory for plugins.  The default installation directory for plugins
-  is \c INSTALL/plugins, where \c INSTALL is the directory where Qt was
-  installed.
 
   \sa removeLibraryPath(), libraryPaths(), setLibraryPaths()
  */
@@ -1728,12 +1678,10 @@ void QCoreApplication::addLibraryPath(const QString &path)
     // make sure that library paths is initialized
     libraryPaths();
 
-    QMutexLocker locker(qGlobalLibraryPathMutex());
+    QMutexLocker locker(qGlobalAppPathsMutex());
     QString canonicalPath = QDir(path).canonicalPath();
-    if (!coreappdata()->app_libpaths->contains(canonicalPath)) {
-        coreappdata()->app_libpaths->prepend(canonicalPath);
-        locker.unlock();
-        QFactoryLoader::refreshAll();
+    if (!coreappdata()->app_librarypaths.contains(canonicalPath)) {
+        coreappdata()->app_librarypaths.prepend(canonicalPath);
     }
 }
 
@@ -1751,13 +1699,105 @@ void QCoreApplication::removeLibraryPath(const QString &path)
     // make sure that library paths is initialized
     libraryPaths();
 
-    QMutexLocker locker(qGlobalLibraryPathMutex());
+    QMutexLocker locker(qGlobalAppPathsMutex());
     QString canonicalPath = QDir(path).canonicalPath();
-    coreappdata()->app_libpaths->removeAll(canonicalPath);
+    coreappdata()->app_librarypaths.removeAll(canonicalPath);
+}
+
+/*!
+    Returns a list of paths that the application will search when
+    dynamically loading plugins.
+
+    This list will include the installation directory for plugins if
+    it exists (the default installation directory for plugins is \c
+    INSTALL/plugins, where \c INSTALL is the directory where Katie was
+    installed). The colon separated entries of the QT_PLUGIN_PATH
+    environment variable are also added.
+
+    \sa setPluginPaths(), addPluginPath(), removePluginPath(),
+        QPluginLoader, {How to Create Katie Plugins}
+*/
+QStringList QCoreApplication::pluginPaths()
+{
+    QMutexLocker locker(qGlobalAppPathsMutex());
+
+    if (coreappdata()->app_pluginpaths.isEmpty()) {
+        const QString installPathPlugins = QLibraryInfo::location(QLibraryInfo::LibrariesPath);
+        if (QDir(installPathPlugins).exists()
+            && !coreappdata()->app_pluginpaths.contains(installPathPlugins)) {
+            coreappdata()->app_pluginpaths.append(installPathPlugins);
+        }
+    }
+
+    foreach (const QString &it, qGetEnvList("QT_PLUGIN_PATH")) {
+        QString canonicalPath = QDir(it).canonicalPath();
+        if (!coreappdata()->app_pluginpaths.contains(canonicalPath)) {
+            coreappdata()->app_pluginpaths.append(canonicalPath);
+        }
+    }
+
+    return coreappdata()->app_pluginpaths;
+}
+
+/*!
+
+    Sets the list of directories to search when loading plugins to
+    \a paths. All existing paths will be deleted and the path list
+    will consist of the paths given in \a paths.
+
+    \sa pluginPaths(), addPluginPath(), removePluginPath(), QLibrary
+ */
+void QCoreApplication::setPluginPaths(const QStringList &paths)
+{
+    QMutexLocker locker(qGlobalAppPathsMutex());
+    coreappdata()->app_pluginpaths = paths;
+    locker.unlock();
     QFactoryLoader::refreshAll();
 }
 
+/*!
+  Prepends \a path to the beginning of the plugin path list, ensuring that
+  it is searched for plugins first. If \a path is empty or already in the
+  path list, the path list is not changed.
 
+  \sa removePluginPath(), pluginPaths(), setPluginPaths()
+ */
+void QCoreApplication::addPluginPath(const QString &path)
+{
+    if (path.isEmpty())
+        return;
+
+    // make sure that plugin paths is initialized
+    pluginPaths();
+
+    QMutexLocker locker(qGlobalAppPathsMutex());
+    QString canonicalPath = QDir(path).canonicalPath();
+    if (!coreappdata()->app_pluginpaths.contains(canonicalPath)) {
+        coreappdata()->app_pluginpaths.prepend(canonicalPath);
+        locker.unlock();
+        QFactoryLoader::refreshAll();
+    }
+}
+
+/*!
+    Removes \a path from the plugin path list. If \a path is empty or not
+    in the path list, the list is not changed.
+
+    \sa addPluginPath(), pluginPaths(), setPluginPaths()
+*/
+void QCoreApplication::removePluginPath(const QString &path)
+{
+    if (path.isEmpty())
+        return;
+
+    // make sure that plugin paths is initialized
+    pluginPaths();
+
+    QMutexLocker locker(qGlobalAppPathsMutex());
+    QString canonicalPath = QDir(path).canonicalPath();
+    coreappdata()->app_pluginpaths.removeAll(canonicalPath);
+    QFactoryLoader::refreshAll();
+}
 #endif //QT_NO_LIBRARY
 
 /*!

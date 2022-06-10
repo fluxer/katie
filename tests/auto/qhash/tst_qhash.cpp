@@ -340,19 +340,19 @@ void tst_QHash::insert1()
         {
             const Hash hash2 = hash;
 
-            Hash::const_iterator it1 = hash2.find(1);
+            Hash::const_iterator it1 = hash2.constFind(1);
             QVERIFY(it1 != hash2.end());
             QVERIFY(it1.key() == 1);
             QVERIFY(it1.value() == hello);
             QVERIFY(*it1 == hello);
 
-            Hash::const_iterator it2 = hash2.find(2);
+            Hash::const_iterator it2 = hash2.constFind(2);
             QVERIFY(it1 != it2);
             QVERIFY(it1 != hash2.end());
             QVERIFY(it2 != hash2.end());
 
             int count = 0;
-            it1 = hash2.begin();
+            it1 = hash2.constBegin();
             while (it1 != hash2.end()) {
                 count++;
                 ++it1;
@@ -360,8 +360,8 @@ void tst_QHash::insert1()
             QVERIFY(count == 2);
 
             count = 0;
-            it1 = hash.begin();
-            while (it1 != hash.end()) {
+            it1 = hash.constBegin();
+            while (it1 != hash.constEnd()) {
                 count++;
                 ++it1;
             }
@@ -571,9 +571,9 @@ void tst_QHash::find()
         map1.insertMulti(4, compareString);
     }
 
-    QHash<int, QString>::const_iterator it=map1.find(4);
+    QHash<int, QString>::const_iterator it=map1.constFind(4);
 
-    for(i = 9; i > 2 && it != map1.end() && it.key() == 4; --i) {
+    for(i = 9; i > 2 && it != map1.constEnd() && it.key() == 4; --i) {
         compareString = testString.arg(i);
         QVERIFY(it.value() == compareString);
         ++it;

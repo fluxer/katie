@@ -105,8 +105,8 @@ public:
      * This is a callback from harfbuzz. The font engine uses the font-system in use to find out the
      * advances of each glyph and set it on the layout.
      */
-    virtual void recalcAdvances(QGlyphLayout *, QTextEngine::ShaperFlags) const {}
-    virtual void doKerning(QGlyphLayout *, QTextEngine::ShaperFlags);
+    virtual void recalcAdvances(QGlyphLayout *) const {}
+    virtual void doKerning(QGlyphLayout *);
 
     virtual void addGlyphsToPath(glyph_t *glyphs, QFixedPoint *positions, int nglyphs,
                                  QPainterPath *path) = 0;
@@ -178,7 +178,7 @@ public:
     ~QFontEngineBox();
 
     virtual bool stringToCMap(const QChar *str, int len, QGlyphLayout *glyphs, int *nglyphs, QTextEngine::ShaperFlags flags) const;
-    virtual void recalcAdvances(QGlyphLayout *, QTextEngine::ShaperFlags) const;
+    virtual void recalcAdvances(QGlyphLayout *) const;
 
     virtual void addOutlineToPath(qreal x, qreal y, const QGlyphLayout &glyphs, QPainterPath *path);
     virtual void addGlyphsToPath(glyph_t *glyphs, QFixedPoint *positions, int nglyphs,

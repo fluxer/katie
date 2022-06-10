@@ -131,8 +131,6 @@ public:
 
     void drawPolygon(const QPointF *points, int pointCount, PolygonDrawMode mode);
     void drawPolygon(const QPoint *points, int pointCount, PolygonDrawMode mode);
-    void fillPath(const QPainterPath &path, QSpanData *fillData);
-    void fillPolygon(const QPointF *points, int pointCount, PolygonDrawMode mode);
 
     void fillRect(const QRectF &rect, const QBrush &brush);
     void fillRect(const QRectF &rect, const QColor &color);
@@ -171,6 +169,8 @@ private:
     void init();
 
     void fillRect(const QRectF &rect, QSpanData *data);
+    void fillPath(const QPainterPath &path, QSpanData *fillData);
+    void fillPolygon(const QPointF *points, int pointCount, PolygonDrawMode mode);
     void drawBitmap(const QPointF &pos, const QImage &image, QSpanData *fill);
 
     bool setClipRectInDeviceCoords(const QRect &r, Qt::ClipOperation op);

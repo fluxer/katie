@@ -268,16 +268,16 @@ void QDeclarativePath::classBegin()
 void QDeclarativePath::componentComplete()
 {
     Q_D(QDeclarativePath);
-    QSet<QString> attrs;
     d->componentComplete = true;
 
     // First gather up all the attributes
+    QStringList attrs;
     foreach (QDeclarativePathElement *pathElement, d->_pathElements) {
         if (QDeclarativePathAttribute *attribute =
             qobject_cast<QDeclarativePathAttribute *>(pathElement))
-            attrs.insert(attribute->name());
+            attrs.append(attribute->name());
     }
-    d->_attributes = attrs.toList();
+    d->_attributes = attrs;
 
     processPath();
 
@@ -295,15 +295,14 @@ QStringList QDeclarativePath::attributes() const
 {
     Q_D(const QDeclarativePath);
     if (!d->componentComplete) {
-        QSet<QString> attrs;
-
         // First gather up all the attributes
+        QStringList attrs;
         foreach (QDeclarativePathElement *pathElement, d->_pathElements) {
             if (QDeclarativePathAttribute *attribute =
                 qobject_cast<QDeclarativePathAttribute *>(pathElement))
-                attrs.insert(attribute->name());
+                attrs.append(attribute->name());
         }
-        return attrs.toList();
+        return attrs;
     }
     return d->_attributes;
 }

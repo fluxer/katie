@@ -2,6 +2,8 @@
 #define QCORECOMMON_P_H
 
 #include "qstring.h"
+#include "qstringlist.h"
+#include "qfile.h"
 
 #include <time.h>
 #include <limits.h>
@@ -94,6 +96,24 @@ static inline QByteArray qt_prettyDebug(const char *data, int len, int maxSize)
         out += "...";
 
     return out;
+}
+
+static inline QString qGetEnv(const char* const name)
+{
+    return QFile::decodeName(qgetenv(name));
+}
+
+static inline QStringList qGetEnvList(const char* const name)
+{
+    QStringList result;
+    const QByteArray location(qgetenv(name));
+    foreach (const QByteArray &path, location.split(':')) {
+        if (path.isEmpty()) {
+            continue;
+        }
+        result.append(QFile::decodeName(path));
+    }
+    return result;
 }
 
 QT_END_NAMESPACE

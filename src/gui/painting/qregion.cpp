@@ -855,6 +855,9 @@ Q_AUTOTEST_EXPORT QPainterPath qt_regionToPath(const QRegion &region)
     }
 
     const QVector<QRect> rects = region.rects();
+    if (rects.size() <= 0) {
+        return result;
+    }
 
     QSTACKARRAY(Segment, segments, 4 * rects.size());
 
@@ -3193,15 +3196,13 @@ static void FreeStorage(ScanLineListBlock *pSLLBlock)
 }
 
 struct QRegionSpan {
-    QRegionSpan() {}
+    QRegionSpan() : x1(0), x2(0) {}
     QRegionSpan(int x1_, int x2_) : x1(x1_), x2(x2_) {}
 
     int x1;
     int x2;
     int width() const { return x2 - x1; }
 };
-
-Q_DECLARE_TYPEINFO(QRegionSpan, Q_PRIMITIVE_TYPE);
 
 static inline void flushRow(const QRegionSpan *spans, int y, int numSpans, QRegionPrivate *reg, int *lastRow, int *extendTo, bool *needsExtend)
 {
