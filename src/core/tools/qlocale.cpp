@@ -1407,8 +1407,9 @@ QList<QLocale::Country> QLocale::countriesForLanguage(Language language)
 */
 QString QLocale::monthName(int month, FormatType type) const
 {
-    if (month < 1 || month > 12)
+    if (Q_UNLIKELY(month < 1 || month > 12)) {
         return QString();
+    }
 
     const qint16 idx = month - 1;
     switch (type) {
@@ -1435,8 +1436,9 @@ QString QLocale::monthName(int month, FormatType type) const
 */
 QString QLocale::standaloneMonthName(int month, FormatType type) const
 {
-    if (month < 1 || month > 12)
+    if (Q_UNLIKELY(month < 1 || month > 12)) {
         return QString();
+    }
 
     const qint16 idx = month - 1;
     switch (type) {
@@ -1461,8 +1463,9 @@ QString QLocale::standaloneMonthName(int month, FormatType type) const
 */
 QString QLocale::dayName(int day, FormatType type) const
 {
-    if (day < 1 || day > 7)
+    if (Q_UNLIKELY(day < 1 || day > 7)) {
         return QString();
+    }
 
     const qint16 idx = day - 1;
     switch (type) {
@@ -1490,8 +1493,9 @@ QString QLocale::dayName(int day, FormatType type) const
 */
 QString QLocale::standaloneDayName(int day, FormatType type) const
 {
-    if (day < 1 || day > 7)
+    if (Q_UNLIKELY(day < 1 || day > 7)) {
         return QString();
+    }
 
     const qint16 idx = day - 1;
     switch (type) {
