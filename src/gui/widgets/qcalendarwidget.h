@@ -38,14 +38,12 @@ class QCalendarWidgetPrivate;
 class Q_GUI_EXPORT QCalendarWidget : public QWidget
 {
     Q_OBJECT
-    Q_ENUMS(Qt::DayOfWeek)
     Q_ENUMS(HorizontalHeaderFormat)
     Q_ENUMS(VerticalHeaderFormat)
     Q_ENUMS(SelectionMode)
     Q_PROPERTY(QDate selectedDate READ selectedDate WRITE setSelectedDate)
     Q_PROPERTY(QDate minimumDate READ minimumDate WRITE setMinimumDate)
     Q_PROPERTY(QDate maximumDate READ maximumDate WRITE setMaximumDate)
-    Q_PROPERTY(Qt::DayOfWeek firstDayOfWeek READ firstDayOfWeek WRITE setFirstDayOfWeek)
     Q_PROPERTY(bool gridVisible READ isGridVisible WRITE setGridVisible)
     Q_PROPERTY(SelectionMode selectionMode READ selectionMode WRITE setSelectionMode)
     Q_PROPERTY(HorizontalHeaderFormat horizontalHeaderFormat READ horizontalHeaderFormat WRITE setHorizontalHeaderFormat)
@@ -89,9 +87,6 @@ public:
     QDate maximumDate() const;
     void setMaximumDate(const QDate &date);
 
-    Qt::DayOfWeek firstDayOfWeek() const;
-    void setFirstDayOfWeek(Qt::DayOfWeek dayOfWeek);
-
     bool isNavigationBarVisible() const;
 
     bool isGridVisible() const;
@@ -108,8 +103,8 @@ public:
     QTextCharFormat headerTextFormat() const;
     void setHeaderTextFormat(const QTextCharFormat &format);
 
-    QTextCharFormat weekdayTextFormat(Qt::DayOfWeek dayOfWeek) const;
-    void setWeekdayTextFormat(Qt::DayOfWeek dayOfWeek, const QTextCharFormat &format);
+    QTextCharFormat weekendTextFormat() const;
+    void setWeekendTextFormat(const QTextCharFormat &format);
 
     QMap<QDate, QTextCharFormat> dateTextFormat() const;
     QTextCharFormat dateTextFormat(const QDate &date) const;
