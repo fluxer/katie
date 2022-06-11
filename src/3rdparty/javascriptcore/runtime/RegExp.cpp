@@ -131,7 +131,7 @@ int RegExp::match(const UString& s, int startOffset, Vector<int, 32>* ovector)
             // TODO: split lines and match
         }
 #endif
-        const bool didmatch = m_regExp.exactMatch(qstring.data() + startOffset);
+        const bool didmatch = (m_regExp.indexIn(qstring, startOffset) != -1);
 
         if (!didmatch) {
 #ifndef QT_NO_DEBUG
