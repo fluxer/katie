@@ -1409,21 +1409,6 @@
 */
 
 /*!
-    \enum QLocale::QuotationStyle
-
-    This enum defines a set of possible styles for locale specific quotation.
-
-    \value StandardQuotation If this option is set, the standard quotation marks
-            will be used to quote strings.
-    \value AlternateQuotation If this option is set, the alternate quotation marks
-            will be used to quote strings.
-
-    \since 4.8
-
-    \sa quoteString()
-*/
-
-/*!
 \fn QString QLocale::toString(short i) const
 
 \overload

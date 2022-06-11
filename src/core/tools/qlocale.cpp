@@ -517,30 +517,6 @@ QLocale::NumberOptions QLocale::numberOptions() const
 /*!
     \since 4.8
 
-    Returns \a str quoted according to the current locale using the given
-    quotation \a style.
-*/
-QString QLocale::quoteString(const QString &str, QuotationStyle style) const
-{
-    return quoteString(&str, style);
-}
-
-/*!
-    \since 4.8
-
-    \overload
-*/
-QString QLocale::quoteString(const QStringRef &str, QuotationStyle style) const
-{
-    if (style == QLocale::StandardQuotation)
-        return QChar(d()->m_quotation_start) + str.toString() + QChar(d()->m_quotation_end);
-    else
-        return QChar(d()->m_alternate_quotation_start) + str.toString() + QChar(d()->m_alternate_quotation_end);
-}
-
-/*!
-    \since 4.8
-
     Returns a string that represents a join of a given \a list of strings with
     a separator defined by the locale.
 */
@@ -648,7 +624,7 @@ QString QLocale::name() const
         const char *country = countryTbl[dd->m_country].code;
         return QLatin1String(lang) + QLatin1Char('_') + QLatin1String(country);
     }
-    return QLatin1String(lang);
+    return QString::fromLatin1(lang);
 }
 
 /*!

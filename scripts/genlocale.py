@@ -351,7 +351,6 @@ def printlocaledata(frommap, key):
         %s, %s, %s,
         %s, %s, %s,
         %s, %s, %s, %s, %s, %s, %s, %s,
-        %s, %s, %s, %s,
         %s, %s,
         %s, %s, %s, %s,
         %s, %s, %s, %s,
@@ -383,10 +382,6 @@ def printlocaledata(frommap, key):
             touint(value['plus']),
             touint(value['exponential']),
             touint(value['zero']),
-            touint(value['quotation_start']),
-            touint(value['quotation_end']),
-            touint(value['alternate_quotation_start']),
-            touint(value['alternate_quotation_end']),
             tochar(value['language_endonym']),
             tochar(value['country_endonym']),
             tochar(value['list_pattern_part_start']),
@@ -610,10 +605,6 @@ localedefaults = {
     'minus': '-',
     'plus': '+',
     'exponential': 'e', # default in CLDR is E
-    'quotation_start': '"', # default in CLDR is “
-    'quotation_end': '"', # default in CLDR is ”
-    'alternate_quotation_start': "'", # default in CLDR is ‘
-    'alternate_quotation_end': "'", # default in CLDR is ’
     # strings
     'language_endonym': '',
     'country_endonym': '',
@@ -779,22 +770,6 @@ def readlocale(fromxml, tomap, isparent):
 
         # locale numeric system was found, break
         break
-
-    quotationstart = root.find('./delimiters/quotationStart')
-    if quotationstart is not None:
-        tomap[locale]['quotation_start'] = quotationstart.text
-
-    quotationend = root.find('./delimiters/quotationEnd')
-    if quotationend is not None:
-        tomap[locale]['quotation_end'] = quotationend.text
-
-    altquotationstart = root.find('./delimiters/alternateQuotationStart')
-    if altquotationstart is not None:
-        tomap[locale]['alternate_quotation_start'] = altquotationstart.text
-
-    altquotationend = root.find('./delimiters/alternateQuotationEnd')
-    if altquotationend is not None:
-        tomap[locale]['alternate_quotation_end'] = altquotationend.text
 
     for nativelang in root.findall('./localeDisplayNames/languages/language'):
         nativelangtype = nativelang.get('type')
