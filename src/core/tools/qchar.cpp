@@ -48,11 +48,6 @@ static inline bool is_ascii_char(uint ucs4)
     return ucs4 <= 127;
 }
 
-static inline bool is_ascii_number(uint ucs4)
-{
-    return (ucs4 >= '0' && ucs4 <= '9');
-}
-
 /*!
     \class QLatin1Char
     \brief The QLatin1Char class provides an 8-bit ASCII/Latin-1 character.
@@ -575,7 +570,7 @@ bool QChar::isLetter() const
 */
 bool QChar::isNumber() const
 {
-    if (is_ascii_number(ucs)) {
+    if (qIsDigit(ucs)) {
         return true;
     }
     return u_isxdigit(ucs);
@@ -614,7 +609,7 @@ bool QChar::isLetterOrNumber() const
 */
 bool QChar::isDigit() const
 {
-    if (is_ascii_number(ucs)) {
+    if (qIsDigit(ucs)) {
         return true;
     }
     return u_isdigit(ucs);

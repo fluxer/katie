@@ -70,7 +70,8 @@ static inline bool qIsUpper(char ch)
     return (ch >= 'A' && ch <= 'Z');
 }
 
-static inline bool qIsDigit(char ch)
+template <class T>
+inline bool qIsDigit(const T ch)
 {
     return (ch >= '0' && ch <= '9');
 }
