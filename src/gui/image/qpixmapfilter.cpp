@@ -37,6 +37,7 @@ QT_BEGIN_NAMESPACE
 // process.
 Q_GUI_EXPORT void qt_grayscale(const QImage &image, QImage &dest)
 {
+    Q_ASSERT(image.depth() == 32 && dest.depth() == 32);
     QRect srcRect =  image.rect();
     if (srcRect.isNull()) {
         srcRect = dest.rect();
