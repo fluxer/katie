@@ -103,7 +103,6 @@ private slots:
     void ampm();
     void uiLanguages();
     void weekendDays();
-    void listPatterns();
 
 private:
     QString m_decimal, m_thousand, m_sdate, m_ldate, m_time;
@@ -1601,40 +1600,6 @@ void tst_QLocale::weekendDays()
     QList<Qt::DayOfWeek> days;
     days << Qt::Monday << Qt::Tuesday << Qt::Wednesday << Qt::Thursday << Qt::Friday;
     QCOMPARE(c.weekdays(), days);
-}
-
-void tst_QLocale::listPatterns()
-{
-    QStringList sl1;
-    QStringList sl2;
-    sl2 << "aaa";
-    QStringList sl3;
-    sl3 << "aaa" << "bbb";
-    QStringList sl4;
-    sl4 << "aaa" << "bbb" << "ccc";
-    QStringList sl5;
-    sl5 << "aaa" << "bbb" << "ccc" << "ddd";
-
-    const QLocale c(QLocale::C);
-    QCOMPARE(c.createSeparatedList(sl1), QString(""));
-    QCOMPARE(c.createSeparatedList(sl2), QString("aaa"));
-    QCOMPARE(c.createSeparatedList(sl3), QString("aaa, bbb"));
-    QCOMPARE(c.createSeparatedList(sl4), QString("aaa, bbb, ccc"));
-    QCOMPARE(c.createSeparatedList(sl5), QString("aaa, bbb, ccc, ddd"));
-
-    const QLocale en_US("en_US");
-    QCOMPARE(en_US.createSeparatedList(sl1), QString(""));
-    QCOMPARE(en_US.createSeparatedList(sl2), QString("aaa"));
-    QCOMPARE(en_US.createSeparatedList(sl3), QString("aaa and bbb"));
-    QCOMPARE(en_US.createSeparatedList(sl4), QString("aaa, bbb, and ccc"));
-    QCOMPARE(en_US.createSeparatedList(sl5), QString("aaa, bbb, ccc, and ddd"));
-
-    const QLocale zh_CN("zh_CN");
-    QCOMPARE(zh_CN.createSeparatedList(sl1), QString(""));
-    QCOMPARE(zh_CN.createSeparatedList(sl2), QString("aaa"));
-    QCOMPARE(zh_CN.createSeparatedList(sl3), QString::fromUtf8("aaa" "\xe5\x92\x8c" "bbb"));
-    QCOMPARE(zh_CN.createSeparatedList(sl4), QString::fromUtf8("aaa" "\xe3\x80\x81" "bbb" "\xe5\x92\x8c" "ccc"));
-    QCOMPARE(zh_CN.createSeparatedList(sl5), QString::fromUtf8("aaa" "\xe3\x80\x81" "bbb" "\xe3\x80\x81" "ccc" "\xe5\x92\x8c" "ddd"));
 }
 
 QTEST_MAIN(tst_QLocale)

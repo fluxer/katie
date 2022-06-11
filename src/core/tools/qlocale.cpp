@@ -515,34 +515,6 @@ QLocale::NumberOptions QLocale::numberOptions() const
 }
 
 /*!
-    \since 4.8
-
-    Returns a string that represents a join of a given \a list of strings with
-    a separator defined by the locale.
-*/
-QString QLocale::createSeparatedList(const QStringList &list) const
-{
-    const int size = list.size();
-    if (size == 1) {
-        return list.at(0);
-    } else if (size == 2) {
-        QString format = getLocaleData(d()->m_list_pattern_part_two);
-        return format.arg(list.at(0), list.at(1));
-    } else if (size > 2) {
-        QString formatStart = getLocaleData(d()->m_list_pattern_part_start);
-        QString formatMid = getLocaleData(d()->m_list_pattern_part_mid);
-        QString formatEnd = getLocaleData(d()->m_list_pattern_part_end);
-        QString result = formatStart.arg(list.at(0), list.at(1));
-        for (int i = 2; i < size - 1; ++i)
-            result = formatMid.arg(result, list.at(i));
-        result = formatEnd.arg(result, list.at(size - 1));
-        return result;
-    }
-
-    return QString();
-}
-
-/*!
     \nonreentrant
 
     Sets the global default locale to \a locale. These

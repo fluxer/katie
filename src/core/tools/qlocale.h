@@ -1376,7 +1376,6 @@ public:
     void setNumberOptions(NumberOptions options);
     NumberOptions numberOptions() const;
 
-    QString createSeparatedList(const QStringList &strl) const;
 private:
     friend class QLocalePrivate;
     // ### We now use this field to pack an index into locale_data and NumberOptions.

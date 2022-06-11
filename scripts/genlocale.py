@@ -103,12 +103,6 @@ def todayenum(day):
     print('Unknown day: %s' % day)
     sys.exit(1)
 
-def tolistformat(fromformat):
-    result = fromformat.replace('{0}', '%1')
-    result = result.replace('{1}', '%2')
-    result = result.replace('{2}', '%3')
-    return result
-
 def todatetimeformat(fromformat):
     # valid are y, m, M, d, h, H, s, a, A, z and t
     unsupportedtags = [
@@ -353,7 +347,6 @@ def printlocaledata(frommap, key):
         %s, %s, %s, %s, %s, %s, %s, %s,
         %s, %s,
         %s, %s, %s, %s,
-        %s, %s, %s, %s,
         %s, %s,
         %s,
         %s,
@@ -384,10 +377,6 @@ def printlocaledata(frommap, key):
             touint(value['zero']),
             tochar(value['language_endonym']),
             tochar(value['country_endonym']),
-            tochar(value['list_pattern_part_start']),
-            tochar(value['list_pattern_part_mid']),
-            tochar(value['list_pattern_part_end']),
-            tochar(value['list_pattern_part_two']),
             tochar(value['short_date_format']),
             tochar(value['long_date_format']),
             tochar(value['short_time_format']),
@@ -608,10 +597,6 @@ localedefaults = {
     # strings
     'language_endonym': '',
     'country_endonym': '',
-    'list_pattern_part_start': "%1, %2",
-    'list_pattern_part_mid': "%1, %2",
-    'list_pattern_part_end': "%1, %2",
-    'list_pattern_part_two': "%1, %2",
     'short_date_format': 'd MMM yyyy', # default in CLDR is y-MM-dd
     'long_date_format': 'd MMMM yyyy',
     'short_time_format': 'HH:mm:ss', # default in CLDR is HH:mm
@@ -783,19 +768,6 @@ def readlocale(fromxml, tomap, isparent):
             if nativecountrytype == countrytype:
                 tomap[locale]['country_endonym'] = nativecountry.text
                 break
-
-    listpattern = root.find('./listPatterns/listPattern')
-    if listpattern is not None:
-        for listpatternpart in listpattern.findall('./listPatternPart'):
-            listpatternparttype = listpatternpart.get('type')
-            if listpatternparttype == 'start':
-                tomap[locale]['list_pattern_part_start'] = tolistformat(listpatternpart.text)
-            elif listpatternparttype == 'middle':
-                tomap[locale]['list_pattern_part_mid'] = tolistformat(listpatternpart.text)
-            elif listpatternparttype == 'end':
-                tomap[locale]['list_pattern_part_end'] = tolistformat(listpatternpart.text)
-            elif listpatternparttype == '2':
-                tomap[locale]['list_pattern_part_two'] = tolistformat(listpatternpart.text)
 
     for calendar in root.findall('./dates/calendars/calendar'):
         calendartype = calendar.get('type')
