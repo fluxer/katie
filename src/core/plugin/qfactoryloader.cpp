@@ -40,12 +40,12 @@ Q_GLOBAL_STATIC(QList<QFactoryLoader *>, qt_factory_loaders)
 
 static std::recursive_mutex qGlobalFactoryLoaderMutex;
 
-class QFactoryLoaderPrivate : public QObjectPrivate
+class QFactoryLoaderPrivate
 {
-    Q_DECLARE_PUBLIC(QFactoryLoader)
 public:
-    QFactoryLoaderPrivate(){}
+    QFactoryLoaderPrivate();
     ~QFactoryLoaderPrivate();
+
     mutable QMutex mutex;
     QByteArray iid;
     QList<QLibraryPrivate*> libraryList;
@@ -56,6 +56,10 @@ public:
     QStringList loadedPaths;
 };
 
+QFactoryLoaderPrivate::QFactoryLoaderPrivate()
+{
+}
+
 QFactoryLoaderPrivate::~QFactoryLoaderPrivate()
 {
     foreach (QLibraryPrivate *library, libraryList)
@@ -65,7 +69,7 @@ QFactoryLoaderPrivate::~QFactoryLoaderPrivate()
 QFactoryLoader::QFactoryLoader(const char *iid,
                                const QString &suffix,
                                Qt::CaseSensitivity cs)
-    : QObject(*new QFactoryLoaderPrivate)
+    : d_ptr(new QFactoryLoaderPrivate())
 {
     Q_D(QFactoryLoader);
     d->iid = iid;
@@ -185,6 +189,7 @@ QFactoryLoader::~QFactoryLoader()
 {
     std::lock_guard<std::recursive_mutex> locker(qGlobalFactoryLoaderMutex);
     qt_factory_loaders()->removeAll(this);
+    delete d_ptr;
 }
 
 QStringList QFactoryLoader::keys() const
@@ -215,8 +220,6 @@ void QFactoryLoader::refreshAll()
         (*it)->update();
     }
 }
-
-#include "moc_qfactoryloader_p.h"
 
 QT_END_NAMESPACE
 

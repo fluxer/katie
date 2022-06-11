@@ -43,11 +43,8 @@ QT_BEGIN_NAMESPACE
 
 class QFactoryLoaderPrivate;
 
-class Q_CORE_EXPORT QFactoryLoader : public QObject
+class Q_CORE_EXPORT QFactoryLoader
 {
-    Q_OBJECT
-    Q_DECLARE_PRIVATE(QFactoryLoader)
-
 public:
     QFactoryLoader(const char *iid,
                    const QString &suffix,
@@ -61,6 +58,11 @@ public:
     void updateDir(const QString &pluginDir);
 
     static void refreshAll();
+
+private:
+    QFactoryLoaderPrivate *d_ptr;
+    Q_DECLARE_PRIVATE(QFactoryLoader)
+
 };
 
 QT_END_NAMESPACE
