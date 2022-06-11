@@ -101,8 +101,8 @@ bool qt_u_strToUpper(const QString &str, QString *out, const QLocale &locale);
 bool qt_u_strToLower(const QString &str, QString *out, const QLocale &locale);
 
 #define QECVT_BUFFSIZE 17
-char *qfcvt(double x, int n, int *dp, int *sign, char* buf);
-char *qecvt(double x, int n, int *dp, int *sign, char* buf);
+char *qFcvt(double x, int n, int *dp, int *sign, char* buf);
+char *qEcvt(double x, int n, int *dp, int *sign, char* buf);
 
 QT_END_NAMESPACE
 

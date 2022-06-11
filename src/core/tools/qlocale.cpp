@@ -1904,7 +1904,7 @@ QString QLocalePrivate::doubleToString(const QChar _zero, const QChar plus, cons
         // NOT thread safe!
         if (form == DFDecimal) {
             QSTACKARRAY(char, qfcvtbuf, QECVT_BUFFSIZE);
-            digits = QString::fromLatin1(qfcvt(d, precision, &decpt, &sign, qfcvtbuf));
+            digits = QString::fromLatin1(qFcvt(d, precision, &decpt, &sign, qfcvtbuf));
         } else {
             int pr = precision;
             if (form == DFExponent)
@@ -1912,7 +1912,7 @@ QString QLocalePrivate::doubleToString(const QChar _zero, const QChar plus, cons
             else if (form == DFSignificantDigits && pr == 0)
                 pr = 1;
             QSTACKARRAY(char, qecvtbuf, QECVT_BUFFSIZE);
-            digits = QString::fromLatin1(qecvt(d, pr, &decpt, &sign, qecvtbuf));
+            digits = QString::fromLatin1(qEcvt(d, pr, &decpt, &sign, qecvtbuf));
 
             // Chop trailing zeros
             if (digits.length() > 0) {
