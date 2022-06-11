@@ -145,7 +145,7 @@ int RegExp::match(const UString& s, int startOffset, Vector<int, 32>* ovector)
         size_t nummatches = 0;
         for (int i = 0; i < m_regExp.matchedLength(); i++) {
             offsetVector[nummatches] = m_regExp.pos(i);
-            offsetVector[nummatches + 1] = m_regExp.cap(0).length();
+            offsetVector[nummatches + 1] = m_regExp.cap(i).length();
             offsetVector[nummatches + 2] = 0;
             nummatches++;
         }
