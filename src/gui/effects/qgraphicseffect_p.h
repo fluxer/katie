@@ -125,7 +125,7 @@ private:
     mutable QPixmapCache::Key m_cacheKey;
 };
 
-class Q_GUI_EXPORT QGraphicsEffectPrivate : public QObjectPrivate
+class QGraphicsEffectPrivate : public QObjectPrivate
 {
     Q_DECLARE_PUBLIC(QGraphicsEffect)
 public:
