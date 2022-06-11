@@ -26,6 +26,8 @@
 #include <stdlib.h>
 #include <string.h>
 #include <wtf/Assertions.h>
+#include <QStringList>
+#include <QDebug>
 
 // for reference:
 // https://en.cppreference.com/w/cpp/regex/basic_regex
@@ -111,20 +113,6 @@ int RegExp::match(const UString& s, int startOffset, Vector<int, 32>* ovector)
         return -1;
 
     if (isValid()) {
-        // Set up the offset vector for the result.
-        // First 2/3 used for result, the last third unused but there for compatibility.
-        int* offsetVector;
-        int offsetVectorSize;
-        int fixedSizeOffsetVector[3];
-        if (!ovector) {
-            offsetVectorSize = 3;
-            offsetVector = fixedSizeOffsetVector;
-        } else {
-            offsetVectorSize = (m_numSubpatterns + 1) * 3;
-            ovector->resize(offsetVectorSize);
-            offsetVector = ovector->data();
-        }
-
         const QString qstring(s);
 #if 0
         if (multiline()) {
@@ -142,8 +130,24 @@ int RegExp::match(const UString& s, int startOffset, Vector<int, 32>* ovector)
             return -1;
         }
 
+        const int capsize = m_regExp.capturedTexts().size();
+
+        // Set up the offset vector for the result.
+        // First 2/3 used for result, the last third unused but there for compatibility.
+        int* offsetVector;
+        int offsetVectorSize;
+        int fixedSizeOffsetVector[3];
+        if (!ovector) {
+            offsetVectorSize = 3;
+            offsetVector = fixedSizeOffsetVector;
+        } else {
+            offsetVectorSize = (capsize + 1) * 3;
+            ovector->resize(offsetVectorSize);
+            offsetVector = ovector->data();
+        }
+
         size_t nummatches = 0;
-        for (int i = 0; i < m_regExp.matchedLength(); i++) {
+        for (int i = 0; i < capsize; i++) {
             offsetVector[nummatches] = m_regExp.pos(i);
             offsetVector[nummatches + 1] = m_regExp.cap(i).length();
             offsetVector[nummatches + 2] = 0;
