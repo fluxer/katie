@@ -130,7 +130,14 @@ QObject *QFactoryLoader::instance(const QString &key)
     if (qt_debug_component()) {
         qDebug() << "QFactoryLoader: attempting to load plugin" << lowered << d->keyMap.value(lowered);
     }
-    loader = new QPluginLoader(d->keyMap.value(lowered));
+    const QString pluginpath = d->keyMap.value(lowered);
+    if (pluginpath.isEmpty()) {
+        if (qt_debug_component()) {
+            qDebug() << "QFactoryLoader: attempt to loaded invalid plugin" << lowered;
+        }
+        return nullptr;
+    }
+    loader = new QPluginLoader(pluginpath);
     if (loader->load()) {
         if (qt_debug_component()) {
             qDebug() << "QFactoryLoader: loaded plugin" << lowered;
