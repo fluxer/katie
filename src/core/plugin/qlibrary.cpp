@@ -139,11 +139,10 @@ QT_BEGIN_NAMESPACE
   we can get the verification data without have to actually load the library.
   This lets us detect mismatches more safely.
 
-  Returns false if version information is not present, or if the
-                information could not be read.
-  Returns  true if version information is present and successfully read.
+  Returns false if the information could not be read.
+  Returns true if successfully read.
 */
-static bool qt_unix_query(const QString &library, uint *version, QLibraryPrivate *lib)
+static bool qt_unix_query(const QString &library, QLibraryPrivate *lib)
 {
     QFile file(library);
     if (!file.open(QIODevice::ReadOnly)) {
@@ -186,14 +185,14 @@ static bool qt_unix_query(const QString &library, uint *version, QLibraryPrivate
         if (qstrcmp(sectioname, ".ktplugin") == 0) {
             ret = true;
             // compatiblity between releases is not guaranteed thus no version matching is done
-            *version = QT_VERSION;
             break;
         }
     }
 
 
-    if (!ret)
+    if (!ret) {
         lib->errorString = QLibrary::tr("Plugin verification data mismatch in '%1'").arg(library);
+    }
     file.close();
 
     return ret;
@@ -261,7 +260,7 @@ Q_GLOBAL_STATIC(QLibraryCleanup, qGlobalLibraryList);
 
 QLibraryPrivate::QLibraryPrivate()
     : pHnd(nullptr), fileName(),
-     instance(nullptr), pluginState(MightBeAPlugin)
+     instance(nullptr), pluginState(QLibraryPrivate::MightBeAPlugin)
 {
 }
 
@@ -310,7 +309,7 @@ bool QLibraryPrivate::loadPlugin()
     if (instance) {
         return true;
     }
-    if (pluginState == IsNotAPlugin) {
+    if (pluginState == QLibraryPrivate::IsNotAPlugin) {
         return false;
     }
     if (load()) {
@@ -320,7 +319,7 @@ bool QLibraryPrivate::loadPlugin()
     if (qt_debug_component()) {
         qWarning() << "QLibraryPrivate::loadPlugin failed on" << fileName << ":" << errorString;
     }
-    pluginState = IsNotAPlugin;
+    pluginState = QLibraryPrivate::IsNotAPlugin;
     return false;
 }
 
@@ -359,8 +358,8 @@ bool QLibrary::isLibrary(const QString &fileName)
 bool QLibraryPrivate::isPlugin()
 {
     errorString.clear();
-    if (pluginState != MightBeAPlugin) {
-        return (pluginState == IsAPlugin);
+    if (pluginState != QLibraryPrivate::MightBeAPlugin) {
+        return (pluginState == QLibraryPrivate::IsAPlugin);
     }
 
 #ifndef QT_NO_PLUGIN_CHECK
@@ -372,13 +371,12 @@ bool QLibraryPrivate::isPlugin()
 
         // pretend we didn't see the file
         errorString = QLibrary::tr("The shared library was not found.");
-        pluginState = IsNotAPlugin;
+        pluginState = QLibraryPrivate::IsNotAPlugin;
         return false;
     }
 
     // use unix shortcut to avoid loading the library
-    uint pluginVersion = 0;
-    const bool success = qt_unix_query(fileName, &pluginVersion, this);
+    const bool success = qt_unix_query(fileName, this);
     if (!success) {
         if (errorString.isEmpty()){
             if (fileName.isEmpty()) {
@@ -390,24 +388,11 @@ bool QLibraryPrivate::isPlugin()
         return false;
     }
 
-    pluginState = IsNotAPlugin; // be pessimistic
+    pluginState = QLibraryPrivate::IsAPlugin;
 
-    if (pluginVersion < QT_VERSION) {
-        if (qt_debug_component()) {
-            qWarning("Plugin uses incompatible Katie library: %s (%d, %d)\n",
-                QFile::encodeName(fileName).data(), pluginVersion, QT_VERSION);
-        }
-        errorString = QLibrary::tr("The plugin uses incompatible Katie library: %1 (%2, %3)")
-            .arg(fileName)
-            .arg(pluginVersion)
-            .arg(QT_VERSION);
-    } else {
-        pluginState = IsAPlugin;
-    }
-
-    return pluginState == IsAPlugin;
+    return (pluginState == QLibraryPrivate::IsAPlugin);
 #else
-    return pluginState == MightBeAPlugin;
+    return (pluginState == QLibraryPrivate::MightBeAPlugin);
 #endif
 }
 
@@ -591,7 +576,7 @@ void *QLibrary::resolve(const char *symbol)
 */
 QString QLibrary::errorString() const
 {
-    return (d_ptr->errorString.isEmpty() ? tr("Unknown error") : d_ptr->errorString);
+    return (d_ptr->errorString.isEmpty() ? QLibrary::tr("Unknown error") : d_ptr->errorString);
 }
 
 /*!
