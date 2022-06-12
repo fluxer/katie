@@ -187,7 +187,7 @@ static bool qt_unix_query(const QString &library, uint *version, QLibraryPrivate
         const char* sectioname = sh_strtab_p + shdr[i].sh_name;
         if (qstrcmp(sectioname, ".ktplugin") == 0) {
             ret = true;
-            // compatiblity between releases is not guratneed thus no version matching is done
+            // compatiblity between releases is not guaranteed thus no version matching is done
             *version = QT_VERSION;
             break;
         }
