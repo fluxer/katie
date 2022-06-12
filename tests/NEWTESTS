@@ -11,7 +11,6 @@ tests/auto/qgridlayout/
 tests/auto/qdbuspendingreply/
 tests/auto/qimage/
 tests/auto/qdoublevalidator/
-tests/auto/qcalendarwidget/
 tests/auto/qintvalidator/
 tests/auto/qfilesystemmodel/
 tests/auto/qshortcut/
