@@ -600,9 +600,9 @@ void QLibrary::setFileNameAndVersion(const QString &fileName, int verNum)
 */
 void QLibrary::setFileNameAndVersion(const QString &fileName, const QString &version)
 {
-    QMutexLocker locker(qGlobalLibraryMutex());
     // if the library path is not the same it may very well be library with different symbols
     const QString librarymatch = qt_find_library(fileName, version);
+    QMutexLocker locker(qGlobalLibraryMutex());
     QLibraryCleanup* loadedlibraries = qGlobalLibraryList();
     for (int i = 0; i < loadedlibraries->size(); i++) {
         QLibraryPrivate* loadedlibrary = loadedlibraries->at(i);

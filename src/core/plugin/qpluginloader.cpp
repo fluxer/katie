@@ -156,7 +156,7 @@ QPluginLoader::~QPluginLoader()
 */
 QObject *QPluginLoader::instance()
 {
-    if (!d_ptr->loadPlugin()) {
+    if (!d_ptr->isPlugin() || !d_ptr->loadPlugin()) {
         return nullptr;
     }
     if (!d_ptr->inst && d_ptr->instance)
