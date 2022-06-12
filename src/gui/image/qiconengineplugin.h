@@ -23,36 +23,18 @@
 #define QICONENGINEPLUGIN_H
 
 #include <QtCore/qplugin.h>
-#include <QtCore/qfactoryinterface.h>
-
 
 QT_BEGIN_NAMESPACE
 
 class QIconEngine;
 
-struct Q_GUI_EXPORT QIconEngineFactoryInterface : public QFactoryInterface
-{
-    virtual QIconEngine *create(const QString &filename= QString()) = 0;
-};
-typedef QIconEngineFactoryInterface QIconEngineFactoryInterfaceV2;
-
-QT_END_NAMESPACE
-
-#define QIconEngineFactoryInterface_iid \
-    "Katie.QIconEngineFactoryInterface"
-Q_DECLARE_INTERFACE(QIconEngineFactoryInterface, QIconEngineFactoryInterface_iid)
-
-QT_BEGIN_NAMESPACE
-
-class Q_GUI_EXPORT QIconEnginePlugin : public QObject, public QIconEngineFactoryInterface
+class Q_GUI_EXPORT QIconEnginePlugin : public QObject
 {
     Q_OBJECT
-    Q_INTERFACES(QIconEngineFactoryInterface:QFactoryInterface)
 public:
     QIconEnginePlugin(QObject *parent = nullptr);
     ~QIconEnginePlugin();
 
-    virtual QStringList keys() const = 0;
     virtual QIconEngine *create(const QString &filename = QString()) = 0;
 };
 typedef QIconEnginePlugin QIconEnginePluginV2;

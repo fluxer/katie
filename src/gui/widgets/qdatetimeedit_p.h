@@ -127,7 +127,6 @@ public:
     QDate selectedDate() { return verifyCalendarInstance()->selectedDate(); }
     void setDate(const QDate &date);
     void setDateRange(const QDate &min, const QDate &max);
-    void setFirstDayOfWeek(Qt::DayOfWeek dow) { verifyCalendarInstance()->setFirstDayOfWeek(dow); }
     QCalendarWidget *calendarWidget() const { return const_cast<QCalendarPopup*>(this)->verifyCalendarInstance(); }
     void setCalendarWidget(QCalendarWidget *cw);
 Q_SIGNALS:

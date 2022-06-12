@@ -297,12 +297,11 @@ void QSettingsPrivate::write()
 
 void QSettingsPrivate::notify()
 {
-    Q_Q(QSettings);
     QMutexLocker locker(qSettingsMutex());
     shouldwrite = true;
     for (int i = 0; i < qGlobalSettings()->size(); i++) {
         QSettings *setting = qGlobalSettings()->at(i);
-        if (setting != q && setting->fileName() == q->fileName()) {
+        if (setting->d_func() != this && setting->fileName() == filename) {
             setting->d_func()->map = map;
             setting->d_func()->shouldwrite = false;
         }
@@ -689,8 +688,8 @@ QStringList QSettingsPrivate::splitArgs(const QString &s, int idx)
 
     \sa QCoreApplication::setApplicationName()
 */
-QSettings::QSettings(QObject *parent)
-    : QObject(*new QSettingsPrivate(QSettings::NativeFormat), parent)
+QSettings::QSettings()
+    : d_ptr(new QSettingsPrivate(QSettings::NativeFormat))
 {
     QMutexLocker locker(qSettingsMutex());
     qGlobalSettings()->append(this);
@@ -699,15 +698,14 @@ QSettings::QSettings(QObject *parent)
 }
 
 /*!
-    Constructs a QSettings object for accessing settings with parent
-    \a parent.
+    Constructs a QSettings object for accessing settings.
 
     If \a format is QSettings::NativeFormat, the native JSON API is used
     for storing settings. If \a format is QSettings::IniFormat, the INI
     format is used.
 */
-QSettings::QSettings(Format format, QObject *parent)
-    : QObject(*new QSettingsPrivate(format), parent)
+QSettings::QSettings(Format format)
+    : d_ptr(new QSettingsPrivate(format))
 {
     QMutexLocker locker(qSettingsMutex());
     qGlobalSettings()->append(this);
@@ -716,9 +714,8 @@ QSettings::QSettings(Format format, QObject *parent)
 }
 
 /*!
-    Constructs a QSettings object for accessing the settings
-    stored in the file called \a fileName, with parent \a parent. If
-    the file doesn't already exist, it is created.
+    Constructs a QSettings object for accessing the settings stored in the
+    file called \a fileName. If the file doesn't already exist, it is created.
 
     The meaning of \a fileName depends on the format. If \a format is
     QSettings::NativeFormat, the filename will end with end with .json
@@ -735,8 +732,8 @@ QSettings::QSettings(Format format, QObject *parent)
 
     \sa fileName()
 */
-QSettings::QSettings(const QString &fileName, Format format, QObject *parent)
-    : QObject(*new QSettingsPrivate(fileName, format), parent)
+QSettings::QSettings(const QString &fileName, Format format)
+    : d_ptr(new QSettingsPrivate(fileName, format))
 {
     QMutexLocker locker(qSettingsMutex());
     qGlobalSettings()->append(this);
@@ -758,6 +755,7 @@ QSettings::~QSettings()
     QMutexLocker locker(qSettingsMutex());
     const int index = qGlobalSettings()->indexOf(this);
     qGlobalSettings()->remove(index);
+    delete d_ptr;
 }
 
 /*!
@@ -1034,8 +1032,6 @@ QVariant QSettings::value(const QString &key, const QVariant &defaultValue) cons
 
     Typedef for QMap<QString, QVariant>.
 */
-
-#include "moc_qsettings.h"
 
 QT_END_NAMESPACE
 

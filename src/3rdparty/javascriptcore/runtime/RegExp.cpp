@@ -26,6 +26,8 @@
 #include <stdlib.h>
 #include <string.h>
 #include <wtf/Assertions.h>
+#include <QStringList>
+#include <QDebug>
 
 // for reference:
 // https://en.cppreference.com/w/cpp/regex/basic_regex
@@ -85,96 +87,60 @@ PassRefPtr<RegExp> RegExp::create(const UString& pattern, const UString& flags)
 
 void RegExp::compile()
 {
-    m_constructionError = std::string();
-    m_regExp = std::regex();
+    m_constructionError.clear();
     m_numSubpatterns = 0;
 
-    int regexOptions = std::regex_constants::ECMAScript;
-    if (ignoreCase())
-        regexOptions |= std::regex_constants::icase;
-#if 0
-    if (multiline())
-#if __cplusplus >= 201703L
-        regexOptions |= std::regex_constants::multiline;
-#endif
-#endif
-
-    m_regexPattern = std::string(m_pattern.ascii());
-#ifndef QT_NO_EXCEPTIONS
-    try {
-        m_regExp = std::regex(m_regexPattern.c_str(), regexOptions);
-        std::sregex_iterator matchbegin = std::sregex_iterator(m_regexPattern.begin(), m_regexPattern.end(), m_regExp);
-        std::sregex_iterator matchend = std::sregex_iterator();
-        m_numSubpatterns = std::distance(matchbegin, matchend);
-    } catch (const std::regex_error &err) {
-        m_constructionError = err.what();
-    } catch (...) {
-        m_constructionError = "Exception caught during regex compilation";
+    if (multiline()) {
+        m_constructionError = "Multi-line not implemented";
+        return;
     }
-#else
-    // no exceptions, no way to find out if error occured
-    m_regExp = std::regex(m_regexPattern.c_str(), regexOptions);
-    std::sregex_iterator matchbegin = std::sregex_iterator(m_regexPattern.begin(), m_regexPattern.end(), m_regExp);
-    std::sregex_iterator matchend = std::sregex_iterator();
-    m_numSubpatterns = std::distance(matchbegin, matchend);
-#endif
+    Qt::CaseSensitivity regexOptions = Qt::CaseSensitive;
+    if (ignoreCase()) {
+        regexOptions = Qt::CaseInsensitive;
+    }
+    m_regExp = QRegExp(QString(m_pattern), regexOptions);
+    if (!m_regExp.isValid()) {
+        m_constructionError = m_regExp.errorString().toLatin1();
+        return;
+    }
+    m_numSubpatterns = m_regExp.captureCount();
 }
 
 int RegExp::match(const UString& s, int startOffset, Vector<int, 32>* ovector)
 {
-    if (startOffset < 0)
+    if (!ovector) {
+        return -1;
+    }
+    if (startOffset < 0) {
         startOffset = 0;
-    if (ovector)
-        ovector->clear();
+    }
+    ovector->clear();
 
     if (startOffset > s.size() || s.isNull())
         return -1;
 
     if (isValid()) {
-        // Set up the offset vector for the result.
-        // First 2/3 used for result, the last third unused but there for compatibility.
-        int* offsetVector;
-        int offsetVectorSize;
-        int fixedSizeOffsetVector[3];
-        if (!ovector) {
-            offsetVectorSize = 3;
-            offsetVector = fixedSizeOffsetVector;
-        } else {
-            offsetVectorSize = (m_numSubpatterns + 1) * 3;
-            ovector->resize(offsetVectorSize);
-            offsetVector = ovector->data();
-        }
-
-        const std::string sstring = std::string(s.ascii());
-#ifndef QT_NO_EXCEPTIONS
-        bool didmatch = false;
-        try {
-            didmatch = std::regex_match(sstring.data() + startOffset, m_regExp);
-        } catch (const std::regex_error &err) {
-            m_constructionError = err.what();
-        } catch (...) {
-            m_constructionError = "Exception caught during regex matching";
-        }
-#else
-        const bool didmatch = std::regex_match(sstring.data() + startOffset, m_regExp);
-#endif
+        const QString qstring(s);
+        const bool didmatch = (m_regExp.indexIn(qstring, startOffset) != -1);
 
         if (!didmatch) {
 #ifndef QT_NO_DEBUG
             fprintf(stderr, "jsRegExpExecute failed with result\n");
 #endif
-            if (ovector)
-                ovector->clear();
             return -1;
         }
 
-        std::sregex_iterator matchbegin = std::sregex_iterator(m_regexPattern.begin(), m_regexPattern.end(), m_regExp);
-        std::sregex_iterator matchend = std::sregex_iterator();
+        const int capsize = m_regExp.capturedTexts().size();
+
+        // Set up the offset vector for the result.
+        // First 2/3 used for result, the last third unused but there for compatibility.
+        ovector->resize((capsize + 1) * 3);
+        int* offsetVector= ovector->data();
+
         size_t nummatches = 0;
-        for (std::sregex_iterator iter = matchbegin; iter != matchend; iter++) {
-            const std::smatch itermatch = *iter;
-            offsetVector[nummatches] = itermatch.position();
-            offsetVector[nummatches + 1] = itermatch.length();
+        for (int i = 0; i < capsize; i++) {
+            offsetVector[nummatches] = m_regExp.pos(i);
+            offsetVector[nummatches + 1] = m_regExp.cap(i).length();
             offsetVector[nummatches + 2] = 0;
             nummatches++;
         }

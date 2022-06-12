@@ -105,9 +105,9 @@
     support for different image formats to Qt.
 
     Writing an image I/O plugin is achieved by subclassing this
-    base class, reimplementing the pure virtual functions capabilities(),
-    create(), and keys(), and exporting the class with the
-    Q_EXPORT_PLUGIN2() macro. See \l{How to Create Qt Plugins} for details.
+    base class, reimplementing the pure virtual functions capabilities()
+    and create(), and exporting the class with the Q_EXPORT_PLUGIN2()
+    macro. See \l{How to Create Qt Plugins} for details.
 
     An image format plugin can support three capabilities: reading (\l
     CanRead) and writing (\l CanWrite). Reimplement capabilities() in your
@@ -115,8 +115,7 @@
 
     create() should create an instance of your QImageIOHandler
     subclass, with the provided device and format properly set, and
-    return this handler. You must also reimplement keys() so that Qt
-    knows which image formats your plugin supports.
+    return this handler.
 
     Different plugins can support different capabilities. For example,
     you may have one plugin that supports reading the SVG format, and
@@ -137,19 +136,7 @@
     \value CanWrite The plugin can write images.
 */
 
-/*!
-    \class QImageIOHandlerFactoryInterface
-    \brief The QImageIOHandlerFactoryInterface class provides the factory
-    interface for QImageIOPlugin.
-    \reentrant
-
-    \internal
-
-    \sa QImageIOPlugin
-*/
-
 #include "qimageiohandler.h"
-
 #include "qbytearray.h"
 #include "qimage.h"
 #include "qvariant.h"
@@ -448,17 +435,6 @@ QImageIOPlugin::~QImageIOPlugin()
 */
 
 /*!
-    \fn QImageIOPlugin::keys() const
-
-    Returns the list of image keys this plugin supports.
-
-    These keys are usually the names of the image formats that are implemented
-    in the plugin (e.g., "png").
-
-    \sa capabilities()
-*/
-
-/*!
     \fn QImageIOPlugin::mimeTypes() const
 
     Returns the list of image MIME types this plugin supports.
@@ -473,10 +449,7 @@ QImageIOPlugin::~QImageIOPlugin()
     \fn QImageIOHandler *QImageIOPlugin::create(QIODevice *device, const QByteArray &format) const
 
     Creates and returns a QImageIOHandler subclass, with \a device
-    and \a format set. The \a format must come from the list returned by keys().
-    Format names are case sensitive.
-
-    \sa keys()
+    and \a format set. The \a format is a hint. Format names are case sensitive.
 */
 
 QT_END_NAMESPACE

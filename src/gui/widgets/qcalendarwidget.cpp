@@ -838,9 +838,6 @@ public:
 
     void setHorizontalHeaderFormat(QCalendarWidget::HorizontalHeaderFormat format);
 
-    void setFirstColumnDay(Qt::DayOfWeek dayOfWeek);
-    Qt::DayOfWeek firstColumnDay() const;
-
     bool weekNumbersShown() const;
     void setWeekNumbersShown(bool show);
 
@@ -868,7 +865,8 @@ public:
     Qt::DayOfWeek m_firstDay;
     QCalendarWidget::HorizontalHeaderFormat m_horizontalHeaderFormat;
     bool m_weekNumbersShown;
-    QMap<Qt::DayOfWeek, QTextCharFormat> m_dayFormats;
+    QTextCharFormat m_weekendFormat;
+    QList<Qt::DayOfWeek> m_weekendDays;
     QMap<QDate, QTextCharFormat> m_dateFormats;
     QTextCharFormat m_headerFormat;
     QCalendarView *m_view;
@@ -1069,8 +1067,8 @@ QTextCharFormat QCalendarModel::formatForCell(int row, int col) const
 
     if (col >= m_firstColumn && col < m_firstColumn + ColumnCount) {
         Qt::DayOfWeek dayOfWeek = dayOfWeekForColumn(col);
-        if (m_dayFormats.contains(dayOfWeek))
-            format.merge(m_dayFormats.value(dayOfWeek));
+        if (m_weekendDays.contains(dayOfWeek))
+            format.merge(m_weekendFormat);
     }
 
     if (!header) {
@@ -1215,20 +1213,6 @@ void QCalendarModel::setHorizontalHeaderFormat(QCalendarWidget::HorizontalHeader
         removeRow(0);
     }
     internalUpdate();
-}
-
-void QCalendarModel::setFirstColumnDay(Qt::DayOfWeek dayOfWeek)
-{
-    if (m_firstDay == dayOfWeek)
-        return;
-
-    m_firstDay = dayOfWeek;
-    internalUpdate();
-}
-
-Qt::DayOfWeek QCalendarModel::firstColumnDay() const
-{
-    return m_firstDay;
 }
 
 bool QCalendarModel::weekNumbersShown() const
@@ -1537,6 +1521,7 @@ public:
     void updateMonthMenu();
     void updateMonthMenuNames();
     void updateNavigationBar();
+    void updateWeekend();
     void updateCurrentPage(const QDate &newDate);
     inline QDate getCurrentDate();
     void setNavigatorEnabled(bool enable);
@@ -1844,6 +1829,20 @@ void QCalendarWidgetPrivate::updateNavigationBar()
     yearEdit->setValue(m_model->m_shownYear);
 }
 
+void QCalendarWidgetPrivate::updateWeekend()
+{
+    m_model->m_weekendDays.clear();
+    const QList<Qt::DayOfWeek> weekdays = m_view->locale().weekdays();
+    for (int i = Qt::Monday; i <= Qt::Sunday; i++) {
+        const Qt::DayOfWeek id = static_cast<Qt::DayOfWeek>(i);
+        if (weekdays.contains(id)) {
+            continue;
+        }
+        m_model->m_weekendDays.append(id);
+    }
+    m_model->m_firstDay = m_view->locale().firstDayOfWeek();
+}
+
 void QCalendarWidgetPrivate::update()
 {
     QDate currentDate = m_model->m_date;
@@ -1945,8 +1944,8 @@ void QCalendarWidgetPrivate::_q_editingFinished()
         \snippet doc/src/snippets/code/src_gui_widgets_qcalendarwidget.cpp 0
     \endtable
 
-    Finally, the day in the first column can be altered using the
-    setFirstDayOfWeek() function.
+    Finally, the day in the first column can be altered by setting the
+    widget locale.
 
     The QCalendarWidget class also provides three signals,
     selectionChanged(), activated() and currentPageChanged() making it
@@ -1997,8 +1996,7 @@ QCalendarWidget::QCalendarWidget(QWidget *parent)
     d->m_model = new QCalendarModel(this);
     QTextCharFormat fmt;
     fmt.setForeground(QBrush(Qt::red));
-    d->m_model->m_dayFormats.insert(Qt::Saturday, fmt);
-    d->m_model->m_dayFormats.insert(Qt::Sunday, fmt);
+    d->m_model->m_weekendFormat = fmt;
     d->m_view = new QCalendarView(this);
     d->m_view->setObjectName(QLatin1String("qt_calendar_calendarview"));
     d->m_view->setModel(d->m_model);
@@ -2631,29 +2629,6 @@ void QCalendarWidget::setSelectionMode(SelectionMode mode)
 }
 
 /*!
-    \property QCalendarWidget::firstDayOfWeek
-    \brief a value identifying the day displayed in the first column.
-
-    By default, the day displayed in the first column is Sunday
-*/
-
-void QCalendarWidget::setFirstDayOfWeek(Qt::DayOfWeek dayOfWeek)
-{
-    Q_D(QCalendarWidget);
-    if ((Qt::DayOfWeek)d->m_model->firstColumnDay() == dayOfWeek)
-        return;
-
-    d->m_model->setFirstColumnDay(dayOfWeek);
-    d->update();
-}
-
-Qt::DayOfWeek QCalendarWidget::firstDayOfWeek() const
-{
-    Q_D(const QCalendarWidget);
-    return (Qt::DayOfWeek)d->m_model->firstColumnDay();
-}
-
-/*!
     Returns the text char format for rendering the header.
 */
 QTextCharFormat QCalendarWidget::headerTextFormat() const
@@ -2679,27 +2654,27 @@ void QCalendarWidget::setHeaderTextFormat(const QTextCharFormat &format)
 }
 
 /*!
-    Returns the text char format for rendering of day in the week \a dayOfWeek.
+    Returns the text char format for rendering of weekend days.
 
     \sa headerTextFormat()
 */
-QTextCharFormat QCalendarWidget::weekdayTextFormat(Qt::DayOfWeek dayOfWeek) const
+QTextCharFormat QCalendarWidget::weekendTextFormat() const
 {
     Q_D(const QCalendarWidget);
-    return d->m_model->m_dayFormats.value(dayOfWeek);
+    return d->m_model->m_weekendFormat;
 }
 
 /*!
-    Sets the text char format for rendering of day in the week \a dayOfWeek to \a format.
+    Sets the text char format for rendering of weekend days to \a format.
     The format will take precedence over the header format in case of foreground
     and background color. Other text formatting information is taken from the headers format.
 
     \sa setHeaderTextFormat()
 */
-void QCalendarWidget::setWeekdayTextFormat(Qt::DayOfWeek dayOfWeek, const QTextCharFormat &format)
+void QCalendarWidget::setWeekendTextFormat(const QTextCharFormat &format)
 {
     Q_D(QCalendarWidget);
-    d->m_model->m_dayFormats[dayOfWeek] = format;
+    d->m_model->m_weekendFormat = format;
     d->cachedSizeHint = QSize();
     d->m_view->viewport()->update();
     d->m_view->updateGeometry();
@@ -2920,10 +2895,15 @@ bool QCalendarWidget::event(QEvent *event)
 {
     Q_D(QCalendarWidget);
     switch (event->type()) {
+        case QEvent::Show:
+            // delayed so that locale property has effect
+            d->updateWeekend();
+            break;
         case QEvent::LayoutDirectionChange:
             d->updateButtonIcons();
         case QEvent::LocaleChange:
             d->cachedSizeHint = QSize();
+            d->updateWeekend();
             d->updateMonthMenuNames();
             d->updateNavigationBar();
             d->m_view->updateGeometry();

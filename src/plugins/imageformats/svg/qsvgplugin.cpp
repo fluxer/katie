@@ -31,19 +31,10 @@ QT_BEGIN_NAMESPACE
 class QSvgPlugin : public QImageIOPlugin
 {
 public:
-    QStringList keys() const;
-    QList<QByteArray> mimeTypes() const;
-    Capabilities capabilities(QIODevice *device, const QByteArray &format) const;
-    QImageIOHandler *create(QIODevice *device, const QByteArray &format = QByteArray()) const;
+    QList<QByteArray> mimeTypes() const final;
+    Capabilities capabilities(QIODevice *device, const QByteArray &format) const final;
+    QImageIOHandler *create(QIODevice *device, const QByteArray &format = QByteArray()) const final;
 };
-
-QStringList QSvgPlugin::keys() const
-{
-    static const QStringList list = QStringList()
-        << QLatin1String("svg")
-        << QLatin1String("svgz");
-    return list;
-}
 
 QList<QByteArray> QSvgPlugin::mimeTypes() const
 {
@@ -74,6 +65,6 @@ QImageIOHandler *QSvgPlugin::create(QIODevice *device, const QByteArray &format)
     return hand;
 }
 
-Q_EXPORT_PLUGIN2(qsvg, QSvgPlugin)
+Q_EXPORT_PLUGIN2(svg, QSvgPlugin)
 
 QT_END_NAMESPACE

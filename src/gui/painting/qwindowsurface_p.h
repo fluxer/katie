@@ -44,7 +44,7 @@ class QPoint;
 class QImage;
 class QWindowSurfacePrivate;
 
-class Q_GUI_EXPORT QWindowSurface
+class QWindowSurface
 {
 public:
     QWindowSurface(QWidget *windows);

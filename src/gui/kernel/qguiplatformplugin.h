@@ -23,9 +23,7 @@
 #define QGUIPLATFORM_P_H
 
 #include <QtCore/qplugin.h>
-#include <QtCore/qfactoryinterface.h>
 #include <QtGui/qdialog.h>
-
 
 QT_BEGIN_NAMESPACE
 
@@ -35,21 +33,9 @@ class QFileDialog;
 class QColorDialog;
 class QFileInfo;
 
-struct Q_GUI_EXPORT QGuiPlatformPluginInterface  : public QFactoryInterface
-{
-};
-
-QT_END_NAMESPACE
-
-#define QGuiPlatformPluginInterface_iid "Katie.QGuiPlatformPluginInterface"
-Q_DECLARE_INTERFACE(QGuiPlatformPluginInterface, QGuiPlatformPluginInterface_iid)
-
-QT_BEGIN_NAMESPACE
-
-class Q_GUI_EXPORT QGuiPlatformPlugin : public QObject, public QGuiPlatformPluginInterface
+class Q_GUI_EXPORT QGuiPlatformPlugin : public QObject
 {
     Q_OBJECT
-    Q_INTERFACES(QGuiPlatformPluginInterface:QFactoryInterface)
     public:
         enum PlatformHint {
             PH_ToolButtonStyle,
@@ -59,8 +45,6 @@ class Q_GUI_EXPORT QGuiPlatformPlugin : public QObject, public QGuiPlatformPlugi
 
         explicit QGuiPlatformPlugin(QObject *parent = nullptr);
         ~QGuiPlatformPlugin();
-
-        virtual QStringList keys() const;
 
         virtual QString styleName();
         virtual QPalette palette();

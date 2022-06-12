@@ -45,15 +45,10 @@ public:
     Q_DECLARE_FLAGS(LoadHints, LoadHint)
 
     explicit QLibrary(QObject *parent = nullptr);
-    explicit QLibrary(const QString& fileName, QObject *parent = nullptr);
-    explicit QLibrary(const QString& fileName, int verNum, QObject *parent = nullptr);
-    explicit QLibrary(const QString& fileName, const QString &version, QObject *parent = nullptr);
+    explicit QLibrary(const QString &fileName, QObject *parent = nullptr);
     ~QLibrary();
 
     void *resolve(const char *symbol);
-    static void *resolve(const QString &fileName, const char *symbol);
-    static void *resolve(const QString &fileName, int verNum, const char *symbol);
-    static void *resolve(const QString &fileName, const QString &version, const char *symbol);
 
     bool load();
     bool unload();
@@ -64,14 +59,13 @@ public:
     void setFileName(const QString &fileName);
     QString fileName() const;
 
-    void setFileNameAndVersion(const QString &fileName, int verNum);
-    void setFileNameAndVersion(const QString &fileName, const QString &version);
     QString errorString() const;
 
     void setLoadHints(LoadHints hints);
     LoadHints loadHints() const;
 private:
-    QLibraryPrivate *d;
+    friend class QPluginLoader;
+    QLibraryPrivate *d_ptr;
     Q_DISABLE_COPY(QLibrary)
 };
 

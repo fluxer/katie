@@ -46,7 +46,7 @@ class QSize;
 class QWidget;
 class QRasterWindowSurfacePrivate;
 
-class Q_GUI_EXPORT QRasterWindowSurface : public QWindowSurface
+class QRasterWindowSurface : public QWindowSurface
 {
 public:
     QRasterWindowSurface(QWidget *widget);

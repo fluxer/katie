@@ -27,18 +27,13 @@
 
 QT_BEGIN_NAMESPACE
 
-
 class QDataStream;
 class QDate;
 class QDateTime;
 class QTime;
-class QVariant;
-class QTextStream;
-class QTextStreamPrivate;
-
-class QLocale;
 
 class QLocalePrivate;
+
 class Q_CORE_EXPORT QLocale
 {
     Q_GADGET
@@ -1376,11 +1371,6 @@ public:
     void setNumberOptions(NumberOptions options);
     NumberOptions numberOptions() const;
 
-    enum QuotationStyle { StandardQuotation, AlternateQuotation };
-    QString quoteString(const QString &str, QuotationStyle style = StandardQuotation) const;
-    QString quoteString(const QStringRef &str, QuotationStyle style = StandardQuotation) const;
-
-    QString createSeparatedList(const QStringList &strl) const;
 private:
     friend class QLocalePrivate;
     // ### We now use this field to pack an index into locale_data and NumberOptions.

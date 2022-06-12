@@ -49,7 +49,6 @@ include/katie/QtCore/QEvent
 include/katie/QtCore/QEventLoop
 include/katie/QtCore/QExplicitlySharedDataPointer
 include/katie/QtCore/QFSFileEngine
-include/katie/QtCore/QFactoryInterface
 include/katie/QtCore/QFile
 include/katie/QtCore/QFileInfo
 include/katie/QtCore/QFileInfoList
@@ -213,7 +212,6 @@ include/katie/QtCore/qeasingcurve.h
 include/katie/QtCore/qelapsedtimer.h
 include/katie/QtCore/qendian.h
 include/katie/QtCore/qeventloop.h
-include/katie/QtCore/qfactoryinterface.h
 include/katie/QtCore/qfile.h
 include/katie/QtCore/qfileinfo.h
 include/katie/QtCore/qfilesystemwatcher.h
@@ -644,15 +642,12 @@ include/katie/QtGui/QHideEvent
 include/katie/QtGui/QHoverEvent
 include/katie/QtGui/QIcon
 include/katie/QtGui/QIconEngine
-include/katie/QtGui/QIconEngineFactoryInterface
-include/katie/QtGui/QIconEngineFactoryInterfaceV2
 include/katie/QtGui/QIconEnginePlugin
 include/katie/QtGui/QIconEnginePluginV2
 include/katie/QtGui/QIconEngineV2
 include/katie/QtGui/QIdentityProxyModel
 include/katie/QtGui/QImage
 include/katie/QtGui/QImageIOHandler
-include/katie/QtGui/QImageIOHandlerFactoryInterface
 include/katie/QtGui/QImageIOPlugin
 include/katie/QtGui/QImageReader
 include/katie/QtGui/QImageWriter
@@ -760,7 +755,6 @@ include/katie/QtGui/QStatusTipEvent
 include/katie/QtGui/QStringListModel
 include/katie/QtGui/QStyle
 include/katie/QtGui/QStyleFactory
-include/katie/QtGui/QStyleFactoryInterface
 include/katie/QtGui/QStyleHintReturn
 include/katie/QtGui/QStyleHintReturnMask
 include/katie/QtGui/QStyleHintReturnVariant
@@ -1267,13 +1261,13 @@ lib/katie/imports/Qt/labs/particles/
 lib/katie/imports/Qt/labs/particles/qmldir
 lib/katie/plugins/
 lib/katie/plugins/designer/
-@so lib/katie/plugins/designer/libqdeclarativeview.so
+@so lib/katie/plugins/designer/qdeclarativeview.so
 lib/katie/plugins/iconengines/
-@so lib/katie/plugins/iconengines/libqsvgicon.so
+@so lib/katie/plugins/iconengines/qsvg.so
 lib/katie/plugins/imageformats/
-@so lib/katie/plugins/imageformats/libqsvg.so
+@so lib/katie/plugins/imageformats/svg.so
 lib/katie/plugins/script/
-@so lib/katie/plugins/script/libqtscriptdbus.so
+@so lib/katie/plugins/script/qtscriptdbus.so
 @lib lib/libKtCore.so.${LIBKtCore_VERSION}
 @lib lib/libKtDBus.so.${LIBKtDBus_VERSION}
 @lib lib/libKtDeclarative.so.${LIBKtDeclarative_VERSION}

@@ -43,10 +43,7 @@ typedef bool (*QSettingsReadFunc)(QIODevice &device, QSettings::SettingsMap &map
 typedef bool (*QSettingsWriteFunc)(QIODevice &device, const QSettings::SettingsMap &map);
 
 class QSettingsPrivate
-    : public QObjectPrivate
 {
-    Q_DECLARE_PUBLIC(QSettings)
-
 public:
     QSettingsPrivate(QSettings::Format format);
     QSettingsPrivate(const QString &fileName, QSettings::Format format);
@@ -71,6 +68,9 @@ public:
     QSettingsReadFunc readFunc;
     QSettingsWriteFunc writeFunc;
     bool shouldwrite;
+
+private:
+    Q_DISABLE_COPY(QSettingsPrivate);
 };
 
 QT_END_NAMESPACE

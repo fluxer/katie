@@ -35,22 +35,11 @@ QT_BEGIN_NAMESPACE
     applications using the QStyleFactory class.
 
     Writing a style plugin is achieved by subclassing this base class,
-    reimplementing the pure virtual keys() and create() functions, and
-    exporting the class using the Q_EXPORT_PLUGIN2() macro. See \l
+    reimplementing the pure virtual create() functions and exporting
+    the class using the Q_EXPORT_PLUGIN2() macro. See \l
     {How to Create Qt Plugins} for details.
 
     \sa QStyleFactory, QStyle
-*/
-
-/*!
-    \fn QStringList QStylePlugin::keys() const
-
-    Returns the list of style keys this plugin supports.
-
-    These keys are usually the class names of the custom styles that
-    are implemented in the plugin.
-
-    \sa create()
 */
 
 /*!
@@ -60,14 +49,7 @@ QT_BEGIN_NAMESPACE
     If a plugin cannot create a style, it should return 0 instead.
 
     The style key is usually the class name of the required
-    style. Note that the keys are case insensitive. For example:
-
-    \snippet doc/src/snippets/qstyleplugin/main.cpp 0
-    \codeline
-    \snippet doc/src/snippets/qstyleplugin/main.cpp 1
-    \snippet doc/src/snippets/qstyleplugin/main.cpp 2
-
-    \sa keys()
+    style. Note that the keys are case insensitive.
 */
 
 /*!

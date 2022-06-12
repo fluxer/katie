@@ -35,7 +35,6 @@
 
 #include "QtCore/qobject.h"
 #include "QtCore/qstringlist.h"
-#include "qlibrary_p.h"
 
 #ifndef QT_NO_LIBRARY
 
@@ -43,24 +42,22 @@ QT_BEGIN_NAMESPACE
 
 class QFactoryLoaderPrivate;
 
-class Q_CORE_EXPORT QFactoryLoader : public QObject
+class Q_CORE_EXPORT QFactoryLoader
 {
-    Q_OBJECT
-    Q_DECLARE_PRIVATE(QFactoryLoader)
-
 public:
-    QFactoryLoader(const char *iid,
-                   const QString &suffix,
-                   Qt::CaseSensitivity = Qt::CaseSensitive);
+    QFactoryLoader(const QString &suffix);
     ~QFactoryLoader();
 
     QStringList keys() const;
-    QObject *instance(const QString &key) const;
+    QObject *instance(const QString &key);
 
     void update();
-    void updateDir(const QString &pluginDir);
 
     static void refreshAll();
+
+private:
+    QFactoryLoaderPrivate *d_ptr;
+    Q_DECLARE_PRIVATE(QFactoryLoader)
 };
 
 QT_END_NAMESPACE

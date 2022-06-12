@@ -323,7 +323,7 @@ SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 */
 // the code bellow is copy from musl libc, modified to not use static buffer
 // and use snprintf() instead of sprintf()
-char *qfcvt(double x, int n, int *dp, int *sign, char* buf)
+char *qFcvt(double x, int n, int *dp, int *sign, char* buf)
 {
     QSTACKARRAY(char, tmp, 1500);
     int i, lz;
@@ -341,10 +341,10 @@ char *qfcvt(double x, int n, int *dp, int *sign, char* buf)
         return (char*)"000000000000000"+14-n;
     }
 
-    return qecvt(x, n-lz, dp, sign, buf);
+    return qEcvt(x, n-lz, dp, sign, buf);
 }
 
-char *qecvt(double x, int n, int *dp, int *sign, char* buf)
+char *qEcvt(double x, int n, int *dp, int *sign, char* buf)
 {
     QSTACKARRAY(char, tmp, 32);
     int i, j;

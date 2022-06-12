@@ -23,12 +23,10 @@
 #define QSCRIPTEXTENSIONPLUGIN_H
 
 #include <QtCore/qplugin.h>
-
+#include <QtCore/qstringlist.h>
 #include <QtScript/qscriptextensioninterface.h>
 
-
 QT_BEGIN_NAMESPACE
-
 
 class QScriptValue;
 
@@ -36,7 +34,6 @@ class Q_SCRIPT_EXPORT QScriptExtensionPlugin : public QObject,
                                                public QScriptExtensionInterface
 {
     Q_OBJECT
-    Q_INTERFACES(QScriptExtensionInterface:QFactoryInterface)
 public:
     explicit QScriptExtensionPlugin(QObject *parent = nullptr);
     ~QScriptExtensionPlugin();

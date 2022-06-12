@@ -70,19 +70,22 @@ static inline bool qIsUpper(char ch)
     return (ch >= 'A' && ch <= 'Z');
 }
 
-static inline bool qIsDigit(char ch)
+template <class T>
+inline bool qIsDigit(const T ch)
 {
     return (ch >= '0' && ch <= '9');
 }
 
-static inline char qToLower(char ch)
+template <class T>
+inline T qToLower(const T ch)
 {
     if (ch >= 'A' && ch <= 'Z')
         return (ch + 32);
     return ch;
 }
 
-static inline char qToUpper(char ch)
+template <class T>
+inline T qToUpper(const T ch)
 {
     if (ch >= 'a' && ch <= 'z')
         return (ch - 32);
@@ -98,8 +101,8 @@ bool qt_u_strToUpper(const QString &str, QString *out, const QLocale &locale);
 bool qt_u_strToLower(const QString &str, QString *out, const QLocale &locale);
 
 #define QECVT_BUFFSIZE 17
-char *qfcvt(double x, int n, int *dp, int *sign, char* buf);
-char *qecvt(double x, int n, int *dp, int *sign, char* buf);
+char *qFcvt(double x, int n, int *dp, int *sign, char* buf);
+char *qEcvt(double x, int n, int *dp, int *sign, char* buf);
 
 QT_END_NAMESPACE
 

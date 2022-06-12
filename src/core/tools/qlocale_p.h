@@ -158,16 +158,8 @@ public:
     const ushort m_plus;
     const ushort m_exponential;
     const uint m_zero;
-    const uint m_quotation_start;
-    const uint m_quotation_end;
-    const uint m_alternate_quotation_start;
-    const uint m_alternate_quotation_end;
     const char* m_language_endonym;
     const char* m_country_endonym;
-    const char* m_list_pattern_part_start;
-    const char* m_list_pattern_part_mid;
-    const char* m_list_pattern_part_end;
-    const char* m_list_pattern_part_two;
     const char* m_short_date_format;
     const char* m_long_date_format;
     const char* m_short_time_format;

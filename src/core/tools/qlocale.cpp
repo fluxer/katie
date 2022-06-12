@@ -515,58 +515,6 @@ QLocale::NumberOptions QLocale::numberOptions() const
 }
 
 /*!
-    \since 4.8
-
-    Returns \a str quoted according to the current locale using the given
-    quotation \a style.
-*/
-QString QLocale::quoteString(const QString &str, QuotationStyle style) const
-{
-    return quoteString(&str, style);
-}
-
-/*!
-    \since 4.8
-
-    \overload
-*/
-QString QLocale::quoteString(const QStringRef &str, QuotationStyle style) const
-{
-    if (style == QLocale::StandardQuotation)
-        return QChar(d()->m_quotation_start) + str.toString() + QChar(d()->m_quotation_end);
-    else
-        return QChar(d()->m_alternate_quotation_start) + str.toString() + QChar(d()->m_alternate_quotation_end);
-}
-
-/*!
-    \since 4.8
-
-    Returns a string that represents a join of a given \a list of strings with
-    a separator defined by the locale.
-*/
-QString QLocale::createSeparatedList(const QStringList &list) const
-{
-    const int size = list.size();
-    if (size == 1) {
-        return list.at(0);
-    } else if (size == 2) {
-        QString format = getLocaleData(d()->m_list_pattern_part_two);
-        return format.arg(list.at(0), list.at(1));
-    } else if (size > 2) {
-        QString formatStart = getLocaleData(d()->m_list_pattern_part_start);
-        QString formatMid = getLocaleData(d()->m_list_pattern_part_mid);
-        QString formatEnd = getLocaleData(d()->m_list_pattern_part_end);
-        QString result = formatStart.arg(list.at(0), list.at(1));
-        for (int i = 2; i < size - 1; ++i)
-            result = formatMid.arg(result, list.at(i));
-        result = formatEnd.arg(result, list.at(size - 1));
-        return result;
-    }
-
-    return QString();
-}
-
-/*!
     \nonreentrant
 
     Sets the global default locale to \a locale. These
@@ -648,7 +596,7 @@ QString QLocale::name() const
         const char *country = countryTbl[dd->m_country].code;
         return QLatin1String(lang) + QLatin1Char('_') + QLatin1String(country);
     }
-    return QLatin1String(lang);
+    return QString::fromLatin1(lang);
 }
 
 /*!
@@ -1459,8 +1407,9 @@ QList<QLocale::Country> QLocale::countriesForLanguage(Language language)
 */
 QString QLocale::monthName(int month, FormatType type) const
 {
-    if (month < 1 || month > 12)
+    if (Q_UNLIKELY(month < 1 || month > 12)) {
         return QString();
+    }
 
     const qint16 idx = month - 1;
     switch (type) {
@@ -1487,8 +1436,9 @@ QString QLocale::monthName(int month, FormatType type) const
 */
 QString QLocale::standaloneMonthName(int month, FormatType type) const
 {
-    if (month < 1 || month > 12)
+    if (Q_UNLIKELY(month < 1 || month > 12)) {
         return QString();
+    }
 
     const qint16 idx = month - 1;
     switch (type) {
@@ -1513,8 +1463,9 @@ QString QLocale::standaloneMonthName(int month, FormatType type) const
 */
 QString QLocale::dayName(int day, FormatType type) const
 {
-    if (day < 1 || day > 7)
+    if (Q_UNLIKELY(day < 1 || day > 7)) {
         return QString();
+    }
 
     const qint16 idx = day - 1;
     switch (type) {
@@ -1542,8 +1493,9 @@ QString QLocale::dayName(int day, FormatType type) const
 */
 QString QLocale::standaloneDayName(int day, FormatType type) const
 {
-    if (day < 1 || day > 7)
+    if (Q_UNLIKELY(day < 1 || day > 7)) {
         return QString();
+    }
 
     const qint16 idx = day - 1;
     switch (type) {
@@ -1952,7 +1904,7 @@ QString QLocalePrivate::doubleToString(const QChar _zero, const QChar plus, cons
         // NOT thread safe!
         if (form == DFDecimal) {
             QSTACKARRAY(char, qfcvtbuf, QECVT_BUFFSIZE);
-            digits = QString::fromLatin1(qfcvt(d, precision, &decpt, &sign, qfcvtbuf));
+            digits = QString::fromLatin1(qFcvt(d, precision, &decpt, &sign, qfcvtbuf));
         } else {
             int pr = precision;
             if (form == DFExponent)
@@ -1960,7 +1912,7 @@ QString QLocalePrivate::doubleToString(const QChar _zero, const QChar plus, cons
             else if (form == DFSignificantDigits && pr == 0)
                 pr = 1;
             QSTACKARRAY(char, qecvtbuf, QECVT_BUFFSIZE);
-            digits = QString::fromLatin1(qecvt(d, pr, &decpt, &sign, qecvtbuf));
+            digits = QString::fromLatin1(qEcvt(d, pr, &decpt, &sign, qecvtbuf));
 
             // Chop trailing zeros
             if (digits.length() > 0) {

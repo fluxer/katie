@@ -97,12 +97,13 @@ bool QApplicationPrivate::autoSipEnabled = true;
 
 QApplicationPrivate::QApplicationPrivate(int &argc, char **argv)
     : QCoreApplicationPrivate(argc, argv)
+#ifndef QT_NO_SESSIONMANAGER
+    , session_manager(nullptr)
+    , is_session_restored(false)
+#endif
+
 {
     QCoreApplicationPrivate::app_type = QCoreApplication::Gui;
-
-#ifndef QT_NO_SESSIONMANAGER
-    is_session_restored = false;
-#endif
 
     quitOnLastWindowClosed = true;
 
@@ -727,7 +728,7 @@ QApplication::~QApplication()
 
 #ifndef QT_NO_SESSIONMANAGER
     delete d->session_manager;
-    d->session_manager = 0;
+    d->session_manager = nullptr;
 #endif //QT_NO_SESSIONMANAGER
 
     QApplicationPrivate::cursor_flash_time = 1000;

@@ -31,9 +31,8 @@ QT_BEGIN_NAMESPACE
 
 class QSettingsPrivate;
 
-class Q_CORE_EXPORT QSettings : public QObject
+class Q_CORE_EXPORT QSettings
 {
-    Q_OBJECT
     Q_DECLARE_PRIVATE(QSettings)
 
 public:
@@ -50,9 +49,9 @@ public:
 
     typedef QMap<QString, QVariant> SettingsMap;
 
-    explicit QSettings(QObject *parent = nullptr);
-    QSettings(Format format, QObject *parent = nullptr);
-    QSettings(const QString &fileName, Format format = NativeFormat, QObject *parent = nullptr);
+    QSettings();
+    QSettings(Format format);
+    QSettings(const QString &fileName, Format format = NativeFormat);
     ~QSettings();
 
     void clear();
@@ -79,6 +78,7 @@ public:
 
 private:
     Q_DISABLE_COPY(QSettings)
+    QSettingsPrivate *d_ptr;
 };
 
 QT_END_NAMESPACE
