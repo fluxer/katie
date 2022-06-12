@@ -27,18 +27,13 @@
 
 QT_BEGIN_NAMESPACE
 
-
 class QDataStream;
 class QDate;
 class QDateTime;
 class QTime;
-class QVariant;
-class QTextStream;
-class QTextStreamPrivate;
-
-class QLocale;
 
 class QLocalePrivate;
+
 class Q_CORE_EXPORT QLocale
 {
     Q_GADGET
