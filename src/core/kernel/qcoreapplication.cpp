@@ -1722,7 +1722,7 @@ QStringList QCoreApplication::pluginPaths()
     QMutexLocker locker(qGlobalAppPathsMutex());
 
     if (coreappdata()->app_pluginpaths.isEmpty()) {
-        const QString installPathPlugins = QLibraryInfo::location(QLibraryInfo::LibrariesPath);
+        const QString installPathPlugins = QLibraryInfo::location(QLibraryInfo::PluginsPath);
         if (QDir(installPathPlugins).exists()
             && !coreappdata()->app_pluginpaths.contains(installPathPlugins)) {
             coreappdata()->app_pluginpaths.append(installPathPlugins);
