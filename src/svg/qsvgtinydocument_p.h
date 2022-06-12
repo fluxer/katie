@@ -48,7 +48,7 @@ class QPainter;
 class QByteArray;
 class QSvgFont;
 
-class Q_SVG_EXPORT QSvgTinyDocument : public QSvgStructureNode
+class QSvgTinyDocument : public QSvgStructureNode
 {
 public:
     static QSvgTinyDocument * load(const QString &file);
