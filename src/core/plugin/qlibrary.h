@@ -45,9 +45,7 @@ public:
     Q_DECLARE_FLAGS(LoadHints, LoadHint)
 
     explicit QLibrary(QObject *parent = nullptr);
-    explicit QLibrary(const QString& fileName, QObject *parent = nullptr);
-    explicit QLibrary(const QString& fileName, int verNum, QObject *parent = nullptr);
-    explicit QLibrary(const QString& fileName, const QString &version, QObject *parent = nullptr);
+    explicit QLibrary(const QString &fileName, QObject *parent = nullptr);
     ~QLibrary();
 
     void *resolve(const char *symbol);
@@ -61,8 +59,6 @@ public:
     void setFileName(const QString &fileName);
     QString fileName() const;
 
-    void setFileNameAndVersion(const QString &fileName, int verNum);
-    void setFileNameAndVersion(const QString &fileName, const QString &version);
     QString errorString() const;
 
     void setLoadHints(LoadHints hints);

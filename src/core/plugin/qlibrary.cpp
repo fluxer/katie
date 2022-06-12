@@ -201,7 +201,7 @@ static bool qt_unix_query(const QString &library, uint *version, QLibraryPrivate
 #endif // QT_NO_PLUGIN_CHECK
 
 
-static QString qt_find_library(const QString &fileName, const QString &version)
+static QString qt_find_library(const QString &fileName)
 {
     QFileSystemEntry fsEntry(fileName);
 
@@ -212,8 +212,8 @@ static QString qt_find_library(const QString &fileName, const QString &version)
     else
         path += QLatin1Char('/');
 
-    QStringList suffixes;
-    suffixes << QLatin1String("");
+    static const QStringList suffixes = QStringList()
+        << QLatin1String("") << QLatin1String(".so");
     QStringList prefixes;
     prefixes << QLatin1String("") << QLatin1String("lib");
 
@@ -221,12 +221,6 @@ static QString qt_find_library(const QString &fileName, const QString &version)
         foreach(const QString &libpath, QCoreApplication::libraryPaths()) {
             prefixes << (libpath + QLatin1Char('/')) << (libpath + QLatin1String("/lib"));
         }
-    }
-
-    if (!version.isEmpty()) {
-        suffixes << QString::fromLatin1(".so.%1").arg(version);
-    } else {
-        suffixes << QLatin1String(".so");
     }
 
     foreach (const QString &prefix, prefixes) {
@@ -485,47 +479,11 @@ QLibrary::QLibrary(QObject *parent)
 
     \sa fileName()
  */
-QLibrary::QLibrary(const QString& fileName, QObject *parent)
+QLibrary::QLibrary(const QString &fileName, QObject *parent)
     : QObject(parent),
     d_ptr(new QLibraryPrivate())
 {
     setFileName(fileName);
-}
-
-/*!
-    Constructs a library object with the given \a parent that will
-    load the library specified by \a fileName and major version
-    number \a verNum.
-
-    We recommend omitting the file's suffix in \a fileName, since
-    QLibrary will automatically look for the file with the appropriate
-    suffix in accordance with the platform, e.g. ".so" on Unix.
-
-    \sa fileName()
-*/
-QLibrary::QLibrary(const QString& fileName, int verNum, QObject *parent)
-    : QObject(parent),
-    d_ptr(new QLibraryPrivate())
-{
-    setFileNameAndVersion(fileName, verNum);
-}
-
-/*!
-    Constructs a library object with the given \a parent that will
-    load the library specified by \a fileName and full version
-    number \a version.
-
-    We recommend omitting the file's suffix in \a fileName, since
-    QLibrary will automatically look for the file with the appropriate
-    suffix in accordance with the platform, e.g. ".so" on Unix.
-
-    \sa fileName()
- */
-QLibrary::QLibrary(const QString& fileName, const QString &version, QObject *parent)
-    : QObject(parent),
-    d_ptr(new QLibraryPrivate())
-{
-    setFileNameAndVersion(fileName, version);
 }
 
 /*!
@@ -569,39 +527,8 @@ QLibrary::~QLibrary()
 
 void QLibrary::setFileName(const QString &fileName)
 {
-    setFileNameAndVersion(fileName, QString());
-}
-
-QString QLibrary::fileName() const
-{
-    return d_ptr->fileName;
-}
-
-/*!
-    \fn void QLibrary::setFileNameAndVersion(const QString &fileName, int versionNumber)
-
-    Sets the fileName property and major version number to \a fileName
-    and \a versionNumber respectively.
-
-    \sa setFileName()
-*/
-void QLibrary::setFileNameAndVersion(const QString &fileName, int verNum)
-{
-    setFileNameAndVersion(fileName, verNum >= 0 ? QString::number(verNum) : QString());
-}
-
-/*!
-    \since 4.4
-
-    Sets the fileName property and full version number to \a fileName
-    and \a version respectively.
-
-    \sa setFileName()
-*/
-void QLibrary::setFileNameAndVersion(const QString &fileName, const QString &version)
-{
     // if the library path is not the same it may very well be library with different symbols
-    const QString librarymatch = qt_find_library(fileName, version);
+    const QString librarymatch = qt_find_library(fileName);
     QMutexLocker locker(qGlobalLibraryMutex());
     QLibraryCleanup* loadedlibraries = qGlobalLibraryList();
     for (int i = 0; i < loadedlibraries->size(); i++) {
@@ -617,6 +544,11 @@ void QLibrary::setFileNameAndVersion(const QString &fileName, const QString &ver
         }
     }
     d_ptr->fileName = librarymatch;
+}
+
+QString QLibrary::fileName() const
+{
+    return d_ptr->fileName;
 }
 
 /*!
