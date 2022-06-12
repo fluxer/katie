@@ -108,10 +108,13 @@ void RegExp::compile()
 
 int RegExp::match(const UString& s, int startOffset, Vector<int, 32>* ovector)
 {
-    if (startOffset < 0)
+    if (!ovector) {
+        return -1;
+    }
+    if (startOffset < 0) {
         startOffset = 0;
-    if (ovector)
-        ovector->clear();
+    }
+    ovector->clear();
 
     if (startOffset > s.size() || s.isNull())
         return -1;
@@ -124,8 +127,6 @@ int RegExp::match(const UString& s, int startOffset, Vector<int, 32>* ovector)
 #ifndef QT_NO_DEBUG
             fprintf(stderr, "jsRegExpExecute failed with result\n");
 #endif
-            if (ovector)
-                ovector->clear();
             return -1;
         }
 
@@ -133,17 +134,8 @@ int RegExp::match(const UString& s, int startOffset, Vector<int, 32>* ovector)
 
         // Set up the offset vector for the result.
         // First 2/3 used for result, the last third unused but there for compatibility.
-        int* offsetVector;
-        int offsetVectorSize;
-        int fixedSizeOffsetVector[3];
-        if (!ovector) {
-            offsetVectorSize = 3;
-            offsetVector = fixedSizeOffsetVector;
-        } else {
-            offsetVectorSize = (capsize + 1) * 3;
-            ovector->resize(offsetVectorSize);
-            offsetVector = ovector->data();
-        }
+        ovector->resize((capsize + 1) * 3);
+        int* offsetVector= ovector->data();
 
         size_t nummatches = 0;
         for (int i = 0; i < capsize; i++) {
