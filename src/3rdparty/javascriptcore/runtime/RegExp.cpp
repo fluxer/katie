@@ -90,10 +90,14 @@ void RegExp::compile()
     m_constructionError.clear();
     m_numSubpatterns = 0;
 
+    if (multiline()) {
+        m_constructionError = "Multi-line not implemented";
+        return;
+    }
     Qt::CaseSensitivity regexOptions = Qt::CaseSensitive;
-    if (ignoreCase())
+    if (ignoreCase()) {
         regexOptions = Qt::CaseInsensitive;
-
+    }
     m_regExp = QRegExp(QString(m_pattern), regexOptions);
     if (!m_regExp.isValid()) {
         m_constructionError = m_regExp.errorString().toLatin1();
@@ -114,11 +118,6 @@ int RegExp::match(const UString& s, int startOffset, Vector<int, 32>* ovector)
 
     if (isValid()) {
         const QString qstring(s);
-#if 0
-        if (multiline()) {
-            // TODO: split lines and match
-        }
-#endif
         const bool didmatch = (m_regExp.indexIn(qstring, startOffset) != -1);
 
         if (!didmatch) {
