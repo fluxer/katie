@@ -1632,17 +1632,17 @@ QStringList QCoreApplication::libraryPaths()
     QMutexLocker locker(qGlobalAppPathsMutex());
 
     if (coreappdata()->app_librarypaths.isEmpty()) {
-        const QString installPathPlugins = QLibraryInfo::location(QLibraryInfo::LibrariesPath);
-        if (QDir(installPathPlugins).exists()
-            && !coreappdata()->app_librarypaths.contains(installPathPlugins)) {
-            coreappdata()->app_librarypaths.append(installPathPlugins);
+        const QString installPathLibraries = QLibraryInfo::location(QLibraryInfo::LibrariesPath);
+        if (QDir(installPathLibraries).exists()
+            && !coreappdata()->app_librarypaths.contains(installPathLibraries)) {
+            coreappdata()->app_librarypaths.append(installPathLibraries);
         }
     }
 
     foreach (const QString &it, qGetEnvList("LD_LIBRARY_PATH")) {
         QString canonicalPath = QDir(it).canonicalPath();
-        if (!coreappdata()->app_pluginpaths.contains(canonicalPath)) {
-            coreappdata()->app_pluginpaths.append(canonicalPath);
+        if (!coreappdata()->app_librarypaths.contains(canonicalPath)) {
+            coreappdata()->app_librarypaths.append(canonicalPath);
         }
     }
 
