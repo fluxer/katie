@@ -56,7 +56,6 @@ public:
     bool load();
     bool loadPlugin(); // loads and resolves instance
     bool unload();
-    void release();
     void *resolve(const char *);
 
     QWeakPointer<QObject> inst;

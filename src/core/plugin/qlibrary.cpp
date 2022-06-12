@@ -276,15 +276,6 @@ QLibraryPrivate::~QLibraryPrivate()
 {
 }
 
-void *QLibraryPrivate::resolve(const char *symbol)
-{
-    if (!pHnd) {
-        return nullptr;
-    }
-    return resolve_sys(symbol);
-}
-
-
 bool QLibraryPrivate::load()
 {
     if (pHnd) {
@@ -311,6 +302,15 @@ bool QLibraryPrivate::unload()
     }
     return (pHnd == 0);
 }
+
+void *QLibraryPrivate::resolve(const char *symbol)
+{
+    if (!pHnd) {
+        return nullptr;
+    }
+    return resolve_sys(symbol);
+}
+
 
 bool QLibraryPrivate::loadPlugin()
 {
@@ -366,8 +366,9 @@ bool QLibrary::isLibrary(const QString &fileName)
 bool QLibraryPrivate::isPlugin()
 {
     errorString.clear();
-    if (pluginState != MightBeAPlugin)
-        return pluginState == IsAPlugin;
+    if (pluginState != MightBeAPlugin) {
+        return (pluginState == IsAPlugin);
+    }
 
 #ifndef QT_NO_PLUGIN_CHECK
     if (Q_UNLIKELY(fileName.endsWith(QLatin1String(".debug")))) {
@@ -383,14 +384,14 @@ bool QLibraryPrivate::isPlugin()
     }
 
     // use unix shortcut to avoid loading the library
-    bool success = qt_unix_query(fileName, &qt_version, this);
-
+    const bool success = qt_unix_query(fileName, &qt_version, this);
     if (!success) {
         if (errorString.isEmpty()){
-            if (fileName.isEmpty())
+            if (fileName.isEmpty()) {
                 errorString = QLibrary::tr("The shared library was not found.");
-            else
+            } else {
                 errorString = QLibrary::tr("The file '%1' is not a valid Katie plugin.").arg(fileName);
+            }
         }
         return false;
     }
