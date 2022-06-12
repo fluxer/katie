@@ -178,8 +178,7 @@ static bool qt_unix_query(const QString &library, uint *version, QLibraryPrivate
     QT_ELF_EHDR_TYPE *ehdr = (QT_ELF_EHDR_TYPE*)(filedata);
     QT_ELF_SHDR_TYPE *shdr = (QT_ELF_SHDR_TYPE*)(filedata + ehdr->e_shoff);
 
-    QT_ELF_SHDR_TYPE *sh_strtab = &shdr[ehdr->e_shstrndx];
-    const char *const sh_strtab_p = filedata + sh_strtab->sh_offset;
+    const char *const sh_strtab_p = filedata + shdr[ehdr->e_shstrndx].sh_offset;
 
     for (int i = 0; i < ehdr->e_shnum; ++i) {
         const char* sectioname = sh_strtab_p + shdr[i].sh_name;
