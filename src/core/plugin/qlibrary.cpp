@@ -537,9 +537,16 @@ void QLibrary::setFileName(const QString &fileName)
             if (qt_debug_component()) {
                 qDebug() << "QLibrary: reusing library" << librarymatch;
             }
-            delete d_ptr;
-            d_ptr = loadedlibrary;
-            loadedlibraries->removeAt(i);
+            if (!d_ptr->pHnd) {
+                delete d_ptr;
+                d_ptr = loadedlibrary;
+                loadedlibraries->removeAt(i);
+            } else {
+                QLibraryPrivate* x_ptr = d_ptr;
+                d_ptr = loadedlibrary;
+                loadedlibraries->removeAt(i);
+                loadedlibraries->append(x_ptr);
+            }
             return;
         }
     }
