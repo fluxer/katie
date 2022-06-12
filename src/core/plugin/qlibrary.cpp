@@ -564,11 +564,6 @@ void *QLibrary::resolve(const char *symbol)
 }
 
 /*!
-    \fn QString QLibrary::library() const
-
-    Use fileName() instead.
-
-/*!
     \since 4.2
 
     Returns a text string with the description of the last error that occurred.
