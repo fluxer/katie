@@ -43,7 +43,6 @@ public:
     ~QFactoryLoaderPrivate();
 
     QMutex mutex;
-    QByteArray iid;
     QMap<QString,QPluginLoader*> pluginMap;
     QMap<QString,QString> keyMap;
     QString suffix;
@@ -56,7 +55,7 @@ QFactoryLoaderPrivate::QFactoryLoaderPrivate()
 QFactoryLoaderPrivate::~QFactoryLoaderPrivate()
 {
     if (qt_debug_component()) {
-        qDebug() << "QFactoryLoader: unloading" << iid << pluginMap.keys();
+        qDebug() << "QFactoryLoader: unloading" << pluginMap.keys();
     }
     foreach (QPluginLoader *loader, pluginMap.values()) {
         loader->unload();
@@ -64,11 +63,10 @@ QFactoryLoaderPrivate::~QFactoryLoaderPrivate()
     }
 }
 
-QFactoryLoader::QFactoryLoader(const char *iid, const QString &suffix)
+QFactoryLoader::QFactoryLoader(const QString &suffix)
     : d_ptr(new QFactoryLoaderPrivate())
 {
     Q_D(QFactoryLoader);
-    d->iid = iid;
     d->suffix = suffix;
 
     QMutexLocker locker(qGlobalFactoryLoaderMutex());

@@ -33,18 +33,7 @@ class QFileDialog;
 class QColorDialog;
 class QFileInfo;
 
-struct Q_GUI_EXPORT QGuiPlatformPluginInterface
-{
-};
-
-QT_END_NAMESPACE
-
-#define QGuiPlatformPluginInterface_iid "Katie.QGuiPlatformPluginInterface"
-Q_DECLARE_INTERFACE(QGuiPlatformPluginInterface, QGuiPlatformPluginInterface_iid)
-
-QT_BEGIN_NAMESPACE
-
-class Q_GUI_EXPORT QGuiPlatformPlugin : public QObject, public QGuiPlatformPluginInterface
+class Q_GUI_EXPORT QGuiPlatformPlugin : public QObject
 {
     Q_OBJECT
     public:

@@ -642,15 +642,12 @@ include/katie/QtGui/QHideEvent
 include/katie/QtGui/QHoverEvent
 include/katie/QtGui/QIcon
 include/katie/QtGui/QIconEngine
-include/katie/QtGui/QIconEngineFactoryInterface
-include/katie/QtGui/QIconEngineFactoryInterfaceV2
 include/katie/QtGui/QIconEnginePlugin
 include/katie/QtGui/QIconEnginePluginV2
 include/katie/QtGui/QIconEngineV2
 include/katie/QtGui/QIdentityProxyModel
 include/katie/QtGui/QImage
 include/katie/QtGui/QImageIOHandler
-include/katie/QtGui/QImageIOHandlerFactoryInterface
 include/katie/QtGui/QImageIOPlugin
 include/katie/QtGui/QImageReader
 include/katie/QtGui/QImageWriter
@@ -758,7 +755,6 @@ include/katie/QtGui/QStatusTipEvent
 include/katie/QtGui/QStringListModel
 include/katie/QtGui/QStyle
 include/katie/QtGui/QStyleFactory
-include/katie/QtGui/QStyleFactoryInterface
 include/katie/QtGui/QStyleHintReturn
 include/katie/QtGui/QStyleHintReturnMask
 include/katie/QtGui/QStyleHintReturnVariant

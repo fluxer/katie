@@ -31,8 +31,7 @@
 QT_BEGIN_NAMESPACE
 
 #ifndef QT_NO_LIBRARY
-Q_GLOBAL_STATIC_WITH_ARGS(QFactoryLoader, stylesloader,
-    (QStyleFactoryInterface_iid, QString::fromLatin1("/styles")))
+Q_GLOBAL_STATIC_WITH_ARGS(QFactoryLoader, stylesloader, (QString::fromLatin1("/styles")))
 #endif
 
 /*!

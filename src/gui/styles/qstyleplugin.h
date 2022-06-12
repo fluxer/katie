@@ -29,19 +29,7 @@ QT_BEGIN_NAMESPACE
 
 class QStyle;
 
-struct Q_GUI_EXPORT QStyleFactoryInterface
-{
-    virtual QStyle *create(const QString &key) = 0;
-};
-
-QT_END_NAMESPACE
-
-#define QStyleFactoryInterface_iid "Katie.QStyleFactoryInterface"
-Q_DECLARE_INTERFACE(QStyleFactoryInterface, QStyleFactoryInterface_iid)
-
-QT_BEGIN_NAMESPACE
-
-class Q_GUI_EXPORT QStylePlugin : public QObject, public QStyleFactoryInterface
+class Q_GUI_EXPORT QStylePlugin : public QObject
 {
     Q_OBJECT
 public:

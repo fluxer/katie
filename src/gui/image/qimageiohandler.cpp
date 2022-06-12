@@ -136,19 +136,7 @@
     \value CanWrite The plugin can write images.
 */
 
-/*!
-    \class QImageIOHandlerFactoryInterface
-    \brief The QImageIOHandlerFactoryInterface class provides the factory
-    interface for QImageIOPlugin.
-    \reentrant
-
-    \internal
-
-    \sa QImageIOPlugin
-*/
-
 #include "qimageiohandler.h"
-
 #include "qbytearray.h"
 #include "qimage.h"
 #include "qvariant.h"

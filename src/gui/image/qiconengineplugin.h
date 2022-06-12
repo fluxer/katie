@@ -28,21 +28,7 @@ QT_BEGIN_NAMESPACE
 
 class QIconEngine;
 
-struct Q_GUI_EXPORT QIconEngineFactoryInterface
-{
-    virtual QIconEngine *create(const QString &filename= QString()) = 0;
-};
-typedef QIconEngineFactoryInterface QIconEngineFactoryInterfaceV2;
-
-QT_END_NAMESPACE
-
-#define QIconEngineFactoryInterface_iid \
-    "Katie.QIconEngineFactoryInterface"
-Q_DECLARE_INTERFACE(QIconEngineFactoryInterface, QIconEngineFactoryInterface_iid)
-
-QT_BEGIN_NAMESPACE
-
-class Q_GUI_EXPORT QIconEnginePlugin : public QObject, public QIconEngineFactoryInterface
+class Q_GUI_EXPORT QIconEnginePlugin : public QObject
 {
     Q_OBJECT
 public:

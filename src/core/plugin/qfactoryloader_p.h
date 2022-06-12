@@ -45,7 +45,7 @@ class QFactoryLoaderPrivate;
 class Q_CORE_EXPORT QFactoryLoader
 {
 public:
-    QFactoryLoader(const char *iid, const QString &suffix);
+    QFactoryLoader(const QString &suffix);
     ~QFactoryLoader();
 
     QStringList keys() const;

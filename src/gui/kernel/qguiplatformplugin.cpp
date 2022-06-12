@@ -35,8 +35,7 @@
 QT_BEGIN_NAMESPACE
 
 #ifndef QT_NO_LIBRARY
-Q_GLOBAL_STATIC_WITH_ARGS(QFactoryLoader, platformLoader,
-    (QGuiPlatformPluginInterface_iid, QString::fromLatin1("/gui_platform")))
+Q_GLOBAL_STATIC_WITH_ARGS(QFactoryLoader, platformLoader, (QString::fromLatin1("/gui_platform")))
 #endif
 
 /*! \internal

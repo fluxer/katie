@@ -371,8 +371,6 @@ bool QLibraryPrivate::isPlugin()
         return pluginState == IsAPlugin;
 
 #ifndef QT_NO_PLUGIN_CHECK
-    bool success = false;
-
     if (Q_UNLIKELY(fileName.endsWith(QLatin1String(".debug")))) {
         // refuse to load a file that ends in .debug
         // these are the debug symbols from the libraries
@@ -386,7 +384,7 @@ bool QLibraryPrivate::isPlugin()
     }
 
     // use unix shortcut to avoid loading the library
-    success = qt_unix_query(fileName, &qt_version, this);
+    bool success = qt_unix_query(fileName, &qt_version, this);
 
     if (!success) {
         if (errorString.isEmpty()){
