@@ -31,8 +31,6 @@
 #include "qfileinfo.h"
 #include "qmutex.h"
 #include "qmap.h"
-#include "qsettings.h"
-#include "qdatetime.h"
 #include "qcoreapplication_p.h"
 #include "qdebug.h"
 #include "qvector.h"
@@ -319,8 +317,9 @@ bool QLibraryPrivate::loadPlugin()
     if (instance) {
         return true;
     }
-    if (pluginState == IsNotAPlugin)
+    if (pluginState == IsNotAPlugin) {
         return false;
+    }
     if (load()) {
         instance = (QtPluginInstanceFunction)resolve("kt_plugin_instance");
         return instance;

@@ -19,14 +19,8 @@
 **
 ****************************************************************************/
 
-#include "qplatformdefs.h"
-
-#include "qplugin.h"
 #include "qpluginloader.h"
 #include "qlibrary_p.h"
-#include "qdebug.h"
-#include "qdir.h"
-
 
 #ifndef QT_NO_LIBRARY
 

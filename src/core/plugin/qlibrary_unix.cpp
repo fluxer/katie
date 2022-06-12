@@ -19,12 +19,8 @@
 **
 ****************************************************************************/
 
-#include "qplatformdefs.h"
-
 #include "qfile.h"
-#include "qstringlist.h"
 #include "qlibrary_p.h"
-#include "qcoreapplication.h"
 
 #ifndef QT_NO_LIBRARY
 
