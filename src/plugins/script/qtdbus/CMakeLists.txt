@@ -10,7 +10,10 @@ katie_setup_target(qtscriptdbusplugin ${QTDBUSPLUGIN_SOURCES} ${QTDBUSPLUGIN_HEA
 
 add_library(qtscriptdbusplugin MODULE ${qtscriptdbusplugin_SOURCES})
 target_link_libraries(qtscriptdbusplugin KtCore KtDBus KtScript)
-set_target_properties(qtscriptdbusplugin PROPERTIES OUTPUT_NAME qtscriptdbus)
+set_target_properties(qtscriptdbusplugin PROPERTIES
+    OUTPUT_NAME qtscriptdbus
+    PREFIX ""
+)
 
 katie_setup_plugin(qtscriptdbusplugin)
 

@@ -49,7 +49,6 @@ include/katie/QtCore/QEvent
 include/katie/QtCore/QEventLoop
 include/katie/QtCore/QExplicitlySharedDataPointer
 include/katie/QtCore/QFSFileEngine
-include/katie/QtCore/QFactoryInterface
 include/katie/QtCore/QFile
 include/katie/QtCore/QFileInfo
 include/katie/QtCore/QFileInfoList
@@ -213,7 +212,6 @@ include/katie/QtCore/qeasingcurve.h
 include/katie/QtCore/qelapsedtimer.h
 include/katie/QtCore/qendian.h
 include/katie/QtCore/qeventloop.h
-include/katie/QtCore/qfactoryinterface.h
 include/katie/QtCore/qfile.h
 include/katie/QtCore/qfileinfo.h
 include/katie/QtCore/qfilesystemwatcher.h
@@ -1246,10 +1244,10 @@ lib/katie/imports/Qt/labs/folderlistmodel/libqmlfolderlistmodelplugin.so
 lib/katie/imports/Qt/labs/folderlistmodel/qmldir
 lib/katie/imports/Qt/labs/particles/libqmlparticlesplugin.so
 lib/katie/imports/Qt/labs/particles/qmldir
-lib/katie/plugins/designer/libqdeclarativeview.so
-lib/katie/plugins/iconengines/libqsvgicon.so
-lib/katie/plugins/imageformats/libqsvg.so
-lib/katie/plugins/script/libqtscriptdbus.so
+lib/katie/plugins/designer/qdeclarativeview.so
+lib/katie/plugins/iconengines/qsvg.so
+lib/katie/plugins/imageformats/svg.so
+lib/katie/plugins/script/qtscriptdbus.so
 lib/libKtCore.so
 lib/libKtCore.so.4.12
 lib/libKtCore.so.4.12.0

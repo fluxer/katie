@@ -23,14 +23,13 @@
 #define QSTYLEPLUGIN_H
 
 #include <QtCore/qplugin.h>
-#include <QtCore/qfactoryinterface.h>
 
 
 QT_BEGIN_NAMESPACE
 
 class QStyle;
 
-struct Q_GUI_EXPORT QStyleFactoryInterface : public QFactoryInterface
+struct Q_GUI_EXPORT QStyleFactoryInterface
 {
     virtual QStyle *create(const QString &key) = 0;
 };
@@ -45,12 +44,10 @@ QT_BEGIN_NAMESPACE
 class Q_GUI_EXPORT QStylePlugin : public QObject, public QStyleFactoryInterface
 {
     Q_OBJECT
-    Q_INTERFACES(QStyleFactoryInterface:QFactoryInterface)
 public:
     explicit QStylePlugin(QObject *parent = nullptr);
     ~QStylePlugin();
 
-    virtual QStringList keys() const = 0;
     virtual QStyle *create(const QString &key) = 0;
 };
 

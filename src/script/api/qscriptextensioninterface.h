@@ -22,18 +22,16 @@
 #ifndef QSCRIPTEXTENSIONINTERFACE_H
 #define QSCRIPTEXTENSIONINTERFACE_H
 
-#include <QtCore/qfactoryinterface.h>
-
 #include <QtCore/qobject.h>
-
 
 QT_BEGIN_NAMESPACE
 
 class QScriptEngine;
 
 struct Q_SCRIPT_EXPORT QScriptExtensionInterface
-    : public QFactoryInterface
 {
+    virtual ~QScriptExtensionInterface() {}
+    virtual QStringList keys() const = 0;
     virtual void initialize(const QString &key, QScriptEngine *engine) = 0;
 };
 

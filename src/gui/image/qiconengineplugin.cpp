@@ -36,20 +36,10 @@ QT_BEGIN_NAMESPACE
     what icon engine to use.
 
     Writing a icon engine plugin is achieved by subclassing this base class,
-    reimplementing the pure virtual functions keys() and create(), and
-    exporting the class with the Q_EXPORT_PLUGIN2() macro.
+    reimplementing the pure virtual functioncreate() and exporting the class
+    with the Q_EXPORT_PLUGIN2() macro.
 
     \sa {How to Create Qt Plugins}
-*/
-
-/*!
-    \fn QStringList QIconEnginePlugin::keys() const
-
-    Returns a list of icon engine keys that this plugin supports. The keys correspond
-    to the suffix of the file or resource name used when the plugin was created.
-    Keys are case insensitive.
-
-    \sa create()
 */
 
 /*!

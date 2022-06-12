@@ -57,8 +57,6 @@
 
 QT_BEGIN_NAMESPACE
 
-Q_GLOBAL_STATIC(QMutex, qt_library_mutex)
-
 /*!
     \class QLibrary
     \reentrant
@@ -204,37 +202,9 @@ static bool qt_unix_query(const QString &library, uint *version, QLibraryPrivate
 }
 #endif // QT_NO_PLUGIN_CHECK
 
-typedef QMap<QString, QLibraryPrivate*> LibraryMap;
 
-struct LibraryData {
-    LibraryMap libraryMap;
-    QSet<QLibraryPrivate*> loadedLibs;
-};
-
-Q_GLOBAL_STATIC(LibraryData, libraryData)
-
-static LibraryMap *libraryMap()
+static QString qt_find_library(const QString &fileName, const QString &version)
 {
-    LibraryData *data = libraryData();
-    return data ? &data->libraryMap : nullptr;
-}
-
-QLibraryPrivate::QLibraryPrivate(const QString &canonicalFileName)
-    : did_load(false), pHnd(0), fileName(canonicalFileName),
-     instance(0), qt_version(0), libraryRefCount(1), libraryUnloadCount(0),
-     pluginState(MightBeAPlugin)
-{
-    libraryMap()->insert(canonicalFileName, this);
-}
-
-QLibraryPrivate *QLibraryPrivate::findOrCreate(const QString &fileName, const QString &version)
-{
-    QMutexLocker locker(qt_library_mutex());
-    if (QLibraryPrivate *lib = libraryMap()->value(fileName)) {
-        lib->libraryRefCount.ref();
-        return lib;
-    }
-
     QFileSystemEntry fsEntry(fileName);
 
     QString path = fsEntry.path();
@@ -270,86 +240,83 @@ QLibraryPrivate *QLibraryPrivate::findOrCreate(const QString &fileName, const QS
             const QString attempt = path + prefix + name + suffix;
             const QStatInfo statinfo(attempt);
             if (statinfo.isFile()) {
-                return new QLibraryPrivate(attempt);
+                return attempt;
             }
         }
     }
 
-    return new QLibraryPrivate(fileName);
+    return fileName;
+}
+
+
+class QLibraryCleanup : public QList<QLibraryPrivate*>
+{
+public:
+    ~QLibraryCleanup();
+};
+
+QLibraryCleanup::~QLibraryCleanup()
+{
+    while (!isEmpty()) {
+        QLibraryPrivate* library = takeLast();
+        library->unload();
+        delete library;
+    }
+}
+
+Q_GLOBAL_STATIC(QMutex, qGlobalLibraryMutex);
+Q_GLOBAL_STATIC(QLibraryCleanup, qGlobalLibraryList);
+
+QLibraryPrivate::QLibraryPrivate()
+    : pHnd(nullptr), fileName(),
+     instance(nullptr), qt_version(0),
+     pluginState(MightBeAPlugin)
+{
 }
 
 QLibraryPrivate::~QLibraryPrivate()
 {
-    LibraryMap * const map = libraryMap();
-    if (map) {
-        QLibraryPrivate *that = map->take(fileName);
-        Q_ASSERT(this == that);
-        Q_UNUSED(that);
-    }
 }
 
 void *QLibraryPrivate::resolve(const char *symbol)
 {
-    if (!pHnd)
+    if (!pHnd) {
         return nullptr;
+    }
     return resolve_sys(symbol);
 }
 
 
 bool QLibraryPrivate::load()
 {
-    libraryUnloadCount.ref();
-    if (pHnd)
+    if (pHnd) {
         return true;
-    if (fileName.isEmpty())
+    }
+    if (fileName.isEmpty()) {
         return false;
-
-    bool ret = load_sys();
-    if (ret) {
-        //when loading a library we add a reference to it so that the QLibraryPrivate won't get deleted
-        //this allows to unload the library at a later time
-        if (LibraryData *lib = libraryData()) {
-            lib->loadedLibs += this;
-            libraryRefCount.ref();
-        }
     }
 
-    return ret;
+    return load_sys();
 }
 
 bool QLibraryPrivate::unload()
 {
-    if (!pHnd)
+    if (!pHnd) {
         return false;
-    if (!libraryUnloadCount.deref()) { // only unload if ALL QLibrary instance wanted to
-        delete inst.data();
-        if  (unload_sys()) {
-            if (qt_debug_component())
-                qWarning() << "QLibraryPrivate::unload succeeded on" << fileName;
-            //when the library is unloaded, we release the reference on it so that 'this'
-            //can get deleted
-            if (LibraryData *lib = libraryData()) {
-                if (lib->loadedLibs.remove(this))
-                    libraryRefCount.deref();
-            }
-            pHnd = 0;
-        }
     }
-
+    delete inst.data();
+    if (unload_sys()) {
+        if (qt_debug_component()) {
+            qWarning() << "QLibraryPrivate::unload succeeded on" << fileName;
+        }
+        pHnd = 0;
+    }
     return (pHnd == 0);
-}
-
-void QLibraryPrivate::release()
-{
-    QMutexLocker locker(qt_library_mutex());
-    if (!libraryRefCount.deref())
-        delete this;
 }
 
 bool QLibraryPrivate::loadPlugin()
 {
     if (instance) {
-        libraryUnloadCount.ref();
         return true;
     }
     if (pluginState == IsNotAPlugin)
@@ -358,8 +325,9 @@ bool QLibraryPrivate::loadPlugin()
         instance = (QtPluginInstanceFunction)resolve("kt_plugin_instance");
         return instance;
     }
-    if (qt_debug_component())
+    if (qt_debug_component()) {
         qWarning() << "QLibraryPrivate::loadPlugin failed on" << fileName << ":" << errorString;
+    }
     pluginState = IsNotAPlugin;
     return false;
 }
@@ -417,32 +385,8 @@ bool QLibraryPrivate::isPlugin()
         return false;
     }
 
-    const QStatInfo statinfo(fileName);
-
-#ifndef QT_NO_DATESTRING
-    lastModified  = statinfo.lastModified().toString(Qt::ISODate);
-#endif
-    QString regkey = QString::fromLatin1("Katie Plugin Cache %1/%2")
-                     .arg(QLatin1String(QT_VERSION_HEX_STR))
-                     .arg(fileName);
-
-#ifndef QT_NO_SETTINGS
-    QSettings settings(QString::fromLatin1("Katie"), QSettings::NativeFormat);
-    QStringList reg = settings.value(regkey).toStringList();
-    if (reg.count() == 2 && lastModified == reg.at(1)) {
-        qt_version = reg.at(0).toUInt();
-        success = qt_version != 0;
-    } else {
-#endif
-        // use unix shortcut to avoid loading the library
-        success = qt_unix_query(fileName, &qt_version, this);
-
-#ifndef QT_NO_SETTINGS
-        QStringList queried;
-        queried << QString::number(qt_version) << lastModified;
-        settings.setValue(regkey, queried);
-    }
-#endif
+    // use unix shortcut to avoid loading the library
+    success = qt_unix_query(fileName, &qt_version, this);
 
     if (!success) {
         if (errorString.isEmpty()){
@@ -487,12 +431,10 @@ bool QLibraryPrivate::isPlugin()
 */
 bool QLibrary::load()
 {
-    if (!d)
-        return false;
-    if (d->did_load)
-        return d->pHnd;
-    d->did_load = true;
-    return d->load();
+    if (!d_ptr->pHnd) {
+        return d_ptr->load();
+    }
+    return d_ptr->pHnd;
 }
 
 /*!
@@ -510,11 +452,10 @@ bool QLibrary::load()
 */
 bool QLibrary::unload()
 {
-    if (d->did_load) {
-        d->did_load = false;
-        return d->unload();
+    if (!d_ptr->pHnd) {
+        return false;
     }
-    return false;
+    return d_ptr->unload();
 }
 
 /*!
@@ -524,18 +465,17 @@ bool QLibrary::unload()
  */
 bool QLibrary::isLoaded() const
 {
-    return d && d->pHnd;
+    return d_ptr->pHnd;
 }
-
 
 /*!
     Constructs a library with the given \a parent.
  */
 QLibrary::QLibrary(QObject *parent)
-    :QObject(parent), d(0)
+    : QObject(parent),
+    d_ptr(new QLibraryPrivate())
 {
 }
-
 
 /*!
     Constructs a library object with the given \a parent that will
@@ -548,11 +488,11 @@ QLibrary::QLibrary(QObject *parent)
     \sa fileName()
  */
 QLibrary::QLibrary(const QString& fileName, QObject *parent)
-    :QObject(parent), d(0)
+    : QObject(parent),
+    d_ptr(new QLibraryPrivate())
 {
     setFileName(fileName);
 }
-
 
 /*!
     Constructs a library object with the given \a parent that will
@@ -566,7 +506,8 @@ QLibrary::QLibrary(const QString& fileName, QObject *parent)
     \sa fileName()
 */
 QLibrary::QLibrary(const QString& fileName, int verNum, QObject *parent)
-    :QObject(parent), d(0)
+    : QObject(parent),
+    d_ptr(new QLibraryPrivate())
 {
     setFileNameAndVersion(fileName, verNum);
 }
@@ -583,7 +524,8 @@ QLibrary::QLibrary(const QString& fileName, int verNum, QObject *parent)
     \sa fileName()
  */
 QLibrary::QLibrary(const QString& fileName, const QString &version, QObject *parent)
-    :QObject(parent), d(0)
+    : QObject(parent),
+    d_ptr(new QLibraryPrivate())
 {
     setFileNameAndVersion(fileName, version);
 }
@@ -598,10 +540,13 @@ QLibrary::QLibrary(const QString& fileName, const QString &version, QObject *par
 */
 QLibrary::~QLibrary()
 {
-    if (d)
-        d->release();
+    if (!d_ptr->pHnd) {
+        delete d_ptr;
+    } else {
+        QMutexLocker locker(qGlobalLibraryMutex());
+        qGlobalLibraryList()->append(d_ptr);
+    }
 }
-
 
 /*!
     \property QLibrary::fileName
@@ -631,9 +576,7 @@ void QLibrary::setFileName(const QString &fileName)
 
 QString QLibrary::fileName() const
 {
-    if (d)
-        return d->fileName;
-    return QString();
+    return d_ptr->fileName;
 }
 
 /*!
@@ -659,15 +602,7 @@ void QLibrary::setFileNameAndVersion(const QString &fileName, int verNum)
 */
 void QLibrary::setFileNameAndVersion(const QString &fileName, const QString &version)
 {
-    QLibrary::LoadHints lh;
-    if (d) {
-        lh = d->loadHints;
-        d->release();
-        d = 0;
-    }
-    d = QLibraryPrivate::findOrCreate(fileName, version);
-    d->loadHints = lh;
-    d->did_load = false;
+    d_ptr->fileName = qt_find_library(fileName, version);
 }
 
 /*!
@@ -684,67 +619,10 @@ void QLibrary::setFileNameAndVersion(const QString &fileName, const QString &ver
 */
 void *QLibrary::resolve(const char *symbol)
 {
-    if (!isLoaded() && !load())
-        return 0;
-    return d->resolve(symbol);
-}
-
-/*!
-    \overload
-
-    Loads the library \a fileName and returns the address of the
-    exported symbol \a symbol. Note that \a fileName should not
-    include the platform-specific file suffix; (see \l{fileName}). The
-    library remains loaded until the application exits.
-
-    The function returns 0 if the symbol could not be resolved or if
-    the library could not be loaded.
-
-    \sa resolve()
-*/
-void *QLibrary::resolve(const QString &fileName, const char *symbol)
-{
-    QLibrary library(fileName);
-    return library.resolve(symbol);
-}
-
-/*!
-    \overload
-
-    Loads the library \a fileName with major version number \a verNum and
-    returns the address of the exported symbol \a symbol.
-    Note that \a fileName should not include the platform-specific file suffix;
-    (see \l{fileName}). The library remains loaded until the application exits.
-
-    The function returns 0 if the symbol could not be resolved or if
-    the library could not be loaded.
-
-    \sa resolve()
-*/
-void *QLibrary::resolve(const QString &fileName, int verNum, const char *symbol)
-{
-    QLibrary library(fileName, verNum);
-    return library.resolve(symbol);
-}
-
-/*!
-    \overload
-    \since 4.4
-
-    Loads the library \a fileName with full version number \a version and
-    returns the address of the exported symbol \a symbol.
-    Note that \a fileName should not include the platform-specific file suffix;
-    (see \l{fileName}). The library remains loaded until the application exits.
-
-    The function returns 0 if the symbol could not be resolved or if
-    the library could not be loaded.
-
-    \sa resolve()
-*/
-void *QLibrary::resolve(const QString &fileName, const QString &version, const char *symbol)
-{
-    QLibrary library(fileName, version);
-    return library.resolve(symbol);
+    if (!isLoaded() && !load()) {
+        return nullptr;
+    }
+    return d_ptr->resolve(symbol);
 }
 
 /*!
@@ -767,7 +645,7 @@ void *QLibrary::resolve(const QString &fileName, const QString &version, const c
 */
 QString QLibrary::errorString() const
 {
-    return (!d || d->errorString.isEmpty()) ? tr("Unknown error") : d->errorString;
+    return (d_ptr->errorString.isEmpty() ? tr("Unknown error") : d_ptr->errorString);
 }
 
 /*!
@@ -794,16 +672,12 @@ QString QLibrary::errorString() const
 */
 void QLibrary::setLoadHints(LoadHints hints)
 {
-    if (!d) {
-        d = QLibraryPrivate::findOrCreate(QString());   // ugly, but we need a d-ptr
-        d->errorString.clear();
-    }
-    d->loadHints = hints;
+    d_ptr->loadHints = hints;
 }
 
 QLibrary::LoadHints QLibrary::loadHints() const
 {
-    return d ? d->loadHints : (QLibrary::LoadHints)0;
+    return d_ptr->loadHints;
 }
 
 /* Internal, for debugging */

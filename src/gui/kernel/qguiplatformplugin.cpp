@@ -34,6 +34,10 @@
 
 QT_BEGIN_NAMESPACE
 
+#ifndef QT_NO_LIBRARY
+Q_GLOBAL_STATIC_WITH_ARGS(QFactoryLoader, platformLoader,
+    (QGuiPlatformPluginInterface_iid, QString::fromLatin1("/gui_platform")))
+#endif
 
 /*! \internal
     Return (an construct if necesseray) the Gui Platform plugin.
@@ -53,8 +57,7 @@ QGuiPlatformPlugin *qt_guiPlatformPlugin()
         }
 
         if (!key.isEmpty()) {
-            QFactoryLoader loader(QGuiPlatformPluginInterface_iid, QLatin1String("/gui_platform"));
-            plugin = qobject_cast<QGuiPlatformPlugin *>(loader.instance(key));
+            plugin = qobject_cast<QGuiPlatformPlugin *>(platformLoader()->instance(key));
         }
 #endif // QT_NO_LIBRARY
 
@@ -92,15 +95,6 @@ QGuiPlatformPlugin::QGuiPlatformPlugin(QObject *parent)
 QGuiPlatformPlugin::~QGuiPlatformPlugin()
 {
 }
-
-/*!
-    Retuns the plugin keys, reimplementations should return keys other than
-    the default
-*/
-QStringList QGuiPlatformPlugin::keys() const
-{
-    return QStringList() << QLatin1String("default");
-};
 
 /*!
     Returns the style string key to be used by application

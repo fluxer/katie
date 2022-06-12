@@ -103,7 +103,7 @@ QT_BEGIN_NAMESPACE
     Constructs a plugin loader with the given \a parent.
 */
 QPluginLoader::QPluginLoader(QObject *parent)
-    : QObject(parent), d(0), did_load(false)
+    : QLibrary(parent)
 {
 }
 
@@ -118,9 +118,8 @@ QPluginLoader::QPluginLoader(QObject *parent)
     \sa setFileName()
 */
 QPluginLoader::QPluginLoader(const QString &fileName, QObject *parent)
-    : QObject(parent), d(0), did_load(false)
+    : QLibrary(fileName, parent)
 {
-    setFileName(fileName);
 }
 
 /*!
@@ -133,8 +132,6 @@ QPluginLoader::QPluginLoader(const QString &fileName, QObject *parent)
 */
 QPluginLoader::~QPluginLoader()
 {
-    if (d)
-        d->release();
 }
 
 /*!
@@ -159,150 +156,12 @@ QPluginLoader::~QPluginLoader()
 */
 QObject *QPluginLoader::instance()
 {
-    if (!load())
+    if (!d_ptr->loadPlugin()) {
         return nullptr;
-    if (!d->inst && d->instance)
-        d->inst = d->instance();
-    return d->inst.data();
-}
-
-/*!
-    Loads the plugin and returns true if the plugin was loaded
-    successfully; otherwise returns false. Since instance() always
-    calls this function before resolving any symbols it is not
-    necessary to call it explicitly. In some situations you might want
-    the plugin loaded in advance, in which case you would use this
-    function.
-
-    \sa unload()
-*/
-bool QPluginLoader::load()
-{
-    if (!d || d->fileName.isEmpty())
-        return false;
-    if (did_load)
-        return d->pHnd && d->instance;
-    if (!d->isPlugin())
-        return false;
-    did_load = true;
-    return d->loadPlugin();
-}
-
-
-/*!
-    Unloads the plugin and returns true if the plugin could be
-    unloaded; otherwise returns false.
-
-    This happens automatically on application termination, so you
-    shouldn't normally need to call this function.
-
-    If other instances of QPluginLoader are using the same plugin, the
-    call will fail, and unloading will only happen when every instance
-    has called unload().
-
-    Don't try to delete the root component. Instead rely on
-    that unload() will automatically delete it when needed.
-
-    \sa instance(), load()
-*/
-bool QPluginLoader::unload()
-{
-    if (did_load) {
-        did_load = false;
-        return d->unload();
     }
-    if (d)  // Ouch
-        d->errorString = tr("The plugin was not loaded.");
-    return false;
-}
-
-/*!
-    Returns true if the plugin is loaded; otherwise returns false.
-
-    \sa load()
- */
-bool QPluginLoader::isLoaded() const
-{
-    return d && d->pHnd && d->instance;
-}
-
-/*!
-    \property QPluginLoader::fileName
-    \brief the file name of the plugin
-
-    To be loadable, the file's suffix must be a valid suffix for a
-    loadable library in accordance with the platform, e.g. \c .so on
-    Unix. The suffix can be verified with QLibrary::isLibrary().
-
-    If the file name does not exist, it will not be set. This property
-    will then contain an empty string.
-
-    By default, this property contains an empty string.
-
-    \sa load()
-*/
-void QPluginLoader::setFileName(const QString &fileName)
-{
-    QLibrary::LoadHints lh;
-    if (d) {
-        lh = d->loadHints;
-        d->release();
-        d = nullptr;
-        did_load = false;
-    }
-
-    d = QLibraryPrivate::findOrCreate(fileName);
-    d->loadHints = lh;
-    if (!d->isPlugin())
-        d->errorString = QLibrary::tr("The shared library was not found.");
-}
-
-QString QPluginLoader::fileName() const
-{
-    if (d)
-        return d->fileName;
-    return QString();
-}
-
-/*!
-    \since 4.2
-
-    Returns a text string with the description of the last error that occurred.
-*/
-QString QPluginLoader::errorString() const
-{
-    return (!d || d->errorString.isEmpty()) ? tr("Unknown error") : d->errorString;
-}
-
-/*! \since 4.4
-
-    \property QPluginLoader::loadHints
-    \brief Give the load() function some hints on how it should behave.
-
-    You can give hints on how the symbols in the plugin are
-    resolved. By default, none of the hints are set.
-
-    See the documentation of QLibrary::loadHints for a complete
-    description of how this property works.
-
-    \sa QLibrary::loadHints
-*/
-
-void QPluginLoader::setLoadHints(QLibrary::LoadHints loadHints)
-{
-    if (!d) {
-        d = QLibraryPrivate::findOrCreate(QString());   // ugly, but we need a d-ptr
-        d->errorString.clear();
-    }
-    d->loadHints = loadHints;
-}
-
-QLibrary::LoadHints QPluginLoader::loadHints() const
-{
-    if (!d) {
-        return (QLibrary::LoadHints)0;
-    }
-    return d->loadHints;
+    if (!d_ptr->inst && d_ptr->instance)
+        d_ptr->inst = d_ptr->instance();
+    return d_ptr->inst.data();
 }
 
 #include "moc_qpluginloader.h"

@@ -31,18 +31,8 @@ QT_BEGIN_NAMESPACE
 class QSvgIconPlugin : public QIconEnginePlugin
 {
 public:
-    QStringList keys() const;
-    QIconEngine *create(const QString &filename = QString());
+    QIconEngine *create(const QString &filename = QString()) final;
 };
-
-QStringList QSvgIconPlugin::keys() const
-{
-    static const QStringList list = QStringList()
-        << QLatin1String("svg")
-        << QLatin1String("svgz")
-        << QLatin1String("svg.gz");
-    return list;
-}
 
 QIconEngine *QSvgIconPlugin::create(const QString &file)
 {
@@ -52,6 +42,6 @@ QIconEngine *QSvgIconPlugin::create(const QString &file)
     return engine;
 }
 
-Q_EXPORT_PLUGIN2(qsvgicon, QSvgIconPlugin)
+Q_EXPORT_PLUGIN2(qsvg, QSvgIconPlugin)
 
 QT_END_NAMESPACE

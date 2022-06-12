@@ -229,7 +229,6 @@ static const struct ClassTblData {
     { QLatin1String("QExtensionFactory"), QLatin1String("QtDesigner/default_extensionfactory.h") },
     { QLatin1String("QExtensionManager"), QLatin1String("QtDesigner/qextensionmanager.h") },
     { QLatin1String("QFSFileEngine"), QLatin1String("QtCore/qfsfileengine.h") },
-    { QLatin1String("QFactoryInterface"), QLatin1String("QtCore/qfactoryinterface.h") },
     { QLatin1String("QFile"), QLatin1String("QtCore/qfile.h") },
     { QLatin1String("QFileDialog"), QLatin1String("QtGui/qfiledialog.h") },
     { QLatin1String("QFileIconProvider"), QLatin1String("QtGui/qfileiconprovider.h") },

@@ -51,9 +51,6 @@ public:
     ~QLibrary();
 
     void *resolve(const char *symbol);
-    static void *resolve(const QString &fileName, const char *symbol);
-    static void *resolve(const QString &fileName, int verNum, const char *symbol);
-    static void *resolve(const QString &fileName, const QString &version, const char *symbol);
 
     bool load();
     bool unload();
@@ -71,7 +68,8 @@ public:
     void setLoadHints(LoadHints hints);
     LoadHints loadHints() const;
 private:
-    QLibraryPrivate *d;
+    friend class QPluginLoader;
+    QLibraryPrivate *d_ptr;
     Q_DISABLE_COPY(QLibrary)
 };
 

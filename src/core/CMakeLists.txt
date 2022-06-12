@@ -71,7 +71,6 @@ set(CORE_PUBLIC_HEADERS
     QMetaObject
     QDir
     QObject
-    QFactoryInterface
     QString
     QLocale
     QMetaType
@@ -173,7 +172,6 @@ set(CORE_HEADERS
     ${CMAKE_CURRENT_SOURCE_DIR}/kernel/qmath.h
     ${CMAKE_CURRENT_SOURCE_DIR}/kernel/qcore_unix_p.h
     ${CMAKE_CURRENT_SOURCE_DIR}/kernel/qeventdispatcher_unix_p.h
-    ${CMAKE_CURRENT_SOURCE_DIR}/plugin/qfactoryinterface.h
     ${CMAKE_CURRENT_SOURCE_DIR}/plugin/qpluginloader.h
     ${CMAKE_CURRENT_SOURCE_DIR}/plugin/qlibrary.h
     ${CMAKE_CURRENT_SOURCE_DIR}/plugin/qlibrary_p.h

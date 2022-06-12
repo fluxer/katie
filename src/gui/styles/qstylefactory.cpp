@@ -22,7 +22,6 @@
 #include "qstylefactory.h"
 #include "qstyleplugin.h"
 #include "qfactoryloader_p.h"
-
 #include "qapplication.h"
 #include "qwindowsstyle.h"
 #ifndef QT_NO_STYLE_CLEANLOOKS
@@ -33,7 +32,7 @@ QT_BEGIN_NAMESPACE
 
 #ifndef QT_NO_LIBRARY
 Q_GLOBAL_STATIC_WITH_ARGS(QFactoryLoader, stylesloader,
-    (QStyleFactoryInterface_iid, QLatin1String("/styles"), Qt::CaseInsensitive))
+    (QStyleFactoryInterface_iid, QString::fromLatin1("/styles")))
 #endif
 
 /*!
@@ -80,8 +79,8 @@ QStyle *QStyleFactory::create(const QString& key)
     }
 #endif
 #if !defined(QT_NO_LIBRARY)
-    if (QStyleFactoryInterface *factory = qobject_cast<QStyleFactoryInterface*>(stylesloader()->instance(key))) {
-        QStyle *ret = factory->create(key);
+    if (QStylePlugin *plugin = qobject_cast<QStylePlugin*>(stylesloader()->instance(key))) {
+        QStyle *ret = plugin->create(key);
         if (ret) {
             // QApplicationPrivate::x11_apply_settings() relies on object name
             if (ret->objectName().isEmpty()) {

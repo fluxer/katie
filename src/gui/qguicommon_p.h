@@ -84,10 +84,10 @@ Q_GLOBAL_STATIC(QWidget, globalStyleInfoWidget)
 
 #if !defined(QT_NO_LIBRARY)
 Q_GLOBAL_STATIC_WITH_ARGS(QFactoryLoader, iconloader,
-    (QIconEngineFactoryInterface_iid, QLatin1String("/iconengines"), Qt::CaseInsensitive))
+    (QIconEngineFactoryInterface_iid, QString::fromLatin1("/iconengines")))
 
 Q_GLOBAL_STATIC_WITH_ARGS(QFactoryLoader, imageloader,
-    (QImageIOHandlerFactoryInterface_iid, QLatin1String("/imageformats")))
+    (QImageIOHandlerFactoryInterface_iid, QString::fromLatin1("/imageformats")))
 #endif
 
 #ifndef QT_NO_TABBAR

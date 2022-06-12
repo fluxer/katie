@@ -200,7 +200,6 @@ classlist = [
     "QExplicitlySharedDataPointer",
     "QExtensionFactory",
     "QExtensionManager",
-    "QFactoryInterface",
     "QFile",
     "QFileDialog",
     "QFileIconProvider",

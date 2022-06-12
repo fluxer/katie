@@ -726,8 +726,8 @@ void QIcon::addFile(const QString &fileName, const QSize &size, Mode mode, State
         QFileInfo info(fileName);
         QString suffix = info.suffix();
         if (!suffix.isEmpty()) {
-            if (QIconEngineFactoryInterface *factory = qobject_cast<QIconEngineFactoryInterface*>(iconloader()->instance(suffix))) {
-                if (QIconEngine *engine = factory->create(fileName)) {
+            if (QIconEnginePlugin *plugin = qobject_cast<QIconEnginePlugin*>(iconloader()->instance(suffix))) {
+                if (QIconEngine *engine = plugin->create(fileName)) {
                     d = new QIconPrivate;
                     d->engine = engine;
                 }
@@ -955,8 +955,8 @@ QDataStream &operator>>(QDataStream &s, QIcon &icon)
         icon.d->engine = engine;
         engine->read(s);
 #if !defined (QT_NO_LIBRARY)
-    } else if (QIconEngineFactoryInterface *factory = qobject_cast<QIconEngineFactoryInterface*>(iconloader()->instance(key))) {
-        if (QIconEngine *engine= factory->create()) {
+    } else if (QIconEnginePlugin *plugin = qobject_cast<QIconEnginePlugin*>(iconloader()->instance(key))) {
+        if (QIconEngine *engine= plugin->create()) {
             icon.d = new QIconPrivate;
             icon.d->engine = engine;
             engine->read(s);
