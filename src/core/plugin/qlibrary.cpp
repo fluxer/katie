@@ -155,11 +155,12 @@ static bool qt_unix_query(const QString &library, uint *version, QLibraryPrivate
         return false;
     }
 
+    QByteArray data;
     qint64 datalen = file.size();
     const char *filedata = reinterpret_cast<char*>(file.map(0, file.size()));
     if (filedata == 0) {
         // try reading the data into memory instead
-        const QByteArray data = file.readAll();
+        data = file.readAll();
         filedata = data.constData();
         datalen = data.size();
     }
