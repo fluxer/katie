@@ -206,39 +206,32 @@ static QString qt_find_library(const QString &fileName)
         qWarning() << "QLibrary: looking for" << fileName;
     }
 
-    QFileSystemEntry fsEntry(fileName);
-    if (fsEntry.isAbsolute()) {
+    if (Q_UNLIKELY(fileName.isEmpty())) {
         return fileName;
     }
 
-    QString path = fsEntry.path();
-    QString name = fsEntry.fileName();
-    if (path == QLatin1String(".") && !fileName.startsWith(path))
-        path.clear();
-    else
-        path += QLatin1Char('/');
-
-    static const QStringList suffixes = QStringList()
-        << QLatin1String("") << QLatin1String(".so");
-    QStringList prefixes;
-    prefixes << QLatin1String("") << QLatin1String("lib");
-
-    if (path.isEmpty()) {
-        foreach(const QString &libpath, QCoreApplication::libraryPaths()) {
-            prefixes << (libpath + QLatin1Char('/')) << (libpath + QLatin1String("/lib"));
-        }
+    // absolute path
+    if (fileName.startsWith(QLatin1Char('/'))) {
+        return fileName;
     }
 
-    foreach (const QString &prefix, prefixes) {
-        foreach (const QString &suffix, suffixes) {
-            if (!prefix.isEmpty() && name.startsWith(prefix))
-                continue;
-            if (!suffix.isEmpty() && name.endsWith(suffix))
-                continue;
-            const QString attempt = path + prefix + name + suffix;
-            const QStatInfo statinfo(attempt);
+    const QStringList attempts = QStringList()
+        << QString::fromLatin1("/%1").arg(fileName)
+        << QString::fromLatin1("/%1.so").arg(fileName)
+        << QString::fromLatin1("/lib%1").arg(fileName)
+        << QString::fromLatin1("/lib%1.so").arg(fileName);
+    foreach(const QString &libpath, QCoreApplication::libraryPaths()) {
+        foreach(const QString &attempt, attempts) {
+            const QString fullpath = libpath + attempt;
+            if (qt_debug_component()) {
+                qDebug() << "QLibrary: checking if library exists" << fullpath;
+            }
+            const QStatInfo statinfo(fullpath);
             if (statinfo.isFile()) {
-                return attempt;
+                if (qt_debug_component()) {
+                    qDebug() << "QLibrary: found library" << fullpath;
+                }
+                return fullpath;
             }
         }
     }
