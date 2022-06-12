@@ -42,7 +42,7 @@
 
 QT_BEGIN_NAMESPACE
 
-class QLocalePrivate
+class Q_CORE_EXPORT QLocalePrivate
 {
 public:
     QChar decimal() const { return QChar(m_decimal); }

@@ -26,6 +26,7 @@
 #include <qlocale.h>
 #include <qnumeric.h>
 #include <qprocess.h>
+#include <qlocale_p.h>
 
 #include <math.h>
 #include <float.h>
