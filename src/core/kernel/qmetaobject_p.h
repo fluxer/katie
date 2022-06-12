@@ -153,7 +153,7 @@ static inline bool is_space(char s)
 #endif
 
 #ifndef QT_BOOTSTRAPPED
-typedef QHash<quint32, QByteArray> QNormalizedTypeHash;
+typedef QHash<uint, QByteArray> QNormalizedTypeHash;
 Q_GLOBAL_STATIC(QNormalizedTypeHash, qGlobalNormalizedTypeHash);
 Q_GLOBAL_STATIC(QMutex, qGlobalNormalizedTypeMutex)
 #endif
@@ -163,7 +163,7 @@ static inline QByteArray normalizeTypeInternal(const char *t, const char *e, boo
 {
     const int len = e - t;
 #ifndef QT_BOOTSTRAPPED
-    const quint32 cachekey = qHash(QByteArray::fromRawData(t, len));
+    const uint cachekey = qHash(QByteArray::fromRawData(t, len));
     QMutexLocker lock(qGlobalNormalizedTypeMutex());
     QByteArray cached = qGlobalNormalizedTypeHash()->value(cachekey);
     if (!cached.isEmpty()) {
