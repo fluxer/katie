@@ -202,7 +202,14 @@ static bool qt_unix_query(const QString &library, QLibraryPrivate *lib)
 
 static QString qt_find_library(const QString &fileName)
 {
+    if (qt_debug_component()) {
+        qWarning() << "QLibrary: looking for" << fileName;
+    }
+
     QFileSystemEntry fsEntry(fileName);
+    if (fsEntry.isAbsolute()) {
+        return fileName;
+    }
 
     QString path = fsEntry.path();
     QString name = fsEntry.fileName();
