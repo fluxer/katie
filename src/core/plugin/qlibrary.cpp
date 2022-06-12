@@ -267,8 +267,7 @@ Q_GLOBAL_STATIC(QLibraryCleanup, qGlobalLibraryList);
 
 QLibraryPrivate::QLibraryPrivate()
     : pHnd(nullptr), fileName(),
-     instance(nullptr), qt_version(0),
-     pluginState(MightBeAPlugin)
+     instance(nullptr), pluginState(MightBeAPlugin)
 {
 }
 
@@ -384,7 +383,8 @@ bool QLibraryPrivate::isPlugin()
     }
 
     // use unix shortcut to avoid loading the library
-    const bool success = qt_unix_query(fileName, &qt_version, this);
+    uint pluginVersion = 0;
+    const bool success = qt_unix_query(fileName, &pluginVersion, this);
     if (!success) {
         if (errorString.isEmpty()){
             if (fileName.isEmpty()) {
@@ -398,14 +398,14 @@ bool QLibraryPrivate::isPlugin()
 
     pluginState = IsNotAPlugin; // be pessimistic
 
-    if (qt_version < QT_VERSION) {
+    if (pluginVersion < QT_VERSION) {
         if (qt_debug_component()) {
             qWarning("Plugin uses incompatible Katie library: %s (%d, %d)\n",
-                QFile::encodeName(fileName).data(), qt_version, QT_VERSION);
+                QFile::encodeName(fileName).data(), pluginVersion, QT_VERSION);
         }
         errorString = QLibrary::tr("The plugin uses incompatible Katie library: %1 (%2, %3)")
             .arg(fileName)
-            .arg(qt_version)
+            .arg(pluginVersion)
             .arg(QT_VERSION);
     } else {
         pluginState = IsAPlugin;
@@ -643,13 +643,6 @@ void *QLibrary::resolve(const char *symbol)
     \fn QString QLibrary::library() const
 
     Use fileName() instead.
-*/
-
-/*!
-    \fn void QLibrary::setAutoUnload( bool b )
-
-    Use load(), isLoaded(), and unload() as necessary instead.
-*/
 
 /*!
     \since 4.2

@@ -60,7 +60,6 @@ public:
 
     QWeakPointer<QObject> inst;
     QtPluginInstanceFunction instance;
-    uint qt_version;
 
     QString errorString;
     QLibrary::LoadHints loadHints;
