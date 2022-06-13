@@ -1640,7 +1640,10 @@ QStringList QCoreApplication::libraryPaths()
     }
 
     foreach (const QString &it, qGetEnvList("LD_LIBRARY_PATH")) {
-        QString canonicalPath = QDir(it).canonicalPath();
+        const QString canonicalPath = QDir(it).canonicalPath();
+        if (canonicalPath.isEmpty()) {
+            continue;
+        }
         if (!coreappdata()->app_librarypaths.contains(canonicalPath)) {
             coreappdata()->app_librarypaths.append(canonicalPath);
         }
@@ -1672,14 +1675,15 @@ void QCoreApplication::setLibraryPaths(const QStringList &paths)
  */
 void QCoreApplication::addLibraryPath(const QString &path)
 {
-    if (path.isEmpty())
+    const QString canonicalPath = QDir(path).canonicalPath();
+    if (canonicalPath.isEmpty()) {
         return;
+    }
 
     // make sure that library paths is initialized
     libraryPaths();
 
     QMutexLocker locker(qGlobalAppPathsMutex());
-    QString canonicalPath = QDir(path).canonicalPath();
     if (!coreappdata()->app_librarypaths.contains(canonicalPath)) {
         coreappdata()->app_librarypaths.prepend(canonicalPath);
     }
@@ -1693,14 +1697,15 @@ void QCoreApplication::addLibraryPath(const QString &path)
 */
 void QCoreApplication::removeLibraryPath(const QString &path)
 {
-    if (path.isEmpty())
+    const QString canonicalPath = QDir(path).canonicalPath();
+    if (canonicalPath.isEmpty()) {
         return;
+    }
 
     // make sure that library paths is initialized
     libraryPaths();
 
     QMutexLocker locker(qGlobalAppPathsMutex());
-    QString canonicalPath = QDir(path).canonicalPath();
     coreappdata()->app_librarypaths.removeAll(canonicalPath);
 }
 
@@ -1730,7 +1735,10 @@ QStringList QCoreApplication::pluginPaths()
     }
 
     foreach (const QString &it, qGetEnvList("QT_PLUGIN_PATH")) {
-        QString canonicalPath = QDir(it).canonicalPath();
+        const QString canonicalPath = QDir(it).canonicalPath();
+        if (canonicalPath.isEmpty()) {
+            continue;
+        }
         if (!coreappdata()->app_pluginpaths.contains(canonicalPath)) {
             coreappdata()->app_pluginpaths.append(canonicalPath);
         }
@@ -1764,14 +1772,15 @@ void QCoreApplication::setPluginPaths(const QStringList &paths)
  */
 void QCoreApplication::addPluginPath(const QString &path)
 {
-    if (path.isEmpty())
+    const QString canonicalPath = QDir(path).canonicalPath();
+    if (canonicalPath.isEmpty()) {
         return;
+    }
 
     // make sure that plugin paths is initialized
     pluginPaths();
 
     QMutexLocker locker(qGlobalAppPathsMutex());
-    QString canonicalPath = QDir(path).canonicalPath();
     if (!coreappdata()->app_pluginpaths.contains(canonicalPath)) {
         coreappdata()->app_pluginpaths.prepend(canonicalPath);
         locker.unlock();
@@ -1787,14 +1796,15 @@ void QCoreApplication::addPluginPath(const QString &path)
 */
 void QCoreApplication::removePluginPath(const QString &path)
 {
-    if (path.isEmpty())
+    const QString canonicalPath = QDir(path).canonicalPath();
+    if (canonicalPath.isEmpty()) {
         return;
+    }
 
     // make sure that plugin paths is initialized
     pluginPaths();
 
     QMutexLocker locker(qGlobalAppPathsMutex());
-    QString canonicalPath = QDir(path).canonicalPath();
     coreappdata()->app_pluginpaths.removeAll(canonicalPath);
     QFactoryLoader::refreshAll();
 }
