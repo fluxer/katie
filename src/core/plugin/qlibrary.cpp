@@ -146,7 +146,7 @@ static bool qt_unix_query(const QString &library, QLibraryPrivate *lib)
         lib->errorString = file.errorString();
         if (qt_debug_component()) {
             qWarning("%s: %s", QFile::encodeName(library).data(),
-                qPrintable(qt_error_string(errno)));
+                qPrintable(lib->errorString));
         }
         return false;
     }
