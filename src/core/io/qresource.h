@@ -47,7 +47,6 @@ public:
 
     bool isValid() const;
 
-    bool isCompressed() const;
     qint64 size() const;
     const uchar *data() const;
 

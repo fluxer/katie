@@ -74,8 +74,7 @@ class QResourceRoot
 {
     enum Flags
     {
-        Compressed = 0x01,
-        Directory = 0x02
+        Directory = 0x01
     };
     const uchar *tree, *names, *payloads;
     inline int findOffset(int node) const { return node * 14; } //sizeof each tree element
@@ -90,7 +89,6 @@ public:
     virtual ~QResourceRoot() { }
     int findNode(const QString &path, const QLocale &locale=QLocale()) const;
     inline bool isContainer(int node) const { return flags(node) & Directory; }
-    inline bool isCompressed(int node) const { return flags(node) & Compressed; }
     const uchar *data(int node, qint64 *size) const;
     QStringList children(int node) const;
     virtual QString mappingRoot() const { return QString(); }
@@ -141,11 +139,9 @@ Q_GLOBAL_STATIC(ResourceList, resourceList)
     as a file system rooted with a \c{/} character, or in resource notation
     rooted with a \c{:} character.
 
-    A QResource that is representing a file will have data backing it, this
-    data can possibly be compressed, in which case qUncompress() must be
-    used to access the real data; this happens implicitly when accessed
-    through a QFile. A QResource that is representing a directory will have
-    only children and no data.
+    A QResource that is representing a file will have data backing it; this
+    happens implicitly when accessed through a QFile. A QResource that is
+    representing a directory will have only children and no data.
 
     \section1 Dynamic Resource Loading
 
@@ -190,7 +186,6 @@ public:
     QString fileName, absoluteFilePath;
     QList<QResourceRoot*> related;
     bool container;
-    mutable bool compressed;
     mutable qint64 size;
     mutable const uchar *data;
     mutable QStringList children;
@@ -201,7 +196,6 @@ QResourcePrivate::clear()
 {
     absoluteFilePath.clear();
     container = false;
-    compressed = false;
     data = nullptr;
     size = 0;
     children.clear();
@@ -228,11 +222,9 @@ QResourcePrivate::load(const QString &file)
                 container = res->isContainer(node);
                 if(!container) {
                     data = res->data(node, &size);
-                    compressed = res->isCompressed(node);
                 } else {
                     data = nullptr;
                     size = 0;
-                    compressed = false;
                 }
             } else if(Q_UNLIKELY(res->isContainer(node) != container)) {
                 qWarning("QResourceInfo: Resource [%s] has both data and children!", file.toLatin1().constData());
@@ -243,7 +235,6 @@ QResourcePrivate::load(const QString &file)
             container = true;
             data = nullptr;
             size = 0;
-            compressed = false;
             res->ref.ref();
             related.append(res);
         }
@@ -407,21 +398,6 @@ bool QResource::isValid() const
     \sa isDir()
 */
 
-
-/*!
-    Returns true if the resource represents a file and the data backing it
-    is in a compressed format, false otherwise.
-
-    \sa data(), isFile()
-*/
-
-bool QResource::isCompressed() const
-{
-    Q_D(const QResource);
-    d->ensureInitialized();
-    return d->compressed;
-}
-
 /*!
     Returns the size of the data backing the resource.
 
@@ -437,11 +413,9 @@ qint64 QResource::size() const
 
 /*!
     Returns direct access to a read only segment of data that this resource
-    represents. If the resource is compressed the data returns is
-    compressed and qUncompress() must be used to access the data. If
-    the resource is a directory 0 is returned.
+    represents. If the resource is a directory 0 is returned.
 
-    \sa size(), isCompressed(), isFile()
+    \sa size(), isFile()
 */
 
 const uchar *QResource::data() const
@@ -980,7 +954,6 @@ private:
     bool unmap(uchar *ptr);
     qint64 offset;
     QResource resource;
-    QByteArray uncompressed;
 protected:
     QResourceFileEnginePrivate() : offset(0) { }
 };
@@ -1010,9 +983,6 @@ QResourceFileEngine::QResourceFileEngine(const QString &file) :
 {
     Q_D(QResourceFileEngine);
     d->resource.setFileName(file);
-    if(d->resource.isCompressed() && d->resource.size()) {
-        d->uncompressed = qUncompress(reinterpret_cast<const char*>(d->resource.data()), d->resource.size());
-    }
 }
 
 QResourceFileEngine::~QResourceFileEngine()
@@ -1043,7 +1013,6 @@ bool QResourceFileEngine::close()
 {
     Q_D(QResourceFileEngine);
     d->offset = 0;
-    d->uncompressed.clear();
     return true;
 }
 
@@ -1059,10 +1028,7 @@ qint64 QResourceFileEngine::read(char *data, qint64 len)
         len = size()-d->offset;
     if(len <= 0)
         return 0;
-    if(d->resource.isCompressed())
-        memcpy(data, d->uncompressed.constData()+d->offset, len);
-    else
-        memcpy(data, d->resource.data()+d->offset, len);
+    memcpy(data, d->resource.data()+d->offset, len);
     d->offset += len;
     return len;
 }
@@ -1097,8 +1063,6 @@ qint64 QResourceFileEngine::size() const
     Q_D(const QResourceFileEngine);
     if(!d->resource.isValid())
         return 0;
-    if(d->resource.isCompressed())
-        return d->uncompressed.size();
     return d->resource.size();
 }
 

@@ -40,14 +40,8 @@ void showHelp( const QString &error)
         "         Write output to file rather than stdout.\n\n"
         "    -name <name>\n"
         "         Create an external initialization function with name.\n\n"
-        "    -threshold <level>\n"
-        "         Threshold to consider compressing files.\n\n"
-        "    -compress <level>\n"
-        "         Compress input files by level.\n\n"
         "    -root <path>\n"
         "         Prefix resource access path with root path.\n\n"
-        "    -no-compress\n"
-        "         Disable all compression.\n\n"
         "    -binary\n"
         "         Output a binary file for use as a dynamic resource.\n\n"
         "    -namespace\n"
@@ -155,18 +149,6 @@ int runRcc(int argc, char *argv[])
                 if (library.resourceRoot().isEmpty()
                         || library.resourceRoot().at(0) != QLatin1Char('/'))
                     errorMsg = QLatin1String("Root must start with a /");
-            } else if (opt == QLatin1String("-compress")) {
-                if (!(i < argc-1)) {
-                    errorMsg = QLatin1String("Missing compression level");
-                    break;
-                }
-                library.setCompressLevel(args[++i].toInt());
-            } else if (opt == QLatin1String("-threshold")) {
-                if (!(i < argc-1)) {
-                    errorMsg = QLatin1String("Missing compression threshold");
-                    break;
-                }
-                library.setCompressThreshold(args[++i].toInt());
             } else if (opt == QLatin1String("-binary")) {
                 library.setFormat(RCCResourceLibrary::Binary);
             } else if (opt == QLatin1String("-namespace")) {
@@ -180,8 +162,6 @@ int runRcc(int argc, char *argv[])
                 return 1;
             } else if (opt == QLatin1String("-help") || opt == QLatin1String("-h")) {
                 helpRequested = true;
-            } else if (opt == QLatin1String("-no-compress")) {
-                library.setCompressLevel(-2);
             } else if (opt == QLatin1String("-project")) {
                 projectRequested = true;
             } else {

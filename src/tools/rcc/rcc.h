@@ -65,12 +65,6 @@ public:
     void setInitName(const QString &name);
     QString initName() const { return m_initName; }
 
-    void setCompressLevel(int c) { m_compressLevel = c; }
-    int compressLevel() const { return m_compressLevel; }
-
-    void setCompressThreshold(int t) { m_compressThreshold = t; }
-    int compressThreshold() const { return m_compressThreshold; }
-
     void setResourceRoot(const QString &root) { m_resourceRoot = root; }
     QString resourceRoot() const { return m_resourceRoot; }
     
@@ -104,8 +98,6 @@ private:
     QString m_initName;
     Format m_format;
     bool m_verbose;
-    int m_compressLevel;
-    int m_compressThreshold;
     int m_treeOffset;
     int m_namesOffset;
     int m_dataOffset;

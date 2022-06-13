@@ -18,17 +18,8 @@ TODO
     -name <name>
         Create an external initialization function with name.
 
-    -threshold <level>
-        Threshold to consider compressing files.
-
-    -compress <level>
-        Compress input files by level.
-
     -root <path>
         Prefix resource access path with root path.
-
-    -no-compress
-        Disable all compression.
 
     -binary
         Output a binary file for use as a dynamic resource.

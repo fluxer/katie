@@ -36,9 +36,7 @@
 QT_BEGIN_NAMESPACE
 
 enum {
-    CONSTANT_USENAMESPACE = 1,
-    CONSTANT_COMPRESSLEVEL_DEFAULT = 1,
-    CONSTANT_COMPRESSTHRESHOLD_DEFAULT = 40
+    CONSTANT_USENAMESPACE = 1
 };
 
 
@@ -75,16 +73,13 @@ public:
     enum Flags
     {
         NoFlags = 0x00,
-        Compressed = 0x01,
-        Directory = 0x02
+        Directory = 0x01
     };
 
     RCCFileInfo(const QString &name = QString(), const QFileInfo &fileInfo = QFileInfo(),
                 QLocale::Language language = QLocale::C,
                 QLocale::Country country = QLocale::AnyCountry,
-                uint flags = NoFlags,
-                int compressLevel = CONSTANT_COMPRESSLEVEL_DEFAULT,
-                int compressThreshold = CONSTANT_COMPRESSTHRESHOLD_DEFAULT);
+                uint flags = NoFlags);
     ~RCCFileInfo();
 
     QString resourceName() const;
@@ -101,8 +96,6 @@ public:
     QFileInfo m_fileInfo;
     RCCFileInfo *m_parent;
     QHash<QString, RCCFileInfo*> m_children;
-    int m_compressLevel;
-    int m_compressThreshold;
 
     qint64 m_nameOffset;
     qint64 m_dataOffset;
@@ -110,8 +103,7 @@ public:
 };
 
 RCCFileInfo::RCCFileInfo(const QString &name, const QFileInfo &fileInfo,
-    QLocale::Language language, QLocale::Country country, uint flags,
-    int compressLevel, int compressThreshold)
+    QLocale::Language language, QLocale::Country country, uint flags)
 {
     m_name = name;
     m_fileInfo = fileInfo;
@@ -122,8 +114,6 @@ RCCFileInfo::RCCFileInfo(const QString &name, const QFileInfo &fileInfo,
     m_nameOffset = 0;
     m_dataOffset = 0;
     m_childOffset = 0;
-    m_compressLevel = compressLevel;
-    m_compressThreshold = compressThreshold;
 }
 
 RCCFileInfo::~RCCFileInfo()
@@ -205,17 +195,6 @@ qint64 RCCFileInfo::writeDataBlob(RCCResourceLibrary &lib, qint64 offset,
         return 0;
     }
     QByteArray data = file.readAll();
-
-    // Check if compression is useful for this file
-    if (m_compressLevel != 0 && data.size() != 0) {
-        QByteArray compressed = qCompress(data.data(), data.size(), m_compressLevel);
-
-        int compressRatio = int(100.0 * (data.size() - compressed.size()) / data.size());
-        if (compressRatio >= m_compressThreshold) {
-            data = compressed;
-            m_flags |= Compressed;
-        }
-    }
 
     // some info
     if (text) {
@@ -306,15 +285,11 @@ static const QLatin1String TAG_FILE = QLatin1String("file");
 static const QLatin1String ATTRIBUTE_LANG = QLatin1String("lang");
 static const QLatin1String ATTRIBUTE_PREFIX = QLatin1String("prefix");
 static const QLatin1String ATTRIBUTE_ALIAS = QLatin1String("alias");
-static const QLatin1String ATTRIBUTE_THRESHOLD = QLatin1String("threshold");
-static const QLatin1String ATTRIBUTE_COMPRESS = QLatin1String("compress");
 
 RCCResourceLibrary::RCCResourceLibrary()
   : m_root(0),
     m_format(C_Code),
     m_verbose(false),
-    m_compressLevel(CONSTANT_COMPRESSLEVEL_DEFAULT),
-    m_compressThreshold(CONSTANT_COMPRESSTHRESHOLD_DEFAULT),
     m_treeOffset(0),
     m_namesOffset(0),
     m_dataOffset(0),
@@ -396,17 +371,6 @@ bool RCCResourceLibrary::interpretResourceFile(QIODevice *inputDevice,
                         else
                             alias = fileName;
 
-                        int compressLevel = m_compressLevel;
-                        if (res.toElement().hasAttribute(ATTRIBUTE_COMPRESS))
-                            compressLevel = res.toElement().attribute(ATTRIBUTE_COMPRESS).toInt();
-                        int compressThreshold = m_compressThreshold;
-                        if (res.toElement().hasAttribute(ATTRIBUTE_THRESHOLD))
-                            compressThreshold = res.toElement().attribute(ATTRIBUTE_THRESHOLD).toInt();
-
-                        // Special case for -no-compress. Overrides all other settings.
-                        if (m_compressLevel == -2)
-                            compressLevel = 0;
-
                         alias = QDir::cleanPath(alias);
                         while (alias.startsWith(QLatin1String("../")))
                             alias.remove(0, 3);
@@ -431,9 +395,7 @@ bool RCCResourceLibrary::interpretResourceFile(QIODevice *inputDevice,
                                                     file,
                                                     language,
                                                     country,
-                                                    RCCFileInfo::NoFlags,
-                                                    compressLevel,
-                                                    compressThreshold)
+                                                    RCCFileInfo::NoFlags)
                                         );
                             if (!arc)
                                 m_failedResources.push_back(absFileName);
@@ -460,9 +422,7 @@ bool RCCResourceLibrary::interpretResourceFile(QIODevice *inputDevice,
                                                             child,
                                                             language,
                                                             country,
-                                                            RCCFileInfo::NoFlags,
-                                                            compressLevel,
-                                                            compressThreshold)
+                                                            RCCFileInfo::NoFlags)
                                                 );
                                     if (!arc)
                                         m_failedResources.push_back(child.fileName());
