@@ -99,8 +99,6 @@ QStringList QIconLoader::themeSearchPaths() const
 {
     if (m_iconDirs.isEmpty()) {
         m_iconDirs = qt_guiPlatformPlugin()->iconThemeSearchPaths();
-        // Always add resource directory as search path
-        m_iconDirs.append(QLatin1String(":/icons"));
     }
     return m_iconDirs;
 }
