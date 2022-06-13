@@ -50,9 +50,6 @@ public:
     qint64 size() const;
     const uchar *data() const;
 
-    static bool registerResource(const QString &rccFilename, const QString &resourceRoot=QString());
-    static bool unregisterResource(const QString &rccFilename, const QString &resourceRoot=QString());
-
     static bool registerResource(const uchar *rccData, const QString &resourceRoot=QString());
     static bool unregisterResource(const uchar *rccData, const QString &resourceRoot=QString());
 

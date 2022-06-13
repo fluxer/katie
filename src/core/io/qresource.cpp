@@ -97,7 +97,7 @@ public:
     { return tree == other.tree && names == other.names && payloads == other.payloads; }
     inline bool operator!=(const QResourceRoot &other) const
     { return !operator==(other); }
-    enum ResourceRootType { Resource_Builtin, Resource_File, Resource_Buffer };
+    enum ResourceRootType { Resource_Builtin, Resource_Buffer };
     virtual ResourceRootType type() const { return Resource_Builtin; }
 
 protected:
@@ -782,100 +782,6 @@ public:
         return false;
     }
 };
-
-
-class QDynamicFileResourceRoot: public QDynamicBufferResourceRoot
-{
-    QString fileName;
-
-public:
-    inline QDynamicFileResourceRoot(const QString &_root) : QDynamicBufferResourceRoot(_root) { }
-    ~QDynamicFileResourceRoot() {
-        delete [] (uchar *)mappingBuffer();
-    }
-    QString mappingFile() const { return fileName; }
-    virtual ResourceRootType type() const { return Resource_File; }
-
-    bool registerSelf(const QString &f) {
-        QFile file(f);
-        if (file.open(QIODevice::ReadOnly)) {
-            qint64 data_len = file.size();
-            uchar *data = new uchar[data_len];
-            if (data_len != file.read((char*)data, data_len)) {
-                delete [] data;
-                return false;
-            } else if (QDynamicBufferResourceRoot::registerSelf(data)) {
-                fileName = f;
-                return true;
-            }
-        }
-        return false;
-    }
-};
-
-/*!
-   \fn bool QResource::registerResource(const QString &rccFileName, const QString &mapRoot)
-
-   Registers the resource with the given \a rccFileName at the location in the
-   resource tree specified by \a mapRoot, and returns true if the file is
-   successfully opened; otherwise returns false.
-
-   \sa unregisterResource()
-*/
-
-bool
-QResource::registerResource(const QString &rccFilename, const QString &resourceRoot)
-{
-    if(Q_UNLIKELY(!resourceRoot.startsWith(QLatin1String(":/")))) {
-        qWarning("QResource::registerResource: Registering a resource [%s] must be rooted in an absolute path (start with :/) [%s]",
-                 rccFilename.toLocal8Bit().data(), resourceRoot.toLocal8Bit().data());
-        return false;
-    }
-
-    QDynamicFileResourceRoot *root = new QDynamicFileResourceRoot(resourceRoot);
-    if(root->registerSelf(rccFilename)) {
-        root->ref.ref();
-        std::lock_guard<std::recursive_mutex> lock(qGlobalResourceMutex);
-        resourceList()->append(root);
-        return true;
-    }
-    delete root;
-    return false;
-}
-
-/*!
-  \fn bool QResource::unregisterResource(const QString &rccFileName, const QString &mapRoot)
-
-  Unregisters the resource with the given \a rccFileName at the location in
-  the resource tree specified by \a mapRoot, and returns true if the
-  resource is successfully unloaded and no references exist for the
-  resource; otherwise returns false.
-
-  \sa registerResource()
-*/
-
-bool
-QResource::unregisterResource(const QString &rccFilename, const QString &resourceRoot)
-{
-    std::lock_guard<std::recursive_mutex> lock(qGlobalResourceMutex);
-    ResourceList *list = resourceList();
-    for(int i = 0; i < list->size(); ++i) {
-        QResourceRoot *res = list->at(i);
-        if(res->type() == QResourceRoot::Resource_File) {
-            QDynamicFileResourceRoot *root = reinterpret_cast<QDynamicFileResourceRoot*>(res);
-            if(root->mappingFile() == rccFilename && root->mappingRoot() == resourceRoot) {
-                resourceList()->removeAt(i);
-                if(!root->ref.deref()) {
-                    delete root;
-                    return true;
-                }
-                return false;
-            }
-        }
-    }
-    return false;
-}
-
 
 /*!
    \fn bool QResource::registerResource(const uchar *rccData, const QString &mapRoot)
