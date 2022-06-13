@@ -191,8 +191,9 @@ static bool compare(const QVariantPrivate *a, const QVariantPrivate *b)
         QVariantMap::ConstIterator it = m1->constBegin();
         QVariantMap::ConstIterator it2 = m2->constBegin();
         while (it != m1->constEnd()) {
-            if (*it != *it2 || it.key() != it2.key())
+            if (it.value() != it2.value() || it.key() != it2.key()) {
                 return false;
+            }
             ++it;
             ++it2;
         }

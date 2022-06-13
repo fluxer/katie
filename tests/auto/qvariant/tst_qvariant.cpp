@@ -1633,8 +1633,8 @@ void tst_QVariant::operator_eq_eq_data()
 
     QTest::newRow("invalidConversion") << QVariant(QString("bubu")) << QVariant(0) << false;
     QTest::newRow("invalidConversionR") << QVariant(0) << QVariant(QString("bubu")) << false;
-    // ### many other combinations missing
 
+    // ### many other combinations missing
     {
         QMap<QString, QVariant> map1;
         map1.insert( "X", 1 );
@@ -1676,13 +1676,53 @@ void tst_QVariant::operator_eq_eq_data()
 
     {
         QMap<QString, QVariant> map1;
+
+        QMap<QString, QVariant> map2;
+
+        QTest::newRow("EmptyEmptyMap") << QVariant(map1) << QVariant(map2) << true;
+    }
+
+    {
+        QMap<QString, QVariant> map1;
+
+        QMap<QString, QVariant> map2;
+        map2.insert( "X", QVariantMap() );
+
+        QTest::newRow("EmptyNestedEmptyMap") << QVariant(map1) << QVariant(map2) << false;
+    }
+
+    {
+        QMap<QString, QVariant> map1;
+        map1.insert( "X", QVariantMap() );
+
+        QMap<QString, QVariant> map2;
+
+        QTest::newRow("NestedEmptyEmptyMap") << QVariant(map1) << QVariant(map2) << false;
+    }
+
+    {
+        QMap<QString, QVariant> map11;
+        map11.insert( "Y", QVariantMap() );
+        QMap<QString, QVariant> map1;
+        map1.insert( "X", map11 );
+
+        QMap<QString, QVariant> map22;
+        map22.insert( "Y", QVariantMap() );
+        QMap<QString, QVariant> map2;
+        map2.insert( "X", map22 );
+
+        QTest::newRow("NestedBothPopulatedMap") << QVariant(map1) << QVariant(map2) << true;
+    }
+
+    {
+        QMap<QString, QVariant> map1;
         map1.insert( "X", 1 );
         map1.insert( "Y", 1 );
 
         QMap<QString, QVariant> map2;
         map2.insert( "X", 1 );
 
-        QTest::newRow("FirstLarger") << QVariant(map1) << QVariant(map2) << false;
+        QTest::newRow("MapFirstLarger") << QVariant(map1) << QVariant(map2) << false;
     }
 
     {
@@ -1693,7 +1733,7 @@ void tst_QVariant::operator_eq_eq_data()
         map2.insert( "X", 1 );
         map2.insert( "Y", 1 );
 
-        QTest::newRow("SecondLarger") << QVariant(map1) << QVariant(map2) << false;
+        QTest::newRow("MapSecondLarger") << QVariant(map1) << QVariant(map2) << false;
     }
 
     // same thing with hash
@@ -1738,6 +1778,46 @@ void tst_QVariant::operator_eq_eq_data()
 
     {
         QHash<QString, QVariant> hash1;
+
+        QHash<QString, QVariant> hash2;
+
+        QTest::newRow("EmptyEmptyHash") << QVariant(hash1) << QVariant(hash2) << true;
+    }
+
+    {
+        QHash<QString, QVariant> hash1;
+
+        QHash<QString, QVariant> hash2;
+        hash2.insert( "X", QVariantHash() );
+
+        QTest::newRow("EmptyNestedEmptyHash") << QVariant(hash1) << QVariant(hash2) << false;
+    }
+
+    {
+        QHash<QString, QVariant> hash1;
+        hash1.insert( "X", QVariantHash() );
+
+        QHash<QString, QVariant> hash2;
+
+        QTest::newRow("NestedEmptyEmptyHash") << QVariant(hash1) << QVariant(hash2) << false;
+    }
+
+    {
+        QHash<QString, QVariant> hash11;
+        hash11.insert( "Y", QVariantHash() );
+        QHash<QString, QVariant> hash1;
+        hash1.insert( "X", hash11 );
+
+        QHash<QString, QVariant> hash22;
+        hash22.insert( "Y", QVariantHash() );
+        QHash<QString, QVariant> hash2;
+        hash2.insert( "X", hash22 );
+
+        QTest::newRow("NestedBothPopulatedHash") << QVariant(hash1) << QVariant(hash2) << true;
+    }
+
+    {
+        QHash<QString, QVariant> hash1;
         hash1.insert( "X", 1 );
         hash1.insert( "Y", 1 );
 
@@ -1774,16 +1854,7 @@ void tst_QVariant::operator_eq_eq()
 void tst_QVariant::operator_eq_eq_rhs()
 {
     QVariant v = 42;
-
     QVERIFY(42 == v.toInt());
-
-#if 0
-    /* This should _not_ compile */
-    QStringList list;
-    QDateTime dt;
-
-    QVERIFY(dt == list);
-#endif
 }
 
 void tst_QVariant::typeName_data()
