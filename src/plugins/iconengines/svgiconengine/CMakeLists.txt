@@ -12,7 +12,7 @@ katie_setup_target(qsvgiconplugin ${QSVGICONPLUGIN_SOURCES} ${QSVGICONPLUGIN_HEA
 add_library(qsvgiconplugin MODULE ${qsvgiconplugin_SOURCES})
 target_link_libraries(qsvgiconplugin KtCore KtGui KtSvg)
 set_target_properties(qsvgiconplugin PROPERTIES
-    OUTPUT_NAME qsvg
+    OUTPUT_NAME svg
     PREFIX ""
 )
 

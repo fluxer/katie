@@ -1263,7 +1263,7 @@ lib/katie/plugins/
 lib/katie/plugins/designer/
 @so lib/katie/plugins/designer/qdeclarativeview.so
 lib/katie/plugins/iconengines/
-@so lib/katie/plugins/iconengines/qsvg.so
+@so lib/katie/plugins/iconengines/svg.so
 lib/katie/plugins/imageformats/
 @so lib/katie/plugins/imageformats/svg.so
 lib/katie/plugins/script/
