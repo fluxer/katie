@@ -2,9 +2,6 @@
 <qresource prefix="/trolltech/styles/commonstyle">
 <file>images/fontbitmap-16.png</file>
 <file>images/fonttruetype-16.png</file>
-<file>images/standardbutton-closetab-16.png</file>
-<file>images/standardbutton-closetab-down-16.png</file>
-<file>images/standardbutton-closetab-hover-16.png</file>
 <file>images/tree_branch_open.png</file>
 <file>images/tree_branch_closed.png</file>
 <file>images/tb_extension_arrow_v.png</file>

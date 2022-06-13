@@ -342,17 +342,8 @@ void QCommonStyle::drawPrimitive(PrimitiveElement pe, const QStyleOption *opt, Q
     }
     case PE_IndicatorTabClose: {
         if (d->tabBarcloseButtonIcon.isNull()) {
-            d->tabBarcloseButtonIcon.addPixmap(QPixmap(
-                        QLatin1String(":/trolltech/styles/commonstyle/images/standardbutton-closetab-16.png")),
-                        QIcon::Normal, QIcon::Off);
-            d->tabBarcloseButtonIcon.addPixmap(QPixmap(
-                        QLatin1String(":/trolltech/styles/commonstyle/images/standardbutton-closetab-down-16.png")),
-                        QIcon::Normal, QIcon::On);
-            d->tabBarcloseButtonIcon.addPixmap(QPixmap(
-                        QLatin1String(":/trolltech/styles/commonstyle/images/standardbutton-closetab-hover-16.png")),
-                        QIcon::Active, QIcon::Off);
+            d->tabBarcloseButtonIcon = standardIcon(QStyle::SP_DialogCloseButton, opt, widget);
         }
-
         int size = proxy()->pixelMetric(QStyle::PM_SmallIconSize);
         QIcon::Mode mode = opt->state & State_Enabled ?
                             (opt->state & State_Raised ? QIcon::Active : QIcon::Normal)
