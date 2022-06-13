@@ -783,8 +783,6 @@ set(GUI_SOURCES
     ${CMAKE_CURRENT_SOURCE_DIR}/styles/qwindowsstyle.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/styles/qcleanlooksstyle.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/styles/qstyle.qrc
-    ${CMAKE_CURRENT_SOURCE_DIR}/styles/qwindowsstyle.qrc
-    ${CMAKE_CURRENT_SOURCE_DIR}/styles/qcleanlooksstyle.qrc
     ${CMAKE_CURRENT_SOURCE_DIR}/text/qfont.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/text/qfontengine.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/text/qfontengine_ft.cpp

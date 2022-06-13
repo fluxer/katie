@@ -251,8 +251,8 @@ void QCommonStyle::drawPrimitive(PrimitiveElement pe, const QStyleOption *opt, Q
         int aft_h = mid_h;
         int aft_v = mid_v;
         static const int decoration_size = 9;
-        static QPixmap open(QLatin1String(":/trolltech/styles/commonstyle/images/tree_branch_open.png"));
-        static QPixmap closed(QLatin1String(":/trolltech/styles/commonstyle/images/tree_branch_closed.png"));
+        static QPixmap open(QLatin1String(":/trolltech/styles/images/tree_branch_open.png"));
+        static QPixmap closed(QLatin1String(":/trolltech/styles/images/tree_branch_closed.png"));
         if (opt->state & State_Children) {
             int delta = decoration_size / 2;
             bef_h -= delta;
@@ -5098,13 +5098,13 @@ QPixmap QCommonStyle::standardPixmap(StandardPixmap sp, const QStyleOption *opti
     switch (sp) {
         case SP_ToolBarHorizontalExtensionButton:
             if (rtl) {
-                QImage im(QLatin1String(":/trolltech/styles/commonstyle/images/tb_extension_arrow_h.png"));
+                QImage im(QLatin1String(":/trolltech/styles/images/tb_extension_arrow_h.png"));
                 im = im.mirrored(true, false);
                 return QPixmap::fromImage(im);
             }
-            return QPixmap(QLatin1String(":/trolltech/styles/commonstyle/images/tb_extension_arrow_h.png"));
+            return QPixmap(QLatin1String(":/trolltech/styles/images/tb_extension_arrow_h.png"));
         case SP_ToolBarVerticalExtensionButton:
-            return QPixmap(QLatin1String(":/trolltech/styles/commonstyle/images/tb_extension_arrow_v.png"));
+            return QPixmap(QLatin1String(":/trolltech/styles/images/tb_extension_arrow_v.png"));
         case SP_CommandLink:
         case SP_ArrowForward:
             if (rtl)

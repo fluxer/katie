@@ -344,31 +344,31 @@ QPixmap QWindowsStyle::standardPixmap(StandardPixmap standardpixmap, const QStyl
 {
     switch (standardpixmap) {
     case SP_TitleBarMenuButton:
-        return QPixmap(QLatin1String(":/trolltech/styles/windowsstyle/images/windows/qt_windows_menu.png"));
+        return QPixmap(QLatin1String(":/trolltech/styles/images/windows/qt_windows_menu.png"));
     case SP_TitleBarShadeButton:
-        return QPixmap(QLatin1String(":/trolltech/styles/windowsstyle/images/windows/qt_windows_shade.png"));
+        return QPixmap(QLatin1String(":/trolltech/styles/images/windows/qt_windows_shade.png"));
     case SP_TitleBarUnshadeButton:
-        return QPixmap(QLatin1String(":/trolltech/styles/windowsstyle/images/windows/qt_windows_unshade.png"));
+        return QPixmap(QLatin1String(":/trolltech/styles/images/windows/qt_windows_unshade.png"));
     case SP_TitleBarNormalButton:
-        return QPixmap(QLatin1String(":/trolltech/styles/windowsstyle/images/windows/qt_windows_normalizeup.png"));
+        return QPixmap(QLatin1String(":/trolltech/styles/images/windows/qt_windows_normalizeup.png"));
     case SP_TitleBarMinButton:
-        return QPixmap(QLatin1String(":/trolltech/styles/windowsstyle/images/windows/qt_windows_minimize.png"));
+        return QPixmap(QLatin1String(":/trolltech/styles/images/windows/qt_windows_minimize.png"));
     case SP_TitleBarMaxButton:
-        return QPixmap(QLatin1String(":/trolltech/styles/windowsstyle/images/windows/qt_windows_maximize.png"));
+        return QPixmap(QLatin1String(":/trolltech/styles/images/windows/qt_windows_maximize.png"));
     case SP_TitleBarCloseButton:
-        return QPixmap(QLatin1String(":/trolltech/styles/windowsstyle/images/windows/qt_windows_close.png"));
+        return QPixmap(QLatin1String(":/trolltech/styles/images/windows/qt_windows_close.png"));
     case SP_TitleBarContextHelpButton:
-        return QPixmap(QLatin1String(":/trolltech/styles/windowsstyle/images/windows/qt_windows_help.png"));
+        return QPixmap(QLatin1String(":/trolltech/styles/images/windows/qt_windows_help.png"));
     case SP_DockWidgetCloseButton:
-        return QPixmap(QLatin1String(":/trolltech/styles/windowsstyle/images/windows/qt_windows_dock_widget_close.png"));
+        return QPixmap(QLatin1String(":/trolltech/styles/images/windows/qt_windows_dock_widget_close.png"));
     case SP_MessageBoxInformation:
-        return QPixmap(QLatin1String(":/trolltech/styles/windowsstyle/images/windows/qt_information.png"));
+        return QPixmap(QLatin1String(":/trolltech/styles/images/windows/qt_information.png"));
     case SP_MessageBoxWarning:
-        return QPixmap(QLatin1String(":/trolltech/styles/windowsstyle/images/windows/qt_warning.png"));
+        return QPixmap(QLatin1String(":/trolltech/styles/images/windows/qt_warning.png"));
     case SP_MessageBoxCritical:
-        return QPixmap(QLatin1String(":/trolltech/styles/windowsstyle/images/windows/qt_critical.png"));
+        return QPixmap(QLatin1String(":/trolltech/styles/images/windows/qt_critical.png"));
     case SP_MessageBoxQuestion:
-        return QPixmap(QLatin1String(":/trolltech/styles/windowsstyle/images/windows/qt_question.png"));
+        return QPixmap(QLatin1String(":/trolltech/styles/images/windows/qt_question.png"));
     default:
         break;
     }
@@ -2324,6 +2324,5 @@ QSize QWindowsStyle::sizeFromContents(ContentsType ct, const QStyleOption *opt,
 QT_END_NAMESPACE
 
 #include "moc_qwindowsstyle.h"
-#include "qrc_qwindowsstyle.cpp"
 
 #endif // QT_NO_STYLE_WINDOWS
