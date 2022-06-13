@@ -68,7 +68,7 @@ void tst_QSvgRenderer::construct()
 
 void tst_QSvgRenderer::load()
 {
-    QFile file(QLatin1String(":/data/tiger.svg"));
+    QFile file(QLatin1String(SRCDIR "/data/tiger.svg"));
     if (!file.open(QFile::ReadOnly))
         QFAIL("Can not open tiger.svg");
     QByteArray data = file.readAll();
@@ -82,4 +82,3 @@ void tst_QSvgRenderer::load()
 QTEST_MAIN(tst_QSvgRenderer)
 
 #include "moc_tst_qsvgrenderer.cpp"
-#include "qrc_qsvgrenderer.cpp"
