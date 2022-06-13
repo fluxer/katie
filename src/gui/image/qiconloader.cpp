@@ -56,7 +56,7 @@ QIconLoader::QIconLoader() :
     if (m_systemTheme.isEmpty())
         m_systemTheme = fallbackTheme;
 #ifndef QT_NO_LIBRARY
-    if (iconloader()->keys().contains(QLatin1String("qsvg")))
+    if (iconloader()->keys().contains(QLatin1String("svg")))
         m_supportsSvg = true;
 #endif //QT_NO_LIBRARY
 }
