@@ -152,6 +152,7 @@ void tst_QCalendarWidget::buttonClickCheck()
     object.setGeometry(0,0,size.width(), size.height());
     object.show();
     QTest::qWaitForWindowShown(&object);
+    object.activateWindow();
 
     QDate selectedDate(2005, 1, 1);
     //click on the month buttons
