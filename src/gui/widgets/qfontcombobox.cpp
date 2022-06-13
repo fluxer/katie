@@ -55,8 +55,8 @@ public:
 QFontFamilyDelegate::QFontFamilyDelegate(QObject *parent)
     : QAbstractItemDelegate(parent)
 {
-    truetype = QIcon(QLatin1String(":/trolltech/styles/commonstyle/images/fonttruetype-16.png"));
-    bitmap = QIcon(QLatin1String(":/trolltech/styles/commonstyle/images/fontbitmap-16.png"));
+    truetype = QIcon::fromTheme(QLatin1String("application-x-font-ttf"));
+    bitmap = QIcon::fromTheme(QLatin1String("application-x-font-bdf"));
 }
 
 void QFontFamilyDelegate::paint(QPainter *painter,
