@@ -33,9 +33,6 @@
 #include "qmap.h"
 #include "qcoreapplication_p.h"
 #include "qdebug.h"
-#include "qvector.h"
-#include "qdir.h"
-#include "qfilesystementry_p.h"
 #include "qcore_unix_p.h"
 
 #include <errno.h>
@@ -135,7 +132,7 @@ QT_BEGIN_NAMESPACE
 #ifndef QT_NO_PLUGIN_CHECK
 /*
   This opens the specified library, mmaps it into memory, and searches
-  for the plugin seciton.  The advantage of this approach is that
+  for the plugin section. The advantage of this approach is that
   we can get the verification data without have to actually load the library.
   This lets us detect mismatches more safely.
 
@@ -177,9 +174,7 @@ static bool qt_unix_query(const QString &library, QLibraryPrivate *lib)
     bool ret = false;
     QT_ELF_EHDR_TYPE *ehdr = (QT_ELF_EHDR_TYPE*)(filedata);
     QT_ELF_SHDR_TYPE *shdr = (QT_ELF_SHDR_TYPE*)(filedata + ehdr->e_shoff);
-
     const char *const sh_strtab_p = filedata + shdr[ehdr->e_shstrndx].sh_offset;
-
     for (int i = 0; i < ehdr->e_shnum; ++i) {
         const char* sectioname = sh_strtab_p + shdr[i].sh_name;
         if (qstrcmp(sectioname, ".ktplugin") == 0) {
@@ -188,7 +183,6 @@ static bool qt_unix_query(const QString &library, QLibraryPrivate *lib)
             break;
         }
     }
-
 
     if (!ret) {
         lib->errorString = QLibrary::tr("Plugin verification data mismatch in '%1'").arg(library);
