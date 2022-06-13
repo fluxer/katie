@@ -90,7 +90,7 @@ void ChipTester::populateScene()
 {
     scene = new QGraphicsScene;
 
-    QImage image(":/qt4logo.png");
+    QImage image(SRCDIR "/chiptester/qt4logo.png");
 
     // Populate scene
     int xx = 0;

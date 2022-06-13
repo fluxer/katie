@@ -525,11 +525,11 @@ void tst_QGraphicsView::imageRiver()
 
     QGraphicsScene scene(0, 0, 300, 300);
 
-    QPixmap pix(QLatin1String(":/images/designer.png"));
+    QPixmap pix(QLatin1String(SRCDIR "/images/designer.png"));
     QVERIFY(!pix.isNull());
 
     QList<QGraphicsItem *> items;
-    QFile file(QLatin1String(":/random.data"));
+    QFile file(QLatin1String(SRCDIR "/random.data"));
     QVERIFY(file.open(QIODevice::ReadOnly));
     QDataStream str(&file);
     for (int i = 0; i < 50; ++i) {
@@ -634,11 +634,11 @@ void tst_QGraphicsView::textRiver()
 
     QGraphicsScene scene(0, 0, 300, 300);
 
-    QPixmap pix(QLatin1String(":/images/designer.png"));
+    QPixmap pix(QLatin1String(SRCDIR "/images/designer.png"));
     QVERIFY(!pix.isNull());
 
     QList<QGraphicsItem *> items;
-    QFile file(QLatin1String(":/random.data"));
+    QFile file(QLatin1String(SRCDIR "/random.data"));
     QVERIFY(file.open(QIODevice::ReadOnly));
     QDataStream str(&file);
     for (int i = 0; i < 50; ++i) {
@@ -733,11 +733,11 @@ void tst_QGraphicsView::moveItemCache()
 
     QGraphicsScene scene(0, 0, 300, 300);
 
-    QPixmap pix(QLatin1String(":/images/wine.png"));
+    QPixmap pix(QLatin1String(SRCDIR "/images/wine.png"));
     QVERIFY(!pix.isNull());
 
     QList<QGraphicsItem *> items;
-    QFile file(QLatin1String(":/random.data"));
+    QFile file(QLatin1String(SRCDIR "/random.data"));
     QVERIFY(file.open(QIODevice::ReadOnly));
     QDataStream str(&file);
     for (int i = 0; i < 5; ++i) {
@@ -822,19 +822,17 @@ void tst_QGraphicsView::paintItemCache_data()
 
 void tst_QGraphicsView::paintItemCache()
 {
-    Q_INIT_RESOURCE(qgraphicsview);
-
     QFETCH(bool, updatePartial);
     QFETCH(bool, rotation);
     QFETCH(int, cacheMode);
 
     QGraphicsScene scene(0, 0, 300, 300);
 
-    QPixmap pix(QLatin1String(":/images/wine.png"));
+    QPixmap pix(QLatin1String(SRCDIR "/images/wine.png"));
     QVERIFY(!pix.isNull());
 
     QList<QGraphicsItem *> items;
-    QFile file(QLatin1String(":/random.data"));
+    QFile file(QLatin1String(SRCDIR "/random.data"));
     QVERIFY(file.open(QIODevice::ReadOnly));
     QDataStream str(&file);
     UpdatedPixmapCacheItem *item = new UpdatedPixmapCacheItem(updatePartial);
@@ -845,7 +843,7 @@ void tst_QGraphicsView::paintItemCache()
     item->setPos(-100, -100);
     scene.addItem(item);
 
-    QPixmap pix2(QLatin1String(":/images/wine-big.png"));
+    QPixmap pix2(QLatin1String(SRCDIR "/images/wine-big.png"));
     item = new UpdatedPixmapCacheItem(updatePartial);
     item->setPixmap(pix2);
     item->setCacheMode((QGraphicsItem::CacheMode)cacheMode);
@@ -876,4 +874,3 @@ void tst_QGraphicsView::paintItemCache()
 QTEST_MAIN(tst_QGraphicsView)
 
 #include "moc_tst_qgraphicsview.cpp"
-#include "qrc_qgraphicsview.cpp"

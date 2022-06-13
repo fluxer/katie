@@ -59,7 +59,7 @@ private:
 
 tst_SunSpider::tst_SunSpider()
 {
-    testsDir = QDir(QLatin1String(":/tests"));
+    testsDir = QDir(QLatin1String(SRCDIR "/tests"));
     if (!testsDir.exists())
         qWarning("*** no tests/ dir!");
 }
@@ -105,4 +105,3 @@ void tst_SunSpider::benchmark()
 QTEST_MAIN(tst_SunSpider)
 
 #include "moc_tst_sunspider.cpp"
-#include "qrc_sunspider.cpp"

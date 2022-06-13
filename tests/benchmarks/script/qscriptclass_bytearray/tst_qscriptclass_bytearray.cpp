@@ -54,7 +54,7 @@ private:
 
 tst_QScriptClass_ByteArray::tst_QScriptClass_ByteArray()
 {
-    testsDir = QDir(QLatin1String(":/tests"));
+    testsDir = QDir(QLatin1String(SRCDIR "/tests"));
     if (!testsDir.exists())
         qWarning("*** no tests/ dir!");
 }
@@ -88,4 +88,3 @@ void tst_QScriptClass_ByteArray::benchmark()
 QTEST_MAIN(tst_QScriptClass_ByteArray)
 
 #include "moc_tst_qscriptclass_bytearray.cpp"
-#include "qrc_qscriptclass_bytearray.cpp"

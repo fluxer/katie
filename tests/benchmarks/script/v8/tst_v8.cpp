@@ -58,7 +58,7 @@ private:
 
 tst_V8::tst_V8()
 {
-    testsDir = QDir(QLatin1String(":/tests"));
+    testsDir = QDir(QLatin1String(SRCDIR "/tests"));
     if (!testsDir.exists())
         qWarning("*** no tests/ dir!");
 }
@@ -114,4 +114,3 @@ void tst_V8::benchmark()
 QTEST_MAIN(tst_V8)
 
 #include "moc_tst_v8.cpp"
-#include "qrc_v8.cpp"
