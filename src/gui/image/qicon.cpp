@@ -660,7 +660,7 @@ void QIcon::detach()
 {
     if (d) {
         if (d->ref != 1) {
-            QIconPrivate *x = new QIconPrivate;
+            QIconPrivate *x = new QIconPrivate();
             x->engine = d->engine->clone();
             if (!d->ref.deref())
                 delete d;
@@ -684,8 +684,8 @@ void QIcon::addPixmap(const QPixmap &pixmap, Mode mode, State state)
     if (pixmap.isNull())
         return;
     if (!d) {
-        d = new QIconPrivate;
-        d->engine = new QPixmapIconEngine;
+        d = new QIconPrivate();
+        d->engine = new QPixmapIconEngine();
     } else {
         detach();
     }
@@ -728,7 +728,7 @@ void QIcon::addFile(const QString &fileName, const QSize &size, Mode mode, State
         if (!suffix.isEmpty()) {
             if (QIconEnginePlugin *plugin = qobject_cast<QIconEnginePlugin*>(iconloader()->instance(suffix))) {
                 if (QIconEngine *engine = plugin->create(fileName)) {
-                    d = new QIconPrivate;
+                    d = new QIconPrivate();
                     d->engine = engine;
                 }
             }
@@ -736,8 +736,8 @@ void QIcon::addFile(const QString &fileName, const QSize &size, Mode mode, State
 #endif
         // ...then fall back to the default engine
         if (!d) {
-            d = new QIconPrivate;
-            d->engine = new QPixmapIconEngine;
+            d = new QIconPrivate();
+            d->engine = new QPixmapIconEngine();
         }
     } else {
         detach();
@@ -945,19 +945,19 @@ QDataStream &operator>>(QDataStream &s, QIcon &icon)
     QString key;
     s >> key;
     if (key == QLatin1String("QPixmapIconEngine")) {
-        icon.d = new QIconPrivate;
-        QIconEngine *engine = new QPixmapIconEngine;
+        icon.d = new QIconPrivate();
+        QIconEngine *engine = new QPixmapIconEngine();
         icon.d->engine = engine;
         engine->read(s);
     } else if (key == QLatin1String("QIconLoaderEngine")) {
-        icon.d = new QIconPrivate;
+        icon.d = new QIconPrivate();
         QIconEngine *engine = new QIconLoaderEngine();
         icon.d->engine = engine;
         engine->read(s);
 #if !defined (QT_NO_LIBRARY)
     } else if (QIconEnginePlugin *plugin = qobject_cast<QIconEnginePlugin*>(iconloader()->instance(key))) {
         if (QIconEngine *engine= plugin->create()) {
-            icon.d = new QIconPrivate;
+            icon.d = new QIconPrivate();
             icon.d->engine = engine;
             engine->read(s);
         }
