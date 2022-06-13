@@ -243,6 +243,7 @@ QFontComboBox::QFontComboBox(QWidget *parent)
     connect(this, SIGNAL(currentIndexChanged(QString)),
             this, SLOT(_q_currentChanged(QString)));
 
+    d->_q_updateModel();
     connect(qApp, SIGNAL(fontDatabaseChanged()),
             this, SLOT(_q_updateModel()));
 }
