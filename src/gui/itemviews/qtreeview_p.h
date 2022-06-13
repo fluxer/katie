@@ -58,7 +58,7 @@ struct QTreeViewItem
 
 Q_DECLARE_TYPEINFO(QTreeViewItem, Q_MOVABLE_TYPE);
 
-class Q_GUI_EXPORT QTreeViewPrivate : public QAbstractItemViewPrivate
+class Q_AUTOTEST_EXPORT QTreeViewPrivate : public QAbstractItemViewPrivate
 {
     Q_DECLARE_PUBLIC(QTreeView)
 public:

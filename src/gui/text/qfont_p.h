@@ -99,7 +99,7 @@ struct QFontDef
     }
 };
 
-class Q_GUI_EXPORT QFontPrivate
+class QFontPrivate
 {
 public:
     QFontPrivate();

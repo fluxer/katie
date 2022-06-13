@@ -22,7 +22,6 @@
 
 #include <QtTest/QtTest>
 #include <qkeysequence.h>
-#include <qapplication_p.h>
 #include <qkeysequence_p.h>
 #include <qdebug.h>
 
