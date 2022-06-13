@@ -5096,6 +5096,15 @@ QPixmap QCommonStyle::standardPixmap(StandardPixmap sp, const QStyleOption *opti
     }
 
     switch (sp) {
+        case SP_ToolBarHorizontalExtensionButton:
+            if (rtl) {
+                QImage im(QLatin1String(":/trolltech/styles/commonstyle/images/tb_extension_arrow_h.png"));
+                im = im.mirrored(true, false);
+                return QPixmap::fromImage(im);
+            }
+            return QPixmap(QLatin1String(":/trolltech/styles/commonstyle/images/tb_extension_arrow_h.png"));
+        case SP_ToolBarVerticalExtensionButton:
+            return QPixmap(QLatin1String(":/trolltech/styles/commonstyle/images/tb_extension_arrow_v.png"));
         case SP_CommandLink:
         case SP_ArrowForward:
             if (rtl)
