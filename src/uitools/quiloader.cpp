@@ -602,7 +602,7 @@ QUiLoader::QUiLoader(QObject *parent)
 
     QStringList paths;
 #ifndef QT_NO_LIBRARY
-    foreach (const QString &path, QApplication::libraryPaths()) {
+    foreach (const QString &path, QApplication::pluginPaths()) {
         QString libPath = path;
         libPath  += QDir::separator();
         libPath  += QLatin1String("designer");
