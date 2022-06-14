@@ -256,24 +256,16 @@ QByteArray QLocalePrivate::bcp47Name() const
     const int totallen = langlen + scriptlen + countrylen + (script ? 1 : 0) + (country ? 1 : 0);
 
     QSTACKARRAY(char, bcp, totallen);
-    int datapos = 0;
-    for (int i = 0; i < langlen; i++) {
-        bcp[datapos] = lang[i];
-        datapos++;
-    }
+    int datapos = langlen;
+    ::memcpy(bcp, lang, langlen * sizeof(char));
     if (script) {
         bcp[datapos++] = '-';
-        for (int i = 0; i < scriptlen; i++) {
-            bcp[datapos] = script[i];
-            datapos++;
-        }
+        ::memcpy(bcp + datapos, script, scriptlen * sizeof(char));
+        datapos += scriptlen;
     }
     if (country) {
         bcp[datapos++] = '-';
-        for (int i = 0; i < countrylen; i++) {
-            bcp[datapos] = country[i];
-            datapos++;
-        }
+        ::memcpy(bcp + datapos, country, countrylen * sizeof(char));
     }
 
     return QByteArray(bcp, totallen);
