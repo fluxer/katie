@@ -2474,8 +2474,7 @@ void QWidgetPrivate::setGeometry_sys(int x, int y, int w, int h, bool isMove)
             // repaint everything anyways, but that's not the case with static contents.
             const bool setTopLevelResize = !slowResize && q->isWindow() && extra && extra->topextra
                                            && !extra->topextra->inTopLevelResize
-                                           && (!extra->topextra->backingStore
-                                               || !extra->topextra->backingStore->hasStaticContents());
+                                           && !extra->topextra->backingStore;
             if (setTopLevelResize)
                 extra->topextra->inTopLevelResize = true;
             QResizeEvent e(q->size(), oldSize);

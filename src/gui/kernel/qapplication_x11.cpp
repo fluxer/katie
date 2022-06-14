@@ -3337,14 +3337,7 @@ bool QETWidget::translateConfigEvent(const XEvent *event)
     if (wasResize) {
         if (isVisible() && data->crect.size() != oldSize) {
             Q_ASSERT(d->extra->topextra);
-            QWidgetBackingStore *bs = d->extra->topextra->backingStore.data();
-            const bool hasStaticContents = bs && bs->hasStaticContents();
-            // If we have a backing store with static contents, we have to disable the top-level
-            // resize optimization in order to get invalidated regions for resized widgets.
-            // The optimization discards all invalidateBuffer() calls since we're going to
-            // repaint everything anyways, but that's not the case with static contents.
-            if (!hasStaticContents)
-                d->extra->topextra->inTopLevelResize = true;
+            d->extra->topextra->inTopLevelResize = true;
             QResizeEvent e(data->crect.size(), oldSize);
             QApplication::sendSpontaneousEvent(this, &e);
         }
@@ -3352,10 +3345,7 @@ bool QETWidget::translateConfigEvent(const XEvent *event)
         const bool waitingForMapNotify = d->extra->topextra && d->extra->topextra->waitingForMapNotify;
         if (!waitingForMapNotify) {
             if (d->paintOnScreen()) {
-                QRegion updateRegion(rect());
-                if (testAttribute(Qt::WA_StaticContents))
-                    updateRegion -= QRect(0, 0, oldSize.width(), oldSize.height());
-                d->syncBackingStore(updateRegion);
+                d->syncBackingStore(rect());
             } else {
                 d->syncBackingStore();
             }

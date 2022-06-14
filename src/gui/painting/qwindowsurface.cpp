@@ -37,7 +37,6 @@ public:
 
     QWidget *window;
     QRect geometry;
-    QRegion staticContents;
 };
 
 /*!
@@ -165,21 +164,6 @@ QPoint QWindowSurface::offset(const QWidget *widget) const
   Returns the rectangle for \a widget in the coordinates of this
   window surface.
 */
-
-void QWindowSurface::setStaticContents(const QRegion &region)
-{
-    d_ptr->staticContents = region;
-}
-
-QRegion QWindowSurface::staticContents() const
-{
-    return d_ptr->staticContents;
-}
-
-bool QWindowSurface::hasStaticContents() const
-{
-    return !d_ptr->staticContents.isEmpty();
-}
 
 void qt_scrollRectInImage(QImage *img, const QRect &rect, const QPoint &offset)
 {

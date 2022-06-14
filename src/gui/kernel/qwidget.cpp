@@ -1136,8 +1136,6 @@ QWidget::~QWidget()
 
     if (QWidgetBackingStore *bs = d->maybeBackingStore()) {
         bs->removeDirtyWidget(this);
-        if (testAttribute(Qt::WA_StaticContents))
-            bs->removeStaticWidget(this);
     }
 
     delete d->needsFlush;
@@ -8452,9 +8450,6 @@ void QWidget::setParent(QWidget *parent, Qt::WindowFlags f)
     if (QWidgetBackingStore *oldBs = oldtlw->d_func()->maybeBackingStore()) {
         if (newParent)
             oldBs->removeDirtyWidget(this);
-        // Move the widget and all its static children from
-        // the old backing store to the new one.
-        oldBs->moveStaticWidgets(this);
     }
 
     if (QApplication::testAttribute(Qt::AA_ImmediateWidgetCreation)
@@ -8922,15 +8917,6 @@ void QWidget::setAttribute(Qt::WidgetAttribute attribute, bool on)
     }
 #endif
 
-    case Qt::WA_StaticContents: {
-        if (QWidgetBackingStore *bs = d->maybeBackingStore()) {
-            if (on)
-                bs->addStaticWidget(this);
-            else
-                bs->removeStaticWidget(this);
-        }
-        break;
-    }
     case Qt::WA_TranslucentBackground: {
         if (on) {
             setAttribute(Qt::WA_NoSystemBackground);

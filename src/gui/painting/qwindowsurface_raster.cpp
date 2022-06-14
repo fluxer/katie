@@ -194,37 +194,6 @@ void QRasterWindowSurface::prepareBuffer(QImage::Format format)
 
     d->image = new QImage(width, height, format);
 
-    if (oldImage && hasStaticContents()) {
-        const uchar *src = oldImage->constBits();
-        uchar *dst = d->image->bits();
-
-        const int srcBytesPerLine = oldImage->bytesPerLine();
-        const int dstBytesPerLine = d->image->bytesPerLine();
-        const int bytesPerPixel = oldImage->depth() >> 3;
-
-        QRegion staticRegion(staticContents());
-        // Make sure we're inside the boundaries of the old image.
-        staticRegion &= QRect(0, 0, oldImage->width(), oldImage->height());
-
-        // Copy the static content of the old image into the new one.
-        foreach(const QRect &srcRect, staticRegion.rects()) {
-            const int bytesOffset = srcRect.x() * bytesPerPixel;
-            const int dy = srcRect.y();
-
-            // Adjust src and dst to point to the right offset.
-            const uchar *s = src + dy * srcBytesPerLine + bytesOffset;
-            uchar *d = dst + dy * dstBytesPerLine + bytesOffset;
-            const int numBytes = srcRect.width() * bytesPerPixel;
-
-            int numScanLinesLeft = srcRect.height();
-            do {
-                ::memcpy(d, s, numBytes);
-                d += dstBytesPerLine;
-                s += srcBytesPerLine;
-            } while (--numScanLinesLeft);
-        };
-    }
-
     delete oldImage;
 }
 

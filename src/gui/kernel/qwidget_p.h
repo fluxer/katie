@@ -181,7 +181,6 @@ struct QWExtra {
     qint32 maxh; // maximum size
     quint16 customDpiX;
     quint16 customDpiY;
-    QSize staticContentsSize;
 
     // *************************** Cross-platform bit fields ****************************
     Qt::Orientations explicitMinSize;

@@ -80,7 +80,6 @@ private:
     QRegion dirty; // needsRepaint
     QVector<QWidget *> dirtyWidgets;
     QVector<QWidget *> dirtyOnScreenWidgets;
-    QList<QWidget *> staticWidgets;
     QWindowSurface *windowSurface;
 
     QPoint tlwOffset;
@@ -92,8 +91,6 @@ private:
 
     void beginPaint(QRegion &toClean, QWindowSurface *windowSurface, BeginPaintInfo *returnInfo);
     void endPaint(const QRegion &cleaned, QWindowSurface *windowSurface, BeginPaintInfo *beginPaintInfo);
-
-    QRegion staticContents(QWidget *widget, const QRect &withinClipRect) const;
 
     void markDirtyOnScreen(const QRegion &dirtyOnScreen, QWidget *widget, const QPoint &topLevelOffset);
 
@@ -121,41 +118,6 @@ private:
         for (int i = 0; i < dirtyWidgets.size(); ++i) {
             if (dirtyWidgets.at(i) == widget)
                 dirtyWidgets.remove(i);
-        }
-    }
-
-    inline void addStaticWidget(QWidget *widget)
-    {
-        if (!widget)
-            return;
-
-        Q_ASSERT(widget->testAttribute(Qt::WA_StaticContents));
-        if (!staticWidgets.contains(widget))
-            staticWidgets.append(widget);
-    }
-
-    inline void removeStaticWidget(QWidget *widget)
-    { staticWidgets.removeAll(widget); }
-
-    // Move the reparented widget and all its static children from this backing store
-    // to the new backing store if reparented into another top-level / backing store.
-    inline void moveStaticWidgets(QWidget *reparented)
-    {
-        Q_ASSERT(reparented);
-        QWidgetBackingStore *newBs = reparented->d_func()->maybeBackingStore();
-        if (newBs == this)
-            return;
-
-        int i = 0;
-        while (i < staticWidgets.size()) {
-            QWidget *w = staticWidgets.at(i);
-            if (reparented == w || reparented->isAncestorOf(w)) {
-                staticWidgets.removeAt(i);
-                if (newBs)
-                    newBs->addStaticWidget(w);
-            } else {
-                ++i;
-            }
         }
     }
 
@@ -190,19 +152,6 @@ private:
             widget->d_func()->dirty = QRegion();
         }
     }
-
-    inline void updateStaticContentsSize()
-    {
-        for (int i = 0; i < staticWidgets.size(); ++i) {
-            QWidgetPrivate *wd = staticWidgets.at(i)->d_func();
-            if (!wd->extra)
-                wd->createExtra();
-            wd->extra->staticContentsSize = wd->data.crect.size();
-        }
-    }
-
-    inline bool hasStaticContents() const
-    { return !staticWidgets.isEmpty(); }
 
     friend class QWidgetPrivate;
     friend class QWidget;

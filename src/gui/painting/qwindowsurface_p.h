@@ -70,12 +70,6 @@ public:
     QPoint offset(const QWidget *widget) const;
     inline QRect rect(const QWidget *widget) const;
 
-    void setStaticContents(const QRegion &region);
-    QRegion staticContents() const;
-
-protected:
-    bool hasStaticContents() const;
-
 private:
     QWindowSurfacePrivate *d_ptr;
 };

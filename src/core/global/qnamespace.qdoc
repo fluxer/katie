@@ -819,11 +819,6 @@
     \value WA_ShowModal \e{This attribute has been deprecated.} Use
     QWidget::windowModality instead.
 
-    \value WA_StaticContents Indicates that the widget contents are north-west
-    aligned and static. On resize, such a widget will receive paint events only
-    for parts of itself that are newly visible. This flag is set or cleared by
-    the widget's author.
-
     \value WA_StyleSheet Indicates that the widget is styled using a
     \l{Qt Style Sheets}{style sheet}.
 
