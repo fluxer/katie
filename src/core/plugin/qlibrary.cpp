@@ -34,7 +34,6 @@
 #include "qcoreapplication_p.h"
 #include "qdebug.h"
 #include "qcore_unix_p.h"
-#include "qstdcontainers_p.h"
 
 #include <errno.h>
 
@@ -235,7 +234,7 @@ static QString qt_find_library(const QString &fileName)
 }
 
 
-class QLibraryCleanup : public QStdVector<QLibraryPrivate*>
+class QLibraryCleanup : public QList<QLibraryPrivate*>
 {
 public:
     ~QLibraryCleanup();
