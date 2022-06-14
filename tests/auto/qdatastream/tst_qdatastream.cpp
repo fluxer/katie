@@ -2973,10 +2973,6 @@ void tst_QDataStream::floatingPointNaN()
 
     // Test and verify that values that become (s)nan's after swapping endianness
     // don't change in the process.
-    // When compiling with e.g., MSVC (32bit) and when the fpu is used (fp:precise)
-    // all snan's will be converted to qnan's (default behavior).
-    // IF we get a snan after swapping endianness we can not copy the value to another
-    // float as this will cause the value to differ from the original value.
     QByteArray ba;
 
     union {

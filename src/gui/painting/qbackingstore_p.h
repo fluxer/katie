@@ -68,7 +68,6 @@ public:
         return !(dirtyWidgets.isEmpty() && dirty.isEmpty());
     }
 
-    // ### Qt 4.6: Merge into a template function (after MSVC isn't supported anymore).
     void markDirty(const QRegion &rgn, QWidget *widget, bool updateImmediately = false,
                    bool invalidateBuffer = false);
     void markDirty(const QRect &rect, QWidget *widget, bool updateImmediately = false,

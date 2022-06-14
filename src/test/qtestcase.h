@@ -253,8 +253,7 @@ namespace QTest
         return compare_string_helper(t1, t2, actual, expected, file, line);
     }
 
-    /* The next two specializations are for MSVC that shows problems with implicit
-       conversions
+    /* The specializations bellow are for problems with implicit conversions
      */
     template<>
     inline bool qCompare(char *t1, const char *t2, const char *actual,
@@ -269,7 +268,6 @@ namespace QTest
         return compare_string_helper(t1, t2, actual, expected, file, line);
     }
 
-    // NokiaX86 and RVCT do not like implicitly comparing bool with int
     template <>
     inline bool qCompare(bool const &t1, int const &t2,
                     const char *actual, const char *expected, const char *file, int line)

@@ -339,7 +339,6 @@ public:
     void moveRect(const QRect &, int dx, int dy);
     void scrollRect(const QRect &, int dx, int dy);
     void invalidateBuffer_resizeHelper(const QPoint &oldPos, const QSize &oldSize);
-    // ### Qt 4.6: Merge into a template function (after MSVC isn't supported anymore).
     void invalidateBuffer(const QRegion &);
     void invalidateBuffer(const QRect &);
     bool isOverlapped(const QRect&) const;

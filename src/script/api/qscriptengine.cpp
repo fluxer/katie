@@ -3673,9 +3673,7 @@ QStringList QScriptEngine::importedExtensions() const
 
     This function is equivalent to QScriptEngine::toScriptValue().
 
-    \note This function was provided as a workaround for MSVC 6
-    which did not support member template functions. It is advised
-    to use the other form in new code.
+    \note It is advised to use the other form in new code.
 
     \sa QScriptEngine::toScriptValue(), qscriptvalue_cast()
 */
@@ -3690,9 +3688,7 @@ QStringList QScriptEngine::importedExtensions() const
 
     This function is equivalent to QScriptEngine::fromScriptValue().
 
-    \note This function was provided as a workaround for MSVC 6
-    which did not support member template functions. It is advised
-    to use the other form in new code.
+    \note It is advised to use the other form in new code.
 
     \sa QScriptEngine::fromScriptValue()
 */

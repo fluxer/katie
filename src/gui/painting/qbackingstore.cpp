@@ -255,8 +255,6 @@ static inline void sendUpdateRequest(QWidget *widget, bool updateImmediately)
 
     If the widget paints directly on screen, the event is sent to the widget
     instead of the top-level widget, and invalidateBuffer is completely ignored.
-
-    ### Qt 4.6: Merge into a template function (after MSVC isn't supported anymore).
 */
 void QWidgetBackingStore::markDirty(const QRegion &rgn, QWidget *widget, bool updateImmediately,
                                     bool invalidateBuffer)
@@ -338,8 +336,6 @@ void QWidgetBackingStore::markDirty(const QRegion &rgn, QWidget *widget, bool up
     This function is equivalent to calling markDirty(QRegion(rect), ...), but
     is more efficient as it eliminates QRegion operations/allocations and can
     use the rect more precisely for additional cut-offs.
-
-    ### Qt 4.6: Merge into a template function (after MSVC isn't supported anymore).
 */
 void QWidgetBackingStore::markDirty(const QRect &rect, QWidget *widget, bool updateImmediately,
                                     bool invalidateBuffer)
@@ -935,8 +931,6 @@ void QWidgetPrivate::invalidateBuffer_resizeHelper(const QPoint &oldPos, const Q
     Invalidates the \a rgn (in widget's coordinates) of the backing store, i.e.
     all widgets intersecting with the region will be repainted when the backing store
     is synced.
-
-    ### Qt 4.6: Merge into a template function (after MSVC isn't supported anymore).
 */
 void QWidgetPrivate::invalidateBuffer(const QRegion &rgn)
 {
@@ -960,8 +954,6 @@ void QWidgetPrivate::invalidateBuffer(const QRegion &rgn)
     This function is equivalent to calling invalidateBuffer(QRegion(rect), ...), but
     is more efficient as it eliminates QRegion operations/allocations and can
     use the rect more precisely for additional cut-offs.
-
-    ### Qt 4.6: Merge into a template function (after MSVC isn't supported anymore).
 */
 void QWidgetPrivate::invalidateBuffer(const QRect &rect)
 {
