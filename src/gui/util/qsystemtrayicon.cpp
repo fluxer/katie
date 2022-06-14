@@ -592,6 +592,7 @@ void QBalloonTip::timerEvent(QTimerEvent *e)
 {
     if (e->timerId() == timerId) {
         killTimer(timerId);
+        timerId = -1;
         if (!underMouse())
             close();
         return;
