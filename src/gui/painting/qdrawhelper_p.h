@@ -370,21 +370,36 @@ inline quint16 qt_colorConvert(const quint32 color, const quint16 dummy)
 }
 
 template <class T>
+void qt_memfill(T *dest, const T color, int count);
+
+template<>
+inline void qt_memfill(quint32 *dest, const quint32 color, int count)
+{
+    Q_ASSERT(sizeof(quint32) == sizeof(wchar_t));
+    ::wmemset((wchar_t*)dest, (const wchar_t)color, count);
+}
+
+template<>
+inline void qt_memfill(quint16 *dest, const quint16 color, int count)
+{
+    do {
+        *dest++ = color;
+    } while (--count > 0);
+}
+
+template<>
+inline void qt_memfill(quint8 *dest, quint8 color, int count)
+{
+    ::memset(dest, color, count);
+}
+
+template <class T>
 inline void qt_memfill(T *dest, const T color, int count)
 {
-    int n = (count + 7) / 8;
-    switch (count & 0x07)
-    {
-    case 0: do { *dest++ = color;
-        case 7:      *dest++ = color;
-        case 6:      *dest++ = color;
-        case 5:      *dest++ = color;
-        case 4:      *dest++ = color;
-        case 3:      *dest++ = color;
-        case 2:      *dest++ = color;
-        case 1:      *dest++ = color;
-        } while (--n > 0);
-    }
+    Q_ASSERT(false);
+    Q_UNUSED(dest);
+    Q_UNUSED(color);
+    Q_UNUSED(count);
 }
 
 template <class T>
