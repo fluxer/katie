@@ -101,6 +101,11 @@ void Q_CORE_EXPORT qt_call_post_routines()
     }
 }
 
+Q_AUTOTEST_EXPORT uint qGlobalPostedEventsCount()
+{
+    QThreadData *currentThreadData = QThreadData::current();
+    return currentThreadData->postEventList.size() - currentThreadData->postEventList.startOffset;
+}
 
 // app starting up if false
 bool QCoreApplicationPrivate::is_app_running = false;
