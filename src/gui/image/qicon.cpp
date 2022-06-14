@@ -722,10 +722,16 @@ void QIcon::addFile(const QString &fileName, const QSize &size, Mode mode, State
     if (fileName.isEmpty())
         return;
     if (!d) {
+        const QFileInfo info(fileName);
+        const QString suffix = info.suffix().toLower();
+
+        if (suffix == QLatin1String("png")) {
+            d = new QIconPrivate();
+            d->engine = new QPixmapIconEngine();
+        }
+
 #if !defined (QT_NO_LIBRARY)
-        QFileInfo info(fileName);
-        QString suffix = info.suffix();
-        if (!suffix.isEmpty()) {
+        if (!d && !suffix.isEmpty()) {
             if (QIconEnginePlugin *plugin = qobject_cast<QIconEnginePlugin*>(iconloader()->instance(suffix))) {
                 if (QIconEngine *engine = plugin->create(fileName)) {
                     d = new QIconPrivate();
