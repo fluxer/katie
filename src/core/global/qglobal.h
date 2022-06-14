@@ -708,7 +708,9 @@ template <typename Wrapper> static inline typename Wrapper::pointer qGetPtrHelpe
 */
 #define Q_DISABLE_COPY(Class) \
     Class(const Class &) = delete; \
-    Class &operator=(const Class &) = delete;
+    Class(const Class &&) = delete; \
+    Class &operator=(const Class &) = delete; \
+    Class &operator=(const Class &&) = delete;
 
 class QByteArray;
 Q_CORE_EXPORT QByteArray qgetenv(const char *varName);
