@@ -37,6 +37,7 @@
 #include "qsize.h"
 #include "qpoint.h"
 #include "qrect.h"
+#include "qstdcontainers_p.h"
 
 QT_BEGIN_NAMESPACE
 
@@ -48,7 +49,7 @@ struct QSettingsFormat
     QSettingsWriteFunc writeFunc;
 };
 
-typedef QVector<QSettings*> QSettingsVector;
+typedef QStdVector<QSettings*> QSettingsVector;
 Q_GLOBAL_STATIC(QSettingsVector, qGlobalSettings)
 Q_GLOBAL_STATIC(QMutex, qSettingsMutex)
 

@@ -45,6 +45,7 @@
 #include "qlocale_p.h"
 #include "qeventdispatcher_unix_p.h"
 #include "qcorecommon_p.h"
+#include "qstdcontainers_p.h"
 
 #include <stdlib.h>
 
@@ -72,30 +73,24 @@ bool QCoreApplicationPrivate::checkInstance(const char *function)
     return true;
 }
 
-typedef QList<QtCleanUpFunction> QVFuncList;
-Q_GLOBAL_STATIC(QVFuncList, postRList)
+typedef QStdVector<QtCleanUpFunction> QVFuncList;
+Q_GLOBAL_STATIC(QVFuncList, qGlobalCleanupList)
 
 void qAddPostRoutine(QtCleanUpFunction p)
 {
-    QVFuncList *list = postRList();
-    if (!list)
-        return;
+    QVFuncList *list = qGlobalCleanupList();
     list->prepend(p);
 }
 
 void qRemovePostRoutine(QtCleanUpFunction p)
 {
-    QVFuncList *list = postRList();
-    if (!list)
-        return;
+    QVFuncList *list = qGlobalCleanupList();
     list->removeAll(p);
 }
 
 void Q_CORE_EXPORT qt_call_post_routines()
 {
-    QVFuncList *list = postRList();
-    if (!list)
-        return;
+    QVFuncList *list = qGlobalCleanupList();
     while (!list->isEmpty())
         (list->takeFirst())();
 }

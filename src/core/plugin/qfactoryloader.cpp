@@ -30,11 +30,12 @@
 #include "qpluginloader.h"
 #include "qcoreapplication_p.h"
 #include "qlibrary_p.h"
+#include "qstdcontainers_p.h"
 
 QT_BEGIN_NAMESPACE
 
 Q_GLOBAL_STATIC(QMutex, qGlobalFactoryLoaderMutex);
-Q_GLOBAL_STATIC(QList<QFactoryLoader*>, qGlobalFactoryLoaders)
+Q_GLOBAL_STATIC(QStdVector<QFactoryLoader*>, qGlobalFactoryLoaders)
 
 class QFactoryLoaderPrivate
 {
@@ -155,10 +156,11 @@ QObject *QFactoryLoader::instance(const QString &key)
 void QFactoryLoader::refreshAll()
 {
     QMutexLocker locker(qGlobalFactoryLoaderMutex());
-    QList<QFactoryLoader *> *loaders = qGlobalFactoryLoaders();
-    for (QList<QFactoryLoader *>::const_iterator it = loaders->constBegin();
-         it != loaders->constEnd(); ++it) {
+    QStdVector<QFactoryLoader*> *loaders = qGlobalFactoryLoaders();
+    QStdVector<QFactoryLoader *>::const_iterator it = loaders->constBegin();
+    while (it != loaders->constEnd()) {
         (*it)->update();
+        it++;
     }
 }
 

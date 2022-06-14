@@ -34,6 +34,7 @@
 #include "qcoreapplication_p.h"
 #include "qdebug.h"
 #include "qcore_unix_p.h"
+#include "qstdcontainers_p.h"
 
 #include <errno.h>
 
@@ -234,7 +235,7 @@ static QString qt_find_library(const QString &fileName)
 }
 
 
-class QLibraryCleanup : public QList<QLibraryPrivate*>
+class QLibraryCleanup : public QStdVector<QLibraryPrivate*>
 {
 public:
     ~QLibraryCleanup();
@@ -284,9 +285,9 @@ bool QLibraryPrivate::unload()
         if (qt_debug_component()) {
             qWarning() << "QLibraryPrivate::unload succeeded on" << fileName;
         }
-        pHnd = 0;
+        pHnd = nullptr;
     }
-    return (pHnd == 0);
+    return (pHnd == nullptr);
 }
 
 void *QLibraryPrivate::resolve(const char *symbol)

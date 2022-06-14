@@ -36,6 +36,7 @@
 #include "qabstractfileengine_p.h"
 #include "qfilesystemmetadata_p.h"
 #include "qcore_unix_p.h"
+#include "qstdcontainers_p.h"
 
 //#define DEBUG_RESOURCE_MATCH
 
@@ -108,12 +109,10 @@ protected:
     }
 };
 
-Q_DECLARE_TYPEINFO(QResourceRoot, Q_MOVABLE_TYPE);
-
 static std::recursive_mutex qGlobalResourceMutex;
 
-typedef QList<QResourceRoot*> ResourceList;
-Q_GLOBAL_STATIC(ResourceList, resourceList)
+typedef QStdVector<QResourceRoot*> ResourceList;
+Q_GLOBAL_STATIC(ResourceList, qGlobalResourceList)
 
 /*!
     \class QResource
@@ -212,7 +211,7 @@ QResourcePrivate::load(const QString &file)
 {
     related.clear();
     std::lock_guard<std::recursive_mutex> lock(qGlobalResourceMutex);
-    const ResourceList *list = resourceList();
+    const ResourceList *list = qGlobalResourceList();
     QString cleaned = QDir::cleanPath(file);
     for(int i = 0; i < list->size(); ++i) {
         QResourceRoot *res = list->at(i);
@@ -698,11 +697,11 @@ Q_CORE_EXPORT bool qRegisterResourceData(int version, const unsigned char *tree,
                                          const unsigned char *name, const unsigned char *data)
 {
     std::lock_guard<std::recursive_mutex> lock(qGlobalResourceMutex);
-    if(version == Q_RCC_OUTPUT_REVISION && resourceList()) {
+    if(version == Q_RCC_OUTPUT_REVISION && qGlobalResourceList()) {
         bool found = false;
         QResourceRoot res(tree, name, data);
-        for(int i = 0; i < resourceList()->size(); ++i) {
-            if(*resourceList()->at(i) == res) {
+        for(int i = 0; i < qGlobalResourceList()->size(); ++i) {
+            if(*qGlobalResourceList()->at(i) == res) {
                 found = true;
                 break;
             }
@@ -710,7 +709,7 @@ Q_CORE_EXPORT bool qRegisterResourceData(int version, const unsigned char *tree,
         if(!found) {
             QResourceRoot *root = new QResourceRoot(tree, name, data);
             root->ref.ref();
-            resourceList()->append(root);
+            qGlobalResourceList()->append(root);
         }
         return true;
     }
@@ -721,11 +720,11 @@ Q_CORE_EXPORT bool qUnregisterResourceData(int version, const unsigned char *tre
                                            const unsigned char *name, const unsigned char *data)
 {
     std::lock_guard<std::recursive_mutex> lock(qGlobalResourceMutex);
-    if(version == Q_RCC_OUTPUT_REVISION && resourceList()) {
+    if(version == Q_RCC_OUTPUT_REVISION && qGlobalResourceList()) {
         QResourceRoot res(tree, name, data);
-        for(int i = 0; i < resourceList()->size(); ) {
-            if(*resourceList()->at(i) == res) {
-                QResourceRoot *root = resourceList()->takeAt(i);
+        for(int i = 0; i < qGlobalResourceList()->size(); ) {
+            if(*qGlobalResourceList()->at(i) == res) {
+                QResourceRoot *root = qGlobalResourceList()->takeAt(i);
                 if(!root->ref.deref())
                     delete root;
             } else {
@@ -810,7 +809,7 @@ QResource::registerResource(const uchar *rccData, const QString &resourceRoot)
     if(root->registerSelf(rccData)) {
         root->ref.ref();
         std::lock_guard<std::recursive_mutex> lock(qGlobalResourceMutex);
-        resourceList()->append(root);
+        qGlobalResourceList()->append(root);
         return true;
     }
     delete root;
@@ -832,13 +831,13 @@ bool
 QResource::unregisterResource(const uchar *rccData, const QString &resourceRoot)
 {
     std::lock_guard<std::recursive_mutex> lock(qGlobalResourceMutex);
-    ResourceList *list = resourceList();
+    ResourceList *list = qGlobalResourceList();
     for(int i = 0; i < list->size(); ++i) {
         QResourceRoot *res = list->at(i);
         if(res->type() == QResourceRoot::Resource_Buffer) {
             QDynamicBufferResourceRoot *root = reinterpret_cast<QDynamicBufferResourceRoot*>(res);
             if(root->mappingBuffer() == rccData && root->mappingRoot() == resourceRoot) {
-                resourceList()->removeAt(i);
+                qGlobalResourceList()->removeAt(i);
                 if(!root->ref.deref()) {
                     delete root;
                     return true;

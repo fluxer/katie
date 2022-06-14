@@ -23,6 +23,7 @@
 #include "qstring.h"
 #include "qlist.h"
 #include "qcorecommon_p.h"
+#include "qstdcontainers_p.h"
 
 #include <stdio.h>
 #include <stdlib.h>
@@ -1633,7 +1634,7 @@ int qrand()
     with meaningful parameter names in their signatures.
 */
 
-Q_GLOBAL_STATIC(QList<qInternalCallback>, qGlobalCallbacks)
+Q_GLOBAL_STATIC(QStdVector<qInternalCallback>, qGlobalCallbacks)
 
 void QInternal::registerCallback(qInternalCallback callback)
 {
@@ -1647,7 +1648,7 @@ void QInternal::unregisterCallback(qInternalCallback callback)
 
 bool QInternal::activateCallbacks(void **parameters)
 {
-    QList<qInternalCallback> *callbacks = qGlobalCallbacks();
+    QStdVector<qInternalCallback> *callbacks = qGlobalCallbacks();
     bool ret = false;
     for (int i = 0; i < callbacks->size(); i++) {
         ret |= (callbacks->at(i))(parameters);
