@@ -48,6 +48,7 @@
 #include "qstdcontainers_p.h"
 
 #include <stdlib.h>
+#include <errno.h>
 
 QT_BEGIN_NAMESPACE
 
@@ -1567,6 +1568,10 @@ void QCoreApplication::setApplicationName(const QString &application)
 QString QCoreApplication::applicationName()
 {
     QString name = coreappdata()->application;
+
+#ifdef QT_HAVE_PROGRAM_INVOCATION_SHORT_NAME
+    name = QString::fromLocal8Bit(program_invocation_short_name);
+#endif
 
 #ifdef QT_HAVE_GETPROGNAME
     if (name.isEmpty()) {
