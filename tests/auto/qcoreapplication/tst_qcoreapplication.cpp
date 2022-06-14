@@ -22,6 +22,8 @@
 #include <QtCore/QtCore>
 #include <QtTest/QtTest>
 
+#include <unistd.h>
+
 class tst_QCoreApplication: public QObject
 {
     Q_OBJECT
@@ -41,6 +43,7 @@ private slots:
     void reexec();
     void execAfterExit();
     void eventLoopExecAfterExit();
+    void postRoutine();
 };
 
 class EventSpy : public QObject
@@ -554,6 +557,18 @@ void tst_QCoreApplication::eventLoopExecAfterExit()
     QEventLoop loop;
     QMetaObject::invokeMethod(&loop, "quit", Qt::QueuedConnection);
     QCOMPARE(loop.exec(), 0);
+}
+
+void TestPostRoutine()
+{
+    ::usleep(1000);
+    // deadlock test
+    qRemovePostRoutine(TestPostRoutine);
+}
+
+void tst_QCoreApplication::postRoutine()
+{
+    qAddPostRoutine(TestPostRoutine);
 }
 
 static void createQObjectOnDestruction()
