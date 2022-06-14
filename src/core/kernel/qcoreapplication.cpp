@@ -75,24 +75,30 @@ bool QCoreApplicationPrivate::checkInstance(const char *function)
 
 typedef QStdVector<QtCleanUpFunction> QVFuncList;
 Q_GLOBAL_STATIC(QVFuncList, qGlobalCleanupList)
+static std::recursive_mutex qGlobalApplicationMutex;
 
 void qAddPostRoutine(QtCleanUpFunction p)
 {
+    std::lock_guard<std::recursive_mutex> locker(qGlobalApplicationMutex);
     QVFuncList *list = qGlobalCleanupList();
     list->prepend(p);
 }
 
 void qRemovePostRoutine(QtCleanUpFunction p)
 {
+    std::lock_guard<std::recursive_mutex> locker(qGlobalApplicationMutex);
     QVFuncList *list = qGlobalCleanupList();
     list->removeAll(p);
 }
 
 void Q_CORE_EXPORT qt_call_post_routines()
 {
+    std::lock_guard<std::recursive_mutex> locker(qGlobalApplicationMutex);
     QVFuncList *list = qGlobalCleanupList();
-    while (!list->isEmpty())
-        (list->takeFirst())();
+    while (!list->isEmpty()) {
+        QtCleanUpFunction vfunc = list->takeFirst();
+        vfunc();
+    }
 }
 
 
@@ -1604,8 +1610,6 @@ QString QCoreApplication::applicationVersion()
 }
 
 #ifndef QT_NO_LIBRARY
-Q_GLOBAL_STATIC(QMutex, qGlobalAppPathsMutex);
-
 /*!
     Returns a list of paths that the application will search when
     dynamically loading libraries.
@@ -1624,7 +1628,7 @@ Q_GLOBAL_STATIC(QMutex, qGlobalAppPathsMutex);
 */
 QStringList QCoreApplication::libraryPaths()
 {
-    QMutexLocker locker(qGlobalAppPathsMutex());
+    std::lock_guard<std::recursive_mutex> locker(qGlobalApplicationMutex);
 
     if (coreappdata()->app_librarypaths.isEmpty()) {
         const QString installPathLibraries = QLibraryInfo::location(QLibraryInfo::LibrariesPath);
@@ -1657,7 +1661,7 @@ QStringList QCoreApplication::libraryPaths()
  */
 void QCoreApplication::setLibraryPaths(const QStringList &paths)
 {
-    QMutexLocker locker(qGlobalAppPathsMutex());
+    std::lock_guard<std::recursive_mutex> locker(qGlobalApplicationMutex);
     coreappdata()->app_librarypaths = paths;
 }
 
@@ -1678,7 +1682,7 @@ void QCoreApplication::addLibraryPath(const QString &path)
     // make sure that library paths is initialized
     libraryPaths();
 
-    QMutexLocker locker(qGlobalAppPathsMutex());
+    std::lock_guard<std::recursive_mutex> locker(qGlobalApplicationMutex);
     if (!coreappdata()->app_librarypaths.contains(canonicalPath)) {
         coreappdata()->app_librarypaths.prepend(canonicalPath);
     }
@@ -1700,7 +1704,7 @@ void QCoreApplication::removeLibraryPath(const QString &path)
     // make sure that library paths is initialized
     libraryPaths();
 
-    QMutexLocker locker(qGlobalAppPathsMutex());
+    std::lock_guard<std::recursive_mutex> locker(qGlobalApplicationMutex);
     coreappdata()->app_librarypaths.removeAll(canonicalPath);
 }
 
@@ -1719,7 +1723,7 @@ void QCoreApplication::removeLibraryPath(const QString &path)
 */
 QStringList QCoreApplication::pluginPaths()
 {
-    QMutexLocker locker(qGlobalAppPathsMutex());
+    std::lock_guard<std::recursive_mutex> locker(qGlobalApplicationMutex);
 
     if (coreappdata()->app_pluginpaths.isEmpty()) {
         const QString installPathPlugins = QLibraryInfo::location(QLibraryInfo::PluginsPath);
@@ -1752,9 +1756,10 @@ QStringList QCoreApplication::pluginPaths()
  */
 void QCoreApplication::setPluginPaths(const QStringList &paths)
 {
-    QMutexLocker locker(qGlobalAppPathsMutex());
-    coreappdata()->app_pluginpaths = paths;
-    locker.unlock();
+    {
+        std::lock_guard<std::recursive_mutex> locker(qGlobalApplicationMutex);
+        coreappdata()->app_pluginpaths = paths;
+    }
     QFactoryLoader::refreshAll();
 }
 
@@ -1775,10 +1780,9 @@ void QCoreApplication::addPluginPath(const QString &path)
     // make sure that plugin paths is initialized
     pluginPaths();
 
-    QMutexLocker locker(qGlobalAppPathsMutex());
+    std::lock_guard<std::recursive_mutex> locker(qGlobalApplicationMutex);
     if (!coreappdata()->app_pluginpaths.contains(canonicalPath)) {
         coreappdata()->app_pluginpaths.prepend(canonicalPath);
-        locker.unlock();
         QFactoryLoader::refreshAll();
     }
 }
@@ -1799,7 +1803,7 @@ void QCoreApplication::removePluginPath(const QString &path)
     // make sure that plugin paths is initialized
     pluginPaths();
 
-    QMutexLocker locker(qGlobalAppPathsMutex());
+    std::lock_guard<std::recursive_mutex> locker(qGlobalApplicationMutex);
     coreappdata()->app_pluginpaths.removeAll(canonicalPath);
     QFactoryLoader::refreshAll();
 }
