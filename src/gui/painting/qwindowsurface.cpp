@@ -22,7 +22,6 @@
 #include "qwindowsurface_p.h"
 #include "qwidget.h"
 #include "qwidget_p.h"
-#include "qbackingstore_p.h"
 #include "qapplication_p.h"
 #include "qt_x11_p.h"
 
