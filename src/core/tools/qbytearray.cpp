@@ -3927,10 +3927,9 @@ void q_fromPercentEncoding(QByteArray *ba)
 */
 QByteArray QByteArray::fromPercentEncoding(const QByteArray &input, char percent)
 {
-    if (input.isNull())
-        return QByteArray();       // preserve null
-    if (input.isEmpty())
-        return QByteArray(input.data(), 0);
+    if (input.isEmpty()) {
+        return input;
+    }
 
     QByteArray tmp = input;
     q_fromPercentEncoding(&tmp, percent);
@@ -4038,10 +4037,9 @@ void q_normalizePercentEncoding(QByteArray *ba, const char *exclude)
 QByteArray QByteArray::toPercentEncoding(const QByteArray &exclude, const QByteArray &include,
                                          char percent) const
 {
-    if (isNull())
-        return QByteArray();    // preserve null
-    if (isEmpty())
-        return QByteArray(data(), 0);
+    if (isEmpty()) {
+        return QByteArray();
+    }
 
     QByteArray include2 = include;
     if (percent != '%')                        // the default
