@@ -70,8 +70,6 @@ public:
     inline QRect rect(const QWidget *widget) const;
 
 private:
-    void prepareBuffer(QImage::Format format);
-
     QWindowSurfacePrivate *d_ptr;
 };
 

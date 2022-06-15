@@ -260,12 +260,30 @@ void QWindowSurface::setGeometry(const QRect &rect)
 {
     d_ptr->geometry = rect;
     if (d_ptr->image == 0 || d_ptr->image->width() < rect.width() || d_ptr->image->height() < rect.height()) {
+        QImage::Format format = QImage::Format_ARGB32_Premultiplied;
 #if defined(Q_WS_X11) && !defined(QT_NO_XRENDER)
-        if (d_ptr->translucentBackground)
-            prepareBuffer(QImage::Format_ARGB32_Premultiplied);
-        else
+        if (!d_ptr->translucentBackground) {
+            format = QImage::systemFormat();
+        }
 #endif
-            prepareBuffer(QImage::systemFormat());
+        int width = window()->width();
+        int height = window()->height();
+        if (d_ptr->image) {
+            width = qMax(d_ptr->image->width(), width);
+            height = qMax(d_ptr->image->height(), height);
+        }
+
+        if (width == 0 || height == 0) {
+            delete d_ptr->image;
+            d_ptr->image = 0;
+            return;
+        }
+
+        QImage *oldImage = d_ptr->image;
+
+        d_ptr->image = new QImage(width, height, format);
+
+        delete oldImage;
     }
 }
 
@@ -310,27 +328,5 @@ QPoint QWindowSurface::offset(const QWidget *widget) const
   Returns the rectangle for \a widget in the coordinates of this
   window surface.
 */
-
-void QWindowSurface::prepareBuffer(QImage::Format format)
-{
-    int width = window()->width();
-    int height = window()->height();
-    if (d_ptr->image) {
-        width = qMax(d_ptr->image->width(), width);
-        height = qMax(d_ptr->image->height(), height);
-    }
-
-    if (width == 0 || height == 0) {
-        delete d_ptr->image;
-        d_ptr->image = 0;
-        return;
-    }
-
-    QImage *oldImage = d_ptr->image;
-
-    d_ptr->image = new QImage(width, height, format);
-
-    delete oldImage;
-}
 
 QT_END_NAMESPACE
