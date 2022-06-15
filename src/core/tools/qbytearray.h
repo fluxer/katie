@@ -68,8 +68,7 @@ inline int qstrnicmp(const char *str1, const char *str2, uint len)
         : (str1 ? 1 : (str2 ? -1 : 0));
 }
 
-// qChecksum: Internet checksum
-Q_CORE_EXPORT quint16 qChecksum(const char *s, uint len);
+Q_CORE_EXPORT quint32 qChecksum(const char *s, uint len);
 
 Q_CORE_EXPORT QByteArray qRandomUuid();
 
