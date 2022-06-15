@@ -168,8 +168,6 @@ QThemeIconEntries QIconLoader::findIconHelper(const QString &themeName,
     QThemeIconEntries entries;
     Q_ASSERT(!themeName.isEmpty());
 
-    QPixmap pixmap;
-
     // Used to protect against potential recursions
     visited << themeName;
 
