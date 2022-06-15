@@ -528,9 +528,9 @@ bool QColor::setNamedColor(const QString &name)
     }
 
 #ifndef QT_NO_COLORNAMES
-    for (qint16 i = 0; i < rgbTblSize; i++) {
-        if (qstricmp(rgbTbl[i].name, latin.constData()) == 0) {
-            setRgba(rgbTbl[i].value);
+    for (qint16 i = 0; i < RGBTblSize; i++) {
+        if (qstricmp(RGBTbl[i].name, latin.constData()) == 0) {
+            setRgba(RGBTbl[i].value);
             return true;
         }
     }
@@ -584,8 +584,8 @@ bool QColor::isValidColor(const QString &name)
     }
 
 #ifndef QT_NO_COLORNAMES
-    for (qint16 i = 0; i < rgbTblSize; i++) {
-        if (qstricmp(rgbTbl[i].name, latin.constData()) == 0) {
+    for (qint16 i = 0; i < RGBTblSize; i++) {
+        if (qstricmp(RGBTbl[i].name, latin.constData()) == 0) {
             return true;
         }
     }
@@ -614,8 +614,8 @@ QStringList QColor::colorNames()
 #ifndef QT_NO_COLORNAMES
     static QStringList lst;
     if (lst.isEmpty()) {
-        for (qint16 i = 0; i < rgbTblSize; i++)
-            lst << QString::fromLatin1(rgbTbl[i].name);
+        for (qint16 i = 0; i < RGBTblSize; i++)
+            lst << QString::fromLatin1(RGBTbl[i].name);
     }
     return lst;
 #else

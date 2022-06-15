@@ -350,11 +350,11 @@ void tst_QColor::globalColors()
 
 void tst_QColor::setNamedColor()
 {
-    for (int i = 0; i < rgbTblSize; ++i) {
+    for (int i = 0; i < RGBTblSize; ++i) {
         QColor color;
-        color.setNamedColor(QLatin1String(rgbTbl[i].name));
+        color.setNamedColor(QLatin1String(RGBTbl[i].name));
         QColor expected;
-        expected.setRgba(rgbTbl[i].value);
+        expected.setRgba(RGBTbl[i].value);
         QCOMPARE(color, expected);
     }
 }
@@ -370,9 +370,9 @@ void tst_QColor::colorNames()
     DEPENDS_ON("setNamedColor()");
 
     QStringList all = QColor::colorNames();
-    QCOMPARE(all.size(), (int)rgbTblSize);
+    QCOMPARE(all.size(), (int)RGBTblSize);
     for (int i = 0; i < all.size(); ++i)
-        QCOMPARE(all.at(i), QString::fromLatin1(rgbTbl[i].name));
+        QCOMPARE(all.at(i), QString::fromLatin1(RGBTbl[i].name));
 }
 
 void tst_QColor::spec()
