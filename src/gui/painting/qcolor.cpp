@@ -24,18 +24,10 @@
 #include "qnamespace.h"
 #include "qdatastream.h"
 #include "qvariant.h"
+#include "qmath.h"
 #include "qdebug.h"
 #include "qcorecommon_p.h"
 
-#ifdef Q_WS_X11
-#  include "qapplication.h"
-#  include "qx11info_x11.h"
-#  include "qt_x11_p.h"
-
-#endif
-
-#include <math.h>
-#include <stdio.h>
 #include <limits.h>
 
 QT_BEGIN_NAMESPACE
@@ -537,13 +529,13 @@ bool QColor::setNamedColor(const QString &name)
 #endif
 
 #ifdef Q_WS_X11
-    XColor result;
-    if (allowX11ColorNames()
-        && QApplication::instance()
-        && QX11Info::display()
-        && XParseColor(QX11Info::display(), QX11Info::appColormap(), latin.constData(), &result)) {
-        setRgb(result.red >> 8, result.green >> 8, result.blue >> 8);
-        return true;
+    if (qAllowX11ColorNames) {
+        for (qint16 i = 0; i < X11RGBTblSize; i++) {
+            if (qstricmp(X11RGBTbl[i].name, latin.constData()) == 0) {
+                setRgba(X11RGBTbl[i].value);
+                return true;
+            }
+        }
     }
 #endif
 
@@ -592,12 +584,12 @@ bool QColor::isValidColor(const QString &name)
 #endif
 
 #ifdef Q_WS_X11
-    XColor result;
-    if (allowX11ColorNames()
-        && QApplication::instance()
-        && QX11Info::display()
-        && XParseColor(QX11Info::display(), QX11Info::appColormap(), latin.constData(), &result)) {
-        return true;
+    if (qAllowX11ColorNames) {
+        for (qint16 i = 0; i < X11RGBTblSize; i++) {
+            if (qstricmp(X11RGBTbl[i].name, latin.constData()) == 0) {
+                return true;
+            }
+        }
     }
 #endif
 

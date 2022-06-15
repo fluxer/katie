@@ -964,7 +964,6 @@ katie_unity_exclude(
     ${CMAKE_CURRENT_SOURCE_DIR}/kernel/qx11info_x11.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/kernel/qt_x11.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/painting/qbackingstore.cpp
-    ${CMAKE_CURRENT_SOURCE_DIR}/painting/qcolor.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/painting/qcolormap_x11.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/painting/qpaintengine_x11.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/painting/qregion.cpp
