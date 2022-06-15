@@ -1840,7 +1840,7 @@ QByteArray &QByteArray::replace(const char *before, int bsize, const char *after
         // the most complex case. We don't want to lose performance by doing repeated
         // copies and reallocs of the string.
         while (index != -1) {
-            uint indices[4096];
+            QSTACKARRAY(uint, indices, 4096);
             uint pos = 0;
             while(pos < 4095) {
                 index = matcher.indexIn(*this, index);
