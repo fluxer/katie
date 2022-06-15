@@ -50,7 +50,8 @@ public:
 };
 
 QRasterWindowSurface::QRasterWindowSurface(QWidget *window)
-    : QWindowSurface(window), d_ptr(new QRasterWindowSurfacePrivate)
+    : QWindowSurface(window),
+    d_ptr(new QRasterWindowSurfacePrivate())
 {
 #ifdef Q_WS_X11
     d_ptr->gc = XCreateGC(qt_x11Data->display, window->handle(), 0, 0);
@@ -68,8 +69,10 @@ QRasterWindowSurface::~QRasterWindowSurface()
 #ifdef Q_WS_X11
     XFreeGC(qt_x11Data->display, d_ptr->gc);
 #endif
-    if (d_ptr->image)
+    if (d_ptr->image) {
         delete d_ptr->image;
+    }
+    delete d_ptr;
 }
 
 QPaintDevice *QRasterWindowSurface::paintDevice()

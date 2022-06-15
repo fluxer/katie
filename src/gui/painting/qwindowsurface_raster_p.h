@@ -34,15 +34,12 @@
 //
 
 #include "qwindowsurface_p.h"
-#include "qscopedpointer.h"
 
 QT_BEGIN_NAMESPACE
 
 class QPaintDevice;
 class QPoint;
 class QRegion;
-class QRegion;
-class QSize;
 class QWidget;
 class QRasterWindowSurfacePrivate;
 
@@ -61,7 +58,7 @@ public:
 private:
     void prepareBuffer(QImage::Format format);
     Q_DECLARE_PRIVATE(QRasterWindowSurface)
-    QScopedPointer<QRasterWindowSurfacePrivate> d_ptr;
+    QRasterWindowSurfacePrivate *d_ptr;
 };
 
 QT_END_NAMESPACE
