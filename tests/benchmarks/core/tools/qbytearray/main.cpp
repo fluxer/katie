@@ -70,7 +70,6 @@ void tst_qbytearray::append()
 void tst_qbytearray::compress_uncompress_data()
 {
     QTest::addColumn<int>("level");
-    QTest::newRow("-1") << int(-1);
     QTest::newRow("0")  << int(0);
     QTest::newRow("1")  << int(1);
     QTest::newRow("2")  << int(2);
