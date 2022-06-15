@@ -64,6 +64,9 @@ private slots:
     void qhash_simple();
     void qhash_simple_reserve();
 
+    void qhash_vs_qchecksum_data();
+    void qhash_vs_qchecksum();
+
 private:
     QString data();
 };
@@ -124,6 +127,31 @@ void tst_QHash::qhash_simple_reserve()
     QBENCHMARK {
         for (int i = 0; i < N; i++) {
             hash[i] = N;
+        }
+    }
+}
+
+void tst_QHash::qhash_vs_qchecksum_data()
+{
+    QTest::addColumn<bool>("qhash");
+
+    QTest::newRow("qHash") << true;
+    QTest::newRow("qChecksum") << false;
+}
+
+
+void tst_QHash::qhash_vs_qchecksum()
+{
+    QFETCH(bool, qhash);
+
+    const QByteArray asciidata = data().toAscii();
+    if (qhash) {
+        QBENCHMARK {
+            (void)qHash(asciidata);
+        }
+    } else {
+        QBENCHMARK {
+            (void)qChecksum(asciidata.constData(), asciidata.size());
         }
     }
 }
