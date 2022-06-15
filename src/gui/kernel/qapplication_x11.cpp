@@ -630,12 +630,12 @@ bool QApplicationPrivate::x11_apply_settings()
     // read new QStyle
     QString stylename = settings.value(QLatin1String("Qt/style")).toString();
 
-    if (stylename.isEmpty() && QApplicationPrivate::styleOverride.isNull() && qt_x11Data->use_xrender) {
+    if (stylename.isEmpty() && QApplicationPrivate::styleOverride.isEmpty()) {
         stylename = qt_guiPlatformPlugin()->styleName();
     }
 
     if (QCoreApplication::startingUp()) {
-        if (!stylename.isEmpty() && QApplicationPrivate::styleOverride.isNull())
+        if (!stylename.isEmpty() && QApplicationPrivate::styleOverride.isEmpty())
             QApplicationPrivate::styleOverride = stylename;
     } else {
         if (stylename.compare(QApplication::style()->objectName(), Qt::CaseInsensitive) != 0) {
