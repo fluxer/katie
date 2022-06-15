@@ -265,7 +265,11 @@ void tst_QColor::isValid_data()
     QTest::newRow("nameQStringConstructor-valid") << QColor(QString("#ffffff")) << true;
     QTest::newRow("nameQStringConstructor-invalid") << QColor(QString("#ffffgg")) << false;
     QTest::newRow("nameQStringConstructor-empty") << QColor(QString("")) << false;
+#ifndef QT_NO_COLORNAMES
     QTest::newRow("nameQStringConstructor-named") << QColor(QString("red")) << true;
+#else
+    QTest::newRow("nameQStringConstructor-named") << QColor(QString("red")) << false;
+#endif
     QTest::newRow("nameCharConstructor-valid") << QColor("#ffffff") << true;
     QTest::newRow("nameCharConstructor-invalid") << QColor("#ffffgg") << false;
     QTest::newRow("nameCharConstructor-invalid-2") << QColor("#fffffg") << false;
