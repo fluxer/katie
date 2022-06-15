@@ -78,7 +78,7 @@ class QWindowSurfacePrivate
 {
 public:
     QWindowSurfacePrivate(QWidget *w)
-        : window(w)
+        : window(w), image(nullptr)
     {
     }
 
@@ -99,7 +99,6 @@ public:
     \since 4.3
     \internal
     \preliminary
-    \ingroup qws qpa
 
     \brief The QWindowSurface class provides the drawing area for top-level
     windows.
@@ -117,7 +116,6 @@ QWindowSurface::QWindowSurface(QWidget *window)
     d_ptr->translucentBackground = (qt_x11Data->use_xrender && window->x11Info().depth() == 32);
 #endif
 #endif
-    d_ptr->image = 0;
 
     if (window) {
         window->setWindowSurface(this);
@@ -201,8 +199,9 @@ void QWindowSurface::flush(QWidget *widget, const QRegion &rgn, const QPoint &of
 {
     // Not ready for painting yet, bail out. This can happen in
     // QWidget::create_sys()
-    if (!d_ptr->image || rgn.rectCount() == 0)
+    if (!d_ptr->image || rgn.rectCount() == 0) {
         return;
+    }
 
 #ifdef Q_WS_X11
     extern void *qt_getClipRects(const QRegion &r, int &num); // in qpaintengine_x11.cpp
@@ -259,7 +258,7 @@ void QWindowSurface::flush(QWidget *widget, const QRegion &rgn, const QPoint &of
 void QWindowSurface::setGeometry(const QRect &rect)
 {
     d_ptr->geometry = rect;
-    if (d_ptr->image == 0 || d_ptr->image->width() < rect.width() || d_ptr->image->height() < rect.height()) {
+    if (!d_ptr->image || d_ptr->image->width() < rect.width() || d_ptr->image->height() < rect.height()) {
         QImage::Format format = QImage::Format_ARGB32_Premultiplied;
 #if defined(Q_WS_X11) && !defined(QT_NO_XRENDER)
         if (!d_ptr->translucentBackground) {
@@ -275,7 +274,7 @@ void QWindowSurface::setGeometry(const QRect &rect)
 
         if (width == 0 || height == 0) {
             delete d_ptr->image;
-            d_ptr->image = 0;
+            d_ptr->image = nullptr;
             return;
         }
 
