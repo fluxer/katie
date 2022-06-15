@@ -55,13 +55,6 @@ QFactoryLoaderPrivate::QFactoryLoaderPrivate()
 
 QFactoryLoaderPrivate::~QFactoryLoaderPrivate()
 {
-    if (qt_debug_component()) {
-        qDebug() << "QFactoryLoader: unloading" << pluginMap.keys();
-    }
-    foreach (QPluginLoader *loader, pluginMap.values()) {
-        loader->unload();
-        delete loader;
-    }
 }
 
 QFactoryLoader::QFactoryLoader(const QString &suffix)

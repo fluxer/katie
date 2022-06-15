@@ -243,9 +243,7 @@ public:
 QLibraryCleanup::~QLibraryCleanup()
 {
     while (!isEmpty()) {
-        QLibraryPrivate* library = takeLast();
-        library->unload();
-        delete library;
+        delete takeLast();
     }
 }
 
@@ -260,6 +258,7 @@ QLibraryPrivate::QLibraryPrivate()
 
 QLibraryPrivate::~QLibraryPrivate()
 {
+    unload();
 }
 
 bool QLibraryPrivate::load()
