@@ -47,7 +47,6 @@
 #include "qwindowsurface_p.h"
 #include "qbackingstore_p.h"
 #include "qpaintengine_raster_p.h"
-#include "qwindowsurface_raster_p.h"
 #include "qwidget_p.h"
 #include "qaction_p.h"
 #include "qlayout_p.h"
@@ -231,7 +230,7 @@ QWidgetPrivate::~QWidgetPrivate()
 QWindowSurface *QWidgetPrivate::createDefaultWindowSurface()
 {
     Q_Q(QWidget);
-    return new QRasterWindowSurface(q);
+    return new QWindowSurface(q);
 }
 
 /*!

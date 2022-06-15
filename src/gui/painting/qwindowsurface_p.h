@@ -47,29 +47,31 @@ class QWindowSurface
 {
 public:
     QWindowSurface(QWidget *windows);
-    virtual ~QWindowSurface();
+    ~QWindowSurface();
 
     QWidget *window() const;
 
-    virtual QPaintDevice *paintDevice() = 0;
+    QPaintDevice *paintDevice();
 
     // 'widget' can be a child widget, in which case 'region' is in child widget coordinates and
     // offset is the (child) widget's offset in relation to the window surface. On QWS, 'offset'
     // can be larger than just the offset from the top-level widget as there may also be window
     // decorations which are painted into the window surface.
-    virtual void flush(QWidget *widget, const QRegion &region, const QPoint &offset) = 0;
-    virtual void setGeometry(const QRect &rect);
+    void flush(QWidget *widget, const QRegion &region, const QPoint &offset);
+    void setGeometry(const QRect &rect);
     QRect geometry() const;
 
-    virtual bool scroll(const QRegion &area, int dx, int dy) = 0;
+    bool scroll(const QRegion &area, int dx, int dy);
 
-    virtual void beginPaint(const QRegion &) = 0;
+    void beginPaint(const QRegion &);
     void endPaint(const QRegion &);
 
     QPoint offset(const QWidget *widget) const;
     inline QRect rect(const QWidget *widget) const;
 
 private:
+    void prepareBuffer(QImage::Format format);
+
     QWindowSurfacePrivate *d_ptr;
 };
 

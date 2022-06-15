@@ -30,7 +30,7 @@
 #include "qgraphicsproxywidget.h"
 #include "qthread.h"
 #include "qwidget_p.h"
-#include "qwindowsurface_raster_p.h"
+#include "qwindowsurface_p.h"
 #include "qapplication_p.h"
 #include "qpaintengine_raster_p.h"
 #include "qgraphicseffect_p.h"

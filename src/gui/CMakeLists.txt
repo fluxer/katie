@@ -441,7 +441,6 @@ set(GUI_HEADERS
     ${CMAKE_CURRENT_SOURCE_DIR}/painting/qdatabuffer_p.h
     ${CMAKE_CURRENT_SOURCE_DIR}/painting/qpen_p.h
     ${CMAKE_CURRENT_SOURCE_DIR}/painting/qfixed_p.h
-    ${CMAKE_CURRENT_SOURCE_DIR}/painting/qwindowsurface_raster_p.h
     ${CMAKE_CURRENT_SOURCE_DIR}/painting/qrgb.h
     ${CMAKE_CURRENT_SOURCE_DIR}/painting/qprinterinfo_unix_p.h
     ${CMAKE_CURRENT_SOURCE_DIR}/painting/qpaintengine_x11_p.h
@@ -766,7 +765,6 @@ set(GUI_SOURCES
     ${CMAKE_CURRENT_SOURCE_DIR}/painting/qpaintengine_raster.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/painting/qdrawhelper.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/painting/qbackingstore.cpp
-    ${CMAKE_CURRENT_SOURCE_DIR}/painting/qwindowsurface_raster.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/painting/qprinterinfo_unix.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/painting/qgrayraster.c
     ${CMAKE_CURRENT_SOURCE_DIR}/painting/qcolormap_x11.cpp
@@ -970,7 +968,7 @@ katie_unity_exclude(
     ${CMAKE_CURRENT_SOURCE_DIR}/painting/qcolormap_x11.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/painting/qpaintengine_x11.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/painting/qregion.cpp
-    ${CMAKE_CURRENT_SOURCE_DIR}/painting/qwindowsurface_raster.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/painting/qwindowsurface.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/text/qfont.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/text/qfont_x11.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/text/qtextformat.cpp
