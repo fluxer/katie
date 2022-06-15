@@ -676,7 +676,7 @@ bool QColor::setNamedColor(const QString &name)
 {
     if (name.isEmpty()) {
         invalidate();
-        return true;
+        return false;
     }
 
     QByteArray latin = name.toLatin1();
