@@ -28,9 +28,7 @@
 
 #ifndef QT_NO_NETWORKINTERFACE
 
-
 QT_BEGIN_NAMESPACE
-
 
 template<typename T> class QList;
 

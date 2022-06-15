@@ -29,6 +29,8 @@
 
 // TESTED_FILES=qnetworkinterface.cpp qnetworkinterface.h qnetworkinterface_unix.cpp
 
+#ifndef QT_NO_NETWORKINTERFACE
+
 class tst_QNetworkInterface : public QObject
 {
     Q_OBJECT
@@ -167,3 +169,9 @@ void tst_QNetworkInterface::copyInvalidInterface()
 QTEST_MAIN(tst_QNetworkInterface)
 
 #include "moc_tst_qnetworkinterface.cpp"
+
+#else // QT_NO_NETWORKINTERFACE
+
+QTEST_NOOP_MAIN
+
+#endif // QT_NO_NETWORKINTERFACE
