@@ -41,7 +41,6 @@ class QPaintDevice;
 class QRegion;
 class QRect;
 class QPoint;
-class QImage;
 class QWindowSurfacePrivate;
 
 class QWindowSurface

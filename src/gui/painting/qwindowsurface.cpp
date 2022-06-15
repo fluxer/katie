@@ -212,7 +212,3 @@ void qt_scrollRectInImage(QImage *img, const QRect &rect, const QPoint &offset)
 }
 
 QT_END_NAMESPACE
-
-
-
-
