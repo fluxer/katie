@@ -700,7 +700,7 @@ QByteArray QPdf::generateLinearGradientShader(const QLinearGradient *gradient, c
 }
 #endif
 
-static void moveToHook(qfixed x, qfixed y, void *data)
+static void moveToHook(qreal x, qreal y, void *data)
 {
     QPdf::Stroker *t = (QPdf::Stroker *)data;
     if (!t->first)
@@ -711,7 +711,7 @@ static void moveToHook(qfixed x, qfixed y, void *data)
     t->first = false;
 }
 
-static void lineToHook(qfixed x, qfixed y, void *data)
+static void lineToHook(qreal x, qreal y, void *data)
 {
     QPdf::Stroker *t = (QPdf::Stroker *)data;
     if (!t->cosmeticPen)
@@ -719,9 +719,9 @@ static void lineToHook(qfixed x, qfixed y, void *data)
     *t->stream << x << y << "l\n";
 }
 
-static void cubicToHook(qfixed c1x, qfixed c1y,
-                        qfixed c2x, qfixed c2y,
-                        qfixed ex, qfixed ey,
+static void cubicToHook(qreal c1x, qreal c1y,
+                        qreal c2x, qreal c2y,
+                        qreal ex, qreal ey,
                         void *data)
 {
     QPdf::Stroker *t = (QPdf::Stroker *)data;

@@ -25,6 +25,7 @@
 #include "qtransform.h"
 #include "qmath.h"
 #include "qnumeric.h"
+#include "qcorecommon_p.h"
 
 QT_BEGIN_NAMESPACE
 
@@ -418,7 +419,7 @@ void QStroker::processCurrentSubpath()
 /*!
     \internal
 */
-void QStroker::joinPoints(qfixed focal_x, qfixed focal_y, const QLineF &nextLine, LineJoinMode join)
+void QStroker::joinPoints(qreal focal_x, qreal focal_y, const QLineF &nextLine, LineJoinMode join)
 {
 #ifdef QPP_STROKE_DEBUG
     printf(" -----> joinPoints: around=(%.0f, %.0f), next_p1=(%.0f, %.f) next_p2=(%.0f, %.f)\n",
@@ -487,7 +488,7 @@ void QStroker::joinPoints(qfixed focal_x, qfixed focal_y, const QLineF &nextLine
             }
 
         } else if (join == SquareJoin) {
-            qfixed offset = m_strokeWidth / 2;
+            qreal offset = m_strokeWidth / 2;
 
             QLineF l1(prevLine);
             l1.translate(l1.dx(), l1.dy());
@@ -500,7 +501,7 @@ void QStroker::joinPoints(qfixed focal_x, qfixed focal_y, const QLineF &nextLine
             emitLineTo(qreal(l2.x1()), qreal(l2.y1()));
 
         } else if (join == RoundJoin) {
-            qfixed offset = m_strokeWidth / 2;
+            qreal offset = m_strokeWidth / 2;
 
             QLineF shortCut(prevLine.p2(), nextLine.p1());
             qreal angle = shortCut.angleTo(prevLine);
@@ -544,7 +545,7 @@ void QStroker::joinPoints(qfixed focal_x, qfixed focal_y, const QLineF &nextLine
         // Same as round join except we know its 180 degrees. Can also optimize this
         // later based on the addEllipse logic
         } else if (join == RoundCap) {
-            qfixed offset = m_strokeWidth / 2;
+            qreal offset = m_strokeWidth / 2;
 
             // first control line
             QLineF l1 = prevLine;
@@ -629,7 +630,7 @@ template <class Iterator> bool qt_stroke_side(Iterator *it,
 
     bool first = true;
 
-    qfixed offset = stroker->strokeWidth() / 2;
+    qreal offset = stroker->strokeWidth() / 2;
 
     while (it->hasNext()) {
         QStrokerOps::Element e = it->next();
@@ -970,15 +971,15 @@ QPointF qt_curves_for_arc(const QRectF &rect, qreal startAngle, qreal sweepLengt
 }
 
 
-static inline void qdashstroker_moveTo(qfixed x, qfixed y, void *data) {
+static inline void qdashstroker_moveTo(qreal x, qreal y, void *data) {
     ((QStroker *) data)->moveTo(x, y);
 }
 
-static inline void qdashstroker_lineTo(qfixed x, qfixed y, void *data) {
+static inline void qdashstroker_lineTo(qreal x, qreal y, void *data) {
     ((QStroker *) data)->lineTo(x, y);
 }
 
-static inline void qdashstroker_cubicTo(qfixed, qfixed, qfixed, qfixed, qfixed, qfixed, void *) {
+static inline void qdashstroker_cubicTo(qreal, qreal, qreal, qreal, qreal, qreal, void *) {
     Q_ASSERT(false);
 //     ((QStroker *) data)->cubicTo(c1x, c1y, c2x, c2y, ex, ey);
 }
@@ -997,13 +998,13 @@ QDashStroker::QDashStroker(QStroker *stroker)
     }
 }
 
-QVector<qfixed> QDashStroker::patternForStyle(Qt::PenStyle style)
+QVector<qreal> QDashStroker::patternForStyle(Qt::PenStyle style)
 {
-    const qfixed space = 2;
-    const qfixed dot = 1;
-    const qfixed dash = 4;
+    const qreal space = 2;
+    const qreal dot = 1;
+    const qreal dash = 4;
 
-    QVector<qfixed> pattern;
+    QVector<qreal> pattern;
 
     switch (style) {
     case Qt::DashLine:
@@ -1061,7 +1062,7 @@ static bool lineIntersectsRect(qfixed2d p1, qfixed2d p2, const qfixed2d &tl, con
 void QDashStroker::processCurrentSubpath()
 {
     int dashCount = qMin(m_dashPattern.size(), 32);
-    qfixed dashes[32];
+    QSTACKARRAY(qreal, dashes, 32);
 
     if (m_stroker) {
         m_customData = m_stroker;
@@ -1116,7 +1117,7 @@ void QDashStroker::processCurrentSubpath()
     qfixed2d line_to_pos;
 
     // Pad to avoid clipping the borders of thick pens.
-    qfixed padding = qreal(qMax(m_stroke_width, m_miter_limit) * longestLength);
+    qreal padding = qreal(qMax(m_stroke_width, m_miter_limit) * longestLength);
     qfixed2d clip_tl = { qreal(m_clip_rect.left()) - padding,
                          qreal(m_clip_rect.top()) - padding };
     qfixed2d clip_br = { qreal(m_clip_rect.right()) + padding ,

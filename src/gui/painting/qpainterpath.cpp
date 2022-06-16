@@ -1633,8 +1633,8 @@ QList<QPolygonF> QPainterPath::toFillPolygons(const QMatrix &matrix) const
 
 //same as qt_polygon_isect_line in qpolygon.cpp
 static void qt_painterpath_isect_line(const QPointF &p1,
-				      const QPointF &p2,
-				      const QPointF &pos,
+                                      const QPointF &p2,
+                                      const QPointF &pos,
                                       int *winding)
 {
     qreal x1 = p1.x();
@@ -2356,19 +2356,19 @@ QDataStream &operator>>(QDataStream &s, QPainterPath &p)
  * class QPainterPathStroker
  */
 
-void qt_path_stroke_move_to(qfixed x, qfixed y, void *data)
+void qt_path_stroke_move_to(qreal x, qreal y, void *data)
 {
     ((QPainterPath *) data)->moveTo(x, y);
 }
 
-void qt_path_stroke_line_to(qfixed x, qfixed y, void *data)
+void qt_path_stroke_line_to(qreal x, qreal y, void *data)
 {
     ((QPainterPath *) data)->lineTo(x, y);
 }
 
-void qt_path_stroke_cubic_to(qfixed c1x, qfixed c1y,
-                             qfixed c2x, qfixed c2y,
-                             qfixed ex, qfixed ey,
+void qt_path_stroke_cubic_to(qreal c1x, qreal c1y,
+                             qreal c2x, qreal c2y,
+                             qreal ex, qreal ey,
                              void *data)
 {
     ((QPainterPath *) data)->cubicTo(c1x, c1y,

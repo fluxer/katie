@@ -48,7 +48,7 @@ public:
     QPainterPathStrokerPrivate();
 
     QStroker stroker;
-    QVector<qfixed> dashPattern;
+    QVector<qreal> dashPattern;
     qreal dashOffset;
 };
 

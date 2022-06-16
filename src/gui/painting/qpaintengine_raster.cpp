@@ -97,19 +97,19 @@ template <typename T> static inline bool isRect(const T *pts, int elementCount) 
 }
 
 
-static void qt_ft_outline_move_to(qfixed x, qfixed y, void *data)
+static void qt_ft_outline_move_to(qreal x, qreal y, void *data)
 {
     ((QOutlineMapper *) data)->moveTo(QPointF(x, y));
 }
 
-static void qt_ft_outline_line_to(qfixed x, qfixed y, void *data)
+static void qt_ft_outline_line_to(qreal x, qreal y, void *data)
 {
     ((QOutlineMapper *) data)->lineTo(QPointF(x, y));
 }
 
-static void qt_ft_outline_cubic_to(qfixed c1x, qfixed c1y,
-                             qfixed c2x, qfixed c2y,
-                             qfixed ex, qfixed ey,
+static void qt_ft_outline_cubic_to(qreal c1x, qreal c1y,
+                             qreal c2x, qreal c2y,
+                             qreal ex, qreal ey,
                              void *data)
 {
     ((QOutlineMapper *) data)->curveTo(QPointF(c1x, c1y),

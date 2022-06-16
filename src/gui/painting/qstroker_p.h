@@ -38,7 +38,6 @@
 
 QT_BEGIN_NAMESPACE
 
-typedef qreal qfixed;
 struct qfixed2d
 {
     qreal x;
