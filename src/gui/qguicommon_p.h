@@ -9,6 +9,10 @@
 
 QT_BEGIN_NAMESPACE
 
+struct QRealRect {
+    qreal x1, y1, x2, y2;
+};
+
 #ifndef QT_NO_IMAGEFORMAT_KAT
 static const char* const qt_imageformat = "kat";
 static const char* const qt_imagemime = "image/katie";

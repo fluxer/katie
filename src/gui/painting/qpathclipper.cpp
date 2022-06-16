@@ -221,14 +221,6 @@ struct TreeNode
     } index;
 };
 
-struct RectF
-{
-    qreal x1;
-    qreal y1;
-    qreal x2;
-    qreal y2;
-};
-
 class SegmentTree
 {
 public:
@@ -237,16 +229,16 @@ public:
     void produceIntersections(int segment);
 
 private:
-    TreeNode buildTree(int first, int last, int depth, const RectF &bounds);
+    TreeNode buildTree(int first, int last, int depth, const QRealRect &bounds);
 
     void produceIntersectionsLeaf(const TreeNode &node, int segment);
-    void produceIntersections(const TreeNode &node, int segment, const RectF &segmentBounds, const RectF &nodeBounds, int axis);
+    void produceIntersections(const TreeNode &node, int segment, const QRealRect &segmentBounds, const QRealRect &nodeBounds, int axis);
     void intersectLines(const QLineF &a, const QLineF &b, QDataBuffer<QIntersection> &intersections);
 
     QPathSegments &m_segments;
     QVector<int> m_index;
 
-    RectF m_bounds;
+    QRealRect m_bounds;
 
     QVector<TreeNode> m_tree;
     QDataBuffer<QIntersection> m_intersections;
@@ -289,7 +281,7 @@ static inline qreal coordinate(const QPointF &pos, int axis)
     return axis == 0 ? pos.x() : pos.y();
 }
 
-TreeNode SegmentTree::buildTree(int first, int last, int depth, const RectF &bounds)
+TreeNode SegmentTree::buildTree(int first, int last, int depth, const QRealRect &bounds)
 {
     if (depth >= 24 || (last - first) <= 10) {
         TreeNode node;
@@ -347,10 +339,10 @@ TreeNode SegmentTree::buildTree(int first, int last, int depth, const RectF &bou
         }
     }
 
-    RectF lbounds = bounds;
+    QRealRect lbounds = bounds;
     (&lbounds.x2)[splitAxis] = node.splitLeft;
 
-    RectF rbounds = bounds;
+    QRealRect rbounds = bounds;
     (&rbounds.x1)[splitAxis] = node.splitRight;
 
     TreeNode left = buildTree(first, l, depth + 1, lbounds);
@@ -488,7 +480,7 @@ void SegmentTree::produceIntersections(int segment)
 {
     const QRectF &segmentBounds = m_segments.elementBounds(segment);
 
-    RectF sbounds;
+    QRealRect sbounds;
     sbounds.x1 = segmentBounds.left();
     sbounds.y1 = segmentBounds.top();
     sbounds.x2 = segmentBounds.right();
@@ -536,17 +528,17 @@ void SegmentTree::produceIntersectionsLeaf(const TreeNode &node, int segment)
     }
 }
 
-void SegmentTree::produceIntersections(const TreeNode &node, int segment, const RectF &segmentBounds, const RectF &nodeBounds, int axis)
+void SegmentTree::produceIntersections(const TreeNode &node, int segment, const QRealRect &segmentBounds, const QRealRect &nodeBounds, int axis)
 {
     if (node.leaf) {
         produceIntersectionsLeaf(node, segment);
         return;
     }
 
-    RectF lbounds = nodeBounds;
+    QRealRect lbounds = nodeBounds;
     (&lbounds.x2)[axis] = node.splitLeft;
 
-    RectF rbounds = nodeBounds;
+    QRealRect rbounds = nodeBounds;
     (&rbounds.x1)[axis] = node.splitRight;
 
     if (segment > node.lowestLeftIndex && (&segmentBounds.x1)[axis] <= node.splitLeft)

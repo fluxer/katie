@@ -33,18 +33,12 @@
 // We mean it.
 //
 
-#include <QtGui/qpaintengine.h>
-
+#include <qpaintengine.h>
 #include "qpaintengine_p.h"
 #include "qpainter_p.h"
-
-
+#include "qguicommon_p.h"
 
 QT_BEGIN_NAMESPACE
-
-struct QRealRect {
-    qreal x1, y1, x2, y2;
-};
 
 class Q_GUI_EXPORT QVectorPath
 {
