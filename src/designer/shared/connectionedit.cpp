@@ -350,7 +350,6 @@ QPoint Connection::endPointPos(EndPoint::Type type) const
 static QPoint lineEntryPos(const QPoint &p1, const QPoint &p2, const QRect &rect)
 {
     QPoint result;
-
     switch (classifyLine(p1, p2)) {
         case CETypes::UpDir:
             result = QPoint(p1.x(), rect.bottom());
@@ -365,14 +364,13 @@ static QPoint lineEntryPos(const QPoint &p1, const QPoint &p2, const QRect &rect
             result = QPoint(rect.left(), p1.y());
             break;
     }
-
     return result;
 }
 
 static QPolygonF arrowHead(const QPoint &p1, const QPoint &p2)
 {
     QPolygonF result;
-
+    result.reserve(3);
     switch (classifyLine(p1, p2)) {
         case CETypes::UpDir:
             result.append(p2 + QPoint(0, 1));
@@ -395,7 +393,6 @@ static QPolygonF arrowHead(const QPoint &p1, const QPoint &p2)
             result.append(p2 + QPoint(-2*LINE_PROXIMITY_RADIUS, LINE_PROXIMITY_RADIUS));
             break;
     }
-
     return result;
 }
 

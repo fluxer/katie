@@ -1607,6 +1607,7 @@ QList<QPolygonF> QPainterPath::toFillPolygons(const QTransform &matrix) const
         const QList<int> &subpath_list = isects[i];
         if (!subpath_list.isEmpty()) {
             QPolygonF buildUp;
+            buildUp.reserve(subpath_list.size());
             for (int j=0; j<subpath_list.size(); ++j) {
                 const QPolygonF &subpath = subpaths.at(subpath_list.at(j));
                 buildUp += subpath;
@@ -2664,6 +2665,7 @@ QPolygonF QPainterPath::toFillPolygon(const QTransform &matrix) const
     if (flats.isEmpty())
         return polygon;
     QPointF first = flats.first().first();
+    polygon.reserve(flats.size());
     for (int i=0; i<flats.size(); ++i) {
         polygon += flats.at(i);
         if (!flats.at(i).isClosed())
