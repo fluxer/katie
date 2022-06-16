@@ -70,7 +70,7 @@ There are several things you should be aware before considering Katie:
   - improved namespaces support and introduced QT_NAMESPACE_COMPAT
   - improved cross-compilation support
   - improved POSIX, XSI, SUSv2, etc. requirements build checks
-  - script component uses std::regex instead of internal PCRE copy
+  - script component uses QRegExp instead of internal PCRE copy
   - tests and benchmarks can be run without prior installation
 
 Bugs fixed in Katie, some of which in Qt5 too:
