@@ -569,6 +569,9 @@ class QPixmapColorizeFilterPrivate : public QPixmapFilterPrivate
 {
     Q_DECLARE_PUBLIC(QPixmapColorizeFilter)
 public:
+    QPixmapColorizeFilterPrivate()
+        : color(0, 0, 192), strength(1), opaque(true), alphaBlend(false) {}
+
     QColor color;
     qreal strength;
     bool opaque;
@@ -585,11 +588,6 @@ public:
 QPixmapColorizeFilter::QPixmapColorizeFilter(QObject *parent)
     : QPixmapFilter(*new QPixmapColorizeFilterPrivate, ColorizeFilter, parent)
 {
-    Q_D(QPixmapColorizeFilter);
-    d->color = QColor(0, 0, 192);
-    d->strength = qreal(1);
-    d->opaque = true;
-    d->alphaBlend = false;
 }
 
 /*!

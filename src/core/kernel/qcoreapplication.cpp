@@ -126,7 +126,6 @@ struct QCoreApplicationData
     QStringList app_librarypaths;
     QStringList app_pluginpaths;
 #endif
-
 };
 
 Q_GLOBAL_STATIC(QCoreApplicationData, coreappdata)
