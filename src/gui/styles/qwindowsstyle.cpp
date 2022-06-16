@@ -790,7 +790,6 @@ void QWindowsStyle::drawPrimitive(PrimitiveElement pe, const QStyleOption *opt, 
         bool down = opt->state & State_Sunken;
         bool enabled = opt->state & State_Enabled;
         bool on = opt->state & State_On;
-        QPolygon a;
 
         //center when rect is larger than indicator size
         int xOffset = 0;
