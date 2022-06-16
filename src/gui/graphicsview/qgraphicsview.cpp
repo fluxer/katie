@@ -2276,6 +2276,7 @@ QPolygonF QGraphicsView::mapToScene(const QRect &rect) const
 QPolygonF QGraphicsView::mapToScene(const QPolygon &polygon) const
 {
     QPolygonF poly;
+    poly.reserve(polygon.size());
     foreach (const QPoint &point, polygon)
         poly << mapToScene(point);
     return poly;
