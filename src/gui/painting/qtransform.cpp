@@ -1343,6 +1343,7 @@ static QPolygonF mapProjective(const QTransform &transform, const QPolygonF &pol
     path = transform.map(path);
 
     QPolygonF result;
+    result.reserve(path.elementCount());
     for (int i = 0; i < path.elementCount(); ++i)
         result << path.elementAt(i);
     return result;
