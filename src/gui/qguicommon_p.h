@@ -2,8 +2,6 @@
 #define QGUICOMMON_P_H
 
 #include "qfactoryloader_p.h"
-#include "qiconengineplugin.h"
-#include "qimageiohandler.h"
 #include "qtabbar.h"
 #include "qtabwidget.h"
 #include "qmap.h"
