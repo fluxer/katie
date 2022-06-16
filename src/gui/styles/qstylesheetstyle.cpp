@@ -4078,7 +4078,6 @@ void QStyleSheetStyle::drawPrimitive(PrimitiveElement pe, const QStyleOption *op
 
     int pseudoElement = PseudoElement_None;
     QRenderRule rule = renderRule(w, opt);
-    QRect rect = opt->rect;
 
     switch (pe) {
 
@@ -4412,7 +4411,7 @@ void QStyleSheetStyle::drawPrimitive(PrimitiveElement pe, const QStyleOption *op
     if (pseudoElement != PseudoElement_None) {
         QRenderRule subRule = renderRule(w, opt, pseudoElement);
         if (subRule.hasDrawable()) {
-            subRule.drawRule(p, rect);
+            subRule.drawRule(p, opt->rect);
         } else {
             baseStyle()->drawPrimitive(pe, opt, p, w);
         }
