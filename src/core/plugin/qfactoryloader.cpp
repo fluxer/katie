@@ -22,7 +22,7 @@
 #include "qfactoryloader_p.h"
 
 #ifndef QT_NO_LIBRARY
-#include "qmap.h"
+#include "qhash.h"
 #include "qdir.h"
 #include "qdebug.h"
 #include "qmutex.h"
@@ -44,8 +44,8 @@ public:
     ~QFactoryLoaderPrivate();
 
     QMutex mutex;
-    QMap<QString,QPluginLoader*> pluginMap;
-    QMap<QString,QString> keyMap;
+    QHash<QString,QPluginLoader*> pluginMap;
+    QHash<QString,QString> keyMap;
     QString suffix;
 };
 
