@@ -69,8 +69,7 @@ public:
     enum DoubleForm {
         DFExponent = 0,
         DFDecimal,
-        DFSignificantDigits,
-        _DFMax = DFSignificantDigits
+        DFSignificantDigits
     };
 
     enum Flags {
