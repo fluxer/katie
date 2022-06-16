@@ -1555,7 +1555,7 @@ QList<QPolygonF> QPainterPath::toFillPolygons(const QTransform &matrix) const
     for (int j=0; j<count; ++j) {
         if (subpaths.at(j).size() <= 2)
             continue;
-        QRectF cbounds = bounds.at(j);
+        const QRectF &cbounds = bounds.at(j);
         for (int i=0; i<count; ++i) {
             if (cbounds.intersects(bounds.at(i))) {
                 isects[j] << i;
