@@ -3311,7 +3311,13 @@ QString::Data *QString::fromAscii_helper(const char *str, int size)
 */
 QString QString::fromLatin1(const char *str, int size)
 {
-    return QString(fromLatin1_helper(str, size), 0);
+    if (!str) {
+        return QString();
+    }
+    if (size < 0) {
+        size = qstrlen(str);
+    }
+    return QIcuCodec::convertTo(str, size, "latin1");
 }
 
 /*!
