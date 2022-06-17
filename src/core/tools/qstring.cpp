@@ -3283,7 +3283,6 @@ QString::Data *QString::fromLatin1_helper(const char *str, int size)
 
 QString::Data *QString::fromAscii_helper(const char *str, int size)
 {
-#ifndef QT_NO_TEXTCODEC
     Data *d;
     if (!str) {
         d = &shared_null;
@@ -3294,13 +3293,11 @@ QString::Data *QString::fromAscii_helper(const char *str, int size)
     } else {
         if (size < 0)
             size = qstrlen(str);
-        QString s = QTextCodec::codecForName("US-ASCII")->toUnicode(str, size);
+        QString s = QString::fromAscii(str, size);
         d = s.d;
         d->ref.ref();
     }
     return d;
-#endif
-    return fromLatin1_helper(str, size);
 }
 
 /*!
