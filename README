@@ -21,7 +21,6 @@ There are several things you should be aware before considering Katie:
     e.g. QIconEngineV2 into QIconEngine and QKeyEventEx into QKeyEvent
   - QGuiPlatformPlugin class is public
   - updated localizations data from Common Locale Data Repository v41
-  - default text codec for C-strings is UTF-8
   - QTranslator uses gettext for translations
   - OpenVG is no longer supported graphics output
   - Blitter is no longer supported painting engine
