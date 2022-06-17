@@ -657,14 +657,6 @@ bool QApplicationPrivate::x11_apply_settings()
     QApplication::setWheelScrollLines(num);
 #endif
 
-    QString defaultcodec = settings.value(QLatin1String("Qt/defaultCodec"),
-                                          QVariant(QLatin1String("none"))).toString();
-    if (defaultcodec != QLatin1String("none")) {
-        QTextCodec *codec = QTextCodec::codecForName(defaultcodec.toLatin1());
-        if (codec)
-            QTextCodec::setCodecForTr(codec);
-    }
-
     int w = settings.value(QLatin1String("Qt/globalStrut/width")).toInt();
     int h = settings.value(QLatin1String("Qt/globalStrut/height")).toInt();
     QSize strut(w, h);

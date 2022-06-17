@@ -1174,9 +1174,7 @@ bool QCoreApplication::event(QEvent *e)
     This enum type defines the 8-bit encoding of character string
     arguments to translate():
 
-    \value CodecForTr  The encoding specified by
-                       QTextCodec::codecForTr() (Latin-1 if none has
-                       been set).
+    \value CodecForTr  US-ASCII.
     \value UnicodeUTF8  UTF-8.
     \value DefaultCodec  (Obsolete) Use CodecForTr instead.
 
@@ -1314,7 +1312,7 @@ void QCoreApplication::removeTranslator(QTranslator *translationFile)
     so will most likely result in crashes or other undesirable
     behavior.
 
-    \sa QObject::tr() installTranslator() QTextCodec::codecForTr()
+    \sa QObject::tr() installTranslator()
 */
 
 
@@ -1331,15 +1329,10 @@ QString QCoreApplication::translate(const char *context, const char *sourceText,
         }
     }
 
-#ifdef QT_NO_TEXTCODEC
-    Q_UNUSED(encoding)
-#else
-    if (encoding == UnicodeUTF8)
+    if (encoding == UnicodeUTF8) {
         return QString::fromUtf8(sourceText);
-    else if (QTextCodec::codecForTr())
-        return QTextCodec::codecForTr()->toUnicode(sourceText);
-#endif
-    return QString::fromLatin1(sourceText);
+    }
+    return QString::fromAscii(sourceText);
 }
 #endif // QT_NO_TRANSLATION
 

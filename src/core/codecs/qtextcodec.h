@@ -48,16 +48,6 @@ public:
     static QTextCodec* codecForLocale();
     static void setCodecForLocale(QTextCodec *c);
 
-    static inline QTextCodec* codecForTr()
-        { return cftr; }
-    static inline void setCodecForTr(QTextCodec *c)
-        { cftr = c; }
-
-    static inline QTextCodec* codecForCStrings()
-        { return QString::codecForCStrings; }
-    static inline void setCodecForCStrings(QTextCodec *c)
-        { QString::codecForCStrings = c; }
-
     static QTextCodec *codecForHtml(const QByteArray &ba);
     static QTextCodec *codecForHtml(const QByteArray &ba, QTextCodec *defaultCodec);
 
@@ -121,7 +111,6 @@ protected:
 
 private:
     friend class QTextCodecCleanup;
-    static QTextCodec *cftr;
 };
 Q_DECLARE_OPERATORS_FOR_FLAGS(QTextCodec::ConversionFlags)
 

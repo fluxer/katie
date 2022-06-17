@@ -1584,7 +1584,7 @@ void QObject::deleteLater()
     translators while performing translations is not supported. Doing
     so will probably result in crashes or other undesirable behavior.
 
-    \sa trUtf8(), QApplication::translate(), QTextCodec::setCodecForTr(), {Internationalization with Qt}
+    \sa trUtf8(), QApplication::translate(), {Internationalization with Katie}
 */
 
 /*!
@@ -1605,7 +1605,7 @@ void QObject::deleteLater()
 
     \snippet doc/src/snippets/code/src_corelib_kernel_qobject.cpp 20
 
-    \sa tr(), QApplication::translate(), {Internationalization with Qt}
+    \sa tr(), QApplication::translate(), {Internationalization with Katie}
 */
 #ifndef QT_NO_TRANSLATION
 QString QObject::tr(const char *sourceText)

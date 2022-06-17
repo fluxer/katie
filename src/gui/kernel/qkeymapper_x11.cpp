@@ -34,7 +34,7 @@ extern bool qt_sendSpontaneousEvent(QObject*, QEvent*);
 
 QKeyMapper::QKeyMapper()
     : keyboardInputDirection(Qt::LeftToRight),
-    keyMapperCodec(QTextCodec::codecForCStrings())
+    keyMapperCodec(QTextCodec::codecForName("US-ASCII"))
 {
     clearMappings();
 }

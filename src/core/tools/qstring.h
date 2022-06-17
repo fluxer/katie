@@ -464,9 +464,6 @@ private:
     static Data shared_empty;
     Data *d;
     QString(Data *dd, int /*dummy*/) : d(dd) {}
-#ifndef QT_NO_TEXTCODEC
-    static QTextCodec *codecForCStrings;
-#endif
     static void freeData(Data *);
     void reallocData(int alloc);
     void expand(int i);
@@ -719,10 +716,7 @@ inline QString::const_iterator QString::constEnd() const
 #ifndef QT_NO_CAST_FROM_ASCII
 inline bool qStringComparisonHelper(const QString &s1, const char *s2)
 {
-#  ifndef QT_NO_TEXTCODEC
-    if (QString::codecForCStrings) return (s1 == QString::fromAscii(s2));
-#  endif
-    return (s1 == QLatin1String(s2));
+    return (s1 == QString::fromAscii(s2));
 }
 inline bool QString::operator==(const char *s) const
 { return qStringComparisonHelper(*this, s); }
@@ -983,10 +977,7 @@ inline bool operator>=(const QStringRef &s1, const QStringRef &s2)
 
 inline bool qStringComparisonHelper(const QStringRef &s1, const char *s2)
 {
-#  ifndef QT_NO_TEXTCODEC
-    if (QString::codecForCStrings) return (s1 == QString::fromAscii(s2));
-#  endif
-    return (s1 == QLatin1String(s2));
+    return (s1 == QString::fromAscii(s2));
 }
 
 inline QT_ASCII_CAST_WARN bool operator==(const char *s1, const QStringRef &s2)

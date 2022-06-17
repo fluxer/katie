@@ -37,12 +37,6 @@
 
 QT_BEGIN_NAMESPACE
 
-#ifndef QT_NO_CODEC_FOR_C_STRINGS
-#  ifdef QT_NO_TEXTCODEC
-#    define QT_NO_CODEC_FOR_C_STRINGS
-#  endif
-#endif
-
 static inline bool is_ascii_char(uint ucs4)
 {
     return ucs4 <= 127;
@@ -402,29 +396,16 @@ static inline bool is_ascii_char(uint ucs4)
     ch.
 */
 QChar::QChar(const char ch)
+    : ucs(uchar(ch))
 {
-#ifndef QT_NO_CODEC_FOR_C_STRINGS
-    if (QTextCodec::codecForCStrings())
-        // #####
-        ucs =  QTextCodec::codecForCStrings()->toUnicode(&ch, 1).at(0).unicode();
-    else
-#endif
-        ucs = uchar(ch);
 }
 
 /*!
     Constructs a QChar corresponding to ASCII/Latin-1 character \a ch.
 */
 QChar::QChar(const uchar ch)
+    : ucs(ch)
 {
-#ifndef QT_NO_CODEC_FOR_C_STRINGS
-    if (QTextCodec::codecForCStrings()) {
-        // #####
-        const char c = char(ch);
-        ucs =  QTextCodec::codecForCStrings()->toUnicode(&c, 1).at(0).unicode();
-    } else
-#endif
-        ucs = ch;
 }
 
 /*!
@@ -1400,7 +1381,7 @@ uint QChar::toCaseFolded(const uint ucs4)
     Returns the Latin-1 character equivalent to the QChar, or 0. This
     is mainly useful for non-internationalized software.
 
-    \sa toAscii(), unicode(), QTextCodec::codecForCStrings()
+    \sa toAscii(), unicode()
 */
 
 /*!
@@ -1415,15 +1396,10 @@ uint QChar::toCaseFolded(const uint ucs4)
     in C strings. This is mainly useful for developers of non-internationalized
     software.
 
-    \sa toLatin1(), unicode(), QTextCodec::codecForCStrings()
+    \sa toLatin1(), unicode()
 */
 char QChar::toAscii() const
 {
-#ifndef QT_NO_CODEC_FOR_C_STRINGS
-    if (QTextCodec::codecForCStrings())
-        // #####
-        return QTextCodec::codecForCStrings()->fromUnicode(QString(*this)).at(0);
-#endif
     return ucs > 0xff ? 0 : char(ucs);
 }
 
@@ -1433,7 +1409,7 @@ char QChar::toAscii() const
     Converts the Latin-1 character \a c to its equivalent QChar. This
     is mainly useful for non-internationalized software.
 
-    \sa fromAscii(), unicode(), QTextCodec::codecForCStrings()
+    \sa fromAscii(), unicode()
 */
 
 /*!
@@ -1442,15 +1418,10 @@ char QChar::toAscii() const
 
     An alternative is to use QLatin1Char.
 
-    \sa fromLatin1(), unicode(), QTextCodec::codecForCStrings()
+    \sa fromLatin1(), unicode()
 */
 QChar QChar::fromAscii(const char c)
 {
-#ifndef QT_NO_CODEC_FOR_C_STRINGS
-    if (QTextCodec::codecForCStrings())
-        // #####
-        return QTextCodec::codecForCStrings()->toUnicode(&c, 1).at(0).unicode();
-#endif
     return QChar(ushort(uchar(c)));
 }
 
