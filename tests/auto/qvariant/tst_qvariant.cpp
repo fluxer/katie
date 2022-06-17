@@ -3162,15 +3162,15 @@ void tst_QVariant::moreCustomTypes()
         playWithVariant(12.12f, false, "12.12", 12.12f, true);
         playWithVariant('a', false, "a", 'a', true);
         playWithVariant((unsigned char)('a'), false, "a", 'a', true);
-        playWithVariant( quint8(12), false, "\xc", 12, true);
-        playWithVariant(  qint8(13), false, "\xd", 13, true);
+        playWithVariant( quint8(12), false, QString::fromLatin1("\xc"), 12, true);
+        playWithVariant(  qint8(13), false, QString::fromLatin1("\xd"), 13, true);
         playWithVariant(quint16(14), false, "14", 14, true);
         playWithVariant( qint16(15), false, "15", 15, true);
         playWithVariant(quint32(16), false, "16", 16, true);
         playWithVariant( qint32(17), false, "17", 17, true);
         playWithVariant(quint64(18), false, "18", 18, true);
         playWithVariant( qint64(19), false, "19", 19, true);
-        playWithVariant(  qint8(-12), false, "\xf4", -12, true);
+        playWithVariant(  qint8(-12), false, QString::fromLatin1("\xf4"), -12, true);
         playWithVariant( qint16(-13), false, "-13", -13, true);
         playWithVariant( qint32(-14), false, "-14", -14, true);
         playWithVariant( qint64(-15), false, "-15", -15, true);

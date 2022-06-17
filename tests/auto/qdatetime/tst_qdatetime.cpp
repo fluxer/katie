@@ -1341,16 +1341,16 @@ void tst_QDateTime::fromStringStringFormatLocale_data()
     QTest::newRow("C:narrow") << "25 Feb 2017 17:21:25" << "d MMM yyyy HH:mm:ss" << c << dt;
 
     QLocale fr(QLocale::French);
-    QTest::newRow("fr:long") << "Samedi 25 février 2017 17:21:25" << "dddd d MMMM yyyy HH:mm:ss" << fr << dt;
+    QTest::newRow("fr:long") << QString::fromUtf8("Samedi 25 février 2017 17:21:25") << "dddd d MMMM yyyy HH:mm:ss" << fr << dt;
     QTest::newRow("fr:short") << "25/02/2017 17:21" << "dd/MM/yyyy HH:mm" << fr << dt.addSecs(-25);
 
     // In Turkish, the word for Friday ("Cuma") is a prefix for the word for
     // Saturday ("Cumartesi")
     QLocale tr(QLocale::Turkish);
-    QTest::newRow("tr:long") << "25 Şubat 2017 Cumartesi 17:21:25" << "d MMMM yyyy dddd HH:mm:ss" << tr << dt;
-    QTest::newRow("tr:long2") << "24 Şubat 2017 Cuma 17:21:25" << "d MMMM yyyy dddd HH:mm:ss" << tr << dt.addDays(-1);
-    QTest::newRow("tr:mashed") << "25 Şubat2017 Cumartesi17:21:25" << "d MMMMyyyy ddddHH:mm:ss" << tr << dt;
-    QTest::newRow("tr:mashed2") << "24 Şubat2017 Cuma17:21:25" << "d MMMMyyyy ddddHH:mm:ss" << tr << dt.addDays(-1);
+    QTest::newRow("tr:long") << QString::fromUtf8("25 Şubat 2017 Cumartesi 17:21:25") << "d MMMM yyyy dddd HH:mm:ss" << tr << dt;
+    QTest::newRow("tr:long2") << QString::fromUtf8("24 Şubat 2017 Cuma 17:21:25") << "d MMMM yyyy dddd HH:mm:ss" << tr << dt.addDays(-1);
+    QTest::newRow("tr:mashed") << QString::fromUtf8("25 Şubat2017 Cumartesi17:21:25") << "d MMMMyyyy ddddHH:mm:ss" << tr << dt;
+    QTest::newRow("tr:mashed2") << QString::fromUtf8("24 Şubat2017 Cuma17:21:25") << "d MMMMyyyy ddddHH:mm:ss" << tr << dt.addDays(-1);
     QTest::newRow("tr:short") << "25.02.2017 17:21" << "d.MM.yyyy HH:mm" << tr << dt.addSecs(-25);
 }
 
