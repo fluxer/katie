@@ -4165,9 +4165,10 @@ int QString::localeAwareCompare_helper(const QChar *data1, int length1,
         return res;
     } // else fall through
 
+    const QByteArray databytes1 = toLocal8Bit_helper(data1, length1);
+    const QByteArray databytes2 = toLocal8Bit_helper(data2, length2);
     // declared in <string.h>
-    int delta = strcoll(toLocal8Bit_helper(data1, length1).constData(),
-                        toLocal8Bit_helper(data2, length2).constData());
+    int delta = strcoll(databytes1.constData(), databytes2.constData());
     if (delta == 0)
         delta = ucstrcmp(data1, length1, data2, length2);
     return delta;
