@@ -56,7 +56,7 @@ int main(int argc, char *argv[])
         return 3;
     }
 
-    if (inputimage.save(outputpath, outputformat) == false) {
+    if (inputimage.save(outputpath, outputformat, 100) == false) {
         qWarning() << "Could not save" << outputpath;
         return 4;
     }
