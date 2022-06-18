@@ -604,12 +604,21 @@ bool QColor::isValidColor(const QString &name)
 QStringList QColor::colorNames()
 {
 #ifndef QT_NO_COLORNAMES
-    static QStringList lst;
-    if (lst.isEmpty()) {
-        for (qint16 i = 0; i < RGBTblSize; i++)
-            lst << QString::fromLatin1(RGBTbl[i].name);
+    QStringList result;
+    for (qint16 i = 0; i < RGBTblSize; i++) {
+        result << QString::fromLatin1(RGBTbl[i].name);
     }
-    return lst;
+#ifdef Q_WS_X11
+    if (qAllowX11ColorNames) {
+        for (qint16 i = 0; i < X11RGBTblSize; i++) {
+            const QString x11color = QString::fromLatin1(X11RGBTbl[i].name);
+            if (!result.contains(x11color)) {
+                result << x11color;
+            }
+        }
+    }
+#endif
+    return result;
 #else
     return QStringList();
 #endif
