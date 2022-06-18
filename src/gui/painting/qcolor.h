@@ -36,7 +36,7 @@ class QVariant;
 class Q_GUI_EXPORT QColor
 {
 public:
-    enum Spec { Invalid, Rgb, Hsv, Cmyk, Hsl };
+    enum Spec { Invalid, Rgb, Hsv, Hsl };
 
     QColor();
     QColor(Qt::GlobalColor color);
@@ -107,22 +107,6 @@ public:
     void getHsvF(qreal *h, qreal *s, qreal *v, qreal *a = nullptr) const;
     void setHsvF(qreal h, qreal s, qreal v, qreal a = 1.0);
 
-    int cyan() const;
-    int magenta() const;
-    int yellow() const;
-    int black() const;
-
-    qreal cyanF() const;
-    qreal magentaF() const;
-    qreal yellowF() const;
-    qreal blackF() const;
-
-    void getCmyk(int *c, int *m, int *y, int *k, int *a = nullptr);
-    void setCmyk(int c, int m, int y, int k, int a = 255);
-
-    void getCmykF(qreal *c, qreal *m, qreal *y, qreal *k, qreal *a = nullptr);
-    void setCmykF(qreal c, qreal m, qreal y, qreal k, qreal a = 1.0);
-
     int hslHue() const; // 0 <= hue < 360
     int hslSaturation() const;
     int lightness() const;
@@ -139,7 +123,6 @@ public:
 
     QColor toRgb() const;
     QColor toHsv() const;
-    QColor toCmyk() const;
     QColor toHsl() const;
 
     QColor convertTo(Spec colorSpec) const;
@@ -152,9 +135,6 @@ public:
 
     static QColor fromHsv(int h, int s, int v, int a = 255);
     static QColor fromHsvF(qreal h, qreal s, qreal v, qreal a = 1.0);
-
-    static QColor fromCmyk(int c, int m, int y, int k, int a = 255);
-    static QColor fromCmykF(qreal c, qreal m, qreal y, qreal k, qreal a = 1.0);
 
     static QColor fromHsl(int h, int s, int l, int a = 255);
     static QColor fromHslF(qreal h, qreal s, qreal l, qreal a = 1.0);
@@ -192,28 +172,18 @@ private:
             ushort red;
             ushort green;
             ushort blue;
-            ushort pad;
         } argb;
         struct {
             ushort alpha;
             ushort hue;
             ushort saturation;
             ushort value;
-            ushort pad;
         } ahsv;
-        struct {
-            ushort alpha;
-            ushort cyan;
-            ushort magenta;
-            ushort yellow;
-            ushort black;
-        } acmyk;
         struct {
             ushort alpha;
             ushort hue;
             ushort saturation;
             ushort lightness;
-            ushort pad;
         } ahsl;
         ushort array[5];
     } ct;

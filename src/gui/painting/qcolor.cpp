@@ -99,7 +99,7 @@ static const struct globalColorsData {
 
 /*!
     \class QColor
-    \brief The QColor class provides colors based on RGB, HSV or CMYK values.
+    \brief The QColor class provides colors based on RGB, HSV or HSL values.
 
     \ingroup painting
     \ingroup appearance
@@ -107,29 +107,20 @@ static const struct globalColorsData {
 
     A color is normally specified in terms of RGB (red, green, and
     blue) components, but it is also possible to specify it in terms
-    of HSV (hue, saturation, and value) and CMYK (cyan, magenta,
-    yellow and black) components. In addition a color can be specified
+    of HSV (hue, saturation and value) and HSL (hue, saturation,
+    and lightness) components. In addition a color can be specified
     using a color name. The color name can be any of the SVG 1.0 color
     names.
 
-    \table
-    \header
-    \o RGB \o HSV \o CMYK
-    \row
-    \o \inlineimage qcolor-rgb.png
-    \o \inlineimage qcolor-hsv.png
-    \o \inlineimage qcolor-cmyk.png
-    \endtable
-
     The QColor constructor creates the color based on RGB values.  To
-    create a QColor based on either HSV or CMYK values, use the
-    toHsv() and toCmyk() functions respectively. These functions
+    create a QColor based on either HSV or HSL values, use the
+    toHsv() and toHsl() functions respectively. These functions
     return a copy of the color using the desired format. In addition
-    the static fromRgb(), fromHsv() and fromCmyk() functions create
+    the static fromRgb(), fromHsv() and fromHsl() functions create
     colors from the specified values. Alternatively, a color can be
     converted to any of the three formats using the convertTo()
     function (returning a copy of the color in the desired format), or
-    any of the setRgb(), setHsv() and setCmyk() functions altering \e
+    any of the setRgb(), setHsv() and setHsl() functions altering \e
     this color's format. The spec() function tells how the color was
     specified.
 
@@ -138,7 +129,7 @@ static const struct globalColorsData {
     The color names are taken from the SVG 1.0 color names. The name()
     function returns the name of the color in the format
     "#RRGGBB". Colors can also be set using setRgb(), setHsv() and
-    setCmyk(). To get a lighter or darker color use the lighter() and
+    setHsl(). To get a lighter or darker color use the lighter() and
     darker() functions respectively.
 
     The isValid() function indicates whether a QColor is legal at
@@ -150,7 +141,7 @@ static const struct globalColorsData {
     The color components can be retrieved individually, e.g with
     red(), hue() and cyan(). The values of the color components can
     also be retrieved in one go using the getRgb(), getHsv() and
-    getCmyk() functions. Using the RGB color model, the color
+    getHsl() functions. Using the RGB color model, the color
     components can in addition be accessed with rgb().
 
     There are several related non-members: QRgb is a typdef for an
@@ -177,7 +168,7 @@ static const struct globalColorsData {
 
     QColor supports floating point precision and provides floating
     point versions of all the color components functions,
-    e.g. getRgbF(), hueF() and fromCmykF(). Note that since the
+    e.g. getRgbF(), hueF() and fromHslF(). Note that since the
     components are stored using 16-bit integers, there might be minor
     deviations between the values set using, for example, setRgbF()
     and the values returned by the getRgbF() function due to rounding.
@@ -284,43 +275,16 @@ static const struct globalColorsData {
     if you look in a really strong light a things they are going to white and
     wash out.
 
-    \section1 The CMYK Color Model
-
-    While the RGB and HSV color models are used for display on
-    computer monitors, the CMYK model is used in the four-color
-    printing process of printing presses and some hard-copy
-    devices.
-
-    CMYK has four components, all in the range 0-255: cyan (C),
-    magenta (M), yellow (Y) and black (K).  Cyan, magenta and yellow
-    are called subtractive colors; the CMYK color model creates color
-    by starting with a white surface and then subtracting color by
-    applying the appropriate components. While combining cyan, magenta
-    and yellow gives the color black, subtracting one or more will
-    yield any other color. When combined in various percentages, these
-    three colors can create the entire spectrum of colors.
-
-    Mixing 100 percent of cyan, magenta and yellow \e does produce
-    black, but the result is unsatisfactory since it wastes ink,
-    increases drying time, and gives a muddy colour when printing. For
-    that reason, black is added in professional printing to provide a
-    solid black tone; hence the term 'four color process'.
-
-    In addition to the standard CMYK model, Qt provides an
-    alpha-channel to feature \l {QColor#Alpha-Blended
-    Drawing}{alpha-blended drawing}.
-
     \sa QPalette, QBrush, QApplication::setColorSpec()
 */
 
 /*!
     \enum QColor::Spec
 
-    The type of color specified, either RGB, HSV, CMYK or HSL.
+    The type of color specified, either RGB, HSV or HSL.
 
     \value Rgb
     \value Hsv
-    \value Cmyk
     \value Hsl
     \value Invalid
 
@@ -388,7 +352,6 @@ QColor::QColor(QRgb color)
     ct.argb.red   = qRed(color)   * 0x101;
     ct.argb.green = qGreen(color) * 0x101;
     ct.argb.blue  = qBlue(color)  * 0x101;
-    ct.argb.pad   = 0;
 }
 
 /*!
@@ -411,9 +374,6 @@ QColor::QColor(Spec spec)
         break;
     case Hsv:
         setHsv(0, 0, 0);
-        break;
-    case Cmyk:
-        setCmyk(0, 0, 0, 0);
         break;
     case Hsl:
         setHsl(0, 0, 0, 0);
@@ -705,7 +665,6 @@ void QColor::setHsvF(qreal h, qreal s, qreal v, qreal a)
     ct.ahsv.hue        = h == qreal(-1.0) ? USHRT_MAX : qRound(h * 36000);
     ct.ahsv.saturation = qRound(s * USHRT_MAX);
     ct.ahsv.value      = qRound(v * USHRT_MAX);
-    ct.ahsv.pad        = 0;
 }
 
 /*!
@@ -731,7 +690,6 @@ void QColor::setHsv(int h, int s, int v, int a)
     ct.ahsv.hue        = h == -1 ? USHRT_MAX : (h % 360) * 100;
     ct.ahsv.saturation = s * 0x101;
     ct.ahsv.value      = v * 0x101;
-    ct.ahsv.pad        = 0;
 }
 
 /*!
@@ -820,7 +778,6 @@ void QColor::setHslF(qreal h, qreal s, qreal l, qreal a)
     ct.ahsl.hue        = h == qreal(-1.0) ? USHRT_MAX : qRound(h * 36000);
     ct.ahsl.saturation = qRound(s * USHRT_MAX);
     ct.ahsl.lightness  = qRound(l * USHRT_MAX);
-    ct.ahsl.pad        = 0;
 }
 
 /*!
@@ -847,7 +804,6 @@ void QColor::setHsl(int h, int s, int l, int a)
     ct.ahsl.hue        = h == -1 ? USHRT_MAX : (h % 360) * 100;
     ct.ahsl.saturation = s * 0x101;
     ct.ahsl.lightness  = l * 0x101;
-    ct.ahsl.pad        = 0;
 }
 
 /*!
@@ -940,7 +896,6 @@ void QColor::setRgbF(qreal r, qreal g, qreal b, qreal a)
     ct.argb.red   = qRound(r * USHRT_MAX);
     ct.argb.green = qRound(g * USHRT_MAX);
     ct.argb.blue  = qRound(b * USHRT_MAX);
-    ct.argb.pad   = 0;
 }
 
 /*!
@@ -963,7 +918,6 @@ void QColor::setRgb(int r, int g, int b, int a)
     ct.argb.red   = r * 0x101;
     ct.argb.green = g * 0x101;
     ct.argb.blue  = b * 0x101;
-    ct.argb.pad   = 0;
 }
 
 /*!
@@ -1002,7 +956,6 @@ void QColor::setRgba(QRgb rgba)
     ct.argb.red   = qRed(rgba)   * 0x101;
     ct.argb.green = qGreen(rgba) * 0x101;
     ct.argb.blue  = qBlue(rgba)  * 0x101;
-    ct.argb.pad   = 0;
 }
 
 /*!
@@ -1031,7 +984,6 @@ void QColor::setRgb(QRgb rgb)
     ct.argb.red   = qRed(rgb)   * 0x101;
     ct.argb.green = qGreen(rgb) * 0x101;
     ct.argb.blue  = qBlue(rgb)  * 0x101;
-    ct.argb.pad   = 0;
 }
 
 /*!
@@ -1468,111 +1420,6 @@ qreal QColor::lightnessF() const
 }
 
 /*!
-    Returns the cyan color component of this color.
-
-    \sa cyanF(), getCmyk(), {QColor#The CMYK Color Model}{The CMYK
-    Color Model}
-*/
-int QColor::cyan() const
-{
-    if (cspec != Invalid && cspec != Cmyk)
-        return toCmyk().cyan();
-    return ct.acmyk.cyan >> 8;
-}
-
-/*!
-    Returns the magenta color component of this color.
-
-    \sa magentaF(), getCmyk(), {QColor#The CMYK Color Model}{The CMYK
-    Color Model}
-*/
-int QColor::magenta() const
-{
-    if (cspec != Invalid && cspec != Cmyk)
-        return toCmyk().magenta();
-    return ct.acmyk.magenta >> 8;
-}
-
-/*!
-    Returns the yellow color component of this color.
-
-    \sa yellowF(), getCmyk(), {QColor#The CMYK Color Model}{The CMYK
-    Color Model}
-*/
-int QColor::yellow() const
-{
-    if (cspec != Invalid && cspec != Cmyk)
-        return toCmyk().yellow();
-    return ct.acmyk.yellow >> 8;
-}
-
-/*!
-    Returns the black color component of this color.
-
-    \sa blackF(), getCmyk(), {QColor#The CMYK Color Model}{The CMYK
-    Color Model}
-
-*/
-int QColor::black() const
-{
-    if (cspec != Invalid && cspec != Cmyk)
-        return toCmyk().black();
-    return ct.acmyk.black >> 8;
-}
-
-/*!
-    Returns the cyan color component of this color.
-
-    \sa cyan(), getCmykF(), {QColor#The CMYK Color Model}{The CMYK
-    Color Model}
-*/
-qreal QColor::cyanF() const
-{
-    if (cspec != Invalid && cspec != Cmyk)
-        return toCmyk().cyanF();
-    return ct.acmyk.cyan / qreal(USHRT_MAX);
-}
-
-/*!
-    Returns the magenta color component of this color.
-
-    \sa magenta(), getCmykF(), {QColor#The CMYK Color Model}{The CMYK
-    Color Model}
-*/
-qreal QColor::magentaF() const
-{
-    if (cspec != Invalid && cspec != Cmyk)
-        return toCmyk().magentaF();
-    return ct.acmyk.magenta / qreal(USHRT_MAX);
-}
-
-/*!
-    Returns the yellow color component of this color.
-
-     \sa yellow(), getCmykF(), {QColor#The CMYK Color Model}{The CMYK
-    Color Model}
-*/
-qreal QColor::yellowF() const
-{
-    if (cspec != Invalid && cspec != Cmyk)
-        return toCmyk().yellowF();
-    return ct.acmyk.yellow / qreal(USHRT_MAX);
-}
-
-/*!
-    Returns the black color component of this color.
-
-    \sa black(), getCmykF(), {QColor#The CMYK Color Model}{The CMYK
-    Color Model}
-*/
-qreal QColor::blackF() const
-{
-    if (cspec != Invalid && cspec != Cmyk)
-        return toCmyk().blackF();
-    return ct.acmyk.black / qreal(USHRT_MAX);
-}
-
-/*!
     Create and returns an RGB QColor based on this color.
 
     \sa fromRgb(), convertTo(), isValid()
@@ -1585,7 +1432,6 @@ QColor QColor::toRgb() const
     QColor color;
     color.cspec = Rgb;
     color.ct.argb.alpha = ct.argb.alpha;
-    color.ct.argb.pad = 0;
 
     switch (cspec) {
     case Hsv: {
@@ -1692,17 +1538,6 @@ QColor QColor::toRgb() const
         }
         break;
     }
-    case Cmyk: {
-        const qreal c = ct.acmyk.cyan / qreal(USHRT_MAX);
-        const qreal m = ct.acmyk.magenta / qreal(USHRT_MAX);
-        const qreal y = ct.acmyk.yellow / qreal(USHRT_MAX);
-        const qreal k = ct.acmyk.black / qreal(USHRT_MAX);
-
-        color.ct.argb.red   = qRound((qreal(1.0) - (c * (qreal(1.0) - k) + k)) * USHRT_MAX);
-        color.ct.argb.green = qRound((qreal(1.0) - (m * (qreal(1.0) - k) + k)) * USHRT_MAX);
-        color.ct.argb.blue  = qRound((qreal(1.0) - (y * (qreal(1.0) - k) + k)) * USHRT_MAX);
-        break;
-    }
     default:
         break;
     }
@@ -1732,7 +1567,6 @@ QColor QColor::toHsv() const
     QColor color;
     color.cspec = Hsv;
     color.ct.ahsv.alpha = ct.argb.alpha;
-    color.ct.ahsv.pad = 0;
 
     const qreal r = ct.argb.red   / qreal(USHRT_MAX);
     const qreal g = ct.argb.green / qreal(USHRT_MAX);
@@ -1783,7 +1617,6 @@ QColor QColor::toHsl() const
     QColor color;
     color.cspec = Hsl;
     color.ct.ahsl.alpha = ct.argb.alpha;
-    color.ct.ahsl.pad = 0;
 
     const qreal r = ct.argb.red   / qreal(USHRT_MAX);
     const qreal g = ct.argb.green / qreal(USHRT_MAX);
@@ -1823,48 +1656,6 @@ QColor QColor::toHsl() const
     return color;
 }
 
-/*!
-    Creates and returns a CMYK QColor based on this color.
-
-    \sa fromCmyk(), convertTo(), isValid(), {QColor#The CMYK Color
-    Model}{The CMYK Color Model}
-*/
-QColor QColor::toCmyk() const
-{
-    if (!isValid() || cspec == Cmyk)
-        return *this;
-    if (cspec != Rgb)
-        return toRgb().toCmyk();
-
-    QColor color;
-    color.cspec = Cmyk;
-    color.ct.acmyk.alpha = ct.argb.alpha;
-
-    // rgb -> cmy
-    const qreal r = ct.argb.red   / qreal(USHRT_MAX);
-    const qreal g = ct.argb.green / qreal(USHRT_MAX);
-    const qreal b = ct.argb.blue  / qreal(USHRT_MAX);
-    qreal c = qreal(1.0) - r;
-    qreal m = qreal(1.0) - g;
-    qreal y = qreal(1.0) - b;
-
-    // cmy -> cmyk
-    const qreal k = qMin(c, qMin(m, y));
-
-    if (!qFuzzyIsNull(k - 1)) {
-        c = (c - k) / (qreal(1.0) - k);
-        m = (m - k) / (qreal(1.0) - k);
-        y = (y - k) / (qreal(1.0) - k);
-    }
-
-    color.ct.acmyk.cyan    = qRound(c * USHRT_MAX);
-    color.ct.acmyk.magenta = qRound(m * USHRT_MAX);
-    color.ct.acmyk.yellow  = qRound(y * USHRT_MAX);
-    color.ct.acmyk.black   = qRound(k * USHRT_MAX);
-
-    return color;
-}
-
 QColor QColor::convertTo(QColor::Spec colorSpec) const
 {
     if (colorSpec == cspec)
@@ -1874,8 +1665,6 @@ QColor QColor::convertTo(QColor::Spec colorSpec) const
         return toRgb();
     case Hsv:
         return toHsv();
-    case Cmyk:
-        return toCmyk();
     case Hsl:
         return toHsl();
     case Invalid:
@@ -1942,7 +1731,6 @@ QColor QColor::fromRgb(int r, int g, int b, int a)
     color.ct.argb.red   = r * 0x101;
     color.ct.argb.green = g * 0x101;
     color.ct.argb.blue  = b * 0x101;
-    color.ct.argb.pad   = 0;
     return color;
 }
 
@@ -1971,7 +1759,6 @@ QColor QColor::fromRgbF(qreal r, qreal g, qreal b, qreal a)
     color.ct.argb.red   = qRound(r * USHRT_MAX);
     color.ct.argb.green = qRound(g * USHRT_MAX);
     color.ct.argb.blue  = qRound(b * USHRT_MAX);
-    color.ct.argb.pad   = 0;
     return color;
 }
 
@@ -2002,7 +1789,6 @@ QColor QColor::fromHsv(int h, int s, int v, int a)
     color.ct.ahsv.hue        = h == -1 ? USHRT_MAX : (h % 360) * 100;
     color.ct.ahsv.saturation = s * 0x101;
     color.ct.ahsv.value      = v * 0x101;
-    color.ct.ahsv.pad        = 0;
     return color;
 }
 
@@ -2034,7 +1820,6 @@ QColor QColor::fromHsvF(qreal h, qreal s, qreal v, qreal a)
     color.ct.ahsv.hue        = h == qreal(-1.0) ? USHRT_MAX : qRound(h * 36000);
     color.ct.ahsv.saturation = qRound(s * USHRT_MAX);
     color.ct.ahsv.value      = qRound(v * USHRT_MAX);
-    color.ct.ahsv.pad        = 0;
     return color;
 }
 
@@ -2066,7 +1851,6 @@ QColor QColor::fromHsl(int h, int s, int l, int a)
     color.ct.ahsl.hue        = h == -1 ? USHRT_MAX : (h % 360) * 100;
     color.ct.ahsl.saturation = s * 0x101;
     color.ct.ahsl.lightness  = l * 0x101;
-    color.ct.ahsl.pad        = 0;
     return color;
 }
 
@@ -2100,190 +1884,6 @@ QColor QColor::fromHslF(qreal h, qreal s, qreal l, qreal a)
         color.ct.ahsl.hue = 0;
     color.ct.ahsl.saturation = qRound(s * USHRT_MAX);
     color.ct.ahsl.lightness  = qRound(l * USHRT_MAX);
-    color.ct.ahsl.pad        = 0;
-    return color;
-}
-
-
-/*!
-    Sets the contents pointed to by \a c, \a m, \a y, \a k, and \a a, to the
-    cyan, magenta, yellow, black, and alpha-channel (transparency) components
-    of the color's CMYK value.
-
-    These components can be retrieved individually using the cyan(), magenta(),
-    yellow(), black() and alpha() functions.
-
-    \sa setCmyk(), {QColor#The CMYK Color Model}{The CMYK Color Model}
-*/
-void QColor::getCmyk(int *c, int *m, int *y, int *k, int *a)
-{
-    if (!c || !m || !y || !k)
-        return;
-
-    if (cspec != Invalid && cspec != Cmyk) {
-        toCmyk().getCmyk(c, m, y, k, a);
-        return;
-    }
-
-    *c = ct.acmyk.cyan >> 8;
-    *m = ct.acmyk.magenta >> 8;
-    *y = ct.acmyk.yellow >> 8;
-    *k = ct.acmyk.black >> 8;
-
-    if (a)
-        *a = ct.acmyk.alpha >> 8;
-}
-
-/*!
-    Sets the contents pointed to by \a c, \a m, \a y, \a k, and \a a, to the
-    cyan, magenta, yellow, black, and alpha-channel (transparency) components
-    of the color's CMYK value.
-
-    These components can be retrieved individually using the cyanF(),
-    magentaF(), yellowF(), blackF() and alphaF() functions.
-
-    \sa setCmykF(), {QColor#The CMYK Color Model}{The CMYK Color Model}
-*/
-void QColor::getCmykF(qreal *c, qreal *m, qreal *y, qreal *k, qreal *a)
-{
-    if (!c || !m || !y || !k)
-        return;
-
-    if (cspec != Invalid && cspec != Cmyk) {
-        toCmyk().getCmykF(c, m, y, k, a);
-        return;
-    }
-
-    *c = ct.acmyk.cyan    / qreal(USHRT_MAX);
-    *m = ct.acmyk.magenta / qreal(USHRT_MAX);
-    *y = ct.acmyk.yellow  / qreal(USHRT_MAX);
-    *k = ct.acmyk.black   / qreal(USHRT_MAX);
-
-    if (a)
-        *a = ct.acmyk.alpha / qreal(USHRT_MAX);
-}
-
-/*!
-    Sets the color to CMYK values, \a c (cyan), \a m (magenta), \a y (yellow),
-    \a k (black), and \a a (alpha-channel, i.e. transparency).
-
-    All the values must be in the range 0-255.
-
-    \sa getCmyk(), setCmykF(), {QColor#The CMYK Color Model}{The
-    CMYK Color Model}
-*/
-void QColor::setCmyk(int c, int m, int y, int k, int a)
-{
-    if (Q_UNLIKELY(c < 0 || c > 255
-        || m < 0 || m > 255
-        || y < 0 || y > 255
-        || k < 0 || k > 255
-        || a < 0 || a > 255)) {
-        qWarning("QColor::setCmyk: CMYK parameters out of range");
-        invalidate();
-        return;
-    }
-
-    cspec = Cmyk;
-    ct.acmyk.alpha   = a * 0x101;
-    ct.acmyk.cyan    = c * 0x101;
-    ct.acmyk.magenta = m * 0x101;
-    ct.acmyk.yellow  = y * 0x101;
-    ct.acmyk.black   = k * 0x101;
-}
-
-/*!
-    \overload
-
-    Sets the color to CMYK values, \a c (cyan), \a m (magenta), \a y (yellow),
-    \a k (black), and \a a (alpha-channel, i.e. transparency).
-
-    All the values must be in the range 0.0-1.0.
-
-    \sa getCmykF() setCmyk(), {QColor#The CMYK Color Model}{The CMYK
-    Color Model}
-*/
-void QColor::setCmykF(qreal c, qreal m, qreal y, qreal k, qreal a)
-{
-    if (Q_UNLIKELY(c < qreal(0.0) || c > qreal(1.0)
-        || m < qreal(0.0) || m > qreal(1.0)
-        || y < qreal(0.0) || y > qreal(1.0)
-        || k < qreal(0.0) || k > qreal(1.0)
-        || a < qreal(0.0) || a > qreal(1.0))) {
-        qWarning("QColor::setCmykF: CMYK parameters out of range");
-        invalidate();
-        return;
-    }
-
-    cspec = Cmyk;
-    ct.acmyk.alpha   = qRound(a * USHRT_MAX);
-    ct.acmyk.cyan    = qRound(c * USHRT_MAX);
-    ct.acmyk.magenta = qRound(m * USHRT_MAX);
-    ct.acmyk.yellow  = qRound(y * USHRT_MAX);
-    ct.acmyk.black   = qRound(k * USHRT_MAX);
-}
-
-/*!
-    Static convenience function that returns a QColor constructed from the
-    given CMYK color values: \a c (cyan), \a m (magenta), \a y (yellow), \a k
-    (black), and \a a (alpha-channel, i.e. transparency).
-
-    All the values must be in the range 0-255.
-
-    \sa toCmyk(), fromCmykF(), isValid(), {QColor#The CMYK Color Model}{The CMYK
-    Color Model}
-*/
-QColor QColor::fromCmyk(int c, int m, int y, int k, int a)
-{
-    if (Q_UNLIKELY(c < 0 || c > 255
-        || m < 0 || m > 255
-        || y < 0 || y > 255
-        || k < 0 || k > 255
-        || a < 0 || a > 255)) {
-        qWarning("QColor::fromCmyk: CMYK parameters out of range");
-        return QColor();
-    }
-
-    QColor color;
-    color.cspec = Cmyk;
-    color.ct.acmyk.alpha   = a * 0x101;
-    color.ct.acmyk.cyan    = c * 0x101;
-    color.ct.acmyk.magenta = m * 0x101;
-    color.ct.acmyk.yellow  = y * 0x101;
-    color.ct.acmyk.black   = k * 0x101;
-    return color;
-}
-
-/*!
-    \overload
-
-    Static convenience function that returns a QColor constructed from the
-    given CMYK color values: \a c (cyan), \a m (magenta), \a y (yellow), \a k
-    (black), and \a a (alpha-channel, i.e. transparency).
-
-    All the values must be in the range 0.0-1.0.
-
-    \sa toCmyk(), fromCmyk(), isValid(), {QColor#The CMYK Color
-    Model}{The CMYK Color Model}
-*/
-QColor QColor::fromCmykF(qreal c, qreal m, qreal y, qreal k, qreal a)
-{
-    if (Q_UNLIKELY(c < qreal(0.0) || c > qreal(1.0)
-        || m < qreal(0.0) || m > qreal(1.0)
-        || y < qreal(0.0) || y > qreal(1.0)
-        || k < qreal(0.0) || k > qreal(1.0)
-        || a < qreal(0.0) || a > qreal(1.0))) {
-        qWarning("QColor::fromCmykF: CMYK parameters out of range");
-        return QColor();
-    }
-
-    QColor color;
-    color.cspec = Cmyk;
-    color.ct.acmyk.alpha   = qRound(a * USHRT_MAX);
-    color.ct.acmyk.cyan    = qRound(c * USHRT_MAX);
-    color.ct.acmyk.magenta = qRound(m * USHRT_MAX);
-    color.ct.acmyk.yellow  = qRound(y * USHRT_MAX);
-    color.ct.acmyk.black   = qRound(k * USHRT_MAX);
     return color;
 }
 
@@ -2415,8 +2015,7 @@ bool QColor::operator==(const QColor &color) const
                      && ((ct.ahsv.hue % 36000) == (color.ct.ahsv.hue % 36000)))
                     || (ct.ahsv.hue == color.ct.ahsv.hue))
                 && ct.argb.green == color.ct.argb.green
-                && ct.argb.blue  == color.ct.argb.blue
-                && ct.argb.pad   == color.ct.argb.pad);
+                && ct.argb.blue  == color.ct.argb.blue);
     }
 }
 
@@ -2477,7 +2076,6 @@ void QColor::invalidate()
     ct.argb.red = 0;
     ct.argb.green = 0;
     ct.argb.blue = 0;
-    ct.argb.pad = 0;
 }
 
 
@@ -2495,9 +2093,6 @@ QDebug operator<<(QDebug dbg, const QColor &c)
         dbg.nospace() << "QColor(ARGB " << c.alphaF() << ", " << c.redF() << ", " << c.greenF() << ", " << c.blueF() << ')';
     else if (c.spec() == QColor::Hsv)
         dbg.nospace() << "QColor(AHSV " << c.alphaF() << ", " << c.hueF() << ", " << c.saturationF() << ", " << c.valueF() << ')';
-    else if (c.spec() == QColor::Cmyk)
-        dbg.nospace() << "QColor(ACMYK " << c.alphaF() << ", " << c.cyanF() << ", " << c.magentaF() << ", " << c.yellowF() << ", "
-                      << c.blackF()<< ')';
     else if (c.spec() == QColor::Hsl)
         dbg.nospace() << "QColor(AHSL " << c.alphaF() << ", " << c.hslHueF() << ", " << c.hslSaturationF() << ", " << c.lightnessF() << ')';
 
@@ -2526,14 +2121,12 @@ QDataStream &operator<<(QDataStream &stream, const QColor &color)
     quint16 r = color.ct.argb.red;
     quint16 g = color.ct.argb.green;
     quint16 b = color.ct.argb.blue;
-    quint16 p = color.ct.argb.pad;
 
     stream << s;
     stream << a;
     stream << r;
     stream << g;
     stream << b;
-    stream << p;
 
     return stream;
 }
@@ -2549,20 +2142,18 @@ QDataStream &operator<<(QDataStream &stream, const QColor &color)
 QDataStream &operator>>(QDataStream &stream, QColor &color)
 {
     qint8 s;
-    quint16 a, r, g, b, p;
+    quint16 a, r, g, b;
     stream >> s;
     stream >> a;
     stream >> r;
     stream >> g;
     stream >> b;
-    stream >> p;
 
     color.cspec = QColor::Spec(s);
     color.ct.argb.alpha = a;
     color.ct.argb.red   = r;
     color.ct.argb.green = g;
     color.ct.argb.blue  = b;
-    color.ct.argb.pad   = p;
 
     return stream;
 }
@@ -2673,7 +2264,7 @@ QDataStream &operator>>(QDataStream &stream, QColor &color)
 
     Creates a copy of \e this color in the format specified by \a colorSpec.
 
-    \sa spec(), toCmyk(), toHsv(), toRgb(), isValid()
+    \sa spec(), toHsv(), toRgb(), isValid()
 */
 
 /*!
