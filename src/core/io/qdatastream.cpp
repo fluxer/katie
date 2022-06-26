@@ -541,6 +541,7 @@ void QDataStream::setByteOrder(ByteOrder bo)
     \row    \i Katie 4.9            \i 12
     \row    \i Katie 4.10           \i 12
     \row    \i Katie 4.11           \i 12
+    \row    \i Katie 4.12           \i 13
     \endtable
 
     The \l Version enum provides symbolic constants for the different
