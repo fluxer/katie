@@ -36,7 +36,7 @@ class QVariant;
 class Q_GUI_EXPORT QColor
 {
 public:
-    enum Spec { Invalid, Rgb, Hsv, Hsl };
+    enum Spec { Invalid, Rgb, Hsv };
 
     QColor();
     QColor(Qt::GlobalColor color);
@@ -107,25 +107,8 @@ public:
     void getHsvF(qreal *h, qreal *s, qreal *v, qreal *a = nullptr) const;
     void setHsvF(qreal h, qreal s, qreal v, qreal a = 1.0);
 
-    int hslHue() const; // 0 <= hue < 360
-    int hslSaturation() const;
-    int lightness() const;
-
-    qreal hslHueF() const; // 0.0 <= hueF < 360.0
-    qreal hslSaturationF() const;
-    qreal lightnessF() const;
-
-    void getHsl(int *h, int *s, int *l, int *a = nullptr) const;
-    void setHsl(int h, int s, int l, int a = 255);
-
-    void getHslF(qreal *h, qreal *s, qreal *l, qreal *a = nullptr) const;
-    void setHslF(qreal h, qreal s, qreal l, qreal a = 1.0);
-
     QColor toRgb() const;
     QColor toHsv() const;
-    QColor toHsl() const;
-
-    QColor convertTo(Spec colorSpec) const;
 
     static QColor fromRgb(QRgb rgb);
     static QColor fromRgba(QRgb rgba);
@@ -135,9 +118,6 @@ public:
 
     static QColor fromHsv(int h, int s, int v, int a = 255);
     static QColor fromHsvF(qreal h, qreal s, qreal v, qreal a = 1.0);
-
-    static QColor fromHsl(int h, int s, int l, int a = 255);
-    static QColor fromHslF(qreal h, qreal s, qreal l, qreal a = 1.0);
 
     QColor light(int f = 150) const;
     QColor lighter(int f = 150) const;
@@ -179,13 +159,6 @@ private:
             ushort saturation;
             ushort value;
         } ahsv;
-        struct {
-            ushort alpha;
-            ushort hue;
-            ushort saturation;
-            ushort lightness;
-        } ahsl;
-        ushort array[5];
     } ct;
 
     friend class QColormap;

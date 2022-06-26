@@ -99,7 +99,7 @@ static const struct globalColorsData {
 
 /*!
     \class QColor
-    \brief The QColor class provides colors based on RGB, HSV or HSL values.
+    \brief The QColor class provides colors based on RGB or HSV values.
 
     \ingroup painting
     \ingroup appearance
@@ -107,30 +107,27 @@ static const struct globalColorsData {
 
     A color is normally specified in terms of RGB (red, green, and
     blue) components, but it is also possible to specify it in terms
-    of HSV (hue, saturation and value) and HSL (hue, saturation,
-    and lightness) components. In addition a color can be specified
-    using a color name. The color name can be any of the SVG 1.0 color
-    names.
+    of HSV (hue, saturation and value) components. In addition a color
+    can be specified using a color name. The color name can be any of
+    the SVG 1.0 color names.
 
-    The QColor constructor creates the color based on RGB values.  To
-    create a QColor based on either HSV or HSL values, use the
-    toHsv() and toHsl() functions respectively. These functions
-    return a copy of the color using the desired format. In addition
-    the static fromRgb(), fromHsv() and fromHsl() functions create
+    The QColor constructor creates the color based on RGB values. To
+    create a QColor based on HSV values, use the toHsv() function.
+    That function return a copy of the color using the desired format.
+    In addition the static fromRgb() and fromHsv() functions create
     colors from the specified values. Alternatively, a color can be
     converted to any of the three formats using the convertTo()
     function (returning a copy of the color in the desired format), or
-    any of the setRgb(), setHsv() and setHsl() functions altering \e
-    this color's format. The spec() function tells how the color was
-    specified.
+    any of the setRgb() and setHsv() functions altering \e this color's
+    format. The spec() function tells how the color was specified.
 
     A color can be set by passing an RGB string (such as "#112233"),
     or a color name (such as "blue"), to the setNamedColor() function.
     The color names are taken from the SVG 1.0 color names. The name()
     function returns the name of the color in the format
-    "#RRGGBB". Colors can also be set using setRgb(), setHsv() and
-    setHsl(). To get a lighter or darker color use the lighter() and
-    darker() functions respectively.
+    "#RRGGBB". Colors can also be set using setRgb() and setHsv(). To
+    get a lighter or darker color use the lighter() and darker()
+    functions respectively.
 
     The isValid() function indicates whether a QColor is legal at
     all. For example, a RGB color with RGB values out of range is
@@ -140,9 +137,9 @@ static const struct globalColorsData {
 
     The color components can be retrieved individually, e.g with
     red(), hue() and cyan(). The values of the color components can
-    also be retrieved in one go using the getRgb(), getHsv() and
-    getHsl() functions. Using the RGB color model, the color
-    components can in addition be accessed with rgb().
+    also be retrieved in one go using the getRgb() and getHsv()
+    functions. Using the RGB color model, the color components can
+    in addition be accessed with rgb().
 
     There are several related non-members: QRgb is a typdef for an
     unsigned int representing the RGB value triplet (r, g, b). Note
@@ -168,10 +165,10 @@ static const struct globalColorsData {
 
     QColor supports floating point precision and provides floating
     point versions of all the color components functions,
-    e.g. getRgbF(), hueF() and fromHslF(). Note that since the
-    components are stored using 16-bit integers, there might be minor
-    deviations between the values set using, for example, setRgbF()
-    and the values returned by the getRgbF() function due to rounding.
+    e.g. getRgbF() and hueF(). Note that since the components are
+    stored using 16-bit integers, there might be minor deviations
+    between the values set using, for example, setRgbF() and the
+    values returned by the getRgbF() function due to rounding.
 
     While the integer based functions take values in the range 0-255
     (except hue() which must have values within the range 0-359),
@@ -266,29 +263,19 @@ static const struct globalColorsData {
     alpha-channel to feature \l {QColor#Alpha-Blended
     Drawing}{alpha-blended drawing}.
 
-    \section1 The HSL Color Model
-
-    HSL is similar to HSV. Instead of value parameter from HSV,
-    HSL has the lightness parameter.
-    The lightness parameter goes from black to color and from color to white.
-    If you go outside at the night its black or dark gray. At day its colorful but
-    if you look in a really strong light a things they are going to white and
-    wash out.
-
     \sa QPalette, QBrush, QApplication::setColorSpec()
 */
 
 /*!
     \enum QColor::Spec
 
-    The type of color specified, either RGB, HSV or HSL.
+    The type of color specified, either RGB or HSV.
 
     \value Rgb
     \value Hsv
-    \value Hsl
     \value Invalid
 
-    \sa spec(), convertTo()
+    \sa spec(), toRgb(), toHsv()
 */
 
 /*!
@@ -296,7 +283,7 @@ static const struct globalColorsData {
 
     Returns how the color was specified.
 
-    \sa Spec, convertTo()
+    \sa Spec
 */
 
 
@@ -347,7 +334,7 @@ QColor::QColor(Qt::GlobalColor color)
 
 QColor::QColor(QRgb color)
 {
-    cspec = Rgb;
+    cspec = QColor::Rgb;
     ct.argb.alpha = 0xffff;
     ct.argb.red   = qRed(color)   * 0x101;
     ct.argb.green = qGreen(color) * 0x101;
@@ -366,18 +353,18 @@ QColor::QColor(QRgb color)
 QColor::QColor(Spec spec)
 {
     switch (spec) {
-    case Invalid:
-        invalidate();
-        break;
-    case Rgb:
-        setRgb(0, 0, 0);
-        break;
-    case Hsv:
-        setHsv(0, 0, 0);
-        break;
-    case Hsl:
-        setHsl(0, 0, 0, 0);
-        break;
+        case QColor::Invalid: {
+            invalidate();
+            break;
+        }
+        case QColor::Rgb: {
+            setRgb(0, 0, 0);
+            break;
+        }
+        case QColor::Hsv: {
+            setHsv(0, 0, 0);
+            break;
+        }
     }
 }
 
@@ -599,7 +586,7 @@ void QColor::getHsvF(qreal *h, qreal *s, qreal *v, qreal *a) const
     if (!h || !s || !v)
         return;
 
-    if (cspec != Invalid && cspec != Hsv) {
+    if (cspec != QColor::Invalid && cspec != QColor::Hsv) {
         toHsv().getHsvF(h, s, v, a);
         return;
     }
@@ -627,7 +614,7 @@ void QColor::getHsv(int *h, int *s, int *v, int *a) const
     if (!h || !s || !v)
         return;
 
-    if (cspec != Invalid && cspec != Hsv) {
+    if (cspec != QColor::Invalid && cspec != QColor::Hsv) {
         toHsv().getHsv(h, s, v, a);
         return;
     }
@@ -660,7 +647,7 @@ void QColor::setHsvF(qreal h, qreal s, qreal v, qreal a)
         return;
     }
 
-    cspec = Hsv;
+    cspec = QColor::Hsv;
     ct.ahsv.alpha      = qRound(a * USHRT_MAX);
     ct.ahsv.hue        = h == qreal(-1.0) ? USHRT_MAX : qRound(h * 36000);
     ct.ahsv.saturation = qRound(s * USHRT_MAX);
@@ -685,125 +672,11 @@ void QColor::setHsv(int h, int s, int v, int a)
         return;
     }
 
-    cspec = Hsv;
+    cspec = QColor::Hsv;
     ct.ahsv.alpha      = a * 0x101;
     ct.ahsv.hue        = h == -1 ? USHRT_MAX : (h % 360) * 100;
     ct.ahsv.saturation = s * 0x101;
     ct.ahsv.value      = v * 0x101;
-}
-
-/*!
-    \since 4.6
-
-    Sets the contents pointed to by \a h, \a s, \a l, and \a a, to the hue,
-    saturation, lightness, and alpha-channel (transparency) components of the
-    color's HSL value.
-
-    These components can be retrieved individually using the hueHslF(),
-    saturationHslF(), lightnessF() and alphaF() functions.
-
-    \sa setHsl()
-*/
-void QColor::getHslF(qreal *h, qreal *s, qreal *l, qreal *a) const
-{
-    if (!h || !s || !l)
-        return;
-
-    if (cspec != Invalid && cspec != Hsl) {
-        toHsl().getHslF(h, s, l, a);
-        return;
-    }
-
-    *h = ct.ahsl.hue == USHRT_MAX ? qreal(-1.0) : ct.ahsl.hue / qreal(36000.0);
-    *s = ct.ahsl.saturation / qreal(USHRT_MAX);
-    *l = ct.ahsl.lightness / qreal(USHRT_MAX);
-
-    if (a)
-        *a = ct.ahsl.alpha / qreal(USHRT_MAX);
-}
-
-/*!
-    \since 4.6
-
-    Sets the contents pointed to by \a h, \a s, \a l, and \a a, to the hue,
-    saturation, lightness, and alpha-channel (transparency) components of the
-    color's HSL value.
-
-    These components can be retrieved individually using the hueHsl(),
-    saturationHsl(), lightness() and alpha() functions.
-
-    \sa setHsl()
-*/
-void QColor::getHsl(int *h, int *s, int *l, int *a) const
-{
-    if (!h || !s || !l)
-        return;
-
-    if (cspec != Invalid && cspec != Hsl) {
-        toHsl().getHsl(h, s, l, a);
-        return;
-    }
-
-    *h = ct.ahsl.hue == USHRT_MAX ? -1 : ct.ahsl.hue / 100;
-    *s = ct.ahsl.saturation >> 8;
-    *l = ct.ahsl.lightness  >> 8;
-
-    if (a)
-        *a = ct.ahsl.alpha >> 8;
-}
-
-/*!
-    \since 4.6
-
-    Sets a HSL color lightness; \a h is the hue, \a s is the saturation, \a l is
-    the lightness and \a a is the alpha component of the HSL color.
-
-    All the values must be in the range 0.0-1.0.
-
-    \sa getHslF(), setHsl()
-*/
-void QColor::setHslF(qreal h, qreal s, qreal l, qreal a)
-{
-    if (Q_UNLIKELY(((h < qreal(0.0) || h > qreal(1.0)) && h != qreal(-1.0))
-        || (s < qreal(0.0) || s > qreal(1.0))
-        || (l < qreal(0.0) || l > qreal(1.0))
-        || (a < qreal(0.0) || a > qreal(1.0)))) {
-        qWarning("QColor::setHsvF: HSV parameters out of range");
-        invalidate();
-        return;
-    }
-
-    cspec = Hsl;
-    ct.ahsl.alpha      = qRound(a * USHRT_MAX);
-    ct.ahsl.hue        = h == qreal(-1.0) ? USHRT_MAX : qRound(h * 36000);
-    ct.ahsl.saturation = qRound(s * USHRT_MAX);
-    ct.ahsl.lightness  = qRound(l * USHRT_MAX);
-}
-
-/*!
-    \since 4.6
-
-    Sets a HSL color value; \a h is the hue, \a s is the saturation, \a l is
-    the lightness and \a a is the alpha component of the HSL color.
-
-    The saturation, value and alpha-channel values must be in the range 0-255,
-    and the hue value must be greater than -1.
-
-    \sa getHsl(), setHslF()
-*/
-void QColor::setHsl(int h, int s, int l, int a)
-{
-    if (Q_UNLIKELY(h < -1 || (uint)s > 255 || (uint)l > 255 || (uint)a > 255)) {
-        qWarning("QColor::setHsv: HSV parameters out of range");
-        invalidate();
-        return;
-    }
-
-    cspec = Hsl;
-    ct.ahsl.alpha      = a * 0x101;
-    ct.ahsl.hue        = h == -1 ? USHRT_MAX : (h % 360) * 100;
-    ct.ahsl.saturation = s * 0x101;
-    ct.ahsl.lightness  = l * 0x101;
 }
 
 /*!
@@ -821,7 +694,7 @@ void QColor::getRgbF(qreal *r, qreal *g, qreal *b, qreal *a) const
     if (!r || !g || !b)
         return;
 
-    if (cspec != Invalid && cspec != Rgb) {
+    if (cspec != QColor::Invalid && cspec != QColor::Rgb) {
         toRgb().getRgbF(r, g, b, a);
         return;
     }
@@ -850,7 +723,7 @@ void QColor::getRgb(int *r, int *g, int *b, int *a) const
     if (!r || !g || !b)
         return;
 
-    if (cspec != Invalid && cspec != Rgb) {
+    if (cspec != QColor::Invalid && cspec != QColor::Rgb) {
         toRgb().getRgb(r, g, b, a);
         return;
     }
@@ -891,7 +764,7 @@ void QColor::setRgbF(qreal r, qreal g, qreal b, qreal a)
         return;
     }
 
-    cspec = Rgb;
+    cspec = QColor::Rgb;
     ct.argb.alpha = qRound(a * USHRT_MAX);
     ct.argb.red   = qRound(r * USHRT_MAX);
     ct.argb.green = qRound(g * USHRT_MAX);
@@ -913,7 +786,7 @@ void QColor::setRgb(int r, int g, int b, int a)
         return;
     }
 
-    cspec = Rgb;
+    cspec = QColor::Rgb;
     ct.argb.alpha = a * 0x101;
     ct.argb.red   = r * 0x101;
     ct.argb.green = g * 0x101;
@@ -939,7 +812,7 @@ void QColor::setRgb(int r, int g, int b, int a)
 
 QRgb QColor::rgba() const
 {
-    if (cspec != Invalid && cspec != Rgb)
+    if (cspec != QColor::Invalid && cspec != QColor::Rgb)
         return toRgb().rgba();
     return qRgba(ct.argb.red >> 8, ct.argb.green >> 8, ct.argb.blue >> 8, ct.argb.alpha >> 8);
 }
@@ -951,7 +824,7 @@ QRgb QColor::rgba() const
 */
 void QColor::setRgba(QRgb rgba)
 {
-    cspec = Rgb;
+    cspec = QColor::Rgb;
     ct.argb.alpha = qAlpha(rgba) * 0x101;
     ct.argb.red   = qRed(rgba)   * 0x101;
     ct.argb.green = qGreen(rgba) * 0x101;
@@ -967,7 +840,7 @@ void QColor::setRgba(QRgb rgba)
 */
 QRgb QColor::rgb() const
 {
-    if (cspec != Invalid && cspec != Rgb)
+    if (cspec != QColor::Invalid && cspec != QColor::Rgb)
         return toRgb().rgb();
     return qRgb(ct.argb.red >> 8, ct.argb.green >> 8, ct.argb.blue >> 8);
 }
@@ -979,7 +852,7 @@ QRgb QColor::rgb() const
 */
 void QColor::setRgb(QRgb rgb)
 {
-    cspec = Rgb;
+    cspec = QColor::Rgb;
     ct.argb.alpha = 0xffff;
     ct.argb.red   = qRed(rgb)   * 0x101;
     ct.argb.green = qGreen(rgb) * 0x101;
@@ -1043,7 +916,7 @@ void QColor::setAlphaF(qreal alpha)
 */
 int QColor::red() const
 {
-    if (cspec != Invalid && cspec != Rgb)
+    if (cspec != QColor::Invalid && cspec != QColor::Rgb)
         return toRgb().red();
     return ct.argb.red >> 8;
 }
@@ -1057,7 +930,7 @@ int QColor::red() const
 void QColor::setRed(int red)
 {
     QCOLOR_INT_RANGE_CHECK("QColor::setRed", red);
-    if (cspec != Rgb)
+    if (cspec != QColor::Rgb)
         setRgb(red, green(), blue(), alpha());
     else
         ct.argb.red = red * 0x101;
@@ -1070,7 +943,7 @@ void QColor::setRed(int red)
 */
 int QColor::green() const
 {
-    if (cspec != Invalid && cspec != Rgb)
+    if (cspec != QColor::Invalid && cspec != QColor::Rgb)
         return toRgb().green();
     return ct.argb.green >> 8;
 }
@@ -1084,7 +957,7 @@ int QColor::green() const
 void QColor::setGreen(int green)
 {
     QCOLOR_INT_RANGE_CHECK("QColor::setGreen", green);
-    if (cspec != Rgb)
+    if (cspec != QColor::Rgb)
         setRgb(red(), green, blue(), alpha());
     else
         ct.argb.green = green * 0x101;
@@ -1098,7 +971,7 @@ void QColor::setGreen(int green)
 */
 int QColor::blue() const
 {
-    if (cspec != Invalid && cspec != Rgb)
+    if (cspec != QColor::Invalid && cspec != QColor::Rgb)
         return toRgb().blue();
     return ct.argb.blue >> 8;
 }
@@ -1113,7 +986,7 @@ int QColor::blue() const
 void QColor::setBlue(int blue)
 {
     QCOLOR_INT_RANGE_CHECK("QColor::setBlue", blue);
-    if (cspec != Rgb)
+    if (cspec != QColor::Rgb)
         setRgb(red(), green(), blue, alpha());
     else
         ct.argb.blue = blue * 0x101;
@@ -1126,7 +999,7 @@ void QColor::setBlue(int blue)
 */
 qreal QColor::redF() const
 {
-    if (cspec != Invalid && cspec != Rgb)
+    if (cspec != QColor::Invalid && cspec != QColor::Rgb)
         return toRgb().redF();
     return ct.argb.red / qreal(USHRT_MAX);
 }
@@ -1141,7 +1014,7 @@ qreal QColor::redF() const
 void QColor::setRedF(qreal red)
 {
     QCOLOR_REAL_RANGE_CHECK("QColor::setRedF", red);
-    if (cspec != Rgb)
+    if (cspec != QColor::Rgb)
         setRgbF(red, greenF(), blueF(), alphaF());
     else
         ct.argb.red = qRound(red * USHRT_MAX);
@@ -1154,7 +1027,7 @@ void QColor::setRedF(qreal red)
 */
 qreal QColor::greenF() const
 {
-    if (cspec != Invalid && cspec != Rgb)
+    if (cspec != QColor::Invalid && cspec != QColor::Rgb)
         return toRgb().greenF();
     return ct.argb.green / qreal(USHRT_MAX);
 }
@@ -1169,7 +1042,7 @@ qreal QColor::greenF() const
 void QColor::setGreenF(qreal green)
 {
     QCOLOR_REAL_RANGE_CHECK("QColor::setGreenF", green);
-    if (cspec != Rgb)
+    if (cspec != QColor::Rgb)
         setRgbF(redF(), green, blueF(), alphaF());
     else
         ct.argb.green = qRound(green * USHRT_MAX);
@@ -1182,7 +1055,7 @@ void QColor::setGreenF(qreal green)
 */
 qreal QColor::blueF() const
 {
-    if (cspec != Invalid && cspec != Rgb)
+    if (cspec != QColor::Invalid && cspec != QColor::Rgb)
         return toRgb().blueF();
     return ct.argb.blue / qreal(USHRT_MAX);
 }
@@ -1196,7 +1069,7 @@ qreal QColor::blueF() const
 void QColor::setBlueF(qreal blue)
 {
     QCOLOR_REAL_RANGE_CHECK("QColor::setBlueF", blue);
-    if (cspec != Rgb)
+    if (cspec != QColor::Rgb)
         setRgbF(redF(), greenF(), blue, alphaF());
     else
         ct.argb.blue = qRound(blue * USHRT_MAX);
@@ -1224,7 +1097,7 @@ int QColor::hue() const
 */
 int QColor::hsvHue() const
 {
-    if (cspec != Invalid && cspec != Hsv)
+    if (cspec != QColor::Invalid && cspec != QColor::Hsv)
         return toHsv().hue();
     return ct.ahsv.hue == USHRT_MAX ? -1 : ct.ahsv.hue / 100;
 }
@@ -1251,7 +1124,7 @@ int QColor::saturation() const
 */
 int QColor::hsvSaturation() const
 {
-    if (cspec != Invalid && cspec != Hsv)
+    if (cspec != QColor::Invalid && cspec != QColor::Hsv)
         return toHsv().saturation();
     return ct.ahsv.saturation >> 8;
 }
@@ -1264,7 +1137,7 @@ int QColor::hsvSaturation() const
 */
 int QColor::value() const
 {
-    if (cspec != Invalid && cspec != Hsv)
+    if (cspec != QColor::Invalid && cspec != QColor::Hsv)
         return toHsv().value();
     return ct.ahsv.value >> 8;
 }
@@ -1290,7 +1163,7 @@ qreal QColor::hueF() const
 */
 qreal QColor::hsvHueF() const
 {
-    if (cspec != Invalid && cspec != Hsv)
+    if (cspec != QColor::Invalid && cspec != QColor::Hsv)
         return toHsv().hueF();
     return ct.ahsv.hue == USHRT_MAX ? qreal(-1.0) : ct.ahsv.hue / qreal(36000.0);
 }
@@ -1316,7 +1189,7 @@ qreal QColor::saturationF() const
 */
 qreal QColor::hsvSaturationF() const
 {
-    if (cspec != Invalid && cspec != Hsv)
+    if (cspec != QColor::Invalid && cspec != QColor::Hsv)
         return toHsv().saturationF();
     return ct.ahsv.saturation / qreal(USHRT_MAX);
 }
@@ -1329,112 +1202,28 @@ qreal QColor::hsvSaturationF() const
 */
 qreal QColor::valueF() const
 {
-    if (cspec != Invalid && cspec != Hsv)
+    if (cspec != QColor::Invalid && cspec != QColor::Hsv)
         return toHsv().valueF();
     return ct.ahsv.value / qreal(USHRT_MAX);
 }
 
 /*!
-    \since 4.6
-
-    Returns the hue color component of this color.
-
-    \sa getHslF(), getHsl()
-*/
-int QColor::hslHue() const
-{
-    if (cspec != Invalid && cspec != Hsl)
-        return toHsl().hslHue();
-    return ct.ahsl.hue == USHRT_MAX ? -1 : ct.ahsl.hue / 100;
-}
-
-/*!
-    \since 4.6
-
-    Returns the saturation color component of this color.
-
-    \sa saturationF(), getHsv(), {QColor#The HSV Color Model}{The HSV Color
-    Model}
-*/
-int QColor::hslSaturation() const
-{
-    if (cspec != Invalid && cspec != Hsl)
-        return toHsl().hslSaturation();
-    return ct.ahsl.saturation >> 8;
-}
-
-/*!
-    \since 4.6
-
-    Returns the lightness color component of this color.
-
-    \sa lightnessF(), getHsl()
-*/
-int QColor::lightness() const
-{
-    if (cspec != Invalid && cspec != Hsl)
-        return toHsl().lightness();
-    return ct.ahsl.lightness >> 8;
-}
-
-/*!
-    \since 4.6
-
-    Returns the hue color component of this color.
-
-    \sa hue(), getHslF()
-*/
-qreal QColor::hslHueF() const
-{
-    if (cspec != Invalid && cspec != Hsl)
-        return toHsl().hslHueF();
-    return ct.ahsl.hue == USHRT_MAX ? qreal(-1.0) : ct.ahsl.hue / qreal(36000.0);
-}
-
-/*!
-    \since 4.6
-
-    Returns the saturation color component of this color.
-
-    \sa saturationF() getHslF()
-*/
-qreal QColor::hslSaturationF() const
-{
-    if (cspec != Invalid && cspec != Hsl)
-        return toHsl().hslSaturationF();
-    return ct.ahsl.saturation / qreal(USHRT_MAX);
-}
-
-/*!
-    \since 4.6
-
-    Returns the lightness color component of this color.
-
-    \sa value() getHslF()
-*/
-qreal QColor::lightnessF() const
-{
-    if (cspec != Invalid && cspec != Hsl)
-        return toHsl().lightnessF();
-    return ct.ahsl.lightness / qreal(USHRT_MAX);
-}
-
-/*!
     Create and returns an RGB QColor based on this color.
 
-    \sa fromRgb(), convertTo(), isValid()
+    \sa fromRgb(), toHsv(), isValid()
 */
 QColor QColor::toRgb() const
 {
-    if (!isValid() || cspec == Rgb)
+    if (!isValid() || cspec == QColor::Rgb) {
         return *this;
+    }
 
     QColor color;
-    color.cspec = Rgb;
+    color.cspec = QColor::Rgb;
     color.ct.argb.alpha = ct.argb.alpha;
 
     switch (cspec) {
-    case Hsv: {
+    case QColor::Hsv: {
         if (ct.ahsv.saturation == 0 || ct.ahsv.hue == USHRT_MAX) {
             // achromatic case
             color.ct.argb.red = color.ct.argb.green = color.ct.argb.blue = ct.ahsv.value;
@@ -1492,52 +1281,6 @@ QColor QColor::toRgb() const
         }
         break;
     }
-    case Hsl: {
-        if (ct.ahsl.saturation == 0 || ct.ahsl.hue == USHRT_MAX) {
-            // achromatic case
-            color.ct.argb.red = color.ct.argb.green = color.ct.argb.blue = ct.ahsl.lightness;
-        } else if (ct.ahsl.lightness == 0) {
-            // lightness 0
-            color.ct.argb.red = color.ct.argb.green = color.ct.argb.blue = 0;
-        } else {
-            // chromatic case
-            const qreal h = ct.ahsl.hue == 36000 ? 0 : ct.ahsl.hue / qreal(36000.);
-            const qreal s = ct.ahsl.saturation / qreal(USHRT_MAX);
-            const qreal l = ct.ahsl.lightness / qreal(USHRT_MAX);
-
-            qreal temp2;
-            if (l < qreal(0.5))
-                temp2 = l * (qreal(1.0) + s);
-            else
-                temp2 = l + s - (l * s);
-
-            const qreal temp1 = (qreal(2.0) * l) - temp2;
-            qreal temp3[3] = { h + (qreal(1.0) / qreal(3.0)),
-                                h,
-                                h - (qreal(1.0) / qreal(3.0)) };
-
-            for (int i = 0; i != 3; ++i) {
-                if (temp3[i] < qreal(0.0))
-                    temp3[i] += qreal(1.0);
-                else if (temp3[i] > qreal(1.0))
-                    temp3[i] -= qreal(1.0);
-
-                const qreal sixtemp3 = temp3[i] * qreal(6.0);
-                if (sixtemp3 < qreal(1.0))
-                    color.ct.array[i+1] = qRound((temp1 + (temp2 - temp1) * sixtemp3) * USHRT_MAX);
-                else if ((temp3[i] * qreal(2.0)) < qreal(1.0))
-                    color.ct.array[i+1] = qRound(temp2 * USHRT_MAX);
-                else if ((temp3[i] * qreal(3.0)) < qreal(2.0))
-                    color.ct.array[i+1] = qRound((temp1 + (temp2 -temp1) * (qreal(2.0) /qreal(3.0) - temp3[i]) * qreal(6.0)) * USHRT_MAX);
-                else
-                    color.ct.array[i+1] = qRound(temp1 * USHRT_MAX);
-            }
-            color.ct.argb.red = color.ct.argb.red == 1 ? 0 : color.ct.argb.red;
-            color.ct.argb.green = color.ct.argb.green == 1 ? 0 : color.ct.argb.green;
-            color.ct.argb.blue = color.ct.argb.blue == 1 ? 0 : color.ct.argb.blue;
-        }
-        break;
-    }
     default:
         break;
     }
@@ -1553,19 +1296,19 @@ QColor QColor::toRgb() const
 /*!
     Creates and returns an HSV QColor based on this color.
 
-    \sa fromHsv(), convertTo(), isValid(), {QColor#The HSV Color
+    \sa fromHsv(), toRgb(), isValid(), {QColor#The HSV Color
     Model}{The HSV Color Model}
 */
 QColor QColor::toHsv() const
 {
-    if (!isValid() || cspec == Hsv)
+    if (!isValid() || cspec == QColor::Hsv)
         return *this;
 
-    if (cspec != Rgb)
+    if (cspec != QColor::Rgb)
         return toRgb().toHsv();
 
     QColor color;
-    color.cspec = Hsv;
+    color.cspec = QColor::Hsv;
     color.ct.ahsv.alpha = ct.argb.alpha;
 
     const qreal r = ct.argb.red   / qreal(USHRT_MAX);
@@ -1600,79 +1343,6 @@ QColor QColor::toHsv() const
 
     return color;
 }
-
-/*!
-    Creates and returns an HSL QColor based on this color.
-
-    \sa fromHsl(), convertTo(), isValid()
-*/
-QColor QColor::toHsl() const
-{
-    if (!isValid() || cspec == Hsl)
-        return *this;
-
-    if (cspec != Rgb)
-        return toRgb().toHsl();
-
-    QColor color;
-    color.cspec = Hsl;
-    color.ct.ahsl.alpha = ct.argb.alpha;
-
-    const qreal r = ct.argb.red   / qreal(USHRT_MAX);
-    const qreal g = ct.argb.green / qreal(USHRT_MAX);
-    const qreal b = ct.argb.blue  / qreal(USHRT_MAX);
-    const qreal max = Q_MAX_3(r, g, b);
-    const qreal min = Q_MIN_3(r, g, b);
-    const qreal delta = max - min;
-    const qreal delta2 = max + min;
-    const qreal lightness = qreal(0.5) * delta2;
-    color.ct.ahsl.lightness = qRound(lightness * USHRT_MAX);
-    if (qFuzzyIsNull(delta)) {
-        // achromatic case, hue is undefined
-        color.ct.ahsl.hue = USHRT_MAX;
-        color.ct.ahsl.saturation = 0;
-    } else {
-        // chromatic case
-        qreal hue = 0;
-        if (lightness < qreal(0.5))
-            color.ct.ahsl.saturation = qRound((delta / delta2) * USHRT_MAX);
-        else
-            color.ct.ahsl.saturation = qRound((delta / (qreal(2.0) - delta2)) * USHRT_MAX);
-        if (qFuzzyCompare(r, max)) {
-            hue = ((g - b) /delta);
-        } else if (qFuzzyCompare(g, max)) {
-            hue = (qreal(2.0) + (b - r) / delta);
-        } else if (qFuzzyCompare(b, max)) {
-            hue = (qreal(4.0) + (r - g) / delta);
-        } else {
-            Q_ASSERT_X(false, "QColor::toHsv", "internal error");
-        }
-        hue *= qreal(60.0);
-        if (hue < qreal(0.0))
-            hue += qreal(360.0);
-        color.ct.ahsl.hue = qRound(hue * 100);
-    }
-
-    return color;
-}
-
-QColor QColor::convertTo(QColor::Spec colorSpec) const
-{
-    if (colorSpec == cspec)
-        return *this;
-    switch (colorSpec) {
-    case Rgb:
-        return toRgb();
-    case Hsv:
-        return toHsv();
-    case Hsl:
-        return toHsl();
-    case Invalid:
-        break;
-    }
-    return QColor(); // must be invalid
-}
-
 
 /*!
     Static convenience function that returns a QColor constructed from the
@@ -1726,7 +1396,7 @@ QColor QColor::fromRgb(int r, int g, int b, int a)
     }
 
     QColor color;
-    color.cspec = Rgb;
+    color.cspec = QColor::Rgb;
     color.ct.argb.alpha = a * 0x101;
     color.ct.argb.red   = r * 0x101;
     color.ct.argb.green = g * 0x101;
@@ -1754,7 +1424,7 @@ QColor QColor::fromRgbF(qreal r, qreal g, qreal b, qreal a)
     }
 
     QColor color;
-    color.cspec = Rgb;
+    color.cspec = QColor::Rgb;
     color.ct.argb.alpha = qRound(a * USHRT_MAX);
     color.ct.argb.red   = qRound(r * USHRT_MAX);
     color.ct.argb.green = qRound(g * USHRT_MAX);
@@ -1784,7 +1454,7 @@ QColor QColor::fromHsv(int h, int s, int v, int a)
     }
 
     QColor color;
-    color.cspec = Hsv;
+    color.cspec = QColor::Hsv;
     color.ct.ahsv.alpha      = a * 0x101;
     color.ct.ahsv.hue        = h == -1 ? USHRT_MAX : (h % 360) * 100;
     color.ct.ahsv.saturation = s * 0x101;
@@ -1815,75 +1485,11 @@ QColor QColor::fromHsvF(qreal h, qreal s, qreal v, qreal a)
     }
 
     QColor color;
-    color.cspec = Hsv;
+    color.cspec = QColor::Hsv;
     color.ct.ahsv.alpha      = qRound(a * USHRT_MAX);
     color.ct.ahsv.hue        = h == qreal(-1.0) ? USHRT_MAX : qRound(h * 36000);
     color.ct.ahsv.saturation = qRound(s * USHRT_MAX);
     color.ct.ahsv.value      = qRound(v * USHRT_MAX);
-    return color;
-}
-
-/*!
-    \since 4.6
-
-    Static convenience function that returns a QColor constructed from the HSV
-    color values, \a h (hue), \a s (saturation), \a l (lightness), and \a a
-    (alpha-channel, i.e. transparency).
-
-    The value of \a s, \a l, and \a a must all be in the range 0-255; the value
-    of \a h must be in the range 0-359.
-
-    \sa toHsl(), fromHslF(), isValid()
-*/
-QColor QColor::fromHsl(int h, int s, int l, int a)
-{
-    if (Q_UNLIKELY(((h < 0 || h >= 360) && h != -1)
-        || s < 0 || s > 255
-        || l < 0 || l > 255
-        || a < 0 || a > 255)) {
-        qWarning("QColor::fromHsv: HSV parameters out of range");
-        return QColor();
-    }
-
-    QColor color;
-    color.cspec = Hsl;
-    color.ct.ahsl.alpha      = a * 0x101;
-    color.ct.ahsl.hue        = h == -1 ? USHRT_MAX : (h % 360) * 100;
-    color.ct.ahsl.saturation = s * 0x101;
-    color.ct.ahsl.lightness  = l * 0x101;
-    return color;
-}
-
-/*!
-    \overload
-    \since 4.6
-
-    Static convenience function that returns a QColor constructed from the HSV
-    color values, \a h (hue), \a s (saturation), \a l (lightness), and \a a
-    (alpha-channel, i.e. transparency).
-
-    All the values must be in the range 0.0-1.0.
-
-    \sa toHsl(), fromHsl(), isValid()
-*/
-QColor QColor::fromHslF(qreal h, qreal s, qreal l, qreal a)
-{
-    if (Q_UNLIKELY(((h < qreal(0.0) || h > qreal(1.0)) && h != qreal(-1.0))
-        || (s < qreal(0.0) || s > qreal(1.0))
-        || (l < qreal(0.0) || l > qreal(1.0))
-        || (a < qreal(0.0) || a > qreal(1.0)))) {
-        qWarning("QColor::fromHsvF: HSV parameters out of range");
-        return QColor();
-    }
-
-    QColor color;
-    color.cspec = Hsl;
-    color.ct.ahsl.alpha      = qRound(a * USHRT_MAX);
-    color.ct.ahsl.hue        = (h == qreal(-1.0)) ? USHRT_MAX : qRound(h * 36000);
-    if (color.ct.ahsl.hue == 36000)
-        color.ct.ahsl.hue = 0;
-    color.ct.ahsl.saturation = qRound(s * USHRT_MAX);
-    color.ct.ahsl.lightness  = qRound(l * USHRT_MAX);
     return color;
 }
 
@@ -1912,10 +1518,15 @@ QColor QColor::fromHslF(qreal h, qreal s, qreal l, qreal a)
 */
 QColor QColor::light(int factor) const
 {
-    if (factor <= 0)                                // invalid lightness factor
+    if (cspec == QColor::Invalid) {
         return *this;
-    else if (factor < 100)                        // makes color darker
+    } else if (factor <= 0) {
+        // invalid lightness factor
+        return *this;
+    } else if (factor < 100) {
+        // makes color darker
         return darker(10000 / factor);
+    }
 
     QColor hsv = toHsv();
     int s = hsv.ct.ahsv.saturation;
@@ -1934,7 +1545,19 @@ QColor QColor::light(int factor) const
     hsv.ct.ahsv.value = v;
 
     // convert back to same color spec as original color
-    return hsv.convertTo(cspec);
+    switch (cspec) {
+        case QColor::Rgb: {
+            return hsv.toRgb();
+        }
+        case QColor::Hsv: {
+            return hsv;
+        }
+        default: {
+            Q_ASSERT(false);
+            return QColor();
+        }
+    }
+    Q_UNREACHABLE();
 }
 
 /*!
@@ -1962,16 +1585,33 @@ QColor QColor::light(int factor) const
 */
 QColor QColor::dark(int factor) const
 {
-    if (factor <= 0)                                // invalid darkness factor
+    if (cspec == QColor::Invalid) {
         return *this;
-    else if (factor < 100)                        // makes color lighter
+    } else if (factor <= 0) {
+        // invalid darkness factor
+        return *this;
+    } else if (factor < 100) {
+        // makes color lighter
         return lighter(10000 / factor);
+    }
 
     QColor hsv = toHsv();
     hsv.ct.ahsv.value = (hsv.ct.ahsv.value * 100) / factor;
 
     // convert back to same color spec as original color
-    return hsv.convertTo(cspec);
+    switch (cspec) {
+        case QColor::Rgb: {
+            return hsv.toRgb();
+        }
+        case QColor::Hsv: {
+            return hsv;
+        }
+        default: {
+            Q_ASSERT(false);
+            return QColor();
+        }
+    }
+    Q_UNREACHABLE();
 }
 
 /*!
@@ -1998,25 +1638,13 @@ QColor &QColor::operator=(Qt::GlobalColor color)
 */
 bool QColor::operator==(const QColor &color) const
 {
-    if (cspec == Hsl && cspec == color.cspec) {
-        return (ct.argb.alpha == color.ct.argb.alpha
-                && ((((ct.ahsl.hue % 36000) == (color.ct.ahsl.hue % 36000)))
-                    || (ct.ahsl.hue == color.ct.ahsl.hue))
-                && (qAbs(ct.ahsl.saturation - color.ct.ahsl.saturation) < 50
-                    || ct.ahsl.lightness == 0
-                    || color.ct.ahsl.lightness == 0
-                    || ct.ahsl.lightness == USHRT_MAX
-                    || color.ct.ahsl.lightness == USHRT_MAX)
-                && (qAbs(ct.ahsl.lightness - color.ct.ahsl.lightness)) < 50);
-    } else {
-        return (cspec == color.cspec
-                && ct.argb.alpha == color.ct.argb.alpha
-                && (((cspec == QColor::Hsv)
-                     && ((ct.ahsv.hue % 36000) == (color.ct.ahsv.hue % 36000)))
-                    || (ct.ahsv.hue == color.ct.ahsv.hue))
-                && ct.argb.green == color.ct.argb.green
-                && ct.argb.blue  == color.ct.argb.blue);
-    }
+    return (cspec == color.cspec
+            && ct.argb.alpha == color.ct.argb.alpha
+            && (((cspec == QColor::Hsv)
+                    && ((ct.ahsv.hue % 36000) == (color.ct.ahsv.hue % 36000)))
+                || (ct.ahsv.hue == color.ct.ahsv.hue))
+            && ct.argb.green == color.ct.argb.green
+            && ct.argb.blue  == color.ct.argb.blue);
 }
 
 /*!
@@ -2071,7 +1699,7 @@ void QColor::setAllowX11ColorNames(bool enabled)
 */
 void QColor::invalidate()
 {
-    cspec = Invalid;
+    cspec = QColor::Invalid;
     ct.argb.alpha = USHRT_MAX;
     ct.argb.red = 0;
     ct.argb.green = 0;
@@ -2093,8 +1721,6 @@ QDebug operator<<(QDebug dbg, const QColor &c)
         dbg.nospace() << "QColor(ARGB " << c.alphaF() << ", " << c.redF() << ", " << c.greenF() << ", " << c.blueF() << ')';
     else if (c.spec() == QColor::Hsv)
         dbg.nospace() << "QColor(AHSV " << c.alphaF() << ", " << c.hueF() << ", " << c.saturationF() << ", " << c.valueF() << ')';
-    else if (c.spec() == QColor::Hsl)
-        dbg.nospace() << "QColor(AHSL " << c.alphaF() << ", " << c.hslHueF() << ", " << c.hslSaturationF() << ", " << c.lightnessF() << ')';
 
     return dbg.space();
 #else
@@ -2257,14 +1883,6 @@ QDataStream &operator>>(QDataStream &stream, QColor &color)
     \fn QColor::hsv(int *h, int *s, int *v) const
 
     Use getHsv() instead.
-*/
-
-/*!
-    \fn QColor QColor::convertTo(Spec colorSpec) const
-
-    Creates a copy of \e this color in the format specified by \a colorSpec.
-
-    \sa spec(), toHsv(), toRgb(), isValid()
 */
 
 /*!

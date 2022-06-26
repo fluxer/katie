@@ -81,13 +81,6 @@ private slots:
     void getHsv();
     void setHsv();
 
-    void hueHsl();
-    void saturationHsl();
-    void lightness();
-
-    void getHsl();
-    void setHsl();
-
     void toRgb_data();
     void toRgb();
     void toRgbNonDestructive();
@@ -96,15 +89,8 @@ private slots:
     void toHsv();
     void toHsvNonDestructive();
 
-    void toHsl_data();
-    void toHsl();
-    void toHslNonDestructive();
-
-    void convertTo();
-
     void fromRgb();
     void fromHsv();
-    void fromHsl();
 
     void light();
     void dark();
@@ -114,8 +100,6 @@ private slots:
 
     void specConstructor_data();
     void specConstructor();
-
-    void achromaticHslHue();
 
 #ifdef Q_WS_X11
     void allowX11ColorNames();
@@ -372,9 +356,6 @@ void tst_QColor::spec()
 
     QColor hsv = QColor::fromHsv(0, 0, 0);
     QCOMPARE(hsv.spec(), QColor::Hsv);
-
-    QColor hsl = QColor::fromHsl(0, 0, 0, 0);
-    QCOMPARE(hsl.spec(), QColor::Hsl);
 
 }
 
@@ -724,169 +705,46 @@ void tst_QColor::setHsv()
     }
 }
 
-void tst_QColor::hueHsl()
-{ DEPENDS_ON(setHsl()); }
-
-void tst_QColor::saturationHsl()
-{ DEPENDS_ON(setHsl()); }
-
-void tst_QColor::lightness()
-{ DEPENDS_ON(setHsl()); }
-
-void tst_QColor::getHsl()
-{ DEPENDS_ON(setHsl()); }
-
-void tst_QColor::setHsl()
-{
-    QColor color;
-
-    for (int A = 0; A <= USHRT_MAX; ++A) {
-        {
-            // 0-255
-            int a = A >> 8;
-            color.setHsl(0, 0, 0, a);
-            QCOMPARE(color.alpha(), a);
-
-            int h, s, l, a2;
-            color.getHsv(&h, &s, &l, &a2);
-            QCOMPARE(a2, a);
-        }
-
-        {
-            // 0.0-1.0
-            qreal a = A / qreal(USHRT_MAX);
-            color.setHslF(0.0, 0.0, 0.0, a); QCOMPARE(color.alphaF(), a);
-
-            qreal h, s, l, a2;
-            color.getHslF(&h, &s, &l, &a2);
-            QCOMPARE(a2, a);
-        }
-    }
-
-    for (int H = 0; H < 36000; ++H) {
-        {
-            // 0-255
-            int h = H / 100;
-
-            color.setHsl(h, 0, 0, 0);
-            QCOMPARE(color.hslHue(), h);
-
-            int h2, s, l, a;
-            color.getHsl(&h2, &s, &l, &a);
-            QCOMPARE(h2, h);
-        }
-
-        {
-            // 0.0-1.0
-            qreal h = H / 36000.0;
-            color.setHslF(h, 0.0, 0.0, 0.0);
-            QCOMPARE(color.hslHueF(), h);
-
-            qreal h2, s, l, a;
-            color.getHslF(&h2, &s, &l, &a);
-            QCOMPARE(h2, h);
-        }
-    }
-
-    for (int S = 0; S <= USHRT_MAX; ++S) {
-        {
-            // 0-255
-            int s = S >> 8;
-            color.setHsl(0, s, 0, 0);
-            QCOMPARE(color.hslSaturation(), s);
-
-            int h, s2, l, a;
-            color.getHsl(&h, &s2, &l, &a);
-            QCOMPARE(s2, s);
-        }
-
-        {
-            // 0.0-1.0
-            qreal s = S / qreal(USHRT_MAX);
-            color.setHslF(0.0, s, 0.0, 0.0);
-            QCOMPARE(color.hslSaturationF(), s);
-
-            qreal h, s2, l, a;
-            color.getHslF(&h, &s2, &l, &a);
-            QCOMPARE(s2, s);
-        }
-    }
-
-    for (int L = 0; L <= USHRT_MAX; ++L) {
-        {
-            // 0-255
-            int l = L >> 8;
-            color.setHsl(0, 0, l, 0);
-            QCOMPARE(color.lightness(),  l);
-
-            int h, s, l2, a;
-            color.getHsl(&h, &s, &l2, &a);
-            QCOMPARE(l2, l);
-        }
-
-        {
-            // 0.0-1.0
-            qreal l = L / qreal(USHRT_MAX);
-            color.setHslF(0.0, 0.0, l, 0.0);
-            QCOMPARE(color.lightnessF(), l);
-
-            qreal h, s, l2, a;
-            color.getHslF(&h, &s, &l2, &a);
-            QCOMPARE(l2, l);
-        }
-    }
-}
-
 void tst_QColor::toRgb_data()
 {
     QTest::addColumn<QColor>("expectedColor");
     QTest::addColumn<QColor>("hsvColor");
-    QTest::addColumn<QColor>("hslColor");
 
     QTest::newRow("black")
         << QColor::fromRgbF(0.0, 0.0, 0.0)
-        << QColor::fromHsvF(-1.0, 0.0, 0.0)
-        << QColor::fromHslF(-1.0, 0.0, 0.0);
+        << QColor::fromHsvF(-1.0, 0.0, 0.0);
 
     QTest::newRow("white")
         << QColor::fromRgbF(1.0, 1.0, 1.0)
-        << QColor::fromHsvF(-1.0, 0.0, 1.0)
-        << QColor::fromHslF(-1.0, 0.0, 1.0);
+        << QColor::fromHsvF(-1.0, 0.0, 1.0);
 
     QTest::newRow("red")
         << QColor::fromRgbF(1.0, 0.0, 0.0)
-        << QColor::fromHsvF(0.0, 1.0, 1.0)
-        << QColor::fromHslF(0.0, 1.0, 0.5, 1.0);
+        << QColor::fromHsvF(0.0, 1.0, 1.0);
 
     QTest::newRow("green")
         << QColor::fromRgbF(0.0, 1.0, 0.0)
-        << QColor::fromHsvF(0.33333, 1.0, 1.0)
-        << QColor::fromHslF(0.33333, 1.0, 0.5);
+        << QColor::fromHsvF(0.33333, 1.0, 1.0);
 
     QTest::newRow("blue")
         << QColor::fromRgbF(0.0, 0.0, 1.0)
-        << QColor::fromHsvF(0.66667, 1.0, 1.0)
-        << QColor::fromHslF(0.66667, 1.0, 0.5);
+        << QColor::fromHsvF(0.66667, 1.0, 1.0);
 
     QTest::newRow("cyan")
         << QColor::fromRgbF(0.0, 1.0, 1.0)
-        << QColor::fromHsvF(0.5, 1.0, 1.0)
-        << QColor::fromHslF(0.5, 1.0, 0.5);
+        << QColor::fromHsvF(0.5, 1.0, 1.0);
 
     QTest::newRow("magenta")
         << QColor::fromRgbF(1.0, 0.0, 1.0)
-        << QColor::fromHsvF(0.83333, 1.0, 1.0)
-        << QColor::fromHslF(0.83333, 1.0, 0.5);
+        << QColor::fromHsvF(0.83333, 1.0, 1.0);
 
     QTest::newRow("yellow")
         << QColor::fromRgbF(1.0, 1.0, 0.0)
-        << QColor::fromHsvF(0.16667, 1.0, 1.0)
-        << QColor::fromHslF(0.16667, 1.0, 0.5);
+        << QColor::fromHsvF(0.16667, 1.0, 1.0);
 
     QTest::newRow("gray")
         << QColor::fromRgbF(0.6431375, 0.6431375, 0.6431375)
-        << QColor::fromHsvF(-1.0, 0.0, 0.6431375)
-        << QColor::fromHslF(-1.0, 0.0, 0.6431375);
+        << QColor::fromHsvF(-1.0, 0.0, 0.6431375);
 
     // ### add colors using the 0-255 functions
 }
@@ -898,9 +756,7 @@ void tst_QColor::toRgb()
 
     QFETCH(QColor, expectedColor);
     QFETCH(QColor, hsvColor);
-    QFETCH(QColor, hslColor);
     QCOMPARE(hsvColor.toRgb(), expectedColor);
-    QCOMPARE(hslColor.toRgb(), expectedColor);
 
 }
 
@@ -908,17 +764,14 @@ void tst_QColor::toHsv_data()
 {
     QTest::addColumn<QColor>("expectedColor");
     QTest::addColumn<QColor>("rgbColor");
-    QTest::addColumn<QColor>("hslColor");
 
     QTest::newRow("data0")
         << QColor::fromHsv(300, 255, 255)
-        << QColor(255, 0, 255)
-        << QColor::fromHslF(300./360., 1., 0.5, 1.0);
+        << QColor(255, 0, 255);
 
     QTest::newRow("data1")
         << QColor::fromHsvF(1., 1., 1., 1.)
-        << QColor(255, 0, 0, 255)
-        << QColor::fromHsvF(1., 1., 1., 1.);
+        << QColor(255, 0, 0, 255);
 }
 
 void tst_QColor::toRgbNonDestructive()
@@ -934,9 +787,7 @@ void tst_QColor::toHsv()
 
     QFETCH(QColor, expectedColor);
     QFETCH(QColor, rgbColor);
-    QFETCH(QColor, hslColor);
     QCOMPARE(rgbColor.toHsv(), expectedColor);
-    QCOMPARE(hslColor.toHsv(), expectedColor);
 }
 
 void tst_QColor::toHsvNonDestructive()
@@ -945,74 +796,10 @@ void tst_QColor::toHsvNonDestructive()
     QCOMPARE(aColor, aColor.toHsv());
 }
 
-void tst_QColor::toHsl_data()
-{
-    QTest::addColumn<QColor>("expectedColor");
-    QTest::addColumn<QColor>("hsvColor");
-    QTest::addColumn<QColor>("rgbColor");
-
-
-    QTest::newRow("data0")
-        << QColor::fromHslF(300./360., 1., 0.5, 1.0)
-        << QColor::fromHsv(300, 255, 255)
-        << QColor(255, 0, 255);
-
-    QTest::newRow("data1")
-        << QColor::fromHslF(1., 1., 0.5, 1.0)
-        << QColor::fromHsvF(1., 1., 1., 1.)
-        << QColor(255, 0, 0, 255);
-}
-
-void tst_QColor::toHsl()
-{
-    // invalid should remain invalid
-    QVERIFY(!QColor().toHsl().isValid());
-
-    QFETCH(QColor, expectedColor);
-    QFETCH(QColor, rgbColor);
-    QFETCH(QColor, hsvColor);
-
-    QCOMPARE(rgbColor.toHsl(), expectedColor);
-    QCOMPARE(hsvColor.toHsl(), expectedColor);
-
-}
-
-
-void tst_QColor::toHslNonDestructive()
-{
-    QColor aColor = QColor::fromHslF(0.11, 0.22, 0.33, 0.44);
-    QCOMPARE(aColor, aColor.toHsl());
-}
-
-
-void tst_QColor::convertTo()
-{
-    QColor color(Qt::black);
-
-    QColor rgb = color.convertTo(QColor::Rgb);
-    QVERIFY(rgb.spec() == QColor::Rgb);
-
-    QColor hsv = color.convertTo(QColor::Hsv);
-    QVERIFY(hsv.spec() == QColor::Hsv);
-
-    QColor hsl = color.convertTo(QColor::Hsl);
-    QVERIFY(hsl.spec() == QColor::Hsl);
-
-    QColor invalid = color.convertTo(QColor::Invalid);
-    QVERIFY(invalid.spec() == QColor::Invalid);
-
-    DEPENDS_ON(toRgb());
-    DEPENDS_ON(toHsv());
-    DEPENDS_ON(toHsl());
-}
-
 void tst_QColor::fromRgb()
 { DEPENDS_ON(convertTo()); }
 
 void tst_QColor::fromHsv()
-{ DEPENDS_ON(convertTo()); }
-
-void tst_QColor::fromHsl()
 { DEPENDS_ON(convertTo()); }
 
 void tst_QColor::light()
@@ -1051,14 +838,6 @@ void tst_QColor::specConstructor()
     QFETCH(QColor::Spec, spec);
     QColor color = spec;
     QCOMPARE(color.spec(), spec);
-}
-
-void tst_QColor::achromaticHslHue()
-{
-    QColor color = Qt::black;
-
-    QColor hsl = color.toHsl();
-    QCOMPARE(hsl.hslHue(), -1);
 }
 
 #ifdef Q_WS_X11

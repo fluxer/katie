@@ -344,7 +344,7 @@ QDeclarativeScriptEngine::QDeclarativeScriptEngine(QDeclarativeEnginePrivate *pr
 
     qtObject.setProperty(QLatin1String("isQtObject"), newFunction(QDeclarativeEnginePrivate::isQtObject, 1));
     qtObject.setProperty(QLatin1String("rgba"), newFunction(QDeclarativeEnginePrivate::rgba, 4));
-    qtObject.setProperty(QLatin1String("hsla"), newFunction(QDeclarativeEnginePrivate::hsla, 4));
+    qtObject.setProperty(QLatin1String("hsva"), newFunction(QDeclarativeEnginePrivate::hsva, 4));
     qtObject.setProperty(QLatin1String("rect"), newFunction(QDeclarativeEnginePrivate::rect, 4));
     qtObject.setProperty(QLatin1String("point"), newFunction(QDeclarativeEnginePrivate::point, 2));
     qtObject.setProperty(QLatin1String("size"), newFunction(QDeclarativeEnginePrivate::size, 2));
@@ -1511,31 +1511,31 @@ QScriptValue QDeclarativeEnginePrivate::rgba(QScriptContext *ctxt, QScriptEngine
 }
 
 /*!
-\qmlmethod color Qt::hsla(real hue, real saturation, real lightness, real alpha)
+\qmlmethod color Qt::hsla(real hue, real saturation, real value, real alpha)
 
-Returns a color with the specified \c hue, \c saturation, \c lightness and \c alpha components.
+Returns a color with the specified \c hue, \c saturation, \c value and \c alpha components.
 All components should be in the range 0-1 inclusive.
 */
-QScriptValue QDeclarativeEnginePrivate::hsla(QScriptContext *ctxt, QScriptEngine *engine)
+QScriptValue QDeclarativeEnginePrivate::hsva(QScriptContext *ctxt, QScriptEngine *engine)
 {
     int argCount = ctxt->argumentCount();
     if(argCount < 3 || argCount > 4)
-        return ctxt->throwError(QLatin1String("Qt.hsla(): Invalid arguments"));
+        return ctxt->throwError(QLatin1String("Qt.hsva(): Invalid arguments"));
     qsreal h = ctxt->argument(0).toNumber();
     qsreal s = ctxt->argument(1).toNumber();
-    qsreal l = ctxt->argument(2).toNumber();
+    qsreal v = ctxt->argument(2).toNumber();
     qsreal a = (argCount == 4) ? ctxt->argument(3).toNumber() : 1;
 
     if (h < 0.0) h=0.0;
     if (h > 1.0) h=1.0;
     if (s < 0.0) s=0.0;
     if (s > 1.0) s=1.0;
-    if (l < 0.0) l=0.0;
-    if (l > 1.0) l=1.0;
+    if (v < 0.0) v=0.0;
+    if (v > 1.0) v=1.0;
     if (a < 0.0) a=0.0;
     if (a > 1.0) a=1.0;
 
-    return engine->toScriptValue(QVariant::fromValue(QColor::fromHslF(h, s, l, a)));
+    return engine->toScriptValue(QVariant::fromValue(QColor::fromHsvF(h, s, v, a)));
 }
 
 /*!

@@ -243,7 +243,7 @@ public:
     static QScriptValue isQtObject(QScriptContext*, QScriptEngine*);
     static QScriptValue vector3d(QScriptContext*, QScriptEngine*);
     static QScriptValue rgba(QScriptContext*, QScriptEngine*);
-    static QScriptValue hsla(QScriptContext*, QScriptEngine*);
+    static QScriptValue hsva(QScriptContext*, QScriptEngine*);
     static QScriptValue point(QScriptContext*, QScriptEngine*);
     static QScriptValue size(QScriptContext*, QScriptEngine*);
     static QScriptValue rect(QScriptContext*, QScriptEngine*);
