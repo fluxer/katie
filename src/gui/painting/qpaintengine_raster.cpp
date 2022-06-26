@@ -2656,7 +2656,7 @@ void QSpanData::setup(const QBrush &brush, int alpha, QPainter::CompositionMode 
             type = LinearGradient;
             const QLinearGradient *g = static_cast<const QLinearGradient *>(brush.gradient());
             gradient.alphaColor = !brush.isOpaque() || alpha != 256;
-            gradient.generateGradientColorTable(*g, alpha);
+            gradient.generateGradientColorTable(g, alpha);
             gradient.spread = g->spread();
 
             QLinearGradientData &linearData = gradient.linear;
@@ -2672,7 +2672,7 @@ void QSpanData::setup(const QBrush &brush, int alpha, QPainter::CompositionMode 
             type = RadialGradient;
             const QRadialGradient *g = static_cast<const QRadialGradient *>(brush.gradient());
             gradient.alphaColor = !brush.isOpaque() || alpha != 256;
-            gradient.generateGradientColorTable(*g, alpha);
+            gradient.generateGradientColorTable(g, alpha);
             gradient.spread = g->spread();
 
             QRadialGradientData &radialData = gradient.radial;

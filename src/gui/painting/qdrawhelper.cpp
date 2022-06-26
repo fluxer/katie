@@ -50,13 +50,13 @@ static inline QRgb qConvertRgb16To32(uint c)
         | ((((c) << 8) & 0xf80000) | (((c) << 3) & 0x70000));
 }
 
-void QGradientData::generateGradientColorTable(const QGradient& gradient, int opacity)
+void QGradientData::generateGradientColorTable(const QGradient* gradient, int opacity)
 {
-    QGradientStops stops = gradient.stops();
+    QGradientStops stops = gradient->stops();
     int stopCount = stops.count();
     Q_ASSERT(stopCount > 0);
 
-    bool colorInterpolation = (gradient.interpolationMode() == QGradient::ColorInterpolation);
+    bool colorInterpolation = (gradient->interpolationMode() == QGradient::ColorInterpolation);
 
     if (stopCount == 2) {
         uint first_color = ARGB_COMBINE_ALPHA(stops[0].second.rgba(), opacity);

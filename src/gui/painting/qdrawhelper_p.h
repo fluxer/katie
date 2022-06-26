@@ -196,7 +196,7 @@ struct QGradientData
     uint colorTable[GRADIENT_STOPTABLE_SIZE];
     bool alphaColor;
 
-    void generateGradientColorTable(const QGradient& g, int opacity);
+    void generateGradientColorTable(const QGradient* g, int opacity);
 };
 
 struct QTextureData
