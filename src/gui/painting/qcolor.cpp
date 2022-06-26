@@ -1784,17 +1784,11 @@ QDebug operator<<(QDebug dbg, const QColor &c)
 */
 QDataStream &operator<<(QDataStream &stream, const QColor &color)
 {
-    qint8   s = color.cspec;
-    quint16 a = color.ct.argb.alpha;
-    quint16 r = color.ct.argb.red;
-    quint16 g = color.ct.argb.green;
-    quint16 b = color.ct.argb.blue;
-
-    stream << s;
-    stream << a;
-    stream << r;
-    stream << g;
-    stream << b;
+    stream << (qint8)color.cspec;
+    stream << (quint16)color.ct.argb.alpha;
+    stream << (quint16)color.ct.argb.red;
+    stream << (quint16)color.ct.argb.green;
+    stream << (quint16)color.ct.argb.blue;
 
     return stream;
 }
