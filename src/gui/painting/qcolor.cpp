@@ -584,8 +584,9 @@ void QColor::getHsvF(qreal *h, qreal *s, qreal *v, qreal *a) const
 */
 void QColor::getHsv(int *h, int *s, int *v, int *a) const
 {
-    if (!h || !s || !v)
+    if (!h || !s || !v) {
         return;
+    }
 
     if (cspec != QColor::Invalid && cspec != QColor::Hsv) {
         toHsv().getHsv(h, s, v, a);
@@ -664,8 +665,9 @@ void QColor::setHsv(int h, int s, int v, int a)
 */
 void QColor::getRgbF(qreal *r, qreal *g, qreal *b, qreal *a) const
 {
-    if (!r || !g || !b)
+    if (!r || !g || !b) {
         return;
+    }
 
     if (cspec != QColor::Invalid && cspec != QColor::Rgb) {
         toRgb().getRgbF(r, g, b, a);
@@ -693,8 +695,9 @@ void QColor::getRgbF(qreal *r, qreal *g, qreal *b, qreal *a) const
 */
 void QColor::getRgb(int *r, int *g, int *b, int *a) const
 {
-    if (!r || !g || !b)
+    if (!r || !g || !b) {
         return;
+    }
 
     if (cspec != QColor::Invalid && cspec != QColor::Rgb) {
         toRgb().getRgb(r, g, b, a);
@@ -785,8 +788,9 @@ void QColor::setRgb(int r, int g, int b, int a)
 
 QRgb QColor::rgba() const
 {
-    if (cspec != QColor::Invalid && cspec != QColor::Rgb)
+    if (cspec != QColor::Invalid && cspec != QColor::Rgb) {
         return toRgb().rgba();
+    }
     return qRgba(ct.argb.red >> 8, ct.argb.green >> 8, ct.argb.blue >> 8, ct.argb.alpha >> 8);
 }
 
@@ -813,8 +817,9 @@ void QColor::setRgba(QRgb rgba)
 */
 QRgb QColor::rgb() const
 {
-    if (cspec != QColor::Invalid && cspec != QColor::Rgb)
+    if (cspec != QColor::Invalid && cspec != QColor::Rgb) {
         return toRgb().rgb();
+    }
     return qRgb(ct.argb.red >> 8, ct.argb.green >> 8, ct.argb.blue >> 8);
 }
 
@@ -839,7 +844,9 @@ void QColor::setRgb(QRgb rgb)
     Drawing}{Alpha-Blended Drawing}
 */
 int QColor::alpha() const
-{ return ct.argb.alpha >> 8; }
+{
+    return ct.argb.alpha >> 8;
+}
 
 
 /*!
@@ -889,8 +896,9 @@ void QColor::setAlphaF(qreal alpha)
 */
 int QColor::red() const
 {
-    if (cspec != QColor::Invalid && cspec != QColor::Rgb)
+    if (cspec != QColor::Invalid && cspec != QColor::Rgb) {
         return toRgb().red();
+    }
     return ct.argb.red >> 8;
 }
 
@@ -916,8 +924,9 @@ void QColor::setRed(int red)
 */
 int QColor::green() const
 {
-    if (cspec != QColor::Invalid && cspec != QColor::Rgb)
+    if (cspec != QColor::Invalid && cspec != QColor::Rgb) {
         return toRgb().green();
+    }
     return ct.argb.green >> 8;
 }
 
@@ -944,8 +953,9 @@ void QColor::setGreen(int green)
 */
 int QColor::blue() const
 {
-    if (cspec != QColor::Invalid && cspec != QColor::Rgb)
+    if (cspec != QColor::Invalid && cspec != QColor::Rgb) {
         return toRgb().blue();
+    }
     return ct.argb.blue >> 8;
 }
 
@@ -972,8 +982,9 @@ void QColor::setBlue(int blue)
 */
 qreal QColor::redF() const
 {
-    if (cspec != QColor::Invalid && cspec != QColor::Rgb)
+    if (cspec != QColor::Invalid && cspec != QColor::Rgb) {
         return toRgb().redF();
+    }
     return ct.argb.red / qreal(USHRT_MAX);
 }
 
@@ -1000,8 +1011,9 @@ void QColor::setRedF(qreal red)
 */
 qreal QColor::greenF() const
 {
-    if (cspec != QColor::Invalid && cspec != QColor::Rgb)
+    if (cspec != QColor::Invalid && cspec != QColor::Rgb) {
         return toRgb().greenF();
+    }
     return ct.argb.green / qreal(USHRT_MAX);
 }
 
@@ -1028,8 +1040,9 @@ void QColor::setGreenF(qreal green)
 */
 qreal QColor::blueF() const
 {
-    if (cspec != QColor::Invalid && cspec != QColor::Rgb)
+    if (cspec != QColor::Invalid && cspec != QColor::Rgb) {
         return toRgb().blueF();
+    }
     return ct.argb.blue / qreal(USHRT_MAX);
 }
 
@@ -1070,8 +1083,9 @@ int QColor::hue() const
 */
 int QColor::hsvHue() const
 {
-    if (cspec != QColor::Invalid && cspec != QColor::Hsv)
+    if (cspec != QColor::Invalid && cspec != QColor::Hsv) {
         return toHsv().hue();
+    }
     return ct.ahsv.hue == USHRT_MAX ? -1 : ct.ahsv.hue / 100;
 }
 
@@ -1097,8 +1111,9 @@ int QColor::saturation() const
 */
 int QColor::hsvSaturation() const
 {
-    if (cspec != QColor::Invalid && cspec != QColor::Hsv)
+    if (cspec != QColor::Invalid && cspec != QColor::Hsv) {
         return toHsv().saturation();
+    }
     return ct.ahsv.saturation >> 8;
 }
 
@@ -1110,8 +1125,9 @@ int QColor::hsvSaturation() const
 */
 int QColor::value() const
 {
-    if (cspec != QColor::Invalid && cspec != QColor::Hsv)
+    if (cspec != QColor::Invalid && cspec != QColor::Hsv) {
         return toHsv().value();
+    }
     return ct.ahsv.value >> 8;
 }
 
@@ -1136,8 +1152,9 @@ qreal QColor::hueF() const
 */
 qreal QColor::hsvHueF() const
 {
-    if (cspec != QColor::Invalid && cspec != QColor::Hsv)
+    if (cspec != QColor::Invalid && cspec != QColor::Hsv) {
         return toHsv().hueF();
+    }
     return ct.ahsv.hue == USHRT_MAX ? qreal(-1.0) : ct.ahsv.hue / qreal(36000.0);
 }
 
@@ -1162,8 +1179,9 @@ qreal QColor::saturationF() const
 */
 qreal QColor::hsvSaturationF() const
 {
-    if (cspec != QColor::Invalid && cspec != QColor::Hsv)
+    if (cspec != QColor::Invalid && cspec != QColor::Hsv) {
         return toHsv().saturationF();
+    }
     return ct.ahsv.saturation / qreal(USHRT_MAX);
 }
 
@@ -1175,8 +1193,9 @@ qreal QColor::hsvSaturationF() const
 */
 qreal QColor::valueF() const
 {
-    if (cspec != QColor::Invalid && cspec != QColor::Hsv)
+    if (cspec != QColor::Invalid && cspec != QColor::Hsv) {
         return toHsv().valueF();
+    }
     return ct.ahsv.value / qreal(USHRT_MAX);
 }
 
@@ -1191,71 +1210,72 @@ QColor QColor::toRgb() const
         return *this;
     }
 
+    Q_ASSERT(cspec == QColor::Hsv);
+
     QColor color;
     color.cspec = QColor::Rgb;
     color.ct.argb.alpha = ct.argb.alpha;
 
-    switch (cspec) {
-    case QColor::Hsv: {
-        if (ct.ahsv.saturation == 0 || ct.ahsv.hue == USHRT_MAX) {
-            // achromatic case
-            color.ct.argb.red = color.ct.argb.green = color.ct.argb.blue = ct.ahsv.value;
-            break;
-        }
+    if (ct.ahsv.saturation == 0 || ct.ahsv.hue == USHRT_MAX) {
+        // achromatic case
+        color.ct.argb.red = color.ct.argb.green = color.ct.argb.blue = ct.ahsv.value;
+        return color;
+    }
 
-        // chromatic case
-        const qreal h = ct.ahsv.hue == 36000 ? 0 : ct.ahsv.hue / qreal(6000.);
-        const qreal s = ct.ahsv.saturation / qreal(USHRT_MAX);
-        const qreal v = ct.ahsv.value / qreal(USHRT_MAX);
-        const int i = int(h);
-        const qreal f = h - i;
-        const qreal p = v * (qreal(1.0) - s);
+    // chromatic case
+    const qreal h = ct.ahsv.hue == 36000 ? 0 : ct.ahsv.hue / qreal(6000.);
+    const qreal s = ct.ahsv.saturation / qreal(USHRT_MAX);
+    const qreal v = ct.ahsv.value / qreal(USHRT_MAX);
+    const int i = int(h);
+    const qreal f = h - i;
+    const qreal p = v * (qreal(1.0) - s);
 
-        if (i & 1) {
-            const qreal q = v * (qreal(1.0) - (s * f));
+    if (i & 1) {
+        const qreal q = v * (qreal(1.0) - (s * f));
 
-            switch (i) {
-            case 1:
+        switch (i) {
+            case 1: {
                 color.ct.argb.red   = qRound(q * USHRT_MAX);
                 color.ct.argb.green = qRound(v * USHRT_MAX);
                 color.ct.argb.blue  = qRound(p * USHRT_MAX);
                 break;
-            case 3:
+            }
+            case 3: {
                 color.ct.argb.red   = qRound(p * USHRT_MAX);
                 color.ct.argb.green = qRound(q * USHRT_MAX);
                 color.ct.argb.blue  = qRound(v * USHRT_MAX);
                 break;
-            case 5:
+            }
+            case 5: {
                 color.ct.argb.red   = qRound(v * USHRT_MAX);
                 color.ct.argb.green = qRound(p * USHRT_MAX);
                 color.ct.argb.blue  = qRound(q * USHRT_MAX);
                 break;
             }
-        } else {
-            const qreal t = v * (qreal(1.0) - (s * (qreal(1.0) - f)));
+        }
+    } else {
+        const qreal t = v * (qreal(1.0) - (s * (qreal(1.0) - f)));
 
-            switch (i) {
-            case 0:
+        switch (i) {
+            case 0: {
                 color.ct.argb.red   = qRound(v * USHRT_MAX);
                 color.ct.argb.green = qRound(t * USHRT_MAX);
                 color.ct.argb.blue  = qRound(p * USHRT_MAX);
                 break;
-            case 2:
+            }
+            case 2: {
                 color.ct.argb.red   = qRound(p * USHRT_MAX);
                 color.ct.argb.green = qRound(v * USHRT_MAX);
                 color.ct.argb.blue  = qRound(t * USHRT_MAX);
                 break;
-            case 4:
+            }
+            case 4: {
                 color.ct.argb.red   = qRound(t * USHRT_MAX);
                 color.ct.argb.green = qRound(p * USHRT_MAX);
                 color.ct.argb.blue  = qRound(v * USHRT_MAX);
                 break;
             }
         }
-        break;
-    }
-    default:
-        break;
     }
 
     return color;
@@ -1277,8 +1297,7 @@ QColor QColor::toHsv() const
     if (!isValid() || cspec == QColor::Hsv)
         return *this;
 
-    if (cspec != QColor::Rgb)
-        return toRgb().toHsv();
+    Q_ASSERT(cspec == QColor::Rgb);
 
     QColor color;
     color.cspec = QColor::Hsv;
