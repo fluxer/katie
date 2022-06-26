@@ -90,14 +90,10 @@ public:
 
     int hue() const; // 0 <= hue < 360
     int saturation() const;
-    int hsvHue() const; // 0 <= hue < 360
-    int hsvSaturation() const;
     int value() const;
 
     qreal hueF() const; // 0.0 <= hueF < 360.0
     qreal saturationF() const;
-    qreal hsvHueF() const; // 0.0 <= hueF < 360.0
-    qreal hsvSaturationF() const;
     qreal valueF() const;
 
     void getHsv(int *h, int *s, int *v, int *a = nullptr) const;

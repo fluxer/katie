@@ -1115,22 +1115,11 @@ void QColor::setBlueF(qreal blue)
 
     The color is implicitly converted to HSV.
 
-    \sa hsvHue(), hueF(), getHsv(), {QColor#The HSV Color Model}{The HSV Color
+    \sa hueF(), getHsv(), {QColor#The HSV Color Model}{The HSV Color
     Model}
 */
 
 int QColor::hue() const
-{
-    return hsvHue();
-}
-
-/*!
-    Returns the hue color component of this color.
-
-    \sa hueF(), getHsv(), {QColor#The HSV Color Model}{The HSV Color
-    Model}
-*/
-int QColor::hsvHue() const
 {
     if (cspec != QColor::Invalid && cspec != QColor::Hsv) {
         return toHsv().hue();
@@ -1143,22 +1132,11 @@ int QColor::hsvHue() const
 
     The color is implicitly converted to HSV.
 
-    \sa hsvSaturation(), saturationF(), getHsv(), {QColor#The HSV Color Model}{The HSV Color
+    \sa saturationF(), getHsv(), {QColor#The HSV Color Model}{The HSV Color
     Model}
 */
 
 int QColor::saturation() const
-{
-    return hsvSaturation();
-}
-
-/*!
-    Returns the saturation color component of this color.
-
-    \sa saturationF(), getHsv(), {QColor#The HSV Color Model}{The HSV Color
-    Model}
-*/
-int QColor::hsvSaturation() const
 {
     if (cspec != QColor::Invalid && cspec != QColor::Hsv) {
         return toHsv().saturation();
@@ -1185,21 +1163,10 @@ int QColor::value() const
 
     The color is implicitly converted to HSV.
 
-    \sa hsvHueF(), hue(), getHsvF(), {QColor#The HSV Color Model}{The HSV Color
-    Model}
-*/
-qreal QColor::hueF() const
-{
-    return hsvHueF();
-}
-
-/*!
-    Returns the hue color component of this color.
-
     \sa hue(), getHsvF(), {QColor#The HSV Color Model}{The HSV Color
     Model}
 */
-qreal QColor::hsvHueF() const
+qreal QColor::hueF() const
 {
     if (cspec != QColor::Invalid && cspec != QColor::Hsv) {
         return toHsv().hueF();
@@ -1212,21 +1179,10 @@ qreal QColor::hsvHueF() const
 
      The color is implicitly converted to HSV.
 
-    \sa hsvSaturationF(), saturation() getHsvF(), {QColor#The HSV Color Model}{The HSV Color
-    Model}
-*/
-qreal QColor::saturationF() const
-{
-    return hsvSaturationF();
-}
-
-/*!
-    Returns the saturation color component of this color.
-
     \sa saturation() getHsvF(), {QColor#The HSV Color Model}{The HSV Color
     Model}
 */
-qreal QColor::hsvSaturationF() const
+qreal QColor::saturationF() const
 {
     if (cspec != QColor::Invalid && cspec != QColor::Hsv) {
         return toHsv().saturationF();
@@ -1751,7 +1707,7 @@ void QColor::setAllowX11ColorNames(bool enabled)
 /*! \internal
 
     Marks the color as invalid and sets all components to zero (alpha is set
-    to fully opaque for compatibility with Qt 3).
+    to fully opaque).
 */
 void QColor::invalidate()
 {
