@@ -188,12 +188,11 @@ static void qHB_HeuristicPosition(HB_ShaperItem *item)
     }
 }
 
-bool qHB_BasicShape(HB_ShaperItem *shaper_item)
+void qHB_BasicShape(HB_ShaperItem *shaper_item)
 {
     qHB_HeuristicSetGlyphAttributes(shaper_item);
 
     qHB_HeuristicPosition(shaper_item);
-    return true;
 }
 
 

@@ -218,7 +218,7 @@ typedef struct {
     QFontEngine* font;
 } HB_ShaperItem;
 
-bool qHB_BasicShape(HB_ShaperItem *shaper_item);
+void qHB_BasicShape(HB_ShaperItem *shaper_item);
 
 void qHB_GetCharAttributes(const HB_UChar16 *string, uint32_t stringLength,
                            HB_CharAttributes *attributes);
