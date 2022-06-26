@@ -32,7 +32,6 @@
 
 #include "qdebug.h"
 #include "qdir.h"
-#include "qdatetime.h"
 
 QT_BEGIN_NAMESPACE
 
