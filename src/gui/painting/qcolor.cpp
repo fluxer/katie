@@ -50,53 +50,6 @@ QT_BEGIN_NAMESPACE
 
 static bool qAllowX11ColorNames = false;
 
-/*
-* From the "The Palette Manager: How and Why" by Ron Gery,
-* March 23, 1992, archived on MSDN:
-*
-*     The Windows system palette is broken up into two
-*     sections, one with fixed colors and one with colors
-*     that can be changed by applications. The system palette
-*     predefines 20 entries; these colors are known as the
-*     static or reserved colors and consist of the 16 colors
-*     found in the Windows version 3.0 VGA driver and 4
-*     additional colors chosen for their visual appeal.  The
-*     DEFAULT_PALETTE stock object is, as the name implies,
-*     the default palette selected into a device context (DC)
-*     and consists of these static colors. Applications can
-*     set the remaining 236 colors using the Palette Manager.
-*
-* The 20 reserved entries have indices in [0,9] and
-* [246,255]. We reuse 17 of them.
-*/
-static const struct globalColorsData {
-    const int red;
-    const int green;
-    const int blue;
-    const int alpha;
-} globalColorsTbl[] = {
-    { 255, 255, 255, 255 }, // Qt::color0
-    {   0,   0,   0, 255 }, // Qt::color1
-    {   0,   0,   0, 255 }, // black
-    { 255, 255, 255, 255 }, // white
-    { 128, 128, 128, 255 }, // index 248   medium gray
-    { 160, 160, 164, 255 }, // index 247   light gray
-    { 192, 192, 192, 255 }, // index 7     light gray
-    { 255,   0,   0, 255 }, // index 249   red
-    {   0, 255,   0, 255 }, // index 250   green
-    {   0,   0, 255, 255 }, // index 252   blue
-    {   0, 255, 255, 255 }, // index 254   cyan
-    { 255,   0, 255, 255 }, // index 253   magenta
-    { 255, 255,   0, 255 }, // index 251   yellow
-    { 128,   0,   0, 255 }, // index 1     dark red
-    {   0, 128,   0, 255 }, // index 2     dark green
-    {   0,   0, 128, 255 }, // index 4     dark blue
-    {   0, 128, 128, 255 }, // index 6     dark cyan
-    { 128,   0, 128, 255 }, // index 5     dark magenta
-    { 128, 128,   0, 255 }, // index 3     dark yellow
-    {   0,   0,   0,   0 }, //             transparent
-};
-
 /*!
     \class QColor
     \brief The QColor class provides colors based on RGB or HSV values.
@@ -308,10 +261,106 @@ static const struct globalColorsData {
  */
 QColor::QColor(Qt::GlobalColor color)
 {
-    setRgb(globalColorsTbl[color].red,
-           globalColorsTbl[color].green,
-           globalColorsTbl[color].blue,
-           globalColorsTbl[color].alpha);
+    /*
+    * From the "The Palette Manager: How and Why" by Ron Gery,
+    * March 23, 1992, archived on MSDN:
+    *
+    *     The Windows system palette is broken up into two
+    *     sections, one with fixed colors and one with colors
+    *     that can be changed by applications. The system palette
+    *     predefines 20 entries; these colors are known as the
+    *     static or reserved colors and consist of the 16 colors
+    *     found in the Windows version 3.0 VGA driver and 4
+    *     additional colors chosen for their visual appeal.  The
+    *     DEFAULT_PALETTE stock object is, as the name implies,
+    *     the default palette selected into a device context (DC)
+    *     and consists of these static colors. Applications can
+    *     set the remaining 236 colors using the Palette Manager.
+    *
+    * The 20 reserved entries have indices in [0,9] and
+    * [246,255]. We reuse 17 of them.
+    */
+    switch (color) {
+        case Qt::color0:
+        case Qt::white: {
+            setRgb(255, 255, 255, 255);
+            break;
+        }
+        case Qt::color1:
+        case Qt::black: {
+            setRgb(0, 0, 0, 255);
+            break;
+        }
+        case Qt::darkGray: {
+            setRgb(128, 128, 128, 255); // index 248
+            break;
+        }
+        case Qt::gray: {
+            setRgb(160, 160, 164, 255); // index 247
+            break;
+        }
+        case Qt::lightGray: {
+            setRgb(192, 192, 192, 255); // index 7
+            break;
+        }
+        case Qt::red: {
+            setRgb(255, 0, 0, 255); // index 249
+            break;
+        }
+        case Qt::green: {
+            setRgb(0, 255, 0, 255); // index 250
+            break;
+        }
+        case Qt::blue: {
+            setRgb(0, 0, 255, 255); // index 252
+            break;
+        }
+        case Qt::cyan: {
+            setRgb(0, 255, 255, 255); // index 254
+            break;
+        }
+        case Qt::magenta: {
+            setRgb(255, 0, 255, 255); // index 253
+            break;
+        }
+        case Qt::yellow: {
+            setRgb(255, 255, 0, 255); // index 251
+            break;
+        }
+        case Qt::darkRed: {
+            setRgb(128, 0, 0, 255); // index 1
+            break;
+        }
+        case Qt::darkGreen: {
+            setRgb(0, 128, 0, 255); // index 2
+            break;
+        }
+        case Qt::darkBlue: {
+            setRgb(0, 0, 128, 255); // index 4
+            break;
+        }
+        case Qt::darkCyan: {
+            setRgb(0, 128, 128, 255); // index 6
+            break;
+        }
+        case Qt::darkMagenta: {
+            setRgb(128, 0, 128, 255); // index 5
+            break;
+        }
+        case Qt::darkYellow: {
+            setRgb(128, 128, 0, 255); // index 3
+            break;
+        }
+        case Qt::transparent: {
+            setRgb(0, 0, 0, 0);
+            break;
+        }
+        default: {
+            qWarning("QColor::QColor: invalid global color");
+            invalidate();
+            break;
+        }
+    }
 }
 
 /*!
@@ -1644,8 +1693,9 @@ bool QColor::operator==(const QColor &color) const
     \a color; otherwise returns false.
 */
 bool QColor::operator!=(const QColor &color) const
-{ return !operator==(color); }
-
+{
+    return !operator==(color);
+}
 
 /*!
     Returns the color as a QVariant
