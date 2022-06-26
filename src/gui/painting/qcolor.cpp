@@ -342,33 +342,6 @@ QColor::QColor(QRgb color)
 }
 
 /*!
-    \internal
-
-    Constructs a color with the given \a spec.
-
-    This function is primarly present to avoid that QColor::Invalid
-    becomes a valid color by accident.
-*/
-
-QColor::QColor(Spec spec)
-{
-    switch (spec) {
-        case QColor::Invalid: {
-            invalidate();
-            break;
-        }
-        case QColor::Rgb: {
-            setRgb(0, 0, 0);
-            break;
-        }
-        case QColor::Hsv: {
-            setHsv(0, 0, 0);
-            break;
-        }
-    }
-}
-
-/*!
     \fn QColor::QColor(const QString &name)
 
     Constructs a named color in the same way as setNamedColor() using
@@ -1864,13 +1837,6 @@ QDataStream &operator>>(QDataStream &stream, QColor &color)
 
     The gray value is calculated using the formula (R * 11 + G * 16 + B * 5)/32;
     the alpha-channel is ignored.
-*/
-
-/*!
-    \fn QColor::QColor(int x, int y, int z, Spec colorSpec)
-
-    Use one of the other QColor constructors, or one of the static convenience
-    functions, instead.
 */
 
 /*!

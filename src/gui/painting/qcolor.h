@@ -45,7 +45,6 @@ public:
     QColor(const QString& name);
     QColor(const char *name);
     QColor(const QColor &color);
-    QColor(Spec spec);
 
     bool isValid() const;
 
@@ -140,9 +139,6 @@ public:
     static bool isValidColor(const QString &name);
 
 private:
-    // do not allow a spec to be used as an alpha value
-    QColor(int, int, int, Spec);
-
     void invalidate();
 
     Spec cspec;

@@ -98,9 +98,6 @@ private slots:
     void assignmentOoperator();
     void equalityOperator();
 
-    void specConstructor_data();
-    void specConstructor();
-
 #ifdef Q_WS_X11
     void allowX11ColorNames();
     void setallowX11ColorNames();
@@ -823,22 +820,6 @@ void tst_QColor::equalityOperator()
 { DEPENDS_ON(convertTo()); }
 
 Q_DECLARE_METATYPE(QColor::Spec);
-
-void tst_QColor::specConstructor_data()
-{
-    QTest::addColumn<QColor::Spec>("spec");
-
-    QTest::newRow("Invalid") << QColor::Invalid;
-    QTest::newRow("Rgb") << QColor::Rgb;
-    QTest::newRow("Hsv") << QColor::Hsv;
-}
-
-void tst_QColor::specConstructor()
-{
-    QFETCH(QColor::Spec, spec);
-    QColor color = spec;
-    QCOMPARE(color.spec(), spec);
-}
 
 #ifdef Q_WS_X11
 void tst_QColor::allowX11ColorNames()
