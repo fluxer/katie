@@ -812,9 +812,9 @@ void QWidgetBackingStore::sync()
 #ifndef QT_NO_GRAPHICSVIEW
     if (tlw->d_func()->extra->proxyWidget) {
         dirty = QRegion();
-        const QVector<QRect> rects(toClean.rects());
-        for (int i = 0; i < rects.size(); ++i)
-            tlw->d_func()->extra->proxyWidget->update(rects.at(i));
+        foreach (const QRect &rect, toClean.rects()) {
+            tlw->d_func()->extra->proxyWidget->update(rect);
+        }
         return;
     }
 #endif
