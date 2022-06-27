@@ -20,7 +20,6 @@
 ****************************************************************************/
 
 #include "qplatformdefs.h"
-#include "qcolormap.h"
 #include "qdesktopwidget.h"
 #include "qapplication.h"
 #include "qapplication_p.h"
@@ -940,12 +939,6 @@ void qt_init(QApplicationPrivate *priv, Display *display,
     qt_x11Data->ignore_badwindow = false;
     qt_x11Data->seen_badwindow = false;
 
-    // colormap control
-    qt_x11Data->visual_class = -1;
-    qt_x11Data->visual_id = -1;
-    qt_x11Data->color_count = 0;
-    qt_x11Data->custom_cmap = false;
-
     // outside visual/colormap
     qt_x11Data->visual = reinterpret_cast<Visual *>(visual);
     qt_x11Data->colormap = colormap;
@@ -995,30 +988,6 @@ void qt_init(QApplicationPrivate *priv, Display *display,
         } else if (arg == "-geometry") {
             if (++i < argc)
                 mwGeometry = argv[i];
-        } else if (arg == "-ncols") {   // xv and netscape use this name
-            if (++i < argc)
-                qt_x11Data->color_count = qMax(0,atoi(argv[i]));
-        } else if (arg == "-visual") {  // xv and netscape use this name
-            if (++i < argc && !qt_x11Data->visual) {
-                QString s = QString::fromLocal8Bit(argv[i]).toLower();
-                if (s == QLatin1String("staticgray"))
-                    qt_x11Data->visual_class = StaticGray;
-                else if (s == QLatin1String("grayscale"))
-                    qt_x11Data->visual_class = XGrayScale;
-                else if (s == QLatin1String("staticcolor"))
-                    qt_x11Data->visual_class = StaticColor;
-                else if (s == QLatin1String("pseudocolor"))
-                    qt_x11Data->visual_class = PseudoColor;
-                else if (s == QLatin1String("truecolor"))
-                    qt_x11Data->visual_class = TrueColor;
-                else if (s == QLatin1String("directcolor"))
-                    qt_x11Data->visual_class = DirectColor;
-                else
-                    qt_x11Data->visual_id = static_cast<int>(strtol(argv[i], 0, 0));
-            }
-        } else if (arg == "-cmap") {    // xv uses this name
-            if (!qt_x11Data->colormap)
-                qt_x11Data->custom_cmap = true;
         }
         else if (arg == "-sync")
             appSync = !appSync;
@@ -1066,6 +1035,12 @@ void qt_init(QApplicationPrivate *priv, Display *display,
         QX11InfoData *screen = qt_x11Data->screens + s;
         screen->ref = 1; // ensures it doesn't get deleted
         screen->screen = s;
+        screen->depth = DefaultDepth(qt_x11Data->display, s);
+        screen->colormap = DefaultColormap(qt_x11Data->display, s);
+        screen->defaultColormap = true;
+        screen->visual = DefaultVisual(qt_x11Data->display, s);
+        screen->defaultVisual = true;
+        screen->cells = screen->visual->map_entries;
 
         int widthMM = DisplayWidthMM(qt_x11Data->display, s);
         if (widthMM != 0) {
@@ -1080,11 +1055,7 @@ void qt_init(QApplicationPrivate *priv, Display *display,
         } else {
             screen->dpiY = 72;
         }
-
-        qt_x11Data->argbVisuals[s] = 0;
-        qt_x11Data->argbColormaps[s] = 0;
     }
-
 
 #ifndef QT_NO_XRENDER
     int xrender_eventbase,  xrender_errorbase;
@@ -1113,7 +1084,45 @@ void qt_init(QApplicationPrivate *priv, Display *display,
     }
 #endif
 
-    QColormap::initialize();
+#ifndef QT_NO_XRENDER
+    if (qt_x11Data->use_xrender) {
+        for (int s = 0; s < qt_x11Data->screenCount; s++) {
+            qt_x11Data->argbVisuals[s] = 0;
+            qt_x11Data->argbColormaps[s] = 0;
+
+            Visual *argbVisual = nullptr;
+
+            int nvi = 0;
+            XVisualInfo templ;
+            templ.screen  = s;
+            templ.depth   = 32;
+            templ.c_class = TrueColor;
+            XVisualInfo *xvi = XGetVisualInfo(
+                qt_x11Data->display,
+                VisualScreenMask | VisualDepthMask | VisualClassMask,
+                &templ, &nvi
+            );
+            for (int idx = 0; idx < nvi; ++idx) {
+                XRenderPictFormat *format = XRenderFindVisualFormat(qt_x11Data->display,
+                                                                    xvi[idx].visual);
+                if (format->type == PictTypeDirect && format->direct.alphaMask) {
+                    argbVisual = xvi[idx].visual;
+                    break;
+                }
+            }
+            XFree(xvi);
+
+            if (argbVisual) {
+                qt_x11Data->argbVisuals[s] = argbVisual;
+                qt_x11Data->argbColormaps[s] = XCreateColormap(
+                    qt_x11Data->display,
+                    RootWindow(qt_x11Data->display, s),
+                    argbVisual, AllocNone
+                );
+            }
+        }
+    }
+#endif
 
     // Support protocols
 #ifndef QT_NO_DRAGANDDROP
@@ -1270,7 +1279,6 @@ void qt_cleanup()
 #ifndef QT_NO_CURSOR
     QCursorData::cleanup();
 #endif // QT_NO_CURSOR
-    QColormap::cleanup();
 
 #ifndef QT_NO_XRENDER
     for (int i = 0; i < qt_x11Data->solid_fill_count; ++i) {
@@ -3450,7 +3458,7 @@ void QApplication::setEffectEnabled(Qt::UIEffect effect, bool enable)
 
 bool QApplication::isEffectEnabled(Qt::UIEffect effect)
 {
-    if (QColormap::instance().depth() < 16 || !QApplicationPrivate::animate_ui)
+    if (!QApplicationPrivate::animate_ui)
         return false;
 
     switch(effect) {

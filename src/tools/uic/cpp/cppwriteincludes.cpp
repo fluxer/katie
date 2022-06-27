@@ -109,7 +109,6 @@ static const struct ClassTblData {
     { QLatin1String("QCloseEvent"), QLatin1String("QtGui/qevent.h") },
     { QLatin1String("QColor"), QLatin1String("QtGui/qcolor.h") },
     { QLatin1String("QColorDialog"), QLatin1String("QtGui/qcolordialog.h") },
-    { QLatin1String("QColormap"), QLatin1String("QtGui/qcolormap.h") },
     { QLatin1String("QColumnView"), QLatin1String("QtGui/qcolumnview.h") },
     { QLatin1String("QComboBox"), QLatin1String("QtGui/qcombobox.h") },
     { QLatin1String("QCommandLinkButton"), QLatin1String("QtGui/qcommandlinkbutton.h") },

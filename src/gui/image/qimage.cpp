@@ -29,7 +29,6 @@
 #include "qimagewriter.h"
 #include "qstringlist.h"
 #include "qvariant.h"
-#include "qcolormap.h"
 #include "qdrawhelper_p.h"
 #include "qmemrotate_p.h"
 #include "qpixmapdata_p.h"
@@ -1648,7 +1647,7 @@ QImage::Format QImage::format() const
 QImage::Format QImage::systemFormat()
 {
 #if defined(Q_WS_X11)
-    if (QColormap::instance().depth() == 16)
+    if (QX11Info::appDepth() == 16)
         return QImage::Format_RGB16;
 #endif
     return QImage::Format_RGB32;

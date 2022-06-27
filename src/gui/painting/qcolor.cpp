@@ -106,9 +106,6 @@ static bool qAllowX11ColorNames = false;
     of the provided QRgb, and the qGray() function calculates and
     return a gray value based on the given value.
 
-    QColor is platform and device independent. The QColormap class
-    maps the color to the hardware.
-
     For more information about painting in general, see the \l{Paint
     System} documentation.
 

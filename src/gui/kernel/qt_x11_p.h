@@ -230,12 +230,6 @@ struct QX11Data
     bool ignore_badwindow;
     bool seen_badwindow;
 
-    // options
-    int visual_class;
-    int visual_id;
-    int color_count;
-    bool custom_cmap;
-
     // outside visual/colormap
     Visual *visual;
     Colormap colormap;
@@ -261,6 +255,8 @@ struct QX11Data
 
     static void copyQImageToXImage(const QImage &image, XImage *ximage);
     static void copyXImageToQImage(XImage *ximage, QImage &image);
+
+    static uint XColorPixel(const int screen, const QColor &color);
 
     bool has_fontconfig;
     int fc_hint_style;

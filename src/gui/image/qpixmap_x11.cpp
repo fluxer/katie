@@ -24,7 +24,6 @@
 #include "qiodevice.h"
 #include "qpixmap_x11_p.h"
 #include "qbitmap.h"
-#include "qcolormap.h"
 #include "qimage.h"
 #include "qmatrix.h"
 #include "qapplication.h"
@@ -409,7 +408,7 @@ void QX11PixmapData::fill(const QColor &fillColor)
         XSetForeground(qt_x11Data->display, gc, fillColor.rgba());
     } else {
         XSetForeground(qt_x11Data->display, gc,
-                       QColormap::instance(xinfo.screen()).pixel(fillColor));
+                       QX11Data::XColorPixel(xinfo.screen(), fillColor));
     }
     XFillRectangle(qt_x11Data->display, hd, gc, 0, 0, width(), height());
     XFreeGC(qt_x11Data->display, gc);

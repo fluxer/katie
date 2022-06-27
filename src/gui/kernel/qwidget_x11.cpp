@@ -33,7 +33,6 @@
 #include "qelapsedtimer.h"
 #include "qcursor.h"
 #include "qstack.h"
-#include "qcolormap.h"
 #include "qdebug.h"
 #include "qmenu.h"
 #include "qmenu_p.h"
@@ -1265,13 +1264,13 @@ void QWidgetPrivate::updateSystemBackground()
                 && q->testAttribute(Qt::WA_TranslucentBackground)
                 && !(q->parent()))
                 XSetWindowBackground(qt_x11Data->display, q->internalWinId(),
-                                     QColormap::instance(xinfo.screen()).pixel(Qt::transparent));
+                                     QX11Data::XColorPixel(xinfo.screen(), Qt::transparent));
             else
                 XSetWindowBackgroundPixmap(qt_x11Data->display, q->internalWinId(), XNone);
         }
     else if (brush.style() == Qt::SolidPattern && brush.isOpaque())
         XSetWindowBackground(qt_x11Data->display, q->internalWinId(),
-                             QColormap::instance(xinfo.screen()).pixel(brush.color()));
+                             QX11Data::XColorPixel(xinfo.screen(), brush.color()));
     else if (isBackgroundInherited())
         XSetWindowBackgroundPixmap(qt_x11Data->display, q->internalWinId(), ParentRelative);
     else if (brush.style() == Qt::TexturePattern) {
@@ -1280,7 +1279,7 @@ void QWidgetPrivate::updateSystemBackground()
         XSetWindowBackgroundPixmap(qt_x11Data->display, q->internalWinId(), bgpixmap.handle());
     } else
         XSetWindowBackground(qt_x11Data->display, q->internalWinId(),
-                             QColormap::instance(xinfo.screen()).pixel(brush.color()));
+                             QX11Data::XColorPixel(xinfo.screen(), brush.color()));
 }
 
 #ifndef QT_NO_CURSOR

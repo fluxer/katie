@@ -551,7 +551,6 @@ include/katie/QtGui/QClipboardEvent
 include/katie/QtGui/QCloseEvent
 include/katie/QtGui/QColor
 include/katie/QtGui/QColorDialog
-include/katie/QtGui/QColormap
 include/katie/QtGui/QColumnView
 include/katie/QtGui/QComboBox
 include/katie/QtGui/QCommandLinkButton
@@ -904,7 +903,6 @@ include/katie/QtGui/qcleanlooksstyle.h
 include/katie/QtGui/qclipboard.h
 include/katie/QtGui/qcolor.h
 include/katie/QtGui/qcolordialog.h
-include/katie/QtGui/qcolormap.h
 include/katie/QtGui/qcolumnview.h
 include/katie/QtGui/qcombobox.h
 include/katie/QtGui/qcommandlinkbutton.h

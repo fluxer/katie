@@ -63,7 +63,6 @@ classlist = [
     "QCloseEvent",
     "QColor",
     "QColorDialog",
-    "QColormap",
     "QColumnView",
     "QComboBox",
     "QCommandLinkButton",

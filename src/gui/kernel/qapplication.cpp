@@ -40,7 +40,6 @@
 #include "qvariant.h"
 #include "qwidget.h"
 #include "qdnd_p.h"
-#include "qcolormap.h"
 #include "qdebug.h"
 #include "qstylesheetstyle_p.h"
 #include "qstyle_p.h"
@@ -468,16 +467,6 @@ void QApplicationPrivate::process_cmdline()
         \o  -geometry \e geometry, sets the client geometry of the first window
             that is shown.
         \o  -title \e title, sets the application title.
-        \o  -visual \c TrueColor, forces the application to use a TrueColor
-            visual on an 8-bit display.
-        \o  -ncols \e count, limits the number of colors allocated in the color
-            cube on an 8-bit display, if the application is using the
-            QApplication::ManyColor color specification. If \e count is 216
-            then a 6x6x6 color cube is used (i.e. 6 levels of red, 6 of green,
-            and 6 of blue); for other values, a cube approximately proportional
-            to a 2x3x1 cube is used.
-        \o  -cmap, causes the application to install a private color map on an
-            8-bit display.
     \endlist
 
     \section1 X11 Notes
@@ -1214,27 +1203,10 @@ void QApplication::setPalette(const QPalette &palette, const char* className)
 
 void QApplicationPrivate::setSystemPalette(const QPalette &pal)
 {
-    QPalette adjusted;
-
-#if 0
-    // adjust the system palette to avoid dithering
-    QColormap cmap = QColormap::instance();
-    if (cmap.depths() > 4 && cmap.depths() < 24) {
-        for (int g = 0; g < QPalette::NColorGroups; g++)
-            for (int i = 0; i < QPalette::NColorRoles; i++) {
-                QColor color = pal.color((QPalette::ColorGroup)g, (QPalette::ColorRole)i);
-                color = cmap.colorAt(cmap.pixel(color));
-                adjusted.setColor((QPalette::ColorGroup)g, (QPalette::ColorRole) i, color);
-            }
-    }
-#else
-    adjusted = pal;
-#endif
-
     if (!sys_pal)
-        sys_pal = new QPalette(adjusted);
+        sys_pal = new QPalette(pal);
     else
-        *sys_pal = adjusted;
+        *sys_pal = pal;
 
 
     if (!QApplicationPrivate::set_pal)

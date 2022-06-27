@@ -35,7 +35,6 @@
 #include "qpainterpath_p.h"
 #include "qpen.h"
 #include "qcolor.h"
-#include "qcolormap.h"
 #include "qstylehelper_p.h"
 #include "qpaintengine_p.h"
 #include "qpaintengine_x11_p.h"
@@ -695,9 +694,8 @@ void QX11PaintEngine::updatePen(const QPen &pen)
         vals.foreground = pen.color().rgba();
         vals.background = qt_transparentrgba;
     } else {
-        QColormap cmap = QColormap::instance(d->scrn);
-        vals.foreground = cmap.pixel(pen.color());
-        vals.background = cmap.pixel(QColor(Qt::transparent));
+        vals.foreground = QX11Data::XColorPixel(d->scrn, pen.color());
+        vals.background = QX11Data::XColorPixel(d->scrn, QColor(Qt::transparent));
     }
 
 
@@ -755,9 +753,8 @@ void QX11PaintEngine::updateBrush(const QBrush &brush, const QPointF &origin)
         vals.foreground = d->cbrush.color().rgba();
         vals.background = qt_transparentrgba;
     } else {
-        QColormap cmap = QColormap::instance(d->scrn);
-        vals.foreground = cmap.pixel(d->cbrush.color());
-        vals.background = cmap.pixel(QColor(Qt::transparent));
+        vals.foreground = QX11Data::XColorPixel(d->scrn, d->cbrush.color());
+        vals.background = QX11Data::XColorPixel(d->scrn, QColor(Qt::transparent));
 
         if (!qt_x11Data->use_xrender && d->has_brush && !d->has_pattern && !brush.isOpaque()) {
             QPixmap pattern = qt_patternForAlpha(brush.color().alpha(), d->scrn);
@@ -1218,8 +1215,7 @@ void QX11PaintEngine::drawPixmap(const QRectF &r, const QPixmap &px, const QRect
         if (mono_dst) {
             XSetForeground(d->dpy, d->gc, qGray(d->cpen.color().rgb()) > 127 ? 0 : 1);
         } else {
-            QColormap cmap = QColormap::instance(d->scrn);
-            XSetForeground(d->dpy, d->gc, cmap.pixel(d->cpen.color()));
+            XSetForeground(d->dpy, d->gc, QX11Data::XColorPixel(d->scrn, d->cpen.color()));
         }
         XFillRectangle(d->dpy, d->hd, d->gc, x, y, sw, sh);
         restore_clip = true;

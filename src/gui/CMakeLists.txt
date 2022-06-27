@@ -37,7 +37,6 @@ set(GUI_PUBLIC_HEADERS
     QClipboard
     QColor
     QColorDialog
-    QColormap
     QColumnView
     QComboBox
     QCommandLinkButton
@@ -399,7 +398,6 @@ set(GUI_HEADERS
     ${CMAKE_CURRENT_SOURCE_DIR}/painting/qbrush.h
     ${CMAKE_CURRENT_SOURCE_DIR}/painting/qcolor.h
     ${CMAKE_CURRENT_SOURCE_DIR}/painting/qcolor_p.h
-    ${CMAKE_CURRENT_SOURCE_DIR}/painting/qcolormap.h
     ${CMAKE_CURRENT_SOURCE_DIR}/painting/qcssutil_p.h
     ${CMAKE_CURRENT_SOURCE_DIR}/painting/qdrawutil.h
     ${CMAKE_CURRENT_SOURCE_DIR}/painting/qmatrix.h
@@ -767,7 +765,6 @@ set(GUI_SOURCES
     ${CMAKE_CURRENT_SOURCE_DIR}/painting/qbackingstore.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/painting/qprinterinfo_unix.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/painting/qgrayraster.c
-    ${CMAKE_CURRENT_SOURCE_DIR}/painting/qcolormap_x11.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/painting/qpaintengine_x11.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/styles/qstyle.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/styles/qstylefactory.cpp
@@ -964,7 +961,6 @@ katie_unity_exclude(
     ${CMAKE_CURRENT_SOURCE_DIR}/kernel/qx11info_x11.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/kernel/qt_x11.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/painting/qbackingstore.cpp
-    ${CMAKE_CURRENT_SOURCE_DIR}/painting/qcolormap_x11.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/painting/qpaintengine_x11.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/painting/qregion.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/painting/qwindowsurface.cpp

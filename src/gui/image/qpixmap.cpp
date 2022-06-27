@@ -22,7 +22,6 @@
 #include "qpixmap.h"
 #include "qpixmapdata_p.h"
 #include "qbitmap.h"
-#include "qcolormap.h"
 #include "qimage.h"
 #include "qwidget.h"
 #include "qpainter.h"
@@ -1574,14 +1573,12 @@ QBitmap QPixmap::mask() const
     On X11 and the depth of the screen will be returned by this
     function.
 
-    \sa depth(), QColormap::depth(), {QPixmap#Pixmap Information}{Pixmap Information}
+    \sa depth(), QX11Info::appDepth(), {QPixmap#Pixmap Information}{Pixmap Information}
 
 */
 int QPixmap::defaultDepth()
 {
-#if defined(Q_WS_X11)
     return QX11Info::appDepth();
-#endif
 }
 
 /*!

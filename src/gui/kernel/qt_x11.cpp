@@ -25,6 +25,7 @@
 #include "qdrawhelper_p.h"
 #include "qt_x11_p.h"
 #include "qx11info_x11.h"
+#include "qdebug.h"
 
 QT_BEGIN_NAMESPACE
 
@@ -227,6 +228,42 @@ void QX11Data::copyXImageToQImage(XImage *ximage, QImage &image)
             }
         }
     }
+}
+
+uint QX11Data::XColorPixel(const int screen, const QColor &color)
+{
+    Display* x11display = QX11Info::display();
+    if (!x11display) {
+        // qWarning("QX11Data::XColorPixel: no display");
+        return 0;
+    }
+
+    Qt::HANDLE x11colormap = QX11Info::appColormap(screen);
+    if (!x11colormap) {
+        // qWarning("QX11Data::XColorPixel: no color map");
+        return 0;
+    }
+
+    int qr = 0;
+    int qg = 0;
+    int qb = 0;
+    color.getRgb(
+        &qr,
+        &qg,
+        &qb
+    );
+
+    XColor x11color;
+    ::memset(&x11color, 0, sizeof(XColor));
+    x11color.flags = DoRed | DoGreen | DoBlue; 
+    x11color.red = qr << 8;
+    x11color.green = qg << 8;
+    x11color.blue = qb << 8;
+
+    XAllocColor(x11display, x11colormap, &x11color);
+
+    // qDebug() << Q_FUNC_INFO << color << x11color.pixel;
+    return x11color.pixel;
 }
 
 QT_END_NAMESPACE

@@ -29,8 +29,6 @@
 
 QT_BEGIN_NAMESPACE
 
-
-class QColormap;
 class QVariant;
 
 class Q_GUI_EXPORT QColor
@@ -153,7 +151,6 @@ private:
         } ahsv;
     } ct;
 
-    friend class QColormap;
 #ifndef QT_NO_DATASTREAM
     friend Q_GUI_EXPORT QDataStream &operator<<(QDataStream &, const QColor &);
     friend Q_GUI_EXPORT QDataStream &operator>>(QDataStream &, QColor &);
