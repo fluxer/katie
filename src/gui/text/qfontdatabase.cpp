@@ -212,10 +212,7 @@ QFontDef qt_FcPatternToQFontDef(FcPattern *pattern, const QFontDef &request)
 
     double dpi;
     if (FcPatternGetDouble(pattern, FC_DPI, 0, &dpi) != FcResultMatch) {
-        if (qt_x11Data->display)
-            dpi = QX11Info::appDpiY();
-        else
-            dpi = QX11Info::appDpiY();
+        dpi = QX11Info::appDpiY();
     }
 
     double size;
