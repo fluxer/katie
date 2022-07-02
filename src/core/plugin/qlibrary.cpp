@@ -1,4 +1,3 @@
-
 /****************************************************************************
 **
 ** Copyright (C) 2015 The Qt Company Ltd.
@@ -205,7 +204,7 @@ static QString qt_find_library(const QString &fileName)
     }
 
     // absolute path
-    if (fileName.startsWith(QLatin1Char('/'))) {
+    if (fileName.at(0) == QChar::fromLatin1('/')) {
         return fileName;
     }
 
