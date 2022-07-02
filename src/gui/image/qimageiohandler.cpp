@@ -143,8 +143,6 @@
 
 QT_BEGIN_NAMESPACE
 
-class QIODevice;
-
 class QImageIOHandlerPrivate
 {
 public:
