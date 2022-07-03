@@ -149,10 +149,7 @@ public:
     enum Type {
         X11,
         PostScript,
-        Raster,
-
-        User = 50,    // first user type id
-        MaxUser = 100 // last user type id
+        Raster
     };
     virtual Type type() const = 0;
 

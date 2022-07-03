@@ -295,11 +295,7 @@ void QPaintEngine::drawPolygon(const QPoint *points, int pointCount, PolygonDraw
 
     \value X11
     \value PostScript
-    \value SVG Scalable Vector Graphics XML format
     \value Raster
-    \value Pdf Portable Document Format
-    \value User First user type ID
-    \value MaxUser Last user type ID
 */
 
 /*!
