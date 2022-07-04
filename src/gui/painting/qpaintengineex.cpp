@@ -27,7 +27,6 @@
 #include "qdebug.h"
 #include "qcorecommon_p.h"
 
-
 QT_BEGIN_NAMESPACE
 
 /*******************************************************************************

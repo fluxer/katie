@@ -6170,34 +6170,6 @@ QPainterState::~QPainterState()
 {
 }
 
-void QPainterState::init(QPainter *p) {
-    bgBrush = Qt::white;
-    bgMode = Qt::TransparentMode;
-    WxF = false;
-    VxF = false;
-    clipEnabled = true;
-    wx = wy = ww = wh = 0;
-    vx = vy = vw = vh = 0;
-    painter = p;
-    pen = QPen();
-    brushOrigin = QPointF(0, 0);
-    brush = QBrush();
-    font = deviceFont = QFont();
-    clipRegion = QRegion();
-    clipPath = QPainterPath();
-    clipOperation = Qt::NoClip;
-    clipInfo.clear();
-    worldMatrix.reset();
-    matrix.reset();
-    layoutDirection = QApplication::layoutDirection();
-    composition_mode = QPainter::CompositionMode_SourceOver;
-    dirtyFlags = 0;
-    changeFlags = 0;
-    renderHints = 0;
-    opacity = 1;
-}
-
-
 /*!
     \fn void QPainter::setBackgroundColor(const QColor &color)
 

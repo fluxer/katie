@@ -96,7 +96,6 @@ public:
     QPainterState();
     QPainterState(const QPainterState *s);
     virtual ~QPainterState();
-    void init(QPainter *p);
 
     QPointF brushOrigin;
     QFont font;
