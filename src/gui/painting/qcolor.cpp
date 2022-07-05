@@ -1639,17 +1639,17 @@ bool QColor::operator==(const QColor &color) const
         case QColor::Invalid: {
             return true;
         }
-        case QColor::Hsv: {
-            return (ct.ahsv.alpha == color.ct.ahsv.alpha
-                && (ct.ahsv.hue % 36000) == (color.ct.ahsv.hue % 36000)
-                && ct.ahsv.saturation == color.ct.ahsv.saturation
-                && ct.ahsv.value  == color.ct.ahsv.value);
-        }
         case QColor::Rgb: {
             return (ct.argb.alpha == color.ct.argb.alpha
                 && ct.argb.red == color.ct.argb.red
                 && ct.argb.green == color.ct.argb.green
                 && ct.argb.blue  == color.ct.argb.blue);
+        }
+        case QColor::Hsv: {
+            return (ct.ahsv.alpha == color.ct.ahsv.alpha
+                && (ct.ahsv.hue % 36000) == (color.ct.ahsv.hue % 36000)
+                && ct.ahsv.saturation == color.ct.ahsv.saturation
+                && ct.ahsv.value  == color.ct.ahsv.value);
         }
     }
     Q_UNREACHABLE();
