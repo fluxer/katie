@@ -612,7 +612,7 @@ bool QApplicationPrivate::x11_apply_settings()
     QString fontDescription = settings.value(QLatin1String("Qt/font")).toString();
     if (!fontDescription.isEmpty()) {
         QFont font(QApplication::font());
-        font.fromString(fontDescription );
+        font.fromString(fontDescription);
         QApplicationPrivate::setSystemFont(font);
     }
 
@@ -1138,7 +1138,7 @@ void qt_init(QApplicationPrivate *priv, Display *display,
 
 #ifndef QT_NO_XRANDR
     // See if XRandR is supported on the connected display
-    int xrandr_errorbase;
+    int xrandr_errorbase = 0;
     if (qgetenv("QT_X11_NO_XRANDR").isNull()
         && XQueryExtension(qt_x11Data->display, "RANDR", &qt_x11Data->xrandr_major,
                            &qt_x11Data->xrandr_eventbase, &xrandr_errorbase)) {
