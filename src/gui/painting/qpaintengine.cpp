@@ -26,9 +26,9 @@
 #include "qapplication.h"
 #include "qdebug.h"
 #include "qmath.h"
-#include "qvarlengtharray.h"
 #include "qfontengine_p.h"
 #include "qpaintengineex_p.h"
+#include "qcorecommon_p.h"
 
 
 QT_BEGIN_NAMESPACE
@@ -261,7 +261,7 @@ void QPaintEngine::drawPolygon(const QPointF *points, int pointCount, PolygonDra
     Q_ASSERT_X(qt_polygon_recursion != this, "QPaintEngine::drawPolygon",
                "At least one drawPolygon function must be implemented");
     qt_polygon_recursion = this;
-    QPoint fp[pointCount];
+    QSTACKARRAY(QPoint, fp, pointCount);
     for (int i = 0; i < pointCount; ++i) {
         fp[i] = points[i].toPoint();
     }
@@ -282,8 +282,8 @@ void QPaintEngine::drawPolygon(const QPoint *points, int pointCount, PolygonDraw
     Q_ASSERT_X(qt_polygon_recursion != this, "QPaintEngine::drawPolygon",
                "At least one drawPolygon function must be implemented");
     qt_polygon_recursion = this;
-    QPointF fp[pointCount];
-    for (int i=0; i<pointCount; ++i) {
+    QSTACKARRAY(QPointF, fp, pointCount);
+    for (int i = 0; i < pointCount; ++i) {
         fp[i] = points[i];
     }
     drawPolygon(fp, pointCount, mode);
@@ -832,9 +832,3 @@ QRect QPaintEngine::systemRect() const
 }
 
 QT_END_NAMESPACE
-
-
-
-
-
-
