@@ -52,12 +52,6 @@ void QFont::x11SetScreen(int screen)
     d->screen = screen;
 }
 
-Qt::HANDLE QFont::handle() const
-{
-    return 0;
-}
-
-
 FT_Face QFont::freetypeFace() const
 {
     QFontEngine *engine = d->engineForScript(QUnicodeTables::Common);

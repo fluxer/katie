@@ -30,7 +30,6 @@
 typedef struct FT_FaceRec_* FT_Face;
 #endif
 
-
 QT_BEGIN_NAMESPACE
 
 class QPaintDevice;
@@ -155,7 +154,6 @@ public:
     inline QFont &operator=(QFont &&other)
     { qSwap(d, other.d); qSwap(resolve_mask, other.resolve_mask);  return *this; }
 
-    Qt::HANDLE handle() const;
 #if defined(Q_WS_X11)
     FT_Face freetypeFace() const;
 #endif
