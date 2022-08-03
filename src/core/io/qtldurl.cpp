@@ -29,7 +29,7 @@ QT_BEGIN_NAMESPACE
 // file, You can obtain one at https://mozilla.org/MPL/2.0/.
 
 // generated via gentld.py
-static const char* TLDTbl[9368] = {
+static const char* TLDTbl[9374] = {
     "ac",
     "com.ac",
     "edu.ac",
@@ -8323,6 +8323,7 @@ static const char* TLDTbl[9368] = {
     "kilo.jp",
     "kuron.jp",
     "littlestar.jp",
+    "lolipopmc.jp",
     "lolitapunk.jp",
     "lomo.jp",
     "lovepop.jp",
@@ -8512,6 +8513,8 @@ static const char* TLDTbl[9368] = {
     "*.moonscale.io",
     "moonscale.net",
     "iki.fi",
+    "ibxos.it",
+    "iliadboxos.it",
     "impertrixcdn.com",
     "impertrix.com",
     "smushcdn.com",
@@ -8563,7 +8566,9 @@ static const char* TLDTbl[9368] = {
     "na4u.ru",
     "iopsys.se",
     "ipifony.net",
+    "iservschule.de",
     "mein-iserv.de",
+    "schulplattform.de",
     "schulserver.de",
     "test-iserv.de",
     "iserv.dev",
@@ -8756,6 +8761,7 @@ static const char* TLDTbl[9368] = {
     "hra.health",
     "miniserver.com",
     "memset.net",
+    "messerli.app",
     "*.cloud.metacentrum.cz",
     "custom.metacentrum.cz",
     "flt.cloud.muni.cz",
@@ -9062,9 +9068,9 @@ static const char* TLDTbl[9368] = {
     "сочи.рус",
     "спб.рус",
     "я.рус",
-    "builder.code.com",
-    "dev-builder.code.com",
-    "stg-builder.code.com",
+    "*.builder.code.com",
+    "*.dev-builder.code.com",
+    "*.stg-builder.code.com",
     "sandcats.io",
     "logoip.de",
     "logoip.com",
@@ -9399,7 +9405,7 @@ static const char* TLDTbl[9368] = {
     "virtualserver.io",
     "enterprisecloud.nu",
 };
-static const qint16 TLDTblSize = 9368;
+static const qint16 TLDTblSize = 9374;
 
 static inline bool containsTLDEntry(const QString &entry)
 {
