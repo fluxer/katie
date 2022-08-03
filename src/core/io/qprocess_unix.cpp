@@ -398,12 +398,10 @@ QProcessEnvironment QProcessEnvironment::systemEnvironment()
     const char *entry;
     for (int count = 0; (entry = environ[count]); ++count) {
         const char *equal = strchr(entry, '=');
-        if (!equal)
+        if (!equal) {
             continue;
-
-        QByteArray name(entry, equal - entry);
-        QByteArray value(equal + 1);
-        env.hash.insert(QString::fromLatin1(name.constData()), QString::fromLocal8Bit(value));
+        }
+        env.hash.insert(QString::fromLatin1(entry, equal - entry), QString::fromLocal8Bit(equal + 1));
     }
     return env;
 }
