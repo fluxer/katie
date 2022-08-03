@@ -2895,10 +2895,6 @@ bool QCalendarWidget::event(QEvent *event)
 {
     Q_D(QCalendarWidget);
     switch (event->type()) {
-        case QEvent::Show:
-            // delayed so that locale property has effect
-            d->updateWeekend();
-            break;
         case QEvent::LayoutDirectionChange:
             d->updateButtonIcons();
         case QEvent::LocaleChange:
