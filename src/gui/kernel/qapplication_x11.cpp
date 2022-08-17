@@ -201,7 +201,7 @@ static const char* X11AtomsTbl[QX11Data::NPredefinedAtoms] = {
     "_QT_SETTINGS_TIMESTAMP\0"
 };
 
-Q_GUI_EXPORT QX11Data *qt_x11Data = 0;
+Q_AUTOTEST_EXPORT QX11Data *qt_x11Data = nullptr;
 
 /*****************************************************************************
   Internal variables and functions
