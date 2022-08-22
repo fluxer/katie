@@ -52,9 +52,6 @@ QT_BEGIN_NAMESPACE
 #define PPK_CupsPaperRect QPrintEngine::PrintEnginePropertyKey(0xfe02)
 #define PPK_CupsStringPageSize QPrintEngine::PrintEnginePropertyKey(0xfe03)
 
-const char *qt_real_to_string(qreal val, char *buf);
-const char *qt_int_to_string(int val, char *buf);
-
 namespace QPdf {
 
     class ByteStream

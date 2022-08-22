@@ -37,7 +37,8 @@ QT_BEGIN_NAMESPACE
 extern QSizeF qt_paperSizeToQSizeF(QPrinter::PaperSize size);
 
 /* also adds a space at the end of the number */
-const char *qt_real_to_string(qreal val, char *buf) {
+static const char *qt_real_to_string(qreal val, char *buf)
+{
     const char *ret = buf;
 
     if (qIsNaN(val)) {
@@ -89,7 +90,8 @@ const char *qt_real_to_string(qreal val, char *buf) {
     return ret;
 }
 
-const char *qt_int_to_string(int val, char *buf) {
+static const char *qt_int_to_string(int val, char *buf)
+{
     const char *ret = buf;
     if (val < 0) {
         *(buf++) = '-';
