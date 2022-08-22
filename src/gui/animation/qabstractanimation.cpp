@@ -848,14 +848,6 @@ void QAbstractAnimation::setPaused(bool paused)
 }
 
 /*!
-    \reimp
-*/
-bool QAbstractAnimation::event(QEvent *event)
-{
-    return QObject::event(event);
-}
-
-/*!
     \fn virtual void QAbstractAnimation::updateCurrentTime(int currentTime) = 0;
 
     This pure virtual function is called every time the animation's
