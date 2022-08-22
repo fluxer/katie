@@ -1405,7 +1405,7 @@ bool QAbstractSocket::waitForConnected(int msecs)
         d->_q_startConnecting(QHostInfo::fromName(d->hostName));
     }
     if (state() == UnconnectedState)
-        return false; // connect not im progress anymore!
+        return false; // connect not in progress anymore!
 
     bool timedOut = true;
 #if defined (QABSTRACTSOCKET_DEBUG)
