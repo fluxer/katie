@@ -46,6 +46,7 @@ QT_BEGIN_NAMESPACE
 
 class QAnimationGroup;
 class QAbstractAnimation;
+
 class QAbstractAnimationPrivate : public QObjectPrivate
 {
 public:
@@ -92,25 +93,25 @@ private:
 };
 
 
-class QDefaultAnimationDriver : public QAnimationDriver
+class QAnimationDriver : public QObject
 {
     Q_OBJECT
 public:
-    QDefaultAnimationDriver();
-    void timerEvent(QTimerEvent *e);
+    QAnimationDriver();
 
-    void started();
-    void stopped();
+    bool isRunning() const;
+
+protected:
+    void timerEvent(QTimerEvent *e) final;
 
 private:
-    QBasicTimer m_timer;
-};
+    friend class QUnifiedTimer;
 
-class Q_GUI_EXPORT QAnimationDriverPrivate : public QObjectPrivate
-{
-public:
-    QAnimationDriverPrivate() : running(false) {}
-    bool running;
+    void start();
+    void stop();
+
+    bool m_running;
+    QBasicTimer m_timer;
 };
 
 class Q_GUI_EXPORT QUnifiedTimer : public QObject
@@ -136,8 +137,6 @@ public:
     */
     static void updateAnimationTimer();
 
-    void installAnimationDriver(QAnimationDriver *driver);
-
     void restartAnimationTimer();
     void updateAnimationsTime();
 
@@ -145,10 +144,7 @@ protected:
     void timerEvent(QTimerEvent *);
 
 private:
-    friend class QDefaultAnimationDriver;
-
-    QAnimationDriver *driver;
-    QDefaultAnimationDriver defaultDriver;
+    QAnimationDriver driver;
 
     QBasicTimer animationTimer;
     // timer used to delay the check if we should start/stop the animation timer

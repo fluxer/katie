@@ -145,7 +145,6 @@ QUnifiedTimer::QUnifiedTimer() :
     isPauseTimerActive(false), runningLeafAnimations(0)
 {
     time.invalidate();
-    driver = &defaultDriver;
 }
 
 
@@ -204,14 +203,15 @@ void QUnifiedTimer::restartAnimationTimer()
             qDebug() << runningPauseAnimations;
             qDebug() << closestPauseAnimationTimeToFinish();
         }
-        driver->stop();
+        driver.stop();
         animationTimer.start(closestTimeToFinish, this);
         isPauseTimerActive = true;
-    } else if (!driver->isRunning() || isPauseTimerActive) {
-        driver->start();
+    } else if (!driver.isRunning() || isPauseTimerActive) {
+        driver.start();
         isPauseTimerActive = false;
-    } else if (runningLeafAnimations == 0)
-        driver->stop();
+    } else if (runningLeafAnimations == 0) {
+        driver.stop();
+    }
 }
 
 void QUnifiedTimer::timerEvent(QTimerEvent *event)
@@ -322,142 +322,48 @@ int QUnifiedTimer::closestPauseAnimationTimeToFinish()
     return closestTimeToFinish;
 }
 
-void QUnifiedTimer::installAnimationDriver(QAnimationDriver *d)
-{
-    if (driver) {
-
-        if (driver->isRunning()) {
-            qWarning("QUnifiedTimer: Cannot change animation driver while animations are running");
-            return;
-        }
-
-        if (driver != &defaultDriver)
-            delete driver;
-    }
-
-    driver = d;
-}
-
-/*!
-   \class QAnimationDriver
-
-   \brief The QAnimationDriver class is used to exchange the mechanism that drives animations.
-
-   The default animation system is driven by a timer that fires at regular intervals.
-   In some scenarios, it is better to drive the animation based on other synchronization
-   mechanisms, such as the vertical refresh rate of the screen.
-
-   \internal
- */
-
-QAnimationDriver::QAnimationDriver(QObject *parent)
-    : QObject(*(new QAnimationDriverPrivate), parent)
-{
-}
-
-QAnimationDriver::QAnimationDriver(QAnimationDriverPrivate &dd, QObject *parent)
-    : QObject(dd, parent)
-{
-}
-
-
-/*!
-    Advances the animation based on the current time. This function should
-    be continuously called by the driver while the animation is running.
-
-    \internal
- */
-void QAnimationDriver::advance()
-{
-    QUnifiedTimer *instance = QUnifiedTimer::instance();
-
-    // update current time on all top level animations
-    instance->updateAnimationsTime();
-    instance->restartAnimationTimer();
-}
-
-
-/*!
-    Installs this animation driver. The animation driver is thread local and
-    will only apply for the thread its installed in.
-
-    \internal
- */
-void QAnimationDriver::install()
-{
-    QUnifiedTimer *timer = QUnifiedTimer::instance();
-    timer->installAnimationDriver(this);
-}
-
 bool QAnimationDriver::isRunning() const
 {
-    return d_func()->running;
+    return m_running;
 }
-
 
 void QAnimationDriver::start()
 {
-    Q_D(QAnimationDriver);
-    if (!d->running) {
-        started();
-        d->running = true;
+    if (!m_running) {
+        m_timer.start(DEFAULT_TIMER_INTERVAL, this);
+        m_running = true;
     }
 }
 
 
 void QAnimationDriver::stop()
 {
-    Q_D(QAnimationDriver);
-    if (d->running) {
-        stopped();
-        d->running = false;
+    if (m_running) {
+        m_timer.stop();
+        m_running = false;
     }
 }
 
 /*!
-    \fn QAnimationDriver::started()
-
-    This function is called by the animation framework to notify the driver
-    that it should start running.
-
-    \internal
- */
-
-/*!
-    \fn QAnimationDriver::stopped()
-
-    This function is called by the animation framework to notify the driver
-    that it should stop running.
-
-    \internal
- */
-
-/*!
    The default animation driver just spins the timer...
  */
-QDefaultAnimationDriver::QDefaultAnimationDriver()
-    : QAnimationDriver(0)
+QAnimationDriver::QAnimationDriver()
+    : QObject(0),
+    m_running(false)
 {
 }
 
-void QDefaultAnimationDriver::timerEvent(QTimerEvent *e)
+void QAnimationDriver::timerEvent(QTimerEvent *e)
 {
     Q_ASSERT(e->timerId() == m_timer.timerId());
     Q_UNUSED(e); // if the assertions are disabled
-    advance();
+
+    QUnifiedTimer *instance = QUnifiedTimer::instance();
+
+    // update current time on all top level animations
+    instance->updateAnimationsTime();
+    instance->restartAnimationTimer();
 }
-
-void QDefaultAnimationDriver::started()
-{
-    m_timer.start(DEFAULT_TIMER_INTERVAL, this);
-}
-
-void QDefaultAnimationDriver::stopped()
-{
-    m_timer.stop();
-}
-
-
 
 void QAbstractAnimationPrivate::setState(QAbstractAnimation::State newState)
 {

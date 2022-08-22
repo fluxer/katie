@@ -534,7 +534,6 @@ include/katie/QtGui/QAbstractUndoItem
 include/katie/QtGui/QAction
 include/katie/QtGui/QActionEvent
 include/katie/QtGui/QActionGroup
-include/katie/QtGui/QAnimationDriver
 include/katie/QtGui/QAnimationGroup
 include/katie/QtGui/QApplication
 include/katie/QtGui/QBitmap

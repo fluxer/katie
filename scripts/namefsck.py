@@ -32,7 +32,6 @@ classlist = [
     "QAction",
     "QActionEvent",
     "QActionGroup",
-    "QAnimationDriver",
     "QAnimationGroup",
     "QApplication",
     "QArgument",

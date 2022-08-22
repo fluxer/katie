@@ -81,7 +81,6 @@ static const struct ClassTblData {
     { QLatin1String("QAction"), QLatin1String("QtGui/qaction.h") },
     { QLatin1String("QActionEvent"), QLatin1String("QtGui/qevent.h") },
     { QLatin1String("QActionGroup"), QLatin1String("QtGui/qactiongroup.h") },
-    { QLatin1String("QAnimationDriver"), QLatin1String("QtGui/qabstractanimation.h") },
     { QLatin1String("QAnimationGroup"), QLatin1String("QtGui/qanimationgroup.h") },
     { QLatin1String("QApplication"), QLatin1String("QtGui/qapplication.h") },
     { QLatin1String("QAtomicInt"), QLatin1String("QtCore/qatomic.h") },

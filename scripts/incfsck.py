@@ -155,7 +155,6 @@ incmap = {
         'QAbstractGraphicsShapeItem': 'qgraphicsitem.h',
         'QAbstractUndoItem': 'qtextdocument.h',
         'QActionEvent': 'qevent.h',
-        'QAnimationDriver': 'qabstractanimation.h',
         'QBrushData': 'qbrush.h',
         'QClipboardEvent': 'qevent.h',
         'QCloseEvent': 'qevent.h',
