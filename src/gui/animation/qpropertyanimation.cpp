@@ -174,7 +174,7 @@ void QPropertyAnimation::setTargetObject(QObject *target)
     if (d->targetValue == target)
         return;
 
-    if (d->state != QAbstractAnimation::Stopped) {
+    if (Q_UNLIKELY(d->state != QAbstractAnimation::Stopped)) {
         qWarning("QPropertyAnimation::setTargetObject: you can't change the target of a running animation");
         return;
     }
@@ -199,7 +199,7 @@ QByteArray QPropertyAnimation::propertyName() const
 void QPropertyAnimation::setPropertyName(const QByteArray &propertyName)
 {
     Q_D(QPropertyAnimation);
-    if (d->state != QAbstractAnimation::Stopped) {
+    if (Q_UNLIKELY(d->state != QAbstractAnimation::Stopped)) {
         qWarning("QPropertyAnimation::setPropertyName: you can't change the property name of a running animation");
         return;
     }
@@ -232,7 +232,7 @@ void QPropertyAnimation::updateState(QAbstractAnimation::State newState,
 {
     Q_D(QPropertyAnimation);
 
-    if (!d->target && oldState == Stopped) {
+    if (Q_UNLIKELY(!d->target && oldState == QAbstractAnimation::Stopped)) {
         qWarning("QPropertyAnimation::updateState (%s): Changing state of an animation without target",
                  d->propertyName.constData());
         return;

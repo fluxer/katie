@@ -106,12 +106,10 @@ QAnimationGroup::~QAnimationGroup()
 QAbstractAnimation *QAnimationGroup::animationAt(int index) const
 {
     Q_D(const QAnimationGroup);
-
-    if (index < 0 || index >= d->animations.size()) {
+    if (Q_UNLIKELY(index < 0 || index >= d->animations.size())) {
         qWarning("QAnimationGroup::animationAt: index is out of bounds");
         return 0;
     }
-
     return d->animations.at(index);
 }
 
@@ -166,13 +164,14 @@ void QAnimationGroup::insertAnimation(int index, QAbstractAnimation *animation)
 {
     Q_D(QAnimationGroup);
 
-    if (index < 0 || index > d->animations.size()) {
+    if (Q_UNLIKELY(index < 0 || index > d->animations.size())) {
         qWarning("QAnimationGroup::insertAnimation: index is out of bounds");
         return;
     }
 
-    if (QAnimationGroup *oldGroup = animation->group())
+    if (QAnimationGroup *oldGroup = animation->group()) {
         oldGroup->removeAnimation(animation);
+    }
 
     d->animations.insert(index, animation);
     QAbstractAnimationPrivate::get(animation)->group = this;
@@ -191,12 +190,12 @@ void QAnimationGroup::removeAnimation(QAbstractAnimation *animation)
 {
     Q_D(QAnimationGroup);
 
-    if (!animation) {
+    if (Q_UNLIKELY(!animation)) {
         qWarning("QAnimationGroup::remove: cannot remove null animation");
         return;
     }
     int index = d->animations.indexOf(animation);
-    if (index == -1) {
+    if (Q_UNLIKELY(index == -1)) {
         qWarning("QAnimationGroup::remove: animation is not part of this group");
         return;
     }
@@ -214,7 +213,7 @@ void QAnimationGroup::removeAnimation(QAbstractAnimation *animation)
 QAbstractAnimation *QAnimationGroup::takeAnimation(int index)
 {
     Q_D(QAnimationGroup);
-    if (index < 0 || index >= d->animations.size()) {
+    if (Q_UNLIKELY(index < 0 || index >= d->animations.size())) {
         qWarning("QAnimationGroup::takeAnimation: no animation at index %d", index);
         return 0;
     }

@@ -291,7 +291,7 @@ QVariant QVariantAnimationPrivate::valueAt(qreal step) const
 
 void QVariantAnimationPrivate::setValueAt(qreal step, const QVariant &value)
 {
-    if (step < qreal(0.0) || step > qreal(1.0)) {
+    if (Q_UNLIKELY(step < qreal(0.0) || step > qreal(1.0))) {
         qWarning("QVariantAnimation::setValueAt: invalid step = %f", step);
         return;
     }
@@ -476,12 +476,13 @@ int QVariantAnimation::duration() const
 void QVariantAnimation::setDuration(int msecs)
 {
     Q_D(QVariantAnimation);
-    if (msecs < 0) {
+    if (Q_UNLIKELY(msecs < 0)) {
         qWarning("QVariantAnimation::setDuration: cannot set a negative duration");
         return;
     }
-    if (d->duration == msecs)
+    if (d->duration == msecs) {
         return;
+    }
     d->duration = msecs;
     d->recalculateCurrentInterval();
 }

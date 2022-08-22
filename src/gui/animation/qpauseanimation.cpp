@@ -67,7 +67,8 @@ public:
     The default duration is 0.
 */
 
-QPauseAnimation::QPauseAnimation(QObject *parent) : QAbstractAnimation(*new QPauseAnimationPrivate, parent)
+QPauseAnimation::QPauseAnimation(QObject *parent)
+    : QAbstractAnimation(*new QPauseAnimationPrivate, parent)
 {
 }
 
@@ -77,7 +78,8 @@ QPauseAnimation::QPauseAnimation(QObject *parent) : QAbstractAnimation(*new QPau
     \a parent is passed to QObject's constructor.
 */
 
-QPauseAnimation::QPauseAnimation(int msecs, QObject *parent) : QAbstractAnimation(*new QPauseAnimationPrivate, parent)
+QPauseAnimation::QPauseAnimation(int msecs, QObject *parent)
+    : QAbstractAnimation(*new QPauseAnimationPrivate, parent)
 {
     setDuration(msecs);
 }
@@ -104,7 +106,7 @@ int QPauseAnimation::duration() const
 
 void QPauseAnimation::setDuration(int msecs)
 {
-    if (msecs < 0) {
+    if (Q_UNLIKELY(msecs < 0)) {
         qWarning("QPauseAnimation::setDuration: cannot set a negative duration");
         return;
     }

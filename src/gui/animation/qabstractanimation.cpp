@@ -770,10 +770,10 @@ void QAbstractAnimation::setCurrentTime(int msecs)
 void QAbstractAnimation::start(DeletionPolicy policy)
 {
     Q_D(QAbstractAnimation);
-    if (d->state == Running)
+    if (d->state == QAbstractAnimation::Running)
         return;
     d->deleteWhenStopped = bool(policy);
-    d->setState(Running);
+    d->setState(QAbstractAnimation::Running);
 }
 
 /*!
@@ -790,10 +790,10 @@ void QAbstractAnimation::stop()
 {
     Q_D(QAbstractAnimation);
 
-    if (d->state == Stopped)
+    if (d->state == QAbstractAnimation::Stopped)
         return;
 
-    d->setState(Stopped);
+    d->setState(QAbstractAnimation::Stopped);
 }
 
 /*!
@@ -806,12 +806,12 @@ void QAbstractAnimation::stop()
 void QAbstractAnimation::pause()
 {
     Q_D(QAbstractAnimation);
-    if (d->state == Stopped) {
+    if (Q_UNLIKELY(d->state == QAbstractAnimation::Stopped)) {
         qWarning("QAbstractAnimation::pause: Cannot pause a stopped animation");
         return;
     }
 
-    d->setState(Paused);
+    d->setState(QAbstractAnimation::Paused);
 }
 
 /*!
@@ -824,13 +824,13 @@ void QAbstractAnimation::pause()
 void QAbstractAnimation::resume()
 {
     Q_D(QAbstractAnimation);
-    if (d->state != Paused) {
+    if (Q_UNLIKELY(d->state != QAbstractAnimation::Paused)) {
         qWarning("QAbstractAnimation::resume: "
                  "Cannot resume an animation that is not paused");
         return;
     }
 
-    d->setState(Running);
+    d->setState(QAbstractAnimation::Running);
 }
 
 /*!
