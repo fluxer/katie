@@ -393,19 +393,16 @@ bool QWhatsThisPrivate::eventFilter(QObject *o, QEvent *e)
     QWidget * w = static_cast<QWidget *>(o);
     bool customWhatsThis = w->testAttribute(Qt::WA_CustomWhatsThis);
     switch (e->type()) {
-    case QEvent::MouseButtonPress:
-    {
+    case QEvent::MouseButtonPress: {
         QMouseEvent *me = static_cast<QMouseEvent*>(e);
         if (me->button() == Qt::RightButton || customWhatsThis)
             return false;
         QHelpEvent e(QEvent::WhatsThis, me->pos(), me->globalPos());
         if (!QApplication::sendEvent(w, &e) || !e.isAccepted())
             leaveOnMouseRelease = true;
-
-    } break;
-
-    case QEvent::MouseMove:
-    {
+        break;
+    }
+    case QEvent::MouseMove: {
         QMouseEvent *me = static_cast<QMouseEvent*>(e);
         QHelpEvent e(QEvent::QueryWhatsThis, me->pos(), me->globalPos());
         bool sentEvent = QApplication::sendEvent(w, &e);
@@ -415,17 +412,17 @@ bool QWhatsThisPrivate::eventFilter(QObject *o, QEvent *e)
         QApplication::changeOverrideCursor((!sentEvent || !e.isAccepted())?
                                            Qt::ForbiddenCursor:Qt::WhatsThisCursor);
 #endif
+        // fall through
     }
-    // fall through
     case QEvent::MouseButtonRelease:
-    case QEvent::MouseButtonDblClick:
+    case QEvent::MouseButtonDblClick: {
         if (leaveOnMouseRelease && e->type() == QEvent::MouseButtonRelease)
             QWhatsThis::leaveWhatsThisMode();
         if (static_cast<QMouseEvent*>(e)->button() == Qt::RightButton || customWhatsThis)
             return false; // ignore RMB release
         break;
-    case QEvent::KeyPress:
-    {
+    }
+    case QEvent::KeyPress: {
         QKeyEvent* kev = (QKeyEvent*)e;
 
         if (kev->key() == Qt::Key_Escape) {
@@ -442,7 +439,8 @@ bool QWhatsThisPrivate::eventFilter(QObject *o, QEvent *e)
                    && kev->key() != Qt::Key_Control && kev->key() != Qt::Key_Meta) {
             QWhatsThis::leaveWhatsThisMode();
         }
-    } break;
+        break;
+    }
     default:
         return false;
     }
