@@ -1354,8 +1354,8 @@ void QApplicationPrivate::applyX11SpecificCommandLineArguments(QWidget *main_wid
                         PropModeReplace, (unsigned char *)net_wm_name.data(), net_wm_name.size());
     }
     if (mwGeometry) { // parse geometry
-        int x, y;
-        int w, h;
+        int x, y = 0;
+        int w, h = 0;
         int m = XParseGeometry((char*)mwGeometry, &x, &y, (uint*)&w, (uint*)&h);
         QSize minSize = main_widget->minimumSize();
         QSize maxSize = main_widget->maximumSize();
