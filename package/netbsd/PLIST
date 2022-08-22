@@ -20,7 +20,6 @@ include/katie/QtCore/QAbstractTableModel
 include/katie/QtCore/QArgument
 include/katie/QtCore/QAtomicInt
 include/katie/QtCore/QAtomicPointer
-include/katie/QtCore/QBasicAtomicInt
 include/katie/QtCore/QBasicTimer
 include/katie/QtCore/QBitArray
 include/katie/QtCore/QBitRef

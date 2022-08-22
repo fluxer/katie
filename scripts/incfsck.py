@@ -10,7 +10,6 @@ incmap = {
         'QArgument': 'qobjectdefs.h',
         'QAtomicInt': 'qatomic.h',
         'QAtomicPointer': 'qatomic.h',
-        'QBasicAtomicInt': 'qbasicatomic.h',
         'QBitRef': 'qbitarray.h',
         'QByteRef': 'qbytearray.h',
         'QCharRef': 'qstring.h',

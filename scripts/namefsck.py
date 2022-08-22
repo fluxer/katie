@@ -38,7 +38,6 @@ classlist = [
     "QArgument",
     "QAtomicInt",
     "QAtomicPointer",
-    "QBasicAtomicInt",
     "QBasicTimer",
     "QBitArray",
     "QBitmap",
