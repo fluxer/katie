@@ -116,7 +116,6 @@ public:
 
     static void syncX();
     static void beep();
-    static void alert(QWidget *widget, int duration = 0);
 
     static Qt::KeyboardModifiers keyboardModifiers();
     static Qt::KeyboardModifiers queryKeyboardModifiers();
@@ -219,10 +218,6 @@ private:
 #endif
     friend class QAction;
     friend class QFontDatabase;
-
-#if defined(Q_WS_X11)
-    Q_PRIVATE_SLOT(d_func(), void _q_alertTimeOut())
-#endif
 };
 
 #if defined(qApp)

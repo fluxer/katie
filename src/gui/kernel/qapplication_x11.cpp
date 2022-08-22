@@ -220,9 +220,6 @@ static Window      curWin = 0;                          // current window
 // function to update the workarea of the screen - in qdesktopwidget_x11.cpp
 extern void qt_desktopwidget_update_workarea();
 
-// Function to change the window manager state (from qwidget_x11.cpp)
-extern void qt_change_net_wm_state(const QWidget *w, bool set, Atom one, Atom two);
-
 // flags for extensions for special Languages, currently only for RTL languages
 bool qt_use_rtl_extensions = false;
 
@@ -1521,54 +1518,7 @@ void QApplication::beep()
     if (qt_x11Data->display)
         XBell(qt_x11Data->display, 0);
     else
-        printf("\7");
-}
-
-void QApplication::alert(QWidget *widget, int msec)
-{
-    if (!QApplicationPrivate::checkInstance("alert"))
-        return;
-
-    QWidgetList windowsToMark;
-    if (!widget) {
-        windowsToMark += topLevelWidgets();
-    } else {
-        windowsToMark.append(widget->window());
-    }
-
-    foreach (QWidget *window, windowsToMark) {
-        if (!window->isActiveWindow()) {
-            qt_change_net_wm_state(window, true, ATOM(_NET_WM_STATE_DEMANDS_ATTENTION), 0);
-            if (msec != 0) {
-                QTimer *timer = new QTimer(qApp);
-                timer->setSingleShot(true);
-                connect(timer, SIGNAL(timeout()), qApp, SLOT(_q_alertTimeOut()));
-                if (QTimer *oldTimer = qApp->d_func()->alertTimerHash.value(window)) {
-                    qApp->d_func()->alertTimerHash.remove(window);
-                    delete oldTimer;
-                }
-                qApp->d_func()->alertTimerHash.insert(window, timer);
-                timer->start(msec);
-            }
-        }
-    }
-}
-
-void QApplicationPrivate::_q_alertTimeOut()
-{
-    if (QTimer *timer = qobject_cast<QTimer *>(q_func()->sender())) {
-        QHash<QWidget *, QTimer *>::iterator it = alertTimerHash.begin();
-        while (it != alertTimerHash.end()) {
-            if (it.value() == timer) {
-                QWidget *window = it.key();
-                qt_change_net_wm_state(window, false, ATOM(_NET_WM_STATE_DEMANDS_ATTENTION), 0);
-                alertTimerHash.erase(it);
-                timer->deleteLater();
-                break;
-            }
-            ++it;
-        }
-    }
+        ::printf("\7");
 }
 
 Qt::KeyboardModifiers QApplication::queryKeyboardModifiers()

@@ -3722,30 +3722,6 @@ void QApplicationPrivate::emitLastWindowClosed()
     Use \l CustomColor instead.
 */
 
-
-/*!
-    \fn void QApplication::alert(QWidget *widget, int msec)
-    \since 4.3
-
-    Causes an alert to be shown for \a widget if the window is not the active
-    window. The alert is shown for \a msec miliseconds. If \a msec is zero (the
-    default), then the alert is shown indefinitely until the window becomes
-    active again.
-
-    Currently this function does nothing on Qt for Embedded Linux.
-
-    On Mac OS X, this works more at the application level and will cause the
-    application icon to bounce in the dock.
-
-    On Windows, this causes the window's taskbar entry to flash for a time. If
-    \a msec is zero, the flashing will stop and the taskbar entry will turn a
-    different color (currently orange).
-
-    On X11, this will cause the window to be marked as "demands attention", the
-    window must not be hidden (i.e. not have hide() called on it, but be
-    visible in some sort of way) in order for this to work.
-*/
-
 /*!
     \property QApplication::cursorFlashTime
     \brief the text cursor's flash (blink) time in milliseconds

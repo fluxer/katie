@@ -343,7 +343,7 @@ Q_GUI_EXPORT void qt_x11_wait_for_window_manager(QWidget *w)
     qt_x11_wait_for_window_manager(w, true);
 }
 
-void qt_change_net_wm_state(const QWidget* w, bool set, Atom one, Atom two = 0)
+static void qt_change_net_wm_state(const QWidget* w, bool set, Atom one, Atom two = 0)
 {
     if (!w->isVisible()) // not managed by the window manager
         return;

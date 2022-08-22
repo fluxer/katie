@@ -52,7 +52,6 @@
 
 QT_BEGIN_NAMESPACE
 
-class QTimer;
 class QClipboard;
 class QGraphicsScene;
 class QObject;
@@ -175,11 +174,6 @@ public:
 
     static QString styleOverride;
 
-
-#if defined(Q_WS_X11)
-    void _q_alertTimeOut();
-    QHash<QWidget *, QTimer *> alertTimerHash;
-#endif
 #ifndef QT_NO_STYLE_STYLESHEET
     static QString styleSheet;
 #endif
