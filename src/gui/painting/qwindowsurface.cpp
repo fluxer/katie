@@ -116,9 +116,7 @@ QWindowSurface::QWindowSurface(QWidget *window)
 #endif
 #endif
 
-    if (window) {
-        window->setWindowSurface(this);
-    }
+    window->setWindowSurface(this);
 }
 
 /*!
