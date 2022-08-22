@@ -141,7 +141,7 @@ public:
     void updateAnimationsTime();
 
 protected:
-    void timerEvent(QTimerEvent *);
+    void timerEvent(QTimerEvent *) final;
 
 private:
     QAnimationDriver driver;
