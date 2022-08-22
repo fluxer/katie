@@ -412,6 +412,7 @@ QByteArray qUncompress(const char* data, int nbytes)
             break;
         }
     }
+    libdeflate_free_decompressor(decomp);
 
     switch (decompresult) {
         case LIBDEFLATE_SUCCESS: {
@@ -424,8 +425,6 @@ QByteArray qUncompress(const char* data, int nbytes)
             break;
         }
     }
-    libdeflate_free_decompressor(decomp);
-
     return result;
 }
 #endif // QT_NO_COMPRESS
