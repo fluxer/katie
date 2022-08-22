@@ -51,11 +51,9 @@ private:
 };
 
 QKatHash::QKatHash()
-    : m_xxh3(nullptr),
-    m_xxh32(nullptr)
+    : m_xxh3(XXH3_createState()),
+    m_xxh32(XXH3_createState())
 {
-    m_xxh3 = XXH3_createState();
-    m_xxh32 = XXH3_createState();
 }
 
 QKatHash::~QKatHash()
