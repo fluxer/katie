@@ -42,6 +42,7 @@ set(NETWORK_HEADERS
     ${CMAKE_CURRENT_SOURCE_DIR}/socket/qlocalsocket.h
     ${CMAKE_CURRENT_SOURCE_DIR}/socket/qlocalsocket_p.h
     ${CMAKE_CURRENT_SOURCE_DIR}/socket/qnet_unix_p.h
+    ${CMAKE_CURRENT_SOURCE_DIR}/qnetworkcommon_p.h
 )
 
 set(NETWORK_SOURCES

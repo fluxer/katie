@@ -328,6 +328,7 @@
 #include "qthread_p.h"
 #include "qcore_unix_p.h"
 #include "qcorecommon_p.h"
+#include "qnetworkcommon_p.h"
 
 #include <time.h>
 
@@ -335,8 +336,6 @@
     if (!d->socketEngine) { \
         return returnValue; \
     } } while (0)
-
-#define QT_CONNECT_TIMEOUT 30000
 
 QT_BEGIN_NAMESPACE
 

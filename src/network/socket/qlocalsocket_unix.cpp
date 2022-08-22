@@ -35,8 +35,7 @@
 #include "qdir.h"
 #include "qdebug.h"
 #include "qelapsedtimer.h"
-
-#define QT_CONNECT_TIMEOUT 30000
+#include "qnetworkcommon_p.h"
 
 QT_BEGIN_NAMESPACE
 
