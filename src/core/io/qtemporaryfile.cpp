@@ -198,17 +198,14 @@ class QTemporaryFilePrivate : public QFilePrivate
 
 protected:
     QTemporaryFilePrivate();
-    ~QTemporaryFilePrivate();
 
     bool autoRemove;
     QString templateName;
 };
 
-QTemporaryFilePrivate::QTemporaryFilePrivate() : autoRemove(true)
-{
-}
-
-QTemporaryFilePrivate::~QTemporaryFilePrivate()
+QTemporaryFilePrivate::QTemporaryFilePrivate()
+    : autoRemove(true),
+    templateName(QDir::tempPath() + QLatin1String("/qt_temp.XXXXXXXXXX"))
 {
 }
 
@@ -264,8 +261,6 @@ QTemporaryFilePrivate::~QTemporaryFilePrivate()
 QTemporaryFile::QTemporaryFile()
     : QFile(*new QTemporaryFilePrivate)
 {
-    Q_D(QTemporaryFile);
-    d->templateName = QDir::tempPath() + QLatin1String("/qt_temp.XXXXXXXXXX");
 }
 
 QTemporaryFile::QTemporaryFile(const QString &templateName)
@@ -285,8 +280,6 @@ QTemporaryFile::QTemporaryFile(const QString &templateName)
 QTemporaryFile::QTemporaryFile()
     : QFile(*new QTemporaryFilePrivate, 0)
 {
-    Q_D(QTemporaryFile);
-    d->templateName = QDir::tempPath() + QLatin1String("/qt_temp.XXXXXXXXXX");
 }
 
 /*!
@@ -319,8 +312,6 @@ QTemporaryFile::QTemporaryFile(const QString &templateName)
 QTemporaryFile::QTemporaryFile(QObject *parent)
     : QFile(*new QTemporaryFilePrivate, parent)
 {
-    Q_D(QTemporaryFile);
-    d->templateName = QDir::tempPath() + QLatin1String("/qt_temp.XXXXXXXXXX");
 }
 
 /*!
