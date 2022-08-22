@@ -83,7 +83,7 @@ bool QLocalServerPrivate::listen(const QString &requestedServerName)
 
 
     // bind
-    if(-1 == QT_SOCKET_BIND(listenSocket, (sockaddr *)&addr, sizeof(sockaddr_un))) {
+    if(-1 == ::bind(listenSocket, (sockaddr *)&addr, sizeof(sockaddr_un))) {
         setError(QLatin1String("QLocalServer::listen"));
         // if address is in use already, just close the socket, but do not delete the file
         if(errno == EADDRINUSE)

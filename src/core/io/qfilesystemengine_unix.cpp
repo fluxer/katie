@@ -453,7 +453,7 @@ QString QFileSystemEngine::tempPath()
 bool QFileSystemEngine::setCurrentPath(const QFileSystemEntry &entry)
 {
     const QByteArray path = entry.nativeFilePath();
-    return (QT_CHDIR(path.constData()) >= 0);
+    return (::chdir(path.constData()) >= 0);
 }
 
 QFileSystemEntry QFileSystemEngine::currentPath()
@@ -469,7 +469,7 @@ QFileSystemEntry QFileSystemEngine::currentPath()
 #else
 #define GETCWDFUNCNAME "getcwd"
     QSTACKARRAY(char, getcwdbuffer, PATH_MAX);
-    if (QT_GETCWD(getcwdbuffer, sizeof(getcwdbuffer))) {
+    if (::getcwd(getcwdbuffer, sizeof(getcwdbuffer))) {
         result = QFileSystemEntry(QByteArray(getcwdbuffer), QFileSystemEntry::FromNativePath());
     }
 #endif // QT_HAVE_GET_CURRENT_DIR_NAME

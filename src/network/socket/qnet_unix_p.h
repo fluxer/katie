@@ -75,7 +75,7 @@ static inline int qt_safe_accept(int s, struct sockaddr *addr, QT_SOCKLEN_T *add
 static inline int qt_safe_connect(int sockfd, const struct sockaddr *addr, QT_SOCKLEN_T addrlen)
 {
     int ret;
-    Q_EINTR_LOOP(ret, QT_SOCKET_CONNECT(sockfd, addr, addrlen));
+    Q_EINTR_LOOP(ret, ::connect(sockfd, addr, addrlen));
     return ret;
 }
 

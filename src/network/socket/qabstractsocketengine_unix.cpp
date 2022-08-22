@@ -418,7 +418,7 @@ bool QAbstractSocketEnginePrivate::nativeBind(const QHostAddress &address, quint
         sockAddrPtr = (struct sockaddr *) &sockAddrIPv4;
     }
 
-    int bindResult = QT_SOCKET_BIND(socketDescriptor, sockAddrPtr, sockAddrSize);
+    int bindResult = ::bind(socketDescriptor, sockAddrPtr, sockAddrSize);
 
     if (bindResult < 0) {
         switch(errno) {

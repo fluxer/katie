@@ -616,7 +616,7 @@ void QProcessPrivate::execChild(const char *workingDir, char **path, char **argv
     qt_safe_close(childStartedPipe[0]);
 
     // enter the working directory
-    if (workingDir && QT_CHDIR(workingDir) == -1) {
+    if (workingDir && ::chdir(workingDir) == -1) {
         qWarning("QProcessPrivate::execChild() failed to chdir to %s", workingDir);
     }
 
@@ -1054,7 +1054,7 @@ bool QProcessPrivate::startDetached(const QString &program, const QStringList &a
 
             QByteArray encodedWorkingDirectory = QFile::encodeName(workingDirectory);
             if (!encodedWorkingDirectory.isEmpty()
-                && QT_CHDIR(encodedWorkingDirectory.constData()) == -1) {
+                && ::chdir(encodedWorkingDirectory.constData()) == -1) {
                 qWarning("QProcessPrivate::startDetached: failed to chdir to %s",
                     encodedWorkingDirectory.constData());
             }
@@ -1101,7 +1101,7 @@ bool QProcessPrivate::startDetached(const QString &program, const QStringList &a
 
         qt_safe_close(startedPipe[1]);
         qt_safe_write(pidPipe[1], (const char *)&doubleForkPid, sizeof(pid_t));
-        if (Q_UNLIKELY(QT_CHDIR("/") == -1)) {
+        if (Q_UNLIKELY(::chdir("/") == -1)) {
             qWarning("QProcessPrivate::startDetached: failed to chdir to /");
         }
         ::_exit(1);

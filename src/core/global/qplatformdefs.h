@@ -71,8 +71,6 @@
 #define QT_READDIR              ::readdir
 #define QT_READDIR_R            ::readdir_r
 #define QT_ACCESS               ::access
-#define QT_GETCWD               ::getcwd
-#define QT_CHDIR                ::chdir
 #define QT_MKDIR                ::mkdir
 #define QT_RMDIR                ::rmdir
 #define QT_CLOSE                ::close
@@ -81,7 +79,5 @@
 #define QT_OPENDIR              ::opendir
 #define QT_CLOSEDIR             ::closedir
 #define QT_FILENO               fileno // defined as macro on OpenBSD
-#define QT_SOCKET_CONNECT       ::connect
-#define QT_SOCKET_BIND          ::bind
 
 #endif // QPLATFORMDEFS_H
