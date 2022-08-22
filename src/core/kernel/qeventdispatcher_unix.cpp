@@ -108,7 +108,7 @@ int QEventDispatcherUNIXPrivate::doSelect(QEventLoop::ProcessEventsFlags flags, 
                     fds.fd = sn->fd;
                     fds.events = 0;
 
-                    int ret = qt_safe_poll(&fds, 1, 0);
+                    int ret = qt_safe_poll(&fds, 0);
                     if (ret == -1 && (fds.revents & POLLNVAL) != 0) {
                         // disable the invalid socket notifier
                         qWarning("QSocketNotifier: Invalid socket %d and type '%s', disabling...",

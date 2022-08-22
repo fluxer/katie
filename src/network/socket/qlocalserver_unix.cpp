@@ -165,7 +165,7 @@ void QLocalServerPrivate::waitForNewConnection(int msec, bool *timedOut)
     ::memset(&fds, 0, sizeof(struct pollfd));
     fds.fd = listenSocket;
     fds.events = POLLIN;
-    int result = qt_safe_poll(&fds, 1, msec);
+    int result = qt_safe_poll(&fds, msec);
     if (result == -1) {
         setError(QLatin1String("QLocalServer::waitForNewConnection"));
         closeServer();

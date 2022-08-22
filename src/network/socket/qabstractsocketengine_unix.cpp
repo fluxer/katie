@@ -986,7 +986,7 @@ int QAbstractSocketEnginePrivate::nativeSelect(int timeout, bool selectForRead) 
     ::memset(&fds, 0, sizeof(struct pollfd));
     fds.fd = socketDescriptor;
     fds.events = (selectForRead ? POLLIN : POLLOUT);
-    return qt_safe_poll(&fds, 1, timeout);
+    return qt_safe_poll(&fds, timeout);
 }
 
 int QAbstractSocketEnginePrivate::nativeSelect(int timeout, bool checkRead, bool checkWrite,
@@ -1003,7 +1003,7 @@ int QAbstractSocketEnginePrivate::nativeSelect(int timeout, bool checkRead, bool
         fds.events |= POLLOUT;
     }
 
-    int ret = qt_safe_poll(&fds, 1, timeout);
+    int ret = qt_safe_poll(&fds, timeout);
     if (ret > 0) {
         *selectForRead = ((fds.revents & POLLIN) != 0);
         *selectForWrite = ((fds.revents & POLLOUT) != 0);

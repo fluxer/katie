@@ -186,7 +186,7 @@ void QProcessManager::run()
         ::memset(&fds, 0, sizeof(struct pollfd));
         fds.fd = qt_qprocess_deadChild_pipe[0];
         fds.events = POLLIN;
-        int nselect = qt_safe_poll(&fds, 1, -1);
+        int nselect = qt_safe_poll(&fds, -1);
         if (nselect < 0) {
             break;
         }
@@ -781,7 +781,7 @@ bool QProcessPrivate::waitForStarted(int msecs)
     ::memset(&fds, 0, sizeof(struct pollfd));
     fds.fd = childStartedPipe[0];
     fds.events = POLLIN;
-    if (qt_safe_poll(&fds, 1, msecs) == 0) {
+    if (qt_safe_poll(&fds, msecs) == 0) {
         processError = QProcess::Timedout;
         q->setErrorString(QProcess::tr("Process operation timed out"));
 #if defined (QPROCESS_DEBUG)

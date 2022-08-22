@@ -57,7 +57,7 @@ void tst_selectpoll::bench_poll()
         ::memset(&fds, 0, sizeof(struct pollfd));
         fds.fd = posixSocket;
         fds.events = POLLIN;
-        int ret = qt_safe_poll(&fds, 1, timeout);
+        int ret = qt_safe_poll(&fds, timeout);
         Q_UNUSED(ret);
     }
     qt_safe_close(posixSocket);
