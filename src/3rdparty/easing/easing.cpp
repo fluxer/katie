@@ -414,7 +414,7 @@ static qreal easeOutInExpo(qreal t)
  */
 static qreal easeInCirc(qreal t)
 {
-    return -(::sqrt(1 - t*t) - 1);
+    return -(qSqrt(1 - t*t) - 1);
 }
 
 /**
@@ -426,7 +426,7 @@ static qreal easeInCirc(qreal t)
 static qreal easeOutCirc(qreal t)
 {
     t-= qreal(1.0);
-    return ::sqrt(1 - t* t);
+    return qSqrt(1 - t* t);
 }
 
 /**
@@ -439,10 +439,10 @@ static qreal easeInOutCirc(qreal t)
 {
     t*=qreal(2.0);
     if (t < 1) {
-        return -0.5 * (::sqrt(1 - t*t) - 1);
+        return -0.5 * (qSqrt(1 - t*t) - 1);
     } else {
         t -= qreal(2.0);
-        return 0.5 * (::sqrt(1 - t*t) + 1);
+        return 0.5 * (qSqrt(1 - t*t) + 1);
     }
 }
 
