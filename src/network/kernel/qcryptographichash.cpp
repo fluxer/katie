@@ -258,7 +258,8 @@ bool QCryptographicHash::addData(QIODevice* device)
 */
 QByteArray QCryptographicHash::result() const
 {
-    if (!d->rehash) {
+    if (Q_UNLIKELY(!d->rehash)) {
+        qWarning("QCryptographicHash::result called without any data");
         return QByteArray();
     }
 
@@ -292,6 +293,7 @@ QByteArray QCryptographicHash::result() const
         }
     }
 
+    Q_UNREACHABLE();
     return QByteArray();
 }
 
@@ -341,6 +343,7 @@ QByteArray QCryptographicHash::hash(const QByteArray &data, QCryptographicHash::
         }
     }
 
+    Q_UNREACHABLE();
     return QByteArray();
 }
 
