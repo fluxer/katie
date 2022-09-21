@@ -287,7 +287,7 @@ QByteArray qRandomUuid()
 
 #undef UUID_TOHEX
 
-    return QByteArray(reinterpret_cast<char*>(uuidbuf), sizeof(uuidbuf));
+    return QByteArray(uuidbuf, sizeof(uuidbuf));
 }
 
 #ifndef QT_NO_COMPRESS
