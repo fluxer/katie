@@ -1,5 +1,7 @@
 #!/usr/bin/python
 
+# Data is from /usr/share/X11/rgb.txt
+
 import sys
 from collections import OrderedDict
 
