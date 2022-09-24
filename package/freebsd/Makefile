@@ -11,7 +11,7 @@ LICENSE_COMB = multi
 MASTER_SITES = https://osdn.net/projects/kde/news/
 DISTFILES = rss
 DIST_SUBDIR = ${PORTNAME}
-WRKSRC = ${WRKDIR}/katie-master
+WRKSRC = ${WRKDIR}/katie.git
 
 USES = compiler:c++11-lang pkgconfig cmake xorg desktop-file-utils
 USE_XORG = x11 xinerama xrandr xrender xfixes xcursor xext sm ice
@@ -33,7 +33,7 @@ NLS_CMAKE_ON = -DWITH_INTL=TRUE
 NLS_CMAKE_OFF = -DWITH_INTL=FALSE
 
 do-extract:
-	@rm -vrf ${WRKDIR}/katie-master
-	@git clone --depth=1 git://git.osdn.net/gitroot/kde/Katie.git ${WRKDIR}/katie-master
+	@rm -vrf ${WRKSRC}
+	@git clone --depth=1 git://git.osdn.net/gitroot/kde/Katie.git ${WRKSRC}
 
 .include <bsd.port.mk>
