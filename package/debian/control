@@ -3,7 +3,7 @@ Priority: optional
 Maintainer: Ivailo Monev <xakepa10@gmail.com>
 Homepage: https://osdn.net/projects/kde/
 Vcs-Git: git://git.osdn.net/gitroot/kde/Katie.git
-Vcs-browser: https://scm.osdn.net/gitroot/kde/Katie.git
+Vcs-browser: https://osdn.net/projects/kde/scm/git/Katie/tree
 Standards-Version: 4.12.0
 Build-Depends: debhelper (>= 9~), libdeflate-dev,
  libc6-dev, libjansson-dev, libpng-dev, libcups2-dev, libfreetype6-dev,
