@@ -8,8 +8,8 @@ COMMENT = C++ toolkit derived from the Qt 4.8 framework
 LICENSE = BSD3CLAUSE LGPL21+
 LICENSE_COMB = multi
 
-MASTER_SITES = https//TODO.com
-DISTFILES = TODO.tar.gz
+MASTER_SITES = https://osdn.net/projects/kde/news/
+DISTFILES = rss
 DIST_SUBDIR = ${PORTNAME}
 WRKSRC = ${WRKDIR}/katie-master
 
@@ -31,5 +31,9 @@ NLS_DESC = Build translator and translations
 NLS_USES = gettext
 NLS_CMAKE_ON = -DWITH_INTL=TRUE
 NLS_CMAKE_OFF = -DWITH_INTL=FALSE
+
+do-extract:
+	@rm -vrf ${WRKDIR}/katie-master
+	@git clone --depth=1 git://git.osdn.net/gitroot/kde/Katie.git ${WRKDIR}/katie-master
 
 .include <bsd.port.mk>
