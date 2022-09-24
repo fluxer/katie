@@ -342,29 +342,6 @@ macro(KATIE_TEST TESTNAME TESTSOURCES)
     )
 endmacro()
 
-# a macro to add D-Bus tests easily by setting them up with the assumptions they make
-macro(KATIE_DBUS_TEST TESTNAME TESTSOURCES)
-    katie_setup_target(${TESTNAME} ${TESTSOURCES} ${ARGN})
-
-    add_executable(${TESTNAME} ${${TESTNAME}_SOURCES})
-    add_dependencies(${TESTNAME} plugins_dependant_tests)
-
-    target_link_libraries(${TESTNAME} KtCore KtDBus KtTest)
-    target_compile_definitions(
-        ${TESTNAME} PRIVATE
-        -DSRCDIR="${CMAKE_CURRENT_SOURCE_DIR}/"
-    )
-    set_target_properties(
-        ${TESTNAME} PROPERTIES
-        RUNTIME_OUTPUT_DIRECTORY "${CMAKE_CURRENT_BINARY_DIR}"
-    )
-
-    add_test(
-        NAME ${TESTNAME}
-        COMMAND "${CMAKE_BINARY_DIR}/dbus.sh" "${CMAKE_CURRENT_BINARY_DIR}/${TESTNAME}"
-    )
-endmacro()
-
 # a macro to add tests that require GUI easily by setting them up with the assumptions they make
 macro(KATIE_GUI_TEST TESTNAME TESTSOURCES)
     katie_setup_target(${TESTNAME} ${TESTSOURCES} ${ARGN})
@@ -385,6 +362,6 @@ macro(KATIE_GUI_TEST TESTNAME TESTSOURCES)
 
     add_test(
         NAME ${TESTNAME}
-        COMMAND "${CMAKE_BINARY_DIR}/xvfb.sh" "${CMAKE_CURRENT_BINARY_DIR}/${TESTNAME}"
+        COMMAND "${CMAKE_BINARY_DIR}/exec.sh" "${CMAKE_CURRENT_BINARY_DIR}/${TESTNAME}"
     )
 endmacro()

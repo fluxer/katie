@@ -1,8 +1,10 @@
 if(WITH_DBUS AND DBUS_FOUND)
-    katie_dbus_test(tst_qdbusinterface
+    katie_test(tst_qdbusinterface
         ${CMAKE_CURRENT_SOURCE_DIR}/tst_qdbusinterface.cpp
         ${CMAKE_CURRENT_SOURCE_DIR}/myobject.h
     )
+
+    target_link_libraries(tst_qdbusinterface KtDBus)
 
     set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR})
     katie_setup_target(qdbusinterface_qmyserver
