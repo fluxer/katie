@@ -4,7 +4,7 @@
 # https://wiki.archlinux.org/index.php/Arch_package_guidelines
 
 pkgname=katie-git
-pkgver=4.12.0.r4681.8f22ea5f
+pkgver=4.12.0.r7494.1a560b404
 pkgrel=1
 pkgdesc='C++ toolkit derived from the Qt 4.8 framework'
 arch=('i486' 'i686' 'pentium4' 'x86_64' 'arm')
@@ -20,7 +20,7 @@ conflicts=('katie')
 # options=('debug')
 
 pkgver() {
-    cd katie
+    cd Katie
     printf "4.12.0.r%s.%s" "$(git rev-list --count HEAD)" "$(git rev-parse --short HEAD)"
 }
 
@@ -30,7 +30,7 @@ prepare() {
 
 build() {
     cd build
-    cmake ../katie \
+    cmake ../Katie \
         -Wno-dev \
         -DCMAKE_BUILD_TYPE=Release \
         -DCMAKE_INSTALL_PREFIX=/usr \
@@ -42,6 +42,6 @@ package() {
     cd build
     make DESTDIR="${pkgdir}" install
 
-    install -vDm644 ../katie/LICENSE.BSD \
+    install -vDm644 ../Katie/LICENSE.BSD \
         "${pkgdir}/usr/share/licenses/katie-git/BSD.txt"
 } 
