@@ -8,8 +8,8 @@ COMMENT = C++ toolkit derived from the Qt 4.8 framework
 LICENSE = BSD3CLAUSE LGPL21+
 LICENSE_COMB = multi
 
-MASTER_SITES = https://github.com/fluxer/katie/archive/
-DISTFILES = master.tar.gz
+MASTER_SITES = https//TODO.com
+DISTFILES = TODO.tar.gz
 DIST_SUBDIR = ${PORTNAME}
 WRKSRC = ${WRKDIR}/katie-master
 

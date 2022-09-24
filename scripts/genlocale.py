@@ -1,7 +1,6 @@
 #!/usr/bin/python3
 #-*- coding: UTF-8 -*-
 
-# See https://github.com/fluxer/katie/wiki/Unicode-support
 # Data is from https://unicode.org/Public/cldr/41/core.zip
 
 import os, sys, glob, re

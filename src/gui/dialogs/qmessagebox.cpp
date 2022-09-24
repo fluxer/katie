@@ -1453,7 +1453,7 @@ void QMessageBox::aboutQt(QWidget *parent, const QString &title)
         "<p>Katie is licensed under the GNU LGPL version 2.1</p>"
         "<p>Copyright (C) 2015 The Qt Company Ltd and other contributors.</p>"
         "<p>Copyright (C) 2016 Ivailo Monev</p>"
-        "<p>See <a href=\"https://github.com/fluxer/katie\">github.com/fluxer/katie</a> for more information.</p>"
+        "<p>See <a href=\"https://osdn.net/projects/kde/\">osdn.net/projects/kde/</a> for more information.</p>"
         );
     QMessageBox *msgBox = new QMessageBox(parent);
     msgBox->setAttribute(Qt::WA_DeleteOnClose);

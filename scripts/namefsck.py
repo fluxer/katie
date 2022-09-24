@@ -1,7 +1,5 @@
 #!/usr/bin/python
 
-# See https://github.com/fluxer/katie/wiki/Namespace-incompatibilities
-
 import os, re
 
 # generated via find /usr/include/katie/ -name 'Q*' -printf '    "%f",\n' | sort -u

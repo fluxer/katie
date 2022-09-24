@@ -7,17 +7,14 @@ code style.
 In many cases using immutable static data rather than generating at runtime and
 caching it is more optimal. If you want to add code that uses data tables use
 naming such as `MIBTbl` which makes it easy to look for and Python script for
-generating the data tables if possible. Check out the existing scripts
-(https://github.com/fluxer/katie/tree/master/scripts) for examples.
+generating the data tables if possible. Check out the existing scripts in the
+scripts directory of Katie source code for examples.
 
 ## Compatibility
 Neither source nor binary compatibility is guaranteed between releases which
 means hacks for binary compatibility and such are not required. If there is
 breaking change, the changes that need to be applied to other projects should
-be kept to minimum with backwards compatibility where possible and usually noted
-at the main wiki page (https://github.com/fluxer/katie/wiki). Note your changes
-there if necessary once they are accepted, ask for write access if you cannot
-edit pages on the wiki.
+be kept to minimum with backwards compatibility where possible.
 
 ## Standards
 All standard and extension requirements for optional feature should be checked
@@ -31,9 +28,9 @@ source of information
 (https://pubs.opengroup.org/onlinepubs/9699919799/idx/head.html).
 
 ## Tests
-You can import tests and adjust them as needed from stock Qt4 copy
-(https://github.com/fluxer/qt) if there are no tests in place relevant to the
-changes you do. Adding regression tests is optional.
+You can import tests and adjust them as needed from stock Qt4 copy if there are
+no tests in place relevant to the changes you do. Adding regression tests is
+optional.
 
 ## Translations
 To contribute translations either use the web interface at

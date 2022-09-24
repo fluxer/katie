@@ -91,8 +91,3 @@ Katie is mostly source compatible with Qt 4.8.x, compatibility with releases
 earlier than that is not a goal. Do note that using libraries that
 are linked to Qt4 from applications linked to Katie will trigger undefined
 behavior.
-
-Should you encounter a problem please report it at
-https://github.com/fluxer/katie/issues. For more information about changes,
-how to handle them and general info please visit
-https://github.com/fluxer/katie/wiki.
