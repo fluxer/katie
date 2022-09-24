@@ -43,6 +43,7 @@
 #include <string.h>
 #include <sys/wait.h>
 #include <errno.h>
+#include <signal.h>
 
 #define Q_EINTR_LOOP(var, cmd)                                \
     do {                                                      \
