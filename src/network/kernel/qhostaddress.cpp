@@ -31,6 +31,7 @@
 #include "qdatastream.h"
 #endif
 
+#include <sys/socket.h>
 #include <arpa/inet.h>
 #include <netinet/in.h>
 
