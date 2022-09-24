@@ -1367,10 +1367,10 @@ void QApplicationPrivate::applyX11SpecificCommandLineArguments(QWidget *main_wid
             w = main_widget->width();
         if ((m & HeightValue) == 0)
             h = main_widget->height();
-        w = qMin(w,maxSize.width());
-        h = qMin(h,maxSize.height());
-        w = qMax(w,minSize.width());
-        h = qMax(h,minSize.height());
+        w = qMin(w, maxSize.width());
+        h = qMin(h, maxSize.height());
+        w = qMax(w, minSize.width());
+        h = qMax(h, minSize.height());
         if ((m & XNegative)) {
             x = QApplication::desktop()->width()  + x - w;
         }

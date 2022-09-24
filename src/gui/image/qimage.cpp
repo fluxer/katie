@@ -3073,7 +3073,6 @@ bool QImageData::doImageIO(const QImage *image, QImageWriter *writer, int qualit
 
     \sa QImage::save(), {Serializing Qt Data Types}
 */
-
 QDataStream &operator<<(QDataStream &s, const QImage &image)
 {
     const bool alphaclut = (image.d ? image.d->has_alpha_clut : false);
@@ -3105,7 +3104,6 @@ QDataStream &operator<<(QDataStream &s, const QImage &image)
 
     \sa QImage::load(), {Serializing Qt Data Types}
 */
-
 QDataStream &operator>>(QDataStream &s, QImage &image)
 {
     qint8 format;
@@ -3150,8 +3148,6 @@ QDataStream &operator>>(QDataStream &s, QImage &image)
 }
 #endif // QT_NO_DATASTREAM
 
-
-
 /*!
     \fn bool QImage::operator==(const QImage & image) const
 
@@ -3164,7 +3160,6 @@ QDataStream &operator>>(QDataStream &s, QImage &image)
 
     \sa operator=()
 */
-
 bool QImage::operator==(const QImage & i) const
 {
     // same object, or shared?
@@ -3193,7 +3188,6 @@ bool QImage::operator==(const QImage & i) const
     return true;
 }
 
-
 /*!
     \fn bool QImage::operator!=(const QImage & image) const
 
@@ -3206,14 +3200,10 @@ bool QImage::operator==(const QImage & i) const
 
     \sa operator=()
 */
-
 bool QImage::operator!=(const QImage & i) const
 {
     return !(*this == i);
 }
-
-
-
 
 /*!
     Returns the number of pixels that fit horizontally in a physical
