@@ -1562,7 +1562,9 @@ QString QCoreApplication::applicationName()
     QString name = coreappdata()->application;
 
 #ifdef QT_HAVE_PROGRAM_INVOCATION_SHORT_NAME
-    name = QString::fromLocal8Bit(program_invocation_short_name);
+    if (name.isEmpty()) {
+        name = QString::fromLocal8Bit(program_invocation_short_name);
+    }
 #endif
 
 #ifdef QT_HAVE_GETPROGNAME
