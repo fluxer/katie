@@ -26,7 +26,6 @@
 #include "qcoreapplication.h"
 #include "qcoreevent.h"
 #include "qdatastream.h"
-#include "qstringlist.h"
 #include "qthread.h"
 #include "qvarlengtharray.h"
 #include "qvariant.h"
@@ -1895,14 +1894,12 @@ int QMetaEnum::keysToValue(const char *keys) const
 {
     if (!mobj)
         return -1;
-    QStringList l = QString::fromLatin1(keys).split(QLatin1Char('|'));
-    //#### TODO write proper code, do not use QStringList
+    QList<QByteArray> l = QByteArray::fromRawData(keys, qstrlen(keys)).split('|');
     int value = 0;
     int count = mobj->d.data[handle + 2];
     int data = mobj->d.data[handle + 3];
     for (int li = 0; li < l.size(); ++li) {
-        QString trimmed = l.at(li).trimmed();
-        QByteArray qualified_key = trimmed.toLatin1();
+        QByteArray qualified_key = l.at(li).trimmed();
         const char *key = qualified_key.constData();
         uint scope = 0;
         const char *s = key + qstrlen(key);
