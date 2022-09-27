@@ -460,7 +460,7 @@ static inline int indexOfMethodRelative(const QMetaObject **baseObject,
         const int end = (MethodType == MethodSlot) ? (priv(m->d.data)->signalCount) : 0;
         for (; i >= end; --i) {
             const char *stringdata = m->d.stringdata + m->d.data[priv(m->d.data)->methodData + 5*i];
-            if (method[0] == stringdata[0] && strcmp(method + 1, stringdata + 1) == 0) {
+            if (qstrcmp(method, stringdata) == 0) {
                 *baseObject = m;
                 return i;
             }
@@ -485,7 +485,7 @@ int QMetaObject::indexOfConstructor(const char *constructor) const
     Q_ASSERT(priv(d.data)->revision >= 6);
     for (int i = priv(d.data)->constructorCount-1; i >= 0; --i) {
         const char *data = d.stringdata + d.data[priv(d.data)->constructorData + 5*i];
-        if (data[0] == constructor[0] && strcmp(constructor + 1, data + 1) == 0) {
+        if (qstrcmp(constructor, data) == 0) {
             return i;
         }
     }
@@ -578,7 +578,7 @@ int QMetaObjectPrivate::indexOfSlotRelative(const QMetaObject **m,
 static const QMetaObject *QMetaObject_findMetaObject(const QMetaObject *self, const char *name)
 {
     while (self) {
-        if (strcmp(self->d.stringdata, name) == 0)
+        if (qstrcmp(self->d.stringdata, name) == 0)
             return self;
         if (self->d.relatedMetaObjects) {
             Q_ASSERT(priv(self->d.data)->revision >= 6);
@@ -617,7 +617,7 @@ int QMetaObject::indexOfEnumerator(const char *name) const
         const QMetaObjectPrivate *d = priv(m->d.data);
         for (int i = d->enumeratorCount - 1; i >= 0; --i) {
             const char *prop = m->d.stringdata + m->d.data[d->enumeratorData + 4*i];
-            if (name[0] == prop[0] && strcmp(name + 1, prop + 1) == 0) {
+            if (qstrcmp(name, prop) == 0) {
                 i += m->enumeratorOffset();
                 return i;
             }
@@ -640,7 +640,7 @@ int QMetaObject::indexOfProperty(const char *name) const
         const QMetaObjectPrivate *d = priv(m->d.data);
         for (int i = d->propertyCount-1; i >= 0; --i) {
             const char *prop = m->d.stringdata + m->d.data[d->propertyData + 3*i];
-            if (name[0] == prop[0] && strcmp(name + 1, prop + 1) == 0) {
+            if (qstrcmp(name, prop) == 0) {
                 i += m->propertyOffset();
                 return i;
             }
@@ -671,7 +671,7 @@ int QMetaObject::indexOfClassInfo(const char *name) const
     const QMetaObject *m = this;
     while (m && i < 0) {
         for (i = priv(m->d.data)->classInfoCount-1; i >= 0; --i) {
-            if (strcmp(name, m->d.stringdata
+            if (qstrcmp(name, m->d.stringdata
                        + m->d.data[priv(m->d.data)->classInfoData + 2*i]) == 0) {
                 i += m->classInfoOffset();
                 break;
@@ -1858,7 +1858,7 @@ int QMetaEnum::keyToValue(const char *key) const
     int data = mobj->d.data[handle + 3];
     for (int i = 0; i < count; ++i)
         if ((!scope || (qstrlen(mobj->d.stringdata) == scope && strncmp(qualified_key, mobj->d.stringdata, scope) == 0))
-             && strcmp(key, mobj->d.stringdata + mobj->d.data[data + 2*i]) == 0)
+             && qstrcmp(key, mobj->d.stringdata + mobj->d.data[data + 2*i]) == 0)
             return mobj->d.data[data + 2*i + 1];
     return -1;
 }
@@ -1912,7 +1912,7 @@ int QMetaEnum::keysToValue(const char *keys) const
         int i;
         for (i = count-1; i >= 0; --i)
             if ((!scope || (qstrlen(mobj->d.stringdata) == scope && strncmp(qualified_key.constData(), mobj->d.stringdata, scope) == 0))
-                 && strcmp(key, mobj->d.stringdata + mobj->d.data[data + 2*i]) == 0) {
+                 && qstrcmp(key, mobj->d.stringdata + mobj->d.data[data + 2*i]) == 0) {
                 value |= mobj->d.data[data + 2*i + 1];
                 break;
             }
@@ -2255,7 +2255,7 @@ bool QMetaProperty::write(QObject *object, const QVariant &value) const
         if (t == QVariant::Invalid) {
             const char *typeName = mobj->d.stringdata + mobj->d.data[handle + 1];
             const char *vtypeName = value.typeName();
-            if (vtypeName && strcmp(typeName, vtypeName) == 0)
+            if (vtypeName && qstrcmp(typeName, vtypeName) == 0)
                 t = value.userType();
             else
                 t = QVariant::nameToType(typeName);
