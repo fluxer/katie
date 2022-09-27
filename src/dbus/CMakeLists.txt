@@ -111,7 +111,7 @@ set_target_properties(KtDBus PROPERTIES
 
 install(
     TARGETS KtDBus
-    EXPORT KatieTargets ${INSTALL_TARGETS_DEFAULT_ARGS}
+    EXPORT KatieTargets
     DESTINATION ${KATIE_LIBRARIES_PATH}
     COMPONENT Runtime
 )

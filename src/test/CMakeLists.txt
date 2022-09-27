@@ -108,7 +108,7 @@ set_target_properties(KtTest PROPERTIES
 
 install(
     TARGETS KtTest
-    EXPORT KatieTargets ${INSTALL_TARGETS_DEFAULT_ARGS}
+    EXPORT KatieTargets
     DESTINATION ${KATIE_LIBRARIES_PATH}
     COMPONENT Runtime
 )

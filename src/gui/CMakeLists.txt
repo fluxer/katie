@@ -987,7 +987,7 @@ set_target_properties(KtGui PROPERTIES
 
 install(
     TARGETS KtGui
-    EXPORT KatieTargets ${INSTALL_TARGETS_DEFAULT_ARGS}
+    EXPORT KatieTargets
     DESTINATION ${KATIE_LIBRARIES_PATH}
     COMPONENT Runtime
 )

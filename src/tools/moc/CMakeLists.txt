@@ -98,7 +98,7 @@ set_target_properties(moc PROPERTIES
 
 install(
     TARGETS moc
-    EXPORT KatieTargets ${INSTALL_TARGETS_DEFAULT_ARGS}
+    EXPORT KatieTargets
     RUNTIME DESTINATION ${KATIE_BINARIES_PATH}
     COMPONENT Tools
 )

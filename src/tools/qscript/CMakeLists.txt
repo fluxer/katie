@@ -22,7 +22,7 @@ set_target_properties(qscript PROPERTIES
 
 install(
     TARGETS qscript
-    EXPORT KatieTargets ${INSTALL_TARGETS_DEFAULT_ARGS}
+    EXPORT KatieTargets
     RUNTIME DESTINATION ${KATIE_BINARIES_PATH}
     COMPONENT Tools
 )

@@ -32,7 +32,7 @@ set_target_properties(rcc PROPERTIES
 
 install(
     TARGETS rcc
-    EXPORT KatieTargets ${INSTALL_TARGETS_DEFAULT_ARGS}
+    EXPORT KatieTargets
     RUNTIME DESTINATION ${KATIE_BINARIES_PATH}
     COMPONENT Tools
 )

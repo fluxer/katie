@@ -44,7 +44,7 @@ set_target_properties(KtXml PROPERTIES
 
 install(
     TARGETS KtXml
-    EXPORT KatieTargets ${INSTALL_TARGETS_DEFAULT_ARGS}
+    EXPORT KatieTargets
     DESTINATION ${KATIE_LIBRARIES_PATH}
     COMPONENT Runtime
 )

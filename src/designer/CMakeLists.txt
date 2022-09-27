@@ -291,7 +291,7 @@ katie_setup_object(KtDesigner sharedqtpropertybrowser sharedfindwidget)
 
 install(
     TARGETS KtDesigner
-    EXPORT KatieTargets ${INSTALL_TARGETS_DEFAULT_ARGS}
+    EXPORT KatieTargets
     DESTINATION ${KATIE_LIBRARIES_PATH}
     COMPONENT Runtime
 )

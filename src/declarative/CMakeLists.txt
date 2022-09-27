@@ -327,7 +327,7 @@ set_target_properties(KtDeclarative PROPERTIES
 
 install(
     TARGETS KtDeclarative
-    EXPORT KatieTargets ${INSTALL_TARGETS_DEFAULT_ARGS}
+    EXPORT KatieTargets
     DESTINATION ${KATIE_LIBRARIES_PATH}
     COMPONENT Runtime
 )

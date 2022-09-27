@@ -53,7 +53,7 @@ set_target_properties(KtSvg PROPERTIES
 
 install(
     TARGETS KtSvg
-    EXPORT KatieTargets ${INSTALL_TARGETS_DEFAULT_ARGS}
+    EXPORT KatieTargets
     DESTINATION ${KATIE_LIBRARIES_PATH}
     COMPONENT Runtime
 )
