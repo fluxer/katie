@@ -3726,8 +3726,9 @@ QSessionManager::QSessionManager(QApplication * app, QString &id, QString& key)
     cb.shutdown_cancelled.client_data = (SmPointer) d;
 
     // avoid showing a warning message below
-    if (qgetenv("SESSION_MANAGER").isEmpty())
+    if (qgetenv("SESSION_MANAGER").isEmpty()) {
         return;
+    }
 
     smcConnection = SmcOpenConnection(0, 0, 1, 0,
                                        SmcSaveYourselfProcMask |
@@ -3742,11 +3743,10 @@ QSessionManager::QSessionManager(QApplication * app, QString &id, QString& key)
     id = QString::fromLatin1(myId);
     ::free(myId); // it was allocated by C
 
-    QString error = QString::fromLocal8Bit(cerror);
-    if (!smcConnection) {
+    if (Q_UNLIKELY(!smcConnection)) {
+        const QString error = QString::fromLocal8Bit(cerror);
         qWarning("Qt: Session management error: %s", qPrintable(error));
-    }
-    else {
+    } else {
         sm_receiver = new QSmSocketReceiver(IceConnectionNumber(SmcGetIceConnection(smcConnection)));
     }
 }
