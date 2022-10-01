@@ -42,7 +42,7 @@ QStringList QFileSystemWatcherEngineUnix::addPaths(const QStringList &paths,
                                                       QStringList *directories)
 {
     QStringList p = paths;
-    foreach (const QString &path, p) {
+    foreach (const QString &path, paths) {
         QStatInfo fi(path, true);
         if (fi.isDir() || path.endsWith(QLatin1Char('/'))) {
             if (!directories->contains(path))
@@ -70,7 +70,7 @@ QStringList QFileSystemWatcherEngineUnix::removePaths(const QStringList &paths,
                                                          QStringList *directories)
 {
     QStringList p = paths;
-    foreach (const QString &path, p) {
+    foreach (const QString &path, paths) {
         if (this->directories.remove(path)) {
             directories->removeAll(path);
             p.removeAll(path);
