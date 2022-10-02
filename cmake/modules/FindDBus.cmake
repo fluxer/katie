@@ -10,7 +10,7 @@
 #
 # Redistribution and use is allowed according to the terms of the BSD license.
 
-include(FindPkgConfig)
+find_package(PkgConfig REQUIRED)
 include(FindPackageHandleStandardArgs)
 
 pkg_check_modules(PC_DBUS QUIET dbus-1)

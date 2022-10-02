@@ -11,7 +11,7 @@
 
 # libdeflate does not provide pkg-config files
 
-include(FindPkgConfig)
+find_package(PkgConfig REQUIRED)
 include(FindPackageHandleStandardArgs)
 
 find_path(DEFLATE_INCLUDES
