@@ -5533,33 +5533,19 @@ QString QString::normalized(QString::NormalizationForm mode) const
 */
 QString QString::repeated(int times) const
 {
-    if (d->size == 0 || times == 1)
+    if (d->size == 0 || times == 1) {
         return *this;
-
+    }
     if (times < 1) {
         return QString();
     }
 
-    const int resultSize = times * d->size;
-
-    QString result(resultSize, Qt::Uninitialized);
-    if (result.d->alloc != resultSize)
-        return QString(); // not enough memory
-
-    memcpy(result.d->data, d->data, d->size * sizeof(ushort));
-
-    int sizeSoFar = d->size;
-    ushort *end = result.d->data + sizeSoFar;
-
-    const int halfResultSize = resultSize >> 1;
-    while (sizeSoFar <= halfResultSize) {
-        memcpy(end, result.d->data, sizeSoFar * sizeof(ushort));
-        end += sizeSoFar;
-        sizeSoFar <<= 1;
+    const int resultsize = (times * d->size);
+    QString result(resultsize, Qt::Uninitialized);
+    for (int i = 0; i < times; i++) {
+        ::memcpy(result.d->data + (i * d->size), d->data, d->size * sizeof(QChar));
     }
-    memcpy(end, result.d->data, (resultSize - sizeSoFar) * sizeof(ushort));
-    result.d->data[resultSize] = '\0';
-    result.d->size = resultSize;
+    result.d->data[resultsize] = '\0';
     return result;
 }
 

@@ -1964,33 +1964,19 @@ QList<QByteArray> QByteArray::split(char sep) const
 */
 QByteArray QByteArray::repeated(const int times) const
 {
-    if (d->size == 0 || times == 1)
+    if (d->size == 0 || times == 1) {
         return *this;
-
+    }
     if (times < 1) {
         return QByteArray();
     }
 
-    const int resultSize = times * d->size;
-
-    QByteArray result(resultSize, Qt::Uninitialized);
-    if (result.d->alloc != resultSize)
-        return QByteArray(); // not enough memory
-
-    memcpy(result.d->data, d->data, d->size);
-
-    int sizeSoFar = d->size;
-    char *end = result.d->data + sizeSoFar;
-
-    const int halfResultSize = resultSize >> 1;
-    while (sizeSoFar <= halfResultSize) {
-        memcpy(end, result.d->data, sizeSoFar);
-        end += sizeSoFar;
-        sizeSoFar <<= 1;
+    const int resultsize = (times * d->size);
+    QByteArray result(resultsize, Qt::Uninitialized);
+    for (int i = 0; i < times; i++) {
+        ::memcpy(result.d->data + (i * d->size), d->data, d->size);
     }
-    memcpy(end, result.d->data, resultSize - sizeSoFar);
-    result.d->data[resultSize] = '\0';
-    result.d->size = resultSize;
+    result.d->data[resultsize] = '\0';
     return result;
 }
 
