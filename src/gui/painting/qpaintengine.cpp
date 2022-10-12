@@ -258,15 +258,17 @@ static QPaintEngine *qt_polygon_recursion = 0;
 */
 void QPaintEngine::drawPolygon(const QPointF *points, int pointCount, PolygonDrawMode mode)
 {
-    Q_ASSERT_X(qt_polygon_recursion != this, "QPaintEngine::drawPolygon",
-               "At least one drawPolygon function must be implemented");
-    qt_polygon_recursion = this;
-    QSTACKARRAY(QPoint, fp, pointCount);
-    for (int i = 0; i < pointCount; ++i) {
-        fp[i] = points[i].toPoint();
+    if (Q_LIKELY(pointCount > 0)) {
+        Q_ASSERT_X(qt_polygon_recursion != this, "QPaintEngine::drawPolygon",
+                   "At least one drawPolygon function must be implemented");
+        qt_polygon_recursion = this;
+        QSTACKARRAY(QPoint, fp, pointCount);
+        for (int i = 0; i < pointCount; ++i) {
+            fp[i] = points[i].toPoint();
+        }
+        drawPolygon(fp, pointCount, mode);
+        qt_polygon_recursion = 0;
     }
-    drawPolygon(fp, pointCount, mode);
-    qt_polygon_recursion = 0;
 }
 
 /*!
@@ -279,15 +281,17 @@ void QPaintEngine::drawPolygon(const QPointF *points, int pointCount, PolygonDra
 */
 void QPaintEngine::drawPolygon(const QPoint *points, int pointCount, PolygonDrawMode mode)
 {
-    Q_ASSERT_X(qt_polygon_recursion != this, "QPaintEngine::drawPolygon",
-               "At least one drawPolygon function must be implemented");
-    qt_polygon_recursion = this;
-    QSTACKARRAY(QPointF, fp, pointCount);
-    for (int i = 0; i < pointCount; ++i) {
-        fp[i] = points[i];
+    if (Q_LIKELY(pointCount > 0)) {
+        Q_ASSERT_X(qt_polygon_recursion != this, "QPaintEngine::drawPolygon",
+                   "At least one drawPolygon function must be implemented");
+        qt_polygon_recursion = this;
+        QSTACKARRAY(QPointF, fp, pointCount);
+        for (int i = 0; i < pointCount; ++i) {
+            fp[i] = points[i];
+        }
+        drawPolygon(fp, pointCount, mode);
+        qt_polygon_recursion = 0;
     }
-    drawPolygon(fp, pointCount, mode);
-    qt_polygon_recursion = 0;
 }
 
 /*!
