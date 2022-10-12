@@ -3711,6 +3711,12 @@ QSessionManager::QSessionManager(QApplication * app, QString &id, QString& key)
     d->restartHint = RestartIfRunning;
 
     resetSmState();
+
+    // avoid showing a warning message below
+    if (qgetenv("SESSION_MANAGER").isEmpty()) {
+        return;
+    }
+
     QSTACKARRAY(char, cerror, 256);
     char* myId = 0;
     const QByteArray b_id = id.toLatin1();
@@ -3724,11 +3730,6 @@ QSessionManager::QSessionManager(QApplication * app, QString &id, QString& key)
     cb.save_complete.client_data = (SmPointer) d;
     cb.shutdown_cancelled.callback = sm_shutdownCancelledCallback;
     cb.shutdown_cancelled.client_data = (SmPointer) d;
-
-    // avoid showing a warning message below
-    if (qgetenv("SESSION_MANAGER").isEmpty()) {
-        return;
-    }
 
     smcConnection = SmcOpenConnection(0, 0, 1, 0,
                                        SmcSaveYourselfProcMask |
