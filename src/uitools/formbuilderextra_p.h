@@ -33,10 +33,6 @@
 // We mean it.
 //
 
-#ifndef QT_FORMBUILDER_NO_SCRIPT
-#    include "formscriptrunner_p.h"
-#endif
-
 #include <QtCore/QHash>
 #include <QtCore/QPointer>
 #include <QtCore/QString>
@@ -76,7 +72,6 @@ public:
         explicit CustomWidgetData(const DomCustomWidget *dc);
 
         QString addPageMethod;
-        QString script;
         QString baseClass;
         bool isContainer;
     };
@@ -93,11 +88,6 @@ public:
     const QPointer<QWidget> &parentWidget() const;
     bool parentWidgetIsSet() const;
     void setParentWidget(const QPointer<QWidget> &w);
-
-#ifndef QT_FORMBUILDER_NO_SCRIPT
-    QFormScriptRunner &formScriptRunner();
-    QString customWidgetScript(const QString &className) const;
-#endif
 
     void setProcessingLayoutWidget(bool processing);
     bool processingLayoutWidget() const;
@@ -153,10 +143,6 @@ private:
 
     typedef QHash<QLabel*, QString> BuddyHash;
     BuddyHash m_buddies;
-
-#ifndef QT_FORMBUILDER_NO_SCRIPT
-    QFormScriptRunner m_FormScriptRunner;
-#endif
 
     QHash<QString, CustomWidgetData> m_customWidgetDataHash;
 

@@ -49,7 +49,7 @@ public:
     enum Message { FormLoadFailureMessage, UiVersionMismatchMessage, ResourceLoadFailureMessage,
                    TopLevelSpacerMessage, PropertyEditorMessage, FormEditorMessage,
                    PreviewFailureMessage, PromotionErrorMessage, ResourceEditorMessage,
-                   ScriptDialogMessage, SignalSlotDialogMessage, OtherMessage, FileChangedMessage };
+                   SignalSlotDialogMessage, OtherMessage, FileChangedMessage };
 
     virtual QMessageBox::StandardButton
         message(QWidget *parent, Message context, QMessageBox::Icon icon,

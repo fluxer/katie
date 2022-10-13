@@ -93,7 +93,6 @@ private slots:
     void addToolBar();
     void createStatusBar();
     void removeStatusBar();
-    void changeScript();
     void containerFakeMethods();
     void slotNavigateToSlot();
     void applySize(QAction *a);

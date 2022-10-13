@@ -42,7 +42,6 @@
 #include "qdesigner_utils_p.h"
 #include <formwindowbase_p.h>
 #include "qtresourcemodel_p.h"
-#include <scripterrordialog_p.h>
 
 #include <QtGui/QWidget>
 #include <QtGui/QMenu>
@@ -62,25 +61,11 @@
 
 QT_BEGIN_NAMESPACE
 
-#ifndef QT_FORMBUILDER_NO_SCRIPT
-static QString summarizeScriptErrors(const QFormScriptRunner::Errors &errors)
-{
-    QString rc =  QCoreApplication::translate("QDesignerFormBuilder", "Script errors occurred:");
-    foreach (QFormScriptRunner::Error error, errors) {
-        rc += QLatin1Char('\n');
-        rc += error.errorMessage;
-    }
-    return rc;
-}
-#endif
-
 namespace qdesigner_internal {
 
 QDesignerFormBuilder::QDesignerFormBuilder(QDesignerFormEditorInterface *core,
-                                           Mode mode,
                                            const DeviceProfile &deviceProfile) :
     m_core(core),
-    m_mode(mode),
     m_deviceProfile(deviceProfile),
     m_pixmapCache(0),
     m_iconCache(0),
@@ -89,20 +74,6 @@ QDesignerFormBuilder::QDesignerFormBuilder(QDesignerFormEditorInterface *core,
     m_mainWidget(true)
 {
     Q_ASSERT(m_core);
-#ifndef QT_FORMBUILDER_NO_SCRIPT
-    // Disable scripting in the editors.
-    QFormScriptRunner::Options options = formScriptRunner()->options();
-    switch (m_mode) {
-    case DisableScripts:
-        options |= QFormScriptRunner::DisableScripts;
-        break;
-    case EnableScripts:
-        options |= QFormScriptRunner::DisableWarnings;
-        options &= ~QFormScriptRunner::DisableScripts;
-        break;
-    }
-    formScriptRunner()-> setOptions(options);
-#endif
 }
 
 QString QDesignerFormBuilder::systemStyle() const
@@ -317,7 +288,7 @@ QWidget *QDesignerFormBuilder::create(DomWidget *ui_widget, QWidget *parentWidge
 {
     QWidget *widget = QFormBuilder::create(ui_widget, parentWidget);
     // Do not apply state if scripts are to be run in preview mode
-    QSimpleResource::applyExtensionDataFromDOM(this, m_core, ui_widget, widget, m_mode == DisableScripts);
+    QSimpleResource::applyExtensionDataFromDOM(this, m_core, ui_widget, widget);
     return widget;
 }
 
@@ -351,13 +322,10 @@ QWidget *QDesignerFormBuilder::createPreview(const QDesignerFormWindowInterface 
                                              const QString &styleName,
                                              const QString &appStyleSheet,
                                              const DeviceProfile &deviceProfile,
-                                             ScriptErrors *scriptErrors,
                                              QString *errorMessage)
 {
-    scriptErrors->clear();
-
     // load
-    QDesignerFormBuilder builder(fw->core(), EnableScripts, deviceProfile);
+    QDesignerFormBuilder builder(fw->core(), deviceProfile);
     builder.setWorkingDirectory(fw->absoluteDir());
 
     const bool warningsEnabled = QSimpleResource::setWarningsEnabled(false);
@@ -380,15 +348,6 @@ QWidget *QDesignerFormBuilder::createPreview(const QDesignerFormWindowInterface 
                 WidgetFactory::applyStyleToTopLevel(wf->getStyle(styleToUse), widget);
         }
     }
-#ifndef QT_FORMBUILDER_NO_SCRIPT
-    // Check for script errors
-    *scriptErrors = builder.formScriptRunner()->errors();
-    if (!scriptErrors->empty()) {
-        *errorMessage = summarizeScriptErrors(*scriptErrors);
-        delete widget;
-        return  0;
-    }
-#endif
 #ifndef QT_NO_STYLE_STYLESHEET
     // Fake application style sheet by prepending. (If this doesn't work, fake by nesting
     // into parent widget).
@@ -410,37 +369,20 @@ QWidget *QDesignerFormBuilder::createPreview(const QDesignerFormWindowInterface 
 QWidget *QDesignerFormBuilder::createPreview(const QDesignerFormWindowInterface *fw,
                                              const QString &styleName,
                                              const QString &appStyleSheet,
-                                             const DeviceProfile &deviceProfile,
                                              QString *errorMessage)
 {
-    ScriptErrors scriptErrors;
-    return  createPreview(fw, styleName, appStyleSheet, deviceProfile, &scriptErrors, errorMessage);
-}
-
-QWidget *QDesignerFormBuilder::createPreview(const QDesignerFormWindowInterface *fw,
-                                             const QString &styleName,
-                                             const QString &appStyleSheet,
-                                             QString *errorMessage)
-{
-    ScriptErrors scriptErrors;
-    return  createPreview(fw, styleName, appStyleSheet, DeviceProfile(), &scriptErrors, errorMessage);
+    return  createPreview(fw, styleName, appStyleSheet, DeviceProfile(), errorMessage);
 }
 
 QWidget *QDesignerFormBuilder::createPreview(const QDesignerFormWindowInterface *fw, const QString &styleName, const QString &appStyleSheet)
 {
-    ScriptErrors scriptErrors;
     QString errorMessage;
-    QWidget *widget = createPreview(fw, styleName, appStyleSheet, DeviceProfile(), &scriptErrors, &errorMessage);
+    QWidget *widget = createPreview(fw, styleName, appStyleSheet, DeviceProfile(), &errorMessage);
     if (!widget) {
         // Display Script errors or message box
         QWidget *dialogParent = fw->core()->topLevel();
-        if (scriptErrors.empty()) {
-            fw->core()->dialogGui()->message(dialogParent, QDesignerDialogGuiInterface::PreviewFailureMessage,
-                                             QMessageBox::Warning, QCoreApplication::translate("QDesignerFormBuilder", "Designer"), errorMessage, QMessageBox::Ok);
-        } else {
-            ScriptErrorDialog scriptErrorDialog(scriptErrors, dialogParent);
-            scriptErrorDialog.exec();
-        }
+        fw->core()->dialogGui()->message(dialogParent, QDesignerDialogGuiInterface::PreviewFailureMessage,
+                                         QMessageBox::Warning, QCoreApplication::translate("QDesignerFormBuilder", "Designer"), errorMessage, QMessageBox::Ok);
         return 0;
     }
     return widget;
@@ -460,9 +402,8 @@ QPixmap QDesignerFormBuilder::createPreviewPixmap(const QDesignerFormWindowInter
 // ---------- NewFormWidgetFormBuilder
 
 NewFormWidgetFormBuilder::NewFormWidgetFormBuilder(QDesignerFormEditorInterface *core,
-                             Mode mode,
                              const DeviceProfile &deviceProfile) :
-    QDesignerFormBuilder(core, mode, deviceProfile)
+    QDesignerFormBuilder(core, deviceProfile)
 {
 }
 

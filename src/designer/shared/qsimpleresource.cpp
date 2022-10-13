@@ -23,13 +23,11 @@
 #include "widgetfactory_p.h"
 #include "widgetdatabase_p.h"
 
-#include <formscriptrunner_p.h>
 #include <properties_p.h>
 #include <ui4.h>
 
 #include <QtDesigner/abstractformeditor.h>
 #include <QtDesigner/abstractlanguage.h>
-#include <script_p.h>
 #include <QtDesigner/QExtensionManager>
 #include <QtUiTools/customwidget.h>
 #include <QtDesigner/extrainfo.h>
@@ -61,10 +59,6 @@ QSimpleResource::QSimpleResource(QDesignerFormEditorInterface *core) :
     workingDirectory +=  QDir::separator();
     workingDirectory +=  QLatin1String(".designer");
     setWorkingDirectory(QDir(workingDirectory));
-#ifndef QT_FORMBUILDER_NO_SCRIPT
-    // Disable scripting in the editors.
-    formScriptRunner()-> setOptions(QFormScriptRunner::DisableScripts);
-#endif
 }
 
 QSimpleResource::~QSimpleResource()
@@ -126,35 +120,6 @@ QString QSimpleResource::pixmapToQrcPath(const QPixmap &pm) const
     return QString();
 }
 
-DomScript *QSimpleResource::createScript(const QString &script, ScriptSource source)
-{
-    if (script.isEmpty())
-        return 0;
-    DomScript *domScript = new DomScript();
-    switch (source) {
-    case ScriptExtension:
-        domScript->setAttributeSource(QLatin1String("extension"));
-        break;
-    case ScriptDesigner:
-        domScript->setAttributeSource(QLatin1String("designer"));
-        break;
-    case ScriptCustomWidgetPlugin:
-        domScript->setAttributeSource(QLatin1String("customwidgetplugin"));
-        break;
-    }
-    domScript->setAttributeLanguage(QLatin1String("Qt Script"));
-    domScript->setText(script);
-    return domScript;
-}
-
-// Add a script to a list of DomScripts unless empty
-void QSimpleResource::addScript(const QString &script, ScriptSource source, DomScripts &domScripts)
-{
-    if (DomScript *domScript = createScript(script, source)) {
-        domScripts += domScript;
-    }
-}
-
 void QSimpleResource::addExtensionDataToDOM(QAbstractFormBuilder *afb,
                                             QDesignerFormEditorInterface *core,
                                             DomWidget *ui_widget, QWidget *widget)
@@ -163,65 +128,15 @@ void QSimpleResource::addExtensionDataToDOM(QAbstractFormBuilder *afb,
     if (QDesignerExtraInfoExtension *extra = qt_extension<QDesignerExtraInfoExtension*>(emgr, widget)) {
         extra->saveWidgetExtraInfo(ui_widget);
     }
-    if (QDesignerScriptExtension *scriptExt = qt_extension<QDesignerScriptExtension*>(emgr, widget)) {
-        // Add internal state
-        const QVariantMap data = scriptExt->data();
-        if (!data.empty()) {
-            // Convert the map to a DomState.
-            // We pass on the widget for property introspection. Thus, non-designable properties
-            // that have to be converted using QMetaObject (enums and the like) will work.
-            DomPropertyList properties;
-            const QVariantMap::const_iterator vcend = data.constEnd();
-            for (QVariantMap::const_iterator it = data.constBegin(); it != vcend; ++it) {
-                if (DomProperty *prop = variantToDomProperty(afb, widget->metaObject(), it.key(), it.value()))
-                    properties += prop;
-            }
-            if (!properties.empty()) {
-                DomWidgetData *domData = new DomWidgetData;
-                domData->setElementProperty(properties);
-                DomWidgetDataList domDataList;
-                 domDataList += domData;
-                ui_widget->setElementWidgetData(domDataList);
-            }
-
-        }
-        // Add script
-        const QString script = scriptExt->script();
-        if (!script.isEmpty()) {
-            DomScripts domScripts = ui_widget->elementScript();
-            addScript(script, ScriptExtension, domScripts);
-            ui_widget->setElementScript(domScripts);
-        }
-    }
 }
 
 void QSimpleResource::applyExtensionDataFromDOM(QAbstractFormBuilder *afb,
                                                 QDesignerFormEditorInterface *core,
-                                                DomWidget *ui_widget, QWidget *widget, bool applyState)
+                                                DomWidget *ui_widget, QWidget *widget)
 {
     QExtensionManager *emgr = core->extensionManager();
     if (QDesignerExtraInfoExtension *extra = qt_extension<QDesignerExtraInfoExtension*>(emgr, widget)) {
         extra->loadWidgetExtraInfo(ui_widget);
-    }
-    if (applyState) {
-        if (QDesignerScriptExtension *scriptExt = qt_extension<QDesignerScriptExtension*>(emgr, widget)) {
-            // Apply the state.
-            // We pass on the widget for property introspection. Thus, non-designable properties
-            // that have to be converted using QMetaObject (enums and the like) will work.
-            QVariantMap data;
-            DomWidgetDataList domDataList = ui_widget->elementWidgetData();
-            if (!domDataList.empty()) {
-                foreach (const DomWidgetData *domData, domDataList) {
-                    const DomPropertyList properties = domData->elementProperty();
-                    foreach(const DomProperty *prop, properties) {
-                        const QVariant vprop = domPropertyToVariant(afb, widget->metaObject(), prop);
-                        if (vprop.type() != QVariant::Invalid)
-                            data.insert(prop->attributeName(), vprop);
-                    }
-                }
-            }
-            scriptExt->setData(data);
-        }
     }
 }
 

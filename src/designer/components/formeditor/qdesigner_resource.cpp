@@ -944,20 +944,7 @@ QWidget *QDesignerResource::create(DomWidget *ui_widget, QWidget *parentWidget)
     }
 
     ui_widget->setAttributeClass(className); // fix the class name
-    applyExtensionDataFromDOM(this, core(), ui_widget, w, true);
-
-    // store user-defined scripts
-    if (MetaDataBase *metaDataBase = qobject_cast<MetaDataBase *>(core()->metaDataBase())) {
-        const QString designerSource = QLatin1String("designer");
-        const DomScripts domScripts = ui_widget->elementScript();
-        if (!domScripts.empty()) {
-            foreach (const DomScript *script, domScripts) {
-                if (script->hasAttributeSource() && script->attributeSource() == designerSource) {
-                    metaDataBase->metaDataBaseItem(w)->setScript(script->text());
-                }
-            }
-        }
-    }
+    applyExtensionDataFromDOM(this, core(), ui_widget, w);
 
     return w;
 }
@@ -1294,7 +1281,6 @@ DomWidget *QDesignerResource::createDom(QWidget *widget, DomWidget *ui_parentWid
     }
     addExtensionDataToDOM(this, core(), w, widget);
 
-    addUserDefinedScripts(widget, w);
     return w;
 }
 
@@ -2032,10 +2018,6 @@ DomCustomWidgets *QDesignerResource::saveCustomWidgets()
                 custom_widget->setElementAddPageMethod(addPageMethod);
         }
 
-        // Look up static per-class scripts of designer
-        if (DomScript *domScript = createScript(customWidgetScript(core, name), ScriptCustomWidgetPlugin))
-            custom_widget->setElementScript(domScript);
-
         orderedMap.insert(db->indexOfClassName(name), custom_widget);
     }
 
@@ -2432,20 +2414,6 @@ void QDesignerResource::loadExtraInfo(DomWidget *ui_widget, QWidget *widget, QWi
         applyAttributesToPropertySheet(ui_widget, widget);
 }
 
-// Add user defined scripts (dialog box) belonging to QWidget to DomWidget.
-void QDesignerResource::addUserDefinedScripts(QWidget *w, DomWidget *ui_widget)
-{
-    QDesignerFormEditorInterface *core = m_formWindow->core();
-    DomScripts domScripts = ui_widget->elementScript();
-    // Look up user-defined scripts of designer
-    if (const qdesigner_internal::MetaDataBase *metaDataBase = qobject_cast<const qdesigner_internal::MetaDataBase *>(core->metaDataBase())) {
-        if (const qdesigner_internal::MetaDataBaseItem *metaItem = metaDataBase->metaDataBaseItem(w)) {
-            addScript(metaItem->script(), ScriptDesigner, domScripts);
-        }
-    }
-    if (!domScripts.empty())
-        ui_widget->setElementScript(domScripts);
-}
 }
 
 QT_END_NAMESPACE

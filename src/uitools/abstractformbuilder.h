@@ -78,10 +78,6 @@ class DomResourcePixmap;
 class QResourceBuilder;
 class QTextBuilder;
 
-#ifndef QT_FORMBUILDER_NO_SCRIPT
-class QFormScriptRunner;
-#endif
-
 class Q_UITOOLS_EXPORT QAbstractFormBuilder
 {
 public:
@@ -93,9 +89,6 @@ public:
 
     virtual QWidget *load(QIODevice *dev, QWidget *parentWidget=0);
     virtual void save(QIODevice *dev, QWidget *widget);
-
-    void setScriptingEnabled(bool enabled);
-    bool isScriptingEnabled() const;
 
 protected:
 //
@@ -204,9 +197,6 @@ protected:
     void reset();
     void initialize(const DomUI *ui);
 
-#ifndef QT_FORMBUILDER_NO_SCRIPT
-    QFormScriptRunner *formScriptRunner() const;
-#endif
 //
 //  utils
 //

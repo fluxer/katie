@@ -1,5 +1,5 @@
 set(EXTRA_DESIGNERCOMPONENTS_LIBS
-    KtCore KtGui KtXml KtDesigner KtScript KtUiTools
+    KtCore KtGui KtXml KtDesigner KtUiTools
 )
 
 include_directories(
@@ -8,7 +8,6 @@ include_directories(
     ${CMAKE_BINARY_DIR}/include/QtCore
     ${CMAKE_BINARY_DIR}/include/QtGui
     ${CMAKE_BINARY_DIR}/include/QtXml
-    ${CMAKE_BINARY_DIR}/include/QtScript
     ${CMAKE_BINARY_DIR}/include/QtUiTools
     ${CMAKE_BINARY_DIR}/include/QtDesigner
     ${CMAKE_BINARY_DIR}/include/QtDesignerComponents
@@ -191,7 +190,7 @@ set(DESIGNERCOMPONENTS_SOURCES
 
 katie_generate_misc("${DESIGNERCOMPONENTS_HEADERS}" QtDesignerComponents)
 katie_generate_public("${DESIGNERCOMPONENTS_PUBLIC_HEADERS}" QtDesignerComponents)
-katie_generate_package(KtDesignerComponents "KtCore KtGui KtXml KtDesigner KtScript KtUiTools")
+katie_generate_package(KtDesignerComponents "KtCore KtGui KtXml KtDesigner KtUiTools")
 katie_setup_target(KtDesignerComponents ${DESIGNERCOMPONENTS_SOURCES} ${DESIGNERCOMPONENTS_HEADERS})
 
 add_library(KtDesignerComponents ${KATIE_TYPE} ${KtDesignerComponents_SOURCES}

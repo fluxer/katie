@@ -1,5 +1,5 @@
 # add_definitions()
-set(EXTRA_UITOOLS_LIBS KtCore KtGui KtXml KtScript)
+set(EXTRA_UITOOLS_LIBS KtCore KtGui KtXml)
 
 set(UITOOLS_PUBLIC_HEADERS
     QUiLoader
@@ -11,7 +11,6 @@ include_directories(
     ${CMAKE_BINARY_DIR}/include/QtCore
     ${CMAKE_BINARY_DIR}/include/QtGui
     ${CMAKE_BINARY_DIR}/include/QtXml
-    ${CMAKE_BINARY_DIR}/include/QtScript
     ${CMAKE_BINARY_DIR}/include/QtUiTools
     # for widgets.table
     ${CMAKE_SOURCE_DIR}/src/shared
@@ -24,7 +23,6 @@ set(UITOOLS_HEADERS
     ${CMAKE_CURRENT_SOURCE_DIR}/customwidget.h
     ${CMAKE_CURRENT_SOURCE_DIR}/formbuilderextra_p.h
     ${CMAKE_CURRENT_SOURCE_DIR}/formbuilder.h
-    ${CMAKE_CURRENT_SOURCE_DIR}/formscriptrunner_p.h
     ${CMAKE_CURRENT_SOURCE_DIR}/properties_p.h
     ${CMAKE_CURRENT_SOURCE_DIR}/quiloader.h
     ${CMAKE_CURRENT_SOURCE_DIR}/quiloader_p.h
@@ -37,7 +35,6 @@ set(UITOOLS_SOURCES
     ${CMAKE_CURRENT_SOURCE_DIR}/abstractformbuilder.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/formbuilder.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/formbuilderextra.cpp
-    ${CMAKE_CURRENT_SOURCE_DIR}/formscriptrunner.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/textbuilder.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/resourcebuilder.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/properties.cpp
@@ -46,7 +43,7 @@ set(UITOOLS_SOURCES
 
 katie_generate_misc("${UITOOLS_HEADERS}" QtUiTools)
 katie_generate_public("${UITOOLS_PUBLIC_HEADERS}" QtUiTools)
-katie_generate_package(KtUiTools "KtCore KtGui KtXml KtScript")
+katie_generate_package(KtUiTools "KtCore KtGui KtXml")
 katie_setup_target(KtUiTools ${UITOOLS_SOURCES} ${UITOOLS_HEADERS})
 
 add_library(KtUiTools ${KATIE_TYPE} ${KtUiTools_SOURCES})

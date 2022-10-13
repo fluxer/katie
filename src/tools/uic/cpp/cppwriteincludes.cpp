@@ -646,13 +646,12 @@ static const struct ClassTblData {
 static const qint16 ClassTblSize = sizeof(ClassTbl) / sizeof(ClassTblData);
 
 WriteIncludes::WriteIncludes(Uic *uic)
-    : m_uic(uic), m_output(uic->output()), m_scriptsActivated(false), m_laidOut(false)
+    : m_uic(uic), m_output(uic->output()), m_laidOut(false)
 {
 }
 
 void WriteIncludes::acceptUI(DomUI *node)
 {
-    m_scriptsActivated = false;
     m_laidOut = false;
     m_localIncludes.clear();
     m_globalIncludes.clear();
@@ -800,10 +799,6 @@ void WriteIncludes::acceptCustomWidget(DomCustomWidget *node)
     if (className.isEmpty())
         return;
 
-    if (const DomScript *domScript = node->elementScript())
-        if (!domScript->text().isEmpty())
-            activateScripts();
-
     if (!node->elementHeader() || node->elementHeader()->text().isEmpty()) {
         add(className, false); // no header specified
     } else {
@@ -866,21 +861,6 @@ void WriteIncludes::writeHeaders(const OrderedSet &headers, bool global)
     }
 }
 
-void WriteIncludes::acceptWidgetScripts(const DomScripts &scripts, DomWidget *, const  DomWidgets &)
-{
-    if (!scripts.empty()) {
-        activateScripts();
-    }
-}
-
-void WriteIncludes::activateScripts()
-{
-    if (!m_scriptsActivated) {
-        add(QLatin1String("QScriptEngine"));
-        add(QLatin1String("QDebug"));
-        m_scriptsActivated = true;
-    }
-}
 } // namespace CPP
 
 QT_END_NAMESPACE

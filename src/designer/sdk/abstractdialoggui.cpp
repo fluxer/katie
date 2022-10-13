@@ -52,7 +52,6 @@ QT_BEGIN_NAMESPACE
    \value PreviewFailureMessage       A preview could not be created
    \value PromotionErrorMessage       Messages related to promotion of a widget
    \value ResourceEditorMessage       Messages of the resource editor
-   \value ScriptDialogMessage         Messages of the script dialog
    \value SignalSlotDialogMessage     Messages of the signal slot dialog
    \value OtherMessage                Unspecified context
 */

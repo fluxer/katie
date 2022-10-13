@@ -140,7 +140,6 @@
                         <xs:element name="container" type="xs:integer" minOccurs="0" />
                         <xs:element name="sizepolicy" type="SizePolicyData" minOccurs="0" />
                         <xs:element name="pixmap" type="xs:string" minOccurs="0" />
-                        <xs:element name="script" type="Script" minOccurs="0" />
                         <xs:element name="properties" type="Properties" minOccurs="0" />
                         <xs:element name="slots" type="Slots" minOccurs="0" />
                         <xs:element name="propertyspecifications" type="PropertySpecifications" minOccurs="0" />
@@ -239,7 +238,6 @@
                 <xs:sequence>
                         <xs:element name="class" type="xs:string" minOccurs="0" maxOccurs="unbounded" /> <!-- unbounded kept for compatibility reasons -->
                         <xs:element name="property" type="Property" minOccurs="0" maxOccurs="unbounded" />
-                        <xs:element name="script" type="Script"  minOccurs="0" maxOccurs="unbounded" /> <!-- unbounded kept for compatibility reasons -->
                         <xs:element name="widgetdata" type="WidgetData"  minOccurs="0" maxOccurs="unbounded" /> <!-- unbounded kept for compatibility reasons -->
                         <xs:element name="attribute" type="Property" minOccurs="0" maxOccurs="unbounded" />
 <!-- item view begin -->
@@ -546,11 +544,6 @@
                 <xs:element name="y" type="xs:integer"/>
             </xs:all>
             <xs:attribute name="type" type="xs:string" use="required" />
-        </xs:complexType>
-
-        <xs:complexType name="Script">
-            <xs:attribute name="source"   type="xs:string" use="required" />
-            <xs:attribute name="language" type="xs:string" use="required" />
         </xs:complexType>
 
         <xs:complexType name="WidgetData">

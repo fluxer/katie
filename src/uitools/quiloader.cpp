@@ -813,37 +813,6 @@ QDir QUiLoader::workingDirectory() const
 }
 
 /*!
-    \internal
-    \since 4.3
-
-    If \a enabled is true, the loader will be able to execute scripts.
-    Otherwise, execution of scripts will be disabled.
-
-    \sa isScriptingEnabled()
-*/
-
-void QUiLoader::setScriptingEnabled(bool enabled)
-{
-    Q_D(QUiLoader);
-    d->builder.setScriptingEnabled(enabled);
-}
-
-/*!
-    \internal
-    \since 4.3
-
-    Returns true if execution of scripts is enabled; returns false otherwise.
-
-    \sa setScriptingEnabled()
-*/
-
-bool QUiLoader::isScriptingEnabled() const
-{
-    Q_D(const QUiLoader);
-    return d->builder.isScriptingEnabled();
-}
-
-/*!
     \since 4.5
 
     If \a enabled is true, user interfaces loaded by this loader will

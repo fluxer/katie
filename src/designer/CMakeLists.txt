@@ -2,7 +2,7 @@ add_definitions(
     -DKATIE_TOOLS_SUFFIX="${KATIE_TOOLS_SUFFIX}"
 )
 set(EXTRA_DESIGNER_LIBS
-    KtCore KtGui KtXml KtUiTools KtScript
+    KtCore KtGui KtXml KtUiTools
 )
 
 set(DESIGNER_PUBLIC_HEADERS
@@ -15,7 +15,6 @@ include_directories(
     ${CMAKE_BINARY_DIR}/include/QtCore
     ${CMAKE_BINARY_DIR}/include/QtGui
     ${CMAKE_BINARY_DIR}/include/QtXml
-    ${CMAKE_BINARY_DIR}/include/QtScript
     ${CMAKE_BINARY_DIR}/include/QtUiTools
     ${CMAKE_BINARY_DIR}/include/QtDesigner
     # for widgets.table
@@ -59,7 +58,6 @@ set(DESIGNER_HEADERS
     ${CMAKE_CURRENT_SOURCE_DIR}/sdk/abstractdnditem.h
     ${CMAKE_CURRENT_SOURCE_DIR}/sdk/abstractpromotioninterface.h
     ${CMAKE_CURRENT_SOURCE_DIR}/sdk/abstractdialoggui_p.h
-    ${CMAKE_CURRENT_SOURCE_DIR}/sdk/script_p.h
     ${CMAKE_CURRENT_SOURCE_DIR}/sdk/abstractnewformwidget_p.h
     ${CMAKE_CURRENT_SOURCE_DIR}/shared/spacer_widget_p.h
     ${CMAKE_CURRENT_SOURCE_DIR}/shared/layoutinfo_p.h
@@ -114,10 +112,6 @@ set(DESIGNER_HEADERS
     ${CMAKE_CURRENT_SOURCE_DIR}/shared/textpropertyeditor_p.h
     ${CMAKE_CURRENT_SOURCE_DIR}/shared/propertylineedit_p.h
     ${CMAKE_CURRENT_SOURCE_DIR}/shared/promotiontaskmenu_p.h
-    ${CMAKE_CURRENT_SOURCE_DIR}/shared/scripterrordialog_p.h
-    ${CMAKE_CURRENT_SOURCE_DIR}/shared/scriptcommand_p.h
-    ${CMAKE_CURRENT_SOURCE_DIR}/shared/scriptdialog_p.h
-    ${CMAKE_CURRENT_SOURCE_DIR}/shared/qscripthighlighter_p.h
     ${CMAKE_CURRENT_SOURCE_DIR}/shared/gridpanel_p.h
     ${CMAKE_CURRENT_SOURCE_DIR}/shared/grid_p.h
     ${CMAKE_CURRENT_SOURCE_DIR}/shared/formwindowbase_p.h
@@ -173,7 +167,6 @@ set(DESIGNER_SOURCES
     ${CMAKE_CURRENT_SOURCE_DIR}/sdk/extrainfo.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/sdk/abstractpromotioninterface.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/sdk/abstractdialoggui.cpp
-    ${CMAKE_CURRENT_SOURCE_DIR}/sdk/script.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/sdk/abstractnewformwidget.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/shared/spacer_widget.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/shared/layoutinfo.cpp
@@ -225,10 +218,6 @@ set(DESIGNER_SOURCES
     ${CMAKE_CURRENT_SOURCE_DIR}/shared/textpropertyeditor.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/shared/propertylineedit.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/shared/promotiontaskmenu.cpp
-    ${CMAKE_CURRENT_SOURCE_DIR}/shared/scripterrordialog.cpp
-    ${CMAKE_CURRENT_SOURCE_DIR}/shared/scriptcommand.cpp
-    ${CMAKE_CURRENT_SOURCE_DIR}/shared/scriptdialog.cpp
-    ${CMAKE_CURRENT_SOURCE_DIR}/shared/qscripthighlighter.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/shared/gridpanel.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/shared/grid.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/shared/formwindowbase.cpp
@@ -273,7 +262,7 @@ add_subdirectory(components)
 
 katie_generate_misc("${DESIGNER_HEADERS}" QtDesigner)
 katie_generate_public("${DESIGNER_PUBLIC_HEADERS}" QtDesigner)
-katie_generate_package(KtDesigner "KtCore KtGui KtXml KtUiTools KtScript")
+katie_generate_package(KtDesigner "KtCore KtGui KtXml KtUiTools")
 katie_setup_target(KtDesigner ${DESIGNER_SOURCES} ${DESIGNER_HEADERS})
 
 add_library(KtDesigner ${KATIE_TYPE} ${KtDesigner_SOURCES}

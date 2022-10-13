@@ -288,8 +288,7 @@ QImage NewFormWidget::grabForm(QDesignerFormEditorInterface *core,
                          const QString &workingDir,
                          const qdesigner_internal::DeviceProfile &dp)
 {
-    qdesigner_internal::NewFormWidgetFormBuilder
-        formBuilder(core, qdesigner_internal::QDesignerFormBuilder::DisableScripts, dp);
+    qdesigner_internal::NewFormWidgetFormBuilder formBuilder(core, dp);
     if (!workingDir.isEmpty())
         formBuilder.setWorkingDirectory(workingDir);
 

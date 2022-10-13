@@ -1879,13 +1879,12 @@ void DomCustomWidget::clear(bool clear_all)
     delete m_header;
     delete m_sizeHint;
     delete m_sizePolicy;
-    delete m_script;
     delete m_properties;
     delete m_slots;
     delete m_propertyspecifications;
 
     if (clear_all) {
-    m_text.clear();
+        m_text.clear();
     }
 
     m_children = 0;
@@ -1893,7 +1892,6 @@ void DomCustomWidget::clear(bool clear_all)
     m_sizeHint = 0;
     m_container = 0;
     m_sizePolicy = 0;
-    m_script = 0;
     m_properties = 0;
     m_slots = 0;
     m_propertyspecifications = 0;
@@ -1906,7 +1904,6 @@ DomCustomWidget::DomCustomWidget()
     m_sizeHint = 0;
     m_container = 0;
     m_sizePolicy = 0;
-    m_script = 0;
     m_properties = 0;
     m_slots = 0;
     m_propertyspecifications = 0;
@@ -1917,7 +1914,6 @@ DomCustomWidget::~DomCustomWidget()
     delete m_header;
     delete m_sizeHint;
     delete m_sizePolicy;
-    delete m_script;
     delete m_properties;
     delete m_slots;
     delete m_propertyspecifications;
@@ -1966,12 +1962,6 @@ void DomCustomWidget::read(QXmlStreamReader &reader)
             }
             if (tag == QLatin1String("pixmap")) {
                 setElementPixmap(reader.readElementText());
-                continue;
-            }
-            if (tag == QLatin1String("script")) {
-                DomScript *v = new DomScript();
-                v->read(reader);
-                setElementScript(v);
                 continue;
             }
             if (tag == QLatin1String("properties")) {
@@ -2043,10 +2033,6 @@ void DomCustomWidget::write(QXmlStreamWriter &writer, const QString &tagName) co
 
     if (m_children & Pixmap) {
         writer.writeTextElement(QLatin1String("pixmap"), m_pixmap);
-    }
-
-    if (m_children & Script) {
-        m_script->write(writer, QLatin1String("script"));
     }
 
     if (m_children & Properties) {
@@ -2142,21 +2128,6 @@ void DomCustomWidget::setElementPixmap(const QString& a)
     m_pixmap = a;
 }
 
-DomScript* DomCustomWidget::takeElementScript() 
-{
-    DomScript* a = m_script;
-    m_script = 0;
-    m_children ^= Script;
-    return a;
-}
-
-void DomCustomWidget::setElementScript(DomScript* a)
-{
-    delete m_script;
-    m_children |= Script;
-    m_script = a;
-}
-
 DomProperties* DomCustomWidget::takeElementProperties() 
 {
     DomProperties* a = m_properties;
@@ -2246,13 +2217,6 @@ void DomCustomWidget::clearElementSizePolicy()
 void DomCustomWidget::clearElementPixmap()
 {
     m_children &= ~Pixmap;
-}
-
-void DomCustomWidget::clearElementScript()
-{
-    delete m_script;
-    m_script = 0;
-    m_children &= ~Script;
 }
 
 void DomCustomWidget::clearElementProperties()
@@ -3398,8 +3362,6 @@ void DomWidget::clear(bool clear_all)
     m_class.clear();
     qDeleteAll(m_property);
     m_property.clear();
-    qDeleteAll(m_script);
-    m_script.clear();
     qDeleteAll(m_widgetData);
     m_widgetData.clear();
     qDeleteAll(m_attribute);
@@ -3447,8 +3409,6 @@ DomWidget::~DomWidget()
     m_class.clear();
     qDeleteAll(m_property);
     m_property.clear();
-    qDeleteAll(m_script);
-    m_script.clear();
     qDeleteAll(m_widgetData);
     m_widgetData.clear();
     qDeleteAll(m_attribute);
@@ -3504,12 +3464,6 @@ void DomWidget::read(QXmlStreamReader &reader)
                 DomProperty *v = new DomProperty();
                 v->read(reader);
                 m_property.append(v);
-                continue;
-            }
-            if (tag == QLatin1String("script")) {
-                DomScript *v = new DomScript();
-                v->read(reader);
-                m_script.append(v);
                 continue;
             }
             if (tag == QLatin1String("widgetdata")) {
@@ -3614,10 +3568,6 @@ void DomWidget::write(QXmlStreamWriter &writer, const QString &tagName) const
         DomProperty* v = m_property[i];
         v->write(writer, QLatin1String("property"));
     }
-    for (int i = 0; i < m_script.size(); ++i) {
-        DomScript* v = m_script[i];
-        v->write(writer, QLatin1String("script"));
-    }
     for (int i = 0; i < m_widgetData.size(); ++i) {
         DomWidgetData* v = m_widgetData[i];
         v->write(writer, QLatin1String("widgetdata"));
@@ -3678,12 +3628,6 @@ void DomWidget::setElementProperty(const QList<DomProperty*>& a)
 {
     m_children |= Property;
     m_property = a;
-}
-
-void DomWidget::setElementScript(const QList<DomScript*>& a)
-{
-    m_children |= Script;
-    m_script = a;
 }
 
 void DomWidget::setElementWidgetData(const QList<DomWidgetData*>& a)
@@ -8451,82 +8395,6 @@ void DomConnectionHint::clearElementX()
 void DomConnectionHint::clearElementY()
 {
     m_children &= ~Y;
-}
-
-void DomScript::clear(bool clear_all)
-{
-
-    if (clear_all) {
-    m_text.clear();
-    m_has_attr_source = false;
-    m_has_attr_language = false;
-    }
-
-    m_children = 0;
-}
-
-DomScript::DomScript()
-{
-    m_children = 0;
-    m_has_attr_source = false;
-    m_has_attr_language = false;
-}
-
-DomScript::~DomScript()
-{
-}
-
-void DomScript::read(QXmlStreamReader &reader)
-{
-
-    foreach (const QXmlStreamAttribute &attribute, reader.attributes()) {
-        QStringRef name = attribute.name();
-        if (name == QLatin1String("source")) {
-            setAttributeSource(attribute.value().toString());
-            continue;
-        }
-        if (name == QLatin1String("language")) {
-            setAttributeLanguage(attribute.value().toString());
-            continue;
-        }
-        reader.raiseError(QLatin1String("Unexpected attribute ") + name.toString());
-    }
-
-    for (bool finished = false; !finished && !reader.hasError();) {
-        switch (reader.readNext()) {
-        case QXmlStreamReader::StartElement : {
-            const QString tag = reader.name().toString().toLower();
-            reader.raiseError(QLatin1String("Unexpected element ") + tag);
-        }
-            break;
-        case QXmlStreamReader::EndElement :
-            finished = true;
-            break;
-        case QXmlStreamReader::Characters :
-            if (!reader.isWhitespace())
-                m_text.append(reader.text().toString());
-            break;
-        default :
-            break;
-        }
-    }
-}
-
-
-void DomScript::write(QXmlStreamWriter &writer, const QString &tagName) const
-{
-    writer.writeStartElement(tagName.isEmpty() ? QString::fromUtf8("script") : tagName.toLower());
-
-    if (hasAttributeSource())
-        writer.writeAttribute(QLatin1String("source"), attributeSource());
-
-    if (hasAttributeLanguage())
-        writer.writeAttribute(QLatin1String("language"), attributeLanguage());
-
-    if (!m_text.isEmpty())
-        writer.writeCharacters(m_text);
-
-    writer.writeEndElement();
 }
 
 void DomWidgetData::clear(bool clear_all)

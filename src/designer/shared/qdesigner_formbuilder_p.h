@@ -34,7 +34,6 @@
 #define QDESIGNER_FORMBUILDER_H
 
 #include "deviceprofile_p.h"
-#include "formscriptrunner_p.h"
 #include "formbuilder.h"
 #include "qmap.h"
 #include "qset.h"
@@ -58,13 +57,7 @@ class DesignerIconCache;
 class Q_DESIGNER_EXPORT QDesignerFormBuilder: public QFormBuilder
 {
 public:
-    enum Mode {
-        DisableScripts,
-        EnableScripts
-    };
-
     QDesignerFormBuilder(QDesignerFormEditorInterface *core,
-                         Mode mode,
                          const DeviceProfile &deviceProfile = DeviceProfile());
 
     QWidget *createWidgetFromContents(const QString &contents, QWidget *parentWidget = 0);
@@ -77,13 +70,6 @@ public:
 
     QString systemStyle() const;
 
-    typedef QFormScriptRunner::Errors ScriptErrors;
-    // Create a preview widget (for integrations) or return 0. The widget has to be embedded into a main window.
-    // Experimental, depending on script support.
-    static QWidget *createPreview(const QDesignerFormWindowInterface *fw, const QString &styleName /* ="" */,
-                                  const QString &appStyleSheet  /* ="" */,
-                                  const DeviceProfile &deviceProfile,
-                                  ScriptErrors *scriptErrors, QString *errorMessage);
     // Convenience that pops up message boxes in case of failures.
     static QWidget *createPreview(const QDesignerFormWindowInterface *fw, const QString &styleName = QString());
     //  Create a preview widget (for integrations) or return 0. The widget has to be embedded into a main window.
@@ -122,7 +108,6 @@ protected:
 
 private:
     QDesignerFormEditorInterface *m_core;
-    const Mode m_mode;
 
     typedef QSet<QWidget *> WidgetSet;
     WidgetSet m_customWidgetsWithScript;
@@ -143,7 +128,6 @@ private:
 class Q_DESIGNER_EXPORT NewFormWidgetFormBuilder: public QDesignerFormBuilder {
 public:
     NewFormWidgetFormBuilder(QDesignerFormEditorInterface *core,
-                             Mode mode,
                              const DeviceProfile &deviceProfile = DeviceProfile());
 
 protected:

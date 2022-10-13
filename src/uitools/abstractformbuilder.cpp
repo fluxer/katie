@@ -324,13 +324,6 @@ QWidget *QAbstractFormBuilder::create(DomWidget *ui_widget, QWidget *parentWidge
     }
 
     loadExtraInfo(ui_widget, w, parentWidget);
-#ifndef QT_FORMBUILDER_NO_SCRIPT
-    QString scriptErrorMessage;
-    QFormBuilderExtra *extra = QFormBuilderExtra::instance(this);
-    extra->formScriptRunner().run(ui_widget,
-                                  extra->customWidgetScript(ui_widget->attributeClass()),
-                                  w, children, &scriptErrorMessage);
-#endif
     addItem(ui_widget, w, parentWidget);
 
     if (qobject_cast<QDialog *>(w) && parentWidget)
@@ -2903,54 +2896,5 @@ QPixmap QAbstractFormBuilder::domPropertyToPixmap(const DomProperty* p)
     \fn void QAbstractFormBuilder::createResources ( DomResources * )
     \internal
 */
-
-/*!
-     \fn QFormScriptRunner *QAbstractFormBuilder::formScriptRunner() const
-     \internal
-     \since 4.3
-*/
-#ifndef QT_FORMBUILDER_NO_SCRIPT
-QFormScriptRunner *QAbstractFormBuilder::formScriptRunner() const
-{
-    return &(QFormBuilderExtra::instance(this)->formScriptRunner());
-}
-#endif
-
-/*!
-    Sets whether the execution of scripts is enabled to \a enabled.
-    \since 4.3
-    \internal
-*/
-
-void QAbstractFormBuilder::setScriptingEnabled(bool enabled)
-{
-#ifdef QT_FORMBUILDER_NO_SCRIPT
-    if (enabled)
-        uiLibWarning(QCoreApplication::translate("QAbstractFormBuilder", "This version of the uitools library is linked without script support."));
-#else
-    QFormScriptRunner::Options options = formScriptRunner()->options();
-    if (enabled)
-        options &= ~QFormScriptRunner::DisableScripts;
-    else
-        options |= QFormScriptRunner::DisableScripts;
-    formScriptRunner()->setOptions(options);
-#endif
-}
-
-/*!
-    Returns whether the execution of scripts is enabled.
-    \sa setScriptingEnabled()
-    \since 4.3
-    \internal
-*/
-
-bool QAbstractFormBuilder::isScriptingEnabled() const
-{
-#ifdef QT_FORMBUILDER_NO_SCRIPT
-    return false;
-#else
-    return !(formScriptRunner()->options() & QFormScriptRunner::DisableScripts);
-#endif
-}
 
 QT_END_NAMESPACE

@@ -38,7 +38,6 @@
 
 QT_BEGIN_NAMESPACE
 
-class DomScript;
 class DomCustomWidgets;
 class DomCustomWidget;
 class DomSlots;
@@ -67,8 +66,7 @@ public:
                                       DomWidget *ui_widget, QWidget *widget);
     static void applyExtensionDataFromDOM(QAbstractFormBuilder *afb,
                                           QDesignerFormEditorInterface *core,
-                                          DomWidget *ui_widget, QWidget *widget,
-                                          bool applyState);
+                                          DomWidget *ui_widget, QWidget *widget);
     // Enable warnings while saving. Turn off for backups.
     static bool setWarningsEnabled(bool warningsEnabled);
     static bool warningsEnabled();
@@ -89,11 +87,6 @@ protected:
     virtual QPixmap nameToPixmap(const QString &filePath, const QString &qrcPath);
     virtual QString pixmapToFilePath(const QPixmap &pm) const;
     virtual QString pixmapToQrcPath(const QPixmap &pm) const;
-
-    enum ScriptSource { ScriptDesigner, ScriptExtension, ScriptCustomWidgetPlugin };
-    static DomScript*createScript(const QString &script, ScriptSource source);
-    typedef QList<DomScript*> DomScripts;
-    static void addScript(const QString &script, ScriptSource source, DomScripts &domScripts);
 
     static bool addFakeMethods(const DomSlots *domSlots, QStringList &fakeSlots, QStringList &fakeSignals);
 
