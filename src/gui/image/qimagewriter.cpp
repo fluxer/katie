@@ -124,12 +124,11 @@ static QImageIOHandler *createWriteHandlerHelper(QIODevice *device,
     }
 #endif // QT_NO_LIBRARY
 
-    if (!handler)
+    if (!handler) {
         return nullptr;
+    }
 
     handler->setDevice(device);
-    if (!form.isEmpty())
-        handler->setFormat(form);
     return handler;
 }
 
