@@ -166,8 +166,7 @@ QAbstractFormBuilder::~QAbstractFormBuilder()
 */
 QWidget *QAbstractFormBuilder::load(QIODevice *dev, QWidget *parentWidget)
 {
-    QXmlStreamReader reader;
-    reader.setDevice(dev);
+    QXmlStreamReader reader(dev);
     DomUI ui;
     bool initialized = false;
 
