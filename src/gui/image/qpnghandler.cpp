@@ -317,7 +317,7 @@ bool QPngHandler::canRead(QIODevice *device)
 
     static const uchar pngheader[]
         = { 0x89, 0x50, 0x4e, 0x47, 0x0d, 0x0a, 0x1a, 0x0a };
-    return (qstrncmp(head, reinterpret_cast<const char*>(pngheader), 8) == 0);
+    return (::memcmp(head, pngheader, 8) == 0);
 }
 
 QT_END_NAMESPACE

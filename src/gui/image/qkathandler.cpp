@@ -60,7 +60,7 @@ bool QKatHandler::canRead(QIODevice *device)
     if (device->peek(head, sizeof(head)) != sizeof(head))
         return false;
 
-    return (qstrncmp(head, "KATIE", 5) == 0);
+    return (::memcmp(head, "KATIE", 5) == 0);
 }
 
 bool QKatHandler::read(QImage *image)
@@ -69,7 +69,7 @@ bool QKatHandler::read(QImage *image)
 
     QSTACKARRAY(char, header, 5);
     imagestream.readRawData(header, 5);
-    if (Q_UNLIKELY(qstrncmp(header, "KATIE", 5) != 0)) {
+    if (Q_UNLIKELY(::memcmp(header, "KATIE", 5) != 0)) {
         qWarning("QKatHandler::read() Invalid header (%s)", header);
         *image = QImage();
         return false;
