@@ -204,25 +204,11 @@ static QImageIOHandler *createReadHandlerHelper(QIODevice *device,
              << keys.size() << "plugins available: " << keys;
 #endif
 
-    // check if any plugin recognize the format
-    if (!form.isEmpty()) {
+    // check if any plugin recognize the format or content
+    if (!handler && autoDetectImageFormat) {
         foreach (const QString &key, keys) {
             QImageIOPlugin *plugin = qobject_cast<QImageIOPlugin *>(l->instance(key));
             if (plugin && plugin->capabilities(device, form) & QImageIOPlugin::CanRead) {
-                handler = plugin->create(device, key.toLatin1());
-#ifdef QIMAGEREADER_DEBUG
-                qDebug() << "QImageReader::createReadHandler: the" << key << "plugin can read this format";
-#endif
-                break;
-            }
-        }
-    }
-
-    // check if any plugin recognize the content
-    if (!handler && device && autoDetectImageFormat) {
-        foreach (const QString &key, keys) {
-            QImageIOPlugin *plugin = qobject_cast<QImageIOPlugin *>(l->instance(key));
-            if (plugin && plugin->capabilities(device, QByteArray()) & QImageIOPlugin::CanRead) {
                 handler = plugin->create(device, key.toLatin1());
 #ifdef QIMAGEREADER_DEBUG
                 qDebug() << "QImageReader::createReadHandler: the" << key << "plugin can read this data";
@@ -244,6 +230,7 @@ static QImageIOHandler *createReadHandlerHelper(QIODevice *device,
         return nullptr;
     }
 
+    handler->setDevice(device);
     return handler;
 }
 
@@ -410,12 +397,8 @@ QByteArray QImageReader::format() const
     \o If no built-in image handler recognizes the format and auto detection
     is enabled the image contents is inspected.
 
-    \o Image plugins are queried based on the format string. No content
-    detection is done at this stage. QImageReader will choose the first
-    plugin that supports reading for this format.
-
-    \o If no capable plugins handlers are found, each plugin is tested by
-    inspecting the content.
+    \o Image plugins are queried based on the format string and by inspecting
+    the content.
 
     \o Finally, if all above approaches fail, QImageReader will report failure
     when trying to read the image.
