@@ -311,7 +311,7 @@ bool QXpmHandler::canRead(QIODevice *device)
     if (device->peek(head, sizeof(head)) != sizeof(head))
         return false;
 
-    return qstrncmp(head, "/* XPM", 6) == 0;
+    return (::memcmp(head, "/* XPM", 6) == 0);
 }
 
 QT_END_NAMESPACE
