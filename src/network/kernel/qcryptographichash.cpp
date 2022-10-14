@@ -82,13 +82,17 @@ void QKatHash::update(const char *data, const int length)
 
 QByteArray QKatHash::result() const
 {
-    XXH128_canonical_t xxh3canonical;
-    XXH128_canonicalFromHash(&xxh3canonical, XXH3_128bits_digest(m_xxh3));
-
-    XXH128_canonical_t xxh3canonical2;
-    XXH128_canonicalFromHash(&xxh3canonical2, XXH3_128bits_digest(m_xxh32));
-
-    return (QByteArray(reinterpret_cast<char *>(xxh3canonical.digest), xxh3len) + QByteArray(reinterpret_cast<char *>(xxh3canonical2.digest), xxh3len));
+    QByteArray result(xxh3len * 2, char(0));
+    char* resultdata = result.data();
+    XXH128_canonicalFromHash(
+        reinterpret_cast<XXH128_canonical_t*>(resultdata),
+        XXH3_128bits_digest(m_xxh3)
+    );
+    XXH128_canonicalFromHash(
+        reinterpret_cast<XXH128_canonical_t*>(resultdata + xxh3len),
+        XXH3_128bits_digest(m_xxh32)
+    );
+    return result;
 }
 
 class QCryptographicHashPrivate
