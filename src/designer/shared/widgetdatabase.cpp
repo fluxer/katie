@@ -22,7 +22,6 @@
 #include "widgetdatabase_p.h"
 #include "widgetfactory_p.h"
 #include "spacer_widget_p.h"
-#include "abstractlanguage.h"
 #include "pluginmanager_p.h"
 #include "qdesigner_widgetbox_p.h"
 #include "qdesigner_utils_p.h"
@@ -304,17 +303,7 @@ QDesignerFormEditorInterface *WidgetDataBase::core() const
 
 int WidgetDataBase::indexOfObject(QObject *object, bool /*resolveName*/) const
 {
-    QExtensionManager *mgr = m_core->extensionManager();
-    QDesignerLanguageExtension *lang = qt_extension<QDesignerLanguageExtension*> (mgr, m_core);
-
-    QString id;
-
-    if (lang)
-        id = lang->classNameOf(object);
-
-    if (id.isEmpty())
-        id = WidgetFactory::classNameOf(m_core,object);
-
+    QString id = WidgetFactory::classNameOf(m_core,object);
     return QDesignerWidgetDataBaseInterface::indexOfClassName(id);
 }
 

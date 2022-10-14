@@ -41,8 +41,6 @@ QT_BEGIN_NAMESPACE
 
 class QDesignerFormEditorInterface;
 class QDesignerFormWindowInterface;
-class QDesignerResourceBrowserInterface;
-
 class QVariant;
 class QWidget;
 
@@ -69,25 +67,11 @@ public:
     void emitNavigateToSlot(const QString &objectName, const QString &signalSignature, const QStringList &parameterNames);
     void emitNavigateToSlot(const QString &slotSignature);
 
-    // Create a resource browser specific to integration. Language integration takes precedence
-    virtual QDesignerResourceBrowserInterface *createResourceBrowser(QWidget *parent = nullptr);
-
-    enum ResourceFileWatcherBehaviour {
-        NoWatcher,
-        ReloadSilently,
-        PromptAndReload
-    };
-
-    ResourceFileWatcherBehaviour resourceFileWatcherBehaviour() const;
-    bool isResourceEditingEnabled() const;
     bool isSlotNavigationEnabled() const;
 
     QString contextHelpId() const;
 
 protected:
-
-    void setResourceFileWatcherBehaviour(ResourceFileWatcherBehaviour behaviour); // PromptAndReload by default
-    void setResourceEditingEnabled(bool enable); // true by default
     void setSlotNavigationEnabled(bool enable); // false by default
 
 signals:

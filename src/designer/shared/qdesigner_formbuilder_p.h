@@ -44,7 +44,6 @@ class QDesignerFormEditorInterface;
 class QDesignerFormWindowInterface;
 
 class QPixmap;
-class QtResourceSet;
 
 namespace qdesigner_internal {
 
@@ -89,7 +88,6 @@ protected:
     virtual DomWidget *createDom(QWidget *widget, DomWidget *ui_parentWidget, bool recursive = true);
     virtual QWidget *create(DomWidget *ui_widget, QWidget *parentWidget);
     virtual QLayout *create(DomLayout *ui_layout, QLayout *layout, QWidget *parentWidget);
-    virtual void createResources(DomResources *resources);
 
     virtual QWidget *createWidget(const QString &widgetName, QWidget *parentWidget, const QString &name);
     virtual bool addItem(DomWidget *ui_widget, QWidget *widget, QWidget *parentWidget);
@@ -101,8 +99,6 @@ protected:
     virtual void applyProperties(QObject *o, const QList<DomProperty*> &properties);
 
     virtual void loadExtraInfo(DomWidget *ui_widget, QWidget *widget, QWidget *parentWidget);
-
-    QtResourceSet *internalResourceSet() const { return m_tempResourceSet; }
 
     DeviceProfile deviceProfile() const { return m_deviceProfile; }
 
@@ -116,8 +112,6 @@ private:
 
     DesignerPixmapCache *m_pixmapCache;
     DesignerIconCache *m_iconCache;
-    bool m_ignoreCreateResources;
-    QtResourceSet *m_tempResourceSet;
     bool m_mainWidget;
 };
 

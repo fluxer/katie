@@ -281,40 +281,6 @@ QRect ObjectInspectorToolWindow::geometryHint() const
     return rc;
 }
 
-//  ---------------------- ResourceEditorToolWindow
-
-class ResourceEditorToolWindow: public QDesignerToolWindow
-{
-public:
-    explicit ResourceEditorToolWindow(QDesignerWorkbench *workbench);
-
-    virtual QRect geometryHint() const;
-};
-
-ResourceEditorToolWindow::ResourceEditorToolWindow(QDesignerWorkbench *workbench)  :
-    QDesignerToolWindow(workbench,
-                        QDesignerComponents::createResourceEditor(workbench->core(), 0),
-                        QLatin1String("qt_designer_resourceeditor"),
-                        QDesignerToolWindow::tr("Resource Browser"),
-                        QLatin1String("__qt_resource_editor_tool_action"),
-                        Qt::RightDockWidgetArea)
-{
-}
-
-QRect ResourceEditorToolWindow::geometryHint() const
-{
-    const QRect g = availableToolWindowGeometry();
-    const int margin = workbench()->marginHint();
-
-    const QSize sz(g.width() * 1/3, g.height() * 1/6);
-    QRect r(QPoint(0, 0), sz);
-    r.moveCenter(g.center());
-    r.moveBottom(g.bottom() - margin);
-    if (debugToolWindow)
-        qDebug() << Q_FUNC_INFO << r;
-    return r;
-}
-
 //  ---------------------- WidgetBoxToolWindow
 
 static inline QWidget *createWidgetBox(QDesignerFormEditorInterface *core, QWidget *parent = nullptr)
@@ -361,8 +327,6 @@ QDesignerToolWindow *QDesignerToolWindow::createStandardToolWindow(StandardToolW
     switch (which) {
     case ActionEditor:
         return new ActionEditorToolWindow(workbench);
-    case ResourceEditor:
-        return new ResourceEditorToolWindow(workbench);
     case PropertyEditor:
         return new PropertyEditorToolWindow(workbench);
     case ObjectInspector:

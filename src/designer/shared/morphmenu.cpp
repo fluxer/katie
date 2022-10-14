@@ -32,7 +32,6 @@
 #include <QtDesigner/container.h>
 #include <QtDesigner/abstractformwindow.h>
 #include <QtDesigner/abstractformeditor.h>
-#include <QtDesigner/abstractlanguage.h>
 #include <QtDesigner/abstractwidgetdatabase.h>
 #include <QtDesigner/abstractmetadatabase.h>
 #include <QtDesigner/propertysheet.h>
@@ -484,9 +483,6 @@ bool MorphWidgetCommand::canMorph(QDesignerFormWindowInterface *fw, QWidget *w, 
         return false;
 
     QDesignerFormEditorInterface *core = fw->core();
-    // Don't know how to fiddle class names in Jambi..
-    if (qt_extension<QDesignerLanguageExtension *>(core->extensionManager(), core))
-        return false;
     if (!fw->isManaged(w) || w == fw->mainContainer())
         return false;
     // Check the parent relationship. We accept only managed parent widgets

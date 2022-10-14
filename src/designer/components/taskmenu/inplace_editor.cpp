@@ -26,7 +26,6 @@
 #include <QtDesigner/abstractformwindowcursor.h>
 #include <QtDesigner/propertysheet.h>
 #include <QtDesigner/abstractformeditor.h>
-#include <QtDesigner/abstractlanguage.h>
 #include <QtDesigner/QExtensionManager>
 
 #include <QtCore/QVariant>

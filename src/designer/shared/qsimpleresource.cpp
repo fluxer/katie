@@ -27,7 +27,6 @@
 #include <ui4.h>
 
 #include <QtDesigner/abstractformeditor.h>
-#include <QtDesigner/abstractlanguage.h>
 #include <QtDesigner/QExtensionManager>
 #include <QtUiTools/customwidget.h>
 #include <QtDesigner/extrainfo.h>

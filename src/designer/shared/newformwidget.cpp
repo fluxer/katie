@@ -29,7 +29,6 @@
 #include <QtDesigner/abstractformeditor.h>
 #include <QtDesigner/abstractformwindow.h>
 #include <QtDesigner/QExtensionManager>
-#include <QtDesigner/abstractlanguage.h>
 #include <QtDesigner/abstractwidgetdatabase.h>
 #include <QtCore/QDir>
 #include <QtCore/QFile>
@@ -130,12 +129,6 @@ NewFormWidget::NewFormWidget(QDesignerFormEditorInterface *core, QWidget *parent
     QString uiExtension = QLatin1String("ui");
     QString templatePath = QLatin1String(":/trolltech/designer/templates/forms");
 
-    QDesignerLanguageExtension *lang = qt_extension<QDesignerLanguageExtension *>(core->extensionManager(), core);
-    if (lang) {
-        templatePath = QLatin1String(":/templates/forms");
-        uiExtension = lang->uiExtension();
-    }
-
     // Resource templates
     const QString formTemplate = settings.formTemplate();
     QTreeWidgetItem *selectedItem = 0;
@@ -147,11 +140,8 @@ NewFormWidget::NewFormWidget(QDesignerFormEditorInterface *core, QWidget *parent
         loadFrom(*it, false, uiExtension, formTemplate, selectedItem);
 
     // Widgets/custom widgets
-    if (!lang) {
-        //: New Form Dialog Categories
-        loadFrom(tr("Widgets"), qdesigner_internal::WidgetDataBase::formWidgetClasses(core), formTemplate, selectedItem);
-        loadFrom(tr("Custom Widgets"), qdesigner_internal::WidgetDataBase::customFormWidgetClasses(core), formTemplate, selectedItem);
-    }
+    loadFrom(tr("Widgets"), qdesigner_internal::WidgetDataBase::formWidgetClasses(core), formTemplate, selectedItem);
+    loadFrom(tr("Custom Widgets"), qdesigner_internal::WidgetDataBase::customFormWidgetClasses(core), formTemplate, selectedItem);
 
     // Still no selection - default to first item
     if (selectedItem == 0 && m_ui->treeWidget->topLevelItemCount() != 0) {

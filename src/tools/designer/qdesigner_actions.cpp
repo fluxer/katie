@@ -44,7 +44,6 @@
 // sdk
 #include "abstractformeditor.h"
 #include "abstractformwindow.h"
-#include "abstractlanguage.h"
 #include "abstractmetadatabase.h"
 #include "abstractformwindowmanager.h"
 #include "abstractformwindowcursor.h"
@@ -364,9 +363,7 @@ QDesignerActions::QDesignerActions(QDesignerWorkbench *workbench)
     connect(m_previewManager, SIGNAL(lastPreviewClosed()), this, SLOT(updateCloseAction()));
 
     connect(m_viewCodeAction, SIGNAL(triggered()), this, SLOT(viewCode()));
-    // Preview code only in Cpp
-    if (qt_extension<QDesignerLanguageExtension *>(m_core->extensionManager(), m_core) == 0)
-        m_formActions->addAction(m_viewCodeAction);
+    m_formActions->addAction(m_viewCodeAction);
 
     m_formActions->addAction(createSeparator(this));
 
@@ -431,10 +428,6 @@ QDesignerActions::~QDesignerActions()
 
 QString QDesignerActions::uiExtension() const
 {
-    QDesignerLanguageExtension *lang
-        = qt_extension<QDesignerLanguageExtension *>(m_core->extensionManager(), m_core);
-    if (lang)
-        return lang->uiExtension();
     return QLatin1String("ui");
 }
 

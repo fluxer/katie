@@ -58,7 +58,6 @@ class DomIncludes;
 class DomInclude;
 class DomString;
 class DomResourcePixmap;
-class DomResources;
 class DomResource;
 class DomConnections;
 class DomConnection;

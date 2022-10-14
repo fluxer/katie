@@ -21,16 +21,12 @@
 
 #include "iconselector_p.h"
 #include "qdesigner_utils_p.h"
-#include "qtresourcemodel_p.h"
-#include "qtresourceview_p.h"
 #include "iconloader_p.h"
 #include "qdesigner_integration_p.h"
 #include "formwindowbase_p.h"
 
 #include <abstractdialoggui_p.h>
 #include <QtDesigner/abstractformeditor.h>
-#include <QtDesigner/abstractresourcebrowser.h>
-#include <QtDesigner/abstractlanguage.h>
 #include <QtDesigner/QExtensionManager>
 
 #include <QtGui/QToolButton>
@@ -54,113 +50,6 @@ QT_BEGIN_NAMESPACE
 
 namespace qdesigner_internal {
 
-// -------------------- LanguageResourceDialogPrivate
-class LanguageResourceDialogPrivate {
-    LanguageResourceDialog *q_ptr;
-    Q_DECLARE_PUBLIC(LanguageResourceDialog)
-
-public:
-    LanguageResourceDialogPrivate(QDesignerResourceBrowserInterface *rb);
-    void init(LanguageResourceDialog *p);
-
-    void setCurrentPath(const QString &filePath);
-    QString currentPath() const;
-
-    void slotAccepted();
-    void slotPathChanged(const QString &);
-
-private:
-    void setOkButtonEnabled(bool v)         { m_dialogButtonBox->button(QDialogButtonBox::Ok)->setEnabled(v); }
-    static bool checkPath(const QString &p);
-
-    QDesignerResourceBrowserInterface *m_browser;
-    QDialogButtonBox *m_dialogButtonBox;
-};
-
-LanguageResourceDialogPrivate::LanguageResourceDialogPrivate(QDesignerResourceBrowserInterface *rb) :
-    q_ptr(nullptr),
-    m_browser(rb),
-    m_dialogButtonBox(new QDialogButtonBox(QDialogButtonBox::Ok | QDialogButtonBox::Cancel))
-{
-     setOkButtonEnabled(false);
-}
-
-void LanguageResourceDialogPrivate::init(LanguageResourceDialog *p)
-{
-    q_ptr = p;
-    QLayout *layout = new QVBoxLayout(p);
-    layout->addWidget(m_browser);
-    layout->addWidget(m_dialogButtonBox);
-    QObject::connect(m_dialogButtonBox, SIGNAL(accepted()), p, SLOT(slotAccepted()));
-    QObject::connect(m_dialogButtonBox, SIGNAL(rejected()), p, SLOT(reject()));
-    QObject::connect(m_browser, SIGNAL(currentPathChanged(QString)), p, SLOT(slotPathChanged(QString)));
-    QObject::connect(m_browser, SIGNAL(pathActivated(QString)), p, SLOT(slotAccepted()));
-    p->setModal(true);
-    p->setWindowTitle(LanguageResourceDialog::tr("Choose Resource"));
-    p->setWindowFlags(p->windowFlags() & ~Qt::WindowContextHelpButtonHint);
-    setOkButtonEnabled(false);
-}
-
-void LanguageResourceDialogPrivate::setCurrentPath(const QString &filePath)
-{
-    m_browser->setCurrentPath(filePath);
-    setOkButtonEnabled(checkPath(filePath));
-}
-
-QString LanguageResourceDialogPrivate::currentPath() const
-{
-    return m_browser->currentPath();
-}
-
-bool LanguageResourceDialogPrivate::checkPath(const QString &p)
-{
-    return p.isEmpty() ? false : IconSelector::checkPixmap(p, IconSelector::CheckFast);
-}
-
-void LanguageResourceDialogPrivate::slotAccepted()
-{
-    if (checkPath(currentPath()))
-        q_ptr->accept();
-}
-
-void LanguageResourceDialogPrivate::slotPathChanged(const QString &p)
-{
-    setOkButtonEnabled(checkPath(p));
-}
-
-// ------------ LanguageResourceDialog
-LanguageResourceDialog::LanguageResourceDialog(QDesignerResourceBrowserInterface *rb, QWidget *parent) :
-    QDialog(parent),
-    d_ptr(new LanguageResourceDialogPrivate(rb))
-{
-    d_ptr->init( this);
-}
-
-LanguageResourceDialog::~LanguageResourceDialog()
-{
-}
-
-void LanguageResourceDialog::setCurrentPath(const QString &filePath)
-{
-    d_ptr->setCurrentPath(filePath);
-}
-
-QString LanguageResourceDialog::currentPath() const
-{
-    return d_ptr->currentPath();
-}
-
-LanguageResourceDialog* LanguageResourceDialog::create(QDesignerFormEditorInterface *core, QWidget *parent)
-{
-    if (QDesignerLanguageExtension *lang = qt_extension<QDesignerLanguageExtension *>(core->extensionManager(), core))
-        if (QDesignerResourceBrowserInterface *rb = lang->createResourceBrowser(0))
-            return new LanguageResourceDialog(rb, parent);
-    if (QDesignerIntegration *di = qobject_cast<QDesignerIntegration*>(core->integration()))
-        if (QDesignerResourceBrowserInterface *rb = di->createResourceBrowser(0))
-            return new LanguageResourceDialog(rb, parent);
-    return nullptr;
-}
-
 // ------------ IconSelectorPrivate
 
 static inline QPixmap emptyPixmap()
@@ -179,7 +68,6 @@ public:
 
     void slotStateActivated();
     void slotSetActivated();
-    void slotSetResourceActivated();
     void slotSetFileActivated();
     void slotResetActivated();
     void slotResetAllActivated();
@@ -198,7 +86,6 @@ public:
     PropertySheetIconValue m_icon;
     DesignerIconCache *m_iconCache;
     DesignerPixmapCache *m_pixmapCache;
-    QtResourceModel *m_resourceModel;
     QDesignerFormEditorInterface *m_core;
 };
 
@@ -211,7 +98,6 @@ IconSelectorPrivate::IconSelectorPrivate() :
     m_resetAllAction(nullptr),
     m_iconCache(nullptr),
     m_pixmapCache(nullptr),
-    m_resourceModel(nullptr),
     m_core(nullptr)
 {
 }
@@ -254,58 +140,8 @@ void IconSelectorPrivate::slotSetActivated()
 {
     QPair<QIcon::Mode, QIcon::State> state = m_indexToState.value(m_stateComboBox->currentIndex());
     const PropertySheetPixmapValue pixmap = m_icon.pixmap(state.first, state.second);
-    // Default to resource
-    const PropertySheetPixmapValue::PixmapSource ps = pixmap.path().isEmpty() ? PropertySheetPixmapValue::ResourcePixmap : pixmap.pixmapSource(m_core);
-    switch (ps) {
-    case PropertySheetPixmapValue::LanguageResourcePixmap:
-    case PropertySheetPixmapValue::ResourcePixmap:
-        slotSetResourceActivated();
-        break;
-    case PropertySheetPixmapValue::FilePixmap:
+    if (!pixmap.path().isEmpty()) {
         slotSetFileActivated();
-        break;
-    }
-}
-
-// Choose a pixmap from resource; use language-dependent resource browser if present
-QString IconSelector::choosePixmapResource(QDesignerFormEditorInterface *core, QtResourceModel *resourceModel, const QString &oldPath, QWidget *parent)
-{
-    Q_UNUSED(resourceModel)
-    QString rc;
-
-    if (LanguageResourceDialog* ldlg = LanguageResourceDialog::create(core, parent)) {
-        ldlg->setCurrentPath(oldPath);
-        if (ldlg->exec() == QDialog::Accepted)
-            rc = ldlg->currentPath();
-        delete ldlg;
-    } else {
-        QtResourceViewDialog dlg(core, parent);
-
-        QDesignerIntegration *designerIntegration = qobject_cast<QDesignerIntegration *>(core->integration());
-        if (designerIntegration)
-            dlg.setResourceEditingEnabled(designerIntegration->isResourceEditingEnabled());
-
-        dlg.selectResource(oldPath);
-        if (dlg.exec() == QDialog::Accepted)
-            rc = dlg.selectedResource();
-    }
-    return rc;
-}
-
-void IconSelectorPrivate::slotSetResourceActivated()
-{
-    const QPair<QIcon::Mode, QIcon::State> state = m_indexToState.value(m_stateComboBox->currentIndex());
-
-    PropertySheetPixmapValue pixmap = m_icon.pixmap(state.first, state.second);
-    const QString oldPath = pixmap.path();
-    const QString newPath = IconSelector::choosePixmapResource(m_core, m_resourceModel, oldPath, q_ptr);
-    if (newPath.isEmpty() || newPath == oldPath)
-        return;
-    const PropertySheetPixmapValue newPixmap = PropertySheetPixmapValue(newPath);
-    if (newPixmap != pixmap) {
-        m_icon.setPixmap(state.first, state.second, newPixmap);
-        slotUpdate();
-        emit q_ptr->iconChanged(m_icon);
     }
 }
 
@@ -437,7 +273,6 @@ IconSelector::IconSelector(QWidget *parent) :
 
     QMenu *setMenu = new QMenu(this);
 
-    QAction *setResourceAction = new QAction(tr("Choose Resource..."), this);
     QAction *setFileAction = new QAction(tr("Choose File..."), this);
     d_ptr->m_resetAction = new QAction(tr("Reset"), this);
     d_ptr->m_resetAllAction = new QAction(tr("Reset All"), this);
@@ -445,7 +280,6 @@ IconSelector::IconSelector(QWidget *parent) :
     d_ptr->m_resetAllAction->setEnabled(false);
     //d_ptr->m_resetAction->setIcon(createIconSet(QString::fromUtf8("resetproperty.png")));
 
-    setMenu->addAction(setResourceAction);
     setMenu->addAction(setFileAction);
     setMenu->addSeparator();
     setMenu->addAction(d_ptr->m_resetAction);
@@ -470,7 +304,6 @@ IconSelector::IconSelector(QWidget *parent) :
 
     connect(d_ptr->m_stateComboBox, SIGNAL(activated(int)), this, SLOT(slotStateActivated()));
     connect(d_ptr->m_iconButton, SIGNAL(clicked()), this, SLOT(slotSetActivated()));
-    connect(setResourceAction, SIGNAL(triggered()), this, SLOT(slotSetResourceActivated()));
     connect(setFileAction, SIGNAL(triggered()), this, SLOT(slotSetFileActivated()));
     connect(d_ptr->m_resetAction, SIGNAL(triggered()), this, SLOT(slotResetActivated()));
     connect(d_ptr->m_resetAllAction, SIGNAL(triggered()), this, SLOT(slotResetAllActivated()));
@@ -499,7 +332,6 @@ PropertySheetIconValue IconSelector::icon() const
 void IconSelector::setFormEditor(QDesignerFormEditorInterface *core)
 {
     d_ptr->m_core = core;
-    d_ptr->m_resourceModel = core->resourceModel();
     d_ptr->slotUpdate();
 }
 

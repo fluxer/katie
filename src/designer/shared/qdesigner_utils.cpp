@@ -27,8 +27,6 @@
 #include <QtDesigner/abstractformeditor.h>
 #include <QtDesigner/abstractformwindow.h>
 #include <QtDesigner/abstracticoncache.h>
-#include <QtDesigner/abstractresourcebrowser.h>
-#include <QtDesigner/abstractlanguage.h>
 #include <QtDesigner/taskmenu.h>
 #include <QtDesigner/QExtensionManager>
 
@@ -268,13 +266,6 @@ namespace qdesigner_internal
 
     PropertySheetPixmapValue::PropertySheetPixmapValue()
     {
-    }
-
-    PropertySheetPixmapValue::PixmapSource PropertySheetPixmapValue::getPixmapSource(QDesignerFormEditorInterface *core, const QString & path)
-    {
-        if (const QDesignerLanguageExtension *lang = qt_extension<QDesignerLanguageExtension *>(core->extensionManager(), core))
-            return lang->isLanguageResource(path) ?  LanguageResourcePixmap : FilePixmap;
-        return path.startsWith(QLatin1Char(':')) ? ResourcePixmap : FilePixmap;
     }
 
     int PropertySheetPixmapValue::compare(const PropertySheetPixmapValue &other) const

@@ -26,7 +26,6 @@
 #include <QtDesigner/abstractformeditor.h>
 #include <QtUiTools/customwidget.h>
 #include <QtDesigner/QExtensionManager>
-#include <QtDesigner/abstractlanguage.h>
 
 #include <QtCore/QDir>
 #include <QtCore/QFile>
@@ -108,14 +107,9 @@ QStringList QDesignerPluginManager::defaultPluginPaths()
     return result;
 }
 
-// Figure out the language designer is running. ToDo: Introduce some
-// Language name API to QDesignerLanguageExtension?
-
+// Figure out the language designer is running
 static inline QString getDesignerLanguage(QDesignerFormEditorInterface *core)
 {
-    if (qt_extension<QDesignerLanguageExtension *>(core->extensionManager(), core)) {
-        return QLatin1String("unknown");
-    }
     return QLatin1String("c++");
 }
 

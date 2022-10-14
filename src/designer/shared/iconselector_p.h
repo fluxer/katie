@@ -41,10 +41,8 @@
 
 QT_BEGIN_NAMESPACE
 
-class QtResourceModel;
 class QDesignerFormEditorInterface;
 class QDesignerDialogGuiInterface;
-class QDesignerResourceBrowserInterface;
 
 namespace qdesigner_internal {
 
@@ -52,30 +50,6 @@ class DesignerIconCache;
 class DesignerPixmapCache;
 class PropertySheetIconValue;
 struct IconThemeEditorPrivate;
-
-// Resource Dialog that embeds the language-dependent resource widget as returned by the language extension
-class Q_DESIGNER_EXPORT LanguageResourceDialog : public QDialog
-{
-    Q_OBJECT
-
-    explicit LanguageResourceDialog(QDesignerResourceBrowserInterface *rb, QWidget *parent = nullptr);
-
-public:
-    virtual ~LanguageResourceDialog();
-    // Factory: Returns 0 if the language extension does not provide a resource browser.
-    static LanguageResourceDialog* create(QDesignerFormEditorInterface *core, QWidget *parent);
-
-    void setCurrentPath(const QString &filePath);
-    QString currentPath() const;
-
-private:
-    QScopedPointer<class LanguageResourceDialogPrivate> d_ptr;
-    Q_DECLARE_PRIVATE(LanguageResourceDialog)
-    Q_DISABLE_COPY(LanguageResourceDialog)
-    Q_PRIVATE_SLOT(d_func(), void slotAccepted())
-    Q_PRIVATE_SLOT(d_func(), void slotPathChanged(QString))
-
-};
 
 class Q_DESIGNER_EXPORT IconSelector: public QWidget
 {
@@ -96,8 +70,6 @@ public:
     static bool checkPixmap(const QString &fileName, CheckMode cm = CheckFully, QString *errorMessage = 0);
     // Choose a pixmap from file
     static QString choosePixmapFile(const QString &directory, QDesignerDialogGuiInterface *dlgGui, QWidget *parent);
-    // Choose a pixmap from resource; use language-dependent resource browser if present
-    static QString choosePixmapResource(QDesignerFormEditorInterface *core, QtResourceModel *resourceModel, const QString &oldPath, QWidget *parent);
 
 signals:
     void iconChanged(const PropertySheetIconValue &icon);
@@ -108,7 +80,6 @@ private:
 
     Q_PRIVATE_SLOT(d_func(), void slotStateActivated())
     Q_PRIVATE_SLOT(d_func(), void slotSetActivated())
-    Q_PRIVATE_SLOT(d_func(), void slotSetResourceActivated())
     Q_PRIVATE_SLOT(d_func(), void slotSetFileActivated())
     Q_PRIVATE_SLOT(d_func(), void slotResetActivated())
     Q_PRIVATE_SLOT(d_func(), void slotResetAllActivated())

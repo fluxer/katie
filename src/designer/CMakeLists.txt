@@ -33,7 +33,6 @@ set(DESIGNER_HEADERS
     ${CMAKE_CURRENT_SOURCE_DIR}/sdk/abstractintrospection_p.h
     ${CMAKE_CURRENT_SOURCE_DIR}/sdk/abstractsettings_p.h
     ${CMAKE_CURRENT_SOURCE_DIR}/sdk/abstractformeditorplugin.h
-    ${CMAKE_CURRENT_SOURCE_DIR}/sdk/abstractresourcebrowser.h
     ${CMAKE_CURRENT_SOURCE_DIR}/sdk/abstractintegration.h
     ${CMAKE_CURRENT_SOURCE_DIR}/sdk/abstractpropertyeditor.h
     ${CMAKE_CURRENT_SOURCE_DIR}/sdk/abstractformwindow.h
@@ -46,7 +45,6 @@ set(DESIGNER_HEADERS
     ${CMAKE_CURRENT_SOURCE_DIR}/sdk/abstractobjectinspector.h
     ${CMAKE_CURRENT_SOURCE_DIR}/sdk/abstractactioneditor.h
     ${CMAKE_CURRENT_SOURCE_DIR}/sdk/abstracticoncache.h
-    ${CMAKE_CURRENT_SOURCE_DIR}/sdk/abstractlanguage.h
     ${CMAKE_CURRENT_SOURCE_DIR}/sdk/abstractoptionspage_p.h
     ${CMAKE_CURRENT_SOURCE_DIR}/sdk/propertysheet.h
     ${CMAKE_CURRENT_SOURCE_DIR}/sdk/dynamicpropertysheet.h
@@ -125,9 +123,6 @@ set(DESIGNER_HEADERS
     ${CMAKE_CURRENT_SOURCE_DIR}/shared/previewmanager_p.h
     ${CMAKE_CURRENT_SOURCE_DIR}/shared/previewconfigurationwidget_p.h
     ${CMAKE_CURRENT_SOURCE_DIR}/shared/codedialog_p.h
-    ${CMAKE_CURRENT_SOURCE_DIR}/shared/qtresourceeditordialog_p.h
-    ${CMAKE_CURRENT_SOURCE_DIR}/shared/qtresourcemodel_p.h
-    ${CMAKE_CURRENT_SOURCE_DIR}/shared/qtresourceview_p.h
     ${CMAKE_CURRENT_SOURCE_DIR}/shared/iconselector_p.h
     ${CMAKE_CURRENT_SOURCE_DIR}/shared/htmlhighlighter_p.h
     ${CMAKE_CURRENT_SOURCE_DIR}/shared/qdesigner_widgetitem_p.h
@@ -151,7 +146,6 @@ set(DESIGNER_SOURCES
     ${CMAKE_CURRENT_SOURCE_DIR}/sdk/abstractformeditor.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/sdk/abstractintrospection.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/sdk/abstractformeditorplugin.cpp
-    ${CMAKE_CURRENT_SOURCE_DIR}/sdk/abstractresourcebrowser.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/sdk/abstractintegration.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/sdk/abstractpropertyeditor.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/sdk/abstractformwindow.cpp
@@ -231,9 +225,6 @@ set(DESIGNER_SOURCES
     ${CMAKE_CURRENT_SOURCE_DIR}/shared/previewmanager.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/shared/previewconfigurationwidget.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/shared/codedialog.cpp
-    ${CMAKE_CURRENT_SOURCE_DIR}/shared/qtresourceeditordialog.cpp
-    ${CMAKE_CURRENT_SOURCE_DIR}/shared/qtresourcemodel.cpp
-    ${CMAKE_CURRENT_SOURCE_DIR}/shared/qtresourceview.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/shared/iconselector.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/shared/htmlhighlighter.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/shared/qdesigner_widgetitem.cpp
@@ -250,7 +241,6 @@ set(DESIGNER_SOURCES
     ${CMAKE_CURRENT_SOURCE_DIR}/shared/gridpanel.ui
     ${CMAKE_CURRENT_SOURCE_DIR}/shared/signalslotdialog.ui
     ${CMAKE_CURRENT_SOURCE_DIR}/shared/previewconfigurationwidget.ui
-    ${CMAKE_CURRENT_SOURCE_DIR}/shared/qtresourceeditordialog.ui
     ${CMAKE_CURRENT_SOURCE_DIR}/shared/newformwidget.ui
     ${CMAKE_CURRENT_SOURCE_DIR}/shared/selectsignaldialog.ui
     ${CMAKE_CURRENT_SOURCE_DIR}/shared/formlayoutrowdialog.ui

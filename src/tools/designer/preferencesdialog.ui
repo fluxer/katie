@@ -53,7 +53,6 @@
    </item>
   </layout>
  </widget>
- <resources/>
  <connections>
   <connection>
    <sender>m_dialogButtonBox</sender>

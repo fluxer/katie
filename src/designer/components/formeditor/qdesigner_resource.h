@@ -87,7 +87,6 @@ protected:
     virtual QWidget *createWidget(const QString &widgetName, QWidget *parentWidget, const QString &name);
     virtual QLayout *createLayout(const QString &layoutName, QObject *parent, const QString &name);
     virtual void createCustomWidgets(DomCustomWidgets *);
-    virtual void createResources(DomResources*);
     virtual void applyTabStops(QWidget *widget, DomTabStops *tabStops);
 
     virtual bool addItem(DomLayoutItem *ui_item, QLayoutItem *item, QLayout *layout);
@@ -120,7 +119,6 @@ protected:
 
     virtual DomCustomWidgets *saveCustomWidgets();
     virtual DomTabStops *saveTabStops();
-    virtual DomResources *saveResources();
 
     virtual void layoutInfo(DomLayout *layout, QObject *parent, int *margin, int *spacing);
 
@@ -130,10 +128,8 @@ protected:
     DomProperty *applyProperStdSetAttribute(QObject *object, const QString &propertyName, DomProperty *property);
 
 private:
-    DomResources *saveResources(const QStringList &qrcPaths);
     bool canCompressMargins(QObject *object) const;
     bool canCompressSpacings(QObject *object) const;
-    QStringList mergeWithLoadedPaths(const QStringList &paths) const;
     void applyAttributesToPropertySheet(const DomWidget *ui_widget, QWidget *widget);
 
     typedef QList<DomCustomWidget*> DomCustomWidgetList;

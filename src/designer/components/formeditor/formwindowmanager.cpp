@@ -32,7 +32,6 @@
 #include <widgetdatabase_p.h>
 #include <iconloader_p.h>
 #include <connectionedit_p.h>
-#include "qtresourcemodel_p.h"
 #include "qdesigner_dnditem_p.h"
 #include "qdesigner_command_p.h"
 #include "qdesigner_command2_p.h"
@@ -48,7 +47,6 @@
 
 // SDK
 #include <QtDesigner/QExtensionManager>
-#include <QtDesigner/abstractlanguage.h>
 #include <QtDesigner/container.h>
 #include <QtDesigner/abstractwidgetbox.h>
 #include <QtDesigner/abstractintegration.h>
@@ -285,11 +283,6 @@ void FormWindowManager::setActiveFormWindow(QDesignerFormWindowInterface *w)
     FormWindow *old = m_activeFormWindow;
 
     m_activeFormWindow = formWindow;
-
-    QtResourceSet *resourceSet = 0;
-    if (formWindow)
-        resourceSet = formWindow->resourceSet();
-    m_core->resourceModel()->setCurrentResourceSet(resourceSet);
 
     slotUpdateActions();
 
@@ -987,15 +980,9 @@ void FormWindowManager::slotActionShowFormWindowSettingsDialog()
     if (!fw)
         return;
 
-    QDialog *settingsDialog = 0;
     const bool wasDirty = fw->isDirty();
 
-    // Ask the language extension for a dialog. If not, create our own
-    if (QDesignerLanguageExtension *lang = qt_extension<QDesignerLanguageExtension*>(m_core->extensionManager(), m_core))
-        settingsDialog = lang->createFormWindowSettingsDialog(fw, /*parent=*/ 0);
-
-    if (!settingsDialog)
-        settingsDialog = new FormWindowSettings(fw);
+    QDialog *settingsDialog = new FormWindowSettings(fw);
 
     QString title = QFileInfo(fw->fileName()).fileName();
     if (title.isEmpty()) // Grab the title from the outer window if no filename

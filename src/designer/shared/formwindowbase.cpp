@@ -69,12 +69,10 @@ public:
     bool m_hasFormGrid;
     DesignerPixmapCache *m_pixmapCache;
     DesignerIconCache *m_iconCache;
-    QtResourceSet *m_resourceSet;
     QMap<QDesignerPropertySheet *, QMap<int, bool> > m_reloadableResources; // bool is dummy, QMap used as QSet
     QMap<QDesignerPropertySheet *, QObject *> m_reloadablePropertySheets;
     const DeviceProfile m_deviceProfile;
     FormWindowBase::LineTerminatorMode m_lineTerminatorMode;
-    FormWindowBase::SaveResourcesBehaviour m_saveResourcesBehaviour;
 };
 
 FormWindowBasePrivate::FormWindowBasePrivate(QDesignerFormEditorInterface *core) :
@@ -83,10 +81,8 @@ FormWindowBasePrivate::FormWindowBasePrivate(QDesignerFormEditorInterface *core)
     m_hasFormGrid(false),
     m_pixmapCache(0),
     m_iconCache(0),
-    m_resourceSet(0),
     m_deviceProfile(QDesignerSharedSettings(core).currentDeviceProfile()),
-    m_lineTerminatorMode(FormWindowBase::NativeLineTerminator),
-    m_saveResourcesBehaviour(FormWindowBase::SaveAll)
+    m_lineTerminatorMode(FormWindowBase::NativeLineTerminator)
 {
 }
 
@@ -114,16 +110,6 @@ DesignerPixmapCache *FormWindowBase::pixmapCache() const
 DesignerIconCache *FormWindowBase::iconCache() const
 {
     return m_d->m_iconCache;
-}
-
-QtResourceSet *FormWindowBase::resourceSet() const
-{
-    return m_d->m_resourceSet;
-}
-
-void FormWindowBase::setResourceSet(QtResourceSet *resourceSet)
-{
-    m_d->m_resourceSet = resourceSet;
 }
 
 void FormWindowBase::addReloadableProperty(QDesignerPropertySheet *sheet, int index)
@@ -203,17 +189,6 @@ void FormWindowBase::reloadProperties()
     }
 }
 
-void FormWindowBase::resourceSetActivated(QtResourceSet *resource, bool resourceSetChanged)
-{
-    if (resource == resourceSet() && resourceSetChanged) {
-        reloadProperties();
-        emit pixmapCache()->reloaded();
-        emit iconCache()->reloaded();
-        if (QDesignerPropertyEditor *propertyEditor = qobject_cast<QDesignerPropertyEditor *>(core()->propertyEditor()))
-            propertyEditor->reloadResourceProperties();
-    }
-}
-
 QVariantMap FormWindowBase::formData()
 {
     QVariantMap rc;
@@ -265,16 +240,6 @@ FormWindowBase::Feature FormWindowBase::features() const
 bool FormWindowBase::gridVisible() const
 {
     return m_d->m_grid.visible() && currentTool() == 0;
-}
-
-FormWindowBase::SaveResourcesBehaviour FormWindowBase::saveResourcesBehaviour() const
-{
-    return m_d->m_saveResourcesBehaviour;
-}
-
-void FormWindowBase::setSaveResourcesBehaviour(SaveResourcesBehaviour behaviour)
-{
-    m_d->m_saveResourcesBehaviour = behaviour;
 }
 
 void FormWindowBase::syncGridFeature()

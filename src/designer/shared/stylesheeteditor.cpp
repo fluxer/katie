@@ -67,7 +67,7 @@ StyleSheetEditorDialog::StyleSheetEditorDialog(QDesignerFormEditorInterface *cor
     m_editor(new StyleSheetEditor),
     m_validityLabel(new QLabel(tr("Valid Style Sheet"))),
     m_core(core),
-    m_addResourceAction(new QAction(tr("Add Resource..."), this)),
+    m_addImageAction(new QAction(tr("Add Image..."), this)),
     m_addColorAction(new QAction(tr("Add Color..."), this)),
     m_addFontAction(new QAction(tr("Add Font..."), this))
 {
@@ -94,19 +94,19 @@ StyleSheetEditorDialog::StyleSheetEditorDialog(QDesignerFormEditorInterface *cor
     connect(m_editor, SIGNAL(customContextMenuRequested(QPoint)),
                 this, SLOT(slotContextMenuRequested(QPoint)));
 
-    QSignalMapper *resourceActionMapper = new QSignalMapper(this);
+    QSignalMapper *imageActionMapper = new QSignalMapper(this);
     QSignalMapper *colorActionMapper = new QSignalMapper(this);
 
-    resourceActionMapper->setMapping(m_addResourceAction, QString());
+    imageActionMapper->setMapping(m_addImageAction, QString());
     colorActionMapper->setMapping(m_addColorAction, QString());
 
-    connect(m_addResourceAction, SIGNAL(triggered()), resourceActionMapper, SLOT(map()));
+    connect(m_addImageAction, SIGNAL(triggered()), imageActionMapper, SLOT(map()));
     connect(m_addColorAction, SIGNAL(triggered()), colorActionMapper, SLOT(map()));
     connect(m_addFontAction, SIGNAL(triggered()), this, SLOT(slotAddFont()));
 
-    m_addResourceAction->setEnabled(mode == ModePerForm);
+    m_addImageAction->setEnabled(mode == ModePerForm);
 
-    const char * const resourceProperties[] = {
+    const char * const imageProperties[] = {
         "background-image",
         "border-image",
         "image",
@@ -128,14 +128,14 @@ StyleSheetEditorDialog::StyleSheetEditorDialog(QDesignerFormEditorInterface *cor
         0
     };
 
-    QMenu *resourceActionMenu = new QMenu(this);
+    QMenu *imageActionMenu = new QMenu(this);
     QMenu *gradientActionMenu = new QMenu(this);
     QMenu *colorActionMenu = new QMenu(this);
 
-    for (int resourceProperty = 0; resourceProperties[resourceProperty]; ++resourceProperty) {
-        QAction *action = resourceActionMenu->addAction(QLatin1String(resourceProperties[resourceProperty]));
-        connect(action, SIGNAL(triggered()), resourceActionMapper, SLOT(map()));
-        resourceActionMapper->setMapping(action, QLatin1String(resourceProperties[resourceProperty]));
+    for (int imageProperty = 0; imageProperties[imageProperty]; ++imageProperty) {
+        QAction *action = imageActionMenu->addAction(QLatin1String(imageProperties[imageProperty]));
+        connect(action, SIGNAL(triggered()), imageActionMapper, SLOT(map()));
+        imageActionMapper->setMapping(action, QLatin1String(imageProperties[imageProperty]));
     }
 
     for (int colorProperty = 0; colorProperties[colorProperty]; ++colorProperty) {
@@ -144,13 +144,13 @@ StyleSheetEditorDialog::StyleSheetEditorDialog(QDesignerFormEditorInterface *cor
         colorActionMapper->setMapping(colorAction, QLatin1String(colorProperties[colorProperty]));
     }
 
-    connect(resourceActionMapper, SIGNAL(mapped(QString)), this, SLOT(slotAddResource(QString)));
+    connect(imageActionMapper, SIGNAL(mapped(QString)), this, SLOT(slotAddImage(QString)));
     connect(colorActionMapper, SIGNAL(mapped(QString)), this, SLOT(slotAddColor(QString)));
 
-    m_addResourceAction->setMenu(resourceActionMenu);
+    m_addImageAction->setMenu(imageActionMenu);
     m_addColorAction->setMenu(colorActionMenu);
 
-    toolBar->addAction(m_addResourceAction);
+    toolBar->addAction(m_addImageAction);
     toolBar->addAction(m_addColorAction);
     toolBar->addAction(m_addFontAction);
 
@@ -185,14 +185,14 @@ void StyleSheetEditorDialog::slotContextMenuRequested(const QPoint &pos)
 {
     QMenu *menu = m_editor->createStandardContextMenu();
     menu->addSeparator();
-    menu->addAction(m_addResourceAction);
+    menu->addAction(m_addImageAction);
     menu->exec(mapToGlobal(pos));
     delete menu;
 }
 
-void StyleSheetEditorDialog::slotAddResource(const QString &property)
+void StyleSheetEditorDialog::slotAddImage(const QString &property)
 {
-    const QString path = IconSelector::choosePixmapResource(m_core, m_core->resourceModel(), QString(), this);
+    const QString path = IconSelector::choosePixmapFile(QString(), m_core->dialogGui(), this);
     if (!path.isEmpty())
         insertCssProperty(property, QString(QLatin1String("url(%1)")).arg(path));
 }

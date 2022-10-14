@@ -27,7 +27,6 @@
 #include "pluginmanager_p.h"
 #include "widgetfactory_p.h"
 #include "qdesigner_widgetbox_p.h"
-#include "qtresourcemodel_p.h"
 
 // sdk
 #include <QtDesigner/abstractformeditor.h>
@@ -37,7 +36,6 @@
 #include <QtDesigner/abstractactioneditor.h>
 #include <QtDesigner/abstractwidgetbox.h>
 #include <QtDesigner/QExtensionManager>
-#include <QtDesigner/abstractresourcebrowser.h>
 #include <QtDesigner/propertysheet.h>
 
 #include <QtCore/QVariant>
@@ -54,13 +52,9 @@ namespace qdesigner_internal {
 class QDesignerIntegrationPrivate {
 public:
     QDesignerIntegrationPrivate()
-        : m_fileWatcherBehaviour(QDesignerIntegration::PromptAndReload),
-          m_resourceEditingEnabled(true),
-          m_slotNavigationEnabled(false)
+        : m_slotNavigationEnabled(false)
     {}
 
-    QDesignerIntegration::ResourceFileWatcherBehaviour m_fileWatcherBehaviour;
-    bool m_resourceEditingEnabled;
     bool m_slotNavigationEnabled;
 };
 
@@ -354,32 +348,6 @@ void QDesignerIntegration::requestHelp(const QDesignerFormEditorInterface *core,
 {
     if (QDesignerIntegration *di = qobject_cast<QDesignerIntegration *>(core->integration()))
         emit di->helpRequested(manual, document);
-}
-
-QDesignerResourceBrowserInterface *QDesignerIntegration::createResourceBrowser(QWidget *)
-{
-    return 0;
-}
-
-void QDesignerIntegration::setResourceFileWatcherBehaviour(ResourceFileWatcherBehaviour behaviour)
-{
-    m_d->m_fileWatcherBehaviour = behaviour;
-    core()->resourceModel()->setWatcherEnabled(behaviour != QDesignerIntegration::NoWatcher);
-}
-
-QDesignerIntegration::ResourceFileWatcherBehaviour QDesignerIntegration::resourceFileWatcherBehaviour() const
-{
-    return m_d->m_fileWatcherBehaviour;
-}
-
-void QDesignerIntegration::setResourceEditingEnabled(bool enable)
-{
-    m_d->m_resourceEditingEnabled = enable;
-}
-
-bool QDesignerIntegration::isResourceEditingEnabled() const
-{
-    return m_d->m_resourceEditingEnabled;
 }
 
 void QDesignerIntegration::setSlotNavigationEnabled(bool enable)

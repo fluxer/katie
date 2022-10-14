@@ -67,7 +67,6 @@ class DomCustomWidgets;
 class DomLayout;
 class DomLayoutItem;
 class DomProperty;
-class DomResources;
 class DomSpacer;
 class DomString;
 class DomTabStops;
@@ -117,7 +116,6 @@ protected:
 
     virtual void createCustomWidgets(DomCustomWidgets *) {}
     virtual void createConnections(DomConnections *, QWidget *) {}
-    virtual void createResources(DomResources*) {}
 
     virtual bool addItem(DomLayoutItem *ui_item, QLayoutItem *item, QLayout *layout);
     virtual bool addItem(DomWidget *ui_widget, QWidget *widget, QWidget *parentWidget);
@@ -143,7 +141,6 @@ protected:
     virtual DomConnections *saveConnections();
     virtual DomCustomWidgets *saveCustomWidgets();
     virtual DomTabStops *saveTabStops();
-    virtual DomResources *saveResources();
     DomButtonGroups *saveButtonGroups(const QWidget *mainContainer);
     virtual QList<DomProperty*> computeProperties(QObject *obj);
     virtual bool checkProperty(QObject *obj, const QString &prop) const;

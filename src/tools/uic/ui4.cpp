@@ -39,7 +39,6 @@ void DomUI::clear(bool clear_all)
     delete m_tabStops;
     delete m_images;
     delete m_includes;
-    delete m_resources;
     delete m_connections;
     delete m_designerdata;
     delete m_slots;
@@ -64,7 +63,6 @@ void DomUI::clear(bool clear_all)
     m_tabStops = 0;
     m_images = 0;
     m_includes = 0;
-    m_resources = 0;
     m_connections = 0;
     m_designerdata = 0;
     m_slots = 0;
@@ -88,7 +86,6 @@ DomUI::DomUI()
     m_tabStops = 0;
     m_images = 0;
     m_includes = 0;
-    m_resources = 0;
     m_connections = 0;
     m_designerdata = 0;
     m_slots = 0;
@@ -104,7 +101,6 @@ DomUI::~DomUI()
     delete m_tabStops;
     delete m_images;
     delete m_includes;
-    delete m_resources;
     delete m_connections;
     delete m_designerdata;
     delete m_slots;
@@ -203,12 +199,6 @@ void DomUI::read(QXmlStreamReader &reader)
                 DomIncludes *v = new DomIncludes();
                 v->read(reader);
                 setElementIncludes(v);
-                continue;
-            }
-            if (tag == QLatin1String("resources")) {
-                DomResources *v = new DomResources();
-                v->read(reader);
-                setElementResources(v);
                 continue;
             }
             if (tag == QLatin1String("connections")) {
@@ -317,10 +307,6 @@ void DomUI::write(QXmlStreamWriter &writer, const QString &tagName) const
 
     if (m_children & Includes) {
         m_includes->write(writer, QLatin1String("includes"));
-    }
-
-    if (m_children & Resources) {
-        m_resources->write(writer, QLatin1String("resources"));
     }
 
     if (m_children & Connections) {
@@ -480,21 +466,6 @@ void DomUI::setElementIncludes(DomIncludes* a)
     m_includes = a;
 }
 
-DomResources* DomUI::takeElementResources() 
-{
-    DomResources* a = m_resources;
-    m_resources = 0;
-    m_children ^= Resources;
-    return a;
-}
-
-void DomUI::setElementResources(DomResources* a)
-{
-    delete m_resources;
-    m_children |= Resources;
-    m_resources = a;
-}
-
 DomConnections* DomUI::takeElementConnections() 
 {
     DomConnections* a = m_connections;
@@ -627,13 +598,6 @@ void DomUI::clearElementIncludes()
     delete m_includes;
     m_includes = 0;
     m_children &= ~Includes;
-}
-
-void DomUI::clearElementResources()
-{
-    delete m_resources;
-    m_resources = 0;
-    m_children &= ~Resources;
 }
 
 void DomUI::clearElementConnections()
@@ -812,93 +776,6 @@ void DomInclude::write(QXmlStreamWriter &writer, const QString &tagName) const
         writer.writeCharacters(m_text);
 
     writer.writeEndElement();
-}
-
-void DomResources::clear(bool clear_all)
-{
-    qDeleteAll(m_include);
-    m_include.clear();
-
-    if (clear_all) {
-    m_text.clear();
-    m_has_attr_name = false;
-    }
-
-    m_children = 0;
-}
-
-DomResources::DomResources()
-{
-    m_children = 0;
-    m_has_attr_name = false;
-}
-
-DomResources::~DomResources()
-{
-    qDeleteAll(m_include);
-    m_include.clear();
-}
-
-void DomResources::read(QXmlStreamReader &reader)
-{
-
-    foreach (const QXmlStreamAttribute &attribute, reader.attributes()) {
-        QStringRef name = attribute.name();
-        if (name == QLatin1String("name")) {
-            setAttributeName(attribute.value().toString());
-            continue;
-        }
-        reader.raiseError(QLatin1String("Unexpected attribute ") + name.toString());
-    }
-
-    for (bool finished = false; !finished && !reader.hasError();) {
-        switch (reader.readNext()) {
-        case QXmlStreamReader::StartElement : {
-            const QString tag = reader.name().toString().toLower();
-            if (tag == QLatin1String("include")) {
-                DomResource *v = new DomResource();
-                v->read(reader);
-                m_include.append(v);
-                continue;
-            }
-            reader.raiseError(QLatin1String("Unexpected element ") + tag);
-        }
-            break;
-        case QXmlStreamReader::EndElement :
-            finished = true;
-            break;
-        case QXmlStreamReader::Characters :
-            if (!reader.isWhitespace())
-                m_text.append(reader.text().toString());
-            break;
-        default :
-            break;
-        }
-    }
-}
-
-
-void DomResources::write(QXmlStreamWriter &writer, const QString &tagName) const
-{
-    writer.writeStartElement(tagName.isEmpty() ? QString::fromUtf8("resources") : tagName.toLower());
-
-    if (hasAttributeName())
-        writer.writeAttribute(QLatin1String("name"), attributeName());
-
-    for (int i = 0; i < m_include.size(); ++i) {
-        DomResource* v = m_include[i];
-        v->write(writer, QLatin1String("include"));
-    }
-    if (!m_text.isEmpty())
-        writer.writeCharacters(m_text);
-
-    writer.writeEndElement();
-}
-
-void DomResources::setElementInclude(const QList<DomResource*>& a)
-{
-    m_children |= Include;
-    m_include = a;
 }
 
 void DomResource::clear(bool clear_all)

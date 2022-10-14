@@ -27,7 +27,6 @@
 #include "formwindowmanager.h"
 #include "tool_widgeteditor.h"
 #include "widgetselection.h"
-#include "qtresourcemodel_p.h"
 #include "widgetfactory_p.h"
 
 // shared
@@ -322,8 +321,6 @@ FormWindow::~FormWindow()
 
     m_widgetStack = 0;
     m_rubberBand = 0;
-    if (resourceSet())
-        core()->resourceModel()->removeResourceSet(resourceSet());
     delete m_selection;
 }
 

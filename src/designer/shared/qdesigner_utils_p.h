@@ -216,12 +216,6 @@ public:
     bool operator!=(const PropertySheetPixmapValue &other) const { return compare(other) != 0; }
     bool operator<(const PropertySheetPixmapValue &other) const  { return compare(other) <  0; }
 
-    // Check where a pixmap comes from
-    enum PixmapSource { LanguageResourcePixmap , ResourcePixmap, FilePixmap };
-    static PixmapSource getPixmapSource(QDesignerFormEditorInterface *core, const QString & path);
-
-    PixmapSource pixmapSource(QDesignerFormEditorInterface *core) const { return getPixmapSource(core, m_path); }
-
     QString path() const;
     void setPath(const QString &path); // passing the empty path resets the pixmap
 

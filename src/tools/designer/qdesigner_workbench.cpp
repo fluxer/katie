@@ -926,9 +926,7 @@ QDesignerFormWindow * QDesignerWorkbench::loadForm(const QString &fileName,
         return 0;
     }
     *uic3Converted = editor->fileName().isEmpty();
-    // Did user specify another (missing) resource path -> set dirty.
-    const bool dirty = editor->property("_q_resourcepathchanged").toBool();
-    editor->setDirty(dirty);
+    editor->setDirty(false);
     resizeForm(formWindow, editor->mainContainer());
     formWindowManager->setActiveFormWindow(editor);
     return formWindow;

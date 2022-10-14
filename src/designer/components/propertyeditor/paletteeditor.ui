@@ -206,7 +206,6 @@
    <header>previewframe.h</header>
   </customwidget>
  </customwidgets>
- <resources/>
  <connections>
   <connection>
    <sender>buttonBox</sender>

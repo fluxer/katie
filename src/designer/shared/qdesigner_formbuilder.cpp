@@ -41,7 +41,6 @@
 #include "qdesigner_propertysheet_p.h"
 #include "qdesigner_utils_p.h"
 #include <formwindowbase_p.h>
-#include "qtresourcemodel_p.h"
 
 #include <QtGui/QWidget>
 #include <QtGui/QMenu>
@@ -69,8 +68,6 @@ QDesignerFormBuilder::QDesignerFormBuilder(QDesignerFormEditorInterface *core,
     m_deviceProfile(deviceProfile),
     m_pixmapCache(0),
     m_iconCache(0),
-    m_ignoreCreateResources(false),
-    m_tempResourceSet(0),
     m_mainWidget(true)
 {
     Q_ASSERT(m_core);
@@ -94,13 +91,7 @@ QWidget *QDesignerFormBuilder::createWidgetFromContents(const QString &contents,
 QWidget *QDesignerFormBuilder::create(DomUI *ui, QWidget *parentWidget)
 {
     m_mainWidget = true;
-    QtResourceSet *resourceSet = core()->resourceModel()->currentResourceSet();
 
-    // reload resource properties;
-    createResources(ui->elementResources());
-    core()->resourceModel()->setCurrentResourceSet(m_tempResourceSet);
-
-    m_ignoreCreateResources = true;
     DesignerPixmapCache pixmapCache;
     DesignerIconCache iconCache(&pixmapCache);
     m_pixmapCache = &pixmapCache;
@@ -108,10 +99,6 @@ QWidget *QDesignerFormBuilder::create(DomUI *ui, QWidget *parentWidget)
 
     QWidget *widget = QFormBuilder::create(ui, parentWidget);
 
-    core()->resourceModel()->setCurrentResourceSet(resourceSet);
-    core()->resourceModel()->removeResourceSet(m_tempResourceSet);
-    m_tempResourceSet = 0;
-    m_ignoreCreateResources = false;
     m_pixmapCache = 0;
     m_iconCache = 0;
 
@@ -290,22 +277,6 @@ QWidget *QDesignerFormBuilder::create(DomWidget *ui_widget, QWidget *parentWidge
     // Do not apply state if scripts are to be run in preview mode
     QSimpleResource::applyExtensionDataFromDOM(this, m_core, ui_widget, widget);
     return widget;
-}
-
-void QDesignerFormBuilder::createResources(DomResources *resources)
-{
-    if (m_ignoreCreateResources)
-        return;
-    QStringList paths;
-    if (resources != 0) {
-        const QList<DomResource*> dom_include = resources->elementInclude();
-        foreach (DomResource *res, dom_include) {
-            QString path = QDir::cleanPath(workingDirectory().absoluteFilePath(res->attributeLocation()));
-            paths << path;
-        }
-    }
-
-    m_tempResourceSet = core()->resourceModel()->addResourceSet(paths);
 }
 
 QLayout *QDesignerFormBuilder::create(DomLayout *ui_layout, QLayout *layout, QWidget *parentWidget)

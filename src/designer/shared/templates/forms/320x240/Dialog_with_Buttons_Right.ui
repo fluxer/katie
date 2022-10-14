@@ -29,7 +29,6 @@
    </property>
   </widget>
  </widget>
- <resources/>
  <connections>
   <connection>
    <sender>buttonBox</sender>

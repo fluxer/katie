@@ -270,7 +270,6 @@
   <tabstop>spacingFunctionLineEdit</tabstop>
   <tabstop>pixmapFunctionLineEdit</tabstop>
  </tabstops>
- <resources/>
  <connections>
   <connection>
    <sender>buttonBox</sender>

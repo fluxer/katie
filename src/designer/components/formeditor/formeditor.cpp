@@ -41,7 +41,6 @@
 #include "qdesigner_toolbox_p.h"
 #include "qdesigner_tabwidget_p.h"
 #include "iconcache.h"
-#include "qtresourcemodel_p.h"
 #include "qdesigner_integration_p.h"
 #include "itemview_propertysheet.h"
 
@@ -130,11 +129,6 @@ FormEditor::FormEditor(QObject *parent)
 
     setPromotion(new QDesignerPromotion(this));
 
-    QtResourceModel *resourceModel = new QtResourceModel(this);
-    setResourceModel(resourceModel);
-    connect(resourceModel, SIGNAL(qrcFileModifiedExternally(QString)),
-            this, SLOT(slotQrcFileChangedExternally(QString)));
-
     QList<QDesignerOptionsPageInterface*> optionsPages;
     optionsPages << new TemplateOptionsPage(this) << new FormEditorOptionsPage(this) << new EmbeddedOptionsPage(this);
     setOptionsPages(optionsPages);
@@ -144,28 +138,6 @@ FormEditor::FormEditor(QObject *parent)
 
 FormEditor::~FormEditor()
 {
-}
-
-void FormEditor::slotQrcFileChangedExternally(const QString &path)
-{
-    QDesignerIntegration *designerIntegration = qobject_cast<QDesignerIntegration *>(integration());
-    if (!designerIntegration)
-        return;
-
-    QDesignerIntegration::ResourceFileWatcherBehaviour behaviour = designerIntegration->resourceFileWatcherBehaviour();
-    if (behaviour == QDesignerIntegration::NoWatcher) {
-        return;
-    } else if (behaviour == QDesignerIntegration::PromptAndReload) {
-        QMessageBox::StandardButton button = dialogGui()->message(topLevel(), QDesignerDialogGuiInterface::FileChangedMessage, QMessageBox::Warning,
-                tr("Resource File Changed"),
-                tr("The file \"%1\" has changed outside Designer. Do you want to reload it?").arg(path),
-                QMessageBox::Yes | QMessageBox::No, QMessageBox::Yes);
-
-        if (button != QMessageBox::Yes)
-            return;
-    }
-
-    resourceModel()->reload(path);
 }
 
 }

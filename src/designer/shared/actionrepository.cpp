@@ -20,7 +20,6 @@
 ****************************************************************************/
 
 #include "actionrepository_p.h"
-#include "qtresourceview_p.h"
 #include "iconloader_p.h"
 #include "qdesigner_utils_p.h"
 #include "qdesignercommon_p.h"
@@ -250,7 +249,8 @@ bool ActionModel::dropMimeData(const QMimeData *data, Qt::DropAction action, int
     if (!droppedItem)
         return false;
 
-
+#warning FIXME
+#if 0
     QtResourceView::ResourceType type;
     QString path;
     if (!QtResourceView::decodeMimeData(data, &type, &path) || type !=  QtResourceView::ResourceImage)
@@ -258,6 +258,9 @@ bool ActionModel::dropMimeData(const QMimeData *data, Qt::DropAction action, int
 
     emit resourceImageDropped(path, actionOfItem(droppedItem));
     return true;
+#else
+    return false;
+#endif
 }
 
 QAction *ActionModel::actionAt(const  QModelIndex &index) const
@@ -274,6 +277,8 @@ QAction *ActionModel::actionAt(const  QModelIndex &index) const
 
 static bool handleImageDragEnterMoveEvent(QDropEvent *event)
 {
+#warning FIXME
+#if 0
     QtResourceView::ResourceType type;
     const bool rc = QtResourceView::decodeMimeData(event->mimeData(), &type) && type ==  QtResourceView::ResourceImage;
     if (rc)
@@ -281,6 +286,9 @@ static bool handleImageDragEnterMoveEvent(QDropEvent *event)
     else
         event->ignore();
     return rc;
+#endif
+    event->ignore();
+    return false;
 }
 
 static void handleImageDropEvent(const QAbstractItemView *iv, QDropEvent *event, ActionModel *am)

@@ -44,7 +44,6 @@ class QDesignerIntrospectionInterface;
 class QDesignerDialogGuiInterface;
 class QDesignerSettingsInterface;
 class QDesignerOptionsPageInterface;
-class QtResourceModel;
 
 class QWidget;
 
@@ -78,7 +77,6 @@ public:
     QDesignerDialogGuiInterface *dialogGui() const;
     QDesignerSettingsInterface *settingsManager() const;
     QString resourceLocation() const;
-    QtResourceModel *resourceModel() const;
     QList<QDesignerOptionsPageInterface*> optionsPages() const;
 
     void setTopLevel(QWidget *topLevel);
@@ -91,7 +89,6 @@ public:
     void setIntrospection(QDesignerIntrospectionInterface *introspection);
     void setDialogGui(QDesignerDialogGuiInterface *dialogGui);
     void setSettingsManager(QDesignerSettingsInterface *settingsManager);
-    void setResourceModel(QtResourceModel *model);
     void setOptionsPages(const QList<QDesignerOptionsPageInterface*> &optionsPages);
 
 protected:

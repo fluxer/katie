@@ -377,7 +377,6 @@ include/katie/QtDesigner/QDesignerFormWindowManagerInterface
 include/katie/QtDesigner/QDesignerFormWindowToolInterface
 include/katie/QtDesigner/QDesignerIconCacheInterface
 include/katie/QtDesigner/QDesignerIntegrationInterface
-include/katie/QtDesigner/QDesignerLanguageExtension
 include/katie/QtDesigner/QDesignerLayoutDecorationExtension
 include/katie/QtDesigner/QDesignerMemberSheetExtension
 include/katie/QtDesigner/QDesignerMetaDataBaseInterface
@@ -386,7 +385,6 @@ include/katie/QtDesigner/QDesignerObjectInspectorInterface
 include/katie/QtDesigner/QDesignerPromotionInterface
 include/katie/QtDesigner/QDesignerPropertyEditorInterface
 include/katie/QtDesigner/QDesignerPropertySheetExtension
-include/katie/QtDesigner/QDesignerResourceBrowserInterface
 include/katie/QtDesigner/QDesignerTaskMenuExtension
 include/katie/QtDesigner/QDesignerWidgetBoxInterface
 include/katie/QtDesigner/QDesignerWidgetDataBaseInterface
@@ -406,12 +404,10 @@ include/katie/QtDesigner/abstractformwindowmanager.h
 include/katie/QtDesigner/abstractformwindowtool.h
 include/katie/QtDesigner/abstracticoncache.h
 include/katie/QtDesigner/abstractintegration.h
-include/katie/QtDesigner/abstractlanguage.h
 include/katie/QtDesigner/abstractmetadatabase.h
 include/katie/QtDesigner/abstractobjectinspector.h
 include/katie/QtDesigner/abstractpromotioninterface.h
 include/katie/QtDesigner/abstractpropertyeditor.h
-include/katie/QtDesigner/abstractresourcebrowser.h
 include/katie/QtDesigner/abstractwidgetbox.h
 include/katie/QtDesigner/abstractwidgetdatabase.h
 include/katie/QtDesigner/abstractwidgetfactory.h

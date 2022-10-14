@@ -31,7 +31,6 @@
 
 #include <QtDesigner/abstractformwindow.h>
 #include <QtDesigner/abstractformwindowcursor.h>
-#include <QtDesigner/abstractlanguage.h>
 #include <QtDesigner/abstractformeditor.h>
 #include <QtDesigner/QExtensionManager>
 
@@ -48,11 +47,6 @@ static QAction *separatorAction(QObject *parent)
     QAction *rc = new  QAction(parent);
     rc->setSeparator(true);
     return rc;
-}
-
-static inline QDesignerLanguageExtension *languageExtension(QDesignerFormEditorInterface *core)
-{
-    return qt_extension<QDesignerLanguageExtension*>(core->extensionManager(), core);
 }
 
 namespace qdesigner_internal {
@@ -183,10 +177,8 @@ void PromotionTaskMenu::addActions(QDesignerFormWindowInterface *fw, unsigned fl
     case CanDemote:
         if (!(flags & SuppressGlobalEdit))
             actionList += m_globalEditAction;
-        if (!languageExtension(fw->core())) {
-            actionList += separatorAction(this);
-            actionList += m_EditSignalsSlotsAction;
-        }
+        actionList += separatorAction(this);
+        actionList += m_EditSignalsSlotsAction;
         break;
     default:
         if (!(flags & SuppressGlobalEdit))
@@ -250,11 +242,7 @@ void PromotionTaskMenu::slotEditPromoteTo()
     Q_ASSERT(QDesignerPromotionDialog::baseClassNames(core->promotion()).contains(base_class_name));
     // Show over promotable widget
     QString promoteToClassName;
-    QDialog *promotionEditor = 0;
-    if (QDesignerLanguageExtension *lang = languageExtension(core))
-        promotionEditor = lang->createPromotionDialog(core, base_class_name, &promoteToClassName, fw);
-    if (!promotionEditor)
-        promotionEditor = new QDesignerPromotionDialog(core, fw, base_class_name, &promoteToClassName);
+    QDialog *promotionEditor = new QDesignerPromotionDialog(core, fw, base_class_name, &promoteToClassName);
     if (promotionEditor->exec() == QDialog::Accepted && !promoteToClassName.isEmpty()) {
         promoteTo(fw, promoteToClassName);
     }
@@ -318,13 +306,8 @@ QDesignerFormWindowInterface *PromotionTaskMenu::formWindow() const
 }
 
 void PromotionTaskMenu::editPromotedWidgets(QDesignerFormEditorInterface *core, QWidget* parent) {
-    QDesignerLanguageExtension *lang = languageExtension(core);
     // Show over non-promotable widget
-    QDialog *promotionEditor =  0;
-    if (lang)
-        lang->createPromotionDialog(core, parent);
-    if (!promotionEditor)
-        promotionEditor = new QDesignerPromotionDialog(core, parent);
+    QDialog *promotionEditor = new QDesignerPromotionDialog(core, parent);
     promotionEditor->exec();
     delete promotionEditor;
 }

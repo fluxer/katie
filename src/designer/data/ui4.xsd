@@ -17,7 +17,6 @@
                         <xs:element name="tabstops" type="TabStops" minOccurs="0" />
                         <xs:element name="images" type="Images" minOccurs="0" />
                         <xs:element name="includes" type="Includes" minOccurs="0" />
-                        <xs:element name="resources" type="Resources" minOccurs="0" />
                         <xs:element name="connections" type="Connections" minOccurs="0" />
                         <xs:element name="designerdata" type="DesignerData" minOccurs="0" />
                         <xs:element name="slots" type="Slots" minOccurs="0" />
@@ -44,19 +43,6 @@
                 <xs:attribute name="impldecl" type="xs:string" />
         </xs:complexType>
 <!-- include end -->
-
-<!-- resource begin -->
-        <xs:complexType name="Resources">
-            <xs:sequence>
-                        <xs:element name="include" type="Resource" minOccurs="0" maxOccurs="unbounded" />
-        </xs:sequence>
-                <xs:attribute name="name" type="xs:string" />
-        </xs:complexType>
-
-        <xs:complexType name="Resource">
-                <xs:attribute name="location" type="xs:string" use="required" />
-        </xs:complexType>
-<!-- resource end -->
 
 <!-- actions begin -->
         <xs:complexType name="ActionGroup">

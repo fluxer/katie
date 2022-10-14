@@ -229,7 +229,6 @@ QWidget *QAbstractFormBuilder::create(DomUI *ui, QWidget *parentWidget)
                     it.value().second->setParent(widget);
         }
         createConnections(ui->elementConnections(), widget);
-        createResources(ui->elementResources()); // maybe this should go first, before create()...
         applyTabStops(widget, ui->elementTabStops());
         formBuilderPrivate->applyInternalProperties();
         reset();
@@ -1208,9 +1207,6 @@ void QAbstractFormBuilder::saveDom(DomUI *ui, QWidget *widget)
         ui->setElementTabStops(ui_tabStops);
     }
 
-    if (DomResources *ui_resources = saveResources()) {
-        ui->setElementResources(ui_resources);
-    }
     if (DomButtonGroups *ui_buttonGroups = saveButtonGroups(widget))
         ui->setElementButtonGroups(ui_buttonGroups);
 }
@@ -1690,14 +1686,6 @@ DomCustomWidgets *QAbstractFormBuilder::saveCustomWidgets()
     \internal
 */
 DomTabStops *QAbstractFormBuilder::saveTabStops()
-{
-    return 0;
-}
-
-/*!
-    \internal
-*/
-DomResources *QAbstractFormBuilder::saveResources()
 {
     return 0;
 }
@@ -2888,11 +2876,6 @@ QPixmap QAbstractFormBuilder::domPropertyToPixmap(const DomProperty* p)
 
 /*!
     \fn void QAbstractFormBuilder::createCustomWidgets ( DomCustomWidgets * )
-    \internal
-*/
-
-/*!
-    \fn void QAbstractFormBuilder::createResources ( DomResources * )
     \internal
 */
 

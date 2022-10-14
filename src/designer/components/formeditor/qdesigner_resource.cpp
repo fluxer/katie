@@ -30,7 +30,6 @@
 #include "qdesigner_menu_p.h"
 #include "qdesigner_menubar_p.h"
 #include "qdesigner_membersheet_p.h"
-#include "qtresourcemodel_p.h"
 #include "qmdiarea_container.h"
 #include "qwizard_container.h"
 #include "layout_propertysheet.h"
@@ -49,7 +48,6 @@
 #include <spacer_widget_p.h>
 #include <pluginmanager_p.h>
 #include <widgetfactory_p.h>
-#include <abstractlanguage.h>
 #include <abstractintrospection_p.h>
 
 #include "qlayout_widget_p.h"
@@ -116,10 +114,6 @@ public:
     void setIconCache(DesignerIconCache *iconCache)       { m_iconCache = iconCache; }
     bool isSaveRelative() const                           { return m_saveRelative; }
     void setSaveRelative(bool relative)                   { m_saveRelative = relative; }
-    QStringList usedQrcFiles() const                      { return m_usedQrcFiles.keys(); }
-#ifdef OLD_RESOURCE_FORMAT
-    QStringList loadedQrcFiles() const                    { return m_loadedQrcFiles.keys(); } // needed only for loading old resource attribute of <iconset> tag.
-#endif
 
     virtual QVariant loadResource(const QDir &workingDirectory, const DomProperty *icon) const;
 
@@ -133,27 +127,21 @@ private:
     QDesignerFormEditorInterface *m_core;
     DesignerPixmapCache  *m_pixmapCache;
     DesignerIconCache    *m_iconCache;
-    const QDesignerLanguageExtension *m_lang;
     bool                  m_saveRelative;
-    mutable QMap<QString, bool>   m_usedQrcFiles;
-    mutable QMap<QString, bool>   m_loadedQrcFiles;
 };
 
 QDesignerResourceBuilder::QDesignerResourceBuilder(QDesignerFormEditorInterface *core, DesignerPixmapCache *pixmapCache, DesignerIconCache *iconCache) :
     m_core(core),
     m_pixmapCache(pixmapCache),
     m_iconCache(iconCache),
-    m_lang(qt_extension<QDesignerLanguageExtension *>(core->extensionManager(), core)),
     m_saveRelative(true)
 {
 }
 
 static inline void setIconPixmap(QIcon::Mode m, QIcon::State s, const QDir &workingDirectory,
-                                 QString path, PropertySheetIconValue &icon,
-                                 const QDesignerLanguageExtension *lang = 0)
+                                 QString path, PropertySheetIconValue &icon)
 {
-    if (lang == 0 || !lang->isLanguageResource(path))
-        path = QFileInfo(workingDirectory, path).absoluteFilePath();
+    path = QFileInfo(workingDirectory, path).absoluteFilePath();
     icon.setPixmap(m, s, PropertySheetPixmapValue(path));
 }
 
@@ -164,15 +152,7 @@ QVariant QDesignerResourceBuilder::loadResource(const QDir &workingDirectory, co
             PropertySheetPixmapValue pixmap;
             DomResourcePixmap *dp = property->elementPixmap();
             if (!dp->text().isEmpty()) {
-                if (m_lang != 0 && m_lang->isLanguageResource(dp->text())) {
-                    pixmap.setPath(dp->text());
-                } else {
-                    pixmap.setPath(QFileInfo(workingDirectory, dp->text()).absoluteFilePath());
-                }
-#ifdef OLD_RESOURCE_FORMAT
-                if (dp->hasAttributeResource())
-                    m_loadedQrcFiles.insert(QFileInfo(workingDirectory, dp->attributeResource()).absoluteFilePath(), false);
-#endif
+                pixmap.setPath(QFileInfo(workingDirectory, dp->text()).absoluteFilePath());
             }
             return QVariant::fromValue(pixmap);
         }
@@ -183,26 +163,24 @@ QVariant QDesignerResourceBuilder::loadResource(const QDir &workingDirectory, co
             icon.setTheme(di->attributeTheme());
             if (const int flags = iconStateFlags(di)) { // new, post 4.4 format
                 if (flags & NormalOff)
-                    setIconPixmap(QIcon::Normal, QIcon::Off, workingDirectory, di->elementNormalOff()->text(), icon, m_lang);
+                    setIconPixmap(QIcon::Normal, QIcon::Off, workingDirectory, di->elementNormalOff()->text(), icon);
                 if (flags & NormalOn)
-                    setIconPixmap(QIcon::Normal, QIcon::On, workingDirectory, di->elementNormalOn()->text(), icon, m_lang);
+                    setIconPixmap(QIcon::Normal, QIcon::On, workingDirectory, di->elementNormalOn()->text(), icon);
                 if (flags & DisabledOff)
-                    setIconPixmap(QIcon::Disabled, QIcon::Off, workingDirectory, di->elementDisabledOff()->text(), icon, m_lang);
+                    setIconPixmap(QIcon::Disabled, QIcon::Off, workingDirectory, di->elementDisabledOff()->text(), icon);
                 if (flags & DisabledOn)
-                    setIconPixmap(QIcon::Disabled, QIcon::On, workingDirectory, di->elementDisabledOn()->text(), icon, m_lang);
+                    setIconPixmap(QIcon::Disabled, QIcon::On, workingDirectory, di->elementDisabledOn()->text(), icon);
                 if (flags & ActiveOff)
-                    setIconPixmap(QIcon::Active, QIcon::Off, workingDirectory, di->elementActiveOff()->text(), icon, m_lang);
+                    setIconPixmap(QIcon::Active, QIcon::Off, workingDirectory, di->elementActiveOff()->text(), icon);
                 if (flags & ActiveOn)
-                    setIconPixmap(QIcon::Active, QIcon::On, workingDirectory, di->elementActiveOn()->text(), icon, m_lang);
+                    setIconPixmap(QIcon::Active, QIcon::On, workingDirectory, di->elementActiveOn()->text(), icon);
                 if (flags & SelectedOff)
-                    setIconPixmap(QIcon::Selected, QIcon::Off, workingDirectory, di->elementSelectedOff()->text(), icon, m_lang);
+                    setIconPixmap(QIcon::Selected, QIcon::Off, workingDirectory, di->elementSelectedOff()->text(), icon);
                 if (flags & SelectedOn)
-                    setIconPixmap(QIcon::Selected, QIcon::On, workingDirectory, di->elementSelectedOn()->text(), icon, m_lang);
+                    setIconPixmap(QIcon::Selected, QIcon::On, workingDirectory, di->elementSelectedOn()->text(), icon);
             } else {
 #ifdef OLD_RESOURCE_FORMAT
-                setIconPixmap(QIcon::Normal, QIcon::Off, workingDirectory, di->text(), icon, m_lang);
-                if (di->hasAttributeResource())
-                    m_loadedQrcFiles.insert(QFileInfo(workingDirectory, di->attributeResource()).absoluteFilePath(), false);
+                setIconPixmap(QIcon::Normal, QIcon::Off, workingDirectory, di->text(), icon);
 #endif
             }
             return QVariant::fromValue(icon);
@@ -232,25 +210,7 @@ DomProperty *QDesignerResourceBuilder::saveResource(const QDir &workingDirectory
         const PropertySheetPixmapValue pix = qvariant_cast<PropertySheetPixmapValue>(value);
         DomResourcePixmap *rp = new DomResourcePixmap;
         const QString pixPath = pix.path();
-        switch (pix.pixmapSource(m_core)) {
-        case PropertySheetPixmapValue::LanguageResourcePixmap:
-            rp->setText(pixPath);
-            break;
-        case PropertySheetPixmapValue::ResourcePixmap: {
-            rp->setText(pixPath);
-            const QString qrcFile = m_core->resourceModel()->qrcPath(pixPath);
-            if (!qrcFile.isEmpty()) {
-                m_usedQrcFiles.insert(qrcFile, false);
-#ifdef OLD_RESOURCE_FORMAT  // Legacy: Add qrc path
-                rp->setAttributeResource(workingDirectory.relativeFilePath(qrcFile));
-#endif
-            }
-        }
-            break;
-        case PropertySheetPixmapValue::FilePixmap:
-            rp->setText(m_saveRelative ? workingDirectory.relativeFilePath(pixPath) : pixPath);
-            break;
-        }
+        rp->setText(m_saveRelative ? workingDirectory.relativeFilePath(pixPath) : pixPath);
         p->setElementPixmap(rp);
         return p;
     } else if (value.canConvert<PropertySheetIconValue>()) {
@@ -267,9 +227,8 @@ DomProperty *QDesignerResourceBuilder::saveResource(const QDir &workingDirectory
                 const QIcon::State state = itPix.key().second;
                 DomResourcePixmap *rp = new DomResourcePixmap;
                 const PropertySheetPixmapValue pix = itPix.value();
-                const PropertySheetPixmapValue::PixmapSource ps = pix.pixmapSource(m_core);
                 const QString pixPath = pix.path();
-                rp->setText(ps == PropertySheetPixmapValue::FilePixmap && m_saveRelative ? workingDirectory.relativeFilePath(pixPath) : pixPath);
+                rp->setText(m_saveRelative ? workingDirectory.relativeFilePath(pixPath) : pixPath);
                 if (state == QIcon::Off) {
                     switch (mode) {
                         case QIcon::Normal:
@@ -277,18 +236,7 @@ DomProperty *QDesignerResourceBuilder::saveResource(const QDir &workingDirectory
 #ifdef OLD_RESOURCE_FORMAT  // Legacy: Set Normal off as text/path in old format.
                             ri->setText(rp->text());
 #endif
-                            if (ps == PropertySheetPixmapValue::ResourcePixmap) {
-                                // Be sure that ri->text() file comes from active resourceSet (i.e. make appropriate
-                                // resourceSet active before calling this method).
-                                const QString qrcFile = m_core->resourceModel()->qrcPath(ri->text());
-                                if (!qrcFile.isEmpty()) {
-                                    m_usedQrcFiles.insert(qrcFile, false);
-#ifdef OLD_RESOURCE_FORMAT  // Legacy: Set Normal off as text/path in old format.
-                                    ri->setAttributeResource(workingDirectory.relativeFilePath(qrcFile));
-#endif
-                                }
-                            }
-                        break;
+                            break;
                         case QIcon::Disabled: ri->setElementDisabledOff(rp); break;
                         case QIcon::Active:   ri->setElementActiveOff(rp);   break;
                         case QIcon::Selected: ri->setElementSelectedOff(rp); break;
@@ -636,10 +584,9 @@ static LoadPreCheck loadPrecheck(QDesignerFormEditorInterface *core,
     }
     dev->seek(0);
 
-    // Check language unless extension present (Jambi)
-    if (!language.isEmpty() && !qt_extension<QDesignerLanguageExtension*>(core->extensionManager(), core)) {
+    // Check language unless extension present
+    if (!language.isEmpty()) {
         if (language.toLower() != QLatin1String("c++")) {
-            // Jambi?!
             *errorMessage = QApplication::translate("Designer", "This file cannot be read because it was created using %1.").arg(language);
             return LoadPreCheckFailed;
         }
@@ -1884,7 +1831,6 @@ DomUI *QDesignerResource::copy(const FormBuilderClipboard &selection)
     DomUI *ui = new DomUI();
     ui->setAttributeVersion(QLatin1String(currentUiVersion));
     ui->setElementWidget(ui_widget);
-    ui->setElementResources(saveResources(m_resourceBuilder->usedQrcFiles()));
     if (DomCustomWidgets *cws = saveCustomWidgets())
         ui->setElementCustomWidgets(cws);
     return ui;
@@ -1922,8 +1868,6 @@ FormBuilderClipboard QDesignerResource::paste(DomUI *ui, QWidget *widgetParent, 
 
     if (QDesignerExtraInfoExtension *extra = qt_extension<QDesignerExtraInfoExtension*>(core()->extensionManager(), core()))
         extra->loadUiExtraInfo(ui);
-
-    createResources(ui->elementResources());
 
     return rc;
 }
@@ -2200,117 +2144,6 @@ DomProperty *QDesignerResource::createProperty(QObject *object, const QString &p
     }
 
     return applyProperStdSetAttribute(object, propertyName, QAbstractFormBuilder::createProperty(object, propertyName, value));
-}
-
-QStringList QDesignerResource::mergeWithLoadedPaths(const QStringList &paths) const
-{
-    QStringList newPaths = paths;
-#ifdef OLD_RESOURCE_FORMAT
-    QStringList loadedPaths = m_resourceBuilder->loadedQrcFiles();
-    QStringListIterator it(loadedPaths);
-    while (it.hasNext()) {
-        const QString path = it.next();
-        if (!newPaths.contains(path))
-            newPaths << path;
-    }
-#endif
-    return newPaths;
-}
-
-
-void QDesignerResource::createResources(DomResources *resources)
-{
-    QStringList paths;
-    if (resources != 0) {
-        const QList<DomResource*> dom_include = resources->elementInclude();
-        foreach (DomResource *res, dom_include) {
-            QString path = QDir::cleanPath(m_formWindow->absoluteDir().absoluteFilePath(res->attributeLocation()));
-            while (!QFile::exists(path)) {
-                QWidget *dialogParent = m_formWindow->core()->topLevel();
-                const QString promptTitle = QApplication::translate("qdesigner_internal::QDesignerResource", "Loading qrc file", QApplication::UnicodeUTF8);
-                const QString prompt = QApplication::translate("qdesigner_internal::QDesignerResource", "The specified qrc file <p><b>%1</b></p><p>could not be found. Do you want to update the file location?</p>", QApplication::UnicodeUTF8).arg(path);
-
-                const QMessageBox::StandardButton answer = core()->dialogGui()->message(dialogParent,  QDesignerDialogGuiInterface::ResourceLoadFailureMessage,
-                        QMessageBox::Warning, promptTitle,  prompt, QMessageBox::Yes|QMessageBox::No, QMessageBox::Yes);
-                if (answer == QMessageBox::Yes) {
-                    const QFileInfo fi(path);
-                    const QString fileDialogTitle = QApplication::translate("qdesigner_internal::QDesignerResource", "New location for %1", QApplication::UnicodeUTF8).arg(fi.fileName());
-                    const QString fileDialogPattern = QApplication::translate("qdesigner_internal::QDesignerResource", "Resource files (*.qrc)", QApplication::UnicodeUTF8);
-                    path = core()->dialogGui()->getOpenFileName(dialogParent, fileDialogTitle, fi.absolutePath(), fileDialogPattern);
-                    if (path.isEmpty())
-                        break;
-                    m_formWindow->setProperty("_q_resourcepathchanged", QVariant(true));
-                } else {
-                    break;
-                }
-            }
-            if (!path.isEmpty()) {
-                paths << path;
-                m_formWindow->addResourceFile(path);
-            }
-        }
-    }
-
-#ifdef OLD_RESOURCE_FORMAT
-    paths = mergeWithLoadedPaths(paths);
-#endif
-
-    QtResourceSet *resourceSet = m_formWindow->resourceSet();
-    if (resourceSet) {
-        QStringList oldPaths = resourceSet->activeQrcPaths();
-        QStringList newPaths = oldPaths;
-        QStringListIterator it(paths);
-        while (it.hasNext()) {
-            const QString path = it.next();
-            if (!newPaths.contains(path))
-                newPaths << path;
-        }
-        resourceSet->activateQrcPaths(newPaths);
-    } else {
-        resourceSet = m_formWindow->core()->resourceModel()->addResourceSet(paths);
-        m_formWindow->setResourceSet(resourceSet);
-        QObject::connect(m_formWindow->core()->resourceModel(), SIGNAL(resourceSetActivated(QtResourceSet*,bool)),
-                m_formWindow, SLOT(resourceSetActivated(QtResourceSet*,bool)));
-    }
-}
-
-DomResources *QDesignerResource::saveResources()
-{
-    QStringList paths;
-    if (m_formWindow->saveResourcesBehaviour() == FormWindowBase::SaveAll) {
-        QtResourceSet *resourceSet = m_formWindow->resourceSet();
-        QList<DomResource*> dom_include;
-        if (resourceSet)
-            paths = resourceSet->activeQrcPaths();
-    } else if (m_formWindow->saveResourcesBehaviour() == FormWindowBase::SaveOnlyUsedQrcFiles) {
-        paths = m_resourceBuilder->usedQrcFiles();
-    }
-
-    return saveResources(paths);
-}
-
-DomResources *QDesignerResource::saveResources(const QStringList &qrcPaths)
-{
-    QtResourceSet *resourceSet = m_formWindow->resourceSet();
-    QList<DomResource*> dom_include;
-    if (resourceSet) {
-        const QStringList activePaths = resourceSet->activeQrcPaths();
-        foreach (const QString &path, activePaths) {
-            if (qrcPaths.contains(path)) {
-                DomResource *dom_res = new DomResource;
-                QString conv_path = path;
-                if (m_resourceBuilder->isSaveRelative())
-                    conv_path = m_formWindow->absoluteDir().relativeFilePath(path);
-                dom_res->setAttributeLocation(conv_path.replace(QDir::separator(), QLatin1Char('/')));
-                dom_include.append(dom_res);
-            }
-        }
-    }
-
-    DomResources *dom_resources = new DomResources;
-    dom_resources->setElementInclude(dom_include);
-
-    return dom_resources;
 }
 
 DomAction *QDesignerResource::createDom(QAction *action)

@@ -128,7 +128,6 @@
    </item>
   </layout>
  </widget>
- <resources/>
  <connections>
   <connection>
    <sender>buttonBox</sender>

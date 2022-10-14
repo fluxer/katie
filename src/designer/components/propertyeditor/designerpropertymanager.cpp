@@ -24,7 +24,6 @@
 #include "paletteeditorbutton.h"
 #include "qlonglongvalidator.h"
 #include "stringlisteditorbutton.h"
-#include "qtresourceview_p.h"
 #include "qtpropertybrowserutils_p.h"
 
 #include <formwindowbase_p.h>
@@ -111,7 +110,6 @@ signals:
 
 private slots:
     void buttonClicked();
-    void resourceActionActivated();
     void fileActionActivated();
 private:
     TextPropertyEditor *m_editor;
@@ -120,7 +118,6 @@ private:
     QFont m_richTextDefaultFont;
     QToolButton *m_button;
     QMenu *m_menu;
-    QAction *m_resourceAction;
     QAction *m_fileAction;
     QHBoxLayout *m_layout;
     QDesignerFormEditorInterface *m_core;
@@ -134,7 +131,6 @@ TextEditor::TextEditor(QDesignerFormEditorInterface *core, QWidget *parent) :
     m_richTextDefaultFont(QApplication::font()),
     m_button(new QToolButton(this)),
     m_menu(new QMenu(this)),
-    m_resourceAction(new QAction(tr("Choose Resource..."), this)),
     m_fileAction(new QAction(tr("Choose File..."), this)),
     m_layout(new QHBoxLayout(this)),
     m_core(core)
@@ -151,7 +147,6 @@ TextEditor::TextEditor(QDesignerFormEditorInterface *core, QWidget *parent) :
     m_layout->setMargin(0);
     m_layout->setSpacing(0);
 
-    connect(m_resourceAction, SIGNAL(triggered()), this, SLOT(resourceActionActivated()));
     connect(m_fileAction, SIGNAL(triggered()), this, SLOT(fileActionActivated()));
     connect(m_editor, SIGNAL(textChanged(QString)), this, SIGNAL(textChanged(QString)));
     connect(m_themeEditor, SIGNAL(edited(QString)), this, SIGNAL(textChanged(QString)));
@@ -160,7 +155,6 @@ TextEditor::TextEditor(QDesignerFormEditorInterface *core, QWidget *parent) :
     setSizePolicy(QSizePolicy(QSizePolicy::Preferred, QSizePolicy::Fixed));
     setFocusProxy(m_editor);
 
-    m_menu->addAction(m_resourceAction);
     m_menu->addAction(m_fileAction);
 }
 
@@ -245,9 +239,7 @@ void TextEditor::buttonClicked()
     }
         break;
     case ValidationURL: {
-        if (oldText.isEmpty() || oldText.startsWith(QLatin1String("qrc:")))
-            resourceActionActivated();
-        else
+        if (!oldText.isEmpty())
             fileActionActivated();
     }
         return;
@@ -258,22 +250,6 @@ void TextEditor::buttonClicked()
         m_editor->setText(newText);
         emit textChanged(newText);
     }
-}
-
-void TextEditor::resourceActionActivated()
-{
-    QString oldPath = m_editor->text();
-    if (oldPath.startsWith(QLatin1String("qrc:")))
-        oldPath.remove(0, 4);
-    // returns ':/file'
-    QString newPath = IconSelector::choosePixmapResource(m_core, m_core->resourceModel(), oldPath, this);
-    if (newPath.startsWith(QLatin1Char(':')))
-         newPath.remove(0, 1);
-    if (newPath.isEmpty() || newPath == oldPath)
-        return;
-    const QString newText = QLatin1String("qrc:") + newPath;
-    m_editor->setText(newText);
-    emit textChanged(newText);
 }
 
 void TextEditor::fileActionActivated()
@@ -356,7 +332,6 @@ protected:
 
 private slots:
     void defaultActionActivated();
-    void resourceActionActivated();
     void fileActionActivated();
     void themeActionActivated();
     void copyActionActivated();
@@ -369,7 +344,6 @@ private:
     QLabel *m_pixmapLabel;
     QLabel *m_pathLabel;
     QToolButton *m_button;
-    QAction *m_resourceAction;
     QAction *m_fileAction;
     QAction *m_themeAction;
     QAction *m_copyAction;
@@ -388,7 +362,6 @@ PixmapEditor::PixmapEditor(QDesignerFormEditorInterface *core, QWidget *parent) 
     m_pixmapLabel(new QLabel(this)),
     m_pathLabel(new QLabel(this)),
     m_button(new QToolButton(this)),
-    m_resourceAction(new QAction(tr("Choose Resource..."), this)),
     m_fileAction(new QAction(tr("Choose File..."), this)),
     m_themeAction(new QAction(tr("Set Icon From Theme..."), this)),
     m_copyAction(new QAction(createIconSet(QLatin1String("editcopy.png")), tr("Copy Path"), this)),
@@ -411,7 +384,6 @@ PixmapEditor::PixmapEditor(QDesignerFormEditorInterface *core, QWidget *parent) 
     m_themeAction->setVisible(false);
 
     QMenu *menu = new QMenu(this);
-    menu->addAction(m_resourceAction);
     menu->addAction(m_fileAction);
     menu->addAction(m_themeAction);
 
@@ -419,7 +391,6 @@ PixmapEditor::PixmapEditor(QDesignerFormEditorInterface *core, QWidget *parent) 
     m_button->setText(tr("..."));
 
     connect(m_button, SIGNAL(clicked()), this, SLOT(defaultActionActivated()));
-    connect(m_resourceAction, SIGNAL(triggered()), this, SLOT(resourceActionActivated()));
     connect(m_fileAction, SIGNAL(triggered()), this, SLOT(fileActionActivated()));
     connect(m_themeAction, SIGNAL(triggered()), this, SLOT(themeActionActivated()));
     connect(m_copyAction, SIGNAL(triggered()), this, SLOT(copyActionActivated()));
@@ -504,27 +475,8 @@ void PixmapEditor::defaultActionActivated()
         themeActionActivated();
         return;
     }
-    // Default to resource
-    const PropertySheetPixmapValue::PixmapSource ps = m_path.isEmpty() ? PropertySheetPixmapValue::ResourcePixmap : PropertySheetPixmapValue::getPixmapSource(m_core, m_path);
-    switch (ps) {
-    case PropertySheetPixmapValue::LanguageResourcePixmap:
-    case PropertySheetPixmapValue::ResourcePixmap:
-        resourceActionActivated();
-        break;
-    case PropertySheetPixmapValue::FilePixmap:
+    if (!m_path.isEmpty()) {
         fileActionActivated();
-        break;
-    }
-}
-
-void PixmapEditor::resourceActionActivated()
-{
-    const QString oldPath = m_path;
-    const  QString newPath = IconSelector::choosePixmapResource(m_core, m_core->resourceModel(), oldPath, this);
-    if (!newPath.isEmpty() &&  newPath != oldPath) {
-        setTheme(QString());
-        setPath(newPath);
-        emit pathChanged(newPath);
     }
 }
 

@@ -42,7 +42,6 @@ QT_BEGIN_NAMESPACE
 
 class QDesignerDnDItemInterface;
 class QMenu;
-class QtResourceSet;
 class QDesignerPropertySheet;
 
 namespace qdesigner_internal {
@@ -60,7 +59,6 @@ class Q_DESIGNER_EXPORT FormWindowBase: public QDesignerFormWindowInterface
     Q_OBJECT
 public:
     enum HighlightMode  { Restore, Highlight };
-    enum SaveResourcesBehaviour  { SaveAll, SaveOnlyUsedQrcFiles, DontSaveQrcFiles };
 
     explicit FormWindowBase(QDesignerFormEditorInterface *core, QWidget *parent = nullptr, Qt::WindowFlags flags = 0);
     virtual ~FormWindowBase();
@@ -95,9 +93,6 @@ public:
 
     bool gridVisible() const;
 
-    SaveResourcesBehaviour saveResourcesBehaviour() const;
-    void setSaveResourcesBehaviour(SaveResourcesBehaviour behaviour);
-
     static const Grid &defaultDesignerGrid();
     static void setDefaultDesignerGrid(const Grid& grid);
 
@@ -131,8 +126,6 @@ public:
 
     DesignerPixmapCache *pixmapCache() const;
     DesignerIconCache *iconCache() const;
-    QtResourceSet *resourceSet() const;
-    void setResourceSet(QtResourceSet *resourceSet);
     void addReloadableProperty(QDesignerPropertySheet *sheet, int index);
     void removeReloadableProperty(QDesignerPropertySheet *sheet, int index);
     void addReloadablePropertySheet(QDesignerPropertySheet *sheet, QObject *object);
@@ -158,9 +151,6 @@ public:
     // Connect the 'activated' (doubleclicked) signal of the form window to a
     // slot triggering the default action (of the task menu)
     static void setupDefaultAction(QDesignerFormWindowInterface *fw);
-
-public slots:
-    void resourceSetActivated(QtResourceSet *resourceSet, bool resourceSetChanged);
 
 private slots:
     void triggerDefaultAction(QWidget *w);

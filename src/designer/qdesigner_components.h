@@ -50,7 +50,6 @@ public:
     static QDesignerActionEditorInterface *createActionEditor(QDesignerFormEditorInterface *core, QWidget *parent);
 
     static QObject *createTaskMenu(QDesignerFormEditorInterface *core, QObject *parent);
-    static QWidget *createResourceEditor(QDesignerFormEditorInterface *core, QWidget *parent);
 };
 
 QT_END_NAMESPACE

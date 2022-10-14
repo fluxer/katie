@@ -50,7 +50,6 @@
 #include <QtDesigner/abstractformwindowcursor.h>
 #include <QtDesigner/propertysheet.h>
 #include <QtDesigner/abstractformeditor.h>
-#include <QtDesigner/abstractlanguage.h>
 #include <QtDesigner/QExtensionManager>
 
 #include <QtGui/QAction>
@@ -516,7 +515,7 @@ QList<QAction*> QDesignerTaskMenu::taskActions() const
                                     PromotionTaskMenu::ModeManagedMultiSelection : PromotionTaskMenu::ModeUnmanagedMultiSelection);
     d->m_promotionTaskMenu->addActions(formWindow, PromotionTaskMenu::LeadingSeparator, actions);
 
-    if (isMainContainer && !qt_extension<QDesignerLanguageExtension*>(formWindow->core()->extensionManager(), formWindow->core())) {
+    if (isMainContainer) {
         actions.append(d->m_separator4);
         actions.append(d->m_containerFakeMethods);
     }

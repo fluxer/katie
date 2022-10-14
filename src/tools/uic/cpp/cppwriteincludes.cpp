@@ -182,7 +182,6 @@ static const struct ClassTblData {
     { QLatin1String("QDesignerPromotionInterface"), QLatin1String("QtDesigner/abstractpromotioninterface.h") },
     { QLatin1String("QDesignerPropertyEditorInterface"), QLatin1String("QtDesigner/abstractpropertyeditor.h") },
     { QLatin1String("QDesignerResource"), QLatin1String("QtDesigner/qdesigner_resource.h") },
-    { QLatin1String("QDesignerResourceBrowserInterface"), QLatin1String("QtDesigner/abstractresourcebrowser.h") },
     { QLatin1String("QDesignerWidgetBoxInterface"), QLatin1String("QtDesigner/abstractwidgetbox.h") },
     { QLatin1String("QDesignerWidgetDataBaseInterface"), QLatin1String("QtDesigner/abstractwidgetdatabase.h") },
     { QLatin1String("QDesignerWidgetFactoryInterface"), QLatin1String("QtDesigner/abstractwidgetfactory.h") },

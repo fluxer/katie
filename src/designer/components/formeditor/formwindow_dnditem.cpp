@@ -24,7 +24,6 @@
 
 #include <ui4.h>
 #include "qdesigner_resource.h"
-#include "qtresourcemodel_p.h"
 
 #include <QtDesigner/abstractformeditor.h>
 
@@ -72,24 +71,8 @@ DomUI *FormWindowDnDItem::domUi() const
     if (widget() == 0 || form == 0)
         return 0;
 
-    QtResourceModel *resourceModel = form->core()->resourceModel();
-    QtResourceSet *currentResourceSet = resourceModel->currentResourceSet();
-    /* Short:
-     *   We need to activate the original resourceSet associated with a form
-     *   to properly generate the dom resource includes.
-     * Long:
-     *   widgetToDom() calls copy() on QDesignerResource. It generates the
-     *   Dom structure. In order to create DomResources properly we need to
-     *   have the associated ResourceSet active (QDesignerResource::saveResources()
-     *   queries the resource model for a qrc path for the given resource file:
-     *      qrcFile = m_core->resourceModel()->qrcPath(ri->text());
-     *   This works only when the resource file comes from the active
-     *   resourceSet */
-    resourceModel->setCurrentResourceSet(form->resourceSet());
-
     result = widgetToDom(widget(), form);
     const_cast<FormWindowDnDItem*>(this)->setDomUi(result);
-    resourceModel->setCurrentResourceSet(currentResourceSet);
     return result;
 }
 

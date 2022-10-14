@@ -37,7 +37,6 @@
 #include <QtDesigner/abstracticoncache.h>
 #include <QtDesigner/abstractactioneditor.h>
 #include <pluginmanager_p.h>
-#include "qtresourcemodel_p.h"
 #include <widgetfactory_p.h>
 #include <shared_settings_p.h>
 #include <formwindowbase_p.h>
@@ -75,7 +74,6 @@ public:
     QDesignerPromotionInterface *m_promotion;
     QDesignerIntrospectionInterface *m_introspection;
     QDesignerDialogGuiInterface *m_dialogGui;
-    QPointer<QtResourceModel> m_resourceModel;
     QList<QDesignerOptionsPageInterface*> m_optionsPages;
 };
 
@@ -84,8 +82,7 @@ QDesignerFormEditorInterfacePrivate::QDesignerFormEditorInterfacePrivate() :
     m_pluginManager(0),
     m_promotion(0),
     m_introspection(0),
-    m_dialogGui(0),
-    m_resourceModel(0)
+    m_dialogGui(0)
 {
 }
 
@@ -96,7 +93,6 @@ QDesignerFormEditorInterfacePrivate::~QDesignerFormEditorInterfacePrivate()
     delete m_promotion;
     delete m_introspection;
     delete m_dialogGui;
-    delete m_resourceModel;
     qDeleteAll(m_optionsPages);
 }
 
@@ -445,27 +441,6 @@ QDesignerPluginManager *QDesignerFormEditorInterface::pluginManager() const
 void QDesignerFormEditorInterface::setPluginManager(QDesignerPluginManager *pluginManager)
 {
     d->m_pluginManager = pluginManager;
-}
-
-/*!
-    \internal
-    \since 4.4
-    Returns the resource model used by the form editor.
-*/
-QtResourceModel *QDesignerFormEditorInterface::resourceModel() const
-{
-    return d->m_resourceModel;
-}
-
-/*!
-    \internal
-
-    Sets the resource model used by the form editor to the specified
-    \a resourceModel.
-*/
-void QDesignerFormEditorInterface::setResourceModel(QtResourceModel *resourceModel)
-{
-    d->m_resourceModel = resourceModel;
 }
 
 /*!

@@ -57,7 +57,6 @@ namespace QFormInternal
 class DomUI;
 class DomIncludes;
 class DomInclude;
-class DomResources;
 class DomResource;
 class DomActionGroup;
 class DomAction;
@@ -227,12 +226,6 @@ public:
     inline bool hasElementIncludes() const { return m_children & Includes; }
     void clearElementIncludes();
 
-    inline DomResources* elementResources() const { return m_resources; }
-    DomResources* takeElementResources();
-    void setElementResources(DomResources* a);
-    inline bool hasElementResources() const { return m_children & Resources; }
-    void clearElementResources();
-
     inline DomConnections* elementConnections() const { return m_connections; }
     DomConnections* takeElementConnections();
     void setElementConnections(DomConnections* a);
@@ -291,7 +284,6 @@ private:
     DomTabStops* m_tabStops;
     DomImages* m_images;
     DomIncludes* m_includes;
-    DomResources* m_resources;
     DomConnections* m_connections;
     DomDesignerData* m_designerdata;
     DomSlots* m_slots;
@@ -309,11 +301,10 @@ private:
         TabStops = 512,
         Images = 1024,
         Includes = 2048,
-        Resources = 4096,
-        Connections = 8192,
-        Designerdata = 16384,
-        Slots = 32768,
-        ButtonGroups = 65536
+        Connections = 4096,
+        Designerdata = 8192,
+        Slots = 16384,
+        ButtonGroups = 32768
     };
 
     DomUI(const DomUI &other);
@@ -389,45 +380,6 @@ private:
 
     DomInclude(const DomInclude &other);
     void operator = (const DomInclude&other);
-};
-
-class QUI_EXPORT DomResources {
-public:
-    DomResources();
-    ~DomResources();
-
-    void read(QXmlStreamReader &reader);
-    void write(QXmlStreamWriter &writer, const QString &tagName = QString()) const;
-    inline QString text() const { return m_text; }
-    inline void setText(const QString &s) { m_text = s; }
-
-    // attribute accessors
-    inline bool hasAttributeName() const { return m_has_attr_name; }
-    inline QString attributeName() const { return m_attr_name; }
-    inline void setAttributeName(const QString& a) { m_attr_name = a; m_has_attr_name = true; }
-    inline void clearAttributeName() { m_has_attr_name = false; }
-
-    // child element accessors
-    inline QList<DomResource*> elementInclude() const { return m_include; }
-    void setElementInclude(const QList<DomResource*>& a);
-
-private:
-    QString m_text;
-    void clear(bool clear_all = true);
-
-    // attribute data
-    QString m_attr_name;
-    bool m_has_attr_name;
-
-    // child element data
-    uint m_children;
-    QList<DomResource*> m_include;
-    enum Child {
-        Include = 1
-    };
-
-    DomResources(const DomResources &other);
-    void operator = (const DomResources&other);
 };
 
 class QUI_EXPORT DomResource {

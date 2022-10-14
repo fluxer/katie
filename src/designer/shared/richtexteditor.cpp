@@ -598,7 +598,7 @@ void RichTextEditorToolBar::insertLink()
 
 void RichTextEditorToolBar::insertImage()
 {
-    const QString path = IconSelector::choosePixmapResource(m_core, m_core->resourceModel(), QString(), this);
+    const QString path = IconSelector::choosePixmapFile(QString(), m_core->dialogGui(), this);
     if (!path.isEmpty())
         m_editor->insertHtml(QLatin1String("<img src=\"") + path + QLatin1String("\"/>"));
 }

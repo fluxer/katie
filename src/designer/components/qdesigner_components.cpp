@@ -24,7 +24,6 @@
 #include "actioneditor_p.h"
 #include "widgetdatabase_p.h"
 #include "widgetfactory_p.h"
-#include "qtresourceview_p.h"
 #include "qdesigner_integration_p.h"
 
 #include "formeditor/formeditor.h"
@@ -35,9 +34,7 @@
 #include "buddyeditor/buddyeditor_plugin.h"
 #include "tabordereditor/tabordereditor_plugin.h"
 
-#include <QtDesigner/abstractlanguage.h>
 #include <QtDesigner/QExtensionManager>
-#include <QtDesigner/abstractresourcebrowser.h>
 
 #include <QtCore/qplugin.h>
 #include <QtCore/QDir>
@@ -116,7 +113,7 @@ static inline void setMinorVersion(int minorVersion, int *qtVersion)
 }
 
 // Build the version-dependent name of the user widget box file, '$HOME.designer/widgetbox4.4.xml'
-static inline QString widgetBoxFileName(int qtVersion, const QDesignerLanguageExtension *lang = 0)
+static inline QString widgetBoxFileName(int qtVersion)
 {
     QString rc; {
         const QChar dot = QLatin1Char('.');
@@ -128,8 +125,6 @@ static inline QString widgetBoxFileName(int qtVersion, const QDesignerLanguageEx
         const int minor = qtMinorVersion(qtVersion);
         if (major >= 4 &&  minor >= 4)
             str << major << dot << minor;
-        if (lang)
-            str << dot << lang->uiExtension();
         str << QLatin1String(".xml");
     }
     return rc;
@@ -141,22 +136,12 @@ QDesignerWidgetBoxInterface *QDesignerComponents::createWidgetBox(QDesignerFormE
 {
     qdesigner_internal::WidgetBox *widgetBox = new qdesigner_internal::WidgetBox(core, parent);
 
-    const QDesignerLanguageExtension *lang = qt_extension<QDesignerLanguageExtension*>(core->extensionManager(), core);
-
     do {
-        if (lang) {
-            const QString languageWidgetBox = lang->widgetBoxContents();
-            if (!languageWidgetBox.isEmpty()) {
-                widgetBox->loadContents(lang->widgetBoxContents());
-                break;
-            }
-        }
-
         widgetBox->setFileName(QLatin1String(":/trolltech/widgetbox/widgetbox.xml"));
         widgetBox->load();
     } while (false);
 
-    const QString userWidgetBoxFile = widgetBoxFileName(QT_VERSION, lang);
+    const QString userWidgetBoxFile = widgetBoxFileName(QT_VERSION);
 
     widgetBox->setFileName(userWidgetBoxFile);
     if (!QFileInfo(userWidgetBoxFile).exists()) {
@@ -165,7 +150,7 @@ QDesignerWidgetBoxInterface *QDesignerComponents::createWidgetBox(QDesignerFormE
         if (const int minv = qtMinorVersion(QT_VERSION)) {
             int oldVersion = QT_VERSION;
             setMinorVersion(minv - 1, &oldVersion);
-            const QString oldWidgetBoxFile = widgetBoxFileName(oldVersion, lang);
+            const QString oldWidgetBoxFile = widgetBoxFileName(oldVersion);
             if (QFileInfo(oldWidgetBoxFile).exists())
                 QFile::copy(oldWidgetBoxFile, userWidgetBoxFile);
         }
@@ -194,26 +179,6 @@ QDesignerObjectInspectorInterface *QDesignerComponents::createObjectInspector(QD
 QDesignerActionEditorInterface *QDesignerComponents::createActionEditor(QDesignerFormEditorInterface *core, QWidget *parent)
 {
     return new qdesigner_internal::ActionEditor(core, parent);
-}
-
-/*!
-    Returns a new resource editor with the given \a parent for the \a core interface.*/
-QWidget *QDesignerComponents::createResourceEditor(QDesignerFormEditorInterface *core, QWidget *parent)
-{
-    if (QDesignerLanguageExtension *lang = qt_extension<QDesignerLanguageExtension*>(core->extensionManager(), core)) {
-        QWidget *w = lang->createResourceBrowser(parent);
-        if (w)
-            return w;
-    }
-    QtResourceView *resourceView = new QtResourceView(core, parent);
-    resourceView->setResourceModel(core->resourceModel());
-    resourceView->setSettingsKey(QLatin1String("ResourceBrowser"));
-    qdesigner_internal::QDesignerIntegration *designerIntegration = qobject_cast<qdesigner_internal::QDesignerIntegration *>(core->integration());
-    // Note for integrators: make sure you call createResourceEditor() after you instantiated your subclass of designer integration
-    // (designer doesn't do that since by default editing resources is enabled)
-    if (designerIntegration)
-        resourceView->setResourceEditingEnabled(designerIntegration->isResourceEditingEnabled());
-    return resourceView;
 }
 
 QT_END_NAMESPACE

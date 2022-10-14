@@ -32,7 +32,6 @@
 #include <QtDesigner/propertysheet.h>
 #include <QtDesigner/QExtensionManager>
 #include <QtDesigner/abstractwidgetdatabase.h>
-#include <QtDesigner/abstractlanguage.h>
 
 #include <QtGui/QAction>
 #include <QtGui/QWidget>
@@ -360,21 +359,18 @@ QStringList FormLayoutRowDialog::fieldWidgetClasses(QDesignerFormEditorInterface
         for (int i = 0; i < fwCount; i++)
             baseClasses.push_back(QLatin1String(fieldWidgetBaseClasses[i]));
         // Scan for custom widgets that inherit them and store them in a
-        // multimap of base class->custom widgets unless we have a language
-        // extension installed which might do funny things with custom widgets.
+        // multimap of base class->custom widgets
         ClassMap customClassMap;
-        if (qt_extension<QDesignerLanguageExtension *>(core->extensionManager(), core) == 0) {
-            const QDesignerWidgetDataBaseInterface *wdb = core->widgetDataBase();
-            const int wdbCount = wdb->count();
-            for (int w = 0; w < wdbCount; ++w) {
-                // Check for non-container custom types that extend the
-                // respective base class.
-                const QDesignerWidgetDataBaseItemInterface *dbItem = wdb->item(w);
-                if (!dbItem->isPromoted() && !dbItem->isContainer() && dbItem->isCustom()) {
-                    const int index = baseClasses.indexOf(dbItem->extends());
-                    if (index != -1)
-                    customClassMap.insert(baseClasses.at(index), dbItem->name());
-                }
+        const QDesignerWidgetDataBaseInterface *wdb = core->widgetDataBase();
+        const int wdbCount = wdb->count();
+        for (int w = 0; w < wdbCount; ++w) {
+            // Check for non-container custom types that extend the
+            // respective base class.
+            const QDesignerWidgetDataBaseItemInterface *dbItem = wdb->item(w);
+            if (!dbItem->isPromoted() && !dbItem->isContainer() && dbItem->isCustom()) {
+                const int index = baseClasses.indexOf(dbItem->extends());
+                if (index != -1)
+                customClassMap.insert(baseClasses.at(index), dbItem->name());
             }
         }
         // Compile final list, taking each base class and append custom widgets

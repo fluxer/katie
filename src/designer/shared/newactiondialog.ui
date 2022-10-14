@@ -255,7 +255,6 @@
   <tabstop>editActionText</tabstop>
   <tabstop>editObjectName</tabstop>
  </tabstops>
- <resources/>
  <connections>
   <connection>
    <sender>buttonBox</sender>

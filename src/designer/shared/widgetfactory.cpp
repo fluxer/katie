@@ -46,7 +46,6 @@
 #include <QtUiTools/customwidget.h>
 #include <QtDesigner/QExtensionManager>
 #include <QtDesigner/propertysheet.h>
-#include <QtDesigner/abstractlanguage.h>
 #include <QtDesigner/abstractformwindowmanager.h>
 #include <QtDesigner/abstractformwindowcursor.h>
 
@@ -253,12 +252,6 @@ QWidget*  WidgetFactory::createCustomWidget(const QString &className, QWidget *p
             knownCustomClasses.insert(className);
         }
     }
-    // Since a language plugin may lie about its names, like Qt Jambi
-    // does, return immediately here...
-    QDesignerLanguageExtension *lang =
-        qt_extension<QDesignerLanguageExtension *>(m_core->extensionManager(), m_core);
-    if (lang)
-        return rc;
 
     // Check for mismatched class names which is hard to track.
     // Perform literal comparison first, for which a meta object hack is in effect.

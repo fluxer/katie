@@ -74,7 +74,7 @@ public:
 private slots:
     void validateStyleSheet();
     void slotContextMenuRequested(const QPoint &pos);
-    void slotAddResource(const QString &property);
+    void slotAddImage(const QString &property);
     void slotAddColor(const QString &property);
     void slotAddFont();
     void slotRequestHelp();
@@ -90,7 +90,7 @@ private:
     StyleSheetEditor *m_editor;
     QLabel *m_validityLabel;
     QDesignerFormEditorInterface *m_core;
-    QAction *m_addResourceAction;
+    QAction *m_addImageAction;
     QAction *m_addColorAction;
     QAction *m_addFontAction;
 };
