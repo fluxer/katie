@@ -488,11 +488,6 @@ void QDesignerResource::saveDom(DomUI *ui, QWidget *widget)
         ui->setElementLayoutFunction(def);
     }
 
-    QString pixFunction = m_formWindow->pixmapFunction();
-    if (!pixFunction.isEmpty()) {
-        ui->setElementPixmapFunction(pixFunction);
-    }
-
     if (QDesignerExtraInfoExtension *extra = qt_extension<QDesignerExtraInfoExtension*>(core()->extensionManager(), core()))
         extra->saveUiExtraInfo(ui);
 
@@ -719,8 +714,6 @@ QWidget *QDesignerResource::create(DomUI *ui, QWidget *parentWidget)
             }
         }
         m_formWindow->setFormData(designerFormData);
-
-        m_formWindow->setPixmapFunction(ui->elementPixmapFunction());
 
         if (DomLayoutDefault *def = ui->elementLayoutDefault()) {
             m_formWindow->setLayoutDefault(def->attributeMargin(), def->attributeSpacing());

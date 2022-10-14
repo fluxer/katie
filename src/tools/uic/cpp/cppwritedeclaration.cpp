@@ -20,9 +20,7 @@
 ****************************************************************************/
 
 #include "cppwritedeclaration.h"
-#include "cppwriteicondeclaration.h"
 #include "cppwriteinitialization.h"
-#include "cppwriteiconinitialization.h"
 #include "driver.h"
 #include "ui4.h"
 #include "uic.h"
@@ -115,19 +113,6 @@ void WriteDeclaration::acceptUI(DomUI *node)
     m_output << "\n";
 
     WriteInitialization(m_uic).acceptUI(node);
-
-    if (node->elementImages()) {
-        m_output << "\n"
-            << "protected:\n"
-            << m_option.indent << "enum IconID\n"
-            << m_option.indent << "{\n";
-        WriteIconDeclaration(m_uic).acceptUI(node);
-
-        m_output << m_option.indent << m_option.indent << "unknown_ID\n"
-            << m_option.indent << "};\n";
-
-        WriteIconInitialization(m_uic).acceptUI(node);
-    }
 
     m_output << "};\n\n";
 

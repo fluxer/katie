@@ -72,9 +72,6 @@ public:
     virtual void layoutFunction(QString *margin, QString *spacing) = 0;
     virtual void setLayoutFunction(const QString &margin, const QString &spacing) = 0;
 
-    virtual QString pixmapFunction() const = 0;
-    virtual void setPixmapFunction(const QString &pixmapFunction) = 0;
-
     virtual QString exportMacro() const = 0;
     virtual void setExportMacro(const QString &exportMacro) = 0;
 

@@ -669,12 +669,6 @@ void WriteIncludes::acceptUI(DomUI *node)
     add(QLatin1String("QButtonGroup")); // ### only if it is really necessary
     add(QLatin1String("QHeaderView"));
 
-    if (m_uic->hasExternalPixmap() && m_uic->pixmapFunction() == QLatin1String("qPixmapFromMimeSource")) {
-        qWarning("%s: Warning: The form file has external pixmaps or qPixmapFromMimeSource() set as a pixmap function. "
-                 "This requires Qt 3 support, which is disabled. The resulting code will not compile.",
-                 qPrintable(m_uic->option().messagePrefix()));
-    }
-
     TreeWalker::acceptUI(node);
 
     writeHeaders(m_globalIncludes, true);

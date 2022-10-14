@@ -37,7 +37,6 @@ void DomUI::clear(bool clear_all)
     delete m_layoutFunction;
     delete m_customWidgets;
     delete m_tabStops;
-    delete m_images;
     delete m_includes;
     delete m_connections;
     delete m_designerdata;
@@ -61,7 +60,6 @@ void DomUI::clear(bool clear_all)
     m_layoutFunction = 0;
     m_customWidgets = 0;
     m_tabStops = 0;
-    m_images = 0;
     m_includes = 0;
     m_connections = 0;
     m_designerdata = 0;
@@ -84,7 +82,6 @@ DomUI::DomUI()
     m_layoutFunction = 0;
     m_customWidgets = 0;
     m_tabStops = 0;
-    m_images = 0;
     m_includes = 0;
     m_connections = 0;
     m_designerdata = 0;
@@ -99,7 +96,6 @@ DomUI::~DomUI()
     delete m_layoutFunction;
     delete m_customWidgets;
     delete m_tabStops;
-    delete m_images;
     delete m_includes;
     delete m_connections;
     delete m_designerdata;
@@ -173,10 +169,6 @@ void DomUI::read(QXmlStreamReader &reader)
                 setElementLayoutFunction(v);
                 continue;
             }
-            if (tag == QLatin1String("pixmapfunction")) {
-                setElementPixmapFunction(reader.readElementText());
-                continue;
-            }
             if (tag == QLatin1String("customwidgets")) {
                 DomCustomWidgets *v = new DomCustomWidgets();
                 v->read(reader);
@@ -187,12 +179,6 @@ void DomUI::read(QXmlStreamReader &reader)
                 DomTabStops *v = new DomTabStops();
                 v->read(reader);
                 setElementTabStops(v);
-                continue;
-            }
-            if (tag == QLatin1String("images")) {
-                DomImages *v = new DomImages();
-                v->read(reader);
-                setElementImages(v);
                 continue;
             }
             if (tag == QLatin1String("includes")) {
@@ -289,20 +275,12 @@ void DomUI::write(QXmlStreamWriter &writer, const QString &tagName) const
         m_layoutFunction->write(writer, QLatin1String("layoutfunction"));
     }
 
-    if (m_children & PixmapFunction) {
-        writer.writeTextElement(QLatin1String("pixmapfunction"), m_pixmapFunction);
-    }
-
     if (m_children & CustomWidgets) {
         m_customWidgets->write(writer, QLatin1String("customwidgets"));
     }
 
     if (m_children & TabStops) {
         m_tabStops->write(writer, QLatin1String("tabstops"));
-    }
-
-    if (m_children & Images) {
-        m_images->write(writer, QLatin1String("images"));
     }
 
     if (m_children & Includes) {
@@ -400,12 +378,6 @@ void DomUI::setElementLayoutFunction(DomLayoutFunction* a)
     m_layoutFunction = a;
 }
 
-void DomUI::setElementPixmapFunction(const QString& a)
-{
-    m_children |= PixmapFunction;
-    m_pixmapFunction = a;
-}
-
 DomCustomWidgets* DomUI::takeElementCustomWidgets() 
 {
     DomCustomWidgets* a = m_customWidgets;
@@ -434,21 +406,6 @@ void DomUI::setElementTabStops(DomTabStops* a)
     delete m_tabStops;
     m_children |= TabStops;
     m_tabStops = a;
-}
-
-DomImages* DomUI::takeElementImages() 
-{
-    DomImages* a = m_images;
-    m_images = 0;
-    m_children ^= Images;
-    return a;
-}
-
-void DomUI::setElementImages(DomImages* a)
-{
-    delete m_images;
-    m_children |= Images;
-    m_images = a;
 }
 
 DomIncludes* DomUI::takeElementIncludes() 
@@ -567,11 +524,6 @@ void DomUI::clearElementLayoutFunction()
     m_children &= ~LayoutFunction;
 }
 
-void DomUI::clearElementPixmapFunction()
-{
-    m_children &= ~PixmapFunction;
-}
-
 void DomUI::clearElementCustomWidgets()
 {
     delete m_customWidgets;
@@ -584,13 +536,6 @@ void DomUI::clearElementTabStops()
     delete m_tabStops;
     m_tabStops = 0;
     m_children &= ~TabStops;
-}
-
-void DomUI::clearElementImages()
-{
-    delete m_images;
-    m_images = 0;
-    m_children &= ~Images;
 }
 
 void DomUI::clearElementIncludes()
@@ -1353,261 +1298,6 @@ void DomButtonGroups::setElementButtonGroup(const QList<DomButtonGroup*>& a)
 {
     m_children |= ButtonGroup;
     m_buttonGroup = a;
-}
-
-void DomImages::clear(bool clear_all)
-{
-    qDeleteAll(m_image);
-    m_image.clear();
-
-    if (clear_all) {
-    m_text.clear();
-    }
-
-    m_children = 0;
-}
-
-DomImages::DomImages()
-{
-    m_children = 0;
-}
-
-DomImages::~DomImages()
-{
-    qDeleteAll(m_image);
-    m_image.clear();
-}
-
-void DomImages::read(QXmlStreamReader &reader)
-{
-
-    for (bool finished = false; !finished && !reader.hasError();) {
-        switch (reader.readNext()) {
-        case QXmlStreamReader::StartElement : {
-            const QString tag = reader.name().toString().toLower();
-            if (tag == QLatin1String("image")) {
-                DomImage *v = new DomImage();
-                v->read(reader);
-                m_image.append(v);
-                continue;
-            }
-            reader.raiseError(QLatin1String("Unexpected element ") + tag);
-        }
-            break;
-        case QXmlStreamReader::EndElement :
-            finished = true;
-            break;
-        case QXmlStreamReader::Characters :
-            if (!reader.isWhitespace())
-                m_text.append(reader.text().toString());
-            break;
-        default :
-            break;
-        }
-    }
-}
-
-
-void DomImages::write(QXmlStreamWriter &writer, const QString &tagName) const
-{
-    writer.writeStartElement(tagName.isEmpty() ? QString::fromUtf8("images") : tagName.toLower());
-
-    for (int i = 0; i < m_image.size(); ++i) {
-        DomImage* v = m_image[i];
-        v->write(writer, QLatin1String("image"));
-    }
-    if (!m_text.isEmpty())
-        writer.writeCharacters(m_text);
-
-    writer.writeEndElement();
-}
-
-void DomImages::setElementImage(const QList<DomImage*>& a)
-{
-    m_children |= Image;
-    m_image = a;
-}
-
-void DomImage::clear(bool clear_all)
-{
-    delete m_data;
-
-    if (clear_all) {
-    m_text.clear();
-    m_has_attr_name = false;
-    }
-
-    m_children = 0;
-    m_data = 0;
-}
-
-DomImage::DomImage()
-{
-    m_children = 0;
-    m_has_attr_name = false;
-    m_data = 0;
-}
-
-DomImage::~DomImage()
-{
-    delete m_data;
-}
-
-void DomImage::read(QXmlStreamReader &reader)
-{
-
-    foreach (const QXmlStreamAttribute &attribute, reader.attributes()) {
-        QStringRef name = attribute.name();
-        if (name == QLatin1String("name")) {
-            setAttributeName(attribute.value().toString());
-            continue;
-        }
-        reader.raiseError(QLatin1String("Unexpected attribute ") + name.toString());
-    }
-
-    for (bool finished = false; !finished && !reader.hasError();) {
-        switch (reader.readNext()) {
-        case QXmlStreamReader::StartElement : {
-            const QString tag = reader.name().toString().toLower();
-            if (tag == QLatin1String("data")) {
-                DomImageData *v = new DomImageData();
-                v->read(reader);
-                setElementData(v);
-                continue;
-            }
-            reader.raiseError(QLatin1String("Unexpected element ") + tag);
-        }
-            break;
-        case QXmlStreamReader::EndElement :
-            finished = true;
-            break;
-        case QXmlStreamReader::Characters :
-            if (!reader.isWhitespace())
-                m_text.append(reader.text().toString());
-            break;
-        default :
-            break;
-        }
-    }
-}
-
-
-void DomImage::write(QXmlStreamWriter &writer, const QString &tagName) const
-{
-    writer.writeStartElement(tagName.isEmpty() ? QString::fromUtf8("image") : tagName.toLower());
-
-    if (hasAttributeName())
-        writer.writeAttribute(QLatin1String("name"), attributeName());
-
-    if (m_children & Data) {
-        m_data->write(writer, QLatin1String("data"));
-    }
-
-    if (!m_text.isEmpty())
-        writer.writeCharacters(m_text);
-
-    writer.writeEndElement();
-}
-
-DomImageData* DomImage::takeElementData() 
-{
-    DomImageData* a = m_data;
-    m_data = 0;
-    m_children ^= Data;
-    return a;
-}
-
-void DomImage::setElementData(DomImageData* a)
-{
-    delete m_data;
-    m_children |= Data;
-    m_data = a;
-}
-
-void DomImage::clearElementData()
-{
-    delete m_data;
-    m_data = 0;
-    m_children &= ~Data;
-}
-
-void DomImageData::clear(bool clear_all)
-{
-
-    if (clear_all) {
-    m_text = QLatin1String("");
-    m_has_attr_format = false;
-    m_has_attr_length = false;
-    m_attr_length = 0;
-    }
-
-    m_children = 0;
-}
-
-DomImageData::DomImageData()
-{
-    m_children = 0;
-    m_has_attr_format = false;
-    m_has_attr_length = false;
-    m_attr_length = 0;
-    m_text = QLatin1String("");
-}
-
-DomImageData::~DomImageData()
-{
-}
-
-void DomImageData::read(QXmlStreamReader &reader)
-{
-
-    foreach (const QXmlStreamAttribute &attribute, reader.attributes()) {
-        QStringRef name = attribute.name();
-        if (name == QLatin1String("format")) {
-            setAttributeFormat(attribute.value().toString());
-            continue;
-        }
-        if (name == QLatin1String("length")) {
-            setAttributeLength(attribute.value().toString().toInt());
-            continue;
-        }
-        reader.raiseError(QLatin1String("Unexpected attribute ") + name.toString());
-    }
-
-    for (bool finished = false; !finished && !reader.hasError();) {
-        switch (reader.readNext()) {
-        case QXmlStreamReader::StartElement : {
-            const QString tag = reader.name().toString().toLower();
-            reader.raiseError(QLatin1String("Unexpected element ") + tag);
-        }
-            break;
-        case QXmlStreamReader::EndElement :
-            finished = true;
-            break;
-        case QXmlStreamReader::Characters :
-            if (!reader.isWhitespace())
-                m_text.append(reader.text().toString());
-            break;
-        default :
-            break;
-        }
-    }
-}
-
-
-void DomImageData::write(QXmlStreamWriter &writer, const QString &tagName) const
-{
-    writer.writeStartElement(tagName.isEmpty() ? QString::fromUtf8("imagedata") : tagName.toLower());
-
-    if (hasAttributeFormat())
-        writer.writeAttribute(QLatin1String("format"), attributeFormat());
-
-    if (hasAttributeLength())
-        writer.writeAttribute(QLatin1String("length"), QString::number(attributeLength()));
-
-    if (!m_text.isEmpty())
-        writer.writeCharacters(m_text);
-
-    writer.writeEndElement();
 }
 
 void DomCustomWidgets::clear(bool clear_all)

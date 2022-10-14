@@ -20,7 +20,6 @@
 ****************************************************************************/
 
 #include "cppwriteinitialization.h"
-#include "cppwriteiconinitialization.h"
 #include "driver.h"
 #include "ui4.h"
 #include "utils.h"
@@ -446,7 +445,6 @@ WriteInitialization::WriteInitialization(Uic *uic)
 
 void WriteInitialization::acceptUI(DomUI *node)
 {
-    m_registeredImages.clear();
     m_actionGroupChain.push(0);
     m_widgetChain.push(0);
     m_layoutChain.push(0);
@@ -456,9 +454,6 @@ void WriteInitialization::acceptUI(DomUI *node)
 
     if (node->elementCustomWidgets())
         TreeWalker::acceptCustomWidgets(node->elementCustomWidgets());
-
-    if (node->elementImages())
-        TreeWalker::acceptImages(node->elementImages());
 
     if (m_option.generateImplemetation)
         m_output << "#include <" << m_driver->headerFileName() << ">\n\n";
@@ -1787,21 +1782,8 @@ QString WriteInitialization::pixCall(const QString &t, const QString &text) cons
         type += QLatin1String("()");
         return type;
     }
-    if (hasImage(text)) {
-        QString rc = WriteIconInitialization::iconFromDataFunction();
-        rc += QLatin1Char('(');
-        rc += text;
-        rc += QLatin1String("_ID)");
-        return rc;
-    }
 
-    QString pixFunc = m_uic->pixmapFunction();
-    if (pixFunc.isEmpty())
-        pixFunc = QLatin1String("QString::fromUtf8");
-
-    type += QLatin1Char('(');
-    type += pixFunc;
-    type += QLatin1Char('(');
+    type += QLatin1String("(QString::fromUtf8(");
     type += fixString(text, m_dindent);
     type += QLatin1String("))");
     return type;
@@ -2290,19 +2272,6 @@ void WriteInitialization::acceptConnection(DomConnection *connection)
         << ", "
         << "SLOT("<<connection->elementSlot()<<')'
         << ");\n";
-}
-
-bool WriteInitialization::hasImage(const QString &name) const
-{
-    return m_registeredImages.contains(name);
-}
-
-void WriteInitialization::acceptImage(DomImage *image)
-{
-    if (!image->hasAttributeName())
-        return;
-
-    m_registeredImages.insert(image->attributeName(), image);
 }
 
 static void generateMultiDirectiveBegin(QTextStream &outputStream, const QSet<QString> &directives)

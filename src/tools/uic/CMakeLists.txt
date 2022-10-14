@@ -19,9 +19,6 @@ set(UIC_SOURCES
     ${CMAKE_CURRENT_SOURCE_DIR}/treewalker.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/ui4.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/cpp/cppwritedeclaration.cpp
-    ${CMAKE_CURRENT_SOURCE_DIR}/cpp/cppwriteicondata.cpp
-    ${CMAKE_CURRENT_SOURCE_DIR}/cpp/cppwriteicondeclaration.cpp
-    ${CMAKE_CURRENT_SOURCE_DIR}/cpp/cppwriteiconinitialization.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/cpp/cppwriteincludes.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/cpp/cppwriteinitialization.cpp
 )

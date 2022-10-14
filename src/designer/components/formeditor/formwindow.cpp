@@ -2905,16 +2905,6 @@ void FormWindow::setLayoutFunction(const QString &margin, const QString &spacing
     m_spacingFunction = spacing;
 }
 
-QString FormWindow::pixmapFunction() const
-{
-    return m_pixmapFunction;
-}
-
-void FormWindow::setPixmapFunction(const QString &pixmapFunction)
-{
-    m_pixmapFunction = pixmapFunction;
-}
-
 QStringList FormWindow::includeHints() const
 {
     return m_includeHints;

@@ -51,8 +51,6 @@ class DomCustomWidget;
 class DomAction;
 class DomActionGroup;
 class DomActionRef;
-class DomImages;
-class DomImage;
 class DomItem;
 class DomIncludes;
 class DomInclude;
@@ -93,8 +91,6 @@ struct TreeWalker
     virtual void acceptDateTime(DomDateTime *dateTime);
     virtual void acceptProperty(DomProperty *property);
     typedef QList<DomWidget *> DomWidgets;
-    virtual void acceptImages(DomImages *images);
-    virtual void acceptImage(DomImage *image);
     virtual void acceptIncludes(DomIncludes *includes);
     virtual void acceptInclude(DomInclude *incl);
     virtual void acceptAction(DomAction *action);

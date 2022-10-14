@@ -15,7 +15,6 @@
         <xsl:when test="$text='exportmacro'">exportMacro</xsl:when>
         <xsl:when test="$text='layoutdefault'">layoutDefault</xsl:when>
         <xsl:when test="$text='layoutfunction'">layoutFunction</xsl:when>
-        <xsl:when test="$text='pixmapfunction'">pixmapFunction</xsl:when>
         <xsl:when test="$text='customwidgets'">customWidgets</xsl:when>
         <xsl:when test="$text='tabstops'">tabStops</xsl:when>
         <xsl:when test="$text='tabstop'">tabStop</xsl:when>

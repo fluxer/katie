@@ -95,13 +95,12 @@ QT_BEGIN_NAMESPACE
 
     You can also retrieve information about where the form is stored
     using absoluteDir(), its include files using includeHints(), and
-    its layout and pixmap functions using layoutDefault(),
-    layoutFunction() and pixmapFunction(). You can find out whether
-    the form window has been modified (but not saved) or not, using
-    the isDirty() function. You can retrieve its author(), its
-    contents(), its fileName(), associated comment() and
-    exportMacro(), its mainContainer(), its features(), its grid() and
-    its resourceFiles().
+    its layout functions using layoutDefault() and layoutFunction().
+    You can find out whether the form window has been modified (but
+    not saved) or not, using the isDirty() function. You can retrieve
+    its author(), its contents(), its fileName(), associated comment()
+    and exportMacro(), its  mainContainer(), its features(), its grid()
+    and its resourceFiles().
 
     The interface provides you with functions and slots allowing you
     to alter most of this information as well. The exception is the
@@ -337,24 +336,6 @@ QDesignerFormWindowInterface *QDesignerFormWindowInterface::findFormWindow(QObje
     form.
 
     \sa layoutFunction()
-*/
-
-/*!
-    \fn virtual QString QDesignerFormWindowInterface::pixmapFunction() const
-
-    Returns the name of the function used to load pixmaps into the
-    form window.
-
-    \sa setPixmapFunction()
-*/
-
-/*!
-    \fn virtual void QDesignerFormWindowInterface::setPixmapFunction(const QString &pixmapFunction)
-
-    Sets the function used to load pixmaps into the form window
-    to the given \a pixmapFunction.
-
-    \sa pixmapFunction()
 */
 
 /*!

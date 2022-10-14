@@ -19,6 +19,5 @@
   <widget class="QWidget" name="centralwidget" />
   <widget class="QStatusBar" name="statusbar" />
  </widget>
- <pixmapfunction></pixmapfunction>
  <connections/>
 </ui>

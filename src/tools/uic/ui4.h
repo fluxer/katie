@@ -63,9 +63,6 @@ class DomAction;
 class DomActionRef;
 class DomButtonGroup;
 class DomButtonGroups;
-class DomImages;
-class DomImage;
-class DomImageData;
 class DomCustomWidgets;
 class DomHeader;
 class DomCustomWidget;
@@ -197,11 +194,6 @@ public:
     inline bool hasElementLayoutFunction() const { return m_children & LayoutFunction; }
     void clearElementLayoutFunction();
 
-    inline QString elementPixmapFunction() const { return m_pixmapFunction; }
-    void setElementPixmapFunction(const QString& a);
-    inline bool hasElementPixmapFunction() const { return m_children & PixmapFunction; }
-    void clearElementPixmapFunction();
-
     inline DomCustomWidgets* elementCustomWidgets() const { return m_customWidgets; }
     DomCustomWidgets* takeElementCustomWidgets();
     void setElementCustomWidgets(DomCustomWidgets* a);
@@ -213,12 +205,6 @@ public:
     void setElementTabStops(DomTabStops* a);
     inline bool hasElementTabStops() const { return m_children & TabStops; }
     void clearElementTabStops();
-
-    inline DomImages* elementImages() const { return m_images; }
-    DomImages* takeElementImages();
-    void setElementImages(DomImages* a);
-    inline bool hasElementImages() const { return m_children & Images; }
-    void clearElementImages();
 
     inline DomIncludes* elementIncludes() const { return m_includes; }
     DomIncludes* takeElementIncludes();
@@ -279,10 +265,8 @@ private:
     DomWidget* m_widget;
     DomLayoutDefault* m_layoutDefault;
     DomLayoutFunction* m_layoutFunction;
-    QString m_pixmapFunction;
     DomCustomWidgets* m_customWidgets;
     DomTabStops* m_tabStops;
-    DomImages* m_images;
     DomIncludes* m_includes;
     DomConnections* m_connections;
     DomDesignerData* m_designerdata;
@@ -296,15 +280,13 @@ private:
         Widget = 16,
         LayoutDefault = 32,
         LayoutFunction = 64,
-        PixmapFunction = 128,
-        CustomWidgets = 256,
-        TabStops = 512,
-        Images = 1024,
-        Includes = 2048,
-        Connections = 4096,
-        Designerdata = 8192,
-        Slots = 16384,
-        ButtonGroups = 32768
+        CustomWidgets = 128,
+        TabStops = 256,
+        Includes = 512,
+        Connections = 1024,
+        Designerdata = 2048,
+        Slots = 4096,
+        ButtonGroups = 8192
     };
 
     DomUI(const DomUI &other);
@@ -625,119 +607,6 @@ private:
 
     DomButtonGroups(const DomButtonGroups &other);
     void operator = (const DomButtonGroups&other);
-};
-
-class QUI_EXPORT DomImages {
-public:
-    DomImages();
-    ~DomImages();
-
-    void read(QXmlStreamReader &reader);
-    void write(QXmlStreamWriter &writer, const QString &tagName = QString()) const;
-    inline QString text() const { return m_text; }
-    inline void setText(const QString &s) { m_text = s; }
-
-    // attribute accessors
-    // child element accessors
-    inline QList<DomImage*> elementImage() const { return m_image; }
-    void setElementImage(const QList<DomImage*>& a);
-
-private:
-    QString m_text;
-    void clear(bool clear_all = true);
-
-    // attribute data
-    // child element data
-    uint m_children;
-    QList<DomImage*> m_image;
-    enum Child {
-        Image = 1
-    };
-
-    DomImages(const DomImages &other);
-    void operator = (const DomImages&other);
-};
-
-class QUI_EXPORT DomImage {
-public:
-    DomImage();
-    ~DomImage();
-
-    void read(QXmlStreamReader &reader);
-    void write(QXmlStreamWriter &writer, const QString &tagName = QString()) const;
-    inline QString text() const { return m_text; }
-    inline void setText(const QString &s) { m_text = s; }
-
-    // attribute accessors
-    inline bool hasAttributeName() const { return m_has_attr_name; }
-    inline QString attributeName() const { return m_attr_name; }
-    inline void setAttributeName(const QString& a) { m_attr_name = a; m_has_attr_name = true; }
-    inline void clearAttributeName() { m_has_attr_name = false; }
-
-    // child element accessors
-    inline DomImageData* elementData() const { return m_data; }
-    DomImageData* takeElementData();
-    void setElementData(DomImageData* a);
-    inline bool hasElementData() const { return m_children & Data; }
-    void clearElementData();
-
-private:
-    QString m_text;
-    void clear(bool clear_all = true);
-
-    // attribute data
-    QString m_attr_name;
-    bool m_has_attr_name;
-
-    // child element data
-    uint m_children;
-    DomImageData* m_data;
-    enum Child {
-        Data = 1
-    };
-
-    DomImage(const DomImage &other);
-    void operator = (const DomImage&other);
-};
-
-class QUI_EXPORT DomImageData {
-public:
-    DomImageData();
-    ~DomImageData();
-
-    void read(QXmlStreamReader &reader);
-    void write(QXmlStreamWriter &writer, const QString &tagName = QString()) const;
-    inline QString text() const { return m_text; }
-    inline void setText(const QString &s) { m_text = s; }
-
-    // attribute accessors
-    inline bool hasAttributeFormat() const { return m_has_attr_format; }
-    inline QString attributeFormat() const { return m_attr_format; }
-    inline void setAttributeFormat(const QString& a) { m_attr_format = a; m_has_attr_format = true; }
-    inline void clearAttributeFormat() { m_has_attr_format = false; }
-
-    inline bool hasAttributeLength() const { return m_has_attr_length; }
-    inline int attributeLength() const { return m_attr_length; }
-    inline void setAttributeLength(int a) { m_attr_length = a; m_has_attr_length = true; }
-    inline void clearAttributeLength() { m_has_attr_length = false; }
-
-    // child element accessors
-private:
-    QString m_text;
-    void clear(bool clear_all = true);
-
-    // attribute data
-    QString m_attr_format;
-    bool m_has_attr_format;
-
-    int m_attr_length;
-    bool m_has_attr_length;
-
-    // child element data
-    uint m_children;
-
-    DomImageData(const DomImageData &other);
-    void operator = (const DomImageData&other);
 };
 
 class QUI_EXPORT DomCustomWidgets {

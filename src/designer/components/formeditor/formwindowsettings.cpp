@@ -51,8 +51,6 @@ struct FormWindowData {
     QString marginFunction;
     QString spacingFunction;
 
-    QString pixFunction;
-
     QString author;
 
     QStringList includeHints;
@@ -68,9 +66,9 @@ QDebug operator<<(QDebug str, const  FormWindowData &d)
 {
     str.nospace() << "LayoutDefault=" << d.layoutDefaultEnabled        << ',' << d.defaultMargin
         <<  ',' << d.defaultSpacing << " LayoutFunctions=" << d.layoutFunctionsEnabled << ','
-        << d.marginFunction << ',' << d.spacingFunction << " PixFunction="
-        << d.pixFunction << " Author=" << d.author << " Hints=" << d.includeHints
-        << " Grid=" << d.hasFormGrid << d.grid.deltaX() << d.grid.deltaY() << '\n';
+        << d.marginFunction << ',' << d.spacingFunction << " Author=" << d.author
+        << " Hints=" << d.includeHints << " Grid=" << d.hasFormGrid
+        << d.grid.deltaX() << d.grid.deltaY() << '\n';
     return str;
 }
 
@@ -91,7 +89,6 @@ bool FormWindowData::equals(const FormWindowData &rhs) const
            layoutFunctionsEnabled == rhs.layoutFunctionsEnabled &&
            marginFunction         == rhs.marginFunction &&
            spacingFunction        == rhs.spacingFunction &&
-           pixFunction            == rhs.pixFunction  &&
            author                 == rhs.author &&
            includeHints           == rhs.includeHints &&
            hasFormGrid            == rhs.hasFormGrid &&
@@ -116,8 +113,6 @@ void FormWindowData::fromFormWindow(FormWindowBase* fw)
     fw->layoutFunction(&marginFunction, &spacingFunction);
     layoutFunctionsEnabled = !marginFunction.isEmpty() || !spacingFunction.isEmpty();
 
-    pixFunction = fw->pixmapFunction();
-
     author = fw->author();
 
     includeHints = fw->includeHints();
@@ -130,7 +125,6 @@ void FormWindowData::fromFormWindow(FormWindowBase* fw)
 void FormWindowData::applyToFormWindow(FormWindowBase* fw) const
 {
     fw->setAuthor(author);
-    fw->setPixmapFunction(pixFunction);
 
     if (layoutDefaultEnabled) {
         fw->setLayoutDefault(defaultMargin, defaultSpacing);
@@ -188,12 +182,6 @@ FormWindowData FormWindowSettings::data() const
     FormWindowData rc;
     rc.author = m_ui->authorLineEdit->text();
 
-    if (m_ui->pixmapFunctionGroupBox->isChecked()) {
-        rc.pixFunction = m_ui->pixmapFunctionLineEdit->text();
-    } else {
-        rc.pixFunction.clear();
-    }
-
     rc.layoutDefaultEnabled = m_ui->layoutDefaultGroupBox->isChecked();
     rc.defaultMargin = m_ui->defaultMarginSpinBox->value();
     rc.defaultSpacing = m_ui->defaultSpacingSpinBox->value();
@@ -231,9 +219,6 @@ void FormWindowSettings::setData(const FormWindowData &data)
     m_ui->layoutFunctionGroupBox->setChecked(data.layoutFunctionsEnabled);
     m_ui->marginFunctionLineEdit->setText(data.marginFunction);
     m_ui->spacingFunctionLineEdit->setText(data.spacingFunction);
-
-    m_ui->pixmapFunctionLineEdit->setText(data.pixFunction);
-    m_ui->pixmapFunctionGroupBox->setChecked(!data.pixFunction.isEmpty());
 
     m_ui->authorLineEdit->setText(data.author);
 

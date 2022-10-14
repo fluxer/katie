@@ -32,7 +32,6 @@
    </property>
   </widget>
  </widget>
- <pixmapfunction></pixmapfunction>
  <connections>
   <connection>
    <sender>buttonBox</sender>

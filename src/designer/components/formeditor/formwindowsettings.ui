@@ -132,50 +132,6 @@
      </item>
     </layout>
    </item>
-   <item row="4" column="1">
-    <layout class="QHBoxLayout">
-     <property name="spacing">
-      <number>6</number>
-     </property>
-     <property name="margin">
-      <number>0</number>
-     </property>
-     <item>
-      <widget class="QGroupBox" name="pixmapFunctionGroupBox">
-       <property name="title">
-        <string>&amp;Pixmap Function</string>
-       </property>
-       <property name="checkable">
-        <bool>true</bool>
-       </property>
-       <layout class="QVBoxLayout">
-        <property name="spacing">
-         <number>6</number>
-        </property>
-        <property name="margin">
-         <number>8</number>
-        </property>
-        <item>
-         <widget class="QLineEdit" name="pixmapFunctionLineEdit"/>
-        </item>
-       </layout>
-      </widget>
-     </item>
-    </layout>
-   </item>
-   <item row="5" column="1">
-    <spacer>
-     <property name="orientation">
-      <enum>Qt::Vertical</enum>
-     </property>
-     <property name="sizeHint" stdset="0">
-      <size>
-       <width>111</width>
-       <height>115</height>
-      </size>
-     </property>
-    </spacer>
-   </item>
    <item row="7" column="0" colspan="2">
     <widget class="QDialogButtonBox" name="buttonBox">
      <property name="orientation">
@@ -235,7 +191,7 @@
     </widget>
    </item>
    <item row="1" column="0" colspan="2">
-    <widget class="QGroupBox" name="pixmapFunctionGroupBox_2">
+    <widget class="QGroupBox" name="authorGroupBox_2">
      <property name="title">
       <string>&amp;Author</string>
      </property>
@@ -268,40 +224,6 @@
   <tabstop>defaultSpacingSpinBox</tabstop>
   <tabstop>marginFunctionLineEdit</tabstop>
   <tabstop>spacingFunctionLineEdit</tabstop>
-  <tabstop>pixmapFunctionLineEdit</tabstop>
  </tabstops>
- <connections>
-  <connection>
-   <sender>buttonBox</sender>
-   <signal>accepted()</signal>
-   <receiver>FormWindowSettings</receiver>
-   <slot>accept()</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>294</x>
-     <y>442</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>150</x>
-     <y>459</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>buttonBox</sender>
-   <signal>rejected()</signal>
-   <receiver>FormWindowSettings</receiver>
-   <slot>reject()</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>373</x>
-     <y>444</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>357</x>
-     <y>461</y>
-    </hint>
-   </hints>
-  </connection>
- </connections>
+ <connections/>
 </ui>

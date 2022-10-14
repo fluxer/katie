@@ -31,9 +31,6 @@ void TreeWalker::acceptUI(DomUI *ui)
         acceptButtonGroups(domButtonGroups);
 
     acceptTabStops(ui->elementTabStops());
-
-    if (ui->elementImages())
-        acceptImages(ui->elementImages());
 }
 
 void TreeWalker::acceptLayoutDefault(DomLayoutDefault *layoutDefault)
@@ -239,17 +236,6 @@ void TreeWalker::acceptActionGroup(DomActionGroup *actionGroup)
 void TreeWalker::acceptActionRef(DomActionRef *actionRef)
 {
     Q_UNUSED(actionRef);
-}
-
-void TreeWalker::acceptImages(DomImages *images)
-{
-    for (int i=0; i<images->elementImage().size(); ++i)
-        acceptImage(images->elementImage().at(i));
-}
-
-void TreeWalker::acceptImage(DomImage *image)
-{
-    Q_UNUSED(image);
 }
 
 void TreeWalker::acceptIncludes(DomIncludes *includes)
