@@ -290,7 +290,6 @@ static const struct ClassTblData {
     { QLatin1String("QGridLayout"), QLatin1String("QtGui/qgridlayout.h") },
     { QLatin1String("QGroupBox"), QLatin1String("QtGui/qgroupbox.h") },
     { QLatin1String("QGuiPlatformPlugin"), QLatin1String("QtGui/qguiplatformplugin.h") },
-    { QLatin1String("QGuiPlatformPluginInterface"), QLatin1String("QtGui/qguiplatformplugin.h") },
     { QLatin1String("QHBoxLayout"), QLatin1String("QtGui/qboxlayout.h") },
     { QLatin1String("QHash"), QLatin1String("QtCore/qhash.h") },
     { QLatin1String("QHashData"), QLatin1String("QtCore/qhash.h") },
