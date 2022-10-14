@@ -1005,12 +1005,11 @@ QPixmap *QItemDelegate::selected(const QPixmap &pixmap, const QPalette &palette,
         painter.fillRect(0, 0, img.width(), img.height(), color);
         painter.end();
 
-        QPixmap selected = QPixmap::fromImage(img);
         int n = (img.byteCount() >> 10) + 1;
         if (QPixmapCache::cacheLimit() < n)
             QPixmapCache::setCacheLimit(n);
 
-        QPixmapCache::insert(key, selected);
+        QPixmapCache::insert(key, QPixmap::fromImage(img));
         pm = QPixmapCache::find(key);
     }
     return pm;
