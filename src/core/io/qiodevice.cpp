@@ -898,9 +898,8 @@ qint64 QIODevice::read(char *data, qint64 maxSize)
 QByteArray QIODevice::read(qint64 maxSize)
 {
     Q_D(QIODevice);
-    QByteArray result;
 
-    CHECK_MAXLEN(read, result);
+    CHECK_MAXLEN(read, QByteArray());
 
 #if defined QIODEVICE_DEBUG
     printf("%p QIODevice::read(%lld), d->pos = %lld, d->buffer.size() = %lld\n",
@@ -914,6 +913,7 @@ QByteArray QIODevice::read(qint64 maxSize)
         maxSize = QBYTEARRAY_MAX - 1;
     }
 
+    QByteArray result;
     qint64 readBytes = 0;
     if (maxSize) {
         result.resize(int(maxSize));
@@ -1135,9 +1135,8 @@ qint64 QIODevice::readLine(char *data, qint64 maxSize)
 QByteArray QIODevice::readLine(qint64 maxSize)
 {
     Q_D(QIODevice);
-    QByteArray result;
 
-    CHECK_MAXLEN(readLine, result);
+    CHECK_MAXLEN(readLine, QByteArray());
 
 #if defined QIODEVICE_DEBUG
     printf("%p QIODevice::readLine(%lld), d->pos = %lld, d->buffer.size() = %lld\n",
@@ -1151,7 +1150,7 @@ QByteArray QIODevice::readLine(qint64 maxSize)
         maxSize = QBYTEARRAY_MAX - 1;
     }
 
-    result.resize(int(maxSize));
+    QByteArray result(int(maxSize), Qt::Uninitialized);
     qint64 readBytes = 0;
     if (!result.size()) {
         // If resize fails or maxSize == 0, read incrementally
