@@ -24,9 +24,7 @@
 
 #include <QtCore/qiodevice.h>
 
-
 QT_BEGIN_NAMESPACE
-
 
 class QByteArray;
 
@@ -40,21 +38,6 @@ template <class Key, class T> class QMap;
 class Q_CORE_EXPORT QDataStream
 {
 public:
-    enum Version {
-        Qt_4_6 = 12,
-        Qt_4_7 = Qt_4_6,
-        Qt_4_8 = Qt_4_7,
-        Qt_4_9 = Qt_4_8,
-        Qt_4_10 = Qt_4_9,
-        Qt_4_11 = Qt_4_10,
-        Qt_4_12 = 13,
-#if QT_VERSION > 0x041200
-#error Add the datastream version for this version
-        Qt_4_13 = Qt_4_12
-#endif
-        Qt_Default = Qt_4_12
-    };
-
     enum ByteOrder {
         BigEndian = Q_BIG_ENDIAN,
         LittleEndian = Q_LITTLE_ENDIAN,
@@ -93,9 +76,6 @@ public:
 
     ByteOrder byteOrder() const;
     void setByteOrder(ByteOrder);
-
-    Version version() const;
-    void setVersion(Version);
 
     QDataStream &operator>>(qint8 &i);
     QDataStream &operator>>(quint8 &i);
@@ -139,7 +119,6 @@ private:
     bool owndev;
     bool noswap;
     ByteOrder byteorder;
-    Version ver;
     DataStatus q_status;
     FloatingPointPrecision floatingPrecision;
 };
@@ -154,12 +133,6 @@ inline QIODevice *QDataStream::device() const
 
 inline QDataStream::ByteOrder QDataStream::byteOrder() const
 { return byteorder; }
-
-inline QDataStream::Version QDataStream::version() const
-{ return ver; }
-
-inline void QDataStream::setVersion(QDataStream::Version v)
-{ ver = v; }
 
 inline QDataStream &QDataStream::operator>>(quint8 &i)
 { return *this >> reinterpret_cast<qint8&>(i); }

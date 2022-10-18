@@ -136,9 +136,6 @@ private slots:
 
     void stream_QByteArray2();
 
-    void setVersion_data();
-    void setVersion();
-
     void skipRawData_data();
     void skipRawData();
 
@@ -234,33 +231,6 @@ private:
 
 private:
     QString svgFile;
-};
-
-static int NColorRoles[] = {
-    QPalette::NoRole,              // No Version
-    QPalette::NoRole,              // Qt_1_0
-    QPalette::HighlightedText + 1, // Qt_2_0
-    QPalette::HighlightedText + 1, // Qt_2_1
-    QPalette::LinkVisited + 1,     // Qt_3_0
-    QPalette::HighlightedText + 1, // Qt_3_1
-    QPalette::HighlightedText + 1, // Qt_3_3
-    QPalette::HighlightedText + 1, // Qt_4_0, Qt_4_1
-    QPalette::HighlightedText + 1, // Qt_4_2
-    QPalette::AlternateBase + 1,   // Qt_4_3
-    QPalette::ToolTipText + 1,     // Qt_4_4
-    QPalette::ToolTipText + 1,     // Qt_4_5
-    QPalette::ToolTipText + 1,     // Qt_4_6
-    QPalette::ToolTipText + 1,     // Qt_4_7
-    QPalette::ToolTipText + 1,     // Qt_4_8
-    QPalette::ToolTipText + 1,     // Qt_4_9
-    QPalette::ToolTipText + 1,     // Qt_4_10
-    QPalette::ToolTipText + 1,     // Qt_4_11
-    QPalette::ToolTipText + 1,     // Qt_4_12
-#if QT_VERSION > 0x041200
-#error Add the datastream color role for this version
-    QPalette::ToolTipText + 1,     // Qt_4_13
-#endif
-    0                              // add the correct value for Qt_4_13 here later
 };
 
 // Testing get/set functions
@@ -2112,99 +2082,6 @@ void tst_QDataStream::stream_QByteArray2()
         QCOMPARE(res, QByteArray());
         QVERIFY(res.isEmpty());
         QVERIFY(res.isNull());
-    }
-}
-
-void tst_QDataStream::setVersion_data()
-{
-    QTest::addColumn<int>("vers");
-    QDataStream latest;
-
-    for (int vers = QDataStream::Qt_4_6; vers <= latest.version(); ++vers)
-        QTest::newRow(qPrintable(QString("v_%1").arg(vers))) << vers;
-
-
-}
-
-void tst_QDataStream::setVersion()
-{
-    QDataStream latest;
-    QFETCH(int, vers);
-
-    /*
-    Test QKeySequence.
-    */
-    QByteArray ba1;
-    {
-        QDataStream out(&ba1, QIODevice::WriteOnly);
-        out.setVersion(static_cast<QDataStream::Version>(vers));
-        out << QKeySequence(Qt::Key_A) << QKeySequence(Qt::Key_B, Qt::Key_C)
-                << (quint32)0xDEADBEEF;
-    }
-    {
-        QKeySequence keyseq1, keyseq2;
-        quint32 deadbeef;
-        QDataStream in(&ba1, QIODevice::ReadOnly);
-        in.setVersion(static_cast<QDataStream::Version>(vers));
-        in >> keyseq1 >> keyseq2 >> deadbeef;
-        QVERIFY(keyseq1 == QKeySequence(Qt::Key_A));
-        QVERIFY(keyseq2 == QKeySequence(Qt::Key_B, Qt::Key_C));
-        QVERIFY(deadbeef == 0xDEADBEEF);
-    }
-
-	/*
-    Test QPalette.
-    */
-
-
-	// revise the test if new color roles or color groups are added
-    QVERIFY(QPalette::NColorRoles == QPalette::ToolTipText + 1);
-    QVERIFY(QPalette::NColorGroups == 3);
-
-    QByteArray ba2;
-    QPalette pal1, pal2;
-    for (int grp = 0; grp < (int)QPalette::NColorGroups; ++grp) {
-        for (int role = 0; role < (int)QPalette::NColorRoles; ++role) {
-		// random stuff
-            pal1.setColor((QPalette::ColorGroup)grp, (QPalette::ColorRole)role,
-                           QColor(grp * 13, 255 - grp, role));
-            pal2.setColor((QPalette::ColorGroup)grp, (QPalette::ColorRole)role,
-                           QColor(role * 11, 254 - role, grp));
-        }
-    }
-
-    {
-        QDataStream out(&ba2, QIODevice::WriteOnly);
-        out.setVersion(static_cast<QDataStream::Version>(vers));
-        out << pal1 << pal2 << (quint32)0xCAFEBABE;
-    }
-    {
-        QPalette inPal1, inPal2;
-        quint32 cafebabe;
-        QDataStream in(&ba2, QIODevice::ReadOnly);
-        in.setVersion(static_cast<QDataStream::Version>(vers));
-        in >> inPal1 >> inPal2;
-        in >> cafebabe;
-
-        QCOMPARE(cafebabe, 0xCAFEBABE);
-
-        QCOMPARE(NColorRoles[latest.version()], (int)QPalette::NColorRoles);  //if this fails you need to update the NColorRoles  array
-
-        if (NColorRoles[vers] < QPalette::NColorRoles) {
-            QVERIFY(pal1 != inPal1);
-            QVERIFY(pal2 != inPal2);
-
-            for (int grp = 0; grp < (int)QPalette::NColorGroups; ++grp) {
-                for (int i = NColorRoles[vers]; i < QPalette::NColorRoles; ++i) {
-                    inPal1.setColor((QPalette::ColorGroup)grp, (QPalette::ColorRole)i,
-                                        pal1.color((QPalette::ColorGroup)grp, (QPalette::ColorRole)i));
-                    inPal2.setColor((QPalette::ColorGroup)grp, (QPalette::ColorRole)i,
-                                        pal2.color((QPalette::ColorGroup)grp, (QPalette::ColorRole)i));
-                }
-            }
-        }
-        QVERIFY(pal1 == inPal1);
-        QVERIFY(pal2 == inPal2);
     }
 }
 

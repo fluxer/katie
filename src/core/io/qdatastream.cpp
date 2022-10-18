@@ -91,29 +91,13 @@ QT_BEGIN_NAMESPACE
     changed with setDevice(). If you've reached the end of the data
     (or if there is no I/O device set) atEnd() will return true.
 
-    \section1 Versioning
+    \section1 Compatibility
 
     QDataStream's binary format has evolved since Qt 1.0, and is
-    likely to continue evolving to reflect changes done in Qt. When
-    inputting or outputting complex types, it's very important to
-    make sure that the same version of the stream (version()) is used
-    for reading and writing. If you need both forward and backward
-    compatibility, you can hardcode the version number in the
-    application:
-
-    \snippet doc/src/snippets/code/src_corelib_io_qdatastream.cpp 2
-
-    If you are producing a new binary data format, such as a file
-    format for documents created by your application, you could use a
-    QDataStream to write the data in a portable format. Typically, you
-    would write a brief header containing a magic string and a version
-    number to give yourself room for future expansion. For example:
-
-    \snippet doc/src/snippets/code/src_corelib_io_qdatastream.cpp 3
-
-    Then read it in with:
-
-    \snippet doc/src/snippets/code/src_corelib_io_qdatastream.cpp 4
+    likely to continue evolving to reflect changes done in Katie.
+    If you need both forward and backward compatibility, you would
+    write a brief header containing a magic string and a version
+    number to give yourself room for future expansion.
 
     You can select which byte order to use when serializing data. The
     default setting is big endian (MSB first). Changing it to little
@@ -185,8 +169,7 @@ QT_BEGIN_NAMESPACE
 /*!
   \enum QDataStream::FloatingPointPrecision
 
-  The precision of floating point numbers used for reading/writing the data. This will only have
-  an effect if the version of the data stream is Qt_4_6 or higher.
+  The precision of floating point numbers used for reading/writing the data.
 
   \warning The floating point precision must be set to the same value on the object that writes
   and the object that reads the data stream.
@@ -245,7 +228,6 @@ QDataStream::QDataStream()
     owndev(false),
     noswap(QDataStream::HostEndian == QDataStream::BigEndian),
     byteorder(QDataStream::BigEndian),
-    ver(QDataStream::Qt_Default),
     q_status(QDataStream::Ok),
     floatingPrecision(QDataStream::DoublePrecision)
 {
@@ -268,7 +250,6 @@ QDataStream::QDataStream(QIODevice *device)
     owndev(false),
     noswap(QDataStream::HostEndian == QDataStream::BigEndian),
     byteorder(QDataStream::BigEndian),
-    ver(QDataStream::Qt_Default),
     q_status(QDataStream::Ok),
     floatingPrecision(QDataStream::DoublePrecision)
 {
@@ -293,7 +274,6 @@ QDataStream::QDataStream(QByteArray *a, QIODevice::OpenMode flags)
     owndev(true),
     noswap(QDataStream::HostEndian == QDataStream::BigEndian),
     byteorder(QDataStream::BigEndian),
-    ver(QDataStream::Qt_Default),
     q_status(QDataStream::Ok),
     floatingPrecision(QDataStream::DoublePrecision)
 {
@@ -318,7 +298,6 @@ QDataStream::QDataStream(const QByteArray &a)
     owndev(true),
     noswap(QDataStream::HostEndian == QDataStream::BigEndian),
     byteorder(QDataStream::BigEndian),
-    ver(QDataStream::Qt_Default),
     q_status(QDataStream::Ok),
     floatingPrecision(QDataStream::DoublePrecision)
 {
@@ -402,14 +381,10 @@ QDataStream::FloatingPointPrecision QDataStream::floatingPointPrecision() const
 }
 
 /*!
-    Sets the floating point precision of the data stream to \a precision. If the floating point precision is
-    DoublePrecision and the version of the data stream is Qt_4_6 or higher, all floating point
-    numbers will be written and read with 64-bit precision. If the floating point precision is
-    SinglePrecision and the version is Qt_4_6 or higher, all floating point numbers will be written
-    and read with 32-bit precision.
-
-    For versions prior to Qt_4_6, the precision of floating point numbers in the data stream depends
-    on the stream operator called.
+    Sets the floating point precision of the data stream to \a precision. If the floating point
+    precision is DoublePrecision, all floating point numbers will be written and read with 64-bit
+    precision. If the floating point precision is SinglePrecision, all floating point numbers will
+    be written and read with 32-bit precision.
 
     The default is DoublePrecision.
 
@@ -489,68 +464,6 @@ void QDataStream::setByteOrder(ByteOrder bo)
     byteorder = bo;
     noswap = (byteorder == QDataStream::HostEndian);
 }
-
-/*!
-    \enum QDataStream::Version
-
-    This enum provides symbolic synonyms for the data serialization
-    format version numbers.
-
-    \value Qt_4_6 Version 12 (Qt 4.6, Qt 4.7, Qt 4.8, Katie 4.9, Katie 4.10, Katie 4.11)
-    \value Qt_4_7 Same as Qt_4_6.
-    \value Qt_4_8 Same as Qt_4_6.
-    \value Qt_4_9 Same as Qt_4_6.
-    \value Qt_4_10 Same as Qt_4_6.
-    \value Qt_4_11 Same as Qt_4_6.
-    \value Qt_4_12 Version 13 (Katie 4.12)
-    \value Qt_Default
-
-    \sa setVersion(), version()
-*/
-
-/*!
-    \fn int QDataStream::version() const
-
-    Returns the version number of the data serialization format.
-
-    \sa setVersion(), Version
-*/
-
-/*!
-    \fn void QDataStream::setVersion(Version v)
-
-    Sets the version number of the data serialization format to \a v.
-
-    You don't \e have to set a version if you are using the current
-    version of Katie, but for your own custom binary formats we
-    recommend that you do; see \l{Versioning} in the Detailed
-    Description.
-
-    To accommodate new functionality, the datastream serialization
-    format of some Katie classes has changed in some versions of Katie.
-    If you want to read data that was created by an earlier version of
-    Katie, or write data that can be read by a program that was compiled
-    with an earlier version of Katie, use this function to modify the
-    serialization format used by QDataStream.
-
-    \table
-    \header \i Toolkit Version      \i QDataStream Version
-    \row    \i Qt 4.6               \i 12
-    \row    \i Qt 4.7               \i 12
-    \row    \i Qt 4.8               \i 12
-    \row    \i Katie 4.9            \i 12
-    \row    \i Katie 4.10           \i 12
-    \row    \i Katie 4.11           \i 12
-    \row    \i Katie 4.12           \i 13
-    \endtable
-
-    The \l Version enum provides symbolic constants for the different
-    versions of Katie. For example:
-
-    \snippet doc/src/snippets/code/src_corelib_io_qdatastream.cpp 5
-
-    \sa version(), Version
-*/
 
 /*****************************************************************************
   QDataStream read functions
