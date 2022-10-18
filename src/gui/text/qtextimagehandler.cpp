@@ -48,12 +48,6 @@ static QPixmap getPixmap(QTextDocument *doc, const QTextImageFormat &format)
     }
 
     if (pm.isNull()) {
-        QString context;
-#ifndef QT_NO_TEXTBROWSER
-        QTextBrowser *browser = qobject_cast<QTextBrowser *>(doc->parent());
-        if (browser)
-            context = browser->source().toString();
-#endif
         QImage img;
         // try direct loading
         if (name.isEmpty() || !img.load(name)) {
@@ -119,13 +113,6 @@ static QImage getImage(QTextDocument *doc, const QTextImageFormat &format)
     }
 
     if (image.isNull()) {
-        QString context;
-#ifndef QT_NO_TEXTBROWSER
-        QTextBrowser *browser = qobject_cast<QTextBrowser *>(doc->parent());
-        if (browser)
-            context = browser->source().toString();
-#endif
-
         // try direct loading
         if (name.isEmpty() || !image.load(name)) {
             return QApplication::style()->standardPixmap(QStyle::SP_FileIcon).toImage();
