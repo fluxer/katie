@@ -122,7 +122,6 @@ set(CORE_HEADERS
     ${CMAKE_CURRENT_SOURCE_DIR}/io/qfileinfo_p.h
     ${CMAKE_CURRENT_SOURCE_DIR}/io/qiodevice.h
     ${CMAKE_CURRENT_SOURCE_DIR}/io/qiodevice_p.h
-    ${CMAKE_CURRENT_SOURCE_DIR}/io/qnoncontiguousbytedevice_p.h
     ${CMAKE_CURRENT_SOURCE_DIR}/io/qprocess.h
     ${CMAKE_CURRENT_SOURCE_DIR}/io/qprocess_p.h
     ${CMAKE_CURRENT_SOURCE_DIR}/io/qtextstream.h
@@ -253,7 +252,6 @@ set(CORE_SOURCES
     ${CMAKE_CURRENT_SOURCE_DIR}/io/qfile.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/io/qfileinfo.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/io/qiodevice.cpp
-    ${CMAKE_CURRENT_SOURCE_DIR}/io/qnoncontiguousbytedevice.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/io/qprocess.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/io/qtextstream.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/io/qtemporaryfile.cpp
