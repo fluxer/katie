@@ -184,12 +184,14 @@ bool QKatHandler::write(const QImage &image)
 QVariant QKatHandler::option(QImageIOHandler::ImageOption option) const
 {
     if (option == QImageIOHandler::Size) {
+        const qint64 devicepos = device()->pos();
         QDataStream imagestream(device());
 
         QSTACKARRAY(char, header, 5);
         imagestream.readRawData(header, 5);
         if (Q_UNLIKELY(qstrncmp(header, "KATIE", 5) != 0)) {
             qWarning("QKatHandler::option() Invalid header (%s)", header);
+            device()->seek(devicepos);
             return QVariant();
         }
 
@@ -199,6 +201,7 @@ QVariant QKatHandler::option(QImageIOHandler::ImageOption option) const
         imagestream >> format;
         imagestream >> width;
         imagestream >> height;
+        device()->seek(devicepos);
         return QSize(width, height);
     } else if (option == QImageIOHandler::CompressionLevel) {
         return QVariant(m_complevel);
