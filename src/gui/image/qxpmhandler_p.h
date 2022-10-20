@@ -66,7 +66,6 @@ private:
     int ncols;
     int cpp;
     QByteArray buffer;
-    QString fileName;
 };
 
 QT_END_NAMESPACE
