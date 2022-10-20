@@ -310,7 +310,7 @@ void QWhatsThat::paintEvent(QPaintEvent*)
 
 #if !defined(QT_NO_IMAGEFORMAT_KAT)
 // generated via `xxd -i <path_to_kat_image>`
-static const unsigned char button_image_bits[] = {
+static const unsigned char button_image_bits_kat[] = {
     0x4b, 0x41, 0x54, 0x49, 0x45, 0x04, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
     0x00, 0x10, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x10, 0x00, 0x00,
     0x00, 0x00, 0x00, 0x00, 0x04, 0x00, 0x00, 0x00, 0x00, 0x83, 0x78, 0x01,
@@ -326,30 +326,7 @@ static const unsigned char button_image_bits[] = {
     0xb0, 0xb7, 0x0d, 0x77, 0x51, 0xc1, 0x1a, 0xf6, 0xf6, 0x2d, 0xee, 0xe3,
     0x1b, 0xdc, 0xc5, 0x2d, 0x3f, 0x1d, 0xde, 0x8d, 0x0b
 };
-static const unsigned int button_image_len = 165;
-#elif !defined(QT_NO_IMAGEFORMAT_XPM)
-/* XPM */
-static const char * const button_image[] = {
-"16 16 3 1",
-"         c None",
-"o        c #000000",
-"a        c #000080",
-"o        aaaaa  ",
-"oo      aaa aaa ",
-"ooo    aaa   aaa",
-"oooo   aa     aa",
-"ooooo  aa     aa",
-"oooooo  a    aaa",
-"ooooooo     aaa ",
-"oooooooo   aaa  ",
-"ooooooooo aaa   ",
-"ooooo     aaa   ",
-"oo ooo          ",
-"o  ooo    aaa   ",
-"    ooo   aaa   ",
-"    ooo         ",
-"     ooo        ",
-"     ooo        "};
+static const unsigned int button_image_kat_len = 165;
 #endif // QT_NO_IMAGEFORMAT_KAT
 
 class QWhatsThisPrivate : public QObject
@@ -481,10 +458,7 @@ QWhatsThisAction::QWhatsThisAction(QObject *parent) : QAction(tr("What's This?")
 {
 #if !defined(QT_NO_IMAGEFORMAT_KAT)
     QPixmap p;
-    p.loadFromData(button_image_bits, button_image_len, "KAT");
-    setIcon(p);
-#elif !defined(QT_NO_IMAGEFORMAT_XPM)
-    QPixmap p((const char**)button_image);
+    p.loadFromData(button_image_bits_kat, button_image_kat_len, "KAT");
     setIcon(p);
 #endif
     setCheckable(true);

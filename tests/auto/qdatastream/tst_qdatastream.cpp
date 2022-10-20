@@ -322,6 +322,7 @@ void tst_QDataStream::stream_data(int noOfElements)
     }
 }
 
+/* XPM */
 static const char* open_xpm[]={
 "16 13 6 1",
 ". c None",
