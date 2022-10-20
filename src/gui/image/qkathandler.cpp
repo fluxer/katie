@@ -189,7 +189,7 @@ QVariant QKatHandler::option(QImageIOHandler::ImageOption option) const
 
         QSTACKARRAY(char, header, 5);
         imagestream.readRawData(header, 5);
-        if (Q_UNLIKELY(qstrncmp(header, "KATIE", 5) != 0)) {
+        if (Q_UNLIKELY(::memcmp(header, "KATIE", 5) != 0)) {
             qWarning("QKatHandler::option() Invalid header (%s)", header);
             device()->seek(devicepos);
             return QVariant();
