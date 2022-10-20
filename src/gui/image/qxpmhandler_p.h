@@ -66,7 +66,6 @@ private:
     int ncols;
     int cpp;
     QByteArray buffer;
-    int index;
     QString fileName;
 };
 

@@ -46,14 +46,8 @@ static quint64 xpmHash(const char *str)
 
 // Skip until ", read until the next ", return the rest in *buf
 // Returns false on error, true on success
-static bool read_xpm_string(QByteArray &buf, QIODevice *d, const char * const *source, int &index,
-                            QByteArray &state)
+static bool read_xpm_string(QByteArray &buf, QIODevice *d, QByteArray &state)
 {
-    if (source) {
-        buf = source[index++];
-        return true;
-    }
-
     buf = "";
     bool gotQuote = false;
     int offset = 0;
@@ -93,12 +87,12 @@ static bool is_xpm_color_spec_prefix(const QByteArray& prefix)
 
 // Reads XPM header.
 static bool read_xpm_header(
-    QIODevice *device, const char * const * source, int& index, QByteArray &state,
+    QIODevice *device, QByteArray &state,
     int *cpp, int *ncols, int *w, int *h)
 {
     QByteArray buf(200, 0);
 
-    if (!read_xpm_string(buf, device, source, index, state))
+    if (!read_xpm_string(buf, device, state))
         return false;
 
     if (sscanf(buf, "%d %d %d %d", w, h, ncols, cpp) < 4)
@@ -109,7 +103,7 @@ static bool read_xpm_header(
 
 // Reads XPM body (color information & pixels).
 static bool read_xpm_body(
-    QIODevice *device, const char * const * source, int& index, QByteArray& state,
+    QIODevice *device, QByteArray& state,
     int cpp, int ncols, int w, int h, QImage& image)
 {
     if (cpp < 0 || cpp > 15)
@@ -120,7 +114,7 @@ static bool read_xpm_body(
     QByteArray buf(200, 0);
 
     for(int currentColor=0; currentColor < ncols; ++currentColor) {
-        if (Q_UNLIKELY(!read_xpm_string(buf, device, source, index, state))) {
+        if (Q_UNLIKELY(!read_xpm_string(buf, device, state))) {
             qWarning("QImage: XPM color specification missing");
             return false;
         }
@@ -178,7 +172,7 @@ static bool read_xpm_body(
     // Read pixels
     QSTACKARRAY(char, b, 16);
     for(int y=0; y<h; y++) {
-        if (!read_xpm_string(buf, device, source, index, state)) {
+        if (!read_xpm_string(buf, device, state)) {
             qWarning("QImage: XPM pixels missing on image line %d", y);
             return false;
         }
@@ -209,35 +203,15 @@ static bool read_xpm_body(
     return true;
 }
 
-//
-// INTERNAL
-//
-// Reads an .xpm from characters array
-//
-bool qt_read_xpm_array(const char * const * source, QImage &image)
-{
-    if (!source)
-        return true;
-
-    QByteArray state;
-
-    int cpp, ncols, w, h, index = 0;
-
-    if (!read_xpm_header(nullptr, source, index, state, &cpp, &ncols, &w, &h))
-        return false;
-
-    return read_xpm_body(nullptr, source, index, state, cpp, ncols, w, h, image);
-}
-
 QXpmHandler::QXpmHandler()
-    : state(Ready), index(0)
+    : state(Ready)
 {
 }
 
 bool QXpmHandler::readHeader()
 {
     state = Error;
-    if (!read_xpm_header(device(), nullptr, index, buffer, &cpp, &ncols, &width, &height))
+    if (!read_xpm_header(device(), buffer, &cpp, &ncols, &width, &height))
         return false;
     state = ReadHeader;
     return true;
@@ -269,7 +243,7 @@ bool QXpmHandler::read(QImage *image)
         return false;
     }
 
-    if (!read_xpm_body(device(), nullptr, index, buffer, cpp, ncols, width, height, *image)) {
+    if (!read_xpm_body(device(), buffer, cpp, ncols, width, height, *image)) {
         state = Error;
         return false;
     }

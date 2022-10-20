@@ -850,37 +850,6 @@ QImage::QImage(const char *fileName, const char *format)
 }
 #endif
 
-#ifndef QT_NO_IMAGEFORMAT_XPM
-extern bool qt_read_xpm_array(const char* const *source, QImage &image);
-
-/*!
-    Constructs an image from the given \a xpm image.
-
-    Make sure that the image is a valid XPM image. Errors are silently
-    ignored.
-
-    Note that it's possible to squeeze the XPM variable a little bit
-    by using an unusual declaration:
-
-    \snippet doc/src/snippets/code/src_gui_image_qimage.cpp 2
-
-    The extra \c const makes the entire definition read-only, which is
-    slightly more efficient (e.g., when the code is in a shared
-    library) and able to be stored in ROM with the application.
-*/
-
-QImage::QImage(const char * const xpm[])
-    : QPaintDevice(),
-    d(nullptr)
-{
-    if (Q_UNLIKELY(!xpm))
-        return;
-    if (Q_UNLIKELY(!qt_read_xpm_array(xpm, *this)))
-        // Issue: Warning because the constructor may be ambigious
-        qWarning("QImage::QImage(), XPM is not supported");
-}
-#endif // QT_NO_IMAGEFORMAT_XPM
-
 /*!
     \fn QImage::QImage(const QByteArray &data)
 

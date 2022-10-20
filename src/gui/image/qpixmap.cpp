@@ -232,37 +232,6 @@ QPixmap::QPixmap(const QPixmap &pixmap)
 }
 
 /*!
-    Constructs a pixmap from the given \a xpm data, which must be a
-    valid XPM image.
-
-    Errors are silently ignored.
-
-    Note that it's possible to squeeze the XPM variable a little bit
-    by using an unusual declaration:
-
-    \snippet doc/src/snippets/code/src_gui_image_qpixmap.cpp 0
-
-    The extra \c const makes the entire definition read-only, which is
-    slightly more efficient (for example, when the code is in a shared
-    library) and ROMable when the application is to be stored in ROM.
-*/
-#ifndef QT_NO_IMAGEFORMAT_XPM
-QPixmap::QPixmap(const char * const xpm[])
-    : QPaintDevice()
-{
-    init(0, 0, QPixmapData::PixmapType);
-    if (!xpm)
-        return;
-
-    QImage image(xpm);
-    if (!image.isNull()) {
-        *this = fromImage(image);
-    }
-}
-#endif
-
-
-/*!
     Destroys the pixmap.
 */
 

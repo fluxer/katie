@@ -50,9 +50,6 @@ public:
     QPixmap(int w, int h);
     QPixmap(const QSize &);
     QPixmap(const QString& fileName, const char *format = nullptr, Qt::ImageConversionFlags flags = Qt::AutoColor);
-#ifndef QT_NO_IMAGEFORMAT_XPM
-    QPixmap(const char * const xpm[]);
-#endif
     QPixmap(const QPixmap &);
     ~QPixmap();
 
