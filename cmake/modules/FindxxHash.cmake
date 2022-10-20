@@ -1,11 +1,10 @@
-# - Try to find xxHash
-# Once done this will define
+# Try to find xxHash, once done this will define:
 #
 #  XXHASH_FOUND - system has xxHash
 #  XXHASH_INCLUDES - the xxHash include directory
 #  XXHASH_LIBRARIES - the libraries needed to use xxHash
 #
-# Copyright (C) 2022, Ivailo Monev, <xakepa10@gmail.com>
+# Copyright (C) 2022 Ivailo Monev <xakepa10@gmail.com>
 #
 # Redistribution and use is allowed according to the terms of the BSD license.
 

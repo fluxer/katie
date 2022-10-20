@@ -1,11 +1,10 @@
-# - Try to find Jansson
-# Once done this will define
+# Try to find Jansson, once done this will define:
 #
 #  JANSSON_FOUND - system has Jansson
 #  JANSSON_INCLUDES - the Jansson include directory
 #  JANSSON_LIBRARIES - the libraries needed to use Jansson
 #
-# Copyright (C) 2021, Ivailo Monev, <xakepa10@gmail.com>
+# Copyright (C) 2021 Ivailo Monev <xakepa10@gmail.com>
 #
 # Redistribution and use is allowed according to the terms of the BSD license.
 

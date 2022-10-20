@@ -1,4 +1,4 @@
-# Copyright (C) 2015, Ivailo Monev, <xakepa10@gmail.com>
+# Copyright (C) 2015 Ivailo Monev <xakepa10@gmail.com>
 # Redistribution and use is allowed according to the terms of the BSD license.
 
 # UNIFDEF_EXECUTABLE and HEADERS_DIRECTORY origin from the macro call

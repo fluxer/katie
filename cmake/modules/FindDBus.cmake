@@ -1,12 +1,11 @@
-# - Try to find D-Bus message bus system
-# Once done this will define
+# Try to find D-Bus message bus system, once done this will define:
 #
 #  DBUS_FOUND - system has D-Bus message bus system
 #  DBUS_INCLUDES - the D-Bus message bus system include directory
 #  DBUS_ARCH_INCLUDES - the D-Bus message bus architecture include directory
 #  DBUS_LIBRARIES - the libraries needed to use D-Bus message bus system
 #
-# Copyright (C) 2015, Ivailo Monev, <xakepa10@gmail.com>
+# Copyright (C) 2015 Ivailo Monev <xakepa10@gmail.com>
 #
 # Redistribution and use is allowed according to the terms of the BSD license.
 

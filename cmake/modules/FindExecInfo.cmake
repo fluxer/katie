@@ -1,15 +1,14 @@
-# - Try to find execinfo
-# Once done this will define
+# Try to find execinfo, once done this will define:
 #
 #  EXECINFO_FOUND - system has execinfo
 #  EXECINFO_INCLUDES - the execinfo include directory
 #  EXECINFO_LIBRARIES - the libraries needed to use execinfo
 #
-# Copyright (C) 2016, Ivailo Monev, <xakepa10@gmail.com>
+# Copyright (C) 2016 Ivailo Monev <xakepa10@gmail.com>
 #
 # Redistribution and use is allowed according to the terms of the BSD license.
 
-# execinfo does not provide pkg-config files
+# execinfo does not provide pkg-config file
 
 include(CMakePushCheckState)
 include(FindPackageHandleStandardArgs)

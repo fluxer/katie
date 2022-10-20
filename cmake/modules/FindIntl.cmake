@@ -1,12 +1,11 @@
-# - Try to find intl
-# Once done this will define
+# Try to find intl, once done this will define:
 #
 #  INTL_FOUND - system has intl
 #  INTL_INCLUDES - the intl include directory
 #  INTL_LIBRARIES - the libraries needed to use intl
 #  INTL_MSGFMT - the msgfmt binary
 #
-# Copyright (C) 2016, Ivailo Monev, <xakepa10@gmail.com>
+# Copyright (C) 2016 Ivailo Monev <xakepa10@gmail.com>
 #
 # Redistribution and use is allowed according to the terms of the BSD license.
 

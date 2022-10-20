@@ -1,10 +1,9 @@
-# - Try to find xdg-utils
-# Once done this will define
+# Try to find xdg-utils, once done this will define:
 #
 #  XDGUTILS_FOUND - system has xdg-utils
 #  XDGUTILS_OPEN - the xdg-open binary
 #
-# Copyright (C) 2021, Ivailo Monev, <xakepa10@gmail.com>
+# Copyright (C) 2021 Ivailo Monev <xakepa10@gmail.com>
 #
 # Redistribution and use is allowed according to the terms of the BSD license.
 
