@@ -321,29 +321,7 @@ void tst_QDataStream::stream_data(int noOfElements)
 	}
     }
 }
-
-/* XPM */
-static const char* open_xpm[]={
-"16 13 6 1",
-". c None",
-"b c #ffff00",
-"d c #000000",
-"* c #999999",
-"c c #cccccc",
-"a c #ffffff",
-"...*****........",
-"..*aaaaa*.......",
-".*abcbcba******.",
-".*acbcbcaaaaaa*d",
-".*abcbcbcbcbcb*d",
-"*************b*d",
-"*aaaaaaaaaa**c*d",
-"*abcbcbcbcbbd**d",
-".*abcbcbcbcbcd*d",
-".*acbcbcbcbcbd*d",
-"..*acbcbcbcbb*dd",
-"..*************d",
-"...ddddddddddddd"};
+static const QString open_png = QFile::decodeName(SRCDIR "/open.png");
 
 #define STREAM_IMPL(TYPE) \
     QFETCH(QString, device); \
@@ -858,7 +836,7 @@ static QBrush qBrushData(int index)
 	case 4: return QBrush(Qt::green, Qt::SolidPattern);
 	case 5: return QBrush(Qt::blue, Qt::Dense7Pattern);
 	case 6: {
-	    QPixmap pm(open_xpm);
+	    QPixmap pm(open_png);
 	    QBrush custom(Qt::black, pm);
 	    return custom;
 	}
@@ -1002,10 +980,10 @@ static QCursor qCursorData(int index)
         case 2: return QCursor(Qt::BitmapCursor);
         case 3: return QCursor(Qt::BlankCursor);
         case 4: return QCursor(Qt::BlankCursor);
-        case 5: return QCursor(QPixmap(open_xpm), 1, 1);
-        case 6: { QPixmap pm(open_xpm); return QCursor(QBitmap(pm), pm.mask(), 3, 4); }
-        case 7: return QCursor(QPixmap(open_xpm), -1, 5);
-        case 8: return QCursor(QPixmap(open_xpm), 5, -1);
+        case 5: return QCursor(QPixmap(open_png), 1, 1);
+        case 6: { QPixmap pm(open_png); return QCursor(QBitmap(pm), pm.mask(), 3, 4); }
+        case 7: return QCursor(QPixmap(open_png), -1, 5);
+        case 8: return QCursor(QPixmap(open_png), 5, -1);
     }
 
     return QCursor();
@@ -1372,14 +1350,14 @@ void tst_QDataStream::stream_QImage()
 
 void tst_QDataStream::writeQImage(QDataStream *s)
 {
-    QImage d12(open_xpm);
+    QImage d12(open_png);
     //debug("Orig alpha: %i", (int)d12.hasAlphaBuffer());
     *s << d12;
 }
 
 void tst_QDataStream::readQImage(QDataStream *s)
 {
-    QImage ref(open_xpm);
+    QImage ref(open_png);
 
     QImage d12;
     *s >> d12;
@@ -1565,13 +1543,13 @@ void tst_QDataStream::stream_QIcon()
 
 void tst_QDataStream::writeQPixmap(QDataStream *s)
 {
-    QPixmap d16(open_xpm);
+    QPixmap d16(open_png);
     *s << d16;
 }
 
 void tst_QDataStream::readQPixmap(QDataStream *s)
 {
-    QPixmap pm(open_xpm);
+    QPixmap pm(open_png);
     QPixmap d16;
     *s >> d16;
     QVERIFY(!d16.isNull() && !pm.isNull());
@@ -1584,7 +1562,7 @@ void tst_QDataStream::readQPixmap(QDataStream *s)
 
 void tst_QDataStream::writeQIcon(QDataStream *s)
 {
-    QPixmap pm(open_xpm);
+    QPixmap pm(open_png);
     QIcon d16(pm);
     *s << d16;
 
@@ -1594,7 +1572,7 @@ void tst_QDataStream::writeQIcon(QDataStream *s)
 
 void tst_QDataStream::readQIcon(QDataStream *s)
 {
-    QPixmap pm(open_xpm);
+    QPixmap pm(open_png);
     QIcon icon(pm);
     QIcon d16;
     *s >> d16;
