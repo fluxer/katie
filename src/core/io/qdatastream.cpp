@@ -708,28 +708,14 @@ QDataStream &QDataStream::readBytes(char *&s, uint &l)
     if (len == 0)
         return *this;
 
-    const quint32 Step = 1024 * 1024;
-    quint32 allocated = 0;
-    char *prevBuf = 0;
-    char *curBuf = 0;
+    char *sbuf = new char[len];
+    if (dev->read(sbuf, len) != len) {
+        delete [] sbuf;
+        setStatus(ReadPastEnd);
+        return *this;
+    }
 
-    do {
-        int blockSize = qMin(Step, len - allocated);
-        prevBuf = curBuf;
-        curBuf = new char[allocated + blockSize + 1];
-        if (prevBuf) {
-            memcpy(curBuf, prevBuf, allocated);
-            delete [] prevBuf;
-        }
-        if (dev->read(curBuf + allocated, blockSize) != blockSize) {
-            delete [] curBuf;
-            setStatus(ReadPastEnd);
-            return *this;
-        }
-        allocated += blockSize;
-    } while (allocated < len);
-
-    s = curBuf;
+    s = sbuf;
     s[len] = '\0';
     l = (uint)len;
     return *this;
