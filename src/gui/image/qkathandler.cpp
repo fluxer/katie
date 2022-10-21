@@ -24,7 +24,6 @@
 
 #include "qimage.h"
 #include "qimage_p.h"
-#include "qbuffer.h"
 #include "qdebug.h"
 #include "qcorecommon_p.h"
 
@@ -165,9 +164,7 @@ bool QKatHandler::write(const QImage &image)
         return false;
     }
 
-    QBuffer imagebuffer;
-    imagebuffer.open(QBuffer::ReadWrite);
-    QDataStream imagestream(&imagebuffer);
+    QDataStream imagestream(device());
     imagestream.writeRawData("KATIE", 5);
     imagestream << (qint8) image32.format();
     imagestream << (qint64) image32.width();
@@ -176,7 +173,7 @@ bool QKatHandler::write(const QImage &image)
     imagestream << (quint32) compresult;
     imagestream.writeRawData(compressedimage.constData(), compresult);
 
-    if (Q_UNLIKELY(device()->write(imagebuffer.data(), imagebuffer.size()) != imagebuffer.size())) {
+    if (Q_UNLIKELY(imagestream.status() != QDataStream::Ok)) {
         qWarning("QKatHandler::write() Could not write image");
         return false;
     }
