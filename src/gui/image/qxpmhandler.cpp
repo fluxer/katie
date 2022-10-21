@@ -26,7 +26,6 @@
 #include "qcolor_p.h"
 #include "qimage.h"
 #include "qmap.h"
-#include "qtextstream.h"
 #include "qvariant.h"
 #include "qplatformdefs.h"
 #include "qcorecommon_p.h"
@@ -48,7 +47,7 @@ static quint64 xpmHash(const char *str)
 // Returns false on error, true on success
 static bool read_xpm_string(QByteArray &buf, QIODevice *d, QByteArray &state)
 {
-    buf = "";
+    buf.clear();
     bool gotQuote = false;
     int offset = 0;
     QSTACKARRAY(char, readbuf, QT_BUFFSIZE);
@@ -130,7 +129,7 @@ static bool read_xpm_body(
             i = tokens.indexOf("m");
         if (Q_UNLIKELY(i < 0)) {
             qWarning("QImage: XPM color specification is missing: %s", buf.constData());
-            return false;        // no c/g/g4/m specification at all
+            return false; // no c/g/g4/m specification at all
         }
         QByteArray color;
         while ((++i < tokens.size()) && !is_xpm_color_spec_prefix(tokens.at(i))) {
@@ -138,7 +137,7 @@ static bool read_xpm_body(
         }
         if (Q_UNLIKELY(color.isEmpty())) {
             qWarning("QImage: XPM color value is missing from specification: %s", buf.constData());
-            return false;        // no color value
+            return false; // no color value
         }
         buf = color;
         if (buf == "none") {
@@ -192,14 +191,13 @@ static bool read_xpm_body(
         }
     }
 
-    if (device) {
-        // Rewind unused characters, and skip to the end of the XPM struct.
-        for (int i = state.size() - 1; i >= 0; --i)
-            device->ungetChar(state[i]);
-        char c;
-        while (device->getChar(&c) && c != ';') {}
-        while (device->getChar(&c) && c != '\n') {}
-    }
+    // Rewind unused characters, and skip to the end of the XPM struct.
+    for (int i = state.size() - 1; i >= 0; --i)
+        device->ungetChar(state[i]);
+    char c;
+    while (device->getChar(&c) && c != ';') {}
+    while (device->getChar(&c) && c != '\n') {}
+
     return true;
 }
 
