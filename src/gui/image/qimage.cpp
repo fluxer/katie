@@ -166,18 +166,15 @@ QImageData * QImageData::create(const QSize &size, QImage::Format format)
         }
     }
 
-    uint width = size.width();
-    uint height = size.height();
-    uint depth = qt_depthForFormat(format);
+    int width = size.width();
+    int height = size.height();
+    int depth = qt_depthForFormat(format);
     // bytes per scanline (must be multiple of 4)
     const int bytes_per_line = ((width * depth + 31) >> 5) << 2;
 
-    // sanity check for potential overflows
-    if (INT_MAX/depth < width
-        || bytes_per_line <= 0
-        || height <= 0
-        || INT_MAX/uint(bytes_per_line) < height
-        || INT_MAX/sizeof(uchar *) < uint(height)) {
+    // sanity check
+    if (width <= 0 || height <= 0 || bytes_per_line <= 0
+        || width >= USHRT_MAX || height >= USHRT_MAX) {
         return nullptr;
     }
 
@@ -3042,17 +3039,17 @@ QDataStream &operator<<(QDataStream &s, const QImage &image)
     const bool alphaclut = (image.d ? image.d->has_alpha_clut : false);
     const bool monoimage = (image.d ? (image.d->depth == 1) : false);
     s << (qint8) image.format();
-    s << (qint64) image.width();
-    s << (qint64) image.height();
-    s << (qint64) image.dotsPerMeterX();
-    s << (qint64) image.dotsPerMeterY();
-    s << (qint64) image.byteCount();
+    s << (qint16) image.width();
+    s << (qint16) image.height();
+    s << (qint32) image.dotsPerMeterX();
+    s << (qint32) image.dotsPerMeterY();
+    s << (qint32) image.byteCount();
     if (monoimage) {
-        s << (quint64)image.d->mono0;
-        s << (quint64)image.d->mono1;
+        s << (qint64)image.d->mono0;
+        s << (qint64)image.d->mono1;
     } else {
-        s << (quint64)-1;
-        s << (quint64)-1;
+        s << (qint64)-1;
+        s << (qint64)-1;
     }
     s << (bool)alphaclut;
     s.writeRawData(reinterpret_cast<const char*>(image.constBits()), image.byteCount());
@@ -3071,13 +3068,13 @@ QDataStream &operator<<(QDataStream &s, const QImage &image)
 QDataStream &operator>>(QDataStream &s, QImage &image)
 {
     qint8 format;
-    qint64 width;
-    qint64 height;
-    qint64 dotsperx;
-    qint64 dotspery;
-    qint64 bytecount;
-    quint64 mono0;
-    quint64 mono1;
+    qint16 width;
+    qint16 height;
+    qint32 dotsperx;
+    qint32 dotspery;
+    qint32 bytecount;
+    qint64 mono0;
+    qint64 mono1;
     bool alphaclut;
     s >> format;
     s >> width;

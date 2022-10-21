@@ -75,9 +75,9 @@ bool QKatHandler::read(QImage *image)
     }
 
     qint8 format = 0;
-    qint64 width = 0;
-    qint64 height = 0;
-    qint64 uncompressedsize = 0;
+    quint16 width = 0;
+    quint16 height = 0;
+    quint32 uncompressedsize = 0;
     quint32 compressedsize = 0;
     imagestream >> format;
     imagestream >> width;
@@ -132,9 +132,7 @@ bool QKatHandler::write(const QImage &image)
 {
     if (image.isNull()) {
         return false;
-    } else if (Q_UNLIKELY(image.height() >= INT_MAX || image.width() >= INT_MAX)) {
-        // the limit is actually lower but QImage::width() and QImage::height() return int and
-        // QImage can be fixed at some point, notably QImage::byteCount() return type change
+    } else if (Q_UNLIKELY(image.height() >= USHRT_MAX || image.width() >= USHRT_MAX)) {
         qWarning("QKatHandler::write() Limitation in Katie");
         return false;
     }
@@ -167,9 +165,9 @@ bool QKatHandler::write(const QImage &image)
     QDataStream imagestream(device());
     imagestream.writeRawData("KATIE", 5);
     imagestream << (qint8) image.format();
-    imagestream << (qint64) image.width();
-    imagestream << (qint64) image.height();
-    imagestream << (qint64) image.byteCount();
+    imagestream << (quint16) image.width();
+    imagestream << (quint16) image.height();
+    imagestream << (quint32) image.byteCount();
     imagestream << (quint32) compresult;
     imagestream.writeRawData(compressedimage, compresult);
     ::free(compressedimage);
@@ -197,8 +195,8 @@ QVariant QKatHandler::option(QImageIOHandler::ImageOption option) const
         }
 
         qint8 format = 0;
-        qint64 width = 0;
-        qint64 height = 0;
+        quint16 width = 0;
+        quint16 height = 0;
         imagestream >> format;
         imagestream >> width;
         imagestream >> height;
