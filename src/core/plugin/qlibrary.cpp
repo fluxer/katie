@@ -186,7 +186,6 @@ static bool qt_unix_query(const QString &library, QLibraryPrivate *lib)
     if (!ret) {
         lib->errorString = QLibrary::tr("Plugin verification data mismatch in '%1'").arg(library);
     }
-    file.close();
 
     return ret;
 }
