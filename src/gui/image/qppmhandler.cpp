@@ -292,8 +292,9 @@ static bool write_pbm_image(QIODevice *out, const QImage &sourceImage, const QBy
     return true;
 }
 
-QPpmHandler::QPpmHandler()
-    : state(Ready)
+QPpmHandler::QPpmHandler(const QByteArray &subtype)
+    : state(Ready),
+    subType(subtype)
 {
 }
 

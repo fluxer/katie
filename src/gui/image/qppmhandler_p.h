@@ -43,7 +43,7 @@ class QByteArray;
 class QPpmHandler : public QImageIOHandler
 {
 public:
-    QPpmHandler();
+    QPpmHandler(const QByteArray &subtype = QByteArray());
 
     bool canRead() const final;
     bool read(QImage *image) final;
