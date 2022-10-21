@@ -169,7 +169,6 @@ public:
     static QLocale keyboardInputLocale();
     static Qt::LayoutDirection keyboardInputDirection();
 
-    static int exec();
     bool notify(QObject *, QEvent *);
 
     static void setQuitOnLastWindowClosed(bool quit);

@@ -659,14 +659,7 @@ void QCoreApplication::processEvents(QEventLoop::ProcessEventsFlags flags, int m
     be achieved using processEvents().
 
     We recommend that you connect clean-up code to the
-    \l{QCoreApplication::}{aboutToQuit()} signal, instead of putting it in
-    your application's \c{main()} function because on some platforms the
-    QCoreApplication::exec() call may not return. For example, on Windows
-    when the user logs off, the system terminates the process after Qt
-    closes all top-level windows. Hence, there is no guarantee that the
-    application will have time to exit its event loop and execute code at
-    the end of the \c{main()} function after the QCoreApplication::exec()
-    call.
+    \l{QCoreApplication::}{aboutToQuit()} signal.
 
     \sa quit(), exit(), processEvents(), QApplication::exec()
 */
