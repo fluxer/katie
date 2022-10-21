@@ -33,8 +33,7 @@
 QT_BEGIN_NAMESPACE
 
 QKatHandler::QKatHandler()
-    : m_complevel(1),
-    m_quality(75)
+    : m_complevel(1)
 {
 }
 
@@ -135,18 +134,12 @@ bool QKatHandler::write(const QImage &image)
         return false;
     }
 
-    QImage::Format imageformat = QImage::Format_ARGB32;
-    if (Q_LIKELY(m_quality <= 75)) {
-        imageformat = (image.d->checkForAlphaPixels() ? QImage::Format_ARGB32 : QImage::Format_RGB16);
-    }
-    const QImage image32 = image.convertToFormat(imageformat);
-
     struct libdeflate_compressor* comp = libdeflate_alloc_compressor(m_complevel);
     if (Q_UNLIKELY(!comp)) {
         qWarning("QKatHandler::write() Could not allocate compressor");
         return false;
     }
-    const size_t boundresult = libdeflate_zlib_compress_bound(comp, image32.byteCount());
+    const size_t boundresult = libdeflate_zlib_compress_bound(comp, image.byteCount());
     if (Q_UNLIKELY(boundresult <= 0)) {
         qWarning("QKatHandler::write() Compression boundary is negative or zero");
         libdeflate_free_compressor(comp);
@@ -155,7 +148,7 @@ bool QKatHandler::write(const QImage &image)
     QByteArray compressedimage(boundresult, Qt::Uninitialized);
     const size_t compresult = libdeflate_zlib_compress(
         comp,
-        reinterpret_cast<const char*>(image32.constBits()), image32.byteCount(),
+        reinterpret_cast<const char*>(image.constBits()), image.byteCount(),
         compressedimage.data(), compressedimage.size()
     );
     libdeflate_free_compressor(comp);
@@ -166,10 +159,10 @@ bool QKatHandler::write(const QImage &image)
 
     QDataStream imagestream(device());
     imagestream.writeRawData("KATIE", 5);
-    imagestream << (qint8) image32.format();
-    imagestream << (qint64) image32.width();
-    imagestream << (qint64) image32.height();
-    imagestream << (qint64) image32.byteCount();
+    imagestream << (qint8) image.format();
+    imagestream << (qint64) image.width();
+    imagestream << (qint64) image.height();
+    imagestream << (qint64) image.byteCount();
     imagestream << (quint32) compresult;
     imagestream.writeRawData(compressedimage.constData(), compresult);
 
@@ -205,8 +198,6 @@ QVariant QKatHandler::option(QImageIOHandler::ImageOption option) const
         return QSize(width, height);
     } else if (option == QImageIOHandler::CompressionLevel) {
         return QVariant(m_complevel);
-    } else if (option == QImageIOHandler::Quality) {
-        return QVariant(m_quality);
     }
     return QVariant();
 }
@@ -221,16 +212,6 @@ void QKatHandler::setOption(QImageIOHandler::ImageOption option, const QVariant 
         } else {
             m_complevel = newcomplevel;
         }
-    } else if (option == QImageIOHandler::Quality) {
-        const int newquality = value.toInt();
-        if (newquality == -1) {
-            m_quality = 75;
-        } else if (Q_UNLIKELY(newquality < 0 || newquality > 100)) {
-            qWarning("QKatHandler::setOption() Invalid quality (%d)", newquality);
-            m_quality = 75;
-        } else {
-            m_quality = newquality;
-        }
     }
 }
 
@@ -238,8 +219,7 @@ bool QKatHandler::supportsOption(QImageIOHandler::ImageOption option) const
 {
     switch (option) {
         case QImageIOHandler::Size:
-        case QImageIOHandler::CompressionLevel:
-        case QImageIOHandler::Quality: {
+        case QImageIOHandler::CompressionLevel: {
             return true;
         }
         default: {

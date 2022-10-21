@@ -312,15 +312,10 @@ bool QImageData::checkForAlphaPixels() const
 
     \section1 Katie Image Format
 
-    The Katie image format is faster and in most cases smaller
-    substitute for the PNG format. Its usage should be primarily
-    in caching and short-lived transfers such as sending QImage
-    trough socket.
-
-    The image format is lossy for fully opaque and lossless for
-    images with alpha pixels by default. If guaranteed lossless
-    quality is required use QImageWriter::setQuality() to set the
-    quality to best (100).
+    The Katie image format is faster, in some cases smaller
+    lossless substitute for the PNG format. Its usage should be
+    primarily in caching and short-lived transfers such as sending
+    QImage trough socket.
 
     Your code should be prepared to discard any image in that
     format and generate a new image in case loading fails as the

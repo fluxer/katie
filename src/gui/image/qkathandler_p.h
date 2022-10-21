@@ -57,7 +57,6 @@ public:
 
 private:
     int m_complevel;
-    int m_quality;
 };
 
 QT_END_NAMESPACE
