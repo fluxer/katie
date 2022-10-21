@@ -20,7 +20,6 @@
 ****************************************************************************/
 
 #include "qpixmapdata_p.h"
-#include "qbuffer.h"
 #include "qbitmap.h"
 #include "qimagereader.h"
 #include "qpixmap_raster_p.h"
@@ -96,10 +95,7 @@ bool QPixmapData::fromFile(const QString &fileName, const char *format,
 
 bool QPixmapData::fromData(const uchar *buf, uint len, const char *format, Qt::ImageConversionFlags flags)
 {
-    QBuffer b;
-    b.setData(reinterpret_cast<const char *>(buf), len);
-    b.open(QIODevice::ReadOnly);
-    QImage image = QImageReader(&b, format).read();
+    QImage image = QImage::fromData(reinterpret_cast<const char *>(buf), len, format);
     fromImage(makeBitmapCompliantIfNeeded(this, image, flags), flags);
     return !isNull();
 }

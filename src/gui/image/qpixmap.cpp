@@ -26,7 +26,6 @@
 #include "qwidget.h"
 #include "qpainter.h"
 #include "qdatastream.h"
-#include "qbuffer.h"
 #include "qapplication.h"
 #include "qapplication_p.h"
 #include "qwidget_p.h"

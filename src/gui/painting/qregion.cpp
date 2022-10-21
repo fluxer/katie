@@ -22,7 +22,6 @@
 #include "qregion.h"
 #include "qpainterpath.h"
 #include "qpolygon.h"
-#include "qbuffer.h"
 #include "qdatastream.h"
 #include "qvariant.h"
 #include "qvarlengtharray.h"

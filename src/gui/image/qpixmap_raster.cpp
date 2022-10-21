@@ -26,7 +26,6 @@
 #include "qpaintengine.h"
 #include "qbitmap.h"
 #include "qimage.h"
-#include "qbuffer.h"
 #include "qimagereader.h"
 #include "qwidget_p.h"
 #include "qdrawhelper_p.h"
@@ -71,10 +70,7 @@ void QRasterPixmapData::resize(int width, int height)
 bool QRasterPixmapData::fromData(const uchar *buffer, uint len, const char *format,
                       Qt::ImageConversionFlags flags)
 {
-    QBuffer b;
-    b.setData(reinterpret_cast<const char *>(buffer), len);
-    b.open(QIODevice::ReadOnly);
-    QImage image = QImageReader(&b, format).read();
+    QImage image = QImage::fromData(reinterpret_cast<const char *>(buffer), len, format);
     if (image.isNull())
         return false;
 

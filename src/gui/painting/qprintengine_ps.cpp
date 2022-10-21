@@ -38,7 +38,6 @@
 #include "qstring.h"
 #include "qbytearray.h"
 #include "qhash.h"
-#include "qbuffer.h"
 #include "qsettings.h"
 #include "qmap.h"
 #include "qbitmap.h"

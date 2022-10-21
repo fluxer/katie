@@ -27,7 +27,6 @@
 #include "qapplication_p.h"
 #include "qpixmap.h"
 #include "qvariant.h"
-#include "qbuffer.h"
 #include "qimage.h"
 #include "qtextcodec.h"
 #include "qthread.h"

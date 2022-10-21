@@ -46,7 +46,6 @@
 #include "qtextcursor_p.h"
 #include "qtextformat.h"
 #include "qdatetime.h"
-#include "qbuffer.h"
 #include "qapplication.h"
 #include "qtexttable.h"
 #include "qvariant.h"
