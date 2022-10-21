@@ -912,12 +912,11 @@ QDataStream &operator<<(QDataStream &s, const QBrush &b)
         s << b.texture();
     } else if (style == Qt::LinearGradientPattern || style == Qt::RadialGradientPattern) {
         const QGradient *gradient = b.gradient();
-        int type_as_int = int(gradient->type());
-        s << type_as_int;
-        s << int(gradient->spread());
-        s << int(gradient->coordinateMode());
+        s << qint8(gradient->type());
+        s << qint8(gradient->spread());
+        s << qint8(gradient->coordinateMode());
 
-        s << int(gradient->interpolationMode());
+        s << qint8(gradient->interpolationMode());
 
 #ifdef QT_NO_FPU
         // ensure that we write doubles here instead of streaming the stops
@@ -974,7 +973,7 @@ QDataStream &operator>>(QDataStream &s, QBrush &b)
     } else if (style == Qt::LinearGradientPattern
                || style == Qt::RadialGradientPattern) {
 
-        int type_as_int;
+        qint8 type_as_int;
         QGradient::Type type;
         QGradientStops stops;
         QGradient::CoordinateMode cmode = QGradient::LogicalMode;
