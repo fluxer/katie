@@ -29,6 +29,7 @@
 
 #include <libdeflate.h>
 #include <limits.h>
+#include <stdlib.h>
 
 QT_BEGIN_NAMESPACE
 
@@ -90,12 +91,14 @@ bool QKatHandler::read(QImage *image)
         return false;
     }
 
-    QByteArray imagedata(compressedsize, Qt::Uninitialized);
-    imagestream.readRawData(imagedata.data(), compressedsize);
+    char* compressedimage = static_cast<char*>(::malloc(compressedsize * sizeof(char)));
+    Q_CHECK_PTR(compressedimage);
+    imagestream.readRawData(compressedimage, compressedsize);
 
     if (Q_UNLIKELY(imagestream.status() != QDataStream::Ok)) {
         qWarning("QKatHandler::read() Could not read image");
         *image = QImage();
+        ::free(compressedimage);
         return false;
     }
 
@@ -103,16 +106,18 @@ bool QKatHandler::read(QImage *image)
     if (Q_UNLIKELY(!decomp)) {
         qWarning("QKatHandler::read(): Could not allocate decompressor");
         *image = QImage();
+        ::free(compressedimage);
         return false;
     }
     size_t decompsize = uncompressedsize;
     const libdeflate_result decompresult = libdeflate_zlib_decompress(
         decomp,
-        imagedata.constData(), imagedata.size(),
+        compressedimage, compressedsize,
         image->d->data, image->byteCount(),
         &decompsize
     );
     libdeflate_free_decompressor(decomp);
+    ::free(compressedimage);
 
     if (Q_UNLIKELY(decompresult != LIBDEFLATE_SUCCESS)) {
         qWarning("QKatHandler::read() Could not decompress image (%d)", decompresult);
@@ -145,15 +150,17 @@ bool QKatHandler::write(const QImage &image)
         libdeflate_free_compressor(comp);
         return false;
     }
-    QByteArray compressedimage(boundresult, Qt::Uninitialized);
+    char* compressedimage = static_cast<char*>(::malloc(boundresult * sizeof(char)));
+    Q_CHECK_PTR(compressedimage);
     const size_t compresult = libdeflate_zlib_compress(
         comp,
         reinterpret_cast<const char*>(image.constBits()), image.byteCount(),
-        compressedimage.data(), compressedimage.size()
+        compressedimage, boundresult
     );
     libdeflate_free_compressor(comp);
     if (Q_UNLIKELY(compresult <= 0)) {
         qWarning("QKatHandler::write() Could not compress data");
+        ::free(compressedimage);
         return false;
     }
 
@@ -164,7 +171,8 @@ bool QKatHandler::write(const QImage &image)
     imagestream << (qint64) image.height();
     imagestream << (qint64) image.byteCount();
     imagestream << (quint32) compresult;
-    imagestream.writeRawData(compressedimage.constData(), compresult);
+    imagestream.writeRawData(compressedimage, compresult);
+    ::free(compressedimage);
 
     if (Q_UNLIKELY(imagestream.status() != QDataStream::Ok)) {
         qWarning("QKatHandler::write() Could not write image");
