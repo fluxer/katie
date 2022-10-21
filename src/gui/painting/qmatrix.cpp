@@ -671,7 +671,7 @@ QPainterPath QMatrix::map(const QPainterPath &path) const
     if (path.isEmpty())
         return QPainterPath();
 
-    QPainterPath copy = path;
+    QPainterPath copy(path);
 
     // Translate or identity
     if (_m11 == 1.0 && _m22 == 1.0 && _m12 == 0.0 && _m21 == 0.0) {
