@@ -79,10 +79,12 @@ bool QKatHandler::read(QImage *image)
     qint64 width = 0;
     qint64 height = 0;
     qint64 uncompressedsize = 0;
+    quint32 compressedsize = 0;
     imagestream >> format;
     imagestream >> width;
     imagestream >> height;
     imagestream >> uncompressedsize;
+    imagestream >> compressedsize;
 
     *image = QImage(width, height, static_cast<QImage::Format>(format));
     if (Q_UNLIKELY(image->isNull())) {
@@ -90,8 +92,8 @@ bool QKatHandler::read(QImage *image)
         return false;
     }
 
-    QByteArray imagedata;
-    imagestream >> imagedata;
+    QByteArray imagedata(compressedsize, Qt::Uninitialized);
+    imagestream.readRawData(imagedata.data(), compressedsize);
 
     if (Q_UNLIKELY(imagestream.status() != QDataStream::Ok)) {
         qWarning("QKatHandler::read() Could not read image");
@@ -171,7 +173,8 @@ bool QKatHandler::write(const QImage &image)
     imagestream << (qint64) image32.width();
     imagestream << (qint64) image32.height();
     imagestream << (qint64) image32.byteCount();
-    imagestream << (QByteArray) QByteArray::fromRawData(compressedimage.constData(), compresult);
+    imagestream << (quint32) compresult;
+    imagestream.writeRawData(compressedimage.constData(), compresult);
 
     if (Q_UNLIKELY(device()->write(imagebuffer.data(), imagebuffer.size()) != imagebuffer.size())) {
         qWarning("QKatHandler::write() Could not write image");
