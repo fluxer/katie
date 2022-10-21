@@ -307,7 +307,7 @@ bool QImageData::checkForAlphaPixels() const
     \row    \o KAT    \o Katie Image                      \o Read/write
     \row    \o PBM    \o Portable Bitmap                  \o Read
     \row    \o PPM    \o Portable Pixmap                  \o Read/write
-    \row    \o XPM    \o X11 Pixmap                       \o Read/write
+    \row    \o XPM    \o X11 Pixmap                       \o Read
     \endtable
 
     \section1 Katie Image Format

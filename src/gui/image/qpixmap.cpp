@@ -1306,7 +1306,7 @@ QPixmap QPixmap::transformed(const QMatrix &matrix, Qt::TransformationMode mode)
     \row    \o KAT    \o Katie Image                      \o Read/write
     \row    \o PBM    \o Portable Bitmap                  \o Read
     \row    \o PPM    \o Portable Pixmap                  \o Read/write
-    \row    \o XPM    \o X11 Pixmap                       \o Read/write
+    \row    \o XPM    \o X11 Pixmap                       \o Read
     \endtable
 
     \section1 Pixmap Information
