@@ -913,9 +913,9 @@ QByteArray QMetaObject::normalizedType(const char *type)
     if (!type || !*type)
         return result;
 
-    QVarLengthArray<char> stackbuf(qstrlen(type) + 1);
-    qRemoveWhitespace(type, stackbuf.data());
-    qNormalizeType(stackbuf.data(), result);
+    QSTACKARRAY(char, stackbuf, qstrlen(type) + 1);
+    qRemoveWhitespace(type, stackbuf);
+    qNormalizeType(stackbuf, result);
 
     return result;
 }
