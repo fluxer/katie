@@ -1046,10 +1046,10 @@ bool QMetaObject::invokeMethod(QObject *obj,
     if (!obj)
         return false;
 
-    QVarLengthArray<char, 512> sig;
     int len = qstrlen(member);
     if (len <= 0)
         return false;
+    QVarLengthArray<char, 512> sig;
     sig.append(member, len);
     sig.append('(');
 
