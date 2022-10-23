@@ -23,15 +23,6 @@
 #include "qbenchmark_p.h"
 #include "qbenchmarkmetric_p.h"
 
-#ifdef QT_GUI_LIB
-#include "qapplication.h"
-#endif
-
-#include "qprocess.h"
-#include "qdir.h"
-#include "qset.h"
-#include "qdebug.h"
-
 QT_BEGIN_NAMESPACE
 
 QBenchmarkGlobalData *QBenchmarkGlobalData::current;
