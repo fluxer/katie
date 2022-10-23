@@ -160,10 +160,7 @@ typedef std::ptrdiff_t qptrdiff;
 #  define Q_DECL_DEPRECATED __attribute__((__deprecated__))
 #endif
 
-#if defined(QT_NO_DEPRECATED)
-#  undef QT_DEPRECATED
-#  undef QT_DEPRECATED_CONSTRUCTOR
-#elif defined(QT_DEPRECATED_WARNINGS)
+#if defined(QT_DEPRECATED_WARNINGS)
 #  undef QT_DEPRECATED
 #  define QT_DEPRECATED Q_DECL_DEPRECATED
 #  undef QT_DEPRECATED_CONSTRUCTOR
