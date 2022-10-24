@@ -2039,7 +2039,6 @@ QModelIndexList QAbstractItemModel::match(const QModelIndex &start, int role,
                                           Qt::MatchFlags flags) const
 {
     QModelIndexList result;
-    uint matchType = flags & 0x0F;
     Qt::CaseSensitivity cs = flags & Qt::MatchCaseSensitive ? Qt::CaseSensitive : Qt::CaseInsensitive;
     bool recurse = flags & Qt::MatchRecursive;
     bool wrap = flags & Qt::MatchWrap;
@@ -2057,36 +2056,30 @@ QModelIndexList QAbstractItemModel::match(const QModelIndex &start, int role,
                  continue;
             QVariant v = data(idx, role);
             // QVariant based matching
-            if (matchType == Qt::MatchExactly) {
+            if (flags & Qt::MatchExactly) {
                 if (value == v)
                     result.append(idx);
             } else { // QString based matching
                 if (text.isEmpty()) // lazy conversion
                     text = value.toString();
                 QString t = v.toString();
-                switch (matchType) {
-                case Qt::MatchRegExp:
+                if (flags & Qt::MatchRegExp) {
                     if (QRegExp(text, cs).exactMatch(t))
                         result.append(idx);
-                    break;
-                case Qt::MatchWildcard:
+                } else if (flags & Qt::MatchWildcard) {
                     if (QRegExp(text, cs, QRegExp::Wildcard).exactMatch(t))
                         result.append(idx);
-                    break;
-                case Qt::MatchStartsWith:
+                 } else if (flags & Qt::MatchStartsWith) {
                     if (t.startsWith(text, cs))
                         result.append(idx);
-                    break;
-                case Qt::MatchEndsWith:
+                 } else if (flags & Qt::MatchEndsWith) {
                     if (t.endsWith(text, cs))
                         result.append(idx);
-                    break;
-                case Qt::MatchFixedString:
+                 } else if (flags & Qt::MatchFixedString) {
                     if (t.compare(text, cs) == 0)
                         result.append(idx);
-                    break;
-                case Qt::MatchContains:
-                default:
+                } else {
+                    // Qt::MatchContains:
                     if (t.contains(text, cs))
                         result.append(idx);
                 }
