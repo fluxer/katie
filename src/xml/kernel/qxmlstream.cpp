@@ -369,7 +369,7 @@ QXmlStreamReader::QXmlStreamReader(const QString &data)
     d->dataBuffer = data.toLatin1();
 #else
     d->dataBuffer = d->codec->fromUnicode(data);
-    d->decoder = d->codec->makeDecoder();
+    d->decoder = new QTextConverter(d->codec->name());
 #endif
     d->lockEncoding = true;
 
@@ -1358,10 +1358,10 @@ ushort QXmlStreamReaderPrivate::getChar_helper()
         QTextCodec *fallback = QTextCodec::codecForName("UTF-8");
         codec = QTextCodec::codecForUtfText(rawReadBuffer, fallback);
         Q_ASSERT(codec);
-        decoder = codec->makeDecoder();
+        decoder = new QTextConverter(codec->name());
     }
 
-    decoder->toUnicode(&readBuffer, rawReadBuffer.constData(), nbytesread);
+    readBuffer = decoder->toUnicode(rawReadBuffer.constData(), nbytesread);
 
     if(lockEncoding && decoder->hasFailure()) {
         raiseWellFormedError(QXmlStream::tr("Encountered incorrectly encoded content."));
@@ -1649,8 +1649,8 @@ void QXmlStreamReaderPrivate::startDocument()
                 else if (newCodec != codec && !lockEncoding) {
                     codec = newCodec;
                     delete decoder;
-                    decoder = codec->makeDecoder();
-                    decoder->toUnicode(&readBuffer, rawReadBuffer.data(), nbytesread);
+                    decoder = new QTextConverter(codec->name());
+                    readBuffer = decoder->toUnicode(rawReadBuffer.data(), nbytesread);
                 }
 #endif // QT_NO_TEXTCODEC
             }
@@ -2814,7 +2814,7 @@ public:
 
 #ifndef QT_NO_TEXTCODEC
     QTextCodec *codec;
-    QTextEncoder *encoder;
+    QTextConverter *encoder;
 #endif
     void checkIfASCIICompatibleCodec();
 
@@ -2835,7 +2835,8 @@ QXmlStreamWriterPrivate::QXmlStreamWriterPrivate()
     deleteDevice = false;
 #ifndef QT_NO_TEXTCODEC
     codec = QTextCodec::codecForMib(106); // utf8
-    encoder = codec->makeEncoder(QTextCodec::IgnoreHeader); // no byte order mark for utf8
+    encoder = new QTextConverter(codec->name());
+    encoder->setFlags(QTextConverter::IgnoreHeader); // no byte order mark for utf8
 #endif
     checkIfASCIICompatibleCodec();
     inStartElement = inEmptyElement = false;
@@ -3122,7 +3123,8 @@ void QXmlStreamWriter::setCodec(QTextCodec *codec)
     if (codec) {
         d->codec = codec;
         delete d->encoder;
-        d->encoder = codec->makeEncoder(QTextCodec::IgnoreHeader); // no byte order mark for utf8
+        d->encoder = new QTextConverter(codec->name());
+        d->encoder->setFlags(QTextConverter::IgnoreHeader); // no byte order mark for utf8
         d->checkIfASCIICompatibleCodec();
     }
 }

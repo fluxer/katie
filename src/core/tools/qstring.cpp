@@ -21,7 +21,7 @@
 
 #include "qstringlist.h"
 #include "qregexp.h"
-#include "qicucodec_p.h"
+#include "qtextcodec_p.h"
 #include "qdatastream.h"
 #include "qlist.h"
 #include "qlocale.h"
@@ -3176,7 +3176,7 @@ QByteArray QString::toLatin1() const
 */
 QByteArray QString::toAscii() const
 {
-    return QIcuCodec::convertFrom(constData(), length(), "US-ASCII");
+    return QTextCodecPrivate::convertFrom(constData(), length(), "US-ASCII");
 }
 
 static QByteArray toLocal8Bit_helper(const QChar *data, int length)
@@ -3233,7 +3233,7 @@ QByteArray QString::toUtf8() const
     if (isNull())
         return QByteArray();
 
-    return QIcuCodec::convertFrom(constData(), length(), "UTF-8");
+    return QTextCodecPrivate::convertFrom(constData(), length(), "UTF-8");
 }
 
 /*!
@@ -3317,7 +3317,7 @@ QString QString::fromLatin1(const char *str, int size)
     if (size < 0) {
         size = qstrlen(str);
     }
-    return QIcuCodec::convertTo(str, size, "latin1");
+    return QTextCodecPrivate::convertTo(str, size, "latin1");
 }
 
 /*!
@@ -3363,7 +3363,7 @@ QString QString::fromAscii(const char *str, int size)
     if (size < 0) {
         size = qstrlen(str);
     }
-    return QIcuCodec::convertTo(str, size, "US-ASCII");
+    return QTextCodecPrivate::convertTo(str, size, "US-ASCII");
 }
 
 /*!
@@ -3395,7 +3395,7 @@ QString QString::fromUtf8(const char *str, int size)
     if (size < 0) {
         size = qstrlen(str);
     }
-    return QIcuCodec::convertTo(str, size, "UTF-8");
+    return QTextCodecPrivate::convertTo(str, size, "UTF-8");
 }
 
 /*!
@@ -3426,7 +3426,7 @@ QString QString::fromUtf16(const ushort *unicode, int size)
             ++size;
         }
     }
-    return QIcuCodec::convertTo((const char *)unicode, size, "UTF-16");
+    return QTextCodecPrivate::convertTo((const char *)unicode, size, "UTF-16");
 }
 
 
@@ -3452,7 +3452,7 @@ QString QString::fromUcs4(const uint *unicode, int size)
             ++size;
         }
     }
-    return QIcuCodec::convertTo((const char *)unicode, size, "UTF-32");
+    return QTextCodecPrivate::convertTo((const char *)unicode, size, "UTF-32");
 }
 
 /*!
@@ -8125,7 +8125,7 @@ QByteArray QStringRef::toLatin1() const
 */
 QByteArray QStringRef::toAscii() const
 {
-    return QIcuCodec::convertFrom(constData(), length(), "US-ASCII");
+    return QTextCodecPrivate::convertFrom(constData(), length(), "US-ASCII");
 }
 
 /*!
@@ -8176,7 +8176,7 @@ QByteArray QStringRef::toUtf8() const
 {
     if (isNull())
         return QByteArray();
-    return QIcuCodec::convertFrom(constData(), length(), "UTF-8");
+    return QTextCodecPrivate::convertFrom(constData(), length(), "UTF-8");
 }
 
 /*!

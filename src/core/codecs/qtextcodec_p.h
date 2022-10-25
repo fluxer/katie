@@ -1,7 +1,6 @@
 /****************************************************************************
 **
-** Copyright (C) 2015 The Qt Company Ltd.
-** Copyright (C) 2016 Ivailo Monev
+** Copyright (C) 2019 Ivailo Monev
 **
 ** This file is part of the QtCore module of the Katie Toolkit.
 **
@@ -22,6 +21,8 @@
 #ifndef QTEXTCODEC_P_H
 #define QTEXTCODEC_P_H
 
+#include "QtCore/qtextcodec.h"
+
 //
 //  W A R N I N G
 //  -------------
@@ -35,40 +36,32 @@
 
 #include "qtextcodec.h"
 
+#include <unicode/ucnv.h>
+
 QT_BEGIN_NAMESPACE
 
-#ifdef QT_NO_TEXTCODEC
-
-class QTextCodec
+class QTextCodecPrivate
 {
 public:
-    enum ConversionFlag {
-        DefaultConversion,
-        ConvertInvalidToNull = 0x80000000,
-        IgnoreHeader = 0x1
-    };
-    Q_DECLARE_FLAGS(ConversionFlags, ConversionFlag)
+    QTextCodecPrivate(const QByteArray &name);
+    QTextCodecPrivate(const int mib);
+    ~QTextCodecPrivate();
 
-    struct ConverterState {
-        ConverterState(ConversionFlags f = DefaultConversion)
-            : flags(f), invalidChars(0), d(nullptr) { }
-        ~ConverterState() { }
-        ConversionFlags flags;
-        int invalidChars;
-    private:
-        void *d;
+    static QList<QByteArray> allCodecs();
+    static QList<int> allMibs();
 
-        friend class QIcuCodec;
-        friend class QTextStreamPrivate;
-        friend class QTextStream;
+    static QString convertTo(const char *data, int len, const char* const codec);
+    static QByteArray convertFrom(const QChar *unicode, int len, const char* const codec);
 
-        ConverterState(const ConverterState &other);
-        ConverterState& operator=(const ConverterState &other);
-    };
+    UConverter* getConverter();
+    void invalidChars(int length) const;
+
+    QByteArray m_name;
+    QTextConverter::ConversionFlags m_flags;
+    UConverter* m_conv;
+    mutable int m_invalidchars;
 };
-
-#endif //QT_NO_TEXTCODEC
 
 QT_END_NAMESPACE
 
-#endif
+#endif // QTEXTCODEC_P_H

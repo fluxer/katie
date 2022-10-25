@@ -30,8 +30,6 @@
 #include "OpaqueJSString.h"
 #include <wtf/unicode/UTF8.h>
 
-#include <QTextCodec>
-
 using namespace JSC;
 using namespace WTF::Unicode;
 
@@ -39,22 +37,6 @@ JSStringRef JSStringCreateWithCharacters(const JSChar* chars, size_t numChars)
 {
     initializeThreading();
     return OpaqueJSString::create(chars, numChars).releaseRef();
-}
-
-JSStringRef JSStringCreateWithUTF8CString(const char* string)
-{
-    initializeThreading();
-    if (string) {
-        QTextCodec *codec = QTextCodec::codecForName("UTF-8");
-        QTextDecoder decoder(codec, QTextCodec::DefaultConversion);
-        QString result = decoder.toUnicode(string, strlen(string));
-        if (!decoder.hasFailure()) {
-            return OpaqueJSString::create(reinterpret_cast<const UChar*>(result.unicode()), result.size()).releaseRef();
-        }
-    }
-
-    // Null string.
-    return OpaqueJSString::create().releaseRef();
 }
 
 JSStringRef JSStringRetain(JSStringRef string)
@@ -84,33 +66,8 @@ size_t JSStringGetMaximumUTF8CStringSize(JSStringRef string)
     return string->length() * 3 + 1; // + 1 for terminating '\0'
 }
 
-size_t JSStringGetUTF8CString(JSStringRef string, char* buffer, size_t bufferSize)
-{
-    if (!bufferSize)
-        return 0;
-
-    QTextCodec *codec = QTextCodec::codecForName("UTF-8");
-    QTextEncoder encoder(codec, QTextCodec::DefaultConversion);
-    QByteArray result = encoder.fromUnicode(reinterpret_cast<const QChar*>(string->characters()), string->length());
-    if (encoder.hasFailure()) {
-        buffer = nullptr;
-        return 0;
-    }
-    buffer = result.data();
-    return result.size();
-}
-
 bool JSStringIsEqual(JSStringRef a, JSStringRef b)
 {
     unsigned len = a->length();
     return len == b->length() && 0 == memcmp(a->characters(), b->characters(), len * sizeof(UChar));
-}
-
-bool JSStringIsEqualToUTF8CString(JSStringRef a, const char* b)
-{
-    JSStringRef bBuf = JSStringCreateWithUTF8CString(b);
-    bool result = JSStringIsEqual(a, bBuf);
-    JSStringRelease(bBuf);
-    
-    return result;
 }

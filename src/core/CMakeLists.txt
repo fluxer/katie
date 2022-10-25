@@ -99,9 +99,8 @@ include_directories(
 )
 
 set(CORE_HEADERS
-    ${CMAKE_CURRENT_SOURCE_DIR}/codecs/qtextcodec_p.h
     ${CMAKE_CURRENT_SOURCE_DIR}/codecs/qtextcodec.h
-    ${CMAKE_CURRENT_SOURCE_DIR}/codecs/qicucodec_p.h
+    ${CMAKE_CURRENT_SOURCE_DIR}/codecs/qtextcodec_p.h
     ${CMAKE_CURRENT_SOURCE_DIR}/global/qendian.h
     ${CMAKE_CURRENT_SOURCE_DIR}/global/qglobal.h
     ${CMAKE_CURRENT_SOURCE_DIR}/global/qlibraryinfo.h
@@ -237,7 +236,6 @@ set(CORE_HEADERS
 
 set(CORE_SOURCES
     ${CMAKE_CURRENT_SOURCE_DIR}/codecs/qtextcodec.cpp
-    ${CMAKE_CURRENT_SOURCE_DIR}/codecs/qicucodec.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/global/qglobal.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/global/qlibraryinfo.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/global/qt_error_string.cpp

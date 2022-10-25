@@ -299,9 +299,9 @@ public:
 #ifndef QT_NO_TEXTCODEC
     // codec
     QTextCodec *codec;
-    QTextCodec::ConverterState readConverterState;
-    QTextCodec::ConverterState writeConverterState;
-    QTextCodec::ConverterState readConverterSavedState;
+    QTextConverter readConverter;
+    QTextConverter writeConverter;
+    QTextConverter readConverterSaved;
     bool autoDetectUnicode;
 #endif
 
@@ -408,10 +408,12 @@ void QTextStreamPrivate::reset()
 
 #ifndef QT_NO_TEXTCODEC
     codec = QTextCodec::codecForLocale();
-    readConverterState = QTextCodec::ConverterState();
-    writeConverterState = QTextCodec::ConverterState();
-    readConverterSavedState = QTextCodec::ConverterState();
-    writeConverterState.flags |= QTextCodec::IgnoreHeader;
+    readConverter = codec->converter();
+    readConverter.setFlags(QTextConverter::DefaultConversion);
+    writeConverter = codec->converter();
+    writeConverter.setFlags(QTextConverter::IgnoreHeader);
+    readConverterSaved.reset();
+    readConverterSaved.setFlags(QTextConverter::DefaultConversion);
     autoDetectUnicode = true;
 #endif
 }
@@ -445,7 +447,7 @@ bool QTextStreamPrivate::fillReadBuffer(qint64 maxBytes)
         codec = QTextCodec::codecForUtfText(buffer, codec);
         if (!codec) {
             codec = QTextCodec::codecForLocale();
-            writeConverterState.flags |= QTextCodec::IgnoreHeader;
+            writeConverter.setFlags(writeConverter.flags() | QTextConverter::IgnoreHeader);
         }
     }
 #if defined (QTEXTSTREAM_DEBUG)
@@ -465,7 +467,7 @@ bool QTextStreamPrivate::fillReadBuffer(qint64 maxBytes)
     int oldReadBufferSize = readBuffer.size();
 #ifndef QT_NO_TEXTCODEC
     // convert to unicode
-    readBuffer += codec->toUnicode(buffer.constData(), bytesRead, &readConverterState);
+    readBuffer += readConverter.toUnicode(buffer.constData(), bytesRead);
 #else
     readBuffer += QString::fromAscii(buffer.constData());
 #endif
@@ -543,11 +545,11 @@ void QTextStreamPrivate::flushWriteBuffer()
         codec = QTextCodec::codecForLocale();
 #if defined (QTEXTSTREAM_DEBUG)
     qDebug("QTextStreamPrivate::flushWriteBuffer(), using %s codec (%s generating BOM)",
-           codec->name().constData(), writeConverterState.flags & QTextCodec::IgnoreHeader ? "not" : "");
+           codec->name().constData(), writeConverter.flags() & QTextConverter::IgnoreHeader ? "not" : "");
 #endif
 
     // convert from unicode to raw data
-    QByteArray data = codec->fromUnicode(writeBuffer.data(), writeBuffer.size(), &writeConverterState);
+    QByteArray data = writeConverter.fromUnicode(writeBuffer.data(), writeBuffer.size());
 #else
     QByteArray data = writeBuffer.toLocal8Bit();
 #endif
@@ -749,7 +751,7 @@ inline void QTextStreamPrivate::consume(int size)
 inline void QTextStreamPrivate::saveConverterState(qint64 newPos)
 {
 #ifndef QT_NO_TEXTCODEC
-    readConverterSavedState = readConverterState;
+    readConverterSaved = readConverter;
 #endif
 
     readBufferStartDevicePos = newPos;
@@ -761,7 +763,7 @@ inline void QTextStreamPrivate::saveConverterState(qint64 newPos)
 inline void QTextStreamPrivate::restoreToSavedConverterState()
 {
 #ifndef QT_NO_TEXTCODEC
-    readConverterState = readConverterSavedState;
+    readConverter = readConverterSaved;
 #endif
 }
 
@@ -1050,10 +1052,12 @@ bool QTextStream::seek(qint64 pos)
 
 #ifndef QT_NO_TEXTCODEC
         // Reset the codec converter states.
-        d->readConverterState = QTextCodec::ConverterState();
-        d->writeConverterState = QTextCodec::ConverterState();
-        d->readConverterSavedState = QTextCodec::ConverterState();
-        d->writeConverterState.flags |= QTextCodec::IgnoreHeader;
+        d->readConverter.reset();
+        d->readConverter.setFlags(QTextConverter::DefaultConversion);
+        d->writeConverter.reset();
+        d->writeConverter.setFlags(QTextConverter::IgnoreHeader);
+        d->readConverterSaved.reset();
+        d->readConverterSaved.setFlags(QTextConverter::DefaultConversion);
 #endif
         return true;
     }
@@ -2827,6 +2831,8 @@ void QTextStream::setCodec(QTextCodec *codec)
         }
     }
     d->codec = codec;
+    d->readConverter = codec->converter();
+    d->writeConverter = codec->converter();
     if (seekPos >=0 && !d->readBuffer.isEmpty())
         seek(seekPos);
 }
@@ -2903,9 +2909,9 @@ void QTextStream::setGenerateByteOrderMark(bool generate)
     Q_D(QTextStream);
     if (d->writeBuffer.isEmpty()) {
         if (generate)
-            d->writeConverterState.flags &= ~QTextCodec::IgnoreHeader;
+            d->writeConverter.setFlags(d->writeConverter.flags() & ~QTextConverter::IgnoreHeader);
         else
-            d->writeConverterState.flags |= QTextCodec::IgnoreHeader;
+            d->writeConverter.setFlags(d->writeConverter.flags() | QTextConverter::IgnoreHeader);
     }
 }
 
@@ -2919,7 +2925,7 @@ void QTextStream::setGenerateByteOrderMark(bool generate)
 bool QTextStream::generateByteOrderMark() const
 {
     Q_D(const QTextStream);
-    return (d->writeConverterState.flags & QTextCodec::IgnoreHeader) == 0;
+    return (d->writeConverter.flags() & QTextConverter::IgnoreHeader) == 0;
 }
 
 #endif

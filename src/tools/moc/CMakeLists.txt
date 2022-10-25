@@ -37,7 +37,6 @@ set(BOOTSTRAP_DEFINITIONS
     -DQT_NO_COMPRESS
     -DQT_NO_EXCEPTIONS
     -DQT_NO_REGEXP
-    -DQT_NO_TEXTCODEC
 )
 
 if(WITH_EXECINFO AND EXECINFO_FOUND)
@@ -48,7 +47,7 @@ if(WITH_EXECINFO AND EXECINFO_FOUND)
 endif()
 
 set(BOOTSTRAP_SOURCES
-    ${CMAKE_SOURCE_DIR}/src/core/codecs/qicucodec.cpp
+    ${CMAKE_SOURCE_DIR}/src/core/codecs/qtextcodec.cpp
     ${CMAKE_SOURCE_DIR}/src/core/global/qglobal.cpp
     ${CMAKE_SOURCE_DIR}/src/core/global/qt_error_string.cpp
     ${CMAKE_SOURCE_DIR}/src/core/io/qabstractfileengine.cpp

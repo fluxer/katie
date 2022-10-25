@@ -127,10 +127,9 @@ UString UString::createFromUTF8(const char* string)
     if (!string)
         return null();
 
-    QTextCodec *codec = QTextCodec::codecForName("UTF-8");
-    QTextDecoder decoder(codec, QTextCodec::DefaultConversion);
-    QString result = decoder.toUnicode(string, strlen(string));
-    if (decoder.hasFailure()) {
+    QTextConverter converter("UTF-8");
+    QString result = converter.toUnicode(string, strlen(string));
+    if (converter.hasFailure()) {
         return null();
     }
 
@@ -773,10 +772,9 @@ bool equal(const UString::Rep* r, const UString::Rep* b)
 
 const char* UString::UTF8String() const
 {
-    QTextCodec *codec = QTextCodec::codecForName("UTF-8");
-    QTextEncoder encoder(codec, QTextCodec::DefaultConversion);
-    QByteArray result = encoder.fromUnicode(reinterpret_cast<const QChar*>(data()), size());
-    if (encoder.hasFailure()) {
+    QTextConverter converter("UTF-8");
+    QByteArray result = converter.fromUnicode(reinterpret_cast<const QChar*>(data()), size());
+    if (converter.hasFailure()) {
         return nullptr;
     }
     return result.constData();

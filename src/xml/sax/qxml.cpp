@@ -209,7 +209,7 @@ public:
     int length;
     bool nextReturnedEndOfData;
 #ifndef QT_NO_TEXTCODEC
-    QTextDecoder *encMapper;
+    QTextConverter *encMapper;
 #endif
 
     QByteArray encodingDeclBytes;
@@ -1303,7 +1303,7 @@ QString QXmlInputSource::fromRawData(const QByteArray &data, bool beginning)
         Q_ASSERT(codec);
         mib = codec->mibEnum();
 
-        d->encMapper = codec->makeDecoder();
+        d->encMapper = new QTextConverter(codec->name());
     }
 
     QString input = d->encMapper->toUnicode(data.constData(), data.size());
@@ -1319,7 +1319,7 @@ QString QXmlInputSource::fromRawData(const QByteArray &data, bool beginning)
                 /* If the encoding is the same, we don't have to do toUnicode() all over again. */
                 if(codec->mibEnum() != mib) {
                     delete d->encMapper;
-                    d->encMapper = codec->makeDecoder();
+                    d->encMapper = new QTextConverter(codec->name());
 
                     /* The variable input can potentially be large, so we deallocate
                      * it before calling toUnicode() in order to avoid having two
