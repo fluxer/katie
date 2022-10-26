@@ -708,7 +708,7 @@ QDataStream &QDataStream::readBytes(char *&s, uint &l)
     if (len == 0)
         return *this;
 
-    char *sbuf = new char[len];
+    char *sbuf = new char[len + 1];
     if (dev->read(sbuf, len) != len) {
         delete [] sbuf;
         setStatus(ReadPastEnd);
