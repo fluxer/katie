@@ -52,7 +52,7 @@ public:
     static QString convertTo(const char *data, int len, const char* const codec);
     static QByteArray convertFrom(const QChar *unicode, int len, const char* const codec);
 
-    QByteArray m_name;
+    QByteArray name;
 private:
     Q_DISABLE_COPY(QTextCodecPrivate);
 };
@@ -67,10 +67,10 @@ public:
     UConverter* getConverter();
     void invalidChars(int length) const;
 
-    QByteArray m_name;
-    QTextConverter::ConversionFlags m_flags;
-    UConverter* m_conv;
-    mutable int m_invalidchars;
+    QByteArray name;
+    QTextConverter::ConversionFlags flags;
+    UConverter* conv;
+    mutable int invalidchars;
 private:
     Q_DISABLE_COPY(QTextConverterPrivate);
 };
