@@ -71,6 +71,7 @@ incmap = {
         'QSizeF': 'qsize.h',
         'QStringListIterator': 'qstringlist.h',
         'QStringRef': 'qstring.h',
+        'QTextConverter': 'qtextcodec.h',
         'QTextDecoder': 'qtextcodec.h',
         'QTextEncoder': 'qtextcodec.h',
         'QTextStreamFunction': 'qtextstream.h',
