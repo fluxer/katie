@@ -40,6 +40,8 @@
 
 QT_BEGIN_NAMESPACE
 
+// always built for one-shot conversions in QString (for performance reasons
+// and because bootstrap requires it)
 class QTextCodecPrivate
 {
 public:
@@ -57,6 +59,7 @@ private:
     Q_DISABLE_COPY(QTextCodecPrivate);
 };
 
+#ifndef QT_NO_TEXTCODEC
 class QTextConverterPrivate
 {
 public:
@@ -74,6 +77,7 @@ public:
 private:
     Q_DISABLE_COPY(QTextConverterPrivate);
 };
+#endif // QT_NO_TEXTCODEC
 
 QT_END_NAMESPACE
 

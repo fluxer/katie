@@ -22,8 +22,6 @@
 #include "qplatformdefs.h"
 #include "qtextcodec.h"
 
-#ifndef QT_NO_TEXTCODEC
-
 #include "qlist.h"
 #include "qfile.h"
 #include "qvarlengtharray.h"
@@ -955,40 +953,6 @@ static inline bool nameMatch(const QByteArray &name, const QByteArray &name2)
     return (ucnv_compareNames(iana, name2.constData()) == 0);
 }
 
-static void icu_from_callback(
-    const void* context,
-    UConverterFromUnicodeArgs *args,
-    const UChar* codeUnits,
-    int32_t length,
-    UChar32 codePoint,
-    UConverterCallbackReason reason,
-    UErrorCode *pErrorCode)
-{
-    if (reason == UCNV_ILLEGAL || reason == UCNV_UNASSIGNED) {
-        const QTextConverterPrivate* codec = static_cast<const QTextConverterPrivate*>(context);
-        codec->invalidChars(length);
-        // reset error code so that conversion continues
-        *pErrorCode = U_ZERO_ERROR;
-    }
-    UCNV_FROM_U_CALLBACK_SUBSTITUTE(context, args, codeUnits, length, codePoint, reason, pErrorCode);
-}
-
-static void icu_to_callback (
-    const void* context,
-    UConverterToUnicodeArgs *args,
-    const char *codeUnits,
-    int32_t length,
-    UConverterCallbackReason reason,
-    UErrorCode *pErrorCode)
-{
-    if (reason == UCNV_ILLEGAL || reason == UCNV_UNASSIGNED) {
-        const QTextConverterPrivate* codec = static_cast<const QTextConverterPrivate*>(context);
-        codec->invalidChars(length);
-        *pErrorCode = U_ZERO_ERROR;
-    }
-    UCNV_TO_U_CALLBACK_SUBSTITUTE(context, args, codeUnits, length, reason, pErrorCode);
-}
-
 QTextCodecPrivate::QTextCodecPrivate(const QByteArray &aname)
     : name(aname)
 {
@@ -1101,6 +1065,40 @@ QByteArray QTextCodecPrivate::convertFrom(const QChar *unicode, int length, cons
     return QByteArray();
 }
 
+#ifndef QT_NO_TEXTCODEC
+static void icu_from_callback(
+    const void* context,
+    UConverterFromUnicodeArgs *args,
+    const UChar* codeUnits,
+    int32_t length,
+    UChar32 codePoint,
+    UConverterCallbackReason reason,
+    UErrorCode *pErrorCode)
+{
+    if (reason == UCNV_ILLEGAL || reason == UCNV_UNASSIGNED) {
+        const QTextConverterPrivate* codec = static_cast<const QTextConverterPrivate*>(context);
+        codec->invalidChars(length);
+        // reset error code so that conversion continues
+        *pErrorCode = U_ZERO_ERROR;
+    }
+    UCNV_FROM_U_CALLBACK_SUBSTITUTE(context, args, codeUnits, length, codePoint, reason, pErrorCode);
+}
+
+static void icu_to_callback (
+    const void* context,
+    UConverterToUnicodeArgs *args,
+    const char *codeUnits,
+    int32_t length,
+    UConverterCallbackReason reason,
+    UErrorCode *pErrorCode)
+{
+    if (reason == UCNV_ILLEGAL || reason == UCNV_UNASSIGNED) {
+        const QTextConverterPrivate* codec = static_cast<const QTextConverterPrivate*>(context);
+        codec->invalidChars(length);
+        *pErrorCode = U_ZERO_ERROR;
+    }
+    UCNV_TO_U_CALLBACK_SUBSTITUTE(context, args, codeUnits, length, reason, pErrorCode);
+}
 
 QTextConverterPrivate::QTextConverterPrivate(const QByteArray &aname)
     : name(aname),
@@ -1993,6 +1991,7 @@ QString QTextConverter::toUnicode(const char *data, int length) const
     return QString(reinterpret_cast<QChar*>(result) + resultoffset, convresult - resultoffset);
 }
 
+#endif // QT_NO_TEXTCODEC
+
 QT_END_NAMESPACE
 
-#endif // QT_NO_TEXTCODEC
