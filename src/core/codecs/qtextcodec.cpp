@@ -1923,7 +1923,9 @@ void QTextConverter::reset()
 */
 QTextConverter& QTextConverter::operator=(const QTextConverter &other)
 {
-    d_ptr->flags = other.d_ptr->flags;
+    if (d_ptr == other.d_ptr) {
+        return *this;
+    }
     if (d_ptr->conv) {
         ucnv_close(d_ptr->conv);
         d_ptr->conv = nullptr;
@@ -1935,6 +1937,8 @@ QTextConverter& QTextConverter::operator=(const QTextConverter &other)
             d_ptr->conv = nullptr;
         }
     }
+    d_ptr->name = other.d_ptr->name;
+    d_ptr->flags = other.d_ptr->flags;
     d_ptr->invalidchars = other.d_ptr->invalidchars;
     return *this;
 }
