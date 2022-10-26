@@ -965,7 +965,7 @@ static void icu_from_callback(
     UErrorCode *pErrorCode)
 {
     if (reason == UCNV_ILLEGAL || reason == UCNV_UNASSIGNED) {
-        const QTextCodecPrivate* codec = static_cast<const QTextCodecPrivate*>(context);
+        const QTextConverterPrivate* codec = static_cast<const QTextConverterPrivate*>(context);
         codec->invalidChars(length);
         // reset error code so that conversion continues
         *pErrorCode = U_ZERO_ERROR;
@@ -982,7 +982,7 @@ static void icu_to_callback (
     UErrorCode *pErrorCode)
 {
     if (reason == UCNV_ILLEGAL || reason == UCNV_UNASSIGNED) {
-        const QTextCodecPrivate* codec = static_cast<const QTextCodecPrivate*>(context);
+        const QTextConverterPrivate* codec = static_cast<const QTextConverterPrivate*>(context);
         codec->invalidChars(length);
         *pErrorCode = U_ZERO_ERROR;
     }
@@ -990,17 +990,11 @@ static void icu_to_callback (
 }
 
 QTextCodecPrivate::QTextCodecPrivate(const QByteArray &name)
-    : m_name(name),
-    m_flags(QTextConverter::DefaultConversion),
-    m_conv(nullptr),
-    m_invalidchars(0)
+    : m_name(name)
 {
 }
 
 QTextCodecPrivate::QTextCodecPrivate(const int mib)
-    : m_flags(QTextConverter::DefaultConversion),
-    m_conv(nullptr),
-    m_invalidchars(0)
 {
     for (qint16 i = 0; i < MIBTblSize; i++) {
         if (mib == MIBTbl[i].mib) {
@@ -1010,13 +1004,6 @@ QTextCodecPrivate::QTextCodecPrivate(const int mib)
     }
 
     m_name = "latin1";
-}
-
-QTextCodecPrivate::~QTextCodecPrivate()
-{
-    if (m_conv) {
-        ucnv_close(m_conv);
-    }
 }
 
 QList<QByteArray> QTextCodecPrivate::allCodecs()
@@ -1063,38 +1050,6 @@ QList<int> QTextCodecPrivate::allMibs()
     }
 
     return allmibs;
-}
-
-UConverter* QTextCodecPrivate::getConverter()
-{
-    if (m_conv) {
-        return m_conv;
-    }
-
-    UErrorCode error = U_ZERO_ERROR;
-    m_conv = ucnv_open(m_name.constData(), &error);
-    if (Q_UNLIKELY(U_FAILURE(error))) {
-        return nullptr;
-    }
-
-    error = U_ZERO_ERROR;
-    if (m_flags & QTextConverter::ConvertInvalidToNull) {
-        ucnv_setSubstString(m_conv, nullchar, 2, &error);
-    } else {
-        ucnv_setSubstString(m_conv, questionmarkchar, 1, &error);
-    }
-
-    error = U_ZERO_ERROR;
-    ucnv_setToUCallBack(m_conv, icu_to_callback, this, nullptr, nullptr, &error);
-    error = U_ZERO_ERROR;
-    ucnv_setFromUCallBack(m_conv, icu_from_callback, this, nullptr, nullptr, &error);
-
-    return m_conv;
-}
-
-void QTextCodecPrivate::invalidChars(int length) const
-{
-    m_invalidchars += length;
 }
 
 QString QTextCodecPrivate::convertTo(const char *data, int length, const char* const codec)
@@ -1146,6 +1101,70 @@ QByteArray QTextCodecPrivate::convertFrom(const QChar *unicode, int length, cons
     return QByteArray();
 }
 
+
+QTextConverterPrivate::QTextConverterPrivate(const QByteArray &name)
+    : m_name(name),
+    m_flags(QTextConverter::DefaultConversion),
+    m_conv(nullptr),
+    m_invalidchars(0)
+{
+}
+
+QTextConverterPrivate::QTextConverterPrivate(const int mib)
+    : m_flags(QTextConverter::DefaultConversion),
+    m_conv(nullptr),
+    m_invalidchars(0)
+{
+    for (qint16 i = 0; i < MIBTblSize; i++) {
+        if (mib == MIBTbl[i].mib) {
+            m_name = MIBTbl[i].name;
+            return;
+        }
+    }
+
+    m_name = "latin1";
+}
+
+QTextConverterPrivate::~QTextConverterPrivate()
+{
+    if (m_conv) {
+        ucnv_close(m_conv);
+    }
+}
+
+UConverter* QTextConverterPrivate::getConverter()
+{
+    if (m_conv) {
+        return m_conv;
+    }
+
+    UErrorCode error = U_ZERO_ERROR;
+    m_conv = ucnv_open(m_name.constData(), &error);
+    if (Q_UNLIKELY(U_FAILURE(error))) {
+        return nullptr;
+    }
+
+    error = U_ZERO_ERROR;
+    if (m_flags & QTextConverter::ConvertInvalidToNull) {
+        ucnv_setSubstString(m_conv, nullchar, 2, &error);
+    } else {
+        ucnv_setSubstString(m_conv, questionmarkchar, 1, &error);
+    }
+
+    error = U_ZERO_ERROR;
+    ucnv_setToUCallBack(m_conv, icu_to_callback, this, nullptr, nullptr, &error);
+    error = U_ZERO_ERROR;
+    ucnv_setFromUCallBack(m_conv, icu_from_callback, this, nullptr, nullptr, &error);
+
+    return m_conv;
+}
+
+void QTextConverterPrivate::invalidChars(int length) const
+{
+    m_invalidchars += length;
+}
+
+
 static QByteArray localecodec;
 #ifndef QT_NO_THREAD
 Q_GLOBAL_STATIC(QMutex, textCodecsMutex)
@@ -1174,7 +1193,8 @@ QTextCodecCleanup::~QTextCodecCleanup()
 }
 Q_GLOBAL_STATIC(QTextCodecCleanup, qGlobalQTextCodec)
 
-static QByteArray checkForCodec(const QByteArray &name) {
+static QByteArray checkForCodec(const QByteArray &name)
+{
     foreach(const QByteArray &codec, QTextCodec::availableCodecs()) {
         if (nameMatch(name, codec)) {
             return name;
@@ -1823,7 +1843,7 @@ QTextCodec *QTextCodec::codecForText(const QByteArray &ba)
     Constructs a QTextConverter for the codec with name \a name.
 */
 QTextConverter::QTextConverter()
-    : d_ptr(new QTextCodecPrivate(4))
+    : d_ptr(new QTextConverterPrivate(4))
 {
 }
 
@@ -1839,7 +1859,7 @@ QTextConverter::QTextConverter(const QTextConverter &other)
     Constructs a QTextConverter for the codec with name \a name.
 */
 QTextConverter::QTextConverter(const QByteArray &name)
-    : d_ptr(new QTextCodecPrivate(name))
+    : d_ptr(new QTextConverterPrivate(name))
 {
 }
 
@@ -1847,7 +1867,7 @@ QTextConverter::QTextConverter(const QByteArray &name)
     Constructs a QTextConverter for the codec with MIB \a mib.
 */
 QTextConverter::QTextConverter(const int mib)
-    : d_ptr(new QTextCodecPrivate(mib))
+    : d_ptr(new QTextConverterPrivate(mib))
 {
 }
 

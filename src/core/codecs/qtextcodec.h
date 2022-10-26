@@ -29,6 +29,7 @@ QT_BEGIN_NAMESPACE
 #ifndef QT_NO_TEXTCODEC
 
 class QTextCodecPrivate;
+class QTextConverterPrivate;
 
 class Q_CORE_EXPORT QTextConverter
 {
@@ -64,7 +65,7 @@ public:
     QTextConverter& operator=(const QTextConverter &other);
 
 private:
-    QTextCodecPrivate* d_ptr;
+    QTextConverterPrivate* d_ptr;
 };
 Q_DECLARE_OPERATORS_FOR_FLAGS(QTextConverter::ConversionFlags)
 

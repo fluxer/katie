@@ -45,13 +45,24 @@ class QTextCodecPrivate
 public:
     QTextCodecPrivate(const QByteArray &name);
     QTextCodecPrivate(const int mib);
-    ~QTextCodecPrivate();
 
     static QList<QByteArray> allCodecs();
     static QList<int> allMibs();
 
     static QString convertTo(const char *data, int len, const char* const codec);
     static QByteArray convertFrom(const QChar *unicode, int len, const char* const codec);
+
+    QByteArray m_name;
+private:
+    Q_DISABLE_COPY(QTextCodecPrivate);
+};
+
+class QTextConverterPrivate
+{
+public:
+    QTextConverterPrivate(const QByteArray &name);
+    QTextConverterPrivate(const int mib);
+    ~QTextConverterPrivate();
 
     UConverter* getConverter();
     void invalidChars(int length) const;
@@ -60,6 +71,8 @@ public:
     QTextConverter::ConversionFlags m_flags;
     UConverter* m_conv;
     mutable int m_invalidchars;
+private:
+    Q_DISABLE_COPY(QTextConverterPrivate);
 };
 
 QT_END_NAMESPACE
