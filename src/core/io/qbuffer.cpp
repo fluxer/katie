@@ -31,15 +31,16 @@ class QBufferPrivate : public QIODevicePrivate
 
 public:
     QBufferPrivate()
-    : buf(0)
+    : buf(0),
+    deleteBuf(true)
 #ifndef QT_NO_QOBJECT
-        , writtenSinceLastEmit(0), signalConnectionCount(0), signalsEmitted(false)
+    , writtenSinceLastEmit(0), signalConnectionCount(0), signalsEmitted(false)
 #endif
     { }
     ~QBufferPrivate() { }
 
     QByteArray *buf;
-    QByteArray defaultBuf;
+    bool deleteBuf;
 
     qint64 peek(char *data, qint64 maxSize) final;
     QByteArray peek(qint64 maxSize) final;
@@ -134,14 +135,19 @@ QBuffer::QBuffer()
     : QIODevice(*new QBufferPrivate)
 {
     Q_D(QBuffer);
-    d->buf = &d->defaultBuf;
+    d->buf = new QByteArray();
 }
+
 QBuffer::QBuffer(QByteArray *buf)
     : QIODevice(*new QBufferPrivate)
 {
     Q_D(QBuffer);
-    d->buf = buf ? buf : &d->defaultBuf;
-    d->defaultBuf.clear();
+    if (buf) {
+        d->buf = buf;
+        d->deleteBuf = false;
+    } else {
+        d->buf = new QByteArray();
+    }
 }
 #else
 /*!
@@ -155,7 +161,7 @@ QBuffer::QBuffer(QObject *parent)
     : QIODevice(*new QBufferPrivate, parent)
 {
     Q_D(QBuffer);
-    d->buf = &d->defaultBuf;
+    d->buf = new QByteArray();
 }
 
 /*!
@@ -179,8 +185,12 @@ QBuffer::QBuffer(QByteArray *byteArray, QObject *parent)
     : QIODevice(*new QBufferPrivate, parent)
 {
     Q_D(QBuffer);
-    d->buf = byteArray ? byteArray : &d->defaultBuf;
-    d->defaultBuf.clear();
+    if (byteArray) {
+        d->buf = byteArray;
+        d->deleteBuf = false;
+    } else {
+        d->buf = new QByteArray();
+    }
 }
 #endif
 
@@ -190,6 +200,10 @@ QBuffer::QBuffer(QByteArray *byteArray, QObject *parent)
 
 QBuffer::~QBuffer()
 {
+    Q_D(QBuffer);
+    if (d->deleteBuf) {
+        delete d->buf;
+    }
 }
 
 /*!
@@ -221,12 +235,17 @@ void QBuffer::setBuffer(QByteArray *byteArray)
         return;
     }
     Q_D(QBuffer);
+    if (d->deleteBuf) {
+        delete d->buf;
+        d->buf = nullptr;
+    }
     if (byteArray) {
         d->buf = byteArray;
+        d->deleteBuf = false;
     } else {
-        d->buf = &d->defaultBuf;
+        d->buf = new QByteArray();
+        d->deleteBuf = true;
     }
-    d->defaultBuf.clear();
 }
 
 /*!
