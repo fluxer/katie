@@ -626,25 +626,7 @@ typedef uint Flags;
 
 #endif /* Q_NO_TYPESAFE_FLAGS */
 
-#ifdef QT_FOREACH_COMPAT
-template <typename T>
-class QForeachContainer {
-public:
-    inline QForeachContainer(const T& t) : c(t) { }
-    inline typename T::const_iterator begin() { return c.begin(); }
-    inline typename T::const_iterator end() { return c.end(); }
-private:
-    const T c;
-};
-
-#define Q_FOREACH(variable, container) \
-    for (variable: QForeachContainer<Q_TYPEOF(container)>(container))
-
-#else // QT_FOREACH_COMPAT
-
 #define Q_FOREACH(variable, container) for (variable: container)
-
-#endif // QT_FOREACH_COMPAT
 
 #define Q_FOREVER for(;;)
 #ifndef QT_NO_KEYWORDS

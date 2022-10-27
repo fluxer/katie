@@ -136,7 +136,7 @@ if(NOT KATIE_FOUND)
             find_package(X11 REQUIRED)
         endif()
 
-        set(compat_definitions -DQT_NAMESPACE_COMPAT -DQT_FOREACH_COMPAT)
+        set(compat_definitions -DQT_NAMESPACE_COMPAT)
         set(KATIE_DEFINITIONS ${KATIE_DEFINITIONS} ${compat_definitions})
         set(QT_DEFINITIONS ${KATIE_DEFINITIONS})
         set(QT4_DEFINITIONS ${KATIE_DEFINITIONS})
