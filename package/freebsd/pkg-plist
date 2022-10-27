@@ -144,6 +144,7 @@ include/katie/QtCore/QStringRef
 include/katie/QtCore/QTemporaryFile
 include/katie/QtCore/QTextBoundaryFinder
 include/katie/QtCore/QTextCodec
+include/katie/QtCore/QTextConverter
 include/katie/QtCore/QTextDecoder
 include/katie/QtCore/QTextEncoder
 include/katie/QtCore/QTextStream
