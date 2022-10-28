@@ -536,8 +536,7 @@ void QUiLoaderPrivate::setupWidgetMap() const
     deriving your own loader class.
 
     If you have a custom component or an application that embeds \QD, you can
-    also use the QFormBuilder class provided by the QtDesigner module to create
-    user interfaces from UI files.
+    also use the QFormBuilder class to create user interfaces from UI files.
 
     The QUiLoader class provides a collection of functions allowing you to
     create widgets based on the information stored in UI files (created

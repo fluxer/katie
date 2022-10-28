@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-06-15 09:42+0300\n"
+"POT-Creation-Date: 2022-10-28 22:12+0300\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -17,29 +17,28 @@ msgstr ""
 "Content-Type: text/plain; charset=CHARSET\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: src/core/plugin/qlibrary.cpp:166
+#: src/core/plugin/qlibrary.cpp:165
 msgid "'%1' is not ELF file"
 msgstr ""
 
-#: src/core/plugin/qlibrary.cpp:169
+#: src/core/plugin/qlibrary.cpp:168
 msgid "ELF class mismatch in '%1'"
 msgstr ""
 
-#: src/core/plugin/qlibrary.cpp:188
+#: src/core/plugin/qlibrary.cpp:187
 msgid "Plugin verification data mismatch in '%1'"
 msgstr ""
 
-#: src/core/plugin/qlibrary.cpp:367 src/core/plugin/qlibrary.cpp:377
+#: src/core/plugin/qlibrary.cpp:364 src/core/plugin/qlibrary.cpp:374
 msgid "The shared library was not found."
 msgstr ""
 
-#: src/core/plugin/qlibrary.cpp:379
+#: src/core/plugin/qlibrary.cpp:376
 msgid "The file '%1' is not a valid Katie plugin."
 msgstr ""
 
-#: src/core/plugin/qlibrary.cpp:568 src/core/io/qiodevice.cpp:1517
+#: src/core/plugin/qlibrary.cpp:565 src/core/io/qiodevice.cpp:1516
 #: src/network/socket/qabstractsocketengine.cpp:439
-#: src/uitools/formscriptrunner.cpp:104
 msgid "Unknown error"
 msgstr ""
 
@@ -157,12 +156,12 @@ msgstr ""
 msgid "Could not open output redirection for writing"
 msgstr ""
 
-#: src/core/io/qprocess_unix.cpp:550
+#: src/core/io/qprocess_unix.cpp:548
 msgid "Resource error (fork failure): %1"
 msgstr ""
 
-#: src/core/io/qprocess_unix.cpp:788 src/core/io/qprocess_unix.cpp:836
-#: src/core/io/qprocess_unix.cpp:906 src/core/io/qprocess_unix.cpp:968
+#: src/core/io/qprocess_unix.cpp:786 src/core/io/qprocess_unix.cpp:834
+#: src/core/io/qprocess_unix.cpp:904 src/core/io/qprocess_unix.cpp:966
 msgid "Process operation timed out"
 msgstr ""
 
@@ -1251,8 +1250,8 @@ msgid ""
 "<p>Katie is a C++ toolkit derived from the Qt 4.8 framework.</p><p>Katie is "
 "licensed under the GNU LGPL version 2.1</p><p>Copyright (C) 2015 The Qt "
 "Company Ltd and other contributors.</p><p>Copyright (C) 2016 Ivailo Monev</"
-"p><p>See <a href=\"https://osdn.net/projects/kde/\">osdn.net/projects/kde/"
-"katie</a> for more information.</p>"
+"p><p>See <a href=\"https://osdn.net/projects/kde/\">osdn.net/projects/kde/</"
+"a> for more information.</p>"
 msgstr ""
 
 #: src/gui/dialogs/qmessagebox.cpp:1460
@@ -1269,7 +1268,7 @@ msgctxt "QPrintPreviewDialog"
 msgid "Page Setup"
 msgstr ""
 
-#: src/gui/dialogs/qdialog.cpp:487 src/gui/kernel/qwhatsthis.cpp:463
+#: src/gui/dialogs/qdialog.cpp:487 src/gui/kernel/qwhatsthis.cpp:456
 msgid "What's This?"
 msgstr ""
 
@@ -1699,42 +1698,42 @@ msgstr ""
 msgid "&OK"
 msgstr ""
 
-#: src/gui/image/qimagewriter.cpp:460
+#: src/gui/image/qimagewriter.cpp:459
 msgctxt "QImageWriter"
 msgid "Unknown error"
 msgstr ""
 
-#: src/gui/image/qimagewriter.cpp:463
+#: src/gui/image/qimagewriter.cpp:462
 msgctxt "QImageWriter"
 msgid "Device not writable"
 msgstr ""
 
-#: src/gui/image/qimagewriter.cpp:466
+#: src/gui/image/qimagewriter.cpp:465
 msgctxt "QImageWriter"
 msgid "Unsupported image format"
 msgstr ""
 
-#: src/gui/image/qimagereader.cpp:812
+#: src/gui/image/qimagereader.cpp:795
 msgctxt "QImageReader"
 msgid "Unknown error"
 msgstr ""
 
-#: src/gui/image/qimagereader.cpp:815
+#: src/gui/image/qimagereader.cpp:798
 msgctxt "QImageReader"
 msgid "File not found"
 msgstr ""
 
-#: src/gui/image/qimagereader.cpp:818
+#: src/gui/image/qimagereader.cpp:801
 msgctxt "QImageReader"
 msgid "Device not readable"
 msgstr ""
 
-#: src/gui/image/qimagereader.cpp:821
+#: src/gui/image/qimagereader.cpp:804
 msgctxt "QImageReader"
 msgid "Unsupported image format"
 msgstr ""
 
-#: src/gui/image/qimagereader.cpp:824
+#: src/gui/image/qimagereader.cpp:807
 msgctxt "QImageReader"
 msgid "Unable to read image data"
 msgstr ""
@@ -1743,32 +1742,32 @@ msgstr ""
 msgid "Close Tab"
 msgstr ""
 
-#: src/gui/widgets/qlineedit.cpp:1710 src/gui/text/qtextcontrol.cpp:1842
+#: src/gui/widgets/qlineedit.cpp:1710 src/gui/text/qtextcontrol.cpp:1841
 msgid "&Undo"
 msgstr ""
 
-#: src/gui/widgets/qlineedit.cpp:1714 src/gui/text/qtextcontrol.cpp:1844
+#: src/gui/widgets/qlineedit.cpp:1714 src/gui/text/qtextcontrol.cpp:1843
 msgid "&Redo"
 msgstr ""
 
-#: src/gui/widgets/qlineedit.cpp:1723 src/gui/text/qtextcontrol.cpp:1848
+#: src/gui/widgets/qlineedit.cpp:1723 src/gui/text/qtextcontrol.cpp:1847
 msgid "Cu&t"
 msgstr ""
 
-#: src/gui/widgets/qlineedit.cpp:1729 src/gui/text/qtextcontrol.cpp:1853
+#: src/gui/widgets/qlineedit.cpp:1729 src/gui/text/qtextcontrol.cpp:1852
 msgid "&Copy"
 msgstr ""
 
-#: src/gui/widgets/qlineedit.cpp:1735 src/gui/text/qtextcontrol.cpp:1866
+#: src/gui/widgets/qlineedit.cpp:1735 src/gui/text/qtextcontrol.cpp:1865
 msgid "&Paste"
 msgstr ""
 
-#: src/gui/widgets/qlineedit.cpp:1742 src/gui/text/qtextcontrol.cpp:1869
+#: src/gui/widgets/qlineedit.cpp:1742 src/gui/text/qtextcontrol.cpp:1868
 #: src/scripttools/debugging/qscriptbreakpointswidget.cpp:279
 msgid "Delete"
 msgstr ""
 
-#: src/gui/widgets/qlineedit.cpp:1750 src/gui/text/qtextcontrol.cpp:1876
+#: src/gui/widgets/qlineedit.cpp:1750 src/gui/text/qtextcontrol.cpp:1875
 msgid "Select All"
 msgstr ""
 
@@ -2021,7 +2020,7 @@ msgstr ""
 msgid "*"
 msgstr ""
 
-#: src/gui/kernel/qapplication.cpp:1643
+#: src/gui/kernel/qapplication.cpp:1615
 msgid "QT_LAYOUT_DIRECTION"
 msgstr ""
 
@@ -3468,91 +3467,91 @@ msgstr ""
 msgid "<empty>"
 msgstr ""
 
-#: src/gui/text/qfontdatabase.cpp:630
+#: src/gui/text/qfontdatabase.cpp:627
 msgctxt "QFontDatabase"
 msgid "Black"
 msgstr ""
 
-#: src/gui/text/qfontdatabase.cpp:632
+#: src/gui/text/qfontdatabase.cpp:629
 msgctxt "QFontDatabase"
 msgid "Bold"
 msgstr ""
 
-#: src/gui/text/qfontdatabase.cpp:634
+#: src/gui/text/qfontdatabase.cpp:631
 msgctxt "QFontDatabase"
 msgid "Demi Bold"
 msgstr ""
 
-#: src/gui/text/qfontdatabase.cpp:636
+#: src/gui/text/qfontdatabase.cpp:633
 msgctxt "QFontDatabase"
 msgid "Light"
 msgstr ""
 
-#: src/gui/text/qfontdatabase.cpp:640
+#: src/gui/text/qfontdatabase.cpp:637
 msgctxt "QFontDatabase"
 msgid "Italic"
 msgstr ""
 
-#: src/gui/text/qfontdatabase.cpp:642
+#: src/gui/text/qfontdatabase.cpp:639
 msgctxt "QFontDatabase"
 msgid "Oblique"
 msgstr ""
 
-#: src/gui/text/qtextcontrol.cpp:1860
+#: src/gui/text/qtextcontrol.cpp:1859
 msgid "Copy &Link Location"
 msgstr ""
 
-#: src/gui/text/qtextcontrol.cpp:2773
+#: src/gui/text/qtextcontrol.cpp:2772
 msgctxt "QUnicodeControlCharacterMenu"
 msgid "LRM Left-to-right mark"
 msgstr ""
 
-#: src/gui/text/qtextcontrol.cpp:2774
+#: src/gui/text/qtextcontrol.cpp:2773
 msgctxt "QUnicodeControlCharacterMenu"
 msgid "RLM Right-to-left mark"
 msgstr ""
 
-#: src/gui/text/qtextcontrol.cpp:2775
+#: src/gui/text/qtextcontrol.cpp:2774
 msgctxt "QUnicodeControlCharacterMenu"
 msgid "ZWJ Zero width joiner"
 msgstr ""
 
-#: src/gui/text/qtextcontrol.cpp:2776
+#: src/gui/text/qtextcontrol.cpp:2775
 msgctxt "QUnicodeControlCharacterMenu"
 msgid "ZWNJ Zero width non-joiner"
 msgstr ""
 
-#: src/gui/text/qtextcontrol.cpp:2777
+#: src/gui/text/qtextcontrol.cpp:2776
 msgctxt "QUnicodeControlCharacterMenu"
 msgid "ZWSP Zero width space"
 msgstr ""
 
-#: src/gui/text/qtextcontrol.cpp:2778
+#: src/gui/text/qtextcontrol.cpp:2777
 msgctxt "QUnicodeControlCharacterMenu"
 msgid "LRE Start of left-to-right embedding"
 msgstr ""
 
-#: src/gui/text/qtextcontrol.cpp:2779
+#: src/gui/text/qtextcontrol.cpp:2778
 msgctxt "QUnicodeControlCharacterMenu"
 msgid "RLE Start of right-to-left embedding"
 msgstr ""
 
-#: src/gui/text/qtextcontrol.cpp:2780
+#: src/gui/text/qtextcontrol.cpp:2779
 msgctxt "QUnicodeControlCharacterMenu"
 msgid "LRO Start of left-to-right override"
 msgstr ""
 
-#: src/gui/text/qtextcontrol.cpp:2781
+#: src/gui/text/qtextcontrol.cpp:2780
 msgctxt "QUnicodeControlCharacterMenu"
 msgid "RLO Start of right-to-left override"
 msgstr ""
 
-#: src/gui/text/qtextcontrol.cpp:2782
+#: src/gui/text/qtextcontrol.cpp:2781
 msgctxt "QUnicodeControlCharacterMenu"
 msgid "PDF Pop directional formatting"
 msgstr ""
 
-#: src/gui/text/qtextcontrol.cpp:2788
+#: src/gui/text/qtextcontrol.cpp:2787
 msgid "Insert Unicode control character"
 msgstr ""
 
@@ -3563,7 +3562,7 @@ msgid "Host not found"
 msgstr ""
 
 #: src/network/kernel/qhostinfo_unix.cpp:45
-#: src/network/socket/qabstractsocket.cpp:1093
+#: src/network/socket/qabstractsocket.cpp:1092
 msgctxt "QHostInfo"
 msgid "Unknown error"
 msgstr ""
@@ -3584,47 +3583,47 @@ msgid "Unknown address type"
 msgstr ""
 
 #: src/network/socket/qtcpserver.cpp:216
-#: src/network/socket/qabstractsocket.cpp:428
+#: src/network/socket/qabstractsocket.cpp:427
 msgid "Operation on socket is not supported"
 msgstr ""
 
-#: src/network/socket/qlocalserver_unix.cpp:187
+#: src/network/socket/qlocalserver_unix.cpp:186
 msgid "%1: Permission denied"
 msgstr ""
 
-#: src/network/socket/qlocalserver_unix.cpp:195
+#: src/network/socket/qlocalserver_unix.cpp:194
 #: src/network/socket/qlocalserver.cpp:199
 msgid "%1: Name error"
 msgstr ""
 
-#: src/network/socket/qlocalserver_unix.cpp:199
+#: src/network/socket/qlocalserver_unix.cpp:198
 msgid "%1: Address in use"
 msgstr ""
 
-#: src/network/socket/qlocalserver_unix.cpp:204
-#: src/network/socket/qlocalsocket_unix.cpp:140
+#: src/network/socket/qlocalserver_unix.cpp:203
+#: src/network/socket/qlocalsocket_unix.cpp:139
 msgid "%1: Unknown error %2"
 msgstr ""
 
-#: src/network/socket/qabstractsocket.cpp:686
+#: src/network/socket/qabstractsocket.cpp:685
 msgid "Host not found"
 msgstr ""
 
-#: src/network/socket/qabstractsocket.cpp:728
+#: src/network/socket/qabstractsocket.cpp:727
 #: src/network/socket/qabstractsocketengine.cpp:406
 msgid "Connection refused"
 msgstr ""
 
-#: src/network/socket/qabstractsocket.cpp:866
+#: src/network/socket/qabstractsocket.cpp:865
 #: src/network/socket/qabstractsocketengine.cpp:403
 msgid "Connection timed out"
 msgstr ""
 
-#: src/network/socket/qabstractsocket.cpp:1437
+#: src/network/socket/qabstractsocket.cpp:1436
 msgid "Socket operation timed out"
 msgstr ""
 
-#: src/network/socket/qabstractsocket.cpp:1847
+#: src/network/socket/qabstractsocket.cpp:1846
 msgid "Socket is not connected"
 msgstr ""
 
@@ -3716,39 +3715,39 @@ msgstr ""
 msgid "Operation on non-socket"
 msgstr ""
 
-#: src/network/socket/qlocalsocket_unix.cpp:112
+#: src/network/socket/qlocalsocket_unix.cpp:111
 msgid "%1: Connection refused"
 msgstr ""
 
-#: src/network/socket/qlocalsocket_unix.cpp:115
+#: src/network/socket/qlocalsocket_unix.cpp:114
 msgid "%1: Remote closed"
 msgstr ""
 
-#: src/network/socket/qlocalsocket_unix.cpp:118
+#: src/network/socket/qlocalsocket_unix.cpp:117
 msgid "%1: Invalid name"
 msgstr ""
 
-#: src/network/socket/qlocalsocket_unix.cpp:121
+#: src/network/socket/qlocalsocket_unix.cpp:120
 msgid "%1: Socket access error"
 msgstr ""
 
-#: src/network/socket/qlocalsocket_unix.cpp:124
+#: src/network/socket/qlocalsocket_unix.cpp:123
 msgid "%1: Socket resource error"
 msgstr ""
 
-#: src/network/socket/qlocalsocket_unix.cpp:127
+#: src/network/socket/qlocalsocket_unix.cpp:126
 msgid "%1: Socket operation timed out"
 msgstr ""
 
-#: src/network/socket/qlocalsocket_unix.cpp:130
+#: src/network/socket/qlocalsocket_unix.cpp:129
 msgid "%1: Datagram too large"
 msgstr ""
 
-#: src/network/socket/qlocalsocket_unix.cpp:133
+#: src/network/socket/qlocalsocket_unix.cpp:132
 msgid "%1: Connection error"
 msgstr ""
 
-#: src/network/socket/qlocalsocket_unix.cpp:136
+#: src/network/socket/qlocalsocket_unix.cpp:135
 msgid "%1: The socket operation is not supported"
 msgstr ""
 
@@ -3998,95 +3997,85 @@ msgid ""
 "<img src=\":/qt/scripttools/debugging/images/wrap.png\">&nbsp;Search wrapped"
 msgstr ""
 
-#: src/uitools/formbuilderextra.cpp:349
+#: src/uitools/formbuilderextra.cpp:321
 msgctxt "FormBuilder"
 msgid "Invalid stretch value for '%1': '%2'"
 msgstr ""
 
-#: src/uitools/formbuilderextra.cpp:411
+#: src/uitools/formbuilderextra.cpp:383
 msgctxt "FormBuilder"
 msgid "Invalid minimum size for '%1': '%2'"
 msgstr ""
 
-#: src/uitools/properties.cpp:86
+#: src/uitools/properties.cpp:80
 msgctxt "QFormBuilder"
 msgid "The set-type property %1 could not be read."
 msgstr ""
 
-#: src/uitools/properties.cpp:104
+#: src/uitools/properties.cpp:98
 msgctxt "QFormBuilder"
 msgid "The enumeration-type property %1 could not be read."
 msgstr ""
 
-#: src/uitools/properties.cpp:289
+#: src/uitools/properties.cpp:283
 msgctxt "QFormBuilder"
 msgid "Reading properties of the type %1 is not supported yet."
 msgstr ""
 
-#: src/uitools/properties.cpp:558
+#: src/uitools/properties.cpp:552
 msgctxt "QFormBuilder"
 msgid "The property %1 could not be written. The type %2 is not supported yet."
 msgstr ""
 
-#: src/uitools/formbuilder.cpp:150
+#: src/uitools/formbuilder.cpp:146
 msgctxt "QFormBuilder"
 msgid "An empty class name was passed on to %1 (object name: '%2')."
 msgstr ""
 
-#: src/uitools/formbuilder.cpp:204
+#: src/uitools/formbuilder.cpp:200
 msgctxt "QFormBuilder"
 msgid ""
 "QFormBuilder was unable to create a custom widget of the class '%1'; "
 "defaulting to base class '%2'."
 msgstr ""
 
-#: src/uitools/formbuilder.cpp:210
+#: src/uitools/formbuilder.cpp:206
 msgctxt "QFormBuilder"
 msgid "QFormBuilder was unable to create a widget of the class '%1'."
 msgstr ""
 
-#: src/uitools/formbuilder.cpp:251
+#: src/uitools/formbuilder.cpp:247
 msgctxt "QFormBuilder"
 msgid "The layout type `%1' is not supported."
 msgstr ""
 
-#: src/uitools/formscriptrunner.cpp:68
-msgid "Exception at line %1: %2"
-msgstr ""
-
-#: src/uitools/formscriptrunner.cpp:154
-msgid ""
-"An error occurred while running the script for %1: %2\n"
-"Script: %3"
-msgstr ""
-
-#: src/uitools/abstractformbuilder.cpp:181
+#: src/uitools/abstractformbuilder.cpp:170
 msgctxt "QAbstractFormBuilder"
 msgid "Unexpected element <%1>"
 msgstr ""
 
-#: src/uitools/abstractformbuilder.cpp:186
+#: src/uitools/abstractformbuilder.cpp:175
 msgctxt "QAbstractFormBuilder"
 msgid ""
 "An error has occurred while reading the UI file at line %1, column %2: %3"
 msgstr ""
 
-#: src/uitools/abstractformbuilder.cpp:192
+#: src/uitools/abstractformbuilder.cpp:181
 msgctxt "QAbstractFormBuilder"
 msgid "Invalid UI file: The root element <ui> is missing."
 msgstr ""
 
-#: src/uitools/abstractformbuilder.cpp:296
+#: src/uitools/abstractformbuilder.cpp:284
 msgctxt "QAbstractFormBuilder"
 msgid "The creation of a widget of the class '%1' failed."
 msgstr ""
 
-#: src/uitools/abstractformbuilder.cpp:585
+#: src/uitools/abstractformbuilder.cpp:566
 msgctxt "QAbstractFormBuilder"
 msgid "Attempt to add child that is not of class QWizardPage to QWizard."
 msgstr ""
 
-#: src/uitools/abstractformbuilder.cpp:647
+#: src/uitools/abstractformbuilder.cpp:628
 msgctxt "QAbstractFormBuilder"
 msgid ""
 "Attempt to add a layout to a widget '%1' (%2) which already has a layout of "
@@ -4094,156 +4083,151 @@ msgid ""
 "This indicates an inconsistency in the ui-file."
 msgstr ""
 
-#: src/uitools/abstractformbuilder.cpp:857
+#: src/uitools/abstractformbuilder.cpp:834
 msgctxt "QAbstractFormBuilder"
 msgid "Empty widget item in %1 '%2'."
 msgstr ""
 
-#: src/uitools/abstractformbuilder.cpp:1591
+#: src/uitools/abstractformbuilder.cpp:1565
 msgctxt "QAbstractFormBuilder"
 msgid "Flags property are not supported yet."
 msgstr ""
 
-#: src/uitools/abstractformbuilder.cpp:1672
+#: src/uitools/abstractformbuilder.cpp:1646
 msgctxt "QAbstractFormBuilder"
 msgid "While applying tab stops: The widget '%1' could not be found."
 msgstr ""
 
-#: src/uitools/abstractformbuilder.cpp:2418
+#: src/uitools/abstractformbuilder.cpp:2383
 msgctxt "QAbstractFormBuilder"
 msgid "Invalid QButtonGroup reference '%1' referenced by '%2'."
 msgstr ""
 
-#: src/uitools/abstractformbuilder.cpp:2929
-msgctxt "QAbstractFormBuilder"
-msgid "This version of the uitools library is linked without script support."
-msgstr ""
-
-#: src/uitools/properties_p.h:107
+#: src/uitools/properties_p.h:102
 msgctxt "QFormBuilder"
 msgid ""
 "The enumeration-value '%1' is invalid. The default value '%2' will be used "
 "instead."
 msgstr ""
 
-#: src/uitools/properties_p.h:121
+#: src/uitools/properties_p.h:116
 msgctxt "QFormBuilder"
 msgid "The flag-value '%1' is invalid. Zero will be used instead."
 msgstr ""
 
-#: src/xml/sax/qxml.cpp:37
+#: src/xml/sax/qxml.cpp:36
 msgctxt "QXml"
 msgid "no error occurred"
 msgstr ""
 
-#: src/xml/sax/qxml.cpp:38
+#: src/xml/sax/qxml.cpp:37
 msgctxt "QXml"
 msgid "error triggered by consumer"
 msgstr ""
 
-#: src/xml/sax/qxml.cpp:39
+#: src/xml/sax/qxml.cpp:38
 msgctxt "QXml"
 msgid "unexpected end of file"
 msgstr ""
 
-#: src/xml/sax/qxml.cpp:40
+#: src/xml/sax/qxml.cpp:39
 msgctxt "QXml"
 msgid "more than one document type definition"
 msgstr ""
 
-#: src/xml/sax/qxml.cpp:41
+#: src/xml/sax/qxml.cpp:40
 msgctxt "QXml"
 msgid "error occurred while parsing element"
 msgstr ""
 
-#: src/xml/sax/qxml.cpp:42
+#: src/xml/sax/qxml.cpp:41
 msgctxt "QXml"
 msgid "tag mismatch"
 msgstr ""
 
-#: src/xml/sax/qxml.cpp:43
+#: src/xml/sax/qxml.cpp:42
 msgctxt "QXml"
 msgid "error occurred while parsing content"
 msgstr ""
 
-#: src/xml/sax/qxml.cpp:44
+#: src/xml/sax/qxml.cpp:43
 msgctxt "QXml"
 msgid "unexpected character"
 msgstr ""
 
-#: src/xml/sax/qxml.cpp:45
+#: src/xml/sax/qxml.cpp:44
 msgctxt "QXml"
 msgid "invalid name for processing instruction"
 msgstr ""
 
-#: src/xml/sax/qxml.cpp:46
+#: src/xml/sax/qxml.cpp:45
 msgctxt "QXml"
 msgid "version expected while reading the XML declaration"
 msgstr ""
 
-#: src/xml/sax/qxml.cpp:47
+#: src/xml/sax/qxml.cpp:46
 msgctxt "QXml"
 msgid "wrong value for standalone declaration"
 msgstr ""
 
-#: src/xml/sax/qxml.cpp:48
+#: src/xml/sax/qxml.cpp:47
 msgctxt "QXml"
 msgid ""
 "encoding declaration or standalone declaration expected while reading the "
 "XML declaration"
 msgstr ""
 
-#: src/xml/sax/qxml.cpp:49
+#: src/xml/sax/qxml.cpp:48
 msgctxt "QXml"
 msgid "standalone declaration expected while reading the XML declaration"
 msgstr ""
 
-#: src/xml/sax/qxml.cpp:50
+#: src/xml/sax/qxml.cpp:49
 msgctxt "QXml"
 msgid "error occurred while parsing document type definition"
 msgstr ""
 
-#: src/xml/sax/qxml.cpp:51
+#: src/xml/sax/qxml.cpp:50
 msgctxt "QXml"
 msgid "letter is expected"
 msgstr ""
 
-#: src/xml/sax/qxml.cpp:52
+#: src/xml/sax/qxml.cpp:51
 msgctxt "QXml"
 msgid "error occurred while parsing comment"
 msgstr ""
 
-#: src/xml/sax/qxml.cpp:53
+#: src/xml/sax/qxml.cpp:52
 msgctxt "QXml"
 msgid "error occurred while parsing reference"
 msgstr ""
 
-#: src/xml/sax/qxml.cpp:54
+#: src/xml/sax/qxml.cpp:53
 msgctxt "QXml"
 msgid "internal general entity reference not allowed in DTD"
 msgstr ""
 
-#: src/xml/sax/qxml.cpp:55
+#: src/xml/sax/qxml.cpp:54
 msgctxt "QXml"
 msgid "external parsed general entity reference not allowed in attribute value"
 msgstr ""
 
-#: src/xml/sax/qxml.cpp:56
+#: src/xml/sax/qxml.cpp:55
 msgctxt "QXml"
 msgid "external parsed general entity reference not allowed in DTD"
 msgstr ""
 
-#: src/xml/sax/qxml.cpp:57
+#: src/xml/sax/qxml.cpp:56
 msgctxt "QXml"
 msgid "unparsed entity reference in wrong context"
 msgstr ""
 
-#: src/xml/sax/qxml.cpp:58
+#: src/xml/sax/qxml.cpp:57
 msgctxt "QXml"
 msgid "recursive entities"
 msgstr ""
 
-#: src/xml/sax/qxml.cpp:59
+#: src/xml/sax/qxml.cpp:58
 msgctxt "QXml"
 msgid "error in the text declaration of an external entity"
 msgstr ""

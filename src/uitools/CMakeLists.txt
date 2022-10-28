@@ -12,8 +12,6 @@ include_directories(
     ${CMAKE_BINARY_DIR}/include/QtGui
     ${CMAKE_BINARY_DIR}/include/QtXml
     ${CMAKE_BINARY_DIR}/include/QtUiTools
-    # for widgets.table
-    ${CMAKE_SOURCE_DIR}/src/shared
     # for ui4.h
     ${CMAKE_SOURCE_DIR}/src/tools/uic
 )

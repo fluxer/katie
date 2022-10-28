@@ -37,7 +37,7 @@ QT_BEGIN_NAMESPACE
     \brief The QFormBuilder class is used to dynamically construct
     user interfaces from UI files at run-time.
 
-    \inmodule QtDesigner
+    \inmodule QtUiTools
 
     The QFormBuilder class provides a mechanism for dynamically
     creating user interfaces at run-time, based on UI files

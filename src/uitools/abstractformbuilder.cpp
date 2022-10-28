@@ -95,7 +95,7 @@ public:
     implementation for classes that create user interfaces at
     run-time.
 
-    \inmodule QtDesigner
+    \inmodule QtUiTools
 
     QAbstractFormBuilder provides a standard interface and a default
     implementation for constructing forms from user interface

@@ -9,7 +9,6 @@ include_directories(
     ${CMAKE_BINARY_DIR}/include/QtGui
     ${CMAKE_BINARY_DIR}/include/QtDBus
     ${CMAKE_BINARY_DIR}/include/QtDeclarative
-    ${CMAKE_BINARY_DIR}/include/QtDesigner
     ${CMAKE_BINARY_DIR}/include/QtNetwork
     ${CMAKE_BINARY_DIR}/include/QtSvg
     ${CMAKE_BINARY_DIR}/include/QtXml
