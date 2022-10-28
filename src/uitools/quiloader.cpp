@@ -52,11 +52,6 @@ Q_GLOBAL_STATIC(QStringList, g_widgets)
 class QUiLoader;
 class QUiLoaderPrivate;
 
-#ifdef QFORMINTERNAL_NAMESPACE
-namespace QFormInternal
-{
-#endif
-
 class TranslatingTextBuilder : public QTextBuilder
 {
 public:
@@ -506,18 +501,10 @@ bool FormBuilderPrivate::addItem(DomWidget *ui_widget, QWidget *widget, QWidget 
     return true;
 }
 
-#ifdef QFORMINTERNAL_NAMESPACE
-}
-#endif
-
 class QUiLoaderPrivate
 {
 public:
-#ifdef QFORMINTERNAL_NAMESPACE
-    QFormInternal::FormBuilderPrivate builder;
-#else
     FormBuilderPrivate builder;
-#endif
 
     void setupWidgetMap() const;
 };

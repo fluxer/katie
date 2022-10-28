@@ -18,13 +18,10 @@
 ** $QT_END_LICENSE$
 **
 ****************************************************************************/
+
 #include "ui4.h"
 
-
 QT_BEGIN_NAMESPACE
-#ifdef QFORMINTERNAL_NAMESPACE
-using namespace QFormInternal;
-#endif
 
 /*******************************************************************************
 ** Implementations

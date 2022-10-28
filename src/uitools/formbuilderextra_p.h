@@ -45,14 +45,8 @@ class QWidget;
 class QObject;
 class QLabel;
 class QButtonGroup;
-
 class QBoxLayout;
 class QGridLayout;
-
-#ifdef QFORMINTERNAL_NAMESPACE
-namespace QFormInternal
-{
-#endif
 
 class DomButtonGroups;
 class DomButtonGroup;
@@ -216,9 +210,6 @@ struct Q_UITOOLS_EXPORT QFormBuilderStrings {
     QList<TextRoleNName> itemTextRoles;
     QHash<QString, QPair<Qt::ItemDataRole, Qt::ItemDataRole> > treeItemTextRoleHash;
 };
-#ifdef QFORMINTERNAL_NAMESPACE
-}
-#endif
 
 QT_END_NAMESPACE
 

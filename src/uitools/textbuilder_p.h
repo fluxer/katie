@@ -40,11 +40,6 @@ QT_BEGIN_NAMESPACE
 
 class QVariant;
 
-#ifdef QFORMINTERNAL_NAMESPACE
-namespace QFormInternal
-{
-#endif
-
 class DomProperty;
 class DomString;
 
@@ -60,11 +55,6 @@ public:
 
     virtual DomProperty *saveText(const QVariant &value) const;
 };
-
-
-#ifdef QFORMINTERNAL_NAMESPACE
-}
-#endif
 
 QT_END_NAMESPACE
 

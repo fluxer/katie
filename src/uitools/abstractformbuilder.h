@@ -50,11 +50,6 @@ class QWidget;
 class QAbstractButton;
 class QAbstractItemView;
 
-#ifdef QFORMINTERNAL_NAMESPACE
-namespace QFormInternal
-{
-#endif
-
 class DomAction;
 class DomActionGroup;
 class DomButtonGroup;
@@ -238,11 +233,6 @@ private:
     friend Q_UITOOLS_EXPORT QVariant domPropertyToVariant(QAbstractFormBuilder *abstractFormBuilder,const QMetaObject *meta, const DomProperty *property);
 };
 
-#ifdef QFORMINTERNAL_NAMESPACE
-}
-#endif
-
 QT_END_NAMESPACE
-
 
 #endif // ABSTRACTFORMBUILDER_H

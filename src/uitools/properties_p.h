@@ -43,11 +43,6 @@
 
 QT_BEGIN_NAMESPACE
 
-#ifdef QFORMINTERNAL_NAMESPACE
-namespace QFormInternal
-{
-#endif
-
 class QAbstractFormBuilder;
 class DomProperty;
 
@@ -141,10 +136,6 @@ inline EnumType enumKeyOfObjectToValue(const char *enumName, const char *key, co
     const QMetaEnum me = metaEnum<QObjectType>(enumName);
     return enumKeyToValue<EnumType>(me, key);
 }
-
-#ifdef QFORMINTERNAL_NAMESPACE
-}
-#endif
 
 QT_END_NAMESPACE
 

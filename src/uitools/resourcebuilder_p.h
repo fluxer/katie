@@ -41,11 +41,6 @@ QT_BEGIN_NAMESPACE
 class QDir;
 class QVariant;
 
-#ifdef QFORMINTERNAL_NAMESPACE
-namespace QFormInternal
-{
-#endif
-
 class DomProperty;
 class DomResourceIcon;
 
@@ -72,11 +67,6 @@ public:
 
     static int iconStateFlags(const DomResourceIcon *resIcon);
 };
-
-
-#ifdef QFORMINTERNAL_NAMESPACE
-}
-#endif
 
 QT_END_NAMESPACE
 

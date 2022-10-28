@@ -44,12 +44,6 @@ QT_BEGIN_NAMESPACE
 
 #define QUI_EXPORT Q_DECL_EXPORT
 
-#ifdef QFORMINTERNAL_NAMESPACE
-namespace QFormInternal
-{
-#endif
-
-
 /*******************************************************************************
 ** Forward declarations
 */
@@ -3309,11 +3303,6 @@ private:
     DomStringPropertySpecification(const DomStringPropertySpecification &other);
     void operator = (const DomStringPropertySpecification&other);
 };
-
-
-#ifdef QFORMINTERNAL_NAMESPACE
-}
-#endif
 
 QT_END_NAMESPACE
 

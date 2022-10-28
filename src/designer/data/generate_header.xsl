@@ -379,11 +379,6 @@ QT_BEGIN_NAMESPACE
 
 #define QUI_EXPORT Q_DECL_EXPORT
 
-#ifdef QFORMINTERNAL_NAMESPACE
-namespace QFormInternal
-{
-#endif
-
 </xsl:text>
 
         <xsl:text>&endl;</xsl:text>
@@ -408,9 +403,6 @@ namespace QFormInternal
             </xsl:call-template>
         </xsl:for-each>
         <xsl:text>
-#ifdef QFORMINTERNAL_NAMESPACE
-}
-#endif
 
 QT_END_NAMESPACE
 

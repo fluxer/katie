@@ -28,7 +28,6 @@
 #include <QtGui/QLabel>
 #include <QtGui/QBoxLayout>
 #include <QtGui/QGridLayout>
-
 #include <QtCore/QVariant>
 #include <QtCore/qdebug.h>
 #include <QtCore/QTextStream>
@@ -36,10 +35,6 @@
 #include <QtCore/QCoreApplication>
 
 QT_BEGIN_NAMESPACE
-
-#ifdef QFORMINTERNAL_NAMESPACE
-namespace QFormInternal {
-#endif
 
 void uiLibWarning(const QString &message) {
     qWarning("Designer: %s", qPrintable(message));
@@ -497,9 +492,5 @@ const QFormBuilderStrings &QFormBuilderStrings::instance()
     static const QFormBuilderStrings rc;
     return rc;
 }
-
-#ifdef QFORMINTERNAL_NAMESPACE
-} // namespace QFormInternal
-#endif
 
 QT_END_NAMESPACE

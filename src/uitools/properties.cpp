@@ -28,7 +28,6 @@
 #include <QtCore/QDateTime>
 #include <QtCore/QUrl>
 #include <QtCore/qdebug.h>
-
 #include <QtGui/QIcon>
 #include <QtGui/QPixmap>
 #include <QtGui/QFont>
@@ -36,11 +35,6 @@
 #include <QtGui/QAbstractScrollArea>
 
 QT_BEGIN_NAMESPACE
-
-#ifdef QFORMINTERNAL_NAMESPACE
-namespace QFormInternal
-{
-#endif
 
 static inline void fixEnum(QString &s)
 {
@@ -648,10 +642,6 @@ DomProperty *variantToDomProperty(QAbstractFormBuilder *afb, const QMetaObject *
     }
     return dom_prop;
 }
-
-#ifdef QFORMINTERNAL_NAMESPACE
-}
-#endif
 
 QT_END_NAMESPACE
 

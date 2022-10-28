@@ -56,9 +56,7 @@
 #include <QtGui/QAbstractButton>
 #include <QtGui/QAbstractItemView>
 #include <QtGui/QHeaderView>
-#ifndef QFORMINTERNAL_NAMESPACE
-#  include "qlayout_p.h" // Compiling within Designer
-#endif
+#include "qlayout_p.h"
 
 #include <QtXml/QXmlStreamReader>
 
@@ -82,20 +80,12 @@ static const char *buttonGroupPropertyC = "buttonGroup";
 
 QT_BEGIN_NAMESPACE
 
-#ifdef QFORMINTERNAL_NAMESPACE
-using namespace QFormInternal;
-#endif
-
 class QFriendlyLayout: public QLayout
 {
 public:
     inline QFriendlyLayout() { Q_ASSERT(false); }
 
-#ifdef QFORMINTERNAL_NAMESPACE
-    friend class QFormInternal::QAbstractFormBuilder;
-#else
     friend class QAbstractFormBuilder;
-#endif
 };
 
 /*!
@@ -837,11 +827,7 @@ QLayoutItem *QAbstractFormBuilder::create(DomLayoutItem *ui_layoutItem, QLayout 
     switch (ui_layoutItem->kind()) {
     case DomLayoutItem::Widget: {
         if (QWidget *w = create(ui_layoutItem->elementWidget(), parentWidget)) {
-#ifdef QFORMINTERNAL_NAMESPACE // uilib
-            QWidgetItem *item = new QWidgetItemV2(w);
-#else                         // Within Designer: Use factory method that returns special items that refuse to shrink to 0,0
             QWidgetItem *item = QLayoutPrivate::createWidgetItem(layout, w);
-#endif
             item->setAlignment(alignmentFromDom(ui_layoutItem->attributeAlignment()));
             return item;
         }
@@ -2394,9 +2380,7 @@ void QAbstractFormBuilder::loadButtonExtraInfo(const DomWidget *ui_widget, QAbst
     ButtonGroupHash &buttonGroups = extra->buttonGroups();
     ButtonGroupHash::iterator it = buttonGroups.find(groupName);
     if (it == buttonGroups.end()) {
-#ifdef QFORMINTERNAL_NAMESPACE // Suppress the warning when copying in Designer
         uiLibWarning(QCoreApplication::translate("QAbstractFormBuilder", "Invalid QButtonGroup reference '%1' referenced by '%2'.").arg(groupName, button->objectName()));
-#endif
         return;
     }
     // Create button group on demand?

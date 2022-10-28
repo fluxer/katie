@@ -1063,13 +1063,7 @@
 </xsl:text>
         <xsl:text>#include "ui4.h"&endl;</xsl:text>
         <xsl:text>&endl;</xsl:text>
-        <xsl:text>QT_BEGIN_NAMESPACE&endl;</xsl:text>
-
-        <xsl:text>#ifdef QFORMINTERNAL_NAMESPACE&endl;</xsl:text>
-        <xsl:text>using namespace QFormInternal;&endl;</xsl:text>
-        <xsl:text>#endif&endl;</xsl:text>
-        <xsl:text>&endl;</xsl:text>
-
+        <xsl:text>QT_BEGIN_NAMESPACE&endl;&endl;</xsl:text>
         <xsl:text>/*******************************************************************************&endl;</xsl:text>
         <xsl:text>** Implementations&endl;</xsl:text>
         <xsl:text>*/&endl;&endl;</xsl:text>

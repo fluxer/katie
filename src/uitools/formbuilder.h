@@ -32,11 +32,6 @@ QT_BEGIN_NAMESPACE
 
 class QCustomWidget;
 
-#ifdef QFORMINTERNAL_NAMESPACE
-namespace QFormInternal
-{
-#endif
-
 class Q_UITOOLS_EXPORT QFormBuilder: public QAbstractFormBuilder
 {
 public:
@@ -77,11 +72,6 @@ private:
     QMap<QString, QCustomWidget*> m_customWidgets;
 };
 
-#ifdef QFORMINTERNAL_NAMESPACE
-}
-#endif
-
 QT_END_NAMESPACE
-
 
 #endif // FORMBUILDER_H
