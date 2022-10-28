@@ -67,13 +67,6 @@ QT_BEGIN_NAMESPACE
 
     \snippet doc/src/snippets/code/tools_designer_src_lib_sdk_abstractformwindow.cpp 1
 
-    The pointer to \QD's current QDesignerFormEditorInterface object
-    (\c formEditor in the example above) is provided by the
-    QDesignerCustomWidgetInterface::initialize() function's
-    parameter. When implementing a custom widget plugin, you must
-    subclass the QDesignerCustomWidgetInterface class to expose your
-    plugin to \QD.
-
     Once you have the form window, you can query its properties. For
     example, a plain custom widget plugin is managed by \QD only at
     its top level, i.e. none of its child widgets can be resized in

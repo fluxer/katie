@@ -36,20 +36,12 @@ QT_BEGIN_NAMESPACE
     a QExtensionFactory, i.e a class that is able to make an instance
     of your extension, and register it using \QD's extension manager.
 
-    The registration of an extension factory is typically made in the
-    QDesignerCustomWidgetInterface::initialize() function:
-
     \snippet doc/src/snippets/code/tools_designer_src_lib_extension_qextensionmanager.cpp 0
 
     The QExtensionManager is not intended to be instantiated
     directly. You can retrieve an interface to \QD's extension manager
     using the QDesignerFormEditorInterface::extensionManager()
-    function. A pointer to \QD's current QDesignerFormEditorInterface
-    object (\c formEditor in the example above) is provided by the
-    QDesignerCustomWidgetInterface::initialize() function's
-    parameter. When implementing a custom widget plugin, you must
-    subclass the QDesignerCustomWidgetInterface to expose your plugin
-    to \QD.
+    function.
 
     Then, when an extension is required, \QD's extension manager will
     run through all its registered factories calling

@@ -114,14 +114,6 @@ QDesignerFormEditorInterfacePrivate::~QDesignerFormEditorInterfacePrivate()
 
     \snippet doc/src/snippets/code/tools_designer_src_lib_sdk_abstractformeditor.cpp 0
 
-    QDesignerFormEditorInterface is not intended to be instantiated
-    directly. A pointer to \QD's current QDesignerFormEditorInterface
-    object (\c formEditor in the example above) is provided by the
-    QDesignerCustomWidgetInterface::initialize() function's
-    parameter. When implementing a custom widget plugin, you must
-    subclass the QDesignerCustomWidgetInterface to expose your plugin
-    to \QD.
-
     QDesignerFormEditorInterface also provides functions that can set
     the action editor, property editor, object inspector and widget
     box. These are only useful if you want to provide your own custom
@@ -135,7 +127,7 @@ QDesignerFormEditorInterfacePrivate::~QDesignerFormEditorInterfacePrivate()
     Finally, QDesignerFormEditorInterface provides the topLevel()
     function that returns \QD's top-level widget.
 
-    \sa QDesignerCustomWidgetInterface
+    \sa QCustomWidget
 */
 
 /*!

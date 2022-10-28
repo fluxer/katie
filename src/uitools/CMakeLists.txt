@@ -33,6 +33,7 @@ set(UITOOLS_HEADERS
 set(UITOOLS_SOURCES
     ${CMAKE_CURRENT_SOURCE_DIR}/quiloader.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/abstractformbuilder.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/customwidget.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/formbuilder.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/formbuilderextra.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/textbuilder.cpp

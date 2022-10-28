@@ -43,7 +43,7 @@ QT_BEGIN_NAMESPACE
 namespace {
     typedef QList<DomWidgetData*> DomWidgetDataList;
     typedef QList<DomProperty*> DomPropertyList;
-    typedef QList<QDesignerCustomWidgetInterface *> CustomWidgetInterfaces;
+    typedef QList<QCustomWidget *> CustomWidgetInterfaces;
 }
 
 namespace qdesigner_internal {

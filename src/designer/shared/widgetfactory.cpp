@@ -194,8 +194,8 @@ void WidgetFactory::loadPlugins()
 
     QDesignerPluginManager *pluginManager = m_core->pluginManager();
 
-    QList<QDesignerCustomWidgetInterface*> lst = pluginManager->registeredCustomWidgets();
-    foreach (QDesignerCustomWidgetInterface *c, lst) {
+    QList<QCustomWidget*> lst = pluginManager->registeredCustomWidgets();
+    foreach (QCustomWidget *c, lst) {
         m_customFactory.insert(c->name(), c);
     }
 }
@@ -221,7 +221,7 @@ QWidget*  WidgetFactory::createCustomWidget(const QString &className, QWidget *p
     if (it == m_customFactory.constEnd())
         return 0;
 
-    QDesignerCustomWidgetInterface *factory = it.value();
+    QCustomWidget *factory = it.value();
     QWidget *rc = factory->createWidget(parentWidget);
     // shouldn't happen
     if (!rc) {

@@ -51,13 +51,7 @@ QT_BEGIN_NAMESPACE
     The QDesignerWidgetBoxInterface class is not intended to be
     instantiated directly. You can retrieve an interface to Qt
     Designer's widget box using the
-    QDesignerFormEditorInterface::widgetBox() function. A pointer to
-    \QD's current QDesignerFormEditorInterface object (\c formEditor
-    in the example above) is provided by the
-    QDesignerCustomWidgetInterface::initialize() function's
-    parameter. When implementing a custom widget plugin, you must
-    subclass the QDesignerCustomWidgetInterface to expose your plugin
-    to \QD.
+    QDesignerFormEditorInterface::widgetBox() function.
 
     If you want to save your changes, and at the same time preserve
     the original contents, you can use the save() function combined

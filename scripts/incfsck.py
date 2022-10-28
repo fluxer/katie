@@ -121,8 +121,6 @@ incmap = {
         'QDesignerActionEditorInterface': 'abstractactioneditor.h',
         'QDesignerComponents': 'qdesigner_components.h',
         'QDesignerContainerExtension': 'container.h',
-        'QDesignerCustomWidgetCollectionInterface': 'customwidget.h',
-        'QDesignerCustomWidgetInterface': 'customwidget.h',
         'QDesignerDnDItemInterface': 'abstractdnditem.h',
         'QDesignerDynamicPropertySheetExtension': 'dynamicpropertysheet.h',
         'QDesignerExtraInfoExtension': 'extrainfo.h',
@@ -332,6 +330,10 @@ incmap = {
         'QTestKeyEvent': 'qtestevent.h',
         'QTestMouseEvent': 'qtestevent.h',
         'QtTestGui': 'qtest_gui.h',
+    },
+    'QtUiTools': {
+        'QCustomWidget': 'customwidget.h',
+        'QCustomWidgetPlugin': 'customwidget.h',
     },
     'QtXml': {
         'QDomAttr': 'qdom.h',

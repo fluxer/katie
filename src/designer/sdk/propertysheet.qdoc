@@ -44,11 +44,6 @@
     {QDesignerFormWindowCursorInterface::setWidgetProperty()}{setWidgetProperty()},
     instead.
 
-    When implementing a custom widget plugin, a pointer to \QD's
-    current QDesignerFormEditorInterface object (\c formEditor in the
-    example above) is provided by the
-    QDesignerCustomWidgetInterface::initialize() function's parameter.
-
     The property sheet, or any other extension, can be retrieved by
     querying \QD's extension manager using the qt_extension()
     function. When you want to release the extension, you only need to

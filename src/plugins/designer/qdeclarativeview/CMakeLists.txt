@@ -9,7 +9,7 @@ set(QDECLARATIVEVIEWPLUGIN_SOURCES
 katie_setup_target(qdeclarativeviewplugin ${QDECLARATIVEVIEWPLUGIN_SOURCES} ${QDECLARATIVEVIEWPLUGIN_HEADERS})
 
 add_library(qdeclarativeviewplugin MODULE ${qdeclarativeviewplugin_SOURCES})
-target_link_libraries(qdeclarativeviewplugin KtCore KtDeclarative KtDesigner)
+target_link_libraries(qdeclarativeviewplugin KtCore KtDeclarative KtUiTools)
 set_target_properties(qdeclarativeviewplugin PROPERTIES
     OUTPUT_NAME qdeclarativeview
     PREFIX ""

@@ -17,23 +17,26 @@
 **
 ****************************************************************************/
 
-/*!
-    \class QDesignerCustomWidgetInterface
+#include "customwidget.h"
 
-    \brief The QDesignerCustomWidgetInterface class enables Katie Designer
+QT_BEGIN_NAMESPACE
+
+/*!
+    \class QCustomWidget
+
+    \brief The QCustomWidget class enables Katie Designer
     to access and construct custom widgets.
 
-    \inmodule QtDesigner
+    \inmodule QtUiTools
 
-    QDesignerCustomWidgetInterface provides a custom widget with an
-    interface. The class contains a set of functions that must be subclassed
-    to return basic information about the widget, such as its class name and
-    the name of its header file. Other functions must be implemented to
-    initialize the plugin when it is loaded, and to construct instances of
-    the custom widget for \QD to use.
+    QCustomWidget provides a interface for custom widget. The class contains
+    a set of functions that must be subclassed to return basic information
+    about the widget, such as its class name and the name of its header file.
+    Other functions must be implemented to initialize the plugin when it is
+    loaded, and to construct instances of the custom widget for \QD to use.
 
     When implementing a custom widget you must subclass
-    QDesignerCustomWidgetInterface to expose your widget to \QD. For
+    QCustomWidget to expose your widget to \QD. For
     example, this is the declaration for the plugin used in the
     \l{Custom Widget Plugin Example}{Custom Widget Plugin example} that
     enables an analog clock custom widget to be used by \QD:
@@ -50,8 +53,7 @@
 
     After \QD loads a custom widget plugin, it calls the interface's
     initialize() function to enable it to set up any resources that it
-    may need. This function is called with a QDesignerFormEditorInterface
-    parameter that provides the plugin with a gateway to all of \QD's API.
+    may need.
 
     \QD constructs instances of the custom widget by calling the plugin's
     createWidget() function with a suitable parent widget. Plugins must
@@ -73,7 +75,7 @@
     When implementing a custom widget plugin, you build it as a
     separate library. If you want to include several custom widget
     plugins in the same library, you must in addition subclass
-    QDesignerCustomWidgetCollectionInterface.
+    QCustomWidgetPlugin.
 
     \warning If your custom widget plugin contains QVariant
     properties, be aware that only the following \l
@@ -97,23 +99,28 @@
     \o QVariant::UInt
     \endlist
 
-    For a complete example using the QDesignerCustomWidgetInterface
-    class, see the \l {designer/customwidgetplugin}{Custom Widget
-    Example}. The example shows how to create a custom widget plugin
-    for \QD.
-
-    \sa QDesignerCustomWidgetCollectionInterface {Creating Custom
+    \sa QCustomWidgetPlugin {Creating Custom
     Widgets for Katie Designer}
 */
 
 /*!
-    \fn QDesignerCustomWidgetInterface::~QDesignerCustomWidgetInterface()
-
-    Destroys the custom widget interface.
+    Constructs an custom widget plugin with the given \a parent. This
+    is invoked automatically by the Q_EXPORT_PLUGIN2() macro.
 */
+QCustomWidget::QCustomWidget(QObject *parent)
+    : QObject(parent)
+{
+}
 
 /*!
-    \fn QString QDesignerCustomWidgetInterface::name() const
+    Destroys the custom widget interface.
+*/
+QCustomWidget::~QCustomWidget()
+{
+}
+
+/*!
+    \fn QString QCustomWidget::name() const
 
     Returns the class name of the custom widget supplied by the interface.
 
@@ -122,41 +129,41 @@
 */
 
 /*!
-    \fn QString QDesignerCustomWidgetInterface::group() const
+    \fn QString QCustomWidget::group() const
 
     Returns the name of the group to which the custom widget belongs.
 */
 
 /*!
-    \fn QString QDesignerCustomWidgetInterface::toolTip() const
+    \fn QString QCustomWidget::toolTip() const
 
     Returns a short description of the widget that can be used by \QD
     in a tool tip.
 */
 
 /*!
-    \fn QString QDesignerCustomWidgetInterface::whatsThis() const
+    \fn QString QCustomWidget::whatsThis() const
 
     Returns a description of the widget that can be used by \QD in
     "What's This?" help for the widget.
 */
 
 /*!
-    \fn QString QDesignerCustomWidgetInterface::includeFile() const
+    \fn QString QCustomWidget::includeFile() const
 
     Returns the path to the include file that \l uic uses when
     creating code for the custom widget.
 */
 
 /*!
-    \fn QIcon QDesignerCustomWidgetInterface::icon() const
+    \fn QIcon QCustomWidget::icon() const
 
     Returns the icon used to represent the custom widget in \QD's
     widget box.
 */
 
 /*!
-    \fn bool QDesignerCustomWidgetInterface::isContainer() const
+    \fn bool QCustomWidget::isContainer() const
 
     Returns true if the custom widget is intended to be used as a
     container; otherwise returns false.
@@ -168,14 +175,14 @@
 */
 
 /*!
-    \fn QWidget *QDesignerCustomWidgetInterface::createWidget(QWidget *parent)
+    \fn QWidget *QCustomWidget::createWidget(QWidget *parent)
 
     Returns a new instance of the custom widget, with the given \a
     parent.
 */
 
 /*!
-    \fn bool QDesignerCustomWidgetInterface::isInitialized() const
+    \fn bool QCustomWidget::isInitialized() const
 
     Returns true if the widget has been initialized; otherwise returns
     false.
@@ -184,23 +191,22 @@
 */
 
 /*!
-    \fn void QDesignerCustomWidgetInterface::initialize(QDesignerFormEditorInterface *formEditor)
+    \fn void QCustomWidget::initialize()
 
-    Initializes the widget for use with the specified \a formEditor
-    interface.
+    Initializes the widget.
 
     \sa isInitialized()
 */
 
 /*!
-    \fn QString QDesignerCustomWidgetInterface::domXml() const
+    \fn QString QCustomWidget::domXml() const
 
     Returns the XML that is used to describe the custom widget's
     properties to \QD.
 */
 
 /*!
-    \fn QString QDesignerCustomWidgetInterface::codeTemplate() const
+    \fn QString QCustomWidget::codeTemplate() const
 
     This function is reserved for future use by \QD.
 
@@ -211,48 +217,21 @@
 */
 
 /*!
-    \macro QDESIGNER_WIDGET_EXPORT
-    \relates QDesignerCustomWidgetInterface
-    \since 4.1
+    \class QCustomWidgetPlugin
 
-    This macro is used when defining custom widgets to ensure that they are
-    correctly exported from plugins for use with \QD.
+    \brief The QCustomWidgetPlugin class allows you to include
+    several custom widgets in one single library.
 
-    On some platforms, the symbols required by \QD to create new widgets
-    are removed from plugins by the build system, making them unusable.
-    Using this macro ensures that the symbols are retained on those platforms,
-    and has no side effects on other platforms.
-
-    For example, the \l{designer/worldtimeclockplugin}{World Time Clock Plugin}
-    example exports a custom widget class with the following declaration:
-
-    \snippet examples/designer/worldtimeclockplugin/worldtimeclock.h 0
-    \dots
-    \snippet examples/designer/worldtimeclockplugin/worldtimeclock.h 2
-
-    \sa {Creating Custom Widgets for Katie Designer}
-*/
-
-
-
-
-
-/*!
-    \class QDesignerCustomWidgetCollectionInterface
-
-    \brief The QDesignerCustomWidgetCollectionInterface class allows
-    you to include several custom widgets in one single library.
-
-    \inmodule QtDesigner
+    \inmodule QtUiTools
 
     When implementing a custom widget plugin, you build it as a
     separate library. If you want to include several custom widget
     plugins in the same library, you must in addition subclass
-    QDesignerCustomWidgetCollectionInterface.
+    QCustomWidgetPlugin.
 
-    QDesignerCustomWidgetCollectionInterface contains one single
+    QCustomWidgetPlugin contains one single
     function returning a list of the collection's
-    QDesignerCustomWidgetInterface objects. For example, if you have
+    QCustomWidget objects. For example, if you have
     several custom widgets \c CustomWidgetOne, \c CustomWidgetTwo and
     \c CustomWidgetThree, the class definition may look like this:
 
@@ -270,18 +249,33 @@
     the custom widgets. Without this macro, there is no way for \QD to
     use them.
 
-    \sa QDesignerCustomWidgetInterface, {Creating Custom Widgets for
+    \sa QCustomWidget, {Creating Custom Widgets for
     Katie Designer}
 */
 
 /*!
-    \fn QDesignerCustomWidgetCollectionInterface::~QDesignerCustomWidgetCollectionInterface() {
-
-    Destroys the custom widget collection interface.
+    Constructs an custom widget collection plugin with the given
+    \a parent. This is invoked automatically by the Q_EXPORT_PLUGIN2()
+    macro.
 */
+QCustomWidgetPlugin::QCustomWidgetPlugin(QObject *parent)
+    : QObject(parent)
+{
+}
 
 /*!
-    \fn QList<QDesignerCustomWidgetInterface*> QDesignerCustomWidgetCollectionInterface::customWidgets() const
+    Destroys the custom widget collection interface.
+*/
+QCustomWidgetPlugin::~QCustomWidgetPlugin()
+{
+}
+
+/*!
+    \fn QList<QCustomWidget*> QCustomWidgetPlugin::customWidgets() const
 
     Returns a list of interfaces to the collection's custom widgets.
 */
+
+QT_END_NAMESPACE
+
+#include "moc_customwidget.h"

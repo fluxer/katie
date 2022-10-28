@@ -43,7 +43,7 @@
 QT_BEGIN_NAMESPACE
 
 class QDesignerFormEditorInterface;
-class QDesignerCustomWidgetInterface;
+class QCustomWidget;
 class QDesignerPluginManagerPrivate;
 
 class QDesignerCustomWidgetSharedData;
@@ -88,7 +88,7 @@ class Q_DESIGNER_EXPORT QDesignerPluginManager: public QObject
 {
     Q_OBJECT
 public:
-    typedef QList<QDesignerCustomWidgetInterface*> CustomWidgetList;
+    typedef QList<QCustomWidget*> CustomWidgetList;
 
     explicit QDesignerPluginManager(QDesignerFormEditorInterface *core);
     virtual ~QDesignerPluginManager();
@@ -113,7 +113,7 @@ public:
     QObjectList instances() const;
 
     CustomWidgetList registeredCustomWidgets() const;
-    QDesignerCustomWidgetData customWidgetData(QDesignerCustomWidgetInterface *w) const;
+    QDesignerCustomWidgetData customWidgetData(QCustomWidget *w) const;
     QDesignerCustomWidgetData customWidgetData(const QString &className) const;
 
     bool registerNewPlugins();

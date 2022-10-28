@@ -30,7 +30,7 @@
 
 QT_BEGIN_NAMESPACE
 
-class QDesignerCustomWidgetInterface;
+class QCustomWidget;
 
 #ifdef QFORMINTERNAL_NAMESPACE
 namespace QFormInternal
@@ -49,7 +49,7 @@ public:
     void addPluginPath(const QString &pluginPath);
     void setPluginPath(const QStringList &pluginPaths);
 
-    QList<QDesignerCustomWidgetInterface*> customWidgets() const;
+    QList<QCustomWidget*> customWidgets() const;
 
 protected:
     virtual QWidget *create(DomUI *ui, QWidget *parentWidget);
@@ -74,7 +74,7 @@ protected:
 
 private:
     QStringList m_pluginPaths;
-    QMap<QString, QDesignerCustomWidgetInterface*> m_customWidgets;
+    QMap<QString, QCustomWidget*> m_customWidgets;
 };
 
 #ifdef QFORMINTERNAL_NAMESPACE

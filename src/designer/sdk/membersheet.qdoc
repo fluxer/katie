@@ -34,11 +34,6 @@
 
     \snippet doc/src/snippets/code/doc_src_qtdesigner.cpp 2
 
-    When implementing a custom widget plugin, a pointer to \QD's
-    current QDesignerFormEditorInterface object (\c formEditor in the
-    example above) is provided by the
-    QDesignerCustomWidgetInterface::initialize() function's parameter.
-
     The member sheet (and any other extension), can be retrieved by
     querying \QD's extension manager using the qt_extension()
     function. When you want to release the extension, you only need to

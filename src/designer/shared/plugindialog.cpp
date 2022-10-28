@@ -91,11 +91,8 @@ void PluginDialog::populateTreeWidget()
             QTreeWidgetItem *pluginItem = setPluginItem(topLevelItem, fileInfo.fileName(), boldFont);
 
             if (QObject *plugin = loader.instance()) {
-                if (const QDesignerCustomWidgetCollectionInterface *c = qobject_cast<QDesignerCustomWidgetCollectionInterface*>(plugin)) {
-                    foreach (const QDesignerCustomWidgetInterface *p, c->customWidgets())
-                        setItem(pluginItem, p->name(), p->toolTip(), p->whatsThis(), p->icon());
-                } else {
-                    if (const QDesignerCustomWidgetInterface *p = qobject_cast<QDesignerCustomWidgetInterface*>(plugin))
+                if (const QCustomWidgetPlugin *c = qobject_cast<QCustomWidgetPlugin*>(plugin)) {
+                    foreach (const QCustomWidget *p, c->customWidgets())
                         setItem(pluginItem, p->name(), p->toolTip(), p->whatsThis(), p->icon());
                 }
             }

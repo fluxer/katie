@@ -133,7 +133,6 @@ set(DESIGNER_HEADERS
     ${CMAKE_CURRENT_SOURCE_DIR}/shared/filterwidget_p.h
     ${CMAKE_CURRENT_SOURCE_DIR}/shared/plugindialog_p.h
     ${CMAKE_CURRENT_SOURCE_DIR}/container.h
-    ${CMAKE_CURRENT_SOURCE_DIR}/qdesignerexportwidget.h
     ${CMAKE_CURRENT_SOURCE_DIR}/qdesigner_components_global.h
     ${CMAKE_CURRENT_SOURCE_DIR}/qdesigner_components.h
     ${CMAKE_CURRENT_SOURCE_DIR}/qdesignercommon_p.h

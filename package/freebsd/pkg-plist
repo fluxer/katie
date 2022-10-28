@@ -365,8 +365,6 @@ include/katie/QtDesigner/QAbstractFormBuilder
 include/katie/QtDesigner/QDesignerActionEditorInterface
 include/katie/QtDesigner/QDesignerComponents
 include/katie/QtDesigner/QDesignerContainerExtension
-include/katie/QtDesigner/QDesignerCustomWidgetCollectionInterface
-include/katie/QtDesigner/QDesignerCustomWidgetInterface
 include/katie/QtDesigner/QDesignerDnDItemInterface
 include/katie/QtDesigner/QDesignerDynamicPropertySheetExtension
 include/katie/QtDesigner/QDesignerExtraInfoExtension
@@ -1169,6 +1167,8 @@ include/katie/QtTest/qtestspontaneevent.h
 include/katie/QtTest/qtestsystem.h
 include/katie/QtTest/qtestxmlstreamer.h
 include/katie/QtTest/qtestxunitstreamer.h
+include/katie/QtUiTools/QCustomWidget
+include/katie/QtUiTools/QCustomWidgetPlugin
 include/katie/QtUiTools/QUiLoader
 include/katie/QtUiTools/QtUiTools
 include/katie/QtUiTools/abstractformbuilder.h

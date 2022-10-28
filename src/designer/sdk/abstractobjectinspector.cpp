@@ -40,13 +40,7 @@ QT_BEGIN_NAMESPACE
     The QDesignerObjectInspectorInterface class is not intended to be
     instantiated directly. You can retrieve an interface to \QD's
     object inspector using the
-    QDesignerFormEditorInterface::objectInspector() function.  A
-    pointer to \QD's current QDesignerFormEditorInterface object (\c
-    formEditor in the example above) is provided by the
-    QDesignerCustomWidgetInterface::initialize() function's
-    parameter. When implementing a custom widget plugin, you must
-    subclass the QDesignerCustomWidgetInterface to expose your plugin
-    to \QD.
+    QDesignerFormEditorInterface::objectInspector() function.
 
     The interface provides the core() function that you can use to
     retrieve a pointer to \QD's current QDesignerFormEditorInterface

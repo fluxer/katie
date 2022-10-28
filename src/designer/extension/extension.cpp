@@ -129,11 +129,6 @@ QT_BEGIN_NAMESPACE
 
    \snippet doc/src/snippets/code/tools_designer_src_lib_extension_extension.cpp 0
 
-   When implementing a custom widget plugin, a pointer to \QD's
-   current QDesignerFormEditorInterface object (\c formEditor) is
-   provided by the QDesignerCustomWidgetInterface::initialize()
-   function's parameter.
-
    If the widget in the example above doesn't have a defined
    QDesignerPropertySheetExtension, \c propertySheet will be a null
    pointer.

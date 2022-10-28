@@ -597,7 +597,7 @@ WidgetBoxTreeWidget::CategoryList WidgetBoxTreeWidget::loadCustomCategoryList() 
     const QString invisible = QLatin1String(invisibleNameC);
     const QString iconPrefix = QLatin1String(iconPrefixC);
 
-    foreach(QDesignerCustomWidgetInterface *c, customWidgets) {
+    foreach(QCustomWidget *c, customWidgets) {
         const QString dom_xml = c->domXml();
         if (dom_xml.isEmpty())
             continue;

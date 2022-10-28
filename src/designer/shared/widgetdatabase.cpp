@@ -307,7 +307,7 @@ int WidgetDataBase::indexOfObject(QObject *object, bool /*resolveName*/) const
     return QDesignerWidgetDataBaseInterface::indexOfClassName(id);
 }
 
-static WidgetDataBaseItem *createCustomWidgetItem(const QDesignerCustomWidgetInterface *c,
+static WidgetDataBaseItem *createCustomWidgetItem(const QCustomWidget *c,
                                                   const QDesignerCustomWidgetData &data)
 {
     WidgetDataBaseItem *item = new WidgetDataBaseItem(c->name(), c->group());
@@ -342,7 +342,7 @@ void WidgetDataBase::loadPlugins()
     // 2) create a list plugins
     ItemList pluginList;
     const QDesignerPluginManager *pm = m_core->pluginManager();
-    foreach(QDesignerCustomWidgetInterface* c, pm->registeredCustomWidgets())
+    foreach(QCustomWidget* c, pm->registeredCustomWidgets())
         pluginList += createCustomWidgetItem(c, pm->customWidgetData(c));
 
     // 3) replace custom classes or add new ones, remove them from existingCustomClasses,

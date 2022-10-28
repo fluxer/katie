@@ -45,7 +45,6 @@
 QT_BEGIN_NAMESPACE
 
 class QObject;
-class QDesignerCustomWidgetInterface;
 
 namespace qdesigner_internal {
 

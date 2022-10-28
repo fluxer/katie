@@ -43,13 +43,6 @@ QT_BEGIN_NAMESPACE
 
     \snippet doc/src/snippets/code/tools_designer_src_lib_sdk_abstractformwindowmanager.cpp 0
 
-    When implementing a custom widget plugin, a pointer to \QD's
-    current QDesignerFormEditorInterface object (\c formEditor in the
-    example above) is provided by the
-    QDesignerCustomWidgetInterface::initialize() function's parameter.
-    You must subclass the QDesignerCustomWidgetInterface to expose
-    your plugin to Katie Designer.
-
     The form window manager interface provides the createFormWindow()
     function that enables you to create a new form window which you
     can add to the collection of form windows that the manager

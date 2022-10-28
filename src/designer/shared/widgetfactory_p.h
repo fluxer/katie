@@ -49,7 +49,7 @@ class QObject;
 class QWidget;
 class QLayout;
 class QDesignerFormEditorInterface;
-class QDesignerCustomWidgetInterface;
+class QCustomWidget;
 class QDesignerFormWindowInterface;
 class QStyle;
 
@@ -144,7 +144,7 @@ private:
 
     const Strings m_strings;
     QDesignerFormEditorInterface *m_core;
-    typedef QMap<QString, QDesignerCustomWidgetInterface*> CustomWidgetFactoryMap;
+    typedef QMap<QString, QCustomWidget*> CustomWidgetFactoryMap;
     CustomWidgetFactoryMap m_customFactory;
     QDesignerFormWindowInterface *m_formWindow;
 

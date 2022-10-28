@@ -426,7 +426,7 @@ class QDesignerPluginManagerPrivate {
     QDesignerPluginManagerPrivate(QDesignerFormEditorInterface *core);
 
     void clearCustomWidgets();
-    bool addCustomWidget(QDesignerCustomWidgetInterface *c,
+    bool addCustomWidget(QCustomWidget *c,
                          const QString &pluginPath,
                          const QString &designerLanguage);
     void addCustomWidgets(const QObject *o,
@@ -444,7 +444,7 @@ class QDesignerPluginManagerPrivate {
 
     // Synced lists of custom widgets and their data. Note that the list
     // must be ordered for collections to appear in order.
-    QList<QDesignerCustomWidgetInterface *> m_customWidgets;
+    QList<QCustomWidget *> m_customWidgets;
     QList<QDesignerCustomWidgetData> m_customWidgetData;
 
     QStringList defaultPluginPaths() const;
@@ -466,7 +466,7 @@ void QDesignerPluginManagerPrivate::clearCustomWidgets()
 
 // Add a custom widget to the list if it parses correctly
 // and is of the right language
-bool QDesignerPluginManagerPrivate::addCustomWidget(QDesignerCustomWidgetInterface *c,
+bool QDesignerPluginManagerPrivate::addCustomWidget(QCustomWidget *c,
                                                     const QString &pluginPath,
                                                     const QString &designerLanguage)
 {
@@ -474,7 +474,7 @@ bool QDesignerPluginManagerPrivate::addCustomWidget(QDesignerCustomWidgetInterfa
         qDebug() << Q_FUNC_INFO << c->name();
 
     if (!c->isInitialized())
-        c->initialize(m_core);
+        c->initialize();
     // Parse the XML even if the plugin is initialized as Jambi might play tricks here
     QDesignerCustomWidgetData data(pluginPath);
     const QString domXml = c->domXml();
@@ -501,18 +501,14 @@ bool QDesignerPluginManagerPrivate::addCustomWidget(QDesignerCustomWidgetInterfa
     return true;
 }
 
-// Check the plugin interface for either a custom widget or a collection and
+// Check the plugin interface for a custom widget plugin and
 // add all contained custom widgets.
 void QDesignerPluginManagerPrivate::addCustomWidgets(const QObject *o,
                                                      const QString &pluginPath,
                                                      const QString &designerLanguage)
 {
-    if (QDesignerCustomWidgetInterface *c = qobject_cast<QDesignerCustomWidgetInterface*>(o)) {
-        addCustomWidget(c, pluginPath, designerLanguage);
-        return;
-    }
-    if (const QDesignerCustomWidgetCollectionInterface *coll = qobject_cast<QDesignerCustomWidgetCollectionInterface*>(o)) {
-        foreach(QDesignerCustomWidgetInterface *c, coll->customWidgets())
+    if (const QCustomWidgetPlugin *coll = qobject_cast<const QCustomWidgetPlugin*>(o)) {
+        foreach(QCustomWidget *c, coll->customWidgets())
             addCustomWidget(c, pluginPath, designerLanguage);
     }
 }
@@ -739,7 +735,7 @@ QDesignerPluginManager::CustomWidgetList QDesignerPluginManager::registeredCusto
     return m_d->m_customWidgets;
 }
 
-QDesignerCustomWidgetData QDesignerPluginManager::customWidgetData(QDesignerCustomWidgetInterface *w) const
+QDesignerCustomWidgetData QDesignerPluginManager::customWidgetData(QCustomWidget *w) const
 {
     const int index = m_d->m_customWidgets.indexOf(w);
     if (index == -1)

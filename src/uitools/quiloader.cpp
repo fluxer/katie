@@ -757,7 +757,7 @@ QStringList QUiLoader::availableWidgets() const
 
     d->setupWidgetMap();
 
-    foreach (QDesignerCustomWidgetInterface *plugin, d->builder.customWidgets()) {
+    foreach (QCustomWidget *plugin, d->builder.customWidgets()) {
         g_widgets()->append(plugin->name());
     }
 

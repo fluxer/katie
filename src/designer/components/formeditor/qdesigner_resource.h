@@ -37,7 +37,6 @@ class DomResource;
 
 class QDesignerContainerExtension;
 class QDesignerFormEditorInterface;
-class QDesignerCustomWidgetInterface;
 class QDesignerWidgetDataBaseItemInterface;
 
 class QTabWidget;

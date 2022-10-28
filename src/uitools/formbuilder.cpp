@@ -192,7 +192,7 @@ QWidget *QFormBuilder::createWidget(const QString &widgetName, QWidget *parentWi
             break;
 
         // try with a registered custom widget
-        QDesignerCustomWidgetInterface *factory = m_customWidgets.value(widgetName);
+        QCustomWidget *factory = m_customWidgets.value(widgetName);
         if (factory != 0)
             w = factory->createWidget(parentWidget);
     } while(false);
@@ -433,16 +433,10 @@ void QFormBuilder::setPluginPath(const QStringList &pluginPaths)
     updateCustomWidgets();
 }
 
-static void insertPlugins(QObject *o, QMap<QString, QDesignerCustomWidgetInterface*> *customWidgets)
+static void insertPlugins(QObject *o, QMap<QString, QCustomWidget*> *customWidgets)
 {
-    // step 1) try with a normal plugin
-    if (QDesignerCustomWidgetInterface *iface = qobject_cast<QDesignerCustomWidgetInterface *>(o)) {
-        customWidgets->insert(iface->name(), iface);
-        return;
-    }
-    // step 2) try with a collection of plugins
-    if (QDesignerCustomWidgetCollectionInterface *c = qobject_cast<QDesignerCustomWidgetCollectionInterface *>(o)) {
-        foreach (QDesignerCustomWidgetInterface *iface, c->customWidgets())
+    if (QCustomWidgetPlugin *c = qobject_cast<QCustomWidgetPlugin *>(o)) {
+        foreach (QCustomWidget *iface, c->customWidgets())
             customWidgets->insert(iface->name(), iface);
     }
 }
@@ -476,11 +470,11 @@ void QFormBuilder::updateCustomWidgets()
 }
 
 /*!
-    \fn QList<QDesignerCustomWidgetInterface*> QFormBuilder::customWidgets() const
+    \fn QList<QCustomWidget*> QFormBuilder::customWidgets() const
 
     Returns a list of the available plugins.
 */
-QList<QDesignerCustomWidgetInterface*> QFormBuilder::customWidgets() const
+QList<QCustomWidget*> QFormBuilder::customWidgets() const
 {
     return m_customWidgets.values();
 }
