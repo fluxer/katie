@@ -61,7 +61,6 @@ set(BOOTSTRAP_SOURCES
     ${CMAKE_SOURCE_DIR}/src/core/io/qfsfileengine.cpp
     ${CMAKE_SOURCE_DIR}/src/core/io/qfsfileengine_iterator.cpp
     ${CMAKE_SOURCE_DIR}/src/core/io/qiodevice.cpp
-    ${CMAKE_SOURCE_DIR}/src/core/io/qtemporaryfile.cpp
     ${CMAKE_SOURCE_DIR}/src/core/io/qtextstream.cpp
     ${CMAKE_SOURCE_DIR}/src/core/io/qfilesystemengine_unix.cpp
     ${CMAKE_SOURCE_DIR}/src/core/io/qfilesystemiterator_unix.cpp
