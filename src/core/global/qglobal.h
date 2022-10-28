@@ -266,12 +266,6 @@ typedef double qreal;
 #  define Q_UITOOLS_EXPORT Q_DECL_IMPORT
 #endif
 
-#ifdef KtDesigner_EXPORTS
-#  define Q_DESIGNER_EXPORT Q_DECL_EXPORT
-#else
-#  define Q_DESIGNER_EXPORT Q_DECL_IMPORT
-#endif
-
 #define Q_CORE_EXPORT_INLINE Q_CORE_EXPORT inline
 #define Q_GUI_EXPORT_INLINE Q_GUI_EXPORT inline
 
