@@ -861,7 +861,7 @@ void QDBusConnectionPrivate::deliverCall(QObject *object, const QDBusMessage &ms
     params.append(0);
 
     // add the input parameters
-    int i;
+    int i = 0;
     int pCount = qMin(msg.arguments().count(), metaTypes.count() - 1);
     for (i = 1; i <= pCount; ++i) {
         int id = metaTypes[i];
