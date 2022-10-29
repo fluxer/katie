@@ -459,26 +459,14 @@ bool QFSFileEngine::supportsExtension(Extension extension) const
     return false;
 }
 
-/*! \fn bool QFSFileEngine::caseSensitive() const
-  Returns true for Windows, false for Unix.
-*/
-
 /*! \fn bool QFSFileEngine::copy(const QString &copyName)
 
-  For windows, copy the file to file \a copyName.
-
-  Not implemented for Unix.
+  Copy the file to file \a copyName.
 */
 
 /*! \fn QString QFSFileEngine::currentPath(const QString &fileName)
   For Unix, returns the current working directory for the file
   engine.
-
-  For Windows, returns the canonicalized form of the current path used
-  by the file engine for the drive specified by \a fileName.  On
-  Windows, each drive has its own current directory, so a different
-  path is returned for file names that include different drive names
-  (e.g. A: or C:).
 
   \sa setCurrentPath()
 */

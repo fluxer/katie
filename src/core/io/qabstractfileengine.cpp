@@ -364,17 +364,6 @@ bool QAbstractFileEngine::setSize(qint64 size)
 }
 
 /*!
-    Should return true if the underlying file system is case-sensitive;
-    otherwise return false.
-
-    This virtual function must be reimplemented by all subclasses.
- */
-bool QAbstractFileEngine::caseSensitive() const
-{
-    return false;
-}
-
-/*!
     Return true if the file referred to by this file engine has a
     relative path; otherwise return false.
 

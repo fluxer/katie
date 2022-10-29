@@ -54,7 +54,6 @@ public:
     bool mkdir(const QString &dirName, bool createParentDirectories) const;
     bool rmdir(const QString &dirName, bool recurseParentDirectories) const;
     bool setSize(qint64 size);
-    bool caseSensitive() const;
     bool isRelativePath() const;
     FileFlags fileFlags(FileFlags type) const;
     bool setPermissions(uint perms);

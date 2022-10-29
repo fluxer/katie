@@ -1365,16 +1365,9 @@ bool QDir::operator==(const QDir &dir) const
 
     if (d == other)
         return true;
-    Qt::CaseSensitivity sensitive;
     if (!d->fileEngine || !other->fileEngine) {
         if (d->fileEngine != other->fileEngine) // one is native, the other is a custom file-engine
             return false;
-
-        sensitive = Qt::CaseSensitive;
-    } else {
-        if (d->fileEngine->caseSensitive() != other->fileEngine->caseSensitive())
-            return false;
-        sensitive = d->fileEngine->caseSensitive() ? Qt::CaseSensitive : Qt::CaseInsensitive;
     }
 
     if (d->filters == other->filters
@@ -1387,12 +1380,12 @@ bool QDir::operator==(const QDir &dir) const
 
         if (exists() && dir.exists()) {
             // Both exist, fallback to expensive canonical path computation
-            return canonicalPath().compare(dir.canonicalPath(), sensitive) == 0;
+            return canonicalPath().compare(dir.canonicalPath(), Qt::CaseSensitive) == 0;
         } else {
             // Neither exists, compare absolute paths rather than canonical (which would be empty strings)
             d->resolveAbsoluteEntry();
             other->resolveAbsoluteEntry();
-            return d->absoluteDirEntry.filePath().compare(other->absoluteDirEntry.filePath(), sensitive) == 0;
+            return d->absoluteDirEntry.filePath().compare(other->absoluteDirEntry.filePath(), Qt::CaseSensitive) == 0;
         }
     }
     return false;

@@ -95,31 +95,22 @@ public:
         inline bool isSystem() const { if (info) return info->isSystem(); return true; }
         inline bool isHidden() const { if (info) return info->isHidden(); return false; }
         inline bool isSymLink() const { return info && info->isSymLink(); }
-        inline bool caseSensitive() const { if (info) return info->isCaseSensitive(); return false; }
         inline QIcon icon() const { if (info) return info->icon; return QIcon(); }
 
         inline bool operator <(const QFileSystemNode &node) const {
-            if (caseSensitive() || node.caseSensitive())
-                return fileName < node.fileName;
-            return QString::compare(fileName, node.fileName, Qt::CaseInsensitive) < 0;
+            return fileName < node.fileName;
         }
         inline bool operator >(const QString &name) const {
-            if (caseSensitive())
-                return fileName > name;
-            return QString::compare(fileName, name, Qt::CaseInsensitive) > 0;
+            return fileName > name;
         }
         inline bool operator <(const QString &name) const {
-            if (caseSensitive())
-                return fileName < name;
-            return QString::compare(fileName, name, Qt::CaseInsensitive) < 0;
+            return fileName < name;
         }
         inline bool operator !=(const QExtendedInformation &fileInfo) const {
             return !operator==(fileInfo);
         }
         bool operator ==(const QString &name) const {
-            if (caseSensitive())
-                return fileName == name;
-            return QString::compare(fileName, name, Qt::CaseInsensitive) == 0;
+            return fileName == name;
         }
         bool operator ==(const QExtendedInformation &fileInfo) const {
             return info && (*info == fileInfo);

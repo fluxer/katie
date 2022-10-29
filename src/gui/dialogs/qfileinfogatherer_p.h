@@ -38,7 +38,6 @@
 #include "qwaitcondition.h"
 #include "qfilesystemwatcher.h"
 #include "qfileiconprovider.h"
-#include "qfsfileengine.h"
 #include "qpair.h"
 #include "qstack.h"
 #include "qdatetime.h"
@@ -64,13 +63,6 @@ public:
        && displayType == fileInfo.displayType
        && permissions() == fileInfo.permissions();
     }
-
-#ifndef QT_NO_FSFILEENGINE
-    bool isCaseSensitive() const {
-        QFSFileEngine fe(mFileInfo.absoluteFilePath());
-        return fe.caseSensitive();
-    }
-#endif
 
     QFile::Permissions permissions() const {
         return mFileInfo.permissions();

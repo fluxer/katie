@@ -188,11 +188,6 @@ bool QFSFileEngine::rmdir(const QString &name, bool recurseParentDirectories) co
     return QFileSystemEngine::removeDirectory(QFileSystemEntry(name), recurseParentDirectories);
 }
 
-bool QFSFileEngine::caseSensitive() const
-{
-    return true;
-}
-
 bool QFSFileEngine::setCurrentPath(const QString &path)
 {
     return QFileSystemEngine::setCurrentPath(QFileSystemEntry(path));

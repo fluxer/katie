@@ -317,23 +317,16 @@ bool QFileInfo::operator==(const QFileInfo &fileinfo) const
     if (d->fileEntry.filePath() == fileinfo.d_ptr->fileEntry.filePath())
         return true;
 
-    Qt::CaseSensitivity sensitive;
     if (!d->fileEngine || !fileinfo.d_ptr->fileEngine) {
         if (d->fileEngine != fileinfo.d_ptr->fileEngine) // one is native, the other is a custom file-engine
             return false;
-
-        sensitive = Qt::CaseSensitive;
-    } else {
-        if (d->fileEngine->caseSensitive() != fileinfo.d_ptr->fileEngine->caseSensitive())
-            return false;
-        sensitive = d->fileEngine->caseSensitive() ? Qt::CaseSensitive : Qt::CaseInsensitive;
     }
 
     if (fileinfo.size() != size()) //if the size isn't the same...
         return false;
 
    // Fallback to expensive canonical path computation
-   return canonicalFilePath().compare(fileinfo.canonicalFilePath(), sensitive) == 0;
+   return canonicalFilePath().compare(fileinfo.canonicalFilePath(), Qt::CaseSensitive) == 0;
 }
 
 /*!

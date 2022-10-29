@@ -315,11 +315,8 @@ QFileSystemModelPrivate::QFileSystemNode *QFileSystemModelPrivate::node(const QS
         // we couldn't find the path element, we create a new node since we
         // _know_ that the path is valid
         if (alreadyExisted) {
-            if ((parent->children.count() == 0)
-                || (parent->caseSensitive()
-                    && parent->children.value(element)->fileName != element)
-                || (!parent->caseSensitive()
-                    && parent->children.value(element)->fileName.toLower() != element.toLower()))
+            if (parent->children.count() == 0
+                || parent->children.value(element)->fileName != element)
                 alreadyExisted = false;
         }
 
@@ -1615,19 +1612,10 @@ void QFileSystemModelPrivate::_q_fileSystemChanged(const QString &path, const QL
             addNode(parentNode, fileName, info.fileInfo());
         }
         QFileSystemModelPrivate::QFileSystemNode * node = parentNode->children.value(fileName);
-        bool isCaseSensitive = parentNode->caseSensitive();
-        if (isCaseSensitive) {
-            if (node->fileName != fileName)
-                continue;
-        } else {
-            if (QString::compare(node->fileName,fileName,Qt::CaseInsensitive) != 0)
-                continue;
+        if (node->fileName != fileName) {
+            continue;
         }
-        if (isCaseSensitive) {
-            Q_ASSERT(node->fileName == fileName);
-        } else {
-            node->fileName = fileName;
-        }
+        Q_ASSERT(node->fileName == fileName);
 
         if (info.size() == -1 && !info.isSymLink()) {
             removeNode(parentNode, fileName);

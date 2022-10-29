@@ -102,7 +102,6 @@ public:
     virtual bool mkdir(const QString &dirName, bool createParentDirectories) const;
     virtual bool rmdir(const QString &dirName, bool recurseParentDirectories) const;
     virtual bool setSize(qint64 size);
-    virtual bool caseSensitive() const;
     virtual bool isRelativePath() const;
     virtual QStringList entryList(QDir::Filters filters, const QStringList &filterNames) const;
     virtual FileFlags fileFlags(FileFlags type=FileInfoAll) const;
