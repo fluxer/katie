@@ -8,7 +8,6 @@ classlist = [
     "QAbstractButton",
     "QAbstractEventDispatcher",
     "QAbstractFileEngine",
-    "QAbstractFileEngineIterator",
     "QAbstractGraphicsShapeItem",
     "QAbstractItemDelegate",
     "QAbstractItemModel",

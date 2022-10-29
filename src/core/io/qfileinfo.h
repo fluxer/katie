@@ -35,7 +35,6 @@ class QFileInfoPrivate;
 class Q_CORE_EXPORT QFileInfo
 {
     friend class QDirIteratorPrivate;
-    friend class QAbstractFileEngineIteratorPrivate;
 public:
     QFileInfo();
     QFileInfo(const QString &file);

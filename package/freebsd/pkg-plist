@@ -10,7 +10,6 @@ bin/rcc-katie
 bin/uic-katie
 include/katie/QtCore/QAbstractEventDispatcher
 include/katie/QtCore/QAbstractFileEngine
-include/katie/QtCore/QAbstractFileEngineIterator
 include/katie/QtCore/QAbstractItemModel
 include/katie/QtCore/QAbstractListModel
 include/katie/QtCore/QAbstractTableModel

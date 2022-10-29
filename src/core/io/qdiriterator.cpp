@@ -47,10 +47,7 @@
     you cannot iterate directories in reverse order) and does not allow random
     access.
 
-    QDirIterator works with all supported file engines, and is implemented
-    using QAbstractFileEngineIterator.
-
-    \sa QDir, QDir::entryList(), QAbstractFileEngineIterator
+    \sa QDir, QDir::entryList()
 */
 
 /*! \enum QDirIterator::IteratorFlag
@@ -118,7 +115,6 @@ public:
     QVector<QRegExp> nameRegExps;
 #endif
 
-    QDirIteratorPrivateIteratorStack<QAbstractFileEngineIterator> fileEngineIterators;
 #ifndef QT_NO_FILESYSTEMITERATOR
     QDirIteratorPrivateIteratorStack<QFileSystemIterator> nativeIterators;
 #endif
@@ -169,20 +165,9 @@ void QDirIteratorPrivate::pushDirectory(const QFileInfo &fileInfo)
     if (iteratorFlags & QDirIterator::FollowSymlinks)
         visitedLinks << fileInfo.canonicalFilePath();
 
-    if (engine) {
-        engine->setFileName(path);
-        QAbstractFileEngineIterator *it = engine->beginEntryList(filters, nameFilters);
-        if (it) {
-            it->setPath(path);
-            fileEngineIterators << it;
-        } else {
-            // No iterator; no entry list.
-        }
-    } else {
 #ifndef QT_NO_FILESYSTEMITERATOR
-        nativeIterators << new QFileSystemIterator(fileInfo.d_ptr->fileEntry);
+    nativeIterators << new QFileSystemIterator(fileInfo.d_ptr->fileEntry);
 #endif
-    }
 }
 
 inline bool QDirIteratorPrivate::entryMatches(const QString & fileName, const QFileInfo &fileInfo)
@@ -205,39 +190,24 @@ inline bool QDirIteratorPrivate::entryMatches(const QString & fileName, const QF
 */
 void QDirIteratorPrivate::advance()
 {
-    if (engine) {
-        while (!fileEngineIterators.isEmpty()) {
-            // Find the next valid iterator that matches the filters.
-            QAbstractFileEngineIterator *it;
-            while (it = fileEngineIterators.top(), it->hasNext()) {
-                it->next();
-                if (entryMatches(it->currentFileName(), it->currentFileInfo()))
-                    return;
-            }
-
-            fileEngineIterators.pop();
-            delete it;
-        }
-    } else {
 #ifndef QT_NO_FILESYSTEMITERATOR
-        QFileSystemEntry nextEntry;
-        QFileSystemMetaData nextMetaData;
+    QFileSystemEntry nextEntry;
+    QFileSystemMetaData nextMetaData;
 
-        while (!nativeIterators.isEmpty()) {
-            // Find the next valid iterator that matches the filters.
-            QFileSystemIterator *it;
-            while (it = nativeIterators.top(), it->advance(nextEntry, nextMetaData)) {
-                QFileInfo info(new QFileInfoPrivate(nextEntry, nextMetaData));
+    while (!nativeIterators.isEmpty()) {
+        // Find the next valid iterator that matches the filters.
+        QFileSystemIterator *it;
+        while (it = nativeIterators.top(), it->advance(nextEntry, nextMetaData)) {
+            QFileInfo info(new QFileInfoPrivate(nextEntry, nextMetaData));
 
-                if (entryMatches(nextEntry.fileName(), info))
-                    return;
-            }
-
-            nativeIterators.pop();
-            delete it;
+            if (entryMatches(nextEntry.fileName(), info))
+                return;
         }
-#endif
+
+        nativeIterators.pop();
+        delete it;
     }
+#endif
 
     currentFileInfo = nextFileInfo;
     nextFileInfo = QFileInfo();
@@ -468,13 +438,10 @@ QString QDirIterator::next()
 */
 bool QDirIterator::hasNext() const
 {
-    if (d->engine)
-        return !d->fileEngineIterators.isEmpty();
-    else
 #ifndef QT_NO_FILESYSTEMITERATOR
-        return !d->nativeIterators.isEmpty();
+    return !d->nativeIterators.isEmpty();
 #else
-        return false;
+    return false;
 #endif
 }
 

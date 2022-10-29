@@ -30,8 +30,6 @@
 
 QT_BEGIN_NAMESPACE
 
-class QVariant;
-class QAbstractFileEngineIterator;
 class QAbstractFileEnginePrivate;
 
 class Q_CORE_EXPORT QAbstractFileEngine
@@ -114,10 +112,6 @@ public:
     uchar *map(qint64 offset, qint64 size);
     bool unmap(uchar *ptr);
 
-    typedef QAbstractFileEngineIterator Iterator;
-    Iterator *beginEntryList(QDir::Filters filters, const QStringList &filterNames);
-    Iterator *endEntryList();
-
     qint64 read(char *data, qint64 maxlen);
     qint64 readLine(char *data, qint64 maxlen);
     qint64 write(const char *data, qint64 len);
@@ -178,32 +172,6 @@ private:
     friend class QFilePrivate;
 };
 Q_DECLARE_OPERATORS_FOR_FLAGS(QAbstractFileEngine::FileFlags)
-
-class QAbstractFileEngineIteratorPrivate;
-class Q_CORE_EXPORT QAbstractFileEngineIterator
-{
-public:
-    QAbstractFileEngineIterator(QDir::Filters filters, const QStringList &nameFilters);
-    ~QAbstractFileEngineIterator();
-
-    QString next();
-    bool hasNext() const;
-
-    QString path() const;
-    QStringList nameFilters() const;
-    QDir::Filters filters() const;
-
-    QString currentFileName() const;
-    QFileInfo currentFileInfo() const;
-    QString currentFilePath() const;
-
-private:
-    Q_DISABLE_COPY(QAbstractFileEngineIterator)
-    friend class QDirIterator;
-    friend class QDirIteratorPrivate;
-    void setPath(const QString &path);
-    QAbstractFileEngineIteratorPrivate* d;
-};
 
 QT_END_NAMESPACE
 

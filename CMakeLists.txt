@@ -477,7 +477,6 @@ if(KATIE_UTILS)
 endif()
 
 # the macro calls bellow are generated via the incfsck script
-katie_generate_obsolete(QAbstractFileEngineIterator QtCore qabstractfileengine.h)
 katie_generate_obsolete(QAbstractGraphicsShapeItem QtGui qgraphicsitem.h)
 katie_generate_obsolete(QAbstractListModel QtCore qabstractitemmodel.h)
 katie_generate_obsolete(QAbstractTableModel QtCore qabstractitemmodel.h)
