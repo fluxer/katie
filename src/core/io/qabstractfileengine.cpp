@@ -144,13 +144,6 @@ bool QAbstractFileEnginePrivate::unmap(uchar *ptr)
 /*!
     Creates and returns a QAbstractFileEngine suitable for processing \a
     fileName.
-
-    You should not need to call this function; use QFile, QFileInfo or
-    QDir directly instead.
-
-    If you reimplemnt this function, it should only return file
-    engines that knows how to handle \a fileName; otherwise, it should
-    return 0.
 */
 QAbstractFileEngine *QAbstractFileEngine::create(const QString &fileName)
 {
@@ -503,8 +496,6 @@ bool QAbstractFileEngine::isSequential() const
     Requests that the file is deleted from the file system. If the
     operation succeeds return true; otherwise return false.
 
-    This virtual function must be reimplemented by all subclasses.
-
     \sa setFileName() rmdir()
  */
 bool QAbstractFileEngine::remove()
@@ -538,8 +529,6 @@ bool QAbstractFileEngine::copy(const QString &newName)
     Requests that the file be renamed to \a newName in the file
     system. If the operation succeeds return true; otherwise return
     false.
-
-    This virtual function must be reimplemented by all subclasses.
 
     \sa setFileName()
  */
@@ -581,8 +570,6 @@ bool QAbstractFileEngine::link(const QString &newName)
     succeed. If the operation succeeds return true; otherwise return
     false.
 
-    This virtual function must be reimplemented by all subclasses.
-
     \sa setFileName() rmdir() isRelativePath()
  */
 bool QAbstractFileEngine::mkdir(const QString &dirName, bool createParentDirectories) const
@@ -599,8 +586,6 @@ bool QAbstractFileEngine::mkdir(const QString &dirName, bool createParentDirecto
     using this function if it is non-empty. If the operation succeeds
     return true; otherwise return false.
 
-    This virtual function must be reimplemented by all subclasses.
-
     \sa setFileName() remove() mkdir() isRelativePath()
  */
 bool QAbstractFileEngine::rmdir(const QString &dirName, bool recurseParentDirectories) const
@@ -613,8 +598,6 @@ bool QAbstractFileEngine::rmdir(const QString &dirName, bool recurseParentDirect
     than the current file then it is filled with 0's, if smaller it is
     simply truncated. If the operations succceeds return true; otherwise
     return false;
-
-    This virtual function must be reimplemented by all subclasses.
 
     \sa size()
 */
@@ -639,8 +622,6 @@ bool QAbstractFileEngine::setSize(qint64 size)
     Return true if the file referred to by this file engine has a
     relative path; otherwise return false.
 
-    This virtual function must be reimplemented by all subclasses.
-
     \sa setFileName()
  */
 bool QAbstractFileEngine::isRelativePath() const
@@ -658,8 +639,6 @@ bool QAbstractFileEngine::isRelativePath() const
     rather than a directory, or if the directory is unreadable or does
     not exist or if nothing matches the specifications.
 
-    This virtual function must be reimplemented by all subclasses.
-
     \sa setFileName()
  */
 QStringList QAbstractFileEngine::entryList(QDir::Filters filters, const QStringList &filterNames) const
@@ -674,17 +653,8 @@ QStringList QAbstractFileEngine::entryList(QDir::Filters filters, const QStringL
 }
 
 /*!
-    This function should return the set of OR'd flags that are true
-    for the file engine's file, and that are in the \a type's OR'd
-    members.
-
-    In your reimplementation you can use the \a type argument as an
-    optimization hint and only return the OR'd set of members that are
-    true and that match those in \a type; in other words you can
-    ignore any members not mentioned in \a type, thus avoiding some
-    potentially expensive lookups or system calls.
-
-    This virtual function must be reimplemented by all subclasses.
+    Return the set of OR'd flags that are true for the file engine's
+    file, and that are in the \a type's OR'd members.
 
     \sa setFileName()
 */
@@ -753,8 +723,6 @@ QAbstractFileEngine::FileFlags QAbstractFileEngine::fileFlags(FileFlags type) co
     honored. If the operations succceeds return true; otherwise return
     false;
 
-    This virtual function must be reimplemented by all subclasses.
-
     \sa size()
 */
 bool QAbstractFileEngine::setPermissions(uint perms)
@@ -775,8 +743,6 @@ bool QAbstractFileEngine::setPermissions(uint perms)
     If you don't handle some \c FileName possibilities, return the
     file name set in setFileName() when an unhandled format is
     requested.
-
-    This virtual function must be reimplemented by all subclasses.
 
     \sa setFileName(), FileName
  */
@@ -815,8 +781,6 @@ QString QAbstractFileEngine::fileName(FileName file) const
     the file. If \a owner is \c OwnerGroup return the ID of the group
     that own the file. If you can't determine the owner return -2.
 
-    This virtual function must be reimplemented by all subclasses.
-
     \sa owner() setFileName(), FileOwner
  */
 uint QAbstractFileEngine::ownerId(FileOwner owner) const
@@ -838,8 +802,6 @@ uint QAbstractFileEngine::ownerId(FileOwner owner) const
     that own the file. If you can't determine the owner return
     QString().
 
-    This virtual function must be reimplemented by all subclasses.
-
     \sa ownerId() setFileName(), FileOwner
  */
 QString QAbstractFileEngine::owner(FileOwner owner) const
@@ -856,8 +818,6 @@ QString QAbstractFileEngine::owner(FileOwner owner) const
     file was most recently accessed (e.g. read or written).
     If the time cannot be determined return QDateTime() (an invalid
     date time).
-
-    This virtual function must be reimplemented by all subclasses.
 
     \sa setFileName(), QDateTime, QDateTime::isValid(), FileTime
  */
@@ -881,9 +841,7 @@ QDateTime QAbstractFileEngine::fileTime(FileTime time) const
 
 /*!
     Sets the file engine's file name to \a file. This file name is the
-    file that the rest of the virtual functions will operate on.
-
-    This virtual function must be reimplemented by all subclasses.
+    file that the rest of the functions will operate on.
 
     \sa rename()
  */
@@ -912,10 +870,6 @@ int QAbstractFileEngine::handle() const
     Returns a pointer to the memory if successful; otherwise returns false
     if, for example, an error occurs.
 
-    This function bases its behavior on calling extension() with
-    MapExtensionOption. If the engine does not support this extension, 0 is
-    returned.
-
     \sa unmap(), supportsExtension()
  */
 
@@ -935,10 +889,6 @@ uchar *QAbstractFileEngine::map(qint64 offset, qint64 size)
 
     Unmaps the memory \a address.  Returns true if the unmap succeeds; otherwise
     returns false.
-
-    This function bases its behavior on calling extension() with
-    UnMapExtensionOption. If the engine does not support this extension, false is
-    returned.
 
     \sa map(), supportsExtension()
  */
@@ -1049,9 +999,9 @@ qint64 QAbstractFileEngine::write(const char *data, qint64 len)
 }
 
 /*!
-    This function reads one line, terminated by a '\n' character, from the
-    file info \a data. At most \a maxlen characters will be read. The
-    end-of-line character is included.
+    Reads one line, terminated by a '\n' character, from the file info
+    \a data. At most \a maxlen characters will be read. The end-of-line
+    character is included.
 */
 qint64 QAbstractFileEngine::readLine(char *data, qint64 maxlen)
 {
@@ -1115,10 +1065,8 @@ qint64 QAbstractFileEngine::readLine(char *data, qint64 maxlen)
 /*!
     \since 4.3
 
-    This virtual function can be reimplemented in a QAbstractFileEngine
-    subclass to provide support for extensions. The \a option argument is
-    provided as input to the extension, and this function can store output
-    results in \a output.
+    The \a option argument is provided as input to the extension, and
+    this function can store output results in \a output.
 
     The behavior of this function is determined by \a extension; see the
     Extension documentation for details.
@@ -1126,7 +1074,7 @@ qint64 QAbstractFileEngine::readLine(char *data, qint64 maxlen)
     You can call supportsExtension() to check if an extension is supported by
     the file engine.
 
-    By default, no extensions are supported, and this function returns false.
+    By default, map and unmap extensions are supported.
 
     \sa supportsExtension(), Extension
 */
@@ -1150,9 +1098,8 @@ bool QAbstractFileEngine::extension(Extension extension, const ExtensionOption *
 /*!
     \since 4.3
 
-    This virtual function returns true if the file engine supports \a
-    extension; otherwise, false is returned. By default, no extensions are
-    supported.
+    Returns true if the file engine supports \a extension; otherwise, false
+    is returned. By default map, unmap and fast readline extensions are supported.
 
     \sa extension()
 */
@@ -1194,8 +1141,6 @@ QString QAbstractFileEngine::errorString() const
 
 /*!
     Sets the error type to \a error, and the error string to \a errorString.
-    Call this function to set the error values returned by the higher-level
-    classes.
 
     \sa QFile::error(), QIODevice::errorString(), QIODevice::setErrorString()
 */
@@ -1249,7 +1194,6 @@ bool QAbstractFileEngine::open(QIODevice::OpenMode openMode, int fd, QFile::File
     return true;
 }
 
-
 QString QAbstractFileEngine::currentPath(const QString &)
 {
     return QFileSystemEngine::currentPath().filePath();
@@ -1274,48 +1218,33 @@ QString QAbstractFileEngine::tempPath()
     \since 4.3
     \class QAbstractFileEngineIterator
     \brief The QAbstractFileEngineIterator class provides an iterator
-    interface for custom file engines.
+    interface for file engines.
 
     If all you want is to iterate over entries in a directory, see
-    QDirIterator instead. This class is only for custom file engine authors.
+    QDirIterator instead. This class is only for internal file engines.
 
-    QAbstractFileEngineIterator is a unidirectional single-use virtual
-    iterator that plugs into QDirIterator, providing transparent proxy
-    iteration for custom file engines.
-
-    You can subclass QAbstractFileEngineIterator to provide an iterator when
-    writing your own file engine. To plug the iterator into your file system,
-    you simply return an instance of this subclass from a reimplementation of
-    QAbstractFileEngine::beginEntryList().
-
-    Example:
-
-    \snippet doc/src/snippets/code/src_corelib_io_qabstractfileengine.cpp 2
+    QAbstractFileEngineIterator is a unidirectional single-use iterator
+    that plugs into QDirIterator, providing transparent proxy iteration for
+    file engines.
 
     QAbstractFileEngineIterator is associated with a path, name filters, and
     entry filters. The path is the directory that the iterator lists entries
     in. The name filters and entry filters are provided for file engines that
     can optimize directory listing at the iterator level (e.g., network file
     systems that need to minimize network traffic), but they can also be
-    ignored by the iterator subclass; QAbstractFileEngineIterator already
-    provides the required filtering logics in the matchesFilters() function.
-    You can call dirName() to get the directory name, nameFilters() to get a
-    stringlist of name filters, and filters() to get the entry filters.
+    ignored by the iterator; QAbstractFileEngineIterator already provides the
+    required filtering logics in the matchesFilters() function. You can call
+    dirName() to get the directory name, nameFilters() to get a stringlist of
+    name filters, and filters() to get the entry filters.
 
-    The pure virtual function hasNext() returns true if the current directory
-    has at least one more entry (i.e., the directory name is valid and
-    accessible, and we have not reached the end of the entry list), and false
-    otherwise. Reimplement next() to seek to the next entry.
+    The function hasNext() returns true if the current directory has at least
+    one more entry (i.e., the directory name is valid and accessible, and we
+    have not reached the end of the entry list), and false otherwise.
+    next() seeks to the next entry.
 
-    The pure virtual function currentFileName() returns the name of the
-    current entry without advancing the iterator. The currentFilePath()
-    function is provided for convenience; it returns the full path of the
-    current entry.
-
-    Here is an example of how to implement an iterator that returns each of
-    three fixed entries in sequence.
-
-    \snippet doc/src/snippets/code/src_corelib_io_qabstractfileengine.cpp 3
+    The function currentFileName() returns the name of the current entry
+    without advancing the iterator. The currentFilePath() function is
+    provided for convenience; it returns the full path of the current entry.
 
     Note: QAbstractFileEngineIterator does not deal with QDir::IteratorFlags;
     it simply returns entries for a single directory.
@@ -1449,8 +1378,7 @@ QDir::Filters QAbstractFileEngineIterator::filters() const
 }
 
 /*!
-    This pure virtual function returns the name of the current directory
-    entry, excluding the path.
+    Returns the name of the current directory entry, excluding the path.
 
     \sa currentFilePath()
 */
@@ -1484,11 +1412,11 @@ QString QAbstractFileEngineIterator::currentFilePath() const
 }
 
 /*!
-    The virtual function returns a QFileInfo for the current directory
-    entry. This function is provided for convenience. It can also be slightly
-    faster than creating a QFileInfo object yourself, as the object returned
-    by this function might contain cached information that QFileInfo otherwise
-    would have to access through the file engine.
+    Returns a QFileInfo for the current directory entry. This function is
+    provided for convenience. It can also be slightly faster than creating a
+    QFileInfo object yourself, as the object returned by this function might
+    contain cached information that QFileInfo otherwise would have to access
+    through the file engine.
 
     \sa currentFileName()
 */
@@ -1502,13 +1430,11 @@ QFileInfo QAbstractFileEngineIterator::currentFileInfo() const
 }
 
 /*!
-    This pure virtual function advances the iterator to the next directory
-    entry, and returns the file path to the current entry.
+    Advances the iterator to the next directory entry, and returns the file
+    path to the current entry.
 
     This function can optionally make use of nameFilters() and filters() to
     optimize its performance.
-
-    Reimplement this function in a subclass to advance the iterator.
 
     \sa QDirIterator::next()
 */
@@ -1526,9 +1452,9 @@ QString QAbstractFileEngineIterator::next()
 }
 
 /*!
-    This pure virtual function returns true if there is at least one more
-    entry in the current directory (i.e., the iterator path is valid and
-    accessible, and the iterator has not reached the end of the entry list).
+    Returns true if there is at least one more entry in the current
+    directory (i.e., the iterator path is valid and accessible, and the
+    iterator has not reached the end of the entry list).
 
     \sa QDirIterator::hasNext()
 */
