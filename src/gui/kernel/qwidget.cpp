@@ -876,7 +876,7 @@ void QWidgetPrivate::adjustFlags(Qt::WindowFlags &flags, QWidget *w)
     }
     if (customize)
         ; // don't modify window flags if the user explicitly set them.
-    else if (type == Qt::Dialog || type == Qt::Sheet)
+    else if (type == Qt::Dialog)
         flags |= Qt::WindowTitleHint | Qt::WindowSystemMenuHint | Qt::WindowContextHelpButtonHint | Qt::WindowCloseButtonHint;
     else if (type == Qt::Tool)
         flags |= Qt::WindowTitleHint | Qt::WindowSystemMenuHint | Qt::WindowCloseButtonHint;

@@ -593,11 +593,6 @@ void QMessageBoxPrivate::_q_buttonClicked(QAbstractButton *button)
     Constructs a message box with no text and no buttons. \a parent is
     passed to the QDialog constructor.
 
-    On Mac OS X, if you want your message box to appear
-    as a Qt::Sheet of its \a parent, set the message box's
-    \l{setWindowModality()} {window modality} to Qt::WindowModal or use open().
-    Otherwise, the message box will be a standard dialog.
-
 */
 QMessageBox::QMessageBox(QWidget *parent)
     : QDialog(*new QMessageBoxPrivate, parent, Qt::WindowTitleHint | Qt::WindowSystemMenuHint | Qt::WindowCloseButtonHint)
@@ -614,11 +609,6 @@ QMessageBox::QMessageBox(QWidget *parent)
 
     The message box is an \l{Qt::ApplicationModal} {application modal}
     dialog box.
-
-    On Mac OS X, if \a parent is not 0 and you want your message box
-    to appear as a Qt::Sheet of that parent, set the message box's
-    \l{setWindowModality()} {window modality} to Qt::WindowModal
-    (default). Otherwise, the message box will be a standard dialog.
 
     \sa setWindowTitle(), setText(), setIcon(), setStandardButtons()
 */
@@ -1583,19 +1573,12 @@ void QMessageBox::setInformativeText(const QString &text)
     This function shadows QWidget::setWindowModality().
 
     Sets the modality of the message box to \a windowModality.
-
-    On Mac OS X, if the modality is set to Qt::WindowModal and the message box
-    has a parent, then the message box will be a Qt::Sheet, otherwise the
-    message box will be a standard dialog.
 */
 void QMessageBox::setWindowModality(Qt::WindowModality windowModality)
 {
     QDialog::setWindowModality(windowModality);
 
-    if (parentWidget() && windowModality == Qt::WindowModal)
-        setParent(parentWidget(), Qt::Sheet);
-    else
-        setParent(parentWidget(), Qt::Dialog);
+    setParent(parentWidget(), Qt::Dialog);
     setDefaultButton(d_func()->defaultButton);
 }
 

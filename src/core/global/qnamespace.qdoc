@@ -898,7 +898,7 @@
     to the window's _NET_WM_WINDOW_TYPE X11 window property. See
     http://standards.freedesktop.org/wm-spec/ for more details. This
     attribute has no effect on non-X11 platforms. \note Qt automatically sets
-    this attribute for the Qt::Dialog and Qt::Sheet window types.
+    this attribute for the Qt::Dialog window types.
 
     \value WA_X11NetWmWindowTypeDropDownMenu Adds
     _NET_WM_WINDOW_TYPE_DROPDOWN_MENU to the window's
@@ -1505,13 +1505,6 @@
                    windows in the application from getting any input.
                    We refer to a top-level window that has a parent
                    as a \e secondary window.
-
-    \value Sheet   Indicates that the window is a Macintosh sheet. Since
-                   using a sheet implies window modality, the recommended
-                   way is to use QWidget::setWindowModality(), or
-                   QDialog::open(), instead.
-
-    \value Drawer  Indicates that the widget is a Macintosh drawer.
 
     \value Popup   Indicates that the widget is a pop-up top-level
                    window, i.e. that it is modal, but has a window

@@ -504,8 +504,6 @@ public:
         Widget = 0x00000000,
         Window = 0x00000001,
         Dialog = 0x00000002 | Window,
-        Sheet = 0x00000004 | Window,
-        Drawer = 0x00000006 | Window,
         Popup = 0x00000008 | Window,
         Tool = 0x0000000a | Window,
         ToolTip = 0x0000000c | Window,

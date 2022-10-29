@@ -327,7 +327,7 @@ void QGraphicsWidgetPrivate::adjustWindowFlags(Qt::WindowFlags *flags)
     uint type = (*flags & Qt::WindowType_Mask);
     if (customize)
         ;
-    else if (type == Qt::Dialog || type == Qt::Sheet)
+    else if (type == Qt::Dialog)
         *flags |= Qt::WindowTitleHint | Qt::WindowSystemMenuHint | Qt::WindowContextHelpButtonHint;
     else if (type == Qt::Tool)
         *flags |= Qt::WindowTitleHint | Qt::WindowSystemMenuHint;

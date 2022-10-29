@@ -142,11 +142,9 @@ static void SetMWMHints(Display *display, Window window, const QtMWMHints &mwmhi
 static inline bool isTransient(const QWidget *w)
 {
     return ((w->windowType() == Qt::Dialog
-             || w->windowType() == Qt::Sheet
              || w->windowType() == Qt::Tool
              || w->windowType() == Qt::SplashScreen
              || w->windowType() == Qt::ToolTip
-             || w->windowType() == Qt::Drawer
              || w->windowType() == Qt::Popup)
             && !w->testAttribute(Qt::WA_X11BypassTransientForHint));
 }
@@ -439,8 +437,7 @@ void QWidgetPrivate::create_sys(WId window, bool initializeWindow, bool destroyO
     bool topLevel = (flags & Qt::Window);
     bool popup = (type == Qt::Popup);
     bool desktop = (type == Qt::Desktop);
-    bool tool = (type == Qt::Tool || type == Qt::SplashScreen
-                 || type == Qt::ToolTip || type == Qt::Drawer);
+    bool tool = (type == Qt::Tool || type == Qt::SplashScreen || type == Qt::ToolTip);
 
 #ifdef ALIEN_DEBUG
     qDebug() << "QWidgetPrivate::create_sys START:" << q << "topLevel?" << topLevel << "WId:"
@@ -2034,13 +2031,11 @@ void QWidgetPrivate::setNetWmWindowTypes()
     // automatic selection
     switch (q->windowType()) {
     case Qt::Dialog:
-    case Qt::Sheet:
         // dialog netwm type
         windowTypes.append(ATOM(_NET_WM_WINDOW_TYPE_DIALOG));
         break;
 
     case Qt::Tool:
-    case Qt::Drawer:
         // utility netwm type
         windowTypes.append(ATOM(_NET_WM_WINDOW_TYPE_UTILITY));
         break;
