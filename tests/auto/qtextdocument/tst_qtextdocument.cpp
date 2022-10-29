@@ -1911,7 +1911,7 @@ void tst_QTextDocument::clonePreservesDefaultFont()
 
 void tst_QTextDocument::clonePreservesResources()
 {
-    QUrl testUrl(":/foobar");
+    QUrl testUrl("/foobar");
     QVariant testResource("hello world");
 
     doc->addResource(QTextDocument::ImageResource, testUrl, testResource);

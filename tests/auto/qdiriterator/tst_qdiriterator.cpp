@@ -84,8 +84,6 @@ private: // convenience functions
 private slots:
     void iterateRelativeDirectory_data();
     void iterateRelativeDirectory();
-    void iterateResource_data();
-    void iterateResource();
     void stopLinkLoop();
     void absoluteFilePathsFromRelativeIteratorPath();
     void recurseWithFilters() const;
@@ -320,53 +318,6 @@ void tst_QDirIterator::iterateRelativeDirectory()
     QCOMPARE(list, sortedEntries);
 }
 
-void tst_QDirIterator::iterateResource_data()
-{
-    QTest::addColumn<QString>("dirName"); // relative from current path or abs
-    QTest::addColumn<QDirIterator::IteratorFlags>("flags");
-    QTest::addColumn<QDir::Filters>("filters");
-    QTest::addColumn<QStringList>("nameFilters");
-    QTest::addColumn<QStringList>("entries");
-
-    QTest::newRow("invalid") << QString::fromLatin1(":/burpaburpa") << QDirIterator::IteratorFlags(0)
-                             << QDir::Filters(QDir::NoFilter) << QStringList(QLatin1String("*"))
-                             << QStringList();
-    QTest::newRow(":/") << QString::fromLatin1(":/") << QDirIterator::IteratorFlags(0)
-                               << QDir::Filters(QDir::NoFilter) << QStringList(QLatin1String("*"))
-                               << QString::fromLatin1(":/entrylist").split(QLatin1String(","));
-    QTest::newRow(":/entrylist") << QString::fromLatin1(":/entrylist") << QDirIterator::IteratorFlags(0)
-                               << QDir::Filters(QDir::NoFilter) << QStringList(QLatin1String("*"))
-                               << QString::fromLatin1(":/entrylist/directory,:/entrylist/file").split(QLatin1String(","));
-    QTest::newRow(":/ recursive") << QString::fromLatin1(":/") << QDirIterator::IteratorFlags(QDirIterator::Subdirectories)
-                                         << QDir::Filters(QDir::NoFilter) << QStringList(QLatin1String("*"))
-                                         << QString::fromLatin1(":/entrylist,:/entrylist/directory,:/entrylist/directory/dummy,:/entrylist/file").split(QLatin1String(","));
-}
-
-void tst_QDirIterator::iterateResource()
-{
-    QFETCH(QString, dirName);
-    QFETCH(QDirIterator::IteratorFlags, flags);
-    QFETCH(QDir::Filters, filters);
-    QFETCH(QStringList, nameFilters);
-    QFETCH(QStringList, entries);
-
-    QDirIterator it(dirName, nameFilters, filters, flags);
-    QStringList list;
-    while (it.hasNext())
-        list << it.next();
-
-    list.sort();
-    QStringList sortedEntries = entries;
-    sortedEntries.sort();
-
-    if (sortedEntries != list) {
-        qDebug() << "EXPECTED:" << sortedEntries;
-        qDebug() << "ACTUAL:" << list;
-    }
-
-    QCOMPARE(list, sortedEntries);
-}
-
 void tst_QDirIterator::stopLinkLoop()
 {
     createLink(QDir::currentPath() + QLatin1String("/entrylist"), "entrylist/entrylist1.lnk");
@@ -515,4 +466,3 @@ void tst_QDirIterator::qtbug15421_hiddenDirs_hiddenFiles()
 QTEST_MAIN(tst_QDirIterator)
 
 #include "moc_tst_qdiriterator.cpp"
-#include "qrc_qdiriterator.cpp"
