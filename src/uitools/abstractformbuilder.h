@@ -143,13 +143,6 @@ protected:
 
     virtual void layoutInfo(DomLayout *layout, QObject *parent, int *margin, int *spacing);
 
-    virtual QIcon nameToIcon(const QString &filePath, const QString &qrcPath);
-    virtual QString iconToFilePath(const QIcon &pm) const;
-    virtual QString iconToQrcPath(const QIcon &pm) const;
-    virtual QPixmap nameToPixmap(const QString &filePath, const QString &qrcPath);
-    virtual QString pixmapToFilePath(const QPixmap &pm) const;
-    virtual QString pixmapToQrcPath(const QPixmap &pm) const;
-
     void loadListWidgetExtraInfo(DomWidget *ui_widget, QListWidget *listWidget, QWidget *parentWidget);
     void loadTreeWidgetExtraInfo(DomWidget *ui_widget, QTreeWidget *treeWidget, QWidget *parentWidget);
     void loadTableWidgetExtraInfo(DomWidget *ui_widget, QTableWidget *tableWidget, QWidget *parentWidget);
@@ -198,20 +191,8 @@ protected:
 //
 //  Icon/pixmap stuff
 //
-    // A Pair of icon path/qrc path.
-    typedef QPair<QString, QString> IconPaths;
-
-    IconPaths iconPaths(const QIcon &) const;
-    IconPaths pixmapPaths(const QPixmap &) const;
-    void setIconProperty(DomProperty &, const IconPaths &) const;
-    void setPixmapProperty(DomProperty &, const IconPaths &) const;
-    DomProperty* iconToDomProperty(const QIcon &) const;
-
-    static const DomResourcePixmap *domPixmap(const DomProperty* p);
-    QIcon domPropertyToIcon(const DomResourcePixmap *);
-    QIcon domPropertyToIcon(const DomProperty* p);
-    QPixmap domPropertyToPixmap(const DomResourcePixmap* p);
-    QPixmap domPropertyToPixmap(const DomProperty* p);
+    void setIconProperty(DomProperty &, const QString &) const;
+    void setPixmapProperty(DomProperty &, const QString &) const;
 
     QSet<QObject*> m_laidout;
     QHash<QString, QAction*> m_actions;

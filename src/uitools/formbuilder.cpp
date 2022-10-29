@@ -45,12 +45,6 @@ QT_BEGIN_NAMESPACE
 
     \snippet doc/src/snippets/code/tools_designer_src_lib_uilib_formbuilder.cpp 0
 
-    By including the user interface in the example's resources (\c
-    myForm.qrc), we ensure that it will be present when the example is
-    run:
-
-    \snippet doc/src/snippets/code/tools_designer_src_lib_uilib_formbuilder.cpp 1
-
     QFormBuilder extends the QAbstractFormBuilder base class with a
     number of functions that are used to support custom widget
     plugins:

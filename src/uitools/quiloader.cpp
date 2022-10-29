@@ -547,11 +547,6 @@ void QUiLoaderPrivate::setupWidgetMap() const
 
     \snippet doc/src/snippets/quiloader/mywidget.cpp 0
 
-    By including the user interface in the form's resources (\c myform.qrc), we
-    ensure that it will be present at run-time:
-
-    \quotefile doc/src/snippets/quiloader/mywidget.qrc
-
     The availableWidgets() function returns a QStringList with the class names
     of the widgets available in the specified plugin paths. To create these
     widgets, simply use the createWidget() function. For example:
