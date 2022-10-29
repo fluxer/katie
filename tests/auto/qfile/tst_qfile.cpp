@@ -22,9 +22,6 @@
 
 #include <QtTest/QtTest>
 #include <qplatformdefs.h>
-
-#include <QAbstractFileEngine>
-#include <QFSFileEngine>
 #include <QCoreApplication>
 #include <QDebug>
 #include <QDir>
@@ -1746,44 +1743,6 @@ void tst_QFile::longFileName()
     QVERIFY(QFile::exists(newName));
     QVERIFY(QFile::remove(newName));
 }
-
-class MyEngine : public QAbstractFileEngine
-{
-public:
-    MyEngine(int n) { number = n; }
-    virtual ~MyEngine() {}
-
-    void setFileName(const QString &) {}
-    bool open(QIODevice::OpenMode) { return false; }
-    bool close() { return false; }
-    bool flush() { return false; }
-    qint64 size() const { return 123 + number; }
-    qint64 at() const { return -1; }
-    bool seek(qint64) { return false; }
-    bool isSequential() const { return false; }
-    qint64 read(char *, qint64) { return -1; }
-    qint64 write(const char *, qint64) { return -1; }
-    bool remove() { return false; }
-    bool copy(const QString &) { return false; }
-    bool rename(const QString &) { return false; }
-    bool link(const QString &) { return false; }
-    bool mkdir(const QString &, bool) const { return false; }
-    bool rmdir(const QString &, bool) const { return false; }
-    bool setSize(qint64) { return false; }
-    QStringList entryList(QDir::Filters, const QStringList &) const { return QStringList(); }
-    bool caseSensitive() const { return false; }
-    bool isRelativePath() const { return false; }
-    FileFlags fileFlags(FileFlags) const { return 0; }
-    bool chmod(uint) { return false; }
-    QString fileName(FileName) const { return name; }
-    uint ownerId(FileOwner) const { return 0; }
-    QString owner(FileOwner) const { return QString(); }
-    QDateTime fileTime(FileTime) const { return QDateTime(); }
-
-private:
-    int number;
-    QString name;
-};
 
 void tst_QFile::getCharFF()
 {
