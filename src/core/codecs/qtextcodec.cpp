@@ -1690,7 +1690,7 @@ QTextCodec *QTextCodec::codecForHtml(const QByteArray &ba, QTextCodec *defaultCo
             }
         }
     }
-    return QTextCodec::codecForText(ba, defaultCodec);;
+    return QTextCodec::codecForText(ba, defaultCodec);
 }
 
 /*!

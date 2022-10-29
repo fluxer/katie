@@ -1782,7 +1782,7 @@ void tst_QTextDocument::codecForHtml()
     const QByteArray header("<META HTTP-EQUIV=\"Content-Type\" CONTENT=\"text/html;charset=utf-16\">");
     QTextCodec *c = QTextCodec::codecForHtml(header);
     QVERIFY(c);
-    QCOMPARE(c->name(), QByteArray("utf-16"));
+    QCOMPARE(c->name(), QByteArray("UTF-16"));
 }
 
 class TestSyntaxHighlighter : public QObject
