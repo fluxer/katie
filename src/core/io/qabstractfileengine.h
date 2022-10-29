@@ -98,9 +98,9 @@ public:
     bool link(const QString &newName);
     bool setSize(qint64 size);
     bool isRelativePath() const;
-    FileFlags fileFlags(FileFlags type=FileInfoAll) const;
+    FileFlags fileFlags(FileFlags type) const;
     bool setPermissions(uint perms);
-    QString fileName(FileName file=DefaultName) const;
+    QString fileName(FileName file) const;
     uint ownerId(FileOwner) const;
     QString owner(FileOwner) const;
     QDateTime fileTime(FileTime time) const;
