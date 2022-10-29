@@ -113,7 +113,7 @@ set(KATIE_TYPE SHARED CACHE STRING "Build type")
 
 # components and tools that will be build, changed depending on the requirements availability
 set(KATIE_COMPONENTS "Core Gui Declarative Network Svg Xml Script ScriptTools Test UiTools")
-set(KATIE_TOOLS "moc uic rcc qscript qtconfig")
+set(KATIE_TOOLS "moc uic qscript qtconfig")
 
 set(KATIE_HEADERS_PATH "${CMAKE_INSTALL_FULL_INCLUDEDIR}/katie" CACHE PATH "Headers installation path")
 set(KATIE_LIBRARIES_PATH "${CMAKE_INSTALL_FULL_LIBDIR}" CACHE PATH "Libraries installation path")
@@ -128,7 +128,7 @@ set(KATIE_MAN_PATH "${CMAKE_INSTALL_FULL_MANDIR}" CACHE PATH "Manual pages insta
 set(KATIE_APPLICATIONS_PATH "${CMAKE_INSTALL_FULL_DATADIR}/applications" CACHE PATH "Desktop applications register installation path")
 set(KATIE_PIXMAPS_PATH "${CMAKE_INSTALL_FULL_DATADIR}/pixmaps" CACHE PATH "Desktop applications icon installation path")
 set(KATIE_PKGCONFIG_PATH "${KATIE_LIBRARIES_PATH}/pkgconfig" CACHE PATH "pkg-config installation path")
-set(KATIE_TOOLS_SUFFIX "" CACHE STRING "Tools (moc, uic, rcc, etc.) suffix")
+set(KATIE_TOOLS_SUFFIX "" CACHE STRING "Tools (moc, uic, etc.) suffix")
 
 # bundled packages
 option(WITH_DEFLATE "Build with external libdeflate" ON)

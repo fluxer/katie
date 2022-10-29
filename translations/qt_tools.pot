@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-10-28 22:12+0300\n"
+"POT-Creation-Date: 2022-10-29 10:06+0300\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -64,46 +64,46 @@ msgid ""
 "will disable the Global Strut feature.</p>"
 msgstr ""
 
-#: src/tools/qtconfig/mainwindow.cpp:160
+#: src/tools/qtconfig/mainwindow.cpp:169
 msgid "Desktop Settings (Default)"
 msgstr ""
 
-#: src/tools/qtconfig/mainwindow.cpp:166
+#: src/tools/qtconfig/mainwindow.cpp:175
 msgid "Choose style and palette based on your desktop settings."
 msgstr ""
 
-#: src/tools/qtconfig/mainwindow.cpp:181
+#: src/tools/qtconfig/mainwindow.cpp:190
 msgid "Unknown"
 msgstr ""
 
-#: src/tools/qtconfig/mainwindow.cpp:315
+#: src/tools/qtconfig/mainwindow.cpp:324
 msgid "No changes to be saved."
 msgstr ""
 
-#: src/tools/qtconfig/mainwindow.cpp:321
+#: src/tools/qtconfig/mainwindow.cpp:330
 msgid "Saving changes..."
 msgstr ""
 
-#: src/tools/qtconfig/mainwindow.cpp:399
+#: src/tools/qtconfig/mainwindow.cpp:408
 msgid "Saved changes."
 msgstr ""
 
-#: src/tools/qtconfig/mainwindow.cpp:520
+#: src/tools/qtconfig/mainwindow.cpp:529
 msgid ""
 "<h3>%1</h3><br/>Version %2<br/><br/>Copyright (C) 2015 The Qt Company Ltd."
 "<br/><br/>Copyright (C) 2016 Ivailo Monev"
 msgstr ""
 
-#: src/tools/qtconfig/mainwindow.cpp:525 src/tools/qtconfig/mainwindow.cpp:526
-#: src/tools/qtconfig/mainwindow.cpp:533
+#: src/tools/qtconfig/mainwindow.cpp:534 src/tools/qtconfig/mainwindow.cpp:535
+#: src/tools/qtconfig/mainwindow.cpp:542
 msgid "Katie Configuration"
 msgstr ""
 
-#: src/tools/qtconfig/mainwindow.cpp:556
+#: src/tools/qtconfig/mainwindow.cpp:565
 msgid "Save Changes"
 msgstr ""
 
-#: src/tools/qtconfig/mainwindow.cpp:557
+#: src/tools/qtconfig/mainwindow.cpp:566
 msgid "Save changes to settings?"
 msgstr ""
 
@@ -120,36 +120,36 @@ msgstr ""
 msgid "Choose a color for the selected effect color role."
 msgstr ""
 
-#: src/tools/qdbusviewer/qdbusviewermain.cpp:51
+#: src/tools/qdbusviewer/qdbusviewermain.cpp:49
 msgctxt "QtDBusViewer"
 msgid "Katie D-Bus Viewer"
 msgstr ""
 
-#: src/tools/qdbusviewer/qdbusviewermain.cpp:58
+#: src/tools/qdbusviewer/qdbusviewermain.cpp:56
 msgid "Session Bus"
 msgstr ""
 
-#: src/tools/qdbusviewer/qdbusviewermain.cpp:59
+#: src/tools/qdbusviewer/qdbusviewermain.cpp:57
 msgid "System Bus"
 msgstr ""
 
-#: src/tools/qdbusviewer/qdbusviewermain.cpp:61
+#: src/tools/qdbusviewer/qdbusviewermain.cpp:59
 msgid "&File"
 msgstr ""
 
-#: src/tools/qdbusviewer/qdbusviewermain.cpp:62
+#: src/tools/qdbusviewer/qdbusviewermain.cpp:60
 msgid "&Quit"
 msgstr ""
 
-#: src/tools/qdbusviewer/qdbusviewermain.cpp:65
+#: src/tools/qdbusviewer/qdbusviewermain.cpp:63
 msgid "&Help"
 msgstr ""
 
-#: src/tools/qdbusviewer/qdbusviewermain.cpp:66
+#: src/tools/qdbusviewer/qdbusviewermain.cpp:64
 msgid "&About"
 msgstr ""
 
-#: src/tools/qdbusviewer/qdbusviewermain.cpp:70
+#: src/tools/qdbusviewer/qdbusviewermain.cpp:68
 msgid "About &Katie"
 msgstr ""
 

@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-10-28 22:12+0300\n"
+"POT-Creation-Date: 2022-10-29 10:06+0300\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -1109,7 +1109,7 @@ msgid "< &Back"
 msgstr ""
 
 #: src/gui/dialogs/qwizard.cpp:581
-#: src/scripttools/debugging/qscriptdebugger.cpp:1666
+#: src/scripttools/debugging/qscriptdebugger.cpp:1676
 msgid "Continue"
 msgstr ""
 
@@ -1141,86 +1141,86 @@ msgstr ""
 msgid "&Help"
 msgstr ""
 
-#: src/gui/dialogs/qprintpreviewdialog.cpp:226
+#: src/gui/dialogs/qprintpreviewdialog.cpp:227
 msgid "%1%"
 msgstr ""
 
-#: src/gui/dialogs/qprintpreviewdialog.cpp:295
+#: src/gui/dialogs/qprintpreviewdialog.cpp:296
 msgctxt "QPrintPreviewDialog"
 msgid "Print Preview"
 msgstr ""
 
-#: src/gui/dialogs/qprintpreviewdialog.cpp:326
+#: src/gui/dialogs/qprintpreviewdialog.cpp:334
 msgctxt "QPrintPreviewDialog"
 msgid "Next page"
 msgstr ""
 
-#: src/gui/dialogs/qprintpreviewdialog.cpp:327
+#: src/gui/dialogs/qprintpreviewdialog.cpp:335
 msgctxt "QPrintPreviewDialog"
 msgid "Previous page"
 msgstr ""
 
-#: src/gui/dialogs/qprintpreviewdialog.cpp:328
+#: src/gui/dialogs/qprintpreviewdialog.cpp:336
 msgctxt "QPrintPreviewDialog"
 msgid "First page"
 msgstr ""
 
-#: src/gui/dialogs/qprintpreviewdialog.cpp:329
+#: src/gui/dialogs/qprintpreviewdialog.cpp:337
 msgctxt "QPrintPreviewDialog"
 msgid "Last page"
 msgstr ""
 
-#: src/gui/dialogs/qprintpreviewdialog.cpp:338
+#: src/gui/dialogs/qprintpreviewdialog.cpp:346
 msgctxt "QPrintPreviewDialog"
 msgid "Fit width"
 msgstr ""
 
-#: src/gui/dialogs/qprintpreviewdialog.cpp:339
+#: src/gui/dialogs/qprintpreviewdialog.cpp:347
 msgctxt "QPrintPreviewDialog"
 msgid "Fit page"
 msgstr ""
 
-#: src/gui/dialogs/qprintpreviewdialog.cpp:350
+#: src/gui/dialogs/qprintpreviewdialog.cpp:358
 msgctxt "QPrintPreviewDialog"
 msgid "Zoom in"
 msgstr ""
 
-#: src/gui/dialogs/qprintpreviewdialog.cpp:351
+#: src/gui/dialogs/qprintpreviewdialog.cpp:359
 msgctxt "QPrintPreviewDialog"
 msgid "Zoom out"
 msgstr ""
 
-#: src/gui/dialogs/qprintpreviewdialog.cpp:357
+#: src/gui/dialogs/qprintpreviewdialog.cpp:365
 msgctxt "QPrintPreviewDialog"
 msgid "Portrait"
 msgstr ""
 
-#: src/gui/dialogs/qprintpreviewdialog.cpp:358
+#: src/gui/dialogs/qprintpreviewdialog.cpp:366
 msgctxt "QPrintPreviewDialog"
 msgid "Landscape"
 msgstr ""
 
-#: src/gui/dialogs/qprintpreviewdialog.cpp:368
+#: src/gui/dialogs/qprintpreviewdialog.cpp:384
 msgctxt "QPrintPreviewDialog"
 msgid "Show single page"
 msgstr ""
 
-#: src/gui/dialogs/qprintpreviewdialog.cpp:369
+#: src/gui/dialogs/qprintpreviewdialog.cpp:385
 msgctxt "QPrintPreviewDialog"
 msgid "Show facing pages"
 msgstr ""
 
-#: src/gui/dialogs/qprintpreviewdialog.cpp:370
+#: src/gui/dialogs/qprintpreviewdialog.cpp:386
 msgctxt "QPrintPreviewDialog"
 msgid "Show overview of all pages"
 msgstr ""
 
-#: src/gui/dialogs/qprintpreviewdialog.cpp:385
+#: src/gui/dialogs/qprintpreviewdialog.cpp:413
 msgctxt "QPrintPreviewDialog"
 msgid "Print"
 msgstr ""
 
-#: src/gui/dialogs/qprintpreviewdialog.cpp:386
+#: src/gui/dialogs/qprintpreviewdialog.cpp:414
 msgctxt "QPrintPreviewDialog"
 msgid "Page setup"
 msgstr ""
@@ -1233,19 +1233,19 @@ msgstr ""
 msgid "Computer"
 msgstr ""
 
-#: src/gui/dialogs/qmessagebox.cpp:102
+#: src/gui/dialogs/qmessagebox.cpp:103
 msgid "Show Details..."
 msgstr ""
 
-#: src/gui/dialogs/qmessagebox.cpp:102
+#: src/gui/dialogs/qmessagebox.cpp:103
 msgid "Hide Details..."
 msgstr ""
 
-#: src/gui/dialogs/qmessagebox.cpp:1448
+#: src/gui/dialogs/qmessagebox.cpp:1439
 msgid "<h3>About Katie</h3><p>This program uses Katie version %1.</p>"
 msgstr ""
 
-#: src/gui/dialogs/qmessagebox.cpp:1452
+#: src/gui/dialogs/qmessagebox.cpp:1443
 msgid ""
 "<p>Katie is a C++ toolkit derived from the Qt 4.8 framework.</p><p>Katie is "
 "licensed under the GNU LGPL version 2.1</p><p>Copyright (C) 2015 The Qt "
@@ -1254,7 +1254,7 @@ msgid ""
 "a> for more information.</p>"
 msgstr ""
 
-#: src/gui/dialogs/qmessagebox.cpp:1460
+#: src/gui/dialogs/qmessagebox.cpp:1451
 msgid "About Katie"
 msgstr ""
 
@@ -1268,7 +1268,7 @@ msgctxt "QPrintPreviewDialog"
 msgid "Page Setup"
 msgstr ""
 
-#: src/gui/dialogs/qdialog.cpp:487 src/gui/kernel/qwhatsthis.cpp:456
+#: src/gui/dialogs/qdialog.cpp:487 src/gui/kernel/qwhatsthis.cpp:437
 msgid "What's This?"
 msgstr ""
 
@@ -1496,25 +1496,25 @@ msgstr ""
 msgid "Points (pt)"
 msgstr ""
 
-#: src/gui/dialogs/qprintdialog_unix.cpp:342
-#: src/gui/dialogs/qprintdialog_unix.cpp:411
+#: src/gui/dialogs/qprintdialog_unix.cpp:346
+#: src/gui/dialogs/qprintdialog_unix.cpp:415
 msgid "&Options >>"
 msgstr ""
 
-#: src/gui/dialogs/qprintdialog_unix.cpp:347
+#: src/gui/dialogs/qprintdialog_unix.cpp:351
 msgid "&Print"
 msgstr ""
 
-#: src/gui/dialogs/qprintdialog_unix.cpp:415
+#: src/gui/dialogs/qprintdialog_unix.cpp:419
 msgid "&Options <<"
 msgstr ""
 
-#: src/gui/dialogs/qprintdialog_unix.cpp:941
+#: src/gui/dialogs/qprintdialog_unix.cpp:945
 msgctxt "QPPDOptionsModel"
 msgid "Name"
 msgstr ""
 
-#: src/gui/dialogs/qprintdialog_unix.cpp:943
+#: src/gui/dialogs/qprintdialog_unix.cpp:947
 msgctxt "QPPDOptionsModel"
 msgid "Value"
 msgstr ""
@@ -1763,7 +1763,7 @@ msgid "&Paste"
 msgstr ""
 
 #: src/gui/widgets/qlineedit.cpp:1742 src/gui/text/qtextcontrol.cpp:1868
-#: src/scripttools/debugging/qscriptbreakpointswidget.cpp:279
+#: src/scripttools/debugging/qscriptbreakpointswidget.cpp:292
 msgid "Delete"
 msgstr ""
 
@@ -1962,8 +1962,8 @@ msgid "Restore"
 msgstr ""
 
 #: src/gui/widgets/qmdisubwindow.cpp:309
-#: src/scripttools/debugging/qscriptbreakpointswidget.cpp:56
-#: src/scripttools/debugging/qscriptdebuggercodefinderwidget.cpp:116
+#: src/scripttools/debugging/qscriptbreakpointswidget.cpp:62
+#: src/scripttools/debugging/qscriptdebuggercodefinderwidget.cpp:122
 msgid "Close"
 msgstr ""
 
@@ -2020,7 +2020,7 @@ msgstr ""
 msgid "*"
 msgstr ""
 
-#: src/gui/kernel/qapplication.cpp:1615
+#: src/gui/kernel/qapplication.cpp:1601
 msgid "QT_LAYOUT_DIRECTION"
 msgstr ""
 
@@ -3755,24 +3755,24 @@ msgstr ""
 msgid "This platform does not support IPv6"
 msgstr ""
 
-#: src/scripttools/debugging/qscriptedit.cpp:384
-#: src/scripttools/debugging/qscriptdebugger.cpp:1767
+#: src/scripttools/debugging/qscriptedit.cpp:398
+#: src/scripttools/debugging/qscriptdebugger.cpp:1797
 msgid "Toggle Breakpoint"
 msgstr ""
 
-#: src/scripttools/debugging/qscriptedit.cpp:386
+#: src/scripttools/debugging/qscriptedit.cpp:400
 msgid "Disable Breakpoint"
 msgstr ""
 
-#: src/scripttools/debugging/qscriptedit.cpp:387
+#: src/scripttools/debugging/qscriptedit.cpp:401
 msgid "Enable Breakpoint"
 msgstr ""
 
-#: src/scripttools/debugging/qscriptedit.cpp:391
+#: src/scripttools/debugging/qscriptedit.cpp:405
 msgid "Breakpoint Condition:"
 msgstr ""
 
-#: src/scripttools/debugging/qscriptbreakpointswidget.cpp:273
+#: src/scripttools/debugging/qscriptbreakpointswidget.cpp:282
 msgid "New"
 msgstr ""
 
@@ -3831,108 +3831,108 @@ msgctxt "QScriptBreakpointsModel"
 msgid "Hit-count"
 msgstr ""
 
-#: src/scripttools/debugging/qscriptdebugger.cpp:859
-#: src/scripttools/debugging/qscriptdebugger.cpp:1870
+#: src/scripttools/debugging/qscriptdebugger.cpp:851
+#: src/scripttools/debugging/qscriptdebugger.cpp:1905
 msgid "Go to Line"
 msgstr ""
 
-#: src/scripttools/debugging/qscriptdebugger.cpp:860
+#: src/scripttools/debugging/qscriptdebugger.cpp:852
 msgid "Line:"
 msgstr ""
 
-#: src/scripttools/debugging/qscriptdebugger.cpp:1649
+#: src/scripttools/debugging/qscriptdebugger.cpp:1650
 msgid "Interrupt"
 msgstr ""
 
-#: src/scripttools/debugging/qscriptdebugger.cpp:1651
+#: src/scripttools/debugging/qscriptdebugger.cpp:1652
 msgid "Shift+F5"
 msgstr ""
 
-#: src/scripttools/debugging/qscriptdebugger.cpp:1668
+#: src/scripttools/debugging/qscriptdebugger.cpp:1678
 msgid "F5"
 msgstr ""
 
-#: src/scripttools/debugging/qscriptdebugger.cpp:1683
+#: src/scripttools/debugging/qscriptdebugger.cpp:1697
 msgid "Step Into"
 msgstr ""
 
-#: src/scripttools/debugging/qscriptdebugger.cpp:1685
+#: src/scripttools/debugging/qscriptdebugger.cpp:1699
 msgid "F11"
 msgstr ""
 
-#: src/scripttools/debugging/qscriptdebugger.cpp:1700
+#: src/scripttools/debugging/qscriptdebugger.cpp:1718
 msgid "Step Over"
 msgstr ""
 
-#: src/scripttools/debugging/qscriptdebugger.cpp:1702
+#: src/scripttools/debugging/qscriptdebugger.cpp:1720
 msgid "F10"
 msgstr ""
 
-#: src/scripttools/debugging/qscriptdebugger.cpp:1717
+#: src/scripttools/debugging/qscriptdebugger.cpp:1739
 msgid "Step Out"
 msgstr ""
 
-#: src/scripttools/debugging/qscriptdebugger.cpp:1719
+#: src/scripttools/debugging/qscriptdebugger.cpp:1741
 msgid "Shift+F11"
 msgstr ""
 
-#: src/scripttools/debugging/qscriptdebugger.cpp:1734
+#: src/scripttools/debugging/qscriptdebugger.cpp:1760
 msgid "Run to Cursor"
 msgstr ""
 
-#: src/scripttools/debugging/qscriptdebugger.cpp:1736
+#: src/scripttools/debugging/qscriptdebugger.cpp:1762
 msgid "Ctrl+F10"
 msgstr ""
 
-#: src/scripttools/debugging/qscriptdebugger.cpp:1752
+#: src/scripttools/debugging/qscriptdebugger.cpp:1782
 msgid "Run to New Script"
 msgstr ""
 
-#: src/scripttools/debugging/qscriptdebugger.cpp:1768
+#: src/scripttools/debugging/qscriptdebugger.cpp:1798
 msgid "F9"
 msgstr ""
 
-#: src/scripttools/debugging/qscriptdebugger.cpp:1782
+#: src/scripttools/debugging/qscriptdebugger.cpp:1812
 msgid "Clear Debug Output"
 msgstr ""
 
-#: src/scripttools/debugging/qscriptdebugger.cpp:1795
+#: src/scripttools/debugging/qscriptdebugger.cpp:1825
 msgid "Clear Error Log"
 msgstr ""
 
-#: src/scripttools/debugging/qscriptdebugger.cpp:1808
+#: src/scripttools/debugging/qscriptdebugger.cpp:1838
 msgid "Clear Console"
 msgstr ""
 
-#: src/scripttools/debugging/qscriptdebugger.cpp:1822
+#: src/scripttools/debugging/qscriptdebugger.cpp:1857
 msgid "&Find in Script..."
 msgstr ""
 
-#: src/scripttools/debugging/qscriptdebugger.cpp:1823
+#: src/scripttools/debugging/qscriptdebugger.cpp:1858
 msgid "Ctrl+F"
 msgstr ""
 
-#: src/scripttools/debugging/qscriptdebugger.cpp:1840
+#: src/scripttools/debugging/qscriptdebugger.cpp:1875
 msgid "Find &Next"
 msgstr ""
 
-#: src/scripttools/debugging/qscriptdebugger.cpp:1842
+#: src/scripttools/debugging/qscriptdebugger.cpp:1877
 msgid "F3"
 msgstr ""
 
-#: src/scripttools/debugging/qscriptdebugger.cpp:1855
+#: src/scripttools/debugging/qscriptdebugger.cpp:1890
 msgid "Find &Previous"
 msgstr ""
 
-#: src/scripttools/debugging/qscriptdebugger.cpp:1857
+#: src/scripttools/debugging/qscriptdebugger.cpp:1892
 msgid "Shift+F3"
 msgstr ""
 
-#: src/scripttools/debugging/qscriptdebugger.cpp:1871
+#: src/scripttools/debugging/qscriptdebugger.cpp:1906
 msgid "Ctrl+G"
 msgstr ""
 
-#: src/scripttools/debugging/qscriptdebugger.cpp:1882
+#: src/scripttools/debugging/qscriptdebugger.cpp:1917
 msgid "Debug"
 msgstr ""
 
@@ -3976,25 +3976,24 @@ msgstr ""
 msgid "Katie Script Debugger"
 msgstr ""
 
-#: src/scripttools/debugging/qscriptdebuggercodefinderwidget.cpp:129
+#: src/scripttools/debugging/qscriptdebuggercodefinderwidget.cpp:135
 msgid "Previous"
 msgstr ""
 
-#: src/scripttools/debugging/qscriptdebuggercodefinderwidget.cpp:136
+#: src/scripttools/debugging/qscriptdebuggercodefinderwidget.cpp:146
 msgid "Next"
 msgstr ""
 
-#: src/scripttools/debugging/qscriptdebuggercodefinderwidget.cpp:141
+#: src/scripttools/debugging/qscriptdebuggercodefinderwidget.cpp:155
 msgid "Case Sensitive"
 msgstr ""
 
-#: src/scripttools/debugging/qscriptdebuggercodefinderwidget.cpp:144
+#: src/scripttools/debugging/qscriptdebuggercodefinderwidget.cpp:158
 msgid "Whole words"
 msgstr ""
 
-#: src/scripttools/debugging/qscriptdebuggercodefinderwidget.cpp:153
-msgid ""
-"<img src=\":/qt/scripttools/debugging/images/wrap.png\">&nbsp;Search wrapped"
+#: src/scripttools/debugging/qscriptdebuggercodefinderwidget.cpp:167
+msgid "Search wrapped"
 msgstr ""
 
 #: src/uitools/formbuilderextra.cpp:321
@@ -4027,24 +4026,24 @@ msgctxt "QFormBuilder"
 msgid "The property %1 could not be written. The type %2 is not supported yet."
 msgstr ""
 
-#: src/uitools/formbuilder.cpp:146
+#: src/uitools/formbuilder.cpp:140
 msgctxt "QFormBuilder"
 msgid "An empty class name was passed on to %1 (object name: '%2')."
 msgstr ""
 
-#: src/uitools/formbuilder.cpp:200
+#: src/uitools/formbuilder.cpp:194
 msgctxt "QFormBuilder"
 msgid ""
 "QFormBuilder was unable to create a custom widget of the class '%1'; "
 "defaulting to base class '%2'."
 msgstr ""
 
-#: src/uitools/formbuilder.cpp:206
+#: src/uitools/formbuilder.cpp:200
 msgctxt "QFormBuilder"
 msgid "QFormBuilder was unable to create a widget of the class '%1'."
 msgstr ""
 
-#: src/uitools/formbuilder.cpp:247
+#: src/uitools/formbuilder.cpp:241
 msgctxt "QFormBuilder"
 msgid "The layout type `%1' is not supported."
 msgstr ""
@@ -4088,17 +4087,17 @@ msgctxt "QAbstractFormBuilder"
 msgid "Empty widget item in %1 '%2'."
 msgstr ""
 
-#: src/uitools/abstractformbuilder.cpp:1565
+#: src/uitools/abstractformbuilder.cpp:1566
 msgctxt "QAbstractFormBuilder"
 msgid "Flags property are not supported yet."
 msgstr ""
 
-#: src/uitools/abstractformbuilder.cpp:1646
+#: src/uitools/abstractformbuilder.cpp:1647
 msgctxt "QAbstractFormBuilder"
 msgid "While applying tab stops: The widget '%1' could not be found."
 msgstr ""
 
-#: src/uitools/abstractformbuilder.cpp:2383
+#: src/uitools/abstractformbuilder.cpp:2384
 msgctxt "QAbstractFormBuilder"
 msgid "Invalid QButtonGroup reference '%1' referenced by '%2'."
 msgstr ""

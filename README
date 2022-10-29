@@ -15,7 +15,7 @@ There are several things you should be aware before considering Katie:
   - Jansson, Freetype, ICU, X11 and libpng are required for building
   - D-Bus and CUPS must be linked to during build
   - QtUiTools is build as shared library by default
-  - moc, uic, rcc, etc. are linked to components
+  - moc, uic, etc. are linked to components
   - updated bundled Harfbuzz from upstream (not Harfbuzz-NG)
   - versioned and extended classes have been merged into the base class,
     e.g. QIconEngineV2 into QIconEngine and QKeyEventEx into QKeyEvent

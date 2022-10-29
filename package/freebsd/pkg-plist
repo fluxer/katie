@@ -117,7 +117,6 @@ include/katie/QtCore/QQueue
 include/katie/QtCore/QRect
 include/katie/QtCore/QRectF
 include/katie/QtCore/QRegExp
-include/katie/QtCore/QResource
 include/katie/QtCore/QReturnArgument
 include/katie/QtCore/QRunnable
 include/katie/QtCore/QScopedPointer
@@ -245,7 +244,6 @@ include/katie/QtCore/qprocess.h
 include/katie/QtCore/qqueue.h
 include/katie/QtCore/qrect.h
 include/katie/QtCore/qregexp.h
-include/katie/QtCore/qresource.h
 include/katie/QtCore/qrunnable.h
 include/katie/QtCore/qscopedpointer.h
 include/katie/QtCore/qscopedvaluerollback.h

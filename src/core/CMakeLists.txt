@@ -78,7 +78,6 @@ set(CORE_PUBLIC_HEADERS
     QFile
     QCache
     QAbstractEventDispatcher
-    QResource
     QRunnable
     QTimeLine
     QTextCodec
@@ -125,9 +124,6 @@ set(CORE_HEADERS
     ${CMAKE_CURRENT_SOURCE_DIR}/io/qprocess_p.h
     ${CMAKE_CURRENT_SOURCE_DIR}/io/qtextstream.h
     ${CMAKE_CURRENT_SOURCE_DIR}/io/qtemporaryfile.h
-    ${CMAKE_CURRENT_SOURCE_DIR}/io/qresource.h
-    ${CMAKE_CURRENT_SOURCE_DIR}/io/qresource_p.h
-    ${CMAKE_CURRENT_SOURCE_DIR}/io/qresource_iterator_p.h
     ${CMAKE_CURRENT_SOURCE_DIR}/io/qurl.h
     ${CMAKE_CURRENT_SOURCE_DIR}/io/qtldurl_p.h
     ${CMAKE_CURRENT_SOURCE_DIR}/io/qsettings.h
@@ -253,8 +249,6 @@ set(CORE_SOURCES
     ${CMAKE_CURRENT_SOURCE_DIR}/io/qprocess.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/io/qtextstream.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/io/qtemporaryfile.cpp
-    ${CMAKE_CURRENT_SOURCE_DIR}/io/qresource.cpp
-    ${CMAKE_CURRENT_SOURCE_DIR}/io/qresource_iterator.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/io/qurl.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/io/qsettings.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/io/qstandardpaths.cpp

@@ -138,13 +138,6 @@ typedef unsigned long long quint64; /* 64 bit unsigned */
 typedef qint64 qlonglong;
 typedef quint64 qulonglong;
 
-#define Q_INIT_RESOURCE(name) \
-    extern int qInitResources_ ## name (); \
-    qInitResources_ ## name ();
-#define Q_CLEANUP_RESOURCE(name) \
-    extern int qCleanupResources_ ## name (); \
-    qCleanupResources_ ## name ();
-
 /*
    Useful type definitions for Qt
 */

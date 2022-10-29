@@ -382,7 +382,6 @@ static const struct ClassTblData {
     { QLatin1String("QRegExpValidator"), QLatin1String("QtGui/qvalidator.h") },
     { QLatin1String("QRegion"), QLatin1String("QtGui/qregion.h") },
     { QLatin1String("QResizeEvent"), QLatin1String("QtGui/qevent.h") },
-    { QLatin1String("QResource"), QLatin1String("QtCore/qresource.h") },
     { QLatin1String("QRubberBand"), QLatin1String("QtGui/qrubberband.h") },
     { QLatin1String("QScopedValueRollback"), QLatin1String("QtCore/qscopedvaluerollback.h") },
     { QLatin1String("QScriptClass"), QLatin1String("QtScript/qscriptclass.h") },

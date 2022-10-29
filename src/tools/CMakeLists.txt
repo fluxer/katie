@@ -7,7 +7,6 @@ add_definitions(
 add_subdirectory(moc)
 
 # essential tools
-add_subdirectory(rcc)
 add_subdirectory(uic)
 
 # not so much

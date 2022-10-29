@@ -452,7 +452,6 @@ classlist = [
     "QRegExpValidator",
     "QRegion",
     "QResizeEvent",
-    "QResource",
     "QReturnArgument",
     "QRgb",
     "QRubberBand",

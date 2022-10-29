@@ -23,15 +23,11 @@
 #include "qabstractfileengine_p.h"
 #include "qdatetime.h"
 #include "qvariant.h"
+#include "qfilesystementry_p.h"
+#include "qfilesystemengine_p.h"
 // built-in handlers
 #include "qfsfileengine.h"
 #include "qdiriterator.h"
-#ifndef QT_BOOTSTRAPPED
-#  include "qresource_p.h"
-#endif
-
-#include "qfilesystementry_p.h"
-#include "qfilesystemengine_p.h"
 
 QT_BEGIN_NAMESPACE
 
@@ -48,11 +44,6 @@ QT_BEGIN_NAMESPACE
 */
 QAbstractFileEngine *QAbstractFileEngine::create(const QString &fileName)
 {
-#ifndef QT_BOOTSTRAPPED
-    // check if a resource file is being handled
-    if(fileName.startsWith(":/"))
-        return new QResourceFileEngine(fileName);
-#endif
 #ifndef QT_NO_FSFILEENGINE
     // fall back to regular file engine
     return new QFSFileEngine(fileName);
