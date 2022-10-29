@@ -39,7 +39,6 @@ struct Option
 
     QString inputFile;
     QString outputFile;
-    QString qrcOutputFile;
     QString indent;
     QString prefix;
     QString postfix;
