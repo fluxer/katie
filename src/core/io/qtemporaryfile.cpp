@@ -444,56 +444,6 @@ void QTemporaryFile::setFileTemplate(const QString &name)
 }
 
 /*!
-  \fn QTemporaryFile *QTemporaryFile::createLocalFile(const QString &fileName)
-  \overload
-
-  Works on the given \a fileName rather than an existing QFile
-  object.
-*/
-
-
-/*!
-  If \a file is not on a local disk, a temporary file is created
-  on a local disk, \a file is copied into the temporary local file,
-  and a pointer to the temporary local file is returned. If \a file
-  is already on a local disk, a copy is not created and 0 is returned.
-*/
-QTemporaryFile *QTemporaryFile::createLocalFile(QFile &file)
-{
-    if (QAbstractFileEngine *engine = file.fileEngine()) {
-        if(engine->fileFlags(QAbstractFileEngine::FlagsMask) & QAbstractFileEngine::LocalDiskFlag)
-            return nullptr; //local already
-        //cache
-        bool wasOpen = file.isOpen();
-        qint64 old_off = 0;
-        if(wasOpen)
-            old_off = file.pos();
-        else
-            file.open(QIODevice::ReadOnly);
-        //dump data
-        QTemporaryFile *ret = new QTemporaryFile();
-        ret->open();
-        file.seek(0);
-        QSTACKARRAY(char, readbuff, QT_BUFFSIZE);
-        while(true) {
-            qint64 len = file.read(readbuff, sizeof(readbuff));
-            if(len < 1)
-                break;
-            ret->write(readbuff, len);
-        }
-        ret->seek(0);
-        //restore
-        if(wasOpen)
-            file.seek(old_off);
-        else
-            file.close();
-        //done
-        return ret;
-    }
-    return 0;
-}
-
-/*!
    \internal
 */
 

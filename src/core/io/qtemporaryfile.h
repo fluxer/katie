@@ -62,10 +62,6 @@ public:
     QString fileTemplate() const;
     void setFileTemplate(const QString &name);
 
-    inline static QTemporaryFile *createLocalFile(const QString &fileName)
-        { QFile file(fileName); return createLocalFile(file); }
-    static QTemporaryFile *createLocalFile(QFile &file);
-
     virtual QAbstractFileEngine *fileEngine() const;
 
 protected:
