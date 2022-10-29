@@ -255,7 +255,7 @@ function(KATIE_SETUP_TARGET FORTARGET)
                 set_property(SOURCE "${fileabs}" APPEND PROPERTY OBJECT_DEPENDS "${rscout}")
             endif()
         else()
-            message(SEND_ERROR "Unkown source type in sources list: ${fileabs}")
+            message(SEND_ERROR "Unknown source type in sources list: ${fileabs}")
         endif()
     endforeach()
 
