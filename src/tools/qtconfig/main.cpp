@@ -27,8 +27,6 @@ QT_USE_NAMESPACE
 
 int main(int argc, char **argv)
 {
-    Q_INIT_RESOURCE(qtconfig);
-
     QApplication app(argc, argv);
 
 #ifndef QT_NO_TRANSLATION
@@ -45,5 +43,3 @@ int main(int argc, char **argv)
     mw.show();
     return app.exec();
 }
-
-#include "qrc_qtconfig.cpp"

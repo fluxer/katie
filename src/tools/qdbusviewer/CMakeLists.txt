@@ -23,7 +23,6 @@ set(QDBUSVIEWER_SOURCES
     ${CMAKE_CURRENT_SOURCE_DIR}/qdbusmodel.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/propertydialog.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/qdbusviewermain.cpp
-    ${CMAKE_CURRENT_SOURCE_DIR}/qdbusviewer.qrc
 )
 
 configure_file(

@@ -122,6 +122,15 @@ static void setStyleHelper(QWidget *w, QStyle *s)
     w->setStyle(s);
 }
 
+static QString qtconfigPixmap()
+{
+    QString result = QString::fromLatin1(KATIE_PIXMAPS_PATH);
+    result.append("/qtconfig");
+    result.append(QLatin1String(KATIE_TOOLS_SUFFIX));
+    result.append(QLatin1String(".png"));
+    return result;
+}
+
 MainWindow::MainWindow()
     : ui(new Ui::MainWindow),
       editPalette(palette()),
@@ -158,7 +167,7 @@ MainWindow::MainWindow()
 
     modified = true;
     desktopThemeName = tr("Desktop Settings (Default)");
-    setWindowIcon(QPixmap(QLatin1String(":/trolltech/qtconfig/qtconfig.png")));
+    setWindowIcon(QPixmap(qtconfigPixmap()));
     QStringList gstyles = QStyleFactory::keys();
     gstyles.sort();
     ui->guiStyleCombo->addItem(desktopThemeName);

@@ -30,6 +30,15 @@
 
 QT_BEGIN_NAMESPACE
 
+static QString QDBusViewerPixmap()
+{
+    QString result = QString::fromLatin1(KATIE_PIXMAPS_PATH);
+    result.append("/qdbusviewer");
+    result.append(QLatin1String(KATIE_TOOLS_SUFFIX));
+    result.append(QLatin1String(".png"));
+    return result;
+}
+
 struct BusSignature
 {
     QString mService, mPath, mInterface, mName;

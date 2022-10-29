@@ -1,5 +1,6 @@
 add_definitions(
     -DKATIE_TOOLS_SUFFIX="${KATIE_TOOLS_SUFFIX}"
+    -DKATIE_PIXMAPS_PATH="${KATIE_PIXMAPS_PATH}"
 )
 
 # semi-bootstraped
