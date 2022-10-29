@@ -182,10 +182,10 @@ private slots:
                 ++count;
             }
 
-            QCOMPARE(count, 11963);
+            QCOMPARE(count, 11960);
         }
 
-        QCOMPARE(count, 11963);
+        QCOMPARE(count, 11960);
     }
 
     void thousandFiles_data() const
