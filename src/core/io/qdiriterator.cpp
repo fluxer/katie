@@ -153,8 +153,6 @@ QDirIteratorPrivate::QDirIteratorPrivate(const QFileSystemEntry &entry, const QS
 */
 void QDirIteratorPrivate::pushDirectory(const QFileInfo &fileInfo)
 {
-    QString path = fileInfo.filePath();
-
     if (iteratorFlags & QDirIterator::FollowSymlinks)
         visitedLinks << fileInfo.canonicalFilePath();
 
