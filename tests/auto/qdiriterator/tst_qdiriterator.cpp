@@ -27,7 +27,6 @@
 #include <qdiriterator.h>
 #include <qfileinfo.h>
 #include <qstringlist.h>
-#include <qfsfileengine.h>
 
 // #define Q_NO_SYMLINKS
 // #define Q_NO_SYMLINKS_TO_DIRS
@@ -338,17 +337,6 @@ void tst_QDirIterator::stopLinkLoop()
 
     // The goal of this test is only to ensure that the test above don't malfunction
 }
-
-class EngineWithNoIterator : public QFSFileEngine
-{
-public:
-    EngineWithNoIterator(const QString &fileName)
-        : QFSFileEngine(fileName)
-    { }
-
-    QAbstractFileEngineIterator *beginEntryList(QDir::Filters, const QStringList &)
-    { return 0; }
-};
 
 void tst_QDirIterator::absoluteFilePathsFromRelativeIteratorPath()
 {
