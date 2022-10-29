@@ -25,7 +25,7 @@
 
 #include "qplatformdefs.h"
 #include "qfile_p.h"
-#include "qfsfileengine_p.h"
+#include "qabstractfileengine_p.h"
 #include "qfilesystemengine_p.h"
 #include "qcore_unix_p.h"
 #include "qcorecommon_p.h"
@@ -35,18 +35,18 @@
 QT_BEGIN_NAMESPACE
 
 //************* QTemporaryFileEngine
-class QTemporaryFileEngine : public QFSFileEngine
+class QTemporaryFileEngine : public QAbstractFileEngine
 {
-    Q_DECLARE_PRIVATE(QFSFileEngine)
+    Q_DECLARE_PRIVATE(QAbstractFileEngine)
 public:
     QTemporaryFileEngine(const QString &file, bool fileIsTemplate = true)
-        : QFSFileEngine(), filePathIsTemplate(fileIsTemplate)
+        : QAbstractFileEngine(), filePathIsTemplate(fileIsTemplate)
     {
-        Q_D(QFSFileEngine);
+        Q_D(QAbstractFileEngine);
         d->fileEntry = QFileSystemEntry(file);
 
         if (!filePathIsTemplate)
-            QFSFileEngine::setFileName(file);
+            QAbstractFileEngine::setFileName(file);
     }
 
     ~QTemporaryFileEngine();
@@ -65,12 +65,12 @@ public:
 
 QTemporaryFileEngine::~QTemporaryFileEngine()
 {
-    QFSFileEngine::close();
+    QAbstractFileEngine::close();
 }
 
 bool QTemporaryFileEngine::isReallyOpen()
 {
-    Q_D(QFSFileEngine);
+    Q_D(QAbstractFileEngine);
     return (d->fd != -1);
 
 }
@@ -78,26 +78,26 @@ bool QTemporaryFileEngine::isReallyOpen()
 void QTemporaryFileEngine::setFileName(const QString &file)
 {
     // Really close the file, so we don't leak
-    QFSFileEngine::close();
-    QFSFileEngine::setFileName(file);
+    QAbstractFileEngine::close();
+    QAbstractFileEngine::setFileName(file);
 }
 
 void QTemporaryFileEngine::setFileTemplate(const QString &fileTemplate)
 {
-    Q_D(QFSFileEngine);
+    Q_D(QAbstractFileEngine);
     if (filePathIsTemplate)
         d->fileEntry = QFileSystemEntry(fileTemplate);
 }
 
 bool QTemporaryFileEngine::open(QIODevice::OpenMode openMode)
 {
-    Q_D(QFSFileEngine);
+    Q_D(QAbstractFileEngine);
     Q_ASSERT(!isReallyOpen());
 
     openMode |= QIODevice::ReadWrite;
 
     if (!filePathIsTemplate)
-        return QFSFileEngine::open(openMode);
+        return QAbstractFileEngine::open(openMode);
 
     QString qfilename = d->fileEntry.filePath();
 
@@ -166,11 +166,11 @@ bool QTemporaryFileEngine::open(QIODevice::OpenMode openMode)
 
 bool QTemporaryFileEngine::remove()
 {
-    Q_D(QFSFileEngine);
+    Q_D(QAbstractFileEngine);
     // Since the QTemporaryFileEngine::close() does not really close the file,
-    // we must explicitly call QFSFileEngine::close() before we remove it.
-    QFSFileEngine::close();
-    if (QFSFileEngine::remove()) {
+    // we must explicitly call QAbstractFileEngine::close() before we remove it.
+    QAbstractFileEngine::close();
+    if (QAbstractFileEngine::remove()) {
         d->fileEntry.clear();
         return true;
     }
@@ -179,8 +179,8 @@ bool QTemporaryFileEngine::remove()
 
 bool QTemporaryFileEngine::rename(const QString &newName)
 {
-    QFSFileEngine::close();
-    return QFSFileEngine::rename(newName);
+    QAbstractFileEngine::close();
+    return QAbstractFileEngine::rename(newName);
 }
 
 bool QTemporaryFileEngine::close()

@@ -23,13 +23,123 @@
 #include "qabstractfileengine_p.h"
 #include "qdatetime.h"
 #include "qvariant.h"
+#include "qdebug.h"
 #include "qfilesystementry_p.h"
 #include "qfilesystemengine_p.h"
+#include "qfileinfo_p.h"
+#include "qcore_unix_p.h"
 // built-in handlers
-#include "qfsfileengine.h"
 #include "qdiriterator.h"
 
+#include <sys/mman.h>
+#include <stdlib.h>
+#include <limits.h>
+#include <errno.h>
+
 QT_BEGIN_NAMESPACE
+
+/*!
+    \internal
+*/
+void QAbstractFileEnginePrivate::init()
+{
+    metaData.clear();
+    openMode = QIODevice::NotOpen;
+    fd = -1;
+    closeFileHandle = false;
+}
+
+bool QAbstractFileEnginePrivate::doStat(QFileSystemMetaData::MetaDataFlags flags) const
+{
+    if (!metaData.hasFlags(flags)) {
+        if (!fileEntry.isEmpty())
+            QFileSystemEngine::fillMetaData(fileEntry, metaData, metaData.missingFlags(flags));
+
+        if (metaData.missingFlags(flags) && fd != -1)
+            QFileSystemEngine::fillMetaData(fd, metaData);
+    }
+
+    return metaData.exists();
+}
+
+uchar *QAbstractFileEnginePrivate::map(qint64 offset, qint64 size)
+{
+    Q_Q(QAbstractFileEngine);
+    if (openMode == QIODevice::NotOpen) {
+        q->setError(QFile::PermissionsError, qt_error_string(EACCES));
+        return 0;
+    }
+
+    if (offset < 0 || offset != qint64(QT_OFF_T(offset))
+            || size < 0 || quint64(size) > quint64(size_t(-1))) {
+        q->setError(QFile::UnspecifiedError, qt_error_string(EINVAL));
+        return 0;
+    }
+
+    // If we know the mapping will extend beyond EOF, fail early to avoid
+    // undefined behavior. Otherwise, let mmap have its say.
+    if (doStat(QFileSystemMetaData::SizeAttribute)
+            && (QT_OFF_T(size) > metaData.size() - QT_OFF_T(offset)))
+        qWarning("QAbstractFileEngine::map: Mapping a file beyond its size is not portable");
+
+    int access = 0;
+    if (openMode & QIODevice::ReadOnly) access |= PROT_READ;
+    if (openMode & QIODevice::WriteOnly) access |= PROT_WRITE;
+
+    static const int pageSize = ::getpagesize();
+    const int extra = offset % pageSize;
+
+    if (quint64(size + extra) > quint64((size_t)-1)) {
+        q->setError(QFile::UnspecifiedError, qt_error_string(EINVAL));
+        return 0;
+    }
+
+    size_t realSize = (size_t)size + extra;
+    QT_OFF_T realOffset = QT_OFF_T(offset);
+    realOffset &= ~(QT_OFF_T(pageSize - 1));
+
+    void *mapAddress = QT_MMAP(nullptr, realSize,
+                   access, MAP_SHARED, fd, realOffset);
+    if (mapAddress != MAP_FAILED) {
+        uchar *address = extra + static_cast<uchar*>(mapAddress);
+        maps[address] = QPair<int,size_t>(extra, realSize);
+        return address;
+    }
+
+    switch(errno) {
+    case EBADF:
+        q->setError(QFile::PermissionsError, qt_error_string(EACCES));
+        break;
+    case ENFILE:
+    case ENOMEM:
+        q->setError(QFile::ResourceError, qt_error_string(errno));
+        break;
+    case EINVAL:
+        // size are out of bounds
+    default:
+        q->setError(QFile::UnspecifiedError, qt_error_string(errno));
+        break;
+    }
+    return 0;
+}
+
+bool QAbstractFileEnginePrivate::unmap(uchar *ptr)
+{
+    Q_Q(QAbstractFileEngine);
+    if (!maps.contains(ptr)) {
+        q->setError(QFile::PermissionsError, qt_error_string(EACCES));
+        return false;
+    }
+
+    uchar *start = ptr - maps[ptr].first;
+    size_t len = maps[ptr].second;
+    if (::munmap(start, len) == -1) {
+        q->setError(QFile::UnspecifiedError, qt_error_string(errno));
+        return false;
+    }
+    maps.remove(ptr);
+    return true;
+}
 
 /*!
     Creates and returns a QAbstractFileEngine suitable for processing \a
@@ -46,7 +156,9 @@ QAbstractFileEngine *QAbstractFileEngine::create(const QString &fileName)
 {
 #ifndef QT_NO_FSFILEENGINE
     // fall back to regular file engine
-    return new QFSFileEngine(fileName);
+    QAbstractFileEngine *engine = new QAbstractFileEngine();
+    engine->d_ptr->fileEntry = QFileSystemEntry(fileName);
+    return engine;
 #else
     return nullptr;
 #endif
@@ -172,6 +284,16 @@ QAbstractFileEngine::QAbstractFileEngine(QAbstractFileEnginePrivate &dd) : d_ptr
  */
 QAbstractFileEngine::~QAbstractFileEngine()
 {
+    Q_D(QAbstractFileEngine);
+    if (d->closeFileHandle) {
+        if (d->fd != -1) {
+            qt_safe_close(d->fd);
+        }
+    }
+    QList<uchar*> keys = d->maps.keys();
+    for (int i = 0; i < keys.count(); ++i)
+        unmap(keys.at(i));
+
     delete d_ptr;
 }
 
@@ -186,8 +308,86 @@ QAbstractFileEngine::~QAbstractFileEngine()
 */
 bool QAbstractFileEngine::open(QIODevice::OpenMode openMode)
 {
-    Q_UNUSED(openMode);
-    return false;
+    Q_D(QAbstractFileEngine);
+    if (Q_UNLIKELY(d->fileEntry.isEmpty())) {
+        qWarning("QAbstractFileEngine::open: No file name specified");
+        setError(QFile::OpenError, QLatin1String("No file name specified"));
+        return false;
+    }
+
+    // Append implies WriteOnly.
+    if (openMode & QFile::Append)
+        openMode |= QFile::WriteOnly;
+
+    // WriteOnly implies Truncate if neither ReadOnly nor Append are sent.
+    if ((openMode & QFile::WriteOnly) && !(openMode & (QFile::ReadOnly | QFile::Append)))
+        openMode |= QFile::Truncate;
+
+    d->openMode = openMode;
+    d->metaData.clear();
+    d->fd = -1;
+
+    int flags = QT_OPEN_RDONLY;
+
+    if ((d->openMode & QFile::ReadWrite) == QFile::ReadWrite) {
+        flags = QT_OPEN_RDWR | QT_OPEN_CREAT;
+    } else if (d->openMode & QFile::WriteOnly) {
+        flags = QT_OPEN_WRONLY | QT_OPEN_CREAT;
+    }
+
+    if (d->openMode & QFile::Append) {
+        flags |= QT_OPEN_APPEND;
+    } else if (d->openMode & QFile::WriteOnly) {
+        if ((d->openMode & QFile::Truncate) || !(d->openMode & QFile::ReadOnly))
+            flags |= QT_OPEN_TRUNC;
+    }
+
+    if (d->openMode & QFile::Unbuffered) {
+#ifdef O_DSYNC
+        flags |= O_DSYNC;
+#else
+        flags |= O_SYNC;
+#endif
+    }
+
+    // Try to open the file.
+    const QByteArray native = d->fileEntry.nativeFilePath();
+    d->fd = qt_safe_open(native.constData(), flags, 0666);
+
+    // On failure, return and report the error.
+    if (d->fd == -1) {
+        setError(errno == EMFILE ? QFile::ResourceError : QFile::OpenError,
+                 qt_error_string(errno));
+        d->openMode = QIODevice::NotOpen;
+        return false;
+    }
+
+    // Refuse to open directories, EISDIR is not a thing (by standards) for
+    // non-write modes.
+    QT_STATBUF statbuf;
+    if (QT_FSTAT(d->fd, &statbuf) == 0 && S_ISDIR(statbuf.st_mode)) {
+        setError(QFile::OpenError, QLatin1String("file to open is a directory"));
+        qt_safe_close(d->fd);
+        d->openMode = QIODevice::NotOpen;
+        d->fd = -1;
+        return false;
+    }
+
+    // Seek to the end when in Append mode.
+    if (d->openMode & QFile::Append) {
+        if (QT_LSEEK(d->fd, 0, SEEK_END) == -1) {
+            setError(errno == EMFILE ? QFile::ResourceError : QFile::OpenError,
+                     qt_error_string(errno));
+            qt_safe_close(d->fd);
+            d->openMode = QIODevice::NotOpen;
+            d->fd = -1;
+            return false;
+        }
+    }
+
+    d->closeFileHandle = true;
+
+    return true;
 }
 
 /*!
@@ -197,7 +397,30 @@ bool QAbstractFileEngine::open(QIODevice::OpenMode openMode)
 */
 bool QAbstractFileEngine::close()
 {
-    return false;
+    Q_D(QAbstractFileEngine);
+    d->openMode = QIODevice::NotOpen;
+
+    if (d->fd == -1)
+        return false;
+
+    d->metaData.clear();
+
+    // Close the file if we created the handle.
+    if (d->closeFileHandle) {
+        int ret = qt_safe_close(d->fd);
+
+        // We must reset these guys regardless; calling close again after a
+        // failed close causes crashes on some systems.
+        d->fd = -1;
+
+        // Report errors.
+        if (ret != 0) {
+            setError(QFile::UnspecifiedError, qt_error_string(errno));
+            return false;
+        }
+    }
+
+    return true;
 }
 
 /*!
@@ -208,7 +431,8 @@ bool QAbstractFileEngine::close()
 */
 bool QAbstractFileEngine::flush()
 {
-    return false;
+    Q_D(const QAbstractFileEngine);
+    return (d->fd != -1);
 }
 
 /*!
@@ -216,7 +440,11 @@ bool QAbstractFileEngine::flush()
 */
 qint64 QAbstractFileEngine::size() const
 {
-    return 0;
+    Q_D(const QAbstractFileEngine);
+
+    if (!d->doStat(QFileSystemMetaData::SizeAttribute))
+        return 0;
+    return d->metaData.size();
 }
 
 /*!
@@ -226,7 +454,8 @@ qint64 QAbstractFileEngine::size() const
 */
 qint64 QAbstractFileEngine::pos() const
 {
-    return 0;
+    Q_D(const QAbstractFileEngine);
+    return (qint64)QT_LSEEK(d->fd, 0, SEEK_CUR);
 }
 
 /*!
@@ -242,8 +471,17 @@ qint64 QAbstractFileEngine::pos() const
 */
 bool QAbstractFileEngine::seek(qint64 pos)
 {
-    Q_UNUSED(pos);
-    return false;
+    Q_D(QAbstractFileEngine);
+
+    if (pos < 0 || pos != qint64(QT_OFF_T(pos)))
+        return false;
+
+    if (Q_UNLIKELY(QT_LSEEK(d->fd, QT_OFF_T(pos), SEEK_SET) == -1)) {
+        qWarning("QAbstractFileEngine::seek: Cannot set file position %lld", pos);
+        setError(QFile::PositionError, qt_error_string(errno));
+        return false;
+    }
+    return true;
 }
 
 /*!
@@ -255,7 +493,10 @@ bool QAbstractFileEngine::seek(qint64 pos)
 */
 bool QAbstractFileEngine::isSequential() const
 {
-    return false;
+    Q_D(const QAbstractFileEngine);
+    if (d->doStat(QFileSystemMetaData::SequentialType))
+        return d->metaData.isSequential();
+    return true;
 }
 
 /*!
@@ -268,7 +509,14 @@ bool QAbstractFileEngine::isSequential() const
  */
 bool QAbstractFileEngine::remove()
 {
-    return false;
+    Q_D(QAbstractFileEngine);
+    int error;
+    bool ret = QFileSystemEngine::removeFile(d->fileEntry, &error);
+    d->metaData.clear();
+    if (!ret) {
+        setError(QFile::RemoveError, qt_error_string(error));
+    }
+    return ret;
 }
 
 /*!
@@ -277,8 +525,13 @@ bool QAbstractFileEngine::remove()
 */
 bool QAbstractFileEngine::copy(const QString &newName)
 {
-    Q_UNUSED(newName);
-    return false;
+    Q_D(QAbstractFileEngine);
+    int error;
+    bool ret = QFileSystemEngine::copyFile(d->fileEntry, QFileSystemEntry(newName), &error);
+    if (!ret) {
+        setError(QFile::CopyError, qt_error_string(error));
+    }
+    return ret;
 }
 
 /*!
@@ -292,8 +545,15 @@ bool QAbstractFileEngine::copy(const QString &newName)
  */
 bool QAbstractFileEngine::rename(const QString &newName)
 {
-    Q_UNUSED(newName);
-    return false;
+    Q_D(QAbstractFileEngine);
+    int error;
+    bool ret = QFileSystemEngine::renameFile(d->fileEntry, QFileSystemEntry(newName), &error);
+    d->metaData.clear();
+    if (!ret) {
+        setError(QFile::RenameError, qt_error_string(error));
+    }
+
+    return ret;
 }
 
 /*!
@@ -304,8 +564,13 @@ bool QAbstractFileEngine::rename(const QString &newName)
 */
 bool QAbstractFileEngine::link(const QString &newName)
 {
-    Q_UNUSED(newName);
-    return false;
+    Q_D(QAbstractFileEngine);
+    int error;
+    bool ret = QFileSystemEngine::createLink(d->fileEntry, QFileSystemEntry(newName), &error);
+    if (!ret) {
+        setError(QFile::RenameError, qt_error_string(error));
+    }
+    return ret;
 }
 
 /*!
@@ -322,9 +587,7 @@ bool QAbstractFileEngine::link(const QString &newName)
  */
 bool QAbstractFileEngine::mkdir(const QString &dirName, bool createParentDirectories) const
 {
-    Q_UNUSED(dirName);
-    Q_UNUSED(createParentDirectories);
-    return false;
+    return QFileSystemEngine::createDirectory(QFileSystemEntry(dirName), createParentDirectories);
 }
 
 /*!
@@ -342,9 +605,7 @@ bool QAbstractFileEngine::mkdir(const QString &dirName, bool createParentDirecto
  */
 bool QAbstractFileEngine::rmdir(const QString &dirName, bool recurseParentDirectories) const
 {
-    Q_UNUSED(dirName);
-    Q_UNUSED(recurseParentDirectories);
-    return false;
+    return QFileSystemEngine::removeDirectory(QFileSystemEntry(dirName), recurseParentDirectories);
 }
 
 /*!
@@ -359,8 +620,19 @@ bool QAbstractFileEngine::rmdir(const QString &dirName, bool recurseParentDirect
 */
 bool QAbstractFileEngine::setSize(qint64 size)
 {
-    Q_UNUSED(size);
-    return false;
+    Q_D(QAbstractFileEngine);
+    int ret = 0;
+    if (d->fd != -1) {
+        Q_EINTR_LOOP(ret, QT_FTRUNCATE(d->fd, size));
+    } else {
+        Q_EINTR_LOOP(ret, QT_TRUNCATE(d->fileEntry.nativeFilePath().constData(), size));
+    }
+    d->metaData.clearFlags(QFileSystemMetaData::SizeAttribute);
+    if (ret == -1) {
+        setError(QFile::ResizeError, qt_error_string(errno));
+        return false;
+    }
+    return true;
 }
 
 /*!
@@ -373,7 +645,8 @@ bool QAbstractFileEngine::setSize(qint64 size)
  */
 bool QAbstractFileEngine::isRelativePath() const
 {
-    return false;
+    Q_D(const QAbstractFileEngine);
+    return d->fileEntry.filePath().length() ? d->fileEntry.filePath()[0] != QLatin1Char('/') : true;
 }
 
 /*!
@@ -417,8 +690,60 @@ QStringList QAbstractFileEngine::entryList(QDir::Filters filters, const QStringL
 */
 QAbstractFileEngine::FileFlags QAbstractFileEngine::fileFlags(FileFlags type) const
 {
-    Q_UNUSED(type);
-    return 0;
+    Q_D(const QAbstractFileEngine);
+
+    if (type & Refresh)
+        d->metaData.clear();
+
+    QAbstractFileEngine::FileFlags ret = 0;
+
+    if (type & FlagsMask)
+        ret |= LocalDiskFlag;
+
+    QFileSystemMetaData::MetaDataFlags queryFlags =
+            QFileSystemMetaData::MetaDataFlags(uint(type))
+            & QFileSystemMetaData::Permissions;
+    queryFlags |= QFileSystemMetaData::LinkType;
+
+    if (type & TypesMask)
+        queryFlags |= QFileSystemMetaData::LinkType
+                | QFileSystemMetaData::FileType
+                | QFileSystemMetaData::DirectoryType;
+
+    if (type & FlagsMask)
+        queryFlags |= QFileSystemMetaData::HiddenAttribute
+                | QFileSystemMetaData::ExistsAttribute;
+
+    bool exists = d->doStat(queryFlags);
+
+    if (!exists && !d->metaData.isLink())
+        return ret;
+
+    if (exists && (type & PermsMask))
+        ret |= FileFlags(uint(d->metaData.permissions()));
+
+    if (type & TypesMask) {
+        if ((type & LinkType) && d->metaData.isLink())
+            ret |= LinkType;
+        if (exists) {
+            if (d->metaData.isFile()) {
+                ret |= FileType;
+            } else if (d->metaData.isDirectory()) {
+                ret |= DirectoryType;
+            }
+        }
+    }
+
+    if (type & FlagsMask) {
+        if (exists)
+            ret |= ExistsFlag;
+        if (d->fileEntry.isRoot())
+            ret |= RootFlag;
+        else if (d->metaData.isHidden())
+            ret |= HiddenFlag;
+    }
+
+    return ret;
 }
 
 /*!
@@ -434,8 +759,13 @@ QAbstractFileEngine::FileFlags QAbstractFileEngine::fileFlags(FileFlags type) co
 */
 bool QAbstractFileEngine::setPermissions(uint perms)
 {
-    Q_UNUSED(perms);
-    return false;
+    Q_D(QAbstractFileEngine);
+    int error;
+    if (!QFileSystemEngine::setPermissions(d->fileEntry, QFile::Permissions(perms), &error)) {
+        setError(QFile::PermissionsError, qt_error_string(error));
+        return false;
+    }
+    return true;
 }
 
 /*!
@@ -452,8 +782,32 @@ bool QAbstractFileEngine::setPermissions(uint perms)
  */
 QString QAbstractFileEngine::fileName(FileName file) const
 {
-    Q_UNUSED(file);
-    return QString();
+    Q_D(const QAbstractFileEngine);
+    if (file == BaseName) {
+        return d->fileEntry.fileName();
+    } else if (file == PathName) {
+        return d->fileEntry.path();
+    } else if (file == AbsoluteName || file == AbsolutePathName) {
+        QFileSystemEntry entry(QFileSystemEngine::absoluteName(d->fileEntry));
+        if (file == AbsolutePathName) {
+            return entry.path();
+        }
+        return entry.filePath();
+    } else if (file == CanonicalName || file == CanonicalPathName) {
+        QFileSystemEntry entry(QFileSystemEngine::canonicalName(d->fileEntry, d->metaData));
+        if (file == CanonicalPathName)
+            return entry.path();
+        return entry.filePath();
+    } else if (file == LinkName) {
+        if (!d->metaData.hasFlags(QFileSystemMetaData::LinkType))
+            QFileSystemEngine::fillMetaData(d->fileEntry, d->metaData, QFileSystemMetaData::LinkType);
+        if (d->metaData.isLink()) {
+            QFileSystemEntry entry = QFileSystemEngine::getLinkTarget(d->fileEntry, d->metaData);
+            return entry.filePath();
+        }
+        return QString();
+    }
+    return d->fileEntry.filePath();
 }
 
 /*!
@@ -467,8 +821,15 @@ QString QAbstractFileEngine::fileName(FileName file) const
  */
 uint QAbstractFileEngine::ownerId(FileOwner owner) const
 {
-    Q_UNUSED(owner);
-    return 0;
+    Q_D(const QAbstractFileEngine);
+
+    if (d->doStat(QFileSystemMetaData::OwnerIds)) {
+        if (owner == QAbstractFileEngine::OwnerUser)
+            return d->metaData.userId();
+        return d->metaData.groupId();
+    }
+
+    return QFileSystemMetaData::nobodyID;
 }
 
 /*!
@@ -483,8 +844,9 @@ uint QAbstractFileEngine::ownerId(FileOwner owner) const
  */
 QString QAbstractFileEngine::owner(FileOwner owner) const
 {
-    Q_UNUSED(owner);
-    return QString();
+    if (owner == QAbstractFileEngine::OwnerUser)
+        return QFileSystemEngine::resolveUserName(ownerId(owner));
+    return QFileSystemEngine::resolveGroupName(ownerId(owner));
 }
 
 /*!
@@ -501,7 +863,19 @@ QString QAbstractFileEngine::owner(FileOwner owner) const
  */
 QDateTime QAbstractFileEngine::fileTime(FileTime time) const
 {
-    Q_UNUSED(time);
+    Q_D(const QAbstractFileEngine);
+
+    if (d->doStat(QFileSystemMetaData::Times)) {
+        switch (time) {
+        case QAbstractFileEngine::ModificationTime:
+            return d->metaData.modificationTime();
+        case QAbstractFileEngine::AccessTime:
+            return d->metaData.accessTime();
+        case QAbstractFileEngine::CreationTime:
+            return d->metaData.creationTime();
+        }
+    }
+
     return QDateTime();
 }
 
@@ -515,7 +889,9 @@ QDateTime QAbstractFileEngine::fileTime(FileTime time) const
  */
 void QAbstractFileEngine::setFileName(const QString &file)
 {
-    Q_UNUSED(file);
+    Q_D(QAbstractFileEngine);
+    d->init();
+    d->fileEntry = QFileSystemEntry(file);
 }
 
 /*!
@@ -525,7 +901,8 @@ void QAbstractFileEngine::setFileName(const QString &file)
 */
 int QAbstractFileEngine::handle() const
 {
-    return -1;
+    Q_D(const QAbstractFileEngine);
+    return d->fd;
 }
 
 /*!
@@ -573,212 +950,6 @@ bool QAbstractFileEngine::unmap(uchar *address)
 }
 
 /*!
-    \since 4.3
-    \class QAbstractFileEngineIterator
-    \brief The QAbstractFileEngineIterator class provides an iterator
-    interface for custom file engines.
-
-    If all you want is to iterate over entries in a directory, see
-    QDirIterator instead. This class is only for custom file engine authors.
-
-    QAbstractFileEngineIterator is a unidirectional single-use virtual
-    iterator that plugs into QDirIterator, providing transparent proxy
-    iteration for custom file engines.
-
-    You can subclass QAbstractFileEngineIterator to provide an iterator when
-    writing your own file engine. To plug the iterator into your file system,
-    you simply return an instance of this subclass from a reimplementation of
-    QAbstractFileEngine::beginEntryList().
-
-    Example:
-
-    \snippet doc/src/snippets/code/src_corelib_io_qabstractfileengine.cpp 2
-
-    QAbstractFileEngineIterator is associated with a path, name filters, and
-    entry filters. The path is the directory that the iterator lists entries
-    in. The name filters and entry filters are provided for file engines that
-    can optimize directory listing at the iterator level (e.g., network file
-    systems that need to minimize network traffic), but they can also be
-    ignored by the iterator subclass; QAbstractFileEngineIterator already
-    provides the required filtering logics in the matchesFilters() function.
-    You can call dirName() to get the directory name, nameFilters() to get a
-    stringlist of name filters, and filters() to get the entry filters.
-
-    The pure virtual function hasNext() returns true if the current directory
-    has at least one more entry (i.e., the directory name is valid and
-    accessible, and we have not reached the end of the entry list), and false
-    otherwise. Reimplement next() to seek to the next entry.
-
-    The pure virtual function currentFileName() returns the name of the
-    current entry without advancing the iterator. The currentFilePath()
-    function is provided for convenience; it returns the full path of the
-    current entry.
-
-    Here is an example of how to implement an iterator that returns each of
-    three fixed entries in sequence.
-
-    \snippet doc/src/snippets/code/src_corelib_io_qabstractfileengine.cpp 3
-
-    Note: QAbstractFileEngineIterator does not deal with QDir::IteratorFlags;
-    it simply returns entries for a single directory.
-
-    \sa QDirIterator
-*/
-
-/*!
-    \typedef QAbstractFileEngine::Iterator
-    \since 4.3
-    \relates QAbstractFileEngine
-
-    Synonym for QAbstractFileEngineIterator.
-*/
-
-class QAbstractFileEngineIteratorPrivate
-{
-public:
-    QString path;
-    QDir::Filters filters;
-    QStringList nameFilters;
-    QFileInfo fileInfo;
-};
-
-/*!
-    Constructs a QAbstractFileEngineIterator, using the entry filters \a
-    filters, and wildcard name filters \a nameFilters.
-*/
-QAbstractFileEngineIterator::QAbstractFileEngineIterator(QDir::Filters filters,
-                                                         const QStringList &nameFilters)
-    : d(new QAbstractFileEngineIteratorPrivate)
-{
-    d->nameFilters = nameFilters;
-    d->filters = filters;
-}
-
-/*!
-    Destroys the QAbstractFileEngineIterator.
-
-    \sa QDirIterator
-*/
-QAbstractFileEngineIterator::~QAbstractFileEngineIterator()
-{
-    delete d;
-}
-
-/*!
-    Returns the path for this iterator. QDirIterator is responsible for
-    assigning this path; it cannot change during the iterator's lifetime.
-
-    \sa nameFilters(), filters()
-*/
-QString QAbstractFileEngineIterator::path() const
-{
-    return d->path;
-}
-
-/*!
-    \internal
-
-    Sets the iterator path to \a path. This function is called from within
-    QDirIterator.
-*/
-void QAbstractFileEngineIterator::setPath(const QString &path)
-{
-    d->path = path;
-}
-
-/*!
-    Returns the name filters for this iterator.
-
-    \sa QDir::nameFilters(), filters(), path()
-*/
-QStringList QAbstractFileEngineIterator::nameFilters() const
-{
-    return d->nameFilters;
-}
-
-/*!
-    Returns the entry filters for this iterator.
-
-    \sa QDir::filter(), nameFilters(), path()
-*/
-QDir::Filters QAbstractFileEngineIterator::filters() const
-{
-    return d->filters;
-}
-
-/*!
-    \fn QString QAbstractFileEngineIterator::currentFileName() const = 0
-
-    This pure virtual function returns the name of the current directory
-    entry, excluding the path.
-
-    \sa currentFilePath()
-*/
-
-/*!
-    Returns the path to the current directory entry. It's the same as
-    prepending path() to the return value of currentFileName().
-
-    \sa currentFileName()
-*/
-QString QAbstractFileEngineIterator::currentFilePath() const
-{
-    QString name = currentFileName();
-    if (!name.isNull()) {
-        QString tmp = path();
-        if (!tmp.isEmpty()) {
-            if (!tmp.endsWith(QLatin1Char('/')))
-                tmp.append(QLatin1Char('/'));
-            name.prepend(tmp);
-        }
-    }
-    return name;
-}
-
-/*!
-    The virtual function returns a QFileInfo for the current directory
-    entry. This function is provided for convenience. It can also be slightly
-    faster than creating a QFileInfo object yourself, as the object returned
-    by this function might contain cached information that QFileInfo otherwise
-    would have to access through the file engine.
-
-    \sa currentFileName()
-*/
-QFileInfo QAbstractFileEngineIterator::currentFileInfo() const
-{
-    QString path = currentFilePath();
-    if (d->fileInfo.filePath() != path)
-        d->fileInfo.setFile(path);
-
-    // return a shallow copy
-    return d->fileInfo;
-}
-
-/*!
-    \fn virtual QString QAbstractFileEngineIterator::next() = 0
-
-    This pure virtual function advances the iterator to the next directory
-    entry, and returns the file path to the current entry.
-
-    This function can optionally make use of nameFilters() and filters() to
-    optimize its performance.
-
-    Reimplement this function in a subclass to advance the iterator.
-
-    \sa QDirIterator::next()
-*/
-
-/*!
-    \fn virtual bool QAbstractFileEngineIterator::hasNext() const = 0
-
-    This pure virtual function returns true if there is at least one more
-    entry in the current directory (i.e., the iterator path is valid and
-    accessible, and the iterator has not reached the end of the entry list).
-
-    \sa QDirIterator::hasNext()
-*/
-
-/*!
     Returns an instance of a QAbstractFileEngineIterator using \a filters for
     entry filtering and \a filterNames for name filtering. This function is
     called by QDirIterator to initiate directory iteration.
@@ -790,9 +961,13 @@ QFileInfo QAbstractFileEngineIterator::currentFileInfo() const
 */
 QAbstractFileEngine::Iterator *QAbstractFileEngine::beginEntryList(QDir::Filters filters, const QStringList &filterNames)
 {
+#ifndef QT_NO_FILESYSTEMITERATOR
+    return new QAbstractFileEngineIterator(filters, filterNames);
+#else
     Q_UNUSED(filters);
     Q_UNUSED(filterNames);
-    return 0;
+    return nullptr;
+#endif
 }
 
 /*!
@@ -800,7 +975,7 @@ QAbstractFileEngine::Iterator *QAbstractFileEngine::beginEntryList(QDir::Filters
 */
 QAbstractFileEngine::Iterator *QAbstractFileEngine::endEntryList()
 {
-    return 0;
+    return nullptr;
 }
 
 /*!
@@ -812,9 +987,32 @@ QAbstractFileEngine::Iterator *QAbstractFileEngine::endEntryList()
 */
 qint64 QAbstractFileEngine::read(char *data, qint64 maxlen)
 {
-    Q_UNUSED(data);
-    Q_UNUSED(maxlen);
-    return -1;
+    Q_D(QAbstractFileEngine);
+
+    if (maxlen < 0) {
+        setError(QFile::ReadError, qt_error_string(EINVAL));
+        return -1;
+    }
+
+    qint64 readBytes = 0;
+    bool eof = false;
+
+    if (d->fd != -1) {
+        ssize_t result;
+        do {
+            result = QT_READ(d->fd, data + readBytes, size_t(maxlen - readBytes));
+        } while ((result == -1 && errno == EINTR)
+                || (result > 0 && (readBytes += result) < maxlen));
+
+        eof = !(result == -1);
+    }
+
+    if (!eof && readBytes == 0) {
+        readBytes = -1;
+        setError(QFile::ReadError, qt_error_string(errno));
+    }
+
+    return readBytes;
 }
 
 /*!
@@ -823,9 +1021,31 @@ qint64 QAbstractFileEngine::read(char *data, qint64 maxlen)
 */
 qint64 QAbstractFileEngine::write(const char *data, qint64 len)
 {
-    Q_UNUSED(data);
-    Q_UNUSED(len);
-    return -1;
+    Q_D(QAbstractFileEngine);
+
+    if (len < 0 || len != qint64(size_t(len))) {
+        setError(QFile::WriteError, qt_error_string(EINVAL));
+        return -1;
+    }
+
+    qint64 writtenBytes = 0;
+
+    if (d->fd != -1) {
+        ssize_t result;
+        do {
+            result = QT_WRITE(d->fd, data + writtenBytes, size_t(len - writtenBytes));
+        } while ((result == -1 && errno == EINTR)
+                || (result > 0 && (writtenBytes += result) < len));
+    }
+
+    if (len && writtenBytes == 0) {
+        writtenBytes = -1;
+        setError(errno == ENOSPC ? QFile::ResourceError : QFile::WriteError, qt_error_string(errno));
+    }
+
+    d->metaData.clearFlags(QFileSystemMetaData::SizeAttribute);
+
+    return writtenBytes;
 }
 
 /*!
@@ -912,9 +1132,18 @@ qint64 QAbstractFileEngine::readLine(char *data, qint64 maxlen)
 */
 bool QAbstractFileEngine::extension(Extension extension, const ExtensionOption *option, ExtensionReturn *output)
 {
-    Q_UNUSED(extension);
-    Q_UNUSED(option);
-    Q_UNUSED(output);
+    Q_D(QAbstractFileEngine);
+
+    if (extension == MapExtension) {
+        const MapExtensionOption *options = (MapExtensionOption*)(option);
+        MapExtensionReturn *returnValue = static_cast<MapExtensionReturn*>(output);
+        returnValue->address = d->map(options->offset, options->size);
+        return (returnValue->address != 0);
+    } else if (extension == UnMapExtension) {
+        UnMapExtensionOption *options = (UnMapExtensionOption*)option;
+        return d->unmap(options->address);
+    }
+
     return false;
 }
 
@@ -929,16 +1158,20 @@ bool QAbstractFileEngine::extension(Extension extension, const ExtensionOption *
 */
 bool QAbstractFileEngine::supportsExtension(Extension extension) const
 {
-    Q_UNUSED(extension);
+    Q_D(const QAbstractFileEngine);
+    if (extension == FastReadLineExtension && d->fd != -1 && isSequential())
+        return true;
+    if (extension == UnMapExtension || extension == MapExtension)
+        return true;
     return false;
 }
 
 /*!
-  Returns the QFile::FileError that resulted from the last failed
-  operation. If QFile::UnspecifiedError is returned, QFile will
-  use its own idea of the error status.
+    Returns the QFile::FileError that resulted from the last failed
+    operation. If QFile::UnspecifiedError is returned, QFile will
+    use its own idea of the error status.
 
-  \sa QFile::FileError, errorString()
+    \sa QFile::FileError, errorString()
  */
 QFile::FileError QAbstractFileEngine::error() const
 {
@@ -947,11 +1180,11 @@ QFile::FileError QAbstractFileEngine::error() const
 }
 
 /*!
-  Returns the human-readable message appropriate to the current error
-  reported by error(). If no suitable string is available, an
-  empty string is returned.
+    Returns the human-readable message appropriate to the current error
+    reported by error(). If no suitable string is available, an
+    empty string is returned.
 
-  \sa error()
+    \sa error()
  */
 QString QAbstractFileEngine::errorString() const
 {
@@ -971,6 +1204,346 @@ void QAbstractFileEngine::setError(QFile::FileError error, const QString &errorS
     Q_D(QAbstractFileEngine);
     d->fileError = error;
     d->errorString = errorString;
+}
+
+/*!
+    Opens the file descriptor \a fd in \a openMode mode. Returns true
+    on success; otherwise returns false.
+
+    The \a handleFlags argument specifies whether the file handle will be
+    closed by Katie. See the QFile::FileHandleFlags documentation for more
+    information.
+*/
+bool QAbstractFileEngine::open(QIODevice::OpenMode openMode, int fd, QFile::FileHandleFlags handleFlags)
+{
+    Q_D(QAbstractFileEngine);
+
+    // Append implies WriteOnly.
+    if (openMode & QFile::Append)
+        openMode |= QFile::WriteOnly;
+
+    // WriteOnly implies Truncate if neither ReadOnly nor Append are sent.
+    if ((openMode & QFile::WriteOnly) && !(openMode & (QFile::ReadOnly | QFile::Append)))
+        openMode |= QFile::Truncate;
+
+    d->openMode = openMode;
+    d->closeFileHandle = (handleFlags & QFile::AutoCloseHandle);
+    d->fileEntry.clear();
+    d->fd = fd;
+    d->metaData.clear();
+
+    // Seek to the end when in Append mode.
+    if (d->openMode & QFile::Append) {
+        if (QT_LSEEK(d->fd, 0, SEEK_END) == -1) {
+            setError(errno == EMFILE ? QFile::ResourceError : QFile::OpenError,
+                     qt_error_string(errno));
+            if (d->closeFileHandle) {
+                qt_safe_close(d->fd);
+            }
+            d->openMode = QIODevice::NotOpen;
+            d->fd = -1;
+            return false;
+        }
+    }
+
+    return true;
+}
+
+
+QString QAbstractFileEngine::currentPath(const QString &)
+{
+    return QFileSystemEngine::currentPath().filePath();
+}
+
+QString QAbstractFileEngine::homePath()
+{
+    return QFileSystemEngine::homePath();
+}
+
+QString QAbstractFileEngine::rootPath()
+{
+    return QFileSystemEngine::rootPath();
+}
+
+QString QAbstractFileEngine::tempPath()
+{
+    return QFileSystemEngine::tempPath();
+}
+
+/*!
+    \since 4.3
+    \class QAbstractFileEngineIterator
+    \brief The QAbstractFileEngineIterator class provides an iterator
+    interface for custom file engines.
+
+    If all you want is to iterate over entries in a directory, see
+    QDirIterator instead. This class is only for custom file engine authors.
+
+    QAbstractFileEngineIterator is a unidirectional single-use virtual
+    iterator that plugs into QDirIterator, providing transparent proxy
+    iteration for custom file engines.
+
+    You can subclass QAbstractFileEngineIterator to provide an iterator when
+    writing your own file engine. To plug the iterator into your file system,
+    you simply return an instance of this subclass from a reimplementation of
+    QAbstractFileEngine::beginEntryList().
+
+    Example:
+
+    \snippet doc/src/snippets/code/src_corelib_io_qabstractfileengine.cpp 2
+
+    QAbstractFileEngineIterator is associated with a path, name filters, and
+    entry filters. The path is the directory that the iterator lists entries
+    in. The name filters and entry filters are provided for file engines that
+    can optimize directory listing at the iterator level (e.g., network file
+    systems that need to minimize network traffic), but they can also be
+    ignored by the iterator subclass; QAbstractFileEngineIterator already
+    provides the required filtering logics in the matchesFilters() function.
+    You can call dirName() to get the directory name, nameFilters() to get a
+    stringlist of name filters, and filters() to get the entry filters.
+
+    The pure virtual function hasNext() returns true if the current directory
+    has at least one more entry (i.e., the directory name is valid and
+    accessible, and we have not reached the end of the entry list), and false
+    otherwise. Reimplement next() to seek to the next entry.
+
+    The pure virtual function currentFileName() returns the name of the
+    current entry without advancing the iterator. The currentFilePath()
+    function is provided for convenience; it returns the full path of the
+    current entry.
+
+    Here is an example of how to implement an iterator that returns each of
+    three fixed entries in sequence.
+
+    \snippet doc/src/snippets/code/src_corelib_io_qabstractfileengine.cpp 3
+
+    Note: QAbstractFileEngineIterator does not deal with QDir::IteratorFlags;
+    it simply returns entries for a single directory.
+
+    \sa QDirIterator
+*/
+
+/*!
+    \typedef QAbstractFileEngine::Iterator
+    \since 4.3
+    \relates QAbstractFileEngine
+
+    Synonym for QAbstractFileEngineIterator.
+*/
+
+class QAbstractFileEngineIteratorPrivate
+{
+public:
+    QAbstractFileEngineIteratorPrivate();
+    ~QAbstractFileEngineIteratorPrivate();
+
+    QString path;
+    QDir::Filters filters;
+    QStringList nameFilters;
+    QFileInfo fileInfo;
+
+#ifndef QT_NO_FILESYSTEMITERATOR
+    void advance() const;
+
+    mutable QFileSystemIterator* nativeIterator;
+    mutable QFileInfo currentInfo;
+    mutable QFileInfo nextInfo;
+    mutable bool done;
+#endif
+};
+
+QAbstractFileEngineIteratorPrivate::QAbstractFileEngineIteratorPrivate()
+#ifndef QT_NO_FILESYSTEMITERATOR
+    : nativeIterator(nullptr)
+    , done(false)
+#endif
+{
+}
+
+QAbstractFileEngineIteratorPrivate::~QAbstractFileEngineIteratorPrivate()
+{
+#ifndef QT_NO_FILESYSTEMITERATOR
+    delete nativeIterator;
+#endif
+}
+
+#ifndef QT_NO_FILESYSTEMITERATOR
+void QAbstractFileEngineIteratorPrivate::advance() const
+{
+    currentInfo = nextInfo;
+
+    QFileSystemEntry entry;
+    QFileSystemMetaData data;
+    if (nativeIterator->advance(entry, data)) {
+        nextInfo = QFileInfo(new QFileInfoPrivate(entry, data));
+    } else {
+        done = true;
+        delete nativeIterator;
+        nativeIterator = nullptr;
+    }
+}
+#endif // QT_NO_FILESYSTEMITERATOR
+
+/*!
+    Constructs a QAbstractFileEngineIterator, using the entry filters \a
+    filters, and wildcard name filters \a nameFilters.
+*/
+QAbstractFileEngineIterator::QAbstractFileEngineIterator(QDir::Filters filters,
+                                                         const QStringList &nameFilters)
+    : d(new QAbstractFileEngineIteratorPrivate())
+{
+    d->nameFilters = nameFilters;
+    d->filters = filters;
+}
+
+/*!
+    Destroys the QAbstractFileEngineIterator.
+
+    \sa QDirIterator
+*/
+QAbstractFileEngineIterator::~QAbstractFileEngineIterator()
+{
+    delete d;
+}
+
+/*!
+    Returns the path for this iterator. QDirIterator is responsible for
+    assigning this path; it cannot change during the iterator's lifetime.
+
+    \sa nameFilters(), filters()
+*/
+QString QAbstractFileEngineIterator::path() const
+{
+    return d->path;
+}
+
+/*!
+    \internal
+
+    Sets the iterator path to \a path. This function is called from within
+    QDirIterator.
+*/
+void QAbstractFileEngineIterator::setPath(const QString &path)
+{
+    d->path = path;
+}
+
+/*!
+    Returns the name filters for this iterator.
+
+    \sa QDir::nameFilters(), filters(), path()
+*/
+QStringList QAbstractFileEngineIterator::nameFilters() const
+{
+    return d->nameFilters;
+}
+
+/*!
+    Returns the entry filters for this iterator.
+
+    \sa QDir::filter(), nameFilters(), path()
+*/
+QDir::Filters QAbstractFileEngineIterator::filters() const
+{
+    return d->filters;
+}
+
+/*!
+    This pure virtual function returns the name of the current directory
+    entry, excluding the path.
+
+    \sa currentFilePath()
+*/
+QString QAbstractFileEngineIterator::currentFileName() const
+{
+#ifndef QT_NO_FILESYSTEMITERATOR
+    return d->currentInfo.fileName();
+#else
+    return QString();
+#endif
+}
+
+/*!
+    Returns the path to the current directory entry. It's the same as
+    prepending path() to the return value of currentFileName().
+
+    \sa currentFileName()
+*/
+QString QAbstractFileEngineIterator::currentFilePath() const
+{
+    QString name = currentFileName();
+    if (!name.isNull()) {
+        QString tmp = path();
+        if (!tmp.isEmpty()) {
+            if (!tmp.endsWith(QLatin1Char('/')))
+                tmp.append(QLatin1Char('/'));
+            name.prepend(tmp);
+        }
+    }
+    return name;
+}
+
+/*!
+    The virtual function returns a QFileInfo for the current directory
+    entry. This function is provided for convenience. It can also be slightly
+    faster than creating a QFileInfo object yourself, as the object returned
+    by this function might contain cached information that QFileInfo otherwise
+    would have to access through the file engine.
+
+    \sa currentFileName()
+*/
+QFileInfo QAbstractFileEngineIterator::currentFileInfo() const
+{
+#ifndef QT_NO_FILESYSTEMITERATOR
+    return d->currentInfo;
+#else
+    return QFileInfo();
+#endif
+}
+
+/*!
+    This pure virtual function advances the iterator to the next directory
+    entry, and returns the file path to the current entry.
+
+    This function can optionally make use of nameFilters() and filters() to
+    optimize its performance.
+
+    Reimplement this function in a subclass to advance the iterator.
+
+    \sa QDirIterator::next()
+*/
+QString QAbstractFileEngineIterator::next()
+{
+#ifndef QT_NO_FILESYSTEMITERATOR
+    if (!hasNext())
+        return QString();
+
+    d->advance();
+    return currentFilePath();
+#else
+    return QString();
+#endif
+}
+
+/*!
+    This pure virtual function returns true if there is at least one more
+    entry in the current directory (i.e., the iterator path is valid and
+    accessible, and the iterator has not reached the end of the entry list).
+
+    \sa QDirIterator::hasNext()
+*/
+bool QAbstractFileEngineIterator::hasNext() const
+{
+#ifndef QT_NO_FILESYSTEMITERATOR
+    if (!d->done && !d->nativeIterator) {
+        d->nativeIterator = new QFileSystemIterator(QFileSystemEntry(path()));
+        d->advance();
+    }
+
+    return !d->done;
+#else
+    return false;
+#endif
 }
 
 QT_END_NAMESPACE

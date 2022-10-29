@@ -34,6 +34,10 @@
 //
 
 #include "QtCore/qabstractfileengine.h"
+#include "qfilesystementry_p.h"
+#include "qfilesystemmetadata_p.h"
+#include "qfilesystemiterator_p.h"
+#include "qhash.h"
 
 QT_BEGIN_NAMESPACE
 
@@ -43,14 +47,32 @@ public:
     inline QAbstractFileEnginePrivate()
         : fileError(QFile::UnspecifiedError)
     {
+        init();
     }
-    inline virtual ~QAbstractFileEnginePrivate() { }
 
     QFile::FileError fileError;
     QString errorString;
 
+    QFileSystemEntry fileEntry;
+    QIODevice::OpenMode openMode;
+
+    uchar *map(qint64 offset, qint64 size);
+    bool unmap(uchar *ptr);
+
+    mutable QFileSystemMetaData metaData;
+
+    QHash<uchar *, QPair<int /*offset % PageSize*/, size_t /*length + offset % PageSize*/> > maps;
+    int fd;
+
+    bool closeFileHandle;
+
+    bool doStat(QFileSystemMetaData::MetaDataFlags flags) const;
+
     QAbstractFileEngine *q_ptr;
     Q_DECLARE_PUBLIC(QAbstractFileEngine)
+
+protected:
+    void init();
 };
 
 QT_END_NAMESPACE

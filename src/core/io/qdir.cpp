@@ -27,7 +27,6 @@
 #include "qdebug.h"
 #endif
 #include "qdiriterator.h"
-#include "qfsfileengine.h"
 #include "qdatetime.h"
 #include "qstring.h"
 #include "qregexp.h"

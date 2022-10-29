@@ -190,7 +190,6 @@ static const struct ClassTblData {
     { QLatin1String("QErrorMessage"), QLatin1String("QtGui/qerrormessage.h") },
     { QLatin1String("QEvent"), QLatin1String("QtCore/qcoreevent.h") },
     { QLatin1String("QEventLoop"), QLatin1String("QtCore/qeventloop.h") },
-    { QLatin1String("QFSFileEngine"), QLatin1String("QtCore/qfsfileengine.h") },
     { QLatin1String("QFile"), QLatin1String("QtCore/qfile.h") },
     { QLatin1String("QFileDialog"), QLatin1String("QtGui/qfiledialog.h") },
     { QLatin1String("QFileIconProvider"), QLatin1String("QtGui/qfileiconprovider.h") },

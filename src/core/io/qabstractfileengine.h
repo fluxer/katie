@@ -28,7 +28,6 @@
 #error qabstractfileengine.h must be included before any header file that defines open
 #endif
 
-
 QT_BEGIN_NAMESPACE
 
 class QVariant;
@@ -86,42 +85,42 @@ public:
         AccessTime
     };
 
-    virtual ~QAbstractFileEngine();
+    ~QAbstractFileEngine();
 
-    virtual bool open(QIODevice::OpenMode openMode);
-    virtual bool close();
-    virtual bool flush();
-    virtual qint64 size() const;
-    virtual qint64 pos() const;
-    virtual bool seek(qint64 pos);
-    virtual bool isSequential() const;
-    virtual bool remove();
-    virtual bool copy(const QString &newName);
-    virtual bool rename(const QString &newName);
-    virtual bool link(const QString &newName);
-    virtual bool mkdir(const QString &dirName, bool createParentDirectories) const;
-    virtual bool rmdir(const QString &dirName, bool recurseParentDirectories) const;
-    virtual bool setSize(qint64 size);
-    virtual bool isRelativePath() const;
-    virtual QStringList entryList(QDir::Filters filters, const QStringList &filterNames) const;
-    virtual FileFlags fileFlags(FileFlags type=FileInfoAll) const;
-    virtual bool setPermissions(uint perms);
-    virtual QString fileName(FileName file=DefaultName) const;
-    virtual uint ownerId(FileOwner) const;
-    virtual QString owner(FileOwner) const;
-    virtual QDateTime fileTime(FileTime time) const;
-    virtual void setFileName(const QString &file);
-    virtual int handle() const;
+    virtual bool open(QIODevice::OpenMode openMode); // virtual for QTemporaryFile
+    virtual bool close(); // virtual for QTemporaryFile
+    bool flush();
+    qint64 size() const;
+    qint64 pos() const;
+    bool seek(qint64 pos);
+    bool isSequential() const;
+    virtual bool remove(); // virtual for QTemporaryFile
+    bool copy(const QString &newName);
+    virtual bool rename(const QString &newName); // virtual for QTemporaryFile
+    bool link(const QString &newName);
+    bool mkdir(const QString &dirName, bool createParentDirectories) const;
+    bool rmdir(const QString &dirName, bool recurseParentDirectories) const;
+    bool setSize(qint64 size);
+    bool isRelativePath() const;
+    QStringList entryList(QDir::Filters filters, const QStringList &filterNames) const;
+    FileFlags fileFlags(FileFlags type=FileInfoAll) const;
+    bool setPermissions(uint perms);
+    QString fileName(FileName file=DefaultName) const;
+    uint ownerId(FileOwner) const;
+    QString owner(FileOwner) const;
+    QDateTime fileTime(FileTime time) const;
+    virtual void setFileName(const QString &file); // virtual for QTemporaryFile
+    int handle() const;
     uchar *map(qint64 offset, qint64 size);
     bool unmap(uchar *ptr);
 
     typedef QAbstractFileEngineIterator Iterator;
-    virtual Iterator *beginEntryList(QDir::Filters filters, const QStringList &filterNames);
-    virtual Iterator *endEntryList();
+    Iterator *beginEntryList(QDir::Filters filters, const QStringList &filterNames);
+    Iterator *endEntryList();
 
-    virtual qint64 read(char *data, qint64 maxlen);
-    virtual qint64 readLine(char *data, qint64 maxlen);
-    virtual qint64 write(const char *data, qint64 len);
+    qint64 read(char *data, qint64 maxlen);
+    qint64 readLine(char *data, qint64 maxlen);
+    qint64 write(const char *data, qint64 len);
 
     QFile::FileError error() const;
     QString errorString() const;
@@ -151,11 +150,19 @@ public:
         uchar *address;
     };
 
-    virtual bool extension(Extension extension, const ExtensionOption *option = nullptr, ExtensionReturn *output = nullptr);
-    virtual bool supportsExtension(Extension extension) const;
+    bool extension(Extension extension, const ExtensionOption *option = nullptr, ExtensionReturn *output = nullptr);
+    bool supportsExtension(Extension extension) const;
 
     // Factory
     static QAbstractFileEngine *create(const QString &fileName);
+
+    //FS only!!
+    bool open(QIODevice::OpenMode flags, int fd, QFile::FileHandleFlags handleFlags);
+    static bool setCurrentPath(const QString &path);
+    static QString currentPath(const QString &path = QString());
+    static QString homePath();
+    static QString rootPath();
+    static QString tempPath();
 
 protected:
     void setError(QFile::FileError error, const QString &str);
@@ -167,8 +174,9 @@ protected:
 private:
     Q_DECLARE_PRIVATE(QAbstractFileEngine)
     Q_DISABLE_COPY(QAbstractFileEngine)
-};
 
+    friend class QFilePrivate;
+};
 Q_DECLARE_OPERATORS_FOR_FLAGS(QAbstractFileEngine::FileFlags)
 
 class QAbstractFileEngineIteratorPrivate;
@@ -176,17 +184,17 @@ class Q_CORE_EXPORT QAbstractFileEngineIterator
 {
 public:
     QAbstractFileEngineIterator(QDir::Filters filters, const QStringList &nameFilters);
-    virtual ~QAbstractFileEngineIterator();
+    ~QAbstractFileEngineIterator();
 
-    virtual QString next() = 0;
-    virtual bool hasNext() const = 0;
+    QString next();
+    bool hasNext() const;
 
     QString path() const;
     QStringList nameFilters() const;
     QDir::Filters filters() const;
 
-    virtual QString currentFileName() const = 0;
-    virtual QFileInfo currentFileInfo() const;
+    QString currentFileName() const;
+    QFileInfo currentFileInfo() const;
     QString currentFilePath() const;
 
 private:
@@ -198,6 +206,5 @@ private:
 };
 
 QT_END_NAMESPACE
-
 
 #endif // QABSTRACTFILEENGINE_H

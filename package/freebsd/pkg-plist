@@ -44,7 +44,6 @@ include/katie/QtCore/QElapsedTimer
 include/katie/QtCore/QEvent
 include/katie/QtCore/QEventLoop
 include/katie/QtCore/QExplicitlySharedDataPointer
-include/katie/QtCore/QFSFileEngine
 include/katie/QtCore/QFile
 include/katie/QtCore/QFileInfo
 include/katie/QtCore/QFileInfoList
@@ -211,7 +210,6 @@ include/katie/QtCore/qeventloop.h
 include/katie/QtCore/qfile.h
 include/katie/QtCore/qfileinfo.h
 include/katie/QtCore/qfilesystemwatcher.h
-include/katie/QtCore/qfsfileengine.h
 include/katie/QtCore/qglobal.h
 include/katie/QtCore/qhash.h
 include/katie/QtCore/qiodevice.h

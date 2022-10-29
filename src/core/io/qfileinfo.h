@@ -28,17 +28,14 @@
 
 QT_BEGIN_NAMESPACE
 
-
 class QDir;
 class QDateTime;
-class QDirIteratorPrivate;
-class QFSFileEngineIterator;
 class QFileInfoPrivate;
 
 class Q_CORE_EXPORT QFileInfo
 {
     friend class QDirIteratorPrivate;
-    friend class QFSFileEngineIterator;
+    friend class QAbstractFileEngineIteratorPrivate;
 public:
     QFileInfo();
     QFileInfo(const QString &file);

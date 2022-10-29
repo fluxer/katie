@@ -207,7 +207,6 @@ classlist = [
     "QFontMetricsF",
     "QFormLayout",
     "QFrame",
-    "QFSFileEngine",
     "QFtp",
     "QFuture",
     "QFutureInterface",

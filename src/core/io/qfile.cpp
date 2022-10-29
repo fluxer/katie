@@ -22,7 +22,6 @@
 #include "qplatformdefs.h"
 #include "qdebug.h"
 #include "qfile.h"
-#include "qfsfileengine.h"
 #include "qtemporaryfile.h"
 #include "qlist.h"
 #include "qfileinfo.h"
@@ -59,9 +58,8 @@ QFilePrivate::openExternalFile(int flags, int fd, QFile::FileHandleFlags handleF
 #else
     delete fileEngine;
     fileEngine = 0;
-    QFSFileEngine *fe = new QFSFileEngine;
-    fileEngine = fe;
-    return fe->open(QIODevice::OpenMode(flags), fd, handleFlags);
+    fileEngine = new QAbstractFileEngine();
+    return fileEngine->open(QIODevice::OpenMode(flags), fd, handleFlags);
 #endif
 }
 

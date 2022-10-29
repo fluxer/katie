@@ -79,7 +79,6 @@
 #include "qfilesystementry_p.h"
 #include "qfilesystemmetadata_p.h"
 #include "qfilesystemengine_p.h"
-#include "qfsfileengine.h"
 #include "qfileinfo_p.h"
 #include "qscopedpointer.h"
 

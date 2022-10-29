@@ -21,7 +21,6 @@
 
 #include "qplatformdefs.h"
 #include "qfilesystemengine_p.h"
-#include "qfsfileengine.h"
 #include "qfile.h"
 #include "qcore_unix_p.h"
 #include "qcorecommon_p.h"
@@ -476,7 +475,7 @@ QFileSystemEntry QFileSystemEngine::currentPath()
 
 #ifndef QT_NO_DEBUG
     if (result.isEmpty())
-        qWarning("QFSFileEngine::currentPath: " GETCWDFUNCNAME "() failed");
+        qWarning("QAbstractFileEngine::currentPath: " GETCWDFUNCNAME "() failed");
 #endif
 #undef GETCWDFUNCNAME
 

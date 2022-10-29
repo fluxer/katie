@@ -452,7 +452,7 @@ void tst_QFile::open()
     }
 
     if (filename.isEmpty())
-        QTest::ignoreMessage(QtWarningMsg, "QFSFileEngine::open: No file name specified");
+        QTest::ignoreMessage(QtWarningMsg, "QAbstractFileEngine::open: No file name specified");
 
     if (ok) {
         QVERIFY2(f.open(QIODevice::OpenMode(mode)),
