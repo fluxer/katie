@@ -1,5 +1,0 @@
-katie_test(tst_bench_qscriptclass_bytearray
-    ${CMAKE_CURRENT_SOURCE_DIR}/tst_qscriptclass_bytearray.cpp
-)
-
-target_link_libraries(tst_bench_qscriptclass_bytearray KtScript)
