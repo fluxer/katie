@@ -625,5 +625,4 @@ QT_END_NAMESPACE
 
 #include "moc_qscriptenginedebugger.h"
 #include "moc_qscriptenginedebugger.cpp"
-#include "qrc_scripttools_debugging.cpp"
 

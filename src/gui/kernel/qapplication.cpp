@@ -67,18 +67,6 @@
 
 //#define ALIEN_DEBUG
 
-
-static void initResources()
-{
-    Q_INIT_RESOURCE(qstyle);
-#ifndef QT_NO_MESSAGEBOX
-    Q_INIT_RESOURCE(qmessagebox);
-#endif
-#if !defined(QT_NO_PRINTDIALOG)
-    Q_INIT_RESOURCE(qprintdialog);
-#endif
-}
-
 QT_BEGIN_NAMESPACE
 
 Q_CORE_EXPORT void qt_call_post_routines();
@@ -501,8 +489,6 @@ QApplication::QApplication(int &argc, char **argv)
 */
 void QApplicationPrivate::construct(Display *dpy, Qt::HANDLE visual, Qt::HANDLE cmap)
 {
-    initResources();
-
     process_cmdline();
 
     // Must be called before initializing

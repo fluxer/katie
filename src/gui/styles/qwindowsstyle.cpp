@@ -48,6 +48,7 @@
 #include "qmath.h"
 #include "qstylehelper_p.h"
 #include "qguicommon_p.h"
+#include "qguiimages_p.h"
 
 #include <limits.h>
 
@@ -343,32 +344,123 @@ QPixmap QWindowsStyle::standardPixmap(StandardPixmap standardpixmap, const QStyl
                                       const QWidget *widget) const
 {
     switch (standardpixmap) {
-    case SP_TitleBarMenuButton:
-        return QPixmap(QLatin1String(":/trolltech/styles/images/windows/qt_windows_menu.png"));
-    case SP_TitleBarShadeButton:
-        return QPixmap(QLatin1String(":/trolltech/styles/images/windows/qt_windows_shade.png"));
-    case SP_TitleBarUnshadeButton:
-        return QPixmap(QLatin1String(":/trolltech/styles/images/windows/qt_windows_unshade.png"));
-    case SP_TitleBarNormalButton:
-        return QPixmap(QLatin1String(":/trolltech/styles/images/windows/qt_windows_normalizeup.png"));
-    case SP_TitleBarMinButton:
-        return QPixmap(QLatin1String(":/trolltech/styles/images/windows/qt_windows_minimize.png"));
-    case SP_TitleBarMaxButton:
-        return QPixmap(QLatin1String(":/trolltech/styles/images/windows/qt_windows_maximize.png"));
-    case SP_TitleBarCloseButton:
-        return QPixmap(QLatin1String(":/trolltech/styles/images/windows/qt_windows_close.png"));
-    case SP_TitleBarContextHelpButton:
-        return QPixmap(QLatin1String(":/trolltech/styles/images/windows/qt_windows_help.png"));
-    case SP_DockWidgetCloseButton:
-        return QPixmap(QLatin1String(":/trolltech/styles/images/windows/qt_windows_dock_widget_close.png"));
-    case SP_MessageBoxInformation:
-        return QPixmap(QLatin1String(":/trolltech/styles/images/windows/qt_information.png"));
-    case SP_MessageBoxWarning:
-        return QPixmap(QLatin1String(":/trolltech/styles/images/windows/qt_warning.png"));
-    case SP_MessageBoxCritical:
-        return QPixmap(QLatin1String(":/trolltech/styles/images/windows/qt_critical.png"));
-    case SP_MessageBoxQuestion:
-        return QPixmap(QLatin1String(":/trolltech/styles/images/windows/qt_question.png"));
+    case SP_TitleBarMenuButton: {
+        QPixmap pix;
+        pix.loadFromData(
+            windows_qt_windows_menu_png,
+            windows_qt_windows_menu_png_len,
+            qt_images_format
+        );
+        return pix;
+    }
+    case SP_TitleBarShadeButton: {
+        QPixmap pix;
+        pix.loadFromData(
+            windows_qt_windows_shade_png,
+            windows_qt_windows_shade_png_len,
+            qt_images_format
+        );
+        return pix;
+    }
+    case SP_TitleBarUnshadeButton: {
+        QPixmap pix;
+        pix.loadFromData(
+            windows_qt_windows_unshade_png,
+            windows_qt_windows_unshade_png_len,
+            qt_images_format
+        );
+        return pix;
+    }
+    case SP_TitleBarNormalButton: {
+        QPixmap pix;
+        pix.loadFromData(
+            windows_qt_windows_normalizeup_png,
+            windows_qt_windows_normalizeup_png_len,
+            qt_images_format
+        );
+        return pix;
+    }
+    case SP_TitleBarMinButton: {
+        QPixmap pix;
+        pix.loadFromData(
+            windows_qt_windows_minimize_png,
+            windows_qt_windows_minimize_png_len,
+            qt_images_format
+        );
+        return pix;
+    }
+    case SP_TitleBarMaxButton: {
+        QPixmap pix;
+        pix.loadFromData(
+            windows_qt_windows_maximize_png,
+            windows_qt_windows_maximize_png_len,
+            qt_images_format
+        );
+        return pix;
+    }
+    case SP_TitleBarCloseButton: {
+        QPixmap pix;
+        pix.loadFromData(
+            windows_qt_windows_close_png,
+            windows_qt_windows_close_png_len,
+            qt_images_format
+        );
+        return pix;
+    }
+    case SP_TitleBarContextHelpButton: {
+        QPixmap pix;
+        pix.loadFromData(
+            windows_qt_windows_help_png,
+            windows_qt_windows_help_png_len,
+            qt_images_format
+        );
+        return pix;
+    }
+    case SP_DockWidgetCloseButton: {
+        QPixmap pix;
+        pix.loadFromData(
+            windows_qt_windows_dock_widget_close_png,
+            windows_qt_windows_dock_widget_close_png_len,
+            qt_images_format
+        );
+        return pix;
+    }
+    case SP_MessageBoxInformation: {
+        QPixmap pix;
+        pix.loadFromData(
+            windows_qt_information_png,
+            windows_qt_information_png_len,
+            qt_images_format
+        );
+        return pix;
+    }
+    case SP_MessageBoxWarning: {
+        QPixmap pix;
+        pix.loadFromData(
+            windows_qt_warning_png,
+            windows_qt_warning_png_len,
+            qt_images_format
+        );
+        return pix;
+    }
+    case SP_MessageBoxCritical: {
+        QPixmap pix;
+        pix.loadFromData(
+            windows_qt_critical_png,
+            windows_qt_critical_png_len,
+            qt_images_format
+        );
+        return pix;
+    }
+    case SP_MessageBoxQuestion: {
+        QPixmap pix;
+        pix.loadFromData(
+            windows_qt_question_png,
+            windows_qt_question_png_len,
+            qt_images_format
+        );
+        return pix;
+    }
     default:
         break;
     }

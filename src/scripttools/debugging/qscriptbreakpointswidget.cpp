@@ -23,6 +23,7 @@
 #include "qscriptbreakpointswidgetinterface_p_p.h"
 #include "qscriptbreakpointsmodel_p.h"
 #include "qscriptdebuggerscriptsmodel_p.h"
+#include "qscripttoolsresources_p.h"
 
 #include <QtCore/qdebug.h>
 #include <QtGui/qaction.h>
@@ -51,7 +52,12 @@ public:
         hboxLayout->setMargin(0);
 
         toolClose = new QToolButton(this);
-        toolClose->setIcon(QIcon(QLatin1String(":/qt/scripttools/debugging/images/win/closetab.png")));
+        QPixmap pix;
+        pix.loadFromData(
+            scripttools_closetab_png, scripttools_closetab_png_len,
+            qt_images_format
+        );
+        toolClose->setIcon(QIcon(pix));
         toolClose->setAutoRaise(true);
         toolClose->setText(tr("Close"));
         hboxLayout->addWidget(toolClose);
@@ -64,7 +70,11 @@ public:
         hboxLayout->addWidget(fileNameEdit);
 
         toolOk = new QToolButton(this);
-        toolOk->setIcon(QIcon(QLatin1String(":/qt/scripttools/debugging/images/win/plus.png")));
+        pix.loadFromData(
+            scripttools_plus_png, scripttools_plus_png_len,
+            qt_images_format
+        );
+        toolOk->setIcon(QIcon(pix));
         toolOk->setAutoRaise(true);
         toolOk->setEnabled(false);
         hboxLayout->addWidget(toolOk);
@@ -127,12 +137,6 @@ public:
     void _q_deleteBreakpoint();
     void _q_onCurrentChanged(const QModelIndex &index);
     void _q_onNewBreakpointRequest(const QString &fileName, int lineNumber);
-
-    static QPixmap pixmap(const QString &path)
-    {
-        static QString prefix = QLatin1String(":/qt/scripttools/debugging/images/");
-        return QPixmap(prefix + path);
-    }
 
     QTreeView *view;
     QScriptNewBreakpointWidget *newBreakpointWidget;
@@ -268,14 +272,23 @@ QScriptBreakpointsWidget::QScriptBreakpointsWidget(QWidget *parent)
     QObject::connect(d->newBreakpointWidget, SIGNAL(newBreakpointRequest(QString,int)),
                      this, SLOT(_q_onNewBreakpointRequest(QString,int)));
 
+    QPixmap pix;
+    pix.loadFromData(
+        scripttools_new_png, scripttools_new_png_len,
+        qt_images_format
+    );
     QIcon newBreakpointIcon;
-    newBreakpointIcon.addPixmap(d->pixmap(QLatin1String("new.png")), QIcon::Normal);
+    newBreakpointIcon.addPixmap(pix, QIcon::Normal);
     QAction *newBreakpointAction = new QAction(newBreakpointIcon, tr("New"), this);
     QObject::connect(newBreakpointAction, SIGNAL(triggered()),
                      this, SLOT(_q_newBreakpoint()));
 
+    pix.loadFromData(
+        scripttools_delete_png, scripttools_delete_png_len,
+        qt_images_format
+    );
     QIcon deleteBreakpointIcon;
-    deleteBreakpointIcon.addPixmap(d->pixmap(QLatin1String("delete.png")), QIcon::Normal);
+    deleteBreakpointIcon.addPixmap(pix, QIcon::Normal);
     d->deleteBreakpointAction = new QAction(deleteBreakpointIcon, tr("Delete"), this);
     d->deleteBreakpointAction->setEnabled(false);
     QObject::connect(d->deleteBreakpointAction, SIGNAL(triggered()),

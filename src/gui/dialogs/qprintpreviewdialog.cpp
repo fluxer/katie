@@ -23,6 +23,7 @@
 #include "qprintpreviewwidget.h"
 #include "qprinter_p.h"
 #include "qdialog_p.h"
+#include "qguiimages_p.h"
 
 #include <QtGui/qaction.h>
 #include <QtGui/qboxlayout.h>
@@ -302,12 +303,19 @@ void QPrintPreviewDialogPrivate::init(QPrinter *_printer)
     preview->setFocus();
 }
 
-static inline void qt_setupActionIconResource(QAction *action, const QLatin1String &name)
+static inline void qt_setupActionIconResource(QAction *action,
+                                              const uchar* const data24,
+                                              const uint data24len,
+                                              const uchar* const data32,
+                                              const uint data32len)
 {
-    QLatin1String imagePrefix(":/trolltech/dialogs/qprintpreviewdialog/images/");
+    QPixmap pix24;
+    pix24.loadFromData(data24, data24len, qt_images_format);
+    QPixmap pix32;
+    pix32.loadFromData(data32, data32len, qt_images_format);
     QIcon icon;
-    icon.addFile(imagePrefix + name + QLatin1String("-24.png"), QSize(24, 24));
-    icon.addFile(imagePrefix + name + QLatin1String("-32.png"), QSize(32, 32));
+    icon.addPixmap(pix24);
+    icon.addPixmap(pix32);
     action->setIcon(icon);
 }
 
@@ -358,8 +366,16 @@ void QPrintPreviewDialogPrivate::setupActions()
     landscapeAction = orientationGroup->addAction(QCoreApplication::translate("QPrintPreviewDialog", "Landscape"));
     portraitAction->setCheckable(true);
     landscapeAction->setCheckable(true);
-    qt_setupActionIconResource(portraitAction, QLatin1String("layout-portrait"));
-    qt_setupActionIconResource(landscapeAction, QLatin1String("layout-landscape"));
+    qt_setupActionIconResource(
+        portraitAction,
+        qprintdialog_layout_portrait_24_png, qprintdialog_layout_portrait_24_png_len,
+        qprintdialog_layout_portrait_32_png, qprintdialog_layout_portrait_32_png_len
+    );
+    qt_setupActionIconResource(
+        landscapeAction,
+        qprintdialog_layout_landscape_24_png, qprintdialog_layout_landscape_24_png_len,
+        qprintdialog_layout_landscape_32_png, qprintdialog_layout_landscape_32_png_len
+    );
     QObject::connect(portraitAction, SIGNAL(triggered(bool)), preview, SLOT(setPortraitOrientation()));
     QObject::connect(landscapeAction, SIGNAL(triggered(bool)), preview, SLOT(setLandscapeOrientation()));
 
@@ -368,9 +384,21 @@ void QPrintPreviewDialogPrivate::setupActions()
     singleModeAction = modeGroup->addAction(QCoreApplication::translate("QPrintPreviewDialog", "Show single page"));
     facingModeAction = modeGroup->addAction(QCoreApplication::translate("QPrintPreviewDialog", "Show facing pages"));
     overviewModeAction = modeGroup->addAction(QCoreApplication::translate("QPrintPreviewDialog", "Show overview of all pages"));
-    qt_setupActionIconResource(singleModeAction, QLatin1String("view-page-one"));
-    qt_setupActionIconResource(facingModeAction, QLatin1String("view-page-sided"));
-    qt_setupActionIconResource(overviewModeAction, QLatin1String("view-page-multi"));
+    qt_setupActionIconResource(
+        singleModeAction,
+        qprintdialog_view_page_one_24_png, qprintdialog_view_page_one_24_png_len,
+        qprintdialog_view_page_one_32_png, qprintdialog_view_page_one_32_png_len
+    );
+    qt_setupActionIconResource(
+        facingModeAction,
+        qprintdialog_view_page_sided_24_png, qprintdialog_view_page_sided_24_png_len,
+        qprintdialog_view_page_sided_32_png, qprintdialog_view_page_sided_32_png_len
+    );
+    qt_setupActionIconResource(
+        overviewModeAction,
+        qprintdialog_view_page_multi_24_png, qprintdialog_view_page_multi_24_png_len,
+        qprintdialog_view_page_multi_32_png, qprintdialog_view_page_multi_32_png_len
+    );
     singleModeAction->setObjectName(QLatin1String("singleModeAction"));
     facingModeAction->setObjectName(QLatin1String("facingModeAction"));
     overviewModeAction->setObjectName(QLatin1String("overviewModeAction"));
@@ -385,7 +413,11 @@ void QPrintPreviewDialogPrivate::setupActions()
     printAction = printerGroup->addAction(QCoreApplication::translate("QPrintPreviewDialog", "Print"));
     pageSetupAction = printerGroup->addAction(QCoreApplication::translate("QPrintPreviewDialog", "Page setup"));
     qt_setupActionIcon(printAction, QLatin1String("document-print"));
-    qt_setupActionIconResource(pageSetupAction, QLatin1String("page-setup"));
+    qt_setupActionIconResource(
+        pageSetupAction,
+        qprintdialog_page_setup_24_png, qprintdialog_page_setup_24_png_len,
+        qprintdialog_page_setup_32_png, qprintdialog_page_setup_32_png_len
+    );
     QObject::connect(printAction, SIGNAL(triggered(bool)), q, SLOT(_q_print()));
     QObject::connect(pageSetupAction, SIGNAL(triggered(bool)), q, SLOT(_q_pageSetup()));
 

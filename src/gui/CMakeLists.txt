@@ -582,6 +582,7 @@ set(GUI_HEADERS
     ${CMAKE_CURRENT_SOURCE_DIR}/widgets/qplaintextedit_p.h
     ${CMAKE_CURRENT_SOURCE_DIR}/widgets/qprintpreviewwidget.h
     ${CMAKE_CURRENT_SOURCE_DIR}/qguicommon_p.h
+    ${CMAKE_CURRENT_SOURCE_DIR}/qguiimages_p.h
 )
 
 set(GUI_SOURCES
@@ -616,8 +617,6 @@ set(GUI_SOURCES
     ${CMAKE_CURRENT_SOURCE_DIR}/dialogs/qprintsettingsoutput.ui
     ${CMAKE_CURRENT_SOURCE_DIR}/dialogs/qprintwidget.ui
     ${CMAKE_CURRENT_SOURCE_DIR}/dialogs/qprintpropertieswidget.ui
-    ${CMAKE_CURRENT_SOURCE_DIR}/dialogs/qprintdialog.qrc
-    ${CMAKE_CURRENT_SOURCE_DIR}/dialogs/qmessagebox.qrc
     ${CMAKE_CURRENT_SOURCE_DIR}/effects/qgraphicseffect.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/graphicsview/qgraphicsgridlayout.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/graphicsview/qgraphicsitem.cpp
@@ -777,7 +776,6 @@ set(GUI_SOURCES
     ${CMAKE_CURRENT_SOURCE_DIR}/styles/qstylesheetstyle_default.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/styles/qwindowsstyle.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/styles/qcleanlooksstyle.cpp
-    ${CMAKE_CURRENT_SOURCE_DIR}/styles/qstyle.qrc
     ${CMAKE_CURRENT_SOURCE_DIR}/text/qfont.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/text/qfontengine.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/text/qfontengine_ft.cpp

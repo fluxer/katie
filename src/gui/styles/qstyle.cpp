@@ -29,6 +29,7 @@
 #include "qstyle_p.h"
 #include "qpen.h"
 #include "qdebug.h"
+#include "qguiimages_p.h"
 
 #ifdef Q_WS_X11
 #include "qx11info_x11.h"
@@ -2281,4 +2282,3 @@ void QStyle::setProxy(QStyle *style)
 QT_END_NAMESPACE
 
 #include "moc_qstyle.h"
-#include "qrc_qstyle.cpp"

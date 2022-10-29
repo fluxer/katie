@@ -55,6 +55,7 @@
 #include "qscriptdebuggerjob_p_p.h"
 #include "qscriptxmlparser_p.h"
 #include "qscripttoolscommon_p.h"
+#include "qscripttoolsresources_p.h"
 
 #include "qobject_p.h"
 
@@ -145,8 +146,6 @@ public:
 
     void showToolTip(const QPoint &pos, int frameIndex,
                      int lineNumber, const QStringList &path);
-
-    static QPixmap pixmap(const QString &path);
 
     void startInteraction(QScriptDebuggerEvent::Type type,
                           qint64 scriptId, int lineNumber);
@@ -242,9 +241,8 @@ QScriptDebuggerPrivate::QScriptDebuggerPrivate()
     interactive = false;
 
     console = new QScriptDebuggerConsole();
-    QString scriptsPath = QLatin1String(":/qt/scripttools/debugging/scripts/commands");
     QScriptStdMessageHandler tmp;
-    console->loadScriptedCommands(scriptsPath, &tmp);
+    console->loadScriptedCommands(&tmp);
 
     consoleWidget = 0;
     stackWidget = 0;
@@ -302,12 +300,6 @@ void QScriptDebuggerPrivate::maybeDelete(QWidget *widget)
 {
     if (widget && !widget->parent())
         delete widget;
-}
-
-QPixmap QScriptDebuggerPrivate::pixmap(const QString &path)
-{
-    static QString prefix = QString::fromLatin1(":/qt/scripttools/debugging/images/");
-    return QPixmap(prefix + path);
 }
 
 /*!
@@ -1642,9 +1634,18 @@ QAction *QScriptDebugger::interruptAction(QObject *parent) const
 {
     Q_D(const QScriptDebugger);
     if (!d->interruptAction) {
+        QPixmap pix;
+        pix.loadFromData(
+            scripttools_interrupt_png, scripttools_interrupt_png_len,
+            qt_images_format
+        );
         QIcon interruptIcon;
-        interruptIcon.addPixmap(d->pixmap(QString::fromLatin1("interrupt.png")), QIcon::Normal);
-        interruptIcon.addPixmap(d->pixmap(QString::fromLatin1("d_interrupt.png")), QIcon::Disabled);
+        interruptIcon.addPixmap(pix, QIcon::Normal);
+        pix.loadFromData(
+            scripttools_d_interrupt_png, scripttools_d_interrupt_png_len,
+            qt_images_format
+        );
+        interruptIcon.addPixmap(pix, QIcon::Disabled);
         QScriptDebugger *that = const_cast<QScriptDebugger*>(this);
         that->d_func()->interruptAction = new QAction(interruptIcon, QScriptDebugger::tr("Interrupt"), parent);
         d->interruptAction->setEnabled(!d->interactive);
@@ -1659,9 +1660,18 @@ QAction *QScriptDebugger::continueAction(QObject *parent) const
 {
     Q_D(const QScriptDebugger);
     if (!d->continueAction) {
+        QPixmap pix;
+        pix.loadFromData(
+            scripttools_play_png, scripttools_play_png_len,
+            qt_images_format
+        );
         QIcon continueIcon;
-        continueIcon.addPixmap(d->pixmap(QString::fromLatin1("play.png")), QIcon::Normal);
-        continueIcon.addPixmap(d->pixmap(QString::fromLatin1("d_play.png")), QIcon::Disabled);
+        continueIcon.addPixmap(pix, QIcon::Normal);
+        pix.loadFromData(
+            scripttools_d_play_png, scripttools_d_play_png_len,
+            qt_images_format
+        );
+        continueIcon.addPixmap(pix, QIcon::Disabled);
         QScriptDebugger *that = const_cast<QScriptDebugger*>(this);
         that->d_func()->continueAction = new QAction(continueIcon, QScriptDebugger::tr("Continue"), parent);
         d->continueAction->setEnabled(d->interactive);
@@ -1676,9 +1686,13 @@ QAction *QScriptDebugger::stepIntoAction(QObject *parent) const
 {
     Q_D(const QScriptDebugger);
     if (!d->stepIntoAction) {
+        QPixmap pix;
+        pix.loadFromData(
+            scripttools_stepinto_png, scripttools_stepinto_png_len,
+            qt_images_format
+        );
         QIcon stepIntoIcon;
-        stepIntoIcon.addPixmap(d->pixmap(QString::fromLatin1("stepinto.png")), QIcon::Normal);
-        stepIntoIcon.addPixmap(d->pixmap(QString::fromLatin1("d_stepinto.png")), QIcon::Disabled);
+        stepIntoIcon.addPixmap(pix, QIcon::Normal);
         QScriptDebugger *that = const_cast<QScriptDebugger*>(this);
         that->d_func()->stepIntoAction = new QAction(stepIntoIcon, QScriptDebugger::tr("Step Into"), parent);
         d->stepIntoAction->setEnabled(d->interactive);
@@ -1693,9 +1707,13 @@ QAction *QScriptDebugger::stepOverAction(QObject *parent) const
 {
     Q_D(const QScriptDebugger);
     if (!d->stepOverAction) {
+        QPixmap pix;
+        pix.loadFromData(
+            scripttools_stepover_png, scripttools_stepover_png_len,
+            qt_images_format
+        );
         QIcon stepOverIcon;
-        stepOverIcon.addPixmap(d->pixmap(QString::fromLatin1("stepover.png")), QIcon::Normal);
-        stepOverIcon.addPixmap(d->pixmap(QString::fromLatin1("d_stepover.png")), QIcon::Disabled);
+        stepOverIcon.addPixmap(pix, QIcon::Normal);
         QScriptDebugger *that = const_cast<QScriptDebugger*>(this);
         that->d_func()->stepOverAction = new QAction(stepOverIcon, QScriptDebugger::tr("Step Over"), parent);
         d->stepOverAction->setEnabled(d->interactive);
@@ -1710,9 +1728,13 @@ QAction *QScriptDebugger::stepOutAction(QObject *parent) const
 {
     Q_D(const QScriptDebugger);
     if (!d->stepOutAction) {
+        QPixmap pix;
+        pix.loadFromData(
+            scripttools_stepout_png, scripttools_stepout_png_len,
+            qt_images_format
+        );
         QIcon stepOutIcon;
-        stepOutIcon.addPixmap(d->pixmap(QString::fromLatin1("stepout.png")), QIcon::Normal);
-        stepOutIcon.addPixmap(d->pixmap(QString::fromLatin1("d_stepout.png")), QIcon::Disabled);
+        stepOutIcon.addPixmap(pix, QIcon::Normal);
         QScriptDebugger *that = const_cast<QScriptDebugger*>(this);
         that->d_func()->stepOutAction = new QAction(stepOutIcon, QScriptDebugger::tr("Step Out"), parent);
         d->stepOutAction->setEnabled(d->interactive);
@@ -1727,9 +1749,13 @@ QAction *QScriptDebugger::runToCursorAction(QObject *parent) const
 {
     Q_D(const QScriptDebugger);
     if (!d->runToCursorAction) {
+        QPixmap pix;
+        pix.loadFromData(
+            scripttools_runtocursor_png, scripttools_runtocursor_png_len,
+            qt_images_format
+        );
         QIcon runToCursorIcon;
-        runToCursorIcon.addPixmap(d->pixmap(QString::fromLatin1("runtocursor.png")), QIcon::Normal);
-        runToCursorIcon.addPixmap(d->pixmap(QString::fromLatin1("d_runtocursor.png")), QIcon::Disabled);
+        runToCursorIcon.addPixmap(pix, QIcon::Normal);
         QScriptDebugger *that = const_cast<QScriptDebugger*>(this);
         that->d_func()->runToCursorAction = new QAction(runToCursorIcon, QScriptDebugger::tr("Run to Cursor"), parent);
         d->runToCursorAction->setEnabled(d->interactive);
@@ -1744,9 +1770,13 @@ QAction *QScriptDebugger::runToNewScriptAction(QObject *parent) const
 {
     Q_D(const QScriptDebugger);
     if (!d->runToNewScriptAction) {
+        QPixmap pix;
+        pix.loadFromData(
+            scripttools_runtonewscript_png, scripttools_runtonewscript_png_len,
+            qt_images_format
+        );
         QIcon runToNewScriptIcon;
-        runToNewScriptIcon.addPixmap(d->pixmap(QString::fromLatin1("runtonewscript.png")), QIcon::Normal);
-        runToNewScriptIcon.addPixmap(d->pixmap(QString::fromLatin1("d_breakonscriptload.png")), QIcon::Disabled);
+        runToNewScriptIcon.addPixmap(pix, QIcon::Normal);
         QScriptDebugger *that = const_cast<QScriptDebugger*>(this);
         that->d_func()->runToNewScriptAction = new QAction(runToNewScriptIcon,
                                                            QScriptDebugger::tr("Run to New Script"), parent);
@@ -1816,8 +1846,13 @@ QAction *QScriptDebugger::findInScriptAction(QObject *parent) const
 {
     Q_D(const QScriptDebugger);
     if (!d->findInScriptAction) {
+        QPixmap pix;
+        pix.loadFromData(
+            scripttools_find_png, scripttools_find_png_len,
+            qt_images_format
+        );
         QIcon findInScriptIcon;
-        findInScriptIcon.addPixmap(d->pixmap(QString::fromLatin1("find.png")), QIcon::Normal);
+        findInScriptIcon.addPixmap(pix, QIcon::Normal);
         QScriptDebugger *that = const_cast<QScriptDebugger*>(this);
         that->d_func()->findInScriptAction = new QAction(findInScriptIcon, QScriptDebugger::tr("&Find in Script..."), parent);
         d->findInScriptAction->setShortcut(QScriptDebugger::tr("Ctrl+F"));

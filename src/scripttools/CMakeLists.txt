@@ -104,6 +104,7 @@ set(SCRIPTTOOLS_HEADERS
     ${CMAKE_CURRENT_SOURCE_DIR}/debugging/qscriptsyntaxhighlighter_p.h
     ${CMAKE_CURRENT_SOURCE_DIR}/debugging/qscriptenginedebugger.h
     ${CMAKE_CURRENT_SOURCE_DIR}/qscripttoolscommon_p.h
+    ${CMAKE_CURRENT_SOURCE_DIR}/qscripttoolsresources_p.h
 )
 
 set(SCRIPTTOOLS_SOURCES
@@ -165,7 +166,6 @@ set(SCRIPTTOOLS_SOURCES
     ${CMAKE_CURRENT_SOURCE_DIR}/debugging/qscriptedit.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/debugging/qscriptsyntaxhighlighter.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/debugging/qscriptenginedebugger.cpp
-    ${CMAKE_CURRENT_SOURCE_DIR}/debugging/scripttools_debugging.qrc
 )
 
 katie_generate_misc("${SCRIPTTOOLS_HEADERS}" QtScriptTools)

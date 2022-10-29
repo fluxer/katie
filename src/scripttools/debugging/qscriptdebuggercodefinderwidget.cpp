@@ -21,6 +21,7 @@
 
 #include "qscriptdebuggercodefinderwidget_p.h"
 #include "qscriptdebuggercodefinderwidgetinterface_p_p.h"
+#include "qscripttoolsresources_p.h"
 
 #include <QtGui/qboxlayout.h>
 #include <QtGui/qlineedit.h>
@@ -111,7 +112,12 @@ QScriptDebuggerCodeFinderWidget::QScriptDebuggerCodeFinderWidget(QWidget *parent
     hboxLayout->setMargin(0);
 
     d->toolClose = new QToolButton(this);
-    d->toolClose->setIcon(QIcon(QLatin1String(":/qt/scripttools/debugging/images/win/closetab.png")));
+    QPixmap pix;
+    pix.loadFromData(
+        scripttools_closetab_png, scripttools_closetab_png_len,
+        qt_images_format
+    );
+    d->toolClose->setIcon(QIcon(pix));
     d->toolClose->setAutoRaise(true);
     d->toolClose->setText(tr("Close"));
     hboxLayout->addWidget(d->toolClose);
@@ -128,14 +134,22 @@ QScriptDebuggerCodeFinderWidget::QScriptDebuggerCodeFinderWidget(QWidget *parent
     d->toolPrevious->setAutoRaise(true);
     d->toolPrevious->setText(tr("Previous"));
     d->toolPrevious->setToolButtonStyle(Qt::ToolButtonTextBesideIcon);
-    d->toolPrevious->setIcon(QIcon(QLatin1String(":/qt/scripttools/debugging/images/win/previous.png")));
+    pix.loadFromData(
+        scripttools_previous_png, scripttools_previous_png_len,
+        qt_images_format
+    );
+    d->toolPrevious->setIcon(QIcon(pix));
     hboxLayout->addWidget(d->toolPrevious);
 
     d->toolNext = new QToolButton(this);
     d->toolNext->setAutoRaise(true);
     d->toolNext->setText(tr("Next"));
     d->toolNext->setToolButtonStyle(Qt::ToolButtonTextBesideIcon);
-    d->toolNext->setIcon(QIcon(QLatin1String(":/qt/scripttools/debugging/images/win/next.png")));
+    pix.loadFromData(
+        scripttools_next_png, scripttools_next_png_len,
+        qt_images_format
+    );
+    d->toolNext->setIcon(QIcon(pix));
     hboxLayout->addWidget(d->toolNext);
 
     d->checkCase = new QCheckBox(tr("Case Sensitive"), this);
@@ -150,7 +164,7 @@ QScriptDebuggerCodeFinderWidget::QScriptDebuggerCodeFinderWidget(QWidget *parent
     d->labelWrapped->setTextFormat(Qt::RichText);
     d->labelWrapped->setScaledContents(true);
     d->labelWrapped->setAlignment(Qt::AlignLeft|Qt::AlignVCenter);
-    d->labelWrapped->setText(tr("<img src=\":/qt/scripttools/debugging/images/wrap.png\">&nbsp;Search wrapped"));
+    d->labelWrapped->setText(tr("Search wrapped"));
     hboxLayout->addWidget(d->labelWrapped);
 
     QSpacerItem *spacerItem = new QSpacerItem(20, 20, QSizePolicy::Expanding, QSizePolicy::Minimum);

@@ -39,10 +39,11 @@
 #include <QtGui/qtextedit.h>
 #include <QtGui/qtextbrowser.h>
 #include <QtGui/qmenu.h>
-#include "qdialog_p.h"
 #include <QtGui/qfont.h>
 #include <QtGui/qfontmetrics.h>
 #include <QtGui/qclipboard.h>
+#include "qdialog_p.h"
+#include "qguiimages_p.h"
 
 QT_BEGIN_NAMESPACE
 
@@ -1451,9 +1452,9 @@ void QMessageBox::aboutQt(QWidget *parent, const QString &title)
     msgBox->setText(translatedTextAboutQtCaption);
     msgBox->setInformativeText(translatedTextAboutQtText);
 
-    QPixmap pm(QLatin1String(":/trolltech/qmessagebox/images/katie.png"));
-    if (!pm.isNull())
-        msgBox->setIconPixmap(pm);
+    QPixmap pm;
+    pm.loadFromData(katie_png, katie_png_len, qt_images_format);
+    msgBox->setIconPixmap(pm);
 
     msgBox->exec();
 }
@@ -1656,6 +1657,5 @@ QPixmap QMessageBox::standardIcon(Icon icon)
 QT_END_NAMESPACE
 
 #include "moc_qmessagebox.h"
-#include "qrc_qmessagebox.cpp"
 
 #endif // QT_NO_MESSAGEBOX

@@ -37,6 +37,7 @@
 #include <QtGui/qprinter.h>
 #include "qprinterinfo_unix_p.h"
 #include "qcore_unix_p.h"
+#include "qguiimages_p.h"
 
 #include "ui_qprintpropertieswidget.h"
 #include "ui_qprintsettingsoutput.h"
@@ -333,9 +334,12 @@ void QPrintDialogPrivate::init()
     bottom = new QWidget(q);
     options.setupUi(bottom);
     options.color->setIconSize(QSize(32, 32));
-    options.color->setIcon(QIcon(QLatin1String(":/trolltech/dialogs/qprintdialog/images/status-color.png")));
+    QPixmap pix;
+    pix.loadFromData(qprintdialog_status_color_png, qprintdialog_status_color_png_len, qt_images_format);
+    options.color->setIcon(QIcon(pix));
     options.grayscale->setIconSize(QSize(32, 32));
-    options.grayscale->setIcon(QIcon(QLatin1String(":/trolltech/dialogs/qprintdialog/images/status-gray-scale.png")));
+    pix.loadFromData(qprintdialog_status_gray_scale_png, qprintdialog_status_gray_scale_png_len, qt_images_format);
+    options.grayscale->setIcon(QIcon(pix));
     top->d->setOptionsPane(this);
 
     buttons = new QDialogButtonBox(QDialogButtonBox::Ok | QDialogButtonBox::Cancel, Qt::Horizontal, q);
@@ -1006,7 +1010,6 @@ QT_END_NAMESPACE
 
 #include "moc_qprintdialog.h"
 #include "moc_qprintdialog_unix.cpp"
-#include "qrc_qprintdialog.cpp"
 
 #endif // QT_NO_PRINTDIALOG
 

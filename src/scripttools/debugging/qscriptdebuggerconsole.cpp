@@ -29,6 +29,7 @@
 #include "qscriptdebuggervalueproperty_p.h"
 #include "qscriptscriptdata_p.h"
 #include "qscripttoolscommon_p.h"
+#include "qscripttoolsresources_p.h"
 
 #include <QtCore/qdir.h>
 #include <QtCore/qfileinfo.h>
@@ -235,8 +236,7 @@ public:
     QScriptDebuggerConsolePrivate(QScriptDebuggerConsole*);
     ~QScriptDebuggerConsolePrivate();
 
-    void loadScriptedCommands(const QString &scriptsPath,
-                              QScriptMessageHandlerInterface *messageHandler);
+    void loadScriptedCommands(QScriptMessageHandlerInterface *messageHandler);
     QScriptDebuggerConsoleCommandJob *createJob(
         const QString &command,
         QScriptMessageHandlerInterface *messageHandler,
@@ -292,23 +292,51 @@ QScriptDebuggerConsolePrivate::~QScriptDebuggerConsolePrivate()
 }
 
 /*!
-  Loads command definitions from scripts located in the given \a scriptsPath.
+  Loads command definitions from scripts.
 */
 void QScriptDebuggerConsolePrivate::loadScriptedCommands(
-    const QString &scriptsPath,
     QScriptMessageHandlerInterface *messageHandler)
 {
-    QDir dir(scriptsPath);
-    QFileInfoList entries = dir.entryInfoList(QStringList()
-                                              << QLatin1String("*.qs"));
-    for (int i = 0; i < entries.size(); ++i) {
-        const QFileInfo &fi = entries.at(i);
-        QString fileName = fi.fileName();
-        QFile file(scriptsPath + QLatin1Char('/') + fileName);
-        if (!file.open(QIODevice::ReadOnly))
-            continue;
-        QTextStream stream(&file);
-        QString program = stream.readAll();
+    static const struct ScriptsTblData {
+        const unsigned char* script;
+        const unsigned int scriptlen;
+        const char* scriptname;
+    } ScriptsTbl[] = {
+        { scripts_advance_qs, scripts_advance_qs_len, "advance.qs" },
+        { scripts_backtrace_qs, scripts_backtrace_qs_len, "backtrace.qs" },
+        { scripts_break_qs, scripts_break_qs_len, "break.qs" },
+        { scripts_clear_qs, scripts_clear_qs_len, "clear.qs" },
+        { scripts_complete_qs, scripts_complete_qs_len, "complete.qs" },
+        { scripts_condition_qs, scripts_condition_qs_len, "condition.qs" },
+        { scripts_continue_qs, scripts_continue_qs_len, "continue.qs" },
+        { scripts_delete_qs, scripts_delete_qs_len, "delete.qs" },
+        { scripts_disable_qs, scripts_disable_qs_len, "disable.qs" },
+        { scripts_down_qs, scripts_down_qs_len, "down.qs" },
+        { scripts_enable_qs, scripts_enable_qs_len, "enable.qs" },
+        { scripts_eval_qs, scripts_eval_qs_len, "eval.qs" },
+        { scripts_finish_qs, scripts_finish_qs_len, "finish.qs" },
+        { scripts_frame_qs, scripts_frame_qs_len, "frame.qs" },
+        { scripts_help_qs, scripts_help_qs_len, "help.qs" },
+        { scripts_ignore_qs, scripts_ignore_qs_len, "ignore.qs" },
+        { scripts_info_qs, scripts_info_qs_len, "info.qs" },
+        { scripts_interrupt_qs, scripts_interrupt_qs_len, "interrupt.qs" },
+        { scripts_list_qs, scripts_list_qs_len, "list.qs" },
+        { scripts_next_qs, scripts_next_qs_len, "next.qs" },
+        { scripts_print_qs, scripts_print_qs_len, "print.qs" },
+        { scripts_return_qs, scripts_return_qs_len, "return.qs" },
+        { scripts_step_qs, scripts_step_qs_len, "step.qs" },
+        { scripts_tbreak_qs, scripts_tbreak_qs_len, "tbreak.qs" },
+        { scripts_up_qs, scripts_up_qs_len, "up.qs" }
+    };
+    static const qint16 ScriptsTblSize = sizeof(ScriptsTbl) / sizeof(ScriptsTblData);
+
+    for (int i = 0; i < ScriptsTblSize; ++i) {
+
+        QString program = QString::fromLocal8Bit(
+            reinterpret_cast<const char*>(ScriptsTbl[i].script),
+            ScriptsTbl[i].scriptlen
+        );
+        QString fileName = QString::fromLocal8Bit(ScriptsTbl[i].scriptname);
         QScriptDebuggerScriptedConsoleCommand *command;
         command = QScriptDebuggerScriptedConsoleCommand::parse(
             program, fileName, commandEngine, messageHandler);
@@ -386,11 +414,10 @@ QScriptDebuggerConsole::~QScriptDebuggerConsole()
 {
 }
 
-void QScriptDebuggerConsole::loadScriptedCommands(const QString &scriptsPath,
-                                                  QScriptMessageHandlerInterface *messageHandler)
+void QScriptDebuggerConsole::loadScriptedCommands(QScriptMessageHandlerInterface *messageHandler)
 {
     Q_D(QScriptDebuggerConsole);
-    d->loadScriptedCommands(scriptsPath, messageHandler);
+    d->loadScriptedCommands(messageHandler);
 }
 
 QScriptDebuggerConsoleCommandManager *QScriptDebuggerConsole::commandManager() const

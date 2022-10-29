@@ -62,7 +62,7 @@ install(
     COMPONENT Tools
 )
 install(
-    FILES ${CMAKE_CURRENT_SOURCE_DIR}/qtconfig.png
+    FILES ${CMAKE_SOURCE_DIR}/data/katie.png
     DESTINATION ${KATIE_PIXMAPS_PATH}
     RENAME qtconfig${KATIE_TOOLS_SUFFIX}.png
     COMPONENT Tools

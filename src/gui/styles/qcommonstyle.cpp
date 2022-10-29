@@ -50,6 +50,7 @@
 #include "qpixmapcache.h"
 #include "qguiplatformplugin.h"
 #include "qstylehelper_p.h"
+#include "qguiimages_p.h"
 
 #ifndef QT_NO_ITEMVIEWS
 #  include "qtextengine_p.h"
@@ -251,15 +252,19 @@ void QCommonStyle::drawPrimitive(PrimitiveElement pe, const QStyleOption *opt, Q
         int aft_h = mid_h;
         int aft_v = mid_v;
         static const int decoration_size = 9;
-        static QPixmap open(QLatin1String(":/trolltech/styles/images/tree_branch_open.png"));
-        static QPixmap closed(QLatin1String(":/trolltech/styles/images/tree_branch_closed.png"));
         if (opt->state & State_Children) {
             int delta = decoration_size / 2;
             bef_h -= delta;
             bef_v -= delta;
             aft_h += delta;
             aft_v += delta;
-            p->drawPixmap(bef_h, bef_v, opt->state & State_Open ? open : closed);
+            QPixmap statepm;
+            if (opt->state & State_Open) {
+                statepm.loadFromData(tree_branch_open_png, tree_branch_open_png_len, qt_images_format);
+            } else {
+                statepm.loadFromData(tree_branch_closed_png, tree_branch_closed_png_len, qt_images_format);
+            }
+            p->drawPixmap(bef_h, bef_v, statepm);
         }
         if (opt->state & State_Item) {
             if (opt->direction == Qt::RightToLeft)
@@ -5096,15 +5101,24 @@ QPixmap QCommonStyle::standardPixmap(StandardPixmap sp, const QStyleOption *opti
     }
 
     switch (sp) {
-        case SP_ToolBarHorizontalExtensionButton:
+        case SP_ToolBarHorizontalExtensionButton: {
             if (rtl) {
-                QImage im(QLatin1String(":/trolltech/styles/images/tb_extension_arrow_h.png"));
+                QImage im = QImage::fromData(
+                    reinterpret_cast<const char*>(tb_extension_arrow_h_png), tb_extension_arrow_h_png_len,
+                    qt_images_format
+                );
                 im = im.mirrored(true, false);
                 return QPixmap::fromImage(im);
             }
-            return QPixmap(QLatin1String(":/trolltech/styles/images/tb_extension_arrow_h.png"));
-        case SP_ToolBarVerticalExtensionButton:
-            return QPixmap(QLatin1String(":/trolltech/styles/images/tb_extension_arrow_v.png"));
+            QPixmap pm;
+            pm.loadFromData(tb_extension_arrow_h_png, tb_extension_arrow_h_png_len, qt_images_format);
+            return pm;
+        }
+        case SP_ToolBarVerticalExtensionButton: {
+            QPixmap pm;
+            pm.loadFromData(tb_extension_arrow_v_png, tb_extension_arrow_v_png_len, qt_images_format);
+            return pm;
+        }
         case SP_CommandLink:
         case SP_ArrowForward:
             if (rtl)

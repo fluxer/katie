@@ -21,6 +21,7 @@
 
 #include "qscriptedit_p.h"
 #include "qscriptsyntaxhighlighter_p.h"
+#include "qscripttoolsresources_p.h"
 
 #include <QtGui/qpainter.h>
 #include <QtGui/qicon.h>
@@ -304,8 +305,6 @@ void QScriptEdit::extraAreaPaintEvent(QPaintEvent *e)
     qreal top = blockBoundingGeometry(block).translated(contentOffset()).top();
     qreal bottom = top + blockBoundingRect(block).height();
 
-    static QString imagesPath = QString::fromLatin1(":/qt/scripttools/debugging/images");
-
     while (block.isValid() && top <= rect.bottom()) {
         if (block.isVisible() && bottom >= rect.top()) {
 
@@ -313,15 +312,30 @@ void QScriptEdit::extraAreaPaintEvent(QPaintEvent *e)
             if (m_breakpoints.contains(lineNumber)) {
                 int radius = fm.lineSpacing() - 1;
                 QRect r(rect.x(), (int)top, radius, radius);
-                QIcon icon(m_breakpoints[lineNumber].enabled
-                           ? QString::fromLatin1("%1/breakpoint.png").arg(imagesPath)
-                           : QString::fromLatin1("%1/d_breakpoint.png").arg(imagesPath));
+                QPixmap pix;
+                if (m_breakpoints[lineNumber].enabled) {
+                    pix.loadFromData(
+                        scripttools_breakpoint_png, scripttools_breakpoint_png_len,
+                        qt_images_format
+                    );
+                } else {
+                    pix.loadFromData(
+                        scripttools_d_breakpoint_png, scripttools_d_breakpoint_png_len,
+                        qt_images_format
+                    );
+                }
+                QIcon icon(pix);
                 icon.paint(&painter, r, Qt::AlignCenter);
             }
             if (m_executionLineNumber == lineNumber) {
                 int radius = fm.lineSpacing() - 1;
                 QRect r(rect.x(), (int)top, radius, radius);
-                QIcon icon(QString::fromLatin1("%1/location.png").arg(imagesPath));
+                QPixmap pix;
+                pix.loadFromData(
+                    scripttools_location_png, scripttools_location_png_len,
+                    qt_images_format
+                );
+                QIcon icon(pix);
                 icon.paint(&painter, r, Qt::AlignCenter);
             }
 

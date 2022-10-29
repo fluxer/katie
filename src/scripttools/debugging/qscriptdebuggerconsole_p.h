@@ -54,8 +54,7 @@ public:
     QScriptDebuggerConsole();
     ~QScriptDebuggerConsole();
 
-    void loadScriptedCommands(const QString &scriptsPath,
-                              QScriptMessageHandlerInterface *messageHandler);
+    void loadScriptedCommands(QScriptMessageHandlerInterface *messageHandler);
 
     void showDebuggerInfoMessage(QScriptMessageHandlerInterface *messageHandler);
 
