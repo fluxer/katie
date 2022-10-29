@@ -51,16 +51,10 @@ QFilePrivate::~QFilePrivate()
 bool
 QFilePrivate::openExternalFile(int flags, int fd, QFile::FileHandleFlags handleFlags)
 {
-#ifdef QT_NO_FSFILEENGINE
-    Q_UNUSED(flags);
-    Q_UNUSED(fd);
-    return false;
-#else
     delete fileEngine;
     fileEngine = 0;
     fileEngine = new QAbstractFileEngine();
     return fileEngine->open(QIODevice::OpenMode(flags), fd, handleFlags);
-#endif
 }
 
 void

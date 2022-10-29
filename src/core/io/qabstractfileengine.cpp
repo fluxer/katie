@@ -141,14 +141,10 @@ bool QAbstractFileEnginePrivate::unmap(uchar *ptr)
 */
 QAbstractFileEngine *QAbstractFileEngine::create(const QString &fileName)
 {
-#ifndef QT_NO_FSFILEENGINE
     // fall back to regular file engine
     QAbstractFileEngine *engine = new QAbstractFileEngine();
     engine->d_ptr->fileEntry = QFileSystemEntry(fileName);
     return engine;
-#else
-    return nullptr;
-#endif
 }
 
 /*!

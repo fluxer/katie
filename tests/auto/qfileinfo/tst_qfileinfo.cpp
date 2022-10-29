@@ -120,9 +120,6 @@ private slots:
     void isHidden_data();
     void isHidden();
 
-    void isLocalFs_data();
-    void isLocalFs();
-
     void refresh();
 
     void isWritable();
@@ -811,26 +808,6 @@ void tst_QFileInfo::isHidden()
     QFileInfo fi(path);
 
     QCOMPARE(fi.isHidden(), isHidden);
-}
-
-void tst_QFileInfo::isLocalFs_data()
-{
-    QTest::addColumn<QString>("path");
-    QTest::addColumn<bool>("isLocalFs");
-
-    QTest::newRow("local root") << QString::fromLatin1("/") << true;
-    QTest::newRow("local non-existent file") << QString::fromLatin1("/abrakadabra.boo") << true;
-}
-
-void tst_QFileInfo::isLocalFs()
-{
-    QFETCH(QString, path);
-    QFETCH(bool, isLocalFs);
-
-    QFileInfo info(path);
-    QFileInfoPrivate *privateInfo = getPrivate(info);
-    QCOMPARE(bool(privateInfo->fileEngine->fileFlags(QAbstractFileEngine::LocalDiskFlag)
-                     & QAbstractFileEngine::LocalDiskFlag), isLocalFs);
 }
 
 void tst_QFileInfo::refresh()

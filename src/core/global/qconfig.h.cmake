@@ -107,7 +107,6 @@
 // #cmakedefine QT_NO_FILESYSTEMMODEL
 // #cmakedefine QT_NO_FONTCOMBOBOX
 // #cmakedefine QT_NO_FONTDIALOG
-// #cmakedefine QT_NO_FSFILEENGINE
 // #cmakedefine QT_NO_GRAPHICSVIEW
 // #cmakedefine QT_NO_GROUPBOX
 // #cmakedefine QT_NO_ICON
@@ -546,11 +545,6 @@
 // QPrintPreviewDialog
 #if !defined(QT_NO_PRINTPREVIEWDIALOG) && (defined(QT_NO_PRINTPREVIEWWIDGET) || defined(QT_NO_PRINTDIALOG) || defined(QT_NO_TOOLBAR))
 #  define QT_NO_PRINTPREVIEWDIALOG
-#endif
-
-// QTemporaryFile
-#if !defined(QT_NO_TEMPORARYFILE) && defined(QT_NO_FSFILEENGINE)
-#  define QT_NO_TEMPORARYFILE
 #endif
 
 // QLocalServer
