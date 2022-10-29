@@ -44,11 +44,7 @@ QT_BEGIN_NAMESPACE
 class QAbstractFileEnginePrivate
 {
 public:
-    inline QAbstractFileEnginePrivate()
-        : fileError(QFile::UnspecifiedError)
-    {
-        init();
-    }
+    QAbstractFileEnginePrivate();
 
     QFile::FileError fileError;
     QString errorString;
@@ -70,9 +66,6 @@ public:
 
     QAbstractFileEngine *q_ptr;
     Q_DECLARE_PUBLIC(QAbstractFileEngine)
-
-protected:
-    void init();
 };
 
 QT_END_NAMESPACE

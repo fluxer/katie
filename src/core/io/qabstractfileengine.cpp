@@ -38,15 +38,12 @@
 
 QT_BEGIN_NAMESPACE
 
-/*!
-    \internal
-*/
-void QAbstractFileEnginePrivate::init()
+QAbstractFileEnginePrivate::QAbstractFileEnginePrivate()
+    : fileError(QFile::UnspecifiedError),
+    openMode(QIODevice::NotOpen),
+    fd(-1),
+    closeFileHandle(false)
 {
-    metaData.clear();
-    openMode = QIODevice::NotOpen;
-    fd = -1;
-    closeFileHandle = false;
 }
 
 bool QAbstractFileEnginePrivate::doStat(QFileSystemMetaData::MetaDataFlags flags) const
@@ -848,7 +845,10 @@ QDateTime QAbstractFileEngine::fileTime(FileTime time) const
 void QAbstractFileEngine::setFileName(const QString &file)
 {
     Q_D(QAbstractFileEngine);
-    d->init();
+    d->metaData.clear();
+    d->openMode = QIODevice::NotOpen;
+    d->fd = -1;
+    d->closeFileHandle = false;
     d->fileEntry = QFileSystemEntry(file);
 }
 
