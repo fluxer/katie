@@ -143,7 +143,7 @@ static QImageIOHandler *createReadHandlerHelper(QIODevice *device,
 #endif
 #ifndef QT_NO_IMAGEFORMAT_PPM
     } else if (form == "pbm" || form == "pbmraw" || form == "ppm" || form == "ppmraw") {
-        handler = new QPpmHandler();
+        handler = new QPpmHandler(form);
 #endif
     }
 
@@ -177,7 +177,7 @@ static QImageIOHandler *createReadHandlerHelper(QIODevice *device,
 #ifndef QT_NO_IMAGEFORMAT_PPM
         QByteArray subType;
         if (!handler && QPpmHandler::canRead(device, &subType)) {
-            handler = new QPpmHandler();
+            handler = new QPpmHandler(subType);
         }
 #endif
     }
