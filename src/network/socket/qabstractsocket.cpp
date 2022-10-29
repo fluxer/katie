@@ -1831,13 +1831,6 @@ qint64 QAbstractSocket::readData(char *data, qint64 maxSize)
 
 /*! \reimp
 */
-qint64 QAbstractSocket::readLineData(char *data, qint64 maxlen)
-{
-    return QIODevice::readLineData(data, maxlen);
-}
-
-/*! \reimp
-*/
 qint64 QAbstractSocket::writeData(const char *data, qint64 size)
 {
     Q_D(QAbstractSocket);
