@@ -27,8 +27,6 @@
 #include "qfilesystemengine_p.h"
 #include "qfileinfo_p.h"
 #include "qcore_unix_p.h"
-// built-in handlers
-#include "qdiriterator.h"
 
 #include <sys/mman.h>
 #include <stdlib.h>
@@ -253,7 +251,8 @@ QAbstractFileEngine *QAbstractFileEngine::create(const QString &fileName)
 
    \sa setFileName()
  */
-QAbstractFileEngine::QAbstractFileEngine() : d_ptr(new QAbstractFileEnginePrivate)
+QAbstractFileEngine::QAbstractFileEngine()
+    : d_ptr(new QAbstractFileEnginePrivate())
 {
     d_ptr->q_ptr = this;
 }
@@ -263,7 +262,8 @@ QAbstractFileEngine::QAbstractFileEngine() : d_ptr(new QAbstractFileEnginePrivat
 
    Constructs a QAbstractFileEngine.
  */
-QAbstractFileEngine::QAbstractFileEngine(QAbstractFileEnginePrivate &dd) : d_ptr(&dd)
+QAbstractFileEngine::QAbstractFileEngine(QAbstractFileEnginePrivate &dd)
+    : d_ptr(&dd)
 {
     d_ptr->q_ptr = this;
 }
@@ -593,28 +593,6 @@ bool QAbstractFileEngine::isRelativePath() const
 {
     Q_D(const QAbstractFileEngine);
     return d->fileEntry.filePath().length() ? d->fileEntry.filePath()[0] != QLatin1Char('/') : true;
-}
-
-/*!
-    Requests that a list of all the files matching the \a filters
-    list based on the \a filterNames in the file engine's directory
-    are returned.
-
-    Should return an empty list if the file engine refers to a file
-    rather than a directory, or if the directory is unreadable or does
-    not exist or if nothing matches the specifications.
-
-    \sa setFileName()
- */
-QStringList QAbstractFileEngine::entryList(QDir::Filters filters, const QStringList &filterNames) const
-{
-    QStringList ret;
-    QDirIterator it(fileName(), filterNames, filters);
-    while (it.hasNext()) {
-        it.next();
-        ret << it.fileName();
-    }
-    return ret;
 }
 
 /*!

@@ -98,7 +98,6 @@ public:
     bool link(const QString &newName);
     bool setSize(qint64 size);
     bool isRelativePath() const;
-    QStringList entryList(QDir::Filters filters, const QStringList &filterNames) const;
     FileFlags fileFlags(FileFlags type=FileInfoAll) const;
     bool setPermissions(uint perms);
     QString fileName(FileName file=DefaultName) const;
