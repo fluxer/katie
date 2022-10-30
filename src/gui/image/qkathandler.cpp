@@ -65,6 +65,7 @@ bool QKatHandler::canRead(QIODevice *device)
 bool QKatHandler::read(QImage *image)
 {
     QDataStream imagestream(device());
+    imagestream.setByteOrder(QDataStream::BigEndian);
 
     QSTACKARRAY(char, header, 5);
     imagestream.readRawData(header, 5);
@@ -163,6 +164,7 @@ bool QKatHandler::write(const QImage &image)
     }
 
     QDataStream imagestream(device());
+    imagestream.setByteOrder(QDataStream::BigEndian);
     imagestream.writeRawData("KATIE", 5);
     imagestream << (qint8) image.format();
     imagestream << (quint16) image.width();
@@ -185,6 +187,7 @@ QVariant QKatHandler::option(QImageIOHandler::ImageOption option) const
     if (option == QImageIOHandler::Size) {
         const qint64 devicepos = device()->pos();
         QDataStream imagestream(device());
+        imagestream.setByteOrder(QDataStream::BigEndian);
 
         QSTACKARRAY(char, header, 5);
         imagestream.readRawData(header, 5);
