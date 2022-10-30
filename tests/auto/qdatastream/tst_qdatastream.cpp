@@ -310,15 +310,15 @@ void tst_QDataStream::stream_data(int noOfElements)
     QTest::addColumn<QString>("byteOrder");
 
     for (int d=0; devices[d] != 0; d++) {
-	QString device = devices[d];
-	for (int b=0; b<2; b++) {
-	    QString byte_order = b == 0 ? "BigEndian" : "LittleEndian";
+        QString device = devices[d];
+        for (int b=0; b<2; b++) {
+            QString byte_order = b == 0 ? "BigEndian" : "LittleEndian";
 
-	    QString tag = device + "_" + byte_order;
-	    for (int e=0; e<noOfElements; e++) {
-		QTest::newRow(qPrintable(tag + QString("_%1").arg(e))) << device << QString(byte_order);
-	    }
-	}
+            QString tag = device + "_" + byte_order;
+            for (int e=0; e<noOfElements; e++) {
+                QTest::newRow(qPrintable(tag + QString("_%1").arg(e))) << device << QString(byte_order);
+            }
+        }
     }
 }
 static const QString open_png = QFile::decodeName(SRCDIR "/open.png");
@@ -326,35 +326,35 @@ static const QString open_png = QFile::decodeName(SRCDIR "/open.png");
 #define STREAM_IMPL(TYPE) \
     QFETCH(QString, device); \
     if (device == "bytearray") { \
-	    QByteArray ba; \
-	    QDataStream sout(&ba, QIODevice::WriteOnly); \
-	    write##TYPE(&sout); \
-	    QDataStream sin(&ba, QIODevice::ReadOnly); \
-	    read##TYPE(&sin); \
+            QByteArray ba; \
+            QDataStream sout(&ba, QIODevice::WriteOnly); \
+            write##TYPE(&sout); \
+            QDataStream sin(&ba, QIODevice::ReadOnly); \
+            read##TYPE(&sin); \
     } else if (device == "file") { \
-	    QString fileName = "qdatastream.out"; \
-	    QFile fOut(fileName); \
-	    QVERIFY(fOut.open(QIODevice::WriteOnly)); \
-	    QDataStream sout(&fOut); \
-	    write##TYPE(&sout); \
-	    fOut.close(); \
-	    QFile fIn(fileName); \
-	    QVERIFY(fIn.open(QIODevice::ReadOnly)); \
-	    QDataStream sin(&fIn); \
-	    read##TYPE(&sin); \
-	    fIn.close(); \
+            QString fileName = "qdatastream.out"; \
+            QFile fOut(fileName); \
+            QVERIFY(fOut.open(QIODevice::WriteOnly)); \
+            QDataStream sout(&fOut); \
+            write##TYPE(&sout); \
+            fOut.close(); \
+            QFile fIn(fileName); \
+            QVERIFY(fIn.open(QIODevice::ReadOnly)); \
+            QDataStream sin(&fIn); \
+            read##TYPE(&sin); \
+            fIn.close(); \
     } else if (device == "buffer") { \
-	    QByteArray ba(10000, '\0'); \
-	    QBuffer bOut(&ba); \
-	    bOut.open(QIODevice::WriteOnly); \
-	    QDataStream sout(&bOut); \
-	    write##TYPE(&sout); \
-	    bOut.close(); \
-	    QBuffer bIn(&ba); \
-	    bIn.open(QIODevice::ReadOnly); \
-	    QDataStream sin(&bIn); \
-	    read##TYPE(&sin); \
-	    bIn.close(); \
+            QByteArray ba(10000, '\0'); \
+            QBuffer bOut(&ba); \
+            bOut.open(QIODevice::WriteOnly); \
+            QDataStream sout(&bOut); \
+            write##TYPE(&sout); \
+            bOut.close(); \
+            QBuffer bIn(&ba); \
+            bIn.open(QIODevice::ReadOnly); \
+            QDataStream sin(&bIn); \
+            read##TYPE(&sin); \
+            bIn.close(); \
     }
 
 // ************************************
@@ -363,13 +363,13 @@ static QString QStringData(int index)
 {
     switch (index)
     {
-	case 0: return QString();
-	case 1: return QString("");
-	case 2: return QString("A");
-	case 3: return QString("ABCDE FGHI");
-	case 4: return QString("This is a long string");
-	case 5: return QString("And again a string with a \nCRLF");
-	case 6: return QString("abcdefghijklmnopqrstuvwxyz ABCDEFGHIJKLMNOPQRESTUVWXYZ 1234567890 ~`!@#$%^&*()_-+={[}]|\\:;\"'<,>.?/");
+        case 0: return QString();
+        case 1: return QString("");
+        case 2: return QString("A");
+        case 3: return QString("ABCDE FGHI");
+        case 4: return QString("This is a long string");
+        case 5: return QString("And again a string with a \nCRLF");
+        case 6: return QString("abcdefghijklmnopqrstuvwxyz ABCDEFGHIJKLMNOPQRESTUVWXYZ 1234567890 ~`!@#$%^&*()_-+={[}]|\\:;\"'<,>.?/");
     }
     return QString("foo");
 }

@@ -117,7 +117,6 @@ private:
 
     QIODevice *dev;
     bool owndev;
-    bool noswap;
     ByteOrder byteorder;
     DataStatus q_status;
     FloatingPointPrecision floatingPrecision;

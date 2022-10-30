@@ -226,7 +226,6 @@ QT_BEGIN_NAMESPACE
 QDataStream::QDataStream()
     : dev(nullptr),
     owndev(false),
-    noswap(QDataStream::HostEndian == QDataStream::BigEndian),
     byteorder(QDataStream::BigEndian),
     q_status(QDataStream::Ok),
     floatingPrecision(QDataStream::DoublePrecision)
@@ -248,7 +247,6 @@ QDataStream::QDataStream()
 QDataStream::QDataStream(QIODevice *device)
     : dev(device),
     owndev(false),
-    noswap(QDataStream::HostEndian == QDataStream::BigEndian),
     byteorder(QDataStream::BigEndian),
     q_status(QDataStream::Ok),
     floatingPrecision(QDataStream::DoublePrecision)
@@ -272,7 +270,6 @@ QDataStream::QDataStream(QIODevice *device)
 QDataStream::QDataStream(QByteArray *a, QIODevice::OpenMode flags)
     : dev(nullptr),
     owndev(true),
-    noswap(QDataStream::HostEndian == QDataStream::BigEndian),
     byteorder(QDataStream::BigEndian),
     q_status(QDataStream::Ok),
     floatingPrecision(QDataStream::DoublePrecision)
@@ -296,7 +293,6 @@ QDataStream::QDataStream(QByteArray *a, QIODevice::OpenMode flags)
 QDataStream::QDataStream(const QByteArray &a)
     : dev(nullptr),
     owndev(true),
-    noswap(QDataStream::HostEndian == QDataStream::BigEndian),
     byteorder(QDataStream::BigEndian),
     q_status(QDataStream::Ok),
     floatingPrecision(QDataStream::DoublePrecision)
@@ -462,7 +458,6 @@ void QDataStream::setStatus(DataStatus status)
 void QDataStream::setByteOrder(ByteOrder bo)
 {
     byteorder = bo;
-    noswap = (byteorder == QDataStream::HostEndian);
 }
 
 /*****************************************************************************
@@ -517,7 +512,7 @@ QDataStream &QDataStream::operator>>(qint16 &i)
     if (dev->read((char *)&i, sizeof(qint16)) != sizeof(qint16)) {
         i = 0;
         setStatus(ReadPastEnd);
-    } else if (!noswap) {
+    } else if (byteorder != QDataStream::HostEndian) {
         i = qbswap(i);
     }
     return *this;
@@ -546,7 +541,7 @@ QDataStream &QDataStream::operator>>(qint32 &i)
     if (dev->read((char *)&i, sizeof(qint32)) != sizeof(qint32)) {
         i = 0;
         setStatus(ReadPastEnd);
-    } else if (!noswap) {
+    } else if (byteorder != QDataStream::HostEndian) {
         i = qbswap(i);
     }
     return *this;
@@ -574,7 +569,7 @@ QDataStream &QDataStream::operator>>(qint64 &i)
     if (dev->read((char *)&i, sizeof(qint64)) != sizeof(qint64)) {
         i = qint64(0);
         setStatus(ReadPastEnd);
-    } else if (!noswap) {
+    } else if (byteorder != QDataStream::HostEndian) {
         i = qbswap(i);
     }
     return *this;
@@ -616,7 +611,7 @@ QDataStream &QDataStream::operator>>(float &f)
     if (dev->read((char *)&f, sizeof(float)) != sizeof(float)) {
         f = 0.0f;
         setStatus(ReadPastEnd);
-    } else if (!noswap) {
+    } else if (byteorder != QDataStream::HostEndian) {
         union {
             float val1;
             quint32 val2;
@@ -651,7 +646,7 @@ QDataStream &QDataStream::operator>>(double &f)
     if (dev->read((char *)&f, sizeof(double)) != sizeof(double)) {
         f = 0.0;
         setStatus(ReadPastEnd);
-    } else if (!noswap) {
+    } else if (byteorder != QDataStream::HostEndian) {
         union {
             double val1;
             quint64 val2;
@@ -783,7 +778,7 @@ QDataStream &QDataStream::operator<<(qint8 i)
 QDataStream &QDataStream::operator<<(qint16 i)
 {
     CHECK_STREAM_WRITE_PRECOND(*this)
-    if (!noswap) {
+    if (byteorder != QDataStream::HostEndian) {
         i = qbswap(i);
     }
     if (dev->write((char *)&i, sizeof(qint16)) != sizeof(qint16))
@@ -801,7 +796,7 @@ QDataStream &QDataStream::operator<<(qint16 i)
 QDataStream &QDataStream::operator<<(qint32 i)
 {
     CHECK_STREAM_WRITE_PRECOND(*this)
-    if (!noswap) {
+    if (byteorder != QDataStream::HostEndian) {
         i = qbswap(i);
     }
     if (dev->write((char *)&i, sizeof(qint32)) != sizeof(qint32))
@@ -827,7 +822,7 @@ QDataStream &QDataStream::operator<<(qint32 i)
 QDataStream &QDataStream::operator<<(qint64 i)
 {
     CHECK_STREAM_WRITE_PRECOND(*this)
-    if (!noswap) {
+    if (byteorder != QDataStream::HostEndian) {
         i = qbswap(i);
     }
     if (dev->write((char *)&i, sizeof(qint64)) != sizeof(qint64))
@@ -874,7 +869,7 @@ QDataStream &QDataStream::operator<<(float f)
 
     CHECK_STREAM_WRITE_PRECOND(*this)
     float g = f;                                // fixes float-on-stack problem
-    if (!noswap) {
+    if (byteorder != QDataStream::HostEndian) {
         union {
             float val1;
             quint32 val2;
@@ -910,7 +905,7 @@ QDataStream &QDataStream::operator<<(double f)
     }
 
     CHECK_STREAM_WRITE_PRECOND(*this)
-    if (noswap) {
+    if (byteorder == QDataStream::HostEndian) {
         if (dev->write((char *)&f, sizeof(double)) != sizeof(double))
             q_status = WriteFailed;
     } else {
