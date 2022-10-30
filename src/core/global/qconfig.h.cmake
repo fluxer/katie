@@ -87,7 +87,6 @@
 // #cmakedefine QT_NO_ACTION
 // #cmakedefine QT_NO_ANIMATION
 // #cmakedefine QT_NO_BUTTONGROUP
-// #cmakedefine QT_NO_CALENDARWIDGET
 // #cmakedefine QT_NO_CLIPBOARD
 // #cmakedefine QT_NO_DRAGANDDROP
 // #cmakedefine QT_NO_COLORDIALOG
@@ -96,7 +95,6 @@
 // #cmakedefine QT_NO_CONTEXTMENU
 // #cmakedefine QT_NO_CSSPARSER
 // #cmakedefine QT_NO_DATESTRING
-// #cmakedefine QT_NO_DATETIMEEDIT
 // #cmakedefine QT_NO_DEBUG_STREAM
 // #cmakedefine QT_NO_DIRMODEL
 // #cmakedefine QT_NO_DOCKWIDGET
@@ -166,10 +164,12 @@
 
 // Misc
 #cmakedefine QT_NO_BACKINGSTORE
+#cmakedefine QT_NO_CALENDARWIDGET
 #cmakedefine QT_NO_COLORNAMES
 #cmakedefine QT_NO_COLUMNVIEW
 #cmakedefine QT_NO_CURSOR
 #cmakedefine QT_NO_DATAWIDGETMAPPER
+#cmakedefine QT_NO_DATETIMEEDIT
 #cmakedefine QT_NO_DEBUG
 #cmakedefine QT_NO_DIAL
 #cmakedefine QT_NO_DIALOGBUTTONBOX

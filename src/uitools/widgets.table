@@ -13,11 +13,7 @@ DECLARE_WIDGET(QComboBox, "")
 #endif
 #ifndef QT_NO_DATETIMEEDIT
 DECLARE_WIDGET(QDateTimeEdit, "")
-#endif
-#ifndef QT_NO_DATEEDIT
 DECLARE_WIDGET(QDateEdit, "")
-#endif
-#ifndef QT_NO_TIMEEDIT
 DECLARE_WIDGET(QTimeEdit, "")
 #endif
 #ifndef QT_NO_DIAL

@@ -1239,7 +1239,9 @@ void tst_QStyleSheetStyle::emptyStyleSheet()
     layout.addWidget(new QLineEdit(&w));
     layout.addWidget(new QSpinBox(&w));
     layout.addWidget(new QComboBox(&w));
+#ifndef QT_NO_DATETIMEEDIT
     layout.addWidget(new QDateEdit(&w));
+#endif
     layout.addWidget(new QGroupBox("some text", &w));
 
     w.show();

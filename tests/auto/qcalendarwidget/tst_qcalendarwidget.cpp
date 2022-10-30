@@ -30,10 +30,10 @@
 #include <qdatetime.h>
 #include <qtextformat.h>
 
-
 //TESTED_CLASS=
 //TESTED_FILES=
 
+#ifndef QT_NO_CALENDARWIDGET
 class tst_QCalendarWidget : public QObject
 {
     Q_OBJECT
@@ -315,3 +315,9 @@ void tst_QCalendarWidget::showPrevNext()
 QTEST_MAIN(tst_QCalendarWidget)
 
 #include "moc_tst_qcalendarwidget.cpp"
+
+#else // QT_NO_CALENDARWIDGET
+
+QTEST_NOOP_MAIN
+
+#endif // QT_NO_CALENDARWIDGET
