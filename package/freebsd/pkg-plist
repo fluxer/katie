@@ -1,4 +1,3 @@
-bin/designer-katie
 bin/moc-katie
 bin/qdbus-katie
 bin/qdbuscpp2xml-katie
@@ -6,7 +5,6 @@ bin/qdbusviewer-katie
 bin/qdbusxml2cpp-katie
 bin/qscript-katie
 bin/qtconfig-katie
-bin/rcc-katie
 bin/uic-katie
 include/katie/QtCore/QAbstractEventDispatcher
 include/katie/QtCore/QAbstractFileEngine
@@ -1127,7 +1125,6 @@ libdata/pkgconfig/KtSvg.pc
 libdata/pkgconfig/KtTest.pc
 libdata/pkgconfig/KtUiTools.pc
 libdata/pkgconfig/KtXml.pc
-share/applications/designer-katie.desktop
 share/applications/qdbusviewer-katie.desktop
 share/applications/qtconfig-katie.desktop
 share/man/man1/moc-katie.1.gz
@@ -1135,8 +1132,6 @@ share/man/man1/qdbus-katie.1.gz
 share/man/man1/qdbuscpp2xml-katie.1.gz
 share/man/man1/qdbusxml2cpp-katie.1.gz
 share/man/man1/qscript-katie.1.gz
-share/man/man1/rcc-katie.1.gz
 share/man/man1/uic-katie.1.gz
-share/pixmaps/designer-katie.png
 share/pixmaps/qdbusviewer-katie.png
 share/pixmaps/qtconfig-katie.png
