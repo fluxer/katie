@@ -22,6 +22,7 @@
 #include "qplatformdefs.h"
 #include "qfilesystemengine_p.h"
 #include "qfile.h"
+#include "qdir.h"
 #include "qcore_unix_p.h"
 #include "qcorecommon_p.h"
 

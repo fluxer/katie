@@ -22,7 +22,8 @@
 #ifndef QABSTRACTFILEENGINE_H
 #define QABSTRACTFILEENGINE_H
 
-#include <QtCore/qdir.h>
+#include <QtCore/qfile.h>
+#include <QtCore/qdatetime.h>
 
 #ifdef open
 #error qabstractfileengine.h must be included before any header file that defines open
@@ -35,33 +36,6 @@ class QAbstractFileEnginePrivate;
 class Q_CORE_EXPORT QAbstractFileEngine
 {
 public:
-    enum FileFlag {
-        //perms (overlaps the QFile::Permission)
-        ReadOwnerPerm = 0x4000, WriteOwnerPerm = 0x2000, ExeOwnerPerm = 0x1000,
-        ReadUserPerm  = 0x0400, WriteUserPerm  = 0x0200, ExeUserPerm  = 0x0100,
-        ReadGroupPerm = 0x0040, WriteGroupPerm = 0x0020, ExeGroupPerm = 0x0010,
-        ReadOtherPerm = 0x0004, WriteOtherPerm = 0x0002, ExeOtherPerm = 0x0001,
-
-        //types
-        LinkType      = 0x10000,
-        FileType      = 0x20000,
-        DirectoryType = 0x40000,
-
-        //flags
-        HiddenFlag     = 0x0100000,
-        LocalDiskFlag  = 0x0200000,
-        ExistsFlag     = 0x0400000,
-        RootFlag       = 0x0800000,
-        Refresh        = 0x1000000,
-
-        //masks
-        PermsMask  = 0x0000FFFF,
-        TypesMask  = 0x000F0000,
-        FlagsMask  = 0x0FF00000,
-        FileInfoAll = FlagsMask | PermsMask | TypesMask
-    };
-    Q_DECLARE_FLAGS(FileFlags, FileFlag)
-
     enum FileName {
         DefaultName,
         BaseName,
@@ -98,7 +72,8 @@ public:
     bool link(const QString &newName);
     bool setSize(qint64 size);
     bool isRelativePath() const;
-    FileFlags fileFlags(FileFlags type) const;
+    bool exists() const;
+    QFile::Permissions permissions() const;
     bool setPermissions(uint perms);
     QString fileName(FileName file) const;
     uint ownerId(FileOwner) const;
@@ -163,7 +138,6 @@ private:
 
     friend class QFilePrivate;
 };
-Q_DECLARE_OPERATORS_FOR_FLAGS(QAbstractFileEngine::FileFlags)
 
 QT_END_NAMESPACE
 

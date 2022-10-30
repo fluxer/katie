@@ -418,12 +418,7 @@ QFile::decodeName(const QByteArray &localFileName)
 bool
 QFile::exists() const
 {
-    // 0x1000000 = QAbstractFileEngine::Refresh, forcing an update
-    const QAbstractFileEngine::FileFlags flags = fileEngine()->fileFlags(QAbstractFileEngine::Refresh
-        | QAbstractFileEngine::FlagsMask);
-    const QAbstractFileEngine::FileFlags type = fileEngine()->fileFlags(QAbstractFileEngine::Refresh
-        | QAbstractFileEngine::TypesMask);
-    return ((flags & QAbstractFileEngine::ExistsFlag) && (type & QAbstractFileEngine::FileType));
+    return fileEngine()->exists();
 }
 
 /*!
@@ -1008,8 +1003,7 @@ bool QFile::resize(const QString &fileName, qint64 sz)
 
 QFile::Permissions QFile::permissions() const
 {
-    QAbstractFileEngine::FileFlags perms = fileEngine()->fileFlags(QAbstractFileEngine::PermsMask) & QAbstractFileEngine::PermsMask;
-    return QFile::Permissions((int)perms); //ewww
+    return fileEngine()->permissions();
 }
 
 /*!
@@ -1107,9 +1101,7 @@ void QFile::close()
 
 qint64 QFile::size() const
 {
-    Q_D(const QFile);
-    fileEngine()->fileFlags(QAbstractFileEngine::Refresh);
-    return d->fileEngine->size();
+    return fileEngine()->size();
 }
 
 /*!

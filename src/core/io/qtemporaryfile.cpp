@@ -24,6 +24,7 @@
 #ifndef QT_NO_TEMPORARYFILE
 
 #include "qplatformdefs.h"
+#include "qdir.h"
 #include "qfile_p.h"
 #include "qabstractfileengine_p.h"
 #include "qfilesystemengine_p.h"

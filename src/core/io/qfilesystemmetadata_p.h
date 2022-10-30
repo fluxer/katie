@@ -82,15 +82,15 @@ public:
         LinkType            = 0x00010000,
         FileType            = 0x00020000,
         DirectoryType       = 0x00040000,
-        SequentialType      = 0x00800000,   // Note: overlaps with QAbstractFileEngine::RootFlag
+        SequentialType      = 0x00800000,
 
         // Attributes
         HiddenAttribute     = 0x00100000,
-        SizeAttribute       = 0x00200000,   // Note: overlaps with QAbstractFileEngine::LocalDiskFlag
+        SizeAttribute       = 0x00200000,
         ExistsAttribute     = 0x00400000,
 
         // Times
-        CreationTime        = 0x01000000,   // Note: overlaps with QAbstractFileEngine::Refresh
+        CreationTime        = 0x01000000,
         ModificationTime    = 0x02000000,
         AccessTime          = 0x04000000,
 

@@ -172,55 +172,6 @@ QAbstractFileEngine *QAbstractFileEngine::create(const QString &fileName)
 */
 
 /*!
-    \enum QAbstractFileEngine::FileFlag
-
-    The permissions and types of a file, suitable for OR'ing together.
-
-    \value ReadOwnerPerm The owner of the file has permission to read
-    it.
-    \value WriteOwnerPerm The owner of the file has permission to
-    write to it.
-    \value ExeOwnerPerm The owner of the file has permission to
-    execute it.
-    \value ReadUserPerm The current user has permission to read the
-    file.
-    \value WriteUserPerm The current user has permission to write to
-    the file.
-    \value ExeUserPerm The current user has permission to execute the
-    file.
-    \value ReadGroupPerm Members of the current user's group have
-    permission to read the file.
-    \value WriteGroupPerm Members of the current user's group have
-    permission to write to the file.
-    \value ExeGroupPerm Members of the current user's group have
-    permission to execute the file.
-    \value ReadOtherPerm All users have permission to read the file.
-    \value WriteOtherPerm All users have permission to write to the
-    file.
-    \value ExeOtherPerm All users have permission to execute the file.
-
-    \value LinkType The file is a link to another file (or link) in
-    the file system (i.e. not a file or directory).
-    \value FileType The file is a regular file to the file system
-    (i.e. not a link or directory)
-    \value DirectoryType The file is a directory in the file system
-    (i.e. not a link or file).
-
-    \value HiddenFlag The file is hidden.
-    \value ExistsFlag The file actually exists in the file system.
-    \value RootFlag  The file or the file pointed to is the root of the filesystem.
-    \value LocalDiskFlag The file resides on the local disk and can be passed to standard file functions.
-    \value Refresh Passing this flag will force the file engine to refresh all flags.
-
-    \omitvalue PermsMask
-    \omitvalue TypesMask
-    \omitvalue FlagsMask
-    \omitvalue FileInfoAll
-
-    \sa fileFlags(), setFileName()
-*/
-
-/*!
     \enum QAbstractFileEngine::FileTime
 
     These are used by the fileTime() function.
@@ -427,6 +378,7 @@ qint64 QAbstractFileEngine::size() const
 {
     Q_D(const QAbstractFileEngine);
 
+    d->metaData.clear();
     if (!d->doStat(QFileSystemMetaData::SizeAttribute))
         return 0;
     return d->metaData.size();
@@ -584,7 +536,7 @@ bool QAbstractFileEngine::setSize(qint64 size)
     relative path; otherwise return false.
 
     \sa setFileName()
- */
+*/
 bool QAbstractFileEngine::isRelativePath() const
 {
     Q_D(const QAbstractFileEngine);
@@ -592,67 +544,30 @@ bool QAbstractFileEngine::isRelativePath() const
 }
 
 /*!
-    Return the set of OR'd flags that are true for the file engine's
-    file, and that are in the \a type's OR'd members.
+    Return true if the file referred to by this file engine exists;
+    otherwise return false.
+*/
+bool QAbstractFileEngine::exists() const
+{
+    Q_D(const QAbstractFileEngine);
+    d->metaData.clear(); // always stat
+    if (!d->doStat(QFileSystemMetaData::ExistsAttribute | QFileSystemMetaData::FileType))
+        return false;
+    return d->metaData.exists() && d->metaData.isFile();
+}
+
+/*!
+    Return the set of permissions for the file engine's file.
 
     \sa setFileName()
 */
-QAbstractFileEngine::FileFlags QAbstractFileEngine::fileFlags(FileFlags type) const
+QFile::Permissions QAbstractFileEngine::permissions() const
 {
     Q_D(const QAbstractFileEngine);
-
-    if (type & Refresh)
-        d->metaData.clear();
-
-    QAbstractFileEngine::FileFlags ret = 0;
-
-    if (type & FlagsMask)
-        ret |= LocalDiskFlag;
-
-    QFileSystemMetaData::MetaDataFlags queryFlags =
-            QFileSystemMetaData::MetaDataFlags(uint(type))
-            & QFileSystemMetaData::Permissions;
-    queryFlags |= QFileSystemMetaData::LinkType;
-
-    if (type & TypesMask)
-        queryFlags |= QFileSystemMetaData::LinkType
-                | QFileSystemMetaData::FileType
-                | QFileSystemMetaData::DirectoryType;
-
-    if (type & FlagsMask)
-        queryFlags |= QFileSystemMetaData::HiddenAttribute
-                | QFileSystemMetaData::ExistsAttribute;
-
-    bool exists = d->doStat(queryFlags);
-
+    bool exists = d->doStat(QFileSystemMetaData::Permissions | QFileSystemMetaData::LinkType);
     if (!exists && !d->metaData.isLink())
-        return ret;
-
-    if (exists && (type & PermsMask))
-        ret |= FileFlags(uint(d->metaData.permissions()));
-
-    if (type & TypesMask) {
-        if ((type & LinkType) && d->metaData.isLink())
-            ret |= LinkType;
-        if (exists) {
-            if (d->metaData.isFile()) {
-                ret |= FileType;
-            } else if (d->metaData.isDirectory()) {
-                ret |= DirectoryType;
-            }
-        }
-    }
-
-    if (type & FlagsMask) {
-        if (exists)
-            ret |= ExistsFlag;
-        if (d->fileEntry.isRoot())
-            ret |= RootFlag;
-        else if (d->metaData.isHidden())
-            ret |= HiddenFlag;
-    }
-
-    return ret;
+        return 0;
+    return d->metaData.permissions();
 }
 
 /*!
