@@ -2717,6 +2717,7 @@ void tst_QVariant::loadUnknownUserType()
 
     QByteArray ba(data, sizeof(data));
     QDataStream ds(&ba, QIODevice::ReadOnly);
+    ds.setByteOrder(QDataStream::BigEndian);
     QVariant var;
     var.load(ds);
     QCOMPARE(ds.status(), QDataStream::ReadCorruptData);
