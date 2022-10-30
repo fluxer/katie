@@ -39,7 +39,7 @@
 // The architechture, must be one of QT_ARCH_x
 #define QT_ARCH_${KATIE_ARCH}
 
-// Target endianness
+// Host endianness
 #define Q_BIG_ENDIAN 4321
 #define Q_LITTLE_ENDIAN 1234
 #define Q_BYTE_ORDER ${KATIE_BYTE_ORDER}

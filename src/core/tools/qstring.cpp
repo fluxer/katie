@@ -6645,17 +6645,7 @@ QString &QString::setRawData(const QChar *unicode, int size)
 QDataStream &operator<<(QDataStream &out, const QString &str)
 {
     if (!str.isEmpty()) {
-        if (out.byteOrder() == QDataStream::HostEndian) {
-            out.writeBytes(reinterpret_cast<const char *>(str.unicode()), sizeof(QChar) * str.length());
-        } else {
-            QSTACKARRAY(ushort, buffer, str.length());
-            const ushort *data = reinterpret_cast<const ushort *>(str.constData());
-            for (int i = 0; i < str.length(); i++) {
-                buffer[i] = qbswap(*data);
-                ++data;
-            }
-            out.writeBytes(reinterpret_cast<const char *>(buffer), sizeof(ushort) * str.length());
-        }
+        out.writeBytes(reinterpret_cast<const char *>(str.unicode()), sizeof(QChar) * str.length());
     } else {
         // write null marker
         out << (quint32)0xffffffff;
@@ -6692,14 +6682,6 @@ QDataStream &operator>>(QDataStream &in, QString &str)
             str.clear();
             in.setStatus(QDataStream::ReadPastEnd);
             return in;
-        }
-
-        if (in.byteOrder() != QDataStream::HostEndian) {
-            ushort *data = reinterpret_cast<ushort *>(str.data());
-            while (len--) {
-                *data = qbswap(*data);
-                ++data;
-            }
         }
     } else {
         str = QLatin1String("");

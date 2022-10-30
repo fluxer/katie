@@ -46,7 +46,7 @@ QT_BEGIN_NAMESPACE
     A data stream is a binary stream of encoded information which is
     100% independent of the host computer's operating system, CPU or
     byte order. For example, a data stream that is written by a PC
-    under Windows can be read by a Sun SPARC running Solaris.
+    under Linux can be read by system running Solaris.
 
     You can also use a data stream to read/write \l{raw}{raw
     unencoded binary data}. If you want a "parsing" input stream, see
@@ -100,10 +100,8 @@ QT_BEGIN_NAMESPACE
     number to give yourself room for future expansion.
 
     You can select which byte order to use when serializing data. The
-    default setting is big endian (MSB first). Changing it to little
-    endian breaks the portability (unless the reader also changes to
-    little endian). We recommend keeping this setting unless you have
-    special requirements.
+    default setting depends on the host endianness. We recommend
+    keeping this setting unless you have special requirements.
 
     \target raw
     \section1 Reading and writing raw binary data
@@ -163,7 +161,7 @@ QT_BEGIN_NAMESPACE
 
     \value BigEndian Most significant byte first (the default)
     \value LittleEndian Least significant byte first
-    \value HostEndian Either BigEndian or LittleEndian, depends on the host endian
+    \value HostEndian Either BigEndian or LittleEndian, depends on the host endianness
 */
 
 /*!
@@ -226,7 +224,7 @@ QT_BEGIN_NAMESPACE
 QDataStream::QDataStream()
     : dev(nullptr),
     owndev(false),
-    byteorder(QDataStream::BigEndian),
+    byteorder(QDataStream::HostEndian),
     q_status(QDataStream::Ok),
     floatingPrecision(QDataStream::DoublePrecision)
 {
@@ -247,7 +245,7 @@ QDataStream::QDataStream()
 QDataStream::QDataStream(QIODevice *device)
     : dev(device),
     owndev(false),
-    byteorder(QDataStream::BigEndian),
+    byteorder(QDataStream::HostEndian),
     q_status(QDataStream::Ok),
     floatingPrecision(QDataStream::DoublePrecision)
 {
@@ -270,7 +268,7 @@ QDataStream::QDataStream(QIODevice *device)
 QDataStream::QDataStream(QByteArray *a, QIODevice::OpenMode flags)
     : dev(nullptr),
     owndev(true),
-    byteorder(QDataStream::BigEndian),
+    byteorder(QDataStream::HostEndian),
     q_status(QDataStream::Ok),
     floatingPrecision(QDataStream::DoublePrecision)
 {
@@ -293,7 +291,7 @@ QDataStream::QDataStream(QByteArray *a, QIODevice::OpenMode flags)
 QDataStream::QDataStream(const QByteArray &a)
     : dev(nullptr),
     owndev(true),
-    byteorder(QDataStream::BigEndian),
+    byteorder(QDataStream::HostEndian),
     q_status(QDataStream::Ok),
     floatingPrecision(QDataStream::DoublePrecision)
 {
@@ -429,11 +427,6 @@ void QDataStream::setStatus(DataStatus status)
         q_status = status;
 }
 
-/*!\fn bool QDataStream::eof() const
-
-    Use atEnd() instead.
-*/
-
 /*!
     \fn int QDataStream::byteOrder() const
 
@@ -446,11 +439,11 @@ void QDataStream::setStatus(DataStatus status)
 /*!
     Sets the serialization byte order to \a bo.
 
-    The \a bo parameter can be QDataStream::BigEndian or
-    QDataStream::LittleEndian.
+    The \a bo parameter can be QDataStream::BigEndian,
+    QDataStream::LittleEndian or QDataStream::HostEndian.
 
-    The default setting is big endian. We recommend leaving this
-    setting unless you have special requirements.
+    The default setting depends on the host endianness. We recommend
+    leaving this setting unless you have special requirements.
 
     \sa byteOrder()
 */
