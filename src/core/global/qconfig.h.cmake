@@ -110,7 +110,6 @@
 // #cmakedefine QT_NO_GRAPHICSVIEW
 // #cmakedefine QT_NO_GROUPBOX
 // #cmakedefine QT_NO_ICON
-// #cmakedefine QT_NO_IMAGEFORMAT_XPM
 // #cmakedefine QT_NO_INPUTDIALOG
 // #cmakedefine QT_NO_ITEMVIEWS
 // #cmakedefine QT_NO_LINEEDIT
@@ -166,7 +165,6 @@
 // #cmakedefine QT_NO_XMLSTREAMWRITER
 
 // Misc
-#cmakedefine QT_NO_USING_NAMESPACE
 #cmakedefine QT_NO_BACKINGSTORE
 #cmakedefine QT_NO_COLORNAMES
 #cmakedefine QT_NO_COLUMNVIEW
@@ -185,6 +183,7 @@
 #cmakedefine QT_NO_IDENTITYPROXYMODEL
 #cmakedefine QT_NO_IMAGEFORMAT_KAT
 #cmakedefine QT_NO_IMAGEFORMAT_PPM
+#cmakedefine QT_NO_IMAGEFORMAT_XPM
 #cmakedefine QT_NO_IMAGE_HEURISTIC_MASK
 #cmakedefine QT_NO_IPV6
 #cmakedefine QT_NO_IPV6IFNAME
@@ -213,6 +212,7 @@
 #cmakedefine QT_NO_UDPSOCKET
 #cmakedefine QT_NO_UNDOGROUP
 #cmakedefine QT_NO_UNDOVIEW
+#cmakedefine QT_NO_USING_NAMESPACE
 #cmakedefine QT_NO_VECTOR2D
 #cmakedefine QT_NO_WHATSTHIS
 #cmakedefine QT_NO_WHEELEVENT
