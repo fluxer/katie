@@ -297,7 +297,6 @@ QFileSystemModelPrivate::QFileSystemNode *QFileSystemModelPrivate::node(const QS
     else
         absolutePath = QDir(path).absolutePath();
 
-    // ### TODO can we use bool QAbstractFileEngine::caseSensitive() const?
     QStringList pathElements = absolutePath.split(QLatin1Char('/'), QString::SkipEmptyParts);
     if (pathElements.isEmpty() && path != QLatin1String("/"))
         return const_cast<QFileSystemModelPrivate::QFileSystemNode*>(&root);
