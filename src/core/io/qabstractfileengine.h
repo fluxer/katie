@@ -96,8 +96,6 @@ public:
     bool copy(const QString &newName);
     virtual bool rename(const QString &newName); // virtual for QTemporaryFile
     bool link(const QString &newName);
-    bool mkdir(const QString &dirName, bool createParentDirectories) const;
-    bool rmdir(const QString &dirName, bool recurseParentDirectories) const;
     bool setSize(qint64 size);
     bool isRelativePath() const;
     QStringList entryList(QDir::Filters filters, const QStringList &filterNames) const;
@@ -152,11 +150,6 @@ public:
 
     //FS only!!
     bool open(QIODevice::OpenMode flags, int fd, QFile::FileHandleFlags handleFlags);
-    static bool setCurrentPath(const QString &path);
-    static QString currentPath(const QString &path = QString());
-    static QString homePath();
-    static QString rootPath();
-    static QString tempPath();
 
 protected:
     void setError(QFile::FileError error, const QString &str);

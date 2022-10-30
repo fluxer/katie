@@ -36,7 +36,6 @@
 #include "QtCore/qabstractfileengine.h"
 #include "qfilesystementry_p.h"
 #include "qfilesystemmetadata_p.h"
-#include "qfilesystemiterator_p.h"
 #include "qhash.h"
 
 QT_BEGIN_NAMESPACE

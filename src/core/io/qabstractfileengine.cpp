@@ -22,7 +22,6 @@
 #include "qabstractfileengine.h"
 #include "qabstractfileengine_p.h"
 #include "qdatetime.h"
-#include "qvariant.h"
 #include "qdebug.h"
 #include "qfilesystementry_p.h"
 #include "qfilesystemengine_p.h"
@@ -557,37 +556,6 @@ bool QAbstractFileEngine::link(const QString &newName)
         setError(QFile::RenameError, qt_error_string(error));
     }
     return ret;
-}
-
-/*!
-    Requests that the directory \a dirName be created. If
-    \a createParentDirectories is true, then any sub-directories in \a dirName
-    that don't exist must be created. If \a createParentDirectories is false then
-    any sub-directories in \a dirName must already exist for the function to
-    succeed. If the operation succeeds return true; otherwise return
-    false.
-
-    \sa setFileName() rmdir() isRelativePath()
- */
-bool QAbstractFileEngine::mkdir(const QString &dirName, bool createParentDirectories) const
-{
-    return QFileSystemEngine::createDirectory(QFileSystemEntry(dirName), createParentDirectories);
-}
-
-/*!
-    Requests that the directory \a dirName is deleted from the file
-    system. When \a recurseParentDirectories is true, then any empty
-    parent-directories in \a dirName must also be deleted. If
-    \a recurseParentDirectories is false, only the \a dirName leaf-node
-    should be deleted. In most file systems a directory cannot be deleted
-    using this function if it is non-empty. If the operation succeeds
-    return true; otherwise return false.
-
-    \sa setFileName() remove() mkdir() isRelativePath()
- */
-bool QAbstractFileEngine::rmdir(const QString &dirName, bool recurseParentDirectories) const
-{
-    return QFileSystemEngine::removeDirectory(QFileSystemEntry(dirName), recurseParentDirectories);
 }
 
 /*!
@@ -1163,26 +1131,6 @@ bool QAbstractFileEngine::open(QIODevice::OpenMode openMode, int fd, QFile::File
     }
 
     return true;
-}
-
-QString QAbstractFileEngine::currentPath(const QString &)
-{
-    return QFileSystemEngine::currentPath().filePath();
-}
-
-QString QAbstractFileEngine::homePath()
-{
-    return QFileSystemEngine::homePath();
-}
-
-QString QAbstractFileEngine::rootPath()
-{
-    return QFileSystemEngine::rootPath();
-}
-
-QString QAbstractFileEngine::tempPath()
-{
-    return QFileSystemEngine::tempPath();
 }
 
 QT_END_NAMESPACE
