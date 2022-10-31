@@ -501,7 +501,7 @@ QFileSystemEntry QFileSystemEngine::currentPath()
 
 #ifndef QT_NO_DEBUG
     if (result.isEmpty())
-        qWarning("QAbstractFileEngine::currentPath: " GETCWDFUNCNAME "() failed");
+        qWarning("QFileSystemEngine::currentPath: " GETCWDFUNCNAME "() failed");
 #endif
 #undef GETCWDFUNCNAME
 

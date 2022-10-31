@@ -34,9 +34,9 @@
 //
 
 #include "qplatformdefs.h"
-#include <QtCore/qdatetime.h>
-#include <QtCore/qabstractfileengine.h>
+#include "qdatetime.h"
 #include "qfilesystementry_p.h"
+#include "qfile.h"
 
 QT_BEGIN_NAMESPACE
 

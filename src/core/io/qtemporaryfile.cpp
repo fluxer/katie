@@ -26,171 +26,14 @@
 #include "qplatformdefs.h"
 #include "qdir.h"
 #include "qfile_p.h"
-#include "qabstractfileengine_p.h"
 #include "qfilesystemengine_p.h"
+#include "qdebug.h"
 #include "qcore_unix_p.h"
 #include "qcorecommon_p.h"
 
 #include <errno.h>
 
 QT_BEGIN_NAMESPACE
-
-//************* QTemporaryFileEngine
-class QTemporaryFileEngine : public QAbstractFileEngine
-{
-    Q_DECLARE_PRIVATE(QAbstractFileEngine)
-public:
-    QTemporaryFileEngine(const QString &file, bool fileIsTemplate = true)
-        : QAbstractFileEngine(), filePathIsTemplate(fileIsTemplate)
-    {
-        Q_D(QAbstractFileEngine);
-        d->fileEntry = QFileSystemEntry(file);
-
-        if (!filePathIsTemplate)
-            QAbstractFileEngine::setFileName(file);
-    }
-
-    ~QTemporaryFileEngine();
-
-    bool isReallyOpen();
-    void setFileName(const QString &file);
-    void setFileTemplate(const QString &fileTemplate);
-
-    bool open(QIODevice::OpenMode flags);
-    bool remove();
-    bool rename(const QString &newName);
-    bool close();
-
-    bool filePathIsTemplate;
-};
-
-QTemporaryFileEngine::~QTemporaryFileEngine()
-{
-    QAbstractFileEngine::close();
-}
-
-bool QTemporaryFileEngine::isReallyOpen()
-{
-    Q_D(QAbstractFileEngine);
-    return (d->fd != -1);
-
-}
-
-void QTemporaryFileEngine::setFileName(const QString &file)
-{
-    // Really close the file, so we don't leak
-    QAbstractFileEngine::close();
-    QAbstractFileEngine::setFileName(file);
-}
-
-void QTemporaryFileEngine::setFileTemplate(const QString &fileTemplate)
-{
-    Q_D(QAbstractFileEngine);
-    if (filePathIsTemplate)
-        d->fileEntry = QFileSystemEntry(fileTemplate);
-}
-
-bool QTemporaryFileEngine::open(QIODevice::OpenMode openMode)
-{
-    Q_D(QAbstractFileEngine);
-    Q_ASSERT(!isReallyOpen());
-
-    openMode |= QIODevice::ReadWrite;
-
-    if (!filePathIsTemplate)
-        return QAbstractFileEngine::open(openMode);
-
-    QString qfilename = d->fileEntry.filePath();
-
-    // "Nativify" :-)
-    QFileSystemEntry::NativePath filename =
-        QFileSystemEngine::absoluteName(QFileSystemEntry(qfilename)).nativeFilePath();
-
-    // Find placeholder in native path
-    uint phPos = filename.length();
-    uint phLength = 0;
-    while (phPos != 0) {
-        --phPos;
-
-        if (filename.at(phPos) == 'X') {
-            ++phLength;
-            continue;
-        }
-
-        // require atleast 6 for compatibility
-        if (phLength >= 6 || filename.at(phPos) == '/') {
-            ++phPos;
-            break;
-        }
-
-        // start over
-        phLength = 0;
-    }
-
-    // Ensure there is a placeholder mask
-    if (phLength < 6) {
-        filename.append(".XXXXXXXXXX");
-        phPos = filename.length() - 10;
-        phLength = 10;
-    }
-
-    Q_ASSERT(phLength >= 6);
-    Q_ASSERT(phPos < filename.length());
-    Q_ASSERT(phLength <= filename.length() - phPos);
-
-    static const char tmpnamechars[] = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz";
-
-    char *data = filename.data();
-    for (uint i = 0; i < phLength; i++) {
-        data[i + phPos] = tmpnamechars[qrand() % 52];
-    }
-
-    // Create file and obtain handle
-    d->fd = qt_safe_open(data, QT_OPEN_CREAT | O_EXCL | QT_OPEN_RDWR, 0600);
-
-    if (d->fd == -1) {
-        setError(QFile::OpenError, qt_error_string(errno));
-        return false;
-    }
-
-    d->fileEntry = QFileSystemEntry(filename, QFileSystemEntry::FromNativePath());
-
-    d->closeFileHandle = true;
-
-    filePathIsTemplate = false;
-
-    d->openMode = openMode;
-    d->metaData.clear();
-
-    return true;
-}
-
-bool QTemporaryFileEngine::remove()
-{
-    Q_D(QAbstractFileEngine);
-    // Since the QTemporaryFileEngine::close() does not really close the file,
-    // we must explicitly call QAbstractFileEngine::close() before we remove it.
-    QAbstractFileEngine::close();
-    if (QAbstractFileEngine::remove()) {
-        d->fileEntry.clear();
-        return true;
-    }
-    return false;
-}
-
-bool QTemporaryFileEngine::rename(const QString &newName)
-{
-    QAbstractFileEngine::close();
-    return QAbstractFileEngine::rename(newName);
-}
-
-bool QTemporaryFileEngine::close()
-{
-    // Don't close the file, just seek to the front.
-    seek(0);
-    setError(QFile::UnspecifiedError, QString());
-    return true;
-}
 
 //************* QTemporaryFilePrivate
 class QTemporaryFilePrivate : public QFilePrivate
@@ -349,32 +192,97 @@ QTemporaryFile::~QTemporaryFile()
 {
     Q_D(QTemporaryFile);
     close();
-    if (!d->fileName.isEmpty() && d->autoRemove)
+    if (!d->fileEntry.isEmpty() && d->autoRemove)
         remove();
 }
 
 /*!
-  \fn bool QTemporaryFile::open()
+    A QTemporaryFile will always be opened in QIODevice::ReadWrite mode,
+    this allows easy access to the data in the file. This function will
+    return true upon success and will set the fileName() to the unique
+    filename used.
 
-  A QTemporaryFile will always be opened in QIODevice::ReadWrite mode,
-  this allows easy access to the data in the file. This function will
-  return true upon success and will set the fileName() to the unique
-  filename used.
-
-  \sa fileName()
+    \sa fileName()
 */
+bool QTemporaryFile::open()
+{
+    Q_D(QTemporaryFile);
+    if (Q_UNLIKELY(isOpen())) {
+        qWarning("QTemporaryFile::open: File (%s) already open", qPrintable(fileName()));
+        return false;
+    }
+
+    // "Nativify" :-)
+    QFileSystemEntry::NativePath filename =
+        QFileSystemEngine::absoluteName(QFileSystemEntry(d->templateName)).nativeFilePath();
+
+    // Find placeholder in native path
+    uint phPos = filename.length();
+    uint phLength = 0;
+    while (phPos != 0) {
+        --phPos;
+
+        if (filename.at(phPos) == 'X') {
+            ++phLength;
+            continue;
+        }
+
+        // require atleast 6 for compatibility
+        if (phLength >= 6 || filename.at(phPos) == '/') {
+            ++phPos;
+            break;
+        }
+
+        // start over
+        phLength = 0;
+    }
+
+    // Ensure there is a placeholder mask
+    if (phLength < 6) {
+        filename.append(".XXXXXXXXXX");
+        phPos = filename.length() - 10;
+        phLength = 10;
+    }
+
+    Q_ASSERT(phLength >= 6);
+    Q_ASSERT(phPos < filename.length());
+    Q_ASSERT(phLength <= filename.length() - phPos);
+
+    static const char tmpnamechars[] = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz";
+
+    char *data = filename.data();
+    for (uint i = 0; i < phLength; i++) {
+        data[i + phPos] = tmpnamechars[qrand() % 52];
+    }
+
+    // Create file and obtain handle
+    d->fd = qt_safe_open(data, QT_OPEN_CREAT | O_EXCL | QT_OPEN_RDWR, 0600);
+
+    if (d->fd == -1) {
+        d->setError(QFile::OpenError, qt_error_string(errno));
+        return false;
+    }
+
+    d->fileEntry = QFileSystemEntry(filename, QFileSystemEntry::FromNativePath());
+    d->closeFileHandle = true;
+    d->metaData.clear();
+
+    QIODevice::open(QIODevice::ReadWrite);
+
+    return true;
+}
 
 /*!
-   Returns true if the QTemporaryFile is in auto remove
-   mode. Auto-remove mode will automatically delete the filename from
-   disk upon destruction. This makes it very easy to create your
-   QTemporaryFile object on the stack, fill it with data, read from
-   it, and finally on function return it will automatically clean up
-   after itself.
+    Returns true if the QTemporaryFile is in auto remove
+    mode. Auto-remove mode will automatically delete the filename from
+    disk upon destruction. This makes it very easy to create your
+    QTemporaryFile object on the stack, fill it with data, read from
+    it, and finally on function return it will automatically clean up
+    after itself.
 
-   Auto-remove is on by default.
+    Auto-remove is on by default.
 
-   \sa setAutoRemove(), remove()
+    \sa setAutoRemove(), remove()
 */
 bool QTemporaryFile::autoRemove() const
 {
@@ -396,23 +304,6 @@ void QTemporaryFile::setAutoRemove(bool b)
 }
 
 /*!
-   Returns the complete unique filename backing the QTemporaryFile
-   object. This string is null before the QTemporaryFile is opened,
-   afterwards it will contain the fileTemplate() plus
-   additional characters to make it unique.
-
-   \sa fileTemplate()
-*/
-
-QString QTemporaryFile::fileName() const
-{
-    Q_D(const QTemporaryFile);
-    if(d->fileName.isEmpty())
-        return QString();
-    return fileEngine()->fileName(QAbstractFileEngine::DefaultName);
-}
-
-/*!
   Returns the set file template. The default file template will be
   called qt_temp and be placed in QDir::tempPath().
 
@@ -425,10 +316,10 @@ QString QTemporaryFile::fileTemplate() const
 }
 
 /*!
-   Sets the static portion of the file name to \a name. If the file
-   template ends in XXXXXXXXXX that will automatically be replaced with
-   the unique part of the filename, otherwise a filename will be
-   determined automatically based on the static portion specified.
+    Sets the static portion of the file name to \a name. If the file
+    template ends in XXXXXXXXXX that will automatically be replaced with
+    the unique part of the filename, otherwise a filename will be
+    determined automatically based on the static portion specified.
 
     If \a name contains a relative file path, the path will be relative to the
     current working directory. You can use QDir::tempPath() to construct \a
@@ -440,48 +331,6 @@ void QTemporaryFile::setFileTemplate(const QString &name)
 {
     Q_D(QTemporaryFile);
     d->templateName = name;
-    if (d->fileEngine)
-        static_cast<QTemporaryFileEngine*>(d->fileEngine)->setFileTemplate(name);
-}
-
-/*!
-   \internal
-*/
-
-QAbstractFileEngine *QTemporaryFile::fileEngine() const
-{
-    Q_D(const QTemporaryFile);
-    if(!d->fileEngine) {
-        if (d->fileName.isEmpty())
-            d->fileEngine = new QTemporaryFileEngine(d->templateName);
-        else
-            d->fileEngine = new QTemporaryFileEngine(d->fileName, false);
-    }
-    return d->fileEngine;
-}
-
-/*!
-   \reimp
-
-    Creates a unique file name for the temporary file, and opens it.  You can
-    get the unique name later by calling fileName(). The file is guaranteed to
-    have been created by this function (i.e., it has never existed before).
-*/
-bool QTemporaryFile::open(OpenMode flags)
-{
-    Q_D(QTemporaryFile);
-    if (!d->fileName.isEmpty()) {
-        if (static_cast<QTemporaryFileEngine*>(fileEngine())->isReallyOpen()) {
-            setOpenMode(flags);
-            return true;
-        }
-    }
-
-    if (QFile::open(flags)) {
-        d->fileName = d->fileEngine->fileName(QAbstractFileEngine::DefaultName);
-        return true;
-    }
-    return false;
 }
 
 #ifndef QT_NO_QOBJECT

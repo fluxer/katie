@@ -43,6 +43,18 @@ QT_BEGIN_NAMESPACE
 class QFileInfoPrivate : public QSharedData
 {
 public:
+    enum FileName {
+        DefaultName,
+        BaseName,
+        PathName,
+        AbsoluteName,
+        AbsolutePathName,
+        LinkName,
+        CanonicalName,
+        CanonicalPathName,
+        NFileNames
+    };
+
     inline QFileInfoPrivate()
         : QSharedData(),
         isDefaultConstructed(true),
@@ -74,16 +86,16 @@ public:
 
     inline void clear() const {
         metaData.clear();
-        for (int i = 0; i < QAbstractFileEngine::NFileNames; i++)
+        for (int i = 0; i < FileName::NFileNames; i++)
             fileNames[i].clear();
     }
 
-    QString getFileName(QAbstractFileEngine::FileName) const;
+    QString getFileName(const FileName name) const;
 
     QFileSystemEntry fileEntry;
     mutable QFileSystemMetaData metaData;
 
-    mutable QString fileNames[QAbstractFileEngine::NFileNames];
+    mutable QString fileNames[FileName::NFileNames];
 
     bool const isDefaultConstructed; // QFileInfo is a default constructed instance
     bool cache_enabled;

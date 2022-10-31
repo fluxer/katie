@@ -18,7 +18,6 @@ set(CORE_PUBLIC_HEADERS
     QHash
     QLibrary
     QObjectCleanupHandler
-    QAbstractFileEngine
     QTranslator
     QWaitCondition
     QMimeData
@@ -104,8 +103,6 @@ set(CORE_HEADERS
     ${CMAKE_CURRENT_SOURCE_DIR}/global/qnamespace.h
     ${CMAKE_CURRENT_SOURCE_DIR}/global/qnumeric.h
     ${CMAKE_CURRENT_SOURCE_DIR}/global/qplatformdefs.h
-    ${CMAKE_CURRENT_SOURCE_DIR}/io/qabstractfileengine.h
-    ${CMAKE_CURRENT_SOURCE_DIR}/io/qabstractfileengine_p.h
     ${CMAKE_CURRENT_SOURCE_DIR}/io/qbuffer.h
     ${CMAKE_CURRENT_SOURCE_DIR}/io/qdatastream.h
     ${CMAKE_CURRENT_SOURCE_DIR}/io/qdataurl_p.h
@@ -229,7 +226,6 @@ set(CORE_SOURCES
     ${CMAKE_CURRENT_SOURCE_DIR}/global/qglobal.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/global/qlibraryinfo.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/global/qt_error_string.cpp
-    ${CMAKE_CURRENT_SOURCE_DIR}/io/qabstractfileengine.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/io/qbuffer.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/io/qdatastream.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/io/qdataurl.cpp

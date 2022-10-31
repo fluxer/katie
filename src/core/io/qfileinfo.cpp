@@ -26,37 +26,37 @@
 
 QT_BEGIN_NAMESPACE
 
-QString QFileInfoPrivate::getFileName(QAbstractFileEngine::FileName name) const
+QString QFileInfoPrivate::getFileName(const QFileInfoPrivate::FileName name) const
 {
     if (cache_enabled && !fileNames[(int)name].isNull())
         return fileNames[(int)name];
 
     QString ret;
     switch (name) {
-        case QAbstractFileEngine::CanonicalName:
-        case QAbstractFileEngine::CanonicalPathName: {
+        case FileName::CanonicalName:
+        case FileName::CanonicalPathName: {
             QFileSystemEntry entry = QFileSystemEngine::canonicalName(fileEntry, metaData);
             if (cache_enabled) { // be smart and store both
-                fileNames[QAbstractFileEngine::CanonicalName] = entry.filePath();
-                fileNames[QAbstractFileEngine::CanonicalPathName] = entry.path();
+                fileNames[FileName::CanonicalName] = entry.filePath();
+                fileNames[FileName::CanonicalPathName] = entry.path();
             }
-            if (name == QAbstractFileEngine::CanonicalName)
+            if (name == FileName::CanonicalName)
                 ret = entry.filePath();
             else
                 ret = entry.path();
             break;
         }
-        case QAbstractFileEngine::LinkName:
+        case FileName::LinkName:
             ret = QFileSystemEngine::getLinkTarget(fileEntry, metaData).filePath();
             break;
-        case QAbstractFileEngine::AbsoluteName:
-        case QAbstractFileEngine::AbsolutePathName: {
+        case FileName::AbsoluteName:
+        case FileName::AbsolutePathName: {
             QFileSystemEntry entry = QFileSystemEngine::absoluteName(fileEntry);
             if (cache_enabled) { // be smart and store both
-                fileNames[QAbstractFileEngine::AbsoluteName] = entry.filePath();
-                fileNames[QAbstractFileEngine::AbsolutePathName] = entry.path();
+                fileNames[FileName::AbsoluteName] = entry.filePath();
+                fileNames[FileName::AbsolutePathName] = entry.path();
             }
-            if (name == QAbstractFileEngine::AbsoluteName)
+            if (name == FileName::AbsoluteName)
                 ret = entry.filePath();
             else
                 ret = entry.path();
@@ -359,7 +359,7 @@ QString QFileInfo::absoluteFilePath() const
     Q_D(const QFileInfo);
     if (d->isDefaultConstructed)
         return QLatin1String("");
-    return d->getFileName(QAbstractFileEngine::AbsoluteName);
+    return d->getFileName(QFileInfoPrivate::AbsoluteName);
 }
 
 /*!
@@ -376,7 +376,7 @@ QString QFileInfo::canonicalFilePath() const
     Q_D(const QFileInfo);
     if (d->isDefaultConstructed)
         return QLatin1String("");
-    return d->getFileName(QAbstractFileEngine::CanonicalName);
+    return d->getFileName(QFileInfoPrivate::CanonicalName);
 }
 
 
@@ -405,7 +405,7 @@ QString QFileInfo::absolutePath() const
         qWarning("QFileInfo::absolutePath: Constructed with empty filename");
         return QLatin1String("");
     }
-    return d->getFileName(QAbstractFileEngine::AbsolutePathName);
+    return d->getFileName(QFileInfoPrivate::AbsolutePathName);
 }
 
 /*!
@@ -421,7 +421,7 @@ QString QFileInfo::canonicalPath() const
     Q_D(const QFileInfo);
     if (d->isDefaultConstructed)
         return QLatin1String("");
-    return d->getFileName(QAbstractFileEngine::CanonicalPathName);
+    return d->getFileName(QFileInfoPrivate::CanonicalPathName);
 }
 
 /*!
@@ -827,7 +827,7 @@ QString QFileInfo::readLink() const
     Q_D(const QFileInfo);
     if (d->isDefaultConstructed)
         return QLatin1String("");
-    return d->getFileName(QAbstractFileEngine::LinkName);
+    return d->getFileName(QFileInfoPrivate::LinkName);
 }
 
 /*!

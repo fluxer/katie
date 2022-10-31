@@ -51,7 +51,6 @@ set(BOOTSTRAP_SOURCES
     ${CMAKE_SOURCE_DIR}/src/core/codecs/qtextcodec.cpp
     ${CMAKE_SOURCE_DIR}/src/core/global/qglobal.cpp
     ${CMAKE_SOURCE_DIR}/src/core/global/qt_error_string.cpp
-    ${CMAKE_SOURCE_DIR}/src/core/io/qabstractfileengine.cpp
     ${CMAKE_SOURCE_DIR}/src/core/io/qbuffer.cpp
     ${CMAKE_SOURCE_DIR}/src/core/io/qdir.cpp
     ${CMAKE_SOURCE_DIR}/src/core/io/qdiriterator.cpp

@@ -55,17 +55,10 @@ public:
     bool autoRemove() const;
     void setAutoRemove(bool b);
 
-    // ### Hides open(flags)
-    bool open() { return open(QIODevice::ReadWrite); }
+    bool open();
 
-    QString fileName() const;
     QString fileTemplate() const;
     void setFileTemplate(const QString &name);
-
-    virtual QAbstractFileEngine *fileEngine() const;
-
-protected:
-    bool open(OpenMode flags);
 
 private:
     friend class QFile;
