@@ -70,13 +70,13 @@ QT_BEGIN_NAMESPACE
     \snippet doc/src/snippets/code/src_corelib_io_qdatastream.cpp 1
 
     Each item written to the stream is written in a predefined binary
-    format that varies depending on the item's type. Supported Qt
+    format that varies depending on the item's type. Supported Katie
     types include QBrush, QColor, QDateTime, QFont, QPixmap, QString,
-    QVariant and many others. For the complete list of all Qt types
-    supporting data streaming see \l{Serializing Qt Data Types}.
+    QVariant and many others. For the complete list of all Katie types
+    supporting data streaming see \l{Serializing Katie Data Types}.
 
-    For integers it is best to always cast to a Qt integer type for
-    writing, and to read back into the same Qt integer type. This
+    For integers it is best to always cast to a Katie integer type for
+    writing, and to read back into the same Katie integer type. This
     ensures that you get integers of the size you want and insulates
     you from compiler and platform differences.
 
@@ -139,7 +139,7 @@ QT_BEGIN_NAMESPACE
     QDataStream & operator>> (QDataStream& stream, QImage& image);
     \endcode
 
-    To see if your favorite Qt class has similar stream operators
+    To see if your favorite Katie class has similar stream operators
     defined, check the \bold {Related Non-Members} section of the
     class's documentation page.
 
@@ -151,9 +151,9 @@ QT_BEGIN_NAMESPACE
 
     The byte order used for reading/writing the data.
 
-    \value BigEndian Most significant byte first (the default)
+    \value BigEndian Most significant byte first
     \value LittleEndian Least significant byte first
-    \value HostEndian Either BigEndian or LittleEndian, depends on the host endianness
+    \value HostEndian Either BigEndian or LittleEndian, depends on the host endianness (the default)
 */
 
 /*!
