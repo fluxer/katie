@@ -112,25 +112,17 @@ QT_BEGIN_NAMESPACE
     written to the stream using writeRawData(). Note that any
     encoding/decoding of the data must be done by you.
 
-    A similar pair of functions is readBytes() and writeBytes(). These
-    differ from their \e raw counterparts as follows: readBytes()
-    reads a quint32 which is taken to be the length of the data to be
-    read, then that number of bytes is read into the preallocated
-    \c{char *}; writeBytes() writes a quint32 containing the length of the
-    data, followed by the data. Note that any encoding/decoding of
-    the data (apart from the length quint32) must be done by you.
+    \section1 Reading and writing Katie collection classes
 
-    \section1 Reading and writing Qt collection classes
-
-    The Qt container classes can also be serialized to a QDataStream.
+    The Katie container classes can also be serialized to a QDataStream.
     These include QList, QVector, QSet, QHash, and QMap.
     The stream operators are declared as non-members of the classes.
 
-    \target Serializing Qt Classes
-    \section1 Reading and writing other Qt classes.
+    \target Serializing Katie Classes
+    \section1 Reading and writing other Katie classes.
 
     In addition to the overloaded stream operators documented here,
-    any Qt classes that you might want to serialize to a QDataStream
+    any Katie classes that you might want to serialize to a QDataStream
     will have appropriate stream operators declared as non-member of
     the class:
 
@@ -650,72 +642,13 @@ QDataStream &QDataStream::operator>>(double &f)
     return *this;
 }
 
-
-/*!
-    \overload
-
-    Reads the '\0'-terminated string \a s from the stream and returns
-    a reference to the stream.
-
-    Space for the string is allocated using \c new -- the caller must
-    destroy it with \c{delete[]}.
-*/
-
-QDataStream &QDataStream::operator>>(char *&s)
-{
-    uint len = 0;
-    return readBytes(s, len);
-}
-
-
-/*!
-    Reads the buffer \a s from the stream and returns a reference to
-    the stream.
-
-    The buffer \a s is allocated using \c new. Destroy it with the \c
-    delete[] operator.
-
-    The \a l parameter is set to the length of the buffer. If the
-    string read is empty, \a l is set to 0 and \a s is set to
-    a null pointer.
-
-    The serialization format is a quint32 length specifier first,
-    then \a l bytes of data.
-
-    \sa readRawData(), writeBytes()
-*/
-
-QDataStream &QDataStream::readBytes(char *&s, uint &l)
-{
-    s = 0;
-    l = 0;
-    CHECK_STREAM_PRECOND(*this)
-
-    quint32 len;
-    *this >> len;
-    if (len == 0)
-        return *this;
-
-    char *sbuf = new char[len + 1];
-    if (dev->read(sbuf, len) != len) {
-        delete [] sbuf;
-        setStatus(ReadPastEnd);
-        return *this;
-    }
-
-    s = sbuf;
-    s[len] = '\0';
-    l = (uint)len;
-    return *this;
-}
-
 /*!
     Reads at most \a len bytes from the stream into \a s and returns the number of
     bytes read. If an error occurs, this function returns -1.
 
     The buffer \a s must be preallocated. The data is \e not encoded.
 
-    \sa readBytes(), QIODevice::read(), writeRawData()
+    \sa QIODevice::read(), writeRawData()
 */
 
 int QDataStream::readRawData(char *s, int len)
@@ -914,55 +847,12 @@ QDataStream &QDataStream::operator<<(double f)
     return *this;
 }
 
-
-/*!
-    \overload
-
-    Writes the '\0'-terminated string \a s to the stream and returns a
-    reference to the stream.
-
-    The string is serialized using writeBytes().
-*/
-
-QDataStream &QDataStream::operator<<(const char *s)
-{
-    if (!s) {
-        *this << (quint32)0;
-        return *this;
-    }
-    uint len = qstrlen(s) + 1;                    // also write null terminator
-    *this << (quint32)len;                        // write length specifier
-    writeRawData(s, len);
-    return *this;
-}
-
-
-/*!
-    Writes the length specifier \a len and the buffer \a s to the
-    stream and returns a reference to the stream.
-
-    The \a len is serialized as a quint32, followed by \a len bytes
-    from \a s. Note that the data is \e not encoded.
-
-    \sa writeRawData(), readBytes()
-*/
-
-QDataStream &QDataStream::writeBytes(const char *s, uint len)
-{
-    CHECK_STREAM_WRITE_PRECOND(*this)
-    *this << (quint32)len;                        // write length specifier
-    if (len)
-        writeRawData(s, len);
-    return *this;
-}
-
-
 /*!
     Writes \a len bytes from \a s to the stream. Returns the
     number of bytes actually written, or -1 on error.
     The data is \e not encoded.
 
-    \sa writeBytes(), QIODevice::write(), readRawData()
+    \sa QIODevice::write(), readRawData()
 */
 
 int QDataStream::writeRawData(const char *s, int len)
@@ -1015,7 +905,6 @@ int QDataStream::skipRawData(int len)
         return len;
     }
 }
-
 
 QT_END_NAMESPACE
 

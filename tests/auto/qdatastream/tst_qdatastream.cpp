@@ -153,8 +153,8 @@ private slots:
     void status_double_data();
     void status_double();
 
-    void status_charptr_QByteArray_data();
-    void status_charptr_QByteArray();
+    void status_QByteArray_data();
+    void status_QByteArray();
 
     void status_QString_data();
     void status_QString();
@@ -2360,7 +2360,7 @@ void tst_QDataStream::status_double_data()
 
 TEST_FLOAT(double)
 
-void tst_QDataStream::status_charptr_QByteArray_data()
+void tst_QDataStream::status_QByteArray_data()
 {
     QTest::addColumn<QByteArray>("data");
     QTest::addColumn<int>("expectedStatus");
@@ -2404,35 +2404,12 @@ void tst_QDataStream::status_charptr_QByteArray_data()
     QTest::newRow("size -2") << QByteArray("\xff\xff\xff\xfe", 4) << (int) QDataStream::ReadPastEnd << QByteArray();
 }
 
-void tst_QDataStream::status_charptr_QByteArray()
+void tst_QDataStream::status_QByteArray()
 {
     QFETCH(QByteArray, data);
     QFETCH(int, expectedStatus);
     QFETCH(QByteArray, expectedString);
 
-    {
-        QDataStream stream(&data, QIODevice::ReadOnly);
-        stream.setByteOrder(QDataStream::BigEndian);
-        char *buf;
-        stream >> buf;
-
-        QCOMPARE((int)qstrlen(buf), expectedString.size());
-        QCOMPARE(QByteArray(buf), expectedString);
-        QCOMPARE(int(stream.status()), expectedStatus);
-        delete [] buf;
-    }
-    {
-        QDataStream stream(&data, QIODevice::ReadOnly);
-        stream.setByteOrder(QDataStream::BigEndian);
-        char *buf;
-        uint len;
-        stream.readBytes(buf, len);
-
-        QCOMPARE((int)len, expectedString.size());
-        QCOMPARE(QByteArray(buf, len), expectedString);
-        QCOMPARE(int(stream.status()), expectedStatus);
-        delete [] buf;
-    }
     {
         QDataStream stream(&data, QIODevice::ReadOnly);
         stream.setByteOrder(QDataStream::BigEndian);

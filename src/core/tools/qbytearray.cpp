@@ -2503,7 +2503,9 @@ QDataStream &operator<<(QDataStream &out, const QByteArray &ba)
         out << (quint32)0xffffffff;
         return out;
     }
-    return out.writeBytes(ba.constData(), ba.size());
+    out << (quint32)ba.size();
+    out.writeRawData(ba.constData(), ba.size());
+    return out;
 }
 
 /*! \relates QByteArray

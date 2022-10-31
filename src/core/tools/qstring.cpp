@@ -6645,7 +6645,9 @@ QString &QString::setRawData(const QChar *unicode, int size)
 QDataStream &operator<<(QDataStream &out, const QString &str)
 {
     if (!str.isEmpty()) {
-        out.writeBytes(reinterpret_cast<const char *>(str.unicode()), sizeof(QChar) * str.length());
+        const quint32 bytes = (str.length() * sizeof(QChar));
+        out << bytes;
+        out.writeRawData(reinterpret_cast<const char *>(str.unicode()), bytes);
     } else {
         // write null marker
         out << (quint32)0xffffffff;
@@ -6661,7 +6663,6 @@ QDataStream &operator<<(QDataStream &out, const QString &str)
 
     \sa {Serializing Qt Data Types}
 */
-
 QDataStream &operator>>(QDataStream &in, QString &str)
 {
     quint32 bytes = 0;
@@ -6675,9 +6676,8 @@ QDataStream &operator>>(QDataStream &in, QString &str)
             return in;
         }
 
-        int len = (bytes / sizeof(QChar));
-        str.resize(len);
-        const quint32 readlen = in.readRawData(reinterpret_cast<char *>(str.data()), bytes);
+        str.resize(bytes / sizeof(QChar));
+        const int readlen = in.readRawData(reinterpret_cast<char *>(str.data()), bytes);
         if (readlen != bytes) {
             str.clear();
             in.setStatus(QDataStream::ReadPastEnd);
