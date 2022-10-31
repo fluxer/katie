@@ -32,9 +32,10 @@
 #include <QtCore/qstringlist.h>
 #include <QtCore/qbitarray.h>
 #include <QtCore/qmimedata.h>
-
 #include "qstandarditemmodel_p.h"
 #include "qdebug.h"
+
+#include <limits.h>
 
 QT_BEGIN_NAMESPACE
 

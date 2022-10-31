@@ -34,6 +34,8 @@
 #include <qdebug.h>
 #include "../../shared/util.h"
 
+#include <limits.h>
+
 typedef QList<int> IntList;
 Q_DECLARE_METATYPE(IntList)
 

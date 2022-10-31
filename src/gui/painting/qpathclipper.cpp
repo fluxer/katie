@@ -26,6 +26,8 @@
 #include "qdebug.h"
 #include "qguicommon_p.h"
 
+#include <limits.h>
+
 /**
   The algorithm is as follows:
 

@@ -26,6 +26,8 @@
 #include "qpainter.h"
 #include "qtablewidget_p.h"
 
+#include <limits.h>
+
 QT_BEGIN_NAMESPACE
 
 QTableModel::QTableModel(int rows, int columns, QTableWidget *parent)

@@ -31,6 +31,8 @@
 #include <qtextobject.h>
 #include <qdebug.h>
 
+#include <limits.h>
+
 //TESTED_FILES=gui/text/qtextcursor.cpp gui/text/qtextcursor_p.h
 
 class tst_QTextCursor : public QObject

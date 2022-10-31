@@ -31,6 +31,8 @@
 #include <qtextlayout.h>
 #include <qabstracttextdocumentlayout.h>
 
+#include <limits.h>
+
 //TESTED_CLASS=
 //TESTED_FILES=
 

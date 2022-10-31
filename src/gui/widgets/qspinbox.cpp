@@ -31,6 +31,7 @@
 
 #include <math.h>
 #include <float.h>
+#include <limits.h>
 
 QT_BEGIN_NAMESPACE
 

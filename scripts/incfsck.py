@@ -13,8 +13,6 @@ incmap = {
         'QByteRef': 'qbytearray.h',
         'QCharRef': 'qstring.h',
         'QChildEvent': 'qcoreevent.h',
-        'QContiguousCacheData': 'qcontiguouscache.h',
-        'QContiguousCacheTypedData': 'qcontiguouscache.h',
         'QDate': 'qdatetime.h',
         'QDynamicPropertyChangeEvent': 'qcoreevent.h',
         'QEvent': 'qcoreevent.h',

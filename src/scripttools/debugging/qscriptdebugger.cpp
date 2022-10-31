@@ -56,17 +56,13 @@
 #include "qscriptxmlparser_p.h"
 #include "qscripttoolscommon_p.h"
 #include "qscripttoolsresources_p.h"
-
 #include "qobject_p.h"
-
 #include <QtScript/qscriptcontext.h>
 #include <QtScript/qscriptcontextinfo.h>
-
 #include <QtCore/qcoreapplication.h>
 #include <QtCore/qdir.h>
 #include <QtCore/qstringlist.h>
 #include <QtCore/qdebug.h>
-
 #include <QtGui/qaction.h>
 #include <QtGui/qevent.h>
 #include <QtGui/qicon.h>
@@ -74,6 +70,8 @@
 #include <QtGui/qmenu.h>
 #include <QtGui/qtoolbar.h>
 #include <QtGui/qtooltip.h>
+
+#include <limits.h>
 
 QT_BEGIN_NAMESPACE
 

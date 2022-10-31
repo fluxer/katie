@@ -24,7 +24,6 @@
 #include "qdeclarativeevents_p_p.h"
 #include "qdeclarativeglobal_p.h"
 #include "qdeclarativeinfo.h"
-
 #include <QtCore/qmath.h>
 #include <QTextLayout>
 #include <QTextDocument>
@@ -33,6 +32,8 @@
 #include <QDebug>
 #include <QPainter>
 #include "qtextcontrol_p.h"
+
+#include <limits.h>
 
 QT_BEGIN_NAMESPACE
 

@@ -32,6 +32,8 @@
 #include "qabstractitemmodel_p.h"
 #include "qabstractproxymodel_p.h"
 
+#include <limits.h>
+
 QT_BEGIN_NAMESPACE
 
 typedef QList<QPair<QModelIndex, QPersistentModelIndex> > QModelIndexPairList;

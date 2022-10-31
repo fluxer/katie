@@ -25,9 +25,6 @@ include/katie/QtCore/QCache
 include/katie/QtCore/QChar
 include/katie/QtCore/QCharRef
 include/katie/QtCore/QChildEvent
-include/katie/QtCore/QContiguousCache
-include/katie/QtCore/QContiguousCacheData
-include/katie/QtCore/QContiguousCacheTypedData
 include/katie/QtCore/QCoreApplication
 include/katie/QtCore/QDataStream
 include/katie/QtCore/QDate
@@ -192,7 +189,6 @@ include/katie/QtCore/qcache.h
 include/katie/QtCore/qchar.h
 include/katie/QtCore/qconfig.h
 include/katie/QtCore/qcontainerfwd.h
-include/katie/QtCore/qcontiguouscache.h
 include/katie/QtCore/qcoreapplication.h
 include/katie/QtCore/qcoreevent.h
 include/katie/QtCore/qdatastream.h

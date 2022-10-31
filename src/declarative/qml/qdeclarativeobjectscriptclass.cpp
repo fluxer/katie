@@ -20,7 +20,6 @@
 ****************************************************************************/
 
 #include "qdeclarativeobjectscriptclass_p.h"
-
 #include "qdeclarativeengine_p.h"
 #include "qdeclarativecontext_p.h"
 #include "qdeclarativedata_p.h"
@@ -30,10 +29,11 @@
 #include "qdeclarativeguard_p.h"
 #include "qdeclarativevmemetaobject_p.h"
 #include "qdeclarativecommon_p.h"
-
 #include <QtCore/qtimer.h>
 #include <QtCore/qvarlengtharray.h>
 #include <QtScript/qscriptcontextinfo.h>
+
+#include <limits.h>
 
 QT_BEGIN_NAMESPACE
 

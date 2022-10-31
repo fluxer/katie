@@ -28,6 +28,8 @@
 #include <qtextedit.h>
 #include <qtextcursor.h>
 
+#include <limits.h>
+
 //TESTED_CLASS=
 //TESTED_FILES=
 

@@ -27,7 +27,6 @@ set(CORE_PUBLIC_HEADERS
     QMap
     QTextStream
     QDebug
-    QContiguousCache
     QFileInfo
     QDateTime
     QThreadPool
@@ -198,7 +197,6 @@ set(CORE_HEADERS
     ${CMAKE_CURRENT_SOURCE_DIR}/tools/qlocale_data_p.h
     ${CMAKE_CURRENT_SOURCE_DIR}/tools/qmap.h
     ${CMAKE_CURRENT_SOURCE_DIR}/tools/qmargins.h
-    ${CMAKE_CURRENT_SOURCE_DIR}/tools/qcontiguouscache.h
     ${CMAKE_CURRENT_SOURCE_DIR}/tools/qpoint.h
     ${CMAKE_CURRENT_SOURCE_DIR}/tools/qqueue.h
     ${CMAKE_CURRENT_SOURCE_DIR}/tools/qrect.h
@@ -302,7 +300,6 @@ set(CORE_SOURCES
     ${CMAKE_CURRENT_SOURCE_DIR}/tools/qpoint.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/tools/qmap.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/tools/qmargins.cpp
-    ${CMAKE_CURRENT_SOURCE_DIR}/tools/qcontiguouscache.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/tools/qrect.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/tools/qregexp.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/tools/qshareddata.cpp

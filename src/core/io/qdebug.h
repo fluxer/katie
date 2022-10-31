@@ -25,7 +25,6 @@
 #include <QtCore/qtextstream.h>
 #include <QtCore/qvector.h>
 #include <QtCore/qset.h>
-#include <QtCore/qcontiguouscache.h>
 
 QT_BEGIN_NAMESPACE
 
@@ -175,19 +174,6 @@ inline QDebug operator<<(QDebug debug, const QSet<T> &set)
 {
     debug.nospace() << "QSet";
     return operator<<(debug, set.toList());
-}
-
-template <class T>
-inline QDebug operator<<(QDebug debug, const QContiguousCache<T> &cache)
-{
-    debug.nospace() << "QContiguousCache(";
-    for (int i = cache.firstIndex(); i <= cache.lastIndex(); ++i) {
-        debug << cache[i];
-        if (i != cache.lastIndex())
-            debug << ", ";
-    }
-    debug << ')';
-    return debug.space();
 }
 
 template <class T>
