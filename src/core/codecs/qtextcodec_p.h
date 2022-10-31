@@ -51,6 +51,8 @@ public:
     static QList<QByteArray> allCodecs();
     static QList<int> allMibs();
 
+    static QByteArray localeCodec();
+
     static QString convertTo(const char *data, int len, const char* const codec);
     static QByteArray convertFrom(const QChar *unicode, int len, const char* const codec);
 
