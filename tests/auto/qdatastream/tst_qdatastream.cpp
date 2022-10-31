@@ -2412,6 +2412,7 @@ void tst_QDataStream::status_charptr_QByteArray()
 
     {
         QDataStream stream(&data, QIODevice::ReadOnly);
+        stream.setByteOrder(QDataStream::BigEndian);
         char *buf;
         stream >> buf;
 
@@ -2422,6 +2423,7 @@ void tst_QDataStream::status_charptr_QByteArray()
     }
     {
         QDataStream stream(&data, QIODevice::ReadOnly);
+        stream.setByteOrder(QDataStream::BigEndian);
         char *buf;
         uint len;
         stream.readBytes(buf, len);
@@ -2433,6 +2435,7 @@ void tst_QDataStream::status_charptr_QByteArray()
     }
     {
         QDataStream stream(&data, QIODevice::ReadOnly);
+        stream.setByteOrder(QDataStream::BigEndian);
         QByteArray buf;
         stream >> buf;
 
@@ -2517,6 +2520,7 @@ void tst_QDataStream::status_QString()
     QFETCH(QString, expectedString);
 
     QDataStream stream(&data, QIODevice::ReadOnly);
+    stream.setByteOrder(QDataStream::BigEndian);
     QString str;
     stream >> str;
 
@@ -2598,6 +2602,7 @@ void tst_QDataStream::status_QBitArray()
     QFETCH(QBitArray, expectedString);
 
     QDataStream stream(&data, QIODevice::ReadOnly);
+    stream.setByteOrder(QDataStream::BigEndian);
     QBitArray str;
     stream >> str;
 
@@ -2610,6 +2615,7 @@ void tst_QDataStream::status_QBitArray()
     { \
         QByteArray ba = byteArray; \
         QDataStream stream(&ba, QIODevice::ReadOnly); \
+        stream.setByteOrder(QDataStream::BigEndian); \
         stream >> hash; \
         QCOMPARE((int)stream.status(), (int)expectedStatus); \
         QCOMPARE(hash.size(), expectedHash.size()); \
@@ -2622,6 +2628,7 @@ void tst_QDataStream::status_QBitArray()
         for (; it != expectedHash.constEnd(); ++it) \
             expectedMap.insert(it.key(), it.value()); \
         QDataStream stream(&ba, QIODevice::ReadOnly); \
+        stream.setByteOrder(QDataStream::BigEndian); \
         stream >> map; \
         QCOMPARE((int)stream.status(), (int)expectedStatus); \
         QCOMPARE(map.size(), expectedMap.size()); \
