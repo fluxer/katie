@@ -128,7 +128,6 @@
 // #cmakedefine QT_NO_SCROLLAREA
 // #cmakedefine QT_NO_SCROLLBAR
 // #cmakedefine QT_NO_SHORTCUT
-// #cmakedefine QT_NO_SIGNALMAPPER
 // #cmakedefine QT_NO_SLIDER
 // #cmakedefine QT_NO_SORTFILTERPROXYMODEL
 // #cmakedefine QT_NO_SPINBOX
@@ -199,6 +198,7 @@
 #cmakedefine QT_NO_PRINTPREVIEWDIALOG
 #cmakedefine QT_NO_PRINTPREVIEWWIDGET
 #cmakedefine QT_NO_PROGRESSDIALOG
+#cmakedefine QT_NO_SIGNALMAPPER
 #cmakedefine QT_NO_SIZEGRIP
 #cmakedefine QT_NO_SPLASHSCREEN
 #cmakedefine QT_NO_STRINGLISTMODEL
