@@ -378,8 +378,33 @@ bool QFileSystemEngine::renameFile(const QFileSystemEntry &source, const QFileSy
     if (::rename(spath.constData(), tpath.constData()) == 0)
         return true;
 #endif
+#ifdef EXDEV
+    // NOTE: rename() does not support cross-filesystem move so that is emulated
+    const int savederrno = errno;
+    if (errno == EXDEV) {
+        QT_STATBUF statbuf;
+        if (QT_STAT(tpath.constData(), &statbuf) == 0
+            && ::unlink(tpath.constData()) == -1) {
+            *error = EXDEV;
+            return false;
+        }
+        int dummy = 0;
+        if (copyFile(source, target, &dummy) == false) {
+            *error = EXDEV;
+            return false;
+        }
+        if (::unlink(spath.constData()) == -1) {
+            *error = EXDEV;
+            return false;
+        }
+        return true;
+    }
+    *error = savederrno;
+    return false;
+#else
     *error = errno;
     return false;
+#endif // EXDEV
 }
 
 //static
