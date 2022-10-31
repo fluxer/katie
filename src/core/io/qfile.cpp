@@ -1143,7 +1143,8 @@ bool QFile::resize(qint64 sz)
     if (d->fd != -1) {
         Q_EINTR_LOOP(ret, QT_FTRUNCATE(d->fd, sz));
     } else {
-        Q_EINTR_LOOP(ret, QT_TRUNCATE(d->fileEntry.nativeFilePath().constData(), sz));
+        const QByteArray native = d->fileEntry.nativeFilePath();
+        Q_EINTR_LOOP(ret, QT_TRUNCATE(native.constData(), sz));
     }
     d->metaData.clearFlags(QFileSystemMetaData::SizeAttribute);
     if (ret == -1) {
