@@ -1106,8 +1106,6 @@ bool QDir::mkdir(const QString &dirName) const
         return false;
     }
 
-    const QDirPrivate* d = d_ptr.constData();
-
     QString fn = filePath(dirName);
     return QFileSystemEngine::createDirectory(QFileSystemEntry(fn), false);
 }
@@ -1127,8 +1125,6 @@ bool QDir::rmdir(const QString &dirName) const
         qWarning("QDir::rmdir: Empty or null file name(s)");
         return false;
     }
-
-    const QDirPrivate* d = d_ptr.constData();
 
     QString fn = filePath(dirName);
     return QFileSystemEngine::removeDirectory(QFileSystemEntry(fn), false);
@@ -1154,8 +1150,6 @@ bool QDir::mkpath(const QString &dirPath) const
         return false;
     }
 
-    const QDirPrivate* d = d_ptr.constData();
-
     QString fn = filePath(dirPath);
     return QFileSystemEngine::createDirectory(QFileSystemEntry(fn), true);
 }
@@ -1177,8 +1171,6 @@ bool QDir::rmpath(const QString &dirPath) const
         qWarning("QDir::rmpath: Empty or null file name(s)");
         return false;
     }
-
-    const QDirPrivate* d = d_ptr.constData();
 
     QString fn = filePath(dirPath);
     return QFileSystemEngine::removeDirectory(QFileSystemEntry(fn), true);
