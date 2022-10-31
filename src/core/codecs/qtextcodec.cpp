@@ -1043,7 +1043,6 @@ QByteArray QTextCodecPrivate::localeCodec()
         return localecodec;
     }
 
-    QByteArray result;
     // Get the first non-empty value from $LC_ALL, $LC_CTYPE, and $LANG
     // environment variables.
     QByteArray lang = qgetenv("LC_ALL");
@@ -1056,26 +1055,26 @@ QByteArray QTextCodecPrivate::localeCodec()
 
     const int indexOfDot = lang.indexOf('.');
     if (indexOfDot != -1) {
-        result = checkForCodec(lang.mid(indexOfDot + 1));
+        localecodec = checkForCodec(lang.mid(indexOfDot + 1));
     }
 
-    if (result.isEmpty() && !lang.isEmpty()) {
-        result = checkForCodec(lang);
+    if (localecodec.isEmpty() && !lang.isEmpty()) {
+        localecodec = checkForCodec(lang);
     }
 
     // Fallback to implementation-defined default locale
-    if (result.isEmpty()) {
+    if (localecodec.isEmpty()) {
         const QByteArray charset = ::nl_langinfo(CODESET); // deep copy
-        result = checkForCodec(charset);
+        localecodec = checkForCodec(charset);
     }
 
     // nl_langinfo() is documented to return empty string only if its argument
     // is not valid
-    if (Q_UNLIKELY(result.isEmpty())) {
+    if (Q_UNLIKELY(localecodec.isEmpty())) {
         qFatal("Could not detect codec for locale");
     }
 
-    return result;
+    return localecodec;
 }
 
 QString QTextCodecPrivate::convertTo(const char *data, int length, const char* const codec)
