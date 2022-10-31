@@ -3333,7 +3333,8 @@ QString QString::fromLocal8Bit(const char *str, int size)
 #if !defined(QT_NO_TEXTCODEC)
     if (size < 0)
         size = qstrlen(str);
-    return QTextCodec::codecForLocale()->toUnicode(str, size);
+    const QByteArray localecodec = QTextCodecPrivate::localeCodec();
+    return QTextCodecPrivate::convertTo(str, size, localecodec.constData());
 #else
     return fromLatin1(str, size);
 #endif // !QT_NO_TEXTCODEC
