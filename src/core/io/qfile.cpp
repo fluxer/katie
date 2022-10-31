@@ -651,8 +651,6 @@ QFile::rename(const QString &oldName, const QString &newName)
 
     \note To create a valid link on Windows, \a linkName must have a \c{.lnk} file extension.
 
-    \note Symbian filesystem does not support links.
-
     \sa setFileName()
 */
 
@@ -1040,7 +1038,7 @@ uchar *QFile::map(qint64 offset, qint64 size)
 {
     Q_D(QFile);
     unsetError();
-    if (openMode() == QIODevice::NotOpen) {
+    if (!isOpen()) {
         d->setError(QFile::PermissionsError, qt_error_string(EACCES));
         return 0;
     }
@@ -1054,8 +1052,9 @@ uchar *QFile::map(qint64 offset, qint64 size)
     // If we know the mapping will extend beyond EOF, fail early to avoid
     // undefined behavior. Otherwise, let mmap have its say.
     if (d->doStat(QFileSystemMetaData::SizeAttribute)
-            && (QT_OFF_T(size) > d->metaData.size() - QT_OFF_T(offset)))
+            && (QT_OFF_T(size) > d->metaData.size() - QT_OFF_T(offset))) {
         qWarning("QFile::map: Mapping a file beyond its size is not portable");
+    }
 
     int access = 0;
     if (openMode() & QIODevice::ReadOnly) access |= PROT_READ;
@@ -1501,7 +1500,8 @@ QString QFile::errorString() const
 void QFile::unsetError()
 {
     Q_D(QFile);
-    d->setError(QFile::NoError, QString());
+    d->error = QFile::NoError;
+    d->errorString.clear();
 }
 
 #ifndef QT_NO_QOBJECT
