@@ -2146,6 +2146,7 @@ void tst_QDataStream::skipRawData()
     \
         { \
             QDataStream stream(&bigEndianData, QIODevice::ReadOnly); \
+            stream.setByteOrder(QDataStream::BigEndian); \
             T i; \
             stream >> i; \
             QCOMPARE((int) stream.status(), expectedStatus); \
@@ -2153,6 +2154,7 @@ void tst_QDataStream::skipRawData()
         } \
         { \
             QDataStream stream(&bigEndianData, QIODevice::ReadOnly); \
+            stream.setByteOrder(QDataStream::BigEndian); \
             UT i; \
             stream >> i; \
             QCOMPARE((int) stream.status(), expectedStatus); \
@@ -2188,6 +2190,7 @@ void tst_QDataStream::skipRawData()
     \
         { \
             QDataStream stream(&bigEndianData, QIODevice::ReadOnly); \
+            stream.setByteOrder(QDataStream::BigEndian); \
             stream.setFloatingPointPrecision(prec); \
             T i; \
             stream >> i; \
