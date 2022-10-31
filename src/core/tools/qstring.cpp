@@ -3179,7 +3179,7 @@ QByteArray QString::toAscii() const
     return QTextCodecPrivate::convertFrom(constData(), length(), "US-ASCII");
 }
 
-static QByteArray toLocal8Bit_helper(const QChar *data, int length)
+static inline QByteArray toLocal8Bit_helper(const QChar *data, int length)
 {
     const QByteArray localecodec = QTextCodecPrivate::localeCodec();
     return QTextCodecPrivate::convertFrom(data, length, localecodec.constData());
@@ -3202,11 +3202,7 @@ static QByteArray toLocal8Bit_helper(const QChar *data, int length)
 */
 QByteArray QString::toLocal8Bit() const
 {
-#ifndef QT_NO_TEXTCODEC
-    return QTextCodec::codecForLocale()->fromUnicode(unicode(), length());
-#else
-    return toLatin1();
-#endif // QT_NO_TEXTCODEC
+    return toLocal8Bit_helper(unicode(), length());
 }
 
 /*!
