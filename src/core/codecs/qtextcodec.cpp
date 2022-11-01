@@ -1783,14 +1783,14 @@ QTextCodec *QTextCodec::codecForText(const QByteArray &ba, QTextCodec *defaultCo
     }
 
     error = U_ZERO_ERROR;
-    const char *name = ucsdet_getName(match, &error);
+    const QByteArray name = ucsdet_getName(match, &error);
     if (Q_UNLIKELY(U_FAILURE(error))) {
         ucsdet_close(detector);
         return defaultCodec;
     }
 
     ucsdet_close(detector);
-    return QTextCodec::codecForName(name);
+    return QTextCodec::codecForName(name.constData());
 }
 
 /*!
