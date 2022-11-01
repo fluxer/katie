@@ -797,37 +797,20 @@ qint64 QIODevice::read(char *data, qint64 maxSize)
             // Make sure the device is positioned correctly.
             if (sequential || d->pos == d->devicePos || seek(d->pos)) {
                 madeBufferReadsOnly = false; // fix readData attempt
-                if (maxSize >= QIODEVICE_BUFFERSIZE || (d->openMode & Unbuffered)) {
-                    // Read big chunk directly to output buffer
-                    readFromDevice = readData(data, maxSize);
-                    deviceAtEof = (readFromDevice != maxSize);
+                // Read big chunk directly to output buffer
+                readFromDevice = readData(data, maxSize);
+                deviceAtEof = (readFromDevice != maxSize);
 #if defined QIODEVICE_DEBUG
-                    printf("%p \treading %lld bytes from device (total %lld)\n", this,
-                           readFromDevice, readSoFar);
+                printf("%p \treading %lld bytes from device (total %lld)\n", this,
+                        readFromDevice, readSoFar);
 #endif
-                    if (readFromDevice > 0) {
-                        readSoFar += readFromDevice;
-                        data += readFromDevice;
-                        maxSize -= readFromDevice;
-                        if (!sequential) {
-                            d->pos += readFromDevice;
-                            d->devicePos += readFromDevice;
-                        }
-                    }
-                } else {
-                    const qint64 bytesToBuffer = QIODEVICE_BUFFERSIZE;
-                    // Try to fill QIODevice buffer by single read
-                    readFromDevice = readData(d->buffer.reserve(bytesToBuffer), bytesToBuffer);
-                    deviceAtEof = (readFromDevice != bytesToBuffer);
-                    d->buffer.chop(bytesToBuffer - qMax(Q_INT64_C(0), readFromDevice));
-                    if (readFromDevice > 0) {
-                        if (!sequential)
-                            d->devicePos += readFromDevice;
-#if defined QIODEVICE_DEBUG
-                       printf("%p \treading %lld from device into buffer\n", this,
-                               readFromDevice);
-#endif
-                        continue;
+                if (readFromDevice > 0) {
+                    readSoFar += readFromDevice;
+                    data += readFromDevice;
+                    maxSize -= readFromDevice;
+                    if (!sequential) {
+                        d->pos += readFromDevice;
+                        d->devicePos += readFromDevice;
                     }
                 }
             } else {
@@ -1168,8 +1151,9 @@ QByteArray QIODevice::readLine(qint64 maxSize)
                 readBytes += readResult;
         } while (readResult == QIODEVICE_BUFFERSIZE
                 && result[int(readBytes - 1)] != '\n');
-    } else
+    } else {
         readBytes = readLine(result.data(), result.size());
+    }
 
     if (readBytes <= 0)
         result.clear();

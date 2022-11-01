@@ -824,19 +824,19 @@ void tst_QFile::readAllBuffer()
     QVERIFY( writer.open(QIODevice::ReadWrite | QIODevice::Unbuffered) );
     QVERIFY( reader.open(QIODevice::ReadOnly) );
 
-    QCOMPARE( writer.write(data1), qint64(data1.size()) );
-    QVERIFY( writer.seek(0) );
+    QCOMPARE(writer.write(data1), qint64(data1.size()));
+    QVERIFY(writer.seek(0));
 
     QByteArray result;
-    result = reader.read(18);
-    QCOMPARE( result.size(), 18 );
+    result = reader.read(data1.size());
+    QCOMPARE(result.size(), data1.size());
 
-    QCOMPARE( writer.write(data2), qint64(data2.size()) ); // new data, old version buffered in reader
-    QCOMPARE( writer.write(data2), qint64(data2.size()) ); // new data, unbuffered in reader
+    QCOMPARE(writer.write(data2), qint64(data2.size()));
+    QCOMPARE(writer.write(data2), qint64(data2.size()));
 
     result += reader.readAll();
 
-    QCOMPARE( result, data1 + data2 );
+    QCOMPARE(result, data1 + data2);
 
     QFile::remove(fileName);
 }
