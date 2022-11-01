@@ -383,8 +383,7 @@ bool QFileSystemEngine::renameFile(const QFileSystemEntry &source, const QFileSy
     const int savederrno = errno;
     if (errno == EXDEV) {
         QT_STATBUF statbuf;
-        if (QT_STAT(tpath.constData(), &statbuf) == 0
-            && ::unlink(tpath.constData()) == -1) {
+        if (QT_STAT(tpath.constData(), &statbuf) == 0) {
             *error = EXDEV;
             return false;
         }
