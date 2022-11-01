@@ -136,9 +136,6 @@ public:
 
     int handle() const;
 
-    uchar *map(qint64 offset, qint64 size);
-    bool unmap(uchar *address);
-
 protected:
 #ifdef QT_NO_QOBJECT
     QFile(QFilePrivate &dd);

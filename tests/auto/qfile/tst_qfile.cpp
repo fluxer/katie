@@ -141,11 +141,6 @@ private slots:
     void readEof_data();
     void readEof();
 
-    void map_data();
-    void map();
-    void mapOpenMode_data();
-    void mapOpenMode();
-
     void openStandardStreams();
 
     void resize_data();
@@ -354,7 +349,6 @@ void tst_QFile::cleanupTestCase()
     QFile::remove("tst_qfile_copy.cpp");
     QFile::remove("nullinline.txt");
     QFile::remove("myLink2.lnk");
-    QFile::remove("qfile_map_testfile");
     QFile::remove("readAllBuffer.txt");
     QFile::remove("qt_file.tmp");
     QFile::remove("File.txt");
@@ -2370,168 +2364,6 @@ void tst_QFile::task167217()
     QVERIFY(!file.isSequential());
     QCOMPARE(file.pos(), qint64(5));
     file.remove();
-}
-
-#define FILESIZE 65536 * 3
-
-void tst_QFile::map_data()
-{
-    QTest::addColumn<int>("fileSize");
-    QTest::addColumn<int>("offset");
-    QTest::addColumn<int>("size");
-    QTest::addColumn<QFile::FileError>("error");
-
-    QTest::newRow("zero")         << FILESIZE << 0     << FILESIZE         << QFile::NoError;
-    QTest::newRow("small, but 0") << FILESIZE << 30    << FILESIZE - 30    << QFile::NoError;
-    QTest::newRow("a page")       << FILESIZE << 4096  << FILESIZE - 4096  << QFile::NoError;
-    QTest::newRow("+page")        << FILESIZE << 5000  << FILESIZE - 5000  << QFile::NoError;
-    QTest::newRow("++page")       << FILESIZE << 65576 << FILESIZE - 65576 << QFile::NoError;
-    QTest::newRow("bad size")     << FILESIZE << 0     << -1               << QFile::ResourceError;
-    QTest::newRow("bad offset")   << FILESIZE << -1    << 1                << QFile::UnspecifiedError;
-    QTest::newRow("zerozero")     << FILESIZE << 0     << 0                << QFile::UnspecifiedError;
-}
-
-void tst_QFile::map()
-{
-    QFETCH(int, fileSize);
-    QFETCH(int, offset);
-    QFETCH(int, size);
-    QFETCH(QFile::FileError, error);
-
-    QString fileName = QDir::currentPath() + '/' + "qfile_map_testfile";
-
-    if (QFile::exists(fileName)) {
-        QVERIFY(QFile::setPermissions(fileName,
-            QFile::WriteOwner | QFile::ReadOwner | QFile::WriteUser | QFile::ReadUser));
-        QFile::remove(fileName);
-    }
-    QFile file(fileName);
-
-    // invalid, not open
-    uchar *memory = file.map(0, size);
-    QVERIFY(!memory);
-    QCOMPARE(file.error(), QFile::PermissionsError);
-    QVERIFY(!file.unmap(memory));
-    QCOMPARE(file.error(), QFile::PermissionsError);
-
-    // make a file
-    QVERIFY(file.open(QFile::ReadWrite));
-    QVERIFY(file.resize(fileSize));
-    QVERIFY(file.flush());
-    file.close();
-    QVERIFY(file.open(QFile::ReadWrite));
-    memory = file.map(offset, size);
-    if (error != QFile::NoError) {
-
-	QVERIFY(file.error() != QFile::NoError);
-        return;
-    }
-
-    QCOMPARE(file.error(), error);
-    QVERIFY(memory);
-    memory[0] = 'Q';
-    QVERIFY(file.unmap(memory));
-    QCOMPARE(file.error(), QFile::NoError);
-
-    // Verify changes were saved
-    memory = file.map(offset, size);
-    QCOMPARE(file.error(), QFile::NoError);
-    QVERIFY(memory);
-    QVERIFY(memory[0] == 'Q');
-    QVERIFY(file.unmap(memory));
-    QCOMPARE(file.error(), QFile::NoError);
-
-    // exotic test to make sure that multiple maps work
-
-    // note: windows ce does not reference count mutliple maps
-    // it's essentially just the same reference but it 
-    // cause a resource lock on the file which prevents it 
-    // from being removed    uchar *memory1 = file.map(0, file.size());
-    uchar *memory1 = file.map(0, file.size());
-    QCOMPARE(file.error(), QFile::NoError);
-    uchar *memory2 = file.map(0, file.size());
-    QCOMPARE(file.error(), QFile::NoError);
-    QVERIFY(memory1);
-    QVERIFY(memory2);
-    QVERIFY(file.unmap(memory1));
-    QCOMPARE(file.error(), QFile::NoError);
-    QVERIFY(file.unmap(memory2));
-    QCOMPARE(file.error(), QFile::NoError);
-    memory1 = file.map(0, file.size());
-    QCOMPARE(file.error(), QFile::NoError);
-    QVERIFY(memory1);
-    QVERIFY(file.unmap(memory1));
-    QCOMPARE(file.error(), QFile::NoError);
-
-    file.close();
-
-    if (!currentuserisroot)
-        // root always has permissions
-    {
-        // Change permissions on a file, just to confirm it would fail
-        QFile::Permissions originalPermissions = file.permissions();
-        QVERIFY(file.setPermissions(QFile::ReadOther));
-        QVERIFY(!file.open(QFile::ReadWrite));
-        memory = file.map(offset, size);
-        QCOMPARE(file.error(), QFile::PermissionsError);
-        QVERIFY(!memory);
-        QVERIFY(file.setPermissions(originalPermissions));
-    }
-    QVERIFY(file.remove());
-}
-
-void tst_QFile::mapOpenMode_data()
-{
-    QTest::addColumn<int>("openMode");
-
-    QTest::newRow("ReadOnly") << int(QIODevice::ReadOnly);
-    //QTest::newRow("WriteOnly") << int(QIODevice::WriteOnly); // this doesn't make sense
-    QTest::newRow("ReadWrite") << int(QIODevice::ReadWrite);
-    QTest::newRow("ReadOnly,Unbuffered") << int(QIODevice::ReadOnly | QIODevice::Unbuffered);
-    QTest::newRow("ReadWrite,Unbuffered") << int(QIODevice::ReadWrite | QIODevice::Unbuffered);
-}
-
-void tst_QFile::mapOpenMode()
-{
-    QFETCH(int, openMode);
-    static const qint64 fileSize = 4096;
-
-    QByteArray pattern(fileSize, 'A');
-
-    QString fileName = QDir::currentPath() + '/' + "qfile_map_testfile";
-    if (QFile::exists(fileName)) {
-        QVERIFY(QFile::setPermissions(fileName,
-            QFile::WriteOwner | QFile::ReadOwner | QFile::WriteUser | QFile::ReadUser));
-	QFile::remove(fileName);
-    }
-    QFile file(fileName);
-
-    // make a file
-    QVERIFY(file.open(QFile::ReadWrite));
-    QVERIFY(file.write(pattern));
-    QVERIFY(file.flush());
-    file.close();
-
-    // open according to our mode
-    QVERIFY(file.open(QIODevice::OpenMode(openMode)));
-
-    uchar *memory = file.map(0, fileSize);
-    QVERIFY(memory);
-    QVERIFY(memcmp(memory, pattern, fileSize) == 0);
-
-    if (openMode & QIODevice::WriteOnly) {
-        // try to write to the file
-        *memory = 'a';
-        file.unmap(memory);
-        file.close();
-        file.open(QIODevice::OpenMode(openMode));
-        file.seek(0);
-        char c;
-        QVERIFY(file.getChar(&c));
-        QCOMPARE(c, 'a');
-    }
-
-    file.close();
 }
 
 void tst_QFile::openDirectory()

@@ -49,13 +49,11 @@ protected:
 
     bool openExternalFile(QIODevice::OpenMode mode, int fd, QFile::FileHandleFlags handleFlags);
     bool doStat(QFileSystemMetaData::MetaDataFlags flags) const;
-    bool unmap(uchar *ptr);
 
     QFile::FileError error;
     QString errorString;
     QFileSystemEntry fileEntry;
     mutable QFileSystemMetaData metaData;
-    QHash<uchar *, QPair<int /*offset % PageSize*/, size_t /*length + offset % PageSize*/> > maps;
     int fd;
     bool closeFileHandle;
 

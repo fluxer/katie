@@ -35,8 +35,6 @@
 #define tr(X) QString::fromLatin1(X)
 #endif
 
-#include <sys/mman.h>
-
 QT_BEGIN_NAMESPACE
 
 //************* QFilePrivate
@@ -62,23 +60,6 @@ bool QFilePrivate::doStat(QFileSystemMetaData::MetaDataFlags flags) const
     }
 
     return metaData.exists();
-}
-
-bool QFilePrivate::unmap(uchar *ptr)
-{
-    if (!maps.contains(ptr)) {
-        setError(QFile::PermissionsError, qt_error_string(EACCES));
-        return false;
-    }
-
-    uchar *start = ptr - maps[ptr].first;
-    size_t len = maps[ptr].second;
-    if (::munmap(start, len) == -1) {
-        setError(QFile::UnspecifiedError, qt_error_string(errno));
-        return false;
-    }
-    maps.remove(ptr);
-    return true;
 }
 
 bool QFilePrivate::openExternalFile(QIODevice::OpenMode mode, int _fd, QFile::FileHandleFlags handleFlags)
@@ -1023,96 +1004,6 @@ int QFile::handle() const
 }
 
 /*!
-    \since 4.4
-    Maps \a size bytes of the file into memory starting at \a offset.  A file
-    should be open for a map to succeed but the file does not need to stay
-    open after the memory has been mapped.  When the QFile is destroyed
-    or a new file is opened with this object, any maps that have not been
-    unmapped will automatically be unmapped.
-
-    Returns a pointer to the memory or 0 if there is an error.
-
-    \sa unmap()
- */
-uchar *QFile::map(qint64 offset, qint64 size)
-{
-    Q_D(QFile);
-    unsetError();
-    if (!isOpen()) {
-        d->setError(QFile::PermissionsError, qt_error_string(EACCES));
-        return 0;
-    }
-
-    if (offset < 0 || offset != qint64(QT_OFF_T(offset))
-            || size < 0 || quint64(size) > quint64(size_t(-1))) {
-        d->setError(QFile::UnspecifiedError, qt_error_string(EINVAL));
-        return 0;
-    }
-
-    // If we know the mapping will extend beyond EOF, fail early to avoid
-    // undefined behavior. Otherwise, let mmap have its say.
-    if (d->doStat(QFileSystemMetaData::SizeAttribute)
-            && (QT_OFF_T(size) > d->metaData.size() - QT_OFF_T(offset))) {
-        qWarning("QFile::map: Mapping a file beyond its size is not portable");
-    }
-
-    int access = 0;
-    if (openMode() & QIODevice::ReadOnly) access |= PROT_READ;
-    if (openMode() & QIODevice::WriteOnly) access |= PROT_WRITE;
-
-    static const int pageSize = ::getpagesize();
-    const int extra = offset % pageSize;
-
-    if (quint64(size + extra) > quint64((size_t)-1)) {
-        d->setError(QFile::UnspecifiedError, qt_error_string(EINVAL));
-        return 0;
-    }
-
-    size_t realSize = (size_t)size + extra;
-    QT_OFF_T realOffset = QT_OFF_T(offset);
-    realOffset &= ~(QT_OFF_T(pageSize - 1));
-
-    void *mapAddress = QT_MMAP(nullptr, realSize,
-                   access, MAP_SHARED, d->fd, realOffset);
-    if (mapAddress != MAP_FAILED) {
-        uchar *address = extra + static_cast<uchar*>(mapAddress);
-        d->maps[address] = QPair<int,size_t>(extra, realSize);
-        return address;
-    }
-
-    switch(errno) {
-    case EBADF:
-        d->setError(QFile::PermissionsError, qt_error_string(EACCES));
-        break;
-    case ENFILE:
-    case ENOMEM:
-        d->setError(QFile::ResourceError, qt_error_string(errno));
-        break;
-    case EINVAL:
-        // size are out of bounds
-    default:
-        d->setError(QFile::UnspecifiedError, qt_error_string(errno));
-        break;
-    }
-    return 0;
-}
-
-/*!
-    \since 4.4
-    Unmaps the memory \a address.
-
-    Returns true if the unmap succeeds; false otherwise.
-
-    \sa map()
- */
-bool QFile::unmap(uchar *address)
-{
-    Q_D(QFile);
-    unsetError();
-    return d->unmap(address);
-}
-
-/*!
     \fn QString QFile::name() const
 
     Use fileName() instead.
@@ -1266,23 +1157,18 @@ void QFile::close()
     d->metaData.clear();
 
     // Close the file if we created the handle.
-    int ret = 0;
     if (d->closeFileHandle) {
-        ret = qt_safe_close(d->fd);
-    }
+        const int ret = qt_safe_close(d->fd);
 
-    // We must reset these guys regardless; calling close again after a
-    // failed close causes crashes on some systems.
-    d->fd = -1;
-    QList<uchar*> keys = d->maps.keys();
-    for (int i = 0; i < keys.count(); ++i) {
-        d->unmap(keys.at(i));
-    }
+        // We must reset these guys regardless; calling close again after a
+        // failed close causes crashes on some systems.
+        d->fd = -1;
 
-    // Report errors.
-    if (ret != 0) {
-        d->setError(QFile::UnspecifiedError, qt_error_string(errno));
-        return;
+        // Report errors.
+        if (ret != 0) {
+            d->setError(QFile::UnspecifiedError, qt_error_string(errno));
+            return;
+        }
     }
 
     if (flushed) {
