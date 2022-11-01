@@ -1267,7 +1267,7 @@ qint64 QFile::readLineData(char *data, qint64 maxlen)
         qint64 readSoFar = 0;
         while (readSoFar < maxlen) {
             char c;
-            qint64 readResult = readData(&c, 1);
+            qint64 readResult = qt_safe_read(d->fd, &c, 1);
             if (readResult <= 0)
                 return (readSoFar > 0) ? readSoFar : -1;
             ++readSoFar;
