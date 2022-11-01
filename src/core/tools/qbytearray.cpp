@@ -263,7 +263,7 @@ QByteArray qRandomUuid()
     uuidbuf[bufi + 1] = tohex[randombuf[randi] & 0xf];
 
     static const char tohex[] = "0123456789abcdef";
-    QSTACKARRAY(char, uuidbuf, 37);
+    QSTACKARRAY(char, uuidbuf, 36);
     UUID_TOHEX(0, 0);
     UUID_TOHEX(2, 1);
     UUID_TOHEX(4, 2);
@@ -1195,7 +1195,7 @@ QByteArray::QByteArray(int size, char ch)
     if (size <= 0) {
         d = &shared_null;
     } else {
-        d = static_cast<Data *>(::malloc(sizeof(Data)+size));
+        d = static_cast<Data *>(::malloc(sizeof(Data) + size));
         Q_CHECK_PTR(d);
         d->ref = 0;
         d->alloc = d->size = size;
