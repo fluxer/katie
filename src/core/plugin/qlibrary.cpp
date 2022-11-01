@@ -32,6 +32,7 @@
 #include "qmap.h"
 #include "qcoreapplication_p.h"
 #include "qdebug.h"
+#include "qcorecommon_p.h"
 #include "qcore_unix_p.h"
 
 #include <errno.h>
@@ -39,12 +40,8 @@
 #ifndef QT_NO_PLUGIN_CHECK
 #  include <elf.h>
 #  if QT_POINTER_SIZE == 8
-#    define QT_ELF_EHDR_TYPE Elf64_Ehdr
-#    define QT_ELF_SHDR_TYPE Elf64_Shdr
 #    define QT_ELF_CLASS_TYPE ELFCLASS64
 #  else
-#    define QT_ELF_EHDR_TYPE Elf32_Ehdr
-#    define QT_ELF_SHDR_TYPE Elf32_Shdr
 #    define QT_ELF_CLASS_TYPE ELFCLASS32
 #  endif
 #endif
@@ -130,10 +127,9 @@ QT_BEGIN_NAMESPACE
 
 #ifndef QT_NO_PLUGIN_CHECK
 /*
-  This opens the specified library, mmaps it into memory, and searches
-  for the plugin section. The advantage of this approach is that
-  we can get the verification data without have to actually load the library.
-  This lets us detect mismatches more safely.
+  This opens the specified library and checks for the ELF magic and class.
+  The advantage of this approach is that we can do verification without
+  actually loading the library. This lets us detect mismatches more safely.
 
   Returns false if the information could not be read.
   Returns true if successfully read.
@@ -150,44 +146,19 @@ static bool qt_unix_query(const QString &library, QLibraryPrivate *lib)
         return false;
     }
 
-    QByteArray data;
-    qint64 datalen = file.size();
-    const char *filedata = reinterpret_cast<char*>(file.map(0, file.size()));
-    if (filedata == 0) {
-        // try reading the data into memory instead
-        data = file.readAll();
-        filedata = data.constData();
-        datalen = data.size();
-    }
+    QSTACKARRAY(char, elfheader, EI_CLASS + 1);
+    const qint64 elfread = file.read(elfheader, EI_CLASS + 1);
 
     // basic ELF checks to avoid crashing
-    if (datalen < (EI_CLASS + 1) || qstrncmp(filedata, ELFMAG, SELFMAG) != 0) {
+    if (elfread < (EI_CLASS + 1) || ::memcmp(elfheader, ELFMAG, SELFMAG) != 0) {
         lib->errorString = QLibrary::tr("'%1' is not ELF file").arg(library);
         return false;
-    } else if (filedata[EI_CLASS] != QT_ELF_CLASS_TYPE) {
+    } else if (elfheader[EI_CLASS] != QT_ELF_CLASS_TYPE) {
         lib->errorString = QLibrary::tr("ELF class mismatch in '%1'").arg(library);
         return false;
     }
 
-    // ELF binaries build with GNU or Clang have .ktplugin section
-    bool ret = false;
-    QT_ELF_EHDR_TYPE *ehdr = (QT_ELF_EHDR_TYPE*)(filedata);
-    QT_ELF_SHDR_TYPE *shdr = (QT_ELF_SHDR_TYPE*)(filedata + ehdr->e_shoff);
-    const char *const sh_strtab_p = filedata + shdr[ehdr->e_shstrndx].sh_offset;
-    for (int i = 0; i < ehdr->e_shnum; ++i) {
-        const char* sectioname = sh_strtab_p + shdr[i].sh_name;
-        if (qstrcmp(sectioname, ".ktplugin") == 0) {
-            ret = true;
-            // compatiblity between releases is not guaranteed thus no version matching is done
-            break;
-        }
-    }
-
-    if (!ret) {
-        lib->errorString = QLibrary::tr("Plugin verification data mismatch in '%1'").arg(library);
-    }
-
-    return ret;
+    return true;
 }
 #endif // QT_NO_PLUGIN_CHECK
 
