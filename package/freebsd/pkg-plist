@@ -7,7 +7,6 @@ bin/qscript-katie
 bin/qtconfig-katie
 bin/uic-katie
 include/katie/QtCore/QAbstractEventDispatcher
-include/katie/QtCore/QAbstractFileEngine
 include/katie/QtCore/QAbstractItemModel
 include/katie/QtCore/QAbstractListModel
 include/katie/QtCore/QAbstractTableModel
@@ -176,7 +175,6 @@ include/katie/QtCore/QtMsgHandler
 include/katie/QtCore/QtPlugin
 include/katie/QtCore/QtPluginInstanceFunction
 include/katie/QtCore/qabstracteventdispatcher.h
-include/katie/QtCore/qabstractfileengine.h
 include/katie/QtCore/qabstractitemmodel.h
 include/katie/QtCore/qalgorithms.h
 include/katie/QtCore/qatomic.h
