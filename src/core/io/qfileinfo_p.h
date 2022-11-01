@@ -44,9 +44,6 @@ class QFileInfoPrivate : public QSharedData
 {
 public:
     enum FileName {
-        DefaultName,
-        BaseName,
-        PathName,
         AbsoluteName,
         AbsolutePathName,
         LinkName,
