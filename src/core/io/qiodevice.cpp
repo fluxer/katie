@@ -1315,7 +1315,7 @@ qint64 QIODevice::write(const char *data)
 void QIODevice::ungetChar(char c)
 {
     Q_D(QIODevice);
-    CHECK_READABLE(read, Q_VOID);
+    CHECK_READABLE(ungetChar, Q_VOID);
 
 #if defined QIODEVICE_DEBUG
     printf("%p QIODevice::ungetChar(0x%hhx '%c')\n", this, c, isprint(c) ? c : '?');
