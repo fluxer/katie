@@ -32,6 +32,14 @@
 
 QT_BEGIN_NAMESPACE
 
+static bool isCharEqual(const char* const byteptr, const int bytelen, const char* const charptr, const int charlen)
+{
+    if (bytelen != charlen) {
+        return false;
+    }
+    return (::memcmp(byteptr, charptr, charlen) == 0);
+}
+
 class QTranslatorPrivate
 {
 public:
@@ -227,6 +235,8 @@ bool QTranslator::loadFromData(const QByteArray &data)
 QString QTranslator::translate(const char *context, const char *sourceText) const
 {
     Q_D(const QTranslator);
+    const int contextlen = qstrlen(context);
+    const int sourcelen = qstrlen(sourceText);
     QDataStream trdatastream(&d->data, QIODevice::ReadOnly);
     QIODevice* trdatadevice = trdatastream.device();
     trdatadevice->seek(d->offset);
@@ -243,12 +253,14 @@ QString QTranslator::translate(const char *context, const char *sourceText) cons
         trdatastream >> trmsgstr_plural;
 
         // this search method assumes plurals and regular messages are unique strings
-        if ((!context || trmsgctxt == context) && trmsgid_plural == sourceText) {
+        if (isCharEqual(trmsgctxt.constData(), trmsgctxt.size(), context, contextlen)
+            && isCharEqual(trmsgid_plural.constData(), trmsgid_plural.size(), sourceText, sourcelen)) {
             d->converter.reset();
             return d->converter.toUnicode(trmsgstr_plural.constData(), trmsgstr_plural.size());
         }
 
-        if ((!context || trmsgctxt == context) && trmsgid == sourceText) {
+        if (isCharEqual(trmsgctxt.constData(), trmsgctxt.size(), context, contextlen)
+            && isCharEqual(trmsgid.constData(), trmsgid.size(), sourceText, sourcelen)) {
             d->converter.reset();
             return d->converter.toUnicode(trmsgstr.constData(), trmsgstr.size());
         }
@@ -268,6 +280,8 @@ QString QTranslator::translate(const char *context, const char *sourceText) cons
 QString QTranslator::translateStrict(const char *context, const char *sourceText) const
 {
     Q_D(const QTranslator);
+    const int contextlen = qstrlen(context);
+    const int sourcelen = qstrlen(sourceText);
     QDataStream trdatastream(&d->data, QIODevice::ReadOnly);
     QIODevice* trdatadevice = trdatastream.device();
     trdatadevice->seek(d->offset);
@@ -283,12 +297,14 @@ QString QTranslator::translateStrict(const char *context, const char *sourceText
         trdatastream >> trmsgid_plural;
         trdatastream >> trmsgstr_plural;
 
-        if ((!context || trmsgctxt == context) && trmsgid_plural == sourceText) {
+        if (isCharEqual(trmsgctxt.constData(), trmsgctxt.size(), context, contextlen)
+            && isCharEqual(trmsgid_plural.constData(), trmsgid_plural.size(), sourceText, sourcelen)) {
             d->converter.reset();
             return d->converter.toUnicode(trmsgstr_plural.constData(), trmsgstr_plural.size());
         }
 
-        if ((!context || trmsgctxt == context) && trmsgid == sourceText) {
+        if (isCharEqual(trmsgctxt.constData(), trmsgctxt.size(), context, contextlen)
+            && isCharEqual(trmsgid.constData(), trmsgid.size(), sourceText, sourcelen)) {
             d->converter.reset();
             return d->converter.toUnicode(trmsgstr.constData(), trmsgstr.size());
         }
