@@ -28,6 +28,7 @@
 #include "qlocale.h"
 #include "qdir.h"
 #include "qtextcodec.h"
+#include "qstdcontainers_p.h"
 #include "qdebug.h"
 
 QT_BEGIN_NAMESPACE
@@ -40,22 +41,29 @@ static bool isCharEqual(const char* const byteptr, const int bytelen, const char
     return (::memcmp(byteptr, charptr, charlen) == 0);
 }
 
+struct QTranslatorCache
+{
+    QByteArray trmsgctxt;
+    QByteArray trmsgid;
+    QByteArray trmsgstr;
+    QByteArray trmsgid_plural;
+    QByteArray trmsgstr_plural;
+};
+
 class QTranslatorPrivate
 {
 public:
     QTranslatorPrivate();
 
     QByteArray domain;
-    mutable QByteArray data;
+    QStdVector<QTranslatorCache> cache;
     mutable QTextConverter converter;
-    quint32 offset;
 
 private:
     Q_DISABLE_COPY(QTranslatorPrivate);
 };
 
 QTranslatorPrivate::QTranslatorPrivate()
-    : offset(0)
 {
 }
 
@@ -158,9 +166,8 @@ QTranslator::~QTranslator()
 bool QTranslator::load(const QString &domain, const QString &locale)
 {
     Q_D(QTranslator);
-    d->data.clear();
+    d->cache.clear();
     d->converter = QTextConverter();
-    d->offset = 0;
     if (domain.isEmpty()) {
         qWarning("QTranslator::load: Domain is empty");
         return false;
@@ -198,30 +205,37 @@ bool QTranslator::load(const QString &domain, const QString &locale)
 bool QTranslator::loadFromData(const QByteArray &data)
 {
     Q_D(QTranslator);
-    d->data = data;
+    d->cache.clear();
     d->converter = QTextConverter();
-    d->offset = 0;
 
     if (data.isEmpty()) {
         qWarning("QTranslator::load: Empty data");
-        d->data.clear();
         return false;
     }
-    
-    QDataStream trheaderstream(&d->data, QIODevice::ReadOnly);
+
+    QDataStream trdatastream(data);
     QByteArray trmagic;
     QByteArray trcodec;
-    trheaderstream >> trmagic;
-    trheaderstream >> trcodec;
+    trdatastream >> trmagic;
+    trdatastream >> trcodec;
 
     if (trmagic != "KATIE_TRANSLATION") {
         qWarning("QTranslator::load: Invalid magic");
-        d->data.clear();
         return false;
     }
 
+    QIODevice* trdatadevice = trdatastream.device();
+    QTranslatorCache trcache;
+    while (!trdatadevice->atEnd()) {
+        trdatastream >> trcache.trmsgctxt;
+        trdatastream >> trcache.trmsgid;
+        trdatastream >> trcache.trmsgstr;
+        trdatastream >> trcache.trmsgid_plural;
+        trdatastream >> trcache.trmsgstr_plural;
+        d->cache.append(trcache);
+    }
     d->converter = QTextConverter(trcodec);
-    d->offset = trheaderstream.device()->pos();
+    // qDebug() << Q_FUNC_INFO << d->domain << d->cache.size() << (d->cache.size() * sizeof(QTranslatorCache));
     return true;
 }
 
@@ -241,32 +255,18 @@ QString QTranslator::translate(const char *context, const char *sourceText) cons
     Q_D(const QTranslator);
     const int contextlen = qstrlen(context);
     const int sourcelen = qstrlen(sourceText);
-    QDataStream trdatastream(&d->data, QIODevice::ReadOnly);
-    QIODevice* trdatadevice = trdatastream.device();
-    trdatadevice->seek(d->offset);
-    while (!trdatadevice->atEnd()) {
-        QByteArray trmsgctxt;
-        QByteArray trmsgid;
-        QByteArray trmsgstr;
-        QByteArray trmsgid_plural;
-        QByteArray trmsgstr_plural;
-        trdatastream >> trmsgctxt;
-        trdatastream >> trmsgid;
-        trdatastream >> trmsgstr;
-        trdatastream >> trmsgid_plural;
-        trdatastream >> trmsgstr_plural;
-
+    foreach (const QTranslatorCache &it, d->cache) {
         // this search method assumes plurals and regular messages are unique strings
-        if (isCharEqual(trmsgctxt.constData(), trmsgctxt.size(), context, contextlen)
-            && isCharEqual(trmsgid_plural.constData(), trmsgid_plural.size(), sourceText, sourcelen)) {
+        if (isCharEqual(it.trmsgctxt.constData(), it.trmsgctxt.size(), context, contextlen)
+            && isCharEqual(it.trmsgid_plural.constData(), it.trmsgid_plural.size(), sourceText, sourcelen)) {
             d->converter.reset();
-            return d->converter.toUnicode(trmsgstr_plural.constData(), trmsgstr_plural.size());
+            return d->converter.toUnicode(it.trmsgstr_plural.constData(), it.trmsgstr_plural.size());
         }
 
-        if (isCharEqual(trmsgctxt.constData(), trmsgctxt.size(), context, contextlen)
-            && isCharEqual(trmsgid.constData(), trmsgid.size(), sourceText, sourcelen)) {
+        if (isCharEqual(it.trmsgctxt.constData(), it.trmsgctxt.size(), context, contextlen)
+            && isCharEqual(it.trmsgid.constData(), it.trmsgid.size(), sourceText, sourcelen)) {
             d->converter.reset();
-            return d->converter.toUnicode(trmsgstr.constData(), trmsgstr.size());
+            return d->converter.toUnicode(it.trmsgstr.constData(), it.trmsgstr.size());
         }
     }
     return QString::fromUtf8(sourceText);
@@ -290,31 +290,18 @@ QString QTranslator::translateStrict(const char *context, const char *sourceText
     Q_D(const QTranslator);
     const int contextlen = qstrlen(context);
     const int sourcelen = qstrlen(sourceText);
-    QDataStream trdatastream(&d->data, QIODevice::ReadOnly);
-    QIODevice* trdatadevice = trdatastream.device();
-    trdatadevice->seek(d->offset);
-    while (!trdatadevice->atEnd()) {
-        QByteArray trmsgctxt;
-        QByteArray trmsgid;
-        QByteArray trmsgstr;
-        QByteArray trmsgid_plural;
-        QByteArray trmsgstr_plural;
-        trdatastream >> trmsgctxt;
-        trdatastream >> trmsgid;
-        trdatastream >> trmsgstr;
-        trdatastream >> trmsgid_plural;
-        trdatastream >> trmsgstr_plural;
-
-        if (isCharEqual(trmsgctxt.constData(), trmsgctxt.size(), context, contextlen)
-            && isCharEqual(trmsgid_plural.constData(), trmsgid_plural.size(), sourceText, sourcelen)) {
+    foreach (const QTranslatorCache &it, d->cache) {
+        // this search method assumes plurals and regular messages are unique strings
+        if (isCharEqual(it.trmsgctxt.constData(), it.trmsgctxt.size(), context, contextlen)
+            && isCharEqual(it.trmsgid_plural.constData(), it.trmsgid_plural.size(), sourceText, sourcelen)) {
             d->converter.reset();
-            return d->converter.toUnicode(trmsgstr_plural.constData(), trmsgstr_plural.size());
+            return d->converter.toUnicode(it.trmsgstr_plural.constData(), it.trmsgstr_plural.size());
         }
 
-        if (isCharEqual(trmsgctxt.constData(), trmsgctxt.size(), context, contextlen)
-            && isCharEqual(trmsgid.constData(), trmsgid.size(), sourceText, sourcelen)) {
+        if (isCharEqual(it.trmsgctxt.constData(), it.trmsgctxt.size(), context, contextlen)
+            && isCharEqual(it.trmsgid.constData(), it.trmsgid.size(), sourceText, sourcelen)) {
             d->converter.reset();
-            return d->converter.toUnicode(trmsgstr.constData(), trmsgstr.size());
+            return d->converter.toUnicode(it.trmsgstr.constData(), it.trmsgstr.size());
         }
     }
     return QString();
@@ -326,7 +313,7 @@ QString QTranslator::translateStrict(const char *context, const char *sourceText
 bool QTranslator::isEmpty() const
 {
     Q_D(const QTranslator);
-    return d->data.isEmpty();
+    return d->cache.isEmpty();
 }
 
 QT_END_NAMESPACE

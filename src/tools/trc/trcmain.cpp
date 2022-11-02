@@ -106,7 +106,7 @@ int runTrc(int argc, char *argv[])
 
     int arg = 1;
     while (arg < argc) {
-        QString opt = QString::fromLocal8Bit(argv[arg]);
+        const QString opt = QString::fromLocal8Bit(argv[arg]);
         if (opt == QLatin1String("-h") || opt == QLatin1String("-help")) {
             showHelp();
             return 0;
