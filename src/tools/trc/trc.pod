@@ -1,0 +1,35 @@
+=head1 NAME
+
+trc - Katie Translation Compiler
+
+=head1 SYNOPSIS
+
+trc [options] <translation-file>
+
+=head1 DESCRIPTION
+
+trc reads a user interface definition (.po) file and creates corresponding
+.tr file.
+
+=head1 OPTIONS
+
+    -h
+    -help
+        Display this help and exit.
+
+    -v
+    -version
+        Display version.
+
+    -o <file>
+        Place the output into <file>.
+
+=head1 EXIT STATUS
+
+trc returns 0 on success and other on unexcepted failure.
+
+=head1 AUTHORS
+
+Copyright (C) 2022 Ivailo Monev
+
+Licensed through GNU Lesser General Public License.

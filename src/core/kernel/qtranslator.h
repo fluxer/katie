@@ -37,10 +37,12 @@ public:
     virtual ~QTranslator();
 
     virtual QString translate(const char *context, const char *sourceText) const;
+    virtual QString translateStrict(const char *context, const char *sourceText) const;
 
     virtual bool isEmpty() const;
 
-    bool load(const QString &domain);
+    bool load(const QString &domain, const QString &locale = QString());
+    bool loadFromData(const QByteArray &data);
 
 private:
     Q_DISABLE_COPY(QTranslator)

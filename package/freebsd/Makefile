@@ -16,6 +16,7 @@ WRKSRC = ${WRKDIR}/katie.git
 USES = compiler:c++11-lang pkgconfig cmake xorg desktop-file-utils
 USE_XORG = x11 xinerama xrandr xrender xfixes xcursor xext sm ice
 USE_LDCONFIG = yes
+USE_GETTEXT_TOOLS = build run
 RUN_DEPENDS = xdg-open:devel/xdg-utils \
 	${LOCALBASE}/share/fonts/freefont-ttf/FreeSans.ttf:x11-fonts/freefont-ttf
 LIB_DEPENDS = libdeflate.so:archivers/libdeflate libicuuc.so:devel/icu \
@@ -28,9 +29,9 @@ CMAKE_ARGS = -DKATIE_TOOLS_SUFFIX="-katie" -Wno-dev
 OPTIONS_DEFINE = NLS
 OPTIONS_SUB = yes
 NLS_DESC = Build translator and translations
-NLS_USES = gettext
-NLS_CMAKE_ON = -DWITH_INTL=TRUE
-NLS_CMAKE_OFF = -DWITH_INTL=FALSE
+NLS_USES = gettext-tools
+NLS_CMAKE_ON = -DWITH_GETTEXTPO=TRUE
+NLS_CMAKE_OFF = -DWITH_GETTEXTPO=FALSE
 
 do-extract:
 	@rm -vrf ${WRKSRC}

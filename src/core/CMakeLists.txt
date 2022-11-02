@@ -319,14 +319,6 @@ foreach(lib dl rt)
     endif()
 endforeach()
 
-if(WITH_INTL AND INTL_FOUND)
-    set(EXTRA_CORE_LIBS
-        ${EXTRA_CORE_LIBS}
-        ${INTL_LIBRARIES}
-    )
-    include_directories(${INTL_INCLUDES})
-endif()
-
 if(WITH_EXECINFO AND EXECINFO_FOUND)
     set(EXTRA_CORE_LIBS
         ${EXTRA_CORE_LIBS}

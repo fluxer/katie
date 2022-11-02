@@ -49,6 +49,7 @@ There are several things you should be aware before considering Katie:
 
  - some additions have been made:
   - custom image format
+  - custom translations format
   - custom hash algorithm
   - JSON document handler
   - standard directories handler

@@ -120,7 +120,7 @@ set(KATIE_LIBRARIES_PATH "${CMAKE_INSTALL_FULL_LIBDIR}" CACHE PATH "Libraries in
 set(KATIE_BINARIES_PATH "${CMAKE_INSTALL_FULL_BINDIR}" CACHE PATH "Binaries installation path")
 set(KATIE_PLUGINS_PATH "${KATIE_LIBRARIES_PATH}/katie/plugins" CACHE PATH "Plugins installation path")
 set(KATIE_IMPORTS_PATH "${KATIE_LIBRARIES_PATH}/katie/imports" CACHE PATH "Declarative imports installation path")
-set(KATIE_TRANSLATIONS_PATH "${CMAKE_INSTALL_FULL_LOCALEDIR}" CACHE PATH "Translations installation path")
+set(KATIE_TRANSLATIONS_PATH "${CMAKE_INSTALL_FULL_DATADIR}/translations" CACHE PATH "Translations installation path")
 set(KATIE_CMAKE_PATH "${KATIE_LIBRARIES_PATH}/cmake/Katie" CACHE PATH "CMake aware modules installation path")
 set(KATIE_LDCONF_PATH "${CMAKE_INSTALL_FULL_SYSCONFDIR}/ld.so.conf.d" CACHE PATH "Run-time linker/loader configs installation path")
 set(KATIE_PROFILE_PATH "${CMAKE_INSTALL_FULL_SYSCONFDIR}/profile.d" CACHE PATH "Shell profile scripts installation path")
@@ -147,8 +147,8 @@ add_feature_info(dbus WITH_DBUS "build D-Bus support")
 option(WITH_FONTCONFIG "Build Fontconfig support" ON)
 add_feature_info(fontconfig WITH_FONTCONFIG "build Fontconfig support")
 
-option(WITH_INTL "Build Intl support" ON)
-add_feature_info(intl WITH_INTL "build Intl support")
+option(WITH_GETTEXTPO "Build Gettext support" ON)
+add_feature_info(gettextpo WITH_GETTEXTPO "build Gettext support")
 
 option(WITH_EXECINFO "Build ExecInfo support" OFF)
 add_feature_info(execinfo WITH_EXECINFO "build ExecInfo support")
@@ -256,10 +256,10 @@ set_package_properties(DBus PROPERTIES
     TYPE RECOMMENDED
 )
 
-find_package(Intl)
-set_package_properties(Intl PROPERTIES
+find_package(GettextPO)
+set_package_properties(GettextPO PROPERTIES
     PURPOSE "Required for translations support"
-    DESCRIPTION "GNU gettext runtime library"
+    DESCRIPTION "GNU gettext PO files processsor"
     URL "https://www.gnu.org/software/gettext/gettext.html"
     TYPE RECOMMENDED
 )
@@ -400,8 +400,10 @@ if(NOT WITH_CUPS OR NOT CUPS_FOUND)
     katie_config(QT_NO_CUPS)
 endif()
 
-if(NOT WITH_INTL OR NOT INTL_FOUND)
+if(NOT WITH_GETTEXTPO OR NOT GETTEXTPO_FOUND)
     katie_config(QT_NO_TRANSLATION)
+else()
+    set(KATIE_TOOLS "${KATIE_TOOLS} trc")
 endif()
 
 if(NOT WITH_EXECINFO OR NOT EXECINFO_FOUND)
@@ -464,7 +466,7 @@ add_subdirectory(src/uitools)
 
 add_subdirectory(src/tools)
 
-if(WITH_INTL AND INTL_FOUND)
+if(WITH_GETTEXTPO AND GETTEXTPO_FOUND)
     add_subdirectory(translations)
 endif()
 

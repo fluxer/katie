@@ -24,21 +24,33 @@
 #ifndef QT_NO_TRANSLATION
 
 #include "qcoreapplication.h"
-
-#include <libintl.h>
+#include "qlibraryinfo.h"
+#include "qlocale.h"
+#include "qdir.h"
+#include "qtextcodec.h"
+#include "qdebug.h"
 
 QT_BEGIN_NAMESPACE
 
 class QTranslatorPrivate
 {
 public:
-    QTranslatorPrivate() { }
+    QTranslatorPrivate();
 
     QByteArray domain;
+    mutable QByteArray data;
+    mutable QTextConverter converter;
+    quint32 offset;
 
 private:
     Q_DISABLE_COPY(QTranslatorPrivate);
 };
+
+QTranslatorPrivate::QTranslatorPrivate()
+    : offset(0)
+{
+}
+
 
 /*!
     \class QTranslator
@@ -113,7 +125,6 @@ QTranslator::QTranslator()
 {
 }
 
-
 /*!
     Destroys the object and frees any allocated resources.
 */
@@ -126,58 +137,172 @@ QTranslator::~QTranslator()
 }
 
 /*!
-
-    Loads \a filename (with ".mo" as suffix), which is file name relative
-    to the translations installation directory. Returns true if the
-    translation is successfully loaded; otherwise returns false.
+    Loads translation for \a domain and \a locale, \a domain being
+    filename relative to the translations installation directory
+    without the suffix and \a locale being either empty or locale of
+    choice; if empty the system locale will be used. Returns true if
+    the translation is successfully loaded; otherwise returns false.
 
     The previous contents of this translator object are discarded.
 
     \sa QLibraryInfo
 */
-bool QTranslator::load(const QString &domain)
+bool QTranslator::load(const QString &domain, const QString &locale)
 {
+    Q_D(QTranslator);
+    d->data.clear();
+    d->converter = QTextConverter();
+    d->offset = 0;
     if (domain.isEmpty()) {
+        qWarning("QTranslator::load: Domain is empty");
         return false;
     }
+
+    QString translationfilepath = QLibraryInfo::location(QLibraryInfo::TranslationsPath);
+    translationfilepath.append(QDir::separator());
+    if (locale.isEmpty()) {
+        translationfilepath.append(QLocale::system().name());
+    } else {
+        translationfilepath.append(locale);
+    }
+    translationfilepath.append(QDir::separator());
+    translationfilepath.append(domain);
+    translationfilepath.append(QLatin1String(".tr"));
+    // qDebug() << Q_FUNC_INFO << translationfilepath;
+
+    QFile translationfile(translationfilepath);
+    if (!translationfile.open(QFile::ReadOnly)) {
+        qWarning("QTranslator::load: %s", qPrintable(translationfile.errorString()));
+        return false;
+    }
+
+    return loadFromData(translationfile.readAll());
+}
+
+/*!
+    Loads translation from \a data. Returns true if the translation
+    is successfully loaded; otherwise returns false.
+
+    The previous contents of this translator object are discarded.
+
+    \sa QLibraryInfo
+*/
+bool QTranslator::loadFromData(const QByteArray &data)
+{
     Q_D(QTranslator);
-    d->domain = domain.toLatin1();
-    bind_textdomain_codeset(d->domain.constData(), "UTF-8");
+    d->data = data;
+    d->converter = QTextConverter();
+    d->offset = 0;
+
+    if (data.isEmpty()) {
+        qWarning("QTranslator::load: Empty data");
+        d->data.clear();
+        return false;
+    }
+    
+    QDataStream trheaderstream(&d->data, QIODevice::ReadOnly);
+    QByteArray trmagic;
+    QByteArray trcodec;
+    trheaderstream >> trmagic;
+    trheaderstream >> trcodec;
+
+    if (trmagic != "KATIE_TRANSLATION") {
+        qWarning("QTranslator::load: Invalid magic");
+        d->data.clear();
+        return false;
+    }
+
+    d->converter = QTextConverter(trcodec);
+    d->offset = trheaderstream.device()->pos();
     return true;
 }
 
 /*!
     Returns the translation for the key (\a context, \a sourceText).
-    The text will be translated depending on the system locale.
+    The text will be translated depending on either the locale specified
+    when the translation was loaded or the system locale.
 
     \sa load()
 */
 QString QTranslator::translate(const char *context, const char *sourceText) const
 {
     Q_D(const QTranslator);
-    if (context) {
-        // for reference:
-        // https://github.com/autotools-mirror/gettext/blob/master/gnulib-local/lib/gettext.h
-        QByteArray msgwithctx(context);
-        msgwithctx.append('\004');
-        msgwithctx.append(sourceText);
-        const char* result = dgettext(d->domain.constData(), msgwithctx.constData());
-        if (result == msgwithctx.constData()) {
-            return QString::fromUtf8(sourceText);
+    QDataStream trdatastream(&d->data, QIODevice::ReadOnly);
+    QIODevice* trdatadevice = trdatastream.device();
+    trdatadevice->seek(d->offset);
+    while (!trdatadevice->atEnd()) {
+        QByteArray trmsgctxt;
+        QByteArray trmsgid;
+        QByteArray trmsgstr;
+        QByteArray trmsgid_plural;
+        QByteArray trmsgstr_plural;
+        trdatastream >> trmsgctxt;
+        trdatastream >> trmsgid;
+        trdatastream >> trmsgstr;
+        trdatastream >> trmsgid_plural;
+        trdatastream >> trmsgstr_plural;
+
+        // this search method assumes plurals and regular messages are unique strings
+        if ((!context || trmsgctxt == context) && trmsgid_plural == sourceText) {
+            d->converter.reset();
+            return d->converter.toUnicode(trmsgstr_plural.constData(), trmsgstr_plural.size());
         }
-        return QString::fromUtf8(result);
+
+        if ((!context || trmsgctxt == context) && trmsgid == sourceText) {
+            d->converter.reset();
+            return d->converter.toUnicode(trmsgstr.constData(), trmsgstr.size());
+        }
     }
-    return QString::fromUtf8(dgettext(d->domain.constData(), sourceText));
+    return QString::fromUtf8(sourceText);
+}
+
+/*!
+    Returns the translation for the key (\a context, \a sourceText).
+    The text will be translated depending on either the locale specified
+    when the translation was loaded or the system locale.
+
+    If no translation is found empty string is returned.
+
+    \sa load()
+*/
+QString QTranslator::translateStrict(const char *context, const char *sourceText) const
+{
+    Q_D(const QTranslator);
+    QDataStream trdatastream(&d->data, QIODevice::ReadOnly);
+    QIODevice* trdatadevice = trdatastream.device();
+    trdatadevice->seek(d->offset);
+    while (!trdatadevice->atEnd()) {
+        QByteArray trmsgctxt;
+        QByteArray trmsgid;
+        QByteArray trmsgstr;
+        QByteArray trmsgid_plural;
+        QByteArray trmsgstr_plural;
+        trdatastream >> trmsgctxt;
+        trdatastream >> trmsgid;
+        trdatastream >> trmsgstr;
+        trdatastream >> trmsgid_plural;
+        trdatastream >> trmsgstr_plural;
+
+        if ((!context || trmsgctxt == context) && trmsgid_plural == sourceText) {
+            d->converter.reset();
+            return d->converter.toUnicode(trmsgstr_plural.constData(), trmsgstr_plural.size());
+        }
+
+        if ((!context || trmsgctxt == context) && trmsgid == sourceText) {
+            d->converter.reset();
+            return d->converter.toUnicode(trmsgstr.constData(), trmsgstr.size());
+        }
+    }
+    return QString();
 }
 
 /*!
     Returns true if this translator is empty, otherwise returns false.
-    This function works with stripped and unstripped translation files.
 */
 bool QTranslator::isEmpty() const
 {
     Q_D(const QTranslator);
-    return d->domain.isEmpty();
+    return d->data.isEmpty();
 }
 
 QT_END_NAMESPACE
