@@ -1240,6 +1240,7 @@ void QCoreApplication::installTranslator(QTranslator *translationFile)
 
     if (!QCoreApplicationPrivate::checkInstance("installTranslator"))
         return;
+    std::lock_guard<std::recursive_mutex> locker(qGlobalApplicationMutex);
     QCoreApplicationPrivate *d = self->d_func();
     d->translators.prepend(translationFile);
 
@@ -1264,6 +1265,7 @@ void QCoreApplication::removeTranslator(QTranslator *translationFile)
         return;
     if (!QCoreApplicationPrivate::checkInstance("removeTranslator"))
         return;
+    std::lock_guard<std::recursive_mutex> locker(qGlobalApplicationMutex);
     QCoreApplicationPrivate *d = self->d_func();
     if (d->translators.removeAll(translationFile) && !self->closingDown()) {
         QEvent ev(QEvent::LanguageChange);
