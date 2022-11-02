@@ -55,7 +55,6 @@ class QTranslatorPrivate
 public:
     QTranslatorPrivate();
 
-    QByteArray domain;
     QStdVector<QTranslatorCache> cache;
     mutable QTextConverter converter;
 
@@ -235,7 +234,7 @@ bool QTranslator::loadFromData(const QByteArray &data)
         d->cache.append(trcache);
     }
     d->converter = QTextConverter(trcodec);
-    // qDebug() << Q_FUNC_INFO << d->domain << d->cache.size() << (d->cache.size() * sizeof(QTranslatorCache));
+    // qDebug() << Q_FUNC_INFO << d->cache.size() << (d->cache.size() * sizeof(QTranslatorCache));
     return true;
 }
 
