@@ -45,7 +45,7 @@ QKeyMapper::~QKeyMapper()
 
 void QKeyMapper::clearMappings()
 {
-    // NOTE: if nothing called setlocale() it has to be done here for XOpenIM()
+    // NOTE: if nothing called setlocale() it has to be done here for XLocaleOfIM()
     // to return the locale set via environment variable
     setlocale(LC_CTYPE, "");
 
