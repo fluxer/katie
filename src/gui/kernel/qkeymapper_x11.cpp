@@ -45,6 +45,10 @@ QKeyMapper::~QKeyMapper()
 
 void QKeyMapper::clearMappings()
 {
+    // NOTE: if nothing called setlocale() it has to be done here for XOpenIM()
+    // to return the locale set via environment variable
+    setlocale(LC_CTYPE, "");
+
     XIM im = XOpenIM(qt_x11Data->display, NULL, NULL, NULL);
     if (!im) {
         keyMapperCodec = QTextCodec::codecForLocale();
