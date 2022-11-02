@@ -34,7 +34,7 @@ extern bool qt_sendSpontaneousEvent(QObject*, QEvent*);
 
 QKeyMapper::QKeyMapper()
     : keyboardInputDirection(Qt::LeftToRight),
-    keyMapperCodec(QTextCodec::codecForName("US-ASCII"))
+    keyMapperCodec(QTextCodec::codecForLocale())
 {
     clearMappings();
 }
@@ -47,6 +47,8 @@ void QKeyMapper::clearMappings()
 {
     XIM im = XOpenIM(qt_x11Data->display, NULL, NULL, NULL);
     if (!im) {
+        keyMapperCodec = QTextCodec::codecForLocale();
+        keyboardInputLocale = QLocale::system();
         return;
     }
     const QString imlocale = QString::fromLatin1(XLocaleOfIM(im));
@@ -66,6 +68,10 @@ void QKeyMapper::clearMappings()
             codeset = codeset.left(atindex);
         }
         keyMapperCodec = QTextCodec::codecForName(codeset.constData());
+    }
+
+    if (!keyMapperCodec) {
+        keyMapperCodec = QTextCodec::codecForLocale();
     }
 }
 
