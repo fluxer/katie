@@ -234,6 +234,10 @@ bool QTranslator::loadFromData(const QByteArray &data)
 */
 QString QTranslator::translate(const char *context, const char *sourceText) const
 {
+    if (isEmpty()) {
+        return QString::fromUtf8(sourceText);
+    }
+
     Q_D(const QTranslator);
     const int contextlen = qstrlen(context);
     const int sourcelen = qstrlen(sourceText);
@@ -279,6 +283,10 @@ QString QTranslator::translate(const char *context, const char *sourceText) cons
 */
 QString QTranslator::translateStrict(const char *context, const char *sourceText) const
 {
+    if (isEmpty()) {
+        return QString();
+    }
+
     Q_D(const QTranslator);
     const int contextlen = qstrlen(context);
     const int sourcelen = qstrlen(sourceText);
