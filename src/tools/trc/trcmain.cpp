@@ -19,7 +19,6 @@
 ****************************************************************************/
 
 #include <QFile>
-#include <QTextCodec>
 #include <QDebug>
 
 #include <gettext-po.h>
@@ -210,7 +209,6 @@ int runTrc(int argc, char *argv[])
     }
 
     po_file_free(gettext_file);
-
     return 0;
 }
 
