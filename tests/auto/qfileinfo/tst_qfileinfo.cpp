@@ -974,14 +974,11 @@ void tst_QFileInfo::detachingOperations()
 
 void tst_QFileInfo::owner()
 {
-    QString userName;
-    {
-        struct passwd *pw = ::getpwuid(::geteuid());
-        QVERIFY(pw);
-        userName = QString::fromLocal8Bit(pw->pw_name);
-    }
-    if (userName.isEmpty())
-        QSKIP("Can't retrieve the user name", SkipAll);
+    struct passwd *pw = ::getpwuid(::geteuid());
+    QVERIFY(pw);
+    QString expected = QString::fromLocal8Bit(pw->pw_name);
+    QVERIFY(!expected.isEmpty());
+
     QString fileName("ownertest.txt");
     QVERIFY(!QFile::exists(fileName) || QFile::remove(fileName));
     {
@@ -992,7 +989,7 @@ void tst_QFileInfo::owner()
     }
     QFileInfo fi(fileName);
     QVERIFY(fi.exists());
-    QCOMPARE(fi.owner(), userName);
+    QCOMPARE(fi.owner(), expected);
 
     QFile::remove(fileName);
 }
@@ -1000,11 +997,11 @@ void tst_QFileInfo::owner()
 void tst_QFileInfo::group()
 {
     struct group *gr = ::getgrgid(::getegid());
+    QVERIFY(gr);
     QString expected = QString::fromLocal8Bit(gr->gr_name);
+    QVERIFY(!expected.isEmpty());
 
     QString fileName("ownertest.txt");
-    if (QFile::exists(fileName))
-        QFile::remove(fileName);
     QFile testFile(fileName);
     QVERIFY(testFile.open(QIODevice::WriteOnly | QIODevice::Text));
     QByteArray testData("testfile");
@@ -1014,6 +1011,8 @@ void tst_QFileInfo::group()
     QVERIFY(fi.exists());
 
     QCOMPARE(fi.group(), expected);
+
+    QFile::remove(fileName);
 }
 
 void tst_QFileInfo::invalidState()
