@@ -1687,7 +1687,7 @@ void QVariant::save(QDataStream &s) const
     s << tp;
     s << qint8(d_ptr ? d_ptr->is_null : true);
     if (tp == QVariant::UserType) {
-        s << QMetaType::typeName(userType());
+        s << QByteArray(QMetaType::typeName(userType()));
     }
 
     if (!isValid()) {

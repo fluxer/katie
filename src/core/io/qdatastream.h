@@ -107,6 +107,10 @@ public:
     int skipRawData(int len);
 
 private:
+    // ASCII is ambiguous, write either QString or QByteArray
+    QDataStream &operator<<(const char *str);
+    QDataStream &operator>>(char *&str);
+
     Q_DISABLE_COPY(QDataStream)
 
     QIODevice *dev;
