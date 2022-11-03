@@ -974,10 +974,7 @@ void tst_QFileInfo::detachingOperations()
 
 void tst_QFileInfo::owner()
 {
-    struct passwd *pw = ::getpwuid(::geteuid());
-    QVERIFY(pw);
-    QString expected = QString::fromLocal8Bit(pw->pw_name);
-    QVERIFY(!expected.isEmpty());
+    QString expected;
 
     QString fileName("ownertest.txt");
     QVERIFY(!QFile::exists(fileName) || QFile::remove(fileName));
@@ -986,6 +983,13 @@ void tst_QFileInfo::owner()
         QVERIFY(testFile.open(QIODevice::WriteOnly | QIODevice::Text));
         QByteArray testData("testfile");
         QVERIFY(testFile.write(testData) != -1);
+
+        QT_STATBUF statbuf;
+        QVERIFY(QT_FSTAT(testFile.handle(), &statbuf) == 0);
+        struct passwd *pw = ::getpwuid(statbuf.st_uid);
+        QVERIFY(pw);
+        expected = QString::fromLocal8Bit(pw->pw_name);
+        QVERIFY(!expected.isEmpty());
     }
     QFileInfo fi(fileName);
     QVERIFY(fi.exists());
@@ -996,20 +1000,25 @@ void tst_QFileInfo::owner()
 
 void tst_QFileInfo::group()
 {
-    struct group *gr = ::getgrgid(::getegid());
-    QVERIFY(gr);
-    QString expected = QString::fromLocal8Bit(gr->gr_name);
-    QVERIFY(!expected.isEmpty());
+    QString expected;
 
     QString fileName("ownertest.txt");
-    QFile testFile(fileName);
-    QVERIFY(testFile.open(QIODevice::WriteOnly | QIODevice::Text));
-    QByteArray testData("testfile");
-    QVERIFY(testFile.write(testData) != -1);
-    testFile.close();
+    QVERIFY(!QFile::exists(fileName) || QFile::remove(fileName));
+    {
+        QFile testFile(fileName);
+        QVERIFY(testFile.open(QIODevice::WriteOnly | QIODevice::Text));
+        QByteArray testData("testfile");
+        QVERIFY(testFile.write(testData) != -1);
+
+        QT_STATBUF statbuf;
+        QVERIFY(QT_FSTAT(testFile.handle(), &statbuf) == 0);
+        struct group *gr = ::getgrgid(statbuf.st_gid);
+        QVERIFY(gr);
+        expected = QString::fromLocal8Bit(gr->gr_name);
+        QVERIFY(!expected.isEmpty());
+    }
     QFileInfo fi(fileName);
     QVERIFY(fi.exists());
-
     QCOMPARE(fi.group(), expected);
 
     QFile::remove(fileName);
