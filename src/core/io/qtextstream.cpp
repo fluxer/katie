@@ -826,7 +826,6 @@ inline void QTextStreamPrivate::putString(const QString &s, bool number)
     // handle padding
     int padSize = fieldWidth - s.size();
     if (padSize > 0) {
-        QString pad(padSize, padChar);
         if (fieldAlignment == QTextStream::AlignLeft) {
             tmp.append(QString(padSize, padChar));
         } else if (fieldAlignment == QTextStream::AlignRight
