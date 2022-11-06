@@ -2039,6 +2039,7 @@ QModelIndexList QAbstractItemModel::match(const QModelIndex &start, int role,
                                           Qt::MatchFlags flags) const
 {
     QModelIndexList result;
+    uint matchType = flags & 0x0F;
     Qt::CaseSensitivity cs = flags & Qt::MatchCaseSensitive ? Qt::CaseSensitive : Qt::CaseInsensitive;
     bool recurse = flags & Qt::MatchRecursive;
     bool wrap = flags & Qt::MatchWrap;
@@ -2056,32 +2057,39 @@ QModelIndexList QAbstractItemModel::match(const QModelIndex &start, int role,
                  continue;
             QVariant v = data(idx, role);
             // QVariant based matching
-            if (flags & Qt::MatchExactly) {
+            if (matchType == Qt::MatchExactly) {
                 if (value == v)
                     result.append(idx);
             } else { // QString based matching
                 if (text.isEmpty()) // lazy conversion
                     text = value.toString();
                 QString t = v.toString();
-                if (flags & Qt::MatchRegExp) {
+                switch (matchType) {
+                case Qt::MatchRegExp:
                     if (QRegExp(text, cs).exactMatch(t))
                         result.append(idx);
-                } else if (flags & Qt::MatchWildcard) {
+                    break;
+                 case Qt::MatchWildcard:
                     if (QRegExp(text, cs, QRegExp::Wildcard).exactMatch(t))
                         result.append(idx);
-                 } else if (flags & Qt::MatchStartsWith) {
+                    break;
+                 case Qt::MatchStartsWith:
                     if (t.startsWith(text, cs))
                         result.append(idx);
-                 } else if (flags & Qt::MatchEndsWith) {
+                    break;
+                 case Qt::MatchEndsWith:
                     if (t.endsWith(text, cs))
                         result.append(idx);
-                 } else if (flags & Qt::MatchFixedString) {
+                    break;
+                 case Qt::MatchFixedString:
                     if (t.compare(text, cs) == 0)
                         result.append(idx);
-                } else {
-                    // Qt::MatchContains:
+                    break;
+                case Qt::MatchContains:
+                default:
                     if (t.contains(text, cs))
                         result.append(idx);
+                    break;
                 }
             }
             if (recurse && hasChildren(idx)) { // search the hierarchy

@@ -1007,13 +1007,13 @@ public:
         MatchExactly = 0,
         MatchContains = 1,
         MatchStartsWith = 2,
-        MatchEndsWith = 4,
-        MatchRegExp = 8,
-        MatchWildcard = 16,
-        MatchFixedString = 32,
-        MatchCaseSensitive = 64,
-        MatchWrap = 128,
-        MatchRecursive = 256
+        MatchEndsWith = 3,
+        MatchRegExp = 4,
+        MatchWildcard = 5,
+        MatchFixedString = 8,
+        MatchCaseSensitive = 16,
+        MatchWrap = 32,
+        MatchRecursive = 64
     };
     Q_DECLARE_FLAGS(MatchFlags, MatchFlag)
 
