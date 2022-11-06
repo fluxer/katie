@@ -833,6 +833,8 @@ QPixmap QPixmap::grabWindow(WId window, int x, int y, int w, int h)
     if (h < 0)
         h = window_attr.height - y;
 
+    // FIXME: figure out which XCopyArea() is failing
+#if 0
     // determine the screen
     int scr;
     for (scr = 0; scr < ScreenCount(dpy); ++scr) {
@@ -879,6 +881,9 @@ QPixmap QPixmap::grabWindow(WId window, int x, int y, int w, int h)
     XFreeGC(dpy, gc);
 
     return pm;
+#else
+    return QPixmap::fromImage(QPixmap::fromX11Pixmap(window).toImage().copy(x, y, w, h));
+#endif
 }
 
 bool QX11PixmapData::hasAlphaChannel() const
