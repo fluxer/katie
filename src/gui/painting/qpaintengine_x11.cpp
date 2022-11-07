@@ -1167,10 +1167,10 @@ void QX11PaintEngine::drawPixmap(const QRectF &r, const QPixmap &px, const QRect
     bool restore_clip = false;
 
     if (static_cast<QX11PixmapData*>(pixmap.data.data())->x11_mask) { // pixmap has a mask
-        QBitmap comb(sw, sh);
-        GC cgc = XCreateGC(d->dpy, comb.handle(), 0, 0);
+        Pixmap comb = XCreatePixmap(d->dpy, d->hd, sw, sh, 1);
+        GC cgc = XCreateGC(d->dpy, comb, 0, 0);
         XSetForeground(d->dpy, cgc, 0);
-        XFillRectangle(d->dpy, comb.handle(), cgc, 0, 0, sw, sh);
+        XFillRectangle(d->dpy, comb, cgc, 0, 0, sw, sh);
         XSetBackground(d->dpy, cgc, 0);
         XSetForeground(d->dpy, cgc, 1);
         if (!d->crgn.isEmpty()) {
@@ -1182,14 +1182,14 @@ void QX11PaintEngine::drawPixmap(const QRectF &r, const QPixmap &px, const QRect
         }
         XSetFillStyle(d->dpy, cgc, FillOpaqueStippled);
         XSetTSOrigin(d->dpy, cgc, -sx, -sy);
-        XSetStipple(d->dpy, cgc,
-                    static_cast<QX11PixmapData*>(pixmap.data.data())->x11_mask);
-        XFillRectangle(d->dpy, comb.handle(), cgc, 0, 0, sw, sh);
+        XSetStipple(d->dpy, cgc, static_cast<QX11PixmapData*>(pixmap.data.data())->x11_mask);
+        XFillRectangle(d->dpy, comb, cgc, 0, 0, sw, sh);
         XFreeGC(d->dpy, cgc);
 
         XSetClipOrigin(d->dpy, d->gc, x, y);
-        XSetClipMask(d->dpy, d->gc, comb.handle());
+        XSetClipMask(d->dpy, d->gc, comb);
         restore_clip = true;
+        XFreePixmap(d->dpy, comb);
     }
 
     if (mono_src) {
