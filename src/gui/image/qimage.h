@@ -34,8 +34,6 @@ QT_BEGIN_NAMESPACE
 
 class QColor;
 class QIODevice;
-class QMatrix;
-class QTransform;
 class QVariant;
 template <class T> class QVector;
 struct QImageData;
