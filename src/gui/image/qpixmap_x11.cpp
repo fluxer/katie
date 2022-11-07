@@ -78,13 +78,16 @@ QBitmap QX11PixmapData::mask_to_bitmap(int screen) const
 {
     if (!x11_mask)
         return QBitmap();
-    QPixmap::x11SetDefaultScreen(screen);
-    QBitmap bm(w, h);
-    GC gc = XCreateGC(qt_x11Data->display, bm.handle(), 0, 0);
-    XCopyArea(qt_x11Data->display, x11_mask, bm.handle(), gc, 0, 0,
-              bm.data->width(), bm.data->height(), 0, 0);
+    QX11PixmapData *data = new QX11PixmapData(QPixmapData::BitmapType);
+    data->resize(w, h);
+
+    GC gc = XCreateGC(qt_x11Data->display, data->hd, 0, 0);
+    XCopyArea(qt_x11Data->display, x11_mask, data->hd, gc, 0, 0,
+              data->width(), data->height(), 0, 0);
     XFreeGC(qt_x11Data->display, gc);
-    return bm;
+    QPixmap pm(data);
+    pm.x11SetScreen(screen);
+    return QBitmap(pm);
 }
 
 Qt::HANDLE QX11PixmapData::bitmap_to_mask(const QBitmap &bitmap, int screen)
