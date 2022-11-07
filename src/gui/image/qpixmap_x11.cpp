@@ -171,38 +171,6 @@ void QX11PixmapData::resize(int width, int height)
 #endif // QT_NO_XRENDER
 }
 
-class QX11AlphaDetector
-{
-public:
-    bool hasAlpha() const {
-        if (checked)
-            return has;
-        // Will implicitly also check format and return quickly for opaque types...
-        checked = true;
-        has = image->isNull() ? false : image->d->checkForAlphaPixels();
-        return has;
-    }
-
-    bool hasXRenderAndAlpha() const {
-        if (!qt_x11Data->use_xrender)
-            return false;
-        return hasAlpha();
-    }
-
-    QX11AlphaDetector(const QImage *i, Qt::ImageConversionFlags flags)
-        : image(i), checked(false), has(false)
-    {
-        if (flags & Qt::NoOpaqueDetection) {
-            checked = true;
-            has = image->hasAlphaChannel();
-        }
-    }
-
-    const QImage *image;
-    mutable bool checked;
-    mutable bool has;
-};
-
 void QX11PixmapData::fromImage(const QImage &img,
                                Qt::ImageConversionFlags flags)
 {
@@ -241,9 +209,14 @@ void QX11PixmapData::fromImage(const QImage &img,
         return;
     }
 
-    QX11AlphaDetector alphaCheck(&img, flags);
-    const int dd = alphaCheck.hasXRenderAndAlpha() ? 32 : xinfo.depth();
-
+    const bool hasAlpha = img.d->checkForAlphaPixels();
+    bool hasXRenderAndAlpha = false;
+    if (flags & Qt::NoOpaqueDetection) {
+        hasXRenderAndAlpha = img.hasAlphaChannel();
+    } else {
+        hasXRenderAndAlpha = (qt_x11Data->use_xrender && hasAlpha);
+    }
+    const int dd = hasXRenderAndAlpha ? 32 : xinfo.depth();
     Display *dpy   = qt_x11Data->display;
     Visual *visual = (Visual *)xinfo.visual();
     XImage *xi = nullptr;
@@ -251,7 +224,7 @@ void QX11PixmapData::fromImage(const QImage &img,
     QImage image(img);
 
 #ifndef QT_NO_XRENDER
-    if (alphaCheck.hasXRenderAndAlpha()) {
+    if (hasXRenderAndAlpha) {
         if (d != 32) {
             image = image.convertToFormat(QImage::Format_RGB32, flags);
         }
@@ -323,7 +296,7 @@ void QX11PixmapData::fromImage(const QImage &img,
     }
 #endif
 
-    if (alphaCheck.hasAlpha()) {
+    if (hasAlpha) {
         setMask(QBitmap::fromImage(image.createAlphaMask(flags)));
     }
 }
