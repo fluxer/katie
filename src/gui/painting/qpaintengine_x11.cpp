@@ -331,7 +331,12 @@ static QPaintEngine::PaintEngineFeatures qt_decide_features()
 
     if (qt_x11Data->use_xrender) {
         features |= QPaintEngine::Antialiasing;
-        features |= QPaintEngine::PorterDuff;
+        if (qt_x11Data->xrender_major > 0 || qt_x11Data->xrender_minor >= 10) {
+            features |= QPaintEngine::PorterDuff;
+        }
+        if (qt_x11Data->xrender_major > 0 || qt_x11Data->xrender_minor >= 11) {
+            features |= QPaintEngine::BlendModes;
+        }
     }
 
     return features;
@@ -526,6 +531,7 @@ void QX11PaintEngine::updateState(const QPaintEngineState &state)
         int function = GXcopy;
         switch (state.compositionMode()) {
 #if !defined(QT_NO_XRENDER)
+            // requires XRENDER v0.10+
             case QPainter::CompositionMode_SourceOver:
                 d->composition_mode = PictOpOver;
                 break;
@@ -561,6 +567,43 @@ void QX11PaintEngine::updateState(const QPaintEngineState &state)
                 break;
             case QPainter::CompositionMode_Xor:
                 d->composition_mode = PictOpXor;
+                break;
+            case QPainter::CompositionMode_Plus:
+                d->composition_mode = PictOpAdd;
+                break;
+            // requires XRENDER v0.11+
+            case QPainter::CompositionMode_Multiply:
+                d->composition_mode = PictOpMultiply;
+                break;
+            case QPainter::CompositionMode_Screen:
+                d->composition_mode = PictOpScreen;
+                break;
+            case QPainter::CompositionMode_Overlay:
+                d->composition_mode = PictOpOverlay;
+                break;
+            case QPainter::CompositionMode_Darken:
+                d->composition_mode = PictOpDarken;
+                break;
+            case QPainter::CompositionMode_Lighten:
+                d->composition_mode = PictOpLighten;
+                break;
+            case QPainter::CompositionMode_ColorDodge:
+                d->composition_mode = PictOpColorDodge;
+                break;
+            case QPainter::CompositionMode_ColorBurn:
+                d->composition_mode = PictOpColorBurn;
+                break;
+            case QPainter::CompositionMode_HardLight:
+                d->composition_mode = PictOpHardLight;
+                break;
+            case QPainter::CompositionMode_SoftLight:
+                d->composition_mode = PictOpSoftLight;
+                break;
+            case QPainter::CompositionMode_Difference:
+                d->composition_mode = PictOpDifference;
+                break;
+            case QPainter::CompositionMode_Exclusion:
+                d->composition_mode = PictOpExclusion;
                 break;
 #endif
             default:
