@@ -702,6 +702,7 @@ QImage QX11PixmapData::toImage(const QRect &rect) const
     QImage image(xi->width, xi->height, format);
     if (image.isNull()) {
         // could not create image
+        qSafeXDestroyImage(xi);
         return image;
     }
 
