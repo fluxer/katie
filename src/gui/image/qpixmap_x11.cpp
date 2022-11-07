@@ -449,20 +449,17 @@ void QX11PixmapData::setAlphaChannel(const QPixmap &alpha)
 
 QBitmap QX11PixmapData::mask() const
 {
-    QBitmap mask;
 #ifndef QT_NO_XRENDER
     if (picture && d == 32) {
         // #### slow - there must be a better way..
-        mask = QBitmap::fromImage(toImage().createAlphaMask());
-    } else
+        return QBitmap::fromImage(toImage().createAlphaMask());
+    }
 #endif
     if (d == 1) {
         QX11PixmapData *that = const_cast<QX11PixmapData*>(this);
-        mask = QPixmap(that);
-    } else {
-        mask = mask_to_bitmap(xinfo.screen());
+        return QPixmap(that);
     }
-    return mask;
+    return mask_to_bitmap(xinfo.screen());
 }
 
 /*!
