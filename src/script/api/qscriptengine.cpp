@@ -2885,7 +2885,7 @@ QScriptValue QScriptEngine::create(int type, const void *ptr)
 
 JSC::JSValue QScriptEnginePrivate::create(JSC::ExecState *exec, int type, const void *ptr)
 {
-    Q_ASSERT(ptr != 0);
+    Q_ASSERT(ptr != 0 || type == 0);
     JSC::JSValue result;
     QScriptEnginePrivate *eng = exec ? QScript::scriptEngineFromExec(exec) : 0;
     QScriptTypeInfo *info = eng ? eng->m_typeInfos.value(type) : 0;
