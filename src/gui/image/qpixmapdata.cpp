@@ -37,7 +37,7 @@ QPixmapData *QPixmapData::create(int w, int h, PixelType type)
 }
 
 
-QPixmapData::QPixmapData(PixelType pixelType, ClassId objectId)
+QPixmapData::QPixmapData(PixelType pixelType)
     : w(0),
       h(0),
       d(0),
@@ -45,7 +45,6 @@ QPixmapData::QPixmapData(PixelType pixelType, ClassId objectId)
       ref(0),
       detach_no(0),
       type(pixelType),
-      id(objectId),
       ser_no(0)
 {
 }

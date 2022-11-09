@@ -49,9 +49,8 @@ public:
         // Must match QPixmap::Type
         PixmapType, BitmapType
     };
-    enum ClassId { RasterClass, X11Class };
 
-    QPixmapData(PixelType pixelType, ClassId classId);
+    QPixmapData(PixelType pixelType);
     virtual ~QPixmapData();
 
     virtual QPixmapData *createCompatiblePixmapData() const;
@@ -84,7 +83,6 @@ public:
     virtual QPaintEngine* paintEngine() const = 0;
 
     inline PixelType pixelType() const { return type; }
-    inline ClassId classId() const { return id; }
 
     virtual QImage* buffer();
 
@@ -93,8 +91,7 @@ public:
     inline int depth() const { return d; }
     inline bool isNull() const { return is_null; }
     inline qint64 cacheKey() const {
-        return ((static_cast<qint64>(id) << 56)
-                | (static_cast<qint64>(ser_no) << 32)
+        return ((static_cast<qint64>(ser_no) << 32)
                 | (static_cast<qint64>(detach_no)));
     }
 
@@ -110,14 +107,12 @@ protected:
 
 private:
     friend class QPixmap;
-    friend class QX11PixmapData;
     friend class QExplicitlySharedDataPointer<QPixmapData>;
 
     QAtomicInt ref;
     int detach_no;
 
     PixelType type;
-    ClassId id;
     int ser_no;
 };
 

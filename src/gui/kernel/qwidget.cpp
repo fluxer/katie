@@ -1287,7 +1287,9 @@ void QWidgetPrivate::deleteExtra()
             deleteTLSysExtra();
             extra->topextra->backingStore.destroy();
             delete extra->topextra->icon;
-            delete extra->topextra->iconPixmap;
+            if (extra->topextra->iconPixmap) {
+                XFreePixmap(qt_x11Data->display, extra->topextra->iconPixmap);
+            }
             delete extra->topextra->windowSurface;
             delete extra->topextra;
         }
@@ -5099,7 +5101,9 @@ void QWidget::setWindowIcon(const QIcon &icon)
         d->extra->topextra->icon = new QIcon();
     *d->extra->topextra->icon = icon;
 
-    delete d->extra->topextra->iconPixmap;
+    if (d->extra->topextra->iconPixmap) {
+        XFreePixmap(qt_x11Data->display, d->extra->topextra->iconPixmap);
+    }
     d->extra->topextra->iconPixmap = 0;
 
     d->setWindowIcon_sys();

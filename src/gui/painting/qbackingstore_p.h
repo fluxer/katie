@@ -53,8 +53,6 @@ public:
     QWidgetBackingStore(QWidget *t);
     ~QWidgetBackingStore();
 
-    static void showYellowThing(QWidget *widget, const QRegion &rgn, int msec, bool);
-
     void sync(QWidget *exposedWidget, const QRegion &exposedRegion);
     void sync();
     void flush(QWidget *widget = 0, QWindowSurface *surface = 0);

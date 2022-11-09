@@ -77,7 +77,6 @@ private:
 
     friend class QPixmap;
     friend class QX11PaintEngine;
-    friend class QX11PixmapData;
     friend class QWidgetPrivate;
     friend void qt_x11_getX11InfoForWindow(QX11Info *xinfo, const void *att);
 };

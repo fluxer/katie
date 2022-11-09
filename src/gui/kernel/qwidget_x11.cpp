@@ -38,7 +38,7 @@
 #include "qmenu_p.h"
 #include "qbackingstore_p.h"
 #include "qwidget_p.h"
-#include "qpixmap_x11_p.h"
+#include "qpixmap_raster_p.h"
 #include "qpaintengine_x11_p.h"
 #include "qt_x11_p.h"
 #include "qx11info_x11.h"
@@ -1271,9 +1271,11 @@ void QWidgetPrivate::updateSystemBackground()
     else if (isBackgroundInherited())
         XSetWindowBackgroundPixmap(qt_x11Data->display, q->internalWinId(), ParentRelative);
     else if (brush.style() == Qt::TexturePattern) {
-        extern QPixmap qt_toX11Pixmap(const QPixmap &pixmap); // qpixmap_x11.cpp
-        const QPixmap bgpixmap(qt_toX11Pixmap(brush.texture()));
-        XSetWindowBackgroundPixmap(qt_x11Data->display, q->internalWinId(), bgpixmap.handle());
+        const Qt::HANDLE bgpixmap = brush.texture().toX11Pixmap();
+        XSetWindowBackgroundPixmap(qt_x11Data->display, q->internalWinId(), bgpixmap);
+        if (bgpixmap) {
+            XFreePixmap(qt_x11Data->display, bgpixmap);
+        }
     } else
         XSetWindowBackground(qt_x11Data->display, q->internalWinId(),
                              QX11Data::XColorPixel(xinfo.screen(), brush.color()));
@@ -1352,7 +1354,6 @@ void QWidgetPrivate::setWindowIcon_sys(bool forceReset)
             }
         }
         if (!icon_data.isEmpty()) {
-            extern QPixmap qt_toX11Pixmap(const QPixmap &pixmap);
             /*
               if the app is running on an unknown desktop, or it is not
               using the default visual, convert the icon to 1bpp as stated
@@ -1362,15 +1363,23 @@ void QWidgetPrivate::setWindowIcon_sys(bool forceReset)
             if (!QX11Info::appDefaultVisual(xinfo.screen())
                 || !QX11Info::appDefaultColormap(xinfo.screen())) {
                 // unknown DE or non-default visual/colormap, use 1bpp bitmap
-                if (!forceReset || !topData->iconPixmap)
-                    topData->iconPixmap = new QPixmap(qt_toX11Pixmap(QBitmap(icon.pixmap(QSize(64,64)))));
-                pixmap_handle = topData->iconPixmap->handle();
+                if (!forceReset || !topData->iconPixmap) {
+                    if (topData->iconPixmap) {
+                        XFreePixmap(qt_x11Data->display, topData->iconPixmap);
+                    }
+                    topData->iconPixmap = QBitmap(icon.pixmap(QSize(64,64))).toX11Pixmap();
+                }
+                pixmap_handle = topData->iconPixmap;
             } else {
                 // default depth, use a normal pixmap (even though this
                 // violates the ICCCM), since this works on all DEs known to Qt
-                if (!forceReset || !topData->iconPixmap)
-                    topData->iconPixmap = new QPixmap(qt_toX11Pixmap(icon.pixmap(QSize(64,64))));
-                pixmap_handle = topData->iconPixmap->handle();
+                if (!forceReset || !topData->iconPixmap) {
+                    if (topData->iconPixmap) {
+                        XFreePixmap(qt_x11Data->display, topData->iconPixmap);
+                    }
+                    topData->iconPixmap = icon.pixmap(QSize(64,64)).toX11Pixmap();
+                }
+                pixmap_handle = topData->iconPixmap;
             }
         }
     }
@@ -1402,8 +1411,9 @@ void QWidgetPrivate::setWindowIcon_sys(bool forceReset)
     }
 
     XSetWMHints(qt_x11Data->display, q->internalWinId(), h);
-    if (h != &wm_hints)
+    if (h != &wm_hints) {
         XFree((char *)h);
+    }
 }
 
 void QWidgetPrivate::setWindowIconText_sys(const QString &iconText)

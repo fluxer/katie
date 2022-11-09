@@ -33,13 +33,7 @@
 // We mean it.
 //
 
-#include "QtGui/qpaintengine.h"
-#include "QtGui/qregion.h"
-#include "QtGui/qpen.h"
-#include "QtCore/qpoint.h"
 #include "qpaintengine_p.h"
-#include "qpainter_p.h"
-#include "qpolygonclipper_p.h"
 
 typedef unsigned long Picture;
 
@@ -59,14 +53,10 @@ public:
     bool end();
 
     void updateState(const QPaintEngineState &state);
-    void updatePen(const QPen &pen);
-    void updateBrush(const QBrush &brush, const QPointF &pt);
-    void updateRenderHints(QPainter::RenderHints hints);
-    void updateMatrix(const QTransform &matrix);
-    void updateClipRegion_dev(const QRegion &region, Qt::ClipOperation op);
 
     void drawPolygon(const QPointF *points, int pointCount, PolygonDrawMode mode);
     void drawPixmap(const QRectF &r, const QPixmap &pm, const QRectF &sr);
+    void drawImage(const QRectF &r, const QImage &pm, const QRectF &sr, Qt::ImageConversionFlags flags = Qt::AutoColor);
     void drawPath(const QPainterPath &path);
 
     inline Type type() const { return QPaintEngine::X11; }
@@ -87,84 +77,22 @@ class QX11PaintEnginePrivate : public QPaintEnginePrivate
 public:
     QX11PaintEnginePrivate()
     {
-        scrn = -1;
         hd = 0;
-        picture = 0;
-        gc = gc_brush = 0;
-        dpy  = 0;
         xinfo = 0;
-        txop = QTransform::TxNone;
-        has_clipping = false;
-        render_hints = 0;
-        xform_scale = 1;
-#ifndef QT_NO_XRENDER
-        tessellator = 0;
+#if !defined (QT_NO_XRENDER)
+        picture = 0;
 #endif
+        gc = 0;
     }
-    enum GCMode {
-        PenGC,
-        BrushGC
-    };
 
     void init();
-    void fillPolygon_dev(const QPointF *points, int pointCount, GCMode gcMode,
-                         QPaintEngine::PolygonDrawMode mode);
-    void fillPath(const QPainterPath &path, GCMode gcmode, bool transform);
-    void strokePolygon_dev(const QPointF *points, int pointCount, bool close);
-    void setupAdaptedOrigin(const QPoint &p);
-    void resetAdaptedOrigin();
-    void decideCoordAdjust() {
-        adjust_coords = !(render_hints & QPainter::Antialiasing)
-                        && (has_alpha_pen
-                            || (has_alpha_brush && has_pen && !has_alpha_pen)
-                            || (cpen.style() > Qt::SolidLine));
-    }
-    void clipPolygon_dev(const QPolygonF &poly, QPolygonF *clipped_poly);
-    void systemStateChanged();
 
-    Display *dpy;
-    int scrn;
-    int pdev_depth;
     Qt::HANDLE hd;
-    QPixmap brush_pm;
 #if !defined (QT_NO_XRENDER)
-    Qt::HANDLE picture;
-    Qt::HANDLE current_brush;
-    QPixmap bitmap_texture;
-    int composition_mode;
-#else
     Qt::HANDLE picture;
 #endif
     GC gc;
-    GC gc_brush;
-
-    QPen cpen;
-    QBrush cbrush;
-    QRegion crgn;
-    QTransform matrix;
-    qreal opacity;
-
-    bool has_scaling_xform;
-    bool adjust_coords;
-    bool has_clipping;
-    bool adapted_brush_origin;
-    bool has_pen;
-    bool has_brush;
-    bool has_texture;
-    bool has_pattern;
-    bool has_alpha_pen;
-    bool has_alpha_brush;
-    QPainter::RenderHints render_hints;
-
     const QX11Info *xinfo;
-    QPointF bg_origin;
-    QTransform::TransformationType txop;
-    qreal xform_scale;
-    QPolygonClipper polygonClipper;
-
-#ifndef QT_NO_XRENDER
-    QXRenderTessellator *tessellator;
-#endif
 };
 
 QT_END_NAMESPACE

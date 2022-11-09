@@ -23,14 +23,11 @@
 #include "qcursor.h"
 #include "qcursor_p.h"
 #include "qx11info_x11.h"
-#include "qpixmap_x11_p.h"
 #include "qt_x11_p.h"
 
 QT_BEGIN_NAMESPACE
 
 #ifndef QT_NO_CURSOR
-extern QPixmap qt_toX11Pixmap(const QPixmap &pixmap); // qpixmap_x11.cpp
-
 /*****************************************************************************
   Internal QCursorData class
  *****************************************************************************/
@@ -75,8 +72,8 @@ QCursorData *QCursorData::setBitmap(const QBitmap &bitmap, const QBitmap &mask, 
     }
     QCursorData *d = new QCursorData(Qt::BitmapCursor);
 
-    d->bm  = new QBitmap(qt_toX11Pixmap(bitmap));
-    d->bmm = new QBitmap(qt_toX11Pixmap(mask));
+    d->bm  = new QBitmap(bitmap);
+    d->bmm = new QBitmap(mask);
     d->hx = hotX >= 0 ? hotX : bitmap.width() / 2;
     d->hy = hotY >= 0 ? hotY : bitmap.height() / 2;
     d->fg.red   = 0x0000;
@@ -222,12 +219,30 @@ void QCursorData::update()
     if (cshape == Qt::BitmapCursor) {
 #ifndef QT_NO_XRENDER
         if (!pixmap.isNull() && qt_x11Data->use_xrender) {
-            pixmap = qt_toX11Pixmap(pixmap);
-            hcurs = XRenderCreateCursor(qt_x11Data->display, pixmap.x11PictureHandle(), hx, hy);
+            Qt::HANDLE pxpixmap = pixmap.toX11Pixmap();
+            XRenderPictFormat *format = (pixmap.depth() == 1)
+                                    ? XRenderFindStandardFormat(dpy, PictStandardA1)
+                                    : XRenderFindStandardFormat(dpy, PictStandardARGB32);
+            Picture picture = XRenderCreatePicture(dpy, pxpixmap, format, 0, 0);
+            if (picture) {
+                hcurs = XRenderCreateCursor(dpy, picture, hx, hy);
+                XRenderFreePicture(dpy, picture);
+            }
+            if (pxpixmap) {
+                XFreePixmap(dpy, pxpixmap);
+            }
         } else
 #endif
         {
-            hcurs = XCreatePixmapCursor(dpy, bm->handle(), bmm->handle(), &fg, &bg, hx, hy);
+            Qt::HANDLE bmpixmap = bm->toX11Pixmap();
+            Qt::HANDLE bmmpixmap = bmm->toX11Pixmap();
+            hcurs = XCreatePixmapCursor(dpy, bmpixmap, bmmpixmap, &fg, &bg, hx, hy);
+            if (bmpixmap) {
+                XFreePixmap(dpy, bmpixmap);
+            }
+            if (bmmpixmap) {
+                XFreePixmap(dpy, bmmpixmap);
+            }
         }
         return;
     }

@@ -239,8 +239,7 @@ bool QRasterPaintEngine::begin(QPaintDevice *device)
     if (device->devType() == QInternal::Pixmap) {
         QPixmap *pixmap = static_cast<QPixmap *>(device);
         QPixmapData *pd = pixmap->pixmapData();
-        if (pd->classId() == QPixmapData::RasterClass)
-            d->device = pd->buffer();
+        d->device = pd->buffer();
     } else {
         d->device = device;
     }
@@ -1486,42 +1485,21 @@ void QRasterPaintEngine::drawPixmap(const QRectF &r, const QPixmap &pixmap, cons
 #endif
 
     QPixmapData* pd = pixmap.pixmapData();
-    if (pd->classId() == QPixmapData::RasterClass) {
-        const QImage &image = static_cast<QRasterPixmapData *>(pd)->image;
-        if (image.depth() == 1) {
-            Q_D(QRasterPaintEngine);
-            QRasterPaintEngineState *s = state();
-            if (s->matrix.type() <= QTransform::TxTranslate
-                && r.size() == sr.size()
-                && r.size() == pixmap.size()) {
-                ensurePen();
-                drawBitmap(r.topLeft() + QPointF(s->matrix.dx(), s->matrix.dy()), image, &s->penData);
-                return;
-            } else {
-                drawImage(r, d->rasterBuffer->colorizeBitmap(image, s->pen.color()), sr);
-            }
+    const QImage &image = static_cast<QRasterPixmapData *>(pd)->image;
+    if (image.depth() == 1) {
+        Q_D(QRasterPaintEngine);
+        QRasterPaintEngineState *s = state();
+        if (s->matrix.type() <= QTransform::TxTranslate
+            && r.size() == sr.size()
+            && r.size() == pixmap.size()) {
+            ensurePen();
+            drawBitmap(r.topLeft() + QPointF(s->matrix.dx(), s->matrix.dy()), image, &s->penData);
+            return;
         } else {
-            drawImage(r, image, sr);
+            drawImage(r, d->rasterBuffer->colorizeBitmap(image, s->pen.color()), sr);
         }
     } else {
-        QRect clippedSource = sr.toAlignedRect().intersected(pixmap.rect());
-        const QImage image = pd->toImage(clippedSource);
-        QRectF translatedSource = sr.translated(-clippedSource.topLeft());
-        if (image.depth() == 1) {
-            Q_D(QRasterPaintEngine);
-            QRasterPaintEngineState *s = state();
-            if (s->matrix.type() <= QTransform::TxTranslate
-                && r.size() == sr.size()
-                && r.size() == pixmap.size()) {
-                ensurePen();
-                drawBitmap(r.topLeft() + QPointF(s->matrix.dx(), s->matrix.dy()), image, &s->penData);
-                return;
-            } else {
-                drawImage(r, d->rasterBuffer->colorizeBitmap(image, s->pen.color()), translatedSource);
-            }
-        } else {
-            drawImage(r, image, translatedSource);
-        }
+        drawImage(r, image, sr);
     }
 }
 
@@ -1670,14 +1648,10 @@ void QRasterPaintEngine::drawTiledPixmap(const QRectF &r, const QPixmap &pixmap,
     Q_D(QRasterPaintEngine);
     QRasterPaintEngineState *s = state();
 
-    QImage image;
+    ;
 
     QPixmapData *pd = pixmap.pixmapData();
-    if (pd->classId() == QPixmapData::RasterClass) {
-        image = static_cast<QRasterPixmapData *>(pd)->image;
-    } else {
-        image = pixmap.toImage();
-    }
+    QImage image = static_cast<QRasterPixmapData *>(pd)->image;
 
     if (image.depth() == 1)
         image = d->rasterBuffer->colorizeBitmap(image, s->pen.color());

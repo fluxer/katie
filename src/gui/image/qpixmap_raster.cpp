@@ -34,7 +34,7 @@
 QT_BEGIN_NAMESPACE
 
 QRasterPixmapData::QRasterPixmapData(PixelType type)
-    : QPixmapData(type, RasterClass)
+    : QPixmapData(type)
 {
 }
 

@@ -112,7 +112,7 @@ struct QTLWExtra {
 
     // Regular pointers (keep them together to avoid gaps on 64 bits architectures).
     QIcon *icon; // widget icon
-    QPixmap *iconPixmap;
+    Qt::HANDLE iconPixmap;
     QWidgetBackingStoreTracker backingStore;
     QWindowSurface *windowSurface;
     QPainter *sharedPainter;

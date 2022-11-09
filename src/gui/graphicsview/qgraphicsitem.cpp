@@ -718,7 +718,6 @@
 
 #ifdef Q_WS_X11
 #  include "qt_x11_p.h"
-#  include "qpixmap_x11_p.h"
 #endif
 
 #include <math.h>

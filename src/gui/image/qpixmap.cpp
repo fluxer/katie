@@ -39,16 +39,13 @@
 #include "qpaintengine.h"
 #include "qthread.h"
 #include "qpixmap_raster_p.h"
+#include "qstylehelper_p.h"
+#include "qguicommon_p.h"
 
 #if defined(Q_WS_X11)
 # include "qx11info_x11.h"
 # include "qt_x11_p.h"
-# include "qpixmap_x11_p.h"
 #endif
-
-
-#include "qpixmap_raster_p.h"
-#include "qstylehelper_p.h"
 
 QT_BEGIN_NAMESPACE
 
@@ -937,78 +934,6 @@ QPixmap QPixmap::grabWidget(QWidget * widget, const QRect &rect)
     \l {QWidget::}{paintEvent()}.
 */
 
-
-/*!
-    \since 4.5
-
-    \enum QPixmap::ShareMode
-
-    This enum type defines the share modes that are available when
-    creating a QPixmap object from a raw X11 Pixmap handle.
-
-    \value ImplicitlyShared  This mode will cause the QPixmap object to
-    create a copy of the internal data before it is modified, thus
-    keeping the original X11 pixmap intact.
-
-    \value ExplicitlyShared  In this mode, the pixmap data will \e not be
-    copied before it is modified, which in effect will change the
-    original X11 pixmap.
-
-    \warning This enum is only used for X11 specific functions; using
-    it is non-portable.
-
-    \sa QPixmap::fromX11Pixmap()
-*/
-
-/*!
-    \since 4.5
-
-    \fn QPixmap QPixmap::fromX11Pixmap(Qt::HANDLE pixmap, QPixmap::ShareMode mode)
-
-    Creates a QPixmap from the native X11 Pixmap handle \a pixmap,
-    using \a mode as the share mode. The default share mode is
-    QPixmap::ImplicitlyShared, which means that a copy of the pixmap is
-    made if someone tries to modify it by e.g. drawing onto it.
-
-    QPixmap does \e not take ownership of the \a pixmap handle, and
-    have to be deleted by the user.
-
-    \warning This function is X11 specific; using it is non-portable.
-
-    \sa QPixmap::ShareMode
-*/
-
-
-#if defined(Q_WS_X11)
-
-/*!
-    Returns the pixmap's handle to the device context.
-
-    Note that, since QPixmap make use of \l {Implicit Data
-    Sharing}{implicit data sharing}, the detach() function must be
-    called explicitly to ensure that only \e this pixmap's data is
-    modified if the pixmap data is shared.
-
-    \warning This function is X11 specific; using it is non-portable.
-
-    \warning Since 4.8, pixmaps do not have an X11 handle unless
-    created with \l {QPixmap::}{fromX11Pixmap()}, or if the native
-    graphics system is explicitly enabled.
-
-    \sa detach()
-*/
-
-Qt::HANDLE QPixmap::handle() const
-{
-    const QPixmapData *pd = pixmapData();
-    if (pd && pd->classId() == QPixmapData::X11Class)
-        return static_cast<const QX11PixmapData*>(pd)->handle();
-    return 0;
-}
-#endif
-
-
-
 /*****************************************************************************
   QPixmap stream functions
  *****************************************************************************/
@@ -1403,23 +1328,7 @@ QPixmap QPixmap::transformed(const QMatrix &matrix, Qt::TransformationMode mode)
 */
 bool QPixmap::hasAlpha() const
 {
-#if defined(Q_WS_X11)
-    if (data && data->hasAlphaChannel())
-        return true;
-    QPixmapData *pd = pixmapData();
-    if (pd && pd->classId() == QPixmapData::X11Class) {
-        QX11PixmapData *x11Data = static_cast<QX11PixmapData*>(pd);
-#ifndef QT_NO_XRENDER
-        if (x11Data->picture && x11Data->d == 32)
-            return true;
-#endif
-        if (x11Data->d == 1 || x11Data->x11_mask)
-            return true;
-    }
-    return false;
-#else
     return data && data->hasAlphaChannel();
-#endif
 }
 
 /*!
@@ -1440,7 +1349,6 @@ int QPixmap::metric(PaintDeviceMetric metric) const
 {
     return data ? data->metric(metric) : 0;
 }
-
 
 /*!
     \fn void QPixmap::setAlphaChannel(const QPixmap &alphaChannel)
@@ -1535,19 +1443,6 @@ QBitmap QPixmap::mask() const
     return data ? data->mask() : QBitmap();
 }
 
-/*!
-    Returns the default pixmap depth used by the application.
-
-    On X11 and the depth of the screen will be returned by this
-    function.
-
-    \sa depth(), QX11Info::appDepth(), {QPixmap#Pixmap Information}{Pixmap Information}
-
-*/
-int QPixmap::defaultDepth()
-{
-    return QX11Info::appDepth();
-}
 
 /*!
     Detaches the pixmap from shared pixmap data.
@@ -1574,11 +1469,8 @@ void QPixmap::detach()
     // QPixmap.data member may be QRuntimePixmapData so use pixmapData() function to get
     // the actual underlaying runtime pixmap data.
     QPixmapData *pd = pixmapData();
-    QPixmapData::ClassId id = pd->classId();
-    if (id == QPixmapData::RasterClass) {
-        QRasterPixmapData *rasterData = static_cast<QRasterPixmapData*>(pd);
-        rasterData->image.detach();
-    }
+    QRasterPixmapData *rasterData = static_cast<QRasterPixmapData*>(pd);
+    rasterData->image.detach();
 
     if (data->ref != 1) {
         *this = copy();
@@ -1631,9 +1523,17 @@ QPixmap QPixmap::fromImageReader(QImageReader *imageReader, Qt::ImageConversionF
 }
 
 /*!
-    \fn QPixmap QPixmap::grabWindow(WId window, int x, int y, int
-    width, int height)
+  \internal
+*/
+QPixmapData* QPixmap::pixmapData() const
+{
+    if (data)
+        return data.data();
 
+    return nullptr;
+}
+
+/*!
     Creates and returns a pixmap constructed by grabbing the contents
     of the given \a window restricted by QRect(\a x, \a y, \a width,
     \a height).
@@ -1666,55 +1566,122 @@ QPixmap QPixmap::fromImageReader(QImageReader *imageReader, Qt::ImageConversionF
 
     \sa grabWidget(), {Screenshot Example}
 */
-
-/*!
-  \internal
-*/
-QPixmapData* QPixmap::pixmapData() const
+QPixmap QPixmap::grabWindow(WId window, int x, int y, int w, int h)
 {
-    if (data)
-        return data.data();
+    if (w == 0 || h == 0)
+        return QPixmap();
 
-    return nullptr;
+    XWindowAttributes window_attr;
+    if (!XGetWindowAttributes(qt_x11Data->display, window, &window_attr))
+        return QPixmap();
+
+    if (w < 0)
+        w = window_attr.width - x;
+    if (h < 0)
+        h = window_attr.height - y;
+
+    return QPixmap::fromX11Pixmap(window).copy(x, y, w, h);
 }
 
-/*! \fn const QX11Info &QPixmap::x11Info() const
-    \bold{X11 only:} Returns information about the configuration of
-    the X display used by the screen to which the pixmap currently belongs.
+#if defined(Q_WS_X11)
+/*!
+    \since 4.5
+
+    Creates a QPixmap from the native X11 Pixmap handle \a pixmap.
+
+    \warning This function is X11 specific; using it is non-portable.
+*/
+QPixmap QPixmap::fromX11Pixmap(Qt::HANDLE pixmap)
+{
+    Window root;
+    int x;
+    int y;
+    uint width;
+    uint height;
+    uint border_width;
+    uint depth;
+    XGetGeometry(qt_x11Data->display, pixmap, &root, &x, &y, &width, &height, &border_width, &depth);
+
+    XImage *ximage = XGetImage(
+        QX11Info::display(), pixmap,
+        0, 0, // x and y
+        width, height,
+        AllPlanes, (depth == 1) ? XYPixmap : ZPixmap
+    );
+    if (Q_UNLIKELY(!ximage)) {
+        return QPixmap();
+    }
+    QImage::Format format = QImage::systemFormat();
+    if (depth == 1 && ximage->bitmap_bit_order == LSBFirst) {
+        format = QImage::Format_MonoLSB;
+    } else if (depth == 1) {
+        format = QImage::Format_Mono;
+    } else if (depth == 24) {
+        format = QImage::Format_RGB32;
+    } else if (depth == 32 && qt_x11Data->use_xrender) {
+        format = QImage::Format_ARGB32_Premultiplied;
+    }
+    QImage image(width, height, format);
+    if (image.depth() == 1) {
+        image.setColorTable(monoColorTable());
+    }
+    QX11Data::copyXImageToQImage(ximage, image);
+    XDestroyImage(ximage);
+    return QPixmap::fromImage(image);
+}
+
+/*!
+    Returns X11 Pixmap handle of the pixmap.
+
+    QPixmap does \e not take ownership of the pixmap handle, it
+    has to be deleted by the user.
 
     \warning This function is only available on X11.
-
-    \sa {QPixmap#Pixmap Information}{Pixmap Information}
 */
-
-/*! \fn Qt::HANDLE QPixmap::x11PictureHandle() const
-    \bold{X11 only:} Returns the X11 Picture handle of the pixmap for
-    XRender support.
-
-    This function will return 0 if XRender support is not compiled
-    into Qt, if the XRender extension is not supported on the X11
-    display, or if the handle could not be created. Use of this
-    function is not portable.
-
-    \warning This function is only available on X11.
-
-    \sa {QPixmap#Pixmap Information}{Pixmap Information}
-*/
-
-/*! \fn int QPixmap::x11SetDefaultScreen(int screen)
-  \internal
-*/
-
-/*! \fn void QPixmap::x11SetScreen(int screen)
-  \internal
-*/
-
-/*! \fn QRgb* QPixmap::clut() const
-    \internal
-*/
+Qt::HANDLE QPixmap::toX11Pixmap() const
+{
+    if (isNull()) {
+        return 0;
+    }
+    Qt::HANDLE handle = XCreatePixmap(
+        qt_x11Data->display, QX11Info::appRootWindow(),
+        width(), height(),
+        32
+    );
+    if (!handle) {
+        return 0;
+    }
+    QImage image = toImage();
+    if (image.depth() != 32) {
+        image = image.convertToFormat(QImage::Format_RGB32);
+    }
+    XImage* ximage = XCreateImage(
+        qt_x11Data->display, (Visual*)QX11Info::appVisual(),
+        image.depth(),
+        ZPixmap,
+        0, NULL, // offset and data
+        image.width(), image.height(),
+        32,
+        0 // bytes per line
+    );
+    if (Q_UNLIKELY(!ximage)) {
+        XFreePixmap(qt_x11Data->display, handle);
+        return 0;
+    }
+    QX11Data::copyQImageToXImage(image, ximage);
+    GC xgc = XCreateGC(
+        qt_x11Data->display, handle,
+        0, 0 // value mask and values
+    );
+    XPutImage(
+        qt_x11Data->display, handle, xgc, ximage,
+        0, 0, 0, 0, // source x and y, destination x and y
+        ximage->width, ximage->height
+    );
+    XFreeGC(qt_x11Data->display, xgc);
+    XDestroyImage(ximage);
+    return handle;
+}
+#endif // Q_WS_X11
 
 QT_END_NAMESPACE
-
-
-
-

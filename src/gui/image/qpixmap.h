@@ -39,7 +39,6 @@ class QImageWriter;
 class QImageReader;
 class QColor;
 class QVariant;
-class QX11Info;
 class QPixmapData;
 
 class Q_GUI_EXPORT QPixmap : public QPaintDevice
@@ -68,8 +67,6 @@ public:
     QSize size() const;
     QRect rect() const;
     int depth() const;
-
-    static int defaultDepth();
 
     void fill(const QColor &fillColor = Qt::white);
     void fill(const QWidget *widget, const QPoint &ofs);
@@ -129,14 +126,8 @@ public:
     bool isQBitmap() const;
 
 #if defined(Q_WS_X11)
-    enum ShareMode { ImplicitlyShared, ExplicitlyShared };
-
-    static QPixmap fromX11Pixmap(Qt::HANDLE pixmap, ShareMode mode = ImplicitlyShared);
-    static int x11SetDefaultScreen(int screen);
-    void x11SetScreen(int screen);
-    const QX11Info &x11Info() const;
-    Qt::HANDLE x11PictureHandle() const;
-    Qt::HANDLE handle() const;
+    static QPixmap fromX11Pixmap(Qt::HANDLE pixmap);
+    Qt::HANDLE toX11Pixmap() const;
 #endif
 
     QPaintEngine *paintEngine() const;
@@ -155,7 +146,6 @@ private:
     QPixmapData* pixmapData() const;
 
     friend class QPixmapData;
-    friend class QX11PixmapData;
     friend class QBitmap;
     friend class QPaintDevice;
     friend class QPainter;
@@ -163,7 +153,6 @@ private:
     friend class QX11PaintEngine;
     friend class QWidgetPrivate;
     friend class QRasterBuffer;
-    friend QPixmap qt_toX11Pixmap(const QPixmap &pixmap);
 
 #if !defined(QT_NO_DATASTREAM)
     friend Q_GUI_EXPORT QDataStream &operator>>(QDataStream &, QPixmap &);

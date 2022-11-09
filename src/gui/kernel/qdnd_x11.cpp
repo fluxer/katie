@@ -445,7 +445,7 @@ bool QX11Data::xdndMimeDataForAtom(Atom a, QMimeData *mimeData, QByteArray *data
                 img = img.convertToFormat(QImage::Format_MonoLSB);
                 pm = QPixmap::fromImage(img);
             }
-            Pixmap handle = pm.handle();
+            Pixmap handle = pm.toX11Pixmap();
             *data = QByteArray(reinterpret_cast<const char *>(&handle), sizeof(Pixmap));
             ret = true;
         } else {
@@ -530,6 +530,7 @@ QVariant QX11Data::xdndMimeConvertToFormat(Atom a, const QByteArray &data, const
             if (!xpm)
                 return QByteArray();
             QPixmap qpm = QPixmap::fromX11Pixmap(xpm);
+            XFreePixmap(qt_x11Data->display, xpm);
             QImageWriter imageWriter;
             imageWriter.setFormat("PPMRAW");
             QImage imageToWrite = qpm.toImage();

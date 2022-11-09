@@ -50,12 +50,6 @@ static inline void qt_flush(QWidget *widget, const QRegion &region, QWindowSurfa
     Q_ASSERT(windowSurface);
     Q_ASSERT(tlw);
 
-#if !defined(QT_NO_DEBUG)
-    static const int flushUpdate = qgetenv("QT_FLUSH_UPDATE").toInt();
-    if (flushUpdate > 0)
-        QWidgetBackingStore::showYellowThing(widget, region, flushUpdate * 10, false);
-#endif
-
     //The performance hit by doing this should be negligible. However, be aware that
     //using this FPS when you have > 1 windowsurface can give you inaccurate FPS
     static const bool fpsDebug = qgetenv("QT_DEBUG_FPS").toInt();
@@ -78,68 +72,6 @@ static inline void qt_flush(QWidget *widget, const QRegion &region, QWindowSurfa
 }
 
 #ifndef QT_NO_DEBUG
-void QWidgetBackingStore::showYellowThing(QWidget *widget, const QRegion &toBePainted, int msec, bool unclipped)
-{
-    QRegion paintRegion = toBePainted;
-    QRect widgetRect = widget->rect();
-
-    if (!widget->internalWinId()) {
-        QWidget *nativeParent = widget->nativeParentWidget();
-        const QPoint offset = widget->mapTo(nativeParent, QPoint(0, 0));
-        paintRegion.translate(offset);
-        widgetRect.translate(offset);
-        widget = nativeParent;
-    }
-
-    //flags to fool painter
-    bool paintUnclipped = widget->testAttribute(Qt::WA_PaintUnclipped);
-    if (unclipped && !widget->d_func()->paintOnScreen())
-        widget->setAttribute(Qt::WA_PaintUnclipped);
-
-    const bool setFlag = !widget->testAttribute(Qt::WA_WState_InPaintEvent);
-    if (setFlag)
-        widget->setAttribute(Qt::WA_WState_InPaintEvent);
-
-    //setup the engine
-    QPaintEngine *pe = widget->paintEngine();
-    if (pe) {
-        pe->setSystemClip(paintRegion);
-        {
-            QPainter p(widget);
-            p.setClipRegion(paintRegion);
-            static int i = 0;
-            switch (i) {
-            case 0:
-                p.fillRect(widgetRect, QColor(255,255,0));
-                break;
-            case 1:
-                p.fillRect(widgetRect, QColor(255,200,55));
-                break;
-            case 2:
-                p.fillRect(widgetRect, QColor(200,255,55));
-                break;
-            case 3:
-                p.fillRect(widgetRect, QColor(200,200,0));
-                break;
-            }
-            i = (i+1) & 3;
-            p.end();
-        }
-    }
-
-    if (setFlag)
-        widget->setAttribute(Qt::WA_WState_InPaintEvent, false);
-
-    //restore
-    widget->setAttribute(Qt::WA_PaintUnclipped, paintUnclipped);
-
-    if (pe)
-        pe->setSystemClip(QRegion());
-
-    QApplication::syncX();
-    QThread::msleep(msec);
-}
-
 bool QWidgetBackingStore::flushPaint(QWidget *widget, const QRegion &rgn)
 {
     if (!widget)
@@ -158,7 +90,6 @@ bool QWidgetBackingStore::flushPaint(QWidget *widget, const QRegion &rgn)
         delay = flushPaint;
     }
 
-    QWidgetBackingStore::showYellowThing(widget, rgn, delay * 10, true);
     return true;
 }
 

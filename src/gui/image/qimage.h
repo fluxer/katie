@@ -194,7 +194,6 @@ private:
     friend class QPixmap;
     friend class QPainter;
     friend class QRasterPixmapData;
-    friend class QX11PixmapData;
     friend class QSpanData;
     friend class QPngHandler;
     friend class QKatHandler;

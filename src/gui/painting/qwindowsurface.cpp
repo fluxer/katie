@@ -233,7 +233,11 @@ void QWindowSurface::flush(QWidget *widget, const QRegion &rgn, const QPoint &of
     if (image.depth() != 32) {
         image = image.convertToFormat(QImage::Format_RGB32);
     }
-    XImage *xi = XCreateImage(qt_x11Data->display, (Visual *)widget->x11Info().visual(), depth, ZPixmap, 0, 0, bw, bh, 32, 0);
+    XImage *xi = XCreateImage(
+        qt_x11Data->display, (Visual *)widget->x11Info().visual(), depth, ZPixmap,
+        0, 0, bw, bh,
+        32, 0
+    );
     Q_CHECK_PTR(xi);
     QX11Data::copyQImageToXImage(image, xi);
     XPutImage(qt_x11Data->display, widget->handle(), d_ptr->gc, xi, 0, 0, wpos.x(), wpos.y(), bw, bh);
