@@ -1401,41 +1401,31 @@ QPixmap QPixmap::grabWindow(WId window, int x, int y, int w, int h)
     if (w == 0 || h == 0)
         return QPixmap();
 
-    XWindowAttributes window_attr;
-    if (!XGetWindowAttributes(qt_x11Data->display, window, &window_attr))
-        return QPixmap();
-
-    if (w < 0)
-        w = window_attr.width - x;
-    if (h < 0)
-        h = window_attr.height - y;
-
-    return QPixmap::fromX11Pixmap(window).copy(x, y, w, h);
-}
-
-#if defined(Q_WS_X11)
-/*!
-    \since 4.5
-
-    Creates a QPixmap from the native X11 Pixmap handle \a pixmap.
-
-    \warning This function is X11 specific; using it is non-portable.
-*/
-QPixmap QPixmap::fromX11Pixmap(Qt::HANDLE pixmap)
-{
-    Window root;
-    int x;
-    int y;
+    Window unusedroot;
+    int unusedx;
+    int unusedy;
     uint width;
     uint height;
-    uint border_width;
+    uint unusedborderwidth;
     uint depth;
-    XGetGeometry(qt_x11Data->display, pixmap, &root, &x, &y, &width, &height, &border_width, &depth);
+    XGetGeometry(
+        qt_x11Data->display,
+        window,
+        &unusedroot, &unusedx, &unusedy,
+        &width, &height,
+        &unusedborderwidth,
+        &depth
+    );
+
+    if (w < 0)
+        w = width - x;
+    if (h < 0)
+        h = height - y;
 
     XImage *ximage = XGetImage(
-        qt_x11Data->display, pixmap,
-        0, 0, // x and y
-        width, height,
+        qt_x11Data->display, window,
+        x, y,
+        w, h,
         AllPlanes, (depth == 1) ? XYPixmap : ZPixmap
     );
     if (Q_UNLIKELY(!ximage)) {
@@ -1451,13 +1441,27 @@ QPixmap QPixmap::fromX11Pixmap(Qt::HANDLE pixmap)
     } else if (depth == 32 && qt_x11Data->use_xrender) {
         format = QImage::Format_ARGB32_Premultiplied;
     }
-    QImage image(width, height, format);
+    QImage image(w, h, format);
     if (image.depth() == 1) {
         image.setColorTable(monoColorTable());
     }
     QX11Data::copyXImageToQImage(ximage, image);
     XDestroyImage(ximage);
     return QPixmap::fromImage(image);
+}
+
+#if defined(Q_WS_X11)
+/*!
+    \since 4.5
+
+    Creates a QPixmap from the native X11 Pixmap handle \a pixmap.
+
+    \warning This function is X11 specific; using it is non-portable.
+*/
+QPixmap QPixmap::fromX11Pixmap(Qt::HANDLE pixmap)
+{
+    // to X Pixmap and Window are just "Drawable"
+    return QPixmap::grabWindow(pixmap);
 }
 
 /*!
