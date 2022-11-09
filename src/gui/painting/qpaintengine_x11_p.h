@@ -40,7 +40,6 @@ typedef unsigned long Picture;
 QT_BEGIN_NAMESPACE
 
 class QX11PaintEnginePrivate;
-class QXRenderTessellator;
 
 class QX11PaintEngine : public QPaintEngine
 {
