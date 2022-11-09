@@ -234,25 +234,6 @@ struct QX11Data
     Visual *visual;
     Colormap colormap;
 
-#ifndef QT_NO_XRENDER
-    enum { solid_fill_count = 20 };
-    struct SolidFills {
-        XRenderColor color;
-        int screen;
-        Picture picture;
-    } solid_fills[solid_fill_count];
-    enum { pattern_fill_count = 20 };
-    struct PatternFills {
-        XRenderColor color;
-        XRenderColor bg_color;
-        int screen;
-        int style;
-        Picture picture;
-    } pattern_fills[pattern_fill_count];
-    Picture getSolidFill(int screen, const QColor &c);
-    XRenderColor preMultiply(const QColor &c);
-#endif
-
     static void copyQImageToXImage(const QImage &image, XImage *ximage);
     static void copyXImageToQImage(XImage *ximage, QImage &image);
 

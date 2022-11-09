@@ -948,15 +948,6 @@ void qt_init(QApplicationPrivate *priv, Display *display,
         qt_x11Data->has_fontconfig = FcInit();
 #endif
 
-#ifndef QT_NO_XRENDER
-    memset(qt_x11Data->solid_fills, 0, sizeof(qt_x11Data->solid_fills));
-    for (int i = 0; i < qt_x11Data->solid_fill_count; ++i)
-        qt_x11Data->solid_fills[i].screen = -1;
-    memset(qt_x11Data->pattern_fills, 0, sizeof(qt_x11Data->pattern_fills));
-    for (int i = 0; i < qt_x11Data->pattern_fill_count; ++i)
-        qt_x11Data->pattern_fills[i].screen = -1;
-#endif
-
     qt_x11Data->startupId = 0;
 
     int argc = priv->argc;
@@ -1276,17 +1267,6 @@ void qt_cleanup()
 #ifndef QT_NO_CURSOR
     QCursorData::cleanup();
 #endif // QT_NO_CURSOR
-
-#ifndef QT_NO_XRENDER
-    for (int i = 0; i < qt_x11Data->solid_fill_count; ++i) {
-        if (qt_x11Data->solid_fills[i].picture)
-            XRenderFreePicture(qt_x11Data->display, qt_x11Data->solid_fills[i].picture);
-    }
-    for (int i = 0; i < qt_x11Data->pattern_fill_count; ++i) {
-        if (qt_x11Data->pattern_fills[i].picture)
-            XRenderFreePicture(qt_x11Data->display, qt_x11Data->pattern_fills[i].picture);
-    }
-#endif
 
     // Reset the error handlers
     XSync(qt_x11Data->display, False); // sync first to process all possible errors

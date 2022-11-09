@@ -2868,8 +2868,3 @@ void dumpClip(int width, int height, const QClipData *clip)
 
 
 QT_END_NAMESPACE
-
-
-
-
-

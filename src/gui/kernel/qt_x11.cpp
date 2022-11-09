@@ -29,60 +29,6 @@
 
 QT_BEGIN_NAMESPACE
 
-#ifndef QT_NO_XRENDER
-XRenderColor QX11Data::preMultiply(const QColor &c)
-{
-    XRenderColor color;
-    const uint A = c.alpha(),
-               R = c.red(),
-               G = c.green(),
-               B = c.blue();
-    color.alpha = (A | A << 8);
-    color.red   = (R | R << 8) * color.alpha / 0x10000;
-    color.green = (G | G << 8) * color.alpha / 0x10000;
-    color.blue  = (B | B << 8) * color.alpha / 0x10000;
-    return color;
-}
-
-Picture QX11Data::getSolidFill(int screen, const QColor &c)
-{
-    if (!qt_x11Data->use_xrender)
-        return XNone;
-
-    XRenderColor color = preMultiply(c);
-    for (int i = 0; i < QX11Data::solid_fill_count; ++i) {
-        if (qt_x11Data->solid_fills[i].screen == screen
-            && qt_x11Data->solid_fills[i].color.alpha == color.alpha
-            && qt_x11Data->solid_fills[i].color.red == color.red
-            && qt_x11Data->solid_fills[i].color.green == color.green
-            && qt_x11Data->solid_fills[i].color.blue == color.blue)
-            return qt_x11Data->solid_fills[i].picture;
-    }
-    // none found, replace one
-    int i = qrand() % QX11Data::solid_fill_count;
-
-    if (qt_x11Data->solid_fills[i].screen != screen && qt_x11Data->solid_fills[i].picture) {
-        XRenderFreePicture (qt_x11Data->display, qt_x11Data->solid_fills[i].picture);
-        qt_x11Data->solid_fills[i].picture = 0;
-    }
-
-    if (!qt_x11Data->solid_fills[i].picture) {
-        Pixmap pixmap = XCreatePixmap (qt_x11Data->display, RootWindow (qt_x11Data->display, screen), 1, 1, 32);
-        XRenderPictureAttributes attrs;
-        attrs.repeat = True;
-        qt_x11Data->solid_fills[i].picture = XRenderCreatePicture (qt_x11Data->display, pixmap,
-                                                            XRenderFindStandardFormat(qt_x11Data->display, PictStandardARGB32),
-                                                            CPRepeat, &attrs);
-        XFreePixmap (qt_x11Data->display, pixmap);
-    }
-
-    qt_x11Data->solid_fills[i].color = color;
-    qt_x11Data->solid_fills[i].screen = screen;
-    XRenderFillRectangle (qt_x11Data->display, PictOpSrc, qt_x11Data->solid_fills[i].picture, &color, 0, 0, 1, 1);
-    return qt_x11Data->solid_fills[i].picture;
-}
-#endif
-
 void QX11Data::copyQImageToXImage(const QImage &image, XImage *ximage)
 {
     Q_ASSERT(ximage);
