@@ -297,7 +297,6 @@ set(GUI_HEADERS
     ${CMAKE_CURRENT_SOURCE_DIR}/image/qimagewriter.h
     ${CMAKE_CURRENT_SOURCE_DIR}/image/qmovie.h
     ${CMAKE_CURRENT_SOURCE_DIR}/image/qpixmap.h
-    ${CMAKE_CURRENT_SOURCE_DIR}/image/qpixmap_raster_p.h
     ${CMAKE_CURRENT_SOURCE_DIR}/image/qpixmapcache.h
     ${CMAKE_CURRENT_SOURCE_DIR}/image/qpixmapdata_p.h
     ${CMAKE_CURRENT_SOURCE_DIR}/image/qpixmapfilter_p.h
@@ -652,7 +651,6 @@ set(GUI_SOURCES
     ${CMAKE_CURRENT_SOURCE_DIR}/image/qiconengine.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/image/qiconengineplugin.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/image/qmovie.cpp
-    ${CMAKE_CURRENT_SOURCE_DIR}/image/qpixmap_raster.cpp
     # Built-in image format support
     ${CMAKE_CURRENT_SOURCE_DIR}/image/qppmhandler.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/image/qxpmhandler.cpp

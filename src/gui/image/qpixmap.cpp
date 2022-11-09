@@ -36,7 +36,6 @@
 #include "qimagereader.h"
 #include "qimagewriter.h"
 #include "qpaintengine.h"
-#include "qpixmap_raster_p.h"
 #include "qstylehelper_p.h"
 #include "qguicommon_p.h"
 
@@ -1305,11 +1304,7 @@ void QPixmap::detach()
     if (!data)
         return;
 
-    // QPixmap.data member may be QRuntimePixmapData so use pixmapData() function to get
-    // the actual underlaying runtime pixmap data.
-    QPixmapData *pd = pixmapData();
-    QRasterPixmapData *rasterData = static_cast<QRasterPixmapData*>(pd);
-    rasterData->image.detach();
+    data->image.detach();
 
     if (data->ref != 1) {
         *this = copy();
@@ -1335,7 +1330,7 @@ QPixmap QPixmap::fromImage(const QImage &image, Qt::ImageConversionFlags flags)
     if (image.isNull())
         return QPixmap();
 
-    QScopedPointer<QPixmapData> data(new QRasterPixmapData(QPixmapData::PixmapType));
+    QScopedPointer<QPixmapData> data(new QPixmapData(QPixmapData::PixmapType));
     data->fromImage(image, flags);
     return QPixmap(data.take());
 }
@@ -1352,7 +1347,7 @@ QPixmap QPixmap::fromImage(const QImage &image, Qt::ImageConversionFlags flags)
 */
 QPixmap QPixmap::fromImageReader(QImageReader *imageReader, Qt::ImageConversionFlags flags)
 {
-    QScopedPointer<QPixmapData> data(new QRasterPixmapData(QPixmapData::PixmapType));
+    QScopedPointer<QPixmapData> data(new QPixmapData(QPixmapData::PixmapType));
     data->fromImageReader(imageReader, flags);
     return QPixmap(data.take());
 }
@@ -1438,7 +1433,7 @@ QPixmap QPixmap::fromX11Pixmap(Qt::HANDLE pixmap)
     XGetGeometry(qt_x11Data->display, pixmap, &root, &x, &y, &width, &height, &border_width, &depth);
 
     XImage *ximage = XGetImage(
-        QX11Info::display(), pixmap,
+        qt_x11Data->display, pixmap,
         0, 0, // x and y
         width, height,
         AllPlanes, (depth == 1) ? XYPixmap : ZPixmap

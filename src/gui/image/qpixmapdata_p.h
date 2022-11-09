@@ -51,40 +51,40 @@ public:
     };
 
     QPixmapData(PixelType pixelType);
-    virtual ~QPixmapData();
+    ~QPixmapData();
 
-    virtual QPixmapData *createCompatiblePixmapData() const;
+    QPixmapData *createCompatiblePixmapData() const;
 
-    virtual void resize(int width, int height) = 0;
-    virtual void fromImage(const QImage &image,
-                           Qt::ImageConversionFlags flags) = 0;
-    virtual void fromImageReader(QImageReader *imageReader,
-                                 Qt::ImageConversionFlags flags);
+    void resize(int width, int height);
+    void fromImage(const QImage &image,
+                   Qt::ImageConversionFlags flags);
+    void fromImageReader(QImageReader *imageReader,
+                         Qt::ImageConversionFlags flags);
 
-    virtual bool fromFile(const QString &filename, const char *format,
-                          Qt::ImageConversionFlags flags);
-    virtual bool fromData(const uchar *buffer, uint len, const char *format,
-                          Qt::ImageConversionFlags flags);
+    bool fromFile(const QString &filename, const char *format,
+                  Qt::ImageConversionFlags flags);
+    bool fromData(const uchar *buffer, uint len, const char *format,
+                  Qt::ImageConversionFlags flags);
 
-    virtual void copy(const QPixmapData *data, const QRect &rect) = 0;
-    virtual void scroll(int dx, int dy, const QRect &rect) = 0;
+    void copy(const QPixmapData *data, const QRect &rect);
+    void scroll(int dx, int dy, const QRect &rect);
 
-    virtual int metric(QPaintDevice::PaintDeviceMetric metric) const = 0;
-    virtual void fill(const QColor &color) = 0;
-    virtual QBitmap mask() const;
-    virtual void setMask(const QBitmap &mask) = 0;
-    virtual bool hasAlphaChannel() const = 0;
+    int metric(QPaintDevice::PaintDeviceMetric metric) const;
+    void fill(const QColor &color);
+    QBitmap mask() const;
+    void setMask(const QBitmap &mask);
+    bool hasAlphaChannel() const;
+    void setAlphaChannel(const QPixmap &alphaChannel);
     QPixmap transformed(const QTransform &matrix,
                         Qt::TransformationMode mode) const;
-    virtual void setAlphaChannel(const QPixmap &alphaChannel);
-    virtual QPixmap alphaChannel() const;
-    virtual QImage toImage() const = 0;
-    virtual QImage toImage(const QRect &rect) const;
-    virtual QPaintEngine* paintEngine() const = 0;
+    QPixmap alphaChannel() const;
+    QImage toImage() const;
+    QImage toImage(const QRect &rect) const;
+    QPaintEngine* paintEngine() const;
 
     inline PixelType pixelType() const { return type; }
 
-    virtual QImage* buffer();
+    QImage* buffer();
 
     inline int width() const { return w; }
     inline int height() const { return h; }
@@ -107,18 +107,15 @@ protected:
 
 private:
     friend class QPixmap;
+    friend class QRasterPaintEngine;
     friend class QExplicitlySharedDataPointer<QPixmapData>;
 
     QAtomicInt ref;
+    QImage image;
     int detach_no;
-
-    PixelType type;
     int ser_no;
+    PixelType type;
 };
-
-#define QT_XFORM_TYPE_MSBFIRST 0
-#define QT_XFORM_TYPE_LSBFIRST 1
-extern bool qt_xForm_helper(const QTransform&, int, int, int, uchar*, int, int, int, const uchar*, int, int, int);
 
 QT_END_NAMESPACE
 

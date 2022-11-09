@@ -22,8 +22,9 @@
 #include "qpixmapdata_p.h"
 #include "qbitmap.h"
 #include "qimagereader.h"
-#include "qpixmap_raster_p.h"
 #include "qapplication_p.h"
+#include "qimage_p.h"
+#include "qx11info_x11.h"
 #include "qdrawhelper_p.h"
 #include "qguicommon_p.h"
 
@@ -31,7 +32,7 @@ QT_BEGIN_NAMESPACE
 
 QPixmapData *QPixmapData::create(int w, int h, PixelType type)
 {
-    QPixmapData *data = new QRasterPixmapData(type);
+    QPixmapData *data = new QPixmapData(type);
     data->resize(w, h);
     return data;
 }
@@ -55,7 +56,7 @@ QPixmapData::~QPixmapData()
 
 QPixmapData *QPixmapData::createCompatiblePixmapData() const
 {
-    return new QRasterPixmapData(pixelType());
+    return new QPixmapData(pixelType());
 }
 
 static QImage makeBitmapCompliantIfNeeded(QPixmapData *d, const QImage &image, Qt::ImageConversionFlags flags)
@@ -79,7 +80,11 @@ static QImage makeBitmapCompliantIfNeeded(QPixmapData *d, const QImage &image, Q
 void QPixmapData::fromImageReader(QImageReader *imageReader,
                                   Qt::ImageConversionFlags flags)
 {
-    fromImage(imageReader->read(), flags);
+    QImage image = imageReader->read();
+    if (image.isNull())
+        return;
+
+    fromImage(image, flags);
 }
 
 bool QPixmapData::fromFile(const QString &fileName, const char *format,
@@ -88,13 +93,6 @@ bool QPixmapData::fromFile(const QString &fileName, const char *format,
     QImage image = QImageReader(fileName, format).read();
     if (image.isNull())
         return false;
-    fromImage(makeBitmapCompliantIfNeeded(this, image, flags), flags);
-    return !isNull();
-}
-
-bool QPixmapData::fromData(const uchar *buf, uint len, const char *format, Qt::ImageConversionFlags flags)
-{
-    QImage image = QImage::fromData(reinterpret_cast<const char *>(buf), len, format);
     fromImage(makeBitmapCompliantIfNeeded(this, image, flags), flags);
     return !isNull();
 }
@@ -131,6 +129,11 @@ QBitmap QPixmapData::mask() const
     return QBitmap::fromImage(mask);
 }
 
+void QPixmapData::setMask(const QBitmap &mask)
+{
+    image = qt_mask_image(image, mask.toImage());
+}
+
 QPixmap QPixmapData::transformed(const QTransform &matrix,
                                  Qt::TransformationMode mode) const
 {
@@ -139,9 +142,7 @@ QPixmap QPixmapData::transformed(const QTransform &matrix,
 
 void QPixmapData::setAlphaChannel(const QPixmap &alphaChannel)
 {
-    QImage image = toImage();
     image.setAlphaChannel(alphaChannel.toImage());
-    fromImage(image, Qt::AutoColor);
 }
 
 QPixmap QPixmapData::alphaChannel() const
@@ -149,19 +150,149 @@ QPixmap QPixmapData::alphaChannel() const
     return QPixmap::fromImage(toImage().alphaChannel());
 }
 
+bool QPixmapData::hasAlphaChannel() const
+{
+    return image.hasAlphaChannel();
+}
+
 void QPixmapData::setSerialNumber(int serNo)
 {
     ser_no = serNo;
 }
 
+QImage QPixmapData::toImage() const
+{
+    if (image.paintingActive())
+        return image.copy();
+
+    return image;
+}
+
 QImage QPixmapData::toImage(const QRect &rect) const
 {
-    return toImage().copy(rect);
+    if (rect.isNull())
+        return image;
+
+    return image.copy(rect);
+}
+
+QPaintEngine* QPixmapData::paintEngine() const
+{
+    return image.paintEngine();
+}
+
+int QPixmapData::metric(QPaintDevice::PaintDeviceMetric metric) const
+{
+    if (!image.d)
+        return 0;
+
+    // override the image dpi with the screen dpi when rendering to a pixmap
+    switch (metric) {
+    case QPaintDevice::PdmWidth:
+        return w;
+    case QPaintDevice::PdmHeight:
+        return h;
+    case QPaintDevice::PdmWidthMM:
+        return qRound(image.d->width * 25.4 / QX11Info::appDpiX());
+    case QPaintDevice::PdmHeightMM:
+        return qRound(image.d->height * 25.4 / QX11Info::appDpiY());
+    case QPaintDevice::PdmNumColors:
+        if (image.d->depth == 1)
+            return 2;
+        return 0;
+    case QPaintDevice::PdmDepth:
+        return depth();
+    case QPaintDevice::PdmDpiX: // fall-through
+    case QPaintDevice::PdmPhysicalDpiX:
+        return QX11Info::appDpiX();
+    case QPaintDevice::PdmDpiY: // fall-through
+    case QPaintDevice::PdmPhysicalDpiY:
+        return QX11Info::appDpiY();
+    }
+
+    qWarning("QPixmapData::metric(): Unhandled metric type %d", metric);
+    return 0;
 }
 
 QImage* QPixmapData::buffer()
 {
-    return 0;
+    return &image;
+}
+
+void QPixmapData::fill(const QColor &color)
+{
+    if (color.alpha() != 255 && !image.hasAlphaChannel()) {
+        image = image.convertToFormat(QImage::Format_ARGB32_Premultiplied);
+    }
+
+    image.fill(color);
+}
+
+void QPixmapData::copy(const QPixmapData *data, const QRect &rect)
+{
+    fromImage(data->toImage(rect), Qt::NoOpaqueDetection);
+}
+
+// from qwindowsurface.cpp
+extern void qt_scrollRectInImage(QImage *img, const QRect &rect, const QPoint &offset);
+
+void QPixmapData::scroll(int dx, int dy, const QRect &rect)
+{
+    if (!image.isNull())
+        qt_scrollRectInImage(&image, rect, QPoint(dx, dy));
+}
+
+void QPixmapData::resize(int width, int height)
+{
+    QImage::Format format = QImage::Format_ARGB32_Premultiplied;
+    if (pixelType() == BitmapType) {
+        format = QImage::Format_MonoLSB;
+    }
+
+    image = QImage(width, height, format);
+    w = width;
+    h = height;
+    d = image.depth();
+    is_null = (w <= 0 || h <= 0);
+
+    if (pixelType() == BitmapType && !image.isNull()) {
+        image.setColorTable(monoColorTable());
+    }
+
+    setSerialNumber(image.cacheKey() >> 32);
+}
+
+bool QPixmapData::fromData(const uchar *buffer, uint len, const char *format,
+                           Qt::ImageConversionFlags flags)
+{
+    QImage image = QImage::fromData(reinterpret_cast<const char *>(buffer), len, format);
+    if (image.isNull())
+        return false;
+
+    fromImage(image, flags);
+    return !isNull();
+}
+
+void QPixmapData::fromImage(const QImage &sourceImage,
+                            Qt::ImageConversionFlags flags)
+{
+    QImage::Format format = QImage::Format_ARGB32_Premultiplied;
+    if (pixelType() == BitmapType) {
+        format = QImage::Format_MonoLSB;
+    }
+
+    image = sourceImage.convertToFormat(format);
+
+    if (image.d) {
+        w = image.d->width;
+        h = image.d->height;
+        d = image.d->depth;
+    } else {
+        w = h = d = 0;
+    }
+    is_null = (w <= 0 || h <= 0);
+
+    setSerialNumber(image.cacheKey()  >> 32);
 }
 
 QT_END_NAMESPACE

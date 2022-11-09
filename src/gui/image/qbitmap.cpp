@@ -21,7 +21,6 @@
 
 #include "qbitmap.h"
 #include "qpixmapdata_p.h"
-#include "qpixmap_raster_p.h"
 #include "qimage.h"
 #include "qvariant.h"
 #include "qpainter.h"
@@ -237,7 +236,7 @@ QBitmap QBitmap::fromImage(const QImage &image, Qt::ImageConversionFlags flags)
         img.setColor(1, qt_blackrgb);
     }
 
-    QScopedPointer<QPixmapData> data(new QRasterPixmapData(QPixmapData::BitmapType));
+    QScopedPointer<QPixmapData> data(new QPixmapData(QPixmapData::BitmapType));
 
     data->fromImage(img, flags | Qt::MonoOnly);
     return QPixmap(data.take());

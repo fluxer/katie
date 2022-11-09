@@ -26,7 +26,6 @@
 #include <QImageReader>
 #include <QPainter>
 #include <QPixmap>
-#include <qpixmap_raster_p.h>
 
 class tst_QPixmap : public QObject
 {
@@ -54,29 +53,6 @@ Q_DECLARE_METATYPE(QImage::Format)
 Q_DECLARE_METATYPE(Qt::AspectRatioMode)
 Q_DECLARE_METATYPE(Qt::TransformationMode)
 
-QPixmap rasterPixmap(int width, int height)
-{
-    QPixmapData *data = new QRasterPixmapData(QPixmapData::PixmapType);
-
-    data->resize(width, height);
-
-    return QPixmap(data);
-}
-
-QPixmap rasterPixmap(const QSize &size)
-{
-    return rasterPixmap(size.width(), size.height());
-}
-
-QPixmap rasterPixmap(const QImage &image)
-{
-    QPixmapData *data = new QRasterPixmapData(QPixmapData::PixmapType);
-
-    data->fromImage(image, Qt::AutoColor);
-
-    return QPixmap(data);
-}
-
 tst_QPixmap::tst_QPixmap()
 {
 }
@@ -100,7 +76,7 @@ void tst_QPixmap::fill()
     QFETCH(int, height);
 
     const QColor color = opaque ? QColor(255, 0, 0) : QColor(255, 0, 0, 200);
-    QPixmap pixmap = rasterPixmap(width, height);
+    QPixmap pixmap(width, height);
 
     QBENCHMARK {
         pixmap.fill(color);
@@ -136,8 +112,8 @@ void tst_QPixmap::scaled()
     QFETCH(Qt::AspectRatioMode, ratioMode);
     QFETCH(Qt::TransformationMode, transformMode);
 
-    QPixmap opaque = rasterPixmap(size);
-    QPixmap transparent = rasterPixmap(size);
+    QPixmap opaque(size);
+    QPixmap transparent(size);
     opaque.fill(QColor(255, 0, 0));
     transparent.fill(QColor(255, 0, 0, 200));
 
@@ -190,8 +166,8 @@ void tst_QPixmap::transformed()
     QFETCH(QTransform, transform);
     QFETCH(Qt::TransformationMode, transformMode);
 
-    QPixmap opaque = rasterPixmap(size);
-    QPixmap transparent = rasterPixmap(size);
+    QPixmap opaque(size);
+    QPixmap transparent(size);
     opaque.fill(QColor(255, 0, 0));
     transparent.fill(QColor(255, 0, 0, 200));
 
@@ -219,7 +195,7 @@ void tst_QPixmap::mask()
 {
     QFETCH(QSize, size);
 
-    QPixmap src = rasterPixmap(size);
+    QPixmap src(size);
     src.fill(Qt::transparent);
     {
         QPainter p(&src);

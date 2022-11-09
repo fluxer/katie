@@ -1485,7 +1485,7 @@ void QRasterPaintEngine::drawPixmap(const QRectF &r, const QPixmap &pixmap, cons
 #endif
 
     QPixmapData* pd = pixmap.pixmapData();
-    const QImage &image = static_cast<QRasterPixmapData *>(pd)->image;
+    const QImage &image = pd->image;
     if (image.depth() == 1) {
         Q_D(QRasterPaintEngine);
         QRasterPaintEngineState *s = state();
@@ -1651,7 +1651,7 @@ void QRasterPaintEngine::drawTiledPixmap(const QRectF &r, const QPixmap &pixmap,
     ;
 
     QPixmapData *pd = pixmap.pixmapData();
-    QImage image = static_cast<QRasterPixmapData *>(pd)->image;
+    QImage image = pd->image;
 
     if (image.depth() == 1)
         image = d->rasterBuffer->colorizeBitmap(image, s->pen.color());

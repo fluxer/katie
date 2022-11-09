@@ -38,7 +38,6 @@
 #include "qmenu_p.h"
 #include "qbackingstore_p.h"
 #include "qwidget_p.h"
-#include "qpixmap_raster_p.h"
 #include "qpaintengine_x11_p.h"
 #include "qt_x11_p.h"
 #include "qx11info_x11.h"
