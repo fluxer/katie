@@ -1465,6 +1465,8 @@ QPixmap QPixmap::fromX11Pixmap(Qt::HANDLE pixmap)
 }
 
 /*!
+    \since 4.12
+
     Returns X11 Pixmap handle of the pixmap.
 
     QPixmap does \e not take ownership of the pixmap handle, it
