@@ -27,7 +27,6 @@
 #include "qpainter.h"
 #include "qdatastream.h"
 #include "qapplication.h"
-#include "qapplication_p.h"
 #include "qwidget_p.h"
 #include "qevent.h"
 #include "qfile.h"
@@ -37,7 +36,6 @@
 #include "qimagereader.h"
 #include "qimagewriter.h"
 #include "qpaintengine.h"
-#include "qthread.h"
 #include "qpixmap_raster_p.h"
 #include "qstylehelper_p.h"
 #include "qguicommon_p.h"
@@ -49,29 +47,8 @@
 
 QT_BEGIN_NAMESPACE
 
-static inline bool qt_pixmap_thread_test()
-{
-    if (Q_UNLIKELY(!qApp)) {
-        qFatal("QPixmap: Must construct a QApplication before a QPaintDevice");
-        return false;
-    }
-
-    if (Q_UNLIKELY(qApp->thread() != QThread::currentThread()
-        && !QApplication::testAttribute(Qt::AA_X11InitThreads))) {
-        qWarning("QPixmap: It is not safe to use pixmaps outside the GUI thread");
-        return false;
-    }
-    return true;
-}
-
 void QPixmap::init(int w, int h, int type)
 {
-    if (Q_UNLIKELY(QApplication::type() == QApplication::Tty)) {
-        qWarning("QPixmap: Cannot create a QPixmap when no GUI is being used");
-        data = 0;
-        return;
-    }
-
     if ((w > 0 && h > 0) || type == QPixmapData::BitmapType)
         data = QPixmapData::create(w, h, (QPixmapData::PixelType) type);
     else
@@ -103,7 +80,6 @@ void QPixmap::init(int w, int h, int type)
 QPixmap::QPixmap()
     : QPaintDevice()
 {
-    (void) qt_pixmap_thread_test();
     init(0, 0, QPixmapData::PixmapType);
 }
 
@@ -124,10 +100,7 @@ QPixmap::QPixmap()
 QPixmap::QPixmap(int w, int h)
     : QPaintDevice()
 {
-    if (!qt_pixmap_thread_test())
-        init(0, 0, QPixmapData::PixmapType);
-    else
-        init(w, h, QPixmapData::PixmapType);
+    init(w, h, QPixmapData::PixmapType);
 }
 
 /*!
@@ -143,10 +116,7 @@ QPixmap::QPixmap(int w, int h)
 QPixmap::QPixmap(const QSize &size)
     : QPaintDevice()
 {
-    if (!qt_pixmap_thread_test())
-        init(0, 0, QPixmapData::PixmapType);
-    else
-        init(size.width(), size.height(), QPixmapData::PixmapType);
+    init(size.width(), size.height(), QPixmapData::PixmapType);
 }
 
 /*!
@@ -154,10 +124,7 @@ QPixmap::QPixmap(const QSize &size)
 */
 QPixmap::QPixmap(const QSize &s, int type)
 {
-    if (!qt_pixmap_thread_test())
-        init(0, 0, static_cast<QPixmapData::PixelType>(type));
-    else
-        init(s.width(), s.height(), static_cast<QPixmapData::PixelType>(type));
+    init(s.width(), s.height(), static_cast<QPixmapData::PixelType>(type));
 }
 
 /*!
@@ -201,9 +168,6 @@ QPixmap::QPixmap(const QString& fileName, const char *format, Qt::ImageConversio
     : QPaintDevice()
 {
     init(0, 0, QPixmapData::PixmapType);
-    if (!qt_pixmap_thread_test())
-        return;
-
     load(fileName, format, flags);
 }
 
@@ -216,10 +180,6 @@ QPixmap::QPixmap(const QString& fileName, const char *format, Qt::ImageConversio
 QPixmap::QPixmap(const QPixmap &pixmap)
     : QPaintDevice()
 {
-    if (!qt_pixmap_thread_test()) {
-        init(0, 0, QPixmapData::PixmapType);
-        return;
-    }
     if (pixmap.paintingActive()) {                // make a deep copy
         operator=(pixmap.copy());
     } else {
