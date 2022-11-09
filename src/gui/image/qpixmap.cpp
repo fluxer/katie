@@ -56,22 +56,6 @@ void QPixmap::init(int w, int h, int type)
 }
 
 /*!
-    \enum QPixmap::ColorMode
-
-    \compat
-
-    This enum type defines the color modes that exist for converting
-    QImage objects to QPixmap.  It is provided here for compatibility
-    with earlier versions of Qt.
-
-    Use Qt::ImageConversionFlags instead.
-
-    \value Auto  Select \c Color or \c Mono on a case-by-case basis.
-    \value Color Always create colored pixmaps.
-    \value Mono  Always create bitmaps.
-*/
-
-/*!
     Constructs a null pixmap.
 
     \sa isNull()
@@ -84,8 +68,6 @@ QPixmap::QPixmap()
 }
 
 /*!
-    \fn QPixmap::QPixmap(int width, int height)
-
     Constructs a pixmap with the given \a width and \a height. If
     either \a width or \a height is zero, a null pixmap is
     constructed.
@@ -213,13 +195,11 @@ int QPixmap::devType() const
 */
 
 /*!
-    \fn QPixmap QPixmap::copy(const QRect &rectangle) const
-
     Returns a deep copy of the subset of the pixmap that is specified
-    by the given \a rectangle. For more information on deep copies,
+    by the given \a rect. For more information on deep copies,
     see the \l {Implicit Data Sharing} documentation.
 
-    If the given \a rectangle is empty, the whole image is copied.
+    If the given \a rect is empty, the whole image is copied.
 
     \sa operator=(), QPixmap(), {QPixmap#Pixmap
     Transformations}{Pixmap Transformations}
@@ -395,19 +375,14 @@ QMatrix QPixmap::trueMatrix(const QMatrix &m, int w, int h)
 
 
 /*!
-    \fn bool QPixmap::isQBitmap() const
-
     Returns true if this is a QBitmap; otherwise returns false.
 */
-
 bool QPixmap::isQBitmap() const
 {
     return data->type == QPixmapData::BitmapType;
 }
 
 /*!
-    \fn bool QPixmap::isNull() const
-
     Returns true if this is a null pixmap; otherwise returns false.
 
     A null pixmap has zero width, zero height and no contents. You
@@ -419,8 +394,6 @@ bool QPixmap::isNull() const
 }
 
 /*!
-    \fn int QPixmap::width() const
-
     Returns the width of the pixmap.
 
     \sa size(), {QPixmap#Pixmap Information}{Pixmap Information}
@@ -431,8 +404,6 @@ int QPixmap::width() const
 }
 
 /*!
-    \fn int QPixmap::height() const
-
     Returns the height of the pixmap.
 
     \sa size(), {QPixmap#Pixmap Information}{Pixmap Information}
@@ -443,8 +414,6 @@ int QPixmap::height() const
 }
 
 /*!
-    \fn QSize QPixmap::size() const
-
     Returns the size of the pixmap.
 
     \sa width(), height(), {QPixmap#Pixmap Information}{Pixmap
@@ -456,8 +425,6 @@ QSize QPixmap::size() const
 }
 
 /*!
-    \fn QRect QPixmap::rect() const
-
     Returns the pixmap's enclosing rectangle.
 
     \sa {QPixmap#Pixmap Information}{Pixmap Information}
@@ -468,8 +435,6 @@ QRect QPixmap::rect() const
 }
 
 /*!
-    \fn int QPixmap::depth() const
-
     Returns the depth of the pixmap.
 
     The pixmap depth is also called bits per pixel (bpp) or bit planes
@@ -482,43 +447,6 @@ int QPixmap::depth() const
 {
     return data ? data->depth() : 0;
 }
-
-/*!
-    \fn void QPixmap::resize(const QSize &size)
-    \overload
-    \compat
-
-    Use QPixmap::copy() instead to get the pixmap with the new size.
-
-    \oldcode
-        pixmap.resize(size);
-    \newcode
-        pixmap = pixmap.copy(QRect(QPoint(0, 0), size));
-    \endcode
-*/
-
-/*!
-    \fn void QPixmap::resize(int width, int height)
-    \compat
-
-    Use QPixmap::copy() instead to get the pixmap with the new size.
-
-    \oldcode
-        pixmap.resize(10, 20);
-    \newcode
-        pixmap = pixmap.copy(0, 0, 10, 20);
-    \endcode
-*/
-
-/*!
-    \fn bool QPixmap::selfMask() const
-    \compat
-
-    Returns whether the pixmap is its own mask or not.
-
-    This function is no longer relevant since the concept of self
-    masking doesn't exists anymore.
-*/
 
 /*!
     Sets a mask bitmap.
@@ -628,7 +556,6 @@ QBitmap QPixmap::createMaskFromColor(const QColor &maskColor, Qt::MaskMode mode)
     \sa loadFromData(), {QPixmap#Reading and Writing Image
     Files}{Reading and Writing Image Files}
 */
-
 bool QPixmap::load(const QString &fileName, const char *format, Qt::ImageConversionFlags flags)
 {
     if (fileName.isEmpty())
@@ -660,8 +587,6 @@ bool QPixmap::load(const QString &fileName, const char *format, Qt::ImageConvers
 }
 
 /*!
-    \fn bool QPixmap::loadFromData(const uchar *data, uint len, const char *format, Qt::ImageConversionFlags flags)
-
     Loads a pixmap from the \a len first bytes of the given binary \a
     data.  Returns true if the pixmap was loaded successfully;
     otherwise returns false.
@@ -677,7 +602,6 @@ bool QPixmap::load(const QString &fileName, const char *format, Qt::ImageConvers
     \sa load(), {QPixmap#Reading and Writing Image Files}{Reading and
     Writing Image Files}
 */
-
 bool QPixmap::loadFromData(const uchar *buf, uint len, const char *format, Qt::ImageConversionFlags flags)
 {
     if (len == 0 || buf == 0)
@@ -698,7 +622,6 @@ bool QPixmap::loadFromData(const uchar *buf, uint len, const char *format, Qt::I
     format and conversion \a flags.
 */
 
-
 /*!
     Saves the pixmap to the file with the given \a fileName using the
     specified image file \a format and \a quality factor. Returns true
@@ -714,7 +637,6 @@ bool QPixmap::loadFromData(const uchar *buf, uint len, const char *format, Qt::I
     \sa {QPixmap#Reading and Writing Image Files}{Reading and Writing
     Image Files}
 */
-
 bool QPixmap::save(const QString &fileName, const char *format, int quality) const
 {
     if (isNull())
@@ -732,7 +654,6 @@ bool QPixmap::save(const QString &fileName, const char *format, int quality) con
 
     \snippet doc/src/snippets/image/image.cpp 1
 */
-
 bool QPixmap::save(QIODevice* device, const char* format, int quality) const
 {
     if (isNull())
@@ -775,7 +696,6 @@ bool QPixmap::doImageIO(QImageWriter *writer, int quality) const
 
     \sa {QPixmap#Pixmap Transformations}{Pixmap Transformations}
 */
-
 void QPixmap::fill(const QColor &color)
 {
     if (isNull())
@@ -822,8 +742,6 @@ static void sendResizeEvents(QWidget *target)
 }
 
 /*!
-    \fn QPixmap QPixmap::grabWidget(QWidget * widget, const QRect &rectangle)
-
     Creates a pixmap and paints the given \a widget, restricted by the
     given \a rectangle, in it. If the \a widget has any children, then
     they are also painted in the appropriate positions.
@@ -850,7 +768,6 @@ static void sendResizeEvents(QWidget *target)
 
     \sa grabWindow()
 */
-
 QPixmap QPixmap::grabWidget(QWidget * widget, const QRect &rect)
 {
     if (!widget)
@@ -937,18 +854,6 @@ QDataStream &operator>>(QDataStream &stream, QPixmap &pixmap)
 }
 
 #endif // QT_NO_DATASTREAM
-
-/*!
-    \fn QImage QPixmap::convertToImage() const
-
-    Use the toImage() function instead.
-*/
-
-/*!
-    \fn QPixmap QPixmap::xForm(const QMatrix &matrix) const
-
-    Use transformed() instead.
-*/
 
 /*!
     \fn QPixmap QPixmap::scaled(int width, int height,
@@ -1296,8 +1201,6 @@ int QPixmap::metric(PaintDeviceMetric metric) const
 }
 
 /*!
-    \fn void QPixmap::setAlphaChannel(const QPixmap &alphaChannel)
-
     Sets the alpha channel of this pixmap to the given \a alphaChannel
     by converting the \a alphaChannel into 32 bit and using the
     intensity of the RGB pixel values.
@@ -1311,7 +1214,7 @@ int QPixmap::metric(PaintDeviceMetric metric) const
 
     \sa alphaChannel(), {QPixmap#Pixmap Transformations}{Pixmap
     Transformations}
- */
+*/
 void QPixmap::setAlphaChannel(const QPixmap &alphaChannel)
 {
     if (alphaChannel.isNull())
@@ -1334,7 +1237,6 @@ void QPixmap::setAlphaChannel(const QPixmap &alphaChannel)
 }
 
 /*!
-
     Returns the alpha channel of the pixmap as a new grayscale QPixmap in which
     each pixel's red, green, and blue values are given the alpha value of the
     original pixmap.
@@ -1387,7 +1289,6 @@ QBitmap QPixmap::mask() const
     return data ? data->mask() : QBitmap();
 }
 
-
 /*!
     Detaches the pixmap from shared pixmap data.
 
@@ -1417,8 +1318,6 @@ void QPixmap::detach()
 }
 
 /*!
-    \fn QPixmap QPixmap::fromImage(const QImage &image, Qt::ImageConversionFlags flags)
-
     Converts the given \a image to a pixmap using the specified \a
     flags to control the conversion.  The \a flags argument is a
     bitwise-OR of the \l{Qt::ImageConversionFlags}. Passing 0 for \a
@@ -1442,8 +1341,6 @@ QPixmap QPixmap::fromImage(const QImage &image, Qt::ImageConversionFlags flags)
 }
 
 /*!
-    \fn QPixmap QPixmap::fromImageReader(QImageReader *imageReader, Qt::ImageConversionFlags flags)
-
     Create a QPixmap from an image read directly from an \a imageReader.
     The \a flags argument is a bitwise-OR of the \l{Qt::ImageConversionFlags}.
     Passing 0 for \a flags sets all the default options.
