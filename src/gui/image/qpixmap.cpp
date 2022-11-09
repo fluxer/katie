@@ -1275,12 +1275,6 @@ QPixmap QPixmap::transformed(const QMatrix &matrix, Qt::TransformationMode mode)
     The cacheKey() function returns a number that uniquely
     identifies the contents of the QPixmap object.
 
-    The x11Info() function returns information about the configuration
-    of the X display used by the screen to which the pixmap currently
-    belongs. The x11PictureHandle() function returns the X11 Picture
-    handle of the pixmap for XRender support. Note that the two latter
-    functions are only available on x11.
-
     \endtable
 
     \section1 Pixmap Conversion
@@ -1289,12 +1283,6 @@ QPixmap QPixmap::transformed(const QMatrix &matrix, Qt::TransformationMode mode)
     toImage() function. Likewise, a QImage can be converted into a
     QPixmap using the fromImage(). If this is too expensive an
     operation, you can use QBitmap::fromImage() instead.
-
-    In addition, on Symbian, the QPixmap class supports conversion to
-    and from CFbsBitmap: the toSymbianCFbsBitmap() function creates
-    CFbsBitmap equivalent to the QPixmap, based on given mode and returns
-    a CFbsBitmap object. The fromSymbianCFbsBitmap() function returns a
-    QPixmap that is equivalent to the given bitmap and given mode.
 
     \section1 Pixmap Transformations
 
@@ -1313,9 +1301,6 @@ QPixmap QPixmap::transformed(const QMatrix &matrix, Qt::TransformationMode mode)
     transformed points of the original pixmap. The static trueMatrix()
     function returns the actual matrix used for transforming the
     pixmap.
-
-    \note When using the native X11 graphics system, the pixmap
-    becomes invalid when the QApplication instance is destroyed.
 
     \sa QBitmap, QImage, QImageReader, QImageWriter
 */
@@ -1392,8 +1377,7 @@ void QPixmap::setAlphaChannel(const QPixmap &alphaChannel)
 
     Returns the alpha channel of the pixmap as a new grayscale QPixmap in which
     each pixel's red, green, and blue values are given the alpha value of the
-    original pixmap. The color depth of the returned pixmap is the system depth
-    on X11.
+    original pixmap.
 
     You can use this function while debugging
     to get a visible image of the alpha channel. If the pixmap doesn't have an
@@ -1447,16 +1431,10 @@ QBitmap QPixmap::mask() const
 /*!
     Detaches the pixmap from shared pixmap data.
 
-    A pixmap is automatically detached by Qt whenever its contents are
-    about to change. This is done in almost all QPixmap member
+    A pixmap is automatically detached by Katie whenever its contents
+    are about to change. This is done in almost all QPixmap member
     functions that modify the pixmap (fill(), fromImage(),
     load(), etc.), and in QPainter::begin() on a pixmap.
-
-    There are two exceptions in which detach() must be called
-    explicitly, that is when calling the handle() or the
-    x11PictureHandle() function (only available on X11). Otherwise,
-    any modifications done using system calls, will be performed on
-    the shared data.
 
     The detach() function returns immediately if there is just a
     single reference or if the pixmap has not been initialized yet.
