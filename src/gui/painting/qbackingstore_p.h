@@ -57,8 +57,6 @@ public:
     void sync();
     void flush(QWidget *widget = 0, QWindowSurface *surface = 0);
 
-    inline QPoint topLevelOffset() const { return tlwOffset; }
-
     QWindowSurface *surface() const { return windowSurface; }
 
     inline bool isDirty() const
