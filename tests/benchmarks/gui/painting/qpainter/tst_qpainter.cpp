@@ -598,8 +598,8 @@ void tst_QPainter::drawPixmap_data()
         "RGB16",
     };
 
-    for (int tar=3; tar<QImage::NImageFormats; ++tar) {
-        for (int src=3; src<QImage::NImageFormats; ++src) {
+    for (int tar=1; tar<QImage::NImageFormats; ++tar) {
+        for (int src=1; src<QImage::NImageFormats; ++src) {
 
             foreach (const QSize &s, sizes) {
                 for (int type=0; type<=3; ++type) {
