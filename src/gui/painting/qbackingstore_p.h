@@ -150,8 +150,6 @@ private:
 
     friend class QWidgetPrivate;
     friend class QWidget;
-    friend class QETWidget;
-    friend class QWindowSurface;
 };
 
 QT_END_NAMESPACE
