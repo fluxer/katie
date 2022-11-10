@@ -1621,78 +1621,6 @@ QImage::Format QImage::systemFormat()
 
 typedef void (QT_FASTCALL *Image_Converter)(QImageData *dest, const QImageData *src, Qt::ImageConversionFlags);
 
-static void QT_FASTCALL convert_ARGB_to_ARGB_PM(QImageData *dest, const QImageData *src, Qt::ImageConversionFlags)
-{
-    Q_ASSERT(src->format == QImage::Format_ARGB32);
-    Q_ASSERT(dest->format == QImage::Format_ARGB32_Premultiplied);
-    Q_ASSERT(src->width == dest->width);
-    Q_ASSERT(src->height == dest->height);
-
-    const int src_pad = (src->bytes_per_line >> 2) - src->width;
-    const int dest_pad = (dest->bytes_per_line >> 2) - dest->width;
-    const QRgb *src_data = (const QRgb *) src->data;
-    QRgb *dest_data = (QRgb *) dest->data;
-
-    for (int i = 0; i < src->height; ++i) {
-        const QRgb *end = src_data + src->width;
-        while (src_data < end) {
-            *dest_data = PREMUL(*src_data);
-            ++src_data;
-            ++dest_data;
-        }
-        src_data += src_pad;
-        dest_data += dest_pad;
-    }
-}
-
-static void QT_FASTCALL convert_ARGB_PM_to_ARGB(QImageData *dest, const QImageData *src, Qt::ImageConversionFlags)
-{
-    Q_ASSERT(src->format == QImage::Format_ARGB32_Premultiplied);
-    Q_ASSERT(dest->format == QImage::Format_ARGB32);
-    Q_ASSERT(src->width == dest->width);
-    Q_ASSERT(src->height == dest->height);
-
-    const int src_pad = (src->bytes_per_line >> 2) - src->width;
-    const int dest_pad = (dest->bytes_per_line >> 2) - dest->width;
-    const QRgb *src_data = (const QRgb *) src->data;
-    QRgb *dest_data = (QRgb *) dest->data;
-
-    for (int i = 0; i < src->height; ++i) {
-        const QRgb *end = src_data + src->width;
-        while (src_data < end) {
-            *dest_data = INV_PREMUL(*src_data);
-            ++src_data;
-            ++dest_data;
-        }
-        src_data += src_pad;
-        dest_data += dest_pad;
-    }
-}
-
-static void QT_FASTCALL convert_ARGB_PM_to_RGB(QImageData *dest, const QImageData *src, Qt::ImageConversionFlags)
-{
-    Q_ASSERT(src->format == QImage::Format_ARGB32_Premultiplied);
-    Q_ASSERT(dest->format == QImage::Format_RGB32);
-    Q_ASSERT(src->width == dest->width);
-    Q_ASSERT(src->height == dest->height);
-
-    const int src_pad = (src->bytes_per_line >> 2) - src->width;
-    const int dest_pad = (dest->bytes_per_line >> 2) - dest->width;
-    const QRgb *src_data = (const QRgb *) src->data;
-    QRgb *dest_data = (QRgb *) dest->data;
-
-    for (int i = 0; i < src->height; ++i) {
-        const QRgb *end = src_data + src->width;
-        while (src_data < end) {
-            *dest_data = 0xff000000 | INV_PREMUL(*src_data);
-            ++src_data;
-            ++dest_data;
-        }
-        src_data += src_pad;
-        dest_data += dest_pad;
-    }
-}
-
 static void QT_FASTCALL swap_bit_order(QImageData *dest, const QImageData *src, Qt::ImageConversionFlags)
 {
     Q_ASSERT(src->format == QImage::Format_Mono || src->format == QImage::Format_MonoLSB);
@@ -1977,13 +1905,6 @@ static void QT_FASTCALL convert_X_to_Mono(QImageData *dst, const QImageData *src
     dither_to_Mono(dst, src, flags, false);
 }
 
-static void QT_FASTCALL convert_ARGB_PM_to_Mono(QImageData *dst, const QImageData *src, Qt::ImageConversionFlags flags)
-{
-    QScopedPointer<QImageData> tmp(QImageData::create(QSize(src->width, src->height), QImage::Format_ARGB32));
-    convert_ARGB_PM_to_ARGB(tmp.data(), src, flags);
-    dither_to_Mono(dst, tmp.data(), flags, false);
-}
-
 static void QT_FASTCALL convert_Mono_to_X32(QImageData *dest, const QImageData *src, Qt::ImageConversionFlags)
 {
     Q_ASSERT(src->format == QImage::Format_Mono || src->format == QImage::Format_MonoLSB);
@@ -2037,6 +1958,17 @@ static void QT_FASTCALL convert_RGB16_to_RGB32(QImageData *dest, const QImageDat
     }
 }
 
+static void QT_FASTCALL convert_RGB16_to_Mono(QImageData *dest, const QImageData *src, Qt::ImageConversionFlags flags)
+{
+    Q_ASSERT(src->format == QImage::Format_RGB16);
+    Q_ASSERT(dest->format == QImage::Format_Mono || dest->format == QImage::Format_MonoLSB);
+    Q_ASSERT(src->width == dest->width);
+    Q_ASSERT(src->height == dest->height);
+    QScopedPointer<QImageData> tmp(QImageData::create(QSize(src->width, src->height), QImage::Format_ARGB32));
+    convert_RGB16_to_RGB32(tmp.data(), src, flags);
+    dither_to_Mono(dest, tmp.data(), flags, false);
+}
+
 static void QT_FASTCALL convert_RGB32_to_RGB16(QImageData *dest, const QImageData *src, Qt::ImageConversionFlags)
 {
     uchar *d = dest->data;
@@ -2046,6 +1978,96 @@ static void QT_FASTCALL convert_RGB32_to_RGB16(QImageData *dest, const QImageDat
         d += dest->bytes_per_line;
         s += src->bytes_per_line;
     }
+}
+
+static void QT_FASTCALL convert_ARGB_to_ARGB_PM(QImageData *dest, const QImageData *src, Qt::ImageConversionFlags)
+{
+    Q_ASSERT(src->format == QImage::Format_ARGB32);
+    Q_ASSERT(dest->format == QImage::Format_ARGB32_Premultiplied);
+    Q_ASSERT(src->width == dest->width);
+    Q_ASSERT(src->height == dest->height);
+
+    const int src_pad = (src->bytes_per_line >> 2) - src->width;
+    const int dest_pad = (dest->bytes_per_line >> 2) - dest->width;
+    const QRgb *src_data = (const QRgb *) src->data;
+    QRgb *dest_data = (QRgb *) dest->data;
+
+    for (int i = 0; i < src->height; ++i) {
+        const QRgb *end = src_data + src->width;
+        while (src_data < end) {
+            *dest_data = PREMUL(*src_data);
+            ++src_data;
+            ++dest_data;
+        }
+        src_data += src_pad;
+        dest_data += dest_pad;
+    }
+}
+
+static void QT_FASTCALL convert_ARGB_PM_to_ARGB(QImageData *dest, const QImageData *src, Qt::ImageConversionFlags)
+{
+    Q_ASSERT(src->format == QImage::Format_ARGB32_Premultiplied);
+    Q_ASSERT(dest->format == QImage::Format_ARGB32);
+    Q_ASSERT(src->width == dest->width);
+    Q_ASSERT(src->height == dest->height);
+
+    const int src_pad = (src->bytes_per_line >> 2) - src->width;
+    const int dest_pad = (dest->bytes_per_line >> 2) - dest->width;
+    const QRgb *src_data = (const QRgb *) src->data;
+    QRgb *dest_data = (QRgb *) dest->data;
+
+    for (int i = 0; i < src->height; ++i) {
+        const QRgb *end = src_data + src->width;
+        while (src_data < end) {
+            *dest_data = INV_PREMUL(*src_data);
+            ++src_data;
+            ++dest_data;
+        }
+        src_data += src_pad;
+        dest_data += dest_pad;
+    }
+}
+
+static void QT_FASTCALL convert_ARGB_PM_to_RGB(QImageData *dest, const QImageData *src, Qt::ImageConversionFlags)
+{
+    Q_ASSERT(src->format == QImage::Format_ARGB32_Premultiplied);
+    Q_ASSERT(dest->format == QImage::Format_RGB32);
+    Q_ASSERT(src->width == dest->width);
+    Q_ASSERT(src->height == dest->height);
+
+    const int src_pad = (src->bytes_per_line >> 2) - src->width;
+    const int dest_pad = (dest->bytes_per_line >> 2) - dest->width;
+    const QRgb *src_data = (const QRgb *) src->data;
+    QRgb *dest_data = (QRgb *) dest->data;
+
+    for (int i = 0; i < src->height; ++i) {
+        const QRgb *end = src_data + src->width;
+        while (src_data < end) {
+            *dest_data = 0xff000000 | INV_PREMUL(*src_data);
+            ++src_data;
+            ++dest_data;
+        }
+        src_data += src_pad;
+        dest_data += dest_pad;
+    }
+}
+
+static void QT_FASTCALL convert_ARGB_to_RGB16(QImageData *dest, const QImageData *src, Qt::ImageConversionFlags flags)
+{
+    Q_ASSERT(src->format == QImage::Format_ARGB32_Premultiplied);
+    Q_ASSERT(dest->format == QImage::Format_RGB16);
+    Q_ASSERT(src->width == dest->width);
+    Q_ASSERT(src->height == dest->height);
+    QScopedPointer<QImageData> tmp(QImageData::create(QSize(src->width, src->height), QImage::Format_ARGB32));
+    convert_ARGB_PM_to_ARGB(tmp.data(), src, flags);
+    convert_RGB32_to_RGB16(dest, tmp.data(), flags);
+}
+
+static void QT_FASTCALL convert_ARGB_PM_to_Mono(QImageData *dst, const QImageData *src, Qt::ImageConversionFlags flags)
+{
+    QScopedPointer<QImageData> tmp(QImageData::create(QSize(src->width, src->height), QImage::Format_ARGB32));
+    convert_ARGB_PM_to_ARGB(tmp.data(), src, flags);
+    dither_to_Mono(dst, tmp.data(), flags, false);
 }
 
 /*
@@ -2112,13 +2134,13 @@ static const Image_Converter converter_map[QImage::NImageFormats][QImage::NImage
         convert_ARGB_PM_to_RGB,
         convert_ARGB_PM_to_ARGB,
         0,
-        0
+        convert_ARGB_to_RGB16
     },  // QImage::Format_ARGB32_Premultiplied
 
     {
         0,
-        0,
-        0,
+        convert_RGB16_to_Mono,
+        convert_RGB16_to_Mono,
         convert_RGB16_to_RGB32,
         convert_RGB16_to_RGB32,
         convert_RGB16_to_RGB32,
@@ -2143,22 +2165,15 @@ QImage QImage::convertToFormat(Format format, Qt::ImageConversionFlags flags) co
         return QImage();
 
     const Image_Converter converter = converter_map[d->format][format];
-    if (converter) {
-        QImage image(d->width, d->height, format);
-        QIMAGE_SANITYCHECK_MEMORY(image);
+    Q_ASSERT(converter);
+    QImage image(d->width, d->height, format);
+    QIMAGE_SANITYCHECK_MEMORY(image);
 
-        image.d->dpmx = dotsPerMeterX();
-        image.d->dpmy = dotsPerMeterY();
+    image.d->dpmx = dotsPerMeterX();
+    image.d->dpmy = dotsPerMeterY();
 
-        converter(image.d, d, flags);
-        return image;
-    }
-
-    Q_ASSERT(format != QImage::Format_ARGB32);
-    Q_ASSERT(d->format != QImage::Format_ARGB32);
-
-    QImage image = convertToFormat(QImage::Format_ARGB32, flags);
-    return image.convertToFormat(format, flags);
+    converter(image.d, d, flags);
+    return image;
 }
 
 /*!
