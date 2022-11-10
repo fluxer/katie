@@ -442,51 +442,6 @@ inline void qt_memconvert(DST *dest, const SRC *src, int count)
 
 static inline int qt_div_255(int x) { return (x + (x>>8) + 0x80) >> 8; }
 
-static inline QImage qt_mask_image(const QImage &image, const QImage &mask)
-{
-    if (mask.isNull()) {
-        if (image.depth() != 1) { // hw: ????
-            return image.convertToFormat(QImage::Format_RGB32);
-        }
-        return image;
-    }
-
-    const int w = image.width();
-    const int h = image.height();
-
-    switch (image.depth()) {
-        case 1: {
-            QImage result(image.size(), image.format());
-            const QImage imageMask = mask.convertToFormat(result.format());
-            const int bpl = result.bytesPerLine();
-            uchar *dest = result.bits();
-            for (int y = 0; y < h; ++y) {
-                const uchar *mscan = imageMask.constScanLine(y);
-                uchar *tscan = QFAST_SCAN_LINE(dest, bpl, y);
-                for (int i = 0; i < bpl; ++i)
-                    tscan[i] &= mscan[i];
-            }
-            return result;
-        }
-        default: {
-            const QImage imageMask = mask.convertToFormat(QImage::Format_MonoLSB);
-            QImage result = image.convertToFormat(QImage::Format_ARGB32_Premultiplied);
-            const int bpl = result.bytesPerLine();
-            uchar *dest = result.bits();
-            for (int y = 0; y < h; ++y) {
-                const uchar *mscan = imageMask.constScanLine(y);
-                QRgb *tscan = reinterpret_cast<QRgb*>(QFAST_SCAN_LINE(dest, bpl, y));
-                for (int x = 0; x < w; ++x) {
-                    if (!(mscan[x>>3] & qt_pixmap_bit_mask[x&7]))
-                        tscan[x] = 0;
-                }
-            }
-            return result;
-        }
-    }
-    Q_UNREACHABLE();
-}
-
 QT_END_NAMESPACE
 
 #endif // QDRAWHELPER_P_H

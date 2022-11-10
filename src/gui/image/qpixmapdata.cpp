@@ -131,7 +131,42 @@ QBitmap QPixmapData::mask() const
 
 void QPixmapData::setMask(const QBitmap &mask)
 {
-    image = qt_mask_image(image, mask.toImage());
+    if (mask.isNull()) {
+        if (image.depth() != 1) { // hw: ????
+            image = image.convertToFormat(QImage::Format_RGB32);
+        }
+        return;
+    }
+
+    const int w = image.width();
+    const int h = image.height();
+    if (image.depth() == 1) {
+        QImage result(image.size(), image.format());
+        const QImage imageMask = mask.toImage().convertToFormat(result.format());
+        const int bpl = result.bytesPerLine();
+        uchar *dest = result.bits();
+        for (int y = 0; y < h; ++y) {
+            const uchar *mscan = imageMask.constScanLine(y);
+            uchar *tscan = QFAST_SCAN_LINE(dest, bpl, y);
+            for (int i = 0; i < bpl; ++i)
+                tscan[i] &= mscan[i];
+        }
+        image = result;
+    } else {
+        const QImage imageMask = mask.toImage().convertToFormat(QImage::Format_MonoLSB);
+        QImage result = image.convertToFormat(QImage::Format_ARGB32_Premultiplied);
+        const int bpl = result.bytesPerLine();
+        uchar *dest = result.bits();
+        for (int y = 0; y < h; ++y) {
+            const uchar *mscan = imageMask.constScanLine(y);
+            QRgb *tscan = reinterpret_cast<QRgb*>(QFAST_SCAN_LINE(dest, bpl, y));
+            for (int x = 0; x < w; ++x) {
+                if (!(mscan[x>>3] & qt_pixmap_bit_mask[x&7]))
+                    tscan[x] = 0;
+            }
+        }
+        image = result;
+    }
 }
 
 QPixmap QPixmapData::transformed(const QTransform &matrix,
