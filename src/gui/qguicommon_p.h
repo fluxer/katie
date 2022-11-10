@@ -131,15 +131,6 @@ inline static QTabBar::Shape tabBarShapeFrom(QTabWidget::TabShape shape, QTabWid
 }
 #endif // QT_NO_TABWIDGET
 
-// Returns position of lowest set bit in 'v' as an integer (0-31), or -1
-inline static int lowest_bit(uint v)
-{
-    int i;
-    ulong lb = 1;
-    for (i=0; ((v & lb) == 0) && i<32;  i++, lb<<=1) {}
-    return i==32 ? -1 : i;
-}
-
 static const qreal inv_dist_to_plane = 1. / 1024.;
 
 // use the same rounding as in qrasterizer.cpp (6 bit fixed point)
