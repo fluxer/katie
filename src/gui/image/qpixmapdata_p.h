@@ -56,7 +56,6 @@ public:
 
     QPixmapData *createCompatiblePixmapData() const;
 
-    void resize(int width, int height);
     void fromImage(const QImage &image,
                    Qt::ImageConversionFlags flags);
     void fromImageReader(QImageReader *imageReader,

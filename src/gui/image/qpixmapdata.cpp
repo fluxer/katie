@@ -284,22 +284,6 @@ void QPixmapData::scroll(int dx, int dy, const QRect &rect)
         qt_scrollRectInImage(&image, rect, QPoint(dx, dy));
 }
 
-void QPixmapData::resize(int width, int height)
-{
-    QImage::Format format = QImage::Format_ARGB32_Premultiplied;
-    if (pixelType() == BitmapType) {
-        format = QImage::Format_MonoLSB;
-    }
-
-    image = QImage(width, height, format);
-
-    if (pixelType() == BitmapType && !image.isNull()) {
-        image.setColorTable(monoColorTable());
-    }
-
-    setSerialNumber(image.cacheKey() >> 32);
-}
-
 bool QPixmapData::fromData(const uchar *buffer, uint len, const char *format,
                            Qt::ImageConversionFlags flags)
 {
