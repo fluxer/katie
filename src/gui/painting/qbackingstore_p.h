@@ -57,7 +57,7 @@ public:
     void sync();
     void flush(QWidget *widget = 0, QWindowSurface *surface = 0);
 
-    QWindowSurface *surface() const { return windowSurface; }
+    inline QWindowSurface *surface() const { return windowSurface; }
 
     inline bool isDirty() const
     {
