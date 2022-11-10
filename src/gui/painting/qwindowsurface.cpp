@@ -165,9 +165,9 @@ void QWindowSurface::beginPaint(const QRegion &rgn)
     if (!qt_widget_private(window())->isOpaque && window()->testAttribute(Qt::WA_TranslucentBackground)) {
         QPainter p(d_ptr->image);
         p.setCompositionMode(QPainter::CompositionMode_Source);
-        foreach (const QRect &r, rgn.rects()) {
-            p.fillRect(r, Qt::transparent);
-        }
+        p.setPen(Qt::NoPen);
+        p.setBrush(QBrush(Qt::transparent));
+        p.drawRects(rgn.rects());
     }
 #else
     Q_UNUSED(rgn);
