@@ -2551,16 +2551,17 @@ static void blend_color_generic(int count, const QSpan *spans, void *userData)
     QSpanData *data = reinterpret_cast<QSpanData *>(userData);
     QSTACKARRAY(uint, buffer, buffer_size);
     Operator op = getOperator(data, spans, count);
+    Q_ASSERT(op.dest_store);
+    Q_ASSERT(op.dest_fetch);
 
     while (count--) {
         int x = spans->x;
         int length = spans->len;
         while (length) {
             int l = qMin(buffer_size, length);
-            uint *dest = op.dest_fetch ? op.dest_fetch(buffer, data->rasterBuffer, x, spans->y, l) : buffer;
+            uint *dest = op.dest_fetch(buffer, data->rasterBuffer, x, spans->y, l);
             op.funcSolid(dest, l, data->solid.color, spans->coverage);
-            if (op.dest_store)
-                op.dest_store(data->rasterBuffer, x, spans->y, dest, l);
+            op.dest_store(data->rasterBuffer, x, spans->y, dest, l);
             length -= l;
             x += l;
         }
@@ -2575,6 +2576,9 @@ static void blend_src_generic(int count, const QSpan *spans, void *userData)
     QSTACKARRAY(uint, buffer, buffer_size);
     QSTACKARRAY(uint, src_buffer, buffer_size);
     Operator op = getOperator(data, spans, count);
+    Q_ASSERT(op.dest_store);
+    Q_ASSERT(op.dest_fetch);
+    Q_ASSERT(op.src_fetch);
 
     uint const_alpha = 256;
     if (data->type == QSpanData::Texture)
@@ -2598,7 +2602,7 @@ static void blend_src_generic(int count, const QSpan *spans, void *userData)
             int process_length = l;
             int process_x = x;
 
-            uint *dest = op.dest_fetch ? op.dest_fetch(buffer, data->rasterBuffer, process_x, y, process_length) : buffer;
+            uint *dest = op.dest_fetch(buffer, data->rasterBuffer, process_x, y, process_length);
             const uint *src = op.src_fetch(src_buffer, &op, data, y, process_x, process_length);
 
             int offset = 0;
@@ -2621,9 +2625,7 @@ static void blend_src_generic(int count, const QSpan *spans, void *userData)
                 }
             }
 
-            if (op.dest_store) {
-                op.dest_store(data->rasterBuffer, process_x, y, dest, process_length);
-            }
+            op.dest_store(data->rasterBuffer, process_x, y, dest, process_length);
         }
     }
 }
@@ -2635,6 +2637,9 @@ static void blend_untransformed_generic(int count, const QSpan *spans, void *use
     QSTACKARRAY(uint, buffer, buffer_size);
     QSTACKARRAY(uint, src_buffer, buffer_size);
     Operator op = getOperator(data, spans, count);
+    Q_ASSERT(op.dest_store);
+    Q_ASSERT(op.dest_fetch);
+    Q_ASSERT(op.src_fetch);
 
     const int image_width = data->texture.width;
     const int image_height = data->texture.height;
@@ -2659,10 +2664,9 @@ static void blend_untransformed_generic(int count, const QSpan *spans, void *use
                 while (length) {
                     int l = qMin(buffer_size, length);
                     const uint *src = op.src_fetch(src_buffer, &op, data, sy, sx, l);
-                    uint *dest = op.dest_fetch ? op.dest_fetch(buffer, data->rasterBuffer, x, spans->y, l) : buffer;
+                    uint *dest = op.dest_fetch(buffer, data->rasterBuffer, x, spans->y, l);
                     op.func(dest, src, l, coverage);
-                    if (op.dest_store)
-                        op.dest_store(data->rasterBuffer, x, spans->y, dest, l);
+                    op.dest_store(data->rasterBuffer, x, spans->y, dest, l);
                     x += l;
                     sx += l;
                     length -= l;
@@ -2680,6 +2684,9 @@ static void blend_tiled_generic(int count, const QSpan *spans, void *userData)
     QSTACKARRAY(uint, buffer, buffer_size);
     QSTACKARRAY(uint, src_buffer, buffer_size);
     Operator op = getOperator(data, spans, count);
+    Q_ASSERT(op.dest_store);
+    Q_ASSERT(op.dest_fetch);
+    Q_ASSERT(op.src_fetch);
 
     const int image_width = data->texture.width;
     const int image_height = data->texture.height;
@@ -2707,10 +2714,9 @@ static void blend_tiled_generic(int count, const QSpan *spans, void *userData)
             if (buffer_size < l)
                 l = buffer_size;
             const uint *src = op.src_fetch(src_buffer, &op, data, sy, sx, l);
-            uint *dest = op.dest_fetch ? op.dest_fetch(buffer, data->rasterBuffer, x, spans->y, l) : buffer;
+            uint *dest = op.dest_fetch(buffer, data->rasterBuffer, x, spans->y, l);
             op.func(dest, src, l, coverage);
-            if (op.dest_store)
-                op.dest_store(data->rasterBuffer, x, spans->y, dest, l);
+            op.dest_store(data->rasterBuffer, x, spans->y, dest, l);
             x += l;
             sx += l;
             length -= l;
