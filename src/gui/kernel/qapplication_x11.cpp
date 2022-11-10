@@ -1016,8 +1016,6 @@ void qt_init(QApplicationPrivate *priv, Display *display,
     qt_x11Data->screenCount = ScreenCount(qt_x11Data->display);
 
     qt_x11Data->screens = new QX11InfoData[qt_x11Data->screenCount];
-    qt_x11Data->argbVisuals = new Visual *[qt_x11Data->screenCount];
-    qt_x11Data->argbColormaps = new Colormap[qt_x11Data->screenCount];
 
     for (int s = 0; s < qt_x11Data->screenCount; s++) {
         QX11InfoData *screen = qt_x11Data->screens + s;
@@ -1074,6 +1072,8 @@ void qt_init(QApplicationPrivate *priv, Display *display,
 
 #ifndef QT_NO_XRENDER
     if (qt_x11Data->use_xrender) {
+        qt_x11Data->argbVisuals = new Visual *[qt_x11Data->screenCount];
+        qt_x11Data->argbColormaps = new Colormap[qt_x11Data->screenCount];
         for (int s = 0; s < qt_x11Data->screenCount; s++) {
             qt_x11Data->argbVisuals[s] = 0;
             qt_x11Data->argbColormaps[s] = 0;
