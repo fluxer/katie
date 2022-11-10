@@ -229,19 +229,28 @@ void QWindowSurface::flush(QWidget *widget, const QRegion &rgn, const QPoint &of
     const int depth = widget->x11Info().depth();
     const int bw = br.width();
     const int bh = br.height();
-    QImage image = d_ptr->image->copy(br);
-    if (image.depth() != 32) {
-        image = image.convertToFormat(QImage::Format_RGB32);
-    }
-    XImage *xi = XCreateImage(
-        qt_x11Data->display, (Visual *)widget->x11Info().visual(), depth, ZPixmap,
-        0, 0, bw, bh,
-        32, 0
+    const QImage image = d_ptr->image->copy(br);
+    XImage *ximage = XCreateImage(
+        qt_x11Data->display,
+        (Visual *)widget->x11Info().visual(), depth,
+        ZPixmap, // QImage::Format_RGB16 in the worst case
+        0, 0,
+        bw, bh,
+        image.depth(), 0
     );
-    Q_CHECK_PTR(xi);
-    QX11Data::copyQImageToXImage(image, xi);
-    XPutImage(qt_x11Data->display, widget->handle(), d_ptr->gc, xi, 0, 0, wpos.x(), wpos.y(), bw, bh);
-    XDestroyImage(xi);
+    Q_CHECK_PTR(ximage);
+    bool freedata = false;
+    QX11Data::copyQImageToXImage(image, ximage, &freedata);
+    XPutImage(
+        qt_x11Data->display,
+        widget->handle(),
+        d_ptr->gc,
+        ximage,
+        0, 0,
+        wpos.x(), wpos.y(),
+        bw, bh
+    );
+    QX11Data::destroyXImage(ximage, freedata);
 
     if (wrgn.rectCount() != 1)
         XSetClipMask(qt_x11Data->display, d_ptr->gc, XNone);

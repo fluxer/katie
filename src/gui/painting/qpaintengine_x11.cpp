@@ -239,7 +239,8 @@ void QX11PaintEngine::drawImage(const QRectF &r, const QImage &pm, const QRectF 
         qWarning("QX11PaintEngine::drawImage: Could not create X11 image");
         return;
     }
-    QX11Data::copyQImageToXImage(pm, ximage);
+    bool freedata = false;
+    QX11Data::copyQImageToXImage(pm, ximage, &freedata);
     const QRect srr = sr.toRect();
     const QRect rr = r.toRect();
     XPutImage(
@@ -248,7 +249,7 @@ void QX11PaintEngine::drawImage(const QRectF &r, const QImage &pm, const QRectF 
         rr.x(), rr.y(),
         pm.width(), pm.height()
     );
-    XDestroyImage(ximage);
+    QX11Data::destroyXImage(ximage, freedata);
 }
 
 QT_END_NAMESPACE

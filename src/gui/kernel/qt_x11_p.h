@@ -234,7 +234,8 @@ struct QX11Data
     Visual *visual;
     Colormap colormap;
 
-    static void copyQImageToXImage(const QImage &image, XImage *ximage);
+    static void copyQImageToXImage(const QImage &image, XImage *ximage, bool *freedata);
+    static void destroyXImage(XImage *ximage, const bool freedata);
     static void copyXImageToQImage(XImage *ximage, QImage &image);
 
     static uint XColorPixel(const int screen, const QColor &color);

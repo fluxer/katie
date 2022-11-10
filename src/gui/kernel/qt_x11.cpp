@@ -21,7 +21,6 @@
 
 #include "qcolor.h"
 #include "qimage.h"
-#include "qbitmap.h"
 #include "qdrawhelper_p.h"
 #include "qt_x11_p.h"
 #include "qx11info_x11.h"
@@ -29,18 +28,28 @@
 
 QT_BEGIN_NAMESPACE
 
-void QX11Data::copyQImageToXImage(const QImage &image, XImage *ximage)
+void QX11Data::copyQImageToXImage(const QImage &image, XImage *ximage, bool *freedata)
 {
     Q_ASSERT(ximage);
-    Q_ASSERT(image.depth() == 32);
+    Q_ASSERT(freedata);
 
+    const bool samedepth = (ximage->bits_per_pixel == image.depth());
+    const bool samebyteorder = ((ximage->byte_order == MSBFirst) == (Q_BYTE_ORDER == Q_BIG_ENDIAN));
+    // the XRender case (depth == 32)
+    if (samedepth && samebyteorder
+        && image.format() == QImage::Format_ARGB32_Premultiplied) {
+        ximage->data = (char*)image.constBits();
+        *freedata = false;
+        return;
+    }
+
+    *freedata = true;
     ximage->data = static_cast<char*>(::malloc(size_t(ximage->bytes_per_line) * image.height()));
     Q_CHECK_PTR(ximage->data);
-
     const int w = image.width();
     const int h = image.height();
-
-    if (ximage->bits_per_pixel == image.depth()) {
+    // same depth, same byte order
+    if (samedepth && samebyteorder) {
         switch(image.format()) {
             case QImage::Format_RGB32: {
                 uint *xidata = (uint *)ximage->data;
@@ -50,7 +59,7 @@ void QX11Data::copyQImageToXImage(const QImage &image, XImage *ximage)
                         *xidata++ = p[x] | 0xff000000;
                     }
                 }
-                break;
+                return;
             }
             case QImage::Format_ARGB32: {
                 uint *xidata = (uint *)ximage->data;
@@ -71,39 +80,26 @@ void QX11Data::copyQImageToXImage(const QImage &image, XImage *ximage)
                         ++xidata;
                     }
                 }
-                break;
-            }
-            case QImage::Format_ARGB32_Premultiplied: {
-                ::memcpy(ximage->data, image.constBits(), image.byteCount());
-                break;
-            }
-            default: {
-                Q_ASSERT(false);
-                break;
+                return;
             }
         }
-
-        if ((ximage->byte_order == MSBFirst) != (Q_BYTE_ORDER == Q_BIG_ENDIAN)) {
-            uint *xidata = (uint *)ximage->data;
-            uint *xiend = xidata + w*h;
-            while (xidata < xiend) {
-                *xidata = (*xidata >> 24)
-                            | ((*xidata >> 8) & 0xff00)
-                            | ((*xidata << 8) & 0xff0000)
-                            | (*xidata << 24);
-                ++xidata;
-            }
-        }
-
-        return;
     }
 
+    // any other case
     for (int h = 0; h < image.height(); h++) {
         for (int w = 0; w < image.width(); w++) {
             const QRgb pixel = image.pixel(w, h);
             XPutPixel(ximage, w, h, pixel);
         }
     }
+}
+
+void QX11Data::destroyXImage(XImage *ximage, const bool freedata)
+{
+    if (!freedata) {
+        ximage->data = nullptr;
+    }
+    XDestroyImage(ximage);
 }
 
 void QX11Data::copyXImageToQImage(XImage *ximage, QImage &image)

@@ -1504,7 +1504,8 @@ Qt::HANDLE QPixmap::toX11Pixmap() const
         XFreePixmap(qt_x11Data->display, handle);
         return 0;
     }
-    QX11Data::copyQImageToXImage(image, ximage);
+    bool freedata = false;
+    QX11Data::copyQImageToXImage(image, ximage, &freedata);
     GC xgc = XCreateGC(
         qt_x11Data->display, handle,
         0, 0 // value mask and values
@@ -1515,7 +1516,7 @@ Qt::HANDLE QPixmap::toX11Pixmap() const
         ximage->width, ximage->height
     );
     XFreeGC(qt_x11Data->display, xgc);
-    XDestroyImage(ximage);
+    QX11Data::destroyXImage(ximage, freedata);
     return handle;
 }
 #endif // Q_WS_X11
