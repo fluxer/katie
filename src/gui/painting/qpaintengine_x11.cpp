@@ -161,7 +161,6 @@ void QX11PaintEngine::updateState(const QPaintEngineState &state)
 
 void QX11PaintEngine::drawPolygon(const QPointF *polygonPoints, int pointCount, PolygonDrawMode mode)
 {
-    Q_D(QX11PaintEngine);
     QPainterPath path(polygonPoints[0]);
     for (int i = 1; i < pointCount; ++i)
         path.lineTo(polygonPoints[i]);
@@ -180,7 +179,6 @@ void QX11PaintEngine::drawPolygon(const QPointF *polygonPoints, int pointCount, 
 
 void QX11PaintEngine::drawPath(const QPainterPath &path)
 {
-    Q_D(QX11PaintEngine);
     if (path.isEmpty())
         return;
 

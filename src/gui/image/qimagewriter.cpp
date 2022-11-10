@@ -91,8 +91,7 @@
 
 QT_BEGIN_NAMESPACE
 
-static QImageIOHandler *createWriteHandlerHelper(QIODevice *device,
-    const QByteArray &format)
+static QImageIOHandler *createWriteHandlerHelper(QIODevice *device, const QByteArray &format)
 {
     QByteArray form = format.toLower();
     QImageIOHandler *handler = nullptr;

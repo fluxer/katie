@@ -92,6 +92,9 @@ void QX11Data::copyQImageToXImage(const QImage &image, XImage *ximage, bool *fre
                 }
                 return;
             }
+            default: {
+                break;
+            }
         }
     }
 
