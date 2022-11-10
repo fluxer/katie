@@ -49,7 +49,7 @@ QT_BEGIN_NAMESPACE
 void QPixmap::init(int w, int h, int type)
 {
     if ((w > 0 && h > 0) || type == QPixmapData::BitmapType)
-        data = QPixmapData::create(w, h, (QPixmapData::PixelType) type);
+        data = new QPixmapData(w, h, static_cast<QPixmapData::PixelType>(type));
     else
         data = 0;
 }
@@ -575,7 +575,7 @@ bool QPixmap::load(const QString &fileName, const char *format, Qt::ImageConvers
     if (QPixmapCache::find(key, *this))
         return true;
 
-    QScopedPointer<QPixmapData> tmp(QPixmapData::create(0, 0, data ? data->type : QPixmapData::PixmapType));
+    QScopedPointer<QPixmapData> tmp(new QPixmapData(data ? data->type : QPixmapData::PixmapType));
     if (tmp->fromFile(fileName, format, flags)) {
         data = tmp.take();
         QPixmapCache::insert(key, *this);
@@ -607,7 +607,7 @@ bool QPixmap::loadFromData(const uchar *buf, uint len, const char *format, Qt::I
         return false;
 
     if (!data)
-        data = QPixmapData::create(0, 0, QPixmapData::PixmapType);
+        data = new QPixmapData(QPixmapData::PixmapType);
 
     return data->fromData(buf, len, format, flags);
 }

@@ -47,20 +47,32 @@ static QImage makeBitmapCompliantIfNeeded(QPixmapData::PixelType type, const QIm
     return image;
 }
 
-QPixmapData *QPixmapData::create(int w, int h, PixelType type)
-{
-    QPixmapData *data = new QPixmapData(type);
-    data->resize(w, h);
-    return data;
-}
-
-
 QPixmapData::QPixmapData(PixelType pixelType)
     : ref(0),
       detach_no(0),
       type(pixelType),
       ser_no(0)
 {
+}
+
+QPixmapData::QPixmapData(int w, int h, PixelType pixelType)
+    : ref(0),
+      detach_no(0),
+      type(pixelType),
+      ser_no(0)
+{
+    QImage::Format format = QImage::Format_ARGB32_Premultiplied;
+    if (type == QPixmapData::BitmapType) {
+        format = QImage::Format_MonoLSB;
+    }
+
+    image = QImage(w, h, format);
+
+    if (type == QPixmapData::BitmapType && !image.isNull()) {
+        image.setColorTable(monoColorTable());
+    }
+
+    setSerialNumber(image.cacheKey() >> 32);
 }
 
 QPixmapData::~QPixmapData()

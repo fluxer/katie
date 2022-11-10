@@ -51,6 +51,7 @@ public:
     };
 
     QPixmapData(PixelType pixelType);
+    QPixmapData(int w, int h, PixelType type);
     ~QPixmapData();
 
     QPixmapData *createCompatiblePixmapData() const;
@@ -94,9 +95,6 @@ public:
         return ((static_cast<qint64>(ser_no) << 32)
                 | (static_cast<qint64>(detach_no)));
     }
-
-
-    static QPixmapData *create(int w, int h, PixelType type);
 
 protected:
     void setSerialNumber(int serNo);
