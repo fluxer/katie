@@ -395,18 +395,6 @@ void QWidgetBackingStore::removeDirtyWidget(QWidget *w)
     }
 }
 
-void QWidgetBackingStore::updateLists(QWidget *cur)
-{
-    if (!cur)
-        return;
-
-    foreach (QObject *objchild, cur->children()) {
-        QWidget *child = qobject_cast<QWidget*>(objchild);
-        if (child)
-            updateLists(child);
-    }
-}
-
 QWidgetBackingStore::QWidgetBackingStore(QWidget *topLevel)
     : tlw(topLevel)
 {
@@ -417,9 +405,6 @@ QWidgetBackingStore::QWidgetBackingStore(QWidget *topLevel)
     // The QWindowSurface constructor will call QWidget::setWindowSurface(),
     // but automatically created surfaces should not be added to the topdata.
     topLevel->d_func()->topData()->windowSurface = 0;
-
-    // Ensure all existing subsurfaces and static widgets are added to their respective lists.
-    updateLists(topLevel);
 }
 
 QWidgetBackingStore::~QWidgetBackingStore()
