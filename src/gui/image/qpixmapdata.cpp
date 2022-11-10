@@ -79,11 +79,6 @@ QPixmapData::~QPixmapData()
 {
 }
 
-QPixmapData *QPixmapData::createCompatiblePixmapData() const
-{
-    return new QPixmapData(pixelType());
-}
-
 void QPixmapData::fromImageReader(QImageReader *imageReader,
                                   Qt::ImageConversionFlags flags)
 {

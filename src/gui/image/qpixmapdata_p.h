@@ -54,8 +54,6 @@ public:
     QPixmapData(int w, int h, PixelType type);
     ~QPixmapData();
 
-    QPixmapData *createCompatiblePixmapData() const;
-
     void fromImage(const QImage &image,
                    Qt::ImageConversionFlags flags);
     void fromImageReader(QImageReader *imageReader,

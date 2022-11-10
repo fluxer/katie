@@ -212,7 +212,7 @@ QPixmap QPixmap::copy(const QRect &rect) const
     if (!rect.isEmpty())
         r = r.intersected(rect);
 
-    QPixmapData *d = data->createCompatiblePixmapData();
+    QPixmapData *d = new QPixmapData(data->pixelType());
     d->copy(data.data(), r);
     return QPixmap(d);
 }
