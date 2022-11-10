@@ -35,10 +35,6 @@ static const QRgb qt_whitergb = qRgb(255, 255, 255);
 static const QRgb qt_blackrgba = qRgba(0, 0, 0, 255);
 // same as QColor(Qt::color1).rgb() and QColor(Qt::black).rgb()
 static const QRgb qt_blackrgb = qRgb(0, 0, 0);
-// same as QColor(Qt::transparent).rgba()
-static const QRgb qt_transparentrgba = qRgba(0, 0, 0, 0);
-// same as QColor(Qt::transparent).rgb()
-static const QRgb qt_transparentrgb = qRgb(0, 0, 0);
 
 
 inline static const QVector<QRgb>& monoColorTable()
