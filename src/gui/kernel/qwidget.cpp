@@ -7307,23 +7307,6 @@ bool QWidget::event(QEvent *event)
         }
         break;
     }
-#ifndef QT_NO_PROPERTIES
-    case QEvent::DynamicPropertyChange: {
-        const QByteArray &propName = static_cast<QDynamicPropertyChangeEvent *>(event)->propertyName();
-        if (qstrncmp(propName, "_q_customDpi", 12) == 0 && propName.length() == 13) {
-            uint value = property(propName.constData()).toUInt();
-            if (!d->extra)
-                d->createExtra();
-            const char axis = propName.at(12);
-            if (axis == 'X')
-                d->extra->customDpiX = value;
-            else if (axis == 'Y')
-                d->extra->customDpiY = value;
-            d->updateFont(d->data.fnt);
-        }
-        // fall through
-    }
-#endif
     default:
         return QObject::event(event);
     }
