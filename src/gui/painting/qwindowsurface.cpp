@@ -112,7 +112,8 @@ QWindowSurface::QWindowSurface(QWidget *window)
 #ifdef Q_WS_X11
     d_ptr->gc = XCreateGC(qt_x11Data->display, window->handle(), 0, 0);
 #ifndef QT_NO_XRENDER
-    d_ptr->translucentBackground = (qt_x11Data->use_xrender && window->x11Info().depth() == 32);
+    // NOTE: 24-bit depth X server is XRender and alpha capable
+    d_ptr->translucentBackground = (qt_x11Data->use_xrender && window->x11Info().depth() >= 24);
 #endif
 #endif
 
