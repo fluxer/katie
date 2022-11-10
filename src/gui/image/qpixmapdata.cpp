@@ -30,6 +30,23 @@
 
 QT_BEGIN_NAMESPACE
 
+static QImage makeBitmapCompliantIfNeeded(QPixmapData::PixelType type, const QImage &image, Qt::ImageConversionFlags flags)
+{
+    if (type == QPixmapData::BitmapType) {
+        QImage img = image.convertToFormat(QImage::Format_MonoLSB, flags);
+
+        // make sure image.color(0) == Qt::color0 (white)
+        // and image.color(1) == Qt::color1 (black)
+        if (img.color(0) == qt_blackrgb && img.color(1) == qt_whitergb) {
+            img.invertPixels();
+            img.setColor(0, qt_whitergb);
+            img.setColor(1, qt_blackrgb);
+        }
+        return img;
+    }
+    return image;
+}
+
 QPixmapData *QPixmapData::create(int w, int h, PixelType type)
 {
     QPixmapData *data = new QPixmapData(type);
@@ -55,24 +72,6 @@ QPixmapData *QPixmapData::createCompatiblePixmapData() const
     return new QPixmapData(pixelType());
 }
 
-static QImage makeBitmapCompliantIfNeeded(QPixmapData *d, const QImage &image, Qt::ImageConversionFlags flags)
-{
-    if (d->pixelType() == QPixmapData::BitmapType) {
-        QImage img = image.convertToFormat(QImage::Format_MonoLSB, flags);
-
-        // make sure image.color(0) == Qt::color0 (white)
-        // and image.color(1) == Qt::color1 (black)
-        if (img.color(0) == qt_blackrgb && img.color(1) == qt_whitergb) {
-            img.invertPixels();
-            img.setColor(0, qt_whitergb);
-            img.setColor(1, qt_blackrgb);
-        }
-        return img;
-    }
-
-    return image;
-}
-
 void QPixmapData::fromImageReader(QImageReader *imageReader,
                                   Qt::ImageConversionFlags flags)
 {
@@ -89,7 +88,7 @@ bool QPixmapData::fromFile(const QString &fileName, const char *format,
     QImage image = QImageReader(fileName, format).read();
     if (image.isNull())
         return false;
-    fromImage(makeBitmapCompliantIfNeeded(this, image, flags), flags);
+    fromImage(makeBitmapCompliantIfNeeded(pixelType(), image, flags), flags);
     return !isNull();
 }
 
