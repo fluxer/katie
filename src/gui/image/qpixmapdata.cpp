@@ -39,11 +39,7 @@ QPixmapData *QPixmapData::create(int w, int h, PixelType type)
 
 
 QPixmapData::QPixmapData(PixelType pixelType)
-    : w(0),
-      h(0),
-      d(0),
-      is_null(true),
-      ref(0),
+    : ref(0),
       detach_no(0),
       type(pixelType),
       ser_no(0)
@@ -218,21 +214,21 @@ QPaintEngine* QPixmapData::paintEngine() const
 
 int QPixmapData::metric(QPaintDevice::PaintDeviceMetric metric) const
 {
-    if (!image.d)
+    if (isNull())
         return 0;
 
     // override the image dpi with the screen dpi when rendering to a pixmap
     switch (metric) {
     case QPaintDevice::PdmWidth:
-        return w;
+        return width();
     case QPaintDevice::PdmHeight:
-        return h;
+        return height();
     case QPaintDevice::PdmWidthMM:
-        return qRound(image.d->width * 25.4 / QX11Info::appDpiX());
+        return qRound(width() * 25.4 / QX11Info::appDpiX());
     case QPaintDevice::PdmHeightMM:
-        return qRound(image.d->height * 25.4 / QX11Info::appDpiY());
+        return qRound(height() * 25.4 / QX11Info::appDpiY());
     case QPaintDevice::PdmNumColors:
-        if (image.d->depth == 1)
+        if (depth() == 1)
             return 2;
         return 0;
     case QPaintDevice::PdmDepth:
@@ -285,10 +281,6 @@ void QPixmapData::resize(int width, int height)
     }
 
     image = QImage(width, height, format);
-    w = width;
-    h = height;
-    d = image.depth();
-    is_null = (w <= 0 || h <= 0);
 
     if (pixelType() == BitmapType && !image.isNull()) {
         image.setColorTable(monoColorTable());
@@ -317,15 +309,6 @@ void QPixmapData::fromImage(const QImage &sourceImage,
     }
 
     image = sourceImage.convertToFormat(format);
-
-    if (image.d) {
-        w = image.d->width;
-        h = image.d->height;
-        d = image.d->depth;
-    } else {
-        w = h = d = 0;
-    }
-    is_null = (w <= 0 || h <= 0);
 
     setSerialNumber(image.cacheKey()  >> 32);
 }

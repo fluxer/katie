@@ -86,10 +86,10 @@ public:
 
     QImage* buffer();
 
-    inline int width() const { return w; }
-    inline int height() const { return h; }
-    inline int depth() const { return d; }
-    inline bool isNull() const { return is_null; }
+    inline int width() const { return image.width(); }
+    inline int height() const { return image.height(); }
+    inline int depth() const { return image.depth(); }
+    inline bool isNull() const { return image.isNull(); }
     inline qint64 cacheKey() const {
         return ((static_cast<qint64>(ser_no) << 32)
                 | (static_cast<qint64>(detach_no)));
@@ -100,10 +100,6 @@ public:
 
 protected:
     void setSerialNumber(int serNo);
-    int w;
-    int h;
-    int d;
-    bool is_null;
 
 private:
     friend class QPixmap;
