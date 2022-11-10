@@ -51,6 +51,16 @@ void QX11Data::copyQImageToXImage(const QImage &image, XImage *ximage, bool *fre
     // same depth, same byte order
     if (samedepth && samebyteorder) {
         switch(image.format()) {
+            case QImage::Format_RGB16: {
+                quint16 *xidata = (quint16 *)ximage->data;
+                for (int y = 0; y < h; ++y) {
+                    const quint16 *p = (const quint16 *) image.constScanLine(y);
+                    for (int x = 0; x < w; ++x) {
+                        *xidata++ = p[x];
+                    }
+                }
+                return;
+            }
             case QImage::Format_RGB32: {
                 uint *xidata = (uint *)ximage->data;
                 for (int y = 0; y < h; ++y) {
@@ -85,7 +95,7 @@ void QX11Data::copyQImageToXImage(const QImage &image, XImage *ximage, bool *fre
         }
     }
 
-    // any other case
+    // any other case, pretty much not tested and likely to produce incorrect results
     for (int h = 0; h < image.height(); h++) {
         for (int w = 0; w < image.width(); w++) {
             const QRgb pixel = image.pixel(w, h);
