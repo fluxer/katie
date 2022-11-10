@@ -187,8 +187,12 @@ void QX11PaintEngine::drawPath(const QPainterPath &path)
     // NOTE: the user of this painter (QWidget) uses backing store so optimizing drawing here is
     // not important, it is used only when WA_PaintOnScreen is set and it is mostly painting of
     // QPixmap
-    const QRect pathbounds = path.boundingRect().toRect();
-    QImage pathimage(pathbounds.size(), QImage::Format_ARGB32_Premultiplied);
+    const QSizeF pathsize = path.boundingRect().size();
+    QImage pathimage(
+        qMax(pathsize.width(), qreal(1.0)),
+        qMax(pathsize.height(), qreal(1.0)),
+        QImage::Format_ARGB32_Premultiplied
+    );
     pathimage.fill(Qt::transparent);
 
     QPainter pathpainter(&pathimage);
