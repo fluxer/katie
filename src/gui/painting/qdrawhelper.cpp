@@ -164,9 +164,6 @@ void QGradientData::generateGradientColorTable(const QGradient* gradient, int op
 
     int current_stop = 0; // We always interpolate between current and current + 1.
 
-    qreal t; // position between current left and right stops
-    qreal t_delta; // the t increment per entry in the color table
-
     if (dpos < end_pos) {
         // Gradient area
         while (dpos > stops[current_stop+1].first)
@@ -183,8 +180,8 @@ void QGradientData::generateGradientColorTable(const QGradient* gradient, int op
 
         qreal diff = stops[current_stop+1].first - stops[current_stop].first;
         qreal c = (diff == 0) ? qreal(0) : 256 / diff;
-        t = (dpos - stops[current_stop].first) * c;
-        t_delta = incr * c;
+        qreal t = (dpos - stops[current_stop].first) * c;  // position between current left and right stops
+        qreal t_delta = incr * c; // the t increment per entry in the color table
 
         while (true) {
             Q_ASSERT(current_stop < stopCount);
