@@ -55,13 +55,6 @@
 
 QT_BEGIN_NAMESPACE
 
-static bool qt_gen_epsf = false;
-
-void qt_generate_epsf(bool b)
-{
-    qt_gen_epsf = b;
-}
-
 static const char *const ps_header =
 "/BD{bind def}bind def/d2{dup dup}BD/ED{exch def}BD/D0{0 ED}BD/F{setfont}BD\n"
 "/RL{rlineto}BD/CM{currentmatrix}BD/SM{setmatrix}BD/TR{translate}BD/SD\n"
@@ -436,42 +429,16 @@ void QPSPrintEnginePrivate::emitHeader(bool finished)
     int mright = paperRect.right() - pageRect.right();
     int width = pageRect.width();
     int height = pageRect.height();
-    if (finished && pageCount == 1 && copies == 1 && fullPage && qt_gen_epsf)
-    {
-        // According to the EPSF 3.0 spec it is required that the PS
-        // version is PS-Adobe-3.0
-        s << "%!PS-Adobe-3.0";
-        if (!boundingBox.isValid())
-            boundingBox.setRect(0, 0, width, height);
-        if (orientation == QPrinter::Landscape) {
-            if (!fullPage)
-                boundingBox.translate(-mleft, -mtop);
-            s << " EPSF-3.0\n%%BoundingBox: "
-              << int((printer->height() - boundingBox.bottom())*scale) // llx
-              << int((printer->width() - boundingBox.right())*scale - 1) // lly
-              << int((printer->height() - boundingBox.top())*scale + 1) // urx
-              << int((printer->width() - boundingBox.left())*scale); // ury
-        } else {
-            if (!fullPage)
-                boundingBox.translate(mleft, -mtop);
-            s << " EPSF-3.0\n%%BoundingBox: "
-              << int((boundingBox.left())*scale)
-              << int((printer->height() - boundingBox.bottom())*scale - 1)
-              << int((boundingBox.right())*scale + 1)
-              << int((printer->height() - boundingBox.top())*scale);
-        }
-    } else {
-        s << "%!PS-Adobe-1.0";
-        int w = width + (fullPage ? 0 : mleft + mright);
-        int h = height + (fullPage ? 0 : mtop + mbottom);
-        w = (int)(w*scale);
-        h = (int)(h*scale);
-        // set a bounding box according to the DSC
-        if (orientation == QPrinter::Landscape)
-            s << "\n%%BoundingBox: 0 0 " << h << w;
-        else
-            s << "\n%%BoundingBox: 0 0 " << w << h;
-    }
+    s << "%!PS-Adobe-1.0";
+    int w = width + (fullPage ? 0 : mleft + mright);
+    int h = height + (fullPage ? 0 : mtop + mbottom);
+    w = (int)(w*scale);
+    h = (int)(h*scale);
+    // set a bounding box according to the DSC
+    if (orientation == QPrinter::Landscape)
+        s << "\n%%BoundingBox: 0 0 " << h << w;
+    else
+        s << "\n%%BoundingBox: 0 0 " << w << h;
     s << '\n' << wrapDSC("%%Creator: " + creator.toUtf8());
     if (!title.isEmpty())
         s << wrapDSC("%%Title: " + title.toUtf8());
