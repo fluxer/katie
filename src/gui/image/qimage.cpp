@@ -284,11 +284,7 @@ bool QImageData::checkForAlphaPixels() const
     can be loaded when constructing the QImage object, or by using the
     load() or loadFromData() functions later on. QImage also provides
     the static fromData() function, constructing a QImage from the
-    given data.  When loading an image, the file name can either refer
-    to an actual file on disk or to one of the application's embedded
-    resources. See \l{The Qt Resource System} overview for details
-    on how to embed images and other resource files in the
-    application's executable.
+    given data.
 
     Simply call the save() function to save a QImage object.
 
@@ -793,12 +789,6 @@ QImage::QImage(const uchar *data, int width, int height, int bytesPerLine, Forma
 
     If the loading of the image failed, this object is a null image.
 
-    The file name can either refer to an actual file on disk or to one
-    of the application's embedded resources. See the
-    \l{resources.html}{Resource System} overview for details on how to
-    embed images and other resource files in the application's
-    executable.
-
     \sa isNull(), {QImage#Reading and Writing Image Files}{Reading and Writing Image Files}
 */
 
@@ -818,12 +808,6 @@ QImage::QImage(const QString &fileName, const char *format)
     the loader probes the file for a header to guess the file format.
 
     If the loading of the image failed, this object is a null image.
-
-    The file name can either refer to an actual file on disk or to one
-    of the application's embedded resources. See the
-    \l{resources.html}{Resource System} overview for details on how to
-    embed images and other resource files in the application's
-    executable.
 
     You can disable this constructor by defining \c
     QT_NO_CAST_FROM_ASCII when you compile your applications. This can
@@ -2875,12 +2859,6 @@ QImage QImage::rgbSwapped() const
     The loader attempts to read the image using the specified \a format, e.g.,
     PNG or XPM. If \a format is not specified (which is the default), the
     loader probes the file for a header to guess the file format.
-
-    The file name can either refer to an actual file on disk or to one
-    of the application's embedded resources. See the
-    \l{resources.html}{Resource System} overview for details on how to
-    embed images and other resource files in the application's
-    executable.
 
     \sa {QImage#Reading and Writing Image Files}{Reading and Writing Image Files}
 */
