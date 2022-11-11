@@ -22,6 +22,7 @@
 #include "qpaintengine_preview_p.h"
 #include "qpainter_p.h"
 #include "qpaintengine_p.h"
+#include "qguicommon_p.h"
 
 #include <QtGui/qprintengine.h>
 #include <QtGui/qpainter.h>
@@ -68,7 +69,9 @@ bool QPreviewPaintEngine::begin(QPaintDevice *)
     qDeleteAll(d->pages);
     d->pages.clear();
 
-    QImage *page = new QImage(QSize(1024, 1024), QImage::Format_RGB32);
+    const QRect pagerect = property(QPrintEngine::PPK_PageRect).toRect();
+    QImage *page = new QImage(pagerect.size(), QImage::Format_RGB32);
+    page->fill(qt_whitergb);
     d->painter = new QPainter(page);
     d->engine = d->painter->paintEngine();
     d->pages.append(page);
@@ -127,7 +130,9 @@ bool QPreviewPaintEngine::newPage()
 {
     Q_D(QPreviewPaintEngine);
 
-    QImage *page = new QImage(QSize(1024, 1024), QImage::Format_RGB32);
+    const QRect pagerect = property(QPrintEngine::PPK_PageRect).toRect();
+    QImage *page = new QImage(pagerect.size(), QImage::Format_RGB32);
+    page->fill(qt_whitergb);
     QPainter *tmp_painter = new QPainter(page);
     QPaintEngine *tmp_engine = tmp_painter->paintEngine();
 
