@@ -1624,10 +1624,16 @@ bool QPdfBaseEnginePrivate::openPrintDevice()
         }
         cupsTempFile = ret.second;
         outDevice = new QFile();
-        static_cast<QFile *>(outDevice)->open(ret.first, QIODevice::WriteOnly);
+        qobject_cast<QFile*>(outDevice)->open(ret.first, QIODevice::WriteOnly);
         fd = ret.first;
     }
 #endif
+
+    // dummy device as required by PS header generator for example
+    if (!outDevice) {
+        outDevice = new QTemporaryFile();
+        qobject_cast<QTemporaryFile*>(outDevice)->open();
+    }
 
     return true;
 }
