@@ -33,11 +33,19 @@ void QX11Data::copyQImageToXImage(const QImage &image, XImage *ximage, bool *fre
     Q_ASSERT(ximage);
     Q_ASSERT(freedata);
 
-    const bool samedepth = (ximage->bits_per_pixel == image.depth());
+    const bool samebpl = (ximage->bytes_per_line == image.bytesPerLine());
     const bool samebyteorder = ((ximage->byte_order == MSBFirst) == (Q_BYTE_ORDER == Q_BIG_ENDIAN));
-    // the XRender case (depth == 32)
-    if (samedepth && samebyteorder
-        && image.format() == QImage::Format_ARGB32_Premultiplied) {
+    // the XRender case (depth == 24 or 32)
+    if (image.format() == QImage::Format_ARGB32_Premultiplied) {
+        ximage->data = (char*)image.constBits();
+        *freedata = false;
+        return;
+    }
+
+    const bool samedepth = (ximage->depth == image.depth());
+    // depth == 16
+    if (samedepth && samebyteorder && samebpl
+        && image.format() == QImage::Format_RGB16) {
         ximage->data = (char*)image.constBits();
         *freedata = false;
         return;
@@ -48,19 +56,9 @@ void QX11Data::copyQImageToXImage(const QImage &image, XImage *ximage, bool *fre
     Q_CHECK_PTR(ximage->data);
     const int w = image.width();
     const int h = image.height();
-    // same depth, same byte order
-    if (samedepth && samebyteorder) {
+    // same bytes per line, same byte order
+    if (samebpl && samebyteorder) {
         switch(image.format()) {
-            case QImage::Format_RGB16: {
-                quint16 *xidata = (quint16 *)ximage->data;
-                for (int y = 0; y < h; ++y) {
-                    const quint16 *p = (const quint16 *) image.constScanLine(y);
-                    for (int x = 0; x < w; ++x) {
-                        *xidata++ = p[x];
-                    }
-                }
-                return;
-            }
             case QImage::Format_RGB32: {
                 uint *xidata = (uint *)ximage->data;
                 for (int y = 0; y < h; ++y) {
