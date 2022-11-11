@@ -416,7 +416,6 @@ set(GUI_HEADERS
     ${CMAKE_CURRENT_SOURCE_DIR}/painting/qpdf_p.h
     ${CMAKE_CURRENT_SOURCE_DIR}/painting/qpen.h
     ${CMAKE_CURRENT_SOURCE_DIR}/painting/qpolygon.h
-    ${CMAKE_CURRENT_SOURCE_DIR}/painting/qpolygonclipper_p.h
     ${CMAKE_CURRENT_SOURCE_DIR}/painting/qprintengine.h
     ${CMAKE_CURRENT_SOURCE_DIR}/painting/qprintengine_ps_p.h
     ${CMAKE_CURRENT_SOURCE_DIR}/painting/qprinter.h
