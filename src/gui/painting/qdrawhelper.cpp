@@ -27,8 +27,7 @@
 
 QT_BEGIN_NAMESPACE
 
-// must be multiple of 4 for easier SIMD implementations
-static const int buffer_size = 2048;
+static const int buffer_size = 32;
 
 static inline uint INTERPOLATE_PIXEL_255(uint x, uint a, uint y, uint b) {
     uint t = (x & 0xff00ff) * a + (y & 0xff00ff) * b;
@@ -2546,21 +2545,19 @@ static inline Operator getOperator(const QSpanData *data, const QSpan *spans, in
 static void blend_color_generic(int count, const QSpan *spans, void *userData)
 {
     QSpanData *data = reinterpret_cast<QSpanData *>(userData);
-    QSTACKARRAY(uint, buffer, buffer_size);
+    QDataBuffer<uint> buffer(buffer_size);
     Operator op = getOperator(data, spans, count);
     Q_ASSERT(op.dest_store);
     Q_ASSERT(op.dest_fetch);
 
     while (count--) {
-        int x = spans->x;
-        int length = spans->len;
-        while (length) {
-            int l = qMin(buffer_size, length);
-            uint *dest = op.dest_fetch(buffer, data->rasterBuffer, x, spans->y, l);
-            op.funcSolid(dest, l, data->solid.color, spans->coverage);
-            op.dest_store(data->rasterBuffer, x, spans->y, dest, l);
-            length -= l;
-            x += l;
+        const int x = spans->x;
+        const int length = spans->len;
+        if (length) {
+            buffer.reserve(length);
+            uint *dest = op.dest_fetch(buffer.data(), data->rasterBuffer, x, spans->y, length);
+            op.funcSolid(dest, length, data->solid.color, spans->coverage);
+            op.dest_store(data->rasterBuffer, x, spans->y, dest, length);
         }
         ++spans;
     }
@@ -2570,8 +2567,8 @@ static void blend_src_generic(int count, const QSpan *spans, void *userData)
 {
     QSpanData *data = reinterpret_cast<QSpanData *>(userData);
 
-    QSTACKARRAY(uint, buffer, buffer_size);
-    QSTACKARRAY(uint, src_buffer, buffer_size);
+    QDataBuffer<uint> buffer(buffer_size);
+    QDataBuffer<uint> src_buffer(buffer_size);
     Operator op = getOperator(data, spans, count);
     Q_ASSERT(op.dest_store);
     Q_ASSERT(op.dest_fetch);
@@ -2592,17 +2589,17 @@ static void blend_src_generic(int count, const QSpan *spans, void *userData)
             right += spans[i].len;
         int length = right - x;
 
-        while (length) {
-            int l = qMin(buffer_size, length);
-            length -= l;
+        if (length) {
+            buffer.reserve(length);
+            src_buffer.reserve(length);
 
-            int process_length = l;
             int process_x = x;
 
-            uint *dest = op.dest_fetch(buffer, data->rasterBuffer, process_x, y, process_length);
-            const uint *src = op.src_fetch(src_buffer, &op, data, y, process_x, process_length);
+            uint *dest = op.dest_fetch(buffer.data(), data->rasterBuffer, process_x, y, length);
+            const uint *src = op.src_fetch(src_buffer.data(), &op, data, y, process_x, length);
 
             int offset = 0;
+            int l = length;
             while (l > 0) {
                 if (x == spans->x) // new span?
                     coverage = (spans->coverage * const_alpha) >> 8;
@@ -2622,7 +2619,7 @@ static void blend_src_generic(int count, const QSpan *spans, void *userData)
                 }
             }
 
-            op.dest_store(data->rasterBuffer, process_x, y, dest, process_length);
+            op.dest_store(data->rasterBuffer, process_x, y, dest, length);
         }
     }
 }
@@ -2631,8 +2628,8 @@ static void blend_untransformed_generic(int count, const QSpan *spans, void *use
 {
     QSpanData *data = reinterpret_cast<QSpanData *>(userData);
 
-    QSTACKARRAY(uint, buffer, buffer_size);
-    QSTACKARRAY(uint, src_buffer, buffer_size);
+    QDataBuffer<uint> buffer(buffer_size);
+    QDataBuffer<uint> src_buffer(buffer_size);
     Operator op = getOperator(data, spans, count);
     Q_ASSERT(op.dest_store);
     Q_ASSERT(op.dest_fetch);
@@ -2658,16 +2655,14 @@ static void blend_untransformed_generic(int count, const QSpan *spans, void *use
                 length = image_width - sx;
             if (length > 0) {
                 const int coverage = (spans->coverage * data->texture.const_alpha) >> 8;
-                while (length) {
-                    int l = qMin(buffer_size, length);
-                    const uint *src = op.src_fetch(src_buffer, &op, data, sy, sx, l);
-                    uint *dest = op.dest_fetch(buffer, data->rasterBuffer, x, spans->y, l);
-                    op.func(dest, src, l, coverage);
-                    op.dest_store(data->rasterBuffer, x, spans->y, dest, l);
-                    x += l;
-                    sx += l;
-                    length -= l;
-                }
+                buffer.reserve(length);
+                src_buffer.reserve(length);
+                const uint *src = op.src_fetch(src_buffer.data(), &op, data, sy, sx, length);
+                uint *dest = op.dest_fetch(buffer.data(), data->rasterBuffer, x, spans->y, length);
+                op.func(dest, src, length, coverage);
+                op.dest_store(data->rasterBuffer, x, spans->y, dest, length);
+                x += length;
+                sx += length;
             }
         }
         ++spans;
@@ -2678,8 +2673,8 @@ static void blend_tiled_generic(int count, const QSpan *spans, void *userData)
 {
     QSpanData *data = reinterpret_cast<QSpanData *>(userData);
 
-    QSTACKARRAY(uint, buffer, buffer_size);
-    QSTACKARRAY(uint, src_buffer, buffer_size);
+    QDataBuffer<uint> buffer(buffer_size);
+    QDataBuffer<uint> src_buffer(buffer_size);
     Operator op = getOperator(data, spans, count);
     Q_ASSERT(op.dest_store);
     Q_ASSERT(op.dest_fetch);
@@ -2708,10 +2703,10 @@ static void blend_tiled_generic(int count, const QSpan *spans, void *userData)
         const int coverage = (spans->coverage * data->texture.const_alpha) >> 8;
         while (length) {
             int l = qMin(image_width - sx, length);
-            if (buffer_size < l)
-                l = buffer_size;
-            const uint *src = op.src_fetch(src_buffer, &op, data, sy, sx, l);
-            uint *dest = op.dest_fetch(buffer, data->rasterBuffer, x, spans->y, l);
+            buffer.reserve(l);
+            src_buffer.reserve(l);
+            const uint *src = op.src_fetch(src_buffer.data(), &op, data, sy, sx, l);
+            uint *dest = op.dest_fetch(buffer.data(), data->rasterBuffer, x, spans->y, l);
             op.func(dest, src, l, coverage);
             op.dest_store(data->rasterBuffer, x, spans->y, dest, l);
             x += l;
