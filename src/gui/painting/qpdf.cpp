@@ -1626,8 +1626,8 @@ bool QPdfBaseEnginePrivate::openPrintDevice()
         outDevice = new QFile();
         static_cast<QFile *>(outDevice)->open(ret.first, QIODevice::WriteOnly);
         fd = ret.first;
-#endif
     }
+#endif
 
     return true;
 }
