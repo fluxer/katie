@@ -96,7 +96,6 @@ public:
                          bool gray, qreal scaleX, qreal scaleY);
 
     int         pageCount;
-    QByteArray     fontsUsed;
 
     // stores the descriptions of the n first pages.
     QPdf::ByteStream buffer;

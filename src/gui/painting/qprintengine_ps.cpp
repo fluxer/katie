@@ -605,7 +605,6 @@ bool QPSPrintEngine::begin(QPaintDevice *pdev)
     d->clipEnabled = false;
     d->allClipped = false;
     d->boundingBox = QRect();
-    d->fontsUsed = "";
     d->hugeDocument = false;
     d->simplePen = false;
 
@@ -632,7 +631,7 @@ bool QPSPrintEngine::end()
     QPdf::ByteStream s(&trailer);
     s << "%%Trailer\n"
          "%%Pages: " << d->pageCount - 1 << '\n' <<
-        wrapDSC("%%DocumentFonts: " + d->fontsUsed);
+        wrapDSC("%%DocumentFonts: ");
     s << "%%EOF\n";
     d->outDevice->write(trailer);
 
