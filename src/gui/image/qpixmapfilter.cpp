@@ -449,7 +449,6 @@ static void expblur(QImage &img, qreal radius, bool improvedQuality, bool alphaO
                    img.bytesPerLine());
 }
 #define AVG(a,b)  ( ((((a)^(b)) & 0xfefefefeUL) >> 1) + ((a)&(b)) )
-#define AVG16(a,b)  ( ((((a)^(b)) & 0xf7deUL) >> 1) + ((a)&(b)) )
 
 static QImage qt_halfScaled(const QImage &source)
 {
