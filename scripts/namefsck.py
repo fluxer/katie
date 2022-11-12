@@ -391,7 +391,6 @@ classlist = [
     "QNetworkInterface",
     "QNetworkReply",
     "QNetworkRequest",
-    "QNoDebug",
     "QObject",
     "QObjectCleanupHandler",
     "QObjectData",

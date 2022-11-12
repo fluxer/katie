@@ -91,7 +91,6 @@ include/katie/QtCore/QMutableStringListIterator
 include/katie/QtCore/QMutableVectorIterator
 include/katie/QtCore/QMutex
 include/katie/QtCore/QMutexLocker
-include/katie/QtCore/QNoDebug
 include/katie/QtCore/QObject
 include/katie/QtCore/QObjectCleanupHandler
 include/katie/QtCore/QObjectData

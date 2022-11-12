@@ -155,7 +155,6 @@
 // #cmakedefine QT_NO_UNDOSTACK
 // #cmakedefine QT_NO_VALIDATOR
 // #cmakedefine QT_NO_VECTOR4D
-// #cmakedefine QT_NO_WARNING_OUTPUT
 // #cmakedefine QT_NO_WIZARD
 // #cmakedefine QT_NO_XMLSTREAM
 // #cmakedefine QT_NO_XMLSTREAMREADER

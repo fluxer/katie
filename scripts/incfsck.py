@@ -54,7 +54,6 @@ incmap = {
         'QMutableStringListIterator': 'qstringlist.h',
         'QMutableVectorIterator': 'qvector.h',
         'QMutexLocker': 'qmutex.h',
-        'QNoDebug': 'qdebug.h',
         'QObjectData': 'qobject.h',
         'QObjectList': 'qobject.h',
         'QPersistentModelIndex': 'qabstractitemmodel.h',

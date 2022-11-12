@@ -90,26 +90,6 @@ public:
     { stream->ts << m; return *this; }
 };
 
-class QNoDebug
-{
-public:
-    inline QNoDebug(){}
-    inline QNoDebug(const QDebug &){}
-    inline ~QNoDebug(){}
-#if !defined(QT_NO_TEXTSTREAM)
-    inline QNoDebug &operator<<(QTextStreamFunction) { return *this; }
-    inline QNoDebug &operator<<(QTextStreamManipulator) { return *this; }
-#endif
-    inline QNoDebug &space() { return *this; }
-    inline QNoDebug &nospace() { return *this; }
-    inline QNoDebug &maybeSpace() { return *this; }
-
-    template<typename T>
-    inline QNoDebug &operator<<(const T &) { return *this; }
-};
-
-Q_CORE_EXPORT_INLINE QDebug qCritical() { return QDebug(QtCriticalMsg); }
-
 inline QDebug &QDebug::operator=(const QDebug &other)
 {
     if (this != &other) {
@@ -194,22 +174,9 @@ inline QDebug operator<<(QDebug debug, const QFlags<T> &flags)
     return debug.space();
 }
 
-#if !defined(QT_NO_DEBUG_OUTPUT)
 Q_CORE_EXPORT_INLINE QDebug qDebug() { return QDebug(QtDebugMsg); }
-#else
-#undef qDebug
-inline QNoDebug qDebug() { return QNoDebug(); }
-#define qDebug QNoDebug
-
-#endif
-
-#if !defined(QT_NO_WARNING_OUTPUT)
 Q_CORE_EXPORT_INLINE QDebug qWarning() { return QDebug(QtWarningMsg); }
-#else
-#undef qWarning
-inline QNoDebug qWarning() { return QNoDebug(); }
-#define qWarning QNoDebug
-#endif
+Q_CORE_EXPORT_INLINE QDebug qCritical() { return QDebug(QtCriticalMsg); }
 
 QT_END_NAMESPACE
 
