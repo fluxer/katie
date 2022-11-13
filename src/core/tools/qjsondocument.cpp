@@ -226,9 +226,11 @@ void QJsonDocumentPrivate::variantToJson(const QVariant &jsonvariant, json_t *jr
                 error = QCoreApplication::translate("QJsonDocument", "Data variant is null");
                 return;
             }
-            foreach(const QString &key, jsonmap.keys()) {
-                const QVariant value = jsonmap.value(key);
-                const QByteArray bytearraykey = key.toUtf8();
+            QVariantMap::const_iterator jsonmapit = jsonmap.constBegin();
+            while(jsonmapit != jsonmap.constEnd()) {
+                const QVariant value = jsonmapit.value();
+                const QByteArray bytearraykey = jsonmapit.key().toUtf8();
+                jsonmapit++;
                 switch(value.type()) {
                     case QVariant::Invalid: {
                         json_object_set_new_nocheck(jroot, bytearraykey.constData(), json_null());
