@@ -49,8 +49,6 @@ private slots:
     void variant();
     void group_data();
     void group();
-    void custom_data();
-    void custom();
 };
 
 void tst_QSettings::initTestCase()
@@ -142,27 +140,12 @@ void tst_QSettings::variant()
     const QByteArray qbytearray("abc");
     const QByteArray qstring("måndag");
     const QStringList qstringlist = QStringList() << "a" << "b" << "c";
-    const QPoint qpoint(1, 2);
-    const QRect qrect(1, 2, 3, 4);
-    const QSize qsize(1, 2);
-    const QDate qdate = QDate::currentDate();
-    const QColor qcolor(1, 2, 3);
-    const QFont qfont = QApplication::font();
 
     QVARIANT_TEST(qll);
     QVARIANT_TEST(qrl);
     QVARIANT_TEST(qbytearray);
     QVARIANT_TEST(qstring);
     QVARIANT_TEST(qstringlist);
-    if (format == QSettings::NativeFormat) {
-        QSKIP("Native format does not support some types", SkipAll);
-    }
-    QVARIANT_TEST(qpoint);
-    QVARIANT_TEST(qrect);
-    QVARIANT_TEST(qsize);
-    QVARIANT_TEST(qdate);
-    QVARIANT_TEST(qcolor);
-    QVARIANT_TEST(qfont);
 }
 #undef QVARIANT_TEST
 
@@ -192,60 +175,6 @@ void tst_QSettings::group()
     QCOMPARE(settings.value("c"), QVariant());
     QCOMPARE(settings.value("c/d"), QVariant());
     settings.endGroup();
-}
-
-struct CustomType {
-    int a;
-    QByteArray b;
-    QSize c;
-};
-Q_DECLARE_METATYPE(CustomType);
-
-QDataStream &operator<<(QDataStream &stream, const CustomType &custom)
-{
-    stream << custom.a;
-    stream << custom.b;
-    stream << custom.c;
-    return stream;
-}
-
-QDataStream &operator>>(QDataStream &stream, CustomType &custom)
-{
-    stream >> custom.a;
-    stream >> custom.b;
-    stream >> custom.c;
-    return stream;
-}
-
-void tst_QSettings::custom_data()
-{
-    tst_QSettings::value_data();
-}
-
-void tst_QSettings::custom()
-{
-    QFETCH(QString, filename);
-    QFETCH(QSettings::Format, format);
-
-    if (format == QSettings::NativeFormat) {
-        QSKIP("Native format does not support custom types", SkipAll);
-    }
-
-    qRegisterMetaType<CustomType>();
-    qRegisterMetaTypeStreamOperators<CustomType>();
-
-    CustomType test;
-    test.a = 10;
-    test.b = QByteArray("test");
-    test.c = QSize(10, 10);
-
-    QSettings settings(filename, format);
-    settings.setValue("a", QVariant::fromValue(test));
-
-    CustomType result = qvariant_cast<CustomType>(settings.value("a"));
-    QCOMPARE(result.a, 10);
-    QCOMPARE(result.b, QByteArray("test"));
-    QCOMPARE(result.c, QSize(10, 10));
 }
 
 QTEST_MAIN(tst_QSettings)

@@ -111,7 +111,7 @@ static bool ini_settings_read(QIODevice &device, QSettings::SettingsMap &map)
 
         const QByteArray key = line.left(separatorpos).trimmed();
         const QByteArray value = line.mid(separatorpos + 1).trimmed();
-        const QVariant variantvalue = QSettingsPrivate::stringToVariant(value);
+        const QVariant variantvalue(value);
         if (section.isEmpty()) {
             map.insert(key, variantvalue);
         } else {
@@ -154,7 +154,11 @@ static bool ini_settings_write(QIODevice &device, const QSettings::SettingsMap &
             return false;
         }
 
-        const QString stringvalue = QSettingsPrivate::variantToString(map.value(key));
+        const QVariant variantvalue = map.value(key);
+        if (!variantvalue.canConvert<QString>()) {
+            return false;
+        }
+        const QString stringvalue = variantvalue.toString();
         const QString datavalue = QLatin1Char('=') + stringvalue + QLatin1Char('\n');
         if (!device.write(datavalue.toAscii())) {
             return false;
@@ -315,152 +319,6 @@ QString QSettingsPrivate::toGroupKey(const QString &key) const
         return key;
     }
     return group + QLatin1Char('/') + key;
-}
-
-QString QSettingsPrivate::variantToString(const QVariant &v)
-{
-    switch (v.type()) {
-        case QVariant::Invalid: {
-            return QLatin1String("@Invalid()");
-        }
-        case QVariant::ByteArray: {
-            QByteArray a = v.toByteArray();
-            QString result = QLatin1String("@ByteArray(");
-            result += QString::fromAscii(a.constData(), a.size());
-            result += QLatin1Char(')');
-            return result;
-        }
-        case QVariant::String:
-        case QVariant::LongLong:
-        case QVariant::ULongLong:
-        case QVariant::Int:
-        case QVariant::UInt:
-        case QVariant::Bool:
-        case QVariant::Double:
-        case QVariant::KeySequence: {
-            QString result = v.toString();
-            if (result.startsWith(QLatin1Char('@')))
-                result.prepend(QLatin1Char('@'));
-            return result;
-        }
-        case QVariant::Rect: {
-            QRect r = qvariant_cast<QRect>(v);
-            QString result = QLatin1String("@Rect(");
-            result += QString::number(r.x());
-            result += QLatin1Char(' ');
-            result += QString::number(r.y());
-            result += QLatin1Char(' ');
-            result += QString::number(r.width());
-            result += QLatin1Char(' ');
-            result += QString::number(r.height());
-            result += QLatin1Char(')');
-            return result;
-        }
-        case QVariant::Size: {
-            QSize s = qvariant_cast<QSize>(v);
-            QString result = QLatin1String("@Size(");
-            result += QString::number(s.width());
-            result += QLatin1Char(' ');
-            result += QString::number(s.height());
-            result += QLatin1Char(')');
-            return result;
-        }
-        case QVariant::Point: {
-            QPoint p = qvariant_cast<QPoint>(v);
-            QString result = QLatin1String("@Point(");
-            result += QString::number(p.x());
-            result += QLatin1Char(' ');
-            result += QString::number(p.y());
-            result += QLatin1Char(')');
-            return result;
-        }
-
-        default: {
-#ifndef QT_NO_DATASTREAM
-            QByteArray a;
-            {
-                QDataStream s(&a, QIODevice::WriteOnly);
-                s << v;
-            }
-
-            QString result = QLatin1String("@Variant(");
-            result += QString::fromAscii(a.constData(), a.size());
-            result += QLatin1Char(')');
-            return result;
-#else
-            Q_ASSERT(!"QSettings: Cannot save custom types without QDataStream support");
-            return QString();
-#endif
-        }
-    }
-    return QString();
-}
-
-
-QVariant QSettingsPrivate::stringToVariant(const QString &s)
-{
-    if (s.startsWith(QLatin1Char('@'))) {
-        if (s.endsWith(QLatin1Char(')'))) {
-            if (s.startsWith(QLatin1String("@ByteArray("))) {
-                return QVariant(s.toAscii().mid(11, s.size() - 12));
-            } else if (s.startsWith(QLatin1String("@Variant("))) {
-#ifndef QT_NO_DATASTREAM
-                QByteArray a(s.toAscii().mid(9));
-                QDataStream stream(&a, QIODevice::ReadOnly);
-                QVariant result;
-                stream >> result;
-                return result;
-#else
-                Q_ASSERT(!"QSettings: Cannot load custom types without QDataStream support");
-#endif
-            } else if (s.startsWith(QLatin1String("@Rect("))) {
-                QStringList args = QSettingsPrivate::splitArgs(s, 5);
-                if (args.size() == 4)
-                    return QVariant(QRect(args[0].toInt(), args[1].toInt(), args[2].toInt(), args[3].toInt()));
-            } else if (s.startsWith(QLatin1String("@Size("))) {
-                QStringList args = QSettingsPrivate::splitArgs(s, 5);
-                if (args.size() == 2)
-                    return QVariant(QSize(args[0].toInt(), args[1].toInt()));
-            } else if (s.startsWith(QLatin1String("@Point("))) {
-                QStringList args = QSettingsPrivate::splitArgs(s, 6);
-                if (args.size() == 2)
-                    return QVariant(QPoint(args[0].toInt(), args[1].toInt()));
-            } else if (s == QLatin1String("@Invalid()")) {
-                return QVariant();
-            }
-
-        }
-        if (s.startsWith(QLatin1String("@@")))
-            return QVariant(s.mid(1));
-    }
-
-    return QVariant(s);
-}
-
-QStringList QSettingsPrivate::splitArgs(const QString &s, int idx)
-{
-    int l = s.length();
-    Q_ASSERT(l > 0);
-    Q_ASSERT(s.at(idx) == QLatin1Char('('));
-    Q_ASSERT(s.at(l - 1) == QLatin1Char(')'));
-
-    QStringList result;
-    QString item;
-
-    for (++idx; idx < l; ++idx) {
-        QChar c = s.at(idx);
-        if (c == QLatin1Char(')')) {
-            Q_ASSERT(idx == l - 1);
-            result.append(item);
-        } else if (c == QLatin1Char(' ')) {
-            result.append(item);
-            item.clear();
-        } else {
-            item.append(c);
-        }
-    }
-
-    return result;
 }
 
 /*!
