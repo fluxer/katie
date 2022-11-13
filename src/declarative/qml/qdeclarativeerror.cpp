@@ -24,6 +24,7 @@
 #include <QtCore/qdebug.h>
 #include <QtCore/qfile.h>
 #include <QtCore/qstringlist.h>
+#include <QtCore/qtextstream.h>
 
 QT_BEGIN_NAMESPACE
 

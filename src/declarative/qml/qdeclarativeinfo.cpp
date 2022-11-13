@@ -20,14 +20,13 @@
 ****************************************************************************/
 
 #include "qdeclarativeinfo.h"
-
 #include "qdeclarativedata_p.h"
 #include "qdeclarativecontext.h"
 #include "qdeclarativecontext_p.h"
 #include "qdeclarativemetatype_p.h"
 #include "qdeclarativeengine_p.h"
-
-#include <QCoreApplication>
+#include "qcoreapplication.h"
+#include "qbuffer.h"
 
 QT_BEGIN_NAMESPACE
 
@@ -63,34 +62,40 @@ QT_BEGIN_NAMESPACE
 class QDeclarativeInfoPrivate
 {
 public:
-    QDeclarativeInfoPrivate() : ref (1), object(0) {}
+    QDeclarativeInfoPrivate();
 
-    int ref;
+    QAtomicInt ref;
     const QObject *object;
-    QString buffer;
+    QByteArray buffer;
     QList<QDeclarativeError> errors;
 };
 
-QDeclarativeInfo::QDeclarativeInfo(QDeclarativeInfoPrivate *p)
-: QDebug(&p->buffer), d(p)
+QDeclarativeInfoPrivate::QDeclarativeInfoPrivate()
+    : ref(1),
+    object(nullptr)
 {
-    nospace();
+}
+
+QDeclarativeInfo::QDeclarativeInfo(QDeclarativeInfoPrivate *p)
+    : d(p)
+{
 }
 
 QDeclarativeInfo::QDeclarativeInfo(const QDeclarativeInfo &other)
-: QDebug(other), d(other.d)
+    : d(other.d)
 {
-    d->ref++;
+    d->ref.ref();
 }
 
 QDeclarativeInfo::~QDeclarativeInfo()
 {
-    if (0 == --d->ref) {
+    if (!d->ref.deref()) {
         QList<QDeclarativeError> errors = d->errors;
 
         QDeclarativeEngine *engine = 0;
 
-        if (!d->buffer.isEmpty()) {
+        QByteArray result = d->buffer.data();
+        if (result.size() > 0) {
             QDeclarativeError error;
 
             QObject *object = const_cast<QObject *>(d->object);
@@ -100,7 +105,7 @@ QDeclarativeInfo::~QDeclarativeInfo()
                 QString typeName;
                 QDeclarativeType *type = QDeclarativeMetaType::qmlType(object->metaObject());
                 if (type) {
-                    typeName = QLatin1String(type->qmlTypeName());
+                    typeName = type->qmlTypeName();
                     int lastSlash = typeName.lastIndexOf(QLatin1Char('/'));
                     if (lastSlash != -1)
                         typeName = typeName.mid(lastSlash+1);
@@ -111,7 +116,7 @@ QDeclarativeInfo::~QDeclarativeInfo()
                         typeName = typeName.left(marker);
                 }
 
-                d->buffer.prepend(QLatin1String("QML ") + typeName + QLatin1String(": "));
+                result.prepend(QByteArray("QML ") + typeName.toLatin1() + ": ");
 
                 QDeclarativeData *ddata = QDeclarativeData::get(object, false);
                 if (ddata && ddata->outerContext && !ddata->outerContext->url.isEmpty()) {
@@ -121,7 +126,7 @@ QDeclarativeInfo::~QDeclarativeInfo()
                 }
             }
 
-            error.setDescription(d->buffer);
+            error.setDescription(result);
 
             errors.prepend(error);
         }
@@ -132,16 +137,34 @@ QDeclarativeInfo::~QDeclarativeInfo()
     }
 }
 
+QDeclarativeInfo &QDeclarativeInfo::operator<<(const char* t)
+{
+    d->buffer.append(t);
+    return *this;
+}
+
+QDeclarativeInfo &QDeclarativeInfo::operator<<(const QString & t)
+{
+    d->buffer.append(t.toLocal8Bit());
+    return *this;
+}
+
+QDeclarativeInfo &QDeclarativeInfo::operator<<(const QByteArray & t)
+{
+    d->buffer.append(t);
+    return *this;
+}
+
 QDeclarativeInfo qmlInfo(const QObject *me)
 {
-    QDeclarativeInfoPrivate *d = new QDeclarativeInfoPrivate;
+    QDeclarativeInfoPrivate *d = new QDeclarativeInfoPrivate();
     d->object = me;
     return QDeclarativeInfo(d);
 }
 
 QDeclarativeInfo qmlInfo(const QObject *me, const QDeclarativeError &error)
 {
-    QDeclarativeInfoPrivate *d = new QDeclarativeInfoPrivate;
+    QDeclarativeInfoPrivate *d = new QDeclarativeInfoPrivate();
     d->object = me;
     d->errors << error;
     return QDeclarativeInfo(d);
@@ -149,7 +172,7 @@ QDeclarativeInfo qmlInfo(const QObject *me, const QDeclarativeError &error)
 
 QDeclarativeInfo qmlInfo(const QObject *me, const QList<QDeclarativeError> &errors)
 {
-    QDeclarativeInfoPrivate *d = new QDeclarativeInfoPrivate;
+    QDeclarativeInfoPrivate *d = new QDeclarativeInfoPrivate();
     d->object = me;
     d->errors = errors;
     return QDeclarativeInfo(d);

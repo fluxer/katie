@@ -22,45 +22,21 @@
 #ifndef QDECLARATIVEINFO_H
 #define QDECLARATIVEINFO_H
 
-#include <QtCore/qdebug.h>
-#include <QtCore/qurl.h>
 #include <QtDeclarative/qdeclarativeerror.h>
-
 
 QT_BEGIN_NAMESPACE
 
-
 class QDeclarativeInfoPrivate;
-class Q_DECLARATIVE_EXPORT QDeclarativeInfo : public QDebug
+
+class Q_DECLARATIVE_EXPORT QDeclarativeInfo
 {
 public:
     QDeclarativeInfo(const QDeclarativeInfo &);
     ~QDeclarativeInfo();
 
-    inline QDeclarativeInfo &operator<<(QChar t) { QDebug::operator<<(t); return *this; }
-    inline QDeclarativeInfo &operator<<(bool t) { QDebug::operator<<(t); return *this; }
-    inline QDeclarativeInfo &operator<<(char t) { QDebug::operator<<(t); return *this; }
-    inline QDeclarativeInfo &operator<<(signed short t) { QDebug::operator<<(t); return *this; }
-    inline QDeclarativeInfo &operator<<(unsigned short t) { QDebug::operator<<(t); return *this; }
-    inline QDeclarativeInfo &operator<<(signed int t) { QDebug::operator<<(t); return *this; }
-    inline QDeclarativeInfo &operator<<(unsigned int t) { QDebug::operator<<(t); return *this; }
-    inline QDeclarativeInfo &operator<<(signed long t) { QDebug::operator<<(t); return *this; }
-    inline QDeclarativeInfo &operator<<(unsigned long t) { QDebug::operator<<(t); return *this; }
-    inline QDeclarativeInfo &operator<<(qint64 t) { QDebug::operator<<(t); return *this; }
-    inline QDeclarativeInfo &operator<<(quint64 t) { QDebug::operator<<(t); return *this; }
-    inline QDeclarativeInfo &operator<<(float t) { QDebug::operator<<(t); return *this; }
-    inline QDeclarativeInfo &operator<<(double t) { QDebug::operator<<(t); return *this; }
-    inline QDeclarativeInfo &operator<<(const char* t) { QDebug::operator<<(t); return *this; }
-    inline QDeclarativeInfo &operator<<(const QString & t) { QDebug::operator<<(t.toLocal8Bit().constData()); return *this; }
-    inline QDeclarativeInfo &operator<<(const QStringRef & t) { return operator<<(t.toString()); }
-    inline QDeclarativeInfo &operator<<(const QLatin1String &t) { QDebug::operator<<(t.latin1()); return *this; }
-    inline QDeclarativeInfo &operator<<(const QByteArray & t) { QDebug::operator<<(t); return *this; }
-    inline QDeclarativeInfo &operator<<(const void * t) { QDebug::operator<<(t); return *this; }
-    inline QDeclarativeInfo &operator<<(QTextStreamFunction f) { QDebug::operator<<(f); return *this; }
-    inline QDeclarativeInfo &operator<<(QTextStreamManipulator m) { QDebug::operator<<(m); return *this; }
-#ifndef QT_NO_DEBUG_STREAM
-    inline QDeclarativeInfo &operator<<(const QUrl &t) { static_cast<QDebug &>(*this) << t; return *this; }
-#endif
+    QDeclarativeInfo &operator<<(const char* t);
+    QDeclarativeInfo &operator<<(const QString & t);
+    QDeclarativeInfo &operator<<(const QByteArray & t);
 
 private:
     friend Q_DECLARATIVE_EXPORT QDeclarativeInfo qmlInfo(const QObject *me);
@@ -76,6 +52,5 @@ Q_DECLARATIVE_EXPORT QDeclarativeInfo qmlInfo(const QObject *me, const QDeclarat
 Q_DECLARATIVE_EXPORT QDeclarativeInfo qmlInfo(const QObject *me, const QList<QDeclarativeError> &errors);
 
 QT_END_NAMESPACE
-
 
 #endif // QDECLARATIVEINFO_H
