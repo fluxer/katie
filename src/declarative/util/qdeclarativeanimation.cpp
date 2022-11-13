@@ -807,7 +807,7 @@ void QDeclarativeScriptActionPrivate::execute()
             expr.setSourceLocation(ddata->outerContext->url.toString(), ddata->lineNumber);
         expr.evaluate();
         if (expr.hasError())
-            qmlInfo(q) << expr.error();
+            qmlInfo(q) << expr.error().toString();
     }
 }
 
