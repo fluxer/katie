@@ -27,9 +27,9 @@ set(BOOTSTRAP_DEFINITIONS
     -DQT_NO_CAST_FROM_BYTEARRAY
     -DQT_NO_CAST_FROM_ASCII
     -DQT_NO_CAST_TO_ASCII
-    -DQT_NO_DATASTREAM
     -DQT_NO_LIBRARY
     -DQT_NO_QOBJECT
+    -DQT_NO_DATASTREAM
     -DQT_NO_TEXTSTREAM
     -DQT_NO_THREAD
     -DQT_NO_PROCESS
@@ -52,6 +52,7 @@ set(BOOTSTRAP_SOURCES
     ${CMAKE_SOURCE_DIR}/src/core/global/qglobal.cpp
     ${CMAKE_SOURCE_DIR}/src/core/global/qt_error_string.cpp
     ${CMAKE_SOURCE_DIR}/src/core/io/qbuffer.cpp
+    ${CMAKE_SOURCE_DIR}/src/core/io/qdebug.cpp
     ${CMAKE_SOURCE_DIR}/src/core/io/qdir.cpp
     ${CMAKE_SOURCE_DIR}/src/core/io/qdiriterator.cpp
     ${CMAKE_SOURCE_DIR}/src/core/io/qfile.cpp

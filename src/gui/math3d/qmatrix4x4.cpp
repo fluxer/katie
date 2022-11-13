@@ -25,6 +25,7 @@
 #include "qmatrix.h"
 #include "qtransform.h"
 #include "qguicommon_p.h"
+#include "qcorecommon_p.h"
 
 QT_BEGIN_NAMESPACE
 
@@ -1764,7 +1765,6 @@ QMatrix4x4::operator QVariant() const
 }
 
 #ifndef QT_NO_DEBUG_STREAM
-
 QDebug operator<<(QDebug dbg, const QMatrix4x4 &m)
 {
     // Create a string that represents the matrix type.
@@ -1783,13 +1783,22 @@ QDebug operator<<(QDebug dbg, const QMatrix4x4 &m)
         bits = bits.left(bits.size() - 1);
 
     // Output in row-major order because it is more human-readable.
-    dbg.nospace() << "QMatrix4x4(type:" << bits.constData() << endl
-        << qSetFieldWidth(10)
-        << m(0, 0) << m(0, 1) << m(0, 2) << m(0, 3) << endl
-        << m(1, 0) << m(1, 1) << m(1, 2) << m(1, 3) << endl
-        << m(2, 0) << m(2, 1) << m(2, 2) << m(2, 3) << endl
-        << m(3, 0) << m(3, 1) << m(3, 2) << m(3, 3) << endl
-        << qSetFieldWidth(0) << ')';
+    QSTACKARRAY(char, snprintfbuff, 1024);
+    snprintf(
+        snprintfbuff, sizeof(snprintfbuff),
+        "QMatrix4x4(type: %s\n"
+        "          %f %f %f %f\n"
+        "          %f %f %f %f\n"
+        "          %f %f %f %f\n"
+        "          %f %f %f %f\n"
+        ")",
+        bits.constData(),
+        m(0, 0), m(0, 1), m(0, 2), m(0, 3),
+        m(1, 0), m(1, 1), m(1, 2), m(1, 3),
+        m(2, 0), m(2, 1), m(2, 2), m(2, 3),
+        m(3, 0), m(3, 1), m(3, 2), m(3, 3)
+    );
+    dbg.nospace() << snprintfbuff;
     return dbg.space();
 }
 

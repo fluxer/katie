@@ -24,6 +24,7 @@
 
 #include "qimage.h"
 #include "qimage_p.h"
+#include "qvariant.h"
 #include "qdebug.h"
 #include "qcorecommon_p.h"
 

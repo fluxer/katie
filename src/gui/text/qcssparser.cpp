@@ -28,6 +28,7 @@
 #include "qfontmetrics.h"
 #include "qbrush.h"
 #include "qimagereader.h"
+#include "qtextstream.h"
 
 #ifndef QT_NO_CSSPARSER
 

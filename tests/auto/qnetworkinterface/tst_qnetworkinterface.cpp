@@ -69,7 +69,7 @@ void tst_QNetworkInterface::dump()
         foreach (const QNetworkAddressEntry &e, i.addressEntries()) {
             QDebug s = qDebug();
             s.nospace() <<    "    address "
-                        << qSetFieldWidth(2) << count++ << qSetFieldWidth(0);
+                        << "  " << count++;
             s.nospace() << ": " << qPrintable(e.ip().toString());
             if (!e.netmask().isNull())
                 s.nospace() << '/' << e.prefixLength()

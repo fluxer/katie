@@ -28,6 +28,7 @@
 #include <QFile>
 #include <QFileInfo>
 #include <QProcess>
+#include <QTextStream>
 
 #include <sys/types.h>
 #include <unistd.h>

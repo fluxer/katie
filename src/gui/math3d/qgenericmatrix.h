@@ -26,7 +26,6 @@
 #include <QtCore/qdebug.h>
 #include <QtCore/qdatastream.h>
 
-
 QT_BEGIN_NAMESPACE
 
 
@@ -325,25 +324,24 @@ typedef QGenericMatrix<4, 2> QMatrix4x2;
 typedef QGenericMatrix<4, 3> QMatrix4x3;
 
 #ifndef QT_NO_DEBUG_STREAM
-
 template <int N, int M>
 QDebug operator<<(QDebug dbg, const QGenericMatrix<N, M> &m)
 {
     dbg.nospace() << "QGenericMatrix<" << N << ", " << M
-        << ">(" << endl << qSetFieldWidth(10);
+        << ">(\n";
     for (int row = 0; row < M; ++row) {
+        for (int spc = 0; spc < 10; ++spc)
+            dbg.space();
         for (int col = 0; col < N; ++col)
             dbg << m(row, col);
-        dbg << endl;
+        dbg.nospace() << "\n";
     }
-    dbg << qSetFieldWidth(0) << ')';
+    dbg.nospace() << ')';
     return dbg.space();
 }
-
 #endif
 
 #ifndef QT_NO_DATASTREAM
-
 template <int N, int M>
 QDataStream &operator<<(QDataStream &stream, const QGenericMatrix<N, M> &matrix)
 {
@@ -365,7 +363,6 @@ QDataStream &operator>>(QDataStream &stream, QGenericMatrix<N, M> &matrix)
     }
     return stream;
 }
-
 #endif
 
 QT_END_NAMESPACE
@@ -378,6 +375,5 @@ Q_DECLARE_METATYPE(QMatrix3x3)
 Q_DECLARE_METATYPE(QMatrix3x4)
 Q_DECLARE_METATYPE(QMatrix4x2)
 Q_DECLARE_METATYPE(QMatrix4x3)
-
 
 #endif

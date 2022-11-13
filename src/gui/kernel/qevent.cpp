@@ -2161,7 +2161,7 @@ QDebug operator<<(QDebug dbg, const QEvent *e) {
         if (buttons && button != buttons)
             dbg << ", buttons=" << mouseButtonsToString(buttons).constData();
         if (const int mods = int(me->modifiers()))
-            dbg << ", modifiers=0x" << hex << mods << dec;
+            dbg << ", modifiers=0x" << QByteArray::number(mods, 16);
         dbg << ')';
         break;
     }
@@ -2178,9 +2178,9 @@ QDebug operator<<(QDebug dbg, const QEvent *e) {
     case QEvent::ShortcutOverride: {
         const QKeyEvent *ke = static_cast<const QKeyEvent *>(e);
         dbg << "QKeyEvent("  << eventTypeName(type)
-            << ", key=0x" << hex << ke->key() << dec;
+            << ", key=0x" << QByteArray::number(ke->key(), 16);
         if (const int mods = ke->modifiers())
-            dbg << ", modifiers=0x" << hex << mods << dec;
+            dbg << ", modifiers=0x" << QByteArray::number(mods, 16);
         if (!ke->text().isEmpty())
             dbg << ", text=" << ke->text();
         if (ke->isAutoRepeat())

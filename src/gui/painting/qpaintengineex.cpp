@@ -80,7 +80,7 @@ QDebug Q_GUI_EXPORT &operator<<(QDebug &s, const QVectorPath &path)
 {
     QRectF rf = path.controlPointRect();
     s << "QVectorPath(size:" << path.elementCount()
-      << " hints:" << hex << path.hints()
+      << " hints:" << QByteArray::number(path.hints(), 16)
       << rf << ')';
     return s;
 }

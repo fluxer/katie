@@ -212,7 +212,6 @@ QT_BEGIN_NAMESPACE
 
     \sa setDevice()
 */
-
 QDataStream::QDataStream()
     : dev(nullptr),
     owndev(false),
@@ -233,7 +232,6 @@ QDataStream::QDataStream()
 
     \sa setDevice(), device()
 */
-
 QDataStream::QDataStream(QIODevice *device)
     : dev(device),
     owndev(false),
@@ -245,8 +243,6 @@ QDataStream::QDataStream(QIODevice *device)
 
 
 /*!
-    \fn QDataStream::QDataStream(QByteArray *a, QIODevice::OpenMode mode)
-
     Constructs a data stream that operates on a byte array, \a a. The
     \a mode describes how the device is to be used.
 
@@ -256,7 +252,6 @@ QDataStream::QDataStream(QIODevice *device)
     Since QByteArray is not a QIODevice subclass, internally a QBuffer
     is created to wrap the byte array.
 */
-
 QDataStream::QDataStream(QByteArray *a, QIODevice::OpenMode flags)
     : dev(nullptr),
     owndev(true),
@@ -304,13 +299,11 @@ QDataStream::QDataStream(const QByteArray &a)
     passed in the \e constructor, in which case the internal I/O device
     is destroyed.
 */
-
 QDataStream::~QDataStream()
 {
     if (owndev)
         delete dev;
 }
-
 
 /*!
     \fn QIODevice *QDataStream::device() const
@@ -329,7 +322,6 @@ QDataStream::~QDataStream()
 
     \sa device()
 */
-
 void QDataStream::setDevice(QIODevice *device)
 {
     if (owndev) {
@@ -340,15 +332,12 @@ void QDataStream::setDevice(QIODevice *device)
 }
 
 /*!
-    \fn bool QDataStream::atEnd() const
-
     Returns true if the I/O device has reached the end position (end of
     the stream or file) or if there is no I/O device set; otherwise
     returns false.
 
     \sa QIODevice::atEnd()
 */
-
 bool QDataStream::atEnd() const
 {
     return dev ? dev->atEnd() : true;
@@ -389,7 +378,6 @@ void QDataStream::setFloatingPointPrecision(QDataStream::FloatingPointPrecision 
 
     \sa Status setStatus() resetStatus()
 */
-
 QDataStream::DataStatus QDataStream::status() const
 {
     return q_status;
@@ -439,7 +427,6 @@ void QDataStream::setStatus(DataStatus status)
 
     \sa byteOrder()
 */
-
 void QDataStream::setByteOrder(ByteOrder bo)
 {
     byteorder = bo;
@@ -461,7 +448,6 @@ void QDataStream::setByteOrder(ByteOrder bo)
     Reads a signed byte from the stream into \a i, and returns a
     reference to the stream.
 */
-
 QDataStream &QDataStream::operator>>(qint8 &i)
 {
     i = 0;
@@ -473,7 +459,6 @@ QDataStream &QDataStream::operator>>(qint8 &i)
         i = qint8(c);
     return *this;
 }
-
 
 /*!
     \fn QDataStream &QDataStream::operator>>(quint16 &i)
@@ -489,7 +474,6 @@ QDataStream &QDataStream::operator>>(qint8 &i)
     Reads a signed 16-bit integer from the stream into \a i, and
     returns a reference to the stream.
 */
-
 QDataStream &QDataStream::operator>>(qint16 &i)
 {
     i = 0;
@@ -502,7 +486,6 @@ QDataStream &QDataStream::operator>>(qint16 &i)
     }
     return *this;
 }
-
 
 /*!
     \fn QDataStream &QDataStream::operator>>(quint32 &i)
@@ -518,7 +501,6 @@ QDataStream &QDataStream::operator>>(qint16 &i)
     Reads a signed 32-bit integer from the stream into \a i, and
     returns a reference to the stream.
 */
-
 QDataStream &QDataStream::operator>>(qint32 &i)
 {
     i = 0;
@@ -546,7 +528,6 @@ QDataStream &QDataStream::operator>>(qint32 &i)
     Reads a signed 64-bit integer from the stream into \a i, and
     returns a reference to the stream.
 */
-
 QDataStream &QDataStream::operator>>(qint64 &i)
 {
     i = qint64(0);
@@ -581,7 +562,6 @@ QDataStream &QDataStream::operator>>(bool &i)
 
     \sa setFloatingPointPrecision()
 */
-
 QDataStream &QDataStream::operator>>(float &f)
 {
     if (floatingPointPrecision() == QDataStream::DoublePrecision) {
@@ -616,7 +596,6 @@ QDataStream &QDataStream::operator>>(float &f)
 
     \sa setFloatingPointPrecision()
 */
-
 QDataStream &QDataStream::operator>>(double &f)
 {
     if (floatingPointPrecision() == QDataStream::SinglePrecision) {
@@ -650,7 +629,6 @@ QDataStream &QDataStream::operator>>(double &f)
 
     \sa QIODevice::read(), writeRawData()
 */
-
 int QDataStream::readRawData(char *s, int len)
 {
     CHECK_STREAM_PRECOND(-1)
@@ -685,7 +663,6 @@ QDataStream &QDataStream::operator<<(qint8 i)
     return *this;
 }
 
-
 /*!
     \fn QDataStream &QDataStream::operator<<(quint16 i)
     \overload
@@ -700,7 +677,6 @@ QDataStream &QDataStream::operator<<(qint8 i)
     Writes a signed 16-bit integer, \a i, to the stream and returns a
     reference to the stream.
 */
-
 QDataStream &QDataStream::operator<<(qint16 i)
 {
     CHECK_STREAM_WRITE_PRECOND(*this)
@@ -718,7 +694,6 @@ QDataStream &QDataStream::operator<<(qint16 i)
     Writes a signed 32-bit integer, \a i, to the stream and returns a
     reference to the stream.
 */
-
 QDataStream &QDataStream::operator<<(qint32 i)
 {
     CHECK_STREAM_WRITE_PRECOND(*this)
@@ -744,7 +719,6 @@ QDataStream &QDataStream::operator<<(qint32 i)
     Writes a signed 64-bit integer, \a i, to the stream and returns a
     reference to the stream.
 */
-
 QDataStream &QDataStream::operator<<(qint64 i)
 {
     CHECK_STREAM_WRITE_PRECOND(*this)
@@ -768,7 +742,6 @@ QDataStream &QDataStream::operator<<(qint64 i)
     Writes a boolean value, \a i, to the stream. Returns a reference
     to the stream.
 */
-
 QDataStream &QDataStream::operator<<(bool i)
 {
     CHECK_STREAM_WRITE_PRECOND(*this)
@@ -785,7 +758,6 @@ QDataStream &QDataStream::operator<<(bool i)
 
     \sa setFloatingPointPrecision()
 */
-
 QDataStream &QDataStream::operator<<(float f)
 {
     if (floatingPointPrecision() == QDataStream::DoublePrecision) {
@@ -813,7 +785,6 @@ QDataStream &QDataStream::operator<<(float f)
     return *this;
 }
 
-
 /*!
     \overload
 
@@ -822,7 +793,6 @@ QDataStream &QDataStream::operator<<(float f)
 
     \sa setFloatingPointPrecision()
 */
-
 QDataStream &QDataStream::operator<<(double f)
 {
     if (floatingPointPrecision() == QDataStream::SinglePrecision) {
@@ -854,7 +824,6 @@ QDataStream &QDataStream::operator<<(double f)
 
     \sa QIODevice::write(), readRawData()
 */
-
 int QDataStream::writeRawData(const char *s, int len)
 {
     CHECK_STREAM_WRITE_PRECOND(-1)

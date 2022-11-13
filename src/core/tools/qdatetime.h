@@ -24,6 +24,7 @@
 
 #include <QtCore/qnamespace.h>
 #include <QtCore/qsharedpointer.h>
+#include <QtCore/qdatastream.h>
 
 
 QT_BEGIN_NAMESPACE

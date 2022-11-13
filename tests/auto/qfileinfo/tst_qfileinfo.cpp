@@ -31,6 +31,7 @@
 #include <qdir.h>
 #include <qfileinfo.h>
 #include <qplatformdefs.h>
+#include <qtextstream.h>
 #include <qdebug.h>
 #include <qfileinfo_p.h>
 #include "../../shared/filesystem.h"

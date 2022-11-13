@@ -28,6 +28,8 @@
 #include <QtCore/QRegExp>
 #include <QtCore/QDebug>
 #include <QtCore/QMetaType>
+#include <QtCore/QTextStream>
+
 #include <stdlib.h>
 
 #ifdef QT_NO_PROCESS

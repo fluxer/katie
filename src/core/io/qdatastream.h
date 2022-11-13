@@ -85,7 +85,6 @@ public:
     QDataStream &operator>>(quint32 &i);
     QDataStream &operator>>(qint64 &i);
     QDataStream &operator>>(quint64 &i);
-
     QDataStream &operator>>(bool &i);
     QDataStream &operator>>(float &f);
     QDataStream &operator>>(double &f);
