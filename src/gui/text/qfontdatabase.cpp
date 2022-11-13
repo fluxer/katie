@@ -583,42 +583,6 @@ static QFontEngine *loadFc(const QFontPrivate *fp, QUnicodeTables::Script script
 }
 #endif // QT_NO_FONTCONFIG
 
-QString QFontDatabase::resolveFontFamilyAlias(const QString &family)
-{
-#if defined(QT_NO_FONTCONFIG)
-    return family;
-#else
-    if (!qt_x11Data->has_fontconfig)
-        return family;
-
-    FcPattern *pattern = FcPatternCreate();
-    if (Q_UNLIKELY(!pattern)) {
-        return family;
-    }
-
-    QByteArray cs = family.toUtf8();
-    FcPatternAddString(pattern, FC_FAMILY, (const FcChar8 *) cs.constData());
-    FcConfigSubstitute(0, pattern, FcMatchPattern);
-    FcDefaultSubstitute(pattern);
-
-    QString resolved;
-    FcChar8 *familyAfterSubstitution = nullptr;
-    FcResult unused;
-    FcPattern *match = FcFontMatch(0, pattern, &unused);
-    if (match) {
-        FcPatternGetString(match, FC_FAMILY, 0, &familyAfterSubstitution);
-        resolved = QString::fromUtf8((const char *) familyAfterSubstitution);
-        FcPatternDestroy(match);
-    } else {
-        FcPatternGetString(pattern, FC_FAMILY, 0, &familyAfterSubstitution);
-        resolved = QString::fromUtf8((const char *) familyAfterSubstitution);
-    }
-    FcPatternDestroy(pattern);
-
-    return resolved;
-#endif
-}
-
 static inline QString styleStringHelper(const QString &family, int weight, QFont::Style style)
 {
     QString result;
@@ -1182,11 +1146,6 @@ bool QFontDatabase::hasFamily(const QString &family) const
     return result;
 }
 
-void QFontDatabase::parseFontName(const QString &name, QString &foundry, QString &family)
-{
-    QT_PREPEND_NAMESPACE(parseFontName)(name, foundry, family);
-}
-
 /*!
     \since 4.4
 
@@ -1206,9 +1165,58 @@ bool QFontDatabase::supportsThreadedFontRendering()
 #endif
 }
 
-/*! \internal
-  Loads a QFontEngine for the specified \a script that matches the
-  QFontDef \e request member variable.
+/*!
+    \internal
+*/
+void QFontDatabase::parseFontName(const QString &name, QString &foundry, QString &family)
+{
+    QT_PREPEND_NAMESPACE(parseFontName)(name, foundry, family);
+}
+
+/*!
+    \internal
+*/
+QString QFontDatabase::resolveFontFamilyAlias(const QString &family)
+{
+#if defined(QT_NO_FONTCONFIG)
+    return family;
+#else
+    if (!qt_x11Data->has_fontconfig)
+        return family;
+
+    FcPattern *pattern = FcPatternCreate();
+    if (Q_UNLIKELY(!pattern)) {
+        return family;
+    }
+
+    QByteArray cs = family.toUtf8();
+    FcPatternAddString(pattern, FC_FAMILY, (const FcChar8 *) cs.constData());
+    FcConfigSubstitute(0, pattern, FcMatchPattern);
+    FcDefaultSubstitute(pattern);
+
+    QString resolved;
+    FcChar8 *familyAfterSubstitution = nullptr;
+    FcResult unused;
+    FcPattern *match = FcFontMatch(0, pattern, &unused);
+    if (match) {
+        FcPatternGetString(match, FC_FAMILY, 0, &familyAfterSubstitution);
+        resolved = QString::fromUtf8((const char *) familyAfterSubstitution);
+        FcPatternDestroy(match);
+    } else {
+        FcPatternGetString(pattern, FC_FAMILY, 0, &familyAfterSubstitution);
+        resolved = QString::fromUtf8((const char *) familyAfterSubstitution);
+    }
+    FcPatternDestroy(pattern);
+
+    return resolved;
+#endif
+}
+
+/*!
+    \internal
+
+    Loads a QFontEngine for the specified \a script that matches the
+    QFontDef \e request member variable.
 */
 QFontEngine* QFontDatabase::load(const QFontPrivate *d, int script)
 {
