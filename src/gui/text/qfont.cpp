@@ -1304,13 +1304,14 @@ QDataStream &operator>>(QDataStream &s, QFont &font)
     font.d = new QFontPrivate;
     font.resolve_mask = QFont::AllPropertiesResolved;
 
-    qint8 hintingPreference = QFont::PreferDefaultHinting, bits;
-    qint8 weight;
+    qint8 hintingPreference = QFont::PreferDefaultHinting;
+    qint8 bits = 0;
+    qint8 weight = 50;
 
     s >> font.d->request.family;
 
-    double pointSize;
-    double pixelSize;
+    double pointSize = -1.0;
+    double pixelSize = -1.0;
     s >> pointSize;
     s >> pixelSize;
     font.d->request.pointSize = qreal(pointSize);
@@ -1325,7 +1326,7 @@ QDataStream &operator>>(QDataStream &s, QFont &font)
 
     set_font_bits(bits, font.d.data());
 
-    qint16 stretch;
+    qint16 stretch = 100;
     s >> stretch;
     font.d->request.stretch = stretch;
 
