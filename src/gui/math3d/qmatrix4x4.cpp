@@ -1783,9 +1783,9 @@ QDebug operator<<(QDebug dbg, const QMatrix4x4 &m)
         bits = bits.left(bits.size() - 1);
 
     // Output in row-major order because it is more human-readable.
-    QSTACKARRAY(char, snprintfbuff, 1024);
-    snprintf(
-        snprintfbuff, sizeof(snprintfbuff),
+    QSTACKARRAY(char, snprintfbuf, 1024);
+    ::snprintf(
+        snprintfbuf, sizeof(snprintfbuf),
         "QMatrix4x4(type: %s\n"
         "          %f %f %f %f\n"
         "          %f %f %f %f\n"
@@ -1798,7 +1798,7 @@ QDebug operator<<(QDebug dbg, const QMatrix4x4 &m)
         m(2, 0), m(2, 1), m(2, 2), m(2, 3),
         m(3, 0), m(3, 1), m(3, 2), m(3, 3)
     );
-    dbg.nospace() << snprintfbuff;
+    dbg.nospace() << snprintfbuf;
     return dbg.space();
 }
 

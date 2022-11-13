@@ -76,19 +76,18 @@ QDebugPrivate::QDebugPrivate(QtMsgType t)
 
     The class also provides several constructors for other situations, including
     a constructor that accepts a QFile or any other QIODevice subclass that is
-    used to write debugging information to files and other devices. The constructor
-    that accepts a QString is used to write to a string for display or serialization.
+    used to write debugging information to files and other devices.
 
     \section1 Writing Custom Types to a Stream
 
-    Many standard types can be written to QDebug objects, and Qt provides support for
-    most Qt value types. To add support for custom types, you need to implement a
+    Many standard types can be written to QDebug objects, and Katie provides support for
+    most Katie value types. To add support for custom types, you need to implement a
     streaming operator, as in the following example:
 
     \snippet doc/src/snippets/qdebug/qdebugsnippet.cpp 0
 
     This is described in the \l{Debugging Techniques} and
-    \l{Creating Custom Qt Types#Making the Type Printable}{Creating Custom Qt Types}
+    \l{Creating Custom Katie Types#Making the Type Printable}{Creating Custom Katie Types}
     documents.
 */
 
