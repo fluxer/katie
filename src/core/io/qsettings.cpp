@@ -111,7 +111,7 @@ static bool ini_settings_read(QIODevice &device, QSettings::SettingsMap &map)
 
         const QByteArray key = line.left(separatorpos).trimmed();
         const QByteArray value = line.mid(separatorpos + 1).trimmed();
-        const QVariant variantvalue(value);
+        const QVariant variantvalue(QString::fromAscii(value.constData(), value.size()));
         if (section.isEmpty()) {
             map.insert(key, variantvalue);
         } else {
