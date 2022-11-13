@@ -174,7 +174,7 @@ static inline int getFCWeight(int fc_weight)
     return QFont::Black;
 }
 
-QFontDef qt_FcPatternToQFontDef(FcPattern *pattern, const QFontDef &request)
+static QFontDef qt_FcPatternToQFontDef(FcPattern *pattern, const QFontDef &request)
 {
     QFontDef fontDef;
 
