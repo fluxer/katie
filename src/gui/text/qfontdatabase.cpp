@@ -828,8 +828,6 @@ QFontDatabase::QFontDatabase()
         FD_DEBUG("QFontDatabase: loaded FontConfig: %d ms", int(elapsedtimer.elapsed()));
 #endif
     }
-
-    emit qApp->fontDatabaseChanged();
 #endif // QT_NO_FONTCONFIG
 }
 

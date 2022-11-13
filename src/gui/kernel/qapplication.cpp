@@ -1586,13 +1586,6 @@ void QApplication::aboutQt()
     \sa QWidget::setFocus(), QWidget::clearFocus(), Qt::FocusReason
 */
 
-/*!
-    \since 4.5
-    \fn void QApplication::fontDatabaseChanged()
-
-    This signal is emitted when application fonts are loaded or removed.
-*/
-
 #ifndef QT_NO_TRANSLATION
 static bool qt_detectRTLLanguage()
 {

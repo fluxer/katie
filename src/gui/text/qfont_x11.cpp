@@ -21,7 +21,6 @@
 
 #include "qfont.h"
 #include "qapplication.h"
-#include "qfontdatabase.h"
 #include "qfontengine_p.h"
 #include "qfontengine_ft_p.h"
 #include "qx11info_x11.h"

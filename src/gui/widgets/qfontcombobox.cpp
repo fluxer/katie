@@ -29,6 +29,7 @@
 #include "qpainter.h"
 #include "qevent.h"
 #include "qapplication.h"
+#include "qfontdatabase.h"
 #include "qcombobox_p.h"
 #include "qdebug.h"
 
@@ -244,8 +245,6 @@ QFontComboBox::QFontComboBox(QWidget *parent)
             this, SLOT(_q_currentChanged(QString)));
 
     d->_q_updateModel();
-    connect(qApp, SIGNAL(fontDatabaseChanged()),
-            this, SLOT(_q_updateModel()));
 }
 
 

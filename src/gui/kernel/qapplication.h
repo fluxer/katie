@@ -178,7 +178,6 @@ public:
 Q_SIGNALS:
     void lastWindowClosed();
     void focusChanged(QWidget *old, QWidget *now);
-    void fontDatabaseChanged();
 #ifndef QT_NO_SESSIONMANAGER
     void commitDataRequest(QSessionManager &sessionManager);
     void saveStateRequest(QSessionManager &sessionManager);
@@ -216,7 +215,6 @@ private:
     friend class QTextControl;
 #endif
     friend class QAction;
-    friend class QFontDatabase;
 };
 
 #if defined(qApp)
