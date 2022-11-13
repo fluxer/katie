@@ -582,7 +582,6 @@ set(GUI_HEADERS
 )
 
 set(GUI_SOURCES
-    ${CMAKE_CURRENT_SOURCE_DIR}/animation/qguivariantanimation.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/animation/qabstractanimation.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/animation/qvariantanimation.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/animation/qpropertyanimation.cpp

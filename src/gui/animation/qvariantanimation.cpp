@@ -25,6 +25,10 @@
 #include <QtCore/qrect.h>
 #include <QtCore/qline.h>
 #include <QtCore/qmutex.h>
+#include <QtGui/qcolor.h>
+#include <QtGui/qvector2d.h>
+#include <QtGui/qvector3d.h>
+#include <QtGui/qvector4d.h>
 
 #ifndef QT_NO_ANIMATION
 
@@ -44,8 +48,8 @@ QT_BEGIN_NAMESPACE
     class; it has a pure virtual method called updateCurrentValue().
     The class performs interpolation over
     \l{QVariant}s, but leaves using the interpolated values to its
-    subclasses. Currently, Qt provides QPropertyAnimation, which
-    animates Qt \l{Qt's Property System}{properties}. See the
+    subclasses. Currently, Katie provides QPropertyAnimation, which
+    animates Katie \l{Katie's Property System}{properties}. See the
     QPropertyAnimation class description if you wish to animate such
     properties.
 
@@ -69,7 +73,7 @@ QT_BEGIN_NAMESPACE
     the virtual interpolated() function.
 
     Subclassing QVariantAnimation can be an alternative if you have
-    \l{QVariant}s that you do not wish to declare as Qt properties.
+    \l{QVariant}s that you do not wish to declare as Katie properties.
     Note, however, that you in most cases will be better off declaring
     your QVariant as a property.
 
@@ -90,6 +94,9 @@ QT_BEGIN_NAMESPACE
         \o \l{QMetaType::}{QRect}
         \o \l{QMetaType::}{QRectF}
         \o \l{QMetaType::}{QColor}
+        \o \l{QMetaType::}{QVector2D}
+        \o \l{QMetaType::}{QVector3D}
+        \o \l{QMetaType::}{QVector4D}
     \endlist
 
     If you need to interpolate other variant types, including custom
@@ -168,6 +175,14 @@ template<> Q_INLINE_TEMPLATE QLine _q_interpolate(const QLine &f, const QLine &t
 template<> Q_INLINE_TEMPLATE QLineF _q_interpolate(const QLineF &f, const QLineF &t, qreal progress)
 {
     return QLineF( _q_interpolate(f.p1(), t.p1(), progress), _q_interpolate(f.p2(), t.p2(), progress));
+}
+
+template<> Q_INLINE_TEMPLATE QColor _q_interpolate(const QColor &f,const QColor &t, qreal progress)
+{
+    return QColor(qBound(0,_q_interpolate(f.red(), t.red(), progress),255),
+                  qBound(0,_q_interpolate(f.green(), t.green(), progress),255),
+                  qBound(0,_q_interpolate(f.blue(), t.blue(), progress),255),
+                  qBound(0,_q_interpolate(f.alpha(), t.alpha(), progress),255));
 }
 
 QVariantAnimationPrivate::QVariantAnimationPrivate() : duration(250), interpolator(&defaultInterpolator)
@@ -322,14 +337,16 @@ void QVariantAnimationPrivate::setDefaultStartEndValue(const QVariant &value)
     Construct a QVariantAnimation object. \a parent is passed to QAbstractAnimation's
     constructor.
 */
-QVariantAnimation::QVariantAnimation(QObject *parent) : QAbstractAnimation(*new QVariantAnimationPrivate, parent)
+QVariantAnimation::QVariantAnimation(QObject *parent)
+    : QAbstractAnimation(*new QVariantAnimationPrivate, parent)
 {
 }
 
 /*!
     \internal
 */
-QVariantAnimation::QVariantAnimation(QVariantAnimationPrivate &dd, QObject *parent) : QAbstractAnimation(dd, parent)
+QVariantAnimation::QVariantAnimation(QVariantAnimationPrivate &dd, QObject *parent)
+    : QAbstractAnimation(dd, parent)
 {
 }
 
@@ -453,6 +470,20 @@ QVariantAnimation::Interpolator QVariantAnimationPrivate::getInterpolator(int in
             return reinterpret_cast<QVariantAnimation::Interpolator>(_q_interpolateVariant<QRect>);
         case QMetaType::QRectF:
             return reinterpret_cast<QVariantAnimation::Interpolator>(_q_interpolateVariant<QRectF>);
+        case QMetaType::QColor:
+            return reinterpret_cast<QVariantAnimation::Interpolator>(_q_interpolateVariant<QColor>);
+#ifndef QT_NO_VECTOR2D
+        case QMetaType::QVector2D:
+            return reinterpret_cast<QVariantAnimation::Interpolator>(_q_interpolateVariant<QVector2D>);
+#endif // QT_NO_VECTOR2D
+#ifndef QT_NO_VECTOR3D
+        case QMetaType::QVector3D:
+            return reinterpret_cast<QVariantAnimation::Interpolator>(_q_interpolateVariant<QVector3D>);
+#endif // QT_NO_VECTOR3D
+#ifndef QT_NO_VECTOR4D
+        case QMetaType::QVector4D:
+            return reinterpret_cast<QVariantAnimation::Interpolator>(_q_interpolateVariant<QVector4D>);
+#endif // QT_NO_VECTOR4D
         default:
             return 0; //this type is not handled
     }
