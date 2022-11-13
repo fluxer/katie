@@ -849,16 +849,18 @@ QStringList QFontDatabase::families() const
         const QtFontFamily &fontfamily = db->at(i);
         familieswithfoundry[fontfamily.family].append(fontfamily.foundry);
     }
-    foreach (const QString &family, familieswithfoundry.keys()) {
-        QStringList foundries = familieswithfoundry.value(family);
+    QMap<QString,QStringList>::const_iterator familieswithfoundryit = familieswithfoundry.constBegin();
+    while (familieswithfoundryit != familieswithfoundry.constEnd()) {
+        QStringList foundries = familieswithfoundryit.value();
         foundries.removeDuplicates();
         if (foundries.size() > 1) {
             foreach (const QString &foundry, foundries) {
-                result.append(QString::fromLatin1("%1 [%2]").arg(family, foundry));
+                result.append(QString::fromLatin1("%1 [%2]").arg(familieswithfoundryit.key(), foundry));
             }
         } else {
-            result.append(family);
+            result.append(familieswithfoundryit.key());
         }
+        familieswithfoundryit++;
     }
     qSort(result);
     return result;
