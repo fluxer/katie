@@ -316,6 +316,7 @@ static const uint specialCharsTbl[] = {
     0x11080, // Kaithi
     0x0C80, // Kannada
     0x30A1, // Katakana
+    0x11F00, // Kawi
     0xA900, // KayahLi
     0x10A00, // Kharoshthi
     0x16FE4, // KhitanSmallScript
@@ -350,6 +351,7 @@ static const uint specialCharsTbl[] = {
     0x11280, // Multani
     0x1000, // Myanmar
     0x10880, // Nabataean
+    0x1E4D0, // NagMundari
     0x119A0, // Nandinagari
     0x1980, // NewTaiLue
     0x11400, // Newa

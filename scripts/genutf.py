@@ -160,5 +160,5 @@ elif 'special' in sys.argv:
 else:
     print('''usage: <grapheme|line|script|special>
 
-Data is from https://unicode.org/Public/14.0.0/ucd/UCD.zip''')
+Data is from https://unicode.org/Public/15.0.0/ucd/UCD.zip''')
     sys.exit(1)
