@@ -46,7 +46,6 @@
 #include "qtextformat.h"
 #include "qwizard.h"
 #include "qdir.h"
-#include "qsettings.h"
 #include "qpixmapcache.h"
 #include "qguiplatformplugin.h"
 #include "qstylehelper_p.h"
