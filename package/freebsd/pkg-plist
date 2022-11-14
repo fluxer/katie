@@ -5,6 +5,7 @@ bin/qdbusviewer-katie
 bin/qdbusxml2cpp-katie
 bin/qscript-katie
 bin/qtconfig-katie
+bin/trc-katie
 bin/uic-katie
 include/katie/QtCore/QAbstractEventDispatcher
 include/katie/QtCore/QAbstractItemModel
@@ -1125,6 +1126,7 @@ share/man/man1/qdbus-katie.1.gz
 share/man/man1/qdbuscpp2xml-katie.1.gz
 share/man/man1/qdbusxml2cpp-katie.1.gz
 share/man/man1/qscript-katie.1.gz
+share/man/man1/trc-katie.1.gz
 share/man/man1/uic-katie.1.gz
 share/pixmaps/qdbusviewer-katie.png
 share/pixmaps/qtconfig-katie.png
