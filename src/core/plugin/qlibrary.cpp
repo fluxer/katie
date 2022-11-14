@@ -391,9 +391,6 @@ bool QLibrary::load()
 */
 bool QLibrary::unload()
 {
-    if (!d_ptr->pHnd) {
-        return false;
-    }
     return d_ptr->unload();
 }
 
