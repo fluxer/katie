@@ -131,7 +131,7 @@ private:
     bool m_valid;
 };
 
-class QIconLoader : public QObject
+class QIconLoader
 {
 public:
     QIconLoader();
