@@ -303,9 +303,7 @@ void QPixmapIconEngine::addFile(const QString &fileName, const QSize &_size, QIc
         QSize size = _size;
         QPixmap pixmap;
 
-        QString abs = fileName;
-        if (fileName.at(0) != QLatin1Char(':'))
-            abs = QFileInfo(fileName).absoluteFilePath();
+        QString abs = QFileInfo(fileName).absoluteFilePath();
 
         for (int i = 0; i < pixmaps.count(); ++i) {
             if (pixmaps.at(i).mode == mode && pixmaps.at(i).state == state) {
