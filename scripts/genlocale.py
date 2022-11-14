@@ -54,6 +54,7 @@ def normalizestring(fromstring):
     result = result.replace(u'é', 'e')
     result = result.replace(u'í', 'i')
     result = result.replace(u'ā', 'a')
+    result = result.replace(u'á', 'a')
     return result
 
 def xmlmerge(fromxml, fromxml2):
