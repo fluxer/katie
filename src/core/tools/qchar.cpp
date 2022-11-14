@@ -175,6 +175,7 @@ static inline bool is_ascii_char(uint ucs4)
     \value Unicode_12_1
     \value Unicode_13_0
     \value Unicode_14_0
+    \value Unicode_15_0
     \value Unicode_Last Latest supported version
     \value Unicode_Unassigned  The value is not assigned to any character
         in Unicode.
@@ -1215,6 +1216,8 @@ QChar::UnicodeVersion QChar::unicodeVersion(const uint ucs4)
         return QChar::Unicode_13_0;
     } else if (info[0] == 14 && info[1] == 0) {
         return QChar::Unicode_14_0;
+    } else if (info[0] == 15 && info[1] == 0) {
+        return QChar::Unicode_15_0;
     }
     return QChar::Unicode_Unassigned;
 }
