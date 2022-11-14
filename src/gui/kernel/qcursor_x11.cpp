@@ -158,7 +158,7 @@ Qt::HANDLE QCursor::handle() const
 #endif
             if (!d->px.isNull()) {
                 d->x11px = d->px.toX11Pixmap();
-                d->x11bm = d->px.mask().toX11Pixmap();
+                d->x11bm = d->bm.toX11Pixmap();
                 d->hcurs = XCreatePixmapCursor(dpy, d->x11px, d->x11bm, &d->fg, &d->bg, d->hx, d->hy);
             }
             return d->hcurs;
