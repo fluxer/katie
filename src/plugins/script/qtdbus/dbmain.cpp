@@ -374,6 +374,6 @@ void QtDBusScriptPlugin::initialize(const QString &key, QScriptEngine *engine)
     (void)new QScriptDBusMessageConstructor(engine, extensionObject);
 }
 
-Q_EXPORT_PLUGIN2(qtscriptdbus, QtDBusScriptPlugin)
+Q_EXPORT_PLUGIN(QtDBusScriptPlugin)
 
 #include "moc_dbmain.h"

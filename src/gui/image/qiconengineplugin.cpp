@@ -37,9 +37,7 @@ QT_BEGIN_NAMESPACE
 
     Writing a icon engine plugin is achieved by subclassing this base class,
     reimplementing the pure virtual functioncreate() and exporting the class
-    with the Q_EXPORT_PLUGIN2() macro.
-
-    \sa {How to Create Qt Plugins}
+    with the Q_EXPORT_PLUGIN() macro.
 */
 
 /*!
@@ -53,7 +51,7 @@ QT_BEGIN_NAMESPACE
 
 /*!
     Constructs a icon engine plugin with the given \a parent. This is invoked
-    automatically by the Q_EXPORT_PLUGIN2() macro.
+    automatically by the Q_EXPORT_PLUGIN() macro.
 */
 QIconEnginePlugin::QIconEnginePlugin(QObject *parent)
     : QObject(parent)

@@ -65,6 +65,6 @@ QImageIOHandler *QSvgPlugin::create(QIODevice *device, const QByteArray &format)
     return hand;
 }
 
-Q_EXPORT_PLUGIN2(svg, QSvgPlugin)
+Q_EXPORT_PLUGIN(QSvgPlugin)
 
 QT_END_NAMESPACE

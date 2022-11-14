@@ -31,14 +31,12 @@ typedef QObject *(*QtPluginInstanceFunction)();
 // NOTE: if you change pattern, you MUST change the pattern in
 // qlibrary.cpp as well.  changing the pattern will break all
 // backwards compatibility as well (no old plugins will be loaded).
-#define Q_EXPORT_PLUGIN2(PLUGIN, PLUGINCLASS) \
+#define Q_EXPORT_PLUGIN(PLUGINCLASS) \
     extern "C" Q_DECL_EXPORT QT_PREPEND_NAMESPACE(QObject) * kt_plugin_instance() \
     { \
         static QT_PREPEND_NAMESPACE(QPointer)<QT_PREPEND_NAMESPACE(QObject)> _instance(new PLUGINCLASS); \
         return _instance; \
     }
-
-#define Q_EXPORT_PLUGIN(PLUGIN) Q_EXPORT_PLUGIN2(PLUGIN, PLUGIN)
 
 QT_END_NAMESPACE
 

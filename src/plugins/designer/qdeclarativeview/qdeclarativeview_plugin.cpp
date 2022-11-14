@@ -120,7 +120,7 @@ QList<QCustomWidget*> QDeclarativeViewPlugin::customWidgets() const
     return m_plugins;
 }
 
-Q_EXPORT_PLUGIN2(customwidgetplugin, QDeclarativeViewPlugin)
+Q_EXPORT_PLUGIN(QDeclarativeViewPlugin)
 
 QT_END_NAMESPACE
 

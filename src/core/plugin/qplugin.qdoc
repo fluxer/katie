@@ -22,8 +22,6 @@
     \title Macros for Defining Plugins
 
     \brief The <QtPlugin> header files defines macros for defining plugins.
-
-    \sa {How to Create Qt Plugins}
 */
 
 /*!
@@ -37,46 +35,26 @@
     \snippet examples/tools/plugandpaint/interfaces.h 3
 
     This macro is normally used right after the class definition for
-    \a ClassName, in a header file. See the
-    \l{tools/plugandpaint}{Plug & Paint} example for details.
+    \a ClassName, in a header file.
 
     If you want to use Q_DECLARE_INTERFACE with interface classes
     declared in a namespace then you have to make sure the Q_DECLARE_INTERFACE
-    is not inside a namespace though. For example:
-    \snippet doc/src/snippets/code/doc_src_qplugin.cpp 0
+    is not inside a namespace though.
 
-    \sa Q_INTERFACES(), Q_EXPORT_PLUGIN2(), {How to Create Qt Plugins}
+    \sa Q_INTERFACES(), Q_EXPORT_PLUGIN()
 */
 
 /*!
     \macro Q_EXPORT_PLUGIN(ClassName)
     \relates <QtPlugin>
-    \obsolete
-
-    Use Q_EXPORT_PLUGIN2() instead. This macro is equivalent to
-    Q_EXPORT_PLUGIN2(\a ClassName, \a ClassName).
-*/
-
-/*!
-    \macro Q_EXPORT_PLUGIN2(PluginName, ClassName)
-    \relates <QtPlugin>
     \since 4.1
-    \keyword Q_EXPORT_PLUGIN2
+    \keyword Q_EXPORT_PLUGIN
 
-    This macro exports the plugin class \a ClassName for the plugin specified
-    by \a PluginName. The value of \a PluginName should correspond to the
-    \l{qmake Variable Reference#TARGET}{TARGET} specified in the plugin's
-    project file.
+    This macro exports the plugin class \a ClassName for the plugin.
 
     There should be exactly one occurrence of this macro in the source code
-    for a Qt plugin, and it should be used where the implementation is written
+    for a Katie plugin, and it should be used where the implementation is written
     rather than in a header file.
 
-    Example:
-
-    \snippet doc/src/snippets/code/doc_src_qplugin.cpp 1
-
-    See the \l{tools/plugandpaint}{Plug & Paint} example for details.
-
-    \sa Q_DECLARE_INTERFACE(), {How to Create Qt Plugins}
+    \sa Q_DECLARE_INTERFACE()
 */

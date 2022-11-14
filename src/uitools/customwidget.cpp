@@ -61,11 +61,11 @@ QT_BEGIN_NAMESPACE
     parent widget. 
 
     In the implementation of the class you must remember to export
-    your custom widget plugin to \QD using the Q_EXPORT_PLUGIN2()
+    your custom widget plugin to \QD using the Q_EXPORT_PLUGIN()
     macro. For example, if a library called \c libcustomwidgetplugin.so
-    (on Unix) or \c libcustomwidget.dll (on Windows) contains a widget
-    class called \c MyCustomWidget, we can export it by adding the
-    following line to the file containing the plugin implementation:
+    (on Unix) contains a widget class called \c MyCustomWidget, we can
+    export it by adding the following line to the file containing the
+    plugin implementation:
 
     \snippet doc/src/snippets/code/doc_src_qtdesigner.cpp 14
 
@@ -105,7 +105,7 @@ QT_BEGIN_NAMESPACE
 
 /*!
     Constructs an custom widget plugin with the given \a parent. This
-    is invoked automatically by the Q_EXPORT_PLUGIN2() macro.
+    is invoked automatically by the Q_EXPORT_PLUGIN() macro.
 */
 QCustomWidget::QCustomWidget(QObject *parent)
     : QObject(parent)
@@ -244,8 +244,8 @@ QCustomWidget::~QCustomWidget()
     \snippet doc/src/snippets/code/doc_src_qtdesigner.cpp 13
 
     Note that instead of exporting each custom widget plugin using the
-    Q_EXPORT_PLUGIN2() macro, you export the entire collection. The
-    Q_EXPORT_PLUGIN2() macro ensures that \QD can access and construct
+    Q_EXPORT_PLUGIN() macro, you export the entire collection. The
+    Q_EXPORT_PLUGIN() macro ensures that \QD can access and construct
     the custom widgets. Without this macro, there is no way for \QD to
     use them.
 
@@ -255,7 +255,7 @@ QCustomWidget::~QCustomWidget()
 
 /*!
     Constructs an custom widget collection plugin with the given
-    \a parent. This is invoked automatically by the Q_EXPORT_PLUGIN2()
+    \a parent. This is invoked automatically by the Q_EXPORT_PLUGIN()
     macro.
 */
 QCustomWidgetPlugin::QCustomWidgetPlugin(QObject *parent)

@@ -106,8 +106,8 @@
 
     Writing an image I/O plugin is achieved by subclassing this
     base class, reimplementing the pure virtual functions capabilities()
-    and create(), and exporting the class with the Q_EXPORT_PLUGIN2()
-    macro. See \l{How to Create Qt Plugins} for details.
+    and create(), and exporting the class with the Q_EXPORT_PLUGIN()
+    macro.
 
     An image format plugin can support three capabilities: reading (\l
     CanRead) and writing (\l CanWrite). Reimplement capabilities() in your
@@ -404,7 +404,7 @@ int QImageIOHandler::nextImageDelay() const
 
 /*!
     Constructs an image plugin with the given \a parent. This is
-    invoked automatically by the Q_EXPORT_PLUGIN2() macro.
+    invoked automatically by the Q_EXPORT_PLUGIN() macro.
 */
 QImageIOPlugin::QImageIOPlugin(QObject *parent)
     : QObject(parent)

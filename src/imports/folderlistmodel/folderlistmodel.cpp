@@ -43,4 +43,4 @@ QT_END_NAMESPACE
 
 #include "moc_folderlistmodel.cpp"
 
-Q_EXPORT_PLUGIN2(qmlfolderlistmodelplugin, QT_PREPEND_NAMESPACE(QmlFolderListModelPlugin))
+Q_EXPORT_PLUGIN(QT_PREPEND_NAMESPACE(QmlFolderListModelPlugin))
