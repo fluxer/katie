@@ -27,6 +27,8 @@
 #include "qcorecommon_p.h"
 #include "qt_x11_p.h"
 
+#include <locale.h>
+
 QT_BEGIN_NAMESPACE
 
 // from qapplication_x11.cpp
