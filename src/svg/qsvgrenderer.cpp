@@ -76,8 +76,6 @@ public:
         delete render;
     }
 
-    static void callRepaintNeeded(QSvgRenderer *const q);
-
     QSvgTinyDocument *render;
 };
 
@@ -177,39 +175,17 @@ void QSvgRenderer::setViewBox(const QRect &viewbox)
 }
 
 /*!
- \internal
- \since 4.5
-
- We can't have template functions, that's loadDocument(), as friends, for this
- code, so we let this function be a friend of QSvgRenderer instead.
- */
-void QSvgRendererPrivate::callRepaintNeeded(QSvgRenderer *const q)
-{
-    q->repaintNeeded();
-}
-
-template<typename TInputType>
-static bool loadDocument(QSvgRenderer *const q,
-                         QSvgRendererPrivate *const d,
-                         const TInputType &in)
-{
-    delete d->render;
-    d->render = QSvgTinyDocument::load(in);
-
-    //force first update
-    QSvgRendererPrivate::callRepaintNeeded(q);
-
-    return d->render;
-}
-
-/*!
     Loads the SVG file specified by \a filename, returning true if the content
     was successfully parsed; otherwise returns false.
 */
 bool QSvgRenderer::load(const QString &filename)
 {
     Q_D(QSvgRenderer);
-    return loadDocument(this, d, filename);
+    delete d->render;
+    d->render = QSvgTinyDocument::load(filename);
+    // force first update
+    repaintNeeded();
+    return d->render;
 }
 
 /*!
@@ -219,7 +195,11 @@ bool QSvgRenderer::load(const QString &filename)
 bool QSvgRenderer::load(const QByteArray &contents)
 {
     Q_D(QSvgRenderer);
-    return loadDocument(this, d, contents);
+    delete d->render;
+    d->render = QSvgTinyDocument::load(contents);
+    // force first update
+    repaintNeeded();
+    return d->render;
 }
 
 /*!
@@ -234,7 +214,11 @@ bool QSvgRenderer::load(const QByteArray &contents)
 bool QSvgRenderer::load(QXmlStreamReader *contents)
 {
     Q_D(QSvgRenderer);
-    return loadDocument(this, d, contents);
+    delete d->render;
+    d->render = QSvgTinyDocument::load(contents);
+    // force first update
+    repaintNeeded();
+    return d->render;
 }
 
 /*!
