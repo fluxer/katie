@@ -163,7 +163,6 @@ void QFreetypeFace::addGlyphToPath(FT_Outline outline, const QFixedPoint &point,
 #ifndef QT_NO_FONTCONFIG
 QFontEngineFT::QFontEngineFT(const QFontDef &fd, FcPattern *pattern)
     : default_load_flags(FT_LOAD_IGNORE_GLOBAL_ADVANCE_WIDTH | FT_LOAD_NO_BITMAP),
-    default_hint_style(HintNone),
     freetype(nullptr),
     xsize(0),
     ysize(0),
@@ -197,7 +196,6 @@ QFontEngineFT::QFontEngineFT(const QFontDef &fd, FcPattern *pattern)
 
 QFontEngineFT::QFontEngineFT(const QFontDef &fd)
     : default_load_flags(FT_LOAD_IGNORE_GLOBAL_ADVANCE_WIDTH | FT_LOAD_NO_BITMAP),
-    default_hint_style(HintNone),
     freetype(nullptr),
     xsize(0),
     ysize(0),
@@ -241,22 +239,6 @@ void QFontEngineFT::init()
     TT_OS2 *os2 = (TT_OS2 *)FT_Get_Sfnt_Table(face, ft_sfnt_os2);
     if (os2)
         fsType = os2->fsType;
-
-    switch (fontDef.hintingPreference) {
-        case QFont::PreferNoHinting: {
-            default_hint_style = HintNone;
-            break;
-        }
-        case QFont::PreferVerticalHinting: {
-            default_hint_style = HintLight;
-            break;
-        }
-        case QFont::PreferFullHinting:
-        default: {
-            default_hint_style = HintFull;
-            break;
-        }
-    }
 }
 
 QFontEngineFT::~QFontEngineFT()
@@ -284,15 +266,20 @@ QFontEngineFT::~QFontEngineFT()
 bool QFontEngineFT::loadGlyph(glyph_t glyph) const
 {
     int load_flags = default_load_flags;
-
-    if (default_hint_style == HintNone) {
-        load_flags |= FT_LOAD_NO_HINTING;
-    } else if (default_hint_style == HintLight) {
-        load_flags |= FT_LOAD_TARGET_LIGHT;
-    } else if (default_hint_style == HintFull) {
-        load_flags |= FT_LOAD_TARGET_LCD;
-    } else {
-        load_flags |= FT_LOAD_TARGET_MONO;
+    switch (fontDef.hintingPreference) {
+        case QFont::PreferNoHinting: {
+            load_flags |= FT_LOAD_NO_HINTING;
+            break;
+        }
+        case QFont::PreferVerticalHinting: {
+            load_flags |= FT_LOAD_TARGET_LIGHT;
+            break;
+        }
+        case QFont::PreferFullHinting:
+        default: {
+            load_flags |= FT_LOAD_TARGET_LCD;
+            break;
+        }
     }
 
     FT_Face face = freetype->face;

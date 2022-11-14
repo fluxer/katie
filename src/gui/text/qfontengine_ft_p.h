@@ -135,15 +135,8 @@ public:
 
     inline bool invalid() const { return xsize == 0 && ysize == 0; }
 
-    enum HintStyle {
-        HintNone,
-        HintLight,
-        HintFull
-    };
-
 protected:
     int default_load_flags;
-    HintStyle default_hint_style;
 
 private:
     void init();
