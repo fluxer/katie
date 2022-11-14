@@ -85,17 +85,9 @@ protected:
     virtual QVariant interpolated(const QVariant &from, const QVariant &to, qreal progress) const;
 
 private:
-    template <typename T> friend void qRegisterAnimationInterpolator(QVariant (*func)(const T &, const T &, qreal));
-    static void registerInterpolator(Interpolator func, int interpolationType);
-
     Q_DISABLE_COPY(QVariantAnimation)
     Q_DECLARE_PRIVATE(QVariantAnimation)
 };
-
-template <typename T>
-void qRegisterAnimationInterpolator(QVariant (*func)(const T &from, const T &to, qreal progress)) {
-    QVariantAnimation::registerInterpolator(reinterpret_cast<QVariantAnimation::Interpolator>(func), qMetaTypeId<T>());
-}
 
 #endif //QT_NO_ANIMATION
 

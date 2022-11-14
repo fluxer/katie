@@ -21,14 +21,12 @@
 
 #include "qvariantanimation.h"
 #include "qvariantanimation_p.h"
-
-#include <QtCore/qrect.h>
-#include <QtCore/qline.h>
-#include <QtCore/qmutex.h>
-#include <QtGui/qcolor.h>
-#include <QtGui/qvector2d.h>
-#include <QtGui/qvector3d.h>
-#include <QtGui/qvector4d.h>
+#include "qrect.h"
+#include "qline.h"
+#include "qcolor.h"
+#include "qvector2d.h"
+#include "qvector3d.h"
+#include "qvector4d.h"
 
 #ifndef QT_NO_ANIMATION
 
@@ -101,25 +99,8 @@ QT_BEGIN_NAMESPACE
 
     If you need to interpolate other variant types, including custom
     types, you have to implement interpolation for these yourself.
-    To do this, you can register an interpolator function for a given
-    type. This function takes 3 parameters: the start value, the end value
-    and the current progress.
-
-    Example:
-    \code
-        QVariant myColorInterpolator(const QColor &start, const QColor &end, qreal progress)
-        {
-            ...
-            return QColor(...);
-        }
-        ...
-        qRegisterAnimationInterpolator<QColor>(myColorInterpolator);
-    \endcode
-
-    Another option is to reimplement interpolated(), which returns
+    To do this you should reimplement interpolated(), which returns
     interpolation values for the value being interpolated.
-
-    \omit We need some snippets around here. \endomit
 
     \sa QPropertyAnimation, QAbstractAnimation, {The Animation Framework}
 */
@@ -141,8 +122,6 @@ QT_BEGIN_NAMESPACE
     \sa currentValue
 */
 
-Q_GLOBAL_STATIC(QMutex, qGlobalVariantAnimationMutex);
-
 static bool animationValueLessThan(const QVariantAnimation::KeyValue &p1, const QVariantAnimation::KeyValue &p2)
 {
     return p1.first < p2.first;
@@ -151,6 +130,19 @@ static bool animationValueLessThan(const QVariantAnimation::KeyValue &p1, const 
 static QVariant defaultInterpolator(const void *, const void *, qreal)
 {
     return QVariant();
+}
+
+// this should make the interpolation faster
+template<typename T>
+inline T _q_interpolate(const T &f, const T &t, qreal progress)
+{
+    return T(f + (t - f) * progress);
+}
+
+template<typename T >
+inline QVariant _q_interpolateVariant(const T &from, const T &to, qreal progress)
+{
+    return _q_interpolate(from, to, progress);
 }
 
 template<> Q_INLINE_TEMPLATE QRect _q_interpolate(const QRect &f, const QRect &t, qreal progress)
@@ -185,35 +177,39 @@ template<> Q_INLINE_TEMPLATE QColor _q_interpolate(const QColor &f,const QColor 
                   qBound(0,_q_interpolate(f.alpha(), t.alpha(), progress),255));
 }
 
-QVariantAnimationPrivate::QVariantAnimationPrivate() : duration(250), interpolator(&defaultInterpolator)
-{ }
+QVariantAnimationPrivate::QVariantAnimationPrivate()
+    : duration(250), interpolator(&defaultInterpolator)
+{
+}
 
 void QVariantAnimationPrivate::convertValues(int t)
 {
-    //this ensures that all the keyValues are of type t
+    // this ensures that all the keyValues are of type t
     for (int i = 0; i < keyValues.count(); ++i) {
         QVariantAnimation::KeyValue &pair = keyValues[i];
         pair.second.convert(static_cast<QVariant::Type>(t));
     }
-    //we also need update to the current interval if needed
+    // we also need update to the current interval if needed
     currentInterval.start.second.convert(static_cast<QVariant::Type>(t));
     currentInterval.end.second.convert(static_cast<QVariant::Type>(t));
 
-    //... and the interpolator
+    // ... and the interpolator
     updateInterpolator();
 }
 
 void QVariantAnimationPrivate::updateInterpolator()
 {
     int type = currentInterval.start.second.userType();
-    if (type == currentInterval.end.second.userType())
+    if (type == currentInterval.end.second.userType()) {
         interpolator = getInterpolator(type);
-    else
+    } else {
         interpolator = 0;
-    
-    //we make sure that the interpolator is always set to something
-    if (!interpolator)
+    }
+
+    // we make sure that the interpolator is always set to something
+    if (!interpolator) {
         interpolator = &defaultInterpolator;
+    }
 }
 
 /*!
@@ -225,8 +221,9 @@ void QVariantAnimationPrivate::updateInterpolator()
 void QVariantAnimationPrivate::recalculateCurrentInterval(bool force/*=false*/)
 {
     // can't interpolate if we don't have at least 2 values
-    if ((keyValues.count() + (defaultStartEndValue.isValid() ? 1 : 0)) < 2)
+    if ((keyValues.count() + (defaultStartEndValue.isValid() ? 1 : 0)) < 2) {
         return;
+    }
 
     const qreal endProgress = (direction == QAbstractAnimation::Forward) ? qreal(1) : qreal(0);
     const qreal progress = easing.valueForProgress(((duration == 0) ? endProgress : qreal(currentTime) / qreal(duration)));
@@ -285,11 +282,11 @@ void QVariantAnimationPrivate::setCurrentValueForProgress(const qreal progress)
     q->updateCurrentValue(currentValue);
     static QAtomicInt changedSignalIndex(0);
     if (!changedSignalIndex) {
-        //we keep the mask so that we emit valueChanged only when needed (for performance reasons)
+        // we keep the mask so that we emit valueChanged only when needed (for performance reasons)
         changedSignalIndex.testAndSetRelaxed(0, signalIndex("valueChanged(QVariant)"));
     }
     if (isSignalConnected(changedSignalIndex) && currentValue != ret) {
-        //the value has changed
+        // the value has changed
         emit q->valueChanged(currentValue);
     }
 }
@@ -392,19 +389,6 @@ void QVariantAnimation::setEasingCurve(const QEasingCurve &easing)
     d->recalculateCurrentInterval();
 }
 
-typedef QVector<QVariantAnimation::Interpolator> QInterpolatorVector;
-Q_GLOBAL_STATIC(QInterpolatorVector, registeredInterpolators)
-
-/*!
-    \fn void qRegisterAnimationInterpolator(QVariant (*func)(const T &from, const T &to, qreal progress))
-    \relates QVariantAnimation
-    \threadsafe
-
-    Registers a custom interpolator \a func for the template type \c{T}.
-    The interpolator has to be registered before the animation is constructed.
-    To unregister (and use the default interpolator) set \a func to 0.
- */
-
 /*!
     \internal
     \typedef QVariantAnimation::Interpolator
@@ -417,34 +401,8 @@ Q_GLOBAL_STATIC(QInterpolatorVector, registeredInterpolators)
 
 */
 
-/*! \internal
- * Registers a custom interpolator \a func for the specific \a interpolationType.
- * The interpolator has to be registered before the animation is constructed.
- * To unregister (and use the default interpolator) set \a func to 0.
- */
-void QVariantAnimation::registerInterpolator(QVariantAnimation::Interpolator func, int interpolationType)
-{
-    QMutexLocker locker(qGlobalVariantAnimationMutex());
-    QInterpolatorVector *interpolators = registeredInterpolators();
-    // the unregistration of interpolators can be called in such an order that we get here with
-    // interpolators == NULL which causes the app to crash on exit with a SEGV
-    if (interpolators) {
-        // will override any existing interpolators
-        if (interpolationType >= interpolators->count())
-            interpolators->resize(interpolationType + 1);
-        interpolators->replace(interpolationType, func);
-    }
-}
-
 QVariantAnimation::Interpolator QVariantAnimationPrivate::getInterpolator(int interpolationType)
 {
-    QMutexLocker locker(qGlobalVariantAnimationMutex());
-    QInterpolatorVector *interpolators = registeredInterpolators();
-    if (interpolationType < interpolators->count()) {
-        QVariantAnimation::Interpolator ret = interpolators->at(interpolationType);
-        if (ret) return ret;
-    }
-
     switch(QMetaType::Type(interpolationType)) {
         case QMetaType::Int:
             return reinterpret_cast<QVariantAnimation::Interpolator>(_q_interpolateVariant<int>);
@@ -485,7 +443,7 @@ QVariantAnimation::Interpolator QVariantAnimationPrivate::getInterpolator(int in
             return reinterpret_cast<QVariantAnimation::Interpolator>(_q_interpolateVariant<QVector4D>);
 #endif // QT_NO_VECTOR4D
         default:
-            return 0; //this type is not handled
+            return nullptr; //this type is not handled
     }
 }
 
@@ -497,7 +455,7 @@ QVariantAnimation::Interpolator QVariantAnimationPrivate::getInterpolator(int in
     animation. The default duration is 250 milliseconds.
 
     \sa QAbstractAnimation::duration()
- */
+*/
 int QVariantAnimation::duration() const
 {
     Q_D(const QVariantAnimation);
@@ -546,7 +504,7 @@ void QVariantAnimation::setStartValue(const QVariant &value)
     This property describes the end value of the animation.
 
     \sa startValue
- */
+*/
 QVariant QVariantAnimation::endValue() const
 {
     return keyValueAt(1);
@@ -556,7 +514,6 @@ void QVariantAnimation::setEndValue(const QVariant &value)
 {
     setKeyValueAt(1, value);
 }
-
 
 /*!
     Returns the key frame value for the given \a step. The given \a step
@@ -575,6 +532,7 @@ QVariant QVariantAnimation::keyValueAt(qreal step) const
 
     This is a typedef for QPair<qreal, QVariant>.
 */
+
 /*!
     \typedef QVariantAnimation::KeyValues
 

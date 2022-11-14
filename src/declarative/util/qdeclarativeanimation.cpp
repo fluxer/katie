@@ -1669,7 +1669,7 @@ void QDeclarativeParallelAnimation::transition(QDeclarativeStateActions &actions
 
 
 
-//convert a variant from string type to another animatable type
+// convert a variant from string type to another animatable type
 void QDeclarativePropertyAnimationPrivate::convertVariant(QVariant &variant, int type)
 {
     if (variant.userType() != QVariant::String) {
