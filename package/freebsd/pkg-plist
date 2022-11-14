@@ -400,7 +400,6 @@ include/katie/QtGui/QDragEnterEvent
 include/katie/QtGui/QDragLeaveEvent
 include/katie/QtGui/QDragMoveEvent
 include/katie/QtGui/QDropEvent
-include/katie/QtGui/QErrorMessage
 include/katie/QtGui/QFileDialog
 include/katie/QtGui/QFileIconProvider
 include/katie/QtGui/QFileSystemModel
@@ -745,7 +744,6 @@ include/katie/QtGui/qdirmodel.h
 include/katie/QtGui/qdockwidget.h
 include/katie/QtGui/qdrag.h
 include/katie/QtGui/qdrawutil.h
-include/katie/QtGui/qerrormessage.h
 include/katie/QtGui/qevent.h
 include/katie/QtGui/qfiledialog.h
 include/katie/QtGui/qfileiconprovider.h

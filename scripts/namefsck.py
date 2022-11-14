@@ -151,7 +151,6 @@ classlist = [
     "QDynamicPropertyChangeEvent",
     "QEasingCurve",
     "QElapsedTimer",
-    "QErrorMessage",
     "QEvent",
     "QEventLoop",
     "QEventSizeOfChecker",

@@ -376,11 +376,6 @@
 #  define QT_NO_TEXTEDIT
 #endif
 
-// QErrorMessage
-#if !defined(QT_NO_ERRORMESSAGE) && (defined(QT_NO_TEXTEDIT))
-#  define QT_NO_ERRORMESSAGE
-#endif
-
 // QListView
 #if !defined(QT_NO_LISTVIEW) && defined(QT_NO_ITEMVIEWS)
 #  define QT_NO_LISTVIEW

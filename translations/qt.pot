@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-11-14 20:38+0200\n"
+"POT-Creation-Date: 2022-11-14 23:21+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -17,37 +17,146 @@ msgstr ""
 "Content-Type: text/plain; charset=CHARSET\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: src/core/plugin/qlibrary.cpp:154
-msgid "'%1' is not ELF file"
+#: src/core/tools/qjsondocument.cpp:52
+msgctxt "QJsonDocument"
+msgid "Data is empty"
 msgstr ""
 
-#: src/core/plugin/qlibrary.cpp:157
-msgid "ELF class mismatch in '%1'"
+#: src/core/tools/qjsondocument.cpp:113 src/core/tools/qjsondocument.cpp:190
+msgctxt "QJsonDocument"
+msgid "Unknown JSON type in array"
 msgstr ""
 
-#: src/core/plugin/qlibrary.cpp:335 src/core/plugin/qlibrary.cpp:345
-msgid "The shared library was not found."
+#: src/core/tools/qjsondocument.cpp:146
+msgctxt "QJsonDocument"
+msgid "Unknown JSON type"
 msgstr ""
 
-#: src/core/plugin/qlibrary.cpp:347
-msgid "The file '%1' is not a valid Katie plugin."
+#: src/core/tools/qjsondocument.cpp:199 src/core/tools/qjsondocument.cpp:301
+msgctxt "QJsonDocument"
+msgid "Rootless values are not supported"
 msgstr ""
 
-#: src/core/plugin/qlibrary.cpp:533 src/core/io/qiodevice.cpp:1500
+#: src/core/tools/qjsondocument.cpp:214 src/core/tools/qjsondocument.cpp:226
+msgctxt "QJsonDocument"
+msgid "Data variant is null"
+msgstr ""
+
+#: src/core/tools/qjsondocument.cpp:217
+msgctxt "QJsonDocument"
+msgid "Maximum depth reached"
+msgstr ""
+
+#: src/core/tools/qjsondocument.cpp:284 src/core/tools/qjsondocument.cpp:310
+msgctxt "QJsonDocument"
+msgid "Unknown variant type"
+msgstr ""
+
+#: src/core/tools/qjsondocument.cpp:306
+msgctxt "QJsonDocument"
+msgid "Rootless arrays are not supported"
+msgstr ""
+
+#: src/core/tools/qregexp.cpp:45
+msgctxt "QRegExp"
+msgid "no error occurred"
+msgstr ""
+
+#: src/core/tools/qregexp.cpp:46
+msgctxt "QRegExp"
+msgid "disabled feature used"
+msgstr ""
+
+#: src/core/tools/qregexp.cpp:47
+msgctxt "QRegExp"
+msgid "bad char class syntax"
+msgstr ""
+
+#: src/core/tools/qregexp.cpp:48
+msgctxt "QRegExp"
+msgid "bad lookahead syntax"
+msgstr ""
+
+#: src/core/tools/qregexp.cpp:49
+msgctxt "QRegExp"
+msgid "lookbehinds not supported, see QTBUG-2371"
+msgstr ""
+
+#: src/core/tools/qregexp.cpp:50
+msgctxt "QRegExp"
+msgid "bad repetition syntax"
+msgstr ""
+
+#: src/core/tools/qregexp.cpp:51
+msgctxt "QRegExp"
+msgid "invalid octal value"
+msgstr ""
+
+#: src/core/tools/qregexp.cpp:52
+msgctxt "QRegExp"
+msgid "missing left delim"
+msgstr ""
+
+#: src/core/tools/qregexp.cpp:53
+msgctxt "QRegExp"
+msgid "unexpected end"
+msgstr ""
+
+#: src/core/tools/qregexp.cpp:54
+msgctxt "QRegExp"
+msgid "met internal limit"
+msgstr ""
+
+#: src/core/tools/qregexp.cpp:55
+msgctxt "QRegExp"
+msgid "invalid interval"
+msgstr ""
+
+#: src/core/tools/qregexp.cpp:56
+msgctxt "QRegExp"
+msgid "invalid category"
+msgstr ""
+
+#: src/core/io/qfile.cpp:578
+msgid "Destination file exists"
+msgstr ""
+
+#: src/core/io/qprocess_unix.cpp:335
+msgid "Could not open input redirection for reading"
+msgstr ""
+
+#: src/core/io/qprocess_unix.cpp:347
+msgid "Could not open output redirection for writing"
+msgstr ""
+
+#: src/core/io/qprocess_unix.cpp:548
+msgid "Resource error (fork failure): %1"
+msgstr ""
+
+#: src/core/io/qprocess_unix.cpp:786 src/core/io/qprocess_unix.cpp:834
+#: src/core/io/qprocess_unix.cpp:904 src/core/io/qprocess_unix.cpp:966
+msgid "Process operation timed out"
+msgstr ""
+
+#: src/core/io/qiodevice.cpp:1500 src/core/plugin/qlibrary.cpp:533
 #: src/network/socket/qabstractsocketengine.cpp:439
 msgid "Unknown error"
 msgstr ""
 
-#: src/core/plugin/qlibrary_unix.cpp:52
-msgid "Cannot load library %1: %2"
+#: src/core/io/qprocess.cpp:663 src/core/io/qprocess.cpp:715
+msgid "Error reading from process"
 msgstr ""
 
-#: src/core/plugin/qlibrary_unix.cpp:62
-msgid "Cannot unload library %1: %2"
+#: src/core/io/qprocess.cpp:762
+msgid "Error writing to process"
 msgstr ""
 
-#: src/core/plugin/qlibrary_unix.cpp:73
-msgid "Cannot resolve symbol \"%1\" in %2: %3"
+#: src/core/io/qprocess.cpp:825
+msgid "Process crashed"
+msgstr ""
+
+#: src/core/io/qprocess.cpp:1726
+msgid "No program defined"
 msgstr ""
 
 #: src/core/io/qstandardpaths.cpp:180
@@ -120,242 +229,347 @@ msgctxt "QStandardPaths"
 msgid "Executable"
 msgstr ""
 
-#: src/core/io/qfile.cpp:578
-msgid "Destination file exists"
+#: src/core/plugin/qlibrary_unix.cpp:52
+msgid "Cannot load library %1: %2"
 msgstr ""
 
-#: src/core/io/qprocess.cpp:663 src/core/io/qprocess.cpp:715
-msgid "Error reading from process"
+#: src/core/plugin/qlibrary_unix.cpp:62
+msgid "Cannot unload library %1: %2"
 msgstr ""
 
-#: src/core/io/qprocess.cpp:762
-msgid "Error writing to process"
+#: src/core/plugin/qlibrary_unix.cpp:73
+msgid "Cannot resolve symbol \"%1\" in %2: %3"
 msgstr ""
 
-#: src/core/io/qprocess.cpp:825
-msgid "Process crashed"
+#: src/core/plugin/qlibrary.cpp:154
+msgid "'%1' is not ELF file"
 msgstr ""
 
-#: src/core/io/qprocess.cpp:1726
-msgid "No program defined"
+#: src/core/plugin/qlibrary.cpp:157
+msgid "ELF class mismatch in '%1'"
 msgstr ""
 
-#: src/core/io/qprocess_unix.cpp:335
-msgid "Could not open input redirection for reading"
+#: src/core/plugin/qlibrary.cpp:335 src/core/plugin/qlibrary.cpp:345
+msgid "The shared library was not found."
 msgstr ""
 
-#: src/core/io/qprocess_unix.cpp:347
-msgid "Could not open output redirection for writing"
+#: src/core/plugin/qlibrary.cpp:347
+msgid "The file '%1' is not a valid Katie plugin."
 msgstr ""
 
-#: src/core/io/qprocess_unix.cpp:548
-msgid "Resource error (fork failure): %1"
+#: src/declarative/util/qdeclarativebehavior.cpp:107
+msgid "Cannot change the animation assigned to a Behavior."
 msgstr ""
 
-#: src/core/io/qprocess_unix.cpp:786 src/core/io/qprocess_unix.cpp:834
-#: src/core/io/qprocess_unix.cpp:904 src/core/io/qprocess_unix.cpp:966
-msgid "Process operation timed out"
+#: src/declarative/util/qdeclarativeutilmodule.cpp:58
+msgid "Application is an abstract class"
 msgstr ""
 
-#: src/core/tools/qregexp.cpp:45
-msgctxt "QRegExp"
-msgid "no error occurred"
+#: src/declarative/util/qdeclarativeutilmodule.cpp:85
+msgid "Animation is an abstract class"
 msgstr ""
 
-#: src/core/tools/qregexp.cpp:46
-msgctxt "QRegExp"
-msgid "disabled feature used"
+#: src/declarative/util/qdeclarativepropertychanges.cpp:236
+msgid "PropertyChanges does not support creating state-specific objects."
 msgstr ""
 
-#: src/core/tools/qregexp.cpp:47
-msgctxt "QRegExp"
-msgid "bad char class syntax"
+#: src/declarative/util/qdeclarativepropertychanges.cpp:404
+#: src/declarative/util/qdeclarativeconnections.cpp:187
+#: src/declarative/util/qdeclarativeconnections.cpp:251
+#: src/declarative/qml/qdeclarativecompiler.cpp:1507
+#: src/declarative/qml/qdeclarativecompiler.cpp:1863
+#: src/declarative/qml/qdeclarativecompiler.cpp:1866
+msgid "Cannot assign to non-existent property \"%1\""
 msgstr ""
 
-#: src/core/tools/qregexp.cpp:48
-msgctxt "QRegExp"
-msgid "bad lookahead syntax"
+#: src/declarative/util/qdeclarativepropertychanges.cpp:407
+msgid "Cannot assign to read-only property \"%1\""
 msgstr ""
 
-#: src/core/tools/qregexp.cpp:49
-msgctxt "QRegExp"
-msgid "lookbehinds not supported, see QTBUG-2371"
+#: src/declarative/util/qdeclarativeanimation.cpp:152
+msgid "Cannot animate non-existent property \"%1\""
 msgstr ""
 
-#: src/core/tools/qregexp.cpp:50
-msgctxt "QRegExp"
-msgid "bad repetition syntax"
+#: src/declarative/util/qdeclarativeanimation.cpp:155
+msgid "Cannot animate read-only property \"%1\""
 msgstr ""
 
-#: src/core/tools/qregexp.cpp:51
-msgctxt "QRegExp"
-msgid "invalid octal value"
+#: src/declarative/util/qdeclarativeanimation.cpp:589
+#: src/declarative/util/qdeclarativeanimation.cpp:1823
+#: src/declarative/util/qdeclarativeanimation.cpp:2843
+msgid "Cannot set a duration of < 0"
 msgstr ""
 
-#: src/core/tools/qregexp.cpp:52
-msgctxt "QRegExp"
-msgid "missing left delim"
+#: src/declarative/util/qdeclarativeanimation.cpp:2675
+#: src/declarative/util/qdeclarativestateoperations.cpp:83
+msgid "Unable to preserve appearance under complex transform"
 msgstr ""
 
-#: src/core/tools/qregexp.cpp:53
-msgctxt "QRegExp"
-msgid "unexpected end"
+#: src/declarative/util/qdeclarativeanimation.cpp:2686
+#: src/declarative/util/qdeclarativeanimation.cpp:2693
+#: src/declarative/util/qdeclarativestateoperations.cpp:94
+#: src/declarative/util/qdeclarativestateoperations.cpp:101
+msgid "Unable to preserve appearance under non-uniform scale"
 msgstr ""
 
-#: src/core/tools/qregexp.cpp:54
-msgctxt "QRegExp"
-msgid "met internal limit"
+#: src/declarative/util/qdeclarativeanimation.cpp:2700
+#: src/declarative/util/qdeclarativestateoperations.cpp:108
+msgid "Unable to preserve appearance under scale of 0"
 msgstr ""
 
-#: src/core/tools/qregexp.cpp:55
-msgctxt "QRegExp"
-msgid "invalid interval"
+#: src/declarative/util/qdeclarativeconnections.cpp:197
+msgid "Connections: nested objects not allowed"
 msgstr ""
 
-#: src/core/tools/qregexp.cpp:56
-msgctxt "QRegExp"
-msgid "invalid category"
+#: src/declarative/util/qdeclarativeconnections.cpp:200
+msgid "Connections: syntax error"
 msgstr ""
 
-#: src/core/tools/qjsondocument.cpp:52
-msgctxt "QJsonDocument"
-msgid "Data is empty"
+#: src/declarative/util/qdeclarativeconnections.cpp:208
+msgid "Connections: script expected"
 msgstr ""
 
-#: src/core/tools/qjsondocument.cpp:113 src/core/tools/qjsondocument.cpp:190
-msgctxt "QJsonDocument"
-msgid "Unknown JSON type in array"
+#: src/declarative/util/qdeclarativelistmodel.cpp:370
+msgid "remove: index %1 out of range"
 msgstr ""
 
-#: src/core/tools/qjsondocument.cpp:146
-msgctxt "QJsonDocument"
-msgid "Unknown JSON type"
+#: src/declarative/util/qdeclarativelistmodel.cpp:403
+msgid "insert: value is not an object"
 msgstr ""
 
-#: src/core/tools/qjsondocument.cpp:199 src/core/tools/qjsondocument.cpp:301
-msgctxt "QJsonDocument"
-msgid "Rootless values are not supported"
+#: src/declarative/util/qdeclarativelistmodel.cpp:408
+msgid "insert: index %1 out of range"
 msgstr ""
 
-#: src/core/tools/qjsondocument.cpp:214 src/core/tools/qjsondocument.cpp:226
-msgctxt "QJsonDocument"
-msgid "Data variant is null"
+#: src/declarative/util/qdeclarativelistmodel.cpp:438
+msgid "move: out of range"
 msgstr ""
 
-#: src/core/tools/qjsondocument.cpp:217
-msgctxt "QJsonDocument"
-msgid "Maximum depth reached"
+#: src/declarative/util/qdeclarativelistmodel.cpp:478
+msgid "append: value is not an object"
 msgstr ""
 
-#: src/core/tools/qjsondocument.cpp:284 src/core/tools/qjsondocument.cpp:310
-msgctxt "QJsonDocument"
-msgid "Unknown variant type"
+#: src/declarative/util/qdeclarativelistmodel.cpp:549
+msgid "set: value is not an object"
 msgstr ""
 
-#: src/core/tools/qjsondocument.cpp:306
-msgctxt "QJsonDocument"
-msgid "Rootless arrays are not supported"
+#: src/declarative/util/qdeclarativelistmodel.cpp:553
+#: src/declarative/util/qdeclarativelistmodel.cpp:591
+msgid "set: index %1 out of range"
 msgstr ""
 
-#: src/declarative/graphicsitems/qdeclarativeitemsmodule.cpp:82
-msgctxt "QDeclarativeAnimatedImage"
-msgid "Katie was built without support for QMovie"
+#: src/declarative/util/qdeclarativelistmodel.cpp:628
+#: src/declarative/util/qdeclarativelistmodel.cpp:645
+msgid "ListElement: cannot contain nested elements"
 msgstr ""
 
-#: src/declarative/graphicsitems/qdeclarativeitemsmodule.cpp:154
-msgid "KeyNavigation is only available via attached properties"
+#: src/declarative/util/qdeclarativelistmodel.cpp:649
+msgid "ListElement: cannot use reserved \"id\" property"
 msgstr ""
 
-#: src/declarative/graphicsitems/qdeclarativeitemsmodule.cpp:155
-msgid "Keys is only available via attached properties"
+#: src/declarative/util/qdeclarativelistmodel.cpp:703
+msgid "ListElement: cannot use script for property value"
 msgstr ""
 
-#: src/declarative/graphicsitems/qdeclarativeitemsmodule.cpp:177
-msgid "LayoutMirroring is only available via attached properties"
+#: src/declarative/util/qdeclarativelistmodel.cpp:735
+msgid "ListModel: undefined property '%1'"
 msgstr ""
 
-#: src/declarative/graphicsitems/qdeclarativeloader.cpp:387
-msgid "Loader does not support loading non-visual elements."
+#: src/declarative/util/qdeclarativepixmapcache.cpp:256
+msgid "Error decoding: %1: %2"
 msgstr ""
 
-#: src/declarative/graphicsitems/qdeclarativeanchors.cpp:177
-msgid "Possible anchor loop detected on fill."
+#: src/declarative/util/qdeclarativepixmapcache.cpp:359
+#: src/declarative/util/qdeclarativepixmapcache.cpp:699
+msgid "Failed to get image from provider: %1"
 msgstr ""
 
-#: src/declarative/graphicsitems/qdeclarativeanchors.cpp:206
-msgid "Possible anchor loop detected on centerIn."
+#: src/declarative/util/qdeclarativepixmapcache.cpp:375
+#: src/declarative/util/qdeclarativepixmapcache.cpp:717
+msgid "Cannot open: %1"
 msgstr ""
 
-#: src/declarative/graphicsitems/qdeclarativeanchors.cpp:414
-#: src/declarative/graphicsitems/qdeclarativeanchors.cpp:448
-#: src/declarative/graphicsitems/qdeclarativeanchors.cpp:1094
-#: src/declarative/graphicsitems/qdeclarativeanchors.cpp:1131
-msgid "Cannot anchor to an item that isn't a parent or sibling."
+#: src/declarative/qml/qdeclarativevme.cpp:199
+msgctxt "QDeclarativeVME"
+msgid "Unable to create object of type %1"
 msgstr ""
 
-#: src/declarative/graphicsitems/qdeclarativeanchors.cpp:561
-msgid "Possible anchor loop detected on vertical anchor."
+#: src/declarative/qml/qdeclarativevme.cpp:639
+msgctxt "QDeclarativeVME"
+msgid "Cannot assign object type %1 with no default method"
 msgstr ""
 
-#: src/declarative/graphicsitems/qdeclarativeanchors.cpp:656
-msgid "Possible anchor loop detected on horizontal anchor."
+#: src/declarative/qml/qdeclarativevme.cpp:642
+msgctxt "QDeclarativeVME"
+msgid "Cannot connect mismatched signal/slot %1 %vs. %2"
 msgstr ""
 
-#: src/declarative/graphicsitems/qdeclarativeanchors.cpp:1078
-msgid "Cannot specify left, right, and hcenter anchors."
+#: src/declarative/qml/qdeclarativevme.cpp:647
+msgctxt "QDeclarativeVME"
+msgid "Cannot assign an object to signal property %1"
 msgstr ""
 
-#: src/declarative/graphicsitems/qdeclarativeanchors.cpp:1088
-#: src/declarative/graphicsitems/qdeclarativeanchors.cpp:1125
-msgid "Cannot anchor to a null item."
+#: src/declarative/qml/qdeclarativevme.cpp:796
+msgctxt "QDeclarativeVME"
+msgid "Cannot assign object to list"
 msgstr ""
 
-#: src/declarative/graphicsitems/qdeclarativeanchors.cpp:1091
-msgid "Cannot anchor a horizontal edge to a vertical edge."
+#: src/declarative/qml/qdeclarativevme.cpp:839
+msgctxt "QDeclarativeVME"
+msgid "Cannot assign object to interface property"
 msgstr ""
 
-#: src/declarative/graphicsitems/qdeclarativeanchors.cpp:1097
-#: src/declarative/graphicsitems/qdeclarativeanchors.cpp:1134
-msgid "Cannot anchor item to self."
+#: src/declarative/qml/qdeclarativevme.cpp:850
+msgctxt "QDeclarativeVME"
+msgid "Unable to create attached object"
 msgstr ""
 
-#: src/declarative/graphicsitems/qdeclarativeanchors.cpp:1109
-msgid "Cannot specify top, bottom, and vcenter anchors."
+#: src/declarative/qml/qdeclarativevme.cpp:882
+msgctxt "QDeclarativeVME"
+msgid "Cannot set properties on %1 as it is null"
 msgstr ""
 
-#: src/declarative/graphicsitems/qdeclarativeanchors.cpp:1115
-msgid ""
-"Baseline anchor cannot be used in conjunction with top, bottom, or vcenter "
-"anchors."
+#: src/declarative/qml/qdeclarativeimport.cpp:358
+msgid "plugin cannot be loaded for module \"%1\": %2"
 msgstr ""
 
-#: src/declarative/graphicsitems/qdeclarativeanchors.cpp:1128
-msgid "Cannot anchor a vertical edge to a horizontal edge."
+#: src/declarative/qml/qdeclarativeimport.cpp:363
+msgid "module \"%1\" plugin \"%2\" not found"
 msgstr ""
 
-#: src/declarative/graphicsitems/qdeclarativetextinput.cpp:870
-#: src/declarative/graphicsitems/qdeclarativetextinput.cpp:878
-msgid "Could not load cursor delegate"
+#: src/declarative/qml/qdeclarativeimport.cpp:507
+#: src/declarative/qml/qdeclarativeimport.cpp:575
+msgid "module \"%1\" version %2.%3 is not installed"
 msgstr ""
 
-#: src/declarative/graphicsitems/qdeclarativetextinput.cpp:889
-msgid "Could not instantiate cursor delegate"
+#: src/declarative/qml/qdeclarativeimport.cpp:509
+msgid "module \"%1\" is not installed"
 msgstr ""
 
-#: src/declarative/graphicsitems/qdeclarativeflipable.cpp:118
-msgid "front is a write-once property"
+#: src/declarative/qml/qdeclarativeimport.cpp:523
+#: src/declarative/qml/qdeclarativeimport.cpp:543
+msgid "\"%1\": no such directory"
 msgstr ""
 
-#: src/declarative/graphicsitems/qdeclarativeflipable.cpp:138
-msgid "back is a write-once property"
+#: src/declarative/qml/qdeclarativeimport.cpp:541
+msgid "import \"%1\" has no qmldir and no namespace"
 msgstr ""
 
-#: src/declarative/graphicsitems/qdeclarativeitem.cpp:783
-msgid "LayoutDirection attached property only works with Items"
+#: src/declarative/qml/qdeclarativeimport.cpp:609
+msgid "- %1 is not a namespace"
 msgstr ""
 
-#: src/declarative/graphicsitems/qdeclarativevisualitemmodel.cpp:1081
-msgid "Delegate component must be Item type."
+#: src/declarative/qml/qdeclarativeimport.cpp:615
+msgid "- nested namespaces not allowed"
+msgstr ""
+
+#: src/declarative/qml/qdeclarativeimport.cpp:662
+#: src/declarative/qml/qdeclarativeimport.cpp:666
+msgid "local directory"
+msgstr ""
+
+#: src/declarative/qml/qdeclarativeimport.cpp:672
+msgid "is ambiguous. Found in %1 and in %2"
+msgstr ""
+
+#: src/declarative/qml/qdeclarativeimport.cpp:676
+msgid "is ambiguous. Found in %1 in version %2.%3 and %4.%5"
+msgstr ""
+
+#: src/declarative/qml/qdeclarativeimport.cpp:690
+msgid "is instantiated recursively"
+msgstr ""
+
+#: src/declarative/qml/qdeclarativeimport.cpp:692
+msgid "is not a type"
+msgstr ""
+
+#: src/declarative/qml/qdeclarativecompiledbindings.cpp:315
+msgctxt "QDeclarativeCompiledBindings"
+msgid "Binding loop detected for property \"%1\""
+msgstr ""
+
+#: src/declarative/qml/qdeclarativescriptparser.cpp:235
+#: src/declarative/qml/qdeclarativescriptparser.cpp:664
+#: src/declarative/qml/qdeclarativescriptparser.cpp:723
+msgctxt "QDeclarativeParser"
+msgid "Property value set multiple times"
+msgstr ""
+
+#: src/declarative/qml/qdeclarativescriptparser.cpp:246
+msgctxt "QDeclarativeParser"
+msgid "Expected type name"
+msgstr ""
+
+#: src/declarative/qml/qdeclarativescriptparser.cpp:380
+msgctxt "QDeclarativeParser"
+msgid "Invalid import qualifier ID"
+msgstr ""
+
+#: src/declarative/qml/qdeclarativescriptparser.cpp:388
+msgctxt "QDeclarativeParser"
+msgid "Reserved name \"Qt\" cannot be used as an qualifier"
+msgstr ""
+
+#: src/declarative/qml/qdeclarativescriptparser.cpp:403
+msgctxt "QDeclarativeParser"
+msgid "Script import qualifiers must be unique."
+msgstr ""
+
+#: src/declarative/qml/qdeclarativescriptparser.cpp:413
+msgctxt "QDeclarativeParser"
+msgid "Script import requires a qualifier"
+msgstr ""
+
+#: src/declarative/qml/qdeclarativescriptparser.cpp:424
+msgctxt "QDeclarativeParser"
+msgid "Library import requires a version"
+msgstr ""
+
+#: src/declarative/qml/qdeclarativescriptparser.cpp:483
+msgctxt "QDeclarativeParser"
+msgid "Expected parameter type"
+msgstr ""
+
+#: src/declarative/qml/qdeclarativescriptparser.cpp:525
+msgctxt "QDeclarativeParser"
+msgid "Invalid property type modifier"
+msgstr ""
+
+#: src/declarative/qml/qdeclarativescriptparser.cpp:534
+msgctxt "QDeclarativeParser"
+msgid "Unexpected property type modifier"
+msgstr ""
+
+#: src/declarative/qml/qdeclarativescriptparser.cpp:543
+msgctxt "QDeclarativeParser"
+msgid "Expected property type"
+msgstr ""
+
+#: src/declarative/qml/qdeclarativescriptparser.cpp:552
+msgctxt "QDeclarativeParser"
+msgid "Readonly not yet supported"
+msgstr ""
+
+#: src/declarative/qml/qdeclarativescriptparser.cpp:770
+msgctxt "QDeclarativeParser"
+msgid "JavaScript declaration outside Script element"
+msgstr ""
+
+#: src/declarative/qml/qdeclarativetypeloader.cpp:774
+msgid "Script %1 unavailable"
+msgstr ""
+
+#: src/declarative/qml/qdeclarativetypeloader.cpp:792
+msgid "Type %1 unavailable"
+msgstr ""
+
+#: src/declarative/qml/qdeclarativetypeloader.cpp:978
+msgid "Namespace %1 cannot be used as a type"
+msgstr ""
+
+#: src/declarative/qml/qdeclarativetypeloader.cpp:980
+msgid "%1 %2"
 msgstr ""
 
 #: src/declarative/qml/qdeclarativecompiler.cpp:164
@@ -511,15 +725,6 @@ msgstr ""
 
 #: src/declarative/qml/qdeclarativecompiler.cpp:1505
 msgid "Cannot assign to non-existent default property"
-msgstr ""
-
-#: src/declarative/qml/qdeclarativecompiler.cpp:1507
-#: src/declarative/qml/qdeclarativecompiler.cpp:1863
-#: src/declarative/qml/qdeclarativecompiler.cpp:1866
-#: src/declarative/util/qdeclarativeconnections.cpp:187
-#: src/declarative/util/qdeclarativeconnections.cpp:251
-#: src/declarative/util/qdeclarativepropertychanges.cpp:404
-msgid "Cannot assign to non-existent property \"%1\""
 msgstr ""
 
 #: src/declarative/qml/qdeclarativecompiler.cpp:1537
@@ -699,65 +904,6 @@ msgstr ""
 msgid "Alias property exceeds alias bounds"
 msgstr ""
 
-#: src/declarative/qml/qdeclarativeimport.cpp:358
-msgid "plugin cannot be loaded for module \"%1\": %2"
-msgstr ""
-
-#: src/declarative/qml/qdeclarativeimport.cpp:363
-msgid "module \"%1\" plugin \"%2\" not found"
-msgstr ""
-
-#: src/declarative/qml/qdeclarativeimport.cpp:507
-#: src/declarative/qml/qdeclarativeimport.cpp:575
-msgid "module \"%1\" version %2.%3 is not installed"
-msgstr ""
-
-#: src/declarative/qml/qdeclarativeimport.cpp:509
-msgid "module \"%1\" is not installed"
-msgstr ""
-
-#: src/declarative/qml/qdeclarativeimport.cpp:523
-#: src/declarative/qml/qdeclarativeimport.cpp:543
-msgid "\"%1\": no such directory"
-msgstr ""
-
-#: src/declarative/qml/qdeclarativeimport.cpp:541
-msgid "import \"%1\" has no qmldir and no namespace"
-msgstr ""
-
-#: src/declarative/qml/qdeclarativeimport.cpp:609
-msgid "- %1 is not a namespace"
-msgstr ""
-
-#: src/declarative/qml/qdeclarativeimport.cpp:615
-msgid "- nested namespaces not allowed"
-msgstr ""
-
-#: src/declarative/qml/qdeclarativeimport.cpp:662
-#: src/declarative/qml/qdeclarativeimport.cpp:666
-msgid "local directory"
-msgstr ""
-
-#: src/declarative/qml/qdeclarativeimport.cpp:672
-msgid "is ambiguous. Found in %1 and in %2"
-msgstr ""
-
-#: src/declarative/qml/qdeclarativeimport.cpp:676
-msgid "is ambiguous. Found in %1 in version %2.%3 and %4.%5"
-msgstr ""
-
-#: src/declarative/qml/qdeclarativeimport.cpp:690
-msgid "is instantiated recursively"
-msgstr ""
-
-#: src/declarative/qml/qdeclarativeimport.cpp:692
-msgid "is not a type"
-msgstr ""
-
-#: src/declarative/qml/qdeclarativebinding.cpp:407
-msgid "Binding loop detected for property \"%1\""
-msgstr ""
-
 #: src/declarative/qml/qdeclarativecomponent.cpp:477
 msgid "Invalid empty URL"
 msgstr ""
@@ -766,149 +912,8 @@ msgstr ""
 msgid "createObject: value is not an object"
 msgstr ""
 
-#: src/declarative/qml/qdeclarativevme.cpp:199
-msgctxt "QDeclarativeVME"
-msgid "Unable to create object of type %1"
-msgstr ""
-
-#: src/declarative/qml/qdeclarativevme.cpp:639
-msgctxt "QDeclarativeVME"
-msgid "Cannot assign object type %1 with no default method"
-msgstr ""
-
-#: src/declarative/qml/qdeclarativevme.cpp:642
-msgctxt "QDeclarativeVME"
-msgid "Cannot connect mismatched signal/slot %1 %vs. %2"
-msgstr ""
-
-#: src/declarative/qml/qdeclarativevme.cpp:647
-msgctxt "QDeclarativeVME"
-msgid "Cannot assign an object to signal property %1"
-msgstr ""
-
-#: src/declarative/qml/qdeclarativevme.cpp:796
-msgctxt "QDeclarativeVME"
-msgid "Cannot assign object to list"
-msgstr ""
-
-#: src/declarative/qml/qdeclarativevme.cpp:839
-msgctxt "QDeclarativeVME"
-msgid "Cannot assign object to interface property"
-msgstr ""
-
-#: src/declarative/qml/qdeclarativevme.cpp:850
-msgctxt "QDeclarativeVME"
-msgid "Unable to create attached object"
-msgstr ""
-
-#: src/declarative/qml/qdeclarativevme.cpp:882
-msgctxt "QDeclarativeVME"
-msgid "Cannot set properties on %1 as it is null"
-msgstr ""
-
-#: src/declarative/qml/qdeclarativescriptparser.cpp:235
-#: src/declarative/qml/qdeclarativescriptparser.cpp:664
-#: src/declarative/qml/qdeclarativescriptparser.cpp:723
-msgctxt "QDeclarativeParser"
-msgid "Property value set multiple times"
-msgstr ""
-
-#: src/declarative/qml/qdeclarativescriptparser.cpp:246
-msgctxt "QDeclarativeParser"
-msgid "Expected type name"
-msgstr ""
-
-#: src/declarative/qml/qdeclarativescriptparser.cpp:380
-msgctxt "QDeclarativeParser"
-msgid "Invalid import qualifier ID"
-msgstr ""
-
-#: src/declarative/qml/qdeclarativescriptparser.cpp:388
-msgctxt "QDeclarativeParser"
-msgid "Reserved name \"Qt\" cannot be used as an qualifier"
-msgstr ""
-
-#: src/declarative/qml/qdeclarativescriptparser.cpp:403
-msgctxt "QDeclarativeParser"
-msgid "Script import qualifiers must be unique."
-msgstr ""
-
-#: src/declarative/qml/qdeclarativescriptparser.cpp:413
-msgctxt "QDeclarativeParser"
-msgid "Script import requires a qualifier"
-msgstr ""
-
-#: src/declarative/qml/qdeclarativescriptparser.cpp:424
-msgctxt "QDeclarativeParser"
-msgid "Library import requires a version"
-msgstr ""
-
-#: src/declarative/qml/qdeclarativescriptparser.cpp:483
-msgctxt "QDeclarativeParser"
-msgid "Expected parameter type"
-msgstr ""
-
-#: src/declarative/qml/qdeclarativescriptparser.cpp:525
-msgctxt "QDeclarativeParser"
-msgid "Invalid property type modifier"
-msgstr ""
-
-#: src/declarative/qml/qdeclarativescriptparser.cpp:534
-msgctxt "QDeclarativeParser"
-msgid "Unexpected property type modifier"
-msgstr ""
-
-#: src/declarative/qml/qdeclarativescriptparser.cpp:543
-msgctxt "QDeclarativeParser"
-msgid "Expected property type"
-msgstr ""
-
-#: src/declarative/qml/qdeclarativescriptparser.cpp:552
-msgctxt "QDeclarativeParser"
-msgid "Readonly not yet supported"
-msgstr ""
-
-#: src/declarative/qml/qdeclarativescriptparser.cpp:770
-msgctxt "QDeclarativeParser"
-msgid "JavaScript declaration outside Script element"
-msgstr ""
-
-#: src/declarative/qml/qdeclarativecompiledbindings.cpp:315
-msgctxt "QDeclarativeCompiledBindings"
+#: src/declarative/qml/qdeclarativebinding.cpp:407
 msgid "Binding loop detected for property \"%1\""
-msgstr ""
-
-#: src/declarative/qml/qdeclarativetypeloader.cpp:774
-msgid "Script %1 unavailable"
-msgstr ""
-
-#: src/declarative/qml/qdeclarativetypeloader.cpp:792
-msgid "Type %1 unavailable"
-msgstr ""
-
-#: src/declarative/qml/qdeclarativetypeloader.cpp:978
-msgid "Namespace %1 cannot be used as a type"
-msgstr ""
-
-#: src/declarative/qml/qdeclarativetypeloader.cpp:980
-msgid "%1 %2"
-msgstr ""
-
-#: src/declarative/qml/parser/qdeclarativejsparser.cpp:1805
-#: src/declarative/qml/parser/qdeclarativejsparser.cpp:1873
-msgctxt "QDeclarativeParser"
-msgid "Syntax error"
-msgstr ""
-
-#: src/declarative/qml/parser/qdeclarativejsparser.cpp:1807
-msgctxt "QDeclarativeParser"
-msgid "Unexpected token `%1'"
-msgstr ""
-
-#: src/declarative/qml/parser/qdeclarativejsparser.cpp:1836
-#: src/declarative/qml/parser/qdeclarativejsparser.cpp:1860
-msgctxt "QDeclarativeParser"
-msgid "Expected token `%1'"
 msgstr ""
 
 #: src/declarative/qml/parser/qdeclarativejslexer.cpp:516
@@ -969,798 +974,259 @@ msgctxt "QDeclarativeParser"
 msgid "Unterminated regular expression class"
 msgstr ""
 
-#: src/declarative/util/qdeclarativeconnections.cpp:197
-msgid "Connections: nested objects not allowed"
+#: src/declarative/qml/parser/qdeclarativejsparser.cpp:1805
+#: src/declarative/qml/parser/qdeclarativejsparser.cpp:1873
+msgctxt "QDeclarativeParser"
+msgid "Syntax error"
 msgstr ""
 
-#: src/declarative/util/qdeclarativeconnections.cpp:200
-msgid "Connections: syntax error"
+#: src/declarative/qml/parser/qdeclarativejsparser.cpp:1807
+msgctxt "QDeclarativeParser"
+msgid "Unexpected token `%1'"
 msgstr ""
 
-#: src/declarative/util/qdeclarativeconnections.cpp:208
-msgid "Connections: script expected"
+#: src/declarative/qml/parser/qdeclarativejsparser.cpp:1836
+#: src/declarative/qml/parser/qdeclarativejsparser.cpp:1860
+msgctxt "QDeclarativeParser"
+msgid "Expected token `%1'"
 msgstr ""
 
-#: src/declarative/util/qdeclarativeanimation.cpp:152
-msgid "Cannot animate non-existent property \"%1\""
+#: src/declarative/graphicsitems/qdeclarativeitemsmodule.cpp:82
+msgctxt "QDeclarativeAnimatedImage"
+msgid "Katie was built without support for QMovie"
 msgstr ""
 
-#: src/declarative/util/qdeclarativeanimation.cpp:155
-msgid "Cannot animate read-only property \"%1\""
+#: src/declarative/graphicsitems/qdeclarativeitemsmodule.cpp:154
+msgid "KeyNavigation is only available via attached properties"
 msgstr ""
 
-#: src/declarative/util/qdeclarativeanimation.cpp:589
-#: src/declarative/util/qdeclarativeanimation.cpp:1823
-#: src/declarative/util/qdeclarativeanimation.cpp:2843
-msgid "Cannot set a duration of < 0"
+#: src/declarative/graphicsitems/qdeclarativeitemsmodule.cpp:155
+msgid "Keys is only available via attached properties"
 msgstr ""
 
-#: src/declarative/util/qdeclarativeanimation.cpp:2675
-#: src/declarative/util/qdeclarativestateoperations.cpp:83
-msgid "Unable to preserve appearance under complex transform"
+#: src/declarative/graphicsitems/qdeclarativeitemsmodule.cpp:177
+msgid "LayoutMirroring is only available via attached properties"
 msgstr ""
 
-#: src/declarative/util/qdeclarativeanimation.cpp:2686
-#: src/declarative/util/qdeclarativeanimation.cpp:2693
-#: src/declarative/util/qdeclarativestateoperations.cpp:94
-#: src/declarative/util/qdeclarativestateoperations.cpp:101
-msgid "Unable to preserve appearance under non-uniform scale"
+#: src/declarative/graphicsitems/qdeclarativetextinput.cpp:870
+#: src/declarative/graphicsitems/qdeclarativetextinput.cpp:878
+msgid "Could not load cursor delegate"
 msgstr ""
 
-#: src/declarative/util/qdeclarativeanimation.cpp:2700
-#: src/declarative/util/qdeclarativestateoperations.cpp:108
-msgid "Unable to preserve appearance under scale of 0"
+#: src/declarative/graphicsitems/qdeclarativetextinput.cpp:889
+msgid "Could not instantiate cursor delegate"
 msgstr ""
 
-#: src/declarative/util/qdeclarativepropertychanges.cpp:236
-msgid "PropertyChanges does not support creating state-specific objects."
+#: src/declarative/graphicsitems/qdeclarativeflipable.cpp:118
+msgid "front is a write-once property"
 msgstr ""
 
-#: src/declarative/util/qdeclarativepropertychanges.cpp:407
-msgid "Cannot assign to read-only property \"%1\""
+#: src/declarative/graphicsitems/qdeclarativeflipable.cpp:138
+msgid "back is a write-once property"
 msgstr ""
 
-#: src/declarative/util/qdeclarativebehavior.cpp:107
-msgid "Cannot change the animation assigned to a Behavior."
+#: src/declarative/graphicsitems/qdeclarativeanchors.cpp:177
+msgid "Possible anchor loop detected on fill."
 msgstr ""
 
-#: src/declarative/util/qdeclarativelistmodel.cpp:370
-msgid "remove: index %1 out of range"
+#: src/declarative/graphicsitems/qdeclarativeanchors.cpp:206
+msgid "Possible anchor loop detected on centerIn."
 msgstr ""
 
-#: src/declarative/util/qdeclarativelistmodel.cpp:403
-msgid "insert: value is not an object"
+#: src/declarative/graphicsitems/qdeclarativeanchors.cpp:414
+#: src/declarative/graphicsitems/qdeclarativeanchors.cpp:448
+#: src/declarative/graphicsitems/qdeclarativeanchors.cpp:1094
+#: src/declarative/graphicsitems/qdeclarativeanchors.cpp:1131
+msgid "Cannot anchor to an item that isn't a parent or sibling."
 msgstr ""
 
-#: src/declarative/util/qdeclarativelistmodel.cpp:408
-msgid "insert: index %1 out of range"
+#: src/declarative/graphicsitems/qdeclarativeanchors.cpp:561
+msgid "Possible anchor loop detected on vertical anchor."
 msgstr ""
 
-#: src/declarative/util/qdeclarativelistmodel.cpp:438
-msgid "move: out of range"
+#: src/declarative/graphicsitems/qdeclarativeanchors.cpp:656
+msgid "Possible anchor loop detected on horizontal anchor."
 msgstr ""
 
-#: src/declarative/util/qdeclarativelistmodel.cpp:478
-msgid "append: value is not an object"
+#: src/declarative/graphicsitems/qdeclarativeanchors.cpp:1078
+msgid "Cannot specify left, right, and hcenter anchors."
 msgstr ""
 
-#: src/declarative/util/qdeclarativelistmodel.cpp:549
-msgid "set: value is not an object"
+#: src/declarative/graphicsitems/qdeclarativeanchors.cpp:1088
+#: src/declarative/graphicsitems/qdeclarativeanchors.cpp:1125
+msgid "Cannot anchor to a null item."
 msgstr ""
 
-#: src/declarative/util/qdeclarativelistmodel.cpp:553
-#: src/declarative/util/qdeclarativelistmodel.cpp:591
-msgid "set: index %1 out of range"
+#: src/declarative/graphicsitems/qdeclarativeanchors.cpp:1091
+msgid "Cannot anchor a horizontal edge to a vertical edge."
 msgstr ""
 
-#: src/declarative/util/qdeclarativelistmodel.cpp:628
-#: src/declarative/util/qdeclarativelistmodel.cpp:645
-msgid "ListElement: cannot contain nested elements"
+#: src/declarative/graphicsitems/qdeclarativeanchors.cpp:1097
+#: src/declarative/graphicsitems/qdeclarativeanchors.cpp:1134
+msgid "Cannot anchor item to self."
 msgstr ""
 
-#: src/declarative/util/qdeclarativelistmodel.cpp:649
-msgid "ListElement: cannot use reserved \"id\" property"
+#: src/declarative/graphicsitems/qdeclarativeanchors.cpp:1109
+msgid "Cannot specify top, bottom, and vcenter anchors."
 msgstr ""
 
-#: src/declarative/util/qdeclarativelistmodel.cpp:703
-msgid "ListElement: cannot use script for property value"
-msgstr ""
-
-#: src/declarative/util/qdeclarativelistmodel.cpp:735
-msgid "ListModel: undefined property '%1'"
-msgstr ""
-
-#: src/declarative/util/qdeclarativepixmapcache.cpp:256
-msgid "Error decoding: %1: %2"
-msgstr ""
-
-#: src/declarative/util/qdeclarativepixmapcache.cpp:359
-#: src/declarative/util/qdeclarativepixmapcache.cpp:699
-msgid "Failed to get image from provider: %1"
-msgstr ""
-
-#: src/declarative/util/qdeclarativepixmapcache.cpp:375
-#: src/declarative/util/qdeclarativepixmapcache.cpp:717
-msgid "Cannot open: %1"
-msgstr ""
-
-#: src/declarative/util/qdeclarativeutilmodule.cpp:58
-msgid "Application is an abstract class"
-msgstr ""
-
-#: src/declarative/util/qdeclarativeutilmodule.cpp:85
-msgid "Animation is an abstract class"
-msgstr ""
-
-#: src/gui/dialogs/qwizard.cpp:578
-msgid "Go Back"
-msgstr ""
-
-#: src/gui/dialogs/qwizard.cpp:578
-msgid "< &Back"
-msgstr ""
-
-#: src/gui/dialogs/qwizard.cpp:581
-#: src/scripttools/debugging/qscriptdebugger.cpp:1674
-msgid "Continue"
-msgstr ""
-
-#: src/gui/dialogs/qwizard.cpp:583
-msgid "&Next >"
-msgstr ""
-
-#: src/gui/dialogs/qwizard.cpp:585
-msgid "Commit"
-msgstr ""
-
-#: src/gui/dialogs/qwizard.cpp:587
-msgid "Done"
-msgstr ""
-
-#: src/gui/dialogs/qwizard.cpp:587
-msgid "&Finish"
-msgstr ""
-
-#: src/gui/dialogs/qwizard.cpp:589 src/gui/dialogs/qprogressdialog.cpp:164
-msgid "Cancel"
-msgstr ""
-
-#: src/gui/dialogs/qwizard.cpp:591 src/gui/widgets/qmdisubwindow.cpp:312
-msgid "Help"
-msgstr ""
-
-#: src/gui/dialogs/qwizard.cpp:591
-msgid "&Help"
-msgstr ""
-
-#: src/gui/dialogs/qprintpreviewdialog.cpp:227
-msgid "%1%"
-msgstr ""
-
-#: src/gui/dialogs/qprintpreviewdialog.cpp:296
-msgctxt "QPrintPreviewDialog"
-msgid "Print Preview"
-msgstr ""
-
-#: src/gui/dialogs/qprintpreviewdialog.cpp:334
-msgctxt "QPrintPreviewDialog"
-msgid "Next page"
-msgstr ""
-
-#: src/gui/dialogs/qprintpreviewdialog.cpp:335
-msgctxt "QPrintPreviewDialog"
-msgid "Previous page"
-msgstr ""
-
-#: src/gui/dialogs/qprintpreviewdialog.cpp:336
-msgctxt "QPrintPreviewDialog"
-msgid "First page"
-msgstr ""
-
-#: src/gui/dialogs/qprintpreviewdialog.cpp:337
-msgctxt "QPrintPreviewDialog"
-msgid "Last page"
-msgstr ""
-
-#: src/gui/dialogs/qprintpreviewdialog.cpp:346
-msgctxt "QPrintPreviewDialog"
-msgid "Fit width"
-msgstr ""
-
-#: src/gui/dialogs/qprintpreviewdialog.cpp:347
-msgctxt "QPrintPreviewDialog"
-msgid "Fit page"
-msgstr ""
-
-#: src/gui/dialogs/qprintpreviewdialog.cpp:358
-msgctxt "QPrintPreviewDialog"
-msgid "Zoom in"
-msgstr ""
-
-#: src/gui/dialogs/qprintpreviewdialog.cpp:359
-msgctxt "QPrintPreviewDialog"
-msgid "Zoom out"
-msgstr ""
-
-#: src/gui/dialogs/qprintpreviewdialog.cpp:365
-msgctxt "QPrintPreviewDialog"
-msgid "Portrait"
-msgstr ""
-
-#: src/gui/dialogs/qprintpreviewdialog.cpp:366
-msgctxt "QPrintPreviewDialog"
-msgid "Landscape"
-msgstr ""
-
-#: src/gui/dialogs/qprintpreviewdialog.cpp:384
-msgctxt "QPrintPreviewDialog"
-msgid "Show single page"
-msgstr ""
-
-#: src/gui/dialogs/qprintpreviewdialog.cpp:385
-msgctxt "QPrintPreviewDialog"
-msgid "Show facing pages"
-msgstr ""
-
-#: src/gui/dialogs/qprintpreviewdialog.cpp:386
-msgctxt "QPrintPreviewDialog"
-msgid "Show overview of all pages"
-msgstr ""
-
-#: src/gui/dialogs/qprintpreviewdialog.cpp:413
-msgctxt "QPrintPreviewDialog"
-msgid "Print"
-msgstr ""
-
-#: src/gui/dialogs/qprintpreviewdialog.cpp:414
-msgctxt "QPrintPreviewDialog"
-msgid "Page setup"
-msgstr ""
-
-#: src/gui/dialogs/qinputdialog.cpp:197
-msgid "Enter a value:"
-msgstr ""
-
-#: src/gui/dialogs/qfilesystemmodel_p.h:223
-msgid "Computer"
-msgstr ""
-
-#: src/gui/dialogs/qmessagebox.cpp:103
-msgid "Show Details..."
-msgstr ""
-
-#: src/gui/dialogs/qmessagebox.cpp:103
-msgid "Hide Details..."
-msgstr ""
-
-#: src/gui/dialogs/qmessagebox.cpp:1439
-msgid "<h3>About Katie</h3><p>This program uses Katie version %1.</p>"
-msgstr ""
-
-#: src/gui/dialogs/qmessagebox.cpp:1443
+#: src/declarative/graphicsitems/qdeclarativeanchors.cpp:1115
 msgid ""
-"<p>Katie is a C++ toolkit derived from the Qt 4.8 framework.</p><p>Katie is "
-"licensed under the GNU LGPL version 2.1</p><p>Copyright (C) 2015 The Qt "
-"Company Ltd and other contributors.</p><p>Copyright (C) 2016 Ivailo Monev</"
-"p><p>See <a href=\"https://osdn.net/projects/kde/\">osdn.net/projects/kde/</"
-"a> for more information.</p>"
+"Baseline anchor cannot be used in conjunction with top, bottom, or vcenter "
+"anchors."
 msgstr ""
 
-#: src/gui/dialogs/qmessagebox.cpp:1451
-msgid "About Katie"
+#: src/declarative/graphicsitems/qdeclarativeanchors.cpp:1128
+msgid "Cannot anchor a vertical edge to a horizontal edge."
 msgstr ""
 
-#: src/gui/dialogs/qsidebar.cpp:405
-msgid "Remove"
+#: src/declarative/graphicsitems/qdeclarativeloader.cpp:387
+msgid "Loader does not support loading non-visual elements."
 msgstr ""
 
-#: src/gui/dialogs/qabstractpagesetupdialog.cpp:48
-#: src/gui/dialogs/qabstractpagesetupdialog.cpp:60
-msgctxt "QPrintPreviewDialog"
-msgid "Page Setup"
+#: src/declarative/graphicsitems/qdeclarativevisualitemmodel.cpp:1081
+msgid "Delegate component must be Item type."
 msgstr ""
 
-#: src/gui/dialogs/qdialog.cpp:487 src/gui/kernel/qwhatsthis.cpp:437
-msgid "What's This?"
+#: src/declarative/graphicsitems/qdeclarativeitem.cpp:783
+msgid "LayoutDirection attached property only works with Items"
 msgstr ""
 
-#: src/gui/dialogs/qfontdialog.cpp:155
-msgid "Select Font"
+#: src/gui/util/qundogroup.cpp:368 src/gui/util/qundostack.cpp:857
+msgid "Undo %1"
 msgstr ""
 
-#: src/gui/dialogs/qfontdialog.cpp:679
-msgid "&Font"
+#: src/gui/util/qundogroup.cpp:368 src/gui/util/qundostack.cpp:857
+msgid "Undo"
 msgstr ""
 
-#: src/gui/dialogs/qfontdialog.cpp:680
-msgid "Font st&yle"
+#: src/gui/util/qundogroup.cpp:399 src/gui/util/qundostack.cpp:887
+msgid "Redo %1"
 msgstr ""
 
-#: src/gui/dialogs/qfontdialog.cpp:681 src/gui/widgets/qmdisubwindow.cpp:1016
-msgid "&Size"
+#: src/gui/util/qundogroup.cpp:399 src/gui/util/qundostack.cpp:887
+msgid "Redo"
 msgstr ""
 
-#: src/gui/dialogs/qfontdialog.cpp:684
-msgid "Effects"
+#: src/gui/util/qundoview.cpp:81
+msgid "<empty>"
 msgstr ""
 
-#: src/gui/dialogs/qfontdialog.cpp:685
-msgid "Stri&keout"
-msgstr ""
-
-#: src/gui/dialogs/qfontdialog.cpp:686
-msgid "&Underline"
-msgstr ""
-
-#: src/gui/dialogs/qfontdialog.cpp:687
-msgid "Sample"
-msgstr ""
-
-#: src/gui/dialogs/qcolordialog.cpp:1203
-msgid "Hu&e:"
-msgstr ""
-
-#: src/gui/dialogs/qcolordialog.cpp:1204
-msgid "&Sat:"
-msgstr ""
-
-#: src/gui/dialogs/qcolordialog.cpp:1205
-msgid "&Val:"
-msgstr ""
-
-#: src/gui/dialogs/qcolordialog.cpp:1206
-msgid "&Red:"
-msgstr ""
-
-#: src/gui/dialogs/qcolordialog.cpp:1207
-msgid "&Green:"
-msgstr ""
-
-#: src/gui/dialogs/qcolordialog.cpp:1208
-msgid "Bl&ue:"
-msgstr ""
-
-#: src/gui/dialogs/qcolordialog.cpp:1209
-msgid "A&lpha channel:"
-msgstr ""
-
-#: src/gui/dialogs/qcolordialog.cpp:1310
-msgid "Select Color"
-msgstr ""
-
-#: src/gui/dialogs/qcolordialog.cpp:1437
-msgid "&Basic colors"
-msgstr ""
-
-#: src/gui/dialogs/qcolordialog.cpp:1438
-msgid "&Custom colors"
-msgstr ""
-
-#: src/gui/dialogs/qcolordialog.cpp:1439
-msgid "&Add to Custom Colors"
-msgstr ""
-
-#: src/gui/dialogs/qmessagebox.h:217
-msgid "Executable '%1' requires Katie %2, found Katie %3."
-msgstr ""
-
-#: src/gui/dialogs/qmessagebox.h:219
-msgid "Incompatible Katie Library Error"
-msgstr ""
-
-#: src/gui/dialogs/qpagesetupdialog_unix.cpp:51
-msgid "A0"
-msgstr ""
-
-#: src/gui/dialogs/qpagesetupdialog_unix.cpp:52
-msgid "A1"
-msgstr ""
-
-#: src/gui/dialogs/qpagesetupdialog_unix.cpp:53
-msgid "A2"
-msgstr ""
-
-#: src/gui/dialogs/qpagesetupdialog_unix.cpp:54
-msgid "A3"
-msgstr ""
-
-#: src/gui/dialogs/qpagesetupdialog_unix.cpp:55
-msgid "A4"
-msgstr ""
-
-#: src/gui/dialogs/qpagesetupdialog_unix.cpp:56
-msgid "A5"
-msgstr ""
-
-#: src/gui/dialogs/qpagesetupdialog_unix.cpp:57
-msgid "A6"
-msgstr ""
-
-#: src/gui/dialogs/qpagesetupdialog_unix.cpp:58
-msgid "A7"
-msgstr ""
-
-#: src/gui/dialogs/qpagesetupdialog_unix.cpp:59
-msgid "A8"
-msgstr ""
-
-#: src/gui/dialogs/qpagesetupdialog_unix.cpp:60
-msgid "A9"
-msgstr ""
-
-#: src/gui/dialogs/qpagesetupdialog_unix.cpp:61
-msgid "B0"
-msgstr ""
-
-#: src/gui/dialogs/qpagesetupdialog_unix.cpp:62
-msgid "B1"
-msgstr ""
-
-#: src/gui/dialogs/qpagesetupdialog_unix.cpp:63
-msgid "B2"
-msgstr ""
-
-#: src/gui/dialogs/qpagesetupdialog_unix.cpp:64
-msgid "B3"
-msgstr ""
-
-#: src/gui/dialogs/qpagesetupdialog_unix.cpp:65
-msgid "B4"
-msgstr ""
-
-#: src/gui/dialogs/qpagesetupdialog_unix.cpp:66
-msgid "B5"
-msgstr ""
-
-#: src/gui/dialogs/qpagesetupdialog_unix.cpp:67
-msgid "B6"
-msgstr ""
-
-#: src/gui/dialogs/qpagesetupdialog_unix.cpp:68
-msgid "B7"
-msgstr ""
-
-#: src/gui/dialogs/qpagesetupdialog_unix.cpp:69
-msgid "B8"
-msgstr ""
-
-#: src/gui/dialogs/qpagesetupdialog_unix.cpp:70
-msgid "B9"
-msgstr ""
-
-#: src/gui/dialogs/qpagesetupdialog_unix.cpp:71
-msgid "B10"
-msgstr ""
-
-#: src/gui/dialogs/qpagesetupdialog_unix.cpp:72
-msgid "C5E"
-msgstr ""
-
-#: src/gui/dialogs/qpagesetupdialog_unix.cpp:73
-msgid "DLE"
-msgstr ""
-
-#: src/gui/dialogs/qpagesetupdialog_unix.cpp:74
-msgid "Executive"
-msgstr ""
-
-#: src/gui/dialogs/qpagesetupdialog_unix.cpp:75
-msgid "Folio"
-msgstr ""
-
-#: src/gui/dialogs/qpagesetupdialog_unix.cpp:76
-msgid "Ledger"
-msgstr ""
-
-#: src/gui/dialogs/qpagesetupdialog_unix.cpp:77
-msgid "Legal"
-msgstr ""
-
-#: src/gui/dialogs/qpagesetupdialog_unix.cpp:78
-msgid "Letter"
-msgstr ""
-
-#: src/gui/dialogs/qpagesetupdialog_unix.cpp:79
-msgid "Tabloid"
-msgstr ""
-
-#: src/gui/dialogs/qpagesetupdialog_unix.cpp:80
-msgid "US Common #10 Envelope"
-msgstr ""
-
-#: src/gui/dialogs/qpagesetupdialog_unix.cpp:81
-msgid "Custom"
-msgstr ""
-
-#: src/gui/dialogs/qpagesetupdialog_unix.cpp:268
-msgid "Centimeters (cm)"
-msgstr ""
-
-#: src/gui/dialogs/qpagesetupdialog_unix.cpp:268
-msgid "Millimeters (mm)"
-msgstr ""
-
-#: src/gui/dialogs/qpagesetupdialog_unix.cpp:268
-msgid "Inches (in)"
-msgstr ""
-
-#: src/gui/dialogs/qpagesetupdialog_unix.cpp:268
-msgid "Points (pt)"
-msgstr ""
-
-#: src/gui/dialogs/qprintdialog_unix.cpp:346
-#: src/gui/dialogs/qprintdialog_unix.cpp:415
-msgid "&Options >>"
-msgstr ""
-
-#: src/gui/dialogs/qprintdialog_unix.cpp:351
-msgid "&Print"
-msgstr ""
-
-#: src/gui/dialogs/qprintdialog_unix.cpp:419
-msgid "&Options <<"
-msgstr ""
-
-#: src/gui/dialogs/qprintdialog_unix.cpp:945
-msgctxt "QPPDOptionsModel"
-msgid "Name"
-msgstr ""
-
-#: src/gui/dialogs/qprintdialog_unix.cpp:947
-msgctxt "QPPDOptionsModel"
-msgid "Value"
-msgstr ""
-
-#: src/gui/dialogs/qabstractprintdialog.cpp:91
-#: src/gui/dialogs/qabstractprintdialog.cpp:104
-msgctxt "QPrintDialog"
-msgid "Print"
-msgstr ""
-
-#: src/gui/dialogs/qfiledialog.cpp:493
-msgid "Find Directory"
-msgstr ""
-
-#: src/gui/dialogs/qfiledialog.cpp:495
-msgid "Open"
-msgstr ""
-
-#: src/gui/dialogs/qfiledialog.cpp:497
-msgid "Save As"
-msgstr ""
-
-#: src/gui/dialogs/qfiledialog.cpp:512 src/gui/dialogs/qfiledialog.cpp:1014
-msgid "All Files (*)"
-msgstr ""
-
-#: src/gui/dialogs/qfiledialog.cpp:522
-msgid "Show "
-msgstr ""
-
-#: src/gui/dialogs/qfiledialog.cpp:526
-msgid "&Rename"
-msgstr ""
-
-#: src/gui/dialogs/qfiledialog.cpp:527
-msgid "&Delete"
-msgstr ""
-
-#: src/gui/dialogs/qfiledialog.cpp:528
-msgid "Show &hidden files"
-msgstr ""
-
-#: src/gui/dialogs/qfiledialog.cpp:529
-msgid "&New Folder"
-msgstr ""
-
-#: src/gui/dialogs/qfiledialog.cpp:534 src/gui/dialogs/qfiledialog.cpp:1195
-msgid "Directory:"
-msgstr ""
-
-#: src/gui/dialogs/qfiledialog.cpp:536 src/gui/dialogs/qfiledialog.cpp:1201
-msgid "File &name:"
-msgstr ""
-
-#: src/gui/dialogs/qfiledialog.cpp:1188 src/gui/dialogs/qfiledialog.cpp:1243
-#: src/gui/dialogs/qfiledialog.cpp:2691
-msgid "&Open"
-msgstr ""
-
-#: src/gui/dialogs/qfiledialog.cpp:1188 src/gui/dialogs/qfiledialog.cpp:1243
-msgid "&Save"
-msgstr ""
-
-#: src/gui/dialogs/qfiledialog.cpp:1191
-msgid "Directories"
-msgstr ""
-
-#: src/gui/dialogs/qfiledialog.cpp:1198 src/gui/dialogs/qfiledialog.cpp:1241
-msgid "&Choose"
-msgstr ""
-
-#: src/gui/dialogs/qfiledialog.cpp:1908 src/gui/dialogs/qfiledialog.cpp:2762
-msgid ""
-"%1\n"
-"Directory not found.\n"
-"Please verify the correct directory name was given."
-msgstr ""
-
-#: src/gui/dialogs/qfiledialog.cpp:1942
-msgid ""
-"%1 already exists.\n"
-"Do you want to replace it?"
-msgstr ""
-
-#: src/gui/dialogs/qfiledialog.cpp:1962
-msgid ""
-"%1\n"
-"File not found.\n"
-"Please verify the correct file name was given."
-msgstr ""
-
-#: src/gui/dialogs/qfiledialog.cpp:2411
-msgid "New Folder"
-msgstr ""
-
-#: src/gui/dialogs/qfiledialog.cpp:2540
-msgid ""
-"'%1' is write protected.\n"
-"Do you want to delete it anyway?"
-msgstr ""
-
-#: src/gui/dialogs/qfiledialog.cpp:2545
-msgid "Are sure you want to delete '%1'?"
-msgstr ""
-
-#: src/gui/dialogs/qfiledialog.cpp:2560
-msgid "Could not delete directory."
-msgstr ""
-
-#: src/gui/dialogs/qfiledialog.cpp:2957
-msgid "Recent Places"
-msgstr ""
-
-#: src/gui/dialogs/qfilesystemmodel.cpp:636
-#: src/gui/itemviews/qdirmodel.cpp:1204
-msgid "%1 TB"
-msgstr ""
-
-#: src/gui/dialogs/qfilesystemmodel.cpp:638
-#: src/gui/itemviews/qdirmodel.cpp:1206
-msgid "%1 GB"
-msgstr ""
-
-#: src/gui/dialogs/qfilesystemmodel.cpp:640
-#: src/gui/itemviews/qdirmodel.cpp:1208
-msgid "%1 MB"
-msgstr ""
-
-#: src/gui/dialogs/qfilesystemmodel.cpp:642
-#: src/gui/itemviews/qdirmodel.cpp:1210
-msgid "%1 KB"
-msgstr ""
-
-#: src/gui/dialogs/qfilesystemmodel.cpp:643
-msgid "%1 bytes"
-msgstr ""
-
-#: src/gui/dialogs/qfilesystemmodel.cpp:713
-msgid "Invalid filename"
-msgstr ""
-
-#: src/gui/dialogs/qfilesystemmodel.cpp:714
-msgid ""
-"<b>The name \"%1\" can not be used.</b><p>Try using another name, with fewer "
-"characters or no punctuations marks."
-msgstr ""
-
-#: src/gui/dialogs/qfilesystemmodel.cpp:782 src/gui/itemviews/qdirmodel.cpp:395
-msgid "Name"
-msgstr ""
-
-#: src/gui/dialogs/qfilesystemmodel.cpp:786 src/gui/itemviews/qdirmodel.cpp:396
-msgid "Size"
-msgstr ""
-
-#: src/gui/dialogs/qfilesystemmodel.cpp:790 src/gui/itemviews/qdirmodel.cpp:397
-msgid "Type"
-msgstr ""
-
-#: src/gui/dialogs/qfilesystemmodel.cpp:796 src/gui/itemviews/qdirmodel.cpp:400
-msgid "Date Modified"
-msgstr ""
-
-#: src/gui/dialogs/qerrormessage.cpp:143
-msgid "Warning:"
-msgstr ""
-
-#: src/gui/dialogs/qerrormessage.cpp:146
-msgid "Fatal Error:"
-msgstr ""
-
-#: src/gui/dialogs/qerrormessage.cpp:149
-msgid "Debug Message:"
-msgstr ""
-
-#: src/gui/dialogs/qerrormessage.cpp:342
-msgid "&Show this message again"
-msgstr ""
-
-#: src/gui/dialogs/qerrormessage.cpp:343
-msgid "&OK"
-msgstr ""
-
-#: src/gui/image/qimagewriter.cpp:458
-msgctxt "QImageWriter"
-msgid "Unknown error"
-msgstr ""
-
-#: src/gui/image/qimagewriter.cpp:461
-msgctxt "QImageWriter"
-msgid "Device not writable"
-msgstr ""
-
-#: src/gui/image/qimagewriter.cpp:464
-msgctxt "QImageWriter"
-msgid "Unsupported image format"
-msgstr ""
-
-#: src/gui/image/qimagereader.cpp:795
-msgctxt "QImageReader"
-msgid "Unknown error"
-msgstr ""
-
-#: src/gui/image/qimagereader.cpp:798
-msgctxt "QImageReader"
-msgid "File not found"
-msgstr ""
-
-#: src/gui/image/qimagereader.cpp:801
-msgctxt "QImageReader"
-msgid "Device not readable"
-msgstr ""
-
-#: src/gui/image/qimagereader.cpp:804
-msgctxt "QImageReader"
-msgid "Unsupported image format"
-msgstr ""
-
-#: src/gui/image/qimagereader.cpp:807
-msgctxt "QImageReader"
-msgid "Unable to read image data"
-msgstr ""
-
-#: src/gui/widgets/qtabbar.cpp:2163
-msgid "Close Tab"
-msgstr ""
-
-#: src/gui/widgets/qlineedit.cpp:1710 src/gui/text/qtextcontrol.cpp:1841
+#: src/gui/text/qtextcontrol.cpp:1841 src/gui/widgets/qlineedit.cpp:1710
 msgid "&Undo"
 msgstr ""
 
-#: src/gui/widgets/qlineedit.cpp:1714 src/gui/text/qtextcontrol.cpp:1843
+#: src/gui/text/qtextcontrol.cpp:1843 src/gui/widgets/qlineedit.cpp:1714
 msgid "&Redo"
 msgstr ""
 
-#: src/gui/widgets/qlineedit.cpp:1723 src/gui/text/qtextcontrol.cpp:1847
+#: src/gui/text/qtextcontrol.cpp:1847 src/gui/widgets/qlineedit.cpp:1723
 msgid "Cu&t"
 msgstr ""
 
-#: src/gui/widgets/qlineedit.cpp:1729 src/gui/text/qtextcontrol.cpp:1852
+#: src/gui/text/qtextcontrol.cpp:1852 src/gui/widgets/qlineedit.cpp:1729
 msgid "&Copy"
 msgstr ""
 
-#: src/gui/widgets/qlineedit.cpp:1735 src/gui/text/qtextcontrol.cpp:1865
+#: src/gui/text/qtextcontrol.cpp:1859
+msgid "Copy &Link Location"
+msgstr ""
+
+#: src/gui/text/qtextcontrol.cpp:1865 src/gui/widgets/qlineedit.cpp:1735
 msgid "&Paste"
 msgstr ""
 
-#: src/gui/widgets/qlineedit.cpp:1742 src/gui/text/qtextcontrol.cpp:1868
+#: src/gui/text/qtextcontrol.cpp:1868 src/gui/widgets/qlineedit.cpp:1742
 #: src/scripttools/debugging/qscriptbreakpointswidget.cpp:292
 msgid "Delete"
 msgstr ""
 
-#: src/gui/widgets/qlineedit.cpp:1750 src/gui/text/qtextcontrol.cpp:1875
+#: src/gui/text/qtextcontrol.cpp:1875 src/gui/widgets/qlineedit.cpp:1750
 msgid "Select All"
+msgstr ""
+
+#: src/gui/text/qtextcontrol.cpp:2772
+msgctxt "QUnicodeControlCharacterMenu"
+msgid "LRM Left-to-right mark"
+msgstr ""
+
+#: src/gui/text/qtextcontrol.cpp:2773
+msgctxt "QUnicodeControlCharacterMenu"
+msgid "RLM Right-to-left mark"
+msgstr ""
+
+#: src/gui/text/qtextcontrol.cpp:2774
+msgctxt "QUnicodeControlCharacterMenu"
+msgid "ZWJ Zero width joiner"
+msgstr ""
+
+#: src/gui/text/qtextcontrol.cpp:2775
+msgctxt "QUnicodeControlCharacterMenu"
+msgid "ZWNJ Zero width non-joiner"
+msgstr ""
+
+#: src/gui/text/qtextcontrol.cpp:2776
+msgctxt "QUnicodeControlCharacterMenu"
+msgid "ZWSP Zero width space"
+msgstr ""
+
+#: src/gui/text/qtextcontrol.cpp:2777
+msgctxt "QUnicodeControlCharacterMenu"
+msgid "LRE Start of left-to-right embedding"
+msgstr ""
+
+#: src/gui/text/qtextcontrol.cpp:2778
+msgctxt "QUnicodeControlCharacterMenu"
+msgid "RLE Start of right-to-left embedding"
+msgstr ""
+
+#: src/gui/text/qtextcontrol.cpp:2779
+msgctxt "QUnicodeControlCharacterMenu"
+msgid "LRO Start of left-to-right override"
+msgstr ""
+
+#: src/gui/text/qtextcontrol.cpp:2780
+msgctxt "QUnicodeControlCharacterMenu"
+msgid "RLO Start of right-to-left override"
+msgstr ""
+
+#: src/gui/text/qtextcontrol.cpp:2781
+msgctxt "QUnicodeControlCharacterMenu"
+msgid "PDF Pop directional formatting"
+msgstr ""
+
+#: src/gui/text/qtextcontrol.cpp:2787
+msgid "Insert Unicode control character"
+msgstr ""
+
+#: src/gui/text/qfontdatabase.cpp:593
+msgctxt "QFontDatabase"
+msgid "Black"
+msgstr ""
+
+#: src/gui/text/qfontdatabase.cpp:595
+msgctxt "QFontDatabase"
+msgid "Bold"
+msgstr ""
+
+#: src/gui/text/qfontdatabase.cpp:597
+msgctxt "QFontDatabase"
+msgid "Demi Bold"
+msgstr ""
+
+#: src/gui/text/qfontdatabase.cpp:599
+msgctxt "QFontDatabase"
+msgid "Light"
+msgstr ""
+
+#: src/gui/text/qfontdatabase.cpp:603
+msgctxt "QFontDatabase"
+msgid "Italic"
+msgstr ""
+
+#: src/gui/text/qfontdatabase.cpp:605
+msgctxt "QFontDatabase"
+msgid "Oblique"
 msgstr ""
 
 #: src/gui/widgets/qscrollbar.cpp:380
@@ -1813,6 +1279,112 @@ msgstr ""
 
 #: src/gui/widgets/qscrollbar.cpp:389
 msgid "Scroll down"
+msgstr ""
+
+#: src/gui/widgets/qtabbar.cpp:2163
+msgid "Close Tab"
+msgstr ""
+
+#: src/gui/widgets/qmdisubwindow.cpp:249
+msgid "- [%1]"
+msgstr ""
+
+#: src/gui/widgets/qmdisubwindow.cpp:250
+msgid "%1 - [%2]"
+msgstr ""
+
+#: src/gui/widgets/qmdisubwindow.cpp:291
+msgid "Minimize"
+msgstr ""
+
+#: src/gui/widgets/qmdisubwindow.cpp:294
+msgid "Maximize"
+msgstr ""
+
+#: src/gui/widgets/qmdisubwindow.cpp:297
+msgid "Unshade"
+msgstr ""
+
+#: src/gui/widgets/qmdisubwindow.cpp:300
+msgid "Shade"
+msgstr ""
+
+#: src/gui/widgets/qmdisubwindow.cpp:304
+msgid "Restore Down"
+msgstr ""
+
+#: src/gui/widgets/qmdisubwindow.cpp:306
+msgid "Restore"
+msgstr ""
+
+#: src/gui/widgets/qmdisubwindow.cpp:309
+#: src/scripttools/debugging/qscriptbreakpointswidget.cpp:62
+#: src/scripttools/debugging/qscriptdebuggercodefinderwidget.cpp:122
+msgid "Close"
+msgstr ""
+
+#: src/gui/widgets/qmdisubwindow.cpp:312 src/gui/dialogs/qwizard.cpp:591
+msgid "Help"
+msgstr ""
+
+#: src/gui/widgets/qmdisubwindow.cpp:315
+msgid "Menu"
+msgstr ""
+
+#: src/gui/widgets/qmdisubwindow.cpp:1012
+msgid "&Restore"
+msgstr ""
+
+#: src/gui/widgets/qmdisubwindow.cpp:1015
+msgid "&Move"
+msgstr ""
+
+#: src/gui/widgets/qmdisubwindow.cpp:1016 src/gui/dialogs/qfontdialog.cpp:681
+msgid "&Size"
+msgstr ""
+
+#: src/gui/widgets/qmdisubwindow.cpp:1017
+msgid "Mi&nimize"
+msgstr ""
+
+#: src/gui/widgets/qmdisubwindow.cpp:1019
+msgid "Ma&ximize"
+msgstr ""
+
+#: src/gui/widgets/qmdisubwindow.cpp:1021
+msgid "Stay on &Top"
+msgstr ""
+
+#: src/gui/widgets/qmdisubwindow.cpp:1024
+msgid "&Close"
+msgstr ""
+
+#: src/gui/widgets/qdatetimeedit.cpp:2081
+msgid "AM"
+msgstr ""
+
+#: src/gui/widgets/qdatetimeedit.cpp:2081
+msgid "am"
+msgstr ""
+
+#: src/gui/widgets/qdatetimeedit.cpp:2083
+msgid "PM"
+msgstr ""
+
+#: src/gui/widgets/qdatetimeedit.cpp:2083
+msgid "pm"
+msgstr ""
+
+#: src/gui/widgets/qabstractspinbox.cpp:1144
+msgid "&Select All"
+msgstr ""
+
+#: src/gui/widgets/qabstractspinbox.cpp:1150
+msgid "&Step up"
+msgstr ""
+
+#: src/gui/widgets/qabstractspinbox.cpp:1152
+msgid "Step &down"
 msgstr ""
 
 #: src/gui/widgets/qdialogbuttonbox.cpp:439
@@ -1905,88 +1477,6 @@ msgctxt "QDialogButtonBox"
 msgid "Restore Defaults"
 msgstr ""
 
-#: src/gui/widgets/qdatetimeedit.cpp:2081
-msgid "AM"
-msgstr ""
-
-#: src/gui/widgets/qdatetimeedit.cpp:2081
-msgid "am"
-msgstr ""
-
-#: src/gui/widgets/qdatetimeedit.cpp:2083
-msgid "PM"
-msgstr ""
-
-#: src/gui/widgets/qdatetimeedit.cpp:2083
-msgid "pm"
-msgstr ""
-
-#: src/gui/widgets/qmdisubwindow.cpp:249
-msgid "- [%1]"
-msgstr ""
-
-#: src/gui/widgets/qmdisubwindow.cpp:250
-msgid "%1 - [%2]"
-msgstr ""
-
-#: src/gui/widgets/qmdisubwindow.cpp:291
-msgid "Minimize"
-msgstr ""
-
-#: src/gui/widgets/qmdisubwindow.cpp:294
-msgid "Maximize"
-msgstr ""
-
-#: src/gui/widgets/qmdisubwindow.cpp:297
-msgid "Unshade"
-msgstr ""
-
-#: src/gui/widgets/qmdisubwindow.cpp:300
-msgid "Shade"
-msgstr ""
-
-#: src/gui/widgets/qmdisubwindow.cpp:304
-msgid "Restore Down"
-msgstr ""
-
-#: src/gui/widgets/qmdisubwindow.cpp:306
-msgid "Restore"
-msgstr ""
-
-#: src/gui/widgets/qmdisubwindow.cpp:309
-#: src/scripttools/debugging/qscriptbreakpointswidget.cpp:62
-#: src/scripttools/debugging/qscriptdebuggercodefinderwidget.cpp:122
-msgid "Close"
-msgstr ""
-
-#: src/gui/widgets/qmdisubwindow.cpp:315
-msgid "Menu"
-msgstr ""
-
-#: src/gui/widgets/qmdisubwindow.cpp:1012
-msgid "&Restore"
-msgstr ""
-
-#: src/gui/widgets/qmdisubwindow.cpp:1015
-msgid "&Move"
-msgstr ""
-
-#: src/gui/widgets/qmdisubwindow.cpp:1017
-msgid "Mi&nimize"
-msgstr ""
-
-#: src/gui/widgets/qmdisubwindow.cpp:1019
-msgid "Ma&ximize"
-msgstr ""
-
-#: src/gui/widgets/qmdisubwindow.cpp:1021
-msgid "Stay on &Top"
-msgstr ""
-
-#: src/gui/widgets/qmdisubwindow.cpp:1024
-msgid "&Close"
-msgstr ""
-
 #: src/gui/widgets/qmdiarea.cpp:251
 msgid "(Untitled)"
 msgstr ""
@@ -1996,24 +1486,95 @@ msgctxt "QMenuBar"
 msgid "Corner Toolbar"
 msgstr ""
 
-#: src/gui/widgets/qabstractspinbox.cpp:1144
-msgid "&Select All"
+#: src/gui/itemviews/qdirmodel.cpp:395 src/gui/dialogs/qfilesystemmodel.cpp:782
+msgid "Name"
 msgstr ""
 
-#: src/gui/widgets/qabstractspinbox.cpp:1150
-msgid "&Step up"
+#: src/gui/itemviews/qdirmodel.cpp:396 src/gui/dialogs/qfilesystemmodel.cpp:786
+msgid "Size"
 msgstr ""
 
-#: src/gui/widgets/qabstractspinbox.cpp:1152
-msgid "Step &down"
+#: src/gui/itemviews/qdirmodel.cpp:397 src/gui/dialogs/qfilesystemmodel.cpp:790
+msgid "Type"
+msgstr ""
+
+#: src/gui/itemviews/qdirmodel.cpp:400 src/gui/dialogs/qfilesystemmodel.cpp:796
+msgid "Date Modified"
+msgstr ""
+
+#: src/gui/itemviews/qdirmodel.cpp:792
+msgctxt "QFileDialog"
+msgid "My Computer"
+msgstr ""
+
+#: src/gui/itemviews/qdirmodel.cpp:1204
+#: src/gui/dialogs/qfilesystemmodel.cpp:636
+msgid "%1 TB"
+msgstr ""
+
+#: src/gui/itemviews/qdirmodel.cpp:1206
+#: src/gui/dialogs/qfilesystemmodel.cpp:638
+msgid "%1 GB"
+msgstr ""
+
+#: src/gui/itemviews/qdirmodel.cpp:1208
+#: src/gui/dialogs/qfilesystemmodel.cpp:640
+msgid "%1 MB"
+msgstr ""
+
+#: src/gui/itemviews/qdirmodel.cpp:1210
+#: src/gui/dialogs/qfilesystemmodel.cpp:642
+msgid "%1 KB"
+msgstr ""
+
+#: src/gui/itemviews/qdirmodel.cpp:1211
+msgid "%1 byte(s)"
+msgstr ""
+
+#: src/gui/itemviews/qfileiconprovider.cpp:132
+msgctxt "QFileDialog"
+msgid "Drive"
+msgstr ""
+
+#: src/gui/itemviews/qfileiconprovider.cpp:135
+#: src/gui/itemviews/qfileiconprovider.cpp:136
+msgctxt "QFileDialog"
+msgid "File"
+msgstr ""
+
+#: src/gui/itemviews/qfileiconprovider.cpp:140
+msgctxt "QFileDialog"
+msgid "Folder"
+msgstr ""
+
+#: src/gui/itemviews/qfileiconprovider.cpp:145
+msgctxt "QFileDialog"
+msgid "Shortcut"
+msgstr ""
+
+#: src/gui/itemviews/qfileiconprovider.cpp:149
+msgctxt "QFileDialog"
+msgid "Unknown"
+msgstr ""
+
+#: src/gui/itemviews/qitemeditorfactory.cpp:536
+msgid "False"
+msgstr ""
+
+#: src/gui/itemviews/qitemeditorfactory.cpp:537
+msgid "True"
+msgstr ""
+
+#: src/gui/kernel/qapplication.cpp:1594
+msgid "QT_LAYOUT_DIRECTION"
 msgstr ""
 
 #: src/gui/kernel/qwidget.cpp:5006
 msgid "*"
 msgstr ""
 
-#: src/gui/kernel/qapplication.cpp:1594
-msgid "QT_LAYOUT_DIRECTION"
+#: src/gui/kernel/qwhatsthis.cpp:437 src/gui/dialogs/qdialog.cpp:487
+msgid "What's This?"
 msgstr ""
 
 #: src/gui/kernel/qkeysequence.cpp:197
@@ -3396,196 +2957,583 @@ msgstr ""
 msgid "+"
 msgstr ""
 
-#: src/gui/itemviews/qdirmodel.cpp:792
-msgctxt "QFileDialog"
-msgid "My Computer"
+#: src/gui/dialogs/qmessagebox.h:217
+msgid "Executable '%1' requires Katie %2, found Katie %3."
 msgstr ""
 
-#: src/gui/itemviews/qdirmodel.cpp:1211
-msgid "%1 byte(s)"
+#: src/gui/dialogs/qmessagebox.h:219
+msgid "Incompatible Katie Library Error"
 msgstr ""
 
-#: src/gui/itemviews/qitemeditorfactory.cpp:536
-msgid "False"
+#: src/gui/dialogs/qinputdialog.cpp:197
+msgid "Enter a value:"
 msgstr ""
 
-#: src/gui/itemviews/qitemeditorfactory.cpp:537
-msgid "True"
+#: src/gui/dialogs/qprogressdialog.cpp:164 src/gui/dialogs/qwizard.cpp:589
+msgid "Cancel"
 msgstr ""
 
-#: src/gui/itemviews/qfileiconprovider.cpp:132
-msgctxt "QFileDialog"
-msgid "Drive"
+#: src/gui/dialogs/qfontdialog.cpp:155
+msgid "Select Font"
 msgstr ""
 
-#: src/gui/itemviews/qfileiconprovider.cpp:135
-#: src/gui/itemviews/qfileiconprovider.cpp:136
-msgctxt "QFileDialog"
-msgid "File"
+#: src/gui/dialogs/qfontdialog.cpp:679
+msgid "&Font"
 msgstr ""
 
-#: src/gui/itemviews/qfileiconprovider.cpp:140
-msgctxt "QFileDialog"
-msgid "Folder"
+#: src/gui/dialogs/qfontdialog.cpp:680
+msgid "Font st&yle"
 msgstr ""
 
-#: src/gui/itemviews/qfileiconprovider.cpp:145
-msgctxt "QFileDialog"
-msgid "Shortcut"
+#: src/gui/dialogs/qfontdialog.cpp:684
+msgid "Effects"
 msgstr ""
 
-#: src/gui/itemviews/qfileiconprovider.cpp:149
-msgctxt "QFileDialog"
-msgid "Unknown"
+#: src/gui/dialogs/qfontdialog.cpp:685
+msgid "Stri&keout"
 msgstr ""
 
-#: src/gui/util/qundostack.cpp:857 src/gui/util/qundogroup.cpp:368
-msgid "Undo %1"
+#: src/gui/dialogs/qfontdialog.cpp:686
+msgid "&Underline"
 msgstr ""
 
-#: src/gui/util/qundostack.cpp:857 src/gui/util/qundogroup.cpp:368
-msgid "Undo"
+#: src/gui/dialogs/qfontdialog.cpp:687
+msgid "Sample"
 msgstr ""
 
-#: src/gui/util/qundostack.cpp:887 src/gui/util/qundogroup.cpp:399
-msgid "Redo %1"
+#: src/gui/dialogs/qfilesystemmodel_p.h:223
+msgid "Computer"
 msgstr ""
 
-#: src/gui/util/qundostack.cpp:887 src/gui/util/qundogroup.cpp:399
-msgid "Redo"
+#: src/gui/dialogs/qprintpreviewdialog.cpp:227
+msgid "%1%"
 msgstr ""
 
-#: src/gui/util/qundoview.cpp:81
-msgid "<empty>"
+#: src/gui/dialogs/qprintpreviewdialog.cpp:296
+msgctxt "QPrintPreviewDialog"
+msgid "Print Preview"
 msgstr ""
 
-#: src/gui/text/qfontdatabase.cpp:593
-msgctxt "QFontDatabase"
-msgid "Black"
+#: src/gui/dialogs/qprintpreviewdialog.cpp:334
+msgctxt "QPrintPreviewDialog"
+msgid "Next page"
 msgstr ""
 
-#: src/gui/text/qfontdatabase.cpp:595
-msgctxt "QFontDatabase"
-msgid "Bold"
+#: src/gui/dialogs/qprintpreviewdialog.cpp:335
+msgctxt "QPrintPreviewDialog"
+msgid "Previous page"
 msgstr ""
 
-#: src/gui/text/qfontdatabase.cpp:597
-msgctxt "QFontDatabase"
-msgid "Demi Bold"
+#: src/gui/dialogs/qprintpreviewdialog.cpp:336
+msgctxt "QPrintPreviewDialog"
+msgid "First page"
 msgstr ""
 
-#: src/gui/text/qfontdatabase.cpp:599
-msgctxt "QFontDatabase"
-msgid "Light"
+#: src/gui/dialogs/qprintpreviewdialog.cpp:337
+msgctxt "QPrintPreviewDialog"
+msgid "Last page"
 msgstr ""
 
-#: src/gui/text/qfontdatabase.cpp:603
-msgctxt "QFontDatabase"
-msgid "Italic"
+#: src/gui/dialogs/qprintpreviewdialog.cpp:346
+msgctxt "QPrintPreviewDialog"
+msgid "Fit width"
 msgstr ""
 
-#: src/gui/text/qfontdatabase.cpp:605
-msgctxt "QFontDatabase"
-msgid "Oblique"
+#: src/gui/dialogs/qprintpreviewdialog.cpp:347
+msgctxt "QPrintPreviewDialog"
+msgid "Fit page"
 msgstr ""
 
-#: src/gui/text/qtextcontrol.cpp:1859
-msgid "Copy &Link Location"
+#: src/gui/dialogs/qprintpreviewdialog.cpp:358
+msgctxt "QPrintPreviewDialog"
+msgid "Zoom in"
 msgstr ""
 
-#: src/gui/text/qtextcontrol.cpp:2772
-msgctxt "QUnicodeControlCharacterMenu"
-msgid "LRM Left-to-right mark"
+#: src/gui/dialogs/qprintpreviewdialog.cpp:359
+msgctxt "QPrintPreviewDialog"
+msgid "Zoom out"
 msgstr ""
 
-#: src/gui/text/qtextcontrol.cpp:2773
-msgctxt "QUnicodeControlCharacterMenu"
-msgid "RLM Right-to-left mark"
+#: src/gui/dialogs/qprintpreviewdialog.cpp:365
+msgctxt "QPrintPreviewDialog"
+msgid "Portrait"
 msgstr ""
 
-#: src/gui/text/qtextcontrol.cpp:2774
-msgctxt "QUnicodeControlCharacterMenu"
-msgid "ZWJ Zero width joiner"
+#: src/gui/dialogs/qprintpreviewdialog.cpp:366
+msgctxt "QPrintPreviewDialog"
+msgid "Landscape"
 msgstr ""
 
-#: src/gui/text/qtextcontrol.cpp:2775
-msgctxt "QUnicodeControlCharacterMenu"
-msgid "ZWNJ Zero width non-joiner"
+#: src/gui/dialogs/qprintpreviewdialog.cpp:384
+msgctxt "QPrintPreviewDialog"
+msgid "Show single page"
 msgstr ""
 
-#: src/gui/text/qtextcontrol.cpp:2776
-msgctxt "QUnicodeControlCharacterMenu"
-msgid "ZWSP Zero width space"
+#: src/gui/dialogs/qprintpreviewdialog.cpp:385
+msgctxt "QPrintPreviewDialog"
+msgid "Show facing pages"
 msgstr ""
 
-#: src/gui/text/qtextcontrol.cpp:2777
-msgctxt "QUnicodeControlCharacterMenu"
-msgid "LRE Start of left-to-right embedding"
+#: src/gui/dialogs/qprintpreviewdialog.cpp:386
+msgctxt "QPrintPreviewDialog"
+msgid "Show overview of all pages"
 msgstr ""
 
-#: src/gui/text/qtextcontrol.cpp:2778
-msgctxt "QUnicodeControlCharacterMenu"
-msgid "RLE Start of right-to-left embedding"
+#: src/gui/dialogs/qprintpreviewdialog.cpp:413
+msgctxt "QPrintPreviewDialog"
+msgid "Print"
 msgstr ""
 
-#: src/gui/text/qtextcontrol.cpp:2779
-msgctxt "QUnicodeControlCharacterMenu"
-msgid "LRO Start of left-to-right override"
+#: src/gui/dialogs/qprintpreviewdialog.cpp:414
+msgctxt "QPrintPreviewDialog"
+msgid "Page setup"
 msgstr ""
 
-#: src/gui/text/qtextcontrol.cpp:2780
-msgctxt "QUnicodeControlCharacterMenu"
-msgid "RLO Start of right-to-left override"
+#: src/gui/dialogs/qprintdialog_unix.cpp:346
+#: src/gui/dialogs/qprintdialog_unix.cpp:415
+msgid "&Options >>"
 msgstr ""
 
-#: src/gui/text/qtextcontrol.cpp:2781
-msgctxt "QUnicodeControlCharacterMenu"
-msgid "PDF Pop directional formatting"
+#: src/gui/dialogs/qprintdialog_unix.cpp:351
+msgid "&Print"
 msgstr ""
 
-#: src/gui/text/qtextcontrol.cpp:2787
-msgid "Insert Unicode control character"
+#: src/gui/dialogs/qprintdialog_unix.cpp:419
+msgid "&Options <<"
 msgstr ""
 
-#: src/network/kernel/qhostinfo_p.h:53 src/network/kernel/qhostinfo_unix.cpp:89
-#: src/network/kernel/qhostinfo_unix.cpp:173
-msgctxt "QHostInfo"
-msgid "Host not found"
+#: src/gui/dialogs/qprintdialog_unix.cpp:945
+msgctxt "QPPDOptionsModel"
+msgid "Name"
 msgstr ""
 
-#: src/network/kernel/qhostinfo_unix.cpp:45
-#: src/network/socket/qabstractsocket.cpp:1092
-msgctxt "QHostInfo"
+#: src/gui/dialogs/qprintdialog_unix.cpp:947
+msgctxt "QPPDOptionsModel"
+msgid "Value"
+msgstr ""
+
+#: src/gui/dialogs/qwizard.cpp:578
+msgid "Go Back"
+msgstr ""
+
+#: src/gui/dialogs/qwizard.cpp:578
+msgid "< &Back"
+msgstr ""
+
+#: src/gui/dialogs/qwizard.cpp:581
+#: src/scripttools/debugging/qscriptdebugger.cpp:1674
+msgid "Continue"
+msgstr ""
+
+#: src/gui/dialogs/qwizard.cpp:583
+msgid "&Next >"
+msgstr ""
+
+#: src/gui/dialogs/qwizard.cpp:585
+msgid "Commit"
+msgstr ""
+
+#: src/gui/dialogs/qwizard.cpp:587
+msgid "Done"
+msgstr ""
+
+#: src/gui/dialogs/qwizard.cpp:587
+msgid "&Finish"
+msgstr ""
+
+#: src/gui/dialogs/qwizard.cpp:591
+msgid "&Help"
+msgstr ""
+
+#: src/gui/dialogs/qpagesetupdialog_unix.cpp:51
+msgid "A0"
+msgstr ""
+
+#: src/gui/dialogs/qpagesetupdialog_unix.cpp:52
+msgid "A1"
+msgstr ""
+
+#: src/gui/dialogs/qpagesetupdialog_unix.cpp:53
+msgid "A2"
+msgstr ""
+
+#: src/gui/dialogs/qpagesetupdialog_unix.cpp:54
+msgid "A3"
+msgstr ""
+
+#: src/gui/dialogs/qpagesetupdialog_unix.cpp:55
+msgid "A4"
+msgstr ""
+
+#: src/gui/dialogs/qpagesetupdialog_unix.cpp:56
+msgid "A5"
+msgstr ""
+
+#: src/gui/dialogs/qpagesetupdialog_unix.cpp:57
+msgid "A6"
+msgstr ""
+
+#: src/gui/dialogs/qpagesetupdialog_unix.cpp:58
+msgid "A7"
+msgstr ""
+
+#: src/gui/dialogs/qpagesetupdialog_unix.cpp:59
+msgid "A8"
+msgstr ""
+
+#: src/gui/dialogs/qpagesetupdialog_unix.cpp:60
+msgid "A9"
+msgstr ""
+
+#: src/gui/dialogs/qpagesetupdialog_unix.cpp:61
+msgid "B0"
+msgstr ""
+
+#: src/gui/dialogs/qpagesetupdialog_unix.cpp:62
+msgid "B1"
+msgstr ""
+
+#: src/gui/dialogs/qpagesetupdialog_unix.cpp:63
+msgid "B2"
+msgstr ""
+
+#: src/gui/dialogs/qpagesetupdialog_unix.cpp:64
+msgid "B3"
+msgstr ""
+
+#: src/gui/dialogs/qpagesetupdialog_unix.cpp:65
+msgid "B4"
+msgstr ""
+
+#: src/gui/dialogs/qpagesetupdialog_unix.cpp:66
+msgid "B5"
+msgstr ""
+
+#: src/gui/dialogs/qpagesetupdialog_unix.cpp:67
+msgid "B6"
+msgstr ""
+
+#: src/gui/dialogs/qpagesetupdialog_unix.cpp:68
+msgid "B7"
+msgstr ""
+
+#: src/gui/dialogs/qpagesetupdialog_unix.cpp:69
+msgid "B8"
+msgstr ""
+
+#: src/gui/dialogs/qpagesetupdialog_unix.cpp:70
+msgid "B9"
+msgstr ""
+
+#: src/gui/dialogs/qpagesetupdialog_unix.cpp:71
+msgid "B10"
+msgstr ""
+
+#: src/gui/dialogs/qpagesetupdialog_unix.cpp:72
+msgid "C5E"
+msgstr ""
+
+#: src/gui/dialogs/qpagesetupdialog_unix.cpp:73
+msgid "DLE"
+msgstr ""
+
+#: src/gui/dialogs/qpagesetupdialog_unix.cpp:74
+msgid "Executive"
+msgstr ""
+
+#: src/gui/dialogs/qpagesetupdialog_unix.cpp:75
+msgid "Folio"
+msgstr ""
+
+#: src/gui/dialogs/qpagesetupdialog_unix.cpp:76
+msgid "Ledger"
+msgstr ""
+
+#: src/gui/dialogs/qpagesetupdialog_unix.cpp:77
+msgid "Legal"
+msgstr ""
+
+#: src/gui/dialogs/qpagesetupdialog_unix.cpp:78
+msgid "Letter"
+msgstr ""
+
+#: src/gui/dialogs/qpagesetupdialog_unix.cpp:79
+msgid "Tabloid"
+msgstr ""
+
+#: src/gui/dialogs/qpagesetupdialog_unix.cpp:80
+msgid "US Common #10 Envelope"
+msgstr ""
+
+#: src/gui/dialogs/qpagesetupdialog_unix.cpp:81
+msgid "Custom"
+msgstr ""
+
+#: src/gui/dialogs/qpagesetupdialog_unix.cpp:268
+msgid "Centimeters (cm)"
+msgstr ""
+
+#: src/gui/dialogs/qpagesetupdialog_unix.cpp:268
+msgid "Millimeters (mm)"
+msgstr ""
+
+#: src/gui/dialogs/qpagesetupdialog_unix.cpp:268
+msgid "Inches (in)"
+msgstr ""
+
+#: src/gui/dialogs/qpagesetupdialog_unix.cpp:268
+msgid "Points (pt)"
+msgstr ""
+
+#: src/gui/dialogs/qmessagebox.cpp:103
+msgid "Show Details..."
+msgstr ""
+
+#: src/gui/dialogs/qmessagebox.cpp:103
+msgid "Hide Details..."
+msgstr ""
+
+#: src/gui/dialogs/qmessagebox.cpp:1439
+msgid "<h3>About Katie</h3><p>This program uses Katie version %1.</p>"
+msgstr ""
+
+#: src/gui/dialogs/qmessagebox.cpp:1443
+msgid ""
+"<p>Katie is a C++ toolkit derived from the Qt 4.8 framework.</p><p>Katie is "
+"licensed under the GNU LGPL version 2.1</p><p>Copyright (C) 2015 The Qt "
+"Company Ltd and other contributors.</p><p>Copyright (C) 2016 Ivailo Monev</"
+"p><p>See <a href=\"https://osdn.net/projects/kde/\">osdn.net/projects/kde/</"
+"a> for more information.</p>"
+msgstr ""
+
+#: src/gui/dialogs/qmessagebox.cpp:1451
+msgid "About Katie"
+msgstr ""
+
+#: src/gui/dialogs/qabstractpagesetupdialog.cpp:48
+#: src/gui/dialogs/qabstractpagesetupdialog.cpp:60
+msgctxt "QPrintPreviewDialog"
+msgid "Page Setup"
+msgstr ""
+
+#: src/gui/dialogs/qfiledialog.cpp:493
+msgid "Find Directory"
+msgstr ""
+
+#: src/gui/dialogs/qfiledialog.cpp:495
+msgid "Open"
+msgstr ""
+
+#: src/gui/dialogs/qfiledialog.cpp:497
+msgid "Save As"
+msgstr ""
+
+#: src/gui/dialogs/qfiledialog.cpp:512 src/gui/dialogs/qfiledialog.cpp:1014
+msgid "All Files (*)"
+msgstr ""
+
+#: src/gui/dialogs/qfiledialog.cpp:522
+msgid "Show "
+msgstr ""
+
+#: src/gui/dialogs/qfiledialog.cpp:526
+msgid "&Rename"
+msgstr ""
+
+#: src/gui/dialogs/qfiledialog.cpp:527
+msgid "&Delete"
+msgstr ""
+
+#: src/gui/dialogs/qfiledialog.cpp:528
+msgid "Show &hidden files"
+msgstr ""
+
+#: src/gui/dialogs/qfiledialog.cpp:529
+msgid "&New Folder"
+msgstr ""
+
+#: src/gui/dialogs/qfiledialog.cpp:534 src/gui/dialogs/qfiledialog.cpp:1195
+msgid "Directory:"
+msgstr ""
+
+#: src/gui/dialogs/qfiledialog.cpp:536 src/gui/dialogs/qfiledialog.cpp:1201
+msgid "File &name:"
+msgstr ""
+
+#: src/gui/dialogs/qfiledialog.cpp:1188 src/gui/dialogs/qfiledialog.cpp:1243
+#: src/gui/dialogs/qfiledialog.cpp:2691
+msgid "&Open"
+msgstr ""
+
+#: src/gui/dialogs/qfiledialog.cpp:1188 src/gui/dialogs/qfiledialog.cpp:1243
+msgid "&Save"
+msgstr ""
+
+#: src/gui/dialogs/qfiledialog.cpp:1191
+msgid "Directories"
+msgstr ""
+
+#: src/gui/dialogs/qfiledialog.cpp:1198 src/gui/dialogs/qfiledialog.cpp:1241
+msgid "&Choose"
+msgstr ""
+
+#: src/gui/dialogs/qfiledialog.cpp:1908 src/gui/dialogs/qfiledialog.cpp:2762
+msgid ""
+"%1\n"
+"Directory not found.\n"
+"Please verify the correct directory name was given."
+msgstr ""
+
+#: src/gui/dialogs/qfiledialog.cpp:1942
+msgid ""
+"%1 already exists.\n"
+"Do you want to replace it?"
+msgstr ""
+
+#: src/gui/dialogs/qfiledialog.cpp:1962
+msgid ""
+"%1\n"
+"File not found.\n"
+"Please verify the correct file name was given."
+msgstr ""
+
+#: src/gui/dialogs/qfiledialog.cpp:2411
+msgid "New Folder"
+msgstr ""
+
+#: src/gui/dialogs/qfiledialog.cpp:2540
+msgid ""
+"'%1' is write protected.\n"
+"Do you want to delete it anyway?"
+msgstr ""
+
+#: src/gui/dialogs/qfiledialog.cpp:2545
+msgid "Are sure you want to delete '%1'?"
+msgstr ""
+
+#: src/gui/dialogs/qfiledialog.cpp:2560
+msgid "Could not delete directory."
+msgstr ""
+
+#: src/gui/dialogs/qfiledialog.cpp:2957
+msgid "Recent Places"
+msgstr ""
+
+#: src/gui/dialogs/qabstractprintdialog.cpp:91
+#: src/gui/dialogs/qabstractprintdialog.cpp:104
+msgctxt "QPrintDialog"
+msgid "Print"
+msgstr ""
+
+#: src/gui/dialogs/qcolordialog.cpp:1203
+msgid "Hu&e:"
+msgstr ""
+
+#: src/gui/dialogs/qcolordialog.cpp:1204
+msgid "&Sat:"
+msgstr ""
+
+#: src/gui/dialogs/qcolordialog.cpp:1205
+msgid "&Val:"
+msgstr ""
+
+#: src/gui/dialogs/qcolordialog.cpp:1206
+msgid "&Red:"
+msgstr ""
+
+#: src/gui/dialogs/qcolordialog.cpp:1207
+msgid "&Green:"
+msgstr ""
+
+#: src/gui/dialogs/qcolordialog.cpp:1208
+msgid "Bl&ue:"
+msgstr ""
+
+#: src/gui/dialogs/qcolordialog.cpp:1209
+msgid "A&lpha channel:"
+msgstr ""
+
+#: src/gui/dialogs/qcolordialog.cpp:1310
+msgid "Select Color"
+msgstr ""
+
+#: src/gui/dialogs/qcolordialog.cpp:1437
+msgid "&Basic colors"
+msgstr ""
+
+#: src/gui/dialogs/qcolordialog.cpp:1438
+msgid "&Custom colors"
+msgstr ""
+
+#: src/gui/dialogs/qcolordialog.cpp:1439
+msgid "&Add to Custom Colors"
+msgstr ""
+
+#: src/gui/dialogs/qfilesystemmodel.cpp:643
+msgid "%1 bytes"
+msgstr ""
+
+#: src/gui/dialogs/qfilesystemmodel.cpp:713
+msgid "Invalid filename"
+msgstr ""
+
+#: src/gui/dialogs/qfilesystemmodel.cpp:714
+msgid ""
+"<b>The name \"%1\" can not be used.</b><p>Try using another name, with fewer "
+"characters or no punctuations marks."
+msgstr ""
+
+#: src/gui/dialogs/qsidebar.cpp:405
+msgid "Remove"
+msgstr ""
+
+#: src/gui/image/qimagereader.cpp:795
+msgctxt "QImageReader"
 msgid "Unknown error"
 msgstr ""
 
-#: src/network/kernel/qhostinfo_unix.cpp:107
-msgctxt "QHostInfo"
-msgid "No host name given"
+#: src/gui/image/qimagereader.cpp:798
+msgctxt "QImageReader"
+msgid "File not found"
 msgstr ""
 
-#: src/network/kernel/qhostinfo_unix.cpp:109
-msgctxt "QHostInfo"
-msgid "Invalid hostname"
+#: src/gui/image/qimagereader.cpp:801
+msgctxt "QImageReader"
+msgid "Device not readable"
 msgstr ""
 
-#: src/network/kernel/qhostinfo_unix.cpp:161
-msgctxt "QHostInfo"
-msgid "Unknown address type"
+#: src/gui/image/qimagereader.cpp:804
+msgctxt "QImageReader"
+msgid "Unsupported image format"
 msgstr ""
 
-#: src/network/socket/qtcpserver.cpp:216
-#: src/network/socket/qabstractsocket.cpp:427
-msgid "Operation on socket is not supported"
+#: src/gui/image/qimagereader.cpp:807
+msgctxt "QImageReader"
+msgid "Unable to read image data"
+msgstr ""
+
+#: src/gui/image/qimagewriter.cpp:458
+msgctxt "QImageWriter"
+msgid "Unknown error"
+msgstr ""
+
+#: src/gui/image/qimagewriter.cpp:461
+msgctxt "QImageWriter"
+msgid "Device not writable"
+msgstr ""
+
+#: src/gui/image/qimagewriter.cpp:464
+msgctxt "QImageWriter"
+msgid "Unsupported image format"
+msgstr ""
+
+#: src/network/socket/qlocalserver.cpp:199
+#: src/network/socket/qlocalserver_unix.cpp:194
+msgid "%1: Name error"
 msgstr ""
 
 #: src/network/socket/qlocalserver_unix.cpp:186
 msgid "%1: Permission denied"
-msgstr ""
-
-#: src/network/socket/qlocalserver_unix.cpp:194
-#: src/network/socket/qlocalserver.cpp:199
-msgid "%1: Name error"
 msgstr ""
 
 #: src/network/socket/qlocalserver_unix.cpp:198
@@ -3597,26 +3545,9 @@ msgstr ""
 msgid "%1: Unknown error %2"
 msgstr ""
 
-#: src/network/socket/qabstractsocket.cpp:685
-msgid "Host not found"
-msgstr ""
-
-#: src/network/socket/qabstractsocket.cpp:727
-#: src/network/socket/qabstractsocketengine.cpp:406
-msgid "Connection refused"
-msgstr ""
-
-#: src/network/socket/qabstractsocket.cpp:865
-#: src/network/socket/qabstractsocketengine.cpp:403
-msgid "Connection timed out"
-msgstr ""
-
-#: src/network/socket/qabstractsocket.cpp:1436
-msgid "Socket operation timed out"
-msgstr ""
-
-#: src/network/socket/qabstractsocket.cpp:1839
-msgid "Socket is not connected"
+#: src/network/socket/qtcpserver.cpp:216
+#: src/network/socket/qabstractsocket.cpp:427
+msgid "Operation on socket is not supported"
 msgstr ""
 
 #: src/network/socket/qabstractsocketengine.cpp:367
@@ -3667,6 +3598,16 @@ msgstr ""
 msgid "Permission denied"
 msgstr ""
 
+#: src/network/socket/qabstractsocketengine.cpp:403
+#: src/network/socket/qabstractsocket.cpp:865
+msgid "Connection timed out"
+msgstr ""
+
+#: src/network/socket/qabstractsocketengine.cpp:406
+#: src/network/socket/qabstractsocket.cpp:727
+msgid "Connection refused"
+msgstr ""
+
 #: src/network/socket/qabstractsocketengine.cpp:409
 msgid "The bound address is already in use"
 msgstr ""
@@ -3707,6 +3648,28 @@ msgstr ""
 msgid "Operation on non-socket"
 msgstr ""
 
+#: src/network/socket/qabstractsocket.cpp:685
+msgid "Host not found"
+msgstr ""
+
+#: src/network/socket/qabstractsocket.cpp:1092
+#: src/network/kernel/qhostinfo_unix.cpp:45
+msgctxt "QHostInfo"
+msgid "Unknown error"
+msgstr ""
+
+#: src/network/socket/qabstractsocket.cpp:1436
+msgid "Socket operation timed out"
+msgstr ""
+
+#: src/network/socket/qabstractsocket.cpp:1839
+msgid "Socket is not connected"
+msgstr ""
+
+#: src/network/socket/qudpsocket.cpp:174
+msgid "This platform does not support IPv6"
+msgstr ""
+
 #: src/network/socket/qlocalsocket_unix.cpp:111
 msgid "%1: Connection refused"
 msgstr ""
@@ -3743,29 +3706,26 @@ msgstr ""
 msgid "%1: The socket operation is not supported"
 msgstr ""
 
-#: src/network/socket/qudpsocket.cpp:174
-msgid "This platform does not support IPv6"
+#: src/network/kernel/qhostinfo_unix.cpp:89
+#: src/network/kernel/qhostinfo_unix.cpp:173
+#: src/network/kernel/qhostinfo_p.h:53
+msgctxt "QHostInfo"
+msgid "Host not found"
 msgstr ""
 
-#: src/scripttools/debugging/qscriptedit.cpp:398
-#: src/scripttools/debugging/qscriptdebugger.cpp:1795
-msgid "Toggle Breakpoint"
+#: src/network/kernel/qhostinfo_unix.cpp:107
+msgctxt "QHostInfo"
+msgid "No host name given"
 msgstr ""
 
-#: src/scripttools/debugging/qscriptedit.cpp:400
-msgid "Disable Breakpoint"
+#: src/network/kernel/qhostinfo_unix.cpp:109
+msgctxt "QHostInfo"
+msgid "Invalid hostname"
 msgstr ""
 
-#: src/scripttools/debugging/qscriptedit.cpp:401
-msgid "Enable Breakpoint"
-msgstr ""
-
-#: src/scripttools/debugging/qscriptedit.cpp:405
-msgid "Breakpoint Condition:"
-msgstr ""
-
-#: src/scripttools/debugging/qscriptbreakpointswidget.cpp:282
-msgid "New"
+#: src/network/kernel/qhostinfo_unix.cpp:161
+msgctxt "QHostInfo"
+msgid "Unknown address type"
 msgstr ""
 
 #: src/scripttools/debugging/qscriptdebuggerstackmodel.cpp:141
@@ -3783,14 +3743,44 @@ msgctxt "QScriptDebuggerStackModel"
 msgid "Location"
 msgstr ""
 
-#: src/scripttools/debugging/qscriptdebuggerlocalsmodel.cpp:876
-msgctxt "QScriptDebuggerLocalsModel"
-msgid "Name"
+#: src/scripttools/debugging/qscriptenginedebugger.cpp:485
+msgid "Loaded Scripts"
 msgstr ""
 
-#: src/scripttools/debugging/qscriptdebuggerlocalsmodel.cpp:878
-msgctxt "QScriptDebuggerLocalsModel"
-msgid "Value"
+#: src/scripttools/debugging/qscriptenginedebugger.cpp:491
+msgid "Breakpoints"
+msgstr ""
+
+#: src/scripttools/debugging/qscriptenginedebugger.cpp:497
+msgid "Stack"
+msgstr ""
+
+#: src/scripttools/debugging/qscriptenginedebugger.cpp:503
+msgid "Locals"
+msgstr ""
+
+#: src/scripttools/debugging/qscriptenginedebugger.cpp:509
+msgid "Console"
+msgstr ""
+
+#: src/scripttools/debugging/qscriptenginedebugger.cpp:515
+msgid "Debug Output"
+msgstr ""
+
+#: src/scripttools/debugging/qscriptenginedebugger.cpp:521
+msgid "Error Log"
+msgstr ""
+
+#: src/scripttools/debugging/qscriptenginedebugger.cpp:533
+msgid "Search"
+msgstr ""
+
+#: src/scripttools/debugging/qscriptenginedebugger.cpp:540
+msgid "View"
+msgstr ""
+
+#: src/scripttools/debugging/qscriptenginedebugger.cpp:558
+msgid "Katie Script Debugger"
 msgstr ""
 
 #: src/scripttools/debugging/qscriptbreakpointsmodel.cpp:435
@@ -3821,6 +3811,23 @@ msgstr ""
 #: src/scripttools/debugging/qscriptbreakpointsmodel.cpp:445
 msgctxt "QScriptBreakpointsModel"
 msgid "Hit-count"
+msgstr ""
+
+#: src/scripttools/debugging/qscriptedit.cpp:398
+#: src/scripttools/debugging/qscriptdebugger.cpp:1795
+msgid "Toggle Breakpoint"
+msgstr ""
+
+#: src/scripttools/debugging/qscriptedit.cpp:400
+msgid "Disable Breakpoint"
+msgstr ""
+
+#: src/scripttools/debugging/qscriptedit.cpp:401
+msgid "Enable Breakpoint"
+msgstr ""
+
+#: src/scripttools/debugging/qscriptedit.cpp:405
+msgid "Breakpoint Condition:"
 msgstr ""
 
 #: src/scripttools/debugging/qscriptdebugger.cpp:849
@@ -3928,44 +3935,18 @@ msgstr ""
 msgid "Debug"
 msgstr ""
 
-#: src/scripttools/debugging/qscriptenginedebugger.cpp:485
-msgid "Loaded Scripts"
+#: src/scripttools/debugging/qscriptdebuggerlocalsmodel.cpp:876
+msgctxt "QScriptDebuggerLocalsModel"
+msgid "Name"
 msgstr ""
 
-#: src/scripttools/debugging/qscriptenginedebugger.cpp:491
-msgid "Breakpoints"
+#: src/scripttools/debugging/qscriptdebuggerlocalsmodel.cpp:878
+msgctxt "QScriptDebuggerLocalsModel"
+msgid "Value"
 msgstr ""
 
-#: src/scripttools/debugging/qscriptenginedebugger.cpp:497
-msgid "Stack"
-msgstr ""
-
-#: src/scripttools/debugging/qscriptenginedebugger.cpp:503
-msgid "Locals"
-msgstr ""
-
-#: src/scripttools/debugging/qscriptenginedebugger.cpp:509
-msgid "Console"
-msgstr ""
-
-#: src/scripttools/debugging/qscriptenginedebugger.cpp:515
-msgid "Debug Output"
-msgstr ""
-
-#: src/scripttools/debugging/qscriptenginedebugger.cpp:521
-msgid "Error Log"
-msgstr ""
-
-#: src/scripttools/debugging/qscriptenginedebugger.cpp:533
-msgid "Search"
-msgstr ""
-
-#: src/scripttools/debugging/qscriptenginedebugger.cpp:540
-msgid "View"
-msgstr ""
-
-#: src/scripttools/debugging/qscriptenginedebugger.cpp:558
-msgid "Katie Script Debugger"
+#: src/scripttools/debugging/qscriptbreakpointswidget.cpp:282
+msgid "New"
 msgstr ""
 
 #: src/scripttools/debugging/qscriptdebuggercodefinderwidget.cpp:135
@@ -4106,6 +4087,148 @@ msgctxt "QFormBuilder"
 msgid "The flag-value '%1' is invalid. Zero will be used instead."
 msgstr ""
 
+#: src/xml/kernel/qxmlstream.cpp:558 src/xml/kernel/qxmlstream_p.h:1786
+msgid "Extra content at end of document."
+msgstr ""
+
+#: src/xml/kernel/qxmlstream.cpp:791
+msgid "Invalid entity value."
+msgstr ""
+
+#: src/xml/kernel/qxmlstream.cpp:899
+msgid "Invalid XML character."
+msgstr ""
+
+#: src/xml/kernel/qxmlstream.cpp:1158
+msgid "Sequence ']]>' not allowed in content."
+msgstr ""
+
+#: src/xml/kernel/qxmlstream.cpp:1367 src/xml/kernel/qxmlstream_p.h:1043
+msgid "Encountered incorrectly encoded content."
+msgstr ""
+
+#: src/xml/kernel/qxmlstream.cpp:1397
+msgid "Namespace prefix '%1' not declared"
+msgstr ""
+
+#: src/xml/kernel/qxmlstream.cpp:1430 src/xml/kernel/qxmlstream.cpp:1442
+#: src/xml/kernel/qxmlstream_p.h:1704 src/xml/kernel/qxmlstream_p.h:1757
+msgid "Illegal namespace declaration."
+msgstr ""
+
+#: src/xml/kernel/qxmlstream.cpp:1474
+msgid "Attribute redefined."
+msgstr ""
+
+#: src/xml/kernel/qxmlstream.cpp:1588
+msgid "Unexpected character '%1' in public id literal."
+msgstr ""
+
+#: src/xml/kernel/qxmlstream.cpp:1616
+msgid "Invalid XML version string."
+msgstr ""
+
+#: src/xml/kernel/qxmlstream.cpp:1618
+msgid "Unsupported XML version."
+msgstr ""
+
+#: src/xml/kernel/qxmlstream.cpp:1639
+msgid "The standalone pseudo attribute must appear after the encoding."
+msgstr ""
+
+#: src/xml/kernel/qxmlstream.cpp:1641
+msgid "%1 is an invalid encoding name."
+msgstr ""
+
+#: src/xml/kernel/qxmlstream.cpp:1648
+msgid "Encoding %1 is unsupported"
+msgstr ""
+
+#: src/xml/kernel/qxmlstream.cpp:1664
+msgid "Standalone accepts only yes or no."
+msgstr ""
+
+#: src/xml/kernel/qxmlstream.cpp:1666
+msgid "Invalid attribute in XML declaration."
+msgstr ""
+
+#: src/xml/kernel/qxmlstream.cpp:1682
+msgid "Premature end of document."
+msgstr ""
+
+#: src/xml/kernel/qxmlstream.cpp:1684
+msgid "Invalid document."
+msgstr ""
+
+#: src/xml/kernel/qxmlstream.cpp:1724
+msgid "Expected "
+msgstr ""
+
+#: src/xml/kernel/qxmlstream.cpp:1735
+msgid ", but got '"
+msgstr ""
+
+#: src/xml/kernel/qxmlstream.cpp:1739
+msgid "Unexpected '"
+msgstr ""
+
+#: src/xml/kernel/qxmlstream.cpp:1964
+msgid "Expected character data."
+msgstr ""
+
+#: src/xml/kernel/qxmlstream_p.h:742
+msgid "Recursive entity detected."
+msgstr ""
+
+#: src/xml/kernel/qxmlstream_p.h:1256
+msgid "Start tag expected."
+msgstr ""
+
+#: src/xml/kernel/qxmlstream_p.h:1469
+msgid "NDATA in parameter entity declaration."
+msgstr ""
+
+#: src/xml/kernel/qxmlstream_p.h:1501
+msgid "XML declaration not at start of document."
+msgstr ""
+
+#: src/xml/kernel/qxmlstream_p.h:1504
+msgid "%1 is an invalid processing instruction name."
+msgstr ""
+
+#: src/xml/kernel/qxmlstream_p.h:1516
+msgid "Invalid processing instruction name."
+msgstr ""
+
+#: src/xml/kernel/qxmlstream_p.h:1647
+msgid "%1 is an invalid PUBLIC identifier."
+msgstr ""
+
+#: src/xml/kernel/qxmlstream_p.h:1773
+msgid "Invalid XML name."
+msgstr ""
+
+#: src/xml/kernel/qxmlstream_p.h:1799
+msgid "Opening and ending tag mismatch."
+msgstr ""
+
+#: src/xml/kernel/qxmlstream_p.h:1805 src/xml/kernel/qxmlstream_p.h:1867
+#: src/xml/kernel/qxmlstream_p.h:1909
+msgid "Entity '%1' not declared."
+msgstr ""
+
+#: src/xml/kernel/qxmlstream_p.h:1819
+msgid "Reference to unparsed entity '%1'."
+msgstr ""
+
+#: src/xml/kernel/qxmlstream_p.h:1883
+msgid "Reference to external entity '%1' in attribute value."
+msgstr ""
+
+#: src/xml/kernel/qxmlstream_p.h:1924
+msgid "Invalid character reference."
+msgstr ""
+
 #: src/xml/sax/qxml.cpp:36
 msgctxt "QXml"
 msgid "no error occurred"
@@ -4221,146 +4344,4 @@ msgstr ""
 #: src/xml/sax/qxml.cpp:58
 msgctxt "QXml"
 msgid "error in the text declaration of an external entity"
-msgstr ""
-
-#: src/xml/kernel/qxmlstream_p.h:742
-msgid "Recursive entity detected."
-msgstr ""
-
-#: src/xml/kernel/qxmlstream_p.h:1043 src/xml/kernel/qxmlstream.cpp:1367
-msgid "Encountered incorrectly encoded content."
-msgstr ""
-
-#: src/xml/kernel/qxmlstream_p.h:1256
-msgid "Start tag expected."
-msgstr ""
-
-#: src/xml/kernel/qxmlstream_p.h:1469
-msgid "NDATA in parameter entity declaration."
-msgstr ""
-
-#: src/xml/kernel/qxmlstream_p.h:1501
-msgid "XML declaration not at start of document."
-msgstr ""
-
-#: src/xml/kernel/qxmlstream_p.h:1504
-msgid "%1 is an invalid processing instruction name."
-msgstr ""
-
-#: src/xml/kernel/qxmlstream_p.h:1516
-msgid "Invalid processing instruction name."
-msgstr ""
-
-#: src/xml/kernel/qxmlstream_p.h:1647
-msgid "%1 is an invalid PUBLIC identifier."
-msgstr ""
-
-#: src/xml/kernel/qxmlstream_p.h:1704 src/xml/kernel/qxmlstream_p.h:1757
-#: src/xml/kernel/qxmlstream.cpp:1430 src/xml/kernel/qxmlstream.cpp:1442
-msgid "Illegal namespace declaration."
-msgstr ""
-
-#: src/xml/kernel/qxmlstream_p.h:1773
-msgid "Invalid XML name."
-msgstr ""
-
-#: src/xml/kernel/qxmlstream_p.h:1786 src/xml/kernel/qxmlstream.cpp:558
-msgid "Extra content at end of document."
-msgstr ""
-
-#: src/xml/kernel/qxmlstream_p.h:1799
-msgid "Opening and ending tag mismatch."
-msgstr ""
-
-#: src/xml/kernel/qxmlstream_p.h:1805 src/xml/kernel/qxmlstream_p.h:1867
-#: src/xml/kernel/qxmlstream_p.h:1909
-msgid "Entity '%1' not declared."
-msgstr ""
-
-#: src/xml/kernel/qxmlstream_p.h:1819
-msgid "Reference to unparsed entity '%1'."
-msgstr ""
-
-#: src/xml/kernel/qxmlstream_p.h:1883
-msgid "Reference to external entity '%1' in attribute value."
-msgstr ""
-
-#: src/xml/kernel/qxmlstream_p.h:1924
-msgid "Invalid character reference."
-msgstr ""
-
-#: src/xml/kernel/qxmlstream.cpp:791
-msgid "Invalid entity value."
-msgstr ""
-
-#: src/xml/kernel/qxmlstream.cpp:899
-msgid "Invalid XML character."
-msgstr ""
-
-#: src/xml/kernel/qxmlstream.cpp:1158
-msgid "Sequence ']]>' not allowed in content."
-msgstr ""
-
-#: src/xml/kernel/qxmlstream.cpp:1397
-msgid "Namespace prefix '%1' not declared"
-msgstr ""
-
-#: src/xml/kernel/qxmlstream.cpp:1474
-msgid "Attribute redefined."
-msgstr ""
-
-#: src/xml/kernel/qxmlstream.cpp:1588
-msgid "Unexpected character '%1' in public id literal."
-msgstr ""
-
-#: src/xml/kernel/qxmlstream.cpp:1616
-msgid "Invalid XML version string."
-msgstr ""
-
-#: src/xml/kernel/qxmlstream.cpp:1618
-msgid "Unsupported XML version."
-msgstr ""
-
-#: src/xml/kernel/qxmlstream.cpp:1639
-msgid "The standalone pseudo attribute must appear after the encoding."
-msgstr ""
-
-#: src/xml/kernel/qxmlstream.cpp:1641
-msgid "%1 is an invalid encoding name."
-msgstr ""
-
-#: src/xml/kernel/qxmlstream.cpp:1648
-msgid "Encoding %1 is unsupported"
-msgstr ""
-
-#: src/xml/kernel/qxmlstream.cpp:1664
-msgid "Standalone accepts only yes or no."
-msgstr ""
-
-#: src/xml/kernel/qxmlstream.cpp:1666
-msgid "Invalid attribute in XML declaration."
-msgstr ""
-
-#: src/xml/kernel/qxmlstream.cpp:1682
-msgid "Premature end of document."
-msgstr ""
-
-#: src/xml/kernel/qxmlstream.cpp:1684
-msgid "Invalid document."
-msgstr ""
-
-#: src/xml/kernel/qxmlstream.cpp:1724
-msgid "Expected "
-msgstr ""
-
-#: src/xml/kernel/qxmlstream.cpp:1735
-msgid ", but got '"
-msgstr ""
-
-#: src/xml/kernel/qxmlstream.cpp:1739
-msgid "Unexpected '"
-msgstr ""
-
-#: src/xml/kernel/qxmlstream.cpp:1964
-msgid "Expected character data."
 msgstr ""

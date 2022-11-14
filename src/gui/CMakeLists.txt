@@ -52,7 +52,6 @@ set(GUI_PUBLIC_HEADERS
     QDirModel
     QDockWidget
     QDrag
-    QErrorMessage
     QFileDialog
     QFileIconProvider
     QFileSystemModel
@@ -234,7 +233,6 @@ set(GUI_HEADERS
     ${CMAKE_CURRENT_SOURCE_DIR}/dialogs/qfscompleter_p.h
     ${CMAKE_CURRENT_SOURCE_DIR}/dialogs/qdialog.h
     ${CMAKE_CURRENT_SOURCE_DIR}/dialogs/qdialog_p.h
-    ${CMAKE_CURRENT_SOURCE_DIR}/dialogs/qerrormessage.h
     ${CMAKE_CURRENT_SOURCE_DIR}/dialogs/qfiledialog.h
     ${CMAKE_CURRENT_SOURCE_DIR}/dialogs/qfiledialog_p.h
     ${CMAKE_CURRENT_SOURCE_DIR}/dialogs/qfontdialog.h
@@ -593,7 +591,6 @@ set(GUI_SOURCES
     ${CMAKE_CURRENT_SOURCE_DIR}/dialogs/qabstractpagesetupdialog.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/dialogs/qcolordialog.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/dialogs/qdialog.cpp
-    ${CMAKE_CURRENT_SOURCE_DIR}/dialogs/qerrormessage.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/dialogs/qfiledialog.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/dialogs/qfontdialog.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/dialogs/qinputdialog.cpp

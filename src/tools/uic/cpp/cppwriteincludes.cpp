@@ -184,7 +184,6 @@ static const struct ClassTblData {
     { QLatin1String("QDynamicPropertyChangeEvent"), QLatin1String("QtCore/qcoreevent.h") },
     { QLatin1String("QEasingCurve"), QLatin1String("QtCore/qeasingcurve.h") },
     { QLatin1String("QElapsedTimer"), QLatin1String("QtCore/qelapsedtimer.h") },
-    { QLatin1String("QErrorMessage"), QLatin1String("QtGui/qerrormessage.h") },
     { QLatin1String("QEvent"), QLatin1String("QtCore/qcoreevent.h") },
     { QLatin1String("QEventLoop"), QLatin1String("QtCore/qeventloop.h") },
     { QLatin1String("QFile"), QLatin1String("QtCore/qfile.h") },
