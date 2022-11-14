@@ -981,7 +981,7 @@ static QCursor qCursorData(int index)
         case 3: return QCursor(Qt::BlankCursor);
         case 4: return QCursor(Qt::BlankCursor);
         case 5: return QCursor(QPixmap(open_png), 1, 1);
-        case 6: { QPixmap pm(open_png); return QCursor(QBitmap(pm), pm.mask(), 3, 4); }
+        case 6: return QCursor(QPixmap(open_png), 3, 4);
         case 7: return QCursor(QPixmap(open_png), -1, 5);
         case 8: return QCursor(QPixmap(open_png), 5, -1);
     }
@@ -1021,12 +1021,7 @@ void tst_QDataStream::readQCursor(QDataStream *s)
 
     QVERIFY(d5.shape() == test.shape()); //## lacks operator==
     QVERIFY(d5.hotSpot() == test.hotSpot());
-    QVERIFY((d5.bitmap() != 0 && test.bitmap() != 0) || (d5.bitmap() == 0 && test.bitmap() == 0));
-    if (d5.bitmap() != 0)
-        QVERIFY(d5.bitmap()->toImage() == test.bitmap()->toImage());
-    QVERIFY((d5.mask() != 0 && test.mask() != 0) || (d5.mask() == 0 && test.mask() == 0));
-    if (d5.mask() != 0)
-        QVERIFY(d5.mask()->toImage() == test.mask()->toImage());
+    QVERIFY(d5.pixmap().toImage() == test.pixmap().toImage());
 #endif
 }
 

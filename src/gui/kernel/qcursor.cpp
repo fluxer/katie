@@ -23,8 +23,6 @@
 
 #ifndef QT_NO_CURSOR
 
-#include "qapplication.h"
-#include "qbitmap.h"
 #include "qimage.h"
 #include "qdatastream.h"
 #include "qvariant.h"
@@ -46,8 +44,8 @@ QT_BEGIN_NAMESPACE
     associated with particular widgets and to get and set the position
     of the mouse cursor.
 
-    Qt has a number of standard cursor shapes, but you can also make
-    custom cursor shapes based on a QBitmap, a mask and a hotspot.
+    Katie has a number of standard cursor shapes, but you can also make
+    custom cursor shapes based on a QPixmap and a hotspot.
 
     To associate a cursor with a widget, use QWidget::setCursor(). To
     associate a cursor with all widgets (normally for a short period
@@ -57,9 +55,8 @@ QT_BEGIN_NAMESPACE
     constructor which takes the shape as argument, or you can use one
     of the predefined cursors defined in the \l Qt::CursorShape enum.
 
-    If you want to create a cursor with your own bitmap, either use
-    the QCursor constructor which takes a bitmap and a mask or the
-    constructor which takes a pixmap as arguments.
+    If you want to create a cursor with your own pixmap, use the
+    QCursor constructor which takes a pixmap as arguments.
 
     To set or get the position of the mouse cursor use the static
     methods QCursor::pos() and QCursor::setPos().
@@ -80,7 +77,7 @@ QT_BEGIN_NAMESPACE
     cursor will be used instead. Note: X11 does not provide
     appropriate cursors for all possible Qt::CursorShape values. It
     is possible that some cursors will be taken from the Xcursor
-    theme, while others will use an internal bitmap cursor.
+    theme, while others will use an internal pixmap cursor.
 
     \table
     \header \o Shape \o Qt::CursorShape Value \o Cursor Name
@@ -133,24 +130,12 @@ QT_BEGIN_NAMESPACE
 */
 
 /*!
-    \fn HCURSOR_or_HANDLE QCursor::handle() const
+    \fn Qt::HANDLE QCursor::handle() const
 
-    Returns a platform-specific cursor handle. The \c
-    HCURSOR_or_HANDLE type is \c HCURSOR on Windows and Qt::HANDLE on X11
-    and Mac OS X. On \l{Qt for Embedded Linux} it is an integer.
+    Returns a platform-specific cursor handle, Qt::HANDLE on X11/
 
     \warning Using the value returned by this function is not
     portable.
-*/
-
-/*!
-    \fn QCursor::QCursor(HCURSOR cursor)
-
-    Constructs a Qt cursor from the given Windows \a cursor.
-
-    \warning This function is only available on Windows.
-
-    \sa handle()
 */
 
 /*!
@@ -201,8 +186,6 @@ QT_BEGIN_NAMESPACE
  *****************************************************************************/
 
 #ifndef QT_NO_DATASTREAM
-
-
 /*!
     \fn QDataStream &operator<<(QDataStream &stream, const QCursor &cursor)
     \relates QCursor
@@ -211,17 +194,11 @@ QT_BEGIN_NAMESPACE
 
     \sa {Serializing Qt Data Types}
 */
-
 QDataStream &operator<<(QDataStream &s, const QCursor &c)
 {
-    s << (qint16)c.shape();                        // write shape id to stream
-    if (c.shape() == Qt::BitmapCursor) {                // bitmap cursor
-        bool isPixmap = !c.pixmap().isNull();
-        s << isPixmap;
-        if (isPixmap)
-            s << c.pixmap();
-        else
-            s << *c.bitmap() << *c.mask();
+    s << (qint16)c.shape();
+    if (c.shape() == Qt::BitmapCursor) {
+        s << c.pixmap();
         s << c.hotSpot();
     }
     return s;
@@ -235,32 +212,21 @@ QDataStream &operator<<(QDataStream &s, const QCursor &c)
 
     \sa {Serializing Qt Data Types}
 */
-
 QDataStream &operator>>(QDataStream &s, QCursor &c)
 {
-    qint16 shape;
-    s >> shape;                                        // read shape id from stream
-    if (shape == Qt::BitmapCursor) {                // read bitmap cursor
-        bool isPixmap = false;
-        s >> isPixmap;
-        if (isPixmap) {
-            QPixmap pm;
-            QPoint hot;
-            s >> pm >> hot;
-            c = QCursor(pm, hot.x(), hot.y());
-        } else {
-            QBitmap bm, bmm;
-            QPoint hot;
-            s >> bm >> bmm >> hot;
-            c = QCursor(bm, bmm, hot.x(), hot.y());
-        }
+    qint16 shape = Qt::ArrowCursor;
+    s >> shape;
+    if (shape == Qt::BitmapCursor) {
+        QPixmap pm;
+        QPoint hot;
+        s >> pm >> hot;
+        c = QCursor(pm, hot.x(), hot.y());
     } else {
-        c.setShape((Qt::CursorShape)shape);                // create cursor with shape
+        c.setShape(static_cast<Qt::CursorShape>(shape));                // create cursor with shape
     }
     return s;
 }
 #endif // QT_NO_DATASTREAM
-
 
 /*!
     Constructs a custom pixmap cursor.
@@ -279,95 +245,19 @@ QDataStream &operator>>(QDataStream &s, QCursor &c)
 
     \sa QPixmap::QPixmap(), QPixmap::setMask()
 */
-
 QCursor::QCursor(const QPixmap &pixmap, int hotX, int hotY)
     : d(nullptr)
 {
-    d = QCursorData::setBitmap(QBitmap(pixmap), pixmap.mask(), hotX, hotY);
-    d->pixmap = pixmap;
-}
-
-
-
-/*!
-    Constructs a custom bitmap cursor.
-
-    \a bitmap and
-    \a mask make up the bitmap.
-    \a hotX and
-    \a hotY define the cursor's hot spot.
-
-    If \a hotX is negative, it is set to the \c{bitmap().width()/2}.
-    If \a hotY is negative, it is set to the \c{bitmap().height()/2}.
-
-    The cursor \a bitmap (B) and \a mask (M) bits are combined like this:
-    \list
-    \o B=1 and M=1 gives black.
-    \o B=0 and M=1 gives white.
-    \o B=0 and M=0 gives transparent.
-    \o B=1 and M=0 gives an XOR'd result under Windows, undefined
-    results on all other platforms.
-    \endlist
-
-    Use the global Qt color Qt::color0 to draw 0-pixels and Qt::color1 to
-    draw 1-pixels in the bitmaps.
-
-    Valid cursor sizes depend on the display hardware (or the
-    underlying window system). We recommend using 32 x 32 cursors,
-    because this size is supported on all platforms. Some platforms
-    also support 16 x 16, 48 x 48, and 64 x 64 cursors.
-
-    \sa QBitmap::QBitmap(), QBitmap::setMask()
-*/
-
-QCursor::QCursor(const QBitmap &bitmap, const QBitmap &mask, int hotX, int hotY)
-    : d(QCursorData::setBitmap(bitmap, mask, hotX, hotY))
-{
-}
-
-QCursorData *qt_cursorTable[Qt::LastCursor + 1];
-bool QCursorData::initialized = false;
-
-/*! \internal */
-void QCursorData::cleanup()
-{
-    if(!QCursorData::initialized)
-        return;
-
-    for (int shape = 0; shape <= Qt::LastCursor; ++shape) {
-        // In case someone has a static QCursor defined with this shape
-        if (!qt_cursorTable[shape]->ref.deref())
-            delete qt_cursorTable[shape];
-        qt_cursorTable[shape] = 0;
-    }
-    QCursorData::initialized = false;
-}
-
-/*! \internal */
-void QCursorData::initialize()
-{
-    if (QCursorData::initialized)
-        return;
-    for (int shape = 0; shape <= Qt::LastCursor; ++shape)
-        qt_cursorTable[shape] = new QCursorData((Qt::CursorShape)shape);
-    QCursorData::initialized = true;
+    d = QCursorData::setBitmap(pixmap, pixmap.mask(), hotX, hotY);
 }
 
 /*!
     Constructs a cursor with the default arrow shape.
 */
 QCursor::QCursor()
+    : d(nullptr)
 {
-    if (!QCursorData::initialized) {
-        if (QApplication::startingUp()) {
-            d = 0;
-            return;
-        }
-        QCursorData::initialize();
-    }
-    QCursorData *c = qt_cursorTable[0];
-    c->ref.ref();
-    d = c;
+    setShape(Qt::ArrowCursor);
 }
 
 /*!
@@ -383,6 +273,36 @@ QCursor::QCursor(Qt::CursorShape shape)
     setShape(shape);
 }
 
+/*!
+    Constructs a copy of the cursor \a other.
+*/
+QCursor::QCursor(const QCursor &other)
+    : d(other.d)
+{
+    if (d) {
+        d->ref.ref();
+    }
+}
+
+/*!
+    Destroys the cursor.
+*/
+QCursor::~QCursor()
+{
+    if (d && !d->ref.deref()) {
+        delete d;
+    }
+}
+
+/*!
+    Assigns \a other to this cursor and returns a reference to this
+    cursor.
+*/
+QCursor &QCursor::operator=(const QCursor &other)
+{
+    qAtomicAssign(d, other.d);
+    return *this;
+}
 
 /*!
     Returns the cursor shape identifier. The return value is one of
@@ -392,8 +312,9 @@ QCursor::QCursor(Qt::CursorShape shape)
 */
 Qt::CursorShape QCursor::shape() const
 {
-    if (!QCursorData::initialized)
-        QCursorData::initialize();
+    if (!d) {
+        return Qt::ArrowCursor;
+    }
     return d->cshape;
 }
 
@@ -406,42 +327,13 @@ Qt::CursorShape QCursor::shape() const
 */
 void QCursor::setShape(Qt::CursorShape shape)
 {
-    if (!QCursorData::initialized)
-        QCursorData::initialize();
-    QCursorData *c = uint(shape) <= Qt::LastCursor ? qt_cursorTable[shape] : 0;
-    if (!c)
-        c = qt_cursorTable[0];
-    c->ref.ref();
-    if (!d) {
-        d = c;
-    } else {
-        if (!d->ref.deref())
-            delete d;
-        d = c;
+    if (d && !d->ref.deref()) {
+        delete d;
+        d = nullptr;
     }
-}
-
-/*!
-    Returns the cursor bitmap, or 0 if it is one of the standard
-    cursors.
-*/
-const QBitmap *QCursor::bitmap() const
-{
-    if (!QCursorData::initialized)
-        QCursorData::initialize();
-    return d->bm;
-}
-
-/*!
-    Returns the cursor bitmap mask, or 0 if it is one of the standard
-    cursors.
-*/
-
-const QBitmap *QCursor::mask() const
-{
-    if (!QCursorData::initialized)
-        QCursorData::initialize();
-    return d->bmm;
+    if (shape <= Qt::LastCursor) {
+        d = new QCursorData(shape);
+    }
 }
 
 /*!
@@ -451,9 +343,10 @@ const QBitmap *QCursor::mask() const
 
 QPixmap QCursor::pixmap() const
 {
-    if (!QCursorData::initialized)
-        QCursorData::initialize();
-    return d->pixmap;
+    if (!d) {
+        return QPixmap();
+    }
+    return d->px;
 }
 
 /*!
@@ -463,45 +356,10 @@ QPixmap QCursor::pixmap() const
 
 QPoint QCursor::hotSpot() const
 {
-    if (!QCursorData::initialized)
-        QCursorData::initialize();
+    if (!d) {
+        return QPoint(0, 0);
+    }
     return QPoint(d->hx, d->hy);
-}
-
-/*!
-    Constructs a copy of the cursor \a other.
-*/
-
-QCursor::QCursor(const QCursor &other)
-{
-    if (!QCursorData::initialized)
-        QCursorData::initialize();
-    d = other.d;
-    d->ref.ref();
-}
-
-/*!
-    Destroys the cursor.
-*/
-
-QCursor::~QCursor()
-{
-    if (d && !d->ref.deref())
-        delete d;
-}
-
-
-/*!
-    Assigns \a other to this cursor and returns a reference to this
-    cursor.
-*/
-
-QCursor &QCursor::operator=(const QCursor &other)
-{
-    if (!QCursorData::initialized)
-        QCursorData::initialize();
-    qAtomicAssign(d, other.d);
-    return *this;
 }
 
 /*!

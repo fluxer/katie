@@ -1201,11 +1201,6 @@ void qt_init(QApplicationPrivate *priv, Display *display,
     // initialize key mapper
     QKeyMapper::changeKeyboard();
 
-    // Misc. initialization
-#ifndef QT_NO_CURSOR
-    QCursorData::initialize();
-#endif // QT_NO_CURSOR
-
     qApp->setObjectName(qApp->applicationName());
 
     for (int screen = 0; screen < qt_x11Data->screenCount; ++screen) {
@@ -1264,9 +1259,6 @@ void qt_cleanup()
 #endif
 
     QPixmapCache::clear();
-#ifndef QT_NO_CURSOR
-    QCursorData::cleanup();
-#endif // QT_NO_CURSOR
 
     // Reset the error handlers
     XSync(qt_x11Data->display, False); // sync first to process all possible errors

@@ -601,9 +601,6 @@ Atom QX11Data::xdndMimeAtomForFormat(const QString &format, QVariant::Type reque
 }
 
 void QX11Data::xdndSetup() {
-#ifndef QT_NO_CURSOR
-    QCursorData::initialize();
-#endif // QT_NO_CURSOR
     qAddPostRoutine(qt_xdnd_cleanup);
 }
 

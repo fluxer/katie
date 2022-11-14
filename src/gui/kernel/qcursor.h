@@ -46,7 +46,6 @@ private:
 #else // QT_NO_CURSOR
 
 class QCursorData;
-class QBitmap;
 class QPixmap;
 
 class Q_GUI_EXPORT QCursor
@@ -54,7 +53,6 @@ class Q_GUI_EXPORT QCursor
 public:
     QCursor();
     QCursor(Qt::CursorShape shape);
-    QCursor(const QBitmap &bitmap, const QBitmap &mask, int hotX=-1, int hotY=-1);
     QCursor(const QPixmap &pixmap, int hotX=-1, int hotY=-1);
     QCursor(const QCursor &cursor);
     ~QCursor();
@@ -66,8 +64,6 @@ public:
     Qt::CursorShape shape() const;
     void setShape(Qt::CursorShape newShape);
 
-    const QBitmap *bitmap() const;
-    const QBitmap *mask() const;
     QPixmap pixmap() const;
     QPoint hotSpot() const;
 

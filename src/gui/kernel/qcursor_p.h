@@ -36,6 +36,7 @@
 #include "QtCore/qatomic.h"
 #include "QtCore/qnamespace.h"
 #include "QtGui/qpixmap.h"
+#include "QtGui/qbitmap.h"
 
 #if defined(Q_WS_X11)
 #  include "qt_x11_p.h"
@@ -45,31 +46,28 @@
 
 QT_BEGIN_NAMESPACE
 
-class QBitmap;
 class QCursorData {
 public:
-    QCursorData(Qt::CursorShape s = Qt::ArrowCursor);
+    QCursorData(Qt::CursorShape s);
     ~QCursorData();
-
-    static void initialize();
-    static void cleanup();
 
     QAtomicInt ref;
     Qt::CursorShape cshape;
-    QBitmap  *bm, *bmm;
-    QPixmap pixmap;
-    short     hx, hy;
+    QPixmap px;
+    QBitmap bm;
+    short hx, hy;
 #if defined(Q_WS_X11)
     XColor fg, bg;
     Cursor hcurs;
-    Pixmap pm;
+    Qt::HANDLE x11px;
+    Qt::HANDLE x11bm;
+#ifndef QT_NO_XRENDER
+    Picture x11pic;
 #endif
-    static bool initialized;
-    void update();
-    static QCursorData *setBitmap(const QBitmap &bitmap, const QBitmap &mask, int hotX, int hotY);
-};
+#endif
 
-extern QCursorData *qt_cursorTable[Qt::LastCursor + 1]; // qcursor.cpp
+    static QCursorData *setBitmap(const QPixmap &pixmap, const QBitmap &mask, int hotX, int hotY);
+};
 
 QT_END_NAMESPACE
 
