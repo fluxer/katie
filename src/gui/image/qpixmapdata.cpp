@@ -50,16 +50,16 @@ static QImage makeBitmapCompliantIfNeeded(QPixmapData::PixelType type, const QIm
 QPixmapData::QPixmapData(PixelType pixelType)
     : ref(0),
       detach_no(0),
-      type(pixelType),
-      ser_no(0)
+      ser_no(0),
+      type(pixelType)
 {
 }
 
 QPixmapData::QPixmapData(int w, int h, PixelType pixelType)
     : ref(0),
       detach_no(0),
-      type(pixelType),
-      ser_no(0)
+      ser_no(0),
+      type(pixelType)
 {
     QImage::Format format = QImage::Format_ARGB32_Premultiplied;
     if (type == QPixmapData::BitmapType) {
